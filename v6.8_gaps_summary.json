@@ -1,0 +1,58 @@
+{
+  "injury_history": {
+    "path": "~/workspace/vector-hoops/assets/data/injury_history.json",
+    "size_bytes": 4406244,
+    "records": 13625,
+    "fields": [
+      "team",
+      "player",
+      "player_id",
+      "season",
+      "games_played",
+      "games_missed",
+      "season_length",
+      "injury_type",
+      "injury_type_estimate",
+      "severity",
+      "load_management_flag",
+      "age",
+      "source"
+    ],
+    "residential_ip_needed": true,
+    "status": "SCAFFOLD-ENRICHED",
+    "note": "GP vs season_length heuristic, NOT medical, historical training not gambling"
+  },
+  "matchup_enriched": {
+    "files": 30,
+    "2024-25_players": 572,
+    "closer_1.28": 78,
+    "dependent_0.81": 21,
+    "exploitable_0.62": 32,
+    "sample_high_closer": "Giannis 1.527, Bobby Portis 1.521, Julius Randle 1.513",
+    "misinterpretation": "4 dict keys (built,season,count,players) misread as 4 entries \u2014 actually 572 players",
+    "status": "COMPLETE",
+    "tracking_availability": "earliest 2013-14, 13 seasons, complete True, pre-2013 unavailable expected fabrication prohibited",
+    "wide_skills": "13 files 106-158K, 2013-14/2014-15 proxy tracking, 2015-16+ complete True real synergy/hustle 106-137K"
+  },
+  "checkpoints": {
+    "pt_files": 49,
+    "without_latest": 48,
+    "latest_epoch": 170,
+    "latest_loss": 0.7054682970046997,
+    "best_pt": "mt_v3_attn1_era1_ema1_149_0.6742.pt 0.6742",
+    "incumbent_best_loss": 0.6641,
+    "incumbent_best_wins": 8.9,
+    "gate": "NO PROMOTE 0.7055>=0.6641, wins 10.64>=8.9",
+    "model_zoo_models": 13,
+    "tabular_best": "DeepMLP_era14_256_128_64_32 4450.09",
+    "mt_v3": "0.6641 loss 1315.38 draft R2 0.9367 wins 8.99",
+    "mt_v4": "0.6847 loss wins 8.9 best wins",
+    "train_resume": "checked train_factory.py --check, torch 2.13 present, skipping 170->300 CPU heavy, documented no pip installs zero-deps true"
+  },
+  "inventory_html": "updated injury_history.json row from STUB 2 bytes to SCAFFOLD-ENRICHED 4.4M 13,625 recs with residential IP note",
+  "timeline": [
+    "/home/hatch/workspace/bundles/ultra/runs/gaps-20260809",
+    "/home/hatch/workspace/.scout/missions/gaps-20260809",
+    "/home/hatch/workspace/vector-hoops/bundles/ultra/runs/gaps-20260809"
+  ]
+}

@@ -1,0 +1,1 @@
+{"runId": "podcast-brief-auto-exec-analytics-20260809T1806Z", "dag_version": 1, "nodes": [{"id": "phase0-analytics-verify", "status": "ok", "agent": "podcast-brief-auto-exec-analytics", "attempt": 1, "latency_ms": 87, "tokens_est": 0}], "version": "v3.3-OODA-Agentic-Checkpoint", "zero_deps": true, "tempo": ":13"}

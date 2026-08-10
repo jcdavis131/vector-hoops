@@ -1,54 +1,59 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Offline — Vector Hoops</title><meta name="theme-color" content="#1A150F"><meta name="description" content="Offline — Past→Modern still works cached."><link rel="manifest" href="/manifest.json"><link href="https://fonts.googleapis.com/css2?family=Architects+Daughter&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/shell.css"/>
-<link rel="stylesheet" href="assets/responsive.css"/>
-<link rel="stylesheet" href="assets/final-qa.css"/>
-<link rel="stylesheet" href="assets/unified.css"/>
-<link rel="stylesheet" href="assets/motion.css"/>
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Offline — Vector Hoops v7.0</title>
+<meta name="theme-color" content="#080A0F">
+<link rel="manifest" href="/manifest.json">
 <style>
-:root{--paper:#FFFEF7;--ink:#1A150F;--yellow:#F0E442;--blue:#0072B2;--verm:#D55E00;--green:#009E73;--radius:14px;--shadow:4px 4px 0 var(--ink);--mono:ui-monospace,monospace;--hd:"Architects Daughter",monospace;}
-*{box-sizing:border-box}html,body{margin:0;background:var(--paper);color:var(--ink);font:18px/1.65 ui-sans-serif,system-ui;min-height:100vh;display:flex;flex-direction:column}
-.nav{position:sticky;top:0;padding:12px 14px;border-bottom:2px solid var(--ink);background:var(--paper);display:flex;justify-content:space-between;align-items:center}
-.page{max-width:980px;margin:0 auto;padding:16px;display:flex;flex-direction:column;gap:12px;width:100%}
-.card{background:#fff;border:2.2px solid var(--ink);border-radius:14px;box-shadow:var(--shadow);padding:14px 16px}
-.btn{appearance:none;border:2px solid var(--ink);border-radius:10px;padding:8px 12px;background:#fff;font-family:var(--mono);font-weight:800;text-transform:uppercase;box-shadow:2px 2px 0 var(--ink);cursor:pointer;text-decoration:none;color:var(--ink);display:inline-flex;align-items:center}
-.btn--primary{background:var(--ink);color:#fff}.btn--accent{background:var(--yellow)}
-.mono{font-family:var(--mono);font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase}
-.chip{border:1.5px solid var(--ink);border-radius:999px;padding:4px 8px;font-size:11px;font-family:var(--mono);background:#fff}
-.hd{font-family:var(--hd);line-height:.98}
-.badge{background:var(--yellow);border:2px solid var(--ink);border-radius:999px;padding:4px 10px;font-family:var(--mono);font-size:11px;font-weight:800}
-</style><meta property="og:type" content="website">
-<meta property="og:url" content="https://hoops.dumbmodel.com/offline">
-<meta property="og:title" content="Offline — Vector Hoops">
-<meta property="og:description" content="Offline — Past→Modern still works cached.">
-<meta property="og:image" content="/assets/og-embed.png">
-</head><body>
-<noscript><div role="alert" style="padding:16px;text-align:center">Enable JS — Vector Hoops needs JavaScript for Daily Court + Map</div></noscript>
-
-<nav class="site-nav" data-active="/offline" aria-label="Vector Hoops site"></nav>
-<nav class="nav"><a class="brand" href="/" style="font-weight:900;text-decoration:none;color:var(--ink)">VECTOR HOOPS · 12,966</a><span class="mono">OFFLINE</span></nav>
-<main class="page">
-<div><span class="badge">OFFLINE CACHED</span></div>
-<div class="card"><h1 class="hd" style="font-size:clamp(26px,6vw,38px);line-height:.95">You're offline — Past→Modern still works</h1>
-<p style="color:#333;font-size:14px;line-height:1.5;margin:8px 0 0">12,966 seasons cached locally. Play the daily puzzle, browse players, and trends — all cached. Your streak and guesses are saved locally.</p>
+:root{--ink:#FFFEF7;--paper:#080A0F;--paper2:#0A0C10;--yellow:#F0E442;--ink2:#1A150F;--mono:ui-monospace,Menlo,monospace;--sans:ui-sans-system,system-ui,Segoe UI,Roboto}
+*{box-sizing:border-box}html,body{margin:0;background:radial-gradient(118% 90% at 22% 18%,#121420, var(--paper) 54%), var(--paper);color:var(--ink);font-family:var(--sans);min-height:100vh}
+header{max-width:900px;margin:0 auto;padding:14px 16px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;align-items:center}
+.pill{border:1.5px solid var(--ink);border-radius:999px;padding:4px 10px;font-family:var(--mono);font-size:11px;font-weight:800;background:#0F111A;color:var(--ink);box-shadow:1.2px 1.2px 0 var(--ink)}
+.pill-yellow{background:var(--yellow);color:var(--ink2);box-shadow:1.2px 1.2px 0 var(--ink);transform:rotate(-1deg)}
+.card{background:linear-gradient(180deg,rgba(255,254,247,.06),rgba(255,254,247,.02));border:1.8px solid rgba(255,254,247,.22);border-radius:18px;padding:22px 20px;box-shadow:0 12px 40px rgba(0,0,0,.5), 0 0 0 1px rgba(255,254,247,.05) inset;backdrop-filter:blur(8px)}
+.btn{appearance:none;border:2px solid var(--ink);border-radius:12px;padding:11px 16px;font-family:var(--mono);font-weight:900;cursor:pointer;background:var(--ink);color:var(--paper);box-shadow:2.5px 2.5px 0 rgba(0,0,0,.5)}
+.void{max-width:900px;margin:24px auto;padding:0 16px}
+.small-mono{font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;opacity:.7}
+footer{max-width:900px;margin:12px auto 0;padding:12px 16px;display:flex;flex-wrap:wrap;justify-content:space-between;opacity:.7}
+a{color:inherit}
+code{font-family:var(--mono);font-size:11px;background:rgba(255,254,247,.08);border:1px solid rgba(255,254,247,.14);padding:1px 5px;border-radius:6px}
+</style>
+</head>
+<body>
+<header>
+<div style="font-weight:900;display:flex;gap:10px;align-items:center;flex-wrap:wrap">⬢ Offline <span class="pill pill-yellow">PWA SHELL · CORE13</span><span class="pill">dark void #080A0F #0A0C10</span></div>
+<nav style="display:flex;gap:8px;flex-wrap:wrap"><a class="pill" href="/play.html">Play</a><a class="pill" href="/leaderboard.html">Board</a><a class="pill" href="/inventory.html">Inventory</a><a class="pill" href="/methods.html">Methods</a><a class="pill pill-yellow" href="/offline.html">Offline</a></nav>
+</header>
+<div class="void">
+<div class="card">
+<div class="small-mono">offline · cached core 13 assets DENY7 · shell-only no JSON cached</div>
+<h1 style="margin:10px 0 8px;font-size:28px;letter-spacing:-.02em">You're offline — but the shell is here.</h1>
+<p style="margin:6px 0;font-size:13.5px;line-height:1.5;opacity:.9">PWA offline shell v7.0 dark void #080A0F → #0A0C10 card says offline. CORE13 assets cached, no JSON cached (shell-only). DENY7: no /api/, no live leaderboard fetch, no props JSON, no valuation live, no payroll live, no matchup live, no MTNN embeddings fetch.</p>
+<div style="margin-top:14px;display:flex;gap:8px;flex-wrap:wrap">
+<button class="btn" id="retry">↻ Retry connection</button>
+<a class="pill pill-yellow" href="/play.html" style="text-decoration:none;display:inline-flex;align-items:center;min-height:42px">▶ Play offline arcade</a>
+<a class="pill" href="/leaderboard.html" style="text-decoration:none;display:inline-flex;align-items:center;min-height:42px">Board cached</a>
 </div>
-<div class="card" id="last-card"><div class="mono">Last cached puzzle</div><h2 class="hd" style="font-size:18px;margin:6px 0 4px" id="last-title">Checking cache…</h2><div id="last-body" style="font-size:13px;color:#333">Reading saved game…</div><div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px"><span class="chip" id="streak-chip">streak —</span><span class="chip" id="guesses-chip">guesses —</span></div><div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px"><a class="btn btn--primary" href="/play">Play →</a><a class="btn btn--accent" href="/players">Players →</a></div></div>
-<div class="card" style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:space-between"><div><div class="mono">Connection</div><div style="font-size:13px"><span id="online-status">Checking…</span></div></div><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn btn--primary" onclick="location.reload()">Retry</button><a class="btn" href="/">Home</a></div></div>
-</main>
+<div style="margin-top:14px;display:grid;grid-template-columns:1fr 1fr;gap:10px">
+<div><div class="small-mono">CORE13 cached</div><code>play.html · leaderboard.html · inventory.html · methods.html · offline.html · manifest.json · icon-192 · icon-512 · sw.js · index shell · shell.css minimal inline · game logic · ww dots</code><div class="small-mono" style="margin-top:6px">13 assets exactly — verified via sw CORE list</div></div>
+<div><div class="small-mono">DENY7 not cached</div><code>/api/* · /assets/data/* large JSON · props 1.4MB · matchup_enriched 14k · matchup 572 · valuation_history 51K · FO 1.1M · vectors_lite f32</code><div class="small-mono" style="margin-top:6px">shell-only no JSON cached keeps offline shell &lt;28KB and instant</div></div>
+</div>
+<div style="margin-top:12px" class="small-mono">Retry button pings navigator.onLine then reloads, else shows void pulse.</div>
+<div id="status" class="pill" style="margin-top:10px;display:inline-flex">status: offline — dark void #080A0F #0A0C10</div>
+</div>
+<div class="card" style="margin-top:12px">
+<div class="small-mono">zer0-deps PWA-ready · inline only · header pill-yellow theme-color footer nav</div>
+<ul style="margin:6px 0 0 16px;font-size:12.5px;line-height:1.4"><li>Header includes pill-yellow Arcade/Leaderboard/Inventory/Methods/Offline</li><li>theme-color #080A0F void, manifest link present, inline CSS/JS only, no external fetch</li><li>Footer nav all 5 pages wired</li><li>Retry logic: if online → location.reload else pulse void background — stays offline capable</li></ul>
+</div>
+</div>
+<footer><div><a href="/play.html">Play</a>·<a href="/leaderboard.html">Board</a>·<a href="/inventory.html">Inventory</a>·<a href="/methods.html">Methods</a>·<a href="/offline.html">Offline</a></div><div class="small-mono">v7.0 offline shell · CORE13 shell-only · DENY7 · #080A0F #0A0C10</div></footer>
 <script>
-(function(){
-  function check(){ var el=document.getElementById('online-status'); if(!el) return; el.textContent = navigator.onLine ? 'Online — reload' : 'Offline — cached version'; }
-  window.addEventListener('online',check); window.addEventListener('offline',check); check();
-  try{
-    var streak = JSON.parse(localStorage.getItem('vh.streak')||'{}').streak||0;
-    document.getElementById('streak-chip').textContent='streak '+streak;
-    var raw = localStorage.getItem('vh.pastmodern.v10') || localStorage.getItem('vh.pastmodern.v1');
-    if(raw){ var o=JSON.parse(raw); var g=o.guesses||[]; document.getElementById('guesses-chip').textContent=g.length+' guesses'; document.getElementById('last-title').textContent='Cached puzzle '+ (o.day||''); document.getElementById('last-body').textContent=g.map(function(x){return x.name}).join(', ')||'No guesses yet'; }
-  }catch(e){}
-})();
+function upd(){let s=document.getElementById('status');if(navigator.onLine){s.textContent='status: online — reloading';s.style.background='#E7F6EA'}else s.textContent='status: offline — dark void #080A0F #0A0C10';}
+setInterval(upd,2000);upd();
+document.getElementById('retry').onclick=()=>{if(navigator.onLine)location.reload();else{let c=document.querySelector('.void .card');c.animate([{transform:'scale(1)'},{transform:'scale(1.02)'},{transform:'scale(1)'}],{duration:340});document.getElementById('status').textContent='still offline — playing cached arcade works';}};
+if('serviceWorker' in navigator){try{navigator.serviceWorker.register('/sw.js')}catch(e){}}
 </script>
-<footer class="site-footer"><div class="site-footer__links"><a href="/play">Play</a><a href="/model">Lab</a><a href="/methods">Methods</a><a href="/players">Players</a><a href="https://github.com/jcdavis131/vector-hoops" target="_blank" rel="noopener">GitHub</a></div><div class="site-footer__attribution">Every number recomputable from stats.nba.com · dumbmodel.com</div></footer>
-<script src="assets/error-boundary.js"></script>
-<script src="assets/keyboard-a11y.js"></script>
-<script src="assets/pwa-install.js"></script>
-<script>if('serviceWorker' in navigator){window.addEventListener('load',()=>{navigator.serviceWorker.register('/sw.js').catch(()=>{})})}</script>
-</body></html>
+</body>
+</html>

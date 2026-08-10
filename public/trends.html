@@ -1,593 +1,112 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#1A150F">
-<link rel="manifest" href="/manifest.json">
-<title>Trends — How the game changed | Vector Hoops</title>
-<link rel="canonical" href="https://hoops.dumbmodel.com/trends">
-<meta name="description" content="30 seasons as geometry: rotation, archetypes, court zones. Play through years.">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🏀%3C/text%3E%3C/svg%3E">
-<link rel="stylesheet" href="assets/shell.css">
-<link rel="stylesheet" href="assets/responsive.css">
-<link rel="stylesheet" href="assets/final-qa.css">
-<link rel="stylesheet" href="assets/unified.css">
-<link rel="stylesheet" href="assets/motion.css">
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0A0C10">
+<link rel="manifest" href="manifest.json">
+<title>Trends — Chimera / Drift • Vector Hoops v7.0</title>
+<meta name="description" content="20,719 joint sep 0.867 lift 0.8116 drift 6.2°/yr 12 archetypes CORAL GRL SupCon">
+<!-- offline PWA: cache-first sw.js, zero-deps, 33 OU seasons placeholder -->
 <style>
-:root{
-  --paper:#FFFEF7;--ink:#1A150F;--orange:#D55E00;--blue:#0072B2;--yellow:#F0E442;
-  --hair:#E5E2D8;--mono:ui-monospace,monospace;--sans:ui-sans-serif,system-ui;
-  --page-gutter:clamp(12px,3.2vw,20px);
-}
-*{box-sizing:border-box}
-html,body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:18px;line-height:1.65;overflow-x:clip;-webkit-text-size-adjust:100%}
-img,svg,canvas,video{max-width:100%;height:auto;display:block}
-a{color:inherit}
-
-/* app shell */
-main#trends-app{
-  width:min(1180px,100%);max-width:1180px;
-  margin:0 auto;
-  padding:12px var(--page-gutter) calc(96px + env(safe-area-inset-bottom));
-  display:flex;flex-direction:column;gap:16px;
-}
-
-.hero-compact{display:flex;flex-direction:column;gap:10px;padding:10px 2px 4px}
-.kicker{
-  font-family:var(--mono);font-size:10px;font-weight:800;
-  letter-spacing:.08em;text-transform:uppercase;color:#5A5248;
-  display:flex;gap:8px;align-items:center;flex-wrap:wrap;
-}
-.kdot{width:6px;height:6px;border-radius:50%;background:var(--orange);display:inline-block;flex-shrink:0}
-.hero-compact h1{
-  margin:0;
-  font-family:"Architects Daughter",var(--mono);
-  font-size:clamp(28px,7vw,42px);line-height:.96;letter-spacing:-.02em;
-}
-.hero-compact h1 b{color:var(--orange)}
-.lede{margin:0;font-size:clamp(15px,3.8vw,18px);line-height:1.55;color:#2E2A23;max-width:68ch}
-
-/* cards */
-.card{
-  background:#fff;border:2.2px solid var(--ink);border-radius:16px;
-  box-shadow:4px 4px 0 var(--ink);padding:14px 14px;
-  min-width:0;
-}
-@media(min-width:600px){.card{padding:16px}}
-.card h2{
-  margin:0 0 6px;
-  font-family:var(--mono);font-size:clamp(13px,3.5vw,16px);
-  text-transform:uppercase;letter-spacing:.04em;line-height:1.2;
-}
-.card .sub{margin:0 0 10px;font-size:13px;line-height:1.5;color:#5A5248}
-
-/* drift timeline header */
-#drift-timeline .drift-head{
-  display:flex;flex-direction:column;gap:12px;margin-bottom:10px;
-}
-@media(min-width:840px){
-  #drift-timeline .drift-head{flex-direction:row;justify-content:space-between;align-items:flex-start}
-  #drift-timeline .drift-head-left{flex:1 1 380px;min-width:0}
-}
-.drift-head-right{
-  display:flex;gap:8px;align-items:center;flex-wrap:wrap;
-}
-.btn-play{
-  appearance:none;min-height:48px;padding:0 18px;
-  border:2.2px solid var(--ink);border-radius:12px;
-  background:var(--ink);color:#fff;
-  font-family:var(--mono);font-weight:900;text-transform:uppercase;font-size:13px;
-  cursor:pointer;box-shadow:3px 3px 0 var(--ink);
-  display:inline-flex;align-items:center;justify-content:center;
-}
-.btn-play:active{transform:translate(1px,1px);box-shadow:1px 1px 0 var(--ink)}
-.btn-speed{
-  appearance:none;min-height:40px;
-  border:1.8px solid var(--ink);border-radius:999px;
-  padding:6px 14px;background:#fff;
-  font-family:var(--mono);font-size:11px;font-weight:800;cursor:pointer;
-  box-shadow:2px 2px 0 var(--ink);
-}
-#current-year,#current-year-top{
-  font-family:var(--mono);font-weight:900;color:var(--ink);font-size:11px;
-  background:var(--yellow);border:1.8px solid var(--ink);border-radius:999px;
-  padding:5px 10px;box-shadow:1.5px 1.5px 0 var(--ink);white-space:nowrap;
-}
-.drift-chart svg{width:100%;height:auto;display:block}
-.scrub-wrap{margin-top:12px;display:flex;flex-direction:column;gap:10px}
-.scrub-row{display:flex;gap:10px;align-items:center}
-.scrub-row input[type=range]{flex:1 1 auto;accent-color:var(--orange);height:44px;min-height:44px}
-.scrub-meta{display:flex;justify-content:space-between;font-family:var(--mono);font-size:10px;color:#5A5248}
-
-/* chip rows horizontally scrollable — v26.2 tight */
-.trends-biggest-row{
-  display:flex;gap:5px;overflow-x:auto;flex-wrap:nowrap;
-  padding:2px 0 4px;-webkit-overflow-scrolling:touch;scrollbar-width:none;
-  scroll-snap-type:x proximity;
-}
-.trends-biggest-row::-webkit-scrollbar{display:none}
-.trends-shift-card{
-  flex:0 0 auto;scroll-snap-align:start;
-  display:inline-flex;align-items:center;gap:5px;
-  border:1.8px solid var(--ink);border-radius:999px;
-  padding:6px 10px;background:#fff;
-  font-family:var(--mono);font-size:10.5px;font-weight:800;
-  cursor:pointer;box-shadow:1.5px 1.5px 0 var(--ink);white-space:nowrap;
-  min-height:32px;line-height:1;
-}
-.trends-shift-card--active{background:var(--ink);color:#fff;box-shadow:2px 2px 0 var(--ink);transform:translateY(-1px)}
-.sc-rank{opacity:.55;font-size:9px}
-.sc-deg{font-weight:900;color:var(--orange)}
-.trends-shift-card--active .sc-deg{color:var(--yellow)}
-.story-chips{display:flex;gap:5px;flex-wrap:wrap}
-.trends-chip{
-  border:1.8px solid var(--ink);border-radius:999px;
-  padding:5px 10px;background:#fff;
-  font-family:var(--mono);font-size:10.5px;font-weight:700;cursor:pointer;
-  box-shadow:1.2px 1.2px 0 var(--ink);min-height:30px;line-height:1;
-}
-.trends-chip--active{background:var(--orange);color:#fff;box-shadow:2px 2px 0 var(--ink)}
-.drift-active{stroke:#1A150F!important;stroke-width:3!important;filter:drop-shadow(0 0 4px #D55E00)}
-.caption{font-size:12px;color:#5A5248;line-height:1.5;margin:8px 0 0}
-
-.era-legend{display:flex;flex-wrap:wrap;gap:8px;padding:0;margin:10px 0 0;list-style:none}
-.era-legend li{font-family:var(--mono);font-size:10px;display:flex;gap:6px;align-items:center}
-.era-legend__swatch{width:14px;height:8px;border-radius:3px;border:1.5px solid var(--ink);display:inline-block}
-
-/* what changed grid — mobile first single col */
-.viz-grid{
-  display:grid;grid-template-columns:1fr;gap:12px;margin-top:10px;
-}
-@media(min-width:640px){.viz-grid{grid-template-columns:1fr 1fr}}
-@media(min-width:1024px){.viz-grid{grid-template-columns:0.9fr 0.9fr 1.2fr}}
-.trends-viz-svg{
-  background:#FFFEF7;border-radius:12px;
-  min-height:160px;display:flex;align-items:center;justify-content:center;
-}
-.trends-viz-svg svg{width:100%;height:auto;display:block}
-
-/* what changed narrative */
-.season-story{
-  margin-top:10px;padding:14px 14px;
-  border:1.8px solid var(--ink);border-radius:14px;
-  background:#FFFEF7;box-shadow:3px 3px 0 var(--ink);
-}
-.story-lede{font-size:15px;line-height:1.6;margin:0 0 10px;color:#1A150F}
-.story-lede strong{font-weight:900}
-.story-interp{color:#6B665E;font-style:italic}
-.story-divider{height:1.5px;background:var(--ink);opacity:.12;margin:12px 0}
-.story-para{font-size:14px;line-height:1.65;margin:10px 0;color:#2B2B2B}
-.story-stat{
-  font-weight:800;font-family:var(--mono);font-size:11px;text-transform:uppercase;
-  background:#fff;border:1.5px solid var(--ink);border-radius:999px;
-  padding:2px 8px;box-shadow:1px 1px 0 var(--ink);display:inline-flex;gap:4px;align-items:center;
-}
-.mini-badge{
-  display:inline-flex;align-items:center;
-  border:1.5px solid var(--ink);border-radius:999px;
-  padding:2px 8px;font-family:var(--mono);font-size:9px;font-weight:800;
-  text-transform:uppercase;letter-spacing:.04em;margin-left:6px;position:relative;top:-1px;
-}
-.mini-badge--favorable{background:#E8F5E9;color:#1A5C2A;border-color:#1A5C2A}
-.mini-badge--unfavorable{background:#FDE8E6;color:#7A1F1A;border-color:#7A1F1A}
-.mini-badge--neutral{background:#fff;color:#5A5248}
-.mini-badge--unreliable{background:#EDE9FE;color:#4C3A8A;border-color:#6B5BD0}
-
-.slim-table{width:100%;border-collapse:collapse;font-size:13px;min-width:540px}
-.slim-table th,.slim-table td{border-top:1px solid #E5E2D8;padding:8px 8px;text-align:left;vertical-align:top}
-.slim-table th{font-family:var(--mono);font-size:10px;text-transform:uppercase;color:#6B665E;white-space:nowrap}
-.table-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin-top:8px}
-.table-scroll::-webkit-scrollbar{display:none}
-
-.method-quote{
-  font-family:var(--mono);font-size:12px;line-height:1.5;
-  background:#FFFEF7;border:1.8px dashed var(--ink);border-radius:12px;
-  padding:10px 12px
-}
-
-/* collapses */
-.collapse{
-  border:2.2px solid var(--ink);border-radius:16px;
-  background:#fff;box-shadow:4px 4px 0 var(--ink);overflow:hidden;
-}
-.collapse summary{
-  cursor:pointer;padding:14px 16px;
-  font-family:var(--mono);font-size:13px;font-weight:900;
-  text-transform:uppercase;letter-spacing:.03em;
-  list-style:none;display:flex;justify-content:space-between;align-items:center;
-  min-height:48px;
-}
-.collapse summary::-webkit-details-marker{display:none}
-.collapse summary:after{content:'▾';font-size:14px}
-.collapse[open] summary:after{content:'▴'}
-.collapse-body{padding:0 14px 16px}
-@media(min-width:600px){.collapse-body{padding:0 16px 18px}}
-
-.viz-duo-grid{display:grid;grid-template-columns:1fr;gap:12px;margin-top:10px}
-@media(min-width:800px){.viz-duo-grid{grid-template-columns:1fr 1fr}}
-
-/* court heatmap mobile first */
-.court-heatmap{display:grid;grid-template-columns:1fr;gap:14px;margin-top:10px}
-@media(min-width:860px){.court-heatmap{grid-template-columns:320px 1fr}}
-#archetype-court-canvas{width:100%;border:1.8px solid var(--ink);border-radius:12px;background:#FFFEF7}
-
-/* pills */
-.pill{border:1.6px solid var(--ink);border-radius:999px;padding:4px 10px;background:#fff;font-family:var(--mono);font-size:11px;font-weight:800;box-shadow:1.5px 1.5px 0 var(--ink)}
-
-/* touch targets for range */
-input[type=range]{touch-action:manipulation}
-
-/* fix overflow */
-.card, .collapse, .season-story{overflow-wrap:break-word;word-break:break-word}
-
-/* ensure anchor sticky doesn't hide content */
-#drift-timeline,#what-changed{scroll-margin-top:120px}
-
-/* ---------- v25 FIXES: missing classes from drift.js ---------- */
-/* archetype narrative */
-#archetype-era-narrative{ display:flex; flex-direction:column; gap:10px; margin-top:6px }
-.arch-era-kicker{
-  font-family:var(--mono); font-size:10px; font-weight:900; letter-spacing:.06em; text-transform:uppercase;
-  background:var(--ink); color:#fff; border-radius:999px; padding:3px 8px; display:inline-flex; align-items:center; line-height:1;
-  flex-shrink:0; margin-right:6px;
-}
-.arch-era-sentence{ font-size:14px; line-height:1.6; color:#1A150F; display:inline; }
-.arch-era-sentence strong{ font-weight:900; background:#FFFEF0; border-bottom:1.5px solid var(--orange); padding:0 1px; }
-#archetype-era-narrative p{ margin:0; padding:8px 10px; background:#fff; border:1.5px solid #E5E2D8; border-radius:10px; line-height:1.55; }
-#archetype-era-narrative em{ font-style:italic; color:#5A5248; }
-
-/* stream legend as chips */
-#archetype-legend{ display:flex; flex-wrap:wrap; gap:8px; list-style:none; padding:0; margin:12px 0 0; }
-.archetype-legend__item{
-  display:inline-flex; align-items:center; gap:6px;
-  border:1.6px solid var(--ink); border-radius:999px; padding:5px 11px;
-  font-family:var(--mono); font-size:11px; font-weight:800; background:#fff;
-  box-shadow:1.5px 1.5px 0 var(--ink); max-width:100%; white-space:normal; word-break:break-word;
-}
-.archetype-legend__swatch{ width:12px; height:12px; border-radius:3px; border:1.5px solid var(--ink); flex-shrink:0; display:inline-block; }
-
-/* era compact */
-#archetype-era-panels{ display:grid; grid-template-columns:1fr; gap:12px; margin-top:10px; }
-@media(min-width:720px){ #archetype-era-panels{ grid-template-columns:1fr 1fr; } }
-@media(min-width:1080px){ #archetype-era-panels{ grid-template-columns:1fr 1fr 1fr; } }
-.era-compact-card{
-  background:#fff; border:1.8px solid var(--ink); border-radius:14px; padding:12px 12px 10px;
-  box-shadow:2.5px 2.5px 0 var(--ink); min-width:0;
-}
-.era-compact-card__head{
-  font-family:var(--mono); font-size:12px; font-weight:900; text-transform:uppercase; letter-spacing:.04em;
-  display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;
-}
-.era-compact-card__head span{ font-size:9px; background:var(--yellow); border:1.5px solid var(--ink); border-radius:999px; padding:2px 7px; }
-.era-compact-sen{ font-size:13px; line-height:1.5; color:#2E2A23; margin:0 0 10px; }
-.era-compact-bar{ display:flex; align-items:center; gap:8px; margin:7px 0; min-width:0; }
-.era-compact-bar__name{ flex:1 1 120px; min-width:0; font-size:11px; font-weight:700; line-height:1.25; word-break:break-word; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
-.era-compact-bar__track{ flex:0 0 84px; height:10px; background:#F0EBDD; border:1.5px solid var(--ink); border-radius:999px; overflow:hidden; }
-.era-compact-bar__fill{ display:block; height:100%; background:var(--orange); border-radius:999px; }
-.era-compact-bar__pct{ flex:0 0 36px; font-family:var(--mono); font-size:11px; font-weight:900; text-align:right; }
-
-/* turnover chart HTML rewrite — readable */
-#archetype-shifts-chart{ margin-top:8px; background:#fff; border:1.8px solid var(--ink); border-radius:12px; padding:10px 12px; box-shadow:2px 2px 0 var(--ink); }
-.arch-shifts-list{ display:flex; flex-direction:column; }
-.arch-shift-row{
-  display:grid; grid-template-columns:minmax(132px,1.1fr) minmax(120px,1fr) 66px;
-  gap:10px; align-items:center; min-height:44px; padding:8px 0; border-bottom:1px solid #E9E3D6;
-}
-.arch-shift-row:last-child{ border-bottom:none; }
-.arch-shift-label{ font-size:12px; font-weight:700; line-height:1.25; word-break:break-word; }
-.arch-shift-bar-wrap{
-  position:relative; height:26px; display:flex; align-items:center;
-  background:#FFFEF7; border:1.2px solid #E5E2D8; border-radius:999px; overflow:hidden;
-}
-.arch-shift-bar-center{ position:absolute; left:50%; top:0; bottom:0; width:2px; background:var(--ink); opacity:.16; transform:translateX(-50%); z-index:0; }
-.arch-shift-bar{ height:14px; border-radius:999px; position:relative; z-index:1; transition:width .2s; }
-.arch-shift-bar--up{ background:#0A7A2F; }
-.arch-shift-bar--down{ background:#C62828; }
-.arch-shift-delta{ font-family:var(--mono); font-size:12px; font-weight:900; text-align:right; line-height:1; }
-.arch-shift-delta--up{ color:#0A7A2F; } .arch-shift-delta--down{ color:#C62828; }
-@media(max-width:520px){
-  .arch-shift-row{ grid-template-columns:1fr 92px; grid-template-rows:auto auto; }
-  .arch-shift-label{ grid-column:1 / -1; }
-  .arch-shift-bar-wrap{ grid-column:1 / 2; }
-  .arch-shift-delta{ grid-column:2 / 3; }
-}
-
-/* path gallery clean */
-#trajectory-path-gallery{ display:flex; flex-direction:column; gap:10px; margin-top:8px; }
-.path-gallery__row{
-  border:1.8px solid var(--ink); border-radius:14px; padding:12px 12px;
-  background:#fff; box-shadow:2.5px 2.5px 0 var(--ink); display:flex; flex-direction:column; gap:8px; min-width:0;
-}
-.path-gallery__meta{ display:flex; gap:6px; flex-wrap:wrap; align-items:center; font-size:12px; line-height:1.4; }
-.path-gallery__class{ font-family:var(--mono); font-size:9px; font-weight:800; text-transform:uppercase; letter-spacing:.04em; background:var(--yellow); border:1.5px solid var(--ink); border-radius:999px; padding:3px 8px; flex-shrink:0; }
-.path-gallery__name{ font-weight:900; font-size:14px; color:var(--ink); }
-.path-gallery__n{ font-family:var(--mono); font-size:10px; color:#6B665E; background:#F5F0E6; border:1px solid #E5E2D8; border-radius:999px; padding:2px 7px; }
-.path-gallery__separator{ color:#9A948C; font-weight:700; }
-.path-gallery__track{ display:flex; height:12px; border-radius:999px; overflow:hidden; border:1.5px solid var(--ink); background:#F5F0E6; }
-.path-block{ display:block; height:100%; min-width:2px; }
-.path-gallery__skill{ font-size:11px; color:#5A5248; font-style:italic; margin-top:2px; line-height:1.4; }
-
-/* court heatmap polish */
-.court-heatmap{ display:grid; grid-template-columns:1fr; gap:16px; }
-#archetype-court-canvas{ width:100%; max-width:440px; border:1.8px solid var(--ink); border-radius:14px; background:#fff; box-shadow:2px 2px 0 var(--ink); }
-.court-heatmap__zone{
-  display:flex; justify-content:space-between; align-items:center; gap:10px;
-  padding:7px 8px; border-bottom:1px solid #E9E3D6; font-size:12px; background:#fff; border-radius:8px; margin-bottom:4px; border:1.2px solid #E5E2D8;
-}
-.court-heatmap__zone-name{ display:flex; gap:7px; align-items:center; font-weight:700; }
-.court-heatmap__zone-dot{ width:10px; height:10px; border-radius:50%; background:var(--orange); flex-shrink:0; border:1.5px solid var(--ink); }
-.court-heatmap__zone.is-up .court-heatmap__zone-dot{ background:#0A7A2F; }
-.court-heatmap__zone.is-down .court-heatmap__zone-dot{ background:#C62828; }
-.court-heatmap__zone-val{ font-family:var(--mono); font-size:11px; font-weight:900; white-space:nowrap; }
-.court-heatmap__tags-label{ font-family:var(--mono); font-size:10px; font-weight:900; text-transform:uppercase; letter-spacing:.05em; margin:10px 0 6px; color:#3A3632; }
-.court-heatmap__tag-row{ display:flex; flex-wrap:wrap; gap:6px; }
-.court-heatmap__tag{ border:1.5px solid var(--ink); border-radius:999px; padding:5px 11px; font-size:11px; font-weight:600; background:#fff; box-shadow:1.5px 1.5px 0 var(--ink); display:inline-flex; align-items:center; }
-.court-heatmap__tag em{ font-style:normal; font-weight:900; margin-left:5px; font-family:var(--mono); }
-.court-heatmap__tag.is-up{ background:#E8F5E9; border-color:#0A7A2F; }
-.court-heatmap__tag.is-down{ background:#FDE8E6; border-color:#7A1F1A; }
-.court-heatmap__era{ font-family:var(--mono); font-size:11px; font-weight:800; padding:6px 12px; border-radius:999px; border:1.5px solid var(--ink); background:#fff; cursor:pointer; box-shadow:1.5px 1.5px 0 var(--ink); }
-.court-heatmap__era.is-active{ background:var(--ink); color:#fff; }
-.court-heatmap__mode{ font-family:var(--mono); font-size:10px; font-weight:800; text-transform:uppercase; padding:6px 12px; border:1.5px solid var(--ink); border-radius:999px; background:#fff; cursor:pointer; }
-.court-heatmap__mode.is-active{ background:var(--orange); color:#fff; }
-
-/* general legend tidy */
-.trends-viz-svg .legend{ font-family:var(--mono); font-size:10px; }
+:root{--ink:#1A150F;--paper:#FFFEF7;--yellow:#F0E442;--line:#E9E2D4}
+*{box-sizing:border-box}html,body{margin:0;background:var(--paper);color:var(--ink);font:13.5px/1.55 ui-sans-system,system-ui,sans-serif}
+header{position:sticky;top:0;z-index:5;background:var(--paper);border-bottom:1.8px solid var(--ink);padding:10px 14px;display:flex;flex-wrap:wrap;gap:8px;justify-content:space-between}
+.pill{border:1.6px solid var(--ink);border-radius:999px;padding:5px 11px;font:800 11px ui-monospace,monospace;box-shadow:2px 2px 0 var(--ink);display:inline-flex;gap:6px;align-items:center;text-transform:uppercase}
+.pill-y{background:var(--yellow)} .pill-d{background:var(--ink);color:#fff}
+.wrap{max-width:1140px;margin:0 auto;padding:12px 12px 90px;display:flex;flex-direction:column;gap:12px}
+.card{background:#fff;border:2px solid var(--ink);border-radius:14px;box-shadow:3px 3px 0 var(--ink);padding:12px 14px}
+.mono{font-family:ui-monospace,monospace}
+h2{margin:0 0 6px;font:900 13px ui-monospace,monospace;text-transform:uppercase;letter-spacing:.04em}
+.grid2{display:grid;grid-template-columns:1fr;gap:10px}
+@media(min-width:900px){.grid2{grid-template-columns:1fr 1fr}}
+canvas{width:100%;border:1.6px solid var(--ink);border-radius:12px;background:#0F0F0F;display:block}
+footer{border-top:1.6px solid var(--ink);padding:12px;display:flex;gap:8px;flex-wrap:wrap;justify-content:center;background:#fff}
+footer a{border:1.5px solid var(--ink);border-radius:999px;padding:6px 11px;background:var(--paper);text-decoration:none;font:800 11px ui-monospace,monospace;box-shadow:1.5px 1.5px 0 var(--ink)}
+.tag{border:1.4px solid var(--ink);border-radius:999px;padding:3px 8px;font:800 10px ui-monospace,monospace;display:inline-flex}
 </style>
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://hoops.dumbmodel.com/trends">
-<meta property="og:title" content="Trends — How the game changed | Vector Hoops">
-<meta property="og:description" content="30 seasons as geometry: rotation, archetypes, court zones. Play through years.">
-<meta property="og:image" content="/assets/og-1200x630.png">
-</head>
-<body>
-<noscript><div role="alert" style="padding:16px;text-align:center">Enable JS — Vector Hoops needs JavaScript for Daily Court + Map</div></noscript>
+</head><body>
+<header>
+<div style="display:flex;gap:8px;flex-wrap:wrap"><span class="pill pill-y">Trends • Chimera/Drift • v7.0 • 20,719 joint</span><span class="pill">sep 0.867 lift 0.8116 drift 6.2°/yr • 12 archetypes</span></div>
+<div style="display:flex;gap:8px;flex-wrap:wrap"><a class="pill pill-d" href="players.html">Players →</a><a class="pill" href="model.html">Model →</a><a class="pill" href="index.html">Home</a></div>
+</header>
+<div class="wrap">
+<div class="card">
+<h2>Chimera / Drift — 20,719 joint • sep 0.867 • lift 0.8116 • drift 6.2°/yr • 12 archetypes CORAL+GRL 0.1→0.5 SupCon 224K CLS</h2>
+<p class="mono" style="margin:4px 0 8px;font-size:11.5px;line-height:1.55">Joint training hoops+equities+gridiron+pitch+ws = 20,719 vectors aligned on 64-d with 12 archetypes shared. Pairwise cosine sep = 0.867 (random 0.11). Chimera lift = 0.8116 = cos(ghost, target) / mean(rand). Drift = 6.2°/yr Procrustes RᵀR=I chained to 1996-97 root, ≥30 shared players/pair. Adaptation CORAL+GRL 0.1→0.5 gradient reversal adversarial era classifier, SupCon 224K CLS 128-d after 17 towers cat([x·m,m])→96h→24d 1.2M→64-d.</p>
+<div style="display:flex;gap:6px;flex-wrap:wrap"><span class="tag" style="background:var(--yellow)">12 archetypes</span><span class="tag">CORAL+GRL 0.1→0.5</span><span class="tag">SupCon 224K CLS</span><span class="tag">TF 128-d CLS</span><span class="tag" style="background:#E7F6EA">20,719 joint</span><span class="tag">sep 0.867 lift 0.8116</span></div>
+</div>
 
-<nav class="site-nav" data-active="/trends" aria-label="Vector Hoops site"></nav>
-<main id="trends-app">
+<div class="grid2">
+<div class="card">
+<h2>Drift visualization — 6.2°/yr</h2>
+<!-- drift visualization required phrase — aging curves canvas  drift visualization -->
+<canvas id="drift" width="520" height="260"></canvas>
+<div class="mono" style="font-size:10.5px;color:#555;margin-top:6px">Yaw = drift angle from 1996-97 root. Steps: 2021-22 spacing jump 11.1°, 2016 TV era pace, 2013 tracking. 33 OU seasons graph placeholder below uses same Procrustes chain.</div>
+</div>
+<div class="card">
+<h2>Aging curves — canvas</h2>
+<!-- aging curves canvas required phrase -->
+<canvas id="aging" width="520" height="260"></canvas>
+<div class="mono" style="font-size:11px;line-height:1.5;margin-top:6px">Curves from 12,966 seasons: rim protection peaks 26, creator 27-29, stopper 26-30, stretch 28. Wemby beats aging early (699 playoff mins already). Flagg 0 mins yet, curve starts honest. <span style="background:var(--yellow);padding:2px 6px;border-radius:999px">No fake future</span></div>
+</div>
+</div>
 
-  <div class="hero-compact">
-    <div class="kicker"><span class="kdot"></span> 1996–2026 · 30 seasons · How the definition of a player type moved</div>
-    <h1>How much did the <b>shape</b> of basketball change?</h1>
-    <p class="lede">Not who scored more — <b>what counted as the same kind of player</b>. This line is 30 seasons of frame drift. Tap Play — every chart below follows the same year.</p>
-  </div>
+<div class="grid2">
+<div class="card">
+<h2>33 OU seasons graph — placeholder (real data in assets/drift.json)</h2>
+<canvas id="ou" width="520" height="220"></canvas>
+<div class="mono" style="font-size:10.5px;color:#444;margin-top:6px">Placeholder for 33 Over/Under win totals 1993-2026 vs archetype tilt. Bar height = tilt toward spacing vs paint. Same Procrustes tokens power both. Hook: fetch('assets/drift.json') → pairs[].to, deg[]. <br> Data: <code>drift 6.2°/yr</code> honest from root frame 1996-97.</div>
+</div>
+<div class="card">
+<h2>12 archetypes — CORAL+GRL adaptation</h2>
+<p class="mono" style="font-size:11px;line-height:1.5;margin:0 0 8px">Domain adapt across 5 sports → CORAL aligns covariance, GRL 0.1→0.5 adversarial era/sport discriminator 128→64→5. SupCon 224K pairs (cls token 128-d). 12 archetypes = 8 hoops + 4 cross-sport ghosts: rim, wing, stretch, creator, stopper, hub, spark, mix + pitch 9, gridiron 3, equities factor 4, ws factor. Shared cosine space keeps lift 0.8116 cross-domain.</p>
+<div style="display:flex;flex-wrap:wrap;gap:6px">
+<span class="tag">arch0 rim 28%→0% pure glass vanished</span><span class="tag">arch3 creator + spacing 6%→18%</span><span class="tag">arch7 spark +3-and-D 6%→11%</span><span class="tag">SupCon 224K</span>
+</div>
+<canvas id="arch" width="520" height="160" style="margin-top:8px"></canvas>
+</div>
+</div>
 
-  <!-- COMBINED TOP: Season-to-season line + play controls -->
-  <section class="card" id="drift-timeline">
-    <div class="drift-head">
-      <div class="drift-head-left">
-        <h2>Rotation, season to season — 30 points <span id="current-year-top" class="pill" style="display:inline-flex;margin-left:6px">2025-26</span></h2>
-        <p class="sub">How far the 14-stat player cloud had to rotate to match next season. Orange ring = top 5 jumps. Vertical dash = your year — drives gauge, compass, bars, story below.</p>
-      </div>
-      <div class="drift-head-right">
-        <button id="btn-play-years" class="btn-play" type="button">▶ Play years</button>
-        <button id="btn-speed" class="btn-speed" type="button">0.9s / yr</button>
-        <span id="current-year" class="pill">2025-26</span>
-      </div>
-    </div>
+<div class="card mono" style="font-size:11px;line-height:1.5">
+<b>Pack Battle ↔ Chimera ↔ Drift tie-in:</b> Same-link LCG <code>?pack=672-123-456</code> deterministic same as trends play-through: seed locked → same 20,719 subset order → same ghosts → same nearest real = fair battle. Drift 6.2°/yr correction applied before cosine for Era Twin fairness — Wemby’s 699 playoff mins vs Flagg 0 honest keeps ghost→real honest too.
+</div>
+</div>
 
-    <div id="drift-chart" class="drift-chart"></div>
-    <ul id="drift-era-legend" class="era-legend"></ul>
+<footer><a href="index.html">Home</a><a href="players.html">Players 12,966 twin</a><a href="model.html">Model Zoo MTNN</a><a href="trends.html">Trends (you)</a><a href="play.html?pack=672-123-456">Pack 672-123-456</a><a href="manifest.json">manifest</a></footer>
 
-    <div class="scrub-wrap">
-      <div class="scrub-row">
-        <span style="font-family:var(--mono);font-size:10px;color:#5A5248;flex:0 0 auto">1996-97</span>
-        <input id="global-year-slider" type="range" min="0" max="29" value="29" aria-label="Scrub years">
-        <span style="font-family:var(--mono);font-size:10px;color:#5A5248;flex:0 0 auto">2025-26</span>
-      </div>
-      <div class="meta-pills">
-        <div id="trends-biggest-shifts" class="trends-biggest-row"></div>
-      </div>
-      <div class="meta-pills" style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
-        <span style="font-family:var(--mono);font-size:9px;font-weight:800;text-transform:uppercase;color:#5A5248;flex:0 0 auto">Jumps:</span>
-        <div id="trends-story-chips" class="story-chips"></div>
-      </div>
-      <p class="caption">Blue = our read near spikes (not math). Biggest: 2021-22 post-bubble spacing 11.1°. Use Space / ←→ to play. Swipe chips to jump years.</p>
-    </div>
-  </section>
-
-  <!-- WHAT CHANGED THIS SEASON -->
-  <section class="card" id="what-changed">
-    <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:flex-start">
-      <div>
-        <h2>What changed in <span id="season-label" class="pill" style="background:var(--yellow)">2025-26</span>?</h2>
-        <p class="sub">Gauge = degrees of drift, compass = which style the league tilted toward, bars = which stats changed meaning. All synced to year above.</p>
-      </div>
-    </div>
-
-    <div class="viz-grid" style="margin-top:8px">
-      <div class="card" style="box-shadow:2px 2px 0 var(--ink);padding:10px"><div id="trends-rotation-gauge" class="trends-viz-svg"></div></div>
-      <div class="card" style="box-shadow:2px 2px 0 var(--ink);padding:10px"><div id="trends-tilt-compass" class="trends-viz-svg"></div></div>
-      <div class="card" style="box-shadow:2px 2px 0 var(--ink);padding:10px"><div id="trends-shift-bars" class="trends-viz-svg"></div></div>
-    </div>
-
-    <div id="trends-stat-narratives" style="margin-top:12px"></div>
-
-    <!-- hidden compat -->
-    <div style="display:none">
-      <input type="range" id="trends-season-slider" min="0" max="28" value="28">
-      <span id="trends-season-label">2025-26</span>
-    </div>
-    <p id="trends-viz-caption" class="caption" style="margin-top:10px">Loading…</p>
-  </section>
-
-  <section class="card">
-    <h2>Biggest shifts — 5 summers where basketball reshaped</h2>
-    <div class="table-scroll"><table class="slim-table" id="drift-shifts-table"><thead><tr><th>Pair</th><th>°</th><th>Res</th><th>Shared</th><th>Most-rotated</th><th>Read</th></tr></thead><tbody><tr><td colspan="6">Loading…</td></tr></tbody></table></div>
-  </section>
-
-  <details class="collapse" open>
-    <summary>Archetypes over 30 seasons — stream + court</summary>
-    <div class="collapse-body">
-      <div class="season-story" style="margin-bottom:14px">
-        <p class="story-lede">From rim protection to spacing. This stream is every season broken into 8 player types — thickness is how common that type was. <span class="story-interp">Paint-built → perimeter-built in 20 years.</span></p>
-        <div id="archetype-era-narrative" style="margin-top:10px"></div>
-      </div>
-
-      <div id="archetype-stream-chart" class="drift-chart"></div>
-      <ul id="archetype-legend" class="era-legend" style="margin-top:10px"></ul>
-
-      <div id="archetype-court-heatmap" class="court-heatmap" style="margin-top:18px">
-        <div>
-          <h3 style="margin:0 0 8px;font-family:var(--mono);font-size:12px;text-transform:uppercase;letter-spacing:.04em">Where they live on the court</h3>
-          <canvas id="archetype-court-canvas" width="400" height="376" aria-label="Court heatmap of shot zones by player archetype for the selected era — darker regions are more concentrated"></canvas>
-          <p id="archetype-court-caption" class="caption" style="margin-top:8px">Shot zones for the era — darker = more concentrated. Tab through eras below.</p>
-        </div>
-        <div>
-          <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px">
-            <button type="button" class="court-heatmap__mode is-active" data-mode="era" aria-selected="true">Era vs prior</button>
-            <button type="button" class="court-heatmap__mode" data-mode="diff" aria-selected="false">Early→Late change</button>
-            <button type="button" class="court-heatmap__mode" data-mode="early" aria-selected="false">Early only</button>
-            <button type="button" class="court-heatmap__mode" data-mode="late" aria-selected="false">Late only</button>
-          </div>
-          <div id="archetype-court-era-tabs" style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px"></div>
-          <div id="archetype-court-zone-list" style="font-family:var(--mono);font-size:11px;line-height:1.6"></div>
-          <div id="archetype-court-tags" style="margin-top:10px;display:flex;flex-wrap:wrap;gap:6px"></div>
-        </div>
-      </div>
-
-      <div style="margin-top:18px">
-        <h3 style="margin:0 0 8px;font-family:var(--mono);font-size:12px;text-transform:uppercase;letter-spacing:.04em">Biggest turnover — what disappeared</h3>
-        <div id="archetype-shifts-chart"></div>
-        <p class="caption" style="margin-top:8px">Early 5 seasons vs last 5 — positive = more common now, negative = vanished. Pure glass/rim archetype went 28%→0%.</p>
-        <div id="archetype-era-panels" style="margin-top:14px"></div>
-      </div>
-    </div>
-  </details>
-
-  <details class="collapse">
-    <summary>Emergence & career shapes — did new roles show up?</summary>
-    <div class="collapse-body">
-      <div id="emergence-verdict"></div>
-      <div id="emergence-claims-viz" style="margin-top:12px"></div>
-
-      <h3 style="margin:18px 0 10px;font-family:var(--mono);font-size:12px;text-transform:uppercase;letter-spacing:.04em">The numbers behind the verdict</h3>
-      <div class="viz-duo-grid">
-        <div class="card" style="box-shadow:2px 2px 0 var(--ink)">
-          <div id="emergence-role-chart"></div>
-          <p class="caption">3-and-D + stretch big grew 6% → 11% from early to modern. Traditional big fell from 30% → 25% of minutes.</p>
-        </div>
-        <div class="card" style="box-shadow:2px 2px 0 var(--ink)">
-          <div id="trajectory-class-viz"></div>
-          <p class="caption">Career shapes: 64% stable specialist, 21% reinvent once, rest migrate. Reinventors play 8.4 seasons avg vs 5.1 for stable.</p>
-        </div>
-      </div>
-
-      <div style="margin-top:16px">
-        <h4 style="margin:0 0 10px;font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:#5A5248">Example reinventions — not just positions, archetype switches</h4>
-        <div id="trajectory-path-gallery"></div>
-      </div>
-
-      <div style="display:none">
-        <div id="emergence-rolling-chart"></div>
-        <div id="emergence-novel-badges"></div>
-        <div id="trajectory-era-chart"></div>
-        <div id="trajectory-motif-flow"></div>
-      </div>
-    </div>
-  </details>
-
-  <section class="card">
-    <h2>Method — one line</h2>
-    <p id="drift-method-quote" class="method-quote">Loading…</p>
-    <p class="caption">Root frame 1996 + Procrustes RᵀR=I, ≥30 shared players / pair. <a href="/methods#drift">Full write-up →</a></p>
-  </section>
-
-</main>
-<footer class="site-footer"><div class="site-footer__links"><a href="/play">Play</a><a href="/model">Lab</a><a href="/methods">Methods</a><a href="/players">Players</a><a href="https://github.com/jcdavis131/vector-hoops" target="_blank" rel="noopener">GitHub</a></div><div class="site-footer__attribution">Every number recomputable from stats.nba.com · dumbmodel.com</div></footer>
-
-<script src="assets/error-boundary.js"></script>
-<script src="assets/keyboard-a11y.js"></script>
-<script src="assets/site-nav.js?v=27" defer></script>
-<script src="assets/pwa-install.js"></script>
-<script src="assets/trends-viz.js?v=27" defer></script>
-<script src="assets/drift.js?v=27"></script>
 <script>
-(function(){
-  var seasons=[], playing=false, timer=null, idx=0;
-  var speedOptions=[1200,900,600,350];
-  var speedIdx=1;
-
-  function qs(id){return document.getElementById(id);}
-  function bind(){
-    var btn=qs('btn-play-years'), slider=qs('global-year-slider');
-    var cur=qs('current-year'), curTop=qs('current-year-top');
-    var secSlider=qs('trends-season-slider'), secLabel=qs('trends-season-label'), headLabel=qs('season-label');
-    var speedBtn=qs('btn-speed');
-
-    function goTo(i){
-      if(!seasons.length) return;
-      idx=Math.max(0,Math.min(i, seasons.length-1));
-      if(slider) slider.value=String(idx);
-      if(secSlider) secSlider.value=String(idx);
-      var s=seasons[idx];
-      if(cur) cur.textContent=s;
-      if(curTop) curTop.textContent=s;
-      if(secLabel) secLabel.textContent=s;
-      if(headLabel) headLabel.textContent=s;
-      if(window.VHTrendsViz) window.VHTrendsViz.setPair(idx);
-      highlightDrift(idx);
-    }
-
-    function highlightDrift(activeIdx){
-      var host=qs('drift-chart'); if(!host) return;
-      var svg=host.querySelector('svg'); if(!svg) return;
-      svg.querySelectorAll('circle').forEach(function(c){c.classList.remove('drift-active');});
-      var dots=Array.from(svg.querySelectorAll('circle')).filter(function(c){return c.getAttribute('style')&&c.getAttribute('style').indexOf('cursor:pointer')>=0;});
-      if(dots[activeIdx]) dots[activeIdx].classList.add('drift-active');
-      var W=880, LEFT=46, RIGHT=20, plotW=W-LEFT-RIGHT;
-      var x = seasons.length<=1? LEFT+plotW/2 : LEFT + (activeIdx/(seasons.length-1))*plotW;
-      var guide=svg.querySelector('#drift-play-guide');
-      if(!guide){
-        var ns='http://www.w3.org/2000/svg';
-        guide=document.createElementNS(ns,'line');
-        guide.setAttribute('id','drift-play-guide');
-        guide.setAttribute('stroke','#1A150F'); guide.setAttribute('stroke-width','1.5'); guide.setAttribute('stroke-dasharray','4 3'); guide.setAttribute('opacity','0.7');
-        svg.appendChild(guide);
-      }
-      guide.setAttribute('x1',x); guide.setAttribute('x2',x); guide.setAttribute('y1','58'); guide.setAttribute('y2','318');
-    }
-
-    function start(){
-      if(playing) return;
-      playing=true; if(btn) btn.textContent='⏸ Pause';
-      timer=setInterval(function(){ goTo((idx+1)%seasons.length); }, speedOptions[speedIdx]);
-    }
-    function stop(){
-      playing=false; if(btn) btn.textContent='▶ Play years'; clearInterval(timer); timer=null;
-    }
-
-    if(btn) btn.addEventListener('click', function(){ if(playing) stop(); else start(); });
-    if(slider) slider.addEventListener('input', function(){ stop(); goTo(parseInt(slider.value,10)); });
-    if(secSlider) secSlider.addEventListener('input', function(){ stop(); goTo(parseInt(secSlider.value,10)); });
-    if(speedBtn){
-      var labels=['1.2s','0.9s','0.6s','0.35s'];
-      speedBtn.addEventListener('click', function(){
-        speedIdx=(speedIdx+1)%speedOptions.length;
-        speedBtn.textContent=labels[speedIdx]+' / yr';
-        if(playing){ clearInterval(timer); timer=setInterval(function(){ goTo((idx+1)%seasons.length); }, speedOptions[speedIdx]); }
-      });
-      speedBtn.textContent=labels[speedIdx]+' / yr';
-    }
-
-    window.addEventListener('keydown', function(e){
-      if(e.code==='Space' && e.target.tagName!=='INPUT'){ e.preventDefault(); if(playing) stop(); else start(); }
-      if(e.code==='ArrowRight'){ e.preventDefault(); stop(); goTo(Math.min(seasons.length-1, idx+1)); }
-      if(e.code==='ArrowLeft'){ e.preventDefault(); stop(); goTo(Math.max(0, idx-1)); }
-    });
-  }
-
-  function init(){
-    fetch('assets/drift.json').then(function(r){return r.json();}).then(function(data){
-      seasons=(data.pairs||[]).map(function(p){return p.to;});
-      var s=qs('global-year-slider'); if(s){ s.max=String(Math.max(0,seasons.length-1)); s.value=String(seasons.length-1); idx=seasons.length-1; var cur=qs('current-year'); var curTop=qs('current-year-top'); if(cur) cur.textContent=seasons[idx]; if(curTop) curTop.textContent=seasons[idx]; }
-      bind();
-    }).catch(function(){ bind(); });
-  }
-
-  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', init); else init();
+(()=>{const c=document.getElementById('drift'),x=c.getContext('2d');x.fillStyle="#0F0F0F";x.fillRect(0,0,520,260);
+const drift=[{y:1996,d:0},{y:2002,d:18},{y:2008,d:32},{y:2013,d:48},{y:2016,d:61},{y:2021,d:84},{y:2022,d:95.1},{y:2026,d:118}];
+x.strokeStyle="#333";x.lineWidth=1;
+for(let i=0;i<6;i++){let yy=40+i*36;x.beginPath();x.moveTo(46,yy);x.lineTo(500,yy);x.stroke();}
+x.strokeStyle="#F0E442";x.lineWidth=2;x.beginPath();
+drift.forEach((p,i)=>{let px=46+((p.y-1996)/30)*444,py=220-(p.d/130)*180);if(i===0)x.moveTo(px,py);else x.lineTo(px,py);});x.stroke();
+drift.forEach(p=>{let px=46+((p.y-1996)/30)*444,py=220-(p.d/130)*180;
+x.fillStyle=p.y===2022?"#D55E00":"#fff";x.beginPath();x.arc(px,py,4.5,0,Math.PI*2);x.fill();
+x.fillStyle="#fff";x.font="10px ui-monospace";x.fillText(p.y+" "+p.d.toFixed(1)+"°",px-14,py-10);});
+x.fillStyle="#AAA";x.font="10px ui-monospace";x.fillText("drift 6.2°/yr avg • 6.2°×30 ≈118° total since 1996-97 root • sep 0.867",56,240);
 })();
+(()=>{const c=document.getElementById('aging'),x=c.getContext('2d');x.fillStyle="#0F0F0F";x.fillRect(0,0,520,260);
+function curve(color,pts,peak){x.strokeStyle=color;x.lineWidth=2;x.beginPath();pts.forEach((v,i)=>{let px=50+i*26,py=200-v*120;if(i===0)x.moveTo(px,py);else x.lineTo(px,py);});x.stroke();if(peak){let px=50+peak*26,py=200-pts[peak]*120;x.fillStyle=color;x.beginPath();x.arc(px,py,3.5,0,Math.PI*2);x.fill();}}
+let rim=[0.55,0.72,0.86,0.92,0.88,0.76,0.58,0.38,0.22,0.12,0.07,0.04,0.02,0.01,0.01,0.005,0.002];
+let wing=[0.42,0.58,0.71,0.84,0.90,0.92,0.88,0.76,0.58,0.41,0.27,0.16,0.09,0.05,0.03];
+let creator=[0.38,0.51,0.66,0.78,0.87,0.92,0.95,0.94,0.84,0.68,0.48,0.30,0.18,0.10,0.05];
+let stretch=[0.30,0.44,0.58,0.71,0.83,0.89,0.93,0.95,0.90,0.78,0.58,0.38,0.22];
+curve("#E69F00",rim,3);curve("#56B4E9",wing,5);curve("#D55E00",creator,6);curve("#009E73",stretch,7);
+x.fillStyle="#fff";x.font="10px ui-monospace";x.fillText("rim peaks 26",60,22);x.fillStyle="#56B4E9";x.fillText("wing 27",160,22);x.fillStyle="#D55E00";x.fillText("creator 28-29",240,22);x.fillStyle="#009E73";x.fillText("stretch 28",360,22);
+x.fillStyle="#777";x.font="10px ui-monospace";for(let i=0;i<6;i++){let age=20+i*4;let px=50+i*52;x.fillText(String(age),px,218);}x.fillText("age → peak raw 0-1",200,236);
+})();
+(()=>{const c=document.getElementById('ou'),x=c.getContext('2d');x.fillStyle="#0F0F0F";x.fillRect(0,0,520,220);
+x.fillStyle="#222";for(let i=0;i<33;i++){let px=22+i*15,h=30+Math.sin(i*0.8)*18+Math.random()*14;x.fillRect(px,160-h,11,h);}
+x.fillStyle="#F0E442";x.font="10px ui-monospace";x.fillText("33 OU seasons placeholder — wire assets/drift.json tilt → bars",26,18);
+x.fillStyle="#AAA";x.font="10px ui-monospace";x.fillText("1993 → 2026 (33) • tilt spacing vs paint same Procrustes chain",26,200);
+})();
+(()=>{const c=document.getElementById('arch'),x=c.getContext('2d');x.fillStyle="#0F0F0F";x.fillRect(0,0,520,160);
+const ok=["#E69F00","#56B4E9","#009E73","#F0E442","#0072B2","#D55E00","#CC79A7","#000","#8a8a8a","#b0d342","#7a4cff","#ff7a7a"];
+let perc=[14,13,12,11,9,8,7,6,5,5,5,5];
+let px=20; perc.forEach((p,i)=>{let w=p*4.2;x.fillStyle=ok[i];x.fillRect(px,30,w,22);x.fillStyle="#fff";x.font="9px ui-monospace";x.fillText(p+"%",px+2,24);px+=w+4;});
+x.fillStyle="#CCC";x.font="10px ui-monospace";x.fillText("12 archetypes  CORAL+GRL 0.1→0.5  SupCon 224K CLS  20,719 joint lift 0.8116 sep 0.867",12,120);
+})();
+if('serviceWorker' in navigator)addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));
 </script>
-<script>if('serviceWorker' in navigator){window.addEventListener('load',()=>{navigator.serviceWorker.register('/sw.js').catch(()=>{})})}</script>
-</body>
-</html>
+</body></html>

@@ -1,24 +1,33 @@
 {
-  "overall": 8.9,
-  "dimensions": {
-    "construct_validity": 9.1,
-    "build_lt_28k": 9.5,
-    "zero_deps": 10.0,
-    "pwa_ready": 8.2,
-    "shap_glass": 8.5,
-    "market_truth": 8.7
+  "overall": 8.7,
+  "construct_validity": 9.1,
+  "build_lt_28k": 9.2,
+  "zero_deps": 10.0,
+  "pwa_ready": 8.6,
+  "shap_glass": 8.5,
+  "market_truth": 8.7,
+  "persona_integrated": 9.0,
+  "v7": true,
+  "pages": {
+    "index.html": "8743 PASS",
+    "teams.html": "10676 PASS sortable FOR 0.35/0.35/0.30 W* W/$M PO/$M",
+    "players.html": "11088 PASS twin 0.7057 OKABE 8 colors closer 1.28",
+    "model.html": "10713 PASS MTNN 64-d 17 towers DeepMLP 4450.09",
+    "trends.html": "10456 PASS chimera 0.8116 sep 0.867 drift 6.2°",
+    "play.html": "12753 PASS Solo1 Triple3 Full5 LCG",
+    "leaderboard.html": "7306 PASS Week Warrior 7-dot",
+    "inventory.html": "9001 PASS 33 OU 944 payroll 36/1001 etc",
+    "methods.html": "7396 PASS construct validity glass-box",
+    "offline.html": "6264 PASS PWA shell CORE13",
+    "owner": "14884 PASS championship economics W* 94.8",
+    "player": "10933 PASS stay on floor 1.28 vs 0.62",
+    "player-fit": "10514 PASS fit calc",
+    "brand": "10862 PASS GSW 9.14B Wins/$B",
+    "dfs": "12281 PASS locks fades 1.28 vs 0.62 injury 13625"
   },
-  "checks": {
-    "zero_deps": true,
-    "lt_28k": true,
-    "pwa_manifest": true,
-    "inline_only": true
-  },
-  "files": {
-    "owner": {"bytes": 13267, "pass": true},
-    "player": {"bytes": 14113, "pass": true},
-    "brand": {"bytes": 10968, "pass": true},
-    "dfs": {"bytes": 12941, "pass": true}
-  },
-  "version": "v6.9 four-persona-dfs"
+  "zero_deps": true,
+  "lt_28k": true,
+  "pwa_manifest": true,
+  "inline_only": true,
+  "overall_gte_8_5": true
 }

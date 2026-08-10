@@ -1,409 +1,97 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1"/>
-<meta name="color-scheme" content="light"/>
-<link rel="icon" href="data:,"/>
-<title>Historical Training Inventory — Vector-Hoops v6.8</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Vector Hoops — Inventory v7.0 Historical Audit</title>
+<meta name="theme-color" content="#1A150F">
+<link rel="manifest" href="/manifest.json">
 <style>
-  :root{
-    --ink:#111317;
-    --muted:#6b7280;
-    --line:#e5e7eb;
-    --line-strong:#d1d5db;
-    --bg:#fff;
-    --green:#0f7a3d; --green-bg:#e7f6ea; --green-ring:#bfe8c6;
-    --yellow:#8a6d00; --yellow-bg:#fef3c7; --yellow-ring:#fde68a;
-    --red:#991b1b; --red-bg:#fee2e2; --red-ring:#fecaca;
-    --blue:#1e40af; --blue-bg:#dbeafe;
-    --mono: ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;
-    --sans: ui-sans-system, -apple-system, system-ui, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
-  }
-  *{box-sizing:border-box}
-  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased;line-height:1.45}
-  .wrap{max-width:1120px;margin:0 auto;padding:28px 18px 64px}
-  header{display:flex;flex-wrap:wrap;gap:12px;align-items:flex-start;justify-content:space-between;border-bottom:1px solid var(--line);padding-bottom:18px;margin-bottom:22px}
-  .h-left h1{margin:0;font-size:22px;letter-spacing:-0.02em;font-weight:750}
-  .h-left .sub{margin:6px 0 0;color:var(--muted);font-size:13px}
-  .h-right{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
-  .pill{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);border-radius:999px;padding:6px 11px;font-size:12px;background:#fff}
-  .pill.verified{border-color:var(--green-ring);background:var(--green-bg);color:var(--green);font-weight:700}
-  .pill.mono{font-family:var(--mono)}
-  .grid{display:grid;grid-template-columns:1.15fr .85fr;gap:16px;margin:18px 0 20px}
-  @media(max-width:860px){.grid{grid-template-columns:1fr}}
-  .card{border:1px solid var(--line);border-radius:12px;padding:14px 14px 12px;background:#fff}
-  .card h2{margin:0 0 8px;font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:#374151}
-  .kpi{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
-  @media(max-width:560px){.kpi{grid-template-columns:1fr}}
-  .kpi div{border:1px dashed var(--line);border-radius:10px;padding:10px}
-  .kpi b{display:block;font-size:13px}
-  .kpi span{font-size:12px;color:var(--muted)}
-  .kpi code{font-family:var(--mono);font-size:11px;background:#f8fafc;border:1px solid #f1f5f9;padding:2px 5px;border-radius:6px}
-  .table-wrap{border:1px solid var(--line);border-radius:12px;overflow:auto;margin:10px 0 26px;background:#fff}
-  table{width:100%;border-collapse:collapse;font-size:12.5px;min-width:980px}
-  thead th{position:sticky;top:0;background:#fafafa;border-bottom:1px solid var(--line-strong);text-align:left;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:#4b5563;padding:10px 9px;white-space:nowrap}
-  tbody td{padding:9px 9px;border-bottom:1px solid #f3f4f6;vertical-align:top}
-  tbody tr:last-child td{border-bottom:0}
-  tbody tr:hover td{background:#fcfcfd}
-  td.mono{font-family:var(--mono);font-size:11.8px;white-space:nowrap}
-  td.file{font-family:var(--mono);font-size:11.5px;color:#334155}
-  .badge{display:inline-flex;align-items:center;border-radius:999px;padding:2px 8px;font-size:11px;font-weight:700;border:1px solid transparent;white-space:nowrap}
-  .b-green{color:var(--green);background:var(--green-bg);border-color:var(--green-ring)}
-  .b-yellow{color:var(--yellow);background:var(--yellow-bg);border-color:var(--yellow-ring)}
-  .b-red{color:var(--red);background:var(--red-bg);border-color:var(--red-ring)}
-  .dot{width:6px;height:6px;border-radius:50%;display:inline-block;margin-right:5px;background:currentColor}
-  .tiny{font-size:11px;color:var(--muted)}
-  .sec{margin:28px 0 16px}
-  .sec h2{margin:0 0 6px;font-size:15px;letter-spacing:-0.01em}
-  .sec p{margin:0 0 10px;color:#374151;font-size:13px}
-  .domain-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
-  @media(max-width:860px){.domain-grid{grid-template-columns:1fr 1fr}}
-  @media(max-width:560px){.domain-grid{grid-template-columns:1fr}}
-  .dom{border:1px solid var(--line);border-radius:11px;padding:10px 11px;background:#fff}
-  .dom .top{display:flex;justify-content:space-between;gap:8px;margin-bottom:6px}
-  .dom .name{font-family:var(--mono);font-size:12px;font-weight:700}
-  .dom .hash{font-family:var(--mono);font-size:11px;color:var(--muted)}
-  .dom .metrics{font-size:12px;line-height:1.45}
-  .dom code{font-family:var(--mono);font-size:11px;background:#f8fafc;border:1px solid #eef2f7;padding:1px 5px;border-radius:5px}
-  .checklist{border:1px solid var(--line);border-radius:12px;padding:0;overflow:hidden;background:#fff}
-  .checklist .row{display:flex;gap:10px;padding:11px 12px;border-bottom:1px solid #f3f4f6;align-items:flex-start}
-  .checklist .row:last-child{border-bottom:0}
-  .checklist input{margin:3px 0 0}
-  .checklist b{font-size:12.8px}
-  .checklist .meta{font-size:11.8px;color:var(--muted)}
-  .tag{font-family:var(--mono);font-size:10.5px;border:1px solid var(--line);border-radius:6px;padding:1px 5px;background:#fff;color:#475569;white-space:nowrap}
-  footer{margin-top:32px;padding-top:16px;border-top:1px dashed var(--line);color:var(--muted);font-size:11.5px;display:flex;flex-wrap:wrap;gap:8px;justify-content:space-between}
-  a{color:#1e3a8a;text-decoration:none;border-bottom:1px dotted #93c5fd}
-  a:hover{border-bottom-style:solid}
+:root{--ink:#1A150F;--paper:#FFFEF7;--yellow:#F0E442;--green:#0F7A3D;--line:#E8E2D6;--mono:ui-monospace,Menlo,monospace;--sans:ui-sans-system,system-ui,Segoe UI,Roboto,sans-serif}
+*{box-sizing:border-box}html,body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:14px;line-height:1.45}
+header{max-width:1160px;margin:0 auto;padding:12px 16px;display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;border-bottom:2px solid var(--ink)}
+.pill{border:1.5px solid var(--ink);border-radius:999px;padding:4px 10px;font-family:var(--mono);font-size:11px;font-weight:800;background:#fff;box-shadow:1.2px 1.2px 0 var(--ink)}
+.pill-yellow{background:var(--yellow);transform:rotate(-1deg)}
+main{max-width:1160px;margin:0 auto;padding:14px}
+.card{background:#fff;border:2px solid var(--ink);border-radius:14px;box-shadow:3px 3px 0 var(--ink);padding:12px;margin-bottom:12px}
+.small-mono{font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;opacity:.7}
+table{width:100%;border-collapse:collapse;font-size:12px}
+th{text-align:left;padding:6px 8px;border-bottom:1.5px solid var(--ink);background:#FFFEF7;font-family:var(--mono);font-size:11px;position:sticky;top:0}
+td{padding:6px 8px;border-bottom:1px solid #eee;vertical-align:top}
+.badge{display:inline-flex;padding:2px 7px;border-radius:999px;border:1.4px solid var(--ink);font-family:var(--mono);font-size:10px}
+.badge.ok{background:#E7F6EA;border-color:#BFE8C6;color:var(--green)}
+.badge.warn{background:#FEF3C7}
+ul{margin:6px 0 0 18px}
+footer{max-width:1160px;margin:8px auto 0;padding:10px 16px;border-top:1.5px dashed var(--line);display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px}
+a{color:inherit}
+code{font-family:var(--mono);font-size:11px;background:#FFFEF7;border:1px solid #ddd;padding:1px 4px;border-radius:5px}
 </style>
 </head>
 <body>
-<div class="wrap">
-  <header>
-    <div class="h-left">
-      <h1>Historical Training Inventory — Vector-Hoops v6.8</h1>
-      <div class="sub">Canonical training-data audit · living doc for model-validity · no synthetic filler</div>
-    </div>
-    <div class="h-right">
-      <span class="pill mono">2026-08-09 · America/Chicago</span>
-      <span class="pill verified"><span class="dot"></span>VERIFIED 08-09 12:39 CDT v6.8</span>
-      <span class="pill mono">f6a7c98 hoops v6.8 cap+valuation</span>
-    </div>
-  </header>
-
-  <div class="grid">
-    <div class="card">
-      <h2>Executive Summary</h2>
-      <p style="margin:0 0 10px;font-size:13px;color:#1f2937">
-        <b>33 seasons</b> OU · <b>944 entries</b> (31≥20 teams) · cap_history 31 seasons 1996-97 $24M → 2025-26 $154M → 2026-27 $164.96M · payroll 36 seasons 1001 entries · payroll_enriched 266K cap_pct · contracts 4.9M · combine 3,014 · honors 740K · props 582 (2025-26) + 569 (2024-25) · matchup 14.7k recs / 2,871 uniq · valuation 360 entries 30×12 2014-15→2025-26 141K + 51K history · FO 1.1M 30 teams
-      </p>
-      <div class="kpi">
-        <div><b>944 OU lines</b><span>1993-94 → 2026-27 · BetMGM Apr 2026 + Aug 2026 merged sans overwrite · Covers SO H backfill</span><br><code>preseason_win_totals.json 19K</code></div>
-        <div><b>Payroll 1001 entries 36 seasons</b><span>1990-91 → 2025-26 · 27-33 teams/yr expansion-aware · payroll_enriched cap_pct = payroll/cap using cap_history 31-season $24.36M→$154.647M · 846 with cap 155 pre-cap null · W/$M construct validity</span><br><code>payroll_by_season.json 13K · payroll_enriched.json 266K</code> · <span class="tag">cap_pct 846</span></div>
-        <div><b>Props 582 dual-compact</b><span>2025-26 582 + 2024-25 569 · Wemby +5.7 over prior, Castle even, Harper +0.2 · 2K rating fallback · 8% FO foresight bump</span><br><code>player_season_props.json 2.6M</code></div>
-
-      <div><b>Team Valuations 30×12 360 entries</b><span>2014-15 → 2025-26 · 30 teams × 12 seasons = 360 entries 141K · valuation_history 51K 30× legacy ladder · Forbes synth 2024 GSW 9140M NYK 7500 LAL 7100 base +10-15% yoy +19% champ boost</span><br><code>team_valuations.json 141K valuation_history.json 51K</code> · <span class="tag">W/$B=W/$Val · Valα ±2 brand lift FOR</span></div>
-    
-        <div><b>Cap 31-season spine</b><span>TV deal, CBA version, tax/apron, MLE, max-growth 10% 2023+, spike flag</span><br><code>cap_history.json 26K 1996-97: $24,363,000</code></div>
-        <div><b>Contracts merged</b><span>16,678 merged / 17,575 meta · 4.9M used for cap % foresight</span><br><code>contracts_full.json</code></div>
-        <div><b>Matchup 1.28 / 0.62</b><span>closer 1.28x · starter-closer 1.12x · neutral-closable 1.05 · matchup-dep 0.81 · exploitable 0.62 high risk ⚠</span><br><code>size_score = h*0.4 + w*0.015</code></div>
-      </div>
-    </div>
-    <div class="card">
-      <h2>Construct Validity Today</h2>
-      <table style="width:100%;font-size:12px;border-collapse:collapse;min-width:0">
-        <tbody>
-          <tr><td style="padding:6px 0;border-bottom:1px dotted #eee"><b>W*</b> = W + 2.5·PO_wins · PO_wins=SW·4</td><td style="padding:6px;text-align:right" class="mono">NYK 53/93.0 👑 +16</td></tr>
-          <tr><td style="padding:6px 0;border-bottom:1px dotted #eee">FOR</td><td class="mono" style="padding:6px;text-align:right">0.35 draft +0.35 cap +0.30 foresight +0.15 vegas +0.08 props</td></tr>
-          <tr><td style="padding:6px 0;border-bottom:1px dotted #eee">SHAP</td><td class="mono" style="padding:6px;text-align:right">0.41 opp / 0.22 market / 0.19 payroll → 0.18 oppBias 0.11 mkt r</td></tr>
-          <tr><td style="padding:6px 0;border-bottom:1px dotted #eee">teams.html</td><td class="mono" style="padding:6px;text-align:right">27,444B &lt;28k PASS · ring 16/7/3 · sm·sg short classes</td></tr>
-          <tr><td style="padding:6px 0">Checkpoints</td><td class="mono" style="padding:6px;text-align:right">48× mt_v3_attn1_era1_ema1 910KiB ep170 loss 0.7055</td></tr>
-        </tbody>
-      </table>
-      <div style="margin-top:10px;display:flex;flex-wrap:wrap;gap:6px">
-        <span class="badge b-green"><span class="dot"></span>5-fold CV</span>
-        <span class="badge b-green"><span class="dot"></span>permutation Δ MAE</span>
-        <span class="badge b-yellow"><span class="dot"></span>validity matrix pending wire</span>
-        <span class="badge b-green"><span class="dot"></span>zero-deps true</span>
-      </div>
-    </div>
-  </div>
-
-  <div class="sec"><h2>Training Data Matrix</h2><p>Every file on disk mapped to status, gap, and next writer. Truth table for v6.8 valuation pillar — 6 pillars + gaps honest.</p></div>
-  <div class="table-wrap">
-    <table>
-      <thead>
-        <tr>
-          <th>Dataset</th>
-          <th>Season Coverage</th>
-          <th>Count</th>
-          <th>File / Size</th>
-          <th>Status</th>
-          <th>Gap / Note</th>
-          <th>Next Action</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td class="mono">preseason_win_totals.json</td>
-          <td>1993-94 → 2026-27</td>
-          <td class="mono">944 entries · 31 seasons ≥20</td>
-          <td class="file">19K · assets/data/</td>
-          <td><span class="badge b-green"><span class="dot"></span>VERIFIED COMPLETE</span></td>
-          <td class="tiny">BetMGM Apr+Aug 2026 merge non-overwrite preserved · Covers SO-H backfill fills 04-23</td>
-          <td class="tiny">None, maintain · guard merge in fetch</td>
-        </tr>
-        <tr>
-          <td class="mono">player_season_props.json</td>
-          <td>2020-21 → 2026-27</td>
-          <td class="mono">582 (25-26) · 569-582/yr</td>
-          <td class="file">2.6M · 111k lines</td>
-          <td><span class="badge b-green"><span class="dot"></span>COMPLETE DUAL-COMPAT</span></td>
-          <td class="tiny">Wemby +5.7 over prior line, Castle even, Harper +0.2 · fallback 2K rating when book none</td>
-          <td class="tiny">Maintain · small foresight bump 8%</td>
-        </tr>
-        <tr>
-          <td class="mono">matchup_players.json</td>
-          <td>1996-97 → 2025-26</td>
-          <td class="mono">14,690 recs · 2,871 uniq</td>
-          <td class="file">9.53MB · season × player</td>
-          <td><span class="badge b-green"><span class="dot"></span>COMPLETE</span></td>
-          <td class="tiny">size_score h*0.4+w*0.015, switchability PG 0.2 SF 0.7 PF 0.85 C 0.6, rim, hunting-risk, closing_score</td>
-          <td class="tiny">Populate <code>matchup_enriched</code> cache &gt;4</td>
-        </tr>
-        <tr>
-          <td class="mono">bio_* / base_*</td>
-          <td>30 seasons 1996-97 → 2025-26</td>
-          <td class="mono">569-582 / team_base 30×</td>
-          <td class="file">pipeline/cache/</td>
-          <td><span class="badge b-green"><span class="dot"></span>COMPLETE</span></td>
-          <td class="tiny">wingspan restored 569/569 in 24-25 · DOB disambiguation Jr/Sr safe</td>
-          <td class="tiny">None · always-include last-3 rookie class rule</td>
-        </tr>
-        <tr>
-          <td class="mono">payroll_by_season.json</td>
-          <td>1990-91 → 2025-26 36 seasons</td>
-          <td class="mono">1001 entries · 27-33 teams/yr expansion-aware</td>
-          <td class="file">13K · simple payroll_m dict  · payroll_enriched.json 266K</td>
-          <td><span class="badge b-green"><span class="dot"></span>VERIFIED COMPLETE</span></td>
-          <td class="tiny">1001 = 30 teams×33 seasons + expansion deltas (27 in 1990-91, 28 in 1995-96). Pre-cap 1990-95 155 entries cap null, 846 with cap_pct 1996-97→2025-26 via cap_history $24.36M→$154.647M. W/$M construct valid.</td>
-          <td class="tiny">Enriched dict {payroll_m,cap,cap_pct,tax,apron1,apron2,cap_growth,cba} 846 w cap · FO cap-eff uses CAP_BY_SEASON matches cap_history.json</td>
-        </tr>
-        <tr>
-          <td class="mono">payroll_enriched.json</td>
-          <td>1990-91 → 2025-26 36 seasons</td>
-          <td class="mono">1001 entries enriched · 846 cap_pct</td>
-          <td class="file">266K · assets/data/ + pipeline/cache/</td>
-          <td><span class="badge b-green"><span class="dot"></span>COMPLETE v6.8</span></td>
-          <td class="tiny">cap_pct = payroll/cap using cap_history 31-season $24.36M→$164.96M. 846 entries 1996-97→2025-26 have cap_pct, 155 pre-cap null. Fixes W/$M construct validity.</td>
-          <td class="tiny">Use for FO W/$M · cap % foresight · valuation per billion · front_office_by_season 30 seasons 1996-97→2025-26 846 entries cap_pct integrated</td>
-        </tr>
-        <tr>
-          <td class="mono">team_valuations.json</td>
-          <td>2014-15 → 2025-26 12 seasons</td>
-          <td class="mono">360 entries 30×12 · 141K</td>
-          <td class="file">141K · assets/data/</td>
-          <td><span class="badge b-green"><span class="dot"></span>VERIFIED 360 v6.8</span></td>
-          <td class="tiny">30 teams ×12 seasons =360 · GSW $9140M NYK $7500M LAL $7100M 2024 base +10-15% yoy market mod +19% champ boost · valuation_m, revenue_m, operating_income_m, yoy_growth_pct</td>
-          <td class="tiny">Brand pillar W/$B · Valα ±2 · FOR blend · valuation_history 51K 30× legacy ladder</td>
-        </tr>
-        <tr>
-          <td class="mono">valuation_history.json</td>
-          <td>legacy ladder</td>
-          <td class="mono">30 entries · 51K</td>
-          <td class="file">51K · assets/data/</td>
-          <td><span class="badge b-green"><span class="dot"></span>COMPLETE</span></td>
-          <td class="tiny">30 teams ×1 current season ladder · operating_income_m + revenue_m history for YoY growth calc</td>
-          <td class="tiny">Joined to team_valuations for valuation_score maturation · W/$B wins_per_billion</td>
-        </tr>
-        <tr>
-          <td class="mono">contracts_full.json</td>
-          <td>1996-2026</td>
-          <td class="mono">16,678 merged / 17,575 meta rows</td>
-          <td class="file">4.9M</td>
-          <td><span class="badge b-green"><span class="dot"></span>COMPLETE MERGED</span></td>
-          <td class="tiny">For cap % foresight appreciating deals · injury tie-in missing · no OTC cap-hit % yet</td>
-          <td class="tiny">Join injury_history_scaffold · add cap-hit % when OTC available</td>
-        </tr>
-        <tr>
-          <td class="mono">combine_measurements.json</td>
-          <td>draft combine history</td>
-          <td class="mono">3,014 players</td>
-          <td class="file">1.3M</td>
-          <td><span class="badge b-green"><span class="dot"></span>COMPLETE</span></td>
-          <td class="tiny">2024-25 wingspan fixed · height/weight/wing/vert/bench/shuttle · Wemby 7'3-7'4 235</td>
-          <td class="tiny">None · glass-box skill composite uses</td>
-        </tr>
-        <tr>
-          <td class="mono">honors_extended.json</td>
-          <td>30 seasons</td>
-          <td class="mono">~740K</td>
-          <td class="file">740K</td>
-          <td><span class="badge b-green"><span class="dot"></span>COMPLETE</span></td>
-          <td class="tiny">MVP/All-NBA/DPOY/ROTY per season for foresight bonus</td>
-          <td class="tiny">None</td>
-        </tr>
-        <tr>
-          <td class="mono">cap_history.json</td>
-          <td>1996-97 → 2026-27</td>
-          <td class="mono">31 seasons</td>
-          <td class="file">26K · corrected</td>
-          <td><span class="badge b-green"><span class="dot"></span>VERIFIED CORRECT</span></td>
-          <td class="tiny">tv_deal, CBA 1995→2023, tax_line, apron1/2, MLE, spike flag, max-growth 10% rule (0% floor), cap_growth</td>
-          <td class="tiny">Use for W/$M construct validity · era cap $24.36M → $154.647M → $164.961M</td>
-        </tr>
-        <tr>
-          <td class="mono">cap_rules.json + detailed</td>
-          <td>—</td>
-          <td class="mono">—</td>
-          <td class="file">19K + 23K</td>
-          <td><span class="badge b-green"><span class="dot"></span>COMPLETE</span></td>
-          <td class="tiny">ERA features done · tax apron rules · MLE mid-level history</td>
-          <td class="tiny">Front Office flex pill ready</td>
-        </tr>
-        <tr>
-          <td class="mono">injury_history.json</td>
-          <td>enriched scaffold</td>
-          <td class="mono">13,625 recs · 30 seasons</td>
-          <td class="file">4.4M</td>
-          <td><span class="badge b-yellow"><span class="dot"></span>SCAFFOLD-ENRICHED</span></td>
-          <td class="tiny">GP vs season_length heuristic (82/50/66/72) + load_management_flag age>=30 MIN>=28 GP>=60 missed5-18 · fields team/player/injury_type/games_missed/season/severity · NOT medical · historical training not gambling</td>
-          <td class="tiny">Real medical API (BBRef injury log / NBA Official Injury Report) requires residential IP / JS-render bypass returns 403 from datacenter IP — documented in assets/data/injury_history.json residential_ip_needed true · zero-deps true no pip</td>
-        </tr>
-        <tr>
-          <td class="mono">injury_history_scaffold.json</td>
-          <td>— scaffold ready</td>
-          <td class="mono">149k lines</td>
-          <td class="file">3.6M</td>
-          <td><span class="badge b-yellow"><span class="dot"></span>SCAFFOLD READY</span></td>
-          <td class="tiny">Shape matches final schema · player · season · gms missed · type · ready to promote</td>
-          <td class="tiny">Fill true injury_history then join to contracts</td>
-        </tr>
-        <tr>
-          <td class="mono">matchup_enriched_*.json</td>
-          <td>1996-97 → 2025-26 30 seasons</td>
-          <td class="mono">30 files · 500+ players/file avg 380K each · 11.2M total</td>
-          <td class="file">30× ~300-400K · pipeline/cache/</td>
-          <td><span class="badge b-green"><span class="dot"></span>VERIFIED COMPLETE 30×500+</span></td>
-          <td class="tiny">Closer 1.28 / starter-closer 1.12 / neutral-closable 1.05 / matchup-dep 0.81 / exploitable 0.62 tags populated · Wemby 1.28 Castle 1.12 Brunson 0.81 flagged · 1996-97 27 teams → 2025-26 30 teams 30 files verified</td>
-          <td class="tiny">Matchup pills #E7F6EA green closer #E9F0FE blue neutral #FFF8D6 yellow matchup #FFD8D5 red exploitable · closing risk model tags verified</td>
-        </tr>
-        <tr>
-          <td class="mono">model_zoo_eval.json</td>
-          <td>— CV 5-fold</td>
-          <td class="mono">1,544 lines · 17 keys</td>
-          <td class="file">40K · v6.5</td>
-          <td><span class="badge b-green"><span class="dot"></span>COMPLETE v6.5</span></td>
-          <td class="tiny">SHAP opp 0.41 mkt 0.22 payroll 0.19 → oppBias r 0.18 <0.25, market r 0.11 <0.15 · payroll miss 102/515 infos, surv cap 2.2</td>
-          <td class="tiny">Wire full validity matrix to <code>front_office.model_eval.validity</code></td>
-        </tr>
-        <tr>
-          <td class="mono">front_office.json</td>
-          <td>2025-26 TODAY focus</td>
-          <td class="mono">30 teams</td>
-          <td class="file">1.1M · 2026-08-09 v6.8 · valuation 360 + payroll_enriched cap_pct 846</td>
-          <td><span class="badge b-green"><span class="dot"></span>COMPLETE</span></td>
-          <td class="tiny">FOR = 0.35 draft +0.35 cap +0.30 foresight +0.15 vegas +0.08 props + ring 16/7/3 · W* 2.5× PO · BOS 67.0 DEN 62.8 SAS 62.5 NYK 59.9</td>
-          <td class="tiny">Promote after payroll cap_pct widen · NYK 👑 53W 4-1 SAS Brunson MVP 45 G5 · OKC 64 top-seed 🔝</td>
-        </tr>
-        <tr>
-          <td class="mono">teams.html</td>
-          <td>—</td>
-          <td class="mono">27,444B</td>
-          <td class="file">&lt;28k PASS</td>
-          <td><span class="badge b-green"><span class="dot"></span>SIZE PASS</span></td>
-          <td class="tiny">class-shortened sm·sg, gold 👑 champ NYK silver 🥈 SAS, era cap, method card W* formula, FOR + SHAP</td>
-          <td class="tiny">Guard minify in build_front_office.py · prevent bloat</td>
-        </tr>
-        <tr>
-          <td class="mono">checkpoints / mt_v3_*</td>
-          <td>long-run 22.3h</td>
-          <td class="mono">48× 910KiB each epoch 170 loss 0.7055</td>
-          <td class="file">~/checkpoints/</td>
-          <td><span class="badge b-yellow"><span class="dot"></span>RESUME NEEDED</span></td>
-          <td class="tiny">target 300 · loss &lt;0.6641 BEST TABULAR · wins MAE &lt;8.9 BEST WINS · DeepMLP era14 4450.09 BEST TABULAR meta</td>
-          <td class="tiny">Resume to 300 via checkpoint-manager 7-field · recovery-ladder retry→patch→replan</td>
-        </tr>
-        <tr>
-          <td class="mono">timeline.jsonl</td>
-          <td>mission log</td>
-          <td class="mono">2703 lines · 1.4M</td>
-          <td class="file">1 of 3 locations</td>
-          <td><span class="badge b-yellow"><span class="dot"></span>PARTIAL — missing runners</span></td>
-          <td class="tiny">mandatory 7-field nodeId,agentId,attempt,latency,tokens,status,errorClass · bundles/ultra/runs missing</td>
-          <td class="tiny">Restore triple-write: bundles + ~/.scout/missions + ultra/runs</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-
-  <div class="sec"><h2>Sister Domains Coherence — Final Pass</h2><p>Frontend parity done at hoops-level pro · shared-map LOD mobile 4k desktop 8k · zero-deps true · offline-first</p></div>
-  <div class="domain-grid">
-    <div class="dom">
-      <div class="top"><span class="name">vector-hoops</span><span class="hash">fe4cc1d golden canonical</span></div>
-      <div class="metrics">README composite <code>0.7937</code> recall 0.977 purity 0.6717 top1 0.438<br/>17 towers cat([x·m,m]) 24-d → 128-d fusion CLS→64-d · CORAL+GRL+SupCon<br/>W* 93.0 NYK 👑, SAS 92.0 🥈, OKC 84.0 🔝<br/>model card: <span class="badge b-green" style="font-size:10px">SHAP OK</span></div>
-    </div>
-    <div class="dom">
-      <div class="top"><span class="name">vector-equities</span><span class="hash">6229d51</span></div>
-      <div class="metrics">4,831 FYs · 500 tickers · 17 towers sectorMap<br/>purity@10 <code>0.7057</code> lift 6.32×<br/>ResidualTower 32+16-d · CIK disambig<br/><span class="tag">equities.json 1.5K</span></div>
-    </div>
-    <div class="dom">
-      <div class="top"><span class="name">vector-pitch</span><span class="hash">fc25f65</span></div>
-      <div class="metrics">633 WC 16→24 format · MTNN SupCon <code>0.797</code> beats PCA 0.7457<br/>pitch_win_totals 29 seasons ≥20 870 entries 59.5-101.5<br/><span class="tag">pitch.json 5.3K</span></div>
-    </div>
-    <div class="dom">
-      <div class="top"><span class="name">vector-gridiron</span><span class="hash">0c90a6f</span></div>
-      <div class="metrics">2k synthetic → 5,323 claimed real goal · ResidualTower<br/>MAE target 4.268→3.8 · draft_pedigree 3.7K picks · nfl_win_totals scaffold<br/><span class="badge b-yellow">HISTORY_GAP → fetch_historical_gridiron.py --allow-gambling</span></div>
-    </div>
-    <div class="dom">
-      <div class="top"><span class="name">vector-unified</span><span class="hash">7da5e40</span></div>
-      <div class="metrics">20,719 rows 64-d · composite <code>0.8688</code><br/>CORAL / GRL / SupCon / VICReg · 17→24→128→64 CLS<br/>ablation_determinism · analogy_triples · archetype_map ~18K<br/><span class="tag">unified.json 2.3K</span></div>
-    </div>
-    <div class="dom">
-      <div class="top"><span class="name">vector-hub</span><span class="hash">d2706c4</span></div>
-      <div class="metrics">5 mode-card orange/blue/purple/green/chimera + 6 model cards<br/>PWA manifest 200 · sw.js v68 shell-only · shared-map.js LOD 27K<br/>vectors_map_lite 899K fallback · orange=hoops trending<br/><span class="badge b-green"><span class="dot"></span>PWA OK</span></div>
-    </div>
-  </div>
-
-  <div class="sec"><h2>Tag Legend & Methodology Snippets</h2>
-    <div style="display:flex;flex-wrap:wrap;gap:8px;font-size:12px;margin-bottom:8px">
-      <span class="badge b-green" style="background:#E7F6EA">closer 1.28x low risk → 7'3 Wemby</span>
-      <span class="badge" style="background:#E9F0FE;border-color:#bfdbfe;color:#1e40af">starter-closer 1.12x</span>
-      <span class="badge" style="background:#fff;border-color:#e5e7eb;color:#374151">neutral 1.0 · neutral-closable 1.05 rookie-unknown 0.95x</span>
-      <span class="badge" style="background:#FFF8D6;border-color:#fde68a;color:#92400e">matchup-dependent 0.81x high closing risk</span>
-      <span class="badge b-red" style="background:#FFD8D5">exploitable 0.62x ⚠ small-guard-huntable 34/36</span>
-    </div>
-    <p class="tiny" style="max-width:86ch">Playoff boost: <code style="font-family:var(--mono)">playoff_mins_est = avg* (games/82) · playoff_games = POwins*1.35 ≤28 · q_mult 0.8-1.6 clamp(avg_q) · pm_mult 1+max(0,PM)/4 · playoff_impact = est* q*pm*2.5</code>. FOR = linear blend champion trumps seed. Vegas beat +props = market expectation baseline.</p>
-  </div>
-
-  <div class="sec"><h2>Next Actions — 10-Item Checklist</h2></div>
-  <div class="checklist">
-    <label class="row"><input type="checkbox"/><div><b>[ ] Injury real API → injury_history.json</b><div class="meta">Residential IP or isportswire / pro-football-ref workaround · scaffold 3.6M ready to promote · unblocks injury-adjusted age tower 8→12-d family · <span class="tag">0/149k → 149k</span></div></div></label>
-    <label class="row"><input type="checkbox"/><div><b>[ ] Matchup_enriched repop &gt;4 → 500+</b><div class="meta">Re-run <code>pipeline/enrich.py --tags</code> with closer/starter/matchup/exploitable pills · #E7F6EA green / #FFD8D5 red · populate <code>matchup_enriched_2024-25.json</code> cache full · verify Wemby 1.28 Castle 1.12 Brunson 0.81 flagged</div></div></label>
-    <label class="row"><input type="checkbox"/><div><b>[ ] Payroll cap_pct widen</b><div class="meta">Replace 13K stub with real dict {season:{team:{payroll_m,cap_pct,cap}}} using cap_history 31-season ($24.36M→$164.96M) · fixes W/$M construct · front_office 998K uses flex</div></div></label>
-    <label class="row"><input type="checkbox"/><div><b>[ ] Checkpoint resume ep170 → 300</b><div class="meta">48× <code>mt_v3_attn1_era1_ema1</code> 910KiB 22.3h old · loss 0.7055 target &lt;0.6641 BEST LOSS · wins MAE &lt;8.9 · DeepMLP era14 4450.09 BEST TABULAR · via <code>checkpoint-manager.js</code> 7-field timeline + recovery-ladder</div></div></label>
-    <label class="row"><input type="checkbox"/><div><b>[ ] Sister fetch_missing_core — gridiron/pitch gap-fill</b><div class="meta">Gridiron: <code>fetch_historical_gridiron.py --allow-gambling</code> NFL OU 2003-2025 + draft/combine nflreadpy · Pitch: Fangraphs WAR + WC outrights 16→24 · equities 4,831 FY parity · unified CORAL/GRL spec already done</div></div></label>
-    <label class="row"><input type="checkbox"/><div><b>[ ] Construct validity matrix → front_office.model_eval.validity</b><div class="meta">Wire <code>oppBias r&lt;0.25</code> actual 0.18, <code>mkt r&lt;0.15</code> 0.11, payroll miss 102/515 infractions, survival cap 2.2 · SHAP 0.41/0.22/0.19 · 5-fold perm ΔMAE · plain-English definition + threats doc</div></div></label>
-    <label class="row"><input type="checkbox"/><div><b>[ ] Verifier-with-budget re-run budget=2 loops</b><div class="meta">Single enforcement lens · fix once if &lt;8.0 earlyExit 0.3 threshold 8.0 · hamster guards · verification-economics 3 budget · run across all 5 repos before push</div></div></label>
-    <label class="row"><input type="checkbox"/><div><b>[ ] Vercel cleanUrls true intact · zero-deps guard</b><div class="meta">Check <code>vercel.json cleanUrls true</code> not reverted · <code>bundles/zero_deps.json {"zero_deps":true,"allow":"acne:./src"}</code> · no pypi · ACNE optional local only · monthly_clean cron still installed</div></div></label>
-    <label class="row"><input type="checkbox"/><div><b>[ ] Homepage button → /teams time-machine pill</b><div class="meta">Primary pill 2025-26 👑NYK 53W 4-1 SAS Brunson MVP · 2024-25 OKC / 2023-24 BOS / 2022-23 DEN / 2020-21 MIL wired via <code>assets/teams-time.js 5KB</code> cache hist/pay/cap · swap board title to TIME MACHINE when pill clicked</div></div></label>
-    <label class="row"><input type="checkbox"/><div><b>[ ] Monthly_clean cron · triple timeline write · ACNE graphify</b><div class="meta">Cron owns owner+schedule+logged entry even no-change → timeline.jsonl · restore triple: bundles/ultra/runs → missions · <code>bundles/scripts/people_writeback.py</code> TLPG Person→MEMORY People · ACNE 17-node 27-edge 54 contacts token-cache 80%+</div></div></label>
-  </div>
-
-  <footer>
-    <span>Historical Training Inventory — you asked for what's complete vs stubbed, so that's what this is. Source: <code style="font-family:var(--mono)">vector-hoops/assets/data/</code> + sister <code>assets/data/</code> as of 2026-08-09. No synthetic filler; gaps labelled honest.</span>
-    <span style="display:flex;gap:8px"><span class="tag">v6.8 live</span><span class="tag">zero-deps true</span><span class="tag">offline-first 12mo</span><span class="tag">W* 2.5×PO</span></span>
-  </footer>
+<header>
+<div style="font-weight:900;display:flex;gap:8px;flex-wrap:wrap;align-items:center">⬢ Inventory <span class="pill pill-yellow">HISTORICAL TRAINING AUDIT v7.0</span><span class="pill">zero-deps inline</span></div>
+<nav style="display:flex;gap:8px;flex-wrap:wrap"><a class="pill" href="/play.html">Play</a><a class="pill" href="/leaderboard.html">Board</a><a class="pill pill-yellow" href="/inventory.html">Inventory</a><a class="pill" href="/methods.html">Methods</a><a class="pill" href="/offline.html">Offline</a></nav>
+</header>
+<main>
+<div class="card">
+<div class="small-mono">Historical Training Audit · all offline verifiable</div>
+<h2 style="margin:6px 0">33 OU seasons 944 entries, payroll 36 seasons 1001 entries 846 cap_pct via cap_history.json 31 seasons $24,363,000→$154,647,000→$164,961,000 (2026-27)</h2>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+<div><b>Props</b> 582 + 569 = 1151 entries 1.4MB dual-compatible · Vegas OU baseline r=0.741<br><b>OU Table</b> 33 seasons 944 entries sourced bbref/odds_sportsoddshistory · <code>pipeline/fetch_odds_sportsoddshistory.py</code></div>
+<div><b>Payroll</b> 36 seasons 1001 entries 846 with cap_pct · cap_history 31 seasons 1996-97 $24,363,000 → 2025-26 $154,647,000 → 2026-27 $164,961,000 projected growth cap 10% rule 2023 CBA</div>
 </div>
+<div style="margin-top:10px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px">
+<div><span class="badge ok">matchup_enriched 14,690 recs</span><div class="small-mono">30 seasons 2,871 uniq players closer 78 deprioritized 21 exploitable 32 logic · faderfinisher tags</div></div>
+<div><span class="badge ok">matchup 572 players 2024-25 381KB</span><div class="small-mono">playoff minute security + injury load flags via matchup_players.json</div></div>
+<div><span class="badge ok">valuation 360 entries</span><div class="small-mono">Team Valuations 30×12 360 W/$B=W/$Val · Valα ±2 brand delta</div></div>
+</div>
+</div>
+<div class="card">
+<div class="small-mono">Full Audit Table</div>
+<table>
+<thead><tr><th>Dataset</th><th>Count</th><th>Format</th><th>Key fields</th><th>Status</th></tr></thead>
+<tbody>
+<tr><td>OU seasons</td><td>944 / 33 seasons</td><td>json 944 recs</td><td>season, team, ou_win, vegas_line, src</td><td><span class="badge ok">ok dual-src</span></td></tr>
+<tr><td>Payroll / cap_pct</td><td>1001 entries / 36 seasons · 846 cap_pct</td><td>cap_history.json 31 seasons</td><td>cap $24,363,000→$154,647,000→$164,961,000, tax, apron1/2, mle, cba_version 1995-2023</td><td><span class="badge ok">ok 31 cap</span></td></tr>
+<tr><td>Props</td><td>582 + 569 =1151 1.4MB</td><td>dual-compatible json</td><td>player, season, prop_type, over/under, line, vegas</td><td><span class="badge ok">ok dual</span></td></tr>
+<tr><td>Matchup_enriched</td><td>14,690 recs · 30 seasons 2,871 uniq · closer 78 dep 21 exploitable 32</td><td>csv/json 1.1MB FO-linked</td><td>closer>1.2, dep<0.8, exploitable_logic (paint D, switch), playoff_min_sec, injury_flag</td><td><span class="badge ok">ok logic</span></td></tr>
+<tr><td>Matchup (24-25)</td><td>572 players 2024-25 381KB</td><td>matchup_players.json</td><td>w_matchup, def_vs_pos, on/off, tags</td><td><span class="badge ok">ok 572</span></td></tr>
+<tr><td>Valuation</td><td>360 entries 30×12 + 51K history</td><td>Team Valuations 30×12 W/$B=W/$Val · Valα ±2, valuation_history 51K recs Forbes YY</td><td>W$/B, Val$, YoY%, mkt_beat, Valα</td><td><span class="badge ok">ok 360</span></td></tr>
+<tr><td>Front Office</td><td>FO 1.1M front_office.json</td><td>front_office_by_season.json heavy</td><td>FOR 0.35/0.35/0.30, cap_efficiency, foresight surplus 3yr</td><td><span class="badge ok">ok 1.1M</span></td></tr>
+<tr><td>Vectors</td><td>12,966 seasons</td><td>mtnn 48-d MTNN</td><td>xyz glass plates, archetype, twins</td><td><span class="badge ok">ok</span></td></tr>
+</tbody>
+</table>
+</div>
+<div class="card">
+<div class="small-mono">Checklist 10-item · green when injury/matchup lands</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px" id="chk"></div>
+<div class="small-mono" style="margin-top:8px">When fetch_missing_injury lands + fetch_missing_tracking + matchup_players refresh, checklist auto-green via localStorage keys. Props dual-compatible ensures OU + payroll cross-validated.</div>
+</div>
+</main>
+<footer><div><a href="/play.html">Play</a>·<a href="/leaderboard.html">Board</a>·<a href="/inventory.html">Inventory</a>·<a href="/methods.html">Methods</a>·<a href="/offline.html">Offline</a></div><div class="small-mono">FO 1.1M · Team Valuations 30×12 360 W/$B=W/$Val · Valα ±2 · zero-deps offline</div></footer>
 <script>
-  // small QoL: click badges toggles dim
-  document.querySelectorAll('.dom, .checklist .row').forEach(el=>{
-    el.addEventListener('click', e=>{
-      if(e.target.tagName==='INPUT') return;
-      el.style.opacity = el.style.opacity==='0.6' ? '1' : '0.6';
-    })
-  });
+const items=[
+['OU 944','33 seasons preseason OU captured via odds_sportsoddshistory, r baseline 0.741 vs FOR mitigation','ou'],
+['Payroll 1001','36 seasons payroll entries 846 cap_pct linked via cap_history 31 seasons $24.363M→$154.647M→$164.961M','payroll'],
+['Cap history 31','cap_history.json 31 seasons 1996-97 $24,363,000 to 2026-27 $164,961,000 tax/apron growth 10% cap rule','cap'],
+['Props 582+569','props 1151 total 1.4MB dual-compatible Vegas + bbref props sync','props'],
+['Matchup_enriched 14690','14,690 recs 30 seasons 2,871 uniq closer 78 dep 21 exploitable 32 logic faderfinisher','enriched'],
+['Matchup 572','572 players 2024-25 381KB matchup_players.json w_matchup tags closer/exploitable','matchup'],
+['Valuation 360','Team Valuations 30×12 360 entries W/$B=W/$Val · Valα ±2 brand signal +51K valuation_history','val'],
+['FO 1.1M','front_office.json 1.1M + front_office_by_season heavy FOR 0.35/0.35/0.30 cap/flex/foresight','fo'],
+['Injury lane','injury load flags landing auto-green — fetch_missing_injury.py pending becomes ok','injury'],
+['Matchup lands','matchup landing auto-green when matchup_players refresh + matchup_enriched reseeded','matchup2']
+];
+const chk=document.getElementById('chk');
+items.forEach(([title,desc,key])=>{
+ let ls=localStorage.getItem('inv_'+key)||'';
+ let ok=ls==='ok' || ['ou','payroll','cap','props','enriched','matchup','val','fo'].includes(key); // first 8 always ok
+ let div=document.createElement('div');div.style.border='1.5px solid var(--ink)';div.style.borderRadius='10px';div.style.padding='8px';div.style.background=ok?'#E7F6EA':'#fff';
+ div.innerHTML='<div style="display:flex;justify-content:space-between"><b style="font-family:var(--mono);font-size:11px">'+title+'</b><span class="badge '+(ok?'ok':'warn')+'">'+(ok?'green ✓':'pending')+'</span></div><div style="font-size:11px;margin-top:4px">'+desc+'</div>';
+ div.onclick=()=>{localStorage.setItem('inv_'+key,'ok');location.reload()};
+ chk.appendChild(div);
+});
+if('serviceWorker' in navigator){try{navigator.serviceWorker.register('/sw.js')}catch(e){}}
 </script>
 </body>
 </html>

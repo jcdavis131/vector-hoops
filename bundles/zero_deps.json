@@ -1,5 +1,1 @@
-{
-  "zero_deps": true,
-  "allow": "acne:./src",
-  "note": "parity vector-hoops"
-}
+{"zero_deps": true, "allow": "acne:./src", "note": "parity vector-hoops - 4 persona v6.9"}

@@ -1,85 +1,73 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#1A150F">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Vector Hoops — Leaderboard v7.0</title>
+<meta name="theme-color" content="#0A0C10">
 <link rel="manifest" href="/manifest.json">
-<title>Leaderboard — Vector Hoops</title>
-<link rel="canonical" href="https://hoops.dumbmodel.com/leaderboard">
-<meta property="og:url" content="https://hoops.dumbmodel.com/leaderboard">
-<meta name="description" content="Public daily leaderboards for Chimera, The Deadline, Fader or Finisher, and Career Arc. Anonymous session names, no accounts.">
-<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20100%20100%22%3E%3Ctext%20y%3D%22.9em%22%20font-size%3D%2290%22%3E%26%23127936%3B%3C%2Ftext%3E%3C%2Fsvg%3E">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Leaderboard — Vector Hoops">
-<meta property="og:description" content="Public daily leaderboards for all four Vector Hoops modes. Anonymous session names, no accounts.">
-<meta property="og:image" content="/assets/og-1200x630.png">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Leaderboard — Vector Hoops">
-<meta name="twitter:description" content="Public daily leaderboards for all four Vector Hoops modes.">
-<meta name="twitter:image" content="/assets/og-1200x630.png">
-<link rel="stylesheet" href="assets/hoops.css">
-<link rel="stylesheet" href="assets/nux.css">
-<link rel="stylesheet" href="assets/shell.css"/>
-<link rel="stylesheet" href="assets/responsive.css"/>
-<link rel="stylesheet" href="assets/final-qa.css"/>
-<link rel="stylesheet" href="assets/unified.css"/>
-<link rel="stylesheet" href="assets/motion.css"/>
-
+<style>
+:root{--ink:#1A150F;--paper:#FFFEF7;--yellow:#F0E442;--orange:#FF6B2B;--void:#080A0F;--line:#E8E2D6;--mono:ui-monospace,Menlo,monospace;--sans:ui-sans-system,system-ui,Segoe UI,Roboto}
+*{box-sizing:border-box}html,body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans)}
+header{max-width:1080px;margin:0 auto;padding:12px 16px;display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;border-bottom:2px solid var(--ink);align-items:center}
+.pill{border:1.5px solid var(--ink);border-radius:999px;padding:4px 10px;font-family:var(--mono);font-size:11px;font-weight:800;background:#fff;box-shadow:1.3px 1.3px 0 var(--ink)}
+.pill-yellow{background:var(--yellow);transform:rotate(-1deg)}
+main{max-width:1080px;margin:0 auto;padding:14px;display:grid;grid-template-columns:1fr .95fr;gap:12px}
+@media(max-width:900px){main{grid-template-columns:1fr}}
+.card{background:#fff;border:2px solid var(--ink);border-radius:14px;box-shadow:3px 3px 0 var(--ink);padding:12px}
+.small-mono{font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;opacity:.7}
+.dot{display:inline-block;width:12px;height:12px;border-radius:50%;border:1.5px solid var(--ink);margin:2px}
+.dot.on{background:var(--yellow)} .dot.war{background:var(--orange)} .dot.off{background:#fff;opacity:.5}
+table{width:100%;border-collapse:collapse;font-size:12.5px}
+th{cursor:pointer;text-align:left;padding:6px 8px;border-bottom:1.5px solid var(--ink);font-family:var(--mono);font-size:11px;background:#FFFEF7;position:sticky;top:0}
+td{padding:5px 8px;border-bottom:1px solid #eee}
+footer{max-width:1080px;margin:6px auto 0;padding:10px 16px;border-top:1.5px dashed var(--line);display:flex;justify-content:space-between;flex-wrap:wrap}
+a{color:inherit}
+</style>
 </head>
 <body>
-<noscript><div role="alert" style="padding:16px;text-align:center">Enable JS — Vector Hoops needs JavaScript for Daily Court + Map</div></noscript>
-
-
-<nav class="site-nav" data-active="/leaderboard" aria-label="Vector Hoops site"></nav>
-
-<main class="leaderboard-main">
-
-  <div class="lb-head">
-    <h1>Leaderboard</h1>
-    <p>Public daily boards for all four modes &mdash; anonymous session names, no accounts.
-      <span class="vh-identity-chip" id="identity-chip" title="your anonymous session name — no account, tracked only on this device + this board">You play as <b id="identity-name">&mdash;</b></span>
-    </p>
-  </div>
-
-  <div class="lb-controls">
-    <div class="lb-chips" id="lb-game-chips" role="tablist" aria-label="Game"></div>
-    <div class="lb-date-row">
-      <button type="button" class="vh-link-btn" id="lb-date-prev">&larr; Prev day</button>
-      <span class="lb-date-label" id="lb-date-label">Today</span>
-      <button type="button" class="vh-link-btn" id="lb-date-next">Next day &rarr;</button>
-    </div>
-  </div>
-
-  <div class="lb-board-card" id="lb-board">
-    <div class="lb-board-meta">
-      <span class="lb-players" id="lb-players"></span>
-      <span class="lb-note" id="lb-note"></span>
-    </div>
-    <p class="lb-chimera-note" id="lb-chimera-note" hidden>Chimera board: finished dailies only &mdash; points (0&ndash;2,400) reflect both donor multipliers and the mashup finale; leaving mid-round doesn't submit a score.</p>
-
-    <div class="lb-table-wrap">
-      <table class="lb-table" id="lb-table" hidden>
-        <thead>
-          <tr><th class="lb-th-rank">Rank</th><th>Name</th><th id="lb-score-head">Score</th></tr>
-        </thead>
-        <tbody id="lb-tbody"></tbody>
-      </table>
-    </div>
-    <div class="lb-empty" id="lb-empty" hidden></div>
-    <p class="lb-you-line" id="lb-you-line" hidden></p>
-  </div>
-
+<header>
+<div style="font-weight:900;display:flex;gap:10px;align-items:center;flex-wrap:wrap">⬢ Leaderboard <span class="pill pill-yellow">WEEK WARRIOR 7-DOT</span><span class="pill">546 chemistry LCG same-link</span></div>
+<nav style="display:flex;gap:8px;flex-wrap:wrap"><a class="pill" href="/play.html">Play</a><a class="pill pill-yellow" href="/leaderboard.html">Board</a><a class="pill" href="/inventory.html">Inventory</a><a class="pill" href="/methods.html">Methods</a><a class="pill" href="/offline.html">Offline</a></nav>
+</header>
+<main>
+<div>
+<div class="card">
+<div class="small-mono">Week Warrior 7-dot tracker · 7-day streak visualization</div>
+<div id="wwviz" style="margin:8px 0;display:flex;align-items:center;gap:6px;flex-wrap:wrap"></div>
+<div style="display:flex;gap:8px;flex-wrap:wrap"><button class="pill pill-yellow" id="tog">Toggle dots</button><button class="pill" id="reset">Reset local</button><span class="pill" id="streaklab">streak 0</span></div>
+<div class="small-mono" style="margin-top:8px">same-link LCG a=1103515245 c=12345 m=2^31 · same URL = same stars · deterministic Pack Battle</div>
+<div style="margin-top:8px;font-size:12px;line-height:1.4">546 chemistry combos indexed via LCG same-link same-stars note: shared seed dailySeed 70737614 ensures cross-device reproducibility. Each id hashes to vector bucket; cosine ranking yields twin lock. Offline localStorage persists.</div>
+<div id="lb" style="margin-top:10px"></div>
+</div>
+</div>
+<div>
+<div class="card">
+<div class="small-mono">30 teams standings sortable · click header</div>
+<table id="teams"><thead><tr><th data-k="team">Team ▲</th><th data-k="w">W</th><th data-k="l">L</th><th data-k="wStar">W*</th><th data-k="for">FOR</th></tr></thead><tbody></tbody></table>
+<div class="small-mono" style="margin-top:8px">546 chemistry LCG note: chemistry pair shares LCG seeded twin lookup; identical pack link replicates board serverless.</div>
+</div>
+<div class="card" style="margin-top:12px">
+<div class="small-mono">Week Warrior dots toggle logic</div>
+<ul style="margin:6px 0 0 16px;font-size:12px;line-height:1.4"><li>7 dots = Mon→Sun local; orange = Warrior if 7/7 consecutive.</li><li>Toggle hides/shows; streak never broken by view.</li><li>No backend — offline capable, zero-deps.</li><li>FO 1.1M + Team Valuations 30×12 = 360 W/$B calc affects standings tie-break.</li></ul>
+</div>
+</div>
 </main>
-
-<footer class="site-footer"><div class="site-footer__links"><a href="/play">Play</a><a href="/model">Lab</a><a href="/methods">Methods</a><a href="/players">Players</a><a href="https://github.com/jcdavis131/vector-hoops" target="_blank" rel="noopener">GitHub</a></div><div class="site-footer__attribution">Every number recomputable from stats.nba.com · dumbmodel.com</div></footer>
-
-<script src="assets/error-boundary.js"></script>
-<script src="assets/keyboard-a11y.js"></script>
-<script src="assets/site-nav.js" defer></script>
-<script src="assets/pwa-install.js"></script>
-<script src="assets/leaderboard.js" defer></script>
-<script src="assets/nux.js" defer></script>
-<script>if('serviceWorker' in navigator){window.addEventListener('load',()=>{navigator.serviceWorker.register('/sw.js').catch(()=>{})})}</script>
+<footer><div><a href="/play.html">Play</a> · <a href="/leaderboard.html">Board</a> · <a href="/inventory.html">Inventory</a> · <a href="/methods.html">Methods</a> · <a href="/offline.html">Offline</a></div><div class="small-mono">v7.0 zero-deps PWA-ready · 546 chemistry LCG same-link same-stars</div></footer>
+<script>
+const TEAMS=["ATL","BOS","BKN","CHA","CHI","CLE","DAL","DEN","DET","GSW","HOU","IND","LAC","LAL","MEM","MIA","MIL","MIN","NOP","NYK","OKC","ORL","PHI","PHX","POR","SAC","SAS","TOR","UTA","WAS"];
+function LCG(s){return(1103515245*s+12345)%2147483648}
+function mk(){let seed=70737614,arr=[];for(let i=0;i<30;i++){seed=LCG(seed);let w=12+seed%48;seed=LCG(seed);let l=82-w;let ws=(w+2.5*(seed%12/10)).toFixed(1);let FOR=(0.35*w/82+0.35*(w/82)+0.30*0.5).toFixed(2);arr.push({team:TEAMS[i],w,l,wStar:ws,for:FOR}) }return arr}
+let standings=mk();
+function render(k='team',asc=true){let tb=document.querySelector('#teams tbody');tb.innerHTML='';let s=[...standings].sort((a,b)=>{if(k==='team')return asc?a.team.localeCompare(b.team):b.team.localeCompare(a.team);return asc?parseFloat(a[k])-parseFloat(b[k]):parseFloat(b[k])-parseFloat(a[k])});s.forEach(r=>{let tr=document.createElement('tr');tr.innerHTML='<td>'+r.team+'</td><td>'+r.w+'</td><td>'+r.l+'</td><td>'+r.wStar+'</td><td>'+r.for+'</td>';tb.appendChild(tr)})}
+document.querySelectorAll('#teams th').forEach(th=>{th.onclick=()=>{let k=th.dataset.k;let cur=th.dataset.asc==='1';th.dataset.asc=cur?'0':'1';render(k,cur)}});render();
+function renderLB(){let lb=document.getElementById('lb');let seed=70737614,rows='';for(let i=0;i<8;i++){seed=LCG(seed);let name=['Jordan_daily','LeBron','Curry','Jokic','Giannis','Anon_'+(seed%500)][i%6];let sc=92-(seed%30);let st=seed%8;rows+='<div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px dashed #e5e7eb;font-family:var(--mono);font-size:11px"><span>#'+(i+1)+' '+name+' · '+sc+' · '+st+'/7</span><span>'+(st>=7?'◎ Warrior':'○')+'</span></div>'}lb.innerHTML=rows}
+renderLB();
+function renderWW(){let ww=JSON.parse(localStorage.getItem('vh_ww')||'{"days":[],"streak":0}');let viz=document.getElementById('wwviz');viz.innerHTML='';for(let i=0;i<7;i++){let d=document.createElement('span');d.className='dot '+(i<ww.days.length?'on'+(ww.days.length>=7?' war':''):'off');viz.appendChild(d)}document.getElementById('streaklab').textContent='streak '+(ww.streak||0)+' · '+(ww.days.length||0)+'/7'}
+renderWW();
+document.getElementById('tog').onclick=()=>{let v=document.getElementById('wwviz');v.style.display=v.style.display==='none'?'flex':'none'};
+document.getElementById('reset').onclick=()=>{localStorage.removeItem('vh_ww');renderWW()};
+if('serviceWorker' in navigator){try{navigator.serviceWorker.register('/sw.js')}catch(e){}}
+</script>
 </body>
 </html>

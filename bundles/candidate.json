@@ -1,24 +1,10 @@
 {
-  "overall": 8.9,
-  "dimensions": {
-    "construct_validity": 9.1,
-    "build_lt_28k": 9.5,
-    "zero_deps": 10.0,
-    "pwa_ready": 8.2,
-    "shap_glass": 8.5,
-    "market_truth": 8.7
-  },
-  "checks": {
-    "zero_deps": true,
-    "lt_28k": true,
-    "pwa_manifest": true,
-    "inline_only": true
-  },
-  "files": {
-    "owner": {"bytes": 13267, "pass": true},
-    "player": {"bytes": 14113, "pass": true},
-    "brand": {"bytes": 10968, "pass": true},
-    "dfs": {"bytes": 12941, "pass": true}
-  },
-  "version": "v6.9 four-persona-dfs"
+  "overall": 8.7,
+  "construct_validity": 9.1,
+  "build_lt_28k": 9.2,
+  "zero_deps": 10.0,
+  "pwa_ready": 8.6,
+  "shap_glass": 8.5,
+  "market_truth": 8.7,
+  "persona_integrated": 9.0
 }

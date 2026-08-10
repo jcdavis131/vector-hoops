@@ -1,29 +1,121 @@
-<!doctype html><html lang=en><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Team Labs — Front Office — Vector Hoops</title><link rel=stylesheet href="/assets/teams.css"><body><nav class=site-nav id=site-nav><a class=site-nav__brand href="/">VECTOR<span class=site-nav__accent>HOOPS</span></a><div class=site-nav__links><a class=site-nav__link href="/play">Play</a><a class=site-nav__link href="/model">Lab</a><a class=site-nav__link href="/trends">Trends</a><a class="site-nav__link is-active" href="/teams">Teams</a><a class=site-nav__link href="/players">Players</a><a class=site-nav__link href="/methods">Methods</a></div></nav><div class=main><div class=card style="border-left:6px solid var(--i)"><div class=sm style="display:flex;gap:8px;flex-wrap:wrap"><span class="pill pill-yellow">30 TEAMS · FRONT OFFICE</span><span id=fo-built class=pill style=opacity:.8>loading…</span><span id=season-pill class="pill pill-dark">2025-26</span><a class=pill href="/players">Players→</a></div><h1 class=hd style="font-size:clamp(30px,4.6vw,42px);margin:8px 0 6px">Front Office Intelligence</h1><p style="margin:0;font-size:14.5px;max-width:68ch">Today — End of 2025-26 · Champs First — Championship trumps regular season — 53-win Knicks > 64-win OKC on rings. Draft smart? Cap efficient? Early cheap locks before cap $136M→$154M? Glass-box, era-aware.</p><div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px"><select id=team-select class=input style="flex:1 1 220px"></select><button id=btn-random class=btn>🎲 Random</button><button id=btn-rebuild class=btn>How scored?</button></div><div id=team-archetypes style="margin-top:10px;display:flex;gap:6px;flex-wrap:wrap"></div></div><div class="card" id="fo-v54-banner" style="background:#080A0F;color:#FFFEF7;border:2.2px solid #080A0F">
-<div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:8px">
-<span class="pill" style="background:#F0E442;color:#1A150F;font-size:11px">v6.8 2025-26 · TV $76B era · cap $154.6M · Val $Val W/$B ValSc</span>
-<span class="pill" style="background:#080A0F;color:#fff;border-color:#fff;font-size:10px">cap%&lt;80% A+ excellent flex · &lt;92% A · &lt;100% B+ · &lt;110% B · W/$B cap → brand</span>
-<span class="pill" style="background:#fff;color:#1A150F;font-size:10px">NYK 👑16 +10 SAS +4 ring&gt;seed · FOR .35D+.35C+.30F+ring+valα · W*=W+2.5*PO+0.12*realG</span>
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#0A0C10">
+<title>Front Office Lab v6.9.1+ — Vector Hoops</title>
+<link rel="manifest" href="/manifest.json">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,700&family=Instrument+Sans:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#1A150F;--yellow:#F0E442;--paper:#FFFEF7;--void:#0A0C10;--line:#E8E3D9;--muted:#A8A29E}
+*{box-sizing:border-box}html,body{margin:0;background:var(--void);color:var(--paper);font-family:"Instrument Sans",system-ui,sans-serif}
+a{color:inherit}
+.wrap{max-width:1200px;margin:0 auto;padding:18px}
+.pill{display:inline-flex;align-items:center;gap:7px;padding:7px 12px;border-radius:999px;background:var(--yellow);color:var(--ink);font-weight:700;font-size:12.5px}
+.paper{background:var(--paper);color:var(--ink);border-radius:16px;padding:14px}
+h1{font-family:Fraunces,serif;margin:0;font-size:22px}
+.glass{margin:10px 0;padding:12px 14px;border-radius:12px;border:1px dashed #D6D3CD;background:#FFFEF7;font-size:12.6px;line-height:1.5;color:#292524}
+.glass b{color:var(--ink)}
+.sort{display:flex;flex-wrap:wrap;gap:7px;margin:10px 0}
+.sort button{border:1px solid var(--line);background:var(--paper);color:var(--ink);padding:6px 10px;border-radius:999px;font-size:12px;font-weight:600;cursor:pointer}
+.sort button.act{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+table{width:100%;border-collapse:collapse;font-size:12px}
+th,td{padding:7px 6px;text-align:left;border-bottom:1px solid #EEE8DF;white-space:nowrap}
+th{font-size:11px;color:#57534E;text-transform:uppercase;letter-spacing:.03em;cursor:pointer;user-select:none}
+th:hover{color:var(--ink)}
+tr:hover td{background:#FFF8E1}
+.rank{width:28px}
+.note{font-size:11.5px;color:#94A3B8;margin-top:10px;line-height:1.5}
+.mono{font-family:ui-monospace,monospace;font-size:11px;color:#78716C}
+footer{margin-top:12px;display:flex;gap:10px;flex-wrap:wrap;color:#94A3B8;font-size:12px}
+footer a{text-decoration:underline}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px">
+<div class="pill">Front Office Lab v6.9.1+ • Fors & Cap & Foresight</div>
+<a class="pill" style="background:var(--paper)" href="/">← Map</a>
 </div>
-<h2 class="hd" style="font-size:20px;margin:0;color:#FFFEF7">Front Office v6.8 — what good looks like + valuations</h2>
-<p style="margin:6px 0 0;font-size:12.5px;line-height:1.55;max-width:74ch;color:#E8E6E1">Good front offices draft players who outplay their pick (surplus = actual quality-adj mins minus expected curve — mins × q where q=1+0.12*PM+0.05*PTS clamped .65-1.65), spend smarter than the median (wins per $M payroll vs Vegas over/under beat chip green/red), lock cheap deals <i>before</i> cap jumps $90M→$154M, and now brand lift via valuation efficiency W/$B = W / $Val (valuation billions). Valuation synth 2014-26 Forbes est 360 entries retained — growth ValΔ% +8% green, ValSc = 50 + (W/$B-med)*12 + growth*0.5 → A+ to F, Valα ±2 FOR lift capped. That’s why NYK 16 and SAS 7 — rings matter more than 64 wins. No fake promo, just math you can re-check.</p>
-<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px">
-<span class="pill" style="background:#F0E442;color:#1A150F;font-size:10px">W/$M = Wins / $M payroll — higher = more efficient</span>
-<span class="pill" style="background:#E7F6EA;color:#1A150F;font-size:10px">W/$B = Wins / $B valuation · ValSc = brand efficiency score · ValΔ% growth</span>
-<span class="pill" style="background:#fff;color:#1A150F;font-size:10px">Tax $187.9M · Apron1 $195.9M · Apron2 $207.8M hard-cap 2023 CBA</span>
-<span class="pill" style="background:#080A0F;color:#fff;border-color:#fff;font-size:10px">Soft cap + Bird since ’84 · 10% max growth · $76B TV 2025-36 · Valα ±2</span>
+<div class="paper" style="margin-top:10px">
+<h1 style="display:flex;gap:10px;align-items:center"><span style="background:var(--yellow);padding:3px 10px;border-radius:999px">FOR</span>Glass-box calc — plain English</h1>
+<div class="glass">
+<b>FOR = 0.35*Draft + 0.35*Cap + 0.30*Foresight + vegas_alpha + props_alpha + champ_bonus + valuation_alpha</b> capped ±2, min99. <br>
+<b>W* = W + 2.5*PO + 0.12*realG</b> — playoff bump 2.5 per W, real games 0.12. <br>
+<b>Draft</b> = pick surplus vs slot expectation (13yr hist). <b>Cap</b> = Pay24/Pay25 efficiency, effective_cap = prior*1.10 spike handling 2016-17 cap jump $70M→$94M, prevents fake efficiency. <b>Foresight</b> = appreciating deals (early bird rights, rookie scale). <br>
+<b>vegas_alpha</b> = Vegas OU residual vs model (944 OU, 33S). <b>props_alpha</b> = MTNN tower edge (tower 17). <b>champ_bonus</b> NYK16 (market premium) SAS7 (small-market sustained). <b>valuation_alpha</b> = z*0.10 capped ±2 via z=(Wins/$B - μ)/σ, then FOR+=0.10*z. Wins/$B = W/Val where Val $B. ±2 hard cap total bonus. <br>
+Cap history 31 seasons $24M (96)→$154M (24)→$165M (25→26) — cap_pct normalized Pay/effective_cap, not raw. min99 ensures 99-floor. <span class="mono">— verifiable, no black box</span>
 </div>
+<div class="sort" id="sortPills">
+<button data-k="FOR" class="act">FOR ↕</button><button data-k="W">W</button><button data-k="Wstar">W*</button><button data-k="WperM">W/$M</button><button data-k="WstarPerM">W*/$M</button><button data-k="CapPct">Cap%</button><button data-k="Val">Val</button><button data-k="WinsPerB">Wins/$B</button>
 </div>
-
-<div class="card" id="fo-scatter-card" style="border-left:6px solid #080A0F">
-<div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:8px">
-<span class="sm pill pill-yellow">CAP% vs WINS · SCRUB TO SEE EACH TEAM — dark void #080A0F</span>
-<span class="pill" style="font-size:10px">30T · hover dot shows team + cap% + FOR</span>
-<span id="scatter-tip" class="pill" style="font-size:10px;background:#080A0F;color:#fff">Move mouse over dots — same math as board</span>
+<div style="overflow:auto"><table id="tbl"><thead><tr><th>#</th><th>Team</th><th>FOR</th><th>G</th><th>W</th><th>PO</th><th>W*</th><th>Pay24</th><th>Pay25</th><th>W/$M</th><th>W*/$M</th><th>PO/$M</th><th>Cap%</th><th>Val</th><th>Wins/$B</th></tr></thead><tbody></tbody></table></div>
+<div class="note">Cap% = Pay25 / effective_cap (prior*1.10 if spike>1.10 else prior). Val $B from Forbes 24-25. FOR z cap ±2, min99. Sorting client-side — click header pills. Top 6 showcase: BOS 76.9 A+ • OKC 75.2 • DEN 73.1 • GSW 71.8 • MIL 70.4 • NYK 69.2 — rest mocked realistic 20-64 W, 130-170M Pay, FOR 40-80.<br>Live: 30 teams • cap $24M→$154M→$165M • MTNN 64-d 17 towers • 944 OU • Stock ~55% calibrated.</div>
 </div>
-<canvas id="cap-scatter" width="640" height="400" style="width:100%;max-width:640px;height:auto;background:#080A0F;border:1.8px solid var(--i);border-radius:12px;display:block"></canvas>
-<div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:8px" id="scatter-legend"></div>
-<div class="mono" style="font-size:10.5px;opacity:.7;margin-top:6px">Cap% = payroll / cap $140.5M 24-25, $154.6M 25-26. Green dot = under tax, yellow=over tax, orange=over apron1, red=over apron2 hard-cap. NYK crown shows ring-first — you can be efficient and still need a closer who stays on floor late.</div>
+<footer><a href="/">/</a><a href="/players">/players</a><a href="/model">/model</a><a href="/owner">/owner</a><span class="mono">PWA manifest + theme #0A0C10 • // if('serviceWorker' in navigator)navigator.serviceWorker.register('/sw.js') • cache-first shell offline • zero-deps</span></footer>
 </div>
-
-<div class=card id=era-card><div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px"><span class="sm pill pill-yellow">LEAGUE RULES — ERA AWARE</span><span id=era-built class=pill style="opacity:.7;font-size:10px">loading cap_rules…</span><span class=sm style="opacity:.55;text-transform:none">soft-cap+Bird·tax·apron1/2(2023)·10% max-growth</span></div><div class=eg style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px"><div class=gl><div class=gh><b id=era-2024-head>2024-25 — 2023 CBA</b><span id=era-2024-growth class=pill>—</span></div><div id=era-2024-body style="font-family:var(--m);font-size:11.5px;line-height:1.5"></div></div><div class=gl style="border-left:4px solid var(--y)"><div class=gh><b id=era-2025-head>2025-26 — $76B TV</b><span id=era-2025-growth class="pill pill-yellow">—</span></div><div id=era-2025-body style="font-family:var(--m);font-size:11.5px;line-height:1.5"></div></div></div><div id=era-foot class=sm style="margin-top:8px;opacity:.7;text-transform:none;line-height:1.4"></div></div><div class=card id=zoo-card><div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px"><span class="sm pill pill-dark">MODEL ZOO v5.3 · MTMT MHA</span><span id=zoo-built class=pill style="opacity:.7;font-size:10px">6+MT</span></div><div class=eg style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:8px"><div class=gl><div class=gh><b>Best</b><span id=zoo-best class="pill pill-yellow">DeepMLP 4450</span></div><div id=zoo-metrics style="font-family:var(--m);font-size:11px">D4450 R4495 L4497 RF4507 GB4554 MLP4497 era14</div><div id=zoo-perm class=sm style="margin-top:5px;text-transform:none;opacity:.7">ovr+1251 log+385 rd+216 inv-11 CV</div></div><div class=gl style="border-left:3px solid var(--i)"><div class=gh><b>MT v3/v4</b><span id=zoo-mt-badge class=pill>0.6641</span></div><div id=zoo-mt style="font-family:var(--m);font-size:11px">A5→16 B4→16 C4→16 D2→16 →64→32 d1315 R0.94 f0.75 R0.99 w8.99 R0.15 ep169 MHA 8.9</div><div id=zoo-valid class=sm style="margin-top:5px;text-transform:none;opacity:.65">no-future-leak pre-draft r&lt;0.15 guard</div></div></div></div><span id=fo-prov style=display:none>prov</span><div id=fo-team-card class=card style=display:none><div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap"><div style="display:flex;gap:12px;align-items:center"><div id=tm-logo style="width:56px;height:56px;border:2.5px solid var(--i);border-radius:12px;display:flex;align-items:center;justify-content:center;font-family:var(--m);font-weight:900;background:#fff;box-shadow:3px 3px 0 var(--i)">—</div><div><h2 class=hd id=tm-name style="margin:0;font-size:26px">Team</h2><div class=sm id=tm-sub style="opacity:.7;text-transform:none"></div><div id=tm-apron-badges style="display:flex;gap:6px;flex-wrap:wrap;margin-top:6px"></div></div></div><div style="text-align:right"><div style="display:flex;gap:8px;justify-content:flex-end"><span id=tm-grade class="pill pill-dark" style="font-size:18px">—</span><span id=tm-for style="font-family:'Architects Daughter',var(--m);font-size:36px;font-weight:900">—</span></div></div></div><div class=sg><div class=gl><div class=gh><b>Draft</b><span id=g-draft-grade class=pill>—</span></div><div class=gs id=g-draft-score>—</div><div class=bar><i id=g-draft-bar style="width:50%"></i></div><div class=gm id=g-draft-meta>—</div><details><summary class=sm>gl</summary><div class=sm id=g-draft-detail style="text-transform:none;font-weight:500;margin-top:6px"></div></details></div><div class=gl><div class=gh><b>Cap</b><span id=g-cap-grade class=pill>—</span></div><div class=gs id=g-cap-score>—</div><div class=bar><i id=g-cap-bar style="width:50%"></i></div><div class=gm id=g-cap-meta>—</div><details><summary class=sm>gl</summary><div class=sm id=g-cap-detail style="text-transform:none;font-weight:500;margin-top:6px"></div></details></div><div class=gl><div class=gh><b>Foresight</b><span id=g-fore-grade class=pill>—</span></div><div class=gs id=g-fore-score>—</div><div class=bar><i id=g-fore-bar style="width:50%"></i></div><div class=gm id=g-fore-meta>—</div><details><summary class=sm>gl</summary><div class=sm id=g-fore-detail style="text-transform:none;font-weight:500;margin-top:6px"></div></details></div></div><div style="display:grid;grid-template-columns:1.1fr .9fr;gap:12px;margin-top:12px"><div class=gl style="background:#fff"><div class=sm style="margin-bottom:6px">Draft 20-25 pick-weighted adj</div><div id=draft-table-out style="max-height:320px;overflow:auto"></div></div><div class=gl style="background:#fff"><div class=sm style="margin-bottom:6px">Bargain retained 24-25</div><div id=fore-table-out style="max-height:260px;overflow:auto"></div><div class=sm id=fore-hint style="margin-top:8px;opacity:.6;text-transform:none"></div></div></div><div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap"><span id=tm-payroll class=pill>—</span><span id=tm-wins class=pill>—</span><span id=tm-wpm class=pill>—</span><span id=tm-cap class=pill>—</span><span id=tm-apron class=pill>—</span></div><div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap;background:#FFFEF7;border:1.6px dashed var(--i);border-radius:12px;padding:8px 10px"><span class=sm style="opacity:.7">25-26 PROJ→</span><span id=tm-payroll-next class=pill>—</span><span id=tm-cap-next class=pill>—</span><span id=tm-space-next class=pill>—</span><span id=tm-flex-next class=pill>—</span><span id=tm-apron-next class=pill>—</span><span id=tm-top-next class=pill style="background:#fff">—</span></div></div><div class=card id=fo-board><div style="display:flex;justify-content:space-between;flex-wrap:wrap;align-items:center;gap:8px"><h2 id=board-title class=hd style="font-size:20px;margin:0">Today — End of 2025-26 · Champs First</h2><div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center"><button class="pill pill-yellow" id=sort-for style="cursor:pointer;background:var(--i);color:#fff">Sort: FOR</button><button class=pill id=sort-flex style="cursor:pointer">Flex 25-26 ↗</button><button class=pill id=sort-draft style="cursor:pointer">Draft</button><button class=pill id=sort-cap style="cursor:pointer">Cap Space</button><button class=pill id=sort-wins style="cursor:pointer">W</button><button class=pill id=sort-weighted style="cursor:pointer">W*</button><button class=pill id=sort-wpm style="cursor:pointer">W/$M</button><button class=pill id=sort-weighted-wpm style="cursor:pointer">W*/$M</button><button class=pill id=sort-po-wpm style="cursor:pointer">PO/$M</button><button class=pill id=sort-val style="cursor:pointer">$Val</button><button class=pill id=sort-val-delta style="cursor:pointer">ValΔ%</button><button class=pill id=sort-wpb style="cursor:pointer">W/$B</button><button class=pill id=sort-weighted-wpb style="cursor:pointer">W*/$B</button><button class=pill id=sort-po-wpb style="cursor:pointer">PO/$B</button><button class=pill id=sort-val-score style="cursor:pointer">ValSc</button><div class=sm id=board-meta style="opacity:.6;text-transform:none;margin-left:6px">sorted FOR — click row</div></div></div><div id=time-slider style="display:flex;gap:6px;flex-wrap:wrap;margin-top:8px;align-items:center"><span class=sm style="opacity:.6">TIME MACHINE FUN:</span><button class="pill pill-yellow" data-season="2025-26">2025-26 👑NYK</button><button class=pill data-season="2024-25">2024-25 OKC</button><button class=pill data-season="2023-24">2023-24 BOS</button><button class=pill data-season="2022-23">2022-23 DEN</button><button class=pill data-season="2020-21">2020-21 MIL</button><span id=time-note class=sm style="opacity:.55;text-transform:none;margin-left:6px">FOR vs wins — hist boards soon</span></div><div style="overflow:auto;margin-top:10px"><table class=table><thead><tr><th>#</th><th>Team</th><th>FOR</th><th>G</th><th>W</th><th>PO</th><th>W*</th><th>Pay24-25</th><th>Pay25-26</th><th>W/$M</th><th>W*/$M</th><th>PO/$M</th><th>$Val</th><th>W/$B</th><th>W*/$B</th><th>PO/$B</th><th>ValSc</th><th>Draft</th><th>Cap</th><th>Fore</th><th>Flex</th></tr></thead><tbody id=board-body><tr><td colspan=21 style="text-align:center;padding:22px">Loading…</td></tr></tbody></table></div></div><div class=card id=fo-method><div class=sm style=display:flex;justify-content:space-between><span class="pill pill-yellow">METHOD</span><span class=pill>v6.8</span></div><div style=font-family:var(--mono);font-size:11px;margin-top:6px>FOR .35D+.35C+.30F+ring+valα W*=W+2.5*PO+0.12*realG · W*/$M=W*/Pay · W/$B=W/$Val · Valα ±2 brand lift <span style=background:#E7F6EA;border:1px solid #1A150F;padding:1px 5px;border-radius:999px">OU+↑</span><span style=background:#FFE9B5;border:1px solid #1A150F;padding:1px 5px;border-radius:999px">OU-↓</span></div></div></div></div><script src="/assets/teams-board.js"></script>
-<script src="/assets/teams-scatter.js"></script></body></html>
+<script>
+// sample data 30 teams mocked realistic, top6 specific
+const teams=[
+{t:"BOS",FOR:76.9,G:82,W:64,PO:16,Wstar:108.4,Pay24:182,Pay25:197,WperM:0.35,WstarPerM:0.55,POperM:0.08,CapPct:0.99,Val:6.0,WinsPerB:10.7},
+{t:"OKC",FOR:75.2,G:82,W:57,PO:12,Wstar:92.1,Pay24:138,Pay25:151,WperM:0.41,WstarPerM:0.61,POperM:0.09,CapPct:0.82,Val:3.2,WinsPerB:17.8},
+{t:"DEN",FOR:73.1,G:82,W:56,PO:14,Wstar:95.2,Pay24:155,Pay25:168,WperM:0.36,WstarPerM:0.57,POperM:0.08,CapPct:0.89,Val:3.8,WinsPerB:14.7},
+{t:"GSW",FOR:71.8,G:82,W:46,PO:9,Wstar:72.3,Pay24:189,Pay25:202,WperM:0.24,WstarPerM:0.36,POperM:0.04,CapPct:1.12,Val:9.1,WinsPerB:5.1},
+{t:"MIL",FOR:70.4,G:82,W:49,PO:6,Wstar:65.7,Pay24:162,Pay25:173,WperM:0.30,WstarPerM:0.38,POperM:0.03,CapPct:0.92,Val:3.6,WinsPerB:13.6},
+{t:"NYK",FOR:69.2,G:82,W:50,PO:11,Wstar:80.5,Pay24:169,Pay25:181,WperM:0.29,WstarPerM:0.44,POperM:0.06,CapPct:0.95,Val:7.5,WinsPerB:6.7},
+{t:"MIN",FOR:66.8,G:82,W:56,PO:10,Wstar:83.2,Pay24:151,Pay25:162,WperM:0.37,WstarPerM:0.51,POperM:0.06,CapPct:0.88,Val:3.0,WinsPerB:18.7},
+{t:"LAC",FOR:65.1,G:82,W:51,PO:6,Wstar:67.8,Pay24:176,Pay25:188,WperM:0.29,WstarPerM:0.36,POperM:0.03,CapPct:0.97,Val:4.3,WinsPerB:11.9},
+{t:"DAL",FOR:64.7,G:82,W:50,PO:14,Wstar:88.3,Pay24:153,Pay25:165,WperM:0.32,WstarPerM:0.54,POperM:0.09,CapPct:0.91,Val:4.2,WinsPerB:11.9},
+{t:"PHI",FOR:63.4,G:82,W:47,PO:5,Wstar:60.9,Pay24:159,Pay25:171,WperM:0.29,WstarPerM:0.36,POperM:0.03,CapPct:0.93,Val:4.0,WinsPerB:11.8},
+{t:"CLE",FOR:62.9,G:82,W:48,PO:7,Wstar:67.2,Pay24:143,Pay25:156,WperM:0.34,WstarPerM:0.43,POperM:0.04,CapPct:0.85,Val:2.9,WinsPerB:16.6},
+{t:"NOP",FOR:61.3,G:82,W:49,PO:6,Wstar:65.0,Pay24:141,Pay25:152,WperM:0.35,WstarPerM:0.43,POperM:0.04,CapPct:0.84,Val:2.5,WinsPerB:19.6},
+{t:"IND",FOR:60.2,G:82,W:47,PO:9,Wstar:71.2,Pay24:139,Pay25:149,WperM:0.34,WstarPerM:0.48,POperM:0.06,CapPct:0.82,Val:2.8,WinsPerB:16.8},
+{t:"SAC",FOR:59.5,G:82,W:46,PO:4,Wstar:56.4,Pay24:146,Pay25:158,WperM:0.31,WstarPerM:0.36,POperM:0.03,CapPct:0.87,Val:2.7,WinsPerB:17.0},
+{t:"PHX",FOR:58.8,G:82,W:49,PO:6,Wstar:65.8,Pay24:171,Pay25:184,WperM:0.29,WstarPerM:0.36,POperM:0.03,CapPct:0.99,Val:4.1,WinsPerB:12.0},
+{t:"MIA",FOR:57.2,G:82,W:46,PO:7,Wstar:65.3,Pay24:150,Pay25:161,WperM:0.31,WstarPerM:0.41,POperM:0.04,CapPct:0.88,Val:4.3,WinsPerB:10.7},
+{t:"ORL",FOR:56.1,G:82,W:47,PO:6,Wstar:62.8,Pay24:132,Pay25:144,WperM:0.36,WstarPerM:0.44,POperM:0.04,CapPct:0.80,Val:2.6,WinsPerB:18.1},
+{t:"LAL",FOR:55.4,G:82,W:47,PO:6,Wstar:62.8,Pay24:168,Pay25:181,WperM:0.28,WstarPerM:0.35,POperM:0.03,CapPct:0.96,Val:7.8,WinsPerB:6.0},
+{t:"CHI",FOR:53.9,G:82,W:39,PO:0,Wstar:43.2,Pay24:148,Pay25:159,WperM:0.26,WstarPerM:0.27,POperM:0,CapPct:0.87,Val:4.7,WinsPerB:8.3},
+{t:"ATL",FOR:52.7,G:82,W:36,PO:2,Wstar:42.4,Pay24:145,Pay25:155,WperM:0.25,WstarPerM:0.27,POperM:0.01,CapPct:0.86,Val:3.2,WinsPerB:11.3},
+{t:"HOU",FOR:51.2,G:82,W:41,PO:4,Wstar:51.4,Pay24:143,Pay25:154,WperM:0.29,WstarPerM:0.33,POperM:0.03,CapPct:0.85,Val:4.4,WinsPerB:9.3},
+{t:"BKN",FOR:50.5,G:82,W:32,PO:0,Wstar:35.8,Pay24:157,Pay25:169,WperM:0.20,WstarPerM:0.21,POperM:0,CapPct:0.91,Val:4.0,WinsPerB:8.0},
+{t:"MEM",FOR:49.8,G:82,W:27,PO:0,Wstar:31.2,Pay24:136,Pay25:147,WperM:0.20,WstarPerM:0.21,POperM:0,CapPct:0.81,Val:2.9,WinsPerB:9.3},
+{t:"UTA",FOR:47.3,G:82,W:31,PO:0,Wstar:35.1,Pay24:131,Pay25:141,WperM:0.24,WstarPerM:0.25,POperM:0,CapPct:0.78,Val:2.7,WinsPerB:11.5},
+{t:"POR",FOR:45.9,G:82,W:21,PO:0,Wstar:25.4,Pay24:138,Pay25:149,WperM:0.15,WstarPerM:0.17,POperM:0,CapPct:0.82,Val:2.5,WinsPerB:8.4},
+{t:"TOR",FOR:44.6,G:82,W:25,PO:0,Wstar:29.3,Pay24:154,Pay25:166,WperM:0.16,WstarPerM:0.18,POperM:0,CapPct:0.90,Val:4.0,WinsPerB:6.3},
+{t:"SAS",FOR:43.8,G:82,W:22,PO:0,Wstar:26.1,Pay24:134,Pay25:145,WperM:0.16,WstarPerM:0.18,POperM:0,CapPct:0.80,Val:3.0,WinsPerB:7.3},
+{t:"CHA",FOR:42.1,G:82,W:21,PO:0,Wstar:25.0,Pay24:131,Pay25:140,WperM:0.16,WstarPerM:0.18,POperM:0,CapPct:0.78,Val:2.7,WinsPerB:7.8},
+{t:"DET",FOR:41.0,G:82,W:14,PO:0,Wstar:18.2,Pay24:130,Pay25:139,WperM:0.11,WstarPerM:0.13,POperM:0,CapPct:0.77,Val:2.6,WinsPerB:5.4},
+{t:"WAS",FOR:40.2,G:82,W:15,PO:0,Wstar:19.1,Pay24:132,Pay25:142,WperM:0.11,WstarPerM:0.13,POperM:0,CapPct:0.79,Val:2.9,WinsPerB:5.2}
+];
+let curK='FOR',curDir=-1;
+function render(){
+ let tb=document.querySelector('#tbl tbody');if(!tb)return;tb.innerHTML='';
+ let sorted=[...teams].sort((a,b)=> (b[curK]-a[curK])* (curDir===-1?1:-1) || b.FOR-a.FOR);
+ sorted.forEach((r,i)=>{
+   let tr=document.createElement('tr');
+   tr.innerHTML=`<td>${i+1}</td><td><b>${r.t}</b></td><td>${r.FOR}</td><td>${r.G}</td><td>${r.W}</td><td>${r.PO}</td><td>${r.Wstar}</td><td>$${r.Pay24}M</td><td>$${r.Pay25}M</td><td>${r.WperM}</td><td>${r.WstarPerM}</td><td>${r.POperM}</td><td>${(r.CapPct*100).toFixed(0)}%</td><td>$${r.Val}B</td><td>${r.WinsPerB}</td>`;
+   tb.appendChild(tr);
+ });
+}
+document.querySelectorAll('#sortPills button').forEach(b=>{
+ b.addEventListener('click',()=>{
+  let k=b.dataset.k;
+  if(curK===k) curDir*=-1; else{curK=k;curDir=-1}
+  document.querySelectorAll('#sortPills button').forEach(x=>x.classList.remove('act'));
+  b.classList.add('act');render();
+ });
+});
+document.querySelectorAll('#tbl th').forEach((th,idx)=>{
+ th.addEventListener('click',()=>{
+  const map=['','t','FOR','G','W','PO','Wstar','Pay24','Pay25','WperM','WstarPerM','POperM','CapPct','Val','WinsPerB'];
+  let k=map[idx]; if(!k||k==='t')return; curK=k; curDir=-1; render();
+ });
+});
+render();
+// PWA: if('serviceWorker' in navigator){navigator.serviceWorker.register('/sw.js')}
+</script>
+<!-- PWA manifest /manifest.json theme #0A0C10 offline cache-first -->
+</body>
+</html>

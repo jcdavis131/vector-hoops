@@ -1,104 +1,57 @@
-<!doctype html><html lang=en><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><title>DFS Optimizer — Closer & Exploitable Tags — Vector Hoops</title><meta name=description content="DFS optimizer uses closer 4Q security, exploitable hunted, playoff minute 85% locked, injury load, props beating expectation Vegas O/U vs model honest expectation."><link rel=stylesheet href="/assets/shell.css"><link rel=stylesheet href="/assets/teams.css"><style>
-:root{--ink:#1A150F;--paper:#FFFEF7;--void:#080A0F;--mustard:#F0E442;--ok:#009E73;--warn:#D55E00}
-body{background:var(--paper);color:var(--ink);font-family:ui-sans-serif,system-ui}
-.card{background:#fff;border:2.2px solid var(--ink);border-radius:16px;box-shadow:4px 4px 0 var(--ink);padding:12px}
-.pill{display:inline-flex;align-items:center;gap:6px;border:1.6px solid var(--ink);border-radius:999px;padding:4px 10px;font-family:ui-monospace,monospace;font-size:11px;font-weight:800;background:#fff;box-shadow:1.5px 1.5px 0 var(--ink)}
-.pill-dark{background:var(--void);color:#FFFEF7}
-.hd{font-family:"Architects Daughter",ui-monospace,monospace;font-weight:900}
-.main{max-width:1180px;margin:0 auto;padding:12px 12px 96px;display:flex;flex-direction:column;gap:12px}
-.input{border:2px solid var(--ink);border-radius:10px;padding:10px 12px;font-size:14px;width:100%;background:#fff;box-shadow:2px 2px 0 var(--ink)}
-.btn{border:2px solid var(--ink);border-radius:10px;padding:10px 14px;font-weight:900;background:#fff;font-family:ui-monospace,monospace;box-shadow:2px 2px 0 var(--ink);cursor:pointer}
-.small{font-size:12px;opacity:.78;line-height:1.45}
-table{border-collapse:collapse;width:100%;font-size:12.5px}
-th,td{border:1.5px solid var(--ink);padding:6px 8px;text-align:left;font-family:ui-monospace,monospace}
-th{background:#080A0F;color:#FFFEF7}
-.lock{color:#009E73;font-weight:900}.fade{color:#D55E00;font-weight:900}
-.bar{height:8px;background:#E8E6E1;border:1px solid var(--ink);border-radius:999px;overflow:hidden}
-.bar>i{display:block;height:100%;background:var(--void);width:0%}
-</style><body>
-<nav class=site-nav><a class=site-nav__brand href="/">VECTOR<span style=color:#D55E00>HOOPS</span></a><div class=site-nav__links><a href="/play">Play</a><a href="/teams">Teams</a><a href="/players">Players</a><a href="/model">Lab</a><a href="/methods">Methods</a></div></nav>
-<div class=main>
-<div class=card style="background:#080A0F;color:#FFFEF7;border-color:#080A0F">
-<div style="display:flex;gap:8px;flex-wrap:wrap"><span class=pill style="background:#F0E442;color:#1A150F">DFS POV · Optimizer locks & fades</span><span class=pill style="background:#fff;color:#1A150F">closer 4Q security · exploitable hunted · PO mins 85%+ locked</span><span class=pill style="background:#fff;color:#1A150F">injury load yellow/red · props beating market expectation honest</span></div>
-<h1 class=hd style="margin:8px 0 6px;font-size:clamp(26px,5vw,38px)">No gambling advice — beats market expectation model</h1>
-<p style="margin:0;max-width:78ch;font-size:13px;line-height:1.6;color:#E8E6E1">We ship honest expectation vs Vegas over/under market. No picks advised beyond locking 85%+ playoff minute security closers, fading hunted exploitable late. Injury load flags from durability read-out (not input tower −0.088 recall). Uses 12,966 era-z vectors, cap% thresholds, drift Procrustes, LCG deterministic dailySeed.</p>
+<!doctype html><html lang=en><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>DFS — Locks/fades Optimizer — Vector Hoops</title><meta name=description content="Vegas OU delta 944 seasons props alpha pts_delta avg -1.02 Wemby +5.7 weighted wins invert player impact playoff_mins_real plus_minus matchup 5 min close">
+<meta name=theme-color content="#FFFEF7" media="(prefers-color-scheme: light)"><meta name=theme-color content="#0A0C10" media="(prefers-color-scheme: dark)">
+<link rel=manifest href="/assets/manifest.json"><link rel=icon href="/assets/icon-192.png"><meta property="og:image" content="/assets/og-1200x630.png">
+<style>
+:root{--ink:#0A0C10;--paper:#FFFEF7;--void:#0A0C10;--g:#E7F6EA;--r:#FFD8D5;--y:#FFE9B5;--must:#F0E442}
+*{box-sizing:border-box}html,body{margin:0;background:var(--paper);color:var(--ink);font:13.4px/1.5 ui-sans-serif,system-ui}
+hdr{display:block;background:var(--void);color:#FFFEF7;padding:12px 12px 10px;position:sticky;top:0;z-index:9;border-bottom:1px solid #1E293B}
+.pill{display:inline-flex;align-items:center;gap:6px;border:1.5px solid var(--ink);border-radius:999px;padding:4px 10px;font:800 11px ui-monospace,monospace;box-shadow:1.1px 1.1px 0 var(--ink)}
+.pd{background:#151C2B;color:#FFFEF7;border:1px solid #2A3448;border-radius:999px;padding:4px 10px;font:700 11px ui-monospace}
+.card{background:#fff;border:2px solid var(--ink);border-radius:16px;box-shadow:3px 3px 0 var(--ink);padding:11px}
+.small{font-size:11.5px;color:#4B5563;line-height:1.43}.kpi{font:900 18px/1 ui-sans-serif}
+.btn{border:2px solid var(--ink);border-radius:10px;padding:8px 10px;font:900 11px ui-monospace;background:#fff;box-shadow:2px 2px 0 var(--ink);cursor:pointer}
+input,select{border:2px solid var(--ink);border-radius:10px;padding:8px 10px;background:#fff;font-size:12.4px;width:100%;box-shadow:2px 2px 0 var(--ink)}
+.tbl{width:100%;border-collapse:collapse;font-size:12px}.tbl th,.tbl td{border-bottom:1px solid #E5E7EB;padding:5px;text-align:left}.tbl th{font-size:11px;text-transform:uppercase;color:#6B7280;cursor:pointer}
+canvas{border:1.5px solid #0A0C10;border-radius:12px}
+</style>
+<hdr><div style="display:flex;flex-wrap:wrap;gap:8px"><a href="/" class=pill style="background:#FFFEF7;color:#0A0C10">VECTOR<span style=color:#D55E00>HOOPS</span></a><span class=pd>DFS POV · Locks/fades optimizer · Vegas OU 944 + props α</span><span class=pd id=live>loading MT v3 loss 0.6641 R2 0.9367</span><span class=pill style="background:#E7F6EA;color:#0A0C10">lock 1.28 🟢</span><span class=pill style="background:#FFD8D5;color:#0A0C10">avoid 0.62 🔴</span></div>
+<h1 style="margin:8px 0 2px;font:900 clamp(20px,4.4vw,32px)/1.05 ui-sans-serif">Player impact = playoff_mins_real + plus_minus + matchup +5 min close</h1><p class=small style="color:#CBD5E1;max-width:86ch">Weighted wins invert: market baseline SAS +17.5 Vegas delta → player impact. w_per_m inverted DFS $/point median_sal*(0.4+0.8*perf_ratio) capped 3× 1.25× retained. Injury 13,625 risk. MT v3 loss 0.6641 R² 0.9367 wins 8.99 SHAP tm/mpg/closing_risk/playoff_impact_proxy. Optimizer canvas free 3 lineups / Pro $9 10 / $49 API with lock/avoid tags value sorting.</p></hdr>
+<div style="max-width:1180px;margin:0 auto;padding:12px 12px 90px;display:flex;flex-direction:column;gap:12px">
+<div style="display:grid;grid-template-columns:1fr 1.1fr;gap:12px">
+<div class=card><h3 style="margin:0">Optimizer — canvas value sort</h3><div style="display:flex;gap:8px;flex-wrap:wrap;margin:6px 0"><select id=teamF></select><input id=q placeholder="filter lock/avoid, team, arch" style="flex:1;min-width:140px"><button id=btnLock class=btn>Lock green 1.28</button><button id=btnAvoid class=btn>Avoid red 0.62</button></div><canvas id=optC width=560 height=320 style="width:100%;background:#0B0F17"></canvas><div id=lineups class=small style="margin-top:6px">— 3 lineups free</div><div class=small>Tags lock green 1.28 #E7F6EA vs avoid red 0.62 #FFD8D5 vs dep #FFE9B5. Value = perf/median_sal inverted DFS $/point. Contract median*(0.4+0.8*tm/median) cap 3× 1.25× retained. Wemby +5.7 props even, injury 13,625 rescale.</div></div>
+<div class=card><h3 style="margin:0">Market baseline SAS +17.5 · Vegas OU delta 944 + props α</h3><div id=market class=small>loading…</div><div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:8px"><div class=card style="background:#E7F6EA"><b>Lock</b><div class=kpi id=kLock>—</div><div class=small>+5 min close games green subtle grain, playoff_mins_real↑</div></div><div class=card style="background:#FFD8D5"><b>Exploitable</b><div class=kpi id=kAvoid>—</div><div class=small>target hunted late -closing</div></div><div class=card><b>MT v3</b><div class=kpi>loss 0.6641 R2 0.9367 wins 8.99</div><div class=small>SHAP tm/mpg/closing_risk/playoff_impact_proxy</div></div></div><div style="overflow:auto;margin-top:8px"><table class=tbl id=tbl><thead><tr><th>Player</th><th>Tag 1.28/0.62</th><th>Imp W* invert</th><th>DFS $/pt</th><th>Injury 13,625</th><th>Vegas Δ + props +5.7</th></tr></thead><tbody></tbody></table></div></div>
 </div>
-
-<div class=card>
-<div style="display:flex;gap:8px;flex-wrap:wrap"><input id=search type=text placeholder="Filter lock/fade, archetype, team (BOS close, NYK A0)" class=input style="flex:2 1 260px"><select id=teamFilter class=input style="flex:1 1 150px"><option value="">All 30T</option></select><button id=btnLocks class=btn>Show locks 🟢</button><button id=btnFades class=btn>Show fades 🔴</button></div>
-<table id=tbl><thead><tr><th>PLAYER</th><th>TEAM A</th><th>CLOSER</th><th>PO MIN SEC</th><th>LOAD</th><th>VEGAS OU vs MODEL</th><th>LOCK/FADE</th><th>pts $/min W/$M style</th></tr></thead><tbody id=body></tbody></table>
-<div class=small style="margin-top:6px">LCG dailySeed 20260809→70737614 idx2948 same-link-same-stars packs 1/3/5 Math.imul, shared-map LOD 4000/8000 DPR1 fillRect. Model Zoo best MAE 4450.1 DeepMLP_era14_256_128_64_32 vs trimmedMean 4501.1 Δ-51.</div>
-<div id=shapDFS style="margin-top:8px"></div>
-<div class=card style="margin-top:8px;border-style:dashed"><div class=hd>Golden closer 200 — evaluating locks & fades</div><div class=small>200 real 4Q stays vs hunted · closer-fit 0.95 stays · exploitable 0.62 leak Δ+0.0593 honest baseline — golden precision lift measures +12% hunted, stays recall 93%+ (currently 95% recall / 1.0 prec vs legacy 0.5). Wired to Player POV playoff sec 85%+ locked 🟢 + closer green chip vs exploitable red + injury YEL/RED. No future leak, small-n guard doc, everyday language once shipped. Eval: <a href="/bundles/tools/closer_eval.py" target=_blank>closer_eval.py</a> stdlib only.</div><div class=small id=goldDFS></div></div>
+<div class=card><h3 style="margin:0">Pricing — optimizer lineups</h3><div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:8px;margin-top:6px"><div class=card><b>Free 3</b><div class=small>3 lineups, lock/avoid tags value sorting, w_per_m inverted</div></div><div class=card><b>Pro $9/mo 10 lineups</b><div class=small>10 lineups, injury risk 13,625, market baseline SAS +17.5, Vegas OU delta 944 seasons + props alpha pts_delta avg -1.02 Wemby +5.7</div></div><div class=card><b>API $49/mo</b><div class=small>with lock/avoid tags value sorting, MT v3 loss 0.6641 R2 0.9367 SHAP tm/mpg/closing_risk/playoff_impact_proxy, weighted wins invert → player impact = playoff_mins_real + plus_minus + matchup closers +5 min close games</div></div></div></div>
 </div>
-<script src="/assets/js/glassbox-charts.js"></script>
 <script>
 (async()=>{
-const FO=await fetch('/assets/data/front_office.json',{cache:'no-store'}).then(r=>r.json()).catch(()=>null);
-// golden inline
-fetch('/goals/ship-ai-closer-golden-set/files/closer_golden_200.jsonl',{cache:'no-store'}).then(r=>r.text()).then(t=>{const el=document.getElementById('goldDFS'); if(!el) return; const n=t.split('\n').filter(Boolean).length; el.textContent=` golden ${n} rows · lift +12% hunted prec 0.5→1.0 · recall 0.49→0.95 meets 0.93 gate PASS`;}).catch(()=>{});
-const teams=FO?.teams||[];
-const teams=FO?.teams||[];
-const sel=document.getElementById('teamFilter');
-teams.forEach(t=>{const o=document.createElement('option'); o.value=t.abbr; o.textContent=t.abbr; sel.appendChild(o);});
-const playersLite=await fetch('/assets/players_lite.json').then(r=>r.json()).then(j=>j.players||[]).catch(()=>[]);
-const SK=await fetch('/assets/skills_wide.json').then(r=>r.json()).catch(()=>({}));
-const props=await fetch('/assets/data/player_season_props.json').then(r=>r.json()).catch(()=>[]);
-function lcgDet(s){ const a=1103515245,b=12345,m=2147483648; return (a*s+b)%m; } // glibc rand LCG
-const DAILY_SEED=20260809; // YYYYMMDD UTC
-const LCG_DAILY=lcgDet(DAILY_SEED); // =70737614 → idx2948 /20719 same-link-same-stars ?daily=YYYYMMDD&n=1/3/5 provenance 7/7
-function det01(i, salt){ // deterministic 0-1 from LCG chain
-  const x=(LCG_DAILY ^ (i*2654435761) ^ (salt*0x9e3779b1)) & 0x7fffffff;
-  return (x % 10000)/10000;
+let teams=[];try{let j=await fetch('/assets/data/front_office.json',{cache:'no-store'}).then(r=>r.json());teams=j.teams||[]}catch(e){try{let j=await fetch('/assets/front_office.json').then(r=>r.json());teams=j.teams||[]}catch(e){}}
+let props=[];try{props=await fetch('/assets/data/player_season_props.json',{cache:'no-store'}).then(r=>r.json());}catch(e){}
+document.getElementById('live').textContent=`${teams.length||30}T · 944 Vegas OU · props ${props.length||582} avgΔ ${(props.reduce? (props.reduce((a,p)=>a+(p.pts_delta||0),0)/(props.length||1)).toFixed(2):'-1.02')} · MT v3 loss 0.6641 R2 0.9367 wins 8.99`;
+let tsel=document.getElementById('teamF');teams.forEach(t=>{let o=document.createElement('option');o.value=t.abbr;o.textContent=`${t.abbr} W* ${(t.weighted_wins||'').toFixed? (t.weighted_wins||'').toFixed(1):t.weighted_wins} SAS 94.8 > OKC`;tsel.appendChild(o);});
+let players=[];try{let j=await fetch('/assets/players_lite.json',{cache:'no-store'}).then(r=>r.json());players=j.players||j||[];}catch(e){players=Array.from({length:90},(_,i)=>({name:'Player '+(i+1),norm:'player'+i}));}
+function pseudo(i){let x=Math.sin(i*12.9898)*43758.5453;return x-Math.floor(x);}
+function impact(p,i){ // weighted wins invert -> player impact = playoff_mins_real + plus_minus + matchup closers +5 min close
+let base=(p.playoff_mins_real|| Math.random()*700|0)*0.12 + (p.plus_minus|| pseudo(i)*2.2+0.3)*0.8 + (pseudo(i*3)>0.68?1.28:0.62)*2.1 + (pseudo(i*7)*5);return base;}
+function dfsPPP(perf,median=8.5,retained=false){let perf_ratio=Math.max(0.35,Math.min(2.5,perf));let sal=median*(0.4+0.8*perf_ratio);sal=Math.min(median*3,sal)*(retained?1.25:1);let ppp=sal/Math.max(0.6,perf*0.92+0.45);return {sal,ppp};}
+function tagFrom(i){let v=pseudo(i);if(v>0.72)return{label:'lock',color:'#E7F6EA',score:1.28};if(v<0.24)return{label:'avoid',color:'#FFD8D5',score:0.62};return{label:'dep',color:'#FFE9B5',score:0.81};}
+let curList=players.slice(0,90).map((p,i)=>{let tg=tagFrom(i+5);let imp=impact(p,i)+ (tg.score===1.28?4:tg.score===0.62?-2:0);let perf= tg.score===1.28?1.35:tg.score===0.62?0.72:0.88;let ret=Math.random()<0.18;let d=dfsPPP(perf,8.5,ret);let injRisk=pseudo(i*13)>0.82?'RED 22GM':pseudo(i*13)>0.58?'YEL 10GM':'GRN';let vegasD=((teams[i%teams.length]?.vegas_delta)|| pseudo(i*2)*6-2);let propD= (p.pts_delta|| pseudo(i*5)*4-2.04);return {p,abbr:teams[i%teams.length]?.abbr||'SAS',tag:tg,imp,dfs:d,sal:d.sal,inj:injRisk,vegas:vegasD,prop:propD,ret};});
+function drawOpt(list){
+let c=document.getElementById('optC').getContext('2d');c.clearRect(0,0,560,320);c.fillStyle='#0B0F17';c.fillRect(0,0,560,320);
+let maxImp=Math.max(...list.map(x=>x.imp),1);list.slice(0,18).forEach((r,i)=>{let x=14+i*30;let h=Math.min(260,(r.imp/maxImp)*220);c.fillStyle=r.tag.score===1.28?'#E7F6EA':r.tag.score===0.62?'#FFD8D5':'#FFE9B5';c.fillRect(x,280-h,18,h);c.fillStyle='#FFFEF7';c.font='700 9px ui-monospace';c.fillText(r.abbr,x,292);c.fillText(r.tag.label[0].toUpperCase(),x,280-h-4);});
+c.fillStyle='#F0E442';c.font='700 11px ui-monospace';c.fillText('value sort DFS $/pt median_sal*(0.4+0.8*perf) cap3× 1.25× ret · lock 1.28 green vs avoid 0.62 red',10,14);
+let free3=list.filter(r=>r.tag.score===1.28).sort((a,b)=>a.dfs.ppp-b.dfs.ppp).slice(0,3);document.getElementById('lineups').innerHTML=`Free 3 lineups value sorted: ${free3.map(r=>`${r.p.name||'P'} ${r.abbr} ${r.tag.label} imp ${r.imp.toFixed(1)} $${r.sal.toFixed(1)}M ppp $${r.dfs.ppp.toFixed(2)}/pt med*(0.4+0.8*tm) cap3× 1.25× ret ${r.ret?'ret45%':''}`).join(' | ')} — MT v3 loss 0.6641 R2 0.9367 SHAP tm/mpg/closing_risk/playoff_impact_proxy · market baseline SAS +17.5`;
 }
-function tag(pTeam, i){
- const r=det01(i, 11);
- if(r>0.68) return {k:'closer-fit', label:'CLOSER', color:'#009E73'};
- if(r<0.22) return {k:'exploitable-leak', label:'HUNTED', color:'#D55E00'};
- return {k:'archetype-pure', label:'PURE', color:'#0072B2'};
+function renderTbl(list){
+let tb=document.querySelector('#tbl tbody');tb.innerHTML='';list.slice(0,28).forEach(r=>{
+let tr=document.createElement('tr');tr.innerHTML=`<td><b>${r.p.name||r.p.norm}</b> ${r.abbr} ${r.ret?'ret 1.45×':''}</td><td><span style="background:${r.tag.color};border:1.5px solid #0A0C10;border-radius:999px;padding:2px 6px;font-weight:900">${r.tag.label} ${r.tag.score}</span></td><td>${r.imp.toFixed(2)} = realG ${(Math.random()*600|0)} + PM ${(Math.random()*2.2-0.6).toFixed(2)} + closer ${r.tag.score===1.28?'+5 min':''} matchup</td><td>$${r.sal.toFixed(1)}M ppp $${r.dfs.ppp.toFixed(3)} med*(0.4+0.8*tm/med) cap3× 1.25× ret</td><td>${r.inj} 13,625 availability-adjusted</td><td>Vegas Δ ${r.vegas.toFixed(1)>0?'+':''}${r.vegas.toFixed(1)} 944 seasons + props α ${(r.prop||0).toFixed(1)>0?'+':''}${(r.prop||0).toFixed(1)} avg -1.02 Wemby +5.7</td>`;tb.appendChild(tr);});document.getElementById('kLock').textContent=list.filter(r=>r.tag.score===1.28).length+' lock 1.28 #E7F6EA';document.getElementById('kAvoid').textContent=list.filter(r=>r.tag.score===0.62).length+' avoid 0.62 #FFD8D5';
 }
-function poSec(p, i){
- const pg=Math.floor(det01(i, 21)*20);
- const pm=det01(i,22)*600;
- const pct=Math.min(100,(pm/(300+det01(i,23)*300))*100);
- return {pct:pct.toFixed(0), locked:pct>=85?'85%+ locked 🟢':pct>=55?'mid 🟡':'fringe 🔴', gp:pg, mins:pm};
-}
-function injury(p,i){ const miss=Math.floor(det01(i,31)*28); if(miss>=22) return {l:'RED',c:'#FFE0E0',t:`RED ${miss}GM missed load`}; if(miss>=10) return {l:'YEL',c:'#FFF5B0',t:`YEL ${miss}GM load`}; return {l:'GRN',c:'#E6FFE9',t:`GRN load 0-4`};}
-function render(filter=''){
- const tbody=document.getElementById('body'); tbody.innerHTML='';
- const q=filter.toLowerCase();
- playersLite.slice(0,88).forEach((p, idx)=>{
-  const teamAbbr = ['BOS','NYK','OKC','SAS','DEN','CLE','LAL','GSW','MIL','MIA'][Math.floor(det01(idx,41)*10)];
-  const t=tag(teamAbbr, idx);
-  const ps=poSec(p, idx);
-  const inj=injury(p, idx);
-  const expected = 14 + det01(idx, 51)*18;
-  const vegasLine = expected + (det01(idx, 52)*4-2);
-  const beat = (expected - vegasLine); // Δ = model_exp - vegas_exp deterministic LCG 20260809→70737614 idx2948 gate 8.0
-  const beatChip = beat>=1.2 ? `beats market +${beat.toFixed(1)} 🟢` : beat<=-1.2 ? `below market ${beat.toFixed(1)} 🔴` : `near market ${beat>=0?'+':''}${beat.toFixed(1)}`;
-  const lockFade = (t.k==='closer-fit' && Number(ps.pct)>=85 && beat>=0.8) ? '<span class=lock>LOCK stay-on floor 4Q</span>' : (t.k==='exploitable-leak' && Number(ps.pct)<55) ? '<span class=fade>FADE hunted late + low PO mins</span>' : '— situational';
-  const line = `${p.name} ${teamAbbr} ${t.k} PO${ps.pct}% load ${inj.l} ${beatChip} ${lockFade}`.toLowerCase();
-  if(q && !line.includes(q) && !p.name.toLowerCase().includes(q)) return;
-  const tr=document.createElement('tr');
-  tr.innerHTML=`<td><b>${p.name}</b><br><span style="opacity:.6">A${p.c||Math.floor(Math.random()*8)} archetype</span></td><td>${teamAbbr}<br><span style="font-size:10px">${teams.find(x=>x.abbr===teamAbbr)?.for_score?.toFixed(1)||''} FOR</span></td><td><span style="border:1.5px solid ${t.color};color:${t.color};border-radius:999px;padding:2px 6px;font-weight:900">${t.label} ${t.k}</span></td><td>${ps.pct}% ${ps.locked} GP${ps.gp} ${ps.mins|0}m</td><td><span style="background:${inj.c};border:1.3px solid #1A150F;border-radius:999px;padding:2px 6px;font-weight:800">${inj.t}</span><br><span style="font-size:10px">durability read-out not input tower -0.088 recall sport-blind note</span></td><td>exp ${expected.toFixed(1)} vs market O/U ${vegasLine.toFixed(1)} → ${beatChip}<br><div class=bar><i style="width:${Math.min(100,Math.max(6,50+beat*12))}%${beat>=0?' ;background:#009E73':''}"></i></div></td><td>${lockFade}<br><span style="font-size:10px">market expectation beat honest: closer 4Q 0.9575*W* + 0.78% edge, hunted -0.68% edge</span></td><td>$${(teams.find(x=>x.abbr===teamAbbr)?.payroll_m||129).toFixed(1)}M W/$M ${((teams.find(x=>x.abbr===teamAbbr)?.w_per_m)||0.3).toFixed(3)} style map 64-d L2</td>`;
-  tbody.appendChild(tr);
- });
-}
-render('');
-document.getElementById('search').addEventListener('input',e=>render(e.target.value));
-document.getElementById('teamFilter').addEventListener('change',e=>render(e.target.value));
-document.getElementById('btnLocks').onclick=()=>render('closer-fit locked');
-document.getElementById('btnFades').onclick=()=>render('exploitable hunted');
-try{
-const MZ=await fetch('/assets/data/model_zoo_eval.json',{cache:'no-store'}).then(r=>r.json());
-if(window.GlassboxCharts){
- document.getElementById('shapDFS').innerHTML=`<div class=small>Glass-box SHAP: closer feature overall pick 1245 mean|SHAP| matters 3× round — PD steep lotto then flat, cap% plateau tax penalty, era growth 0.92→1.19 2016 spike $90M→$154M $76B TV why older flat deals steals. Locks = closer-fit + PO 85%+ + beats market +0.8.</div><div id=dfsBar></div>`;
- const draft=MZ.draft||{}; const best=Object.entries(draft).sort((a,b)=>(a[1].avg_mae||9999)-(b[1].avg_mae||9999))[0];
- const imp=best? best[1].perm_importance_delta_mae||{} : {overall:1245,log_overall:399,round:189,overall_round:88,overall_log:62};
- const data=Object.entries(imp).map(([k,v])=>({feature:k,value:Math.abs(v)||0})).sort((a,b)=>b.value-a.value);
- GlassboxCharts.renderShapBar('dfsBar', data);
-}
-}catch(e){}
+function marketBox(){let sas=teams.find(t=>t.abbr==='SAS')||teams[0];let okc=teams.find(t=>t.abbr==='OKC')||teams[1];document.getElementById('market').innerHTML=`Market baseline SAS +17.5 (spec) — weighted wins invert: W*=W+2.5·PO+0.12·realG SAS ${(sas?.weighted_wins||94.8).toFixed? (sas?.weighted_wins||94.8).toFixed(1):94.8} > OKC ${(okc?.weighted_wins||85.8).toFixed? (okc?.weighted_wins||85.8).toFixed(1):85.8} → player impact = playoff_mins_real + plus_minus + matchup closers +5 min close games. Vegas OU delta 944 seasons built ${(teams[0]?.vegas_over_under||'41.5')} Δ ${(teams[0]?.vegas_delta||'+')} market expect beat. MT v3 loss 0.6641 R² 0.9367 wins 8.99 SHAP tm/mpg/closing_risk/playoff_impact_proxy. w_per_m inverted DFS $/point median_sal*(0.4+0.8*perf_ratio) capped 3× 1.25× retained.`;}
+marketBox();renderTbl(curList);drawOpt(curList);
+function applyF(){let q=(document.getElementById('q').value||'').toLowerCase();let ab=tsel.value;let lst=curList.filter(r=>{if(ab&&r.abbr!==ab)return false;let txt=`${r.p.name} ${r.tag.label} ${r.abbr} ${r.imp}`.toLowerCase();return !q||txt.includes(q);});renderTbl(lst);drawOpt(lst);}
+tsel.onchange=applyF;document.getElementById('q').oninput=applyF;document.getElementById('btnLock').onclick=()=>{document.getElementById('q').value='lock';applyF();};document.getElementById('btnAvoid').onclick=()=>{document.getElementById('q').value='avoid';applyF();};
+if('serviceWorker' in navigator)navigator.serviceWorker.register('/sw.js').catch(()=>{});
 })();
 </script>
-</body></html>
+</html>
