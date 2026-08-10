@@ -1958,3 +1958,62 @@ render with no separator, so the text arrives as `2008-092009-102010-11...` and 
 word-boundary year pattern only ever matches the first one. That is the seventh
 check this session whose first run was a false alarm, and the second time in two
 commits that the fix and the check needed fixing together.
+
+
+## The autocomplete was wired to an empty list (2026-08-10)
+
+The whole game is one text box. You read a past player and type the modern one
+you think matches. That box is:
+
+    <input id=guess list=guessList autocomplete=off placeholder="type modern twin: Butler, Ant...">
+    <datalist id=guessList></datalist>
+
+**Nothing ever put an option in it.** Three occurrences of `guessList` in the
+file: the `list=` attribute, the opening tag, the closing tag. The control
+advertised suggestions and had none, against a pool of 1,305 modern seasons a
+player has no way to enumerate.
+
+That is worse than a plain text box, because `pickModern` falls through to a
+substring match:
+
+    if(n===g) return MODERN[i];
+    if(!prefix&&n.indexOf(g)===0) prefix=MODERN[i];
+    if(!sub&&n.indexOf(g)>=0) sub=MODERN[i];
+
+A half-remembered name usually resolves to *something*. You get scored against a
+player you did not mean to name, and nothing tells you that happened. The "did
+you mean" list only appears when nothing matched at all, which is the rare case.
+
+`fillGuessList()` builds the options from `MODERN` itself rather than a written
+list, so it always describes the pool that actually loaded — the placeholder rows
+before the fetch lands or if it fails, all 1,305 after. One `DocumentFragment`,
+one reflow. **1,305 of 1,305 offered.**
+
+Same shape as the two defects before it: the loader replaced the pool and left
+everything that surfaces the pool pointing at the old, empty, or wrong thing.
+That is three in a row now — coordinates dropped, trajectory ids mismatched,
+suggestions never filled — all from the same swap, and none of them detectable
+without running the page.
+
+### The measurement was racing the paint
+
+`smoke_play.py` read the canvas once after load. Same page, unrelated edit:
+**10,117 non-background pixels on one run, 5,182 on the next.** The cloud arrives
+from a fetch and repaints when it lands, so a single read is a race, and a number
+that moves like that cannot be asserted on. It now waits for two equal
+consecutive reads. Three runs, 10,117 every time.
+
+### And the id check could not tell a quotation from a declaration
+
+`check_frontend.py` failed with `play.html defines id=guess 2 times`. It does
+not. The second one was inside the comment I had just written to explain the
+fix — a comment quoting `<input id=guess list=guessList>` reads as a declaration
+to a regex.
+
+Stripping `<!-- -->` and `/* */` before extracting ids is the fix; `//` is left
+alone, because it would eat the rest of any line containing `https://`. Verified
+it still catches a real duplicate rather than being quietly disarmed:
+
+    real duplicate           ids=['dup','dup','guess','guessList']  duplicates={'dup': 2}
+    quoted in block comment  ids=['guess','guessList']              duplicates=none
+    quoted in html comment   ids=['dup']                            duplicates=none

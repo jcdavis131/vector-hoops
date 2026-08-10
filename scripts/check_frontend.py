@@ -208,9 +208,25 @@ def check_assets(fail) -> None:
     print(f"  {len(seen)} static asset reference(s) resolve")
 
 
+RE_HTML_COMMENT = re.compile(r"<!--.*?-->", re.S)
+RE_BLOCK_COMMENT = re.compile(r"/\*.*?\*/", re.S)
+
+
+def without_comments(text: str) -> str:
+    """Comments do not define ids.
+
+    A comment that quotes the markup it is describing — `<input id=guess
+    list=guessList>` — reads as a second `id=guess` to a regex, and the page was
+    reported as defining it twice. The id was quoted, not declared. Only `<!-- -->`
+    and `/* */` are stripped; `//` is left alone because it would take the rest
+    of any line containing `https://` with it.
+    """
+    return RE_BLOCK_COMMENT.sub(" ", RE_HTML_COMMENT.sub(" ", text))
+
+
 def check_ids(fail) -> None:
     for page in pages():
-        ids = RE_ID_ATTR.findall(page.read_text(encoding="utf-8"))
+        ids = RE_ID_ATTR.findall(without_comments(page.read_text(encoding="utf-8")))
         for name in sorted({i for i in ids if ids.count(i) > 1}):
             fail(f"{label(page)} defines id={name} {ids.count(name)} times — getElementById will pick one")
     print(f"  no duplicate ids across {len(pages())} page(s)")

@@ -179,6 +179,27 @@ def errs_of(ws) -> list[str]:
     return [e if isinstance(e, str) else json.dumps(e, default=str) for e in got]
 
 
+def stable_ink(ws, deadline=15.0, poll=0.4):
+    """Read the canvas once it has stopped changing.
+
+    The cloud arrives from a fetch and repaints when it lands, so reading once
+    after load is a race: the same page measured 10,117 non-background pixels on
+    one run and 5,182 on the next, with only an unrelated edit in between. A
+    number that moves like that cannot be asserted on. This waits for two equal
+    consecutive reads instead of guessing a sleep long enough.
+    """
+    end, last, seen = time.time() + deadline, None, None
+    while time.time() < end:
+        got = ev(ws, CANVAS_INK)
+        if not isinstance(got, dict) or "err" in got:
+            return got
+        if last is not None and got.get("ink") == last:
+            return got
+        last, seen = got.get("ink"), got
+        time.sleep(poll)
+    return seen or {"err": "canvas never settled"}
+
+
 def wait_for(ws, expr, deadline=10.0, poll=0.25):
     end = time.time() + deadline
     while time.time() < end:
@@ -256,7 +277,7 @@ def main() -> int:
             raise SystemExit  # nothing below can mean anything
 
         # 1. the map
-        ink = ev(ws, CANVAS_INK)
+        ink = stable_ink(ws)
         if not isinstance(ink, dict) or "err" in ink:
             failures.append(f"canvas: {ink.get('err') if isinstance(ink, dict) else ink}")
         else:
@@ -293,7 +314,20 @@ def main() -> int:
                 f"{p['best']['n']!r} at cos {p['best']['s']:.2f} and the threshold is 0.76, "
                 f"so this round is unwinnable")
 
-        # 3. the miss path, which nothing has ever run
+        # 3. the suggestions. #guess is <input list=guessList>, so a player is
+        #    told the box will help them. It shipped pointing at an empty
+        #    <datalist> that nothing ever filled — 1,305 names in the pool and
+        #    no way to see any of them, while pickModern's substring fallback
+        #    quietly resolves a half-remembered name to the wrong player.
+        opts = ev(ws, "document.querySelectorAll('#guessList option').length")
+        print(f"  suggest  {opts} of {p['pool']} modern names offered")
+        if not isinstance(opts, int) or opts < p["pool"]:
+            failures.append(
+                f"the guess box advertises a datalist but only {opts} of {p['pool']} "
+                f"modern names are in it — every name the game will accept has to be "
+                f"suggestable, or a player is typing blind")
+
+        # 4. the miss path, which nothing has ever run
         ws.call("Runtime.evaluate", {"expression": "window.__vhErr = []"})
         idx_before = ev(ws, "idx")
         type_guess(ws, p["worst"]["n"])
