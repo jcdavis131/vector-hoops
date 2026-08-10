@@ -189,9 +189,33 @@ Still unsourced and now labelled as such: the `model.html` model-zoo table.
 - [ ] P4.1b `players.html` still scans `aria-live` ×0, `tabindex` ×0, `role=`
       ×0, `prefers-reduced-motion` ×0. Needs the same appended a11y layer
       `play.html` got in `f520c19e`.
-- [ ] P4.3 Player cards proper. `players.html` renders a canvas explorer, not a
-      card. `knowledge/` holds a generated wiki page per charted player and
-      **no page links it**.
+- [x] P4.3 **Player cards shipped — `11c1a0d4`.** `/player.html` searches
+      2,293 generated wiki pages and renders them. `knowledge/` is 7.9 MB that
+      **nothing on the site linked**, and `knowledge/INDEX.md` is a 515-byte
+      stub listing none of them, so `scripts/build_wiki_index.py` emits
+      `assets/wiki_index.json` (2,293 entries, 419 KB) from the frontmatter
+      each page already carries. Committed markdown only — no network, no
+      model, no pipeline cache. Asset-clobber guard: all 117 existing assets
+      snapshotted by name+size before and after; **nothing else changed**.
+      `--check` mode proves the index current.
+      Two bugs the tests caught, neither visible by reading:
+      1. the frontmatter regex required LF, but there is **no `.gitattributes`
+         and `core.autocrlf` is true** — the YAML block leaked into the card on
+         a Windows tree. Every line-ending regex is `\r?\n` now and the test
+         renders each page under both.
+      2. wikilinks come in three shapes, **counted** across all 2,293 pages:
+         29,809 slug+label, 2,293 bare slug, and **6,750 relative paths**
+         (`../archetypes/…`) that rendered as raw `[[…]]`. Normalising them
+         also made the 8 archetype and 5 position hubs reachable.
+      Gate: 0 unresolved wikilinks across all 2,293 pages; 10 structural
+      assertions on 5 pages × both line endings; escaping holds against an
+      injected `<img onerror>`.
+- [ ] P4.4 `/players.html` (the old canvas explorer) and `/player.html` now
+      overlap. Decide: fold the explorer into the card page, or make
+      `players.html` redirect. Nav currently points at `/player.html`.
+- [ ] P4.5 **No `.gitattributes` in the repo.** Line endings are per-clone,
+      which is what caused bug 1 above. A `* text=auto` + `*.md text` file would
+      close the whole class. Repo-wide change, so flagged not done.
 
 ### Phase 5 — team / front office
 - [ ] P5.1 `teams.html` already exists at 15,182 b — **audit before building**.
