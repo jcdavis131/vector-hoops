@@ -1518,3 +1518,47 @@ stripping a viewport meta reports that page, and both clear when restored.
 **What this does not cover, said plainly:** it reads what is declared. Real
 layout, text wrapping and tap ergonomics need a device, and nothing on this branch
 has ever been opened in a browser.
+
+
+## The site has now actually been opened (2026-08-10)
+
+Last pass I wrote that nothing on this branch had ever been rendered in a browser
+— that every gate here was static analysis plus node stubs with a DOM I wrote
+myself, and that this was the honest boundary of ninety-odd commits. It was, and
+it did not have to be.
+
+`scripts/smoke_render.py` serves `public/` — the directory Vercel actually
+publishes — over loopback, drives headless Chrome at it, and reads the DOM after
+the page's JavaScript has run and its fetches have settled. **No installs:**
+Chrome and Edge both ship on this machine, `http.server` is stdlib. The server
+binds 127.0.0.1 and is always shut down; the browser profile lives in the system
+temp directory, not the repo.
+
+**Eight pages render with their content filled in.** `/owner/` draws
+`<tr title="Boston Celtics">…BOS…56…66.80…$129.33M…78.10 A+`, `/teams.html` has
+all 30, and `/trends.html` comes back at 159,857 bytes with its observer-gated
+archetype legend populated — so the deferral works *and* still loads.
+
+### The test was wrong before it was right, for the third time this session
+
+First run reported two failures: `/owner/` "still showing Loading 30 teams" and
+`/teams.html` "never rendered Boston Celtics". **Both were my test.**
+
+`--dump-dom` returns the whole document, `<script>` elements included. "Loading 30
+teams" was matching the `tb.innerHTML` placeholder *inside the script that
+replaces it*, and "Could not load" was the text of a catch branch that never ran.
+The table had rendered perfectly the whole time — I only saw that by dumping the
+DOM to a file and reading it instead of theorising about virtual time budgets.
+teams.html renders `BOS`, never the club name, so that assertion was simply wrong.
+
+Assertions now run against the DOM with script elements stripped. That is the
+same lesson as the contrast checker's 65 unreal findings and the responsive
+checker's eleven: **a first-run failure list is a hypothesis, not a finding.**
+
+### One thing the harness surfaced about the real site
+
+`/offline` returns 404 from a plain static server. On Vercel it does not, because
+`vercel.json` rewrites `/offline` to `/offline.html` — and `sw.js` caches exactly
+`['/', '/offline', '/manifest.json']`. So offline support depends on that rewrite
+existing. It does today. Worth knowing that deleting one line of `vercel.json`
+would silently break the service worker's install.
