@@ -3141,7 +3141,8 @@ driving the whole thing with `aria-activedescendant` — a rebuild of the widget
 not an attribute. It works by mouse and by keyboard today; recorded rather than
 half-changed.
 
-- [ ] **P9.8 The results list is buttons inside options.** `aria-selected` cannot
+- [x] **P9.8 The results list is buttons inside options.**
+  Done 2026-08-10 — rebuilt as a proper combobox. See the note at the end. `aria-selected` cannot
   do its job while focus lives on a child of the option. Worth doing as a
   deliberate widget pass, along with the same question on play.html's datalist.
 
@@ -3232,3 +3233,46 @@ matching — parse the assets, compare numbers against the specific field a clai
 names, with a tolerance — not a substring search. That is a real piece of work
 and it is not obviously worth it, because reading the page has been finding these
 faster.
+
+
+## P9.8: the option that was a button (2026-08-10)
+
+Logged two passes ago as a widget rebuild rather than an attribute, and left
+because the search worked by mouse and by keyboard. It did work. It also told a
+screen reader something untrue about its own shape:
+
+    <li role="option" aria-selected="false"><button data-slug=…>…</button></li>
+
+An option containing a button, and DOM focus moving out of the combobox onto that
+button on every ArrowDown — so `aria-selected` sat at `false` on all five rows
+forever and the input's `aria-activedescendant` was never used at all.
+
+Rebuilt to the pattern the markup was already reaching for. **The option is the
+option**: no button inside it, focus stays in the input, and the arrow keys move
+`aria-activedescendant`.
+
+    typed 'curry'   expanded=true   activedesc=null    focus=INPUT   selected=false,false,false,false,false
+    ArrowDown       expanded=true   activedesc=hit-0   focus=INPUT   selected=true,false,false,false,false
+    ArrowDown       expanded=true   activedesc=hit-1   focus=INPUT   selected=false,true,false,false,false
+    Enter           opens '2001-02 – 2007-08 · 7 seasons · CPF …'
+
+Mouse still opens a row, and clicking one sets the active descendant too, so the
+two input methods leave the widget in the same state rather than in two different
+ones.
+
+**Focus no longer moves, which makes the visible cue load-bearing.** A sighted
+keyboard user had the browser's own focus ring doing that job; now the active row
+carries it — the existing yellow fill plus a `3px` outline, checked by eye rather
+than assumed. The `Escape` key clears the list, which the old handler never
+offered.
+
+The list's own ArrowUp/ArrowDown handler is gone. It existed only because focus
+used to land inside the list; there is nothing in there to steer now.
+
+### Why this one was worth doing at all
+
+The honest case against was that it works. The case for is that this is the site's
+search — the primary control on the page the brief names for player cards — and it
+was describing itself incorrectly to exactly the users who cannot see the yellow
+row. Five options that all report `aria-selected="false"` while one of them is
+plainly selected is not a nuance; it is the widget denying its own state.

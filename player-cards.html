@@ -29,8 +29,10 @@ h1{font-size:clamp(26px,4.4vw,40px);line-height:1.08;letter-spacing:-.02em;margi
 .dim{color:var(--muted)}
 input[type=search]{width:100%;max-width:460px;padding:11px 13px;border:2px solid var(--ink);border-radius:10px;font-family:var(--mono);font-size:15px;box-shadow:var(--shadow-sm);background:#fff}
 .hits{list-style:none;margin:8px 0 0;padding:0;display:flex;flex-direction:column;gap:4px;max-width:460px}
-.hits button{display:flex;justify-content:space-between;gap:10px;align-items:baseline;width:100%;text-align:left;border:1.6px solid var(--ink);border-radius:9px;background:#fff;padding:8px 10px;font:inherit;font-size:14px;cursor:pointer;min-height:40px}
-.hits button:hover,.hits button:focus-visible{background:var(--yellow)}
+.hits li[role="option"]{display:flex;justify-content:space-between;gap:10px;align-items:baseline;width:100%;text-align:left;border:1.6px solid var(--ink);border-radius:9px;background:#fff;padding:8px 10px;font:inherit;font-size:14px;cursor:pointer;min-height:40px}
+/* focus stays in the input, so the active row has to carry the visible cue itself */
+.hits li[role="option"]:hover,.hits li.is-active{background:var(--yellow)}
+.hits li.is-active{outline:3px solid var(--blue);outline-offset:2px}
 .hits .meta{font-family:var(--mono);font-size:10.5px;color:var(--muted);white-space:nowrap}
 /* the card itself, rendered from the wiki markdown */
 #card h2{font-size:clamp(24px,3.6vw,32px);letter-spacing:-.02em;margin:0 0 6px}
@@ -273,8 +275,14 @@ function search(){
     }).slice(0,10);
   $('hits').innerHTML=hits.length
     ? hits.map(function(p,i){
-        return '<li role="option" aria-selected="false"><button type="button" data-slug="'+esc(p.slug)+'" data-i="'+i+'">'+
-          '<span>'+esc(p.name)+'</span><span class="meta">'+esc(p.span)+'</span></button></li>';
+        /* The option IS the option. This used to be a <button> inside the
+           li[role=option], which puts a button inside an option as far as a
+           screen reader is concerned, and moved DOM focus out of the combobox
+           onto it — so aria-selected never moved off "false" and the input's
+           aria-activedescendant was never used. Focus stays in the input now. */
+        return '<li role="option" id="hit-'+i+'" aria-selected="false" tabindex="-1" '+
+          'data-slug="'+esc(p.slug)+'" data-i="'+i+'">'+
+          '<span>'+esc(p.name)+'</span><span class="meta">'+esc(p.span)+'</span></li>';
       }).join('')
     : '<li class="sub dim">No charted player matches that.</li>';
   setExpanded(hits.length>0);
@@ -295,15 +303,30 @@ function loadIndex(){
 
 $('q').addEventListener('input',function(){ IDX?search():loadIndex(); });
 $('q').addEventListener('focus',loadIndex);
+function setActive(i){
+  var opts=$('hits').querySelectorAll('li[role="option"]');
+  if(!opts.length){ cursor=-1; $('q').removeAttribute('aria-activedescendant'); return; }
+  cursor=Math.max(0,Math.min(opts.length-1,i));
+  for(var k=0;k<opts.length;k++){
+    var on=(k===cursor);
+    if((opts[k].getAttribute('aria-selected')==='true')!==on)
+      opts[k].setAttribute('aria-selected', on?'true':'false');
+    opts[k].classList.toggle('is-active', on);
+  }
+  $('q').setAttribute('aria-activedescendant', opts[cursor].id);
+  if(opts[cursor].scrollIntoView) opts[cursor].scrollIntoView({block:'nearest'});
+}
 $('q').addEventListener('keydown',function(e){
-  var btns=$('hits').querySelectorAll('button');
+  var opts=$('hits').querySelectorAll('li[role="option"]');
   if(e.key==='ArrowDown'||e.key==='ArrowUp'){
-    if(!btns.length) return;
+    if(!opts.length) return;
     e.preventDefault();
-    cursor=Math.max(0,Math.min(btns.length-1,cursor+(e.key==='ArrowDown'?1:-1)));
-    btns[cursor].focus();
-  } else if(e.key==='Enter' && btns.length){
-    e.preventDefault(); open(btns[Math.max(0,cursor)].dataset.slug,true);
+    setActive(cursor + (e.key==='ArrowDown'?1:-1));
+  } else if(e.key==='Enter' && opts.length){
+    e.preventDefault(); open(opts[Math.max(0,cursor)].dataset.slug,true);
+  } else if(e.key==='Escape'){
+    $('hits').innerHTML=''; hits=[]; setExpanded(false);
+    cursor=-1; $('q').removeAttribute('aria-activedescendant');
   }
 });
 /* The browse row opens a hub card through the same path the search results use,
@@ -313,16 +336,12 @@ document.addEventListener('click',function(e){
   if(b&&b.dataset.path) open(b.dataset.path,true);
 });
 $('hits').addEventListener('click',function(e){
-  var b=e.target.closest?e.target.closest('button'):null; if(b) open(b.dataset.slug,true);
+  var li=e.target.closest?e.target.closest('li[role="option"]'):null;
+  if(li && li.dataset.slug){ setActive(+li.dataset.i||0); open(li.dataset.slug,true); }
 });
-$('hits').addEventListener('keydown',function(e){
-  var btns=$('hits').querySelectorAll('button');
-  if(e.key!=='ArrowDown'&&e.key!=='ArrowUp') return;
-  e.preventDefault();
-  var i=+((e.target.dataset||{}).i||0)+(e.key==='ArrowDown'?1:-1);
-  if(i<0){ $('q').focus(); cursor=-1; return; }
-  if(i<btns.length){ cursor=i; btns[i].focus(); }
-});
+/* The list had its own ArrowUp/ArrowDown handler because focus used to move
+   into it. Focus stays on the input now and setActive() moves
+   aria-activedescendant, so there is nothing in here to steer. */
 // wikilinks between cards stay in-page
 $('card').addEventListener('click',function(e){
   var a=e.target.closest?e.target.closest('a.wikilink'):null;
