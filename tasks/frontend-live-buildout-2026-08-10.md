@@ -62,7 +62,16 @@ from; if there isn't one, say so on the page.**
 top-5 0.9339; held-out test n=790 top-1 0.438 / top-5 0.757; transparent 14-d
 baseline test top-5 0.1962. Use these; cite the file.
 
-Still unsourced and now labelled as such: the `model.html` model-zoo table.
+**Correction (later in the branch):** I once wrote here that the `model.html`
+model-zoo table was "still unsourced and now labelled as such". That was wrong
+and it is the fifth entry in the table above. Every zoo figure is in
+`assets/front_office.json` → `model_eval.model_zoo` with 5-fold metrics, seeds
+and architectures; I had checked only `eval_scoreboard.json`, not found them,
+and concluded they existed nowhere. Fixed in `0b8660a2` (table reads the file)
+and `d9130d73` (the card headline that still restated two of them in markup).
+Hardcoded zoo numbers in `model.html`: **0**.
+
+| **my own** board + `model.html` | labelled sourced figures "Unsourced" | `0b8660a2` |
 
 ## Findings that are bugs, not features
 
