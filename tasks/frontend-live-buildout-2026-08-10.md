@@ -95,9 +95,24 @@ Accessibility across the live site is effectively zero — scanned
       whoever owns the generated `play.html`.
 
 ### Phase 2 — trends
-- [ ] P2.1 `trends.html` is a stub. Build a real change-over-time page from
-      committed assets (`drift.json`, `archetypes_time.json`,
-      `trajectories.json`, `season_norms.json`). Follow the `dataviz` skill.
+- [x] P2.1 `trends.html` rebuilt — **done `f5d7f4d3`**, 1,822 b → 25,250 b.
+      Was a nav plus one card of jargon, sitting on `drift.json` (122,561 b)
+      and `archetypes_time.json` (25,147 b) that nothing read.
+      **The stub's headline was wrong**: it claimed `drift 6.2°/yr`; the mean of
+      the 29 measured pairs is **8.38°**. Nothing is hardcoded now — every
+      figure computes from the JSON at load and the validation step greps for
+      the old constants to keep it that way.
+      Rotation line (single series, no legend); archetype shares as 8 small
+      multiples on one shared y-scale rather than a stacked area; diverging
+      blue/orange validated at ΔE 24.7 protan / 33.6 normal on `#fafaf8`.
+      Table view, arrow-key stepping, live region, skip link, reduced-motion.
+- [ ] P2.2 `trajectories.json` (90,730 b) and `eratwins.json` (632,875 b) are
+      still unread by any page. Era-twin pairs are the most quotable thing in
+      the repo and appear nowhere.
+- [ ] P2.3 `season_norms.json` documents `notInvertible` features
+      (`FG3_PCT` and two others: empirical-Bayes shrunk before z-scoring, so
+      the raw rate is not what was normalized — it says to show a percentile
+      instead of a fabricated rate). Nothing surfaces that caveat yet.
 
 ### Phase 3 — explainability
 - [x] P3.1 **F1 fixed — `fba1b234`.** The chart now reads
