@@ -180,11 +180,32 @@ Two `POOL` ids were mislabelled and both are in the canonical pack link
 | 123 | Shaq 99-00 | **Doug West 1996-97** |
 | 456 | Iverson 00-01 | **Carlos Rogers 1997-98** |
 
-- [ ] **NEXT: wire `play.html` to `game_vectors.json`.** Replace `POOL`/`MODERN`,
+- [x] **Wired — `870119be`.** `POOL`/`MODERN` refilled from `game_vectors.json`; `cos()` runs the full vector with a length guard; hardcoded rows kept as pre-load fallback. Original note: wire `play.html` to `game_vectors.json`. Replace `POOL`/`MODERN`,
       change `cos()` from `i<3` to the vector length, lazy-load the 319 KB.
       **This changes puzzle content and scores** — and `?pack=672-123-456` will
       start resolving 123/456 to their real players rather than the claimed
       Shaq/Iverson. Flagged because it is user-visible, not because it is wrong.
+
+## 🔴 P0 #2 — the daily puzzle crashed on half of all dates
+
+Every seed site read `(hStr(date)^DAILY)%M`. In JavaScript `^` yields a
+**signed** 32-bit integer, so the seed is negative about half the time and
+`POOL[s%POOL.length]` is a negative index → `undefined` → `setSeq([undefined])`
+→ `POOL[NaN]` → `cur` undefined → `past.n` throws.
+
+**Measured: 361 of 730 dates from 2026-01-01 produce no puzzle.** That is the
+initial page load plus the Solo1 / Triple3 / Full5 buttons.
+
+Pre-existing: the expression is byte-identical on `origin/master`, so it is
+live. Fixed in `870119be` — `>>>0` after the XOR at all 5 sites. **Not a
+reshuffle:** all 365 previously-working days produce the same puzzle, all 365
+previously-broken days now produce a valid one, 0 undefined picks across 730.
+
+Found by testing the real-vector wiring, not by looking for it.
+
+**Noted, not fixed:** `LCG(s)=(A*s+C)%M` overflows `Number.MAX_SAFE_INTEGER`
+for `s` near 2³¹, so it is not a true LCG — only **120 distinct puzzles across
+two years**. Correcting it changes every puzzle, so it is a product call.
 ## Findings that are bugs, not features
 
 - **F1 — `model.html` draws a fake SHAP chart.** Its script is literally
