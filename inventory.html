@@ -19,7 +19,11 @@ header{max-width:1120px;margin:0 auto;padding:10px 14px;display:flex;flex-wrap:w
 .pill{display:inline-flex;align-items:center;gap:6px;padding:6px 11px;border-radius:999px;border:1.6px solid var(--ink);background:#fff;box-shadow:1.8px 1.8px 0 var(--ink);font-weight:800;font-size:11.5px;font-family:ui-monospace,Menlo,monospace;min-height:44px;cursor:pointer}
 .pill-y{background:var(--yellow)} .pill-o{background:var(--orange);color:#111} .pill-b{background:#0072b2;color:#fff}
 .wrap{max-width:1120px;margin:0 auto;padding:12px}
-.card{background:#fff;border:2.2px solid var(--ink);border-radius:16px;box-shadow:4px 4px 0 var(--ink);padding:12px}
+/* min-width:0 because a .card is often a grid item, and a grid item defaults to
+   min-width:auto and will not shrink below its widest content. Measured at 360px:
+   div.card min-width=auto inside a display:grid parent held this page at 645 px
+   however narrow the viewport got. */
+.card{background:#fff;border:2.2px solid var(--ink);border-radius:16px;box-shadow:4px 4px 0 var(--ink);padding:12px;min-width:0}
 .hd{font-family:ui-monospace,Menlo,monospace;font-weight:900;text-transform:uppercase;letter-spacing:.04em;font-size:12px}
 .mono{font-family:ui-monospace,Menlo,monospace;font-size:11px;color:#5A5754}
 .mini{font-size:12.3px;line-height:1.5;color:#443F3A}

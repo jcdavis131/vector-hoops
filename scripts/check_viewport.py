@@ -47,7 +47,14 @@ BROWSERS = [
     Path(r"C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe"),
 ]
 
-PAGES = ["/", "/owner/", "/teams.html", "/trends.html", "/model.html", "/play.html", "/players.html"]
+# every page the site serves, not a sample. Three of the first seven overflowed,
+# so the other fifteen had no reason to be assumed fine.
+PAGES = [
+    "/", "/owner/", "/brand/", "/dfs/", "/player/", "/player-fit/",
+    "/teams.html", "/trends.html", "/model.html", "/play.html", "/players.html",
+    "/player.html", "/dictionary.html", "/methods.html", "/inventory.html",
+    "/leaderboard.html", "/offline.html", "/player-animations.html",
+]
 
 # What to ask the page once it has settled. Returns the two widths and the worst
 # offenders, so a failure names the element instead of just the number.
@@ -79,6 +86,40 @@ PROBE = """(() => {
   return JSON.stringify({sw: d.scrollWidth, cw: d.clientWidth, over: out.slice(0, 6), n: out.length});
 })()"""
 
+
+# Names the element that actually causes the overflow, with the computed values
+# that matter. Guessing from CSS cost two wrong turns: the first suspect on
+# /teams was #foTable at 760px, which is correctly contained inside
+# #foWrap{overflow-x:auto}; the real cause was a grid item three levels up
+# refusing to go below min-width:auto.
+EXPLAIN = """(() => {
+  const d = document.documentElement;
+  const contained = e => {
+    for (let p = e.parentElement; p && p !== d; p = p.parentElement) {
+      const o = getComputedStyle(p).overflowX;
+      if (o === 'auto' || o === 'scroll' || o === 'hidden') return true;
+    }
+    return false;
+  };
+  const hits = [];
+  document.querySelectorAll('body *').forEach(e => {
+    const r = e.getBoundingClientRect();
+    if (r.width && r.right > d.clientWidth + 1 && !contained(e)) hits.push({e, r});
+  });
+  if (!hits.length) return JSON.stringify({none: true, sw: d.scrollWidth, cw: d.clientWidth});
+  hits.sort((a, b) => b.r.right - a.r.right);
+  const {e, r} = hits[0];
+  const chain = [];
+  for (let p = e; p && p !== d; p = p.parentElement) {
+    const c = getComputedStyle(p);
+    chain.push(p.tagName.toLowerCase() + (p.id ? '#' + p.id : '') +
+      (p.className && p.className.toString ? '.' + p.className.toString().trim().split(/\\s+/)[0] : '') +
+      '  w=' + Math.round(p.getBoundingClientRect().width) +
+      '  min-width=' + c.minWidth + '  overflow-x=' + c.overflowX + '  display=' + c.display);
+  }
+  return JSON.stringify({n: hits.length, sw: d.scrollWidth, cw: d.clientWidth,
+    text: (e.textContent || '').trim().slice(0, 90), chain: chain.slice(0, 6)}, null, 1);
+})()"""
 
 class WS:
     """The smallest WebSocket client that can drive CDP."""
@@ -163,6 +204,8 @@ class WS:
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--widths", default="320,360,390", help="comma-separated CSS pixel widths")
+    ap.add_argument("--explain", help="one path: name the widest uncontained element and its "
+                                      "ancestor chain with computed min-width, overflow-x and display")
     args = ap.parse_args()
     widths = [int(w) for w in args.widths.split(",") if w.strip()]
 
@@ -223,6 +266,15 @@ def main() -> int:
         ws.call("Runtime.enable")
 
         print(f"serving public/ at 127.0.0.1:{site_port}, driving {browser.name} over CDP\n")
+        if args.explain:
+            ws.call("Emulation.setDeviceMetricsOverride",
+                    {"width": widths[0], "height": 900, "deviceScaleFactor": 1, "mobile": True})
+            ws.call("Page.navigate", {"url": f"http://127.0.0.1:{site_port}{args.explain}"})
+            time.sleep(2.5)
+            r = ws.call("Runtime.evaluate", {"expression": EXPLAIN, "returnByValue": True})
+            print(f"{args.explain} at {widths[0]}px:")
+            print((r.get("result") or {}).get("value") or "no result")
+            return 0
         for width in widths:
             ws.call("Emulation.setDeviceMetricsOverride",
                     {"width": width, "height": 900, "deviceScaleFactor": 1, "mobile": True})

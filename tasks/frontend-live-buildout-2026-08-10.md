@@ -1662,3 +1662,40 @@ now skips anything inside a scrollable ancestor, because the page-level question
 is `scrollWidth` against `clientWidth` and nothing else.
 
 **All seven pages now fit at 320, 360 and 390 with nothing past the edge.**
+
+
+## Two more pages did not fit, and one threshold was wrong (2026-08-10)
+
+The viewport check covered seven pages and three of them had failed, so the other
+fifteen had no business being assumed fine. Extended it to all eighteen the site
+serves. Two more overflowed:
+
+    /methods.html    scrollWidth 647 vs 360
+    /inventory.html  scrollWidth 645 vs 360
+
+Both the same trap as teams and model, confirmed by asking the browser rather than
+reading CSS: `div.card min-width=auto` inside a `display:grid` parent. That is now
+**four pages** with the identical bug, so the fix went on `.card` itself — a card
+is usually a grid item, and a grid item that cannot go below `min-width:auto` will
+not shrink to its column however narrow the screen gets.
+
+`--explain` is now a flag rather than a one-off script: give it a path and it
+names the widest uncontained element and walks its ancestor chain with computed
+`min-width`, `overflow-x` and `display`. That is what found all four.
+
+### And then methods.html was still wrong
+
+647 dropped to 500, not 360. The remaining cause was a **four-column table** with
+no scroll wrapper — which `check_responsive.py` had deliberately exempted, on my
+reasoning that "three and four column tables wrap and compress, which is the
+ordinary responsive case."
+
+That reasoning was wrong, and the browser is what proved it. `WIDE_TABLE_COLS`
+is now 4. The static check is the cheap pre-filter; `check_viewport.py` is the
+authority, because it measures instead of inferring.
+
+**All eighteen served pages now fit at 320, 360 and 390 with nothing past the
+edge.**
+
+Worth noting for whoever runs this next: eighteen pages across three widths takes
+longer than two minutes, so run it one width at a time.

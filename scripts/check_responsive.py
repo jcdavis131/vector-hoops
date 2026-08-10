@@ -43,9 +43,12 @@ ROOT = Path(__file__).resolve().parent.parent
 SKIP_DIRS = {"public", "node_modules", ".git", "assets", "knowledge", "pipeline", "docs", "scripts", "tasks"}
 
 NARROW = 360
-# below this a table wraps and compresses; at or above it, or with nowrap cells,
-# it needs somewhere to scroll
-WIDE_TABLE_COLS = 6
+# Was 6, on the reasoning that three and four column tables wrap and compress.
+# scripts/check_viewport.py then measured methods.html at 360px in a real browser
+# and found a four-column table forcing the page to 500. Lowered to 4. The browser
+# check is the authority here; this one is the cheap pre-filter that runs without
+# launching Chrome.
+WIDE_TABLE_COLS = 4
 
 RE_STYLE = re.compile(r"<style[^>]*>(.*?)</style>", re.S | re.I)
 RE_CSS_COMMENT = re.compile(r"/\*.*?\*/", re.S)
