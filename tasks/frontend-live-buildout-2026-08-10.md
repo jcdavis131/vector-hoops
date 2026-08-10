@@ -137,7 +137,7 @@ would be an unverifiable visual change to a live page. The key added in
 behaviour for it. **Operator decision: pick a canonical order, then align the
 other camp.** (`#FFFEF7` vs `#000000` at index 7 may be deliberate — one suits
 a dark canvas, the other a light one.)
-- [ ] P1.4 `resMeta` renders `cos` to **3 decimals**, against the repo rule of
+- [x] P1.4 `resMeta` 3-decimal cosine — **closed in `cc052ccb`**, verified: `toFixed(3)` count in `play.html` is now 0. (Stale board entry; re-checked against the file rather than trusted.) Original note: `resMeta` rendered `cos` to **3 decimals**, against the repo rule of
       never showing a user more than 2. Left alone deliberately: fixing it from
       my appended layer means a re-entrant observer rewriting another agent's
       render, which is more fragile than the bug. One-character fix for
@@ -193,7 +193,7 @@ a dark canvas, the other a light one.)
       `PLAYER_HEIGHT_INCHES` 1.93 then `PLAYER_WEIGHT` 1.24; archetype by
       `PLAYER_HEIGHT_INCHES` 0.86 then `USG_PCT` 0.76.
 - [ ] P3.2 End-to-end narrative: stat → tower → fusion → 64-d → head.
-- [ ] P3.3 Audit the rest of `model.html` for the same failure mode. The model
+- [x] P3.3 Closed — `0b8660a2` sourced the zoo table, and a follow-up removed the last 2 hardcoded figures that survived in the card headline (it duplicated `4450.09`/`4501.15` in markup). Headline is now filled from the same rows as the table, so the two cannot drift, and it states that a draft-surplus MAE is a different benchmark from the retrieval score. Hardcoded zoo numbers in `model.html`: **0**. Original note: audit the rest of `model.html` for the same failure mode. The model
       zoo numbers (`DeepMLP 4450.09`, `MTNN v3 loss 0.6641`, `purity@10
       0.7057`, `lift 6.32`) are hardcoded in markup. They may well be true —
       `assets/eval_scoreboard.json` exists — but **none of them is sourced**,
