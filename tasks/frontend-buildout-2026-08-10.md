@@ -55,9 +55,17 @@ Invoke-WebRequest http://localhost:8099/<page>.html -UseBasicParsing   # 200 + e
 
 ## Phase 1 — gameplay, centered on the embedding map
 
-- [ ] P1.1 Map becomes the stage, not a strip. `#map-wrap` is a fixed
-      640×380 canvas wedged between cards; promote it to the primary surface
-      with the guess panel docked over it.
+- [x] P1.1 Map becomes the stage — **done 2026-08-10**. `#map-wrap` is now
+      `position:sticky` under the nav, so it stays on screen through the target
+      card and the guess input instead of scrolling away the moment you play.
+      Height is responsive (`clamp(240px,42vh,420px)` mobile,
+      `clamp(320px,52vh,560px)` ≥900px, `min(200px,38vh)` on ≤560px-tall
+      landscape) replacing the flat `min-height:380px`. Added the `⌖ Target`
+      button — `focusOnTarget()` shipped in the API from day one with nothing
+      visible calling it (audit finding 7, now closed).
+      **Sticky depends on `html,body{overflow-x:clip}`** from `unified.css`,
+      the last sheet loaded; `responsive.css:7` sets `overflow-x:hidden` and
+      would break it if a later `clip` ever stops winning the cascade.
 - [x] P1.2 Guess feedback drawn *on the map* — **already shipped before this
       board.** `shared-map.js draw()` persists every guess as an orange ring,
       draws a line to the target bullseye (latest solid, earlier dashed), and
@@ -144,12 +152,15 @@ Mounted by `index.html` and `play.html` only. Performance is not the problem.
 
 **Still open (queued, not yet done):**
 
-6. `#map-wrap` is `min-height:380px` sandwiched between the daily-court card
-   and the past-card, so on mobile the map sits below the fold — the stage
-   problem P1.1 addresses.
-7. `focusOnTarget()` exists in the API but no visible button calls it; only
-   `Pause` and `Reset` are in `#map-controls`. `T` now reaches it from the
-   keyboard, but a pointer user still cannot.
+6. ~~`#map-wrap` is `min-height:380px` sandwiched between the daily-court card
+   and the past-card, so the map is off-screen for the whole guess loop.~~
+   **Closed by P1.1** — sticky, responsive height.
+7. ~~`focusOnTarget()` exists in the API but no visible button calls it.~~
+   **Closed by P1.1** — `⌖ Target` button in `#map-controls`.
 8. `dotSize = W<600?2:2` — dead ternary, both branches 2 (harmless).
 9. The 8s idle pause sets `embedPaused`, and only pointer/resume events
    revived it; keyboard now kicks it, but the pause is invisible to the user.
+10. **No visual verification is possible on this box** — no headless browser is
+   installed and installing one is out of lane. Layout claims here rest on
+   reading the cascade plus local-server string checks, not on a render. Any
+   layout regression will surface on the post-push smoke of the live site.

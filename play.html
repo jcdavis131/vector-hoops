@@ -19,7 +19,23 @@ button,.input{min-height:44px}
 .pill{border:1.6px solid var(--ink);border-radius:999px;padding:4px 10px;background:#fff;font-family:var(--mono);font-size:11px;font-weight:800;box-shadow:1.5px 1.5px 0 var(--ink);display:inline-flex;align-items:center;gap:6px}
 .pill-yellow{background:var(--yellow)}.pill-green{background:var(--green);color:#fff}.pill-blue{background:var(--blue);color:#fff}
 .main{max-width:980px;margin:0 auto;padding:12px clamp(12px,3vw,20px) calc(92px + env(safe-area-inset-bottom));display:flex;flex-direction:column;gap:14px}
-#map-wrap{position:relative;min-height:380px;border:2.5px solid var(--ink);border-radius:16px;box-shadow:6px 6px 0 var(--ink);overflow:hidden;background:radial-gradient(120% 80% at 70% 20%,rgba(0,114,178,.12),transparent 48%),radial-gradient(90% 60% at 20% 70%,rgba(213,94,0,.10),transparent 46%),var(--paper)}
+/* .site-nav is position:sticky;top:0 (shell.css), so anything else that pins
+   must clear it. Measured, not guessed: 10px padding x2 + ~28px content. */
+:root{--vh-nav-h:48px}
+@media(max-width:640px){:root{--vh-nav-h:44px}}
+/* The map is where the game answers you — the bullseye, your guess rings, the
+   distance lines. It used to sit above the target card and the guess input, so
+   the entire guess loop happened with the map scrolled off-screen. Pinning it
+   keeps the thing you are aiming at visible while you aim.
+   Sticky needs no scroll-container ancestor: html/body compute to
+   overflow-x:clip (unified.css is the last sheet in), not hidden. On engines
+   without `clip`, responsive.css's earlier overflow-x:hidden wins and the map
+   simply scrolls as it did before — the game still plays. */
+#map-wrap{position:sticky;top:calc(var(--vh-nav-h,48px) + env(safe-area-inset-top,0px) + 6px);z-index:6;height:clamp(240px,42vh,420px);min-height:0;border:2.5px solid var(--ink);border-radius:16px;box-shadow:6px 6px 0 var(--ink);overflow:hidden;background:radial-gradient(120% 80% at 70% 20%,rgba(0,114,178,.12),transparent 48%),radial-gradient(90% 60% at 20% 70%,rgba(213,94,0,.10),transparent 46%),var(--paper);transition:height .28s cubic-bezier(.22,1,.36,1)}
+@media(min-width:900px){#map-wrap{height:clamp(320px,52vh,560px)}}
+/* A phone in landscape is ~375px tall; the mobile clamp floor would eat 64% of it. */
+@media(max-height:560px){#map-wrap{height:min(200px,38vh);top:calc(var(--vh-nav-h,44px) + env(safe-area-inset-top,0px) + 4px)}}
+@media(prefers-reduced-motion:reduce){#map-wrap{transition:none}}
 #sky-canvas{position:absolute;inset:0;width:100%;height:100%;display:block;cursor:grab}
 #map-overlay{position:absolute;left:10px;right:10px;top:10px;display:flex;justify-content:space-between;gap:8px;z-index:2;pointer-events:none;flex-wrap:wrap}
 #map-overlay .chip{background:rgba(255,254,247,.92);border:2px solid var(--ink);border-radius:999px;padding:4px 8px;font-family:var(--mono);font-size:10px;box-shadow:1px 1px 0 var(--ink)}
@@ -168,7 +184,7 @@ button,.input{min-height:44px}
     <div class="small-mono" style="margin-top:8px;opacity:.6;text-transform:none">Each slot is fixed for the day — same for everyone. No reroll on refresh. Solve 3 to stay incentivized, 5 to dominate leaderboard.</div>
   </div>
 
-  <div id="map-wrap"><canvas id="sky-canvas" width="640" height="380" aria-label="12,966 player-seasons as points in a rotatable 3D embedding map — your guesses draw as orange rings connected by a line to the past target's bullseye, showing how close each guess landed. Focus this map and press H to hear the controls and the current state."></canvas><div id="target-badge" style="position:absolute;left:0;top:0;transform:translate(-50%,-140%);background:#F0E442;border:2.2px solid #1A150F;border-radius:999px;padding:5px 10px;font-family:ui-monospace,monospace;font-size:10px;font-weight:900;box-shadow:2px 2px 0 #1A150F;z-index:4;display:none;pointer-events:none;white-space:nowrap">★ TARGET</div><div id="map-overlay"><span class="chip" id="map-fact">12,966 seasons • ★ target past</span><span class="chip">orange rings = your guesses • line = distance • ◎ bullseye = target</span></div><div id="map-controls"><button class="chip pill" id="btn-pause" type="button">Pause</button><button class="chip pill" id="btn-reset" type="button">Reset</button></div><div id="map-legend"><div style="font-family:var(--mono);font-size:7.5px;letter-spacing:.1em;text-transform:uppercase;font-weight:900;opacity:.55;margin-bottom:4px">Map</div><div style="font-family:var(--mono);font-size:9px">Drag to orbit • ◎ bullseye = past target (auto-centered)</div><div style="font-family:var(--mono);font-size:9px;margin-top:3px;opacity:.72">Keys ←→↑↓ orbit • +/− zoom • T target • G guesses • H help</div></div><div id="hover-tip"></div></div>
+  <div id="map-wrap"><canvas id="sky-canvas" width="640" height="380" aria-label="12,966 player-seasons as points in a rotatable 3D embedding map — your guesses draw as orange rings connected by a line to the past target's bullseye, showing how close each guess landed. Focus this map and press H to hear the controls and the current state."></canvas><div id="target-badge" style="position:absolute;left:0;top:0;transform:translate(-50%,-140%);background:#F0E442;border:2.2px solid #1A150F;border-radius:999px;padding:5px 10px;font-family:ui-monospace,monospace;font-size:10px;font-weight:900;box-shadow:2px 2px 0 #1A150F;z-index:4;display:none;pointer-events:none;white-space:nowrap">★ TARGET</div><div id="map-overlay"><span class="chip" id="map-fact">12,966 seasons • ★ target past</span><span class="chip">orange rings = your guesses • line = distance • ◎ bullseye = target</span></div><div id="map-controls"><button class="chip pill" id="btn-center-target" type="button" title="Re-centre the map on today's target (keyboard: T)">⌖ Target</button><button class="chip pill" id="btn-pause" type="button">Pause</button><button class="chip pill" id="btn-reset" type="button">Reset</button></div><div id="map-legend"><div style="font-family:var(--mono);font-size:7.5px;letter-spacing:.1em;text-transform:uppercase;font-weight:900;opacity:.55;margin-bottom:4px">Map</div><div style="font-family:var(--mono);font-size:9px">Drag to orbit • ◎ bullseye = past target (auto-centered)</div><div style="font-family:var(--mono);font-size:9px;margin-top:3px;opacity:.72">Keys ←→↑↓ orbit • +/− zoom • T target • G guesses • H help</div></div><div id="hover-tip"></div></div>
 
   <!-- PACK BATTLE v2 Production UI -->
   <div class="card" id="pack-progress" style="display:none;"></div>
@@ -291,7 +307,7 @@ button,.input{min-height:44px}
   }
   async function mountGameMap(){
     try{
-      const mod = await import('./assets/shared-map.js?v=58');
+      const mod = await import('./assets/shared-map.js?v=59');
       const canvasEl = document.querySelector('#sky-canvas');
       if(!canvasEl) return;
       const st = (window.VHPastModern && VHPastModern.state) ? VHPastModern.state() : null;

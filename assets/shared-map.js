@@ -446,6 +446,18 @@ export async function mountSharedMap(canvas, opts={}){
     }
     return out;
   }
+  // standalone so the map's own Target button, the T key and the public API all
+  // recentre through one path instead of three
+  function focusOnTarget(){
+    // targetId>maxId would read past the Int32Array end: idx=undefined -> atan2(undefined)=NaN -> map collapses
+    if(targetId==null||!projById||targetId<0||targetId>maxId) return false;
+    const idx=projById[targetId]; if(idx==null||idx<0) return false;
+    const ox=baseOx[idx], oy=baseOy[idx], oz=baseOz[idx];
+    const ry=-Math.atan2(ox,oz); const r=Math.sqrt(ox*ox+oz*oz)||1; const rx=-Math.atan2(oy,r)*0.85;
+    if(isFinite(ry)&&isFinite(rx)){ rotY=ry; rotX=rx; }
+    projectFrame(); draw();
+    return true;
+  }
   function kick(){
     idleMs=0;
     if(auto){ embedPaused=false; lastT=0; scheduleLoop(); }
@@ -477,7 +489,7 @@ export async function mountSharedMap(canvas, opts={}){
         break;
       case 't': case 'T':
         if(targetId==null){ say('No target on the map yet.'); break; }
-        api.focusOnTarget();
+        focusOnTarget();
         kbIdx=poiList().length?0:-1;
         if(kbIdx===0) showTip(poiList()[0]);
         say('Centred on target. '+stateSentence());
@@ -584,6 +596,16 @@ export async function mountSharedMap(canvas, opts={}){
   if(pauseBtn){
     pauseBtn.addEventListener('click',()=>{ auto=!auto; embedPaused=!auto; pauseBtn.textContent=auto?'Pause':'Resume'; lastT=0; idleMs=0; if(auto) scheduleLoop(); });
   }
+  // focusOnTarget() existed in the API from the start but nothing visible called
+  // it — a pointer user who orbited away from the bullseye had no way back.
+  const centerBtn=document.getElementById('btn-center-target');
+  if(centerBtn){
+    centerBtn.addEventListener('click',()=>{
+      if(!focusOnTarget()){ say('No target on the map yet.'); return; }
+      idleMs=0;
+      say('Centred on target. '+stateSentence());
+    });
+  }
   const resetBtn=document.getElementById('btn-reset');
   if(resetBtn){
     resetBtn.addEventListener('click',()=>{ rotY=Math.PI*0.18; rotX=0.22; zoom=1; kbIdx=-1; auto=!reduceMotion; embedPaused=false; idleMs=0; lastT=0; if(pauseBtn) pauseBtn.textContent=auto?'Pause':'Resume'; if(hoverEl) hoverEl.style.display='none'; resize(); projectFrame(); draw(); scheduleLoop(); });
@@ -630,15 +652,7 @@ export async function mountSharedMap(canvas, opts={}){
     announce: say,
     describe: stateSentence,
     setZoom, getZoom(){ return zoom; },
-    focusOnTarget(){
-      // targetId>maxId would read past the Int32Array end: idx=undefined -> atan2(undefined)=NaN -> map collapses
-      if(targetId==null||!projById||targetId<0||targetId>maxId) return;
-      const idx=projById[targetId]; if(idx==null||idx<0) return;
-      const ox=baseOx[idx], oy=baseOy[idx], oz=baseOz[idx];
-      const ry=-Math.atan2(ox,oz); const r=Math.sqrt(ox*ox+oz*oz)||1; const rx=-Math.atan2(oy,r)*0.85;
-      if(isFinite(ry)&&isFinite(rx)){ rotY=ry; rotX=rx; }
-      projectFrame(); draw();
-    },
+    focusOnTarget,
     hasPoint(id){ return !!(projById && id!=null && id>=0 && id<=maxId && projById[id]>=0); },
     // append one row (e.g. a daily target outside the sampled lite map) so the bullseye always exists
     addPoint(p){

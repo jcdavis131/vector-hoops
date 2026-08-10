@@ -6,7 +6,7 @@
    - stale-while-revalidate for immutable CORE
 */
 
-const CACHE_NAME = 'vector-hoops-v67-map-keyboard';
+const CACHE_NAME = 'vector-hoops-v68-map-stage';
 
 const CORE = [
   '/',
