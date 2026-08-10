@@ -3276,3 +3276,50 @@ search — the primary control on the page the brief names for player cards — 
 was describing itself incorrectly to exactly the users who cannot see the yellow
 row. Five options that all report `aria-selected="false"` while one of them is
 plainly selected is not a nuance; it is the widget denying its own state.
+
+
+## Reduced motion stopped at the stylesheet (2026-08-10)
+
+Every page on this site carries
+
+    @media (prefers-reduced-motion:reduce){*,*::before,*::after{
+      animation-duration:.001ms!important;transition-duration:.001ms!important}}
+
+and it has been read, on this board and elsewhere, as "motion is handled". It is
+not. That block governs CSS animation and transition. **Every piece of motion
+that matters on the game page is JavaScript**: `animateCareer` runs a 1200ms
+`requestAnimationFrame` loop, `pulseRing2` holds a ring on screen for 1240ms, and
+the spike waits out a 600ms timer. A media query cannot touch any of them.
+
+Measured with the media feature emulated over CDP, playing a full round each way:
+
+    no-preference   matchMedia=false   rAF frames during the win 112   long timers 4
+    reduce          matchMedia=true    rAF frames during the win 114   long timers 4
+
+`matchMedia` answered correctly the whole time. Nothing asked it.
+
+Gated now — and the point is that only the *motion* goes, not the result:
+
+    no-preference   rAF 112  timers 4   idx 1  chips 18  overlayInk 6116  dist 0.06 · cos 0.94
+    reduce          rAF   4  timers 2   idx 1  chips 18  overlayInk 6116  dist 0.06 · cos 0.94
+
+**Identical pixel count on the trajectory overlay.** The same picture is drawn,
+in one frame instead of a hundred and twelve; the pack still advances, the chips
+still render, the readout is unchanged. The ring simply never appears, because a
+ring that exists to flash has nothing to offer someone who asked for no flashing.
+
+`reducedMotion()` reads the query live rather than caching it at load, so
+changing the setting mid-session counts.
+
+`smoke_play.py` emulates the feature and checks the ring stays hidden — the
+cheapest observable, since it is shown for 1240ms otherwise. It also fails if the
+page's own check stops reporting the preference at all, because animations gated
+on something that never reads true are not gated.
+
+### Worth saying about the standing rule
+
+"Every animation gated behind `prefers-reduced-motion`" was a constraint I was
+given at the start of this work and believed was satisfied, because the CSS block
+is on every page and easy to grep for. The grep was the whole problem: it finds
+the declaration, not the coverage. Nothing had ever set the preference and
+watched what happened.

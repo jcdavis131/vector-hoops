@@ -607,6 +607,34 @@ def main() -> int:
                 failures.append(f"playing the next day gave {streak['consecutive']} rather "
                                 f"than 4 — consecutive days must still count up")
 
+        # 6c. asking for less motion has to reach the JavaScript. The page's
+        #     @media (prefers-reduced-motion:reduce) block stops CSS animation and
+        #     nothing else: the trajectory draw, the ring pulse and the spike are
+        #     all JS, and measured over CDP they used to run identically either
+        #     way — 112 rAF frames with no preference, 114 with reduce.
+        #     Checked here through the ring, which is the cheapest observable: it
+        #     is shown for 1240ms normally and must not appear at all under reduce.
+        ws.call("Emulation.setEmulatedMedia", {"features": [
+            {"name": "prefers-reduced-motion", "value": "reduce"}]})
+        motion = ev(ws, """(() => {
+          const r = document.getElementById('ring');
+          if (!r) return JSON.stringify({err: 'no #ring'});
+          r.style.display = 'none';
+          const asked = typeof reducedMotion === 'function' ? reducedMotion() : null;
+          pulseRing2();
+          return JSON.stringify({asked: asked, ring: getComputedStyle(r).display});
+        })()""")
+        ws.call("Emulation.setEmulatedMedia", {"features": []})
+        if isinstance(motion, dict) and not motion.get("err"):
+            print(f"  motion   reduce honoured={motion.get('asked')}, ring={motion.get('ring')!r}")
+            if motion.get("asked") is not True:
+                failures.append("with prefers-reduced-motion: reduce emulated, the page's own "
+                                "check does not report it — the JS animations cannot be gated "
+                                "on something they never read")
+            elif motion.get("ring") != "none":
+                failures.append(f"the ring pulse still ran under reduced motion (display "
+                                f"{motion.get('ring')!r}) — the CSS block does not stop JS")
+
         # 7. the whole session
         errs = errs_of(ws)
         if errs:
