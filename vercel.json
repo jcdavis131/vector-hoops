@@ -1,8 +1,6 @@
 {
   "cleanUrls": true,
   "trailingSlash": false,
-  "public": true,
-  "github": { "enabled": true, "autoAlias": true, "autoJob": true },
   "headers": [
     { "source": "/assets/(.*)\\.(json|js|css|png|webp|svg|woff2|f32|bin)", "headers": [{ "key": "Cache-Control", "value": "public, max-age=31536000, immutable, stale-while-revalidate=86400" }, { "key": "Access-Control-Allow-Origin", "value": "*" }] },
     { "source": "/assets/(.*)\\.f32", "headers": [{ "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }, { "key": "Content-Type", "value": "application/octet-stream" }] },
