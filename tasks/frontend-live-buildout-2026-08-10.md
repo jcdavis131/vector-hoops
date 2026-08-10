@@ -423,7 +423,7 @@ a dark canvas, the other a light one.)
 - [x] P2.2b **Shipped.** `trajectories.json` is not redundant with `embedding_map_trajectories.json` — checked before assuming. It is career-arc analysis: 1,308 careers in five shapes, migrator 11.77 yr vs stable 7.11 yr, plus reinvention motifs and per-decade rates. Original note: `trajectories.json` (90,730 b) is unread by any page.
       `play.html` uses `embedding_map_trajectories.json` instead; check whether
       the smaller file is redundant or carries something the big one lacks.
-- [ ] P2.4 Data-quality nit for the pipeline lane: `eratwins.json` contains
+- [x] **P2.4 was wrong, by about 30x.** See "The hyphens" below. Original note: `eratwins.json` contains
       `"Nigel HayesDavis"` — a dropped hyphen from name normalization. Cosmetic
       but user-visible now that the file is rendered.
 - [x] P2.3 `season_norms.json`'s `notInvertible` caveat is surfaced — the
@@ -805,7 +805,8 @@ no `.gitattributes` plus `core.autocrlf=true` means these files are CRLF here, s
 an LF-only pattern matches nothing while reporting "could not extract". Same
 lesson as the renderer frontmatter regex earlier on this branch. See P4.5.
 
-- [ ] **P7.2 methods.html's figures are hardcoded prose, snapshot-verified today.**
+- [x] **P7.2 DONE — and it was never yours to decide.** I wrote it as a fork ("teach the gate, or accept the drift") when one branch is strictly better, reversible and touches nothing a visitor sees. `check_frontend.py` now has a ninth check, `cited`, which asserts every figure in its `CITED` table is still on its page **and** still in the file that page names. Proved it fails in both directions before believing it: drift the value in the JSON and it reports the page as stale; remove the figure from the page and it reports the `CITED` row as rotten. Matching is bounded on both sides — a bare substring test for "6.3" would pass on "16.35". Original note follows.
+  ~~P7.2 methods.html's figures are hardcoded prose, snapshot-verified today.~~
   1245.3 / 398.7 / 187.2 / 6.3 / 4450.09 / 4501.15 were checked against
   `assets/data/model_zoo_eval.json` on 2026-08-10 and all six are present. But the
   page never reads the file — it prints them as text — so if the zoo regenerates,
@@ -813,3 +814,54 @@ lesson as the renderer frontmatter regex earlier on this branch. See P4.5.
   knows the hand-maintained `UNSOURCED` list. Either teach the gate to verify these
   against the file, or accept the drift knowingly. Recorded so the next session does
   not re-derive it from scratch.
+
+
+## The hyphens: not a nit, and not one file (2026-08-10)
+
+P2.4 said *"`eratwins.json` contains `Nigel HayesDavis` — cosmetic, one for the
+pipeline lane."* Every part of that was too small.
+
+**`assets/vectors.json` contains 2,421 distinct player names and not one hyphen.**
+Every compound surname derived from it is glued, and seventeen committed assets
+inherit it — including `game_vectors.json` and `wiki_index.json`, which scripts in
+this repo generate, so I propagated it even though I did not cause it. Thirty
+players, not one, and they are not obscure: Karl-Anthony Towns, Shai
+Gilgeous-Alexander, Kentavious Caldwell-Pope, Michael Kidd-Gilchrist,
+Mahmoud Abdul-Rauf, Willie Cauley-Stein.
+
+It reaches four live pages:
+
+| page | asset | glued names |
+|---|---|---|
+| index.html | vectors.json | 30 of 30 |
+| trends.html | eratwins.json | 28 of 30 |
+| play.html | embedding_map_manifest.json | 27 of 30 |
+| players.html | embedding_map_points_limited.json | 27 of 30 |
+
+**No heuristic can fix this.** "VanVleet", "McKie", "DeRozan", "LeVert" and
+"LaVine" are correct exactly as written and are the same shape as the broken
+ones. Any regex that re-inserted hyphens would corrupt more names than it repaired.
+
+But the correct spelling is already committed somewhere the pipeline did not
+touch: `knowledge/players/*.md` frontmatter kept its hyphens — 30 of them.
+Joining the two sides on a punctuation-stripped key — the same join
+`build_wiki_index.py` already uses to match "A.C. Green" to "AC Green" — recovers
+every one from committed data. Nothing typed in, nothing inferred.
+
+`scripts/build_name_fixes.py` → `assets/name_fixes.json` (30 names, 1,982 b,
+`--check` mode, refuses to write an empty map or more than 80 renames). Wired into
+`trends.html` as the reference implementation: **37 glued name slots → 0**, with
+"Fred VanVleet" verified untouched as a control. If the map fails to load the
+names render as stored — wrong, but never invented.
+
+- [ ] **P8.1 Three pages still render glued names**, with the lookup now built and
+  proven: `index.html` (30 of 30, `vectors.json`), `play.html` (27,
+  `embedding_map_manifest.json`), `players.html` (27,
+  `embedding_map_points_limited.json`). The recipe is the six lines in
+  `trends.html`: fetch `assets/name_fixes.json` alongside the page's own data,
+  repair the name fields on load, render. I stopped at one page rather than do
+  render-path surgery on three more in the same pass.
+- [ ] **P8.2 The real fix is upstream.** This is display-level repair of a
+  normalisation bug in whatever writes `vectors.json`. Fixing it at source would
+  make `name_fixes.json` unnecessary and correct all seventeen assets at once. I
+  cannot run the pipeline, so it stays here.

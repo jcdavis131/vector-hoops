@@ -16,7 +16,8 @@ Checks, in order of how much they have actually caught:
   3. assets     every static src/href/fetch path resolves on disk
   4. ids        no duplicate element ids
   5. sourced    no known-unsourced figures in user-visible markup
-  6. links      every internal .html link resolves
+  6. cited      figures printed as prose still match the file they name
+  7. links      every internal .html link resolves
 
 Read-only. Never writes. Exit 0 clean, 1 on any failure.
 
@@ -44,6 +45,25 @@ SKIP_DIRS = {"public", "node_modules", ".git", "assets", "knowledge", "pipeline"
 # /dictionary.html under "Terms this site uses that have no file behind them".
 # If a scoreboard ever ships them, delete the entry — do not silence the check.
 UNSOURCED = ("purity@10 0.7057", "lift 6.32", "purity 0.7057")
+
+# The mirror image of UNSOURCED: figures that ARE sourced, printed on a page as
+# prose rather than read from the file at runtime. `sourced` catches a number
+# with no file behind it; this catches a number whose file has moved on without
+# it. methods.html quotes the draft model zoo's SHAP and MAE figures — verified
+# present 2026-08-10 — but the page does not fetch the file, so a regenerated
+# zoo would leave the page quietly wrong and nothing would say so.
+#
+# Removing a figure from a page is also a failure here, deliberately: otherwise
+# the list rots into entries that check nothing. Delete the row when you delete
+# the claim.
+CITED = (
+    ("methods.html", "1245.3", "assets/data/model_zoo_eval.json"),
+    ("methods.html", "398.7", "assets/data/model_zoo_eval.json"),
+    ("methods.html", "187.2", "assets/data/model_zoo_eval.json"),
+    ("methods.html", "6.3", "assets/data/model_zoo_eval.json"),
+    ("methods.html", "4450.09", "assets/data/model_zoo_eval.json"),
+    ("methods.html", "4501.15", "assets/data/model_zoo_eval.json"),
+)
 
 # A mention within 400 characters of one of these reads as naming the claim
 # rather than making it, and passes. Keep these phrases explicit — anything
@@ -199,6 +219,43 @@ def check_sourced(fail) -> None:
     print(f"  no unsourced figures presented as fact ({len(UNSOURCED)} pattern(s), {allowed} disclaimed mention(s) allowed)")
 
 
+def check_cited(fail) -> None:
+    """Every figure in CITED is still on its page AND still in its source file.
+
+    Matching is bounded on both sides — a bare `in` test for "6.3" would pass on
+    "16.35" and make the check meaningless the moment the file changed shape.
+    """
+    checked = matched = 0
+    for page_name, figure, source in CITED:
+        page = ROOT / page_name
+        src = ROOT / source
+        if not page.exists():
+            # --root public and friends: nothing to check here
+            continue
+        checked += 1
+        rx = re.compile(r"(?<![\d.])" + re.escape(figure) + r"(?![\d])")
+        on_page = bool(rx.search(strip_comments(page.read_text(encoding="utf-8"))))
+        if not src.exists():
+            fail(f"{page_name} cites {source} for {figure}, and that file is not on disk")
+            continue
+        in_file = bool(rx.search(src.read_text(encoding="utf-8", errors="replace")))
+        if on_page and not in_file:
+            fail(
+                f"{page_name} prints {figure} sourced to {source}, but that value is no longer "
+                f"in the file. Re-read the file and update the page, or drop the claim."
+            )
+        elif not on_page:
+            fail(
+                f"CITED still lists {figure} for {page_name}, which no longer prints it — "
+                f"remove the stale row from CITED in scripts/check_frontend.py."
+            )
+        else:
+            matched += 1
+    # say what actually held, not how many rows were looked at — an earlier
+    # version printed "6 still match" on the same run that reported a mismatch
+    print(f"  {matched} of {checked} cited figure(s) still match the file they name")
+
+
 def check_links(fail) -> None:
     total = 0
     for page in pages():
@@ -258,6 +315,7 @@ CHECKS = {
     "assets": check_assets,
     "ids": check_ids,
     "sourced": check_sourced,
+    "cited": check_cited,
     "links": check_links,
 }
 

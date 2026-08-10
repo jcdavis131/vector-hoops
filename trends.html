@@ -491,9 +491,30 @@ function lookup(){
 function load(){
   if(TW||loading) return;
   loading=true;
-  fetch('assets/eratwins.json?v=aff3a23c',{cache:'force-cache'})
-    .then(function(r){ if(!r.ok) throw new Error('HTTP '+r.status); return r.json(); })
-    .then(function(j){ TW=j; render(); lookup(); })
+  /* Repair the hyphens before rendering. assets/vectors.json carries no hyphen
+     at all across 2,421 names, so every compound surname derived from it is
+     glued — this file alone has 19 players and 18 twins spelled "Nigel
+     HayesDavis", "Kentavious CaldwellPope", "Shai GilgeousAlexander".
+     assets/name_fixes.json is the lookup, derived by scripts/build_name_fixes.py
+     from the committed wiki, which kept its hyphens. A lookup and not a regex on
+     purpose: "VanVleet", "McKie" and "LaVine" are correct as written and are the
+     same shape as the broken ones. If the map fails to load the names render as
+     they are stored — wrong, but never invented. */
+  Promise.all([
+    fetch('assets/eratwins.json?v=aff3a23c',{cache:'force-cache'})
+      .then(function(r){ if(!r.ok) throw new Error('HTTP '+r.status); return r.json(); }),
+    fetch('assets/name_fixes.json?v=54393bac',{cache:'force-cache'})
+      .then(function(r){ return r.ok?r.json():null; }).catch(function(){ return null; })
+  ])
+    .then(function(both){
+      var j=both[0], fx=(both[1]&&both[1].fixes)||null;
+      if(fx&&j&&j.players) j.players.forEach(function(p){
+        if(p.name&&fx[p.name]) p.name=fx[p.name];
+        if(p.twin&&p.twin.name&&fx[p.twin.name]) p.twin.name=fx[p.twin.name];
+        if(p.top5) p.top5.forEach(function(t){ if(t&&t.name&&fx[t.name]) t.name=fx[t.name]; });
+      });
+      TW=j; render(); lookup();
+    })
     .catch(function(e){
       loading=false;
       $('twinStats').innerHTML='';
