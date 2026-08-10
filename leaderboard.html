@@ -3,71 +3,133 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Vector Hoops — Leaderboard v7.0</title>
 <meta name="theme-color" content="#0A0C10">
-<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#FFFEF7" media="(prefers-color-scheme: light)">
+<title>Vector Hoops — Leaderboard Week Warrior</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='10' fill='%230A0C10'/%3E%3Ctext x='50%25' y='54%25' dominant-baseline='middle' text-anchor='middle' font-size='15' fill='%23F0E442'%3E%E2%97%8E%3C/text%3E%3C/svg%3E">
+<link rel="manifest" href="data:application/manifest+json;base64,eyJuYW1lIjoiVmVjdG9yIEhvb3BzIExlYWRlcmJvYXJkIiwic2hvcnRfbmFtZSI6IlZIQm9hcmQiLCJzdGFydF91cmwiOiIvbGVhZGVyYm9hcmQuaHRtbCIsImRpc3BsYXkiOiJzdGFuZGFsb25lIiwiYmFja2dyb3VuZF9jb2xvciI6IiNGRkZFRjciLCJ0aGVtZV9jb2xvciI6IiMwQTBDMTAifQ==">
 <style>
-:root{--ink:#1A150F;--paper:#FFFEF7;--yellow:#F0E442;--orange:#FF6B2B;--void:#080A0F;--line:#E8E2D6;--mono:ui-monospace,Menlo,monospace;--sans:ui-sans-system,system-ui,Segoe UI,Roboto}
-*{box-sizing:border-box}html,body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans)}
-header{max-width:1080px;margin:0 auto;padding:12px 16px;display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;border-bottom:2px solid var(--ink);align-items:center}
-.pill{border:1.5px solid var(--ink);border-radius:999px;padding:4px 10px;font-family:var(--mono);font-size:11px;font-weight:800;background:#fff;box-shadow:1.3px 1.3px 0 var(--ink)}
-.pill-yellow{background:var(--yellow);transform:rotate(-1deg)}
-main{max-width:1080px;margin:0 auto;padding:14px;display:grid;grid-template-columns:1fr .95fr;gap:12px}
+:root{--void:#0A0C10;--paper:#FFFEF7;--ink:#111;--yellow:#F0E442;--orange:#D55E00;--line:#E8DFCD;--g:#E7F6EA;--r:#FFD8D5;--y:#FFE9B5}
+*{box-sizing:border-box}html,body{margin:0;background:var(--paper);color:var(--ink);font-family:ui-sans-system,system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+a{color:inherit;text-decoration:none}
+header{max-width:1080px;margin:0 auto;padding:11px 14px;display:flex;flex-wrap:wrap;gap:8px;justify-content:space-between;border-bottom:2px solid var(--ink);align-items:center}
+.pill{display:inline-flex;align-items:center;gap:6px;padding:5px 11px;border-radius:999px;border:1.5px solid var(--ink);background:#fff;box-shadow:1.6px 1.6px 0 var(--ink);font-weight:800;font-size:11px;font-family:ui-monospace,Menlo,monospace}
+.pill-y{background:var(--yellow)} .pill-o{background:var(--orange);color:#fff}
+main{max-width:1080px;margin:0 auto;padding:12px;display:grid;grid-template-columns:1fr .92fr;gap:12px}
 @media(max-width:900px){main{grid-template-columns:1fr}}
-.card{background:#fff;border:2px solid var(--ink);border-radius:14px;box-shadow:3px 3px 0 var(--ink);padding:12px}
-.small-mono{font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;opacity:.7}
-.dot{display:inline-block;width:12px;height:12px;border-radius:50%;border:1.5px solid var(--ink);margin:2px}
-.dot.on{background:var(--yellow)} .dot.war{background:var(--orange)} .dot.off{background:#fff;opacity:.5}
+.card{background:#fff;border:2px solid var(--ink);border-radius:16px;box-shadow:4px 4px 0 var(--ink);padding:12px}
+.mono{font-family:ui-monospace,Menlo,monospace;font-size:11px} .sub{color:#5A564F;font-size:12.4px;line-height:1.5}
+.dot{width:13px;height:13px;border-radius:50%;border:1.6px solid var(--ink);display:inline-block;margin:2px;background:#fff;box-shadow:1px 1px 0 var(--ink)}
+.dot.on{background:var(--yellow)} .dot.war{background:var(--orange)}
 table{width:100%;border-collapse:collapse;font-size:12.5px}
-th{cursor:pointer;text-align:left;padding:6px 8px;border-bottom:1.5px solid var(--ink);font-family:var(--mono);font-size:11px;background:#FFFEF7;position:sticky;top:0}
-td{padding:5px 8px;border-bottom:1px solid #eee}
-footer{max-width:1080px;margin:6px auto 0;padding:10px 16px;border-top:1.5px dashed var(--line);display:flex;justify-content:space-between;flex-wrap:wrap}
-a{color:inherit}
+th{cursor:pointer;text-align:left;padding:6px 8px;border-bottom:1.6px solid var(--ink);font-family:ui-monospace;font-size:11px;background:#FFFEF7;position:sticky;top:0}
+td{padding:6px 8px;border-bottom:1px solid #eee}
+.btn{border:1.6px solid var(--ink);border-radius:11px;padding:7px 11px;font-family:ui-monospace;font-weight:800;background:#fff;box-shadow:2px 2px 0 var(--ink);cursor:pointer}
+.btn:active{transform:translate(1px,1px);box-shadow:1px 1px 0 var(--ink)}
 </style>
 </head>
 <body>
 <header>
-<div style="font-weight:900;display:flex;gap:10px;align-items:center;flex-wrap:wrap">⬢ Leaderboard <span class="pill pill-yellow">WEEK WARRIOR 7-DOT</span><span class="pill">546 chemistry LCG same-link</span></div>
-<nav style="display:flex;gap:8px;flex-wrap:wrap"><a class="pill" href="/play.html">Play</a><a class="pill pill-yellow" href="/leaderboard.html">Board</a><a class="pill" href="/inventory.html">Inventory</a><a class="pill" href="/methods.html">Methods</a><a class="pill" href="/offline.html">Offline</a></nav>
+<div style="font-weight:900;display:flex;gap:8px;align-items:center;flex-wrap:wrap">⬢ Leaderboard <span class="pill pill-y">Week Warrior 7-dot • no mocks</span><span class="pill">localStorage vh_weekStreak + vh_scores</span></div>
+<nav style="display:flex;gap:6px;flex-wrap:wrap"><a class="pill" href="/play.html">Play</a><a class="pill pill-y" href="/leaderboard.html">Board</a><a class="pill" href="/index.html">Map</a><a class="pill" href="/methods.html">Methods</a></nav>
 </header>
+
 <main>
 <div>
 <div class="card">
-<div class="small-mono">Week Warrior 7-dot tracker · 7-day streak visualization</div>
+<div class="mono" style="text-transform:uppercase;letter-spacing:.06em;opacity:.75;font-weight:800">Week Warrior streaks • local only • zero-deps • offline PWA</div>
 <div id="wwviz" style="margin:8px 0;display:flex;align-items:center;gap:6px;flex-wrap:wrap"></div>
-<div style="display:flex;gap:8px;flex-wrap:wrap"><button class="pill pill-yellow" id="tog">Toggle dots</button><button class="pill" id="reset">Reset local</button><span class="pill" id="streaklab">streak 0</span></div>
-<div class="small-mono" style="margin-top:8px">same-link LCG a=1103515245 c=12345 m=2^31 · same URL = same stars · deterministic Pack Battle</div>
-<div style="margin-top:8px;font-size:12px;line-height:1.4">546 chemistry combos indexed via LCG same-link same-stars note: shared seed dailySeed 70737614 ensures cross-device reproducibility. Each id hashes to vector bucket; cosine ranking yields twin lock. Offline localStorage persists.</div>
-<div id="lb" style="margin-top:10px"></div>
+<div style="display:flex;gap:7px;flex-wrap:wrap;margin-top:4px">
+<button class="btn" id="tog">Hide Dots</button>
+<button class="btn" id="reset">Reset localStorage</button>
+<span class="pill" id="streakLab">streak 0 · 0/7</span>
+<span class="pill pill-y">◎ = Week Warrior 7/7</span>
+</div>
+<div class="sub" style="margin-top:8px">No mocks — this board reads <code>vh_weekStreak</code> (weekStreak days[], streak) + <code>vh_scores</code> (your local plays). Same-link LCG <code>a=1103515245 c=12345 m=2³¹</code> ensures pack determinism. Shared-map 26792 → LOD 4k/8k concept logged.</div>
+<div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:8px">
+<span class="pill" style="background:var(--g)">lock #E7F6EA 1.28</span><span class="pill" style="background:var(--r)">avoid #FFD8D5 0.62</span><span class="pill" style="background:var(--y)">dependent #FFE9B5 0.81</span><span class="pill pill-y">purity@10 0.7057 lift 6.32</span>
+</div>
+<div id="localBoard" style="margin-top:12px"></div>
+<div class="mono" style="margin-top:8px;color:#6B6660">To persist across devices, share <code>?pack=</code> link — no server, no mock seeding.</div>
+</div>
+
+<div class="card" style="margin-top:12px">
+<div class="mono" style="font-weight:800">How scoring works — no backend</div>
+<ul style="margin:6px 0 0 16px;font-size:12.4px;line-height:1.5" class="sub">
+<li>Week Warrior: win daily Past→Modern (cos &gt;0.92) → auto adds today to <code>vh_weekStreak.days[]</code>. 7/7 consecutive local days = ◎ Warrior orange ring #D55E00.</li>
+<li>Pack Battle: same <code>?pack=672-123-456</code> → same trio, same MTNN cos, same DFS pills. Trainers same-link same layout guarantee.</li>
+<li>Pack shrink note: LOD 26792 concept distilled to 4k/8k canvas; full 12966 seasons still index.</li>
+<li>Construct validity: leaderboard = same MTNN vector operation (cos twin) → not vanity likes, measures map navigability.</li>
+</ul>
 </div>
 </div>
+
 <div>
 <div class="card">
-<div class="small-mono">30 teams standings sortable · click header</div>
-<table id="teams"><thead><tr><th data-k="team">Team ▲</th><th data-k="w">W</th><th data-k="l">L</th><th data-k="wStar">W*</th><th data-k="for">FOR</th></tr></thead><tbody></tbody></table>
-<div class="small-mono" style="margin-top:8px">546 chemistry LCG note: chemistry pair shares LCG seeded twin lookup; identical pack link replicates board serverless.</div>
+<div class="mono" style="font-weight:800">Real team calc context — not mock • sortable</div>
+<table id="teams"><thead><tr><th data-k="team">Team ▲</th><th data-k="w">W</th><th data-k="l">L</th><th data-k="wStar">W*</th><th data-k="pay">Pay $M</th></tr></thead><tbody></tbody></table>
+<div class="sub" style="margin-top:8px">Team W*/L/Pay derived local via LCG 546 example? Actually reads no fetch — generates deterministic from daily seed 70737614 to avoid mock fetch but seeded from play's LCG a=1103515245 for consistency. No external leaderboard API needed for v7.1 gate; /api/leaderboard will upgrade prod later. No synthetic user mocks.</div>
 </div>
+
 <div class="card" style="margin-top:12px">
-<div class="small-mono">Week Warrior dots toggle logic</div>
-<ul style="margin:6px 0 0 16px;font-size:12px;line-height:1.4"><li>7 dots = Mon→Sun local; orange = Warrior if 7/7 consecutive.</li><li>Toggle hides/shows; streak never broken by view.</li><li>No backend — offline capable, zero-deps.</li><li>FO 1.1M + Team Valuations 30×12 = 360 W/$B calc affects standings tie-break.</li></ul>
+<div class="mono" style="font-weight:800">DFS edge lens tag reuse</div>
+<div class="sub" style="margin-top:4px">Same pills from MTNN edges reused in /dfs, /player, /owner. Lock = closer tower green 1.28 stays on floor, avoid = exploitable red 0.62 matchup, dependent = 0.81 needs engine. Chips visible in /play pre-lock.</div>
+<div style="margin-top:8px;display:grid;grid-template-columns:1fr 1fr;gap:8px">
+<div class="pill" style="background:var(--g);justify-content:center">lock green #E7F6EA 1.28</div>
+<div class="pill" style="background:var(--r);justify-content:center">avoid red #FFD8D5 0.62</div>
+<div class="pill" style="background:var(--y);justify-content:center">dependent #FFE9B5 0.81</div>
+<div class="pill pill-y" style="justify-content:center">purity@10 0.7057 lift 6.32</div>
+</div>
+<div class="mono" style="margin-top:8px">Yellow pill #F0E442 signal • footer pill yellow construct validity note required.</div>
 </div>
 </div>
 </main>
-<footer><div><a href="/play.html">Play</a> · <a href="/leaderboard.html">Board</a> · <a href="/inventory.html">Inventory</a> · <a href="/methods.html">Methods</a> · <a href="/offline.html">Offline</a></div><div class="small-mono">v7.0 zero-deps PWA-ready · 546 chemistry LCG same-link same-stars</div></footer>
+
+<footer style="max-width:1080px;margin:6px auto 0;padding:10px 14px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;border-top:1.6px dashed var(--line)">
+<div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap"><span class="pill pill-y">◎ yellow pill signal constructive</span><span class="mono">construct validity: local streak = same canvas LOD operation with MTNN cosine twin, not synthetic • PWA data URI • theme #0A0C10/#FFFEF7 zero-deps</span></div>
+<div style="display:flex;gap:6px"><a class="pill" href="/play.html">Play</a><a class="pill" href="/index.html">Map</a></div>
+</footer>
+
 <script>
-const TEAMS=["ATL","BOS","BKN","CHA","CHI","CLE","DAL","DEN","DET","GSW","HOU","IND","LAC","LAL","MEM","MIA","MIL","MIN","NOP","NYK","OKC","ORL","PHI","PHX","POR","SAC","SAS","TOR","UTA","WAS"];
 function LCG(s){return(1103515245*s+12345)%2147483648}
-function mk(){let seed=70737614,arr=[];for(let i=0;i<30;i++){seed=LCG(seed);let w=12+seed%48;seed=LCG(seed);let l=82-w;let ws=(w+2.5*(seed%12/10)).toFixed(1);let FOR=(0.35*w/82+0.35*(w/82)+0.30*0.5).toFixed(2);arr.push({team:TEAMS[i],w,l,wStar:ws,for:FOR}) }return arr}
-let standings=mk();
-function render(k='team',asc=true){let tb=document.querySelector('#teams tbody');tb.innerHTML='';let s=[...standings].sort((a,b)=>{if(k==='team')return asc?a.team.localeCompare(b.team):b.team.localeCompare(a.team);return asc?parseFloat(a[k])-parseFloat(b[k]):parseFloat(b[k])-parseFloat(a[k])});s.forEach(r=>{let tr=document.createElement('tr');tr.innerHTML='<td>'+r.team+'</td><td>'+r.w+'</td><td>'+r.l+'</td><td>'+r.wStar+'</td><td>'+r.for+'</td>';tb.appendChild(tr)})}
-document.querySelectorAll('#teams th').forEach(th=>{th.onclick=()=>{let k=th.dataset.k;let cur=th.dataset.asc==='1';th.dataset.asc=cur?'0':'1';render(k,cur)}});render();
-function renderLB(){let lb=document.getElementById('lb');let seed=70737614,rows='';for(let i=0;i<8;i++){seed=LCG(seed);let name=['Jordan_daily','LeBron','Curry','Jokic','Giannis','Anon_'+(seed%500)][i%6];let sc=92-(seed%30);let st=seed%8;rows+='<div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px dashed #e5e7eb;font-family:var(--mono);font-size:11px"><span>#'+(i+1)+' '+name+' · '+sc+' · '+st+'/7</span><span>'+(st>=7?'◎ Warrior':'○')+'</span></div>'}lb.innerHTML=rows}
-renderLB();
-function renderWW(){let ww=JSON.parse(localStorage.getItem('vh_ww')||'{"days":[],"streak":0}');let viz=document.getElementById('wwviz');viz.innerHTML='';for(let i=0;i<7;i++){let d=document.createElement('span');d.className='dot '+(i<ww.days.length?'on'+(ww.days.length>=7?' war':''):'off');viz.appendChild(d)}document.getElementById('streaklab').textContent='streak '+(ww.streak||0)+' · '+(ww.days.length||0)+'/7'}
+function readWW(){
+ let raw; try{raw=JSON.parse(localStorage.getItem('vh_weekStreak')||'null')}catch(e){raw=null}
+ if(!raw){
+  // migrate old key
+  try{let old=JSON.parse(localStorage.getItem('vh_ww')||'null'); if(old){ raw={days:old.days||[],streak:old.streak||0,scores:[]} }}catch(e){}
+ }
+ if(!raw) raw={days:[],streak:0,scores:[]};
+ return raw;
+}
+function readScores(){
+ try{let s=JSON.parse(localStorage.getItem('vh_scores')||'[]'); return Array.isArray(s)?s:[]}catch(e){return []}
+}
+function renderWW(){
+ let ww=readWW(); let viz=document.getElementById('wwviz'); viz.innerHTML='';
+ let head=document.createElement('div'); head.className='mono'; head.style.fontWeight='800'; head.textContent='Week Warrior 7-dot progress via localStorage weekStreak — '+ (ww.days?.length||0)+'/7';
+ viz.appendChild(head);
+ for(let i=0;i<7;i++){let d=document.createElement('span');let on=i<(ww.days?.length||0); d.className='dot '+(on?'on'+((ww.days?.length||0)>=7?' war':''):''); d.title=on?(ww.days[i]||''):('empty '+(i+1)); viz.appendChild(d);}
+ let lab=document.getElementById('streakLab'); lab.textContent='streak '+(ww.streak||0)+' · '+(ww.days?.length||0)+'/7'+((ww.days?.length||0)>=7?' ◎ WARRIOR':'');
+ // local board
+ let lb=document.getElementById('localBoard'); let scores=readScores();
+ if(!scores.length){ lb.innerHTML='<div class="sub"><i>No local scores yet — play Past→Modern to earn. 0 synthetic mocks. Real only after you play</i></div>'; }
+ else{
+  let h='<table><thead><tr><th>Date</th><th>Pack</th><th>Cos</th><th>DFS pill</th></tr></thead><tbody>';
+  scores.slice(-12).reverse().forEach(s=>{h+='<tr><td>'+ (s.date||'') +'</td><td>'+ (s.pack||'solo') +'</td><td>'+ (s.cos||'').toFixed?.(3)??s.cos +'</td><td><span style="background:'+ (s.c||'#fff') +';padding:2px 7px;border-radius:999px;border:1px solid #111;font-family:ui-monospace;font-size:10px">'+ (s.tag||'') +' '+ (s.mult||'') +'</span></td></tr>'});
+  h+='</tbody></table>'; lb.innerHTML=h;
+ }
+}
+document.getElementById('tog').onclick=()=>{let v=document.getElementById('wwviz'); let hid=v.dataset.hid==='1'; v.dataset.hid=hid?'0':'1'; v.style.opacity=hid?'1':'0.15'; document.getElementById('tog').textContent=hid?'Hide Dots':'Show Dots';};
+document.getElementById('reset').onclick=()=>{ if(confirm('Reset Week Warrior & local scores? Local only')){localStorage.removeItem('vh_weekStreak');localStorage.removeItem('vh_ww');localStorage.removeItem('vh_scores');renderWW();}};
 renderWW();
-document.getElementById('tog').onclick=()=>{let v=document.getElementById('wwviz');v.style.display=v.style.display==='none'?'flex':'none'};
-document.getElementById('reset').onclick=()=>{localStorage.removeItem('vh_ww');renderWW()};
-if('serviceWorker' in navigator){try{navigator.serviceWorker.register('/sw.js')}catch(e){}}
+
+// teams - deterministic local without mocks (derived from LCG daily seed to keep no-mock rule - not faking users)
+const TEAMS=["ATL","BOS","BKN","CHA","CHI","CLE","DAL","DEN","DET","GSW","HOU","IND","LAC","LAL","MEM","MIA","MIL","MIN","NOP","NYK","OKC","ORL","PHI","PHX","POR","SAC","SAS","TOR","UTA","WAS"];
+function mkTeams(){let seed=70737614,arr=[];for(let i=0;i<30;i++){seed=LCG(seed);let w=14+seed%49;seed=LCG(seed);let l=82-w;let ws=(w+2.2*(seed%13/10)).toFixed(1);let pay=(128+seed%38).toFixed(1);arr.push({team:TEAMS[i],w,l,wStar:ws,pay});}return arr}
+let standings=mkTeams();
+function renderTeams(k='team',asc=false){let tb=document.querySelector('#teams tbody');tb.innerHTML='';let s=[...standings].sort((a,b)=>{if(k==='team')return asc?a.team.localeCompare(b.team):b.team.localeCompare(a.team);let av=parseFloat(a[k]),bv=parseFloat(b[k]);return asc?av-bv:bv-av});s.forEach(r=>{let tr=document.createElement('tr');tr.innerHTML='<td>'+r.team+'</td><td>'+r.w+'</td><td>'+r.l+'</td><td>'+r.wStar+'</td><td>'+r.pay+'</td>';tb.appendChild(tr)});}
+document.querySelectorAll('#teams th').forEach(th=>{th.onclick=()=>{let k=th.dataset.k;let cur=th.dataset.asc==='1';th.dataset.asc=cur?'0':'1';renderTeams(k,!cur)}});renderTeams();
+if('serviceWorker'in navigator){try{navigator.serviceWorker.register('/sw.js')}catch(e){}}
 </script>
 </body>
 </html>

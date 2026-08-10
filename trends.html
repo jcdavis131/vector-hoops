@@ -1,112 +1,21 @@
-<!doctype html>
-<html lang="en"><head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#0A0C10">
-<link rel="manifest" href="manifest.json">
-<title>Trends — Chimera / Drift • Vector Hoops v7.0</title>
-<meta name="description" content="20,719 joint sep 0.867 lift 0.8116 drift 6.2°/yr 12 archetypes CORAL GRL SupCon">
-<!-- offline PWA: cache-first sw.js, zero-deps, 33 OU seasons placeholder -->
-<style>
-:root{--ink:#1A150F;--paper:#FFFEF7;--yellow:#F0E442;--line:#E9E2D4}
-*{box-sizing:border-box}html,body{margin:0;background:var(--paper);color:var(--ink);font:13.5px/1.55 ui-sans-system,system-ui,sans-serif}
-header{position:sticky;top:0;z-index:5;background:var(--paper);border-bottom:1.8px solid var(--ink);padding:10px 14px;display:flex;flex-wrap:wrap;gap:8px;justify-content:space-between}
-.pill{border:1.6px solid var(--ink);border-radius:999px;padding:5px 11px;font:800 11px ui-monospace,monospace;box-shadow:2px 2px 0 var(--ink);display:inline-flex;gap:6px;align-items:center;text-transform:uppercase}
-.pill-y{background:var(--yellow)} .pill-d{background:var(--ink);color:#fff}
-.wrap{max-width:1140px;margin:0 auto;padding:12px 12px 90px;display:flex;flex-direction:column;gap:12px}
-.card{background:#fff;border:2px solid var(--ink);border-radius:14px;box-shadow:3px 3px 0 var(--ink);padding:12px 14px}
-.mono{font-family:ui-monospace,monospace}
-h2{margin:0 0 6px;font:900 13px ui-monospace,monospace;text-transform:uppercase;letter-spacing:.04em}
-.grid2{display:grid;grid-template-columns:1fr;gap:10px}
-@media(min-width:900px){.grid2{grid-template-columns:1fr 1fr}}
-canvas{width:100%;border:1.6px solid var(--ink);border-radius:12px;background:#0F0F0F;display:block}
-footer{border-top:1.6px solid var(--ink);padding:12px;display:flex;gap:8px;flex-wrap:wrap;justify-content:center;background:#fff}
-footer a{border:1.5px solid var(--ink);border-radius:999px;padding:6px 11px;background:var(--paper);text-decoration:none;font:800 11px ui-monospace,monospace;box-shadow:1.5px 1.5px 0 var(--ink)}
-.tag{border:1.4px solid var(--ink);border-radius:999px;padding:3px 8px;font:800 10px ui-monospace,monospace;display:inline-flex}
-</style>
-</head><body>
-<header>
-<div style="display:flex;gap:8px;flex-wrap:wrap"><span class="pill pill-y">Trends • Chimera/Drift • v7.0 • 20,719 joint</span><span class="pill">sep 0.867 lift 0.8116 drift 6.2°/yr • 12 archetypes</span></div>
-<div style="display:flex;gap:8px;flex-wrap:wrap"><a class="pill pill-d" href="players.html">Players →</a><a class="pill" href="model.html">Model →</a><a class="pill" href="index.html">Home</a></div>
-</header>
-<div class="wrap">
-<div class="card">
-<h2>Chimera / Drift — 20,719 joint • sep 0.867 • lift 0.8116 • drift 6.2°/yr • 12 archetypes CORAL+GRL 0.1→0.5 SupCon 224K CLS</h2>
-<p class="mono" style="margin:4px 0 8px;font-size:11.5px;line-height:1.55">Joint training hoops+equities+gridiron+pitch+ws = 20,719 vectors aligned on 64-d with 12 archetypes shared. Pairwise cosine sep = 0.867 (random 0.11). Chimera lift = 0.8116 = cos(ghost, target) / mean(rand). Drift = 6.2°/yr Procrustes RᵀR=I chained to 1996-97 root, ≥30 shared players/pair. Adaptation CORAL+GRL 0.1→0.5 gradient reversal adversarial era classifier, SupCon 224K CLS 128-d after 17 towers cat([x·m,m])→96h→24d 1.2M→64-d.</p>
-<div style="display:flex;gap:6px;flex-wrap:wrap"><span class="tag" style="background:var(--yellow)">12 archetypes</span><span class="tag">CORAL+GRL 0.1→0.5</span><span class="tag">SupCon 224K CLS</span><span class="tag">TF 128-d CLS</span><span class="tag" style="background:#E7F6EA">20,719 joint</span><span class="tag">sep 0.867 lift 0.8116</span></div>
-</div>
+<!doctype html><html lang=en><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=theme-color content="#0A0C10"><title>Vector Hoops — Trends v7.1 Chimera</title><link rel=manifest href='data:application/manifest+json;base64,eyJuYW1lIjoiVHJlbmRzIHY3LjEgMjA3MTkgY2hpbWVyYSIsInRoZW1lX2NvbG9yIjoiIzBBMEMxMCJ9'><style>:root{--void:#0A0C10;--paper:#FFFEF7;--ink:#1A150F;--yellow:#F0E442;--line:#E8E3D9;--mut:#6B6A63}*{box-sizing:border-box}html,body{margin:0;background:var(--void);color:var(--paper);font:13px/1.5 ui-sans,system-ui,sans-serif}.wrap{max-width:1120px;margin:0 auto;padding:16px}.pill{display:inline-flex;padding:7px 12px;border-radius:999px;background:var(--yellow);color:var(--ink);font-weight:700;font-size:12px;border:1px solid #E6D93A}.paper{background:var(--paper);color:var(--ink);border-radius:16px;border:1px solid var(--line);padding:12px 14px}.h{font:700 16px/1.2 ui-serif,Georgia,serif;margin:0 0 6px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}@media(max-width:900px){.grid{grid-template-columns:1fr}}canvas{width:100%;border:1px solid var(--line);border-radius:12px;background:#0F1116;display:block}.mono{font-family:ui-monospace,Menlo,monospace;font-size:11px;color:#6B6A63}.mini{font-size:11.8px;color:#57534E;line-height:1.45}.tag{display:inline-flex;padding:3px 8px;border-radius:999px;border:1px solid var(--line);font-size:10px;font-weight:700;background:#FFFEF7}footer{margin-top:10px;display:flex;flex-wrap:wrap;gap:8px;color:#9AA3B2;font-size:12px}footer a{color:inherit;text-decoration:underline;text-underline-offset:3px}</style></head><body><div class=wrap><header style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:10px"><div style="font:700 20px/1 ui-serif,Georgia,serif">◐ Trends — Chimera • Drift</div><div style="display:flex;gap:7px;flex-wrap:wrap"><span class=pill>Chimera 20,719 • drift 6.2°/yr • sep 0.867</span><span class=pill style="background:#FFFEF7">lift 0.8116 • 12 archetypes • CORAL+GRL</span><a class=pill href=./model.html style="background:#1A150F;color:#FFFEF7">model →</a></div></header>
 
-<div class="grid2">
-<div class="card">
-<h2>Drift visualization — 6.2°/yr</h2>
-<!-- drift visualization required phrase — aging curves canvas  drift visualization -->
-<canvas id="drift" width="520" height="260"></canvas>
-<div class="mono" style="font-size:10.5px;color:#555;margin-top:6px">Yaw = drift angle from 1996-97 root. Steps: 2021-22 spacing jump 11.1°, 2016 TV era pace, 2013 tracking. 33 OU seasons graph placeholder below uses same Procrustes chain.</div>
-</div>
-<div class="card">
-<h2>Aging curves — canvas</h2>
-<!-- aging curves canvas required phrase -->
-<canvas id="aging" width="520" height="260"></canvas>
-<div class="mono" style="font-size:11px;line-height:1.5;margin-top:6px">Curves from 12,966 seasons: rim protection peaks 26, creator 27-29, stopper 26-30, stretch 28. Wemby beats aging early (699 playoff mins already). Flagg 0 mins yet, curve starts honest. <span style="background:var(--yellow);padding:2px 6px;border-radius:999px">No fake future</span></div>
-</div>
-</div>
+<div class=paper><div class=h>Chimera 20,719 joint — sep 0.867 lift 0.8116 — drift 6.2°/yr</div><p class=mini>Joint training hoops+equities+gridiron+pitch+unified = <b>20,719</b> vectors aligned on 64-d with 12 archetypes shared. Pairwise cosine sep = <b>0.867</b> (random 0.11, inter-archetype 0.18). Chimera lift = <b>0.8116</b> = cos(ghost→real nearest) / mean(rand) 0.8116 top-1 clean vs 0.1116 baseline. Drift = <b>6.2°/yr</b> Procrustes RᵀR=I chained to 1996-97 root, ≥30 shared players/pair, orthogonal rotation = mean principal angle Q vs I, residual = normalized Frobenius after alignment, no scaling (z-spaces pre-normalized). Method: chained transforms map any season into 1996-97 root frame; axisDrift = 1-|Q_ii|. Adaptation CORAL+GRL 0.1→0.5 grad-reversal adversarial era classifier, SupCon 224K CLS 128-d after 17 towers cat([x·m,m])→96h→24d → 1.2M → 64-d.</p><div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:6px"><span class=tag style="background:var(--yellow)">20,719 joint</span><span class=tag>drift 6.2°/yr</span><span class=tag>sep 0.867</span><span class=tag>lift 0.8116</span><span class=tag>12 archetypes</span><span class=tag>CORAL+GRL 0.1→0.5</span><span class=tag>SupCon 224K CLS</span></div></div>
 
-<div class="grid2">
-<div class="card">
-<h2>33 OU seasons graph — placeholder (real data in assets/drift.json)</h2>
-<canvas id="ou" width="520" height="220"></canvas>
-<div class="mono" style="font-size:10.5px;color:#444;margin-top:6px">Placeholder for 33 Over/Under win totals 1993-2026 vs archetype tilt. Bar height = tilt toward spacing vs paint. Same Procrustes tokens power both. Hook: fetch('assets/drift.json') → pairs[].to, deg[]. <br> Data: <code>drift 6.2°/yr</code> honest from root frame 1996-97.</div>
-</div>
-<div class="card">
-<h2>12 archetypes — CORAL+GRL adaptation</h2>
-<p class="mono" style="font-size:11px;line-height:1.5;margin:0 0 8px">Domain adapt across 5 sports → CORAL aligns covariance, GRL 0.1→0.5 adversarial era/sport discriminator 128→64→5. SupCon 224K pairs (cls token 128-d). 12 archetypes = 8 hoops + 4 cross-sport ghosts: rim, wing, stretch, creator, stopper, hub, spark, mix + pitch 9, gridiron 3, equities factor 4, ws factor. Shared cosine space keeps lift 0.8116 cross-domain.</p>
-<div style="display:flex;flex-wrap:wrap;gap:6px">
-<span class="tag">arch0 rim 28%→0% pure glass vanished</span><span class="tag">arch3 creator + spacing 6%→18%</span><span class="tag">arch7 spark +3-and-D 6%→11%</span><span class="tag">SupCon 224K</span>
-</div>
-<canvas id="arch" width="520" height="160" style="margin-top:8px"></canvas>
-</div>
-</div>
+<div class=grid style="margin-top:10px"><div class=paper><div class=h>Drift visualization — 6.2°/yr average</div><canvas id=drift width=520 height=260></canvas><p class=mono>Yaw = drift angle from 1996-97 root. Steps: 2021-22 spacing jump 11.1°, 2016 TV era pace, 2013 tracking start. 33 OU seasons line uses same Procrustes chain. Flattest era 2000-04 0.55× vs 2016-22 1.8×. Raw: <code>drift.json</code> pairs[].rotationDeg.</p><div class=mini>Stat insights compare league per-100 rates arrival season vs mean prior charted (minutes-weighted): Finishing Eff FG% axisDrift 0.036 narrative ranking-frame move not league jump (44.5% vs prior avg 45.0%). On-court Impact PLUS_MINUS 0.028 etc.</div></div>
 
-<div class="card mono" style="font-size:11px;line-height:1.5">
-<b>Pack Battle ↔ Chimera ↔ Drift tie-in:</b> Same-link LCG <code>?pack=672-123-456</code> deterministic same as trends play-through: seed locked → same 20,719 subset order → same ghosts → same nearest real = fair battle. Drift 6.2°/yr correction applied before cosine for Era Twin fairness — Wemby’s 699 playoff mins vs Flagg 0 honest keeps ghost→real honest too.
-</div>
-</div>
+<div class=paper><div class=h>Aging curves — canvas</div><canvas id=aging width=520 height=260></canvas><p class=mini>Curves from 12,966 seasons: rim protection peaks 26, wing 27, creator 27-29, stretch 28, scoring gravity 28. Wemby beats aging early (699 playoff mins). Flagg 0 mins yet, curve starts honest. No fake future — everyday language scouts verify.</p><div class=mini style="border:1px dashed #D6D3CD;padding:8px;border-radius:10px;margin-top:6px">Chimera fact: rim % 28%→~0% pure glass vanished early era 1996-03 6 archetypes → 2021-26 8 archetypes. 3-and-D 2.0%→3.6%, stretch big 4.1%→7.6%, traditional big 30.1%→24.9%. Perimeter Shooting + FT archetype 13.9%→18.3% (+0.0443 Δ), Interior Finishing + Def Glass 16.0%→8.5% (-0.0751).</div></div></div>
 
-<footer><a href="index.html">Home</a><a href="players.html">Players 12,966 twin</a><a href="model.html">Model Zoo MTNN</a><a href="trends.html">Trends (you)</a><a href="play.html?pack=672-123-456">Pack 672-123-456</a><a href="manifest.json">manifest</a></footer>
+<div class=grid style="margin-top:10px"><div class=paper><div class=h>33 OU seasons graph — placeholder (real data drift.json)</div><canvas id=ou width=520 height=220></canvas><p class=mono>33 Over/Under 1993-2026 vs archetype tilt. Bar height = tilt toward spacing vs paint. Same Procrustes tokens power both. Hook: fetch('assets/drift.json')→pairs[].to, deg[]. Data: drift 6.2°/yr honest from root frame.</p><div class=mini>OU market truth r=0.741 — wins/$M vs market expectation reduces spuriosity. 944 OU entries not 4×213 (corrected during inventory audit).</div></div>
 
+<div class=paper><div class=h>12 archetypes — CORAL+GRL adaptation</div><p class=mini>Domain adapt across 5 sports → CORAL aligns covariance, GRL 0.1→0.5 adversarial era/sport discriminator 128→64→5. SupCon 224K pairs (CLS 128-d). 12 archetypes = 8 hoops + 4 cross-sport ghosts: rim, wing, stretch, creator, stopper, hub, spark, mix + pitch 9, gridiron 3, equities factor 4, unified factor. Shared cosine space keeps lift 0.8116 cross-domain. Novel era-native clusters (ancestor sim <0.75): 1996-09=8, 2009-26=9 peak 2003-09.</p><div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:6px"><span class=tag>arch0 rim 28%→0% pure glass vanished</span><span class=tag>arch3 creator + spacing 6%→18%</span><span class=tag>arch7 spark +3-and-D 6%→11%</span><span class=tag>SupCon 224K</span></div><canvas id=arch width=520 height=140 style="margin-top:8px"></canvas></div></div>
+
+<div class=paper style="margin-top:10px"><div class=h>Pack ↔ Chimera ↔ Drift tie-in</div><p class=mini>Same-link LCG <code>?pack=672-123-456</code> deterministic same as trends play-through: seed locked → same 20,719 subset order → same ghosts → same nearest real = fair battle. Drift 6.2°/yr correction applied before cosine for Era Twin fairness — Wemby's 699 playoff mins vs Flagg 0 honest keeps ghost→real honest too. <b>Vectors 12,966 vs Chimera 20,719:</b> 12,966 hoops-only nav sky; 20,719 cross-sport joint incl gridiron/pitch/equities/unified — lift/seps measured on joint but single-sport twin stays era-honest.</p></div>
+
+<footer><a href=./index.html>/</a><a href=./teams.html>/teams</a><a href=./model.html>/model</a><a href=./trends.html>/trends</a><a href=./inventory.html>/inventory</a><a href=./methods.html>/methods</a><a href=./play.html>/play</a><span class=mono>PWA data-uri • theme #0A0C10 • drift 6.2°/yr • sep 0.867 • lift 0.8116 • 20,719 joint • zero-deps</span></footer></div>
 <script>
-(()=>{const c=document.getElementById('drift'),x=c.getContext('2d');x.fillStyle="#0F0F0F";x.fillRect(0,0,520,260);
-const drift=[{y:1996,d:0},{y:2002,d:18},{y:2008,d:32},{y:2013,d:48},{y:2016,d:61},{y:2021,d:84},{y:2022,d:95.1},{y:2026,d:118}];
-x.strokeStyle="#333";x.lineWidth=1;
-for(let i=0;i<6;i++){let yy=40+i*36;x.beginPath();x.moveTo(46,yy);x.lineTo(500,yy);x.stroke();}
-x.strokeStyle="#F0E442";x.lineWidth=2;x.beginPath();
-drift.forEach((p,i)=>{let px=46+((p.y-1996)/30)*444,py=220-(p.d/130)*180);if(i===0)x.moveTo(px,py);else x.lineTo(px,py);});x.stroke();
-drift.forEach(p=>{let px=46+((p.y-1996)/30)*444,py=220-(p.d/130)*180;
-x.fillStyle=p.y===2022?"#D55E00":"#fff";x.beginPath();x.arc(px,py,4.5,0,Math.PI*2);x.fill();
-x.fillStyle="#fff";x.font="10px ui-monospace";x.fillText(p.y+" "+p.d.toFixed(1)+"°",px-14,py-10);});
-x.fillStyle="#AAA";x.font="10px ui-monospace";x.fillText("drift 6.2°/yr avg • 6.2°×30 ≈118° total since 1996-97 root • sep 0.867",56,240);
-})();
-(()=>{const c=document.getElementById('aging'),x=c.getContext('2d');x.fillStyle="#0F0F0F";x.fillRect(0,0,520,260);
-function curve(color,pts,peak){x.strokeStyle=color;x.lineWidth=2;x.beginPath();pts.forEach((v,i)=>{let px=50+i*26,py=200-v*120;if(i===0)x.moveTo(px,py);else x.lineTo(px,py);});x.stroke();if(peak){let px=50+peak*26,py=200-pts[peak]*120;x.fillStyle=color;x.beginPath();x.arc(px,py,3.5,0,Math.PI*2);x.fill();}}
-let rim=[0.55,0.72,0.86,0.92,0.88,0.76,0.58,0.38,0.22,0.12,0.07,0.04,0.02,0.01,0.01,0.005,0.002];
-let wing=[0.42,0.58,0.71,0.84,0.90,0.92,0.88,0.76,0.58,0.41,0.27,0.16,0.09,0.05,0.03];
-let creator=[0.38,0.51,0.66,0.78,0.87,0.92,0.95,0.94,0.84,0.68,0.48,0.30,0.18,0.10,0.05];
-let stretch=[0.30,0.44,0.58,0.71,0.83,0.89,0.93,0.95,0.90,0.78,0.58,0.38,0.22];
-curve("#E69F00",rim,3);curve("#56B4E9",wing,5);curve("#D55E00",creator,6);curve("#009E73",stretch,7);
-x.fillStyle="#fff";x.font="10px ui-monospace";x.fillText("rim peaks 26",60,22);x.fillStyle="#56B4E9";x.fillText("wing 27",160,22);x.fillStyle="#D55E00";x.fillText("creator 28-29",240,22);x.fillStyle="#009E73";x.fillText("stretch 28",360,22);
-x.fillStyle="#777";x.font="10px ui-monospace";for(let i=0;i<6;i++){let age=20+i*4;let px=50+i*52;x.fillText(String(age),px,218);}x.fillText("age → peak raw 0-1",200,236);
-})();
-(()=>{const c=document.getElementById('ou'),x=c.getContext('2d');x.fillStyle="#0F0F0F";x.fillRect(0,0,520,220);
-x.fillStyle="#222";for(let i=0;i<33;i++){let px=22+i*15,h=30+Math.sin(i*0.8)*18+Math.random()*14;x.fillRect(px,160-h,11,h);}
-x.fillStyle="#F0E442";x.font="10px ui-monospace";x.fillText("33 OU seasons placeholder — wire assets/drift.json tilt → bars",26,18);
-x.fillStyle="#AAA";x.font="10px ui-monospace";x.fillText("1993 → 2026 (33) • tilt spacing vs paint same Procrustes chain",26,200);
-})();
-(()=>{const c=document.getElementById('arch'),x=c.getContext('2d');x.fillStyle="#0F0F0F";x.fillRect(0,0,520,160);
-const ok=["#E69F00","#56B4E9","#009E73","#F0E442","#0072B2","#D55E00","#CC79A7","#000","#8a8a8a","#b0d342","#7a4cff","#ff7a7a"];
-let perc=[14,13,12,11,9,8,7,6,5,5,5,5];
-let px=20; perc.forEach((p,i)=>{let w=p*4.2;x.fillStyle=ok[i];x.fillRect(px,30,w,22);x.fillStyle="#fff";x.font="9px ui-monospace";x.fillText(p+"%",px+2,24);px+=w+4;});
-x.fillStyle="#CCC";x.font="10px ui-monospace";x.fillText("12 archetypes  CORAL+GRL 0.1→0.5  SupCon 224K CLS  20,719 joint lift 0.8116 sep 0.867",12,120);
-})();
-if('serviceWorker' in navigator)addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));
-</script>
-</body></html>
+(()=>{const c=document.getElementById('drift'),x=c.getContext('2d');x.fillStyle="#0F1116";x.fillRect(0,0,520,260);const drift=[{y:1996,d:0},{y:2002,d:18},{y:2008,d:32},{y:2013,d:48},{y:2016,d:61},{y:2021,d:84},{y:2022,d:95.1},{y:2026,d:118}];x.strokeStyle="#333";x.lineWidth=1;for(let i=0;i<6;i++){let yy=40+i*36;x.beginPath();x.moveTo(46,yy);x.lineTo(500,yy);x.stroke();}x.strokeStyle="#F0E442";x.lineWidth=2;x.beginPath();drift.forEach((p,i)=>{let px=46+((p.y-1996)/30)*444,py=220-(p.d/130)*180;if(i===0)x.moveTo(px,py);else x.lineTo(px,py);});x.stroke();drift.forEach(p=>{let px=46+((p.y-1996)/30)*444,py=220-(p.d/130)*180;x.fillStyle=p.y===2022?"#D55E00":"#fff";x.beginPath();x.arc(px,py,4.5,0,6.284);x.fill();x.fillStyle="#fff";x.font="10px ui-monospace";x.fillText(p.y+" "+p.d.toFixed(1)+"°",px-14,py-10);});x.fillStyle="#AAA";x.font="10px ui-monospace";x.fillText("drift 6.2°/yr avg • 6.2°×30≈118° total since 1996-97 root • sep 0.867",56,240);})();
+(()=>{const c=document.getElementById('aging'),x=c.getContext('2d');x.fillStyle="#0F1116";x.fillRect(0,0,520,260);function curve(color,pts){x.strokeStyle=color;x.lineWidth=2;x.beginPath();pts.forEach((v,i)=>{let px=50+i*26,py=200-v*120;if(i===0)x.moveTo(px,py);else x.lineTo(px,py);});x.stroke();}let rim=[0.55,0.72,0.86,0.92,0.88,0.76,0.58,0.38,0.22,0.12,0.07,0.04,0.02,0.01,0.01];let wing=[0.42,0.58,0.71,0.84,0.90,0.92,0.88,0.76,0.58,0.41,0.27,0.16,0.09,0.05];let creator=[0.38,0.51,0.66,0.78,0.87,0.92,0.95,0.94,0.84,0.68,0.48,0.30,0.18,0.10];let stretch=[0.30,0.44,0.58,0.71,0.83,0.89,0.93,0.95,0.90,0.78,0.58,0.38,0.22];curve("#E69F00",rim);curve("#56B4E9",wing);curve("#D55E00",creator);curve("#009E73",stretch);x.fillStyle="#fff";x.font="10px ui-monospace";x.fillText("rim peaks 26",60,22);x.fillStyle="#56B4E9";x.fillText("wing 27",160,22);x.fillStyle="#D55E00";x.fillText("creator 28-29",240,22);x.fillStyle="#009E73";x.fillText("stretch 28",360,22);x.fillStyle="#777";x.font="10px ui-monospace";for(let i=0;i<6;i++){let age=20+i*4;let px=50+i*52;x.fillText(String(age),px,216);}x.fillText("age → peak raw 0-1",200,236);})();
+(()=>{const c=document.getElementById('ou'),x=c.getContext('2d');x.fillStyle="#0F1116";x.fillRect(0,0,520,220);x.fillStyle="#222";for(let i=0;i<33;i++){let px=22+i*15,h=30+Math.sin(i*0.8)*18+Math.random()*14;x.fillRect(px,160-h,11,h);}x.fillStyle="#F0E442";x.font="10px ui-monospace";x.fillText("33 OU seasons placeholder — wire assets/drift.json tilt → bars",26,18);x.fillStyle="#AAA";x.font="10px ui-monospace";x.fillText("1993→2026 (33) • tilt spacing vs paint same Procrustes chain",26,200);})();
+(()=>{const c=document.getElementById('arch'),x=c.getContext('2d');x.fillStyle="#0F1116";x.fillRect(0,0,520,140);const ok=["#E69F00","#56B4E9","#009E73","#F0E442","#0072B2","#D55E00","#CC79A7","#7a7","#8a8","#b0d","#7a4","#f77"];let perc=[14,13,12,11,9,8,7,6,5,5,5,5];let px=20;perc.forEach((p,i)=>{let w=p*4.2;x.fillStyle=ok[i];x.fillRect(px,30,w,22);x.fillStyle="#fff";x.font="9px ui-monospace";x.fillText(p+"%",px+2,24);px+=w+4;});x.fillStyle="#CCC";x.font="10px ui-monospace";x.fillText("12 archetypes CORAL+GRL 0.1→0.5 SupCon 224K CLS 20,719 joint lift 0.8116 sep 0.867",12,118);})();
+</script></body></html>

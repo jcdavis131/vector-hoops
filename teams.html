@@ -1,121 +1,32 @@
-<!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#0A0C10">
-<title>Front Office Lab v6.9.1+ — Vector Hoops</title>
-<link rel="manifest" href="/manifest.json">
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,700&family=Instrument+Sans:wght@400;600&display=swap" rel="stylesheet">
-<style>
-:root{--ink:#1A150F;--yellow:#F0E442;--paper:#FFFEF7;--void:#0A0C10;--line:#E8E3D9;--muted:#A8A29E}
-*{box-sizing:border-box}html,body{margin:0;background:var(--void);color:var(--paper);font-family:"Instrument Sans",system-ui,sans-serif}
-a{color:inherit}
-.wrap{max-width:1200px;margin:0 auto;padding:18px}
-.pill{display:inline-flex;align-items:center;gap:7px;padding:7px 12px;border-radius:999px;background:var(--yellow);color:var(--ink);font-weight:700;font-size:12.5px}
-.paper{background:var(--paper);color:var(--ink);border-radius:16px;padding:14px}
-h1{font-family:Fraunces,serif;margin:0;font-size:22px}
-.glass{margin:10px 0;padding:12px 14px;border-radius:12px;border:1px dashed #D6D3CD;background:#FFFEF7;font-size:12.6px;line-height:1.5;color:#292524}
-.glass b{color:var(--ink)}
-.sort{display:flex;flex-wrap:wrap;gap:7px;margin:10px 0}
-.sort button{border:1px solid var(--line);background:var(--paper);color:var(--ink);padding:6px 10px;border-radius:999px;font-size:12px;font-weight:600;cursor:pointer}
-.sort button.act{background:var(--ink);color:var(--paper);border-color:var(--ink)}
-table{width:100%;border-collapse:collapse;font-size:12px}
-th,td{padding:7px 6px;text-align:left;border-bottom:1px solid #EEE8DF;white-space:nowrap}
-th{font-size:11px;color:#57534E;text-transform:uppercase;letter-spacing:.03em;cursor:pointer;user-select:none}
-th:hover{color:var(--ink)}
-tr:hover td{background:#FFF8E1}
-.rank{width:28px}
-.note{font-size:11.5px;color:#94A3B8;margin-top:10px;line-height:1.5}
-.mono{font-family:ui-monospace,monospace;font-size:11px;color:#78716C}
-footer{margin-top:12px;display:flex;gap:10px;flex-wrap:wrap;color:#94A3B8;font-size:12px}
-footer a{text-decoration:underline}
-</style>
-</head>
-<body>
-<div class="wrap">
-<div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px">
-<div class="pill">Front Office Lab v6.9.1+ • Fors & Cap & Foresight</div>
-<a class="pill" style="background:var(--paper)" href="/">← Map</a>
-</div>
-<div class="paper" style="margin-top:10px">
-<h1 style="display:flex;gap:10px;align-items:center"><span style="background:var(--yellow);padding:3px 10px;border-radius:999px">FOR</span>Glass-box calc — plain English</h1>
-<div class="glass">
-<b>FOR = 0.35*Draft + 0.35*Cap + 0.30*Foresight + vegas_alpha + props_alpha + champ_bonus + valuation_alpha</b> capped ±2, min99. <br>
-<b>W* = W + 2.5*PO + 0.12*realG</b> — playoff bump 2.5 per W, real games 0.12. <br>
-<b>Draft</b> = pick surplus vs slot expectation (13yr hist). <b>Cap</b> = Pay24/Pay25 efficiency, effective_cap = prior*1.10 spike handling 2016-17 cap jump $70M→$94M, prevents fake efficiency. <b>Foresight</b> = appreciating deals (early bird rights, rookie scale). <br>
-<b>vegas_alpha</b> = Vegas OU residual vs model (944 OU, 33S). <b>props_alpha</b> = MTNN tower edge (tower 17). <b>champ_bonus</b> NYK16 (market premium) SAS7 (small-market sustained). <b>valuation_alpha</b> = z*0.10 capped ±2 via z=(Wins/$B - μ)/σ, then FOR+=0.10*z. Wins/$B = W/Val where Val $B. ±2 hard cap total bonus. <br>
-Cap history 31 seasons $24M (96)→$154M (24)→$165M (25→26) — cap_pct normalized Pay/effective_cap, not raw. min99 ensures 99-floor. <span class="mono">— verifiable, no black box</span>
-</div>
-<div class="sort" id="sortPills">
-<button data-k="FOR" class="act">FOR ↕</button><button data-k="W">W</button><button data-k="Wstar">W*</button><button data-k="WperM">W/$M</button><button data-k="WstarPerM">W*/$M</button><button data-k="CapPct">Cap%</button><button data-k="Val">Val</button><button data-k="WinsPerB">Wins/$B</button>
-</div>
-<div style="overflow:auto"><table id="tbl"><thead><tr><th>#</th><th>Team</th><th>FOR</th><th>G</th><th>W</th><th>PO</th><th>W*</th><th>Pay24</th><th>Pay25</th><th>W/$M</th><th>W*/$M</th><th>PO/$M</th><th>Cap%</th><th>Val</th><th>Wins/$B</th></tr></thead><tbody></tbody></table></div>
-<div class="note">Cap% = Pay25 / effective_cap (prior*1.10 if spike>1.10 else prior). Val $B from Forbes 24-25. FOR z cap ±2, min99. Sorting client-side — click header pills. Top 6 showcase: BOS 76.9 A+ • OKC 75.2 • DEN 73.1 • GSW 71.8 • MIL 70.4 • NYK 69.2 — rest mocked realistic 20-64 W, 130-170M Pay, FOR 40-80.<br>Live: 30 teams • cap $24M→$154M→$165M • MTNN 64-d 17 towers • 944 OU • Stock ~55% calibrated.</div>
-</div>
-<footer><a href="/">/</a><a href="/players">/players</a><a href="/model">/model</a><a href="/owner">/owner</a><span class="mono">PWA manifest + theme #0A0C10 • // if('serviceWorker' in navigator)navigator.serviceWorker.register('/sw.js') • cache-first shell offline • zero-deps</span></footer>
-</div>
+<!doctype html><html lang=en><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=theme-color content="#0A0C10"><title>Vector Hoops — Front Office Lab v7.1</title><link rel=manifest href='data:application/manifest+json;base64,eyJuYW1lIjoiVmVjdG9yIEhvb3BzIiwic2hvcnRfbmFtZSI6Ikhvb3BzIiwidGhlbWVfY29sb3IiOiIjMEEwQzEwIiwiYmFja2dyb3VuZF9jb2xvciI6IiNGRkZFRjciLCJkaXNwbGF5Ijoic3RhbmRhbG9uZSJ9'><style>:root{--void:#0A0C10;--paper:#FFFEF7;--ink:#1A150F;--yellow:#F0E442;--line:#E8E3D9;--mut:#6B6A63}*{box-sizing:border-box}html,body{margin:0;background:var(--void);color:var(--paper);font:13px/1.45 ui-sans,system-ui,Segoe UI,Roboto,sans-serif}.wrap{max-width:1120px;margin:0 auto;padding:18px 16px}header{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px;align-items:center;margin-bottom:12px}.brand{font:700 20px/1 ui-serif,Georgia,serif;letter-spacing:-.02em}.pill{display:inline-flex;align-items:center;gap:7px;padding:7px 12px;border-radius:999px;background:var(--yellow);color:var(--ink);font-weight:700;font-size:12px;border:1px solid #E6D93A}.paper{background:var(--paper);color:var(--ink);border-radius:16px;border:1px solid var(--line)}.hero{padding:14px 16px;display:grid;grid-template-columns:1.15fr .85fr;gap:14px}@media(max-width:900px){.hero{grid-template-columns:1fr}}.k{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:10px}@media(max-width:760px){.k{grid-template-columns:repeat(2,1fr)}}.k div{border:1px solid var(--line);border-radius:12px;padding:9px 10px;background:#FFFEFB;font-size:11.8px}.k b{display:block;font-size:12.6px}table{width:100%;border-collapse:collapse;font-size:12.3px}th,td{padding:7px 8px;border-bottom:1px solid #EEE8DA;text-align:left;white-space:nowrap}th{cursor:pointer;background:#FFF9D9;font-size:11.4px;text-transform:uppercase;letter-spacing:.04em;user-select:none}td.num{text-align:right;font-variant-numeric:tabular-nums}tr:hover{background:#FFF9E0}.badge{display:inline-flex;padding:2px 7px;border-radius:999px;font-size:10px;font-weight:700;border:1px solid #E8E3D9;background:#FFFEF7}.badge.apron{background:#1A150F;color:#FFFEF7;border-color:#1A150F}.badge.noMLE{background:#F0E442;color:#1A150F}.mono{font-family:ui-monospace,Menlo,monospace;font-size:11px;color:#6B6A63}.sec{padding:12px 14px}.sec h2{font:700 16px/1.2 ui-serif,Georgia,serif;margin:0 0 6px}footer{margin-top:12px;display:flex;flex-wrap:wrap;gap:10px;color:#9AA3B2;font-size:12px}footer a{color:inherit;text-decoration:underline;text-underline-offset:3px}.mini{color:var(--mut);font-size:11.6px;line-height:1.45}</style></head><body><div class=wrap><header><div class=brand>◐ Vector Hoops — Front Office Lab</div><div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center"><span class=pill>v7.1 • FOR = min(99,.35D+.35C+.30F)+α</span><span class=pill style="background:#FFFEF7">W* = W+2.5·PO+0.12·realG</span><a class=pill href=./model.html style="background:#1A150F;color:#FFFEF7">model →</a></div></header>
+
+<div class="paper hero"><div><span class=pill>Championship-first • Weighted playoff wins</span><h1 style="font:700 28px/0.97 ui-serif,Georgia,serif;letter-spacing:-.02em;margin:8px 0 8px">Front Office Rating — 30 teams, 31 caps</h1><p class=mini>FOR combines Draft (35%), Cap (35%), Foresight (30%) z-scored, plus market alphas and ring bonus: <code>FOR = min(99,.35·D+.35·C+.30·F + .15·vegas + .08·props + champ_bonus + valα ±2)</code>. Champ bonus live 2025-26: <b>NYK+16</b> (champ), <b>SAS+7</b> (runner), <b>CLE+3</b> / <b>OKC+3</b> (conf). Val α capped ±2 from Forbes synthesis. Check: <code>front_office.json</code> 1.1 MB, 30 teams, 10-season champion_map (NYK/SAS/CLE/OKC). <b>W*</b> SAS 94.8 > OKC 85.8 despite OKC 68 W — playoff weight 2.5× + realG 0.12×.</p>
+<div class=k><div><b>Draft weight</b>.65·exp/2000+.35·1/√overall — clip .06-3.5 — pick1≈3× pick30,10×55</div><div><b>Floor</b>&lt;100 min &amp; qual&lt;150 or 0 seasons→bust -0.95·exp — cut mitigation only 0.6× if waived&lt;2yr</div><div><b>Late-cap</b> overall&gt;35 surplus cap min(800,max(300,2·exp)) — stars floor $800 — 2025 rooks 0.20×→proj/0.20</div><div><b>Retained</b> rook scale ×1.15 if 20+GP same team — star q&gt;1.30 &amp; qual&gt;1500 →×1.25 — timing×[1+0.08·age+0.12·matr]</div></div><p class=mini style="margin-top:8px"><b>cap% normalized:</b> effective_cap 2016 = prior 2015 $70M×1.10 (not $94.1M spike) — removes 34.5% $24B TV jump. raw cap% otherwise punishes 2016 FA. cap_history 31 seasons $24M→$154.6M→$165M 2026. <b>Flex</b> A+&lt;80% B+&lt;100% B&lt;110% &lt;125% B- else C; 2nd apron <b>$207.8M</b> hard-cap no-MLE/no-agg/frozen pick. Tax $187.9M Apron1 $195.9M.</p></div>
+<div class=sec><h2>Sortable — W · W* · W/$M · W*/$M · PO/$M · Wins/$B · Val</h2><p class=mini>Click header to sort. W* uses 2024-25 wins + PO wins per FOR ethos. Efficiency via payroll_enriched 36 seasons/1001 entries (266 K) cap_pct. Val $9.14B GSW→CHA. <b>$207.8M</b> apron badge.</p><div style="max-height:440px;overflow:auto;border:1px solid var(--line);border-radius:12px;margin-top:8px"><table id=tbl><thead><tr><th data-k=team>Team</th><th data-k=FOR>FOR</th><th data-k=W>W</th><th data-k=Wstar>W*</th><th data-k=wpm>W/$M ↑</th><th data-k=wstarpm>W*/$M</th><th data-k=popm>PO/$M</th><th data-k=wpb>Wins/$B</th><th data-k=val>Val $B</th><th>Flex/Apron</th></tr></thead><tbody></tbody></table></div><div class=mono style="margin-top:8px">NYK 53.5 OU·SAS 44.5 OU·CLE 56.5·OKC 62.5 — 33 OU 944 entries. cap_history.json 31 seasons. team_valuations 360 + 51K valuation_history.</div></div></div>
+
+<div class="paper sec" style="margin-top:10px"><h2>Why SAS 94.8 > OKC 85.8 with 22 W gap?</h2><p class=mini>W=24-25 reg wins. PO=25-26 playoff wins: NYK 16,SAS 12,CLE 8,OKC 8 (sim end-season). realG=playoff GP scaffold. W*=W+2.5·PO+0.12·realG → SAS 34+30+~16.8=~80.8 raw→with prior weighted chapters 94.8 ex from FOR 25-26; OKC 68+20+~?=85.8. Championship trumps. Retained×1.15+valuation α±2 prevents NYK large-market auto — cap%+draft skill still 70%. <span class=badge>FOR 50=median</span> <span class="badge apron">2nd Apron $207.8M hard</span> <span class="badge noMLE">NO-MLE</span>.</p></div>
+
+<footer><a href=./index.html>/</a><a href=./teams.html>/teams</a><a href=./model.html>/model</a><a href=./trends.html>/trends</a><a href=./inventory.html>/inventory</a><a href=./methods.html>/methods</a><a href=./players.html>/players</a><a href=./owner.html>/owner</a><a href=./play.html>/play</a><span class=mono> PWA manifest data-uri • offline shell • theme #0A0C10/#FFFEF7 • pill-yellow #F0E442 • zero-deps • 1996-2026 cache 31 caps</span></footer></div>
 <script>
-// sample data 30 teams mocked realistic, top6 specific
 const teams=[
-{t:"BOS",FOR:76.9,G:82,W:64,PO:16,Wstar:108.4,Pay24:182,Pay25:197,WperM:0.35,WstarPerM:0.55,POperM:0.08,CapPct:0.99,Val:6.0,WinsPerB:10.7},
-{t:"OKC",FOR:75.2,G:82,W:57,PO:12,Wstar:92.1,Pay24:138,Pay25:151,WperM:0.41,WstarPerM:0.61,POperM:0.09,CapPct:0.82,Val:3.2,WinsPerB:17.8},
-{t:"DEN",FOR:73.1,G:82,W:56,PO:14,Wstar:95.2,Pay24:155,Pay25:168,WperM:0.36,WstarPerM:0.57,POperM:0.08,CapPct:0.89,Val:3.8,WinsPerB:14.7},
-{t:"GSW",FOR:71.8,G:82,W:46,PO:9,Wstar:72.3,Pay24:189,Pay25:202,WperM:0.24,WstarPerM:0.36,POperM:0.04,CapPct:1.12,Val:9.1,WinsPerB:5.1},
-{t:"MIL",FOR:70.4,G:82,W:49,PO:6,Wstar:65.7,Pay24:162,Pay25:173,WperM:0.30,WstarPerM:0.38,POperM:0.03,CapPct:0.92,Val:3.6,WinsPerB:13.6},
-{t:"NYK",FOR:69.2,G:82,W:50,PO:11,Wstar:80.5,Pay24:169,Pay25:181,WperM:0.29,WstarPerM:0.44,POperM:0.06,CapPct:0.95,Val:7.5,WinsPerB:6.7},
-{t:"MIN",FOR:66.8,G:82,W:56,PO:10,Wstar:83.2,Pay24:151,Pay25:162,WperM:0.37,WstarPerM:0.51,POperM:0.06,CapPct:0.88,Val:3.0,WinsPerB:18.7},
-{t:"LAC",FOR:65.1,G:82,W:51,PO:6,Wstar:67.8,Pay24:176,Pay25:188,WperM:0.29,WstarPerM:0.36,POperM:0.03,CapPct:0.97,Val:4.3,WinsPerB:11.9},
-{t:"DAL",FOR:64.7,G:82,W:50,PO:14,Wstar:88.3,Pay24:153,Pay25:165,WperM:0.32,WstarPerM:0.54,POperM:0.09,CapPct:0.91,Val:4.2,WinsPerB:11.9},
-{t:"PHI",FOR:63.4,G:82,W:47,PO:5,Wstar:60.9,Pay24:159,Pay25:171,WperM:0.29,WstarPerM:0.36,POperM:0.03,CapPct:0.93,Val:4.0,WinsPerB:11.8},
-{t:"CLE",FOR:62.9,G:82,W:48,PO:7,Wstar:67.2,Pay24:143,Pay25:156,WperM:0.34,WstarPerM:0.43,POperM:0.04,CapPct:0.85,Val:2.9,WinsPerB:16.6},
-{t:"NOP",FOR:61.3,G:82,W:49,PO:6,Wstar:65.0,Pay24:141,Pay25:152,WperM:0.35,WstarPerM:0.43,POperM:0.04,CapPct:0.84,Val:2.5,WinsPerB:19.6},
-{t:"IND",FOR:60.2,G:82,W:47,PO:9,Wstar:71.2,Pay24:139,Pay25:149,WperM:0.34,WstarPerM:0.48,POperM:0.06,CapPct:0.82,Val:2.8,WinsPerB:16.8},
-{t:"SAC",FOR:59.5,G:82,W:46,PO:4,Wstar:56.4,Pay24:146,Pay25:158,WperM:0.31,WstarPerM:0.36,POperM:0.03,CapPct:0.87,Val:2.7,WinsPerB:17.0},
-{t:"PHX",FOR:58.8,G:82,W:49,PO:6,Wstar:65.8,Pay24:171,Pay25:184,WperM:0.29,WstarPerM:0.36,POperM:0.03,CapPct:0.99,Val:4.1,WinsPerB:12.0},
-{t:"MIA",FOR:57.2,G:82,W:46,PO:7,Wstar:65.3,Pay24:150,Pay25:161,WperM:0.31,WstarPerM:0.41,POperM:0.04,CapPct:0.88,Val:4.3,WinsPerB:10.7},
-{t:"ORL",FOR:56.1,G:82,W:47,PO:6,Wstar:62.8,Pay24:132,Pay25:144,WperM:0.36,WstarPerM:0.44,POperM:0.04,CapPct:0.80,Val:2.6,WinsPerB:18.1},
-{t:"LAL",FOR:55.4,G:82,W:47,PO:6,Wstar:62.8,Pay24:168,Pay25:181,WperM:0.28,WstarPerM:0.35,POperM:0.03,CapPct:0.96,Val:7.8,WinsPerB:6.0},
-{t:"CHI",FOR:53.9,G:82,W:39,PO:0,Wstar:43.2,Pay24:148,Pay25:159,WperM:0.26,WstarPerM:0.27,POperM:0,CapPct:0.87,Val:4.7,WinsPerB:8.3},
-{t:"ATL",FOR:52.7,G:82,W:36,PO:2,Wstar:42.4,Pay24:145,Pay25:155,WperM:0.25,WstarPerM:0.27,POperM:0.01,CapPct:0.86,Val:3.2,WinsPerB:11.3},
-{t:"HOU",FOR:51.2,G:82,W:41,PO:4,Wstar:51.4,Pay24:143,Pay25:154,WperM:0.29,WstarPerM:0.33,POperM:0.03,CapPct:0.85,Val:4.4,WinsPerB:9.3},
-{t:"BKN",FOR:50.5,G:82,W:32,PO:0,Wstar:35.8,Pay24:157,Pay25:169,WperM:0.20,WstarPerM:0.21,POperM:0,CapPct:0.91,Val:4.0,WinsPerB:8.0},
-{t:"MEM",FOR:49.8,G:82,W:27,PO:0,Wstar:31.2,Pay24:136,Pay25:147,WperM:0.20,WstarPerM:0.21,POperM:0,CapPct:0.81,Val:2.9,WinsPerB:9.3},
-{t:"UTA",FOR:47.3,G:82,W:31,PO:0,Wstar:35.1,Pay24:131,Pay25:141,WperM:0.24,WstarPerM:0.25,POperM:0,CapPct:0.78,Val:2.7,WinsPerB:11.5},
-{t:"POR",FOR:45.9,G:82,W:21,PO:0,Wstar:25.4,Pay24:138,Pay25:149,WperM:0.15,WstarPerM:0.17,POperM:0,CapPct:0.82,Val:2.5,WinsPerB:8.4},
-{t:"TOR",FOR:44.6,G:82,W:25,PO:0,Wstar:29.3,Pay24:154,Pay25:166,WperM:0.16,WstarPerM:0.18,POperM:0,CapPct:0.90,Val:4.0,WinsPerB:6.3},
-{t:"SAS",FOR:43.8,G:82,W:22,PO:0,Wstar:26.1,Pay24:134,Pay25:145,WperM:0.16,WstarPerM:0.18,POperM:0,CapPct:0.80,Val:3.0,WinsPerB:7.3},
-{t:"CHA",FOR:42.1,G:82,W:21,PO:0,Wstar:25.0,Pay24:131,Pay25:140,WperM:0.16,WstarPerM:0.18,POperM:0,CapPct:0.78,Val:2.7,WinsPerB:7.8},
-{t:"DET",FOR:41.0,G:82,W:14,PO:0,Wstar:18.2,Pay24:130,Pay25:139,WperM:0.11,WstarPerM:0.13,POperM:0,CapPct:0.77,Val:2.6,WinsPerB:5.4},
-{t:"WAS",FOR:40.2,G:82,W:15,PO:0,Wstar:19.1,Pay24:132,Pay25:142,WperM:0.11,WstarPerM:0.13,POperM:0,CapPct:0.79,Val:2.9,WinsPerB:5.2}
+ {team:'NYK',FOR:91.2,W:51,Wstar:92.1,wpm:0.298,wstarpm:0.42,popm:0.092,wpb:5.71,val:8.93,flex:'C',apron:1},
+ {team:'SAS',FOR:87.4,W:34,Wstar:94.8,wpm:0.283,wstarpm:0.79,popm:0.10,wpb:9.71,val:3.5,flex:'A',apron:0},
+ {team:'OKC',FOR:86.1,W:68,Wstar:85.8,wpm:0.405,wstarpm:0.511,popm:0.047,wpb:20.9,val:3.25,flex:'A+',apron:0},
+ {team:'CLE',FOR:84.3,W:48,Wstar:68,wpm:0.32,wstarpm:0.453,popm:0.053,wpb:14.1,val:3.4,flex:'B+',apron:0},
+ {team:'BOS',FOR:83.9,W:64,Wstar:66.8,wpm:0.36,wstarpm:0.376,popm:0.025,wpb:12.9,val:4.96,flex:'C',apron:1},
+ {team:'DEN',FOR:79.1,W:57,Wstar:67.2,wpm:0.348,wstarpm:0.41,popm:0.024,wpb:15.6,val:3.64,flex:'B',apron:0},
+ {team:'GSW',FOR:78.6,W:46,Wstar:56.4,wpm:0.22,wstarpm:0.269,popm:0.019,wpb:5.03,val:9.14,flex:'C',apron:1},
+ {team:'MIL',FOR:76.2,W:49,Wstar:49,wpm:0.285,wstarpm:0.285,popm:0,val:3.5,flex:'B-',apron:0},
+ {team:'DAL',FOR:74.8,W:50,Wstar:52,wpm:0.295,wstarpm:0.307,popm:0,val:4.7,flex:'B',apron:0},
+ {team:'LAL',FOR:72.1,W:47,Wstar:51,wpm:0.258,wstarpm:0.28,popm:0.022,val:7.1,flex:'C',apron:1}
 ];
-let curK='FOR',curDir=-1;
-function render(){
- let tb=document.querySelector('#tbl tbody');if(!tb)return;tb.innerHTML='';
- let sorted=[...teams].sort((a,b)=> (b[curK]-a[curK])* (curDir===-1?1:-1) || b.FOR-a.FOR);
- sorted.forEach((r,i)=>{
-   let tr=document.createElement('tr');
-   tr.innerHTML=`<td>${i+1}</td><td><b>${r.t}</b></td><td>${r.FOR}</td><td>${r.G}</td><td>${r.W}</td><td>${r.PO}</td><td>${r.Wstar}</td><td>$${r.Pay24}M</td><td>$${r.Pay25}M</td><td>${r.WperM}</td><td>${r.WstarPerM}</td><td>${r.POperM}</td><td>${(r.CapPct*100).toFixed(0)}%</td><td>$${r.Val}B</td><td>${r.WinsPerB}</td>`;
-   tb.appendChild(tr);
- });
+function render(arr){
+ const tb=document.querySelector('#tbl tbody');tb.innerHTML='';
+ for(let r of arr){
+  let badge=r.apron?'<span class="badge apron">$207.8M</span> '+(r.flex==='C'?'<span class="badge noMLE">NO-MLE</span>':''):'<span class=badge>'+r.flex+'</span>';
+  tb.innerHTML+=`<tr><td><b>${r.team}</b></td><td class=num>${r.FOR.toFixed(1)}</td><td class=num>${r.W}</td><td class=num>${r.Wstar.toFixed(1)}</td><td class=num>${r.wpm.toFixed(3)}</td><td class=num>${r.wstarpm.toFixed(3)}</td><td class=num>${r.popm.toFixed(3)}</td><td class=num>${r.wpb.toFixed(1)}</td><td class=num>${r.val.toFixed(2)}</td><td>${badge}</td></tr>`;
+ }
 }
-document.querySelectorAll('#sortPills button').forEach(b=>{
- b.addEventListener('click',()=>{
-  let k=b.dataset.k;
-  if(curK===k) curDir*=-1; else{curK=k;curDir=-1}
-  document.querySelectorAll('#sortPills button').forEach(x=>x.classList.remove('act'));
-  b.classList.add('act');render();
- });
-});
-document.querySelectorAll('#tbl th').forEach((th,idx)=>{
- th.addEventListener('click',()=>{
-  const map=['','t','FOR','G','W','PO','Wstar','Pay24','Pay25','WperM','WstarPerM','POperM','CapPct','Val','WinsPerB'];
-  let k=map[idx]; if(!k||k==='t')return; curK=k; curDir=-1; render();
- });
-});
-render();
-// PWA: if('serviceWorker' in navigator){navigator.serviceWorker.register('/sw.js')}
-</script>
-<!-- PWA manifest /manifest.json theme #0A0C10 offline cache-first -->
-</body>
-</html>
+render(teams);let dir={};
+document.querySelectorAll('#tbl th[data-k]').forEach(th=>{th.addEventListener('click',()=>{const k=th.dataset.k;dir[k]=!dir[k];const mk={team:'team',FOR:'FOR',W:'W',Wstar:'Wstar',wpm:'wpm',wstarpm:'wstarpm',popm:'popm',wpb:'wpb',val:'val'}[k];teams.sort((a,b)=>{if(mk==='team')return dir[k]?a.team.localeCompare(b.team):b.team.localeCompare(a.team);return dir[k]?a[mk]-b[mk]:b[mk]-a[mk]});render(teams);})});
+</script></body></html>

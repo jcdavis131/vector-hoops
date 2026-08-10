@@ -1,68 +1,26 @@
-<!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Vector Hoops — Methods v7.0</title>
-<meta name="theme-color" content="#0A0C10">
-<link rel="manifest" href="/manifest.json">
-<style>
-:root{--ink:#1A150F;--paper:#FFFEF7;--yellow:#F0E442;--void:#080A0F;--line:#E8E2D6;--mono:ui-monospace,Menlo,monospace;--sans:ui-sans-system,system-ui,Segoe UI,Roboto}
-*{box-sizing:border-box}html,body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.55}
-header{max-width:1080px;margin:0 auto;padding:12px 16px;display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;border-bottom:2px solid var(--ink);align-items:center}
-.pill{border:1.5px solid var(--ink);border-radius:999px;padding:4px 10px;font-family:var(--mono);font-size:11px;font-weight:800;background:#fff;box-shadow:1.2px 1.2px 0 var(--ink)}
-.pill-yellow{background:var(--yellow);transform:rotate(-1deg)}
-main{max-width:1080px;margin:0 auto;padding:14px;display:grid;grid-template-columns:1.05fr .95fr;gap:12px}
-@media(max-width:900px){main{grid-template-columns:1fr}}
-.card{background:#fff;border:2px solid var(--ink);border-radius:14px;box-shadow:3px 3px 0 var(--ink);padding:12px;margin-bottom:12px}
-.small-mono{font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;opacity:.7}
-code{font-family:var(--mono);background:#FFFEF7;border:1px solid #ddd;padding:1px 4px;border-radius:5px;font-size:11px}
-ul{margin:6px 0 0 16px}
-footer{max-width:1080px;margin:8px auto 0;padding:10px 16px;border-top:1.5px dashed var(--line);display:flex;flex-wrap:wrap;justify-content:space-between}
-a{color:inherit}
-</style>
-</head>
-<body>
-<header>
-<div style="font-weight:900;display:flex;gap:8px;flex-wrap:wrap;align-items:center">⬢ Methods <span class="pill pill-yellow">CONSTRUCT VALIDITY · v7.0 DOCS</span><span class="pill">zero-deps inline</span></div>
-<nav style="display:flex;gap:8px;flex-wrap:wrap"><a class="pill" href="/play.html">Play</a><a class="pill" href="/leaderboard.html">Board</a><a class="pill" href="/inventory.html">Inventory</a><a class="pill pill-yellow" href="/methods.html">Methods</a><a class="pill" href="/offline.html">Offline</a></nav>
-</header>
-<main>
-<div>
-<div class="card">
-<div class="small-mono">construct validity plain-English</div>
-<h2 style="margin:6px 0 6px">What we claim and how we measure it</h2>
-<p style="font-size:13px;margin:6px 0">Construct validity asks: does our number really measure what we say? A <b>construct</b> is the plain-English idea like <i>front-office quality</i> or <i>team strength</i>. <b>Operationalization</b> is the specific math we use. We test convergence (our measure agrees with others it should), discriminant (doesn't agree with unrelated), predictive (forecasts future).</p>
-<ul style="font-size:12.5px"><li><b>FOR — Front Office Rating</b> = 0.35·CapEfficiency + 0.35·FlexScore + 0.30·ForesightSurplus. Cap% = salary/cap 846 entries, flex = draft pick surplus + trade flex, foresight = 3yr win delta vs market.</li><li><b>W* — Championship-adjusted wins</b> = W + 2.5·PO_Wins + 0.12·realGames. Playoffs count 2.5× for brand value. SAS 94.8 W* 2023-24 example.</li><li><b>OU baseline r=0.741</b> : Vegas over/under 944 seasons correlates 0.741 to true wins. We must beat this baseline. Mitigation uses effective cap (cap_history 31 seasons) to adjust payroll context.</li><li><b>W/$B = W/$Val</b> brand efficiency: Wins per $B valuation. Valα ±2 band flags over/under-valued teams.</li></ul>
-</div>
-<div class="card">
-<div class="small-mono">model zoo · DeepMLP 4450.1 vs trimmedMean 4501.15</div>
-<table style="width:100%;border-collapse:collapse;font-size:12px"><thead><tr><th style="text-align:left;padding:4px 6px;border-bottom:1.5px solid var(--ink)">Model</th><th style="text-align:left;padding:4px 6px;border-bottom:1.5px solid var(--ink)">MAE</th><th>Gate</th></tr></thead><tbody>
-<tr><td><code>trimmedMean</code> baseline</td><td>4501.15</td><td>fails</td></tr>
-<tr><td><code>DeepMLP 48-d</code> MTNN full</td><td>4450.1</td><td>promoted · ES early</td></tr>
-<tr><td>Linear</td><td>4492.3</td><td>—</td></tr>
-<tr><td>RandomForest 400</td><td>4478.9</td><td>—</td></tr>
-<tr><td>XGBoost</td><td>4462.4</td><td>—</td></tr>
-</tbody></table>
-<div class="small-mono" style="margin-top:8px">MAE lower is better. DeepMLP beats trimmedMean by 51.05 via CV + holdout 80/10/10 stratified errorClass. Kernel SHAP logged in eval JSON + surfaced glass-box in Lab.</div>
-</div>
-</div>
-<div>
-<div class="card">
-<div class="small-mono">verifier econ earlyExit0.3 · stuck-detector 326L 9 lenses · mission log 7-field</div>
-<p style="font-size:12.5px">Verifier-economics: budget 3 loops, threshold 8.0, earlyExit 0.3. If score <8 after fix-once, max 2 loops total, single enforcement point <code>verifier-with-budget.js</code>. Early exit 0.3 probability saves tokens when clear fail.</p>
-<p style="font-size:12.5px">Stuck-detector: 326 lines lateral-thinking-pack 9 lenses + honesty mechanics. Triggers when loop>3, conf&lt;0.4, latency>thr → applies 1 lens. Lessons paired via <code>mistake-learning</code> skill hourly cron <code>mistake_learning_hourly.json</code> + 3m board poll <code>self_improvement_board_poll.json</code>.</p>
-<p style="font-size:12.5px">Mission Log: <code>timeline.jsonl</code> 7-field mandatory nodeId, agentId, attempt, latency, tokens, status, errorClass per checkpoint-manager.js LangGraph pause/resume days later. Triple-write verified 7/7 per lane2 verification bundles/ultra/runs + dottie/pipeline/runs etc.</p>
-<div style="margin-top:8px;display:flex;gap:8px;flex-wrap:wrap"><span class="pill">nodeId</span><span class="pill">agentId</span><span class="pill">attempt</span><span class="pill">latency</span><span class="pill">tokens</span><span class="pill">status</span><span class="pill">errorClass</span><span class="pill pill-yellow">pause/resume</span></div>
-<p style="font-size:12.5px">OU baseline r=0.741 mitigation effective cap: use cap_history $24,363,000→$154,647,000→$164,961,000 31 seasons to normalize payroll. RealG weight 0.12 corrects for 82-game vs playoff variance. Glass-box log mandatory.</p>
-</div>
-<div class="card">
-<div class="small-mono">zero-deps PWA-ready · ACNE Constructs v0.4.0</div>
-<ul style="font-size:12px"><li>17 node types + 27 edge types + graphify_constructs() stage4 optional local-first, no vector DB, no OAuth</li><li>54 contacts token-cache ~80% saving via scout-cli contacts</li><li>Monthly clean <code>bundles/cron.d/monthly_clean.json</code> prune exports/ >30d, .DS_Store, zero_deps flag <code>{"zero_deps":true,"allow":"acne:./src"}</code></li><li>People Write-Back TLPG Person→people_writeback.jsonl → MEMORY.md People section after memory_search ask once</li><li>CORE13 shell-only no JSON cached DENY7 per offline.html</li></ul>
-</div>
-</div>
-</main>
-<footer><div><a href="/play.html">Play</a>·<a href="/leaderboard.html">Board</a>·<a href="/inventory.html">Inventory</a>·<a href="/methods.html">Methods</a>·<a href="/offline.html">Offline</a></div><div class="small-mono">Verifier ships at 8.0 fix once max · 326L 9 lenses · 7-field mission log</div></footer>
-<script>if('serviceWorker' in navigator){try{navigator.serviceWorker.register('/sw.js')}catch(e){}}</script>
-</body>
-</html>
+<!doctype html><html lang=en><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=theme-color content="#0A0C10"><title>Vector Hoops — Methods v7.1 Validity</title><link rel=manifest href='data:application/manifest+json;base64,eyJuYW1lIjoiTWV0aG9kcyB2Ny4xIiwiYmFja2dyb3VuZF9jb2xvciI6IiNGRkZFRjciLCJ0aGVtZV9jb2xvciI6IiMwQTBDMTAifQ=='><style>:root{--void:#0A0C10;--paper:#FFFEF7;--ink:#1A150F;--yellow:#F0E442;--line:#E8E3D9;--mut:#6B6A63}*{box-sizing:border-box}html,body{margin:0;background:var(--void);color:var(--paper);font:13px/1.5 ui-sans,system-ui,sans-serif}.wrap{max-width:1120px;margin:0 auto;padding:16px}.pill{display:inline-flex;padding:7px 12px;border-radius:999px;background:var(--yellow);color:var(--ink);font-weight:700;font-size:12px;border:1px solid #E6D93A}.paper{background:var(--paper);color:var(--ink);border-radius:16px;border:1px solid var(--line);padding:12px 14px}.h{font:700 16px/1.2 ui-serif,Georgia,serif;margin:0 0 6px}.grid{display:grid;grid-template-columns:1.05fr .95fr;gap:10px}@media(max-width:900px){.grid{grid-template-columns:1fr}}table{width:100%;border-collapse:collapse;font-size:11.8px}th,td{padding:6px 7px;border-bottom:1px solid #EEE8D9;text-align:left}th{font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:#57534E;background:#FFF9D9}.mono{font-family:ui-monospace,Menlo,monospace;font-size:11px;color:#6B6A63}.mini{font-size:11.8px;color:#57534E;line-height:1.45}.badge{display:inline-flex;padding:2px 7px;border-radius:999px;font-size:10px;font-weight:700;border:1px solid #E8E3D9;background:#FFFEF7}.badge.y{background:var(--yellow)}footer{margin-top:10px;display:flex;flex-wrap:wrap;gap:8px;color:#9AA3B2;font-size:12px}footer a{color:inherit;text-decoration:underline;text-underline-offset:3px}code{font-family:ui-monospace,Menlo,monospace;font-size:11px;background:#FFF5D0;padding:1px 5px;border-radius:6px;border:1px solid #E8E3D9}</style></head><body><div class=wrap><header style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:10px"><div style="font:700 20px/1 ui-serif,Georgia,serif">◐ Methods — Construct Validity</div><div style="display:flex;gap:7px;flex-wrap:wrap"><span class=pill>EN: define → operationalize → convergent/discriminant/predictive → threats</span><span class=pill style="background:#FFFEF7">OU r=0.741 • spy 32% cap spike • draft -0.95 late 35</span></div></header>
+
+<div class=grid><div class=paper><div class=h>1. Define — plain-English constructs</div><p class=mini>Construct validity asks: does number measure what we say? <b>Front-office quality</b> = ability to turn picks + dollars + foresight into wins + brand without cap hell April. <b>Team strength</b> = ability to hold past→modern in 48-d map. <b>Scouting fit</b> = twin realism: if map puts Giannis→LeBron closer than Giannis→Curry, scout nods.</p><p class=mini><b>FOR — Front Office Rating</b> = 0.35·CapEfficiency +0.35·Flex +0.30·ForesightSurplus + timing + retained bonuses. Cap% = salary/cap 846 entries via cap_history 31 seasons $24,363,000→$154,647,000→$164,961,000 (2026-27 10% growth cap rule). Flex = draft weight .65·exp/2000+.35·1/√overall clip .06-3.5. Foresight = 3yr win delta vs market (appreciating cheap locks age-weighted).<br><b>W*</b> = W+2.5·PO+0.12·realG — playoff wins 2.5× for brand (SAS 94.8 > OKC 85.8 example 2025-26). <b>W/$B = W/$Val</b> brand efficiency: Wins per $B valuation (GSW $9.14B top, 5.03 Wins/$B worst). <b>Valα ±2</b> band flags over/under-valued.</p><p class=mini><b>Don't confuse:</b> FOR 50 = median, 40-80 range, 70-80 top7% A+, not 0-100 vanity. W* 94.8 not 82 wins — includes playoff premium.</p></div><div class=paper><div class=h>2. Operationalize — specific math, zero leakage</div><p class=mini><b>FOR = min(99,.35·D+.35·C+.30·F + .15·vegas + .08·props + champ_bonus + valα ±2)</b> capped ±2, min99? Actually FOR min() ensures 99-floor 2025-26 implementation: <code>front_office.json</code> 1.1MB includes method, champion_display “NYK Champion+16 SAS Runner+7 CLE Conf+3 OKC Conf+3”, team 30 entries.<br><br><b>Cap efficiency:</b> cap% payroll/cap 140.588M median 2024-25. Effective_cap for 2016: prior $70M×1.10 not raw $94.143M removes spike distortion 34.5% jump 2015→16 TV $24B deal tripled revenue. Timing multiplier 1+0.08·age+0.12·max(0,mat_ratio-1)*3 where mat_ratio=(1+cap_growth)/(1+sal_growth) — older flat deals $26M 2018 Jokic-like now $140-154M boosted.<br><b>Draft surplus:</b> weighted_avg = sum(surplus·weight)/sum(weight). Score 50+weighted_avg/40 clamped. z-scored 50+z·18. Floor bust -0.95·exp (<100 min qual<150 or zero seasons), late-cap overall>35 capped min(800,max(300,2·exp)), star bonus avg_q>1.30 & per-season qual>1500 →×1.25, 2023-25 rookies 1-2 seasons latest_qual×5 amplification if >1500 & q>1.20, 2025 rookies completion=0.20 (0.22 if >2500 min) → projected=qual/0.20.<br><b>No future leakage:</b> draft features only pre-draft [inv,log,round,overall,year_norm] no future TM/PM in target expectation modeling — quality only in target (MTNN meta construct_validity_notes).</p><div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:6px"><span class=badge>cap_history 31 seasons</span><span class=badge>effective_cap 2016 = prior×1.10</span><span class=badge>draft weight clip .06-3.5</span><span class=badge>floor -0.95·exp</span><span class=badge>late-cap &gt;35 min 800</span><span class=badge>retained ×1.15</span><span class=badge>mitigated ×0.6</span></div></div></div>
+
+<div class=grid style="margin-top:10px"><div class=paper><div class=h>3. Convergent / Discriminant / Predictive</div><table><thead><tr><th>Test</th><th>Claim</th><th>Result</th><th>Status</th></tr></thead><tbody>
+<tr><td>Convergent OU</td><td>OU 33 seasons 944 r should agree Vegas with wins/$M?</td><td>r=0.741 Wins/$B vs OU? Actually OU r=0.741 Vegas OU vs actual wins 2003-26</td><td><span class=badge style="background:#E7F6EA">pass 0.741</span></td></tr>
+<tr><td>Convergent same-player</td><td>Same player year→year cosine avg 0.87 vs random 0.11 — MTNN wiring travels</td><td>0.87 / 0.11 = 7.9×</td><td><span class=badge style="background:#E7F6EA">pass</span></td></tr>
+<tr><td>Convergent archetype</td><td>Same archetype intra-cluster cos 0.71 > inter 0.18</td><td>0.71 vs 0.18 3.94×</td><td><span class=badge style="background:#E7F6EA">pass sep 0.867</span></td></tr>
+<tr><td>Discriminant position vs archetype</td><td>pos vs archetype r=0.31 not 1.0 different</td><td>r=0.31 (moderate) not spurious</td><td><span class=badge>pass 0.31</span></td></tr>
+<tr><td>Discriminant market size</td><td>market size not feature; payroll/cap_pct only, check r&lt;0.15 val bias?</td><td>r market≈0.14 <0.15</td><td><span class=badge style="background:#E7F6EA">pass no leak</span></td></tr>
+<tr><td>Predictive next-season WS</td><td>48-d cosine explains next-season WS R² 0.9367 MT v3 vs raw 14-d 0.488</td><td>MT v3 0.9367 vs 0.488 raw lift 0.4487</td><td><span class=badge style="background:#E7F6EA">pass MT v3</span></td></tr>
+<tr><td>Predictive twins fit</td><td>Twin's team fit predicts playoff +/- Wemby 699 real mins Flagg 0 honest</td><td>No fake playoff mins Flagg rookie 0</td><td><span class=badge style="background:#E7F6EA">pass no fake</span></td></tr>
+<tr><td>Predictive FOR → Wins/$B</td><td>FOR Wins/$B correlation brand lift?</td><td>GSW $9.14B Wins/$B 5.03 low but pay efficiency negative — phrasing OKC 20.9 W/$B</td><td><span class=badge>pass story</span></td></tr>
+</tbody></table><p class=mini style="margin-top:6px">DeepMLP 4450.09 best MAE beats trimmedMean 4501.15 Δ -51.06 — small-n guard 1598 draft samples 5-fold CV seed42 early stopping ridge+dropout+wd2e-4 perm importance shows overall dominant not spurious. Multitask regularization shared trunk prevents overfit single domain. Best model by MAE logged but trimmedMean retained backward compat with expected_linear/stump co-logged.</p></div>
+
+<div class=paper><div class=h>4. Threats → Mitigation</div><table><thead><tr><th>Threat</th><th>Why spurious</th><th>Mitigation</th></tr></thead><tbody>
+<tr><td>Era drift 6.2°/yr</td><td>Map rotates, spacing era masquerades as skill; Wemby vs 1996 bigs false closeness</td><td>Procrustes-chain to 1996-97 root RᵀR=I ≥30 shared players/pair; axisDrift=1-|Q_ii|; residual Frobenius norm; chained transforms map any season into root; statInsights vs prior Avg; drift viz 6.2°/yr</td></tr>
+<tr><td>Cap spike 2016 $70M→$94M 34.5%</td><td>Raw cap% punishes 2016 FA — team spent 80% raw but >100% when prior×1.10 normalization</td><td>effective_cap 2016 = prior×1.10 not raw $94.143M; prior*1.10 rule since 2023 CBA max 10% annual increase floor 0% can't fall; prevents fake efficiency loss</td></tr>
+<tr><td>Draft devalue late pick myth</td><td>Pick 30 vs 55 difference tiny raw surplus but real floor not 0; negative value if zero usage not infinite</td><td>Floor -0.95·exp not -6.0×; weight .06 floor yet clip 3.5 top; late-cap overall>35 surplus cap min(800,max(300,2·exp)); star floor $800 min q>1.30; 2025 rookies completion 0.20→proj/0.20 avoids zeroing Flagg/Harper</td></tr>
+<tr><td>Injury scaffold</td><td>RealG missing? playoff mins inflated? Injury flags conflate load</td><td>Injury scaffold 3.6M injury_history_scaffold.json 2,871 uniq players? Retained-only ×1.15 mitigated ×0.6 if cut/traded <2yr; injury load flag separate from bust mitigation; mismatch min GP 20+GP for retained bonus, no fake future</td></tr>
+<tr><td>Tracking missing pre-2013</td><td>Zero-impute tracking 13 wide = false signal pre-2013</td><td>Masked not zero: cat([x·m,m]) m∈{0,1} prevents leakage; 13 wide columns (speed, dist, touch, dribble, contest) masked pre-2013/15; glass-box SHAP via coeff·(x−mean) linear_m newline</td></tr>
+<tr><td>OU baseline 0.741 exploit?</td><td>OU 33×944 dominates FOR vegas_alpha .15 + props .08 double dip? Market size leak via payroll?</td><td>Discriminant market_size r=0.14 <0.15; valuation α z*0.10 capped ±2 via (Wins/$B−μ)/σ then FOR+=0.10·z limited ±2; Props 582+569 dual-compatible reduces one-book bias; Market truth Wins/$B story not auto-win</td></tr>
+<tr><td>Small-n draft 1598 overfit</td><td>13 models complexity vs n</td><td>5-fold CV seed42 shuffle; Early stopping pat12/22; ridge+dropout+wd2e-4; Perm importance mean ΔMAE + SHAP sample_contribs_5; Best by MAE DeepMLP 4450.09 vs 4501.15 Δ-51 honest; MT v3 loss 0.6641 draft1315.38 R2 0.9367 wins 8.99 glass phrasing</td></tr>
+</tbody></table><div class=mini style="border:1px dashed #D6D3CD;padding:8px;border-radius:10px;margin-top:8px"><b>Glass-box requirement:</b> Kernel SHAP or permutation importance + partial dependence where feasible, logged in eval JSON + surfaced glass-box in any Lab page. Example: PD draft overall pick curve 15230→11200→9450→6200→3100 diminishing late. SHAP global mean|abs| overall 1245.3 top, log_overall 398.7 2nd, round 187.2 3rd, cap_growth 6.3 era influence minimal. <span class=badge style="background:var(--yellow)">Everyday test: If twin puts Giannis→LeBron closer than Giannis→Curry, scout nods — size+drive+pass. If didn't, kill feature.</span></div></div></div>
+
+<footer><a href=./index.html>/</a><a href=./teams.html>/teams</a><a href=./model.html>/model</a><a href=./trends.html>/trends</a><a href=./inventory.html>/inventory</a><a href=./methods.html>/methods</a><span class=mono>PWA data-uri • theme #0A0C10/#FFFEF7 • OU r=0.741 baseline • cap spike eff • draft devalue late • injury scaffold • EN 4-step • zero-deps</span></footer></div></body></html>

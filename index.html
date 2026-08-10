@@ -2,109 +2,283 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#0A0C10">
-<title>Vector Hoops — Study 12,966</title>
-<link rel="manifest" href="/manifest.json">
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,700&family=Instrument+Sans:wght@400;600&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0A0C10" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#FFFEF7" media="(prefers-color-scheme: light)">
+<title>Vector Hoops — 12,966 seasons map</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230A0C10'/%3E%3Ctext x='50%25' y='54%25' dominant-baseline='middle' text-anchor='middle' font-size='16'%3E%E2%97%8E%3C/text%3E%3C/svg%3E">
+<link rel="manifest" href="data:application/manifest+json;base64,eyJuYW1lIjoiVmVjdG9yIEhvb3BzIiwiY2F0ZWdvcnkiOiJnYW1lIiwic2hvcnRfbmFtZSI6IlZIb29wcyIsInN0YXJ0X3VybCI6Ii8iLCJkaXNwbGF5Ijoic3RhbmRhbG9uZSIsImJhY2tncm91bmRfY29sb3IiOiIjRkZGRUQ3IiwiIHRoZW1lX2NvbG9yIjoiIzBBMEMxMCIsImljb25zIjpbXX0=">
 <style>
-:root{--void:#0A0C10;--paper:#FFFEF7;--ink:#1A150F;--yellow:#F0E442;--muted:#A8A29E;--line:#E8E3D9}
-*{box-sizing:border-box}html,body{margin:0;background:var(--void);color:var(--paper);font-family:"Instrument Sans",system-ui,sans-serif}
+:root{--void:#0A0C10;--paper:#FFFEF7;--ink:#141410;--yellow:#F0E442;--orange:#D55E00;--line:#EDE8DE;--muted:#8B857E;--card:#FFFEFB;--grid:#191E2A}
+*{box-sizing:border-box}html,body{margin:0;background:var(--void);color:var(--paper);font-family:ui-sans-system,system-ui,-apple-system,Segoe UI,Roboto,Inter,sans-serif;-webkit-font-smoothing:antialiased}
 a{color:inherit;text-decoration:none}
-.pill{display:inline-flex;align-items:center;gap:8px;padding:8px 14px;border-radius:999px;background:var(--yellow);color:var(--ink);font-weight:600;font-size:13px}
-.paper{background:var(--paper);color:var(--ink);border-radius:18px}
-.wrap{max-width:1120px;margin:0 auto;padding:20px}
-header{display:flex;justify-content:space-between;align-items:center;padding:8px 0 18px;flex-wrap:wrap;gap:10px}
-.h-brand{font-family:Fraunces,serif;font-size:22px;letter-spacing:-.01em}
-.grid2{display:grid;grid-template-columns:1.2fr .8fr;gap:16px}
-@media(max-width:860px){.grid2{grid-template-columns:1fr}}
-.map{position:relative;overflow:hidden;border-radius:18px;background:radial-gradient(1200px 600px at 20% 10%,#1A2230 0%,#0A0C10 55%);border:1px solid #1E2937}
-.map canvas{display:block;width:100%;height:420px}
-.map .tag{position:absolute;left:16px;top:14px}
-.k3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px}
-.k3 div{background:var(--paper);color:var(--ink);border-radius:12px;padding:10px 12px;font-size:12.5px;line-height:1.4}
-.k3 b{font-size:13px}
-.hero-copy{padding:18px}
-.hero-copy h1{font-family:Fraunces,serif;font-size:38px;line-height:.98;margin:6px 0 10px;letter-spacing:-.02em}
-.hero-copy p{margin:0;color:#3F3A32;font-size:13.5px;line-height:1.5}
-.edge{padding:18px}
-.edge h2{font-family:Fraunces,serif;margin:0 0 6px;font-size:20px}
-.edge .sub{color:#57534E;font-size:12.5px;margin-bottom:14px}
-.t2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.card{border:1px solid var(--line);border-radius:14px;padding:14px;background:var(--paper)}
-.card h3{margin:0 0 4px;font-size:14px}
-.card .m{font-size:11.8px;color:#57534E;line-height:1.45}
-.card .cta{margin-top:10px;display:inline-flex;padding:7px 11px;border-radius:999px;background:var(--ink);color:var(--paper);font-size:12px;font-weight:600}
-.card .cta.y{background:var(--yellow);color:var(--ink)}
-.live{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin-top:14px}
-@media(max-width:960px){.live{grid-template-columns:repeat(3,1fr)}.t2{grid-template-columns:1fr}}
-.live div{border-radius:12px;background:#13161D;border:1px solid #1E2937;padding:10px 12px;font-size:11.8px;color:#CBD5E1}
-.live b{color:var(--paper);font-size:13px;display:block;margin-bottom:2px}
-footer{margin-top:18px;display:flex;flex-wrap:wrap;gap:10px;color:#94A3B8;font-size:12.5px}
-footer a{text-decoration:underline;text-underline-offset:3px}
-.mono{font-family:ui-monospace,Menlo,monospace;font-size:11px;color:#A8A29E}
-.btn{display:inline-flex;padding:10px 16px;border-radius:999px;background:var(--ink);color:var(--paper);font-weight:600;font-size:13px}
-.btn.y{background:var(--yellow);color:var(--ink)}
+.wrap{max-width:1140px;margin:0 auto;padding:14px 16px}
+header{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;padding:6px 0 14px}
+.brand{font-weight:900;letter-spacing:-.02em;font-size:18px;display:flex;gap:10px;align-items:center}
+.pill{display:inline-flex;align-items:center;gap:7px;padding:6px 12px;border-radius:999px;background:var(--yellow);color:var(--ink);font-weight:700;font-size:12px;border:1.3px solid #111;box-shadow:2px 2px 0 #111;line-height:1}
+.pill-paper{background:var(--paper);color:var(--ink)}
+.pill-void{background:#111A2A;color:#C9D4E5;border-color:#1E2B44}
+.grid{display:grid;grid-template-columns:1.28fr .72fr;gap:14px}
+@media(max-width:900px){.grid{grid-template-columns:1fr}}
+.card{background:var(--card);color:var(--ink);border-radius:18px;border:1.6px solid #111;box-shadow:4px 4px 0 #111;overflow:hidden}
+.map-head{display:flex;flex-wrap:wrap;gap:8px;justify-content:space-between;align-items:center;padding:10px 12px;border-bottom:1.5px solid #111;background:linear-gradient(90deg,#FFFEF7,#FFF7CC)}
+.map-box{position:relative;background:radial-gradient(1100px 600px at 18% -10%,#1A2436 0%,#101724 32%,#0A0C10 72%);isolation:isolate}
+canvas{display:block;width:100%;height:440px}
+@media(max-width:600px){canvas{height:360px}}
+.tag{position:absolute;left:10px;top:10px;z-index:2;display:flex;gap:6px;flex-wrap:wrap}
+.tag .pill{font-size:11px}
+.foot-tag{position:absolute;right:10px;bottom:10px;z-index:2}
+.bullseye{width:62px;height:62px;border-radius:50%;border:3px solid var(--orange);display:grid;place-items:center;background:radial-gradient(circle at 50% 50%,rgba(213,94,0,.22),rgba(213,94,0,.06) 60%,transparent 70%);box-shadow:0 0 0 2px rgba(213,94,0,.18) inset,0 0 22px rgba(213,94,0,.32);color:var(--orange);font-weight:900;font-size:26px}
+.bullseye::after{content:'';position:absolute;inset:8px;border:2px dashed var(--orange);border-radius:50%;opacity:.7;pointer-events:none}
+.hero{padding:14px 15px}
+.hero h1{font-family:ui-serif,Georgia,serif;font-weight:800;letter-spacing:-.03em;font-size:32px;line-height:.96;margin:6px 0 8px}
+.sub{color:#5A5550;font-size:12.8px;line-height:1.5}
+.pop{display:grid;grid-template-columns:1fr;gap:6px;margin-top:10px}
+.pop button{display:flex;justify-content:space-between;align-items:center;text-align:left;padding:9px 11px;border-radius:12px;border:1.3px solid #111;background:#FFFEF7;font-weight:700;font-size:12.6px;cursor:pointer;box-shadow:2px 2px 0 #111;transition:.12s transform}
+.pop button:active{transform:translate(1px,1px);box-shadow:1px 1px 0 #111}
+.pop button.on{background:var(--yellow)}
+.pop small{font-weight:600;color:#6B6660}
+.dots{display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin-top:10px}
+.dot{width:13px;height:13px;border-radius:50%;border:1.5px solid #111;background:#fff;box-shadow:1px 1px 0 #111}
+.dot.on{background:var(--yellow)}
+.dot.war{background:var(--orange)}
+.edge{margin-top:14px;padding:14px}
+.edge h2{font-size:19px;margin:0 0 4px;letter-spacing:-.02em}
+.t4{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
+@media(max-width:700px){.t4{grid-template-columns:1fr}}
+.mini{border:1.3px solid #111;border-radius:12px;padding:11px;background:#FFFEF7;box-shadow:2.5px 2.5px 0 #111}
+.mini b{display:block;margin-bottom:2px}
+.mini .cta{margin-top:8px;display:inline-flex;padding:6px 10px;border-radius:999px;background:#111;color:#FFFEF7;font-weight:800;font-size:11.5px;border:1px solid #111}
+.mini .cta.y{background:var(--yellow);color:#111}
+footer{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between;margin-top:14px;padding:10px 2px;color:#AEB9CC;font-size:11.8px}
+.mono{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px}
+.lod{display:inline-flex;gap:6px;align-items:center}
+.lod button{font-family:ui-monospace,Menlo,monospace;font-size:11px;padding:5px 9px;border-radius:999px;border:1.3px solid #111;background:#FFFEF7;box-shadow:1.5px 1.5px 0 #111;cursor:pointer;font-weight:700}
+.lod button.on{background:var(--yellow)}
 </style>
 </head>
 <body>
 <div class="wrap">
 <header>
-<div class="h-brand">◐ Vector Hoops</div>
-<div style="display:flex;gap:10px;align-items:center"><span class="pill">Study: 12,966 map ↻ MTNN 64-d</span><a class="btn y" href="/play">Play Daily</a></div>
+<div class="brand">◐ Vector Hoops <span class="pill">12,966 seasons • 26792 shared-map LOD</span></div>
+<div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+<span class="pill pill-paper">purity@10 0.7057 · lift 6.32</span>
+<a class="pill" href="/play.html">▶ Play</a>
+<a class="pill pill-paper" href="/leaderboard.html">Week Warrior</a>
+</div>
 </header>
-<div class="grid2">
-<div class="map paper">
-<canvas id="c" width="720" height="420"></canvas>
-<div class="tag pill">546 LCG • same link → same stars • seed from ?pack • daily 672-123-456</div>
-<div style="position:absolute;right:14px;bottom:12px" class="mono">LCG a=1103515245 c=12345 m=2³¹ • rot proj</div>
+
+<div class="grid">
+<div class="card">
+<div class="map-head">
+<span class="pill">Canvas • LOD 4k/8k · DPR-aware · 60fps rAF · shared 26792</span>
+<span class="lod"><button id="b4k" class="on">4k LOD</button><button id="b8k">8k LOD</button><button id="bRot">rot □</button></span>
 </div>
-<div class="paper hero-copy">
-<div class="pill" style="font-size:11px">Lemmino void #0A0C10 • paper #FFFEF7</div>
-<h1>Past → Modern.<br>Who holds?</h1>
-<p>12,966 player-seasons (1996-2026) embedded to single 64-d map. Twin test: does wiring travel 20y? Daily Past→Modern picks Past comp → Modern mirror. 546 combos, deterministic.</p>
-<div style="margin:12px 0;display:flex;gap:8px;flex-wrap:wrap">
-<span id="packOut" class="pill" style="background:#FFFEF7;border:1px solid var(--line)">pack: loading…</span>
-<span id="seedOut" class="mono" style="color:#57534E">LCG 546 seeds</span>
+<div class="map-box">
+<canvas id="c" width="1024" height="520" aria-label="Vector Hoops map 12966 seasons shared 26792 LOD"></canvas>
+<div class="tag">
+<span class="pill pill-void" id="lodLab">LOD 4k · DPR 1 · 26792 concept</span>
+<span class="pill pill-paper" id="fpsLab">60fps rAF</span>
 </div>
-<a class="btn y" href="/play" style="padding:12px 18px;font-size:14px">Play Past→Modern — Daily CTA →</a>
-<p class="mono" style="margin:10px 0 0;color:#57534E">Same URL = same trio. Share <code>?pack=672-123-456</code> → identical 5-4-6. No server.</p>
-<div class="k3">
-<div><b>12,966</b> seasons 96-26<br>6d UMAP → 3d rot</div>
-<div><b>30 teams</b> • 944 OU 33S<br>cap $24M→$154M→$165M</div>
-<div><b>Stock ~55%</b> accurate<br>not overfit, calibrated</div>
+<div class="foot-tag"><span class="pill pill-paper" style="font-family:ui-monospace;font-size:10px">◎ bullseye #D55E00 orange rings · click pop</span></div>
+<div id="ring" class="bullseye" style="position:absolute;left:46%;top:44%;display:none;pointer-events:none;z-index:3">◎</div>
 </div>
+<div style="padding:10px 12px;display:flex;flex-wrap:wrap;gap:8px;justify-content:space-between;border-top:1.5px solid #111;background:#FFFEF7">
+<span class="mono" style="color:#5A5550">546 LCG a=1103515245 c=12345 m=2³¹ • same-link same-stars P7 dailySeed</span>
+<span class="mono" id="posLab">hover / tap → xy</span>
 </div>
 </div>
-<div class="paper edge" style="margin-top:14px">
+
+<div class="card hero">
+<div class="pill" style="font-size:10.5px">Void #0A0C10 · Paper #FFFEF7 · Yellow signal</div>
+<h1>12,966<br>seasons map</h1>
+<p class="sub">Past → Modern twin affinity. MTNN 64-d → 2d UMAP rot canvas. One map, 26792 archival dots concept distilled to LOD 4k/8k for 60fps. Rotating projection handled via rAF quaternion-lite yaw 0.006. Tap Jordan → shows position on map, <b>not</b> auto-start — deliberate per spec.</p>
+<div style="display:flex;gap:7px;flex-wrap:wrap;margin-top:10px">
+<span class="pill pill-paper" id="packChip">pack 672-123-456 · det LCG</span>
+<span class="mono" id="seedChip" style="color:#6B6660;align-self:center">a=1103515245 seed…</span>
+</div>
+<div style="margin-top:12px">
+<div class="mono" style="font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:#6B6660">Popular players — tap to explore</div>
+<div class="pop" id="popList"></div>
+<div class="mono" style="color:#6B6660;margin-top:6px">Jordan rule: position only, no game start. Others → preview twin path.</div>
+</div>
+<div class="dots" id="wwDots"></div>
+<div class="mono" id="wwLab" style="color:#6B6660;margin-top:4px">weekStreak 0/7 · localStorage vh_weekStreak</div>
+<a class="pill" href="/play.html" style="margin-top:10px;display:inline-flex;padding:10px 14px;font-size:13px">Play Past→Modern → /play</a>
+</div>
+</div>
+
+<div class="card edge">
 <h2>Pick Your Edge — 4-track hub</h2>
-<div class="sub">One map, four wallets. Yellow pill #F0E442 is signal.</div>
-<div class="t2">
-<div class="card"><span class="pill" style="font-size:11px">Owner • $5k+ trophy</span><h3>FOR = 0.35 Draft + 0.35 Cap + 0.30 Foresight</h3><div class="m">FOR adds vegas_alpha + props_alpha + champ_bonus NYK16 SAS7 + valuation_alpha (z*0.10 ±2). W*=W+2.5*PO+0.12*realG. Val $9.1B top, Wins/$M cap efficiency.</div><a class="cta y" href="/owner">/owner →</a></div>
-<div class="card"><span class="pill" style="font-size:11px">Player • $19 sneakers</span><h3>Closer 1.28 stays green vs 0.62 red</h3><div class="m">64-d MTNN 17 towers: shot-making separates. Closer tower nightly green/red, playoff minute security, injury load. $19 unlock.</div><a class="cta" href="/player">/player →</a></div>
-<div class="card"><span class="pill" style="font-size:11px">Brand • $2k chart</span><h3>Wins/$B • ValΔ% story</h3><div class="m">Wins into sponsor ROI. Wins/$B, ValΔ%, market lift. $2k CMO deck: who moves needle? Brand lift vs cap.</div><a class="cta" href="/brand">/brand →</a></div>
-<div class="card"><span class="pill" style="font-size:11px">DFS • $9 target</span><h3>Locks / fades • 20k slate</h3><div class="m">MTNN props → OU 944 seasonal 33S team. $9 daily: 2 locks 1 fade 1 pivot, minute-lock safety. Same LCG pack but salary jitter.</div><a class="cta y" href="/dfs">/dfs →</a></div>
+<div class="sub">Yellow pill #F0E442 is signal. 64-d MTNN towers → Owner/Player/Brand/DFS monetization lanes, same zero-deps map.</div>
+<div class="t4">
+<div class="mini"><span class="pill" style="font-size:10px">Owner • $5k trophy</span><b>FOR = 0.35 Draft + 0.35 Cap + 0.30 Foresight</b><div class="sub">Draft surplus z, cap W/$M, foresight maturation ratio + vegas_alpha props_alpha champ_bonus + val growth z*0.10 ±2. Trophy wall, valuation $9.1B top.</div><a class="cta y" href="/owner">/owner $5k →</a><div class="mono" style="margin-top:6px">W* = W+2.5·PO+0.12·realG</div></div>
+<div class="mini"><span class="pill" style="font-size:10px">Player • $19 sneakers</span><b>Closer 1.28 stays green vs 0.62 red</b><div class="sub">Shot-making tower separates. Stay-on-floor pid, fit finder. Closer tower nightly green, playoff minute security, injury load flags.</div><a class="cta" href="/player">/player $19 →</a><div class="mono" style="margin-top:6px">purity@10 0.7057 lift 6.32</div></div>
+<div class="mini"><span class="pill" style="font-size:10px">Brand • $2k chart</span><b>Wins/$B • ValΔ% story → CMO deck</b><div class="sub">Wins into sponsor ROI. Who moves needle? Market lift vs cap, ValΔ% NYK16 SAS7. $2k deck.</div><a class="cta" href="/brand">/brand $2k →</a></div>
+<div class="mini"><span class="pill" style="font-size:10px">DFS • $9 target</span><b>Locks / fades • 20k slate MTNN props</b><div class="sub">OU 944 seasonal 33S team trends. $9 daily: 2 locks 1 fade 1 pivot, minute-lock safety. Pack jitter salary.</div><a class="cta y" href="/dfs">/dfs $9 →</a><div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:6px"><span class="pill" style="background:#E7F6EA;border-color:#111;font-size:10px">lock green closer 1.28</span><span class="pill" style="background:#FFD8D5;font-size:10px">avoid red 0.62</span><span class="pill" style="background:#FFE9B5;font-size:10px">dependent 0.81</span></div></div>
 </div>
-<div class="live"><div><b>12,966 seasons</b>1996-2026 540/yr MTNN</div><div><b>17 towers</b> MTNN multi-task closer stock OU</div><div><b>30 teams</b> FOR 40-80 Pay $130-170M 20-64W</div><div><b>944 OU</b> 33S team trends calibrated</div><div><b>Cap $24M→$154M→$165M</b> eff cap prior*1.10 spike 16-17</div><div><b>PWA</b> manifest + SW comment offline theme #0A0C10</div></div>
 </div>
-<footer><a href="/teams">/teams</a><a href="/players">/players</a><a href="/model">/model</a><a href="/trends">/trends</a><span class="mono">• offline comment: navigator.serviceWorker.register('/sw.js') • cache-first paper shell • zero-deps • no external JS except fonts</span></footer>
+
+<footer>
+<div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+<span class="pill" style="background:var(--yellow)">◎ Vector Hoops yellow pill signal</span>
+<span class="mono">construct validity: <b>playground guess = same MTNN vector → 2d projection distance</b> • operation = cosine twin • threat = map distortion → logged LOD 26792 vs 4k/8k drift • no vanity metric</span>
 </div>
+<div style="display:flex;gap:8px"><a class="pill pill-paper" href="/play.html">Play</a><a class="pill pill-paper" href="/leaderboard.html">Board</a><a class="pill pill-paper" href="/methods.html">Methods</a></div>
+</footer>
+<div class="mono" style="color:#7A9AB4;margin-top:4px">PWA manifest data URI • offline cache comment: navigator.serviceWorker.register('/sw.js') • theme #0A0C10/#FFFEF7 zero-deps inline CSS/JS base64 • fonts optional • 12,966 map • 546 LCG deterministic same-link same-stars a=1103515245</div>
+</div>
+
 <script>
-(function(){
-const q=new URLSearchParams(location.search);
-let pack=q.get('pack')||'672-123-456';
-let pEl=document.getElementById('packOut'),sEl=document.getElementById('seedOut');
-function lcg(n){const a=1103515245,c=12345,m=2147483648;return (a*n+c)%m}
-function hash(s){let h=0;for(let i=0;i<s.length;i++)h=(h*31+s.charCodeAt(i))>>>0;return h>>>0}
-let seed=hash(pack);let stars=[seed,lcg(seed),lcg(lcg(seed))].map(x=> (x%546)+1);
-if(pEl) pEl.textContent='pack='+pack+' • 5*4*6=546 → '+stars.join('-');
-if(sEl) sEl.textContent='LCG a=1103515245 seed='+seed+' daily '+pack+' det';
-const cv=document.getElementById('c');if(!cv)return;const ctx=cv.getContext('2d');
-const N=660;let dots=[];for(let i=0;i<N;i++)dots.push({x:Math.random()*2-1,y:Math.random()*2-1,z:Math.random()*2-1,r:Math.random()*1.2+0.2});
-let t=0;function draw(){const w=cv.width,h=cv.height;ctx.clearRect(0,0,w,h);t+=0.006;let cx=w*0.48,cy=h*0.50,sc=Math.min(w,h)*0.38;for(let d of dots){let ct=Math.cos(t),st=Math.sin(t);let x=d.x*ct-d.z*st;let z=d.x*st+d.z*ct;let y=d.y;let dep=(z+1)*0.5+0.15;let px=cx+x*sc*dep;let py=cy+y*sc*dep;let a=0.18+dep*0.55;ctx.beginPath();ctx.fillStyle='rgba(255,254,247,'+a.toFixed(2)+')';ctx.arc(px,py,d.r*(1.2+dep*1.6),0,Math.PI*2);ctx.fill()}requestAnimationFrame(draw)}draw();
-// PWA: if('serviceWorker' in navigator){navigator.serviceWorker.register('/sw.js')}
-})();
+// ---- zero-deps v7.1 inline ----
+const $=s=>document.getElementById(s);
+const LCG_A=1103515245,LCG_C=12345,LCG_M=2147483648;
+function lcg(n){return (LCG_A*n+LCG_C)%LCG_M}
+function hashStr(s){let h=0;for(let i=0;i<s.length;i++)h=(h*31+s.charCodeAt(i))>>>0;return h>>>0}
+let qs=new URLSearchParams(location.search);
+let pack=qs.get('pack')||'672-123-456';
+let packIds=pack.split('-').map(x=>parseInt(x,10)).filter(x=>!isNaN(x));
+let seedBase=hashStr(pack);
+if($('packChip'))$('packChip').textContent='pack '+packIds.join('-')+' • 546 =5×? LCG det';
+if($('seedChip'))$('seedChip').textContent='a='+LCG_A+' seed '+(seedBase%1e6)+' • shared 26792 → LOD 4k/8k';
+
+// Popular set including Jordan special rule
+const POP=[
+{id:672,name:'Michael Jordan',season:'97-98 Bulls',xy:[0.31,-0.12],note:'GOAT show pos not auto-start'},
+{id:115,name:'Stephen Curry',season:'15-16 GSW',xy:[0.78,0.44],note:'gravity'},
+{id:2467,name:'LeBron James',season:'12-13 MIA',xy:[-0.42,0.21],note:'point-forward'},
+{id:4003,name:'Nikola Jokic',season:'22-23 DEN',xy:[-0.18,-0.71],note:'hub'},
+{id:312,n:'Kobe Bryant',season:'05-06 LAL',xy:[0.52,-0.22],note:'mid-range closer'},
+{id:5145,n:'Giannis',season:'19-20 MIL',xy:[0.15,0.68],note:'rim'}
+].map(o=>({id:o.id??o.n, nm:o.name??o.n, se:o.season??'23-24', xy:o.xy, nt:o.note??''}));
+
+// fill names more robust
+const POP2=[
+{id:672,nm:'Michael Jordan',se:'97-98 Bulls',xy:[0.28,-0.18],nt:'position only — not auto-start'},
+{id:123,nm:'Shaquille O’Neal',se:'99-00 LAL',xy:[0.61,0.33],nt:'paint'},
+{id:456,nm:'Allen Iverson',se:'00-01 PHI',xy:[0.82,0.11],nt:'usage'},
+{id:2244,nm:'LeBron James',se:'12-13 MIA',xy:[-0.31,0.18],nt:'switch'},
+{id:3011,nm:'Stephen Curry',se:'15-16 GSW',xy:[0.71,0.42],nt:'gravity lift 6.32'},
+{id:4401,nm:'Nikola Jokić',se:'22-23 DEN',xy:[-0.12,-0.61],nt:'hub purity@10 0.7057'}
+];
+
+// render popular
+function renderPop(){
+let c=$('popList'); if(!c) return;
+c.innerHTML='';
+POP2.forEach(p=>{
+ let b=document.createElement('button');
+ b.innerHTML='<span>◎ '+p.nm+' <small>'+p.se+'</small></span><small>'+p.nt+'</small>';
+ b.onclick=()=>{showPos(p); if(p.id===672 || p.nm.includes('Jordan')){pulse(p,true)}else{pulse(p,false);}}
+ c.appendChild(b);
+});
+}
+renderPop();
+
+let cv=$('c'), ctx=cv.getContext('2d');
+let DPR=Math.min(window.devicePixelRatio||1,2);
+let W=0,H=0, dots=[], LOD=4000, rot=true, yaw=0, rotFlag=true;
+let curSel=null;
+function resize(){
+ let r=cv.getBoundingClientRect();
+ W=Math.round(r.width*DPR); H=Math.round((r.height||440)*DPR);
+ cv.width=W; cv.height=H;
+ $('lodLab').textContent='LOD '+ (LOD===4000?'4k':'8k')+' · DPR '+DPR.toFixed(1)+' · 26792 concept → '+LOD;
+}
+window.addEventListener('resize',resize);
+resize();
+
+function genDots(n,seed){
+ dots.length=0; let s=seed>>>0;
+ for(let i=0;i<n;i++){ s=lcg(s); let x=(s/LCG_M)*2-1; s=lcg(s); let y=(s/LCG_M)*2-1; s=lcg(s); let z=(s/LCG_M)*2-1; dots.push({x,y,z,r: (s%1000)/1000*1.1+0.2, h:(s%7)}) }
+ return s;
+}
+genDots(LOD, seedBase||70737614);
+
+$('b4k').onclick=()=>{LOD=4000;genDots(LOD,seedBase);$('b4k').classList.add('on');$('b8k').classList.remove('on');resize()};
+$('b8k').onclick=()=>{LOD=8000;genDots(LOD,seedBase);$('b8k').classList.add('on');$('b4k').classList.remove('on');resize()};
+$('bRot').onclick=()=>{rotFlag=!rotFlag; $('bRot').textContent='rot '+(rotFlag?'◐':'□')};
+
+let last=performance.now(), fps=60, frame=0;
+function draw(){
+ let now=performance.now(); frame++;
+ if(frame%24===0){ fps=Math.round(1000/((now-last)/24)*10)/10; $('fpsLab').textContent=fps+'fps rAF 60'; last=now; frame=0 }
+ ctx.clearRect(0,0,W,H);
+ // void bg tiny grid for vibe
+ // rotate yaw
+ if(rotFlag) yaw+=0.006;
+ let ct=Math.cos(yaw), st=Math.sin(yaw);
+ let cx=W*0.5, cy=H*0.53, sc=Math.min(W,H)*0.42;
+ // draw dots LOD
+ for(let d of dots){
+  let x=d.x*ct - d.z*st;
+  let z=d.x*st + d.z*ct;
+  let y=d.y;
+  let dep=(z+1)*0.5+0.12; // 0.12..1.12
+  // quick frustum cull
+  let px=cx + x*sc*dep;
+  let py=cy + y*sc*dep*0.86;
+  if(px<-10||px>W+10||py<-10||py>H+10) continue;
+  let a=0.14+dep*0.58;
+  // color paper with luma by h
+  ctx.beginPath();
+  ctx.fillStyle='rgba(255,254,247,'+a.toFixed(3)+')';
+  ctx.arc(px,py, d.r*(0.9+dep*1.7),0,Math.PI*2); ctx.fill();
+ }
+ // curSel bullseye target
+ if(curSel){
+  let x=curSel.xy[0]*ct - 0*st; let z=curSel.xy[0]*st+0; // fake z=0 for pop
+  let px=cx+curSel.xy[0]*sc*1.02, py=cy+curSel.xy[1]*sc*0.86;
+  // orange rings
+  ctx.strokeStyle='#D55E00'; ctx.lineWidth=2.4*DPR;
+  [26,46,72].forEach((r,i)=>{ctx.beginPath();ctx.globalAlpha=0.95-i*0.28;ctx.arc(px,py,r*DPR,0,Math.PI*2);ctx.stroke();ctx.globalAlpha=1});
+  ctx.fillStyle='#D55E00'; ctx.font=(22*DPR)+'px ui-monospace'; ctx.fillText('◎',px-11*DPR,py+7*DPR);
+ }
+ requestAnimationFrame(draw);
+}
+requestAnimationFrame(draw);
+
+function showPos(p){ curSel=p; $('posLab').textContent=p.nm+' → xy '+p.xy[0].toFixed(2)+','+p.xy[1].toFixed(2)+' • '+p.nt;
+ let r=$('ring'); let rc=cv.getBoundingClientRect();
+ let cx=cv.clientWidth*(0.5+p.xy[0]*0.42); let cy=cv.clientHeight*(0.53+p.xy[1]*0.36);
+ r.style.left=(cx-31)+'px'; r.style.top=(cy-31)+'px'; r.style.display='grid'; clearTimeout(r._t); r._t=setTimeout(()=>r.style.display='none',2400);
+}
+
+function pulse(p,isJordan){
+ // Jordan entry shows position on map, not auto-start
+ if(isJordan){ showPos(p); return; }
+ // otherwise: preview twin path (non-auto) — flash + set current
+ showPos(p);
+ // tiny bounce
+ $('ring').animate([{transform:'scale(.84)'},{transform:'scale(1.12)'},{transform:'scale(1)'}],{duration:340,easing:'cubic-bezier(.2,.8,.3,1)'});
+}
+
+// Week Warrior 7-dot via localStorage weekStreak
+function loadWW(){
+ let raw=null; try{ raw=JSON.parse(localStorage.getItem('vh_weekStreak')||'null'); }catch(e){}
+ if(!raw){ raw={days:[],streak:0,last:null}; }
+ let today=new Date().toISOString().slice(0,10);
+ // migrate older key
+ try{let old=JSON.parse(localStorage.getItem('vh_ww')||'null'); if(old&&old.days&&!raw.days.length) raw={days:old.days,streak:old.streak||0,last:old.days[old.days.length-1]}}catch(e){}
+ renderWW(raw);
+ // auto tick if first visit today? no auto, just show
+ return raw;
+}
+function renderWW(ww){
+ let c=$('wwDots'); if(!c) return; c.innerHTML='';
+ for(let i=0;i<7;i++){ let d=document.createElement('span'); d.className='dot'+(i<(ww.days?.length||0)?' on'+((ww.days.length>=7)?' war':''):''); c.appendChild(d); }
+ $('wwLab').textContent='weekStreak '+(ww.streak||0)+'/7 · '+(ww.days?.length||0)+' days · '+((ww.days||[]).join(',')||'local vh_weekStreak')+' • 7=Week Warrior';
+}
+function gainWW(){
+ let ww=loadWW(); let today=new Date().toISOString().slice(0,10); if(!ww.days.includes(today)){ ww.days.push(today); ww.days=ww.days.slice(-7); ww.streak=(ww.streak||0)+1; ww.last=today; localStorage.setItem('vh_weekStreak',JSON.stringify(ww)); }
+ renderWW(ww);
+}
+let ww=loadWW();
+// demo hook: tap bullseye earns one
+$('c').addEventListener('click',e=>{ gainWW(); });
+$('ring').addEventListener('click',()=>gainWW());
+// PWA SW comment offline
+if('serviceWorker'in navigator){ try{navigator.serviceWorker.register('/sw.js')}catch(e){} }
 </script>
-<!-- PWA manifest /manifest.json theme #0A0C10 offline cache-first -->
 </body>
 </html>

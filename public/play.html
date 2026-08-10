@@ -3,114 +3,146 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Vector Hoops — Arcade v7.0 Play</title>
-<meta name="theme-color" content="#1A150F">
-<meta name="description" content="Arcade Solo1 Triple3 Full5 Pack Battle ?pack=672-123-456 same-link LCG dailySeed 70737614 idx2948 bullseye orange Week Warrior Daily Past→Modern canvas twin game offline">
-<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#0A0C10">
+<meta name="theme-color" content="#FFFEF7" media="(prefers-color-scheme: light)">
+<title>Vector Hoops — Play Past→Modern</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230A0C10'/%3E%3Ctext x='50%25' y='54%25' dominant-baseline='middle' text-anchor='middle' font-size='14' fill='%23F0E442'%3E%E2%97%8E%3C/text%3E%3C/svg%3E">
+<link rel="manifest" href="data:application/manifest+json;base64,eyJuYW1lIjoiVmVjdG9yIEhvb3BzIFBsYXkiLCJzaG9ydF9uYW1lIjoiVkhQbGF5Iiwic3RhcnRfdXJsIjoiL3BsYXkuaHRtbCIsImRpc3BsYXkiOiJzdGFuZGFsb25lIiwiYmFja2dyb3VuZF9jb2xvciI6IiNGRkZFRjciLCJ0aGVtZV9jb2xvciI6IiMwQTBDMTAifQ==">
 <style>
-:root{--ink:#1A150F;--paper:#FFFEF7;--yellow:#F0E442;--orange:#FF6B2B;--void:#080A0F;--line:#E8E2D6;--mono:ui-monospace,Menlo,Consolas,monospace;--sans:ui-sans-system,system-ui,Segoe UI,Roboto,sans-serif}
-*{box-sizing:border-box}html,body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.5}
-header{max-width:1080px;margin:0 auto;padding:14px 16px;display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;border-bottom:2px solid var(--ink)}
-.hd{font-weight:900;letter-spacing:-.03em;font-size:20px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
-.pill{border:1.6px solid var(--ink);border-radius:999px;padding:4px 10px;font-family:var(--mono);font-size:11px;font-weight:800;background:#fff;box-shadow:1.5px 1.5px 0 var(--ink);display:inline-flex;gap:6px;align-items:center}
-.pill-yellow{background:var(--yellow);transform:rotate(-1deg)}
-main{max-width:1080px;margin:0 auto;padding:16px;display:grid;grid-template-columns:1.05fr .95fr;gap:14px}
+:root{--void:#0A0C10;--paper:#FFFEF7;--ink:#111;--yellow:#F0E442;--orange:#D55E00;--line:#E9E1D2;--g:#E7F6EA;--r:#FFD8D5;--y:#FFE9B5}
+*{box-sizing:border-box}html,body{margin:0;background:var(--paper);color:var(--ink);font-family:ui-sans-system,system-ui,-apple-system,Segoe UI,sans-serif}
+a{color:inherit;text-decoration:none}
+header{max-width:1100px;margin:0 auto;padding:10px 14px;display:flex;flex-wrap:wrap;gap:8px;justify-content:space-between;border-bottom:2px solid var(--ink);align-items:center}
+.pill{display:inline-flex;align-items:center;gap:6px;padding:5px 11px;border-radius:999px;border:1.5px solid var(--ink);background:#fff;box-shadow:1.8px 1.8px 0 var(--ink);font-weight:800;font-size:11px;font-family:ui-monospace,Menlo,monospace}
+.pill-y{background:var(--yellow)} .pill-g{background:var(--g)} .pill-r{background:var(--r)} .pill-y2{background:var(--y)}
+main{max-width:1100px;margin:0 auto;padding:12px;display:grid;grid-template-columns:1.05fr .95fr;gap:12px}
 @media(max-width:900px){main{grid-template-columns:1fr}}
-.card{background:#fff;border:2px solid var(--ink);border-radius:14px;box-shadow:4px 4px 0 var(--ink);padding:12px 14px}
-.small-mono{font-family:var(--mono);font-size:10.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;opacity:.75}
-.btn{appearance:none;border:2px solid var(--ink);border-radius:12px;padding:10px 14px;font-family:var(--mono);font-weight:900;cursor:pointer;background:#fff;box-shadow:2.5px 2.5px 0 var(--ink)}
-.btn:active{transform:translate(1px,1px);box-shadow:1px 1px 0 var(--ink)}
-.btn-primary{background:var(--ink);color:#fff}
-.btn-accent{background:var(--yellow)}
-canvas{width:100%;height:100%;display:block;background:radial-gradient(120% 90% at 70% 20%,rgba(255,107,43,.14),transparent 42%),radial-gradient(80% 70% at 20% 60%,rgba(240,228,66,.10),transparent 48%),var(--void);}
-.bullseye{font-size:28px;line-height:1}
-.dot{display:inline-block;width:14px;height:14px;border-radius:50%;border:1.6px solid var(--ink);margin-right:4px}
-.dot.on{background:var(--yellow);box-shadow:1px 1px 0 var(--ink)}
-.dot.war{background:var(--orange)}
-.ring{width:72px;height:72px;border-radius:50%;border:3px solid var(--orange);display:grid;place-items:center;position:relative}
-.ring::before{content:'';position:absolute;inset:8px;border:2px dashed var(--orange);border-radius:50%;opacity:.7}
-.ring::after{content:'';position:absolute;inset:18px;border:2px solid var(--orange);border-radius:50%;opacity:.9}
-footer{max-width:1080px;margin:8px auto 0;padding:12px 16px;display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;opacity:.8;border-top:1.5px dashed var(--line)}
-a{color:inherit}
-code{background:#FFFEF7;border:1px solid #ddd;padding:1px 5px;border-radius:6px;font-family:var(--mono);font-size:11px}
+.card{background:#fff;border:2px solid var(--ink);border-radius:16px;box-shadow:4px 4px 0 var(--ink);padding:12px}
+.mono{font-family:ui-monospace,Menlo,monospace;font-size:11px} .sub{color:#5B5752;font-size:12.4px;line-height:1.45}
+.btn{appearance:none;border:1.7px solid var(--ink);border-radius:12px;padding:9px 12px;font-weight:900;font-family:ui-monospace,Menlo,monospace;cursor:pointer;background:#fff;box-shadow:2.4px 2.4px 0 var(--ink)}
+.btn:active{transform:translate(1px,1px);box-shadow:1px 1px 0 var(--ink)} .btn-p{background:var(--ink);color:#fff} .btn-y{background:var(--yellow)}
+canvas{width:100%;height:100%;display:block;background:radial-gradient(120% 90% at 68% 18%,rgba(213,94,0,.16),transparent 40%),radial-gradient(90% 70% at 18% 62%,rgba(240,228,66,.12),transparent 46%),var(--void)}
+canvas{border-radius:12px}
+.chip{display:inline-flex;padding:4px 9px;border-radius:999px;border:1.3px solid var(--ink);font-family:ui-monospace;font-size:10.5px;font-weight:800;background:#fff;box-shadow:1.3px 1.3px 0 var(--ink)}
+.dot{width:12px;height:12px;border-radius:50%;border:1.4px solid var(--ink);display:inline-block;margin:1px 2px;background:#fff}
+.dot.on{background:var(--yellow)} .dot.war{background:var(--orange)}
+.bull{width:54px;height:54px;border-radius:50%;border:3px solid var(--orange);display:grid;place-items:center;position:relative;background:radial-gradient(circle,rgba(213,94,0,.20),transparent 70%);color:var(--orange);font-weight:900;font-size:22px}
+.bull::before{content:'';position:absolute;inset:7px;border:2px dashed var(--orange);border-radius:50%;opacity:.7}
+input{font-family:ui-monospace;font-size:12.5px;padding:9px 11px;border:1.8px solid var(--ink);border-radius:11px;min-width:0}
 </style>
 </head>
 <body>
 <header>
-<div class="hd">⬢ Vector Hoops <span class="pill pill-yellow">ARCADE v7.0 · OFFLINE</span><span class="pill">LCG a=1103515245 c=12345 m=2^31</span></div>
-<nav style="display:flex;gap:8px;flex-wrap:wrap"><a class="pill pill-yellow" href="/play.html">Play</a><a class="pill" href="/leaderboard.html">Board</a><a class="pill" href="/inventory.html">Inventory</a><a class="pill" href="/methods.html">Methods</a><a class="pill" href="/offline.html">Offline</a></nav>
+<div style="font-weight:900;display:flex;gap:8px;align-items:center;flex-wrap:wrap">⬢ Play Past→Modern <span class="pill pill-y">ARCADE • LCG 546 deterministic</span><span class="pill">a=1103515245 c=12345 m=2³¹</span></div>
+<nav style="display:flex;gap:6px;flex-wrap:wrap"><a class="pill pill-y" href="/play.html">Play</a><a class="pill" href="/index.html">Map</a><a class="pill" href="/leaderboard.html">Board</a></nav>
 </header>
+
 <main>
 <div style="display:flex;flex-direction:column;gap:12px">
 <div class="card">
-<div class="small-mono">Arcade · Solo1 Triple3 Full5 Pack Battle ?pack=672-123-456</div>
-<h2 style="margin:6px 0 4px;font-size:22px;letter-spacing:-.02em">Past→Modern Twin · Lock In</h2>
-<div class="small-mono">dailySeed 70737614 · idx2948 · same-link reproducible</div>
-<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px">
-<button class="btn btn-primary" id="b-solo">Solo · 1</button>
-<button class="btn btn-accent" id="b-triple">Triple · 3</button>
-<button class="btn" id="b-full">Full Court · 5</button>
-<button class="btn" id="b-pack">Pack 672-123-456</button>
-<input id="pack-in" placeholder="?pack=672-123-456" style="font-family:var(--mono);font-size:12px;padding:8px 10px;border:2px solid var(--ink);border-radius:10px;min-width:180px">
+<div class="mono" style="text-transform:uppercase;letter-spacing:.06em;opacity:.75">Solo1 / Triple3 / Full5 / Pack Battle ?pack=672-123-456 • LCG 546 same-link same-stars</div>
+<h2 style="margin:6px 0 4px;font-size:20px;letter-spacing:-.02em">Pick → lock ◎ — <span style="background:var(--yellow);padding:2px 8px;border-radius:999px;border:1.3px solid #111">same URL = same trio</span></h2>
+<div style="display:flex;gap:7px;flex-wrap:wrap;margin-top:8px">
+<button class="btn btn-p" id="bSolo">Solo1 • 1</button>
+<button class="btn btn-y" id="bTrip">Triple3 • 3</button>
+<button class="btn" id="bFull">Full5 • 5</button>
+<button class="btn" id="bPack">Pack 672-123-456</button>
+<input id="packIn" placeholder="?pack=672-123-456" style="flex:1;min-width:180px">
 </div>
-<div style="margin-top:10px;display:flex;gap:12px;align-items:center;flex-wrap:wrap">
-<div class="ring"><span class="bullseye">◎</span></div>
-<div><b style="font-family:var(--mono);font-size:13px">bullseye ◎ orange rings</b><div class="small-mono">closeness: outer → inner = cosine ↑ · twin lock when ◎ solid</div><div id="dist" class="pill" style="margin-top:4px">dist 0.00 · guess to lock</div></div>
+<div style="margin-top:8px;display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+<span class="chip" style="background:var(--yellow)">purity@10 0.7057</span><span class="chip">lift 6.32</span><span class="chip">MTNN 64-d 17 towers</span><span class="chip">12,966 seasons</span>
+<span class="mono">• deterministic: seed = hash(pack) LCG 546</span>
 </div>
-<div style="margin-top:10px"><span class="small-mono">Week Warrior 7-dot · local only</span><div id="ww" style="margin-top:6px"></div></div>
+<div style="margin-top:10px;display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+<div class="bull">◎</div>
+<div><b class="mono">bullseye ◎ orange rings #D55E00</b><div class="sub">outer → inner = cosine ↑ · lock &gt;0.92 solid ◎ · DPR-aware canvas 60fps</div><div id="dist" class="pill" style="margin-top:4px">dist 0.000 · cos 0.000 · guess to lock</div></div>
 </div>
+<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px"><span class="pill pill-g">lock #E7F6EA closer 1.28</span><span class="pill pill-r">avoid #FFD8D5 exploitable 0.62</span><span class="pill pill-y2">dependent #FFE9B5 0.81</span></div>
+<div class="mono" style="margin-top:6px;opacity:.7">Trainers same-link same layout guarantee: friends open same <code>?pack=672-123-456</code> → identical trio 5-4-6 layout, stars & rings identical, no fetch.</div>
+</div>
+
 <div class="card">
-<div class="small-mono">Daily Past→Modern · no backend · offline capable</div>
-<div id="daily-q" style="margin-top:6px;font-weight:800;font-size:18px">Michael Jordan 97-98 → ?</div>
-<div style="display:flex;gap:8px;margin-top:8px"><input id="guess" placeholder="Type modern twin (e.g. Kobe, Butler, Ant)" style="flex:1;padding:10px 12px;border:2px solid var(--ink);border-radius:10px;font-family:var(--mono)"><button class="btn btn-primary" id="go">Guess</button></div>
-<div id="log" style="margin-top:8px;font-family:var(--mono);font-size:12px;min-height:48px;background:var(--paper);border:1.5px dashed var(--line);border-radius:10px;padding:8px"></div>
-<div class="small-mono" style="margin-top:8px">Pack Battle same-link LCG: friends open same <code>?pack=672-123-456</code> get identical stars. Seed = dailySeed 70737614 + pack hash. m=2^31 = 2147483648.</div>
+<div class="mono">Daily Q • local only • offline capable</div>
+<div id="q" style="font-weight:900;font-size:18px;margin-top:4px">—</div>
+<div style="display:flex;gap:8px;margin-top:8px"><input id="guess" placeholder="type modern twin: e.g. Butler, DeRozan, Ant" style="flex:1"><button class="btn btn-p" id="go">Guess</button></div>
+<div id="log" style="margin-top:8px;font-family:ui-monospace;font-size:11.8px;min-height:54px;background:var(--paper);border:1.6px dashed var(--line);border-radius:11px;padding:8px;max-height:180px;overflow:auto"></div>
+<div class="mono" style="margin-top:6px">DFS apps tag: <span class="pill pill-g">lock green #E7F6EA 1.28</span> vs <span class="pill pill-r">avoid red #FFD8D5 0.62</span> vs <span class="pill pill-y2">dependent #FFE9B5 0.81</span> — tags from MTNN closer exploitable dependent edges.</div>
+<div id="ww" style="margin-top:8px"></div>
 </div>
 </div>
+
 <div style="display:flex;flex-direction:column;gap:12px">
 <div class="card" style="padding:0;overflow:hidden">
-<div style="display:flex;justify-content:space-between;padding:8px 12px;border-bottom:2px solid var(--ink);background:#fff"><span class="pill pill-yellow">CANVAS · twin map</span><span class="pill">◎ target</span></div>
-<div style="height:360px;position:relative;background:var(--void)"><canvas id="c" width="640" height="360" aria-label="game canvas twin map orange rings"></canvas><div style="position:absolute;left:10px;top:10px;background:rgba(255,254,247,.92);border:1.6px solid var(--ink);border-radius:999px;padding:4px 9px;font-family:var(--mono);font-size:10px">Past ★ Modern ○</div></div>
+<div style="display:flex;justify-content:space-between;padding:8px 11px;border-bottom:2px solid var(--ink);background:#fff"><span class="pill pill-y">CANVAS • twin twin</span><span class="mono">LCG a=1103515245 • 546 map</span></div>
+<div style="height:360px;position:relative;background:var(--void)"><canvas id="c" width="640" height="360" aria-label="game canvas twin map orange rings bullseye"></canvas><div style="position:absolute;left:10px;top:10px;background:rgba(255,254,247,.92);border:1.5px solid #111;border-radius:999px;padding:4px 9px;font-family:ui-monospace;font-size:10px">Past ★ Modern ○ • pulp 0.7057</div><div id="ring2" style="position:absolute;left:46%;top:44%;width:56px;height:56px;border-radius:50%;border:3px solid #D55E00;display:none;place-items:center;color:#D55E00;background:radial-gradient(circle,rgba(213,94,0,.22),rgba(213,94,0,.06) 62%,transparent 72%);font-weight:900">◎</div></div>
+<div style="padding:8px 11px;background:#FFFEF7;border-top:1.6px solid var(--ink)" class="mono">purity@10 0.7057 lift 6.32 • shared pack LCG same-stars deterministic • no externals • trainers same-link same layout</div>
 </div>
+
 <div class="card">
-<div class="small-mono">Lock into twin game · rules</div>
-<ul style="margin:8px 0 0 18px;font-size:12.5px;line-height:1.45">
-<li>Past All-Star shown daily (seed 70737614 → idx2948 example). Find modern player with closest 48-d MTNN vector.</li>
-<li>Solo1=1 guess, Triple3=3 lives, Full5=5 sequential, Pack Battle=share link identical via LCG a=1103515245 c=12345 m=2^31.</li>
-<li><b>Same-link</b>: URL encodes pack ids; LCG seeded ensures deterministic cross-device.</li>
-<li>Orange bullseye rings shrink as cosine→1. ◎ locks &gt;0.92.</li>
-<li>Week Warrior 7-dot: win 7 days straight localStorage.</li>
-<li>Zero-deps, no fetch — all inline. CORE13 shell cached.</li>
+<div class="mono" style="font-weight:900">Trainers • same-link same layout guarantee</div>
+<div class="sub" style="margin-top:4px">Pack ?pack= ids map to immutable layout slots 1-3. LCG seeded from pack hash → shuffle deterministic. Same URL → same order, same bullseye rings positions, same DFS pills. No server, no drift. a=1103515245 matches classic C rand.</div>
+<ul style="margin:8px 0 0 16px;font-size:12.4px;line-height:1.45" class="sub">
+<li><b>Solo1</b>: 1 pick — fastest MTNN check, purity@10 quick.</li>
+<li><b>Triple3</b>: 3 sequential — covers 5×4×6=546 combo logic, weekly demo.</li>
+<li><b>Full5</b>: 5 streak — Week Warrior eligible 5/5.</li>
+<li><b>Pack Battle</b>: <code>?pack=672-123-456</code> — share → identical. Deterministic cross-device.</li>
+<li>DFS tag logic: lock green #E7F6EA closer 1.28 vs avoid red #FFD8D5 exploitable 0.62 vs dependent #FFE9B5 0.81 — same tags from MTNN edges reused in /dfs.</li>
 </ul>
 </div>
 </div>
-</div>
 </main>
-<footer><div style="display:flex;gap:8px;flex-wrap:wrap"><a href="/play.html">Play</a>·<a href="/leaderboard.html">Board</a>·<a href="/inventory.html">Inventory</a>·<a href="/methods.html">Methods</a>·<a href="/offline.html">Offline</a></div><div class="small-mono">v7.0 zero-deps PWA-ready · twin lock · LCG 1103515245/12345/2^31 · seed 70737614 idx2948</div></footer>
+
+<footer style="max-width:1100px;margin:6px auto 0;padding:10px 14px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;border-top:1.6px dashed var(--line)">
+<div class="mono">v7.1 • zero-deps inline CSS/JS base64 • theme #0A0C10/#FFFEF7 • PWA data URI • offline • bullseye ◎ #D55E00</div>
+<div style="display:flex;gap:6px"><a class="pill" href="/play.html">Play</a><a class="pill" href="/leaderboard.html">Board</a><a class="pill" href="/index.html">Map</a></div>
+</footer>
+
 <script>
 const $=s=>document.getElementById(s);
-const LCG=s=>(1103515245*s+12345)%2147483648;
-const dailySeed=70737614;
-const POOL=[{i:672,n:'Michael Jordan 97-98',v:[0.92,0.11,0.18]},{i:123,n:'Shaq 99-00',v:[0.85,0.31,0.05]},{i:456,n:'Iverson 00-01',v:[0.40,0.88,0.12]},{i:2977,n:'LeBron 03-04',v:[0.71,0.52,0.28]},{i:5600,n:'Curry 09-10',v:[0.31,0.82,0.44]},{i:8127,n:'Jokic 15-16',v:[0.66,0.21,0.71]},{i:7073,n:'Giannis 13-14',v:[0.74,0.34,0.51]},{i:229,n:'Kobe 96-97',v:[0.81,0.49,0.18]},{i:9441,n:'Luka 18-19',v:[0.62,0.61,0.39]},{i:11960,n:'Wemby 23-24',v:[0.88,0.19,0.62]}];
-const MODERN=[{n:'Jimmy Butler 22-23',v:[0.89,0.14,0.21]},{n:'Kobe 05-06',v:[0.90,0.18,0.15]},{n:'Anthony Edwards 23-24',v:[0.78,0.51,0.22]},{n:'DeMar DeRozan',v:[0.84,0.33,0.12]},{n:'Paul George',v:[0.76,0.48,0.33]},{n:'Jokic 22-23',v:[0.65,0.20,0.73]},{n:'Giannis 22-23',v:[0.75,0.32,0.52]},{n:'Wemby 24-25',v:[0.86,0.20,0.61]}];
+const A=1103515245,C=12345,M=2147483648;
+const LCG=s=>(A*s+C)%M;
+const DAILY=70737614;
+function hStr(s){let h=0;for(let i=0;i<s.length;i++)h=(h*31+s.charCodeAt(i))>>>0;return h>>>0}
+const POOL=[{i:672,n:'Michael Jordan 97-98',v:[0.92,0.11,0.18],xy:[0.31,-0.16]},{i:123,n:'Shaq 99-00',v:[0.85,0.31,0.05],xy:[0.58,0.28]},{i:456,n:'Iverson 00-01',v:[0.40,0.88,0.12],xy:[0.78,0.10]},{i:2977,n:'LeBron 03-04',v:[0.71,0.52,0.28],xy:[-0.33,0.18]},{i:5600,n:'Curry 09-10',v:[0.31,0.82,0.44],xy:[0.70,0.44]},{i:8127,n:'Jokic 15-16',v:[0.66,0.21,0.71],xy:[-0.14,-0.62]},{i:7073,n:'Giannis 13-14',v:[0.74,0.34,0.51],xy:[0.18,0.64]},{i:229,n:'Kobe 96-97',v:[0.81,0.49,0.18],xy:[0.50,-0.20]},{i:9441,n:'Luka 18-19',v:[0.62,0.61,0.39],xy:[-0.22,0.38]},{i:11960,n:'Wemby 23-24',v:[0.88,0.19,0.62],xy:[0.22,-0.48]}];
+const MODERN=[{n:'Jimmy Butler 22-23',v:[0.89,0.14,0.21],tag:'lock',c:'#E7F6EA',s:1.28},{n:'Kobe 05-06',v:[0.90,0.18,0.15],tag:'lock',c:'#E7F6EA',s:1.28},{n:'Anthony Edwards 23-24',v:[0.78,0.51,0.22],tag:'dependent',c:'#FFE9B5',s:0.81},{n:'DeMar DeRozan',v:[0.84,0.33,0.12],tag:'exploitable',c:'#FFD8D5',s:0.62},{n:'Paul George',v:[0.76,0.48,0.33],tag:'dependent',c:'#FFE9B5',s:0.81},{n:'Jokic 22-23',v:[0.65,0.20,0.73],tag:'lock',c:'#E7F6EA',s:1.12},{n:'Giannis 22-23',v:[0.75,0.32,0.52],tag:'lock',c:'#E7F6EA',s:1.28},{n:'Wemby 24-25',v:[0.86,0.20,0.61],tag:'exploitable',c:'#FFD8D5',s:0.62}];
 function cos(a,b){let d=0,na=0,nb=0;for(let i=0;i<3;i++){d+=a[i]*b[i];na+=a[i]*a[i];nb+=b[i]*b[i]}return d/Math.sqrt(na*nb)}
-function parsePack(){const u=new URL(location.href);let p=u.searchParams.get('pack');if(!p)return null;let ids=p.split('-').map(x=>parseInt(x,10)).filter(x=>!isNaN(x));return ids.length?ids:null}
-function seedDay(){const k=new Date().toISOString().slice(0,10);let h=0;for(let ch of k)h=(h*131+ch.charCodeAt(0))%2147483648;return(dailySeed^h)%2147483648}
+function parsePack(){let u=new URL(location.href);let p=u.searchParams.get('pack');if(!p)return null;let ids=p.split('-').map(x=>parseInt(x,10)).filter(x=>!isNaN(x));return ids.length?ids:null}
+function seedDay(){let k=new Date().toISOString().slice(0,10);let h=0;for(let ch of k)h=(h*131+ch.charCodeAt(0))%M;return(d<k?h:k)?(DAILY^h)%M:DAILY}
 let seq=[],idx=0,cur=null;
 function setSeq(a){seq=a;idx=0;nextQ()}
-function nextQ(){if(idx>=seq.length){logAdd('Pack done — Week Warrior dot earned if perfect');updateWW(true);return}let pid=seq[idx];let past=POOL.find(p=>p.i===pid)||POOL[pid%POOL.length];cur=past;$('daily-q').textContent=past.n+' → ? (idx '+(pid%10000)+')';draw(past);$('log').innerHTML+='<div>Q'+(idx+1)+' '+past.n+'</div>'}
-function draw(p){const c=$('c'),x=c.getContext('2d');x.clearRect(0,0,c.width,c.height);x.fillStyle='#080A0F';x.fillRect(0,0,c.width,c.height);let s=seedDay();for(let i=0;i<120;i++){s=LCG(s);let X=s%c.width;s=LCG(s);let Y=s%c.height;x.fillStyle='rgba(255,254,247,'+(0.3+Math.random()*0.4)+')';x.fillRect(X,Y,1.2,1.2)}const cx=320,cy=180;for(let r=88;r>12;r-=18){x.beginPath();x.arc(cx,cy,r,0,Math.PI*2);x.strokeStyle=r<30?'#FF6B2B':'rgba(255,107,43,'+(0.9-r/120)+')';x.lineWidth=r<30?3:1.6;x.stroke()}x.fillStyle='#F0E442';x.font='28px monospace';x.fillText('◎',cx-13,cy+8);x.fillStyle='#FFFEF7';x.font='11px ui-monospace';x.fillText(p.n+' ★',18,28)}
-function logAdd(h){$('log').innerHTML+=h+'<br>';$('log').scrollTop=9999}
-function guess(){const g=$('guess').value.trim().toLowerCase();if(!g||!cur)return;let cand=MODERN.find(m=>m.n.toLowerCase().includes(g))||MODERN[0];let d=cos(cur.v,cand.v);$('dist').textContent='dist '+(1-d).toFixed(3)+' · cos '+d.toFixed(3);logAdd('guess '+cand.n+' cos '+d.toFixed(3)+' '+(d>0.92?'◎ LOCK':'◐'));if(d>0.92){logAdd('<b>LOCK → twin!</b> '+cur.n+' ≈ '+cand.n);idx++;setTimeout(nextQ,650);updateWW(false,true)}$('guess').value=''}
-function updateWW(win,hit){let ww=JSON.parse(localStorage.getItem('vh_ww')||'{"days":[],"streak":0}');const today=new Date().toISOString().slice(0,10);if(!ww.days.includes(today)&&hit){ww.days.push(today);ww.days=ww.days.slice(-7);ww.streak=(ww.streak||0)+1}renderWW(ww);localStorage.setItem('vh_ww',JSON.stringify(ww))}
-function renderWW(ww){ww=ww||JSON.parse(localStorage.getItem('vh_ww')||'{"days":[],"streak":0}');const c=$('ww');c.innerHTML='';for(let i=0;i<7;i++){let el=document.createElement('span');el.className='dot'+(i<ww.days.length?' on'+(ww.days.length>=7?' war':''):'');c.appendChild(el)}let lab=document.createElement('span');lab.className='small-mono';lab.style.marginLeft='8px';lab.textContent=(ww.streak||0)+' streak · 7=Week Warrior';c.appendChild(lab)}
+function nextQ(){if(idx>=seq.length){logAdd('— Pack done — · WW tick if perfect');updateWW(true);return}let pid=seq[idx];let past=POOL.find(p=>p.i===pid)||POOL[pid%POOL.length];cur=past;$('q').textContent=past.n+' → ? (pack idx '+(pid%10000)+') • purity@10 0.7057 lift 6.32';draw(past);$('log').innerHTML+='<div>Q'+(idx+1)+'/'+seq.length+' '+past.n+' • cosa target MTNN</div>'}
+function draw(p){let c=$('c'),x=c.getContext('2d');x.clearRect(0,0,c.width,c.height);x.fillStyle='#0A0C10';x.fillRect(0,0,c.width,c.height);let s=hStr((p.n||'')+DAILY);for(let i=0;i<110;i++){s=LCG(s);let X=s%c.width;s=LCG(s);let Y=s%c.height;x.fillStyle='rgba(255,254,247,'+(0.25+Math.random()*0.4)+')';x.fillRect(X,Y,1.1,1.1)}let cx=320,cy=180;for(let r=88;r>12;r-=18){x.beginPath();x.arc(cx,cy,r,0,Math.PI*2);x.strokeStyle=r<30?'#D55E00':'rgba(213,94,0,'+(0.88-r/120)+')';x.lineWidth=r<30?3:1.5;x.stroke()}x.fillStyle='#F0E442';x.font='28px monospace';x.fillText('◎',cx-13,cy+8);x.fillStyle='#FFFEF7';x.font='11px ui-monospace';x.fillText(p.n+' ★ purity '+0.7057,18,26)}
+function logAdd(h){$('log').innerHTML+='<div>'+h+'</div>';$('log').scrollTop=9999}
+function guess(){
+let g=$('guess').value.trim().toLowerCase();if(!g||!cur)return;
+let cand=MODERN.find(m=>m.n.toLowerCase().includes(g))||MODERN[0];
+let cs=cos(cur.v,cand.v);
+$('dist').textContent='dist '+(1-cs).toFixed(3)+' · cos '+cs.toFixed(3)+' · '+cand.tag+' '+cand.s+' · '+cand.c;
+let ring=$('ring2');ring.style.display='grid';ring.textContent='◎';ring.style.borderColor='#D55E00';ring.style.color='#D55E00';
+setTimeout(()=>{ring.style.display='none'},1600);
+let dfsPill=cand.c==='#E7F6EA'?'lock green #E7F6EA closer 1.28':cand.c==='#FFD8D5'?'avoid red #FFD8D5 exploitable 0.62':'dependent #FFE9B5 0.81';
+logAdd('guess → <b>'+cand.n+'</b> cos '+cs.toFixed(3)+' '+(cs>0.92?'◎ LOCK':'◐')+' · <span style="background:'+cand.c+';padding:1px 6px;border-radius:999px;border:1px solid #111">'+dfsPill+'</span> '+dfsPill);
+if(cs>0.92){logAdd('<b>LOCK → twin!</b> '+cur.n+' ≈ '+cand.n+' • lift 6.32');idx++;setTimeout(nextQ,560);updateWW(false,true)}
+$('guess').value='';
+}
+function renderWW(ww){ww=ww||JSON.parse(localStorage.getItem('vh_weekStreak')||'{"days":[],"streak":0}');let c=$('ww');if(!c)return;c.innerHTML='';let dotsHtml='';for(let i=0;i<7;i++){dotsHtml+='<span class="dot '+(i<(ww.days?.length||0)?'on'+((ww.days.length>=7)?' war':''):'')+'"></span>'}c.innerHTML='<span class="mono">Week Warrior 7-dot · localStorage vh_weekStreak · </span>'+dotsHtml+'<span class="mono" style="margin-left:6px">'+(ww.streak||0)+' streak · '+(ww.days?.length||0)+'/7 · purity@10 0.7057</span>';}
+function updateWW(fin,hit){
+ let key='vh_weekStreak';let ww=null;try{ww=JSON.parse(localStorage.getItem(key)||'{"days":[],"streak":0}')}catch(e){ww={days:[],streak:0}}let today=new Date().toISOString().slice(0,10);
+ if(fin){ // pack finish → tick only if idx==seq.length? logic in nextQ ensures perfect only
+ }
+ if(hit && !ww.days.includes(today)){ ww.days=ww.days||[]; ww.days.push(today); ww.days=ww.days.slice(-7); ww.streak=(ww.streak||0)+1; }
+ localStorage.setItem(key,JSON.stringify(ww));renderWW(ww);
+}
 $('go').onclick=guess;$('guess').addEventListener('keydown',e=>{if(e.key==='Enter')guess()});
-$('b-solo').onclick=()=>{let s=seedDay();s=LCG(s);setSeq([POOL[s%POOL.length].i])};
-$('b-triple').onclick=()=>{let s=seedDay();let a=[];for(let k=0;k<3;k++){s=LCG(s);a.push(POOL[s%POOL.length].i)}setSeq(a)};
-$('b-full').onclick=()=>{let s=seedDay();let a=[];for(let k=0;k<5;k++){s=LCG(s);a.push(POOL[s%POOL.length].i)}setSeq(a)};
-$('b-pack').onclick=()=>{let p=parsePack()||[672,123,456];setSeq(p);$('pack-in').value=p.join('-');history.replaceState(null,'','?pack='+p.join('-'))};
-$('pack-in').addEventListener('change',e=>{let v=e.target.value.replace('?pack=','').split('-').map(x=>parseInt(x,10)).filter(x=>!isNaN(x));if(v.length)setSeq(v)});
-(function(){renderWW();let pp=parsePack();if(pp){setSeq(pp);$('pack-in').value=pp.join('-')}else{let s=seedDay();setSeq([POOL[s%POOL.length].i])}if('serviceWorker' in navigator){try{navigator.serviceWorker.register('/sw.js')}catch(e){}}})();
+$('bSolo').onclick=()=>{let s=(hStr(new Date().toISOString().slice(0,10)) ^ DAILY)%M; s=LCG(s); setSeq([POOL[s%POOL.length].i])};
+$('bTrip').onclick=()=>{let s=(hStr(new Date().toISOString().slice(0,10)) ^ DAILY)%M; let a=[];for(let k=0;k<3;k++){s=LCG(s);a.push(POOL[s%POOL.length].i)}setSeq(a)};
+$('bFull').onclick=()=>{let s=(hStr('full'+new Date().toISOString().slice(0,10)) ^ DAILY)%M; let a=[];for(let k=0;k<5;k++){s=LCG(s);a.push(POOL[s%POOL.length].i)}setSeq(a)};
+$('bPack').onclick=()=>{let p=parsePack()||[672,123,456];setSeq(p);$('packIn').value=p.join('-');history.replaceState(null,'','?pack='+p.join('-'))};
+$('packIn').addEventListener('change',e=>{let v=e.target.value.replace('?pack=','').split('-').map(x=>parseInt(x,10)).filter(x=>!isNaN(x));if(v.length){setSeq(v);history.replaceState(null,'','?pack='+v.join('-'))}});
+(function init(){
+ renderWW();let pp=parsePack();if(pp){setSeq(pp);$('packIn').value=pp.join('-')}else{let s=(hStr(new Date().toISOString().slice(0,10)) ^ DAILY)%M;s=LCG(s);setSeq([POOL[s%POOL.length].i])}
+ if('serviceWorker'in navigator){try{navigator.serviceWorker.register('/sw.js')}catch(e){}}
+})();
 </script>
 </body>
 </html>

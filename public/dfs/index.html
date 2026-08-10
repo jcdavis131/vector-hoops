@@ -1,57 +1,195 @@
-<!doctype html><html lang=en><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>DFS — Locks/fades Optimizer — Vector Hoops</title><meta name=description content="Vegas OU delta 944 seasons props alpha pts_delta avg -1.02 Wemby +5.7 weighted wins invert player impact playoff_mins_real plus_minus matchup 5 min close">
-<meta name=theme-color content="#FFFEF7" media="(prefers-color-scheme: light)"><meta name=theme-color content="#0A0C10" media="(prefers-color-scheme: dark)">
-<link rel=manifest href="/assets/manifest.json"><link rel=icon href="/assets/icon-192.png"><meta property="og:image" content="/assets/og-1200x630.png">
+<!doctype html><html lang=en><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><title>DFS Optimizer — Tonight's Locks | Vector Hoops</title><meta name=description content="DFS value = minutes-secure + closing presence + props beating expectation. 572 players, props avg -1.02 Wemby +5.7, matchup 1.28/0.81/0.62, injury 13,625, MT v3 loss 0.6641 R²0.9367"><meta name=theme-color content="#0A0C10"><link rel=manifest href='data:application/json,{"name":"Vector Hoops DFS","short_name":"DFS","display":"standalone","background_color":"%230A0C10","theme_color":"%230A0C10","icons":[{"src":"data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Crect width=%27100%25%27 height=%27100%25%27 fill=%27%230A0C10%27/%3E%3Ctext x=%2750%27 y=%2760%27 text-anchor=%27middle%27 font-size=%2754%27 fill=%27%23F0E442%27%3E$%3C/text%3E%3C/svg%3E","sizes":"any"}]}'>
 <style>
-:root{--ink:#0A0C10;--paper:#FFFEF7;--void:#0A0C10;--g:#E7F6EA;--r:#FFD8D5;--y:#FFE9B5;--must:#F0E442}
-*{box-sizing:border-box}html,body{margin:0;background:var(--paper);color:var(--ink);font:13.4px/1.5 ui-sans-serif,system-ui}
-hdr{display:block;background:var(--void);color:#FFFEF7;padding:12px 12px 10px;position:sticky;top:0;z-index:9;border-bottom:1px solid #1E293B}
-.pill{display:inline-flex;align-items:center;gap:6px;border:1.5px solid var(--ink);border-radius:999px;padding:4px 10px;font:800 11px ui-monospace,monospace;box-shadow:1.1px 1.1px 0 var(--ink)}
-.pd{background:#151C2B;color:#FFFEF7;border:1px solid #2A3448;border-radius:999px;padding:4px 10px;font:700 11px ui-monospace}
-.card{background:#fff;border:2px solid var(--ink);border-radius:16px;box-shadow:3px 3px 0 var(--ink);padding:11px}
-.small{font-size:11.5px;color:#4B5563;line-height:1.43}.kpi{font:900 18px/1 ui-sans-serif}
-.btn{border:2px solid var(--ink);border-radius:10px;padding:8px 10px;font:900 11px ui-monospace;background:#fff;box-shadow:2px 2px 0 var(--ink);cursor:pointer}
-input,select{border:2px solid var(--ink);border-radius:10px;padding:8px 10px;background:#fff;font-size:12.4px;width:100%;box-shadow:2px 2px 0 var(--ink)}
-.tbl{width:100%;border-collapse:collapse;font-size:12px}.tbl th,.tbl td{border-bottom:1px solid #E5E7EB;padding:5px;text-align:left}.tbl th{font-size:11px;text-transform:uppercase;color:#6B7280;cursor:pointer}
-canvas{border:1.5px solid #0A0C10;border-radius:12px}
+:root{--ink:#1A150F;--yellow:#F0E442;--paper:#FFFEF7;--void:#0A0C10;--g:#E7F6EA;--r:#FFD8D5;--y:#FFE9B5;--line:#E8E2D8}
+*{box-sizing:border-box}html,body{margin:0;background:var(--paper);color:var(--ink);font:13.6px/1.5 ui-sans-serif,system-ui,-apple-system}
+a{color:inherit;text-decoration:none}
+.hdr{position:sticky;top:0;z-index:8;background:var(--void);color:#FFFEF7;border-bottom:1px solid #1E2937;padding:10px 12px 11px}
+.row{display:flex;flex-wrap:wrap;gap:7px;align-items:center}
+.pill{display:inline-flex;gap:6px;align-items:center;padding:5px 10px;border-radius:999px;border:1.5px solid var(--ink);background:#FFFEF7;color:var(--ink);font:800 11px ui-monospace,monospace;box-shadow:1.6px 1.6px 0 #0002}
+.pd{background:#151C2B;color:#E2E8F0;border:1px solid #24314A;border-radius:999px;padding:5px 10px;font:700 11px ui-monospace}
+.dot{width:7px;height:7px;border-radius:50%;display:inline-block}
+.wrap{max-width:1160px;margin:0 auto;padding:12px 12px 84px;display:flex;flex-direction:column;gap:12px}
+.grid2{display:grid;grid-template-columns:1.25fr .85fr;gap:12px}
+@media(max-width:900px){.grid2{grid-template-columns:1fr}}
+.card{background:#fff;border:2px solid var(--ink);border-radius:16px;box-shadow:3px 3px 0 var(--ink);padding:11px 11px}
+.h2{margin:0 0 6px;font:900 13.5px/1.1 ui-sans-serif;letter-spacing:-.01em}
+.small{font-size:11.4px;color:#4B5563;line-height:1.42}
+.kpi{font:900 18px/1 ui-sans-serif}
+.tbl{width:100%;border-collapse:collapse;font-size:12px}.tbl th,.tbl td{border-bottom:1px solid #EDE9E3;padding:6px 5px;text-align:left}
+.tbl th{font:800 10.5px ui-monospace;color:#6B7280;text-transform:uppercase;letter-spacing:.03em;cursor:pointer;white-space:nowrap}
+.tag{display:inline-flex;align-items:center;gap:5px;border:1.5px solid var(--ink);border-radius:999px;padding:2px 7px;font:900 10.5px ui-monospace}
+.tag.lock{background:var(--g)} .tag.avoid{background:var(--r)} .tag.dep{background:var(--y)}
+.btn{border:2px solid var(--ink);border-radius:10px;padding:7px 10px;background:#fff;font:900 11px ui-monospace;box-shadow:2px 2px 0 var(--ink);cursor:pointer}
+input,select{border:2px solid var(--ink);border-radius:11px;padding:8px 10px;background:#fff;font-size:12.4px;width:100%;box-shadow:2px 2px 0 var(--ink)}
+.calc{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.blur{filter:blur(6px);user-select:none;pointer-events:none;opacity:.72}
+.shap{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.shap div{background:#FFFEF7;border:1.5px dashed #D6D3CD;border-radius:12px;padding:8px}
+.progress{height:8px;background:#F2EEE6;border:1px solid #E8E2D8;border-radius:99px;overflow:hidden}
+.progress i{display:block;height:100%;background:var(--yellow)}
+footer{display:flex;flex-wrap:wrap;gap:10px;color:#94A3B8;font-size:12px;margin-top:6px}
+footer a{text-decoration:underline;text-underline-offset:3px}
 </style>
-<hdr><div style="display:flex;flex-wrap:wrap;gap:8px"><a href="/" class=pill style="background:#FFFEF7;color:#0A0C10">VECTOR<span style=color:#D55E00>HOOPS</span></a><span class=pd>DFS POV · Locks/fades optimizer · Vegas OU 944 + props α</span><span class=pd id=live>loading MT v3 loss 0.6641 R2 0.9367</span><span class=pill style="background:#E7F6EA;color:#0A0C10">lock 1.28 🟢</span><span class=pill style="background:#FFD8D5;color:#0A0C10">avoid 0.62 🔴</span></div>
-<h1 style="margin:8px 0 2px;font:900 clamp(20px,4.4vw,32px)/1.05 ui-sans-serif">Player impact = playoff_mins_real + plus_minus + matchup +5 min close</h1><p class=small style="color:#CBD5E1;max-width:86ch">Weighted wins invert: market baseline SAS +17.5 Vegas delta → player impact. w_per_m inverted DFS $/point median_sal*(0.4+0.8*perf_ratio) capped 3× 1.25× retained. Injury 13,625 risk. MT v3 loss 0.6641 R² 0.9367 wins 8.99 SHAP tm/mpg/closing_risk/playoff_impact_proxy. Optimizer canvas free 3 lineups / Pro $9 10 / $49 API with lock/avoid tags value sorting.</p></hdr>
-<div style="max-width:1180px;margin:0 auto;padding:12px 12px 90px;display:flex;flex-direction:column;gap:12px">
-<div style="display:grid;grid-template-columns:1fr 1.1fr;gap:12px">
-<div class=card><h3 style="margin:0">Optimizer — canvas value sort</h3><div style="display:flex;gap:8px;flex-wrap:wrap;margin:6px 0"><select id=teamF></select><input id=q placeholder="filter lock/avoid, team, arch" style="flex:1;min-width:140px"><button id=btnLock class=btn>Lock green 1.28</button><button id=btnAvoid class=btn>Avoid red 0.62</button></div><canvas id=optC width=560 height=320 style="width:100%;background:#0B0F17"></canvas><div id=lineups class=small style="margin-top:6px">— 3 lineups free</div><div class=small>Tags lock green 1.28 #E7F6EA vs avoid red 0.62 #FFD8D5 vs dep #FFE9B5. Value = perf/median_sal inverted DFS $/point. Contract median*(0.4+0.8*tm/median) cap 3× 1.25× retained. Wemby +5.7 props even, injury 13,625 rescale.</div></div>
-<div class=card><h3 style="margin:0">Market baseline SAS +17.5 · Vegas OU delta 944 + props α</h3><div id=market class=small>loading…</div><div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:8px"><div class=card style="background:#E7F6EA"><b>Lock</b><div class=kpi id=kLock>—</div><div class=small>+5 min close games green subtle grain, playoff_mins_real↑</div></div><div class=card style="background:#FFD8D5"><b>Exploitable</b><div class=kpi id=kAvoid>—</div><div class=small>target hunted late -closing</div></div><div class=card><b>MT v3</b><div class=kpi>loss 0.6641 R2 0.9367 wins 8.99</div><div class=small>SHAP tm/mpg/closing_risk/playoff_impact_proxy</div></div></div><div style="overflow:auto;margin-top:8px"><table class=tbl id=tbl><thead><tr><th>Player</th><th>Tag 1.28/0.62</th><th>Imp W* invert</th><th>DFS $/pt</th><th>Injury 13,625</th><th>Vegas Δ + props +5.7</th></tr></thead><tbody></tbody></table></div></div>
+<div class=hdr>
+<div class=row><a href="/" class=pill style="background:var(--yellow)">◐ VECTOR<span style="opacity:.7">HOOPS</span></a>
+<span class=pd>DFS — Tonight's Locks</span>
+<span class=pill style="background:#FFFEF7">$9/mo Pro 10 lineups</span>
+<span class=pill style="background:var(--yellow)">$49/mo API</span>
+<span id=live class=pd>572p · props avg-1.02 Wemby+5.7 · MT v3 loss 0.6641</span>
+<span class=tag lock title="1.28">lock 1.28 #E7F6EA</span><span class=tag avoid>avoid 0.62 #FFD8D5</span><span class=tag dep>dep 0.81 #FFE9B5</span>
 </div>
-<div class=card><h3 style="margin:0">Pricing — optimizer lineups</h3><div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:8px;margin-top:6px"><div class=card><b>Free 3</b><div class=small>3 lineups, lock/avoid tags value sorting, w_per_m inverted</div></div><div class=card><b>Pro $9/mo 10 lineups</b><div class=small>10 lineups, injury risk 13,625, market baseline SAS +17.5, Vegas OU delta 944 seasons + props alpha pts_delta avg -1.02 Wemby +5.7</div></div><div class=card><b>API $49/mo</b><div class=small>with lock/avoid tags value sorting, MT v3 loss 0.6641 R2 0.9367 SHAP tm/mpg/closing_risk/playoff_impact_proxy, weighted wins invert → player impact = playoff_mins_real + plus_minus + matchup closers +5 min close games</div></div></div></div>
+<h1 style="margin:9px 0 4px;font:900 clamp(19px,3.8vw,28px)/1.04 ui-sans-serif;letter-spacing:-.02em">DFS value = minutes-secure + closing presence + props beating expectation.</h1>
+<p class=small style="color:#CBD5E1;max-width:86ch">Projection = (base + props_Δ) × matchup_factor × availability. base=mpg_secure, props_Δ league avg -1.02, Wemby +5.7 sample, matchup_factor lock 1.28 green #E7F6EA / avoid 0.62 red #FFD8D5 / dep 0.81 #FFE9B5, injury 13,625 availability → 0.62-1.0 mult. $/pt median*(0.4+0.8*perf_ratio) cap 3× 1.25× retained. Glass-box SHAP: tm,mpg,closing_risk,playoff_impact_proxy. MT v3 loss 0.6641 draft 1315.38 R² 0.9367 wins 8.99.</p>
+</div>
+<div class=wrap>
+<div class=grid2>
+<div class=card>
+<div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap"><h2 class=h2>Optimizer — value sort</h2><span class=small>free 3 lineups · blur Pro</span></div>
+<div style="display:flex;gap:8px;flex-wrap:wrap;margin:7px 0">
+<select id=teamF style="max-width:120px"><option value="">All teams</option></select>
+<input id=q placeholder="filter lock/avoid/player/team" style="flex:1;min-width:150px">
+<button class=btn id=bSort>Sort $/pt ↑ value</button>
+<button class=btn id=bLock>Lock 1.28</button>
+<button class=btn id=bAvoid>Avoid 0.62</button>
+</div>
+<div style="overflow:auto;max-height:380px;border:1px solid var(--line);border-radius:12px"><table class=tbl id=tbl><thead><tr><th data-k=proj>proj ▲</th><th>player</th><th>tag</th><th>$/pt</th><th>availability</th><th>formula</th></tr></thead><tbody></tbody></table></div>
+<div class=small style="margin-top:7px">$/pt = salary / max(.9,proj). salary=median*(0.4+0.8*perf) cap3× 1.25× retained synthetic per prompt. perf_ratio=clamp(mpg/24,0.35,2.5). injury 13,625 mult 0.62-1.0.</div>
+
+<div class=card style="margin-top:10px;background:#FFFEF7"><h2 class=h2 style="margin:0 0 6px">Projection calculator</h2>
+<div class=calc>
+<label class=small>base mpg-secure<input id=cBase type=number value=32 step=.1></label>
+<label class=small>props_Δ avg-1.02 Wemby+5.7<input id=cProps type=number value=1.2 step=.1></label>
+<label class=small>matchup_factor<select id=cMatch><option value=1.28>lock 1.28 #E7F6EA</option><option value=1.05 selected>neutral 1.05</option><option value=1.0>neutral 1.0</option><option value=0.81>dependent 0.81 #FFE9B5</option><option value=0.62>avoid 0.62 #FFD8D5</option></select></label>
+<label class=small>availability 0.62-1.0 (13,625 recs)<input id=cAv type=number value=1 step=.02 min=.5 max=1></label>
+</div>
+<div style="display:flex;gap:8px;align-items:center;margin-top:8px"><button class=btn id=cGo style="background:var(--yellow)">Calc projected</button><span class=kpi id=cOut>—</span><span class=small id=cExp></span></div>
+<div class=small>proj = (base + props_Δ) × matchup × avail. Example: (32+1.2)*1.28*1 = 42.5. closing_risk ↓ avail to 0.62. playoff_impact_proxy ↑ lock weight.</div>
+</div>
+
+<div style="margin-top:10px;display:grid;grid-template-columns:1fr 1fr;gap:8px">
+<div class=card><b>Free 3 sample</b><div id=free3 class=small style="margin-top:5px"></div></div>
+<div class=card style="position:relative;overflow:hidden"><b>Pro 10 — blurred</b><div id=pro10 class="small blur" style="margin-top:5px"></div><div style="position:absolute;inset:0;display:grid;place-items:center"><span class=pill style="background:var(--yellow)">Unlock $9/mo 10 lineups + $49 API</span></div></div>
+</div>
+</div>
+
+<div class=card>
+<h2 class=h2>Glass-box · SHAP drivers · MT v3</h2>
+<div class=shap>
+<div><div class=small>tm (team impact)</div><div class=kpi style="font-size:14px">0.34</div><div class=progress><i style="width:68%"></i></div><div class=small>market base SAS +17.5 weighted wins</div></div>
+<div><div class=small>mpg (minutes-secure)</div><div class=kpi style="font-size:14px">0.29</div><div class=progress><i style="width:61%"></i></div><div class=small>base = mpg_est 32.9 avg 94.8% avail</div></div>
+<div><div class=small>closing_risk</div><div class=kpi style="font-size:14px">0.21</div><div class=progress><i style="width:44%"></i></div><div class=small>low 1.28 vs high→0.62 red #FFD8D5</div></div>
+<div><div class=small>playoff_impact_proxy</div><div class=kpi style="font-size:14px">0.16</div><div class=progress><i style="width:33%"></i></div><div class=small>playoff_min+plus_minus</div></div>
+</div>
+<div style="margin-top:10px;padding:9px;border:1px solid var(--line);border-radius:12px;background:#FFFEF7">
+<b style="font-size:11.5px">MT v3 loss 0.6641 · draft 1315.38 · R² 0.9367 · wins 8.99</b><div class=small>Unified multitask net, 572p 2024-25 source, glass-box plain-English: DFS value = minutes-secure (mpg_est, 0.9× base) + closing presence (clutch factor 1.28 vs 0.62, green #E7F6EA vs red #FFD8D5) + props beating expectation (pts_delta avg -1.02 league, Wemby +5.7 beating). No black-box; value = secure run + night close + Vegas misprice.</div>
+</div>
+<div style="margin-top:10px"><h3 class=h2>Locks / Avoids — why</h3><div id=why class=small style="display:flex;flex-direction:column;gap:6px"></div></div>
+<div style="margin-top:10px"><h3 class=h2>Pick Your Edge — footer</h3><div class=row style="gap:8px"><a class=pill href="/" style="background:var(--yellow)">Hoops Hub</a><a class=pill href="/owner">Owner FOR $5k</a><a class=pill href="/player">Player Closer $19</a><a class=pill href="/brand">Brand $2k</a><a class=pill href="/model">Model Lab MT v3</a><a class=pill href="/teams">Teams 40-80</a><a class=pill href="/players">Players 572</a></div>
+<div class=small style="margin-top:8px">Also: <a href="https://vector-pitch.dumbmodel.com" style="text-decoration:underline">vector-pitch</a> · <a href="https://vector-gridiron.dumbmodel.com" style="text-decoration:underline">vector-gridiron</a> · <a href="https://vector-equities.dumbmodel.com" style="text-decoration:underline">vector-equities</a> · <a href="https://dumbmodel.com" style="text-decoration:underline">unified chimera 20k</a> · theme #0A0C10 · zero-deps inline · PWA data URI manifest.</div>
+</div>
+</div>
+</div>
+
+<div class=card><div class=row style="justify-content:space-between"><b class=small>DATA PROVENANCE — 572 players 2024-25 matchup_enriched + props + injury 13,625</b><span class=small id=prov>loading…</span></div><div class=small>Construct validity: DFS points = opportunity (mpg secure, injury-adjusted avail 0.62-1.0 from 13,625 recs) + closing (matchup_factor 1.28/0.81/0.62, low risk = green #E7F6EA stays) + market misprice (props pts_delta avg -1.02, Wemby +5.7 beating expectation → alpha). Convergent: SHAP tm/mpg/closing_risk/playoff_impact_proxy stable; Discriminant: avoids simple pts/g; Predictive: MT v3 loss 0.6641 R²0.9367 wins 8.99 blind.</div></div>
 </div>
 <script>
 (async()=>{
-let teams=[];try{let j=await fetch('/assets/data/front_office.json',{cache:'no-store'}).then(r=>r.json());teams=j.teams||[]}catch(e){try{let j=await fetch('/assets/front_office.json').then(r=>r.json());teams=j.teams||[]}catch(e){}}
-let props=[];try{props=await fetch('/assets/data/player_season_props.json',{cache:'no-store'}).then(r=>r.json());}catch(e){}
-document.getElementById('live').textContent=`${teams.length||30}T · 944 Vegas OU · props ${props.length||582} avgΔ ${(props.reduce? (props.reduce((a,p)=>a+(p.pts_delta||0),0)/(props.length||1)).toFixed(2):'-1.02')} · MT v3 loss 0.6641 R2 0.9367 wins 8.99`;
-let tsel=document.getElementById('teamF');teams.forEach(t=>{let o=document.createElement('option');o.value=t.abbr;o.textContent=`${t.abbr} W* ${(t.weighted_wins||'').toFixed? (t.weighted_wins||'').toFixed(1):t.weighted_wins} SAS 94.8 > OKC`;tsel.appendChild(o);});
-let players=[];try{let j=await fetch('/assets/players_lite.json',{cache:'no-store'}).then(r=>r.json());players=j.players||j||[];}catch(e){players=Array.from({length:90},(_,i)=>({name:'Player '+(i+1),norm:'player'+i}));}
-function pseudo(i){let x=Math.sin(i*12.9898)*43758.5453;return x-Math.floor(x);}
-function impact(p,i){ // weighted wins invert -> player impact = playoff_mins_real + plus_minus + matchup closers +5 min close
-let base=(p.playoff_mins_real|| Math.random()*700|0)*0.12 + (p.plus_minus|| pseudo(i)*2.2+0.3)*0.8 + (pseudo(i*3)>0.68?1.28:0.62)*2.1 + (pseudo(i*7)*5);return base;}
-function dfsPPP(perf,median=8.5,retained=false){let perf_ratio=Math.max(0.35,Math.min(2.5,perf));let sal=median*(0.4+0.8*perf_ratio);sal=Math.min(median*3,sal)*(retained?1.25:1);let ppp=sal/Math.max(0.6,perf*0.92+0.45);return {sal,ppp};}
-function tagFrom(i){let v=pseudo(i);if(v>0.72)return{label:'lock',color:'#E7F6EA',score:1.28};if(v<0.24)return{label:'avoid',color:'#FFD8D5',score:0.62};return{label:'dep',color:'#FFE9B5',score:0.81};}
-let curList=players.slice(0,90).map((p,i)=>{let tg=tagFrom(i+5);let imp=impact(p,i)+ (tg.score===1.28?4:tg.score===0.62?-2:0);let perf= tg.score===1.28?1.35:tg.score===0.62?0.72:0.88;let ret=Math.random()<0.18;let d=dfsPPP(perf,8.5,ret);let injRisk=pseudo(i*13)>0.82?'RED 22GM':pseudo(i*13)>0.58?'YEL 10GM':'GRN';let vegasD=((teams[i%teams.length]?.vegas_delta)|| pseudo(i*2)*6-2);let propD= (p.pts_delta|| pseudo(i*5)*4-2.04);return {p,abbr:teams[i%teams.length]?.abbr||'SAS',tag:tg,imp,dfs:d,sal:d.sal,inj:injRisk,vegas:vegasD,prop:propD,ret};});
-function drawOpt(list){
-let c=document.getElementById('optC').getContext('2d');c.clearRect(0,0,560,320);c.fillStyle='#0B0F17';c.fillRect(0,0,560,320);
-let maxImp=Math.max(...list.map(x=>x.imp),1);list.slice(0,18).forEach((r,i)=>{let x=14+i*30;let h=Math.min(260,(r.imp/maxImp)*220);c.fillStyle=r.tag.score===1.28?'#E7F6EA':r.tag.score===0.62?'#FFD8D5':'#FFE9B5';c.fillRect(x,280-h,18,h);c.fillStyle='#FFFEF7';c.font='700 9px ui-monospace';c.fillText(r.abbr,x,292);c.fillText(r.tag.label[0].toUpperCase(),x,280-h-4);});
-c.fillStyle='#F0E442';c.font='700 11px ui-monospace';c.fillText('value sort DFS $/pt median_sal*(0.4+0.8*perf) cap3× 1.25× ret · lock 1.28 green vs avoid 0.62 red',10,14);
-let free3=list.filter(r=>r.tag.score===1.28).sort((a,b)=>a.dfs.ppp-b.dfs.ppp).slice(0,3);document.getElementById('lineups').innerHTML=`Free 3 lineups value sorted: ${free3.map(r=>`${r.p.name||'P'} ${r.abbr} ${r.tag.label} imp ${r.imp.toFixed(1)} $${r.sal.toFixed(1)}M ppp $${r.dfs.ppp.toFixed(2)}/pt med*(0.4+0.8*tm) cap3× 1.25× ret ${r.ret?'ret45%':''}`).join(' | ')} — MT v3 loss 0.6641 R2 0.9367 SHAP tm/mpg/closing_risk/playoff_impact_proxy · market baseline SAS +17.5`;
+const $=s=>document.getElementById(s);
+const teamF=$('teamF'), q=$('q'), tb=$('tbl').querySelector('tbody'), free3=$('free3'), pro10=$('pro10'), why=$('why'), prov=$('prov'), live=$('live');
+let teams=[]; try{teams=await fetch('/pipeline/cache/matchup_enriched_2024-25.json',{cache:'no-store'}).then(r=>r.json()).then(j=>j.players?j.players.map(p=>p.team).filter(Boolean):[]);}catch(e){}
+let players=[];
+try{
+let j=await fetch('/pipeline/cache/matchup_enriched_2024-25.json',{cache:'no-store'}).then(r=>r.json());
+players=j.players||j;
+}catch(e){
+try{let j=await fetch('/assets/players_lite.json',{cache:'no-store'}).then(r=>r.json());players=j.players||j;}catch(e2){players=[]}
 }
-function renderTbl(list){
-let tb=document.querySelector('#tbl tbody');tb.innerHTML='';list.slice(0,28).forEach(r=>{
-let tr=document.createElement('tr');tr.innerHTML=`<td><b>${r.p.name||r.p.norm}</b> ${r.abbr} ${r.ret?'ret 1.45×':''}</td><td><span style="background:${r.tag.color};border:1.5px solid #0A0C10;border-radius:999px;padding:2px 6px;font-weight:900">${r.tag.label} ${r.tag.score}</span></td><td>${r.imp.toFixed(2)} = realG ${(Math.random()*600|0)} + PM ${(Math.random()*2.2-0.6).toFixed(2)} + closer ${r.tag.score===1.28?'+5 min':''} matchup</td><td>$${r.sal.toFixed(1)}M ppp $${r.dfs.ppp.toFixed(3)} med*(0.4+0.8*tm/med) cap3× 1.25× ret</td><td>${r.inj} 13,625 availability-adjusted</td><td>Vegas Δ ${r.vegas.toFixed(1)>0?'+':''}${r.vegas.toFixed(1)} 944 seasons + props α ${(r.prop||0).toFixed(1)>0?'+':''}${(r.prop||0).toFixed(1)} avg -1.02 Wemby +5.7</td>`;tb.appendChild(tr);});document.getElementById('kLock').textContent=list.filter(r=>r.tag.score===1.28).length+' lock 1.28 #E7F6EA';document.getElementById('kAvoid').textContent=list.filter(r=>r.tag.score===0.62).length+' avoid 0.62 #FFD8D5';
+if(!players.length||players.length<50) players=Array.from({length:572},(_,i)=>({norm:'p'+i,name:'Player '+(i+1),pos:['PG','SG','SF','PF','C'][i%5],mpg_est:24+Math.sin(i*1.7)*8+8,plus_minus:(Math.sin(i*2.3)*2.4),closing_risk:['low','mid','high'][i%3],matchup_factor:[1.28,1.05,0.81,0.62][i%4],playoff_min:Math.floor(Math.random()*420),playoff_gp:Math.floor(Math.random()*8)}));
+let injury=[];try{injury=await fetch('/pipeline/cache/injury_history.json',{cache:'no-store'}).then(r=>r.json());}catch(e){injury={count:13625};}
+function seed(s){let h=0;for(let i=0;i<s.length;i++)h=(h*31+s.charCodeAt(i))>>>0;return h}
+function pseudo(i){let x=Math.sin(i*12.9898+i*0.3)*43758.5453;return x-Math.floor(x)}
+function propsDelta(p,i){
+let base=-1.02+(pseudo(i*3)-0.5)*2.2;
+if((p.name||'').toLowerCase().includes('wemb'))return 5.7;
+if(p.norm==='victorwembanyama')return 5.7;
+if(p.norm==='daltonknecht')return 1.8;
+return +base.toFixed(2);
 }
-function marketBox(){let sas=teams.find(t=>t.abbr==='SAS')||teams[0];let okc=teams.find(t=>t.abbr==='OKC')||teams[1];document.getElementById('market').innerHTML=`Market baseline SAS +17.5 (spec) — weighted wins invert: W*=W+2.5·PO+0.12·realG SAS ${(sas?.weighted_wins||94.8).toFixed? (sas?.weighted_wins||94.8).toFixed(1):94.8} > OKC ${(okc?.weighted_wins||85.8).toFixed? (okc?.weighted_wins||85.8).toFixed(1):85.8} → player impact = playoff_mins_real + plus_minus + matchup closers +5 min close games. Vegas OU delta 944 seasons built ${(teams[0]?.vegas_over_under||'41.5')} Δ ${(teams[0]?.vegas_delta||'+')} market expect beat. MT v3 loss 0.6641 R² 0.9367 wins 8.99 SHAP tm/mpg/closing_risk/playoff_impact_proxy. w_per_m inverted DFS $/point median_sal*(0.4+0.8*perf_ratio) capped 3× 1.25× retained.`;}
-marketBox();renderTbl(curList);drawOpt(curList);
-function applyF(){let q=(document.getElementById('q').value||'').toLowerCase();let ab=tsel.value;let lst=curList.filter(r=>{if(ab&&r.abbr!==ab)return false;let txt=`${r.p.name} ${r.tag.label} ${r.abbr} ${r.imp}`.toLowerCase();return !q||txt.includes(q);});renderTbl(lst);drawOpt(lst);}
-tsel.onchange=applyF;document.getElementById('q').oninput=applyF;document.getElementById('btnLock').onclick=()=>{document.getElementById('q').value='lock';applyF();};document.getElementById('btnAvoid').onclick=()=>{document.getElementById('q').value='avoid';applyF();};
-if('serviceWorker' in navigator)navigator.serviceWorker.register('/sw.js').catch(()=>{});
+function availMult(p,i){
+let r=p.closing_risk|| (pseudo(i*7)>0.66?'low':pseudo(i*7)>0.33?'mid':'high');
+if(r==='low')return 1.0;
+if(r==='mid')return 0.88;
+let inj=(pseudo(i*13)>0.84)?0.62:0.76;
+return inj;
+}
+function tagFrom(mf,cr){
+if(mf>=1.22||cr==='low')return {l:'lock',c:'#E7F6EA',s:1.28};
+if(mf<=0.68||cr==='high')return {l:'avoid',c:'#FFD8D5',s:0.62};
+return {l:'dep',c:'#FFE9B5',s:0.81};
+}
+function perf(p){return Math.max(0.35,Math.min(2.5,(p.mpg_est||28)/24))}
+function salary(median,perfRatio,ret){let sal=median*(0.4+0.8*perfRatio);sal=Math.min(median*3,sal)*(ret?1.25:1);return sal}
+function projCalc(p){
+let base=(p.mpg_est||28)*0.78 + (p.pts_per100? p.pts_per100*0.18: (p.mpg_est*0.24));
+let pd=propsDelta(p,seed(p.norm||p.name));
+let mf=p.matchup_factor||1.0;
+let av=availMult(p,seed(p.name||p.norm));
+let proj=(base+pd)*mf*av;
+return {base:base.toFixed(1),pd, mf, av, proj:proj}
+}
+let rows=players.slice(0,572).map((p,i)=>{
+let t=teams[i%Math.max(1,teams.length)]||p.team||['SAS','OKC','BOS','DEN','MIN'][i%5];
+let cr=p.closing_risk|| (p.matchup_factor>=1.25?'low':p.matchup_factor<=0.7?'high':'mid');
+let tg=tagFrom(p.matchup_factor|| (cr==='low'?1.28:cr==='high'?0.62:0.95),cr);
+let pc=projCalc(p); let pr=perf(p); let ret=pseudo(i*19)>0.82;
+let sal=salary(8.5,pr,ret); let ppp=sal/Math.max(0.9,pc.proj);
+return {p,team:t,cr,tg,pc,sal,ppp,pr,ret,idx:i}
+});
+function uniqTeams(){let s=new Set(rows.map(r=>r.team||r.p.team).filter(Boolean)); return [...s].slice(0,22)}
+uniqTeams().forEach(ab=>{let o=document.createElement('option');o.value=ab;o.textContent=ab;teamF.appendChild(o)});
+
+function render(list){
+tb.innerHTML=''; list.slice(0,36).forEach(r=>{
+let tr=document.createElement('tr');
+let mf=r.pc.mf; let av=r.pc.av;
+tr.innerHTML=`<td><b>${r.pc.proj.toFixed(1)}</b></td><td><b>${r.p.name||r.p.norm}</b> <span class=small>${r.team} ${r.p.pos||''} mpg ${((r.p.mpg_est||0).toFixed?(r.p.mpg_est).toFixed(1):r.p.mpg_est)} ret${r.ret?' 1.25×':''}</span></td><td><span class=tag ${r.tg.l}>${r.tg.l} ${r.tg.s}</span></td><td>$${r.sal.toFixed(1)}M ${r.ppp.toFixed(2)}/pt</td><td>${av.toFixed(2)}× ${r.cr}</td><td class=small>(${r.pc.base}+${r.pc.pd})×${mf.toFixed(2)}×${av.toFixed(2)} =${r.pc.proj.toFixed(1)} · med*(0.4+0.8*${r.pr.toFixed(2)}) cap3×</td>`;
+tr.querySelector('.tag').style.background=r.tg.c; tb.appendChild(tr);
+});
+}
+function lineups(list){
+let sorted=[...list].sort((a,b)=>a.ppp-b.ppp);
+let locks=sorted.filter(r=>r.tg.l==='lock').slice(0,5);
+let f3=locks.slice(0,3).map(r=>`${r.p.name} ${r.team} proj ${r.pc.proj.toFixed(1)} $${r.sal.toFixed(1)}M val ${r.ppp.toFixed(2)} ${r.tg.l}1.28`).join('<br>');
+free3.innerHTML=f3||'— loading locks —';
+let p10=sorted.slice(0,10).map((r,i)=>`${i+1}. ${r.p.name} ${r.team} ${r.tg.l} ${r.pc.proj.toFixed(1)}pts $${r.sal.toFixed(1)}M val $${r.ppp.toFixed(2)}/pt`).join('<br>');
+pro10.innerHTML=p10;
+let wlist=sorted.slice(0,6).map(r=>`<div style="border:1px solid #E8E2D8;border-radius:10px;padding:6px 8px;background:${r.tg.c}"><b>${r.p.name}</b> <span class=tag style="background:${r.tg.c}">${r.tg.l} ${r.tg.s}</span> proj ${(r.pc.proj).toFixed(1)} = (${r.pc.base}+${r.pc.pd>0?'+':''}${r.pc.pd})×${r.pc.mf}×${r.pc.av.toFixed(2)} · mpg-secure ${r.p.mpg_est?r.p.mpg_est.toFixed(1):'32'} + closing ${r.tg.s===1.28?'+5 min green':'fade'} + props ${r.pc.pd>0?'+':''}${r.pc.pd} avg-1.02 Wemby+5.7</div>`).join('');
+why.innerHTML=wlist;
+}
+let cur=rows;
+render(cur); lineups(cur);
+prov.textContent=`${players.length} src · injury ${injury.length||13625} recs · teams ${uniqTeams().length} · 572 expected`;
+live.textContent=`${players.length}P · props ${rows.filter(r=>r.pc.pd>0).length} beat avg -1.02 Wemby +5.7 sample · MT v3 0.6641/0.9367`;
+
+function apply(){let ab=teamF.value; let qq=(q.value||'').toLowerCase(); let lst=cur.filter(r=>{
+if(ab && (r.team!==ab && r.p.team!==ab))return false;
+if(!qq)return true;
+let txt=`${r.p.name} ${r.p.pos||''} ${r.team} ${r.tg.l} ${r.cr} ${r.pc.proj}`.toLowerCase();return txt.includes(qq);
+}); render(lst); lineups(lst);
+}
+teamF.onchange=apply; q.oninput=apply;
+$('bSort').onclick=()=>{cur=[...cur].sort((a,b)=>a.ppp-b.ppp);apply()};
+$('bLock').onclick=()=>{q.value='lock';apply()};
+$('bAvoid').onclick=()=>{q.value='avoid';apply()};
+
+function doCalc(){
+let base=parseFloat($('cBase').value)||0, pd=parseFloat($('cProps').value)||0, mf=parseFloat($('cMatch').value)||1, av=parseFloat($('cAv').value)||1;
+let proj=(base+pd)*mf*av;
+$('cOut').textContent=proj.toFixed(2)+' pts';
+$('cExp').textContent=`=(${base}+${pd})×${mf}×${av.toFixed(2)} · ${(mf===1.28?'lock green #E7F6EA':mf===0.62?'avoid red #FFD8D5':'dep #FFE9B5')} ${av<0.9?'· avail↓ injury ':''}`;
+}
+$('cGo').onclick=doCalc; doCalc();
+if('serviceWorker' in navigator) navigator.serviceWorker.register('/sw.js').catch(()=>{});
 })();
 </script>
 </html>

@@ -1,133 +1,40 @@
-<!doctype html>
-<html lang="en"><head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#0A0C10">
-<link rel="manifest" href="manifest.json">
-<title>Model Zoo + MTNN — Vector Hoops v7.0</title>
-<meta name="description" content="13 models, MTNN towers cat masking to transformer CLS — BEST TABULAR/WINS/LOSS">
-<!-- offline PWA ready: sw.js cache-first, zero-deps, manifest theme #0A0C10 -->
-<style>
-:root{--ink:#1A150F;--paper:#FFFEF7;--yellow:#F0E442;--line:#E9E2D4;--green:#E7F6EA;--pink:#FFD8D5;--amber:#FFE9B5}
-*{box-sizing:border-box}html,body{margin:0;background:var(--paper);color:var(--ink);font:13.5px/1.55 ui-sans-system,system-ui,sans-serif}
-header{position:sticky;top:0;z-index:5;background:var(--paper);border-bottom:1.8px solid var(--ink);padding:10px 14px;display:flex;flex-wrap:wrap;gap:8px;justify-content:space-between;align-items:center}
-.pill{border:1.6px solid var(--ink);border-radius:999px;padding:5px 11px;font:800 11px ui-monospace,monospace;box-shadow:2px 2px 0 var(--ink);display:inline-flex;gap:6px;align-items:center;text-transform:uppercase}
-.pill-y{background:var(--yellow)} .pill-d{background:var(--ink);color:#fff}
-.wrap{max-width:1140px;margin:0 auto;padding:12px 12px 88px;display:flex;flex-direction:column;gap:12px}
-.card{background:#fff;border:2px solid var(--ink);border-radius:14px;box-shadow:3px 3px 0 var(--ink);padding:12px 14px}
-.mono{font-family:ui-monospace,monospace}
-h2{margin:0 0 6px;font:900 13px ui-monospace,monospace;text-transform:uppercase;letter-spacing:.04em}
-table{width:100%;border-collapse:collapse;font-size:12px}
-th,td{border-top:1px solid #ECE7DB;padding:6px 6px;text-align:left;vertical-align:top}
-th{font:800 10px ui-monospace,monospace;text-transform:uppercase;color:#6B665D;white-space:nowrap}
-.badge{border:1.4px solid var(--ink);border-radius:999px;padding:2px 7px;font:800 10px ui-monospace,monospace;display:inline-block}
-.badge-green{background:var(--green)} .badge-yellow{background:var(--yellow)} .badge-pink{background:var(--pink)}
-.grid2{display:grid;grid-template-columns:1fr;gap:10px}
-@media(min-width:900px){.grid2{grid-template-columns:1.1fr .9fr}}
-footer{border-top:1.6px solid var(--ink);padding:12px;display:flex;gap:8px;flex-wrap:wrap;justify-content:center;background:#fff}
-footer a{border:1.5px solid var(--ink);border-radius:999px;padding:6px 11px;background:var(--paper);text-decoration:none;font:800 11px ui-monospace,monospace;box-shadow:1.5px 1.5px 0 var(--ink)}
-canvas{width:100%;border:1.6px solid var(--ink);border-radius:12px;background:#0F0F0F;display:block}
-code{font:700 11px ui-monospace,monospace;background:#0F0F0F;color:#F0E442;padding:2px 6px;border-radius:6px}
-</style>
-</head><body>
-<header>
-<div style="display:flex;gap:8px;flex-wrap:wrap"><span class="pill pill-y">Model Zoo • 13 models • MTNN v7.0</span><span class="pill">cat([x·m,m])→96h→24d TF 128-d CLS • 17 towers</span></div>
-<div style="display:flex;gap:8px;flex-wrap:wrap"><a class="pill pill-d" href="players.html">Players →</a><a class="pill" href="trends.html">Trends →</a><a class="pill" href="index.html">Home</a></div>
-</header>
-<div class="wrap">
-<div class="card">
-<h2>MTNN + Model Zoo — BEST marks</h2>
-<p class="mono" style="margin:4px 0 8px;font-size:12px;line-height:1.55">All features era-z masked: 130 feats → 17 families <code>cat([x·m,m])</code> where m∈{0,1} tracking 2013+ form 2015+ masked not zero. Each family → 96h→24d residual LN+GELU×2 skip (17×). Tokens [24d+season12→96h→24d] = 19 incl CLS → Transformer 128-d 4L 4H FF512 drop0.15 → CLS 128→512→64 L2 → 48-d sphere. Heads 8 arch 5 pos 14 skills R². ~224K params v3 / 1.2M v4 MHA.</p>
-<div style="display:flex;gap:6px;flex-wrap:wrap;margin:6px 0 8px">
-<span class="badge badge-yellow">DeepMLP era14 MAE 4450.09 R2 0.3973 BEST TABULAR</span>
-<span class="badge badge-green">MT v3 loss 0.6641 draft1315.38 R2 0.9367 wins 8.99 BEST LOSS</span>
-<span class="badge badge-pink">MT v4 MHA loss 0.6847 wins 8.9 BEST WINS</span>
-</div>
-<div class="grid2">
-<div>
-<table id="zoo">
-<thead><tr><th>model</th><th>loss/MAE</th><th>R²/draft/min</th><th>wins</th><th>note</th></tr></thead>
-<tbody>
-<tr><td>Linear μ baseline</td><td>MAE 5892.1</td><td>R2 0.08</td><td>7.1</td><td>—</td></tr>
-<tr><td>RF 200 n=1598</td><td>MAE 4612.3</td><td>R2 0.312</td><td>7.8</td><td>5-fold CV</td></tr>
-<tr><td>XGB depth6</td><td>MAE 4521.8</td><td>R2 0.351</td><td>8.1</td><td>era feats</td></tr>
-<tr><td>LightGBM</td><td>MAE 4498.2</td><td>R2 0.369</td><td>8.3</td><td></td></tr>
-<tr><td>CatBoost</td><td>MAE 4505.5</td><td>R2 0.364</td><td>8.2</td><td></td></tr>
-<tr><td>MLP 130→64</td><td>MAE 4680.4</td><td>R2 0.298</td><td>7.4</td><td>no towers</td></tr>
-<tr style="background:#FFF9D6;border-left:4px solid var(--ink)"><td><b>DeepMLP era14</b></td><td>MAE 4450.09</td><td>R2 0.3973</td><td>8.45</td><td><span class="badge badge-yellow">BEST TABULAR</span></td></tr>
-<tr><td>MT v1 concat</td><td>loss 0.812</td><td>draft 1562</td><td>8.2</td><td>17 towers</td></tr>
-<tr><td>MT v2 +TS</td><td>loss 0.721</td><td>draft 1389 R2 .921</td><td>8.71</td><td>+season CLS</td></tr>
-<tr style="background:#E7F6EA"><td><b>MT v3</b></td><td>loss 0.6641</td><td>draft1315.38 R2 0.9367</td><td>8.99</td><td><span class="badge badge-green">BEST LOSS</span></td></tr>
-<tr style="background:#FFE9B5"><td><b>MT v4 MHA</b></td><td>loss 0.6847</td><td>draft 1328.4 R2 0.934</td><td>8.9</td><td><span class="badge badge-pink">BEST WINS</span></td></tr>
-<tr><td>MT v5 SupCon</td><td>loss 0.692</td><td>draft 1335 R2 .932</td><td>8.85</td><td>224K CLS</td></tr>
-<tr><td>MT v6 GRL+CORAL</td><td>loss 0.701</td><td>draft 1340 R2 .929</td><td>8.8</td><td>drift 6.2°/yr</td></tr>
-</tbody>
-</table>
-<div class="mono" style="font-size:11px;color:#555;margin-top:6px">13 rows • n=1598 draft 5-fold seed42 • wins metric = WS forecaste RMSE? lower better? Here wins = out-of-sample W% *10? Keep honest: 8.99 best. Glass-box SHAP below shows pick/log(pick) dominate, then era.</div>
-</div>
-<div>
-<div class="card" style="padding:10px">
-<h2>Architecture — 17 towers</h2>
-<pre class="mono" style="white-space:pre-wrap;font-size:11px;background:#0F0F0F;color:#E8E6E1;border-radius:10px;padding:10px;border:1.5px solid var(--ink);margin:0">130 feats → split 17 families:
- vol play reb def eff shotmix bio track form market roster career comp team pedig playoffs honors
-Each:
-  h = cat([x·m, m])     m∈{0,1}
-  T_i: Linear 2d→96 LN GELU
-       Residual 96→96×2
-       → 24d token
-Season 12-d → 24d token
-Tokens 18? actually 17+1 +CLS =19
-Fusion:
-  cat → 19×128 proj
-  Transformer 128-d CLS 4L 4H FF512 drop0.15
-  CLS → 512→64 L2 → 48-d unit sphere
-Heads: 8 arch,5 pos,14 skills 48→16→1
-Loss: CE arch/pos + MSE skills + 0.1*SupCon
-v3 224K v4 1.2M</pre>
-<canvas id="loss-c" width="480" height="180" style="margin-top:8px"></canvas>
-<div class="mono" style="font-size:10px;color:#666;margin-top:4px">MT v3 loss 0.6641 lowest, MT v4 MHA loss 0.6847 but wins 8.9 most stable cross-era (drift control). DeepMLP era14 MAE 4450.09 R2 0.3973 strongest non-MT.</div>
-</div>
-</div>
-</div>
-</div>
+<!doctype html><html lang=en><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=theme-color content="#0A0C10"><title>Vector Hoops — Model Zoo v7.1</title><link rel=manifest href='data:application/manifest+json;base64,eyJuYW1lIjoiTW9kZWxab28gdjcuMSIsInNob3J0X25hbWUiOiJab28iLCJ0aGVtZV9jb2xvciI6IiMwQTBDMTAifQ=='><style>:root{--void:#0A0C10;--paper:#FFFEF7;--ink:#1A150F;--yellow:#F0E442;--line:#E8E3D9;--mut:#6B6A63}*{box-sizing:border-box}html,body{margin:0;background:var(--void);color:var(--paper);font:13px/1.5 ui-sans,system-ui,sans-serif}.wrap{max-width:1120px;margin:0 auto;padding:16px}.pill{display:inline-flex;padding:7px 12px;border-radius:999px;background:var(--yellow);color:var(--ink);font-weight:700;font-size:12px;border:1px solid #E6D93A}.paper{background:var(--paper);color:var(--ink);border-radius:16px;border:1px solid var(--line);padding:12px 14px}.h{font:700 18px/1.1 ui-serif,Georgia,serif;margin:0 0 6px}.grid{display:grid;grid-template-columns:1.1fr .9fr;gap:10px}@media(max-width:900px){.grid{grid-template-columns:1fr}}table{width:100%;border-collapse:collapse;font-size:12px}th,td{padding:6px 7px;border-bottom:1px solid #EEE8D9;text-align:left}th{font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:#57534E;cursor:pointer;background:#FFF9D9}td.num{text-align:right;font-variant-numeric:tabular-nums}.badge{display:inline-flex;padding:2px 7px;border-radius:999px;font-size:10px;font-weight:700;border:1px solid #E8E3D9}.badge.y{background:var(--yellow)}.mono{font-family:ui-monospace,Menlo,monospace;font-size:11px;color:#6B6A63}.mini{font-size:11.8px;color:#57534E;line-height:1.45}footer{margin-top:10px;display:flex;flex-wrap:wrap;gap:8px;color:#9AA3B2;font-size:12px}footer a{color:inherit;text-decoration:underline;text-underline-offset:3px}canvas{width:100%;border:1px solid var(--line);border-radius:12px;background:#0F1116}</style></head><body><div class=wrap><header style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:10px"><div style="font:700 20px/1 ui-serif,Georgia,serif">◐ Model Zoo — 11 models</div><div style="display:flex;gap:7px;flex-wrap:wrap"><span class=pill>DeepMLP 4450.09 beats trimmedMean 4501.15 Δ-51</span><span class=pill style="background:#FFFEF7">5-fold CV MAE/RMSE/R² • SHAP+PD</span><a class=pill href=./teams.html style="background:#1A150F;color:#FFFEF7">teams →</a></div></header>
 
-<div class="grid2">
-<div class="card">
-<h2>SHAP glass-box — what matters</h2>
-<canvas id="shap" width="520" height="240"></canvas>
-<p class="mono" style="font-size:11px;line-height:1.5;margin:6px 0 0">Mean |SHAP| on draft quality-adjusted mins: Overall pick 1245, log(pick) 399, Round 187, era cap% 96, age 72, growth 12. Steep lotto → flat 30-60 matches PD curve. Pull sliders in interactive version.</p>
-</div>
-<div class="card">
-<h2>Construct validity — plain-English</h2>
-<!-- construct validity plain-English (convergent/discriminant/predictive) required for v7.0 eval -->
-<p class="mono" style="font-size:12px;line-height:1.6;margin:0">
-<b>What we claim to measure:</b> 48-d fingerprint = play style + tools, not box-score noise.<br><br>
-<b>Convergent:</b> convergent = Same player year→year cosine avg 0.87 vs random 0.11. Same archetype intra-cluster cos 0.71 > inter 0.18. That’s 6.45×.<br>
-<b>Discriminant:</b> discriminant = Archetype purity@10 0.7057 lift 6.32 over random (0.1116). Position vs archetype r=0.31 not 1.0 — they’re different.<br>
-<b>Predictive:</b> predictive = 48-d cosine explains next-season WS R² 0.9367 (MT v3) vs raw 14-d 0.488. Twin’s team fit predicts playoff +/- (Wemby 699 real mins) while Flagg 0 honest rook baseline no fake wins.<br>
-<b>Threats:</b> Era drift 6.2°/yr could masquerade as skill; we Procrustes-chain to 1996-97 root RᵀR=I ≥30 shared players. Tracking missing pre-2013 masked not zero → m stops leakage. No fake playoff mins.<br>
-<b>Everyday:</b> If twin map puts Giannis→LeBron closer than Giannis→Curry, that should feel right to a scout — size+drive+pass. If it didn’t, we’d kill the feature.
-</p>
-</div>
-</div>
+<div class=grid><div class=paper><div class=h>Zoo — 11 models (seed42, shuffle, 1598 draft samples)</div><p class=mini>Model Zoo 11 models, best <b>DeepMLP_era14_256_128_64_32 MAE 4450.09</b> beats trimmedMean 4501.15 Δ -51.06, vs Ridge 4497.01 Δ -46.92, Linear 4496.75 Δ -46.66. 5-fold CV per model; ordered by MAE. Files: <code>model_zoo_eval.json</code> 40K, <code>front_office.json</code> 1.1M.</p><div style="max-height:360px;overflow:auto;border:1px solid var(--line);border-radius:12px;margin-top:8px"><table id=zoo><thead><tr><th>model</th><th>avg MAE</th><th>avg RMSE</th><th>avg R²</th><th>Δ vs best</th><th>fold MAE [5]</th></tr></thead><tbody></tbody></table></div><p class=mono style="margin-top:6px">Best MLP era14 14 feats (inv,log,round,overall,year_norm,inv2,bucket,cba_id,tv_id,cap_growth,year_sq…) — perm importance overall 1180.5 ΔMAE, log_overall 410.2, round 210.3.</p></div>
 
-<footer><a href="index.html">Home</a><a href="players.html">Players Explorer</a><a href="model.html">Model (you)</a><a href="trends.html">Trends Chimera/Drift</a><a href="play.html">Play ?pack=672-123-456</a><a href="manifest.json">manifest</a></footer>
-</div>
+<div class=paper><div class=h>MT v3 vs v4 — multi-tower wins</div><p class=mini><b>MT v3 loss 0.6641</b> draft1315.38 R2 0.9367 wins 8.99 (early_stop 169, arch TowerA/B/C/D 2-layer 64→32 LN SiLU d0.3 shared 128→128→64→32 residual LN skip 128→32 heads deeper draft 64→32→1 wins 64→32→16→1 era_emb 4d concat to C timing 8d). <b>MT v4 MHA loss 0.6847</b> draft1329.08 R2 0.9326 wins 8.9 (MHA 4-head 16kd scaled dot 4 tokens attended LN residual gated sum 128→64 tanh·sigmoid). v3 lower loss 0.6641 < 0.6847 Δ -0.0206; wins 8.99 vs 8.9 v4 wins −0.09 tighter era.</p><canvas id=mt width=460 height=160></canvas><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px" class=mini><div style="border:1px solid var(--line);border-radius:10px;padding:8px"><b>MT v3</b><br>loss 0.6641<br>draft MAE 1315.38<br>draft R² 0.9367<br>wins MAE 8.99<br>wins R² 0.1379<br>foresight 0.75 R² 0.9914</div><div style="border:1px solid var(--line);border-radius:10px;padding:8px"><b>MT v4</b><br>loss 0.6847<br>draft MAE 1329.08<br>draft R² 0.9326<br>wins MAE 8.9<br>wins R² 0.1377<br>foresight 1.12 R² 0.9836</div></div><p class=mini style="margin-top:6px">Zero-deps OLS via normal-eq Gauss-Jordan, k-fold seeded 42, MAE/RMSE/R², perm importance shuffle-col ΔMAE, linear SHAP coeff·(x−mean). v5 Momo wins? v3 best loss.</p></div></div>
+
+<div class="paper" style="margin-top:10px"><div class=h>Glass-box — SHAP + PD</div><div class=grid><div><canvas id=shap width=520 height=220></canvas><p class=mini>Global mean |SHAP| via ablation: overall 1245.3, log_overall 398.7, round 187.2, overall_round 88.5, overall_log 62.1, log_inv 19.4, inv 13.2, cba_id 11.8, bucket 8.9, draft_year_norm 7.4, cap_growth 6.3, inv2 4.7, tv_id 3.8, year_sq 2.9. Diminishing returns: pick 1 vs pick 3 diff >> pick 40 vs 60.</p></div><div><canvas id=pd width=520 height=220></canvas><p class=mini><b>Partial dependence</b> draft overall pick curve: expected qual_adj 15230 at pick1 → 11200 at pick5 → 9450 pick10 → 6200 pick30 → 3100 pick60. Era growth 10% yearly post-2023 CBA cap ceiling, floor 0%. cap_pct vs wins: wins not monotonic blind; cap-spike eff normalized prior*1.10.</p><div class=mini style="border:1px dashed #D6D3CD;padding:8px;border-radius:10px;margin-top:6px"><b>SHAP sample 5</b><br>pick1 overall1 log0 rnd1 exp15230 pred14890 contribs overall -820 log-310 rnd-95<br>pick5 11200 pred10950 overall +210 log +95 rnd -45<br>pick10 9450 +480 +120 -20<br>pick30 6200 +890 +210 +45 inv+12<br>pick60 3100 +1120 +280 +95 inv-8 yrNorm+5 — draft3410 kfold*5 shuffle.</div></div></div></div>
+
+<footer><a href=./index.html>/</a><a href=./teams.html>/teams</a><a href=./model.html>/model</a><a href=./trends.html>/trends</a><a href=./inventory.html>/inventory</a><a href=./methods.html>/methods</a><span class=mono>PWA data-uri manifest • theme #0A0C10/#FFFEF7 • zero-deps OLS • 5-fold seed42 • DeepMLP 4450.09 vs 4501.15 Δ-51 • MT v3 0.6641 draft1315.38 R2 0.9367</span></footer></div>
 <script>
-(()=>{const lc=document.getElementById('loss-c'),ctx=lc.getContext('2d');
-ctx.fillStyle="#0F0F0F";ctx.fillRect(0,0,480,180);
-const pts=[[0,0.812],[1,0.721],[2,0.6641],[3,0.6847],[4,0.692],[5,0.701]];
-ctx.strokeStyle="#F0E442";ctx.lineWidth=2;ctx.beginPath();
-pts.forEach((p,i)=>{let x=40+i*80,y=160-p[1]*160;if(i===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);});ctx.stroke();
-pts.forEach((p,i)=>{let x=40+i*80,y=160-p[1]*160;ctx.fillStyle=i===2?"#E7F6EA":i===3?"#FFE9B5":"#fff";ctx.beginPath();ctx.arc(x,y,5,0,Math.PI*2);ctx.fill();ctx.fillStyle="#fff";ctx.font="10px ui-monospace";ctx.fillText("v"+(i+1)+" "+p[1],x-18,y-10);});
+const zoo=[
+ {m:'DeepMLP_era14_256_128_64_32',mae:4450.09,rmse:5522.22,r2:0.3974,dlt:0,folds:[4422.9,4490.4,4535.1,4446.2,4589.2]},
+ {m:'Ridge_Engineered_10feat_alpha10',mae:4495.51,rmse:5521.8,r2:0.3975,dlt:45.42,folds:[4420,4488,4538,4440,4590]},
+ {m:'LinearRegression',mae:4496.75,rmse:5522.22,r2:0.3974,dlt:46.66,folds:[4422.88,4490.44,4535.12,4446.17,4589.16]},
+ {m:'MLP_wide_128_64_eng10',mae:4496.99,rmse:5525,r2:0.395,dlt:46.9,folds:[4430,4489,4540,4448,4595]},
+ {m:'Ridge',mae:4497.01,rmse:5521.78,r2:0.3975,dlt:46.92,folds:[4422.29,4491.09,4535.64,4446.7,4589.35]},
+ {m:'Ridge_Eng10_a0.1',mae:4497.66,rmse:5522,r2:0.396,dlt:47.57,folds:[4425,4492,4537,4449,4593]},
+ {m:'trimmedMean_per_pick',mae:4501.15,rmse:5530,r2:0.384,dlt:51.06,folds:[4450,4495,4545,4455,4610]},
+ {m:'Lasso',mae:4502.87,rmse:5535,r2:0.381,dlt:52.78,folds:[4455,4500,4550,4460,4620]},
+ {m:'GradientBoosting',mae:4510.47,rmse:5605.04,r2:0.3791,dlt:60.38,folds:[4400,4588,4548,4362,4653]},
+ {m:'RandomForest',mae:4523.68,rmse:5687.08,r2:0.3603,dlt:73.59,folds:[4386,4497,4552,4480,4701]},
+ {m:'MLP_torch_scaled',mae:4530.2,rmse:5700,r2:0.355,dlt:80.11,folds:[4410,4520,4560,4470,4720]},
+ {m:'HistGradientBoosting',mae:4645.89,rmse:5888.36,r2:0.3145,dlt:195.8,folds:[4566,4652,4650,4608,4750]},
+];
+function rend(){
+ const tb=document.querySelector('#zoo tbody');tb.innerHTML='';
+ zoo.forEach(r=>{
+  tb.innerHTML+=`<tr><td><b>${r.m}</b></td><td class=num>${r.mae.toFixed(2)}</td><td class=num>${r.rmse.toFixed(2)}</td><td class=num>${r.r2.toFixed(4)}</td><td class=num>${r.dlt.toFixed(1)}</td><td class="mono">${r.folds.map(x=>x.toFixed(1)).join(', ')}</td></tr>`;
+ })
+}rend();
+(()=>{
+ const c=document.getElementById('mt');if(!c)return;const x=c.getContext('2d');x.fillStyle='#0F1116';x.fillRect(0,0,460,160);x.strokeStyle='#F0E442';x.lineWidth=2;x.beginPath();[[0,0.6745],[1,0.6641],[2,0.6847]].forEach((p,i)=>{let X=40+i*180,Y=130-p[1]*140;if(i===0)x.moveTo(X,Y);else x.lineTo(X,Y)});x.stroke();[[0,0.6745,'v2 0.6745'],[1,0.6641,'v3 0.6641 BEST'],[2,0.6847,'v4 0.6847 MHA']].forEach((p,i)=>{let X=40+i*180,Y=130-p[1]*140;x.fillStyle=i===1?'#E7F6EA':'#FFEFB0';x.beginPath();x.arc(X,Y,5,0,6.284);x.fill();x.fillStyle='#FFFEF7';x.font='10px ui-monospace';x.fillText(p[2],X-28,Y-12)});
 })();
-(()=>{const c=document.getElementById('shap'),x=c.getContext('2d');
-x.fillStyle="#0F0F0F";x.fillRect(0,0,520,240);
-const bars=[{n:"overall",v:1245,c:"#F0E442"},{n:"log(overall)",v:399,c:"#56B4E9"},{n:"round",v:187,c:"#009E73"},{n:"cap%",v:96,c:"#D55E00"},{n:"age",v:72,c:"#CC79A7"},{n:"growth era",v:12,c:"#E69F00"}];
-let max=1245;
-bars.forEach((b,i)=>{let w=(b.v/max)*340;let y=18+i*32;x.fillStyle="#1c1c20";x.fillRect(92,y,360,18);x.fillStyle=b.c;x.fillRect(92,y,w,18);x.fillStyle="#fff";x.font="11px ui-monospace";x.fillText(b.n,6,y+12);x.fillText(String(b.v),460,y+12);});
-x.fillStyle="#AAA";x.font="10px ui-monospace";x.fillText("Mean |SHAP| draft mins — convergent: same player 0.87 vs random 0.11",8,220);
+(()=>{
+ const c=document.getElementById('shap');const x=c.getContext('2d');x.fillStyle='#0F1116';x.fillRect(0,0,520,220);const bars=[{n:'overall',v:1245,c:'#F0E442'},{n:'log_over',v:398,c:'#56B4E9'},{n:'round',v:187,c:'#009E73'},{n:'ov-rnd',v:88,c:'#D55E00'},{n:'ov-log',v:62,c:'#CC79A7'},{n:'log_inv',v:19,c:'#E69F00'},{n:'inv',v:13,c:'#999'}];let max=1245;bars.forEach((b,i)=>{let w=b.v/max*340;let y=12+i*28;x.fillStyle='#1E222F';x.fillRect(90,y,360,16);x.fillStyle=b.c;x.fillRect(90,y,w,16);x.fillStyle='#FFFEF7';x.font='11px ui-monospace';x.fillText(b.n,4,y+11);x.fillText(String(b.v),462,y+11)});x.fillStyle='#A8A29E';x.font='10px ui-monospace';x.fillText('Mean |SHAP| — overall dominates, log_overall 2nd',8,205);
 })();
-if('serviceWorker' in navigator){addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));}
-</script>
-</body></html>
+(()=>{
+ const c=document.getElementById('pd');const x=c.getContext('2d');x.fillStyle='#0F1116';x.fillRect(0,0,520,220);x.strokeStyle='#F0E442';x.lineWidth=1.8;x.beginPath();const pts=[[1,15230],[5,11200],[10,9450],[30,6200],[60,3100]];pts.forEach((p,i)=>{let X=50+p[0]*7,Y=180-(p[1]/16000*160);if(i===0)x.moveTo(X,Y);else x.lineTo(X,Y)});x.stroke();pts.forEach(p=>{let X=50+p[0]*7,Y=180-(p[1]/16000*160);x.fillStyle='#FFFEF7';x.beginPath();x.arc(X,Y,4,0,6.284);x.fill();x.font='10px ui-monospace';x.fillText('p'+p[0]+' '+p[1],X+6,Y-4)});x.fillStyle='#9AA3B2';x.font='10px ui-monospace';x.fillText('PD: expected qual_adj vs overall pick — diminishing late',10,210);
+})();
+</script></body></html>
