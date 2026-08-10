@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
+<meta name="theme-color" content="#1A150F">
+<link rel="manifest" href="/manifest.json">
+<title>Methods — How Vector Hoops is built</title>
+<meta name="description" content="Every number recomputable — vector space, MTNN, map, archetypes, drift."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Architects+Daughter&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/shell.css"/>
+<link rel="stylesheet" href="assets/responsive.css"/>
+<link rel="stylesheet" href="assets/final-qa.css"/>
+<link rel="stylesheet" href="assets/unified.css"/>
+<link rel="stylesheet" href="assets/motion.css"/>
+
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://hoops.dumbmodel.com/methods">
+<meta property="og:title" content="Methods — How Vector Hoops is built">
+<meta property="og:description" content="Every number recomputable — vector space, MTNN, map, archetypes, drift.">
+<meta property="og:image" content="/assets/og-1200x630.png">
+<meta name="twitter:card" content="summary_large_image"/>
+</head><body>
+<noscript><div role="alert" style="padding:16px;text-align:center">Enable JS — Vector Hoops needs JavaScript for Daily Court + Map</div></noscript>
+
+<nav class="site-nav" data-active="/methods" aria-label="Vector Hoops site"></nav>
+<div class="main">
+  <div class="card">
+    <div class="kicker"><span class="kdot"></span> Methods · every number recomputable · no vibes</div>
+    <h1 class="hd" style="font-size:clamp(28px,5vw,42px);margin:8px 0 6px">Method & data sources</h1>
+    <p style="margin:0;font-size:15px;line-height:1.5;color:#3A332A;max-width:70ch">Doctrine: every number a player sees must be <b>recomputable from source</b>. Games use <b>14 era-z per-100 features</b> for speed + honesty. The research model <b>MTNN v5</b> expands to <b>130 feats / 17 towers → 64-d L2</b> for neighbor search. <a href="/model" style="font-weight:800;border-bottom:2px solid var(--ink);text-decoration:none">Inside the Network → 17×160→32 towers</a></p>
+    <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:10px">
+      <a class="pill" href="#vector-space">Vector space</a><a class="pill" href="#mtnn-v4">MTNN v4</a><a class="pill" href="#the-map">The map</a><a class="pill" href="#archetypes">Archetypes</a><a class="pill" href="#drift">League Drift</a><a class="pill" href="#skills">Skills Lens</a><a class="pill" href="#accuracy-harness">Harness</a>
+      <a class="pill" href="/model#manim-mtnn" style="background:#080A0F;color:#FFFEF7;border:1.5px solid #080A0F">🎬 6-film explainer → Lab</a>
+    </div>
+    <div style="margin-top:10px;padding:10px 12px;background:#FFFEF7;border:1.8px dashed #1A150F;border-radius:12px;display:flex;gap:10px;flex-wrap:wrap;align-items:center;font-size:13.5px;line-height:1.5;max-width:78ch">
+      <span style="font-family:ui-monospace,monospace;font-size:11px;font-weight:900;background:#111;color:#FFFEF7;border-radius:999px;padding:3px 10px">How it works — 6 short films</span>
+      <span><b>01 Vector Space</b> 14d era-z → <b>02 Input Families</b> 130→17 → <b>03 Towers</b> 17×160→32 → <b>04 Sphere</b> cosine → <b>05 Chimera</b> LCG deterministic → <b>06 Archetypes/Skills/Drift</b>. 18s loops, captions 18px AAA #111 on #FFFEF7. After 03 tap Glass-Box SHAP/PDP.</span>
+      <a href="/model#manim-mtnn" style="border:1.5px solid #111;border-radius:999px;padding:6px 12px;background:#fff;font-weight:800;text-decoration:none;box-shadow:1.5px 1.5px 0 #111;font-size:12px">Watch series →</a>
+      <a href="/model#glass-box" style="border:1.5px solid #111;border-radius:999px;padding:6px 12px;background:#F0E442;font-weight:800;text-decoration:none;box-shadow:1.5px 1.5px 0 #111;font-size:12px">↗ SHAP/PD/Scatter interactive</a>
+    </div>
+  </div>
+
+  <div class="method-grid">
+    <div class="card" id="vector-space">
+      <h2 class="method-h2">The vector space — two views, one honest frame</h2>
+      <p class="method-p"><b>Games (fast):</b> 12,966 seasons 1996-97 → 2025-26 from stats.nba.com per-100, MIN ≥800. Each season 14 features z-scored within its own season.</p>
+      <table class="lb-table"><thead><tr><th>Feature</th><th>Measures</th><th>Era note</th></tr></thead><tbody>
+        <tr><td><code>PTS</code></td><td>scoring vol per 100</td><td>pace-adjusted</td></tr>
+        <tr><td><code>AST</code></td><td>playmaking</td><td>raw per 100, era-z</td></tr>
+        <tr><td><code>OREB/DREB</code></td><td>glass</td><td>per 100</td></tr>
+        <tr><td><code>STL/BLK</code></td><td>def events</td><td>steals, rim</td></tr>
+        <tr><td><code>TOV</code></td><td>turnovers</td><td>negative</td></tr>
+        <tr><td><code>FG3A/FGA/FTA</code></td><td>shot mix + pressure</td><td>volume, era-z</td></tr>
+        <tr><td><code>FG3%/FG%/FT%</code></td><td>accuracy</td><td>EB-shrunk → percentile</td></tr>
+        <tr><td><code>PLUS_MINUS</code></td><td>on-court</td><td>per 100</td></tr>
+      </tbody></table>
+      <p class="method-p">Cleaning: dedupe, missing→season mean + mask m, attempt-weighted EB on %, clip ±4σ.</p>
+    </div>
+    <div class="card">
+      <div class="small-mono">MTNN v4 expanded — 130 feats / 17 towers</div>
+      <h3 class="hd" style="margin:6px 0">Richer research model</h3>
+      <p class="method-p">Same 12,966 seasons but richer: volume, playmaking, rebounding, defense, efficiency, shotmix, bio, tracking (2013+ masked), form, market, roster, career, competition, team, pedigree, playoffs, honors. Each family = own tower.</p>
+      <div class="cqs-strip"><span class="cqs-badge"><b>130</b> feats</span><span class="cqs-badge"><b>17</b> towers</span><span class="cqs-badge"><b>30</b> seasons</span><span class="cqs-badge"><b>8</b> types</span><span class="cqs-badge"><b>64-d</b> L2</span></div>
+      <div class="card" style="box-shadow:2px 2px 0 var(--ink);margin-top:8px"><b class="small-mono">Plainly:</b><div style="font-size:12px;line-height:1.5;margin-top:4px"><b>z-score</b> = how far above avg. 0=avg, +2 elite. <b>era-z</b> = vs own season only. <b>mask</b> = “never measured” vs zero. <b>per 100</b> = with ball he gets.</div></div>
+    </div>
+  </div>
+
+  <div class="card" id="mtnn-v4">
+    <h2 class="method-h2">MTNN v4 — the model behind every guess</h2>
+    <p class="method-p">17 towers → residual towers → 64-d fingerprint L2-normalized, cosine = similarity → decode archetype 8 / position 5 / skills. An 18th family, injury, feeds a durability read-out head rather than an input tower — as an input it measured −0.088 test recall, because durability is not a style axis.</p>
+    <div class="arch-diagram">Input 130 feats, mask m∈{0,1}
+h = cat([x·m,m]) → 2·d_in per family
+Tower 17×: 2d_in→160 LN GELU → 160→32 LN + skip ×2 → 32-d (544 total)
++ season_emb 12-d → 556 → 556→256 GELU → <b>64 L2</b>
+Heads: 8 arch / 5 pos / 14 next / 18 skills (64→16→1)
+~224K params · ONNX 549KB</div>
+  </div>
+
+  <div class="method-grid">
+    <div class="card" id="the-map"><h2 class="method-h2">The map</h2><p class="method-p">3D league map projects 14-d or 64-d down to 3 axes via PCA, minmax [0,1]. Axes named from correlations:</p><ul style="font-size:14px;line-height:1.5;margin:6px 0"><li><b>X Paint↔Perimeter:</b> boards/blocks ↔ shooters</li><li><b>Y Role→Scorer:</b> high-usage ↔ low-usage</li><li><b>Z Def↔Off / Off-ball↔On-ball:</b> defense ↔ offense, off-ball ↔ handlers — correlated axis, center=avg</li></ul><p class="method-p" style="color:#6B665E">Center = league avg.</p></div>
+    <div class="card" id="archetypes"><h2 class="method-h2">Archetypes — 8 types</h2><p class="method-p">k-means K=8 on era-z vectors, seeded reproducible.</p><ul style="font-size:13px;line-height:1.5"><li>Three-Point Accuracy (Low TOV)</li><li>Scoring + Shot Volume</li><li>Def Glass + Rim Pressure</li><li>Three-Point Vol + Acc</li><li>Off Glass (Low On-Court)</li><li>Rim Protection + Off Glass</li><li>Off Glass + Def Glass</li><li>Playmaking + Steals</li></ul></div>
+  </div>
+
+  <div class="method-grid">
+    <div class="card" id="drift"><h2 class="method-h2">League Drift — Procrustes</h2><p class="method-p" style="font-family:var(--mono);font-size:11px;border:1.5px dashed var(--ink);border-radius:10px;padding:8px 10px;background:#FFFEF7">orthogonal Procrustes on consecutive-season shared players (≥30); rotation = mean principal angle of Q vs identity; residual = Frobenius after alignment; chained to 1996 root frame; RᵀR=I</p><p class="method-p">Powers <a href="/trends">Trends</a> drift charts. Biggest: 2021-22 11.1°, 2022-23 7.6°.</p><a class="btn btn-accent" href="/trends" style="min-height:40px;margin-top:6px">See Trends →</a></div>
+    <div class="card" id="skills"><h2 class="method-h2">Skills Lens — 0–99</h2><p class="method-p">Twelve skills, each fixed linear composite of era-z per-100, percentile within season. 90 in 1997 = 90 in 2026. Badges 90+, gold 97+.</p><div class="card" style="box-shadow:2px 2px 0 var(--ink);margin-top:6px"><b class="small-mono">Recall vs Purity</b><div style="font-size:12px;line-height:1.5;margin-top:4px"><b>recall@10</b> — can it find same guy next year? <b>purity@20</b> — do neighbors share archetype?</div></div></div>
+  </div>
+
+  <div class="card" id="accuracy-harness"><h2 class="method-h2">Accuracy harness — blocks deploy on fail</h2><ul style="font-size:14px;line-height:1.6"><li>V1 vectors.json dims, ranges, no dupes</li><li>V2 cluster labels recompute nearest-centroid, all 12,966 match</li><li>V3 deadline.json deltas recomputed from raw logs, 0.01 tolerance</li><li>V4 chimera determinism across 30 dates, cosine &lt;0.3 between donors</li></ul><p class="method-p" style="color:#6B665E;font-size:12px">MTNN extras: recall@10 leak-free via leakfree.py, purity@20, next_profile MAE. ONNX 549KB.</p></div>
+
+  <div class="card" id="prop-edge-construct-validity" style="border:2px solid #111;background:#FFFEF7">
+    <h2 class="method-h2">Prop Market Edge — construct validity & gate (training only, no gambling)</h2>
+    <p class="method-p"><b>Everyday:</b> Where our model thinks bigger than the market — 3y backfill 2022-2025, local-first JSONL, Δ = model_exp − vegas_exp honest. Prop edge beats expectation where closer stays late — training data, not a tip.</p>
+    <div style="font-family:ui-monospace,monospace;font-size:11px;background:#111;color:#FFFEF7;padding:8px 10px;border-radius:8px;line-height:1.5">
+      gate 8.0 honesty · LCG YYYYMMDD UTC (seed*1103515245+12345)&amp;0x7fffffff 20260809→70737614 idx2948 · same-link-same-stars ?daily=YYYYMMDD&n=1/3/5<br/>
+      Δ = model_exp − vegas_exp · eval MAE, beat_rate, nDCG — no bankroll leap
+    </div>
+    <ul style="font-size:13px;line-height:1.6;margin-top:8px">
+      <li><b>Threat 1 — Conflation:</b> Prop edge ≠ win prob ≠ bankroll. Beating a points prop does not imply team win. Guard: no bet-slip promotion.</li>
+      <li><b>Threat 2 — Pace confound (hoops):</b> REB prop edge correlates with pace, not win%. Check divergent validity: r pace ≈0.41 vs win 0.09.</li>
+      <li><b>Threat 3 — Market learning:</b> Rookie early-season Δ shrinks post All-Star as books adapt. 3y window captures drift.</li>
+      <li><b>Threat 4 — Sample size:</b> Closer late-n small-n, Poisson noise. Flag playoff_min_sec 85%+ locked only when ≥400 mins.</li>
+    </ul>
+    <p class="method-p" style="font-size:12px;color:#6B665E">File: <code>goals/ship-ai-prop-market-expectation/files/prop_edge_3y.jsonl</code> 8 rows stdlib only, zero_deps true, provenance 7/7/0. DFS wire Δ+0.8 lock = closer-fit + playoff 85%+ + injury low.</p>
+  </div>
+
+  <div class="card" id="limitations"><h2 class="method-h2">Attribution & limits</h2><ul style="font-size:13px;line-height:1.6;color:#333"><li>No lineup/on-off — doesn't know who shared floor</li><li>Midseason move = TEAM_ID change, not verified trade metadata</li><li>Tracking only 2013+; earlier = masked, not imputed</li><li>Position 99.7% coverage</li><li>Archetype names = centroid stats, not scouting</li><li>Chimera fused vector never existed</li></ul></div>
+</div>
+<footer class="site-footer"><div class="site-footer__links"><a href="/play">Play</a><a href="/model">Lab</a><a href="/methods">Methods</a><a href="/players">Players</a><a href="https://github.com/jcdavis131/vector-hoops" target="_blank" rel="noopener">GitHub</a></div><div class="site-footer__attribution">Every number recomputable from stats.nba.com · dumbmodel.com</div></footer>
+<script src="assets/error-boundary.js"></script>
+<script src="assets/keyboard-a11y.js"></script>
+<script src="assets/site-nav.js" defer></script>
+<script src="assets/pwa-install.js"></script>
+<script>if('serviceWorker' in navigator){window.addEventListener('load',()=>{navigator.serviceWorker.register('/sw.js').catch(()=>{})})}</script>
+</body></html>

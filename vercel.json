@@ -26,6 +26,14 @@
     { "source": "/player", "destination": "/player/index.html" },
     { "source": "/brand", "destination": "/brand/index.html" },
     { "source": "/dfs", "destination": "/dfs/index.html" },
+    { "source": "/player-fit", "destination": "/player-fit/index.html" },
+    { "source": "/players", "destination": "/players.html" },
+    { "source": "/play", "destination": "/play.html" },
+    { "source": "/leaderboard", "destination": "/leaderboard.html" },
+    { "source": "/inventory", "destination": "/inventory.html" },
+    { "source": "/methods", "destination": "/methods.html" },
+    { "source": "/player-animations", "destination": "/player-animations.html" },
+    { "source": "/offline", "destination": "/offline.html" },
     { "source": "/model", "destination": "/model.html" },
     { "source": "/trends", "destination": "/trends.html" }
   ]
