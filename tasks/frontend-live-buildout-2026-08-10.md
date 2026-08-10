@@ -1562,3 +1562,63 @@ checker's eleven: **a first-run failure list is a hypothesis, not a finding.**
 `['/', '/offline', '/manifest.json']`. So offline support depends on that rewrite
 existing. It does today. Worth knowing that deleting one line of `vercel.json`
 would silently break the service worker's install.
+
+
+## Looked at it, and misread what I saw (2026-08-10)
+
+Having a browser bought two things nothing else could: the console, and my own
+eyes on the page.
+
+**The console is clean.** All eight pages, zero errors or warnings from the site
+itself. `smoke_render.py` now fails on any, with two known harness lines filtered:
+`favicon.ico` 404s, and `sw: skipped /offline` — which only appears because a
+plain static server does not apply vercel.json's rewrite, and which is itself
+proof that `596a4001` works, since each SHELL entry is added with its own catch
+and one bad path degrades the shell instead of rejecting install.
+
+**The page looks good.** trends.html reads cleanly at desktop width: the 8.38°
+hero lands, the rotation chart is legible, the eight archetype panels are
+readable, the axis-drift bars are properly scaled.
+
+### And then I misread a screenshot
+
+A 390px capture of /owner appeared to show the nav running off the edge and the
+headline clipped mid-word. I diagnosed it, wrote a fix, applied it to 18 pages —
+and the re-shot screenshot came back byte-identical, which is what made me
+measure instead of look.
+
+**Headless Chrome clamps the viewport to 497px on this machine.** Requesting 320,
+360 or 390 all render at 497. So the "phone screenshot" was a 390px crop of a
+497px layout, and the clipping was the crop.
+
+Measured properly, with a probe served from a copy so the repo was never touched:
+
+    /owner/   scrollWidth 497  clientWidth 497  elements past the edge: 0
+    /         scrollWidth 497  clientWidth 497  elements past the edge: 0
+
+No overflow at all at the narrowest width this harness can produce.
+
+### What I kept, and why
+
+The two changes were not fixing an observed defect, and I am not going to claim
+they were. They are kept because the underlying fragility is real:
+**eighteen pages declared `nav{display:flex}` with no `flex-wrap` while carrying
+up to twelve links**, seven of which `fix_nav.py` appended to the persona pages.
+At a true 360px width those clip. `flex-wrap` and `overflow-wrap:break-word` are
+both inert when content already fits, so the cost is nothing and the protection
+is real.
+
+`check_responsive.py` gained the check that *should* have found this — a flex nav
+of six or more links that cannot wrap. Verified both ways.
+
+### One thing I did not change
+
+The axis-drift bars looked empty in the screenshot. They are not: the rendered
+DOM has them at 100%, 84.4%, 52% and 42.2%, correctly scaled to the maximum. An
+11px blue fill is just hard to read in a downscaled image. Checked before
+"fixing".
+
+- [ ] **P9.6 Widths below 497px are untested.** Headless `--window-size` clamps
+  there; a true phone viewport needs `Emulation.setDeviceMetricsOverride` over the
+  DevTools protocol, which means a CDP client. Everything narrower than 497 is
+  covered only by the static checks.

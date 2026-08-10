@@ -7,6 +7,7 @@ page. This looks for the failures a static read can settle:
   viewport   every page declares <meta name=viewport>, or nothing scales
   wide       an element whose CSS forces it wider than a phone viewport, with
              nothing around it that scrolls
+  nav        a flex <nav> of six or more links that cannot wrap
   table      a table of six or more columns, or one with nowrap cells, that has
              no scrollable ancestor
 
@@ -136,7 +137,7 @@ def main() -> int:
         sys.exit(f"--root {args.root} is not a directory")
 
     failures: list[str] = []
-    counts = {"viewport": 0, "wide": 0, "table": 0}
+    counts = {"viewport": 0, "nav": 0, "wide": 0, "table": 0}
 
     for page in pages(root):
         name = str(page.relative_to(root)).replace("\\", "/")
@@ -146,6 +147,26 @@ def main() -> int:
         counts["viewport"] += 1
         if not RE_VIEWPORT.search(raw):
             failures.append(f"{name}: no <meta name=viewport> — the page will not scale on a phone")
+
+        # A flex nav that cannot wrap puts every link on one line and clips the
+        # overflow. Eighteen pages declared `nav{display:flex}` with no flex-wrap
+        # while carrying up to twelve links — including the seven that
+        # scripts/fix_nav.py appended to the persona pages to make the map
+        # reachable. This is the check that should have caught that; the
+        # screenshot I thought caught it was a 390px crop of a 497px layout,
+        # because headless Chrome clamps the viewport at 497 on this machine.
+        nav_el = re.search(r"<nav[\s\S]*?</nav>", raw, re.I)
+        if nav_el:
+            links = len(re.findall(r"<a\b", nav_el.group(0)))
+            rule = re.search(r"(?<![\w.#-])nav\s*\{([^}]*)\}", css)
+            flexed = bool(rule and "display:flex" in rule.group(1).replace(" ", ""))
+            wraps = bool(rule and re.search(r"flex-wrap\s*:\s*wrap", rule.group(1)))
+            counts["nav"] += 1
+            if links > 5 and flexed and not wraps:
+                failures.append(
+                    f"{name}: a flex <nav> with {links} links declares no flex-wrap — "
+                    f"the ones that do not fit are clipped, not wrapped"
+                )
 
         can_scroll = scrollers(css)
 

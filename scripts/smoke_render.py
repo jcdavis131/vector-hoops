@@ -73,6 +73,36 @@ def rendered(dom: str) -> str:
     return RE_SCRIPT_EL.sub(" ", dom)
 
 
+RE_CONSOLE = re.compile(r"(?:ERROR|WARNING):CONSOLE[^\]]*\]\s*(.*)")
+
+# The static server used here does not apply vercel.json's rewrites, so /offline
+# 404s locally and sw.js reports skipping it. On Vercel that rewrite exists and
+# the entry caches. The message is also proof the fix in 596a4001 works: each
+# SHELL entry is added with its own catch, so one bad path degrades the shell
+# instead of rejecting install and leaving the worker unregistered.
+HARNESS_NOISE = (
+    "sw: skipped /offline",
+    "favicon.ico",
+    "Failed to load resource: the server responded with a status of 404",
+)
+
+
+def console_errors(log: str) -> list[str]:
+    """Console errors and warnings the page itself produced, minus harness noise."""
+    out = []
+    for line in log.splitlines():
+        m = RE_CONSOLE.search(line)
+        if not m:
+            if "Uncaught" in line:
+                out.append(line.strip())
+            continue
+        msg = m.group(1).strip()
+        if any(n in msg for n in HARNESS_NOISE):
+            continue
+        out.append(msg)
+    return out
+
+
 def free_port() -> int:
     with socket.socket() as s:
         s.bind(("127.0.0.1", 0))
@@ -86,19 +116,20 @@ def find_browser() -> Path:
     sys.exit("no Chrome or Edge found — cannot render")
 
 
-def dump(browser: Path, url: str, profile: Path, budget: int = 9000) -> str:
+def dump(browser: Path, url: str, profile: Path, budget: int = 9000) -> tuple[str, str]:
     """Post-JavaScript DOM. virtual-time-budget lets fetches and timers settle."""
     cmd = [
         str(browser), "--headless=new", "--disable-gpu", "--no-first-run",
         "--no-default-browser-check", "--disable-extensions",
         f"--user-data-dir={profile}",
         "--window-size=1280,3000",          # tall, so observer-gated sections come into view
+        "--enable-logging=stderr", "--log-level=0",
         f"--virtual-time-budget={budget}",
         "--dump-dom", url,
     ]
     r = subprocess.run(cmd, capture_output=True, text=True, timeout=90,
                        encoding="utf-8", errors="replace")
-    return r.stdout or ""
+    return r.stdout or "", r.stderr or ""
 
 
 def main() -> int:
@@ -135,7 +166,8 @@ def main() -> int:
         cases = [c for c in CASES if not args.only or args.only in c[0]]
         for path, must, must_not in cases:
             url = f"http://127.0.0.1:{port}{path}"
-            dom = dump(browser, url, profile, args.budget)
+            dom, log = dump(browser, url, profile, args.budget)
+            bad = console_errors(log)
             if not dom.strip():
                 failures.append(f"{path}: browser returned nothing")
                 print(f"  FAIL  {path:<18} empty DOM")
@@ -149,7 +181,7 @@ def main() -> int:
             left = [s for s in must_not if s in body]
             stuck = sorted(set(PLACEHOLDER.findall(body)))
 
-            ok = not missing and not left
+            ok = not missing and not left and not bad
             print(f"  {'PASS' if ok else 'FAIL'}  {path:<18} {len(dom):>7,} b of DOM")
             if missing:
                 failures.append(f"{path}: never rendered {missing}")
@@ -157,6 +189,10 @@ def main() -> int:
             if left:
                 failures.append(f"{path}: still showing {left}")
                 print(f"        placeholder left: {left}")
+            if bad:
+                failures.append(f"{path}: {len(bad)} console error(s)")
+                for b in bad[:3]:
+                    print(f"        console: {b[:150]}")
             if stuck and not left:
                 print(f"        note — text still reading 'Loading…': {stuck[:3]}")
 
