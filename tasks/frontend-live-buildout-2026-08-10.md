@@ -537,9 +537,16 @@ this gets visually verified is a production deploy.
 What I *can* do, and now do:
 
 ```
-python scripts/check_frontend.py                # repo root, 7 checks
+python scripts/check_frontend.py                # repo root, 8 checks
 python scripts/check_frontend.py --root public  # the surface Vercel serves
+python scripts/sync_public.py                   # refresh the deployed mirror
+python scripts/stamp_assets.py                  # re-hash ?v= cache tokens
 ```
+
+The eight: **syntax · mirror · tokens · targets · assets · ids · sourced ·
+links.** Three exist because a hand-maintained convention had silently drifted —
+the `public/` mirror, the asset cache tokens, and the unsourced figures. Each is
+now derived and enforced rather than remembered.
 
 Checking the deploy surface found `manifest.json` missing from `public/` —
 five pages link it and `/manifest.json` 404s live.
