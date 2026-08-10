@@ -3323,3 +3323,47 @@ given at the start of this work and believed was satisfied, because the CSS bloc
 is on every page and easy to grep for. The grep was the whole problem: it finds
 the declaration, not the coverage. Nothing had ever set the preference and
 watched what happened.
+
+
+## The service worker was argued about. Now it has been watched (2026-08-10)
+
+`play.html` displays **"offline capable"**, and the worker was rewritten earlier
+this session on the reasoning that v7.1 could never have installed — `addAll()` is
+atomic, three of its four SHELL entries 404'd against the live site, so the whole
+install promise rejected and seven pages registered a worker that never existed.
+That was a good argument. Nobody had watched it happen.
+
+Loaded the site, waited, and asked the browser:
+
+    service worker:  [{"scope":"…","active":true,"state":"activated"}]
+    caches:          [{"cache":"hoops-v7-2","urls":["/","/manifest.json"]}]
+
+**It installs and activates.** First end-to-end confirmation that the v7.1 defect
+is actually gone rather than argued gone.
+
+Two of three SHELL entries cached, and the missing one is the harness, not the
+site:
+
+    vercel.json rewrite:  /offline → /offline.html   (and cleanUrls: true)
+    local server:         /offline 404, /offline.html 200
+
+`SimpleHTTPRequestHandler` does not do clean URLs, so `/offline` cannot be fetched
+locally at all. What that accidentally demonstrated is the part of the rewrite
+that mattered most: **the per-entry `.catch()` did its job.** One unreachable
+entry degraded the shell to two files instead of destroying the install, which is
+precisely the failure mode v7.1 died of.
+
+### What is still not established
+
+Navigating offline succeeded for both `/play.html` and `/` — but that proves less
+than it looks. Chrome's own HTTP cache can satisfy a navigation it has just seen,
+and the local server sends none of the `max-age=0, must-revalidate` headers
+`vercel.json` sets for `.html`. **So the success cannot be attributed to the
+service worker rather than the browser cache**, and "offline capable" stays an
+unverified claim in production terms.
+
+Recorded rather than chased: settling it needs either the deployed site or a local
+server that implements the rewrites and the cache headers. Worth knowing that
+every browser check in `scripts/` navigates to `/play.html` and `/teams.html`
+while visitors hit `/play` and `/teams` — the files are the same, so the risk is
+small, but no check currently exercises a clean URL.
