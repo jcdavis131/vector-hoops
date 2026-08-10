@@ -2841,3 +2841,49 @@ backslashes — `/\\s+\\d{4}-\\d{2}$/` matches a literal backslash, so nothing
 stripped and "giannis" reported two other players, both of them Giannis. It was
 caught by looking at the output rather than the code, and `smoke_play.py` now
 asserts the disclosure so the next silent failure is not silent.
+
+
+## Winning the daily looked exactly like being stuck (2026-08-10)
+
+The daily seed sets **one** question — `setSeq([POOL[s%POOL.length].i])` — so
+winning it ends the pack. Nothing had ever looked at what happens next.
+
+`nextQ()` opened with `if(idx>=seq.length){ log(...); updateWW(true); return }`,
+and that return came **before the line that writes the question**. So a player who
+won the daily and pressed Next was left with:
+
+    Russell Westbrook 2010-11 → ? • pack idx 5991 • LOD 4k 60fps
+
+the same puzzle they had just finished, an empty guess box, and the only word
+that the game was over appended to a debug-style log panel underneath.
+
+It says so where the player is looking now:
+
+    Done for today. The puzzle is seeded by the date, so a new one is here
+    tomorrow. The map below is still live — hover a point to name it, or share
+    the card.
+
+"Tomorrow" is a fact about the code, not a promise: the seed is
+`hStr(new Date().toISOString().slice(0,10))`, so it turns over with the date. The
+guess box stays enabled — the map picker fills it, and there is no reason to stop
+someone comparing more players against the same target once the scoring is done.
+
+`smoke_play.py` presses Next after winning and requires the question line to
+change.
+
+### The screenshot lied again, and the measurement caught it
+
+The full-page capture of the finished game showed a **completely black map**, and
+it looked like a serious bug — the canvas blanked at the end of a round. Measured
+instead of believed:
+
+    after load             ink   19687   canvas 501x360   resizes 0
+    after winning          ink   19687   canvas 501x360   resizes 0
+    after pressing Next    ink   19687   canvas 501x360   resizes 0
+
+Nothing blanked. `Page.captureScreenshot` with `captureBeyondViewport` and a clip
+taller than the viewport does not re-rasterise canvas content — the earlier
+canvas crops worked because they fitted inside the viewport. **That is twice this
+session a screenshot has sent me after a bug that was not there** (the 390px
+phone crop was the first), and both times the fix was to measure the thing
+directly rather than trust the picture of it.

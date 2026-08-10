@@ -521,6 +521,21 @@ def main() -> int:
                     f"— a fabricated career printed as a real one. Either resolve the real "
                     f"trajectory or label the path illustrative")
 
+        # 5b. the end of the daily. The seed sets one question, so winning it ends
+        #     the pack — and nextQ() used to return before touching the question
+        #     line, leaving the old puzzle on screen with an empty box. Winning
+        #     and pressing Next looked exactly like being stuck.
+        before_q = str(ev(ws, "document.getElementById('q').textContent") or "")
+        ev(ws, "(() => { const b=document.getElementById('btnNext')||"
+               "document.getElementById('btnNext2'); if(b) b.click(); return 1 })()")
+        time.sleep(1.2)
+        after_q = str(ev(ws, "document.getElementById('q').textContent") or "")
+        print(f"  done     {after_q.strip()[:66]!r}")
+        if after_q.strip() == before_q.strip():
+            failures.append("winning the daily and pressing Next left the question line "
+                            "unchanged — the pack is over and the page still shows the "
+                            "puzzle it just finished")
+
         # 6. the numbers a player is shown
         for label, s in (("miss", str(dist_miss or "")), ("hit", str(dist_hit or ""))):
             if "NaN" in s:
