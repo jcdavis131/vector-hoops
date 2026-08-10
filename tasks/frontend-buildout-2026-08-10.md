@@ -1,5 +1,39 @@
 # Frontend buildout — hoops.dumbmodel.com (started 2026-08-10)
 
+> ## ⛔ STOP — THIS BOARD IS BUILT ON A DEAD BASE (found 2026-08-10, after 4 commits)
+>
+> The local checkout was **244 commits behind `origin/master`**. Another agent
+> ("Scout", `scout@hoops.dumbmodel.com`) rebuilt the entire frontend today —
+> v7.0 rebuild → v7.1 → v7.1.5 → v7.2 → v7.3 retheme — and **that** is what
+> hoops.dumbmodel.com serves.
+>
+> | file | local (this board) | `origin/master` = live |
+> |---|---|---|
+> | `play.html` | 105,964 b | **27,938 b** |
+> | `sw.js` | 8,176 b | **612 b** |
+> | `trends.html` | 33,616 b | **1,822 b** |
+> | `model.html` | 35,258 b | **5,943 b** |
+> | `teams.html` | 3,349 b (stub) | **15,182 b (already built)** |
+>
+> `origin/master:play.html` contains **none** of `map-wrap`, `shared-map.js`,
+> `sky-canvas`, `map-legend`, `site-nav`. Verified against the live URL:
+> `https://hoops.dumbmodel.com/play` is 27,938 bytes, carries the v7.3 token
+> `#eb6834`, and lacks every element the four commits below touched.
+>
+> **So commits `8c5ae0e`, `89428f5`, `4613ac0`, `6f712d1` improve files that are
+> not deployed.** They are safe on branch `frontend-buildout`; nothing was lost
+> and nothing live was harmed. But the work must be re-aimed before it counts.
+>
+> **What the live site still lacks** (scanned `https://hoops.dumbmodel.com/play`):
+> `aria-live` ×0, `tabindex` ×0, `prefers-reduced-motion` ×0, `archetype` ×0.
+> So every problem the four commits fix is still real — only the target file
+> changed. It has 4 `<canvas>` elements and does mention embedding/trajectory.
+>
+> Two agents have built divergent frontends in one repo. Which one is the real
+> site is the operator's call, not this board's. **Do not resume any phase
+> below until that is answered.**
+
+
 > **This file is the board.** A `/loop` fires the same giant prompt every 3
 > minutes. **Do not re-plan on a fire.** Read this file → take the first
 > `[ ]` item → execute → validate → commit → tick the box → stop.
