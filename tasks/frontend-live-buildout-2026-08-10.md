@@ -689,3 +689,30 @@ Two hand-numbered tokens survive inside dead modules
   written for site-wide use, which is why it is included.
 - `offline.html` is deliberately skipped: it renders with no network and
   `sw.js` does not precache these modules.
+### What each of the three actually does, checked rather than assumed
+
+- `keyboard-a11y.js` — **live.** The focus ring is the whole reason for the
+  rollout; 16 pages had no `:focus-visible` rule. Also roving tabindex on
+  `.bottom-tabs[role=tablist]`, combobox ARIA on `.suggest`, Escape-closes-sheets.
+  All of it degrades to a no-op on a page lacking those structures.
+- `error-boundary.js` — **live.** Verified wired, not just present: `offline` and
+  `online` listeners driving the toast, `unhandledrejection`, resource and JS
+  error capture, `window.VHErrorBoundary` exported. Logging is localStorage only,
+  capped at 50, no external telemetry.
+- `pwa-install.js` — **inert, and I am not going to call it a win.**
+  `shouldShow()` returns `visits.length>=2 || hasLocked`, reading
+  `vectorHoops.visits` and `vectorHoops.favoriteTeam`. **Nothing in the repo
+  writes either key** — not the live inline scripts, not even the dead module set.
+  So the banner cannot render on any page. Wiring it changed nothing a visitor
+  can see.
+
+- [ ] **P6.4 Decide what to do about the install prompt.** Either give it a visit
+  recorder so the policy it already encodes (2+ visits, 14-day dismissal) can
+  fire, or drop its tag from the 20 pages. I did not add the recorder: making a
+  promotional banner start appearing site-wide is a product call, not a defect
+  fix, and the module is harmless while inert. One line either way.
+
+Two checks that came back clean and are worth not re-running: no page assigns
+`window.onerror`, so the module's assignment at L149 clobbers nothing; and pages
+that do define their own `:focus-visible` override the module's global rule by
+specificity, so the ring does not fight existing styling.
