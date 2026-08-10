@@ -428,6 +428,33 @@ def main() -> int:
             ws.call("Runtime.evaluate", {"expression":
                 "(() => { const g = document.getElementById('guess'); g.value=''; return true })()"})
 
+        # 3c. an ambiguous fragment has to admit it was ambiguous. pickModern
+        #     breaks a substring tie by position in MODERN, which is array order
+        #     rather than relevance — "curry" scores you against Seth, not
+        #     Stephen. The pick stands; the alternatives are named so it reads as
+        #     a pick. The season suffix is stripped first, so other seasons of the
+        #     player already chosen are not counted as other people — a regex that
+        #     silently failed to strip reported "giannis also matches 2 other
+        #     players", all of them Giannis.
+        amb = ev(ws, """(() => {
+          const g = document.getElementById('guess');
+          g.focus(); g.value = 'curry';
+          return 1; })()""")
+        press_enter(ws)
+        time.sleep(0.5)
+        shown = str(ev(ws, "document.getElementById('dist').textContent") or "")
+        import re as _re2
+        m = _re2.search(r"also matches (\d+) other player", shown)
+        print(f"  ambiguous 'curry' -> {shown.strip()[:66]!r}")
+        if not m:
+            failures.append("typing 'curry' scores one of several Currys and says nothing "
+                            "about the others — an ambiguous fragment must name what else "
+                            "it matched")
+        elif int(m.group(1)) < 1:
+            failures.append(f"'curry' reported {m.group(1)} alternatives, which cannot be right")
+        ws.call("Runtime.evaluate", {"expression":
+            "(() => { const g=document.getElementById('guess'); g.value=''; return 1 })()"})
+
         # 4. the miss path, which nothing has ever run
         ws.call("Runtime.evaluate", {"expression": "window.__vhErr = []"})
         idx_before = ev(ws, "idx")

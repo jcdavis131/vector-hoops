@@ -2782,3 +2782,62 @@ about the world, and it deserves the same evidence as any other claim I make. I
 checked what the *branch* contained and never checked what `master` contained,
 which is the one question that separates "a condition of the site" from "a thing
 I just did".
+
+
+## The audit I promised, and the bug it led to (2026-08-10)
+
+Last pass I found P9.6 was my own bug filed as an operator decision, and said the
+other six deserved the same question: **did this branch create the condition, or
+did it pre-date the branch?**
+
+    on master     player-animations.html      (and unpkg is on master too)
+    on master     assets/pwa-install.js
+    on master     assets/teams-time.js
+    on master     assets/teams-board.js
+    on master     assets/push-retention.js
+    neither       .gitattributes
+
+**P9.6 was the only one.** P4.5, P6.1, P6.4, P8.2, P9.3 and P9.4 all genuinely
+pre-date this branch. The remaining board is the operator's, and now that is a
+checked fact rather than an assumption.
+
+That left P9.5, the one item about verifying **my own** work. The datalist popup
+really is unreachable from CDP. But the path nobody had tested is the one people
+actually use: typing a fragment and pressing Enter without touching the dropdown.
+
+## "curry" scores you against Seth
+
+`pickModern` ranks exact › prefix › substring, and where several names contain the
+fragment the tie is broken by position in `MODERN` — array order, not relevance:
+
+    curry     -> Seth Curry 2022-23        (5 rows matched)
+    ant       -> Anthony Davis 2022-23     (53 rows matched)
+    giannis   -> Giannis Antetokounmpo     (3 rows, all the same person)
+
+Type "curry" meaning Stephen and you are silently scored against Seth. Type "ant"
+and you get Anthony Davis — **on a page whose own placeholder offers "Ant" as the
+example**.
+
+There is no prominence field in this data. Ranking them properly would mean
+inventing a signal, and ranking by cosine to the target would hand you the
+answer. So the pick stands and the page says it was a pick:
+
+    curry also matches 1 other player — Stephen Curry. Type more of the name to pick one.
+    ant also matches 19 other players — Anthony Edwards · Anthony Gill · …
+
+Other seasons of the player already chosen are not counted as other people, which
+is why "giannis" says nothing at all.
+
+### Two things caught before shipping
+
+The disclosure interpolates the typed fragment, which makes it **the first user
+input on this page to reach `innerHTML`**. There was no escaping helper in
+play.html — I had reached for `esc2`, which exists on trends.html and not here,
+so the first version would have thrown on every guess. It escapes properly now,
+and a typed `<img src=x onerror=...>` creates no element.
+
+And the season-stripping regex went in through a heredoc that doubled its
+backslashes — `/\\s+\\d{4}-\\d{2}$/` matches a literal backslash, so nothing
+stripped and "giannis" reported two other players, both of them Giannis. It was
+caught by looking at the output rather than the code, and `smoke_play.py` now
+asserts the disclosure so the next silent failure is not silent.
