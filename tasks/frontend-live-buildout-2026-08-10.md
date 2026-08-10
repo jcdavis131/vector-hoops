@@ -679,7 +679,7 @@ Two hand-numbered tokens survive inside dead modules
 
 - [x] **P6.2 DONE, and I had the criterion wrong.** I filed it against WCAG 2.5.5, which is AAA at 44px. **2.5.8 Target Size (Minimum) is AA in WCAG 2.2 at 24px**, and that is the bar a site claiming accessibility has to clear. See below. Original note:
   where it can be reviewed — not a runtime sweep. Not done; removed the sweep.
-- [ ] **P6.3** The three tags sit at end of `<body>` (copying the placement
+- [x] **P6.3 DONE — the reason I said it needed turned out to be this branch's headline defect.** See below. Original note: (copying the placement
   `player-animations.html` already used), so `error-boundary.js` does not catch
   a throw in a page's own inline script during first execution. It still catches
   async, resource and rejection errors. Moving it to `<head>` is a bigger change
@@ -1355,3 +1355,45 @@ a **declared** height — reporting an estimate as a failure is what made the fi
 contrast pass produce 65 findings that were not real. Verified in both directions;
 the failure message names the selector, which took a second pass because the CSS
 rule regex was reporting the comment above the rule as the selector.
+
+
+## The one failure the error boundary could never see (2026-08-10)
+
+P6.3 sat on the board reading *"moving it to `<head>` is a bigger change than it
+is worth without a reason."* The reason was `9a0a4481`, the first defect this
+branch found:
+
+    b.onclick=()=>{...}c.appendChild(b);
+
+No semicolon, no line break, so index.html's **entire inline script was a
+SyntaxError and never ran** — on production, for an unknown length of time, with
+nothing to notice. `assets/error-boundary.js` was already in the repo and would
+have recorded it, except a listener only sees errors from scripts parsed *after*
+it is installed, and the boundary loads at the end of `<body>`. Checked rather
+than assumed: on index, play, trends, model, teams and players **the first script
+on the page is the page's own inline block**. The one class of failure that takes
+a whole page down was the one class the boundary structurally could not see.
+
+**Not solved by moving the file.** A 10 KB blocking script in `<head>` to catch a
+rare failure is a bad trade. `scripts/fix_early_errors.py` inserts **692 bytes**
+inline instead, immediately after `<meta charset>` — that position because the
+charset declaration has to stay inside the first 1024 bytes. It only queues.
+`error-boundary.js` drains the queue on load and logs each entry the way it logs
+anything else: localStorage, capped at 50, no external telemetry.
+
+After draining, the queue is swapped for a no-op sink. The boundary has installed
+its own listeners by then, so leaving a live array would both double-log every
+later error and grow without a cap.
+
+`scripts/smoke_early_errors.mjs` proves the chain rather than the pieces: it takes
+the hook **out of the shipped index.html**, fires the exact failure shape that
+started this — a SyntaxError with a filename and line — then loads the real
+`error-boundary.js` and checks the error came out the other side. Nine checks, and
+the one that matters reads *"the SyntaxError is there with its line"*.
+
+- [ ] **P9.4 `player-animations.html` loads a third-party script from a CDN**:
+  `https://unpkg.com/posecode-embed@0.1.0/dist/posecode-embed.js`, in `<head>`,
+  and it is the only external script on the site. It sits against the repo's
+  zero-deps doctrine, it is a third party that can see every visitor to that page,
+  and it cannot work offline. Self-host, drop the feature, or accept it knowingly
+  — all three are decisions rather than fixes, so it is recorded, not changed.

@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
+<script>/* early error queue — drained by assets/error-boundary.js. Installed here because a listener only sees scripts parsed after it, and the page's own inline block used to be first. */window.__vhErr=[];window.addEventListener("error",function(e){try{var t=e.target,r=t&&(t.src||t.href);window.__vhErr.push({type:r?"resource":"js",message:e.message||("Failed to load "+(r||"")),source:e.filename||r||"",lineno:e.lineno||0,colno:e.colno||0,stack:(e.error&&e.error.stack)||""});}catch(_){}} ,true);window.addEventListener("unhandledrejection",function(e){try{window.__vhErr.push({type:"unhandledrejection",message:String((e.reason&&e.reason.message)||e.reason||"")});}catch(_){}});</script>
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#fafaf8">
 <title>Vector Hoops — Inventory Audit</title>
@@ -72,7 +73,7 @@ const rows=[
 let tb=document.querySelector('#aud tbody'); rows.forEach(r=>{ let tr=document.createElement('tr'); tr.innerHTML='<td><b>'+r[0]+'</b></td><td>'+r[1]+'</td><td class="mono">'+r[2]+'</td><td class="mono">'+r[3]+'</td><td><span class="badge ok">'+r[4]+'</span></td>'; tb.appendChild(tr) });
 if('serviceWorker' in navigator){ try{ navigator.serviceWorker.register('/sw.js') }catch(e){} }
 </script>
-<script src="assets/error-boundary.js?v=b00e79a0"></script>
+<script src="assets/error-boundary.js?v=daeb2be4"></script>
 <script src="assets/keyboard-a11y.js?v=eb6c977f"></script>
 <script src="assets/pwa-install.js?v=3c377447"></script>
 </body>

@@ -251,6 +251,30 @@
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', init);
   else init();
 
+  /* Drain whatever the early hook in <head> queued before this file loaded.
+     That hook exists because a listener only sees errors from scripts parsed
+     after it is installed, and on most pages the first script is the page's own
+     inline block — which is exactly the failure 9a0a4481 was: index.html's whole
+     script was a SyntaxError, never ran, and nothing recorded it.
+
+     After draining, the queue is swapped for a no-op sink. This file has now
+     installed its own 'error' and 'unhandledrejection' listeners, so anything
+     later is caught here; leaving a live array would both double-log it and grow
+     without a cap. */
+  try{
+    var queued = window.__vhErr;
+    if(queued && typeof queued.length === 'number'){
+      for(var qi=0; qi<queued.length; qi++){
+        var q = queued[qi];
+        if(q) logError(q);
+      }
+      if(queued.length && window.console && console.warn){
+        console.warn('[vh.errors] recovered ' + queued.length + ' error(s) from before the boundary loaded');
+      }
+    }
+    window.__vhErr = { push: function(){} };
+  }catch(e){}
+
   window.VHErrorBoundary = {
     log: logError,
     getErrors: getErrors,
