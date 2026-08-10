@@ -1,0 +1,3019 @@
+{
+  "schema_version": "1.1",
+  "domain": "hoops",
+  "primary_task_type": "prediction",
+  "description": "NBA player-seasons. Given a player's season-t feature vector, predict several next-season outcomes independently — advanced efficiency stats and a raw counting line.",
+  "aggregate": {
+    "targets_total": 6,
+    "targets_scored": 6,
+    "targets_spec_only": 0,
+    "targets_errored": 0,
+    "targets_judged": 6,
+    "mtnn_target_wins": 3,
+    "baseline_target_wins": 3,
+    "primary_metric_verdicts": {
+      "next_season_per": false,
+      "next_season_win_shares": true,
+      "next_season_bpm": false,
+      "next_season_pts": true,
+      "next_season_reb": true,
+      "next_season_ast": false
+    },
+    "headline": "MTNN beats best baseline on 3/6 judged target(s) (primary metric); baseline wins the rest",
+    "built": "2026-08-09T23:44:34"
+  },
+  "targets": [
+    {
+      "target": {
+        "name": "next_season_per",
+        "kind": "regression",
+        "horizon": "next_season",
+        "split": "temporal",
+        "primary_metric": "spearman_ic",
+        "status": "scored"
+      },
+      "note": "",
+      "scorecard": {
+        "schema_version": "1.0",
+        "domain": "hoops",
+        "task": "hoops::next_season_per",
+        "task_type": "prediction",
+        "split": "temporal",
+        "seed": 7,
+        "k_values": [
+          1,
+          5,
+          10
+        ],
+        "summary": {
+          "metrics_judged": 4,
+          "mtnn_wins": 0,
+          "baseline_wins": 4,
+          "headline": "baseline wins all 4 judged metric(s) — this domain is simple",
+          "built": "2026-08-09T23:43:35",
+          "n_train": 9661,
+          "n_test": 396
+        },
+        "methods": [
+          {
+            "name": "dummy_mean",
+            "kind": "prediction",
+            "is_mtnn": false,
+            "status": "ok",
+            "metrics": {
+              "spearman_ic": 0.0,
+              "mae": 3.482099,
+              "rmse": 4.522042,
+              "r2": -0.014071
+            },
+            "note": ""
+          },
+          {
+            "name": "persistence",
+            "kind": "prediction",
+            "is_mtnn": false,
+            "status": "ok",
+            "metrics": {
+              "spearman_ic": 0.71119,
+              "mae": 2.305656,
+              "rmse": 3.026416,
+              "r2": 0.545791
+            },
+            "note": ""
+          },
+          {
+            "name": "ridge",
+            "kind": "prediction",
+            "is_mtnn": false,
+            "status": "ok",
+            "metrics": {
+              "spearman_ic": 0.779299,
+              "mae": 2.035003,
+              "rmse": 2.61834,
+              "r2": 0.660022
+            },
+            "note": ""
+          },
+          {
+            "name": "pca_ridge(n=16)",
+            "kind": "prediction",
+            "is_mtnn": false,
+            "status": "ok",
+            "metrics": {
+              "spearman_ic": 0.779414,
+              "mae": 2.059191,
+              "rmse": 2.627958,
+              "r2": 0.65752
+            },
+            "note": ""
+          },
+          {
+            "name": "knn(k=10)",
+            "kind": "prediction",
+            "is_mtnn": false,
+            "status": "ok",
+            "metrics": {
+              "spearman_ic": 0.752379,
+              "mae": 2.09447,
+              "rmse": 2.675477,
+              "r2": 0.645022
+            },
+            "note": ""
+          },
+          {
+            "name": "hist_gbm",
+            "kind": "prediction",
+            "is_mtnn": false,
+            "status": "ok",
+            "metrics": {
+              "spearman_ic": 0.770809,
+              "mae": 2.044063,
+              "rmse": 2.614008,
+              "r2": 0.661146
+            },
+            "note": ""
+          },
+          {
+            "name": "mlp",
+            "kind": "prediction",
+            "is_mtnn": false,
+            "status": "ok",
+            "metrics": {
+              "spearman_ic": 0.70848,
+              "mae": 2.299013,
+              "rmse": 2.998768,
+              "r2": 0.554051
+            },
+            "note": ""
+          },
+          {
+            "name": "persistence_current_per",
+            "kind": "prediction",
+            "is_mtnn": false,
+            "status": "ok",
+            "metrics": {
+              "spearman_ic": 0.766118,
+              "mae": 2.230303,
+              "rmse": 2.942616,
+              "r2": 0.570596
+            },
+            "note": ""
+          },
+          {
+            "name": "persistence_current_ws",
+            "kind": "prediction",
+            "is_mtnn": false,
+            "status": "ok",
+            "metrics": {
+              "spearman_ic": 0.484811,
+              "mae": 11.573232,
+              "rmse": 12.154749,
+              "r2": -6.326407
+            },
+            "note": ""
+          },
+          {
+            "name": "persistence_current_bpm",
+            "kind": "prediction",
+            "is_mtnn": false,
+            "status": "ok",
+            "metrics": {
+              "spearman_ic": 0.59864,
+              "mae": 14.986111,
+              "rmse": 15.362654,
+              "r2": -10.703926
+            },
+            "note": ""
+          },
+          {
+            "name": "persistence_current_pts",
+            "kind": "prediction",
+            "is_mtnn": false,
+            "status": "ok",
+            "metrics": {
+              "spearman_ic": 0.500208,
+              "mae": 5.391414,
+              "rmse": 6.662214,
+              "r2": -1.201082
+            },
+            "note": ""
+          },
+          {
+            "name": "persistence_current_reb",
+            "kind": "prediction",
+            "is_mtnn": false,
+            "status": "ok",
+            "metrics": {
+              "spearman_ic": 0.563883,
+              "mae": 10.336869,
+              "rmse": 10.947854,
+              "r2": -4.943702
+            },
+            "note": ""
+          },
+          {
+            "name": "persistence_current_ast",
+            "kind": "prediction",
+            "is_mtnn": false,
+            "status": "ok",
+            "metrics": {
+              "spearman_ic": 0.378653,
+              "mae": 12.039394,
+              "rmse": 12.680371,
+              "r2": -6.973757
+            },
+            "note": ""
+          },
+          {
+            "name": "mtnn",
+            "kind": "prediction",
+            "is_mtnn": true,
+            "status": "ok",
+            "metrics": {
+              "spearman_ic": 0.772884,
+              "mae": 2.076337,
+              "rmse": 2.645804,
+              "r2": 0.652852
+            },
+            "note": ""
+          }
+        ],
+        "metrics": {
+          "spearman_ic": {
+            "higher_is_better": true,
+            "ranking": [
+              {
+                "method": "pca_ridge(n=16)",
+                "value": 0.779414
+              },
+              {
+                "method": "ridge",
+                "value": 0.779299
+              },
+              {
+                "method": "mtnn",
+                "value": 0.772884
+              },
+              {
+                "method": "hist_gbm",
+                "value": 0.770809
+              },
+              {
+                "method": "persistence_current_per",
+                "value": 0.766118
+              },
+              {
+                "method": "knn(k=10)",
+                "value": 0.752379
+              },
+              {
+                "method": "persistence",
+                "value": 0.71119
+              },
+              {
+                "method": "mlp",
+                "value": 0.70848
+              },
+              {
+                "method": "persistence_current_bpm",
+                "value": 0.59864
+              },
+              {
+                "method": "persistence_current_reb",
+                "value": 0.563883
+              },
+              {
+                "method": "persistence_current_pts",
+                "value": 0.500208
+              },
+              {
+                "method": "persistence_current_ws",
+                "value": 0.484811
+              },
+              {
+                "method": "persistence_current_ast",
+                "value": 0.378653
+              },
+              {
+                "method": "dummy_mean",
+                "value": 0.0
+              }
+            ],
+            "best_method": "pca_ridge(n=16)",
+            "best_baseline": "pca_ridge(n=16)",
+            "best_baseline_value": 0.779414,
+            "mtnn_value": 0.772884,
+            "mtnn_delta": -0.00653,
+            "mtnn_beats_best_baseline": false
+          },
+          "mae": {
+            "higher_is_better": false,
+            "ranking": [
+              {
+                "method": "ridge",
+                "value": 2.035003
+              },
+              {
+                "method": "hist_gbm",
+                "value": 2.044063
+              },
+              {
+                "method": "pca_ridge(n=16)",
+                "value": 2.059191
+              },
+              {
+                "method": "mtnn",
+                "value": 2.076337
+              },
+              {
+                "method": "knn(k=10)",
+                "value": 2.09447
+              },
+              {
+                "method": "persistence_current_per",
+                "value": 2.230303
+              },
+              {
+                "method": "mlp",
+                "value": 2.299013
+              },
+              {
+                "method": "persistence",
+                "value": 2.305656
+              },
+              {
+                "method": "dummy_mean",
+                "value": 3.482099
+              },
+              {
+                "method": "persistence_current_pts",
+                "value": 5.391414
+              },
+              {
+                "method": "persistence_current_reb",
+                "value": 10.336869
+              },
+              {
+                "method": "persistence_current_ws",
+                "value": 11.573232
+              },
+              {
+                "method": "persistence_current_ast",
+                "value": 12.039394
+              },
+              {
+                "method": "persistence_current_bpm",
+                "value": 14.986111
+              }
+            ],
+            "best_method": "ridge",
+            "best_baseline": "ridge",
+            "best_baseline_value": 2.035003,
+            "mtnn_value": 2.076337,
+            "mtnn_delta": -0.041334,
+            "mtnn_beats_best_baseline": false
+          },
+          "rmse": {
+            "higher_is_better": false,
+            "ranking": [
+              {
+                "method": "hist_gbm",
+                "value": 2.614008
+              },
+              {
+                "method": "ridge",
+                "value": 2.61834
+              },
+              {
+                "method": "pca_ridge(n=16)",
+                "value": 2.627958
+              },
+              {
+                "method": "mtnn",
+                "value": 2.645804
+              },
+              {
+                "method": "knn(k=10)",
+                "value": 2.675477
+              },
+              {
+                "method": "persistence_current_per",
+                "value": 2.942616
+              },
+              {
+                "method": "mlp",
+                "value": 2.998768
+              },
+              {
+                "method": "persistence",
+                "value": 3.026416
+              },
+              {
+                "method": "dummy_mean",
+                "value": 4.522042
+              },
+              {
+                "method": "persistence_current_pts",
+                "value": 6.662214
+              },
+              {
+                "method": "persistence_current_reb",
+                "value": 10.947854
+              },
+              {
+                "method": "persistence_current_ws",
+                "value": 12.154749
+              },
+              {
+                "method": "persistence_current_ast",
+                "value": 12.680371
+              },
+              {
+                "method": "persistence_current_bpm",
+                "value": 15.362654
+              }
+            ],
+            "best_method": "hist_gbm",
+            "best_baseline": "hist_gbm",
+            "best_baseline_value": 2.614008,
+            "mtnn_value": 2.645804,
+            "mtnn_delta": -0.031795,
+            "mtnn_beats_best_baseline": false
+          },
+          "r2": {
+            "higher_is_better": true,
+            "ranking": [
+              {
+                "method": "hist_gbm",
+                "value": 0.661146
+              },
+              {
+                "method": "ridge",
+                "value": 0.660022
+              },
+              {
+                "method": "pca_ridge(n=16)",
+                "value": 0.65752
+              },
+              {
+                "method": "mtnn",
+                "value": 0.652852
+              },
+              {
+                "method": "knn(k=10)",
+                "value": 0.645022
+              },
+              {
+                "method": "persistence_current_per",
+                "value": 0.570596
+              },
+              {
+                "method": "mlp",
+                "value": 0.554051
+              },
+              {
+                "method": "persistence",
+                "value": 0.545791
+              },
+              {
+                "method": "dummy_mean",
+                "value": -0.014071
+              },
+              {
+                "method": "persistence_current_pts",
+                "value": -1.201082
+              },
+              {
+                "method": "persistence_current_reb",
+                "value": -4.943702
+              },
+              {
+                "method": "persistence_current_ws",
+                "value": -6.326407
+              },
+              {
+                "method": "persistence_current_ast",
+                "value": -6.973757
+              },
+              {
+                "method": "persistence_current_bpm",
+                "value": -10.703926
+              }
+            ],
+            "best_method": "hist_gbm",
+            "best_baseline": "hist_gbm",
+            "best_baseline_value": 0.661146,
+            "mtnn_value": 0.652852,
+            "mtnn_delta": -0.008293,
+            "mtnn_beats_best_baseline": false
+          }
+        },
+        "notes": {
+          "target": "next_season_per",
+          "kind": "regression",
+          "horizon": "next_season",
+          "primary_metric": "spearman_ic",
+          "construction": "y = PER of the same player in season t+1; features from season t only. Temporal split on the *target* season year: train on target-season <= cut, test strictly after. No future season is visible at fit time; a player may recur across seasons (realistic).",
+          "rows_labeled": "10057",
+          "mtnn_train_rows": "8885",
+          "harness_train_years": "target_year <= 2025",
+          "test_year": "2026"
+        }
+      }
+    },
+    {
+      "target": {
+        "name": "next_season_win_shares",
+        "kind": "regression",
+        "horizon": "next_season",
+        "split": "temporal",
+        "primary_metric": "spearman_ic",
+        "status": "scored"
+      },
+      "note": "",
+      "scorecard": {
+        "schema_version": "1.0",
+        "domain": "hoops",
+        "task": "hoops::next_season_win_shares",
+        "task_type": "prediction",
+        "split": "temporal",
+        "seed": 7,
+        "k_values": [
+          1,
+          5,
+          10
+        ],
+        "summary": {
+          "metrics_judged": 4,
+          "mtnn_wins": 4,
+          "baseline_wins": 0,
+          "headline": "MTNN wins all 4 judged metric(s)",
+          "built": "2026-08-09T23:43:47",
+          "n_train": 9661,
+          "n_test": 396
+        },
+        "methods": [
+          {
+            "name": "dummy_mean",
+            "kind": "prediction",
+            "is_mtnn": false,
+            "status": "ok",
+            "metrics": {
+              "spearman_ic": 0.0,
+              "mae": 2.117644,
+              "rmse": 2.613303,
+              "r2": -0.016007
+            },
+            "note": ""
+          },
+          {
+            "name": "persistence",
+            "kind": "prediction",
+            "is_mtnn": false,
+            "status": "ok",
+            "metrics": {
+              "spearman_ic": 0.473541,
+              "mae": 1.828057,
+              "rmse": 2.359468,
+              "r2": 0.17178
+            },
+            "note": ""
+          },
+          {
+            "name": "ridge",
+            "kind": "prediction",
+            "is_mtnn": false,
+            "status": "ok",
+            "metrics": {
+              "spearman_ic": 0.62473,
+              "mae": 1.488868,
+              "rmse": 1.937879,
+              "r2": 0.441311
+            },
+            "note": ""
+          },
+          {
+            "name": "pca_ridge(n=16)",
+            "kind": "prediction",
+            "is_mtnn": false,
+            "status": "ok",
+            "metrics": {
+              "spearman_ic": 0.626975,
+              "mae": 1.483549,
+              "rmse": 1.945081,
+              "r2": 0.43715
+            },
+            "note": ""
+          },
+          {
+            "name": "knn(k=10)",
+            "kind": "prediction",
+            "is_mtnn": false,
+            "status": "ok",
+            "metrics": {
+              "spearman_ic": 0.615422,
+              "mae": 1.555505,
+              "rmse": 2.01747,
+              "r2": 0.394476
+            },
+            "note": ""
+          },
+          {
+            "name": "hist_gbm",
+            "kind": "prediction",
+            "is_mtnn": false,
+            "status": "ok",
+            "metrics": {
+              "spearman_ic": 0.614373,
+              "mae": 1.496088,
+              "rmse": 1.960225,
+              "r2": 0.428352
+            },
+            "note": ""
+          },
+          {
+            "name": "mlp",
+            "kind": "prediction",
+            "is_mtnn": false,
+            "status": "ok",
+            "metrics": {
+              "spearman_ic": 0.572402,
+              "mae": 1.547184,
+              "rmse": 2.022075,
+              "r2": 0.391709
+            },
+            "note": ""
+          },
+          {
+            "name": "persistence_current_per",
+            "kind": "prediction",
+            "is_mtnn": false,
+            "status": "ok",
+            "metrics": {
+              "spearman_ic": 0.525863,
+              "mae": 11.423485,
+              "rmse": 12.011197,
+              "r2": -20.462965
+            },
+            "note": ""
+          },
+          {
+            "name": "persistence_current_ws",
+            "kind": "prediction",
+            "is_mtnn": false,
+            "status": "ok",
+            "metrics": {
+              "spearman_ic": 0.574574,
+              "mae": 1.718434,
+              "rmse": 2.291007,
+              "r2": 0.219146
+            },
+            "note": ""
+          },
+          {
+            "name": "persistence_current_bpm",
+            "kind": "prediction",
+            "is_mtnn": false,
+            "status": "ok",
+            "metrics": {
+              "spearman_ic": 0.550301,
+              "mae": 3.676768,
+              "rmse": 4.315968,
+              "r2": -1.771236
+            },
+            "note": ""
+          },
+          {
+            "name": "persistence_current_pts",
+            "kind": "prediction",
+            "is_mtnn": false,
+            "status": "ok",
+            "metrics": {
+              "spearman_ic": 0.439589,
+              "mae": 7.786616,
+              "rmse": 9.630671,
+              "r2": -12.798446
+            },
+            "note": ""
+          },
+          {
+            "name": "persistence_current_reb",
+            "kind": "prediction",
+            "is_mtnn": false,
+            "status": "ok",
+            "metrics": {
+              "spearman_ic": 0.482598,
+              "mae": 2.172475,
+              "rmse": 2.803673,
+              "r2": -0.169423
+            },
+            "note": ""
+          },
+          {
+            "name": "persistence_current_ast",
+            "kind": "prediction",
+            "is_mtnn": false,
+            "status": "ok",
+            "metrics": {
+              "spearman_ic": 0.353856,
+              "mae": 1.900758,
+              "rmse": 2.56676,
+              "r2": 0.019861
+            },
+            "note": ""
+          },
+          {
+            "name": "mtnn",
+            "kind": "prediction",
+            "is_mtnn": true,
+            "status": "ok",
+            "metrics": {
+              "spearman_ic": 0.63776,
+              "mae": 1.451483,
+              "rmse": 1.890217,
+              "r2": 0.468455
+            },
+            "note": ""
+          }
+        ],
+        "metrics": {
+          "spearman_ic": {
+            "higher_is_better": true,
+            "ranking": [
+              {
+                "method": "mtnn",
+                "value": 0.63776
+              },
+              {
+                "method": "pca_ridge(n=16)",
+                "value": 0.626975
+              },
+              {
+                "method": "ridge",
+                "value": 0.62473
+              },
+              {
+                "method": "knn(k=10)",
+                "value": 0.615422
+              },
+              {
+                "method": "hist_gbm",
+                "value": 0.614373
+              },
+              {
+                "method": "persistence_current_ws",
+                "value": 0.574574
+              },
+              {
+                "method": "mlp",
+                "value": 0.572402
+              },
+              {
+                "method": "persistence_current_bpm",
+                "value": 0.550301
+              },
+              {
+                "method": "persistence_current_per",
+                "value": 0.525863
+              },
+              {
+                "method": "persistence_current_reb",
+                "value": 0.482598
+              },
+              {
+                "method": "persistence",
+                "value": 0.473541
+              },
+              {
+                "method": "persistence_current_pts",
+                "value": 0.439589
+              },
+              {
+                "method": "persistence_current_ast",
+                "value": 0.353856
+              },
+              {
+                "method": "dummy_mean",
+                "value": 0.0
+              }
+            ],
+            "best_method": "mtnn",
+            "best_baseline": "pca_ridge(n=16)",
+            "best_baseline_value": 0.626975,
+            "mtnn_value": 0.63776,
+            "mtnn_delta": 0.010785,
+            "mtnn_beats_best_baseline": true
+          },
+          "mae": {
+            "higher_is_better": false,
+            "ranking": [
+              {
+                "method": "mtnn",
+                "value": 1.451483
+              },
+              {
+                "method": "pca_ridge(n=16)",
+                "value": 1.483549
+              },
+              {
+                "method": "ridge",
+                "value": 1.488868
+              },
+              {
+                "method": "hist_gbm",
+                "value": 1.496088
+              },
+              {
+                "method": "mlp",
+                "value": 1.547184
+              },
+              {
+                "method": "knn(k=10)",
+                "value": 1.555505
+              },
+              {
+                "method": "persistence_current_ws",
+                "value": 1.718434
+              },
+              {
+                "method": "persistence",
+                "value": 1.828057
+              },
+              {
+                "method": "persistence_current_ast",
+                "value": 1.900758
+              },
+              {
+                "method": "dummy_mean",
+                "value": 2.117644
+              },
+              {
+                "method": "persistence_current_reb",
+                "value": 2.172475
+              },
+              {
+                "method": "persistence_current_bpm",
+                "value": 3.676768
+              },
+              {
+                "method": "persistence_current_pts",
+                "value": 7.786616
+              },
+              {
+                "method": "persistence_current_per",
+                "value": 11.423485
+              }
+            ],
+            "best_method": "mtnn",
+            "best_baseline": "pca_ridge(n=16)",
+            "best_baseline_value": 1.483549,
+            "mtnn_value": 1.451483,
+            "mtnn_delta": 0.032065,
+            "mtnn_beats_best_baseline": true
+          },
+          "rmse": {
+            "higher_is_better": false,
+            "ranking": [
+              {
+                "method": "mtnn",
+                "value": 1.890217
+              },
+              {
+                "method": "ridge",
+                "value": 1.937879
+              },
+              {
+                "method": "pca_ridge(n=16)",
+                "value": 1.945081
+              },
+              {
+                "method": "hist_gbm",
+                "value": 1.960225
+              },
+              {
+                "method": "knn(k=10)",
+                "value": 2.01747
+              },
+              {
+                "method": "mlp",
+                "value": 2.022075
+              },
+              {
+                "method": "persistence_current_ws",
+                "value": 2.291007
+              },
+              {
+                "method": "persistence",
+                "value": 2.359468
+              },
+              {
+                "method": "persistence_current_ast",
+                "value": 2.56676
+              },
+              {
+                "method": "dummy_mean",
+                "value": 2.613303
+              },
+              {
+                "method": "persistence_current_reb",
+                "value": 2.803673
+              },
+              {
+                "method": "persistence_current_bpm",
+                "value": 4.315968
+              },
+              {
+                "method": "persistence_current_pts",
+                "value": 9.630671
+              },
+              {
+                "method": "persistence_current_per",
+                "value": 12.011197
+              }
+            ],
+            "best_method": "mtnn",
+            "best_baseline": "ridge",
+            "best_baseline_value": 1.937879,
+            "mtnn_value": 1.890217,
+            "mtnn_delta": 0.047662,
+            "mtnn_beats_best_baseline": true
+          },
+          "r2": {
+            "higher_is_better": true,
+            "ranking": [
+              {
+                "method": "mtnn",
+                "value": 0.468455
+              },
+              {
+                "method": "ridge",
+                "value": 0.441311
+              },
+              {
+                "method": "pca_ridge(n=16)",
+                "value": 0.43715
+              },
+              {
+                "method": "hist_gbm",
+                "value": 0.428352
+              },
+              {
+                "method": "knn(k=10)",
+                "value": 0.394476
+              },
+              {
+                "method": "mlp",
+                "value": 0.391709
+              },
+              {
+                "method": "persistence_current_ws",
+                "value": 0.219146
+              },
+              {
+                "method": "persistence",
+                "value": 0.17178
+              },
+              {
+                "method": "persistence_current_ast",
+                "value": 0.019861
+              },
+              {
+                "method": "dummy_mean",
+                "value": -0.016007
+              },
+              {
+                "method": "persistence_current_reb",
+                "value": -0.169423
+              },
+              {
+                "method": "persistence_current_bpm",
+                "value": -1.771236
+              },
+              {
+                "method": "persistence_current_pts",
+                "value": -12.798446
+              },
+              {
+                "method": "persistence_current_per",
+                "value": -20.462965
+              }
+            ],
+            "best_method": "mtnn",
+            "best_baseline": "ridge",
+            "best_baseline_value": 0.441311,
+            "mtnn_value": 0.468455,
+            "mtnn_delta": 0.027144,
+            "mtnn_beats_best_baseline": true
+          }
+        },
+        "notes": {
+          "target": "next_season_win_shares",
+          "kind": "regression",
+          "horizon": "next_season",
+          "primary_metric": "spearman_ic",
+          "construction": "y = Win Shares of the same player in season t+1; features from season t. Temporal split on target season year (as PER).",
+          "rows_labeled": "10057",
+          "mtnn_train_rows": "8885",
+          "harness_train_years": "target_year <= 2025",
+          "test_year": "2026"
+        }
+      }
+    },
+    {
+      "target": {
+        "name": "next_season_bpm",
+        "kind": "regression",
+        "horizon": "next_season",
+        "split": "temporal",
+        "primary_metric": "spearman_ic",
+        "status": "scored"
+      },
+      "note": "",
+      "scorecard": {
+        "schema_version": "1.0",
+        "domain": "hoops",
+        "task": "hoops::next_season_bpm",
+        "task_type": "prediction",
+        "split": "temporal",
+        "seed": 7,
+        "k_values": [
+          1,
+          5,
+          10
+        ],
+        "summary": {
+          "metrics_judged": 4,
+          "mtnn_wins": 0,
+          "baseline_wins": 4,
+          "headline": "baseline wins all 4 judged metric(s) — this domain is simple",
+          "built": "2026-08-09T23:44:01",
+          "n_train": 9661,
+          "n_test": 396
+        },
+        "methods": [
+          {
+            "name": "dummy_mean",
+            "kind": "prediction",
+            "is_mtnn": false,
+            "status": "ok",
+            "metrics": {
+              "spearman_ic": 0.0,
+              "mae": 2.297445,
+              "rmse": 3.048203,
+              "r2": -0.010843
+            },
+            "note": ""
+          },
+          {
+            "name": "persistence",
+            "kind": "prediction",
+            "is_mtnn": false,
+            "status": "ok",
+            "metrics": {
+              "spearman_ic": 0.618533,
+              "mae": 1.778131,
+              "rmse": 2.372978,
+              "r2": 0.387391
+            },
+            "note": ""
+          },
+          {
+            "name": "ridge",
+            "kind": "prediction",
+            "is_mtnn": false,
+            "status": "ok",
+            "metrics": {
+              "spearman_ic": 0.677702,
+              "mae": 1.615684,
+              "rmse": 2.052073,
+              "r2": 0.541878
+            },
+            "note": ""
+          },
+          {
+            "name": "pca_ridge(n=16)",
+            "kind": "prediction",
+            "is_mtnn": false,
+            "status": "ok",
+            "metrics": {
+              "spearman_ic": 0.67815,
+              "mae": 1.622591,
+              "rmse": 2.05638,
+              "r2": 0.539953
+            },
+            "note": ""
+          },
+          {
+            "name": "knn(k=10)",
+            "kind": "prediction",
+            "is_mtnn": false,
+            "status": "ok",
+            "metrics": {
+              "spearman_ic": 0.644417,
+              "mae": 1.663308,
+              "rmse": 2.118188,
+              "r2": 0.511882
+            },
+            "note": ""
+          },
+          {
+            "name": "hist_gbm",
+            "kind": "prediction",
+            "is_mtnn": false,
+            "status": "ok",
+            "metrics": {
+              "spearman_ic": 0.695222,
+              "mae": 1.577975,
+              "rmse": 2.014988,
+              "r2": 0.558286
+            },
+            "note": ""
+          },
+          {
+            "name": "mlp",
+            "kind": "prediction",
+            "is_mtnn": false,
+            "status": "ok",
+            "metrics": {
+              "spearman_ic": 0.636314,
+              "mae": 1.79331,
+              "rmse": 2.284313,
+              "r2": 0.432315
+            },
+            "note": ""
+          },
+          {
+            "name": "persistence_current_per",
+            "kind": "prediction",
+            "is_mtnn": false,
+            "status": "ok",
+            "metrics": {
+              "spearman_ic": 0.629338,
+              "mae": 14.709343,
+              "rmse": 15.091692,
+              "r2": -23.778309
+            },
+            "note": ""
+          },
+          {
+            "name": "persistence_current_ws",
+            "kind": "prediction",
+            "is_mtnn": false,
+            "status": "ok",
+            "metrics": {
+              "spearman_ic": 0.518588,
+              "mae": 3.597222,
+              "rmse": 4.19398,
+              "r2": -0.913589
+            },
+            "note": ""
+          },
+          {
+            "name": "persistence_current_bpm",
+            "kind": "prediction",
+            "is_mtnn": false,
+            "status": "ok",
+            "metrics": {
+              "spearman_ic": 0.661756,
+              "mae": 1.790909,
+              "rmse": 2.357151,
+              "r2": 0.395536
+            },
+            "note": ""
+          },
+          {
+            "name": "persistence_current_pts",
+            "kind": "prediction",
+            "is_mtnn": false,
+            "status": "ok",
+            "metrics": {
+              "spearman_ic": 0.429329,
+              "mae": 10.968434,
+              "rmse": 12.35657,
+              "r2": -15.610843
+            },
+            "note": ""
+          },
+          {
+            "name": "persistence_current_reb",
+            "kind": "prediction",
+            "is_mtnn": false,
+            "status": "ok",
+            "metrics": {
+              "spearman_ic": 0.467554,
+              "mae": 4.665404,
+              "rmse": 5.318975,
+              "r2": -2.07788
+            },
+            "note": ""
+          },
+          {
+            "name": "persistence_current_ast",
+            "kind": "prediction",
+            "is_mtnn": false,
+            "status": "ok",
+            "metrics": {
+              "spearman_ic": 0.417991,
+              "mae": 3.203788,
+              "rmse": 3.900813,
+              "r2": -0.655411
+            },
+            "note": ""
+          },
+          {
+            "name": "mtnn",
+            "kind": "prediction",
+            "is_mtnn": true,
+            "status": "ok",
+            "metrics": {
+              "spearman_ic": 0.689996,
+              "mae": 1.609458,
+              "rmse": 2.029928,
+              "r2": 0.551712
+            },
+            "note": ""
+          }
+        ],
+        "metrics": {
+          "spearman_ic": {
+            "higher_is_better": true,
+            "ranking": [
+              {
+                "method": "hist_gbm",
+                "value": 0.695222
+              },
+              {
+                "method": "mtnn",
+                "value": 0.689996
+              },
+              {
+                "method": "pca_ridge(n=16)",
+                "value": 0.67815
+              },
+              {
+                "method": "ridge",
+                "value": 0.677702
+              },
+              {
+                "method": "persistence_current_bpm",
+                "value": 0.661756
+              },
+              {
+                "method": "knn(k=10)",
+                "value": 0.644417
+              },
+              {
+                "method": "mlp",
+                "value": 0.636314
+              },
+              {
+                "method": "persistence_current_per",
+                "value": 0.629338
+              },
+              {
+                "method": "persistence",
+                "value": 0.618533
+              },
+              {
+                "method": "persistence_current_ws",
+                "value": 0.518588
+              },
+              {
+                "method": "persistence_current_reb",
+                "value": 0.467554
+              },
+              {
+                "method": "persistence_current_pts",
+                "value": 0.429329
+              },
+              {
+                "method": "persistence_current_ast",
+                "value": 0.417991
+              },
+              {
+                "method": "dummy_mean",
+                "value": 0.0
+              }
+            ],
+            "best_method": "hist_gbm",
+            "best_baseline": "hist_gbm",
+            "best_baseline_value": 0.695222,
+            "mtnn_value": 0.689996,
+            "mtnn_delta": -0.005226,
+            "mtnn_beats_best_baseline": false
+          },
+          "mae": {
+            "higher_is_better": false,
+            "ranking": [
+              {
+                "method": "hist_gbm",
+                "value": 1.577975
+              },
+              {
+                "method": "mtnn",
+                "value": 1.609458
+              },
+              {
+                "method": "ridge",
+                "value": 1.615684
+              },
+              {
+                "method": "pca_ridge(n=16)",
+                "value": 1.622591
+              },
+              {
+                "method": "knn(k=10)",
+                "value": 1.663308
+              },
+              {
+                "method": "persistence",
+                "value": 1.778131
+              },
+              {
+                "method": "persistence_current_bpm",
+                "value": 1.790909
+              },
+              {
+                "method": "mlp",
+                "value": 1.79331
+              },
+              {
+                "method": "dummy_mean",
+                "value": 2.297445
+              },
+              {
+                "method": "persistence_current_ast",
+                "value": 3.203788
+              },
+              {
+                "method": "persistence_current_ws",
+                "value": 3.597222
+              },
+              {
+                "method": "persistence_current_reb",
+                "value": 4.665404
+              },
+              {
+                "method": "persistence_current_pts",
+                "value": 10.968434
+              },
+              {
+                "method": "persistence_current_per",
+                "value": 14.709343
+              }
+            ],
+            "best_method": "hist_gbm",
+            "best_baseline": "hist_gbm",
+            "best_baseline_value": 1.577975,
+            "mtnn_value": 1.609458,
+            "mtnn_delta": -0.031483,
+            "mtnn_beats_best_baseline": false
+          },
+          "rmse": {
+            "higher_is_better": false,
+            "ranking": [
+              {
+                "method": "hist_gbm",
+                "value": 2.014988
+              },
+              {
+                "method": "mtnn",
+                "value": 2.029928
+              },
+              {
+                "method": "ridge",
+                "value": 2.052073
+              },
+              {
+                "method": "pca_ridge(n=16)",
+                "value": 2.05638
+              },
+              {
+                "method": "knn(k=10)",
+                "value": 2.118188
+              },
+              {
+                "method": "mlp",
+                "value": 2.284313
+              },
+              {
+                "method": "persistence_current_bpm",
+                "value": 2.357151
+              },
+              {
+                "method": "persistence",
+                "value": 2.372978
+              },
+              {
+                "method": "dummy_mean",
+                "value": 3.048203
+              },
+              {
+                "method": "persistence_current_ast",
+                "value": 3.900813
+              },
+              {
+                "method": "persistence_current_ws",
+                "value": 4.19398
+              },
+              {
+                "method": "persistence_current_reb",
+                "value": 5.318975
+              },
+              {
+                "method": "persistence_current_pts",
+                "value": 12.35657
+              },
+              {
+                "method": "persistence_current_per",
+                "value": 15.091692
+              }
+            ],
+            "best_method": "hist_gbm",
+            "best_baseline": "hist_gbm",
+            "best_baseline_value": 2.014988,
+            "mtnn_value": 2.029928,
+            "mtnn_delta": -0.01494,
+            "mtnn_beats_best_baseline": false
+          },
+          "r2": {
+            "higher_is_better": true,
+            "ranking": [
+              {
+                "method": "hist_gbm",
+                "value": 0.558286
+              },
+              {
+                "method": "mtnn",
+                "value": 0.551712
+              },
+              {
+                "method": "ridge",
+                "value": 0.541878
+              },
+              {
+                "method": "pca_ridge(n=16)",
+                "value": 0.539953
+              },
+              {
+                "method": "knn(k=10)",
+                "value": 0.511882
+              },
+              {
+                "method": "mlp",
+                "value": 0.432315
+              },
+              {
+                "method": "persistence_current_bpm",
+                "value": 0.395536
+              },
+              {
+                "method": "persistence",
+                "value": 0.387391
+              },
+              {
+                "method": "dummy_mean",
+                "value": -0.010843
+              },
+              {
+                "method": "persistence_current_ast",
+                "value": -0.655411
+              },
+              {
+                "method": "persistence_current_ws",
+                "value": -0.913589
+              },
+              {
+                "method": "persistence_current_reb",
+                "value": -2.07788
+              },
+              {
+                "method": "persistence_current_pts",
+                "value": -15.610843
+              },
+              {
+                "method": "persistence_current_per",
+                "value": -23.778309
+              }
+            ],
+            "best_method": "hist_gbm",
+            "best_baseline": "hist_gbm",
+            "best_baseline_value": 0.558286,
+            "mtnn_value": 0.551712,
+            "mtnn_delta": -0.006574,
+            "mtnn_beats_best_baseline": false
+          }
+        },
+        "notes": {
+          "target": "next_season_bpm",
+          "kind": "regression",
+          "horizon": "next_season",
+          "primary_metric": "spearman_ic",
+          "construction": "y = BPM of the same player in season t+1; features from season t. Temporal split on target season year.",
+          "rows_labeled": "10057",
+          "mtnn_train_rows": "8885",
+          "harness_train_years": "target_year <= 2025",
+          "test_year": "2026"
+        }
+      }
+    },
+    {
+      "target": {
+        "name": "next_season_pts",
+        "kind": "regression",
+        "horizon": "next_season",
+        "split": "temporal",
+        "primary_metric": "spearman_ic",
+        "status": "scored"
+      },
+      "note": "",
+      "scorecard": {
+        "schema_version": "1.0",
+        "domain": "hoops",
+        "task": "hoops::next_season_pts",
+        "task_type": "prediction",
+        "split": "temporal",
+        "seed": 7,
+        "k_values": [
+          1,
+          5,
+          10
+        ],
+        "summary": {
+          "metrics_judged": 4,
+          "mtnn_wins": 4,
+          "baseline_wins": 0,
+          "headline": "MTNN wins all 4 judged metric(s)",
+          "built": "2026-08-09T23:44:15",
+          "n_train": 9661,
+          "n_test": 396
+        },
+        "methods": [
+          {
+            "name": "dummy_mean",
+            "kind": "prediction",
+            "is_mtnn": false,
+            "status": "ok",
+            "metrics": {
+              "spearman_ic": 0.0,
+              "mae": 5.206179,
+              "rmse": 6.661614,
+              "r2": -0.026386
+            },
+            "note": ""
+          },
+          {
+            "name": "persistence",
+            "kind": "prediction",
+            "is_mtnn": false,
+            "status": "ok",
+            "metrics": {
+              "spearman_ic": 0.734396,
+              "mae": 3.075932,
+              "rmse": 3.831304,
+              "r2": 0.660496
+            },
+            "note": ""
+          },
+          {
+            "name": "ridge",
+            "kind": "prediction",
+            "is_mtnn": false,
+            "status": "ok",
+            "metrics": {
+              "spearman_ic": 0.831825,
+              "mae": 2.583035,
+              "rmse": 3.291191,
+              "r2": 0.749471
+            },
+            "note": ""
+          },
+          {
+            "name": "pca_ridge(n=16)",
+            "kind": "prediction",
+            "is_mtnn": false,
+            "status": "ok",
+            "metrics": {
+              "spearman_ic": 0.829435,
+              "mae": 2.593074,
+              "rmse": 3.298977,
+              "r2": 0.748284
+            },
+            "note": ""
+          },
+          {
+            "name": "knn(k=10)",
+            "kind": "prediction",
+            "is_mtnn": false,
+            "status": "ok",
+            "metrics": {
+              "spearman_ic": 0.821451,
+              "mae": 2.626162,
+              "rmse": 3.303833,
+              "r2": 0.747543
+            },
+            "note": ""
+          },
+          {
+            "name": "hist_gbm",
+            "kind": "prediction",
+            "is_mtnn": false,
+            "status": "ok",
+            "metrics": {
+              "spearman_ic": 0.823933,
+              "mae": 2.656265,
+              "rmse": 3.362063,
+              "r2": 0.738565
+            },
+            "note": ""
+          },
+          {
+            "name": "mlp",
+            "kind": "prediction",
+            "is_mtnn": false,
+            "status": "ok",
+            "metrics": {
+              "spearman_ic": 0.776698,
+              "mae": 2.914207,
+              "rmse": 3.746704,
+              "r2": 0.675324
+            },
+            "note": ""
+          },
+          {
+            "name": "persistence_current_per",
+            "kind": "prediction",
+            "is_mtnn": false,
+            "status": "ok",
+            "metrics": {
+              "spearman_ic": 0.540938,
+              "mae": 5.216414,
+              "rmse": 6.383136,
+              "r2": 0.057633
+            },
+            "note": ""
+          },
+          {
+            "name": "persistence_current_ws",
+            "kind": "prediction",
+            "is_mtnn": false,
+            "status": "ok",
+            "metrics": {
+              "spearman_ic": 0.564592,
+              "mae": 7.971465,
+              "rmse": 9.601519,
+              "r2": -1.132219
+            },
+            "note": ""
+          },
+          {
+            "name": "persistence_current_bpm",
+            "kind": "prediction",
+            "is_mtnn": false,
+            "status": "ok",
+            "metrics": {
+              "spearman_ic": 0.504562,
+              "mae": 11.328788,
+              "rmse": 12.585429,
+              "r2": -2.66343
+            },
+            "note": ""
+          },
+          {
+            "name": "persistence_current_pts",
+            "kind": "prediction",
+            "is_mtnn": false,
+            "status": "ok",
+            "metrics": {
+              "spearman_ic": 0.804001,
+              "mae": 2.821465,
+              "rmse": 3.564772,
+              "r2": 0.706089
+            },
+            "note": ""
+          },
+          {
+            "name": "persistence_current_reb",
+            "kind": "prediction",
+            "is_mtnn": false,
+            "status": "ok",
+            "metrics": {
+              "spearman_ic": 0.529975,
+              "mae": 6.905303,
+              "rmse": 8.814547,
+              "r2": -0.797016
+            },
+            "note": ""
+          },
+          {
+            "name": "persistence_current_ast",
+            "kind": "prediction",
+            "is_mtnn": false,
+            "status": "ok",
+            "metrics": {
+              "spearman_ic": 0.657209,
+              "mae": 8.425,
+              "rmse": 10.018827,
+              "r2": -1.32159
+            },
+            "note": ""
+          },
+          {
+            "name": "mtnn",
+            "kind": "prediction",
+            "is_mtnn": true,
+            "status": "ok",
+            "metrics": {
+              "spearman_ic": 0.8351,
+              "mae": 2.574757,
+              "rmse": 3.289173,
+              "r2": 0.749778
+            },
+            "note": ""
+          }
+        ],
+        "metrics": {
+          "spearman_ic": {
+            "higher_is_better": true,
+            "ranking": [
+              {
+                "method": "mtnn",
+                "value": 0.8351
+              },
+              {
+                "method": "ridge",
+                "value": 0.831825
+              },
+              {
+                "method": "pca_ridge(n=16)",
+                "value": 0.829435
+              },
+              {
+                "method": "hist_gbm",
+                "value": 0.823933
+              },
+              {
+                "method": "knn(k=10)",
+                "value": 0.821451
+              },
+              {
+                "method": "persistence_current_pts",
+                "value": 0.804001
+              },
+              {
+                "method": "mlp",
+                "value": 0.776698
+              },
+              {
+                "method": "persistence",
+                "value": 0.734396
+              },
+              {
+                "method": "persistence_current_ast",
+                "value": 0.657209
+              },
+              {
+                "method": "persistence_current_ws",
+                "value": 0.564592
+              },
+              {
+                "method": "persistence_current_per",
+                "value": 0.540938
+              },
+              {
+                "method": "persistence_current_reb",
+                "value": 0.529975
+              },
+              {
+                "method": "persistence_current_bpm",
+                "value": 0.504562
+              },
+              {
+                "method": "dummy_mean",
+                "value": 0.0
+              }
+            ],
+            "best_method": "mtnn",
+            "best_baseline": "ridge",
+            "best_baseline_value": 0.831825,
+            "mtnn_value": 0.8351,
+            "mtnn_delta": 0.003275,
+            "mtnn_beats_best_baseline": true
+          },
+          "mae": {
+            "higher_is_better": false,
+            "ranking": [
+              {
+                "method": "mtnn",
+                "value": 2.574757
+              },
+              {
+                "method": "ridge",
+                "value": 2.583035
+              },
+              {
+                "method": "pca_ridge(n=16)",
+                "value": 2.593074
+              },
+              {
+                "method": "knn(k=10)",
+                "value": 2.626162
+              },
+              {
+                "method": "hist_gbm",
+                "value": 2.656265
+              },
+              {
+                "method": "persistence_current_pts",
+                "value": 2.821465
+              },
+              {
+                "method": "mlp",
+                "value": 2.914207
+              },
+              {
+                "method": "persistence",
+                "value": 3.075932
+              },
+              {
+                "method": "dummy_mean",
+                "value": 5.206179
+              },
+              {
+                "method": "persistence_current_per",
+                "value": 5.216414
+              },
+              {
+                "method": "persistence_current_reb",
+                "value": 6.905303
+              },
+              {
+                "method": "persistence_current_ws",
+                "value": 7.971465
+              },
+              {
+                "method": "persistence_current_ast",
+                "value": 8.425
+              },
+              {
+                "method": "persistence_current_bpm",
+                "value": 11.328788
+              }
+            ],
+            "best_method": "mtnn",
+            "best_baseline": "ridge",
+            "best_baseline_value": 2.583035,
+            "mtnn_value": 2.574757,
+            "mtnn_delta": 0.008278,
+            "mtnn_beats_best_baseline": true
+          },
+          "rmse": {
+            "higher_is_better": false,
+            "ranking": [
+              {
+                "method": "mtnn",
+                "value": 3.289173
+              },
+              {
+                "method": "ridge",
+                "value": 3.291191
+              },
+              {
+                "method": "pca_ridge(n=16)",
+                "value": 3.298977
+              },
+              {
+                "method": "knn(k=10)",
+                "value": 3.303833
+              },
+              {
+                "method": "hist_gbm",
+                "value": 3.362063
+              },
+              {
+                "method": "persistence_current_pts",
+                "value": 3.564772
+              },
+              {
+                "method": "mlp",
+                "value": 3.746704
+              },
+              {
+                "method": "persistence",
+                "value": 3.831304
+              },
+              {
+                "method": "persistence_current_per",
+                "value": 6.383136
+              },
+              {
+                "method": "dummy_mean",
+                "value": 6.661614
+              },
+              {
+                "method": "persistence_current_reb",
+                "value": 8.814547
+              },
+              {
+                "method": "persistence_current_ws",
+                "value": 9.601519
+              },
+              {
+                "method": "persistence_current_ast",
+                "value": 10.018827
+              },
+              {
+                "method": "persistence_current_bpm",
+                "value": 12.585429
+              }
+            ],
+            "best_method": "mtnn",
+            "best_baseline": "ridge",
+            "best_baseline_value": 3.291191,
+            "mtnn_value": 3.289173,
+            "mtnn_delta": 0.002018,
+            "mtnn_beats_best_baseline": true
+          },
+          "r2": {
+            "higher_is_better": true,
+            "ranking": [
+              {
+                "method": "mtnn",
+                "value": 0.749778
+              },
+              {
+                "method": "ridge",
+                "value": 0.749471
+              },
+              {
+                "method": "pca_ridge(n=16)",
+                "value": 0.748284
+              },
+              {
+                "method": "knn(k=10)",
+                "value": 0.747543
+              },
+              {
+                "method": "hist_gbm",
+                "value": 0.738565
+              },
+              {
+                "method": "persistence_current_pts",
+                "value": 0.706089
+              },
+              {
+                "method": "mlp",
+                "value": 0.675324
+              },
+              {
+                "method": "persistence",
+                "value": 0.660496
+              },
+              {
+                "method": "persistence_current_per",
+                "value": 0.057633
+              },
+              {
+                "method": "dummy_mean",
+                "value": -0.026386
+              },
+              {
+                "method": "persistence_current_reb",
+                "value": -0.797016
+              },
+              {
+                "method": "persistence_current_ws",
+                "value": -1.132219
+              },
+              {
+                "method": "persistence_current_ast",
+                "value": -1.32159
+              },
+              {
+                "method": "persistence_current_bpm",
+                "value": -2.66343
+              }
+            ],
+            "best_method": "mtnn",
+            "best_baseline": "ridge",
+            "best_baseline_value": 0.749471,
+            "mtnn_value": 0.749778,
+            "mtnn_delta": 0.000307,
+            "mtnn_beats_best_baseline": true
+          }
+        },
+        "notes": {
+          "target": "next_season_pts",
+          "kind": "regression",
+          "horizon": "next_season",
+          "primary_metric": "spearman_ic",
+          "construction": "y = PTS/G in season t+1; features from season t. Temporal split.",
+          "rows_labeled": "10057",
+          "mtnn_train_rows": "8885",
+          "harness_train_years": "target_year <= 2025",
+          "test_year": "2026"
+        }
+      }
+    },
+    {
+      "target": {
+        "name": "next_season_reb",
+        "kind": "regression",
+        "horizon": "next_season",
+        "split": "temporal",
+        "primary_metric": "spearman_ic",
+        "status": "scored"
+      },
+      "note": "",
+      "scorecard": {
+        "schema_version": "1.0",
+        "domain": "hoops",
+        "task": "hoops::next_season_reb",
+        "task_type": "prediction",
+        "split": "temporal",
+        "seed": 7,
+        "k_values": [
+          1,
+          5,
+          10
+        ],
+        "summary": {
+          "metrics_judged": 4,
+          "mtnn_wins": 1,
+          "baseline_wins": 3,
+          "headline": "MTNN wins 1/4 judged metric(s); baseline wins the rest",
+          "built": "2026-08-09T23:44:23",
+          "n_train": 9661,
+          "n_test": 396
+        },
+        "methods": [
+          {
+            "name": "dummy_mean",
+            "kind": "prediction",
+            "is_mtnn": false,
+            "status": "ok",
+            "metrics": {
+              "spearman_ic": 0.0,
+              "mae": 1.800961,
+              "rmse": 2.327897,
+              "r2": -0.000152
+            },
+            "note": ""
+          },
+          {
+            "name": "persistence",
+            "kind": "prediction",
+            "is_mtnn": false,
+            "status": "ok",
+            "metrics": {
+              "spearman_ic": 0.721672,
+              "mae": 1.066859,
+              "rmse": 1.451664,
+              "r2": 0.611071
+            },
+            "note": ""
+          },
+          {
+            "name": "ridge",
+            "kind": "prediction",
+            "is_mtnn": false,
+            "status": "ok",
+            "metrics": {
+              "spearman_ic": 0.836008,
+              "mae": 0.837398,
+              "rmse": 1.088014,
+              "r2": 0.781522
+            },
+            "note": ""
+          },
+          {
+            "name": "pca_ridge(n=16)",
+            "kind": "prediction",
+            "is_mtnn": false,
+            "status": "ok",
+            "metrics": {
+              "spearman_ic": 0.837946,
+              "mae": 0.835327,
+              "rmse": 1.081617,
+              "r2": 0.784084
+            },
+            "note": ""
+          },
+          {
+            "name": "knn(k=10)",
+            "kind": "prediction",
+            "is_mtnn": false,
+            "status": "ok",
+            "metrics": {
+              "spearman_ic": 0.7905,
+              "mae": 0.953561,
+              "rmse": 1.227218,
+              "r2": 0.72204
+            },
+            "note": ""
+          },
+          {
+            "name": "hist_gbm",
+            "kind": "prediction",
+            "is_mtnn": false,
+            "status": "ok",
+            "metrics": {
+              "spearman_ic": 0.831989,
+              "mae": 0.854729,
+              "rmse": 1.115106,
+              "r2": 0.770506
+            },
+            "note": ""
+          },
+          {
+            "name": "mlp",
+            "kind": "prediction",
+            "is_mtnn": false,
+            "status": "ok",
+            "metrics": {
+              "spearman_ic": 0.796036,
+              "mae": 0.940862,
+              "rmse": 1.248835,
+              "r2": 0.712162
+            },
+            "note": ""
+          },
+          {
+            "name": "persistence_current_per",
+            "kind": "prediction",
+            "is_mtnn": false,
+            "status": "ok",
+            "metrics": {
+              "spearman_ic": 0.602243,
+              "mae": 10.273737,
+              "rmse": 10.864926,
+              "r2": -20.786733
+            },
+            "note": ""
+          },
+          {
+            "name": "persistence_current_ws",
+            "kind": "prediction",
+            "is_mtnn": false,
+            "status": "ok",
+            "metrics": {
+              "spearman_ic": 0.49738,
+              "mae": 2.090404,
+              "rmse": 2.679543,
+              "r2": -0.325134
+            },
+            "note": ""
+          },
+          {
+            "name": "persistence_current_bpm",
+            "kind": "prediction",
+            "is_mtnn": false,
+            "status": "ok",
+            "metrics": {
+              "spearman_ic": 0.495354,
+              "mae": 4.690657,
+              "rmse": 5.317355,
+              "r2": -4.218311
+            },
+            "note": ""
+          },
+          {
+            "name": "persistence_current_pts",
+            "kind": "prediction",
+            "is_mtnn": false,
+            "status": "ok",
+            "metrics": {
+              "spearman_ic": 0.444763,
+              "mae": 6.841919,
+              "rmse": 8.887845,
+              "r2": -13.579127
+            },
+            "note": ""
+          },
+          {
+            "name": "persistence_current_reb",
+            "kind": "prediction",
+            "is_mtnn": false,
+            "status": "ok",
+            "metrics": {
+              "spearman_ic": 0.803,
+              "mae": 0.949495,
+              "rmse": 1.262313,
+              "r2": 0.705915
+            },
+            "note": ""
+          },
+          {
+            "name": "persistence_current_ast",
+            "kind": "prediction",
+            "is_mtnn": false,
+            "status": "ok",
+            "metrics": {
+              "spearman_ic": 0.277026,
+              "mae": 2.357071,
+              "rmse": 3.049764,
+              "r2": -0.716608
+            },
+            "note": ""
+          },
+          {
+            "name": "mtnn",
+            "kind": "prediction",
+            "is_mtnn": true,
+            "status": "ok",
+            "metrics": {
+              "spearman_ic": 0.842898,
+              "mae": 0.835586,
+              "rmse": 1.086103,
+              "r2": 0.782289
+            },
+            "note": ""
+          }
+        ],
+        "metrics": {
+          "spearman_ic": {
+            "higher_is_better": true,
+            "ranking": [
+              {
+                "method": "mtnn",
+                "value": 0.842898
+              },
+              {
+                "method": "pca_ridge(n=16)",
+                "value": 0.837946
+              },
+              {
+                "method": "ridge",
+                "value": 0.836008
+              },
+              {
+                "method": "hist_gbm",
+                "value": 0.831989
+              },
+              {
+                "method": "persistence_current_reb",
+                "value": 0.803
+              },
+              {
+                "method": "mlp",
+                "value": 0.796036
+              },
+              {
+                "method": "knn(k=10)",
+                "value": 0.7905
+              },
+              {
+                "method": "persistence",
+                "value": 0.721672
+              },
+              {
+                "method": "persistence_current_per",
+                "value": 0.602243
+              },
+              {
+                "method": "persistence_current_ws",
+                "value": 0.49738
+              },
+              {
+                "method": "persistence_current_bpm",
+                "value": 0.495354
+              },
+              {
+                "method": "persistence_current_pts",
+                "value": 0.444763
+              },
+              {
+                "method": "persistence_current_ast",
+                "value": 0.277026
+              },
+              {
+                "method": "dummy_mean",
+                "value": 0.0
+              }
+            ],
+            "best_method": "mtnn",
+            "best_baseline": "pca_ridge(n=16)",
+            "best_baseline_value": 0.837946,
+            "mtnn_value": 0.842898,
+            "mtnn_delta": 0.004952,
+            "mtnn_beats_best_baseline": true
+          },
+          "mae": {
+            "higher_is_better": false,
+            "ranking": [
+              {
+                "method": "pca_ridge(n=16)",
+                "value": 0.835327
+              },
+              {
+                "method": "mtnn",
+                "value": 0.835586
+              },
+              {
+                "method": "ridge",
+                "value": 0.837398
+              },
+              {
+                "method": "hist_gbm",
+                "value": 0.854729
+              },
+              {
+                "method": "mlp",
+                "value": 0.940862
+              },
+              {
+                "method": "persistence_current_reb",
+                "value": 0.949495
+              },
+              {
+                "method": "knn(k=10)",
+                "value": 0.953561
+              },
+              {
+                "method": "persistence",
+                "value": 1.066859
+              },
+              {
+                "method": "dummy_mean",
+                "value": 1.800961
+              },
+              {
+                "method": "persistence_current_ws",
+                "value": 2.090404
+              },
+              {
+                "method": "persistence_current_ast",
+                "value": 2.357071
+              },
+              {
+                "method": "persistence_current_bpm",
+                "value": 4.690657
+              },
+              {
+                "method": "persistence_current_pts",
+                "value": 6.841919
+              },
+              {
+                "method": "persistence_current_per",
+                "value": 10.273737
+              }
+            ],
+            "best_method": "pca_ridge(n=16)",
+            "best_baseline": "pca_ridge(n=16)",
+            "best_baseline_value": 0.835327,
+            "mtnn_value": 0.835586,
+            "mtnn_delta": -0.000259,
+            "mtnn_beats_best_baseline": false
+          },
+          "rmse": {
+            "higher_is_better": false,
+            "ranking": [
+              {
+                "method": "pca_ridge(n=16)",
+                "value": 1.081617
+              },
+              {
+                "method": "mtnn",
+                "value": 1.086103
+              },
+              {
+                "method": "ridge",
+                "value": 1.088014
+              },
+              {
+                "method": "hist_gbm",
+                "value": 1.115106
+              },
+              {
+                "method": "knn(k=10)",
+                "value": 1.227218
+              },
+              {
+                "method": "mlp",
+                "value": 1.248835
+              },
+              {
+                "method": "persistence_current_reb",
+                "value": 1.262313
+              },
+              {
+                "method": "persistence",
+                "value": 1.451664
+              },
+              {
+                "method": "dummy_mean",
+                "value": 2.327897
+              },
+              {
+                "method": "persistence_current_ws",
+                "value": 2.679543
+              },
+              {
+                "method": "persistence_current_ast",
+                "value": 3.049764
+              },
+              {
+                "method": "persistence_current_bpm",
+                "value": 5.317355
+              },
+              {
+                "method": "persistence_current_pts",
+                "value": 8.887845
+              },
+              {
+                "method": "persistence_current_per",
+                "value": 10.864926
+              }
+            ],
+            "best_method": "pca_ridge(n=16)",
+            "best_baseline": "pca_ridge(n=16)",
+            "best_baseline_value": 1.081617,
+            "mtnn_value": 1.086103,
+            "mtnn_delta": -0.004486,
+            "mtnn_beats_best_baseline": false
+          },
+          "r2": {
+            "higher_is_better": true,
+            "ranking": [
+              {
+                "method": "pca_ridge(n=16)",
+                "value": 0.784084
+              },
+              {
+                "method": "mtnn",
+                "value": 0.782289
+              },
+              {
+                "method": "ridge",
+                "value": 0.781522
+              },
+              {
+                "method": "hist_gbm",
+                "value": 0.770506
+              },
+              {
+                "method": "knn(k=10)",
+                "value": 0.72204
+              },
+              {
+                "method": "mlp",
+                "value": 0.712162
+              },
+              {
+                "method": "persistence_current_reb",
+                "value": 0.705915
+              },
+              {
+                "method": "persistence",
+                "value": 0.611071
+              },
+              {
+                "method": "dummy_mean",
+                "value": -0.000152
+              },
+              {
+                "method": "persistence_current_ws",
+                "value": -0.325134
+              },
+              {
+                "method": "persistence_current_ast",
+                "value": -0.716608
+              },
+              {
+                "method": "persistence_current_bpm",
+                "value": -4.218311
+              },
+              {
+                "method": "persistence_current_pts",
+                "value": -13.579127
+              },
+              {
+                "method": "persistence_current_per",
+                "value": -20.786733
+              }
+            ],
+            "best_method": "pca_ridge(n=16)",
+            "best_baseline": "pca_ridge(n=16)",
+            "best_baseline_value": 0.784084,
+            "mtnn_value": 0.782289,
+            "mtnn_delta": -0.001795,
+            "mtnn_beats_best_baseline": false
+          }
+        },
+        "notes": {
+          "target": "next_season_reb",
+          "kind": "regression",
+          "horizon": "next_season",
+          "primary_metric": "spearman_ic",
+          "construction": "y = REB/G in season t+1; features from season t. Temporal split.",
+          "rows_labeled": "10057",
+          "mtnn_train_rows": "8885",
+          "harness_train_years": "target_year <= 2025",
+          "test_year": "2026"
+        }
+      }
+    },
+    {
+      "target": {
+        "name": "next_season_ast",
+        "kind": "regression",
+        "horizon": "next_season",
+        "split": "temporal",
+        "primary_metric": "spearman_ic",
+        "status": "scored"
+      },
+      "note": "",
+      "scorecard": {
+        "schema_version": "1.0",
+        "domain": "hoops",
+        "task": "hoops::next_season_ast",
+        "task_type": "prediction",
+        "split": "temporal",
+        "seed": 7,
+        "k_values": [
+          1,
+          5,
+          10
+        ],
+        "summary": {
+          "metrics_judged": 4,
+          "mtnn_wins": 0,
+          "baseline_wins": 4,
+          "headline": "baseline wins all 4 judged metric(s) — this domain is simple",
+          "built": "2026-08-09T23:44:34",
+          "n_train": 9661,
+          "n_test": 396
+        },
+        "methods": [
+          {
+            "name": "dummy_mean",
+            "kind": "prediction",
+            "is_mtnn": false,
+            "status": "ok",
+            "metrics": {
+              "spearman_ic": 0.0,
+              "mae": 1.394958,
+              "rmse": 1.924019,
+              "r2": -0.029075
+            },
+            "note": ""
+          },
+          {
+            "name": "persistence",
+            "kind": "prediction",
+            "is_mtnn": false,
+            "status": "ok",
+            "metrics": {
+              "spearman_ic": 0.7474,
+              "mae": 0.807861,
+              "rmse": 1.101975,
+              "r2": 0.662424
+            },
+            "note": ""
+          },
+          {
+            "name": "ridge",
+            "kind": "prediction",
+            "is_mtnn": false,
+            "status": "ok",
+            "metrics": {
+              "spearman_ic": 0.840812,
+              "mae": 0.68003,
+              "rmse": 0.940553,
+              "r2": 0.754079
+            },
+            "note": ""
+          },
+          {
+            "name": "pca_ridge(n=16)",
+            "kind": "prediction",
+            "is_mtnn": false,
+            "status": "ok",
+            "metrics": {
+              "spearman_ic": 0.839784,
+              "mae": 0.689437,
+              "rmse": 0.945412,
+              "r2": 0.751532
+            },
+            "note": ""
+          },
+          {
+            "name": "knn(k=10)",
+            "kind": "prediction",
+            "is_mtnn": false,
+            "status": "ok",
+            "metrics": {
+              "spearman_ic": 0.775129,
+              "mae": 0.759116,
+              "rmse": 1.065617,
+              "r2": 0.684332
+            },
+            "note": ""
+          },
+          {
+            "name": "hist_gbm",
+            "kind": "prediction",
+            "is_mtnn": false,
+            "status": "ok",
+            "metrics": {
+              "spearman_ic": 0.836348,
+              "mae": 0.680181,
+              "rmse": 0.919483,
+              "r2": 0.764974
+            },
+            "note": ""
+          },
+          {
+            "name": "mlp",
+            "kind": "prediction",
+            "is_mtnn": false,
+            "status": "ok",
+            "metrics": {
+              "spearman_ic": 0.783449,
+              "mae": 0.764145,
+              "rmse": 1.064838,
+              "r2": 0.684794
+            },
+            "note": ""
+          },
+          {
+            "name": "persistence_current_per",
+            "kind": "prediction",
+            "is_mtnn": false,
+            "status": "ok",
+            "metrics": {
+              "spearman_ic": 0.367251,
+              "mae": 11.834596,
+              "rmse": 12.520209,
+              "r2": -42.576423
+            },
+            "note": ""
+          },
+          {
+            "name": "persistence_current_ws",
+            "kind": "prediction",
+            "is_mtnn": false,
+            "status": "ok",
+            "metrics": {
+              "spearman_ic": 0.431511,
+              "mae": 1.859343,
+              "rmse": 2.495891,
+              "r2": -0.731727
+            },
+            "note": ""
+          },
+          {
+            "name": "persistence_current_bpm",
+            "kind": "prediction",
+            "is_mtnn": false,
+            "status": "ok",
+            "metrics": {
+              "spearman_ic": 0.441827,
+              "mae": 3.384343,
+              "rmse": 4.089683,
+              "r2": -3.649515
+            },
+            "note": ""
+          },
+          {
+            "name": "persistence_current_pts",
+            "kind": "prediction",
+            "is_mtnn": false,
+            "status": "ok",
+            "metrics": {
+              "spearman_ic": 0.607268,
+              "mae": 8.113384,
+              "rmse": 9.896052,
+              "r2": -26.224026
+            },
+            "note": ""
+          },
+          {
+            "name": "persistence_current_reb",
+            "kind": "prediction",
+            "is_mtnn": false,
+            "status": "ok",
+            "metrics": {
+              "spearman_ic": 0.327776,
+              "mae": 2.337626,
+              "rmse": 3.084766,
+              "r2": -1.645288
+            },
+            "note": ""
+          },
+          {
+            "name": "persistence_current_ast",
+            "kind": "prediction",
+            "is_mtnn": false,
+            "status": "ok",
+            "metrics": {
+              "spearman_ic": 0.814146,
+              "mae": 0.730051,
+              "rmse": 1.014603,
+              "r2": 0.713832
+            },
+            "note": ""
+          },
+          {
+            "name": "mtnn",
+            "kind": "prediction",
+            "is_mtnn": true,
+            "status": "ok",
+            "metrics": {
+              "spearman_ic": 0.837977,
+              "mae": 0.682853,
+              "rmse": 0.941971,
+              "r2": 0.753337
+            },
+            "note": ""
+          }
+        ],
+        "metrics": {
+          "spearman_ic": {
+            "higher_is_better": true,
+            "ranking": [
+              {
+                "method": "ridge",
+                "value": 0.840812
+              },
+              {
+                "method": "pca_ridge(n=16)",
+                "value": 0.839784
+              },
+              {
+                "method": "mtnn",
+                "value": 0.837977
+              },
+              {
+                "method": "hist_gbm",
+                "value": 0.836348
+              },
+              {
+                "method": "persistence_current_ast",
+                "value": 0.814146
+              },
+              {
+                "method": "mlp",
+                "value": 0.783449
+              },
+              {
+                "method": "knn(k=10)",
+                "value": 0.775129
+              },
+              {
+                "method": "persistence",
+                "value": 0.7474
+              },
+              {
+                "method": "persistence_current_pts",
+                "value": 0.607268
+              },
+              {
+                "method": "persistence_current_bpm",
+                "value": 0.441827
+              },
+              {
+                "method": "persistence_current_ws",
+                "value": 0.431511
+              },
+              {
+                "method": "persistence_current_per",
+                "value": 0.367251
+              },
+              {
+                "method": "persistence_current_reb",
+                "value": 0.327776
+              },
+              {
+                "method": "dummy_mean",
+                "value": 0.0
+              }
+            ],
+            "best_method": "ridge",
+            "best_baseline": "ridge",
+            "best_baseline_value": 0.840812,
+            "mtnn_value": 0.837977,
+            "mtnn_delta": -0.002835,
+            "mtnn_beats_best_baseline": false
+          },
+          "mae": {
+            "higher_is_better": false,
+            "ranking": [
+              {
+                "method": "ridge",
+                "value": 0.68003
+              },
+              {
+                "method": "hist_gbm",
+                "value": 0.680181
+              },
+              {
+                "method": "mtnn",
+                "value": 0.682853
+              },
+              {
+                "method": "pca_ridge(n=16)",
+                "value": 0.689437
+              },
+              {
+                "method": "persistence_current_ast",
+                "value": 0.730051
+              },
+              {
+                "method": "knn(k=10)",
+                "value": 0.759116
+              },
+              {
+                "method": "mlp",
+                "value": 0.764145
+              },
+              {
+                "method": "persistence",
+                "value": 0.807861
+              },
+              {
+                "method": "dummy_mean",
+                "value": 1.394958
+              },
+              {
+                "method": "persistence_current_ws",
+                "value": 1.859343
+              },
+              {
+                "method": "persistence_current_reb",
+                "value": 2.337626
+              },
+              {
+                "method": "persistence_current_bpm",
+                "value": 3.384343
+              },
+              {
+                "method": "persistence_current_pts",
+                "value": 8.113384
+              },
+              {
+                "method": "persistence_current_per",
+                "value": 11.834596
+              }
+            ],
+            "best_method": "ridge",
+            "best_baseline": "ridge",
+            "best_baseline_value": 0.68003,
+            "mtnn_value": 0.682853,
+            "mtnn_delta": -0.002823,
+            "mtnn_beats_best_baseline": false
+          },
+          "rmse": {
+            "higher_is_better": false,
+            "ranking": [
+              {
+                "method": "hist_gbm",
+                "value": 0.919483
+              },
+              {
+                "method": "ridge",
+                "value": 0.940553
+              },
+              {
+                "method": "mtnn",
+                "value": 0.941971
+              },
+              {
+                "method": "pca_ridge(n=16)",
+                "value": 0.945412
+              },
+              {
+                "method": "persistence_current_ast",
+                "value": 1.014603
+              },
+              {
+                "method": "mlp",
+                "value": 1.064838
+              },
+              {
+                "method": "knn(k=10)",
+                "value": 1.065617
+              },
+              {
+                "method": "persistence",
+                "value": 1.101975
+              },
+              {
+                "method": "dummy_mean",
+                "value": 1.924019
+              },
+              {
+                "method": "persistence_current_ws",
+                "value": 2.495891
+              },
+              {
+                "method": "persistence_current_reb",
+                "value": 3.084766
+              },
+              {
+                "method": "persistence_current_bpm",
+                "value": 4.089683
+              },
+              {
+                "method": "persistence_current_pts",
+                "value": 9.896052
+              },
+              {
+                "method": "persistence_current_per",
+                "value": 12.520209
+              }
+            ],
+            "best_method": "hist_gbm",
+            "best_baseline": "hist_gbm",
+            "best_baseline_value": 0.919483,
+            "mtnn_value": 0.941971,
+            "mtnn_delta": -0.022488,
+            "mtnn_beats_best_baseline": false
+          },
+          "r2": {
+            "higher_is_better": true,
+            "ranking": [
+              {
+                "method": "hist_gbm",
+                "value": 0.764974
+              },
+              {
+                "method": "ridge",
+                "value": 0.754079
+              },
+              {
+                "method": "mtnn",
+                "value": 0.753337
+              },
+              {
+                "method": "pca_ridge(n=16)",
+                "value": 0.751532
+              },
+              {
+                "method": "persistence_current_ast",
+                "value": 0.713832
+              },
+              {
+                "method": "mlp",
+                "value": 0.684794
+              },
+              {
+                "method": "knn(k=10)",
+                "value": 0.684332
+              },
+              {
+                "method": "persistence",
+                "value": 0.662424
+              },
+              {
+                "method": "dummy_mean",
+                "value": -0.029075
+              },
+              {
+                "method": "persistence_current_ws",
+                "value": -0.731727
+              },
+              {
+                "method": "persistence_current_reb",
+                "value": -1.645288
+              },
+              {
+                "method": "persistence_current_bpm",
+                "value": -3.649515
+              },
+              {
+                "method": "persistence_current_pts",
+                "value": -26.224026
+              },
+              {
+                "method": "persistence_current_per",
+                "value": -42.576423
+              }
+            ],
+            "best_method": "hist_gbm",
+            "best_baseline": "hist_gbm",
+            "best_baseline_value": 0.764974,
+            "mtnn_value": 0.753337,
+            "mtnn_delta": -0.011636,
+            "mtnn_beats_best_baseline": false
+          }
+        },
+        "notes": {
+          "target": "next_season_ast",
+          "kind": "regression",
+          "horizon": "next_season",
+          "primary_metric": "spearman_ic",
+          "construction": "y = AST/G in season t+1; features from season t. Temporal split.",
+          "rows_labeled": "10057",
+          "mtnn_train_rows": "8885",
+          "harness_train_years": "target_year <= 2025",
+          "test_year": "2026"
+        }
+      }
+    }
+  ],
+  "notes": {
+    "mtnn_training": "one multi-task net, 6 heads on shared 48-d embedding; trunk (128, 128), GELU, dropout 0.1; Adam lr=0.001 wd=0.0001 batch=256; seed=7; max_epochs=300 early-stop patience 25 on val (target years 2024..2025) masked MSE; best_epoch=37 best_val=0.27181; train rows: target_year <= 2023; trained in 15.5s on CPU (2 threads).",
+    "baseline_data": "baselines fit on the harness temporal-train side (target_year < 2026 = MTNN train + val); the MTNN never fits on val or test rows."
+  }
+}
