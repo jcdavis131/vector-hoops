@@ -568,6 +568,45 @@ def main() -> int:
                     failures.append(f"{label}: {m.group(1)} {m.group(2)} shows {decimals} "
                                     f"decimals — a player is never shown more than two")
 
+        # 6b. a streak has to break when a day is missed. updateWW used to add 1
+        #     whenever the day was new, with no check on when the last one was, so
+        #     it counted days played ever while the page called it a streak and
+        #     drew a seven-dot "Week Warrior". Exercised here by seeding a stale
+        #     record and moving the clock forward nine days, rather than by
+        #     playing four rounds.
+        streak = ev(ws, """(() => {
+          const KEY = 'vh_weekStreak', saved = localStorage.getItem(KEY);
+          const RealDate = Date;
+          const shim = iso => { function F(...a){ return a.length ? new RealDate(...a)
+              : new RealDate(iso + 'T12:00:00.000Z'); }
+            F.prototype = RealDate.prototype; F.now = () => new RealDate(iso).getTime();
+            F.parse = RealDate.parse; F.UTC = RealDate.UTC; window.Date = F; };
+          const run = (days, streak, today) => {
+            localStorage.setItem(KEY, JSON.stringify({days, streak}));
+            shim(today); updateWW(false, true);
+            return JSON.parse(localStorage.getItem(KEY) || '{}');
+          };
+          const gap  = run(['2026-08-10','2026-08-11','2026-08-12'], 3, '2026-08-21');
+          const next = run(['2026-08-10','2026-08-11','2026-08-12'], 3, '2026-08-13');
+          window.Date = RealDate;
+          if (saved === null) localStorage.removeItem(KEY); else localStorage.setItem(KEY, saved);
+          return JSON.stringify({afterGap: gap.streak, afterGapDays: gap.days.length,
+                                 consecutive: next.streak});
+        })()""")
+        if isinstance(streak, dict):
+            print(f"  streak   after a 9-day gap {streak['afterGap']}, "
+                  f"next day {streak['consecutive']}")
+            if streak["afterGap"] != 1:
+                failures.append(f"a nine-day gap left the streak at {streak['afterGap']} — "
+                                f"a streak that survives a missed day is a count of days "
+                                f"played, not a streak")
+            if streak["afterGapDays"] != 1:
+                failures.append(f"after the gap the dots still show {streak['afterGapDays']} "
+                                f"days, so they disagree with the streak beside them")
+            if streak["consecutive"] != 4:
+                failures.append(f"playing the next day gave {streak['consecutive']} rather "
+                                f"than 4 — consecutive days must still count up")
+
         # 7. the whole session
         errs = errs_of(ws)
         if errs:

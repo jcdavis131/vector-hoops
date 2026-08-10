@@ -2940,3 +2940,50 @@ A second 1200x630 canvas that stays at ink 0 and `0x0` through a whole game. It
 is not wired to anything the win path touches. Recorded rather than removed —
 it may be the download variant of a feature that was never finished, which makes
 it P6.1's question, not a stray to sweep.
+
+
+## The streak survived a nine-day gap (2026-08-10)
+
+The last path a person walks that nothing had exercised: coming back tomorrow.
+`updateWW` added to the count whenever the day was new and never asked **when the
+last day was**:
+
+    if(hit && !ww.days.includes(today)){
+      ww.days.push(today); ww.days = ww.days.slice(-7);
+      ww.streak = (ww.streak||0) + 1;
+    }
+
+So it counted days played, ever, while the page called it a **streak** and drew a
+seven-dot **Week Warrior** beside it. Play once, disappear for six months, play
+again: two.
+
+Measured over a shimmed clock rather than argued from the code — a `Date` stub
+installed before the page's own scripts, four rounds played:
+
+    2026-08-10   streak 1   days ['2026-08-10']
+    2026-08-11   streak 2   days ['2026-08-10','2026-08-11']
+    2026-08-12   streak 3   days ['2026-08-10','2026-08-11','2026-08-12']
+    2026-08-21   streak 4   days [... ,'2026-08-21']      <- nine days later
+
+Now the same four rounds give **1, 2, 3, 1**, and `days` resets with the count so
+seven dots mean seven days in a row rather than seven days scattered across
+months.
+
+This is the label-versus-value question again, and it went the other way from
+`/owner`. There the column said `Pay24-25` and the field really was 2024-25, so
+the fix was to say which season the *other* columns came from. Here the word
+"streak" described something that was not one, so the value moved to match the
+word.
+
+`smoke_play.py` seeds a stale record and moves the clock nine days rather than
+playing four rounds, and requires the streak to reset, the dots to reset with it,
+and a genuinely consecutive day to still count up.
+
+### One thing left unexplained
+
+`smoke_render.py` exited 1 once, in the middle of a batch, and has exited 0 three
+times since — including twice more in the same sequence that produced the
+failure. Nothing in its output named a page. It uses a **fixed** profile directory
+(`vh-render-profile`) while the other browser checks use their own, which is the
+obvious place for contention with a leftover Chrome, but **I did not confirm
+that** and it is recorded as an unreproduced flake rather than as understood.
