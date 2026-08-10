@@ -47,7 +47,20 @@ RE_SCRIPT = re.compile(
     r"""(<script[^>]*?\ssrc=['"])(/?assets/[\w./-]+\.js)(?:\?v=[0-9a-f]+)?(['"])"""
 )
 
-PATTERNS = (RE_FETCH, RE_SCRIPT)
+# Same reasoning for stylesheets, which had no pattern because until fonts.css
+# there was no linked stylesheet on this site — every page carried its CSS
+# inline. vercel.json matches css in exactly the same immutable rule as js, so a
+# <link href> with no token is pinned in a returning visitor's cache for a year
+# just as a <script src> is.
+#
+# The .woff2 files fonts.css points at are deliberately left unstamped: a font's
+# bytes do not change in place, and Google's own path carries the face version
+# (…/architectsdaughter/v20/…), so a new cut arrives under a new filename.
+RE_LINK = re.compile(
+    r"""(<link[^>]*?\shref=['"])(/?assets/[\w./-]+\.css)(?:\?v=[0-9a-f]+)?(['"])"""
+)
+
+PATTERNS = (RE_FETCH, RE_SCRIPT, RE_LINK)
 
 
 def digest(path: Path) -> str:

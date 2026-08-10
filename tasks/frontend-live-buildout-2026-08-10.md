@@ -538,7 +538,8 @@ a dark canvas, the other a light one.)
       is authoritative, five copies are dead weight in the deploy.
 
 ### Cross-cutting
-- [ ] F2 self-host or drop the Google Fonts link.
+- [x] F2 self-host or drop the Google Fonts link.
+  Closed 2026-08-10 — self-hosted. See the note at the end of this file.
 - [x] F3 **Nav unified — `4413c6d5`.** Mapped every nav before editing: `/trends.html` (rebuilt here from a stub) was reachable from **2 of 10** pages; `/dictionary.html` and `/player.html` only from the pages that created them; `leaderboard.html`/`methods.html` were a third island. All 10 pages now carry the same seven destinations — Explorer, Players, Trends, Model, Teams, Dictionary, Play CTA — each in its own markup and classes, so nothing moves visually but the link list. Verified every nav href resolves to a file on disk.
 
 ## Validation — and what I genuinely cannot check
@@ -2386,3 +2387,64 @@ Both broken files are fixed rather than excluded. An excluded file is a permanen
 blind spot, and these two are exactly the kind that would stay broken forever.
 Whether they should exist at all is **P6.1**, still the operator's call — but
 they are at least syntactically valid now if the answer is "revive".
+
+
+## F2: the site's own footers decided this one (2026-08-10)
+
+"Self-host or drop" looked like a taste question. It was not, because the pages
+say what the font is for:
+
+    dumbmodel #fafaf8 • paper aesthetic • Architects Daughter
+
+A face the design credits by name, in its own footer, as part of the aesthetic is
+not a thing to drop to save a request. **Self-host**, which keeps it byte-identical
+and costs nothing visually.
+
+**18 pages loaded it; 16 actually use it.** Two — `player-fit.html` and its
+`player-fit/index.html` mirror — carried the preconnects and the stylesheet and
+never named the family anywhere. Their links are simply gone.
+
+I nearly got this wrong. My first count said "12 of 18 load a font they never
+use", because I only looked for `var(--hand)`. Ten pages set
+`font-family:"Architects Daughter",cursive` literally instead, several of them
+from inside JS template strings where the quotes are escaped. Checking the
+literal form as well as the variable moved the answer from 12 unused to 2.
+
+### What changed
+
+    assets/fonts/architects-daughter-latin.woff2       13,156 B
+    assets/fonts/architects-daughter-latin-ext.woff2    7,028 B
+    assets/fonts/OFL.txt                                4,362 B
+    assets/fonts.css                     two @font-face rules
+
+Both subsets and their `unicode-range` values are copied from Google's own css2
+response, so a browser still downloads only the subset it needs — the Latin-only
+case pulls 13 KB and never touches the extended one. `font-display:swap` is
+preserved. The licence is SIL OFL 1.1 and its full text ships beside the files.
+
+**Three `<link>` tags per page became one**, and two third-party origins
+disappeared from every page on the site. No visitor IP goes to Google to render a
+heading any more, which is the part that had nothing to do with performance.
+
+Verified in a browser rather than assumed:
+
+    /index.html    face-loaded=True  width 394 vs fallback 449  google-requests=0
+    /play.html     face-loaded=True  width 394 vs fallback 449  google-requests=0
+    /teams.html    face-loaded=True  width 394 vs fallback 449  google-requests=0
+
+The width comparison is the part that matters: `document.fonts.check()` can
+return true while the text still renders in the fallback. 394 against 449 for the
+same string is the real face doing the work.
+
+### And the stamper had never seen a stylesheet
+
+`stamp_assets.py` stamped `fetch()` calls and `<script src>`, and had no pattern
+for `<link href>` — because until `fonts.css` **there was no linked stylesheet on
+this site**; every page carries its CSS inline. `vercel.json` puts css in exactly
+the same `max-age=31536000, immutable` rule as js, so an unstamped stylesheet is
+pinned in a returning visitor's cache for a year. Now stamped:
+`fonts.css?v=31e5658b` on all 16.
+
+The `.woff2` files are deliberately left unstamped. A font's bytes do not change
+in place, and Google's path carries the face version (`…/architectsdaughter/v20/…`),
+so a new cut arrives under a new filename.
