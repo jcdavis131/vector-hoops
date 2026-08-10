@@ -906,3 +906,22 @@ That also retires the note that said stamping inside JS was only worth building
 if P6.1 revived the dead modules. It was worth building the moment one live
 module fetched anything. 43 distinct assets now tracked across 22 pages and 50
 modules.
+
+
+### What the stamper still does not reach, precisely
+
+Module coverage is not total, and the board should not imply it is. Two
+hand-numbered tokens survive:
+
+    past-modern-game.js   scoring_lite_index.json        ?v=56
+    shared-map.js         vectors_search_lite_pos.json   ?v=58
+
+Both assign the URL to a variable and hand it to a wrapper rather than passing a
+literal to etch(, so RE_FETCH does not see them. Broadening the pattern to
+any ssets/*.json string in a .js file would also rewrite paths inside
+comments and docs, which is a worse trade for two files that are both in the dead
+46 and therefore fetch nothing today. Recorded rather than fixed. If P6.1 revives
+either module, this becomes real and the pattern needs the wrapper case.
+
+Everything reachable from a page is stamped: 43 distinct assets across 22 pages
+and 50 modules, --check clean, and a second run is a no-op.
