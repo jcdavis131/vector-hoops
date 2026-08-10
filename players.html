@@ -172,6 +172,11 @@ cv.addEventListener('click',async e=>{let r=cv.getBoundingClientRect(),mx=(e.cli
     say(spinning?'Rotation paused.':'Rotation resumed.');
   });
   if(lab && lab.parentNode) lab.parentNode.insertBefore(btn, lab);
+  var hint=document.createElement('div');
+  hint.className='mono';
+  hint.style.cssText='font-size:10.5px;color:var(--ink-muted);margin-top:4px';
+  hint.textContent='Map keys: focus it, then ←/→ rotate (shift = faster) · Home resets · space stops the spin · H reads the controls.';
+  if(lab && lab.parentNode) lab.parentNode.insertBefore(hint, lab);
 
   // ── the player list was <div onclick> — invisible to Tab and to AT ──────
   var list=$('list');
@@ -198,6 +203,49 @@ cv.addEventListener('click',async e=>{let r=cv.getBoundingClientRect(),mx=(e.cli
   if(selLab && window.MutationObserver){
     new MutationObserver(function(){ say(selLab.textContent||''); })
       .observe(selLab,{childList:true,characterData:true,subtree:true});
+  }
+
+  // ── keyboard orbit ─────────────────────────────────────────────────────
+  // The map could be rotated by waiting for the animation and inspected by
+  // clicking a dot. Both require a pointer and patience. `yaw` is the draw
+  // loop's rotation and is now reachable on window (see the var/let note
+  // above), and draw() re-runs every frame regardless of whether rot is set,
+  // so writing yaw is picked up on the next paint with no redraw plumbing.
+  function fmtDeg(rad){
+    var d=((rad*180/Math.PI)%360+360)%360;
+    return (Math.round(d*100)/100).toFixed(2)+' degrees';
+  }
+  if(canvas){
+    if(!canvas.hasAttribute('tabindex')) canvas.tabIndex=0;
+    canvas.setAttribute('aria-keyshortcuts','ArrowLeft ArrowRight Home Space H');
+    canvas.addEventListener('focus',function(){
+      say('Embedding map focused. Left and right arrows rotate it. Press H for the controls.');
+    });
+    canvas.addEventListener('keydown',function(e){
+      if(e.altKey||e.ctrlKey||e.metaKey) return;
+      var step=(e.shiftKey?0.45:0.15), handled=true;
+      switch(e.key){
+        case 'ArrowLeft':
+          setSpin(false); window.yaw-=step; say('Rotated left to '+fmtDeg(window.yaw)+'.'); break;
+        case 'ArrowRight':
+          setSpin(false); window.yaw+=step; say('Rotated right to '+fmtDeg(window.yaw)+'.'); break;
+        case 'Home': case '0':
+          setSpin(false); window.yaw=0; say('Rotation reset to 0 degrees.'); break;
+        case ' ': case 'Spacebar': {
+          var spinning=btn.getAttribute('aria-pressed')==='false';
+          setSpin(!spinning);
+          say(spinning?'Rotation paused.':'Rotation resumed.');
+          break;
+        }
+        case 'h': case 'H': case '?':
+          say('Map keys: left and right arrows rotate, hold shift to rotate faster, '+
+              'Home resets the angle, space starts and stops the automatic rotation. '+
+              'The player list below the map selects a career and is reachable with Tab.');
+          break;
+        default: handled=false;
+      }
+      if(handled){ e.preventDefault(); e.stopPropagation(); }
+    });
   }
 
   var main=document.querySelector('.wrap')||document.querySelector('main');
