@@ -420,7 +420,7 @@ a dark canvas, the other a light one.)
       an older space's output.
       Invariants asserted in the smoke test: 0 same-decade twins, 0 duplicate
       names (the lookup keys on name), 0 missing `top5`/`archetype`.
-- [ ] P2.2b `trajectories.json` (90,730 b) is still unread by any page.
+- [x] P2.2b **Shipped.** `trajectories.json` is not redundant with `embedding_map_trajectories.json` — checked before assuming. It is career-arc analysis: 1,308 careers in five shapes, migrator 11.77 yr vs stable 7.11 yr, plus reinvention motifs and per-decade rates. Original note: `trajectories.json` (90,730 b) is unread by any page.
       `play.html` uses `embedding_map_trajectories.json` instead; check whether
       the smaller file is redundant or carries something the big one lacks.
 - [ ] P2.4 Data-quality nit for the pipeline lane: `eratwins.json` contains
