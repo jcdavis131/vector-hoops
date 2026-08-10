@@ -59,7 +59,9 @@ RE_GET_BY_ID = re.compile(r"""getElementById\(\s*['"]([A-Za-z][\w\-]*)['"]""")
 RE_DOLLAR = re.compile(r"""\$\(\s*['"]([A-Za-z][\w\-]*)['"]\s*\)""")
 RE_DOLLAR_DEF = re.compile(r"""\$\s*=\s*(?:function\s*\(|\w+\s*=>)""")
 RE_QS = re.compile(r"""querySelector\(\s*['"]([#.][A-Za-z][\w\-]*)['"]\s*\)""")
-RE_CLASS_ATTR = re.compile(r"""class=["']([^"']+)["']""")
+# play.html is generated with unquoted attributes (class=chip), so a
+# quoted-only pattern reported a live class as missing. Both forms.
+RE_CLASS_ATTR = re.compile(r"""class=(?:["']([^"']+)["']|([^\s>"'=]+))""")
 RE_ASSET = re.compile(
     r"""(?:fetch\(\s*['"]|<script[^>]+src=['"]|<link[^>]+href=['"]|<img[^>]+src=['"])([^'"]+)['"]"""
 )
@@ -109,7 +111,7 @@ def check_targets(fail) -> None:
     for page in pages():
         text = page.read_text(encoding="utf-8")
         ids = set(RE_ID_ATTR.findall(text))
-        classes = {c for attr in RE_CLASS_ATTR.findall(text) for c in attr.split()}
+        classes = {c for m in RE_CLASS_ATTR.findall(text) for c in (m[0] or m[1]).split()}
         wanted = set(RE_GET_BY_ID.findall(text))
         if RE_DOLLAR_DEF.search(text):
             wanted |= set(RE_DOLLAR.findall(text))
