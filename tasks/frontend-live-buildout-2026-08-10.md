@@ -497,7 +497,30 @@ a dark canvas, the other a light one.)
 - [ ] F2 self-host or drop the Google Fonts link.
 - [x] F3 **Nav unified — `4413c6d5`.** Mapped every nav before editing: `/trends.html` (rebuilt here from a stub) was reachable from **2 of 10** pages; `/dictionary.html` and `/player.html` only from the pages that created them; `leaderboard.html`/`methods.html` were a third island. All 10 pages now carry the same seven destinations — Explorer, Players, Trends, Model, Teams, Dictionary, Play CTA — each in its own markup and classes, so nothing moves visually but the link list. Verified every nav href resolves to a file on disk.
 
-## Validation
+## Validation — and what I genuinely cannot check
+
+**I cannot see this site rendered. At all.** No headless browser here, and the
+Vercel preview is behind `ssoProtection: all_except_custom_domains`, so every
+`*.vercel.app` URL redirects to SSO — including through Vercel's own
+authenticated fetch tool, whose `_vercel_share` token rotates and still requires
+an interactive exchange. **I quoted that preview URL ~10 times without ever
+verifying it served anything.** It works for you (you own the account); it was
+never something I had checked.
+
+So the only public surface is `hoops.dumbmodel.com`, and the only way any of
+this gets visually verified is a production deploy.
+
+What I *can* do, and now do:
+
+```
+python scripts/check_frontend.py                # repo root, 7 checks
+python scripts/check_frontend.py --root public  # the surface Vercel serves
+```
+
+Checking the deploy surface found `manifest.json` missing from `public/` —
+five pages link it and `/manifest.json` 404s live.
+
+## Old validation notes
 
 No frontend test harness and **no headless browser on this box** — layout is
 reasoned from the cascade, then confirmed on a Vercel preview deploy of this
