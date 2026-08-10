@@ -63,14 +63,36 @@ Accessibility across the live site is effectively zero — scanned
 ## Board
 
 ### Phase 1 — gameplay on the map
-- [ ] P1.1 Keyboard + screen-reader access to the play map (`#c`): focusable
-      canvas, arrow-key orbit, zoom, live-region mirror of target/guess state.
-      Proven implementation exists on branch `frontend-buildout`
-      (`assets/shared-map.js`) — port the behaviour, not the file.
-- [ ] P1.2 Archetype colour key. The map colours points and nothing says what a
-      colour means. Names must come from `assets/mtnn_arch.json gameArchetypes`,
-      asserted equal at validation time — never transcribed.
-- [ ] P1.3 `prefers-reduced-motion` gate on the trajectory animation.
+- [x] P1.1 Screen-reader access to the play map — **done `f520c19e`**. The
+      canvas `aria-label` was `"game canvas karaoke trajectory orange rings"`;
+      it now describes what is on screen. The result panel appeared via
+      `style.display='block'` + `innerHTML` — neither is an event AT hears, so
+      the payoff of every guess was silent; a `MutationObserver` mirrors it
+      into a live region. Season chips were bare `<span>` + `.onclick`,
+      unreachable by Tab; now `role=button tabindex=0` with Enter/Space. Skip
+      link added past the 8 nav links. Focus ring added — there was none.
+      Shipped as an appended block: **the first 27,701 chars of `play.html`
+      are byte-identical to `HEAD`**, 5,162 appended before `</body>`.
+- [x] P1.3 `prefers-reduced-motion` — **done `f520c19e`**. The page shipped 4
+      `@keyframes` + 4 `animation:` rules (1200 ms trajectory sweep, card
+      spike, 12-star confetti) and gated none of them.
+- [ ] P1.1b Keyboard *orbit* of the map. Not done and not cheap: rotation state
+      lives inside the page's minified IIFE closure, unreachable from an
+      appended script. Needs an edit inside the generated file, or the map
+      rewritten against `assets/shared-map.js` (which is still committed at
+      27,161 b but no longer referenced by `play.html`).
+- [ ] P1.2 Archetype colour key. **Blocked on data, not effort** —
+      `embedding_map_manifest.json` rows carry `player_id, norm, display_name,
+      seasons, seasons_count, is_current, is_allstar, is_recent_rookie,
+      is_3plus, best_season, latest_season, best_score`. No archetype field,
+      so the live map's colours cannot be decoded from what it loads. Either
+      join against `assets/archetype_assignments.json` client-side or add the
+      field to the manifest (pipeline lane — not mine).
+- [ ] P1.4 `resMeta` renders `cos` to **3 decimals**, against the repo rule of
+      never showing a user more than 2. Left alone deliberately: fixing it from
+      my appended layer means a re-entrant observer rewriting another agent's
+      render, which is more fragile than the bug. One-character fix for
+      whoever owns the generated `play.html`.
 
 ### Phase 2 — trends
 - [ ] P2.1 `trends.html` is a stub. Build a real change-over-time page from
@@ -78,10 +100,24 @@ Accessibility across the live site is effectively zero — scanned
       `trajectories.json`, `season_norms.json`). Follow the `dataviz` skill.
 
 ### Phase 3 — explainability
-- [ ] P3.1 **F1 first** — replace the fabricated SHAP canvas with real
-      attributions from `mtnn_attr_pop.json`, or delete the chart. Fabricated
-      beats nothing only in the wrong direction.
+- [x] P3.1 **F1 fixed — `fba1b234`.** The chart now reads
+      `assets/mtnn_attr_pop.json` (12,966 seasons, 120 features, 4 targets).
+      It is also not SHAP: the file states the method as *signed gradient ×
+      input*, a local linearization, so the label changed too. `method` and
+      `maskedNote` print verbatim, not paraphrased. 70 of 120 features are not
+      measured in every season — those bars are hatched and carry coverage in
+      their accessible name, because a zero bar means NEVER MEASURED. DOM bars,
+      not canvas, so values are selectable and readable by AT. On fetch failure
+      it says so; there is no fallback chart on purpose.
+      Real top attributions, for reference: position is dominated by
+      `PLAYER_HEIGHT_INCHES` 1.93 then `PLAYER_WEIGHT` 1.24; archetype by
+      `PLAYER_HEIGHT_INCHES` 0.86 then `USG_PCT` 0.76.
 - [ ] P3.2 End-to-end narrative: stat → tower → fusion → 64-d → head.
+- [ ] P3.3 Audit the rest of `model.html` for the same failure mode. The model
+      zoo numbers (`DeepMLP 4450.09`, `MTNN v3 loss 0.6641`, `purity@10
+      0.7057`, `lift 6.32`) are hardcoded in markup. They may well be true —
+      `assets/eval_scoreboard.json` exists — but **none of them is sourced**,
+      and F1 proves this page has shipped invented numbers before.
 
 ### Phase 4 — player cards + dictionary
 - [ ] P4.1 Audit `players.html` (14,723 b) against `knowledge/` wiki + `skills.json`.
