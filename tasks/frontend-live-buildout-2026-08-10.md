@@ -2682,3 +2682,59 @@ Afterwards, measured the same way it was found:
 naming choices with a plausible intent behind them — the CTA styling differs too
 — and picking one is a voice decision, not a defect. Recorded rather than
 changed.
+
+
+## The game drew a share card and no shared link could show it (2026-08-10)
+
+`play.html` builds a 1200x630 share image — `makeShareOG()`, `#shareCard`,
+`#shareCardD`, a whole popup to display it. Sharing is unambiguously intended.
+The metadata that decides what a shared link *looks like*:
+
+    missing description: 15 | no og: 20 | no twitter: 22 | no canonical: 22  (of 22)
+
+A link to `/play` — the page every navigation on the site drives to — rendered as
+a bare URL. No title, no summary, no image, while the page itself was drawing one.
+
+`scripts/build_social_meta.py` writes the tags, and **every value is already
+committed or already on the page**:
+
+    og:title        the page's own <title>
+    og:description  the page's own meta description — only where one exists
+    og:image        assets/og-1200x630.png, measured at exactly 1200x630
+    og:url          the clean URL, derived from the file path
+
+**Fifteen pages have no description and none was invented for them.** Writing
+fifteen summaries is copy, not wiring; those pages now get a title and an image
+in a preview and no summary line. That is a gap to fill deliberately, not a
+blank to fill automatically.
+
+**22 of 22 now carry Open Graph and Twitter tags. 20 of 22 carry a canonical.**
+
+## The two that do not, and why
+
+Six pages exist at two paths. Four of those pairs are true mirrors — `brand.html`
+and `brand/index.html` are one page at `/brand`, same title, and naming one
+canonical for both is exactly right.
+
+**`/player` is not a mirror pair. It is a collision.**
+
+    player.html         "Vector Hoops — Player cards"
+    player/index.html   "Vector Hoops — Player • Stay on floor"
+
+Two different pages, different content, both resolving to `/player` under
+`cleanUrls`. Whichever Vercel serves, **the other is unreachable at its clean
+URL** — and one of them is the player-cards hub whose browse row was built two
+passes ago. Twenty pages link `Players` there.
+
+No canonical was written for either, because none would be true. The generator
+detects the case by comparing titles and refuses rather than guessing, and says
+so on every run:
+
+    NOTE  https://hoops.dumbmodel.com/player is claimed by two different pages
+          — no canonical written for either
+
+- [ ] **P9.6 Decide which page owns `/player`.** Resolving it means renaming one
+  or adding a rewrite, and choosing which of the two a visitor should land on is
+  a product call. Worth knowing that the local server cannot answer it either —
+  `SimpleHTTPRequestHandler` does not implement `cleanUrls`, so only the deployed
+  site or Vercel's documented precedence settles which one currently wins.
