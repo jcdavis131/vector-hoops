@@ -3,8 +3,10 @@
 The brief says "make all pages free and accessible". I did the focus-ring half —
 16 of 22 pages had no :focus-visible rule at all — and then treated accessibility
 as finished, which it was not. This checks the criteria a static reader can
-actually settle. It cannot judge colour contrast or reading order; those need a
-browser and a person, and it says so rather than implying coverage it lacks.
+actually settle. Contrast is checked separately by scripts/check_contrast.py —
+it turned out to be arithmetic, not a browser job. Reading order, focus order and
+real screen-reader flow still need a browser and a person, and this says so rather
+than implying coverage it lacks.
 
 What it checks, all WCAG A/AA and all objectively decidable from the markup:
 
@@ -18,6 +20,12 @@ What it checks, all WCAG A/AA and all objectively decidable from the markup:
   btn-name    no control whose only content is an icon    4.1.2
   tabindex    no positive tabindex                        2.4.3
   th-scope    every <th> declares scope                   1.3.1
+  target-size a declared interactive height reaches 24px  2.5.8
+
+target-size covers only rules that state a height. A control sized by padding and
+font-size alone has a rendered height this cannot settle — .chip on play.html
+estimated to about 23.2px and now declares 24 explicitly rather than being
+guessed at.
 
     python scripts/check_a11y.py
     python scripts/check_a11y.py --root public
@@ -37,6 +45,10 @@ RE_COMMENT = re.compile(r"<!--.*?-->", re.S)
 RE_SCRIPT = re.compile(r"<script[^>]*>.*?</script>", re.S)
 RE_TAG = re.compile(r"<(\w+)((?:\s+[^>]*?)?)>", re.S)
 # an accessible name can come from any of these
+RE_STYLE = re.compile(r"<style[^>]*>(.*?)</style>", re.S | re.I)
+RE_CSS_COMMENT = re.compile(r"/\*.*?\*/", re.S)
+RE_CSS_RULE = re.compile(r"([^{}]+)\{([^{}]*)\}", re.S)
+RE_INTERACTIVE = re.compile(r"button|\.btn|\.pill|\.sbtn|\.tbtn|chip|\binput\b|\bselect\b|summary|\.tab\b", re.I)
 RE_HAS_NAME = re.compile(r"""\b(aria-label|aria-labelledby|title)\s*=\s*["']?[^"'\s>]""", re.I)
 # text that carries no name: emoji, arrows, punctuation, whitespace, entities
 RE_ICON_ONLY = re.compile(r"^(?:\s|&[a-z]+;|&#\d+;|[^\w\s])*$")
@@ -84,7 +96,7 @@ def main() -> int:
 
     failures: list[str] = []
     titles: dict[str, str] = {}
-    counts = {k: 0 for k in ("lang", "title", "img-alt", "label", "main", "h1", "heading", "btn-name", "tabindex", "th-scope")}
+    counts = {k: 0 for k in ("lang", "title", "img-alt", "label", "main", "h1", "heading", "btn-name", "tabindex", "th-scope", "target-size")}
 
     for page in pages(root):
         name = str(page.relative_to(root)).replace("\\", "/")
@@ -180,6 +192,36 @@ def main() -> int:
                 counts["th-scope"] += 1
                 if "scope" not in attrs(m.group(1)):
                     failures.append(f"{name}: <th> without scope= (WCAG 1.3.1)")
+
+        if on("target-size"):
+            # WCAG 2.5.8 Target Size (Minimum), AA in WCAG 2.2: 24x24 CSS px.
+            #
+            # Only rules that *declare* a height are checked. A control sized by
+            # padding and font-size alone has a rendered height this cannot
+            # settle — .chip on play.html computed to about 23.2px and needed a
+            # browser to confirm, which is why it now declares 24 explicitly.
+            # Reporting an estimate as a failure is how the first contrast pass
+            # produced 65 findings that were not real.
+            #
+            # `chip` and not `\.chip`: the pattern that missed .season-chip.
+            # strip CSS comments first, or the "selector" reported is whatever
+            # comment preceded the rule — which is what the first run printed
+            css = RE_CSS_COMMENT.sub(" ", "\n".join(RE_STYLE.findall(raw)))
+            for m in RE_CSS_RULE.finditer(css):
+                sel, decls = m.group(1).strip(), m.group(2)
+                if sel.startswith("@") or not RE_INTERACTIVE.search(sel):
+                    continue
+                hm = (re.search(r"min-height\s*:\s*([\d.]+)px", decls)
+                      or re.search(r"(?<![-\w])height\s*:\s*([\d.]+)px", decls))
+                if not hm:
+                    continue
+                counts["target-size"] += 1
+                px = float(hm.group(1))
+                if px < 24:
+                    failures.append(
+                        f"{name}: {sel[:44]!r} declares {px:g}px — interactive targets need "
+                        f"24px (WCAG 2.5.8)"
+                    )
 
     for k, v in counts.items():
         if want is None or k in want:

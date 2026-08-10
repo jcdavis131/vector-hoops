@@ -677,7 +677,7 @@ Two hand-numbered tokens survive inside dead modules
 (`past-modern-game.js` `?v=56`, `shared-map.js` `?v=58`); stamping tokens
 *inside* JS files is only worth building if P6.1 revives them.
 
-- [ ] **P6.2** Target size (WCAG 2.5.5) belongs in each page's CSS, declaratively,
+- [x] **P6.2 DONE, and I had the criterion wrong.** I filed it against WCAG 2.5.5, which is AAA at 44px. **2.5.8 Target Size (Minimum) is AA in WCAG 2.2 at 24px**, and that is the bar a site claiming accessibility has to clear. See below. Original note:
   where it can be reviewed — not a runtime sweep. Not done; removed the sweep.
 - [ ] **P6.3** The three tags sit at end of `<body>` (copying the placement
   `player-animations.html` already used), so `error-boundary.js` does not catch
@@ -1316,3 +1316,42 @@ Map data now renders on **5 root pages**, up from 3 two passes ago.
   dictionary defines terms, methods and inventory are reference. Whether any of
   them wants one is a product judgement rather than a gap, so this is a decision
   rather than a task.
+
+
+## Target size: I deferred it as unverifiable, and had the wrong criterion (2026-08-10)
+
+P6.2 said target size was "an unreviewed visual change" and left it. Two things
+were wrong with that.
+
+**The criterion.** I filed it against WCAG **2.5.5**, which is AAA and asks for
+44px — the number the runtime sweep was forcing, and a fair thing to refuse.
+**2.5.8 Target Size (Minimum) is AA in WCAG 2.2 and asks for 24.** A site claiming
+accessibility has to clear 24, and my ten-criterion audit did not check it at all.
+
+**"Unverifiable."** Ten interactive rules on this site declare a height, and all
+ten already clear 24 — 26, 28, 40, 44 x6, 74. That part was always checkable, and
+is now checked.
+
+The 120 rules that declare no height needed an estimate: padding + font-size x
+line-height + borders. My first pass assumed line-height 1.5 and found nothing,
+which was **backwards** — a larger line-height inflates the estimate toward
+passing. Browsers render `normal` at roughly 1.2. Redone at 1.2, two controls fell
+under, both on the page the brief puts first:
+
+    play.html  .chip         4+4 padding, 10.5px text, 1.3px borders  ~23.2px
+    play.html  .season-chip  4+4 padding, 10.2px text, 1.3px borders  ~22.8px
+
+`.season-chip` was missed on the first sweep because the pattern was `\.chip`,
+which does not match `-chip`. The gate's selector list now says `chip`.
+
+**Both fixes are one pixel.** That is the whole reason they ship: the sweep I
+removed earlier forced 46 elements on this page from their designed size to 44px,
+and refusing that was right. Going 23.2 to 24 is not the same decision.
+`align-items:center` comes with it so the text sits centred in the very slightly
+taller box.
+
+`target-size` is now the eleventh check in `check_a11y.py`, and only ever fails on
+a **declared** height — reporting an estimate as a failure is what made the first
+contrast pass produce 65 findings that were not real. Verified in both directions;
+the failure message names the selector, which took a second pass because the CSS
+rule regex was reporting the comment above the rule as the selector.
