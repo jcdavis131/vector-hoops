@@ -2171,3 +2171,59 @@ Okabe-Ito on white, clusters legible at a glance — because **archetype is the
 variable it is about**. model.html's cloud is context behind a single
 trajectory, so it stays neutral. Same data, different jobs, and that is a
 deliberate split rather than an inconsistency to iron out.
+
+
+## I fixed one duplicate skip link and never looked for the others (2026-08-10)
+
+Two pages still had two. I found them by accident, chasing something else.
+
+**play.html** carried a static `<a class="vh-skip" href="#main">Skip to the
+content</a>` and then an IIFE that injected a second reading "Skip to the game"
+at `body.firstChild` — *ahead* of the static one. Identical to the players.html
+defect I fixed two commits ago, on a page I did not think to check while fixing
+it. Only the injection was removed; the static link works with JavaScript off.
+
+**index.html** had two static links, both to `#main`: `class="skip"` and
+`class="vh-skip"`. The `.skip` one is the page's own — a comment in the file
+says it "was already here and left alone" — and `fix_skip_link.py` added mine on
+top, back when it looked for `class="vh-skip"` rather than for a skip link. **The
+one I added is the one that went.** The original's `:focus` pins the link at 16px
+rather than `left:0`, which is the better of the two, and its now-dead `.vh-skip`
+rule went with it.
+
+Making the check behavioural is what let this land cleanly: `/` now reports
+`first=.skip` and passes, because the assertion asks where the link goes rather
+than what it is called.
+
+### The rule is duplicate destination, not duplicate link
+
+`teams.html` also has two — "Skip to the content" to `#main` and "Skip to all 30
+teams" to `#foSec`. **That is correct**, and a check that counted skip links
+would have failed a page doing the right thing. `check_focus.py` now fails only
+when two of them point at the same target. Proven by putting a duplicate back
+into the served copy:
+
+    FAIL - /: 2 skip links all pointing at #main: Skip to content / Skip to the
+           content - a keyboard visitor meets the same destination twice
+
+### The sweep that found nothing, which is also a result
+
+Before that, all 18 served pages were checked for four things no static reader
+can see: `NaN`/`undefined`/`[object Object]`/`Infinity` in rendered text, loading
+placeholders still on screen, text elements overlapping, and text wider than its
+box. **No junk text anywhere. No overflow anywhere.** That is worth knowing.
+
+Both "stuck loading" hits were the probe's fault, not the site's, and both are
+worth writing down because they will catch the next person too:
+
+- **trends.html** looked like it had a permanent "Loading archetype names…".
+  The section is `IntersectionObserver`-gated and my probe scrolled to the page
+  bottom and back, never parking it in view. Park it and the legend fills
+  immediately: 8 archetype swatches with names, 9 buttons, an 8-row table.
+- **player-animations.html** looked like 8 code blocks stuck at "loading…". They
+  are inside closed `<details>` and load on expand. **A closed `<details>`'s
+  contents still report a non-zero bounding box in Chrome** — 1104x30 here — so
+  "is it visible" cannot be answered from rect size alone. Open one and it fills.
+
+That is the tenth and eleventh false alarm this session, and in both cases I
+nearly "fixed" a page that was working correctly.

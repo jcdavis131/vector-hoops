@@ -494,18 +494,13 @@ if('serviceWorker'in navigator){try{navigator.serviceWorker.register('/sw.js')}c
   }
 
   // ── skip link ──────────────────────────────────────────────────────────
-  // The nav is 8 links before the game; without this every keyboard visitor
-  // walks all of them on every page load.
-  var main=document.querySelector('main');
-  if(main){
-    if(!main.id) main.id='vh-main';
-    var skip=document.createElement('a');
-    skip.className='vh-skip';
-    skip.href='#'+main.id;
-    skip.textContent='Skip to the game';
-    document.body.insertBefore(skip,document.body.firstChild);
-    main.setAttribute('tabindex','-1');
-  }
+  // Removed. This injected a second one: the page already carries a static
+  // <a class="vh-skip" href="#main">Skip to the content</a> right after <body>,
+  // and this ran afterwards and inserted "Skip to the game" at
+  // body.firstChild — so it went in *ahead* of the static one and a keyboard
+  // visitor met two skip links before anything else. Same defect as
+  // players.html, on a page I did not think to check when I fixed that one.
+  // The static link works with JavaScript off, so it is the one to keep.
 })();
 </script>
 <script src="assets/error-boundary.js?v=daeb2be4"></script>

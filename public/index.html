@@ -49,12 +49,15 @@ canvas{display:block;width:100%;height:440px}@media(max-width:600px){canvas{heig
 footer{max-width:1120px;margin:0 auto;padding:10px var(--gutter);display:flex;flex-wrap:wrap;gap:8px;justify-content:space-between;color:#6b6760;font-size:11.5px;font-family:var(--mono)}
 .lod{display:inline-flex;gap:6px}.lod button{font-family:var(--mono);font-size:11px;padding:5px 9px;border-radius:999px;border:1.5px solid var(--ink);background:var(--surface);box-shadow:1.5px 1.5px 0 var(--ink);cursor:pointer;font-weight:800}.lod button.on{background:var(--yellow)}
 
-.vh-skip{position:absolute;left:-9999px;top:0;z-index:99;background:var(--paper,#fafaf8);border:2.2px solid var(--ink,#111);padding:10px 14px;font-family:ui-monospace,Menlo,monospace;font-weight:800;text-decoration:none;border-radius:0 0 10px 0}
-.vh-skip:focus{left:0}
+/* No .vh-skip rule here on purpose. This page had its own .skip link before I
+   touched it — the comment further down says so — and fix_skip_link.py added a
+   second one anyway, because back then it looked for class="vh-skip" rather than
+   for a skip link. Two links to #main, one after the other, before anything else
+   a keyboard visitor reaches. The original .skip is kept: its :focus style pins
+   the link at 16px rather than left:0, which is the better of the two. */
 </style>
 </head>
 <body>
-<a class="vh-skip" href="#main">Skip to the content</a>
 <a class="skip" href="#main">Skip to content</a>
 <nav class="site-nav" aria-label="Primary">
   <a class="site-nav__brand" href="/">DUMB<span>MODEL</span></a>

@@ -125,6 +125,28 @@ DESCRIBE = """(() => {
 })()"""
 
 
+DUPE_SKIPS = """(() => {
+  const seen = {};
+  for (const a of document.querySelectorAll('a[href^="#"]')) {
+    if (!/^\\s*skip\\b/i.test(a.textContent || '')) continue;
+    const t = a.getAttribute('href');
+    (seen[t] = seen[t] || []).push((a.textContent || '').trim().slice(0, 30));
+  }
+  const dupes = Object.keys(seen).filter(t => seen[t].length > 1)
+    .map(t => seen[t].length + ' skip links all pointing at ' + t + ': ' + seen[t].join(' / '));
+  return JSON.stringify(dupes);
+})()"""
+
+
+def ev_dupe_skips(ws: WS) -> str:
+    r = ws.call("Runtime.evaluate", {"expression": DUPE_SKIPS, "returnByValue": True})
+    try:
+        got = json.loads((r.get("result") or {}).get("value") or "[]")
+    except ValueError:
+        return ""
+    return "; ".join(got)[:150]
+
+
 def tab(ws: WS):
     for t in ("rawKeyDown", "keyUp"):
         ws.call("Input.dispatchKeyEvent", {"type": t, "key": "Tab", "code": "Tab",
@@ -236,6 +258,16 @@ def main() -> int:
                 # perfectly good .pl-skip — while missing that the page had
                 # ended up with two skip links, which was the actual bug.
                 s = first.get("skip")
+                # two skip links to the same place is a defect; two to different
+                # places is not. teams.html offers "Skip to the content" and
+                # "Skip to all 30 teams" and that is correct bypass-blocks
+                # practice, while index.html had two links both pointing at
+                # #main and play.html injected a second one at body.firstChild,
+                # ahead of the static one it already had.
+                dupes = ev_dupe_skips(ws)
+                if dupes:
+                    failures.append(f"{path}: {dupes} — a keyboard visitor meets the same "
+                                    f"destination twice before reaching anything")
                 if not s:
                     failures.append(f"{path}: first Tab went to {seq[0][0]}, which is not a "
                                     f"same-page link — no way past the nav (WCAG 2.4.1)"); ok = False
