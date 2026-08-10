@@ -2605,3 +2605,40 @@ about the real numbers, so it stays exactly as written.
 the two syntax errors I fixed two passes ago were in genuinely dead code and that
 fix changed no behaviour on any page. Worth confirming rather than assuming,
 since reviving a dead module silently would have been a real regression.
+
+
+## /owner: the payroll column named its season and the wins column did not (2026-08-10)
+
+Last page of the brief without a read-it-against-its-own-data pass. Its 30-team
+table headed one column **Pay24-25** while every other column went unlabelled,
+and the wins in the same row are **2025-26**. A reader sees `W 56` beside
+`Pay24-25` and concludes both are 2024-25. Boston won **61** in 2024-25, not 56.
+
+**I expected fabrication and did not find it.** Every figure on the page matches
+the committed data, and the column label is *correct*: BOS carries both
+
+    payroll_m           129.33     <- what /owner and /teams read
+    payroll_m_2025_26   213.82     <- the actual 2025-26 payroll
+
+so `Pay24-25` accurately names the field, and `56 ÷ 129.33 = 0.433` is the 0.43
+the page prints. The lite file's own method note says it outright: *"Wins per $1M
+payroll 2024-25."*
+
+The two seasons are a deliberate methodology choice — cap efficiency asks what
+the roster you paid for went on to win — and the defect was only that the page
+never said so. Headers are now **W 25-26**, **W\* 25-26**, **Pay 24-25**, with a
+caption carrying the worked example and naming the field the page does *not* use.
+
+Nothing about the numbers changed. One line of markup per mirror.
+
+### Worth recording, because it cuts against the last three passes
+
+Three fabricated surfaces came out of this session — `/owner`'s `Math.random()`
+columns, model.html's `EH 0.92`, teams.html's ten hardcoded rows — and the
+pattern made a fourth feel likely here. It was not. The check that would have
+"found" one was the same check that confirmed there was none: comparing every
+printed figure against the file it claims to come from. A suspicion is not a
+finding, and the page that survives the audit deserves to be recorded as
+surviving it.
+
+**All five phases of the brief have now had a look-at-the-page pass.**
