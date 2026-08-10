@@ -15,12 +15,29 @@ So this one plays:
             "play on the map" can degrade to "cloud with no target" — or to no
             cloud at all — without a single error in the console.
   question  a past player is being asked about, and it carries map coordinates
+  suggest   every name the game will accept is in the datalist the guess box
+            advertises. It shipped pointing at an empty one, so the only control
+            in the game offered no help against 1,305 names.
   miss      a deliberately bad guess. This path had never run under any gate,
             and it is the one that touches `pulseRing2()` and `#play-a-101`.
   hit       the best guess available, which has to advance the pack
+  chips     what the win actually drew. Advancing is not the same as telling the
+            truth — a trajectory that misses the cache falls through to invented
+            seasons, which must either match the guess's era or say they are
+            illustrative.
   numbers   cos within [-1,1], dist within [0,2], no "NaN" on screen, and no
             more than two decimals shown to a user
   console   no page error at any point in the session
+
+The canvas reading waits for two equal consecutive measurements. The cloud
+arrives from a fetch and repaints when it lands, so a single read is a race: the
+same page measured 10,117 non-background pixels on one run and 5,182 on the next.
+
+What this cannot reach: the datalist popup is browser chrome, not DOM. That every
+name is an `<option>` is checkable and checked; that the suggestions render while
+typing, and that arrow-selecting one and pressing Enter scores the selected name
+rather than the partial, needs a person. This test types the full exact name, so
+that path is genuinely unexercised.
 
 Nothing here is hardcoded to a player or a score. The pack is date-seeded — a
 fixture guess would rot by tomorrow — so both guesses are derived in-page from

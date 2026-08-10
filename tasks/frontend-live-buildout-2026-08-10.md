@@ -2017,3 +2017,28 @@ it still catches a real duplicate rather than being quietly disarmed:
     real duplicate           ids=['dup','dup','guess','guessList']  duplicates={'dup': 2}
     quoted in block comment  ids=['guess','guessList']              duplicates=none
     quoted in html comment   ids=['dup']                            duplicates=none
+
+
+### The same strip, applied where it hides failures instead of inventing them
+
+`without_comments` went into `check_ids` because a comment quoting markup was
+being counted as a declaration. The `targets` check reads ids and classes from
+the same raw text, and there it points the other way: an id that exists **only**
+inside a comment would let a `getElementById` for a target that is not on the
+page report as resolving. Inventing a failure wastes time; hiding one ships.
+
+Both now read stripped markup. **164 DOM lookups still resolve on both roots** —
+nothing on this site was leaning on a comment-declared target, which is the
+answer I wanted and not one I could have assumed.
+
+- [ ] **P9.5 The datalist dropdown needs a person.** That every accepted name is
+  an `<option>` is checkable and checked — 1,305 of 1,305. Two things are not,
+  because the popup is browser chrome rather than DOM and CDP cannot reach it:
+  whether suggestions render while typing (`autocomplete=off` alongside `list=`
+  is the standard pairing precisely so autofill history does not cover the
+  datalist, so this should be fine — but nothing has looked), and whether
+  arrow-selecting an option then pressing Enter scores the **selected** name
+  rather than the partial that was typed. The Enter handler fires on datalist
+  commit, and value-versus-keydown ordering is the kind of thing that differs by
+  browser. `smoke_play.py` types the full exact name, so that path is genuinely
+  unexercised.

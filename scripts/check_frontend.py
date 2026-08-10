@@ -172,8 +172,13 @@ def check_targets(fail) -> None:
     total = 0
     for page in pages():
         text = page.read_text(encoding="utf-8")
-        ids = set(RE_ID_ATTR.findall(text))
-        classes = {c for m in RE_CLASS_ATTR.findall(text) for c in (m[0] or m[1]).split()}
+        # the same reason check_ids strips them, pointed the other way: an id or
+        # class that only appears inside a comment would let a lookup for a
+        # target that does not exist report as resolving. That hides a failure
+        # rather than inventing one, which is the worse direction.
+        markup = without_comments(text)
+        ids = set(RE_ID_ATTR.findall(markup))
+        classes = {c for m in RE_CLASS_ATTR.findall(markup) for c in (m[0] or m[1]).split()}
         wanted = set(RE_GET_BY_ID.findall(text))
         if RE_DOLLAR_DEF.search(text):
             wanted |= set(RE_DOLLAR.findall(text))
