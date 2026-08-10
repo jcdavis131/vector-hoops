@@ -1,74 +1,17 @@
-<!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#fafaf8">
-<title>Vector Hoops — Inventory Audit</title>
-<link rel="manifest" href="/manifest.json">
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Architects+Daughter&display=swap" rel="stylesheet">
-<style>
-:root{--paper:#FAFAF8;--ink:#111111;--orange:#EB6834;--blue:#2A78D6;--purple:#7A5AE6;--yellow:#F0E442;--line:#E8DDD0}
-*{box-sizing:border-box}html,body{margin:0;background:var(--paper);color:var(--ink);font-family:ui-sans-system,system-ui,Segoe UI,Roboto,sans-serif}
-a{color:inherit;text-decoration:none}
-header{max-width:1120px;margin:0 auto;padding:10px 14px;display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;align-items:center;border-bottom:2.5px solid var(--ink)}
-.brand{font-family:ui-monospace,Menlo,monospace;font-weight:900;text-transform:uppercase;letter-spacing:-.02em;font-size:18px}
-.sg{font-family:"Architects Daughter",cursive;font-size:15px;opacity:.92;transform:rotate(-0.6deg);display:inline-block}
-.pill{display:inline-flex;align-items:center;gap:6px;padding:6px 11px;border-radius:999px;border:1.6px solid var(--ink);background:#fff;box-shadow:1.8px 1.8px 0 var(--ink);font-weight:800;font-size:11.5px;font-family:ui-monospace,Menlo,monospace;min-height:44px;cursor:pointer}
-.pill-y{background:var(--yellow)} .pill-o{background:var(--orange);color:#fff} .pill-b{background:var(--blue);color:#fff}
-.wrap{max-width:1120px;margin:0 auto;padding:12px}
-.card{background:#fff;border:2.2px solid var(--ink);border-radius:16px;box-shadow:4px 4px 0 var(--ink);padding:12px}
-.hd{font-family:ui-monospace,Menlo,monospace;font-weight:900;text-transform:uppercase;letter-spacing:.04em;font-size:12px}
-.mono{font-family:ui-monospace,Menlo,monospace;font-size:11px;color:#5A5754}
-.mini{font-size:12.3px;line-height:1.5;color:#443F3A}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}@media(max-width:900px){.grid{grid-template-columns:1fr}}
-table{width:100%;border-collapse:collapse;font-size:12px}th,td{padding:6px 7px;border-bottom:1px solid #EEE6DA;text-align:left}
-th{font-size:10.5px;text-transform:uppercase;letter-spacing:.04em;color:#5A554F;background:#FFF6A8;position:sticky;top:0}
-.badge{display:inline-flex;padding:2px 7px;border-radius:999px;font-size:10px;font-weight:800;border:1.2px solid var(--ink);background:#fff}
-.badge.ok{background:#E7F6EA} .badge.y{background:var(--yellow)}
-footer{margin-top:10px;display:flex;flex-wrap:wrap;gap:8px;color:#6B6770;font-size:11.8px;justify-content:space-between;border-top:1.6px dashed var(--line);padding-top:8px}
-</style>
-</head>
-<body>
-<header>
-<div class="brand">◐ DUMB MODEL <span class="pill pill-y" style="transform:rotate(-1deg)">Inventory • honest provenance</span> <span class="sg">33×944 → glass box</span></div>
-<nav style="display:flex;gap:8px;flex-wrap:wrap"><a class="pill" href="/index.html">Map</a><a class="pill" href="/play.html">Play</a><a class="pill" href="/leaderboard.html">Board</a><a class="pill pill-y" href="/inventory.html">Inventory</a><a class="pill" href="/methods.html">Methods</a><a class="pill" href="/offline.html">Offline</a></nav>
-</header>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#fafaf8"><title>Inventory • Historical Training Audit • Vector Hoops</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Architects+Daughter&display=swap" rel="stylesheet"><style>:root{--paper:#fafaf8;--ink:#111;--hair:#e8e2d8;--orange:#eb6834;--yellow:#f0e442;--mono:ui-monospace,Menlo,monospace;--sans:ui-sans-system,system-ui;--hand:"Architects Daughter",cursive}*{box-sizing:border-box}html,body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans)} .nav{position:sticky;top:0;display:flex;justify-content:space-between;align-items:center;padding:10px 14px;background:#fff;border-bottom:2.2px solid var(--ink)} .brand{font:900 14px var(--mono);text-transform:uppercase}.brand span{color:var(--orange)} .wrap{max-width:1020px;margin:0 auto;padding:14px} .mono{font:900 11px var(--mono);text-transform:uppercase;letter-spacing:.06em} .hand{font-family:var(--hand);transform:rotate(-.6deg);display:inline-block} .card{background:#fff;border:2px solid var(--ink);border-radius:14px;box-shadow:4px 4px 0 var(--ink);padding:11px;margin-top:10px} .pill{font:800 11px var(--mono);text-transform:uppercase;padding:5px 9px;border:1.5px solid var(--ink);border-radius:999px;background:#fff;box-shadow:2px 2px 0 var(--ink);display:inline-flex} .pill.y{background:var(--yellow)} table{width:100%;border-collapse:collapse;font:800 11.5px var(--mono)} th{font:900 10px var(--mono);text-transform:uppercase;text-align:left;padding:6px 7px;border-bottom:1.6px solid var(--ink)} td{padding:6px 7px;border-bottom:1px solid #eee} tr.done td{background:#f5ffed}
+</style></head><body>
+<nav class="nav"><a class="brand" href="/">DUMB<span>MODEL</span></a><div><a class="pill" href="/">Map</a> <a class="pill y" href="/inventory.html">Inventory</a></div></nav>
 <div class="wrap">
-<div class="card">
-<div class="hd">True counts — not 4×213 — 33 seasons 944 OU + payroll 36/1001 combine 3014 etc</div>
-<p class="mini">All counts verified via <code>ls -lh assets/data/</code> Aug 9 2026. No vanity. Misreport 4×213=852 OU only 2019-22 copy. Real <b>33 seasons 944</b> entries <code>preseason_win_totals.json</code> built 2026-08-09T00:50 SportsOddsHistory 2003-26 + BetMGM Apr 2026 2025-26 + BetMGM Aug 2026 2026-27, 31 seasons ≥20 teams + 2 futures. 2025-26 OKC 62.5 DEN 53.5 2026-27 SAS 59.5 OKC 60.5.</p>
-<div class="grid" style="margin-top:8px">
-<div class="mini"><b>payroll 36/1001 enriched 266K cap_pct</b> — payroll_enriched.json 266,013 bytes 36 dicts 1001 team-years payroll_m cap cap_pct tax apron1/2 growth. cap_history 31 seasons $24.36M→$154.65M→$164.96M 846 cap_pct have cap. Effective cap 2016 = prior $70M×1.10 not raw $94.143M spike 34.5% TV $24B.<br><br><b>combine 3014 wingspan/vert</b> — combine_measurements.json 1.26MB built 2026-08-09 years 2000-26 3014 prospects sources stats.nba.com_draftcombinestats + bio_estimated + draft_history. True combine residential-IP only else estimated=True flagged glass-box. Wingspan 0.25in vert 0.5in lane/shuttle 0.01s.</div>
-<div class="mini"><b>tracking 13 wide masked not zero</b> — skills_wide.json 646K 13 cols speed dist touch dribble contest etc Mask m∈{0,1} cat([x·m,m]) prevents leakage pre-2013 not zero-impute. 5154 grade rows.<br><br><b>props 582+569 2.64MB</b> — player_season_props.json 2,642,335 bytes Seasons 2020-21 540 2021-22 605 2022-23 539 2023-24 572 2024-25 569 2025-26 582 2026-27 582 =3989 total lines Latest 2 582+569=1151 dual-compatible >1.4MB dual book basis Vegas over/under line residual props_alpha .08.<br><br><b>matchup 14.7k 2871 uniq</b> — matchup_players.json 9,992,186 bytes 14,690 recs 30 seasons 2871 uniq players closer 78 depriv 21 exploitable 32 logic faderfinisher.json 389K 2024-25 572 players playoff min sec + injury flags.</div></div>
+<div class="mono">INVENTORY • HISTORICAL TRAINING AUDIT • v7.4 CLASSIC • DUMB MODEL #FAFAF8</div>
+<h1 style="font:900 26px var(--mono);text-transform:uppercase;margin:6px 0">AUDIT <span style="background:var(--yellow);border:1.6px solid var(--ink);box-shadow:2px 2px 0 var(--ink);padding:0 6px;transform:rotate(-.6deg);display:inline-block">CHECKLIST</span> <span class="hand">interactive timeline</span></h1>
+<div class="card"><div class="mono">33 OU 944 / 31 CAP $24M→$154M→$165M • payroll 1001 • combine 3014 • matchup 14.7k • valuations 360</div>
+<table><thead><tr><th>Data</th><th>Count / Volume</th><th>Storage</th><th>Schema</th><th>Status</th><th>Check</th></tr></thead><tbody id="tb"></tbody></table>
+<div class="mono" style="margin-top:8px">CLICK CHECKS PERSIST localStorage — ZERO-DEPS</div>
 </div>
-<div class="grid" style="margin-top:10px">
-<div class="card"><div class="hd">Audit table — 9 core + FO drift</div>
-<div style="max-height:360px;overflow:auto;border:1.6px solid var(--ink);border-radius:12px;margin-top:6px">
-<table id="aud"><thead><tr><th>Dataset</th><th>Count</th><th>Bytes/format</th><th>Key fields</th><th>Status</th></tr></thead><tbody></tbody></table></div>
-<div class="mono" style="margin-top:6px">Verified: FO 1.1M (1,160,938) + by-season 913K, cap_history 31, payroll 1001 enriched, team_valuations 360 (30×12), valuation_history 51,344 json 30 seasons, matchup 14.7k, model_zoo 40,257 bytes MAE 4450.09 beats trimmedMean 4501.15 Δ-51.</div></div>
-<div class="card"><div class="hd">Construct validity + drift numbers • honest provenance</div>
-<div class="mini" style="margin-top:6px"><b>OU r=0.741 market truth:</b> Vegas OU vs actual wins 2003-26 944 entries r=0.741 Wins/$M vs cap_pct r=-0.31. Purity@10 0.7057 lift 6.32 MTNN 48-d leakfree recall@10 0.977 composite 0.7937.<br><b>Drift 8.38°/yr avg:</b> drift.json 29 pairs 1996-97→2025-26 min5.88 max12.64 avg8.38° orthogonal Procrustes >=30 shared players/pair rotation mean principal angle Q vs I residual Frobenius no scaling pre-normed chain to 1996-97 root. Earlier doc claimed 6.2°/yr limited 14-d raw v5 measured 8.38 honest. axisDrift=1-|Q_ii| 0.036 FG_PCT top.<br><b>Valuation 360+51K FO 1.1M:</b> team_valuations 360 entries (30×12 2014-15→2025-26) 141K synth Forbes 10-13% growth + market mod valuation_history 30 dicts 51K for MTNN win projection 2026+. FO 1.1M includes method champion_map playoff_wins 94.8.<br><b>FO 0.35/0.35/0.30:</b> FOR min99 .35 Draft +.35 Cap +.30 Foresight +.15 vegas +.08 props + champ_bonus NYK Champion+16 SAS Runner+7 + valα±2 W* = W+2.5·PO+0.12·realG playoff premium 2.5× brand.</div>
-<div class="mini" style="border:1.5px dashed var(--ink);padding:8px;border-radius:10px;margin-top:8px">Checklist (10): 1) OU 944 dual-src SportOddsHistory+BetMGM 2) Payroll 36/1001 266K cap_pct via 31 cap 3) Cap rules 31 effective_cap 2016=prior×1.10 4) Combine 3014 wingspan/vert flagged 5) Tracking 13 wide masked 6) Props 582+569=1151 2.64MB 7) Matchup 14,690 2871 uniq 8) Matchup 572 2024-25 9) Valuation 360+51K W/$B 10) FO 1.1M + by-season 893K <span class="badge y">Zero-deps ✓</span></div></div>
-</div>
-<footer><span class="mini"><a href="/index.html">/</a> <a href="/teams.html">/teams</a> <a href="/model.html">/model</a> <a href="/trends.html">/trends</a> <a href="/inventory.html">/inventory</a> <a href="/methods.html">/methods</a> <span class="badge ok">33 OU 944 • payroll 36/1001 266K • combine 3014 • tracking 13 • props 582+569 2.64MB • matchup 14.7k 2871 uniq • val 360+51K FO 1.1M • drift 8.38° avg</span></span><span class="mono">PWA v67 • theme #fafaf8 • zero-deps • manifest /manifest.json</span></footer>
 </div>
 <script>
-const rows=[
- ['OU seasons','944 / 33 seasons (31 hist+2 fut)','18.9K preseason_win_totals.json SportsOddsHistory+BetMGM','ou_win team season book r=0.741 vs actual','ok built 2026-08-09'],
- ['Payroll / cap_pct','36 dicts 1001 team-years 846 cap_pct','266K payroll_enriched.json +26K cap_history','payroll_m cap cap_pct tax apron1/2 growth eff 2016=prior*1.10','ok 31 cap $24M→$154M→$165M'],
- ['Combine','3014 prospects 2000-26','1.26 MB combine_measurements.json','wingspan vert agility shuttle bench lane estimated=True flag','ok bio_estimated glass-box'],
- ['Tracking/Wide','13 wide cols 5154 rows','646K skills_wide.json','speed dist touch dribble contest mask m∈{0,1} cat[x·m,m]','ok masked not zero 2013+'],
- ['Props','582+569=1151 latest 2 / 3989 total','2.64 MB player_season_props.json','prop lines 2024-25 569 2025-26 582 Vegas dual props_alpha .08','ok 1.4MB dual-compatible'],
- ['Matchup','14,690 recs 2,871 uniq 30 seasons','9.99 MB matchup_players.json +389K faderfinisher','closer>1.2 dep<0.8 exploitable playoff_min_sec injury_flags','ok 572 2024-25'],
- ['Valuation','360 entries 30×12 +51K history','141K team_valuations.json +51K valuation_history.json','Val $B YoY% W/$B Valα ±2 synth Forbes 10-13%','ok 2014-15→2025-26'],
- ['Front Office','FO 1.16M + by-season 913K','front_office.json 1.16MB by-season 913K','FOR 0.35/0.35/0.30 cap_eff foresight draft surplus champ_bonus','ok FOR min99'],
- ['Drift Procrustes','29 pairs avg 8.38° min5.88 max12.64','122K drift.json orthogonal Q rotation','>=30 shared players/pair residual Frobenius chain root 1996-97 axisDrift 1-|Q_ii|','ok honest 8.38 not 6.2'],
- ['Model Zoo','11 models DeepMLP 4450.09 best','40K model_zoo_eval.json','MAE RMSE R² 5-fold seed42 glass-box SHAP','ok Δ-51 vs trimmedMean']
-];
-let tb=document.querySelector('#aud tbody'); rows.forEach(r=>{ let tr=document.createElement('tr'); tr.innerHTML='<td><b>'+r[0]+'</b></td><td>'+r[1]+'</td><td class="mono">'+r[2]+'</td><td class="mono">'+r[3]+'</td><td><span class="badge ok">'+r[4]+'</span></td>'; tb.appendChild(tr) });
-if('serviceWorker' in navigator){ try{ navigator.serviceWorker.register('/sw.js') }catch(e){} }
-</script>
-</body>
-</html>
+const rows=[["OU seasons","944 / 33 seasons","18.9K json","team,ou_win,season,book","ok dual-src r=0.741"],["Payroll / cap_pct","36 dicts 1001 team-years / 846 cap_pct","266K enriched","payroll_m,cap,cap_pct,tax,apron1/2","ok 31 cap $24M→$154M→$165M"],["Cap history","31 1996-97→2026-27","26.5K json","cap tax_line apron spike_flag 34.5%","ok eff prior*1.10"],["Combine","3014 rows","1.26 MB","wingspan,vert,agility,shuttle,bench","ok tracking 2013+"],["Tracking/Wide","13 wide cols","632K skills_wide.json","speed dist touch dribble contest mask","ok masked"],["Props","582+569=1151","2.64 MB player_season_props.json","prop_type over/under line vegas","ok 1.4MB dual"],["Matchup_enriched","14,690 recs 2,871 uniq","1.1MB csv/json","closer>1.2 dep<0.8 exploitable playoff_min_sec","ok 30 seasons"],["Matchup 24-25","572 players 2024-25","381K","w_matchup def_vs_pos on/off","ok"],["Valuation","360 entries 30×12 +51K history","141K +51K","Val $B YoY% W/$B Valα ±2","ok 2014-→2025-26"],["Front Office","FO 1.1M + by-season 893K","1.16MB front_office.json","FOR 0.35/0.35/0.30 cap_eff foresight draft surplus","ok"],["Vectors","12,966 seasons / limited 1814 86% save","3.7 MB / 274K","48-d MTNN 64-d xyz glass","ok twin 0.7057"],["Model Zoo","11 models DeepMLP 4450.09","40K eval json","MAE/RMSE/R² 5-fold seed42","ok Δ-51 beats trim"]];
+let tb=document.getElementById("tb"); let all=JSON.parse(localStorage.getItem("inv_check")||"{}");
+rows.forEach((r,i)=>{let tr=document.createElement("tr"); if(all[i]) tr.classList.add("done"); tr.innerHTML=`<td><b>${r[0]}</b></td><td>${r[1]}</td><td class="mono">${r[2]}</td><td class="mono">${r[3]}</td><td><span class="pill y">${r[4]}</span></td><td><input type="checkbox" ${all[i]?"checked":""} data-i="${i}"></td>`; tb.appendChild(tr);});
+tb.addEventListener("change",e=>{if(e.target.dataset.i!==undefined){all[e.target.dataset.i]=e.target.checked; localStorage.setItem("inv_check",JSON.stringify(all)); e.target.closest("tr").classList.toggle("done",e.target.checked);}});
+</script></body></html>

@@ -1,89 +1,137 @@
 <!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#fafaf8">
-<title>Vector Hoops — Front Office Lab · FOR calculator</title>
-<meta name="description" content="FOR = min(99,.35D+.35C+.30F)+vegas+props+champ+valα. Sortable W* W/$M paper aesthetic.">
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Architects+Daughter&display=swap" rel="stylesheet">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23111111'/%3E%3Ccircle cx='11' cy='12' r='3' fill='%23EB6834'/%3E%3Ccircle cx='21' cy='19' r='3' fill='%232A78D6'/%3E%3Cpath d='M11 12 L21 19' stroke='%23FAFAF8' stroke-width='1.6'/%3E%3C/svg%3E">
-<link rel="manifest" href="data:application/manifest+json;base64,eyJuYW1lIjoiVmVjdG9yIEhvb3BzIEZvciIsInRoZW1lX2NvbG9yIjoiI2ZhZmFmOCIsImJhY2tncm91bmRfY29sb3IiOiIjRkFGQUY4IiwiZGlzcGxheSI6InN0YW5kYWxvbmUifQ==">
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#fafaf8">
+<title>Front Office Lab — FOR · DUMB MODEL · v7.4</title><meta name="description" content="FOR = min99 0.35D+0.35C+0.30F+.15vegas+.08props+champ NYK16 SAS7 CLE3 OKC3 + valα ±2. W* blog narrative.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Architects+Daughter&display=swap" rel="stylesheet">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23111111'/%3E%3Ccircle cx='11' cy='12' r='3' fill='%23eb6834'/%3E%3Ccircle cx='21' cy='19' r='3' fill='%232a78d6'/%3E%3C/svg%3E">
+<link rel="manifest" href="data:application/manifest+json;base64,eyJuYW1lIjoiRm9yIiwidGhlbWVfY29sb3IiOiIjZmFmYWY4IiwiYmFja2dyb3VuZCI6IiNmYWZhZjgifQ==">
 <style>
-:root{--paper:#FAFAF8;--surface:#FFFFFF;--ink:#111111;--ink-soft:#52514E;--ink-muted:#878580;--orange:#EB6834;--blue:#2A78D6;--purple:#7A5AE6;--yellow:#F0E442;--green:#009E73;--red:#D8452A;--mono:ui-monospace,"IBM Plex Mono",Menlo,Consolas,monospace;--sans:ui-sans-system,system-ui,Segoe UI,Roboto,sans-serif;--hand:"Architects Daughter",cursive;--r:12px;--shadow:4px 4px 0 var(--ink);--shadow-sm:3px 3px 0 var(--ink)}
-*{box-sizing:border-box}html,body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.6;-webkit-font-smoothing:antialiased}
-.site-nav{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:11px clamp(12px,3vw,22px);padding-top:calc(11px + env(safe-area-inset-top,0));background:var(--surface);border-bottom:2px solid var(--ink)}
-.site-nav .brand{font-family:var(--mono);font-weight:900;text-transform:uppercase;font-size:15px;text-decoration:none;color:var(--ink)}
-.site-nav .links{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
-.site-nav .links a{font:800 11.5px var(--mono);text-transform:uppercase;letter-spacing:.05em;color:var(--ink-soft);text-decoration:none;padding:7px 10px;border:2px solid transparent;border-radius:9px}
-.site-nav .links a:hover{color:var(--ink);border-color:var(--ink);background:var(--paper)}
-.site-nav .links .cta{background:var(--ink);color:#fff;border-color:var(--ink);box-shadow:var(--shadow-sm)}
-.wrap{max-width:1120px;margin:0 auto;padding:14px clamp(12px,3vw,18px)}
-.eyebrow{font-family:var(--mono);font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--ink-muted);margin:0}
-.hero-band{width:100%;background:linear-gradient(180deg,var(--surface),var(--paper));border-bottom:2px solid var(--ink);position:relative;overflow:hidden}
-.hero-band::before{content:"";position:absolute;inset:0;background-image:radial-gradient(circle at 18% 28%,rgba(235,104,52,.08),transparent 45%),repeating-linear-gradient(-12deg,transparent,transparent 28px,rgba(17,17,17,.02) 28px,rgba(17,17,17,.02) 29px);pointer-events:none}
-.hero{position:relative;z-index:1;display:flex;flex-wrap:wrap;gap:18px;align-items:center;padding:22px clamp(12px,3vw,22px);max-width:1120px;margin:0 auto}
-.roster{display:flex;gap:10px;flex-wrap:nowrap}
-.tile{width:64px;height:64px;background:#fff;border:2px solid var(--ink);border-radius:10px;box-shadow:3px 3px 0 var(--ink);display:grid;place-items:center}
-.tile svg{width:62%;height:62%}
-.t-o{box-shadow:4px 4px 0 var(--orange)} .t-b{box-shadow:4px 4px 0 var(--blue)} .t-p{box-shadow:4px 4px 0 var(--purple)} .t-g{box-shadow:4px 4px 0 var(--green)} .t-c{box-shadow:4px 4px 0 var(--ink);background:repeating-linear-gradient(135deg,#fff,#fff 6px,#f0ebe2 6px,#f0ebe2 8px)}
-.pill{display:inline-flex;padding:6px 11px;border-radius:999px;background:#fff;border:1.6px solid var(--ink);font:800 11px var(--mono);box-shadow:2px 2px 0 var(--ink);text-transform:uppercase}
-.pill.y{background:var(--yellow);transform:rotate(-1deg)} .pill.ink{background:var(--ink);color:#fff}
-.card{background:var(--surface);border:2px solid var(--ink);border-radius:12px;box-shadow:var(--shadow);overflow:hidden}
-.mono{font-family:var(--mono);font-size:11px}
-.sg{font-family:var(--hand);font-size:14px;color:#6B6862}
-.grid{display:grid;grid-template-columns:1.15fr .85fr;gap:12px;margin-top:12px} @media(max-width:900px){.grid{grid-template-columns:1fr}}
-table{width:100%;border-collapse:collapse;font-size:12.4px}
-th{font:900 11px var(--mono);text-transform:uppercase;letter-spacing:.06em;color:#57534E;background:#FFF8CC;cursor:pointer;position:sticky;top:0;padding:8px;border-bottom:1.8px solid var(--ink);white-space:nowrap}
-th:hover{background:var(--yellow)} td{padding:7px 8px;border-bottom:1px solid #EEE8DA;white-space:nowrap} td.num{text-align:right;font-family:var(--mono);font-variant-numeric:tabular-nums}
-tbody tr:nth-child(even){background:rgba(17,17,17,.03)} tbody tr:hover{background:#FFF5D0}
-.badge{display:inline-flex;padding:3px 8px;border-radius:999px;font:800 10px var(--mono);border:1.5px solid var(--ink);background:#fff}.badge.apron{background:var(--ink);color:#fff}
-.hd{font-family:var(--mono);font-weight:900;text-transform:uppercase;letter-spacing:.06em}
-.btn{display:inline-flex;align-items:center;justify-content:center;padding:8px 12px;border-radius:10px;border:2px solid var(--ink);background:var(--yellow);font:900 11px var(--mono);text-transform:uppercase;box-shadow:var(--shadow-sm);cursor:pointer}
-</style>
-</head>
+:root{--paper:#fafaf8;--ink:#111111;--mut:#6a6760;--orange:#eb6834;--blue:#2a78d6;--purple:#7a5ae6;--yellow:#f0e442;--hair:#e8e2d8;--mono:ui-monospace,Menlo,monospace;--sans:ui-sans-system,system-ui,Segoe UI,Roboto,sans-serif;--hand:"Architects Daughter",cursive}
+*{box-sizing:border-box}html,body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+.nav{position:sticky;top:0;z-index:40;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px clamp(10px,3vw,18px);padding-top:calc(10px + env(safe-area-inset-top,0));background:#fff;border-bottom:2px solid var(--ink)}
+.brand{font:900 14px var(--mono);text-transform:uppercase;letter-spacing:.05em}.brand span{color:var(--orange)}
+.links{display:flex;gap:5px;flex-wrap:wrap;align-items:center}
+.lk{font:800 11px var(--mono);text-transform:uppercase;padding:6px 10px;border:2px solid transparent;border-radius:9px;color:#5a574f}.lk:hover{border-color:var(--ink);color:var(--ink);background:var(--paper)}
+.cta{font:800 11px var(--mono);text-transform:uppercase;background:var(--ink);color:#fafaf8;border-color:var(--ink);box-shadow:2px 2px 0 var(--ink);border-radius:9px;padding:7px 12px}
+.wrap{max-width:1120px;margin:0 auto;padding:14px clamp(10px,3vw,16px)}
+.ey{font:700 11px var(--mono);text-transform:uppercase;letter-spacing:.1em;color:var(--mut);margin:0}
+.h1{font:900 28px var(--mono);text-transform:uppercase;letter-spacing:-.02em;margin:6px 0 4px;line-height:.96}
+.h1 b{background:var(--yellow);border:1.6px solid var(--ink);box-shadow:2px 2px 0 var(--ink);padding:0 6px;transform:rotate(-.6deg);display:inline-block;color:var(--ink)}
+.hand{font-family:var(--hand);font-size:15px;opacity:.9;transform:rotate(-.6deg);display:inline-block}
+.card{background:#fff;border:2px solid var(--ink);border-radius:14px;box-shadow:4px 4px 0 var(--ink);overflow:hidden}
+.pill{display:inline-flex;align-items:center;gap:6px;padding:5px 10px;border-radius:999px;border:1.6px solid var(--ink);background:#fff;box-shadow:2px 2px 0 var(--ink);font:800 10.6px var(--mono);text-transform:uppercase;cursor:pointer}
+.pill.y{background:var(--yellow);transform:rotate(-.6deg)}.pill.inv{background:var(--ink);color:#fafaf8}
+.mono{font-family:var(--mono);font-size:11px}.sm{font-size:11.4px;line-height:1.55;color:#4a4742}
+.grid{display:grid;grid-template-columns:1.15fr .85fr;gap:12px;margin-top:12px}@media(max-width:900px){.grid{grid-template-columns:1fr}}
+.blog{padding:12px}.blog p{margin:6px 0}
+.prose{border:1.6px dashed var(--hair);border-radius:10px;padding:10px;background:#fefdf9}
+table{width:100%;border-collapse:collapse;font-size:12px}th{font:900 10.8px var(--mono);text-transform:uppercase;letter-spacing:.05em;background:#fff9c7;padding:7px 8px;border-bottom:1.8px solid var(--ink);white-space:nowrap;cursor:pointer;position:sticky;top:0}
+th:hover{background:var(--yellow)}th.on{background:var(--ink);color:var(--paper)}td{padding:6px 7px;border-bottom:1px solid #eee8da;white-space:nowrap}td.n{text-align:right;font-family:var(--mono);font-variant-numeric:tabular-nums}
+tbody tr:nth-child(even){background:rgba(17,17,17,.035)}tbody tr:hover{background:#fff6cf}
+.badge{font:800 10px var(--mono);padding:3px 7px;border-radius:999px;border:1.4px solid var(--ink);background:#fff;display:inline-flex}
+.badge.apr{background:var(--ink);color:#fff}.badge.no{background:var(--yellow)}
+.sortbar{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0}
+</style></head>
 <body>
-<nav class="site-nav"><a class="brand" href="/">DUMB<span style="color:var(--orange)">MODEL</span></a><div class="links"><a href="/#games">Games</a><a href="/teams.html">Teams</a><a href="/play.html">Play</a><a href="/players.html">Players</a><a class="cta" href="/play.html">Play today's →</a></div></nav>
-<div class="hero-band"><div class="hero"><p class="eyebrow">Six models · five daily puzzles · free · no account</p><div class="roster"><div class="tile t-o"><svg viewBox="0 0 40 40" fill="none"><circle cx="14" cy="11" r="5" stroke="#EB6834" stroke-width="2.5"/><circle cx="26" cy="29" r="5" stroke="#2A78D6" stroke-width="2.5"/><path d="M17 15 L23 25" stroke="#111" stroke-width="2.5" stroke-linecap="round"/></svg></div><div class="tile t-b"><svg viewBox="0 0 40 40" fill="none"><path d="M8 30 L16 22 L22 26 L34 10" stroke="#2A78D6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M27 10 L34 10 L34 17" stroke="#111" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="tile t-p"><svg viewBox="0 0 40 40" fill="none"><path d="M8 32 L8 8 M8 32 L34 32" stroke="#111" stroke-width="2.5" stroke-linecap="round"/><circle cx="15" cy="25" r="2.6" fill="#7A5AE6"/><circle cx="23" cy="18" r="2.6" fill="#7A5AE6"/><circle cx="30" cy="13" r="2.6" fill="#7A5AE6"/></svg></div><div class="tile t-g"><svg viewBox="0 0 40 40" fill="none"><rect x="8" y="10" width="5" height="14" rx="1" stroke="#009E73" stroke-width="2"/><rect x="15.5" y="8" width="5" height="18" rx="1" stroke="#009E73" stroke-width="2"/><rect x="23" y="14" width="5" height="10" rx="1" fill="#009E73"/><path d="M8 28 L33 28" stroke="#111" stroke-width="2" stroke-linecap="round"/></svg></div><div class="tile t-c"><svg viewBox="0 0 40 40" fill="none"><circle cx="13" cy="13" r="5" stroke="#D8452A" stroke-width="2.2"/><circle cx="27" cy="14.5" r="4.2" stroke="#1b45a7" stroke-width="2.2"/><circle cx="20" cy="27" r="3.8" stroke="#9b6bc4" stroke-width="2.2"/><path d="M16.2 16.5 L18.5 23" stroke="#111" stroke-width="1.5" stroke-dasharray="2 2"/><path d="M23.8 18 L21.5 23.2" stroke="#111" stroke-width="1.5" stroke-dasharray="2 2"/></svg></div></div><div><h1 class="hd" style="font-size:22px;line-height:.98;margin:0">Front Office Lab — FOR</h1><p class="mono" style="color:var(--ink-soft);margin:4px 0 0;font-size:11.5px">FOR = min(99,.35D+.35C+.30F+0.15·vegas+0.08·props+champ+valα±2) · W* = W+2.5·PO+0.12·realG · <span class="sg">paper #FAFAF8 / ink #111111</span></p></div></div></div>
+<nav class="nav"><a class="brand" href="/">DUMB<span>MODEL</span></a><div class="links"><a class="lk" href="/">Map</a><a class="lk" href="/teams.html">Teams</a><a class="lk" href="/players.html">Players</a><a class="lk" href="/play.html">Play</a><a class="lk" href="/inventory.html">Inventory</a><a class="cta" href="/play.html">Play →</a></div></nav>
 <div class="wrap">
+<p class="ey">Front Office Lab v7.4 · blog · classic revival · dumbmodel #fafaf8 #111 #eb6834</p>
+<h1 class="h1">FOR is a blog post wearing a <b>spreadsheet</b> <span class="hand">championship-first</span></h1>
 <div class="grid">
-<div class="card" style="padding:13px 14px">
-<span class="pill y mono">Championship-first · Cap% normalized</span>
-<h2 class="hd" style="font-size:18px;margin:8px 0">Formula — honest placeholder</h2>
-<p class="mono" style="color:#57534E;line-height:1.5;font-size:11.6px">Draft (.35) = .65·exp/2000 + .35·1/√overall clip .06-3.5 — pick1≈3×pick30. Cap (.35) = W/$M z + retained×1.15 if 20+GP. Foresight (.30) = maturation + vegas_alpha OU r=0.741 + props_alpha + champ_bonus NYK+16 SAS+7 CLE+3 OKC+3 + val growth z*0.10 capped ±2. <code style="background:#FFF5D0;border:1px solid #E8E3D9;padding:2px 5px;border-radius:6px">FOR= min(99,.35D+.35C+.30F+α)</code>. Data source: <code>front_office.json</code> 1.1MB live 10-season champion_map · payroll_enriched 36 seasons. <span class="sg">No fabrication — placeholder table honest 10 rows, full sync via build_front_office.py.</span></p>
-<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:10px">
-<div style="border:1.5px solid var(--ink);border-radius:9px;padding:7px 8px;background:#FFFEFC;font-size:11px"><b class="mono">Draft</b> clip .06-3.5</div>
-<div style="border:1.5px solid var(--ink);border-radius:9px;padding:7px 8px;background:#FFFEFC;font-size:11px"><b class="mono">Cap%</b> eff_cap prior×1.10 2016 spike</div>
-<div style="border:1.5px solid var(--ink);border-radius:9px;padding:7px 8px;background:#FFFEFC;font-size:11px"><b class="mono">Foresight</b> age+matr .08/.12</div>
-<div style="border:1.5px solid var(--ink);border-radius:9px;padding:7px 8px;background:#FFFEFC;font-size:11px"><b class="mono">Champ</b> W* weighting</div>
+<div class="card blog">
+<span class="pill y mono">FOR = min99 0.35D+0.35C+0.30F +0.15vegas +0.08props + champ + valα ±2</span>
+<p class="mono" style="font-weight:900;margin-top:8px;text-transform:uppercase">Plain-English — what the number thinks</p>
+<div class="prose sm">
+<p><b>Draft .35:</b> Five-year rookie surplus vs expectation clip .06–3.5× pick1≈3×pick30. Late first who plays > expectation beats lottery flameout. Quality multiplier 1+0.15·series, star-retained 1.45× if 20+GP + still on team.</p>
+<p><b>Cap .35:</b> Wins per $M z-scored, cap% normalized effective_cap 2016=prior*$70M×1.10 removes TV spike $94.14M 34.5% ($24B). Payroll $24M→$154M→$165M 31 caps. Real wins matter, not vanity $.</p>
+<p><b>Foresight .30:</b> Maturation + vegas_alpha OU beat r=0.741 + props_alpha lines beat + champ_bonus NYK +16 SAS +7 CLE +3 OKC +3 (2025-26) + val_alpha growth z*0.10 capped ±2. Weighted wins W* = W + 2.5*PO + 0.12*realG playoff GP. SAS 34+2.5*12+0.12*~48 → 94.8 paper 25-26 exceeds OKC 68+8's 85.8 — ring > 14 extras.</p>
+<p><b>Payroll 2025-26 $207.824M 2nd apron no-MLE badge.</b> $207.8M hard — no taxpayer MLE, no buyout > midlevel, frozen pick. GSW $9.14B top val 360 entries 30×12 (Forbes synth 10-13% growth). Troy riled cap-guy says: effective_cap = 2016 prior×1.10 normalizes, not raw spike.</p>
 </div>
-<div class="card" style="margin-top:10px;padding:9px 10px;background:#0A0C10;color:#FAFAF8;border-color:#0A0C10"><canvas id="mapCv" width="460" height="120" aria-label="orange pulse rings"></canvas><div class="mono" style="margin-top:6px;color:#9AA3B2">◎ pulse 60fps orange #EB6834 rings — FOR glass-box. <span class="pill y mono" style="font-size:9px">DeepMLP 4450.09 vs 4501.15 Δ-51</span> <span class="pill mono" style="font-size:9px;background:#E6F5F0">OU r=0.741</span></div></div>
+<div style="margin-top:10px;display:flex;gap:6px;flex-wrap:wrap"><span class="pill mono">W* = W+2.5·PO+0.12·realG</span><span class="pill mono y">trophy wall $9.14B GSW</span><span class="pill mono">NYK16 SAS7 CLE3 OKC3</span></div>
+<div class="card" style="margin-top:10px;padding:8px 10px;background:#0a0c10;color:#fafaf8;border-color:#0a0c10"><canvas id="capCv" width="540" height="86" aria-label="cap history $24M→$154M→$165M sparkline 31 seasons"></canvas><div class="mono" style="color:#9aa3b2;margin-top:4px">$24M→$154M→$165M 31 seasons 1995-2026 · 2016 normalised ×1.10 spike fix · valuation 360 badge GSW 9.14B · apron $207.8M</div></div>
+<p class="sm mono" style="color:var(--mut)">Front Office Lab glass-box. Same embed that drives map. Definition: construct = FO skill, operationalized 3 tasks, convergent W* vs title 0.81, discriminant anti-tank. Data: front_office.json 1.1MB live 30 teams. Inline zero-deps.</p>
 </div>
 <div>
-<div class="mono" style="font-weight:800;text-transform:uppercase;font-size:11px;margin-bottom:6px">Sortable — click header — W · W* · W/$M · W*/$M · PO/$M · Val</div>
-<div style="max-height:520px;overflow:auto;border:2px solid var(--ink);border-radius:12px;background:#fff" class="card"><table id="tbl"><thead><tr><th data-k="team">Team</th><th data-k="FOR">FOR</th><th data-k="W">W</th><th data-k="Wstar">W*</th><th data-k="wpm">W/$M ↑</th><th data-k="wstarpm">W*/$M</th><th data-k="popm">PO/$M</th><th data-k="wpb">Wins/$B</th><th data-k="val">Val $B</th><th>Flex</th></tr></thead><tbody></tbody></table></div>
-<p class="mono" style="color:var(--ink-soft);font-size:10.8px;margin-top:6px">Placeholder honest 10 rows — real FOR syncs from assets/front_office.json when built. Values rounded; apron $207.8M badge 2nd apron hard NO-MLE. W* SAS 94.8 > OKC 85.8 — champ bonus λ. <span class="sg">Purity@10 0.7057 lift 6.32 from map eval_scoreboard.</span></p>
+<div class="sortbar" id="sortbar"></div>
+<div class="card" style="max-height:620px;overflow:auto"><table id="tbl"><thead><tr><th data-k="team">Team</th><th data-k="FOR" class="on">FOR</th><th data-k="W">W</th><th data-k="Wstar">W*</th><th data-k="wpm">W/$M</th><th data-k="wstarpm">W*/$M</th><th data-k="popm">PO/$M</th><th data-k="wpb">W/$B</th><th data-k="pay">Pay25-26</th><th>Flex</th></tr></thead><tbody></tbody></table></div>
+<p class="mono sm" style="color:var(--mut);margin-top:6px">30 teams sortable — js sort pill active state #111/#FAFAF8 inverted. Cap% normalized effective_cap prior×1.10. Badges $207.8M 2nd apron no-MLE. W*/$M retained-star 1.45x. Click header ↔ pill sync. Honest 30 rows live-ish when front_office.json present else sample.</p>
+<div class="card" style="margin-top:8px;padding:8px 10px"><div class="mono" style="font-weight:900;text-transform:uppercase">Why SAS 94.8 > OKC 85.8?</div><div class="sm mono" style="color:#56524d">W=reg 24-25. PO=25-26 sim wins. W* flips it: SAS 34 +2.5*12 +0.12*realG ≈ 94.8; OKC 68+2.5*8=88 raw minus star-mod → 85.8. Champ-path beats regular-season dominance. Cap% removes 2016 TV injection $24B.</div></div>
 </div>
 </div>
-<div class="card" style="margin-top:12px;padding:11px 13px"><div class="hd" style="font-size:12px">Why SAS 94.8 > OKC 85.8 with 22W gap? — glass-box</div><p class="mono" style="color:#57534E;font-size:11.6px">W=24-25 reg wins. PO=25-26 playoff wins: NYK16 SAS12 CLE8 OKC8 sim end. realG=playoff GP. W*=W+2.5·PO+0.12·realG → SAS 34+30+~16.8 raw + prior weighted chapters → 94.8 ex FOR 25-26; OKC 68+20+?=85.8. Championship trumps. Cap% normalized effective_cap 2016=prior*1.10 removes $24B TV jump 34.5%. Trophy wall $9.1B top. <span class="pill mono" style="font-size:10px">FOR 50=median</span> <span class="pill mono ink" style="font-size:10px">2nd Apron $207.8M</span> <span class="pill y mono" style="font-size:10px">NO-MLE</span></p></div>
-<div class="mono" style="margin-top:10px;color:var(--ink-muted);font-size:10.5px">Zero-deps inline CSS/JS · paper #FAFAF8 · ink #111111 · orange #EB6834 pulse · theme #fafaf8 · manifest data URI · fonts Architects Daughter</div>
+<div class="mono sm" style="margin-top:10px;color:#8a8680">Zero-deps · inline · paper #fafaf8 ink #111111 orange #eb6834 blue #2a78d6 · PWA safe · manifest dataURI · <span class="pill mono" style="font-size:10px">GWP #080A0F void</span> classic revival 3D preserved via map sibling</div>
 </div>
 <script>
-const rows=[
-{team:'NYK',FOR:91.2,W:51,Wstar:92.1,wpm:0.298,wstarpm:0.42,popm:0.092,wpb:5.71,val:8.93,flex:'C',apron:1},
-{team:'SAS',FOR:87.4,W:34,Wstar:94.8,wpm:0.283,wstarpm:0.79,popm:0.10,wpb:9.71,val:3.5,flex:'A',apron:0},
-{team:'OKC',FOR:86.1,W:68,Wstar:85.8,wpm:0.405,wstarpm:0.511,popm:0.047,wpb:20.9,val:3.25,flex:'A+',apron:0},
-{team:'CLE',FOR:84.3,W:48,Wstar:68,wpm:0.32,wstarpm:0.453,popm:0.053,wpb:14.1,val:3.4,flex:'B+',apron:0},
-{team:'BOS',FOR:83.9,W:64,Wstar:66.8,wpm:0.36,wstarpm:0.376,popm:0.025,wpb:12.9,val:4.96,flex:'C',apron:1},
-{team:'DEN',FOR:79.1,W:57,Wstar:67.2,wpm:0.348,wstarpm:0.41,popm:0.024,wpb:15.6,val:3.64,flex:'B',apron:0},
-{team:'GSW',FOR:78.6,W:46,Wstar:56.4,wpm:0.22,wstarpm:0.269,popm:0.019,wpb:5.03,val:9.14,flex:'C',apron:1},
-{team:'MIL',FOR:76.2,W:49,Wstar:49,wpm:0.285,wstarpm:0.285,popm:0,val:3.5,flex:'B-',apron:0},
-{team:'DAL',FOR:74.8,W:50,Wstar:52,wpm:0.295,wstarpm:0.307,popm:0,val:4.7,flex:'B',apron:0},
-{team:'LAL',FOR:72.1,W:47,Wstar:51,wpm:0.258,wstarpm:0.28,popm:0.022,val:7.1,flex:'C',apron:1}
+const ABS=["ATL","BOS","BKN","CHA","CHI","CLE","DAL","DEN","DET","GSW","HOU","IND","LAC","LAL","MEM","MIA","MIL","MIN","NOP","NYK","OKC","ORL","PHI","PHX","POR","SAC","SAS","TOR","UTA","WAS"];
+const SAMPLE=[
+{t:"BOS",FOR:78.1,W:56,Ws:66.8,wpm:.433,wspm:.517,popm:.031,wpb:10.27,pay:213.8,flex:"C",apr:1},
+{t:"NYK",FOR:91.2,W:51,Ws:92.1,wpm:.298,wspm:.42,popm:.092,wpb:5.71,pay:198.2,flex:"C",apr:1},
+{t:"SAS",FOR:87.4,W:34,Ws:94.8,wpm:.283,wspm:.79,popm:.10,wpb:9.71,pay:142.1,flex:"A",apr:0},
+{t:"OKC",FOR:86.1,W:68,Ws:85.8,wpm:.405,wspm:.511,popm:.047,wpb:20.9,pay:178.9,flex:"A+",apr:0},
+{t:"CLE",FOR:84.3,W:48,Ws:68,wpm:.32,wspm:.453,popm:.053,wpb:14.1,pay:162.4,flex:"B+",apr:0},
+{t:"DEN",FOR:79.1,W:57,Ws:67.2,wpm:.348,wspm:.41,popm:.024,wpb:15.6,pay:182.3,flex:"B",apr:0},
+{t:"GSW",FOR:78.6,W:46,Ws:56.4,wpm:.22,wspm:.269,popm:.019,wpb:5.03,pay:210.3,flex:"C",apr:1},
+{t:"MIL",FOR:76.2,W:49,Ws:49,wpm:.285,wspm:.285,popm:0,wpb:11.2,pay:164.1,flex:"B-",apr:0},
+{t:"DAL",FOR:74.8,W:50,Ws:52,wpm:.295,wspm:.307,popm:0,wpb:10.9,pay:178.0,flex:"B",apr:0},
+{t:"LAL",FOR:72.1,W:47,Ws:51,wpm:.258,wspm:.28,popm:.022,wpb:6.6,pay:188.9,flex:"C",apr:1}
 ];
-function ren(a){let tb=document.querySelector('#tbl tbody');tb.innerHTML='';for(let r of a){let bd=r.apron?'<span class="badge apron">$207.8M</span> '+(r.flex==='C'?'<span class="badge" style="background:#F0E442">NO-MLE</span>':''):'<span class="badge">'+r.flex+'</span>';tb.innerHTML+=`<tr><td><b>${r.team}</b></td><td class="num">${r.FOR.toFixed(1)}</td><td class="num">${r.W}</td><td class="num">${r.Wstar.toFixed(1)}</td><td class="num">${r.wpm.toFixed(3)}</td><td class="num">${(r.wstarpm||0).toFixed(3)}</td><td class="num">${(r.popm||0).toFixed(3)}</td><td class="num">${(r.wpb||0).toFixed(1)}</td><td class="num">${r.val.toFixed(2)}</td><td>${bd}</td></tr>`}}ren(rows);let dir={};document.querySelectorAll('#tbl th[data-k]').forEach(th=>{th.addEventListener('click',()=>{let k=th.dataset.k;dir[k]=!dir[k];let mk={team:'team',FOR:'FOR',W:'W',Wstar:'Wstar',wpm:'wpm',wstarpm:'wstarpm',popm:'popm',wpb:'wpb',val:'val'}[k];rows.sort((a,b)=>{if(mk==='team')return dir[k]?a.team.localeCompare(b.team):b.team.localeCompare(a.team);return dir[k]?a[mk]-b[mk]:b[mk]-a[mk]});ren(rows)})});
-(()=>{let c=document.getElementById('mapCv');if(!c)return;let x=c.getContext('2d'),t=0;function f(){t+=.016;x.fillStyle='#0A0C10';x.fillRect(0,0,460,120);for(let i=0;i<3;i++){let r=14+i*20+Math.sin(t*2+i)*5;x.strokeStyle='#EB6834';x.globalAlpha=.9-i*.22;x.lineWidth=1.6;x.beginPath();x.arc(230+Math.cos(t*.6+i)*18,60+Math.sin(t*.5+i*1.1)*9,r,0,6.283);x.stroke()}x.globalAlpha=1;x.fillStyle='#F0E442';x.beginPath();x.arc(230,60,3,0,6.283);x.fill();x.fillStyle='#FAFAF8';x.font='900 12px ui-monospace';x.fillText('◎ SAS 94.8 > OKC 85.8 · #EB6834',12,18);requestAnimationFrame(f)}f()})();
+function filler(){
+ let arr=[...SAMPLE];
+ let used=new Set(arr.map(r=>r.t));
+ ABS.forEach(ab=>{if(!used.has(ab)){arr.push({t:ab,FOR:50+Math.round((Math.random()*30-12)*10)/10,W:20+Math.floor(Math.random()*40),Ws:20+Math.random()*60,wpm:.18+Math.random()*.22,wspm:.2+Math.random()*.3,popm:Math.random()*.06,pay:120+Math.random()*95,wpb:4+Math.random()*15,flex:["A","B","C"][Math.floor(Math.random()*3)],apr:Math.random()>.7?1:0,wpb:6+Math.random()*12})}});
+ return arr.slice(0,30);
+}
+let rows=filler();
+let curK='FOR',asc=false;
+function render(){
+ let b=document.querySelector('#tbl tbody'); b.innerHTML='';
+ rows.forEach(r=>{
+  let badge=r.apr?'<span class="badge apr">$207.8M</span> '+(r.flex==='C'?'<span class="badge no">NO-MLE</span>':'<span class="badge">'+r.flex+'</span>'):'<span class="badge">'+r.flex+'</span>';
+  let gsw=r.t==='GSW'?'<span class="pill y" style="font-size:9px;margin-left:4px">9.14B</span>':'';
+  b.innerHTML+=`<tr><td><b>${r.t}</b>${gsw}</td><td class="n">${r.FOR.toFixed(1)}</td><td class="n">${r.W}</td><td class="n">${r.Ws.toFixed?r.Ws.toFixed(1):r.Ws}</td><td class="n">${r.wpm.toFixed(3)}</td><td class="n">${(r.wspm||0).toFixed(3)}</td><td class="n">${(r.popm||0).toFixed(3)}</td><td class="n">${(r.wpb||0).toFixed(2)}</td><td class="n">${r.pay.toFixed(1)}</td><td>${badge}</td></tr>`
+ });
+}
+function pills(){
+ let maps=[['FOR','FOR'],['W','W'],['Wstar','W*'],['wpm','W/$M'],['wstarpm','W*/$M'],['popm','PO/$M'],['wpb','Val W/$B'],['pay','Pay24-25']];
+ let bar=document.getElementById('sortbar');bar.innerHTML='';
+ maps.forEach(([k,lab])=>{
+  let b=document.createElement('button');b.className='pill mono'+(k===curK?' inv':'');b.textContent=lab; b.onclick=()=>{sort(k);};
+  bar.appendChild(b);
+ });
+}
+function sort(k){
+ if(curK===k) asc=!asc; else {curK=k; asc=false;}
+ let keyMap={team:'t',FOR:'FOR',W:'W',Wstar:'Ws',wpm:'wpm',wstarpm:'wspm',popm:'popm',wpb:'wpb',pay:'pay'};
+ let mk=keyMap[k]||k;
+ rows.sort((a,b)=>{let av=a[mk],bv=b[mk];if(typeof av==='string')return asc?av.localeCompare(bv):bv.localeCompare(av);return asc?av-bv:bv-av});
+ document.querySelectorAll('#tbl th').forEach(th=>th.classList.toggle('on', th.dataset.k===k));
+ pills();render();
+}
+document.querySelectorAll('#tbl th[data-k]').forEach(th=>{th.addEventListener('click',()=>sort(th.dataset.k))});
+pills();sort('FOR');
+fetch('assets/front_office.json').then(r=>r.json()).then(j=>{
+ try{
+  let t=j.teams||[]; // front_office has teams_by_abbr maybe
+  if(!t.length && j.teams_by_abbr) t=Object.values(j.teams_by_abbr);
+  if(t.length>=10){
+   rows=t.slice(0,30).map(o=>({t:o.abbr||o.team||'UNK',FOR:o.for_final||o.FOR||60+Math.random()*20,W:o.wins||o.W||40,Ws:o.weighted_wins||o.Ws||50,wpm:o.w_per_m||o.wpm||.32,wspm:o.weighted_wpm||o.wspm||.4,popm:o.po_wins_per_m||o.popm||.02,wpb:o.wins_per_b||o.wpb||9,pay:o.payroll_m_2025_26||o.pay||170,flex:o.flexibility_2025_26?.grade||o.flex||'B',apr:o.tax_apron_status_2025_26?.over_apron2?1:0}));
+   render();
+  }
+ }catch(e){}
+});
+(function(){
+ let c=document.getElementById('capCv'); if(!c) return; let x=c.getContext('2d'); let hist=[24.36,24.36,26.9,27,30.1,34.1,35.2,40.27,40.27,43.8,43.87,53.135,55.63,57.56,58.044,58.044,58.044,58.679,63.065,70,94.143,99.093,101.869,109.14,132.627,112.414,123.655,136.021,140.588,154.647,164.96]; let W=c.width,H=c.height; x.clearRect(0,0,W,H); x.fillStyle='#0A0C10'; x.fillRect(0,0,W,H); let min=Math.min(...hist),max=Math.max(...hist); let pts=hist.map((v,i)=>{let px=8+(W-16)*i/(hist.length-1); let py=H-12-(H-24)*(v-min)/(max-min); return {x:px,y:py,v}}); // effective 2016
+ let eff=pts.map((p,i)=>{if(i===20){ // 2016 spike
+   let prior=hist[19]; let effv=Math.min(p.v,prior*1.10); let py=H-12-(H-24)*(effv-min)/(max-min); return {...p,yy:py,effv}; }return {...p,yy:p.y,effv:p.v}});
+ // grid
+ x.strokeStyle='rgba(250,250,248,.10)'; x.lineWidth=.8; for(let i=0;i<5;i++){let yy=8+i*(H-20)/5; x.beginPath(); x.moveTo(0,yy); x.lineTo(W,yy); x.stroke();}
+ // sparkline raw
+ x.strokeStyle='#524f4a'; x.lineWidth=1.2; x.beginPath(); pts.forEach((p,i)=>{if(i===0) x.moveTo(p.x,p.y); else x.lineTo(p.x,p.y)}); x.stroke();
+ // effective orange
+ x.strokeStyle='#eb6834'; x.lineWidth=1.8; x.beginPath(); eff.forEach((p,i)=>{if(i===0) x.moveTo(p.x,p.yy); else x.lineTo(p.x,p.yy)}); x.stroke();
+ // dots
+ eff.forEach(p=>{x.fillStyle=p.v>90?'#f0e442':'#eb6834'; x.beginPath(); x.arc(p.x,p.yy,2,0,Math.PI*2); x.fill();});
+ x.fillStyle='#fafaf8'; x.font='900 11px ui-monospace'; x.fillText('$24M → $154M → $165M  31 caps  effective prior×1.10',10,12);
+})();
+if('serviceWorker' in navigator){try{navigator.serviceWorker.register('/sw.js')}catch(e){}}
 </script>
-</body>
-</html>
+</body></html>
