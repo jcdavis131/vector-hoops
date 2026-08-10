@@ -1,0 +1,116 @@
+:root{
+  /* Ground is the Fargekart wall: a warmer white and a blue-black ink, shared
+     with the rest of the family. 16.36:1. This block is loaded last, so these
+     two govern every page — including the ones that also load hoops.css. */
+  --paper:#f7f5f0; --ink:#14181d; --blue:#0072B2; --verm:#D55E00; --orange:#D55E00;
+  --yellow:#F0E442; --green:#009E73; --radius:14px; --shadow:4px 4px 0 var(--ink);
+  --mono:ui-monospace,monospace; --sans:ui-sans-serif,system-ui; --hd:"Architects Daughter",var(--mono);
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:18px;line-height:1.65;overflow-x:clip}
+html{ -webkit-text-size-adjust:100%; } img,svg,canvas{max-width:100%}
+a{color:inherit}
+.card{background:#fff;border:2.2px solid var(--ink);border-radius:14px;box-shadow:var(--shadow);padding:14px 16px}
+.btn{appearance:none;border:2.2px solid var(--ink);border-radius:12px;min-height:48px;padding:10px 14px;font-weight:900;font-family:var(--mono);text-transform:uppercase;letter-spacing:.04em;cursor:pointer;box-shadow:3px 3px 0 var(--ink);background:#fff;color:var(--ink);display:inline-flex;align-items:center;gap:8px;text-decoration:none}
+.btn:active{transform:translate(1px,1px);box-shadow:1px 1px 0 var(--ink)}
+.btn-primary{background:var(--ink);color:#fff}
+.btn-accent{background:var(--yellow);color:var(--ink)}
+.input{width:100%;border:2.2px solid var(--ink);border-radius:12px;padding:0 12px;font-size:16px;font-weight:600;box-shadow:2px 2px 0 var(--ink);min-height:48px}
+.small-mono{font-family:var(--mono);font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase}
+.pill{border:1.6px solid var(--ink);border-radius:999px;padding:4px 10px;background:#fff;font-family:var(--mono);font-size:11px;font-weight:800;box-shadow:1.5px 1.5px 0 var(--ink)}
+.main{max-width:1180px;margin:0 auto;padding:12px clamp(12px,3vw,20px) calc(92px + env(safe-area-inset-bottom));display:flex;flex-direction:column;gap:14px}
+.hd{font-family:var(--hd);line-height:.98}
+.kicker{font-family:var(--mono);font-size:10px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#5A5248;display:flex;gap:8px;align-items:center}
+.kdot{width:6px;height:6px;border-radius:50%;background:var(--orange);display:inline-block}
+
+/* pills as tabs */
+.tab-pills{display:flex;gap:8px;flex-wrap:wrap}
+.tab-pills button{border:1.6px solid var(--ink);border-radius:999px;padding:6px 12px;background:#fff;font-family:var(--mono);font-size:11px;font-weight:800;box-shadow:1.5px 1.5px 0 var(--ink);cursor:pointer}
+.tab-pills button.is-active{background:var(--ink);color:#fff}
+
+/* wiki / directory restyled */
+.wiki-controls{display:flex;flex-direction:column;gap:10px}
+.wiki-search-row{display:flex;gap:8px;flex-wrap:wrap}
+.wiki-search{flex:1 1 220px;min-width:0}
+.wiki-filters{display:flex;gap:8px;flex-wrap:wrap}
+.wiki-filters select{border:2.2px solid var(--ink);border-radius:12px;padding:0 10px;min-height:44px;background:#fff;font-family:var(--mono);font-size:12px;font-weight:700;box-shadow:2px 2px 0 var(--ink)}
+.wiki-alphabet{display:flex;gap:4px;flex-wrap:wrap}
+.wiki-alphabet button{border:1.5px solid var(--ink);border-radius:8px;padding:4px 6px;min-width:28px;background:#fff;font-family:var(--mono);font-size:11px;font-weight:800;cursor:pointer}
+.wiki-alphabet button.is-active{background:var(--ink);color:#fff}
+.wiki-alphabet button.is-disabled{opacity:.25;pointer-events:none}
+.wiki-count{font-family:var(--mono);font-size:11px;color:#5A5248}
+.wiki-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
+.wiki-row-wrap{display:flex;gap:8px;align-items:center;background:#fff;border:2px solid var(--ink);border-radius:12px;box-shadow:2px 2px 0 var(--ink);padding:8px 10px}
+.wiki-row{flex:1 1 auto;display:flex;justify-content:space-between;gap:10px;align-items:center;border:0;background:transparent;text-align:left;cursor:pointer;min-width:0}
+.wiki-row__name{font-weight:800;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.wiki-row__name .vh-team-tag{font-weight:700;font-size:10px;border:1.5px solid var(--ink);border-radius:999px;padding:1px 6px;margin-left:6px;background:var(--yellow)}
+.wiki-row__meta{font-family:var(--mono);font-size:10px;color:#6B665E;white-space:nowrap}
+.wiki-row__grades{flex:0 0 auto;border:1.5px solid var(--ink);border-radius:999px;padding:4px 8px;background:#fff;font-family:var(--mono);font-size:10px;font-weight:800;cursor:pointer;box-shadow:1px 1px 0 var(--ink)}
+.wiki-empty{font-size:13px;color:#666;padding:8px}
+
+/* skills */
+.skills-panel{display:flex;flex-direction:column;gap:12px}
+.skills-suggest{list-style:none;margin:6px 0 0;padding:0;display:flex;flex-direction:column;gap:6px;max-height:280px;overflow:auto}
+.skills-suggest li{border:1.5px solid var(--ink);border-radius:10px;padding:8px 10px;background:#fff;cursor:pointer;display:flex;justify-content:space-between;gap:8px;box-shadow:1.5px 1.5px 0 var(--ink)}
+.skills-suggest li:hover{background:var(--yellow)}
+.skills-player-meta{font-family:var(--mono);font-size:11px;color:#444;margin:6px 0}
+.skills-seasons{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0}
+.skills-seasons button{border:1.5px solid var(--ink);border-radius:999px;padding:4px 8px;background:#fff;font-family:var(--mono);font-size:10px;font-weight:800}
+.skills-seasons button.is-active{background:var(--ink);color:#fff}
+.skillbar-list{list-style:none;margin:8px 0 0;padding:0;display:flex;flex-direction:column;gap:8px}
+.skillbar{display:grid;grid-template-columns:110px 1fr 36px;gap:8px;align-items:center;border:1.8px solid var(--ink);border-radius:10px;padding:8px 10px;background:#fff;box-shadow:1.5px 1.5px 0 var(--ink)}
+.skillbar__label{font-family:var(--mono);font-size:10px;font-weight:800;text-transform:uppercase}
+.skillbar__track{height:8px;background:#eee;border-radius:999px;overflow:hidden;border:1.2px solid var(--ink)}
+.skillbar__fill{height:100%;background:var(--blue)}
+.skillbar__grade{font-family:var(--mono);font-size:11px;font-weight:900;text-align:right}
+.vh-skill-badges{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0}
+.vh-skill-badges span{border:1.5px solid var(--ink);border-radius:999px;padding:3px 8px;font-family:var(--mono);font-size:10px;font-weight:800;background:#fff;box-shadow:1px 1px 0 var(--ink)}
+
+/* dossier modal - fixed to allow click-out + proper hidden handling */
+[hidden]{display:none !important}
+.vh-modal-backdrop{position:fixed;inset:0;background:rgba(26,21,15,.45);display:grid;place-items:center;z-index:80;padding:16px;cursor:pointer}
+.vh-modal-backdrop[hidden]{display:none !important}
+.vh-modal{background:#fff;border:2.5px solid var(--ink);border-radius:16px;box-shadow:6px 6px 0 var(--ink);max-width:560px;width:100%;max-height:80vh;overflow:auto;padding:14px 16px;cursor:auto;pointer-events:auto}
+body.vh-modal-open{overflow:hidden;overscroll-behavior:contain}
+
+/* leaderboard */
+.lb-controls{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between}
+.lb-chips{display:flex;gap:8px;flex-wrap:wrap}
+.lb-chips button{border:1.6px solid var(--ink);border-radius:999px;padding:6px 10px;background:#fff;font-family:var(--mono);font-size:11px;font-weight:800;box-shadow:1.5px 1.5px 0 var(--ink);cursor:pointer}
+.lb-chips button.is-active{background:var(--ink);color:#fff}
+.lb-date-row{display:flex;gap:8px;align-items:center}
+.lb-table-wrap{overflow-x:auto}
+.lb-table{width:100%;border-collapse:collapse;font-size:14px}
+.lb-table th{text-align:left;font-family:var(--mono);font-size:11px;text-transform:uppercase;color:#6B665E;border-bottom:2px solid var(--ink);padding:8px 6px}
+.lb-table td{padding:8px 6px;border-top:1px solid #E5E2D8}
+.lb-table tr:hover{background:#FFFEF7}
+
+/* players — skills + leaderboards */
+.skills-panel{display:flex;flex-direction:column;gap:10px}
+.skills-board{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:8px}
+.skills-board__item,.skills-board li{border:2px solid var(--ink);border-radius:12px;padding:10px 12px;background:#fff;box-shadow:2px 2px 0 var(--ink);display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
+.skills-board__name{font-weight:800;font-size:14px;cursor:pointer}
+.skills-board__season{font-family:var(--mono);font-size:11px;color:#6B665E}
+.skills-board__grade{border:1.6px solid var(--ink);border-radius:999px;padding:2px 8px;font-family:var(--mono);font-size:11px;font-weight:800;background:#F0E442}
+.skills-board__empty{border:1.6px dashed var(--ink);border-radius:12px;padding:14px;background:#FFFEF7;color:#6B665E;font-size:13px}
+.skills-suggest{list-style:none;padding:0;margin:6px 0 0;display:flex;flex-direction:column;gap:4px;max-height:220px;overflow:auto}
+.skills-suggest li{border:1.6px solid var(--ink);border-radius:10px;padding:8px 10px;background:#fff;cursor:pointer}
+.skills-suggest li.is-active,.skills-suggest li:hover{background:#FFFEF7}
+.skillbar-list{list-style:none;padding:0;margin:10px 0 0;display:flex;flex-direction:column;gap:6px}
+.skillbar-list li{display:flex;gap:8px;align-items:center;font-size:13px}
+.skillbar-list .bar{flex:1;height:10px;background:#eee;border-radius:999px;overflow:hidden;border:1.2px solid #ddd}
+.skillbar-list .bar i{display:block;height:100%;background:#0072B2}
+.vh-skill-badges{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0}
+
+/* methods / model */
+.method-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media(max-width:840px){.method-grid{grid-template-columns:1fr}}
+.method-h2{font-family:var(--hd);font-size:22px;margin:0 0 6px}
+.method-p{font-size:14px;line-height:1.6;color:#2b2b2b;margin:6px 0}
+.arch-diagram{font-family:var(--mono);font-size:10.5px;line-height:1.5;background:#111;color:#ddd;border-radius:12px;padding:12px 14px;border:2.2px solid var(--ink);box-shadow:3px 3px 0 var(--ink);overflow:auto}
+.cqs-strip{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0}
+.cqs-badge{border:1.6px solid var(--ink);border-radius:10px;padding:6px 8px;background:#fff;font-family:var(--mono);font-size:10px;box-shadow:1.5px 1.5px 0 var(--ink)}
+.cqs-badge b{font-size:13px;display:block}
+
+/* footer minimal  */
+.site-footer__attribution a{color:inherit}

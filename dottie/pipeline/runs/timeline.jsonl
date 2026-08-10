@@ -5,3 +5,4 @@
 {"nodeId":"frontend-rebuild-vercel-candidate-public","agentId":"5cf312f2","attempt":1,"latency_ms":1200,"tokens_est":2100,"status":"pass","errorClass":"none"}
 {"nodeId":"frontend-rebuild-curl-verify","agentId":"5cf312f2","attempt":1,"latency_ms":3400,"tokens_est":1200,"status":"pass","errorClass":"none"}
 {"nodeId":"frontend-rebuild-v7-complete","agentId":"5cf312f2","attempt":1,"latency_ms":35000,"tokens_est":49900,"status":"pass","errorClass":"none"}
+{"nodeId":"polish-v71","agentId":"dfdf337a-f5dd-4ace-aa9a-55c3473ba9ef","attempt":1,"latency_ms":42000,"tokens_est":5400,"status":"success","errorClass":"none"}

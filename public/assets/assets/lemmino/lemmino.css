@@ -1,0 +1,148 @@
+/* Lemmino Documentary System for Vector Hoops - Professional 3D */
+:root{
+  --lemmino-bg:#0A0C10;
+  --lemmino-bg-2:#12151C;
+  --lemmino-ink:#EAE6DE;
+  --lemmino-muted:#8A867E;
+  --lemmino-line:rgba(234,230,222,0.12);
+  --lemmino-accent:#F0E442;
+}
+
+.lemmino-section{
+  position:relative;
+  width:100%;
+  max-width:1180px;
+  margin:24px auto 0;
+  padding:0 clamp(12px,3.2vw,28px);
+  box-sizing:border-box;
+}
+.lemmino-hero-void{
+  position:relative;
+  width:100%;
+  height:520px;
+  border:2.5px solid #1A150F;
+  border-radius:16px;
+  overflow:hidden;
+  background:radial-gradient(120% 80% at 30% 20%, rgba(240,228,66,0.06), transparent 55%), radial-gradient(90% 60% at 80% 80%, rgba(0,114,178,0.10), transparent 50%), var(--lemmino-bg);
+  box-shadow:6px 6px 0 #1A150F;
+  isolation:isolate;
+}
+@media(max-width:720px){ .lemmino-hero-void{ height:460px; } }
+
+.lemmino-hero-void canvas,
+.lemmino-monoliths canvas,
+.lemmino-map-void canvas,
+.lemmino-drift canvas{
+  position:absolute; inset:0; width:100%; height:100%; display:block;
+}
+.lemmino-map-void{
+  position:relative;
+  width:100%;
+  min-height:560px;
+  border:2.5px solid #1A150F;
+  border-radius:16px;
+  overflow:hidden;
+  background:radial-gradient(120% 80% at 30% 20%, rgba(240,228,66,0.06), transparent 55%), radial-gradient(90% 60% at 80% 80%, rgba(0,114,178,0.10), transparent 50%), var(--lemmino-bg);
+  box-shadow:6px 6px 0 #1A150F;
+  isolation:isolate;
+}
+@media(max-width:720px){ .lemmino-map-void{ min-height:500px; } }
+.lemmino-drift{
+  position:relative;
+  width:100%;
+  height:560px;
+  border:2.5px solid #1A150F;
+  border-radius:16px;
+  overflow:hidden;
+  background:radial-gradient(130% 90% at 50% 12%, rgba(86,180,233,0.10), transparent 60%), radial-gradient(90% 70% at 80% 90%, rgba(0,114,178,0.12), transparent 50%), var(--lemmino-bg);
+  box-shadow:6px 6px 0 #1A150F;
+  isolation:isolate;
+}
+@media(max-width:720px){ .lemmino-drift{ height:520px; } }
+
+.lemmino-vignette{
+  position:absolute; inset:0; pointer-events:none; z-index:2;
+  background:
+    radial-gradient(120% 90% at 50% 50%, transparent 58%, rgba(0,0,0,0.52) 100%),
+    radial-gradient(60% 40% at 20% 15%, rgba(240,228,66,0.08), transparent 70%),
+    linear-gradient(to bottom, rgba(10,12,16,0.15), rgba(10,12,16,0.55));
+}
+.lemmino-grain{
+  position:absolute; inset:-10%; pointer-events:none; z-index:3; opacity:0.22; mix-blend-mode:soft-light;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.95' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.42'/%3E%3C/svg%3E");
+  animation:lemmino-grain-shift 0.4s steps(2) infinite;
+}
+@keyframes lemmino-grain-shift{
+  0%{ transform:translate(0,0) } 100%{ transform:translate(-2%,1%) }
+}
+
+.lemmino-ui{
+  position:absolute; inset:auto 14px 14px 14px; z-index:4; display:flex; justify-content:space-between; gap:10px; align-items:flex-end; flex-wrap:wrap; pointer-events:none;
+}
+.lemmino-ui .lemmino-caption{
+  pointer-events:auto;
+  background:rgba(255,254,247,0.92);
+  border:2px solid #1A150F;
+  border-radius:999px;
+  padding:6px 10px;
+  font-family:ui-monospace,monospace;
+  font-size:10px; font-weight:900; letter-spacing:0.06em; text-transform:uppercase;
+  box-shadow:2px 2px 0 #1A150F;
+  backdrop-filter:blur(6px);
+}
+.lemmino-ui .lemmino-caption--dark{
+  background:#1A150F; color:#FFFEF7; border-color:#1A150F;
+}
+.lemmino-chapter{
+  position:absolute; left:14px; top:14px; z-index:4; pointer-events:none;
+  display:flex; flex-direction:column; gap:6px;
+}
+.lemmino-chapter .kicker{
+  display:inline-flex; align-items:center; gap:8px;
+  font-family:ui-monospace,monospace; font-size:10px; font-weight:900; letter-spacing:0.14em; text-transform:uppercase;
+  color:rgba(234,230,222,0.72);
+}
+.lemmino-chapter .kicker i{
+  width:28px; height:1px; background:rgba(234,230,222,0.42); display:inline-block;
+}
+.lemmino-chapter h2{
+  margin:0; font-family:"Architects Daughter",ui-monospace,monospace;
+  font-size:clamp(20px, 2.6vw, 32px); line-height:0.95; letter-spacing:-0.02em; color:#FFFEF7;
+  text-shadow:0 2px 22px rgba(0,0,0,0.8);
+}
+.lemmino-chapter h2 em{ font-style:normal; opacity:0.55; font-size:0.7em; }
+.lemmino-chapter .de{
+  margin:4px 0 0; max-width:36ch; font-size:12.5px; line-height:1.45; color:rgba(234,230,222,0.72);
+}
+
+/* Monoliths Section */
+.lemmino-monoliths{
+  position:relative;
+  width:100%;
+  height:560px;
+  border:2.5px solid #1A150F;
+  border-radius:16px;
+  overflow:hidden;
+  background:radial-gradient(130% 90% at 50% 12%, rgba(213,94,0,0.10), transparent 60%), radial-gradient(90% 70% at 80% 90%, rgba(0,114,178,0.12), transparent 50%), var(--lemmino-bg);
+  box-shadow:6px 6px 0 #1A150F;
+  isolation:isolate;
+}
+@media(max-width:720px){ .lemmino-monoliths{ height:520px; } }
+
+.lemmino-scanline{
+  position:absolute; inset:0; pointer-events:none; z-index:3; opacity:0.18;
+  background:repeating-linear-gradient(to bottom, transparent 0 2px, rgba(255,255,255,0.04) 2px 3px);
+}
+
+/* Documentary label style */
+.lemmino-doc-label{
+  position:absolute; right:14px; top:14px; z-index:4;
+  font-family:ui-monospace,monospace; font-size:9px; font-weight:900; letter-spacing:0.12em; text-transform:uppercase;
+  color:rgba(234,230,222,0.52); border:1px solid rgba(234,230,222,0.14); padding:6px 8px; border-radius:6px;
+  background:rgba(10,12,16,0.42); backdrop-filter:blur(8px);
+}
+
+/* Reduced motion */
+@media(prefers-reduced-motion:reduce){
+  .lemmino-grain{ animation:none; display:none; }
+}
