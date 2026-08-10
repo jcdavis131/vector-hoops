@@ -925,3 +925,46 @@ either module, this becomes real and the pattern needs the wrapper case.
 
 Everything reachable from a page is stamped: 43 distinct assets across 22 pages
 and 50 modules, --check clean, and a second run is a no-op.
+
+
+## The explainability page claimed a model that does not exist (2026-08-10)
+
+Phase 3 of the brief is the model-explainability page, and it was the surface I
+had verified least. Checking it the way the owner table got checked — do the
+numbers on the page trace to the files the page names — found this pill row:
+
+    MT v4 MHA 0.6847 wins 8.9    EH 0.92 wins 6.7
+
+The first is real: `multi_tower_multitask_v4` in `assets/data/model_zoo_eval.json`
+has `loss_final` 0.6847 and `wins_mae` 8.9, exactly.
+
+**"EH 0.92 wins 6.7" has nothing behind it.** No committed asset pairs an "EH"
+label with those figures; no file anywhere under `pipeline/` or `docs/` does
+either; and 0.92 and 6.7 never co-occur in a single object in any asset. It is not
+a rounding of anything — the nearest real multi-tower loss is 0.6745.
+
+What makes it worse than an ordinary stale number: **wins MAE 6.7 would have been
+the best result on the page**, beating the v4 model sitting immediately next to it
+at 8.9. A reader comparing the two would conclude the invented model won.
+
+Replaced with a real sibling that is in the same file — `multi_tower_multitask_v3`,
+`loss_final` 0.6641, `wins_mae` 8.99 — so the row still shows a comparison, and
+labelled the row with its source file. Both models' figures are now in `CITED`,
+so the gate re-checks them on every run rather than trusting this reading.
+
+`"EH 0.92 wins 6.7"` is pinned in `UNSOURCED`. Verified the trap in both
+directions: putting the pill back fails three ways — `sourced` names it, and
+`cited` catches the two real figures disappearing along with it.
+
+I had my hands on this exact pill row earlier in this branch. `f9d9e7c8`
+("I labelled the model zoo 'Unsourced'. That was wrong — correcting it") edited
+it to fix a different mistake and walked straight past this one.
+
+### A limit of the `cited` check, stated plainly
+
+It matches verbatim. model.html prints `0.51` for a stored `0.5081` and `0.93`
+for `0.9339` — correct roundings, and I checked all six against
+`eval_scoreboard.json` by hand today (0.5081, 0.9339, 0.438, 0.757, 0.1962, and
+10,104 eligible pairs all confirmed) — but a rounded string is not in the file, so
+the gate cannot cover them. Those remain hand-verified. Extending `CITED` to carry
+a JSON path and compare `round(value, 2)` would close it and is not built.

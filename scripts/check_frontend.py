@@ -44,7 +44,18 @@ SKIP_DIRS = {"public", "node_modules", ".git", "assets", "knowledge", "pipeline"
 # Figures that appear in site copy and are in no committed file. Documented in
 # /dictionary.html under "Terms this site uses that have no file behind them".
 # If a scoreboard ever ships them, delete the entry — do not silence the check.
-UNSOURCED = ("purity@10 0.7057", "lift 6.32", "purity 0.7057")
+UNSOURCED = (
+    "purity@10 0.7057",
+    "lift 6.32",
+    "purity 0.7057",
+    # model.html carried a pill reading "EH 0.92 wins 6.7" beside the real
+    # multi-tower numbers. No committed asset pairs an "EH" label with those
+    # figures, nothing outside assets/ does either, and 0.92 and 6.7 never
+    # co-occur in any object anywhere — and a wins MAE of 6.7 would have made it
+    # the best model on the page, beating the v4 it sat next to. Removed and
+    # pinned here so it cannot come back quietly.
+    "EH 0.92 wins 6.7",
+)
 
 # The mirror image of UNSOURCED: figures that ARE sourced, printed on a page as
 # prose rather than read from the file at runtime. `sourced` catches a number
@@ -56,6 +67,10 @@ UNSOURCED = ("purity@10 0.7057", "lift 6.32", "purity 0.7057")
 # Removing a figure from a page is also a failure here, deliberately: otherwise
 # the list rots into entries that check nothing. Delete the row when you delete
 # the claim.
+#
+# Verbatim only. A page that rounds for display — model.html prints 0.51 for a
+# stored 0.5081 — cannot be checked this way, because the rounded string is not
+# in the file. Those stay verified by hand; this covers the figures quoted exactly.
 CITED = (
     ("methods.html", "1245.3", "assets/data/model_zoo_eval.json"),
     ("methods.html", "398.7", "assets/data/model_zoo_eval.json"),
@@ -63,6 +78,12 @@ CITED = (
     ("methods.html", "6.3", "assets/data/model_zoo_eval.json"),
     ("methods.html", "4450.09", "assets/data/model_zoo_eval.json"),
     ("methods.html", "4501.15", "assets/data/model_zoo_eval.json"),
+    # the two multi-tower models model.html names, after removing the third that
+    # had no file behind it
+    ("model.html", "0.6847", "assets/data/model_zoo_eval.json"),
+    ("model.html", "8.9", "assets/data/model_zoo_eval.json"),
+    ("model.html", "0.6641", "assets/data/model_zoo_eval.json"),
+    ("model.html", "8.99", "assets/data/model_zoo_eval.json"),
 )
 
 # A mention within 400 characters of one of these reads as naming the claim
