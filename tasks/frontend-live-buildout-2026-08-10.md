@@ -246,6 +246,37 @@ index 7 is `#FFFEF7` on `play.html`, not the `#000000` `index.html` and
 `players.html` use — that canvas is `#0A0C10` and black on near-black is
 invisible. 0–6 match, so the maps agree with each other. The underlying
 two-camp order split is still open above.
+
+## 🔴 P0 #3 — the whole branch was editing files Vercel does not serve
+
+`vercel.json` declares no build step and no `outputDirectory`, so Vercel serves
+**`public/` at the site root**. `public/play.html` is what `/play` returns; the
+root `play.html` is ignored.
+
+| route | live | root | `public/` |
+|---|---|---|---|
+| `/play` | 27,938 | 45,050 | **27,938** |
+| `/trends` | 1,822 | 33,234 | **1,826** |
+| `/model` | 5,943 | 22,247 | **5,954** |
+
+**9 of the 11 pages this branch changed were shadowed.**
+`assets/game_vectors.json`, `assets/wiki_index.json` and all 2,293
+`knowledge/*.md` returned **404 live** — `/player.html` would have shown "no
+wiki page" for every player.
+
+Fixed in `0f2aa5c0`: `scripts/sync_public.py` mirrors the served surface
+(root `*.html`, the five `*/index.html`, `assets/`, `knowledge/`) into
+`public/`. Byte-for-byte comparison — a stale mirror with a matching size and
+mtime is the exact failure it catches. Never deletes. 2,325 files synced.
+`check_frontend.py` gains a **`mirror`** check so it cannot silently return;
+negative-tested.
+
+**Corrects my own claim one turn earlier** that `public/` was "172 MB of dead
+weight, not served". `/public/` 404s *because* it is served as the root.
+
+**Better fix, not taken:** delete `public/` and set `outputDirectory: "."`.
+Halves the repo and removes the drift class. Untestable from here, and wrong
+means a fully 404'd site — operator's call.
 ## Findings that are bugs, not features
 
 - **F1 — `model.html` draws a fake SHAP chart.** Its script is literally
