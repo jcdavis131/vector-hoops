@@ -17,11 +17,14 @@ from __future__ import annotations
 import argparse
 import json
 import sys
+import unicodedata
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 WIKI = ROOT / "knowledge" / "players"
 OUT = ROOT / "assets" / "wiki_index.json"
+VECTORS = ROOT / "assets" / "vectors.json"
+SKILLS = ROOT / "assets" / "skills.json"
 
 # Only these frontmatter keys are carried into the index. Everything else stays
 # in the page — the index exists to find a page, not to replace it.
@@ -54,9 +57,64 @@ def parse_frontmatter(text: str) -> dict:
     return out
 
 
+def norm_name(name: str) -> str:
+    """Join key for names that two files spell differently.
+
+    The wiki writes "A.C. Green"; vectors.json writes "AC Green". Matching on
+    the raw string dropped 111 of 2,293 players. Stripping punctuation recovered
+    79 of them and left 32 — Schröder, Bogdanović, Pasečņiks — because isalnum()
+    keeps an accented letter as itself. NFKD decomposes the accent into a
+    combining mark, which the isalnum filter then drops, so "schröder" and
+    "schroder" land on the same key.
+    """
+    decomposed = unicodedata.normalize("NFKD", name.lower())
+    return "".join(ch for ch in decomposed if ch.isalnum() and not unicodedata.combining(ch))
+
+
+def load_peak_skills() -> tuple[list[dict], dict[str, dict]]:
+    """Best-graded season per player from assets/skills.json.
+
+    README calls the Skills Lens a shipped feature — "grades all 12,392
+    player-seasons on 12 transparent skills and ships live". Nothing on the
+    site read skills.json. It is 478 KB of per-season grades, so rather than
+    ship the whole file to a card page, the peak season is resolved here and
+    only 12 integers per player travel.
+
+    grades is index-aligned with vectors.json rows; the join is by row order,
+    which is the same contract archetype_assignments.json uses.
+    """
+    if not (VECTORS.exists() and SKILLS.exists()):
+        return [], {}
+    rows = json.loads(VECTORS.read_text(encoding="utf-8")).get("players") or []
+    sk = json.loads(SKILLS.read_text(encoding="utf-8"))
+    grades = sk.get("grades") or []
+    meta = sk.get("skills") or []
+    if len(grades) != len(rows):
+        # a silent off-by-one here would label every player with someone
+        # else's grades, so refuse the join rather than guess
+        print(f"warning: skills.json has {len(grades)} grade rows for {len(rows)} vectors — skipping skills")
+        return [], {}
+
+    best: dict[str, dict] = {}
+    for i, r in enumerate(rows):
+        g = grades[i]
+        name = r.get("name")
+        if not name or not g:
+            continue
+        key = norm_name(name)
+        score = sum(g)
+        prev = best.get(key)
+        if prev is None or score > prev["_score"]:
+            best[key] = {"_score": score, "s": r.get("season", ""), "g": [int(x) for x in g]}
+    for v in best.values():
+        v.pop("_score", None)
+    return meta, best
+
+
 def build() -> dict:
     if not WIKI.is_dir():
         sys.exit(f"missing {WIKI} — nothing to index")
+    skill_meta, peak = load_peak_skills()
     players, skipped = [], []
     for path in sorted(WIKI.glob("*.md")):
         fm = parse_frontmatter(path.read_text(encoding="utf-8"))
@@ -64,20 +122,25 @@ def build() -> dict:
         if not name:
             skipped.append(path.name)
             continue
-        players.append(
-            {
-                "slug": path.stem,
-                "name": name,
-                "span": fm.get("span", ""),
-                "seasons": fm.get("seasons_charted", 0),
-                "positions": fm.get("positions", []),
-                "archetypes": fm.get("archetypes", []),
-            }
-        )
+        entry = {
+            "slug": path.stem,
+            "name": name,
+            "span": fm.get("span", ""),
+            "seasons": fm.get("seasons_charted", 0),
+            "positions": fm.get("positions", []),
+            "archetypes": fm.get("archetypes", []),
+        }
+        pk = peak.get(norm_name(name))
+        if pk:
+            entry["sk"] = pk["g"]     # 12 grades, 0-99, index-aligned with skills[]
+            entry["skS"] = pk["s"]    # the season those grades come from
+        players.append(entry)
     return {
         "source": "knowledge/players/*.md frontmatter",
         "generator": "scripts/build_wiki_index.py",
         "note": "Derived from committed markdown only. No network, no model, no pipeline cache.",
+        "skills": skill_meta,
+        "skillsNote": "Peak-graded season per player from assets/skills.json; 0-99 percentile within that season pool.",
         "count": len(players),
         "skipped_no_name": skipped,
         "players": players,
