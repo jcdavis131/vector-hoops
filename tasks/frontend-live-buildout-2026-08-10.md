@@ -579,3 +579,21 @@ cd C:\Users\jcdav\vector-hoops\.claude\worktrees\frontend-live
 Start-Process python -ArgumentList '-m','http.server','8099' -WindowStyle Hidden
 Invoke-WebRequest http://localhost:8099/<page>.html -UseBasicParsing
 ```
+
+## Preview deployment — verified 2026-08-10 (was an open honesty item)
+
+I quoted the preview URL repeatedly without ever confirming it built. Checked it
+via the Vercel API. It is healthy, and the thing that stopped me fetching it was
+never a broken deploy:
+
+- latest `dpl_29VGYbSj2kZmLmyEp6UZnRFd6ghr` -> sha `789bd87d`, ref `frontend-live`, state **READY** (= this branch HEAD)
+- every `frontend-live` deployment listed is READY; none errored
+- `ssoProtection: enabled, all_except_custom_domains` -> previews are gated to
+  the logged-in Vercel team. `hoops.dumbmodel.com` is a custom domain, so
+  production is public and previews are not. That is the gate I kept hitting.
+- every `frontend-live` build has `target: null`; only `master` commits carry
+  `target: "production"`. This branch has never touched the live site.
+- `.vercel/project.json` has `outputDirectory: null`, which independently
+  confirms P0.3: zero-config Vercel serves `public/` when it exists.
+
+Turning SSO off to make previews publicly shareable is an operator decision, not mine.
