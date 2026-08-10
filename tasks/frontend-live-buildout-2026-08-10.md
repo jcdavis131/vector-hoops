@@ -17,8 +17,17 @@ dictionary · **5** team / front office.
 
 ## Rules of engagement
 
-- `COORDINATION.md` is a live claim board. **Write a claim row before editing**,
-  clear it when done. My row: `Claude-frontend-a11y`.
+- `COORDINATION.md` is a live claim board. I wrote a `Claude-frontend-a11y` row
+  before editing anything, per its protocol — and have since **removed it**.
+  Upstream regenerates that file from `bundles/coordination/active-tasks.md`,
+  which is not in this repo, on a ~30-minute heartbeat. Holding a hand-edited
+  row in a machine-generated file conflicted on every sync (it broke a rebase
+  mid-replay once). The claim lives here instead, where nothing overwrites it:
+  **this branch owns the hoops frontend pages — `index`, `play`, `players`,
+  `player`, `trends`, `model`, `dictionary`, `teams`, `leaderboard`,
+  `methods`, `inventory` — plus `scripts/build_wiki_index.py` and
+  `scripts/check_frontend.py`. No pipeline runs, no trainer runs, committed
+  assets only. `master` untouched.**
 - Never run a pipeline fetcher or trainer (ledger: two shipped-artifact
   clobbers from "just a smoke run"). Committed `assets/*.json` only.
 - Own branch only. `master` is Scout's and pushing it deploys live.
