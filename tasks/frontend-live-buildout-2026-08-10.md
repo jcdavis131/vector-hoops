@@ -968,3 +968,25 @@ for `0.9339` — correct roundings, and I checked all six against
 10,104 eligible pairs all confirmed) — but a rounded string is not in the file, so
 the gate cannot cover them. Those remain hand-verified. Extending `CITED` to carry
 a JSON path and compare `round(value, 2)` would close it and is not built.
+
+
+### Phase 4 audited by the same method — clean
+
+Ran the model.html audit against the player-cards surface, because it was the
+next-least-verified phase and this method had found something every time it was
+pointed somewhere new. It came back clean, recorded so it is not re-derived:
+
+- `player.html` states **2,293**, exactly the `wiki_index.json` count.
+- `players.html` states **held-out top-5 0.76** and links it to
+  `/dictionary.html#retrieval`. `eval_scoreboard.json` `by_split.test.top5` is
+  0.757 — correct rounding, correct split, and correctly labelled *held-out*
+  rather than overall.
+- `dictionary.html` states **~13,000 candidates** against a corpus of 12,966,
+  written with an explicit tilde; and **1.00** as the top of the cosine range,
+  which is a definition, not a measurement. Its `0.7057` and `6.32` are the two
+  known-unsourced figures the page exists to document — `sourced` passes them
+  because they are disclaimed in place.
+
+All five phases of the brief have now had this audit applied. It found the
+`Math.random()` owner table and the three em-dash columns in phase 5, and the EH
+pill in phase 3. Phases 1, 2 and 4 came back clean.
