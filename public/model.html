@@ -31,6 +31,9 @@
 .attr-val{text-align:right;font-variant-numeric:tabular-nums}
 .attr-fam{font-weight:400;color:var(--muted);text-transform:none}
 .tbtn{cursor:pointer}
+/* every cell is white-space:nowrap and there are ten columns, so on a phone this
+   has to scroll inside itself or it drags the page sideways */
+#zooTable{overflow-x:auto}
 #zooTable table{border-collapse:collapse;width:100%;font-family:var(--mono);font-size:11px}
 #zooTable th,#zooTable td{border:1px solid var(--hair);padding:3px 6px;text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
 #zooTable th:first-child,#zooTable td:first-child{text-align:left;white-space:normal}

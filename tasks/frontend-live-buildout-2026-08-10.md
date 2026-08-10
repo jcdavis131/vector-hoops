@@ -1474,3 +1474,47 @@ shared utility modules. Nothing else is fetched until a reader scrolls to it.
 That was the last item on this board that was mine. Every remaining one needs a
 person: six are operator decisions, one is blocked behind a pipeline I am not
 allowed to run, and two are product judgements.
+
+
+## Nobody had checked this on a phone (2026-08-10)
+
+Every check on this branch so far looked at a desktop-shaped page. Most visits to
+a site like this are not.
+
+`scripts/check_responsive.py` — viewport meta, elements declared wider than a
+360px screen, and tables with no scrollable ancestor. Two real failures, both in
+tables I built:
+
+- **`/owner`** — the nine-column FOR table sat in a plain `.card` with no
+  overflow container at all. On a phone it dragged the whole page sideways.
+- **`model.html #zooTable`** — every cell is `white-space:nowrap` across ten
+  columns, and the container declared no `overflow-x`. Guaranteed to overflow.
+
+Both wrapped the way every other wide table here already is.
+
+### The checker was wrong twice before it was right
+
+**Thirteen findings on the first run, eleven of them false.** It compared CSS
+selectors to decide whether something was wrapped, and a stylesheet cannot say
+what contains what: `#retrMap` is inside `#retrWrap`, `#archMap` and `svg.chart`
+inside `.figwrap`, `#foTable` inside `#foWrap` — all correctly wrapped, all
+reported. It also demanded the literal string `overflow-x` and so missed the
+`overflow:auto` containers on inventory and teams, missed `.tablewrap` on
+player.html, and read `<table>` inside a JavaScript string as if it were markup.
+
+Rewritten to resolve wrappers from the **markup** — walk back through opening
+tags for one that declares overflow inline or carries a class the stylesheet gives
+overflow to. Then narrowed again: three and four column tables wrap and compress,
+which is the ordinary responsive case, so only six-or-more columns or nowrap cells
+are reported.
+
+That is the same shape as the first contrast pass, which produced 65 findings that
+were not real. A checker that cries wolf is worse than no checker, and the cost of
+getting there is two rewrites before anything gets committed.
+
+Verified both directions: unwrapping the owner table reports it by column count,
+stripping a viewport meta reports that page, and both clear when restored.
+
+**What this does not cover, said plainly:** it reads what is declared. Real
+layout, text wrapping and tap ergonomics need a device, and nothing on this branch
+has ever been opened in a browser.
