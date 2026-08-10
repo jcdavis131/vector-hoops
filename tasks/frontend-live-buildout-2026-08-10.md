@@ -220,6 +220,12 @@ page had neither half of it:
 Both degrade safely: a failed fetch leaves the demo pool and the starfield, and
 the page says so.
 
+Expanding the pool created two defects of my own, fixed in the follow-up: match
+ranking (`includes` over 1,305 names is a lottery — now exact › prefix ›
+substring) and a miss message that listed **all 1,305**. A native `<datalist>`
+now supplies suggestions, and the last guess draws on the map with a line to
+the target.
+
 **Deliberate palette inconsistency, recorded so it is not read as a bug:**
 index 7 is `#FFFEF7` on `play.html`, not the `#000000` `index.html` and
 `players.html` use — that canvas is `#0A0C10` and black on near-black is
