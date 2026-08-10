@@ -22,6 +22,11 @@ Where a page already uses `id="main"` on some other element — index.html has
 `<div class="grid" id="main">` — that element is left as the target and simply
 made focusable, rather than moving the id and breaking whatever points at it.
 
+A page that already has a skip link is left alone, and "already has one" is
+decided by behaviour: an anchor to a fragment whose text starts with "skip",
+in the markup or built by a script. Looking for `class="vh-skip"` is what gave
+players.html a second skip link stacked on the `.pl-skip` it already injected.
+
     python scripts/fix_skip_link.py --check
     python scripts/fix_skip_link.py
 """
@@ -40,6 +45,13 @@ LINK = '<a class="vh-skip" href="#main">Skip to the content</a>'
 CSS = (".vh-skip{position:absolute;left:-9999px;top:0;z-index:99;background:var(--paper,#fafaf8);"
        "border:2.2px solid var(--ink,#111);padding:10px 14px;font-family:ui-monospace,Menlo,monospace;"
        "font-weight:800;text-decoration:none;border-radius:0 0 10px 0}\n.vh-skip:focus{left:0}")
+
+# A page already has a skip link if it has an anchor to a fragment whose text
+# starts with "skip" — whatever that anchor is called, and whether it is in the
+# markup or built by a script. Looking for class="vh-skip" is what gave
+# players.html a second skip link on top of the .pl-skip it already injected.
+RE_SKIP_STATIC = re.compile(r"""<a\b[^>]*\bhref\s*=\s*["']?#[\w.:-]+["']?[^>]*>\s*(?:<[^>]+>\s*)*skip\b""", re.I)
+RE_SKIP_JS = re.compile(r"""textContent\s*=\s*["']\s*skip\b""", re.I)
 
 RE_BODY = re.compile(r"<body[^>]*>", re.I)
 RE_MAIN = re.compile(r"<main\b([^>]*)>", re.I)
@@ -66,6 +78,12 @@ def main() -> int:
         text = page.read_bytes().decode("utf-8")
         original = text
         did = []
+
+        # 0. does this page already have one, under any name?
+        existing = RE_SKIP_STATIC.search(text) or RE_SKIP_JS.search(text)
+        if existing and 'class="vh-skip"' not in text:
+            print(f"  have  {name:<26} already has a skip link — {existing.group(0)[:52].strip()!r}")
+            continue
 
         # 1. a focusable target called main
         target = RE_ID_MAIN.search(text)

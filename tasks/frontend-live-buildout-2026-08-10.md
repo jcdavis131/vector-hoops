@@ -1744,3 +1744,73 @@ breath.
 The caveat `check_a11y.py` prints is narrower now, and honest: contrast, focus
 order, skip links and phone widths all have a tool. Whether the reading order
 *makes sense* still needs a person.
+
+
+## The focus check was testing the label, not the behaviour (2026-08-10)
+
+Extended `check_focus.py` from seven pages to all eighteen, on the lesson the
+viewport check taught: sampling seven of them had missed two failures. One page
+came back red.
+
+**/players.html — and both halves of it were mine.**
+
+The check asserted `class="vh-skip"` on the first Tab stop. players.html landed
+on `.pl-skip`, which is a perfectly good skip link. So the check was wrong. But
+going to look at why the class differed turned up the real bug: the page had
+**two** skip links. `fix_skip_link.py` looks for `class="vh-skip"` before adding
+one, players.html already injected its own from earlier a11y work, so the fixer
+could not see it and stacked a second one on top. The JS-injected one won,
+because it goes in at `body.firstChild`.
+
+Checking the name rather than the behaviour got both halves wrong at once — it
+failed a page that worked, and it caused the defect it failed the page for.
+
+Both now decide by behaviour. The check asks whether the first stop is an anchor
+whose fragment resolves to an element that is, contains, or sits inside the main
+landmark, and can take focus — and it names which of those failed. The fixer
+asks whether the page has an anchor to a fragment whose text starts with "skip",
+in the markup or built by a script. **22 of 22 detected, 0 missed.**
+
+The removal on players.html needed care: the injection is the last nine lines of
+an IIFE that otherwise holds the keyboard orbit controls for the map. Only the
+tail came out. Its target was `.wrap` first anyway, so it was setting
+`id="pl-main"` on the wrapper rather than on `<main>` — while a static
+`<main id="main" tabindex="-1">` already sat right there. The static link is the
+better one to keep: it works with JavaScript off.
+
+### Then player-animations.html failed, and that was wrong too
+
+Two traps and four elements with no focus indicator. Before fixing anything I
+asked the browser what `posecode-player` actually is:
+
+    8 elements, all with an open shadowRoot, each holding a button and a link
+    delegatesFocus: false, no tabindex on the host
+
+`document.activeElement` stops at the shadow host. So every Tab inside one
+component reported the same element — a trap that was not there — and the focus
+ring was computed on the host instead of on the control that had focus. **16
+focusable controls the check had never once looked at.**
+
+It follows focus into open shadow roots now. Document order became a path —
+`[host position, position inside its shadow root, …]` — which compares
+lexicographically, so shadow-encapsulated stops get distinct, correctly ordered
+identities. player-animations.html passes with `in-shadow=4`, and those four
+stops have real focus rings, which the component ships and this now confirms
+rather than assumes.
+
+**All eighteen served pages: skip link first, no traps, no backward jumps, every
+stop visibly focused.**
+
+That is the sixth checker this session whose first run on new ground was a false
+alarm — contrast, responsive, render, viewport, focus-trap, and now shadow DOM.
+The pattern in all six is the same: the check read a proxy for the thing (a
+selector, a literal string, a class name, a host element) instead of the thing.
+Asking the browser what is true costs one probe script and has been right every
+time.
+
+### For P9.4, the unpkg question
+
+Evidence rather than opinion: the component contributes 8 shadow roots and 16
+focusable controls, all of which carry their own focus rings and tab in document
+order. Whatever is decided about the external dependency, it is not currently an
+accessibility problem.

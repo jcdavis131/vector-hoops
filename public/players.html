@@ -98,8 +98,7 @@ cv.addEventListener('click',async e=>{let r=cv.getBoundingClientRect(),mx=(e.cli
 }
 :focus-visible{outline:3px solid var(--blue);outline-offset:2px}
 .pl-sr{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;border:0}
-.pl-skip{position:absolute;left:-9999px;top:0;z-index:200;background:var(--paper);border:2.2px solid var(--ink);padding:10px 14px;font-family:var(--mono);font-weight:800;text-decoration:none;border-radius:0 0 10px 0}
-.pl-skip:focus{left:0}
+/* .pl-skip is gone — the static .vh-skip link below covers WCAG 2.4.1 here. */
 #plKey{margin-top:10px}
 #plKey ul{list-style:none;margin:6px 0 0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(232px,1fr));gap:2px}
 #plKey li{display:flex;align-items:center;gap:7px;min-height:26px;font-family:var(--mono);font-size:11px;padding:2px 4px}
@@ -254,14 +253,10 @@ cv.addEventListener('click',async e=>{let r=cv.getBoundingClientRect(),mx=(e.cli
     });
   }
 
-  var main=document.querySelector('.wrap')||document.querySelector('main');
-  if(main){
-    if(!main.id) main.id='pl-main';
-    main.setAttribute('tabindex','-1');
-    var skip=document.createElement('a');
-    skip.className='pl-skip'; skip.href='#'+main.id; skip.textContent='Skip to the explorer';
-    document.body.insertBefore(skip, document.body.firstChild);
-  }
+  // A JS-injected skip link used to sit here. The page now carries a static one
+  // right after <body>, which works with JavaScript off and does not depend on
+  // this IIFE running. Keeping both gave the page two skip links, and the
+  // injected one won because it went in at body.firstChild.
 })();
 </script>
 </main>
