@@ -227,7 +227,7 @@ $('foTable').addEventListener('keydown',function(e){
   });
 })();
 
-fetch('assets/front_office.json',{cache:'force-cache'})
+fetch('assets/front_office.json?v=fb95747f',{cache:'force-cache'})
   .then(function(r){ if(!r.ok) throw new Error('HTTP '+r.status); return r.json(); })
   .then(function(j){
     if(!j.teams||!j.teams.length) throw new Error('no teams in file');

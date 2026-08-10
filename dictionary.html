@@ -289,13 +289,13 @@ jump.innerHTML=Array.prototype.map.call(document.querySelectorAll('.entry[id]'),
   return '<a href="#'+e.id+'">'+esc(h?h.textContent:e.id)+'</a>';
 }).join('');
 
-fetch('assets/mtnn_arch.json',{cache:'force-cache'}).then(function(r){return r.ok?r.json():null;})
+fetch('assets/mtnn_arch.json?v=d9922089',{cache:'force-cache'}).then(function(r){return r.ok?r.json():null;})
  .then(function(j){
    if(!j||!j.gameArchetypes) return;
    $('archList').innerHTML=j.gameArchetypes.map(function(a){return '<li>'+esc(a)+'</li>';}).join('');
  }).catch(function(){ $('archList').innerHTML='<li class="dim">Archetype list could not be loaded.</li>'; });
 
-fetch('assets/eval_scoreboard.json',{cache:'force-cache'}).then(function(r){return r.ok?r.json():null;})
+fetch('assets/eval_scoreboard.json?v=a436661b',{cache:'force-cache'}).then(function(r){return r.ok?r.json():null;})
  .then(function(j){
    if(!j||!j.results||!j.results.mtnn) throw new Error('shape');
    var m=j.results.mtnn, b=j.results.baseline_transparent_14d;

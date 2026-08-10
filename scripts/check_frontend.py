@@ -232,9 +232,28 @@ def check_mirror(fail) -> None:
         print(f"  {first.removeprefix('OK').strip()}")
 
 
+def check_tokens(fail) -> None:
+    """assets/*.json is served immutable for a year, so a regenerated asset
+    never reaches a returning visitor unless its URL changes."""
+    script = ROOT / "scripts" / "stamp_assets.py"
+    if not script.exists():
+        print("  SKIP  scripts/stamp_assets.py not present")
+        return
+    r = subprocess.run(
+        [sys.executable, str(script), "--check"], capture_output=True, text=True, cwd=str(ROOT)
+    )
+    lines = [ln for ln in r.stdout.strip().splitlines() if ln.strip()]
+    first = lines[0] if lines else "no output"
+    if r.returncode != 0:
+        fail(f"asset cache tokens are stale — {first.removeprefix('FAIL').strip()} Run: python scripts/stamp_assets.py")
+    else:
+        print(f"  {first.removeprefix('OK').strip()}")
+
+
 CHECKS = {
     "syntax": check_syntax,
     "mirror": check_mirror,
+    "tokens": check_tokens,
     "targets": check_targets,
     "assets": check_assets,
     "ids": check_ids,

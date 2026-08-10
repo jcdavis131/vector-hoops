@@ -396,8 +396,8 @@ function boot(){
 }
 
 Promise.all([
-  fetch('assets/drift.json',{cache:'force-cache'}).then(function(r){if(!r.ok)throw new Error('drift.json HTTP '+r.status);return r.json();}),
-  fetch('assets/archetypes_time.json',{cache:'force-cache'}).then(function(r){return r.ok?r.json():null;}).catch(function(){return null;})
+  fetch('assets/drift.json?v=a420f8c8',{cache:'force-cache'}).then(function(r){if(!r.ok)throw new Error('drift.json HTTP '+r.status);return r.json();}),
+  fetch('assets/archetypes_time.json?v=0e5539d5',{cache:'force-cache'}).then(function(r){return r.ok?r.json():null;}).catch(function(){return null;})
 ]).then(function(res){ DRIFT=res[0]; ARCH=res[1]; boot(); })
  .catch(function(e){
    // no invented fallback: an empty page beats a page of made-up drift
@@ -478,7 +478,7 @@ function lookup(){
 function load(){
   if(TW||loading) return;
   loading=true;
-  fetch('assets/eratwins.json',{cache:'force-cache'})
+  fetch('assets/eratwins.json?v=aff3a23c',{cache:'force-cache'})
     .then(function(r){ if(!r.ok) throw new Error('HTTP '+r.status); return r.json(); })
     .then(function(j){ TW=j; render(); lookup(); })
     .catch(function(e){

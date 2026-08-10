@@ -216,7 +216,7 @@ function search(){
 }
 function loadIndex(){
   if(IDX) return Promise.resolve(IDX);
-  return fetch('assets/wiki_index.json',{cache:'force-cache'})
+  return fetch('assets/wiki_index.json?v=0b0ee6a2',{cache:'force-cache'})
     .then(function(r){ if(!r.ok) throw new Error('HTTP '+r.status); return r.json(); })
     .then(function(j){
       IDX=j; byslug={};
