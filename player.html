@@ -1,0 +1,278 @@
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Vector Hoops — Player cards</title>
+<meta name="description" content="A card for every charted NBA player, 1996-97 to 2025-26: vector identity, signature season, season-by-season archetypes, and the closest career shapes in the embedding.">
+<meta name="theme-color" content="#fafaf8">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23111'/%3E%3Ccircle cx='11' cy='12' r='3' fill='%23eb6834'/%3E%3C/svg%3E">
+<style>
+:root{
+  --paper:#fafaf8;--surface:#fff;--ink:#111;--ink-soft:#52514e;--muted:#6b6760;--hair:#e1e0d9;
+  --orange:#eb6834;--blue:#2a78d6;--yellow:#f0e442;--green:#009e73;
+  --mono:ui-monospace,"IBM Plex Mono",Menlo,monospace;--sans:ui-sans-serif,system-ui,sans-serif;
+  --shadow:4px 4px 0 var(--ink);--shadow-sm:3px 3px 0 var(--ink);
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased;overflow-x:clip}
+a{color:inherit}
+nav{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:12px 16px;background:var(--surface);border-bottom:2px solid var(--ink);position:sticky;top:0;z-index:10;flex-wrap:wrap}
+.brand{font-family:var(--mono);font-weight:800;letter-spacing:.04em;text-transform:uppercase;text-decoration:none}
+.brand span{color:var(--orange)}
+.pill{display:inline-flex;align-items:center;gap:5px;padding:5px 10px;border:1.6px solid var(--ink);border-radius:999px;background:#fff;box-shadow:2px 2px 0 var(--ink);font-family:var(--mono);font-size:11px;font-weight:800;text-transform:uppercase;text-decoration:none}
+.pill-y{background:var(--yellow)}
+main{max-width:900px;margin:0 auto;padding:16px clamp(12px,3vw,20px) 80px}
+.card{background:var(--surface);border:2.2px solid var(--ink);border-radius:14px;box-shadow:var(--shadow);padding:16px;margin:14px 0}
+h1{font-size:clamp(26px,4.4vw,40px);line-height:1.08;letter-spacing:-.02em;margin:10px 0 8px}
+.sub{font-size:13.5px;color:var(--ink-soft);line-height:1.6;max-width:68ch}
+.mono{font-family:var(--mono);font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.05em}
+.dim{color:var(--muted)}
+input[type=search]{width:100%;max-width:460px;padding:11px 13px;border:2px solid var(--ink);border-radius:10px;font-family:var(--mono);font-size:15px;box-shadow:var(--shadow-sm);background:#fff}
+.hits{list-style:none;margin:8px 0 0;padding:0;display:flex;flex-direction:column;gap:4px;max-width:460px}
+.hits button{display:flex;justify-content:space-between;gap:10px;align-items:baseline;width:100%;text-align:left;border:1.6px solid var(--ink);border-radius:9px;background:#fff;padding:8px 10px;font:inherit;font-size:14px;cursor:pointer;min-height:40px}
+.hits button:hover,.hits button:focus-visible{background:var(--yellow)}
+.hits .meta{font-family:var(--mono);font-size:10.5px;color:var(--muted);white-space:nowrap}
+/* the card itself, rendered from the wiki markdown */
+#card h2{font-size:clamp(24px,3.6vw,32px);letter-spacing:-.02em;margin:0 0 6px}
+#card h3{font-size:16px;margin:18px 0 4px;letter-spacing:-.01em}
+#card p{font-size:14.5px;line-height:1.65;margin:8px 0}
+#card ul{margin:8px 0;padding-left:18px}
+#card li{font-size:14px;line-height:1.6;margin:2px 0}
+#card table{border-collapse:collapse;width:100%;margin:8px 0;font-family:var(--mono);font-size:11.5px}
+#card th,#card td{border:1px solid var(--hair);padding:4px 7px;text-align:left;vertical-align:top}
+#card th{background:#f4f3ee;white-space:nowrap}
+.tablewrap{overflow-x:auto}
+.badges{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0 2px}
+.badge{display:inline-flex;align-items:center;gap:5px;border:1.5px solid var(--ink);border-radius:999px;padding:3px 9px;font-family:var(--mono);font-size:10.5px;font-weight:800;background:#fff}
+.badge-y{background:var(--yellow)}
+a.wikilink{font-weight:700;text-decoration:underline;text-underline-offset:2px}
+:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+.vh-sr{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;border:0}
+.vh-skip{position:absolute;left:-9999px;top:0;z-index:99;background:var(--paper);border:2.2px solid var(--ink);padding:10px 14px;font-family:var(--mono);font-weight:800;text-decoration:none;border-radius:0 0 10px 0}
+.vh-skip:focus{left:0}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.001ms!important;transition-duration:.001ms!important}}
+</style></head><body>
+<a class="vh-skip" href="#main">Skip to the search</a>
+<nav>
+  <a class="brand" href="/">DUMB<span>MODEL</span></a>
+  <div style="display:flex;gap:6px;flex-wrap:wrap">
+    <a class="pill" href="/trends.html">Trends</a>
+    <a class="pill" href="/model.html">Model</a>
+    <a class="pill" href="/dictionary.html">Dictionary</a>
+    <a class="pill pill-y" href="/play.html">Play today's →</a>
+  </div>
+</nav>
+
+<main id="main" tabindex="-1">
+  <div class="card">
+    <div class="mono dim">Player cards</div>
+    <h1>Every charted player has a page</h1>
+    <p class="sub">2,293 of them, 1996-97 to 2025-26 — generated from the same vectors the game
+    scores against. Each card gives a career identity in standard deviations against its own era,
+    a signature season, an archetype for every year, and the closest career shapes in the
+    embedding. Until now nothing on this site linked them.</p>
+    <div style="margin-top:14px">
+      <label class="mono" for="q">Find a player</label>
+      <input type="search" id="q" autocomplete="off" spellcheck="false" placeholder="Wembanyama, Jordan, Nash…"
+             aria-describedby="qhelp" aria-controls="hits" style="margin-top:5px">
+      <div class="mono dim" id="qhelp" style="margin-top:5px">Arrow keys move through results · Enter opens</div>
+      <ul class="hits" id="hits" role="listbox" aria-label="Matching players"></ul>
+    </div>
+  </div>
+
+  <div class="card" id="cardWrap" hidden>
+    <div id="card" aria-live="polite"></div>
+    <p class="sub dim" id="cardSrc" style="margin-top:14px"></p>
+  </div>
+
+  <div id="live" class="vh-sr" role="status" aria-live="polite" aria-atomic="true"></div>
+</main>
+
+<script>
+(function(){
+'use strict';
+var $=function(id){return document.getElementById(id);};
+var esc=function(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');};
+var IDX=null, byslug=null, cursor=-1, hits=[];
+function say(m){var l=$('live');if(!l||!m)return;if(l.textContent===m)l.textContent='';l.textContent=m;}
+
+/* A deliberately small markdown renderer. These pages are machine-written by
+   pipeline/build_wiki.py to a fixed shape — headings, bold, tables, lists and
+   [[slug|Label]] wikilinks — so a full parser would be a dependency bought for
+   nothing. Everything is escaped before any markup is applied, so page content
+   can never inject HTML. */
+/* Wikilink targets come in three shapes across the 2,293 pages, counted rather
+   than assumed: 29,809 bare player slugs with a label, 2,293 bare slugs alone,
+   and 6,750 relative paths like ../archetypes/<slug> pointing at the 8
+   archetype and 5 position hubs. Normalising all three to a knowledge/ path
+   means the hubs become reachable too — they are the same markdown format. */
+function normTarget(t){
+  t=String(t||'').trim().replace(/^\.{1,2}\//,'').replace(/\.md$/,'');
+  return t.indexOf('/')<0 ? 'players/'+t : t;
+}
+function href(path){
+  return path.indexOf('players/')===0 ? '?p='+encodeURIComponent(path.slice(8))
+                                      : '?w='+encodeURIComponent(path);
+}
+function inline(s){
+  s=esc(s);
+  s=s.replace(/\[\[([^\]|]+)\|([^\]]+)\]\]/g,function(_,t,label){
+    var p=normTarget(t);
+    return '<a class="wikilink" href="'+href(p)+'" data-path="'+esc(p)+'">'+label+'</a>';
+  });
+  s=s.replace(/\[\[([^\]|]+)\]\]/g,function(_,t){
+    var p=normTarget(t);
+    return '<a class="wikilink" href="'+href(p)+'" data-path="'+esc(p)+'">'+esc(t)+'</a>';
+  });
+  s=s.replace(/\*\*([^*]+)\*\*/g,'<b>$1</b>');
+  s=s.replace(/`([^`]+)`/g,'<code>$1</code>');
+  return s;
+}
+function render(md){
+  // Drop the frontmatter block and the generator's own HTML comments.
+  // \r?\n throughout: the repo has no .gitattributes and core.autocrlf is on,
+  // so these files are CRLF in a Windows working tree and LF elsewhere. An
+  // LF-only regex silently leaks the whole frontmatter into the card.
+  md=md.replace(/^---\r?\n[\s\S]*?\r?\n---\r?\n/,'').replace(/<!--[\s\S]*?-->/g,'');
+  var out=[], lines=md.split(/\r?\n/), i=0;
+  while(i<lines.length){
+    var ln=lines[i];
+    if(/^\s*$/.test(ln)){ i++; continue; }
+    var h=ln.match(/^(#{1,4})\s+(.*)$/);
+    if(h){ var lv=Math.min(4,h[1].length+1); out.push('<h'+lv+'>'+inline(h[2])+'</h'+lv+'>'); i++; continue; }
+    if(/^\s*\|/.test(ln)){
+      var rows=[];
+      while(i<lines.length && /^\s*\|/.test(lines[i])){ rows.push(lines[i]); i++; }
+      var cells=function(r){ return r.replace(/^\s*\|/,'').replace(/\|\s*$/,'').split('|').map(function(c){return c.trim();}); };
+      var head=cells(rows[0]);
+      var body=rows.slice(rows.length>1 && /^[\s|:\-]+$/.test(rows[1])?2:1);
+      out.push('<div class="tablewrap"><table><thead><tr>'+head.map(function(c){return '<th>'+inline(c)+'</th>';}).join('')+
+        '</tr></thead><tbody>'+body.map(function(r){
+          return '<tr>'+cells(r).map(function(c){return '<td>'+inline(c)+'</td>';}).join('')+'</tr>';
+        }).join('')+'</tbody></table></div>');
+      continue;
+    }
+    if(/^\s*[-*]\s+/.test(ln)){
+      var items=[];
+      while(i<lines.length && /^\s*[-*]\s+/.test(lines[i])){ items.push(lines[i].replace(/^\s*[-*]\s+/,'')); i++; }
+      out.push('<ul>'+items.map(function(t){return '<li>'+inline(t)+'</li>';}).join('')+'</ul>');
+      continue;
+    }
+    var para=[];
+    while(i<lines.length && !/^\s*$/.test(lines[i]) && !/^\s*\|/.test(lines[i]) && !/^\s*[-*]\s+/.test(lines[i]) && !/^#{1,4}\s/.test(lines[i])){ para.push(lines[i]); i++; }
+    out.push('<p>'+inline(para.join(' '))+'</p>');
+  }
+  return out.join('');
+}
+
+function badges(rec){
+  if(!rec) return '';
+  var b=[];
+  if(rec.span) b.push('<span class="badge">'+esc(rec.span)+'</span>');
+  if(rec.seasons) b.push('<span class="badge">'+rec.seasons+' season'+(rec.seasons===1?'':'s')+'</span>');
+  (rec.positions||[]).forEach(function(p){ b.push('<span class="badge">'+esc(p)+'</span>'); });
+  (rec.archetypes||[]).forEach(function(a){ b.push('<span class="badge badge-y">'+esc(a)+'</span>'); });
+  return '<div class="badges">'+b.join('')+'</div>';
+}
+function open(path,push){
+  if(!path) return;
+  path=normTarget(path);
+  var slug=path.indexOf('players/')===0?path.slice(8):null;
+  var rec=(slug&&byslug)?byslug[slug]:null;
+  var label=rec?rec.name:path.split('/').pop().replace(/-/g,' ');
+  $('cardWrap').hidden=false;
+  $('card').innerHTML='<p class="sub dim">Loading '+esc(label)+'…</p>';
+  fetch('knowledge/'+path.split('/').map(encodeURIComponent).join('/')+'.md',{cache:'force-cache'})
+    .then(function(r){ if(!r.ok) throw new Error('HTTP '+r.status); return r.text(); })
+    .then(function(md){
+      $('card').innerHTML=badges(rec)+render(md);
+      $('cardSrc').innerHTML='Source: <code>knowledge/'+esc(path)+'.md</code> — generated by '+
+        '<code>pipeline/build_wiki.py</code> from the committed vectors. Sigma values are against '+
+        'that player’s own era; see the <a href="/dictionary.html#era-z">dictionary</a>.';
+      if(push) history.pushState({path:path},'',href(path));
+      document.title=label+' — Vector Hoops';
+      say(label+' card loaded.');
+      $('cardWrap').scrollIntoView({block:'start'});
+    })
+    .catch(function(e){
+      // no invented card: if the page is missing, say which one and why
+      $('card').innerHTML='<p class="sub">No wiki page at <code>knowledge/'+esc(path)+'.md</code> ('+
+        esc(e.message)+'). 2,293 charted players have one, plus 8 archetype and 5 position hubs; '+
+        'a player below the charting floor will not.</p>';
+      $('cardSrc').textContent='';
+    });
+}
+function search(){
+  var v=($('q').value||'').trim().toLowerCase();
+  cursor=-1;
+  if(!IDX){ $('hits').innerHTML='<li class="sub dim">Loading index…</li>'; return; }
+  if(v.length<2){ $('hits').innerHTML=''; hits=[]; return; }
+  hits=IDX.players.filter(function(p){ return p.name.toLowerCase().indexOf(v)>=0; })
+    .sort(function(a,b){
+      var ai=a.name.toLowerCase().indexOf(v), bi=b.name.toLowerCase().indexOf(v);
+      return ai!==bi ? ai-bi : (b.seasons||0)-(a.seasons||0);
+    }).slice(0,10);
+  $('hits').innerHTML=hits.length
+    ? hits.map(function(p,i){
+        return '<li role="option" aria-selected="false"><button type="button" data-slug="'+esc(p.slug)+'" data-i="'+i+'">'+
+          '<span>'+esc(p.name)+'</span><span class="meta">'+esc(p.span)+'</span></button></li>';
+      }).join('')
+    : '<li class="sub dim">No charted player matches that.</li>';
+  say(hits.length+' match'+(hits.length===1?'':'es')+'.');
+}
+function loadIndex(){
+  if(IDX) return Promise.resolve(IDX);
+  return fetch('assets/wiki_index.json',{cache:'force-cache'})
+    .then(function(r){ if(!r.ok) throw new Error('HTTP '+r.status); return r.json(); })
+    .then(function(j){
+      IDX=j; byslug={};
+      j.players.forEach(function(p){ byslug[p.slug]=p; });
+      search();
+      return j;
+    })
+    .catch(function(e){ $('hits').innerHTML='<li class="sub">Index unavailable ('+esc(e.message)+').</li>'; });
+}
+
+$('q').addEventListener('input',function(){ IDX?search():loadIndex(); });
+$('q').addEventListener('focus',loadIndex);
+$('q').addEventListener('keydown',function(e){
+  var btns=$('hits').querySelectorAll('button');
+  if(e.key==='ArrowDown'||e.key==='ArrowUp'){
+    if(!btns.length) return;
+    e.preventDefault();
+    cursor=Math.max(0,Math.min(btns.length-1,cursor+(e.key==='ArrowDown'?1:-1)));
+    btns[cursor].focus();
+  } else if(e.key==='Enter' && btns.length){
+    e.preventDefault(); open(btns[Math.max(0,cursor)].dataset.slug,true);
+  }
+});
+$('hits').addEventListener('click',function(e){
+  var b=e.target.closest?e.target.closest('button'):null; if(b) open(b.dataset.slug,true);
+});
+$('hits').addEventListener('keydown',function(e){
+  var btns=$('hits').querySelectorAll('button');
+  if(e.key!=='ArrowDown'&&e.key!=='ArrowUp') return;
+  e.preventDefault();
+  var i=+((e.target.dataset||{}).i||0)+(e.key==='ArrowDown'?1:-1);
+  if(i<0){ $('q').focus(); cursor=-1; return; }
+  if(i<btns.length){ cursor=i; btns[i].focus(); }
+});
+// wikilinks between cards stay in-page
+$('card').addEventListener('click',function(e){
+  var a=e.target.closest?e.target.closest('a.wikilink'):null;
+  if(a && a.dataset.path){ e.preventDefault(); open(a.dataset.path,true); }
+});
+// ?p= is the short form for a player; ?w= addresses any other knowledge/ page
+function fromUrl(){
+  var q=new URLSearchParams(location.search);
+  return q.get('w') || q.get('p') || null;
+}
+window.addEventListener('popstate',function(){
+  var t=fromUrl();
+  if(t) open(t,false); else { $('cardWrap').hidden=true; }
+});
+
+var initial=fromUrl();
+if(initial){ loadIndex().then(function(){ open(initial,false); }); }
+})();
+</script>
+</body></html>
