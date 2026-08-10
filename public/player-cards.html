@@ -92,7 +92,8 @@ input[type=search]{width:100%;max-width:460px;padding:11px 13px;border:2px solid
     <div style="margin-top:14px">
       <label class="mono" for="q">Find a player</label>
       <input type="search" id="q" autocomplete="off" spellcheck="false" placeholder="Wembanyama, Jordan, Nash…"
-             aria-describedby="qhelp" aria-controls="hits" style="margin-top:5px">
+             aria-describedby="qhelp" aria-controls="hits" role="combobox"
+             aria-expanded="false" aria-autocomplete="list" style="margin-top:5px">
       <div class="mono dim" id="qhelp" style="margin-top:5px">Arrow keys move through results · Enter opens</div>
       <ul class="hits" id="hits" role="listbox" aria-label="Matching players"></ul>
 <!-- build_player_hubs.py: start -->
@@ -252,11 +253,19 @@ function open(path,push){
       $('cardSrc').textContent='';
     });
 }
+function setExpanded(open){
+  var q=$('q'), want=open?'true':'false';
+  if(q && q.getAttribute('aria-expanded')!==want) q.setAttribute('aria-expanded',want);
+}
 function search(){
   var v=($('q').value||'').trim().toLowerCase();
   cursor=-1;
   if(!IDX){ $('hits').innerHTML='<li class="sub dim">Loading index…</li>'; return; }
-  if(v.length<2){ $('hits').innerHTML=''; hits=[]; return; }
+  if(v.length<2){ $('hits').innerHTML=''; hits=[]; setExpanded(false); return; }
+  /* The input points aria-controls at a listbox and never said whether that
+     listbox was open, so a screen reader announced a combobox with no state
+     while five results sat under it. Set where the list is actually written,
+     and guarded so a repeat write is a no-op. */
   hits=IDX.players.filter(function(p){ return p.name.toLowerCase().indexOf(v)>=0; })
     .sort(function(a,b){
       var ai=a.name.toLowerCase().indexOf(v), bi=b.name.toLowerCase().indexOf(v);
@@ -268,6 +277,7 @@ function search(){
           '<span>'+esc(p.name)+'</span><span class="meta">'+esc(p.span)+'</span></button></li>';
       }).join('')
     : '<li class="sub dim">No charted player matches that.</li>';
+  setExpanded(hits.length>0);
   say(hits.length+' match'+(hits.length===1?'':'es')+'.');
 }
 function loadIndex(){

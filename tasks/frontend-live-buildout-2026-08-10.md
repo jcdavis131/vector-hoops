@@ -3093,3 +3093,54 @@ restoring focus after a table redraw would have stolen it from mouse users
 without the `contains(activeElement)` guard, and this would have announced a
 toggle that does not exist. Operating a control tells you what it does; only
 looking at what it *is* tells you what to claim about it.
+
+
+## The search never said whether it was open (2026-08-10)
+
+Last untested control on the site: the player search on `/player-cards`. Typing
+works — five hits for "curry" — arrow keys walk into the results, and Enter opens
+the card.
+
+The input declared `aria-controls="hits"` at a `role="listbox"` and **never set
+`aria-expanded`**. A screen reader met a control that points at a popup and never
+says whether the popup is there, while five results sat underneath it.
+
+Now stated where the list is actually written, and guarded so a repeat write is a
+no-op:
+
+    on load          {"expanded":"false","hits":0}
+    typed 'curry'    {"expanded":"true","hits":5}
+    typed 'zzzzz'    {"expanded":"false","hits":0}
+    cleared          {"expanded":"false","hits":0}
+
+`role="combobox"` and `aria-autocomplete="list"` come with it, since the element
+was already behaving as one.
+
+### A bug I nearly reported that was my own probe
+
+The first run said **Enter opened nothing** — empty card, focus sitting on the
+result button. That reads exactly like a keyboard dead end: the Enter handler is
+bound to the input, focus has moved off it, and the list's own keydown handler
+only answers ArrowUp/ArrowDown.
+
+It was the probe. I sent `rawKeyDown` + `keyUp` with no `char` event, and a
+button's native activation needs the full sequence — the same three-part Enter
+`smoke_play.py` has always used. With the char event the card opens:
+
+    '2001-02 – 2007-08 7 seasons CPF Defensive Glass + Rim Pressure (Fts)…'
+
+Second time this session a synthetic-input shortcut has manufactured a defect,
+and the tell was the same both times: the failure was too clean.
+
+### Left alone, and why
+
+Every `li[role="option"]` wraps a `<button>`, so a screen reader meets a button
+inside an option and `aria-selected` never moves off `false` as focus walks the
+list. Fixing that properly means making the options themselves focusable and
+driving the whole thing with `aria-activedescendant` — a rebuild of the widget,
+not an attribute. It works by mouse and by keyboard today; recorded rather than
+half-changed.
+
+- [ ] **P9.8 The results list is buttons inside options.** `aria-selected` cannot
+  do its job while focus lives on a child of the option. Worth doing as a
+  deliberate widget pass, along with the same question on play.html's datalist.
