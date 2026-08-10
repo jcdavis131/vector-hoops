@@ -8,6 +8,19 @@ export async function mountSharedMap(canvas, opts={}){
   if(!canvas) return null;
   const OKABE=['#0072B2','#D55E00','#009E73','#F0E442','#56B4E9','#CC79A7','#E69F00','#000000'];
   const ARCH=["Glass+Rim","LowVol Glass","Low Impact","Def Glass FT","Vol+3P","3P Acc+Vol","Playmaking","Scoring Vol"];
+  // Full names as the model states them, index-aligned with ARCH and OKABE.
+  // Source: assets/mtnn_arch.json gameArchetypes (same order as
+  // assets/archetype-bridge.js ARCH_DEFS, which uses the identical palette).
+  const ARCH_FULL=[
+    "Offensive Glass + Rim Protection",
+    "Offensive Glass (Low Shot Volume)",
+    "Three-Point Volume (Low On-Court Impact)",
+    "Defensive Glass + Rim Pressure (Fts)",
+    "Shot Volume + Three-Point Volume",
+    "Three-Point Accuracy + Three-Point Volume",
+    "Playmaking + Steals",
+    "Scoring Volume + Shot Volume"
+  ];
   const POS=['PG','SG','SF','PF','C'];
   const highlightInit = opts.highlightId ?? null;
   const dark = !!opts.dark;
@@ -26,6 +39,9 @@ export async function mountSharedMap(canvas, opts={}){
   // wide shot and 12,966 points at 2px are unreadable.
   let zoom=1;
   const ZOOM_MIN=0.6, ZOOM_MAX=4;
+  // null/empty = draw every archetype at full strength; otherwise the set of
+  // archetype indices to keep lit while the rest fade back.
+  let archFilter=null;
   // guesses are stored as {idx, sim, rank} — idx is the external player id
   // (same id space as targetId, translated through projById below), sim is
   // 0..1 similarity, rank is 0-based (0 = exact match). A plain array of
@@ -211,20 +227,26 @@ export async function mountSharedMap(canvas, opts={}){
     // sampling
     const step=Math.max(1, Math.ceil(N / maxRender));
     // group by color batches: we will iterate colors and inside iterate sampled indices
-    const dotSize = W<600?2:2;
+    const dotSize = 2;
+    // One globalAlpha per colour batch, not per point — the archetype filter
+    // stays free. Unselected archetypes fade rather than vanish so the shape of
+    // the whole cloud still reads behind the one you are inspecting.
+    const dimming = !!(archFilter && archFilter.size);
     for(let c=0;c<8;c++){
       ctx.fillStyle=OKABE[c];
+      ctx.globalAlpha = dimming ? (archFilter.has(c) ? 1 : 0.07) : 1;
       // batched draw
       for(let i=0;i<N;i+=step){
         if(baseC[i]!==c) continue;
         const pr=projected[i];
         if(!pr) continue;
         if(pr.sx< -20 || pr.sx> W+20 || pr.sy< -20 || pr.sy> H+20) continue;
-        // alpha via globalAlpha cheap but we batch: use opacity 0.75 for all except depth fade approximated
         const x = pr.sx|0, y=pr.sy|0;
         ctx.fillRect(x, y, dotSize, dotSize);
       }
     }
+    // guesses, target and the readout below must never inherit the dim
+    ctx.globalAlpha = 1;
 
     // target screen position, computed early so guess lines can reach it —
     // the bullseye itself still draws later/on top, in its original spot
@@ -429,6 +451,7 @@ export async function mountSharedMap(canvas, opts={}){
       out.push('No guesses placed yet.');
     }
     out.push('Zoom '+zoom.toFixed(1)+'x.');
+    if(archFilter&&archFilter.size) out.push(archSentence());
     return out.join(' ');
   }
 
@@ -515,8 +538,12 @@ export async function mountSharedMap(canvas, opts={}){
         if(hoverEl) hoverEl.style.display='none';
         kbIdx=-1; say('Inspection cleared.');
         break;
+      case 'a': case 'A':
+        if(archFilter&&archFilter.size) setArchFilter(null);
+        else say(archSentence()+' Use the colour-equals-archetype list below the map to isolate one.');
+        break;
       case '?': case 'h': case 'H':
-        say('Map keys: arrow keys orbit, shift plus arrows orbits faster, plus and minus zoom, T centres the target, G steps through the target and your guesses, space toggles auto-rotate, zero resets. '+stateSentence());
+        say('Map keys: arrow keys orbit, shift plus arrows orbits faster, plus and minus zoom, T centres the target, G steps through the target and your guesses, A clears an archetype filter, space toggles auto-rotate, zero resets. '+stateSentence());
         break;
       default: handled=false;
     }
@@ -527,7 +554,7 @@ export async function mountSharedMap(canvas, opts={}){
       if(!canvas.hasAttribute('tabindex')) canvas.tabIndex=0;
       canvas.setAttribute('role','application');
       canvas.setAttribute('aria-roledescription','interactive 3D embedding map');
-      canvas.setAttribute('aria-keyshortcuts','ArrowLeft ArrowRight ArrowUp ArrowDown + - 0 T G Space');
+      canvas.setAttribute('aria-keyshortcuts','ArrowLeft ArrowRight ArrowUp ArrowDown + - 0 T G A Space');
       if(!canvas.getAttribute('aria-label')) canvas.setAttribute('aria-label','Player-season embedding map');
       canvas.addEventListener('keydown', onKey);
       canvas.addEventListener('focus',()=>{ say('Embedding map focused. Press H for map keys. '+stateSentence()); });
@@ -541,6 +568,77 @@ export async function mountSharedMap(canvas, opts={}){
         document.head.appendChild(st);
       }
     }catch(e){ console.warn('map a11y setup fail',e); }
+  }
+
+  // ── archetype key ────────────────────────────────────────────────────────
+  // The map paints 12,966 seasons in 8 colours and nothing on the page ever
+  // said what a colour meant, so the encoding — the entire point of the map —
+  // was undecodable. The key is built from this module's own OKABE/ARCH arrays,
+  // so a swatch cannot drift from what draw() actually paints, and each row
+  // doubles as a filter: press one and the rest of the cloud fades back.
+  let archKeyBtns=[];
+  function syncArchPressed(){
+    for(const b of archKeyBtns){
+      b.setAttribute('aria-pressed', !!(archFilter&&archFilter.has(+b.dataset.arch))?'true':'false');
+    }
+  }
+  function archSentence(){
+    if(!archFilter||!archFilter.size) return 'All 8 archetypes shown.';
+    const names=Array.from(archFilter).sort((a,b)=>a-b).map(i=>ARCH_FULL[i]);
+    return 'Showing '+names.join('; ')+'. The other archetypes are dimmed.';
+  }
+  function setArchFilter(next){
+    archFilter=(next&&next.size)?next:null;
+    syncArchPressed();
+    projectFrame(); draw();
+    say(archSentence());
+  }
+  function toggleArch(c){
+    const s=new Set(archFilter||[]);
+    if(s.has(c)) s.delete(c); else s.add(c);
+    setArchFilter(s);
+  }
+  function mountArchKey(){
+    const host=(typeof document!=='undefined')?document.getElementById('map-arch-key'):null;
+    if(!host||host.dataset.vhMounted) return;
+    try{
+      host.dataset.vhMounted='1';
+      const sum=document.createElement('summary');
+      sum.textContent='Colour = archetype';
+      const ul=document.createElement('ul');
+      for(let c=0;c<8;c++){
+        const li=document.createElement('li');
+        const b=document.createElement('button');
+        b.type='button';
+        b.className='arch-key__btn';
+        b.dataset.arch=String(c);
+        b.setAttribute('aria-pressed','false');
+        // visible text is the short label, so the accessible name has to start
+        // with it (WCAG 2.5.3) and then add the name the model actually uses
+        b.setAttribute('aria-label', ARCH[c]+' — '+ARCH_FULL[c]);
+        b.title=ARCH_FULL[c];
+        const sw=document.createElement('span');
+        sw.className='arch-key__sw';
+        sw.style.background=OKABE[c];
+        sw.setAttribute('aria-hidden','true');
+        const lb=document.createElement('span');
+        lb.className='arch-key__lb';
+        lb.textContent=ARCH[c];
+        b.appendChild(sw); b.appendChild(lb);
+        b.addEventListener('click',()=>toggleArch(c));
+        li.appendChild(b); ul.appendChild(li);
+      }
+      const clear=document.createElement('button');
+      clear.type='button';
+      clear.className='arch-key__btn arch-key__clear';
+      clear.textContent='Show all 8';
+      clear.addEventListener('click',()=>setArchFilter(null));
+      host.appendChild(sum); host.appendChild(ul); host.appendChild(clear);
+      archKeyBtns=Array.prototype.slice.call(ul.querySelectorAll('.arch-key__btn'));
+      // open on a desktop-sized map, collapsed on a phone where it would cover
+      // most of the canvas
+      if((window.innerWidth||0)>=900) host.open=true;
+    }catch(e){ console.warn('arch key mount fail',e); }
   }
 
   // interaction
@@ -613,6 +711,7 @@ export async function mountSharedMap(canvas, opts={}){
 
   // load and start
   setupA11y();
+  mountArchKey();
   resize();
   // Coalesce observer callbacks through one frame. Submitting a guess mutates
   // the DOM around the map (guess rows, result panel), which can fire this
@@ -652,6 +751,8 @@ export async function mountSharedMap(canvas, opts={}){
     announce: say,
     describe: stateSentence,
     setZoom, getZoom(){ return zoom; },
+    setArchFilter, getArchFilter(){ return archFilter?Array.from(archFilter).sort((a,b)=>a-b):null; },
+    archetypes(){ return ARCH_FULL.map((full,i)=>({ i, short:ARCH[i], full, color:OKABE[i] })); },
     focusOnTarget,
     hasPoint(id){ return !!(projById && id!=null && id>=0 && id<=maxId && projById[id]>=0); },
     // append one row (e.g. a daily target outside the sampled lite map) so the bullseye always exists

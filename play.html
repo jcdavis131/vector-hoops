@@ -40,7 +40,23 @@ button,.input{min-height:44px}
 #map-overlay{position:absolute;left:10px;right:10px;top:10px;display:flex;justify-content:space-between;gap:8px;z-index:2;pointer-events:none;flex-wrap:wrap}
 #map-overlay .chip{background:rgba(255,254,247,.92);border:2px solid var(--ink);border-radius:999px;padding:4px 8px;font-family:var(--mono);font-size:10px;box-shadow:1px 1px 0 var(--ink)}
 #map-controls{position:absolute;left:10px;bottom:10px;z-index:3;display:flex;gap:6px;flex-wrap:wrap}
-#map-legend{position:absolute;right:10px;bottom:10px;z-index:3;background:rgba(255,254,247,.94);border:2px solid var(--ink);border-radius:12px;padding:7px 9px;box-shadow:2px 2px 0 var(--ink);font-family:var(--mono);font-size:9px;line-height:1.35;pointer-events:none;min-width:128px}
+/* pointer-events was none — fine when this was three lines of static text, but
+   the archetype key inside it is now the map's only decoder ring and has to be
+   clickable. Capped so it can never swallow a 375px canvas. */
+#map-legend{position:absolute;right:10px;bottom:10px;z-index:3;background:rgba(255,254,247,.94);border:2px solid var(--ink);border-radius:12px;padding:7px 9px;box-shadow:2px 2px 0 var(--ink);font-family:var(--mono);font-size:9px;line-height:1.35;pointer-events:auto;min-width:128px;max-width:min(66vw,238px);max-height:calc(100% - 20px);overflow:auto;overscroll-behavior:contain}
+#map-arch-key{margin-top:6px;border-top:1.5px dashed rgba(26,21,15,.35);padding-top:5px}
+#map-arch-key>summary{cursor:pointer;font-size:8.5px;font-weight:900;letter-spacing:.06em;text-transform:uppercase;list-style:none;display:flex;align-items:center;gap:5px;min-height:24px}
+#map-arch-key>summary::-webkit-details-marker{display:none}
+#map-arch-key>summary::after{content:'▸';margin-left:auto;transition:transform .18s cubic-bezier(.22,1,.36,1)}
+#map-arch-key[open]>summary::after{transform:rotate(90deg)}
+#map-arch-key ul{list-style:none;margin:4px 0 0;padding:0;display:flex;flex-direction:column;gap:1px}
+.arch-key__btn{display:flex;align-items:center;gap:6px;width:100%;min-height:24px;padding:3px 4px;border:0;border-radius:6px;background:none;color:var(--ink);font:inherit;font-size:9px;text-align:left;cursor:pointer}
+.arch-key__btn:hover{background:rgba(240,228,66,.55)}
+.arch-key__btn:focus-visible{outline:2px solid var(--blue);outline-offset:-2px;background:rgba(240,228,66,.55)}
+.arch-key__btn[aria-pressed="true"]{background:var(--ink);color:#fff}
+.arch-key__sw{width:10px;height:10px;flex:0 0 10px;border:1.2px solid var(--ink);border-radius:3px}
+.arch-key__clear{margin-top:3px;justify-content:center;border:1.4px solid var(--ink);font-weight:900;text-transform:uppercase;letter-spacing:.05em;font-size:8.5px}
+@media(prefers-reduced-motion:reduce){#map-arch-key>summary::after{transition:none}}
 #hover-tip{position:absolute;left:50%;top:50%;transform:translate(-50%,-100%);background:#FFFEF7;border:2px solid var(--ink);border-radius:10px;padding:6px 8px;box-shadow:3px 3px 0 var(--ink);font-size:11px;display:none;z-index:3;pointer-events:none;max-width:220px}
 .guess-row{border:1.8px solid var(--ink);border-radius:12px;padding:10px 12px;background:#fff;margin-top:8px;box-shadow:2px 2px 0 var(--ink)}
 .guess-row.win{border-color:var(--green);background:#e8f5e9}
@@ -184,7 +200,7 @@ button,.input{min-height:44px}
     <div class="small-mono" style="margin-top:8px;opacity:.6;text-transform:none">Each slot is fixed for the day — same for everyone. No reroll on refresh. Solve 3 to stay incentivized, 5 to dominate leaderboard.</div>
   </div>
 
-  <div id="map-wrap"><canvas id="sky-canvas" width="640" height="380" aria-label="12,966 player-seasons as points in a rotatable 3D embedding map — your guesses draw as orange rings connected by a line to the past target's bullseye, showing how close each guess landed. Focus this map and press H to hear the controls and the current state."></canvas><div id="target-badge" style="position:absolute;left:0;top:0;transform:translate(-50%,-140%);background:#F0E442;border:2.2px solid #1A150F;border-radius:999px;padding:5px 10px;font-family:ui-monospace,monospace;font-size:10px;font-weight:900;box-shadow:2px 2px 0 #1A150F;z-index:4;display:none;pointer-events:none;white-space:nowrap">★ TARGET</div><div id="map-overlay"><span class="chip" id="map-fact">12,966 seasons • ★ target past</span><span class="chip">orange rings = your guesses • line = distance • ◎ bullseye = target</span></div><div id="map-controls"><button class="chip pill" id="btn-center-target" type="button" title="Re-centre the map on today's target (keyboard: T)">⌖ Target</button><button class="chip pill" id="btn-pause" type="button">Pause</button><button class="chip pill" id="btn-reset" type="button">Reset</button></div><div id="map-legend"><div style="font-family:var(--mono);font-size:7.5px;letter-spacing:.1em;text-transform:uppercase;font-weight:900;opacity:.55;margin-bottom:4px">Map</div><div style="font-family:var(--mono);font-size:9px">Drag to orbit • ◎ bullseye = past target (auto-centered)</div><div style="font-family:var(--mono);font-size:9px;margin-top:3px;opacity:.72">Keys ←→↑↓ orbit • +/− zoom • T target • G guesses • H help</div></div><div id="hover-tip"></div></div>
+  <div id="map-wrap"><canvas id="sky-canvas" width="640" height="380" aria-label="12,966 player-seasons as points in a rotatable 3D embedding map — your guesses draw as orange rings connected by a line to the past target's bullseye, showing how close each guess landed. Focus this map and press H to hear the controls and the current state."></canvas><div id="target-badge" style="position:absolute;left:0;top:0;transform:translate(-50%,-140%);background:#F0E442;border:2.2px solid #1A150F;border-radius:999px;padding:5px 10px;font-family:ui-monospace,monospace;font-size:10px;font-weight:900;box-shadow:2px 2px 0 #1A150F;z-index:4;display:none;pointer-events:none;white-space:nowrap">★ TARGET</div><div id="map-overlay"><span class="chip" id="map-fact">12,966 seasons • ★ target past</span><span class="chip">orange rings = your guesses • line = distance • ◎ bullseye = target</span></div><div id="map-controls"><button class="chip pill" id="btn-center-target" type="button" title="Re-centre the map on today's target (keyboard: T)">⌖ Target</button><button class="chip pill" id="btn-pause" type="button">Pause</button><button class="chip pill" id="btn-reset" type="button">Reset</button></div><div id="map-legend"><div style="font-family:var(--mono);font-size:7.5px;letter-spacing:.1em;text-transform:uppercase;font-weight:900;opacity:.55;margin-bottom:4px">Map</div><div style="font-family:var(--mono);font-size:9px">Drag to orbit • ◎ bullseye = past target (auto-centered)</div><div style="font-family:var(--mono);font-size:9px;margin-top:3px;opacity:.72">Keys ←→↑↓ orbit • +/− zoom • T target • G guesses • A all • H help</div><details id="map-arch-key"></details></div><div id="hover-tip"></div></div>
 
   <!-- PACK BATTLE v2 Production UI -->
   <div class="card" id="pack-progress" style="display:none;"></div>
@@ -307,7 +323,7 @@ button,.input{min-height:44px}
   }
   async function mountGameMap(){
     try{
-      const mod = await import('./assets/shared-map.js?v=59');
+      const mod = await import('./assets/shared-map.js?v=60');
       const canvasEl = document.querySelector('#sky-canvas');
       if(!canvasEl) return;
       const st = (window.VHPastModern && VHPastModern.state) ? VHPastModern.state() : null;

@@ -78,9 +78,27 @@ Invoke-WebRequest http://localhost:8099/<page>.html -UseBasicParsing   # 200 + e
       target + guesses, Space toggle auto-rotate, `0` reset, `H` help,
       `Esc` clear. Every action mirrors into an `aria-live` region, and
       `setTarget`/`setGuesses` announce game state changes.
+- [x] P1.6 **Archetype key on the map — done 2026-08-10.** Discovered while
+      doing P1.1 and promoted ahead of P1.4/P1.5: the map painted 12,966
+      seasons in 8 Okabe colours and *nothing on the page said what a colour
+      meant*, so the map's whole encoding was undecodable and it read as
+      decoration. `shared-map.js` now renders the key from its own
+      `OKABE`/`ARCH` arrays (a swatch cannot drift from what `draw()` paints),
+      full names index-aligned to `assets/mtnn_arch.json gameArchetypes` —
+      **all 8 verified string-equal against that file**. Each row is a filter
+      button (`aria-pressed`): press one and the other archetypes fade to 7%
+      via one `globalAlpha` per colour batch, so the cost is zero per point.
+      `A` clears the filter; the live region speaks the filter state.
 - [ ] P1.4 Mobile: map + guess flow at 375px without the page scrolling
-      horizontally or the canvas collapsing.
+      horizontally or the canvas collapsing. **Partially covered already** —
+      `.mode-tabs` scrolls with `overflow-x:auto;flex-wrap:nowrap`,
+      `.court-grid` collapses to one column ≤720px, `.lineup-bar` and
+      `.rewards-row` wrap, `.main` is `max-width:980px` with fluid padding, and
+      P1.1 gave the map viewport-relative heights. What is left is a real
+      375px render check, which this box cannot do (see audit note 10).
 - [ ] P1.5 Onboarding: first-run overlay teaches the *map*, not the rules text.
+      The current sheet is three paragraphs about pack links and localStorage
+      and never mentions the map at all.
 
 ## Phase 2 — trends / change over time
 
