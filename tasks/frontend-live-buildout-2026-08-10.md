@@ -2448,3 +2448,51 @@ pinned in a returning visitor's cache for a year. Now stamped:
 The `.woff2` files are deliberately left unstamped. A font's bytes do not change
 in place, and Google's path carries the face version (`…/architectsdaughter/v20/…`),
 so a new cut arrives under a new filename.
+
+
+## The map had eight colours and no key (2026-08-10)
+
+play.html paints the cloud and the pickable pool in eight archetype colours and
+said nowhere what any of them meant. Identity carried by colour alone, on the
+surface the brief puts at the centre of everything. trends.html has had a key for
+its archetype map the whole time; this one never did.
+
+Names come from `assets/mtnn_arch.json` — the same `gameArchetypes` array
+trends.html reads, already committed and now fetched here too. **The index
+alignment was checked, not assumed:** trends pairs `#0072B2` with "Offensive
+Glass + Rim Protection", which is `MAP_OKABE[0]` and `gameArchetypes[0]`. A key
+that mislabels a colour is worse than no key, and this is a page where a wrong
+label would quietly teach someone the wrong thing about the model.
+
+Built in JS rather than markup so it exists only when the names do. If the fetch
+fails there is no key **and no swatches** — a half-loaded version, coloured
+squares with nothing to read them by, is precisely the problem being fixed.
+
+The swatches carry a 1.4px ink border, which is not decoration: `MAP_OKABE[7]` is
+`#FFFEF7`, chosen to be visible against the near-black canvas, and it would
+disappear entirely on the white card underneath it. Same trap as model.html's
+1.07:1 cloud, caught this time before shipping rather than after.
+
+**Verified by looking at it**: eight entries, wrapping to four rows, colours
+matching the clusters above them, and the near-white swatch clearly bounded.
+
+`smoke_play.py` now requires eight named entries. Proven both ways — renaming the
+key's id in the served copy:
+
+    FAIL - the map has no colour key — eight archetype colours are drawn and
+           nothing on the page says what any of them mean
+
+### Two loose ends closed honestly
+
+The six `collide` warnings my visual probe raised against trends.html were **all
+false**, and I said at the time I would not act on them unverified. Settled now:
+every overlapping `<td>` reports `inDetails: True, detailsOpen: False`. They are
+table cells inside a **closed** `<details>`, which still report a layout box in
+Chrome — the same behaviour that made player-animations look broken two passes
+ago. Nothing is wrong with the page.
+
+And the P5.3 follow-up I recorded last pass is **not the win I implied**. Pages
+fetch `/assets/front_office.json` — the subset — directly. Consolidating them
+onto the superset saves 1,127,784 B of deploy bundle but adds **33,154 B to every
+visitor** on those pages, because the superset carries `valuation_history` they
+do not use. That is a trade, not a cleanup, and it should not be filed as one.

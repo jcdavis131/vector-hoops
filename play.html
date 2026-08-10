@@ -215,6 +215,52 @@ function installRealMap(dim){
     })
     .catch(function(){ swapDraw(); });   // target-only map still beats a starfield
 
+  /* A colour key. The map paints eight archetype colours and, until now, said
+     nowhere what any of them meant — identity carried by colour alone, on the
+     surface this whole page is built around. trends.html has had a key for its
+     archetype map all along; this one did not.
+
+     Names come from assets/mtnn_arch.json, the same gameArchetypes array
+     trends.html reads, and the index lines up with the colour: trends pairs
+     #0072B2 with "Offensive Glass + Rim Protection", which is MAP_OKABE[0] and
+     gameArchetypes[0]. Checked before writing this rather than assumed, because
+     a key that mislabels a colour is worse than no key.
+
+     Built here rather than in the markup so that it exists only when the names
+     do. If the fetch fails there is no key and no swatches — showing colours
+     with nothing to read them by is the thing being fixed, so a half-loaded
+     version of it is not an improvement.
+
+     The swatches carry a solid ink border: MAP_OKABE[7] is #FFFEF7, picked to
+     be visible on the near-black canvas, and it would vanish on the white card
+     without one. */
+  fetch('assets/mtnn_arch.json?v=d9922089')
+    .then(function(r){ return r.ok?r.json():null; })
+    .then(function(j){
+      var names=j&&j.gameArchetypes;
+      if(!Array.isArray(names)||!names.length) return;
+      var host=c.closest('.card'); if(!host) return;
+      var ul=document.createElement('ul');
+      ul.id='mapKey';
+      ul.setAttribute('aria-label','What the colours on the map mean');
+      ul.style.cssText='display:flex;flex-wrap:wrap;gap:6px 13px;margin:0;padding:9px 11px;'+
+        'list-style:none;border-top:2.2px solid var(--ink);background:#fff;'+
+        'font-family:var(--mono);font-size:10.5px;font-weight:800;color:var(--ink)';
+      names.slice(0,8).forEach(function(n,i){
+        var li=document.createElement('li');
+        li.style.cssText='display:inline-flex;align-items:center;gap:5px';
+        var sw=document.createElement('i');
+        sw.setAttribute('aria-hidden','true');
+        sw.style.cssText='width:11px;height:11px;flex:none;border:1.4px solid var(--ink);'+
+          'border-radius:2px;background:'+MAP_OKABE[i];
+        li.appendChild(sw);
+        li.appendChild(document.createTextNode(n));
+        ul.appendChild(li);
+      });
+      host.appendChild(ul);
+    })
+    .catch(function(){});
+
   function swapDraw(){
     drawBase=function(poolObj){
       var m=vhMapXY(), W=m.W, H=m.H, sx=m.sx, sy=m.sy;

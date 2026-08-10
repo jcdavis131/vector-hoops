@@ -343,6 +343,24 @@ def main() -> int:
                 f"something opaque is layered over the map, so whatever is painted on "
                 f"#c cannot be seen: {'; '.join(covers['bad'])[:160]}")
 
+        # 1c. the map paints eight archetype colours, so eight names have to be
+        #     readable somewhere. Colour-alone encoding is the thing this guards.
+        key = ev(ws, """(() => {
+          const k = document.getElementById('mapKey');
+          if (!k) return JSON.stringify({missing: true});
+          const items = [...k.querySelectorAll('li')].map(li => (li.textContent || '').trim());
+          return JSON.stringify({n: items.length, blank: items.filter(t => !t).length,
+                                 first: items[0] || ''});
+        })()""")
+        if not isinstance(key, dict) or key.get("missing"):
+            failures.append("the map has no colour key — eight archetype colours are drawn "
+                            "and nothing on the page says what any of them mean")
+        else:
+            print(f"  key      {key['n']} archetypes named, first {key['first']!r}")
+            if key["n"] < 8 or key["blank"]:
+                failures.append(f"the colour key has {key['n']} entries and {key['blank']} of them "
+                                f"are blank — every colour drawn needs a name beside it")
+
         # 2. the question, and whether it can be placed on the map at all
         p = ev(ws, PICK)
         if not isinstance(p, dict) or "err" in p:
