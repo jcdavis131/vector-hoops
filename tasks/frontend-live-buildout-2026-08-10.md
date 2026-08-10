@@ -597,3 +597,95 @@ never a broken deploy:
   confirms P0.3: zero-config Vercel serves `public/` when it exists.
 
 Turning SSO off to make previews publicly shareable is an operator decision, not mine.
+## The JS module set is not loaded — 46 of 49 files, 746,356 b (2026-08-10)
+
+I came looking for committed data nothing reads and found committed *code*
+nothing runs. Three independent methods agree, and I had to correct myself twice
+getting there:
+
+- a quoted-string scan said 3 loaded
+- a raw `<script ... assets/ ...>` grep, quoted or not, found **3 tags in the
+  entire site**, all in `player-animations.html`
+- a comment-stripped transitive reachability pass (pages -> JS -> JS, including
+  `assets/lemmino/`, `assets/js/`, `assets/workers/`) agreed: 3
+
+Two corrections along the way, both mine: `.js` is a prefix of `.json`, so an
+unanchored pattern reports `drift.json` as `drift.js` and calls every JSON
+reference a missing module; and a prose mention of `shared-map.js` inside an
+HTML comment made a dead file look alive.
+
+**I did not cause this.** Script tags referencing `assets/*.js`: `origin/master`
+3, this branch 3. It is the state of the live site, not a regression from my work.
+The pages carry self-contained inline scripts; `assets/*.js` is a parallel
+module set that is simply never loaded.
+
+What makes it worth an operator decision is what is in the dead set — it maps
+onto the five phases of the brief:
+
+| phase | dead modules |
+|---|---|
+| 1 embedding map | `shared-map.js`, `insight-engine.js`, `subset-map.js`, `embedding-nebula.js` |
+| 2 trends | `trends-viz.js`, `drift.js` (67,908 b) |
+| 4 player cards | `players-skills.js`, `players-directory.js`, `players-page.js` |
+| 5 team/front office | `teams-board.js`, `teams-time.js`, `teams-scatter.js`, `teams-lab.js`, `team-leaderboard.js` |
+| — | `network-viz.js` (153,414 b), `lemmino/*` (95,821 b) |
+
+- [ ] **P6.1 Decide: delete or revive the 46.** Reviving is not a wiring job —
+  the live pages already implement these features inline and target the same DOM
+  ids, so loading a module on top would double-render and double-fetch. Deleting
+  746 KB of someone's work is not mine to do either. Needs a human call.
+
+## Shipped instead: the part that was unambiguously a defect (2026-08-10)
+
+Three of the modules are generic site-wide utilities that were loaded on exactly
+one page. The gap that matters is measurable: **16 of 22 pages ship no
+`:focus-visible` rule and 15 ship no `:focus` rule either** — a keyboard user
+cannot see what is focused. That is WCAG 2.4.7 Focus Visible at Level AA, failing
+on 16 pages, with the fix already written and committed and not loaded.
+
+Wired `error-boundary.js` + `keyboard-a11y.js` + `pwa-install.js` into 20
+pages (`scripts/wire_a11y.py`, idempotent, `--check` mode). Fixed three
+defects first, because rolling them out unchanged would have been worse than
+leaving them off:
+
+1. `keyboard-a11y.js` injected a stylesheet whose `@media` block was missing a
+   closing brace — `@media(...){*{...}` opens two and closes one.
+2. `keyboard-a11y.js` swept every `button/.btn/.vh-btn/.pill` with
+   `getComputedStyle` and wrote `minHeight:44px` on anything shorter. Correct
+   goal (WCAG 2.5.5), wrong mechanism: on 21 more pages that resizes 46 elements
+   on `play.html` and 37 on `index.html` after first paint. Removed.
+3. `error-boundary.js` rendered a *"Sky took longer to load … 12,966 seasons map
+   is 617KB"* card on **any** failed request with `vectors` in its name, and
+   `showFallbackCard` falls back to `.main`/`.sections`/`body` when its
+   container is absent. `#sky-demo` exists on **no page in the repo**, so that
+   card would have pinned itself to the top of `dictionary.html`, `index.html`
+   and `play.html` — with a Retry button wired to `location.reload()`. Now
+   guarded on the container existing.
+
+The header comment advertises `n`/`p`/`l` hotkeys that the code does not
+bind; only `/`, `Escape` and `?` are. Left as-is, noted so the next reader
+does not trust the comment.
+
+### The stamper had the same blind spot as the pages
+
+`vercel.json` marks `/assets/(.*)\.(json|js|css|…)` immutable for a year — `js`
+in the same breath as `json` — but `stamp_assets.py` only ever rewrote
+`fetch('assets/…')`. Every `<script src>` on the site was unversioned and
+pinned in returning visitors' caches for a year. It now stamps script tags too,
+so the gate covers them and the three new tags shipped with content hashes.
+Two hand-numbered tokens survive inside dead modules
+(`past-modern-game.js` `?v=56`, `shared-map.js` `?v=58`); stamping tokens
+*inside* JS files is only worth building if P6.1 revives them.
+
+- [ ] **P6.2** Target size (WCAG 2.5.5) belongs in each page's CSS, declaratively,
+  where it can be reviewed — not a runtime sweep. Not done; removed the sweep.
+- [ ] **P6.3** The three tags sit at end of `<body>` (copying the placement
+  `player-animations.html` already used), so `error-boundary.js` does not catch
+  a throw in a page's own inline script during first execution. It still catches
+  async, resource and rejection errors. Moving it to `<head>` is a bigger change
+  than it is worth without a reason.
+- `pwa-install.js` going site-wide is a growth-UX judgment call, reversible by
+  deleting one tag per page. Its visit-count and 14-day-dismissal logic was
+  written for site-wide use, which is why it is included.
+- `offline.html` is deliberately skipped: it renders with no network and
+  `sw.js` does not precache these modules.

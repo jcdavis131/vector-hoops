@@ -31,6 +31,21 @@ ROOT = Path(__file__).resolve().parent.parent
 # fetch('assets/…')  with an optional existing ?v=… to replace
 RE_FETCH = re.compile(r"""(fetch\(\s*['"])(assets/[\w./-]+)(?:\?v=[0-9a-f]+)?(['"])""")
 
+# <script src="/assets/….js"> — same treatment, and it was the bigger hole.
+# The vercel.json rule that makes this urgent names js in the same breath as json:
+#   /assets/(.*)\.(json|js|css|png|webp|svg|woff2|f32|bin)
+#     -> public, max-age=31536000, immutable
+# so a script tag with no token is a module pinned in every returning visitor's
+# cache for a year. Only stamping fetch() left every <script src> unversioned.
+# The optional leading slash is kept in the output: root-absolute is what a page
+# in a subdirectory needs, since a relative "assets/x.js" resolves differently
+# depending on whether the URL ends in a slash.
+RE_SCRIPT = re.compile(
+    r"""(<script[^>]*?\ssrc=['"])(/?assets/[\w./-]+\.js)(?:\?v=[0-9a-f]+)?(['"])"""
+)
+
+PATTERNS = (RE_FETCH, RE_SCRIPT)
+
 
 def digest(path: Path) -> str:
     h = hashlib.sha256()
@@ -62,18 +77,21 @@ def main() -> int:
         text = page.read_text(encoding="utf-8")
 
         def sub(m: re.Match) -> str:
-            rel = m.group(2)
+            raw = m.group(2)          # as written on the page, may be root-absolute
+            rel = raw.lstrip("/")     # as found on disk
             target = ROOT / rel
             if not target.exists():
                 # check_frontend's assets check owns reporting this; here it
                 # only means "cannot stamp what is not there"
-                missing.append(f"{page.name} -> {rel}")
+                missing.append(f"{page.name} -> {raw}")
                 return m.group(0)
             if rel not in cache:
                 cache[rel] = digest(target)
-            return f"{m.group(1)}{rel}?v={cache[rel]}{m.group(3)}"
+            return f"{m.group(1)}{raw}?v={cache[rel]}{m.group(3)}"
 
-        new = RE_FETCH.sub(sub, text)
+        new = text
+        for pattern in PATTERNS:
+            new = pattern.sub(sub, new)
         if new != text:
             rel_page = page.relative_to(ROOT).as_posix()
             stale.append(rel_page)

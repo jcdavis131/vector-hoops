@@ -6,4 +6,7 @@
 <script>
 const TEAMS=["ATL","BOS","BKN","CHA","CHI","CLE","DAL","DEN","DET","GSW","HOU","IND","LAC","LAL","MEM","MIA","MIL","MIN","NOP","NYK","OKC","ORL","PHI","PHX","POR","SAC","SAS","TOR","UTA","WAS"];const tb=document.getElementById('tb');TEAMS.forEach((tm,i)=>{let w=20+Math.floor(Math.random()*45),po=Math.floor(Math.random()*8),ws=w+2.5*po+Math.random()*3,pay=80+Math.random()*130,val=1.6+Math.random()*7.5,forV=60+Math.random()*30;let tr=document.createElement('tr');tr.innerHTML=`<td>${tm}</td><td>${w}</td><td>${ws.toFixed(1)}</td><td>$${pay.toFixed(1)}M</td><td>${(w/pay).toFixed(3)}</td><td>${(ws/pay).toFixed(3)}</td><td>${(po/pay).toFixed(3)}</td><td>$${val.toFixed(1)}B</td><td>${forV.toFixed(1)}</td>`;tb.appendChild(tr);});
 </script>
+<script src="/assets/error-boundary.js?v=b00e79a0"></script>
+<script src="/assets/keyboard-a11y.js?v=eb6c977f"></script>
+<script src="/assets/pwa-install.js?v=3c377447"></script>
 </body></html>

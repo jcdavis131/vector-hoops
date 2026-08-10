@@ -128,10 +128,21 @@
       });
       if((target.src||'').indexOf('mtnn_embeddings')!==-1 || (target.src||'').indexOf('vectors')!==-1){
         try{ window.dispatchEvent(new CustomEvent('vh:vectors-failed')); }catch(e){}
-        showFallbackCard('sky-demo','Sky took longer to load','12,966 seasons map is 617KB lite-first + 2.5MB embeddings. Check connection — cache still works offline.', function(){
-          location.reload();
-          return false;
-        });
+        // Only render the sky card on a page that actually has the sky.
+        // showFallbackCard falls back to .main / .sections / body when its
+        // container is missing, and #sky-demo exists on no page in the repo —
+        // so unguarded, any failed request with "vectors" in its name pinned a
+        // card reading "Sky took longer to load ... 12,966 seasons map is 617KB"
+        // to the top of whatever page the visitor was on, with a Retry button
+        // wired to location.reload(). dictionary.html, index.html and play.html
+        // all fetch a vectors* asset and would have been exposed the moment this
+        // module was loaded site-wide.
+        if(document.getElementById('sky-demo')){
+          showFallbackCard('sky-demo','Sky took longer to load','12,966 seasons map is 617KB lite-first + 2.5MB embeddings. Check connection — cache still works offline.', function(){
+            location.reload();
+            return false;
+          });
+        }
       }
       return;
     }

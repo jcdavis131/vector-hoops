@@ -206,23 +206,29 @@
     handleSuggestListA11y();
     handleEscapeClosesSheets();
 
-    // focus ring AAA
+    // Focus ring. This is the reason the module is worth loading everywhere:
+    // 16 of 22 pages ship no :focus-visible rule of their own and 15 ship no
+    // :focus rule either, so a keyboard user currently cannot see where they
+    // are — WCAG 2.4.7 at Level AA.
+    //
+    // The @media block used to be missing its closing brace: `@media(...){*{...}`
+    // opens two blocks and closes one. Browsers auto-close at end of sheet so it
+    // happened to work, but anything appended after it would have landed inside
+    // the reduced-motion query.
     var style = document.createElement('style');
-    style.textContent = ':focus-visible{outline:3px solid #0072B2; outline-offset:2px; box-shadow:0 0 0 5px rgba(0,114,178,.22);} .bottom-tabs button:focus-visible{outline:3px solid #F0E442; outline-offset:-3px;} @media(prefers-reduced-motion:reduce){*{animation-duration:.001ms !important; transition-duration:.001ms !important}';
+    style.textContent = ':focus-visible{outline:3px solid #0072B2; outline-offset:2px; box-shadow:0 0 0 5px rgba(0,114,178,.22);} .bottom-tabs button:focus-visible{outline:3px solid #F0E442; outline-offset:-3px;} @media(prefers-reduced-motion:reduce){*{animation-duration:.001ms !important; transition-duration:.001ms !important}}';
     document.head.appendChild(style);
 
     // city-intro-pills deprecated (arena tour removed v25) — nothing to enhance
 
-    // ensure all buttons min-height 44px for AAA (check computed, add class if needed)
-    try{
-      document.querySelectorAll('button, .btn, .vh-btn, .pill').forEach(function(el){
-        var cs = getComputedStyle(el);
-        var h = parseFloat(cs.minHeight) || el.offsetHeight;
-        if(h>0 && h<44){
-          el.style.minHeight='44px';
-        }
-      });
-    }catch(e){}
+    // Removed: a runtime sweep that measured every button/.btn/.vh-btn/.pill with
+    // getComputedStyle and wrote el.style.minHeight='44px' on anything shorter.
+    // The goal (WCAG 2.5.5 target size) is right, but the mechanism is not: it
+    // ran on one page, and rolling it out unchanged would resize 46 elements on
+    // play.html and 37 on index.html — dense chip rows — after first paint,
+    // which is both an unreviewed visual change and layout shift caused by JS.
+    // Target size belongs in each page's CSS where it can be seen in review.
+    // Tracked on the board rather than done silently here.
   }
 
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', init);
