@@ -113,7 +113,14 @@ function ren(a){let tb=document.querySelector('#tbl tbody');tb.innerHTML='';for(
 #foTable tbody tr:hover{background:#fffbe8}
 .fo-sw{display:inline-block;width:9px;height:9px;border-radius:2px;border:1px solid var(--ink);margin-right:5px;vertical-align:-1px}
 .fo-ring{color:var(--orange);font-weight:900}
-#foMethod{font-size:12px;line-height:1.6;color:#57534E;background:#f4f3ee;border:1.5px dashed var(--ink);border-radius:9px;padding:10px 12px;margin-top:10px;white-space:pre-wrap}
+#foMethod,.fo-method{font-size:12px;line-height:1.6;color:#57534E;background:#f4f3ee;border:1.5px dashed var(--ink);border-radius:9px;padding:10px 12px;margin-top:10px;white-space:pre-wrap}
+.mv-row{display:grid;grid-template-columns:1fr 74px 52px;gap:8px;align-items:baseline;padding:3px 0;border-bottom:1px solid #EEE8DA;font-family:var(--mono);font-size:11px}
+.mv-name{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.mv-move{color:var(--ink-muted);white-space:nowrap}
+.mv-score{text-align:right;font-weight:900;font-variant-numeric:tabular-nums}
+.mv-score.up{color:#009E73}.mv-score.down{color:#D8452A}
+.ch-row{display:grid;grid-template-columns:1fr 96px 60px;gap:8px;align-items:baseline;padding:3px 0;border-bottom:1px solid #EEE8DA;font-family:var(--mono);font-size:11px}
+.ch-score{text-align:right;font-weight:900;font-variant-numeric:tabular-nums}
 .fo-sr{position:absolute;width:1px;height:1px;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap}
 .fo-skip{position:absolute;left:-9999px;top:0;z-index:200;background:var(--paper);border:2.2px solid var(--ink);padding:10px 14px;font:800 12px var(--mono);text-transform:uppercase;text-decoration:none;border-radius:0 0 10px 0}
 .fo-skip:focus{left:0}
@@ -132,6 +139,23 @@ function ren(a){let tb=document.querySelector('#tbl tbody');tb.innerHTML='';for(
     <p class="mono" style="font-size:10.5px;color:#878580;margin:8px 0 0" id="foProv"></p>
     <details style="margin-top:10px"><summary class="mono" style="cursor:pointer;font-size:11px">Method, verbatim from the file</summary><div id="foMethod"></div></details>
   </div>
+  <div class="card">
+    <h2 class="hd" id="dlH" style="font-size:18px;margin:0 0 4px">Deadline moves that worked, and didn't</h2>
+    <p class="mono" id="dlSub" style="color:#57534E;font-size:11.6px;line-height:1.5;margin:0">Loading <code>assets/deadline.json</code>…</p>
+    <div class="grid" style="margin-top:10px">
+      <div><div class="mono" style="color:#009E73">▲ Thrived after the move</div><div id="dlUp"></div></div>
+      <div><div class="mono" style="color:#D8452A">▼ Cratered</div><div id="dlDown"></div></div>
+    </div>
+    <details style="margin-top:10px"><summary class="mono" style="cursor:pointer;font-size:11px">Method, verbatim — including what it admits</summary><div id="dlMethod" class="fo-method"></div></details>
+  </div>
+
+  <div class="card">
+    <h2 class="hd" id="chH" style="font-size:18px;margin:0 0 4px">Pairs that fit</h2>
+    <p class="mono" id="chSub" style="color:#57534E;font-size:11.6px;line-height:1.5;margin:0">Loading <code>assets/chemistry.json</code>…</p>
+    <div id="chList" style="margin-top:8px"></div>
+    <details style="margin-top:10px"><summary class="mono" style="cursor:pointer;font-size:11px">Method, verbatim — including the limitation it states</summary><div id="chMethod" class="fo-method"></div></details>
+  </div>
+
   <div id="foLive" class="fo-sr" role="status" aria-live="polite" aria-atomic="true"></div>
 </section>
 <script>
@@ -226,6 +250,51 @@ $('foTable').addEventListener('keydown',function(e){
     });
   });
 })();
+
+/* Two more files the front office already computed and nothing read.
+   Both state their own limits, so both print their method verbatim rather than
+   a paraphrase — deadline.json calls its score "a stated blend, not a truth
+   claim", and chemistry.json admits its success proxy is joint plus-minus
+   because lineup on/off is not freely available. Burying that would be worse
+   than not shipping the feature. */
+fetch('assets/deadline.json?v=03a54d6c',{cache:'force-cache'})
+  .then(function(r){ if(!r.ok) throw new Error('HTTP '+r.status); return r.json(); })
+  .then(function(j){
+    var up=(j.thrives||[]).slice(0,10), down=(j.craters||[]).slice(0,10);
+    if(!up.length&&!down.length) throw new Error('no movers');
+    function rows(list,cls){
+      return list.map(function(m){
+        return '<div class="mv-row"><span class="mv-name">'+esc(m.name)+' <span class="mv-move">'+esc(m.season)+'</span></span>'+
+          '<span class="mv-move">'+esc(m.from)+' → '+esc(m.to)+'</span>'+
+          '<span class="mv-score '+cls+'">'+(m.score>0?'+':'')+n2(m.score)+'</span></div>';
+      }).join('');
+    }
+    document.getElementById('dlUp').innerHTML=rows(up,'up');
+    document.getElementById('dlDown').innerHTML=rows(down,'down');
+    document.getElementById('dlSub').innerHTML='Read from <code>assets/deadline.json</code> — '+
+      (j.moversAnalyzed||0)+' in-season moves analysed, best and worst ten by composite score. '+
+      'A move counts only with at least 15 games on both sides.';
+    document.getElementById('dlMethod').textContent=j.method||'';
+  })
+  .catch(function(e){ document.getElementById('dlSub').textContent='Deadline moves could not be loaded ('+e.message+'). Nothing is shown in their place.'; });
+
+fetch('assets/chemistry.json?v=37040785',{cache:'force-cache'})
+  .then(function(r){ if(!r.ok) throw new Error('HTTP '+r.status); return r.json(); })
+  .then(function(j){
+    var pairs=(j.pairs||[]).slice().sort(function(a,b){return b.chemistry-a.chemistry;}).slice(0,12);
+    if(!pairs.length) throw new Error('no pairs');
+    document.getElementById('chList').innerHTML=pairs.map(function(p){
+      return '<div class="ch-row"><span>'+esc(p.a)+' + '+esc(p.b)+'</span>'+
+        '<span class="mv-move">'+esc(p.team)+' '+esc(p.season)+'</span>'+
+        '<span class="ch-score">'+n2(p.chemistry)+'</span></div>';
+    }).join('');
+    document.getElementById('chSub').innerHTML='Read from <code>assets/chemistry.json</code> — top 12 of '+
+      (j.totalPairsAnalyzed||0).toLocaleString()+' teammate pairs. Complementarity is '+
+      '1 − |cosine| of the two era-z profiles, so it rewards players whose skills are '+
+      '<em>orthogonal</em> rather than similar.';
+    document.getElementById('chMethod').textContent=j.method||'';
+  })
+  .catch(function(e){ document.getElementById('chSub').textContent='Chemistry pairs could not be loaded ('+e.message+'). Nothing is shown in their place.'; });
 
 fetch('assets/front_office.json?v=fb95747f',{cache:'force-cache'})
   .then(function(r){ if(!r.ok) throw new Error('HTTP '+r.status); return r.json(); })
