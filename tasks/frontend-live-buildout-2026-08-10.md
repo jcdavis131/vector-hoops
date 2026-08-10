@@ -43,6 +43,27 @@ Accessibility across the live site is effectively zero — scanned
 `https://hoops.dumbmodel.com/play`: `aria-live` ×0, `tabindex` ×0,
 `prefers-reduced-motion` ×0, `role=` ×0, `aria-` ×1.
 
+## The pattern this branch keeps finding
+
+Three separate places shipped numbers that no committed file supports, and one
+of them was mine. This is the dominant defect class on this site — not layout,
+not performance. **Before adding a figure to any page, find the file it comes
+from; if there isn't one, say so on the page.**
+
+| where | what | fixed |
+|---|---|---|
+| `model.html` SHAP canvas | `vals=[0.92,0.81,…]`, comment said "placeholder" | `fba1b234` |
+| `play.html` `parityLab` | `(0.71+Math.random()*0.18)` labelled "convergent parity", re-rolled every result | `cc052ccb` |
+| `play.html` ×4 + `model.html` ×2 | `purity@10 0.7057` / `lift 6.32` — absent from `eval_scoreboard.json`, and one copy rode the exported share PNG | `cc052ccb`, `dda2b107` |
+| **my own** `play.html` aria-label | claimed the canvas showed "1,814 NBA players placed by the model"; it is a 140-dot `Math.random()` starfield | `cc052ccb` |
+
+**What `assets/eval_scoreboard.json` actually says** (computed 2026-07-25,
+10,104 eligible pairs, ties counted against the target): overall top-1 0.5081 /
+top-5 0.9339; held-out test n=790 top-1 0.438 / top-5 0.757; transparent 14-d
+baseline test top-5 0.1962. Use these; cite the file.
+
+Still unsourced and now labelled as such: the `model.html` model-zoo table.
+
 ## Findings that are bugs, not features
 
 - **F1 — `model.html` draws a fake SHAP chart.** Its script is literally
