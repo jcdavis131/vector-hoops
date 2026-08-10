@@ -113,7 +113,18 @@ Six read-only checks, exit 1 on failure: inline scripts parse · every
 `getElementById`/`$()`/`querySelector` literal resolves · every static
 `src`/`href`/`fetch` path exists · no duplicate ids · no known-unsourced figure
 presented as fact · every internal `.html` link resolves.
-Baseline: 19 script blocks, 134 DOM lookups, 32 asset refs, 103 links, clean.
+Baseline: **22 pages** (root `*.html` plus the `*/index.html` Vercel serves for
+`/owner`, `/brand`, `/dfs`, `/player`, `/player-fit`), 21 script blocks, 137 DOM
+lookups, 34 asset refs, 111 links, clean.
+
+**Scope was wrong until `29daf69b`+1:** the gate globbed root only, so five live
+pages were invisible. Widening it immediately found `purity@10 0.7057 lift 6.32`
+on `player/index.html`. **Eleventh instance, eighth file.**
+
+**Still open — duplicate files:** root `owner.html`, `brand.html`, `dfs.html`
+and `player-fit.html` are byte-identical to their `*/index.html` counterparts
+and are never served (`cleanUrls` 308s them). `public/` is a full stale mirror
+of the site. Deleting other agents' files is not mine to do; flagged.
 
 It found four more `purity@10 0.7057` / `lift 6.32` on its first run that six
 grep passes had missed — including one drawn onto the share canvas with
