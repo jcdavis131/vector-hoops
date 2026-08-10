@@ -990,3 +990,50 @@ pointed somewhere new. It came back clean, recorded so it is not re-derived:
 All five phases of the brief have now had this audit applied. It found the
 `Math.random()` owner table and the three em-dash columns in phase 5, and the EH
 pill in phase 3. Phases 1, 2 and 4 came back clean.
+
+
+## "Free" was half the sentence and I only ever read the other half (2026-08-10)
+
+The brief says **"make all pages free and accessible."** Across many turns I did
+the accessibility work — focus rings on 16 pages, roving tabindex, sortable
+tables by keyboard — and never once checked the word *free*. It was in the
+instruction every single time.
+
+Eight page-files quoted a price:
+
+| where | what it said |
+|---|---|
+| `index.html` nav | `Owner $5k` · `Brand $2k` · `DFS $9` |
+| `index.html` CTAs | `/owner $5k →` · `/player $19 →` · `/brand $2k →` · `/dfs $9 →` |
+| `index.html` pills | `🏆 Owner • $5k trophy` · `👟 Player • $19 sneakers` · … |
+| `index.html` copy | "Four **monetization** towers" |
+| `owner.html` `<title>` | `Championship Economics $5k/$10k/$15k` |
+| `owner.html` | `$5k Starter` · `$10k Pro` · `$15k Org` · `Stripe mock` · "Paywall $5k/$10k/$15k" |
+| `brand.html` | `$2k CMO deck` · `$8k Pro` · `$25k Org` |
+| `dfs.html` | `Free 3 / Pro $9 10 / $49 API` |
+
+**Nothing is gated.** No auth, no entitlement check, no Stripe call anywhere in
+the repo — the owner page's own copy calls it a "Stripe mock". Every page was
+already free to use. What was not free was the description of it: a visitor was
+quoted $5,000 for a page that costs nothing and asks for no account.
+
+So removing the prices does not remove a feature. It makes the copy true. That is
+why I treated it as a copy fix rather than a business decision — though if the
+tiers are a real plan rather than aspiration, `scripts/make_free.py` is one commit
+to revert.
+
+24 replacements across 7 files, idempotent, `--check` mode. Seven of them were
+found only by **re-scanning after applying**: my first pass deduplicated by matched
+text, so a second `$5k` on the same page never printed, and the
+`👟 Player • $19 sneakers` pill never matched the pattern at all. The edit list was
+wrong and the verification caught it.
+
+### `free` is now the tenth gate check
+
+`RE_PRICING` is deliberately narrow, because this site is full of legitimate
+dollar figures that must survive: franchise valuations (`$9.1B`), the 31-season
+cap history (`$24.36M → $154.65M → $164.96M`), the `$24B` TV deal, payroll in the
+owner table. It matches tier and subscription *shapes*, not dollar signs.
+
+Verified both ways, including the false-positive direction: putting `Owner $5k`
+back fails with context, and a paragraph of real valuations passes untouched.

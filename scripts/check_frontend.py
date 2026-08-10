@@ -240,6 +240,39 @@ def check_sourced(fail) -> None:
     print(f"  no unsourced figures presented as fact ({len(UNSOURCED)} pattern(s), {allowed} disclaimed mention(s) allowed)")
 
 
+# The brief for this site is that every page is free. Nothing is gated — there is
+# no auth, no entitlement check and no Stripe call anywhere — but the copy used to
+# price the pages anyway: the landing nav read "Owner $5k", a title read
+# "Championship Economics $5k/$10k/$15k", and three persona pages carried tier
+# pills. Visitors were quoted a price for something that has none.
+#
+# Deliberately narrow. Franchise valuations ($9.1B), the 31-season cap history
+# ($24.36M -> $154.65M) and payroll figures are data and must survive, so this
+# matches tier and subscription shapes, not dollar signs.
+RE_PRICING = re.compile(
+    r"paywall|stripe|monetiz|\bstarter\b|per month|/mo\b|subscri|checkout|billing"
+    r"|free trial|\$\d+\s*(?:k\b|/|per)|pro \$\d|\$\d+ api|\$\d+ (?:sneak|deck|daily|target|trophy|chart)",
+    re.I,
+)
+
+
+def check_free(fail) -> None:
+    """No page quotes a price. See RE_PRICING for why this is not a $-sign scan."""
+    checked = 0
+    for page in pages():
+        visible = strip_comments(page.read_text(encoding="utf-8"))
+        visible = re.sub(r"<script[^>]*>.*?</script>", " ", visible, flags=re.S)
+        visible = re.sub(r"<style[^>]*>.*?</style>", " ", visible, flags=re.S)
+        checked += 1
+        for m in RE_PRICING.finditer(visible):
+            snippet = re.sub(r"\s+", " ", visible[max(0, m.start() - 60) : m.end() + 60]).strip()
+            fail(
+                f"{label(page)} quotes a price or tier ({m.group(0)!r}) — every page on this "
+                f"site is free and nothing is gated. Context: …{snippet}…"
+            )
+    print(f"  {checked} page(s) quote no price")
+
+
 def check_cited(fail) -> None:
     """Every figure in CITED is still on its page AND still in its source file.
 
@@ -337,6 +370,7 @@ CHECKS = {
     "ids": check_ids,
     "sourced": check_sourced,
     "cited": check_cited,
+    "free": check_free,
     "links": check_links,
 }
 
