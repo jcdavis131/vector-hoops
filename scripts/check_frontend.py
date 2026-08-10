@@ -36,6 +36,10 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 
+# public/ mirrors the whole site; auditing it double-reports every finding.
+# node_modules and .git are never pages.
+SKIP_DIRS = {"public", "node_modules", ".git", "assets", "knowledge", "pipeline", "docs", "scripts", "tasks"}
+
 # Figures that appear in site copy and are in no committed file. Documented in
 # /dictionary.html under "Terms this site uses that have no file behind them".
 # If a scoreboard ever ships them, delete the entry — do not silence the check.
@@ -70,7 +74,24 @@ RE_COMMENT = re.compile(r"<!--.*?-->|/\*.*?\*/", re.S)
 
 
 def pages() -> list[Path]:
-    return sorted(p for p in ROOT.glob("*.html"))
+    """Root pages plus the one-level directory pages Vercel actually serves.
+
+    vercel.json rewrites /owner -> /owner/index.html and the same for brand,
+    dfs, player and player-fit, so those directory files are the live pages —
+    a root-only glob had never checked them. `public/` is a stale mirror of the
+    whole site; auditing it would double-report every finding, so it is skipped
+    and flagged on the board instead.
+    """
+    found = list(ROOT.glob("*.html"))
+    for sub in sorted(ROOT.glob("*/index.html")):
+        if sub.parent.name in SKIP_DIRS:
+            continue
+        found.append(sub)
+    return sorted(found, key=lambda p: str(p.relative_to(ROOT)))
+
+
+def label(page: Path) -> str:
+    return str(page.relative_to(ROOT)).replace("\\", "/")
 
 
 def strip_comments(text: str) -> str:
@@ -102,7 +123,7 @@ def check_syntax(fail) -> None:
                         (ln for ln in lines if "Error" in ln and not ln.startswith("at ")),
                         lines[-1] if lines else "parse error",
                     )
-                    fail(f"{page.name} script block {i} does not parse: {err}")
+                    fail(f"{label(page)} script block {i} does not parse: {err}")
     print(f"  {checked} inline script block(s) parsed")
 
 
@@ -118,12 +139,12 @@ def check_targets(fail) -> None:
         for name in sorted(wanted):
             total += 1
             if name not in ids:
-                fail(f"{page.name} looks up #{name}, which does not exist on the page")
+                fail(f"{label(page)} looks up #{name}, which does not exist on the page")
         for sel in sorted(set(RE_QS.findall(text))):
             total += 1
             pool = ids if sel[0] == "#" else classes
             if sel[1:] not in pool:
-                fail(f"{page.name} querySelector('{sel}') matches nothing on the page")
+                fail(f"{label(page)} querySelector('{sel}') matches nothing on the page")
     print(f"  {total} DOM lookup(s) resolve")
 
 
@@ -137,12 +158,12 @@ def check_assets(fail) -> None:
             # paths built by string concatenation are exercised at runtime, not here
             if not rel or any(ch in rel for ch in "{}$+"):
                 continue
-            key = (page.name, rel)
+            key = (label(page), rel)
             if key in seen:
                 continue
             seen.add(key)
             if not (ROOT / rel).exists():
-                fail(f"{page.name} references {rel}, which is not on disk")
+                fail(f"{label(page)} references {rel}, which is not on disk")
     print(f"  {len(seen)} static asset reference(s) resolve")
 
 
@@ -150,7 +171,7 @@ def check_ids(fail) -> None:
     for page in pages():
         ids = RE_ID_ATTR.findall(page.read_text(encoding="utf-8"))
         for name in sorted({i for i in ids if ids.count(i) > 1}):
-            fail(f"{page.name} defines id={name} {ids.count(name)} times — getElementById will pick one")
+            fail(f"{label(page)} defines id={name} {ids.count(name)} times — getElementById will pick one")
     print(f"  no duplicate ids across {len(pages())} page(s)")
 
 
@@ -172,7 +193,7 @@ def check_sourced(fail) -> None:
                     allowed += 1
                     continue
                 fail(
-                    f"{page.name} shows '{bad}' as fact — it is in no committed file. "
+                    f"{label(page)} shows '{bad}' as fact — it is in no committed file. "
                     f"Use the eval_scoreboard figures, or disclaim it (see /dictionary.html#purity)."
                 )
     print(f"  no unsourced figures presented as fact ({len(UNSOURCED)} pattern(s), {allowed} disclaimed mention(s) allowed)")
@@ -184,7 +205,7 @@ def check_links(fail) -> None:
         for raw in sorted(set(RE_LINK.findall(page.read_text(encoding="utf-8")))):
             total += 1
             if not (ROOT / raw.lstrip("./")).exists():
-                fail(f"{page.name} links to {raw}, which does not exist")
+                fail(f"{label(page)} links to {raw}, which does not exist")
     print(f"  {total} internal link(s) resolve")
 
 
