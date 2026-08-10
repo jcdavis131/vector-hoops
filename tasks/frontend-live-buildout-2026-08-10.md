@@ -2642,3 +2642,43 @@ finding, and the page that survives the audit deserves to be recorded as
 surviving it.
 
 **All five phases of the brief have now had a look-at-the-page pass.**
+
+
+## Nav links that worked by luck (2026-08-10)
+
+Twenty-two pages carry **eight different navigations**. Most of that is
+deliberate — the persona pages share one nav, the content pages share another —
+and which links belong where is a product decision, so the order and the
+membership are untouched.
+
+Two things in it were not decisions. Both are objective, and both were found by
+asking a question with a yes/no answer: *does the same destination always get the
+same name, and does the same name always go to the same place?*
+
+**`play.html` addressed eleven page links relatively.** `href="./teams.html"`
+where all twenty-one other pages write `href="/teams.html"`. It resolves today
+only because `vercel.json` sets `trailingSlash: false`; served once at `/play/`
+instead of `/play`, every one of them would resolve to `/play/teams.html` and
+404. This repo already knows the trap — `stamp_assets.py` carries a comment
+saying root-absolute "is what a page in a subdirectory needs, since a relative
+path resolves differently depending on whether the URL ends in a slash." The nav
+had the same bug the assets were fixed for.
+
+**Six home links pointed at `/index.html`.** `cleanUrls: true` redirects that to
+`/`, and the board already had the measurement from the service-worker
+investigation: `/index.html → 308`. Four pages sent every visitor clicking "Map"
+through a redirect to reach the page they were already asking for.
+
+Afterwards, measured the same way it was found:
+
+    relative page hrefs left:                 0
+    /index.html hrefs left:                   0
+    labels pointing at more than one place:   0
+
+### What was deliberately left alone
+
+`/` is still called **DUMBMODEL** on sixteen pages and **Map** on two, and
+`/play.html` is **Play** on fourteen and **Play today's →** on seven. Those are
+naming choices with a plausible intent behind them — the CTA styling differs too
+— and picking one is a voice decision, not a defect. Recorded rather than
+changed.
