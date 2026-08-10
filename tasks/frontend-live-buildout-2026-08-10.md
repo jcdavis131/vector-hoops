@@ -1814,3 +1814,86 @@ Evidence rather than opinion: the component contributes 8 shadow roots and 16
 focusable controls, all of which carry their own focus rings and tab in document
 order. Whatever is decided about the external dependency, it is not currently an
 accessibility problem.
+
+
+## Nothing had ever played the game (2026-08-10)
+
+Eight checkers on this repo: structure, contrast, focus order, phone widths,
+weight, console cleanliness, rendering, tab order. Every one of them tests how
+the site is *built*. The brief puts gameplay first, and the closest thing to
+coverage it had was `smoke_render.py` visiting /play.html and asserting the
+string "DUMB MODEL" appears somewhere in the DOM.
+
+So `scripts/smoke_play.py` plays a round. It found two defects, both of which had
+been shipping, and neither of which produces a single line of console output.
+
+### The map the game is played on was drawing the cloud and nothing else
+
+`installRealMap` draws the target crosshair, your guess ring, and a dashed line
+between them, behind this guard:
+
+    if(poolObj && typeof poolObj.x==='number'){ ... }
+
+The pool rows had no `x`. Fields were `i,n,v,pid`. So the guard was false every
+time and the draw was skipped **silently** — you got a 4,322-point cloud with
+nothing marked on it. The comment sitting directly above that code calls the
+guess-to-target line "the whole point of playing on a map rather than beside
+one," and it had never once been drawn.
+
+### And a correct guess scored nothing
+
+    function synthTraj(poolObj,n=6){let bx=(poolObj.xy[0]*0.5+0.5), ...
+
+`poolObj.xy` is also absent, so this threw `Cannot read properties of undefined
+(reading '0')` — inside `animateCareer`'s promise chain, where it surfaced as an
+**unhandled rejection** rather than an error anyone would see. A guess above the
+0.76 threshold went into `animateCareer(...).then(() => { idx++; ... })`, the
+chain rejected, `idx` never incremented, and the pack stopped advancing. Answer
+correctly and the game quietly stops.
+
+### One root cause, two field names, neither of them present
+
+`const POOL` and `const MODERN` are hardcoded fallback rows: 3-dimension vectors
+with `xy` pairs in [-1,1]. The real pool replaces them from
+`assets/game_vectors.json` — 14-dimension vectors with `x` and `y` scalars in
+[0,1]. Every row in that file already carries `x`, `y`, `z` and `c`. The loader
+just dropped them on the floor:
+
+    past.forEach(function(p){ POOL.push({i:p.i,n:p.n+' '+p.s,v:p.v,pid:String(p.i)}); });
+
+The drawing code was written against one shape, the loader against the other, and
+nothing in between ever compared them. `x`, `y` and `c` now come along, and
+`synthTraj` accepts either shape rather than assuming the one the real data does
+not use. No new asset, no pipeline run — the coordinates were already committed
+and already being fetched.
+
+**Measured before and after, same seed, same question:**
+
+    fields      i,n,v,pid              ->  i,n,v,pid,x,y,c
+    map coords  (None, None)           ->  (0.7181, 0.2747)
+    canvas ink  9,592 px               ->  10,117 px
+    winning guess  unhandled rejection ->  scores and advances the pack
+
+Those 525 pixels are the crosshair, the ring and the line.
+
+### What the test does, and what it refuses to do
+
+Nothing in it is pinned to a player or a score. The pack is date-seeded, so a
+fixture would rot overnight; both guesses are derived in-page from the pool that
+actually loaded — argmax cosine for a guaranteed hit, argmin for a guaranteed
+miss. The miss path had never run under any gate, and it is the one that touches
+`pulseRing2()` and `#play-a-101`.
+
+Both wirings get exercised: Enter on the input for one guess, the Go button for
+the other, dispatched as real key and mouse events. Calling `guess()` directly
+would pass with every listener unhooked.
+
+The map assertion counts non-background pixels on the canvas rather than trusting
+the fetch. That is the only way to catch a guard that skips silently — the fetch
+succeeding tells you nothing about whether anything was drawn with it.
+
+Two false starts, both mine and both worth writing down: `JSON.stringify` drops
+keys whose value is `undefined`, so the missing coordinate vanished into a
+`KeyError` instead of arriving as the finding it was — the probe now emits
+explicit nulls. And a Windows console is cp1252, so the test died encoding the
+`◐` in the very readout it was checking.
