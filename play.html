@@ -241,14 +241,15 @@ button,.input{min-height:44px}
 </div>
 
 <div id="onboarding-backdrop" class="vh-sheet-backdrop" hidden>
-  <div class="vh-sheet" role="dialog" aria-modal="true"><div class="vh-sheet__handle"></div>
-    <div class="vh-sheet__head"><h2 class="vh-sheet__title">Daily Court — 5× + Pack Battle</h2><button class="vh-sheet__close" id="btn-onboard-close" type="button">✕</button></div>
-    <div class="small-mono" style="margin-bottom:8px;color:#5A5248">5 puzzles daily + viral packs</div>
+  <div class="vh-sheet" role="dialog" aria-modal="true" aria-labelledby="onboard-title" aria-describedby="onboard-sub" tabindex="-1"><div class="vh-sheet__handle"></div>
+    <div class="vh-sheet__head"><h2 class="vh-sheet__title" id="onboard-title">The map is the board</h2><button class="vh-sheet__close" id="btn-onboard-close" type="button" aria-label="Close how to play">✕</button></div>
+    <div class="small-mono" id="onboard-sub" style="margin-bottom:8px;color:#5A5248">Read this once — the rest is guessing</div>
     <div class="onboard-steps">
-      <div class="onboard-step"><span class="onboard-step__num">1</span><div><b>Daily Court: 5 fixed past All-Stars per day, same for everyone</b><p>Deterministic from date: hash(date+slot). Refresh gives same 5. Guesses saved per slot in localStorage. Can't be rerolled.</p></div></div>
-      <div class="onboard-step"><span class="onboard-step__num">2</span><div><b>Pack Battle: 1, 3 or 5 random All-Stars — same link for friends</b><p><code>?pack=672-123-456</code> = identical pack for everyone. Share link, friends get same stars. Add <code>&s=2-3-0</code> to include your scores (0=fail). Battle: who solves more in fewer guesses? Streak-safe, persists through refresh.</p></div></div>
-      <div class="onboard-step"><span class="onboard-step__num">3</span><div><b>Battle flow</b><p>Solve slot → Next → final summary shows total solved, total guesses, avg, and vs challenger. Share final pack image (canvas) with score. Copy challenge link to beat friends. New packs via ⚡🔥🏀 buttons.</p></div></div>
+      <div class="onboard-step"><span class="onboard-step__num">1</span><div><b>Every dot is one player-season</b><p>12,966 of them, 1996 to 2026. A neural net read 130 stats per season — all per-100-possessions, z-scored inside each season so eras compare honestly — and placed each one. <b>Two dots close together played alike.</b> The colour is the archetype the model assigned; the key sits on the map itself.</p></div></div>
+      <div class="onboard-step"><span class="onboard-step__num">2</span><div><b>Your target is the ◎ bullseye</b><p>Each puzzle hands you a past All-Star and marks them on the map. Name the modern player who lands closest. Every guess draws an <b style="color:#D55E00">orange ring</b> with a line back to the bullseye — <b>a short line means you were close</b>, and the newest guess shows its % match. Six tries.</p></div></div>
+      <div class="onboard-step"><span class="onboard-step__num">3</span><div><b>Five a day, identical for everyone</b><p>The Daily Court fixes 5 past All-Stars at midnight UTC; refreshing cannot reroll them. Solve 1 to keep your streak, 3 for Sharpshooter, 5 for a Full Court. A pack link (<code>?pack=672-123-456</code>) hands a friend the exact same set — add <code>&amp;s=2-3-0</code> to send your scores along and make it a race.</p></div></div>
     </div>
+    <p class="small-mono" style="margin:10px 0 0;text-transform:none;color:#5A5248;line-height:1.5">Map without a mouse: focus it, then <b>←→↑↓</b> orbit · <b>+/−</b> zoom · <b>T</b> centres the target · <b>G</b> steps through your guesses · <b>A</b> shows all archetypes · <b>H</b> reads the controls aloud.</p>
     <div style="display:flex;gap:10px;margin-top:12px;flex-wrap:wrap"><button class="btn btn-primary" id="btn-onboard-play" type="button">▶ Play Court</button><button class="btn" id="btn-onboard-random" type="button">🎲 Random</button></div>
   </div>
 </div>
@@ -1330,10 +1331,44 @@ button,.input{min-height:44px}
 
     renderPast(); renderGuesses(); finish(); renderDailyCourt(); renderPackProgress(); renderPackSummary();
 
-    const onboardSeen=localStorage.getItem('vh.onboardSeenV3');
+    // V4, not V3: the sheet now explains the map, which returning players were
+    // never told, so it is worth one more showing.
+    const onboardSeen=localStorage.getItem('vh.onboardSeenV4');
     const backdrop=$('#onboarding-backdrop');
-    function openOnboard(){ if(backdrop){ backdrop.hidden=false; document.body.style.overflow='hidden'; } }
-    function closeOnboard(){ if(backdrop){ backdrop.hidden=true; document.body.style.overflow=''; } try{ localStorage.setItem('vh.onboardSeenV3','1'); }catch{} }
+    const onboardSheet=backdrop?backdrop.querySelector('.vh-sheet'):null;
+    // The sheet declared aria-modal and behaved like a decoration: opening it
+    // left focus on the button behind it, Tab walked straight out into the page
+    // underneath, and Escape did nothing — keyboard-a11y.js dispatches
+    // 'vh:escape' and nothing in the codebase has ever listened for it.
+    const ONBOARD_FOCUSABLE='a[href],button:not([disabled]),input:not([disabled]),select,textarea,summary,[tabindex]:not([tabindex="-1"])';
+    let onboardOpener=null;
+    function onboardIsOpen(){ return !!(backdrop && !backdrop.hidden); }
+    function openOnboard(){
+      if(!backdrop) return;
+      onboardOpener=(document.activeElement instanceof HTMLElement)?document.activeElement:null;
+      backdrop.hidden=false;
+      document.body.style.overflow='hidden';
+      (onboardSheet||backdrop).focus();
+    }
+    function closeOnboard(){
+      if(backdrop){ backdrop.hidden=true; document.body.style.overflow=''; }
+      try{ localStorage.setItem('vh.onboardSeenV4','1'); }catch{}
+      if(onboardOpener && document.contains(onboardOpener)) onboardOpener.focus();
+      onboardOpener=null;
+    }
+    document.addEventListener('keydown', e=>{
+      if(!onboardIsOpen()) return;
+      if(e.key==='Escape'){ e.preventDefault(); closeOnboard(); return; }
+      if(e.key!=='Tab' || !onboardSheet) return;
+      const items=Array.prototype.filter.call(
+        onboardSheet.querySelectorAll(ONBOARD_FOCUSABLE),
+        el=>el.getClientRects().length>0
+      );
+      if(!items.length) return;
+      const first=items[0], last=items[items.length-1];
+      if(e.shiftKey && (document.activeElement===first || document.activeElement===onboardSheet)){ e.preventDefault(); last.focus(); }
+      else if(!e.shiftKey && document.activeElement===last){ e.preventDefault(); first.focus(); }
+    });
     if(!onboardSeen){ setTimeout(openOnboard, 700); }
     $('#btn-howto')?.addEventListener('click', openOnboard);
     $('#btn-onboard-close')?.addEventListener('click', closeOnboard);

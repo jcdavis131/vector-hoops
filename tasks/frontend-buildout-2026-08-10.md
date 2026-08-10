@@ -96,9 +96,16 @@ Invoke-WebRequest http://localhost:8099/<page>.html -UseBasicParsing   # 200 + e
       `.rewards-row` wrap, `.main` is `max-width:980px` with fluid padding, and
       P1.1 gave the map viewport-relative heights. What is left is a real
       375px render check, which this box cannot do (see audit note 10).
-- [ ] P1.5 Onboarding: first-run overlay teaches the *map*, not the rules text.
-      The current sheet is three paragraphs about pack links and localStorage
-      and never mentions the map at all.
+- [x] P1.5 Onboarding teaches the map — **done 2026-08-10**. Three steps
+      rewritten: what a dot is, why near means alike, what the colours encode,
+      then the bullseye/ring/line feedback, then the daily rules and pack links
+      last. localStorage key `vh.onboardSeenV3` → `V4` so returning players see
+      it once. Dialog was `aria-modal="true"` in name only — focus stayed
+      behind it, Tab escaped, and **Escape did nothing**: `keyboard-a11y.js`
+      fires a `vh:escape` CustomEvent that nothing in the repo listens for, and
+      its dialog `forEach` body is empty. Focus move/restore, a Tab trap, a
+      local Escape handler (which also unsticks `body.style.overflow`), and
+      `aria-labelledby`/`aria-describedby` all added.
 
 ## Phase 2 — trends / change over time
 
@@ -144,6 +151,19 @@ Invoke-WebRequest http://localhost:8099/<page>.html -UseBasicParsing   # 200 + e
 - [ ] `a11y-gate` each page after editing it.
 - [ ] `leaderboard.html` is orphaned — not in `site-nav.js`, no inbound link.
       Decide: fold into `/play` or link it. (Not a phase of its own.)
+- [ ] `play.html` registers the same `#btn-random` click handler twice
+      (two identical `addEventListener` lines). Harmless — both navigate to the
+      same URL — but it is dead weight. Sweep with the next play.html edit.
+
+## Shared-checkout warning
+
+A second agent (`build-and-train`) is working the **pipeline** lane in this same
+checkout. **Never `git add -A` / `git add .` here.** Stage explicit paths only,
+and read `git status --short` before every commit so their in-progress
+`pipeline/*` work is not swept into a frontend commit.
+Their lane also *replaces committed `assets/*.json`* — if a rebuilt embedding
+lands, re-check that `mtnn_arch.json gameArchetypes` still matches the 8 names
+hardcoded in `shared-map.js ARCH_FULL`.
 
 ---
 
