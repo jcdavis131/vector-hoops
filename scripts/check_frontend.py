@@ -165,7 +165,27 @@ def check_syntax(fail) -> None:
                         lines[-1] if lines else "parse error",
                     )
                     fail(f"{label(page)} script block {i} does not parse: {err}")
-    print(f"  {checked} inline script block(s) parsed")
+
+        # External modules, which this used to skip entirely. Inline blocks were
+        # parsed and assets/*.js was not, so a module could ship with a syntax
+        # error and never execute — the browser reports it once in the console
+        # and everything that file was meant to do simply does not happen.
+        # Two were sitting in the repo when this check was added:
+        #   assets/teams-time.js      a try{ block never closed before its catch
+        #   assets/push-retention.js  \" escapes that leaked out of a generator
+        # Neither is referenced by a page today, so nothing was visibly broken —
+        # but nothing would have caught it if one had been.
+        for js in sorted(ROOT.glob("assets/**/*.js")):
+            if ".min." in js.name:
+                continue
+            checked += 1
+            r = subprocess.run([node, "--check", str(js)], capture_output=True, text=True)
+            if r.returncode != 0:
+                lines = [ln.strip() for ln in r.stderr.splitlines() if ln.strip()]
+                err = next((ln for ln in lines if "Error" in ln and not ln.startswith("at ")),
+                           lines[-1] if lines else "parse error")
+                fail(f"{js.relative_to(ROOT).as_posix()} does not parse: {err}")
+    print(f"  {checked} script(s) parsed — inline blocks and assets/*.js")
 
 
 def check_targets(fail) -> None:

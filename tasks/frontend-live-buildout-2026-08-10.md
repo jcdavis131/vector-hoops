@@ -530,7 +530,10 @@ a dark canvas, the other a light one.)
       its hero/formula cards remain hardcoded. `playoff_paths.json` (9.0 MB),
       `projections.json`, `chemistry.json`, `roles.json`, `honors.json`,
       `pedigree.json`, `deadline.json` are all still unread by any page.
-- [ ] P5.3 Asset duplication: `front_office.json` exists at **8 paths**
+- [x] P5.3 Asset duplication: `front_office.json` exists at **8 paths**
+  Resolved 2026-08-10 — see the note at the end of this file. One copy was a
+  byte-identical duplicate and is deleted; the other pair turned out not to be
+  duplicates at all.
       (`assets/`, `assets/data/`, and six under `public/assets/…`). Whichever
       is authoritative, five copies are dead weight in the deploy.
 
@@ -2317,3 +2320,69 @@ Worth stating plainly: **the grep I trusted was structurally incapable of findin
 this**, and I would not have looked without being pushed to check workers and CSS
 specifically. Deleting the duplicates was still right; the evidence I offered for
 it was one mechanism short.
+
+
+## P5.3: one of those files was a duplicate, and the other pair was not (2026-08-10)
+
+"`front_office.json` at 8 paths" was really **5 distinct files**, each mirrored
+into `public/` by `sync_public.py`. Hashing them separates two very different
+situations:
+
+    assets/data/front_office.json             1,160,938 B   fa0a3241
+    assets/front_office.json                  1,127,784 B   fb95747f
+    assets/data/front_office_by_season.json     913,467 B   09c3502c
+    assets/front_office_by_season.json          913,467 B   09c3502c   <- same hash
+    assets/front_office_lite.json                17,467 B   c9496248
+
+**The by_season pair is byte-identical**, and both are referenced from one place:
+
+    cacheBY = await fetchJSON('/assets/data/front_office_by_season.json')
+           || await fetchJSON('/assets/front_office_by_season.json');
+
+A fallback to the same bytes cannot help. Both are static assets deployed
+together out of `public/assets`, so if the primary is missing the deploy is
+broken and the copy is missing too; if it is present the copy returns the same
+913,467 bytes. **913 KB shipped to make a dead branch look like resilience.**
+Copy deleted, branch removed.
+
+**The other pair is not a duplication problem at all**, which is why it should
+not be "cleaned up": `assets/data/front_office.json` is a strict **superset** of
+`assets/front_office.json` — 26 top-level keys against 25, the extra one being
+`valuation_history`, and **all 25 shared keys are equal**. Both are live, with 10
+and 22 references. Consolidating onto the superset would save another 1,127,784 B
+and remove a drift hazard, but it means repointing 22 references and their cache
+tokens, and any consumer that iterates top-level keys would newly see
+`valuation_history`. That is a follow-up with a real risk surface, not a
+drive-by, and it is recorded rather than done.
+
+## Two committed modules never parsed at all
+
+`node --check` on the file I was editing failed — on a line I had not touched.
+Sweeping every committed module found two:
+
+    assets/teams-time.js       a try{ block never closed before its catch
+    assets/push-retention.js   \" escapes that leaked out of some generator
+
+A module with a syntax error does not partly work. The browser reports it once
+and **everything in that file simply never happens** — the same failure that took
+out index.html's entire script earlier in this session.
+
+Neither is referenced by any page today, so nothing was visibly broken. That is
+luck, not design, and it is the second time this session that dead code has
+turned out to be hiding something.
+
+### The check that should have existed
+
+`check_syntax` parsed **inline** `<script>` blocks and skipped `assets/*.js`
+entirely. Every module on the site was outside it. It now parses both — **93
+scripts** rather than the inline handful — and it respects `--root`, so the
+served copies under `public/` are parsed as well as the source. Proven by
+breaking a file again and re-running:
+
+    FAIL - assets/push-retention.js does not parse: SyntaxError: Invalid or
+           unexpected token
+
+Both broken files are fixed rather than excluded. An excluded file is a permanent
+blind spot, and these two are exactly the kind that would stay broken forever.
+Whether they should exist at all is **P6.1**, still the operator's call — but
+they are at least syntactically valid now if the answer is "revive".

@@ -59,7 +59,7 @@
             setTimeout(function(){ banner.remove(); }, 2500);
             if(navigator.serviceWorker && navigator.serviceWorker.ready){
               navigator.serviceWorker.ready.then(function(reg){
-                try{ reg.showNotification('Vector Hoops 🔥 streak saved', {body:'Your '+ (function(){ try{ var r=localStorage.getItem(\"vectorHoops.v5\"); var s=JSON.parse(r); return s.streak||1; }catch(e){return 1;}})() +' day streak — puzzle resets midnight CT', icon:'/assets/og-embed.png', badge:'/assets/og-embed.png'}); }catch(e){}
+                try{ reg.showNotification('Vector Hoops 🔥 streak saved', {body:'Your '+ (function(){ try{ var r=localStorage.getItem('vectorHoops.v5'); var s=JSON.parse(r); return s.streak||1; }catch(e){return 1;}})() +' day streak — puzzle resets midnight CT', icon:'/assets/og-embed.png', badge:'/assets/og-embed.png'}); }catch(e){}
               });
             }
           } else {

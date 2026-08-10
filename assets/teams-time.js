@@ -5,7 +5,14 @@
  async function getHist(){if(cacheHist) return cacheHist;cacheHist=await fetchJSON('/assets/data/team_history.json');return cacheHist;}
  async function getPay(){if(cachePay) return cachePay;cachePay=await fetchJSON('/assets/data/payroll_by_season.json');return cachePay;}
  async function getCap(){if(cacheCap) return cacheCap;cacheCap=await fetchJSON('/assets/data/cap_rules.json');return cacheCap;}
- async function getBY(){if(cacheBY) return cacheBY;cacheBY=await fetchJSON('/assets/data/front_office_by_season.json')||await fetchJSON('/assets/front_office_by_season.json');return cacheBY;}
+ /* The fallback that used to sit on the end of this line pointed at
+   /assets/front_office_by_season.json, which was byte-for-byte the same file as
+   the primary — same sha256, same 913,467 bytes. Both are static assets deployed
+   together out of public/assets, so the fallback could never fire usefully: if
+   the primary is missing the deploy is broken and the copy is missing too, and
+   if it is present the copy returns identical bytes. 913 KB shipped to make a
+   dead branch look like resilience. The copy is deleted and the branch with it. */
+async function getBY(){if(cacheBY) return cacheBY;cacheBY=await fetchJSON('/assets/data/front_office_by_season.json');return cacheBY;}
  function champTxt(map,s){if(!map||!map[s]) return '';let m=map[s];let parts=Object.entries(m).sort((a,b)=>b[1]-a[1]).map(([a,v])=>`${a} ${v>=8?'Champion':v>=4?'Runner':'Conf'}+${v}`);return parts.join(' ')+` (${s})`}
  function boardHist(ts,season,FO,pay,capRules){
    let bd=document.getElementById('board-body'); if(!bd) return;
@@ -59,7 +66,7 @@
    let capMap={}; if(capRules){Object.keys(capRules).forEach(k=>{if(capRules[k]&&capRules[k].cap) capMap[k]=capRules[k]}); }
    window.PO_WINS=FO.playoff_wins||{}; window.PO_SERIES=FO.playoff_series_wins||{}; window.PO_WEIGHT=FO.playoff_win_weight||2.5;
    // valuation map for fun boards
-   try{let _vm={}; if(FO.teams){for(let tt of FO.teams){if(tt.valuation_m){_vm[FO.season_focus]=_vm[FO.season_focus]||{}; _vm[FO.season_focus][tt.abbr]=tt.valuation_m}} FO._valuation_by_season=_vm;}catch(e){}
+   try{let _vm={}; if(FO.teams){for(let tt of FO.teams){if(tt.valuation_m){_vm[FO.season_focus]=_vm[FO.season_focus]||{}; _vm[FO.season_focus][tt.abbr]=tt.valuation_m}} FO._valuation_by_season=_vm;}}catch(e){}
    // expose validity corr for time-machine header if present
    if(bySeason&&bySeason.validity&&bySeason.validity.vegas_wins_corrs){
      let cur=bySeason.validity.vegas_wins_corrs.find(x=>x.season===FO.season_focus);
