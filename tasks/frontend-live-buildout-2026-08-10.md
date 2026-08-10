@@ -2887,3 +2887,56 @@ canvas crops worked because they fitted inside the viewport. **That is twice thi
 session a screenshot has sent me after a bug that was not there** (the 390px
 phone crop was the first), and both times the fix was to measure the thing
 directly rather than trust the picture of it.
+
+
+## The share card linked to a different puzzle (2026-08-10)
+
+Nothing had ever opened the share card. It works — `makeShareOG()` draws on the
+win (27,994 non-uniform pixels on the 1200x630 canvas), the popup opens, the
+matchup and both career paths are on it. One line on it was false:
+
+    sx.fillText('hoops.dumbmodel.com/play?pack=' +
+      (new URL(location.href).searchParams.get('pack') || '672-123-456') + ...)
+
+A daily game has no `?pack=` in its URL, so **every shared card fell back to the
+literal `672-123-456`** — the demo pack from the placeholder rows. The one
+artefact on this site built to be posted in public advertised a link to a
+different puzzle than the picture above it.
+
+`seq` holds the pool ids the round was built from and `parsePack` reads exactly
+that format back, so `seq.join('-')` round-trips. Verified by following it:
+
+    daily seq   [5991]   target 'Russell Westbrook 2010-11'
+    card link   hoops.dumbmodel.com/play?pack=5991
+    replayed    target 'Russell Westbrook 2010-11'   seq [5991]
+
+If `seq` is somehow empty the bare `/play` is printed rather than a pack code
+that leads somewhere else. `smoke_play.py` fails if the demo string ever comes
+back, or if a non-empty seq produces a link with no pack.
+
+That is the fourth value on this site that was stated with no relationship to
+what it described, after `/owner`'s `Math.random()` columns, model.html's
+`EH 0.92`, and teams.html's ten hardcoded rows.
+
+### Two things about the card that are design, not defects
+
+Left alone deliberately, because they are judgement about how the site should
+present itself rather than something being wrong:
+
+- **The card is mostly empty.** The two trajectories occupy a small patch of a
+  1200x630 poster; roughly two thirds is black. It reads as a diagnostic, not a
+  thing someone wants to post.
+- **The footer is build metadata** — `v7.2 paper traj 1200ms easeInOut cubic
+  grey→vivid 0.35→1.0 • SoC white • LPCM` — set in small grey on black. It is
+  legible to whoever wrote it and to nobody else.
+
+- [ ] **P9.7 The share card is a diagnostic, not a poster.** Both points above.
+  Fixing them means deciding what the card is *for* — a score to brag about, a
+  picture of the model working, an invitation to play — and that is a voice call.
+
+### And `#shareCardD` is never drawn
+
+A second 1200x630 canvas that stays at ink 0 and `0x0` through a whole game. It
+is not wired to anything the win path touches. Recorded rather than removed —
+it may be the download variant of a feature that was never finished, which makes
+it P6.1's question, not a stray to sweep.

@@ -536,6 +536,24 @@ def main() -> int:
                             "unchanged — the pack is over and the page still shows the "
                             "puzzle it just finished")
 
+        # 5c. the share card's link has to reproduce the game the card shows. It
+        #     fell back to the literal '672-123-456' whenever the page had no
+        #     ?pack= — which is every daily game — so the one artefact built to be
+        #     posted publicly advertised the demo pack, a different puzzle from
+        #     the one pictured on it.
+        link = str(ev(ws, """(() => {
+          const p = new URL(location.href).searchParams.get('pack');
+          let q = p; if (!q && typeof seq !== 'undefined' && seq && seq.length) q = seq.join('-');
+          return 'play' + (q ? '?pack=' + q : ''); })()""") or "")
+        seq_now = ev(ws, "JSON.stringify(seq)")
+        print(f"  share    link {link!r} for seq {seq_now}")
+        if "672-123-456" in link:
+            failures.append("the share card advertises the demo pack 672-123-456 rather than "
+                            "the game it depicts — anyone following it gets a different puzzle")
+        elif seq_now and seq_now != "[]" and "?pack=" not in link:
+            failures.append(f"the share card link carries no pack for seq {seq_now}, so it "
+                            f"cannot reproduce the puzzle it shows")
+
         # 6. the numbers a player is shown
         for label, s in (("miss", str(dist_miss or "")), ("hit", str(dist_hit or ""))):
             if "NaN" in s:
