@@ -102,13 +102,36 @@ Still unsourced and now labelled as such: the `model.html` model-zoo table.
       appended script. Needs an edit inside the generated file, or the map
       rewritten against `assets/shared-map.js` (which is still committed at
       27,161 b but no longer referenced by `play.html`).
-- [ ] P1.2 Archetype colour key. **Blocked on data, not effort** —
-      `embedding_map_manifest.json` rows carry `player_id, norm, display_name,
-      seasons, seasons_count, is_current, is_allstar, is_recent_rookie,
-      is_3plus, best_season, latest_season, best_score`. No archetype field,
-      so the live map's colours cannot be decoded from what it loads. Either
-      join against `assets/archetype_assignments.json` client-side or add the
-      field to the manifest (pipeline lane — not mine).
+- [x] P1.2 Archetype colour key — **done `3f211553`, and I had it on the wrong
+      page.** I called it blocked because `embedding_map_manifest.json` has no
+      archetype field. True, but `play.html`'s canvas is a decorative starfield
+      — it has no archetype colours to decode. The page that does is
+      **`players.html`**, which paints 1,764 points via `OKABE[p.c%8]` from
+      `embedding_map_points_limited.json`.
+      Encoding verified, not assumed: joined that file through `vectors.json`
+      to `archetype_assignments.json` — **`c === gameCluster` for 1,764 of
+      1,764 points**, so index *i* is `gameArchetypes[i]`. Key lists all eight
+      with names read from `mtnn_arch.json`; refuses to invent labels on a
+      failed fetch.
+
+## ⚠ Open finding — the same archetype is two different colours
+
+| file | idx 3 | idx 4 | idx 5 | idx 7 |
+|---|---|---|---|---|
+| `assets/shared-map.js`, `assets/archetype-bridge.js` | `#F0E442` | `#56B4E9` | `#CC79A7` | `#FFFEF7` |
+| `players.html`, `index.html` | `#CC79A7` | `#F0E442` | `#56B4E9` | `#000000` |
+
+Indices 3/4/5 are permuted between the two camps and index 7 differs. Since
+`c` is the archetype index on both surfaces, **archetypes 3, 4 and 5 render in
+different colours depending on which page you are on** — in the site's only
+visual encoding.
+
+Nothing in the repo documents which order is intended, so repainting on a guess
+would be an unverifiable visual change to a live page. The key added in
+`3f211553` describes `players.html`'s **actual** colours, which is the honest
+behaviour for it. **Operator decision: pick a canonical order, then align the
+other camp.** (`#FFFEF7` vs `#000000` at index 7 may be deliberate — one suits
+a dark canvas, the other a light one.)
 - [ ] P1.4 `resMeta` renders `cos` to **3 decimals**, against the repo rule of
       never showing a user more than 2. Left alone deliberately: fixing it from
       my appended layer means a re-entrant observer rewriting another agent's
@@ -186,9 +209,17 @@ Still unsourced and now labelled as such: the `model.html` model-zoo table.
       as a visible pill — replaced with the sourced `held-out top-5 0.76`,
       linked to its dictionary entry. Its one `toFixed(3)` is a canvas rgba
       alpha, which `docs/HANDOFF.md` explicitly exempts as internal; left alone.
-- [ ] P4.1b `players.html` still scans `aria-live` ×0, `tabindex` ×0, `role=`
-      ×0, `prefers-reduced-motion` ×0. Needs the same appended a11y layer
-      `play.html` got in `f520c19e`.
+- [x] P4.1b `players.html` a11y — **done `3f211553`**. `draw()` called
+      `requestAnimationFrame` unconditionally and advanced `yaw` every frame, so
+      the map **rotated forever with no way to stop it** (WCAG 2.2.2). Pause
+      control added; starts paused under `prefers-reduced-motion`. Player list
+      was `<div>` + `.onclick` — now `role=button tabindex=0`, Enter/Space.
+      Selection only wrote `#selLab` text, which AT never hears — mirrored into
+      a live region. Real canvas `aria-label`, skip link, focus ring.
+      One keyword changed inside the working script: `let dots=…,rot=1,…` →
+      `var`. A top-level `let` lives in script scope, so `window.rot` was a
+      different variable and the pause button would have silently done nothing.
+      Caught before shipping, not after.
 - [x] P4.3 **Player cards shipped — `11c1a0d4`.** `/player.html` searches
       2,293 generated wiki pages and renders them. `knowledge/` is 7.9 MB that
       **nothing on the site linked**, and `knowledge/INDEX.md` is a 515-byte
