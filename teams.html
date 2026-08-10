@@ -70,8 +70,8 @@ window.__vhReduceMotion = !!(window.matchMedia && window.matchMedia('(prefers-re
 <div class="grid">
 <div class="card" style="padding:13px 14px">
 <span class="pill y mono">Championship-first · Cap% normalized</span>
-<h2 class="hd" style="font-size:18px;margin:8px 0">Formula — honest placeholder</h2>
-<p class="mono" style="color:#57534E;line-height:1.5;font-size:11.6px">Draft (.35) = .65·exp/2000 + .35·1/√overall clip .06-3.5 — pick1≈3×pick30. Cap (.35) = W/$M z + retained×1.15 if 20+GP. Foresight (.30) = maturation + vegas_alpha OU r=0.741 + props_alpha + champ_bonus NYK+16 SAS+7 CLE+3 OKC+3 + val growth z*0.10 capped ±2. <code style="background:#FFF5D0;border:1px solid #E8E3D9;padding:2px 5px;border-radius:6px">FOR= min(99,.35D+.35C+.30F+α)</code>. Data source: <code>front_office.json</code> 1.1MB live 10-season champion_map · payroll_enriched 36 seasons. <span class="sg">No fabrication — placeholder table honest 10 rows, full sync via build_front_office.py.</span></p>
+<h2 class="hd" style="font-size:18px;margin:8px 0">How FOR is computed</h2>
+<p class="mono" style="color:#57534E;line-height:1.5;font-size:11.6px">Draft (.35) = .65·exp/2000 + .35·1/√overall clip .06-3.5 — pick1≈3×pick30. Cap (.35) = W/$M z + retained×1.15 if 20+GP. Foresight (.30) = maturation + vegas_alpha OU r=0.741 + props_alpha + champ_bonus NYK+16 SAS+7 CLE+3 OKC+3 + val growth z*0.10 capped ±2. <code style="background:#FFF5D0;border:1px solid #E8E3D9;padding:2px 5px;border-radius:6px">FOR= min(99,.35D+.35C+.30F+α)</code>. Data source: <code>front_office.json</code> 1.1MB live 10-season champion_map · payroll_enriched 36 seasons. <span class="sg">Every number in the table below is read from that file. A ten-row table of hardcoded values used to sit above it — it is gone.</span></p>
 <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:10px">
 <div style="border:1.5px solid var(--ink);border-radius:9px;padding:7px 8px;background:#FFFEFC;font-size:11px"><b class="mono">Draft</b> clip .06-3.5</div>
 <div style="border:1.5px solid var(--ink);border-radius:9px;padding:7px 8px;background:#FFFEFC;font-size:11px"><b class="mono">Cap%</b> eff_cap prior×1.10 2016 spike</div>
@@ -80,29 +80,21 @@ window.__vhReduceMotion = !!(window.matchMedia && window.matchMedia('(prefers-re
 </div>
 <div class="card" style="margin-top:10px;padding:9px 10px;background:#0A0C10;color:#FAFAF8;border-color:#0A0C10"><canvas id="mapCv" width="460" height="120" aria-label="orange pulse rings"></canvas><div class="mono" style="margin-top:6px;color:#9AA3B2">◎ pulse 60fps orange #EB6834 rings — FOR glass-box. <span class="pill y mono" style="font-size:9px">DeepMLP 4450.09 vs 4501.15 Δ-51</span> <span class="pill mono" style="font-size:9px;background:#E6F5F0">OU r=0.741</span></div></div>
 </div>
-<div>
-<div class="mono" style="font-weight:800;text-transform:uppercase;font-size:11px;margin-bottom:6px">Sortable — click header — W · W* · W/$M · W*/$M · PO/$M · Val</div>
-<div style="max-height:520px;overflow:auto;border:2px solid var(--ink);border-radius:12px;background:#fff" class="card"><table id="tbl"><thead><tr><th scope="col" data-k="team">Team</th><th scope="col" data-k="FOR">FOR</th><th scope="col" data-k="W">W</th><th scope="col" data-k="Wstar">W*</th><th scope="col" data-k="wpm">W/$M ↑</th><th scope="col" data-k="wstarpm">W*/$M</th><th scope="col" data-k="popm">PO/$M</th><th scope="col" data-k="wpb">Wins/$B</th><th scope="col" data-k="val">Val $B</th><th scope="col">Flex</th></tr></thead><tbody></tbody></table></div>
-<p class="mono" style="color:var(--ink-soft);font-size:10.8px;margin-top:6px">Placeholder honest 10 rows — real FOR syncs from assets/front_office.json when built. Values rounded; apron $207.8M badge 2nd apron hard NO-MLE. W* SAS 94.8 > OKC 85.8 — champ bonus λ. <span class="sg">Embedding accuracy, from <code>assets/eval_scoreboard.json</code>: held-out top-5 0.76 against a transparent 14-d baseline of 0.20. (This line previously cited that file for "Purity@10 0.7057 lift 6.32"; neither figure is in it — see <a href="/dictionary.html#purity">the dictionary</a>.)</span></p>
-</div>
+<!-- The sortable ten-row table that stood here is gone. It was ten hardcoded
+     literals - {team:'LAL',FOR:72.1,W:47,...} - under a caption reading
+     "Placeholder honest 10 rows" and a formula block promising "No
+     fabrication". The numbers matched nothing: against the committed
+     2025-26 front_office.json, NYK read FOR 91.2 against 61.7, SAS 34 wins
+     against 62, BOS 64 against 56. They are not a different season either -
+     OKC 68 and SAS 34 look like 2024-25 while CLE 48 does not. Unsourced
+     numbers in a sortable table read as authoritative, and the real thing,
+     all 30 teams from front_office.json, is already on this page below. -->
+
 </div>
 <div class="card" style="margin-top:12px;padding:11px 13px"><div class="hd" style="font-size:12px">Why SAS 94.8 > OKC 85.8 with 22W gap? — glass-box</div><p class="mono" style="color:#57534E;font-size:11.6px">W=24-25 reg wins. PO=25-26 playoff wins: NYK16 SAS12 CLE8 OKC8 sim end. realG=playoff GP. W*=W+2.5·PO+0.12·realG → SAS 34+30+~16.8 raw + prior weighted chapters → 94.8 ex FOR 25-26; OKC 68+20+?=85.8. Championship trumps. Cap% normalized effective_cap 2016=prior*1.10 removes $24B TV jump 34.5%. Trophy wall $9.1B top. <span class="pill mono" style="font-size:10px">FOR 50=median</span> <span class="pill mono ink" style="font-size:10px">2nd Apron $207.8M</span> <span class="pill y mono" style="font-size:10px">NO-MLE</span></p></div>
 <div class="mono" style="margin-top:10px;color:var(--ink-muted);font-size:10.5px">Zero-deps inline CSS/JS · paper #FAFAF8 · ink #111111 · orange #EB6834 pulse · theme #fafaf8 · manifest data URI · fonts Architects Daughter</div>
 </div>
 <script>
-const rows=[
-{team:'NYK',FOR:91.2,W:51,Wstar:92.1,wpm:0.298,wstarpm:0.42,popm:0.092,wpb:5.71,val:8.93,flex:'C',apron:1},
-{team:'SAS',FOR:87.4,W:34,Wstar:94.8,wpm:0.283,wstarpm:0.79,popm:0.10,wpb:9.71,val:3.5,flex:'A',apron:0},
-{team:'OKC',FOR:86.1,W:68,Wstar:85.8,wpm:0.405,wstarpm:0.511,popm:0.047,wpb:20.9,val:3.25,flex:'A+',apron:0},
-{team:'CLE',FOR:84.3,W:48,Wstar:68,wpm:0.32,wstarpm:0.453,popm:0.053,wpb:14.1,val:3.4,flex:'B+',apron:0},
-{team:'BOS',FOR:83.9,W:64,Wstar:66.8,wpm:0.36,wstarpm:0.376,popm:0.025,wpb:12.9,val:4.96,flex:'C',apron:1},
-{team:'DEN',FOR:79.1,W:57,Wstar:67.2,wpm:0.348,wstarpm:0.41,popm:0.024,wpb:15.6,val:3.64,flex:'B',apron:0},
-{team:'GSW',FOR:78.6,W:46,Wstar:56.4,wpm:0.22,wstarpm:0.269,popm:0.019,wpb:5.03,val:9.14,flex:'C',apron:1},
-{team:'MIL',FOR:76.2,W:49,Wstar:49,wpm:0.285,wstarpm:0.285,popm:0,val:3.5,flex:'B-',apron:0},
-{team:'DAL',FOR:74.8,W:50,Wstar:52,wpm:0.295,wstarpm:0.307,popm:0,val:4.7,flex:'B',apron:0},
-{team:'LAL',FOR:72.1,W:47,Wstar:51,wpm:0.258,wstarpm:0.28,popm:0.022,val:7.1,flex:'C',apron:1}
-];
-function ren(a){let tb=document.querySelector('#tbl tbody');tb.innerHTML='';for(let r of a){let bd=r.apron?'<span class="badge apron">$207.8M</span> '+(r.flex==='C'?'<span class="badge" style="background:#F0E442">NO-MLE</span>':''):'<span class="badge">'+r.flex+'</span>';tb.innerHTML+=`<tr><td><b>${r.team}</b></td><td class="num">${r.FOR.toFixed(1)}</td><td class="num">${r.W}</td><td class="num">${r.Wstar.toFixed(1)}</td><td class="num">${r.wpm.toFixed(3)}</td><td class="num">${(r.wstarpm||0).toFixed(3)}</td><td class="num">${(r.popm||0).toFixed(3)}</td><td class="num">${(r.wpb||0).toFixed(1)}</td><td class="num">${r.val.toFixed(2)}</td><td>${bd}</td></tr>`}}ren(rows);let dir={};document.querySelectorAll('#tbl th[data-k]').forEach(th=>{th.addEventListener('click',()=>{let k=th.dataset.k;dir[k]=!dir[k];let mk={team:'team',FOR:'FOR',W:'W',Wstar:'Wstar',wpm:'wpm',wstarpm:'wstarpm',popm:'popm',wpb:'wpb',val:'val'}[k];rows.sort((a,b)=>{if(mk==='team')return dir[k]?a.team.localeCompare(b.team):b.team.localeCompare(a.team);return dir[k]?a[mk]-b[mk]:b[mk]-a[mk]});ren(rows)})});
 (()=>{let c=document.getElementById('mapCv');if(!c)return;let x=c.getContext('2d'),t=0;function f(){t+=.016;x.fillStyle='#0A0C10';x.fillRect(0,0,460,120);for(let i=0;i<3;i++){let r=14+i*20+Math.sin(t*2+i)*5;x.strokeStyle='#EB6834';x.globalAlpha=.9-i*.22;x.lineWidth=1.6;x.beginPath();x.arc(230+Math.cos(t*.6+i)*18,60+Math.sin(t*.5+i*1.1)*9,r,0,6.283);x.stroke()}x.globalAlpha=1;x.fillStyle='#F0E442';x.beginPath();x.arc(230,60,3,0,6.283);x.fill();x.fillStyle='#FAFAF8';x.font='900 12px ui-monospace';x.fillText('◎ SAS 94.8 > OKC 85.8 · #EB6834',12,18);if(!window.__vhReduceMotion)requestAnimationFrame(f)}f()})();
 </script>
 
@@ -383,7 +375,7 @@ fetch('assets/front_office_lite.json?v=c9496248',{cache:'force-cache'})
     say(j.teams.length+' teams loaded.');
   })
   .catch(function(e){
-    // the placeholder above is already labelled a placeholder; do not add a fake table
+    // there is no placeholder table above any more; still do not invent one
     $('foSub').textContent='assets/front_office_lite.json could not be loaded ('+e.message+'). '+
       'No table is shown rather than an invented one.';
   });

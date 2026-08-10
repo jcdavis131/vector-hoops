@@ -2547,3 +2547,61 @@ supports one — every record carries `positions`, `archetypes`, `span` and a
 12-value skill vector — but 2,293 links is a real weight decision, and the useful
 version of it is probably paged or letter-at-a-time rather than all at once.
 Recorded rather than guessed at.
+
+
+## "No fabrication" sat above a fabricated table (2026-08-10)
+
+Phase 5 of the brief is the team / front office page, and I had not looked at it.
+`teams.html` carried a section headed **"Formula — honest placeholder"** whose
+closing line read:
+
+    No fabrication — placeholder table honest 10 rows, full sync via
+    build_front_office.py.
+
+Underneath it, a sortable ten-row table of hardcoded literals:
+
+    {team:'LAL',FOR:72.1,W:47,wpm:0.258,wstarpm:0.28,popm:0.022,val:7.1,…}
+
+**The numbers matched nothing.** Against the committed 2025-26
+`front_office.json`:
+
+    team   page FOR   real for_score      page W   real wins
+    NYK    91.2       61.7                51       53
+    SAS    87.4       69.3                34       62
+    OKC    86.1       70.7                68       64
+    CLE    84.3       66.7                48       52
+    BOS    83.9       78.1                64       56
+
+Not a rounding difference and **not a different season** either — OKC 68 and SAS
+34 look like 2024-25, but CLE 48 does not; CLE won 64 that year. The real file is
+internally coherent (wins + losses = 82 for all thirty). The ten rows correspond
+to no season the site holds.
+
+They were presented in a sortable table with a FOR column, directly above **the
+real thing** — `#foTable`, all thirty teams read from `front_office_lite.json` at
+load. Two team tables, different numbers, and the word "honest" attached to the
+invented one.
+
+Deleted: the table, the 2,139 characters of hardcoded rows and sort wiring behind
+it, and the three claims that described it. The heading is now **"How FOR is
+computed"**, which is what that block actually does, and the line about the data
+source now says what is true — every number in the table below is read from the
+file. The formula documentation stays; it explains the real table's FOR column.
+
+That is the third fabricated surface removed this session, after `/owner`'s nine
+`Math.random()` columns and model.html's `EH 0.92`. All three announced their own
+honesty in the surrounding copy.
+
+### One thing that checked out
+
+The card headed "Why SAS 94.8 > OKC 85.8 with 22W gap?" **is** consistent: the
+real table gives SAS a W* of 94.80 and OKC 85.80. That explanation was always
+about the real numbers, so it stays exactly as written.
+
+### And a risk from an earlier pass, closed
+
+`teams.html` loads only `error-boundary.js`, `keyboard-a11y.js` and
+`pwa-install.js`. It does **not** load `teams-time.js` or `teams-board.js` — so
+the two syntax errors I fixed two passes ago were in genuinely dead code and that
+fix changed no behaviour on any page. Worth confirming rather than assuming,
+since reviving a dead module silently would have been a real regression.
