@@ -783,3 +783,33 @@ name both and point at the file.
 the same reason it does on script tags — a subdirectory page has to write the
 root-absolute form, and an unstamped fetch is the year-long cache pin this script
 exists to prevent.
+
+### Verified the shipped code, not a restatement of it
+
+The first smoke test claimed to run the owner table's formatters verbatim and did
+not — it was a rewrite, with arrow functions, no colour swatch and no `<b>`
+wrapper. That validates the data contract and nothing about what ships.
+`scripts/smoke_owner_table.mjs` now extracts `esc`/`n2`/`COLS` straight out of
+`owner/index.html` and runs those:
+
+    node scripts/smoke_owner_table.mjs
+
+Ten checks, all green, including the injection surface — `primary` is
+interpolated into a `style` attribute and `name` into `title`: all 30 `primary`
+values match `^#[0-9A-Fa-f]{3,8}$`, no team name contains a quote or angle
+bracket, and `esc` neutralises a hostile string. The decimal check strips tags
+first, or `width:9px` in the swatch markup reads as a displayed number.
+
+The `\r?\n` in its extraction patterns is load-bearing and cost one failed run:
+no `.gitattributes` plus `core.autocrlf=true` means these files are CRLF here, so
+an LF-only pattern matches nothing while reporting "could not extract". Same
+lesson as the renderer frontmatter regex earlier on this branch. See P4.5.
+
+- [ ] **P7.2 methods.html's figures are hardcoded prose, snapshot-verified today.**
+  1245.3 / 398.7 / 187.2 / 6.3 / 4450.09 / 4501.15 were checked against
+  `assets/data/model_zoo_eval.json` on 2026-08-10 and all six are present. But the
+  page never reads the file — it prints them as text — so if the zoo regenerates,
+  methods.html goes stale silently and no gate catches it: the `sourced` check only
+  knows the hand-maintained `UNSOURCED` list. Either teach the gate to verify these
+  against the file, or accept the drift knowingly. Recorded so the next session does
+  not re-derive it from scratch.
