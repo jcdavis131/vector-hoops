@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#fafaf8">
-<title>Vector Hoops — Offline PWA v67</title>
+<title>Vector Hoops — Offline</title>
 <link rel="manifest" href="/manifest.json">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='10' fill='%23FAFAF8'/%3E%3Ctext x='50%25' y='54%25' dominant-baseline='middle' text-anchor='middle' font-size='14' fill='%23080A0F'%3E%E2%97%8E%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -36,15 +36,15 @@ header{max-width:900px;margin:0 auto;padding:10px 14px;display:flex;flex-wrap:wr
 </head>
 <body>
 <header>
-<div class="brand">◐ DUMB MODEL <span class="pill pill-y" style="transform:rotate(-1deg)">PWA v67 • offline shell 13k</span> <span class="sg">dark card #080A0F core only</span></div>
+<div class="brand">◐ DUMB MODEL <span class="pill pill-y" style="transform:rotate(-1deg)">shell-only cache • 3 entries</span> <span class="sg">dark card #080A0F core only</span></div>
 <nav style="display:flex;gap:8px;flex-wrap:wrap"><a class="pill" href="/index.html">Map</a><a class="pill" href="/play.html">Play</a><a class="pill" href="/leaderboard.html">Board</a><a class="pill" href="/inventory.html">Inventory</a><a class="pill" href="/methods.html">Methods</a><a class="pill pill-d" href="/offline.html">Offline</a></nav>
 </header>
 <main id="main">
 <div class="wrap">
 <div class="card">
-<div class="mono" style="text-transform:uppercase;letter-spacing:.06em;opacity:.75;font-weight:800">offline • cached core 13 assets DENY7 • shell-only no JSON cached • PWA v67</div>
+<div class="mono" style="text-transform:uppercase;letter-spacing:.06em;opacity:.75;font-weight:800">offline • shell-only • 3 entries cached • no JSON cached • cache hoops-v7-2</div>
 <h1 style="margin:10px 0 8px;font-size:26px;letter-spacing:-.02em;font-family:ui-monospace,Menlo,monospace;text-transform:uppercase">You're offline — shell is here.</h1>
-<p class="sub">Offline shell v67 dark void #080A0F card says offline. CORE13 cached, no JSON cached (shell-only 13k). DENY7: no /api/, no live leaderboard fetch, no props JSON 2.6MB, no valuation live 141K, no payroll live 266K, no matchup live 9.9MB, no MTNN embeddings 3.2M fetch. Retry pings navigator.onLine then reloads, else void pulse. Week Warrior 7-dot still works from hub-streak.</p>
+<p class="sub">You are offline. sw.js caches three entries and no JSON at all, so the map, the season data and every model asset need a connection. DENY7: no /api/, no live leaderboard fetch, no props JSON 2.6MB, no valuation live 141K, no payroll live 266K, no matchup live 9.9MB, no MTNN embeddings 3.2M fetch. Retry pings navigator.onLine then reloads, else void pulse. Week Warrior 7-dot still works from hub-streak.</p>
 <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap">
 <button class="btn btn-y" id="retry">↻ Retry connection</button>
 <a class="pill pill-y" href="/play.html" style="text-decoration:none;display:inline-flex;align-items:center">▶ Play offline arcade</a>
@@ -53,23 +53,25 @@ header{max-width:900px;margin:0 auto;padding:10px 14px;display:flex;flex-wrap:wr
 <div id="dots" style="margin-top:12px;display:flex;flex-wrap:wrap;gap:4px"></div>
 <div class="mono" id="streakLab" style="margin-top:6px;color:#C9D4E5">weekStreak 0/7 • hub-streak</div>
 <div style="margin-top:12px;display:grid;grid-template-columns:1fr 1fr;gap:10px">
-<div><div class="mono">CORE13 cached exactly</div><code style="font-size:11px;background:rgba(250,250,248,.08);border:1px solid rgba(250,250,248,.15);padding:6px 8px;border-radius:8px;display:block;white-space:pre-wrap">/ /index.html /play.html /leaderboard.html /inventory.html /methods.html /offline.html /manifest.json /assets/icon-192.png /assets/icon-512.png /sw.js / inline / LCG / ww dots hub-streak</code><div class="mono" style="margin-top:6px">13 assets exactly — verified via sw CORE list v67</div></div>
+<div><div class="mono">What is actually cached</div><code style="font-size:11px;background:rgba(250,250,248,.08);border:1px solid rgba(250,250,248,.15);padding:6px 8px;border-radius:8px;display:block;white-space:pre-wrap">/
+/offline
+/manifest.json</code><div class="mono" style="margin-top:6px">Three entries — read from sw.js SHELL, cache name hoops-v7-2</div></div>
 <div><div class="mono">DENY7 not cached — shell-only</div><code style="font-size:11px;background:rgba(250,250,248,.08);border:1px solid rgba(250,250,248,.15);padding:6px 8px;border-radius:8px;display:block;white-space:pre-wrap">/api/* .json /assets/data/* large 2.6MB props / 9.9MB matchup / 141K vals / 51K hist / FO 1.1M / 3.2M embeddings / 2.3M heads / 524K projections</code><div class="mono" style="margin-top:6px">shell-only keeps offline shell &lt;28k instant • theme #fafaf8 still</div></div>
 </div>
-<div class="mono" id="status" style="margin-top:12px;display:inline-flex;padding:5px 10px;border-radius:999px;border:1px solid #FAFAF8">status: offline — dark card #080A0F shell 13k v67</div>
+<div class="mono" id="status" style="margin-top:12px;display:inline-flex;padding:5px 10px;border-radius:999px;border:1px solid #FAFAF8">status: offline — shell-only, 3 entries cached</div>
 </div>
 <div style="margin-top:12px;background:#fff;border:2.2px solid #111;border-radius:14px;padding:10px;box-shadow:3px 3px 0 #111">
-<div class="mono" style="font-weight:800;text-transform:uppercase;letter-spacing:.04em">PWA v67 manifest • inline only • header pill-yellow</div>
-<ul style="margin:6px 0 0 16px;font-size:12.3px;line-height:1.5"><li>manifest.json link present theme-color #fafaf8 inline CSS/JS no external fetch (Google Fonts handwriting optional)</li><li>sw.js caches SHELL 13 only then fallback /offline.html deny .json /api/* ensures shell-only</li><li>Week Warrior 7-dot reads hub-streak hub-best local not server 44px taps</li><li>Core only playable offline Past→Modern LCG deterministic same-link same trio no embeddings fetch</li><li>Size &lt;28k shell 13k (this file 9663) inline zero-deps verified</li></ul>
+<div class="mono" style="font-weight:800;text-transform:uppercase;letter-spacing:.04em">PWA manifest • inline only • network-first</div>
+<ul style="margin:6px 0 0 16px;font-size:12.3px;line-height:1.5"><li>manifest.json link present theme-color #fafaf8 inline CSS/JS no external fetch (Google Fonts handwriting optional)</li><li>sw.js caches SHELL (3 entries) and falls back to /offline; .json and /api/* are never cached, so a stale model asset can never be served</li><li>Week Warrior 7-dot reads hub-streak hub-best local not server 44px taps</li><li>Core only playable offline Past→Modern LCG deterministic same-link same trio no embeddings fetch</li><li>This page is 9965 bytes, inline, zero-deps. The cached shell is the three SHELL entries in sw.js, not a size budget.</li></ul>
 </div>
 </div>
 </main>
-<footer style="max-width:900px;margin:8px auto 0;padding:10px 14px;display:flex;flex-wrap:wrap;gap:8px;justify-content:space-between;border-top:1.6px dashed var(--line)"><span class="mono">PWA v67 • CORE13 shell-only • DENY7 • #080A0F dark • Week Warrior 7-dot • local only</span><div style="display:flex;gap:6px"><a class="pill" href="/play.html">Play</a><a class="pill" href="/leaderboard.html">Board</a></div></footer>
+<footer style="max-width:900px;margin:8px auto 0;padding:10px 14px;display:flex;flex-wrap:wrap;gap:8px;justify-content:space-between;border-top:1.6px dashed var(--line)"><span class="mono">shell-only • 3 entries • no JSON cached • Week Warrior 7-dot • local only</span><div style="display:flex;gap:6px"><a class="pill" href="/play.html">Play</a><a class="pill" href="/leaderboard.html">Board</a></div></footer>
 <script>
 function read(k,fb){try{let v=JSON.parse(localStorage.getItem(k)||'null');return v||fb}catch(e){return fb}}
 function getWW(){let s=read('hub-streak',{days:[],streak:0,last:null});if(!s.days)s.days=[];let old=null;try{old=JSON.parse(localStorage.getItem('vh_weekStreak')||'null')}catch(e){}if(s.days.length===0&&old&&old.days)s=old;return s}
 function renderWW(){let ww=getWW();let c=document.getElementById('dots');if(!c)return;c.innerHTML='';let t=document.createElement('div');t.className='mono';t.style.color='#C9D4E5';t.textContent='Week Warrior 7-dot via hub-streak — '+ww.days.length+'/7 '+(ww.days.length>=7?'◎ WARRIOR':'');c.appendChild(t);let row=document.createElement('div');row.style.display='flex';row.style.flexWrap='wrap';for(let i=0;i<7;i++){let d=document.createElement('span');let on=i<ww.days.length;d.className='dot '+(on?'on'+(ww.days.length>=7?' war':''):'');d.title=on?(ww.days[i]||''):('empty '+(i+1));row.appendChild(d);}c.appendChild(row);let lab=document.getElementById('streakLab');if(lab)lab.textContent='weekStreak '+(ww.streak||0)+' /7 • '+ww.days.length+' dots • '+((ww.days||[]).join(',')||'hub-streak')+(localStorage.getItem('hub-best')?' • best '+localStorage.getItem('hub-best'):'');}
-function upd(){let s=document.getElementById('status');if(!s)return;if(navigator.onLine){s.textContent='status: online — reloading';s.style.background='#E7F6EA';s.style.color='#111'}else{s.textContent='status: offline — dark card #080A0F shell 13k v67';s.style.background='#080A0F';s.style.color='#FAFAF8'}}
+function upd(){let s=document.getElementById('status');if(!s)return;if(navigator.onLine){s.textContent='status: online — reloading';s.style.background='#E7F6EA';s.style.color='#111'}else{s.textContent='status: offline — shell-only, 3 entries cached';s.style.background='#080A0F';s.style.color='#FAFAF8'}}
 setInterval(()=>{upd();renderWW()},2000);upd();renderWW();
 document.getElementById('retry').onclick=()=>{if(navigator.onLine)location.reload();else{let c=document.querySelector('.card');c.animate([{transform:'scale(1)'},{transform:'scale(1.02)'},{transform:'scale(1)'}],{duration:320});document.getElementById('status').textContent='still offline — cached arcade works';}};
 if('serviceWorker' in navigator){try{navigator.serviceWorker.register('/sw.js')}catch(e){}}

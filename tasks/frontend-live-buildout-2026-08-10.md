@@ -1145,3 +1145,68 @@ constraint. Retuning the token to satisfy one pill would restyle everything.
 **The blue is the interesting one.** Neither `#fff` (4.42) nor `#111` (4.28)
 clears 4.5:1 on `#2a78d6`. That pair cannot be fixed by changing the text at all,
 which is why it is the only one where the background moved.
+
+
+## "Everything centered around the embedding map" — never checked until now
+
+That clause is the organising principle of the whole brief and I had treated it
+as background rather than as a requirement. Checked:
+
+**The map renders on 3 of 22 pages** — index, play, players. teams.html has a
+canvas but it draws decorative rings, no map data. The 18 without it include
+`trends.html`, whose entire subject is movement *through* that space, and
+`model.html`, which explains the model that produces it.
+
+Then the worse half. There were **seven distinct nav shapes** across 22 pages, and
+one was a dead end: the nine persona pages — owner, brand, dfs, player-fit, player
+and their `/index.html` twins — linked only to each other and to `/`. **From
+`/owner` you could not reach the map, the game, trends, the model page, teams or
+the dictionary.** `player-animations.html` had `<nav class="site-nav"
+data-active="/player-animations"></nav>` — completely empty, because the module
+meant to fill it is `assets/site-nav.js`, one of the dead 46.
+
+So the brief was failing twice at once: not "world class UX throughout", and not
+"centered around the map" when the map was unreachable from nine pages.
+
+### The canonical set is the site's own, not mine
+
+Six pages already used the same eight destinations — dictionary, model, player,
+players, teams, trends. `scripts/fix_nav.py` brings the minority to that majority
+convention rather than imposing a new one, ordered as the brief orders the phases:
+Map, Play, Trends, Model, Explorer, Players, Teams, Dictionary.
+
+**Additive, never a rewrite.** Each page styles nav links differently — `.pill`,
+`.site-nav__link`, bare `<a>` — so it reads the class the page already uses and
+appends only the missing destinations in that page's own idiom. Replacing nav
+markup wholesale would have restyled nine pages I cannot see. The persona pages
+keep their persona row and gain the rest. 78 links across 12 pages;
+**22 of 22 pages now reach both the map and the game.**
+
+`offline.html` is deliberately excluded: `sw.js` caches exactly
+`['/', '/offline', '/manifest.json']`, so every other destination would be a dead
+link in the one situation that page exists for.
+
+### And offline.html was describing a service worker that no longer exists
+
+It claimed **"CORE13 cached exactly"**, listed thirteen paths, and stamped
+**"PWA v67"** in eight places. Reality is `const C = 'hoops-v7-2'` and three SHELL
+entries.
+
+**That staleness is mine.** sw.js used to list four entries, `cache.addAll()` is
+atomic, and three of the four 404'd or redirected on the live site — so install
+rejected and the worker never registered anywhere. I cut SHELL to the three paths
+the site actually serves and added them individually. I never went back to the one
+page whose entire job is describing that cache. Twelve claims corrected, including
+a "this file 9663" byte count that was 9,965.
+
+The thirteen-item list was aspirational even before my change — it named
+`/leaderboard.html`, `/methods.html` and `/assets/icon-192.png`, which no version
+of SHELL has ever contained.
+
+- [ ] **P9.1 The map is still only on 3 pages.** This pass fixed *reachability*,
+  not *presence*. `trends.html` in particular is about rotation, archetype drift,
+  era twins and career arcs — all spatial, all currently shown as charts with no
+  map beside them, while `assets/embedding_map_trajectories.json` (1,135,755 b) is
+  already fetched by two other pages. Putting a real map there is a feature build,
+  not an audit fix, which is why it is boarded rather than done in the same pass
+  as a nav change.
