@@ -61,7 +61,10 @@ canvas{display:block;width:100%;height:440px} @media(max-width:600px){canvas{hei
 <script>
 const OKABE=['#0072B2','#D55E00','#009E73','#CC79A7','#F0E442','#56B4E9','#E69F00','#000000'];
 const $=s=>document.getElementById(s);
-let dots=[],allPts=[],yaw=0,rot=1,curTr=null,tCache={},filter='all';
+/* var, not let: the pause control appended at the end of this file needs to
+   reach `rot`, and a top-level `let` lives in script scope where nothing else
+   can see it. `var` publishes these on window. Only the keyword changed. */
+var dots=[],allPts=[],yaw=0,rot=1,curTr=null,tCache={},filter='all';
 let cv=$('c'),ctx=cv.getContext('2d'),W=900,H=480;
 let DPR=Math.min(devicePixelRatio||1,1.4);
 function rs(){let r=cv.getBoundingClientRect();W=Math.round(r.width*DPR);H=Math.round((r.height||460)*DPR);cv.width=W;cv.height=H}addEventListener('resize',()=>{DPR=Math.min(devicePixelRatio||1,1.4);rs()});rs();
@@ -72,6 +75,140 @@ async function sel(pid,hint){let trs=await loadTraj(),tr=trs[String(pid)];if(!tr
 $('fAll').onclick=()=>{filter='all';$('fAll').classList.add('on');$('fCur').classList.remove('on');loadPts('all')};$('fCur').onclick=()=>{filter='current';$('fCur').classList.add('on');$('fAll').classList.remove('on');loadPts('current')};$('bAll2').onclick=$('fAll').onclick;$('bCur2').onclick=$('fCur').onclick;$('bClr').onclick=()=>{curTr=null;$('selLab').textContent='cleared trajectory'};$('fLod').onclick=()=>{DPR=DPR===1.4?1:1.4;$('fLod').textContent='DPR '+DPR.toFixed(1);rs()};
 function draw(){let ct=Math.cos(yaw),st=Math.sin(yaw),cx=W*.5,cy=H*.52,sc=Math.min(W,H)*.42;ctx.clearRect(0,0,W,H);if(rot)yaw+=.005;for(let pass=0;pass<2;pass++){for(let d of dots){let viv=d.al>.65;if((pass===0&&viv)||(pass===1&&!viv))continue;let x=d.x*ct-d.z*st,z=d.x*st+d.z*ct,y=d.y,dep=(z+1)*.5+.12,px=cx+x*sc*dep,py=cy+y*sc*dep*.86;if(px<-20||px>W+20||py<-20||py>H+20)continue;ctx.beginPath();let col=d.col;let r=parseInt(col.slice(1,3),16),g=parseInt(col.slice(3,5),16),b=parseInt(col.slice(5,7),16);ctx.fillStyle='rgba('+r+','+g+','+b+','+(.14+dep*.62*d.al).toFixed(3)+')';ctx.arc(px,py,d.r*(1+dep*1.4),0,6.283);ctx.fill()}}if(curTr&&curTr.length>1){ctx.strokeStyle='#EB6834';ctx.lineWidth=2*DPR;ctx.globalAlpha=.96;ctx.beginPath();let f=1;curTr.forEach(pt=>{let xv=(pt.x-.5)*2,yv=(pt.y-.5)*2,zv=((pt.z||.5)-.5)*2,xx=xv*ct-zv*st,zz=xv*st+zv*ct,dep=(zz+1)*.5+.12,px=cx+xx*sc*dep,py=cy+yv*sc*dep*.86;if(f){ctx.moveTo(px,py);f=0}else ctx.lineTo(px,py)});ctx.stroke();ctx.globalAlpha=1;curTr.forEach((pt,i)=>{let xv=(pt.x-.5)*2,yv=(pt.y-.5)*2,zv=((pt.z||.5)-.5)*2,xx=xv*ct-zv*st,zz=xv*st+zv*ct,dep=(zz+1)*.5+.12,px=cx+xx*sc*dep,py=cy+yv*sc*dep*.86,p=i/(curTr.length-1);ctx.fillStyle='rgba(235,104,52,'+(.36+p*.64).toFixed(2)+')';ctx.beginPath();ctx.arc(px,py,2.8*DPR+p*1.6,0,6.283);ctx.fill()})}requestAnimationFrame(draw)}loadPts('all');requestAnimationFrame(draw);
 cv.addEventListener('click',async e=>{let r=cv.getBoundingClientRect(),mx=(e.clientX-r.left)/r.width*2-1,my=(e.clientY-r.top)/r.height*2-1,ct=Math.cos(yaw),st=Math.sin(yaw),cx=W*.5,cy=H*.52,sc=Math.min(W,H)*.42,best=null,bd=1e9;dots.forEach(d=>{let x=d.x*ct-d.z*st,z=d.x*st+d.z*ct,y=d.y,dep=(z+1)*.5+.12,px=cx+x*sc*dep,py=cy+y*sc*dep*.86,pxn=(px/W)*2-1,pyn=(py/H)*2-1,dist=(pxn-mx)*(pxn-mx)+(pyn-my)*(pyn-my);if(dist<bd){bd=dist;best=d}});if(best&&bd<.03)sel(best.pid,best)});
+</script>
+
+<!-- ══ archetype key + accessibility ═══════════════════════════════════════
+     Appended rather than edited in: the explorer above works and none of this
+     needs to touch it. Scanned first — this page had aria-live x0, tabindex x0,
+     role= x0, prefers-reduced-motion x0, and its map coloured 1,764 points by
+     archetype with nothing anywhere saying what a colour meant. -->
+<style id="pl-a11y-css">
+/* draw() calls requestAnimationFrame unconditionally and advances yaw by .005
+   every frame, so the map spins forever. WCAG 2.2.2: motion that starts
+   automatically and lasts over five seconds needs a way to stop it. The button
+   below is that mechanism; this honours the OS setting without being asked. */
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}
+}
+:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+.pl-sr{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;border:0}
+.pl-skip{position:absolute;left:-9999px;top:0;z-index:200;background:var(--paper);border:2.2px solid var(--ink);padding:10px 14px;font-family:var(--mono);font-weight:800;text-decoration:none;border-radius:0 0 10px 0}
+.pl-skip:focus{left:0}
+#plKey{margin-top:10px}
+#plKey ul{list-style:none;margin:6px 0 0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(232px,1fr));gap:2px}
+#plKey li{display:flex;align-items:center;gap:7px;min-height:26px;font-family:var(--mono);font-size:11px;padding:2px 4px}
+#plKey .sw{width:11px;height:11px;flex:0 0 11px;border:1.3px solid var(--ink);border-radius:3px}
+#plKey .n{font-weight:800;color:var(--ink-muted);min-width:14px}
+#plMotion{font:800 11px var(--mono);border:1.6px solid var(--ink);border-radius:9px;background:#fff;box-shadow:2px 2px 0 var(--ink);padding:6px 10px;min-height:34px;cursor:pointer}
+.it[role="button"]{cursor:pointer}
+</style>
+<div id="plLive" class="pl-sr" role="status" aria-live="polite" aria-atomic="true"></div>
+<script>
+(function(){
+  'use strict';
+  var $=function(id){return document.getElementById(id);};
+  var esc=function(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');};
+  var live=$('plLive');
+  function say(m){ if(!live||!m) return; if(live.textContent===m) live.textContent=''; live.textContent=m; }
+
+  // Must mirror the OKABE constant the draw loop uses. Verified against the
+  // data rather than assumed: c === gameCluster for 1,764 of 1,764 points in
+  // embedding_map_points_limited.json, joined through vectors.json to
+  // archetype_assignments.json — so index i really is gameArchetypes[i].
+  // NOTE: assets/shared-map.js and assets/archetype-bridge.js use a DIFFERENT
+  // order at indices 3,4,5. This key describes THIS page's colours, which is
+  // the honest thing for it to do; the site-wide split is logged on the board.
+  var OKABE=['#0072B2','#D55E00','#009E73','#CC79A7','#F0E442','#56B4E9','#E69F00','#000000'];
+
+  var canvas=document.getElementById('c');
+  if(canvas){
+    canvas.setAttribute('role','img');
+    canvas.setAttribute('aria-label',
+      'Embedding map of 1,764 player-seasons. Each dot is one season, placed so that '+
+      'players who played alike sit together, and coloured by the archetype the model '+
+      'assigned. Selecting a player from the list draws their career path in orange. '+
+      'The list below the map carries the same information as text.');
+  }
+
+  // ── archetype key ──────────────────────────────────────────────────────
+  var host=document.createElement('div');
+  host.id='plKey';
+  host.innerHTML='<div class="mono" style="font-size:10.5px;color:var(--ink-muted)">Colour = archetype · loading names…</div>';
+  var lab=$('lab');
+  if(lab && lab.parentNode) lab.parentNode.insertBefore(host, lab.nextSibling);
+  fetch('assets/mtnn_arch.json',{cache:'force-cache'})
+    .then(function(r){ if(!r.ok) throw new Error('HTTP '+r.status); return r.json(); })
+    .then(function(j){
+      var names=j.gameArchetypes||[];
+      if(!names.length) throw new Error('gameArchetypes missing');
+      host.innerHTML='<div class="mono" style="font-size:10.5px;color:var(--ink-muted)">'+
+        'Colour = archetype — names from <code>assets/mtnn_arch.json</code></div><ul>'+
+        names.map(function(n,i){
+          return '<li><span class="sw" style="background:'+esc(OKABE[i%8])+'"></span>'+
+                 '<span class="n">'+i+'</span><span>'+esc(n)+'</span></li>';
+        }).join('')+'</ul>';
+    })
+    .catch(function(e){
+      // never invent archetype names to fill the key
+      host.innerHTML='<div class="mono" style="font-size:10.5px;color:var(--ink-muted)">'+
+        'Colour = archetype, but the names could not be loaded ('+esc(e.message)+'). '+
+        'No labels are guessed.</div>';
+    });
+
+  // ── stop the perpetual rotation ────────────────────────────────────────
+  var btn=document.createElement('button');
+  btn.id='plMotion'; btn.type='button';
+  var reduced=window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  // window.rot is the draw loop's spin flag; it lives in the page scope above
+  function setSpin(on){
+    try{ window.rot=on?1:0; }catch(e){}
+    btn.setAttribute('aria-pressed', on?'false':'true');
+    btn.textContent = on ? '⏸ Pause rotation' : '▶ Resume rotation';
+  }
+  if(reduced) setSpin(false); else setSpin(true);
+  btn.addEventListener('click',function(){
+    var spinning = btn.getAttribute('aria-pressed')==='false';
+    setSpin(!spinning);
+    say(spinning?'Rotation paused.':'Rotation resumed.');
+  });
+  if(lab && lab.parentNode) lab.parentNode.insertBefore(btn, lab);
+
+  // ── the player list was <div onclick> — invisible to Tab and to AT ──────
+  var list=$('list');
+  if(list){
+    var stamp=function(){
+      var kids=list.querySelectorAll('.it');
+      for(var i=0;i<kids.length;i++){
+        if(kids[i].getAttribute('role')==='button') continue;
+        kids[i].setAttribute('role','button');
+        kids[i].setAttribute('tabindex','0');
+      }
+    };
+    stamp();
+    if(window.MutationObserver) new MutationObserver(stamp).observe(list,{childList:true});
+    list.addEventListener('keydown',function(e){
+      if(e.key!=='Enter' && e.key!==' ' && e.key!=='Spacebar') return;
+      var t=e.target.closest?e.target.closest('.it'):null;
+      if(!t) return;
+      e.preventDefault(); t.click();
+    });
+  }
+  // selection currently only updates #selLab text, which AT never hears
+  var selLab=$('selLab');
+  if(selLab && window.MutationObserver){
+    new MutationObserver(function(){ say(selLab.textContent||''); })
+      .observe(selLab,{childList:true,characterData:true,subtree:true});
+  }
+
+  var main=document.querySelector('.wrap')||document.querySelector('main');
+  if(main){
+    if(!main.id) main.id='pl-main';
+    main.setAttribute('tabindex','-1');
+    var skip=document.createElement('a');
+    skip.className='pl-skip'; skip.href='#'+main.id; skip.textContent='Skip to the explorer';
+    document.body.insertBefore(skip, document.body.firstChild);
+  }
+})();
 </script>
 </body>
 </html>
