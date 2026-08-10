@@ -25,7 +25,9 @@
 .hero-band{width:100%;background:linear-gradient(180deg,var(--surface),var(--paper));border-bottom:2px solid var(--ink);position:relative;overflow:hidden}
 .hero-band::before{content:"";position:absolute;inset:0;background-image:radial-gradient(circle at 18% 28%,rgba(235,104,52,.08),transparent 45%),repeating-linear-gradient(-12deg,transparent,transparent 28px,rgba(17,17,17,.02) 28px,rgba(17,17,17,.02) 29px);pointer-events:none}
 .hero{position:relative;z-index:1;display:flex;flex-wrap:wrap;gap:18px;align-items:center;padding:22px clamp(12px,3vw,22px);max-width:1120px;margin:0 auto}
-.roster{display:flex;gap:10px;flex-wrap:nowrap}
+/* nowrap put eight 64px tiles on one line: 8*64 + 7*10 = 582px, which is why
+   /teams scrolled sideways at 360. Measured over CDP, not guessed. */
+.roster{display:flex;gap:10px;flex-wrap:wrap}
 .tile{width:64px;height:64px;background:#fff;border:2px solid var(--ink);border-radius:10px;box-shadow:3px 3px 0 var(--ink);display:grid;place-items:center}
 .tile svg{width:62%;height:62%}
 .t-o{box-shadow:4px 4px 0 var(--orange)} .t-b{box-shadow:4px 4px 0 var(--blue)} .t-p{box-shadow:4px 4px 0 var(--purple)} .t-g{box-shadow:4px 4px 0 var(--green)} .t-c{box-shadow:4px 4px 0 var(--ink);background:repeating-linear-gradient(135deg,#fff,#fff 6px,#f0ebe2 6px,#f0ebe2 8px)}
@@ -34,7 +36,11 @@
 .card{background:var(--surface);border:2px solid var(--ink);border-radius:12px;box-shadow:var(--shadow);overflow:hidden}
 .mono{font-family:var(--mono);font-size:11px}
 .sg{font-family:var(--hand);font-size:14px;color:#6B6862}
-.grid{display:grid;grid-template-columns:1.15fr .85fr;gap:12px;margin-top:12px} @media(max-width:900px){.grid{grid-template-columns:1fr}}
+.grid{display:grid;grid-template-columns:1.15fr .85fr;gap:12px;margin-top:12px}/* a grid item defaults to min-width:auto and will not shrink below its widest
+   content, so a .card of long mono formulas held the page at 567px however narrow
+   the viewport got - the media query collapsed the columns but not the item.
+   Measured over CDP at 360px: div.card w=567 minw=auto inside div.grid w=336. */
+.grid>*{min-width:0} @media(max-width:900px){.grid{grid-template-columns:1fr}}
 table{width:100%;border-collapse:collapse;font-size:12.4px}
 th{font:900 11px var(--mono);text-transform:uppercase;letter-spacing:.06em;color:#57534E;background:#FFF8CC;cursor:pointer;position:sticky;top:0;padding:8px;border-bottom:1.8px solid var(--ink);white-space:nowrap}
 th:hover{background:var(--yellow)} td{padding:7px 8px;border-bottom:1px solid #EEE8DA;white-space:nowrap} td.num{text-align:right;font-family:var(--mono);font-variant-numeric:tabular-nums}

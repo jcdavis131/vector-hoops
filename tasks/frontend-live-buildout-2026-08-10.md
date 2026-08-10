@@ -1618,7 +1618,47 @@ DOM has them at 100%, 84.4%, 52% and 42.2%, correctly scaled to the maximum. An
 11px blue fill is just hard to read in a downscaled image. Checked before
 "fixing".
 
-- [ ] **P9.6 Widths below 497px are untested.** Headless `--window-size` clamps
+- [x] **P9.6 DONE.** Written, and it found three real bugs. Original note: Headless `--window-size` clamps
   there; a true phone viewport needs `Emulation.setDeviceMetricsOverride` over the
   DevTools protocol, which means a CDP client. Everything narrower than 497 is
   covered only by the static checks.
+
+
+## Three pages did not fit on a phone (2026-08-10)
+
+P9.6 said a true phone viewport needed `Emulation.setDeviceMetricsOverride` over
+the DevTools protocol, which meant a WebSocket client, which Python's standard
+library does not have. That was the whole blocker, and it was worth eighty lines:
+`scripts/check_viewport.py` carries a minimal WebSocket implementation —
+handshake, masked client frames, frame decoder — so the repo keeps its zero-deps
+doctrine and still gets real device emulation.
+
+**Measured at 320, 360 and 390px, three pages overflowed sideways:**
+
+    /teams.html   scrollWidth 579 vs 360   +219px, and constant at every width
+    /model.html   scrollWidth 450 vs 360   +90px
+    /play.html    scrollWidth 392 vs 360   +32px
+
+None of this was findable statically. `check_responsive.py` reads declared widths
+and wrappers; every one of these came from computed layout.
+
+### Two of the three were the same trap
+
+`div.card w=567 minw=auto` inside `div.grid w=336`. **A grid item defaults to
+`min-width:auto` and will not shrink below its widest content.** teams.html's
+media query collapsed `.grid` to one column and the item still held 567px, which
+is why the number never moved as the viewport narrowed. model.html had it too, in
+`.grid2`, where a long `assets/…` path inside a `<code>` set the floor.
+
+`.grid>*{min-width:0}` and `.grid2>*{min-width:0}` fix both. play.html was
+simpler: `.brand` is a flex row of pills with no `flex-wrap`.
+
+The browser named all of it — I asked it for the widest uncontained element and
+its ancestor chain with computed `min-width`, `overflow-x` and `display`, rather
+than reading CSS and guessing. Two rounds of that: the first pointed at
+`#foTable` at 760px, which turned out to be correctly contained inside
+`#foWrap{overflow-x:auto}` with `.card{overflow-x:hidden}` above it. The probe
+now skips anything inside a scrollable ancestor, because the page-level question
+is `scrollWidth` against `clientWidth` and nothing else.
+
+**All seven pages now fit at 320, 360 and 390 with nothing past the edge.**
