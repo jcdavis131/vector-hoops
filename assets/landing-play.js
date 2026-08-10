@@ -16,7 +16,7 @@
   var playersLower = [];
 
   function fetchPlayers(){
-    return fetch('assets/players_lite.json',{cache:'force-cache'}).then(function(r){return r.json();}).then(function(j){
+    return fetch('assets/players_lite.json?v=9312b99c',{cache:'force-cache'}).then(function(r){return r.json();}).then(function(j){
       players = (j.players||[]).map(function(p){return p.name;});
       playersLower = players.map(function(n){return n.toLowerCase();});
       return players;

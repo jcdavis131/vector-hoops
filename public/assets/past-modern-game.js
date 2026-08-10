@@ -57,11 +57,11 @@
     _liteP=(async ()=>{
       const idx=await fetchJSON('assets/scoring_lite_index.json?v=56');
       // freshness canary: warn (never block) if the lite core lags the full export
-      fetch('assets/mtnn_meta.json').then(r=>r.ok?r.json():null).then(m=>{
+      fetch('assets/mtnn_meta.json?v=37335d35').then(r=>r.ok?r.json():null).then(m=>{
         if(m&&m.built&&idx.built&&m.built!==idx.built)
           console.warn('scoring_lite stale: built '+idx.built+' vs mtnn '+m.built+' — rerun pipeline/build_scoring_lite.py');
       }).catch(()=>{});
-      const r=await fetch('assets/scoring_lite.f32?v=56',{cache:'force-cache'});
+      const r=await fetch('assets/scoring_lite.f32?v=ce28462d',{cache:'force-cache'});
       if(!r.ok) throw new Error('scoring_lite f32 '+r.status);
       const E=new Float32Array(await r.arrayBuffer());
       if(E.length!==idx.rows*idx.dim) throw new Error('scoring_lite length mismatch');

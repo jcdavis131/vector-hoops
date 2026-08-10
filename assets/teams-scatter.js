@@ -7,7 +7,7 @@
  async function loadFO(){
   try{
    let r=await fetch('./assets/data/front_office.json',{cache:'no-store'});
-   if(!r.ok) r=await fetch('/assets/data/front_office.json',{cache:'no-store'});
+   if(!r.ok) r=await fetch('/assets/data/front_office.json?v=fa0a3241',{cache:'no-store'});
    let fo=await r.json();
    window.FO = window.FO||fo;
    drawScatter(fo);

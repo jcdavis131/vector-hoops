@@ -66,6 +66,17 @@ def pages() -> list[Path]:
     return sorted(found)
 
 
+def modules() -> list[Path]:
+    """assets/**/*.js — they fetch JSON too, and nothing was stamping those.
+
+    Order matters and is why this is a separate list: a module's own ?v= token in
+    the HTML is the hash of the module file, so rewriting a fetch inside the
+    module changes that hash. Stamping modules first and pages second reaches the
+    fixed point in one pass. Stamped before the HTML pass in main().
+    """
+    return sorted(ROOT.glob("assets/**/*.js"))
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--check", action="store_true", help="report stale tokens, write nothing")
@@ -76,8 +87,11 @@ def main() -> int:
     written = 0
     missing: list[str] = []
 
-    for page in pages():
+    # modules first: their content feeds the hash the pages will stamp on them
+    for page in modules() + pages():
         text = page.read_text(encoding="utf-8")
+        # a .js file has no <script src>; only its fetch() calls are in scope
+        patterns = (RE_FETCH,) if page.suffix == ".js" else PATTERNS
 
         def sub(m: re.Match) -> str:
             raw = m.group(2)          # as written on the page, may be root-absolute
@@ -93,7 +107,7 @@ def main() -> int:
             return f"{m.group(1)}{raw}?v={cache[rel]}{m.group(3)}"
 
         new = text
-        for pattern in PATTERNS:
+        for pattern in patterns:
             new = pattern.sub(sub, new)
         if new != text:
             rel_page = page.relative_to(ROOT).as_posix()
@@ -113,10 +127,13 @@ def main() -> int:
                 print(f"  - {p}")
             print("  run: python scripts/stamp_assets.py")
             return 1
-        print(f"OK   asset tokens current — {len(cache)} distinct asset(s) across {len(pages())} page(s)")
+        print(
+            f"OK   asset tokens current — {len(cache)} distinct asset(s) across "
+            f"{len(pages())} page(s) and {len(modules())} module(s)"
+        )
         return 0
 
-    print(f"stamped {written} page(s) — {len(cache)} distinct asset(s)")
+    print(f"stamped {written} file(s) — {len(cache)} distinct asset(s)")
     return 0
 
 

@@ -21,7 +21,7 @@
 
   function loadPlayers(){
     if(players) return Promise.resolve(players);
-    return fetch('/assets/players_lite.json',{cache:'force-cache'}).then(function(r){return r.json();}).then(function(j){
+    return fetch('/assets/players_lite.json?v=9312b99c',{cache:'force-cache'}).then(function(r){return r.json();}).then(function(j){
       players=j.players||[]; return players;
     }).catch(function(){ return []; });
   }

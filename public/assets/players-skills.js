@@ -750,8 +750,8 @@
     if (!document.getElementById('skills-search')) return;
     initDom();
     Promise.all([
-      fetch('assets/vectors.json').then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); }),
-      fetch('assets/skills.json').then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+      fetch('assets/vectors.json?v=14872103').then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); }),
+      fetch('assets/skills.json?v=7ed3c9b1').then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
     ]).then(function (loaded) {
       DATA = loaded[0]; SKILLS = loaded[1];
       if (SKILLS.grades.length !== DATA.players.length) throw new Error('skills/vectors misaligned');
@@ -766,16 +766,16 @@
         // show empty state with featured
         if (els.ppEmptyWrap) els.ppEmptyWrap.hidden = false;
       }
-      fetch('assets/playoffs.json').then(function(r){return r.ok?r.json():null;}).then(function(po){
+      fetch('assets/playoffs.json?v=80a4c74d').then(function(r){return r.ok?r.json():null;}).then(function(po){
         PLAYOFFS=po||false; if (PLAYOFFS && current.slug) renderProfile(); DRAFT={}; renderBoard();
       }).catch(function(){PLAYOFFS=false; DRAFT={}; renderBoard();});
-      fetch('assets/playoff_paths.json').then(function(r){return r.ok?r.json():null;}).then(function(pp){ PLAYOFF_PATHS=pp||false; if (PLAYOFF_PATHS && current.slug) renderProfile(); }).catch(function(){PLAYOFF_PATHS=false;});
-      fetch('assets/honors.json').then(function(r){return r.ok?r.json():null;}).then(function(ho){ HONORS=ho||false; if (HONORS && current.slug) renderProfile(); }).catch(function(){HONORS=false;});
-      fetch('assets/pedigree.json').then(function(r){return r.ok?r.json():null;}).then(function(ped){ PEDIGREE=ped||false; if (PEDIGREE) addDraftBoardModes(); }).catch(function(){PEDIGREE=false;});
-      fetch('assets/skills_wide.json').then(function(r){return r.ok?r.json():null;}).then(function(w){ WIDE=w||false; if (WIDE) { addWideBoardModes(); if (current.slug) renderProfile(); } }).catch(function(){WIDE=false;});
-      fetch('assets/archetype_assignments.json').then(function(r){return r.ok?r.json():null;}).then(function(aa){ ARCH_ASSIGN=aa||false; if (ARCH_ASSIGN && current.slug) renderProfile(); }).catch(function(){ARCH_ASSIGN=false;});
-      fetch('assets/season_norms.json').then(function(r){return r.ok?r.json():null;}).then(function(sn){ SEASON_NORMS=sn||null; if (SEASON_NORMS && current.slug) renderProfile(); }).catch(function(){SEASON_NORMS=null;});
-      fetch('assets/next_profile_eval.json').then(function(r){return r.ok?r.json():null;}).then(function(ne){ NEXT_EVAL=ne||false; if (NEXT_EVAL && current.slug) renderProfile(); }).catch(function(){NEXT_EVAL=false;});
+      fetch('assets/playoff_paths.json?v=42858f12').then(function(r){return r.ok?r.json():null;}).then(function(pp){ PLAYOFF_PATHS=pp||false; if (PLAYOFF_PATHS && current.slug) renderProfile(); }).catch(function(){PLAYOFF_PATHS=false;});
+      fetch('assets/honors.json?v=140c08f4').then(function(r){return r.ok?r.json():null;}).then(function(ho){ HONORS=ho||false; if (HONORS && current.slug) renderProfile(); }).catch(function(){HONORS=false;});
+      fetch('assets/pedigree.json?v=48965aa7').then(function(r){return r.ok?r.json():null;}).then(function(ped){ PEDIGREE=ped||false; if (PEDIGREE) addDraftBoardModes(); }).catch(function(){PEDIGREE=false;});
+      fetch('assets/skills_wide.json?v=a0114aae').then(function(r){return r.ok?r.json():null;}).then(function(w){ WIDE=w||false; if (WIDE) { addWideBoardModes(); if (current.slug) renderProfile(); } }).catch(function(){WIDE=false;});
+      fetch('assets/archetype_assignments.json?v=f15ed392').then(function(r){return r.ok?r.json():null;}).then(function(aa){ ARCH_ASSIGN=aa||false; if (ARCH_ASSIGN && current.slug) renderProfile(); }).catch(function(){ARCH_ASSIGN=false;});
+      fetch('assets/season_norms.json?v=b2910fba').then(function(r){return r.ok?r.json():null;}).then(function(sn){ SEASON_NORMS=sn||null; if (SEASON_NORMS && current.slug) renderProfile(); }).catch(function(){SEASON_NORMS=null;});
+      fetch('assets/next_profile_eval.json?v=e0161948').then(function(r){return r.ok?r.json():null;}).then(function(ne){ NEXT_EVAL=ne||false; if (NEXT_EVAL && current.slug) renderProfile(); }).catch(function(){NEXT_EVAL=false;});
       if (window.VHMtnn && window.VHMtnn.load) { window.VHMtnn.load(function (ok) { MTNN_READY = !!ok; if (MTNN_READY && current.slug) renderProfile(); }); } else { MTNN_READY=false; }
     }).catch(function (err) {
       if (els.empty) els.empty.textContent = 'Could not load the skills data (' + err.message + ').';

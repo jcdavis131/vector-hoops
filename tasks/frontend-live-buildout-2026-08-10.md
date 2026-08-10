@@ -854,7 +854,7 @@ every one from committed data. Nothing typed in, nothing inferred.
 "Fred VanVleet" verified untouched as a control. If the map fails to load the
 names render as stored — wrong, but never invented.
 
-- [ ] **P8.1 Three pages still render glued names**, with the lookup now built and
+- [x] **P8.1 DONE — and it was mine, not yours.** I filed it as an open item while calling the board "operator-only", which was wrong: it was my own deferred work. `assets/name-fix.js` now ships on all three. Original note:, with the lookup now built and
   proven: `index.html` (30 of 30, `vectors.json`), `play.html` (27,
   `embedding_map_manifest.json`), `players.html` (27,
   `embedding_map_points_limited.json`). The recipe is the six lines in
@@ -865,3 +865,44 @@ names render as stored — wrong, but never invented.
   normalisation bug in whatever writes `vectors.json`. Fixing it at source would
   make `name_fixes.json` unnecessary and correct all seventeen assets at once. I
   cannot run the pipeline, so it stays here.
+
+
+## Finishing the hyphens, and the cache trap that came with it
+
+Shipping the repair on one page of four was half a fix, and P8.1 was my own
+deferred work filed as though it were a decision for someone else.
+
+`assets/name-fix.js` now loads on `index.html`, `play.html` and `players.html`.
+`trends.html` is deliberately not on the list — it repairs the names at the data
+layer when it loads `eratwins.json`, which is strictly better than a text pass.
+
+A text pass rather than surgery at each render site, because those three pages
+build names from three different asset shapes across many render points in
+minified inline script. Verified safe before shipping: **none of the thirty glued
+spellings appears in any page's static markup**, so it only ever rewrites text
+that came from data. The two occurrences anywhere near a page are inside my own
+explanatory comment in `trends.html`, which a text-node walk never visits.
+
+It terminates by construction — the replacement removes the glued spelling, so a
+second pass matches nothing and queues no further mutation. That is exactly the
+trap `keyboard-a11y.js` documents, where an observer wrote attributes
+unconditionally and re-queued itself forever, and `scripts/smoke_name_fix.mjs`
+asserts it: fifteen checks, built from the shipped regex rather than a restatement
+of it, including all seven correct-as-written controls (VanVleet, McKie, DeRozan,
+LeVert, LaVine, LeBron, DiVincenzo) and an explicit idempotence case.
+
+### The module re-opened a gap I had deferred, so I closed it
+
+`stamp_assets.py` only ever walked HTML. A live module with `fetch('assets/…')`
+inside it therefore had an unversioned URL on a file served
+`max-age=31536000, immutable` — a fresh instance of the exact trap the script
+exists to prevent, created by my own change. It now stamps `assets/**/*.js`
+too, **before** the pages, because a module's `?v=` token in the HTML is the hash
+of the module file: rewrite a fetch inside it and that hash moves. Modules first,
+pages second, and the fixed point lands in one pass — verified by running it twice
+and getting `stamped 0 file(s)`, then `--check` clean.
+
+That also retires the note that said stamping inside JS was only worth building
+if P6.1 revived the dead modules. It was worth building the moment one live
+module fetched anything. 43 distinct assets now tracked across 22 pages and 50
+modules.

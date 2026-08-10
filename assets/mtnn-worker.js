@@ -12,7 +12,7 @@ function loadF32(url) {
 async function ensure() {
   if (self._cache) return self._cache;
   const [metaJson, E] = await Promise.all([
-    fetch('assets/mtnn_meta.json').then(r=>r.json()).catch(()=>({dim:48, rows:12966})),
+    fetch('assets/mtnn_meta.json?v=37335d35').then(r=>r.json()).catch(()=>({dim:48, rows:12966})),
     loadF32('assets/mtnn_embeddings.f32')
   ]);
   var dim = metaJson.dim || 48;

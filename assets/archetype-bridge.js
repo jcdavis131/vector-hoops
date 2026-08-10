@@ -27,7 +27,7 @@
 
   async function loadHeadDist(idx){
     try{
-      const resp=await fetch('assets/mtnn_heads.f32',{cache:'force-cache'});
+      const resp=await fetch('assets/mtnn_heads.f32?v=9b3f7454',{cache:'force-cache'});
       if(!resp.ok) return null;
       const buf=await resp.arrayBuffer();
       const arr=new Float32Array(buf);
