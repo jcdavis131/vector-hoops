@@ -62,6 +62,14 @@ input[type=search]{width:100%;max-width:460px;padding:11px 13px;border:2px solid
 .vh-sr{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;border:0}
 .vh-skip{position:absolute;left:-9999px;top:0;z-index:99;background:var(--paper);border:2.2px solid var(--ink);padding:10px 14px;font-family:var(--mono);font-weight:800;text-decoration:none;border-radius:0 0 10px 0}
 .vh-skip:focus{left:0}
+/* The browse row. min-height is declared rather than left to padding so the
+   target-size check can settle it instead of estimating: 28px clears the 24px
+   WCAG 2.5.8 minimum with room to spare. */
+.hubrow{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.hubrow button{border:1.6px solid var(--ink);border-radius:999px;background:#fff;
+  padding:5px 11px;font-family:var(--mono);font-size:11px;font-weight:800;
+  cursor:pointer;min-height:28px;box-shadow:2px 2px 0 var(--ink)}
+.hubrow button:hover{background:var(--paper,#fafaf8)}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.001ms!important;transition-duration:.001ms!important}}
 </style></head><body>
 <a class="vh-skip" href="#main">Skip to the search</a>
@@ -84,6 +92,13 @@ input[type=search]{width:100%;max-width:460px;padding:11px 13px;border:2px solid
              aria-describedby="qhelp" aria-controls="hits" style="margin-top:5px">
       <div class="mono dim" id="qhelp" style="margin-top:5px">Arrow keys move through results · Enter opens</div>
       <ul class="hits" id="hits" role="listbox" aria-label="Matching players"></ul>
+<!-- build_player_hubs.py: start -->
+<div style="margin-top:16px;border-top:2px solid var(--hair,#e1e0d9);padding-top:4px">
+<p class="sub dim" style="margin:8px 0 0">Or start from a shape rather than a name — every charted player belongs to at least one of these.</p>
+<div class="mono dim" style="margin-top:12px">By archetype</div><div class="hubrow" role="group" aria-label="Browse players by archetype"><button type="button" class="hub" data-path="archetypes/defensive-glass-rim-pressure-fts">Defensive Glass + Rim Pressure (Fts)</button><button type="button" class="hub" data-path="archetypes/offensive-glass-defensive-glass">Offensive Glass + Defensive Glass</button><button type="button" class="hub" data-path="archetypes/offensive-glass-low-on-court-impact">Offensive Glass (Low On-Court Impact)</button><button type="button" class="hub" data-path="archetypes/playmaking-steals">Playmaking + Steals</button><button type="button" class="hub" data-path="archetypes/rim-protection-offensive-glass">Rim Protection + Offensive Glass</button><button type="button" class="hub" data-path="archetypes/scoring-volume-shot-volume">Scoring Volume + Shot Volume</button><button type="button" class="hub" data-path="archetypes/three-point-accuracy-low-turnovers">Three-Point Accuracy (Low Turnovers)</button><button type="button" class="hub" data-path="archetypes/three-point-volume-three-point-accuracy">Three-Point Volume + Three-Point Accuracy</button></div>
+<div class="mono dim" style="margin-top:12px">By position</div><div class="hubrow" role="group" aria-label="Browse players by position"><button type="button" class="hub" data-path="positions/c">Center</button><button type="button" class="hub" data-path="positions/pf">Power forward</button><button type="button" class="hub" data-path="positions/pg">Point guard</button><button type="button" class="hub" data-path="positions/sf">Small forward</button><button type="button" class="hub" data-path="positions/sg">Shooting guard</button></div>
+</div>
+<!-- build_player_hubs.py: end -->
     </div>
   </div>
 
@@ -277,6 +292,12 @@ $('q').addEventListener('keydown',function(e){
   } else if(e.key==='Enter' && btns.length){
     e.preventDefault(); open(btns[Math.max(0,cursor)].dataset.slug,true);
   }
+});
+/* The browse row opens a hub card through the same path the search results use,
+   so an archetype page behaves exactly like a player page once it is open. */
+document.addEventListener('click',function(e){
+  var b=e.target.closest?e.target.closest('.hubrow button'):null;
+  if(b&&b.dataset.path) open(b.dataset.path,true);
 });
 $('hits').addEventListener('click',function(e){
   var b=e.target.closest?e.target.closest('button'):null; if(b) open(b.dataset.slug,true);

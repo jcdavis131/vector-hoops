@@ -2496,3 +2496,54 @@ fetch `/assets/front_office.json` — the subset — directly. Consolidating the
 onto the superset saves 1,127,784 B of deploy bundle but adds **33,154 B to every
 visitor** on those pages, because the superset carries `valuation_history` they
 do not use. That is a trade, not a cleanup, and it should not be filed as one.
+
+
+## /player.html was a search box and nothing else (2026-08-10)
+
+Phase 4 of the brief is player cards, and I had not looked at the page. It is
+**466 pixels tall** — for comparison trends.html is about 9,000 — and the whole
+thing is one input:
+
+    Every charted player has a page
+    2,293 of them … Until now nothing on this site linked them.
+    [ Find a player: Wembanyama, Jordan, Nash… ]
+
+`search()` returns nothing until the query reaches two characters, so **you could
+only find a player you had already thought of**. 2,293 cards, no way in. The
+page's own sentence about nothing linking them was still true of the page saying
+it.
+
+It needed no new data. `knowledge/` already carries thirteen hub pages —
+**8 archetype hubs and 5 position hubs** — `open('archetypes/playmaking-steals')`
+already worked, and the page's own error message even names them. Nothing linked
+to them either.
+
+`scripts/build_player_hubs.py` writes the row from those files. The labels are
+read out of each hub's frontmatter rather than typed into the markup, because a
+hand-copied label goes stale the moment a hub is renamed and the page would then
+be lying about what it links to — the same reason `build_wiki_index.py` exists.
+
+**Static markup, not JS, and that is the point.** The row costs nothing on load
+and needs no index, so the 539 KB `wiki_index.json` stays deferred until someone
+actually searches. A blank page that could have shown thirteen doors did not
+justify making every visitor download half a megabyte to see them.
+
+Verified by clicking, not by reading:
+
+    hub buttons in the page: 13
+      first archetype   shown=True chars=1950 loading=False errs=[]
+                        'Archetype: Defensive Glass + Rim Pressure (Fts)…'
+      first position    shown=True chars=1857 loading=False errs=[]
+                        'Position: C — Center…'
+
+`min-height:28px` is declared on the buttons rather than left to padding, so the
+target-size check can settle WCAG 2.5.8 instead of estimating it.
+
+### What is still thin here
+
+The row is thirteen doors, not a directory. A player whose archetype you cannot
+guess is still only reachable by typing their name, and there is no A–Z. The data
+supports one — every record carries `positions`, `archetypes`, `span` and a
+12-value skill vector — but 2,293 links is a real weight decision, and the useful
+version of it is probably paged or letter-at-a-time rather than all at once.
+Recorded rather than guessed at.
