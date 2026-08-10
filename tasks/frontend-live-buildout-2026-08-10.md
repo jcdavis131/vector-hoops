@@ -1699,3 +1699,48 @@ edge.**
 
 Worth noting for whoever runs this next: eighteen pages across three widths takes
 longer than two minutes, so run it one width at a time.
+
+
+## Sixteen pages had no way past the navigation (2026-08-10)
+
+`check_a11y.py` printed "focus order still needs a browser and a person" on every
+run. Half of that was true. The mechanical half was not, and going to check it
+found something bigger first.
+
+**Six of twenty-two pages had a working skip link.** WCAG 2.4.1 Bypass Blocks,
+Level A. On the other sixteen a keyboard user tabs through the entire navigation —
+twelve links on the persona pages, after `fix_nav.py` added seven to make the map
+reachable — before reaching any content, on every page, every time. I made that
+nav longer and never asked what it cost someone tabbing.
+
+**play.html was worse than missing:** it carried skip-link text pointing at
+`#main` while its `<main>` had no id at all. The link went nowhere.
+
+`scripts/fix_skip_link.py` copies the pattern the six working pages already use
+rather than inventing one, and the part that is easy to leave out is
+`tabindex="-1"` on the target: without it the anchor scrolls but focus stays put,
+so the next Tab goes back into the navigation and the link has achieved nothing.
+Where a page already used `id="main"` on something else — index.html has
+`<div class="grid" id="main">` — that element is made focusable rather than having
+the id moved out from under whatever points at it. **22 of 22 now.**
+
+### And then the focus test itself
+
+`scripts/check_focus.py` presses Tab through a real browser and asks what has
+focus after each press: the first stop is the skip link, activating it moves focus
+into `main`, focus never jumps backwards, never fails to move, and every stop
+computes a real outline or shadow.
+
+Seven pages, all clean — and it confirms the fix rather than assuming it:
+**activating the skip link on /teams.html lands focus on `main`.**
+
+It was wrong first, of course. It called every page a focus trap, because it used
+the CSS class as element identity and a nav is a row of twelve consecutive
+`.pill` links. Identity is the element's document position now. That is the fourth
+checker this session whose first run was a false alarm, which is starting to look
+less like bad luck and more like the cost of writing a check and a fix in the same
+breath.
+
+The caveat `check_a11y.py` prints is narrower now, and honest: contrast, focus
+order, skip links and phone widths all have a tool. Whether the reading order
+*makes sense* still needs a person.

@@ -18,7 +18,10 @@
   --okabe-blue:#0072B2; --okabe-verm:#D55E00; --okabe-yellow:#F0E442; --okabe-sky:#56B4E9;
 }
 html,body{margin:0; background:var(--paper); color:var(--ink); font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif; overflow-x:hidden;overflow-wrap:break-word}
-.topbar{position:sticky; top:0; z-index:20; background:var(--paper); border-bottom:2px solid var(--ink); display:flex; align-items:center; justify-content:space-between; padding:10px 14px; padding-top:calc(10px + env(safe-area-inset-bottom))</style>
+.topbar{position:sticky; top:0; z-index:20; background:var(--paper); border-bottom:2px solid var(--ink); display:flex; align-items:center; justify-content:space-between; padding:10px 14px; padding-top:calc(10px + env(safe-area-inset-bottom))
+.vh-skip{position:absolute;left:-9999px;top:0;z-index:99;background:var(--paper,#fafaf8);border:2.2px solid var(--ink,#111);padding:10px 14px;font-family:ui-monospace,Menlo,monospace;font-weight:800;text-decoration:none;border-radius:0 0 10px 0}
+.vh-skip:focus{left:0}
+</style>
 <script src="https://unpkg.com/posecode-embed@0.1.0/dist/posecode-embed.js"></script>
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://hoops.dumbmodel.com/player-animations">
@@ -27,6 +30,7 @@ html,body{margin:0; background:var(--paper); color:var(--ink); font-family: Inte
 <meta property="og:image" content="/assets/og-1200x630.png">
 </head>
 <body>
+<a class="vh-skip" href="#main">Skip to the content</a>
 <noscript><div role="alert" style="padding:16px;text-align:center">Enable JS — Vector Hoops needs JavaScript for Daily Court + Map</div></noscript>
 
 <nav class="site-nav" data-active="/player-animations" aria-label="Vector Hoops site"><a href="/">Map</a><a href="/play.html">Play</a><a href="/trends.html">Trends</a><a href="/model.html">Model</a><a href="/players.html">Explorer</a><a href="/player.html">Players</a><a href="/teams.html">Teams</a><a href="/dictionary.html">Dictionary</a></nav>
@@ -34,7 +38,7 @@ html,body{margin:0; background:var(--paper); color:var(--ink); font-family: Inte
   <a class="brand" href="/">🏀 Vector Hoops <span style="font-weight:800; color:var(--okabe-verm);">Posecode Lab</span></a>
   <span class="badge">8 NBA moves • 60fps • MIT</span>
 </header>
-<main class="main">
+<main class="main" id="main" tabindex="-1">
   <section class="hero">
     <h1>People animations — built from scratch in Posecode</h1>
     <p>Every move below is hand-authored .posecode using the grammar <code>pose start = standing</code>, <code>step "Name" Ns easing: joints: flex/abduct/rotate, ground-lock, reach, travel, turn, cue</code>. Rendering is forward kinematics in Three.js via <a href="https://github.com/posecode-dev/posecode" target="_blank" rel="noopener">posecode-dev/posecode</a> (MIT) — ROM clamped per joint (knee ≤144°, elbow ≤154°, shoulder ≤180°). Zero build, free-tier Vercel static, on-device 60fps.</p>

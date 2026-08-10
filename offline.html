@@ -33,14 +33,18 @@ header{max-width:900px;margin:0 auto;padding:10px 14px;display:flex;flex-wrap:wr
    geometry as the module injects, so focus looks identical site-wide. */
 :focus-visible{outline:3px solid #0072B2;outline-offset:2px;box-shadow:0 0 0 5px rgba(0,114,178,.22)}
 @media(prefers-reduced-motion:reduce){*{animation-duration:.001ms !important;transition-duration:.001ms !important}}
+
+.vh-skip{position:absolute;left:-9999px;top:0;z-index:99;background:var(--paper,#fafaf8);border:2.2px solid var(--ink,#111);padding:10px 14px;font-family:ui-monospace,Menlo,monospace;font-weight:800;text-decoration:none;border-radius:0 0 10px 0}
+.vh-skip:focus{left:0}
 </style>
 </head>
 <body>
+<a class="vh-skip" href="#main">Skip to the content</a>
 <header>
 <div class="brand">◐ DUMB MODEL <span class="pill pill-y" style="transform:rotate(-1deg)">shell-only cache • 3 entries</span> <span class="sg">dark card #080A0F core only</span></div>
 <nav style="display:flex;gap:8px;flex-wrap:wrap"><a class="pill" href="/index.html">Map</a><a class="pill" href="/play.html">Play</a><a class="pill" href="/leaderboard.html">Board</a><a class="pill" href="/inventory.html">Inventory</a><a class="pill" href="/methods.html">Methods</a><a class="pill pill-d" href="/offline.html">Offline</a></nav>
 </header>
-<main id="main">
+<main id="main" tabindex="-1">
 <div class="wrap">
 <div class="card">
 <div class="mono" style="text-transform:uppercase;letter-spacing:.06em;opacity:.75;font-weight:800">offline • shell-only • 3 entries cached • no JSON cached • cache hoops-v7-2</div>
