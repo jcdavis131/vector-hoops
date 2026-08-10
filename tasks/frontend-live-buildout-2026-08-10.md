@@ -257,7 +257,7 @@ a dark canvas, the other a light one.)
       Gate: 0 unresolved wikilinks across all 2,293 pages; 10 structural
       assertions on 5 pages × both line endings; escaping holds against an
       injected `<img onerror>`.
-- [ ] P4.4 `/players.html` (the old canvas explorer) and `/player.html` now
+- [x] P4.4 Settled by `4413c6d5` — named for what they do rather than deleting either: **Explorer** = `/players.html` (archetype map, colour key, keyboard orbit), **Players** = `/player.html` (2,293-card wiki search). Original note: `/players.html` and `/player.html` now
       overlap. Decide: fold the explorer into the card page, or make
       `players.html` redirect. Nav currently points at `/player.html`.
 - [ ] P4.5 **No `.gitattributes` in the repo.** Line endings are per-clone,
@@ -291,7 +291,7 @@ a dark canvas, the other a light one.)
 
 ### Cross-cutting
 - [ ] F2 self-host or drop the Google Fonts link.
-- [ ] F3 one shared nav across all pages.
+- [x] F3 **Nav unified — `4413c6d5`.** Mapped every nav before editing: `/trends.html` (rebuilt here from a stub) was reachable from **2 of 10** pages; `/dictionary.html` and `/player.html` only from the pages that created them; `leaderboard.html`/`methods.html` were a third island. All 10 pages now carry the same seven destinations — Explorer, Players, Trends, Model, Teams, Dictionary, Play CTA — each in its own markup and classes, so nothing moves visually but the link list. Verified every nav href resolves to a file on disk.
 
 ## Validation
 
