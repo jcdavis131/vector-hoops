@@ -195,6 +195,19 @@ th{background:#f4f3ee}
     <p class="sub" id="twinCaveat" style="margin-top:8px"></p>
   </section>
 
+  <section class="card" aria-labelledby="h-arc">
+    <h2 id="h-arc">Careers that changed shape lasted longer</h2>
+    <p class="sub" id="arcLead">Loading <code>assets/trajectories.json</code>…</p>
+    <div class="figwrap"><table id="arcTable"></table></div>
+    <h3 style="margin-top:16px">What players turned into</h3>
+    <p class="sub">The most common archetype-to-archetype moves across a career. Read them as
+    “this is what reinvention usually looks like”, not as advice.</p>
+    <div id="arcMotifs"></div>
+    <h3 style="margin-top:16px">Reinvention rate by decade</h3>
+    <div id="arcEra"></div>
+    <div class="method" id="arcMethod" style="margin-top:12px"></div>
+  </section>
+
   <section class="card" aria-labelledby="h-method">
     <h2 id="h-method">Method</h2>
     <p class="sub">Printed verbatim from the files this page reads, not paraphrased.</p>
@@ -487,6 +500,55 @@ function load(){
       $('twinResult').innerHTML='<p class="sub">Era twins could not be loaded ('+esc(e.message)+'). Nothing is estimated in their place.</p>';
     });
 }
+/* Career taxonomy. assets/trajectories.json classifies 1,308 careers into five
+   shapes and nothing read it. The headline is in the numbers: careers that
+   changed archetype ran longer and scored better than careers that did not.
+   The file's own method warns that these are "correlates observed with
+   selection effects", which is exactly the caveat a reader needs — a player
+   has to survive long enough to reinvent — so it prints verbatim and the copy
+   says it in words too. */
+(function(){
+  fetch('assets/trajectories.json?v=08dc3ccc',{cache:'force-cache'})
+    .then(function(r){ if(!r.ok) throw new Error('HTTP '+r.status); return r.json(); })
+    .then(function(j){
+      var cs=(j.classStats||[]).slice().sort(function(a,b){return b.meanCareerLength-a.meanCareerLength;});
+      if(!cs.length) throw new Error('no classStats');
+      var stable=cs.filter(function(c){return c.class==='stable';})[0];
+      var best=cs[0];
+      $('arcLead').innerHTML=(j.totalCareers||0).toLocaleString()+' careers of four seasons or more, sorted into five shapes. '+
+        'The ones that changed what they were lasted longest: <b>'+esc(best.class)+'</b> at '+n2(best.meanCareerLength)+
+        ' seasons against <b>stable</b> at '+n2(stable?stable.meanCareerLength:0)+
+        '. Causation runs both ways — you have to last to get the chance to reinvent — and the file says so.';
+      $('arcTable').innerHTML='<caption class="vh-sr">Career shape, share, mean length and mean plus-minus z</caption>'+
+        '<thead><tr><th>Career shape</th><th>Careers</th><th>Share</th><th>Mean seasons</th><th>Mean plus-minus z</th></tr></thead><tbody>'+
+        cs.map(function(c){
+          return '<tr><td>'+esc(c.class)+'</td><td>'+c.count+'</td><td>'+pct1(c.share)+'</td><td>'+
+            n2(c.meanCareerLength)+'</td><td>'+n2(c.meanPMz)+'</td></tr>';
+        }).join('')+'</tbody>';
+      var motifs=(j.topReinventionMotifs||[]).slice(0,6);
+      var mx=motifs.length?motifs[0].count:1;
+      $('arcMotifs').innerHTML=motifs.map(function(m){
+        return '<div class="bar-row" style="grid-template-columns:1fr 90px 34px">'+
+          '<span style="font-size:11px">'+esc(m.from)+' → <b>'+esc(m.to)+'</b></span>'+
+          '<span class="bar-track"><span class="bar-fill" style="width:'+Math.max(3,(m.count/mx)*100).toFixed(1)+'%"></span></span>'+
+          '<span class="bar-val">'+m.count+'</span></div>';
+      }).join('');
+      var era=(j.eraTransitionRates||[]);
+      var emx=era.reduce(function(a,e){return Math.max(a,e.meanTransitionRate);},0)||1;
+      $('arcEra').innerHTML=era.map(function(e){
+        return '<div class="bar-row" style="grid-template-columns:78px 1fr 46px">'+
+          '<span>'+esc(e.decade)+'</span>'+
+          '<span class="bar-track" role="img" aria-label="'+esc(e.decade)+' mean transition rate '+n2(e.meanTransitionRate)+' over '+e.careers+' careers">'+
+          '<span class="bar-fill" style="width:'+((e.meanTransitionRate/emx)*100).toFixed(1)+'%"></span></span>'+
+          '<span class="bar-val">'+n2(e.meanTransitionRate)+'</span></div>';
+      }).join('');
+      $('arcMethod').textContent=j.method||'';
+    })
+    .catch(function(e){
+      $('arcLead').textContent='Career shapes could not be loaded ('+e.message+'). Nothing is shown in their place.';
+    });
+})();
+
 var sec=$('twinSection');
 if(sec && window.IntersectionObserver){
   var io=new IntersectionObserver(function(en){
