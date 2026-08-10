@@ -218,8 +218,29 @@ Still unsourced and now labelled as such: the `model.html` model-zoo table.
       close the whole class. Repo-wide change, so flagged not done.
 
 ### Phase 5 — team / front office
-- [ ] P5.1 `teams.html` already exists at 15,182 b — **audit before building**.
-      The prior board assumed a stub; that was the stale tree.
+- [x] P5.1 Audited, then fixed — **`8b0fa901`**. `teams.html` printed
+      *"Data source: front_office.json 1.1MB live 10-season champion_map"* and
+      contained **zero `fetch` calls**. Every figure was typed into markup; the
+      table was two sample rows.
+      I assumed the file was missing and **checked before writing that down —
+      it is not**. `assets/front_office.json` is real: 1.1 MB, built 2026-08-09,
+      30 teams × 68 fields, champion map over 10 seasons, 11-key method block.
+      Now rendered: rank, record, W*, FOR + draft/cap/foresight components,
+      grade, payroll, W/$M, postseason. Sortable with `aria-sort`, keyboard
+      headers, live region, SR caption; method verbatim behind a `<details>`.
+      Also fixed a **false citation**: *"Purity@10 0.7057 lift 6.32 from map
+      eval_scoreboard"* named the evidence file explicitly and neither figure
+      is in it. **Fifth file in this branch carrying those two numbers.**
+      Gate: all 30 teams resolve every rendered column, `for_rank` is exactly
+      1–30 with no duplicates, `is_champion` agrees with `champion_map`, every
+      sortable numeric finite.
+- [ ] P5.2 `teams.html` still has `aria-live` only in my appended block, and
+      its hero/formula cards remain hardcoded. `playoff_paths.json` (9.0 MB),
+      `projections.json`, `chemistry.json`, `roles.json`, `honors.json`,
+      `pedigree.json`, `deadline.json` are all still unread by any page.
+- [ ] P5.3 Asset duplication: `front_office.json` exists at **8 paths**
+      (`assets/`, `assets/data/`, and six under `public/assets/…`). Whichever
+      is authoritative, five copies are dead weight in the deploy.
 
 ### Cross-cutting
 - [ ] F2 self-host or drop the Google Fonts link.
