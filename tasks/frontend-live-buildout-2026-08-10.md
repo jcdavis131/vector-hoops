@@ -1037,3 +1037,65 @@ owner table. It matches tier and subscription *shapes*, not dollar signs.
 
 Verified both ways, including the false-positive direction: putting `Owner $5k`
 back fails with context, and a paragraph of real valuations passes untouched.
+
+
+## "Accessible" was the other half I only partly did (2026-08-10)
+
+Last pass caught that I had read "free and accessible" and only ever acted on
+*accessible*. This pass caught that I had only partly done that half too. I fixed
+`:focus-visible` on 16 pages, called accessibility handled, and never checked
+anything else.
+
+`scripts/check_a11y.py` — ten criteria, all WCAG A/AA and all decidable from
+markup — found **81 failures**:
+
+| criterion | count | what |
+|---|---|---|
+| 1.3.1 | 17 | no `<main>` or `role=main` landmark |
+| 1.3.1 | 14 | no `<h1>` at all |
+| 1.3.1 | 41 | `<th>` with no `scope` |
+| 3.3.2 | 4 | inputs whose only name was a placeholder |
+| 4.1.2 | 1 | a link whose entire accessible name was `/` |
+| 2.4.2 | 4 | duplicate `<title>` — see below, these were noise |
+
+The persona pages had **no headings whatsoever** — `<div class="mono">Owner Lab
+• …</div>` was doing the job visually and telling a screen reader nothing.
+
+### Choices, each of which had a worse option
+
+- **The `<h1>` is visually hidden, not promoted.** Promoting the styled div is the
+  better semantic fix and I did not do it: I cannot see these pages, and promoting
+  a styled element across 14 files is the same unreviewed visual change I removed
+  a runtime 44px sweep for. A hidden `<h1>` from the page's own `<title>` is
+  correct for a screen reader, invisible otherwise, and cheap to upgrade.
+- **Its hiding style is inline, not a class.** Not every page defines `.vh-sr`, and
+  a hidden heading that becomes visible because a class is missing is worse than
+  no heading.
+- **The fixer skips `<script>` blocks.** A first version reported 64 `th-scope`
+  fixes against the audit's 41; the extra 23 were inside JavaScript template
+  strings. Editing markup inside a JS string with a regex can produce something
+  that still parses and still emits wrong HTML — a failure with no symptom.
+- **The 4 duplicate titles were my check being wrong**, not the site: `brand.html`
+  and `brand/index.html` are the same page and only one is served. The check now
+  recognises mirror pairs.
+
+### Two bugs I introduced fixing this, both caught by verification
+
+1. **`<main>` straddled `</header>` on four pages.** My anchor rule was "open the
+   landmark after `</nav>`", and on `inventory`, `leaderboard`, `methods` and
+   `offline` the `<nav>` lives *inside* `<header>` — so `<main>` opened inside the
+   header and `</header>` closed across it. Found by checking tag balance inside
+   the inserted landmark, not by reading the diff.
+2. **`index.html` ended up with `id="main"` twice** — it already had
+   `<div class="grid" id="main">` as its skip-link target. The existing gate's
+   `ids` check caught that one, which is the first time a check I wrote earlier in
+   this branch caught a regression I introduced later in it.
+
+Both fixed, both re-verified: 22/22 pages now have exactly one `<main>`, one
+`</main>` and one `<h1>`, and the fixer is idempotent.
+
+### What this does not cover, stated so it is not mistaken for coverage
+
+Colour contrast, reading order, focus order and actual screen-reader flow need a
+browser and a person. The audit prints that line every run rather than implying
+the site is accessible because a static check passed.
