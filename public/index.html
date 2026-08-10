@@ -1,0 +1,442 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
+<title>Vector Hoops — 12,966 seasons as rotating map — Past→Modern</title>
+<meta property="og:title" content="Vector Hoops — 12,966 as rotating map · Past→Modern Twin"/>
+<meta property="og:description" content="12,966 NBA seasons as rotating embedding map — now in Lemmino documentary void. One game: Past All-Star → guess modern twin."/>
+<meta property="og:image" content="https://hoops.dumbmodel.com/assets/og-1200x630.png"/><meta property="og:image:width" content="1200"/><meta property="og:image:height" content="630"/>
+<meta name="twitter:card" content="summary_large_image"/><meta name="twitter:image" content="https://hoops.dumbmodel.com/assets/og-1200x630.png"/>
+<meta name="description" content="12,966 NBA seasons as rotating embedding map. Daily Past→Modern. Lemmino void style."/><meta name="theme-color" content="#0A0C10"/>
+<link rel="manifest" href="/manifest.json"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Architects+Daughter&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/shell.css"/><link rel="stylesheet" href="assets/responsive.css"/><link rel="stylesheet" href="assets/final-qa.css"/><link rel="stylesheet" href="assets/unified.css"/><link rel="stylesheet" href="assets/motion.css"/><link rel="stylesheet" href="assets/lemmino/lemmino.css"/>
+<link rel="stylesheet" href="assets/trading-card.css?v=42"/>
+<style>
+:root{--paper:#FFFEF7;--ink:#1A150F;--blue:#0072B2;--verm:#D55E00;--yellow:#F0E442;--green:#009E73;--radius:14px;--shadow:4px 4px 0 var(--ink);--mono:ui-monospace,monospace;--sans:ui-sans-serif,system-ui;}
+*{box-sizing:border-box}html,body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:18px;line-height:1.65;overflow-x:clip}
+.card{background:#fff;border:2.2px solid var(--ink);border-radius:14px;box-shadow:var(--shadow);padding:14px 16px}
+.btn{appearance:none;min-height:48px;padding:12px 18px;border:2.2px solid var(--ink);border-radius:12px;background:#fff;color:var(--ink);font-family:var(--mono);font-weight:900;text-transform:uppercase;box-shadow:4px 4px 0 var(--ink);cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:transform .08s,box-shadow .08s}
+.btn:active{transform:translate(1px,1px);box-shadow:1px 1px 0 var(--ink)}
+.btn-primary{background:var(--ink);color:#fff}.btn-accent{background:var(--yellow);color:var(--ink)}.btn-xl{font-size:15px;min-height:54px;padding:14px 22px}
+.small-mono{font-family:var(--mono);font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase}
+.pill{border:1.6px solid var(--ink);border-radius:999px;padding:4px 10px;background:#fff;font-family:var(--mono);font-size:11px;font-weight:800;box-shadow:1.5px 1.5px 0 var(--ink)}
+.pill-yellow{background:var(--yellow);transform:rotate(-1deg)}
+
+#map-wrap{position:relative;min-height:580px;border:2.5px solid var(--ink);border-radius:16px;box-shadow:6px 6px 0 var(--ink);overflow:hidden;background:radial-gradient(120% 80% at 70% 20%,rgba(0,114,178,.12),transparent 48%),radial-gradient(90% 60% at 20% 70%,rgba(213,94,0,.10),transparent 46%),#0A0C10;width:100%}
+#sky-canvas{position:absolute;inset:0;width:100%;height:100%;display:block;cursor:grab;touch-action:none}
+#sky-canvas:active{cursor:grabbing}
+
+/* overlay chips - keep for star-map void */
+#map-overlay{position:absolute;left:12px;right:12px;top:56px;display:flex;justify-content:space-between;gap:8px;z-index:5;pointer-events:none;flex-wrap:wrap}
+#map-overlay .chip{background:rgba(255,254,247,.92);border:2px solid var(--ink);border-radius:999px;padding:5px 10px;font-family:var(--mono);font-size:10px;box-shadow:1.5px 1.5px 0 var(--ink)}
+#map-controls{position:absolute;left:12px;bottom:calc(12px + env(safe-area-inset-bottom));z-index:6;display:flex;gap:8px;flex-wrap:wrap}
+#map-controls .chip{pointer-events:auto;cursor:pointer;background:#fff;border:2px solid var(--ink);border-radius:999px;padding:8px 14px;font-family:var(--mono);font-size:11px;font-weight:800;box-shadow:2px 2px 0 var(--ink);min-height:44px;display:inline-flex;align-items:center}
+#map-legend{position:absolute;right:12px;bottom:calc(12px + env(safe-area-inset-bottom));z-index:6;background:rgba(255,254,247,.97);border:2px solid var(--ink);border-radius:14px;padding:8px 9px 8px 8px;box-shadow:2px 2px 0 var(--ink);font-family:var(--mono);font-size:9px;line-height:1.35;pointer-events:auto;min-width:186px;max-width:214px}
+#map-legend .legend-title{font-size:7.5px;letter-spacing:.1em;text-transform:uppercase;font-weight:900;opacity:.65;margin-bottom:6px;display:flex;justify-content:space-between;align-items:center;gap:6px}
+#hover-tip{position:absolute;left:50%;top:50%;transform:translate(-50%,-100%);background:#FFFEF7;border:2px solid var(--ink);border-radius:10px;padding:7px 9px;box-shadow:3px 3px 0 var(--ink);font-size:11px;line-height:1.35;display:none;z-index:7;pointer-events:none;max-width:260px}
+.legend-star{display:inline-flex;width:14px;height:14px;align-items:center;justify-content:center;background:var(--yellow);border:1.5px solid var(--ink);border-radius:4px;font-size:10px}
+
+.hero{max-width:1180px;margin:0 auto;padding:18px clamp(14px,3.5vw,28px) 10px;display:grid;grid-template-columns:1.08fr .92fr;gap:28px;align-items:start}
+@media(max-width:980px){
+  .hero{grid-template-columns:1fr;max-width:none;margin:0;padding:0 0 10px;gap:0}
+  .hero-copy{padding:18px clamp(14px,3.5vw,28px) 12px}
+  #map-wrap{border-radius:0;border-left:0;border-right:0;width:100vw;margin-left:calc(50% - 50vw);box-shadow:none;min-height:78vh;min-height:78dvh;border-top:2.5px solid var(--ink);border-bottom:2.5px solid var(--ink)}
+  #map-controls{left:clamp(10px,3vw,16px);bottom:calc(14px + env(safe-area-inset-bottom))}
+  #map-legend{right:clamp(10px,3vw,16px);left:auto;max-width:68vw;bottom:calc(66px + env(safe-area-inset-bottom));font-size:8.5px}
+}
+.hd{font-family:"Architects Daughter",var(--mono);line-height:.92;letter-spacing:-.01em}
+.hero-copy{display:flex;flex-direction:column;gap:14px}
+.eyebrow{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.eyebrow #puzzle-meta{opacity:.65}
+.deck{color:#2E2A23;margin:0;line-height:1.5;font-size:18px;max-width:46ch}
+.deck b{color:var(--ink)}
+.cta-row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:2px}
+.micro{color:#5A544D;text-transform:none;font-weight:600;font-size:11.5px;letter-spacing:.01em;line-height:1.5}
+.pulse-dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--yellow);border:1.5px solid var(--ink);box-shadow:0 0 0 3px rgba(240,228,66,.35);animation:pulse 1.6s ease-in-out infinite}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 3px rgba(240,228,66,.35);transform:scale(1)}50%{box-shadow:0 0 0 7px rgba(240,228,66,.18);transform:scale(1.08)}}
+.tri{max-width:1180px;margin:12px auto 0;padding:0 clamp(14px,3.5vw,28px) calc(20px + 88px);display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+@media(max-width:760px){.tri{grid-template-columns:1fr}}
+
+/* v35 trading card replaces drift — clean trading card void, legacy drift hard kill */
+.trading-card-void{ position:relative; width:100%; background:#ECE7DB; min-height:560px }
+@media(max-width:980px){ .trading-card-void{ width:100vw; margin-left:calc(50% - 50vw); border-left:0; border-right:0 } }
+/* legacy guard */
+#drift-info-stack, #drift-scrub-wrap, #lemmino-drift-focus, #lemmino-drift-meta, .lemmino-drift, #lemmino-drift{ display:none !important }
+
+.hd{font-family:"Architects Daughter",var(--mono);line-height:.92;letter-spacing:-.01em}
+.hero-copy{display:flex;flex-direction:column;gap:14px}
+.eyebrow{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.eyebrow #puzzle-meta{opacity:.65}
+.deck{color:#2E2A23;margin:0;line-height:1.5;font-size:18px;max-width:46ch}
+.deck b{color:var(--ink)}
+.cta-row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:2px}
+.micro{color:#5A544D;text-transform:none;font-weight:600;font-size:11.5px;letter-spacing:.01em;line-height:1.5}
+.pulse-dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--yellow);border:1.5px solid var(--ink);box-shadow:0 0 0 3px rgba(240,228,66,.35);animation:pulse 1.6s ease-in-out infinite}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 3px rgba(240,228,66,.35);transform:scale(1)}50%{box-shadow:0 0 0 7px rgba(240,228,66,.18);transform:scale(1.08)}}
+.tri{max-width:1180px;margin:12px auto 0;padding:0 clamp(14px,3.5vw,28px) calc(20px + 88px);display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+@media(max-width:760px){.tri{grid-template-columns:1fr}}
+.tri .card{transition:transform .12s,box-shadow .12s}
+.tri .card:hover{transform:translate(-1px,-1px);box-shadow:5px 5px 0 var(--ink)}
+/* v4.2 overlap fixes */
+#map-wrap #map-controls{display:flex;flex-direction:row;align-items:center;gap:10px;flex-wrap:nowrap;bottom:calc(14px + env(safe-area-inset-bottom));left:12px}
+#map-wrap #map-controls .chip{flex:0 0 auto;white-space:nowrap;transform:none}
+#map-axis-legend{pointer-events:none;z-index:5}
+@media(max-width:560px){
+  #map-wrap #map-axis-legend{right:10px;left:auto;max-width:68vw;bottom:calc(68px + env(safe-area-inset-bottom));font-size:8.5px;line-height:1.28}
+  #map-wrap #map-controls{left:10px;bottom:calc(12px + env(safe-area-inset-bottom));gap:8px}
+  #map-wrap #map-controls .chip{min-height:40px;padding:7px 12px;font-size:10px}
+}
+/* v34 cleaned — legacy stack removed, only map-wrap overlap guard remains */
+</style>
+</head><body>
+<noscript><div role="alert" style="padding:16px;text-align:center">Enable JS — Vector Hoops needs JavaScript for Daily Court + 3D void</div></noscript>
+
+<nav class="site-nav" data-active="/" aria-label="Vector Hoops site"></nav>
+
+<div class="hero">
+  <div class="hero-copy">
+    <div class="small-mono eyebrow">
+      <span class="pill pill-yellow">12,966 · ROTATING STARS</span>
+      <span id="viral-streak" class="pill" style="background:#1A150F;color:#FFFEF7">streak 0</span>
+      <span id="puzzle-meta" style="opacity:.6">Daily puzzle</span>
+    </div>
+
+    <h1 class="hd" style="font-size:clamp(38px,5.8vw,62px);margin:2px 0 0;letter-spacing:-.02em">
+      Find the<br>modern twin<span style="opacity:.35">.</span>
+    </h1>
+
+    <p class="deck" id="deck-line" style="margin-top:10px;font-size:17px;line-height:1.45">
+      <b id="deck-name" style="font-weight:900">Michael Jordan 1997-98</b> → who plays most like them now?<br>
+      <span id="viral-today" style="opacity:.6;font-size:14px">12,966 seasons as stars in Lemmino void — documentary style</span>
+    </p>
+
+    <div class="cta-row" style="margin-top:12px">
+      <button class="btn btn-primary btn-xl" id="btn-focus-mj" type="button">★ Show Jordan on map</button>
+      <a class="btn" href="/play" style="min-height:54px">▶ Play daily</a>
+      <a class="btn btn-accent" href="/teams" style="min-height:54px">🏀 Teams · Front Office</a>
+    </div>
+
+    <div class="micro small-mono" style="text-transform:none;display:flex;gap:8px;align-items:center;margin-top:8px">
+      <span class="pulse-dot"></span><span id="sky-fact-inline">Drag to rotate · hover any star · ★ = MJ 97-98 — click a name below to jump</span>
+    </div>
+
+    <div id="popular-row" style="margin-top:14px;display:flex;flex-direction:column;gap:8px">
+      <div class="small-mono" style="opacity:.7;text-transform:none;font-weight:800;letter-spacing:.02em">Popular — tap to show on map:</div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <button class="pill pill-yellow popular-btn" data-id="672" type="button" style="cursor:pointer">MJ 97-98</button>
+        <button class="pill popular-btn" data-id="2977" type="button" style="cursor:pointer">LeBron 03-04</button>
+        <button class="pill popular-btn" data-id="5600" type="button" style="cursor:pointer">Curry 09-10</button>
+        <button class="pill popular-btn" data-id="8127" type="button" style="cursor:pointer">Jokic 15-16</button>
+        <button class="pill popular-btn" data-id="7073" type="button" style="cursor:pointer">Giannis 13-14</button>
+        <button class="pill popular-btn" data-id="229" type="button" style="cursor:pointer">Kobe 96-97</button>
+        <button class="pill popular-btn" data-id="1507" type="button" style="cursor:pointer">Shaq 99-00</button>
+        <button class="pill popular-btn" data-id="4635" type="button" style="cursor:pointer">KD 07-08</button>
+        <button class="pill popular-btn" data-id="11960" type="button" style="cursor:pointer">Wemby 23-24</button>
+        <button class="pill popular-btn" data-id="9441" type="button" style="cursor:pointer">Luka 18-19</button>
+        <button class="pill popular-btn" data-id="11994" type="button" style="cursor:pointer">Castle 24-25</button>
+        <button class="pill popular-btn" data-id="12012" type="button" style="cursor:pointer">Flagg 25-26</button>
+        <button class="pill" type="button" onclick="location.href='/players'" style="cursor:pointer;opacity:.7">More →</button>
+      </div>
+      <div id="popular-current" class="small-mono" style="text-transform:none;opacity:.6;font-size:11px"></div>
+    </div>
+  </div>
+
+  <!-- LEMMINO COMBO: embedding map as stars -->
+  <div id="map-wrap" class="lemmino-map-void" style="background:#080A0F">
+    <canvas id="sky-canvas" width="640" height="580" aria-label="12,966 player-seasons as points, XYZ glass plates for orientation"></canvas>
+    <!-- minimal controls only — no inline bottom to allow safe-area CSS -->
+    <div id="map-controls">
+      <button class="chip" id="btn-pause" type="button" style="background:rgba(255,254,247,0.96);border:2px solid #1A150F;border-radius:999px;padding:8px 14px;font-family:ui-monospace,monospace;font-size:11px;font-weight:800;min-height:44px">Pause</button>
+      <button class="chip" id="btn-reset" type="button" style="background:rgba(255,254,247,0.96);border:2px solid #1A150F;border-radius:999px;padding:8px 14px;font-family:ui-monospace,monospace;font-size:11px;font-weight:800;min-height:44px">Reset view</button>
+    </div>
+    <div id="hover-tip" style="position:absolute;left:50%;top:50%;transform:translate(-50%,-100%);background:#FFFEF7;border:2px solid #1A150F;border-radius:10px;padding:7px 9px;box-shadow:3px 3px 0 #1A150F;font-size:12px;line-height:1.35;display:none;z-index:7;pointer-events:none;max-width:260px"></div>
+    <div id="map-axis-legend" style="position:absolute;right:clamp(12px,2.5vw,16px);bottom:calc(12px + env(safe-area-inset-bottom));z-index:5;background:rgba(255,254,247,0.96);border:2px solid #1A150F;border-radius:10px;padding:7px 8px;font-family:ui-monospace,monospace;font-size:9px;line-height:1.3;box-shadow:2px 2px 0 #1A150F;max-width:min(68vw,300px)">
+      <div style="font-weight:900;letter-spacing:.05em;margin-bottom:4px;display:flex;justify-content:space-between;gap:8px"><span>SHAPE=POS</span><span style="opacity:.55">COLOR=ARCHETYPE</span></div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:4px"><span>● PG</span><span>▲ SG</span><span>◆ SF</span><span>■ PF</span><span>✚ C</span></div>
+      <div style="opacity:.8">X Paint↔Perim · Y Role→Score · Z Def↔Off — drag to spin</div>
+    </div>
+  </div>
+</div>
+
+<div class="tri">
+  <a class="card" href="/trends" style="text-decoration:none;color:inherit"><div class="small-mono">Trends</div><b style="font-family:'Architects Daughter',mono;font-size:19px">How the game changed</b><div style="font-size:13px;color:#666;margin-top:5px;line-height:1.45">30 seasons of drift, archetype shifts, career shapes — one scrub to play it.</div></a>
+  <a class="card" href="/players" style="text-decoration:none;color:inherit"><div class="small-mono">Players</div><b style="font-family:'Architects Daughter',mono;font-size:19px">Directory + Skills</b><div style="font-size:13px;color:#666;margin-top:5px;line-height:1.45">Every season graded, search any name, compare eras side-by-side.</div></a>
+  <a class="card" href="/teams" style="text-decoration:none;color:inherit;border-left:5px solid var(--yellow)"><div class="small-mono"><span class="pill pill-yellow" style="font-size:10px">NEW</span> Front Office</div><b style="font-family:'Architects Daughter',mono;font-size:19px">Team Boards · 30 Front Offices</b><div style="font-size:13px;color:#666;margin-top:5px;line-height:1.45">Draft smarts (Wemby / Flagg / Harper), cap $136M→$154M era, rebuild flex sortable — glass-box.</div><div style="margin-top:8px" class="small-mono"><span class="pill" style="background:var(--ink);color:#fff">Open Teams →</span></div></a>
+  <a class="card" href="/model" style="text-decoration:none;color:inherit"><div class="small-mono">Lab</div><b style="font-family:'Architects Daughter',mono;font-size:19px">Inside the model</b><div style="font-size:13px;color:#666;margin-top:5px;line-height:1.45">How the embedding is built, what it captures, and where it fails.</div></a>
+</div>
+
+<!-- TRADING CARD VOID — replaces heavy drift tube — career arc + skills trading card -->
+<div class="trading-card-void" id="trading-card-void">
+  <div style="padding:24px;font-family:ui-monospace;font-size:13px;text-align:center">Loading trading cards…</div>
+</div>
+
+<div id="persona-hub" style="max-width:1180px;margin:18px auto 0;padding:0 clamp(14px,3.5vw,28px)">
+  <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:12px">
+    <span class="pill pill-yellow" style="font-size:12px;transform:rotate(-1deg)">Pick Your Edge</span>
+    <span class="small-mono" style="opacity:.6;text-transform:none;letter-spacing:.01em">same engine — four ways to use it</span>
+    <span class="pill" style="font-size:10px;opacity:.7">W* = W+2.5·PO+0.12·realG</span>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px" id="persona-grid">
+    <style>#persona-grid{grid-template-columns:1fr 1fr}@media(max-width:860px){#persona-grid{grid-template-columns:1fr}}#persona-grid .pcard{position:relative;overflow:hidden}#persona-grid .pcard:hover{transform:translate(-1px,-1px);box-shadow:5px 5px 0 var(--ink)}#persona-grid .pct{font-family:var(--mono);font-size:10px;opacity:.6}</style>
+    <a class="card pcard" href="/owner" style="text-decoration:none;color:inherit;border-left:4px solid #1A150F;display:flex;flex-direction:column;gap:8px">
+      <div style="display:flex;justify-content:space-between;align-items:center"><span class="pill" style="background:#1A150F;color:#FFFEF7;font-size:11px">🏆 Owner</span><span class="pill pill-yellow" style="font-size:10px">$5k+</span></div>
+      <b style="font-family:'Architects Daughter',mono;font-size:18px">Championship Economics</b>
+      <div style="font-size:13px;color:#555;line-height:1.45">30Y true FOR snapshots, tax apron planner — where SAS 94.8 W* beats OKC 85.8 today</div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap" class="pct"><span class="pill" style="font-size:10px">FOR 0.35/0.35/0.30</span><span class="pill" style="font-size:10px">W*/$M PO/$M</span><span class="pill" style="font-size:10px">Val $9.1B</span></div>
+      <div style="margin-top:2px"><span class="btn btn-primary" style="min-height:42px;padding:9px 14px;font-size:12px">Open Owner →</span></div>
+    </a>
+    <a class="card pcard" href="/player" style="text-decoration:none;color:inherit;border-left:4px solid #0072B2;display:flex;flex-direction:column;gap:8px">
+      <div style="display:flex;justify-content:space-between;align-items:center"><span class="pill" style="background:#0072B2;color:#fff;font-size:11px">👟 Player</span><span class="pill" style="font-size:10px">$19/mo</span></div>
+      <b style="font-family:'Architects Daughter',mono;font-size:18px">Stay On The Floor</b>
+      <div style="font-size:13px;color:#555;line-height:1.45">Closer 1.28 stays, exploitable 0.62 sits late — real playoff mins Wemby 699 vs Flagg 0 honest</div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap" class="pct"><span class="pill" style="font-size:10px;background:#E7F6EA">closer 1.28</span><span class="pill" style="font-size:10px;background:#FFD8D5">exploit 0.62</span><span class="pill" style="font-size:10px">fit &amp; cap%</span></div>
+      <div style="margin-top:2px"><span class="btn" style="min-height:42px;padding:9px 14px;font-size:12px;background:#0072B2;color:#fff">Open Player →</span></div>
+    </a>
+    <a class="card pcard" href="/brand" style="text-decoration:none;color:inherit;border-left:4px solid #009E73;display:flex;flex-direction:column;gap:8px">
+      <div style="display:flex;justify-content:space-between;align-items:center"><span class="pill" style="background:#009E73;color:#fff;font-size:11px">📈 Brand</span><span class="pill" style="font-size:10px">$2k</span></div>
+      <b style="font-family:'Architects Daughter',mono;font-size:18px">Wins Into Story</b>
+      <div style="font-size:13px;color:#555;line-height:1.45">Forbes NYK $7.5B YoY%, market beat +17.5 SAS — Wins/$B is your rising star signal</div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap" class="pct"><span class="pill" style="font-size:10px">Wins/$B</span><span class="pill" style="font-size:10px">PO vis 2.5×</span><span class="pill" style="font-size:10px">ValΔ% +2.1pp</span></div>
+      <div style="margin-top:2px"><span class="btn" style="min-height:42px;padding:9px 14px;font-size:12px;background:#009E73;color:#fff;border-color:#1A150F">Open Brand →</span></div>
+    </a>
+    <a class="card pcard" href="/dfs" style="text-decoration:none;color:inherit;border-left:4px solid #F0E442;display:flex;flex-direction:column;gap:8px;background:#FFFEF7">
+      <div style="display:flex;justify-content:space-between;align-items:center"><span class="pill pill-yellow" style="font-size:11px">🎯 DFS</span><span class="pill" style="font-size:10px;background:#1A150F;color:#fff">$9/mo</span></div>
+      <b style="font-family:'Architects Daughter',mono;font-size:18px">Tonight's Locks</b>
+      <div style="font-size:13px;color:#555;line-height:1.45">Vegas OU 944 seasons + props +5.7 Wemby — optimizer tags locks ↑ fades ↓ before salary</div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap" class="pct"><span class="pill" style="font-size:10px;background:#E7F6EA">lock 1.28</span><span class="pill" style="font-size:10px;background:#FFD8D5">avoid 0.62</span><span class="pill" style="font-size:10px">$/pt val</span></div>
+      <div style="margin-top:2px"><span class="btn btn-accent" style="min-height:42px;padding:9px 14px;font-size:12px">Open DFS →</span></div>
+    </a>
+  </div>
+</div>
+
+<div id="viral-row" style="max-width:1180px;margin:10px auto 0;padding:0 clamp(14px,3.5vw,28px) calc(28px + 88px);display:grid;grid-template-columns:1.1fr .9fr;gap:12px">
+  <div class="card" id="random-rush-card" style="display:flex;flex-direction:column;gap:10px;border-width:2.5px">
+    <div class="small-mono" style="display:flex;justify-content:space-between;align-items:center"><span style="display:flex;gap:6px;align-items:center"><span class="pill" style="background:var(--ink);color:#fff">📦 Pack Battle</span><span>Viral 1·3·5</span></span><span class="pill pill-yellow">Shareable challenge</span></div>
+    <div style="display:flex;gap:10px;align-items:flex-start">
+      <div style="font-size:38px;line-height:1">⚡</div>
+      <div style="flex:1"><b style="font-family:'Architects Daughter',mono;font-size:18px;display:block">Pack Challenge — random All-Stars, same link for friends</b><div style="font-size:12px;color:#555;margin-top:4px;line-height:1.45">Random grouping of 1, 3 or 5 past All-Stars. Solve it, then share the <code style="font-size:10px;background:#FFFEF7;border:1px solid #ddd;padding:1px 5px;border-radius:6px">?pack=672-123-456</code> link — friends get identical pack. Streak-safe, beat your friend's score.</div></div>
+    </div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:4px">
+      <button class="btn btn-primary" data-pack-card="1" type="button">⚡ Solo · 1</button>
+      <button class="btn btn-accent" data-pack-card="3" type="button">🔥 Triple · 3</button>
+      <button class="btn" data-pack-card="5" type="button" style="background:#fff">🏀 Full Court · 5</button>
+      <button class="btn" id="btn-copy-random" type="button" style="min-height:48px">Copy last link</button>
+      <span class="small-mono" id="random-hint" style="align-self:center;opacity:.6;text-transform:none"></span>
+    </div>
+    <div class="small-mono" style="text-transform:none;opacity:.6;font-size:10px;line-height:1.3">Each pack = unique names · reproducible link · add &s=2-3-0 for score battle</div>
+  </div>
+  <div class="card" id="streak-card" style="display:flex;flex-direction:column;gap:8px">
+    <div class="small-mono" style="display:flex;justify-content:space-between;align-items:center"><span>🔥 Streak challenge · resets daily</span><span class="pill" id="streak-best-pill">best 0</span></div>
+    <div style="display:flex;gap:12px;align-items:center">
+      <div style="width:56px;height:56px;border:2.2px solid var(--ink);border-radius:14px;background:var(--paper);display:flex;align-items:center;justify-content:center;box-shadow:3px 3px 0 var(--ink);flex-shrink:0"><span id="streak-big" style="font-family:'Architects Daughter',mono;font-size:24px;font-weight:900;line-height:1">0</span></div>
+      <div style="flex:1">
+        <b id="streak-title" style="font-family:'Architects Daughter',mono;font-size:17px;display:block">Start your streak</b>
+        <div id="streak-desc" style="font-size:12px;color:#555;margin-top:3px;line-height:1.45">Win today's daily before midnight UTC to build. Miss a day and it resets. 7 days = Week Warrior.</div>
+        <div id="streak-track" style="display:flex;gap:4px;margin-top:8px"></div>
+        <div class="small-mono" id="next-countdown" style="margin-top:6px;text-transform:none;opacity:.7;display:none">Next in <span id="countdown-hms">--</span></div>
+      </div>
+    </div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:2px">
+      <a class="btn btn-primary" id="btn-continue-streak" href="/play">Play Today</a>
+      <button class="btn" id="btn-share-streak" type="button">Share Streak</button>
+      <button class="btn" id="btn-challenge" type="button">Challenge Friend</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast" style="position:fixed;left:50%;bottom:94px;transform:translateX(-50%);background:#1A150F;color:#FFFEF7;font-family:var(--mono);font-size:11px;font-weight:800;padding:9px 14px;border-radius:999px;box-shadow:4px 4px 0 var(--ink);z-index:40;display:none"></div>
+
+<script>
+/* Minimal viral init — keeps MJ placeholder as hero map star per request */
+(function(){
+  const HERO_MJ_ID = 672;
+  function showToast(msg, ms){
+    var t=document.getElementById('toast'); if(!t) return;
+    t.textContent=msg; t.style.display='block'; clearTimeout(t._tm); t._tm=setTimeout(function(){ t.style.display='none'; }, ms||2600);
+  }
+  async function initViral(){
+    try{
+      if(window.VHPastModern){
+        await window.VHPastModern.init();
+        if(window.VHMtnn){ try{ await VHMtnn.loadAsync(); }catch(e){} }
+        var st=window.VHPastModern.state();
+        var sInfo = VHPastModern.getStreak();
+        var big = document.getElementById('streak-big');
+        var title = document.getElementById('streak-title');
+        var desc = document.getElementById('streak-desc');
+        var bestPill = document.getElementById('streak-best-pill');
+        var track = document.getElementById('streak-track');
+        if(big) big.textContent = sInfo.streak;
+        if(bestPill) bestPill.textContent='best '+sInfo.best;
+        if(track){
+          track.innerHTML='';
+          for(var i=0;i<7;i++){
+            var dot=document.createElement('span');
+            dot.style.cssText='width:22px;height:6px;border-radius:999px;border:1.5px solid var(--ink);display:inline-block;'+(i < sInfo.streak%7 || (sInfo.streak>=7 && i<7) ? 'background:var(--yellow);box-shadow:1px 1px 0 var(--ink)' : 'background:#fff;opacity:.55');
+            track.appendChild(dot);
+          }
+        }
+        if(sInfo.streak===0){
+          if(title) title.textContent='Start your streak';
+          if(desc) desc.textContent='Win today\'s daily before midnight UTC to start. 7 in a row = Week Warrior badge. Random spins don\'t break streak.';
+        } else if(sInfo.streak>=7){
+          if(title) title.textContent='Week Warrior! '+sInfo.streak+'🔥';
+          if(desc) desc.textContent='Insane consistency. Keep it alive — daily resets at midnight UTC.';
+        } else {
+          if(title) title.textContent=sInfo.streak+' day'+(sInfo.streak===1?'':'s')+' — keep it alive';
+          if(desc) desc.textContent=(7-sInfo.streak)+' more to Week Warrior.';
+        }
+        var dn0=document.getElementById('deck-name'); if(dn0) dn0.textContent='Michael Jordan 1997-98';
+        var cp0=document.getElementById('cta-past'); if(cp0) cp0.textContent='Michael Jordan';
+        var cta0=document.getElementById('cta-primary'); if(cta0) cta0.href='/play?r='+HERO_MJ_ID;
+        var lsn0=document.getElementById('legend-star-name'); if(lsn0) lsn0.textContent='Michael Jordan 97-98';
+        var sfi=document.getElementById('sky-fact-inline'); if(sfi) sfi.textContent='Drag to rotate · hover any star · ★ = MJ 97-98';
+        var vt0=document.getElementById('viral-today'); if(vt0) vt0.textContent='12,966 stars in void — Today daily: '+st.target.n+' '+st.target.s+' — drag stars to spin';
+        var vs=document.getElementById('viral-streak'); if(vs) vs.textContent = sInfo.streak>0 ? '🔥 '+sInfo.streak : 'streak 0';
+        var rh=document.getElementById('random-hint'); if(rh) rh.textContent='Today: '+st.target.n+' '+st.target.s+' · Hero stars: MJ 97-98';
+      }
+    }catch(e){ console.warn('viral init', e); }
+  }
+  function wirePacks(){
+    function makePackAndGo(n){
+      try{
+        if(!window.VHPastModern || !VHPastModern.generateRandomPack){ location.href='/play?pack=random&n='+n; return; }
+        var entries = VHPastModern.generateRandomPack(n);
+        var ids = entries.map(function(e){return e.i;});
+        var url = (VHPastModern.packChallengeUrl ? VHPastModern.packChallengeUrl(ids) : VHPastModern.packShareUrl(ids));
+        location.href=url;
+      }catch(e){ location.href='/play?pack=random&n='+n; }
+    }
+    document.querySelectorAll('[data-pack-hero]').forEach(function(btn){ btn.addEventListener('click', function(){ makePackAndGo(parseInt(btn.getAttribute('data-pack-hero'),10)||3); }); });
+    document.querySelectorAll('[data-pack-card]').forEach(function(btn){ btn.addEventListener('click', function(){ makePackAndGo(parseInt(btn.getAttribute('data-pack-card'),10)||3); }); });
+    var bShare=document.getElementById('btn-share-board');
+    if(bShare){
+      bShare.addEventListener('click', async function(){
+        try{
+          var c=document.getElementById('sky-canvas');
+          var snap=document.createElement('canvas'); snap.width=c.width; snap.height=c.height;
+          var sctx=snap.getContext('2d'); sctx.drawImage(c,0,0);
+          var blob=await new Promise(function(res){snap.toBlob(function(b){res(b);},'image/png');});
+          if(window.VHShare && navigator.canShare && blob){
+            var file=new File([blob],'vector-hoops-map.png',{type:'image/png'});
+            if(navigator.canShare({files:[file]})){ await navigator.share({title:'Vector Hoops',text:'12,966 seasons as stars — hoops.dumbmodel.com',files:[file]}); return; }
+          }
+          var url=snap.toDataURL('image/png'); var a=document.createElement('a'); a.href=url; a.download='vector-hoops-map.png'; a.click();
+          showToast('Map image saved');
+        }catch(e){ console.warn(e); }
+      });
+    }
+    var bChallenge=document.getElementById('btn-challenge');
+    if(bChallenge){ bChallenge.addEventListener('click', async function(){
+      try{
+        var st=window.VHPastModern? window.VHPastModern.state(): null;
+        var day= st? st.dayKey : new Date().toISOString().slice(0,10);
+        var url=location.origin+'/play?day='+day;
+        var txt='Can you find the modern twin for '+ (st? st.target.n+' '+st.target.s : 'today')+'? '+url;
+        if(navigator.clipboard) await navigator.clipboard.writeText(txt);
+        this.textContent='Copied!'; showToast('Challenge link copied'); setTimeout(function(el){el.textContent='Challenge';}.bind(null,this),1500);
+      }catch(e){}
+    });}
+  }
+  wirePacks();
+  window.addEventListener('load', function(){ setTimeout(initViral, 400); });
+})();
+</script>
+
+<!-- Unified shared map v2-light — simplified homepage, MJ as map anchor -->
+<script type="module">
+const lazyMount = (selector, loader) => {
+  const el = document.querySelector(selector);
+  if(!el) return;
+  let mounted=false;
+  const mount = async ()=>{
+    if(mounted) return; mounted=true; observer&&observer.disconnect();
+    try{ await loader(); }catch(e){ console.warn('shared map lazy fail',selector,e); }
+  };
+  const observer = new IntersectionObserver((entries)=>{
+    const ent=entries[0]; if(ent&&ent.isIntersecting){ setTimeout(mount, 80); }
+  },{rootMargin:'200px 0px', threshold:0.01});
+  observer.observe(el);
+};
+
+let hoopsMap = null;
+
+function showToastLocal(msg, ms){
+  var t=document.getElementById('toast');
+  if(!t) return;
+  t.textContent=msg; t.style.display='block';
+  clearTimeout(t._tm);
+  t._tm=setTimeout(()=>{ t.style.display='none'; }, ms||2400);
+}
+
+async function focusPlayer(id, label){
+  if(!hoopsMap){
+    showToastLocal('Map still loading — one sec');
+    return;
+  }
+  try{
+    const pid = parseInt(id,10);
+    // if not in lite, try to inject from search lite pool if available
+    if(!hoopsMap.hasPoint(pid)){
+      if(window.VHPastModern && VHPastModern.state){
+        try{
+          const sl=VHPastModern.state().searchLite;
+          const arr=sl && (sl.players||sl);
+          const row=Array.isArray(arr) && arr.find(p=>p && p.i===pid);
+          if(row) hoopsMap.addPoint(row);
+        }catch{}
+      }
+    }
+    hoopsMap.setTarget(pid);
+    if(typeof hoopsMap.focusOnTarget==='function') hoopsMap.focusOnTarget();
+    if(label){
+      const cur=document.getElementById('popular-current');
+      if(cur) cur.textContent='Showing '+label+' — ★ on map · drag to explore';
+      showToastLocal('★ '+label+' — on map');
+    }
+    document.getElementById('map-wrap')?.scrollIntoView({behavior:'smooth', block:'center'});
+  }catch(e){ console.warn('focus fail', e); }
+}
+
+window.__focusHoopsPlayer = focusPlayer;
+
+(async ()=>{
+  const c=document.getElementById('sky-canvas');
+  if(!c) return;
+  try{
+    const { mountSharedMap } = await import('./assets/shared-map.js?v=57');
+    hoopsMap = await mountSharedMap(c, { highlightId: 672, dark:true });
+    window.__hoopsMap = hoopsMap;
+
+    // wire new homepage buttons
+    document.getElementById('btn-focus-mj')?.addEventListener('click', ()=>{
+      focusPlayer(672,'Michael Jordan 1997-98');
+    });
+
+    document.querySelectorAll('.popular-btn[data-id]').forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        const id=btn.getAttribute('data-id');
+        const label=btn.textContent.trim();
+        // toggle active style
+        document.querySelectorAll('.popular-btn').forEach(b=>{ b.style.background='#fff'; b.style.color='#1A150F'; });
+        btn.style.background='#1A150F'; btn.style.color='#FFFEF7';
+        focusPlayer(id,label);
+      });
+    });
+
+    // default highlight MJ
+    setTimeout(()=>{ focusPlayer(672,'Michael Jordan 1997-98'); }, 900);
+
+  }catch(e){ console.error('shared-map eager fail', e); }
+})();
+
+lazyMount('#trading-card-void', async ()=>{
+  const { mountTradingCardVoid } = await import('./assets/lemmino/trading-card-void.js?v=53');
+  const c=document.getElementById('trading-card-void');
+  if(c) await mountTradingCardVoid(c);
+});
+</script>
+
+
+<footer class="site-footer"><div class="site-footer__links"><a href="/play">Play</a><a href="/model">Lab</a><a href="/methods">Methods</a><a href="/players">Players</a><a href="https://github.com/jcdavis131/vector-hoops" target="_blank" rel="noopener">GitHub</a></div><div class="site-footer__attribution">Every number recomputable from stats.nba.com · dumbmodel.com</div></footer>
+<script>if('serviceWorker' in navigator){window.addEventListener('load',()=>{navigator.serviceWorker.register('/sw.js').catch(()=>{})})}</script>
+</body></html>

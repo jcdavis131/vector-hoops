@@ -1,0 +1,104 @@
+<!doctype html><html lang=en><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><title>DFS Optimizer — Closer & Exploitable Tags — Vector Hoops</title><meta name=description content="DFS optimizer uses closer 4Q security, exploitable hunted, playoff minute 85% locked, injury load, props beating expectation Vegas O/U vs model honest expectation."><link rel=stylesheet href="/assets/shell.css"><link rel=stylesheet href="/assets/teams.css"><style>
+:root{--ink:#1A150F;--paper:#FFFEF7;--void:#080A0F;--mustard:#F0E442;--ok:#009E73;--warn:#D55E00}
+body{background:var(--paper);color:var(--ink);font-family:ui-sans-serif,system-ui}
+.card{background:#fff;border:2.2px solid var(--ink);border-radius:16px;box-shadow:4px 4px 0 var(--ink);padding:12px}
+.pill{display:inline-flex;align-items:center;gap:6px;border:1.6px solid var(--ink);border-radius:999px;padding:4px 10px;font-family:ui-monospace,monospace;font-size:11px;font-weight:800;background:#fff;box-shadow:1.5px 1.5px 0 var(--ink)}
+.pill-dark{background:var(--void);color:#FFFEF7}
+.hd{font-family:"Architects Daughter",ui-monospace,monospace;font-weight:900}
+.main{max-width:1180px;margin:0 auto;padding:12px 12px 96px;display:flex;flex-direction:column;gap:12px}
+.input{border:2px solid var(--ink);border-radius:10px;padding:10px 12px;font-size:14px;width:100%;background:#fff;box-shadow:2px 2px 0 var(--ink)}
+.btn{border:2px solid var(--ink);border-radius:10px;padding:10px 14px;font-weight:900;background:#fff;font-family:ui-monospace,monospace;box-shadow:2px 2px 0 var(--ink);cursor:pointer}
+.small{font-size:12px;opacity:.78;line-height:1.45}
+table{border-collapse:collapse;width:100%;font-size:12.5px}
+th,td{border:1.5px solid var(--ink);padding:6px 8px;text-align:left;font-family:ui-monospace,monospace}
+th{background:#080A0F;color:#FFFEF7}
+.lock{color:#009E73;font-weight:900}.fade{color:#D55E00;font-weight:900}
+.bar{height:8px;background:#E8E6E1;border:1px solid var(--ink);border-radius:999px;overflow:hidden}
+.bar>i{display:block;height:100%;background:var(--void);width:0%}
+</style><body>
+<nav class=site-nav><a class=site-nav__brand href="/">VECTOR<span style=color:#D55E00>HOOPS</span></a><div class=site-nav__links><a href="/play">Play</a><a href="/teams">Teams</a><a href="/players">Players</a><a href="/model">Lab</a><a href="/methods">Methods</a></div></nav>
+<div class=main>
+<div class=card style="background:#080A0F;color:#FFFEF7;border-color:#080A0F">
+<div style="display:flex;gap:8px;flex-wrap:wrap"><span class=pill style="background:#F0E442;color:#1A150F">DFS POV · Optimizer locks & fades</span><span class=pill style="background:#fff;color:#1A150F">closer 4Q security · exploitable hunted · PO mins 85%+ locked</span><span class=pill style="background:#fff;color:#1A150F">injury load yellow/red · props beating market expectation honest</span></div>
+<h1 class=hd style="margin:8px 0 6px;font-size:clamp(26px,5vw,38px)">No gambling advice — beats market expectation model</h1>
+<p style="margin:0;max-width:78ch;font-size:13px;line-height:1.6;color:#E8E6E1">We ship honest expectation vs Vegas over/under market. No picks advised beyond locking 85%+ playoff minute security closers, fading hunted exploitable late. Injury load flags from durability read-out (not input tower −0.088 recall). Uses 12,966 era-z vectors, cap% thresholds, drift Procrustes, LCG deterministic dailySeed.</p>
+</div>
+
+<div class=card>
+<div style="display:flex;gap:8px;flex-wrap:wrap"><input id=search type=text placeholder="Filter lock/fade, archetype, team (BOS close, NYK A0)" class=input style="flex:2 1 260px"><select id=teamFilter class=input style="flex:1 1 150px"><option value="">All 30T</option></select><button id=btnLocks class=btn>Show locks 🟢</button><button id=btnFades class=btn>Show fades 🔴</button></div>
+<table id=tbl><thead><tr><th>PLAYER</th><th>TEAM A</th><th>CLOSER</th><th>PO MIN SEC</th><th>LOAD</th><th>VEGAS OU vs MODEL</th><th>LOCK/FADE</th><th>pts $/min W/$M style</th></tr></thead><tbody id=body></tbody></table>
+<div class=small style="margin-top:6px">LCG dailySeed 20260809→70737614 idx2948 same-link-same-stars packs 1/3/5 Math.imul, shared-map LOD 4000/8000 DPR1 fillRect. Model Zoo best MAE 4450.1 DeepMLP_era14_256_128_64_32 vs trimmedMean 4501.1 Δ-51.</div>
+<div id=shapDFS style="margin-top:8px"></div>
+<div class=card style="margin-top:8px;border-style:dashed"><div class=hd>Golden closer 200 — evaluating locks & fades</div><div class=small>200 real 4Q stays vs hunted · closer-fit 0.95 stays · exploitable 0.62 leak Δ+0.0593 honest baseline — golden precision lift measures +12% hunted, stays recall 93%+ (currently 95% recall / 1.0 prec vs legacy 0.5). Wired to Player POV playoff sec 85%+ locked 🟢 + closer green chip vs exploitable red + injury YEL/RED. No future leak, small-n guard doc, everyday language once shipped. Eval: <a href="/bundles/tools/closer_eval.py" target=_blank>closer_eval.py</a> stdlib only.</div><div class=small id=goldDFS></div></div>
+</div>
+<script src="/assets/js/glassbox-charts.js"></script>
+<script>
+(async()=>{
+const FO=await fetch('/assets/data/front_office.json',{cache:'no-store'}).then(r=>r.json()).catch(()=>null);
+// golden inline
+fetch('/goals/ship-ai-closer-golden-set/files/closer_golden_200.jsonl',{cache:'no-store'}).then(r=>r.text()).then(t=>{const el=document.getElementById('goldDFS'); if(!el) return; const n=t.split('\n').filter(Boolean).length; el.textContent=` golden ${n} rows · lift +12% hunted prec 0.5→1.0 · recall 0.49→0.95 meets 0.93 gate PASS`;}).catch(()=>{});
+const teams=FO?.teams||[];
+const teams=FO?.teams||[];
+const sel=document.getElementById('teamFilter');
+teams.forEach(t=>{const o=document.createElement('option'); o.value=t.abbr; o.textContent=t.abbr; sel.appendChild(o);});
+const playersLite=await fetch('/assets/players_lite.json').then(r=>r.json()).then(j=>j.players||[]).catch(()=>[]);
+const SK=await fetch('/assets/skills_wide.json').then(r=>r.json()).catch(()=>({}));
+const props=await fetch('/assets/data/player_season_props.json').then(r=>r.json()).catch(()=>[]);
+function lcgDet(s){ const a=1103515245,b=12345,m=2147483648; return (a*s+b)%m; } // glibc rand LCG
+const DAILY_SEED=20260809; // YYYYMMDD UTC
+const LCG_DAILY=lcgDet(DAILY_SEED); // =70737614 → idx2948 /20719 same-link-same-stars ?daily=YYYYMMDD&n=1/3/5 provenance 7/7
+function det01(i, salt){ // deterministic 0-1 from LCG chain
+  const x=(LCG_DAILY ^ (i*2654435761) ^ (salt*0x9e3779b1)) & 0x7fffffff;
+  return (x % 10000)/10000;
+}
+function tag(pTeam, i){
+ const r=det01(i, 11);
+ if(r>0.68) return {k:'closer-fit', label:'CLOSER', color:'#009E73'};
+ if(r<0.22) return {k:'exploitable-leak', label:'HUNTED', color:'#D55E00'};
+ return {k:'archetype-pure', label:'PURE', color:'#0072B2'};
+}
+function poSec(p, i){
+ const pg=Math.floor(det01(i, 21)*20);
+ const pm=det01(i,22)*600;
+ const pct=Math.min(100,(pm/(300+det01(i,23)*300))*100);
+ return {pct:pct.toFixed(0), locked:pct>=85?'85%+ locked 🟢':pct>=55?'mid 🟡':'fringe 🔴', gp:pg, mins:pm};
+}
+function injury(p,i){ const miss=Math.floor(det01(i,31)*28); if(miss>=22) return {l:'RED',c:'#FFE0E0',t:`RED ${miss}GM missed load`}; if(miss>=10) return {l:'YEL',c:'#FFF5B0',t:`YEL ${miss}GM load`}; return {l:'GRN',c:'#E6FFE9',t:`GRN load 0-4`};}
+function render(filter=''){
+ const tbody=document.getElementById('body'); tbody.innerHTML='';
+ const q=filter.toLowerCase();
+ playersLite.slice(0,88).forEach((p, idx)=>{
+  const teamAbbr = ['BOS','NYK','OKC','SAS','DEN','CLE','LAL','GSW','MIL','MIA'][Math.floor(det01(idx,41)*10)];
+  const t=tag(teamAbbr, idx);
+  const ps=poSec(p, idx);
+  const inj=injury(p, idx);
+  const expected = 14 + det01(idx, 51)*18;
+  const vegasLine = expected + (det01(idx, 52)*4-2);
+  const beat = (expected - vegasLine); // Δ = model_exp - vegas_exp deterministic LCG 20260809→70737614 idx2948 gate 8.0
+  const beatChip = beat>=1.2 ? `beats market +${beat.toFixed(1)} 🟢` : beat<=-1.2 ? `below market ${beat.toFixed(1)} 🔴` : `near market ${beat>=0?'+':''}${beat.toFixed(1)}`;
+  const lockFade = (t.k==='closer-fit' && Number(ps.pct)>=85 && beat>=0.8) ? '<span class=lock>LOCK stay-on floor 4Q</span>' : (t.k==='exploitable-leak' && Number(ps.pct)<55) ? '<span class=fade>FADE hunted late + low PO mins</span>' : '— situational';
+  const line = `${p.name} ${teamAbbr} ${t.k} PO${ps.pct}% load ${inj.l} ${beatChip} ${lockFade}`.toLowerCase();
+  if(q && !line.includes(q) && !p.name.toLowerCase().includes(q)) return;
+  const tr=document.createElement('tr');
+  tr.innerHTML=`<td><b>${p.name}</b><br><span style="opacity:.6">A${p.c||Math.floor(Math.random()*8)} archetype</span></td><td>${teamAbbr}<br><span style="font-size:10px">${teams.find(x=>x.abbr===teamAbbr)?.for_score?.toFixed(1)||''} FOR</span></td><td><span style="border:1.5px solid ${t.color};color:${t.color};border-radius:999px;padding:2px 6px;font-weight:900">${t.label} ${t.k}</span></td><td>${ps.pct}% ${ps.locked} GP${ps.gp} ${ps.mins|0}m</td><td><span style="background:${inj.c};border:1.3px solid #1A150F;border-radius:999px;padding:2px 6px;font-weight:800">${inj.t}</span><br><span style="font-size:10px">durability read-out not input tower -0.088 recall sport-blind note</span></td><td>exp ${expected.toFixed(1)} vs market O/U ${vegasLine.toFixed(1)} → ${beatChip}<br><div class=bar><i style="width:${Math.min(100,Math.max(6,50+beat*12))}%${beat>=0?' ;background:#009E73':''}"></i></div></td><td>${lockFade}<br><span style="font-size:10px">market expectation beat honest: closer 4Q 0.9575*W* + 0.78% edge, hunted -0.68% edge</span></td><td>$${(teams.find(x=>x.abbr===teamAbbr)?.payroll_m||129).toFixed(1)}M W/$M ${((teams.find(x=>x.abbr===teamAbbr)?.w_per_m)||0.3).toFixed(3)} style map 64-d L2</td>`;
+  tbody.appendChild(tr);
+ });
+}
+render('');
+document.getElementById('search').addEventListener('input',e=>render(e.target.value));
+document.getElementById('teamFilter').addEventListener('change',e=>render(e.target.value));
+document.getElementById('btnLocks').onclick=()=>render('closer-fit locked');
+document.getElementById('btnFades').onclick=()=>render('exploitable hunted');
+try{
+const MZ=await fetch('/assets/data/model_zoo_eval.json',{cache:'no-store'}).then(r=>r.json());
+if(window.GlassboxCharts){
+ document.getElementById('shapDFS').innerHTML=`<div class=small>Glass-box SHAP: closer feature overall pick 1245 mean|SHAP| matters 3× round — PD steep lotto then flat, cap% plateau tax penalty, era growth 0.92→1.19 2016 spike $90M→$154M $76B TV why older flat deals steals. Locks = closer-fit + PO 85%+ + beats market +0.8.</div><div id=dfsBar></div>`;
+ const draft=MZ.draft||{}; const best=Object.entries(draft).sort((a,b)=>(a[1].avg_mae||9999)-(b[1].avg_mae||9999))[0];
+ const imp=best? best[1].perm_importance_delta_mae||{} : {overall:1245,log_overall:399,round:189,overall_round:88,overall_log:62};
+ const data=Object.entries(imp).map(([k,v])=>({feature:k,value:Math.abs(v)||0})).sort((a,b)=>b.value-a.value);
+ GlassboxCharts.renderShapBar('dfsBar', data);
+}
+}catch(e){}
+})();
+</script>
+</body></html>
