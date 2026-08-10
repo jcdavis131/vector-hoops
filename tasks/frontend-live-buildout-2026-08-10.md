@@ -277,6 +277,30 @@ weight, not served". `/public/` 404s *because* it is served as the root.
 **Better fix, not taken:** delete `public/` and set `outputDirectory: "."`.
 Halves the repo and removes the drift class. Untestable from here, and wrong
 means a fully 404'd site — operator's call.
+
+## 🔴 P0 #5 — the service worker has never installed
+
+`sw.js` v7.1 precached `SHELL=['/','/index.html','/offline.html','/manifest.json']`
+with `cache.addAll()`, which is **atomic**. Live status of those four:
+
+```
+/               200
+/index.html     308    cleanUrls redirects .html
+/offline.html   308
+/manifest.json  404    missing from public/, which is what deploys
+```
+
+Three of four fail → `addAll` rejects → install fails. **Seven pages register
+a worker that has never existed.** Offline and PWA install have been dead.
+
+Fixed: SHELL uses the served paths (`/`, `/offline`, `/manifest.json`), each
+added individually with its own `catch` so one miss degrades the shell instead
+of killing the worker, cache bumped to `hoops-v7-2`. Fetch handler narrowed to
+same-origin — it could previously answer a cross-origin font request with the
+offline HTML page.
+
+Found by asking what else depended on the missing `manifest.json`, rather than
+stopping at the five pages that linked it.
 ## Findings that are bugs, not features
 
 - **F1 — `model.html` draws a fake SHAP chart.** Its script is literally
