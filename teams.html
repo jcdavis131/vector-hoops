@@ -44,6 +44,14 @@ tbody tr:nth-child(even){background:rgba(17,17,17,.03)} tbody tr:hover{backgroun
 </style>
 </head>
 <body>
+<script>
+/* Must run before the decorative canvas loop lower down reads it. That loop is
+   a closed IIFE, so an appended script cannot reach its `f` — the one-condition
+   guard added inside it checks this flag instead. Without it, three orange
+   rings driven by Math.sin(t) drift and pulse forever with no way to stop. */
+window.__vhReduceMotion = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+</script>
+<a class="fo-skip" href="#foSec">Skip to all 30 teams</a>
 <nav class="site-nav"><a class="brand" href="/">DUMB<span style="color:var(--orange)">MODEL</span></a><div class="links"><a href="/players.html">Explorer</a><a href="/player.html">Players</a><a href="/trends.html">Trends</a><a href="/model.html">Model</a><a href="/teams.html">Teams</a><a href="/dictionary.html">Dictionary</a><a class="cta" href="/play.html">Play today's →</a></div></nav>
 <div class="hero-band"><div class="hero"><p class="eyebrow">Six models · five daily puzzles · free · no account</p><div class="roster"><div class="tile t-o"><svg viewBox="0 0 40 40" fill="none"><circle cx="14" cy="11" r="5" stroke="#EB6834" stroke-width="2.5"/><circle cx="26" cy="29" r="5" stroke="#2A78D6" stroke-width="2.5"/><path d="M17 15 L23 25" stroke="#111" stroke-width="2.5" stroke-linecap="round"/></svg></div><div class="tile t-b"><svg viewBox="0 0 40 40" fill="none"><path d="M8 30 L16 22 L22 26 L34 10" stroke="#2A78D6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M27 10 L34 10 L34 17" stroke="#111" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="tile t-p"><svg viewBox="0 0 40 40" fill="none"><path d="M8 32 L8 8 M8 32 L34 32" stroke="#111" stroke-width="2.5" stroke-linecap="round"/><circle cx="15" cy="25" r="2.6" fill="#7A5AE6"/><circle cx="23" cy="18" r="2.6" fill="#7A5AE6"/><circle cx="30" cy="13" r="2.6" fill="#7A5AE6"/></svg></div><div class="tile t-g"><svg viewBox="0 0 40 40" fill="none"><rect x="8" y="10" width="5" height="14" rx="1" stroke="#009E73" stroke-width="2"/><rect x="15.5" y="8" width="5" height="18" rx="1" stroke="#009E73" stroke-width="2"/><rect x="23" y="14" width="5" height="10" rx="1" fill="#009E73"/><path d="M8 28 L33 28" stroke="#111" stroke-width="2" stroke-linecap="round"/></svg></div><div class="tile t-c"><svg viewBox="0 0 40 40" fill="none"><circle cx="13" cy="13" r="5" stroke="#D8452A" stroke-width="2.2"/><circle cx="27" cy="14.5" r="4.2" stroke="#1b45a7" stroke-width="2.2"/><circle cx="20" cy="27" r="3.8" stroke="#9b6bc4" stroke-width="2.2"/><path d="M16.2 16.5 L18.5 23" stroke="#111" stroke-width="1.5" stroke-dasharray="2 2"/><path d="M23.8 18 L21.5 23.2" stroke="#111" stroke-width="1.5" stroke-dasharray="2 2"/></svg></div></div><div><h1 class="hd" style="font-size:22px;line-height:.98;margin:0">Front Office Lab — FOR</h1><p class="mono" style="color:var(--ink-soft);margin:4px 0 0;font-size:11.5px">FOR = min(99,.35D+.35C+.30F+0.15·vegas+0.08·props+champ+valα±2) · W* = W+2.5·PO+0.12·realG · <span class="sg">paper #FAFAF8 / ink #111111</span></p></div></div></div>
 <div class="wrap">
@@ -83,7 +91,7 @@ const rows=[
 {team:'LAL',FOR:72.1,W:47,Wstar:51,wpm:0.258,wstarpm:0.28,popm:0.022,val:7.1,flex:'C',apron:1}
 ];
 function ren(a){let tb=document.querySelector('#tbl tbody');tb.innerHTML='';for(let r of a){let bd=r.apron?'<span class="badge apron">$207.8M</span> '+(r.flex==='C'?'<span class="badge" style="background:#F0E442">NO-MLE</span>':''):'<span class="badge">'+r.flex+'</span>';tb.innerHTML+=`<tr><td><b>${r.team}</b></td><td class="num">${r.FOR.toFixed(1)}</td><td class="num">${r.W}</td><td class="num">${r.Wstar.toFixed(1)}</td><td class="num">${r.wpm.toFixed(3)}</td><td class="num">${(r.wstarpm||0).toFixed(3)}</td><td class="num">${(r.popm||0).toFixed(3)}</td><td class="num">${(r.wpb||0).toFixed(1)}</td><td class="num">${r.val.toFixed(2)}</td><td>${bd}</td></tr>`}}ren(rows);let dir={};document.querySelectorAll('#tbl th[data-k]').forEach(th=>{th.addEventListener('click',()=>{let k=th.dataset.k;dir[k]=!dir[k];let mk={team:'team',FOR:'FOR',W:'W',Wstar:'Wstar',wpm:'wpm',wstarpm:'wstarpm',popm:'popm',wpb:'wpb',val:'val'}[k];rows.sort((a,b)=>{if(mk==='team')return dir[k]?a.team.localeCompare(b.team):b.team.localeCompare(a.team);return dir[k]?a[mk]-b[mk]:b[mk]-a[mk]});ren(rows)})});
-(()=>{let c=document.getElementById('mapCv');if(!c)return;let x=c.getContext('2d'),t=0;function f(){t+=.016;x.fillStyle='#0A0C10';x.fillRect(0,0,460,120);for(let i=0;i<3;i++){let r=14+i*20+Math.sin(t*2+i)*5;x.strokeStyle='#EB6834';x.globalAlpha=.9-i*.22;x.lineWidth=1.6;x.beginPath();x.arc(230+Math.cos(t*.6+i)*18,60+Math.sin(t*.5+i*1.1)*9,r,0,6.283);x.stroke()}x.globalAlpha=1;x.fillStyle='#F0E442';x.beginPath();x.arc(230,60,3,0,6.283);x.fill();x.fillStyle='#FAFAF8';x.font='900 12px ui-monospace';x.fillText('◎ SAS 94.8 > OKC 85.8 · #EB6834',12,18);requestAnimationFrame(f)}f()})();
+(()=>{let c=document.getElementById('mapCv');if(!c)return;let x=c.getContext('2d'),t=0;function f(){t+=.016;x.fillStyle='#0A0C10';x.fillRect(0,0,460,120);for(let i=0;i<3;i++){let r=14+i*20+Math.sin(t*2+i)*5;x.strokeStyle='#EB6834';x.globalAlpha=.9-i*.22;x.lineWidth=1.6;x.beginPath();x.arc(230+Math.cos(t*.6+i)*18,60+Math.sin(t*.5+i*1.1)*9,r,0,6.283);x.stroke()}x.globalAlpha=1;x.fillStyle='#F0E442';x.beginPath();x.arc(230,60,3,0,6.283);x.fill();x.fillStyle='#FAFAF8';x.font='900 12px ui-monospace';x.fillText('◎ SAS 94.8 > OKC 85.8 · #EB6834',12,18);if(!window.__vhReduceMotion)requestAnimationFrame(f)}f()})();
 </script>
 
 <!-- ══ all 30 teams, read from the file this page already names ═══════════
@@ -107,6 +115,13 @@ function ren(a){let tb=document.querySelector('#tbl tbody');tb.innerHTML='';for(
 .fo-ring{color:var(--orange);font-weight:900}
 #foMethod{font-size:12px;line-height:1.6;color:#57534E;background:#f4f3ee;border:1.5px dashed var(--ink);border-radius:9px;padding:10px 12px;margin-top:10px;white-space:pre-wrap}
 .fo-sr{position:absolute;width:1px;height:1px;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap}
+.fo-skip{position:absolute;left:-9999px;top:0;z-index:200;background:var(--paper);border:2.2px solid var(--ink);padding:10px 14px;font:800 12px var(--mono);text-transform:uppercase;text-decoration:none;border-radius:0 0 10px 0}
+.fo-skip:focus{left:0}
+/* The page's own table is sortable and was mouse-only: 11 <th data-k> with a
+   click handler, cursor:pointer, no tabindex and no aria-sort. */
+#tbl th[data-k]{cursor:pointer}
+#tbl th[data-k][aria-sort="descending"]::after{content:" ▼"}
+#tbl th[data-k][aria-sort="ascending"]::after{content:" ▲"}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}}
 </style>
 <section id="foSec" aria-labelledby="foH">
@@ -179,6 +194,38 @@ $('foTable').addEventListener('keydown',function(e){
   var th=e.target.closest?e.target.closest('th[data-k]'):null;
   if(th){ e.preventDefault(); sortBy(th.dataset.k); }
 });
+
+// ── the page's own table and canvas ────────────────────────────────────
+// Everything above this point is the section appended in 8b0fa901. These few
+// lines fix the original page: its sortable table could not be sorted without
+// a mouse, and its canvas announced itself as "canvas".
+(function(){
+  var mapCv=document.getElementById('mapCv');
+  if(mapCv) mapCv.setAttribute('aria-hidden','true');   // decorative rings + a label
+  var ths=document.querySelectorAll('#tbl th[data-k]');
+  if(!ths.length) return;
+  // The page's own sort state lives in a closure we cannot read, so mirror the
+  // toggle here and update it on every click regardless of whether the click
+  // came from a pointer or from the Enter/Space handler below. Listeners added
+  // later run later, so the mirror always reflects the sort that just happened.
+  var mine={};
+  Array.prototype.forEach.call(ths,function(th){
+    th.setAttribute('tabindex','0');
+    th.setAttribute('role','columnheader');
+    th.setAttribute('aria-sort','none');
+    th.addEventListener('click',function(){
+      var k=th.dataset.k;
+      mine[k]=!mine[k];
+      Array.prototype.forEach.call(ths,function(o){ if(o!==th) o.setAttribute('aria-sort','none'); });
+      th.setAttribute('aria-sort', mine[k]?'ascending':'descending');
+      say('Sorted by '+(th.textContent||k).trim()+', '+(mine[k]?'ascending':'descending')+'.');
+    });
+    th.addEventListener('keydown',function(e){
+      if(e.key!=='Enter' && e.key!==' ' && e.key!=='Spacebar') return;
+      e.preventDefault(); th.click();
+    });
+  });
+})();
 
 fetch('assets/front_office.json',{cache:'force-cache'})
   .then(function(r){ if(!r.ok) throw new Error('HTTP '+r.status); return r.json(); })
