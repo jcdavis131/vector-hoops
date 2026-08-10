@@ -192,7 +192,8 @@ def main() -> int:
             print(f"  - {f}")
         return 1
     print(f"OK — no static accessibility failures across {len(pages(root))} pages")
-    print("  (contrast, reading order and screen-reader flow still need a browser and a person)")
+    print("  (reading order, focus order and real screen-reader flow still need a browser")
+    print("   and a person; contrast is checked by scripts/check_contrast.py)")
     return 0
 
 

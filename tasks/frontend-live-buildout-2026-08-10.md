@@ -1099,3 +1099,49 @@ Both fixed, both re-verified: 22/22 pages now have exactly one `<main>`, one
 Colour contrast, reading order, focus order and actual screen-reader flow need a
 browser and a person. The audit prints that line every run rather than implying
 the site is accessible because a static check passed.
+
+
+## I declared contrast out of scope and it was arithmetic (2026-08-10)
+
+Last pass I wrote, in a docstring and in the report, that colour contrast "needs
+a browser and a person" — and left it. That was wrong. Every surface on this site
+is an explicit hex token in a `:root` block, and the contrast ratio between two
+known colours is a formula. What needs a person is deciding *which* pairs meet on
+screen. Computing the ratio, once the pair is known, does not.
+
+Same shape as the two misses before it: "free" I never read, "accessible" I only
+half-did, contrast I ruled out of scope while it sat inside it.
+
+### The first version of the check was mostly noise
+
+77 findings, and most were nonsense: it paired every text colour with every
+background the page declared, so it reported `.site-nav__brand` at **1.04:1**
+against a `--void` token that element never sits on, and flagged offline.html's
+`.sub` against paper when it lives inside a `#080A0F` card. A checker that cries
+wolf on 65 pairs is worse than no checker.
+
+Rebuilt in two tiers:
+
+- **Tier 1 — fails the gate.** The rule declares both colour and background. No
+  ambiguity. **12 real failures.**
+- **Tier 2 — warns only.** The rule sets colour alone, so the true backdrop
+  depends on nesting a static read cannot settle. Evaluated against the page's own
+  `<body>` background and printed to check in a browser, never failed on.
+
+### The 12 collapse to three pairs
+
+    #fff    on #eb6834 orange   3.20:1   ->  #111 on orange        5.90:1
+    #fff    on #2a78d6 blue     4.42:1   ->  #fff on #0072b2       5.19:1
+    #eb6834 on #f0e442 yellow   2.42:1   ->  #111 on yellow       14.28:1
+
+No new colour. `#0072b2` is `--okabe-blue`, already declared here and already used
+for the focus ring, and ink-on-brand-colour is already the site's own pattern in
+`.btn-y{background:var(--yellow);color:#111}`.
+
+The text moved rather than the token because `--orange` and `--blue` are the
+brand — borders, marks, chart series — where contrast against paper is not the
+constraint. Retuning the token to satisfy one pill would restyle everything.
+
+**The blue is the interesting one.** Neither `#fff` (4.42) nor `#111` (4.28)
+clears 4.5:1 on `#2a78d6`. That pair cannot be fixed by changing the text at all,
+which is why it is the only one where the background moved.
