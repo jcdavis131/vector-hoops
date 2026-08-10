@@ -1,84 +1,77 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#0A0C10"><title>Vector Hoops — Players Explorer 1814 filt</title>
-<link rel="manifest" href="data:application/manifest+json;base64,eyJuYW1lIjoiUGxheWVycyJ9">
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#fafaf8">
+<title>Vector Hoops — Players Explorer · 1814 filtered</title>
+<meta name="description" content="1814 players filtered · current/all · click trajectory orange polyline · dark canvas #0A0C10 · OKABE vivid.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Architects+Daughter&display=swap" rel="stylesheet">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23111111'/%3E%3Ccircle cx='11' cy='12' r='3' fill='%23EB6834'/%3E%3Ccircle cx='21' cy='19' r='3' fill='%232A78D6'/%3E%3Cpath d='M11 12 L21 19' stroke='%23FAFAF8' stroke-width='1.6'/%3E%3C/svg%3E">
+<link rel="manifest" href="data:application/manifest+json;base64,eyJuYW1lIjoiUGxheWVycyIsInRoZW1lX2NvbG9yIjoiI2ZhZmFmOCIsImJhY2tncm91bmRfY29sb3IiOiIjRkFGQUY4IiwiZGlzcGxheSI6InN0YW5kYWxvbmUifQ==">
 <style>
-:root{--paper:#FFFEF7;--void:#080A0F;--ink:#1A150F;--yellow:#F0E442;--orange:#FF5A1F;--g:#E7F6EA;--r:#FFD8D5;--y:#FFE9B5}
-*{box-sizing:border-box}html,body{margin:0;background:var(--void);color:var(--paper);font-family:ui-sans,system-ui;line-height:1.5}
-.wrap{max-width:1080px;margin:0 auto;padding:14px}
-.card{background:#FFFEFB;color:var(--ink);border:2.2px solid var(--ink);border-radius:14px;box-shadow:4px 4px 0 var(--ink);overflow:hidden}
-.pill{display:inline-flex;padding:5px 10px;border-radius:999px;background:var(--yellow);border:1.5px solid var(--ink);font-weight:800;font-size:11px}
-canvas{display:block;width:100%;height:420px;background:radial-gradient(1100px 600px at 18% -10%,#1E2B44 0%,#101724 32%,var(--void) 72%)}
-.list{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:8px;padding:10px}
-.it{border:1.5px solid var(--ink);border-radius:10px;padding:8px;background:#fff;cursor:pointer}
-.it:hover{transform:translateY(-1px)} .it.on{background:var(--yellow)}
-.mono{font-family:ui-monospace,monospace;font-size:11px}
-</style></head><body><div class="wrap">
-<div style="display:flex;justify-content:space-between;align-items:center"><span class="pill">1814 players • current+allstars+3+ • 1764 pts</span><a class="pill" href="/">← Map</a></div>
-<div class="card" style="margin-top:10px"><canvas id="c" width="900" height="460"></canvas>
-<div style="display:flex;justify-content:space-between;padding:8px"><span class="mono" id="lab">loading 1764 pts</span><span class="mono"><button id="bAll">Show All 3+ only</button> <button id="bCur">Current only 532</button> <button id="bToggleFull">?full</button></span></div></div>
-<div id="list" class="list"></div>
+:root{--paper:#FAFAF8;--surface:#FFFFFF;--ink:#111111;--ink-soft:#52514E;--ink-muted:#878580;--orange:#EB6834;--blue:#2A78D6;--purple:#7A5AE6;--yellow:#F0E442;--green:#009E73;--red:#D8452A;--mono:ui-monospace,"IBM Plex Mono",Menlo,monospace;--sans:ui-sans-system,system-ui,Segoe UI,Roboto,sans-serif;--hand:"Architects Daughter",cursive;--r:12px;--shadow:4px 4px 0 var(--ink);--shadow-sm:3px 3px 0 var(--ink)}
+*{box-sizing:border-box}html,body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.6;-webkit-font-smoothing:antialiased}
+.site-nav{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:11px clamp(12px,3vw,22px);padding-top:calc(11px + env(safe-area-inset-top,0));background:var(--surface);border-bottom:2px solid var(--ink)}
+.site-nav .brand{font-family:var(--mono);font-weight:900;text-transform:uppercase;font-size:15px;text-decoration:none;color:var(--ink)}
+.site-nav .links{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.site-nav .links a{font:800 11.5px var(--mono);text-transform:uppercase;letter-spacing:.05em;color:var(--ink-soft);text-decoration:none;padding:7px 10px;border:2px solid transparent;border-radius:9px}
+.site-nav .links a:hover{color:var(--ink);border-color:var(--ink);background:var(--paper)}
+.site-nav .links .cta{background:var(--ink);color:#fff;border-color:var(--ink);box-shadow:var(--shadow-sm)}
+.wrap{max-width:1120px;margin:0 auto;padding:14px clamp(12px,3vw,18px)}
+.eyebrow{font-family:var(--mono);font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--ink-muted);margin:0}
+.hero-band{width:100%;background:linear-gradient(180deg,var(--surface),var(--paper));border-bottom:2px solid var(--ink);position:relative;overflow:hidden}
+.hero-band::before{content:"";position:absolute;inset:0;background-image:radial-gradient(circle at 18% 28%,rgba(235,104,52,.08),transparent 45%),repeating-linear-gradient(-12deg,transparent,transparent 28px,rgba(17,17,17,.02) 28px,rgba(17,17,17,.02) 29px);pointer-events:none}
+.hero{position:relative;z-index:1;display:flex;flex-wrap:wrap;gap:16px;align-items:center;padding:20px clamp(12px,3vw,22px);max-width:1120px;margin:0 auto}
+.roster{display:flex;gap:10px;flex-wrap:nowrap}
+.tile{width:60px;height:60px;background:#fff;border:2px solid var(--ink);border-radius:10px;box-shadow:3px 3px 0 var(--ink);display:grid;place-items:center}
+.tile svg{width:62%;height:62%}.t-o{box-shadow:4px 4px 0 var(--orange)}.t-b{box-shadow:4px 4px 0 var(--blue)}.t-p{box-shadow:4px 4px 0 var(--purple)}.t-g{box-shadow:4px 4px 0 var(--green)}.t-c{box-shadow:4px 4px 0 var(--ink);background:repeating-linear-gradient(135deg,#fff,#fff 6px,#f0ebe2 6px,#f0ebe2 8px)}
+.pill{display:inline-flex;padding:6px 11px;border-radius:999px;background:#fff;border:1.6px solid var(--ink);font:800 11px var(--mono);box-shadow:2px 2px 0 var(--ink);text-transform:uppercase;cursor:pointer}
+.pill.on{background:var(--ink);color:#fff}.pill.y{background:var(--yellow);transform:rotate(-1deg)} .pill.ink{background:var(--ink);color:#fff}
+.card{background:var(--surface);border:2px solid var(--ink);border-radius:12px;box-shadow:var(--shadow);overflow:hidden}
+.mono{font-family:var(--mono);font-size:11px} .sg{font-family:var(--hand);font-size:13.5px;color:#6B6862}
+.map-box{position:relative;background:#0A0C10;border-radius:10px;overflow:hidden;border:2px solid #0A0C10}
+canvas{display:block;width:100%;height:440px} @media(max-width:600px){canvas{height:360px}}
+.grid2{display:grid;grid-template-columns:1.2fr .8fr;gap:12px;margin-top:12px} @media(max-width:900px){.grid2{grid-template-columns:1fr}}
+.list{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:8px;padding:10px;max-height:620px;overflow:auto}
+.it{border:1.6px solid var(--ink);border-radius:10px;padding:8px 9px;background:#fff;cursor:pointer;transition:.1s;box-shadow:2px 2px 0 var(--ink)}
+.it:hover{transform:translateY(-1px);box-shadow:3px 3px 0 var(--ink)} .it.on{background:var(--yellow)}
+.btn{display:inline-flex;align-items:center;justify-content:center;padding:7px 11px;border-radius:9px;border:2px solid var(--ink);background:#fff;font:800 11px var(--mono);text-transform:uppercase;cursor:pointer;box-shadow:var(--shadow-sm)}
+.btn:hover{transform:translateY(-1px)}
+</style>
+</head>
+<body>
+<nav class="site-nav"><a class="brand" href="/">DUMB<span style="color:var(--orange)">MODEL</span></a><div class="links"><a href="/#games">Games</a><a href="/teams.html">Teams</a><a href="/play.html">Play</a><a href="/players.html">Players</a><a class="cta" href="/play.html">Play today's →</a></div></nav>
+<div class="hero-band"><div class="hero"><p class="eyebrow">Six models · five daily puzzles · free · no account</p><div class="roster"><div class="tile t-o"><svg viewBox="0 0 40 40" fill="none"><circle cx="14" cy="11" r="5" stroke="#EB6834" stroke-width="2.5"/><circle cx="26" cy="29" r="5" stroke="#2A78D6" stroke-width="2.5"/><path d="M17 15 L23 25" stroke="#111" stroke-width="2.5" stroke-linecap="round"/></svg></div><div class="tile t-b"><svg viewBox="0 0 40 40" fill="none"><path d="M8 30 L16 22 L22 26 L34 10" stroke="#2A78D6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M27 10 L34 10 L34 17" stroke="#111" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="tile t-p"><svg viewBox="0 0 40 40" fill="none"><path d="M8 32 L8 8 M8 32 L34 32" stroke="#111" stroke-width="2.5" stroke-linecap="round"/><circle cx="15" cy="25" r="2.6" fill="#7A5AE6"/><circle cx="23" cy="18" r="2.6" fill="#7A5AE6"/><circle cx="30" cy="13" r="2.6" fill="#7A5AE6"/></svg></div><div class="tile t-g"><svg viewBox="0 0 40 40" fill="none"><rect x="8" y="10" width="5" height="14" rx="1" stroke="#009E73" stroke-width="2"/><rect x="15.5" y="8" width="5" height="18" rx="1" stroke="#009E73" stroke-width="2"/><rect x="23" y="14" width="5" height="10" rx="1" fill="#009E73"/><path d="M8 28 L33 28" stroke="#111" stroke-width="2" stroke-linecap="round"/></svg></div><div class="tile t-c"><svg viewBox="0 0 40 40" fill="none"><circle cx="13" cy="13" r="5" stroke="#D8452A" stroke-width="2.2"/><circle cx="27" cy="14.5" r="4.2" stroke="#1b45a7" stroke-width="2.2"/><circle cx="20" cy="27" r="3.8" stroke="#9b6bc4" stroke-width="2.2"/><path d="M16.2 16.5 L18.5 23" stroke="#111" stroke-width="1.5" stroke-dasharray="2 2"/><path d="M23.8 18 L21.5 23.2" stroke="#111" stroke-width="1.5" stroke-dasharray="2 2"/></svg></div></div><div><h1 class="mono" style="font-weight:900;font-size:18px;text-transform:uppercase;margin:0">Players Explorer · 1814 filtered</h1><p class="mono" style="color:var(--ink-soft);margin:2px 0 0;font-size:11.2px">Current+allstars+3+ seasons — best/latest vivid OKABE 8 — grey rest hidden • <span class="sg">click list 80 → orange trajectory</span></p></div></div></div>
+<div class="wrap">
+<div class="grid2">
+<div class="card" style="padding:0">
+<div style="padding:10px 12px;display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;border-bottom:2px solid var(--ink);background:linear-gradient(90deg,var(--surface),#FFF6CC)"><span class="pill y mono">Canvas • DPR 1.4 max · #0A0C10 dark inset</span><span class="mono" style="display:flex;gap:6px"><button id="fAll" class="pill on mono">All 1814</button><button id="fCur" class="pill mono">Current 532</button><button id="fLod" class="pill mono">LOD 4k</button></span></div>
+<div class="map-box"><canvas id="c" width="900" height="480" aria-label="Players map 1814 vivid dark inset"></canvas><div style="position:absolute;left:10px;top:10px;display:flex;gap:6px"><span class="pill mono" id="lab" style="font-size:10.5px">loading 1814 pts</span></div><div style="position:absolute;right:10px;bottom:10px"><span class="pill mono" style="font-size:10.5px">◎ pulse #EB6834 · trajectory orange</span></div></div>
+<div style="padding:8px 12px;display:flex;justify-content:space-between;gap:8px;border-top:2px solid var(--ink)"><span class="mono" id="selLab" style="color:var(--ink-soft)">select player → trajectory</span><span class="mono"><span class="pill mono" style="font-size:10px">pack 672-123-456</span> <span class="pill mono" style="font-size:10px">purity@10 0.7057</span></span></div>
+</div>
+<div>
+<div class="card" style="padding:10px 11px"><div class="mono" style="font-weight:800;text-transform:uppercase;font-size:11px">Filter — All / Current · 80 list tap→map</div><p class="mono" style="color:var(--ink-soft);font-size:11px">Filter uses is_current flag from embedding_map_points_limited.json. Current = 532 latest seasons (2025-26). All = 1814 filtered (current+allstars+3+). Honest count live from file.</p><div style="margin-top:8px;display:flex;gap:6px"><button id="bAll2" class="btn">All</button><button id="bCur2" class="btn">Current</button><button id="bClr" class="btn">Clear traj</button></div></div>
+<div class="card" style="margin-top:10px"><div class="list" id="list"></div></div>
+<div class="mono" style="margin-top:8px;color:var(--ink-muted);font-size:10.5px">Zero-deps inline JS · OKABE 8 #0072B2 #D55E00 #009E73 #CC79A7 #F0E442 #56B4E9 #E69F00 #000000 · orange polyline #EB6834 · grey #9AA0A6 hidden until select · DPR capped 1.4 · 60fps rAF · 1814 → 80 list subset · share 1200×630 via index · theme #fafaf8.</div>
+</div>
+</div>
+</div>
 <script>
 const OKABE=['#0072B2','#D55E00','#009E73','#CC79A7','#F0E442','#56B4E9','#E69F00','#000000'];
 const $=s=>document.getElementById(s);
-let dots=[], yaw=0, trajCache={}, curTraj=null;
-let cv=$('c'), ctx=cv.getContext('2d'), W=900,H=460, DPR=Math.min(devicePixelRatio||1,2);
-cv.width=W*DPR; cv.height=H*DPR; ctx.scale(DPR,DPR); W=900; H=460;
-async function loadPts(filter='all'){
- let res=await fetch('assets/embedding_map_points_limited.json'); let data=await res.json();
- dots=data.points.filter(p=>{
-  if(filter==='current') return p.is_current;
-  if(filter==='allstar') return p.is_allstar;
-  return true;
- }).map(p=>({x:(p.x-0.5)*2,y:(p.y-0.5)*2,z:((p.z||0.5)-0.5)*2,r:p.is_current?1.0:0.7,col:OKABE[p.c%8],pid:p.pid,nm:p.display_name,season:p.season,alpha:p.is_current?0.9:0.75}));
- $('lab').textContent='pts '+dots.length+' filter '+filter+' mem save 86% vs 12966';
- renderList();
-}
-async function loadTraj(){
- if(Object.keys(trajCache).length) return trajCache;
- let j=await (await fetch('assets/embedding_map_trajectories.json')).json();
- trajCache=j.trajectories||{};
- return trajCache;
-}
-function renderList(){
- let l=$('list'); l.innerHTML='';
- dots.slice(0,80).forEach(d=>{
-   let div=document.createElement('div'); div.className='it';
-   div.innerHTML='<b>'+d.nm+'</b><div class=mono>'+d.season+' • '+(d.pid)+'</div>';
-   div.onclick=()=>selectPid(d.pid);
-   l.appendChild(div);
- });
-}
-async function selectPid(pid){
- let trajs=await loadTraj();
- let traj=trajs[String(pid)];
- if(!traj) return;
- curTraj=traj;
- $('lab').textContent='trajectory '+traj.length+' seasons '+traj[0].season+'→'+traj[traj.length-1].season+' • grey→orange change';
-}
-$('bAll').onclick=()=>loadPts('all');
-$('bCur').onclick=()=>loadPts('current');
-$('bToggleFull').onclick=()=>location.search='?full=1';
-
-function draw(){
- ctx.clearRect(0,0,W,H);
- yaw+=0.004;
- let ct=Math.cos(yaw), st=Math.sin(yaw), cx=W*0.5, cy=H*0.51, sc=Math.min(W,H)*0.42;
- for(let d of dots){
-  let x=d.x*ct - d.z*st, z=d.x*st + d.z*ct, y=d.y, dep=(z+1)*0.5+0.12;
-  let px=cx+x*sc*dep, py=cy+y*sc*dep*0.86;
-  ctx.beginPath(); ctx.fillStyle=d.col; ctx.globalAlpha=0.16+dep*0.62*d.alpha; ctx.arc(px,py,d.r*2.2,0,Math.PI*2); ctx.fill();
- }
- if(curTraj){
-  ctx.globalAlpha=1; ctx.strokeStyle='#FF5A1F'; ctx.lineWidth=1.6; ctx.beginPath();
-  let first=true;
-  curTraj.forEach(pt=>{
-   let xv=(pt.x-0.5)*2,yv=(pt.y-0.5)*2,zv=((pt.z||0.5)-0.5)*2;
-   let xx=xv*ct - zv*st, zz=xv*st+zv*ct, dep=(zz+1)*0.5+0.12;
-   let px=cx+xx*sc*dep, py=cy+yv*sc*dep*0.86;
-   if(first){ctx.moveTo(px,py);first=false}else ctx.lineTo(px,py);
-  }); ctx.stroke();
- }
- requestAnimationFrame(draw);
-}
-loadPts('all'); requestAnimationFrame(draw);
-</script></div></body></html>
+let dots=[],allPts=[],yaw=0,rot=1,curTr=null,tCache={},filter='all';
+let cv=$('c'),ctx=cv.getContext('2d'),W=900,H=480;
+let DPR=Math.min(devicePixelRatio||1,1.4);
+function rs(){let r=cv.getBoundingClientRect();W=Math.round(r.width*DPR);H=Math.round((r.height||460)*DPR);cv.width=W;cv.height=H}addEventListener('resize',()=>{DPR=Math.min(devicePixelRatio||1,1.4);rs()});rs();
+async function loadPts(f='all'){try{let res=await fetch('assets/embedding_map_points_limited.json'),j=await res.json();allPts=j.points||[];let filt=allPts.filter(p=>{if(f==='current')return p.is_current;return true});dots=filt.map(p=>({x:(p.x-.5)*2,y:(p.y-.5)*2,z:((p.z||.5)-.5)*2,r:p.is_current?1.05:.72,col:OKABE[p.c%8]||'#F0E442',pid:p.pid,nm:p.display_name,se:p.season,cur:!!p.is_current,al:p.is_current?.92:.78}));$('lab').textContent=f+' • '+dots.length+' pts • 1814 filtered · mem 86%';renderList();}catch(e){$('lab').textContent='fallback load failed'}}
+function renderList(){let L=$('list');L.innerHTML='';dots.slice(0,80).forEach(d=>{let div=document.createElement('div');div.className='it';div.innerHTML=`<b style="font-size:12.5px">${d.nm}</b><div class="mono" style="color:var(--ink-soft)">${d.se} • pid ${d.pid} ${d.cur?'• current':''}</div>`;div.onclick=()=>sel(d.pid,d);L.appendChild(div)})}
+async function loadTraj(){if(Object.keys(tCache).length)return tCache;try{let r=await fetch('assets/embedding_map_trajectories.json'),j=await r.json();tCache=j.trajectories||{}}catch{}return tCache}
+async function sel(pid,hint){let trs=await loadTraj(),tr=trs[String(pid)];if(!tr){$('selLab').textContent='no trajectory for pid '+pid+' — points only';return}curTr=tr;$('selLab').textContent= (hint?hint.nm+' • ':'')+'trajectory '+tr.length+' seasons '+tr[0].season+'→'+tr[tr.length-1].season+' • orange #EB6834 polyline';document.querySelectorAll('.it').forEach(el=>{if(el.textContent.includes(String(pid)))el.classList.add('on')})}
+$('fAll').onclick=()=>{filter='all';$('fAll').classList.add('on');$('fCur').classList.remove('on');loadPts('all')};$('fCur').onclick=()=>{filter='current';$('fCur').classList.add('on');$('fAll').classList.remove('on');loadPts('current')};$('bAll2').onclick=$('fAll').onclick;$('bCur2').onclick=$('fCur').onclick;$('bClr').onclick=()=>{curTr=null;$('selLab').textContent='cleared trajectory'};$('fLod').onclick=()=>{DPR=DPR===1.4?1:1.4;$('fLod').textContent='DPR '+DPR.toFixed(1);rs()};
+function draw(){let ct=Math.cos(yaw),st=Math.sin(yaw),cx=W*.5,cy=H*.52,sc=Math.min(W,H)*.42;ctx.clearRect(0,0,W,H);if(rot)yaw+=.005;for(let pass=0;pass<2;pass++){for(let d of dots){let viv=d.al>.65;if((pass===0&&viv)||(pass===1&&!viv))continue;let x=d.x*ct-d.z*st,z=d.x*st+d.z*ct,y=d.y,dep=(z+1)*.5+.12,px=cx+x*sc*dep,py=cy+y*sc*dep*.86;if(px<-20||px>W+20||py<-20||py>H+20)continue;ctx.beginPath();let col=d.col;let r=parseInt(col.slice(1,3),16),g=parseInt(col.slice(3,5),16),b=parseInt(col.slice(5,7),16);ctx.fillStyle='rgba('+r+','+g+','+b+','+(.14+dep*.62*d.al).toFixed(3)+')';ctx.arc(px,py,d.r*(1+dep*1.4),0,6.283);ctx.fill()}}if(curTr&&curTr.length>1){ctx.strokeStyle='#EB6834';ctx.lineWidth=2*DPR;ctx.globalAlpha=.96;ctx.beginPath();let f=1;curTr.forEach(pt=>{let xv=(pt.x-.5)*2,yv=(pt.y-.5)*2,zv=((pt.z||.5)-.5)*2,xx=xv*ct-zv*st,zz=xv*st+zv*ct,dep=(zz+1)*.5+.12,px=cx+xx*sc*dep,py=cy+yv*sc*dep*.86;if(f){ctx.moveTo(px,py);f=0}else ctx.lineTo(px,py)});ctx.stroke();ctx.globalAlpha=1;curTr.forEach((pt,i)=>{let xv=(pt.x-.5)*2,yv=(pt.y-.5)*2,zv=((pt.z||.5)-.5)*2,xx=xv*ct-zv*st,zz=xv*st+zv*ct,dep=(zz+1)*.5+.12,px=cx+xx*sc*dep,py=cy+yv*sc*dep*.86,p=i/(curTr.length-1);ctx.fillStyle='rgba(235,104,52,'+(.36+p*.64).toFixed(2)+')';ctx.beginPath();ctx.arc(px,py,2.8*DPR+p*1.6,0,6.283);ctx.fill()})}requestAnimationFrame(draw)}loadPts('all');requestAnimationFrame(draw);
+cv.addEventListener('click',async e=>{let r=cv.getBoundingClientRect(),mx=(e.clientX-r.left)/r.width*2-1,my=(e.clientY-r.top)/r.height*2-1,ct=Math.cos(yaw),st=Math.sin(yaw),cx=W*.5,cy=H*.52,sc=Math.min(W,H)*.42,best=null,bd=1e9;dots.forEach(d=>{let x=d.x*ct-d.z*st,z=d.x*st+d.z*ct,y=d.y,dep=(z+1)*.5+.12,px=cx+x*sc*dep,py=cy+y*sc*dep*.86,pxn=(px/W)*2-1,pyn=(py/H)*2-1,dist=(pxn-mx)*(pxn-mx)+(pyn-my)*(pyn-my);if(dist<bd){bd=dist;best=d}});if(best&&bd<.03)sel(best.pid,best)});
+</script>
+</body>
+</html>

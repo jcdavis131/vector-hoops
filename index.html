@@ -3,139 +3,134 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#0A0C10" media="(prefers-color-scheme: dark)">
-<meta name="theme-color" content="#FFFEF7" media="(prefers-color-scheme: light)">
-<title>Vector Hoops — 12,966 seasons map</title>
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23080A0F'/%3E%3Ctext x='50%25' y='54%25' dominant-baseline='middle' text-anchor='middle' font-size='16' fill='%23F0E442'%3E%E2%97%8E%3C/text%3E%3C/svg%3E">
-<link rel="manifest" href="data:application/manifest+json;base64,eyJuYW1lIjoiVmVjdG9yIEhvb3BzIiwiY2F0ZWdvcnkiOiJnYW1lIiwic2hvcnRfbmFtZSI6IlZIb29wcyIsInN0YXJ0X3VybCI6Ii8iLCJkaXNwbGF5Ijoic3RhbmRhbG9uZSIsImJhY2tncm91bmRfY29sb3IiOiIjRkZGRUQ3IiwiIHRoZW1lX2NvbG9yIjoiIzBBMEMxMCIsImljb25zIjpbXX0=">
+<title>dumbmodel — Vector Hoops • 12,966 seasons map</title>
+<meta name="description" content="Twelve thousand seasons as 64-d vectors — Past→Modern twin affinity. Era-honest NBA comparisons.">
+<meta name="theme-color" content="#fafaf8">
+<meta property="og:title" content="Vector Hoops — 12,966 seasons map">
+<meta property="og:image" content="/assets/og-1200x630.png">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Architects+Daughter&display=swap" rel="stylesheet">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23111111'/%3E%3Ccircle cx='11' cy='12' r='3' fill='%23eb6834'/%3E%3Ccircle cx='21' cy='19' r='3' fill='%232a78d6'/%3E%3Cpath d='M11 12 L21 19' stroke='%23fafaf8' stroke-width='1.6'/%3E%3C/svg%3E">
+<link rel="manifest" href="data:application/manifest+json;base64,eyJuYW1lIjoiVmVjdG9yIEhvb3BzIiwiY2F0ZWdvcnkiOiJnYW1lIiwic2hvcnRfbmFtZSI6IlZIb29wcyIsInN0YXJ0X3VybCI6Ii8iLCJkaXNwbGF5Ijoic3RhbmRhbG9uZSIsImJhY2tncm91bmRfY29sb3IiOiIjZmFmYWY4IiwiIHRoZW1lX2NvbG9yIjoiI2ZhZmFmOCJ9">
 <style>
-:root{--paper:#FFFEF7;--void:#080A0F;--ink:#1A150F;--yellow:#F0E442;--orange:#FF5A1F;--green:#00D9A0;--red:#FF3B30;--line:#EDE8DE;--muted:#8B857E;--card:#FFFEFB;--g:#E7F6EA;--r:#FFD8D5;--y:#FFE9B5;--grid:#151B2A}
-*{box-sizing:border-box}html{font-size:18px}html,body{margin:0;background:var(--void);color:var(--paper);font-family:ui-sans-system,system-ui,-apple-system,Segoe UI,Roboto,Inter,sans-serif;line-height:1.65;-webkit-font-smoothing:antialiased}
-body::after{content:'';position:fixed;inset:0;pointer-events:none;opacity:.02;z-index:9999;background-image:radial-gradient(circle at 1px 1px,var(--paper) 1px,transparent 0),radial-gradient(circle at 6px 9px,var(--ink) .9px,transparent 0);background-size:18px 18px,22px 22px}
-a{color:inherit;text-decoration:none}
-.hd{font-family:ui-monospace,Menlo,Consolas,monospace;font-weight:900;text-transform:uppercase;letter-spacing:.06em}
-.sm{font-family:ui-monospace,Menlo,monospace;font-size:11.5px;font-weight:800;letter-spacing:.03em;color:var(--muted);text-transform:uppercase}
-.sg{font-family:"Architects Daughter",cursive,ui-sans-serif;font-size:16px;line-height:1.45;opacity:.92;transform:rotate(-0.6deg);display:inline-block}
-.wrap{max-width:1140px;margin:0 auto;padding:14px 16px;position:relative;z-index:1}
-header{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;padding:6px 0 14px}
-.brand{font-family:ui-monospace,Menlo,monospace;font-weight:900;letter-spacing:-.02em;font-size:18px;display:flex;gap:10px;align-items:center;text-transform:uppercase}
-.pill{display:inline-flex;align-items:center;gap:7px;padding:6px 12px;border-radius:999px;background:var(--yellow);color:var(--ink);font-weight:800;font-size:12px;border:1.5px solid var(--ink);box-shadow:2px 2px 0 var(--ink);line-height:1;transform:rotate(-1deg)}
-.pill-paper{background:var(--paper);color:var(--ink);transform:none}.pill-void{background:#121A2D;color:#C9D4E5;border-color:#1E2B44;transform:none}
-.pill-g,.pill-blue,.pill-closer{background:#E7F6EA;transform:none}.pill-y2,.pill-dependent{background:#FFE9B5;transform:none}.pill-r,.pill-red,.pill-exploitable{background:#FFD8D5;transform:none}
-.pill-y{background:var(--yellow);transform:rotate(-1deg)}
-.pack{font-family:ui-monospace,Menlo,monospace;font-weight:900;font-size:clamp(13px,2.2vw,18px);letter-spacing:.04em;border:2.2px solid var(--ink);border-radius:10px;padding:8px 12px;background:var(--paper);color:var(--ink);box-shadow:3px 3px 0 var(--ink);display:inline-flex;gap:8px;align-items:center}
-.grid{display:grid;grid-template-columns:1.28fr .72fr;gap:14px}
+:root{--paper:#fafaf8;--surface:#fff;--ink:#111111;--ink-soft:#52514e;--ink-muted:#898781;--hairline:#e1e0d9;--orange:#eb6834;--blue:#2a78d6;--purple:#7a5ae6;--yellow:#f0e442;--green:#009e73;--red:#d8452a;--void:#0A0C10;--mono:ui-monospace,"IBM Plex Mono","SFMono-Regular",Consolas,Menlo,monospace;--sans:ui-sans-system,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;--hand:"Architects Daughter",cursive;--shadow:4px 4px 0 var(--ink);--shadow-sm:3px 3px 0 var(--ink);--radius:12px;--gutter:clamp(12px,3.2vw,28px)}
+*{box-sizing:border-box}html,body{margin:0;padding:0;background:var(--paper);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}a:focus-visible,button:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+.skip{position:absolute;left:-9999px}.skip:focus{position:fixed;left:16px;top:16px;z-index:200;padding:10px 14px;background:var(--ink);color:var(--paper);border:2px solid var(--ink);border-radius:8px;font-family:var(--mono);font-weight:800;font-size:12px;text-transform:uppercase;box-shadow:var(--shadow-sm)}
+.site-nav{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px var(--gutter);padding-top:calc(12px + env(safe-area-inset-top,0));background:var(--surface);border-bottom:2px solid var(--ink);position:sticky;top:0;z-index:50;width:100%}
+.site-nav__brand{font-family:var(--mono);font-weight:800;letter-spacing:.04em;font-size:15px;text-transform:uppercase;color:var(--ink);text-decoration:none;white-space:nowrap}
+.site-nav__brand span{color:var(--orange)}.site-nav__links{display:flex;align-items:center;gap:4px;flex-wrap:wrap;justify-content:flex-end}
+.site-nav__link{font-family:var(--mono);font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-soft);text-decoration:none;padding:8px 10px;border-radius:8px;border:2px solid transparent}
+.site-nav__link:hover{color:var(--ink)}.site-nav__cta{font-family:var(--mono);font-size:11.5px;font-weight:800;text-transform:uppercase;letter-spacing:.04em;background:var(--ink);color:var(--paper);border:2px solid var(--ink);border-radius:8px;padding:8px 14px;min-height:36px;display:inline-flex;align-items:center;box-shadow:var(--shadow-sm);transition:transform .1s,box-shadow .1s}
+.site-nav__cta:hover{transform:translate(-1px,-1px);box-shadow:var(--shadow)}@media(max-width:479px){.site-nav{padding:8px 12px}.site-nav__brand{font-size:13px}.site-nav__link{font-size:10px;padding:6px 7px}.site-nav__cta{font-size:10px;padding:6px 10px}}
+.hero-band{background:var(--paper);border-bottom:2px solid var(--ink)}.hero{max-width:1120px;margin:0 auto;padding:18px var(--gutter) 16px;display:grid;grid-template-columns:1.1fr .9fr;gap:16px;align-items:start}
+@media(max-width:820px){.hero{grid-template-columns:1fr}}.eyebrow{font-family:var(--mono);font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-muted);margin:0 0 8px}
+.roster{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0 10px}.tile{width:46px;height:46px;border:2px solid var(--ink);border-radius:10px;background:#fff;display:grid;place-items:center;box-shadow:var(--shadow-sm)}.tile--orange{border-color:var(--ink)} .tile--blue{border-color:var(--ink)} .tile--purple{border-color:var(--ink)} .tile--green{border-color:var(--ink)} .tile--chimera{border-color:var(--ink);background:var(--surface)}
+.title{font-family:var(--mono);font-weight:900;font-size:clamp(30px,5.6vw,44px);line-height:.96;margin:6px 0 8px;letter-spacing:-.02em;text-transform:uppercase}.title-accent{color:var(--orange);display:inline-block;transform:rotate(-0.9deg);background:var(--yellow);padding:0 6px;border:1.5px solid var(--ink);box-shadow:2px 2px 0 var(--ink)}
+.tagline{font-size:15px;line-height:1.6;max-width:46ch;margin:0}.tagline b{font-weight:800}.hand{font-family:var(--hand);font-size:16px;opacity:.92;transform:rotate(-0.6deg);display:inline-block;margin-left:2px}
+.pill{display:inline-flex;align-items:center;gap:6px;padding:5px 10px;border-radius:999px;border:1.6px solid var(--ink);background:#fff;box-shadow:2px 2px 0 var(--ink);font-family:var(--mono);font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.02em;line-height:1}
+.pill-y{background:var(--yellow);transform:rotate(-.8deg)}.pill-o{background:#ffe7d6;border-color:var(--ink)}.pill-b{background:#e7eefc}.pill-g{background:#e7f6ea}
+.card{background:var(--surface);border:2px solid var(--ink);border-radius:14px;box-shadow:var(--shadow);overflow:hidden;transition:transform .12s,box-shadow .12s}
+.card:hover{transform:translateY(-1px);box-shadow:6px 6px 0 var(--ink)}.mono{font-family:var(--mono);font-size:11px;font-weight:800;letter-spacing:.03em;text-transform:uppercase}
+.mono-sm{font-family:var(--mono);font-size:10.5px;color:var(--ink-muted);text-transform:uppercase;letter-spacing:.06em}
+.grid{max-width:1120px;margin:0 auto;padding:12px var(--gutter);display:grid;grid-template-columns:1.32fr .68fr;gap:14px}
 @media(max-width:900px){.grid{grid-template-columns:1fr}}
-.card{background:var(--card);color:var(--ink);border:2.2px solid var(--ink);border-radius:14px;box-shadow:4px 4px 0 var(--ink);overflow:hidden;transition:.12s transform,.12s box-shadow}
-.card:hover{transform:translateY(-1px);box-shadow:5px 5px 0 var(--ink)}.card:active{transform:translate(1px,1px);box-shadow:1px 1px 0 var(--ink)}
-.card-plain{background:var(--card);border:2.2px solid var(--ink);border-radius:14px;box-shadow:4px 4px 0 var(--ink)}
-.map-head{display:flex;flex-wrap:wrap;gap:8px;justify-content:space-between;align-items:center;padding:10px 12px;border-bottom:2.2px solid var(--ink);background:linear-gradient(90deg,var(--paper),#FFF7CC)}
-.map-box{position:relative;background:radial-gradient(1100px 600px at 18% -10%,#1E2B44 0%,#101724 32%,var(--void) 72%);isolation:isolate}
-canvas{display:block;width:100%;height:440px}
-@media(max-width:600px){canvas{height:360px}}
-.tag{position:absolute;left:10px;top:10px;z-index:2;display:flex;gap:6px;flex-wrap:wrap}
-.foot-tag{position:absolute;right:10px;bottom:10px;z-index:2}
-.bullseye{width:62px;height:62px;border-radius:50%;border:3px solid var(--orange);display:grid;place-items:center;background:radial-gradient(circle at 50% 50%,rgba(255,90,31,.28),rgba(255,90,31,.08) 60%,transparent 70%);box-shadow:0 0 0 2px rgba(255,90,31,.22) inset,0 0 22px rgba(255,90,31,.36);color:var(--orange);font-weight:900;font-size:26px;animation:pulseRing 2.2s ease-in-out infinite}
-@keyframes pulseRing{0%,100%{transform:scale(1);box-shadow:0 0 0 2px rgba(255,90,31,.22) inset,0 0 18px rgba(255,90,31,.32)}50%{transform:scale(1.06);box-shadow:0 0 0 3px rgba(255,90,31,.32) inset,0 0 28px rgba(255,90,31,.52)}}
-.hero{padding:14px 15px}
-.hero h1{font-family:ui-monospace,Menlo,monospace;font-weight:900;letter-spacing:-.02em;font-size:32px;line-height:.96;margin:6px 0 8px;text-transform:uppercase}
-.sub{color:#5A5550;font-size:12.8px;line-height:1.5}
-.pop{display:grid;grid-template-columns:1fr;gap:6px;margin-top:10px}
-.pop button{display:flex;justify-content:space-between;align-items:center;text-align:left;padding:9px 11px;border-radius:12px;border:2.2px solid var(--ink);background:var(--paper);font-weight:800;font-size:12.6px;cursor:pointer;box-shadow:2.5px 2.5px 0 var(--ink);transition:.12s transform}
-.pop button:hover{transform:translateY(-1px);box-shadow:3.5px 3.5px 0 var(--ink)}.pop button:active{transform:translate(1px,1px);box-shadow:1px 1px 0 var(--ink)}
-.pop button.on{background:var(--yellow)} .pop small{font-weight:600;color:#6B6660}
-.dots{display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin-top:10px}
-.dot{width:13px;height:13px;border-radius:50%;border:1.5px solid var(--ink);background:#fff;box-shadow:1px 1px 0 var(--ink);display:inline-block}
-.dot.on{background:var(--yellow)}.dot.filled{background:var(--ink);border-color:var(--ink)}.dot.war{background:var(--orange);border-color:var(--ink)}
-.edge{margin-top:14px;padding:14px}.edge .t4{margin-top:10px}
-.edge h2{font-family:ui-monospace,Menlo,monospace;font-weight:900;font-size:20px;margin:0 0 6px;letter-spacing:-.02em;text-transform:uppercase}
-.t4{display:grid;grid-template-columns:1fr 1fr;gap:10px} @media(max-width:700px){.t4{grid-template-columns:1fr}}
-.mini{border:2.2px solid var(--ink);border-radius:14px;padding:11px;background:var(--paper);box-shadow:3px 3px 0 var(--ink);transition:.12s}
-.mini:hover{transform:translateY(-1px);box-shadow:4px 4px 0 var(--ink)} .mini b{display:block;margin-bottom:2px;font-size:13px}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;padding:8px 12px;border-radius:999px;border:2.2px solid var(--ink);background:#fff;font-weight:900;font-family:ui-monospace,Menlo,monospace;cursor:pointer;box-shadow:2.6px 2.6px 0 var(--ink);transition:.12s;text-transform:uppercase;letter-spacing:.02em}
-.btn:hover{transform:translateY(-1px);box-shadow:3.6px 3.6px 0 var(--ink)} .btn:active{transform:translate(1px,1px);box-shadow:1px 1px 0 var(--ink)}
-.btn-xl{min-height:54px;padding:12px 18px;font-size:15px;border-radius:14px;background:var(--yellow);display:inline-flex;align-items:center;justify-content:center;gap:8px}
-.btn-p{background:var(--ink);color:var(--paper)} .btn-y{background:var(--yellow);color:var(--ink)}
-footer{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between;margin-top:14px;padding:10px 2px;color:#AEB9CC;font-size:11.8px}
-.mono{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px}
-.lod{display:inline-flex;gap:6px;align-items:center} .lod button{font-family:ui-monospace,Menlo,monospace;font-size:11px;padding:5px 9px;border-radius:999px;border:1.5px solid var(--ink);background:var(--paper);box-shadow:1.5px 1.5px 0 var(--ink);cursor:pointer;font-weight:800}
-.lod button.on{background:var(--yellow)}
+.map-head{display:flex;flex-wrap:wrap;gap:8px;justify-content:space-between;align-items:center;padding:10px 12px;border-bottom:2px solid var(--ink);background:linear-gradient(90deg,var(--paper),#FFF6C8)}
+.map-box{position:relative;background:radial-gradient(1100px 600px at 18% -10%,#1A233A 0%,#121A2D 32%,var(--void) 72%);isolation:isolate}
+canvas{display:block;width:100%;height:440px}@media(max-width:600px){canvas{height:360px}}
+.map-tag{position:absolute;left:10px;top:10px;z-index:2;display:flex;gap:6px;flex-wrap:wrap}.foot-tag{position:absolute;right:10px;bottom:10px;z-index:2}
+.bull{width:58px;height:58px;border-radius:50%;border:3px solid var(--orange);display:grid;place-items:center;background:radial-gradient(circle at 50% 50%,rgba(235,104,52,.28),rgba(235,104,52,.08) 60%,transparent 70%);color:var(--orange);font-weight:900;font-size:24px;animation:pr 2.2s ease-in-out infinite}
+@keyframes pr{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
+.pop{display:grid;grid-template-columns:1fr;gap:6px;margin-top:10px}.pop button{display:flex;justify-content:space-between;align-items:center;text-align:left;padding:9px 11px;border-radius:12px;border:2px solid var(--ink);background:var(--surface);font-weight:800;font-size:12.6px;cursor:pointer;box-shadow:2.5px 2.5px 0 var(--ink);transition:.12s}.pop button:hover{transform:translateY(-1px);box-shadow:3.5px 3.5px 0 var(--ink)}.pop button.on{background:var(--yellow)}.sub{color:#5A5550;font-size:12.8px;line-height:1.5}
+.dots{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}.dot{width:12px;height:12px;border-radius:50%;border:1.5px solid var(--ink);background:#fff;box-shadow:1px 1px 0 var(--ink);display:inline-block}.dot.on{background:var(--yellow)}.dot.filled{background:var(--ink)}.dot.war{background:var(--orange)}
+.edge{margin-top:10px;padding:14px}.t4{display:grid;grid-template-columns:1fr 1fr;gap:10px}@media(max-width:700px){.t4{grid-template-columns:1fr}}
+.mini{border:2px solid var(--ink);border-radius:14px;padding:11px;background:var(--surface);box-shadow:3px 3px 0 var(--ink)}.btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;padding:8px 12px;border-radius:999px;border:2px solid var(--ink);background:#fff;font-weight:900;font-family:var(--mono);cursor:pointer;box-shadow:2.6px 2.6px 0 var(--ink);transition:.12s;text-transform:uppercase;font-size:11.5px}.btn:hover{transform:translateY(-1px);box-shadow:3.6px 3.6px 0 var(--ink)}.btn:active{transform:translate(1px,1px);box-shadow:1px 1px 0 var(--ink)}.btn-xl{min-height:44px;padding:10px 16px;font-size:13px;border-radius:12px}.btn-p{background:var(--ink);color:var(--paper)}.btn-y{background:var(--yellow);color:var(--ink)}
+footer{max-width:1120px;margin:0 auto;padding:10px var(--gutter);display:flex;flex-wrap:wrap;gap:8px;justify-content:space-between;color:#6b6760;font-size:11.5px;font-family:var(--mono)}
+.lod{display:inline-flex;gap:6px}.lod button{font-family:var(--mono);font-size:11px;padding:5px 9px;border-radius:999px;border:1.5px solid var(--ink);background:var(--surface);box-shadow:1.5px 1.5px 0 var(--ink);cursor:pointer;font-weight:800}.lod button.on{background:var(--yellow)}
 </style>
 </head>
 <body>
-<div class="wrap">
-<header>
-<div class="brand">◐ Vector Hoops <span class="pill pill-y">12,966 seasons • 26792 shared-map LOD</span></div>
-<div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
-<span class="pill pill-paper sm">purity@10 0.7057 · lift 6.32</span>
-<a class="btn btn-xl" href="/play.html">▶ Play</a>
-<a class="pill pill-paper" href="/leaderboard.html">Week Warrior</a>
-</div>
-</header>
+<a class="skip" href="#main">Skip to content</a>
+<nav class="site-nav" aria-label="Primary">
+  <a class="site-nav__brand" href="/">DUMB<span>MODEL</span></a>
+  <div class="site-nav__links">
+    <a class="site-nav__link" href="#games">Games</a>
+    <a class="site-nav__link" href="/teams.html">Teams</a>
+    <a class="site-nav__link" href="/players.html">Players</a>
+    <a class="site-nav__link" href="/model.html">Model</a>
+    <a class="site-nav__cta" href="/play.html">Play today's →</a>
+  </div>
+</nav>
 
-<div class="grid">
-<div class="card">
+<div class="hero-band">
+<div class="hero">
+<div>
+<p class="eyebrow">Six models · five daily puzzles · free · no account</p>
+<div class="roster" aria-hidden="true">
+<div class="tile tile--orange"><svg viewBox="0 0 40 40" fill="none"><circle cx="14" cy="11" r="5" stroke="#eb6834" stroke-width="2.5"/><circle cx="26" cy="29" r="5" stroke="#2a78d6" stroke-width="2.5"/><path d="M17 15 L23 25" stroke="#111" stroke-width="2.5" stroke-linecap="round"/></svg></div>
+<div class="tile tile--blue"><svg viewBox="0 0 40 40" fill="none"><path d="M8 30 L16 22 L22 26 L34 10" stroke="#2a78d6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M27 10 L34 10 L34 17" stroke="#111" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+<div class="tile tile--purple"><svg viewBox="0 0 40 40" fill="none"><path d="M8 32 L8 8 M8 32 L34 32" stroke="#111" stroke-width="2.5" stroke-linecap="round"/><circle cx="15" cy="25" r="2.6" fill="#7a5ae6"/><circle cx="23" cy="18" r="2.6" fill="#7a5ae6"/><circle cx="30" cy="13" r="2.6" fill="#7a5ae6"/></svg></div>
+<div class="tile tile--green"><svg viewBox="0 0 40 40" fill="none"><rect x="8" y="10" width="5" height="14" rx="1" stroke="#009E73" stroke-width="2"/><rect x="15.5" y="8" width="5" height="18" rx="1" stroke="#009E73" stroke-width="2"/><rect x="23" y="14" width="5" height="10" rx="1" fill="#009E73"/><path d="M8 28 L33 28" stroke="#111" stroke-width="2" stroke-linecap="round"/></svg></div>
+<div class="tile tile--chimera" title="Joint 20,719 × 64-d"><svg viewBox="0 0 40 40" fill="none"><circle cx="13" cy="13" r="5" stroke="#d8452a" stroke-width="2.2"/><circle cx="27" cy="14.5" r="4.2" stroke="#1b45a7" stroke-width="2.2"/><circle cx="20" cy="27" r="3.8" stroke="#9b6bc4" stroke-width="2.2"/><path d="M16.2 16.5 L18.5 23" stroke="#14181d" stroke-width="1.5" stroke-dasharray="2 2" stroke-linecap="round"/><path d="M23.8 18 L21.5 23.2" stroke="#14181d" stroke-width="1.5" stroke-dasharray="2 2" stroke-linecap="round"/></svg></div>
+</div>
+<h1 class="title">It's a dumb model.<br>Beat it <span class="title-accent">anyway</span>.</h1>
+<p class="tagline">12,966 NBA seasons as 64-d vectors — the box score, the tracking, the draft slot, the salary, the awards nobody remembers — squashed into one list. We hide the names and hand you the numbers. <b style="background:var(--yellow);padding:2px 6px;border:1.5px solid var(--ink);box-shadow:1.5px 1.5px 0 var(--ink)">The model is wrong all the time — that's the fun part.</b> <span class="hand">past → modern twin affinity</span></p>
+<div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap"><a class="btn btn-p btn-xl" href="/play.html">Play today's Vector Hoops →</a><a class="btn btn-xl" href="#model">How it works</a><span class="pill pill-y">purity@10 0.7057 · lift 6.32</span></div>
+</div>
+<div>
+<div class="card" style="padding:12px"><div class="mono">20,719 · JOINT STARS · 64-d L2</div><div class="mono-sm" style="margin-top:6px">12,966 NBA · 4,831 company-years · 4,022 tennis · 5,323 NFL joint · 2,430 pitch. Same engine, 5 dailies.</div><div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap"><span class="pill pill-o">MTNN 17 towers</span><span class="pill pill-b">130 feats</span><span class="pill">ONNX 549K</span><span class="pill pill-y" id="lodLab2">1814 pts filt • 86% mem save</span></div><div style="margin-top:10px;font-size:13px;line-height:1.5;color:#3a3732">Era-honest comparisons — peak year vivid if retired, latest vivid if still playing, rest grey hidden until you tap. Trajectory orange shows change over time.</div></div>
+</div>
+</div>
+</div>
+
+<div class="grid" id="main">
+<div class="card" id="map-card">
 <div class="map-head">
-<span class="pill hd" style="font-size:10.5px">Canvas • LOD 4k/8k · DPR-aware · 60fps rAF · shared 26792</span>
-<span class="lod"><button id="b4k" class="on">4k</button><button id="b8k">8k</button><button id="bRot" class="pill">rot ◐</button><button id="bShare" class="pill pill-y">Share 1200×630</button></span>
+<span class="pill mono" style="font-size:10.5px;background:#111;color:#fff">Canvas • LOD 4k/8k · DPR-aware · 60fps rAF</span>
+<span class="lod"><button id="b4k" class="on">4k</button><button id="b8k">8k</button><button id="bRot">rot ◐</button><button id="bShare" class="pill pill-y">Share 1200×630</button></span>
 </div>
 <div class="map-box">
-<canvas id="c" width="1024" height="520" aria-label="Vector Hoops map 12966 seasons shared 26792 LOD"></canvas>
-<div class="tag">
-<span class="pack" id="lodLab">LOD 4k · DPR 1 · 26792 → 4k</span>
-<span class="pill pill-paper sm" id="fpsLab">60fps rAF</span>
+<canvas id="c" width="1024" height="520" aria-label="Vector Hoops map 1814 limited"></canvas>
+<div class="map-tag"><span class="pill" id="fpsLab" style="font-size:10.5px">60fps rAF</span><span class="pill mono-sm" id="seedLab">pack 672-123-456 · LCG det</span></div>
+<div class="foot-tag"><span class="pill mono-sm">◎ bullseye #EB6834 orange pulse · tap pop</span></div>
+<div id="ring" class="bull" style="position:absolute;left:46%;top:44%;display:none;pointer-events:none;z-index:3">◎</div>
 </div>
-<div class="foot-tag"><span class="pill pill-paper sm">◎ bullseye #FF5A1F orange pulse · tap pop</span></div>
-<div id="ring" class="bullseye" style="position:absolute;left:46%;top:44%;display:none;pointer-events:none;z-index:3">◎</div>
-</div>
-<div style="padding:10px 12px;display:flex;flex-wrap:wrap;gap:8px;justify-content:space-between;border-top:2.2px solid var(--ink);background:var(--paper)">
-<span class="mono" style="color:#5A5550">546 LCG a=1103515245 c=12345 m=2³¹ • same-link same-stars P7 dailySeed</span>
-<span class="mono pack" id="posLab" style="font-size:11px">hover / tap → xy</span>
+<div style="padding:10px 12px;display:flex;flex-wrap:wrap;gap:8px;justify-content:space-between;border-top:2px solid var(--ink);background:var(--paper)">
+<span class="mono-sm">546 LCG a=1103515245 c=12345 m=2³¹ • same-link same-stars dailySeed</span>
+<span class="mono pill" id="posLab" style="font-size:11px">hover / tap → xy</span>
 </div>
 </div>
 
-<div class="card hero">
-<div class="pill pill-y hd" style="font-size:10.5px">Void #080A0F · Paper #FFFEF7 · Yellow signal</div>
-<h1>12,966<br>seasons map</h1>
-<p class="sub">Past → Modern twin affinity. MTNN 64-d → 2d UMAP rot canvas. One map, 26792 archival dots concept distilled to LOD 4k/8k for 60fps. <span class="sg">Rotating projection rAF quaternion-yaw .006 pulse #FF5A1F</span> Tap Jordan → shows position, <b>not</b> auto-start — deliberate.</p>
-<div style="display:flex;gap:7px;flex-wrap:wrap;margin-top:10px">
-<span class="pack" id="packChip">pack 672-123-456 · LCG det</span>
-<span class="mono sm" id="seedChip">a=1103515245 seed…</span>
+<div style="display:flex;flex-direction:column;gap:12px">
+<div class="card" style="padding:12px">
+<div class="pill pill-y mono" style="font-size:10.5px">Void #080A0F · Paper #FAFAF8 · Orange signal #EB6834</div>
+<div class="mono" style="margin-top:8px;font-size:20px;letter-spacing:-.02em">12,966 seasons map</div>
+<p class="sub">Past → Modern twin affinity. MTNN 64-d → 2d rotating projection rAF quaternion-yaw .006 pulse #EB6834. LOD 4k unwraps to 8k full 12,966 on demand. <span class="hand" style="font-family:var(--hand)">Tap Jordan → pos only, deliberate.</span></p>
+<div style="display:flex;gap:7px;flex-wrap:wrap;margin-top:8px"><span class="pill" id="packChip">pack 672-123-456</span><span class="mono-sm" id="seedChip">1814 pts filt</span></div>
+<div style="margin-top:10px"><div class="mono-sm">Popular — tap to explore</div><div class="pop" id="popList"></div><div class="mono-sm" style="margin-top:6px">Jordan rule: pos only, no game start. Others → preview trajectory.</div></div>
+<div class="dots" id="wwDots"></div><div class="mono-sm" id="wwLab" style="margin-top:4px">weekStreak 0/7</div>
+<a class="btn btn-y btn-xl" href="/play.html" style="margin-top:10px;width:100%">Play Past→Modern → /play</a>
 </div>
-<div style="margin-top:12px">
-<div class="sm hd">Popular — tap to explore</div>
-<div class="pop" id="popList"></div>
-<div class="sg" style="margin-top:6px">Jordan rule: pos only, no game start. Others → preview twin path.</div>
-</div>
-<div class="dots" id="wwDots"></div>
-<div class="mono sm" id="wwLab" style="margin-top:4px">weekStreak 0/7 · vh_weekStreak</div>
-<a class="btn btn-xl" href="/play.html" style="margin-top:10px;width:100%">Play Past→Modern → /play</a>
+<div class="card" style="padding:10px"><div class="mono">Owner / Player / Brand / DFS</div><div class="mono-sm" style="margin-top:4px">Four monetization towers, one map. Pick Your Edge below.</div><div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap"><a class="btn btn-xl" href="/owner">Owner $5k</a><a class="btn" href="/player">Player</a><a class="btn" href="/brand">Brand $2k</a><a class="btn btn-y" href="/dfs">DFS $9</a></div></div>
 </div>
 </div>
 
+<div style="max-width:1120px;margin:0 auto;padding:0 var(--gutter) 10px">
 <div class="card edge">
-<div class="pill pill-y hd" style="transform:rotate(-1deg)">Pick Your Edge — 4-track hub 🏆</div>
-<h2 style="margin-top:8px">Four monetization towers, one map, zero-deps</h2>
-<div class="sub"><span class="pill pill-y sm">Yellow #F0E442 signal pill above fold</span> 64-d MTNN → Owner/Player/Brand/DFS lanes. <span class="sg">2x2 grid, 1-col mobile, emoji icons no sets.</span></div>
-<div class="t4">
-<div class="mini"><span class="pill sm" style="background:var(--yellow)">🏆 Owner • $5k trophy</span><b>FOR = 0.35 Draft + 0.35 Cap + 0.30 Foresight</b><div class="sub">Draft surplus z, cap W/$M, foresight maturation + vegas_alpha props_alpha champ_bonus + val growth z*0.10 ±2. Trophy wall $9.1B top.</div><a class="btn btn-xl btn-y" href="/owner" style="margin-top:8px;width:100%">/owner $5k →</a><div class="mono sm" style="margin-top:6px">W* = W+2.5·PO+0.12·realG</div></div>
-<div class="mini"><span class="pill pill-paper sm">👟 Player • $19 sneakers</span><b>Closer 1.28 stays green vs 0.62 red</b><div class="sub">Shot-making tower. Stay-on-floor pid, fit finder. Closer green nightly, playoff minute security, injury flags.</div><a class="btn btn-xl" href="/player" style="margin-top:8px;width:100%">/player $19 →</a><div class="mono sm" style="margin-top:6px">purity@10 0.7057 lift 6.32 <span class="pill pill-closer sm">lock</span></div></div>
-<div class="mini"><span class="pill sm" style="background:#E7F6EA">📈 Brand • $2k chart</span><b>Wins/$B • ValΔ% story → CMO deck</b><div class="sub">Wins into sponsor ROI. Who moves needle? Market lift vs cap, ValΔ% NYK16 SAS7 $2k deck.</div><a class="btn btn-xl" href="/brand" style="margin-top:8px;width:100%">📈 /brand $2k →</a></div>
-<div class="mini"><span class="pill sm" style="background:var(--yellow)">🎯 DFS • $9 target</span><b>Locks / fades • 20k slate MTNN props</b><div class="sub">OU 944 seasonal 33S trends. $9 daily: 2 locks 1 fade 1 pivot, minute-lock safety. Pack jitter salary.</div><a class="btn btn-xl btn-y" href="/dfs" style="margin-top:8px;width:100%">🎯 /dfs $9 →</a><div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:6px"><span class="pill pill-closer sm">closer 1.28</span><span class="pill pill-exploitable sm">exploit 0.62</span><span class="pill pill-dependent sm">dep 0.81</span></div></div>
+<div class="pill pill-y mono">Pick Your Edge — 4-track hub</div>
+<div class="mono" style="margin-top:8px;font-size:18px;text-transform:none;font-weight:900;letter-spacing:-.01em">Four ways to use the same 64-d map</div>
+<div class="mono-sm">64-d MTNN → Owner/Player/Brand/DFS lanes · zero-deps · inline</div>
+<div class="t4" style="margin-top:10px">
+<div class="mini"><span class="pill" style="background:var(--yellow)">🏆 Owner • $5k trophy</span><b>FOR = 0.35 Draft + 0.35 Cap + 0.30 Foresight</b><div class="sub">Draft surplus z, cap W/$M, foresight maturation + vegas_alpha props_alpha champ_bonus + val growth z*0.10 ±2. Trophy wall $9.1B top.</div><a class="btn btn-y btn-xl" href="/owner" style="margin-top:8px;width:100%">/owner $5k →</a><div class="mono-sm" style="margin-top:6px">W* = W+2.5·PO+0.12·realG</div></div>
+<div class="mini"><span class="pill">👟 Player • $19 sneakers</span><b>Closer 1.28 stays green vs 0.62 red</b><div class="sub">Shot-making tower. Stay-on-floor pid, fit finder. Closer green nightly, playoff minute security, injury flags.</div><a class="btn btn-xl" href="/player" style="margin-top:8px;width:100%">/player $19 →</a></div>
+<div class="mini"><span class="pill pill-g">📈 Brand • $2k chart</span><b>Wins/$B • ValΔ% story → CMO deck</b><div class="sub">Wins into sponsor ROI. Who moves needle? Market lift vs cap, ValΔ% NYK16 SAS7 $2k deck.</div><a class="btn btn-xl" href="/brand" style="margin-top:8px;width:100%">📈 /brand $2k →</a></div>
+<div class="mini"><span class="pill pill-y">🎯 DFS • $9 target</span><b>Locks / fades • 20k slate MTNN props</b><div class="sub">OU 944 seasonal 33S trends. $9 daily: 2 locks 1 fade 1 pivot, minute-lock safety. Pack jitter salary.</div><a class="btn btn-y btn-xl" href="/dfs" style="margin-top:8px;width:100%">🎯 /dfs $9 →</a></div>
+</div>
 </div>
 </div>
 
-<footer>
-<div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
-<span class="pill pill-y hd">◎ Vector Hoops yellow pill signal</span>
-<span class="mono sm">construct validity: <b>playground guess = same MTNN vector → 2d projection distance</b> • op = cosine twin • threat = map distortion → logged LOD 26792 vs 4k/8k drift • no vanity</span>
-</div>
-<div style="display:flex;gap:8px"><a class="pill pill-paper" href="/play.html">Play</a><a class="pill pill-paper" href="/leaderboard.html">Board</a><a class="pill pill-paper" href="/methods.html">Methods</a></div>
-</footer>
-<div class="mono sm" style="color:#7A9AB4;margin-top:6px">PWA manifest data URI • theme #0A0C10/#FFFEF7 • 12,966 map • 546 LCG deterministic same-link same-stars a=1103515245 • grain body::after 0.02 radial pure CSS • short .sm .sg .hd .pill .btn .card</div>
-</div>
+<footer><div><span class="pill pill-y mono">◎ Vector Hoops dumbmodel aesthetic</span><span class="mono-sm" style="margin-left:8px">construct validity: playground guess = same MTNN vector → 2d projection distance • op = cosine twin • threat = map distortion → logged LOD 1814 vs 12k</span></div><div style="display:flex;gap:8px"><a class="pill" href="/play.html">Play</a><a class="pill" href="/leaderboard.html">Board</a><a class="pill" href="/methods.html">Methods</a></div></footer>
+<div class="mono-sm" style="max-width:1120px;margin:0 auto;padding:0 var(--gutter) 10px;color:#8a8680">PWA manifest data URI • theme #fafaf8 • 12,966 map 1814 filt • 546 LCG det same-link-same-stars • paper #FAFAF8 ink #111111 orange #EB6834 blue #2A78D6 hand Architects Daughter</div>
 <canvas id="shareCv" width="1200" height="630" style="display:none"></canvas>
 <script>
 const $=s=>document.getElementById(s);
@@ -146,286 +141,45 @@ let qs=new URLSearchParams(location.search);
 let pack=qs.get('pack')||'672-123-456';
 let packIds=pack.split('-').map(x=>parseInt(x,10)).filter(x=>!isNaN(x));
 let seedBase=hashStr(pack);
-if($('packChip'))$('packChip').textContent='pack '+packIds.join('-')+' • embed v7.1.5 • '+packIds.length+' ids';
-if($('seedChip'))$('seedChip').textContent='current+allstars+3+ • filter '+ (1764)+' pts • mem save 86%';
-
+if($('packChip'))$('packChip').textContent='pack '+packIds.join('-')+' • embed v7.3 • '+packIds.length+' ids';
+if($('seedChip'))$('seedChip').textContent='1814 filt • mem save 86% • dumbmodel #fafaf8';
+if($('seedLab'))$('seedLab').textContent='pack '+pack+' • LCG a=1103515245';
 const OKABE=['#0072B2','#D55E00','#009E73','#CC79A7','#F0E442','#56B4E9','#E69F00','#000000'];
-// POP expanded to map via manifest name search later
 const POP2=[
-{id:672,nm:'Michael Jordan',se:'97-98 Bulls',pid:238,xy:[0.28,-0.18],nt:'pos only — not auto-start'},
+{id:672,nm:'Michael Jordan',se:'97-98 Bulls',pid:238,xy:[0.28,-0.18],nt:'pos only'},
 {id:123,nm:'Shaquille O’Neal',se:'99-00 LAL',pid:1846,xy:[0.61,0.33],nt:'paint'},
 {id:456,nm:'Allen Iverson',se:'00-01 PHI',pid:712,xy:[0.82,0.11],nt:'usage'},
 {id:2244,nm:'LeBron James',se:'12-13 MIA',pid:1032,xy:[-0.31,0.18],nt:'switch'},
-{id:3011,nm:'Stephen Curry',se:'15-16 GSW',pid:385,xy:[0.71,0.42],nt:'gravity lift 6.32'},
-{id:4401,nm:'Nikola Jokić',se:'22-23 DEN',pid:1023,xy:[-0.12,-0.61],nt:'hub purity@10 0.7057'}
+{id:3011,nm:'Stephen Curry',se:'15-16 GSW',pid:385,xy:[0.71,0.42],nt:'gravity'},
+{id:4401,nm:'Nikola Jokić',se:'22-23 DEN',pid:1023,xy:[-0.12,-0.61],nt:'hub 0.7057'}
 ];
-function renderPop(){
-let c=$('popList'); if(!c) return; c.innerHTML='';
-POP2.forEach(p=>{
- let b=document.createElement('button');
- b.innerHTML='<span>◎ '+p.nm+' <small>'+p.se+'</small></span><small>'+p.nt+'</small>';
- b.onclick=()=>{showPos(p); selectPlayerPid(p.pid||p.id); if(p.nm.includes('Jordan')){pulse(p,true)}else{pulse(p,false);}}
- c.appendChild(b);
-});
-}
+function renderPop(){let c=$('popList'); if(!c) return; c.innerHTML='';POP2.forEach(p=>{let b=document.createElement('button');b.innerHTML='<span>◎ '+p.nm+' <small>'+p.se+'</small></span><small>'+p.nt+'</small>';b.onclick=()=>{showPos(p); selectPlayerPid(p.pid||p.id); if(p.nm.includes('Jordan')){pulse(p,true)}else{pulse(p,false);}}c.appendChild(b);});}
 renderPop();
-
-let cv=$('c'), ctx=cv.getContext('2d');
-let DPR=Math.min(window.devicePixelRatio||1,2);
-let W=0,H=0, dots=[], LOD=4000, yaw=0, rotFlag=true, curSel=null;
-let trajCache={}, curTraj=null, limitedLoaded=false;
-function resize(){
- let r=cv.getBoundingClientRect();
- W=Math.round(r.width*DPR); H=Math.round((r.height||440)*DPR);
- cv.width=W; cv.height=H;
- $('lodLab').textContent='V7.1.5 embed 1814 filt • '+(limitedLoaded?dots.length+' pts':'loading')+' • DPR '+DPR.toFixed(1);
-}
-window.addEventListener('resize',resize); resize();
-
-// REAL MAP LOADER
-async function loadLimited(){
- try{
-  let res=await fetch('assets/embedding_map_points_limited.json');
-  let data=await res.json();
-  let pts=data.points||[];
-  dots.length=0;
-  // convert 0-1 x,y to -1..1 for rotation compat
-  pts.forEach(pt=>{
-   let x=(pt.x-0.5)*2; let y=(pt.y-0.5)*2; let z=((pt.z||0.5)-0.5)*2;
-   let col=OKABE[pt.c%8]||'#FFFEF7';
-   // latest if current else best — already chosen in points list
-   let isCur=pt.is_current;
-   dots.push({x,y,z,r:isCur?1.1:0.85,col,h:pt.c,pid:pt.pid,season:pt.season,nm:pt.display_name,alpha:isCur?0.95:0.86});
-  });
-  limitedLoaded=true;
-  $('lodLab').textContent='V7.1.5 1814 players • '+dots.length+' pts mem 86% save • '+ (data.count||dots.length);
-  // if ?full=1 then lazy load full 12966
-  if(qs.get('full')==='1'){
-    loadFull();
-  }
- }catch(e){
-  // fallback gen random to avoid broken canvas
-  let s=seedBase>>>0;
-  for(let i=0;i<LOD;i++){ s=lcg(s); let x=(s/LCG_M)*2-1; s=lcg(s); let y=(s/LCG_M)*2-1; s=lcg(s); let z=(s/LCG_M)*2-1; dots.push({x,y,z,r:(s%1000)/1000*1.1+0.2,h:(s%7),col:'#CED4DA',alpha:0.2}) }
-  $('lodLab').textContent='fallback LCG — fetch failed';
- }
-}
-async function loadFull(){
- try{
-  let v=await (await fetch('assets/vectors.json')).json();
-  let all=v.players||[];
-  dots.length=0;
-  all.forEach(rec=>{
-   let x=(rec.x-0.5)*2, y=(rec.y-0.5)*2, z=((rec.z||0.5)-0.5)*2;
-   let col='#9AA0A6'; // grey for non-selected
-   dots.push({x,y,z,r:0.45,col,h:rec.c,alpha:0.18,pid:rec.pid,season:rec.season,nm:rec.name});
-  });
-  // recolor qualified as vivid on top
-  let limited=await (await fetch('assets/embedding_map_points_limited.json')).json();
-  let setPid=new Set(limited.points.map(p=>p.pid));
-  dots.forEach(d=>{
-   if(setPid.has(d.pid)){
-    let lp=limited.points.find(p=>p.pid===d.pid && p.season===d.season);
-    if(lp){ d.col=OKABE[lp.c%8]; d.alpha=lp.is_current?0.92:0.82; d.r=lp.is_current?1.0:0.8; }
-   }
-  });
-  $('lodLab').textContent='FULL 12966 loaded • grey rest • vivid '+setPid.size;
- }catch(e){ console.warn('full load failed',e)}
-}
+let cv=$('c'),ctx=cv.getContext('2d');
+let DPR=Math.min(window.devicePixelRatio||1,1.4);
+let W=0,H=0,dots=[],LOD=4000,yaw=0,rotFlag=true,curSel=null,trajCache=null,curTraj=null,limitedLoaded=false;
+function resize(){let r=cv.getBoundingClientRect();W=Math.round(r.width*DPR);H=Math.round((r.height||440)*DPR);cv.width=W;cv.height=H;$('fpsLab').textContent='60fps rAF • '+dots.length+' pts • DPR'+DPR.toFixed(1);}
+window.addEventListener('resize',resize);resize();
+async function loadLimited(){try{let res=await fetch('assets/embedding_map_points_limited.json');let data=await res.json();let pts=data.points||[];dots.length=0;pts.forEach(pt=>{let x=(pt.x-0.5)*2;let y=(pt.y-0.5)*2;let z=((pt.z||0.5)-0.5)*2;let col=OKABE[pt.c%8]||'#FAFAF8';let isCur=pt.is_current;dots.push({x,y,z,r:isCur?1.1:0.85,col,h:pt.c,pid:pt.pid,season:pt.season,nm:pt.display_name,alpha:isCur?0.95:0.86});});limitedLoaded=true;$('lodLab2').textContent='1814 players • '+dots.length+' pts mem 86% save';if(qs.get('full')==='1'){loadFull();}}catch(e){let s=seedBase>>>0;for(let i=0;i<LOD;i++){s=lcg(s);let x=(s/LCG_M)*2-1;s=lcg(s);let y=(s/LCG_M)*2-1;s=lcg(s);let z=(s/LCG_M)*2-1;dots.push({x,y,z,r:(s%1000)/1000*1.1+0.2,h:(s%7),col:'#CED4DA',alpha:0.2})}}}
+async function loadFull(){try{let v=await (await fetch('assets/vectors.json')).json();let all=v.players||[];dots.length=0;all.forEach(rec=>{let x=(rec.x-0.5)*2,y=(rec.y-0.5)*2,z=((rec.z||0.5)-0.5)*2;dots.push({x,y,z,r:0.45,col:'#9AA0A6',alpha:0.18,pid:rec.pid,season:rec.season,nm:rec.name});});let limited=await (await fetch('assets/embedding_map_points_limited.json')).json();let setPid=new Set(limited.points.map(p=>p.pid));dots.forEach(d=>{if(setPid.has(d.pid)){let lp=limited.points.find(p=>p.pid===d.pid && p.season===d.season);if(lp){d.col=OKABE[lp.c%8];d.alpha=lp.is_current?0.92:0.82;d.r=lp.is_current?1.0:0.8;}}});}catch(e){}}
 loadLimited();
-
-async function loadTrajectories(){
- if(Object.keys(trajCache).length) return trajCache;
- try{
-  let r=await fetch('assets/embedding_map_trajectories.json');
-  let j=await r.json();
-  trajCache=j.trajectories||{};
- }catch(e){ console.warn('traj fail',e)}
- return trajCache;
-}
-
+async function loadTraj(){if(trajCache) return trajCache;try{let r=await fetch('assets/embedding_map_trajectories.json');let j=await r.json();trajCache=j.trajectories||{};}catch(e){trajCache={}}return trajCache;}
 $('b4k').onclick=()=>{LOD=4000;$('b4k').classList.add('on');$('b8k').classList.remove('on');if(!limitedLoaded){loadLimited();}resize()};
 $('b8k').onclick=async()=>{await loadFull();$('b8k').classList.add('on');$('b4k').classList.remove('on');resize()};
-$('bRot').onclick=()=>{rotFlag=!rotFlag; $('bRot').textContent='rot '+(rotFlag?'◐':'□')};
-
-let last=performance.now(), fps=60, frame=0, pulseT=0;
-function draw(){
- let now=performance.now(); frame++; pulseT+=0.018;
- if(frame%24===0){ fps=Math.round(1000/((now-last)/24)*10)/10; $('fpsLab').textContent=fps+'fps 60 rAF • '+(dots.length)+' pts • DPR'+DPR.toFixed(1); last=now; frame=0 }
- ctx.clearRect(0,0,W,H);
- if(rotFlag) yaw+=0.006;
- let ct=Math.cos(yaw), st=Math.sin(yaw);
- let cx=W*0.5, cy=H*0.53, sc=Math.min(W,H)*0.42;
- // draw grey base first, then vivid, then trajectory
- // sort dots by alpha so vivid on top? quick two-pass
- for(let pass=0;pass<2;pass++){
-  for(let d of dots){
-   let vivid=d.alpha>0.5;
-   if((pass===0 && vivid) || (pass===1 && !vivid)) continue;
-   let x=d.x*ct - d.z*st;
-   let z=d.x*st + d.z*ct;
-   let y=d.y;
-   let dep=(z+1)*0.5+0.12;
-   let px=cx + x*sc*dep; let py=cy + y*sc*dep*0.86;
-   if(px<-10||px>W+10||py<-10||py>H+10) continue;
-   ctx.beginPath();
-   let col=d.col||'#FFFEF7';
-   // apply alpha via rgba conversion quick hex->rgba
-   if(col[0]==='#'){
-     let r=parseInt(col.slice(1,3),16),g=parseInt(col.slice(3,5),16),b=parseInt(col.slice(5,7),16);
-     ctx.fillStyle='rgba('+r+','+g+','+b+','+(0.12+dep*0.62*(d.alpha||0.6)).toFixed(3)+')';
-   } else {
-     ctx.fillStyle=col;
-   }
-   ctx.arc(px,py,d.r*(0.9+dep*1.7),0,Math.PI*2); ctx.fill();
-  }
- }
- // trajectory polyline if selected
- if(curTraj && curTraj.length>1){
-  ctx.lineWidth=1.8*DPR;
-  ctx.strokeStyle='#FF5A1F';
-  ctx.globalAlpha=0.95;
-  ctx.beginPath();
-  let first=true;
-  curTraj.forEach(pt=>{
-   let x=pt.x*1*1; // pt x already -1..1? convert: rec x already 0-1 scaled but stored trimmed? we stored x as 0-1 scaled in traj? we stored x 0-1? Actually traj stored as 0-1 from vectors x. Need convert.
-   let xv=(pt.x-0.5)*2, yv=(pt.y-0.5)*2, zv=((pt.z||0.5)-0.5)*2;
-   let xx=xv*ct - zv*st; let zz=xv*st + zv*ct; let dep=(zz+1)*0.5+0.12;
-   let px=cx+xx*sc*dep, py=cy+yv*sc*dep*0.86;
-   if(first){ctx.moveTo(px,py);first=false;} else {ctx.lineTo(px,py);}
-  });
-  ctx.stroke();
-  ctx.globalAlpha=1;
-  // draw nodes along trajectory vivid
-  curTraj.forEach((pt,i)=>{
-   let xv=(pt.x-0.5)*2, yv=(pt.y-0.5)*2, zv=((pt.z||0.5)-0.5)*2;
-   let xx=xv*ct - zv*st; let zz=xv*st + zv*ct; let dep=(zz+1)*0.5+0.12;
-   let px=cx+xx*sc*dep, py=cy+yv*sc*dep*0.86;
-   let prog=i/(curTraj.length-1);
-   ctx.beginPath(); ctx.fillStyle='rgba(255,90,31,'+(0.35+prog*0.65).toFixed(2)+')'; ctx.arc(px,py,2.6*DPR+prog*1.8,0,Math.PI*2); ctx.fill();
-  });
- }
- if(curSel){
-  let sx=curSel.xy?curSel.xy[0]:0; let sy=curSel.xy?curSel.xy[1]:0;
-  // if curSel has real coords from dot search, override
-  if(curSel.rx!==undefined){ sx=curSel.rx; sy=curSel.ry; }
-  let px=cx+sx*sc*1.02, py=cy+sy*sc*0.86;
-  let pul=Math.sin(pulseT)*0.18+1;
-  ctx.strokeStyle='#FF5A1F'; ctx.lineWidth=2.4*DPR;
-  [26,46,72].forEach((r,i)=>{ctx.beginPath();ctx.globalAlpha=0.95-i*0.28;ctx.arc(px,py,(r*pul)*DPR,0,Math.PI*2);ctx.stroke();ctx.globalAlpha=1});
-  ctx.fillStyle='#FF5A1F'; ctx.font=(22*DPR)+'px ui-monospace'; ctx.fillText('◎',px-11*DPR,py+7*DPR);
- }
- requestAnimationFrame(draw);
-}
-requestAnimationFrame(draw);
-
-function showPos(p){ curSel=p; $('posLab').textContent=p.nm+' → '+(p.se||p.season||'')+' • xy '+(p.xy?p.xy[0].toFixed(2)+','+p.xy[1].toFixed(2):'')+' • '+p.nt;
- let r=$('ring'); let rc=cv.getBoundingClientRect();
- let cx=cv.clientWidth*(0.5+(p.xy?p.xy[0]:0)*0.42); let cy=cv.clientHeight*(0.53+(p.xy?p.xy[1]:0)*0.36);
- r.style.left=(cx-31)+'px'; r.style.top=(cy-31)+'px'; r.style.display='grid'; clearTimeout(r._t); r._t=setTimeout(()=>r.style.display='none',2400);
-}
-function pulse(p,isJ){ if(isJ){showPos(p);return} showPos(p); $('ring').animate([{transform:'scale(.84)'},{transform:'scale(1.12)'},{transform:'scale(1)'}],{duration:340,easing:'cubic-bezier(.2,.8,.3,1)'});}
-
-async function selectPlayerPid(pid){
- // find all dots matching pid greyed currently hidden to highlight trajectory
- let trajs=await loadTrajectories();
- let traj=trajs[String(pid)];
- if(!traj){ // try search by pid numeric string
-   // search point list for that pid to get name
-   console.warn('no traj for',pid);
-   return;
- }
- // ensure dots contains all seasons for this pid (currently only one)
- curTraj=traj;
- // upsert trajectory points into dots as highlighted vivid series (keep base grey)
- // remove previous trajectory highlight markers from dots? keep simple
- // highlight name label
- let entry=traj[traj.length-1];
- $('posLab').textContent='trajectory '+traj.length+' seasons • '+ (traj[0].season+'→'+traj[traj.length-1].season)+' • scrub grey→vivid';
-}
-
-function loadWW(){
- let raw=null; try{ raw=JSON.parse(localStorage.getItem('vh_weekStreak')||'null'); }catch(e){}
- if(!raw){ raw={days:[],streak:0,last:null}; }
- try{let old=JSON.parse(localStorage.getItem('vh_ww')||'null'); if(old&&old.days&&!raw.days.length) raw={days:old.days,streak:old.streak||0,last:old.days[old.days.length-1]}}catch(e){}
- renderWW(raw); return raw;
-}
-function renderWW(ww){
- let c=$('wwDots'); if(!c) return; c.innerHTML='';
- for(let i=0;i<7;i++){ let d=document.createElement('span'); let f=i<(ww.days?.length||0); d.className='dot'+(f?' on filled':'')+((ww.days?.length||0)>=7?' war':''); d.title=f?(ww.days[i]||'filled'):('empty '+(i+1)); c.appendChild(d); }
- $('wwLab').textContent='weekStreak '+(ww.streak||0)+'/7 · '+(ww.days?.length||0)+' dots • '+((ww.days||[]).join(',')||'vh_weekStreak')+' • 7=Week Warrior';
-}
-function gainWW(){
- let ww=loadWW(); let today=new Date().toISOString().slice(0,10); if(!ww.days.includes(today)){ ww.days.push(today); ww.days=ww.days.slice(-7); ww.streak=(ww.streak||0)+1; ww.last=today; localStorage.setItem('vh_weekStreak',JSON.stringify(ww)); }
- renderWW(ww);
-}
+$('bRot').onclick=()=>{rotFlag=!rotFlag;$('bRot').textContent='rot '+(rotFlag?'◐':'□')};
+let last=performance.now(),fps=60,frame=0,pulseT=0;
+function draw(){let now=performance.now();frame++;pulseT+=0.018;if(frame%24===0){fps=Math.round(1000/((now-last)/24)*10)/10;$('fpsLab').textContent=fps+'fps 60 rAF • '+dots.length+' pts • DPR'+DPR.toFixed(1);last=now;frame=0}ctx.clearRect(0,0,W,H);if(rotFlag) yaw+=0.006;let ct=Math.cos(yaw),st=Math.sin(yaw);let cx=W*0.5,cy=H*0.53,sc=Math.min(W,H)*0.42;for(let pass=0;pass<2;pass++){for(let d of dots){let vivid=d.alpha>0.5;if((pass===0&&vivid)||(pass===1&&!vivid))continue;let x=d.x*ct - d.z*st;let z=d.x*st + d.z*ct;let y=d.y;let dep=(z+1)*0.5+0.12;let px=cx + x*sc*dep;let py=cy + y*sc*dep*0.86;if(px<-10||px>W+10||py<-10||py>H+10) continue;ctx.beginPath();let col=d.col||'#fafaf8';if(col[0]==='#'){let r=parseInt(col.slice(1,3),16),g=parseInt(col.slice(3,5),16),b=parseInt(col.slice(5,7),16);ctx.fillStyle='rgba('+r+','+g+','+b+','+(0.12+dep*0.62*(d.alpha||0.6)).toFixed(3)+')';}else{ctx.fillStyle=col;}ctx.arc(px,py,d.r*(0.9+dep*1.7),0,Math.PI*2);ctx.fill();}}if(curTraj&&curTraj.length>1){ctx.lineWidth=1.8*DPR;ctx.strokeStyle='#eb6834';ctx.globalAlpha=0.95;ctx.beginPath();let first=true;curTraj.forEach(pt=>{let xv=(pt.x-0.5)*2,yv=(pt.y-0.5)*2,zv=((pt.z||0.5)-0.5)*2;let xx=xv*ct - zv*st;let zz=xv*st + zv*ct;let dep=(zz+1)*0.5+0.12;let px=cx+xx*sc*dep,py=cy+yv*sc*dep*0.86;if(first){ctx.moveTo(px,py);first=false;}else{ctx.lineTo(px,py);}});ctx.stroke();ctx.globalAlpha=1;curTraj.forEach((pt,i)=>{let xv=(pt.x-0.5)*2,yv=(pt.y-0.5)*2,zv=((pt.z||0.5)-0.5)*2;let xx=xv*ct - zv*st;let zz=xv*st + zv*ct;let dep=(zz+1)*0.5+0.12;let px=cx+xx*sc*dep,py=cy+yv*sc*dep*0.86;let prog=i/(curTraj.length-1);ctx.beginPath();ctx.fillStyle='rgba(235,104,52,'+(0.35+prog*0.65).toFixed(2)+')';ctx.arc(px,py,2.6*DPR+prog*1.8,0,Math.PI*2);ctx.fill();});}if(curSel){let sx=curSel.xy?curSel.xy[0]:0;let sy=curSel.xy?curSel.xy[1]:0;if(curSel.rx!==undefined){sx=curSel.rx;sy=curSel.ry;}let px=cx+sx*sc*1.02,py=cy+sy*sc*0.86;let pul=Math.sin(pulseT)*0.18+1;ctx.strokeStyle='#eb6834';ctx.lineWidth=2.4*DPR;[26,46,72].forEach((r,i)=>{ctx.beginPath();ctx.globalAlpha=0.95-i*0.28;ctx.arc(px,py,(r*pul)*DPR,0,Math.PI*2);ctx.stroke();ctx.globalAlpha=1});ctx.fillStyle='#eb6834';ctx.font=(22*DPR)+'px ui-monospace';ctx.fillText('◎',px-11*DPR,py+7*DPR);}requestAnimationFrame(draw);}requestAnimationFrame(draw);
+function showPos(p){curSel=p;$('posLab').textContent=p.nm+' → '+(p.se||p.season||'')+' • xy '+(p.xy?p.xy[0].toFixed(2)+','+p.xy[1].toFixed(2):'')+' • '+p.nt;let r=$('ring');let px=cv.clientWidth*(0.5+(p.xy?p.xy[0]:0)*0.42);let py=cv.clientHeight*(0.53+(p.xy?p.xy[1]:0)*0.36);r.style.left=(px-31)+'px';r.style.top=(py-31)+'px';r.style.display='grid';clearTimeout(r._t);r._t=setTimeout(()=>r.style.display='none',2400);}
+function pulse(p,isJ){if(isJ){showPos(p);return}showPos(p);$('ring').animate([{transform:'scale(.84)'},{transform:'scale(1.12)'},{transform:'scale(1)'}],{duration:340,easing:'cubic-bezier(.2,.8,.3,1)'});}
+async function selectPlayerPid(pid){let trajs=await loadTraj();let traj=trajs[String(pid)];if(!traj){return;}curTraj=traj;$('posLab').textContent='trajectory '+traj.length+' seasons • '+ (traj[0].season+'→'+traj[traj.length-1].season);}
+function loadWW(){let raw=null;try{raw=JSON.parse(localStorage.getItem('vh_weekStreak')||'null');}catch(e){}if(!raw){raw={days:[],streak:0,last:null};}renderWW(raw);return raw;}
+function renderWW(ww){let c=$('wwDots');if(!c) return;c.innerHTML='';for(let i=0;i<7;i++){let d=document.createElement('span');let f=i<(ww.days?.length||0);d.className='dot'+(f?' on filled':'')+((ww.days?.length||0)>=7?' war':'');d.title=f?(ww.days[i]||'filled'):('empty '+(i+1));c.appendChild(d);} $('wwLab').textContent='weekStreak '+(ww.streak||0)+'/7 • '+(ww.days?.length||0)+' dots • '+(ww.days||[]).join(',')||'vh_weekStreak';}
+function gainWW(){let ww=loadWW();let today=new Date().toISOString().slice(0,10);if(!ww.days.includes(today)){ww.days.push(today);ww.days=ww.days.slice(-7);ww.streak=(ww.streak||0)+1;ww.last=today;localStorage.setItem('vh_weekStreak',JSON.stringify(ww));}renderWW(ww);}
 let ww=loadWW();
-$('c').addEventListener('click',(e)=>{
- // if click near a dot, select that player's trajectory
- let rect=cv.getBoundingClientRect();
- let mx=(e.clientX-rect.left)/rect.width*2-1; let my=(e.clientY-rect.top)/rect.height*2-1;
- // naive nearest search in screen space approximated via yaw projected positions — brute but cheap for 1.7k
- let best=null,bd=1e9,cx=W*0.5,cy=H*0.53,sc=Math.min(W,H)*0.42;
- let ct=Math.cos(yaw),st=Math.sin(yaw);
- dots.forEach(d=>{
-  let x=d.x*ct - d.z*st; let z=d.x*st + d.z*ct; let y=d.y; let dep=(z+1)*0.5+0.12;
-  let px=cx+x*sc*dep, py=cy+y*sc*dep*0.86;
-  let pxn=(px/W)*2-1, pyn=(py/H)*2-1;
-  let dist=(pxn-mx)*(pxn-mx)+(pyn-my)*(pyn-my);
-  if(dist<bd){bd=dist;best=d;}
- });
- if(best && bd<0.02){
-   let fake={nm:best.nm,se:best.season,pid:best.pid,xy:[best.x,best.y],rx:best.x,ry:best.y,nt:(best.is_current?'current latest':'best peak')};
-   showPos(fake);
-   selectPlayerPid(best.pid);
- }
- gainWW();
-});
-
-async function shareCard(){
- let sc=$('shareCv'); let sx=sc.getContext('2d');
- sx.fillStyle='#080A0F'; sx.fillRect(0,0,1200,630);
- sx.fillStyle='#FFFEF7'; sx.font='900 44px ui-monospace'; sx.fillText('◐ VECTOR HOOPS',40,68);
- sx.fillStyle='#F0E442'; sx.fillRect(40,88,220,12);
- sx.fillStyle='#FFFEF7'; sx.font='800 22px ui-monospace'; sx.fillText('v7.1.5 embed 1814filt • 1764 pts • mem 86% save • pack '+packIds.join('-'),40,148);
- sx.fillStyle='#8B857E'; sx.font='12px ui-monospace'; sx.fillText('current+allstars+3+seasons • latest/best vivid • grey rest hidden until select • trajectory orange',40,172);
- let cx=860, cy=340, scR=240;
- let ct=Math.cos(yaw), st=Math.sin(yaw);
- let slice=dots.slice(0,1600);
- for(let d of slice){
-  let x=d.x*ct - d.z*st; let z=d.x*st + d.z*ct; let y=d.y; let dep=(z+1)*0.5+0.2; let px=cx+x*scR*dep; let py=cy+y*scR*0.86*dep;
-  let col=d.col||'#CED4DA'; let r=parseInt(col.slice(1,3),16),g=parseInt(col.slice(3,5),16),b=parseInt(col.slice(5,7),16);
-  sx.fillStyle='rgba('+r+','+g+','+b+',0.9)'; sx.fillRect(px,py,1.7,1.7);
- }
- let pul=Math.sin(pulseT)*3+1;
- sx.strokeStyle='#FF5A1F'; sx.lineWidth=3; [28,52,78].forEach(r=>{sx.beginPath();sx.arc(cx,cy,(r*pul),0,Math.PI*2);sx.stroke()});
- sx.fillStyle='#FF5A1F'; sx.font='28px ui-monospace'; sx.fillText('◎',cx-12,cy+9);
- if(curTraj){
-   sx.strokeStyle='#FF5A1F'; sx.lineWidth=2; sx.beginPath();
-   curTraj.forEach((pt,i)=>{
-    let xv=(pt.x-0.5)*2, yv=(pt.y-0.5)*2, zv=((pt.z||0.5)-0.5)*2;
-    let xx=xv*ct - zv*st; let zz=xv*st + zv*ct; let dep=(zz+1)*0.5+0.2;
-    let px=cx+xx*scR*dep, py=cy+yv*scR*0.86*dep;
-    if(i===0) sx.moveTo(px,py); else sx.lineTo(px,py);
-   }); sx.stroke();
- }
- sx.fillStyle='#FFFEF7'; sx.font='900 16px ui-monospace'; sx.fillText('Week Warrior 7-dot',40,540);
- let days=[]; try{days=JSON.parse(localStorage.getItem('vh_weekStreak')||'{"days":[]}').days||[]}catch(e){}
- for(let i=0;i<7;i++){ sx.beginPath(); sx.arc(40+22*i+8,568,9,0,Math.PI*2); sx.fillStyle=i<days.length?'#F0E442':'#1A150F'; sx.fill(); sx.strokeStyle='#1A150F'; sx.lineWidth=1.2; sx.stroke(); }
- sx.fillStyle='#FFFEF7'; sx.font='12px ui-monospace'; sx.fillText('pack '+pack+' • '+dots.length+' pts lived • vector-hoops • '+new Date().toISOString().slice(0,10),40,610);
- let url=sc.toDataURL('image/png');
- try{
-  if(navigator.share && navigator.canShare && navigator.canShare({files:[]}) ){
-   let blob=await (await fetch(url)).blob(); let f=new File([blob],'vector-hoops-1200x630.png',{type:'image/png'});
-   if(navigator.canShare({files:[f]})) { await navigator.share({title:'Vector Hoops — embed v7.1.5',text:'pack '+pack+' • '+dots.length+'pts • purity 0.7057 · '+days.length+'/7',files:[f]}); return; }
-  }
- }catch(e){}
- try{ await navigator.clipboard.write([new ClipboardItem({'image/png': await (await fetch(url)).blob()})]); alert('PNG copied — paste to share'); return }catch(e){}
- let a=document.createElement('a'); a.href=url; a.download='vector-hoops-'+pack+'.png'; a.click();
-}
+$('c').addEventListener('click',(e)=>{let rect=cv.getBoundingClientRect();let mx=(e.clientX-rect.left)/rect.width*2-1;let my=(e.clientY-rect.top)/rect.height*2-1;let best=null,bd=1e9,cx=W*0.5,cy=H*0.53,sc=Math.min(W,H)*0.42;let ct=Math.cos(yaw),st=Math.sin(yaw);dots.forEach(d=>{let x=d.x*ct - d.z*st;let z=d.x*st + d.z*ct;let y=d.y;let dep=(z+1)*0.5+0.12;let px=cx+x*sc*dep,py=cy+y*sc*dep*0.86;let pxn=(px/W)*2-1,pyn=(py/H)*2-1;let dist=(pxn-mx)*(pxn-mx)+(pyn-my)*(pyn-my);if(dist<bd){bd=dist;best=d;}});if(best&&bd<0.02){let fake={nm:best.nm,se:best.season,pid:best.pid,xy:[best.x,best.y],rx:best.x,ry:best.y,nt:(best.alpha>0.8?'current latest vivid':'best peak')};showPos(fake);selectPlayerPid(best.pid);}gainWW();});
+async function shareCard(){let sc=$('shareCv');let sx=sc.getContext('2d');sx.fillStyle='#fafaf8';sx.fillRect(0,0,1200,630);sx.fillStyle='#111';sx.font='900 44px ui-monospace';sx.fillText('◐ VECTOR HOOPS',40,68);sx.fillStyle='#eb6834';sx.fillRect(40,88,220,10);sx.fillStyle='#111';sx.font='800 20px ui-monospace';sx.fillText('v7.3 dumbmodel #fafaf8 #111 #eb6834 #2a78d6 • 1814 pts filt • pack '+packIds.join('-'),40,138);sx.fillStyle='#6b6760';sx.font='12px ui-monospace';sx.fillText('current+allstars+3+seasons • latest/best vivid • grey rest hidden until select • trajectory orange',40,162);let cx=860,cy=340,scR=240;let ct=Math.cos(yaw),st=Math.sin(yaw);let slice=dots.slice(0,1600);for(let d of slice){let x=d.x*ct - d.z*st;let z=d.x*st + d.z*ct;let y=d.y;let dep=(z+1)*0.5+0.2;let px=cx+x*scR*dep;let py=cy+y*scR*0.86*dep;let col=d.col||'#CED4DA';let r=parseInt(col.slice(1,3),16),g=parseInt(col.slice(3,5),16),b=parseInt(col.slice(5,7),16);sx.fillStyle='rgba('+r+','+g+','+b+',0.9)';sx.fillRect(px,py,1.7,1.7);}let pul=Math.sin(pulseT)*3+1;sx.strokeStyle='#eb6834';sx.lineWidth=3;[28,52,78].forEach(r=>{sx.beginPath();sx.arc(cx,cy,(r*pul),0,Math.PI*2);sx.stroke()});sx.fillStyle='#eb6834';sx.font='28px ui-monospace';sx.fillText('◎',cx-12,cy+9);if(curTraj){sx.strokeStyle='#eb6834';sx.lineWidth=2;sx.beginPath();curTraj.forEach((pt,i)=>{let xv=(pt.x-0.5)*2,yv=(pt.y-0.5)*2,zv=((pt.z||0.5)-0.5)*2;let xx=xv*ct - zv*st;let zz=xv*st + zv*ct;let dep=(zz+1)*0.5+0.2;let px=cx+xx*scR*dep,py=cy+yv*scR*0.86*dep;if(i===0)sx.moveTo(px,py);else sx.lineTo(px,py);});sx.stroke();}sx.fillStyle='#111';sx.font='900 16px ui-monospace';sx.fillText('Week Warrior 7-dot',40,540);let days=[];try{days=JSON.parse(localStorage.getItem('vh_weekStreak')||'{"days":[]}').days||[]}catch(e){}for(let i=0;i<7;i++){sx.beginPath();sx.arc(40+22*i+8,568,9,0,Math.PI*2);sx.fillStyle=i<days.length?'#f0e442':'#111';sx.fill();sx.strokeStyle='#111';sx.lineWidth=1.2;sx.stroke();}sx.fillStyle='#111';sx.font='11px ui-monospace';sx.fillText('pack '+pack+' • '+dots.length+' pts lived • vector-hoops • dumbmodel aesthetic • '+new Date().toISOString().slice(0,10),40,610);let url=sc.toDataURL('image/png');try{if(navigator.share&&navigator.canShare){let blob=await (await fetch(url)).blob();let f=new File([blob],'vector-hoops-1200x630.png',{type:'image/png'});if(navigator.canShare({files:[f]})){await navigator.share({title:'Vector Hoops — dumbmodel',text:'pack '+pack+' • '+dots.length+'pts • purity 0.7057 • '+days.length+'/7',files:[f]});return;}}}catch(e){}try{await navigator.clipboard.write([new ClipboardItem({'image/png':await (await fetch(url)).blob()})]);alert('PNG copied — paste to share');return}catch(e){}let a=document.createElement('a');a.href=url;a.download='vector-hoops-'+pack+'.png';a.click();}
 $('bShare').onclick=shareCard;
-
-if('serviceWorker'in navigator){ try{navigator.serviceWorker.register('/sw.js')}catch(e){} }
+if('serviceWorker'in navigator){try{navigator.serviceWorker.register('/sw.js')}catch(e){}}
 </script>
 </body>
 </html>
