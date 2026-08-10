@@ -132,6 +132,37 @@ comments, `loaded`/`drift`/`seasons` are prose. Zero real findings.
 
 Not added to the gate. A check that cries wolf gets ignored, which is worse
 than not having it. Catching runtime errors here needs a real DOM, not a regex.
+
+## 🔴 OPERATOR DECISION — the game does not use the model
+
+`play.html` scores every guess with:
+
+```js
+function cos(a,b){let d=0,na=0,nb=0;for(let i=0;i<3;i++){...}}
+```
+
+`i<3`. `POOL` is **10 hardcoded past players** with `v:[0.92,0.11,0.18]`-shaped
+vectors; `MODERN` is **8 hardcoded modern players**, same shape. The page
+fetches `embedding_map_manifest.json` and `embedding_map_trajectories.json` —
+**neither carries a vector**. `assets/vectors.json` has the real 64-d vectors
+for 12,966 player-seasons and this page never opens it.
+
+The "cos" a player sees is two 3-number profiles compared over a 10×8 pool, on
+a site that says throughout it is a 64-dimensional model over 12,966 seasons.
+
+**Not fixed here, deliberately.** Wiring it to the real vectors means a 3.8 MB
+fetch (or `mtnn_embeddings.f32`, 3,319,296 b = 12,966 × 64 × 4), a different
+puzzle pool, different scores, and it changes what a `?pack=672-123-456` link
+resolves to. That is a product decision.
+
+Done in `25e198c6` instead: fixed the silent-fallback bug (`MODERN.find(...)
+||MODERN[0]` scored unrecognised guesses against Jimmy Butler), relabelled the
+readout `profile cos`, and stated on the page that this is a demo pool and
+where the real embedding does run. `cos()` left at `i<3` on purpose — changing
+it without changing the vectors would be worse.
+
+**This supersedes P1.x as the reason the game is not "centred on the embedding
+map": there is no embedding on that page to centre on.**
 ## Findings that are bugs, not features
 
 - **F1 — `model.html` draws a fake SHAP chart.** Its script is literally
