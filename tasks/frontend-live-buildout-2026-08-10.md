@@ -3186,3 +3186,49 @@ kind of gap to close and the easiest to walk past.
 
 `lift 6.32` needs no action — already absent. Recorded so the next pass does not
 re-investigate it.
+
+
+## I built a check that could not fail, and threw it away (2026-08-10)
+
+Five unsourced figures have come off this site one at a time, and `sourced` in
+`check_frontend.py` only knows the four literal strings it was told. The obvious
+generalisation: pull every measurement-shaped number out of the static markup and
+require it to appear somewhere in a committed asset.
+
+It ran clean. **77 figures examined, 0 unmatched** as a standalone audit; wired
+into the gate it reported **86 measurements traced, 0 failures** in 5.9 seconds.
+That looked like an all-clear on the whole class.
+
+Then the RED test refused to go red. I injected
+
+    Held-out retrieval top-5 accuracy is 0.9987 across the pool.
+
+into the served copy, and the check counted it — 86 measurements became 87 — and
+passed it. So I measured the thing itself instead of the site:
+
+    haystack: 66.9 MB across 124 files
+    random 2-dot-4 decimals found in it:  11/400   (3%)
+    random 2-dot-2 decimals found in it: 289/400   (72%)
+
+**Nearly three quarters of two-decimal values match by accident**, and two
+decimals is the shape almost every metric on this site takes — `cos 0.94`,
+`top-5 0.76`, `baseline 0.20`. The check was not passing because the pages are
+clean. It was passing because 66.9 MB of float data contains almost any short
+decimal you care to name. My injected value only slipped through the 3% because I
+happened to pick four decimals.
+
+Reverted. A gate that cannot fail is worse than no gate: it converts an open
+question into a green tick, and the next person reads the tick.
+
+**And the sentence I wrote an hour earlier in this same pass — "every static
+numeric claim on the site traces to shipped data" — is not supported.** What the
+audit actually established is that no figure is *conspicuously* absent from
+66.9 MB of assets, which given the collision rate is close to saying nothing. The
+five that were found were found by reading claims in context, and that is still
+the only method here with a demonstrated hit rate.
+
+Worth knowing before anyone builds it again: the technique needs value-aware
+matching — parse the assets, compare numbers against the specific field a claim
+names, with a tolerance — not a substring search. That is a real piece of work
+and it is not obviously worth it, because reading the page has been finding these
+faster.
