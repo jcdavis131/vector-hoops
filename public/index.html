@@ -6,64 +6,71 @@
 <meta name="theme-color" content="#0A0C10" media="(prefers-color-scheme: dark)">
 <meta name="theme-color" content="#FFFEF7" media="(prefers-color-scheme: light)">
 <title>Vector Hoops — 12,966 seasons map</title>
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230A0C10'/%3E%3Ctext x='50%25' y='54%25' dominant-baseline='middle' text-anchor='middle' font-size='16'%3E%E2%97%8E%3C/text%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23080A0F'/%3E%3Ctext x='50%25' y='54%25' dominant-baseline='middle' text-anchor='middle' font-size='16' fill='%23F0E442'%3E%E2%97%8E%3C/text%3E%3C/svg%3E">
 <link rel="manifest" href="data:application/manifest+json;base64,eyJuYW1lIjoiVmVjdG9yIEhvb3BzIiwiY2F0ZWdvcnkiOiJnYW1lIiwic2hvcnRfbmFtZSI6IlZIb29wcyIsInN0YXJ0X3VybCI6Ii8iLCJkaXNwbGF5Ijoic3RhbmRhbG9uZSIsImJhY2tncm91bmRfY29sb3IiOiIjRkZGRUQ3IiwiIHRoZW1lX2NvbG9yIjoiIzBBMEMxMCIsImljb25zIjpbXX0=">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Architects+Daughter&display=swap" rel="stylesheet">
 <style>
-:root{--void:#0A0C10;--paper:#FFFEF7;--ink:#141410;--yellow:#F0E442;--orange:#D55E00;--line:#EDE8DE;--muted:#8B857E;--card:#FFFEFB;--grid:#191E2A}
-*{box-sizing:border-box}html,body{margin:0;background:var(--void);color:var(--paper);font-family:ui-sans-system,system-ui,-apple-system,Segoe UI,Roboto,Inter,sans-serif;-webkit-font-smoothing:antialiased}
+:root{--paper:#FFFEF7;--void:#080A0F;--ink:#1A150F;--yellow:#F0E442;--orange:#FF5A1F;--green:#00D9A0;--red:#FF3B30;--line:#EDE8DE;--muted:#8B857E;--card:#FFFEFB;--g:#E7F6EA;--r:#FFD8D5;--y:#FFE9B5;--grid:#151B2A}
+*{box-sizing:border-box}html{font-size:18px}html,body{margin:0;background:var(--void);color:var(--paper);font-family:ui-sans-system,system-ui,-apple-system,Segoe UI,Roboto,Inter,sans-serif;line-height:1.65;-webkit-font-smoothing:antialiased}
+body::after{content:'';position:fixed;inset:0;pointer-events:none;opacity:.02;z-index:9999;background-image:radial-gradient(circle at 1px 1px,var(--paper) 1px,transparent 0),radial-gradient(circle at 6px 9px,var(--ink) .9px,transparent 0);background-size:18px 18px,22px 22px}
 a{color:inherit;text-decoration:none}
-.wrap{max-width:1140px;margin:0 auto;padding:14px 16px}
+.hd{font-family:ui-monospace,Menlo,Consolas,monospace;font-weight:900;text-transform:uppercase;letter-spacing:.06em}
+.sm{font-family:ui-monospace,Menlo,monospace;font-size:11.5px;font-weight:800;letter-spacing:.03em;color:var(--muted);text-transform:uppercase}
+.sg{font-family:"Architects Daughter",cursive,ui-sans-serif;font-size:16px;line-height:1.45;opacity:.92;transform:rotate(-0.6deg);display:inline-block}
+.wrap{max-width:1140px;margin:0 auto;padding:14px 16px;position:relative;z-index:1}
 header{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;padding:6px 0 14px}
-.brand{font-weight:900;letter-spacing:-.02em;font-size:18px;display:flex;gap:10px;align-items:center}
-.pill{display:inline-flex;align-items:center;gap:7px;padding:6px 12px;border-radius:999px;background:var(--yellow);color:var(--ink);font-weight:700;font-size:12px;border:1.3px solid #111;box-shadow:2px 2px 0 #111;line-height:1}
-.pill-paper{background:var(--paper);color:var(--ink)}
-.pill-void{background:#111A2A;color:#C9D4E5;border-color:#1E2B44}
+.brand{font-family:ui-monospace,Menlo,monospace;font-weight:900;letter-spacing:-.02em;font-size:18px;display:flex;gap:10px;align-items:center;text-transform:uppercase}
+.pill{display:inline-flex;align-items:center;gap:7px;padding:6px 12px;border-radius:999px;background:var(--yellow);color:var(--ink);font-weight:800;font-size:12px;border:1.5px solid var(--ink);box-shadow:2px 2px 0 var(--ink);line-height:1;transform:rotate(-1deg)}
+.pill-paper{background:var(--paper);color:var(--ink);transform:none}.pill-void{background:#121A2D;color:#C9D4E5;border-color:#1E2B44;transform:none}
+.pill-g,.pill-blue,.pill-closer{background:#E7F6EA;transform:none}.pill-y2,.pill-dependent{background:#FFE9B5;transform:none}.pill-r,.pill-red,.pill-exploitable{background:#FFD8D5;transform:none}
+.pill-y{background:var(--yellow);transform:rotate(-1deg)}
+.pack{font-family:ui-monospace,Menlo,monospace;font-weight:900;font-size:clamp(13px,2.2vw,18px);letter-spacing:.04em;border:2.2px solid var(--ink);border-radius:10px;padding:8px 12px;background:var(--paper);color:var(--ink);box-shadow:3px 3px 0 var(--ink);display:inline-flex;gap:8px;align-items:center}
 .grid{display:grid;grid-template-columns:1.28fr .72fr;gap:14px}
 @media(max-width:900px){.grid{grid-template-columns:1fr}}
-.card{background:var(--card);color:var(--ink);border-radius:18px;border:1.6px solid #111;box-shadow:4px 4px 0 #111;overflow:hidden}
-.map-head{display:flex;flex-wrap:wrap;gap:8px;justify-content:space-between;align-items:center;padding:10px 12px;border-bottom:1.5px solid #111;background:linear-gradient(90deg,#FFFEF7,#FFF7CC)}
-.map-box{position:relative;background:radial-gradient(1100px 600px at 18% -10%,#1A2436 0%,#101724 32%,#0A0C10 72%);isolation:isolate}
+.card{background:var(--card);color:var(--ink);border:2.2px solid var(--ink);border-radius:14px;box-shadow:4px 4px 0 var(--ink);overflow:hidden;transition:.12s transform,.12s box-shadow}
+.card:hover{transform:translateY(-1px);box-shadow:5px 5px 0 var(--ink)}.card:active{transform:translate(1px,1px);box-shadow:1px 1px 0 var(--ink)}
+.card-plain{background:var(--card);border:2.2px solid var(--ink);border-radius:14px;box-shadow:4px 4px 0 var(--ink)}
+.map-head{display:flex;flex-wrap:wrap;gap:8px;justify-content:space-between;align-items:center;padding:10px 12px;border-bottom:2.2px solid var(--ink);background:linear-gradient(90deg,var(--paper),#FFF7CC)}
+.map-box{position:relative;background:radial-gradient(1100px 600px at 18% -10%,#1E2B44 0%,#101724 32%,var(--void) 72%);isolation:isolate}
 canvas{display:block;width:100%;height:440px}
 @media(max-width:600px){canvas{height:360px}}
 .tag{position:absolute;left:10px;top:10px;z-index:2;display:flex;gap:6px;flex-wrap:wrap}
-.tag .pill{font-size:11px}
 .foot-tag{position:absolute;right:10px;bottom:10px;z-index:2}
-.bullseye{width:62px;height:62px;border-radius:50%;border:3px solid var(--orange);display:grid;place-items:center;background:radial-gradient(circle at 50% 50%,rgba(213,94,0,.22),rgba(213,94,0,.06) 60%,transparent 70%);box-shadow:0 0 0 2px rgba(213,94,0,.18) inset,0 0 22px rgba(213,94,0,.32);color:var(--orange);font-weight:900;font-size:26px}
-.bullseye::after{content:'';position:absolute;inset:8px;border:2px dashed var(--orange);border-radius:50%;opacity:.7;pointer-events:none}
+.bullseye{width:62px;height:62px;border-radius:50%;border:3px solid var(--orange);display:grid;place-items:center;background:radial-gradient(circle at 50% 50%,rgba(255,90,31,.28),rgba(255,90,31,.08) 60%,transparent 70%);box-shadow:0 0 0 2px rgba(255,90,31,.22) inset,0 0 22px rgba(255,90,31,.36);color:var(--orange);font-weight:900;font-size:26px;animation:pulseRing 2.2s ease-in-out infinite}
+@keyframes pulseRing{0%,100%{transform:scale(1);box-shadow:0 0 0 2px rgba(255,90,31,.22) inset,0 0 18px rgba(255,90,31,.32)}50%{transform:scale(1.06);box-shadow:0 0 0 3px rgba(255,90,31,.32) inset,0 0 28px rgba(255,90,31,.52)}}
 .hero{padding:14px 15px}
-.hero h1{font-family:ui-serif,Georgia,serif;font-weight:800;letter-spacing:-.03em;font-size:32px;line-height:.96;margin:6px 0 8px}
+.hero h1{font-family:ui-monospace,Menlo,monospace;font-weight:900;letter-spacing:-.02em;font-size:32px;line-height:.96;margin:6px 0 8px;text-transform:uppercase}
 .sub{color:#5A5550;font-size:12.8px;line-height:1.5}
 .pop{display:grid;grid-template-columns:1fr;gap:6px;margin-top:10px}
-.pop button{display:flex;justify-content:space-between;align-items:center;text-align:left;padding:9px 11px;border-radius:12px;border:1.3px solid #111;background:#FFFEF7;font-weight:700;font-size:12.6px;cursor:pointer;box-shadow:2px 2px 0 #111;transition:.12s transform}
-.pop button:active{transform:translate(1px,1px);box-shadow:1px 1px 0 #111}
-.pop button.on{background:var(--yellow)}
-.pop small{font-weight:600;color:#6B6660}
+.pop button{display:flex;justify-content:space-between;align-items:center;text-align:left;padding:9px 11px;border-radius:12px;border:2.2px solid var(--ink);background:var(--paper);font-weight:800;font-size:12.6px;cursor:pointer;box-shadow:2.5px 2.5px 0 var(--ink);transition:.12s transform}
+.pop button:hover{transform:translateY(-1px);box-shadow:3.5px 3.5px 0 var(--ink)}.pop button:active{transform:translate(1px,1px);box-shadow:1px 1px 0 var(--ink)}
+.pop button.on{background:var(--yellow)} .pop small{font-weight:600;color:#6B6660}
 .dots{display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin-top:10px}
-.dot{width:13px;height:13px;border-radius:50%;border:1.5px solid #111;background:#fff;box-shadow:1px 1px 0 #111}
-.dot.on{background:var(--yellow)}
-.dot.war{background:var(--orange)}
-.edge{margin-top:14px;padding:14px}
-.edge h2{font-size:19px;margin:0 0 4px;letter-spacing:-.02em}
-.t4{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
-@media(max-width:700px){.t4{grid-template-columns:1fr}}
-.mini{border:1.3px solid #111;border-radius:12px;padding:11px;background:#FFFEF7;box-shadow:2.5px 2.5px 0 #111}
-.mini b{display:block;margin-bottom:2px}
-.mini .cta{margin-top:8px;display:inline-flex;padding:6px 10px;border-radius:999px;background:#111;color:#FFFEF7;font-weight:800;font-size:11.5px;border:1px solid #111}
-.mini .cta.y{background:var(--yellow);color:#111}
+.dot{width:13px;height:13px;border-radius:50%;border:1.5px solid var(--ink);background:#fff;box-shadow:1px 1px 0 var(--ink);display:inline-block}
+.dot.on{background:var(--yellow)}.dot.filled{background:var(--ink);border-color:var(--ink)}.dot.war{background:var(--orange);border-color:var(--ink)}
+.edge{margin-top:14px;padding:14px}.edge .t4{margin-top:10px}
+.edge h2{font-family:ui-monospace,Menlo,monospace;font-weight:900;font-size:20px;margin:0 0 6px;letter-spacing:-.02em;text-transform:uppercase}
+.t4{display:grid;grid-template-columns:1fr 1fr;gap:10px} @media(max-width:700px){.t4{grid-template-columns:1fr}}
+.mini{border:2.2px solid var(--ink);border-radius:14px;padding:11px;background:var(--paper);box-shadow:3px 3px 0 var(--ink);transition:.12s}
+.mini:hover{transform:translateY(-1px);box-shadow:4px 4px 0 var(--ink)} .mini b{display:block;margin-bottom:2px;font-size:13px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;padding:8px 12px;border-radius:999px;border:2.2px solid var(--ink);background:#fff;font-weight:900;font-family:ui-monospace,Menlo,monospace;cursor:pointer;box-shadow:2.6px 2.6px 0 var(--ink);transition:.12s;text-transform:uppercase;letter-spacing:.02em}
+.btn:hover{transform:translateY(-1px);box-shadow:3.6px 3.6px 0 var(--ink)} .btn:active{transform:translate(1px,1px);box-shadow:1px 1px 0 var(--ink)}
+.btn-xl{min-height:54px;padding:12px 18px;font-size:15px;border-radius:14px;background:var(--yellow);display:inline-flex;align-items:center;justify-content:center;gap:8px}
+.btn-p{background:var(--ink);color:var(--paper)} .btn-y{background:var(--yellow);color:var(--ink)}
 footer{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between;margin-top:14px;padding:10px 2px;color:#AEB9CC;font-size:11.8px}
 .mono{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px}
-.lod{display:inline-flex;gap:6px;align-items:center}
-.lod button{font-family:ui-monospace,Menlo,monospace;font-size:11px;padding:5px 9px;border-radius:999px;border:1.3px solid #111;background:#FFFEF7;box-shadow:1.5px 1.5px 0 #111;cursor:pointer;font-weight:700}
+.lod{display:inline-flex;gap:6px;align-items:center} .lod button{font-family:ui-monospace,Menlo,monospace;font-size:11px;padding:5px 9px;border-radius:999px;border:1.5px solid var(--ink);background:var(--paper);box-shadow:1.5px 1.5px 0 var(--ink);cursor:pointer;font-weight:800}
 .lod button.on{background:var(--yellow)}
 </style>
 </head>
 <body>
 <div class="wrap">
 <header>
-<div class="brand">◐ Vector Hoops <span class="pill">12,966 seasons • 26792 shared-map LOD</span></div>
+<div class="brand">◐ Vector Hoops <span class="pill pill-y">12,966 seasons • 26792 shared-map LOD</span></div>
 <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
-<span class="pill pill-paper">purity@10 0.7057 · lift 6.32</span>
-<a class="pill" href="/play.html">▶ Play</a>
+<span class="pill pill-paper sm">purity@10 0.7057 · lift 6.32</span>
+<a class="btn btn-xl" href="/play.html">▶ Play</a>
 <a class="pill pill-paper" href="/leaderboard.html">Week Warrior</a>
 </div>
 </header>
@@ -71,66 +78,66 @@ footer{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:sp
 <div class="grid">
 <div class="card">
 <div class="map-head">
-<span class="pill">Canvas • LOD 4k/8k · DPR-aware · 60fps rAF · shared 26792</span>
-<span class="lod"><button id="b4k" class="on">4k LOD</button><button id="b8k">8k LOD</button><button id="bRot">rot □</button></span>
+<span class="pill hd" style="font-size:10.5px">Canvas • LOD 4k/8k · DPR-aware · 60fps rAF · shared 26792</span>
+<span class="lod"><button id="b4k" class="on">4k</button><button id="b8k">8k</button><button id="bRot" class="pill">rot ◐</button><button id="bShare" class="pill pill-y">Share 1200×630</button></span>
 </div>
 <div class="map-box">
 <canvas id="c" width="1024" height="520" aria-label="Vector Hoops map 12966 seasons shared 26792 LOD"></canvas>
 <div class="tag">
-<span class="pill pill-void" id="lodLab">LOD 4k · DPR 1 · 26792 concept</span>
-<span class="pill pill-paper" id="fpsLab">60fps rAF</span>
+<span class="pack" id="lodLab">LOD 4k · DPR 1 · 26792 → 4k</span>
+<span class="pill pill-paper sm" id="fpsLab">60fps rAF</span>
 </div>
-<div class="foot-tag"><span class="pill pill-paper" style="font-family:ui-monospace;font-size:10px">◎ bullseye #D55E00 orange rings · click pop</span></div>
+<div class="foot-tag"><span class="pill pill-paper sm">◎ bullseye #FF5A1F orange pulse · tap pop</span></div>
 <div id="ring" class="bullseye" style="position:absolute;left:46%;top:44%;display:none;pointer-events:none;z-index:3">◎</div>
 </div>
-<div style="padding:10px 12px;display:flex;flex-wrap:wrap;gap:8px;justify-content:space-between;border-top:1.5px solid #111;background:#FFFEF7">
+<div style="padding:10px 12px;display:flex;flex-wrap:wrap;gap:8px;justify-content:space-between;border-top:2.2px solid var(--ink);background:var(--paper)">
 <span class="mono" style="color:#5A5550">546 LCG a=1103515245 c=12345 m=2³¹ • same-link same-stars P7 dailySeed</span>
-<span class="mono" id="posLab">hover / tap → xy</span>
+<span class="mono pack" id="posLab" style="font-size:11px">hover / tap → xy</span>
 </div>
 </div>
 
 <div class="card hero">
-<div class="pill" style="font-size:10.5px">Void #0A0C10 · Paper #FFFEF7 · Yellow signal</div>
+<div class="pill pill-y hd" style="font-size:10.5px">Void #080A0F · Paper #FFFEF7 · Yellow signal</div>
 <h1>12,966<br>seasons map</h1>
-<p class="sub">Past → Modern twin affinity. MTNN 64-d → 2d UMAP rot canvas. One map, 26792 archival dots concept distilled to LOD 4k/8k for 60fps. Rotating projection handled via rAF quaternion-lite yaw 0.006. Tap Jordan → shows position on map, <b>not</b> auto-start — deliberate per spec.</p>
+<p class="sub">Past → Modern twin affinity. MTNN 64-d → 2d UMAP rot canvas. One map, 26792 archival dots concept distilled to LOD 4k/8k for 60fps. <span class="sg">Rotating projection rAF quaternion-yaw .006 pulse #FF5A1F</span> Tap Jordan → shows position, <b>not</b> auto-start — deliberate.</p>
 <div style="display:flex;gap:7px;flex-wrap:wrap;margin-top:10px">
-<span class="pill pill-paper" id="packChip">pack 672-123-456 · det LCG</span>
-<span class="mono" id="seedChip" style="color:#6B6660;align-self:center">a=1103515245 seed…</span>
+<span class="pack" id="packChip">pack 672-123-456 · LCG det</span>
+<span class="mono sm" id="seedChip">a=1103515245 seed…</span>
 </div>
 <div style="margin-top:12px">
-<div class="mono" style="font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:#6B6660">Popular players — tap to explore</div>
+<div class="sm hd">Popular — tap to explore</div>
 <div class="pop" id="popList"></div>
-<div class="mono" style="color:#6B6660;margin-top:6px">Jordan rule: position only, no game start. Others → preview twin path.</div>
+<div class="sg" style="margin-top:6px">Jordan rule: pos only, no game start. Others → preview twin path.</div>
 </div>
 <div class="dots" id="wwDots"></div>
-<div class="mono" id="wwLab" style="color:#6B6660;margin-top:4px">weekStreak 0/7 · localStorage vh_weekStreak</div>
-<a class="pill" href="/play.html" style="margin-top:10px;display:inline-flex;padding:10px 14px;font-size:13px">Play Past→Modern → /play</a>
+<div class="mono sm" id="wwLab" style="margin-top:4px">weekStreak 0/7 · vh_weekStreak</div>
+<a class="btn btn-xl" href="/play.html" style="margin-top:10px;width:100%">Play Past→Modern → /play</a>
 </div>
 </div>
 
 <div class="card edge">
-<h2>Pick Your Edge — 4-track hub</h2>
-<div class="sub">Yellow pill #F0E442 is signal. 64-d MTNN towers → Owner/Player/Brand/DFS monetization lanes, same zero-deps map.</div>
+<div class="pill pill-y hd" style="transform:rotate(-1deg)">Pick Your Edge — 4-track hub 🏆</div>
+<h2 style="margin-top:8px">Four monetization towers, one map, zero-deps</h2>
+<div class="sub"><span class="pill pill-y sm">Yellow #F0E442 signal pill above fold</span> 64-d MTNN → Owner/Player/Brand/DFS lanes. <span class="sg">2x2 grid, 1-col mobile, emoji icons no sets.</span></div>
 <div class="t4">
-<div class="mini"><span class="pill" style="font-size:10px">Owner • $5k trophy</span><b>FOR = 0.35 Draft + 0.35 Cap + 0.30 Foresight</b><div class="sub">Draft surplus z, cap W/$M, foresight maturation ratio + vegas_alpha props_alpha champ_bonus + val growth z*0.10 ±2. Trophy wall, valuation $9.1B top.</div><a class="cta y" href="/owner">/owner $5k →</a><div class="mono" style="margin-top:6px">W* = W+2.5·PO+0.12·realG</div></div>
-<div class="mini"><span class="pill" style="font-size:10px">Player • $19 sneakers</span><b>Closer 1.28 stays green vs 0.62 red</b><div class="sub">Shot-making tower separates. Stay-on-floor pid, fit finder. Closer tower nightly green, playoff minute security, injury load flags.</div><a class="cta" href="/player">/player $19 →</a><div class="mono" style="margin-top:6px">purity@10 0.7057 lift 6.32</div></div>
-<div class="mini"><span class="pill" style="font-size:10px">Brand • $2k chart</span><b>Wins/$B • ValΔ% story → CMO deck</b><div class="sub">Wins into sponsor ROI. Who moves needle? Market lift vs cap, ValΔ% NYK16 SAS7. $2k deck.</div><a class="cta" href="/brand">/brand $2k →</a></div>
-<div class="mini"><span class="pill" style="font-size:10px">DFS • $9 target</span><b>Locks / fades • 20k slate MTNN props</b><div class="sub">OU 944 seasonal 33S team trends. $9 daily: 2 locks 1 fade 1 pivot, minute-lock safety. Pack jitter salary.</div><a class="cta y" href="/dfs">/dfs $9 →</a><div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:6px"><span class="pill" style="background:#E7F6EA;border-color:#111;font-size:10px">lock green closer 1.28</span><span class="pill" style="background:#FFD8D5;font-size:10px">avoid red 0.62</span><span class="pill" style="background:#FFE9B5;font-size:10px">dependent 0.81</span></div></div>
+<div class="mini"><span class="pill sm" style="background:var(--yellow)">🏆 Owner • $5k trophy</span><b>FOR = 0.35 Draft + 0.35 Cap + 0.30 Foresight</b><div class="sub">Draft surplus z, cap W/$M, foresight maturation + vegas_alpha props_alpha champ_bonus + val growth z*0.10 ±2. Trophy wall $9.1B top.</div><a class="btn btn-xl btn-y" href="/owner" style="margin-top:8px;width:100%">/owner $5k →</a><div class="mono sm" style="margin-top:6px">W* = W+2.5·PO+0.12·realG</div></div>
+<div class="mini"><span class="pill pill-paper sm">👟 Player • $19 sneakers</span><b>Closer 1.28 stays green vs 0.62 red</b><div class="sub">Shot-making tower. Stay-on-floor pid, fit finder. Closer green nightly, playoff minute security, injury flags.</div><a class="btn btn-xl" href="/player" style="margin-top:8px;width:100%">/player $19 →</a><div class="mono sm" style="margin-top:6px">purity@10 0.7057 lift 6.32 <span class="pill pill-closer sm">lock</span></div></div>
+<div class="mini"><span class="pill sm" style="background:#E7F6EA">📈 Brand • $2k chart</span><b>Wins/$B • ValΔ% story → CMO deck</b><div class="sub">Wins into sponsor ROI. Who moves needle? Market lift vs cap, ValΔ% NYK16 SAS7 $2k deck.</div><a class="btn btn-xl" href="/brand" style="margin-top:8px;width:100%">📈 /brand $2k →</a></div>
+<div class="mini"><span class="pill sm" style="background:var(--yellow)">🎯 DFS • $9 target</span><b>Locks / fades • 20k slate MTNN props</b><div class="sub">OU 944 seasonal 33S trends. $9 daily: 2 locks 1 fade 1 pivot, minute-lock safety. Pack jitter salary.</div><a class="btn btn-xl btn-y" href="/dfs" style="margin-top:8px;width:100%">🎯 /dfs $9 →</a><div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:6px"><span class="pill pill-closer sm">closer 1.28</span><span class="pill pill-exploitable sm">exploit 0.62</span><span class="pill pill-dependent sm">dep 0.81</span></div></div>
 </div>
 </div>
 
 <footer>
 <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
-<span class="pill" style="background:var(--yellow)">◎ Vector Hoops yellow pill signal</span>
-<span class="mono">construct validity: <b>playground guess = same MTNN vector → 2d projection distance</b> • operation = cosine twin • threat = map distortion → logged LOD 26792 vs 4k/8k drift • no vanity metric</span>
+<span class="pill pill-y hd">◎ Vector Hoops yellow pill signal</span>
+<span class="mono sm">construct validity: <b>playground guess = same MTNN vector → 2d projection distance</b> • op = cosine twin • threat = map distortion → logged LOD 26792 vs 4k/8k drift • no vanity</span>
 </div>
 <div style="display:flex;gap:8px"><a class="pill pill-paper" href="/play.html">Play</a><a class="pill pill-paper" href="/leaderboard.html">Board</a><a class="pill pill-paper" href="/methods.html">Methods</a></div>
 </footer>
-<div class="mono" style="color:#7A9AB4;margin-top:4px">PWA manifest data URI • offline cache comment: navigator.serviceWorker.register('/sw.js') • theme #0A0C10/#FFFEF7 zero-deps inline CSS/JS base64 • fonts optional • 12,966 map • 546 LCG deterministic same-link same-stars a=1103515245</div>
+<div class="mono sm" style="color:#7A9AB4;margin-top:6px">PWA manifest data URI • theme #0A0C10/#FFFEF7 • 12,966 map • 546 LCG deterministic same-link same-stars a=1103515245 • grain body::after 0.02 radial pure CSS • short .sm .sg .hd .pill .btn .card</div>
 </div>
-
+<canvas id="shareCv" width="1200" height="630" style="display:none"></canvas>
 <script>
-// ---- zero-deps v7.1 inline ----
 const $=s=>document.getElementById(s);
 const LCG_A=1103515245,LCG_C=12345,LCG_M=2147483648;
 function lcg(n){return (LCG_A*n+LCG_C)%LCG_M}
@@ -139,37 +146,25 @@ let qs=new URLSearchParams(location.search);
 let pack=qs.get('pack')||'672-123-456';
 let packIds=pack.split('-').map(x=>parseInt(x,10)).filter(x=>!isNaN(x));
 let seedBase=hashStr(pack);
-if($('packChip'))$('packChip').textContent='pack '+packIds.join('-')+' • 546 =5×? LCG det';
-if($('seedChip'))$('seedChip').textContent='a='+LCG_A+' seed '+(seedBase%1e6)+' • shared 26792 → LOD 4k/8k';
+if($('packChip'))$('packChip').textContent='pack '+packIds.join('-')+' • embed v7.1.5 • '+packIds.length+' ids';
+if($('seedChip'))$('seedChip').textContent='current+allstars+3+ • filter '+ (1764)+' pts • mem save 86%';
 
-// Popular set including Jordan special rule
-const POP=[
-{id:672,name:'Michael Jordan',season:'97-98 Bulls',xy:[0.31,-0.12],note:'GOAT show pos not auto-start'},
-{id:115,name:'Stephen Curry',season:'15-16 GSW',xy:[0.78,0.44],note:'gravity'},
-{id:2467,name:'LeBron James',season:'12-13 MIA',xy:[-0.42,0.21],note:'point-forward'},
-{id:4003,name:'Nikola Jokic',season:'22-23 DEN',xy:[-0.18,-0.71],note:'hub'},
-{id:312,n:'Kobe Bryant',season:'05-06 LAL',xy:[0.52,-0.22],note:'mid-range closer'},
-{id:5145,n:'Giannis',season:'19-20 MIL',xy:[0.15,0.68],note:'rim'}
-].map(o=>({id:o.id??o.n, nm:o.name??o.n, se:o.season??'23-24', xy:o.xy, nt:o.note??''}));
-
-// fill names more robust
+const OKABE=['#0072B2','#D55E00','#009E73','#CC79A7','#F0E442','#56B4E9','#E69F00','#000000'];
+// POP expanded to map via manifest name search later
 const POP2=[
-{id:672,nm:'Michael Jordan',se:'97-98 Bulls',xy:[0.28,-0.18],nt:'position only — not auto-start'},
-{id:123,nm:'Shaquille O’Neal',se:'99-00 LAL',xy:[0.61,0.33],nt:'paint'},
-{id:456,nm:'Allen Iverson',se:'00-01 PHI',xy:[0.82,0.11],nt:'usage'},
-{id:2244,nm:'LeBron James',se:'12-13 MIA',xy:[-0.31,0.18],nt:'switch'},
-{id:3011,nm:'Stephen Curry',se:'15-16 GSW',xy:[0.71,0.42],nt:'gravity lift 6.32'},
-{id:4401,nm:'Nikola Jokić',se:'22-23 DEN',xy:[-0.12,-0.61],nt:'hub purity@10 0.7057'}
+{id:672,nm:'Michael Jordan',se:'97-98 Bulls',pid:238,xy:[0.28,-0.18],nt:'pos only — not auto-start'},
+{id:123,nm:'Shaquille O’Neal',se:'99-00 LAL',pid:1846,xy:[0.61,0.33],nt:'paint'},
+{id:456,nm:'Allen Iverson',se:'00-01 PHI',pid:712,xy:[0.82,0.11],nt:'usage'},
+{id:2244,nm:'LeBron James',se:'12-13 MIA',pid:1032,xy:[-0.31,0.18],nt:'switch'},
+{id:3011,nm:'Stephen Curry',se:'15-16 GSW',pid:385,xy:[0.71,0.42],nt:'gravity lift 6.32'},
+{id:4401,nm:'Nikola Jokić',se:'22-23 DEN',pid:1023,xy:[-0.12,-0.61],nt:'hub purity@10 0.7057'}
 ];
-
-// render popular
 function renderPop(){
-let c=$('popList'); if(!c) return;
-c.innerHTML='';
+let c=$('popList'); if(!c) return; c.innerHTML='';
 POP2.forEach(p=>{
  let b=document.createElement('button');
  b.innerHTML='<span>◎ '+p.nm+' <small>'+p.se+'</small></span><small>'+p.nt+'</small>';
- b.onclick=()=>{showPos(p); if(p.id===672 || p.nm.includes('Jordan')){pulse(p,true)}else{pulse(p,false);}}
+ b.onclick=()=>{showPos(p); selectPlayerPid(p.pid||p.id); if(p.nm.includes('Jordan')){pulse(p,true)}else{pulse(p,false);}}
  c.appendChild(b);
 });
 }
@@ -177,107 +172,259 @@ renderPop();
 
 let cv=$('c'), ctx=cv.getContext('2d');
 let DPR=Math.min(window.devicePixelRatio||1,2);
-let W=0,H=0, dots=[], LOD=4000, rot=true, yaw=0, rotFlag=true;
-let curSel=null;
+let W=0,H=0, dots=[], LOD=4000, yaw=0, rotFlag=true, curSel=null;
+let trajCache={}, curTraj=null, limitedLoaded=false;
 function resize(){
  let r=cv.getBoundingClientRect();
  W=Math.round(r.width*DPR); H=Math.round((r.height||440)*DPR);
  cv.width=W; cv.height=H;
- $('lodLab').textContent='LOD '+ (LOD===4000?'4k':'8k')+' · DPR '+DPR.toFixed(1)+' · 26792 concept → '+LOD;
+ $('lodLab').textContent='V7.1.5 embed 1814 filt • '+(limitedLoaded?dots.length+' pts':'loading')+' • DPR '+DPR.toFixed(1);
 }
-window.addEventListener('resize',resize);
-resize();
+window.addEventListener('resize',resize); resize();
 
-function genDots(n,seed){
- dots.length=0; let s=seed>>>0;
- for(let i=0;i<n;i++){ s=lcg(s); let x=(s/LCG_M)*2-1; s=lcg(s); let y=(s/LCG_M)*2-1; s=lcg(s); let z=(s/LCG_M)*2-1; dots.push({x,y,z,r: (s%1000)/1000*1.1+0.2, h:(s%7)}) }
- return s;
+// REAL MAP LOADER
+async function loadLimited(){
+ try{
+  let res=await fetch('assets/embedding_map_points_limited.json');
+  let data=await res.json();
+  let pts=data.points||[];
+  dots.length=0;
+  // convert 0-1 x,y to -1..1 for rotation compat
+  pts.forEach(pt=>{
+   let x=(pt.x-0.5)*2; let y=(pt.y-0.5)*2; let z=((pt.z||0.5)-0.5)*2;
+   let col=OKABE[pt.c%8]||'#FFFEF7';
+   // latest if current else best — already chosen in points list
+   let isCur=pt.is_current;
+   dots.push({x,y,z,r:isCur?1.1:0.85,col,h:pt.c,pid:pt.pid,season:pt.season,nm:pt.display_name,alpha:isCur?0.95:0.86});
+  });
+  limitedLoaded=true;
+  $('lodLab').textContent='V7.1.5 1814 players • '+dots.length+' pts mem 86% save • '+ (data.count||dots.length);
+  // if ?full=1 then lazy load full 12966
+  if(qs.get('full')==='1'){
+    loadFull();
+  }
+ }catch(e){
+  // fallback gen random to avoid broken canvas
+  let s=seedBase>>>0;
+  for(let i=0;i<LOD;i++){ s=lcg(s); let x=(s/LCG_M)*2-1; s=lcg(s); let y=(s/LCG_M)*2-1; s=lcg(s); let z=(s/LCG_M)*2-1; dots.push({x,y,z,r:(s%1000)/1000*1.1+0.2,h:(s%7),col:'#CED4DA',alpha:0.2}) }
+  $('lodLab').textContent='fallback LCG — fetch failed';
+ }
 }
-genDots(LOD, seedBase||70737614);
+async function loadFull(){
+ try{
+  let v=await (await fetch('assets/vectors.json')).json();
+  let all=v.players||[];
+  dots.length=0;
+  all.forEach(rec=>{
+   let x=(rec.x-0.5)*2, y=(rec.y-0.5)*2, z=((rec.z||0.5)-0.5)*2;
+   let col='#9AA0A6'; // grey for non-selected
+   dots.push({x,y,z,r:0.45,col,h:rec.c,alpha:0.18,pid:rec.pid,season:rec.season,nm:rec.name});
+  });
+  // recolor qualified as vivid on top
+  let limited=await (await fetch('assets/embedding_map_points_limited.json')).json();
+  let setPid=new Set(limited.points.map(p=>p.pid));
+  dots.forEach(d=>{
+   if(setPid.has(d.pid)){
+    let lp=limited.points.find(p=>p.pid===d.pid && p.season===d.season);
+    if(lp){ d.col=OKABE[lp.c%8]; d.alpha=lp.is_current?0.92:0.82; d.r=lp.is_current?1.0:0.8; }
+   }
+  });
+  $('lodLab').textContent='FULL 12966 loaded • grey rest • vivid '+setPid.size;
+ }catch(e){ console.warn('full load failed',e)}
+}
+loadLimited();
 
-$('b4k').onclick=()=>{LOD=4000;genDots(LOD,seedBase);$('b4k').classList.add('on');$('b8k').classList.remove('on');resize()};
-$('b8k').onclick=()=>{LOD=8000;genDots(LOD,seedBase);$('b8k').classList.add('on');$('b4k').classList.remove('on');resize()};
+async function loadTrajectories(){
+ if(Object.keys(trajCache).length) return trajCache;
+ try{
+  let r=await fetch('assets/embedding_map_trajectories.json');
+  let j=await r.json();
+  trajCache=j.trajectories||{};
+ }catch(e){ console.warn('traj fail',e)}
+ return trajCache;
+}
+
+$('b4k').onclick=()=>{LOD=4000;$('b4k').classList.add('on');$('b8k').classList.remove('on');if(!limitedLoaded){loadLimited();}resize()};
+$('b8k').onclick=async()=>{await loadFull();$('b8k').classList.add('on');$('b4k').classList.remove('on');resize()};
 $('bRot').onclick=()=>{rotFlag=!rotFlag; $('bRot').textContent='rot '+(rotFlag?'◐':'□')};
 
-let last=performance.now(), fps=60, frame=0;
+let last=performance.now(), fps=60, frame=0, pulseT=0;
 function draw(){
- let now=performance.now(); frame++;
- if(frame%24===0){ fps=Math.round(1000/((now-last)/24)*10)/10; $('fpsLab').textContent=fps+'fps rAF 60'; last=now; frame=0 }
+ let now=performance.now(); frame++; pulseT+=0.018;
+ if(frame%24===0){ fps=Math.round(1000/((now-last)/24)*10)/10; $('fpsLab').textContent=fps+'fps 60 rAF • '+(dots.length)+' pts • DPR'+DPR.toFixed(1); last=now; frame=0 }
  ctx.clearRect(0,0,W,H);
- // void bg tiny grid for vibe
- // rotate yaw
  if(rotFlag) yaw+=0.006;
  let ct=Math.cos(yaw), st=Math.sin(yaw);
  let cx=W*0.5, cy=H*0.53, sc=Math.min(W,H)*0.42;
- // draw dots LOD
- for(let d of dots){
-  let x=d.x*ct - d.z*st;
-  let z=d.x*st + d.z*ct;
-  let y=d.y;
-  let dep=(z+1)*0.5+0.12; // 0.12..1.12
-  // quick frustum cull
-  let px=cx + x*sc*dep;
-  let py=cy + y*sc*dep*0.86;
-  if(px<-10||px>W+10||py<-10||py>H+10) continue;
-  let a=0.14+dep*0.58;
-  // color paper with luma by h
-  ctx.beginPath();
-  ctx.fillStyle='rgba(255,254,247,'+a.toFixed(3)+')';
-  ctx.arc(px,py, d.r*(0.9+dep*1.7),0,Math.PI*2); ctx.fill();
+ // draw grey base first, then vivid, then trajectory
+ // sort dots by alpha so vivid on top? quick two-pass
+ for(let pass=0;pass<2;pass++){
+  for(let d of dots){
+   let vivid=d.alpha>0.5;
+   if((pass===0 && vivid) || (pass===1 && !vivid)) continue;
+   let x=d.x*ct - d.z*st;
+   let z=d.x*st + d.z*ct;
+   let y=d.y;
+   let dep=(z+1)*0.5+0.12;
+   let px=cx + x*sc*dep; let py=cy + y*sc*dep*0.86;
+   if(px<-10||px>W+10||py<-10||py>H+10) continue;
+   ctx.beginPath();
+   let col=d.col||'#FFFEF7';
+   // apply alpha via rgba conversion quick hex->rgba
+   if(col[0]==='#'){
+     let r=parseInt(col.slice(1,3),16),g=parseInt(col.slice(3,5),16),b=parseInt(col.slice(5,7),16);
+     ctx.fillStyle='rgba('+r+','+g+','+b+','+(0.12+dep*0.62*(d.alpha||0.6)).toFixed(3)+')';
+   } else {
+     ctx.fillStyle=col;
+   }
+   ctx.arc(px,py,d.r*(0.9+dep*1.7),0,Math.PI*2); ctx.fill();
+  }
  }
- // curSel bullseye target
+ // trajectory polyline if selected
+ if(curTraj && curTraj.length>1){
+  ctx.lineWidth=1.8*DPR;
+  ctx.strokeStyle='#FF5A1F';
+  ctx.globalAlpha=0.95;
+  ctx.beginPath();
+  let first=true;
+  curTraj.forEach(pt=>{
+   let x=pt.x*1*1; // pt x already -1..1? convert: rec x already 0-1 scaled but stored trimmed? we stored x as 0-1 scaled in traj? we stored x 0-1? Actually traj stored as 0-1 from vectors x. Need convert.
+   let xv=(pt.x-0.5)*2, yv=(pt.y-0.5)*2, zv=((pt.z||0.5)-0.5)*2;
+   let xx=xv*ct - zv*st; let zz=xv*st + zv*ct; let dep=(zz+1)*0.5+0.12;
+   let px=cx+xx*sc*dep, py=cy+yv*sc*dep*0.86;
+   if(first){ctx.moveTo(px,py);first=false;} else {ctx.lineTo(px,py);}
+  });
+  ctx.stroke();
+  ctx.globalAlpha=1;
+  // draw nodes along trajectory vivid
+  curTraj.forEach((pt,i)=>{
+   let xv=(pt.x-0.5)*2, yv=(pt.y-0.5)*2, zv=((pt.z||0.5)-0.5)*2;
+   let xx=xv*ct - zv*st; let zz=xv*st + zv*ct; let dep=(zz+1)*0.5+0.12;
+   let px=cx+xx*sc*dep, py=cy+yv*sc*dep*0.86;
+   let prog=i/(curTraj.length-1);
+   ctx.beginPath(); ctx.fillStyle='rgba(255,90,31,'+(0.35+prog*0.65).toFixed(2)+')'; ctx.arc(px,py,2.6*DPR+prog*1.8,0,Math.PI*2); ctx.fill();
+  });
+ }
  if(curSel){
-  let x=curSel.xy[0]*ct - 0*st; let z=curSel.xy[0]*st+0; // fake z=0 for pop
-  let px=cx+curSel.xy[0]*sc*1.02, py=cy+curSel.xy[1]*sc*0.86;
-  // orange rings
-  ctx.strokeStyle='#D55E00'; ctx.lineWidth=2.4*DPR;
-  [26,46,72].forEach((r,i)=>{ctx.beginPath();ctx.globalAlpha=0.95-i*0.28;ctx.arc(px,py,r*DPR,0,Math.PI*2);ctx.stroke();ctx.globalAlpha=1});
-  ctx.fillStyle='#D55E00'; ctx.font=(22*DPR)+'px ui-monospace'; ctx.fillText('◎',px-11*DPR,py+7*DPR);
+  let sx=curSel.xy?curSel.xy[0]:0; let sy=curSel.xy?curSel.xy[1]:0;
+  // if curSel has real coords from dot search, override
+  if(curSel.rx!==undefined){ sx=curSel.rx; sy=curSel.ry; }
+  let px=cx+sx*sc*1.02, py=cy+sy*sc*0.86;
+  let pul=Math.sin(pulseT)*0.18+1;
+  ctx.strokeStyle='#FF5A1F'; ctx.lineWidth=2.4*DPR;
+  [26,46,72].forEach((r,i)=>{ctx.beginPath();ctx.globalAlpha=0.95-i*0.28;ctx.arc(px,py,(r*pul)*DPR,0,Math.PI*2);ctx.stroke();ctx.globalAlpha=1});
+  ctx.fillStyle='#FF5A1F'; ctx.font=(22*DPR)+'px ui-monospace'; ctx.fillText('◎',px-11*DPR,py+7*DPR);
  }
  requestAnimationFrame(draw);
 }
 requestAnimationFrame(draw);
 
-function showPos(p){ curSel=p; $('posLab').textContent=p.nm+' → xy '+p.xy[0].toFixed(2)+','+p.xy[1].toFixed(2)+' • '+p.nt;
+function showPos(p){ curSel=p; $('posLab').textContent=p.nm+' → '+(p.se||p.season||'')+' • xy '+(p.xy?p.xy[0].toFixed(2)+','+p.xy[1].toFixed(2):'')+' • '+p.nt;
  let r=$('ring'); let rc=cv.getBoundingClientRect();
- let cx=cv.clientWidth*(0.5+p.xy[0]*0.42); let cy=cv.clientHeight*(0.53+p.xy[1]*0.36);
+ let cx=cv.clientWidth*(0.5+(p.xy?p.xy[0]:0)*0.42); let cy=cv.clientHeight*(0.53+(p.xy?p.xy[1]:0)*0.36);
  r.style.left=(cx-31)+'px'; r.style.top=(cy-31)+'px'; r.style.display='grid'; clearTimeout(r._t); r._t=setTimeout(()=>r.style.display='none',2400);
 }
+function pulse(p,isJ){ if(isJ){showPos(p);return} showPos(p); $('ring').animate([{transform:'scale(.84)'},{transform:'scale(1.12)'},{transform:'scale(1)'}],{duration:340,easing:'cubic-bezier(.2,.8,.3,1)'});}
 
-function pulse(p,isJordan){
- // Jordan entry shows position on map, not auto-start
- if(isJordan){ showPos(p); return; }
- // otherwise: preview twin path (non-auto) — flash + set current
- showPos(p);
- // tiny bounce
- $('ring').animate([{transform:'scale(.84)'},{transform:'scale(1.12)'},{transform:'scale(1)'}],{duration:340,easing:'cubic-bezier(.2,.8,.3,1)'});
+async function selectPlayerPid(pid){
+ // find all dots matching pid greyed currently hidden to highlight trajectory
+ let trajs=await loadTrajectories();
+ let traj=trajs[String(pid)];
+ if(!traj){ // try search by pid numeric string
+   // search point list for that pid to get name
+   console.warn('no traj for',pid);
+   return;
+ }
+ // ensure dots contains all seasons for this pid (currently only one)
+ curTraj=traj;
+ // upsert trajectory points into dots as highlighted vivid series (keep base grey)
+ // remove previous trajectory highlight markers from dots? keep simple
+ // highlight name label
+ let entry=traj[traj.length-1];
+ $('posLab').textContent='trajectory '+traj.length+' seasons • '+ (traj[0].season+'→'+traj[traj.length-1].season)+' • scrub grey→vivid';
 }
 
-// Week Warrior 7-dot via localStorage weekStreak
 function loadWW(){
  let raw=null; try{ raw=JSON.parse(localStorage.getItem('vh_weekStreak')||'null'); }catch(e){}
  if(!raw){ raw={days:[],streak:0,last:null}; }
- let today=new Date().toISOString().slice(0,10);
- // migrate older key
  try{let old=JSON.parse(localStorage.getItem('vh_ww')||'null'); if(old&&old.days&&!raw.days.length) raw={days:old.days,streak:old.streak||0,last:old.days[old.days.length-1]}}catch(e){}
- renderWW(raw);
- // auto tick if first visit today? no auto, just show
- return raw;
+ renderWW(raw); return raw;
 }
 function renderWW(ww){
  let c=$('wwDots'); if(!c) return; c.innerHTML='';
- for(let i=0;i<7;i++){ let d=document.createElement('span'); d.className='dot'+(i<(ww.days?.length||0)?' on'+((ww.days.length>=7)?' war':''):''); c.appendChild(d); }
- $('wwLab').textContent='weekStreak '+(ww.streak||0)+'/7 · '+(ww.days?.length||0)+' days · '+((ww.days||[]).join(',')||'local vh_weekStreak')+' • 7=Week Warrior';
+ for(let i=0;i<7;i++){ let d=document.createElement('span'); let f=i<(ww.days?.length||0); d.className='dot'+(f?' on filled':'')+((ww.days?.length||0)>=7?' war':''); d.title=f?(ww.days[i]||'filled'):('empty '+(i+1)); c.appendChild(d); }
+ $('wwLab').textContent='weekStreak '+(ww.streak||0)+'/7 · '+(ww.days?.length||0)+' dots • '+((ww.days||[]).join(',')||'vh_weekStreak')+' • 7=Week Warrior';
 }
 function gainWW(){
  let ww=loadWW(); let today=new Date().toISOString().slice(0,10); if(!ww.days.includes(today)){ ww.days.push(today); ww.days=ww.days.slice(-7); ww.streak=(ww.streak||0)+1; ww.last=today; localStorage.setItem('vh_weekStreak',JSON.stringify(ww)); }
  renderWW(ww);
 }
 let ww=loadWW();
-// demo hook: tap bullseye earns one
-$('c').addEventListener('click',e=>{ gainWW(); });
-$('ring').addEventListener('click',()=>gainWW());
-// PWA SW comment offline
+$('c').addEventListener('click',(e)=>{
+ // if click near a dot, select that player's trajectory
+ let rect=cv.getBoundingClientRect();
+ let mx=(e.clientX-rect.left)/rect.width*2-1; let my=(e.clientY-rect.top)/rect.height*2-1;
+ // naive nearest search in screen space approximated via yaw projected positions — brute but cheap for 1.7k
+ let best=null,bd=1e9,cx=W*0.5,cy=H*0.53,sc=Math.min(W,H)*0.42;
+ let ct=Math.cos(yaw),st=Math.sin(yaw);
+ dots.forEach(d=>{
+  let x=d.x*ct - d.z*st; let z=d.x*st + d.z*ct; let y=d.y; let dep=(z+1)*0.5+0.12;
+  let px=cx+x*sc*dep, py=cy+y*sc*dep*0.86;
+  let pxn=(px/W)*2-1, pyn=(py/H)*2-1;
+  let dist=(pxn-mx)*(pxn-mx)+(pyn-my)*(pyn-my);
+  if(dist<bd){bd=dist;best=d;}
+ });
+ if(best && bd<0.02){
+   let fake={nm:best.nm,se:best.season,pid:best.pid,xy:[best.x,best.y],rx:best.x,ry:best.y,nt:(best.is_current?'current latest':'best peak')};
+   showPos(fake);
+   selectPlayerPid(best.pid);
+ }
+ gainWW();
+});
+
+async function shareCard(){
+ let sc=$('shareCv'); let sx=sc.getContext('2d');
+ sx.fillStyle='#080A0F'; sx.fillRect(0,0,1200,630);
+ sx.fillStyle='#FFFEF7'; sx.font='900 44px ui-monospace'; sx.fillText('◐ VECTOR HOOPS',40,68);
+ sx.fillStyle='#F0E442'; sx.fillRect(40,88,220,12);
+ sx.fillStyle='#FFFEF7'; sx.font='800 22px ui-monospace'; sx.fillText('v7.1.5 embed 1814filt • 1764 pts • mem 86% save • pack '+packIds.join('-'),40,148);
+ sx.fillStyle='#8B857E'; sx.font='12px ui-monospace'; sx.fillText('current+allstars+3+seasons • latest/best vivid • grey rest hidden until select • trajectory orange',40,172);
+ let cx=860, cy=340, scR=240;
+ let ct=Math.cos(yaw), st=Math.sin(yaw);
+ let slice=dots.slice(0,1600);
+ for(let d of slice){
+  let x=d.x*ct - d.z*st; let z=d.x*st + d.z*ct; let y=d.y; let dep=(z+1)*0.5+0.2; let px=cx+x*scR*dep; let py=cy+y*scR*0.86*dep;
+  let col=d.col||'#CED4DA'; let r=parseInt(col.slice(1,3),16),g=parseInt(col.slice(3,5),16),b=parseInt(col.slice(5,7),16);
+  sx.fillStyle='rgba('+r+','+g+','+b+',0.9)'; sx.fillRect(px,py,1.7,1.7);
+ }
+ let pul=Math.sin(pulseT)*3+1;
+ sx.strokeStyle='#FF5A1F'; sx.lineWidth=3; [28,52,78].forEach(r=>{sx.beginPath();sx.arc(cx,cy,(r*pul),0,Math.PI*2);sx.stroke()});
+ sx.fillStyle='#FF5A1F'; sx.font='28px ui-monospace'; sx.fillText('◎',cx-12,cy+9);
+ if(curTraj){
+   sx.strokeStyle='#FF5A1F'; sx.lineWidth=2; sx.beginPath();
+   curTraj.forEach((pt,i)=>{
+    let xv=(pt.x-0.5)*2, yv=(pt.y-0.5)*2, zv=((pt.z||0.5)-0.5)*2;
+    let xx=xv*ct - zv*st; let zz=xv*st + zv*ct; let dep=(zz+1)*0.5+0.2;
+    let px=cx+xx*scR*dep, py=cy+yv*scR*0.86*dep;
+    if(i===0) sx.moveTo(px,py); else sx.lineTo(px,py);
+   }); sx.stroke();
+ }
+ sx.fillStyle='#FFFEF7'; sx.font='900 16px ui-monospace'; sx.fillText('Week Warrior 7-dot',40,540);
+ let days=[]; try{days=JSON.parse(localStorage.getItem('vh_weekStreak')||'{"days":[]}').days||[]}catch(e){}
+ for(let i=0;i<7;i++){ sx.beginPath(); sx.arc(40+22*i+8,568,9,0,Math.PI*2); sx.fillStyle=i<days.length?'#F0E442':'#1A150F'; sx.fill(); sx.strokeStyle='#1A150F'; sx.lineWidth=1.2; sx.stroke(); }
+ sx.fillStyle='#FFFEF7'; sx.font='12px ui-monospace'; sx.fillText('pack '+pack+' • '+dots.length+' pts lived • vector-hoops • '+new Date().toISOString().slice(0,10),40,610);
+ let url=sc.toDataURL('image/png');
+ try{
+  if(navigator.share && navigator.canShare && navigator.canShare({files:[]}) ){
+   let blob=await (await fetch(url)).blob(); let f=new File([blob],'vector-hoops-1200x630.png',{type:'image/png'});
+   if(navigator.canShare({files:[f]})) { await navigator.share({title:'Vector Hoops — embed v7.1.5',text:'pack '+pack+' • '+dots.length+'pts • purity 0.7057 · '+days.length+'/7',files:[f]}); return; }
+  }
+ }catch(e){}
+ try{ await navigator.clipboard.write([new ClipboardItem({'image/png': await (await fetch(url)).blob()})]); alert('PNG copied — paste to share'); return }catch(e){}
+ let a=document.createElement('a'); a.href=url; a.download='vector-hoops-'+pack+'.png'; a.click();
+}
+$('bShare').onclick=shareCard;
+
 if('serviceWorker'in navigator){ try{navigator.serviceWorker.register('/sw.js')}catch(e){} }
 </script>
 </body>

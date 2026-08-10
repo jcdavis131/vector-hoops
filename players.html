@@ -1,168 +1,84 @@
-<!doctype html>
-<html lang="en"><head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#0A0C10">
-<link rel="manifest" href="manifest.json">
-<title>Players — Explorer • Vector Hoops v7.0</title>
-<meta name="description" content="Twin map 12,966 seasons — 64-d OKABE archetypes, closer/exploitable/dependent, purity@10 0.7057">
-<!-- offline-ready PWA: cache-first sw.js, zero-deps, works offline, theme #0A0C10 -->
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#0A0C10"><title>Vector Hoops — Players Explorer 1814 filt</title>
+<link rel="manifest" href="data:application/manifest+json;base64,eyJuYW1lIjoiUGxheWVycyJ9">
 <style>
-:root{--ink:#1A150F;--paper:#FFFEF7;--yellow:#F0E442;--line:#E9E2D4;--ok1:#E69F00;--ok2:#56B4E9;--ok3:#009E73;--ok4:#F0E442;--ok5:#0072B2;--ok6:#D55E00;--ok7:#CC79A7;--ok8:#000000}
-*{box-sizing:border-box}html,body{margin:0;background:var(--paper);color:var(--ink);font:14px/1.55 ui-sans-system,system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
-a{color:inherit}
-header{position:sticky;top:0;z-index:5;background:var(--paper);border-bottom:1.8px solid var(--ink);padding:10px 14px;display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between}
-.pill{border:1.7px solid var(--ink);border-radius:999px;padding:6px 12px;font:800 11px/1 ui-monospace,monospace;letter-spacing:.03em;display:inline-flex;align-items:center;gap:6px;box-shadow:2px 2px 0 var(--ink);text-transform:uppercase}
-.pill-yellow{background:var(--yellow)}
-.pill-dark{background:var(--ink);color:#fff}
-.wrap{max-width:1120px;margin:0 auto;padding:14px 14px 88px;display:flex;flex-direction:column;gap:14px}
-.card{background:#fff;border:2px solid var(--ink);border-radius:14px;box-shadow:3px 3px 0 var(--ink);padding:12px 14px}
-.card h2{margin:0 0 6px;font:900 13px/1.2 ui-monospace,monospace;text-transform:uppercase;letter-spacing:.04em}
-.mono{font-family:ui-monospace,monospace}
-.tag{display:inline-flex;align-items:center;gap:6px;border:1.5px solid var(--ink);border-radius:999px;padding:4px 9px;font:800 11px ui-monospace,monospace}
-.grid2{display:grid;grid-template-columns:1fr;gap:10px}
-@media(min-width:860px){.grid2{grid-template-columns:1.15fr .85fr}}
-canvas{display:block;width:100%;border:1.6px solid var(--ink);border-radius:12px;background:#0E0E11}
-.kbd{border:1.3px solid var(--ink);border-radius:6px;padding:2px 6px;background:#fff;font:700 11px ui-monospace,monospace}
-footer{border-top:1.6px solid var(--ink);padding:14px;display:flex;flex-wrap:wrap;gap:8px;justify-content:center;background:#fff}
-footer a{border:1.5px solid var(--ink);border-radius:999px;padding:6px 11px;background:var(--paper);text-decoration:none;font:800 11px ui-monospace,monospace;box-shadow:1.5px 1.5px 0 var(--ink)}
-#twins{max-height:260px;overflow:auto;font-size:12.5px;line-height:1.5}
-</style>
-</head><body>
-<header>
-<div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
-<span class="pill pill-yellow">Players • 12,966 seasons • Twin map • v7.0</span>
-<span class="pill">64-d OKABE 8 colors • purity@10 0.7057 lift 6.32</span>
-</div>
-<div style="display:flex;gap:8px;flex-wrap:wrap">
-<a class="pill pill-dark" href="model.html">Model →</a>
-<a class="pill" href="trends.html">Trends →</a>
-<a class="pill" href="index.html">Home</a>
-</div>
-</header>
-
-<div class="wrap">
-<div class="card">
-<h2>Player Explorer — 12,966 season Twin map · 64-d · <span style="background:var(--yellow);padding:2px 6px;border-radius:999px">OKABE 8 colors</span></h2>
-<p style="margin:6px 0 8px">Every player-season → 64-d unit sphere. <b>12,966 seasons</b> from 1996-2026, cat([x·m,m]) masked, 17 towers →96h→24d→64 L2. OKABE: <span class="mono"><span style="color:var(--ok1)">■ rim</span> <span style="color:var(--ok2)">■ wing</span> <span style="color:var(--ok3)">■ stretch</span> <span style="color:var(--ok4)">■ creator</span> <span style="color:var(--ok5)">■ stopper</span> <span style="color:var(--ok6)">■ hub</span> <span style="color:var(--ok7)">■ spark</span> <span style="color:#555">■ mix</span></span>. Cosine = twin. Click dot → twins.</p>
-<div style="display:flex;gap:6px;flex-wrap:wrap;margin:8px 0">
-<span class="tag" style="background:#E7F6EA">closer 1.28</span>
-<span class="tag" style="background:#FFD8D5">exploitable 0.62</span>
-<span class="tag" style="background:#FFE9B5">dependent 0.81</span>
-<span class="tag">purity@10 0.7057 lift 6.32</span>
-<span class="tag" style="background:var(--yellow)">Wemby 699 real playoff mins vs Flagg 0 honest 2025 rook</span>
-</div>
-<div class="grid2">
-<div>
-<canvas id="map" width="680" height="400" aria-label="Twin map 64-d projected 12,966 points OKABE"></canvas>
-<div style="margin-top:8px;display:flex;gap:8px;flex-wrap:wrap">
-<button id="btn-shuffle" class="pill pill-yellow" type="button">↻ Shuffle projection</button>
-<span class="mono" style="font-size:11px;color:#555">Click any dot → 5 nearest twins (same cosine that powers Daily Court). No server.</span>
-</div>
-</div>
-<div>
-<div class="card" style="box-shadow:2px 2px 0 var(--ink)">
-<h2>Selected — twins</h2>
-<div id="twins" class="mono">Tap a dot on the left. We project 64-d → 2-d via cheap PCA-hash; color = argmax archetype (OKABE 8). Twins are true 64-d cosine.</div>
-<div id="play-meta" class="mono" style="margin-top:8px;font-size:11px;color:#555;line-height:1.5">closer = lifts team in clutch (possessions leverage × WS). exploitable = drops vs switching. dependent = needs creator. All 3 are TS-normalized like <span style="background:#E7F6EA;padding:2px 5px;border-radius:6px">closer 1.28 #E7F6EA</span> <span style="background:#FFD8D5;padding:2px 5px;border-radius:6px">exploitable 0.62 #FFD8D5</span> <span style="background:#FFE9B5;padding:2px 5px;border-radius:6px">dependent 0.81 #FFE9B5</span></div>
-<div style="margin-top:10px;padding:8px;border:1.4px dashed var(--ink);border-radius:10px;background:var(--paper)">
-<b class="mono" style="font-size:11px">Pack Battle — same-link deterministic</b><br>
-<a id="pack-link" class="mono" href="play.html?pack=672-123-456" style="font-weight:800">play.html?pack=672-123-456</a>
-<div class="mono" style="font-size:11px;margin-top:4px;color:#444">LCG: s=(s*1103515245+12345)&0x7fffffff; idx=s%12966. Same URL → same 3 stars → same ghost → same answer. No server, still fair. Copy link to battle friends.</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-
-<div class="card mono" style="font-size:11px;line-height:1.5">
-<b>Honesty note:</b> Wemby 699 real playoff mins (SAS 2024-25 run, logged). Flagg is 0 — honest 2025 rook, Duke one-and-done, no NBA mins yet, so his comps are pre-draft tracked metrics only. No fake playoff numbers.
-<span style="margin-left:6px" class="tag">MIN≥800 filter for map • 3+ seasons for stability</span>
-</div>
-</div>
-
-<footer>
-<a href="index.html">Home</a><a href="players.html">Players (you)</a><a href="model.html">Model Zoo + MTNN</a><a href="trends.html">Trends Chimera/Drift</a><a href="play.html">Play</a><a href="manifest.json">manifest</a>
-</footer>
-
+:root{--paper:#FFFEF7;--void:#080A0F;--ink:#1A150F;--yellow:#F0E442;--orange:#FF5A1F;--g:#E7F6EA;--r:#FFD8D5;--y:#FFE9B5}
+*{box-sizing:border-box}html,body{margin:0;background:var(--void);color:var(--paper);font-family:ui-sans,system-ui;line-height:1.5}
+.wrap{max-width:1080px;margin:0 auto;padding:14px}
+.card{background:#FFFEFB;color:var(--ink);border:2.2px solid var(--ink);border-radius:14px;box-shadow:4px 4px 0 var(--ink);overflow:hidden}
+.pill{display:inline-flex;padding:5px 10px;border-radius:999px;background:var(--yellow);border:1.5px solid var(--ink);font-weight:800;font-size:11px}
+canvas{display:block;width:100%;height:420px;background:radial-gradient(1100px 600px at 18% -10%,#1E2B44 0%,#101724 32%,var(--void) 72%)}
+.list{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:8px;padding:10px}
+.it{border:1.5px solid var(--ink);border-radius:10px;padding:8px;background:#fff;cursor:pointer}
+.it:hover{transform:translateY(-1px)} .it.on{background:var(--yellow)}
+.mono{font-family:ui-monospace,monospace;font-size:11px}
+</style></head><body><div class="wrap">
+<div style="display:flex;justify-content:space-between;align-items:center"><span class="pill">1814 players • current+allstars+3+ • 1764 pts</span><a class="pill" href="/">← Map</a></div>
+<div class="card" style="margin-top:10px"><canvas id="c" width="900" height="460"></canvas>
+<div style="display:flex;justify-content:space-between;padding:8px"><span class="mono" id="lab">loading 1764 pts</span><span class="mono"><button id="bAll">Show All 3+ only</button> <button id="bCur">Current only 532</button> <button id="bToggleFull">?full</button></span></div></div>
+<div id="list" class="list"></div>
 <script>
-// zero-deps inline — 12,966 projected
-(() => {
-const c=document.getElementById('map'),x=c.getContext('2d');
-const twinsEl=document.getElementById('twins');
-const N=800; // show subset of 12,966 for perf, but note full size
-const okabe=["#E69F00","#56B4E9","#009E73","#F0E442","#0072B2","#D55E00","#CC79A7","#000000"];
-const names=["Wemby 23-24","Flagg 25-26*","Curry 15-16","Jokic 22-23","Giannis 20-21","LeBron 12-13","Jordan 90-91","Shaq 99-00","Chet 23-24","AD 19-20","Luka 23-24","KD 16-17","Dray 16-17","CP3 07-08","Kawhi 18-19","Embiid 22-23"];
-let pts=[];
-function mkrng(seed){return()=>{seed=(seed*1103515245+12345)&0x7fffffff;return seed/0x7fffffff};}
-let rnd=mkrng(672);
-function gen(){
- pts=[];
- for(let i=0;i<N;i++){
-  let arch=Math.floor(rnd()*8);
-  let ang=rnd()*Math.PI*2+arch*0.8;
-  let rad=40+rnd()*160+arch*5;
-  let cx=340+Math.cos(ang)*rad+rnd()*18;
-  let cy=200+Math.sin(ang*1.2)*rad*0.72+rnd()*18;
-  let closer=(0.6+rnd()*0.9).toFixed(2);
-  let expl=(0.3+rnd()*0.7).toFixed(2);
-  let dep=(0.5+rnd()*0.8).toFixed(2);
-  let nm=names[i%names.length]+(i>15?" #"+(i+1):"");
-  pts.push({x:cx,y:cy,arch,nm,closer:closer,expl,dep,idx:i,vec:Array.from({length:8},()=>rnd())});
- }
+const OKABE=['#0072B2','#D55E00','#009E73','#CC79A7','#F0E442','#56B4E9','#E69F00','#000000'];
+const $=s=>document.getElementById(s);
+let dots=[], yaw=0, trajCache={}, curTraj=null;
+let cv=$('c'), ctx=cv.getContext('2d'), W=900,H=460, DPR=Math.min(devicePixelRatio||1,2);
+cv.width=W*DPR; cv.height=H*DPR; ctx.scale(DPR,DPR); W=900; H=460;
+async function loadPts(filter='all'){
+ let res=await fetch('assets/embedding_map_points_limited.json'); let data=await res.json();
+ dots=data.points.filter(p=>{
+  if(filter==='current') return p.is_current;
+  if(filter==='allstar') return p.is_allstar;
+  return true;
+ }).map(p=>({x:(p.x-0.5)*2,y:(p.y-0.5)*2,z:((p.z||0.5)-0.5)*2,r:p.is_current?1.0:0.7,col:OKABE[p.c%8],pid:p.pid,nm:p.display_name,season:p.season,alpha:p.is_current?0.9:0.75}));
+ $('lab').textContent='pts '+dots.length+' filter '+filter+' mem save 86% vs 12966';
+ renderList();
 }
+async function loadTraj(){
+ if(Object.keys(trajCache).length) return trajCache;
+ let j=await (await fetch('assets/embedding_map_trajectories.json')).json();
+ trajCache=j.trajectories||{};
+ return trajCache;
+}
+function renderList(){
+ let l=$('list'); l.innerHTML='';
+ dots.slice(0,80).forEach(d=>{
+   let div=document.createElement('div'); div.className='it';
+   div.innerHTML='<b>'+d.nm+'</b><div class=mono>'+d.season+' • '+(d.pid)+'</div>';
+   div.onclick=()=>selectPid(d.pid);
+   l.appendChild(div);
+ });
+}
+async function selectPid(pid){
+ let trajs=await loadTraj();
+ let traj=trajs[String(pid)];
+ if(!traj) return;
+ curTraj=traj;
+ $('lab').textContent='trajectory '+traj.length+' seasons '+traj[0].season+'→'+traj[traj.length-1].season+' • grey→orange change';
+}
+$('bAll').onclick=()=>loadPts('all');
+$('bCur').onclick=()=>loadPts('current');
+$('bToggleFull').onclick=()=>location.search='?full=1';
+
 function draw(){
- x.clearRect(0,0,c.width,c.height);
- x.fillStyle="#0E0E11"; x.fillRect(0,0,c.width,c.height);
- // grid
- x.strokeStyle="#1e1e26"; x.lineWidth=1;
- for(let i=0;i<8;i++){x.beginPath();x.moveTo(0,50+i*42);x.lineTo(680,50+i*42);x.stroke();}
- pts.forEach(p=>{
-  x.fillStyle=okabe[p.arch];
-  x.beginPath();x.arc(p.x,p.y, p.nm.includes("Wemby")?6.5:3.6,0,Math.PI*2);x.fill();
-  if(p.arch===3){x.strokeStyle="#fff";x.lineWidth=0.6;x.stroke();}
- });
- // legend OKABE 8
- x.fillStyle="#fff";x.font="10px ui-monospace,monospace";
- x.fillText("Twin map • 12,966 seasons • 64-d OKABE • closer 1.28 #E7F6EA exploitable 0.62 #FFD8D5 dependent 0.81 #FFE9B5 • purity@10 0.7057 lift 6.32",8,16);
+ ctx.clearRect(0,0,W,H);
+ yaw+=0.004;
+ let ct=Math.cos(yaw), st=Math.sin(yaw), cx=W*0.5, cy=H*0.51, sc=Math.min(W,H)*0.42;
+ for(let d of dots){
+  let x=d.x*ct - d.z*st, z=d.x*st + d.z*ct, y=d.y, dep=(z+1)*0.5+0.12;
+  let px=cx+x*sc*dep, py=cy+y*sc*dep*0.86;
+  ctx.beginPath(); ctx.fillStyle=d.col; ctx.globalAlpha=0.16+dep*0.62*d.alpha; ctx.arc(px,py,d.r*2.2,0,Math.PI*2); ctx.fill();
+ }
+ if(curTraj){
+  ctx.globalAlpha=1; ctx.strokeStyle='#FF5A1F'; ctx.lineWidth=1.6; ctx.beginPath();
+  let first=true;
+  curTraj.forEach(pt=>{
+   let xv=(pt.x-0.5)*2,yv=(pt.y-0.5)*2,zv=((pt.z||0.5)-0.5)*2;
+   let xx=xv*ct - zv*st, zz=xv*st+zv*ct, dep=(zz+1)*0.5+0.12;
+   let px=cx+xx*sc*dep, py=cy+yv*sc*dep*0.86;
+   if(first){ctx.moveTo(px,py);first=false}else ctx.lineTo(px,py);
+  }); ctx.stroke();
+ }
+ requestAnimationFrame(draw);
 }
-function cosine(a,b){
- let dot=0,na=0,nb=0;
- for(let i=0;i<a.length;i++){dot+=a[i]*b[i];na+=a[i]*a[i];nb+=b[i]*b[i];}
- return dot/(Math.sqrt(na*nb)+1e-9);
-}
-function showTwins(p){
- let sims=pts.map(q=>({q,sim:cosine(p.vec,q.vec)})).sort((a,b)=>b.sim-a.sim).slice(0,9);
- // skip self first
- let html=`<b>${p.nm}</b> arch ${p.arch} OKABE <span style="display:inline-block;width:10px;height:10px;background:${okabe[p.arch]};border:1px solid #111"></span> closer ${p.closer} exploitable ${p.expl} dependent ${p.dep}<br><span style="color:#666">5 twins (true 64-d cosine):</span><br>`;
- sims.forEach((s,i)=>{
-  if(s.q===p) return;
-  let badge=sims.indexOf(s)===1?' ← top twin':'';
-  html+=`${i}. ${s.q.nm} sim ${(s.sim*100).toFixed(1)}% arch ${s.q.arch} <span style="background:${okabe[s.q.arch]};display:inline-block;width:10px;height:6px;border:1px solid #111"></span>${badge}<br>`;
- });
- html+=`<br><span class="kbd">Wemby 699 real playoff mins</span> vs <span class="kbd">Flagg 0 honest 2025 rook</span> keeps honesty — no fake stats.`;
- twinsEl.innerHTML=html;
-}
-c.addEventListener('click',e=>{
- let r=c.getBoundingClientRect(),sx=(e.clientX-r.left)/r.width*c.width,sy=(e.clientY-r.top)/r.height*c.height;
- let best=null,bd=1e9;
- pts.forEach(p=>{let d=(p.x-sx)**2+(p.y-sy)**2;if(d<bd){bd=d;best=p;}});
- if(best){draw();x.strokeStyle="#F0E442";x.lineWidth=2;x.beginPath();x.arc(best.x,best.y,9,0,Math.PI*2);x.stroke();showTwins(best);}
-});
-document.getElementById('btn-shuffle').addEventListener('click',()=>{rnd=mkrng(Math.floor(Math.random()*1e9));gen();draw();twinsEl.textContent="Shuffled projection — same 12,966 under, different 2-d view. Same OKABE 8 archetypes.";});
-// pack LCG determinism demo
-(() => {
- const a=document.getElementById('pack-link');
- const base="play.html?pack=672-123-456";
- a.addEventListener('click',e=>{
-  // let navigation happen, but log LCG decoding
-  let parts="672-123-456".split("-").map(Number);
-  let s=parts.reduce((acc,n)=>((acc*1103515245+12345)&0x7fffffff)^n, 20250615);
-  console.log("seed demo",s,"same-link same stars");
- });
-})();
-gen();draw();
-if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));}
-})();
-</script>
-</body></html>
+loadPts('all'); requestAnimationFrame(draw);
+</script></div></body></html>
