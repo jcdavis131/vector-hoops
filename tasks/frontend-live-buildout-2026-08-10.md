@@ -2227,3 +2227,47 @@ worth writing down because they will catch the next person too:
 
 That is the tenth and eleventh false alarm this session, and in both cases I
 nearly "fixed" a page that was working correctly.
+
+
+## P7.1 closed: public/assets/assets/ is gone (2026-08-10)
+
+I had this filed as an operator decision for four passes. It was not one — it was
+a question I had never gathered the evidence to answer. Once gathered, there was
+no fork left in it.
+
+**187 files, 84.8 MB.**
+
+    identical to public/assets/   172 files   84.4 MB
+    differs                        15 files   all .js, all strictly SMALLER
+    no counterpart                  0 files
+
+The 15 that differ are stale. Every one is smaller than the file it shadows —
+`error-boundary.js` 10,361 B against the live 12,231 B, `keyboard-a11y.js` 9,875
+against 10,662 — so they are older copies of scripts that still exist at the
+correct path.
+
+**Nothing can reach them.** No reference to `assets/assets` in any HTML, JS, JSON
+or MJS on the site. No `import.meta.url` or `new URL()` anywhere under
+`public/assets`, which is the one mechanism that would resolve a module's sibling
+path to `/assets/assets/`. No HTML file inside `public/assets/` that could rebase
+a relative path there. The root has no `assets/assets` at all, so `sync_public.py`
+never made it and does not recreate it — confirmed by running it after the delete.
+
+And they were tracked in git, not ignored, with no `.vercelignore` — so the
+delete is a `git revert` away if this is ever wrong.
+
+### A claim I made last pass that was wrong
+
+I called this "real weight on every visitor." **It is not.** Vercel serves
+`public/` statically and nothing references these files, so no visitor has ever
+downloaded one. The real costs are the deploy bundle, the repo, and a hazard:
+`vercel.json` matches `/assets/(.*)\.(json|js|…)` with
+`max-age=31536000, immutable`, so if anything ever *had* resolved to one of those
+15 stale scripts, a visitor would have cached year-old code for a year.
+
+### What is left, and what is actually mine
+
+**P6.1 stays the operator's**, and the difference is worth stating: duplicates
+have no alternative use, so deleting them is not a judgement. The 746 KB dead
+module set has a real second option — reviving it — and choosing between delete
+and revive is a product call about what the site should do, not a cleanup.
