@@ -1449,7 +1449,7 @@ rather than a path written in the test. A hardcoded path would have gone on
 validating `front_office.json` after the page stopped opening it — passing while
 proving nothing. It reads the lite file now and prints identical rows.
 
-- [ ] **P9.5 `chemistry.json` is 105,336 b eager on /teams.** The section that
+- [x] **P9.5 DONE.** Deferred behind the same observer the archetype map and the era twins use; /teams now loads 45,490 b on paint. It was my own deferred work filed as a judgement call, the same as P6.2, P6.3, P8.1, P9.1 and P9.2 before it, and the last such item on this board. Original note: The section that
   uses it sits well below the fold, so it is a candidate for the same observer,
   but the page now loads 161,759 b total and this is the last two-thirds of it.
   Small enough that it is a judgement call rather than a defect.
