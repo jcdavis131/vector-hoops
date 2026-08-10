@@ -322,6 +322,10 @@ def main() -> int:
             const cs = getComputedStyle(o);
             if (cs.position !== 'absolute' && cs.position !== 'fixed') continue;
             const a = base.getBoundingClientRect(), b = o.getBoundingClientRect();
+            // a zero-area target is "half covered" by everything, since the
+            // threshold is also zero. The site's hidden share canvases are 0x0
+            // and reported every sibling as covering them.
+            if (a.width * a.height < 1) continue;
             const overlap = Math.max(0, Math.min(a.right, b.right) - Math.max(a.left, b.left)) *
                             Math.max(0, Math.min(a.bottom, b.bottom) - Math.max(a.top, b.top));
             if (overlap < a.width * a.height * 0.5) continue;

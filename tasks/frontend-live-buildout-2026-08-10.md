@@ -2117,3 +2117,57 @@ the drift.
 Moving the map into view also collided the canvas caption at (14,20) with the
 HTML pill in the same corner. Nobody had seen them overlap because nobody had
 seen either. Caption moved to the bottom edge and now names the pickable count.
+
+
+## Looked at every canvas on the site (2026-08-10)
+
+play.html's map was painted and invisible, and no static check could have known.
+So the obvious question: where else? Ten canvases across six pages, each one
+scrolled into view, measured, asked what is layered over it, and **cropped so it
+could actually be looked at**.
+
+    /index.html   #c         689x440   ink  3.5%
+    /model.html   #retrMap  1068x616   ink 10.7%
+    /play.html    #c         501x360   ink 11.2%
+    /players.html #c         635x440   ink  3.0%
+    /teams.html   #mapCv     460x120   ink  5.2%
+    /trends.html  #archMap  1024x592   ink  6.6%
+
+**No other page has the covering bug.** play.html was the only one with an
+absolutely-positioned canvas, which is the shape the bug needs.
+
+Three "failures" the sweep printed were its own. The hidden share canvases are
+0x0, and a zero-area target is "half covered" by everything when the threshold is
+also zero — so every sibling was reported as covering them. `#trajOver` was
+flagged blank, which is what an idle overlay is supposed to be. **The same
+zero-area bug was sitting latent in the check committed to `smoke_play.py`**; it
+never fired there because `#c` is not zero-sized, and it is guarded now.
+
+And the first run of crops came back pure white. `Page.captureScreenshot` takes
+its clip in **page** coordinates and I passed viewport-relative ones, so after
+scrolling a canvas into view the crop captured empty page below it. play.html had
+worked only because it sits at scrollY 0.
+
+### model.html's cloud was drawn in a colour nobody can see
+
+    g.globalAlpha=0.22; g.fillStyle='#b9b7b0';    on a #fff surface
+
+Which renders as about **rgb(240,239,236) against white — a contrast ratio near
+1.07:1**. The retrieval map is the centrepiece of the model explainability page,
+and its 4,000-odd context points were a rumour. Screenshotting is the only reason
+this surfaced; the ink count said 10.7% and was right, because the points really
+were painted.
+
+Now `#7d7a73` at 0.42 — about rgb(200,199,195), which reads as texture with
+visible density structure. Darker at a moderate alpha rather than the same grey
+turned up, so overlapping points still accumulate. Kept deliberately grey and
+subordinate: the orange retrieval path is the subject of the figure and colouring
+the cloud would compete with it. Verified by looking at it, before and after.
+
+### Where the two conventions differ, on purpose
+
+trends.html's archetype map is the best-looking surface on the site — full
+Okabe-Ito on white, clusters legible at a glance — because **archetype is the
+variable it is about**. model.html's cloud is context behind a single
+trajectory, so it stays neutral. Same data, different jobs, and that is a
+deliberate split rather than an inconsistency to iron out.

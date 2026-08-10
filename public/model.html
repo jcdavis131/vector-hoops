@@ -337,7 +337,16 @@
     var pad=16, iw=w-pad*2, ih=h-pad*2;
     var X=function(x){return pad+x*iw;}, Y=function(y){return pad+(1-y)*ih;};
 
-    g.globalAlpha=0.22; g.fillStyle='#b9b7b0';
+    /* Was #b9b7b0 at 0.22, which on this white surface renders as about
+       rgb(240,239,236) — a contrast ratio near 1.07:1 against #fff. Screenshotting
+       the canvas rather than measuring its backing store showed what that means:
+       the cloud was there and nobody could see it. These are 1.1px dots, and small
+       marks need more separation than large ones to register at all.
+       Darker at a moderate alpha rather than the same grey turned up, so that
+       overlapping points still accumulate and density stays readable. Kept
+       deliberately grey and subordinate — the orange retrieval path is the
+       subject of this figure and colouring the cloud would compete with it. */
+    g.globalAlpha=0.42; g.fillStyle='#7d7a73';
     for(var k in TR){ var pth=TR[k];
       for(var j=0;j<pth.length;j++){ g.beginPath(); g.arc(X(pth[j].x),Y(pth[j].y),1.1,0,6.2832); g.fill(); } }
     g.globalAlpha=1;
