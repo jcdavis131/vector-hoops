@@ -143,11 +143,8 @@ window.__vhReduceMotion = !!(window.matchMedia && window.matchMedia('(prefers-re
 .fo-sr{position:absolute;width:1px;height:1px;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap}
 .fo-skip{position:absolute;left:-9999px;top:0;z-index:200;background:var(--paper);border:2.2px solid var(--ink);padding:10px 14px;font:800 12px var(--mono);text-transform:uppercase;text-decoration:none;border-radius:0 0 10px 0}
 .fo-skip:focus{left:0}
-/* The page's own table is sortable and was mouse-only: 11 <th scope="col" data-k> with a
-   click handler, cursor:pointer, no tabindex and no aria-sort. */
-#tbl th[data-k]{cursor:pointer}
-#tbl th[data-k][aria-sort="descending"]::after{content:" ▼"}
-#tbl th[data-k][aria-sort="ascending"]::after{content:" ▲"}
+/* The #tbl rules that were here are gone with the ten-row placeholder table
+   they styled. #foTable carries its own sort affordances below. */
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}}
 </style>
 <section id="foSec" aria-labelledby="foH">
@@ -239,8 +236,20 @@ function draw(){
     }).join('')+'</tbody>';
 }
 function sortBy(k){
+  /* draw() rewrites the whole table with innerHTML, so the <th> being operated
+     is destroyed and focus falls to <body>. Measured: after pressing Enter on a
+     header, document.contains(oldTh) is false and activeElement is BODY — a
+     keyboard user has to tab from the top of the page to sort a second column,
+     which takes the keyboard support this table was given and makes it usable
+     once. Only restore focus if it was already inside the table, so a redraw
+     from anywhere else never steals it. */
+  var hadFocus=$('foTable').contains(document.activeElement);
   if(k===sortKey) sortDir=-sortDir; else { sortKey=k; sortDir=(k==='for_rank'||k==='abbr')?1:-1; }
   draw();
+  if(hadFocus){
+    var back=$('foTable').querySelector('th[data-k="'+k+'"]');
+    if(back&&back.focus) back.focus();
+  }
   var lab=(COLS.filter(function(c){return c.k===k;})[0]||{}).t||k;
   say('Sorted by '+lab+', '+(sortDir===1?'ascending':'descending')+'.');
 }

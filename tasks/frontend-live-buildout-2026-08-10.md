@@ -2987,3 +2987,54 @@ failure. Nothing in its output named a page. It uses a **fixed** profile directo
 (`vh-render-profile`) while the other browser checks use their own, which is the
 obvious place for contention with a leftover Chrome, but **I did not confirm
 that** and it is recorded as an unreproduced flake rather than as understood.
+
+
+## Operating the controls, not just tabbing past them (2026-08-10)
+
+`check_focus.py` tabs through every page and proves each control can be *reached*.
+Nothing had ever *used* one. Three pages' interactive controls, operated for the
+first time.
+
+**trends.html — the archetype filter works.** Nine buttons; "All 8" leaves the map
+at its full 40,307 ink and each archetype redraws it to a distinct value
+(27,260 / 27,983 / 27,334 / 27,817 — it dims the rest rather than hiding them, so
+the count stays high). `aria-pressed` is right: exactly one `true` and eight
+`false` after a click. No errors.
+
+**model.html — both controls work.** The career picker holds 1,313 options and
+each selection redraws the retrieval map. The four attribution targets each change
+the bars beneath them — the top feature reads `PLAYER_HEIGHT_INCHES bio 0.86` for
+Archetype and `1.93` for Position. One `aria-pressed=true`. No errors.
+
+Two pages checked, two pages correct. Worth recording as checked rather than
+assumed.
+
+## teams.html — sorting from the keyboard worked once, then stranded you
+
+The third page had a real defect, and it is the kind that only shows up when you
+use the thing twice.
+
+`draw()` rewrites the table with `innerHTML`, so the `<th>` being operated is
+destroyed. Measured before and after pressing Enter on a header:
+
+    before Enter: {"label":"W*","focused":true,"inDoc":true}
+    after Enter:  {"oldNodeStillInDoc":false,"sameNode":false,"activeTag":"BODY"}
+
+Focus fell to `<body>`. A keyboard user sorts one column and is then at the very
+top of the document — past the skip link, past the whole navigation — and has to
+tab all the way back to sort a second. The board records this table being given
+keyboard support and `aria-sort` precisely so it would not be mouse-only; the
+support was there and it worked exactly once per visit.
+
+`sortBy` now restores focus to the header carrying the same `data-k` after the
+redraw, and only when focus was already inside the table, so a redraw from
+anywhere else never steals it. After the fix: `activeTag: TH`, `activeText: W*`.
+
+The `say()` announcement was already correct and is untouched — the live region
+was saying "Sorted by W*, descending" the whole time, to someone who had just
+been thrown to the top of the page.
+
+Also removed three `#tbl` CSS rules and the comment above them describing "the
+page's own table … 11 `<th scope="col" data-k>`". That table was the fabricated
+ten-row placeholder deleted earlier; the rules styled nothing and the comment
+described something that no longer existed.
