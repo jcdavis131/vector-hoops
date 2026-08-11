@@ -175,12 +175,22 @@ def run_one(tag: str, arch: list[str], masked: list[str], seed: int, epochs: int
     logs = OUT / "trial_logs"
     logs.mkdir(parents=True, exist_ok=True)
     log = logs / f"{tag}_s{seed}.log"
-    # CREATE_NO_WINDOW matters as much as the file handles. Under Start-Process
-    # -WindowStyle Hidden this parent has no console, and a console child spawned
-    # from it tries to allocate one and blocks: measured at 0.0156s CPU, 4
-    # threads waiting on EventPairLow, a 0-byte log and 0% GPU, indefinitely.
-    # The same trainer launched directly under the same hidden Start-Process
-    # finishes in under 25 seconds, which is what isolated it to the spawn.
+    # These two settings are good hygiene and they do NOT fix the real problem.
+    # I claimed they did and was wrong; here is what four configurations
+    # actually measured, each watched until CPU and log size stopped moving:
+    #
+    #   detached hidden,   pipes        first child completes, second blocks
+    #   detached hidden,   files + flag first child completes, second blocks
+    #   detached minimised (real console) one more trial, then blocks
+    #   foreground                       runs normally until killed externally
+    #
+    # So a detached parent gets roughly one child through and then stalls at
+    # 0.03s CPU with 0% GPU and a 0-byte log, regardless of pipes vs files,
+    # console vs none. The growth I first read as "the flag worked" was simply
+    # the next trial's seed-7 run finishing, which happened without the flag too.
+    #
+    # Not diagnosed further. Run the climb in the foreground; eval_cache.json
+    # makes it resumable, so repeated bounded runs converge on the same result.
     flags = getattr(subprocess, "CREATE_NO_WINDOW", 0)
     with open(log, "wb") as fh:
         subprocess.run(cmd, cwd=ROOT, check=True, stdout=fh, stderr=subprocess.STDOUT,
