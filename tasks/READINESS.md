@@ -1,13 +1,13 @@
 # frontend-live — readiness
 
-**Nothing here is live.** Everything below is measured at **`7c709270`** — the sha is the anchor,
+**Nothing here is live.** Everything below is measured at **`0a98b30c`** — the sha is the anchor,
 because the commit that records a count is never inside the count it records. All of it is on
 `frontend-live`; `master` is untouched, and pushing `master` is what deploys the site. Suite green
 at that commit.
 
 | | |
 |---|---|
-| commits ahead of master | 163 at `7c709270` |
+| commits ahead of master | 164 at `0a98b30c` |
 | paths changed | 2,633 (2,547 under `public/`, 33 scripts) |
 | insertions / deletions | +203,753 / −310,431 |
 | working notes | `tasks/frontend-live-buildout-2026-08-10.md`, 4,665 lines |
