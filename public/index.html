@@ -48,6 +48,10 @@ canvas{display:block;width:100%;height:440px}
 #c.grabbing{cursor:grabbing}
 #c.overdot{cursor:pointer}
 #c:focus{outline:3px solid #0072B2;outline-offset:2px}
+/* every overlay on the map is a readout, and a readout that eats a click is a
+   dot you cannot select. Measured on /players, where the archetype key covered
+   84% of the canvas and swallowed everything that landed on it. */
+.map-tag,.foot-tag{pointer-events:none}
 .map-help{margin:0;padding:9px 12px;font-size:12px;line-height:1.55;color:#3A3732;border-top:2px solid var(--ink);background:var(--surface)}
 .map-help kbd{font-family:var(--mono);font-size:11px;font-weight:800;color:#111;background:#fff;border:1.5px solid #111;border-radius:5px;padding:1px 5px;margin:0 1px;white-space:nowrap}@media(max-width:600px){canvas{height:360px}}
 .map-tag{position:absolute;left:10px;top:10px;z-index:2;display:flex;gap:6px;flex-wrap:wrap}.foot-tag{position:absolute;right:10px;bottom:10px;z-index:2}
@@ -84,7 +88,7 @@ footer{max-width:1120px;margin:0 auto;padding:10px var(--gutter);display:flex;fl
 <!-- the camera every embedding map on this site shares. In <head> because the
      inline map script below calls VHMapCamera.attach() while it runs, and a
      module that arrives after its caller is a module that is not there. -->
-<script src="assets/map-camera.js?v=1a809f36"></script>
+<script src="assets/map-camera.js?v=7d7496c8"></script>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>

@@ -87,6 +87,24 @@ MUTATIONS = {
     "spin-glyph": (PAGE,   "b.textContent='rot '+(on?'◐':'□')", "b.textContent='rot ◐'"),
 }
 
+# Two maps attach to the camera. The camera assertions run against both; the
+# page-shaped ones (what a selection announces, which button reports the spin)
+# are named here because they are the only part that differs.
+PAGES = {
+    "index": {
+        "url": "/index.html", "live": "ixLive", "btn": "bRot",
+        "glyph": lambda on: "rot ◐" if on else "rot □",
+        "picked": lambda s: s.startswith("Selected "),
+        "picked_desc": "a sentence starting 'Selected '",
+    },
+    "players": {
+        "url": "/players.html", "live": "plLive", "btn": "plMotion",
+        "glyph": lambda on: "⏸ Pause rotation" if on else "▶ Resume rotation",
+        "picked": lambda s: bool(s.strip()),
+        "picked_desc": "any announcement at all",
+    },
+}
+
 CAM = "VHMapCamera.cams[0]"
 CTRL = 2
 
@@ -128,32 +146,38 @@ def mouse(ws, kind, x, y, buttons=0, mods=0, dy=0.0):
 def canvas_box(ws):
     return ev(ws, """(function(){var c=document.getElementById('c');
         c.scrollIntoView({block:'center'});var r=c.getBoundingClientRect();
-        return JSON.stringify({l:r.left,t:r.top,w:r.width,h:r.height,W:window.W,H:window.H});})()""")
+        var s=VHMapCamera.cams[0].size();
+        return JSON.stringify({l:r.left,t:r.top,w:r.width,h:r.height,W:s[0],H:s[1]});})()""")
 
 
 def dot_point(ws, box):
     """Viewport coords of a real dot, projected by the camera the page draws with."""
     return ev(ws, """(function(){
-        if(!window.dots||!window.dots.length) return JSON.stringify({miss:true});
-        var cam=VHMapCamera.cams[0];
-        var best=null,bd=1e9,cx=window.W*0.5,cy=window.H*0.53;
-        for(var i=0;i<window.dots.length;i++){var d=window.dots[i];var P=cam.proj(d.x,d.y,d.z);
+        var cam=VHMapCamera.cams[0], pts=window.dots||[];
+        if(!cam||!pts.length) return JSON.stringify({miss:true});
+        var s=cam.size(), best=null,bd=1e9,cx=s[0]*0.5,cy=s[1]*0.52;
+        for(var i=0;i<pts.length;i++){var d=pts[i];var P=cam.proj(d.x,d.y,d.z);
           var q=(P[0]-cx)*(P[0]-cx)+(P[1]-cy)*(P[1]-cy);
           if(q<bd){bd=q;best={d:d,P:P};}}
         var r=document.getElementById('c').getBoundingClientRect();
-        return JSON.stringify({x:r.left+best.P[0]*r.width/window.W,
-                               y:r.top +best.P[1]*r.height/window.H, nm:best.d.nm});})()""")
+        return JSON.stringify({x:r.left+best.P[0]*r.width/s[0],
+                               y:r.top +best.P[1]*r.height/s[1], nm:best.d.nm||''});})()""")
 
 
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--mutate", choices=sorted(MUTATIONS), help="serve one broken page")
+    ap.add_argument("--page", choices=sorted(PAGES), default="index",
+                    help="which map to drive (default: index)")
     args = ap.parse_args()
+    P = PAGES[args.page]
+    if args.mutate and MUTATIONS[args.mutate][0] == "page" and args.page != "index":
+        sys.exit(f"mutation {args.mutate!r} is a property of index.html, not {args.page}")
 
     browser = next((b for b in BROWSERS if b.exists()), None)
     if not browser:
         sys.exit("no Chrome or Edge found")
-    srcs = {"page": (SERVE / "index.html").read_text(encoding="utf-8"),
+    srcs = {"page": (SERVE / P["url"].lstrip("/")).read_text(encoding="utf-8"),
             "camera": (SERVE / "assets" / "map-camera.js").read_text(encoding="utf-8")}
     if args.mutate:
         where, find, repl = MUTATIONS[args.mutate]
@@ -169,7 +193,7 @@ def main() -> int:
 
         def do_GET(self):
             path = self.path.split("?")[0]
-            which = ("page" if path in ("/", "/index.html", "/index")
+            which = ("page" if path in ("/", P["url"], P["url"][:-5])
                      else "camera" if path.endswith("/assets/map-camera.js") else None)
             if which:
                 blob, ctype = BODIES[which]
@@ -224,12 +248,12 @@ def main() -> int:
 
         ws = WS(target)
         ws.call("Page.enable"); ws.call("Runtime.enable")
-        url = f"http://127.0.0.1:{site}/index.html"
+        url = f"http://127.0.0.1:{site}{P['url']}"
         ws.call("Page.navigate", {"url": url})
         time.sleep(3.0)
 
         mut = f"  [mutation {args.mutate}]" if args.mutate else ""
-        print(f"driving the landing map with real input in {browser.name}{mut}\n")
+        print(f"driving the {args.page} map with real input in {browser.name}{mut}\n")
 
         box = canvas_box(ws)
         if not isinstance(box, dict) or not box.get("w"):
@@ -238,7 +262,7 @@ def main() -> int:
 
         # ── drag ──────────────────────────────────────────────────────────────
         ev(ws, CAM + ".spin=false")          # isolate the drag from the spin
-        ev(ws, "document.getElementById('ixLive').textContent=''")
+        ev(ws, "document.getElementById('" + P['live'] + "').textContent=''")
         # Counted, not assumed: releasing a drag on the same element still fires a
         # click, and "a drag must not select" is only a real assertion if that
         # click actually arrived and was turned away.
@@ -252,7 +276,7 @@ def main() -> int:
         time.sleep(0.15)
         y1, p1 = ev(ws, CAM + ".yaw"), ev(ws, CAM + ".pitch")
         clicks = ev(ws, "window.__mapClicks")
-        live = ev(ws, "document.getElementById('ixLive').textContent") or ""
+        live = ev(ws, "document.getElementById('" + P['live'] + "').textContent") or ""
         print(f"  drag     yaw {y0:+.3f} -> {y1:+.3f}   pitch {p0:+.3f} -> {p1:+.3f}   "
               f"{clicks} click event(s) fired")
         if abs(y1 - y0) < 0.5:
@@ -267,17 +291,17 @@ def main() -> int:
         print(f"           after the drag the live region says {live[:44]!r}")
 
         # ── click selects ─────────────────────────────────────────────────────
-        ev(ws, "document.getElementById('ixLive').textContent=''")
+        ev(ws, "document.getElementById('" + P['live'] + "').textContent=''")
         hit = dot_point(ws, box)
         if isinstance(hit, dict) and not hit.get("miss"):
             mouse(ws, "mousePressed", hit["x"], hit["y"], buttons=1)
             mouse(ws, "mouseReleased", hit["x"], hit["y"], buttons=0)
             time.sleep(0.25)
-            said = ev(ws, "document.getElementById('ixLive').textContent") or ""
+            said = ev(ws, "document.getElementById('" + P['live'] + "').textContent") or ""
             print(f"  click    {said[:60]!r}")
-            if not said.startswith("Selected "):
+            if not P["picked"](said):
                 fails.append(f"clicking the dot nearest the centre announced {said[:60]!r}, "
-                             f"not a selection")
+                             f"not {P['picked_desc']}")
             elif len(said) > 90:
                 fails.append(f"the selection announcement is {len(said)} characters — a live "
                              f"region is one sentence, not a card")
@@ -331,18 +355,18 @@ def main() -> int:
         spin0 = ev(ws, CAM + ".spin")
         key(ws, " ", "Space", 32, text=" ")
         spin1 = ev(ws, CAM + ".spin")
-        glyph = ev(ws, "document.getElementById('bRot').textContent")
-        ev(ws, "document.getElementById('ixLive').textContent=''")
+        glyph = ev(ws, "document.getElementById('" + P['btn'] + "').textContent")
+        ev(ws, "document.getElementById('" + P['live'] + "').textContent=''")
         key(ws, "h", "KeyH", 72, text="h")
         time.sleep(0.15)
-        helped = ev(ws, "document.getElementById('ixLive').textContent") or ""
+        helped = ev(ws, "document.getElementById('" + P['live'] + "').textContent") or ""
         print(f"  contract Home -> {home}, Space {spin0} -> {spin1} "
               f"(button {glyph!r}), H says {helped[:34]!r}")
         if [round(v, 4) for v in home] != [0, 1]:
             fails.append(f"Home left the camera at {home}, not at rest")
         if spin1 == spin0:
             fails.append("Space did not start or stop the automatic rotation")
-        if glyph != ("rot ◐" if spin1 else "rot □"):
+        if glyph != P["glyph"](spin1):
             fails.append(f"the spin is {spin1} but its button reads {glyph!r} — the control "
                          f"is lying about its own state")
         if "Map keys" not in helped:
@@ -395,13 +419,13 @@ def main() -> int:
         ws.call("Page.navigate", {"url": url + "?rm=1"})
         time.sleep(2.6)
         rf = ev(ws, CAM + ".spin")
-        glyph = ev(ws, "document.getElementById('bRot').textContent")
+        glyph = ev(ws, "document.getElementById('" + P['btn'] + "').textContent")
         yA = ev(ws, CAM + ".yaw"); time.sleep(0.6); yB = ev(ws, CAM + ".yaw")
         print(f"  reduce   rotFlag {rf}, button says {glyph!r}, "
               f"yaw moved {yB - yA:+.4f} rad in 0.6s")
         if rf is not False:
             fails.append("prefers-reduced-motion: reduce and the map still auto-spins")
-        if glyph != "rot □":
+        if glyph != P["glyph"](False):
             fails.append(f"the spin is off but its button reads {glyph!r} — the control "
                          f"is lying about its own state")
         if abs(yB - yA) > 1e-6:
@@ -420,7 +444,7 @@ def main() -> int:
         print("OK — the map rotates under a real drag and real arrow keys, zooms within its "
               "clamp, picks without hijacking the page scroll, and holds still when asked")
         return 0
-    print(f"FAIL — {len(fails)} problem(s) driving the landing map:")
+    print(f"FAIL — {len(fails)} problem(s) driving the {args.page} map:")
     for f in fails:
         print(f"  - {f}")
     return 1

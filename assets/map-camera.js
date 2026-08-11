@@ -105,6 +105,10 @@
       lv.textContent = msg;
     };
 
+    /* the page's own W/H are usually script-scoped and unreachable from
+       Runtime.evaluate; scripts/smoke_map.py needs them to aim a real click */
+    cam.size = o.size;
+
     cam.deg = function () { return Math.round(((cam.yaw * 180 / Math.PI) % 360 + 360) % 360); };
 
     cam.proj = function (x, y, z) {
@@ -166,9 +170,13 @@
       cam.showOri(announce);
     };
 
+    /* settable after attach: /players builds its pause button in a later script,
+       so it hands the camera a repaint function then rather than looking the
+       button up by an id that is not in the markup for a gate to find. */
+    cam.onSpin = typeof o.onSpin === 'function' ? o.onSpin : null;
     cam.setSpin = function (on, announce) {
       cam.spin = !!on;
-      if (typeof o.onSpin === 'function') o.onSpin(cam.spin);
+      if (cam.onSpin) cam.onSpin(cam.spin);
       if (announce) cam.say(cam.spin ? 'Rotation resumed.' : 'Rotation paused.');
     };
 
@@ -275,7 +283,7 @@
     });
 
     cam.showOri(false);
-    if (typeof o.onSpin === 'function') o.onSpin(cam.spin);
+    if (cam.onSpin) cam.onSpin(cam.spin);
     CAMS.push(cam);
     return cam;
   }
