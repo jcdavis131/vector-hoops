@@ -79,7 +79,7 @@ tbody tr:nth-child(even){background:rgba(17,17,17,.03)} tbody tr:hover{backgroun
 window.__vhReduceMotion = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
 </script>
 <a class="fo-skip" href="#foSec">Skip to all 30 teams</a>
-<nav class="site-nav"><a class="brand" href="/">DUMB<span style="color:var(--orange)">MODEL</span></a><div class="links"><a href="/players">Explorer</a><a href="/player-cards">Players</a><a href="/trends">Trends</a><a href="/model">Model</a><a href="/teams">Teams</a><a href="/dictionary">Dictionary</a><a class="cta" href="/play">Play today's →</a></div></nav>
+<nav class="site-nav"><a class="brand" href="/">DUMB<span style="color:var(--orange-ink)">MODEL</span></a><div class="links"><a href="/players">Explorer</a><a href="/player-cards">Players</a><a href="/trends">Trends</a><a href="/model">Model</a><a href="/teams">Teams</a><a href="/dictionary">Dictionary</a><a class="cta" href="/play">Play today's →</a></div></nav>
 <main id="main" tabindex="-1">
 <div class="hero-band"><div class="hero"><p class="eyebrow">Six models · five daily puzzles · free · no account</p><div class="roster"><div class="tile t-o"><svg aria-hidden="true" viewBox="0 0 40 40" fill="none"><circle cx="14" cy="11" r="5" stroke="#EB6834" stroke-width="2.5"/><circle cx="26" cy="29" r="5" stroke="#2A78D6" stroke-width="2.5"/><path d="M17 15 L23 25" stroke="#111" stroke-width="2.5" stroke-linecap="round"/></svg></div><div class="tile t-b"><svg aria-hidden="true" viewBox="0 0 40 40" fill="none"><path d="M8 30 L16 22 L22 26 L34 10" stroke="#2A78D6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M27 10 L34 10 L34 17" stroke="#111" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="tile t-p"><svg aria-hidden="true" viewBox="0 0 40 40" fill="none"><path d="M8 32 L8 8 M8 32 L34 32" stroke="#111" stroke-width="2.5" stroke-linecap="round"/><circle cx="15" cy="25" r="2.6" fill="#7A5AE6"/><circle cx="23" cy="18" r="2.6" fill="#7A5AE6"/><circle cx="30" cy="13" r="2.6" fill="#7A5AE6"/></svg></div><div class="tile t-g"><svg aria-hidden="true" viewBox="0 0 40 40" fill="none"><rect x="8" y="10" width="5" height="14" rx="1" stroke="#009E73" stroke-width="2"/><rect x="15.5" y="8" width="5" height="18" rx="1" stroke="#009E73" stroke-width="2"/><rect x="23" y="14" width="5" height="10" rx="1" fill="#009E73"/><path d="M8 28 L33 28" stroke="#111" stroke-width="2" stroke-linecap="round"/></svg></div><div class="tile t-c"><svg aria-hidden="true" viewBox="0 0 40 40" fill="none"><circle cx="13" cy="13" r="5" stroke="#D8452A" stroke-width="2.2"/><circle cx="27" cy="14.5" r="4.2" stroke="#1b45a7" stroke-width="2.2"/><circle cx="20" cy="27" r="3.8" stroke="#9b6bc4" stroke-width="2.2"/><path d="M16.2 16.5 L18.5 23" stroke="#111" stroke-width="1.5" stroke-dasharray="2 2"/><path d="M23.8 18 L21.5 23.2" stroke="#111" stroke-width="1.5" stroke-dasharray="2 2"/></svg></div></div><div><h1 class="hd" style="font-size:22px;line-height:.98;margin:0">Front Office Lab — FOR</h1><p class="mono" style="color:var(--ink-soft);margin:4px 0 0;font-size:11.5px">FOR = min(99,.35D+.35C+.30F+0.15·vegas+0.08·props+champ+valα±2) · W* = W+2.5·PO+0.12·realG · <span class="sg">paper #FAFAF8 / ink #111111</span></p></div></div></div>
 <div class="wrap">
@@ -147,6 +147,26 @@ window.__vhReduceMotion = !!(window.matchMedia && window.matchMedia('(prefers-re
 /* The #tbl rules that were here are gone with the ten-row placeholder table
    they styled. #foTable carries its own sort affordances below. */
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}}
+
+/* ── text inks, solved for WCAG AA on what the browser paints ──────────────
+   Measured per element with its real backdrop composited through transparent
+   ancestors: the brand colours were carrying text at 3.20:1 (#EB6834), 3.42:1
+   (#009E73) and 4.42:1 (#2A78D6) against white.
+
+   These are new tokens, not new values for the brand colours. Every ring, fill,
+   polyline and border still draws #EB6834 / #2A78D6 / #009E73; only text moves.
+   Two earlier attempts changed a shared token instead and traded one failure for
+   another — darkening --ink-muted to clear 4.5 on paper took the same text on the
+   #0A0C10 map inset from 5.3:1 to 4.14:1. The muted greys are left alone here
+   for that reason: they need per-container scoping, not a page-level value. */
+:root{--orange-ink:#C84714;--blue-ink:#2873CF;--green-ink:#008460}
+.brand span,.site-nav__brand span{color:var(--orange-ink)}
+.sm__delta.down,.down{color:var(--orange-ink)}
+.sm__delta.up,.up{color:var(--blue-ink)}
+.fl-dim{color:var(--blue-ink)}
+.fo-ring{color:var(--orange-ink)}
+.proj{color:var(--orange-ink)}
+.mv-score.up{color:var(--green-ink)}
 </style>
 <section id="foSec" aria-labelledby="foH" tabindex="-1">
   <div class="card">

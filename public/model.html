@@ -91,6 +91,26 @@
 #retrWrap{margin-top:12px;overflow-x:auto}
 #retrPick{font-family:var(--mono);font-size:12px;padding:6px 8px;border:1.6px solid var(--ink);border-radius:8px;background:#fff;min-height:34px;max-width:100%}
 .retr-sr{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;border:0}
+
+/* ── text inks, solved for WCAG AA on what the browser paints ──────────────
+   Measured per element with its real backdrop composited through transparent
+   ancestors: the brand colours were carrying text at 3.20:1 (#EB6834), 3.42:1
+   (#009E73) and 4.42:1 (#2A78D6) against white.
+
+   These are new tokens, not new values for the brand colours. Every ring, fill,
+   polyline and border still draws #EB6834 / #2A78D6 / #009E73; only text moves.
+   Two earlier attempts changed a shared token instead and traded one failure for
+   another — darkening --ink-muted to clear 4.5 on paper took the same text on the
+   #0A0C10 map inset from 5.3:1 to 4.14:1. The muted greys are left alone here
+   for that reason: they need per-container scoping, not a page-level value. */
+:root{--orange-ink:#C84714;--blue-ink:#2873CF;--green-ink:#008460}
+.brand span,.site-nav__brand span{color:var(--orange-ink)}
+.sm__delta.down,.down{color:var(--orange-ink)}
+.sm__delta.up,.up{color:var(--blue-ink)}
+.fl-dim{color:var(--blue-ink)}
+.fo-ring{color:var(--orange-ink)}
+.proj{color:var(--orange-ink)}
+.mv-score.up{color:var(--green-ink)}
 </style>
 
 <section class="card" id="retrSection" aria-labelledby="h-retr">

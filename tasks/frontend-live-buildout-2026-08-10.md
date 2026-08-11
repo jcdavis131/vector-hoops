@@ -5768,3 +5768,40 @@ Every one of those was solved for rather than chosen: keep hue and saturation,
 drop lightness until the ratio clears against every background the colour actually
 appears on. The remaining work is to give each a light-background and a
 dark-background variant and point the text at the right one.
+
+
+## Text inks, and two attempts that traded one failure for another (2026-08-11)
+
+The painted-contrast measurement said 67 text elements were below WCAG AA. This
+firing fixed the brand colours: **67 → 31, with zero findings left on a dark
+ground.**
+
+    #EB6834 text  3.20:1  ->  --orange-ink  #C84714   4.79:1 on white
+    #2A78D6 text  4.42:1  ->  --blue-ink    #2873CF   4.50:1
+    #009E73 text  3.42:1  ->  --green-ink   #008460   4.51:1
+
+**New tokens, not new values for the brand colours.** Every ring, fill, polyline
+and border still draws `#EB6834`; only text moves. The wordmark, the trend deltas,
+the front-office ring glyph and "▲ Thrived after the move" are a deeper shade of
+the same hue. One inline `style="color:var(--orange)"` had to move too — an inline
+style beats every rule, which is why the first pass left three wordmarks behind.
+
+### The two attempts that were reverted
+
+**Attempt one** darkened the shared muted tokens to clear 4.5 on paper. `#878580`
+on the `#0A0C10` map inset went from about **5.3:1 to 4.14:1** — below a line it
+was already above. Reverted.
+
+**Attempt two** gave the dark page its own value: `offline.html` got a light
+`--muted-ink`. That page has **both** grounds, so a `div.mono` on its white card
+went to **1.7:1**. Reverted.
+
+Three rounds, each measured, each reverted where it regressed. The lesson is
+specific and worth keeping: **a colour token is not a light-or-dark decision at the
+page level.** The muted greys need per-container scoping — light ink by default,
+the light twin only inside the dark containers — and that is the remaining work,
+not another global swap.
+
+The 31 that are left are all muted greys and pill inks on light grounds, between
+3.42:1 and 4.49:1. None is invisible; each needs its container identified rather
+than its token changed.

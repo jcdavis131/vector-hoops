@@ -159,6 +159,17 @@ Both now point at the pages the nav already uses for those words — `/play.html
 rather than at anchors minted to justify the links. A new `fragments` check makes every deep link
 land on something that exists; it was shown failing first.
 
+**Text inks, and two attempts that traded one failure for another.** The brand colours were carrying
+text below AA on every page — `#EB6834` at 3.20:1, `#009E73` at 3.42:1, `#2A78D6` at 4.42:1. Three
+new tokens fix them: `--orange-ink #C84714`, `--blue-ink #2873CF`, `--green-ink #008460`. **New names,
+not new values** — every ring, fill, polyline and border still draws the brand colour, and only text
+moves. **67 → 31 below AA, with zero findings left on a dark ground.** Two earlier attempts were
+measured and reverted: darkening the shared muted token to clear 4.5 on paper took the same text on
+the `#0A0C10` inset from 5.3:1 to **4.14:1**, and giving the dark page its own light token put a
+`div.mono` on its white card at **1.7:1**. The lesson is specific — a colour token is not a
+light-or-dark decision at the page level; the remaining muted greys need per-container scoping, which
+is the next step rather than another global swap.
+
 **The contrast gate has never looked at what was painted.** `check_contrast.py` reads CSS rules and
 says in its own docstring that colour-only rules are "printed to check in a browser, never failed on".
 Nobody ran the browser half — and most of this site's text is rendered from JSON into elements a
