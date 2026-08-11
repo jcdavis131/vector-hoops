@@ -7387,3 +7387,35 @@ does not.
 Also fixed: `enriched 266K` on /inventory, a summary I missed when correcting
 that file's byte size — I caught the `2.64MB` one in the same sentence and not
 this one.
+
+
+## The map uses a quarter of its canvas (2026-08-11)
+
+Every check on this site so far has been structural or numeric. I rendered the
+landing page and looked at it, which I had not done since before the context
+compaction, and the centre of the site is mostly empty.
+
+Measured inside the page rather than off the screenshot — my first attempt
+classified pixels from the PNG and reported "100% fill", because it counted the
+black nav bar as canvas and the white page as points:
+
+    desktop  canvas 689x440   cloud bbox 170x188   25% of width, 43% of height
+    mobile   canvas 361x360   cloud bbox 140x155   39% of width, 43% of height
+
+both at `zoom 1`.
+
+`cam.proj` scales by `min(W,H) * scFrac * zoom` with `scFrac` 0.42, so a point at
+the edge of the normalised cube lands 185px from centre on desktop — a 370px
+span. The cloud measures 170px, so **the data occupies under half the cube it is
+drawn in**, and the default view frames the cube rather than the data.
+
+A map application fits to its bounds on load. This one opens at a fixed zoom and
+leaves three quarters of the frame dark on the page the whole site is built
+around.
+
+**Not implemented yet, deliberately.** `map-camera.js` is shared by /, /players
+and /trends, a fit routine has to be robust to outliers (max radius is one stray
+point away from useless, so a high percentile rather than a max), and the
+before-numbers above are exactly what an after-measurement needs to be checked
+against. Rushing a change to the centrepiece is worse than carrying the finding
+one turn.
