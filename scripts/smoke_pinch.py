@@ -191,11 +191,25 @@ def main() -> int:
             var r=c.getBoundingClientRect();
             return JSON.stringify({x:r.left+r.width/2, y:r.top+r.height/2,
                                    w:r.width, h:r.height});})()"""
-        # /trends attaches its camera inside the .then() of a 415 KB fetch, and
-        # its lower sections boot on an IntersectionObserver, so at four seconds
-        # on a page nobody has scrolled there is no camera to pinch. Scroll and
-        # look again rather than reporting a map that does not exist.
+        # /trends does not fetch its 406 KB season map until someone asks: the
+        # canvas sits behind a "Draw the seasons" button and the label beside it
+        # says "press Draw the seasons to load". So no camera at four seconds is
+        # the page working, not the page broken. Press it, the way a visitor
+        # does, rather than reporting a map that was never meant to be there yet.
         box = ev(ws, FIND)
+        if not isinstance(box, dict):
+            pressed = ev(ws, """(function(){
+                var b=document.getElementById('smLoad');
+                if(!b) b=[].slice.call(document.querySelectorAll('button'))
+                          .filter(function(x){return /draw the seasons|load the map/i
+                                                     .test(x.textContent||'');})[0];
+                if(!b) return '';
+                b.scrollIntoView({block:'center'}); b.click();
+                return (b.textContent||'').trim().slice(0,34);})()""")
+            if pressed:
+                print(f"  (pressed {pressed!r} — this map loads on request)")
+                time.sleep(4.5)
+                box = ev(ws, FIND)
         if not isinstance(box, dict):
             for frac in (0.35, 0.6, 0.85, 1.0):
                 ev(ws, f"window.scrollTo(0, document.body.scrollHeight*{frac})")
