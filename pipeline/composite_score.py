@@ -138,8 +138,12 @@ def _threshold(metric: str, n_seeds: int, floor: float) -> float:
 
     With one seed the standard error is the full seed sd, so the bar is wide;
     averaging over PROMOTE_SEEDS_TARGET seeds shrinks it back toward the floor.
-    This is what stops the gate adjudicating sampling noise -- measured test
-    recall sd is 0.088, more than 4x the old hand-picked 0.02 slack.
+    This is what stops the gate adjudicating sampling noise. The measured sds
+    live in BASELINE_SD and are read from there rather than restated here: an
+    earlier version of this docstring said "measured test recall sd is 0.088"
+    while BASELINE_SD said 0.031, and the same wrong figure appeared in
+    composite_quality's promote_rule. A sentence that explains a threshold has
+    to come from the same place the threshold does.
     """
     sd = BASELINE_SD.get(metric)
     if not sd:
