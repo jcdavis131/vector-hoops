@@ -1133,6 +1133,7 @@ def emit_training_snapshot(args, weights, fams, history, val_trace, status) -> N
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--epochs", type=int, default=40)
+    ap.add_argument("--device", type=str, default="cpu", help="cpu or cuda — forced cpu per 2026-08-10 user request")
     ap.add_argument("--dim", type=int, default=48)
     ap.add_argument(
         "--tower-width",
@@ -1365,7 +1366,7 @@ def main() -> None:
 
     torch.manual_seed(args.seed)
     np.random.seed(args.seed)
-    device = "cuda" if torch.cuda.is_available() else "cpu"
+    device = args.device or ("cuda" if torch.cuda.is_available() else "cpu")  # auto: GPU on personal local (CUDA avail), CPU in Hatch VM
 
     (Z, M, names, seasons, pids, clusters, positions, season_ids, manifest) = load_bundle()
 
@@ -1749,14 +1750,25 @@ def main() -> None:
             test_pairs = filter_pairs_by_split(pair_arr, seasons, "test")
             test_r = recall_at_k(E_val, test_pairs, k=10)
             val_pu = cross_era_archetype_purity(E_val, clusters, seasons)
-            val_recall_hist.append(val_r)
-            val_r_smooth = sum(val_recall_hist[-VAL_RECALL_SMOOTH_N:]) / len(val_recall_hist[-VAL_RECALL_SMOOTH_N:])
-            val_comp = promotion_composite(val_r_smooth, val_pu)
+            val_recall_hist.append(val_r if val_r is not None else 0.0)
+            try:
+                _hist = [float(x) for x in val_recall_hist[-int(VAL_RECALL_SMOOTH_N):] if x is not None]
+                val_r_smooth = (sum(_hist) / len(_hist)) if _hist else 0.0
+            except Exception:
+                val_r_smooth = float(val_r) if val_r is not None else 0.0
+            try:
+                val_comp = promotion_composite(val_r_smooth, val_pu)
+            except Exception:
+                val_comp = 0.0
             pu_s = f" purity@20={val_pu:.3f}" if val_pu is not None else ""
+            val_r_f = float(val_r) if val_r is not None else 0.0
+            test_r_f = float(test_r) if test_r is not None else 0.0
+            val_rs_f = float(val_r_smooth) if val_r_smooth is not None else 0.0
+            val_comp_f = float(val_comp) if val_comp is not None else 0.0
             log_line += (
-                f"  val_recall@10={val_r:.3f} (smooth {val_r_smooth:.3f})"
-                f" test_recall@10={test_r:.3f}"
-                f"{pu_s} composite={val_comp:.3f}"
+                f"  val_recall@10={val_r_f:.3f} (smooth {val_rs_f:.3f})"
+                f" test_recall@10={test_r_f:.3f}"
+                f"{pu_s} composite={val_comp_f:.3f}"
             )
             trace_row = {
                 "epoch": epoch,

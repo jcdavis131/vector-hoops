@@ -71,8 +71,7 @@ try:
 
     TORCH = True
     torch.manual_seed(SEED)
-    if torch.cuda.is_available():
-        torch.cuda.manual_seed_all(SEED)
+    if torch.cuda.is_available(): torch.cuda.manual_seed_all(SEED)
 except Exception as e:
     TORCH = False
     print(f"torch missing {e}")
@@ -843,14 +842,14 @@ def train_mt_long(args):
     use_attn = args.attn
     use_ckpt_mem = args.checkpoint_mem
     model = MultiTowerMTDeep(use_era=use_era, use_attn=use_attn, use_checkpoint=use_ckpt_mem)
-    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")  # auto: GPU on personal local (CUDA avail), CPU in Hatch VM
     model.to(device)
 
     optimizer = torch.optim.AdamW(model.parameters(), lr=args.lr, weight_decay=args.wd)
     scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, mode="min", factor=0.5, patience=5)
 
     # AMP
-    scaler_amp = torch.cuda.amp.GradScaler() if device.type == "cuda" and args.amp else None
+    scaler_amp = torch.cuda.amp.GradScaler() if device.type == "cuda" else None  # auto: AMP on CUDA, None on CPU
 
     # EMA
     ema = EMA(model, decay=0.999) if args.ema else None
@@ -969,7 +968,7 @@ def train_mt_long(args):
                     errorClass = "OOM"
                     print(f"[retry] OOM detected, halving batch to {batch_size} attempt {retry_attempts}")
                     if torch.cuda.is_available():
-                        torch.cuda.empty_cache()
+                        if torch.cuda.is_available(): torch.cuda.empty_cache()
                     time.sleep(1)
                     continue
                 else:

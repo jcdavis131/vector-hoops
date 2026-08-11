@@ -194,7 +194,7 @@ def main() -> None:
 
     torch.manual_seed(args.seed)
     np.random.seed(args.seed)
-    device = "cuda" if torch.cuda.is_available() else "cpu"
+    device = args.device or ("cuda" if torch.cuda.is_available() else "cpu")  # auto: GPU on personal local (CUDA avail), CPU in Hatch VM
 
     seq = np.load(SEQ_NPZ, allow_pickle=False)
     E, seasons, names, pids, sal = load_row_features()
