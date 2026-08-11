@@ -41,7 +41,11 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 SERVE = ROOT / "public"
-MAX_TABS = 60
+# 60 truncated /players at exactly 60, which is a cap reporting itself as a
+# count. Raised until every page terminates on its own; the run below prints the
+# per-page numbers, so a page that ever hits this ceiling is visible rather than
+# quietly rounded down.
+MAX_TABS = 110
 
 if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
@@ -70,6 +74,14 @@ READ = r"""(function(){
   }
   var a=document.activeElement;
   if(!a||a===document.body||a===document.documentElement) return JSON.stringify({none:true});
+  /* Wrap detection by node identity, not by text. It used to key on
+     tag.class|text, which meant any two controls that look alike ended the walk:
+     /model grew a second group of Archetype / Position / Skills / Next Profile
+     buttons and the count fell 499 -> 493, silently covering less of a page that
+     had just got bigger. A gate that quietly measures less is the same defect as
+     a gate that measures nothing. */
+  if(a.hasAttribute('data-vhring')) return JSON.stringify({wrapped:true});
+  a.setAttribute('data-vhring','1');
   var cs=getComputedStyle(a);
   var cls=(a.className&&a.className.baseVal!==undefined?a.className.baseVal:a.className||'').toString();
   var sel=a.tagName.toLowerCase()+(cls?'.'+cls.trim().split(/\s+/).slice(0,2).join('.'):'');
@@ -167,16 +179,14 @@ def main() -> int:
         for page in pages:
             ws.call("Page.navigate", {"url": f"http://127.0.0.1:{site}{page}"})
             time.sleep(2.2)
-            seen, page_bad, n = set(), 0, 0
+            page_bad, n = 0, 0
             for _ in range(MAX_TABS):
                 tab(ws)
                 d = ev(ws, READ)
                 if not isinstance(d, dict) or d.get("none") or d.get("err"):
                     continue
-                key = f"{d.get('sel')}|{d.get('text')}"
-                if key in seen:
-                    break                      # wrapped around the document
-                seen.add(key)
+                if d.get("wrapped"):
+                    break                      # came back to a stop already walked
                 n += 1
                 if d.get("skip") or d.get("shadowOnly"):
                     continue

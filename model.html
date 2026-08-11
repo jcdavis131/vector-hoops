@@ -33,6 +33,236 @@
 <div class="sub" id="zooNote" style="margin:6px 0">Loading the measured zoo from <code>assets/model_zoo.json</code>…</div>
 <div id="zooTable" style="margin-top:8px"></div>
 <div class="sub" id="zooCaveat" style="margin-top:8px;border-left:3px solid var(--orange);padding-left:8px"></div></div></div>
+<div class="card" id="pxCard"><h2 class="vh-sr">Why this player</h2>
+<div class="mono">Why this player — the model's own gradient, one season at a time</div>
+<p class="sub" style="margin:6px 0 0">The bars above are the population: what moves the model across
+12,966 player-seasons. This is one of them. <code>assets/mtnn_attr_topk.bin</code> holds, for every
+row, the eight input features that moved each prediction most — signed, ranked by size. Reading one
+player's slice takes <b>two HTTP Range requests totalling 48 bytes</b> out of a 2,489,472-byte file,
+so nothing here is downloaded that is not about the player you asked for.</p>
+<div class="px-pick">
+  <label class="mono" for="pxName">Player-season</label>
+  <input id="pxName" list="pxList" autocomplete="off" spellcheck="false"
+         placeholder="Type a name — the map's 1,764 signature seasons" disabled>
+  <datalist id="pxList"></datalist>
+  <button id="pxGo" class="pill" type="button" disabled>Explain</button>
+</div>
+<p class="sub" id="pxState" style="margin:8px 0 0">Loading the row index from
+<code>assets/attr_index.json</code>…</p>
+<div id="pxTabs" role="group" aria-label="Prediction to explain"
+     style="display:flex;gap:6px;flex-wrap:wrap;margin:8px 0"></div>
+<div id="pxBars"></div>
+<p class="sub" id="pxMethod" style="margin-top:8px"></p>
+<p class="sub" id="pxZero" style="margin-top:6px;border-left:3px solid var(--orange);padding-left:8px"></p>
+<p class="mono" id="pxProv" style="margin-top:8px;opacity:.75;text-transform:none"></p>
+<p id="pxLive" class="vh-sr" role="status" aria-live="polite" aria-atomic="true"></p>
+</div>
+<style>
+.px-pick{display:flex;gap:8px;align-items:flex-end;flex-wrap:wrap;margin-top:10px}
+.px-pick label{display:block;color:#3A2E00;margin-bottom:3px}
+.px-pick input{font-family:var(--mono);font-size:13px;padding:8px 10px;border:1.8px solid var(--ink);border-radius:10px;background:#fff;min-width:min(320px,100%);color:#111}
+.px-pick input:disabled{background:#F2F1EC;color:#6B6760;border-color:#B9B6AE;cursor:not-allowed}
+.px-pick button{cursor:pointer;min-height:32px}
+.px-pick button:disabled{background:#F2F1EC;color:#6B6760;border-color:#B9B6AE;cursor:not-allowed;box-shadow:none}
+.px-row{display:grid;grid-template-columns:158px 1fr 62px;gap:8px;align-items:center;padding:3px 0;font-family:var(--mono);font-size:11px}
+.px-name{font-weight:800;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:#26241F}
+.px-fam{font-weight:700;color:#5A6476}
+.px-track{position:relative;background:#f0efe9;border:1.4px solid var(--ink);border-radius:4px;height:14px}
+.px-track::before{content:"";position:absolute;left:50%;top:0;bottom:0;width:1.4px;background:#8C8981}
+.px-fill{position:absolute;top:1px;bottom:1px;border:1.2px solid var(--ink);border-radius:2px}
+.px-fill.pos{background:#2A78D6;left:50%}
+.px-fill.neg{background:#D55E00;right:50%}
+.px-val{text-align:right;font-variant-numeric:tabular-nums;color:#26241F}
+.px-zero{color:#6B6760;font-style:italic}
+</style>
+<script>
+/* ── Why this player ───────────────────────────────────────────────────────────
+   The card above shows the population attribution. This shows one row of it.
+
+   assets/mtnn_attr_topk.bin is [12966][4][8] — for every player-season, the eight
+   input features that moved each of four predictions most, signed. Its layout is
+   fully described by mtnn_attr_pop.json.topkLayout, so one player's slice is two
+   byte ranges: 16 bytes of uint16 feature indices and 32 bytes of float32 values.
+   The host answers 206 with accept-ranges: bytes — checked against production
+   before this was written — and if it ever stops, the fallback below reads the
+   same offsets out of whatever it did send instead of guessing.
+
+   What this deliberately does NOT say: that changing a stat would move the
+   prediction. The file's own method line calls it a local linearization and not a
+   counterfactual ablation, and that sentence is printed on screen rather than
+   paraphrased away. Nor does it claim these gradients came from the model the
+   architecture panel describes: the two files record different checkpoints, and
+   that is stated rather than smoothed over. */
+(function(){
+  'use strict';
+  var $ = function(s){ return document.getElementById(s); };
+  var elName=$('pxName'), elGo=$('pxGo'), elState=$('pxState'), elTabs=$('pxTabs'),
+      elBars=$('pxBars'), elMethod=$('pxMethod'), elZero=$('pxZero'), elProv=$('pxProv'),
+      elList=$('pxList');
+  if(!elName) return;
+
+  var IDX = null, POP = null, LAYOUT = null, VAL_OFF = 0, K = 8, NT = 4;
+  var TENSOR = 'assets/mtnn_attr_topk.bin';
+  var target = 0, current = null, byLabel = {};
+
+  function say(m){ var l=$('pxLive'); if(!l||!m) return;
+    if(l.textContent===m) l.textContent=''; l.textContent=m; }
+  function esc(s){ return String(s).replace(/[&<>"]/g, function(c){
+    return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
+  function pretty(t){ return t.replace(/_/g,' ').replace(/\b\w/g, function(c){
+    return c.toUpperCase(); }); }
+
+  function slice(a, b){
+    /* one range. If the host ignores Range and sends the whole file, the reply is
+       200 and the full buffer arrives — take the same bytes out of it rather than
+       failing, because the answer is still in there. */
+    return fetch(TENSOR, {headers:{'Range':'bytes='+a+'-'+b}}).then(function(r){
+      if(!r.ok && r.status!==206) throw new Error('HTTP '+r.status);
+      return r.arrayBuffer().then(function(buf){
+        var want = b - a + 1;
+        if(buf.byteLength === want) return {buf:buf, base:0, ranged:true};
+        if(buf.byteLength > b) return {buf:buf, base:a, ranged:false};
+        throw new Error('short read: '+buf.byteLength+' bytes for '+want);
+      });
+    });
+  }
+
+  function explain(key, label){
+    var row = IDX.rows[key];
+    if(row === undefined){ elState.textContent = 'No row for ' + label + '.'; return; }
+    var flat = (row * NT + target) * K;
+    elState.textContent = 'Reading row ' + row.toLocaleString() + ' of ' +
+      IDX.tensorRows.toLocaleString() + ' — 48 bytes…';
+    Promise.all([slice(flat*2, flat*2 + K*2 - 1),
+                 slice(VAL_OFF + flat*4, VAL_OFF + flat*4 + K*4 - 1)])
+      .then(function(parts){
+        var iv = new DataView(parts[0].buf), vv = new DataView(parts[1].buf);
+        var ib = parts[0].base ? flat*2 : 0;
+        var vb = parts[1].base ? VAL_OFF + flat*4 : 0;
+        var rows = [];
+        for(var k=0;k<K;k++){
+          var fi = iv.getUint16(ib + k*2, true);
+          rows.push({f: POP.features[fi] || ('feature ' + fi),
+                     v: vv.getFloat32(vb + k*4, true),
+                     fam: (POP.featureFamily && POP.featureFamily[POP.features[fi]]) || ''});
+        }
+        current = {key:key, label:label, row:row, rows:rows,
+                   ranged: parts[0].ranged && parts[1].ranged};
+        draw();
+      })
+      .catch(function(e){
+        elBars.innerHTML = '';
+        elState.textContent = 'Could not read row ' + row + ' (' + e.message + '). ' +
+          'Nothing is drawn rather than a guess.';
+        say('Could not read that row.');
+      });
+  }
+
+  function draw(){
+    if(!current){ return; }
+    var rows = current.rows;
+    var max = 0, i;
+    for(i=0;i<rows.length;i++) max = Math.max(max, Math.abs(rows[i].v));
+    if(!max) max = 1;
+    var html = rows.map(function(r){
+      var pct = Math.abs(r.v) / max * 50;
+      var zero = r.v === 0;
+      return '<div class="px-row">' +
+        '<span class="px-name">' + esc(r.f) +
+          (r.fam ? ' <span class="px-fam">' + esc(r.fam) + '</span>' : '') + '</span>' +
+        '<span class="px-track" role="img" aria-label="' + esc(r.f) + ', ' +
+          (zero ? 'not measured in this season' : r.v.toFixed(3)) + '">' +
+          (zero ? '' : '<span class="px-fill ' + (r.v > 0 ? 'pos' : 'neg') +
+                       '" style="width:' + pct.toFixed(1) + '%"></span>') +
+        '</span>' +
+        '<span class="px-val' + (zero ? ' px-zero' : '') + '">' +
+          (zero ? 'n/m' : r.v.toFixed(3)) + '</span></div>';
+    }).join('');
+    var tname = POP.targets[target];
+    elBars.innerHTML = '<div class="mono" style="opacity:.7;text-transform:none;margin-bottom:4px">' +
+      esc(current.label) + ' · ' + esc(pretty(tname)) + ' · the eight features with the ' +
+      'largest signed contribution · blue pushes up, orange pushes down</div>' + html;
+    elState.textContent = 'Row ' + current.row.toLocaleString() + ' of ' +
+      IDX.tensorRows.toLocaleString() + ', read as ' +
+      (current.ranged ? '48 bytes over two Range requests' :
+                        'two reads (the host did not honour Range, so the whole file came down)') +
+      '.';
+    Array.prototype.forEach.call(elTabs.children, function(b, i){
+      b.setAttribute('aria-pressed', i === target ? 'true' : 'false');
+    });
+    say(current.label + ', ' + pretty(tname) + ': led by ' + rows[0].f + ' at ' +
+        rows[0].v.toFixed(2) + '.');
+  }
+
+  function go(){
+    var v = (elName.value || '').trim();
+    var key = byLabel[v];
+    if(!key){
+      elState.textContent = 'No player-season called “' + v + '”. Pick one from the list — ' +
+        'nothing is guessed from a partial name.';
+      say('That name is not in the list.');
+      return;
+    }
+    explain(key, v);
+  }
+
+  Promise.all([
+    fetch('assets/attr_index.json?v=807ae9aa').then(function(r){
+      if(!r.ok) throw new Error('attr_index HTTP ' + r.status); return r.json(); }),
+    fetch('assets/mtnn_attr_pop.json?v=0438ec8c', {cache:'force-cache'}).then(function(r){
+      if(!r.ok) throw new Error('attr_pop HTTP ' + r.status); return r.json(); }),
+    fetch('assets/embedding_map_points_limited.json?v=407d2cbc', {cache:'force-cache'}).then(function(r){
+      if(!r.ok) throw new Error('points HTTP ' + r.status); return r.json(); })
+  ]).then(function(all){
+    IDX = all[0]; POP = all[1];
+    LAYOUT = POP.topkLayout || {};
+    K = LAYOUT.k || 8;
+    NT = (LAYOUT.shape && LAYOUT.shape[1]) || (POP.targets || []).length || 4;
+    (LAYOUT.blocks || []).forEach(function(b){ if(b.name === 'value') VAL_OFF = b.offset; });
+    if(!VAL_OFF) throw new Error('the layout does not say where the values start');
+
+    var pts = all[2].points || [], n = 0;
+    pts.forEach(function(p){
+      var key = p.pid + '|' + p.season;
+      if(IDX.rows[key] === undefined) return;
+      var label = p.display_name + ' — ' + p.season;
+      byLabel[label] = key;
+      var o = document.createElement('option'); o.value = label;
+      elList.appendChild(o); n++;
+    });
+
+    (POP.targets || []).forEach(function(t, i){
+      var b = document.createElement('button');
+      b.className = 'pill tbtn'; b.type = 'button'; b.textContent = pretty(t);
+      b.setAttribute('aria-pressed', i === 0 ? 'true' : 'false');
+      b.addEventListener('click', function(){
+        target = i;
+        if(current) explain(current.key, current.label); else draw();
+      });
+      elTabs.appendChild(b);
+    });
+
+    elName.disabled = false; elGo.disabled = false;
+    elState.textContent = n.toLocaleString() + ' player-seasons can be explained. ' +
+      'Pick one and press Explain.';
+    elMethod.textContent = 'How this is computed — ' + (POP.method || '');
+    elZero.textContent = 'Read zero carefully — ' + (POP.maskedNote || '');
+    var ck = POP.checkpoint || {};
+    elProv.textContent = 'Built ' + (POP.built || '?') + ' from ' + (POP.matrix || '?') +
+      ' · ' + (POP.rows || 0).toLocaleString() + ' rows × ' + NT + ' targets × top ' + K +
+      ' · checkpoint ' + (ck.bytes ? ck.bytes.toLocaleString() + ' bytes' : 'unrecorded') +
+      '. That is not the same checkpoint record as the architecture panel above quotes, so read ' +
+      'these gradients as the model that produced this file, not as the one serving the map.';
+    elGo.addEventListener('click', go);
+    elName.addEventListener('change', go);
+    elName.addEventListener('keydown', function(e){ if(e.key === 'Enter'){ e.preventDefault(); go(); } });
+  }).catch(function(e){
+    elState.textContent = 'The per-player attributions could not be loaded (' + e.message +
+      '). No placeholder is shown here on purpose — the numbers on this page are either the ' +
+      'model’s or absent.';
+  });
+})();
+</script>
 <div class="card" id="flowCard"><h2 class="vh-sr">End to end — one stat to one prediction</h2>
 <div class="mono">End to end — one stat to one prediction</div>
 <p class="sub" id="flowLead" style="margin:6px 0 0">Loading the architecture from <code>assets/mtnn_arch.json</code>…</p>
