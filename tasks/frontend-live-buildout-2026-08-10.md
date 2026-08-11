@@ -6913,3 +6913,81 @@ none. Four other pages already fetch it, so for anyone arriving from elsewhere
 on the site it is a cache hit, and the site now ships one fewer distinct map
 asset. `sw.js` v7-5 → v7-6 collects the unused 189 KB `vectors_map_lite.json`
 from returning caches.
+
+
+## A gate for the class, then two pages that phoned home (2026-08-11)
+
+The `/player` bug was not a typo, it was a **shape**: read a key the file does
+not have, and let a fallback make the miss look like working code. Nothing here
+could see that. `derived` proves the generators produce the files. `sourced` and
+`cited` prove the figures on screen match a file. None of them proves a page
+reads the key it *thinks* it does — it can fetch the right file, parse it, and
+ask it for a name that was never in it.
+
+Reading the source cannot answer it either. `V.vectors` is a valid property
+access against any object. The only thing that knows is the object, at the
+moment of the read. So `scripts/check_data_keys.py` runs the pages and asks it:
+before any page script, `Response.prototype.json` and `JSON.parse` are patched
+so every parsed object comes back wrapped in a Proxy that forwards every get
+untouched and records the ones naming a key the object lacks.
+
+    2,407 key reads across 18 pages — every read of a fetched file is valid
+
+Proved against the bug it exists for *before* being trusted: with `V.points`
+put back to `V.vectors` it names the file, the key, and the three keys the file
+actually has.
+
+One note, not a failure: `/play` reads `.days` off `{}` parsed from
+localStorage on a first visit, guarded by `ww.days?.length||0`, and **0 days is
+the true answer**. Local state is not a data file. Failing on it would train me
+to ignore this gate, which is how a real miss gets through.
+
+### 100% of the DOM, 0% of the feature
+
+`/player-animations` loaded its player from unpkg. Measured with that host
+blocked: `customElements.get('posecode-player')` is **false** and all eight
+players are inert. The page's whole subject is eight animated moves, and none
+of them existed without a third party.
+
+**The offline sweep read that page at 100% the entire time** — it compares DOM
+node counts, and eight inert `<posecode-player>` elements count exactly as much
+as eight working ones. It is the same shape as every other check this session
+that was measuring the wrong state, and this time the check was mine.
+
+624,256 bytes committed, sha256 `8925809899c7979c71c42f32…`, and the deployed
+copy verified byte-identical against it — no line-ending conversion. Then the
+new `external` check found a second one I had not gone looking for: **`/player`
+pulled Architects Daughter from `fonts.googleapis.com`**, a render blocker on
+someone else's server and every visitor's IP handed to Google. That face has
+been committed under `assets/fonts/` with its OFL licence since 2026-08-10 and
+all seventeen other pages link `assets/fonts.css`. `/player` is the page that
+lived only in `public/` and was skipped by every check that would have said so.
+
+The first draft of `external` reported `brand.html`'s own canonical URL as an
+outside dependency. A canonical URL says where the page lives; it is not
+fetched. It covers `<script src>` and the `<link rel>` values that make a
+browser go get something.
+
+### The test that cleared two false claims
+
+`/methods` said "GSW $9.14B 5.03 worst OKC 20.9 best". Every part was wrong:
+GSW is **$10.09B** (five other pages already said so), its wins/$B is **3.67**,
+the worst is **BKN 3.65** and the best is **DET 18.13**. The site had been
+quoting two different valuations for one team.
+
+I found it by sweeping every decimal a reader sees against every committed
+asset — and then nearly stopped there. That sweep is a *containment* test, and
+it had reported `20.9` and `9.14` as "in a committed asset" while both were
+false as claims. Token presence is not sourcing. Rechecking the survivors
+against their actual fields:
+
+    SAS 94.8 > OKC 85.8     true — but they are weighted_wins, not a "brand"
+                            score, and NYK is higher at 95.3
+    R2 0.9367               true — hill_climb_v5_3.mt_v3.draft_r2
+    vs raw 0.488 lift 0.449  not in the repo at all. No committed field carries
+                            a draft R2 of 0.488, and 0.449 is 0.9367 minus it —
+                            a lift over a baseline that does not exist
+
+**Deliberately not done:** `.gitattributes`. Every commit warns about LF/CRLF,
+but `* text=auto` renormalises the whole repo and this checkout is shared with
+another agent mid-work. Cosmetic warning, repo-wide blast radius.
