@@ -159,6 +159,17 @@ Both now point at the pages the nav already uses for those words — `/play.html
 rather than at anchors minted to justify the links. A new `fragments` check makes every deep link
 land on something that exists; it was shown failing first.
 
+**A whole wiki page, read aloud.** Yesterday's live-region finding was a class, so the class got
+swept: every `[aria-live]` element on all 22 pages, loaded and scrolled. **It came back clean — and
+that was wrong**, because two were empty at the moment of measurement. `#card` on `/player-cards` and
+`#twinResult` on `/trends` are the containers a card and a lookup fill; a sweep that never opens
+anything reads them as 0. Opened, `#card` holds **4,283 characters** and was `aria-live="polite"` —
+so opening a card announced *"Vince Carter card loaded."* **and then read out the entire wiki page**,
+roughly seven hundred words, every time. The twin box announced its answer twice, once as prose and
+once as the card. Both pages already said the right sentence, so the fix is subtractive. The assertion
+went into the two smokes that drive those pages **with the region full**, because that is the only
+state the defect exists in; both mutations caught.
+
 **The model page read its charts aloud at you.** Two regions on `/model` carried `aria-live="polite"`
 and both are containers that receive whole blocks — the twelve-row attribution chart (279 characters)
 and the pipeline detail (176). A live region announces whatever lands in it, and both fill **on

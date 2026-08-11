@@ -274,6 +274,30 @@ def main() -> int:
                         f"map both announce, and this box is the answer the section is "
                         f"named after")
 
+            # #twinResult was aria-live, and it fills with a whole career card —
+            # measured at 222 characters — while the section separately says one
+            # sentence. So the answer was announced twice, once as prose and once
+            # as the card. Checked here because a sweep of every page reads this
+            # region as empty: it is, until a lookup fills it.
+            regions = ev(ws, r"""(function(){
+              return JSON.stringify([].slice.call(document.querySelectorAll('[aria-live]'))
+                .map(function(e){
+                  var t=(e.textContent||'').replace(/\s+/g,' ').trim();
+                  return {id:e.id||e.tagName, chars:t.length, head:t.slice(0,40)};
+                }));
+            })()""")
+            if isinstance(regions, str):
+                regions = json.loads(regions)
+            print("  regions  "
+                  + ", ".join(f"{r['id']}={r['chars']}c" for r in (regions or [])))
+            for r in (regions or []):
+                if r["chars"] > 200:
+                    failures.append(
+                        f"#{r['id']} is a live region holding {r['chars']} characters "
+                        f"({r['head']!r}…) — a live region announces whatever lands in it, "
+                        f"and the section already says one sentence, so the answer is "
+                        f"announced twice")
+
             # 4. a name nobody has still has to be told honestly
             typed(ws, "zzzznotaplayer")
             time.sleep(0.4)

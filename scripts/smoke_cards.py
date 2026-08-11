@@ -340,6 +340,31 @@ def main() -> int:
                     f"a failed card took over the title and url: {after['title']!r} "
                     f"{after['url']!r}")
 
+
+            # A live region announces whatever lands in it. #card fills with a
+            # whole rendered wiki page — measured at 4,283 characters — and the
+            # page separately says "<name> card loaded.", so a screen reader got
+            # the sentence and then the entire card. Checked with the card OPEN:
+            # a sweep of every page reads this region as empty, because it is,
+            # until something is opened.
+            regions = ev(ws, r"""(function(){
+              return JSON.stringify([].slice.call(document.querySelectorAll('[aria-live]'))
+                .map(function(e){
+                  var t=(e.textContent||'').replace(/\s+/g,' ').trim();
+                  return {id:e.id||e.tagName, chars:t.length, head:t.slice(0,40)};
+                }));
+            })()""")
+            if isinstance(regions, str):
+                regions = json.loads(regions)
+            print("  live regions   "
+                  + ", ".join(f"{r['id']}={r['chars']}c" for r in (regions or [])))
+            for r in (regions or []):
+                if r["chars"] > 200:
+                    failures.append(
+                        f"#{r['id']} is a live region holding {r['chars']} characters "
+                        f"({r['head']!r}…) — a live region announces whatever lands in it, "
+                        f"and that is a document, not a sentence")
+
             # 9. The announcement has to count the matches, not the cap. `hits`
             #    was sliced to ten before anything counted it, so a query with
             #    forty matches told a screen-reader user "10 matches" and showed

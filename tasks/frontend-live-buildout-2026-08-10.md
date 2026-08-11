@@ -5671,3 +5671,47 @@ tab stop with arrow keys, which is the right shape; not thirty tab stops.
 
 **The season buttons are real `<button>`s with `aria-pressed`**, and so are the
 attribution chips. Neither needed anything.
+
+
+## A whole wiki page, read aloud (2026-08-11)
+
+Yesterday's `/model` finding was a class, so the class got swept: every
+`[aria-live]`, `[role=status]` and `[role=alert]` element on all 22 pages, loaded
+and scrolled, measured by how much it was holding.
+
+    0 live region(s) over 200 characters
+
+Clean — and wrong, because two of them were **empty at the moment I looked**:
+
+    /player-cards   card=0c
+    /trends         twinResult=0c
+
+Those are the containers a card and a lookup fill. A sweep that never opens
+anything reads them as empty, which is the same trap as reading a page in one
+state. Opened:
+
+    /player-cards #card       aria-live='polite'   filled to 4,283 characters
+                  #live       25 characters — 'Vince Carter card loaded.'
+    /trends #twinResult       aria-live='polite'   filled to 222 characters
+            #live             77 characters — 'AC Green 1999-00. Closest modern
+                              match Horace Grant 2000-01, similarity 0.85.'
+
+**Both pages already said the right sentence.** Opening a card announced
+"Vince Carter card loaded." *and then read out the entire wiki page* — 4,283
+characters, roughly seven hundred words, every time a card is opened. The era-twin
+box announced its answer twice, once as prose and once as the card.
+
+The fix is subtractive: neither container is a live region now. The sentences were
+already there and already correct.
+
+### Checked where the region is full, not where it is empty
+
+The assertion went into the two smokes that already drive these pages **with the
+region filled** — `smoke_cards` after a card opens, `smoke_trends` after a lookup —
+because that is the only state in which the defect exists. Both mutations caught:
+
+    card region        RC=1  #card is a live region holding 1974 characters
+    twin result region RC=1  #twinResult is a live region holding 233 characters
+
+That makes the live-region rule enforced in three places now, each in the state
+that page can actually be wrong in.
