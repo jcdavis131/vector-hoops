@@ -95,7 +95,10 @@ that handler set its state *after* awaiting the fetch: no label change, no `aria
 count moving, for 20.1 seconds. The only honest reading of that page is that the press did not
 register — and `loadFull()` had no guard, so pressing again started another 3,784,565-byte download.
 Now the state goes up in 300 ms, the download happens once however many times you press, and a
-failure says so instead of flipping the button to "on" over an unchanged cloud.
+failure says so instead of flipping the button to "on" over an unchanged cloud. **Enforced, not just
+fixed:** `scripts/smoke_index.py` presses the control under a throttle and fails if any of those
+behaviours goes missing — and mutation-testing that check found two of its own six assertions
+worthless before they were repaired.
 
 That failure claim then had to be earned. `loadFull()` awaits twice, and only the first path was
 the one I had in mind: blocking `points_limited` — the second — left **12,966 uncoloured points on

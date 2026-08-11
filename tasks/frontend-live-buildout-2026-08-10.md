@@ -4378,3 +4378,25 @@ which is the same trap the two generators had. And I wrote a literal newline int
 Python file twice by routing `
 ` through a shell heredoc, which the ledger already
 warns about; the Edit tool fixed in one move what the heredoc broke twice.
+
+
+## Next: product depth on phases 4 and 5, starting with a measurement (2026-08-10)
+
+Three firings in a row have ended in verification infrastructure — the derived
+gate, the live-region assertions, now the map-control smoke. Each was a named open
+item and each is closed, so the enforcement debt is paid. **Carrying on in that
+direction would be following the gradient rather than the brief.**
+
+Phases 4 and 5 — player cards and dictionary, team and front office — have had the
+least product depth. And there is a thread already open in them: the payload census
+shortlisted
+
+    player-cards.html    25K html + 569K fetched    wiki_index.json 539KB
+
+and **that was never checked in a browser.** It is exactly the question that found
+`/model` downloading 1.1 MB to draw an 8 KB table, and the one that stopped me
+"fixing" a landing page that turned out to be 15× lighter than the census claimed.
+Eager or lazy is a two-minute measurement and it decides whether there is anything
+there at all.
+
+Start there next, not at another gate.
