@@ -7062,3 +7062,61 @@ while the service worker holds a keep-alive connection open. A server in a
 separate process can just be killed. With it killed and the page reloaded:
 `customElements.get('posecode-player')` **true**, eight players, 4,823 body
 characters — identical to online. Before the vendoring it was `false`.
+
+
+## Tilt, and an Install button that did nothing (2026-08-11)
+
+Pinch fixed zoom. **Rotation still had half of it missing**, and measuring
+found where — under `touch-action: pan-y` the page owns the vertical part of any
+one-finger gesture:
+
+    one finger sideways   yaw 0.84    pitch 0      scrollY unchanged
+    one finger upward     yaw 0       pitch 0.15   scrollY 614 -> 719
+    one finger diagonal   yaw 0.079   pitch 0.056  scrollY 614 -> 693
+
+A diagonal drag is the natural way to orbit a 3D scene and it was **the gesture
+that worked least**: 0.079 of yaw where a mouse gives 0.63, because the page
+scrolled out from under it.
+
+The fix is not `touch-action: none` — that traps a visitor who puts a finger on
+a 520px canvas and then cannot scroll past it, the same trap the file already
+refuses for the wheel. Two fingers are already ours, so tilt goes there. Sliding
+them together moves the midpoint without changing the distance, so tilt and zoom
+stay separate inside one gesture. Same split Google, Apple and Mapbox use.
+
+Measured on all three map pages: two fingers slid 100px up move pitch to exactly
+**0.50** — the camera's own 0.005 per pixel — leave zoom at 1.0, and do not
+scroll.
+
+### The Install button did nothing on the one platform that needed it
+
+`'standalone' in navigator` is a **feature test**. `pwa-install.js` read it as
+an **is-installed** test. On iOS Safari that property always exists, so the
+guard was false there, every iOS visitor with two visits fell through to the
+banner carrying an **Install** button, and `showIOS()` — the branch written for
+exactly those people — was unreachable.
+
+iOS has no `beforeinstallprompt` at all. Measured with `navigator.standalone`
+defined the way Safari defines it: banner true, install button true, pressing it
+returns **"banner removed, nothing installed"**. The same defect as the dead
+*Find fit* button taken off /player-fit, on the one platform where a custom
+prompt is the only prompt there is.
+
+The banner also claimed **"114KB lite map cached"**. The lite maps are 273 KB
+and 185 KB; `114` appears in no committed file except as a digit run inside
+unrelated JSON — the coincidence the ledger warns about.
+
+**Nothing here could have seen any of it.** It lives in a JS file, so `sourced`
+and `free` never read it; it needs two recorded visits, so a first load never
+draws it; and it needs `navigator.standalone` to exist, which a CDP user-agent
+override does not provide. **My first run of the new smoke tested a browser that
+does not exist** — a UA string saying iPhone is not an iPhone — and reported the
+bug fixed while it was still there.
+
+### What I did not change
+
+Two nav entries on `/` both point at `/play`: a `site-nav__link` reading "Games"
+and a `site-nav__cta` reading "Play today's →". I had this on the list as a
+duplicate to merge. It is a nav item plus a distinct call to action for the
+primary thing the site does, which is ordinary practice — not a defect, and left
+alone.
