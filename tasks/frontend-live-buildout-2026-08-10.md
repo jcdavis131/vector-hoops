@@ -3999,3 +3999,22 @@ then regenerated, `identical: True` against the source subtree, RC=0, 7/7.
 the generators print em-dashes. Mojibake in a gate's own failure message, from the
 class the ledger already carries. `encoding="utf-8", errors="replace"` now, and the
 two older call sites that had the same latent bug were fixed with it.
+
+
+## /trends "map has ink NEVER" — settled (2026-08-10)
+
+Left open last pass as recorded-not-asserted: the speed probe reported no ink on
+`/trends`, and the probe never scrolled, so "never drew" and "never asked to draw"
+were not distinguished by that run.
+
+`trends.html` has one canvas, `#archMap`, and `bootMap()` sits behind an
+IntersectionObserver on `#mapSection` with `rootMargin:'320px'`. Measured rather
+than reasoned:
+
+    at the top       ink=0       #mapSection top=2597px   viewport=802px
+    after scrolling  ink=45709   scrollY=2597px
+
+The section starts 2,597px down a 802px viewport — nearly two screens past the
+320px margin — so the observer had correctly not fired. **Working as designed.**
+Closed, not a defect, and the same explanation given for `/model`'s trajectories
+now has a measurement behind it rather than an analogy.

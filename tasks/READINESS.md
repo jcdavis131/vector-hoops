@@ -1,14 +1,14 @@
 # frontend-live — readiness
 
-**Nothing here is live.** All 140 commits are on `frontend-live`; `master` is untouched, and
+**Nothing here is live.** All 143 commits are on `frontend-live`; `master` is untouched, and
 pushing `master` is what deploys the site. Suite green at the time of writing.
 
 | | |
 |---|---|
-| commits ahead of master | 140 |
-| paths changed | 2,628 (2,546 under `public/`, 30 scripts) |
-| insertions / deletions | +200,159 / −310,415 |
-| working notes | `tasks/frontend-live-buildout-2026-08-10.md`, 3,659 lines |
+| commits ahead of master | 143 |
+| paths changed | 2,631 (2,547 under `public/`, 31 scripts) |
+| insertions / deletions | +202,001 / −310,415 |
+| working notes | `tasks/frontend-live-buildout-2026-08-10.md`, 4,001 lines |
 
 **Where to look at it.** The branch is pushed and Vercel builds every commit on it:
 
@@ -16,7 +16,8 @@ pushing `master` is what deploys the site. Suite green at the time of writing.
 vector-hoops-git-frontend-live-cams-projects-c5c4c5f6.vercel.app
 ```
 
-Latest build `dpl_44meiX6Y4WDrqL4HoxTDHEsyVb9H` → `19818290`, **READY** in 16 seconds. Every
+That alias always serves the newest build on the branch, so it does not go stale as this file
+does. Every
 `frontend-live` deployment carries `target: null`; only `master` commits carry
 `target: "production"`, so none of this has touched the live site. Previews sit behind
 `ssoProtection: all_except_custom_domains`, so that URL works for you and cannot be fetched
@@ -30,8 +31,8 @@ Deletions outweigh insertions because two duplications came out: an 84.8 MB orph
 Run against both roots. All exit 0.
 
 ```
-python scripts/check_frontend.py            # 11 checks, 22 pages, 93 scripts parsed
-python scripts/build_model_zoo.py --check   # the model-zoo slice still matches its source
+python scripts/check_frontend.py            # 12 checks, 22 pages, 93 scripts parsed
+# build_*.py --check now runs inside check_frontend's `derived` check, all seven of them
 python scripts/check_a11y.py                # 11 WCAG A/AA criteria
 python scripts/check_contrast.py            # WCAG 1.4.3
 python scripts/check_responsive.py
@@ -101,8 +102,17 @@ of the page. The players filter announces which one is active. The player search
 
 **Weight and third parties.** `/owner` −96% and `/teams` −96.4% bytes on paint. Google Fonts removed
 from all 18 pages that carried it; Architects Daughter self-hosted (20,184 bytes, SIL OFL alongside),
-dropping two third-party origins site-wide. Every page now carries Open Graph, Twitter and canonical
-metadata.
+dropping two third-party origins site-wide.
+
+**Social metadata — and a sentence here that was false.** This section used to end "Every page now
+carries Open Graph, Twitter and canonical metadata." It did not. `player-cards.html` and
+`player/index.html` had `og=0, twitter=0`, and `build_social_meta.py --check` had been naming both of
+them and exiting 0 the whole time. The generator could not fix it either: it returns *the tags a page
+is missing* while its caller replaces the entire managed block with exactly that, and it read
+"already has" from text that included its own block — so each run deleted what the last one wrote,
+and those two pages oscillated between twelve tags and zero. Fixed at the source; convergence
+measured over three write/check cycles; 213 tags site-wide became 235, with the other twenty pages
+byte-identical. **Now it is true.**
 
 ## Nine decisions
 
