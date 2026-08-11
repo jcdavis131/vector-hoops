@@ -1,11 +1,11 @@
 # frontend-live — readiness
 
-**Nothing here is live.** All 150 commits are on `frontend-live`; `master` is untouched, and
+**Nothing here is live.** All 152 commits are on `frontend-live`; `master` is untouched, and
 pushing `master` is what deploys the site. Suite green at the time of writing.
 
 | | |
 |---|---|
-| commits ahead of master | 150 |
+| commits ahead of master | 152 |
 | paths changed | 2,631 (2,547 under `public/`, 31 scripts) |
 | insertions / deletions | +202,533 / −310,431 |
 | working notes | `tasks/frontend-live-buildout-2026-08-10.md`, 4,273 lines |
@@ -16,8 +16,8 @@ pushing `master` is what deploys the site. Suite green at the time of writing.
 vector-hoops-git-frontend-live-cams-projects-c5c4c5f6.vercel.app
 ```
 
-That alias always serves the newest build on the branch, so it does not go stale as this file
-does. Every
+That alias always serves the newest build on the branch, so it does not go stale as this file does
+— which is why no specific deployment id is quoted here. Every
 `frontend-live` deployment carries `target: null`; only `master` commits carry
 `target: "production"`, so none of this has touched the live site. Previews sit behind
 `ssoProtection: all_except_custom_domains`, so that URL works for you and cannot be fetched
@@ -93,6 +93,14 @@ count moving, for 20.1 seconds. The only honest reading of that page is that the
 register — and `loadFull()` had no guard, so pressing again started another 3,784,565-byte download.
 Now the state goes up in 300 ms, the download happens once however many times you press, and a
 failure says so instead of flipping the button to "on" over an unchanged cloud.
+
+That failure claim then had to be earned. `loadFull()` awaits twice, and only the first path was
+the one I had in mind: blocking `points_limited` — the second — left **12,966 uncoloured points on
+screen** under a button reading not-loaded, while the region announced "Still showing the
+1,764-point map", and a poller elsewhere in the page then announced the success line over the top of
+it. Both files fetch together now and `dots` is swapped only once both have arrived, so a throw at
+either await leaves the map exactly as it was. Re-measured: `dots.length 1764 → 1764`, two
+announcements, both true.
 
 **Typography.** Nine pages were rendering body copy in Times New Roman. They declared
 `font-family:ui-sans-system`, which is not a CSS keyword — the real generic is `ui-sans-serif`, so
