@@ -3367,3 +3367,91 @@ server that implements the rewrites and the cache headers. Worth knowing that
 every browser check in `scripts/` navigates to `/play.html` and `/teams.html`
 while visitors hit `/play` and `/teams` — the files are the same, so the risk is
 small, but no check currently exercises a clean URL.
+
+
+## Nine pages were set in Times New Roman (2026-08-10)
+
+Found while auditing something else entirely. `public/player/index.html` declares
+
+    body{ ... font-family:ui-sans-system; ... }
+
+**`ui-sans-system` is not a CSS keyword.** The real generic is `ui-sans-serif`.
+CSS parses an unknown unquoted name as a font *family name*, so the declaration is
+syntactically valid, matches no installed font, and — with no fallback after it —
+hands the paragraph to the browser's default. Nothing warns. It greps clean. Every
+static gate on this branch passed it 22 pages at a time.
+
+Measured with `CSS.getPlatformFontsForNode`, which reports the font the renderer
+actually resolved rather than the one the cascade asked for:
+
+    /owner/index.html        asked ui-sans-system    RENDERED Times New Roman  428 chars
+    /player/index.html       asked ui-sans-system    RENDERED Times New Roman  134
+    /brand/index.html        asked ui-sans-system    RENDERED Times New Roman   63
+    /dfs/index.html          asked ui-sans-system    RENDERED Times New Roman  357
+    /player-fit/index.html   asked ui-sans-system    RENDERED Times New Roman   86
+    ... and the four flat twins (owner.html, brand.html, dfs.html, player-fit.html)
+
+Nine pages of a site whose own footer calls it a **paper aesthetic** were rendering
+body copy in the browser's default serif. Not a subtle mis-weighting — a different
+typeface from the other thirteen pages.
+
+Three distinct defects, one generator:
+
+**A — the nine with no fallback.** Now carry the stack `hoops.css` already ships:
+`ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif`.
+The full stack rather than the one-token spelling fix, because `ui-sans-serif` is
+not universally implemented and a bare generic would reproduce the bug elsewhere.
+
+**B — the same misspelling with a fallback behind it** (`index.html`, `teams.html`,
+`players.html`, `model.html`, `methods.html`, `leaderboard.html`, `inventory.html`,
+`offline.html`). Invisible: `system-ui` catches it and always did. Corrected anyway
+so the site has one spelling of its own name for its own font.
+
+**C — an HTML escape that is not one.** Five pages carried
+
+    <span style="font-family:\"Architects Daughter\",cursive">
+
+A backslash escapes nothing inside an HTML attribute; the value ends at the first
+quote. Fed to a real tokenizer, that span is not what it looks like:
+
+    'style'                  = 'font-family:\'
+    'architects'             = None
+    'daughter\",cursive"'    = None
+
+An invalid declaration plus two junk attributes, so the handwriting font never
+applied on any of the five. Now single-quoted, and measured resolving:
+
+    /brand/index.html   asked "Architects Daughter", cursive   RENDERED Architects Daughter
+    /dfs/index.html     asked "Architects Daughter", cursive   RENDERED Architects Daughter
+    /player/index.html  asked "Architects Daughter", cursive   RENDERED Architects Daughter
+    /brand.html         asked "Architects Daughter", cursive   RENDERED Architects Daughter
+    /dfs.html           asked "Architects Daughter", cursive   RENDERED Architects Daughter
+
+with the attribute list down to `['style']`. The font was already self-hosted in
+`assets/fonts.css` and linked by all five — nothing was missing except a quote.
+
+After: every prose page on the site renders Segoe UI. (`/players.html` still reports
+Consolas because its largest block of prose is a mono table, which is deliberate.)
+
+### Two near-misses worth recording
+
+**The first measurement said the opposite.** Pointing
+`getPlatformFontsForNode` at `<body>` returned Consolas on all 21 pages with
+`glyphCount` 19 — which is "Skip to the content", exactly 19 characters, mono by
+design. `body`'s own text nodes are the skip link and nothing else. The probe had
+to target an element that actually holds prose before it measured the thing I was
+asking about. A uniform-looking result across every page was the tell.
+
+**The blast radius was nearly 17 whole files.** All 22 pages are CRLF. The fixer
+read with universal newlines and wrote with `newline=""`, which would have
+converted every line in every file and buried a one-line change in a 3,000-line
+diff. Caught by checking the line endings before applying rather than after.
+`git diff --numstat` came back 1–2 lines per file, which is what was intended.
+
+### What this says about the gates
+
+`check_frontend` parses 93 scripts and resolves 146 links; `check_contrast`
+evaluates 150 declared colour pairs; `check_a11y` clears 22 pages. None of them
+looks at whether a declared font exists, because a font name is an opaque string
+to all three. The defect was visible to anyone who opened the page and invisible to
+everything automated. It was found by reading a file for an unrelated reason.
