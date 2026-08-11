@@ -7,8 +7,8 @@ at that commit.
 
 | | |
 |---|---|
-| commits this session | 252 at `36325249`, now on `master` |
-| paths changed | 2,652 (2,547 under `public/`, 45 scripts) |
+| commits this session | 217 on this branch's own line at `50d1e0c5`, now on `master` (a plain `rev-list` says 253 — it walks both sides of the merge and counts Scout's 36) |
+| paths changed, across the merge | 2,652 (2,547 under `public/`, 45 scripts) |
 | insertions / deletions | +211,573 / −310,582 |
 | working notes | `tasks/frontend-live-buildout-2026-08-10.md`, 6,071 lines |
 
