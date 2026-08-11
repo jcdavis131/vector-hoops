@@ -1,5 +1,5 @@
 <!doctype html><html lang=en><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name=theme-color content="#fafaf8"><title>Player — Stay On Floor — Vector Hoops</title><meta name=description content="64-d OKABE 8 colors, closer 1.28 #E7F6EA vs exploitable 0.62 #FFD8D5 vs dependent 0.81 #FFE9B5, Wemby 699 real PO mins vs Flagg 0, retained 1.45×"><link rel=manifest href="/manifest.json"><link rel=icon href="/assets/icon-192.png"><link href="https://fonts.googleapis.com/css2?family=Architects+Daughter&display=swap" rel=stylesheet><style>
-:root{--paper:#FAFAF8;--ink:#FF4F6B;--orange:#EB6834;--blue:#2A78D6;--purple:#7A5AE6;--yellow:#F0E442;--mut:#6B6660;--card:#FFFEFB;--g:#E7F6EA;--r:#FFD8D5;--y:#FFE9B5;--line:#E9E3DB}
+:root{--paper:#FAFAF8;--ink:#111111;--score:#D60022;--orange:#EB6834;--blue:#2A78D6;--purple:#7A5AE6;--yellow:#F0E442;--mut:#6B6660;--card:#FFFEFB;--g:#E7F6EA;--r:#FFD8D5;--y:#FFE9B5;--line:#E9E3DB}
 *{box-sizing:border-box}html,body{margin:0;background:var(--paper);color:var(--ink);font:13.6px/1.52 ui-sans-system,system-ui,-apple-system,Segoe UI,Inter,sans-serif}
 a{color:inherit;text-decoration:none}
 .top{position:sticky;top:0;z-index:20;background:var(--paper);border-bottom:2.2px solid var(--ink);padding:10px 14px;display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between}
@@ -16,6 +16,15 @@ a{color:inherit;text-decoration:none}
 .btn{border:2.2px solid var(--ink);border-radius:12px;padding:8px 11px;background:#fff;font:900 11px ui-monospace;box-shadow:2.4px 2.4px 0 var(--ink);cursor:pointer}
 input,select{border:2.2px solid var(--ink);border-radius:12px;padding:8px 10px;background:#fff;font-size:12.7px;width:100%;box-shadow:2.4px 2.4px 0 var(--ink)}
 .foot{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between;border-top:2.2px solid var(--ink);padding:14px 2px;color:#6F6B65;font:800 11px ui-monospace}
+
+/* Per-ground ink, the same pattern the rest of the site uses for exactly this.
+   Scout replaced a black scoring colour with #FF4F6B to make it visible; it was
+   2.44:1 to 3.19:1 on the grounds it lands on. Darkened to #D60022 - same hue
+   350deg, same saturation, lightness 65% -> 42% - which clears 4.5:1 on white,
+   paper and the amber pill. Two grounds are still too close to it, and paper on
+   brand orange was never 4.5 to begin with, so those three get their own ink
+   keyed off the class that puts the colour there. */
+.pill.o{color:#26261B}
 </style>
 <div class=top><a href="/" class=brand>◐ DUMB MODEL <b style="font-family:ui-monospace">VECTOR HOOPS</b></a><div style="display:flex;flex-wrap:wrap;gap:7px"><span class="pill o">PLAYER · STAY ON FLOOR · 64-D OKABE 8</span><span class="pill g">CLOSER 1.28 🟢 #E7F6EA</span><span class="pill rr">EXPLOITABLE 0.62 🔴 #FFD8D5</span><span class="pill yy">DEP 0.81</span><span class="pill dark" id=live>LOADING 20,719×64-D</span></div></div>
 <div class=wrap>
@@ -35,7 +44,7 @@ input,select{border:2.2px solid var(--ink);border-radius:12px;padding:8px 10px;b
 </div>
 <script>
 (async()=>{
-const OKABE=["#E69F00","#56B4E9","#009E73","#F0E442","#0072B2","#D55E00","#CC79A7","#FF4F6B"];let teams=[],V={vectors:[]},props=[];
+const OKABE=["#E69F00","#56B4E9","#009E73","#F0E442","#0072B2","#D55E00","#CC79A7","#D60022"];let teams=[],V={vectors:[]},props=[];
 try{let j=await fetch('/assets/data/front_office.json',{cache:'no-store'}).then(r=>r.json());teams=j.teams||[]}catch(e){try{let j=await fetch('/assets/front_office.json').then(r=>r.json());teams=j.teams||[]}catch(e){}}
 try{V=await fetch('/assets/vectors_map_lite.json',{cache:'no-store'}).then(r=>r.json());}catch(e){V={vectors:Array.from({length:480},(_,i)=>({x:Math.random(),y:Math.random(),a:i%8,n:'Player'+i,tag:i%7===0?'closer':i%5===0?'exploitable':'neutral',arch:i%12}))};}
 try{props=await fetch('/assets/data/player_season_props.json',{cache:'no-store'}).then(r=>r.json());}catch(e){}

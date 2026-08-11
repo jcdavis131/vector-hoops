@@ -94,7 +94,7 @@ window.__vhReduceMotion = !!(window.matchMedia && window.matchMedia('(prefers-re
 <div style="border:1.5px solid var(--ink);border-radius:9px;padding:7px 8px;background:#FFFEFC;font-size:11px"><b class="mono">Foresight</b> age+matr .08/.12</div>
 <div style="border:1.5px solid var(--ink);border-radius:9px;padding:7px 8px;background:#FFFEFC;font-size:11px"><b class="mono">Champ</b> W* weighting</div>
 </div>
-<div class="card" style="margin-top:10px;padding:9px 10px;background:#0A0C10;color:#FAFAF8;border-color:#0A0C10"><h2 class="vh-sr">Glass-box check on the rating</h2><canvas id="mapCv" width="460" height="120" aria-label="orange pulse rings"></canvas><div class="mono" style="margin-top:6px;color:#9AA3B2">◎ pulse 60fps orange #EB6834 rings — FOR glass-box. <span class="pill y mono" style="font-size:9px">DeepMLP 4450.09 vs 4501.15 Δ-51</span> <span class="pill mono" style="font-size:9px;background:#E6F5F0">OU r=0.741</span></div></div>
+<div class="card" style="margin-top:10px;padding:9px 10px;background:#0A0C10;color:#FAFAF8;border-color:#0A0C10"><h2 class="vh-sr">Model and market figures behind the rating</h2><div class="mono" style="color:#9AA3B2">The two figures this rating leans on, both from committed files. <span class="pill y mono" style="font-size:9px">DeepMLP 4450.09 vs 4501.15 Δ-51</span> <span class="pill mono" style="font-size:9px;background:#E6F5F0">OU r=0.741</span></div></div>
 </div>
 <!-- The sortable ten-row table that stood here is gone. It was ten hardcoded
      literals - {team:'LAL',FOR:72.1,W:47,...} - under a caption reading
@@ -107,12 +107,14 @@ window.__vhReduceMotion = !!(window.matchMedia && window.matchMedia('(prefers-re
      all 30 teams from front_office.json, is already on this page below. -->
 
 </div>
-<div class="card" style="margin-top:12px;padding:11px 13px"><h2 class="vh-sr">Why San Antonio rates above Oklahoma City</h2><div class="hd" style="font-size:12px">Why SAS 94.8 > OKC 85.8 with 22W gap? — glass-box</div><p class="mono" style="color:#57534E;font-size:11.6px">W=24-25 reg wins. PO=25-26 playoff wins: NYK16 SAS12 CLE8 OKC8 sim end. realG=playoff GP. W*=W+2.5·PO+0.12·realG → SAS 34+30+~16.8 raw + prior weighted chapters → 94.8 ex FOR 25-26; OKC 68+20+?=85.8. Championship trumps. Cap% normalized effective_cap 2016=prior*1.10 removes $24B TV jump 34.5%. Trophy wall $9.1B top. <span class="pill mono" style="font-size:10px">FOR 50=median</span> <span class="pill mono ink" style="font-size:10px">2nd Apron $207.8M</span> <span class="pill y mono" style="font-size:10px">NO-MLE</span></p></div>
+<div class="card" style="margin-top:12px;padding:11px 13px" id="whyCard"><h2 class="vh-sr" id="whyH">Where weighted wins and the rating disagree</h2><div class="hd" style="font-size:12px" id="whyHd">Where weighted wins and the rating disagree — glass-box</div><p class="mono" style="color:#57534E;font-size:11.6px" id="whyBody">Reading the two teams from <code>assets/front_office_lite.json</code>…</p></div>
 <div class="mono" style="margin-top:10px;color:#6F6D68;font-size:10.5px">Zero-deps inline CSS/JS · paper #FAFAF8 · ink #111111 · orange #EB6834 pulse · theme #fafaf8 · manifest data URI · fonts Architects Daughter</div>
 </div>
-<script>
-(()=>{let c=document.getElementById('mapCv');if(!c)return;let x=c.getContext('2d'),t=0;function f(){t+=.016;x.fillStyle='#0A0C10';x.fillRect(0,0,460,120);for(let i=0;i<3;i++){let r=14+i*20+Math.sin(t*2+i)*5;x.strokeStyle='#EB6834';x.globalAlpha=.9-i*.22;x.lineWidth=1.6;x.beginPath();x.arc(230+Math.cos(t*.6+i)*18,60+Math.sin(t*.5+i*1.1)*9,r,0,6.283);x.stroke()}x.globalAlpha=1;x.fillStyle='#F0E442';x.beginPath();x.arc(230,60,3,0,6.283);x.fill();x.fillStyle='#FAFAF8';x.font='900 12px ui-monospace';x.fillText('◎ SAS 94.8 > OKC 85.8 · #EB6834',12,18);if(!window.__vhReduceMotion)requestAnimationFrame(f)}f()})();
-</script>
+<!-- A 460x120 canvas of pulsing rings stood here, under an <h2> reading
+     "Glass-box check on the rating". It checked nothing. What it did do was
+     paint "◎ SAS 94.8 > OKC 85.8" every frame for as long as the page was
+     open - a claim this page's own table contradicts. Decoration that repeats a
+     wrong number is worse than no decoration. -->
 
 <!-- ══ all 30 teams, read from the file this page already names ═══════════
      teams.html cited assets/front_office.json as its data source and then
@@ -306,8 +308,8 @@ $('foTable').addEventListener('keydown',function(e){
 // lines fix the original page: its sortable table could not be sorted without
 // a mouse, and its canvas announced itself as "canvas".
 (function(){
-  var mapCv=document.getElementById('mapCv');
-  if(mapCv) mapCv.setAttribute('aria-hidden','true');   // decorative rings + a label
+  /* the decorative pulse-ring canvas this hid from screen readers is gone;
+     it painted a claim the table on the same page contradicts */
   var ths=document.querySelectorAll('#tbl th[data-k]');
   if(!ths.length) return;
   // The page's own sort state lives in a closure we cannot read, so mirror the
@@ -403,6 +405,52 @@ fetch('assets/front_office_lite.json?v=c9496248',{cache:'force-cache'})
     $('foProv').textContent='Built '+(j.built||'?').slice(0,10)+' · '+j.teams.length+
       ' teams · champion map covers '+Object.keys(j.champion_map||{}).length+' seasons · '+
       (j.champion_display||'');
+
+    /* This card was written down, and it was wrong. It headed itself "Why San
+         Antonio rates above Oklahoma City" over the line "Why SAS 94.8 > OKC
+         85.8" - but 94.8 and 85.8 are `weighted_wins`, and on `for_final`, the
+         column the table below sorts by, OKC is 70.7 at rank 3 and SAS is 69.3
+         at rank 4. The page argued for the opposite of what its own table
+         showed, and a canvas repeated it as an animation.
+
+         The question was a good one; only the answer was typed. 72 pairs in
+         this file disagree between weighted wins and the rating, so the card
+         picks the widest one and reads both numbers from the same fetch the
+         table uses. It cannot contradict the table again. */
+      (function(){
+        var n1=function(v){return (v==null||isNaN(v))?'—':(Math.round(v*10)/10).toFixed(1);};
+        var best=null, T=j.teams, a, b, gap;
+        for(var i=0;i<T.length;i++) for(var k=i+1;k<T.length;k++){
+          a=T[i]; b=T[k];
+          if((a.weighted_wins-b.weighted_wins)*(a.for_final-b.for_final)>=0) continue;
+          gap=Math.abs(a.weighted_wins-b.weighted_wins);
+          if(!best||gap>best.gap)
+            best={gap:gap, hi:(a.weighted_wins>b.weighted_wins?a:b),
+                            lo:(a.weighted_wins>b.weighted_wins?b:a)};
+        }
+        if(!best){
+          $('whyBody').textContent='In this file every team that wins more weighted games also '+
+            'rates higher, so there is nothing to explain here. That is unusual enough that it '+
+            'is worth checking the file rather than believing this line.';
+          return;
+        }
+        var hi=best.hi, lo=best.lo;
+        var title='Why '+esc(lo.name)+' rates above '+esc(hi.name);
+        $('whyH').textContent=title;
+        $('whyHd').textContent=title+' \u2014 glass-box';
+        $('whyBody').innerHTML=
+          '<b>'+esc(hi.abbr)+'</b> has more weighted wins than any other team in this file \u2014 '+
+          n1(hi.weighted_wins)+' against <b>'+esc(lo.abbr)+'</b>\u2019s '+n1(lo.weighted_wins)+
+          ', a gap of '+n1(best.gap)+' \u2014 and rates <b>'+hi.for_rank+'th</b> on FOR at '+
+          n1(hi.for_final)+'. '+esc(lo.abbr)+' rates <b>'+lo.for_rank+
+          (lo.for_rank===1?'st':lo.for_rank===2?'nd':lo.for_rank===3?'rd':'th')+'</b> at '+
+          n1(lo.for_final)+'. The rating is per dollar: '+esc(hi.abbr)+' spent $'+
+          n2(hi.payroll_m)+'M for those wins and '+esc(lo.abbr)+' spent $'+n2(lo.payroll_m)+
+          'M, so '+esc(lo.abbr)+' buys '+n2(lo.weighted_wpm)+' weighted wins per $M against '+
+          esc(hi.abbr)+'\u2019s '+n2(hi.weighted_wpm)+'. Weighted wins say who won; FOR says '+
+          'who got the most for what they paid. '+
+          '<span class="pill mono" style="font-size:10px">read from the same file as the table below</span>';
+      })();
 
     // A component that is the same number for all 30 teams cannot separate them,
     // however much weight the composite puts on it. Computed rather than written

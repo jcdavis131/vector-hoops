@@ -781,7 +781,7 @@ $('twinInput').addEventListener('change',lookup);
   function say(m){ if(!live||!m) return; if(live.textContent===m) live.textContent=''; live.textContent=m; }
 
   var cv=$('archMap'); if(!cv) return;
-  var OKABE=['#0072B2','#D55E00','#009E73','#CC79A7','#F0E442','#56B4E9','#E69F00','#FF4F6B'];
+  var OKABE=['#0072B2','#D55E00','#009E73','#CC79A7','#F0E442','#56B4E9','#E69F00','#D60022'];
   var PTS=null, NAMES=null, sel=-1;
 
   cv.setAttribute('role','img');
@@ -805,7 +805,7 @@ $('twinInput').addEventListener('change',lookup);
     // dim everything else rather than hiding it, so a filtered view still shows
     // where the archetype sits *within* the whole cloud
     // #d6d4cd on #FAFAF8 was 1.3:1 – unreadable. #9AA0A6 at 0.7 is 2.2:1 for
-    // reference dots, while selected stays vivid OKABE 8 including #FF4F6B for
+    // reference dots, while selected stays vivid OKABE 8 including #D60022 for
     // scoring volume which was black #000 and vanished on #0A0C10 dark inset.
     for(var pass=0;pass<2;pass++){
       for(var k=0;k<PTS.length;k++){

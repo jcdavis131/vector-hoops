@@ -63,10 +63,10 @@ THROTTLE = {"offline": False, "latency": 40,
             "uploadThroughput": 1024 * 1024 / 8}
 
 STATE = """(function(){
-  var b=document.getElementById('b8k');
-  if(!b) return JSON.stringify({err:'no #b8k'});
+  var b=document.getElementById('bFull');
+  if(!b) return JSON.stringify({err:'no #bFull'});
   return JSON.stringify({
-    label:(b.textContent||'').trim(), cls:b.className,
+    label:(b.textContent||'').trim(), hidden:b.hidden, cls:b.className,
     busy:b.getAttribute('aria-busy'),
     dots:(typeof window.dots!=='undefined'&&window.dots)?window.dots.length:-1,
     live:((document.getElementById('ixLive')||{}).textContent||'').trim(),
@@ -192,7 +192,7 @@ def main() -> int:
         hits["vectors"] = 0
 
         # 1 + 2. state before the download, and one download for two presses
-        ev(ws, "document.getElementById('b8k').click()")
+        ev(ws, "document.getElementById('bFull').click()")
         time.sleep(0.4)
         busy = ev(ws, STATE)
         print(f"  400ms    label {busy['label']!r} aria-busy {busy['busy']!r}")
@@ -208,7 +208,7 @@ def main() -> int:
         if not busy["live"]:
             failures.append("nothing was announced when the load began")
 
-        ev(ws, "document.getElementById('b8k').click()")
+        ev(ws, "document.getElementById('bFull').click()")
         time.sleep(0.4)
         if hits["vectors"] > 1:
             failures.append(f"two presses started {hits['vectors']} downloads of "
@@ -221,10 +221,13 @@ def main() -> int:
             done = ev(ws, STATE)
             if done["busy"] is None:
                 break
-        print(f"  done     {done['dots']} points, class {done['cls']!r}")
+        print(f"  done     {done['dots']} points, button hidden={done.get('hidden')}")
         print(f"           announced {done['live'][:62]!r}")
-        if done["cls"] != "on" or done["dots"] <= base_dots:
-            failures.append(f"the full cloud never arrived: class {done['cls']!r}, "
+        # the control is one-shot now: it draws the full cloud and takes itself
+        # away, because a button that has already done its only job is a button
+        # asking to be pressed again for nothing
+        if done.get("hidden") is not True or done["dots"] <= base_dots:
+            failures.append(f"the full cloud never arrived: button hidden={done.get('hidden')}, "
                             f"{done['dots']} points against {base_dots} before")
         else:
             shown = f"{done['dots']:,}"
@@ -247,7 +250,7 @@ def main() -> int:
 
         # 3. pressing again, once loaded, must not re-fetch
         before_third = hits["vectors"]
-        ev(ws, "document.getElementById('b8k').click()")
+        ev(ws, "document.getElementById('bFull').click()")
         time.sleep(1.0)
         if hits["vectors"] > before_third:
             failures.append("pressing the button after it had already loaded fetched "
@@ -259,7 +262,7 @@ def main() -> int:
         time.sleep(4.5)
         ws.call("Network.setBlockedURLs", {"urls": ["*embedding_map_points_limited.json*"]})
         pre = ev(ws, STATE)
-        ev(ws, "document.getElementById('b8k').click()")
+        ev(ws, "document.getElementById('bFull').click()")
         for _ in range(40):
             time.sleep(0.5)
             post = ev(ws, STATE)

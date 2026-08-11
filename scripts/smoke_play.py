@@ -443,15 +443,36 @@ def main() -> int:
         press_enter(ws)
         time.sleep(0.5)
         shown = str(ev(ws, "document.getElementById('dist').textContent") or "")
-        import re as _re2
-        m = _re2.search(r"also matches (\d+) other player", shown)
-        print(f"  ambiguous 'curry' -> {shown.strip()[:66]!r}")
-        if not m:
-            failures.append("typing 'curry' scores one of several Currys and says nothing "
-                            "about the others — an ambiguous fragment must name what else "
-                            "it matched")
-        elif int(m.group(1)) < 1:
-            failures.append(f"'curry' reported {m.group(1)} alternatives, which cannot be right")
+        # What matters is that the fragment admits it was ambiguous and says who
+        # else it could have meant. This used to assert the exact sentence
+        # "also matches N other players", and when the copy was rewritten to
+        # name them instead — "Also matches Seth Curry · … — type more to pick" —
+        # the check went red on a page that had got BETTER. Naming beats
+        # counting. So it asks the page which names the fragment matches, and
+        # requires the message to carry one it did not score.
+        amb_pool = ev(ws, """(() => {
+            const seen = {}, out = [];
+            // the datalist the page fills is the pool a player can actually type
+            [].slice.call(document.querySelectorAll('#guessList option')).forEach(o => {
+              const n = (o.value || '').replace(/\s+\d{4}-\d{2}$/, '');
+              if (/curry/i.test(n) && !seen[n]) { seen[n] = 1; out.push(n); }
+            });
+            const b = document.querySelector('#dist b');
+            return JSON.stringify({names: out,
+                                   scored: b ? b.textContent.trim() : ''});})()""")
+        names = (amb_pool or {}).get("names", []) if isinstance(amb_pool, dict) else []
+        scored = (amb_pool or {}).get("scored", "") if isinstance(amb_pool, dict) else ""
+        others = [n for n in names if n and n != scored]
+        named = [n for n in others if n and n in shown]
+        print(f"  ambiguous 'curry' -> scored {scored!r}, pool {names}, "
+              f"message names {named}")
+        if len(names) < 2:
+            failures.append(f"'curry' matches {names} in this pool, so the ambiguity this "
+                            f"checks for does not exist and the check proves nothing")
+        elif not named:
+            failures.append(f"typing 'curry' scored {scored!r} and never says it could have "
+                            f"meant {others} — an ambiguous fragment must name what else it "
+                            f"matched. The message read: {shown.strip()[:90]!r}")
         ws.call("Runtime.evaluate", {"expression":
             "(() => { const g=document.getElementById('guess'); g.value=''; return 1 })()"})
 
