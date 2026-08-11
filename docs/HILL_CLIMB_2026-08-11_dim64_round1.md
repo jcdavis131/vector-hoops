@@ -68,8 +68,8 @@ modelling policy:
 
 1. more seeds — at the observed CQS sd of 2.38, four seeds put 2 x SEM at 2.38,
    still above +1.73, so resolving this gain honestly needs more than four;
-2. `passes_guards` could call `same_sign()`, which already exists and requires
-   every seed to agree a candidate is better. Nothing calls it.
+2. ~~`passes_guards` could call `same_sign()`~~ — wrong, see the correction
+   below. It is called, at the end of each round, on the winner.
 
 ## Not the point, but worth keeping
 
@@ -92,8 +92,8 @@ on the same seed removes that shared term. Doing so to the same cache:
 **Every family "win" is negative on seed 7 and strongly positive on seed 13.**
 The whole leaderboard was seed 13's bad draw for the unmasked configuration.
 Masking makes the model worse on the good seed. `same_sign()` — which requires
-every seed to agree — already exists in hill_climb.py and would have refused all
-of them; `passes_guards()` never calls it.
+every seed to agree — already exists in hill_climb.py **and is already wired
+in**: see the correction at the end of this file.
 
 Only three configurations gain on both seeds: `drop_efficiency`,
 `drop_competition`, and `fusion_concat_384_d64`.
@@ -125,3 +125,35 @@ a wash and recall falls.** It is a trade, not a free win — and it is the only
 trade in this cache whose better side is the metric that two seeds can actually
 resolve. Read against `full` instead of the matched control it looks like a
 strict improvement, which is how I first read it and is wrong.
+
+
+## Correction: the tool already does this, and I never let it finish
+
+I wrote twice above that `same_sign()` is unwired and that `passes_guards()`
+never calls it. **Both are wrong.** `climb_families` calls it at the end of every
+round, and `evaluate()` populates the `cqs_per_seed` it needs:
+
+    for k in ("cqs", "test_recall", ...):
+        agg[k] = mean(vals)
+        agg[f"{k}_per_seed"] = vals
+
+The acceptance chain, in order: drop every candidate that fails `passes_guards`;
+take the highest CQS of what remains; stop if the gain is under `MIN_GAIN` 1.2;
+stop if `same_sign` says the seeds disagree; otherwise accept.
+
+Run against round 1's numbers, that chain does this:
+
+    guard survivors    competition +0.34, playoffs +1.73
+    best               playoffs, +1.73
+    MIN_GAIN 1.2       1.73 > 1.2, passes
+    same_sign          playoffs is -0.67 on seed 7 -> seeds disagree
+    outcome            "best (playoffs) gain +1.73 but seeds disagree - stop"
+
+**It accepts nothing, which is the same conclusion the paired analysis above
+reaches by hand.** The tool was right on its own. I never saw it because I kept
+killing the round before its acceptance logic ran — thirteen of eighteen
+families measured, and the decision only happens after all eighteen.
+
+The lesson is not about hill_climb. It is that I diagnosed a missing guard from
+a run I had truncated, and the guard was there the whole time. A partial run is
+not evidence about what a program decides.
