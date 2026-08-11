@@ -97,6 +97,16 @@ CASES = [
       '<main id="main" tabindex="-1"><div style="width:2400px;height:4px"></div>'),
      gate("check_viewport.py"), True),
 
+    # Put the CDN back. Measured with unpkg blocked, the eight players on that
+    # page are inert and customElements.get('posecode-player') is false.
+    ("external", "player-animations.html",
+     # anchored before the ?v= token, which stamp_assets rewrites from the
+     # file's own hash — the first attempt anchored past it and the harness
+     # said ANCHOR NOT FOUND rather than passing, which is the point of it
+     ('src="/assets/posecode-embed-0.1.0.js',
+      'src="https://unpkg.com/posecode-embed@0.1.0/dist/posecode-embed.js" data-was="'),
+     gate("check_frontend.py", "--only", "external"), True),
+
     # Put back the read this gate was written for: vectors_map_lite.json's key
     # is `players`, /player asked for `V.vectors`, and every one of the four
     # reads had a fallback that made the miss look like working code.

@@ -912,8 +912,56 @@ def check_wiki(fail) -> None:
           f"({', '.join(sorted(dead)) or 'none'})")
 
 
+def check_external(fail) -> None:
+    """No page may load code, styling or fonts from another host.
+
+    /player-animations loaded its player from
+    `unpkg.com/posecode-embed@0.1.0/dist/posecode-embed.js`. Measured with that
+    host blocked: `customElements.get('posecode-player')` is **false** and all
+    eight players on the page are inert. The page's whole subject is eight
+    animated moves, and none of them existed without a third party.
+
+    The offline sweep read that page at 100%, because it compares DOM node
+    counts and eight inert `<posecode-player>` elements count exactly as much as
+    eight working ones. 100% of the DOM and 0% of the feature — the same shape
+    as every other check this session that was measuring the wrong state.
+
+    Two more reasons beyond offline: every visitor handed unpkg their IP to find
+    out whether the page worked, and an unpinned CDN URL is someone else's
+    deploy in the middle of this one. The bundle is committed now, so this makes
+    sure another one does not arrive.
+
+    Images and `<a href>` are not covered here — a link to another site is a
+    link, not a dependency. This is about anything the browser must fetch and
+    execute or apply before the page is itself.
+    """
+    # <link rel=canonical> and the og: URLs name where this page lives; they are
+    # not fetched. Only the rel values that make the browser go get something
+    # count, which the first version of this check got wrong — it reported
+    # brand.html's own canonical URL as an outside dependency.
+    FETCHED = {"stylesheet", "preload", "prefetch", "preconnect", "dns-prefetch",
+               "modulepreload", "icon", "shortcut icon", "apple-touch-icon", "manifest"}
+    tag = re.compile(r"<(script|link)\b([^>]*)>", re.I)
+    attr = re.compile(r"""(\w[\w-]*)\s*=\s*(?:"([^"]*)"|'([^']*)'|([^\s>]+))""")
+    for page in sorted(ROOT.glob("*.html")):
+        for m in tag.finditer(page.read_text(encoding="utf-8")):
+            a = {k.lower(): (b or c or d or "")
+                 for k, b, c, d in attr.findall(m.group(2))}
+            url = a.get("src") if m.group(1).lower() == "script" else a.get("href")
+            if not url or not re.match(r"(https?:)?//", url, re.I):
+                continue
+            if m.group(1).lower() == "link" and a.get("rel", "").lower() not in FETCHED:
+                continue
+            host = re.sub(r"^(https?:)?//", "", url).split("/")[0]
+            fail(f"{page.name} loads {url} from {host} — an outside host. Commit it under "
+                 f"assets/ and point at the copy, the way assets/posecode-embed-0.1.0.js is.")
+    print(f"  {len(list(ROOT.glob('*.html')))} page(s) fetch nothing executable from "
+          f"another host")
+
+
 CHECKS = {
     "syntax": check_syntax,
+    "external": check_external,
     "mirror": check_mirror,
     "tokens": check_tokens,
     "derived": check_derived,

@@ -70,7 +70,14 @@ span.proj{color:var(--orange-ink)}
    focusable scroll container, and that stop does not match the heuristic. */
 posecode-player:focus{outline:3px solid #0072B2;outline-offset:3px}
 </style>
-<script src="https://unpkg.com/posecode-embed@0.1.0/dist/posecode-embed.js"></script>
+<!-- Vendored from unpkg.com/posecode-embed@0.1.0, sha256 8925809899c7979c71c42f32
+     062c997dba393e20fbcb7c49f45bd866d938c54f. It was loaded from the CDN, and with
+     unpkg unreachable customElements.get("posecode-player") is false and all eight
+     players on this page are inert. The offline sweep read this page at 100% because
+     it counts DOM nodes and eight inert elements still count: 100% of the DOM and 0%
+     of the feature. A page that cannot animate without a third party is not offline
+     first, and every visitor was handing unpkg their IP to find that out. -->
+<script src="/assets/posecode-embed-0.1.0.js?v=89258098"></script>
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://hoops.dumbmodel.com/player-animations">
 <meta property="og:title" content="Player Animations — Vector Hoops Posecode Lab">
