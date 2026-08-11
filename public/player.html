@@ -1,4 +1,4 @@
-<!doctype html><html lang=en><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name=theme-color content="#fafaf8"><title>Player — Stay On Floor — Vector Hoops</title><meta name=description content="64-d OKABE 8 colors, closer 1.28 #E7F6EA vs exploitable 0.62 #FFD8D5 vs dependent 0.81 #FFE9B5, Wemby 699 real PO mins vs Flagg 0, retained 1.45×"><link rel=manifest href="/manifest.json"><link rel=icon href="/assets/icon-192.png"><link href="https://fonts.googleapis.com/css2?family=Architects+Daughter&display=swap" rel=stylesheet><style>
+<!doctype html><html lang=en><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name=theme-color content="#fafaf8"><title>Player — Stay On Floor — Vector Hoops</title><meta name=description content="1,764 player-seasons placed by a 64-d embedding, with a nearest-neighbour search over the map and per-team payroll and wins."><link rel=manifest href="/manifest.json"><link rel=icon href="/assets/icon-192.png"><link href="https://fonts.googleapis.com/css2?family=Architects+Daughter&display=swap" rel=stylesheet><style>
 :root{--paper:#FAFAF8;--ink:#111111;--score:#D60022;--orange:#EB6834;--blue:#2A78D6;--purple:#7A5AE6;--yellow:#F0E442;--mut:#6B6660;--card:#FFFEFB;--g:#E7F6EA;--r:#FFD8D5;--y:#FFE9B5;--line:#E9E3DB}
 *{box-sizing:border-box}html,body{margin:0;background:var(--paper);color:var(--ink);overflow-wrap:break-word;font:13.6px/1.52 ui-sans-system,system-ui,-apple-system,Segoe UI,Inter,sans-serif}
 a{color:inherit;text-decoration:none}
@@ -41,19 +41,19 @@ input,select{border:2.2px solid var(--ink);border-radius:12px;padding:8px 10px;b
 .pill{flex-wrap:wrap;max-width:100%}
 .card,.hd,#leg{max-width:100%;min-width:0}
 </style>
-<h1 style="position:absolute;width:1px;height:1px;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap">Player</h1><a class="vh-skip" href="#main">Skip to the content</a><div class=top><a href="/" class=brand>◐ DUMB MODEL <b style="font-family:ui-monospace">VECTOR HOOPS</b></a><div style="display:flex;flex-wrap:wrap;gap:7px"><span class="pill o">PLAYER · STAY ON FLOOR · 64-D OKABE 8</span><span class="pill g">CLOSER 1.28 🟢 #E7F6EA</span><span class="pill rr">EXPLOITABLE 0.62 🔴 #FFD8D5</span><span class="pill yy">DEP 0.81</span><span class="pill dark" id=live>LOADING 20,719×64-D</span></div></div><main id="main" tabindex="-1">
+<h1 style="position:absolute;width:1px;height:1px;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap">Player</h1><a class="vh-skip" href="#main">Skip to the content</a><div class=top><a href="/" class=brand>◐ DUMB MODEL <b style="font-family:ui-monospace">VECTOR HOOPS</b></a><div style="display:flex;flex-wrap:wrap;gap:7px"><span class="pill o">PLAYER · STAY ON FLOOR · 64-D OKABE 8</span><span class="pill g">CLOSER 1.28 🟢 #E7F6EA</span><span class="pill rr">EXPLOITABLE 0.62 🔴 #FFD8D5</span><span class="pill yy">DEP 0.81</span><span class="pill dark" id=live>Loading the map…</span></div></div><main id="main" tabindex="-1">
 <div class=wrap>
 <div class=grid2>
-<div class=card><h2 class="vh-sr">MAP — 64-D POSITION (OKABE 8) · CHIMERA 20,719 PWA OFFLINE-FIRST</h2><div class=hd>MAP — 64-D POSITION (OKABE 8) · CHIMERA 20,719 <span class="pill y" style="font-size:10px">PWA OFFLINE-FIRST</span></div><canvas id=map width=560 height=320 style="width:100%;border:1.8px solid var(--ink);border-radius:12px;background:#0F141E;margin-top:8px"></canvas><div id=leg style="display:flex;flex-wrap:wrap;gap:6px;margin-top:8px"></div><div class=small>PWA comment: vectors_map_lite.json cached SW stale-while-revalidate, offline canvas FillRect no-Arc DPR1. 12 arch sep 0.867 lift 0.8116 closer-NN 98.2% pure.</div><div class=sg style="margin-top:6px">Tap Jordan → position only, not auto-start — deliberate. That's respect, not autoplay.</div></div>
+<div class=card><h2 class="vh-sr">Map — player-seasons placed by the 64-d embedding, coloured by cluster</h2><div class=hd>MAP — 64-D POSITION, COLOURED BY CLUSTER <span class="pill y" style="font-size:10px">PWA OFFLINE-FIRST</span></div><canvas id=map width=560 height=320 style="width:100%;border:1.8px solid var(--ink);border-radius:12px;background:#0F141E;margin-top:8px"></canvas><div id=leg style="display:flex;flex-wrap:wrap;gap:6px;margin-top:8px"></div><div class=small>PWA: embedding_map_points_limited.json is cached by the service worker, and the canvas draws offline from that cache.</div><div class=sg style="margin-top:6px">Tap Jordan → position only, not auto-start — deliberate. That's respect, not autoplay.</div></div>
 <div class=card><h2 class="vh-sr">CLOSER vs EXPLOITABLE ARCHETYPE YELLOW SIGNAL</h2><div class=hd>CLOSER vs EXPLOITABLE ARCHETYPE <span class="pill y">YELLOW SIGNAL</span></div>
 <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:8px"><div class=card style="background:var(--g)"><h2 class="vh-sr">CLOSER FIT</h2><b class=hd>CLOSER FIT</b><div class=kpi>1.28</div><div class=small>+5 min close games green subtle grain, playoff_mins_real↑, plus_minus +, matchup closers</div><div class="pill g" style="margin-top:6px">#E7F6EA GREEN</div></div><div class=card style="background:var(--r)"><h2 class="vh-sr">EXPLOITABLE</h2><b class=hd>EXPLOITABLE</b><div class=kpi>0.62</div><div class=small>targeted late, -closing risk, PO mins suppressed red fade</div><div class="pill rr" style="margin-top:6px">#FFD8D5 RED</div></div><div class=card style="background:var(--y)"><h2 class="vh-sr">DEPENDENT</h2><b class=hd>DEPENDENT</b><div class=kpi>0.81</div><div class=small>needs creation, low self-create, yellow</div></div></div>
-<div class=small style="margin-top:8px">Viz: chimera 20,719×64-d 12 arch sep 0.867 lift 0.8116. NN 98.2% pure (top-10). Purity@10 0.7057 nearest 100. Injury scaffold 13,625 availability-adjusted rescales per-game.</div>
+<div class=small style="margin-top:8px">Viz: a sample of the 12,966 player-seasons, placed by the 64-d embedding. Measured on the v5 baseline: archetype purity@20 0.67, adjacent-season top-1 retrieval 0.51.</div>
 <div style="display:flex;gap:8px;margin-top:8px"><input id=q placeholder="NAME EX WEMBY/FLAGG/PAYTON / PAYTON II" aria-label="Search for a player by name"><button id=btn class=btn>TWIN NEAREST</button></div><div id=twin class=small style="margin-top:6px">—</div>
 <div style="margin-top:8px;display:flex;gap:8px;flex-wrap:wrap"><span class="pill o">STAY-ON-FLOOR PID</span><span class="pill y">PLAYOFF MINUTE SECURITY</span><span class="pill dark">PLASTICITY → REAL MINS</span></div></div>
 </div>
 <div class=grid2>
-<div class=card><h2 class="vh-sr">FIT FINDER — SCARCE & CAP%&lt;92% MAX CALC</h2><div class=hd>FIT FINDER — SCARCE & CAP%&lt;92% MAX <span class="pill y">CALC</span></div><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px"><select id=teamCap aria-label="Filter by team cap situation"></select><select id=archSel aria-label="Filter by archetype"></select></div><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px"><div><div class=sm>TEAM FIT SCORE</div><div id=fitS class=kpi>—</div><div class=small>arch scarcity × realG × cap% headroom &lt;92% max</div></div><div><div class=sm>CONTRACT FORESIGHT</div><div id=foreS class=kpi>—</div><div class=small id=foreT>median*(0.4+0.8*tm/median) cap3× 1.25× retained</div></div></div><div class=small style="margin-top:8px">Jr/Sr disambig name+DOB Payton Gary I 1968-07-23 vs II 1992-12-01. Pack battle trainers same-link-same-stars 546 links. Playoff minute security: Wemby 699 real PO mins vs Flagg 0 honest.</div><div class=sg>Where you actually stay on — scarce archetype × cap clarity, not vibes.</div></div>
-<div class=card><h2 class="vh-sr">WHAT IS HERE, AND WHAT IT RESTS ON GLASS BOX</h2><div class=hd>WHAT IS HERE, AND WHAT IT RESTS ON <span class="pill y">GLASS BOX</span></div><div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin-top:8px"><div class=card><h2 class="vh-sr">FREE</h2><b class=hd>FREE</b><div class=small>map +3 comps, twin 100, Wemby 699 real PO mins vs Flagg 0 honest</div></div><div class=card style="border-style:dashed"><h2 class="vh-sr">SHAP + CLOSER FIT</h2><b class=hd>SHAP + CLOSER FIT</b><div class=small>SHAP + closer 1.28 vs 0.62 vs 0.81 + fit finder + injury 13,625 + props alpha +5.7 Castle +0.2</div><button class="btn" style="background:var(--ink);color:#fff;margin-top:6px">LOCK 1.28 🟢 →</button></div><div class=card><h2 class="vh-sr">API + WHITE-LABEL</h2><b class=hd>API + WHITE-LABEL</b><div class=small>API, chimera 20,719×64-d 12 arch sep 0.867 lift 0.8116 white-label</div></div></div><div id=props class=small style="margin-top:8px">props avgΔ -1.02 loading…</div><div class=small>Wemby 699 real playoff mins vs Flagg 0 — that's playoff minute security. Every rotation spot has a cost.</div></div>
+<div class=card><h2 class="vh-sr">Team payroll and wins, from front_office_lite.json</h2><div class=hd>TEAM PAYROLL AND WINS <span class="pill y">MEASURED</span></div><div style="margin-top:8px"><select id=teamCap aria-label="Choose a team" style="width:100%"></select></div><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px"><div><div class=sm>WINS PER $M OF PAYROLL</div><div id=fitS class=kpi>—</div><div class=small>the season’s wins divided by payroll in $M</div></div><div><div class=sm>PAYROLL</div><div id=foreS class=kpi>—</div><div class=small id=foreT>—</div></div></div><div class=small style="margin-top:8px">A fit score and a contract forecast stood here. Both were invented — the fit multiplied a <code>Math.random()</code> term and printed three decimals, and the forecast scaled a league median typed into the source. No contract model is committed to this repo, so these are the figures that are: payroll, wins and the front-office grade, per team.</div><div class=sg>Where you actually stay on — scarce archetype × cap clarity, not vibes.</div></div>
+<div class=card><h2 class="vh-sr">WHAT IS HERE, AND WHAT IT RESTS ON GLASS BOX</h2><div class=hd>WHAT IS HERE, AND WHAT IT RESTS ON <span class="pill y">GLASS BOX</span></div><div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin-top:8px"><div class=card><h2 class="vh-sr">FREE</h2><b class=hd>FREE</b><div class=small>The map, the nearest-neighbour search and the team figures are all free, with no account.</div></div><div class=card style="border-style:dashed"><h2 class="vh-sr">SHAP + CLOSER FIT</h2><b class=hd>SHAP + CLOSER FIT</b><div class=small>Per-player attribution is on the explainability page, computed from the committed tensors.</div><button class="btn" style="background:var(--ink);color:#fff;margin-top:6px">LOCK 1.28 🟢 →</button></div><div class=card><h2 class="vh-sr">API + WHITE-LABEL</h2><b class=hd>API + WHITE-LABEL</b><div class=small>API and white-label. The model is 64-d over 12,966 player-seasons.</div></div></div><div id=props class=small style="margin-top:8px">Loading the prop summary…</div><div class=small>The map holds no minutes played, so no minutes are quoted here.</div></div>
 </div>
 </main><div class=foot><div style="display:flex;gap:7px;flex-wrap:wrap"><span class="pill o">DUMB MODEL</span><a class=pill href="/">HOME MAP</a><a class=pill href="/owner">OWNER</a><a class=pill href="/player-fit">FIT CALC</a><a class=pill href="/brand">BRAND</a><a class=pill href="/dfs">DFS $9</a></div><div class=sm>CLoser 1.28 #E7F6EA / 0.62 #FFD8D5 / 0.81 — THEME #FAFAF8 — ZERO-DEPS — PWA — MONO 900 UPPERCASE — PAPER CARD 2.2PX 4PX SHADOW — YELLOW PILL #F0E442</div></div>
 </div>
@@ -71,17 +71,64 @@ const OKABE=["#E69F00","#56B4E9","#009E73","#F0E442","#0072B2","#D55E00","#CC79A
    whether or not anything had loaded. This site's rule is the one /model states
    on itself — the numbers are either the model's or absent. */
 try{let j=await fetch('/assets/front_office_lite.json?v=f6949ae3').then(r=>r.json());teams=j.teams||[]}catch(e){teams=[]}
-try{V=await fetch('/assets/vectors_map_lite.json?v=ad8fed2b').then(r=>r.json());}catch(e){V={vectors:[]}}
+try{V=await fetch('/assets/embedding_map_points_limited.json?v=407d2cbc').then(r=>r.json());}catch(e){V=null}
 try{props=await fetch('/assets/props_summary.json?v=367a49f4').then(r=>r.json());}catch(e){props=null}
-document.getElementById('live').textContent = (teams.length && V.vectors && V.vectors.length)
-  ? teams.length+'T · '+V.vectors.length.toLocaleString()+'×64-d loaded'
-  : 'Team and vector files did not load. Nothing below is drawn from them.';
-const archs=["Slasher","Shooter","Rim Protect","Playmaker","Wing 3&D","Stretch Big","Lob Big","Iso Closer","Enforcer","Connector","Paint Scorer","PoA Defender"];const asel=document.getElementById('archSel');archs.forEach(a=>{let o=document.createElement('option');o.value=a;o.textContent=a;asel.appendChild(o);});
+/* This read V.vectors, and the map file's key is `players` — so it was
+   undefined on every visit and the page said a loaded file had not loaded.
+   The rows it draws are map coordinates, not the 64-d vectors, so saying
+   ×64-d here would swap one false claim for another. */
+var PTS = (V && V.points) || [];
+document.getElementById('live').textContent = (teams.length && PTS.length)
+  ? teams.length+' teams · '+PTS.length.toLocaleString()+' map points'
+  : 'Team and map files did not load. Nothing below is drawn from them.';
 const tSel=document.getElementById('teamCap');teams.sort((a,b)=>(a.cap_pct||0)-(b.cap_pct||0)).forEach(t=>{let o=document.createElement('option');o.value=t.abbr;o.textContent=`${t.abbr} cap%${((t.cap_pct_normalized||t.cap_pct)*100).toFixed(1)}% ${t.flexibility_2025_26||''}`;tSel.appendChild(o);});
 let c=document.getElementById('map').getContext('2d');let leg=document.getElementById('leg');
-archs.slice(0,8).forEach((a,i)=>{let s=document.createElement('span');s.className='pill';s.style.background='#fff';s.innerHTML=`<span style="width:10px;height:10px;border-radius:50%;display:inline-block;background:${OKABE[i%8]}"></span> ${a}`;leg.appendChild(s);});
-function draw(){c.clearRect(0,0,560,320);c.fillStyle='#0F141E';c.fillRect(0,0,560,320);let vs=(V.vectors||[]).slice(0,540);vs.forEach((v,i)=>{let x=(v.x||Math.random())*550;let y=(v.y||Math.random())*310;let ai=(v.a||v.arch||i)%8;c.fillStyle=OKABE[ai%8];c.globalAlpha=0.9;c.beginPath();c.arc((x%540)+10,(y%300)+10, v.tag==='closer'?5: v.tag==='exploitable'?3:3.6,0,6.28);c.fill();});c.globalAlpha=1;c.fillStyle='#FAFAF8';c.font='800 11px ui-monospace';c.fillText('64-d OKABE 8 — Wemby 699 real PO mins vs Flagg 0 · closer #E7F6EA 1.28 vs #FFD8D5 0.62 vs #FFE9B5 0.81',10,16);}draw();
-function twinQ(){let q=(document.getElementById('q').value||'wemby').toLowerCase();let cand=(V.vectors||[]).filter(v=>((v.n||v.name||'')+'').toLowerCase().includes(q)).slice(0,3);let b=document.getElementById('twin');if(!cand.length)b.textContent='no match — twin nearest 100 — arch sep 0.867, lift 0.8116';else b.innerHTML=cand.map(v=>`${v.n||v.name} arch ${v.arch||'—'} tag ${v.tag||'neutral'} — realG ${(v.playoff_mins_real||Math.random()*700|0)} vs rookie 0 honest — ${v.tag==='closer'?'closer1.28 green #E7F6EA':'tag'+(v.closer_score||'')}`).join('<br>');}document.getElementById('btn').onclick=twinQ;document.getElementById('q').onkeydown=e=>{if(e.key==='Enter')twinQ();};twinQ();
+/* This paired eight hand-typed archetype names with eight colours while the
+   canvas coloured by the loop index, so the key described nothing. Colour is
+   the cluster id the map file carries; the committed data does not name the
+   clusters, so neither does this. */
+[0,1,2,3,4,5,6,7].forEach(function(k){var s=document.createElement('span');s.className='pill';s.style.background='#fff';s.innerHTML='<span style="width:10px;height:10px;border-radius:50%;display:inline-block;background:'+OKABE[k]+'"></span> cluster '+k;leg.appendChild(s);});
+/* `v.x||Math.random()` put a point at a random spot whenever x was missing or
+   zero, and the caption quoted figures that are in no committed file. A point
+   without coordinates is now skipped rather than invented. */
+function draw(){
+  c.clearRect(0,0,560,320);c.fillStyle='#0F141E';c.fillRect(0,0,560,320);
+  var drawn=0;
+  PTS.forEach(function(v){
+    if(typeof v.x!=='number'||typeof v.y!=='number') return;
+    c.fillStyle=OKABE[(v.c||0)%8]; c.globalAlpha=v.is_current?0.95:0.7;
+    c.beginPath(); c.arc(v.x*540+10, v.y*300+10, v.is_current?4:2.6, 0, 6.28); c.fill();
+    drawn++;
+  });
+  c.globalAlpha=1;c.fillStyle='#FAFAF8';c.font='800 11px ui-monospace';
+  c.fillText(drawn?drawn.toLocaleString()+' player-seasons, coloured by cluster'
+                  :'the map file did not load',10,16);
+}draw();
+/* This filtered on v.n and v.name. The map file carries neither, so no query
+   could ever match and every visitor read the `else` — which quoted two
+   figures that are in no committed file. The result line then printed
+   Math.random()*700 as playoff minutes with the word `honest` beside it.
+   It now finds the named player and returns real nearest neighbours in the
+   map's own coordinates. */
+function twinQ(){
+  var b=document.getElementById('twin');
+  var q=(document.getElementById('q').value||'').trim().toLowerCase();
+  if(!PTS.length){ b.textContent='The map file did not load, so there is nothing to search.'; return; }
+  if(!q){ b.textContent='Type a name to find that player\u2019s nearest neighbours on the map.'; return; }
+  var hit=null;
+  for(var i=0;i<PTS.length;i++){
+    var nm=(PTS[i].display_name||'').toLowerCase();
+    if(nm.indexOf(q)>=0){ if(!hit||PTS[i].is_current) hit=PTS[i]; if(PTS[i].is_current) break; }
+  }
+  if(!hit){ b.textContent='No player on the map matches \u201c'+q+'\u201d. It holds '+PTS.length.toLocaleString()+' player-seasons.'; return; }
+  var near=PTS.filter(function(v){ return v!==hit && typeof v.x==='number'; })
+    .map(function(v){ var dx=v.x-hit.x, dy=v.y-hit.y, dz=(v.z||0)-(hit.z||0);
+                      return {v:v, d:Math.sqrt(dx*dx+dy*dy+dz*dz)}; })
+    .sort(function(a,z){ return a.d-z.d; }).slice(0,3);
+  b.innerHTML='<b>'+hit.display_name+'</b> '+hit.season+', cluster '+hit.c+
+    ' \u2014 nearest on the map:<br>'+near.map(function(n){
+      return n.v.display_name+' '+n.v.season+', cluster '+n.v.c+' (distance '+n.d.toFixed(2)+')'; }).join('<br>');
+}document.getElementById('btn').onclick=twinQ;document.getElementById('q').onkeydown=e=>{if(e.key==='Enter')twinQ();};twinQ();
 /* This read a 2,753,469-byte file with `Array.isArray(props)`, and the file is
    an object — so the branch that computed anything never ran and the line was
    always the `else`. The whole file came down on every visit and was thrown
@@ -109,7 +156,35 @@ function twinQ(){let q=(document.getElementById('q').value||'wemby').toLowerCase
          (m.ptsDelta>0?'+':'')+m.ptsDelta.toFixed(1)+', prop '+m.ptsProp+
          ' against '+m.ptsActual+'.' : '');
 })();
-function calc(){let ab=tSel.value;let t=teams.find(x=>x.abbr===ab)||teams[0];if(!t&&!teams.length){document.getElementById('fitS').textContent='0.92/1.45';document.getElementById('foreS').textContent='$10.6M';return;}if(!t) t={cap_pct:0.84,cap_pct_normalized:0.84};let capN=t.cap_pct_normalized||t.cap_pct||0.9;let head=capN<0.92?1.25:capN<1.0?1.05:0.72;let scarce=asel.value.includes('Closer')||asel.value.includes('Rim')?1.22:asel.value.includes('Wing')?1.12:1.0;let realG=1+0.12*Math.min(1,Math.random()+0.4);let fit=(scarce*head*realG*0.94).toFixed(3);document.getElementById('fitS').textContent=fit+'/1.45';let perf=scarce>1?1.24:0.91;let med=8.5;let fores=med*(0.4+0.8*perf);let capped=Math.min(med*3,fores*1.25);document.getElementById('foreS').textContent='$'+capped.toFixed(1)+'M';document.getElementById('foreT').textContent=`median*(0.4+0.8*tm/median) tm ${perf.toFixed(2)} median $${med}M cap 3× 1.25× retained ${capN<0.92?'✓ <92% max':''} · pack 546 same-link-same-stars`; }asel.onchange=calc;tSel.onchange=calc;calc();
+/* Four invented numbers stood in these five lines, and this is the fourth pass
+   over this page to find some. With no team file it printed a fit of 0.92/1.45
+   and a figure of $10.6M; with a team it could not find it made one up at
+   cap_pct 0.84; and capN fell back to 0.9 for anything missing. Every one of
+   them put a number on screen with nothing behind it, which is the thing this
+   site says it does not do.
+
+   front_office_lite.json carries cap_pct on all 30 teams and does not carry
+   cap_pct_normalized at all, so the normalized branch was reading undefined and
+   the || chain was hiding it. */
+function calc(){
+  var fitEl=document.getElementById('fitS'), foreEl=document.getElementById('foreS'),
+      noteEl=document.getElementById('foreT');
+  var t=teams.find(function(x){return x.abbr===tSel.value;});
+  var capN=t ? (t.cap_pct_normalized!=null ? t.cap_pct_normalized : t.cap_pct) : null;
+  if(capN==null){
+    fitEl.textContent='\u2014'; foreEl.textContent='\u2014';
+    noteEl.textContent = teams.length
+      ? 'No cap figure for '+(tSel.value||'that team')+' in assets/front_office_lite.json, '+
+        'so nothing is computed for it.'
+      : 'The team file did not load, so there is nothing to compute here.';
+    return;
+  }
+    fitEl.textContent = t.w_per_m!=null ? t.w_per_m.toFixed(2) : '—';
+  foreEl.textContent = t.payroll_m!=null ? '$'+t.payroll_m.toFixed(1)+'M' : '—';
+  noteEl.textContent = t.wins+'–'+t.losses+', cap '+(capN*100).toFixed(0)+'% · '+
+    'front office '+t.for_grade+', ranked '+t.for_rank+' of 30 · '+
+    'assets/front_office_lite.json';
+}tSel.onchange=calc;calc();
 if('serviceWorker' in navigator)navigator.serviceWorker.register('/sw.js').catch(()=>{});
 })();
 </script>
