@@ -28,8 +28,8 @@
 <div id="attrBars" aria-live="polite"><div class="sub">Loading attributions…</div></div>
 <div class="sub" style="margin-top:8px"><b>How this is computed</b> — <span id="attrMethod"></span></div>
 <div class="sub" style="margin-top:6px;border-left:3px solid var(--orange);padding-left:8px"><b>Read zero carefully</b> — <span id="attrMasked"></span></div>
-<div class="mono" id="attrProv" style="margin-top:8px;opacity:.7;text-transform:none"></div></div><div><div class="mono">Model zoo 10 models 5-fold CV</div>
-<div class="sub" id="zooNote" style="margin:6px 0">Loading the measured zoo from <code>assets/front_office.json</code>…</div>
+<div class="mono" id="attrProv" style="margin-top:8px;opacity:.7;text-transform:none"></div></div><div><div class="mono" id="zooCount">Model zoo · 5-fold CV</div>
+<div class="sub" id="zooNote" style="margin:6px 0">Loading the measured zoo from <code>assets/model_zoo.json</code>…</div>
 <div id="zooTable" style="margin-top:8px"></div>
 <div class="sub" id="zooCaveat" style="margin-top:8px;border-left:3px solid var(--orange);padding-left:8px"></div></div></div>
 <div class="card" id="flowCard">
@@ -186,7 +186,7 @@
      the caveat the file carries and the markup did not: the best model's
      numbers are PROJECTED from a prior version, not retrained. */
   var zt=document.getElementById('zooTable'), zn=document.getElementById('zooNote'), zc=document.getElementById('zooCaveat');
-  fetch('assets/front_office.json?v=fb95747f',{cache:'force-cache'}).then(function(r){
+  fetch('assets/model_zoo.json?v=15a50de0',{cache:'force-cache'}).then(function(r){
     if(!r.ok) throw new Error('HTTP '+r.status);
     return r.json();
   }).then(function(j){
@@ -213,7 +213,12 @@
         (b0.proj?' <span class="proj" title="projected, not retrained">▲ projected</span>':'')+
         ' — a separate benchmark from the retrieval score above.';
     }
-    zn.innerHTML='Read from <code>assets/front_office.json</code> → <code>model_eval.model_zoo</code>: '+
+    // The heading said "10 models" in hardcoded markup while the table drew 12 —
+    // the slice holds 13 and one carries no numeric MAE. Counting the same rows
+    // the table is built from is the only version that cannot drift.
+    var zcnt=document.getElementById('zooCount');
+    if(zcnt) zcnt.textContent='Model zoo · '+rows.length+' models · 5-fold CV';
+    zn.innerHTML='Read from <code>assets/model_zoo.json</code>, a verbatim slice of <code>assets/front_office.json</code> → <code>model_eval.model_zoo</code>: '+
       rows.length+' models, 5-fold CV, lower MAE is better. Predicting draft-pick surplus, '+
       'not player similarity — a different job from the retrieval score above.';
     zt.innerHTML='<table><thead><tr><th>Model</th><th>MAE</th><th>RMSE</th><th>R²</th><th>Folds</th></tr></thead><tbody>'+

@@ -3786,3 +3786,80 @@ this change shrinks it from 6.7s to 2.9s rather than fixing a lie.
 No cache-token or worker bump: the only file changed is a page, `.html` is served
 `max-age=0, must-revalidate`, and the worker shell is `/`, `/offline`,
 `/manifest.json`. The `tokens` check confirms it.
+
+
+## /model downloaded 1.1 MB to draw an 8 KB table (2026-08-10)
+
+Having found a 2.35x on `/play` by timing it, the obvious question was whether the
+other phase pages had the same shape. `/trends` is lean — 264.1 KB, everything in
+by 1.9s on Fast 3G. **`/model` was not.** The explainability page, phase 3 of the
+brief, took **13.3 seconds to draw its map** on a cold Fast 3G load:
+
+    resource                          start      end       ms        KB
+    embedding_map_points_limited.json   393     5096     4703     273.5
+    front_office.json                   363    13079    12716    1101.6
+    embedding_map_trajectories.json     393    13194    12801    1109.4
+    TOTAL                                                       2577.8
+    map has ink                       13259 ms
+
+`front_office.json` on the *model* page. It is fetched for exactly one subtree:
+
+    fetch('assets/front_office.json')  ->  j.model_eval.model_zoo
+
+    front_office.json          1,127,784 B
+    model_eval.model_zoo           8,299 B      0.74% of what comes down the wire
+    teams + teams_by_abbr        896,034 B      79.4%, and this page reads neither
+
+**A page about how the model works was spending twelve seconds downloading the
+front office to render thirteen rows of model metrics.**
+
+`scripts/build_model_zoo.py` now cuts the subtree into `assets/model_zoo.json`,
+verbatim — the script copies, it does not compute, round or rename, and `--check`
+fails if the slice drifts from its source. The page keeps the shape it already
+destructures (`(j.model_eval||{}).model_zoo`), so the consumer is a one-line URL
+change.
+
+    resource                          start      end       ms        KB
+    model_zoo.json                      355      824      469      12.6
+    embedding_map_points_limited.json   385     3787     3402     273.5
+    embedding_map_trajectories.json     385     7869     7484    1109.4
+    TOTAL                                                       1488.7
+    map has ink                        7939 ms
+
+                        before      after
+    payload            2577.8 KB  1488.7 KB    -42.2%
+    map has ink        13259 ms    7939 ms     1.67x
+    zoo table lands    13079 ms      824 ms    16x
+
+`front_office_lite.json` already existed and was the obvious home, but it carries
+`teams` for owner/teams/index and has no `model_eval`. Putting the zoo in it would
+push 8 KB onto three pages that never read it — the same trade the board rejected
+for a 33,154-byte merge. A separate slice costs them nothing.
+
+Checked before assuming: `inventory.html` and `methods.html` name
+`front_office.json` in prose but never fetch it, so `/model` was the only page
+paying this.
+
+### A number that had drifted, found on the way
+
+The card heading was hardcoded:
+
+    <div class="mono">Model zoo 10 models 5-fold CV</div>
+
+The slice holds **13** models, one of which carries no numeric MAE, so the table
+below it drew **12**. The heading had been wrong by two for as long as the data has
+had thirteen entries. It now counts the same `rows` array the table is built from —
+the page already uses that argument for its headline figure ("filling it from the
+same rows means the headline and the table can never drift") and this heading had
+simply never been included in it. Rendered: `Model zoo · 12 models · 5-fold CV`,
+matching the note beneath it.
+
+### Not touched, and why
+
+`embedding_map_trajectories.json` is the other 1.1 MB and it is already behind an
+IntersectionObserver, loading when the retrieval section approaches the viewport.
+It starts at 385 ms here because that section sits inside the first 1280x900
+screen, which is the observer working as designed rather than a defect. Making the
+map paint before 7.9s means either splitting that file or drawing the cloud from
+the 273.5 KB points file first — a real option, but a design change rather than a
+correction, so it is not something to do quietly.
