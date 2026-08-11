@@ -6681,3 +6681,57 @@ about a training set.
 correlations to two decimals, both spreads, the top valuation by name, and the
 three dearest and three cheapest per win. **Four mutations, four caught**, plus
 the blocked-file path where the page says so and prints no number.
+
+
+## A mutation that fails to apply looks exactly like one that was caught (2026-08-11)
+
+`/dfs` was 784 characters promising *"locks / fades"*, *"minute-lock safety"* and
+an optimizer. `assets/projections.json` — the file those would have come from —
+ends its own method line with:
+
+    "Not a minutes or pace forecast — treat as geometry-implied next-year
+     profile pending held-out eval."
+
+**The page promised the two things the file says it is not.**
+
+The eval does exist. `next_profile_eval.json` scores **10,108 player-seasons**
+where a prediction can be compared with what happened, and gives
+`meanAbsErrPrimary` 0.459 — unreadable on its own. `build_projection_eval.py`
+computes the error of predicting the era mean for everybody alongside it, per
+feature, and the ratio. Reproduced rather than copied: the primary mean comes out
+at **0.459**, matching the source summary, and the generator fails if it stops
+matching. **2,920 bytes, 0.10% of the 2,873,826 it is cut from.**
+
+    offensive glass     0.337 against 0.825 guessing   ratio 0.41
+    on-court impact     0.650 against 0.741 guessing   ratio 0.88
+
+**It sees a player's shape coming. It does not see their impact coming** — the
+one feature you would have been paid on is the one it predicts worst.
+
+### The hole this page found in my own tooling
+
+Every smoke exits 1 for a real assertion failure and, via `sys.exit(msg)`, also 1
+when its mutation string no longer matches. **The matrix loops I have run all
+session read any non-zero as "caught"** — so a stale mutation scored as proof of
+the assertion it was meant to test. Two of `smoke_dfs.py`'s four did exactly that
+on the first run.
+
+Mutation-not-found exits **2** now, across all seven smokes with a table, and
+`check_frontend` grew an **18th check** — `mutations` — which verifies every
+string still matches a served file before anyone runs anything.
+
+**Measured, not assumed: 39 of 39 strings still matched.** No earlier matrix
+result had been faked; the only two stale ones were in the smoke written this
+turn.
+
+Also caught: the headline check named the best and worst feature without caring
+which came first, so swapping them ran green. Positional now.
+
+### And one I pushed
+
+The commit before this one went out with a stale asset token. My own re-gate
+caught it — and the command chain that ran the gate **did not stop on it**, so
+the push happened anyway.
+
+**Re-running the gate after a rebase is not the discipline. Stopping on it is.**
+A check whose result nothing reads is a check that did not run.
