@@ -274,7 +274,11 @@ function setExpanded(open){
 function search(){
   var v=($('q').value||'').trim().toLowerCase();
   cursor=-1;
-  if(!IDX){ $('hits').innerHTML='<li class="sub dim">Loading index…</li>'; return; }
+  // role=presentation: this is a status line, not a choice. #hits is a listbox,
+  // and an <li> in one without a role reads as an option a screen reader can pick.
+  // Expanded stays false for the same reason — there is nothing to choose yet.
+  if(!IDX){ $('hits').innerHTML='<li class="sub dim" role="presentation">Loading index…</li>';
+            setExpanded(false); return; }
   if(v.length<2){ $('hits').innerHTML=''; hits=[]; setExpanded(false); return; }
   /* The input points aria-controls at a listbox and never said whether that
      listbox was open, so a screen reader announced a combobox with no state
@@ -300,9 +304,17 @@ function search(){
   setExpanded(hits.length>0);
   say(hits.length+' match'+(hits.length===1?'':'es')+'.');
 }
+/* Memoising the RESULT was not enough. IDX stays null for the whole flight, so
+   focus plus five keystrokes entered here six times and started six downloads of
+   a 539 KB index. Measured on Fast 3G: five requests while typing "curry", and
+   the contention turned a 2.7-second fetch into first results at 12.0 seconds.
+   Holding the promise makes it one download however fast anyone types. */
+var IDXP=null;
 function loadIndex(){
   if(IDX) return Promise.resolve(IDX);
-  return fetch('assets/wiki_index.json?v=4e63a03b',{cache:'force-cache'})
+  if(IDXP) return IDXP;
+  say('Loading the player index.');
+  IDXP=fetch('assets/wiki_index.json?v=4e63a03b',{cache:'force-cache'})
     .then(function(r){ if(!r.ok) throw new Error('HTTP '+r.status); return r.json(); })
     .then(function(j){
       IDX=j; byslug={};
@@ -310,10 +322,21 @@ function loadIndex(){
       search();
       return j;
     })
-    .catch(function(e){ $('hits').innerHTML='<li class="sub">Index unavailable ('+esc(e.message)+').</li>'; });
+    .catch(function(e){
+      // cleared so a later keystroke can retry rather than being stuck on a
+      // promise that will never resolve
+      IDXP=null;
+      $('hits').innerHTML='<li class="sub" role="presentation">Index unavailable ('+esc(e.message)+').</li>';
+      say('The player index could not be loaded.');
+    });
+  return IDXP;
 }
 
-$('q').addEventListener('input',function(){ IDX?search():loadIndex(); });
+/* Both, always. `IDX ? search() : loadIndex()` never called search() while the
+   index was missing — which is the one case search() already handles, with a
+   "Loading index…" line it could therefore never reach. Twelve seconds of an
+   empty list on Fast 3G, and the page had the right words sitting unreachable. */
+$('q').addEventListener('input',function(){ loadIndex(); search(); });
 $('q').addEventListener('focus',loadIndex);
 function setActive(i){
   var opts=$('hits').querySelectorAll('li[role="option"]');

@@ -43,6 +43,7 @@ python scripts/check_viewport.py --widths 320,360,390
 python scripts/smoke_render.py              # 8 pages, empty console
 python scripts/smoke_play.py                # plays a full round
 python scripts/smoke_index.py               # presses the landing page's map control
+python scripts/smoke_cards.py               # searches before the 539 KB index lands
 node scripts/smoke_owner_table.mjs          # + arch_map, retrieval_map, name_fix, early_errors
 ```
 
@@ -107,6 +108,16 @@ screen** under a button reading not-loaded, while the region announced "Still sh
 it. Both files fetch together now and `dots` is swapped only once both have arrived, so a throw at
 either await leaves the map exactly as it was. Re-measured: `dots.length 1764 → 1764`, two
 announcements, both true.
+
+**The player search downloaded its index five times.** `/player-cards` is 30.4 KB on load — the
+539 KB `wiki_index.json` is lazy — so everything happens in the gap before it lands. Typing there on
+Fast 3G gave **twelve seconds of an empty list and five downloads of the same file**: `loadIndex()`
+memoised its *result*, and `IDX` stays null for the whole flight, so every keystroke started another
+fetch and they contended. Worse, `search()` already had a "Loading index…" branch for exactly this
+case, and its only caller was `IDX ? search() : loadIndex()` — **guarding on the condition the callee
+was written to handle**, so the message could never be reached by typing. The promise is memoised now
+and the handler calls both: **12.0s → 2.4s** to first results, one request, and the wait explained
+while it happens. Enforced by `scripts/smoke_cards.py`, mutation-tested three for three.
 
 **Typography.** Nine pages were rendering body copy in Times New Roman. They declared
 `font-family:ui-sans-system`, which is not a CSS keyword — the real generic is `ui-sans-serif`, so

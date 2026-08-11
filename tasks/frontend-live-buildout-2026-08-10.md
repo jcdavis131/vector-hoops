@@ -4400,3 +4400,74 @@ Eager or lazy is a two-minute measurement and it decides whether there is anythi
 there at all.
 
 Start there next, not at another gate.
+
+
+## The search that downloaded its index five times (2026-08-10)
+
+Followed the board's own next-step rather than looking for a new one. The census
+had shortlisted `player-cards.html` at 569 KB fetched, `wiki_index.json` 539 KB,
+never checked in a browser. **Checked: 30.4 KB on load.** The index is lazy, the
+census was wrong a second time, and that shortlist is settled rather than carried.
+
+The interesting thing was the gap it left. `assets/wiki_index.json` arrives only
+when someone uses the search, which is the page. Typing during that wait, Fast 3G:
+
+           t     rows   opts  first result
+        0.0s        0      0  ''
+        ...
+       12.0s        5      5  'Seth Curry2015-16 - 2024-25'
+
+    wiki_index.json requests for five keystrokes: 5
+
+**Twelve seconds under a search box with nothing on screen, and five downloads of
+the same 539 KB file.** Two causes, each a line long.
+
+`loadIndex()` memoised the *result*:
+
+    if(IDX) return Promise.resolve(IDX);
+
+`IDX` is null for the entire flight, so focus plus five keystrokes entered it six
+times and started six fetches, which then contended for one pipe — that is what
+turned a 2.7-second download into twelve. It holds the **promise** now.
+
+And the loading message existed the whole time, unreachable:
+
+    function search(){
+      if(!IDX){ $('hits').innerHTML='<li class="sub dim">Loading index...</li>'; return; }
+
+with its only caller written
+
+    $('q').addEventListener('input',function(){ IDX?search():loadIndex(); });
+
+**The caller guarded on exactly the condition the callee was written to handle**,
+so the branch could not be reached by typing. The right words sat three lines from
+the empty list they were meant to fill. The handler calls both now.
+
+           t     rows   opts  first result
+        0.0s        1      0  'Loading index...'
+        2.4s        5      5  'Seth Curry2015-16 - 2024-25'
+
+    wiki_index.json requests for five keystrokes: 1
+
+**12.0s to 2.4s for first results, and the wait is explained while it happens.**
+The loading row is `role="presentation"` and leaves `aria-expanded` false: `#hits`
+is a listbox, and an unroled `<li>` in one reads as an option a screen reader can
+choose, which a status line is not.
+
+### Enforced the same day
+
+`scripts/smoke_cards.py`, mutation-tested like the last one:
+
+    promise memo                RC=1   caught
+    loading branch reachable    RC=1   caught
+    search on resolve           RC=1   caught
+
+Three for three, no hollow assertions this time, and `player-cards.html` restored
+to exactly the intended diff afterwards.
+
+### P4.5 paid for itself
+
+`git status` reported `player/index.html` modified. `git diff --numstat` reported
+nothing, and nothing is right — it is the CRLF stat artifact recorded under P4.5
+two passes ago. **The note stopped me investigating a change that did not exist**,
+which is the whole point of having written it down.
