@@ -112,9 +112,19 @@ def build(text: str, url: str) -> str | None:
     desc = RE_DESC.search(text)
     desc_txt = re.sub(r"\s+", " ", desc.group(1)).strip() if desc else None
 
-    have_props = set(re.findall(r"""property=["'](og:[\w:]+)["']""", text, re.I))
-    have_names = set(re.findall(r"""name=["'](twitter:[\w:]+)["']""", text, re.I))
-    has_canon = bool(re.search(r"""<link[^>]*rel=["']canonical["']""", text, re.I))
+    # Everything between START and END belongs to this script and is replaced
+    # wholesale by the caller, so "what the page already has" has to be read from
+    # OUTSIDE that block. Reading it from the whole text made the script subtract
+    # its own output: the first run wrote twelve tags, the second saw those twelve
+    # as already-present, emitted only the remainder, and then replaced the block
+    # with that remainder — deleting eleven of them. /player-cards and /player
+    # oscillated between 12 tags and 0 on alternate runs, and `--check` reported
+    # "2 page(s) to change" forever while exiting 0.
+    outside = re.sub(re.escape(START) + r".*?" + re.escape(END), "", text, flags=re.S)
+
+    have_props = set(re.findall(r"""property=["'](og:[\w:]+)["']""", outside, re.I))
+    have_names = set(re.findall(r"""name=["'](twitter:[\w:]+)["']""", outside, re.I))
+    has_canon = bool(re.search(r"""<link[^>]*rel=["']canonical["']""", outside, re.I))
 
     out: list[str] = []
     if not has_canon and url not in CLASH:
@@ -190,6 +200,18 @@ def main() -> int:
         print(f"{no_desc} page(s) still have no <meta name=\"description\">. Writing one is copy, "
               f"not wiring, so none was invented here — a shared link to those pages gets a title "
               f"and an image but no summary line.")
+    # --check has to be able to fail. It reported "2 page(s) to change" and exited
+    # 0 for as long as player-cards.html and player/index.html carried no Open
+    # Graph or Twitter tags at all, while the readiness report said every page had
+    # them. A check that names the drift and then passes is worse than no check:
+    # it turns an open question into a green tick.
+    #
+    # Missing descriptions stay a note rather than a failure — writing one is copy,
+    # and this script deliberately invents none.
+    if args.check and changed:
+        print(f"FAIL {changed} page(s) need social metadata — "
+              f"run: python scripts/build_social_meta.py")
+        return 1
     return 0
 
 

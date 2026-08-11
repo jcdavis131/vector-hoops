@@ -112,8 +112,13 @@ def main() -> int:
         print(f"  browse row already current — {n} hub link(s)")
         return 0
     print(f"  {'would write' if args.check else 'wrote'} the browse row — {n} hub link(s)")
-    if not args.check:
-        PAGE.write_bytes(updated.encode("utf-8"))
+    if args.check:
+        # Reaching here means updated != text, which is the definition of stale —
+        # the equality case returned above. It printed "would write" and exited 0
+        # anyway, so nothing downstream could ever go red on it.
+        print("FAIL browse row is stale — run: python scripts/build_player_hubs.py")
+        return 1
+    PAGE.write_bytes(updated.encode("utf-8"))
     return 0
 
 

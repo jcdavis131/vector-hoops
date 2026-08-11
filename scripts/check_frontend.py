@@ -375,7 +375,8 @@ def check_mirror(fail) -> None:
         print("  SKIP  scripts/sync_public.py not present")
         return
     r = subprocess.run(
-        [sys.executable, str(script), "--check"], capture_output=True, text=True, cwd=str(ROOT)
+        [sys.executable, str(script), "--check"], capture_output=True, text=True,
+        encoding="utf-8", errors="replace", cwd=str(ROOT)
     )
     first = (r.stdout.strip().splitlines() or ["no output"])[0]
     if r.returncode != 0:
@@ -392,7 +393,8 @@ def check_tokens(fail) -> None:
         print("  SKIP  scripts/stamp_assets.py not present")
         return
     r = subprocess.run(
-        [sys.executable, str(script), "--check"], capture_output=True, text=True, cwd=str(ROOT)
+        [sys.executable, str(script), "--check"], capture_output=True, text=True,
+        encoding="utf-8", errors="replace", cwd=str(ROOT)
     )
     lines = [ln for ln in r.stdout.strip().splitlines() if ln.strip()]
     first = lines[0] if lines else "no output"
@@ -400,6 +402,45 @@ def check_tokens(fail) -> None:
         fail(f"asset cache tokens are stale — {first.removeprefix('FAIL').strip()} Run: python scripts/stamp_assets.py")
     else:
         print(f"  {first.removeprefix('OK').strip()}")
+
+
+def check_derived(fail) -> None:
+    """Assets cut from other committed assets have to still match what they were cut from.
+
+    `assets/model_zoo.json` is a verbatim slice of `front_office.json`, served
+    `immutable` for a year. If the source changes and the slice does not, nothing
+    goes red and the page shows year-old numbers under a fresh headline. The same
+    is true of every `build_*.py` output — that whole family was checkable and
+    unchecked, which is the exact shape the `mirror` and `tokens` checks exist for.
+
+    Each generator is run with `--check`, which is read-only: verified by running
+    all seven against a clean tree and confirming it stayed clean. None of them
+    imports the pipeline, touches the network, or loads torch — that was checked
+    before wiring them in, because a gate that calls seven scripts is seven
+    chances to repeat the run-that-also-shipped.
+    """
+    folder = ROOT / "scripts"
+    if not folder.is_dir():
+        print("  SKIP  no scripts/ under this root")
+        return
+    gens = sorted(folder.glob("build_*.py"))
+    if not gens:
+        print("  SKIP  no build_*.py generators found")
+        return
+    ok = 0
+    for g in gens:
+        # encoding is explicit: text=True decodes with the locale codec, which on
+        # this box is cp1252, and the generators print em-dashes. The first run of
+        # this check reported "is stale â€" run:" — mojibake in a gate's own
+        # failure message, from the same class of bug the ledger already carries.
+        r = subprocess.run([sys.executable, str(g), "--check"], capture_output=True,
+                           text=True, encoding="utf-8", errors="replace", cwd=str(ROOT))
+        if r.returncode != 0:
+            last = [ln for ln in (r.stdout + r.stderr).strip().splitlines() if ln.strip()]
+            fail(f"{g.name} reports drift — {last[-1] if last else 'no output'}")
+        else:
+            ok += 1
+    print(f"  {ok}/{len(gens)} derived asset(s) match the sources they were built from")
 
 
 def check_worker(fail) -> None:
@@ -440,6 +481,7 @@ CHECKS = {
     "syntax": check_syntax,
     "mirror": check_mirror,
     "tokens": check_tokens,
+    "derived": check_derived,
     "worker": check_worker,
     "targets": check_targets,
     "assets": check_assets,

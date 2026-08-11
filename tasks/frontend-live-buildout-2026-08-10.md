@@ -3900,3 +3900,102 @@ hand-maintained convention drifted silently, and a stale slice would be served
 `immutable` for a year with nothing going red. Wiring it is the shape of
 `check_tokens` — subprocess the `--check`, fail on a non-zero exit — and it has to
 be shown failing once before it counts.
+
+
+## The generator that subtracted its own output (2026-08-10)
+
+Last pass closed with one named gap: `build_model_zoo.py --check` existed and was
+not wired into anything, so a stale slice would ship `immutable` for a year with
+nothing going red. Wiring it meant asking whether the rest of the family was in
+the same state. **Seven `build_*.py` generators, all with a `--check`, none of them
+wired to anything.**
+
+Before running any of them from a gate — the ledger's first entry is a measuring
+run that also shipped — each was audited and then tested rather than trusted:
+
+    script                          net    pipe   torch  check-before-write
+    build_front_office_lite.py      False  False  False  yes
+    build_game_vectors.py           False  False  False  yes
+    build_model_zoo.py              False  False  False  yes
+    build_name_fixes.py             False  False  False  yes
+    build_player_hubs.py            False  False  False  yes
+    build_social_meta.py            False  False  False  yes
+    build_wiki_index.py             False  False  False  yes
+
+Then all seven `--check` runs against a clean tree: still clean afterwards, 286 to
+830 ms each. Safe to call from a gate.
+
+### Two of the seven could not fail
+
+    build_player_hubs  --check  ->  "would write the browse row — 13 hub link(s)"   RC=0
+    build_social_meta  --check  ->  "2 page(s) to change"                           RC=0
+
+Both named their own drift and exited 0. And the second one was **describing a real
+hole**:
+
+    would add  player-cards.html   12 tag(s)
+    would add  player/index.html   10 tag(s)
+
+    player-cards.html    og=0  twitter=0  canonical=1
+    player/index.html    og=0  twitter=0  canonical=0
+
+Two pages with no Open Graph and no Twitter tags at all — one of them the page the
+brief names for phase 4 — while `READINESS.md` said *"Every page now carries Open
+Graph, Twitter and canonical metadata."* **I wrote that sentence.** The check that
+would have caught me exited 0.
+
+### Why it was never true: the generator deleted its own work
+
+Running it did not fix it. It added 12 and 10 tags, then reported "1 tag to change"
+on each, then on the next run the counts were back to **12 and 10** and the pages
+were back to **og=0, twitter=0**.
+
+`build()` returns *the tags this page is missing*, and the caller replaces the whole
+managed block with exactly that:
+
+    body = build(text, url)                  # only what is missing
+    block = f"{START}\n{body}\n{END}"
+    updated = text[:i(START)] + block + text[i(END)+len(END):]   # replaces everything
+
+`have_props` was read from the **full text, including the block this script owns**.
+So every tag it had already written counted as already-present, got excluded from
+the next `body`, and was then deleted by the wholesale replace. The two pages
+oscillated between twelve tags and zero on alternate runs, forever.
+
+Fixed by reading the "already has" sets from the text with its own block removed:
+
+    outside = re.sub(re.escape(START) + r".*?" + re.escape(END), "", text, flags=re.S)
+
+Convergence measured rather than assumed — write, check, three times:
+
+    pass 1: write RC=0 (21 changed) | check RC=0 (0 pages)
+    pass 2: write RC=0 (0 changed)  | check RC=0 (0 pages)
+    pass 3: write RC=0 (0 changed)  | check RC=0 (0 pages)
+
+Net against HEAD, counted per page: **only the two pages changed.** 213 social tags
+site-wide became 235; the other twenty pages are byte-identical. `git diff --numstat`
+lists 7 files while `git status` lists 44 — the other 37 were rewritten with the
+same bytes and differ only by mtime.
+
+### The gate
+
+`check_frontend.py` gained a **`derived`** check running all seven generators'
+`--check`. Twelve checks now. Shown failing before it was allowed to pass, by
+perturbing one value in the slice:
+
+    perturbed DeepMLP_era14_256_128_64_32 avg_mae 4450.09 -> 4451.09
+
+    RC=1
+      6/7 derived asset(s) match the sources they were built from
+    FAIL — build_model_zoo.py reports drift — assets/model_zoo.json is stale
+
+then regenerated, `identical: True` against the source subtree, RC=0, 7/7.
+
+**A bug in my own check, caught in that RED run.** The failure message printed
+
+    is stale â€" run: python scripts/build_model_zoo.py
+
+`subprocess.run(..., text=True)` decodes with the locale codec — cp1252 here — and
+the generators print em-dashes. Mojibake in a gate's own failure message, from the
+class the ledger already carries. `encoding="utf-8", errors="replace"` now, and the
+two older call sites that had the same latent bug were fixed with it.
