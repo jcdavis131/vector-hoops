@@ -1,11 +1,11 @@
 # frontend-live — readiness
 
-**Nothing here is live.** All 146 commits are on `frontend-live`; `master` is untouched, and
+**Nothing here is live.** All 148 commits are on `frontend-live`; `master` is untouched, and
 pushing `master` is what deploys the site. Suite green at the time of writing.
 
 | | |
 |---|---|
-| commits ahead of master | 146 |
+| commits ahead of master | 148 |
 | paths changed | 2,631 (2,547 under `public/`, 31 scripts) |
 | insertions / deletions | +202,270 / −310,429 |
 | working notes | `tasks/frontend-live-buildout-2026-08-10.md`, 4,151 lines |
@@ -103,15 +103,21 @@ of the page. The players filter announces which one is active. The player search
 **What a screen reader actually receives.** `check_a11y.py` settles eleven criteria and says in its
 own docstring that "real screen-reader flow still needs a browser and a person". The browser half is
 now done: `Accessibility.getFullAXTree` reports the computed role and name of every node, which is
-what assistive tech receives rather than what the markup implies. Across eight pages —
-**zero unnamed interactive nodes**; every button, link and field announces itself. Two gaps it found:
+what assistive tech receives rather than what the markup implies. Across **all 22 pages** —
+**zero unnamed interactive nodes and zero unnamed images**; every button, link and field announces
+itself. Two gaps it found:
 
 - **The game was silent between guesses.** `/play` announces the result box at the end, but each
   guess before it reached nothing. Measured: `#vh-live` empty before a guess and empty after, while
   the sighted player read `guess → AJ Griffin 2022-23 cos -0.67 ◐ • row 11029` in `#log`, which is
   not a live region. With six guesses and no way to hear whether you landed at −0.67 or 0.94, the
   game could not be played without sight. Each guess is now announced verbatim — only `cos` expands
-  to `cosine`, every number and name untouched, so heard and shown cannot drift apart.
+  to `cosine`, every number and name untouched, so heard and shown cannot drift apart. Two observers
+  then fed one region: measured through a win, the payoff was announced and **replaced 4 ms later**
+  by `'Trajectory done … confetti 12 … karaoke-grade 1.24s'`, so the result box now owns the region
+  while it is up. `smoke_play` asserts both, on the miss path — the only place that can prove it,
+  since a win fills the region either way and the first version of that assertion passed with the
+  whole announcement deleted.
 - **Fifteen decorative `<svg>` tiles announced themselves as "image"** with no name, on `/teams`,
   `/players` and `/index`. They were not `aria-hidden` — a hidden node never reaches the tree, which
   is why they showed up. Now hidden; re-measured as none.
