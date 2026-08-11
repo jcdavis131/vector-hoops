@@ -404,9 +404,23 @@ function fromUrl(){
   var q=new URLSearchParams(location.search);
   return q.get('w') || q.get('p') || null;
 }
+/* The title the page arrived with, so backing out of a card can put it back. */
+var BASE_TITLE=document.title;
 window.addEventListener('popstate',function(){
   var t=fromUrl();
-  if(t) open(t,false); else { $('cardWrap').hidden=true; }
+  if(t){ open(t,false); return; }
+  /* Backing out to the bare URL hid the card and left everything else where the
+     card had put it. Measured by opening two cards and pressing Back twice:
+
+       Back   url ''   hidden=True   title 'Vince Carter — Vector Hoops'
+
+     A document title is what the tab shows, what a bookmark saves, and what a
+     screen reader reads on navigation — so with no card on screen it has to stop
+     naming one. The close is announced for the same reason the open is: nothing
+     else tells a non-visual visitor the card went away. */
+  $('cardWrap').hidden=true;
+  document.title=BASE_TITLE;
+  say('Card closed.');
 });
 
 var initial=fromUrl();

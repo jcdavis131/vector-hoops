@@ -4865,3 +4865,58 @@ counted as markup**; `check_frontend` already carries `without_comments()` for
 exactly this, learned when a comment quoting `<input id=guess>` was counted as a
 second declaration of that id. The new check uses it. The scratch audit now strips
 comments too.
+
+
+## Nobody had pressed Back (2026-08-10)
+
+`/player-cards` keeps its state in the query string. `open()` calls
+`history.pushState({path},'','?p=slug')` and a handler reads it back:
+
+    window.addEventListener('popstate',function(){
+      var t=fromUrl(); if(t) open(t,false); else { $('cardWrap').hidden=true; }
+    });
+
+Every control on this site has now been driven except the browser's own. It is
+worth more than usual here: the card race showed its symptom in this exact
+mechanism — a `pushState` that ran after the visitor had navigated away — and a
+card reopened by Back goes through the `open()` that now carries a sequence guard.
+
+Two paths, both driven. **A shared link works**: arriving directly at
+`?p=vince-carter` loads the card, sets the title, and shows it. **Back and Forward
+work** as navigation. What did not:
+
+    Back     url ''   hidden=True   title 'Vince Carter — Vector Hoops'
+
+The card was gone and **the tab still named it.** `open()` rewrites
+`document.title`; the `else` branch hid the card and put nothing back — not the
+title, and not an announcement, so a non-visual visitor was told when a card opened
+and nothing at all when it went away.
+
+A title is what the tab shows, what a bookmark saves, and what a screen reader
+reads on navigation. Restored from the value the page arrived with, and the close is
+announced for the same reason the open is:
+
+    Back     url ''   hidden=True   title 'Vector Hoops — Player cards'
+             announced 'Card closed.'
+    Forward  url '?p=vince-carter'  title 'Vince Carter — Vector Hoops'
+             announced 'Vince Carter card loaded.'
+
+### The matrix is eight for eight
+
+`smoke_cards.py` now presses Back too, and both new behaviours have a mutation:
+
+    promise memo / loading branch / search on resolve / retry after failure
+    card sequence guard / stale-404 guard
+    title restored on Back      RC=1   caught
+    close announced             RC=1   caught
+
+The last two report it in the words that matter — *"the card is gone and the title,
+the bookmark and the screen reader all still name it"*, and *"a non-visual visitor
+is told when a card opens and nothing when it goes away."*
+
+### Why this path was worth driving at all
+
+Nothing about it is exotic. Open a card, press Back — that is the second thing
+anyone does on a page that changes the URL. It survived every gate, every smoke and
+an accessibility-tree sweep because **all of those look at a page in one state**,
+and this is a defect that only exists in the transition between two.

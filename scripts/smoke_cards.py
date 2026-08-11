@@ -339,6 +339,43 @@ def main() -> int:
                 failures.append(
                     f"a failed card took over the title and url: {after['title']!r} "
                     f"{after['url']!r}")
+
+            # 8. Back. open() pushes a history entry and rewrites document.title, so
+            #    backing out of a card has to undo both. Measured before the fix:
+            #      Back   url ''   hidden=True   title 'Vince Carter — Vector Hoops'
+            #    — the card was gone and the tab still named it. A title is what the
+            #    tab shows, what a bookmark saves, and what a screen reader reads on
+            #    navigation.
+            ws.call("Page.navigate", {"url": f"http://127.0.0.1:{site}{PAGE}"})
+            time.sleep(3)
+            base_title = ev(ws, "document.title")
+            ev(ws, "document.getElementById('q').focus()")
+            time.sleep(2.5)
+            picked = pick(ws, "gerald brown", "gerald brown")
+            time.sleep(1.5)
+            opened = ev(ws, CARD)
+            ev(ws, "history.back()")
+            time.sleep(2.0)
+            backed = ev(ws, CARD)
+            hidden = ev(ws, "!!(document.getElementById('cardWrap')||{}).hidden")
+            print(f"  back           {picked!r} -> url {backed['url']!r} hidden={hidden} "
+                  f"title {backed['title'][:34]!r}")
+            if opened["title"] == base_title:
+                failures.append("opening a card did not change the document title, so the "
+                                "Back assertion below cannot mean anything")
+            elif backed["title"] != base_title:
+                failures.append(
+                    f"after backing out of a card the tab still reads "
+                    f"{backed['title'][:44]!r} rather than {base_title[:44]!r} — the card "
+                    f"is gone and the title, the bookmark and the screen reader all still "
+                    f"name it")
+            if not hidden:
+                failures.append("backing out of a card left the card on screen")
+            if "closed" not in (backed["live"] or "").lower():
+                failures.append(
+                    f"backing out of a card announced {backed['live'][:44]!r} — a "
+                    f"non-visual visitor is told when a card opens and nothing when it "
+                    f"goes away")
     except SystemExit:
         pass
     finally:

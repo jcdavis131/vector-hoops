@@ -159,6 +159,15 @@ Both now point at the pages the nav already uses for those words — `/play.html
 rather than at anchors minted to justify the links. A new `fragments` check makes every deep link
 land on something that exists; it was shown failing first.
 
+**Nobody had pressed Back.** `/player-cards` puts its state in the query string — `open()` calls
+`pushState('?p=slug')` and a `popstate` handler reads it back. A shared link works and Back/Forward
+navigate correctly, but backing out to the bare URL hid the card and **left the tab reading
+'Vince Carter — Vector Hoops'** with no card on screen, and announced nothing, so a non-visual
+visitor was told when a card opened and never when it closed. The title is restored from the value
+the page arrived with and the close is announced. Enforced: `smoke_cards.py` presses Back, and its
+mutation matrix is eight for eight. This survived every gate and an accessibility sweep because
+**those look at a page in one state, and this only exists in the transition between two.**
+
 **Typography.** Nine pages were rendering body copy in Times New Roman. They declared
 `font-family:ui-sans-system`, which is not a CSS keyword — the real generic is `ui-sans-serif`, so
 the name matched no font and, with no fallback behind it, the paragraph fell to the browser default.
