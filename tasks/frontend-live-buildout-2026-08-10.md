@@ -5358,3 +5358,65 @@ Yesterday's fragment-focus note said a screen reader "begins reading a 26-entry
 glossary from the beginning". The glossary has **19** entries; 26 was its total
 heading count — one h1, six h2s and nineteen h3s. Corrected in `READINESS.md`, in
 `check_frontend.py`'s docstring, in the published report, and above.
+
+
+## A regex that was two backspace characters (2026-08-11)
+
+Half the sections on this site ship a placeholder — `Loading assets/…json …` —
+and several sit behind an IntersectionObserver, so they do not even start until
+you scroll to them. Nothing had ever checked that any of those placeholders goes
+away.
+
+**A section stuck on "Loading" is the worst failure this site can have**, because
+it reads as a slow network rather than a broken page: no error, no console
+warning a visitor would see, and copy that actively tells them to wait. It
+survives every static gate — the markup is right, the asset resolves on disk, the
+script parses — and it survives a render smoke that only asserts the page painted.
+
+`smoke_settled.py` loads all 22 pages, scrolls each to the bottom so every
+observer fires, waits three seconds, and reads what is on screen. **All 22 settle
+clean.** But a check that has never been red proves nothing, so it was mutated —
+and that is where the firing actually went.
+
+### Four ways the probe was wrong before it was right
+
+**`SVGElement` has no `getClientRects`.** `<defs>`, `<title>` and
+`<linearGradient>` threw, so every page with an inline chart reported only
+`Uncaught` — 21 of 22 pages "broken" by a probe that died on them.
+
+**The page's error queue is a sink.** `assets/error-boundary.js` drains
+`window.__vhErr` and replaces it with `{ push: function(){} }`, so reading it
+after load gives `TypeError: (window.__vhErr || []).map is not a function`. The
+collector this test needs is its own, installed with
+`Page.addScriptToEvaluateOnNewDocument`.
+
+**`/loading/` matched "reloading"** — the offline page says
+`status: online — reloading`.
+
+**And then the one that mattered.** With all of that fixed the check went green on
+22 pages and *stayed green* when a page was mutated to leave `#foSub` reading
+`Loading …`. The cause:
+
+    STUCK = """ … /\bloading\b/i … """
+
+In a plain Python string `\b` **is a backspace character**, not a word boundary.
+The regex reached the browser as `/\x08loading\x08|please wait/i` and matched
+nothing, on any page, ever. One `r` prefix. Measured before and after by mutating
+teams.html two ways — a 404 with its catch removed, and the success write
+redirected to another element so nothing throws at all — and both are caught now,
+by the stuck-placeholder assertion rather than by the error one.
+
+That is the **ninth** check this session that reported success while measuring
+something other than what it named, and the first where the thing it measured was
+literally nothing.
+
+**An honest negative.** The first green run after the fix reported eight stuck
+placeholders on `/player-animations`. They are the collapsed "View .posecode
+source" panels, which fill when opened — and Chrome now hides `<details>` content
+with `content-visibility` rather than `display:none`, so it still reports client
+rects. Eight correct panels reported as eight broken ones. The check skips a
+closed `<details>` now, and the page was never at fault.
+
+A sweep of every other JS block held in a Python string found one more candidate,
+`check_focus.py`'s `DUPE_SKIPS` — which writes `\\s` and `\\b`, so its regex
+arrives intact. It is correct as written.

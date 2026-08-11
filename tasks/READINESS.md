@@ -159,6 +159,19 @@ Both now point at the pages the nav already uses for those words — `/play.html
 rather than at anchors minted to justify the links. A new `fragments` check makes every deep link
 land on something that exists; it was shown failing first.
 
+**A regex that was two backspace characters.** Half the sections here ship a `Loading assets/…json …`
+placeholder and several only start when scrolled to; nothing had checked that any of them goes away.
+A section stuck on "Loading" is this site's worst failure — it reads as a slow network rather than a
+broken page and survives every static gate. `smoke_settled.py` scrolls all 22 pages to the bottom,
+waits, and reads what is on screen: **all 22 settle clean**. Proving that meant mutating a page to
+break it, and the check stayed green — because `STUCK = """…/\bloading\b/i…"""` in a plain Python
+string makes `\b` **a backspace character**, so the regex shipped as `/\x08loading\x08/i` and matched
+nothing on any page ever. One `r` prefix. Three earlier versions were wrong too: `SVGElement` has no
+`getClientRects` (21 pages reported as `Uncaught`), the page's own error queue is replaced by a sink
+after load, and `/loading/` matched "reloading". An honest negative: the first real run flagged eight
+stuck panels on `/player-animations` that are collapsed `<details>` Chrome now hides with
+`content-visibility` — the page was never at fault.
+
 **A glossary you could not search.** `/dictionary` is deep-linked from five pages and holds 19 terms
 in six sections; the only way to find one was a jump index that is a wall of nineteen chips. A filter
 now sits under it — everything it filters is already in the DOM, so nothing is fetched, and it ships
