@@ -6835,3 +6835,81 @@ I would not have known without running it three times. Two causes, both mine:
 
 It scrolls and then settles for 0.9s now. **Three consecutive runs, every page at
 100%.** A test that reads at a fixed moment measures the moment.
+
+
+## A fallback hid the bug that made it load-bearing (2026-08-11)
+
+`vectors_map_lite.json`'s key is **`players`**. `/player` read `V.vectors` in
+four places. Every one was `undefined` — and nothing looked broken, because
+every one had a fallback:
+
+    V.vectors.length || 20719      a plausible count
+    (V.vectors || [])              an empty map, twice
+    v.x || Math.random()           a dot at a random spot
+
+So the status line told every visitor **"team and vector files did not load"**
+about a file that was loading fine. Removing the `||20719` last pass is the only
+reason this pass could see it.
+
+Two functions away, `twinQ` filtered on `v.n || v.name` — keys that file has
+never carried. **No query could ever match.** Every visitor read the `else`,
+which quoted `arch sep 0.867, lift 0.8116`. A feature that cannot succeed, whose
+failure path is a polished sentence, looks exactly like a feature that works.
+
+It reads `embedding_map_points_limited.json` now — 1,764 points with
+`display_name`, real x/y/z and a cluster id, already fetched by index, model,
+players and trends, so it is warm in the service worker cache. The search
+returns real nearest neighbours: **LeBron James 2025-26 → Jalen Johnson**, with
+distances.
+
+### The 0.867 was not where I thought
+
+The smoke caught `0.867` on screen and I assumed it came from the static copy,
+which quotes the same digits. It came from the fit finder:
+
+    let realG = 1 + 0.12*Math.min(1, Math.random()+0.4);
+    let fit   = (scarce*head*realG*0.94).toFixed(3);
+
+**randomised on every change of the picker, printed to three decimals.** Below
+it, "contract foresight" scaled `let med = 8.5` — a league median typed into the
+source. No contract model is committed here, so the card shows what is: payroll,
+wins per $M, cap%, front-office grade and rank. The archetype select went with
+it; its only job was the fake multiplier.
+
+### Five figures in no committed file
+
+`20,719×64-d`, `12 arch`, `sep 0.867`, `lift 0.8116`, `NN 98.2% pure`. Checked
+against every file in the repo: `0.8116` and `20,719` appear **only in scout
+timeline logs**, never in site data. `20,719` was also on `/`, `/model` and in
+`/player`'s meta description, where link previews were carrying it.
+
+Replaced with what is sourced: **12,966 player-seasons** (`player_season_rows`,
+and `mtnn_embeddings.f32` is 3,319,296 b = 829,824 floats / 64), **64-d**,
+**purity@20 0.67** and **adjacent-season top-1 0.51**, both measured on the v5
+baseline. Every v6 figure in that file is keyed `projected_`, so none is quoted
+as measured. Also gone: "Wemby 699 real PO mins vs Flagg 0" — the map data has
+no minutes field at all — plus "546 links", "injury 13,625", and `props avgΔ
+-1.02` still shipping as the props element's *initial* text.
+
+`dictionary.html`'s `purity@10 0.7057` stays. It is the record of that figure
+being removed from `play.html`, not a live claim.
+
+### Two of the six mutations were holes first
+
+`invent` restores the typed figures in the branch that runs only when the team
+file is missing — so on a normal load it ran **green for want of an input**, the
+same shape as `smoke_wiki --mutate demote-bare`. It is driven with `--block`.
+
+`scatter` puts `Math.random()` back into the canvas, and **no assertion over
+`innerText` can see where a dot landed**. It is caught by painting the map twice
+and comparing the bytes: two loads of one file over one dataset must be
+identical.
+
+### Cost, stated plainly
+
+`/player` alone now fetches **319,310 bytes against 209,419** — up 109,891,
+because the file that carries names is 90 KB larger than the one that carried
+none. Four other pages already fetch it, so for anyone arriving from elsewhere
+on the site it is a cache hit, and the site now ships one fewer distinct map
+asset. `sw.js` v7-5 → v7-6 collects the unused 189 KB `vectors_map_lite.json`
+from returning caches.
