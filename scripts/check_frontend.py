@@ -977,6 +977,24 @@ COUNTS = (
     # cannot see it, which is the limit its own docstring describes.
     ("model.html", "10,104", "assets/eval_scoreboard.json",
      "eligible pairs", lambda d: d["eligible_pairs"]),
+    # /inventory is an inventory: it prints the byte size of the files it lists.
+    # Four of six had drifted from the files they name — player_season_props by
+    # 111,134 bytes, payroll_enriched by 11,084, valuation_history by 2,581,
+    # model_zoo by 1,544 — and nothing could see it, because a file's size is
+    # never written inside the file. A page that says how big something is has
+    # to be checked against how big it is.
+    ("inventory.html", "1,160,938", None, "bytes of assets/data/front_office.json",
+     lambda _: (ROOT / "assets/data/front_office.json").stat().st_size),
+    ("inventory.html", "9,992,186", None, "bytes of assets/matchup_players.json",
+     lambda _: (ROOT / "assets/matchup_players.json").stat().st_size),
+    ("inventory.html", "2,753,469", None, "bytes of assets/data/player_season_props.json",
+     lambda _: (ROOT / "assets/data/player_season_props.json").stat().st_size),
+    ("inventory.html", "277,097", None, "bytes of assets/data/payroll_enriched.json",
+     lambda _: (ROOT / "assets/data/payroll_enriched.json").stat().st_size),
+    ("inventory.html", "53,925", None, "bytes of assets/data/valuation_history.json",
+     lambda _: (ROOT / "assets/data/valuation_history.json").stat().st_size),
+    ("inventory.html", "41,801", None, "bytes of assets/data/model_zoo_eval.json",
+     lambda _: (ROOT / "assets/data/model_zoo_eval.json").stat().st_size),
     ("player-cards.html", "2,293", None,
      "committed player cards", lambda _: sum(1 for _ in (ROOT / "knowledge" / "players").glob("*.md"))),
 )
