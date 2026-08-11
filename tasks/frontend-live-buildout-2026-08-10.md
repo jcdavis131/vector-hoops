@@ -7305,3 +7305,38 @@ byte-for-byte afterwards.
 `10,104` went into `CITED` first and failed — the page prints a comma, the file
 stores `10104`. That is precisely the verbatim limit CITED documents about
 itself, and the failure was the check being right about its own scope.
+
+
+### Correction: "every one resolves" covered eleven of eighteen
+
+I wrote that the integer sweep flagged 18 and every one resolved, then itemised
+eleven. The other seven I had **categorised, not checked** — /inventory's
+numbers as "file sizes", index's as "cross-repo counts". Checking the first
+group found four wrong:
+
+    player_season_props.json   said 2,642,335   is 2,753,469   +111,134
+    payroll_enriched.json      said   266,013   is   277,097    +11,084
+    valuation_history.json     said    51,344   is    53,925     +2,581
+    model_zoo_eval.json        said    40,257   is    41,801     +1,544
+
+**/inventory is the one page whose whole job is to be current**, and it had
+drifted from the files it inventories.
+
+Two were right — `front_office.json` 1,160,938 and `matchup_players.json`
+9,992,186 — and the first nearly went down as wrong as well: a glob matched
+`assets/front_office.json` (1,127,784) when the page means `assets/data/`.
+Checking every candidate instead of the first match is what separated four real
+findings from a fifth I would have invented.
+
+Nothing could see any of this. **A file's size is never written inside the
+file**, so no sweep over committed JSON confirms it and `cited` cannot either.
+All six are in `COUNTS` now, recomputed from disk every run, along with the
+"2.64MB" summary that had drifted with them.
+
+The sibling-sport counts on `/` — 4,022 tennis, 4,831 company-years, 5,323 NFL —
+stay as they are. They describe other repos and **cannot be verified from this
+one**. That is a limit, and saying so is not the same as saying they resolve.
+
+And the sweep itself over-reports: its blob test missed `10104` and `1308`,
+which are in their files. So "0 unsourced integers" is really "18 candidates, 4
+confirmed defects" — the all-clear is trustworthy in one direction only.
