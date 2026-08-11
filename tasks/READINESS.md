@@ -1,16 +1,16 @@
 # frontend-live — readiness
 
-**Nothing here is live.** Everything below is measured at **`002fcf9c`** — the sha is the anchor,
+**Nothing here is live.** Everything below is measured at **`e32f670d`** — the sha is the anchor,
 because the commit that records a count is never inside the count it records. All of it is on
 `frontend-live`; `master` is untouched, and pushing `master` is what deploys the site. Suite green
 at that commit.
 
 | | |
 |---|---|
-| commits this session | 254 on this branch's own line at `002fcf9c`, now on `master` (a plain `rev-list` says 290 — it walks both sides of the merge and counts Scout's 36) |
+| commits this session | 256 on this branch's own line at `e32f670d`, now on `master` (a plain `rev-list` says 292 — it walks both sides of the merge and counts Scout's 36) |
 | paths changed, across the merge | 2,652 (2,547 under `public/`, 45 scripts) |
 | insertions / deletions | +211,573 / −310,582 |
-| working notes | `tasks/frontend-live-buildout-2026-08-10.md`, 6,739 lines |
+| working notes | `tasks/frontend-live-buildout-2026-08-10.md`, 6,792 lines |
 
 **Where to look at it.** The branch is pushed and Vercel builds every commit on it:
 
@@ -158,6 +158,21 @@ each moved the page from **scrollY 0 to scrollY 0** while writing the fragment i
 Both now point at the pages the nav already uses for those words — `/play.html` and `/model.html` —
 rather than at anchors minted to justify the links. A new `fragments` check makes every deep link
 land on something that exists; it was shown failing first.
+
+**The offline claim, tested on eighteen pages instead of one.** Last turn I fixed 37 trailing-slash
+links and justified it with the service worker's cache without ever measuring the benefit — and
+`smoke_offline` covered `/play` alone, so *"works offline after your first visit"* had been tested on
+one page of eighteen. `--site` now warms every page, stops the server, and revisits every page,
+comparing each against **itself** online. **Its first run said 17 of 18 were dead, and that was the
+test:** it walked the `.html` form, which `cleanUrls` 308s and the worker rightly refuses to cache —
+which is exactly why those 37 links mattered. On the clean URLs the site links, 17 of 18 came back
+whole. **The eighteenth was real.** `/player` returned 74% of its online text because it fetched
+**5,231,646 bytes for a 19 KB page** (`front_office.json` twice, under two paths, for one field
+each), passed `{cache:'no-store'}` on three of four fetches — opting out of the very cache the
+offline claim rests on — and, when a fetch failed, **invented 480 players at random coordinates named
+`Player0`…`Player479`** under a status line printing `30T · 20719×64-d` whether or not anything had
+loaded. One lite fetch now, no `no-store`, empty arrays instead of invented ones: **5,231,646 →
+2,960,868 bytes, and 74% → 100% offline.** All 18 pages come back at 100% of their online DOM.
 
 **A mutation that fails to apply looks exactly like one that was caught.** `/dfs` promised "locks /
 fades" and "minute-lock safety"; `projections.json` ends its own method line with *"Not a minutes or

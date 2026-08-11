@@ -6735,3 +6735,56 @@ the push happened anyway.
 
 **Re-running the gate after a rebase is not the discipline. Stopping on it is.**
 A check whose result nothing reads is a check that did not run.
+
+
+## The offline claim, tested on eighteen pages instead of one (2026-08-11)
+
+Last turn I fixed 37 trailing-slash links and justified it with the service
+worker's cache — **without ever measuring the benefit**. `smoke_offline` covers
+`/play` and nothing else, so *"works offline after your first visit"* had been
+tested on one page of eighteen.
+
+`smoke_offline --site` warms every page, stops the server, and revisits every
+page, comparing each against **itself** online so there is no threshold to go
+stale.
+
+### The first run said 17 of 18 were dead. It was the test.
+
+It walked `brand.html` and friends. `vercel.json`'s `cleanUrls` 308s the `.html`
+form, and the worker refuses to cache a redirect — exactly as it should, and
+exactly why those 37 links mattered. Walking the clean URLs the site actually
+links, **17 of 18 came back whole**.
+
+That the failure looked total is what made it obvious. A partial failure would
+have been much easier to believe.
+
+### The eighteenth was real
+
+`/player` returned **74%** of its online text, for three reasons at once:
+
+  - **5,231,646 bytes fetched for a 19 KB page.** `front_office.json` twice,
+    under two paths, for one field each; a 2.75 MB props file read for two
+    numbers.
+  - **`{cache:'no-store'}` on three of the four** — opting out of the immutable
+    cache the offline claim rests on.
+  - **Fabrication when a fetch failed.** 480 players at random coordinates named
+    `Player0`…`Player479`, and a status line printing `30T · 20719×64-d` whether
+    or not anything had loaded.
+
+The third is the one that matters. The rule here is the one `/model` states on
+itself — *the numbers are either the model's or absent* — and `/player` was
+drawing a random cloud and labelling it with a count it did not have.
+
+One fetch of `front_office_lite.json` now (with `cap_pct` added to that
+generator, the only field `/player` needed and the whole reason it was pulling
+1.1 MB), no `no-store` anywhere, empty arrays instead of invented ones, and a
+status line that says the files did not load when they did not load.
+
+    5,231,646 -> 2,960,868 bytes
+    offline    74% -> 100% of its online DOM
+
+**All 18 pages now come back with the network gone**, every one at 100% of what
+it rendered online.
+
+Still heavy: `player_season_props.json` is 2.75 MB read for a count and a mean. A
+slice would take it to a few hundred bytes. Next.
