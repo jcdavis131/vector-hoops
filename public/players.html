@@ -76,7 +76,7 @@ canvas{display:block;width:100%;height:440px}
 <!-- build_social_meta.py: end -->
 <!-- the camera every embedding map on this site shares. In <head> because the
      inline map script below calls VHMapCamera.attach() while it runs. -->
-<script src="assets/map-camera.js?v=652adec8"></script>
+<script src="assets/map-camera.js?v=abc48188"></script>
 </head>
 <body>
 <a class="vh-skip" href="#main">Skip to the content</a>
@@ -154,6 +154,7 @@ async function loadPts(f='all'){try{
   }
   mapState='real';
   applyFilter(f);
+  if(cam&&cam.fit)cam.fit();   /* frame the data, not the cube */
 }catch(e){ptsPromise=null;mapState='failed';if(!dots.length)seedPlaceholder();applyFilter(f);}}
 /* The list showed the first 80 of however many the filter left — 1,814 with
    All selected — and said nothing about the other 1,684. The label beside the

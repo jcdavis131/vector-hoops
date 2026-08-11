@@ -88,7 +88,7 @@ footer{max-width:1120px;margin:0 auto;padding:10px var(--gutter);display:flex;fl
 <!-- the camera every embedding map on this site shares. In <head> because the
      inline map script below calls VHMapCamera.attach() while it runs, and a
      module that arrives after its caller is a module that is not there. -->
-<script src="assets/map-camera.js?v=652adec8"></script>
+<script src="assets/map-camera.js?v=abc48188"></script>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -243,7 +243,7 @@ var cam=VHMapCamera.attach(cv,{
   onSpin:function(on){var b=$('bRot');if(b) b.textContent='rot '+(on?'◐':'□');},
   live:'ixLive', status:'oriLab', hover:'hovLab', cy:0.53
 });
-async function loadLimited(){try{let res=await fetch('assets/embedding_map_points_limited.json?v=407d2cbc');let data=await res.json();let pts=data.points||[];dots.length=0;pts.forEach(pt=>{let x=(pt.x-0.5)*2;let y=(pt.y-0.5)*2;let z=((pt.z||0.5)-0.5)*2;let col=OKABE[pt.c%8]||'#FAFAF8';let isCur=pt.is_current;dots.push({x,y,z,r:isCur?1.1:0.85,col,h:pt.c,pid:pt.pid,season:pt.season,nm:pt.display_name,alpha:isCur?0.95:0.86});});limitedLoaded=true;mapState='real';var ll2=$('lodLab2'); if(ll2) ll2.textContent=dots.length+' pts • clean view';if(qs.get('full')==='1'){loadFull();}}catch(e){mapState='failed';if(!dots.length)seedPlaceholder();}}
+async function loadLimited(){try{let res=await fetch('assets/embedding_map_points_limited.json?v=407d2cbc');let data=await res.json();let pts=data.points||[];dots.length=0;pts.forEach(pt=>{let x=(pt.x-0.5)*2;let y=(pt.y-0.5)*2;let z=((pt.z||0.5)-0.5)*2;let col=OKABE[pt.c%8]||'#FAFAF8';let isCur=pt.is_current;dots.push({x,y,z,r:isCur?1.1:0.85,col,h:pt.c,pid:pt.pid,season:pt.season,nm:pt.display_name,alpha:isCur?0.95:0.86});});limitedLoaded=true;mapState='real';if(cam&&cam.fit)cam.fit();   /* frame the data, not the cube */var ll2=$('lodLab2'); if(ll2) ll2.textContent=dots.length+' pts • clean view';if(qs.get('full')==='1'){loadFull();}}catch(e){mapState='failed';if(!dots.length)seedPlaceholder();}}
 /* Returns whether the full cloud is now drawn. It used to end `catch(e){}` and
    return nothing, so a failed fetch was indistinguishable from a slow one and the
    caller flipped the button to "on" over a cloud that had not changed. Memoised

@@ -245,7 +245,12 @@ def main() -> int:
         def ori():
             return ev(ws, "JSON.stringify([VHMapCamera.cams[0].yaw,VHMapCamera.cams[0].pitch])")
 
-        ev(ws, "VHMapCamera.cams[0].reset(false); VHMapCamera.cams[0].setSpin(false,false)")
+        # reset() restores the fitted zoom, which on a phone is ~1.65 — high
+        # enough that a 1.83x spread hits the 3.0 clamp and the proportionality
+        # check below compares two ceilings and proves nothing. Start this case
+        # from 1.0 explicitly so the ratio is measurable.
+        ev(ws, "VHMapCamera.cams[0].reset(false); VHMapCamera.cams[0].setSpin(false,false);"
+               "VHMapCamera.cams[0].setZoom(1,false)")
         time.sleep(0.2)
         start, ori0 = zoom(), ori()
 
@@ -327,6 +332,9 @@ def main() -> int:
             return JSON.stringify({x:r.left+r.width/2, y:r.top+r.height/2});})()""")
         cx, cy = b2["x"], b2["y"]
         sy0 = ev(ws, "Math.round(window.scrollY)")
+        # the map opens fitted to its data now, so the baseline is whatever
+        # reset() restored, not 1.0
+        z_before = zoom()
         pinch(80, 150, steps=8, drift=120)
         sy1 = ev(ws, "Math.round(window.scrollY)")
         zd = zoom()
@@ -334,10 +342,11 @@ def main() -> int:
         if sy0 != sy1:
             fails.append(f"pinching with both fingers drifting down scrolled the page from "
                          f"{sy0} to {sy1}; the map moved out from under the gesture")
-        if not isinstance(zd, (int, float)) or abs(zd - 150 / 80) > 0.12:
-            fails.append(f"a pinch with 120px of vertical drift left zoom at {zd}; the "
-                         f"spread was 80px -> 150px, so {150/80:.2f} is what it means. The "
-                         f"browser took the gesture as a scroll.")
+        want_zd = min(3.0, z_before * 150 / 80)
+        if not isinstance(zd, (int, float)) or abs(zd - want_zd) > 0.12:
+            fails.append(f"a pinch with 120px of vertical drift left zoom at {zd}; from "
+                         f"{z_before:.3f} a 80px -> 150px spread means {want_zd:.2f} "
+                         f"(the camera clamps at 3). The browser took the gesture as a scroll.")
 
         # Two fingers sliding together tilt it. Measured before that existed: a
         # one-finger upward drag moved pitch 0.15 while the page took 105px, and
@@ -350,6 +359,7 @@ def main() -> int:
             return JSON.stringify({x:r.left+r.width/2, y:r.top+r.height/2});})()""")
         cx, cy = b3["x"], b3["y"]
         sy2 = ev(ws, "Math.round(window.scrollY)")
+        z_slide = zoom()
         pinch(120, 120, steps=8, drift=-100)          # same gap: a slide, not a pinch
         tilt = ev(ws, "+VHMapCamera.cams[0].pitch.toFixed(3)")
         tz = zoom()
@@ -360,9 +370,9 @@ def main() -> int:
         if not isinstance(tilt, (int, float)) or abs(tilt - want_p) > 0.08:
             fails.append(f"two fingers slid 100px up left pitch at {tilt}; the camera moves "
                          f"0.005 per pixel, so {want_p:.2f} is what that gesture means")
-        if not isinstance(tz, (int, float)) or abs(tz - 1) > 0.05:
-            fails.append(f"a slide with the fingers a constant 120px apart changed zoom to "
-                         f"{tz}; sliding is not pinching and must not zoom")
+        if not isinstance(tz, (int, float)) or abs(tz - z_slide) > 0.05:
+            fails.append(f"a slide with the fingers a constant 120px apart moved zoom from "
+                         f"{z_slide} to {tz}; sliding is not pinching and must not zoom")
         if sy2 != sy3:
             fails.append(f"sliding two fingers up scrolled the page {sy2} -> {sy3}")
 

@@ -193,8 +193,82 @@
       if (announce) cam.say(cam.spin ? 'Rotation resumed.' : 'Rotation paused.');
     };
 
+    /* Frame the data, not the cube it is drawn in.
+
+       Measured on the landing page at zoom 1: the cloud was 170x188 inside a
+       689x440 canvas — a quarter of the width, under half the height, the rest
+       dark — and 140x155 of 361x360 on a phone. `proj` scales by
+       min(W,H) * scFrac * zoom, so a point at the edge of the normalised cube
+       lands 185px from centre on desktop, a 370px span. The cloud measures 170.
+       The data does not reach the edge of the cube, so a view built around the
+       cube wastes most of the frame on the control this whole site is about.
+
+       A 97th percentile, not a max: one stray point at the corner makes a
+       max-based fit no better than no fit at all.
+       min() of the two axes, never max: filling the width would need 3.45x here
+       and setZoom clamps at 3, and overshooting the height would push points
+       off the top. The canvas is wider than the data is; that is aspect ratio,
+       not something to solve by cropping. */
+    cam.home = 1;
+    cam.fit = function (frac) {
+      var pts = (typeof o.points === 'function' && o.points()) || [];
+      var s = o.size(), W = s[0], H = s[1];
+      if (!pts.length || !W || !H) return false;
+      /* The map turns. A cloud's projected extent depends on the angle you
+         measure it from, so fitting to the current yaw fits one frame of a
+         moving object: measured at yaw 0 the extents are rx 52.8 / ry 46.2, and
+         six seconds of auto-rotation later the same cloud reads rx 70.3 / ry
+         66.4. Fitting the first pair asks for k 3.85, the cloud then grows past
+         the frame as it turns, and a painted-pixel check reads the clipping as
+         a perfect 100% fill.
+
+         So measure at several yaws and keep the widest. The fit then holds at
+         every angle the rotation passes through rather than at the one it
+         happened to start from. */
+      var asc = function (a, b) { return a - b; };
+      var q = function (a) { return a[Math.min(a.length - 1, Math.floor(a.length * 0.995))]; };
+      var yaw0 = cam.yaw, rx = 0, ry = 0, sampled = 0;
+      var ANGLES = [0, Math.PI / 4, Math.PI / 2, 3 * Math.PI / 4];
+      for (var a = 0; a < ANGLES.length; a++) {
+        cam.yaw = yaw0 + ANGLES[a];
+        var xs = [], ys = [];
+        for (var i = 0; i < pts.length; i++) {
+          var d = pts[i];
+          if (!d || typeof d.x !== 'number' || typeof d.y !== 'number') continue;
+          var P = cam.proj(d.x, d.y, d.z);
+          xs.push(Math.abs(P[0] - W * 0.5));
+          ys.push(Math.abs(P[1] - H * cyFrac));
+        }
+        if (xs.length < 8) { cam.yaw = yaw0; return false; }
+        xs.sort(asc); ys.sort(asc);
+        rx = Math.max(rx, q(xs)); ry = Math.max(ry, q(ys));
+        sampled = xs.length;
+      }
+      cam.yaw = yaw0;
+      if (!sampled) return false;
+      if (rx < 2 && ry < 2) return false;
+      /* proj scales linearly with zoom, so divide the measured extents back to
+         what they would be at zoom 1 and set an absolute zoom. Multiplying the
+         current zoom instead made fit() compound on itself: called twice it ran
+         to the 3.0 clamp, pushed the cloud past the canvas edge, and the
+         painted-pixel check read that as "100% of height" — a clipped cloud
+         looks exactly like a perfectly framed one from the outside. */
+      var z = cam.zoom || 1;
+      var rx1 = rx / z, ry1 = ry / z;
+      var want = typeof frac === 'number' ? frac : 0.82;
+      var hy = H * Math.min(cyFrac, 1 - cyFrac);
+      var k = Math.min(rx1 >= 1 ? (W * 0.5 * want) / rx1 : 1e9,
+                       ry1 >= 1 ? (hy * want) / ry1 : 1e9);
+      if (!isFinite(k) || k <= 0) return false;
+      cam.lastFit = {W: W, H: H, n: sampled, rx: rx, ry: ry,
+                     rx1: rx1, ry1: ry1, z: z, k: k};
+      cam.setZoom(k, false);
+      cam.home = cam.zoom;   /* 0 and Home return here, not to a zoom that framed nothing */
+      return true;
+    };
+
     cam.reset = function (announce) {
-      cam.yaw = 0; cam.pitch = 0; cam.setZoom(1, false);
+      cam.yaw = 0; cam.pitch = 0; cam.setZoom(cam.home || 1, false);
       if (announce) cam.say('View reset.');
       cam.showOri(false);
     };
