@@ -26,7 +26,7 @@
 <div class="card"><h2 class="vh-sr">The model at a glance</h2><div class="mono">MTNN • ONNX 549KB • 17 towers • 130 feats • 64-d L2 • SupCon 224K • CORAL+GRL • towerBlocks2 h160 d32</div><div class="mono-lg" id="zooHead" style="margin:6px 0">Loading the measured headline…</div><div class="sub">17 towers (bio / career / playstyle / shooting / defense / context / salary / draft / awards / clutch / fatigue / opponent / pace / chemistry / market / durability / volume) → 64-d L2 unit cosine is dot. 12 archetypes A0-A11. Shared space 64/32/24 →64 trunk. On the committed held-out scoreboard (<code>assets/eval_scoreboard.json</code>, computed 2026-07-25): adjacent-season retrieval top-1 <b>0.51</b> / top-5 <b>0.93</b> over 10,104 eligible pairs, and on the truly held-out test split (n=790) top-1 <b>0.44</b> / top-5 <b>0.76</b> — against a transparent 14-d baseline of top-5 <b>0.20</b>. Ties count against the target. ONNX input [1,130]→[1,64] L2. Joint 20,719 ×64-d 5-sport lives. <span style="font-family:var(--hand)">Real models not vibes.</span></div><div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap"><span class="pill pill-y">MT v4 MHA loss 0.6847 wins MAE 8.9</span><span class="pill">MT v3 loss 0.6641 wins MAE 8.99</span><span class="pill">both from <code>assets/data/model_zoo_eval.json</code></span><span class="pill">CORAL + contrastive + GRL</span><span class="pill">gradient × input attribution</span></div></div>
 <div class="card grid2"><h2 class="vh-sr">Feature attribution</h2><div><div class="mono">Feature attribution — real, from <code>assets/mtnn_attr_pop.json</code></div>
 <div id="attrTargets" role="group" aria-label="Attribution target" style="display:flex;gap:6px;flex-wrap:wrap;margin:8px 0"></div>
-<div id="attrBars" aria-live="polite"><div class="sub">Loading attributions…</div></div>
+<div id="attrBars"><div class="sub">Loading attributions…</div></div>
 <div class="sub" style="margin-top:8px"><b>How this is computed</b> — <span id="attrMethod"></span></div>
 <div class="sub" style="margin-top:6px;border-left:3px solid var(--orange);padding-left:8px"><b>Read zero carefully</b> — <span id="attrMasked"></span></div>
 <div class="mono" id="attrProv" style="margin-top:8px;opacity:.7;text-transform:none"></div></div><div><div class="mono" id="zooCount">Model zoo · 5-fold CV</div>
@@ -37,7 +37,8 @@
 <div class="mono">End to end — one stat to one prediction</div>
 <p class="sub" id="flowLead" style="margin:6px 0 0">Loading the architecture from <code>assets/mtnn_arch.json</code>…</p>
 <ol class="flow" id="flow" aria-label="Model pipeline, five stages"></ol>
-<div id="flowDetail" class="flow-detail" aria-live="polite"></div>
+<div id="flowDetail" class="flow-detail"></div>
+<p id="modelLive" class="vh-sr" role="status" aria-live="polite" aria-atomic="true"></p>
 <p class="mono" id="flowProv" style="margin-top:8px;opacity:.7;text-transform:none"></p>
 </div>
 
@@ -118,7 +119,12 @@
    zero gradient, so a zero bar means NEVER MEASURED, not "no effect". */
 (function(){
   'use strict';
-  var TOP=12, data=null, target=null;
+  var TOP=12, data=null, target=null, pressed=false;
+  /* A container that receives a whole chart announces the whole chart. The site's
+     pattern everywhere else is a status node fed one sentence, and `pressed`
+     keeps the first render silent: nobody asked for it. */
+  function say(m){var l=document.getElementById('modelLive');
+    if(!l||!m)return; if(l.textContent===m) l.textContent=''; l.textContent=m;}
   var elBars=document.getElementById('attrBars'),
       elTabs=document.getElementById('attrTargets'),
       elMethod=document.getElementById('attrMethod'),
@@ -154,6 +160,10 @@
     Array.prototype.forEach.call(elTabs.children,function(b){
       b.setAttribute('aria-pressed', b.dataset.t===target?'true':'false');
     });
+    if(pressed && rows.length){
+      say(label(target)+' — '+rows.length+' features, led by '+rows[0].f+
+          ' at '+(rows[0].v*scale).toFixed(2)+'.');
+    }
   }
   fetch('assets/mtnn_attr_pop.json?v=0438ec8c',{cache:'force-cache'}).then(function(r){
     if(!r.ok) throw new Error('HTTP '+r.status);
@@ -164,7 +174,7 @@
       var b=document.createElement('button');
       b.className='pill tbtn'; b.type='button'; b.dataset.t=t;
       b.textContent=label(t); b.setAttribute('aria-pressed','false');
-      b.addEventListener('click',function(){ target=t; render(); });
+      b.addEventListener('click',function(){ target=t; pressed=true; render(); });
       elTabs.appendChild(b);
     });
     elMethod.textContent=j.method||'';
@@ -271,6 +281,9 @@
         '<span class="fl-label">'+esc2(L.label||L.id)+'</span>'+
         '<span class="fl-dim">'+esc2(dims[L.id]||'')+'</span></button></li>';
     }).join('');
+    var stagePressed=false;
+    function sayStage(m){var l=document.getElementById('modelLive');
+      if(!l||!m)return; if(l.textContent===m) l.textContent=''; l.textContent=m;}
     function pick(i){
       var L=layers[i];
       Array.prototype.forEach.call(flowEl.querySelectorAll('button'),function(b){
@@ -301,9 +314,11 @@
           'see <a href="/dictionary#coverage">coverage</a>, and the chart above.</div>';
       }
       flowDet.innerHTML='<b>Stage '+(i+1)+' — '+esc2(L.label||L.id)+'.</b> '+esc2(L.detail||'')+extra;
+      if(stagePressed) sayStage('Stage '+(i+1)+' of '+layers.length+', '+(L.label||L.id)+'.');
     }
     flowEl.addEventListener('click',function(e){
-      var b=e.target.closest?e.target.closest('button[data-i]'):null; if(b) pick(+b.dataset.i);
+      var b=e.target.closest?e.target.closest('button[data-i]'):null;
+      if(b){ stagePressed=true; pick(+b.dataset.i); }
     });
     flowProv.textContent='Model '+(a.model||'?')+' · built '+(a.built||'?')+
       ' · trained '+((a.training||{}).epochs||'?')+' epochs, fusion '+(a.fusion||'?')+

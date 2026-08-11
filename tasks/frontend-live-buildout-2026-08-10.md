@@ -5623,3 +5623,51 @@ asking the thing under test to grade itself.
 
     announces the true count     RC=1  caught
     says the list is cut short   RC=1  caught
+
+
+## The model page read its charts aloud at you (2026-08-11)
+
+Phase 3. Two of `/model`'s regions carried `aria-live="polite"`, and both are
+containers that receive whole blocks:
+
+    #attrBars     aria-live='polite'   12 rows   279 chars
+    #flowDetail   aria-live='polite'             176 chars
+
+A live region announces whatever lands in it. Both fill **on arrival**, so a
+screen reader was handed **455 characters of bar chart and pipeline detail** to a
+visitor who had pressed nothing — and 321 more on every target press.
+
+The information was never missing: each bar already carries
+`role="img"` with its own label, and the chips are real buttons with
+`aria-pressed`. What was wrong is that the page said all of it, unasked.
+
+The charts are ordinary regions now, and one status node carries a sentence, only
+when a press asks for one:
+
+    on arrival     ''
+    after a chip   'Position — 12 features, led by PLAYER_HEIGHT_INCHES at 1.93.'
+    after a stage  'Stage 2 of 5, Residual towers.'
+
+### The half my own test did not check
+
+`smoke_model.py` is new, and its first version caught two of three mutations.
+Putting `aria-live` back on the chart left it **green** — the fix has two halves,
+and the test only asserted the second: the status node still said the right thing.
+
+It asks the principle now rather than the attribute — **a live region is for a
+sentence, not for twelve rows** — by measuring what every `[aria-live]` element on
+the page actually holds, so a new offender anywhere is caught too:
+
+    - #attrBars is a live region holding 279 characters ('Mean |gradient × input|…')
+
+Three for three after that.
+
+### Two sweeps that found nothing, which is the rest of the result
+
+**The rotation chart on `/trends` is already keyboard-operable** — the SVG carries
+`tabindex="0"`, `role="img"`, `aria-labelledby`, and a keydown handler for
+ArrowLeft/Right/Up/Down/Home/End that moves the selection and announces it. One
+tab stop with arrow keys, which is the right shape; not thirty tab stops.
+
+**The season buttons are real `<button>`s with `aria-pressed`**, and so are the
+attribution chips. Neither needed anything.

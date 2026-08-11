@@ -159,6 +159,19 @@ Both now point at the pages the nav already uses for those words — `/play.html
 rather than at anchors minted to justify the links. A new `fragments` check makes every deep link
 land on something that exists; it was shown failing first.
 
+**The model page read its charts aloud at you.** Two regions on `/model` carried `aria-live="polite"`
+and both are containers that receive whole blocks — the twelve-row attribution chart (279 characters)
+and the pipeline detail (176). A live region announces whatever lands in it, and both fill **on
+arrival**, so a screen reader was handed 455 characters to a visitor who had pressed nothing, plus 321
+more per press. The information was never missing: every bar already carries its own `role="img"`
+label and the chips are real buttons with `aria-pressed`. The charts are ordinary regions now and one
+status node carries a sentence, only when asked: *"Position — 12 features, led by
+PLAYER_HEIGHT_INCHES at 1.93."* New `smoke_model.py`, three mutations, three caught — **after** its
+first version passed with `aria-live` put back, because it asserted only half the fix. It asks the
+principle now: a live region is for a sentence, not for twelve rows. Two sweeps found nothing, which
+is the rest of the result: `/trends`' rotation chart is already one tab stop with arrow-key selection
+and announcements, and every chip on both pages is already a real button with a pressed state.
+
 **It said 10 matches. There were 538.** `/player-cards` sliced its results to ten *before* counting
 them, so the announcement was the length of the list rather than the number of matches: typing `an`
 matches **538** charted players and a screen-reader user was told **"10 matches."**, with ten rows on
