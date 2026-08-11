@@ -56,7 +56,8 @@ STATE = """(function(){
   if(!a||!c) return JSON.stringify({err:'no filter buttons'});
   return JSON.stringify({
     button:a.classList.contains('on')?'all':(c.classList.contains('on')?'current':'?'),
-    lab:((document.getElementById('lab')||{}).textContent||'').trim()});
+    lab:((document.getElementById('lab')||{}).textContent||'').trim(),
+    dots:(typeof dots!=='undefined'&&dots)?dots.length:0});
 })()"""
 
 
@@ -143,7 +144,11 @@ def main() -> int:
         if not isinstance(start, dict) or start.get("err"):
             failures.append(f"the filter buttons are not on the page: {start}")
             raise SystemExit
-        if "pts" not in start["lab"]:
+        # was `"pts" not in lab` — coupled to the label's wording, so rewording
+        # it from "1764 pts • 1814 filtered · mem 86%" to "1764 of 1764 points"
+        # made this report a working map as a broken one. Ask the page how many
+        # points it drew instead.
+        if not start.get("dots"):
             failures.append(f"the map never loaded — label reads {start['lab'][:50]!r}, so "
                             f"nothing below is a fair test")
             raise SystemExit

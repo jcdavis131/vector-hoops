@@ -5474,3 +5474,59 @@ three of the four were **my** mutation being wrong rather than the gate:
 
 The three gates were right and the tests were wrong. Worth writing down: **an
 uncaught mutation is a question, not a verdict.**
+
+
+## 1814 was 1764, in eleven places (2026-08-11)
+
+The brief centres everything on the embedding map and the Explorer is where it
+lives. Two things were wrong with it.
+
+**The list capped in silence.** `renderList()` rendered `dots.slice(0,80)` — the
+first 80 of whatever the filter left — and said nothing about the rest, while the
+label beside the map printed a total at the same time. The only route to a player
+outside those 80 was clicking a dot on a canvas.
+
+A search now sits above the list. Everything it filters is already in `dots`, so
+nothing is fetched; it ships `disabled` and the script enables it; and the count
+is stated rather than implied:
+
+    80 of 1764 shown — keep typing to narrow it.
+    'lebron james' → 1 player shown.
+    'zzzznotaplayer' → No player matches. Clear the box to see the list again.
+
+**And the number was wrong.** The page said **1814** in eleven visitor-facing
+places — the title, the description, both social cards, the h1, the All button,
+the loading pill, the prose and the footer note.
+`assets/embedding_map_points_limited.json` holds **1,764** usable points. The
+prose said *"Honest count live from file"* directly beside a frozen number, and
+the map label printed both at once:
+
+    $('lab').textContent = f+' • '+dots.length+' pts • 1814 filtered · mem 86%'
+
+`dots.length` and a hardcoded 1814, side by side, disagreeing — plus a memory
+figure from nothing at all. The current-season count, 532, was right.
+
+`scripts/build_player_counts.py` derives both from the asset and stamps them, with
+a `--check` that `check_frontend`'s `derived` gate already picks up — **eight
+generators now**. Patterns are anchored to their sentence, because a bare
+number-swap would rewrite pids, hex colours and the 80-row cap too.
+
+### Two of my own things this caught
+
+The hidden heading added to that card yesterday read **"How this page is built"**
+— it was anchored to the "Zero-deps inline JS" note, which sits *outside* the
+card. A screen reader navigating headings landed on that and found the player
+list. Checked all 37 hidden headings against the content that follows them; it was
+the only one wrong. Now "The player list".
+
+And `smoke_players.py` decided the map had loaded by looking for `"pts"` in the
+label. Rewording the label to *"1764 of 1764 points"* made it report a working map
+as a broken one. It asks the page how many points it drew now.
+
+### The audit harness left a 2,400px div behind
+
+`audit_gates.py` was killed by a ten-minute limit mid-case, so its `finally` never
+ran and `leaderboard.html` kept the `viewport` mutation. Backups now go to a fixed
+place with a manifest written **before** each mutation, and the next run restores
+from it before doing anything else. A harness that can leave the site broken is
+the thing its own docstring warns about.

@@ -21,10 +21,10 @@ worse than no harness.
 from __future__ import annotations
 
 import argparse
+import json
 import shutil
 import subprocess
 import sys
-import tempfile
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -99,6 +99,35 @@ CASES = [
 ]
 
 
+# A run that is killed - a timeout, a Ctrl-C - never reaches its finally, and the
+# first version of this left a 2,400px <div> in leaderboard.html when a 10-minute
+# limit cut it off mid-case. Backups go to a fixed place with a manifest beside
+# them, and the next run puts them back before it does anything else. A mutation
+# harness that can leave the site broken is the thing its own docstring warns
+# about.
+SAFE = ROOT / ".audit-backups"
+MANIFEST = SAFE / "manifest.json"
+
+
+def recover() -> None:
+    if not MANIFEST.exists():
+        return
+    try:
+        pairs = json.loads(MANIFEST.read_text(encoding="utf-8"))
+    except ValueError:
+        pairs = {}
+    put_back = []
+    for rel, bak in pairs.items():
+        src, b = ROOT / rel, Path(bak)
+        if b.exists() and src.exists() and src.read_bytes() != b.read_bytes():
+            shutil.copy(b, src)
+            put_back.append(rel)
+    MANIFEST.unlink(missing_ok=True)
+    if put_back:
+        print(f"a previous run did not finish; restored {put_back} from its backups\n")
+        sync()
+
+
 def sync() -> None:
     subprocess.run([PY, str(ROOT / "scripts" / "sync_public.py")],
                    capture_output=True, cwd=str(ROOT))
@@ -110,7 +139,9 @@ def main() -> int:
     args = ap.parse_args()
     wanted = {s.strip() for s in args.only.split(",")} if args.only else None
 
-    tmp = Path(tempfile.mkdtemp(prefix="vh-audit-"))
+    SAFE.mkdir(exist_ok=True)
+    recover()
+    tmp = SAFE
     uncaught: list[str] = []
     touched: dict[Path, Path] = {}
 
@@ -124,6 +155,10 @@ def main() -> int:
             bak = tmp / (name + "-" + src.name)
             shutil.copy(src, bak)
             touched[src] = bak
+            # written BEFORE the mutation, so a kill leaves a trail to follow
+            MANIFEST.write_text(json.dumps(
+                {str(k.relative_to(ROOT)).replace("\\", "/"): str(v)
+                 for k, v in touched.items()}, indent=1), encoding="utf-8")
 
             with open(src, encoding="utf-8", newline="") as fh:
                 raw = fh.read()
@@ -163,6 +198,7 @@ def main() -> int:
                 shutil.copy(bak, src)
                 drift.append(str(src.relative_to(ROOT)))
         sync()
+        MANIFEST.unlink(missing_ok=True)
         shutil.rmtree(tmp, ignore_errors=True)
         if drift:
             print(f"\nrestored from backup after the run: {drift}")

@@ -159,6 +159,18 @@ Both now point at the pages the nav already uses for those words — `/play.html
 rather than at anchors minted to justify the links. A new `fragments` check makes every deep link
 land on something that exists; it was shown failing first.
 
+**1814 was 1764, in eleven places.** The Explorer's list rendered the first 80 of whatever the filter
+left and said nothing about the rest, so the only route to a player outside those 80 was clicking a
+dot on a canvas. A search now sits above it — nothing is fetched, the box ships `disabled` and the
+script enables it, and the count is stated: *80 of 1764 shown*. **And the number was wrong**: the page
+said **1814** in eleven visitor-facing places while the asset holds **1,764** usable points, with the
+prose reading *"Honest count live from file"* beside the frozen number and the map label printing
+`dots.length` and a hardcoded 1814 side by side, plus a "mem 86%" from nothing at all. New
+`build_player_counts.py` derives both counts from the asset; the `derived` gate already runs it.
+Two of my own things fell out: the hidden heading on that card said "How this page is built" over the
+player list (checked all 37 — the only one wrong), and `smoke_players.py` judged the map loaded by
+looking for `"pts"` in the label, so rewording it reported a working map as broken.
+
 **Green only means something if it can go red.** Every interaction smoke here has a mutation matrix;
 the gates did not, and one of them turned out this week to have been incapable of failing. New
 `scripts/audit_gates.py` breaks something each gate claims to catch and requires it to notice —

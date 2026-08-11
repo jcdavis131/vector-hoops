@@ -24,3 +24,4 @@ node_modules/
 
 # Live training cockpit scratch — regenerated per run, never a build artifact
 assets/mtnn_training/
+.audit-backups/
