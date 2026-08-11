@@ -3863,3 +3863,40 @@ screen, which is the observer working as designed rather than a defect. Making t
 map paint before 7.9s means either splitting that file or drawing the cloud from
 the 273.5 KB points file first — a real option, but a design change rather than a
 correction, so it is not something to do quietly.
+
+
+## Two loose ends from the speed pass (2026-08-10)
+
+**`READINESS.md` and `readiness.html` are a mirror, and I keep treating them as
+one file plus an optional extra.** The speed table went into the markdown and not
+into the artifact, which is the thing the operator actually opens. That is the
+third time this pair has needed an outside nudge — 129→135, the preview
+contradiction, and now the firing's own headline result. It has exactly the shape
+of root↔`public/`, which has a gate precisely because a hand-maintained mirror
+drifts. **Rule from here: an edit to one is unfinished until the other carries it
+or this board says why not.** No gate for it yet; `sync_public.py` cannot help
+because the artifact lives in the scratchpad, not the repo.
+
+Also corrected while in there: the artifact was citing a specific deployment id
+four builds old as "READY". The branch alias always serves the newest build, so
+the page now says that and names the current one — `dpl_CHZw7DepiHr81t2q4UP8unUCbCJE`
+→ `def85879`, checked through the API — rather than pinning a claim that ages
+badly. The header is anchored to a sha now instead of only a commit count, since
+an absolute count is wrong one commit later by construction.
+
+**`/trends` reported `map has ink NEVER` and I let it pass unremarked.** Almost
+certainly the same explanation given for `/model`'s trajectories — an
+IntersectionObserver section sitting below the 1280×900 fold that is never
+approached in a probe that does not scroll. Recording it rather than asserting it:
+the probe never scrolled, so "never drew" and "never asked to draw" are not
+distinguished by that run. `/trends` is 264.1 KB and fully loaded by 1.9s on
+Fast 3G, so there is no speed question hiding behind it either way.
+
+### Still remembered rather than enforced
+
+`build_model_zoo.py --check` exists and is in the verify list, but it is not a
+`check_frontend` check. `mirror` and `tokens` are checks precisely because a
+hand-maintained convention drifted silently, and a stale slice would be served
+`immutable` for a year with nothing going red. Wiring it is the shape of
+`check_tokens` — subprocess the `--check`, fail on a non-zero exit — and it has to
+be shown failing once before it counts.
