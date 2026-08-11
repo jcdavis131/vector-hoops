@@ -96,6 +96,13 @@ CASES = [
      ('<main id="main" tabindex="-1">',
       '<main id="main" tabindex="-1"><div style="width:2400px;height:4px"></div>'),
      gate("check_viewport.py"), True),
+
+    # Put back the read this gate was written for: vectors_map_lite.json's key
+    # is `players`, /player asked for `V.vectors`, and every one of the four
+    # reads had a fallback that made the miss look like working code.
+    ("datakeys", "player.html",
+     ("var PTS = (V && V.points) || [];", "var PTS = (V && V.vectors) || [];"),
+     gate("check_data_keys.py", "--only", "player"), True),
 ]
 
 
