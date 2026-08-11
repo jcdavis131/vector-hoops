@@ -3,7 +3,7 @@
  */
 (function(global){
   'use strict';
-  const PAL = ['#0072B2','#D55E00','#009E73','#F0E442','#56B4E9','#CC79A7','#E69F00','#FFFEF7'];
+  const PAL = ['#0072B2','#D55E00','#009E73','#F0E442','#56B4E9','#CC79A7','#E69F00','#FF4F6B'];
   const ARCH_DEFS = {
     'Offensive Glass + Rim Protection':'Elite second-chance + paint deterrence. High OREB, BLK, low 3PA. Era evolves from Mutombo 1998 to Wemby 2024 same PC1 tip.',
     'Offensive Glass (Low Shot Volume)':'Garbage man, putbacks, screen-setter. Low USG, high OREB%, low TS load.',

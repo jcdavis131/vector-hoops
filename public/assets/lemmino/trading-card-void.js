@@ -2,7 +2,7 @@
 export async function mountTradingCardVoid(root){
   if(!root) return;
   const CACHE='vector-hoops-v44-20260723-badges';
-  const OKABE=['#0072B2','#D55E00','#009E73','#F0E442','#56B4E9','#CC79A7','#E69F00','#111111'];
+  const OKABE=['#0072B2','#D55E00','#009E73','#F0E442','#56B4E9','#CC79A7','#E69F00','#FF4F6B'];
   const ARCH_LABELS=["Glass+Rim","LowVol Glass","Low Impact","Def Glass FT","Vol+3P","3P Acc+Vol","Playmaking","Scoring Vol"];
   const FULL_LABELS=["Offensive Glass + Rim Protection","Offensive Glass (Low Shot Volume)","Three-Point Volume (Low On-Court Impact)","Defensive Glass + Rim Pressure (Fts)","Shot Volume + Three-Point Volume","Three-Point Accuracy + Three-Point Volume","Playmaking + Steals","Scoring Volume + Shot Volume"];
 

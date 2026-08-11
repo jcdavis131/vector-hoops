@@ -87,18 +87,19 @@ canvas{display:block;width:100%;height:440px}
 <div class="grid2">
 <div class="card" style="padding:0"><h2 class="vh-sr">The map</h2>
 <div style="padding:10px 12px;display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;border-bottom:2px solid var(--ink);background:linear-gradient(90deg,var(--surface),#FFF6CC)"><span class="pill y mono">Canvas • DPR 1.4 max · #0A0C10 dark inset</span><span class="mono" style="display:flex;gap:6px"><button id="fAll" class="pill on mono">All 1764</button><button id="fCur" class="pill mono">Current 532</button><button id="fLod" class="pill mono">LOD 4k</button></span></div>
-<div class="map-box"><canvas id="c" width="900" height="480" aria-label="The embedding map. Each dot is one player-season, placed by the model and coloured by archetype. The list below the map carries the same players as text, and the search above it reaches any of them without a mouse."></canvas><div style="position:absolute;left:10px;top:10px;display:flex;gap:6px;flex-wrap:wrap;pointer-events:none"><span class="pill mono" id="lab" style="font-size:10.5px">loading 1764 pts</span><span class="pill mono" id="plOri" style="font-size:10.5px">yaw 0° · pitch 0° · zoom 1.0×</span></div><div style="position:absolute;left:10px;bottom:10px;max-width:calc(100% - 20px);pointer-events:none"><span class="pill mono" id="plHov" style="font-size:10.5px">◎ hover a dot to name it · click to select · drag to rotate</span></div><div style="position:absolute;right:10px;bottom:10px;pointer-events:none"><span class="pill mono" style="font-size:10.5px">◎ pulse #EB6834 · trajectory orange</span></div></div>
+<div class="map-box"><canvas id="c" width="900" height="480" aria-label="The embedding map. Each dot is one player-season, placed by the model and coloured by archetype. The list below the map carries the same players as text, and the search above it reaches any of them without a mouse."></canvas><div style="position:absolute;left:10px;top:10px;display:flex;gap:6px;flex-wrap:wrap;pointer-events:none"><span class="pill mono" id="lab" style="font-size:10.5px">loading 1764 pts</span><span class="pill mono" id="plOri" style="font-size:10.5px">yaw 0° · pitch 0° · zoom 1.0×</span></div><div style="position:absolute;left:10px;right:10px;bottom:10px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;pointer-events:none"><span class="pill mono" id="plHov" style="font-size:10.5px">◎ hover a dot to name it · click to select · drag to rotate</span><span class="pill mono" style="font-size:10.5px">◎ pulse #EB6834 · trajectory orange</span></div></div>
+<div id="plKey" class="archetype-legend-dark" style="margin-top:10px;background:#0A0C10;border:2px solid #0A0C10;border-radius:10px;padding:10px 12px;box-shadow:2px 2px 0 var(--ink)"></div>
 <div style="padding:8px 12px;display:flex;justify-content:space-between;gap:8px;border-top:2px solid var(--ink)"><span class="mono" id="selLab" style="color:var(--ink-soft)">select player → trajectory</span><span class="mono"><span class="pill mono" style="font-size:10px">pack 672-123-456</span> <a class="pill mono" style="font-size:10px;text-decoration:none" href="/dictionary#retrieval">held-out top-5 0.76</a></span></div>
 </div>
 <div>
 <div class="card" style="padding:10px 11px"><h2 class="vh-sr">Filter the map</h2><div class="mono" style="font-weight:800;text-transform:uppercase;font-size:11px">Filter — All / Current · 80 list tap→map</div><p class="mono" style="color:var(--ink-soft);font-size:11px">Filter uses is_current flag from embedding_map_points_limited.json. Current = 532 latest seasons (2025-26). All = 1764 filtered (current+allstars+3+). Honest count live from file.</p><div style="margin-top:8px;display:flex;gap:6px"><button id="bAll2" class="btn">All</button><button id="bCur2" class="btn">Current</button><button id="bClr" class="btn">Clear traj</button></div></div>
 <div class="card" style="margin-top:10px"><h2 class="vh-sr">The player list</h2><div class="find"><label class="mono" for="pq">Find a player</label><input id="pq" type="search" autocomplete="off" disabled placeholder="name, season or pid…"><p id="pqCount" class="mono" role="status" aria-live="polite" aria-atomic="true"></p></div><div class="list" id="list"></div></div>
-<div class="mono" style="margin-top:8px;color:#6F6D68;font-size:10.5px">Zero-deps inline JS · OKABE 8 #0072B2 #D55E00 #009E73 #CC79A7 #F0E442 #56B4E9 #E69F00 #000000 · orange polyline #EB6834 · grey #9AA0A6 hidden until select · DPR capped 1.4 · 60fps rAF · 1764 → 80 list subset · share 1200×630 via index · theme #fafaf8.</div>
+<div class="mono" style="margin-top:8px;color:#3A3732;font-size:10.5px;font-weight:700">Zero-deps inline JS · OKABE 8 #0072B2 #D55E00 #009E73 #CC79A7 #F0E442 #56B4E9 #E69F00 #FF4F6B coral-pink for Scoring+Shot Volume · orange polyline #EB6834 · grey #9AA0A6 hidden until select · DPR capped 1.4 · 60fps rAF · 1764 → 80 list subset · share 1200×630 via index · theme #fafaf8.</div>
 </div>
 </div>
 </div>
 <script>
-const OKABE=['#0072B2','#D55E00','#009E73','#CC79A7','#F0E442','#56B4E9','#E69F00','#000000'];
+const OKABE=['#0072B2','#D55E00','#009E73','#CC79A7','#F0E442','#56B4E9','#E69F00','#FF4F6B'];
 const $=s=>document.getElementById(s);
 /* var, not let: the accessibility layer appended at the end of this file reads
    `dots`, and a top-level `let` lives in script scope where nothing else can
@@ -262,7 +263,7 @@ span.proj{color:var(--orange-ink)}
   // NOTE: assets/shared-map.js and assets/archetype-bridge.js use a DIFFERENT
   // order at indices 3,4,5. This key describes THIS page's colours, which is
   // the honest thing for it to do; the site-wide split is logged on the board.
-  var OKABE=['#0072B2','#D55E00','#009E73','#CC79A7','#F0E442','#56B4E9','#E69F00','#000000'];
+  var OKABE=['#0072B2','#D55E00','#009E73','#CC79A7','#F0E442','#56B4E9','#E69F00','#FF4F6B'];
 
   var canvas=document.getElementById('c');
   if(canvas){
@@ -275,11 +276,13 @@ span.proj{color:var(--orange-ink)}
   }
 
   // ── archetype key ──────────────────────────────────────────────────────
-  var host=document.createElement('div');
-  host.id='plKey';
+  var host=$('plKey') || document.createElement('div');
+  if(!host.id) host.id='plKey';
+  if(!host.parentNode){
+    var lab=$('lab');
+    if(lab && lab.parentNode) lab.parentNode.insertBefore(host, lab.nextSibling);
+  }
   host.innerHTML='<div class="mono" style="font-size:10.5px;color:#C9C6C0">Colour = archetype · loading names…</div>';
-  var lab=$('lab');
-  if(lab && lab.parentNode) lab.parentNode.insertBefore(host, lab.nextSibling);
   fetch('assets/mtnn_arch.json?v=d9922089',{cache:'force-cache'})
     .then(function(r){ if(!r.ok) throw new Error('HTTP '+r.status); return r.json(); })
     .then(function(j){

@@ -113,7 +113,7 @@
     // number box (small)
     R(6.5,6.8,3,1.2, '#fff');
     // arch color tiny dot
-    const archCol = ['#E69F00','#56B4E9','#009E73','#F0E442','#0072B2','#D55E00','#CC79A7','#000'][cfg.arch%8];
+    const archCol = ['#E69F00','#56B4E9','#009E73','#F0E442','#0072B2','#D55E00','#CC79A7','#FF4F6B'][cfg.arch%8];
     R(8.5,7,0.8,0.8, archCol);
 
     // arms skin

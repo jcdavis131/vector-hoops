@@ -781,7 +781,7 @@ $('twinInput').addEventListener('change',lookup);
   function say(m){ if(!live||!m) return; if(live.textContent===m) live.textContent=''; live.textContent=m; }
 
   var cv=$('archMap'); if(!cv) return;
-  var OKABE=['#0072B2','#D55E00','#009E73','#CC79A7','#F0E442','#56B4E9','#E69F00','#000000'];
+  var OKABE=['#0072B2','#D55E00','#009E73','#CC79A7','#F0E442','#56B4E9','#E69F00','#FF4F6B'];
   var PTS=null, NAMES=null, sel=-1;
 
   cv.setAttribute('role','img');
@@ -804,14 +804,17 @@ $('twinInput').addEventListener('change',lookup);
     var pad=14, iw=w-pad*2, ih=h-pad*2;
     // dim everything else rather than hiding it, so a filtered view still shows
     // where the archetype sits *within* the whole cloud
+    // #d6d4cd on #FAFAF8 was 1.3:1 – unreadable. #9AA0A6 at 0.7 is 2.2:1 for
+    // reference dots, while selected stays vivid OKABE 8 including #FF4F6B for
+    // scoring volume which was black #000 and vanished on #0A0C10 dark inset.
     for(var pass=0;pass<2;pass++){
       for(var k=0;k<PTS.length;k++){
         var p=PTS[k], on=(sel<0||p.c===sel);
         if(pass===0 ? on : !on) continue;
         g.beginPath();
-        g.arc(pad+p.x*iw, pad+(1-p.y)*ih, on?2.1:1.4, 0, 6.2832);
-        g.fillStyle = on ? OKABE[p.c%8] : '#d6d4cd';
-        g.globalAlpha = on ? 0.82 : 0.5;
+        g.arc(pad+p.x*iw, pad+(1-p.y)*ih, on?2.4:1.6, 0, 6.2832);
+        g.fillStyle = on ? OKABE[p.c%8] : '#8A949E';
+        g.globalAlpha = on ? 0.88 : 0.68;
         g.fill();
       }
     }
@@ -829,7 +832,7 @@ $('twinInput').addEventListener('change',lookup);
     $('archKey').innerHTML=rows.map(function(r){
       return '<span><span class="swatch" style="background:'+esc2(OKABE[r.i%8])+'"></span>'+
              esc2((NAMES&&NAMES[r.i])||('Archetype '+r.i))+'</span>';
-    }).join('')+'<span class="dim">Colour is never the only label — every name is written out</span>';
+    }).join('')+'<span style="color:#3A3732;font-weight:700">Colour is never the only label — every name is written out</span>';
 
     $('archBtns').innerHTML='<button class="sbtn" type="button" data-i="-1" aria-pressed="'+(sel<0)+'">All 8</button>'+
       rows.map(function(r){

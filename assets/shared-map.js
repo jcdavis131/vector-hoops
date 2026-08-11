@@ -5,7 +5,7 @@
 */
 export async function mountSharedMap(canvas, opts={}){
   if(!canvas) return null;
-  const OKABE=['#0072B2','#D55E00','#009E73','#F0E442','#56B4E9','#CC79A7','#E69F00','#FFFEF7'];
+  const OKABE=['#0072B2','#D55E00','#009E73','#F0E442','#56B4E9','#CC79A7','#E69F00','#FF4F6B'];
   const ARCH=["Glass+Rim","LowVol Glass","Low Impact","Def Glass FT","Vol+3P","3P Acc+Vol","Playmaking","Scoring Vol"];
   const POS=['PG','SG','SF','PF','C'];
   const highlightInit = opts.highlightId ?? null;
