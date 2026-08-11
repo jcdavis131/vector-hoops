@@ -4018,3 +4018,40 @@ The section starts 2,597px down a 802px viewport — nearly two screens past the
 320px margin — so the observer had correctly not fired. **Working as designed.**
 Closed, not a defect, and the same explanation given for `/model`'s trajectories
 now has a measurement behind it rather than an analogy.
+
+
+## P4.5 has a measurement now: `git status` overreports on this checkout
+
+Nearly misread this firing's blast radius because of it. After running the
+generators, `git status --porcelain` listed **44 modified files** while
+`git diff --numstat` listed **7**. The seven were real; the other thirty-seven had
+no content change at all.
+
+    core.autocrlf = true
+    .gitattributes present: NO
+
+    dictionary.html   HEAD  crlf=0    lf=349
+                      work  crlf=335  lf=349     bytes 22076 vs 22411
+
+HEAD stores the file with LF. `autocrlf=true` converts on checkout, so the working
+copy carries CRLF and is 335 bytes larger — exactly the carriage returns. `git diff`
+normalises both sides and correctly reports nothing; `git status` compares against a
+stat cache that no longer matches, and flags the file. `git update-index --refresh`
+does not clear it, because the bytes genuinely differ.
+
+Worth noting the third state in that table: **335 CRLF against 349 LF is mixed** —
+fourteen lines in that file are LF while the rest are CRLF. Tools that rewrite part
+of a file leave exactly this.
+
+### What it means in practice
+
+**`git diff --numstat` is the authoritative blast-radius check on this checkout;
+`git status` is not.** Every commit on this branch has been verified with numstat
+for that reason, and this is the first time the gap was large enough to be
+misleading on its own.
+
+This is **P4.5** — the missing `.gitattributes` — which stays the operator's call
+because a `* text=auto eol=lf` line rewrites line endings across a checkout another
+agent is working in. It is now filed with a measurement rather than as a
+housekeeping note: the cost of not having it is that the single most common
+"what did I just change" command reports six times more than it should.
