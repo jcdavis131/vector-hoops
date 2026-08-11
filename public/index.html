@@ -75,7 +75,10 @@ footer{max-width:1120px;margin:0 auto;padding:10px var(--gutter);display:flex;fl
 <nav class="site-nav" aria-label="Primary">
   <a class="site-nav__brand" href="/">DUMB<span>MODEL</span></a>
   <div class="site-nav__links">
-    <a class="site-nav__link" href="#games">Games</a>
+    <!-- was href="#games": no element on this page has that id, at parse time or after
+     the scripts run, so the link only ever wrote "#games" into the address bar and
+     left the page where it was. Measured: scrollY 0 -> 0. This site's game is the
+     daily, which is where the nav's own CTA already points. --><a class="site-nav__link" href="/play.html">Games</a>
     <a class="site-nav__link" href="/players.html">Explorer</a>
     <a class="site-nav__link" href="/player-cards">Players</a>
     <a class="site-nav__link" href="/trends.html">Trends</a>
@@ -100,7 +103,10 @@ footer{max-width:1120px;margin:0 auto;padding:10px var(--gutter);display:flex;fl
 </div>
 <h1 class="title">It's a dumb model.<br>Beat it <span class="title-accent">anyway</span>.</h1>
 <p class="tagline">12,966 NBA seasons as 64-d vectors — the box score, the tracking, the draft slot, the salary, the awards nobody remembers — squashed into one list. We hide the names and hand you the numbers. <b style="background:var(--yellow);padding:2px 6px;border:1.5px solid var(--ink);box-shadow:1.5px 1.5px 0 var(--ink)">The model is wrong all the time — that's the fun part.</b> <span class="hand">past → modern twin affinity</span></p>
-<div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap"><a class="btn btn-p btn-xl" href="/play.html">Play today's Vector Hoops →</a><a class="btn btn-xl" href="#model">How it works</a><a class="pill pill-y" href="/dictionary.html#retrieval" style="text-decoration:none" title="How the model is scored">held-out top-5 0.76 · baseline 0.20</a></div>
+<div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap"><a class="btn btn-p btn-xl" href="/play.html">Play today's Vector Hoops →</a><!-- was href="#model", which named no id either — so the front door's second call
+     to action, sitting beside "Play today's", did nothing at all. /model.html is
+     the page that answers "how it works", and the nav's Model link already goes
+     there. --><a class="btn btn-xl" href="/model.html">How it works</a><a class="pill pill-y" href="/dictionary.html#retrieval" style="text-decoration:none" title="How the model is scored">held-out top-5 0.76 · baseline 0.20</a></div>
 </div>
 <div>
 <div class="card" style="padding:12px"><div class="mono">20,719 · JOINT STARS · 64-d L2</div><div class="mono-sm" style="margin-top:6px">12,966 NBA · 4,831 company-years · 4,022 tennis · 5,323 NFL joint · 2,430 pitch. Same engine, 5 dailies.</div><div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap"><span class="pill pill-o">MTNN 17 towers</span><span class="pill pill-b">130 feats</span><span class="pill">ONNX 549K</span><span class="pill pill-y" id="lodLab2">1814 pts filt • 86% mem save</span></div><div style="margin-top:10px;font-size:13px;line-height:1.5;color:#3a3732">Era-honest comparisons — peak year vivid if retired, latest vivid if still playing, rest grey hidden until you tap. Trajectory orange shows change over time.</div></div>

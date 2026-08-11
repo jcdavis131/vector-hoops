@@ -33,7 +33,7 @@ Deletions outweigh insertions because two duplications came out: an 84.8 MB orph
 Run against both roots. All exit 0.
 
 ```
-python scripts/check_frontend.py            # 12 checks, 22 pages, 93 scripts parsed
+python scripts/check_frontend.py            # 13 checks, 22 pages, 93 scripts parsed
 # build_*.py --check now runs inside check_frontend's `derived` check, all seven of them
 python scripts/check_a11y.py                # 11 WCAG A/AA criteria
 python scripts/check_contrast.py            # WCAG 1.4.3
@@ -149,6 +149,15 @@ goes further and names the current sort in a caption. The one gap: **`/owner`'s 
 and no `aria-label`**, so a screen reader met nine columns and thirty rows of nothing in particular.
 It now carries the same caption pattern as its sibling, counted from the rows drawn rather than
 asserting thirty, and it follows the sort.
+
+**"How it works" did nothing.** The `links` check captures the file half of an href and treats
+`#anything` as trailing noise, so **36 fragment links across 22 pages had never been checked**. Two
+did not resolve, both on the landing page: `#games` in the nav and `#model` on the "How it works"
+button beside "Play today's". Neither id existed at parse time or after the scripts ran, and clicking
+each moved the page from **scrollY 0 to scrollY 0** while writing the fragment into the address bar.
+Both now point at the pages the nav already uses for those words — `/play.html` and `/model.html` —
+rather than at anchors minted to justify the links. A new `fragments` check makes every deep link
+land on something that exists; it was shown failing first.
 
 **Typography.** Nine pages were rendering body copy in Times New Roman. They declared
 `font-family:ui-sans-system`, which is not a CSS keyword — the real generic is `ui-sans-serif`, so

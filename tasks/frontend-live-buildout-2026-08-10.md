@@ -4795,3 +4795,73 @@ is done:
 None of those was a defect in the site. All three looked like one. **The rule that
 keeps earning its place: when an instrument says the code is wrong, check the
 instrument first** — and print what you are asserting on, not a prefix of it.
+
+
+## "How it works" did nothing (2026-08-10)
+
+`check_frontend`'s `links` check has resolved every internal link on this branch
+since it was written. Its pattern is
+
+    RE_LINK = re.compile(r'href=["\'](\.?/?[\w\-]+\.html)(?:[#?][^"\']*)?["\']')
+
+— it captures the **file** and treats `#anything` as optional trailing noise. So
+`/dictionary.html#retrieval` has always passed on the strength of the file
+existing, whatever is or is not inside it. **36 fragment links across 22 pages, and
+none of them had ever been checked.**
+
+Two do not resolve, both on the landing page:
+
+    <a class="site-nav__link" href="#games">Games</a>
+    <a class="btn btn-xl" href="#model">How it works</a>
+
+The second sits beside "Play today's Vector Hoops →" as the other half of the front
+door's call to action. `index.html` builds markup with `innerHTML`, so the ids could
+have appeared at runtime — they do not:
+
+    after the page has run:
+      #games    getElementById=False  name-anchor=False
+      #model    getElementById=False  name-anchor=False
+
+    clicking each:
+      Games          scrollY 0 -> 0   location.hash='#games'
+      How it works   scrollY 0 -> 0   location.hash='#model'
+
+The page is 1,895px tall, so there was somewhere to go. **Both links wrote a
+fragment into the address bar and left the reader where they were.**
+
+### Where they now point, and why not an invented anchor
+
+The page has six cards and no games section, so there is no honest `#games` target
+to create. Both labels already have real destinations that the nav itself uses:
+`Model → /model.html` is the page that answers "how it works", and the nav's own
+CTA is `Play today's → /play.html`. Pointing the two links there uses what exists
+rather than minting anchors to justify the links.
+
+**Worth flagging as yours:** the nav now has "Games" and "Play today's →" both
+going to `/play.html`. That is redundant, and whether "Games" should exist as a
+separate item at all is a product call. A dead link is not — that part is not a
+judgement.
+
+### The gate
+
+`check_frontend` gained a **`fragments`** check: every fragment link must name an
+element that exists in the served markup. Thirteen checks now. Shown failing before
+it was allowed to pass, by repointing the dictionary's skip link:
+
+    FAIL — dictionary.html links to '#nowhere-at-all' but no element in
+      dictionary.html has id='nowhere-at-all' — the link writes a fragment into the
+      address bar and leaves the reader where they were
+
+Ids are read from the served markup, so a target built at runtime would read as
+missing. None is today. That is a limit worth stating rather than hiding: a loud
+failure is the right way to learn it changed.
+
+### The comment that broke my own audit
+
+After fixing both hrefs the audit still reported them unresolved — because the note
+explaining the change quotes `href="#games"`, and the scan read the comment as a
+link. **This is the third time on this branch that a comment quoting markup has been
+counted as markup**; `check_frontend` already carries `without_comments()` for
+exactly this, learned when a comment quoting `<input id=guess>` was counted as a
+second declaration of that id. The new check uses it. The scratch audit now strips
+comments too.

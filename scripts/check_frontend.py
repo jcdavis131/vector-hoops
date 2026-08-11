@@ -404,6 +404,67 @@ def check_tokens(fail) -> None:
         print(f"  {first.removeprefix('OK').strip()}")
 
 
+RE_FRAG = re.compile(r"""href=["']([^"']*#[^"']+)["']""")
+RE_ID_ANY = re.compile(r"""\sid=["']?([A-Za-z][\w\-:.]*)""")
+RE_ANCHOR_NAME = re.compile(r"""<a[^>]+name=["']([A-Za-z][\w\-:.]*)""")
+
+
+def check_fragments(fail) -> None:
+    """A deep link has to land on something.
+
+    `links` resolves the file half of an href and throws the fragment away — its
+    pattern captures `([\\w\\-]+\\.html)` and treats `#...` as optional trailing
+    noise — so `/dictionary.html#retrieval` passed for as long as the file existed,
+    whatever was or was not inside it. Rename a glossary entry and every page
+    pointing at it quietly lands at the top of a long page instead.
+
+    Found two on the landing page: `#games` in the nav and `#model` on the "How it
+    works" button beside "Play today's". Neither id existed at parse time or after
+    the scripts ran, and clicking each moved the page from scrollY 0 to scrollY 0
+    while writing the fragment into the address bar.
+
+    Ids are read out of the served markup, so a target built at runtime would read
+    as missing here. None is today — every one of the site's fragment links names a
+    static id — and a loud failure is the right way to find out that changed.
+    """
+    ids: dict[str, set[str]] = {}
+    for p in pages():
+        text = p.read_text(encoding="utf-8", errors="replace")
+        ids[label(p)] = set(RE_ID_ANY.findall(text)) | set(RE_ANCHOR_NAME.findall(text))
+
+    def resolve(src: str, file_part: str) -> str:
+        if not file_part or file_part in ("./",):
+            return src
+        f = file_part.split("?")[0].lstrip("/")
+        if not f.endswith(".html"):
+            f = f.rstrip("/") + "/index.html"
+        return f if f in ids else f.split("/")[-1]
+
+    checked = 0
+    for p in pages():
+        src = label(p)
+        # a comment quoting a link is not a link — the same reason `ids` reads
+        # without_comments, learned when a comment quoting <input id=guess> was
+        # counted as a second declaration of that id
+        text = without_comments(p.read_text(encoding="utf-8", errors="replace"))
+        for href in RE_FRAG.findall(text):
+            if href.startswith(("http://", "https://", "mailto:")):
+                continue
+            file_part, frag = href.split("#", 1)
+            frag = frag.split("?")[0]
+            if not frag:
+                continue
+            target = resolve(src, file_part)
+            checked += 1
+            if target not in ids:
+                fail(f"{src} links to {href!r} and {target} is not a page on this site")
+            elif frag not in ids[target]:
+                fail(f"{src} links to {href!r} but no element in {target} has "
+                     f"id={frag!r} — the link writes a fragment into the address bar "
+                     f"and leaves the reader where they were")
+    print(f"  {checked} fragment link(s) land on an element that exists")
+
+
 def check_derived(fail) -> None:
     """Assets cut from other committed assets have to still match what they were cut from.
 
@@ -490,6 +551,7 @@ CHECKS = {
     "cited": check_cited,
     "free": check_free,
     "links": check_links,
+    "fragments": check_fragments,
 }
 
 
