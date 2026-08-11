@@ -7419,3 +7419,24 @@ point away from useless, so a high percentile rather than a max), and the
 before-numbers above are exactly what an after-measurement needs to be checked
 against. Rushing a change to the centrepiece is worse than carrying the finding
 one turn.
+
+
+### After the fit: measured, and one thing left
+
+    desktop  25% / 43%  ->  50% / 86%   zoom 1 -> 2.05
+    mobile   39% / 43%  ->  63% / 70%   zoom 1 -> 1.65
+
+`smoke_pinch --mutate deaf` still catches a broken gesture after the change, and
+the round's own gates stayed green.
+
+**Left open:** the cloud sits 50px right of centre on desktop and 31px on mobile
+— 7 to 9% of the canvas — because `proj` always centres at `W*0.5` while the
+data's own centroid is not at the origin. Fixing it means a pan term in `proj`,
+which every hit test on three maps reads, so it is a larger change than the
+scale was and is not worth bundling with it.
+
+Worth recording how that was found: **the screenshot said the cloud sat left of
+centre and the measurement says right.** The image crops at 900px and the canvas
+runs past it, so I was looking at the top half of a 440px canvas and reading the
+part for the whole. Looking is how the problem got noticed at all; it is not how
+any of it got measured.
