@@ -142,6 +142,14 @@ seconds while the map still said `all • 1764 pts`. One fetch, then a synchrono
 demonstrated here and none is claimed — the fix is justified by the megabyte and the contradiction.
 Enforced by `scripts/smoke_players.py`.
 
+**Front office (phase 5), checked and largely sound.** Operating every control on `/teams` and
+`/owner` re-fetches nothing, and both tables report their sort correctly through `aria-sort` —
+including `/owner`'s default, which announces `FOR descending` before anything is clicked. `/teams`
+goes further and names the current sort in a caption. The one gap: **`/owner`'s table had no caption
+and no `aria-label`**, so a screen reader met nine columns and thirty rows of nothing in particular.
+It now carries the same caption pattern as its sibling, counted from the rows drawn rather than
+asserting thirty, and it follows the sort.
+
 **Typography.** Nine pages were rendering body copy in Times New Roman. They declared
 `font-family:ui-sans-system`, which is not a CSS keyword — the real generic is `ui-sans-serif`, so
 the name matched no font and, with no fallback behind it, the paragraph fell to the browser default.

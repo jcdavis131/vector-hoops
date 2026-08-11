@@ -4735,3 +4735,63 @@ finding was mine.
 Enforced by `scripts/smoke_players.py` — no requests for four presses, and the map
 agreeing with the button a quarter-second after each. Restoring the old code turns
 both assertions red.
+
+
+## Phase 5, and three times my own instruments lied (2026-08-10)
+
+Last pass recorded a gap of my own making: the re-fetch probe reported **0 controls**
+on `/teams` and `/owner`, and that was the selector — `button, select, [role=button]`
+— not the pages. Their sort headers are `<th>`, and on `/teams` they do not even
+exist in the static markup, because `draw()` builds the whole table each time.
+
+Widened to include `th[data-k]`, `summary`, `input` and anything focusable:
+
+    /teams.html        15 control(s) operated twice each   no data re-fetched
+    /owner/index.html   9 control(s) operated twice each   no data re-fetched
+
+**Gap closed, and the answer is a negative.** Nothing on either page re-fetches.
+
+### The sort state, which is the thing those tables are for
+
+`aria-sort` is name/role/**value** — the same criterion behind the Explorer filter
+fix, where the active state was visible to eyes and to nothing else. Measured by
+clicking headers and reading every `<th>`:
+
+    /teams.html     at rest  [('#', 'ascending')] of 12 headers
+                    caption  'Front-office rating for all 30 teams, sorted by #.'
+                    clicked Team  -> [('Team','ascending')],  caption follows
+                    clicked W-L   -> [('W-L','descending')],  caption follows
+
+    /owner/index.html  at rest  [('FOR','descending')] of 9 headers
+                       clicked W 25-26  -> [('W 25-26','descending')]
+
+**Both correct**, including `/owner`'s default — `sortKey='for_final'` is COLS[8],
+and the header for it really does announce `descending` before anything is clicked.
+`/teams` goes further than the spec asks and names the current sort in a caption.
+
+### What was actually missing
+
+`/owner`'s table had **no caption and no `aria-label`**. A screen reader announced
+nine columns and thirty rows of nothing in particular, while its sibling page names
+its table and its sort. Added in the same pattern, counted from the rows drawn
+rather than asserting thirty:
+
+    at rest              '30 teams by spend and front-office rating, sorted by FOR, descending…'
+    after clicking W     '30 teams by spend and front-office rating, sorted by W, descending…'
+
+### Three instruments, three wrong readings
+
+Worth putting together, because the pattern is now the main risk in how this work
+is done:
+
+  * the enclosing-function regex attributed fetches to `resize`, `say`, `rows` and
+    `esc2` — it takes the nearest declaration above, which in this code is usually
+    an unrelated helper
+  * `className.indexOf('on')` reported every filter button as active, because
+    **"mono" contains "on"**
+  * this pass, `at rest [...][:5]` printed the first five headers of nine and made
+    `/owner` look like it announced no sort at all — the marked header is the ninth
+
+None of those was a defect in the site. All three looked like one. **The rule that
+keeps earning its place: when an instrument says the code is wrong, check the
+instrument first** — and print what you are asserting on, not a prefix of it.
