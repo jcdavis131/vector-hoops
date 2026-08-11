@@ -287,7 +287,7 @@ function saveHistory(entry){
     let h=JSON.parse(localStorage.getItem(k)||'[]');
     h.push(entry);
     if(h.length>60) h=h.slice(-60);
-    localStorage.setItem(k, JSON.stringify(h));
+    localStorage.setItem(k, JSON.stringify(h)); renderMiniBoard();
   }catch(e){}
 }
 
@@ -300,6 +300,21 @@ function loadDailyForDate(dateStr){
     let d=$('dist'); if(d) d.textContent='Replaying '+dateStr+' — same as everyone that day';
   }catch(e){}
 }
+
+function renderMiniBoard(){
+  try{
+    let k='vh_guess_history';
+    let h=JSON.parse(localStorage.getItem(k)||'[]');
+    if(!h.length) return;
+    let counts={};
+    h.forEach(x=>{ let n=x.guess||''; if(!n) return; counts[n]=(counts[n]||0)+1; });
+    let top=Object.entries(counts).sort((a,b)=>b[1]-a[1]).slice(0,4);
+    let mb=$('miniBoard'); if(!mb) return;
+    mb.style.display='';
+    mb.innerHTML='<div class="mono" style="font-weight:800">Your recent picks • '+h.length+' guesses</div><div style="display:flex;gap:4px;flex-wrap:wrap;margin-top:4px">'+top.map(([n,c])=>'<span class="season-chip">'+n+' ×'+c+'</span>').join('')+'</div><div class="sub" style="margin-top:4px">Global crowd board coming soon — your picks seed it now</div>';
+  }catch(e){}
+}
+
 function renderCal(){
   let c=$('calStrip'); if(!c) return;
   let days=[];
@@ -425,7 +440,7 @@ $('dlShare')?.addEventListener('click',()=>{
     let a=document.createElement('a'); a.href=url; a.download='past-modern-'+(new Date().toISOString().slice(0,10))+'.png'; a.click();
     let s=$('shareStat'); if(s){ s.textContent='Image saved'; setTimeout(()=>s.textContent='',1700);}
   }catch(e){}
-});$('closeShare')?.addEventListener('click',shutShare);$('sharePop')?.addEventListener('click',e=>{if(e.target.id==='sharePop')shutShare()});(function init(){resizeCanvas();window.addEventListener('resize',resizeCanvas);renderWW(); renderCal();fillGuessList();installMapPicker();
+});$('closeShare')?.addEventListener('click',shutShare);$('sharePop')?.addEventListener('click',e=>{if(e.target.id==='sharePop')shutShare()});(function init(){resizeCanvas();window.addEventListener('resize',resizeCanvas);renderWW(); renderCal(); renderMiniBoard();fillGuessList();installMapPicker();
 (function(){try{
   let seen=localStorage.getItem('vh_seen_onboard');
   if(!seen){
