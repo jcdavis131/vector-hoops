@@ -159,6 +159,19 @@ Both now point at the pages the nav already uses for those words — `/play.html
 rather than at anchors minted to justify the links. A new `fragments` check makes every deep link
 land on something that exists; it was shown failing first.
 
+**Green only means something if it can go red.** Every interaction smoke here has a mutation matrix;
+the gates did not, and one of them turned out this week to have been incapable of failing. New
+`scripts/audit_gates.py` breaks something each gate claims to catch and requires it to notice —
+**thirteen cases, thirteen caught**: a statement with no right-hand side, an id renamed out from under
+a `getElementById`, a script that is not on disk, a duplicate id, an unsourced figure printed as fact,
+a cited number moved away from its file, a price on a page, a root edit that never reached `public/`,
+a stale `?v=`, `<html>` with no `lang`, 1.10:1 text, a deleted skip link, and a 2,400px element at
+320px. Each case restores from a backup and the run ends by comparing every touched file byte for
+byte. **Four tested nothing on the first attempt** — and three of those were the mutation being wrong,
+not the gate: `focus` deliberately ignores the skip link's class name, `viewport` cannot fail on the
+3-of-23 pages that set `overflow-x:clip`, and `contrast` fails only on rules declaring both colour and
+background. An uncaught mutation is a question, not a verdict.
+
 **A regex that was two backspace characters.** Half the sections here ship a `Loading assets/…json …`
 placeholder and several only start when scrolled to; nothing had checked that any of them goes away.
 A section stuck on "Loading" is this site's worst failure — it reads as a slow network rather than a

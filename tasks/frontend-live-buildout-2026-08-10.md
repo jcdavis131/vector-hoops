@@ -5420,3 +5420,57 @@ closed `<details>` now, and the page was never at fault.
 A sweep of every other JS block held in a Python string found one more candidate,
 `check_focus.py`'s `DUPE_SKIPS` — which writes `\\s` and `\\b`, so its regex
 arrives intact. It is correct as written.
+
+
+## Green only means something if it can go red (2026-08-11)
+
+Nine checks this session reported success while measuring something other than
+what they named, and the last one — a regex that reached the browser as two
+backspace characters — **could not have failed on any page, ever**. Every
+interaction smoke has a mutation matrix. The gates did not.
+
+`scripts/audit_gates.py` breaks something each gate claims to catch and requires
+the gate to notice. Thirteen cases, **thirteen caught**:
+
+    syntax      a statement with no right-hand side
+    targets     an id renamed out from under a getElementById
+    assets      a script src that is not on disk
+    ids         the same id declared twice
+    sourced     'lift 6.32' printed as fact
+    cited       a figure changed away from the file it cites
+    free        a price on a page
+    mirror      a root edit that never reached public/
+    tokens      a ?v= token that does not match the file
+    a11y        <html> with no lang
+    contrast    #1166c0 on #0072b2 — 1.10:1
+    focus       the skip link deleted
+    viewport    a 2,400px element at 320px
+
+Each case backs the file up, mutates it, runs one gate, restores from the backup
+in a `finally`, and the run ends by comparing every touched file to its backup
+byte for byte. A mutation harness that leaves the site modified is worse than no
+harness.
+
+### Four of the thirteen tested nothing on the first run
+
+Which is the same failure as a hollow assertion, this time in the harness — and
+three of the four were **my** mutation being wrong rather than the gate:
+
+- **`focus`** judges the skip link "by what it does rather than what it is
+  called", so renaming its class changed nothing. Deleting the link is the
+  mutation; the gate then reports *first Tab went to .brand, which is not a
+  same-page link*.
+- **`viewport`** could not fail on `dictionary.html` because that page sets
+  `overflow-x:clip`, so a wide child can never make `scrollWidth` exceed
+  `clientWidth`. **3 of 23 pages set it**; moving the mutation to one of the other
+  20 catches it immediately.
+- **`contrast`** fails only on a rule declaring *both* colour and background —
+  a colour-only rule is tier 2 and warns by design. `--ink-soft` is colour-only,
+  so that mutation exercised the warning path and nothing else.
+- **`free`**'s anchor did not exist: `leaderboard.html`'s `<h1>` carries an
+  inline visually-hidden style, so `<h1>Leaderboard` matches nothing. The harness
+  reports a missing anchor as a failure rather than a pass, which is the only
+  reason that one did not read as green.
+
+The three gates were right and the tests were wrong. Worth writing down: **an
+uncaught mutation is a question, not a verdict.**
