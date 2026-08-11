@@ -1,14 +1,26 @@
 # frontend-live — readiness
 
-**Nothing here is live.** All 134 commits are on `frontend-live`; `master` is untouched, and
+**Nothing here is live.** All 136 commits are on `frontend-live`; `master` is untouched, and
 pushing `master` is what deploys the site. Suite green at the time of writing.
 
 | | |
 |---|---|
-| commits ahead of master | 134 |
+| commits ahead of master | 136 |
 | paths changed | 2,628 (2,546 under `public/`, 30 scripts) |
-| insertions / deletions | +199,932 / −310,409 |
-| working notes | `tasks/frontend-live-buildout-2026-08-10.md`, 3,513 lines |
+| insertions / deletions | +200,159 / −310,415 |
+| working notes | `tasks/frontend-live-buildout-2026-08-10.md`, 3,659 lines |
+
+**Where to look at it.** The branch is pushed and Vercel builds every commit on it:
+
+```
+vector-hoops-git-frontend-live-cams-projects-c5c4c5f6.vercel.app
+```
+
+Latest build `dpl_44meiX6Y4WDrqL4HoxTDHEsyVb9H` → `19818290`, **READY** in 16 seconds. Every
+`frontend-live` deployment carries `target: null`; only `master` commits carry
+`target: "production"`, so none of this has touched the live site. Previews sit behind
+`ssoProtection: all_except_custom_domains`, so that URL works for you and cannot be fetched
+from here — which is why everything below was verified locally instead.
 
 Deletions outweigh insertions because two duplications came out: an 84.8 MB orphan asset tree
 (187 files, zero references) and a byte-identical 913,467-byte JSON copy.
@@ -18,7 +30,7 @@ Deletions outweigh insertions because two duplications came out: an 84.8 MB orph
 Run against both roots. All exit 0.
 
 ```
-python scripts/check_frontend.py            # 10 checks, 22 pages, 93 scripts parsed
+python scripts/check_frontend.py            # 11 checks, 22 pages, 93 scripts parsed
 python scripts/check_a11y.py                # 11 WCAG A/AA criteria
 python scripts/check_contrast.py            # WCAG 1.4.3
 python scripts/check_responsive.py
@@ -86,25 +98,31 @@ metadata.
 Each was checked against `origin/master`: all nine pre-date this branch. The one collision this
 branch created — two pages claiming `/player` — was found, fixed, and withdrawn from this list.
 
-**P9.9 in detail**, because it is the one with a wrong number in front of users. The shipped
+**P9.9 in detail** — smaller than it was filed, because the reachable part is now fixed. The shipped
 embedding is 64-d, verified from the bytes: `assets/mtnn_embeddings.f32` is 3,319,296 bytes =
-12,966 rows × 64 × 4, its sha256 matches the hash `eval_scoreboard.json` declares, and the model is
-named `…_d64_…`. That scoreboard's own `description` field nevertheless says "the shipped 48-d MTNN
-space" — it contradicts the `dim: 64` sitting four lines below it. The field never reaches the DOM,
-so no visitor sees it, but the site's prose says **48-d in 30 places and 64-d in 32**. It disagrees
-with itself roughly half and half.
+12,966 rows × 64 × 4, its sha256 matches the hash `eval_scoreboard.json` declares, `mtnn_meta.json`
+says `dim: 64` with 8 centroids of length 64, and the model is named `…_d64_…`.
 
-This is not a find-and-replace. Some of those thirty are correct as written: `methods.html`
-attributes one to `MT v3`, an older model, and `dictionary.html` explicitly describes "an older 48-d
-evaluation". Others plainly describe the current artifact — `methods.html` calls the live game's map
-"48-d". Fixing it needs each statement matched to the model version it describes, and where that
-version is genuinely unknown, guessing would fabricate a claim about a historical model in the act of
-correcting one about the current model. Regenerating the asset would settle the `description` string
-and is forbidden here.
+Enumerating all thirty "48-d" statements showed **eight of the ten modules containing them are loaded
+by no page** — that is P6.1's 746 KB, and correcting prose in files that may be deleted has negative
+expected value. Four statements were reachable and are corrected: `inventory.html`, `methods.html`,
+`archetype-bridge.js` and `error-boundary.js`. Also checked and clean: no code strides 48 floats
+through a 64-float row — the single hardcoded `48` is a dead property, and `mtnn.js` derives the
+dimension from metadata and asserts the buffer length.
+
+**What is left for you** is the remainder: `methods.html` attributes one to `MT v3` and
+`dictionary.html` describes "an older 48-d evaluation" deliberately, so those are correct as written;
+the architecture diagram in `network-viz.js` is labelled `v4 baseline` with `12,392 seasons` against
+the shipped v5's 12,966, which is a redraw-or-relabel call; and `eval_scoreboard.json`'s own
+`description` still says "the shipped 48-d MTNN space" four lines above its `dim: 64`. That field
+never reaches the DOM, and settling it needs the asset regenerated, which is forbidden here.
 
 ## Not covered
 
-- Nothing is deployed; the branch has never been merged and no preview URL was created.
+- Nothing is deployed to production. The branch has never been merged; its preview builds (see the
+  URL above) are all `target: null` and only `master` carries `target: "production"`. The preview is
+  SSO-gated, so it was never something this session could open — every claim below was verified
+  against a local server and a headless browser instead.
 - Fourteen findings were false alarms caught before acting. A closed `<details>` still reports a
   layout box in Chrome; IntersectionObserver sections look broken if you scroll past them;
   `captureBeyondViewport` screenshots do not re-rasterise canvas. Twice a screenshot sent me after a
