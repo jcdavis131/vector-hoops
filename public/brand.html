@@ -59,7 +59,118 @@ span.proj{color:var(--orange-ink)}
 <a class="vh-skip" href="#main">Skip to the content</a>
 <nav><a class="brand" href="/">DUMB<span>MODEL</span></a><div style="display:flex;gap:6px;flex-wrap:wrap"><a class="pill" href="/owner">Owner</a><a class="pill" href="/player">Player</a><a class="pill" href="/brand">Brand</a><a class="pill pill-y" href="/dfs">DFS</a></div><a class="pill" href="/play">Play</a><a class="pill" href="/trends">Trends</a><a class="pill" href="/model">Model</a><a class="pill" href="/players">Explorer</a><a class="pill" href="/player-cards">Players</a><a class="pill" href="/teams">Teams</a><a class="pill" href="/dictionary">Dictionary</a></nav>
 <main id="main" tabindex="-1"><h1 style="position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;border:0">Brand • Wins/</h1>
-<div class="card"><h2 class="vh-sr">Brand Lab — wins into sponsor ROI</h2><div class="mono">Brand Lab • Wins/$B • ValΔ% story → CMO deck</div><div class="mono" style="font-size:20px;margin:6px 0">Wins into sponsor ROI • $10.09B top • GSW 10.09B</div><div class="sub">Market lift vs cap, ValΔ% NYK16 SAS7 • Brand = wins→story / $B. <span style="font-family:'Architects Daughter',cursive">Who moves needle?</span></div><div style="margin-top:8px;display:flex;gap:8px"><span class="pill pill-y">CMO deck</span><span class="pill">Free</span><span class="pill">No account</span></div><div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap"><a class="pill" href="/teams">All 30 teams — valuation, payroll and rating</a><a class="pill" href="/owner">Owner — how the rating is built</a></div></div>
+<div class="card"><h2 class="vh-sr">Does winning move the valuation?</h2><div class="mono">Brand Lab • wins, payroll and rating against franchise value</div>
+<div class="mono" style="font-size:20px;margin:6px 0" id="brHead">Reading 30 teams from <code>assets/front_office_lite.json</code>…</div>
+<p class="sub" style="margin:0">This page used to headline <i>“wins into sponsor ROI”</i>. The file it
+would have drawn that from does not support it, so it says what the file says instead.</p>
+<div style="margin-top:10px;display:flex;gap:6px;flex-wrap:wrap"><span class="pill">Free</span><span class="pill">No account</span><span class="pill pill-y" id="brSeason">season —</span></div>
+<div id="brCorr" style="margin-top:12px"></div>
+<p class="sub" id="brRead" style="margin-top:8px"></p>
+<div id="brVpw" style="margin-top:12px"></div>
+<p class="sub" id="brMethod" style="margin-top:10px;border-left:3px solid var(--orange);padding-left:8px"></p>
+<div style="margin-top:10px;display:flex;gap:6px;flex-wrap:wrap"><a class="pill" href="/teams">All 30 teams — valuation, payroll and rating</a><a class="pill" href="/owner">Owner — how the rating is built</a></div>
+</div>
+<style>
+.br-row{display:grid;grid-template-columns:minmax(0,1fr) 74px;gap:8px;align-items:center;padding:4px 0;border-bottom:1px solid var(--hair,#e1e0d9);font-family:var(--mono);font-size:11.5px}
+.br-row:last-child{border-bottom:0}
+.br-lab{color:#26241F;overflow-wrap:break-word}
+.br-num{text-align:right;font-weight:800;font-variant-numeric:tabular-nums;color:#26241F}
+.br-tbl{border:1.6px solid var(--ink);border-radius:10px;padding:6px 10px;background:#fff}
+.br-cap{font-family:var(--mono);font-size:10.5px;text-transform:uppercase;letter-spacing:.05em;color:#6F6D68;margin-bottom:4px}
+</style>
+<script>
+/* ── Does winning move the valuation? ─────────────────────────────────────────
+   This page was 413 characters of jargon under the headline "Wins into sponsor
+   ROI • $9.1B top • GSW 9.14B". The figure was stale and the claim is not in the
+   data: across the 30 teams in assets/front_office_lite.json, wins and valuation
+   correlate at +0.09.
+
+   One thing this must not do is turn that into a claim about basketball. Every
+   valuation in this repo is `forbes_synth_estimated_for_training` - estimates
+   generated to train the model. A correlation computed over them describes the
+   file, not the league, and the copy below says so rather than leaving a reader
+   to assume otherwise. */
+(function(){
+  'use strict';
+  var $=function(s){return document.getElementById(s);};
+  if(!$('brCorr')) return;
+  function esc(s){ return String(s).replace(/[&<>"]/g,function(c){
+    return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
+  function n2(v){ return (Math.round(v*100)/100).toFixed(2); }
+  function n0(v){ return Math.round(v).toLocaleString(); }
+
+  function corr(a,b){
+    var n=a.length, i, ma=0, mb=0;
+    for(i=0;i<n;i++){ ma+=a[i]; mb+=b[i]; }
+    ma/=n; mb/=n;
+    var sab=0, saa=0, sbb=0, da, db;
+    for(i=0;i<n;i++){ da=a[i]-ma; db=b[i]-mb; sab+=da*db; saa+=da*da; sbb+=db*db; }
+    return (saa&&sbb) ? sab/Math.sqrt(saa*sbb) : 0;
+  }
+  function rows(title, list){
+    return '<div class="br-tbl"><div class="br-cap">'+esc(title)+'</div>'+
+      list.map(function(r){
+        return '<div class="br-row"><span class="br-lab">'+r[0]+'</span>'+
+               '<span class="br-num">'+r[1]+'</span></div>'; }).join('')+'</div>';
+  }
+
+  fetch('assets/front_office_lite.json?v=c9496248')
+    .then(function(r){ if(!r.ok) throw new Error('HTTP '+r.status); return r.json(); })
+    .then(function(j){
+      var T=j.teams||[];
+      if(!T.length) throw new Error('no teams in the file');
+      var wins=T.map(function(t){return t.wins;}),
+          val =T.map(function(t){return t.valuation_m;}),
+          pay =T.map(function(t){return t.payroll_m;}),
+          rate=T.map(function(t){return t.for_final;});
+      var cw=corr(wins,val), cp=corr(pay,val), cr=corr(rate,val);
+      var top=T.slice().sort(function(a,b){return b.valuation_m-a.valuation_m;})[0];
+
+      $('brSeason').textContent='season '+(j.season_focus||'—');
+      $('brHead').innerHTML='Winning does not move the valuation in this file: '+
+        '<b>r = '+n2(cw)+'</b> across '+T.length+' teams.';
+
+      $('brCorr').innerHTML=rows('Correlation with franchise valuation, '+T.length+' teams',[
+        ['Regular-season wins', n2(cw)],
+        ['Payroll ($M)', n2(cp)],
+        ['Front-office rating (FOR)', n2(cr)]
+      ]);
+
+      $('brRead').innerHTML='For scale, the spread is not the problem: valuations run '+
+        '$'+n2(Math.min.apply(null,val)/1000)+'B to $'+n2(Math.max.apply(null,val)/1000)+'B and '+
+        'wins run '+n0(Math.min.apply(null,wins))+' to '+n0(Math.max.apply(null,wins))+'. '+
+        'Both are wide. They just do not move together. The largest valuation here is '+
+        esc(top.name)+' at $'+n2(top.valuation_m/1000)+'B on '+n0(top.wins)+' wins.';
+
+      var vpw=T.map(function(t){
+        return {abbr:t.abbr, name:t.name, wins:t.wins, val:t.valuation_m,
+                vpw:t.valuation_m/Math.max(t.wins,1)}; });
+      var dear=vpw.slice().sort(function(a,b){return b.vpw-a.vpw;}).slice(0,3);
+      var cheap=vpw.slice().sort(function(a,b){return a.vpw-b.vpw;}).slice(0,3);
+      var fmt=function(r){ return [esc(r.name)+' <span style="color:#6F6D68">'+n0(r.wins)+
+        'W · $'+n2(r.val/1000)+'B</span>', '$'+n0(r.vpw)+'M']; };
+      $('brVpw').innerHTML=
+        '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:8px">'+
+        rows('Most valuation per win', dear.map(fmt))+
+        rows('Least valuation per win', cheap.map(fmt))+'</div>';
+
+      $('brMethod').innerHTML='<b>What this is and is not.</b> Pearson r over '+T.length+
+        ' teams in one season, from <code>assets/front_office_lite.json</code>, which '+
+        '<code>scripts/build_front_office_lite.py</code> cuts from '+
+        '<code>assets/front_office.json</code>. Thirty points is a small sample and one season '+
+        'is one season. More important: every valuation in this repo is generated, not measured '+
+        '— see the note below — so this describes <b>the file</b>, not the league. It is here '+
+        'because the page previously claimed the opposite without checking either.';
+    })
+    .catch(function(e){
+      $('brHead').textContent='The team file could not be loaded ('+e.message+').';
+      $('brRead').textContent='Nothing is shown here rather than a number that was typed in. '+
+        'The same figures are on /teams, which reads the same file.';
+      $('brMethod').textContent='';
+    });
+})();
+</script>
+
 </main>
 <footer style="max-width:980px;margin:0 auto;padding:8px 12px;display:flex;justify-content:space-between;font-family:var(--mono);font-size:11px;color:#717171"><span>dumbmodel #fafaf8 • paper aesthetic • Architects Daughter</span><a class="pill" href="/">Home</a></footer>
 <!-- build_valuation_note.py: start --><p class="mono" style="font-size:10.5px;line-height:1.55;text-transform:none;letter-spacing:0;margin:8px 0 0;color:#6F6D68">Franchise valuations on this site are <b>estimates, not measured figures</b>. Every one of the 360 valuation records in <code>assets/front_office.json</code>, across 12 seasons, names its own source as <code>forbes_synth_estimated_for_training</code> — generated to train the model. The largest in 2025-26 is GSW at $10.09B; read it as the model’s number, not the market’s.</p><!-- build_valuation_note.py: end -->

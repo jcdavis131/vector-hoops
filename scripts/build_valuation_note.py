@@ -79,9 +79,25 @@ def patterns(f: dict) -> list[tuple[re.Pattern[str], str]]:
     ]
 
 
+def outside_code(text: str, fn):
+    """Run fn on visitor-facing copy only, never inside a script or a comment.
+
+    The first version rewrote the line in brand.html's own script comment that
+    QUOTES the old headline it replaced — "$9.1B top • GSW 9.14B" — turning the
+    record of the defect into a copy of the fix. A stamper that edits quoted
+    history erases the only place the reason is written down. Same rule the other
+    checks already use: check_sourced strips comments, check_headings strips
+    scripts.
+    """
+    parts = re.split(r"(<script[\s\S]*?</script>|<!--[\s\S]*?-->)", text)
+    for i in range(0, len(parts), 2):
+        parts[i] = fn(parts[i])
+    return "".join(parts)
+
+
 def apply(text: str, f: dict) -> str:
     for rx, want in patterns(f):
-        text = rx.sub(want, text)
+        text = outside_code(text, lambda s, rx=rx, want=want: rx.sub(want, s))
     block = note(f)
     if MARK_OPEN in text:
         return re.sub(re.escape(MARK_OPEN) + r"[\s\S]*?" + re.escape(MARK_CLOSE),
