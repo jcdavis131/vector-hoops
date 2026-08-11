@@ -12,14 +12,22 @@ This drives real touch points through CDP rather than calling the handler:
 against the camera the page actually attached. What it reads back is
 `window.VHMapCamera.cams[0].zoom`, which is the number the projection uses.
 
-  spread    two fingers moving apart zoom in
-  squeeze   two fingers moving together zoom out
-  clamp     zoom stays inside the camera's own 0.55-3 bounds
-  rotate    a pinch is not a drag: yaw and pitch come back unchanged
+  spread     80px -> 146px is a ratio of 1.83, and zoom must move by it
+  squeeze    146px -> 80px puts it back
+  clamp      a gesture far past either bound lands exactly on 3 or on 0.55
+  no-scroll  a pinch drifting 120px down still zooms, and scrollY does not move
+  rotate     a pinch is not a drag: yaw and pitch come back unchanged
 
     python scripts/smoke_pinch.py
-    python scripts/smoke_pinch.py --page players
-    python scripts/smoke_pinch.py --mutate deaf    # expect FAIL
+    python scripts/smoke_pinch.py --page players     # or trends, which loads on request
+    python scripts/smoke_pinch.py --mutate deaf      # expect FAIL
+
+Three things went wrong writing this, all the same shape: a gesture aimed at
+900px on a 390px viewport lands nowhere; a centre read before a scroll is not
+the centre after it; and a canvas 52px below an 844px viewport is not touched at
+all. Each time the zoom simply sat where it was, which reads exactly like a
+gesture that was received and ignored. Anything here that dispatches a touch
+should re-read getBoundingClientRect immediately before doing it.
 """
 
 from __future__ import annotations

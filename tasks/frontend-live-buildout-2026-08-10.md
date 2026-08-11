@@ -6991,3 +6991,74 @@ against their actual fields:
 **Deliberately not done:** `.gitattributes`. Every commit warns about LF/CRLF,
 but `* text=auto` renormalises the whole repo and this checkout is shared with
 another agent mid-work. Cosmetic warning, repo-wide blast radius.
+
+
+## The map zooms with two fingers (2026-08-11)
+
+Zoom had four ways in — `ctrl`+wheel, `+`, `−`, and `0` to reset — and **every
+one of them wants hardware a phone does not have.** A touch visitor could turn
+the map and pick points on it and could never get closer to one, on the control
+this whole site is built around. `check_viewport` said the pages fit 320px and
+`check_target_size` said the controls are big enough to hit; neither can say
+whether a *gesture* does anything, so nothing here could see it.
+
+Touch events rather than a second pointer: under `touch-action: pan-y` the
+browser cancels pointers once it decides a gesture is a pan, so a pinch
+assembled from `pointerdown` pairs loses one part-way through. One finger is
+left alone, so the page still scrolls past a canvas 360-520px tall.
+
+Measured on all three map pages at 390×844 with real CDP touch contacts:
+
+    spread     80px -> 146px, a ratio of 1.83, moves zoom 1 -> 1.825
+    squeeze    146px -> 80px puts it back to 1.0
+    clamp      22px <-> 324px lands exactly on 3 and exactly on 0.55
+    no-scroll  a pinch drifting 120px down still zooms 1.875, scrollY unchanged
+    rotate     yaw and pitch come back untouched: a pinch is not a drag
+
+### Three self-inflicted measurement bugs, one shape
+
+  - a gesture reaching for **900px on a 390px viewport** puts the contacts at
+    x=-255 and x=645. Nothing is touched, no handler runs, and the zoom left
+    over from the previous step sits there looking like a result;
+  - `getBoundingClientRect` is in **viewport** coordinates, so it is only true
+    until the page scrolls. Reading the centre and then scrolling put every
+    contact on the page background, where `pan-y` scrolls exactly as it should
+    — and I nearly "fixed" a scroll-jacking bug that was my own stale number;
+  - once, the canvas sat **52px below an 844px viewport** and was never touched.
+
+Every one of them showed up as *the zoom did not change*, which is
+indistinguishable from a gesture received and ignored.
+
+### A mutation that could not fail, removed
+
+`bubble` took the `preventDefault` out of `touchstart` and never failed:
+measured, with it gone a pinch carrying 120px of drift **still zooms to 1.875
+and still leaves scrollY alone**, because the `touchmove` `preventDefault` is
+already enough under emulation. The line stays in `map-camera.js` — on real
+hardware Chrome can begin a scroll on the compositor before `touchmove` reaches
+the main thread — but the mutation is gone and the file says plainly that the
+line is not covered. Keeping a mutation because its subject sounds important is
+how `smoke_wiki`'s `demote-bare` passed for want of an input.
+
+### /trends was not broken
+
+The smoke reported "no camera attached" and I read it as a defect. It is the
+page working: /trends does not fetch its 406 KB season map until asked, the
+canvas sits behind a **Draw the seasons** button, and the label beside it says
+so. The smoke presses it now, the way a visitor does.
+
+### The help never mentioned touch
+
+Every map's help listed keys and only keys — arrows turn, `+`/`−` zoom, `H`
+reads the controls aloud. A phone has none of them. Three pages now say two
+fingers pinch to zoom and one drags to turn, which is the part a touch visitor
+could not have discovered: **there is no affordance for a gesture**, and until
+this week there was no gesture either.
+
+### And the offline claim from earlier today, closed properly
+
+Three attempts hung on `httpd.shutdown()`, which waits for the serving loop
+while the service worker holds a keep-alive connection open. A server in a
+separate process can just be killed. With it killed and the page reloaded:
+`customElements.get('posecode-player')` **true**, eight players, 4,823 body
+characters — identical to online. Before the vendoring it was `false`.
