@@ -1,0 +1,21 @@
+# Deliberately NOT `* text=auto`.
+#
+# That would renormalise every file in the repo in one commit, and this checkout
+# is shared with another agent mid-work. The line-ending warnings on every commit
+# are cosmetic and stay.
+#
+# What is here is the case that is not cosmetic: files whose bytes are the point.
+# assets/posecode-embed-0.1.0.js carries its own sha256 in a comment on
+# player-animations.html, and git's text detection would hand a Windows clone a
+# CRLF copy that no longer matches the hash the page publishes. The tensors and
+# the font are binary in fact; saying so keeps any future heuristic from deciding
+# otherwise.
+
+assets/posecode-embed-0.1.0.js         -text
+public/assets/posecode-embed-0.1.0.js  -text
+
+*.f32    -text
+*.bin    -text
+*.woff2  -text
+*.png    -text
+*.ico    -text
