@@ -159,6 +159,22 @@ Both now point at the pages the nav already uses for those words — `/play.html
 rather than at anchors minted to justify the links. A new `fragments` check makes every deep link
 land on something that exists; it was shown failing first.
 
+**The map was never a control.** Every page here describes a map you can turn, and neither version
+of the landing page bound a gesture to it — mine span on a timer and took one click, and the version
+on master claims "drag rotate yaw/pitch, wheel zoom, dblclick recenter, touch pinch" in its **commit
+message** while binding **zero** `addEventListener` calls in its code. It is a control now: drag and
+arrow keys rotate, ± buttons / `+` `−` / ctrl-wheel zoom within a 0.55–3× clamp, Enter picks the
+point nearest the centre, and the auto-spin yields to whoever is steering. A **plain wheel still
+scrolls the page** and `touch-action: pan-y` keeps the vertical swipe — a 440px canvas across the
+front door is the last place to trap a scroll. One `proj()` now serves the draw loop, picking and the
+selection ring; those three disagreed before, which is why the ring slid off its own dot whenever the
+cloud turned. Two designed-out defects: the a11y layer's `role="img"` on something that takes arrow
+keys (now `application`, with the keys spelled out in `#mapHelp` via `aria-describedby`), and a
+reduced-motion spin that started off under a button still reading `◐`. New `scripts/smoke_map.py`
+drives real CDP mouse and key input and reads `window.yaw`/`pitch`/`zoom` back — **nine mutations,
+nine caught** — and it serves its mutations instead of writing them, so a killed run cannot leave a
+broken page in the checkout.
+
 **The ring only exists under a real Tab.** `check_focus.py` proves a focus ring exists and that Tab
 reaches things in order; it never asked whether the ring can be *seen* (WCAG 1.4.11 wants 3:1). The
 first measurement used `element.focus()` and reported **67 controls with no focus indicator at all** —

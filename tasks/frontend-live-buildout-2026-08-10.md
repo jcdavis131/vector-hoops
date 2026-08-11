@@ -5989,3 +5989,81 @@ written.
 renormalises line endings across 2,600 files, and dropping that on top of a branch
 somebody has to review would drown the review in whitespace. It is a one-line file
 and a one-command commit the day after this merges.
+
+
+## The map was never a control (2026-08-11)
+
+Every page on this site describes a map you can turn. Neither version of the
+landing page bound a gesture to it.
+
+Mine span on a timer and took one click. The version on master — Scout's
+`0232bfc5` — carries a commit message that reads "drag rotate yaw/pitch, wheel
+zoom 0.55-2.8, dblclick recenter, touch pinch", and its code binds **zero**
+`addEventListener` calls and seven `onclick=` attributes. I over-credited that
+message in the merge report; the correction belongs here in writing. A commit
+message is not an interaction.
+
+So the map is a control now, and the same camera drives every reader of it:
+
+    proj(x, y, z)   the draw loop, picking, and the selection ring
+
+Those three used to disagree. The ring was positioned from the raw x, y with yaw
+ignored entirely, so it slid off its own dot the moment the cloud turned; the
+click test compared distances in normalised -1..1 space, which squashes the hit
+radius on a canvas twice as wide as it is tall. One projection fixes both, and at
+pitch 0 / zoom 1 it returns exactly what the old inline maths returned — the map
+at rest is byte-identical to what shipped.
+
+What it now does, and what each choice cost:
+
+  drag        pointer capture; yaw and pitch, pitch clamped to ±0.85 rad
+  keys        arrows rotate, shift for a coarse step, +/− zoom, 0 resets,
+              Enter picks the point nearest the centre — every one preventDefault
+              so the page does not scroll out from under the person steering
+  wheel       ctrl or cmd only. A plain wheel still scrolls the page: a 440px
+              canvas across the top of the front door is the last place to trap a
+              scroll, and the ± buttons and keys carry zoom for everyone else
+  touch       `touch-action: pan-y`, so a vertical swipe is still the page and a
+              horizontal drag is still the map. Pinch is deliberately not here
+  hover       resolved inside the loop that already projected every dot, so it
+              costs nothing and cannot disagree with what was painted
+  spin        yields to whoever is steering — off under the pointer, off during a
+              drag, off for 2.5s after an arrow key, then back on
+
+Two defects were designed out rather than discovered:
+
+  **`role="img"` on something that takes arrow keys.** The appended a11y layer set
+  the canvas label *and* its role, and it ran after the markup, so an interactive
+  description in the attribute would never have survived — two writers, one
+  surface, last write wins, for the fourth time this session. The label now lives
+  in the markup only. The role became `application`, which is what passes arrow
+  keys through instead of browse mode swallowing them, and that is only
+  defensible because the keys are spelled out in `#mapHelp`, which the canvas
+  points at with `aria-describedby`.
+
+  **A button lying about its own state.** Under `prefers-reduced-motion` the spin
+  starts off, and the markup ships `rot ◐`. The glyph is now corrected at wire-up.
+
+`scripts/smoke_map.py` drives the real thing — `Input.dispatchMouseEvent` and
+`Input.dispatchKeyEvent`, then `window.yaw` / `pitch` / `zoom` read back over CDP.
+A synthetic `element.dispatchEvent` would prove nothing here for the same reason
+`element.focus()` proved nothing about focus rings. Mutations are **served, not
+written**: the handler rewrites `index.html` in flight, so a killed run cannot
+leave a mutated page in a shared checkout the way the audit harness once left a
+2,400px div in `leaderboard.html`.
+
+**Nine mutations, nine caught.** Three of them were caught on the first real run
+and were mine, not the page's: the plain-wheel check scrolled the page, which
+invalidated the coordinates the next two checks were aiming at. The fix is to
+re-measure — and the scroll it caused is now an assertion of its own, because a
+plain wheel that does *not* scroll the page is the trap this design exists to
+avoid.
+
+One assertion is only real because it is counted rather than assumed: "a drag
+must not select" means nothing unless the drag's release actually fires a click.
+The smoke counts them, and fails if none arrived.
+
+Verified: 15 checks over 22 pages on both roots, a11y, contrast, painted
+contrast, target size (559 targets), focus order, focus rings (**498** tab stops,
+up from 494 — the canvas and three buttons), responsive, doc numbers, the settle
+sweep, 8 pages rendering, `smoke_index`, and `smoke_map` with its matrix.
