@@ -7120,3 +7120,35 @@ and a `site-nav__cta` reading "Play today's →". I had this on the list as a
 duplicate to merge. It is a nav item plus a distinct call to action for the
 primary thing the site does, which is ordinary practice — not a defect, and left
 alone.
+
+
+### Correction: nothing was counting, so nobody had met that button
+
+I wrote above that "every iOS visitor with two visits fell through to the banner
+with an Install button". **That population is empty.** Checking a claim I had
+already pushed:
+
+    vectorHoops.visits        written only by assets/push-retention.js
+    vectorHoops.favoriteTeam  written only by assets/favorite-team.js
+    both of those files        loaded by 0 of 18 pages
+    pwa-install.js            loaded by 16
+
+`shouldShow()` has always returned false. **The banner has never been drawn for
+anyone.** The dead Install button was real; no one had met it yet.
+
+What sent me looking: the grep behind "the visits path works" had matched
+`var LS_VISITS = 'vectorHoops.visits'` — a *declaration*, not a write — and I
+never checked whether anything loads the file it sits in. A name appearing in a
+file is not the file doing anything, which is the same mistake as a digit run
+inside JSON standing in for a source.
+
+The file that *is* loaded counts its own visits now, same key and shape as the
+unloaded one so the two agree if it is ever wired, once per six hours because
+opening a second link is not coming back. And the smoke had seeded two visits —
+testing the banner while stepping around the thing that counts them. It seeds
+one now; the second has to come from `recordVisit`.
+
+**Named and not fixed: 37 files in `assets/*.js` are loaded by no page at all,
+511,731 bytes committed and never fetched.** Two of them are the ones above.
+They cost a visitor nothing — nothing fetches them — but they cost me a wrong
+assumption today, which is that code existing means a feature works.
