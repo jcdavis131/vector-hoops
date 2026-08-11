@@ -394,7 +394,7 @@ if(lowerSec && window.IntersectionObserver){
   lio.observe(lowerSec);
 } else { bootLower(); }
 
-fetch('assets/front_office_lite.json?v=c9496248',{cache:'force-cache'})
+fetch('assets/front_office_lite.json?v=f6949ae3',{cache:'force-cache'})
   .then(function(r){ if(!r.ok) throw new Error('HTTP '+r.status); return r.json(); })
   .then(function(j){
     if(!j.teams||!j.teams.length) throw new Error('no teams in file');

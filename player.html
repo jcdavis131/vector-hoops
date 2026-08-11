@@ -60,10 +60,22 @@ input,select{border:2.2px solid var(--ink);border-radius:12px;padding:8px 10px;b
 <script>
 (async()=>{
 const OKABE=["#E69F00","#56B4E9","#009E73","#F0E442","#0072B2","#D55E00","#CC79A7","#D60022"];let teams=[],V={vectors:[]},props=[];
-try{let j=await fetch('/assets/data/front_office.json?v=fa0a3241',{cache:'no-store'}).then(r=>r.json());teams=j.teams||[]}catch(e){try{let j=await fetch('/assets/front_office.json?v=fb95747f').then(r=>r.json());teams=j.teams||[]}catch(e){}}
-try{V=await fetch('/assets/vectors_map_lite.json?v=ad8fed2b',{cache:'no-store'}).then(r=>r.json());}catch(e){V={vectors:Array.from({length:480},(_,i)=>({x:Math.random(),y:Math.random(),a:i%8,n:'Player'+i,tag:i%7===0?'closer':i%5===0?'exploitable':'neutral',arch:i%12}))};}
-try{props=await fetch('/assets/data/player_season_props.json?v=7e14b434',{cache:'no-store'}).then(r=>r.json());}catch(e){}
-document.getElementById('live').textContent=(teams.length||30)+'T · '+(V.vectors?.length||20719)+'×64-d · 13,625 injury scaffold';
+/* This block fetched 5,231,646 bytes for a 19 KB page: front_office.json twice,
+   under two paths, for one field each, plus a 2.75 MB props file read for two
+   numbers. It also passed {cache:'no-store'} on three of the four, which opts
+   out of the immutable cache the site's offline claim rests on — measured, the
+   page came back at 74% of its online text with the network gone.
+
+   And when a fetch failed it made things up: 480 players at random coordinates
+   named Player0..Player479, and a status line that printed "30T · 20719×64-d"
+   whether or not anything had loaded. This site's rule is the one /model states
+   on itself — the numbers are either the model's or absent. */
+try{let j=await fetch('/assets/front_office_lite.json?v=f6949ae3').then(r=>r.json());teams=j.teams||[]}catch(e){teams=[]}
+try{V=await fetch('/assets/vectors_map_lite.json?v=ad8fed2b').then(r=>r.json());}catch(e){V={vectors:[]}}
+try{props=await fetch('/assets/data/player_season_props.json?v=7e14b434').then(r=>r.json());}catch(e){props=[]}
+document.getElementById('live').textContent = (teams.length && V.vectors && V.vectors.length)
+  ? teams.length+'T · '+V.vectors.length.toLocaleString()+'×64-d loaded'
+  : 'Team and vector files did not load. Nothing below is drawn from them.';
 const archs=["Slasher","Shooter","Rim Protect","Playmaker","Wing 3&D","Stretch Big","Lob Big","Iso Closer","Enforcer","Connector","Paint Scorer","PoA Defender"];const asel=document.getElementById('archSel');archs.forEach(a=>{let o=document.createElement('option');o.value=a;o.textContent=a;asel.appendChild(o);});
 const tSel=document.getElementById('teamCap');teams.sort((a,b)=>(a.cap_pct||0)-(b.cap_pct||0)).forEach(t=>{let o=document.createElement('option');o.value=t.abbr;o.textContent=`${t.abbr} cap%${((t.cap_pct_normalized||t.cap_pct)*100).toFixed(1)}% ${t.flexibility_2025_26||''}`;tSel.appendChild(o);});
 let c=document.getElementById('map').getContext('2d');let leg=document.getElementById('leg');

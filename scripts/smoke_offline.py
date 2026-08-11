@@ -158,8 +158,36 @@ class Prod(http.server.SimpleHTTPRequestHandler):
             self.close_connection = True
 
 
+SITE = """(function(){
+  var b=document.body;
+  return JSON.stringify({
+    title: document.title,
+    dom:   document.documentElement.outerHTML.length,
+    text:  b ? (b.innerText||'').replace(/\\s+/g,' ').trim().length : 0,
+    nodes: document.getElementsByTagName('*').length});
+})()"""
+
+
+def walk(ws, base, pages, label):
+    """Visit every page and report what it actually put on screen."""
+    out = {}
+    for name in pages:
+        ws.call("Page.navigate", {"url": f"{base}/{name}"})
+        time.sleep(2.4)
+        d = ev(ws, SITE)
+        if not isinstance(d, dict):
+            d = {"title": "", "dom": 0, "text": 0, "nodes": 0}
+        out[name] = d
+        print(f"  {label:<7} {('/' + name) or '/':<24} {d['dom']:>8,} b  {d['text']:>6,} chars  "
+              f"{d['title'][:30]!r}")
+    return out
+
+
 def main() -> int:
-    argparse.ArgumentParser().parse_args()
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--site", action="store_true",
+                    help="warm every page, pull the plug, then revisit every page")
+    args = ap.parse_args()
 
     browser = next((b for b in BROWSERS if b.exists()), None)
     if not browser:
@@ -202,10 +230,68 @@ def main() -> int:
         if not target:
             sys.exit("chrome exposed no devtools target")
 
-        print("pulling the plug on /play\n")
         ws = WS(target)
         ws.call("Page.enable"); ws.call("Runtime.enable")
         base = f"http://127.0.0.1:{site}"
+
+        if args.site:
+            # the CLEAN form, which is the only form the site ever links. The
+            # first version of this walked brand.html and friends and reported
+            # 17 of 18 pages dead offline - because vercel.json's cleanUrls 308s
+            # the .html form and the worker refuses to cache a redirect, exactly
+            # as it should. The test was asking for URLs no visitor ever asks
+            # for. That the failure looked total is what made it obvious.
+            pages = []
+            for q in sorted(SERVE.glob("*.html")):
+                pages.append("" if q.stem == "index" else q.stem)
+            print(f"warming {len(pages)} page(s), then pulling the plug\n")
+            # twice: the first visit installs the worker, and only from the
+            # second is it controlling the page it is meant to be caching
+            walk(ws, base, pages, "warm")
+            on = walk(ws, base, pages, "online")
+
+            httpd.shutdown(); httpd.server_close(); stopped = True
+            time.sleep(0.6)
+            print()
+            off = walk(ws, base, pages, "offline")
+
+            print()
+            for name in pages:
+                a, b = on[name], off[name]
+                if not a["dom"]:
+                    failures.append(f"{name} rendered nothing even online — the plug was never "
+                                    f"the problem")
+                    continue
+                if "offline" in b["title"].lower() and name != "offline":
+                    failures.append(f"offline, {name} serves the offline notice "
+                                    f"({b['title']!r}) — the worker cached it under a URL this "
+                                    f"link never asks for, or did not cache it at all")
+                    continue
+                # each page against ITSELF online, so there is no threshold to
+                # go stale as the pages grow
+                share = b["dom"] / a["dom"] if a["dom"] else 0
+                if share < 0.9:
+                    failures.append(f"offline, {name} renders {b['dom']:,} bytes of DOM against "
+                                    f"{a['dom']:,} online ({share:.0%}) — something it needs is "
+                                    f"not in any cache")
+                elif b["text"] < a["text"] * 0.9:
+                    failures.append(f"offline, {name} shows {b['text']:,} characters against "
+                                    f"{a['text']:,} online — the shell came back and the content "
+                                    f"did not")
+            worst = min(((off[n]["dom"] / on[n]["dom"]) if on[n]["dom"] else 0) for n in pages)
+            print(f"  every page came back at {worst:.0%} of its online DOM or better")
+            if failures:
+                print()
+                print(f"FAIL — {len(failures)} page(s) do not survive the plug:")
+                for f in failures:
+                    print(f"  - {f}")
+                return 1
+            print()
+            print(f"OK — all {len(pages)} pages come back with the network gone, each within "
+                  f"10% of the DOM it rendered online")
+            return 0
+
+        print("pulling the plug on /play\n")
 
         # first visit installs the worker; the second is the first one it controls
         ws.call("Page.navigate", {"url": f"{base}/play"})

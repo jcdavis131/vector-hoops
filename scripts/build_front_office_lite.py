@@ -38,6 +38,9 @@ FIELDS = (
     "w_per_m", "weighted_wpm", "po_wins_per_m",
     "valuation_m", "for_final", "for_grade", "for_rank",
     "playoff_result",
+    # /player sorts its team picker by cap_pct. Without it that page had to
+    # fetch the whole 1,127,784-byte front_office.json for one number.
+    "cap_pct",
 )
 
 # teams.html reads r.draft.score, r.cap_efficiency.score and r.foresight.score
