@@ -19,3 +19,15 @@ public/assets/posecode-embed-0.1.0.js  -text
 *.woff2  -text
 *.png    -text
 *.ico    -text
+
+# Every file under assets/ whose content hash becomes a `?v=` cache token has to
+# have the same bytes everywhere, or the token a Windows checkout stamps will not
+# describe the bytes Vercel serves. Measured on this box, with core.autocrlf
+# true: `git checkout -- assets/map-camera.js` turned 16,869 bytes into 17,231
+# with 362 CRLF, and check_frontend immediately reported the tokens on three
+# pages as stale. Same mechanism, wider blast radius than the one bundle.
+
+assets/*.js         -text
+assets/*.css        -text
+public/assets/*.js  -text
+public/assets/*.css -text
