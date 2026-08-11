@@ -446,7 +446,12 @@ $('dlShare')?.addEventListener('click',()=>{
   if(!seen){
     setTimeout(()=>{
       let d=$('dist'); if(d) d.innerHTML='Welcome — one past player, guess the modern twin. Tap a dot or type a name, then Guess.';
-      let g=$('guess'); if(g) g.focus();
+      /* The welcome line stays; moving focus does not. This ran 400ms after
+         load on a first visit, which is exactly when a keyboard visitor is
+         orienting - it took focus out of the document flow, past the skip
+         link and the whole nav, and check_focus read the first Tab landing
+         on #go with no way back up. Telling someone what to do is not the
+         same as doing it for them. */
     },400);
     localStorage.setItem('vh_seen_onboard','1');
   }

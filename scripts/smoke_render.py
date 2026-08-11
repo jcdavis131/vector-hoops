@@ -47,7 +47,7 @@ BROWSERS = [
 # (path, [things that must appear], [things that must NOT be left behind])
 CASES: list[tuple[str, list[str], list[str]]] = [
     ("/", ["DUMB", "Pick Your Edge"], ["Loading the measured headline"]),
-    ("/owner/", ["Boston Celtics", "78.10", "129.33"], ["Loading 30 teams"]),
+    ("/owner.html", ["Boston Celtics", "78.10", "129.33"], ["Loading 30 teams"]),
     ("/teams.html", ["All 30 teams", "BOS", "78.10"], ["Loading <code>assets"]),
     ("/model.html", ["MTNN", "towers"], ["Loading the measured headline"]),
     ("/trends.html", ["rotation", "archetype"], ["Loading archetype names"]),

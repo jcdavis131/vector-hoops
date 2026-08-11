@@ -27,6 +27,23 @@ ROOT = Path(__file__).resolve().parent.parent
 
 # (file, before, after). Root pages and their public-facing duplicates both.
 EDITS: list[tuple[str, str, str]] = [
+    # ── /player: the page nothing walked ─────────────────────────────────────
+    # It lived in public/ with no root counterpart, so all sixteen root-walking
+    # checks missed it, and it shipped a three-tier price card on a site where
+    # nothing is gated. The feature copy is real and stays; only the prices go,
+    # because the features are all just here.
+    ("player.html", "<b class=hd>PRO $19/MO</b>", "<b class=hd>SHAP + CLOSER FIT</b>"),
+    ("player.html", "<b class=hd>AGENCY $199 10 SEATS</b>", "<b class=hd>API + WHITE-LABEL</b>"),
+    ("player.html", "<div class=small>10 seats, API,", "<div class=small>API,"),
+    ("player.html", ">OWNER FOR $5K</a>", ">OWNER</a>"),
+    ("player.html", ">FIT CALC $19</a>", ">FIT CALC</a>"),
+    ("player.html", ">BRAND W/$B</a>", ">BRAND</a>"),
+    ("player.html", "<div class=hd>PRICING & PROPS HONESTY",
+     "<div class=hd>WHAT IS HERE, AND WHAT IT RESTS ON"),
+    # the same unsourced figure the merge commit called master out for
+    ("player.html", "twin 100 purity@10 0.7057, Wemby 699 real PO mins",
+     "twin 100, Wemby 699 real PO mins"),
+
     # ── landing: the nav literally priced the pages ──────────────────────────
     ("index.html",
      '<a class="btn btn-xl" href="/owner">Owner $5k</a>',
@@ -64,7 +81,7 @@ EDITS: list[tuple[str, str, str]] = [
 # franchise valuation out of front_office.json, as are the $M and $B figures in
 # the owner table. Only tier and subscription copy comes out.
 
-for page in ("owner.html", "owner/index.html"):
+for page in ("owner.html",):
     EDITS += [
         (page,
          "<title>Vector Hoops — Owner • Championship Economics $5k/$10k/$15k</title>",
@@ -79,7 +96,7 @@ for page in ("owner.html", "owner/index.html"):
          "Owner PWA manifest+SW. Free, no account."),
     ]
 
-for page in ("brand.html", "brand/index.html"):
+for page in ("brand.html",):
     EDITS.append((
         page,
         '<span class="pill pill-y">$2k CMO deck</span><span class="pill">$8k Pro</span>'
@@ -88,7 +105,7 @@ for page in ("brand.html", "brand/index.html"):
         '<span class="pill">No account</span>',
     ))
 
-for page in ("dfs.html", "dfs/index.html"):
+for page in ("dfs.html",):
     EDITS.append((
         page,
         "Free 3 / Pro $9 10 / $49 API with lock/avoid tags sorting by value.",

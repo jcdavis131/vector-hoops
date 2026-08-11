@@ -63,7 +63,7 @@ WS, BROWSERS = _cv.WS, _cv.BROWSERS
 # failed; extending it to all eighteen turned up two more. Sampling was the
 # mistake there, so it is not repeated here.
 PAGES = [
-    "/", "/owner/", "/brand/", "/dfs/", "/player/", "/player-fit/",
+    "/", "/owner.html", "/brand.html", "/dfs.html", "/player.html", "/player-fit.html",
     "/teams.html", "/trends.html", "/model.html", "/play.html", "/players.html",
     "/player-cards.html", "/dictionary.html", "/methods.html", "/inventory.html",
     "/leaderboard.html", "/offline.html", "/player-animations.html",

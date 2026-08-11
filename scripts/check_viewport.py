@@ -50,7 +50,7 @@ BROWSERS = [
 # every page the site serves, not a sample. Three of the first seven overflowed,
 # so the other fifteen had no reason to be assumed fine.
 PAGES = [
-    "/", "/owner/", "/brand/", "/dfs/", "/player/", "/player-fit/",
+    "/", "/owner.html", "/brand.html", "/dfs.html", "/player.html", "/player-fit.html",
     "/teams.html", "/trends.html", "/model.html", "/play.html", "/players.html",
     "/player-cards.html", "/dictionary.html", "/methods.html", "/inventory.html",
     "/leaderboard.html", "/offline.html", "/player-animations.html",

@@ -50,6 +50,11 @@ SR_ONLY = (
 # input -> the name it should announce. Placeholder text is not an accessible
 # name; browsers expose it only as a last resort and it disappears on input.
 INPUT_LABELS = {
+    # /player was invisible to every root-walking check until its file moved
+    # out of public/; these three controls had no accessible name at all.
+    "q": "Search for a player by name",
+    "teamCap": "Filter by team cap situation",
+    "archSel": "Filter by archetype",
     "packIn": "Pack code, for example 672-123-456",
     "guess": "Type a modern player to guess the twin",
 }
@@ -123,6 +128,8 @@ def fix(text: str) -> tuple[str, list[str]]:
         return tag[:-1].rstrip() + f' aria-label="{label}">'
 
     text = outside_scripts(text, lambda s: re.sub(r"<input\b[^>]*>", inp, s, flags=re.I))
+    # <select> was never handled: three unnamed ones sat on /player.
+    text = outside_scripts(text, lambda s: re.sub(r"<select\b[^>]*>", inp, s, flags=re.I))
 
     # ── the link whose whole name was "/" ───────────────────────────────────
     if '<a href="/index.html">/</a>' in text:

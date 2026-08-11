@@ -142,6 +142,47 @@ def strip_comments(text: str) -> str:
     return RE_COMMENT.sub("", text)
 
 
+
+def check_routes(fail) -> None:
+    """One file per route, and no served page outside the mirror.
+
+    Two ways a page can be served and never checked, both of which happened:
+
+    **A page only in public/.** `public/player.html` was tracked with no root
+    counterpart, so `sync_public.py` never touched it and every root-walking
+    check — all sixteen — walked past. It was serving a three-tier price card
+    (`PRO $19/MO`, `AGENCY $199`) on a site where nothing is gated, four
+    unsourced figures, and ten cards with no heading.
+
+    **Two files claiming one route.** With `cleanUrls` and `trailingSlash:false`,
+    `X.html` answers `/X` and `X/index.html` answers only `/X/`, which 308s to
+    `/X`. So the directory page is unreachable. Five routes were like this —
+    brand, dfs, owner, player, player-fit — and on `/owner` the reachable file
+    was the one WITHOUT the table caption added for screen readers, so an
+    accessibility fix sat shadowed and unshipped.
+    """
+    SERVE = ROOT / "public"
+    if not SERVE.is_dir():
+        print("  SKIP  no public/ under this root")
+        return
+    skip = {"assets", "knowledge", "node_modules"}
+    roots = {q.stem for q in SERVE.glob("*.html")}
+    dirs = {q.parent.name for q in SERVE.glob("*/index.html") if q.parent.name not in skip}
+
+    orphans = sorted(q.name for q in SERVE.glob("*.html") if not (ROOT / q.name).exists())
+    for name in orphans:
+        fail(f"public/{name} has no counterpart at the repo root, so sync_public.py never "
+             f"touches it and every check that walks the root misses it. Move it to the root "
+             f"and let the mirror carry it.")
+
+    for name in sorted(roots & dirs):
+        fail(f"/{name} is claimed by both {name}.html and {name}/index.html. cleanUrls serves "
+             f"the first and trailingSlash:false 308s /{name}/ to /{name}, so the directory "
+             f"page cannot be reached — keep one.")
+
+    print(f"  {len(roots)} route(s), one file each; none served from outside the mirror")
+
+
 def check_syntax(fail) -> None:
     node = shutil.which("node")
     if not node:
@@ -390,6 +431,7 @@ def check_links(fail) -> None:
     print(f"  {total} internal link(s) resolve")
 
 
+RE_SLASH_HREF = re.compile(r"""href=["'](/[A-Za-z0-9._~-]+(?:/[A-Za-z0-9._~-]+)*/)["']""")
 RE_HTML_HREF = re.compile(r"""href=["'](?!\w+:)([^"'#]*\.html)((?:#[^"']*)?)["']""")
 
 
@@ -414,6 +456,16 @@ def check_clean(fail) -> None:
     total = 0
     for page in pages():
         text = without_comments(page.read_text(encoding="utf-8", errors="replace"))
+        # vercel.json also sets trailingSlash:false, so /owner/ is a 308 to
+        # /owner for exactly the same two reasons: a round trip per click, and a
+        # service worker that keyed its cache on /owner being asked for a URL it
+        # has never held. 37 hrefs were written with one, and this check — built
+        # for the .html half — did not know about it.
+        for slashed in sorted(set(RE_SLASH_HREF.findall(text))):
+            total += 1
+            fail(f"{label(page)} links to {slashed} — trailingSlash:false 308s that to "
+                 f"{slashed.rstrip('/')}, which costs a round trip and misses the worker's "
+                 f"cache. Drop the trailing slash.")
         for path, frag in sorted(set(RE_HTML_HREF.findall(text))):
             total += 1
             fail(
@@ -821,6 +873,7 @@ CHECKS = {
     "links": check_links,
     "clean": check_clean,
     "headings": check_headings,
+    "routes": check_routes,
     "fragments": check_fragments,
     "wiki": check_wiki,
 }
