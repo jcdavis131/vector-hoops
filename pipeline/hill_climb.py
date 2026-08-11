@@ -309,9 +309,19 @@ def main() -> None:
     ap.add_argument("--epochs", type=int, default=20)
     ap.add_argument("--rounds", type=int, default=2)
     ap.add_argument("--out", default=None)
+    # BASE_ARCH carries --dim 48 while the shipped embedding_v3.npz is (12966, 64).
+    # Climbing at 48 searches a space the deployed model is not in, so its winner
+    # would not transfer. Default keeps the old behaviour; pass --arch-dim 64 to
+    # search the architecture actually in production.
+    ap.add_argument("--arch-dim", type=int, default=None,
+                    help="override BASE_ARCH's --dim (shipped model is 64)")
     args = ap.parse_args()
 
     seeds = [int(s) for s in args.seeds.split(",") if s]
+    if args.arch_dim:
+        i = BASE_ARCH.index("--dim")
+        BASE_ARCH[i + 1] = str(args.arch_dim)
+        print(f"searching at --dim {args.arch_dim} (shipped embedding is 64-d)", flush=True)
     OUT.mkdir(parents=True, exist_ok=True)
     if args.mode == "families":
         res = climb_families(seeds, args.epochs, args.rounds)
