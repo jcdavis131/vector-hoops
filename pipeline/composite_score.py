@@ -259,9 +259,11 @@ def composite_quality(report: dict[str, Any]) -> dict[str, Any]:
             "promote if CQS >= baseline_cqs + delta, test recall@10 and "
             "purity@20 stay within their floors, and continuity spread stays "
             "under its bar. Thresholds are 2x the standard error of the seed "
-            "mean (measured seed sd: recall 0.088, CQS 1.61, purity 0.0046), "
-            "so they widen when a decision rests on few seeds and tighten "
-            f"toward the hand floors at {PROMOTE_SEEDS_TARGET} seeds."
+            "mean (measured seed sd: recall "
+            f"{BASELINE_SD['recall']:g}, CQS {BASELINE_SD['cqs']:g}, purity "
+            f"{BASELINE_SD['purity']:g}), so they widen when a decision rests "
+            "on few seeds and tighten toward the hand floors at "
+            f"{PROMOTE_SEEDS_TARGET} seeds."
         ),
         "baseline_provenance": dict(BASELINE_PROVENANCE),
         "baseline_sd": dict(BASELINE_SD),
