@@ -24,7 +24,18 @@ throttles the first visit and looks while it is still happening.
   blocked   with the file refused, the page says so and calls them a placeholder
 
     python scripts/smoke_mapload.py
+    python scripts/smoke_mapload.py --page players
     python scripts/smoke_mapload.py --mutate late-seed   # expect FAIL
+
+/players had the same gap and no placeholder at all to fall back on — 0 painted
+pixels at 2.5s and at 5.0s, on the page whose whole subject is the map. It also
+shipped `<span id="lab">1,764 players</span>` typed into the markup, shown over
+an empty canvas before anything had loaded and left there if the fetch failed.
+
+Two caches sit between "the server said no" and "the page did not get it". The
+blocked case reported the map loading fine twice before it was really blocked:
+first the service worker answered from its own cache without asking, then with
+that cleared the browser's HTTP cache did. Both are cleared now.
 """
 
 from __future__ import annotations
@@ -54,14 +65,24 @@ if hasattr(sys.stdout, "reconfigure"):
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from check_viewport import WS, BROWSERS  # noqa: E402
 
-PAGE = SERVE / "index.html"
 MAP = "/assets/embedding_map_points_limited.json"
 
+# per page, because the two maps are separate code carrying the same defect
 MUTATIONS = {
-    # put the placeholder back where it was: only reachable on failure
-    "late-seed": [("seedPlaceholder();\nloadLimited();", "loadLimited();")],
-    # call the placeholder's invented positions players again
-    "count-lie": [("sL.textContent = mapState==='real'", "sL.textContent = true")],
+    "index": {
+        # put the placeholder back where it was: only reachable on failure
+        "late-seed": [("seedPlaceholder();\nloadLimited();", "loadLimited();")],
+        # call the placeholder's invented positions players again
+        "count-lie": [("sL.textContent = mapState==='real'", "sL.textContent = true")],
+    },
+    "players": {
+        # anchored on both bootstrap lines: adding applyFilter between them made
+        # the old one-line anchor miss, and the harness said so with exit 2
+        # rather than passing
+        "late-seed": [("seedPlaceholder();\napplyFilter('all');", "")],
+        "count-lie": [("$('lab').textContent = mapState==='real'",
+                       "$('lab').textContent = true")],
+    },
 }
 
 PAINT = """(function(){
@@ -71,13 +92,22 @@ PAINT = """(function(){
     for(var i=3;i<d.length;i+=4){ if(d[i]!==0) n++; }
     return n; }catch(e){ return -3; }
 })()"""
-STATUS = "((document.getElementById('statusLab')||{}).innerText||'')"
+# /index calls the map's own status line statusLab; /players calls it lab and
+# also has a statusLab showing the *list* count, so falling back from one to the
+# other read the wrong element and reported "1,764 PLAYERS" during loading — a
+# number the map was not claiming. Name the right one per page.
+STATUS_ID = {"index": "statusLab", "players": "lab"}
 
 
 def main() -> int:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--mutate", choices=sorted(MUTATIONS))
+    ap.add_argument("--page", default="index", choices=sorted(MUTATIONS))
+    ap.add_argument("--mutate", choices=("late-seed", "count-lie"))
     args = ap.parse_args()
+    PAGE = SERVE / f"{args.page}.html"
+    MUTS = MUTATIONS[args.page]
+    STATUS = ("((document.getElementById('" + STATUS_ID[args.page] +
+              "')||{}).innerText||'')")
 
     browser = next((b for b in BROWSERS if b.exists()), None)
     if not browser:
@@ -85,7 +115,7 @@ def main() -> int:
 
     page = PAGE.read_text(encoding="utf-8")
     if args.mutate:
-        for find, repl in MUTATIONS[args.mutate]:
+        for find, repl in MUTS[args.mutate]:
             if find not in page:
                 # exit 2, not 1: a mutation that never applied must not look
                 # like a mutation the assertions caught
@@ -102,7 +132,8 @@ def main() -> int:
 
         def do_GET(self):
             path = self.path.split("?")[0]
-            if path in ("/", "/index.html"):
+            if path in ("/", f"/{args.page}.html") or (
+                    args.page == "index" and path == "/index.html"):
                 self.send_response(200)
                 self.send_header("Content-Type", "text/html; charset=utf-8")
                 self.send_header("Content-Length", str(len(body)))
@@ -170,9 +201,9 @@ def main() -> int:
                 "offline": False, "latency": 400,
                 "downloadThroughput": kbps * 1024 / 8, "uploadThroughput": kbps * 1024 / 8})
 
-        url = f"http://127.0.0.1:{site}/index.html"
+        url = f"http://127.0.0.1:{site}/{args.page}.html"
         mut = f"  [mutation {args.mutate}]" if args.mutate else ""
-        print(f"loading / on a throttled first visit{mut}\n")
+        print(f"loading /{args.page} on a throttled first visit{mut}\n")
 
         # ── while it is still arriving ────────────────────────────────────
         throttle(400)
@@ -201,7 +232,7 @@ def main() -> int:
                            "embedding_map_points_limited.json").read_text(encoding="utf-8"))
         want = f"{len(real['points']):,}"
         print(f"  arrived   {px} painted px   status {st[:44]!r}   (file holds {want})")
-        if want not in st:
+        if want not in st.replace(",", ","):
             fails.append(f"once loaded the status reads {st[:60]!r}; the file holds {want} "
                          f"points")
 
