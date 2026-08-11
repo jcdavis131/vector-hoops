@@ -7213,3 +7213,53 @@ a guard (`if (window.VHTrendsViz)`), one is inside a comment, and the custom
 events with no emitter belong to features that are absent rather than broken.
 `shared-map.js` already pauses on `focusin` and `visibilitychange` natively, so
 the unfired `vh:pause-maps` costs nothing. Unshipped code, not broken code.
+
+
+## Four sweeps, four clean results (2026-08-11)
+
+Under a cron that has turned up a defect every turn, the honest outcome this
+time is that four investigations came back empty. Recording them so the ground
+is not re-hunted.
+
+    first paint   all 18 pages, throttled first visit. **0 pages** are under
+                  60% of their own text at 2.5s without saying they are
+                  loading. /trends reads 50% and announces it, and its map sits
+                  behind a "Draw the seasons" button by design. The placeholder
+                  work covered the real cases.
+
+    typed counts  swept for more markup like `<span id="lab">1,764 players</span>`
+                  that JS later overwrites. Four hits, none a defect: three are
+                  honest zero states (`streak 0 • 0/7`) and one is "30 teams".
+
+    card count    /player-cards says "2,293 of them". `knowledge/players` holds
+                  exactly **2,293** .md files; the other 15 are 8 archetypes,
+                  5 positions and 2 index pages.
+
+    the game      `smoke_play` end to end: the map paints, "curry" is
+                  disambiguated against both Currys, a miss is refused without
+                  throwing, the hit advances the pack, the share dialog traps
+                  focus and closes on Escape, the streak reads 1 after a
+                  nine-day gap and 4 the next day, reduced motion honoured.
+
+### The one thing that was not clean was my own claim
+
+`.gitattributes` went in with "verified: staging it changes exactly one file".
+That tests the **add**, not the **rule**. Testing the rule means making git
+touch the files:
+
+    covered      624,256 b -> 624,256 b, 0 CRLF, sha256 8925809899c7… intact
+    NOT covered  16,869 b -> **17,231 b, 362 CRLF**
+
+`core.autocrlf` is true here. Without the control the first number means
+nothing — "0 CRLF" and "git never converts anything here" look identical.
+
+The control then exposed what the first pass missed. `stamp_assets` derives each
+`?v=` token from a file's sha256, so a checkout that rewrites line endings
+changes the token: `check_frontend` called the tokens on three pages stale the
+moment `map-camera.js` came back CRLF. **A Windows checkout would stamp tokens
+describing bytes Vercel does not serve.** Anything whose content hash becomes a
+URL now carries `-text`.
+
+Still no `* text=auto` — that renormalises the repo in one commit and this
+checkout is shared. Still parked, still not a defect: 511,731 bytes across 37
+unloaded `assets/*.js`.
