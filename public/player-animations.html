@@ -59,6 +59,16 @@ span.pill.mono.ink,.pill.ink{color:#C9C6C0}
 span.proj{color:var(--orange-ink)}
 
 
+
+/* This page had no :focus-visible rule at all — every control was relying on
+   Chrome's default ring, which happens to pass, except on <posecode-player>:
+   measured with real Tab presses, that stop had no outline and no box-shadow.
+   The element comes from a third-party script and is a tab stop with or without
+   it, so the ring is the page's job. */
+:focus-visible{outline:3px solid #0072B2;outline-offset:2px}
+/* :focus, not :focus-visible — Chrome makes an overflowing custom element a
+   focusable scroll container, and that stop does not match the heuristic. */
+posecode-player:focus{outline:3px solid #0072B2;outline-offset:3px}
 </style>
 <script src="https://unpkg.com/posecode-embed@0.1.0/dist/posecode-embed.js"></script>
 <meta property="og:type" content="website">

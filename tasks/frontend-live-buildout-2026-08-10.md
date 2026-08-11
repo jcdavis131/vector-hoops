@@ -5888,3 +5888,38 @@ before it tested anything. A test that fails to break the thing it is testing
 proves nothing about the test.
 
 **Seventeen checks now.**
+
+
+## The ring only exists under a real Tab (2026-08-11)
+
+`check_focus.py` proves a focus ring exists and that Tab reaches things in a
+sensible order. It never asked whether the ring can be **seen** — WCAG 1.4.11
+wants 3:1 against what is behind it.
+
+The first version of that measurement focused each control with
+`element.focus()` and reported **67 controls across 22 pages with no focus
+indicator at all**. Every one of those was the measurement:
+
+    programmatic .focus()   :focus-visible False   outline: none 3px rgb(0,0,238)
+    a real Tab press        :focus-visible True    outline: solid 3px rgb(0,114,178)
+                                                   shadow:  rgba(0,114,178,.22) 0 0 0 5px
+
+The site styles focus with `:focus-visible`, and Chrome does not match that for
+scripted focus. **Any tool that measures focus styling by scripting focus is
+measuring nothing** — which is the same shape as the backspace regex, the empty
+live regions and the closed `<details>`: a state the page only enters one way,
+read from a state it never entered.
+
+Walked with real key events instead: **494 tab stops across 22 pages, one
+genuine failure.**
+
+    /player-animations.html <posecode-player> — no outline and no box-shadow
+
+That page carried **no `:focus-visible` rule at all** and was relying on Chrome's
+default ring, which happens to pass everywhere except on the third-party
+`<posecode-player>`. It needed `:focus` rather than `:focus-visible`: Chrome makes
+an overflowing custom element a focusable scroll container, and that stop does not
+match the heuristic.
+
+`scripts/check_focus_ring.py` — **eighteen checks now** — with two mutations, two
+caught: a ring recoloured to `#FBFBF9` (1.01:1) and a ring removed outright.

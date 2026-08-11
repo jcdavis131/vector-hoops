@@ -159,6 +159,17 @@ Both now point at the pages the nav already uses for those words — `/play.html
 rather than at anchors minted to justify the links. A new `fragments` check makes every deep link
 land on something that exists; it was shown failing first.
 
+**The ring only exists under a real Tab.** `check_focus.py` proves a focus ring exists and that Tab
+reaches things in order; it never asked whether the ring can be *seen* (WCAG 1.4.11 wants 3:1). The
+first measurement used `element.focus()` and reported **67 controls with no focus indicator at all** —
+every one of them the measurement, not the site: Chrome does not match `:focus-visible` for scripted
+focus, so **any tool that measures focus styling by scripting focus is measuring nothing.** Walked
+with real key events instead: **494 tab stops, one genuine failure** — `<posecode-player>` on
+`/player-animations`, a page carrying no `:focus-visible` rule at all and relying on Chrome's default
+ring. It needed `:focus`, because Chrome makes an overflowing custom element a focusable scroll
+container and that stop does not match the heuristic. New `check_focus_ring.py`, **eighteen checks
+now**, two mutations, two caught.
+
 **43 targets under 24px, and why none of them fails.** WCAG 2.2 added 2.5.8 Target Size at AA — 24 × 24
 CSS px — and this site is built out of small mono pills that nobody had measured. Across 22 pages:
 **555 targets, 43 under 24 × 24, 8 exempt as inline links in prose, 35 passing on the spacing
