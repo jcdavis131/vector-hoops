@@ -84,9 +84,11 @@ HOLD = """
 """
 
 CARD = """(function(){
+  var c=document.getElementById('card');
   return JSON.stringify({
     title:document.title.slice(0,44),
     url:location.search,
+    body:((c&&c.textContent)||'').trim().slice(0,70),
     live:((document.getElementById('live')||{}).textContent||'').trim().slice(0,44)});
 })()"""
 
@@ -314,6 +316,29 @@ def main() -> int:
                     f"title {end['title']!r}, url {end['url']!r}. open() has no sequence "
                     f"guard, so a slow response overwrites a newer one and pushes a "
                     f"history entry for a page nobody navigated to")
+
+            # 7. the same race, but the held request FAILS. The catch writes the
+            #    "No wiki page" copy, so it needs the guard too — a stale 404 must
+            #    not land on a card the visitor has since opened. Cache is disabled
+            #    for this run, so blocking really does reach the network.
+            ws.call("Network.setBlockedURLs", {"urls": ["*vince-carter.md*"]})
+            pick(ws, "vince carter", "vince carter")
+            time.sleep(0.4)
+            pick(ws, "gerald brown", "gerald brown")
+            time.sleep(5.0)
+            after = ev(ws, CARD)
+            ws.call("Network.setBlockedURLs", {"urls": []})
+            print(f"  raced a 404    title {after['title']!r} url {after['url']!r}")
+            if "no wiki page" in after["body"].lower():
+                failures.append(
+                    f"a card that failed to load replaced one the visitor had already "
+                    f"opened — the catch writes its 'No wiki page' copy without checking "
+                    f"whether it is still the current request, so a dead link three "
+                    f"seconds ago wipes out the page someone is reading now")
+            if "brown" not in (after["title"] + after["url"]).lower():
+                failures.append(
+                    f"a failed card took over the title and url: {after['title']!r} "
+                    f"{after['url']!r}")
     except SystemExit:
         pass
     finally:

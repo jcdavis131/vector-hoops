@@ -4598,3 +4598,66 @@ failure), and now the card view. None was visible in a screenshot, in a gate, or
 a fast link. All three needed the same question — *what if the slower one arrives
 second?* — and none of them would have been asked by looking at the code alone,
 because in each case the code reads correctly right up until you time it.
+
+
+## The guard I wrote proactively, then published as enforced (2026-08-10)
+
+The card race fix guarded both `.then` and `.catch` — the second with a comment
+saying "a stale failure must not replace a card the visitor has since opened."
+Good instinct, and **by this branch's own rule that comment was a claim.** The race
+phase held a request that *succeeds*; nothing produced a stale failure, the
+mutation matrix deleted only the `.then` guard, and `READINESS.md` had already gone
+out saying a sequence number "guards both the success and the failure path…
+Enforced." A reader takes that to cover two things. It covered one.
+
+Delaying vince-carter **and** blocking it makes the held fetch reject at three
+seconds instead of resolving, which is the missing case exactly:
+
+    clicked first   'Vince Carter'   (held 3s, then fails)
+    clicked second  'Gerald Brown'
+
+    5s later   title 'Gerald Brown — Vector Hoops'  url '?p=gerald-brown'
+               body  '1998-99 – 1998-991 seasonSGPlaymaking + Steals…'
+               announced 'Gerald Brown card loaded.'
+
+    a stale 404 replaced the open card: False
+
+The guard holds. **Nothing to fix, and that is not the point** — the claim was
+published before it was true, and it is one line's difference between a guard that
+works and a guard that was never run. Folded in as a seventh assertion; the matrix
+is now six for six, the new mutation reporting *"a card that failed to load
+replaced one the visitor had already opened."*
+
+## Worker bumps: a standing rule instead of a remembered sentence
+
+Four commits in a row have changed a page's inline JS and had to decide whether to
+bump the service worker, and the decision went unstated in two of them. It is the
+same test every time, so it belongs in `READINESS.md` once rather than in each
+commit from memory:
+
+**The worker is bumped when a `?v=` asset token changes, or when a page in the
+three-entry shell (`/`, `/offline`, `/manifest.json`) changes. Nothing else.**
+`.html` is served `max-age=0, must-revalidate` and the worker is network-first, so
+a page edit reaches visitors without one. That is the `019ba589` test; from here a
+commit cites it rather than re-deriving it.
+
+`player-cards.html` this pass: no token changed, not in the shell, **not bumped.**
+
+## Next: sweep for the shape instead of tripping over it
+
+Three defects this session have been one shape — **two writers, one surface, last
+write wins**: the game's live region, the landing page's point count, the card
+view. The board note above says none is findable by reading. That is true of the
+*defects* and false of the *candidates*: a user-triggered `fetch(...).then(...)`
+that writes `innerHTML`, `textContent`, `document.title` or `pushState` **without a
+sequence or generation guard** is a grep, and the browser decides each one.
+
+That sweep is also the natural way into phase 5, which has had the least product
+depth of anything in the brief. `/teams` is the least-examined interactive page —
+`chemistry.json` at 103 KB, eager-vs-lazy never checked, and sorting plus filters
+as its primary controls.
+
+**Next step: grep for the shape across the live pages and loaded assets, shortlist,
+then let the browser settle each — starting on `/teams`.** The same census-then-
+browser discipline that has been wrong twice about payload and right every time
+about behaviour.

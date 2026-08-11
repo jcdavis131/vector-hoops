@@ -49,6 +49,11 @@ node scripts/smoke_owner_table.mjs          # + arch_map, retrieval_map, name_fi
 
 Add `--root public` to the python checkers to test the served copy.
 
+**Service worker bumps, so the rule stops being remembered per commit.** The worker version is
+bumped when a `?v=` asset token changes, or when a page in its three-entry shell (`/`, `/offline`,
+`/manifest.json`) changes. Nothing else: `.html` is served `max-age=0, must-revalidate` and the
+worker is network-first, so an edit to any other page reaches visitors without one.
+
 ## What changed
 
 **The game.** The map was never visible — a bare `canvas{}` rule gave the overlay an opaque
@@ -125,8 +130,7 @@ the slower request wins whichever card you asked for last. Measured by holding o
 seconds: a visitor who clicked Vince Carter, changed their mind and clicked Gerald Brown was on
 **Gerald Brown at 1s and Vince Carter at 5s**, with a `pushState` that ran after they had navigated
 away, so Back went somewhere they never chose. A sequence number now guards both the success and the
-failure path — a stale 404 must not replace a card someone has since opened either. Enforced by the
-race phase in `scripts/smoke_cards.py`; its mutation matrix is five for five.
+failure path — a stale 404 must not replace a card someone has since opened either, which was measured by delaying that request **and** blocking it so the held fetch rejects. Enforced by two race phases in `scripts/smoke_cards.py`; its mutation matrix is six for six.
 
 **Typography.** Nine pages were rendering body copy in Times New Roman. They declared
 `font-family:ui-sans-system`, which is not a CSS keyword — the real generic is `ui-sans-serif`, so
