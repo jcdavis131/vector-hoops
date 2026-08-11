@@ -1,14 +1,14 @@
 # frontend-live — readiness
 
-**Nothing here is live.** All 143 commits are on `frontend-live`; `master` is untouched, and
+**Nothing here is live.** All 146 commits are on `frontend-live`; `master` is untouched, and
 pushing `master` is what deploys the site. Suite green at the time of writing.
 
 | | |
 |---|---|
-| commits ahead of master | 143 |
+| commits ahead of master | 146 |
 | paths changed | 2,631 (2,547 under `public/`, 31 scripts) |
-| insertions / deletions | +202,001 / −310,415 |
-| working notes | `tasks/frontend-live-buildout-2026-08-10.md`, 4,001 lines |
+| insertions / deletions | +202,270 / −310,429 |
+| working notes | `tasks/frontend-live-buildout-2026-08-10.md`, 4,151 lines |
 
 **Where to look at it.** The branch is pushed and Vercel builds every commit on it:
 
@@ -99,6 +99,22 @@ handwriting font never applied. Every prose page now renders the sans it asks fo
 **Accessibility.** Skip links 6/22 → 22/22. Focus rings 6/22 → 22/22. Static failures 81 → 0.
 Contrast failures 12 → 0. Sorting the teams table from the keyboard no longer strands you at the top
 of the page. The players filter announces which one is active. The player search is a real combobox.
+
+**What a screen reader actually receives.** `check_a11y.py` settles eleven criteria and says in its
+own docstring that "real screen-reader flow still needs a browser and a person". The browser half is
+now done: `Accessibility.getFullAXTree` reports the computed role and name of every node, which is
+what assistive tech receives rather than what the markup implies. Across eight pages —
+**zero unnamed interactive nodes**; every button, link and field announces itself. Two gaps it found:
+
+- **The game was silent between guesses.** `/play` announces the result box at the end, but each
+  guess before it reached nothing. Measured: `#vh-live` empty before a guess and empty after, while
+  the sighted player read `guess → AJ Griffin 2022-23 cos -0.67 ◐ • row 11029` in `#log`, which is
+  not a live region. With six guesses and no way to hear whether you landed at −0.67 or 0.94, the
+  game could not be played without sight. Each guess is now announced verbatim — only `cos` expands
+  to `cosine`, every number and name untouched, so heard and shown cannot drift apart.
+- **Fifteen decorative `<svg>` tiles announced themselves as "image"** with no name, on `/teams`,
+  `/players` and `/index`. They were not `aria-hidden` — a hidden node never reaches the tree, which
+  is why they showed up. Now hidden; re-measured as none.
 
 **Weight and third parties.** `/owner` −96% and `/teams` −96.4% bytes on paint. Google Fonts removed
 from all 18 pages that carried it; Architects Daughter self-hosted (20,184 bytes, SIL OFL alongside),
