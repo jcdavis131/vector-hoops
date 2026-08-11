@@ -7340,3 +7340,50 @@ one**. That is a limit, and saying so is not the same as saying they resolve.
 And the sweep itself over-reports: its blob test missed `10104` and `1308`,
 which are in their files. So "0 unsourced integers" is really "18 candidates, 4
 confirmed defects" — the all-clear is trustworthy in one direction only.
+
+
+## The sibling counts were verifiable after all (2026-08-11)
+
+Twice I wrote that `/`'s cross-sport figures "describe other repos and cannot be
+verified from this one". **I never checked whether those repos were on this
+box.** All ten `vector-*` siblings are. Same mistake as the /inventory one a few
+hours earlier, one layer up: a limit asserted instead of measured.
+
+`vector-unified/assets/unified_slim.json` is the joint model itself:
+
+    hoops      12,966
+    gridiron    5,323
+    pitch       2,430
+    TOTAL      20,719        meta.n_players = 20719, d_emb = 64
+
+So **20,719 is not arithmetic that happens to work** — it is the row count of
+the joint embedding, and all three components are exact. `4,831 company-years`
+is `vector-equities/eval_scoreboard.json` `n_rows`, also exact.
+
+The fifth does not check out. `4022` appears in no JSON anywhere under
+`vector-tennis`, because **that repo contains zero JSON files**. Four exact
+figures standing beside one with nothing behind it is the pattern this site says
+it does not ship, so the sentence now states the relationship it can back and
+names tennis without a count.
+
+This cannot become a gate: the evidence lives in repos that are not part of this
+deploy, so `COUNTS` cannot reach it. Hand-verified, working recorded here.
+
+### /inventory's record counts were fine; my reading of them was not
+
+I had checked its byte sizes and none of its counts. First pass reported four
+counts wrong — **every one of those was my own bad read of the file's shape**
+(`combine 2` and `matchup 7` were top-level dict keys, not records). Read
+properly:
+
+    33 seasons · 944 OU entries · 3,014 combine prospects · 14,690 matchup
+    records · 2,871 unique players · 36 dicts · 1,001 team-years
+
+all correct. The counts come from each generator's own metadata; only the
+hand-typed byte sizes had drifted. That is a coherent story rather than a
+coincidence: a number the generator writes stays true, a number a person types
+does not.
+
+Also fixed: `enriched 266K` on /inventory, a summary I missed when correcting
+that file's byte size — I caught the `2.64MB` one in the same sentence and not
+this one.
