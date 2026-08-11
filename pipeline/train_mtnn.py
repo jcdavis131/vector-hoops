@@ -54,6 +54,26 @@ from mtnn_validation import build_validation_report, role_labels_from_context
 
 ROOT = Path(__file__).resolve().parents[1]
 DATA_DIR = ROOT / "pipeline" / "data"
+
+# Where embedding_v3.npz and mtnn_centroids.npz go.
+#
+# This used to be DATA_DIR unconditionally, so *every* run shipped. On
+# 2026-08-06 a `--epochs 1` smoke test — run only to check the trainer started —
+# overwrote the shipped 64-d embedding_v3.npz with a 48-d one-epoch model, CQS
+# 44.49, population validation FAILED. pipeline/data is gitignored, so git could
+# not restore it; recovery needed dated .npz backups plus a cosine
+# identification against a sibling repo.
+#
+# pipeline/hill_climb.py runs this script once per trial with cwd=ROOT. A
+# two-seed, two-round families climb is dozens of trials, and under the old
+# behaviour every one of them overwrote the deploy artifact, last write winning.
+# The search tool could not be used at all without destroying what it was
+# searching to improve.
+#
+# So it defaults to scratch and only points at DATA_DIR when --write-artifacts
+# is passed. It fails closed: a code path that forgets to consult the flag
+# writes somewhere harmless rather than over the shipped model.
+ART_DIR = DATA_DIR / "_scratch"
 VECTORS = ROOT / "assets" / "vectors.json"
 BEST_CKPT = DATA_DIR / "mtnn_best.pt"
 POSITIONS = ["PG", "SG", "SF", "PF", "C"]
@@ -1356,7 +1376,20 @@ def main() -> None:
     )
     for key in DEFAULT_LOSS_WEIGHTS:
         ap.add_argument(f"--w-{key.replace('_', '-')}", type=float, default=None, dest=f"w_{key}")
+    ap.add_argument(
+        "--write-artifacts",
+        action=argparse.BooleanOptionalAction,
+        default=False,
+        help="ship embedding_v3.npz and mtnn_centroids.npz into pipeline/data. "
+             "OFF by default: a measuring run must never be a shipping run.",
+    )
     args = ap.parse_args()
+
+    global ART_DIR
+    ART_DIR = DATA_DIR if args.write_artifacts else (DATA_DIR / "_scratch")
+    ART_DIR.mkdir(parents=True, exist_ok=True)
+    print(f"[artifacts] {'SHIPPING into' if args.write_artifacts else 'scratch only,'} "
+          f"{ART_DIR}", flush=True)
 
     weights = dict(DEFAULT_LOSS_WEIGHTS)
     for key in DEFAULT_LOSS_WEIGHTS:
@@ -1854,7 +1887,7 @@ def main() -> None:
     game_feature_keys = np.array([manifest["features"][j] for j in game_cols])
 
     np.savez_compressed(
-        DATA_DIR / "embedding_v3.npz",
+        ART_DIR / "embedding_v3.npz",
         E=E,
         player_id=pids,
         season=seasons,
@@ -1875,7 +1908,7 @@ def main() -> None:
         if mask_k.any():
             c = E[mask_k].mean(0)
             centroids[k] = c / (np.linalg.norm(c) + 1e-8)
-    np.savez_compressed(DATA_DIR / "mtnn_centroids.npz", centroids=centroids)
+    np.savez_compressed(ART_DIR / "mtnn_centroids.npz", centroids=centroids)
 
     recall = recall_at_k(E, pair_arr, k=10)
     arch_acc = classification_acc(arch_logits, clusters)
@@ -2238,7 +2271,7 @@ def main() -> None:
         )
         next_profile_pred = heads["next_profile"].cpu().numpy().astype(np.float32)
         np.savez_compressed(
-            DATA_DIR / "embedding_v3.npz",
+            ART_DIR / "embedding_v3.npz",
             E=E,
             player_id=pids,
             season=seasons,
@@ -2258,7 +2291,7 @@ def main() -> None:
             if mask_k.any():
                 c = E[mask_k].mean(0)
                 centroids[k] = c / (np.linalg.norm(c) + 1e-8)
-        np.savez_compressed(DATA_DIR / "mtnn_centroids.npz", centroids=centroids)
+        np.savez_compressed(ART_DIR / "mtnn_centroids.npz", centroids=centroids)
         torch.save(
             {
                 "epoch": best_epoch,
@@ -2270,12 +2303,13 @@ def main() -> None:
             },
             BEST_CKPT,
         )
-        print("rewrote embedding_v3.npz, mtnn_centroids.npz, mtnn_best.pt from refit")
+        print(f"rewrote embedding_v3.npz, mtnn_centroids.npz, mtnn_best.pt from refit -> {ART_DIR}")
 
     (DATA_DIR / "mtnn_report.json").write_text(json.dumps(report, indent=2), encoding="utf-8")
     print(json.dumps(report, indent=2))
     print(f"CQS {report['composite']['cqs']} · {why}")
-    print("wrote embedding_v3.npz, mtnn_centroids.npz, mtnn_report.json")
+    print(f"wrote embedding_v3.npz, mtnn_centroids.npz, mtnn_report.json "
+          f"-> {ART_DIR}")
 
 
 if __name__ == "__main__":
