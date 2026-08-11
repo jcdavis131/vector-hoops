@@ -6107,7 +6107,7 @@ full cloud is 12,966 points and a hover pass of its own would be a second
 projection of all of them sixty times a second. Done this way it also cannot
 disagree with what was painted, because it reads the same numbers.
 
-### The legend covered 84% of the map and ate every click
+### The legend covered 83% of the map and ate every click
 
 Driving `/players` with real mouse events, six checks failed at once. One cause:
 
@@ -6120,7 +6120,7 @@ Driving `/players` with real mouse events, six checks failed at once. One cause:
       CANVAS#c             [ 83,181,635,440]
 
 The archetype key is appended **inside** the map's top-left overlay and is a grid
-that fills its container. 371 of the canvas's 440 pixels, with
+that fills its container. 625×371 against a canvas of 635×440 — **83% of its area** — with
 `pointer-events: auto`. **Clicking a dot behind the legend has never worked on
 this page.** Nothing caught it because until now the only pointer interaction was
 a click, and no test had ever driven a real one — the same shape as every other

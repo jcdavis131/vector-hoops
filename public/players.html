@@ -306,6 +306,10 @@ span.proj{color:var(--orange-ink)}
   // repaints this button through its onSpin callback. This used to keep its own
   // flag and its own copy of the media query, which is two places for the same
   // truth to live and one of them to be wrong.
+  // Ordering is load-bearing: the camera is attached in the map script above,
+  // and this block is appended at the end of <body>, so cam.spin has already
+  // settled — including the reduced-motion case, which the camera reads once.
+  // paint() therefore reports state rather than choosing it.
   var cam = window.VHMapCamera && VHMapCamera.cams[0];
   function paint(on){
     btn.setAttribute('aria-pressed', on?'false':'true');
