@@ -1,7 +1,7 @@
 # Hill-climb round 1 at dim 64 is not decision-grade
 
 **2026-08-11.** `hill_climb --mode families --seeds 7,13 --epochs 20 --arch-dim 64`,
-13 of 18 families measured. Recorded because the result is a negative one and
+**All 18 families measured; the round completed.** Recorded because the result is a negative one and
 negative results get re-derived if nobody writes them down.
 
 ## What the climb printed
@@ -157,3 +157,29 @@ families measured, and the decision only happens after all eighteen.
 The lesson is not about hill_climb. It is that I diagnosed a missing guard from
 a run I had truncated, and the guard was there the whole time. A partial run is
 not evidence about what a program decides.
+
+## The round finished, and the tool refused everything
+
+    r1 mask team       +1.28  test 0.860  purity 0.7155   guard
+    r1 mask tracking   +1.48  test 0.855  purity 0.7105   guard
+    r1 mask volume     +0.81  test 0.852  purity 0.6768   guard
+
+    r1: best (playoffs) gain +1.73 but seeds disagree - stop
+
+`families_dim64.json` records `masked: []` and a history of one entry, the
+incumbent. **No family was dropped.**
+
+Two candidates cleared `passes_guards` across all eighteen — `competition` at
++0.34 and `playoffs` at +1.73 — `playoffs` won on CQS, cleared `MIN_GAIN` 1.2,
+and `same_sign` stopped it because seed 7 disagrees. That is the same conclusion
+the paired table above reaches by hand, reached independently by the tool's own
+logic.
+
+`team` is worth noting: the highest held-out recall in the whole round, 0.860
+against the incumbent's 0.740, and refused for a purity drop of 0.020. Every
+family whose removal lifts recall costs purity, without exception across
+eighteen families. That is a property of the feature set, not of any one family.
+
+**The result of round 1 at dim 64, 20 epochs, 2 seeds: drop nothing.** It is a
+negative result and it is decision-grade, because the metric the decision turned
+on — purity, sd 0.0042 — is the one this protocol measures precisely.
