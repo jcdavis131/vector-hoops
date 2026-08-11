@@ -3657,3 +3657,56 @@ One bug of my own, caught before commit: the check first printed "1 page mention
 agree" while failing, because the counter incremented on every mention including
 the mismatched one. A gate that miscounts its own evidence is halfway back to the
 problem it was written for.
+
+
+## Amendment: "four reachable" was measured through too narrow a filter (2026-08-10)
+
+The P9.9 sweep above enumerated thirty occurrences of "48-d" and concluded four
+were reachable. It walked `public/` filtering `endswith(('.html','.js'))`.
+**Shipped JSON was never looked at**, and that is where the interesting one was:
+
+    eratwins.json         "method": "signature seasons matched in the promoted MTNN
+                                     embedding (48-d, L2-normalized, index-aligned
+                                     with vectors.json); twin = ne…"
+    mtnn_map.json         "method": "PCA(3) on 48-d MTNN embeddings; axes min-max
+                                     scaled for the explorer map."
+    archetypes_time.json  "…K=8 k-means on promoted MTNN embeddings (48-d, L2-normalized)…"
+    series.json           "…48-d fuse labeled -> 64-d truthful MTNN v4…"
+
+and `trends.html` prints the first one straight into the document:
+
+    $('twinMethod').textContent = TW.method || '';
+
+So there is a **fifth reachable "48-d", and it is correct**. Those twins really
+were computed in the older space, and the page does not merely leave the string
+there — it explains it, immediately below:
+
+    This table was computed in the 48-dimensional embedding, as its own method
+    line states. The model the game ships now is 64-dimensional
+    (assets/eval_scoreboard.json). These twins are therefore a snapshot of an
+    earlier space, not of the current one, and are labelled that way rather than
+    quietly reused.
+
+That is the site doing the right thing without being asked.
+
+### What it changes
+
+Nothing to fix, and one claim to correct: "four reachable, all four wrong" should
+read **four reachable and wrong, a fifth reachable and correct**. Amended in
+`READINESS.md` and in the artifact. The commit message on `19818290` says four; it
+is immortal and slightly narrow, which is what this note is for.
+
+It also makes the case against a blanket 48→64 replacement much stronger than it
+was when P9.9 was filed. This is not one stale string — it is **a family of derived
+assets that were genuinely built from a 48-d embedding and say so**. `mtnn_map.json`
+is the explorer map's own projection. Overwriting those method fields would replace
+true provenance with false, which is the no-fabrication rule pointed backwards.
+
+### The lesson, which is the same one as last time
+
+Last note recorded searching `closing_score` because the prose said "closer", and
+being wrong because the number lived in `matchup_factor`. This is that error in a
+different coat: **I filtered the search by the file type I expected the answer to
+be in.** A conclusion of the form "only N of these are reachable" is a claim about
+coverage, and it is only as good as the glob that produced it. The fix both times
+is the same — enumerate what could hold the answer before deciding what does.

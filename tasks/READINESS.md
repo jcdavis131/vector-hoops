@@ -110,6 +110,17 @@ expected value. Four statements were reachable and are corrected: `inventory.htm
 through a 64-float row — the single hardcoded `48` is a dead property, and `mtnn.js` derives the
 dimension from metadata and asserts the buffer length.
 
+**A fifth reachable one is correct as it stands, and the enumeration missed it.** That sweep read
+only `.html` and `.js`; several shipped *JSON* assets carry "48-d" in a `method` field, and
+`trends.html` prints `eratwins.json`'s directly into the page. It is accurate — those twins really
+were computed in the older 48-d space — and the page already says so beside it: *"This table was
+computed in the 48-dimensional embedding… The model the game ships now is 64-dimensional… labelled
+that way rather than quietly reused."* `mtnn_map.json` (PCA(3) on 48-d) and `archetypes_time.json`
+(k-means on 48-d) come from the same older space, and `series.json` records the transition
+explicitly. This is the strongest argument against a find-and-replace: a family of derived assets is
+honestly describing its own provenance, and overwriting those strings would replace true statements
+with false ones.
+
 **What is left for you** is the remainder: `methods.html` attributes one to `MT v3` and
 `dictionary.html` describes "an older 48-d evaluation" deliberately, so those are correct as written;
 the architecture diagram in `network-viz.js` is labelled `v4 baseline` with `12,392 seasons` against
