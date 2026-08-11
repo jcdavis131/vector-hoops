@@ -1,16 +1,16 @@
 # frontend-live — readiness
 
-**Nothing here is live.** Everything below is measured at **`897f76ca`** — the sha is the anchor,
+**Nothing here is live.** Everything below is measured at **`0ad7d5fd`** — the sha is the anchor,
 because the commit that records a count is never inside the count it records. All of it is on
 `frontend-live`; `master` is untouched, and pushing `master` is what deploys the site. Suite green
 at that commit.
 
 | | |
 |---|---|
-| commits this session | 230 on this branch's own line at `897f76ca`, now on `master` (a plain `rev-list` says 266 — it walks both sides of the merge and counts Scout's 36) |
+| commits this session | 239 on this branch's own line at `0ad7d5fd`, now on `master` (a plain `rev-list` says 275 — it walks both sides of the merge and counts Scout's 36) |
 | paths changed, across the merge | 2,652 (2,547 under `public/`, 45 scripts) |
 | insertions / deletions | +211,573 / −310,582 |
-| working notes | `tasks/frontend-live-buildout-2026-08-10.md`, 6,333 lines |
+| working notes | `tasks/frontend-live-buildout-2026-08-10.md`, 6,408 lines |
 
 **Where to look at it.** The branch is pushed and Vercel builds every commit on it:
 
@@ -158,6 +158,22 @@ each moved the page from **scrollY 0 to scrollY 0** while writing the fragment i
 Both now point at the pages the nav already uses for those words — `/play.html` and `/model.html` —
 rather than at anchors minted to justify the links. A new `fragments` check makes every deep link
 land on something that exists; it was shown failing first.
+
+**520 broken table rows on the player cards, and a claim that nearly shipped.** `/player-cards`
+renders 2,308 markdown cards and nothing had checked any of its 39,389 wikilinks. Every archetype and
+position hub lists its members in a table whose cells are wikilinks — and the row splitter was
+`.split('|')`, so a link's own pipe became a column break: `<td>[[../players/rajon-rondo</td><td>Rajon
+Rondo]]</td>`, **520 rows across all 13 hubs**, on the feature the page offers as the alternative to
+searching by name. Two smaller ones: `[[OKF|OKF.md]]` pointed at `players/OKF` because every bare
+slug was forced under `players/`, and `OKF.md`'s own format contract — `` `[[slug|Display Name]]` ``
+in backticks — was linkified, rewriting the documentation into the thing it documents. **The claim
+that nearly shipped:** 2,306 wikilinks resolve to nothing and 2,304 are one boilerplate word on every
+player card, so "every card ships a dead link" was a commit away — until `smoke_wiki.py` failed on
+its own assertion that the sentence appears as text. It is **inside an HTML comment the renderer
+strips**. The real number reaching a reader was three, and the check now reports *landed*, *never
+drawn* and *demoted to text* as three numbers rather than one. New `wiki` check (**16 now**, proved
+red by emptying its allowlist: 2,306 findings) and new `smoke_wiki.py` — five mutations, five caught,
+after `demote-bare` first ran green for want of an input rather than for want of a bug.
 
 **Why this player — the model's own gradient, 48 bytes at a time.** Phase three is explainability,
 and `/model` had the population view only. `assets/mtnn_attr_topk.bin` had held the per-player answer

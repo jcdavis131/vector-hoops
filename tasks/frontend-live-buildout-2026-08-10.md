@@ -6329,3 +6329,78 @@ families × 5 targets, the same Range trick at 220 bytes a row. It is left for
 later on purpose: its sidecar records `dEmb: 48` against the shipped 64, so it
 needs its own provenance sentence, and one tensor with one method line is a
 clearer card than two with four caveats.
+
+
+## 520 broken table rows, and a claim that nearly shipped (2026-08-11)
+
+Phase four is player cards and the dictionary. `/player-cards` renders 2,308
+committed markdown cards with a small purpose-built renderer, and **nothing had
+ever checked a single one of its 39,389 wikilinks.**
+
+### The hub tables
+
+Every archetype and position hub lists its members in a markdown table whose
+cells are wikilinks:
+
+    | [[../players/rajon-rondo|Rajon Rondo]] | 16 |
+
+The row splitter was `.split('|')`. A wikilink carries its own pipe, so the
+target landed in one column and the label in the next:
+
+    <td>[[../players/rajon-rondo</td><td>Rajon Rondo]]</td>
+
+**520 rows across all 13 hub pages** rendered as visible raw markdown — on the
+feature the page itself offers as the alternative to searching by name: *"Or
+start from a shape rather than a name."* The splitter ignores pipes inside
+`[[...]]` now. 80 cells per hub, 40 links, 0 raw.
+
+Two more, both real and both small:
+
+  - `[[OKF|OKF.md]]` on `INDEX.md` pointed at `players/OKF`, because every bare
+    slug was forced under `players/`. A bare slug is a player unless there is no
+    such player and there *is* a top-level card by that name.
+  - `OKF.md` documents the link format as `` `[[slug|Display Name]]` `` in
+    backticks, and the wikilink pass ran before the code-span pass — so the
+    site's own format contract was rewritten into the thing it was describing.
+    Code spans come out first and go back last now.
+
+### The claim that nearly shipped
+
+This started from a count: 2,306 of the 39,389 wikilinks resolve to nothing, and
+2,304 are the same word in a boilerplate sentence present on **every** player
+card:
+
+    <!-- Curated layer. Add scouting notes, history, film observations,
+         corrections, and further [[wikilinks]] here. -->
+
+I was one commit from writing "every player card ships a dead link". The first
+run of `smoke_wiki.py` failed on its own assertion that the sentence appears as
+text — because it is **inside an HTML comment**, and `render()` strips comments
+before `inline()` ever sees them. **2,306 of the 2,308 unresolvable targets are
+invisible.** The real number reaching a reader was three.
+
+The check reports those separately rather than as one number:
+
+    37,081 land on a committed card
+     2,306 sit inside a comment the renderer strips and are never drawn
+         2 reach a reader and are rendered as text
+
+Merging them would have let the gate repeat the claim in its own output.
+
+### What now guards it
+
+  - **`check_frontend`'s `wiki` check — 16 checks now.** Every `[[link]]` must
+    land on a committed card or be listed boilerplate. Proved red by emptying the
+    allowlist: 2,306 findings.
+  - **`scripts/smoke_wiki.py`** guards the render, which is the half a static
+    check cannot see: an anchor exists only once a page builds it, and whether it
+    is built at all depends on where in the file it sits. Five mutations, five
+    caught — but `demote-bare` first ran green **for want of an input, not for
+    want of a bug**: every unresolvable target on disk is either hidden in a
+    comment or carries a label, so nothing exercised the bare branch. The smoke
+    serves a synthetic card built to have one.
+
+Also fixed: `KNOWN` was cached the first time anything asked. Built before the
+search index landed it holds the 13 hubs and nothing else, and every player link
+on the first card opened would have been demoted to plain text for the life of
+the page.
