@@ -6404,3 +6404,94 @@ Also fixed: `KNOWN` was cached the first time anything asked. Built before the
 search index landed it holds the 13 hubs and nothing else, and every player link
 on the first card opened would have been demoted to plain text for the life of
 the page.
+
+
+## Phase five, and a rebase I did not re-gate (2026-08-11)
+
+### The glass-box card argued the opposite of the table below it
+
+`/teams` carried a card headed *"Why San Antonio rates above Oklahoma City"* over
+the line *"Why SAS 94.8 > OKC 85.8"*. Against
+`assets/front_office_lite.json` — the file the 30-team table **on the same page**
+reads:
+
+    94.8 / 85.8   are weighted_wins, not the rating
+    OKC           for_final 70.7, rank 3
+    SAS           for_final 69.3, rank 4
+
+A visitor reads the headline, scrolls down, and finds OKC third and SAS fourth. A
+460×120 canvas painted `◎ SAS 94.8 > OKC 85.8` every frame for as long as the
+page was open, under an `<h2>` reading *"Glass-box check on the rating"* over a
+card that checked nothing.
+
+The question was good; only the answer was typed. **72 pairs** in that file
+disagree between weighted wins and the rating, so the card picks the widest and
+reads every number from the same fetch the table uses:
+
+    NYK  95.3 weighted wins — most in the league — rated 6th
+    DEN  64.7 weighted wins                       — rated 2nd
+
+and explains it the way the file does: per dollar, $161.01M against $133.97M. The
+pulse-ring canvas is gone. **Decoration that repeats a wrong number is worse than
+no decoration.**
+
+`scripts/smoke_teams.py` reads the rendered card and compares every figure to the
+file. Three mutations, three caught.
+
+### A rebase I did not re-gate, and everything it was hiding
+
+Four turns ago I rebased onto master, pushed, and never re-ran the gates. All of
+this was live:
+
+  - **`play.html` did not parse.** A commit added a calendar strip by appending
+    `; renderCal()` after every `renderWW(ww)`. There were three call sites and
+    one **declaration**, and the replacement did not know the difference:
+
+        -function renderWW(ww){ww=ww||...
+        +function renderWW(ww); renderCal(){ww=ww||...
+
+    A syntax error is not local. The whole block failed to parse, so **49,730
+    bytes of the game page — the second of its three script blocks — never ran.**
+    `check_frontend`'s `syntax` check does exactly this and has for weeks. It was
+    simply not run between the rebase and the push. That is on me, not the check.
+
+  - **`--ink` was the scoring pink.** `public/player.html` shipped with
+    `--ink:#FF4F6B`, and `--ink` is the token behind body text, every border and
+    every box-shadow on that page. **16 painted elements between 2.44:1 and
+    4.13:1.** Restored to `#111111`; `#FF4F6B` itself darkened site-wide to
+    `#D60022` — same hue 350°, same saturation, lightness 65% → 42% — which
+    clears 4.5:1 on white, paper and amber.
+
+  - **The landing map lost the control that reached the number beside it.** The
+    head reads *"12,966 seasons"*, and the commit that removed the DPR / FPS /
+    pack / LCG pills took the 4k/8k pair with them. The pills were right to go —
+    that is developer instrumentation and I have said so myself. This was not: it
+    is the only path from the 1,764-point opening cloud to the 12,966 the heading
+    advertises. Back as one button, **"Draw all 12,966 — 3.6 MB"**, in the words
+    `/trends` already uses, and one-shot: it draws the cloud and takes itself
+    away.
+
+  - **Eight lookups pointed at elements that no longer existed.** All eight were
+    null-guarded, so nothing threw — and nothing worked either. Dead handlers
+    deleted; `play.html`'s mini-board got the element its renderer writes into,
+    which it never had.
+
+**The rule this buys: re-run the gates after a rebase, before the push.** A
+rebase is a merge. The tree that gets pushed is not the tree that was tested.
+
+### A test that asserted a sentence where it meant a property
+
+`smoke_play` required the exact words *"also matches N other players"*. The copy
+was rewritten to **name** the alternatives instead — *"Also matches Seth Curry ·
+… — type more to pick"* — which is better, and the check went red **on a page
+that had improved.** It reads the pool from the datalist now and requires the
+message to carry a name it did not score. Typing `curry` scores Seth Curry
+2022-23 and names both Currys.
+
+### One thing left standing
+
+`public/player.html` is tracked in git with **no root counterpart** — the only
+served page outside the root→`public/` mirror the whole repo runs on.
+`check_frontend` walks 22 pages from the root and never sees it;
+`check_painted_contrast` walks `public/` and sees 23. That gap is why its
+contrast went unmeasured until now, and it is worth a check of its own.

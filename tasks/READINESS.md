@@ -1,16 +1,16 @@
 # frontend-live — readiness
 
-**Nothing here is live.** Everything below is measured at **`0ad7d5fd`** — the sha is the anchor,
+**Nothing here is live.** Everything below is measured at **`8a846e44`** — the sha is the anchor,
 because the commit that records a count is never inside the count it records. All of it is on
 `frontend-live`; `master` is untouched, and pushing `master` is what deploys the site. Suite green
 at that commit.
 
 | | |
 |---|---|
-| commits this session | 239 on this branch's own line at `0ad7d5fd`, now on `master` (a plain `rev-list` says 275 — it walks both sides of the merge and counts Scout's 36) |
+| commits this session | 243 on this branch's own line at `8a846e44`, now on `master` (a plain `rev-list` says 279 — it walks both sides of the merge and counts Scout's 36) |
 | paths changed, across the merge | 2,652 (2,547 under `public/`, 45 scripts) |
 | insertions / deletions | +211,573 / −310,582 |
-| working notes | `tasks/frontend-live-buildout-2026-08-10.md`, 6,408 lines |
+| working notes | `tasks/frontend-live-buildout-2026-08-10.md`, 6,499 lines |
 
 **Where to look at it.** The branch is pushed and Vercel builds every commit on it:
 
@@ -158,6 +158,23 @@ each moved the page from **scrollY 0 to scrollY 0** while writing the fragment i
 Both now point at the pages the nav already uses for those words — `/play.html` and `/model.html` —
 rather than at anchors minted to justify the links. A new `fragments` check makes every deep link
 land on something that exists; it was shown failing first.
+
+**Phase five, and a rebase I did not re-gate.** `/teams` carried a card headed *"Why San Antonio
+rates above Oklahoma City"* over *"Why SAS 94.8 > OKC 85.8"* — but 94.8/85.8 are `weighted_wins`, and
+on `for_final`, the column the 30-team table **on the same page** sorts by, OKC is 70.7 at rank 3 and
+SAS 69.3 at rank 4. The page argued the opposite of its own table, and a canvas painted the claim
+every frame under an `<h2>` promising a "glass-box check" over a card that checked nothing. **72
+pairs** in that file disagree between weighted wins and the rating; the card now picks the widest —
+NYK, most weighted wins in the league, rated 6th, against DEN rated 2nd — and reads every number from
+the same fetch the table uses. New `smoke_teams.py`, three mutations, three caught. **And what a
+rebase four turns ago had been hiding, all live:** `play.html` did not parse — a search-and-replace
+appended `; renderCal()` to the *declaration* as well as the call sites, so **49,730 bytes of the game
+page never ran**; `public/player.html` shipped with `--ink:#FF4F6B`, the token behind body text,
+borders and shadows, giving **16 painted elements between 2.44:1 and 4.13:1**; and the landing map
+lost the only control that reached the 12,966 seasons its own heading advertises. The `syntax` check
+would have caught the first the moment it ran — it simply was not run between the rebase and the
+push. **Re-run the gates after a rebase, before the push: a rebase is a merge, and the tree that gets
+pushed is not the tree that was tested.**
 
 **520 broken table rows on the player cards, and a claim that nearly shipped.** `/player-cards`
 renders 2,308 markdown cards and nothing had checked any of its 39,389 wikilinks. Every archetype and
