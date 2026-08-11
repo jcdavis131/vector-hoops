@@ -72,7 +72,7 @@ const OKABE=["#E69F00","#56B4E9","#009E73","#F0E442","#0072B2","#D55E00","#CC79A
    on itself — the numbers are either the model's or absent. */
 try{let j=await fetch('/assets/front_office_lite.json?v=f6949ae3').then(r=>r.json());teams=j.teams||[]}catch(e){teams=[]}
 try{V=await fetch('/assets/vectors_map_lite.json?v=ad8fed2b').then(r=>r.json());}catch(e){V={vectors:[]}}
-try{props=await fetch('/assets/data/player_season_props.json?v=7e14b434').then(r=>r.json());}catch(e){props=[]}
+try{props=await fetch('/assets/props_summary.json?v=367a49f4').then(r=>r.json());}catch(e){props=null}
 document.getElementById('live').textContent = (teams.length && V.vectors && V.vectors.length)
   ? teams.length+'T · '+V.vectors.length.toLocaleString()+'×64-d loaded'
   : 'Team and vector files did not load. Nothing below is drawn from them.';
@@ -82,7 +82,33 @@ let c=document.getElementById('map').getContext('2d');let leg=document.getElemen
 archs.slice(0,8).forEach((a,i)=>{let s=document.createElement('span');s.className='pill';s.style.background='#fff';s.innerHTML=`<span style="width:10px;height:10px;border-radius:50%;display:inline-block;background:${OKABE[i%8]}"></span> ${a}`;leg.appendChild(s);});
 function draw(){c.clearRect(0,0,560,320);c.fillStyle='#0F141E';c.fillRect(0,0,560,320);let vs=(V.vectors||[]).slice(0,540);vs.forEach((v,i)=>{let x=(v.x||Math.random())*550;let y=(v.y||Math.random())*310;let ai=(v.a||v.arch||i)%8;c.fillStyle=OKABE[ai%8];c.globalAlpha=0.9;c.beginPath();c.arc((x%540)+10,(y%300)+10, v.tag==='closer'?5: v.tag==='exploitable'?3:3.6,0,6.28);c.fill();});c.globalAlpha=1;c.fillStyle='#FAFAF8';c.font='800 11px ui-monospace';c.fillText('64-d OKABE 8 — Wemby 699 real PO mins vs Flagg 0 · closer #E7F6EA 1.28 vs #FFD8D5 0.62 vs #FFE9B5 0.81',10,16);}draw();
 function twinQ(){let q=(document.getElementById('q').value||'wemby').toLowerCase();let cand=(V.vectors||[]).filter(v=>((v.n||v.name||'')+'').toLowerCase().includes(q)).slice(0,3);let b=document.getElementById('twin');if(!cand.length)b.textContent='no match — twin nearest 100 — arch sep 0.867, lift 0.8116';else b.innerHTML=cand.map(v=>`${v.n||v.name} arch ${v.arch||'—'} tag ${v.tag||'neutral'} — realG ${(v.playoff_mins_real||Math.random()*700|0)} vs rookie 0 honest — ${v.tag==='closer'?'closer1.28 green #E7F6EA':'tag'+(v.closer_score||'')}`).join('<br>');}document.getElementById('btn').onclick=twinQ;document.getElementById('q').onkeydown=e=>{if(e.key==='Enter')twinQ();};twinQ();
-let avg=0;if(Array.isArray(props)&&props.length){let s=props.reduce((a,p)=>a+(p.pts_delta||p.delta||0),0);avg=s/props.length;document.getElementById('props').textContent=`props ${props.length} avg pts_delta ${avg.toFixed(2)} (spec -1.02) — Wemby +5.7 Castle +3 even Harper +0.2 honest · injury 13,625 availability-adjusted · Jr/Sr Payton I 1968 vs II 1992 name+DOB`;}else document.getElementById('props').textContent=`props avgΔ -1.02 fallback — Wemby +5.7 Castle even Harper +0.2 · injury 13,625 rescale · Jr/Sr Payton I/II name+DOB · Twin nearest 100`;
+/* This read a 2,753,469-byte file with `Array.isArray(props)`, and the file is
+   an object — so the branch that computed anything never ran and the line was
+   always the `else`. The whole file came down on every visit and was thrown
+   away, and what a visitor read was typed: `avgΔ -1.02`, against a real mean of
+   -0.035 over the 3,407 scored player-seasons in it. Of the three players named,
+   only Wembanyama's +5.7 was in there; Castle and Harper appear solely in
+   2026-27, which has no actuals to score against.
+
+   assets/props_summary.json is 2,020 bytes cut from the same file by
+   scripts/build_props_summary.py, and this prints what it holds. */
+(function(){
+  var el=document.getElementById('props');
+  if(!el) return;
+  if(!props || props.meanPtsDelta==null){
+    el.textContent='The prop summary did not load, so no figure is shown here.';
+    return;
+  }
+  var m=(props.biggestMovers||[])[0];
+  el.textContent='Prop is the prior season\u2019s average rounded to 0.5, not a market line. '+
+    'Actual minus prop averages '+props.meanPtsDelta.toFixed(2)+' over '+
+    props.scored.toLocaleString()+' scored player-seasons of '+
+    props.players.toLocaleString()+', median '+props.medianPtsDelta.toFixed(2)+'.'+
+    (m ? ' Biggest move in '+props.latestScoredSeason+' among the '+props.moversQualified+
+         ' who played '+props.moversMinGp+' games or more: '+m.name+' '+
+         (m.ptsDelta>0?'+':'')+m.ptsDelta.toFixed(1)+', prop '+m.ptsProp+
+         ' against '+m.ptsActual+'.' : '');
+})();
 function calc(){let ab=tSel.value;let t=teams.find(x=>x.abbr===ab)||teams[0];if(!t&&!teams.length){document.getElementById('fitS').textContent='0.92/1.45';document.getElementById('foreS').textContent='$10.6M';return;}if(!t) t={cap_pct:0.84,cap_pct_normalized:0.84};let capN=t.cap_pct_normalized||t.cap_pct||0.9;let head=capN<0.92?1.25:capN<1.0?1.05:0.72;let scarce=asel.value.includes('Closer')||asel.value.includes('Rim')?1.22:asel.value.includes('Wing')?1.12:1.0;let realG=1+0.12*Math.min(1,Math.random()+0.4);let fit=(scarce*head*realG*0.94).toFixed(3);document.getElementById('fitS').textContent=fit+'/1.45';let perf=scarce>1?1.24:0.91;let med=8.5;let fores=med*(0.4+0.8*perf);let capped=Math.min(med*3,fores*1.25);document.getElementById('foreS').textContent='$'+capped.toFixed(1)+'M';document.getElementById('foreT').textContent=`median*(0.4+0.8*tm/median) tm ${perf.toFixed(2)} median $${med}M cap 3× 1.25× retained ${capN<0.92?'✓ <92% max':''} · pack 546 same-link-same-stars`; }asel.onchange=calc;tSel.onchange=calc;calc();
 if('serviceWorker' in navigator)navigator.serviceWorker.register('/sw.js').catch(()=>{});
 })();

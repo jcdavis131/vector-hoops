@@ -173,8 +173,24 @@ def walk(ws, base, pages, label):
     out = {}
     for name in pages:
         ws.call("Page.navigate", {"url": f"{base}/{name}"})
-        time.sleep(2.4)
-        d = ev(ws, SITE)
+        # Scroll, then settle - neither is optional. A fixed 2.4s wait reported
+        # /model at 69% of its own online DOM on one run and 100% on the next
+        # two: 3,571 nodes, simply not finished. And /teams boots its lower
+        # cards on an IntersectionObserver, so without a scroll they render or
+        # not depending on timing rather than on the network - which is what
+        # this is supposed to be measuring. smoke_settled already scrolls for
+        # the same reason.
+        time.sleep(0.3)
+        ev(ws, "window.scrollTo(0, document.body.scrollHeight)")
+        stable, prev, d = 0, -1, None
+        for _ in range(40):
+            time.sleep(0.3)
+            d = ev(ws, SITE)
+            now = d["dom"] if isinstance(d, dict) else -1
+            stable = stable + 1 if (now == prev and now) else 0
+            prev = now
+            if stable >= 3:          # unchanged for ~0.9s
+                break
         if not isinstance(d, dict):
             d = {"title": "", "dom": 0, "text": 0, "nodes": 0}
         out[name] = d
