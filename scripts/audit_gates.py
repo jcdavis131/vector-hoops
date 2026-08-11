@@ -66,6 +66,20 @@ CASES = [
      ("0.6847", "0.6841"),
      gate("check_frontend.py", "--only", "cited"), True),
 
+    # a count that is the length of a collection is never a literal in its file,
+    # so `cited` cannot see it; `counts` recomputes instead of matching
+    ("counts", "trends.html",
+     ("12,038 player-seasons", "12,039 player-seasons"),
+     gate("check_frontend.py", "--only", "counts"), True),
+
+    # The case above only proves the page-lost-the-figure branch. The branch this
+    # check exists for is the other one: the file is regenerated and the page
+    # goes quietly stale. Only a change to the data can reach it, so this moves
+    # one season's count and expects the recomputation to disagree with the page.
+    ("counts", "public/assets/season_map.json",
+     ('"1996-97":290', '"1996-97":291'),
+     gate("check_frontend.py", "--only", "counts"), False),
+
     ("free", "leaderboard.html",
      (">Your Week Warrior progress<", ">Your Week Warrior progress — $9.99/mo<"),
      gate("check_frontend.py", "--only", "free"), True),

@@ -30,6 +30,7 @@ Read-only. Never writes. Exit 0 clean, 1 on any failure.
 from __future__ import annotations
 
 import argparse
+import json
 import re
 import shutil
 import importlib.util
@@ -959,6 +960,59 @@ def check_external(fail) -> None:
           f"another host")
 
 
+# A count that is the *length of a collection* is never a literal in the file it
+# comes from, so CITED cannot see it and a substring sweep reports it as
+# unsourced forever. These were each checked by hand once — trends' 12,038 is
+# the sum of season_map's per-season counts, its 1,308 is how many careers
+# trajectories.json indexes, and /player-cards' 2,293 is how many player cards
+# are committed. Checking them by recomputation is the only way they stay true
+# the day a generator's output changes.
+COUNTS = (
+    ("trends.html", "12,038", "public/assets/season_map.json",
+     "sum of counts", lambda d: sum(d["counts"].values())),
+    ("trends.html", "1,308", "public/assets/trajectories.json",
+     "playerIndex entries", lambda d: len(d["playerIndex"])),
+    # "over 10,104 eligible pairs", named to assets/eval_scoreboard.json on the
+    # page. Printed with a comma, stored as 10104 — CITED matches verbatim and
+    # cannot see it, which is the limit its own docstring describes.
+    ("model.html", "10,104", "assets/eval_scoreboard.json",
+     "eligible pairs", lambda d: d["eligible_pairs"]),
+    ("player-cards.html", "2,293", None,
+     "committed player cards", lambda _: sum(1 for _ in (ROOT / "knowledge" / "players").glob("*.md"))),
+)
+
+
+def check_counts(fail) -> None:
+    """Figures that are a count of something, recomputed rather than matched."""
+    checked = 0
+    for page_name, figure, source, what, how in COUNTS:
+        page = ROOT / page_name
+        if not page.exists():
+            continue
+        rx = re.compile(r"(?<![\d.,])" + re.escape(figure) + r"(?![\d.,])")
+        if not rx.search(strip_comments(page.read_text(encoding="utf-8"))):
+            fail(f"COUNTS still lists {figure} for {page_name}, which no longer prints it "
+                 f"— remove the stale row or put the figure back")
+            continue
+        if source:
+            src = ROOT / source
+            if not src.exists():
+                fail(f"{page_name} takes {figure} from {source}, which is not on disk")
+                continue
+            try:
+                got = how(json.loads(src.read_text(encoding="utf-8")))
+            except Exception as exc:
+                fail(f"{page_name}: could not recompute {figure} from {source} ({exc})")
+                continue
+        else:
+            got = how(None)
+        checked += 1
+        if f"{got:,}" != figure:
+            fail(f"{page_name} says {figure} {what}; recomputing it from "
+                 f"{source or 'knowledge/players'} gives {got:,}")
+    print(f"  {checked} count(s) on a page still equal what recomputing them gives")
+
+
 CHECKS = {
     "syntax": check_syntax,
     "external": check_external,
@@ -971,6 +1025,7 @@ CHECKS = {
     "ids": check_ids,
     "sourced": check_sourced,
     "cited": check_cited,
+    "counts": check_counts,
     "free": check_free,
     "links": check_links,
     "clean": check_clean,
