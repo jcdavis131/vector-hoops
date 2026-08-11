@@ -572,7 +572,80 @@ def main() -> int:
                 f"Result — the payoff was announced and then overwritten by a later log line, "
                 f"which is the one announcement a non-visual player most needs")
 
-        # 5b. the end of the daily. The seed sets one question, so winning it ends
+        # 5b. the share overlay is the page's one modal, and a modal is a second
+        #     state no static check ever sees. Measured before the fix: opening it
+        #     left focus on the button behind it, Tab walked two live controls the
+        #     visitor could no longer see — the second being "Next Q →", which
+        #     moves the game on underneath the card they are looking at — Escape
+        #     did nothing, and closing dropped focus to <body> so the next Tab
+        #     restarted at the skip link. Driven here with real key events,
+        #     because a synthetic .click() cannot show where the keyboard goes.
+        def key(code, name):
+            for t in ("rawKeyDown", "keyUp"):
+                ws.call("Input.dispatchKeyEvent", {
+                    "type": t, "windowsVirtualKeyCode": code, "nativeVirtualKeyCode": code,
+                    "key": name, "code": name})
+            time.sleep(0.2)
+
+        DLG = """(function(){
+          var p=document.getElementById('sharePop'), a=document.activeElement;
+          var d=p?p.querySelector('[role="dialog"]'):null;
+          return JSON.stringify({
+            open:!!(p&&p.classList.contains('on')),
+            inside:!!(p&&a&&p.contains(a)),
+            active:a?((a.tagName||'')+(a.id?'#'+a.id:'')):'(none)',
+            name:d?(d.getAttribute('aria-label')||d.getAttribute('aria-labelledby')||''):'',
+            modal:d?(d.getAttribute('aria-modal')||''):''});
+        })()"""
+
+        ev(ws, "document.getElementById('btnShareCard').focus()")
+        ev(ws, "document.getElementById('btnShareCard').click()")
+        time.sleep(0.4)
+        opened = ev(ws, DLG)
+        if isinstance(opened, dict) and opened.get("open"):
+            print(f"  dialog   opened focus={opened['active']} inside={opened['inside']} "
+                  f"role=dialog name={opened['name']!r}")
+            if not opened.get("inside"):
+                failures.append(f"opening the share card left focus on {opened['active']} — "
+                                f"a control now behind a blurred backdrop, so a keyboard "
+                                f"player is operating a page they cannot see")
+            if not opened.get("name"):
+                failures.append("the share overlay has no role=dialog with a name, so a "
+                                "screen reader is given no way to know one opened")
+            if opened.get("modal") != "true":
+                failures.append("the share overlay is not aria-modal, so the page behind it "
+                                "is still offered to a screen reader")
+            # Tab must not leave, and it has to be checked at every press rather
+            # than at the end: a trap with only its wrap branch removed still has
+            # a catch-all that hauls focus back on the *next* Tab, so reading the
+            # final state alone passed with the trap broken. What the visitor
+            # experiences is each keystroke, not the last one.
+            walk = []
+            for _ in range(4):
+                key(9, "Tab")
+                st = ev(ws, DLG)
+                walk.append((st.get("active"), bool(st.get("inside"))))
+            print("  dialog   tab walk " +
+                  " → ".join(f"{a}{'' if ins else ' (OUTSIDE)'}" for a, ins in walk))
+            stray = [a for a, ins in walk if not ins]
+            if stray:
+                failures.append(f"tabbing inside the share card reached {stray[0]}, which is "
+                                f"behind the overlay — one of those controls advances the game "
+                                f"under a card the player is still looking at")
+            key(27, "Escape")
+            escaped = ev(ws, DLG)
+            print(f"  dialog   Escape open={escaped['open']} focus={escaped['active']}")
+            if escaped.get("open"):
+                failures.append("Escape does not close the share card — the one key every "
+                                "visitor tries on a dialog")
+            elif escaped.get("active") != "BUTTON#btnShareCard":
+                failures.append(f"closing the share card left focus on {escaped['active']} "
+                                f"rather than the button that opened it, so the next Tab "
+                                f"restarts from wherever that is")
+        else:
+            failures.append("the share card button did not open the overlay after a win")
+
+        # 5c. the end of the daily. The seed sets one question, so winning it ends
         #     the pack — and nextQ() used to return before touching the question
         #     line, leaving the old puzzle on screen with an empty box. Winning
         #     and pressing Next looked exactly like being stuck.
@@ -587,7 +660,7 @@ def main() -> int:
                             "unchanged — the pack is over and the page still shows the "
                             "puzzle it just finished")
 
-        # 5c. the share card's link has to reproduce the game the card shows. It
+        # 5d. the share card's link has to reproduce the game the card shows. It
         #     fell back to the literal '672-123-456' whenever the page had no
         #     ?pack= — which is every daily game — so the one artefact built to be
         #     posted publicly advertised the demo pack, a different puzzle from

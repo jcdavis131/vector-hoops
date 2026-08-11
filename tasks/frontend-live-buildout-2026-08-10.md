@@ -4920,3 +4920,65 @@ Nothing about it is exotic. Open a card, press Back — that is the second thing
 anyone does on a page that changes the URL. It survived every gate, every smoke and
 an accessibility-tree sweep because **all of those look at a page in one state**,
 and this is a defect that only exists in the transition between two.
+
+
+## The one modal on the site (2026-08-10)
+
+The Back-button defect said something general: **every gate looks at a page in one
+state, and this one only existed in the transition between two.** A modal is the
+same shape. `/play.html` has the only one — the share overlay — and it is on the
+page the brief puts first.
+
+It was a `div` with a class on it. `pop.classList.add('on')`, `.remove('on')`, and
+a click on the backdrop. Driven in a browser with real key events, after a real win:
+
+    closed      focusable-and-visible inside overlay: 0
+    opened      focus BUTTON#btnShareCard   (still behind the overlay)
+    Tab 1       BUTTON#btnGlass2            behind it
+    Tab 2       BUTTON#btnNext2             behind it
+    Tab 3       BUTTON#closeShare           in dialog
+    Escape      still open
+    closed      focus BODY
+
+Five things wrong, one thing right. Right: closed, the overlay is `display:none`, so
+nothing inside it is a phantom tab stop — the worst version of this bug is absent.
+
+Wrong: **focus never entered.** The visitor is left on a button behind a
+`rgba(8,10,15,.74)` backdrop with a 10px blur. **Tab then walked the page behind
+the card** — and the second control it reached is `Next Q →`, which advances the
+game underneath the card the player is still looking at. Three tabs to reach Close.
+**Escape did nothing**, the one key everyone tries. And **closing dropped focus to
+`<body>`**, so the next Tab restarted at the skip link at the top of the document.
+No `role`, no `aria-modal`, no name — a screen reader was never told a dialog opened.
+
+Now: `role=dialog`, `aria-modal=true`, named; focus moves in on open, Tab wraps
+inside, Escape closes, and the opener gets focus back.
+
+    opened      focus BUTTON#closeShare   inside=True   name 'Share this result'
+    tab walk    closeShare → closeShare → closeShare → closeShare
+    Escape      open=False   focus BUTTON#btnShareCard
+
+The card itself is a `<canvas>`, which reaches a screen reader as "image" and
+nothing more. It is named at draw time from the same variables the picture is drawn
+from — the same rule as the per-guess announcement, so what is heard and what is
+drawn cannot drift apart.
+
+### The assertion that passed with the trap broken
+
+`smoke_play.py` gained the check, and the mutation matrix caught five of six. The
+miss is worth more than the five:
+
+    Tab stays inside     RC=0   *** NOT CAUGHT ***
+
+The mutation removed the wrap branch, so Tab **did** leave — onto a footer link.
+But the trap has a catch-all for focus found outside, and that hauled it back on the
+*next* Tab. The assertion read the state after two presses, so it saw focus inside
+and passed. **A visitor experiences each keystroke, not the last one.** The check now
+records where focus is at every press and fails on the first stray:
+
+    tab walk BUTTON#closeShare → BUTTON#closeShare → BUTTON#closeShare → BUTTON#closeShare
+    - tabbing inside the share card reached A, which is behind the overlay
+
+Six for six after that. That makes four assertions this session that passed for a
+reason other than the one they named, every one found by mutating the code rather
+than by reading the test.

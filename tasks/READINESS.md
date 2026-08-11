@@ -159,6 +159,19 @@ Both now point at the pages the nav already uses for those words — `/play.html
 rather than at anchors minted to justify the links. A new `fragments` check makes every deep link
 land on something that exists; it was shown failing first.
 
+**The one modal on the site.** The Back-button defect generalised: gates look at a page in one
+state, and a modal is a second state. `/play.html` has the only one — the share overlay, on the page
+the brief puts first. Driven with real key events after a real win: opening it **left focus on the
+button behind the backdrop**, Tab then walked two controls the player could no longer see — the
+second being `Next Q →`, **which advances the game underneath the card they are looking at** —
+**Escape did nothing**, and closing dropped focus to `<body>` so the next Tab restarted at the skip
+link. No role, no name, no `aria-modal`. Now a real dialog: focus enters, Tab wraps inside, Escape
+closes, the opener gets focus back, and the canvas is named at draw time from the values it is drawn
+from. One honest positive: closed, the overlay is `display:none`, so it was never a phantom tab stop.
+Enforced in `smoke_play.py`, **six mutations, six caught** — but only after the Tab check was
+rewritten, because the first version passed with the trap broken (a catch-all hauled focus back on
+the *next* press, and the assertion read only the final state).
+
 **Nobody had pressed Back.** `/player-cards` puts its state in the query string — `open()` calls
 `pushState('?p=slug')` and a `popstate` handler reads it back. A shared link works and Back/Forward
 navigate correctly, but backing out to the bare URL hid the card and **left the tab reading
