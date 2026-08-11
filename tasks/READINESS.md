@@ -159,6 +159,23 @@ Both now point at the pages the nav already uses for those words — `/play.html
 rather than at anchors minted to justify the links. A new `fragments` check makes every deep link
 land on something that exists; it was shown failing first.
 
+**The page said "offline capable".** `/play.html` prints it on the Daily Q card, and nothing here
+had ever pulled the plug. Two things had to be right before the measurement meant anything, and the
+first two runs got both wrong in the flattering direction: `Network.emulateNetworkConditions` is
+**per-target and a service worker is its own target**, so the page went offline and the worker's
+`fetch()` did not; and a bare test server **sends no `Cache-Control`**, so Chrome heuristically
+cached the HTML that production marks `must-revalidate`. With the server actually stopped and
+`vercel.json`'s headers mirrored, `/play` served **the offline notice with no game behind it**. Fixed
+by filling the cache at runtime rather than from a hardcoded list that rots at every deploy —
+documents and code, never `.json`/`.f32`/`.bin`, so a stale model asset still cannot be served.
+Measured after: 10 entries, 0 of them data, and offline the game keeps its question, its 1,305
+suggestions, its pool and its map. Also found: the fallback chain was **two tiers pretending to be
+three** (`r || caches.match(a) || caches.match(b)` — a Promise is always truthy), and the offline page
+was printing its own byte count wrongly (9,965 against 11,576), an unverified asset-size list, and a
+claim that the game played offline. Enforced: new `smoke_offline.py` (3 mutations, 3 caught) and a
+second half to the `worker` gate that requires sw.js's exemption regex and the page's promise to name
+**the same set**.
+
 **The one modal on the site.** The Back-button defect generalised: gates look at a page in one
 state, and a modal is a second state. `/play.html` has the only one — the share overlay, on the page
 the brief puts first. Driven with real key events after a real win: opening it **left focus on the

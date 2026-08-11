@@ -1,4 +1,4 @@
-/* Shell-only, no JSON cached — v7.3
+/* Network-first, with the pages you have visited kept for when the link dies — v7.4
 
    v7.1 never installed. Its SHELL was ['/','/index.html','/offline.html',
    '/manifest.json'] and cache.addAll() is atomic: one bad entry rejects the
@@ -20,9 +20,34 @@
    v7.3: two asset files changed and stamp_assets.py re-hashed the ?v= tokens on
    21 pages. Nothing here caches JS — the shell is three entries and fetch is
    network-first — but '/' IS in the shell, and a cached '/' would keep pointing
-   at the previous tokens. Bumping C makes activate purge it. */
-const C = 'hoops-v7-3';
+   at the previous tokens. Bumping C makes activate purge it.
+
+   v7.4: /play.html prints "offline capable" on the Daily Q card, so the plug was
+   pulled — with the server stopped rather than with CDP network emulation, which
+   is per-target and leaves the worker's own fetch() online. What a visitor got:
+
+     title    'Vector Hoops — Offline'
+     question NO #q
+
+   The shell was three entries and /play was not one of them, so the one page
+   that advertised offline play served the offline notice instead.
+
+   Listing more paths in SHELL would not fix it honestly: every page loads four
+   ?v=-stamped scripts and a stamped stylesheet, and stamp_assets.py re-hashes
+   those on any asset change, so a hardcoded list rots at the next deploy. So the
+   fill happens at runtime instead: a same-origin GET that comes back 200 is
+   copied into the cache under its exact stamped URL. New tokens miss and go to
+   the network, which is what they are for, and activate purges the lot on a
+   version bump.
+
+   Documents and code, not data. .json keeps its exemption — a stale model asset
+   must never be served — and .f32/.bin join it: those are immutable and large
+   (mtnn_embeddings.f32 alone is 3.2 MB), and the HTTP cache already holds them
+   for a year, so there is nothing to gain by holding a second copy here. */
+const C = 'hoops-v7-4';
 const SHELL = ['/', '/offline', '/manifest.json'];
+const FALLBACK = ['/offline', '/'];
+const DATA = /\.(json|f32|bin)$/;
 
 self.addEventListener('install', e => {
   e.waitUntil(
@@ -40,17 +65,39 @@ self.addEventListener('activate', e => {
   );
 });
 
-/* Network first, cache only as the offline fallback. JSON and /api/ are left
-   alone so a stale model asset can never be served from cache. Cross-origin
-   requests are skipped too: on a flaky network the old handler could answer a
-   font or script request with the offline HTML page. */
+/* Network first: the network answer always wins while there is one, so nothing
+   here can serve a visitor something older than what the site is publishing.
+   Cross-origin requests are skipped: on a flaky link the old handler could
+   answer a font or script request with the offline HTML page. */
 self.addEventListener('fetch', e => {
   const u = new URL(e.request.url);
+  if (e.request.method !== 'GET') return;
   if (u.origin !== self.location.origin) return;
-  if (u.pathname.includes('/api/') || u.pathname.endsWith('.json')) return;
-  e.respondWith(
-    fetch(e.request).catch(() =>
-      caches.match(e.request).then(r => r || caches.match('/offline') || caches.match('/'))
-    )
-  );
+  if (u.pathname.includes('/api/') || DATA.test(u.pathname)) return;
+
+  e.respondWith((async () => {
+    try {
+      const res = await fetch(e.request);
+      /* Only a plain 200 from this origin. A redirect cannot be put into a cache
+         at all, and an opaque response has nothing readable in it. */
+      if (res && res.status === 200 && res.type === 'basic' && !res.redirected) {
+        const copy = res.clone();
+        caches.open(C).then(c => c.put(e.request, copy)).catch(() => {});
+      }
+      return res;
+    } catch (err) {
+      const hit = await caches.match(e.request);
+      if (hit) return hit;
+      /* This used to read `r || caches.match('/offline') || caches.match('/')`,
+         which looks like three tiers and is two: caches.match returns a Promise
+         and a Promise is always truthy, so the last tier could never be reached
+         and a miss on the first resolved to undefined — respondWith(undefined)
+         is the browser's network error page, not a fallback. */
+      for (const p of FALLBACK) {
+        const f = await caches.match(p);
+        if (f) return f;
+      }
+      throw err;
+    }
+  })());
 });

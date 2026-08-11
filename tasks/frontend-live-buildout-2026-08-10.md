@@ -4982,3 +4982,105 @@ records where focus is at every press and fails on the first stray:
 Six for six after that. That makes four assertions this session that passed for a
 reason other than the one they named, every one found by mutating the code rather
 than by reading the test.
+
+
+## The page said "offline capable" (2026-08-11)
+
+`/play.html` prints it on the Daily Q card. Nothing on this repo had ever pulled
+the plug, so the claim had never been true or false — only printed.
+
+**Two things had to be right before the measurement meant anything**, and the
+first two runs got both wrong in the flattering direction.
+
+`Network.emulateNetworkConditions {offline:true}` is **per-target, and a service
+worker is its own target.** The page went offline; the worker's `fetch()` did not.
+That run reported a perfectly playable game — the worker was still talking to the
+server. Stopping the server is the only version of "the network is gone" that is
+true for every target at once.
+
+And a bare `SimpleHTTPRequestHandler` **sends no `Cache-Control` at all**, so
+Chrome heuristically cached the HTML and served it offline on its own. Production
+sends `max-age=0, must-revalidate` on every `.html`, which forbids exactly that,
+and `immutable` on `/assets/*`, which genuinely does survive. Both are mirrored
+from `vercel.json` now: a server that serves a different site than production
+makes every offline measurement meaningless.
+
+With both fixed:
+
+    title    'Vector Hoops — Offline'
+    question NO #q
+
+The shell was three entries — `/`, `/offline`, `/manifest.json` — and `/play` was
+not one of them. **The one page advertising offline play served the offline
+notice.**
+
+### Why not just add the path
+
+Every page loads four `?v=`-stamped scripts and a stamped stylesheet, and
+`stamp_assets.py` re-hashes those whenever an asset changes. A hardcoded SHELL
+rots at the next deploy — which is exactly how v7.1 shipped a worker that never
+installed at all.
+
+So the fill happens at runtime: a same-origin GET that comes back 200 is copied
+into the cache under its exact stamped URL. New tokens miss and go to the network,
+which is what they are for, and `activate` purges the lot on a version bump.
+
+**Documents and code, not data.** `.json` keeps its exemption — a stale model asset
+must never be served — and `.f32`/`.bin` join it: immutable, large
+(`mtnn_embeddings.f32` alone is 3.2 MB) and already held by the HTTP cache for a
+year, so a second copy buys nothing.
+
+    online   controlled=True  names=1305 pool=1305 ink=19676
+    cache    ['hoops-v7-4'] holds 10 entries, 0 of them data files
+    offline  'DUMB MODEL — Play Past→Modern'  names=1305 pool=1305 ink=19676
+    unseen   /teams offline lands on 'Vector Hoops — Offline'
+
+### The fallback that was two tiers pretending to be three
+
+    caches.match(e.request).then(r => r || caches.match('/offline') || caches.match('/'))
+
+`caches.match` returns a **Promise**, and a Promise is always truthy — so the last
+tier could never be reached, and a miss on the first resolved to `undefined`.
+`respondWith(undefined)` is the browser's error page, not a fallback. Now a loop
+that awaits each tier in turn.
+
+### What the offline page was telling people
+
+The page a visitor lands on when their connection dies is the page whose entire
+job is describing this cache, and it was carrying:
+
+- **"This page is 9965 bytes"** — it is 11,576. A self-referential number that
+  cannot stay true; deleted rather than corrected.
+- **"offline shell &lt;28k instant"** — never checked, unrelated to anything the
+  worker does.
+- **"Core only playable offline"** — false in exactly the way measured above.
+- a **DENY7** list of asset sizes (2.6MB props, 141K valuation, 9.9MB matchup…)
+  that nothing had verified. Unverified numbers on screen are the one thing this
+  branch does not ship, so they are gone rather than re-derived.
+
+Twelve replacements, and `check_frontend`'s `worker` check caught the thirteenth
+before it landed: the new copy read `cache hoops-v7-4.` and the check reported the
+trailing full stop as a wrong cache name.
+
+### The promise now has a gate
+
+`worker` gained a second half. sw.js says what it will not cache in a regex;
+offline.html says it in a sentence; nothing tied them together. It now reads the
+extension list out of `const DATA` and out of the clause ending "are never cached",
+and requires the two sets to be **equal** — because the dangerous direction is
+someone narrowing the regex while the page still promises the file is safe.
+
+The first version of that check only caught the harmless direction. Shown failing
+on the real one:
+
+    - offline.html promises ['.bin', '.f32', '.json'] are never cached and sw.js
+      exempts ['.json'] — the mismatch is a promise about a visitor's model data
+      that the worker is not keeping
+
+`scripts/fix_offline_claims.py` is deleted. It was a one-shot string migration for
+the previous correction; its "before" strings no longer exist and its "after"
+strings have now themselves been rewritten, so it exited 1 with seven MISSes and
+could never be run again. What replaces it is a check that derives, not a script
+that remembers.
+
+`scripts/smoke_offline.py` is new: three assertions, three mutations, three caught.

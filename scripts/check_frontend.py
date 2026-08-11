@@ -537,6 +537,38 @@ def check_worker(fail) -> None:
                 )
     print(f"  {agree} page mention(s) of the worker cache agree with sw.js ({name})")
 
+    # The name was one literal in two places. So is the list of file types the
+    # worker refuses to cache, and that one is a promise about model data rather
+    # than a version string: offline.html tells the visitor "no .json, .f32 or
+    # .bin", and if someone narrows the regex in sw.js the page keeps saying it.
+    src = sw.read_text(encoding="utf-8")
+    d = re.search(r"""const\s+DATA\s*=\s*/\\\.\(([^)]+)\)\$/""", src)
+    page = ROOT / "offline.html"
+    if not d or not page.exists():
+        return
+    exts = {e for e in d.group(1).split("|")}
+    text = without_comments(page.read_text(encoding="utf-8", errors="replace"))
+    # The sentence that makes the promise, not the whole page: a type mentioned
+    # anywhere would let a narrowed regex pass while the page still says the file
+    # is safe. Read back from "are never cached" to the clause it belongs to.
+    s = re.search(r"([^;]{0,140})are never cached", text)
+    if not s:
+        fail("offline.html no longer contains the sentence naming what the worker "
+             "refuses to cache, so nothing ties that promise to sw.js")
+        return
+    # a leading space or comma, so the full stops in the prose and the dot in
+    # /api/* are not read as file types
+    claimed = set(re.findall(r"(?:^|[\s,])\.(\w+)", s.group(1)))
+    if claimed != exts:
+        fail(
+            f"offline.html promises {sorted('.' + e for e in claimed)} are never cached "
+            f"and sw.js exempts {sorted('.' + e for e in exts)} — the mismatch is a "
+            f"promise about a visitor's model data that the worker is not keeping"
+        )
+    else:
+        print(f"  offline.html promises exactly what sw.js exempts "
+              f"({', '.join(sorted('.' + e for e in exts))})")
+
 
 CHECKS = {
     "syntax": check_syntax,
