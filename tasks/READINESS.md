@@ -159,6 +159,17 @@ Both now point at the pages the nav already uses for those words — `/play.html
 rather than at anchors minted to justify the links. A new `fragments` check makes every deep link
 land on something that exists; it was shown failing first.
 
+**One heading for the whole landing page.** Heading navigation is how a screen-reader user moves
+through a long document, and **31 card regions across the site had no heading anywhere inside them** —
+the landing page offered one stop for five sections, and the Explorer, the page the brief centres
+everything on, one for three. `/trends` had 14 over 9 cards and nothing had been carried across. 37
+headings added, visually hidden and worded to match what each card already shows, so nothing on screen
+moved; verified through `Accessibility.getFullAXTree`, where it counts: index **1 → 6**, model
+**2 → 6**, methods **1 → 7**, leaderboard **1 → 5**, players **1 → 4**. A new `headings` gate
+(15 checks now) immediately failed **eight more pages** my own per-page arithmetic had called clean.
+It then had to be fixed twice itself: it was reading a template literal in a script body as markup,
+and a parent card was passing on its nested child's heading.
+
 **The page said there was no Curry.** Phase 2. `/trends` is the change-over-time research, and its
 one text input sits under **"Who is the modern version of…?"**. Typing `curry` returned *"No charted
 career by that name with at least four seasons"* — `eratwins.json` holds five. The matcher was a

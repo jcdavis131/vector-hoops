@@ -5209,3 +5209,64 @@ keystroke**, so only that keystroke can fill it.
 
 Six for six after that. That makes **six** assertions this session that passed for
 a reason other than the one they named, and the live region is now three of them.
+
+
+## One heading for the whole landing page (2026-08-11)
+
+Heading navigation — the H key, the rotor — is how somebody using a screen reader
+moves through a long document. Counted across the site:
+
+    index.html         5 cards   1 heading
+    players.html       3 cards   1 heading      the Explorer the brief centres on
+    model.html         5 cards   2 headings     the explainability page
+    methods.html       6 cards   1 heading
+    leaderboard.html   4 cards   1 heading
+    trends.html        9 cards  14 headings     the one that was already right
+
+**31 card regions with no heading anywhere inside them.** The landing page offered
+one stop for five sections; the Explorer offered one for three. `/trends` proved
+it was fixable and nothing had been carried across.
+
+37 headings added, **visually hidden and worded to match what each card already
+shows**, so nothing on screen moved. Each is anchored to a snippet of its own
+card's text rather than to a card index — an anchor that has moved fails loudly, a
+count that has moved silently puts the heading in the wrong section.
+
+Markup is not the accessibility tree, so this was verified where it matters,
+through `Accessibility.getFullAXTree`:
+
+    /index.html      1 → 6 headings
+    /players.html    1 → 4
+    /model.html      2 → 6
+    /methods.html    1 → 7
+    /leaderboard.html 1 → 5
+    /owner.html      1 → 4
+    /play.html       2 → 5
+    /teams.html      5 → 7
+
+### The gate found eight pages my own count had missed
+
+A `headings` check went into `check_frontend` — **15 checks now** — walking each
+card's extent rather than counting per page. It immediately failed eight pages my
+`cards − headings` arithmetic had called clean: `brand`, `dfs`, `player-fit`,
+`player/index` and their mirrors each have one card holding the whole page, and
+the only heading sat in the header **above** it.
+
+### Then the gate turned out to be measuring the wrong thing. Twice.
+
+**`${m.arch}`.** The first run reported `player-animations.html` as having an
+unreachable section. Its cards are built from a template literal — the check was
+reading a script body as markup. A card that does not exist until the script runs
+cannot be given a static heading, and reading JS as HTML is how a checker starts
+inventing findings.
+
+**And a parent card was passing on its child's heading.** Deleting
+`4. Threats and mitigations` from methods.html left the check green: that card
+*contains* another card, whose heading was still inside its extent. The check now
+cuts at the first nested card, so a heading has to come before the section it
+heads. Shown failing on the same deletion afterwards:
+
+    - methods.html has a card with no heading in it — '4. Threats → Mitigation (honest)'
+
+That is the **seventh** check this session that reported success while measuring
+something other than what it named.

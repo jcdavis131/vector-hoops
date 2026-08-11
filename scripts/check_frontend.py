@@ -19,6 +19,7 @@ Checks, in order of how much they have actually caught:
   6. cited      figures printed as prose still match the file they name
   7. links      every internal link lands on a file the site serves
   8. clean      no internal link pays the cleanUrls 308
+  9. headings   every card region has a heading to reach it by
 
 Read-only. Never writes. Exit 0 clean, 1 on any failure.
 
@@ -424,6 +425,68 @@ def check_clean(fail) -> None:
         print("  no internal link pays a cleanUrls redirect")
 
 
+RE_SCRIPT_ANY = re.compile(r"<script.*?</script>", re.S)
+RE_CARD_OPEN = re.compile(r'<(div|section)\b[^>]*\bclass=(?:"[^"]*\bcard\b[^"]*"|card\b)[^>]*>')
+RE_ANY_HEAD = re.compile(r"<h[1-6][\s>]")
+RE_BOX = re.compile(r"</?(div|section)\b[^>]*?(/?)>")
+
+
+def check_headings(fail) -> None:
+    """Every card region has a heading, because that is how a page is navigated.
+
+    Heading navigation — the H key, the rotor — is how a screen-reader user moves
+    through a long document. Counted across the site, 31 card regions had no
+    heading anywhere inside them: the landing page offered one stop for five
+    cards, and the Explorer, the page the brief centres everything on, offered
+    one for three. /trends was the outlier that showed it was fixable, with 14
+    headings over 9 cards.
+
+    The headings added are visually hidden, so this cannot be checked by looking
+    at a screenshot — but `Accessibility.getFullAXTree` reports them, which is the
+    only place it matters. Verified there: index 1 → 6, model 2 → 6, methods
+    1 → 7.
+    """
+    unheaded = 0
+    for page in pages():
+        text = without_comments(page.read_text(encoding="utf-8", errors="replace"))
+        # Markup only. player-animations.html builds its cards from a template
+        # literal, and the first version of this check reported `${m.arch}` as a
+        # section nobody could reach — a card that does not exist until the script
+        # runs cannot be given a static heading, and reading script bodies as
+        # markup is how a checker starts inventing findings.
+        text = RE_SCRIPT_ANY.sub("", text)
+        for card in RE_CARD_OPEN.finditer(text):
+            depth, i = 1, card.end()
+            while depth and i < len(text):
+                m = RE_BOX.search(text, i)
+                if not m:
+                    break
+                i = m.end()
+                if m.group(0).startswith("</"):
+                    depth -= 1
+                elif not m.group(2):
+                    depth += 1
+            # A card's OWN content, not its children's. methods.html nests two
+            # cards inside two others, and the first version of this check read
+            # the whole subtree: deleting a parent's heading left the child's
+            # inside its extent and the check stayed green. Cut at the first
+            # nested card, so a heading has to come before the section it heads.
+            body = text[card.end():i]
+            nested = RE_CARD_OPEN.search(body)
+            if nested:
+                body = body[:nested.start()]
+            if not RE_ANY_HEAD.search(body):
+                unheaded += 1
+                snippet = re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", text[card.end():card.end() + 90])).strip()
+                fail(
+                    f"{label(page)} has a card with no heading in it — {snippet[:56]!r}. "
+                    f"Heading navigation is how this page is read without a mouse, and "
+                    f"that section cannot be reached by it"
+                )
+    if not unheaded:
+        print("  every card region carries a heading")
+
+
 def check_mirror(fail) -> None:
     """public/ is what Vercel serves; root is what everyone edits.
 
@@ -653,6 +716,7 @@ CHECKS = {
     "free": check_free,
     "links": check_links,
     "clean": check_clean,
+    "headings": check_headings,
     "fragments": check_fragments,
 }
 

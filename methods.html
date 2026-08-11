@@ -36,6 +36,7 @@ footer{max-width:1120px;margin:8px auto 0;padding:10px 14px;display:flex;flex-wr
 
 .vh-skip{position:absolute;left:-9999px;top:0;z-index:99;background:var(--paper,#fafaf8);border:2.2px solid var(--ink,#111);padding:10px 14px;font-family:ui-monospace,Menlo,monospace;font-weight:800;text-decoration:none;border-radius:0 0 10px 0}
 .vh-skip:focus{left:0}
+.vh-sr{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;border:0}
 </style>
 <!-- build_social_meta.py: start -->
 <link rel="canonical" href="https://hoops.dumbmodel.com/methods">
@@ -60,15 +61,15 @@ footer{max-width:1120px;margin:8px auto 0;padding:10px 14px;display:flex;flex-wr
 <main id="main" tabindex="-1"><h1 style="position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;border:0">Methods Construct Validity</h1>
 <div style="max-width:1120px;margin:0 auto;padding:12px">
 <div style="display:grid;grid-template-columns:1.05fr .95fr;gap:10px">
-<div class="card"><div class="hd">1. Define — plain-English constructs</div>
+<div class="card"><h2 class="vh-sr">1. Define the constructs</h2><div class="hd">1. Define — plain-English constructs</div>
 <div class="mini"><b>Front-office quality</b> = ability to turn picks + dollars + foresight into wins + brand without cap hell April. Not vibes. <b>Team strength</b> = ability to hold Past→Modern twin in 64-d map 6+ guesses. <b>Scouting fit</b> = twin realism: if map puts Giannis→LeBron closer than Giannis→Curry scout nods.<br><br><b>FOR</b> = 0.35·CapEff +0.35·Flex +0.30·ForesightSurplus + timing + retained +.15 vegas +.08 props + champ_bonus + valα±2. Cap% = salary/cap 846 entries via 31 seasons $24.36M→$154.65M→$164.96M effective_cap 2016 prior×1.10 not raw. Flex = .65·exp/2000+.35·1/√overall clip .06-3.5. Foresight = 3yr win Δ vs market cheap locks age-weighted.<br><b>W*</b> = W+2.5·PO+0.12·realG playoff 2.5× brand SAS 94.8 > OKC 85.8 2025-26. <b>W/$B</b> wins per $B valuation GSW $9.14B 5.03 worst OKC 20.9 best story.</div>
 <div class="mini" style="margin-top:8px;border:1.4px dashed var(--ink);padding:7px;border-radius:10px">Don't confuse: FOR 50 median 40-80 range 70-80 top7% A+ not 0-100 vanity. W* 94.8 not 82 wins includes playoff premium.</div></div>
-<div class="card"><div class="hd">2. Operationalize — specific math, zero leakage</div>
+<div class="card"><h2 class="vh-sr">2. Operationalise</h2><div class="hd">2. Operationalize — specific math, zero leakage</div>
 <div class="mini"><b>FOR = min(99,.35·D+.35·C+.30·F +.15·vegas+.08·props+champ_bonus+valα±2)</b> capped. front_office.json 1.16M includes method champion_display NYK Champion+16 SAS Runner+7 etc 30 teams.<br><br><b>Cap eff:</b> cap% payroll/cap 140.588M median 2024-25. Effective 2016 = prior $70M×1.10 not raw $94.143M removes 34.5% jump TV $24B tripled revenue. Timing mult 1+0.08·age+0.12·max(0,mat_ratio-1)*3 mat_ratio=(1+cap_growth)/(1+sal_growth) older flat deals $26M 2018 Jokic-like now $140-154M boost honest.<br><b>Draft:</b> weighted_avg = sum(surplus·weight)/sum(weight) Score 50+avg/40 clamped z 50+z·18 Floor bust -0.95·exp (&lt;100 min qual&lt;150 or zero seasons) late-cap overall&gt;35 capped min800 max300 2·exp star bonus avg_q&gt;1.30 & per-season qual&gt;1500 →×1.25 rookies latest_qual×5 amp if &gt;1500 & q&gt;1.20 2025 rookies completion 0.20 (0.22 if &gt;2500 min) → projected=qual/0.20 avoids zeroing.<br><b>No future leakage:</b> draft features only pre-draft [inv log round overall year_norm] no future TM/PM in target — quality only in target.</div>
 <div style="margin-top:6px;display:flex;gap:6px;flex-wrap:wrap"><span class="badge">cap_history 31</span><span class="badge">eff 2016 prior×1.10</span><span class="badge">weight .06-3.5</span><span class="badge">floor -0.95·exp</span><span class="badge">late&gt;35 min800</span><span class="badge">retained×1.15</span><span class="badge">mitigated×0.6</span></div></div>
 </div>
 <div style="display:grid;grid-template-columns:1.05fr .95fr;gap:10px;margin-top:10px">
-<div class="card"><div class="hd">3. Convergent / Discriminant / Predictive</div>
+<div class="card"><h2 class="vh-sr">3. Convergent, discriminant, predictive</h2><div class="hd">3. Convergent / Discriminant / Predictive</div>
 <div style="overflow-x:auto"><table><thead><tr><th scope="col">Test</th><th scope="col">Claim</th><th scope="col">Result</th><th scope="col">Status</th></tr></thead><tbody>
 <tr><td>Convergent OU</td><td>Vegas OU vs actual wins</td><td>r=0.741 944 entries</td><td><span class="badge ok">pass 0.741</span></td></tr>
 <tr><td>Convergent same-player</td><td>Same player yr→yr cos vs random</td><td>0.87 vs 0.11 7.9×</td><td><span class="badge ok">pass</span></td></tr>
@@ -80,10 +81,10 @@ footer{max-width:1120px;margin:8px auto 0;padding:10px 14px;display:flex;flex-wr
 <tr><td>Predictive twins</td><td>Twin fit playoff +/- honest</td><td>Wemby 699 real Flagg 0 honest</td><td><span class="badge ok">pass no fake</span></td></tr>
 </tbody></table></div>
 <div class="mini" style="margin-top:8px">DeepMLP 4450.09 best MAE beats trimmedMean 4501.15 Δ-51 1598 draft samples 5-fold CV seed42 early stop ridge+dropout+wd2e-4 perm importance overall dominant.</div>
-<div class="card" style="margin-top:10px;padding:8px"><div class="hd">SHAP / perm importance — glass-box</div>
+<div class="card" style="margin-top:10px;padding:8px"><h2 class="vh-sr">SHAP and permutation importance</h2><div class="hd">SHAP / perm importance — glass-box</div>
 <div class="mini">Kernel SHAP or permutation mean ΔMAE + sample_contribs_5 logged in model_zoo_eval.json. PD curve pick 1→30: 15230→11200→9450→6200→3100 diminishing late. SHAP global mean|abs| overall 1245.3 top log_overall 398.7 2nd round 187.2 3rd cap_growth 6.3 era minimal. Everyday test: If twin puts Giannis→LeBron closer than Giannis→Curry scout nods size+drive+pass. If didn't kill feature. <span class="badge y">Every model glass-box</span></div>
 <div class="mono">perm 5-fold shuffle not single split SHAP coeff·(x-mean) linear local PD 30 pt grid.</div></div></div>
-<div class="card"><div class="hd">4. Threats → Mitigation (honest)</div>
+<div class="card"><h2 class="vh-sr">4. Threats and mitigations</h2><div class="hd">4. Threats → Mitigation (honest)</div>
 <div style="overflow-x:auto"><table><thead><tr><th scope="col">Threat</th><th scope="col">Why spurious</th><th scope="col">Mitigation</th></tr></thead><tbody>
 <tr><td>Era drift 8.38° avg</td><td>Map rotates era masquerades skill Wemby vs 1996 bigs false closeness</td><td>Procrustes chain >=30 shared players/pair rotation mean principal angle Q vs I 5.88-12.64 avg 8.38 residual Frobenius chain to 1996-97 root axisDrift=1-|Q_ii|</td></tr>
 <tr><td>Cap spike 2016 $70M→$94M 34.5%</td><td>Raw cap% punishes 2016 FA 80% raw but >100% when prior×1.10</td><td>effective_cap 2016=prior×1.10 not raw $94.143M 2023 CBA max10% floor 0% can't fall timing mult</td></tr>
@@ -93,7 +94,7 @@ footer{max-width:1120px;margin:8px auto 0;padding:10px 14px;display:flex;flex-wr
 <tr><td>OU baseline 0.741 double-dip</td><td>OU 944 dominates FOR vegas_alpha .15+props .08 market leak?</td><td>Discriminant market_size r=0.14 <0.15 valα z*0.10 capped ±2 via (Wins/$B-μ)/σ FOR+=0.10·z limited ±2 Props dual 582+569 dual-compatible</td></tr>
 <tr><td>Small-n draft 1598 overfit</td><td>13 models complexity vs n</td><td>5-fold CV seed42 shuffle early stopping pat12/22 ridge+dropout+wd2e-4 Perm importance mean ΔMAE + SHAP sample5 Best MAE 4450.09 vs 4501.15 Δ-51 honest MT v3 loss0.6641 R2 0.9367</td></tr>
 </tbody></table></div>
-<div class="card" style="margin-top:10px;padding:8px"><div class="hd">Training cockpit — model zoo 11 models</div>
+<div class="card" style="margin-top:10px;padding:8px"><h2 class="vh-sr">Training cockpit — the model zoo</h2><div class="hd">Training cockpit — model zoo 11 models</div>
 <div class="mini">Factory train_factory.py leakfree player-level split 3 seeds promotion_composite 0.4·recall+0.6·purity 11 models linear logit multiple regression random forest gradient boost PyTorch MLP DeepMLP 2× hidden160 48-d 5-fold CV shuffle42 early stop 12/22 MAE/RMSE/R² logged eval JSON glass-box log + Lab pages Multi-tower multitask deep net endgame Construct validity first.</div>
 <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:6px"><span class="badge ok">MAE 4450 best</span><span class="badge">R² 0.9367 WS</span><span class="badge y">OU r=0.741</span><span class="badge">drift 8.38° 5.88-12.64</span><span class="badge">FOR 0.35/0.35/0.30</span></div></div></div>
 </div>

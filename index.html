@@ -55,6 +55,7 @@ footer{max-width:1120px;margin:0 auto;padding:10px var(--gutter);display:flex;fl
    for a skip link. Two links to #main, one after the other, before anything else
    a keyboard visitor reaches. The original .skip is kept: its :focus style pins
    the link at 16px rather than left:0, which is the better of the two. */
+.vh-sr{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;border:0}
 </style>
 <!-- build_social_meta.py: start -->
 <link rel="canonical" href="https://hoops.dumbmodel.com/">
@@ -109,13 +110,13 @@ footer{max-width:1120px;margin:0 auto;padding:10px var(--gutter);display:flex;fl
      there. --><a class="btn btn-xl" href="/model">How it works</a><a class="pill pill-y" href="/dictionary#retrieval" style="text-decoration:none" title="How the model is scored">held-out top-5 0.76 · baseline 0.20</a></div>
 </div>
 <div>
-<div class="card" style="padding:12px"><div class="mono">20,719 · JOINT STARS · 64-d L2</div><div class="mono-sm" style="margin-top:6px">12,966 NBA · 4,831 company-years · 4,022 tennis · 5,323 NFL joint · 2,430 pitch. Same engine, 5 dailies.</div><div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap"><span class="pill pill-o">MTNN 17 towers</span><span class="pill pill-b">130 feats</span><span class="pill">ONNX 549K</span><span class="pill pill-y" id="lodLab2">1814 pts filt • 86% mem save</span></div><div style="margin-top:10px;font-size:13px;line-height:1.5;color:#3a3732">Era-honest comparisons — peak year vivid if retired, latest vivid if still playing, rest grey hidden until you tap. Trajectory orange shows change over time.</div></div>
+<div class="card" style="padding:12px"><h2 class="vh-sr">What the model covers</h2><div class="mono">20,719 · JOINT STARS · 64-d L2</div><div class="mono-sm" style="margin-top:6px">12,966 NBA · 4,831 company-years · 4,022 tennis · 5,323 NFL joint · 2,430 pitch. Same engine, 5 dailies.</div><div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap"><span class="pill pill-o">MTNN 17 towers</span><span class="pill pill-b">130 feats</span><span class="pill">ONNX 549K</span><span class="pill pill-y" id="lodLab2">1814 pts filt • 86% mem save</span></div><div style="margin-top:10px;font-size:13px;line-height:1.5;color:#3a3732">Era-honest comparisons — peak year vivid if retired, latest vivid if still playing, rest grey hidden until you tap. Trajectory orange shows change over time.</div></div>
 </div>
 </div>
 </div>
 
 <div class="grid" id="main" tabindex="-1">
-<div class="card" id="map-card">
+<div class="card" id="map-card"><h2 class="vh-sr">The embedding map</h2>
 <div class="map-head">
 <span class="pill mono" style="font-size:10.5px;background:#111;color:#fff">Canvas • LOD 4k/8k · DPR-aware · 60fps rAF</span>
 <span class="lod"><button id="b4k" class="on">4k</button><button id="b8k">8k</button><button id="bRot">rot ◐</button><button id="bShare" class="pill pill-y">Share 1200×630</button></span>
@@ -133,7 +134,7 @@ footer{max-width:1120px;margin:0 auto;padding:10px var(--gutter);display:flex;fl
 </div>
 
 <div style="display:flex;flex-direction:column;gap:12px">
-<div class="card" style="padding:12px">
+<div class="card" style="padding:12px"><h2 class="vh-sr">How to read the map</h2>
 <div class="pill pill-y mono" style="font-size:10.5px">Void #080A0F · Paper #FAFAF8 · Orange signal #EB6834</div>
 <div class="mono" style="margin-top:8px;font-size:20px;letter-spacing:-.02em">12,966 seasons map</div>
 <p class="sub">Past → Modern twin affinity. MTNN 64-d → 2d rotating projection rAF quaternion-yaw .006 pulse #EB6834. LOD 4k unwraps to 8k full 12,966 on demand. <span class="hand" style="font-family:var(--hand)">Tap Jordan → pos only, deliberate.</span></p>
@@ -142,12 +143,12 @@ footer{max-width:1120px;margin:0 auto;padding:10px var(--gutter);display:flex;fl
 <div class="dots" id="wwDots"></div><div class="mono-sm" id="wwLab" style="margin-top:4px">weekStreak 0/7</div>
 <a class="btn btn-y btn-xl" href="/play" style="margin-top:10px;width:100%">Play Past→Modern → /play</a>
 </div>
-<div class="card" style="padding:10px"><div class="mono">Owner / Player / Brand / DFS</div><div class="mono-sm" style="margin-top:4px">Four ways into the same map. Pick Your Edge below. All of it free.</div><div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap"><a class="btn btn-xl" href="/owner">Owner</a><a class="btn" href="/player">Player</a><a class="btn" href="/brand">Brand</a><a class="btn btn-y" href="/dfs">DFS</a></div></div>
+<div class="card" style="padding:10px"><h2 class="vh-sr">Four ways in</h2><div class="mono">Owner / Player / Brand / DFS</div><div class="mono-sm" style="margin-top:4px">Four ways into the same map. Pick Your Edge below. All of it free.</div><div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap"><a class="btn btn-xl" href="/owner">Owner</a><a class="btn" href="/player">Player</a><a class="btn" href="/brand">Brand</a><a class="btn btn-y" href="/dfs">DFS</a></div></div>
 </div>
 </div>
 
 <div style="max-width:1120px;margin:0 auto;padding:0 var(--gutter) 10px">
-<div class="card edge">
+<div class="card edge"><h2 class="vh-sr">Pick your edge</h2>
 <div class="pill pill-y mono">Pick Your Edge — 4-track hub</div>
 <div class="mono" style="margin-top:8px;font-size:18px;text-transform:none;font-weight:900;letter-spacing:-.01em">Four ways to use the same 64-d map</div>
 <div class="mono-sm">64-d MTNN → Owner/Player/Brand/DFS lanes · zero-deps · inline</div>

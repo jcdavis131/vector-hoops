@@ -51,6 +51,7 @@ tbody tr:nth-child(even){background:rgba(17,17,17,.03)} tbody tr:hover{backgroun
 
 .vh-skip{position:absolute;left:-9999px;top:0;z-index:99;background:var(--paper,#fafaf8);border:2.2px solid var(--ink,#111);padding:10px 14px;font-family:ui-monospace,Menlo,monospace;font-weight:800;text-decoration:none;border-radius:0 0 10px 0}
 .vh-skip:focus{left:0}
+.vh-sr{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;border:0}
 </style>
 <!-- build_social_meta.py: start -->
 <link rel="canonical" href="https://hoops.dumbmodel.com/teams">
@@ -93,7 +94,7 @@ window.__vhReduceMotion = !!(window.matchMedia && window.matchMedia('(prefers-re
 <div style="border:1.5px solid var(--ink);border-radius:9px;padding:7px 8px;background:#FFFEFC;font-size:11px"><b class="mono">Foresight</b> age+matr .08/.12</div>
 <div style="border:1.5px solid var(--ink);border-radius:9px;padding:7px 8px;background:#FFFEFC;font-size:11px"><b class="mono">Champ</b> W* weighting</div>
 </div>
-<div class="card" style="margin-top:10px;padding:9px 10px;background:#0A0C10;color:#FAFAF8;border-color:#0A0C10"><canvas id="mapCv" width="460" height="120" aria-label="orange pulse rings"></canvas><div class="mono" style="margin-top:6px;color:#9AA3B2">◎ pulse 60fps orange #EB6834 rings — FOR glass-box. <span class="pill y mono" style="font-size:9px">DeepMLP 4450.09 vs 4501.15 Δ-51</span> <span class="pill mono" style="font-size:9px;background:#E6F5F0">OU r=0.741</span></div></div>
+<div class="card" style="margin-top:10px;padding:9px 10px;background:#0A0C10;color:#FAFAF8;border-color:#0A0C10"><h2 class="vh-sr">Glass-box check on the rating</h2><canvas id="mapCv" width="460" height="120" aria-label="orange pulse rings"></canvas><div class="mono" style="margin-top:6px;color:#9AA3B2">◎ pulse 60fps orange #EB6834 rings — FOR glass-box. <span class="pill y mono" style="font-size:9px">DeepMLP 4450.09 vs 4501.15 Δ-51</span> <span class="pill mono" style="font-size:9px;background:#E6F5F0">OU r=0.741</span></div></div>
 </div>
 <!-- The sortable ten-row table that stood here is gone. It was ten hardcoded
      literals - {team:'LAL',FOR:72.1,W:47,...} - under a caption reading
@@ -106,7 +107,7 @@ window.__vhReduceMotion = !!(window.matchMedia && window.matchMedia('(prefers-re
      all 30 teams from front_office.json, is already on this page below. -->
 
 </div>
-<div class="card" style="margin-top:12px;padding:11px 13px"><div class="hd" style="font-size:12px">Why SAS 94.8 > OKC 85.8 with 22W gap? — glass-box</div><p class="mono" style="color:#57534E;font-size:11.6px">W=24-25 reg wins. PO=25-26 playoff wins: NYK16 SAS12 CLE8 OKC8 sim end. realG=playoff GP. W*=W+2.5·PO+0.12·realG → SAS 34+30+~16.8 raw + prior weighted chapters → 94.8 ex FOR 25-26; OKC 68+20+?=85.8. Championship trumps. Cap% normalized effective_cap 2016=prior*1.10 removes $24B TV jump 34.5%. Trophy wall $9.1B top. <span class="pill mono" style="font-size:10px">FOR 50=median</span> <span class="pill mono ink" style="font-size:10px">2nd Apron $207.8M</span> <span class="pill y mono" style="font-size:10px">NO-MLE</span></p></div>
+<div class="card" style="margin-top:12px;padding:11px 13px"><h2 class="vh-sr">Why San Antonio rates above Oklahoma City</h2><div class="hd" style="font-size:12px">Why SAS 94.8 > OKC 85.8 with 22W gap? — glass-box</div><p class="mono" style="color:#57534E;font-size:11.6px">W=24-25 reg wins. PO=25-26 playoff wins: NYK16 SAS12 CLE8 OKC8 sim end. realG=playoff GP. W*=W+2.5·PO+0.12·realG → SAS 34+30+~16.8 raw + prior weighted chapters → 94.8 ex FOR 25-26; OKC 68+20+?=85.8. Championship trumps. Cap% normalized effective_cap 2016=prior*1.10 removes $24B TV jump 34.5%. Trophy wall $9.1B top. <span class="pill mono" style="font-size:10px">FOR 50=median</span> <span class="pill mono ink" style="font-size:10px">2nd Apron $207.8M</span> <span class="pill y mono" style="font-size:10px">NO-MLE</span></p></div>
 <div class="mono" style="margin-top:10px;color:var(--ink-muted);font-size:10.5px">Zero-deps inline CSS/JS · paper #FAFAF8 · ink #111111 · orange #EB6834 pulse · theme #fafaf8 · manifest data URI · fonts Architects Daughter</div>
 </div>
 <script>

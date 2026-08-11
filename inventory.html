@@ -36,6 +36,7 @@ footer{margin-top:10px;display:flex;flex-wrap:wrap;gap:8px;color:#6B6770;font-si
 
 .vh-skip{position:absolute;left:-9999px;top:0;z-index:99;background:var(--paper,#fafaf8);border:2.2px solid var(--ink,#111);padding:10px 14px;font-family:ui-monospace,Menlo,monospace;font-weight:800;text-decoration:none;border-radius:0 0 10px 0}
 .vh-skip:focus{left:0}
+.vh-sr{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;border:0}
 </style>
 <!-- build_social_meta.py: start -->
 <link rel="canonical" href="https://hoops.dumbmodel.com/inventory">
@@ -59,7 +60,7 @@ footer{margin-top:10px;display:flex;flex-wrap:wrap;gap:8px;color:#6B6770;font-si
 </header>
 <main id="main" tabindex="-1"><h1 style="position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;border:0">Inventory Audit</h1>
 <div class="wrap">
-<div class="card">
+<div class="card"><h2 class="vh-sr">True counts</h2>
 <div class="hd">True counts — not 4×213 — 33 seasons 944 OU + payroll 36/1001 combine 3014 etc</div>
 <p class="mini">All counts verified via <code>ls -lh assets/data/</code> Aug 9 2026. No vanity. Misreport 4×213=852 OU only 2019-22 copy. Real <b>33 seasons 944</b> entries <code>preseason_win_totals.json</code> built 2026-08-09T00:50 SportsOddsHistory 2003-26 + BetMGM Apr 2026 2025-26 + BetMGM Aug 2026 2026-27, 31 seasons ≥20 teams + 2 futures. 2025-26 OKC 62.5 DEN 53.5 2026-27 SAS 59.5 OKC 60.5.</p>
 <div class="grid" style="margin-top:8px">
@@ -67,11 +68,11 @@ footer{margin-top:10px;display:flex;flex-wrap:wrap;gap:8px;color:#6B6770;font-si
 <div class="mini"><b>tracking 13 wide masked not zero</b> — skills_wide.json 646K 13 cols speed dist touch dribble contest etc Mask m∈{0,1} cat([x·m,m]) prevents leakage pre-2013 not zero-impute. 5154 grade rows.<br><br><b>props 582+569 2.64MB</b> — player_season_props.json 2,642,335 bytes Seasons 2020-21 540 2021-22 605 2022-23 539 2023-24 572 2024-25 569 2025-26 582 2026-27 582 =3989 total lines Latest 2 582+569=1151 dual-compatible >1.4MB dual book basis Vegas over/under line residual props_alpha .08.<br><br><b>matchup 14.7k 2871 uniq</b> — matchup_players.json 9,992,186 bytes 14,690 recs 30 seasons 2871 uniq players closer 78 depriv 21 exploitable 32 logic faderfinisher.json 389K 2024-25 572 players playoff min sec + injury flags.</div></div>
 </div>
 <div class="grid" style="margin-top:10px">
-<div class="card"><div class="hd">Audit table — 9 core + FO drift</div>
+<div class="card"><h2 class="vh-sr">Audit table</h2><div class="hd">Audit table — 9 core + FO drift</div>
 <div style="max-height:360px;overflow:auto;border:1.6px solid var(--ink);border-radius:12px;margin-top:6px">
 <table id="aud"><thead><tr><th scope="col">Dataset</th><th scope="col">Count</th><th scope="col">Bytes/format</th><th scope="col">Key fields</th><th scope="col">Status</th></tr></thead><tbody></tbody></table></div>
 <div class="mono" style="margin-top:6px">Verified: FO 1.1M (1,160,938) + by-season 913K, cap_history 31, payroll 1001 enriched, team_valuations 360 (30×12), valuation_history 51,344 json 30 seasons, matchup 14.7k, model_zoo 40,257 bytes MAE 4450.09 beats trimmedMean 4501.15 Δ-51.</div></div>
-<div class="card"><div class="hd">Construct validity + drift numbers • honest provenance</div>
+<div class="card"><h2 class="vh-sr">Construct validity and drift</h2><div class="hd">Construct validity + drift numbers • honest provenance</div>
 <div class="mini" style="margin-top:6px"><b>OU r=0.741 market truth:</b> Vegas OU vs actual wins 2003-26 944 entries r=0.741 Wins/$M vs cap_pct r=-0.31. Held-out top-5 0.76 vs 0.20 baseline (eval_scoreboard.json). MTNN 64-d leakfree recall@10 0.977 composite 0.7937.<br><b>Drift 8.38°/yr avg:</b> drift.json 29 pairs 1996-97→2025-26 min5.88 max12.64 avg8.38° orthogonal Procrustes >=30 shared players/pair rotation mean principal angle Q vs I residual Frobenius no scaling pre-normed chain to 1996-97 root. Earlier doc claimed 6.2°/yr limited 14-d raw v5 measured 8.38 honest. axisDrift=1-|Q_ii| 0.036 FG_PCT top.<br><b>Valuation 360+51K FO 1.1M:</b> team_valuations 360 entries (30×12 2014-15→2025-26) 141K synth Forbes 10-13% growth + market mod valuation_history 30 dicts 51K for MTNN win projection 2026+. FO 1.1M includes method champion_map playoff_wins 94.8.<br><b>FO 0.35/0.35/0.30:</b> FOR min99 .35 Draft +.35 Cap +.30 Foresight +.15 vegas +.08 props + champ_bonus NYK Champion+16 SAS Runner+7 + valα±2 W* = W+2.5·PO+0.12·realG playoff premium 2.5× brand.</div>
 <div class="mini" style="border:1.5px dashed var(--ink);padding:8px;border-radius:10px;margin-top:8px">Checklist (10): 1) OU 944 dual-src SportOddsHistory+BetMGM 2) Payroll 36/1001 266K cap_pct via 31 cap 3) Cap rules 31 effective_cap 2016=prior×1.10 4) Combine 3014 wingspan/vert flagged 5) Tracking 13 wide masked 6) Props 582+569=1151 2.64MB 7) Matchup 14,690 2871 uniq 8) Matchup 572 2024-25 9) Valuation 360+51K W/$B 10) FO 1.1M + by-season 893K <span class="badge y">Zero-deps ✓</span></div></div>
 </div>
