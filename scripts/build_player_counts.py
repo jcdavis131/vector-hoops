@@ -28,7 +28,7 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-PAGE = ROOT / "players.html"
+PAGES = ("players.html", "index.html", "model.html")
 ASSET = ROOT / "assets" / "embedding_map_points_limited.json"
 
 
@@ -54,6 +54,10 @@ def patterns(total: int, current: int) -> list[tuple[re.Pattern[str], str]]:
         (re.compile(r"Current = \d+ latest seasons"), f"Current = {c} latest seasons"),
         (re.compile(r"All = \d+ filtered \(current"), f"All = {t} filtered (current"),
         (re.compile(r"· \d+ → 80 list subset"), f"· {t} → 80 list subset"),
+        # index.html and model.html quote the same count in their own words
+        (re.compile(r"\d+ pts filt"), f"{t} pts filt"),
+        (re.compile(r"map \d+ filt"), f"map {t} filt"),
+        (re.compile(r"LOD \d+ vs "), f"LOD {t} vs "),
     ]
 
 
@@ -62,20 +66,26 @@ def main() -> int:
     ap.add_argument("--check", action="store_true")
     args = ap.parse_args()
 
-    if not ASSET.exists() or not PAGE.exists():
-        print(f"  SKIP  {ASSET.name} or {PAGE.name} not present")
+    if not ASSET.exists():
+        print(f"  SKIP  {ASSET.name} not present")
         return 0
 
     total, current = counts()
-    with open(PAGE, encoding="utf-8", newline="") as fh:
-        original = fh.read()
-
-    text, stale = original, []
-    for rx, want in patterns(total, current):
-        for m in rx.finditer(text):
-            if m.group(0) != want:
-                stale.append(f"{m.group(0)!r} should read {want!r}")
-        text = rx.sub(want.replace("\\", "\\\\"), text)
+    stale, writes = [], []
+    for rel in PAGES:
+        page = ROOT / rel
+        if not page.exists():
+            continue
+        with open(page, encoding="utf-8", newline="") as fh:
+            original = fh.read()
+        text = original
+        for rx, want in patterns(total, current):
+            for m in rx.finditer(text):
+                if m.group(0) != want:
+                    stale.append(f"{rel}: {m.group(0)!r} should read {want!r}")
+            text = rx.sub(want.replace("\\", "\\\\"), text)
+        if text != original:
+            writes.append((page, text))
 
     if stale:
         print(f"  {len(stale)} stale count(s) against {total} usable points "
@@ -87,10 +97,10 @@ def main() -> int:
 
     if args.check:
         return 1 if stale else 0
-    if text != original:
-        with open(PAGE, "w", encoding="utf-8", newline="") as fh:
+    for page, text in writes:
+        with open(page, "w", encoding="utf-8", newline="") as fh:
             fh.write(text)
-        print(f"  wrote {PAGE.name}")
+        print(f"  wrote {page.name}")
     return 0
 
 

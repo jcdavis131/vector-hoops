@@ -123,7 +123,7 @@ async function loadPts(f='all'){try{
   applyFilter(f);
 }catch(e){ptsPromise=null;$('lab').textContent='fallback load failed'}}
 /* The list showed the first 80 of however many the filter left — 1,814 with
-   All selected — and said nothing about the other 1,734. The label beside the
+   All selected — and said nothing about the other 1,684. The label beside the
    map printed both dots.length and a frozen 1814 at once, so the page disagreed
    with itself in public.
    A search reaches the rest: everything it filters is already in `dots`, so

@@ -5530,3 +5530,52 @@ ran and `leaderboard.html` kept the `viewport` mutation. Backups now go to a fix
 place with a manifest written **before** each mutation, and the next run restores
 from it before doing anything else. A harness that can leave the site broken is
 the thing its own docstring warns about.
+
+
+## The same wrong number, five more times (2026-08-11)
+
+Yesterday's finding — **1814** on the Explorer against **1,764** in the file it
+describes — was a hardcoded count that had drifted from its data. Nothing on this
+repo looks for that: `sourced` knows a fixed list of bad figures and `cited`
+checks figures that appear verbatim in a file, and a *count* appears in no file as
+a literal.
+
+So every count every page states was put next to the collection sizes of the
+assets that page fetches, and anything within 12% of a real count without being it
+was flagged — the drift signature. Six candidates:
+
+    index.html    1,814   OFF BY +50 (2.8%)   points_limited.json:points=1764
+    index.html   12,345   OFF BY -621 (4.8%)  vectors.json:players=12966
+    model.html      130   OFF BY +10 (8.3%)   mtnn_attr_pop.json:coverage=120
+    model.html    1,814   OFF BY +50 (2.8%)   points_limited.json:points=1764
+    play.html     1,200   OFF BY -105 (8.0%)  game_vectors.json:modern=1305
+
+**Three were real, three were the heuristic being a heuristic.** `12345` is the
+LCG constant `c` in `a=1103515245 c=12345 m=2³¹`. `130` is `dIn` in
+`mtnn_arch.json` — the model's input width, nothing to do with a coverage map of
+120 entries. `1200` is `Share 1200×630` and `1200ms easeInOut`.
+
+The real ones: **eight** more visitor-facing places carrying 1814 across
+`index.html` and `model.html`, including the landing page's map label
+(`aria-label="Vector Hoops map 1814 limited"` — a filename, not a description) and
+the share card it draws. `build_player_counts.py` covers all three pages now, so a
+rebuilt asset updates them or the `derived` gate goes red.
+
+**And "86% mem save" is gone**, in three places on the landing page. It was beside
+the same live-vs-frozen pattern the Explorer had:
+
+    $('lodLab2').textContent='1814 players • '+dots.length+' pts mem 86% save'
+
+A frozen count, a live one and a memory figure from nothing, in one string.
+
+### The fix broke the landing page, and the suite said so
+
+Replacing the frozen number with `dots.length` in the *other* label put a read of
+`dots` above its own declaration:
+
+    Uncaught TypeError: Cannot read properties of undefined (reading 'length')
+
+Three smokes went red at once — `smoke_render` on console errors, `smoke_index`
+because the map never loaded, `smoke_settled` from its own collector. That line is
+a literal again, owned by the generator's `\d+ pts filt` pattern, which is what
+that pattern is for.

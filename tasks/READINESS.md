@@ -159,6 +159,18 @@ Both now point at the pages the nav already uses for those words — `/play.html
 rather than at anchors minted to justify the links. A new `fragments` check makes every deep link
 land on something that exists; it was shown failing first.
 
+**The same wrong number, five more times.** Yesterday's stale count was a hardcoded number that had
+drifted from its data, and nothing here looks for that class. Every count every page states was put
+next to the collection sizes of the assets that page fetches; six were within 12% of a real count
+without being it. **Three were real** — eight more visitor-facing places carrying 1814 across
+`index.html` and `model.html`, including the landing page's map label (`"Vector Hoops map 1814
+limited"`, a filename rather than a description) and the share card it draws. **Three were the
+heuristic being a heuristic**: `12345` is the LCG constant, `130` is the model's input width from
+`mtnn_arch.json`, `1200` is `1200×630` and `1200ms`. The generator covers all three pages now, and
+"86% mem save" is gone from the landing page in three places. The fix broke the page first — replacing
+a frozen number with `dots.length` put a read above its own declaration, and three smokes went red at
+once.
+
 **1814 was 1764, in eleven places.** The Explorer's list rendered the first 80 of whatever the filter
 left and said nothing about the rest, so the only route to a player outside those 80 was clicking a
 dot on a canvas. A search now sits above it — nothing is fetched, the box ships `disabled` and the
