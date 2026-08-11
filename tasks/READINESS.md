@@ -1,13 +1,13 @@
 # frontend-live — readiness
 
-**Nothing here is live.** Everything below is measured at **`28a9afdc`** — the sha is the anchor,
+**Nothing here is live.** Everything below is measured at **`45b3c217`** — the sha is the anchor,
 because the commit that records a count is never inside the count it records. All of it is on
 `frontend-live`; `master` is untouched, and pushing `master` is what deploys the site. Suite green
 at that commit.
 
 | | |
 |---|---|
-| commits ahead of master | 172 at `28a9afdc` |
+| commits ahead of master | 173 at `45b3c217` |
 | paths changed | 2,634 (2,547 under `public/`, 34 scripts) |
 | insertions / deletions | +204,317 / −310,433 |
 | working notes | `tasks/frontend-live-buildout-2026-08-10.md`, 4,869 lines |
@@ -209,7 +209,7 @@ and those two pages oscillated between twelve tags and zero. Fixed at the source
 measured over three write/check cycles; 213 tags site-wide became 235, with the other twenty pages
 byte-identical. **Now it is true.**
 
-## Nine decisions
+## Ten decisions
 
 | id | decision | why it is not mine |
 |---|---|---|
@@ -223,7 +223,9 @@ byte-identical. **Now it is true.**
 | P9.5 | datalist dropdown behaviour | popup is browser chrome, unreachable from CDP |
 | P9.9 | the site says both 48-d and 64-d | which statements describe the shipped model and which describe an older one |
 
-Each was checked against `origin/master`: all nine pre-date this branch. The one collision this
+| P9.10 | "Games" and "Play today's" now both go to `/play.html` | whether "Games" should be a separate nav item is a product call; the dead link it replaced was not |
+
+Each of the first nine was checked against `origin/master` and pre-dates this branch. **P9.10 is new and is mine** — the nav's "Games" link pointed at `#games`, which named no element, and repointing it at the daily left two nav items going to the same place. The one collision this
 branch created — two pages claiming `/player` — was found, fixed, and withdrawn from this list.
 
 **P9.9 in detail** — smaller than it was filed, because the reachable part is now fixed. The shipped
