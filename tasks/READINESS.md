@@ -1,16 +1,16 @@
 # frontend-live — readiness
 
-**Nothing here is live.** Everything below is measured at **`ec9ceced`** — the sha is the anchor,
+**Nothing here is live.** Everything below is measured at **`619b4d47`** — the sha is the anchor,
 because the commit that records a count is never inside the count it records. All of it is on
 `frontend-live`; `master` is untouched, and pushing `master` is what deploys the site. Suite green
 at that commit.
 
 | | |
 |---|---|
-| commits this session | 223 on this branch's own line at `ec9ceced`, now on `master` (a plain `rev-list` says 259 — it walks both sides of the merge and counts Scout's 36) |
+| commits this session | 227 on this branch's own line at `619b4d47`, now on `master` (a plain `rev-list` says 263 — it walks both sides of the merge and counts Scout's 36) |
 | paths changed, across the merge | 2,652 (2,547 under `public/`, 45 scripts) |
 | insertions / deletions | +211,573 / −310,582 |
-| working notes | `tasks/frontend-live-buildout-2026-08-10.md`, 6,154 lines |
+| working notes | `tasks/frontend-live-buildout-2026-08-10.md`, 6,234 lines |
 
 **Where to look at it.** The branch is pushed and Vercel builds every commit on it:
 
@@ -158,6 +158,23 @@ each moved the page from **scrollY 0 to scrollY 0** while writing the fragment i
 Both now point at the pages the nav already uses for those words — `/play.html` and `/model.html` —
 rather than at anchors minted to justify the links. A new `fragments` check makes every deep link
 land on something that exists; it was shown failing first.
+
+**The league, one season at a time.** Phase two of the brief is change over time, and `/trends` had
+no way to see it — `archMap` draws every charted season at once, which is where the archetypes sit,
+not how the league moved through them. The data was here in the wrong shape:
+`embedding_map_trajectories.json` has **1,764 players, 30 seasons, 12,038 player-seasons** but is
+keyed by player, so "where was the league in 2003-04" means walking 1,764 careers — on every frame.
+`scripts/build_season_map.py` pivots it once at build time into **415,336 bytes, 36.6% of the
+source, with `x`, `y`, `z` and `c` copied verbatim**. The new section loads it on an explicit press
+whose size, span and count are *stamped by the generator* (proved by lying to it: `120 KB` makes
+`--check` exit 1), scrubs 30 seasons with a range input and a play control, draws each season's real
+roster — 290 in 1996-97, 500 in 2024-25 — on the shared camera, and counts the archetype mix **from
+the points on screen** rather than from a prevalence table in a different clustering. First press:
+1996-97's largest share is *Defensive Glass + Rim Pressure*; 2025-26's is *Three-Point Accuracy +
+Three-Point Volume*. `smoke_season.py` checks the page against the file for five probed seasons — and
+its `once` mutation **ran green twice for two different wrong reasons**: the button's own `disabled`
+carried the first, and the second was counting HTTP requests that Chrome served from cache, as
+production would. It counts `fetch()` calls now.
 
 **One camera for every map, and the legend that ate one.** Five maps here; before
 `assets/map-camera.js`, five contracts — the landing map could be dragged, zoomed and hovered, the

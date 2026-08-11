@@ -6150,3 +6150,83 @@ Two small API decisions, both forced by a gate rather than taste:
 `index.html` 51,869 → 47,193 bytes; `players.html` 32,664 → 32,970;
 `map-camera.js` is 12,911 and immutable-cached, shared. `/teams`, `/trends` and
 `/model` are the next three, and they are now a few lines each.
+
+
+## The league, one season at a time (2026-08-11)
+
+Phase two of the brief is change over time, and `/trends` had no way to see it.
+`archMap` draws every charted season at once, which answers *where do the
+archetypes sit* and not *how did the league move through them*.
+
+The data was already here and in the wrong shape.
+`assets/embedding_map_trajectories.json` holds every position the site could want
+— **1,764 players, 30 seasons, 12,038 player-seasons**, each with `x, y, z` and an
+archetype index — but it is keyed by player. Asking "where was the whole league in
+2003-04" means walking 1,764 careers, and a scrubber would do that on every frame.
+
+`scripts/build_season_map.py` pivots it once, at build time:
+
+    embedding_map_trajectories.json   1,135,755 B   {pid: [{season,x,y,z,c,gp,mpg}]}
+    season_map.json                     415,336 B   {season: [[pid,x,y,z,c]]}
+
+**36.6%, and nothing is rounded or resampled.** `x`, `y`, `z` and `c` are copied
+verbatim, so the scrubbed map and the trajectory overlay cannot disagree about
+where a player was. `gp` and `mpg` are dropped because no view reads them; that
+and the array-of-arrays shape are the whole saving. Archetype **names** are
+deliberately not in the file — the site reads those from `mtnn_arch.json` and
+shows bare indices when it cannot, and a second copy of the labels is a second
+thing to drift.
+
+The section:
+
+  - **load** — an explicit press with the real size on the button. The size, the
+    span and the count in the prose are stamped by the generator, so the button
+    cannot come to quote a number the file stopped having. Proved by lying to it:
+    `Draw the seasons — 120 KB` makes `--check` exit 1.
+  - **scrub** — a range input over 30 seasons, prev/next, and play at one season
+    per 0.9s. Every season draws exactly the players who were on the floor: 290 in
+    1996-97, 500 in 2024-25.
+  - **mix** — archetype percentages counted from the points on screen, not read
+    from the prevalence table. That table is a different clustering in a different
+    space, and a page quoting two sources for one number is a page that will
+    eventually disagree with itself.
+  - **map** — the shared camera. Same drag, tilt, zoom, hover and keys as the
+    front page.
+  - **pick** — clicking a point traces that player's whole career across all 30
+    seasons and announces the span.
+
+What it shows on the first press, counted off the screen rather than asserted: in
+**1996-97** the largest share of the league is *Defensive Glass + Rim Pressure*;
+in **2025-26** it is *Three-Point Accuracy + Three-Point Volume*.
+
+### `once` ran green twice, for two different wrong reasons
+
+`smoke_season.py` claims the 406 KB file is fetched once however many times the
+button is pressed. Two mutations said it was true when it was not being tested:
+
+1. The first removed the `pending || SM` guard. Green — the button's own
+   `disabled` was carrying it.
+2. The second removed **both** guards and still saw one request, because the
+   count was of **HTTP requests** and Chrome served the repeats from its own
+   cache. Production would too: the asset is `immutable` for a year. **The
+   network layer cannot tell you whether the page asked twice.**
+
+It counts `fetch()` calls now. And the defence-in-depth claim is measured rather
+than assumed: with either guard alone left in place, the page calls fetch exactly
+once — which is why the mutation has to remove both.
+
+Same shape as the whole session. A check read in the wrong state measures
+nothing, and *where* you read it is part of the state.
+
+### One honest gap
+
+The slider and the prev/next/play buttons ship `disabled` and the map box ships
+`hidden`, so `check_focus`, `check_focus_ring` and `check_target_size` do not
+reach them — they see the page a visitor first sees, which is the right thing for
+them to see. `smoke_season.py` drives all of them after the load instead. Worth
+knowing that the static gates stop at the press.
+
+`check_painted_contrast` did reach the disabled buttons and was right about them:
+`opacity:.5` on `#111` is **2:1**. WCAG exempts disabled controls, but a control
+you cannot read is a control you cannot plan around, so they are `#6B6760` on
+`#F2F1EC` — **4.97:1** — and still obviously disabled.
