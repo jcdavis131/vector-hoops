@@ -35,8 +35,8 @@
 <meta name="twitter:image" content="https://hoops.dumbmodel.com/assets/og-1200x630.png">
 <!-- build_social_meta.py: end -->
 </head><body>
-<a class="vh-skip" href="#main">Skip to the content</a><nav><div class=brand><span style="border:2.2px solid var(--ink);padding:4px 9px;border-radius:9px;background:var(--yellow);box-shadow:2px 2px 0 var(--ink);transform:rotate(-1deg)">DUMB MODEL</span><span class=chrome-caviar>⬢ Play Past→Modern</span><span class="pill y">ARCADE • LCG 546</span><span class="pill">v7.2 paper</span></div><div style="display:flex;gap:6px;flex-wrap:wrap"><a class="pill y" href="/play">Play</a><a class="pill" href="/players">Explorer</a><a class="pill" href="/player-cards">Players</a><a class="pill" href="/trends">Trends</a><a class="pill i" href="/model">Model</a><a class="pill" href="/teams">Teams</a><a class="pill" href="/dictionary">Dictionary</a><a class="pill" href="/leaderboard">Board</a></div><a class="pill" href="/">Map</a></nav><main id="main" tabindex="-1"><h1 style="position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;border:0">DUMB MODEL — Play Past→Modern</h1><div style="display:flex;flex-direction:column;gap:12px"><div class=card><div class=mono style="text-transform:uppercase;letter-spacing:.06em;opacity:.75"><span class=chrome-caviar>Solo1 / Triple3 / Full5 / Pack Battle</span> ?pack=672-123-456 • same-link same-stars LCG A=1103515245</div><h2 style="margin:6px 0 4px;font-size:18px;letter-spacing:-.02em">Pick → lock ◎ — <span style="background:var(--yellow);padding:2px 8px;border-radius:999px;border:1.3px solid #111">career trajectory anim</span></h2><div style="display:flex;gap:7px;flex-wrap:wrap;margin-top:8px"><button class="btn btn-p" id=bSolo>Solo1</button><button class="btn btn-y" id=bTrip>Triple3</button><button class="btn" id=bFull>Full5</button><button class="btn" id=bPack>Pack 672-123-456</button><input id=packIn placeholder="?pack=672-123-456" style="flex:1;min-width:160px" aria-label="Pack code, for example 672-123-456"></div><div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap"><span class=chip style="background:var(--yellow)">demo pool · 10 past × 8 modern</span><a class=chip href="/dictionary#retrieval" style="text-decoration:none">model: held-out top-5 0.76</a><a class=chip href="/model" style="text-decoration:none">MTNN 64-d powers the model page</a></div><div id=dist class=pill style="margin-top:8px">dist 0.00 · profile cos 0.00 · guess to lock</div>
-<p class=mono style="margin:6px 0 0;font-size:10.5px;color:#6B6862;line-height:1.5;text-transform:none">This page scores on a built-in demo pool — 10 past and 8 modern players, compared on a 3-value profile. It is not the 64-dimensional model, which is not loaded here. The real embedding runs the map on <a href="/players">Explorer</a>, the research on <a href="/trends">Trends</a>, and the cards on <a href="/player-cards">Players</a>.</p><div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px"><span class="pill" style="background:#E7F6EA">lock #E7F6EA 1.28 closer</span><span class="pill" style="background:#FFD8D5">avoid #FFD8D5 0.62</span><span class="pill" style="background:#FFE9B5">dep #FFE9B5 0.81</span></div></div><div class=card><h2 class="vh-sr">Today's question</h2><div class=mono><span class=chrome-caviar>Daily Q</span> • plays offline after one visit • pack invariant</div><div id=q style="font-weight:900;font-size:17px;margin-top:4px">—</div><div style="display:flex;gap:8px;margin-top:8px"><input id=guess list=guessList autocomplete=off placeholder="type modern twin: Butler, Ant..." style="flex:1" aria-label="Type a modern player to guess the twin"><datalist id=guessList></datalist><button class="btn btn-p" id=go>Guess ◎</button></div><div id=log style="margin-top:8px;font-family:ui-monospace;font-size:11.4px;min-height:54px;background:var(--paper);border:1.6px dashed #E8E2DA;border-radius:11px;padding:8px;max-height:150px;overflow:auto"></div><div id=trajChips style="margin-top:8px"></div><div id=parityLab class=mono style="margin-top:6px;font-size:10.6px;color:#5B5752"></div><div style="display:flex;gap:8px;margin-top:8px;align-items:center;flex-wrap:wrap"><button class="btn btn-y" id=shareBtn style="display:none">Share 1200×630</button><span id=shareStat class=mono></span><button class="btn" id=btnGlass style="display:none">View glass transform</button><button class="btn btn-p" id=btnNext style="display:none">Next →</button></div><div class=sub style="margin-top:6px">iOS shadow OK • canvas DPR·1.4 max • bullet tolerance 1.4x • same-link-same-layout invariant preserved • #EB6834 ring</div><div id=ww style="margin-top:6px"></div></div></div><div style="display:flex;flex-direction:column;gap:12px"><div class=card style="padding:0;overflow:hidden"><h2 class="vh-sr">The embedding map</h2><div style="display:flex;justify-content:space-between;padding:8px 11px;border-bottom:2.2px solid var(--ink);background:#fff"><span class="pill y">CANVAS • twin arc • chrome caviar karaoke-grade v7.2</span><span class=mono>LCG 546 same-link same-stars</span></div><div id=play-a-101><canvas id=c width=640 height=360 aria-label="Embedding map. The modern player pool is drawn as points positioned by the model, coloured by archetype, with the season being asked about marked by a crosshair. Points can be clicked to fill the guess box; every one of them is also in the guess box suggestions, so nothing here needs a mouse."></canvas><canvas id=trajOver width=640 height=360 style="position:absolute;inset:0;pointer-events:none"></canvas><div class=pill style="position:absolute;left:10px;top:10px;z-index:3;background:rgba(250,250,248,.92)"><span class=chrome-caviar>Past ★ Modern ○</span></div><div id=ring class=ring>◎</div><div id=confetti></div><div id=resultBox class=traj-glass><div class=mono style="font-weight:900;text-transform:uppercase">◎ LOCK finale <span class=chrome-caviar>chrome caviar</span> • platform anim 1200ms easeInOut cubic</div><div id=resMeta class=mono style="margin-top:4px;font-size:11px;line-height:1.45">—</div><div id=seasonChips style="margin-top:6px;display:flex;flex-wrap:wrap"></div><div id=parityLab2 class=mono style="margin-top:6px;font-size:10.5px;opacity:.86"></div><div style="display:flex;gap:6px;margin-top:8px;flex-wrap:wrap"><button class="btn btn-y" id=btnShareCard>Share 1200×630 #080A0F</button><button class="btn" id=btnGlass2>Glass transform ▶︎</button><button class="btn btn-p" id=btnNext2>Next Q →</button></div></div></div><div style="padding:8px 11px;background:var(--paper);border-top:1.6px solid var(--ink)" class=mono>500ms LOD teaser pulse • 60fps orange #EB6834 rings • held-out top-5 0.76 vs 14-d baseline 0.20 (assets/eval_scoreboard.json) • shared pack LCG same-stars • trainers same-link same layout • grey→vivid 0.35→1.0 • 0A0C10 base</div></div><div class=card><h2 class="vh-sr">How the packs work</h2><div class=mono style="font-weight:900"><span class=chrome-caviar>Trainers guarantee</span> • same-link same layout</div><div class=sub style="margin-top:4px">Pack ?pack= ids map to immutable layout slots 1-3. Trainer mute.</div><ul style="margin:8px 0 0 16px;font-size:12.4px;line-height:1.45" class=sub><li><b>Solo1</b>:1 pick — fast MTNN check.</li><li><b>Triple3</b>:3 seq — covers 5×4×6=546.</li><li><b>Full5</b>:WW eligible.</li><li><b>Pack Battle</b>:<code>?pack=672-123-456</code> — share → identical.</li><li>Traj #EB6834 0.35→1.0 1200ms • chip→glass • 12★</li></ul></div></div></main><div id=sharePop class=share-pop><div class=share-card role=dialog aria-modal=true aria-label="Share this result"><canvas id=shareCard role=img aria-label="Share card. Drawn when a round ends." width=1200 height=630 style="width:100%;height:auto;display:block;background:#080A0F"></canvas><div style="padding:10px 12px;display:flex;gap:8px;flex-wrap:wrap;justify-content:space-between;align-items:center;background:#080A0F"><span class=mono style="color:#C9D4E5">SoC sig white • LPCM • 1200×630 OG #080A0F • pack ?pack=672-123-456 • LCG 546 • orange #EB6834</span><button class="btn btn-y" id=closeShare>Close ◎</button></div></div></div><canvas id=shareCardD width=1200 height=630></canvas><footer><div class=mono>v7.2 paper • DPR1.4 bullet1.4x #EB6834</div><div style="display:flex;gap:6px"><a class="pill y" href="/play">Play</a><a class="pill" href="/leaderboard">Board</a><a class="pill" href="/">Map</a><a class="pill i" href="/model">Model</a></div></footer><script>const $=s=>document.getElementById(s);const A=1103515245,C=12345,M=2147483648;/* Math.imul, not *: A*s reaches 2.37e18 for s near 2^31 and
+<a class="vh-skip" href="#main">Skip to the content</a><nav><div class=brand><span style="border:2.2px solid var(--ink);padding:4px 9px;border-radius:9px;background:var(--yellow);box-shadow:2px 2px 0 var(--ink);transform:rotate(-1deg)">DUMB MODEL</span><span>Past → Modern</span></div><div style="display:flex;gap:6px;flex-wrap:wrap"><a class="pill y" href="/play">Play</a><a class="pill" href="/players">Explorer</a><a class="pill" href="/player-cards">Players</a><a class="pill" href="/trends">Trends</a><a class="pill" href="/model">Model</a><a class="pill" href="/teams">Teams</a><a class="pill" href="/dictionary">Dictionary</a><a class="pill" href="/leaderboard">Board</a></div><a class="pill" href="/">Map</a></nav><main id="main" tabindex="-1"><h1 style="position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;border:0">DUMB MODEL — Play Past→Modern</h1><div style="display:flex;flex-direction:column;gap:12px"><div class=card><div class=mono style="text-transform:uppercase;letter-spacing:.06em;opacity:.75">Daily puzzle • same for everyone today</div><h2 style="margin:6px 0 4px;font-size:18px;letter-spacing:-.02em">Guess the modern twin — tap to lock</h2><div style="display:flex;gap:7px;flex-wrap:wrap;margin-top:8px"><button class="btn btn-p" id=bSolo>Play Today's</button><button class="btn" id=bTrip style="display:none">Triple3</button><button class="btn" id=bFull style="display:none">Full5</button><button class="btn" id=bPack style="display:none">Pack Battle</button><input id=packIn placeholder="Pack code (optional)" style="flex:1;min-width:160px;display:none" aria-label="Pack code"></div><div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap"><span class=chip style="background:var(--yellow)">10 past × 8 modern to start</span><a class=chip href="/model" style="text-decoration:none">How we score it</a></div><div id=dist class=pill style="margin-top:8px">Type a name to start</div>
+<p class=mono style="margin:6px 0 0;font-size:10.5px;color:#6B6862;line-height:1.5;text-transform:none">Past player on the left — guess which modern player plays most like them. Same puzzle for everyone each day, works offline after your first visit.</p></div><div class=card><h2 class="vh-sr">Today's question</h2><div class=mono>Daily • works offline after first visit</div><div id=q style="font-weight:900;font-size:17px;margin-top:4px">—</div><div style="display:flex;gap:8px;margin-top:8px"><input id=guess list=guessList autocomplete=off placeholder="Type modern player — Curry, Wemby..." style="flex:1" aria-label="Type a modern player to guess the twin"><datalist id=guessList></datalist><button class="btn btn-p" id=go>Guess ◎</button></div><div id=log style="margin-top:8px;font-family:ui-monospace;font-size:11.4px;min-height:54px;background:var(--paper);border:1.6px dashed #E8E2DA;border-radius:11px;padding:8px;max-height:150px;overflow:auto"></div><div id=trajChips style="margin-top:8px"></div><div id=parityLab class=mono style="margin-top:6px;font-size:10.6px;color:#5B5752"></div><div style="display:flex;gap:8px;margin-top:8px;align-items:center;flex-wrap:wrap"><button class="btn" id=hintBtn>Hint</button><button class="btn btn-y" id=shareBtn style="display:none">Share result</button><span id=shareStat class=mono></span><button class="btn" id=btnGlass style="display:none">How it works</button><button class="btn btn-p" id=btnNext style="display:none">Next →</button></div><div id=ww style="margin-top:6px"></div></div></div><div style="display:flex;flex-direction:column;gap:12px"><div class=card style="padding:0;overflow:hidden"><h2 class="vh-sr">The embedding map</h2><div style="display:flex;justify-content:space-between;padding:8px 11px;border-bottom:2.2px solid var(--ink);background:#fff"><span class="pill y">Tap a dot to guess</span><span class=mono>Past ★ Modern ○</span></div><div id=play-a-101><canvas id=c width=640 height=360 aria-label="Embedding map. The modern player pool is drawn as points positioned by the model, coloured by archetype, with the season being asked about marked by a crosshair. Points can be clicked to fill the guess box; every one of them is also in the guess box suggestions, so nothing here needs a mouse."></canvas><canvas id=trajOver width=640 height=360 style="position:absolute;inset:0;pointer-events:none"></canvas><div class=pill style="position:absolute;left:10px;top:10px;z-index:3;background:rgba(250,250,248,.92)">Past ★ Modern ○</div><div id=ring class=ring>◎</div><div id=confetti></div><div id=resultBox class=traj-glass><div class=mono style="font-weight:900;text-transform:uppercase">◎ Locked — nice call</div><div id=resMeta class=mono style="margin-top:4px;font-size:11px;line-height:1.45">—</div><div id=seasonChips style="margin-top:6px;display:flex;flex-wrap:wrap"></div><div id=parityLab2 class=mono style="margin-top:6px;font-size:10.5px;opacity:.86"></div><div style="display:flex;gap:6px;margin-top:8px;flex-wrap:wrap"><button class="btn btn-y" id=btnShareCard>Share</button><button class="btn" id=btnGlass2>How it works</button><button class="btn btn-p" id=btnNext2>Next →</button></div></div></div><div style="padding:8px 11px;background:var(--paper);border-top:1.6px solid var(--ink)" class=mono>Tap a player dot to fill your guess • orange pulse shows the lock</div></div><div class=card><h2 style="font-size:14px;margin:0">How to play</h2><div class=sub style="margin-top:4px">One past player appears. Guess which modern player plays most like them. We score how close your guess is — closer greens lock it in.</div><ul style="margin:8px 0 0 16px;font-size:12.4px;line-height:1.45" class=sub><li><b>Tap or type</b> a name — map or box, both work</li><li><b>Lock it</b> — good guess shows orange career path</li><li><b>Share</b> — same puzzle for everyone today</li><li>Streak builds when you finish the day's set</li></ul></div></div></main><div id=sharePop class=share-pop><div class=share-card role=dialog aria-modal=true aria-label="Share this result"><canvas id=shareCard role=img aria-label="Share card. Drawn when a round ends." width=1200 height=630 style="width:100%;height:auto;display:block;background:#080A0F"></canvas><div style="padding:10px 12px;display:flex;gap:8px;flex-wrap:wrap;justify-content:space-between;align-items:center;background:#080A0F"><span class=mono style="color:#C9D4E5">Past → Modern • share your twin match</span><div style="display:flex;gap:6px"><button class="btn" id=dlShare>Download image</button><button class="btn btn-y" id=closeShare>Close ◎</button></div></div></div></div><canvas id=shareCardD width=1200 height=630></canvas><footer><div class=mono>Past → Modern • one puzzle a day</div><div style="display:flex;gap:6px"><a class="pill y" href="/play">Play</a><a class="pill" href="/leaderboard">Board</a><a class="pill" href="/">Map</a><a class="pill" href="/model">Model</a></div></footer><script>const $=s=>document.getElementById(s);const A=1103515245,C=12345,M=2147483648;/* Math.imul, not *: A*s reaches 2.37e18 for s near 2^31 and
    Number.MAX_SAFE_INTEGER is 9.01e15, so the plain multiply loses the low bits
    that %M then reads. Measured effect: 120 distinct daily puzzles across 730
    days instead of the ~513 a uniform draw over a 968-row pool predicts.
@@ -58,7 +58,7 @@ function vhMapXY(){
     sx:function(x){return pad+x*(W-pad*2)},
     sy:function(y){return pad+(1-y)*(H-pad*2)}};
 }
-function drawBase(poolObj){let W=c.clientWidth,H=c.clientHeight;ctx.clearRect(0,0,W,H);ctx.fillStyle='#0A0C10';ctx.fillRect(0,0,W,H);let s=hStr((poolObj?poolObj.n:'')+DAILY);for(let i=0;i<140;i++){s=LCG(s);let X=(s%(W*1.12))-W*0.06;s=LCG(s);let Y=s%H;ctx.fillStyle='rgba(250,250,248,'+(0.18+Math.random()*0.34)+')';ctx.fillRect(X,Y,1.15,1.15)}let cx=W/2,cy=H/2;for(let r=96;r>14;r-=20){ctx.beginPath();ctx.arc(cx,cy,r,0,Math.PI*2);ctx.strokeStyle=r<34?'#EB6834':'rgba(235,104,52,'+(0.86-r/130)+')';ctx.lineWidth=r<34?2.6:1.3;ctx.stroke()}ctx.fillStyle='#F0E442';ctx.font='26px monospace';ctx.fillText('◎',cx-13,cy+8);if(poolObj){ctx.fillStyle='#FAFAF8';ctx.font='11px ui-monospace';ctx.fillText(poolObj.n+' ★ held-out top-5 0.76',16,20)}}function parsePack(){let u=new URL(location.href);let p=u.searchParams.get('pack');if(!p)return null;let ids=p.split('-').map(v=>parseInt(v,10)).filter(v=>!isNaN(v));return ids.length?ids:null}function setSeq(a){seq=a;idx=0;nextQ()}function nextQ(){vhAnimating=false;vhHover=null;if(idx>=seq.length){
+function drawBase(poolObj){let W=c.clientWidth,H=c.clientHeight;ctx.clearRect(0,0,W,H);ctx.fillStyle='#0A0C10';ctx.fillRect(0,0,W,H);let s=hStr((poolObj?poolObj.n:'')+DAILY);for(let i=0;i<140;i++){s=LCG(s);let X=(s%(W*1.12))-W*0.06;s=LCG(s);let Y=s%H;ctx.fillStyle='rgba(250,250,248,'+(0.18+Math.random()*0.34)+')';ctx.fillRect(X,Y,1.15,1.15)}let cx=W/2,cy=H/2;for(let r=96;r>14;r-=20){ctx.beginPath();ctx.arc(cx,cy,r,0,Math.PI*2);ctx.strokeStyle=r<34?'#EB6834':'rgba(235,104,52,'+(0.86-r/130)+')';ctx.lineWidth=r<34?2.6:1.3;ctx.stroke()}ctx.fillStyle='#F0E442';ctx.font='26px monospace';ctx.fillText('◎',cx-13,cy+8);if(poolObj){ctx.fillStyle='#FAFAF8';ctx.font='11px ui-monospace';ctx.fillText(poolObj.n,16,20)}}function parsePack(){let u=new URL(location.href);let p=u.searchParams.get('pack');if(!p)return null;let ids=p.split('-').map(v=>parseInt(v,10)).filter(v=>!isNaN(v));return ids.length?ids:null}function setSeq(a){seq=a;idx=0;nextQ()}function nextQ(){vhAnimating=false;vhHover=null;if(idx>=seq.length){
   log('— Pack done — • Week Warrior tick if perfect • chrome caviar array locked');
   updateWW(true);
   /* Say it where the player is looking. This branch used to return here, which
@@ -68,12 +68,10 @@ function drawBase(poolObj){let W=c.clientWidth,H=c.clientHeight;ctx.clearRect(0,
      panel. The daily seed is the date string (hStr of toISOString().slice(0,10)),
      so "tomorrow" is a fact about the code, not a promise. */
   var done=$('q');
-  if(done) done.innerHTML='<span class="chrome-caviar">Done for today.</span> '+
-    'The puzzle is seeded by the date, so a new one is here tomorrow. '+
-    'The map below is still live — hover a point to name it, or share the card.';
+  if(done) done.innerHTML='Done for today. New puzzle tomorrow — keep exploring the map below.';
   var gi=$('guess');
-  if(gi) gi.placeholder='Today is done — keep exploring the map, or come back tomorrow';
-  return}let pid=seq[idx];let past=POOL.find(p=>p.i===pid)||POOL[pid%POOL.length];cur=past;$('q').innerHTML='<span class="chrome-caviar">'+past.n+'</span> → ? • pack idx '+(pid%10000)+' • LOD 4k 60fps';drawBase(past);$('trajChips').innerHTML='';$('seasonChips').innerHTML='';let rb=$('resultBox');if(rb)rb.style.display='none';let ov=trajOver.getContext('2d');ov.clearRect(0,0,trajOver.width,trajOver.height)}function log(h){$('log').innerHTML+='<div>'+h+'</div>';$('log').scrollTop=9999}async function fetchTrajCache(){if(trajCache)return trajCache;try{let r=await fetch('assets/embedding_map_trajectories.json?v=2e787a46');let j=await r.json();trajCache=j.trajectories||j;return trajCache}catch(e){return{}}}async function fetchManifest(){if(manifestCache)return manifestCache;try{let r=await fetch('assets/embedding_map_manifest.json?v=c4042e09');let j=await r.json();manifestCache=j.players||[];return manifestCache}catch(e){return[]}}function norm(s){return(s||'').toLowerCase().replace(/[^a-z]/g,'')}function findPid(name){if(!manifestCache)return null;let nb=norm(name.replace(/\s+\d{2}-\d{2}.*/,'').replace(/\s+\d{4}.*/,'').trim());let f=manifestCache.find(p=>norm(p.display_name).includes(nb)||nb.includes(norm(p.display_name)));return f?f.player_id:null}/* Two pool shapes reach this. The real rows from game_vectors.json carry x and
+  if(gi) gi.placeholder='Done — explore the map or share';
+  return}let pid=seq[idx];let past=POOL.find(p=>p.i===pid)||POOL[pid%POOL.length];cur=past;$('q').innerHTML='<b>'+past.n+'</b> → ?';drawBase(past);$('trajChips').innerHTML='';$('seasonChips').innerHTML='';let rb=$('resultBox');if(rb)rb.style.display='none';let ov=trajOver.getContext('2d');ov.clearRect(0,0,trajOver.width,trajOver.height)}function log(h){$('log').innerHTML+='<div>'+h+'</div>';$('log').scrollTop=9999}async function fetchTrajCache(){if(trajCache)return trajCache;try{let r=await fetch('assets/embedding_map_trajectories.json?v=2e787a46');let j=await r.json();trajCache=j.trajectories||j;return trajCache}catch(e){return{}}}async function fetchManifest(){if(manifestCache)return manifestCache;try{let r=await fetch('assets/embedding_map_manifest.json?v=c4042e09');let j=await r.json();manifestCache=j.players||[];return manifestCache}catch(e){return[]}}function norm(s){return(s||'').toLowerCase().replace(/[^a-z]/g,'')}function findPid(name){if(!manifestCache)return null;let nb=norm(name.replace(/\s+\d{2}-\d{2}.*/,'').replace(/\s+\d{4}.*/,'').trim());let f=manifestCache.find(p=>norm(p.display_name).includes(nb)||nb.includes(norm(p.display_name)));return f?f.player_id:null}/* Two pool shapes reach this. The real rows from game_vectors.json carry x and
    y already in [0,1]; the hardcoded fallback rows carry xy in [-1,1]. Only `xy`
    used to be read, and the real pool has no such field — so every guess whose
    pid missed the trajectory cache threw on undefined[0]. That rejection was
@@ -123,26 +121,42 @@ let r=$('ring');r.classList.remove('karaoke-2x');void r.offsetWidth;r.classList.
   } else {
     allSeasons=[...new Set([...gTraj.map(p=>p.season),...tTraj.map(p=>p.season)])].sort();
     allSeasons.forEach(s=>{let el=document.createElement('span');el.className='season-chip';el.textContent=s;chips.appendChild(el)});
-  }let start=performance.now(),dur=1200;return new Promise(resolve=>{function frame(now){let t=RM?1:Math.min(1,(now-start)/dur),e=easeInOut(t);octx.clearRect(0,0,W,H);function drawOne(traj,color,isGuess){if(!traj.length)return;let prog=e*(traj.length-1),upto=Math.floor(prog),rem=prog-upto;octx.beginPath();octx.lineWidth=isGuess?2.8:2.2;octx.lineCap='round';octx.lineJoin='round';octx.shadowColor='#111';octx.shadowBlur=1.2;for(let i=0;i<=upto;i++){let p=traj[i];let X=p.x*W,Y=p.y*H;if(i===0)octx.moveTo(X,Y);else octx.lineTo(X,Y);let a=0.35+0.65*(i/(traj.length-1||1));octx.strokeStyle=color;octx.globalAlpha=a*e;octx.stroke();octx.beginPath();octx.moveTo(X,Y);let pr=3.2+e*2.4;octx.globalAlpha=1;octx.fillStyle=i===traj.length-1?color:'#9AA0A6';octx.beginPath();octx.arc(X,Y,pr,0,Math.PI*2);octx.fill();if(rem>0&&i===upto&&i+1<traj.length){let np=traj[i+1];let ix=X+(np.x*W-X)*rem,iy=Y+(np.y*H-Y)*rem;octx.beginPath();octx.moveTo(X,Y);octx.lineTo(ix,iy);octx.strokeStyle=color;octx.globalAlpha=0.9;octx.stroke();octx.globalAlpha=1}}octx.globalAlpha=1;octx.shadowBlur=0}drawOne(gTraj,'#F0E442',true);drawOne(tTraj,'#EB6834',false);let active=Math.floor(e*(allSeasons.length-1));chips.querySelectorAll('.season-chip').forEach((el,i)=>el.classList.toggle('active',i===active));let sChips=$('seasonChips');if(sChips){sChips.innerHTML='';let pts=gTraj.slice(0,Math.floor(e*gTraj.length)+1);pts.forEach((pt,i)=>{let el=document.createElement('span');el.className='season-chip'+(i===pts.length-1?' active':'');el.textContent=(pt.season||'S'+i)+' '+(pt.team||'')+' '+(pt.wins?'W'+pt.wins:'');el.onclick=()=>{let rb=$('resultBox');rb?.classList.toggle('traj-glass');el.classList.toggle('active')};sChips.appendChild(el)})}if(t<1){requestAnimationFrame(frame)}else{confettiBurst();showResultBox(guessObj,targetObj,gTraj,tTraj);makeShareOG(guessObj,targetObj,gTraj,tTraj);resolve()}}requestAnimationFrame(frame)})}function confettiBurst(){let cf=$('confetti');cf.innerHTML='';for(let i=0;i<12;i++){let s=document.createElement('div');s.className='star';s.textContent='★';s.style.left=(26+Math.random()*48)+'%';s.style.top=(42+Math.random()*22)+'%';s.style.color='#F0E442';s.style.position='absolute';s.style.animationDelay=(i*48)+'ms';s.style.fontSize=(11+Math.random()*6)+'px';cf.appendChild(s)}setTimeout(()=>cf.innerHTML='',1300)}function showResultBox(guess,target,gT,tT){let rb=$('resultBox');if(!rb)return;rb.style.display='block';rb.classList.add('spike');setTimeout(()=>rb.classList.remove('spike'),620);$('resMeta').innerHTML='<span class="chrome-caviar">'+target.n+' ≈ '+guess.n+'</span> • cos '+(cos(target.v,guess.v).toFixed(2))+' cosine • '+gT.length+'→'+tT.length+' seasons path • <span class="pill y">array locked</span>';$('parityLab').innerHTML='Cosine above is the only number here the model produced. Model-wide accuracy lives on <a href="/model" style="color:inherit">the model page</a>, measured against a held-out split.';$('parityLab2').innerHTML='🪶🪶🪶 96-97 birds hover shows '+(tT[0]?.team||'team')+' W'+(tT[0]?.wins||'')+' • <span class="pill">SoC white LPCM</span>';$('btnGlass').style.display='inline-flex';$('btnNext').style.display='inline-flex';$('shareBtn').style.display='inline-flex'}function makeShareOG(guess,target,gT,tT){let sc=$('shareCard'),sx=sc.getContext('2d');sx.fillStyle='#080A0F';sx.fillRect(0,0,1200,630);sx.fillStyle='#FAFAF8';sx.font='700 34px ui-monospace';sx.fillText('◐ DUMB MODEL — chrome caviar karaoke-grade',36,56);sx.fillStyle='#F0E442';sx.font='900 42px ui-monospace';sx.fillText(target.n+' → '+guess.n,36,116);sx.fillStyle='#9AA0A6';sx.font='15px ui-monospace';sx.fillText((tT.length||0)+' seasons '+(tT[0]?.season||'')+'→'+(tT[tT.length-1]?.season||'')+' • '+(gT.length||0)+' guess seasons • held-out top-5 0.76 • LCG 546 same-link',36,152);sx.strokeStyle='#EB6834';sx.lineWidth=2.6;sx.beginPath();tT.forEach((pt,i)=>{let X=540+pt.x*520,Y=210+pt.y*300;if(i===0)sx.moveTo(X,Y);else sx.lineTo(X,Y)});sx.stroke();sx.strokeStyle='#F0E442';sx.beginPath();gT.forEach((pt,i)=>{let X=540+pt.x*520,Y=210+pt.y*300;if(i===0)sx.moveTo(X,Y);else sx.lineTo(X,Y)});sx.stroke();tT.forEach(pt=>{let X=540+pt.x*520,Y=210+pt.y*300;sx.fillStyle='#EB6834';sx.beginPath();sx.arc(X,Y,3.2,0,6.284);sx.fill()});gT.forEach(pt=>{let X=540+pt.x*520,Y=210+pt.y*300;sx.fillStyle='#F0E442';sx.beginPath();sx.arc(X,Y,3.2,0,6.284);sx.fill()});sx.fillStyle='#EB6834';sx.font='28px ui-monospace';sx.fillText('◎',760,305);sx.fillStyle='#5B5752';sx.font='12px ui-monospace';/* The link on the share card has to reproduce the game the card depicts.
-   It used to fall back to the literal '672-123-456' whenever the page had no
-   ?pack= in its URL — which is every daily game — so the one artefact built to
-   be posted publicly advertised the demo pack from the placeholder rows, a
-   different puzzle from the one in the picture above it.
-   seq holds the pool ids this round was built from and parsePack reads exactly
-   that format back, so seq.join('-') round-trips. If seq is somehow empty the
-   bare /play is printed rather than a pack code that leads somewhere else. */
-sx.fillText('hoops.dumbmodel.com/play'+(function(){
-  var p=new URL(location.href).searchParams.get('pack');
-  if(!p && typeof seq!=='undefined' && seq && seq.length) p=seq.join('-');
-  return p?('?pack='+p):'';
-})()+' • v7.2 paper traj 1200ms easeInOut cubic grey→vivid 0.35→1.0 • SoC white • LPCM',36,610);
-/* The card is a canvas, so a screen reader gets "image" and nothing else unless
-   it is named. Named from the same variables the picture is drawn from, for the
-   same reason each guess is announced verbatim: what is heard and what is drawn
-   cannot then drift apart. */
-sc.setAttribute('aria-label','Share card. '+target.n+' to '+guess.n+', '+
-  (tT.length||0)+' seasons against '+(gT.length||0)+', drawn as two paths.');
-$('shareBtn').onclick=()=>openShare($('shareBtn'))}/* Matching used to be MODERN.find(includes) over 8 hardcoded names, and the
+  }let start=performance.now(),dur=1200;return new Promise(resolve=>{function frame(now){let t=RM?1:Math.min(1,(now-start)/dur),e=easeInOut(t);octx.clearRect(0,0,W,H);function drawOne(traj,color,isGuess){if(!traj.length)return;let prog=e*(traj.length-1),upto=Math.floor(prog),rem=prog-upto;octx.beginPath();octx.lineWidth=isGuess?2.8:2.2;octx.lineCap='round';octx.lineJoin='round';octx.shadowColor='#111';octx.shadowBlur=1.2;for(let i=0;i<=upto;i++){let p=traj[i];let X=p.x*W,Y=p.y*H;if(i===0)octx.moveTo(X,Y);else octx.lineTo(X,Y);let a=0.35+0.65*(i/(traj.length-1||1));octx.strokeStyle=color;octx.globalAlpha=a*e;octx.stroke();octx.beginPath();octx.moveTo(X,Y);let pr=3.2+e*2.4;octx.globalAlpha=1;octx.fillStyle=i===traj.length-1?color:'#9AA0A6';octx.beginPath();octx.arc(X,Y,pr,0,Math.PI*2);octx.fill();if(rem>0&&i===upto&&i+1<traj.length){let np=traj[i+1];let ix=X+(np.x*W-X)*rem,iy=Y+(np.y*H-Y)*rem;octx.beginPath();octx.moveTo(X,Y);octx.lineTo(ix,iy);octx.strokeStyle=color;octx.globalAlpha=0.9;octx.stroke();octx.globalAlpha=1}}octx.globalAlpha=1;octx.shadowBlur=0}drawOne(gTraj,'#F0E442',true);drawOne(tTraj,'#EB6834',false);let active=Math.floor(e*(allSeasons.length-1));chips.querySelectorAll('.season-chip').forEach((el,i)=>el.classList.toggle('active',i===active));let sChips=$('seasonChips');if(sChips){sChips.innerHTML='';let pts=gTraj.slice(0,Math.floor(e*gTraj.length)+1);pts.forEach((pt,i)=>{let el=document.createElement('span');el.className='season-chip'+(i===pts.length-1?' active':'');el.textContent=(pt.season||'S'+i)+' '+(pt.team||'')+' '+(pt.wins?'W'+pt.wins:'');el.onclick=()=>{let rb=$('resultBox');rb?.classList.toggle('traj-glass');el.classList.toggle('active')};sChips.appendChild(el)})}if(t<1){requestAnimationFrame(frame)}else{confettiBurst();showResultBox(guessObj,targetObj,gTraj,tTraj);makeShareOG(guessObj,targetObj,gTraj,tTraj);resolve()}}requestAnimationFrame(frame)})}function confettiBurst(){let cf=$('confetti');cf.innerHTML='';for(let i=0;i<12;i++){let s=document.createElement('div');s.className='star';s.textContent='★';s.style.left=(26+Math.random()*48)+'%';s.style.top=(42+Math.random()*22)+'%';s.style.color='#F0E442';s.style.position='absolute';s.style.animationDelay=(i*48)+'ms';s.style.fontSize=(11+Math.random()*6)+'px';cf.appendChild(s)}setTimeout(()=>cf.innerHTML='',1300)}function showResultBox(guess,target,gT,tT){
+  let rb=$('resultBox');if(!rb)return;rb.style.display='block';rb.classList.add('spike');setTimeout(()=>rb.classList.remove('spike'),620);
+  let score=cos(target.v,guess.v);
+  let label=score>0.92?"Dead on — lock!":score>0.82?"Very close":score>0.68?"Getting close":"Keep trying";
+  $('resMeta').innerHTML='<b>'+target.n+' ≈ '+guess.n+'</b> • '+label+' ('+(score*100|0)+'%)';
+  $('parityLab').innerHTML='Same puzzle for everyone today. <a href="/model" style="color:inherit">See how we score it</a>';
+  $('parityLab2').innerHTML=(tT[0]?.team?'First year '+(tT[0]?.team||''):'')+' • tap to see path';
+  if($('btnGlass')) $('btnGlass').style.display='inline-flex';
+  if($('btnNext')) $('btnNext').style.display='inline-flex';
+  if($('shareBtn')) $('shareBtn').style.display='inline-flex';
+}function makeShareOG(guess,target,gT,tT){
+  let sc=$('shareCard'),sx=sc.getContext('2d');
+  if(!sc) return;
+  sx.fillStyle='#080A0F';sx.fillRect(0,0,1200,630);
+  sx.fillStyle='#FAFAF8';sx.font='700 36px ui-monospace';
+  sx.fillText('DUMB MODEL — Past → Modern',36,62);
+  sx.fillStyle='#F0E442';sx.font='900 44px ui-monospace';
+  let line=(target.n+' → '+guess.n).slice(0,56);
+  sx.fillText(line,36,118);
+  sx.fillStyle='#C9D4E5';sx.font='18px ui-monospace';
+  let sco=cos(target.v,guess.v);
+  let lbl=sco>0.92?"Dead on":sco>0.82?"Very close":sco>0.68?"Close":"Nice try";
+  sx.fillText(lbl+' • same puzzle for everyone today • hoops.dumbmodel.com/play',36,156);
+  sx.strokeStyle='#EB6834';sx.lineWidth=3;sx.beginPath();
+  tT.forEach((pt,i)=>{let X=520+pt.x*560,Y=200+pt.y*340; if(i===0) sx.moveTo(X,Y); else sx.lineTo(X,Y)});sx.stroke();
+  sx.strokeStyle='#F0E442';sx.beginPath();
+  gT.forEach((pt,i)=>{let X=520+pt.x*560,Y=200+pt.y*340; if(i===0) sx.moveTo(X,Y); else sx.lineTo(X,Y)});sx.stroke();
+  tT.forEach(pt=>{let X=520+pt.x*560,Y=200+pt.y*340;sx.fillStyle='#EB6834';sx.beginPath();sx.arc(X,Y,3.5,0,6.283);sx.fill()});
+  gT.forEach(pt=>{let X=520+pt.x*560,Y=200+pt.y*340;sx.fillStyle='#F0E442';sx.beginPath();sx.arc(X,Y,3.5,0,6.283);sx.fill()});
+  sx.fillStyle='#EB6834';sx.font='28px ui-monospace';sx.fillText('◎',760,315);
+  sx.fillStyle='#9AA0A6';sx.font='13px ui-monospace';
+  let packParam=new URL(location.href).searchParams.get('pack');
+  let linkPack=packParam?('?pack='+packParam): (typeof seq!=='undefined' && seq && seq.length?('?pack='+seq.join('-')):'');
+  sx.fillText('hoops.dumbmodel.com/play'+linkPack+' • tap to play',36,604);
+  sc.setAttribute('aria-label','Share card. '+target.n+' to '+guess.n);
+  $('shareBtn').onclick=()=>openShare($('shareBtn'))}/* Matching used to be MODERN.find(includes) over 8 hardcoded names, and the
    miss message listed all of them. Both were fine at 8 and wrong at 1,305:
    "james" hit whoever appeared first, and a miss printed the entire pool.
    Rank exact, then prefix, then substring, and cap the suggestions. */
@@ -211,11 +225,42 @@ function guess(){let g=$('guess').value.trim().toLowerCase();if(!g||!cur)return;
       if(MODERN[oi].n.toLowerCase().indexOf(g)>=0){ seen[bn]=1; others.push(bn); }
     }
   }
-  $('dist').innerHTML='dist '+(1-cs).toFixed(2)+' · profile cos '+cs.toFixed(2)+' · <span class="chrome-caviar">'+cand.n+'</span> '+cand.tag+' • lock? '+(cs>0.88?'◎':'◐')
-    +(others.length?'<div class="sub" style="margin-top:4px;font-size:11.5px;opacity:.85">'+
-      hesc(g)+' also matches '+others.length+' other player'+(others.length===1?'':'s')+
-      ' — '+others.slice(0,3).map(hesc).join(' · ')+(others.length>3?' …':'')+
-      '. Type more of the name to pick one.</div>':'');log('guess → <b class="chrome-caviar">'+cand.n+'</b> cos '+cs.toFixed(2)+' '+(cs>0.88?'◎ LOCK':'◐')+' • row '+cand.i+'');if(cs>0.76){vhAnimating=true;animateCareer(cand,cur).then(()=>{vhAnimating=false;log('<b>Trajectory done</b> '+cur.n+' → <b>'+cand.n+'</b> • confetti ★ 12 • <span class="chrome-caviar">karaoke-grade 1.24s</span> • glass-click → robust');idx++;updateWW(false,true)});}else{let pb=$('play-a-101');pb.classList.add('spike');setTimeout(()=>pb.classList.remove('spike'),520);pulseRing2();drawBase(cur)} $('guess').value=''}function renderWW(ww){ww=ww||JSON.parse(localStorage.getItem('vh_weekStreak')||'{"days":[],"streak":0}');let c=$('ww');if(!c)return;c.innerHTML='';let dots='';for(let i=0;i<7;i++){dots+='<span class="dotw '+(i<(ww.days?.length||0)?'on'+((ww.days.length>=7)?' war':''):'')+'"></span>'}c.innerHTML='<span class="mono">Week Warrior • 7-dot • </span>'+dots+'<span class="mono" style="margin-left:6px">'+(ww.streak||0)+' streak • '+(ww.days?.length||0)+'/7</span>'}function updateWW(fin,hit){let key='vh_weekStreak';let ww=null;try{ww=JSON.parse(localStorage.getItem(key)||'{"days":[],"streak":0}')}catch(e){ww={days:[],streak:0}}let today=new Date().toISOString().slice(0,10);
+  let lbl=cs>0.88?'Dead on':cs>0.78?'Very close':cs>0.66?'Getting close':cs>0.5?'Not bad':'Try another';
+  $('dist').innerHTML='<b>'+cand.n+'</b> • '+lbl+' ('+(cs*100|0)+'%)'+(cs>0.7?' ◎':"");
+  if(others.length){
+    $('dist').innerHTML+='<div class="sub" style="margin-top:4px">Also matches '+others.slice(0,3).join(' · ')+(others.length>3?' …':'')+' — type more to pick</div>';
+  }
+  log('→ <b>'+cand.n+'</b> • '+lbl);
+  let lockTh=0.68;
+  if(cs>lockTh){vhAnimating=true;animateCareer(cand,cur).then(()=>{vhAnimating=false;log('Locked! '+cur.n+' → <b>'+cand.n+'</b> ★');idx++;updateWW(false,true);});}else{let pb=$('play-a-101');pb.classList.add('spike');setTimeout(()=>pb.classList.remove('spike'),520);pulseRing2();drawBase(cur)} $('guess').value=''}
+function bestModernForCur(){
+  if(!cur || !MODERN || !MODERN.length) return null;
+  let best=null,bestS=-1;
+  for(let i=0;i<MODERN.length;i++){ let s=cos(cur.v, MODERN[i].v); if(s>bestS){bestS=s; best=MODERN[i];}}
+  return {p:best, s:bestS};
+}
+(function(){
+  let hb=$('hintBtn'); if(!hb) return;
+  hb.addEventListener('click', ()=>{
+    let bm=bestModernForCur();
+    if(!bm || !bm.p){ $('dist').innerHTML='Hint: type a name — the map dots are all guessable'; return;}
+    let nm=bm.p.n||''; 
+    let last=nm.split(' ').slice(-1)[0]||nm;
+    let teamHint=(bm.p.tag?(' • '+bm.p.tag):'');
+    // progressive hints: first click shows initial, second shows team/tag, third shows first name
+    hb.dataset.clicks=(parseInt(hb.dataset.clicks||'0')+1).toString();
+    let c=parseInt(hb.dataset.clicks);
+    if(c===1){
+      $('dist').innerHTML='Hint: starts with <b>'+ (last[0]||'') +'</b> — '+MODERN.length+' modern seasons in pool';
+    }else if(c===2){
+      $('dist').innerHTML='Hint: <b>'+last[0]+'</b>… • closest is ~'+(bm.s*100|0)+'% similar'+teamHint;
+    }else{
+      $('dist').innerHTML='It\'s <b>'+nm+'</b> ('+(bm.s*100|0)+'%) — try locking it in';
+    }
+  });
+})();
+
+function renderWW(ww){ww=ww||JSON.parse(localStorage.getItem('vh_weekStreak')||'{"days":[],"streak":0}');let c=$('ww');if(!c)return;c.innerHTML='';let dots='';for(let i=0;i<7;i++){dots+='<span class="dotw '+(i<(ww.days?.length||0)?'on'+((ww.days.length>=7)?' war':''):'')+'"></span>'}c.innerHTML='<span class="mono">Streak </span>'+dots+'<span class="mono" style="margin-left:6px">'+(ww.streak||0)+' days • '+(ww.days?.length||0)+'/7</span>'}function updateWW(fin,hit){let key='vh_weekStreak';let ww=null;try{ww=JSON.parse(localStorage.getItem(key)||'{"days":[],"streak":0}')}catch(e){ww={days:[],streak:0}}let today=new Date().toISOString().slice(0,10);
   if(hit&&!ww.days.includes(today)){
     /* A streak that survives a gap is not a streak. This used to be
        ww.streak=(ww.streak||0)+1 with no check on when the last day was, so it
@@ -240,10 +285,33 @@ function shareFocusable(){return [].slice.call($('sharePop').querySelectorAll(
   'button,[href],input,select,textarea,[tabindex]:not([tabindex="-1"])'))
   .filter(function(e){return e.offsetParent!==null;});}
 var shareOpener=null;
-function openShare(t){var pop=$('sharePop');
+function openShare(t){
+  // one-click share text
+  try{
+    let curP=(typeof cur!=='undefined' && cur)?cur:{n:''};
+    let last=window.__vhLastGuess||{n:''};
+    let txt='';
+    if(curP.n && last.n){
+      let sc=(curP.v&&last.v)?cos(curP.v,last.v):0;
+      let pct=sc?(' '+((sc*100|0))+'%'):'';
+      txt='I matched '+curP.n+' → '+last.n+pct+' — Past → Modern daily on hoops.dumbmodel.com/play';
+    }else{
+      txt='Past → Modern daily — hoops.dumbmodel.com/play';
+    }
+    if(navigator.share){
+      navigator.share({title:'DUMB MODEL — Past→Modern', text:txt, url:location.href}).catch(()=>{});
+    }
+    if(navigator.clipboard){
+      navigator.clipboard.writeText(txt+' '+location.href).then(()=>{
+        let s=$('shareStat'); if(s){ s.textContent='Link copied'; setTimeout(()=>{s.textContent='';},1800);}
+      }).catch(()=>{});
+    }
+  }catch(e){}
+  var pop=$('sharePop');
   shareOpener=t||document.activeElement;
-  pop.classList.add('on');
-  var f=shareFocusable();if(f.length)f[0].focus();}
+  if(pop) pop.classList.add('on');
+  var f=shareFocusable();if(f.length)f[0].focus();
+}
 function shutShare(){var pop=$('sharePop');
   if(!pop.classList.contains('on'))return;
   pop.classList.remove('on');
@@ -262,7 +330,27 @@ document.addEventListener('keydown',function(e){
   else if(e.shiftKey&&a===first){e.preventDefault();last.focus();}
   else if(!e.shiftKey&&a===last){e.preventDefault();first.focus();}
 });
-$('btnShareCard')?.addEventListener('click',function(){openShare(this)});$('closeShare')?.addEventListener('click',shutShare);$('sharePop')?.addEventListener('click',e=>{if(e.target.id==='sharePop')shutShare()});(function init(){resizeCanvas();window.addEventListener('resize',resizeCanvas);renderWW();fillGuessList();installMapPicker();let pp=parsePack();if(pp){setSeq(pp);$('packIn').value=pp.join('-')}else{let s=((hStr(new Date().toISOString().slice(0,10))^DAILY)>>>0)%M;s=LCG(s);setSeq([POOL[s%POOL.length].i])}/* ── swap the placeholder pool for the real one ──────────────────────────
+$('btnShareCard')?.addEventListener('click',function(){openShare(this)});
+$('dlShare')?.addEventListener('click',()=>{
+  let sc=$('shareCard'); if(!sc) return; 
+  try{
+    let url=sc.toDataURL('image/png');
+    let a=document.createElement('a'); a.href=url; a.download='past-modern-'+(new Date().toISOString().slice(0,10))+'.png'; a.click();
+    let s=$('shareStat'); if(s){ s.textContent='Image saved'; setTimeout(()=>s.textContent='',1700);}
+  }catch(e){}
+});$('closeShare')?.addEventListener('click',shutShare);$('sharePop')?.addEventListener('click',e=>{if(e.target.id==='sharePop')shutShare()});(function init(){resizeCanvas();window.addEventListener('resize',resizeCanvas);renderWW();fillGuessList();installMapPicker();
+(function(){try{
+  let seen=localStorage.getItem('vh_seen_onboard');
+  if(!seen){
+    setTimeout(()=>{
+      let d=$('dist'); if(d) d.innerHTML='Welcome — one past player, guess the modern twin. Tap a dot or type a name, then Guess.';
+      let g=$('guess'); if(g) g.focus();
+    },400);
+    localStorage.setItem('vh_seen_onboard','1');
+  }
+}catch(e){}
+})();
+let pp=parsePack();if(pp){setSeq(pp);$('packIn').value=pp.join('-')}else{let s=((hStr(new Date().toISOString().slice(0,10))^DAILY)>>>0)%M;s=LCG(s);setSeq([POOL[s%POOL.length].i])}/* ── swap the placeholder pool for the real one ──────────────────────────
    POOL and MODERN above are const, so they are emptied and refilled rather
    than reassigned. assets/game_vectors.json carries the frozen 14-d game
    contract for 968 All-Star/All-NBA past seasons and 1,305 modern ones, built
