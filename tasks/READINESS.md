@@ -1,14 +1,14 @@
 # frontend-live — readiness
 
-**Nothing here is live.** All 129 commits are on `frontend-live`; `master` is untouched, and
+**Nothing here is live.** All 134 commits are on `frontend-live`; `master` is untouched, and
 pushing `master` is what deploys the site. Suite green at the time of writing.
 
 | | |
 |---|---|
-| commits ahead of master | 129 |
+| commits ahead of master | 134 |
 | paths changed | 2,628 (2,546 under `public/`, 30 scripts) |
-| insertions / deletions | +199,624 / −310,403 |
-| working notes | `tasks/frontend-live-buildout-2026-08-10.md`, 3,278 lines |
+| insertions / deletions | +199,932 / −310,409 |
+| working notes | `tasks/frontend-live-buildout-2026-08-10.md`, 3,513 lines |
 
 Deletions outweigh insertions because two duplications came out: an 84.8 MB orphan asset tree
 (187 files, zero references) and a byte-identical 913,467-byte JSON copy.
@@ -45,7 +45,20 @@ and a streak that survived a nine-day gap now resets.
 **Five values stated numbers with no source:** `/owner`'s nine `Math.random()` columns,
 `model.html`'s `EH 0.92`, `teams.html`'s ten hardcoded rows under the words "No fabrication", the
 share card's demo pack code, and the map's `pulp 0.7057` — which the site's own dictionary already
-listed as unverifiable.
+listed as unverifiable. A sixth candidate was cleared rather than removed: `/player`'s `1.28`, `0.62`
+and `0.81` looked fabricated because `0.62` sits below the floor of `closing_score`, but `closer` is
+a level of `matchup_grade`, not that field, and the grade → `matchup_factor` cross-tab maps all three
+exactly. The rule has to be able to clear a claim, not only condemn one.
+
+**Typography.** Nine pages were rendering body copy in Times New Roman. They declared
+`font-family:ui-sans-system`, which is not a CSS keyword — the real generic is `ui-sans-serif`, so
+the name matched no font and, with no fallback behind it, the paragraph fell to the browser default.
+Measured with `CSS.getPlatformFontsForNode`, not inferred. The four persona pages and their flat
+twins now carry the stack `hoops.css` already shipped, and the same misspelling was corrected on
+eight more pages where a `system-ui` fallback had been quietly covering for it. Five pages also
+carried `style="font-family:\"Architects Daughter\",cursive"` — a backslash escapes nothing inside an
+HTML attribute, so a real tokenizer read an invalid declaration plus two junk attributes and the
+handwriting font never applied. Every prose page now renders the sans it asks for.
 
 **Accessibility.** Skip links 6/22 → 22/22. Focus rings 6/22 → 22/22. Static failures 81 → 0.
 Contrast failures 12 → 0. Sorting the teams table from the keyboard no longer strands you at the top
@@ -56,7 +69,7 @@ from all 18 pages that carried it; Architects Daughter self-hosted (20,184 bytes
 dropping two third-party origins site-wide. Every page now carries Open Graph, Twitter and canonical
 metadata.
 
-## Eight decisions
+## Nine decisions
 
 | id | decision | why it is not mine |
 |---|---|---|
@@ -68,9 +81,26 @@ metadata.
 | P8.2 | hyphen fix belongs upstream | needs data regeneration, which I must not run |
 | P6.4 | the install prompt is inert | trigger it or remove it |
 | P9.5 | datalist dropdown behaviour | popup is browser chrome, unreachable from CDP |
+| P9.9 | the site says both 48-d and 64-d | which statements describe the shipped model and which describe an older one |
 
-Each was checked against `origin/master`: all eight pre-date this branch. The one collision this
+Each was checked against `origin/master`: all nine pre-date this branch. The one collision this
 branch created — two pages claiming `/player` — was found, fixed, and withdrawn from this list.
+
+**P9.9 in detail**, because it is the one with a wrong number in front of users. The shipped
+embedding is 64-d, verified from the bytes: `assets/mtnn_embeddings.f32` is 3,319,296 bytes =
+12,966 rows × 64 × 4, its sha256 matches the hash `eval_scoreboard.json` declares, and the model is
+named `…_d64_…`. That scoreboard's own `description` field nevertheless says "the shipped 48-d MTNN
+space" — it contradicts the `dim: 64` sitting four lines below it. The field never reaches the DOM,
+so no visitor sees it, but the site's prose says **48-d in 30 places and 64-d in 32**. It disagrees
+with itself roughly half and half.
+
+This is not a find-and-replace. Some of those thirty are correct as written: `methods.html`
+attributes one to `MT v3`, an older model, and `dictionary.html` explicitly describes "an older 48-d
+evaluation". Others plainly describe the current artifact — `methods.html` calls the live game's map
+"48-d". Fixing it needs each statement matched to the model version it describes, and where that
+version is genuinely unknown, guessing would fabricate a claim about a historical model in the act of
+correcting one about the current model. Regenerating the asset would settle the `description` string
+and is forbidden here.
 
 ## Not covered
 

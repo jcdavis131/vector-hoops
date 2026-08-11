@@ -3511,3 +3511,50 @@ echoed instead of enumerating the fields that could produce the number.** Checki
 one field and finding the value impossible feels like proof; it is proof only if
 that field is the right one. The discipline has to be able to clear a claim, not
 only condemn one, or it stops being a check and becomes a ratchet.
+
+
+## P9.9 — the site says both 48-d and 64-d (2026-08-10)
+
+Noticed in passing while reading `eval_scoreboard.json` for something else, and it
+would have dropped silently if it had not been written down.
+
+The file contradicts itself. Its `description` opens "Query the shipped **48-d**
+MTNN space", and four lines below, its own `embedding_asset` block says `dim: 64`.
+
+The bytes settle which is right:
+
+    assets/mtnn_embeddings.f32   3,319,296 bytes
+    12,966 rows x 64 dims x 4    3,319,296        exact
+    bytes / rows / 4             64.0000
+    model                        mtnn_v5_concat_b2_h160_t32_d64_mlp128_fus256
+    sha256 on disk == sha256 declared in the scoreboard
+
+**The shipped space is 64-d.** The `description` string is stale prose inside an
+otherwise accurate file.
+
+That string never reaches the DOM — no page reads `.description`, so no visitor
+sees it. The prose does, and the prose is split:
+
+    "48-d"  30 occurrences
+    "64-d"  32 occurrences
+
+The site disagrees with itself about its own model, roughly half and half, and it
+is already half-aware of it: `trends.html` carries the comment *"The method string
+says 48-d. eval_scoreboard.json says the shipped…"* and `dictionary.html` warns a
+figure "may come from an older 48-d evaluation."
+
+### Why this is not a find-and-replace
+
+Some of the thirty are correct. `methods.html` attributes one to **MT v3**, an
+older model; `dictionary.html` describes "an older 48-d evaluation" deliberately.
+Others plainly describe the current artifact — `methods.html` calls the live game's
+map "48-d", and the game runs on the shipped 64-d space.
+
+So each of the thirty has to be matched to the model version it describes.
+**Where that version is genuinely unknown, guessing fabricates a claim about a
+historical model in the act of correcting one about the current model** — which is
+the same rule this branch has enforced five times, pointed the other way.
+Regenerating the asset would fix the `description` string and is forbidden here.
+
+Filed as P9.9 rather than fixed, with the byte-level evidence above so the next
+pass starts from a settled fact rather than re-deriving it.
