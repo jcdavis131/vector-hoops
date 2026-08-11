@@ -3,7 +3,7 @@
 The page says "CORE13 cached exactly", lists thirteen paths, and stamps "PWA v67"
 in eight places. sw.js caches three:
 
-    const C = 'hoops-v7-2';
+    const C = 'hoops-v7-3';
     const SHELL = ['/', '/offline', '/manifest.json'];
 
 This is my fault, not inherited. sw.js used to list four entries, and
@@ -38,7 +38,7 @@ EDITS: list[tuple[str, str]] = [
      "shell-only cache • 3 entries"),
 
     ("offline • cached core 13 assets DENY7 • shell-only no JSON cached • PWA v67",
-     "offline • shell-only • 3 entries cached • no JSON cached • cache hoops-v7-2"),
+     "offline • shell-only • 3 entries cached • no JSON cached • cache hoops-v7-3"),
 
     ("Offline shell v67 dark void #080A0F card says offline. CORE13 cached, no JSON cached (shell-only 13k).",
      "You are offline. sw.js caches three entries and no JSON at all, so the map, "
@@ -48,7 +48,7 @@ EDITS: list[tuple[str, str]] = [
      "<div class=\"mono\">What is actually cached</div>"),
 
     ("13 assets exactly — verified via sw CORE list v67",
-     "Three entries — read from sw.js SHELL, cache name hoops-v7-2"),
+     "Three entries — read from sw.js SHELL, cache name hoops-v7-3"),
 
     ("status: offline — dark card #080A0F shell 13k v67",
      "status: offline — shell-only, 3 entries cached"),

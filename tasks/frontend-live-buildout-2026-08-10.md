@@ -3558,3 +3558,102 @@ Regenerating the asset would fix the `description` string and is forbidden here.
 
 Filed as P9.9 rather than fixed, with the byte-level evidence above so the next
 pass starts from a settled fact rather than re-deriving it.
+
+
+## P9.9 was 30 wrong numbers. Four of them were reachable (2026-08-10)
+
+Filed last pass as "the site says both 48-d and 64-d, 30 occurrences, needs
+operator judgement." Enumerating all thirty with context changed the size of it
+completely.
+
+**Eight of the ten modules containing "48-d" are loaded by no page at all.**
+
+    mtnn-full.js           *** NO PAGE LOADS IT ***
+    past-modern-game.js    *** NO PAGE LOADS IT ***
+    skill-tower-viz.js     *** NO PAGE LOADS IT ***
+    viral-share.js         *** NO PAGE LOADS IT ***
+    network-viz.js         *** NO PAGE LOADS IT ***
+    mtnn-worker.js         *** NO PAGE LOADS IT ***
+    game.js                only via past-modern-game.js  -> dead
+    insight-engine.js      only via game.js              -> dead
+    error-boundary.js      22 pages
+    archetype-bridge.js    players.html
+
+That is P6.1's 746 KB of unloaded modules, and correcting prose inside files that
+may simply be deleted is work with a negative expected value. So the thirty split
+into four reachable statements, a large dead-code remainder, and a handful that
+are **correct as written** — `methods.html` attributes one to `MT v3` and
+`dictionary.html` describes "an older 48-d evaluation" on purpose.
+
+### The four, each measured before touching
+
+    inventory.html            "MTNN 48-d leakfree recall@10 0.977 composite 0.7937"
+    methods.html              "hold Past->Modern twin in 48-d map 6+ guesses"
+    archetype-bridge.js       title:'mtnn_meta centroid 48-d mean'
+    error-boundary.js         '48-d MTNN 2.5MB embeddings took too long.'
+
+`mtnn_meta.json` reports `dim: 64`, `rows: 12966`, model `mtnn_v5_…_d64_…`, and
+its `centroids` are **8 vectors of length 64** — which is what settles the
+archetype-bridge line specifically, since that one is about centroids rather than
+the embedding. `eval_scoreboard_v6.json`'s `baseline_v5_metrics` block agrees:
+`dim: 64`, and it also contains the other two figures on the inventory line —
+`leak_free_player_split_recall_at_10: 0.977` and `composite: 0.7937`, both exact.
+**Only the dimension on that line was wrong.** The error-boundary size claim was
+wrong too: `mtnn_embeddings.f32` is 3,319,296 bytes = 3.17 MB, not 2.5 MB.
+
+Stated plainly because it limits the claim: **the error-boundary string is not
+reachable today.** It fires on `vh:mtnn-failed`, which only `mtnn.js` and
+`insight-engine.js` dispatch, and no page loads either — so `window.VHMtnn` never
+exists. Fixed for correctness, not because a visitor was seeing it.
+
+### What was checked and found *not* broken
+
+A wrong dimension in *code* would be far worse than in prose — striding 48 floats
+through a 64-float row misaligns every vector. Searched for it:
+
+    insight-engine.js   DIM:48   <- declared once, read nowhere, dead field
+    mtnn.js             dim = meta.dim || 64, rows = meta.rows || 12966
+                        throw new Error('emb len mismatch '+E.length+' vs '+rows*dim)
+
+`mtnn.js` derives the dimension from metadata, defaults correctly, and asserts the
+buffer length. The one hardcoded `48` in the codebase is a dead property. **No
+striding bug.** Also cleared: `inventory.html`'s `recall@10 0.977` looked like a
+sixth unsourced value against `mtnn_meta.json`'s `test_recall_at_10 = 0.846`, but
+those are different protocols — transductive versus leak-free player split — and
+0.977 is measured under the second.
+
+## The cache name the page announced and the worker did not use
+
+Two asset files changed, so `stamp_assets.py` re-hashed `?v=` tokens on 21 pages,
+and the standing rule bumps the worker with them: `hoops-v7-2` → `hoops-v7-3`.
+Nothing here caches JS — the shell is three entries and fetch is network-first —
+but `/` **is** in the shell, and a cached `/` keeps pointing at the old tokens.
+
+`offline.html` prints the cache name to the visitor, twice. The bump left it
+announcing `hoops-v7-2` while the worker used `hoops-v7-3`.
+
+`scripts/fix_offline_claims.py` exists precisely to keep that page honest, it has
+a `--check` mode, and it **passed**:
+
+    0 claim(s) to correct, 11 already correct, 0 not found
+
+because it compares the page against the literal string `hoops-v7-2` baked into
+its own source. It was asserting a frozen constant, not an invariant — the same
+shape as the audit reverted in `5d7ec48b`, and it would have shipped a page that
+lies about the worker.
+
+Replaced with a derived check. `check_frontend.py` now reads `const C` out of
+`sw.js` and requires every page mentioning a `hoops-v…` name to match it.
+**Demonstrated failing before it was made to pass**, on the real drift:
+
+    RC=1
+    FAIL — 1 problem(s):
+      - offline.html shows cache name 'hoops-v7-2' but sw.js uses 'hoops-v7-3'
+        — a visitor reading the page is told the wrong cache
+
+then green on both roots after the page was corrected. Eleven checks now.
+
+One bug of my own, caught before commit: the check first printed "1 page mention
+agree" while failing, because the counter incremented on every mention including
+the mismatched one. A gate that miscounts its own evidence is halfway back to the
+problem it was written for.

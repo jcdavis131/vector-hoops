@@ -101,7 +101,7 @@ document.getElementById('resetBtn').onclick=()=>{if(confirm('Reset hub-streak & 
 document.getElementById('shareBtn').onclick=async()=>{let ww=getStreak();let best=getBest();let days=ww.days.length;let streak=ww.streak||0;let txt='Week Warrior '+days+'/7 • streak '+streak+' • best '+best+' • Vector Hoops Past→Modern twin cos>0.92 • '+location.origin+'/play.html';if(navigator.share){try{await navigator.share({title:'Week Warrior '+streak+'🔥 best '+best,text:txt,url:location.origin+'/leaderboard.html'});return}catch(e){}}try{await navigator.clipboard.writeText(txt);alert('Copied streak — paste anywhere: '+txt.slice(0,140));}catch(e){prompt('Copy streak:',txt)}};
 if('serviceWorker' in navigator){try{navigator.serviceWorker.register('/sw.js')}catch(e){}}
 </script>
-<script src="assets/error-boundary.js?v=daeb2be4"></script>
+<script src="assets/error-boundary.js?v=fd910453"></script>
 <script src="assets/keyboard-a11y.js?v=d840cbf5"></script>
 <script src="assets/pwa-install.js?v=3c377447"></script>
 </body>

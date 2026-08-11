@@ -124,7 +124,7 @@
     containerEl.innerHTML='';
     containerEl.style.cssText='display:flex;flex-wrap:wrap;gap:6px';
     [
-      {label:`Global: ${assign.mtnnGlobalName}`, color:PAL[assign.mtnnGlobal%PAL.length], title:'mtnn_meta centroid 48-d mean'},
+      {label:`Global: ${assign.mtnnGlobalName}`, color:PAL[assign.mtnnGlobal%PAL.length], title:'mtnn_meta centroid 64-d mean'},
       {label:`Game: ${assign.gameClusterName}`, color:'#1A150F'},
       {label:`Era ${assign.era}: ${assign.eraNativeName}`, color:'#6B6256'},
       ...(assign.eraTags||[]).map(t=>({label:t, color:'#0072B2'}))

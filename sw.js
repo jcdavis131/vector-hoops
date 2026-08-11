@@ -1,4 +1,4 @@
-/* Shell-only, no JSON cached — v7.2
+/* Shell-only, no JSON cached — v7.3
 
    v7.1 never installed. Its SHELL was ['/','/index.html','/offline.html',
    '/manifest.json'] and cache.addAll() is atomic: one bad entry rejects the
@@ -15,8 +15,13 @@
    Two fixes. The paths are the ones the site actually serves — no .html, so
    nothing redirects. And each entry is added individually with its own catch,
    so a single missing file degrades the shell instead of destroying the
-   worker. Cache name bumped, which makes activate purge the v7.1 cache. */
-const C = 'hoops-v7-2';
+   worker. Cache name bumped, which makes activate purge the v7.1 cache.
+
+   v7.3: two asset files changed and stamp_assets.py re-hashed the ?v= tokens on
+   21 pages. Nothing here caches JS — the shell is three entries and fetch is
+   network-first — but '/' IS in the shell, and a cached '/' would keep pointing
+   at the previous tokens. Bumping C makes activate purge it. */
+const C = 'hoops-v7-3';
 const SHELL = ['/', '/offline', '/manifest.json'];
 
 self.addEventListener('install', e => {

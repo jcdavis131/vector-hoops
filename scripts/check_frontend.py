@@ -402,10 +402,45 @@ def check_tokens(fail) -> None:
         print(f"  {first.removeprefix('OK').strip()}")
 
 
+def check_worker(fail) -> None:
+    """offline.html tells the visitor which cache the worker uses, and that name
+    was a literal in the page and a separate literal in sw.js with nothing tying
+    them together.
+
+    Bumping the worker to v7.3 left the page announcing v7.2. The one-shot script
+    that owns those sentences has a --check mode and it passed anyway, because it
+    compares the page against a frozen string rather than against the worker's
+    actual name — a check that cannot fail. This one derives the expected value
+    from sw.js, so the next bump either updates the page or goes red.
+    """
+    sw = ROOT / "sw.js"
+    if not sw.exists():
+        print("  SKIP  sw.js not present")
+        return
+    m = re.search(r"""const\s+C\s*=\s*['"]([^'"]+)['"]""", sw.read_text(encoding="utf-8"))
+    if not m:
+        fail("sw.js has no `const C = '…'` cache name for the pages to agree with")
+        return
+    name = m.group(1)
+    agree = 0
+    for p in pages():
+        text = without_comments(p.read_text(encoding="utf-8", errors="replace"))
+        for hit in sorted(set(re.findall(r"hoops-v[\w.-]+", text))):
+            if hit == name:
+                agree += 1
+            else:
+                fail(
+                    f"{p.name} shows cache name {hit!r} but sw.js uses {name!r} — "
+                    f"a visitor reading the page is told the wrong cache"
+                )
+    print(f"  {agree} page mention(s) of the worker cache agree with sw.js ({name})")
+
+
 CHECKS = {
     "syntax": check_syntax,
     "mirror": check_mirror,
     "tokens": check_tokens,
+    "worker": check_worker,
     "targets": check_targets,
     "assets": check_assets,
     "ids": check_ids,
