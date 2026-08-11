@@ -21,7 +21,7 @@
 .site-nav .links a:hover{color:var(--ink);border-color:var(--ink);background:var(--paper)}
 .site-nav .links .cta{background:var(--ink);color:#fff;border-color:var(--ink);box-shadow:var(--shadow-sm)}
 .wrap{max-width:1120px;margin:0 auto;padding:14px clamp(12px,3vw,18px)}
-.eyebrow{font-family:var(--mono);font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--ink-muted);margin:0}
+.eyebrow{font-family:var(--mono);font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:#6F6D68;margin:0}
 .hero-band{width:100%;background:linear-gradient(180deg,var(--surface),var(--paper));border-bottom:2px solid var(--ink);position:relative;overflow:hidden}
 .hero-band::before{content:"";position:absolute;inset:0;background-image:radial-gradient(circle at 18% 28%,rgba(235,104,52,.08),transparent 45%),repeating-linear-gradient(-12deg,transparent,transparent 28px,rgba(17,17,17,.02) 28px,rgba(17,17,17,.02) 29px);pointer-events:none}
 .hero{position:relative;z-index:1;display:flex;flex-wrap:wrap;gap:18px;align-items:center;padding:22px clamp(12px,3vw,22px);max-width:1120px;margin:0 auto}
@@ -108,7 +108,7 @@ window.__vhReduceMotion = !!(window.matchMedia && window.matchMedia('(prefers-re
 
 </div>
 <div class="card" style="margin-top:12px;padding:11px 13px"><h2 class="vh-sr">Why San Antonio rates above Oklahoma City</h2><div class="hd" style="font-size:12px">Why SAS 94.8 > OKC 85.8 with 22W gap? — glass-box</div><p class="mono" style="color:#57534E;font-size:11.6px">W=24-25 reg wins. PO=25-26 playoff wins: NYK16 SAS12 CLE8 OKC8 sim end. realG=playoff GP. W*=W+2.5·PO+0.12·realG → SAS 34+30+~16.8 raw + prior weighted chapters → 94.8 ex FOR 25-26; OKC 68+20+?=85.8. Championship trumps. Cap% normalized effective_cap 2016=prior*1.10 removes $24B TV jump 34.5%. Trophy wall $9.1B top. <span class="pill mono" style="font-size:10px">FOR 50=median</span> <span class="pill mono ink" style="font-size:10px">2nd Apron $207.8M</span> <span class="pill y mono" style="font-size:10px">NO-MLE</span></p></div>
-<div class="mono" style="margin-top:10px;color:var(--ink-muted);font-size:10.5px">Zero-deps inline CSS/JS · paper #FAFAF8 · ink #111111 · orange #EB6834 pulse · theme #fafaf8 · manifest data URI · fonts Architects Daughter</div>
+<div class="mono" style="margin-top:10px;color:#6F6D68;font-size:10.5px">Zero-deps inline CSS/JS · paper #FAFAF8 · ink #111111 · orange #EB6834 pulse · theme #fafaf8 · manifest data URI · fonts Architects Daughter</div>
 </div>
 <script>
 (()=>{let c=document.getElementById('mapCv');if(!c)return;let x=c.getContext('2d'),t=0;function f(){t+=.016;x.fillStyle='#0A0C10';x.fillRect(0,0,460,120);for(let i=0;i<3;i++){let r=14+i*20+Math.sin(t*2+i)*5;x.strokeStyle='#EB6834';x.globalAlpha=.9-i*.22;x.lineWidth=1.6;x.beginPath();x.arc(230+Math.cos(t*.6+i)*18,60+Math.sin(t*.5+i*1.1)*9,r,0,6.283);x.stroke()}x.globalAlpha=1;x.fillStyle='#F0E442';x.beginPath();x.arc(230,60,3,0,6.283);x.fill();x.fillStyle='#FAFAF8';x.font='900 12px ui-monospace';x.fillText('◎ SAS 94.8 > OKC 85.8 · #EB6834',12,18);if(!window.__vhReduceMotion)requestAnimationFrame(f)}f()})();
@@ -136,9 +136,16 @@ window.__vhReduceMotion = !!(window.matchMedia && window.matchMedia('(prefers-re
 #foMethod,.fo-method{font-size:12px;line-height:1.6;color:#57534E;background:#f4f3ee;border:1.5px dashed var(--ink);border-radius:9px;padding:10px 12px;margin-top:10px;white-space:pre-wrap}
 .mv-row{display:grid;grid-template-columns:1fr 74px 52px;gap:8px;align-items:baseline;padding:3px 0;border-bottom:1px solid #EEE8DA;font-family:var(--mono);font-size:11px}
 .mv-name{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.mv-move{color:var(--ink-muted);white-space:nowrap}
+.mv-move{color:#6F6D68;white-space:nowrap}
 .mv-score{text-align:right;font-weight:900;font-variant-numeric:tabular-nums}
-.mv-score.up{color:#009E73}.mv-score.down{color:#D8452A}
+.mv-score.up{color:#008460}.mv-score.down{color:#D33F24}
+/* the archetype key and the dark pills sit on near-black: the light-ground inks
+   above must not reach them */
+#plKey span,#plKey .n{color:#FAFAF8}
+span.pill.mono.ink,.pill.ink{color:#C9C6C0}
+/* a rule in a later <style> block was still winning on this one */
+span.proj{color:var(--orange-ink)}
+
 .ch-row{display:grid;grid-template-columns:1fr 96px 60px;gap:8px;align-items:baseline;padding:3px 0;border-bottom:1px solid #EEE8DA;font-family:var(--mono);font-size:11px}
 .ch-score{text-align:right;font-weight:900;font-variant-numeric:tabular-nums}
 .fo-sr{position:absolute;width:1px;height:1px;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap}
@@ -167,13 +174,24 @@ window.__vhReduceMotion = !!(window.matchMedia && window.matchMedia('(prefers-re
 .fo-ring{color:var(--orange-ink)}
 .proj{color:var(--orange-ink)}
 .mv-score.up{color:var(--green-ink)}
+
+/* #F0E442 is a bright yellow: an ink solved for white reads 3.64:1 on it, and the
+   white-on-yellow badge read 1.27:1. Keyed off the class that puts the yellow
+   there, so this cannot reach another ground. */
+span.pill.mono{color:#5A6476}
+.pill-y,.pill-y.mono,.pill-y.mono-sm,.pill.pill-y,.pill.pill-y.mono,.pill.pill-y.mono-sm,
+a.pill.pill-y,.pill.y,.pill.y.mono{color:#3A2E00}
+/* muted small print, on pages whose every ground is light */
+p.eyebrow,div.mono-sm,span.mono-sm,.pill.mono-sm,.mv-move,p.mono{color:#6F6D68}
+.mv-score.down{color:#D33F24}
+
 </style>
 <section id="foSec" aria-labelledby="foH" tabindex="-1">
   <div class="card">
     <h2 class="hd" id="foH" style="font-size:18px;margin:0 0 4px">All 30 teams</h2>
     <p class="mono" style="color:#57534E;font-size:11.6px;line-height:1.5;margin:0" id="foSub">Loading <code>assets/front_office_lite.json</code>…</p>
     <div id="foWrap"><table id="foTable"><caption class="fo-sr">Front-office rating for all 30 teams. Column headers sort; press Enter on a header to re-sort.</caption></table></div>
-    <p class="mono" style="font-size:10.5px;color:#878580;margin:8px 0 0" id="foProv"></p>
+    <p class="mono" style="font-size:10.5px;color:#6F6D68;margin:8px 0 0" id="foProv"></p>
     <p class="fo-method" style="margin-top:10px" id="foCaveat"></p>
     <details style="margin-top:10px"><summary class="mono" style="cursor:pointer;font-size:11px">Method, verbatim from the file</summary><div id="foMethod"></div></details>
   </div>
@@ -181,8 +199,8 @@ window.__vhReduceMotion = !!(window.matchMedia && window.matchMedia('(prefers-re
     <h2 class="hd" id="dlH" style="font-size:18px;margin:0 0 4px">Deadline moves that worked, and didn't</h2>
     <p class="mono" id="dlSub" style="color:#57534E;font-size:11.6px;line-height:1.5;margin:0">Loading <code>assets/deadline.json</code>…</p>
     <div class="grid" style="margin-top:10px">
-      <div><div class="mono" style="color:#009E73">▲ Thrived after the move</div><div id="dlUp"></div></div>
-      <div><div class="mono" style="color:#D8452A">▼ Cratered</div><div id="dlDown"></div></div>
+      <div><div class="mono" style="color:#008460">▲ Thrived after the move</div><div id="dlUp"></div></div>
+      <div><div class="mono" style="color:#D33F24">▼ Cratered</div><div id="dlDown"></div></div>
     </div>
     <details style="margin-top:10px"><summary class="mono" style="cursor:pointer;font-size:11px">Method, verbatim — including what it admits</summary><div id="dlMethod" class="fo-method"></div></details>
   </div>

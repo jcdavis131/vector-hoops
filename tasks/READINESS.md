@@ -159,6 +159,18 @@ Both now point at the pages the nav already uses for those words — `/play.html
 rather than at anchors minted to justify the links. A new `fragments` check makes every deep link
 land on something that exists; it was shown failing first.
 
+**75 to zero, and a gate that reads the browser.** Every painted text element on all 22 pages now
+clears WCAG AA — 75 → 67 → 49 → 31 → 6 → 2 → **0** — measured with its real backdrop composited
+through transparent ancestors. The method the failures taught: **scope to the container that
+guarantees the ground, never change a shared value.** Pills key off the class that puts the yellow
+there; the two dark containers are excluded explicitly; eighteen inline declarations were swapped only
+on pages with no dark ground, because an inline style beats every rule. Four of the findings were not
+colour problems at all: `opacity:.7` on already-muted text composites to 3.69:1; `#zooTable .proj`
+out-specified `span.proj` for three rounds; `#D64227` on white is **4.4989:1**, which rounds to "4.5"
+and fails; and one inline `color:#878580` no rule could reach. New
+`scripts/check_painted_contrast.py` is the browser half the static checker says it cannot do —
+**sixteen checks now** — with two mutations, two caught.
+
 **Text inks, and two attempts that traded one failure for another.** The brand colours were carrying
 text below AA on every page — `#EB6834` at 3.20:1, `#009E73` at 3.42:1, `#2A78D6` at 4.42:1. Three
 new tokens fix them: `--orange-ink #C84714`, `--blue-ink #2873CF`, `--green-ink #008460`. **New names,

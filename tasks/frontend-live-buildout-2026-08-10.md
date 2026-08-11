@@ -5805,3 +5805,50 @@ not another global swap.
 The 31 that are left are all muted greys and pill inks on light grounds, between
 3.42:1 and 4.49:1. None is invisible; each needs its container identified rather
 than its token changed.
+
+
+## 75 to zero, and a gate that reads the browser (2026-08-11)
+
+    75 → 67 → 49 → 31 → 6 → 2 → 0
+
+**Every painted text element on all 22 pages now clears WCAG AA**, measured with
+its real backdrop composited through however many transparent ancestors it has.
+
+The method that finally worked is the one the failures taught: **scope to the
+container that guarantees the ground, never change a shared value.**
+
+  pills      `.pill-y`, `.pill.y` — the class that puts `#F0E442` behind the text
+             is the class the rule keys off, so it cannot reach another ground
+  dark       `#plKey span`, `.pill.ink` — the two places a light ink is required,
+             excluded explicitly rather than by hoping
+  inline     eighteen inline `color:` declarations, each swapped only on pages
+             with no dark ground at all, because an inline style beats every rule
+
+### Four things that were not colour problems
+
+**`opacity:.7` on already-muted text.** `#6F6D68` at 70% over white composites to
+`#878580` — 3.69:1. The colour was fine; the alpha was not.
+
+**`#zooTable .proj`** beat `span.proj` on specificity, so the model page kept raw
+`#EB6834` on a cornsilk callout at 3:1 through three rounds of edits. Matching the
+id-scoped selector fixed it.
+
+**`4.4989:1`.** `#D64227` on white rounds to "4.5" and fails. `#D33F24`, 4.66:1.
+
+**An inline `color:#878580`** on the front-office provenance line, which no rule
+could ever have reached.
+
+### The gate
+
+`scripts/check_painted_contrast.py` is the browser half `check_contrast.py` says
+in its own docstring it cannot do. It loads each page, scrolls it so the lazy
+sections fill, composites each element's real backdrop and its foreground alpha,
+and applies WCAG 2.2 AA — 4.5:1, or 3:1 at 24px, or 18.66px when bold.
+
+Two mutations, two caught:
+
+    brand orange back to #EB6834   RC=1  3.2:1 on white, and 3.01:1 on #F8F8F8
+    yellow pill ink removed        RC=1  4.19:1 on #F0E442
+
+**Sixteen checks now**, and the one that matters most here is the only one that
+looks at what a visitor actually sees.

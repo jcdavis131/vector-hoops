@@ -24,6 +24,24 @@
 .fo-ring{color:var(--orange-ink)}
 .proj{color:var(--orange-ink)}
 .mv-score.up{color:var(--green-ink)}
+
+/* #F0E442 is a bright yellow: an ink solved for white reads 3.64:1 on it, and the
+   white-on-yellow badge read 1.27:1. Keyed off the class that puts the yellow
+   there, so this cannot reach another ground. */
+span.pill.mono{color:#5A6476}
+.pill-y,.pill-y.mono,.pill-y.mono-sm,.pill.pill-y,.pill.pill-y.mono,.pill.pill-y.mono-sm,
+a.pill.pill-y,.pill.y,.pill.y.mono{color:#3A2E00}
+/* muted small print, on pages whose every ground is light */
+p.eyebrow,div.mono-sm,span.mono-sm,.pill.mono-sm,.mv-move,p.mono{color:#6F6D68}
+.mv-score.down{color:#D33F24}
+/* the archetype key and the dark pills sit on near-black: the light-ground inks
+   above must not reach them */
+#plKey span,#plKey .n{color:#FAFAF8}
+span.pill.mono.ink,.pill.ink{color:#C9C6C0}
+/* a rule in a later <style> block was still winning on this one */
+span.proj{color:var(--orange-ink)}
+
+
 </style><!-- build_social_meta.py: start -->
 <link rel="canonical" href="https://hoops.dumbmodel.com/brand">
 <meta property="og:type" content="website">
@@ -43,7 +61,7 @@
 <main id="main" tabindex="-1"><h1 style="position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;border:0">Brand • Wins/</h1>
 <div class="card"><h2 class="vh-sr">Brand Lab — wins into sponsor ROI</h2><div class="mono">Brand Lab • Wins/$B • ValΔ% story → CMO deck</div><div class="mono" style="font-size:20px;margin:6px 0">Wins into sponsor ROI • $9.1B top • GSW 9.14B</div><div class="sub">Market lift vs cap, ValΔ% NYK16 SAS7 • Brand = wins→story / $B. <span style="font-family:'Architects Daughter',cursive">Who moves needle?</span></div><div style="margin-top:8px;display:flex;gap:8px"><span class="pill pill-y">CMO deck</span><span class="pill">Free</span><span class="pill">No account</span></div></div>
 </main>
-<footer style="max-width:980px;margin:0 auto;padding:8px 12px;display:flex;justify-content:space-between;font-family:var(--mono);font-size:11px;color:#777"><span>dumbmodel #fafaf8 • paper aesthetic • Architects Daughter</span><a class="pill" href="/">Home</a></footer>
+<footer style="max-width:980px;margin:0 auto;padding:8px 12px;display:flex;justify-content:space-between;font-family:var(--mono);font-size:11px;color:#717171"><span>dumbmodel #fafaf8 • paper aesthetic • Architects Daughter</span><a class="pill" href="/">Home</a></footer>
 <script src="/assets/error-boundary.js?v=b5444017"></script>
 <script src="/assets/keyboard-a11y.js?v=d840cbf5"></script>
 <script src="/assets/pwa-install.js?v=3c377447"></script>

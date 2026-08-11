@@ -41,6 +41,24 @@ html,body{margin:0; background:var(--paper); color:var(--ink); font-family: Inte
 .fo-ring{color:var(--orange-ink)}
 .proj{color:var(--orange-ink)}
 .mv-score.up{color:var(--green-ink)}
+
+/* #F0E442 is a bright yellow: an ink solved for white reads 3.64:1 on it, and the
+   white-on-yellow badge read 1.27:1. Keyed off the class that puts the yellow
+   there, so this cannot reach another ground. */
+span.pill.mono{color:#5A6476}
+.pill-y,.pill-y.mono,.pill-y.mono-sm,.pill.pill-y,.pill.pill-y.mono,.pill.pill-y.mono-sm,
+a.pill.pill-y,.pill.y,.pill.y.mono{color:#3A2E00}
+/* muted small print, on pages whose every ground is light */
+p.eyebrow,div.mono-sm,span.mono-sm,.pill.mono-sm,.mv-move,p.mono{color:#6F6D68}
+.mv-score.down{color:#D33F24}
+/* the archetype key and the dark pills sit on near-black: the light-ground inks
+   above must not reach them */
+#plKey span,#plKey .n{color:#FAFAF8}
+span.pill.mono.ink,.pill.ink{color:#C9C6C0}
+/* a rule in a later <style> block was still winning on this one */
+span.proj{color:var(--orange-ink)}
+
+
 </style>
 <script src="https://unpkg.com/posecode-embed@0.1.0/dist/posecode-embed.js"></script>
 <meta property="og:type" content="website">
