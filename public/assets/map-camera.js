@@ -124,8 +124,21 @@
 
     cam.deg = function () { return Math.round(((cam.yaw * 180 / Math.PI) % 360 + 360) % 360); };
 
+    /* Rotation happens about this point. It was the origin, and the data's
+       centroid is not there, so the cloud did not spin in place — it orbited.
+       Measured across a full turn on a 689px canvas, the centroid's horizontal
+       offset ran -1, +45, +69, +53, +2, -51, -69, -47: a 138px sinusoid, a
+       fifth of the canvas, swinging side to side forever. Reading it at one
+       angle just says "off centre" and misses that it is moving.
+
+       cam.fit fills this in from the data. Zero until then, so a page that
+       never fits behaves exactly as before. Hit testing calls proj too, so it
+       follows automatically. */
+    cam.ctr = [0, 0, 0];
+
     cam.proj = function (x, y, z) {
       var s = o.size(), W = s[0], H = s[1];
+      x -= cam.ctr[0]; y -= cam.ctr[1]; z -= cam.ctr[2];
       var ct = Math.cos(cam.yaw), st = Math.sin(cam.yaw);
       var cp = Math.cos(cam.pitch), sp = Math.sin(cam.pitch);
       var x1 = x * ct - z * st, z1 = x * st + z * ct;
@@ -227,6 +240,22 @@
          happened to start from. */
       var asc = function (a, b) { return a - b; };
       var q = function (a) { return a[Math.min(a.length - 1, Math.floor(a.length * 0.995))]; };
+
+      /* median per axis, not mean: a handful of far points drag a mean and the
+         cloud would orbit a place no player is. Set before the extents are
+         measured — they are measured through proj, which reads this. */
+      var cx = [], cy2 = [], cz = [];
+      for (var m = 0; m < pts.length; m++) {
+        var pm = pts[m];
+        if (!pm || typeof pm.x !== 'number' || typeof pm.y !== 'number') continue;
+        cx.push(pm.x); cy2.push(pm.y); cz.push(typeof pm.z === 'number' ? pm.z : 0);
+      }
+      if (cx.length >= 8) {
+        cx.sort(asc); cy2.sort(asc); cz.sort(asc);
+        var mid = function (a) { return a[a.length >> 1]; };
+        cam.ctr = [mid(cx), mid(cy2), mid(cz)];
+      }
+
       var yaw0 = cam.yaw, rx = 0, ry = 0, sampled = 0;
       var ANGLES = [0, Math.PI / 4, Math.PI / 2, 3 * Math.PI / 4];
       for (var a = 0; a < ANGLES.length; a++) {
@@ -255,7 +284,7 @@
          looks exactly like a perfectly framed one from the outside. */
       var z = cam.zoom || 1;
       var rx1 = rx / z, ry1 = ry / z;
-      var want = typeof frac === 'number' ? frac : 0.82;
+      var want = typeof frac === 'number' ? frac : 0.92;
       var hy = H * Math.min(cyFrac, 1 - cyFrac);
       var k = Math.min(rx1 >= 1 ? (W * 0.5 * want) / rx1 : 1e9,
                        ry1 >= 1 ? (hy * want) / ry1 : 1e9);
