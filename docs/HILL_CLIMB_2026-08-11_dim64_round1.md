@@ -76,3 +76,52 @@ modelling policy:
 `mask roster` was rejected for purity 0.7156 against a floor of 0.7158 — by
 0.0002, against a purity seed sd of 0.0042. That boundary is being adjudicated
 at a twentieth of the noise.
+
+
+## Paired by seed, the family result disappears
+
+Comparing means hides that seed variance is largely *shared*: a seed that draws
+badly draws badly for every configuration. Pairing each candidate against `full`
+on the same seed removes that shared term. Doing so to the same cache:
+
+    drop_playoffs    s7 -0.67   s13 +4.13   mixed
+    drop_honors      s7 -0.85   s13 +4.10   mixed
+    drop_roster      s7 -0.84   s13 +3.87   mixed
+    drop_market      s7 -1.11   s13 +3.92   mixed
+
+**Every family "win" is negative on seed 7 and strongly positive on seed 13.**
+The whole leaderboard was seed 13's bad draw for the unmasked configuration.
+Masking makes the model worse on the good seed. `same_sign()` — which requires
+every seed to agree — already exists in hill_climb.py and would have refused all
+of them; `passes_guards()` never calls it.
+
+Only three configurations gain on both seeds: `drop_efficiency`,
+`drop_competition`, and `fusion_concat_384_d64`.
+
+## Run-to-run noise, separate from seed noise
+
+`fusion_concat_256_d64` is `{"--dim": "64"}` over BASE_ARCH, which is exactly
+what `full` is under `--arch-dim 64`. Same configuration, same seed 7, same
+epochs:
+
+    full                   cqs 74.15   test recall 0.838
+    fusion_concat_256_d64  cqs 74.13   test recall 0.814
+
+So an identical run repeats to about 0.02 CQS and 0.024 recall. That is
+nondeterminism within a seed, on top of the dispersion between seeds, and it
+means cache rows written in different sessions are only loosely comparable.
+
+## The one result that survives pairing against a matched control
+
+Widening fusion-hidden from 256 to 384 at dim 64, each seed against the same
+seed of the 256 control rather than against `full`:
+
+    seed   cqs             purity                    test recall
+    s7     74.13 -> 74.45  0.7345 -> 0.7531 (+4.4sd) 0.814 -> 0.806
+    s13    72.07 -> 71.73  0.7396 -> 0.7641 (+5.8sd) 0.690 -> 0.632
+
+**Purity rises on both seeds by four to six sd of its own measured noise. CQS is
+a wash and recall falls.** It is a trade, not a free win — and it is the only
+trade in this cache whose better side is the metric that two seeds can actually
+resolve. Read against `full` instead of the matched control it looks like a
+strict improvement, which is how I first read it and is wrong.
