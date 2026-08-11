@@ -7263,3 +7263,45 @@ URL now carries `-text`.
 Still no `* text=auto` — that renormalises the repo in one commit and this
 checkout is shared. Still parked, still not a defect: 511,731 bytes across 37
 unloaded `assets/*.js`.
+
+
+## The integers had never been swept (2026-08-11)
+
+The decimal sweep two turns ago looked at `\d+\.\d{1,4}` only. **Comma-formatted
+integers were never checked** — and `13,625` on /player was exactly that shape,
+found by hand rather than by any sweep. 18 flagged across six pages, and every
+one resolves:
+
+    12,038   trends      sum of season_map.json's per-season counts, exactly
+    1,308    trends      trajectories.json indexes 1,308 careers; eratwins too
+    10,104   model       eval_scoreboard.json eligible_pairs
+    2,293    cards       knowledge/players holds exactly 2,293 .md files
+    ~13,000  dictionary  an explicit approximation of 12,966, marked with a tilde
+    1,130    model       ONNX shape notation [1,130] -> [1,64], not a count
+    20,719   index       12,966 + 5,323 + 2,430, checked last week
+    byte sizes on /inventory, which are file sizes and in no JSON
+
+Zero defects. What it did expose is **its own limit**: a count that is the
+*length of a collection* is never a literal in the file it comes from, so
+neither a substring sweep nor `cited` — which matches verbatim, as its own
+docstring says — can confirm it. Those four were verified by hand today and
+would have needed verifying by hand every time after.
+
+`counts` recomputes instead of matching. 4 of 4 agree. **20 checks now.**
+
+### The mutation I wrote first only reached half the check
+
+`counts` fails two ways, and changing the page only reaches one:
+
+    page drops the figure     caught
+    the FILE is regenerated   the branch the check exists for — and no
+                              page-only mutation can reach it
+
+So the second audit case moves one season's count *inside season_map.json* and
+expects the recomputation to disagree with the page. Caught: *"trends.html says
+12,038 sum of counts; recomputing it gives 12,039"*. The 415 KB file is restored
+byte-for-byte afterwards.
+
+`10,104` went into `CITED` first and failed — the page prints a comma, the file
+stores `10104`. That is precisely the verbatim limit CITED documents about
+itself, and the failure was the check being right about its own scope.
