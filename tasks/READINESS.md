@@ -1,16 +1,16 @@
 # frontend-live — readiness
 
-**Nothing here is live.** Everything below is measured at **`7db5119d`** — the sha is the anchor,
+**Nothing here is live.** Everything below is measured at **`63d1cc70`** — the sha is the anchor,
 because the commit that records a count is never inside the count it records. All of it is on
 `frontend-live`; `master` is untouched, and pushing `master` is what deploys the site. Suite green
 at that commit.
 
 | | |
 |---|---|
-| commits ahead of master | 205 at `7db5119d` |
+| commits ahead of master | 207 at `63d1cc70` |
 | paths changed | 2,642 (2,547 under `public/`, 41 scripts) |
-| insertions / deletions | +208,192 / −310,515 |
-| working notes | `tasks/frontend-live-buildout-2026-08-10.md`, 5,772 lines |
+| insertions / deletions | +209,115 / −310,510 |
+| working notes | `tasks/frontend-live-buildout-2026-08-10.md`, 5,809 lines |
 
 **Where to look at it.** The branch is pushed and Vercel builds every commit on it:
 
