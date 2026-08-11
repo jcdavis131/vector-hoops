@@ -124,7 +124,10 @@ def main() -> int:
     if args.mutate:
         for find, repl in MUTATIONS[args.mutate]:
             if find not in page:
-                sys.exit(f"mutation {args.mutate!r} no longer matches: {find!r}")
+                # exit 2, not 1: a mutation that never applied must not look
+                # like a mutation the assertions caught
+                print("MUTATION DID NOT APPLY — " + f"mutation {args.mutate!r} no longer matches: {find!r}")
+                raise SystemExit(2)
             page = page.replace(find, repl, 1)
     body = page.encode("utf-8")
     served = {"tensor_bytes": 0, "tensor_hits": 0}

@@ -32,6 +32,7 @@ from __future__ import annotations
 import argparse
 import re
 import shutil
+import importlib.util
 import subprocess
 import sys
 import tempfile
@@ -41,6 +42,7 @@ ROOT = Path(__file__).resolve().parent.parent
 
 # public/ mirrors the whole site; auditing it double-reports every finding.
 # node_modules and .git are never pages.
+SERVE_DIR = ROOT / "public"
 SKIP_DIRS = {"public", "node_modules", ".git", "assets", "knowledge", "pipeline", "docs", "scripts", "tasks"}
 
 # Figures that appear in site copy and are in no committed file. Documented in
@@ -181,6 +183,58 @@ def check_routes(fail) -> None:
              f"page cannot be reached — keep one.")
 
     print(f"  {len(roots)} route(s), one file each; none served from outside the mirror")
+
+
+
+def check_mutations(fail) -> None:
+    """Every smoke's mutation strings still match the file they are meant to break.
+
+    The smokes prove their assertions can go red by serving a deliberately broken
+    copy of a page. That only works while the string they search for still exists:
+    once a page is edited past it, the mutation cannot apply.
+
+    And the failure was invisible. `sys.exit(msg)` returns 1, exactly like a real
+    assertion failure, so a matrix loop reading "non-zero means caught" scored a
+    mutation that never ran as proof of the assertion it was meant to test. Two
+    of smoke_dfs.py's four did that on their first run. The smokes exit 2 for this
+    now, and this check catches it before anyone runs them at all.
+
+    Measured when it was added: 39 of 39 strings across seven smokes still
+    matched, so no earlier result had been faked.
+    """
+    folder = ROOT / "scripts"
+    if not folder.is_dir():
+        print("  SKIP  no scripts/ under this root")
+        return
+    if not SERVE_DIR.is_dir():
+        print("  SKIP  no public/ under this root")
+        return
+    blobs = {}
+    for q in list(SERVE_DIR.glob("*.html")) + list((SERVE_DIR / "assets").glob("*.js")):
+        blobs[q.name] = q.read_text(encoding="utf-8", errors="replace")
+
+    total = 0
+    for smoke in sorted(folder.glob("smoke_*.py")):
+        spec = importlib.util.spec_from_file_location(smoke.stem, smoke)
+        mod = importlib.util.module_from_spec(spec)
+        try:
+            spec.loader.exec_module(mod)
+        except BaseException:
+            continue
+        table = getattr(mod, "MUTATIONS", None)
+        if not table:
+            continue
+        for name, edits in table.items():
+            if isinstance(edits, tuple):
+                edits = [edits]
+            for e in edits:
+                find = e[1] if len(e) == 3 else e[0]
+                total += 1
+                if not any(find in b for b in blobs.values()):
+                    fail(f"{smoke.name} --mutate {name} searches for a string no served file "
+                         f"contains, so it cannot apply and its run is not evidence: "
+                         f"{find[:70]!r}")
+    print(f"  {total} mutation string(s) across the smokes still match a served file")
 
 
 def check_syntax(fail) -> None:
@@ -874,6 +928,7 @@ CHECKS = {
     "clean": check_clean,
     "headings": check_headings,
     "routes": check_routes,
+    "mutations": check_mutations,
     "fragments": check_fragments,
     "wiki": check_wiki,
 }

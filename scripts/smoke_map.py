@@ -182,7 +182,10 @@ def main() -> int:
     if args.mutate:
         where, find, repl = MUTATIONS[args.mutate]
         if find not in srcs[where]:
-            sys.exit(f"mutation {args.mutate!r} no longer matches the {where}: {find!r}")
+            # exit 2, not 1: a mutation that never applied must not look
+            # like a mutation the assertions caught
+            print("MUTATION DID NOT APPLY — " + f"mutation {args.mutate!r} no longer matches the {where}: {find!r}")
+            raise SystemExit(2)
         srcs[where] = srcs[where].replace(find, repl, 1)
     BODIES = {"page": (srcs["page"].encode("utf-8"), "text/html; charset=utf-8"),
               "camera": (srcs["camera"].encode("utf-8"), "text/javascript; charset=utf-8")}
