@@ -1,11 +1,11 @@
 # frontend-live — readiness
 
-**Nothing here is live.** All 136 commits are on `frontend-live`; `master` is untouched, and
+**Nothing here is live.** All 140 commits are on `frontend-live`; `master` is untouched, and
 pushing `master` is what deploys the site. Suite green at the time of writing.
 
 | | |
 |---|---|
-| commits ahead of master | 136 |
+| commits ahead of master | 140 |
 | paths changed | 2,628 (2,546 under `public/`, 30 scripts) |
 | insertions / deletions | +200,159 / −310,415 |
 | working notes | `tasks/frontend-live-buildout-2026-08-10.md`, 3,659 lines |
@@ -31,6 +31,7 @@ Run against both roots. All exit 0.
 
 ```
 python scripts/check_frontend.py            # 11 checks, 22 pages, 93 scripts parsed
+python scripts/build_model_zoo.py --check   # the model-zoo slice still matches its source
 python scripts/check_a11y.py                # 11 WCAG A/AA criteria
 python scripts/check_contrast.py            # WCAG 1.4.3
 python scripts/check_responsive.py
@@ -61,6 +62,28 @@ listed as unverifiable. A sixth candidate was cleared rather than removed: `/pla
 and `0.81` looked fabricated because `0.62` sits below the floor of `closing_score`, but `closer` is
 a level of `matchup_grade`, not that field, and the grade → `matchup_factor` cross-tab maps all three
 exactly. The rule has to be able to clear a claim, not only condemn one.
+
+**Speed, on the two pages the brief puts first.** Nothing here had ever been timed — every gate
+answers "is it correct", none answered "how long until you can use it". Measured over CDP with a
+cold cache and Fast 3G emulated (1.6 Mbit/s, 150 ms RTT):
+
+| | before | after | |
+|---|---|---|---|
+| `/play` — real pool loaded | 6,701 ms | **2,856 ms** | 2.35× |
+| `/model` — map has ink | 13,259 ms | **7,939 ms** | 1.67× |
+| `/model` — payload | 2,577.8 KB | **1,488.7 KB** | −42% |
+| `/model` — zoo table lands | 13,079 ms | **824 ms** | 16× |
+
+`/play` ended its script with `fetchTrajCache();fetchManifest();` — 2 MB of win-animation prefetch
+fired at the same millisecond as `game_vectors.json`, the 397.6 KB that decides when the game starts.
+Until it lands the page runs on an 8-name demo pool (disclosed on the page, and it refuses to swap
+mid-game). Deferring the prefetch behind the pool promise costs nothing: the win path already awaits
+it, and both fetches are memoised. Same bytes, better order.
+
+`/model` fetched all 1,127,784 bytes of `front_office.json` to read one 8,299-byte subtree —
+`model_eval.model_zoo`, 0.74% of the transfer, on a page that reads neither `teams` nor
+`teams_by_abbr` (79.4% of the file). `scripts/build_model_zoo.py` cuts that subtree into
+`assets/model_zoo.json` verbatim, with a `--check` mode that fails if it drifts from its source.
 
 **Typography.** Nine pages were rendering body copy in Times New Roman. They declared
 `font-family:ui-sans-system`, which is not a CSS keyword — the real generic is `ui-sans-serif`, so
