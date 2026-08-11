@@ -5151,3 +5151,61 @@ in it.
 measuring nothing** — the live-region read after a win, the counted announcement
 that matched a different announcer's sentence, and this. All three were found by
 changing the code under the check rather than by reading the check.
+
+
+## The page said there was no Curry (2026-08-11)
+
+Phase 2. `/trends` is the change-over-time research, and the section headed **"Who
+is the modern version of…?"** has the page's one text input. Typing `curry` into it:
+
+    No charted career by that name with at least four seasons.
+
+`assets/eratwins.json` holds **five**: Dell, Michael, Eddy, Stephen and Seth. The
+matcher was `k.indexOf(v)===0` — a prefix test against the **whole name** — so a
+surname could never match anything. A surname is how anybody types a basketball
+player, and telling someone a career is not charted when it is is worse than
+finding nothing.
+
+Exact first, then prefix, then anywhere in the name. One match resolves straight to
+the card; several are listed with the real count, and the list says **"…and N
+more"** rather than stopping silently at six.
+
+    'henderson' matches 3 → '3 charted careers match. Did you mean Alan Henderson…'
+    'mckie'                → the Aaron McKie card
+    'zzzznotaplayer'       → 'No charted career by that name…'
+
+### The same bug as /player-cards, one page over
+
+    $('twinInput').addEventListener('input',function(){ if(!TW) load(); else lookup(); });
+
+While the 632 KB is in flight, typing calls the loader and never the lookup — so
+`lookup()`'s own branch for exactly this case
+
+    if(!byName){ $('twinResult').innerHTML='<p class="sub dim">Still loading…</p>'; return; }
+
+**could not be reached by typing at all.** Measured on Fast 3G: the box was empty
+for **2,459 ms** and then answered. `load()` is memoised here — unlike
+player-cards, which fired six downloads — so the cost was silence, not bandwidth.
+
+    before   606 ms ''                3067 ms 'No charted career by that name…'
+    after    606 ms 'Still loading…'  3066 ms '5 charted careers match. Did you mean…'
+    requests 1, both times
+
+And the box had no `say()` of its own. The rotation chart announces; the archetype
+map announces; the answer the section is **named after** did not.
+
+### The announcement check that a stale announcement satisfied
+
+Two of six mutations were not caught at first, both announcement assertions, both
+because "the live region is not empty" is not the same as "this answer was
+announced" — `#live` still held `Still loading…` from a moment before.
+
+Tying them to the current answer caught one. The other still passed, and the reason
+is worth keeping: typing `mckie` passes through `mck`, whose **match list already
+names Aaron McKie**, so a check looking for that name in the live region was
+satisfied by an announcement three keystrokes old. The fix is mechanical rather
+than textual — **blank the live region immediately before the deciding
+keystroke**, so only that keystroke can fill it.
+
+Six for six after that. That makes **six** assertions this session that passed for
+a reason other than the one they named, and the live region is now three of them.

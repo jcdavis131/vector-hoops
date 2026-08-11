@@ -159,6 +159,19 @@ Both now point at the pages the nav already uses for those words — `/play.html
 rather than at anchors minted to justify the links. A new `fragments` check makes every deep link
 land on something that exists; it was shown failing first.
 
+**The page said there was no Curry.** Phase 2. `/trends` is the change-over-time research, and its
+one text input sits under **"Who is the modern version of…?"**. Typing `curry` returned *"No charted
+career by that name with at least four seasons"* — `eratwins.json` holds five. The matcher was a
+prefix test against the whole name, so a **surname could never match**. Now exact, then prefix, then
+anywhere in the name: one match opens the card, several are listed with the true count and an
+"…and N more" rather than a silent cap. The same box also carried the `/player-cards` bug one page
+over — typing during the 632 KB download called the loader and never the lookup, so the
+"Still loading…" branch was unreachable and the box sat **empty for 2,459 ms**; and the answer the
+section is named after was never announced, though the chart and the map beside it both are.
+Enforced by new `smoke_trends.py`, which derives its own queries from the loaded index rather than
+naming a player: **six mutations, six caught** — after two announcement assertions were found passing
+on a *stale* announcement, one of them from three keystrokes earlier.
+
 **201 links paid a redirect.** `vercel.json` sets `cleanUrls`, and sw.js's own header records the
 live-site measurement — `/index.html 308`. Every internal link ending in `.html` cost a round trip
 before the page started, and after the worker began filling its cache at runtime it cost more than

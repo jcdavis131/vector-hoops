@@ -463,6 +463,7 @@ var $=function(id){return document.getElementById(id);};
 var esc=function(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');};
 var n2=function(v){return (Math.round(v*100)/100).toFixed(2);};
 var TW=null, byName=null, loading=false;
+var say=function(m){var l=document.getElementById('live');if(!l||!m)return;if(l.textContent===m)l.textContent='';l.textContent=m;};
 
 function simBar(sim,label){
   var w=Math.max(2,Math.min(100,sim*100));
@@ -512,16 +513,42 @@ function render(){
 function lookup(){
   var v=($('twinInput').value||'').trim().toLowerCase();
   if(!v){ $('twinResult').innerHTML=''; return; }
-  if(!byName){ $('twinResult').innerHTML='<p class="sub dim">Still loading…</p>'; return; }
+  if(!byName){ $('twinResult').innerHTML='<p class="sub dim">Still loading…</p>'; say('Still loading the charted careers.'); return; }
   var hit=byName[v];
   if(!hit){
-    var near=Object.keys(byName).filter(function(k){return k.indexOf(v)===0;}).slice(0,6);
-    $('twinResult').innerHTML=near.length
-      ? '<p class="sub">Did you mean '+near.map(function(k){return '<b>'+esc(byName[k].name)+'</b>';}).join(', ')+'?</p>'
-      : '<p class="sub dim">No charted career by that name with at least four seasons.</p>';
-    return;
+    /* Matching was `k.indexOf(v)===0` — a prefix test against the whole name, so
+       a surname found nothing. "curry" reported "No charted career by that name"
+       while this file holds five of them: Dell, Michael, Eddy, Stephen and Seth.
+       A surname is how anybody types a basketball player, and telling someone a
+       career is not charted when it is is worse than finding nothing at all.
+       Exact first, then prefix, then anywhere in the name. */
+    var keys=Object.keys(byName);
+    var m=keys.filter(function(k){return k.indexOf(v)===0;});
+    if(!m.length) m=keys.filter(function(k){return k.indexOf(v)>=0;});
+    if(m.length===1){ hit=byName[m[0]]; }
+    else if(m.length){
+      var shown=m.slice(0,6);
+      /* no silent cap: a list that quietly stops at six reads as "these are all
+         of them", which is how a page starts lying by omission */
+      var more=m.length>shown.length?(' …and '+(m.length-shown.length)+' more'):'';
+      $('twinResult').innerHTML='<p class="sub">'+m.length+' charted careers match. Did you mean '+
+        shown.map(function(k){return '<b>'+esc(byName[k].name)+'</b>';}).join(', ')+more+'?</p>';
+      say(m.length+' charted careers match. '+
+          shown.map(function(k){return byName[k].name;}).join(', ')+'.');
+      return;
+    } else {
+      $('twinResult').innerHTML='<p class="sub dim">No charted career by that name with at least four seasons.</p>';
+      say('No charted career matches that name.');
+      return;
+    }
   }
   $('twinResult').innerHTML=pairCard(hit,null);
+  /* The card is the answer to the question this whole section asks, and nothing
+     was announcing it — the rotation chart and the archetype map both have a
+     say(); this box did not. */
+  say(hit.name+' '+(hit.season||'')+'. Closest modern match '+
+      ((hit.twin&&hit.twin.name)||'unknown')+' '+((hit.twin&&hit.twin.season)||'')+
+      ((hit.twin&&typeof hit.twin.similarity==='number')?(', similarity '+n2(hit.twin.similarity)):'')+'.');
 }
 function load(){
   if(TW||loading) return;
@@ -613,7 +640,11 @@ if(sec && window.IntersectionObserver){
   io.observe(sec);
 } else { load(); }
 $('twinInput').addEventListener('focus',load);
-$('twinInput').addEventListener('input',function(){ if(!TW) load(); else lookup(); });
+/* `if(!TW) load(); else lookup();` never called lookup() while the 632 KB was
+   in flight, so the box sat empty for 2,459 ms on Fast 3G and lookup()'s own
+   'Still loading…' branch could not be reached by typing at all. load() is
+   memoised, so calling both costs one download and says something. */
+$('twinInput').addEventListener('input',function(){ load(); lookup(); });
 $('twinInput').addEventListener('change',lookup);
 })();
 
