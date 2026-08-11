@@ -195,7 +195,26 @@ async function loadLimited(){try{let res=await fetch('assets/embedding_map_point
    caller flipped the button to "on" over a cloud that had not changed. Memoised
    too: there was no guard, so every press re-downloaded 3,784,565 bytes. */
 let fullLoaded=false;
-async function loadFull(){if(fullLoaded)return true;try{let v=await (await fetch('assets/vectors.json?v=14872103')).json();let all=v.players||[];dots.length=0;all.forEach(rec=>{let x=(rec.x-0.5)*2,y=(rec.y-0.5)*2,z=((rec.z||0.5)-0.5)*2;dots.push({x,y,z,r:0.45,col:'#9AA0A6',alpha:0.18,pid:rec.pid,season:rec.season,nm:rec.name});});let limited=await (await fetch('assets/embedding_map_points_limited.json?v=407d2cbc')).json();let setPid=new Set(limited.points.map(p=>p.pid));dots.forEach(d=>{if(setPid.has(d.pid)){let lp=limited.points.find(p=>p.pid===d.pid && p.season===d.season);if(lp){d.col=OKABE[lp.c%8];d.alpha=lp.is_current?0.92:0.82;d.r=lp.is_current?1.0:0.8;}}});fullLoaded=true;return true;}catch(e){return false;}}
+async function loadFull(){if(fullLoaded)return true;try{
+  /* Both files first, then build, then swap. It used to run `dots.length=0` and
+     repopulate between the two awaits, so a failure on the second one left the
+     map mutated and every report of it wrong at once. Measured with
+     points_limited blocked:
+        dots.length 12966   button class ''   (loaded map, not-loaded button)
+        'The full cloud could not be loaded. Still showing the 1,764-point map.'
+     — the 1,764-point map was not what was on screen. All-or-nothing now: a
+     throw at either await leaves `dots` exactly as it was, which is what makes
+     the sentence above true when it is said. */
+  let [v,limited]=await Promise.all([
+    fetch('assets/vectors.json?v=14872103').then(r=>r.json()),
+    fetch('assets/embedding_map_points_limited.json?v=407d2cbc').then(r=>r.json())
+  ]);
+  let all=v.players||[],next=[];
+  all.forEach(rec=>{let x=(rec.x-0.5)*2,y=(rec.y-0.5)*2,z=((rec.z||0.5)-0.5)*2;next.push({x,y,z,r:0.45,col:'#9AA0A6',alpha:0.18,pid:rec.pid,season:rec.season,nm:rec.name});});
+  let setPid=new Set(limited.points.map(p=>p.pid));
+  next.forEach(d=>{if(setPid.has(d.pid)){let lp=limited.points.find(p=>p.pid===d.pid && p.season===d.season);if(lp){d.col=OKABE[lp.c%8];d.alpha=lp.is_current?0.92:0.82;d.r=lp.is_current?1.0:0.8;}}});
+  dots.length=0;for(let i=0;i<next.length;i++)dots.push(next[i]);
+  fullLoaded=true;return true;}catch(e){return false;}}
 loadLimited();
 async function loadTraj(){if(trajCache) return trajCache;try{let r=await fetch('assets/embedding_map_trajectories.json?v=2e787a46');let j=await r.json();trajCache=j.trajectories||{};}catch(e){trajCache={}}return trajCache;}
 $('b4k').onclick=()=>{LOD=4000;$('b4k').classList.add('on');$('b8k').classList.remove('on');if(!limitedLoaded){loadLimited();}resize()};
@@ -215,7 +234,9 @@ $('b8k').onclick=async()=>{
   b.removeAttribute('aria-busy'); delete b.dataset.busy; b.textContent=was;
   if(ok){
     b.classList.add('on'); $('b4k').classList.remove('on'); resize();
-    if(lv) lv.textContent='Full cloud drawn — 12,966 points.';
+    /* counted, not asserted — the same reason the model-zoo heading counts its
+       own rows instead of carrying a number someone typed once */
+    if(lv) lv.textContent='Full cloud drawn — '+dots.length.toLocaleString()+' points.';
   } else if(lv){
     lv.textContent='The full cloud could not be loaded. Still showing the 1,764-point map.';
   }

@@ -4271,3 +4271,60 @@ earned: **a static reader can tell you what a page names, never what it runs.**
 Both of this session's payload wins were confirmed in a browser before a line
 changed, and this is the case where that discipline saved the work rather than
 merely documenting it.
+
+
+## The failure path I described but never ran (2026-08-10)
+
+The 8k fix above claimed "a failure says so instead of pretending". Nothing had
+made it fail. `loadFull()` awaits **twice**, so there are two failure paths, and
+only the first was the one I had in mind.
+
+**Blocking `vectors.json`** — the first await — behaved as claimed: 1,764 points
+still drawn, button not `on`, label restored, `aria-busy` cleared, and the region
+saying so.
+
+**Blocking `points_limited`** — the second await — did not:
+
+    dots.length  12966        button class ''
+    'The full cloud could not be loaded. Still showing the 1,764-point map.'
+    '12,966 player-seasons are now on the map.'
+
+Three things wrong at once. `dots.length=0` and the repopulate ran *between* the
+two awaits, so a failure on the second left **12,966 uncoloured points on screen**;
+the button said not-loaded over a loaded map; and my own failure sentence named a
+1,764-point map that was not what anyone was looking at. Then the accessibility
+layer's poller — which watches `dots.length` on an interval, by its own comment
+"cheaper and less brittle than patching loadFull()" — saw the count change and
+announced the success line last, over the failure.
+
+Both files are fetched with `Promise.all` now, the new array is built in full, and
+`dots` is only swapped once both have arrived. A throw at either await leaves the
+map exactly as it was, which is what makes the sentence true when it is said.
+Re-measured at the authoritative level rather than off the fps label, which lags:
+
+    second-fetch failure: dots.length 1764 -> 1764   button class ''
+      'Loading the full cloud — 12,966 points, a 3.6 megabyte download.'
+      'The full cloud could not be loaded. Still showing the 1,764-point map.'
+
+Two announcements, both true, and the poller stays quiet because nothing changed.
+The completion line counts `dots.length` now instead of carrying a typed 12,966 —
+the same rule as the model-zoo heading.
+
+### Service worker: not bumped, same rule as `019ba589`
+
+`index.html` changed again and `/` is in the shell. **Not bumped**, and stated
+rather than left silent: no `?v=` token changed — `vectors.json?v=14872103` is
+untouched — `stamp_assets --check` is clean, `.html` is served
+`max-age=0, must-revalidate`, and the worker is network-first, so the cached `/`
+is only ever an offline fallback. That is the same test applied at `019ba589`, and
+writing it down each time is what stops two rules existing.
+
+### Still measured-once: the 8k control has no assertion
+
+`smoke_render` only renders the page. Delete the busy-state block, the re-entry
+guard or the all-or-nothing swap and **nothing goes red.** The probes that proved
+each of them live in scratch. This is the same gap named for the per-guess
+announcement one pass ago, and that one was closed the same day — this one is not.
+`scripts/probe_8k2.py` logic is most of a check: press, assert `aria-busy` inside
+500 ms, assert one request across two presses, block the second fetch and assert
+`dots.length` is unchanged. **Open, and named here rather than left implicit.**
