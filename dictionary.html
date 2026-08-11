@@ -40,6 +40,11 @@ h2{font-size:clamp(18px,2.4vw,22px);margin:22px 0 4px;letter-spacing:-.015em;scr
 code{font-family:var(--mono);font-size:.92em;background:#f2f1ec;padding:1px 4px;border-radius:4px}
 /* index */
 .jump{display:flex;flex-wrap:wrap;gap:5px;margin-top:10px}
+.find{margin-top:12px}
+.find input{font-family:var(--mono);font-size:13px;padding:9px 11px;border:2px solid var(--ink);border-radius:10px;width:100%;max-width:420px;display:block;margin-top:5px;background:#fff}
+.find input:disabled{opacity:.55}
+#dqCount{margin-top:6px;min-height:1.2em}
+.jump a[hidden]{display:none}
 .jump a{font-family:var(--mono);font-size:11px;font-weight:800;border:1.5px solid var(--ink);border-radius:7px;padding:4px 8px;text-decoration:none;background:#fff;min-height:28px;display:inline-flex;align-items:center}
 .jump a:hover{background:var(--yellow)}
 :focus-visible{outline:3px solid var(--blue);outline-offset:2px}
@@ -78,6 +83,12 @@ code{font-family:var(--mono);font-size:.92em;background:#f2f1ec;padding:1px 4px;
     it rather than trust it. Terms with no file behind them are listed too, at the bottom, and
     marked.</p>
     <nav class="jump" id="jump" aria-label="Jump to a term"></nav>
+    <div class="find">
+      <label class="mono" for="dq">Find a term</label>
+      <input id="dq" type="search" autocomplete="off" disabled
+             placeholder="filter — cosine, drift, seed…">
+      <p id="dqCount" class="sub dim" role="status" aria-live="polite" aria-atomic="true"></p>
+    </div>
   </div>
 
   <div class="card">
@@ -315,6 +326,57 @@ jump.innerHTML=Array.prototype.map.call(document.querySelectorAll('.entry[id]'),
   var h=e.querySelector('h3');
   return '<a href="#'+e.id+'">'+esc(h?h.textContent:e.id)+'</a>';
 }).join('');
+
+/* Nineteen terms in six sections and no way to search them: the jump index was
+   the only affordance, and it is a wall of nineteen chips. Everything
+   filtered here is already in the DOM — nothing is fetched, so the box works
+   the moment this script runs. It ships disabled and is enabled below, so a page
+   whose script never ran shows a control that says it is unavailable rather than
+   one that silently does nothing. */
+var q=$('dq'), qc=$('dqCount');
+var ENTRIES=Array.prototype.map.call(document.querySelectorAll('.entry[id]'),function(e){
+  return {el:e, text:(e.textContent||'').toLowerCase()};
+});
+/* The six section headings are siblings of the entries inside one card, not
+   wrappers around them — so hiding "a card with no visible entries" hid nothing,
+   and the heading stayed on screen over the gap where its terms had been. Group
+   by the h2 and the entries that follow it, which is what a reader sees as a
+   section. */
+var SECTIONS=[];
+Array.prototype.forEach.call(document.querySelectorAll('h2'),function(h){
+  var items=[], n=h.nextElementSibling;
+  while(n && n.tagName!=='H2'){
+    if(n.className && n.className.indexOf('entry')>=0) items.push(n);
+    n=n.nextElementSibling;
+  }
+  if(items.length) SECTIONS.push({h:h, items:items});
+});
+function applyFilter(){
+  var v=(q.value||'').trim().toLowerCase(), n=0;
+  ENTRIES.forEach(function(x){
+    var hit=!v||x.text.indexOf(v)>=0;
+    x.el.hidden=!hit; if(hit) n++;
+  });
+  /* a section heading standing over nothing reads as an empty section rather
+     than a filtered one */
+  SECTIONS.forEach(function(s){
+    s.h.hidden = !!v && !s.items.some(function(e){ return !e.hidden; });
+  });
+  /* the index has to agree with the page it indexes, or it offers links to
+     entries that are not on it */
+  Array.prototype.forEach.call(jump.querySelectorAll('a'),function(a){
+    var e=document.getElementById(a.getAttribute('href').slice(1));
+    a.hidden=!!(e&&e.hidden);
+  });
+  /* silence on no matches reads as a broken filter; the count says what is on
+     screen and what is still here */
+  qc.textContent = !v ? '' : (n
+    ? n+' of '+ENTRIES.length+' terms match.'
+    : 'No term matches. All '+ENTRIES.length+' are still here — clear the box to see them.');
+}
+q.disabled=false;
+q.addEventListener('input',applyFilter);
+q.addEventListener('search',applyFilter);
 
 fetch('assets/mtnn_arch.json?v=d9922089',{cache:'force-cache'}).then(function(r){return r.ok?r.json():null;})
  .then(function(j){

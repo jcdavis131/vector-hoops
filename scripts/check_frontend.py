@@ -587,7 +587,7 @@ def check_fragments(fail) -> None:
 
         The page scrolls, so a sighted reader lands on the word. Focus does not,
         so the next Tab starts at the skip link and a screen reader begins at the
-        top of a 26-entry glossary. tabindex="-1" is the whole fix, and all 23
+        top of a 19-entry glossary. tabindex="-1" is the whole fix, and all 23
         skip links already had it — only the content anchors were missed.
         """
         m = re.search(r"<(\w+)([^>]*\sid=[\"']?" + re.escape(frag) + r"[\"']?[^>]*)>",

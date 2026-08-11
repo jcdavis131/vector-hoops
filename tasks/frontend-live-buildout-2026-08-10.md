@@ -5288,7 +5288,7 @@ hold focus.** Measured on the links a visitor actually follows:
 
 The scroll works, so a sighted reader lands on the word. **Focus stays at the top of
 the document**, so the next Tab starts from the skip link and a screen reader begins
-reading a 26-entry glossary from the beginning — having been sent there to read one
+reading a 19-entry glossary from the beginning — having been sent there to read one
 specific entry.
 
 `tabindex="-1"` on six elements is the whole fix:
@@ -5312,3 +5312,49 @@ by removing a single attribute:
     - play.html links to '/dictionary#era-z' and dictionary.html's #era-z cannot
       hold focus, so arriving scrolls the page and leaves focus at the top of the
       document
+
+
+## A glossary you could not search (2026-08-11)
+
+Phase 4. `/dictionary` is deep-linked from five pages and holds **19 terms in six
+sections**. The only way to find one was the jump index — a wall of nineteen chips
+— or Ctrl-F.
+
+A filter now sits under it. Everything it filters is already in the DOM, so nothing
+is fetched and it works the moment the script runs. It ships `disabled` and is
+enabled by that script, following `/model`'s picker: a page whose JS never ran
+shows a control that says it is unavailable rather than one that silently does
+nothing.
+
+    'similarity'     → 1 of 19 terms match.
+    'zzzznotaterm'   → No term matches. All 19 are still here — clear the box to see them.
+    cleared          → 19 of 19
+
+Four things had to be true beyond "it filters": the count says what is on screen,
+a query nobody matches says so rather than leaving a blank page, the jump index
+stops offering entries that are no longer there, and a section heading does not
+stand over nothing.
+
+### The one that was wrong, and the check that agreed with it
+
+The last of those did not work, and the mutation that should have caught it
+reported green. Both for the same reason: **the six `<h2>` section headings are
+siblings of the entries inside a single card, not wrappers around them.** Hiding
+"a card with no visible entries" hid nothing — the whole glossary is one card —
+and the smoke's matching check counted the same cards, so "no empty section
+headings" was true however the filter behaved.
+
+Grouped by heading instead — an `<h2>` and the entries that follow it, which is
+what a reader sees as a section. The mutation now reports:
+
+    - 5 section heading(s) are left standing over no entries
+
+Six for six. That is the **eighth** assertion this session that passed for a reason
+other than the one it named.
+
+### A number correction
+
+Yesterday's fragment-focus note said a screen reader "begins reading a 26-entry
+glossary from the beginning". The glossary has **19** entries; 26 was its total
+heading count — one h1, six h2s and nineteen h3s. Corrected in `READINESS.md`, in
+`check_frontend.py`'s docstring, in the published report, and above.

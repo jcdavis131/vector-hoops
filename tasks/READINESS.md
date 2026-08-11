@@ -159,11 +159,22 @@ Both now point at the pages the nav already uses for those words — `/play.html
 rather than at anchors minted to justify the links. A new `fragments` check makes every deep link
 land on something that exists; it was shown failing first.
 
+**A glossary you could not search.** `/dictionary` is deep-linked from five pages and holds 19 terms
+in six sections; the only way to find one was a jump index that is a wall of nineteen chips. A filter
+now sits under it — everything it filters is already in the DOM, so nothing is fetched, and it ships
+`disabled` and is enabled by the script so a page with no JS is honest about it. Beyond filtering:
+the count says what is on screen, a query nobody matches says so rather than leaving a blank page,
+the jump index stops offering entries that are gone, and a section heading does not stand over
+nothing. **That last one was wrong, and the mutation that should have caught it reported green** —
+both because the six `<h2>`s are siblings of the entries inside one card rather than wrappers around
+them, so "hide a card with no visible entries" hid nothing and the check counted the same cards.
+Regrouped by heading; six mutations, six caught.
+
 **The page scrolled, the focus didn't.** Five pages link into the dictionary for a definition, and
 the `fragments` gate proved those ids exist without proving anything happens on arrival. A fragment
 navigation focuses its target **only if the target can hold focus** — measured, `#era-z`, `#retrieval`
 and `teams#foSec` all scrolled correctly (scrollY 815 / 2315 / 638) and left focus on `BODY`, so the
-next Tab restarted at the skip link and a screen reader began a 26-entry glossary from the top after
+next Tab restarted at the skip link and a screen reader began a 19-entry glossary from the top after
 being sent to one entry. `tabindex="-1"` on six elements; verified landing on the target afterwards.
 An honest positive: all 23 `#main` skip-link targets were already correct — only the content anchors
 were missed, which is why nothing had caught it. The gate now reads the target's tag and attributes,
