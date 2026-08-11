@@ -159,6 +159,18 @@ Both now point at the pages the nav already uses for those words — `/play.html
 rather than at anchors minted to justify the links. A new `fragments` check makes every deep link
 land on something that exists; it was shown failing first.
 
+**The contrast gate has never looked at what was painted.** `check_contrast.py` reads CSS rules and
+says in its own docstring that colour-only rules are "printed to check in a browser, never failed on".
+Nobody ran the browser half — and most of this site's text is rendered from JSON into elements a
+static pass never sees. Measured on every page, scrolled until the lazy sections filled, with each
+element's real backdrop composited through its transparent ancestors: **75 painted text elements below
+WCAG AA across 15 colour pairs**, including the wordmark at 3.20:1, "▲ Thrived after the move" at
+3.42:1, a pill at 1.92:1 — and the archetype names on the map inset at **1.04:1**, which is invisible
+rather than low. That last one is fixed (75 → 67). The rest is **not** committed: darkening the muted
+greys to clear 4.5 on white took the same text on the `#0A0C10` inset from 5.3:1 down to 4.14:1, so
+the swap that helps on paper hurts on the inset. A palette change has to solve both background
+families at once; the solved-for values are recorded on the board.
+
 **A whole wiki page, read aloud.** Yesterday's live-region finding was a class, so the class got
 swept: every `[aria-live]` element on all 22 pages, loaded and scrolled. **It came back clean — and
 that was wrong**, because two were empty at the moment of measurement. `#card` on `/player-cards` and

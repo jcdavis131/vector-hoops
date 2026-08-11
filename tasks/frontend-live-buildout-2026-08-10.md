@@ -5715,3 +5715,56 @@ because that is the only state in which the defect exists. Both mutations caught
 
 That makes the live-region rule enforced in three places now, each in the state
 that page can actually be wrong in.
+
+
+## The contrast gate has never looked at what was painted (2026-08-11)
+
+`check_contrast.py` reads CSS rules and says so in its own docstring: a rule that
+sets colour alone is *"evaluated against that page's own `<body>` background and
+printed to check in a browser, never failed on, because the true backdrop depends
+on nesting a static read cannot settle."*
+
+**Nobody ran the browser half.** And most of this site's text is not in the CSS at
+all — it is rendered from JSON into elements a static pass never sees: card
+badges, bar rows, match lists, tables, chips.
+
+So every page was loaded, scrolled until the lazy sections filled, and every
+element that paints text had its real backdrop composited through however many
+transparent ancestors it has:
+
+    75 painted text element(s) below WCAG AA, across 15 colour pairs
+
+    21   3.20:1  #EB6834 on white          the wordmark, and every delta
+    11   3.42:1  #009E73 on white          "▲ Thrived after the move", +4.55
+     9   4.42:1  #2A78D6 on white          "17 × 32-d = 544-d"
+     8   1.04:1  #111111 on #0A0C10        archetype names on the map inset
+    10   3.59:1  #898781 on white          the small print
+     1   1.92:1  #9AA3B2 on #F0E442        a pill nobody could read
+     1   1.27:1  #FAFAF8 on #F0E442        "▶ Play offline arcade"
+
+### One fixed, and a lesson about the rest
+
+The **1.04:1** is not low contrast, it is invisible: the archetype key on
+`/players` is inserted over the `#0A0C10` map inset and inherited the page's ink.
+Given a light ink it reads at once, and eight elements came off the list — 75 → 67.
+
+Then I darkened the muted greys and the pill inks to clear 4.5 on white and paper,
+and **made the dark-background cases worse**: `#878580` on `#0A0C10` was about
+5.3:1 and my "fix" took it to **4.14:1**, below the line it was already above. The
+same swap that helps on paper hurts on the inset.
+
+**Those edits were reverted rather than committed.** A palette change has to solve
+for both background families at once, and the numbers to solve it with are
+recorded here:
+
+    #EB6834 text  3.01:1  ->  #C94714  4.51:1   (fills, rings and strokes unchanged)
+    #2A78D6 text  4.23:1  ->  #2873CF  4.50:1
+    #009E73 text  3.27:1  ->  #008460  4.51:1
+    #898781       3.44:1  ->  #75736E  4.51:1   on light only — needs a dark twin
+    #878580       3.53:1  ->  #75736F  4.51:1   on light only — needs a dark twin
+    #9AA3B2       1.92:1  ->  #5A6476  4.50:1   on the yellow pill only
+
+Every one of those was solved for rather than chosen: keep hue and saturation,
+drop lightness until the ratio clears against every background the colour actually
+appears on. The remaining work is to give each a light-background and a
+dark-background variant and point the text at the right one.

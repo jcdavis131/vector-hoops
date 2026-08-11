@@ -40,6 +40,9 @@ canvas{display:block;width:100%;height:440px} @media(max-width:600px){canvas{hei
 .find input{font-family:var(--mono);font-size:13px;padding:8px 10px;border:1.8px solid var(--ink);border-radius:10px;width:100%;max-width:360px;display:block;margin-top:4px;background:#fff}
 .find input:disabled{opacity:.55}
 #pqCount{margin:6px 0 0;font-size:10.5px;color:var(--ink-soft);min-height:1.2em;text-transform:none;letter-spacing:0}
+/* The archetype key sits over the #0A0C10 map inset, so it inherited page ink
+   onto near-black — measured at 1.04:1, which is invisible rather than low. */
+#plKey{color:#FAFAF8}
 .it{border:1.6px solid var(--ink);border-radius:10px;padding:8px 9px;background:#fff;cursor:pointer;transition:.1s;box-shadow:2px 2px 0 var(--ink)}
 .it:hover{transform:translateY(-1px);box-shadow:3px 3px 0 var(--ink)} .it.on{background:var(--yellow)}
 .btn{display:inline-flex;align-items:center;justify-content:center;padding:7px 11px;border-radius:9px;border:2px solid var(--ink);background:#fff;font:800 11px var(--mono);text-transform:uppercase;cursor:pointer;box-shadow:var(--shadow-sm)}
@@ -212,7 +215,7 @@ cv.addEventListener('click',async e=>{let r=cv.getBoundingClientRect(),mx=(e.cli
   // ── archetype key ──────────────────────────────────────────────────────
   var host=document.createElement('div');
   host.id='plKey';
-  host.innerHTML='<div class="mono" style="font-size:10.5px;color:var(--ink-muted)">Colour = archetype · loading names…</div>';
+  host.innerHTML='<div class="mono" style="font-size:10.5px;color:#C9C6C0">Colour = archetype · loading names…</div>';
   var lab=$('lab');
   if(lab && lab.parentNode) lab.parentNode.insertBefore(host, lab.nextSibling);
   fetch('assets/mtnn_arch.json?v=d9922089',{cache:'force-cache'})
@@ -220,7 +223,7 @@ cv.addEventListener('click',async e=>{let r=cv.getBoundingClientRect(),mx=(e.cli
     .then(function(j){
       var names=j.gameArchetypes||[];
       if(!names.length) throw new Error('gameArchetypes missing');
-      host.innerHTML='<div class="mono" style="font-size:10.5px;color:var(--ink-muted)">'+
+      host.innerHTML='<div class="mono" style="font-size:10.5px;color:#C9C6C0">'+
         'Colour = archetype — names from <code>assets/mtnn_arch.json</code></div><ul>'+
         names.map(function(n,i){
           return '<li><span class="sw" style="background:'+esc(OKABE[i%8])+'"></span>'+
@@ -229,7 +232,7 @@ cv.addEventListener('click',async e=>{let r=cv.getBoundingClientRect(),mx=(e.cli
     })
     .catch(function(e){
       // never invent archetype names to fill the key
-      host.innerHTML='<div class="mono" style="font-size:10.5px;color:var(--ink-muted)">'+
+      host.innerHTML='<div class="mono" style="font-size:10.5px;color:#C9C6C0">'+
         'Colour = archetype, but the names could not be loaded ('+esc(e.message)+'). '+
         'No labels are guessed.</div>';
     });
@@ -253,7 +256,7 @@ cv.addEventListener('click',async e=>{let r=cv.getBoundingClientRect(),mx=(e.cli
   if(lab && lab.parentNode) lab.parentNode.insertBefore(btn, lab);
   var hint=document.createElement('div');
   hint.className='mono';
-  hint.style.cssText='font-size:10.5px;color:var(--ink-muted);margin-top:4px';
+  hint.style.cssText='font-size:10.5px;color:#C9C6C0;margin-top:4px';
   hint.textContent='Map keys: focus it, then ←/→ rotate (shift = faster) · Home resets · space stops the spin · H reads the controls.';
   if(lab && lab.parentNode) lab.parentNode.insertBefore(hint, lab);
 
