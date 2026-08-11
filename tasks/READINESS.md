@@ -170,8 +170,9 @@ whose size, span and count are *stamped by the generator* (proved by lying to it
 `--check` exit 1), scrubs 30 seasons with a range input and a play control, draws each season's real
 roster — 290 in 1996-97, 500 in 2024-25 — on the shared camera, and counts the archetype mix **from
 the points on screen** rather than from a prevalence table in a different clustering. First press:
-1996-97's largest share is *Defensive Glass + Rim Pressure*; 2025-26's is *Three-Point Accuracy +
-Three-Point Volume*. `smoke_season.py` checks the page against the file for five probed seasons — and
+1996-97's largest share is *Defensive Glass + Rim Pressure (Fts)* at 18%; 2025-26's is *Three-Point
+Accuracy + Three-Point Volume* at 20% — and `c` in the trajectory file was checked against the file
+the names come from rather than assumed to match it: **0 of 1,764 vivid rows disagree**. `smoke_season.py` checks the page against the file for five probed seasons — and
 its `once` mutation **ran green twice for two different wrong reasons**: the button's own `disabled`
 carried the first, and the second was counting HTTP requests that Chrome served from cache, as
 production would. It counts `fetch()` calls now.

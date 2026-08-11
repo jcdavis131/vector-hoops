@@ -6195,9 +6195,17 @@ The section:
   - **pick** — clicking a point traces that player's whole career across all 30
     seasons and announces the span.
 
-What it shows on the first press, counted off the screen rather than asserted: in
-**1996-97** the largest share of the league is *Defensive Glass + Rim Pressure*;
-in **2025-26** it is *Three-Point Accuracy + Three-Point Volume*.
+What it shows on the first press, counted off the screen rather than asserted:
+the largest share of the league in **1996-97** is *Defensive Glass + Rim Pressure
+(Fts)* at **18%**; in **2025-26** it is *Three-Point Accuracy + Three-Point
+Volume* at **20%**.
+
+The labels rest on one thing that was worth checking rather than assuming: that
+`c` in the trajectory file indexes the same clustering `mtnn_arch.json` names. The
+fact on record — "c === gameCluster for 1,764 of 1,764 points" — was measured
+against `embedding_map_points_limited.json`, not against the trajectory file. Both
+carry the 1,764 vivid rows, so they can be compared directly: **0 of 1,764
+disagree.** Same clustering, now measured.
 
 ### `once` ran green twice, for two different wrong reasons
 
