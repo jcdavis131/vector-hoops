@@ -8,25 +8,30 @@ yaw/pitch, wheel zoom 0.55-2.8, dblclick recenter, touch pinch" — binds
 message is not an interaction.
 
 So this drives the real thing. `Input.dispatchMouseEvent` and
-`Input.dispatchKeyEvent`, then `window.yaw` / `window.pitch` / `window.zoom` read
-back over CDP. A synthetic `element.dispatchEvent` would prove nothing here for
-exactly the reason `element.focus()` proved nothing about focus rings: it is a
-state the page only truly enters one way.
+`Input.dispatchKeyEvent`, then `VHMapCamera.cams[0].yaw` / `.pitch` / `.zoom`
+read back over CDP. A synthetic `element.dispatchEvent` would prove nothing here
+for exactly the reason `element.focus()` proved nothing about focus rings: it is
+a state the page only truly enters one way.
+
+The camera is `assets/map-camera.js`, shared by every map on the site, so most
+of the mutation matrix now lands in the module rather than in one page — one
+matrix protects every map that attaches to it.
 
 Checked:
 
   drag      a left-drag across the canvas moves yaw and pitch, and does NOT
             select — a rotate that also picks a player is not a rotate
   click     a click on a dot's projected position announces one short sentence
-  keys      ArrowRight rotates, +/- zoom, 0 resets, all with the page not
-            scrolling underneath
+  keys      ArrowRight rotates, +/- zoom, 0 and Home reset, Space starts and
+            stops the rotation and the button follows, H speaks the controls —
+            all with the page not scrolling underneath
   clamp     zoom stops at 0.55x and 3x however many times you press
   wheel     ctrl+wheel zooms; a plain wheel does not, so the page still scrolls
   hover     the auto-spin yields under the pointer and resumes when it leaves
   reduce    under prefers-reduced-motion the spin starts off AND the button says so
 
-Mutations are served, never written: the HTTP handler rewrites index.html in
-flight, so a killed run cannot leave a mutated page in the checkout the way the
+Mutations are served, never written: the HTTP handler rewrites index.html and
+assets/map-camera.js in flight, so a killed run cannot leave a mutated page in the checkout the way the
 audit harness once left a 2,400px div in leaderboard.html.
 
     python scripts/smoke_map.py
@@ -60,19 +65,29 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from check_viewport import WS, BROWSERS  # noqa: E402
 
 # Each mutation deletes exactly one thing this smoke claims to prove. If a
-# mutation runs green, the assertion behind it is decoration.
+# mutation runs green, the assertion behind it is decoration. Most of them now
+# land in the shared camera, which is the point of extracting it: one matrix
+# protects every map that attaches to it.
+CAMERA, PAGE = "camera", "page"
 MUTATIONS = {
-    "drag":     ("yaw+=dx*0.007", "yaw+=dx*0"),
-    "pitch":    ("pitch=clampPitch(pitch-dy*0.005)", "pitch=clampPitch(pitch-dy*0)"),
-    "clamp":    ("zoom=Math.max(0.55,Math.min(3,v))", "zoom=v"),
-    "keys":     ("else if(k==='ArrowRight') yaw+=step;", "else if(k==='ArrowRight') yaw+=0;"),
-    "announce": ("say('Selected '", "String('Selected '"),
-    "hover":    ("!hoverPause&&", ""),
-    "wheel":    ("if(!(e.ctrlKey||e.metaKey)) return;", "if(e.ctrlKey||e.metaKey) return;"),
-    "reduce":   ("if(REDUCE) rotFlag=false;", ";"),
-    "drag-picks": ("if(mapMoved>6){mapMoved=0;return;}", "if(false){}"),
+    "drag":       (CAMERA, "cam.yaw += dx * 0.007", "cam.yaw += dx * 0"),
+    "pitch":      (CAMERA, "cam.pitch = clamp(cam.pitch - dy * 0.005, -0.85, 0.85)",
+                           "cam.pitch = clamp(cam.pitch - dy * 0, -0.85, 0.85)"),
+    "clamp":      (CAMERA, "cam.zoom = clamp(v, 0.55, 3)", "cam.zoom = v"),
+    "keys":       (CAMERA, "else if (k === 'ArrowRight') cam.yaw += step;",
+                           "else if (k === 'ArrowRight') cam.yaw += 0;"),
+    "hover":      (CAMERA, "!cam.hoverPause &&", ""),
+    "wheel":      (CAMERA, "if (!(e.ctrlKey || e.metaKey)) return;",
+                           "if (e.ctrlKey || e.metaKey) return;"),
+    "reduce":     (CAMERA, "if (cam.reduce) cam.spin = false;", ";"),
+    "drag-picks": (CAMERA, "if (cam.moved > 6) { cam.moved = 0; return; }", "if (false) {}"),
+    "spin-key":   (CAMERA, "cam.spin = !!on;", ""),
+    "help-key":   (CAMERA, "{ steer = false; cam.say(HELP); }", "{ steer = false; String(HELP); }"),
+    "announce":   (PAGE,   "cam.say('Selected '", "String('Selected '"),
+    "spin-glyph": (PAGE,   "b.textContent='rot '+(on?'◐':'□')", "b.textContent='rot ◐'"),
 }
 
+CAM = "VHMapCamera.cams[0]"
 CTRL = 2
 
 
@@ -117,11 +132,12 @@ def canvas_box(ws):
 
 
 def dot_point(ws, box):
-    """Viewport coords of a real dot, projected by the page's own proj()."""
+    """Viewport coords of a real dot, projected by the camera the page draws with."""
     return ev(ws, """(function(){
         if(!window.dots||!window.dots.length) return JSON.stringify({miss:true});
+        var cam=VHMapCamera.cams[0];
         var best=null,bd=1e9,cx=window.W*0.5,cy=window.H*0.53;
-        for(var i=0;i<window.dots.length;i++){var d=window.dots[i];var P=proj(d.x,d.y,d.z);
+        for(var i=0;i<window.dots.length;i++){var d=window.dots[i];var P=cam.proj(d.x,d.y,d.z);
           var q=(P[0]-cx)*(P[0]-cx)+(P[1]-cy)*(P[1]-cy);
           if(q<bd){bd=q;best={d:d,P:P};}}
         var r=document.getElementById('c').getBoundingClientRect();
@@ -137,26 +153,32 @@ def main() -> int:
     browser = next((b for b in BROWSERS if b.exists()), None)
     if not browser:
         sys.exit("no Chrome or Edge found")
-    page_src = (SERVE / "index.html").read_text(encoding="utf-8")
+    srcs = {"page": (SERVE / "index.html").read_text(encoding="utf-8"),
+            "camera": (SERVE / "assets" / "map-camera.js").read_text(encoding="utf-8")}
     if args.mutate:
-        find, repl = MUTATIONS[args.mutate]
-        if find not in page_src:
-            sys.exit(f"mutation {args.mutate!r} no longer matches the page: {find!r}")
-        page_src = page_src.replace(find, repl, 1)
-    body = page_src.encode("utf-8")
+        where, find, repl = MUTATIONS[args.mutate]
+        if find not in srcs[where]:
+            sys.exit(f"mutation {args.mutate!r} no longer matches the {where}: {find!r}")
+        srcs[where] = srcs[where].replace(find, repl, 1)
+    BODIES = {"page": (srcs["page"].encode("utf-8"), "text/html; charset=utf-8"),
+              "camera": (srcs["camera"].encode("utf-8"), "text/javascript; charset=utf-8")}
 
     class Quiet(http.server.SimpleHTTPRequestHandler):
         def log_message(self, *a):
             pass
 
         def do_GET(self):
-            if self.path.split("?")[0] in ("/", "/index.html", "/index"):
+            path = self.path.split("?")[0]
+            which = ("page" if path in ("/", "/index.html", "/index")
+                     else "camera" if path.endswith("/assets/map-camera.js") else None)
+            if which:
+                blob, ctype = BODIES[which]
                 self.send_response(200)
-                self.send_header("Content-Type", "text/html; charset=utf-8")
-                self.send_header("Content-Length", str(len(body)))
+                self.send_header("Content-Type", ctype)
+                self.send_header("Content-Length", str(len(blob)))
                 self.send_header("Cache-Control", "max-age=0, must-revalidate")
                 self.end_headers()
-                self.wfile.write(body)
+                self.wfile.write(blob)
                 return
             super().do_GET()
 
@@ -215,20 +237,20 @@ def main() -> int:
         cx, cy = box["l"] + box["w"] / 2, box["t"] + box["h"] / 2
 
         # ── drag ──────────────────────────────────────────────────────────────
-        ev(ws, "window.rotFlag=false")          # isolate the drag from the spin
+        ev(ws, CAM + ".spin=false")          # isolate the drag from the spin
         ev(ws, "document.getElementById('ixLive').textContent=''")
         # Counted, not assumed: releasing a drag on the same element still fires a
         # click, and "a drag must not select" is only a real assertion if that
         # click actually arrived and was turned away.
         ev(ws, "window.__mapClicks=0;document.getElementById('c')"
                ".addEventListener('click',function(){window.__mapClicks++;})")
-        y0, p0 = ev(ws, "window.yaw"), ev(ws, "window.pitch")
+        y0, p0 = ev(ws, CAM + ".yaw"), ev(ws, CAM + ".pitch")
         mouse(ws, "mousePressed", cx - 120, cy, buttons=1)
         for i in range(1, 7):
             mouse(ws, "mouseMoved", cx - 120 + i * 30, cy - i * 9, buttons=1)
         mouse(ws, "mouseReleased", cx + 60, cy - 54, buttons=0)
         time.sleep(0.15)
-        y1, p1 = ev(ws, "window.yaw"), ev(ws, "window.pitch")
+        y1, p1 = ev(ws, CAM + ".yaw"), ev(ws, CAM + ".pitch")
         clicks = ev(ws, "window.__mapClicks")
         live = ev(ws, "document.getElementById('ixLive').textContent") or ""
         print(f"  drag     yaw {y0:+.3f} -> {y1:+.3f}   pitch {p0:+.3f} -> {p1:+.3f}   "
@@ -265,13 +287,13 @@ def main() -> int:
         # ── keys ──────────────────────────────────────────────────────────────
         ev(ws, "document.getElementById('c').focus()")
         scroll0 = ev(ws, "window.scrollY")
-        y0 = ev(ws, "window.yaw")
+        y0 = ev(ws, CAM + ".yaw")
         for _ in range(3):
             key(ws, "ArrowRight", "ArrowRight", 39)
-        y1 = ev(ws, "window.yaw")
-        p0 = ev(ws, "window.pitch")
+        y1 = ev(ws, CAM + ".yaw")
+        p0 = ev(ws, CAM + ".pitch")
         key(ws, "ArrowUp", "ArrowUp", 38)
-        p1 = ev(ws, "window.pitch")
+        p1 = ev(ws, CAM + ".pitch")
         scroll1 = ev(ws, "window.scrollY")
         print(f"  keys     3x ArrowRight yaw {y0:+.3f} -> {y1:+.3f}, "
               f"ArrowUp pitch {p0:+.3f} -> {p1:+.3f}, scrollY {scroll0} -> {scroll1}")
@@ -286,10 +308,10 @@ def main() -> int:
         # ── zoom, and its clamp ───────────────────────────────────────────────
         for _ in range(24):
             key(ws, "+", "Equal", 187, text="+")
-        zmax = ev(ws, "window.zoom")
+        zmax = ev(ws, CAM + ".zoom")
         for _ in range(40):
             key(ws, "-", "Minus", 189, text="-")
-        zmin = ev(ws, "window.zoom")
+        zmin = ev(ws, CAM + ".zoom")
         print(f"  clamp    24x '+' -> {zmax}x, then 40x '-' -> {zmin}x")
         if not 2.99 < zmax < 3.01:
             fails.append(f"zoom ran to {zmax} instead of stopping at 3")
@@ -297,16 +319,41 @@ def main() -> int:
             fails.append(f"zoom ran down to {zmin} instead of stopping at 0.55")
 
         key(ws, "0", "Digit0", 48, text="0")
-        rst = ev(ws, "JSON.stringify([window.yaw,window.pitch,window.zoom])")
+        rst = ev(ws, "JSON.stringify([" + CAM + ".yaw," + CAM + ".pitch," + CAM + ".zoom])")
         print(f"  reset    '0' -> yaw/pitch/zoom {rst}")
         if [round(v, 4) for v in rst] != [0, 0, 1]:
             fails.append(f"'0' left the camera at {rst}, not at rest")
 
+        # ── Home resets too, Space toggles the spin, H speaks ────────────────
+        ev(ws, CAM + ".yaw=1.4;" + CAM + ".zoom=2")
+        key(ws, "Home", "Home", 36)
+        home = ev(ws, "JSON.stringify([" + CAM + ".yaw," + CAM + ".zoom])")
+        spin0 = ev(ws, CAM + ".spin")
+        key(ws, " ", "Space", 32, text=" ")
+        spin1 = ev(ws, CAM + ".spin")
+        glyph = ev(ws, "document.getElementById('bRot').textContent")
+        ev(ws, "document.getElementById('ixLive').textContent=''")
+        key(ws, "h", "KeyH", 72, text="h")
+        time.sleep(0.15)
+        helped = ev(ws, "document.getElementById('ixLive').textContent") or ""
+        print(f"  contract Home -> {home}, Space {spin0} -> {spin1} "
+              f"(button {glyph!r}), H says {helped[:34]!r}")
+        if [round(v, 4) for v in home] != [0, 1]:
+            fails.append(f"Home left the camera at {home}, not at rest")
+        if spin1 == spin0:
+            fails.append("Space did not start or stop the automatic rotation")
+        if glyph != ("rot ◐" if spin1 else "rot □"):
+            fails.append(f"the spin is {spin1} but its button reads {glyph!r} — the control "
+                         f"is lying about its own state")
+        if "Map keys" not in helped:
+            fails.append(f"H announced {helped[:40]!r} instead of the list of controls")
+        key(ws, " ", "Space", 32, text=" ")     # put the spin back as it was
+
         # ── wheel: ctrl zooms, plain scrolls the page ────────────────────────
-        z0, s0 = ev(ws, "window.zoom"), ev(ws, "window.scrollY")
+        z0, s0 = ev(ws, CAM + ".zoom"), ev(ws, "window.scrollY")
         mouse(ws, "mouseWheel", cx, cy, dy=240)
         time.sleep(0.2)
-        zplain, s1 = ev(ws, "window.zoom"), ev(ws, "window.scrollY")
+        zplain, s1 = ev(ws, CAM + ".zoom"), ev(ws, "window.scrollY")
         # that scroll moved the canvas out from under the cursor, which is the
         # point of it — re-measure before the ctrl wheel rather than aiming at
         # coordinates the page has already invalidated
@@ -314,7 +361,7 @@ def main() -> int:
         cx, cy = box["l"] + box["w"] / 2, box["t"] + box["h"] / 2
         mouse(ws, "mouseWheel", cx, cy, dy=-240, mods=CTRL)
         time.sleep(0.15)
-        zctrl = ev(ws, "window.zoom")
+        zctrl = ev(ws, CAM + ".zoom")
         print(f"  wheel    plain {z0}x -> {zplain}x, scrollY {s0} -> {s1}   "
               f"ctrl+wheel -> {round(zctrl, 3)}x")
         if abs(zplain - z0) > 1e-9:
@@ -325,15 +372,15 @@ def main() -> int:
             fails.append(f"ctrl+wheel moved zoom by {zctrl - zplain:+.3f} — it does not zoom")
 
         # ── the spin yields to the pointer ────────────────────────────────────
-        ev(ws, "window.rotFlag=true;window.userAt=-1e9")
+        ev(ws, CAM + ".spin=true;" + CAM + ".userAt=-1e9")
         mouse(ws, "mouseMoved", box["l"] + box["w"] + 60, box["t"] - 60)   # leave first,
         time.sleep(0.1)
         mouse(ws, "mouseMoved", cx, cy)                                    # then enter
         time.sleep(0.1)
-        a = ev(ws, "window.yaw"); time.sleep(0.6); b = ev(ws, "window.yaw")
+        a = ev(ws, CAM + ".yaw"); time.sleep(0.6); b = ev(ws, CAM + ".yaw")
         mouse(ws, "mouseMoved", box["l"] + box["w"] + 60, box["t"] - 60)
         time.sleep(0.1)
-        c = ev(ws, "window.yaw"); time.sleep(0.6); d = ev(ws, "window.yaw")
+        c = ev(ws, CAM + ".yaw"); time.sleep(0.6); d = ev(ws, CAM + ".yaw")
         print(f"  hover    under the pointer {b - a:+.4f} rad in 0.6s, "
               f"off it {d - c:+.4f} rad")
         if abs(b - a) > 1e-6:
@@ -347,9 +394,9 @@ def main() -> int:
                 {"features": [{"name": "prefers-reduced-motion", "value": "reduce"}]})
         ws.call("Page.navigate", {"url": url + "?rm=1"})
         time.sleep(2.6)
-        rf = ev(ws, "window.rotFlag")
+        rf = ev(ws, CAM + ".spin")
         glyph = ev(ws, "document.getElementById('bRot').textContent")
-        yA = ev(ws, "window.yaw"); time.sleep(0.6); yB = ev(ws, "window.yaw")
+        yA = ev(ws, CAM + ".yaw"); time.sleep(0.6); yB = ev(ws, CAM + ".yaw")
         print(f"  reduce   rotFlag {rf}, button says {glyph!r}, "
               f"yaw moved {yB - yA:+.4f} rad in 0.6s")
         if rf is not False:
