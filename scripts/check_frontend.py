@@ -731,6 +731,81 @@ def check_worker(fail) -> None:
               f"({', '.join(sorted('.' + e for e in exts))})")
 
 
+
+# The word "wikilinks" appears inside a boilerplate sentence on every player card
+# — "corrections, and further [[wikilinks]] here" — so pipeline/build_wiki.py
+# writes 2,304 targets that are not pages. Regenerating those files is not
+# something this repo does, so /player-cards demotes an unresolvable target to
+# plain text instead. This is the list of targets that treatment is allowed to
+# cover: anything NEW that fails to resolve is a broken link, not boilerplate.
+WIKI_BOILERPLATE = {"wikilinks", "slug", "../archetypes/slug", "../positions/pg"}
+
+
+def _wiki_norm(target: str, cards: set[str]) -> str:
+    """The same normalisation /player-cards applies, kept in step with it."""
+    raw = target.strip()
+    rel = raw.startswith("./") or raw.startswith("../")
+    s = re.sub(r"^\.{1,2}/", "", raw)
+    s = re.sub(r"\.md$", "", s)
+    if rel or "/" in s:
+        return s
+    # a bare slug is a player unless there is no such player and there is a
+    # top-level card by that name
+    return "players/" + s if ("players/" + s) in cards or s not in cards else s
+
+
+def check_wiki(fail) -> None:
+    """Every [[link]] in the knowledge cards lands on a card that exists.
+
+    39,386 of them across 2,308 files, and nothing checked any of them. The
+    renderer used to turn every one into an anchor whether or not the target was
+    a page: 2,306 pointed at nothing, and 2,304 of those were the same word in
+    the same sentence on every single player card, so **every player card
+    shipped a dead link** to knowledge/players/wikilinks.md.
+    """
+    root = ROOT / "knowledge"
+    if not root.is_dir():
+        print("  SKIP  no knowledge/ under this root")
+        return
+    cards = {p.relative_to(root).as_posix()[:-3] for p in root.rglob("*.md")}
+    if not cards:
+        print("  SKIP  knowledge/ holds no cards")
+        return
+    total = ok = hidden = 0
+    dead: dict[str, int] = {}
+    for page in sorted(root.rglob("*.md")):
+        src = page.relative_to(root).as_posix()[:-3]
+        text = page.read_text(encoding="utf-8", errors="replace")
+        # /player-cards strips HTML comments before it looks for links, so a
+        # target inside one is never rendered at all. That is a different fact
+        # from "rendered as text", and reporting them as one number would have
+        # let this check claim 2,308 demotions when 2,306 of them are simply
+        # invisible.
+        comments = [(c.start(), c.end()) for c in re.finditer(r"<!--[\s\S]*?-->", text)]
+        for m in re.finditer(r"\[\[([^\]|]+)(?:\|[^\]]*)?\]\]", text):
+            total += 1
+            raw = m.group(1).strip()
+            if _wiki_norm(raw, cards) in cards:
+                ok += 1
+                continue
+            if any(a <= m.start() < b for a, b in comments):
+                hidden += 1
+                continue
+            if raw in WIKI_BOILERPLATE:
+                dead[raw] = dead.get(raw, 0) + 1
+                continue
+            fail(f"knowledge/{src}.md links to [[{raw}]], which is no committed card. "
+                 f"If it is generator boilerplate, add it to WIKI_BOILERPLATE and make sure "
+                 f"/player-cards renders it as text.")
+    covered = sum(dead.values())
+    # counted, not inferred: `total - covered` would report every broken link as
+    # a landing one, which is the printed number disagreeing with the measured one
+    print(f"  {ok:,} of {total:,} wikilink(s) land on a committed card; "
+          f"{hidden:,} sit inside a comment the renderer strips and are never drawn; "
+          f"{covered:,} reach a reader and are rendered as text "
+          f"({', '.join(sorted(dead)) or 'none'})")
+
+
 CHECKS = {
     "syntax": check_syntax,
     "mirror": check_mirror,
@@ -747,6 +822,7 @@ CHECKS = {
     "clean": check_clean,
     "headings": check_headings,
     "fragments": check_fragments,
+    "wiki": check_wiki,
 }
 
 

@@ -185,25 +185,68 @@ function say(m){var l=$('live');if(!l||!m)return;if(l.textContent===m)l.textCont
    archetype and 5 position hubs. Normalising all three to a knowledge/ path
    means the hubs become reachable too — they are the same markdown format. */
 function normTarget(t){
-  t=String(t||'').trim().replace(/^\.{1,2}\//,'').replace(/\.md$/,'');
-  return t.indexOf('/')<0 ? 'players/'+t : t;
+  var raw=String(t||'').trim();
+  /* An explicit ./ or ../ says "this target carries its own path". Stripping it
+     and then re-prefixing players/ turned [[../OKF]] into players/OKF, a page
+     that does not exist. Only a bare slug is a player. */
+  var rel=/^\.{1,2}\//.test(raw);
+  var s=raw.replace(/^\.{1,2}\//,'').replace(/\.md$/,'');
+  if(rel || s.indexOf('/')>=0) return s;
+  /* a bare slug is a player unless there is no such player and there IS a
+     top-level card by that name: knowledge/INDEX.md links to [[OKF]], and
+     forcing every bare slug under players/ pointed it at nothing */
+  return knows('players/'+s) ? 'players/'+s : (knows(s) ? s : 'players/'+s);
 }
+/* Every target these pages can reach, built from what is already on the page:
+   the 2,293 slugs in the search index and the archetype and position hubs the
+   markup already lists. OKF and INDEX are the two top-level cards; they are
+   named here and check_frontend's `wiki` check fails if either stops existing.
+
+   Before this, `inline` turned EVERY [[x]] into an anchor whether or not x was
+   a page. 2,306 of the 39,386 wikilinks across the cards resolve to nothing —
+   2,304 of them the word "wikilinks", which appears in a boilerplate sentence
+   on every single player card, so every card shipped a dead link. Clicking it
+   asked for knowledge/players/wikilinks.md and got a 404. */
+var KNOWN=null;
+function knownTargets(){
+  /* never cache a KNOWN built before the index arrived: it would hold the 13
+     hubs and nothing else, and every player link on the first card opened would
+     be demoted to plain text for the life of the page */
+  if(KNOWN && IDX) return KNOWN;
+  KNOWN={'OKF':1,'INDEX':1};
+  if(IDX&&IDX.players) IDX.players.forEach(function(r){ if(r&&r.slug) KNOWN['players/'+r.slug]=1; });
+  Array.prototype.forEach.call(document.querySelectorAll('.hub[data-path]'),function(b){
+    KNOWN[b.getAttribute('data-path')]=1;
+  });
+  return KNOWN;
+}
+function knows(path){ return knownTargets()[path]===1; }
 function href(path){
   return path.indexOf('players/')===0 ? '?p='+encodeURIComponent(path.slice(8))
                                       : '?w='+encodeURIComponent(path);
 }
 function inline(s){
   s=esc(s);
+  /* Code spans come out first and go back last. OKF.md documents the link
+     format with `[[slug|Display Name]]` inside backticks, and running the
+     wikilink pass first turned the site's own format contract into the thing it
+     was describing — the example read "Display Name". Whatever is in backticks
+     is a quotation, not markup. */
+  var code=[];
+  s=s.replace(/`([^`]+)`/g,function(_,c){ code.push(c); return '\u0000'+(code.length-1)+'\u0000'; });
+  /* a target with no page behind it becomes its own words, not a link to a 404 */
   s=s.replace(/\[\[([^\]|]+)\|([^\]]+)\]\]/g,function(_,t,label){
     var p=normTarget(t);
+    if(!knows(p)) return label;
     return '<a class="wikilink" href="'+href(p)+'" data-path="'+esc(p)+'">'+label+'</a>';
   });
   s=s.replace(/\[\[([^\]|]+)\]\]/g,function(_,t){
     var p=normTarget(t);
+    if(!knows(p)) return esc(t);
     return '<a class="wikilink" href="'+href(p)+'" data-path="'+esc(p)+'">'+esc(t)+'</a>';
   });
   s=s.replace(/\*\*([^*]+)\*\*/g,'<b>$1</b>');
-  s=s.replace(/`([^`]+)`/g,'<code>$1</code>');
+  s=s.replace(/\u0000(\d+)\u0000/g,function(_,i){ return '<code>'+code[+i]+'</code>'; });
   return s;
 }
 function render(md){
@@ -221,7 +264,23 @@ function render(md){
     if(/^\s*\|/.test(ln)){
       var rows=[];
       while(i<lines.length && /^\s*\|/.test(lines[i])){ rows.push(lines[i]); i++; }
-      var cells=function(r){ return r.replace(/^\s*\|/,'').replace(/\|\s*$/,'').split('|').map(function(c){return c.trim();}); };
+      /* A wikilink carries its own pipe — [[slug|Label]] — so splitting the row
+         on every | put the target in one cell and the label in the next. Every
+         archetype and position hub rendered its member table as raw markdown:
+         "[[../players/rajon-rondo" in one column and "Rajon Rondo]]" in the
+         next. Split only on pipes that are not inside a wikilink. */
+      var cells=function(r){
+        var s=r.replace(/^\s*\|/,'').replace(/\|\s*$/,'');
+        var out=[], buf='', depth=0;
+        for(var k=0;k<s.length;k++){
+          if(s[k]==='[' && s[k+1]==='['){ depth++; buf+='[['; k++; continue; }
+          if(s[k]===']' && s[k+1]===']'){ if(depth) depth--; buf+=']]'; k++; continue; }
+          if(s[k]==='|' && !depth){ out.push(buf.trim()); buf=''; continue; }
+          buf+=s[k];
+        }
+        out.push(buf.trim());
+        return out;
+      };
       var head=cells(rows[0]);
       var body=rows.slice(rows.length>1 && /^[\s|:\-]+$/.test(rows[1])?2:1);
       out.push('<div class="tablewrap"><table><thead><tr>'+head.map(function(c){return '<th>'+inline(c)+'</th>';}).join('')+
