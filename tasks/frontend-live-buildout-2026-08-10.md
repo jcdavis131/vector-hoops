@@ -4149,3 +4149,61 @@ generators now emit the newline the file already uses. Convergence re-measured:
 and `play.html` is back to `crlf=705`, its only diff the forty lines added above.
 This is **P4.5** again, from a third direction: the missing `.gitattributes` is why
 a generator can be correct on one checkout and wrong on the next.
+
+
+## Two writers, one live region — and an assertion that could not fail (2026-08-10)
+
+The per-guess announcement added earlier this pass was verified on a single miss.
+That was not enough: `say()` assigns `textContent`, and after the change **two
+observers feed the same node** — the pre-existing one on `#resultBox`, which
+carries the payoff, and the new one on `#log`. A win produces both. Recorded every
+value `#vh-live` took, through a real win:
+
+    6088 ms  'guess . Alperen Sengun 2024-25 cosine 1.00 LOCK . row 11992'
+    9197 ms  'Result. Alperen Sengun 2024-25 ≈ Alperen Sengun 2024-25 • cos 1.00 …'
+    9201 ms  'Trajectory done … confetti 12 . karaoke-grade 1.24s . glass-click …'
+
+**The payoff was announced and replaced four milliseconds later by telemetry.** A
+polite region voices the last write, so the change made to help a blind player
+would have read them "confetti 12, karaoke-grade 1.24s" instead of the answer.
+
+Guarded: while `#resultBox` is up it owns the region. Re-measured —
+
+    6181 ms  'guess . Alperen Sengun 2024-25 cosine 1.00 LOCK . row 11992'
+    9313 ms  'Result. Alperen Sengun 2024-25 ≈ Alperen Sengun 2024-25 • cos 1.00 …'
+
+two values, and the Result is the one left standing.
+
+### The first assertion I wrote for this could not fail
+
+Encoded in `smoke_play` — and the RED test refused to go red. Deleting the entire
+per-guess announcement left the check **passing**, because it read `#vh-live` after
+the *win*, where the `resultBox` observer fills the region regardless. It was
+asserting something that was true for another reason.
+
+Moved to the **miss** path, which is the only place that can prove it: a miss draws
+no result box, so nothing else writes there.
+
+    GREEN  spoken   miss 'guess . Caleb Houstan 2024-25 cosine -0.91 . row 12039'
+    RED    spoken   miss ''    ->  RC=1
+
+The win-side check stayed as a second assertion, for the clobbering above, with the
+reason it is insufficient on its own written next to it.
+
+### Coverage
+
+The sweep was run on eight pages and the claim was written as "across eight pages".
+Re-run across **all 22**: still zero unnamed interactive nodes and zero unnamed
+images. The persona pages — where the Times New Roman bug hid — are in that set now.
+
+### Service worker: deliberately not bumped
+
+`index.html` changed this pass and `/` is in the worker's shell, which is the
+condition that triggered the v7.2 → v7.3 bump. Not bumping, and the reason belongs
+on the record rather than in silence: **that bump fired because `?v=` asset tokens
+had changed**, so a cached `/` would have pointed at URLs that no longer existed.
+Nothing here changed a token — `aria-hidden` is markup, `stamp_assets --check` is
+clean — and the worker is network-first, so the cached `/` is only ever an offline
+fallback. The cost of being wrong is that an offline visitor's tile icons announce
+as unlabelled images until the next revalidation. Bumping every markup edit would
+purge the shell constantly and make the version meaningless.

@@ -656,6 +656,14 @@ vhPoolReady.then(function(){ fetchTrajCache(); fetchManifest(); });})();</script
     new MutationObserver(function(){
       var el=logEl.lastElementChild;
       if(!el) return;
+      // Once the result box is up it owns this region — it carries the payoff,
+      // and the log goes on appending underneath it. Measured through a win
+      // before this guard existed: the result was announced at 9,197 ms and
+      // replaced 4 ms later by 'Trajectory done … confetti 12 … karaoke-grade
+      // 1.24s … glass-click'. A polite region voices the last write, so the
+      // change meant to help a blind player would have read them the telemetry
+      // instead of the answer.
+      if(res && res.style.display!=='none' && res.offsetParent) return;
       var msg=speakable(el.textContent);
       if(!msg || msg===lastSpoken) return;
       lastSpoken=msg;

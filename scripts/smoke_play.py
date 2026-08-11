@@ -475,6 +475,29 @@ def main() -> int:
         if ev(ws, "idx") != idx_before:
             failures.append("a missed guess advanced the pack — a miss must not score")
 
+        # 4b. the miss has to reach a screen reader, and this is the only place
+        #     that can prove it. #log is not a live region: measured over the
+        #     accessibility tree, #vh-live was '' before a guess and '' after one
+        #     while #log carried 'guess → AJ Griffin 2022-23 cos -0.67 ◐ • row
+        #     11029'. A miss draws no result box, so nothing else writes to the
+        #     region here — checking it after the WIN proves nothing, because the
+        #     resultBox observer fills it either way. That version of this check
+        #     passed with the per-guess announcement deleted.
+        spoken_miss = str(ev(ws, "(document.getElementById('vh-live')||{}).textContent") or "")
+        print(f"  spoken   miss {spoken_miss.strip()[:60]!r}")
+        if not spoken_miss.strip():
+            failures.append(
+                "#vh-live is empty after a missed guess — the guess a player just made is "
+                "announced nowhere. With six guesses and no result box until the end, a "
+                "non-visual player has no way to hear whether they got warmer")
+        else:
+            worst_first = str(p["worst"]["n"]).split()[0]
+            if worst_first and worst_first.lower() not in spoken_miss.lower():
+                failures.append(
+                    f"the live region says {spoken_miss.strip()[:60]!r} after guessing "
+                    f"{p['worst']['n']!r} — the announcement does not name the guess it is "
+                    f"about, so it cannot be the feedback for this guess")
+
         # 4. the hit path, through the other wiring
         ws.call("Runtime.evaluate", {"expression": "window.__vhErr = []"})
         type_guess(ws, p["best"]["n"])
@@ -520,6 +543,34 @@ def main() -> int:
                     f"the win on {p['best']['n']!r} drew season chips ending in {max(years)} "
                     f"— a fabricated career printed as a real one. Either resolve the real "
                     f"trajectory or label the path illustrative")
+
+        # 5a2. the round has to reach a screen reader. Everything checked above is
+        #      what a sighted player sees. #log is not a live region, so before
+        #      this the status node stayed empty through an entire round: measured
+        #      over the accessibility tree, #vh-live was '' before a guess and ''
+        #      after one, while #log carried
+        #      'guess → AJ Griffin 2022-23 cos -0.67 ◐ • row 11029'.
+        #
+        #      Two writers feed that one node now — the per-guess log line and the
+        #      result box — and say() assigns textContent, so the last write wins.
+        #      The result has to be the one left standing: it is the payoff. Before
+        #      the guard, the result was announced at 9,197 ms and replaced 4 ms
+        #      later by 'Trajectory done … confetti 12 … karaoke-grade 1.24s', so a
+        #      polite region would have read out the telemetry instead of the answer.
+        wait_for(ws, "/^result/i.test((((document.getElementById('vh-live')||{})"
+                     ".textContent)||'').trim())", 8)
+        said = str(ev(ws, "(document.getElementById('vh-live')||{}).textContent") or "")
+        print(f"  spoken   {said.strip()[:66]!r}")
+        if not said.strip():
+            failures.append(
+                "#vh-live is empty after a scoring guess — the round is silent to a screen "
+                "reader. #log carries the result and #log is not a live region, so nothing "
+                "the player did or scored is announced")
+        elif not said.strip().lower().startswith("result"):
+            failures.append(
+                f"the live region ends the win holding {said.strip()[:70]!r} rather than the "
+                f"Result — the payoff was announced and then overwritten by a later log line, "
+                f"which is the one announcement a non-visual player most needs")
 
         # 5b. the end of the daily. The seed sets one question, so winning it ends
         #     the pack — and nextQ() used to return before touching the question
