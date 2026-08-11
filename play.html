@@ -444,8 +444,13 @@ function installRealMap(dim){
   }
 }
 
-(function(){
-  fetch('assets/game_vectors.json?v=b98e3a0b',{cache:'force-cache'})
+/* Held rather than discarded so the win-animation prefetch at the end of this
+   script can wait for it. Measured on Fast 3G with a cold cache: this file is
+   397.6 KB and takes ~2.0s alone, but took 6.2s while 2 MB of trajectory and
+   manifest prefetch shared the pipe — and until it lands the page is running on
+   an 8-name demo pool. */
+var vhPoolReady = (function(){
+  return fetch('assets/game_vectors.json?v=b98e3a0b',{cache:'force-cache'})
     .then(function(r){ if(!r.ok) throw new Error('HTTP '+r.status); return r.json(); })
     .then(function(j){
       var past=j.past||[], modern=j.modern||[];
@@ -529,7 +534,14 @@ function installRealMap(dim){
     });
 })();
 
-if('serviceWorker'in navigator){try{navigator.serviceWorker.register('/sw.js')}catch(e){}}setTimeout(()=>{let pb=$('play-a-101');pb?.classList.add('spike');setTimeout(()=>pb?.classList.remove('spike'),560)},520);fetchTrajCache();fetchManifest();})();</script>
+if('serviceWorker'in navigator){try{navigator.serviceWorker.register('/sw.js')}catch(e){}}setTimeout(()=>{let pb=$('play-a-101');pb?.classList.add('spike');setTimeout(()=>pb?.classList.remove('spike'),560)},520);/* Both of these warm the cache for the win animation — 1.08 MB of trajectories
+   and 0.89 MB of manifest. Neither is needed to play: the win path already does
+   `await fetchTrajCache()` at the moment it draws, and both are memoised, so
+   deferring costs nothing on a win and cannot be reached before the real pool
+   exists anyway. Fired eagerly they were competing with game_vectors.json for a
+   slow link's bandwidth, which is the one download standing between a visitor
+   and a real game. `.catch` above resolves, so this still runs if the pool fails. */
+vhPoolReady.then(function(){ fetchTrajCache(); fetchManifest(); });})();</script>
 
 <!-- ══ accessibility layer ═════════════════════════════════════════════════
      Added as a separate, purely additive block. The page above is one

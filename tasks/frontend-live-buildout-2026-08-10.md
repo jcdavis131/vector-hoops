@@ -3710,3 +3710,79 @@ different coat: **I filtered the search by the file type I expected the answer t
 be in.** A conclusion of the form "only N of these are reachable" is a claim about
 coverage, and it is only as good as the glob that produced it. The fix both times
 is the same — enumerate what could hold the answer before deciding what does.
+
+
+## The game spent six seconds on an eight-player demo pool (2026-08-10)
+
+Every gate on this branch answers "is it correct". None of them answers **"how
+long until you can play"**, and nobody had asked. `/owner` and `/teams` were
+measured for bytes-on-paint; the page the brief puts first never was.
+
+Measured over CDP with a cold cache and Fast 3G emulated (1.6 Mbit/s, 150 ms RTT),
+reading the page's own Resource Timing plus a poller stamping when the guess
+datalist fills:
+
+    resource                          start      end       ms        KB
+    game_vectors.json                   480     6676     6189     397.6
+    mtnn_arch.json                     6699     6930      231       3.5
+    vectors_map_lite.json              6699     9593     2894     185.3
+    embedding_map_manifest.json         488    12643    12155     908.2
+    embedding_map_trajectories.json     488    13634    13146    1109.4
+
+    guess box usable      355 ms
+    map has ink           502 ms
+    REAL pool loaded     6701 ms
+    datalist over time:  [[241, 0], [502, 8], [6701, 1305]]
+
+That last line is the finding. **The datalist holds 8 names for six and a half
+seconds, then 1,305.** `game_vectors.json` is 397.6 KB and needs about 2.0s alone
+on this link; it took 6.2s because the last line of the script fired
+
+    fetchTrajCache();fetchManifest();
+
+eagerly — 1.08 MB of trajectories and 0.89 MB of manifest, launched at the same
+millisecond as the pool and sharing the pipe three ways. Both exist only to warm
+the cache for the win animation. Neither is needed to play, both are memoised, and
+the win path already does `await fetchTrajCache()` at the moment it draws.
+
+Deferred behind the pool — the IIFE now returns its promise instead of discarding
+it, and the prefetch chains off it:
+
+    var vhPoolReady = (function(){ return fetch('assets/game_vectors.json'…
+
+    vhPoolReady.then(function(){ fetchTrajCache(); fetchManifest(); });
+
+Same measurement again:
+
+                          before      after
+    game_vectors.json     6189 ms    2343 ms
+    vectors_map_lite      9593 ms    5753 ms
+    REAL pool loaded      6701 ms    2856 ms      <- 2.35x
+    total bytes          2656.7 KB  2656.7 KB     <- unchanged
+
+**Nothing was removed and nothing was made smaller.** The same 2.66 MB is
+requested; it is requested in the order the player needs it. Trajectories finish
+at 13,921 ms instead of 13,634 — 287 ms later, on an asset that cannot be reached
+before a win, and the win path awaits it anyway. Unthrottled the real pool lands
+at 247 ms, so nothing regressed on a fast link. A full round still plays.
+
+### What I went looking for and did not find
+
+The obvious follow-on worry was that a player spends those seconds in a fake game
+without being told. **The page is already scrupulous about this**, which is worth
+recording because I was ready to file it as a defect:
+
+    <span class=chip style="background:var(--yellow)">demo pool · 10 past × 8 modern</span>
+
+    This page scores on a built-in demo pool — 10 past and 8 modern players,
+    compared on a 3-value profile. It is not the 64-dimensional model…
+
+and on load it rewrites the chip, the note and the input placeholder to the real
+counts. It also refuses to swap mid-game, with the reasoning stated in place:
+*"swapping under a game in progress would be worse than letting that one game
+finish on the demo pool."* So the honest-but-limited window is real and disclosed;
+this change shrinks it from 6.7s to 2.9s rather than fixing a lie.
+
+No cache-token or worker bump: the only file changed is a page, `.html` is served
+`max-age=0, must-revalidate`, and the worker shell is `/`, `/offline`,
+`/manifest.json`. The `tokens` check confirms it.
