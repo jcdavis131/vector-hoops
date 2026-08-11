@@ -3455,3 +3455,59 @@ evaluates 150 declared colour pairs; `check_a11y` clears 22 pages. None of them
 looks at whether a declared font exists, because a font name is an opaque string
 to all three. The defect was visible to anyone who opened the page and invisible to
 everything automated. It was found by reading a file for an unrelated reason.
+
+
+## The sixth candidate fabrication was real data (2026-08-10)
+
+Five unsourced values have been removed from this branch under the no-fabrication
+rule. `/player` carries three more — `1.28`, `0.62`, `0.81` — presented with the
+specificity of measurements and citing no field:
+
+    Closer 1.28 stays green vs 0.62 red - exploitable #FFD8D5
+    [lock 1.28 closer] [avoid 0.62 exploitable] [dep 0.81]
+
+The word "closer" points at `closing_score` in `matchup_players.json`, so that is
+where I checked, and the result looked damning:
+
+    closing_score   n=14690   min 0.644   max 1.558
+    0.62 -> 0 rows, and below the minimum of the field entirely
+
+**A value beneath the floor of its own metric is the clearest fabrication signal
+there is, and it was the wrong field.** `matchup_grade` is a categorical with a
+level literally named `closer`, and `matchup_factor` is a constant attached to it.
+The cross-tab settles it:
+
+    matchup_grade        matchup_factor
+    neutral-closable     n=5029   {1.05: 4949, 1.134: 80}
+    neutral              n=4383   {1.0: 4383}
+    closer               n=2272   {1.28: 2267, 1.35: 5}
+    starter-closer       n=1309   {1.12: 1202, 1.21: 107}
+    exploitable          n=1153   {0.62: 937, 0.57: 216}
+    matchup-dependent    n=544    {0.81: 544}
+
+All three chips map exactly — `closer` → 1.28, `exploitable` → 0.62,
+`matchup-dependent` → 0.81, which is what "dep" abbreviates. **Sourced, correct,
+and nothing to remove.**
+
+One qualifier that is fair to state: these are modal constants, not universal ones.
+`closer` is 1.28 in 2267 of 2272 rows (99.8%) and `matchup-dependent` is 0.81 in
+all 544, but `exploitable` is 0.62 in 937 of 1153 (81%) with the remaining 216 at
+0.57. The page quotes the dominant value of each grade, which is a fair summary of
+a two-valued category rather than a claim that every exploitable player scores 0.62.
+
+Separately verified on the same page: "held-out top-5 0.76 against a 0.20
+transparent baseline" cites `assets/eval_scoreboard.json` and survives the
+like-for-like test — MTNN test-split top5 is 0.757 and the 14-d baseline's *test
+split* is 0.1962 (its overall is 0.1954), both on the same n=790 cohort. The
+comparison is not the common trick of a held-out model number against an
+all-splits baseline.
+
+### Why this is on the board rather than deleted quietly
+
+The no-fabrication rule has removed five values here, and a sixth was two minutes
+from joining them on evidence that was internally consistent and pointed the wrong
+way. The failure mode is specific: **I searched the field whose name the prose
+echoed instead of enumerating the fields that could produce the number.** Checking
+one field and finding the value impossible feels like proof; it is proof only if
+that field is the right one. The discipline has to be able to clear a claim, not
+only condemn one, or it stops being a check and becomes a ratchet.
