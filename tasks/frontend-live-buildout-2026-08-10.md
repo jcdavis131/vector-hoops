@@ -6067,3 +6067,86 @@ Verified: 15 checks over 22 pages on both roots, a11y, contrast, painted
 contrast, target size (559 targets), focus order, focus rings (**498** tab stops,
 up from 494 — the canvas and three buttons), responsive, doc numbers, the settle
 sweep, 8 pages rendering, `smoke_index`, and `smoke_map` with its matrix.
+
+
+## One camera, and the legend that ate the map (2026-08-11)
+
+Five maps on this site. Before `assets/map-camera.js`, five different contracts:
+
+    /          drag, zoom, hover, arrows + - 0 Enter
+    /players   arrows and Home only - no drag, no zoom, no hover
+    /teams     nothing
+    /trends    nothing
+    /model     nothing
+
+The projection maths was copy-pasted between the two 3D ones and had already
+drifted — `cy` 0.53 on one, 0.52 on the other — and each copy carried its own hit
+test. A visitor who learns the map on one page should not have to learn it again
+on the next, and duplicating the landing page's camera three more times was not
+going to end anywhere good.
+
+One contract now, wherever it attaches:
+
+    drag              yaw and pitch          ctrl/cmd + wheel   zoom
+    arrows            yaw and pitch          + and -            zoom
+    shift + arrows    coarser                0 or Home          reset
+    Enter             pick nearest centre    Space              auto-rotation
+    H or ?            speak the controls     hover              name a point
+
+It is the **union** of what the two pages already had, not the landing page's
+version imposed on the other: `H`, the focus announcement and `Home` come from
+`/players`; drag, tilt, zoom and hover come from `/`. `Space` toggles the
+rotation rather than picking — `Enter` is the pick — because that is what
+`/players` already did and it is the better convention for a canvas that
+animates.
+
+Each page keeps its own draw loop and its own idea of what a point is, and
+answers four questions: `size()`, `points()`, `label(d)`, `onPick(d)`. `hit()` is
+called from the page's loop rather than re-projecting on every `pointermove`: the
+full cloud is 12,966 points and a hover pass of its own would be a second
+projection of all of them sixty times a second. Done this way it also cannot
+disagree with what was painted, because it reads the same numbers.
+
+### The legend covered 84% of the map and ate every click
+
+Driving `/players` with real mouse events, six checks failed at once. One cause:
+
+    elementsFromPoint(401, 401) over the canvas
+      SPAN                 [310,395,217, 17]
+      LI                   [267,391,305, 26]
+      UL                   [267,307,305,222]
+      DIV#plKey            [267,284,305,244]
+      DIV (absolute)       [ 93,191,625,371]   <- the overlay
+      CANVAS#c             [ 83,181,635,440]
+
+The archetype key is appended **inside** the map's top-left overlay and is a grid
+that fills its container. 371 of the canvas's 440 pixels, with
+`pointer-events: auto`. **Clicking a dot behind the legend has never worked on
+this page.** Nothing caught it because until now the only pointer interaction was
+a click, and no test had ever driven a real one — the same shape as every other
+hollow check this session: a state the page only enters one way, asserted from a
+state it never entered.
+
+Every readout over both maps is `pointer-events: none` now. A readout that eats a
+click is a dot you cannot select.
+
+### The matrix moved into the module
+
+`smoke_map.py` takes `--page` and drives both maps. **Twelve mutations on index,
+twelve caught; six camera mutations re-run against `/players`, six caught.** Eight
+of the twelve now live in the module, so one matrix protects every map that
+attaches to it — which is what extracting it was for. Page-shaped mutations are
+*refused* on a page they do not describe rather than passing vacuously.
+
+Two small API decisions, both forced by a gate rather than taste:
+
+  - `cam.onSpin` is settable after attach, because `/players` builds its pause
+    button in a later script and looking it up by id would have meant a
+    `getElementById` for an id that is not in the markup. `check_frontend`
+    rejected it, correctly.
+  - `cam.size()` is exposed so the smoke can aim a real click at a page whose
+    `W`/`H` are script-scoped.
+
+`index.html` 51,869 → 47,193 bytes; `players.html` 32,664 → 32,970;
+`map-camera.js` is 12,911 and immutable-cached, shared. `/teams`, `/trends` and
+`/model` are the next three, and they are now a few lines each.

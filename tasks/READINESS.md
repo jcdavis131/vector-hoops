@@ -1,16 +1,16 @@
 # frontend-live — readiness
 
-**Nothing here is live.** Everything below is measured at **`36325249`** — the sha is the anchor,
+**Nothing here is live.** Everything below is measured at **`ec9ceced`** — the sha is the anchor,
 because the commit that records a count is never inside the count it records. All of it is on
 `frontend-live`; `master` is untouched, and pushing `master` is what deploys the site. Suite green
 at that commit.
 
 | | |
 |---|---|
-| commits this session | 217 on this branch's own line at `50d1e0c5`, now on `master` (a plain `rev-list` says 253 — it walks both sides of the merge and counts Scout's 36) |
+| commits this session | 223 on this branch's own line at `ec9ceced`, now on `master` (a plain `rev-list` says 259 — it walks both sides of the merge and counts Scout's 36) |
 | paths changed, across the merge | 2,652 (2,547 under `public/`, 45 scripts) |
 | insertions / deletions | +211,573 / −310,582 |
-| working notes | `tasks/frontend-live-buildout-2026-08-10.md`, 6,071 lines |
+| working notes | `tasks/frontend-live-buildout-2026-08-10.md`, 6,154 lines |
 
 **Where to look at it.** The branch is pushed and Vercel builds every commit on it:
 
@@ -158,6 +158,21 @@ each moved the page from **scrollY 0 to scrollY 0** while writing the fragment i
 Both now point at the pages the nav already uses for those words — `/play.html` and `/model.html` —
 rather than at anchors minted to justify the links. A new `fragments` check makes every deep link
 land on something that exists; it was shown failing first.
+
+**One camera for every map, and the legend that ate one.** Five maps here; before
+`assets/map-camera.js`, five contracts — the landing map could be dragged, zoomed and hovered, the
+Explorer answered only to `←` `→` and `Home`, and the other three to nothing. The projection maths
+was copy-pasted between the two 3D ones and had already drifted (`cy` 0.53 against 0.52). One module
+now owns yaw, pitch, zoom and every gesture that moves them, and its contract is the **union** of
+what the two pages had, not one imposed on the other: `H`, the focus announcement and `Home` come
+from `/players`; drag, tilt, zoom and hover from `/`. Driving `/players` with real mouse events then
+failed six checks at once, all one cause: the archetype key is appended **inside** the map's overlay
+and fills it — `[93,191,625,371]` over a canvas of `[83,181,635,440]`, `pointer-events: auto`.
+**Clicking a dot behind the legend had never worked on that page**, and nothing caught it because no
+test had ever driven a real pointer at it. Every readout over both maps is `pointer-events: none`
+now. `smoke_map.py` takes `--page` and drives both: **twelve mutations on index, twelve caught; six
+camera mutations against `/players`, six caught** — eight of them live in the module, so one matrix
+protects every map that attaches to it.
 
 **The map was never a control.** Every page here describes a map you can turn, and neither version
 of the landing page bound a gesture to it — mine span on a timer and took one click, and the version
