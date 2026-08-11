@@ -176,7 +176,15 @@ def main() -> int:
         body = build(text, url)
         if body is None:
             continue
-        block = f"{START}\n{body}\n{END}"
+        # Emit the newline the file already uses. This block was composed with
+        # "\n" while `core.autocrlf=true` hands out CRLF working copies, so after
+        # every fresh checkout the rebuilt block differed from the stored one by
+        # nothing but line endings — the script reported "1 page(s) to change",
+        # rewrote play.html 12 bytes shorter, and went quiet until the next
+        # checkout. Harmless on its own; as the `derived` gate's input it is a
+        # false red that trains you to ignore the gate.
+        nl = "\r\n" if "\r\n" in text else "\n"
+        block = (START + nl + body.replace("\n", nl) + nl + END)
 
         if START in text and END in text:
             updated = text[: text.index(START)] + block + text[text.index(END) + len(END):]

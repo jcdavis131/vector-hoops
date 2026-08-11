@@ -623,6 +623,46 @@ vhPoolReady.then(function(){ fetchTrajCache(); fetchManifest(); });})();</script
     }).observe(res,{attributes:true,attributeFilter:['style'],childList:true,subtree:true,characterData:true});
   }
 
+  // ── every guess, not only the last one ─────────────────────────────────
+  // The block above announces the payoff. Every guess before it was silent.
+  // The line a sighted player reads —
+  //
+  //     guess → AJ Griffin 2022-23 cos -0.67 ◐ • row 11029
+  //
+  // goes into #log, which is not a live region, so nothing ever reached the
+  // status node. Measured over the accessibility tree on 2026-08-10: #vh-live
+  // was empty before a guess and still empty after one, while #log carried the
+  // line above. With six guesses and no way to hear how close the last one
+  // landed, the game cannot be played without sight — knowing you are at
+  // -0.67 rather than 0.94 is the entire loop.
+  //
+  // Announced verbatim apart from decorative glyphs, so what is heard and what
+  // is shown cannot drift apart. Only `cos` is expanded, to `cosine`; every
+  // number, name and season is untouched.
+  function speakable(s){
+    return clean(String(s||'')
+      .replace(/[◎◐★☆◆●○▲△]/g,' ')
+      .replace(/[→·•—–]/g,'. ')
+      .replace(/\bcos\b/g,'cosine')
+      .replace(/\s*\.\s*(?=\.)/g,''));
+  }
+  var logEl=$('log');
+  if(logEl && window.MutationObserver){
+    // log() appends with innerHTML +=, which re-parses the container and so
+    // reports every existing entry as removed and re-added. Reading
+    // lastElementChild is correct whatever the mutation looked like, and the
+    // guard stops one appended line being announced several times over.
+    var lastSpoken='';
+    new MutationObserver(function(){
+      var el=logEl.lastElementChild;
+      if(!el) return;
+      var msg=speakable(el.textContent);
+      if(!msg || msg===lastSpoken) return;
+      lastSpoken=msg;
+      say(msg);
+    }).observe(logEl,{childList:true});
+  }
+
   // ── season chips ───────────────────────────────────────────────────────
   // Built as bare <span> with an .onclick handler: clickable by mouse, and
   // invisible to Tab and to assistive tech. Stamped as they are created.

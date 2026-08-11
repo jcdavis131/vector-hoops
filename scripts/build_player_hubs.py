@@ -98,6 +98,13 @@ def main() -> int:
     fresh = block()
     n = fresh.count("<button")
 
+    # Emit the newline the file already uses. block() composes with "\n" while
+    # `core.autocrlf=true` hands out CRLF working copies, so after a fresh
+    # checkout the rebuilt row differed from the stored one by line endings
+    # alone — drift this script caused and then reported as drift.
+    nl = "\r\n" if "\r\n" in text else "\n"
+    fresh = fresh.replace("\r\n", "\n").replace("\n", nl)
+
     if START in text and END in text:
         before = text[: text.index(START)]
         after = text[text.index(END) + len(END):]
@@ -106,7 +113,7 @@ def main() -> int:
         anchor = '<ul class="hits" id="hits" role="listbox" aria-label="Matching players"></ul>'
         if anchor not in text:
             sys.exit("could not find the results list to anchor the browse row to")
-        updated = text.replace(anchor, anchor + "\n" + fresh, 1)
+        updated = text.replace(anchor, anchor + nl + fresh, 1)
 
     if updated == text:
         print(f"  browse row already current — {n} hub link(s)")

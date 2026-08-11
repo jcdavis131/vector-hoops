@@ -4055,3 +4055,97 @@ because a `* text=auto eol=lf` line rewrites line endings across a checkout anot
 agent is working in. It is now filed with a measurement rather than as a
 housekeeping note: the cost of not having it is that the single most common
 "what did I just change" command reports six times more than it should.
+
+
+## The game told a screen reader nothing about the guess you just made (2026-08-10)
+
+`check_a11y.py` settles eleven criteria and says so in its own docstring: *"real
+screen-reader flow still needs a browser and a person"*. This is the browser half.
+`Accessibility.getFullAXTree` returns the computed role, name and properties for
+every node, which is what a screen reader actually receives rather than what the
+markup suggests it should.
+
+The sweep across eight pages was mostly reassuring:
+
+    page                 ax nodes  unnamed interactive  live regions
+    /play.html                271                    0             1
+    /player-cards.html        113                    0             1
+    /trends.html              811                    0             2
+    /model.html              2034                    0             3
+    /teams.html              1404                    0             1
+    /players.html             698                    0             1
+    /dictionary.html          651                    0             0
+    /index.html               353                    0             1
+
+**Zero unnamed interactive nodes anywhere.** Every button, link and field announces
+itself. Two things it did surface.
+
+### The game was silent between guesses
+
+`/play` carries one polite live region, `#vh-live`, and the accessibility layer
+already announces the *result box* — the payoff — with a comment saying "the entire
+payoff of a guess … was silent" and fixing that. Each guess **before** the payoff
+was still silent. Played a round over CDP and read the region:
+
+    before the guess   #vh-live  ''
+    typed              'AJ Griffin 2022-23'
+    after the guess    #vh-live  ''
+    what the sighted player got, in #log:
+                       'guess → AJ Griffin 2022-23 cos -0.67 ◐ • row 11029'
+
+`#log` is not a live region, so nothing reached the status node. Six guesses, and
+no way to hear whether the last one landed at -0.67 or 0.94 — **that is the loop.**
+A game you cannot get warmer in is not a game.
+
+Now announced, and deliberately verbatim so what is heard and what is shown cannot
+drift apart. Only `cos` is expanded, to `cosine`; decorative glyphs become sentence
+breaks; every number, name and season is untouched:
+
+    #vh-live   'guess . AJ Griffin 2022-23 cosine -0.67 . row 11029'
+    #log       'guess → AJ Griffin 2022-23 cos -0.67 ◐ • row 11029'
+
+`log()` appends with `innerHTML +=`, which re-parses the container and reports every
+existing entry as removed and re-added, so the observer reads `lastElementChild`
+rather than trying to pick the new node out of the mutation record, and a guard
+stops one line being announced several times.
+
+### Ten decorative tiles announcing themselves as "image"
+
+`/teams` and `/players` each exposed five `role=image` nodes with an empty
+accessible name — bare `<svg viewBox="0 0 40 40">` tile artwork. They were not
+`aria-hidden`; a hidden node is `ignored` and never reaches the tree at all, which
+is precisely why they showed up. A screen reader met each one and was told "image"
+and nothing more. `aria-hidden="true"` on all ten, plus five on `index.html` that
+had the same markup. Re-measured: **none.**
+
+## The gate I built last pass caught my own change, then caught itself
+
+Running the suite after all this, `check_frontend` went red:
+
+    build_social_meta.py reports drift — FAIL 1 page(s) need social metadata
+
+That is the `derived` check working. But the drift was not real, and finding out
+why was the more useful half. The generator wanted to rewrite `play.html` — whose
+social block I had not touched, same title, markers intact, `og=7 twitter=3` before
+and after. `difflib` on `.splitlines()` showed no difference at all. The bytes did:
+
+    before: crlf=705 lf=705      block head: '…start -->\r\n<link rel="canonical"…'
+    after : crlf=693 lf=705      block head: '…start -->\n<link rel="canonical"…'
+
+`block = f"{START}\n{body}\n{END}"` composes with LF while `core.autocrlf=true`
+hands out CRLF working copies. **So after every fresh checkout the rebuilt block
+differed from the stored one by line endings alone** — the script reported drift it
+had caused itself, rewrote the file twelve bytes shorter, and went quiet until the
+next checkout.
+
+Harmless while nothing read it. As the `derived` gate's input it is a false red on
+a clean tree, which is the failure that teaches you to ignore a gate. Both
+generators now emit the newline the file already uses. Convergence re-measured:
+
+    pass 1: social write RC=0 (21 pages) | social check RC=0 | hubs check RC=0
+    pass 2: social write RC=0 (0 pages)  | social check RC=0 | hubs check RC=0
+    pass 3: social write RC=0 (0 pages)  | social check RC=0 | hubs check RC=0
+
+and `play.html` is back to `crlf=705`, its only diff the forty lines added above.
+This is **P4.5** again, from a third direction: the missing `.gitattributes` is why
+a generator can be correct on one checkout and wrong on the next.
