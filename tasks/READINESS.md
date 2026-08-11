@@ -159,6 +159,16 @@ Both now point at the pages the nav already uses for those words — `/play.html
 rather than at anchors minted to justify the links. A new `fragments` check makes every deep link
 land on something that exists; it was shown failing first.
 
+**The page scrolled, the focus didn't.** Five pages link into the dictionary for a definition, and
+the `fragments` gate proved those ids exist without proving anything happens on arrival. A fragment
+navigation focuses its target **only if the target can hold focus** — measured, `#era-z`, `#retrieval`
+and `teams#foSec` all scrolled correctly (scrollY 815 / 2315 / 638) and left focus on `BODY`, so the
+next Tab restarted at the skip link and a screen reader began a 26-entry glossary from the top after
+being sent to one entry. `tabindex="-1"` on six elements; verified landing on the target afterwards.
+An honest positive: all 23 `#main` skip-link targets were already correct — only the content anchors
+were missed, which is why nothing had caught it. The gate now reads the target's tag and attributes,
+so it checks arrival rather than existence.
+
 **One heading for the whole landing page.** Heading navigation is how a screen-reader user moves
 through a long document, and **31 card regions across the site had no heading anywhere inside them** —
 the landing page offered one stop for five sections, and the Explorer, the page the brief centres

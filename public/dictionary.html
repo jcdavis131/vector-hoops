@@ -93,7 +93,7 @@ code{font-family:var(--mono);font-size:.92em;background:#f2f1ec;padding:1px 4px;
       <span class="src">assets/mtnn_arch.json</span>
     </div>
 
-    <div class="entry" id="cosine">
+    <div class="entry" id="cosine" tabindex="-1">
       <h3>Cosine similarity</h3>
       <p class="plain">How close two players are, on a scale where 1.00 means identical and 0
       means unrelated. It is the number behind every comparison on this site.</p>
@@ -103,7 +103,7 @@ code{font-family:var(--mono);font-size:.92em;background:#f2f1ec;padding:1px 4px;
       <span class="src">computed in the browser</span>
     </div>
 
-    <div class="entry" id="era-z">
+    <div class="entry" id="era-z" tabindex="-1">
       <h3>Era-z / per-100 possessions</h3>
       <p class="plain">Stats adjusted so a 1997 season and a 2025 season can be compared without
       the pace of the league doing the talking.</p>
@@ -167,7 +167,7 @@ code{font-family:var(--mono);font-size:.92em;background:#f2f1ec;padding:1px 4px;
       <span class="src">assets/drift.json</span>
     </div>
 
-    <div class="entry" id="era-twin">
+    <div class="entry" id="era-twin" tabindex="-1">
       <h3>Era twin</h3>
       <p class="plain">The player from a different decade who played most like this one.</p>
       <p class="exact">Nearest career in another decade by cosine between signature seasons,
@@ -180,7 +180,7 @@ code{font-family:var(--mono);font-size:.92em;background:#f2f1ec;padding:1px 4px;
 
     <h2 id="accuracy">Is it any good?</h2>
 
-    <div class="entry" id="retrieval">
+    <div class="entry" id="retrieval" tabindex="-1">
       <h3>Adjacent-season retrieval (top-1, top-5)</h3>
       <p class="plain">The test: hand the model one season of a player's career and ask it to
       find that same player's <em>next</em> season out of ~13,000 candidates. If the model
@@ -233,7 +233,7 @@ code{font-family:var(--mono);font-size:.92em;background:#f2f1ec;padding:1px 4px;
       <span class="src">assets/mtnn_attr_pop.json → method · assets/data/model_zoo_eval.json → glass_box</span>
     </div>
 
-    <div class="entry" id="coverage">
+    <div class="entry" id="coverage" tabindex="-1">
       <h3>Coverage, and why zero does not mean zero</h3>
       <p class="plain">Some stats were not tracked in older seasons. Where a stat is missing, the
       model is told it is missing — so it contributes nothing, which is not the same as

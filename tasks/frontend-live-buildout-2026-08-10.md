@@ -5270,3 +5270,45 @@ heads. Shown failing on the same deletion afterwards:
 
 That is the **seventh** check this session that reported success while measuring
 something other than what it named.
+
+
+## The page scrolled, the focus didn't (2026-08-11)
+
+Five pages link into the dictionary for a definition — `/play`, `/model`,
+`/players`, `/player-cards`, `/player/index` — plus `/teams#foSec` from its own
+nav. The `fragments` gate proves those ids exist. It does not prove that anything
+happens when you arrive.
+
+A fragment navigation scrolls to the target **and focuses it only if the target can
+hold focus.** Measured on the links a visitor actually follows:
+
+    /dictionary.html#era-z      focus BODY   landed False   scrollY 815
+    /dictionary.html#retrieval  focus BODY   landed False   scrollY 2315
+    /teams.html#foSec           focus BODY   landed False   scrollY 638
+
+The scroll works, so a sighted reader lands on the word. **Focus stays at the top of
+the document**, so the next Tab starts from the skip link and a screen reader begins
+reading a 26-entry glossary from the beginning — having been sent there to read one
+specific entry.
+
+`tabindex="-1"` on six elements is the whole fix:
+
+    /dictionary.html#era-z      focus DIV#era-z       landed True   scrollY 815
+    /dictionary.html#retrieval  focus DIV#retrieval   landed True   scrollY 2315
+    /teams.html#foSec           focus SECTION#foSec   landed True   scrollY 638
+
+**An honest positive worth recording:** all 23 `#main` skip-link targets already
+carried `tabindex="-1"`. Whoever did that work did it correctly and only the
+*content* anchors were missed — which is why nothing had noticed: the one fragment
+target anybody thought to check was the one that was right.
+
+### The gate now checks arrival, not existence
+
+`fragments` reads the target element's tag and attributes and requires it to be
+focusable — natively, or by `tabindex`. Its line changes from "land on an element
+that exists" to "land on an element that exists **and takes focus**". Shown failing
+by removing a single attribute:
+
+    - play.html links to '/dictionary#era-z' and dictionary.html's #era-z cannot
+      hold focus, so arriving scrolls the page and leaves focus at the top of the
+      document

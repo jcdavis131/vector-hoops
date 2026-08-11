@@ -572,6 +572,30 @@ def check_fragments(fail) -> None:
             f = bare + ".html" if bare + ".html" in ids else bare + "/index.html"
         return f if f in ids else f.split("/")[-1]
 
+    raw = {label(p): p.read_text(encoding="utf-8", errors="replace") for p in pages()}
+    native = re.compile(r"^(a|button|input|select|textarea|summary|details|iframe)$", re.I)
+
+    def focusable(target: str, frag: str) -> bool:
+        """Arriving at a fragment only moves focus if the target can hold it.
+
+        Measured on a deep link a visitor actually follows — the "what does this
+        word mean" links into the dictionary from five other pages:
+
+            /dictionary.html#era-z      focus BODY   landed False   scrollY 815
+            /dictionary.html#retrieval  focus BODY   landed False   scrollY 2315
+            /teams.html#foSec           focus BODY   landed False   scrollY 638
+
+        The page scrolls, so a sighted reader lands on the word. Focus does not,
+        so the next Tab starts at the skip link and a screen reader begins at the
+        top of a 26-entry glossary. tabindex="-1" is the whole fix, and all 23
+        skip links already had it — only the content anchors were missed.
+        """
+        m = re.search(r"<(\w+)([^>]*\sid=[\"']?" + re.escape(frag) + r"[\"']?[^>]*)>",
+                      raw.get(target, ""))
+        if not m:
+            return True     # `ids` above already reported a missing target
+        return bool(native.match(m.group(1)) or re.search(r"tabindex=", m.group(2)))
+
     checked = 0
     for p in pages():
         src = label(p)
@@ -594,7 +618,12 @@ def check_fragments(fail) -> None:
                 fail(f"{src} links to {href!r} but no element in {target} has "
                      f"id={frag!r} — the link writes a fragment into the address bar "
                      f"and leaves the reader where they were")
-    print(f"  {checked} fragment link(s) land on an element that exists")
+            elif not focusable(target, frag):
+                fail(f"{src} links to {href!r} and {target}'s #{frag} cannot hold "
+                     f"focus, so arriving scrolls the page and leaves focus at the "
+                     f"top of the document — the next Tab starts from the skip link "
+                     f"and a screen reader begins reading from the beginning")
+    print(f"  {checked} fragment link(s) land on an element that exists and takes focus")
 
 
 def check_derived(fail) -> None:
