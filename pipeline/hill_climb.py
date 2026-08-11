@@ -163,7 +163,28 @@ def run_one(tag: str, arch: list[str], masked: list[str], seed: int, epochs: int
     ]
     if masked:
         cmd += ["--mask-families", ",".join(sorted(masked))]
-    subprocess.run(cmd, cwd=ROOT, check=True, capture_output=True)
+    # capture_output=True gives the child a pipe. Run under Start-Process
+    # -WindowStyle Hidden — the only way to run a multi-hour climb on this box,
+    # since harness background jobs get killed — the child then blocks forever:
+    # measured at 0.06s CPU and 0% GPU across 35 seconds, while the identical
+    # spawn in the foreground finished in 10.3s with 35,879 bytes of stdout.
+    # Same family as the 2026-08-07 hidden-shell deadlock, one level down: the
+    # parent had real file handles and its child did not.
+    #
+    # Real files per trial. They are also worth having when a trial goes wrong.
+    logs = OUT / "trial_logs"
+    logs.mkdir(parents=True, exist_ok=True)
+    log = logs / f"{tag}_s{seed}.log"
+    # CREATE_NO_WINDOW matters as much as the file handles. Under Start-Process
+    # -WindowStyle Hidden this parent has no console, and a console child spawned
+    # from it tries to allocate one and blocks: measured at 0.0156s CPU, 4
+    # threads waiting on EventPairLow, a 0-byte log and 0% GPU, indefinitely.
+    # The same trainer launched directly under the same hidden Start-Process
+    # finishes in under 25 seconds, which is what isolated it to the spawn.
+    flags = getattr(subprocess, "CREATE_NO_WINDOW", 0)
+    with open(log, "wb") as fh:
+        subprocess.run(cmd, cwd=ROOT, check=True, stdout=fh, stderr=subprocess.STDOUT,
+                       stdin=subprocess.DEVNULL, creationflags=flags)
     rep = json.loads(REPORT.read_text(encoding="utf-8"))
     dest = OUT / f"{tag}_s{seed}"
     dest.mkdir(parents=True, exist_ok=True)
