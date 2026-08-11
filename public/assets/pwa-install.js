@@ -26,10 +26,28 @@
   function maybeShow(){
     if(!shouldShow()) return;
     if(document.getElementById('pwa-install-banner')) return;
-    if(!deferredPrompt && !('standalone' in navigator || window.matchMedia('(display-mode: standalone)').matches)) {
-      // on iOS, show manual add to home screen
-      var isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
-      if(isIOS) showIOS();
+
+    /* This read `'standalone' in navigator`, which is a feature test, as though
+       it were an is-installed test. On iOS Safari the property always exists,
+       so the condition was false there and every iOS visitor with two visits
+       fell through to showBanner() — the banner with an Install button — while
+       showIOS(), the branch actually written for them, was unreachable.
+
+       Measured with navigator.standalone defined the way Safari defines it:
+       banner true, install button true, and pressing it returns "banner
+       removed, nothing installed". iOS has no beforeinstallprompt at all, so
+       there was never anything for that button to do. It is the same defect as
+       the dead Find fit button removed from /player-fit, on the platform where
+       a custom prompt is the only prompt there is.
+
+       navigator.standalone === true is the is-installed test. */
+    var installed = navigator.standalone === true ||
+                    window.matchMedia('(display-mode: standalone)').matches;
+    if(installed) return;                 /* nothing to offer someone who has it */
+
+    if(!deferredPrompt){
+      /* no prompt to defer means no Install button can work */
+      if(/iphone|ipad|ipod/i.test(navigator.userAgent)) showIOS();
       return;
     }
     showBanner();
@@ -39,7 +57,7 @@
     var banner = document.createElement('div');
     banner.id='pwa-install-banner';
     banner.style.cssText='position:fixed; left:50%; bottom:calc(14px + env(safe-area-inset-bottom)); transform:translateX(-50%); z-index:75; background:#FFFEF7; color:#111; border:2px solid #111; border-radius:16px; box-shadow:6px 6px 0 #111; padding:12px 14px; display:flex; gap:12px; align-items:center; max-width:min(92vw, 420px); width:92vw; box-sizing:border-box; font-family:ui-monospace, monospace;';
-    banner.innerHTML='<div style="flex:0 0 40px; height:40px; background:#111; color:#F0E442; border-radius:10px; display:grid; place-items:center; font-weight:950; font-size:18px;">VH</div><div style="flex:1; min-width:0;"><div style="font-weight:900; font-size:13px; line-height:1.2;">Add to Home Screen</div><div style="font-size:11px; opacity:.8; line-height:1.35; margin-top:2px;">Offline, instant, no app store. 114KB lite map cached.</div></div><div style="display:flex; flex-direction:column; gap:6px;"><button id="pwa-install-go" style="min-height:36px; border:2px solid #111; background:#F0E442; border-radius:999px; font-weight:900; font-size:12px; padding:0 14px; cursor:pointer; box-shadow:2px 2px 0 #111;">Install</button><button id="pwa-install-no" style="min-height:28px; border:1px solid #111; background:transparent; border-radius:999px; font-size:10px; padding:0 10px; cursor:pointer;">Not now</button></div>';
+    banner.innerHTML='<div style="flex:0 0 40px; height:40px; background:#111; color:#F0E442; border-radius:10px; display:grid; place-items:center; font-weight:950; font-size:18px;">VH</div><div style="flex:1; min-width:0;"><div style="font-weight:900; font-size:13px; line-height:1.2;">Add to Home Screen</div><div style="font-size:11px; opacity:.8; line-height:1.35; margin-top:2px;">Offline, instant, no app store.</div></div><div style="display:flex; flex-direction:column; gap:6px;"><button id="pwa-install-go" style="min-height:36px; border:2px solid #111; background:#F0E442; border-radius:999px; font-weight:900; font-size:12px; padding:0 14px; cursor:pointer; box-shadow:2px 2px 0 #111;">Install</button><button id="pwa-install-no" style="min-height:28px; border:1px solid #111; background:transparent; border-radius:999px; font-size:10px; padding:0 10px; cursor:pointer;">Not now</button></div>';
     document.body.appendChild(banner);
     document.getElementById('pwa-install-go').addEventListener('click', function(){
       if(deferredPrompt){
@@ -50,6 +68,8 @@
           deferredPrompt=null;
         });
       } else {
+        /* unreachable: showBanner only runs with a deferredPrompt in hand. It
+           used to be how the Install button "worked" on iOS. */
         banner.remove();
       }
     });
