@@ -20,10 +20,16 @@
  *     shift + arrows    coarser                0 or Home          reset
  *     Enter             pick nearest centre    Space              auto-rotation
  *     H or ?            speak the controls     hover              name a point
+ *     two fingers       pinch to zoom          one finger         scroll the page
  *
  * A plain wheel is deliberately left alone: these canvases are 360-520px tall
  * and sit high on their pages, and a wheel that zooms instead of scrolling is a
  * trap. Zoom is reachable three other ways.
+ *
+ * Pinch was the last of them to arrive, and until it did every one of those
+ * three needed hardware a phone does not have — a wheel or a keyboard. Touch
+ * visitors could turn the map and pick points on it and could never get closer
+ * to one.
  *
  * The page keeps its own draw loop and its own idea of what a point is. This
  * owns the camera and the input, and asks the page four questions:
@@ -251,6 +257,45 @@
       cam.userAt = performance.now();
       cam.setZoom(cam.zoom * Math.exp(-e.deltaY * 0.0016), true);
     }, { passive: false });
+
+    /* Two fingers pinch to zoom.
+       Zoom had four ways in and not one of them worked on a phone: ctrl+wheel
+       wants a wheel, plus, minus and 0 want a keyboard. A touch visitor could
+       turn the map and pick a point on it and could never get closer to one,
+       on the control this whole site is built around.
+
+       Touch events rather than a second pointer. Under `touch-action: pan-y`
+       the browser cancels pointers as soon as it decides a gesture is a pan, so
+       a pinch assembled from pointerdown pairs loses one of them part-way
+       through; touchstart still reports both. preventDefault is what stops the
+       browser page-zooming on top of the map's own zoom. One finger is left
+       alone so the page still scrolls past a canvas 360-520px tall. */
+    var pinch = null;
+    function spread(t) {
+      var dx = t[0].clientX - t[1].clientX, dy = t[0].clientY - t[1].clientY;
+      return Math.sqrt(dx * dx + dy * dy);
+    }
+    cv.addEventListener('touchstart', function (e) {
+      if (e.touches.length !== 2) return;
+      e.preventDefault();
+      pinch = { d0: spread(e.touches), z0: cam.zoom };
+      /* the first finger had already started a rotate, and a pinch is not one.
+         `moved` also keeps the click that follows from being read as a pick. */
+      cam.drag = null; cam.moved = 99; cv.classList.remove('grabbing');
+    }, { passive: false });
+    cv.addEventListener('touchmove', function (e) {
+      if (!pinch || e.touches.length !== 2) return;
+      e.preventDefault();
+      cam.userAt = performance.now();
+      var d = spread(e.touches);
+      /* below about 8px apart the ratio is noise, not a gesture */
+      if (pinch.d0 > 8) cam.setZoom(pinch.z0 * (d / pinch.d0), true);
+    }, { passive: false });
+    function endPinch(e) {
+      if (pinch && e.touches.length < 2) { pinch = null; cam.userAt = performance.now(); }
+    }
+    cv.addEventListener('touchend', endPinch);
+    cv.addEventListener('touchcancel', endPinch);
 
     // ── keyboard ───────────────────────────────────────────────────────────
     if (!cv.hasAttribute('tabindex')) cv.tabIndex = 0;
