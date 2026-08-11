@@ -37,6 +37,27 @@ h3{font-size:15px;margin:0 0 4px}
 .stat{border:1.8px solid var(--ink);border-radius:10px;box-shadow:var(--shadow-sm);padding:8px 11px;background:var(--surface);min-width:112px}
 .stat__v{font-family:var(--mono);font-weight:900;font-size:19px;font-variant-numeric:tabular-nums}
 .stat__k{font-family:var(--mono);font-size:9.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-top:2px}
+
+/* ── the season scrubber ─────────────────────────────────────────────────── */
+.sm-box{position:relative;background:radial-gradient(1100px 600px at 18% -10%,#1A233A 0%,#121A2D 32%,#0A0C10 72%);border:2px solid var(--ink);border-radius:10px;overflow:hidden;margin-top:10px}
+#smCv{display:block;width:100%;height:420px;min-width:0;touch-action:pan-y;cursor:grab}
+#smCv.grabbing{cursor:grabbing}
+#smCv.overdot{cursor:pointer}
+#smCv:focus{outline:3px solid #0072B2;outline-offset:2px}
+.sm-tag{position:absolute;left:10px;top:10px;display:flex;gap:6px;flex-wrap:wrap;pointer-events:none;max-width:calc(100% - 20px)}
+.sm-foot{position:absolute;left:10px;bottom:10px;pointer-events:none;max-width:calc(100% - 20px)}
+.sm-pill{display:inline-flex;align-items:center;padding:4px 9px;border-radius:999px;border:1.5px solid #0A0C10;background:#FAFAF8;color:#26241F;font-family:var(--mono);font-size:10.5px;font-weight:800;letter-spacing:.02em;line-height:1.35}
+.sm-ctl{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:10px}
+.sm-ctl button{font:800 11px var(--mono);min-height:30px;min-width:30px;padding:6px 10px;border:1.6px solid var(--ink);border-radius:9px;background:var(--surface);box-shadow:2px 2px 0 var(--ink);cursor:pointer}
+/* opacity:.5 put this at 2:1 and check_painted_contrast was right to say so. WCAG exempts disabled controls, but a control you cannot read is a control you cannot plan around — this one still says what it will do. */
+.sm-ctl button[disabled]{color:#6B6760;background:#F2F1EC;border-color:#B9B6AE;cursor:not-allowed;box-shadow:none}
+.sm-ctl input[type=range]{flex:1 1 220px;min-width:180px;height:30px;accent-color:#2a78d6}
+.sm-yr{font-family:var(--mono);font-size:12px;font-weight:800;font-variant-numeric:tabular-nums;color:#26241F}
+.sm-mix{display:flex;flex-wrap:wrap;gap:5px;margin-top:10px}
+.sm-mix span{display:inline-flex;align-items:center;gap:5px;font-family:var(--mono);font-size:10.5px;color:#3A3732;border:1.4px solid var(--hair);border-radius:999px;padding:3px 8px}
+.sm-mix i{width:10px;height:10px;border-radius:3px;border:1.2px solid var(--ink);display:inline-block}
+.sm-help{margin:9px 0 0;font-size:12px;line-height:1.55;color:#3A3732}
+.sm-help kbd{font-family:var(--mono);font-size:11px;font-weight:800;color:#111;background:#fff;border:1.5px solid #111;border-radius:5px;padding:1px 5px;margin:0 1px}
 /* charts */
 .figwrap{margin-top:12px;overflow-x:auto}
 svg.chart{display:block;width:100%;height:auto;min-width:520px;touch-action:pan-y}
@@ -143,6 +164,8 @@ span.proj{color:var(--orange-ink)}
 <meta property="og:description" content="30 seasons of NBA player-seasons measured in one embedding space. Orthogonal Procrustes rotation between consecutive seasons, archetype prevalence 1996-2026, and what moved in each season — every number recomputable.">
 <meta name="twitter:description" content="30 seasons of NBA player-seasons measured in one embedding space. Orthogonal Procrustes rotation between consecutive seasons, archetype prevalence 1996-2026, and what moved in each season — every number recomputable.">
 <!-- build_social_meta.py: end -->
+<!-- the camera every embedding map on this site shares -->
+<script src="assets/map-camera.js?v=7d7496c8"></script>
 </head><body>
 <a class="vh-skip" href="#main">Skip to the research</a>
 <nav>
@@ -230,6 +253,40 @@ span.proj{color:var(--orange-ink)}
       <div style="overflow-x:auto"><table id="archMapTable"></table></div>
     </details>
     <div class="method" id="archMapMethod"></div>
+  </section>
+
+  <section class="card" aria-labelledby="h-season">
+    <h2 id="h-season">The league, one season at a time</h2>
+    <p class="sub">The map above is every charted season at once. This is the same space with the
+    years pulled apart: pick a season and you are looking at where the model put the players who
+    were actually on the floor that year — <b>30 seasons, 1996-97 to 2025-26, 12,038 player-seasons</b>. Drag it to turn it; the keys are the ones the map on the front page uses.
+    The mix underneath is counted from the points on screen, not from a separate table, so the
+    two cannot disagree.</p>
+    <p style="margin-top:10px"><button id="smLoad" class="btn" type="button">Draw the seasons — 406 KB</button>
+    <span class="mono" id="smState" style="margin-left:8px;color:var(--muted)">not loaded yet</span></p>
+    <div class="sm-box" id="smBox" hidden>
+      <canvas id="smCv" width="900" height="520" tabindex="0" aria-describedby="smHelp"
+        aria-label="The league in one season, drawn in the embedding space. Every point is one player's season, placed by the model and coloured by archetype. Drag or use the arrow keys to turn it, plus and minus to zoom, Enter to select the point nearest the middle. The season slider below carries the same seasons, and the archetype mix under it is counted from the points on screen."></canvas>
+      <div class="sm-tag"><span class="sm-pill" id="smSeason">season</span><span class="sm-pill" id="smOri">yaw 0° · pitch 0° · zoom 1.0×</span></div>
+      <div class="sm-foot"><span class="sm-pill" id="smHov">◎ hover a point to name it · click to trace the career</span></div>
+    </div>
+    <div class="sm-ctl">
+      <button id="smPrev" type="button" disabled aria-label="Previous season">◀</button>
+      <input id="smYear" type="range" min="0" max="29" step="1" value="29" disabled
+             aria-label="Season" aria-describedby="smLab">
+      <button id="smNext" type="button" disabled aria-label="Next season">▶</button>
+      <button id="smPlay" type="button" disabled aria-pressed="false">▶ Play the seasons</button>
+      <span class="sm-yr" id="smLab">press Draw the seasons to load</span>
+    </div>
+    <div class="sm-mix" id="smMix"></div>
+    <p id="smHelp" class="sm-help">The slider is a real range input: <kbd>←</kbd><kbd>→</kbd> step a
+    season, <kbd>Home</kbd> and <kbd>End</kbd> jump to 1996-97 and 2025-26. On the map itself:
+    <kbd>←</kbd><kbd>→</kbd> turn, <kbd>↑</kbd><kbd>↓</kbd> tilt, <kbd>+</kbd><kbd>−</kbd> zoom,
+    <kbd>Enter</kbd> selects the point nearest the middle, <kbd>Space</kbd> stops the rotation,
+    <kbd>H</kbd> reads the controls aloud.</p>
+    <div class="method" id="smMethod">Nothing is loaded yet. The file is
+    <code>assets/season_map.json</code>, cut from <code>assets/embedding_map_trajectories.json</code>
+    by <code>scripts/build_season_map.py</code> with the coordinates copied verbatim.</div>
   </section>
 
   <section class="card" aria-labelledby="h-shifts">
@@ -839,6 +896,215 @@ $('twinInput').addEventListener('change',lookup);
     },{rootMargin:'320px'});
     mio.observe(mapSec);
   } else { bootMap(); }
+})();
+</script>
+<script>
+/* ── The league, one season at a time ──────────────────────────────────────────
+   The archetype map above draws every charted season at once. This draws one
+   season: assets/season_map.json is the same trajectory data pivoted by year, so
+   picking 2003-04 shows exactly the players who were on the floor that year,
+   where the model put them.
+
+   Two things are deliberate. The file loads on an explicit press with its real
+   size on the button, because 406 KB is not something to spend on a visitor who
+   scrolled past. And the archetype mix under the slider is counted from the
+   points on screen rather than read from a prevalence table — that table is a
+   different clustering in a different space, and a page that quotes two sources
+   for one number is a page that will eventually disagree with itself. */
+(function(){
+  'use strict';
+  var $ = function(s){ return document.getElementById(s); };
+  var OK = ['#0072B2','#D55E00','#009E73','#CC79A7','#F0E442','#56B4E9','#E69F00','#000000'];
+  var cv = $('smCv');
+  if(!cv || !window.VHMapCamera) return;
+  var ctx = cv.getContext('2d');
+  var box=$('smBox'), btn=$('smLoad'), state=$('smState'), yr=$('smYear'),
+      lab=$('smLab'), mix=$('smMix'), play=$('smPlay'), method=$('smMethod');
+  var SM=null, pending=null, cam=null, idx=29, frame=[], trace=null,
+      names=null, playT=0, annT=0, W=0, H=0;
+  var DPR = Math.min(window.devicePixelRatio||1, 1.4);
+
+  function say(m){ var l=$('live'); if(!l||!m) return;
+    if(l.textContent===m) l.textContent=''; l.textContent=m; }
+  function esc(s){ return String(s).replace(/[&<>"]/g, function(c){
+    return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
+  function rs(){ var r=cv.getBoundingClientRect();
+    W=Math.round(r.width*DPR); H=Math.round((r.height||420)*DPR); cv.width=W; cv.height=H; }
+
+  function setFrame(i, announce){
+    if(!SM) return;
+    idx = Math.max(0, Math.min(SM.seasons.length-1, i));
+    var s = SM.seasons[idx], rows = SM.frames[s] || [];
+    /* rows are [pid,x,y,z,c] in 0..1; the camera and every other map on this
+       site work in -1..1, so the conversion happens once per season change
+       rather than once per point per frame */
+    frame = rows.map(function(r){ return {pid:r[0], x:(r[1]-0.5)*2, y:(r[2]-0.5)*2,
+                                          z:(r[3]-0.5)*2, c:r[4]}; });
+    yr.value = String(idx);
+    $('smSeason').textContent = s + ' · ' + frame.length + ' player-seasons';
+    lab.textContent = s + ' · ' + frame.length + ' of ' +
+                      SM.playerSeasons.toLocaleString() + ' charted';
+    renderMix();
+    if(announce){
+      clearTimeout(annT);
+      annT = setTimeout(function(){
+        say(s + ', ' + frame.length + ' player-seasons on the floor.'); }, 400);
+    }
+  }
+
+  function renderMix(){
+    var n=[0,0,0,0,0,0,0,0], tot=frame.length, i, c;
+    for(i=0;i<tot;i++){ c=frame[i].c; if(c>=0 && c<8) n[c]++; }
+    var order=[0,1,2,3,4,5,6,7].sort(function(a,b){ return n[b]-n[a]; });
+    var out='';
+    for(i=0;i<8;i++){
+      c=order[i];
+      if(!n[c]) continue;
+      var nm = (names && names[c]) ? names[c] : ('archetype ' + c);
+      out += '<span><i style="background:'+OK[c]+'"></i>'+esc(nm)+' '+
+             Math.round(n[c]/tot*100)+'%</span>';
+    }
+    mix.innerHTML = out;
+  }
+
+  function traceFor(pid){
+    /* every season this player appears in, in order. Scanning all 30 frames on a
+       click is 12,038 row visits once, which is cheaper than carrying a second
+       index of the same numbers for the life of the page. */
+    var out=[], i, s, rows, j;
+    for(i=0;i<SM.seasons.length;i++){
+      s=SM.seasons[i]; rows=SM.frames[s];
+      for(j=0;j<rows.length;j++){
+        if(rows[j][0]===pid){
+          out.push({s:s, x:(rows[j][1]-0.5)*2, y:(rows[j][2]-0.5)*2, z:(rows[j][3]-0.5)*2});
+          break;
+        }
+      }
+    }
+    return out;
+  }
+
+  function draw(){
+    if(!cam){ return; }
+    ctx.clearRect(0,0,W,H);
+    cam.tick();
+    for(var i=0;i<frame.length;i++){
+      var d=frame[i], P=cam.proj(d.x,d.y,d.z), px=P[0], py=P[1], dep=P[2];
+      if(px<-12||px>W+12||py<-12||py>H+12) continue;
+      cam.hit(d,px,py);
+      var col=OK[d.c & 7];
+      ctx.beginPath();
+      ctx.fillStyle='rgba('+parseInt(col.slice(1,3),16)+','+parseInt(col.slice(3,5),16)+','+
+                    parseInt(col.slice(5,7),16)+','+(0.24+dep*0.58).toFixed(3)+')';
+      ctx.arc(px,py,(1.4+dep*2.1)*DPR,0,6.283);
+      ctx.fill();
+    }
+    cam.frameEnd();
+    if(trace && trace.length>1){
+      ctx.strokeStyle='#EB6834'; ctx.lineWidth=2*DPR; ctx.globalAlpha=0.95;
+      ctx.beginPath();
+      trace.forEach(function(pt,k){
+        var P=cam.proj(pt.x,pt.y,pt.z);
+        if(k===0) ctx.moveTo(P[0],P[1]); else ctx.lineTo(P[0],P[1]);
+      });
+      ctx.stroke(); ctx.globalAlpha=1;
+      trace.forEach(function(pt,k){
+        var P=cam.proj(pt.x,pt.y,pt.z), prog=k/(trace.length-1);
+        ctx.beginPath();
+        ctx.fillStyle='rgba(235,104,52,'+(0.4+prog*0.6).toFixed(2)+')';
+        ctx.arc(P[0],P[1],2.4*DPR+prog*1.6,0,6.283);
+        ctx.fill();
+      });
+    }
+    requestAnimationFrame(draw);
+  }
+
+  function enable(){
+    ['smPrev','smNext','smPlay','smYear'].forEach(function(id){ $(id).disabled=false; });
+  }
+
+  function start(){
+    box.hidden=false;
+    rs();
+    window.addEventListener('resize', function(){
+      DPR=Math.min(window.devicePixelRatio||1,1.4); rs(); });
+    cam = VHMapCamera.attach(cv, {
+      size:   function(){ return [W,H]; },
+      points: function(){ return frame; },
+      label:  function(d){ return '◎ ' + ((SM.names && SM.names[d.pid]) || ('player ' + d.pid)) +
+                                  ' · ' + SM.seasons[idx] + ' — click to trace the career'; },
+      hoverIdle: '◎ hover a point to name it · click to trace the career',
+      onPick: function(d){
+        var nm = (SM.names && SM.names[d.pid]) || ('player ' + d.pid);
+        trace = traceFor(d.pid);
+        cam.say(nm + ' — ' + trace.length + ' charted season' +
+                (trace.length===1?'':'s') + ', ' + trace[0].s + ' to ' +
+                trace[trace.length-1].s + '.');
+      },
+      live:'live', status:'smOri', hover:'smHov', cy:0.53
+    });
+    yr.max = String(SM.seasons.length-1);
+    setFrame(SM.seasons.length-1, false);
+    enable();
+    requestAnimationFrame(draw);
+  }
+
+  function stop(){
+    if(!playT) return;
+    clearInterval(playT); playT=0;
+    play.setAttribute('aria-pressed','false'); play.textContent='▶ Play the seasons';
+  }
+
+  btn.addEventListener('click', function(){
+    if(pending || SM) return;                 /* one download, however many presses */
+    btn.disabled=true; btn.setAttribute('aria-busy','true');
+    btn.textContent='Drawing…';
+    state.textContent='fetching assets/season_map.json';
+    say('Loading the season map, 406 kilobytes.');
+    pending = fetch('assets/season_map.json?v=06dd2657')
+      .then(function(r){ if(!r.ok) throw new Error('HTTP '+r.status); return r.json(); })
+      .then(function(j){
+        if(!j.seasons || !j.seasons.length) throw new Error('no seasons in the file');
+        SM=j;
+        btn.hidden=true;
+        state.textContent = j.seasons.length + ' seasons loaded';
+        method.textContent = j.playerSeasons.toLocaleString() + ' player-seasons across ' +
+          j.seasons.length + ' seasons (' + j.seasons[0] + ' to ' +
+          j.seasons[j.seasons.length-1] + '), ' + j.players.toLocaleString() + ' players, from ' +
+          'assets/season_map.json — cut from assets/embedding_map_trajectories.json by ' +
+          'scripts/build_season_map.py with x, y and z copied verbatim. The archetype mix is ' +
+          'counted from the points drawn. Colour names come from assets/mtnn_arch.json; if that ' +
+          'file cannot be loaded the mix shows indices rather than inventing names.';
+        start();
+        say(j.seasons.length + ' seasons loaded. Use the season slider, or the map itself.');
+        return fetch('assets/mtnn_arch.json?v=d9922089');
+      })
+      .then(function(r){ return r && r.ok ? r.json() : null; })
+      .then(function(a){
+        if(a && a.gameArchetypes && a.gameArchetypes.length){ names=a.gameArchetypes; renderMix(); }
+      })
+      .catch(function(e){
+        pending=null;
+        btn.disabled=false; btn.removeAttribute('aria-busy');
+        btn.textContent='Try again';
+        state.textContent='could not load ('+e.message+')';
+        method.textContent='The season map could not be loaded ('+e.message+
+          '). Nothing is drawn rather than a made-up cloud.';
+        say('The season map could not be loaded.');
+      });
+  });
+
+  yr.addEventListener('input', function(){ stop(); setFrame(+yr.value, true); });
+  $('smPrev').addEventListener('click', function(){ stop(); setFrame(idx-1, true); });
+  $('smNext').addEventListener('click', function(){ stop(); setFrame(idx+1, true); });
+  play.addEventListener('click', function(){
+    if(playT){ stop(); say('Stopped at ' + SM.seasons[idx] + '.'); return; }
+    playT = setInterval(function(){
+      setFrame(idx+1 >= SM.seasons.length ? 0 : idx+1, false);
+    }, 900);
+    play.setAttribute('aria-pressed','true'); play.textContent='⏸ Stop';
+    say('Playing the seasons, one every nine tenths of a second.');
+  });
 })();
 </script>
 <script src="assets/error-boundary.js?v=b5444017"></script>
