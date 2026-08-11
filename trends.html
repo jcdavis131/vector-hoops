@@ -608,9 +608,14 @@ function load(){
           return '<tr><td>'+esc(c.class)+'</td><td>'+c.count+'</td><td>'+pct1(c.share)+'</td><td>'+
             n2(c.meanCareerLength)+'</td><td>'+n2(c.meanPMz)+'</td></tr>';
         }).join('')+'</tbody>';
-      var motifs=(j.topReinventionMotifs||[]).slice(0,6);
+      /* the file carries eight; showing six of them without saying so reads as
+     "these are the motifs" rather than "these are the six biggest" */
+  var allMotifs=(j.topReinventionMotifs||[]);
+  var motifs=allMotifs.slice(0,6);
       var mx=motifs.length?motifs[0].count:1;
-      $('arcMotifs').innerHTML=motifs.map(function(m){
+      $('arcMotifs').innerHTML=(allMotifs.length>motifs.length
+    ? '<p class="sub dim" style="margin:0 0 6px">The '+motifs.length+' most common of '+
+      allMotifs.length+' charted motifs.</p>' : '')+motifs.map(function(m){
         return '<div class="bar-row" style="grid-template-columns:1fr 90px 34px">'+
           '<span style="font-size:11px">'+esc(m.from)+' → <b>'+esc(m.to)+'</b></span>'+
           '<span class="bar-track"><span class="bar-fill" style="width:'+Math.max(3,(m.count/mx)*100).toFixed(1)+'%"></span></span>'+

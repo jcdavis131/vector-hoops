@@ -340,6 +340,52 @@ def main() -> int:
                     f"a failed card took over the title and url: {after['title']!r} "
                     f"{after['url']!r}")
 
+            # 9. The announcement has to count the matches, not the cap. `hits`
+            #    was sliced to ten before anything counted it, so a query with
+            #    forty matches told a screen-reader user "10 matches" and showed
+            #    ten rows with nothing saying there were more.
+            #
+            #    The true count comes from the index this test already serves,
+            #    not from the page: IDX lives inside an IIFE and Runtime.evaluate
+            #    cannot see it, and asking the page how many matches it found is
+            #    asking the thing under test to grade itself.
+            seed, true_n = None, 0
+            try:
+                idx = json.loads((SERVE / "assets" / "wiki_index.json")
+                                 .read_text(encoding="utf-8"))
+                names = [str(x.get("name", "")).lower() for x in (idx.get("players") or [])]
+                for cand in ("an", "ar", "on", "er", "le", "ma", "jo", "ri"):
+                    n = sum(1 for x in names if cand in x)
+                    if n > 12:
+                        seed, true_n = cand, n
+                        break
+            except Exception as e:                                   # noqa: BLE001
+                failures.append(f"could not read the index to count matches: {e}")
+
+            if seed:
+                ev(ws, "(function(){var q=document.getElementById('q');q.value=" +
+                       json.dumps(seed) +
+                       ";q.dispatchEvent(new Event('input',{bubbles:true}));})()")
+                time.sleep(0.8)
+                shown = ev(ws, "document.querySelectorAll('#hits li[role=\"option\"]').length")
+                spoken = str(ev(ws, "(document.getElementById('live')||{}).textContent") or "")
+                print(f"  counted        {seed!r} matches {true_n}, list shows {shown}, "
+                      f"said {spoken.strip()[:52]!r}")
+                if str(true_n) not in spoken:
+                    failures.append(
+                        f"{seed!r} matches {true_n} charted players and the announcement "
+                        f"says {spoken.strip()[:44]!r} — that is the length of the list, "
+                        f"not the number of matches, so the one number a non-visual "
+                        f"visitor gets is the cap")
+                elif isinstance(shown, int) and 0 < shown < true_n \
+                        and "showing" not in spoken.lower():
+                    failures.append(
+                        f"{shown} of {true_n} matches are on screen and the announcement "
+                        f"does not say the list is cut short: {spoken.strip()[:50]!r}")
+            elif not failures or "could not read the index" not in failures[-1]:
+                failures.append("no two-letter seed matches more than twelve names, so the "
+                                "capped-count path was never exercised")
+
             # 8. Back. open() pushes a history entry and rewrites document.title, so
             #    backing out of a card has to undo both. Measured before the fix:
             #      Back   url ''   hidden=True   title 'Vince Carter — Vector Hoops'

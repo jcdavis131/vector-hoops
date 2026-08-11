@@ -5579,3 +5579,47 @@ Three smokes went red at once — `smoke_render` on console errors, `smoke_index
 because the map never loaded, `smoke_settled` from its own collector. That line is
 a literal again, owned by the generator's `\d+ pts filt` pattern, which is what
 that pattern is for.
+
+
+## It said 10 matches. There were 538. (2026-08-11)
+
+Two sweeps this firing. The first found nothing, which is worth saying.
+
+**Every decimal the site prints, against every committed asset.** Fourteen pages,
+82 asset files: **zero figures that no file contains.** Tightened to the site's
+actual promise — *"names the committed file it comes from"* — by pairing each
+figure with the asset named nearest it, 18 pairs looked wrong and **all 18 were
+the heuristic**: `0.7057` is in the dictionary's own *"terms with no file behind
+them"* section, `1.00` is "1.00 would be identical" explaining cosine, `0.51` and
+`0.20` are the rounded-for-display cases `cited` documents it cannot check, `0.35`
+and `1.0` are an alpha ramp, and the `1.28 / 0.62 / 0.81` chips sit next to a
+sentence that names a file for *the figures after them*, not for themselves.
+
+**The second sweep found the real thing.** Eight list renders cap at a fixed
+number. Five are honest by construction — the headings say "the five", the map key
+has exactly as many colours as there are archetypes (8 and 8), the ambiguity list
+already appends "…". Two were not.
+
+`/player-cards` sliced before it counted:
+
+    hits = IDX.players.filter(…).sort(…).slice(0,10);
+    say(hits.length + ' match' + … );
+
+So the announcement was the length of the list, not the number of matches. Typing
+`an` matches **538** charted players; a screen-reader user was told **"10
+matches."** and shown ten rows with nothing saying there were more. Now:
+
+    538 matches, showing the first 10. Keep typing to narrow it.
+
+And `/trends` showed six of the eight reinvention motifs its own file carries,
+with nothing saying so — it now names the six as the six most common of eight.
+
+### Two mutations, two caught
+
+`smoke_cards.py` gained the assertion, and it counts from the index the test
+already serves rather than asking the page — `IDX` lives inside an IIFE that
+`Runtime.evaluate` cannot see, and asking the page how many matches it found is
+asking the thing under test to grade itself.
+
+    announces the true count     RC=1  caught
+    says the list is cut short   RC=1  caught

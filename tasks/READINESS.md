@@ -159,6 +159,17 @@ Both now point at the pages the nav already uses for those words — `/play.html
 rather than at anchors minted to justify the links. A new `fragments` check makes every deep link
 land on something that exists; it was shown failing first.
 
+**It said 10 matches. There were 538.** `/player-cards` sliced its results to ten *before* counting
+them, so the announcement was the length of the list rather than the number of matches: typing `an`
+matches **538** charted players and a screen-reader user was told **"10 matches."**, with ten rows on
+screen and nothing saying there were more. It now says *538 matches, showing the first 10.* `/trends`
+had the same shape, showing six of the eight reinvention motifs in its own file; it names them as the
+six most common of eight now. Two mutations, two caught — and the assertion counts from the index the
+test serves rather than asking the page, because asking the page how many matches it found is asking
+the thing under test to grade itself. **A figure sweep found nothing**, which is the other half of the
+result: every decimal on fourteen pages exists in a committed asset, and all 18 apparent
+figure/file mismatches were the heuristic rather than the site.
+
 **The same wrong number, five more times.** Yesterday's stale count was a hardcoded number that had
 drifted from its data, and nothing here looks for that class. Every count every page states was put
 next to the collection sizes of the assets that page fetches; six were within 12% of a real count

@@ -301,11 +301,15 @@ function search(){
      listbox was open, so a screen reader announced a combobox with no state
      while five results sat under it. Set where the list is actually written,
      and guarded so a repeat write is a no-op. */
-  hits=IDX.players.filter(function(p){ return p.name.toLowerCase().indexOf(v)>=0; })
+  var all=IDX.players.filter(function(p){ return p.name.toLowerCase().indexOf(v)>=0; })
     .sort(function(a,b){
       var ai=a.name.toLowerCase().indexOf(v), bi=b.name.toLowerCase().indexOf(v);
       return ai!==bi ? ai-bi : (b.seasons||0)-(a.seasons||0);
-    }).slice(0,10);
+    });
+  /* Ten is the list, `all.length` is the truth. Slicing before counting made the
+     announcement state the cap: forty matches were called "10 matches", and the
+     list showed ten with nothing saying there were more. */
+  hits=all.slice(0,10);
   $('hits').innerHTML=hits.length
     ? hits.map(function(p,i){
         /* The option IS the option. This used to be a <button> inside the
@@ -319,7 +323,8 @@ function search(){
       }).join('')
     : '<li class="sub dim">No charted player matches that.</li>';
   setExpanded(hits.length>0);
-  say(hits.length+' match'+(hits.length===1?'':'es')+'.');
+  say(all.length+' match'+(all.length===1?'':'es')+
+      (all.length>hits.length?(', showing the first '+hits.length+'. Keep typing to narrow it.'):'.'));
 }
 /* Memoising the RESULT was not enough. IDX stays null for the whole flight, so
    focus plus five keystrokes entered here six times and started six downloads of
