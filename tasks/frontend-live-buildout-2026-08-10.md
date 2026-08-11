@@ -4207,3 +4207,67 @@ clean — and the worker is network-first, so the cached `/` is only ever an off
 fallback. The cost of being wrong is that an offline visitor's tile icons announce
 as unlabelled images until the next revalidation. Bumping every markup edit would
 purge the shell constantly and make the version meaningless.
+
+
+## Twenty seconds of nothing on the landing page's map control (2026-08-10)
+
+Ran a static payload census over every page to find the next `/model` — a page
+downloading far more than it reads. It nominated `index.html` at **5,150 KB**, more
+than double anything else, with `vectors.json` at 3,696 KB.
+
+**The census was wrong, and its own docstring said it would be.** It reads
+`fetch()` literals and cannot see when they run. Measured in the browser instead:
+
+    /index.html   Fast 3G, cold cache
+    embedding_map_points_limited.json   455 → 2164 ms   273.5 KB
+    TOTAL                                                325.5 KB
+    map has ink                          2188 ms
+
+The landing page is lean. `loadFull()` — the 3.6 MB — is called from exactly one
+place: `$('b8k').onclick`. A shortlist is not a verdict; 15× off, in the safe
+direction, and only because the browser was asked.
+
+### What the browser did find
+
+The button that fetch sits behind:
+
+    $('b8k').onclick = async () => { await loadFull(); $('b8k').classList.add('on'); … }
+
+State is set *after* the await. Pressed it on Fast 3G and sampled every two
+seconds:
+
+     2.0s  label='8k'  class=''    1764 pts
+     …
+    18.0s  label='8k'  class=''    1764 pts
+    20.1s  label='8k'  class='on'  12966 pts
+
+**Twenty seconds in which nothing whatsoever changed** — no label, no
+`aria-busy`, no point count — and then the map redrew. The only honest reading of
+that page is that the press did not register, and the reasonable response is to
+press again. `loadFull()` had no guard, so **every press started another 3,784,565-byte
+download.** Its `catch(e){}` returned nothing either, so a failed fetch and a slow
+one were indistinguishable, and the handler flipped the button to "on" over a cloud
+that had not changed.
+
+Three things, all measured after:
+
+    300 ms after the press   label='8k…'  aria-busy='true'
+                             announced 'Loading the full cloud — 12,966 points,
+                                        a 3.6 megabyte download.'
+    second press mid-load    vectors.json requests: 1
+    on completion            class='on'   announced 'Full cloud drawn — 12,966 points.'
+    third press once loaded  requests still 1
+
+`loadFull` returns a boolean and memoises; the handler sets state before it awaits
+and restores on either outcome; failure says so out loud instead of pretending.
+`index.html` already had `#ixLive`, so the announcement had somewhere to go.
+
+### Worth keeping
+
+The census stays useful — it is how the shortlist got made — but it belongs in
+scratch, not in `scripts/`, because a tool that reports 5,150 KB for a 325 KB page
+is a false alarm generator if anyone treats its output as a finding. The rule it
+earned: **a static reader can tell you what a page names, never what it runs.**
+Both of this session's payload wins were confirmed in a browser before a line
+changed, and this is the case where that discipline saved the work rather than
+merely documenting it.
