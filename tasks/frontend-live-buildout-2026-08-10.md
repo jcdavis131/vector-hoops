@@ -7152,3 +7152,64 @@ one now; the second has to come from `recordVisit`.
 511,731 bytes committed and never fetched.** Two of them are the ones above.
 They cost a visitor nothing — nothing fetches them — but they cost me a wrong
 assumption today, which is that code existing means a feature works.
+
+
+## Both maps were a blank box for the first five seconds (2026-08-11)
+
+The landing map's grey placeholder cloud lived inside `loadLimited()`'s
+**catch**. It appeared only when the fetch *failed*. On the normal path `dots`
+stayed empty and the canvas drew nothing until 273 KB had arrived:
+
+    t=2.5s   canvas exists, 0 painted pixels
+    t=5.0s   0 painted pixels
+    t=9.0s   first paint
+
+Meanwhile the canvas `aria-label` had been telling assistive tech the map "opens
+on a placeholder cloud and is replaced when the full vector file finishes
+loading" — **a description of the failure path presented as the normal one.**
+
+Seeded up front now: **41,088 painted pixels at 2.5s**, real cloud at 9s, and
+the sentence in the aria-label is true for the first time.
+
+`/players` had the same gap and **no placeholder at all** to fall back on, on
+the page whose entire subject is the map. It also shipped
+`<span id="lab">1,764 players</span>` **typed into the markup** — shown over an
+empty canvas before anything loaded, and left there if the fetch failed. It
+matches the file today; it would drift silently the day the file changed.
+
+### The status line called invented positions players
+
+`dots.length + ' players'` read off whatever was in the array, so over the
+placeholder it said **4,000 players** — 4,000 LCG-generated positions described
+as people. Both maps now say "Loading the map…" while waiting, the real count
+when the file lands, and with the file refused: *"The map file did not load.
+These points are a placeholder, not players."* The `count-lie` mutation
+reproduces the old line exactly.
+
+### Three of my own mistakes, caught by the thing I was building
+
+  - the `catch` seeded the placeholder and then called `applyFilter`, which
+    rebuilds `dots` from an empty `allPts` and **wiped it** — 0 painted pixels
+    with the file refused. Nothing to filter means nothing to replace it with;
+  - the smoke read `statusLab` on both pages, and on `/players` that id belongs
+    to the **list** count, not the map — it reported "1,764 PLAYERS" during
+    loading, a number the map was not claiming;
+  - `players late-seed` came back **exit 2, not a pass**: inserting
+    `applyFilter` between the two bootstrap lines made the anchor miss. That is
+    the entire point of exit 2.
+
+### Two caches between "the server said no" and "the page did not get it"
+
+The blocked case reported the map loading fine **twice** before it was really
+blocked. First the service worker answered from its own cache without asking
+the server at all; then, with that cleared, the browser's own HTTP cache did.
+Refusing a file at the origin is not the same as the page not having it.
+
+### Also checked, and not a defect
+
+37 files in `assets/*.js` are loaded by no page — 511,731 bytes. I went looking
+for breakage caused by that and found none: every reference from loaded code is
+a guard (`if (window.VHTrendsViz)`), one is inside a comment, and the custom
+events with no emitter belong to features that are absent rather than broken.
+`shared-map.js` already pauses on `focusin` and `visibilitychange` natively, so
+the unfired `vh:pause-maps` costs nothing. Unshipped code, not broken code.
