@@ -6788,3 +6788,50 @@ it rendered online.
 
 Still heavy: `player_season_props.json` is 2.75 MB read for a count and a mean. A
 slice would take it to a few hundred bytes. Next.
+
+
+## Fetched, parsed, discarded (2026-08-11)
+
+I named this last turn as *"2.75 MB read for a count and a mean"*. **It was not
+read at all.**
+
+    if(Array.isArray(props) && props.length){ ...compute... }
+    else  props avgΔ -1.02 fallback — Wemby +5.7 Castle even Harper +0.2
+
+`assets/data/player_season_props.json` is an object, not an array.
+`Array.isArray` is false, so the branch that computes anything never ran.
+**2,753,469 bytes came down on every visit, were parsed, and were thrown away** —
+and what a visitor read was always the typed `else`.
+
+Every figure on that line, against the file:
+
+    avgΔ -1.02        no. the real mean is -0.035 over 3,407 scored player-seasons
+    Wemby +5.7        yes, 2025-26
+    Castle +3 even    no. Castle appears only in 2026-27, which has no actuals
+    Harper +0.2       no. same
+
+`scripts/build_props_summary.py` cuts it to **2,020 bytes — 0.073%** — carrying
+per-season counts and means, the overall figure, the biggest real movers, and the
+source line verbatim. That last part matters: the "prop" here is *the prior
+season's average rounded to 0.5*, not a market line, and a page saying "props"
+without that is saying the wrong thing.
+
+Ranked by raw `|delta|` the top mover was **Alondes Williams at -51.3 off four
+games** — the list was measuring sample size, not movement. Qualified at 41
+games it is **Micah Potter +11.9**, on a prop of 11.0 against an actual of 22.9,
+and the page says how many players cleared the bar.
+
+    /player fetch weight   5,231,646 -> 209,419 bytes over two turns
+
+### The sweep I added last turn was flaky
+
+I would not have known without running it three times. Two causes, both mine:
+
+  - a fixed 2.4s wait reported `/model` at **69%** of its own online DOM on one
+    run and **100%** on the next two — 3,571 nodes, simply not finished;
+  - `/teams` boots its lower cards on an `IntersectionObserver`, so without a
+    scroll they render or not depending on timing rather than on the network,
+    which is the only thing the test is supposed to be measuring.
+
+It scrolls and then settles for 0.9s now. **Three consecutive runs, every page at
+100%.** A test that reads at a fixed moment measures the moment.
