@@ -6238,3 +6238,94 @@ knowing that the static gates stop at the press.
 `opacity:.5` on `#111` is **2:1**. WCAG exempts disabled controls, but a control
 you cannot read is a control you cannot plan around, so they are `#6B6760` on
 `#F2F1EC` — **4.97:1** — and still obviously disabled.
+
+
+## Why this player, and a gate that had been measuring less (2026-08-11)
+
+Phase three is model explainability end to end. `/model` had the population view
+and stopped there: what moves the model across 12,966 player-seasons, and nothing
+about any one of them.
+
+**`assets/mtnn_attr_topk.bin` has held the per-player answer the whole time and no
+page read it.** `[12966][4][8]` — for every player-season, the eight input
+features that moved each of four predictions most, signed. Its layout is fully
+described by `mtnn_attr_pop.json.topkLayout`, and that is what makes the rest
+possible:
+
+    index  uint16   offset 0        829,824 B
+    value  float32  offset 829824 1,659,648 B
+
+One player's slice is **two HTTP Range requests: 16 bytes of feature indices and
+32 bytes of values, 48 out of 2,489,472.** Production answers 206 with
+`accept-ranges: bytes` — checked against the live host before any of this was
+written, not assumed:
+
+    HTTP/2 206
+    accept-ranges: bytes
+    content-range: bytes 0-15/2489472
+
+`scripts/build_attr_index.py` supplies the one thing the browser cannot work out:
+**which row.** The row index lives only in `vectors_search_lite.json` (1.7 MB) and
+`vectors.json` (3.8 MB), and loading either to read one integer would spend
+seventy times the slice. It cuts out the 1,764 player-seasons the map offers —
+**38,606 bytes, 2.2%** — copying `i` from the file that already states it. 1,764
+of 1,764 resolve, and every row is confirmed to carry the same pid and season in
+both files before it goes in.
+
+### What the card refuses to say
+
+  - **Not a counterfactual.** The file's method line calls it *"Signed gradient ×
+    input … local linearization, not a counterfactual ablation"*, and that
+    sentence is printed rather than paraphrased into "change this and the
+    prediction moves".
+  - **Not this model.** The attribution file records checkpoint **2,262,906
+    bytes**; the architecture panel above it records **1,563,083**. Different
+    records. The provenance line says so instead of smoothing it over.
+  - **Zero is not "no effect."** `maskedNote` — *"a masked feature has exactly
+    zero gradient. Zero attribution means NEVER MEASURED"* — is on screen, and
+    zeros render as `n/m` rather than as an empty bar that reads as nothing.
+
+### The failure that matters is not a blank screen
+
+It is **plausible numbers for the wrong row.** An off-by-one in the offsets, the
+value block read from the index block's origin, float32 decoded big-endian — all
+draw eight confident bars that are simply not this player's.
+
+So `smoke_attr.py` decodes the same bytes in Python and compares, for two players
+× two targets: **Stephen Curry 2025-26, row 12,908** and **Tim Duncan 1997-98, row
+757**, archetype and skills. All agree.
+
+    Range on    336 bytes of the tensor over 14 requests
+    Range off   34,852,608 bytes — the right row still read out of the whole file,
+                and the page says that is what happened
+
+**Five mutations, five caught.** `row` is the instructive one: pinning the row to
+0 drew AC Green's 1996-97 numbers under Stephen Curry's name.
+
+### The gate had been measuring less than it said
+
+Adding a card to `/model` made `check_focus_ring` report **fewer** tab stops —
+499 → 493. A page that grew cannot lose stops, so the gate was wrong.
+
+Its wrap detection keyed on `tag.class|text`, and `/model` had just grown a
+second group of buttons labelled *Archetype / Position / Skills / Next Profile*.
+The walk hit the first repeat and stopped, covering less of a page that had just
+got bigger. It keys on the node now.
+
+And `MAX_TABS = 60` was truncating `/players` at exactly 60 — **a cap reporting
+itself as a count.** `/players` has 99.
+
+    499  reported before
+    516  with wrap detection on node identity
+    555  with the cap raised until every page terminates on its own
+
+**A gate that quietly measures less is the same defect as a gate that measures
+nothing** — and this one was found by a page getting bigger, not by looking for it.
+
+### Still unread
+
+`assets/mtnn_jacobian.f32` is `[12966, 11, 5]` — per-family sensitivity, 11 tower
+families × 5 targets, the same Range trick at 220 bytes a row. It is left for
+later on purpose: its sidecar records `dEmb: 48` against the shipped 64, so it
+needs its own provenance sentence, and one tensor with one method line is a
+clearer card than two with four caveats.

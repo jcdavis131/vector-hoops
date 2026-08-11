@@ -1,16 +1,16 @@
 # frontend-live — readiness
 
-**Nothing here is live.** Everything below is measured at **`619b4d47`** — the sha is the anchor,
+**Nothing here is live.** Everything below is measured at **`897f76ca`** — the sha is the anchor,
 because the commit that records a count is never inside the count it records. All of it is on
 `frontend-live`; `master` is untouched, and pushing `master` is what deploys the site. Suite green
 at that commit.
 
 | | |
 |---|---|
-| commits this session | 227 on this branch's own line at `619b4d47`, now on `master` (a plain `rev-list` says 263 — it walks both sides of the merge and counts Scout's 36) |
+| commits this session | 230 on this branch's own line at `897f76ca`, now on `master` (a plain `rev-list` says 266 — it walks both sides of the merge and counts Scout's 36) |
 | paths changed, across the merge | 2,652 (2,547 under `public/`, 45 scripts) |
 | insertions / deletions | +211,573 / −310,582 |
-| working notes | `tasks/frontend-live-buildout-2026-08-10.md`, 6,234 lines |
+| working notes | `tasks/frontend-live-buildout-2026-08-10.md`, 6,333 lines |
 
 **Where to look at it.** The branch is pushed and Vercel builds every commit on it:
 
@@ -158,6 +158,29 @@ each moved the page from **scrollY 0 to scrollY 0** while writing the fragment i
 Both now point at the pages the nav already uses for those words — `/play.html` and `/model.html` —
 rather than at anchors minted to justify the links. A new `fragments` check makes every deep link
 land on something that exists; it was shown failing first.
+
+**Why this player — the model's own gradient, 48 bytes at a time.** Phase three is explainability,
+and `/model` had the population view only. `assets/mtnn_attr_topk.bin` had held the per-player answer
+the whole time and no page read it: `[12966][4][8]`, the eight input features that moved each of four
+predictions most, signed. Because `topkLayout` documents the byte layout exactly, one player's slice
+is **two HTTP Range requests — 48 bytes out of 2,489,472** (production answers 206 with
+`accept-ranges: bytes`; checked live before this was built). `scripts/build_attr_index.py` supplies
+the row number the browser cannot derive — 38,606 bytes, 2.2% of the 1.7 MB file that states it,
+1,764 of 1,764 resolving. The card refuses three things in writing: it is a **local linearization,
+not a counterfactual**; the attribution checkpoint (2,262,906 bytes) is **not the one the
+architecture panel records** (1,563,083); and **zero means never measured**, rendered `n/m`. The
+failure that mattered was never a blank screen but *plausible numbers for the wrong row*, so
+`smoke_attr.py` decodes the same bytes in Python and compares — Curry 2025-26 row 12,908 and Duncan
+1997-98 row 757, two targets each, all agreeing — **336 bytes on the wire with Range, 34,852,608
+without, and the right row read either way.** Five mutations, five caught; pinning the row to 0 drew
+AC Green's numbers under Curry's name.
+
+**The focus-ring gate had been measuring less than it said.** Adding a card made it report *fewer*
+tab stops, 499 → 493 — and a page that grew cannot lose stops. Its wrap detection keyed on
+`tag.class|text`, so the second group of *Archetype / Position / Skills / Next Profile* buttons ended
+the walk early; and `MAX_TABS = 60` was truncating `/players` at exactly 60, a cap reporting itself
+as a count. **499 → 516 on node identity → 555 with the cap raised**; `/players` has 99. Found by a
+page getting bigger, not by looking.
 
 **The league, one season at a time.** Phase two of the brief is change over time, and `/trends` had
 no way to see it — `archMap` draws every charted season at once, which is where the archetypes sit,
