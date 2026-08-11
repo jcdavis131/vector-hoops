@@ -19,6 +19,7 @@ provide — a UA string that says iPhone is not an iPhone, and the first run of
 this smoke tested a browser that does not exist. The property is injected with
 `Page.addScriptToEvaluateOnNewDocument` so it is there before the page script.
 
+  ios-first-visit  a first visit is offered nothing at all
   ios-fresh      iOS, not installed: the Share instructions, and no Install button
   ios-installed  iOS, already installed: nothing at all
   desktop-fresh  no beforeinstallprompt: nothing, because no button could work
@@ -64,6 +65,8 @@ MUTATIONS = {
     # put back the feature test standing in for an is-installed test
     "feature-test": [("var installed = navigator.standalone === true ||",
                       "var installed = !('standalone' in navigator) &&")],
+    # stop counting visits, which is the state the whole feature was in
+    "no-count": [("    recordVisit();\n", "")],
     # offer the Install button with no prompt behind it, as it used to
     "dead-button": [("    if(!deferredPrompt){\n"
                      "      /* no prompt to defer means no Install button can work */\n"
@@ -127,6 +130,7 @@ def main() -> int:
     ws = proc = None
     try:
         for label, ua, standalone, want in (
+            ("ios-first-visit", IOS_UA, "false", "nothing"),
             ("ios-fresh", IOS_UA, "false", "ios"),
             ("ios-installed", IOS_UA, "true", "nothing"),
             ("desktop-fresh", DESKTOP_UA, None, "nothing"),
@@ -168,9 +172,11 @@ def main() -> int:
 
             url = f"http://127.0.0.1:{site}/index.html"
             ws.call("Page.navigate", {"url": url}); time.sleep(1.3)
-            # the script waits for two recorded visits before it offers anything
-            ev("localStorage.setItem('vectorHoops.visits', JSON.stringify(['a','b']));"
-               "localStorage.removeItem('vectorHoops.installPromptDismissedAt')")
+            # One seeded visit, not two: the second has to come from recordVisit,
+            # so this exercises the counter rather than stepping around it.
+            if label != "ios-first-visit":
+                ev("localStorage.setItem('vectorHoops.visits', JSON.stringify([1000]));"
+                   "localStorage.removeItem('vectorHoops.installPromptDismissedAt')")
             ws.call("Page.navigate", {"url": url}); time.sleep(5.2)
 
             got = ev("JSON.stringify({banner:!!document.getElementById('pwa-install-banner'),"

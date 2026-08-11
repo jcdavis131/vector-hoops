@@ -92,7 +92,35 @@
     });
   }
 
+  /* Nothing was counting. shouldShow() waits for two visits or a locked team,
+     and measured: `vectorHoops.visits` is written only by push-retention.js and
+     `vectorHoops.favoriteTeam` only by favorite-team.js, and **neither file is
+     loaded by any page** — 0 of 18, while this one is loaded by 16. So
+     shouldShow() has always returned false and this banner has never appeared
+     to anyone. The dead Install button fixed above was real, and no one had met
+     it yet.
+
+     Rather than wire in two more scripts that nothing else references, the file
+     that is loaded counts its own visits. Same key and same shape as
+     push-retention.js — an array of Date.now() capped at 30 — so if that one is
+     ever wired the two agree instead of fighting.
+
+     Once per six hours, because opening a second link is not coming back. */
+  function recordVisit(){
+    try{
+      var raw = localStorage.getItem('vectorHoops.visits');
+      var visits = raw ? JSON.parse(raw) : [];
+      var now = Date.now();
+      var last = visits.length ? +visits[visits.length - 1] : 0;
+      if(now - last < 6 * 3600000) return;
+      visits.push(now);
+      if(visits.length > 30) visits = visits.slice(-30);
+      localStorage.setItem('vectorHoops.visits', JSON.stringify(visits));
+    }catch(e){}
+  }
+
   function init(){
+    recordVisit();
     setTimeout(maybeShow, 3500);
     window.addEventListener('vh:favorite-team', function(){ setTimeout(maybeShow, 1200); });
   }
