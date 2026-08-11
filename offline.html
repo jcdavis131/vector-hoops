@@ -55,25 +55,25 @@ header{max-width:900px;margin:0 auto;padding:10px 14px;display:flex;flex-wrap:wr
 <a class="vh-skip" href="#main">Skip to the content</a>
 <header>
 <div class="brand">◐ DUMB MODEL <span class="pill pill-y" style="transform:rotate(-1deg)">network-first cache • visited pages kept</span> <span class="sg">dark card #080A0F core only</span></div>
-<nav style="display:flex;gap:8px;flex-wrap:wrap"><a class="pill" href="/">Map</a><a class="pill" href="/play.html">Play</a><a class="pill" href="/leaderboard.html">Board</a><a class="pill" href="/inventory.html">Inventory</a><a class="pill" href="/methods.html">Methods</a><a class="pill pill-d" href="/offline.html">Offline</a></nav>
+<nav style="display:flex;gap:8px;flex-wrap:wrap"><a class="pill" href="/">Map</a><a class="pill" href="/play">Play</a><a class="pill" href="/leaderboard">Board</a><a class="pill" href="/inventory">Inventory</a><a class="pill" href="/methods">Methods</a><a class="pill pill-d" href="/offline">Offline</a></nav>
 </header>
 <main id="main" tabindex="-1">
 <div class="wrap">
 <div class="card">
-<div class="mono" style="text-transform:uppercase;letter-spacing:.06em;opacity:.75;font-weight:800">offline • pages you have opened are kept • no .json, .f32 or .bin cached • cache hoops-v7-4</div>
+<div class="mono" style="text-transform:uppercase;letter-spacing:.06em;opacity:.75;font-weight:800">offline • pages you have opened are kept • no .json, .f32 or .bin cached • cache hoops-v7-5</div>
 <h1 style="margin:10px 0 8px;font-size:26px;letter-spacing:-.02em;font-family:ui-monospace,Menlo,monospace;text-transform:uppercase">You're offline — shell is here.</h1>
 <p class="sub">You are offline. sw.js is network-first and keeps every same-origin page, script, style and font you have already loaded, so a page you have opened before still works — measured with the server stopped, /play still has its question, its 1,305 suggestions, its pool and its map. Data never enters that cache: no /api/, no .json, no .f32, no .bin, so the season data and every model asset need a connection and a stale one can never be served. Retry pings navigator.onLine then reloads, else void pulse. Week Warrior 7-dot still works from hub-streak.</p>
 <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap">
 <button class="btn btn-y" id="retry">↻ Retry connection</button>
-<a class="pill pill-y" href="/play.html" style="text-decoration:none;display:inline-flex;align-items:center">▶ Play offline arcade</a>
-<a class="pill" href="/leaderboard.html" style="text-decoration:none;display:inline-flex;align-items:center;color:#080A0F">Board cached</a>
+<a class="pill pill-y" href="/play" style="text-decoration:none;display:inline-flex;align-items:center">▶ Play offline arcade</a>
+<a class="pill" href="/leaderboard" style="text-decoration:none;display:inline-flex;align-items:center;color:#080A0F">Board cached</a>
 </div>
 <div id="dots" style="margin-top:12px;display:flex;flex-wrap:wrap;gap:4px"></div>
 <div class="mono" id="streakLab" style="margin-top:6px;color:#C9D4E5">weekStreak 0/7 • hub-streak</div>
 <div style="margin-top:12px;display:grid;grid-template-columns:1fr 1fr;gap:10px">
 <div><div class="mono">What is actually cached</div><code style="font-size:11px;background:rgba(250,250,248,.08);border:1px solid rgba(250,250,248,.15);padding:6px 8px;border-radius:8px;display:block;white-space:pre-wrap">/
 /offline
-/manifest.json</code><div class="mono" style="margin-top:6px">Three entries installed up front, read from sw.js SHELL — cache hoops-v7-4 — everything else arrives by being visited.</div></div>
+/manifest.json</code><div class="mono" style="margin-top:6px">Three entries installed up front, read from sw.js SHELL — cache hoops-v7-5 — everything else arrives by being visited.</div></div>
 <div><div class="mono">never cached — data only</div><code style="font-size:11px;background:rgba(250,250,248,.08);border:1px solid rgba(250,250,248,.15);padding:6px 8px;border-radius:8px;display:block;white-space:pre-wrap">/api/* .json /assets/data/* large 2.6MB props / 9.9MB matchup / 141K vals / 51K hist / FO 1.1M / 3.2M embeddings / 2.3M heads / 524K projections</code><div class="mono" style="margin-top:6px">keeping data out of the cache keeps it small • theme #fafaf8 still</div></div>
 </div>
 <div class="mono" id="status" style="margin-top:12px;display:inline-flex;padding:5px 10px;border-radius:999px;border:1px solid #FAFAF8">status: offline — pages you have opened are cached</div>
@@ -84,7 +84,7 @@ header{max-width:900px;margin:0 auto;padding:10px 14px;display:flex;flex-wrap:wr
 </div>
 </div>
 </main>
-<footer style="max-width:900px;margin:8px auto 0;padding:10px 14px;display:flex;flex-wrap:wrap;gap:8px;justify-content:space-between;border-top:1.6px dashed var(--line)"><span class="mono">network-first • visited pages kept • no data cached • Week Warrior 7-dot • local only</span><div style="display:flex;gap:6px"><a class="pill" href="/play.html">Play</a><a class="pill" href="/leaderboard.html">Board</a></div></footer>
+<footer style="max-width:900px;margin:8px auto 0;padding:10px 14px;display:flex;flex-wrap:wrap;gap:8px;justify-content:space-between;border-top:1.6px dashed var(--line)"><span class="mono">network-first • visited pages kept • no data cached • Week Warrior 7-dot • local only</span><div style="display:flex;gap:6px"><a class="pill" href="/play">Play</a><a class="pill" href="/leaderboard">Board</a></div></footer>
 <script>
 function read(k,fb){try{let v=JSON.parse(localStorage.getItem(k)||'null');return v||fb}catch(e){return fb}}
 function getWW(){let s=read('hub-streak',{days:[],streak:0,last:null});if(!s.days)s.days=[];let old=null;try{old=JSON.parse(localStorage.getItem('vh_weekStreak')||'null')}catch(e){}if(s.days.length===0&&old&&old.days)s=old;return s}

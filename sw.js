@@ -43,8 +43,14 @@
    Documents and code, not data. .json keeps its exemption — a stale model asset
    must never be served — and .f32/.bin join it: those are immutable and large
    (mtnn_embeddings.f32 alone is 3.2 MB), and the HTTP cache already holds them
-   for a year, so there is nothing to gain by holding a second copy here. */
-const C = 'hoops-v7-4';
+   for a year, so there is nothing to gain by holding a second copy here.
+
+   v7.5: 188 internal hrefs dropped their .html. cleanUrls 308s the old form, and
+   this cache is keyed on the request URL — so a visitor who had /model cached
+   still got the offline notice from a link written /model.html. The stamped
+   error-boundary.js changed with them, so every page's ?v= moved. Bumping C
+   purges the cache that was filled under the old URLs. */
+const C = 'hoops-v7-5';
 const SHELL = ['/', '/offline', '/manifest.json'];
 const FALLBACK = ['/offline', '/'];
 const DATA = /\.(json|f32|bin)$/;

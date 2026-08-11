@@ -17,7 +17,8 @@ Checks, in order of how much they have actually caught:
   4. ids        no duplicate element ids
   5. sourced    no known-unsourced figures in user-visible markup
   6. cited      figures printed as prose still match the file they name
-  7. links      every internal .html link resolves
+  7. links      every internal link lands on a file the site serves
+  8. clean      no internal link pays the cleanUrls 308
 
 Read-only. Never writes. Exit 0 clean, 1 on any failure.
 
@@ -110,7 +111,7 @@ RE_CLASS_ATTR = re.compile(r"""class=(?:["']([^"']+)["']|([^\s>"'=]+))""")
 RE_ASSET = re.compile(
     r"""(?:fetch\(\s*['"]|<script[^>]+src=['"]|<link[^>]+href=['"]|<img[^>]+src=['"])([^'"]+)['"]"""
 )
-RE_LINK = re.compile(r"""href=["'](\.?/?[\w\-]+\.html)(?:[#?][^"']*)?["']""")
+RE_LINK = re.compile(r"""href=["'](?!\w+:|//|#)([^"'#?]+)(?:[#?][^"']*)?["']""")
 RE_COMMENT = re.compile(r"<!--.*?-->|/\*.*?\*/", re.S)
 
 
@@ -351,14 +352,76 @@ def check_cited(fail) -> None:
     print(f"  {matched} of {checked} cited figure(s) still match the file they name")
 
 
+def served_by(raw: str) -> Path | None:
+    """The file Vercel serves for an internal href, cleanUrls and all."""
+    p = raw.split("#")[0].split("?")[0].lstrip("./").rstrip("/")
+    if not p:
+        return ROOT / "index.html"
+    if p.endswith(".html"):
+        return ROOT / p
+    # a real file is served as itself — /manifest.json is not /manifest.json.html
+    if (ROOT / p).is_file():
+        return ROOT / p
+    for cand in (ROOT / (p + ".html"), ROOT / p / "index.html"):
+        if cand.exists():
+            return cand
+    return None
+
+
 def check_links(fail) -> None:
+    """Every internal link lands on a file the site actually serves.
+
+    This used to match only `…\\.html`, which was every internal link on the site
+    until 188 of them dropped the extension. The moment they did, the pattern
+    matched nothing and the check reported "0 internal link(s) resolve" and
+    passed — a green line for work it was no longer doing. It reads whole hrefs
+    now and resolves them the way cleanUrls does: /model is model.html if that
+    exists, otherwise model/index.html.
+    """
     total = 0
     for page in pages():
         for raw in sorted(set(RE_LINK.findall(page.read_text(encoding="utf-8")))):
+            if raw.lstrip("./").startswith("assets/"):
+                continue   # the `assets` check owns those, with the ?v= tokens
             total += 1
-            if not (ROOT / raw.lstrip("./")).exists():
-                fail(f"{label(page)} links to {raw}, which does not exist")
+            if served_by(raw) is None or not served_by(raw).exists():
+                fail(f"{label(page)} links to {raw}, which the site does not serve")
     print(f"  {total} internal link(s) resolve")
+
+
+RE_HTML_HREF = re.compile(r"""href=["'](?!\w+:)([^"'#]*\.html)((?:#[^"']*)?)["']""")
+
+
+def check_clean(fail) -> None:
+    """vercel.json sets cleanUrls, so every internal link ending in .html is a 308.
+
+    Measured against a server that emulates it, with the worker installed:
+
+        navigating to /model        1 document request   ['/model']
+        navigating to /model.html   2 document requests  ['/model.html', '/model']
+
+    A round trip per click was the cheap half. The worker fills its cache at
+    runtime and keys it on the request URL, so visiting /model stores /model and
+    a link to /model.html asks for a URL the cache has never held:
+
+        offline, /model        lands on 'Vector Hoops — Model Zoo …'
+        offline, /model.html   lands on 'Vector Hoops — Offline'
+
+    A visitor with the page cached is shown the offline notice because of how the
+    link was written. 201 hrefs were, so this is what stops them coming back.
+    """
+    total = 0
+    for page in pages():
+        text = without_comments(page.read_text(encoding="utf-8", errors="replace"))
+        for path, frag in sorted(set(RE_HTML_HREF.findall(text))):
+            total += 1
+            fail(
+                f"{label(page)} links to {path}{frag} — cleanUrls 308s that to "
+                f"{path[:-len('.html')]}{frag}, which costs a round trip online and "
+                f"the offline notice offline, because the worker holds the clean URL"
+            )
+    if not total:
+        print("  no internal link pays a cleanUrls redirect")
 
 
 def check_mirror(fail) -> None:
@@ -437,7 +500,13 @@ def check_fragments(fail) -> None:
             return src
         f = file_part.split("?")[0].lstrip("/")
         if not f.endswith(".html"):
-            f = f.rstrip("/") + "/index.html"
+            # cleanUrls, the way Vercel resolves it: /dictionary is
+            # dictionary.html if that exists, and only otherwise the directory
+            # index. Resolving to the directory first sent every /dictionary#…
+            # link looking for its target inside index.html, which reported six
+            # working deep links as broken the moment the .html came off them.
+            bare = f.rstrip("/")
+            f = bare + ".html" if bare + ".html" in ids else bare + "/index.html"
         return f if f in ids else f.split("/")[-1]
 
     checked = 0
@@ -583,6 +652,7 @@ CHECKS = {
     "cited": check_cited,
     "free": check_free,
     "links": check_links,
+    "clean": check_clean,
     "fragments": check_fragments,
 }
 

@@ -159,6 +159,18 @@ Both now point at the pages the nav already uses for those words — `/play.html
 rather than at anchors minted to justify the links. A new `fragments` check makes every deep link
 land on something that exists; it was shown failing first.
 
+**201 links paid a redirect.** `vercel.json` sets `cleanUrls`, and sw.js's own header records the
+live-site measurement — `/index.html 308`. Every internal link ending in `.html` cost a round trip
+before the page started, and after the worker began filling its cache at runtime it cost more than
+that, because **the cache is keyed on the request URL**: `/model` was one request and worked offline;
+`/model.html` was two and **landed a visitor who already had the page cached on the offline notice**.
+188 hrefs rewritten, attribute values only — prose and code samples quoting paths are left alone, and
+one of the 188 is the "Offline mode" link inside `error-boundary.js`, the link most likely to be
+clicked while offline. Two gates: new `clean` (no internal href ends in `.html`, shown failing at 156
+findings), and a repair to `links`, which had matched `.html` hrefs only and so reported
+**"0 internal link(s) resolve"** the moment they lost the extension — a green line for work it was no
+longer doing. It now checks 237.
+
 **The page said "offline capable".** `/play.html` prints it on the Daily Q card, and nothing here
 had ever pulled the plug. Two things had to be right before the measurement meant anything, and the
 first two runs got both wrong in the flattering direction: `Network.emulateNetworkConditions` is

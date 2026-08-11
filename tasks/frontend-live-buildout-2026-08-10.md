@@ -5084,3 +5084,70 @@ could never be run again. What replaces it is a check that derives, not a script
 that remembers.
 
 `scripts/smoke_offline.py` is new: three assertions, three mutations, three caught.
+
+
+## 201 links paid a redirect, and after yesterday they cost more than that (2026-08-11)
+
+`vercel.json` sets `cleanUrls: true`. sw.js's own header records the measurement
+against the live site — `/index.html 308`, `/offline.html 308` — so every internal
+link ending in `.html` is a redirect before the page starts. There were **201**,
+across 23 pages.
+
+A round trip per click was the cheap half. The worker started filling its cache at
+runtime yesterday, and **that cache is keyed on the request URL**:
+
+    navigating to /model        1 document request   ['/model']
+    navigating to /model.html   2 document requests  ['/model.html', '/model']
+
+    offline, /model             lands on 'Vector Hoops — Model Zoo …'
+    offline, /model.html        lands on 'Vector Hoops — Offline'
+
+A visitor with the page **already cached** was shown the offline notice, because of
+how the link was written. The offline capability shipped one commit earlier was
+defeated by 201 links written before it existed.
+
+### The sweep
+
+188 hrefs rewritten — attribute values only. The pages quote paths in prose and in
+code samples (sw.js's own SHELL history, the dictionary's examples), and rewriting
+those would falsify text rather than fix a link. One of the 188 is in
+`assets/error-boundary.js`: the "Offline mode →" link on the error panel, which is
+the one link on the site most likely to be clicked while offline.
+
+That JS change moved every page's `?v=` token, so `stamp_assets.py` re-stamped 21
+files and the worker went to `hoops-v7-5` — the old cache was filled under URLs
+that no longer exist.
+
+### Two checks, one of which I broke writing the other
+
+`clean` is new: no internal href may end in `.html`. Shown failing first, on the
+real thing — 156 findings across 23 pages — then green, then failing again after
+putting a single `.html` back.
+
+`links` had matched `href="…\.html"` since it was written, which was every internal
+link on the site until this commit. The moment they lost the extension it matched
+nothing:
+
+    links:
+      0 internal link(s) resolve
+
+**A green line for work it was no longer doing.** It reads whole hrefs now and
+resolves them the way cleanUrls does — `/model` is `model.html` if that exists,
+otherwise `model/index.html`, and a real file like `/manifest.json` is served as
+itself. It checks **237** links, up from 146, and fails on a broken one:
+
+    - teams.html links to /nonexistent-page, which the site does not serve
+
+`fragments` had the same resolution bug in the other direction: it turned every
+extensionless path into `…/index.html`, so the six `/dictionary#…` deep links went
+looking for their targets inside `index.html` and reported as broken the moment the
+`.html` came off. Fixed to prefer the file.
+
+`smoke_offline.py`'s server now emulates the 308 as well as the headers. Serving
+both URL forms with a 200 would hide this entire class of bug from every assertion
+in it.
+
+**That is now three times in three days that a checker reported success while
+measuring nothing** — the live-region read after a win, the counted announcement
+that matched a different announcer's sentence, and this. All three were found by
+changing the code under the check rather than by reading the check.

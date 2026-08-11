@@ -117,6 +117,22 @@ class Prod(http.server.SimpleHTTPRequestHandler):
     def log_message(self, *a):
         pass
 
+    def do_GET(self):
+        # cleanUrls redirects the .html form, and the redirect is the point: this
+        # cache is keyed on the request URL, so a link written /model.html asks
+        # for a URL the worker has never held even when /model is sitting in it.
+        # Measured: /model.html cost two document requests online and landed on
+        # the offline notice offline. Serving both forms with a 200 here would
+        # hide that whole class of bug from every assertion below.
+        p = self.path.split("?")[0]
+        if p.endswith(".html") and (SERVE / p.lstrip("/")).exists():
+            self.send_response(308)
+            self.send_header("Location", p[: -len(".html")])
+            self.send_header("Cache-Control", "public, max-age=0, must-revalidate")
+            self.end_headers()
+            return
+        super().do_GET()
+
     def end_headers(self):
         p = self.path.split("?")[0]
         if p.startswith("/assets/") and p.rsplit(".", 1)[-1] in IMMUTABLE:
