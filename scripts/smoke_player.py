@@ -275,7 +275,14 @@ def main() -> int:
             if "market line" not in got["props"].lower():
                 fails.append("the props line does not say a prop here is not a market line — "
                              "it is the prior season's average rounded to 0.5")
-            for gone in ("0.92/1.45", "$10.6M", "-1.02"):
+            # 1.28 / 0.62 / 0.81 were the closer, exploitable and dependent
+            # thresholds, printed as KPIs, in the header pills, on a button and
+            # in the footer. No committed asset carries a closer score at all.
+            # They survived the first sweep because that sweep's list was built
+            # from figures already found, which is how a motif this widespread
+            # goes unseen.
+            for gone in ("0.92/1.45", "$10.6M", "-1.02", "1.28", "0.62", "0.81",
+                         "20,719", "0.8116", "13,625", "$9"):
                 if gone in got["body"]:
                     fails.append(f"{gone!r} is back on the page; it was typed, not computed")
             long_dec = re.search(r"\d+\.\d{3,}", got["body"])
