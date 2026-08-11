@@ -1,14 +1,14 @@
 # frontend-live — readiness
 
-**Nothing here is live.** All 148 commits are on `frontend-live`; `master` is untouched, and
+**Nothing here is live.** All 150 commits are on `frontend-live`; `master` is untouched, and
 pushing `master` is what deploys the site. Suite green at the time of writing.
 
 | | |
 |---|---|
-| commits ahead of master | 148 |
+| commits ahead of master | 150 |
 | paths changed | 2,631 (2,547 under `public/`, 31 scripts) |
-| insertions / deletions | +202,270 / −310,429 |
-| working notes | `tasks/frontend-live-buildout-2026-08-10.md`, 4,151 lines |
+| insertions / deletions | +202,533 / −310,431 |
+| working notes | `tasks/frontend-live-buildout-2026-08-10.md`, 4,273 lines |
 
 **Where to look at it.** The branch is pushed and Vercel builds every commit on it:
 
@@ -85,6 +85,14 @@ it, and both fetches are memoised. Same bytes, better order.
 `model_eval.model_zoo`, 0.74% of the transfer, on a page that reads neither `teams` nor
 `teams_by_abbr` (79.4% of the file). `scripts/build_model_zoo.py` cuts that subtree into
 `assets/model_zoo.json` verbatim, with a `--check` mode that fails if it drifts from its source.
+
+**The landing page's map control gave twenty seconds of nothing.** `index.html` itself is lean —
+325.5 KB, map ink at 2,188 ms on Fast 3G. The 3.6 MB `vectors.json` sits behind the "8k" button, and
+that handler set its state *after* awaiting the fetch: no label change, no `aria-busy`, no point
+count moving, for 20.1 seconds. The only honest reading of that page is that the press did not
+register — and `loadFull()` had no guard, so pressing again started another 3,784,565-byte download.
+Now the state goes up in 300 ms, the download happens once however many times you press, and a
+failure says so instead of flipping the button to "on" over an unchanged cloud.
 
 **Typography.** Nine pages were rendering body copy in Times New Roman. They declared
 `font-family:ui-sans-system`, which is not a CSS keyword — the real generic is `ui-sans-serif`, so
