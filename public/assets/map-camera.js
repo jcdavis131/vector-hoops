@@ -20,16 +20,23 @@
  *     shift + arrows    coarser                0 or Home          reset
  *     Enter             pick nearest centre    Space              auto-rotation
  *     H or ?            speak the controls     hover              name a point
- *     two fingers       pinch to zoom          one finger         scroll the page
+ *     one finger        drag sideways to turn  two fingers        pinch to zoom
+ *     one finger        drag up and down to    two fingers        slide together
+ *                       scroll the page                           to tilt
  *
  * A plain wheel is deliberately left alone: these canvases are 360-520px tall
  * and sit high on their pages, and a wheel that zooms instead of scrolling is a
  * trap. Zoom is reachable three other ways.
  *
- * Pinch was the last of them to arrive, and until it did every one of those
- * three needed hardware a phone does not have — a wheel or a keyboard. Touch
- * visitors could turn the map and pick points on it and could never get closer
- * to one.
+ * The touch row arrived last, and until it did every one of those ways needed
+ * hardware a phone does not have. Measured before it: a one-finger upward drag
+ * moved pitch 0.15 and scrolled the page 105px, and a diagonal drag yawed 0.079
+ * where the same drag with a mouse yaws 0.63. Under `touch-action: pan-y` the
+ * page takes the vertical part of any one-finger gesture, so tilt was not
+ * really reachable and the natural way to orbit a 3D scene was the one that
+ * worked least. The fix is not `touch-action: none` — that traps a visitor who
+ * puts a finger on a 520px canvas and cannot then scroll past it — it is to put
+ * tilt and zoom on two fingers, which nothing else competes for.
  *
  * The page keeps its own draw loop and its own idea of what a point is. This
  * owns the camera and the input, and asks the page four questions:
@@ -275,10 +282,11 @@
       var dx = t[0].clientX - t[1].clientX, dy = t[0].clientY - t[1].clientY;
       return Math.sqrt(dx * dx + dy * dy);
     }
+    function midY(t) { return (t[0].clientY + t[1].clientY) / 2; }
     cv.addEventListener('touchstart', function (e) {
       if (e.touches.length !== 2) return;
       e.preventDefault();
-      pinch = { d0: spread(e.touches), z0: cam.zoom };
+      pinch = { d0: spread(e.touches), z0: cam.zoom, m0: midY(e.touches), p0: cam.pitch };
       /* the first finger had already started a rotate, and a pinch is not one.
          `moved` also keeps the click that follows from being read as a pick. */
       cam.drag = null; cam.moved = 99; cv.classList.remove('grabbing');
@@ -289,7 +297,21 @@
       cam.userAt = performance.now();
       var d = spread(e.touches);
       /* below about 8px apart the ratio is noise, not a gesture */
-      if (pinch.d0 > 8) cam.setZoom(pinch.z0 * (d / pinch.d0), true);
+      if (pinch.d0 > 8) cam.setZoom(pinch.z0 * (d / pinch.d0), false);
+      /* Two fingers sliding up and down together tilt it. Measured before this
+         existed: a one-finger upward drag moved pitch 0.15 and scrolled the page
+         105px, and a diagonal one yawed 0.079 where the same drag with a mouse
+         yaws 0.63 — under `touch-action: pan-y` the page takes the vertical
+         part and the map gets what is left. So tilt was not really reachable by
+         touch at all, and the natural way to orbit a 3D scene was the gesture
+         that worked least.
+
+         Two fingers are already ours: the preventDefault above means nothing
+         competes for them. Sliding them together moves the midpoint without
+         changing the distance, so tilt and zoom stay separate in one gesture,
+         which is the same split Google, Apple and Mapbox use. */
+      cam.pitch = clamp(pinch.p0 - (midY(e.touches) - pinch.m0) * 0.005, -0.85, 0.85);
+      cam.showOri(true);
     }, { passive: false });
     function endPinch(e) {
       if (pinch && e.touches.length < 2) { pinch = null; cam.userAt = performance.now(); }

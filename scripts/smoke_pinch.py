@@ -1,4 +1,4 @@
-"""Pinch the embedding map with two fingers and check it zooms.
+"""Pinch and tilt the embedding map with two fingers, and check both.
 
 Zoom had four ways in — ctrl+wheel, plus, minus, and 0 to reset — and every one
 of them wants hardware a phone does not have. A touch visitor could turn the map
@@ -8,15 +8,16 @@ whole site is built around. `check_viewport` said the page fits 320px and
 say whether a gesture does anything, so nothing here could see it.
 
 This drives real touch points through CDP rather than calling the handler:
-`Input.dispatchTouchEvent` with two contacts, moved apart and then together,
-against the camera the page actually attached. What it reads back is
+`Input.dispatchTouchEvent` with two contacts — moved apart, brought together,
+and slid up as a pair — against the camera the page actually attached. What it reads back is
 `window.VHMapCamera.cams[0].zoom`, which is the number the projection uses.
 
   spread     80px -> 146px is a ratio of 1.83, and zoom must move by it
   squeeze    146px -> 80px puts it back
   clamp      a gesture far past either bound lands exactly on 3 or on 0.55
   no-scroll  a pinch drifting 120px down still zooms, and scrollY does not move
-  rotate     a pinch is not a drag: yaw and pitch come back unchanged
+  tilt       two fingers slid 100px up move pitch 0.50 and leave zoom alone
+  rotate     a pure spread is not a drag: yaw comes back unchanged
 
     python scripts/smoke_pinch.py
     python scripts/smoke_pinch.py --page players     # or trends, which loads on request
@@ -77,6 +78,9 @@ MUTATIONS = {
     # treat the pinch as a drag as well, which is what it was before
     "rotate": [("cam.drag = null; cam.moved = 99; cv.classList.remove('grabbing');",
                 "cv.classList.remove('grabbing');")],
+    # take away the two-finger tilt, which is the only way to tilt on a phone
+    "flat": [("cam.pitch = clamp(pinch.p0 - (midY(e.touches) - pinch.m0) * 0.005, "
+              "-0.85, 0.85);", "")],
 }
 
 
@@ -335,8 +339,35 @@ def main() -> int:
                          f"spread was 80px -> 150px, so {150/80:.2f} is what it means. The "
                          f"browser took the gesture as a scroll.")
 
+        # Two fingers sliding together tilt it. Measured before that existed: a
+        # one-finger upward drag moved pitch 0.15 while the page took 105px, and
+        # a diagonal drag yawed 0.079 where a mouse yaws 0.63. Tilt was not
+        # reachable by touch.
+        ev(ws, "VHMapCamera.cams[0].reset(false);"
+               "VHMapCamera.cams[0].canvas.scrollIntoView({block:'center'})")
+        time.sleep(0.9)
+        b3 = ev(ws, """(function(){var r=VHMapCamera.cams[0].canvas.getBoundingClientRect();
+            return JSON.stringify({x:r.left+r.width/2, y:r.top+r.height/2});})()""")
+        cx, cy = b3["x"], b3["y"]
+        sy2 = ev(ws, "Math.round(window.scrollY)")
+        pinch(120, 120, steps=8, drift=-100)          # same gap: a slide, not a pinch
+        tilt = ev(ws, "+VHMapCamera.cams[0].pitch.toFixed(3)")
+        tz = zoom()
+        sy3 = ev(ws, "Math.round(window.scrollY)")
+        want_p = 100 * 0.005
+        print(f"  tilt     two fingers slid 100px up -> pitch {tilt} (want {want_p:.2f}), "
+              f"zoom {tz}, scrollY {sy2} -> {sy3}")
+        if not isinstance(tilt, (int, float)) or abs(tilt - want_p) > 0.08:
+            fails.append(f"two fingers slid 100px up left pitch at {tilt}; the camera moves "
+                         f"0.005 per pixel, so {want_p:.2f} is what that gesture means")
+        if not isinstance(tz, (int, float)) or abs(tz - 1) > 0.05:
+            fails.append(f"a slide with the fingers a constant 120px apart changed zoom to "
+                         f"{tz}; sliding is not pinching and must not zoom")
+        if sy2 != sy3:
+            fails.append(f"sliding two fingers up scrolled the page {sy2} -> {sy3}")
+
         ori1 = ori_after_pinches
-        print(f"  rotate   yaw/pitch {ori0} -> {ori1}")
+        print(f"  rotate   yaw/pitch {ori0} -> {ori1}   (pure spread must not turn it)")
         if ori0 != ori1:
             fails.append(f"the pinches also turned the map: yaw and pitch went from "
                          f"{ori0} to {ori1}. A pinch is not a drag.")
@@ -351,8 +382,8 @@ def main() -> int:
 
     print()
     if not fails:
-        print("OK — two fingers zoom the map in and out, stay inside the camera's bounds, "
-              "and do not turn it")
+        print("OK — two fingers zoom the map in and out and tilt it, stay inside the "
+              "camera's bounds, and a pure spread does not turn it")
         return 0
     print(f"FAIL — {len(fails)} problem(s):")
     for f in fails:
