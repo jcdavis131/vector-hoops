@@ -119,6 +119,15 @@ was written to handle**, so the message could never be reached by typing. The pr
 and the handler calls both: **12.0s → 2.4s** to first results, one request, and the wait explained
 while it happens. Enforced by `scripts/smoke_cards.py`, mutation-tested three for three.
 
+**Changing your mind on a player card changed it back.** `open()` writes the card, the title, a
+history entry and the announcement unconditionally when its fetch resolves, with no sequencing — so
+the slower request wins whichever card you asked for last. Measured by holding one request three
+seconds: a visitor who clicked Vince Carter, changed their mind and clicked Gerald Brown was on
+**Gerald Brown at 1s and Vince Carter at 5s**, with a `pushState` that ran after they had navigated
+away, so Back went somewhere they never chose. A sequence number now guards both the success and the
+failure path — a stale 404 must not replace a card someone has since opened either. Enforced by the
+race phase in `scripts/smoke_cards.py`; its mutation matrix is five for five.
+
 **Typography.** Nine pages were rendering body copy in Times New Roman. They declared
 `font-family:ui-sans-system`, which is not a CSS keyword — the real generic is `ui-sans-serif`, so
 the name matched no font and, with no fallback behind it, the paragraph fell to the browser default.

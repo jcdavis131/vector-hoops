@@ -66,6 +66,48 @@ STATE = """(function(){
 })()"""
 
 
+# Holds one card's fetch for three seconds. A controlled version of what an
+# unlucky link does to a single resource, so the race has a decided winner
+# instead of depending on which 3 KB file happens to arrive first.
+HOLD = """
+(function(){
+  var orig=window.fetch;
+  window.fetch=function(u,o){
+    if(String(u).indexOf('vince-carter')>=0){
+      return new Promise(function(res,rej){
+        setTimeout(function(){ orig(u,o).then(res,rej); }, 3000);
+      });
+    }
+    return orig(u,o);
+  };
+})();
+"""
+
+CARD = """(function(){
+  return JSON.stringify({
+    title:document.title.slice(0,44),
+    url:location.search,
+    live:((document.getElementById('live')||{}).textContent||'').trim().slice(0,44)});
+})()"""
+
+
+def pick(ws, query, needle):
+    """Type a query, wait for options, click the one whose text contains needle."""
+    ev(ws, "(function(){var q=document.getElementById('q');q.value=" + json.dumps(query) +
+           ";q.dispatchEvent(new Event('input',{bubbles:true}));})()")
+    for _ in range(40):
+        time.sleep(0.25)
+        if ev(ws, "document.querySelectorAll('#hits li[role=\"option\"]').length"):
+            break
+    return ev(ws,
+              "(function(){var o=[].slice.call("
+              "document.querySelectorAll('#hits li[role=\"option\"]'));"
+              "var t=o.filter(function(x){return (x.textContent||'').toLowerCase().indexOf(" +
+              json.dumps(needle.lower()) + ")>=0;})[0];"
+              "if(!t) return 'NOT FOUND';t.click();"
+              "return (t.textContent||'').trim().slice(0,30);})()")
+
+
 def ev(ws, expr):
     r = ws.call("Runtime.evaluate", {"expression": expr, "returnByValue": True})
     if "exceptionDetails" in r:
@@ -243,6 +285,35 @@ def main() -> int:
                 "the search permanently dead for that visit")
         elif not again["options"]:
             failures.append("the index loaded on retry and the search still shows nothing")
+
+        # 6. two cards in quick succession. open() writes the card, the title, the
+        #    history entry and the announcement on resolve, so without a sequence
+        #    guard the request that finishes LAST wins whichever the visitor asked
+        #    for last. One request is held deliberately, because the cards are
+        #    2.6-5.4 KB and real jitter will not decide this reliably in a test.
+        ws.call("Page.addScriptToEvaluateOnNewDocument", {"source": HOLD})
+        ws.call("Page.navigate", {"url": f"http://127.0.0.1:{site}{PAGE}"})
+        time.sleep(2.5)
+        ev(ws, "document.getElementById('q').focus()")
+        time.sleep(2.5)
+        first = pick(ws, "vince carter", "vince carter")
+        time.sleep(0.4)
+        second = pick(ws, "gerald brown", "gerald brown")
+        print(f"\n  raced          {first!r} held, then {second!r}")
+        if "NOT FOUND" in (str(first), str(second)):
+            failures.append("could not find both cards to race — the search returned neither")
+        else:
+            time.sleep(5.0)
+            end = ev(ws, CARD)
+            print(f"  5s later       title {end['title']!r} url {end['url']!r}")
+            print(f"                 announced {end['live']!r}")
+            landed = (end["title"] + end["url"] + end["live"]).lower()
+            if "brown" not in landed:
+                failures.append(
+                    f"a card the visitor moved away from replaced the one they chose — "
+                    f"title {end['title']!r}, url {end['url']!r}. open() has no sequence "
+                    f"guard, so a slow response overwrites a newer one and pushes a "
+                    f"history entry for a page nobody navigated to")
     except SystemExit:
         pass
     finally:

@@ -4536,3 +4536,65 @@ untouched — `/player-cards` is not in the worker's three-entry shell, `.html` 
 served `max-age=0, must-revalidate`, and the worker is network-first. Third time
 this decision has come up and the third time the same test decided it; writing it
 down each time is what keeps it one rule.
+
+
+## Change your mind on a player card and it changes it back (2026-08-10)
+
+The remaining lazy fetch on `/player-cards` is the card open itself. It already
+had the two things that make a wait bearable — a "Loading <name>…" placeholder and
+a 404 path that names the missing file — so the expectation was that it would
+settle itself. The thing nobody had asked was what happens when a visitor opens
+**two** cards.
+
+`open(path, push)` writes the card body, `document.title`, a `history.pushState`
+entry and the spoken announcement, all unconditionally in `.then`. **No sequencing
+guard**, so the request that finishes last wins whichever one was asked for last.
+
+Cards are 2.6-5.4 KB, too close for jitter to decide a test reliably, so one
+request was held for three seconds deliberately — a controlled version of what an
+unlucky link does to a single resource. Click Vince Carter, change your mind,
+click Gerald Brown:
+
+    1s later   card 'Skills Lens - 1998-99'  title 'Gerald Brown'   url '?p=gerald-brown'
+    5s later   card 'Skills Lens - 2000-01'  title 'Vince Carter'   url '?p=vince-carter'
+               announced 'Vince Carter card loaded.'
+
+**Three seconds after settling on Gerald Brown you are on Vince Carter**, and the
+`pushState` ran after the visitor had already navigated away — so Back now goes to
+a page they never chose. The announcement tells a non-visual visitor the same
+wrong thing.
+
+A sequence number, checked in both `.then` and `.catch` — a stale *failure* must
+not replace a card someone has since opened either:
+
+    var mine=++openSeq;
+    ...
+    if(mine!==openSeq) return;
+
+Re-measured, same race:
+
+    5s later   title 'Gerald Brown — Vector Hoops'  url '?p=gerald-brown'
+               announced 'Gerald Brown card loaded.'
+
+### Enforced, and the matrix is five for five
+
+`smoke_cards.py` now races two cards with the same deliberate hold. Mutations:
+
+    promise memo                RC=1   caught
+    loading branch reachable    RC=1   caught
+    search on resolve           RC=1   caught
+    retry after failure         RC=1   caught
+    card sequence guard         RC=1   caught
+
+The new one reports it in the words that matter: *"a card the visitor moved away
+from replaced the one they chose — title 'Vince Carter'"*.
+
+### The pattern this makes three of
+
+Three defects this session were the same shape: **two writers, one surface, last
+write wins.** The game's live region (the payoff announcement clobbered 4 ms later
+by telemetry), the landing page's point count (a poller announcing success over a
+failure), and now the card view. None was visible in a screenshot, in a gate, or on
+a fast link. All three needed the same question — *what if the slower one arrives
+second?* — and none of them would have been asked by looking at the code alone,
+because in each case the code reads correctly right up until you time it.
