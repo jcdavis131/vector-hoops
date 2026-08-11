@@ -159,6 +159,16 @@ Both now point at the pages the nav already uses for those words — `/play.html
 rather than at anchors minted to justify the links. A new `fragments` check makes every deep link
 land on something that exists; it was shown failing first.
 
+**43 targets under 24px, and why none of them fails.** WCAG 2.2 added 2.5.8 Target Size at AA — 24 × 24
+CSS px — and this site is built out of small mono pills that nobody had measured. Across 22 pages:
+**555 targets, 43 under 24 × 24, 8 exempt as inline links in prose, 35 passing on the spacing
+exception, 0 failing.** The criterion is not "everything must be 24px": a small target passes if a
+24px circle centred on it reaches no other target. So the site meets it — **but 35 of those meet it by
+spacing rather than size**, which a later layout change can take away silently, so it is now a gate
+rather than a note. `scripts/check_target_size.py` names the crowding neighbour, because "too small"
+alone is not actionable. Its first mutation **did not fire**, correctly: the shrink lost to the page's
+own later rule, so the chips stayed 28px. **Seventeen checks now.**
+
 **75 to zero, and a gate that reads the browser.** Every painted text element on all 22 pages now
 clears WCAG AA — 75 → 67 → 49 → 31 → 6 → 2 → **0** — measured with its real backdrop composited
 through transparent ancestors. The method the failures taught: **scope to the container that

@@ -5852,3 +5852,39 @@ Two mutations, two caught:
 
 **Sixteen checks now**, and the one that matters most here is the only one that
 looks at what a visitor actually sees.
+
+
+## 43 targets under 24px, and why none of them fails (2026-08-11)
+
+WCAG 2.2 added **2.5.8 Target Size (Minimum)** at AA: 24 × 24 CSS px. This site is
+built out of small mono pills and chips and nothing had ever measured one.
+
+    555 targets across 22 pages
+     43 under 24 × 24
+      8 inline links inside a sentence — exempt outright
+     35 pass on the spacing exception
+      0 failing
+
+**The criterion is not "everything must be 24px".** A small target passes if a
+24px-diameter circle centred on it reaches no other target, and an inline link in
+prose is exempt. Both are implemented, because a check that flagged every chip on
+a toolbar would be noise rather than a finding.
+
+So the site meets 2.5.8 — **but 35 of those targets meet it by spacing, not by
+size**, which is exactly the kind of pass a later layout change takes away without
+anyone noticing. Hence the gate rather than a note.
+
+`scripts/check_target_size.py` names the neighbour, because "too small" on its own
+is not actionable. Shrinking the dictionary's jump chips to 14px and closing their
+gap:
+
+    - /dictionary.html 45.6×14 <a> 'Embedding' — 17.8px from 'Held-out split'
+    - /dictionary.html 41.2×14 <a> 'Residual'  — 15.3px from 'Chimera'
+
+**The first mutation did not fire**, and that is worth keeping: setting
+`min-height:0` on the chips lost to the page's own later rule, so the chips stayed
+28px and the gate was right to stay quiet. The mutation had to use `!important`
+before it tested anything. A test that fails to break the thing it is testing
+proves nothing about the test.
+
+**Seventeen checks now.**
