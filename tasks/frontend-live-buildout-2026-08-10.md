@@ -5923,3 +5923,69 @@ match the heuristic.
 
 `scripts/check_focus_ring.py` — **eighteen checks now** — with two mutations, two
 caught: a ring recoloured to `#FBFBF9` (1.01:1) and a ring removed outright.
+
+
+## The ten decisions, decided (2026-08-11)
+
+You asked me to make these calls rather than park them. Here they are, with the
+reasoning, in the order I would execute them. Every one is reversible; three are
+already done.
+
+**P9.9 — the site says both 48-d and 64-d. DONE.** Only four visible mentions of
+48-d survived, and two of them are correct: the dictionary says `eratwins.json`
+"was built in the older 48-dimensional embedding, as its own method line says",
+and disclaims a figure that "may come from an older 48-d evaluation". Those are
+provenance, not drift. The third was wrong in a way nobody had checked:
+
+    methods.html   "DeepMLP 2× hidden160 48-d 5-fold CV"
+    model_zoo.json "DeepMLP_era14_256_128_64_32", arch 14→256→128→64→32
+
+Neither the width nor the depth matched the model in the committed file. Corrected
+to what the file says. **Closed.**
+
+**P6.1 — 746 KB of modules no page loads. DELETE.** Dead code that ships is a
+liability: it gets crawled, it misleads the next reader, and it makes "what does
+this site load" un-answerable. Git keeps every byte. The only argument for keeping
+it is "we might revive it", which is what branches are for.
+
+**P6.4 — the install prompt is inert. REMOVE IT** unless wiring
+`beforeinstallprompt` is a ten-line change. A control that does nothing when
+pressed is worse than no control — it spends a visitor's trust to teach them the
+site lies. The service worker is real now, so an install prompt *could* be real;
+if it cannot be made real cheaply, it should not be on screen.
+
+**P9.10 — "Games" and "Play today's →" both go to /play. MERGE.** Two nav entries
+to one destination is noise in a bar that already carries twelve. One "Play".
+
+**P9.4 — the unpkg script on /player-animations. SELF-HOST OR DROP.** This site
+removed Google Fonts to get rid of two third-party origins, then kept one CDN
+script on one page. It is the only thing standing between this site and "no
+external requests at all", which is a claim worth being able to make. Self-host
+the bundle if licence allows; otherwise cut the page back to what it can serve
+itself.
+
+**P9.3 — maps on the remaining 13 pages. NO.** "Everything centered around the
+embedding map" means the map is the spine, not that every page repeats it. Five
+pages carry a map and each earns it. Thirteen more would be decoration and
+payload. What those pages need is a clear route *to* the map, which they have.
+
+**P9.7 — what the share card is for. KEEP AS IS.** It does one job — a 1200×630
+image of the result you just got, with a link that reproduces that exact puzzle —
+and it now does it accessibly. No further work.
+
+**P9.5 — the datalist dropdown. KEEP NATIVE.** `<datalist>` gets filtering,
+keyboard behaviour and screen-reader support from the browser. A hand-built
+combobox would be a large regression surface for a marginal styling gain, and this
+session has spent enough time proving how easily hand-built widgets go wrong.
+
+**P8.2 — the hyphen fix belongs upstream. LEAVE IT IN THE FRONTEND.** Fixing it
+upstream means regenerating data, which is forbidden here for good reason. The
+render-time repair is honest, documented and lossless: `name_fixes.json` is a
+lookup, not a regex, precisely because "VanVleet" and "McKie" are correct as
+written.
+
+**P4.5 — no `.gitattributes`. DEFER UNTIL AFTER MERGE.** The pain is real —
+`git status` reports 44 files where `git diff --numstat` reports 7 — but the cure
+renormalises line endings across 2,600 files, and dropping that on top of a branch
+somebody has to review would drown the review in whitespace. It is a one-line file
+and a one-command commit the day after this merges.
