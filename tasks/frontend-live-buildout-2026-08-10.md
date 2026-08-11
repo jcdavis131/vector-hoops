@@ -4661,3 +4661,77 @@ as its primary controls.
 then let the browser settle each — starting on `/teams`.** The same census-then-
 browser discipline that has been wrong twice about payload and right every time
 about behaviour.
+
+
+## The sweep the board asked for, and what it actually took to run (2026-08-10)
+
+Board's next step was: grep for the two-writers shape, shortlist, let the browser
+settle each, starting on `/teams`.
+
+**The grep worked. The narrowing step did not.** Restricted to live code — 22 pages
+and the four assets they actually load, because eight of the ten modules that once
+looked relevant are loaded by nothing — 14 fetch chains write the page and none
+carries a guard a regex can see. But a fetch that runs once at load cannot race
+itself, so the list is only useful once narrowed to *what a visitor can trigger
+twice*, and the enclosing-function regex attributed those fetches to `resize`,
+`say`, `rows` and `esc2`. Those are plainly not the functions; it takes the nearest
+declaration above, which in this code style is usually an unrelated helper.
+
+**So the static half stopped being useful exactly where it mattered**, and rather
+than build on it, the browser was asked instead: load each page, count requests,
+operate every button and select twice, count again.
+
+    /teams.html          0 controls found     no data re-fetched
+    /model.html         10 controls           no data re-fetched
+    /players.html       87 controls           embedding_map_points_limited.json  8 extra
+    /owner/index.html    0 controls found     no data re-fetched
+    /trends.html        38 controls           no data re-fetched
+
+Two things in that table. One real signal on `/players`. And **`/teams` and
+`/owner` reporting zero controls is my probe's gap, not a fact about those pages** —
+their sort headers are `<th>`, and the selector was `button, select, [role=button]`.
+Recorded so the next pass does not read those two rows as coverage.
+
+## The filter that re-downloaded its own data
+
+`loadPts(f)` fetched the 273.5 KB point file on every call, assigned `allPts`, then
+filtered — and both filter buttons called it. Measured on Fast 3G:
+
+    click 1 fCur  250ms after: button=Current  map says 'all • 1764 pts'
+                  settled:     button=Current  map says 'current • 532 pts'
+    ...
+    273.5 KB downloaded 4 time(s) for four clicks
+
+**1.07 MB to filter a list the page had already parsed**, and because the class and
+`aria-pressed` flip synchronously while the redraw waits on the network, the button
+said Current for about two seconds while the map still said `all • 1764 pts`, with
+nothing on screen explaining the gap.
+
+Filtering is a property of data in memory. One fetch, held as a promise so
+overlapping presses share it, then a synchronous redraw:
+
+    273.5 KB downloaded 0 time(s) for four clicks
+    click 1 fCur  button=current  map says 'current • 532 pts'   (at 250ms)
+
+The lag window is gone rather than shortened, because there is no longer anything
+to wait for — which also removes the possibility of two filter responses landing
+out of order.
+
+**A race was NOT demonstrated here, and I am not claiming one.** Clicking Current
+then All 150 ms apart ended correctly on All both before and after the change:
+equal-sized responses generally complete in order. The card race needed a
+deliberate hold to expose it; this one was never shown, so the fix is justified by
+the 1.07 MB and the two-second contradiction, not by a race I did not see.
+
+### My probe reported the wrong thing first
+
+The first run said `button=All` for all four clicks, including immediately after
+pressing Current. The check was `className.indexOf('on')>=0` — and **"mono"
+contains the letters "on"**, so every button matched. `classList.contains('on')`
+fixed it. Same family as the season-chip regex that matched unseparated chips, and
+the reason the rule is *suspect the probe first*: the reading that looked like a
+finding was mine.
+
+Enforced by `scripts/smoke_players.py` — no requests for four presses, and the map
+agreeing with the button a quarter-second after each. Restoring the old code turns
+both assertions red.

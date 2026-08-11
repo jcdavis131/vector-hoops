@@ -89,7 +89,32 @@ var dots=[],allPts=[],yaw=0,rot=1,curTr=null,tCache={},filter='all';
 let cv=$('c'),ctx=cv.getContext('2d'),W=900,H=480;
 let DPR=Math.min(devicePixelRatio||1,1.4);
 function rs(){let r=cv.getBoundingClientRect();W=Math.round(r.width*DPR);H=Math.round((r.height||460)*DPR);cv.width=W;cv.height=H}addEventListener('resize',()=>{DPR=Math.min(devicePixelRatio||1,1.4);rs()});rs();
-async function loadPts(f='all'){try{let res=await fetch('assets/embedding_map_points_limited.json?v=407d2cbc'),j=await res.json();allPts=j.points||[];let filt=allPts.filter(p=>{if(f==='current')return p.is_current;return true});dots=filt.map(p=>({x:(p.x-.5)*2,y:(p.y-.5)*2,z:((p.z||.5)-.5)*2,r:p.is_current?1.05:.72,col:OKABE[p.c%8]||'#F0E442',pid:p.pid,nm:p.display_name,se:p.season,cur:!!p.is_current,al:p.is_current?.92:.78}));$('lab').textContent=f+' • '+dots.length+' pts • 1814 filtered · mem 86%';renderList();}catch(e){$('lab').textContent='fallback load failed'}}
+/* Filtering is a property of data already in memory, so it stops being a network
+   operation after the first load. It used to re-fetch the whole 273.5 KB file on
+   every filter press — measured on Fast 3G, four alternating clicks downloaded it
+   four times, 1.07 MB for a file whose contents never change — and because the
+   button class flips synchronously while the map waits on the fetch, the button
+   read "Current" for about two seconds while the map still said
+   "all • 1764 pts", with nothing on screen saying why.
+
+   One fetch, held as a promise so overlapping presses share it, then a synchronous
+   redraw. Fetching once also removes the possibility of two filter responses
+   landing out of order, which is the shape that has produced three defects here. */
+var ptsPromise=null;
+function applyFilter(f){
+  let filt=allPts.filter(p=>{if(f==='current')return p.is_current;return true});
+  dots=filt.map(p=>({x:(p.x-.5)*2,y:(p.y-.5)*2,z:((p.z||.5)-.5)*2,r:p.is_current?1.05:.72,col:OKABE[p.c%8]||'#F0E442',pid:p.pid,nm:p.display_name,se:p.season,cur:!!p.is_current,al:p.is_current?.92:.78}));
+  $('lab').textContent=f+' • '+dots.length+' pts • 1814 filtered · mem 86%';
+  renderList();
+}
+async function loadPts(f='all'){try{
+  if(!allPts.length){
+    if(!ptsPromise) ptsPromise=fetch('assets/embedding_map_points_limited.json?v=407d2cbc').then(r=>r.json());
+    let j=await ptsPromise;
+    allPts=j.points||[];
+  }
+  applyFilter(f);
+}catch(e){ptsPromise=null;$('lab').textContent='fallback load failed'}}
 function renderList(){let L=$('list');L.innerHTML='';dots.slice(0,80).forEach(d=>{let div=document.createElement('div');div.className='it';div.innerHTML=`<b style="font-size:12.5px">${d.nm}</b><div class="mono" style="color:var(--ink-soft)">${d.se} • pid ${d.pid} ${d.cur?'• current':''}</div>`;div.onclick=()=>sel(d.pid,d);L.appendChild(div)})}
 async function loadTraj(){if(Object.keys(tCache).length)return tCache;try{let r=await fetch('assets/embedding_map_trajectories.json?v=2e787a46'),j=await r.json();tCache=j.trajectories||{}}catch{}return tCache}
 async function sel(pid,hint){let trs=await loadTraj(),tr=trs[String(pid)];if(!tr){$('selLab').textContent='no trajectory for pid '+pid+' — points only';return}curTr=tr;$('selLab').textContent= (hint?hint.nm+' • ':'')+'trajectory '+tr.length+' seasons '+tr[0].season+'→'+tr[tr.length-1].season+' • orange #EB6834 polyline';document.querySelectorAll('.it').forEach(el=>{if(el.textContent.includes(String(pid)))el.classList.add('on')})}

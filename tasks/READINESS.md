@@ -44,6 +44,7 @@ python scripts/smoke_render.py              # 8 pages, empty console
 python scripts/smoke_play.py                # plays a full round
 python scripts/smoke_index.py               # presses the landing page's map control
 python scripts/smoke_cards.py               # searches before the 539 KB index lands
+python scripts/smoke_players.py             # filters the Explorer without re-fetching
 node scripts/smoke_owner_table.mjs          # + arch_map, retrieval_map, name_fix, early_errors
 ```
 
@@ -131,6 +132,15 @@ seconds: a visitor who clicked Vince Carter, changed their mind and clicked Gera
 **Gerald Brown at 1s and Vince Carter at 5s**, with a `pushState` that ran after they had navigated
 away, so Back went somewhere they never chose. A sequence number now guards both the success and the
 failure path — a stale 404 must not replace a card someone has since opened either, which was measured by delaying that request **and** blocking it so the held fetch rejects. Enforced by two race phases in `scripts/smoke_cards.py`; its mutation matrix is six for six.
+
+**The Explorer's filter re-downloaded its own data.** `loadPts(f)` fetched the 273.5 KB point file
+on every call and both filter buttons called it, so **four alternating presses downloaded it four
+times — 1.07 MB to filter a list the page had already parsed**. The button class and `aria-pressed`
+flip synchronously while the redraw waits on the network, so the button read "Current" for about two
+seconds while the map still said `all • 1764 pts`. One fetch, then a synchronous redraw from memory:
+**0 requests for four presses**, and the map agrees with the button immediately. No race was
+demonstrated here and none is claimed — the fix is justified by the megabyte and the contradiction.
+Enforced by `scripts/smoke_players.py`.
 
 **Typography.** Nine pages were rendering body copy in Times New Roman. They declared
 `font-family:ui-sans-system`, which is not a CSS keyword — the real generic is `ui-sans-serif`, so
