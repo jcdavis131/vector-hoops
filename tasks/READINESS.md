@@ -1,11 +1,13 @@
 # frontend-live — readiness
 
-**Nothing here is live.** All 153 commits are on `frontend-live`; `master` is untouched, and
-pushing `master` is what deploys the site. Suite green at the time of writing.
+**Nothing here is live.** Everything below is measured at **`159c90ac`** — the sha is the anchor,
+because the commit that records a count is never inside the count it records. All of it is on
+`frontend-live`; `master` is untouched, and pushing `master` is what deploys the site. Suite green
+at that commit.
 
 | | |
 |---|---|
-| commits ahead of master | 153 |
+| commits ahead of master | 154 at `159c90ac` |
 | paths changed | 2,631 (2,547 under `public/`, 31 scripts) |
 | insertions / deletions | +202,533 / −310,431 |
 | working notes | `tasks/frontend-live-buildout-2026-08-10.md`, 4,273 lines |
