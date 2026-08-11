@@ -4471,3 +4471,68 @@ to exactly the intended diff afterwards.
 nothing, and nothing is right — it is the CRLF stat artifact recorded under P4.5
 two passes ago. **The note stopped me investigating a change that did not exist**,
 which is the whole point of having written it down.
+
+
+## The search's failure path, run rather than asserted (2026-08-10)
+
+The catch added an hour earlier gained three behaviours and none had been
+executed: `IDXP=null` so a later keystroke can retry, a spoken failure, and
+`role="presentation"` on the error row. **"Cleared so a later keystroke can retry"
+was committed as a code comment, which is a claim.** The last two unmeasured
+failure paths on this branch turned out to hold three faults and a clobbered
+announcement respectively, so:
+
+    A: index blocked
+      rows       [{'role': 'presentation', 'text': 'Index unavailable (Failed to fetch).'}]
+      options    0   aria-expanded='false'
+      announced  'The player index could not be loaded.'
+
+    B: block lifted, one more edit
+      requests   0 -> 1     (the second request is what proves IDXP was cleared)
+      options    5   aria-expanded='true'
+      first row  {'role': 'option', 'text': 'Seth Curry2015-16 - 2024-25'}
+
+All three hold. Nothing to fix — which is worth saying plainly, because the value
+of running it was never conditional on finding something.
+
+**My probe manufactured a false negative first.** Phase B appended `x`, leaving
+the query as `curryx`, which honestly matches nobody — and the probe read zero
+options as a broken retry. The retry had worked; the query was wrong. Same shape
+as the synthetic keypress that made Enter look broken on this very page months of
+notes ago: *when a probe says the code is wrong, suspect the probe first.*
+
+Folded into `smoke_cards.py` as two more assertions, and the mutation that proves
+them — deleting `IDXP=null` from the catch — is caught, with a cascade I had not
+predicted:
+
+    retry after failure   RC=1   caught
+      - with the index blocked the results list shows 'Loading index…'
+      - typing again after a failed index started no new request
+
+Without the clear, the next keystroke gets the settled promise back, `search()`
+runs with `IDX` still null, and the *error message is overwritten by the loading
+message* — so the page would sit forever claiming to be loading something it had
+already given up on. Four mutations, four caught.
+
+## An anchor that drifted from its own content
+
+`READINESS.md` opened "measured at `159c90ac`" while the content beneath it — the
+player-search section included — was three commits newer. The cause is visible in
+this session's own transcript: a compound command carrying the anchor bump failed
+on shell quoting, and the rewrite carried the board note and the verify-list row
+but **not the bump**. A retry after a failure has to carry every edit the original
+had, not the ones that were easiest to remember.
+
+`scratch/sync_readiness.py` now derives sha, commits, paths, insertions, deletions,
+script count and board length from git in one run and writes both halves from the
+same numbers. They cannot drift apart by being updated on different days, and
+moving the anchor necessarily refreshes everything under it.
+
+## Service worker: not bumped, same test as `019ba589`
+
+`player-cards.html` changed and its inline JS with it. **Not bumped**, stated
+rather than left silent: no `?v=` token changed — `wiki_index.json?v=4e63a03b` is
+untouched — `/player-cards` is not in the worker's three-entry shell, `.html` is
+served `max-age=0, must-revalidate`, and the worker is network-first. Third time
+this decision has come up and the third time the same test decided it; writing it
+down each time is what keeps it one rule.

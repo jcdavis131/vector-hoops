@@ -192,6 +192,57 @@ def main() -> int:
                 f"the 539 KB index was requested {hits['index']} times for one search — "
                 f"loadIndex memoises its result and IDX is null for the whole flight, so "
                 f"every keystroke starts another download and they contend")
+
+        # 4 + 5. the failure path, and whether it can be recovered from. Holding the
+        #        promise makes a failed load sticky unless the catch clears it, so
+        #        "a later keystroke can retry" is a claim that needs a second request
+        #        to back it up — the same claim-without-a-run that the landing page's
+        #        button was committed with one pass ago.
+        ws.call("Page.navigate", {"url": f"http://127.0.0.1:{site}{PAGE}"})
+        time.sleep(2.5)
+        ws.call("Network.setBlockedURLs", {"urls": ["*wiki_index.json*"]})
+        ev(ws, "document.getElementById('q').focus()")
+        time.sleep(0.2)
+        for ch in QUERY:
+            ev(ws, "(function(){var q=document.getElementById('q');q.value+=" +
+                   json.dumps(ch) + ";q.dispatchEvent(new Event('input',{bubbles:true}));})()")
+            time.sleep(0.15)
+        time.sleep(2.0)
+        blocked = ev(ws, STATE)
+        said = ev(ws, "(document.getElementById('live')||{}).textContent||''")
+        print(f"\n  index blocked  {blocked['text'][:44]!r} expanded={blocked['expanded']!r}")
+        print(f"                 announced {str(said).strip()[:48]!r}")
+        if "unavailable" not in blocked["text"].lower():
+            failures.append(f"with the index blocked the results list shows "
+                            f"{blocked['text'][:60]!r} — a visitor is left with an empty "
+                            f"box and no reason for it")
+        if blocked["expanded"] == "true":
+            failures.append("the combobox claims to be expanded over a failure message")
+        if "could not" not in str(said).lower():
+            failures.append(f"a failed index announced {str(said).strip()[:60]!r} — someone "
+                            f"who cannot see the list is told nothing went wrong")
+
+        ws.call("Network.setBlockedURLs", {"urls": []})
+        before = hits["index"]
+        ev(ws, "(function(){var q=document.getElementById('q');q.value+='x';"
+               "q.dispatchEvent(new Event('input',{bubbles:true}));"
+               "q.value=q.value.slice(0,-1);"
+               "q.dispatchEvent(new Event('input',{bubbles:true}));})()")
+        again = None
+        for _ in range(30):
+            time.sleep(0.4)
+            again = ev(ws, STATE)
+            if again["options"] > 0:
+                break
+        print(f"  after recovery requests {before} -> {hits['index']}, "
+              f"options {again['options']}")
+        if hits["index"] <= before:
+            failures.append(
+                "typing again after a failed index started no new request — the catch "
+                "does not clear the memoised promise, so one bad network moment leaves "
+                "the search permanently dead for that visit")
+        elif not again["options"]:
+            failures.append("the index loaded on retry and the search still shows nothing")
     except SystemExit:
         pass
     finally:
