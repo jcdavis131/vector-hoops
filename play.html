@@ -35,7 +35,7 @@
 <meta name="twitter:image" content="https://hoops.dumbmodel.com/assets/og-1200x630.png">
 <!-- build_social_meta.py: end -->
 </head><body>
-<a class="vh-skip" href="#main">Skip to the content</a><nav><div class=brand><span style="border:2.2px solid var(--ink);padding:4px 9px;border-radius:9px;background:var(--yellow);box-shadow:2px 2px 0 var(--ink);transform:rotate(-1deg)">DUMB MODEL</span><span>Past → Modern</span></div><div style="display:flex;gap:6px;flex-wrap:wrap"><a class="pill y" href="/play">Play</a><a class="pill" href="/players">Explorer</a><a class="pill" href="/player-cards">Players</a><a class="pill" href="/trends">Trends</a><a class="pill" href="/model">Model</a><a class="pill" href="/teams">Teams</a><a class="pill" href="/dictionary">Dictionary</a><a class="pill" href="/leaderboard">Board</a></div><a class="pill" href="/">Map</a></nav><main id="main" tabindex="-1"><h1 style="position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;border:0">DUMB MODEL — Play Past→Modern</h1><div style="display:flex;flex-direction:column;gap:12px"><div class=card><div class=mono style="text-transform:uppercase;letter-spacing:.06em;opacity:.75">Daily puzzle • same for everyone today</div><h2 style="margin:6px 0 4px;font-size:18px;letter-spacing:-.02em">Guess the modern twin — tap to lock</h2><div style="display:flex;gap:7px;flex-wrap:wrap;margin-top:8px"><button class="btn btn-p" id=bSolo>Play Today's</button><button class="btn" id=bTrip style="display:none">Triple3</button><button class="btn" id=bFull style="display:none">Full5</button><button class="btn" id=bPack style="display:none">Pack Battle</button><input id=packIn placeholder="Pack code (optional)" style="flex:1;min-width:160px;display:none" aria-label="Pack code"></div><div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap"><span class=chip style="background:var(--yellow)">10 past × 8 modern to start</span><a class=chip href="/model" style="text-decoration:none">How we score it</a></div><div id=dist class=pill style="margin-top:8px">Type a name to start</div>
+<a class="vh-skip" href="#main">Skip to the content</a><nav><div class=brand><span style="border:2.2px solid var(--ink);padding:4px 9px;border-radius:9px;background:var(--yellow);box-shadow:2px 2px 0 var(--ink);transform:rotate(-1deg)">DUMB MODEL</span><span>Past → Modern</span></div><div style="display:flex;gap:6px;flex-wrap:wrap"><a class="pill y" href="/play">Play</a><a class="pill" href="/players">Explorer</a><a class="pill" href="/player-cards">Players</a><a class="pill" href="/trends">Trends</a><a class="pill" href="/model">Model</a><a class="pill" href="/teams">Teams</a><a class="pill" href="/dictionary">Dictionary</a><a class="pill" href="/leaderboard">Board</a></div><a class="pill" href="/">Map</a></nav><main id="main" tabindex="-1"><h1 style="position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;border:0">DUMB MODEL — Play Past→Modern</h1><div style="display:flex;flex-direction:column;gap:12px"><div class=card><div class=mono style="text-transform:uppercase;letter-spacing:.06em;opacity:.75">Daily puzzle • same for everyone today</div><h2 style="margin:6px 0 4px;font-size:18px;letter-spacing:-.02em">Guess the modern twin — tap to lock</h2><div style="display:flex;gap:7px;flex-wrap:wrap;margin-top:8px"><button class="btn btn-p" id=bSolo>Play Today's</button><button class="btn btn-y" id=bChallenge>Challenge a friend</button><button class="btn" id=bTrip style="display:none">Triple3</button><button class="btn" id=bFull style="display:none">Full5</button><button class="btn" id=bPack style="display:none">Pack Battle</button><input id=packIn placeholder="Pack code (optional)" style="flex:1;min-width:160px;display:none" aria-label="Pack code"></div><div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap"><span class=chip style="background:var(--yellow)">10 past × 8 modern to start</span><a class=chip href="/model" style="text-decoration:none">How we score it</a></div><div id=dist class=pill style="margin-top:8px">Type a name to start</div>
 <p class=mono style="margin:6px 0 0;font-size:10.5px;color:#6B6862;line-height:1.5;text-transform:none">Past player on the left — guess which modern player plays most like them. Same puzzle for everyone each day, works offline after your first visit.</p></div><div class=card><h2 class="vh-sr">Today's question</h2><div class=mono>Daily • works offline after first visit</div><div id=q style="font-weight:900;font-size:17px;margin-top:4px">—</div><div style="display:flex;gap:8px;margin-top:8px"><input id=guess list=guessList autocomplete=off placeholder="Type modern player — Curry, Wemby..." style="flex:1" aria-label="Type a modern player to guess the twin"><datalist id=guessList></datalist><button class="btn btn-p" id=go>Guess ◎</button></div><div id=log style="margin-top:8px;font-family:ui-monospace;font-size:11.4px;min-height:54px;background:var(--paper);border:1.6px dashed #E8E2DA;border-radius:11px;padding:8px;max-height:150px;overflow:auto"></div><div id=trajChips style="margin-top:8px"></div><div id=parityLab class=mono style="margin-top:6px;font-size:10.6px;color:#5B5752"></div><div style="display:flex;gap:8px;margin-top:8px;align-items:center;flex-wrap:wrap"><button class="btn" id=hintBtn>Hint</button><button class="btn btn-y" id=shareBtn style="display:none">Share result</button><span id=shareStat class=mono></span><button class="btn" id=btnGlass style="display:none">How it works</button><button class="btn btn-p" id=btnNext style="display:none">Next →</button></div><div id=ww style="margin-top:6px"></div></div></div><div style="display:flex;flex-direction:column;gap:12px"><div class=card style="padding:0;overflow:hidden"><h2 class="vh-sr">The embedding map</h2><div style="display:flex;justify-content:space-between;padding:8px 11px;border-bottom:2.2px solid var(--ink);background:#fff"><span class="pill y">Tap a dot to guess</span><span class=mono>Past ★ Modern ○</span></div><div id=play-a-101><canvas id=c width=640 height=360 aria-label="Embedding map. The modern player pool is drawn as points positioned by the model, coloured by archetype, with the season being asked about marked by a crosshair. Points can be clicked to fill the guess box; every one of them is also in the guess box suggestions, so nothing here needs a mouse."></canvas><canvas id=trajOver width=640 height=360 style="position:absolute;inset:0;pointer-events:none"></canvas><div class=pill style="position:absolute;left:10px;top:10px;z-index:3;background:rgba(250,250,248,.92)">Past ★ Modern ○</div><div id=ring class=ring>◎</div><div id=confetti></div><div id=resultBox class=traj-glass><div class=mono style="font-weight:900;text-transform:uppercase">◎ Locked — nice call</div><div id=resMeta class=mono style="margin-top:4px;font-size:11px;line-height:1.45">—</div><div id=seasonChips style="margin-top:6px;display:flex;flex-wrap:wrap"></div><div id=parityLab2 class=mono style="margin-top:6px;font-size:10.5px;opacity:.86"></div><div style="display:flex;gap:6px;margin-top:8px;flex-wrap:wrap"><button class="btn btn-y" id=btnShareCard>Share</button><button class="btn" id=btnGlass2>How it works</button><button class="btn btn-p" id=btnNext2>Next →</button></div></div></div><div style="padding:8px 11px;background:var(--paper);border-top:1.6px solid var(--ink)" class=mono>Tap a player dot to fill your guess • orange pulse shows the lock</div></div><div class=card><h2 style="font-size:14px;margin:0">How to play</h2><div class=sub style="margin-top:4px">One past player appears. Guess which modern player plays most like them. We score how close your guess is — closer greens lock it in.</div><ul style="margin:8px 0 0 16px;font-size:12.4px;line-height:1.45" class=sub><li><b>Tap or type</b> a name — map or box, both work</li><li><b>Lock it</b> — good guess shows orange career path</li><li><b>Share</b> — same puzzle for everyone today</li><li>Streak builds when you finish the day's set</li></ul></div></div></main><div id=sharePop class=share-pop><div class=share-card role=dialog aria-modal=true aria-label="Share this result"><canvas id=shareCard role=img aria-label="Share card. Drawn when a round ends." width=1200 height=630 style="width:100%;height:auto;display:block;background:#080A0F"></canvas><div style="padding:10px 12px;display:flex;gap:8px;flex-wrap:wrap;justify-content:space-between;align-items:center;background:#080A0F"><span class=mono style="color:#C9D4E5">Past → Modern • share your twin match</span><div style="display:flex;gap:6px"><button class="btn" id=dlShare>Download image</button><button class="btn btn-y" id=closeShare>Close ◎</button></div></div></div></div><canvas id=shareCardD width=1200 height=630></canvas><footer><div class=mono>Past → Modern • one puzzle a day</div><div style="display:flex;gap:6px"><a class="pill y" href="/play">Play</a><a class="pill" href="/leaderboard">Board</a><a class="pill" href="/">Map</a><a class="pill" href="/model">Model</a></div></footer><script>const $=s=>document.getElementById(s);const A=1103515245,C=12345,M=2147483648;/* Math.imul, not *: A*s reaches 2.37e18 for s near 2^31 and
    Number.MAX_SAFE_INTEGER is 9.01e15, so the plain multiply loses the low bits
    that %M then reads. Measured effect: 120 distinct daily puzzles across 730
@@ -125,12 +125,31 @@ let r=$('ring');r.classList.remove('karaoke-2x');void r.offsetWidth;r.classList.
   let rb=$('resultBox');if(!rb)return;rb.style.display='block';rb.classList.add('spike');setTimeout(()=>rb.classList.remove('spike'),620);
   let score=cos(target.v,guess.v);
   let label=score>0.92?"Dead on — lock!":score>0.82?"Very close":score>0.68?"Getting close":"Keep trying";
-  $('resMeta').innerHTML='<b>'+target.n+' ≈ '+guess.n+'</b> • '+label+' ('+(score*100|0)+'%)';
+  let best=null,bestS=-1;
+  try{
+    for(let i=0;i<MODERN.length;i++){let s=cos(target.v, MODERN[i].v); if(s>bestS){bestS=s; best=MODERN[i];}}
+  }catch(e){}
+  let modelLine='';
+  if(best && best.n!==guess.n){
+    modelLine='<div class="sub" style="margin-top:4px">Model closest: <b>'+best.n+'</b> ('+(bestS*100|0)+'%)</div>';
+  }
+  $('resMeta').innerHTML='<b>'+target.n+' ≈ '+guess.n+'</b> • '+label+' ('+(score*100|0)+'%)'+modelLine;
   $('parityLab').innerHTML='Same puzzle for everyone today. <a href="/model" style="color:inherit">See how we score it</a>';
   $('parityLab2').innerHTML=(tT[0]?.team?'First year '+(tT[0]?.team||''):'')+' • tap to see path';
   if($('btnGlass')) $('btnGlass').style.display='inline-flex';
   if($('btnNext')) $('btnNext').style.display='inline-flex';
   if($('shareBtn')) $('shareBtn').style.display='inline-flex';
+  try{
+    if(typeof AudioContext!=='undefined'){
+      let ac=new (window.AudioContext||window.webkitAudioContext)();
+      let o=ac.createOscillator(), g=ac.createGain();
+      o.type='sine'; o.frequency.value=720; o.connect(g); g.connect(ac.destination);
+      g.gain.setValueAtTime(0.0001, ac.currentTime);
+      g.gain.exponentialRampToValueAtTime(0.22, ac.currentTime+0.04);
+      g.gain.exponentialRampToValueAtTime(0.0001, ac.currentTime+0.36);
+      o.start(); o.stop(ac.currentTime+0.38);
+    }
+  }catch(e){}
 }function makeShareOG(guess,target,gT,tT){
   let sc=$('shareCard'),sx=sc.getContext('2d');
   if(!sc) return;
@@ -231,6 +250,7 @@ function guess(){let g=$('guess').value.trim().toLowerCase();if(!g||!cur)return;
     $('dist').innerHTML+='<div class="sub" style="margin-top:4px">Also matches '+others.slice(0,3).join(' · ')+(others.length>3?' …':'')+' — type more to pick</div>';
   }
   log('→ <b>'+cand.n+'</b> • '+lbl);
+  saveHistory({t: new Date().toISOString(), past: cur?.n||'', guess: cand.n, score: cs, pack: (typeof seq!=='undefined'?seq.join('-'):'')});
   let lockTh=0.68;
   if(cs>lockTh){vhAnimating=true;animateCareer(cand,cur).then(()=>{vhAnimating=false;log('Locked! '+cur.n+' → <b>'+cand.n+'</b> ★');idx++;updateWW(false,true);});}else{let pb=$('play-a-101');pb.classList.add('spike');setTimeout(()=>pb.classList.remove('spike'),520);pulseRing2();drawBase(cur)} $('guess').value=''}
 function bestModernForCur(){
@@ -260,6 +280,17 @@ function bestModernForCur(){
   });
 })();
 
+
+function saveHistory(entry){
+  try{
+    let k='vh_guess_history';
+    let h=JSON.parse(localStorage.getItem(k)||'[]');
+    h.push(entry);
+    if(h.length>60) h=h.slice(-60);
+    localStorage.setItem(k, JSON.stringify(h));
+  }catch(e){}
+}
+
 function renderWW(ww){ww=ww||JSON.parse(localStorage.getItem('vh_weekStreak')||'{"days":[],"streak":0}');let c=$('ww');if(!c)return;c.innerHTML='';let dots='';for(let i=0;i<7;i++){dots+='<span class="dotw '+(i<(ww.days?.length||0)?'on'+((ww.days.length>=7)?' war':''):'')+'"></span>'}c.innerHTML='<span class="mono">Streak </span>'+dots+'<span class="mono" style="margin-left:6px">'+(ww.streak||0)+' days • '+(ww.days?.length||0)+'/7</span>'}function updateWW(fin,hit){let key='vh_weekStreak';let ww=null;try{ww=JSON.parse(localStorage.getItem(key)||'{"days":[],"streak":0}')}catch(e){ww={days:[],streak:0}}let today=new Date().toISOString().slice(0,10);
   if(hit&&!ww.days.includes(today)){
     /* A streak that survives a gap is not a streak. This used to be
@@ -273,7 +304,32 @@ function renderWW(ww){ww=ww||JSON.parse(localStorage.getItem('vh_weekStreak')||'
     var consecutive=last&&(Date.parse(today+'T00:00:00Z')-Date.parse(last+'T00:00:00Z'))===86400000;
     if(consecutive){ww.days.push(today);ww.days=ww.days.slice(-7);ww.streak=(ww.streak||0)+1}
     else{ww.days=[today];ww.streak=1}
-  }localStorage.setItem(key,JSON.stringify(ww));renderWW(ww)}$('go').onclick=guess;$('guess').addEventListener('keydown',e=>{if(e.key==='Enter')guess()});$('bSolo').onclick=()=>{let s=((hStr(new Date().toISOString().slice(0,10))^DAILY)>>>0)%M;s=LCG(s);setSeq([POOL[s%POOL.length].i])};$('bTrip').onclick=()=>{let s=((hStr(new Date().toISOString().slice(0,10))^DAILY)>>>0)%M;let a=[];for(let k=0;k<3;k++){s=LCG(s);a.push(POOL[s%POOL.length].i)}setSeq(a)};$('bFull').onclick=()=>{let s=((hStr('full'+new Date().toISOString().slice(0,10))^DAILY)>>>0)%M;let a=[];for(let k=0;k<5;k++){s=LCG(s);a.push(POOL[s%POOL.length].i)}setSeq(a)};$('bPack').onclick=()=>{let p=parsePack()||[672,123,456];setSeq(p);$('packIn').value=p.join('-');history.replaceState(null,'','?pack='+p.join('-'))};$('packIn').addEventListener('change',e=>{let v=e.target.value.replace('?pack=','').split('-').map(x=>parseInt(x,10)).filter(x=>!isNaN(x));if(v.length){setSeq(v);history.replaceState(null,'','?pack='+v.join('-'))}});$('btnNext')?.addEventListener('click',()=>{let rb=$('resultBox');rb.style.display='none';octx.clearRect(0,0,trajOver.width,trajOver.height);nextQ()});$('btnNext2')?.addEventListener('click',()=>{let rb=$('resultBox');rb.style.display='none';octx.clearRect(0,0,trajOver.width,trajOver.height);nextQ()});$('btnGlass')?.addEventListener('click',()=>{let rb=$('resultBox');rb?.classList.toggle('traj-glass');trajOver.style.filter=trajOver.style.filter?'':'blur(.6px) contrast(1.2) drop-shadow(0 0 6px rgba(235,104,52,.5))'});$('btnGlass2')?.addEventListener('click',()=>{let rb=$('resultBox');rb?.classList.toggle('traj-glass');trajOver.style.filter=trajOver.style.filter?'':'blur(.6px) contrast(1.2) drop-shadow(0 0 6px rgba(235,104,52,.5))'});/* ── the share overlay was a div with a class on it ──────────────────────────
+  }localStorage.setItem(key,JSON.stringify(ww));renderWW(ww)}$('go').onclick=guess;$('guess').addEventListener('keydown',e=>{if(e.key==='Enter')guess()});
+$('bChallenge')?.addEventListener('click',()=>{
+  let ids=[];
+  let pool=POOL||[];
+  for(let k=0;k<3;k++){ let s=((Math.random()*2147483648)|0); ids.push(pool[(s>>>0)%pool.length]?.i || pool[k%pool.length]?.i || 672); }
+  let code=ids.join('-');
+  let url=location.origin+location.pathname+'?pack='+code;
+  history.replaceState(null,'','?pack='+code);
+  setSeq(ids);
+  let stat=$('shareStat');
+  if(navigator.clipboard){
+    navigator.clipboard.writeText(url).then(()=>{
+      if(stat) stat.textContent='Pack link copied';
+      setTimeout(()=>{ if(stat) stat.textContent='';},2200);
+    }).catch(()=>{
+      if(stat) stat.textContent='Pack: '+code;
+    });
+  }else{
+    if(stat) stat.textContent='Pack: '+code;
+  }
+  if(navigator.share){
+    navigator.share({title:'Challenge Past-Modern', text:'Can you beat my pack?', url:url}).catch(()=>{});
+  }
+});
+
+$('bSolo').onclick=()=>{let s=((hStr(new Date().toISOString().slice(0,10))^DAILY)>>>0)%M;s=LCG(s);setSeq([POOL[s%POOL.length].i])};$('bTrip').onclick=()=>{let s=((hStr(new Date().toISOString().slice(0,10))^DAILY)>>>0)%M;let a=[];for(let k=0;k<3;k++){s=LCG(s);a.push(POOL[s%POOL.length].i)}setSeq(a)};$('bFull').onclick=()=>{let s=((hStr('full'+new Date().toISOString().slice(0,10))^DAILY)>>>0)%M;let a=[];for(let k=0;k<5;k++){s=LCG(s);a.push(POOL[s%POOL.length].i)}setSeq(a)};$('bPack').onclick=()=>{let p=parsePack()||[672,123,456];setSeq(p);$('packIn').value=p.join('-');history.replaceState(null,'','?pack='+p.join('-'))};$('packIn').addEventListener('change',e=>{let v=e.target.value.replace('?pack=','').split('-').map(x=>parseInt(x,10)).filter(x=>!isNaN(x));if(v.length){setSeq(v);history.replaceState(null,'','?pack='+v.join('-'))}});$('btnNext')?.addEventListener('click',()=>{let rb=$('resultBox');rb.style.display='none';octx.clearRect(0,0,trajOver.width,trajOver.height);nextQ()});$('btnNext2')?.addEventListener('click',()=>{let rb=$('resultBox');rb.style.display='none';octx.clearRect(0,0,trajOver.width,trajOver.height);nextQ()});$('btnGlass')?.addEventListener('click',()=>{let rb=$('resultBox');rb?.classList.toggle('traj-glass');trajOver.style.filter=trajOver.style.filter?'':'blur(.6px) contrast(1.2) drop-shadow(0 0 6px rgba(235,104,52,.5))'});$('btnGlass2')?.addEventListener('click',()=>{let rb=$('resultBox');rb?.classList.toggle('traj-glass');trajOver.style.filter=trajOver.style.filter?'':'blur(.6px) contrast(1.2) drop-shadow(0 0 6px rgba(235,104,52,.5))'});/* ── the share overlay was a div with a class on it ──────────────────────────
    Measured in a browser: opening it left focus on the button behind it, and Tab
    then walked two live controls the visitor could no longer see through a
    blurred backdrop — the second being "Next Q →", which moves the game on
