@@ -6632,3 +6632,52 @@ labelled — which is exactly what the dictionary already does for the 48-d
 with a **later override** rather than the declaration, so the painted result was
 right and the declared pair was still wrong. Two checks disagreeing is the
 signal; the declared pair is the painted pair now.
+
+
+## The page claimed wins drive value; its own file says r = 0.09 (2026-08-11)
+
+`/brand` was **413 characters of jargon** under the headline *"Wins into sponsor
+ROI • $9.1B top • GSW 9.14B"*. Last turn fixed the figure. This turn checked the
+claim, which nothing ever had. Across the 30 teams in
+`assets/front_office_lite.json`:
+
+    corr(wins, valuation)     +0.09
+    corr(payroll, valuation)  +0.10
+    corr(rating, valuation)    0.00
+
+It is not a scale problem. Valuations run **$2.95B to $10.09B** and wins run
+**17 to 64** — both wide, and they do not move together. The concrete version of
+the same fact: dearest per win is **BKN $274M**, GSW $273M, WAS $254M; cheapest
+is **DET $55M**, OKC $55M, SAS $56M. Big markets with few wins against winning
+teams in smaller ones.
+
+The page computes all of that from the file now and says what it finds, which is
+the opposite of what it used to assert.
+
+### The line that matters most is the caveat
+
+Every valuation in this repo is `forbes_synth_estimated_for_training`. So a
+correlation computed over them describes **the file that generated them, not the
+league**. The method note says exactly that, because a reader who is not told
+will assume the other thing — and *"wins do not drive franchise value"* is a far
+bigger claim than 30 synthetic points from one season can carry.
+
+Making a page honest is not the same as making it interesting, and it would have
+been easy to ship the r = 0.09 as a finding about basketball. It is a finding
+about a training set.
+
+### Two smaller ones, both mine
+
+  - **A stamper was eating quoted history.** `build_valuation_note.py` rewrote
+    the line in `brand.html`'s own script comment that *quotes* the old headline
+    — turning the record of the defect into a copy of the fix. Patterns now apply
+    outside `<script>` and `<!-- -->` only, which is the rule `check_sourced` and
+    `check_headings` already use.
+  - **A signed zero is not a sign.** `smoke_brand` asserted Python's `-0.00`
+    against the browser's `0.00` for the rating correlation. The page was right
+    and the expectation was wrong.
+
+`scripts/smoke_brand.py` recomputes every figure in Python and compares — three
+correlations to two decimals, both spreads, the top valuation by name, and the
+three dearest and three cheapest per win. **Four mutations, four caught**, plus
+the blocked-file path where the page says so and prints no number.

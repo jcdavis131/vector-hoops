@@ -1,16 +1,16 @@
 # frontend-live — readiness
 
-**Nothing here is live.** Everything below is measured at **`18d1658b`** — the sha is the anchor,
+**Nothing here is live.** Everything below is measured at **`4ea00ad9`** — the sha is the anchor,
 because the commit that records a count is never inside the count it records. All of it is on
 `frontend-live`; `master` is untouched, and pushing `master` is what deploys the site. Suite green
 at that commit.
 
 | | |
 |---|---|
-| commits this session | 248 on this branch's own line at `18d1658b`, now on `master` (a plain `rev-list` says 284 — it walks both sides of the merge and counts Scout's 36) |
+| commits this session | 250 on this branch's own line at `4ea00ad9`, now on `master` (a plain `rev-list` says 286 — it walks both sides of the merge and counts Scout's 36) |
 | paths changed, across the merge | 2,652 (2,547 under `public/`, 45 scripts) |
 | insertions / deletions | +211,573 / −310,582 |
-| working notes | `tasks/frontend-live-buildout-2026-08-10.md`, 6,636 lines |
+| working notes | `tasks/frontend-live-buildout-2026-08-10.md`, 6,685 lines |
 
 **Where to look at it.** The branch is pushed and Vercel builds every commit on it:
 
@@ -158,6 +158,22 @@ each moved the page from **scrollY 0 to scrollY 0** while writing the fragment i
 Both now point at the pages the nav already uses for those words — `/play.html` and `/model.html` —
 rather than at anchors minted to justify the links. A new `fragments` check makes every deep link
 land on something that exists; it was shown failing first.
+
+**The page claimed wins drive value; its own file says r = 0.09.** `/brand` was 413 characters of
+jargon headed *"Wins into sponsor ROI"*. Nothing had ever checked the claim against the file it would
+have come from: across 30 teams, `corr(wins, valuation) = +0.09`, `corr(payroll, valuation) = +0.10`,
+`corr(rating, valuation) = 0.00`. Not a scale problem — valuations run **$2.95B to $10.09B**, wins
+**17 to 64**, both wide and unrelated. Dearest per win **BKN $274M**, cheapest **DET $55M**. The page
+computes all of it now and says the opposite of what it used to assert. **The line that matters most
+is the caveat:** every valuation in this repo is `forbes_synth_estimated_for_training`, so the
+correlation describes *the file that generated them, not the league* — and "wins do not drive
+franchise value" is a far bigger claim than 30 synthetic points from one season can carry. It would
+have been easy to ship r = 0.09 as a finding about basketball; it is a finding about a training set.
+`smoke_brand.py` recomputes every figure in Python and compares — **four mutations, four caught**,
+plus the blocked-file path. Two smaller ones, both mine: `build_valuation_note.py` was rewriting the
+script comment that *quotes* the old headline, turning the record of the defect into a copy of the
+fix (patterns now skip `<script>` and comments); and the smoke asserted Python's `-0.00` against the
+browser's `0.00` — a signed zero is not a sign, the page was right.
 
 **The valuations were synthetic all along.** Every check and smoke was green — 17 and 16 in one
 sweep — so the question became what a green sweep cannot see. Measuring what all 18 pages put on
