@@ -1,16 +1,16 @@
 # frontend-live — readiness
 
-**Nothing here is live.** Everything below is measured at **`882e0168`** — the sha is the anchor,
+**Nothing here is live.** Everything below is measured at **`18d1658b`** — the sha is the anchor,
 because the commit that records a count is never inside the count it records. All of it is on
 `frontend-live`; `master` is untouched, and pushing `master` is what deploys the site. Suite green
 at that commit.
 
 | | |
 |---|---|
-| commits this session | 245 on this branch's own line at `882e0168`, now on `master` (a plain `rev-list` says 281 — it walks both sides of the merge and counts Scout's 36) |
+| commits this session | 248 on this branch's own line at `18d1658b`, now on `master` (a plain `rev-list` says 284 — it walks both sides of the merge and counts Scout's 36) |
 | paths changed, across the merge | 2,652 (2,547 under `public/`, 45 scripts) |
 | insertions / deletions | +211,573 / −310,582 |
-| working notes | `tasks/frontend-live-buildout-2026-08-10.md`, 6,565 lines |
+| working notes | `tasks/frontend-live-buildout-2026-08-10.md`, 6,636 lines |
 
 **Where to look at it.** The branch is pushed and Vercel builds every commit on it:
 
@@ -158,6 +158,25 @@ each moved the page from **scrollY 0 to scrollY 0** while writing the fragment i
 Both now point at the pages the nav already uses for those words — `/play.html` and `/model.html` —
 rather than at anchors minted to justify the links. A new `fragments` check makes every deep link
 land on something that exists; it was shown failing first.
+
+**The valuations were synthetic all along.** Every check and smoke was green — 17 and 16 in one
+sweep — so the question became what a green sweep cannot see. Measuring what all 18 pages put on
+screen: **`brand` 413 characters of text, `player-fit` 378, `dfs` 784**, against `player.html`'s
+3,776. Three nav destinations are taglines, not pages, and two had **no links at all**.
+`/player-fit` carried an `<input>` and a **Find fit →** button with no handler and no id to attach
+one to — P6.4 exactly — replaced with the three places fit actually works. Then the numbers:
+`brand`'s headline `$9.1B top • GSW 9.14B` was **stale** (the file's own `season_focus` says GSW
+**$10,090M**), it was on **three pages including the landing page**, its premise is unsupported
+(`corr(wins, valuation) = 0.09` across 30 teams), and — the real finding — **all 360 valuation
+records over 12 seasons name their own source as `forbes_synth_estimated_for_training`.** They are
+estimates generated to train the model, not measured franchise values, and no page said so.
+`scripts/build_valuation_note.py` stamps the computed figure and the disclosure quoted from the
+file's `source` field; `derived` runs it — **11 generators** — shown red by putting `$9.1B` back. The
+numbers are not changed, because a synthetic estimate is still the best figure this repo has and
+deleting it would leave the pages emptier and no more honest. It is labelled, as the dictionary
+already labels the 48-d `eratwins.json`. Also: `check_contrast` caught `.pill.o` at 3.06:1 — last
+turn I fixed that with a later override instead of the declaration, so the paint was right and the
+declaration was still wrong.
 
 **The page nothing walked.** `/player` served `public/player.html` — tracked with **no root
 counterpart**, so `sync_public.py` never touched it and all sixteen root-walking checks went past.

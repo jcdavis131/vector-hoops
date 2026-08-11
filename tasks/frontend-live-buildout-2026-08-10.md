@@ -6561,3 +6561,74 @@ And one of mine, caught by `check_viewport`: the ten headings added to
 `player.html` were written `class="vh-sr"` before that rule existed on the page,
 so they rendered as **visible duplicate titles** and pushed the 320px layout to
 388. The rule is there now, along with the skip link the page never had.
+
+
+## The valuations were synthetic all along (2026-08-11)
+
+Every check and every smoke was green — 17 and 16, run in one sweep — so the
+question became what a green sweep cannot see. Measuring what each of the 18
+pages actually puts on screen answered it:
+
+    brand.html          413 characters of text,  56 nodes, 0 canvas/svg/img
+    player-fit.html     378 characters,          53 nodes, 0
+    dfs.html            784 characters,          57 nodes, 0
+    player.html       3,776 characters,         172 nodes, 1
+
+Three of the site's nav destinations are **taglines, not pages** — a heading, a
+line of jargon, a call to action, a footer. Two of them had **no links at all**.
+
+### A control with nothing behind it
+
+`/player-fit` carried this:
+
+    <input placeholder="player id" aria-label="Player id">
+    <button class="btn btn-y">Find fit →</button>
+
+No handler, no id to attach one to, and the page's only two listeners are the
+error queue. **P6.4 in the ten decisions covers exactly this**: a control that
+does nothing when pressed spends a visitor's trust to teach them the site lies.
+Removed, and replaced with the three places fit actually works — the Explorer,
+the player cards with their cosine neighbours, and `/model` for how that cosine
+is computed. `/brand` gets two routes out.
+
+### And then the numbers
+
+`brand.html` headlined *"Wins into sponsor ROI • $9.1B top • GSW 9.14B"*. Two
+things were wrong with that sentence.
+
+**The figure is stale.** For the file's own `season_focus` 2025-26, the largest
+valuation is GSW at **$10,090M**. `$9.1B top` was on three pages, including the
+landing page.
+
+**The premise is not supported by the file it would draw from.** Across 30 teams:
+
+    corr(wins, valuation)     = 0.09
+    corr(payroll, valuation)  = 0.10
+
+Wins do not explain franchise value in this data. Nor does payroll.
+
+**And the valuations are synthetic.** `valuations_meta_by_season` carries 360
+records over 12 seasons, and every single one names its own source:
+
+    "source": "forbes_synth_estimated_for_training"
+
+They are estimates generated to train the model, not measured franchise values.
+**No page said so.**
+
+`scripts/build_valuation_note.py` stamps both from the file — the figure,
+computed, and the disclosure, quoted from the `source` field rather than
+paraphrased. `check_frontend`'s `derived` check runs it with `--check`, so
+neither can drift again: **11 generators now**. Shown red by putting `$9.1B`
+back, then green.
+
+The numbers are not changed. A synthetic estimate is still the best figure this
+repo has, and deleting it would leave the pages emptier and no more honest. It is
+labelled — which is exactly what the dictionary already does for the 48-d
+`eratwins.json`.
+
+### One more, from running a check that had not been in the battery
+
+`check_contrast` flagged `.pill.o` at 3.06:1 on `/player`. Last turn I fixed that
+with a **later override** rather than the declaration, so the painted result was
+right and the declared pair was still wrong. Two checks disagreeing is the
+signal; the declared pair is the painted pair now.
