@@ -1,16 +1,16 @@
 # frontend-live — readiness
 
-**Nothing here is live.** Everything below is measured at **`8a846e44`** — the sha is the anchor,
+**Nothing here is live.** Everything below is measured at **`882e0168`** — the sha is the anchor,
 because the commit that records a count is never inside the count it records. All of it is on
 `frontend-live`; `master` is untouched, and pushing `master` is what deploys the site. Suite green
 at that commit.
 
 | | |
 |---|---|
-| commits this session | 243 on this branch's own line at `8a846e44`, now on `master` (a plain `rev-list` says 279 — it walks both sides of the merge and counts Scout's 36) |
+| commits this session | 245 on this branch's own line at `882e0168`, now on `master` (a plain `rev-list` says 281 — it walks both sides of the merge and counts Scout's 36) |
 | paths changed, across the merge | 2,652 (2,547 under `public/`, 45 scripts) |
 | insertions / deletions | +211,573 / −310,582 |
-| working notes | `tasks/frontend-live-buildout-2026-08-10.md`, 6,499 lines |
+| working notes | `tasks/frontend-live-buildout-2026-08-10.md`, 6,565 lines |
 
 **Where to look at it.** The branch is pushed and Vercel builds every commit on it:
 
@@ -158,6 +158,24 @@ each moved the page from **scrollY 0 to scrollY 0** while writing the fragment i
 Both now point at the pages the nav already uses for those words — `/play.html` and `/model.html` —
 rather than at anchors minted to justify the links. A new `fragments` check makes every deep link
 land on something that exists; it was shown failing first.
+
+**The page nothing walked.** `/player` served `public/player.html` — tracked with **no root
+counterpart**, so `sync_public.py` never touched it and all sixteen root-walking checks went past.
+Moved to the root and checked for the first time: **seventeen findings on one page**, including a
+three-tier price card (`PRO $19/MO`, `AGENCY $199`, `OWNER FOR $5K`) on a site whose first brief line
+is *make all pages free*, four unsourced figures, ten cards with no heading, no `<h1>`, no `<main>`,
+three unnamed controls, and 388px of layout at a 320px viewport. `make_free.py` had never been
+pointed at it and was still naming three files that no longer exist — a tool reporting `SKIP` and
+passing. **Five routes were claimed by two files each**; with `cleanUrls` and `trailingSlash:false`
+the directory half is unreachable, and on `/owner` the reachable half was the one **without** the
+screen-reader table caption — an accessibility fix reported as shipped had been shadowed since the
+day it was written. **37 links carried a trailing slash**, which the service worker's URL-keyed cache
+turns into an offline-notice hit, and `check_clean` only knew about the `.html` half. Two new arms,
+both shown red first: **`routes`** (nothing served from outside the mirror, no route claimed twice)
+and trailing slashes in **`clean`** — **seventeen checks over 18 pages**. Also: `/play`'s onboarding
+tip stole focus 400 ms after load on a first visit, past the skip link and the nav; and ten headings
+I added were `class="vh-sr"` before that rule existed on the page, so they rendered as visible
+duplicate titles — caught by `check_viewport`, not by me.
 
 **Phase five, and a rebase I did not re-gate.** `/teams` carried a card headed *"Why San Antonio
 rates above Oklahoma City"* over *"Why SAS 94.8 > OKC 85.8"* — but 94.8/85.8 are `weighted_wins`, and

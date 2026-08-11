@@ -6495,3 +6495,69 @@ served page outside the root→`public/` mirror the whole repo runs on.
 `check_frontend` walks 22 pages from the root and never sees it;
 `check_painted_contrast` walks `public/` and sees 23. That gap is why its
 contrast went unmeasured until now, and it is worth a check of its own.
+
+
+## The page nothing walked (2026-08-11)
+
+`/player` served `public/player.html` — tracked in git with **no root
+counterpart**. `sync_public.py` never touched it, and every root-walking check,
+all sixteen, walked straight past. Moving it to the root and checking it for the
+first time produced **seventeen findings on one page**:
+
+    PRO $19/MO        a tier card with a dashed border and a LOCK button
+    AGENCY $199       10 SEATS, API, white-label
+    OWNER FOR $5K     in the footer nav, next to FIT CALC $19
+    purity@10 0.7057  ×4, a figure check_sourced says is in no committed file
+    10 cards          with no heading at all
+    5 a11y failures   no <h1>, no <main>, three unnamed controls
+    320px             scrollWidth 388
+
+The brief's first line is *make all pages free*. `make_free.py` exists for exactly
+this and had never been pointed at the page. It was also still naming
+`owner/index.html`, `brand/index.html` and `dfs/index.html` — files that report
+as `SKIP`, which is a tool quietly doing nothing for three pages. **27
+replacements now, 0 skipped.**
+
+### Five routes, ten files
+
+With `cleanUrls` and `trailingSlash:false`, `X.html` answers `/X` and
+`X/index.html` answers only `/X/`, which 308s to `/X`. The directory page cannot
+be reached. Four of the five pairs differed only in relative-vs-absolute asset
+paths. `/owner` did not:
+
+    owner.html        15,571 b   no caption
+    owner/index.html  16,475 b   caption, aria-sort, the lot
+
+**The reachable file was the one without the table caption added for screen
+readers** — so an accessibility fix reported as shipped had been sitting shadowed
+since the day it was written. Ported into `owner.html`; the five directory pages
+collapsed. Live `/owner` now carries it.
+
+### 37 links that cost a redirect
+
+`check_clean` exists to stop exactly this and only knew about the `.html` half.
+Its own docstring names why it matters, and it is not just a round trip: the
+service worker keys its cache on the request URL, so `/owner/` is a URL the cache
+has never held and an offline visitor gets the offline notice.
+
+### Two new arms, both shown red before green
+
+  - **`routes`** — no page served from outside the mirror, no route claimed by
+    two files. Proved with a throwaway `public/zzz-probe.html` and a throwaway
+    `public/teams/index.html`.
+  - **`clean`** — trailing-slash links are redirects too. Proved by giving one
+    `/model` link a slash.
+
+**Seventeen checks now, over 18 pages.**
+
+### Two more, found on the way
+
+`/play`'s onboarding tip moved focus to the guess box 400ms after load on a first
+visit — past the skip link and the whole nav, exactly when a keyboard visitor is
+orienting. The welcome line stays; the focus steal does not. **Telling someone
+what to do is not the same as doing it for them.**
+
+And one of mine, caught by `check_viewport`: the ten headings added to
+`player.html` were written `class="vh-sr"` before that rule existed on the page,
+so they rendered as **visible duplicate titles** and pushed the 320px layout to
+388. The rule is there now, along with the skip link the page never had.
