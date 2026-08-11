@@ -1,11 +1,11 @@
 # frontend-live — readiness
 
-**Nothing here is live.** All 152 commits are on `frontend-live`; `master` is untouched, and
+**Nothing here is live.** All 153 commits are on `frontend-live`; `master` is untouched, and
 pushing `master` is what deploys the site. Suite green at the time of writing.
 
 | | |
 |---|---|
-| commits ahead of master | 152 |
+| commits ahead of master | 153 |
 | paths changed | 2,631 (2,547 under `public/`, 31 scripts) |
 | insertions / deletions | +202,533 / −310,431 |
 | working notes | `tasks/frontend-live-buildout-2026-08-10.md`, 4,273 lines |
@@ -40,6 +40,7 @@ python scripts/check_focus.py               # tabs 18 pages in Chrome
 python scripts/check_viewport.py --widths 320,360,390
 python scripts/smoke_render.py              # 8 pages, empty console
 python scripts/smoke_play.py                # plays a full round
+python scripts/smoke_index.py               # presses the landing page's map control
 node scripts/smoke_owner_table.mjs          # + arch_map, retrieval_map, name_fix, early_errors
 ```
 

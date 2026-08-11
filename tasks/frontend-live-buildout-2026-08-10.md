@@ -4328,3 +4328,53 @@ announcement one pass ago, and that one was closed the same day — this one is 
 `scripts/probe_8k2.py` logic is most of a check: press, assert `aria-busy` inside
 500 ms, assert one request across two presses, block the second fetch and assert
 `dots.length` is unchanged. **Open, and named here rather than left implicit.**
+
+
+## The 8k control is enforced now, and two of its six assertions were hollow (2026-08-10)
+
+Named as open last pass: delete the busy state, the re-entry guard or the
+all-or-nothing swap and nothing on this repo would go red. `scripts/smoke_index.py`
+closes it — the landing page's one control that does real work, pressed under a
+~6 Mbit/s throttle so the busy window is a real interval rather than a race.
+
+Writing the check was the easy half. **Proving it can fail found two assertions
+that were worth nothing**, by mutating one behaviour at a time and requiring the
+smoke to notice:
+
+    busy state                  RC=1   caught
+    label change                RC=1   caught
+    re-entry guard              RC=1   caught
+    memoisation                 RC=1   caught
+    counted completion line     RC=0   *** NOT CAUGHT ***
+    atomic swap                 RC=0   *** NOT CAUGHT ***
+
+**The counted-announcement assertion was passing on somebody else's text.** The
+page has a second announcer — an interval watching `dots.length` — that writes
+after the button's own completion line and replaces it. The check read whatever was
+left in the region, found "12,966" in the *interval watcher's* sentence, and passed
+with the button's line deleted. Now it records every value the region takes and
+looks for the button's own line in that sequence. This is the third assertion this
+session to pass for a reason other than the one it was written for.
+
+**The atomic-swap row proved nothing because my mutation was a no-op** — it
+appended a comment. A mutation that does not change behaviour tests the harness,
+not the code, so the runner now refuses to score a mutation whose text matches the
+original. Rewritten to reintroduce the real shape of the bug — split the
+`Promise.all` and mutate the map before the second fetch — it is caught, with the
+message naming the number: *"a failure partway through left the map at 12966 points
+instead of 1764."*
+
+All six now:
+
+    busy state / label change / re-entry guard / memoisation
+    counted completion line / atomic swap        RC=1   caught
+
+and `index.html` restored byte-identical afterwards.
+
+Two process notes worth the space. The mutation anchors are multi-line, and this
+checkout is CRLF, so the first run reported ANCHOR NOT FOUND on the only mutation
+that mattered — **a multi-line anchor is a line-ending assumption in disguise**,
+which is the same trap the two generators had. And I wrote a literal newline into a
+Python file twice by routing `
+` through a shell heredoc, which the ledger already
+warns about; the Edit tool fixed in one move what the heredoc broke twice.
