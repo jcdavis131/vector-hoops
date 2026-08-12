@@ -146,6 +146,7 @@ function applyFilter(f){
   $('lab').textContent = mapState==='real' ? f+' • '+dots.length.toLocaleString()+' of '+allPts.length.toLocaleString()+' points' : mapState==='failed'   ? 'The map file did not load. These points are a placeholder, not players.'   : 'Loading the map…';
   renderList();
 }
+var deepLinked=false;
 async function loadPts(f='all'){try{
   if(!allPts.length){
     if(!ptsPromise) ptsPromise=fetch('assets/embedding_map_points_limited.json?v=407d2cbc').then(r=>r.json());
@@ -155,6 +156,18 @@ async function loadPts(f='all'){try{
   mapState='real';
   applyFilter(f);
   if(cam&&cam.fit)cam.fit();   /* frame the data, not the cube */
+  /* Once, and only once the real points exist — sel() needs a pid that is in
+     the file, and the placeholder cloud has none. A pid that is not in the file
+     says so rather than selecting nothing quietly. */
+  if(!deepLinked){
+    deepLinked = true;
+    var want = new URLSearchParams(location.search).get('pid');
+    if(want){
+      var hit = allPts.find(function(p){ return String(p.pid) === String(want); });
+      if(hit) sel(hit.pid, {nm: hit.display_name || hit.nm});
+      else $('selLab').textContent = 'No player with pid ' + want + ' in this file.';
+    }
+  }
 }catch(e){ptsPromise=null;mapState='failed';if(!dots.length)seedPlaceholder();applyFilter(f);}}
 /* The list showed the first 80 of however many the filter left — 1,814 with
    All selected — and said nothing about the other 1,684. The label beside the
@@ -200,7 +213,22 @@ function renderList(){let L=$('list');L.innerHTML='';
         : hits.length+(hits.length===1?' player':' players')+' shown.');
   hits.slice(0,LIST_CAP).forEach(d=>{let div=document.createElement('div');div.className='it';div.innerHTML=`<b style="font-size:12.5px">${d.nm}</b><div class="mono" style="color:var(--ink-soft)">${d.se} • pid ${d.pid} ${d.cur?'• current':''}</div>`;div.onclick=()=>sel(d.pid,d);L.appendChild(div)})}
 async function loadTraj(){if(Object.keys(tCache).length)return tCache;try{let r=await fetch('assets/embedding_map_trajectories.json?v=2e787a46'),j=await r.json();tCache=j.trajectories||{}}catch{}return tCache}
-async function sel(pid,hint){let trs=await loadTraj(),tr=trs[String(pid)];if(!tr){$('selLab').textContent='no trajectory for pid '+pid+' — points only';return}curTr=tr;$('selLab').textContent= (hint?hint.nm+' • ':'')+'trajectory '+tr.length+' seasons '+tr[0].season+'→'+tr[tr.length-1].season+' • orange #EB6834 polyline';document.querySelectorAll('.it').forEach(el=>{if(el.textContent.includes(String(pid)))el.classList.add('on')})}
+/* A selection you can send to somebody.
+
+   Picking a dot or a list row highlights that player and draws their career as
+   an orange polyline, and until now that state lived only in memory: no way to
+   link to it, bookmark it, or get it back after a reload. This site already
+   thinks in shareable links — /play carries ?pack= — and the Explorer is the
+   page whose whole job is looking at one player in the space.
+
+   replaceState, not pushState: a visitor clicking through twenty dots should not
+   have to press Back twenty times to leave the page. The address bar stays
+   shareable either way. */
+function markUrl(pid){
+  try{ history.replaceState(null,'', pid ? (location.pathname+'?pid='+encodeURIComponent(pid))
+                                         : location.pathname); }catch(_){}
+}
+async function sel(pid,hint){markUrl(pid);let trs=await loadTraj(),tr=trs[String(pid)];if(!tr){$('selLab').textContent='no trajectory for pid '+pid+' — points only';return}curTr=tr;$('selLab').textContent= (hint?hint.nm+' • ':'')+'trajectory '+tr.length+' seasons '+tr[0].season+'→'+tr[tr.length-1].season+' • orange #EB6834 polyline';document.querySelectorAll('.it').forEach(el=>{if(el.textContent.includes(String(pid)))el.classList.add('on')})}
 (function(){var q=$('pq');if(!q)return;q.disabled=false;q.addEventListener('input',renderList);q.addEventListener('search',renderList);})();
 $('fAll').onclick=()=>{filter='all';$('fAll').classList.add('on');$('fCur').classList.remove('on');loadPts('all')};$('fCur').onclick=()=>{filter='current';$('fCur').classList.add('on');$('fAll').classList.remove('on');loadPts('current')};$('bAll2').onclick=$('fAll').onclick;$('bCur2').onclick=$('fCur').onclick;$('bClr').onclick=()=>{curTr=null;$('selLab').textContent='cleared trajectory'};/* the DPR toggle lost its button when 2d032a4b cleared the instrument pills.
    DPR is a rendering detail, not a thing to ask a visitor about, so the

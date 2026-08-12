@@ -216,6 +216,43 @@ def main() -> int:
                 failures.append(f"clearing the box left {s3['rows']} rows against "
                                 f"{s0['rows']} before — the list does not come back")
 
+            # A selection you can send to somebody. Picking a player draws their
+            # career as an orange polyline, and that used to live only in memory:
+            # no link, no bookmark, gone on reload.
+            ev(ws, "document.querySelectorAll('.it')[0].scrollIntoView({block:'center'})")
+            time.sleep(0.7)
+            r = ev(ws, "(function(){var b=document.querySelectorAll('.it')[0]"
+                       ".getBoundingClientRect();return {x:b.left+b.width/2,y:b.top+b.height/2};})()")
+            if isinstance(r, dict):
+                for kind in ("mousePressed", "mouseReleased"):
+                    ws.call("Input.dispatchMouseEvent", {"type": kind, "x": r["x"], "y": r["y"],
+                                                         "button": "left", "clickCount": 1})
+                time.sleep(2.2)
+                url = ev(ws, "location.search") or ""
+                lab = (ev(ws, "(document.getElementById('selLab')||{}).innerText||''") or "")
+                print(f"  picked   url={url!r} sel={lab[:44]!r}")
+                if "pid=" not in url:
+                    failures.append(f"selecting a player left the address bar at {url!r} — the "
+                                    f"selection cannot be linked to, bookmarked, or survive a reload")
+
+                # and the link has to open on that player
+                ws.call("Page.navigate", {"url": f"http://127.0.0.1:{site}/players.html{url}"})
+                time.sleep(6.0)
+                lab2 = (ev(ws, "(document.getElementById('selLab')||{}).innerText||''") or "")
+                print(f"  reopened sel={lab2[:44]!r}")
+                if lab2.strip() != lab.strip():
+                    failures.append(f"opening {url!r} cold selected {lab2[:50]!r}; clicking the "
+                                    f"row had selected {lab[:50]!r}")
+
+                # a pid the file does not carry says so rather than selecting nothing
+                ws.call("Page.navigate", {"url": f"http://127.0.0.1:{site}/players.html?pid=99999999"})
+                time.sleep(6.0)
+                lab3 = (ev(ws, "(document.getElementById('selLab')||{}).innerText||''") or "")
+                print(f"  bad pid  sel={lab3[:52]!r}")
+                if "99999999" not in lab3:
+                    failures.append(f"a pid that is not in the file answered {lab3[:60]!r} rather "
+                                    f"than naming the pid it could not find")
+
     except SystemExit:
         pass
     finally:
