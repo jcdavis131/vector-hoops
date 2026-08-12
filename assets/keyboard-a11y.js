@@ -268,6 +268,12 @@
     // opens two blocks and closes one. Browsers auto-close at end of sheet so it
     // happened to work, but anything appended after it would have landed inside
     // the reduced-motion query.
+    /* Declared here, above the line that uses it. It was declared 30 lines
+       lower: `var` hoists the declaration and not the assignment, so this
+       read `undefined` and the sheet became `undefined:focus-visible{...}` —
+       one invalid selector that took the focus ring down with it. */
+    var CURRENT = 'nav [aria-current="page"]{box-shadow:inset 0 -3px 0 currentColor;' +
+                  'font-weight:900;}';
     var style = document.createElement('style');
     style.textContent = CURRENT + ':focus-visible{outline:3px solid #0072B2; outline-offset:2px; box-shadow:0 0 0 5px rgba(0,114,178,.22);} .bottom-tabs button:focus-visible{outline:3px solid #F0E442; outline-offset:-3px;} @media(prefers-reduced-motion:reduce){*{animation-duration:.001ms !important; transition-duration:.001ms !important}}';
     document.head.appendChild(style);
@@ -299,8 +305,6 @@
        page in it is what caused half the confusion above. An inset underline
        inside the pill instead, which works on the pill navs and the text-link
        nav alike. */
-    var CURRENT = 'nav [aria-current="page"]{box-shadow:inset 0 -3px 0 currentColor;' +
-                  'font-weight:900;}';
     function routeOf(path){
       var s = String(path || '').split('?')[0].split('#')[0];
       s = s.replace(/^\/+/, '').replace(/\/+$/, '').replace(/\.html$/, '');
