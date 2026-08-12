@@ -784,22 +784,38 @@ if('serviceWorker'in navigator){try{navigator.serviceWorker.register('/sw.js')}c
    exists anyway. Fired eagerly they were competing with game_vectors.json for a
    slow link's bandwidth, which is the one download standing between a visitor
    and a real game. `.catch` above resolves, so this still runs if the pool fails. */
-vhPoolReady.then(function(){
-  /* ...and not at all when the visitor has said not to. Warming costs 1.97 MB
-     on every first visit, and it buys one thing: the win animation draws without
-     a pause the first time. Save-Data is a person telling the browser they are
-     paying for bytes, and effectiveType 2g is a link on which two megabytes of
-     prefetch is worse than a pause. Both paths still work — the win handler
-     already awaits fetchTrajCache() at the moment it draws, and both are
-     memoised, so declining to warm costs a wait and never a failure.
+/* Warmed on the first sign of a player, not on arrival.
 
-     No signal means no opinion: Safari exposes neither, `c` is {}, and the warm
-     proceeds exactly as before. */
-  var c = navigator.connection || {};
-  if (c.saveData) return;
-  if (/2g/.test(c.effectiveType || '')) return;
-  fetchTrajCache(); fetchManifest();
-});})();</script>
+   These two are 1.97 MB and they buy one thing: the win animation draws without
+   a pause the first time. A visitor who lands, reads the question and leaves —
+   which is most of them — was paying for an animation they never saw. Nothing
+   here is needed to play: the win handler already awaits fetchTrajCache() at the
+   moment it draws and both are memoised, so warming late costs a wait and never
+   a failure.
+
+   The trigger is touching the guess box or the map, because those are the two
+   ways a guess starts and both take seconds of human time that the download can
+   run inside. Same shape as /player-fit's pool, deliberately.
+
+   Save-Data still opts out entirely: someone paying for bytes should not get
+   two megabytes of prefetch even once they are playing, and the win path will
+   fetch what it needs when it needs it. No signal means no opinion. */
+(function(){
+  var warmed = false;
+  function warmWin(){
+    if (warmed) return;
+    warmed = true;
+    var c = navigator.connection || {};
+    if (c.saveData) return;
+    if (/2g/.test(c.effectiveType || '')) return;
+    fetchTrajCache(); fetchManifest();
+  }
+  var gi = document.getElementById('guess'), cv = document.getElementById('c');
+  ['focus','pointerdown','keydown'].forEach(function(e){
+    if (gi) gi.addEventListener(e, warmWin);
+  });
+  if (cv) cv.addEventListener('pointerdown', warmWin);
+})();})();</script>
 
 <!-- ══ accessibility layer ═════════════════════════════════════════════════
      Added as a separate, purely additive block. The page above is one
