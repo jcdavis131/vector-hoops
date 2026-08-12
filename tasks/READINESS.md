@@ -56,6 +56,7 @@ python scripts/check_a11y.py                # 11 WCAG A/AA criteria
 python scripts/check_contrast.py            # WCAG 1.4.3
 python scripts/check_responsive.py
 python scripts/check_focus.py               # tabs 18 pages in Chrome
+python scripts/check_motion.py              # 18 pages under prefers-reduced-motion
 python scripts/check_viewport.py --widths 320,360,390
 python scripts/smoke_render.py              # 8 pages, empty console
 python scripts/smoke_play.py                # plays a full round

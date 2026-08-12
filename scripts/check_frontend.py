@@ -217,7 +217,13 @@ def check_mutations(fail) -> None:
         blobs[q.name] = q.read_text(encoding="utf-8", errors="replace")
 
     total = 0
-    for smoke in sorted(folder.glob("smoke_*.py")):
+    # checkers carry mutation tables too — check_motion.py breaks the camera's
+    # reduced-motion guard to prove it can see the fault — and a mutation string
+    # rots the same way whatever the file is called. `check_frontend.py` itself
+    # is skipped: exec'ing this module from inside it would run the gate again.
+    files = sorted(folder.glob("smoke_*.py")) + [
+        p for p in sorted(folder.glob("check_*.py")) if p.name != Path(__file__).name]
+    for smoke in files:
         spec = importlib.util.spec_from_file_location(smoke.stem, smoke)
         mod = importlib.util.module_from_spec(spec)
         try:
@@ -237,7 +243,8 @@ def check_mutations(fail) -> None:
                     fail(f"{smoke.name} --mutate {name} searches for a string no served file "
                          f"contains, so it cannot apply and its run is not evidence: "
                          f"{find[:70]!r}")
-    print(f"  {total} mutation string(s) across the smokes still match a served file")
+    print(f"  {total} mutation string(s) across the smokes and checkers still match "
+          f"a served file")
 
 
 def check_syntax(fail) -> None:
