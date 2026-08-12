@@ -1120,8 +1120,50 @@ def check_counts(fail) -> None:
     print(f"  {checked} count(s) on a page still equal what recomputing them gives")
 
 
+# The destinations every page must offer. Not a style rule — this is whether a
+# visitor who lands anywhere can reach the rest of the site.
+CANON_NAV = ("play", "players", "player-cards", "trends", "model", "teams", "dictionary")
+
+# /offline is served when the network is gone. Its links are the pages the worker
+# can actually answer for; a link to an unvisited route lands the reader back on
+# the offline notice, which is worse than not offering it.
+NAV_EXEMPT = {"offline.html"}
+
+
+def check_nav(fail) -> None:
+    """Every page can reach the rest of the site from its own navigation.
+
+    Measured before this existed: /player offered five links — owner, player-fit,
+    brand, dfs and home — and none of the seven below. From a page the landing
+    map links to, there was no way to reach the game, the Explorer, trends, the
+    model page, teams or the dictionary without editing the address bar. Three
+    other pages were each missing two or more.
+
+    It reads <nav> only. Links buried in body copy are not navigation: a reader
+    cannot be expected to find them, and a screen reader user jumping by landmark
+    never sees them at all.
+    """
+    checked = 0
+    for page in pages():
+        name = label(page)
+        if name in NAV_EXEMPT:
+            continue
+        text = without_comments(page.read_text(encoding="utf-8", errors="replace"))
+        navs = " ".join(re.findall(r"<nav\b[^>]*>(.*?)</nav>", text, re.S | re.I))
+        if not navs:
+            continue        # check_a11y owns "has a nav landmark at all"
+        have = set(re.findall(r'href="/([a-z-]*)"', navs))
+        checked += 1
+        missing = [d for d in CANON_NAV if d not in have and page.stem != d]
+        if missing:
+            fail(f"{name}'s navigation cannot reach {', '.join('/' + m for m in missing)} — "
+                 f"a visitor landing here has no way on without editing the address bar")
+    print(f"  {checked} page(s) can reach the rest of the site from their own navigation")
+
+
 CHECKS = {
     "syntax": check_syntax,
+    "nav": check_nav,
     "external": check_external,
     "mirror": check_mirror,
     "tokens": check_tokens,
