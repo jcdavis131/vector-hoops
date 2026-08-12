@@ -1030,6 +1030,40 @@ $('twinInput').addEventListener('change',lookup);
     ['smPrev','smNext','smPlay','smYear'].forEach(function(id){ $(id).disabled=false; });
   }
 
+  /* A traced career you can send to somebody.
+
+     Clicking a dot draws that player's path across thirty seasons, and that
+     state lived only in memory — the same gap /players had. replaceState, so
+     clicking through careers does not fill the back button.
+
+     A ?pid= link also presses the button for the visitor. The 406 KB is behind
+     an opt-in because a page should not spend that on someone who only came to
+     read; someone following a link to a specific career has already asked. */
+  function markUrl(pid){
+    try{ history.replaceState(null,'', pid ? (location.pathname+'?pid='+encodeURIComponent(pid))
+                                           : location.pathname); }catch(_){}
+  }
+  function applyDeepLink(){
+    var want = new URLSearchParams(location.search).get('pid');
+    if(!want || !SM) return;
+    var tr = traceFor(want) || [];
+    if(!tr.length) tr = traceFor(Number(want)) || [];
+    if(tr.length){
+      trace = tr;
+      var nm = (SM.names && (SM.names[want] || SM.names[Number(want)])) || ('player ' + want);
+      var line = nm + ' — ' + tr.length + ' charted season' + (tr.length===1?'':'s') + ', ' +
+                 tr[0].s + ' to ' + tr[tr.length-1].s + ', traced from the link.';
+      say(line);
+      /* and on screen, not only announced: the live region is a queue and the
+         next message overwrites it, so a visitor arriving on a shared link had
+         nothing telling them whose career they were looking at. */
+      state.textContent = line;
+    } else {
+      say('No charted career with pid ' + want + ' in this file.');
+      state.textContent = 'No charted career with pid ' + want + ' in this file.';
+    }
+  }
+
   function start(){
     box.hidden=false;
     rs();
@@ -1044,6 +1078,7 @@ $('twinInput').addEventListener('change',lookup);
       onPick: function(d){
         var nm = (SM.names && SM.names[d.pid]) || ('player ' + d.pid);
         trace = traceFor(d.pid);
+        markUrl(d.pid);
         cam.say(nm + ' — ' + trace.length + ' charted season' +
                 (trace.length===1?'':'s') + ', ' + trace[0].s + ' to ' +
                 trace[trace.length-1].s + '.');
@@ -1053,6 +1088,7 @@ $('twinInput').addEventListener('change',lookup);
     yr.max = String(SM.seasons.length-1);
     setFrame(SM.seasons.length-1, false);
     enable();
+    applyDeepLink();
     requestAnimationFrame(draw);
   }
 
@@ -1062,6 +1098,7 @@ $('twinInput').addEventListener('change',lookup);
     play.setAttribute('aria-pressed','false'); play.textContent='▶ Play the seasons';
   }
 
+  if(new URLSearchParams(location.search).get('pid')) setTimeout(function(){ btn.click(); }, 0);
   btn.addEventListener('click', function(){
     if(pending || SM) return;                 /* one download, however many presses */
     btn.disabled=true; btn.setAttribute('aria-busy','true');
