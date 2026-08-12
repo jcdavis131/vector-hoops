@@ -69,10 +69,20 @@ READ = r"""(function(){
     var acc=null,n=el.parentElement;
     while(n&&n.nodeType===1){var c=parse(getComputedStyle(n).backgroundColor);
       if(c&&c[3]>0){acc=acc===null?c:over(acc,c); if(c[3]>=1) return acc.slice(0,3).concat([1]);}
-      n=n.parentElement;}
+      /* out through the shadow boundary as well, or the composite stops at the
+         shadow root and the ring is judged against the wrong backdrop — which
+         only bites for the elements the fix above has just made visible */
+      n=n.parentElement||(n.getRootNode&&n.getRootNode().host)||null;}
     return acc||[255,255,255,1];
   }
   var a=document.activeElement;
+  /* Follow focus into open shadow roots. document.activeElement stops at the
+     host, so on /player-animations every Tab inside a <posecode-player> reported
+     the same element: the ring was measured on the host rather than on the
+     control that had focus, and the identity dedupe below then ended the walk
+     early — 14 stops recorded against check_focus's 18. check_focus already
+     resolves this the same way; this is its loop. */
+  while(a&&a.shadowRoot&&a.shadowRoot.activeElement) a=a.shadowRoot.activeElement;
   if(!a||a===document.body||a===document.documentElement) return JSON.stringify({none:true});
   /* Wrap detection by node identity, not by text. It used to key on
      tag.class|text, which meant any two controls that look alike ended the walk:

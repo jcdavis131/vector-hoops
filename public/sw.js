@@ -65,7 +65,7 @@
    Three bumps went unrecorded here and the line above still said v7.4 while the
    constant read v7-8 — a version history that stops being written is worse than
    none, because it reads as complete. */
-const C = 'hoops-v7-8';
+const C = 'hoops-v7-9';
 const SHELL = ['/', '/offline', '/manifest.json'];
 const FALLBACK = ['/offline', '/'];
 const DATA = /\.(json|f32|bin)$/;

@@ -272,6 +272,57 @@
     style.textContent = ':focus-visible{outline:3px solid #0072B2; outline-offset:2px; box-shadow:0 0 0 5px rgba(0,114,178,.22);} .bottom-tabs button:focus-visible{outline:3px solid #F0E442; outline-offset:-3px;} @media(prefers-reduced-motion:reduce){*{animation-duration:.001ms !important; transition-duration:.001ms !important}}';
     document.head.appendChild(style);
 
+    // That rule cannot reach a shadow root: document CSS does not style shadow
+    // content. /player-animations mounts eight <posecode-player> components
+    // holding sixteen controls between them, and their ring measured 1.01:1 —
+    // rgb(16,16,16) on rgb(12,15,21), near-black on near-black, which is no
+    // visible ring at all. A keyboard user tabbing through them could not see
+    // where they were, on the only page where that was true.
+    //
+    // The same declaration is put into every open root instead. Not patched into
+    // the embed: assets/posecode-embed-0.1.0.js is a 624 KB vendored build with
+    // three.js inside it, and an edit there dies at the next release.
+    var RING = ':focus-visible{outline:3px solid #0072B2; outline-offset:2px;' +
+               'box-shadow:0 0 0 5px rgba(0,114,178,.22);}';
+    function ringInto(root){
+      if(!root || root.__vhRing) return;
+      root.__vhRing = 1;
+      try{
+        var s = document.createElement('style');
+        s.textContent = RING;
+        root.appendChild(s);
+      }catch(_){}
+    }
+    function sweepShadows(node){
+      if(!node || typeof node.querySelectorAll !== 'function') return;
+      var all = node.querySelectorAll('*');
+      for(var i=0;i<all.length;i++){
+        var sr = all[i].shadowRoot;
+        if(sr){ ringInto(sr); sweepShadows(sr); }
+      }
+    }
+    sweepShadows(document);
+
+    // The components mount asynchronously — the embed builds its players after
+    // its own module has loaded, so the pass above sees none of them on a cold
+    // visit. Walking only the added subtree keeps this off the critical path of
+    // pages that mutate constantly; a full re-sweep on load catches any root
+    // attached after its host was already in the document.
+    if(window.MutationObserver){
+      new MutationObserver(function(recs){
+        for(var i=0;i<recs.length;i++){
+          var added = recs[i].addedNodes;
+          for(var j=0;j<added.length;j++){
+            var n = added[j];
+            if(!n || n.nodeType !== 1) continue;
+            if(n.shadowRoot){ ringInto(n.shadowRoot); sweepShadows(n.shadowRoot); }
+            sweepShadows(n);
+          }
+        }
+      }).observe(document.documentElement, {childList:true, subtree:true});
+    }
+    window.addEventListener('load', function(){ sweepShadows(document); });
+
     // city-intro-pills deprecated (arena tour removed v25) — nothing to enhance
 
     // Removed: a runtime sweep that measured every button/.btn/.vh-btn/.pill with

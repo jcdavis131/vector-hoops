@@ -28,7 +28,22 @@ from check_viewport import WS, BROWSERS  # noqa: E402
 PROBE = r"""(function(){
   var SEL='a[href],button,input,select,textarea,summary,[role="button"],[role="option"],'+
           '[role="columnheader"][tabindex],[tabindex]:not([tabindex="-1"])';
-  var els=[].slice.call(document.querySelectorAll(SEL)).filter(function(e){
+  /* Shadow roots too. document.querySelectorAll stops at the shadow boundary,
+     and /player-animations mounts eight <posecode-player> elements holding
+     sixteen focusable controls between them — this gate reported 26 targets on
+     that page, which is the light-DOM count exactly, and said nothing about the
+     other sixteen. They are judged by the same two exceptions below as everything
+     else; nothing here is special-cased for being in a shadow root. */
+  function collect(root, out){
+    var all=root.querySelectorAll('*');
+    for(var i=0;i<all.length;i++){
+      var e=all[i];
+      if(e.matches && e.matches(SEL)) out.push(e);
+      if(e.shadowRoot) collect(e.shadowRoot, out);
+    }
+    return out;
+  }
+  var els=collect(document, []).filter(function(e){
     if(typeof e.getClientRects!=='function' || !e.getClientRects().length) return false;
     var cs=getComputedStyle(e);
     if(cs.visibility==='hidden'||cs.display==='none'||+cs.opacity===0) return false;
