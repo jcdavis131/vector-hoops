@@ -1,7 +1,10 @@
 # frontend-live — readiness
 
-**This is live.** Everything below is measured at **`7ff3d8ba`**, which is also `origin/master`,
-and pushing `master` is what deploys hoops.dumbmodel.com. An earlier version of this header said
+**This is live.** Everything below was measured at **`7ff3d8ba`**, which was `origin/master` when it
+was measured, and pushing `master` is what deploys hoops.dumbmodel.com. Past tense on purpose: an
+earlier draft of this line said "which *is* also `origin/master`", which the very next docs commit
+falsified — the same shape as the error the rest of this paragraph is about, written while fixing it.
+The sha is the anchor; nothing else here needs to claim to be current. An earlier version of this header said
 "Nothing here is live" and "`master` is untouched" while anchored at `0e95b151`; both stopped being
 true the first time this branch was pushed to `master`, and a readiness document that misstates
 whether it has shipped is the one sentence in it that has to be right. The sha is the anchor because

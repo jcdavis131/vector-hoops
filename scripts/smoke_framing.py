@@ -183,8 +183,16 @@ def main() -> int:
             # pan the fit went on to set. Resolve to absolute canvas px through
             # the live values rather than assuming what the fit decided — an
             # assertion that hard-codes the fix cannot fail when the fix breaks.
-            scale = f["k"] / f["z"] if f["z"] else 1.0
-            upk = min(W, H) * f["sc"] * f["k"]        # sc at the shipped zoom
+            # `k` is what the fit asked for; `home` is what setZoom granted after
+            # the 0.55-3 clamp, and it is the zoom the view rests at. They agree
+            # today because every k lands inside the clamp — measure through the
+            # granted one anyway, or the day a k exceeds 3 this reports a view
+            # nobody is looking at.
+            shipped = got["home"] or f["k"]
+            if abs(shipped - f["k"]) > 1e-6:
+                print(f"    fit asked for zoom {f['k']:.3f}, clamp granted {shipped:.3f}")
+            scale = shipped / f["z"] if f["z"] else 1.0
+            upk = min(W, H) * f["sc"] * shipped       # sc at the shipped zoom
             ax = [W * mid[0] + v * scale + pan[0] * upk for v in f["sx"]]
             ay = [H * mid[1] + v * scale + pan[1] * upk for v in f["sy"]]
             (lox, hix), (loy, hiy) = ax, ay
@@ -192,7 +200,7 @@ def main() -> int:
             offx, offy = (lox + hix) / 2 - W * 0.5, (loy + hiy) / 2 - H * 0.5
             fillx, filly = (hix - lox) / W, (hiy - loy) / H
 
-            print(f"    canvas {W}x{H}   zoom {f['z']:.2f} -> {f['k']:.2f}   "
+            print(f"    canvas {W}x{H}   zoom {f['z']:.2f} -> {shipped:.2f}   "
                   f"n {f['n']:,}   mid {mid[0]:.2f},{mid[1]:.2f}")
             print(f"    x  {lox:7.1f} .. {hix:7.1f}   off centre {offx:+7.1f} "
                   f"({offx / W:+.1%} of width)    fills {fillx:.0%}")

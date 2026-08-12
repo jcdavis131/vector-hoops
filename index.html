@@ -268,7 +268,17 @@ async function loadFull(){if(fullLoaded)return true;try{
   let setPid=new Set(limited.points.map(p=>p.pid));
   next.forEach(d=>{if(setPid.has(d.pid)){let lp=limited.points.find(p=>p.pid===d.pid && p.season===d.season);if(lp){d.col=OKABE[lp.c%8];d.alpha=lp.is_current?0.92:0.82;d.r=lp.is_current?1.0:0.8;}}});
   dots.length=0;for(let i=0;i<next.length;i++)dots.push(next[i]);
-  fullLoaded=true;return true;}catch(e){return false;}}
+  fullLoaded=true;
+  /* Re-frame: the swap replaces 1,764 points with 12,966 and the camera was
+     holding a zoom fit to the smaller set. Measured at 689x440 without this,
+     one frame of the full cloud put 22 dots off the canvas against 1 for the
+     limited one, and its trimmed span still only reached 442 of 689 across —
+     both symptoms of framing data that is no longer there. fit() is idempotent
+     (it zeroes pan and mid before measuring), so calling it a second time is
+     safe, and this is a deliberate press rather than an animation frame, so a
+     visible reframe is the honest answer to "show me all of it". */
+  if(cam&&cam.fit)cam.fit();
+  return true;}catch(e){return false;}}
 /* The grey placeholder cloud lived only inside loadLimited()'s catch, so it
    appeared only when the fetch FAILED. On the normal path `dots` stayed empty
    and the map was a blank rectangle until the 273 KB file landed. Measured on a
