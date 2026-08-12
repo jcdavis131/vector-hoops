@@ -32,6 +32,7 @@ header{max-width:900px;margin:0 auto;padding:10px 14px;display:flex;flex-wrap:wr
    precache that module, so the rule is inlined here to match. Same colour and
    geometry as the module injects, so focus looks identical site-wide. */
 :focus-visible{outline:3px solid #0072B2;outline-offset:2px;box-shadow:0 0 0 5px rgba(0,114,178,.22)}
+nav [aria-current="page"]{box-shadow:inset 0 -3px 0 currentColor;font-weight:900}
 @media(prefers-reduced-motion:reduce){*{animation-duration:.001ms !important;transition-duration:.001ms !important}}
 
 .vh-skip{position:absolute;left:-9999px;top:0;z-index:99;background:var(--paper,#fafaf8);border:2.2px solid var(--ink,#111);padding:10px 14px;font-family:ui-monospace,Menlo,monospace;font-weight:800;text-decoration:none;border-radius:0 0 10px 0}
@@ -93,12 +94,12 @@ span.proj{color:var(--orange-ink)}
 <a class="vh-skip" href="#main">Skip to the content</a>
 <header>
 <div class="brand">◐ DUMB MODEL <span class="pill pill-y" style="transform:rotate(-1deg)">network-first cache • visited pages kept</span> <span class="sg">dark card #080A0F core only</span></div>
-<nav style="display:flex;gap:8px;flex-wrap:wrap"><a class="pill" href="/">Map</a><a class="pill" href="/play">Play</a><a class="pill" href="/leaderboard">Board</a><a class="pill" href="/inventory">Inventory</a><a class="pill" href="/methods">Methods</a><a class="pill pill-d" href="/offline">Offline</a></nav>
+<nav style="display:flex;gap:8px;flex-wrap:wrap"><a class="pill" href="/">Map</a><a class="pill" href="/play">Play</a><a class="pill" href="/leaderboard">Board</a><a class="pill" href="/inventory">Inventory</a><a class="pill" href="/methods">Methods</a><a class="pill pill-d" href="/offline" aria-current="page">Offline</a></nav>
 </header>
 <main id="main" tabindex="-1">
 <div class="wrap">
 <div class="card">
-<div class="mono" style="text-transform:uppercase;letter-spacing:.06em;opacity:.75;font-weight:800">offline • pages you have opened are kept • no .json, .f32 or .bin cached • cache hoops-v7-10</div>
+<div class="mono" style="text-transform:uppercase;letter-spacing:.06em;opacity:.75;font-weight:800">offline • pages you have opened are kept • no .json, .f32 or .bin cached • cache hoops-v7-11</div>
 <h1 style="margin:10px 0 8px;font-size:26px;letter-spacing:-.02em;font-family:ui-monospace,Menlo,monospace;text-transform:uppercase">You're offline — shell is here.</h1>
 <p class="sub">You are offline. sw.js is network-first and keeps every same-origin page, script, style and font you have already loaded, so a page you have opened before still works — measured with the server stopped, /play still has its question, its 1,305 suggestions, its pool and its map. Data never enters that cache: no /api/, no .json, no .f32, no .bin, so the season data and every model asset need a connection and a stale one can never be served. Retry pings navigator.onLine then reloads, else void pulse. Week Warrior 7-dot still works from hub-streak.</p>
 <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap">
@@ -111,7 +112,7 @@ span.proj{color:var(--orange-ink)}
 <div style="margin-top:12px;display:grid;grid-template-columns:1fr 1fr;gap:10px">
 <div><div class="mono">What is actually cached</div><code style="font-size:11px;background:rgba(250,250,248,.08);border:1px solid rgba(250,250,248,.15);padding:6px 8px;border-radius:8px;display:block;white-space:pre-wrap">/
 /offline
-/manifest.json</code><div class="mono" style="margin-top:6px">Three entries installed up front, read from sw.js SHELL — cache hoops-v7-10 — everything else arrives by being visited.</div></div>
+/manifest.json</code><div class="mono" style="margin-top:6px">Three entries installed up front, read from sw.js SHELL — cache hoops-v7-11 — everything else arrives by being visited.</div></div>
 <div><div class="mono">never cached — data only</div><code style="font-size:11px;background:rgba(250,250,248,.08);border:1px solid rgba(250,250,248,.15);padding:6px 8px;border-radius:8px;display:block;white-space:pre-wrap">/api/* .json /assets/data/* large 2.6MB props / 9.9MB matchup / 141K vals / 51K hist / FO 1.1M / 3.2M embeddings / 2.3M heads / 524K projections</code><div class="mono" style="margin-top:6px">keeping data out of the cache keeps it small • theme #fafaf8 still</div></div>
 </div>
 <div class="mono" id="status" style="margin-top:12px;display:inline-flex;padding:5px 10px;border-radius:999px;border:1px solid #FAFAF8">status: offline — pages you have opened are cached</div>

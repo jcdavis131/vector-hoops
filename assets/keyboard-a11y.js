@@ -269,7 +269,7 @@
     // happened to work, but anything appended after it would have landed inside
     // the reduced-motion query.
     var style = document.createElement('style');
-    style.textContent = ':focus-visible{outline:3px solid #0072B2; outline-offset:2px; box-shadow:0 0 0 5px rgba(0,114,178,.22);} .bottom-tabs button:focus-visible{outline:3px solid #F0E442; outline-offset:-3px;} @media(prefers-reduced-motion:reduce){*{animation-duration:.001ms !important; transition-duration:.001ms !important}}';
+    style.textContent = CURRENT + ':focus-visible{outline:3px solid #0072B2; outline-offset:2px; box-shadow:0 0 0 5px rgba(0,114,178,.22);} .bottom-tabs button:focus-visible{outline:3px solid #F0E442; outline-offset:-3px;} @media(prefers-reduced-motion:reduce){*{animation-duration:.001ms !important; transition-duration:.001ms !important}}';
     document.head.appendChild(style);
 
     // That rule cannot reach a shadow root: document CSS does not style shadow
@@ -282,6 +282,51 @@
     // The same declaration is put into every open root instead. Not patched into
     // the embed: assets/posecode-embed-0.1.0.js is a 624 KB vendored build with
     // three.js inside it, and an edit there dies at the next release.
+    /* Where you are. Measured before this: of the eleven pages whose navigation
+       highlighted anything, seven highlighted the wrong thing. /brand, /owner
+       and /player-fit each painted the DFS pill yellow — a copy of the markup
+       from /dfs, where it happened to be right — so three pages told a visitor
+       they were on a page they were not. The rest highlighted "Play today's",
+       which is a call to action and reads as a location when nothing else on
+       the page marks one.
+
+       Computed rather than written into nineteen headers: every page already
+       loads this file, and a marker derived from location.pathname cannot
+       disagree with the page it is on. Without JS there is simply no marker,
+       which is where every page except four already was.
+
+       Not yellow. Yellow is this site's call-to-action and putting the current
+       page in it is what caused half the confusion above. An inset underline
+       inside the pill instead, which works on the pill navs and the text-link
+       nav alike. */
+    var CURRENT = 'nav [aria-current="page"]{box-shadow:inset 0 -3px 0 currentColor;' +
+                  'font-weight:900;}';
+    function routeOf(path){
+      var s = String(path || '').split('?')[0].split('#')[0];
+      s = s.replace(/^\/+/, '').replace(/\/+$/, '').replace(/\.html$/, '');
+      return s || 'index';
+    }
+    function markCurrent(){
+      var here = routeOf(location.pathname), links = document.querySelectorAll('nav a[href]');
+      for (var i = 0; i < links.length; i++) {
+        var a = links[i];
+        /* href may be absolute, root-relative or bare; the anchor's own pathname
+           resolves all three the same way the browser will */
+        if (a.host && a.host !== location.host) continue;
+        /* A bare fragment resolves to this page's own pathname, so matching on
+           pathname alone marked all nineteen glossary anchors in /dictionary's
+           table of contents as the current page — which is worse than marking
+           nothing, because a screen reader announces every one of them as where
+           the reader is. A link to a place on this page is not a link to this
+           page. */
+        var raw = a.getAttribute('href') || '';
+        if (raw.charAt(0) === '#') continue;
+        if (routeOf(a.pathname) === here) a.setAttribute('aria-current', 'page');
+        else if (a.getAttribute('aria-current') === 'page') a.removeAttribute('aria-current');
+      }
+    }
+    markCurrent();
+
     var RING = ':focus-visible{outline:3px solid #0072B2; outline-offset:2px;' +
                'box-shadow:0 0 0 5px rgba(0,114,178,.22);}';
     function ringInto(root){

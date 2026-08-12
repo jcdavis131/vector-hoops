@@ -1,4 +1,4 @@
-/* Network-first, with the pages you have visited kept for when the link dies — v7.10
+/* Network-first, with the pages you have visited kept for when the link dies — v7.11
 
    v7.1 never installed. Its SHELL was ['/','/index.html','/offline.html',
    '/manifest.json'] and cache.addAll() is atomic: one bad entry rejects the
@@ -72,7 +72,7 @@
    v7.10: index.html changed — four hub cards had their headline glued to
    their label, three button treatments across four equal lanes, and a card
    stretched to 90px of empty white. '/' is in SHELL. */
-const C = 'hoops-v7-10';
+const C = 'hoops-v7-11';
 const SHELL = ['/', '/offline', '/manifest.json'];
 const FALLBACK = ['/offline', '/'];
 const DATA = /\.(json|f32|bin)$/;
