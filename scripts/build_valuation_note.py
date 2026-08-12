@@ -60,8 +60,16 @@ def facts() -> dict:
 def note(f: dict) -> str:
     src = ", ".join(f"<code>{s}</code>" for s in f["sources"])
     only = "every one of" if len(f["sources"]) == 1 else "the"
+    # It contains itself. The anchor below is the shared error-boundary script at
+    # the end of <body>, deliberately — see the comment there — which means the
+    # note lands outside whatever wrapper the page centres its content in. As a
+    # bare <p> it then ran the full width of the viewport with no gutter, while
+    # every block above it stopped at the container: on /brand it was 1280px wide
+    # under a 1130px page. Same max-width and gutter the pages use, so it lines
+    # up with the content regardless of where it is inserted.
     return (f'{MARK_OPEN}<p class="mono" style="font-size:10.5px;line-height:1.55;'
-            f'text-transform:none;letter-spacing:0;margin:8px 0 0;color:#6F6D68">'
+            f'text-transform:none;letter-spacing:0;color:#6F6D68;'
+            f'max-width:1120px;margin:8px auto 0;padding:0 clamp(12px,3.2vw,28px)">'
             f'Franchise valuations on this site are <b>estimates, not measured figures</b>. '
             f'{only.capitalize()} the {f["records"]} valuation records in '
             f'<code>assets/front_office.json</code>, across {f["seasons"]} seasons, names its own '
