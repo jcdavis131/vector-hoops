@@ -50,7 +50,7 @@
    still got the offline notice from a link written /model.html. The stamped
    error-boundary.js changed with them, so every page's ?v= moved. Bumping C
    purges the cache that was filled under the old URLs. */
-const C = 'hoops-v7-6';
+const C = 'hoops-v7-7';
 const SHELL = ['/', '/offline', '/manifest.json'];
 const FALLBACK = ['/offline', '/'];
 const DATA = /\.(json|f32|bin)$/;

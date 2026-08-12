@@ -136,6 +136,26 @@
        follows automatically. */
     cam.ctr = [0, 0, 0];
 
+    /* Where the point the map turns about lands, and how far the cloud is
+       nudged from there so its extent — not its median — sits in the middle.
+
+       Those are two different centres and only the first one was ever set.
+       `ctr` puts the median at the canvas centre, which is what stops the cloud
+       orbiting; the *extent* is a separate question, and the fit could not ask
+       it, because it measured |P - centre| and the absolute value adds the two
+       tails together before anything reads them. A cloud reaching 60px one way
+       and 200px the other measures identically to one reaching 200px both ways.
+       Measured on the landing map, it reached 205px up and 116px down: the top
+       tail at the clip limit, 91px of dead canvas underneath, and no number
+       anywhere in the code that differed between that and a centred cloud.
+
+       `mid` is a fraction of the canvas; `pan` is in `sc` units, the same ones
+       `x1 * dep` is in, so both scale with zoom and with the canvas instead of
+       freezing at the size that was measured. Zero and cyFrac until `fit` runs,
+       so a page that never fits projects exactly as before. */
+    cam.mid = [0.5, cyFrac];
+    cam.pan = [0, 0];
+
     cam.proj = function (x, y, z) {
       var s = o.size(), W = s[0], H = s[1];
       x -= cam.ctr[0]; y -= cam.ctr[1]; z -= cam.ctr[2];
@@ -145,7 +165,8 @@
       var y1 = y * cp - z1 * sp, z2 = y * sp + z1 * cp;
       var dep = (z2 + 1) * 0.5 + 0.12;
       var sc = Math.min(W, H) * scFrac * cam.zoom;
-      return [W * 0.5 + x1 * sc * dep, H * cyFrac + y1 * sc * dep * 0.86, dep];
+      return [W * cam.mid[0] + (x1 * dep + cam.pan[0]) * sc,
+              H * cam.mid[1] + (y1 * dep * 0.86 + cam.pan[1]) * sc, dep];
     };
 
     cam.tick = function () {
@@ -244,7 +265,20 @@
          every angle the rotation passes through rather than at the one it
          happened to start from. */
       var asc = function (a, b) { return a - b; };
-      var q = function (a) { return a[Math.min(a.length - 1, Math.floor(a.length * 0.995))]; };
+      /* the two tails separately. A 99.5th percentile of |P - centre| was one
+         number for both sides and could not tell a lopsided cloud from a
+         centred one; 0.25% off each end of the signed spread trims the same
+         amount of stray and keeps the sides apart. */
+      var pLo = function (a) { return a[Math.floor(a.length * 0.0025)]; };
+      var pHi = function (a) { return a[Math.min(a.length - 1, Math.floor(a.length * 0.9975))]; };
+
+      /* Zero both before measuring. The loops below read `proj`, so a pan left
+         over from an earlier fit would be folded into the numbers the next fit
+         derives its pan from — the same compounding that made an earlier
+         version of this multiply the zoom into its own clamp. Same reason the
+         yaw is saved and put back. */
+      cam.mid = [0.5, cyFrac];
+      cam.pan = [0, 0];
 
       /* median per axis, not mean: a handful of far points drag a mean and the
          cloud would orbit a place no player is. Set before the extents are
@@ -261,42 +295,79 @@
         cam.ctr = [mid(cx), mid(cy2), mid(cz)];
       }
 
-      var yaw0 = cam.yaw, rx = 0, ry = 0, sampled = 0;
-      var ANGLES = [0, Math.PI / 4, Math.PI / 2, 3 * Math.PI / 4];
-      for (var a = 0; a < ANGLES.length; a++) {
-        cam.yaw = yaw0 + ANGLES[a];
+      /* Eight angles, not four. At pitch 0 the projection mirrors x about the
+         centre every half turn — x1(θ+π) = -x1(θ), since ct and st both flip —
+         so measuring |P - centre| over a half turn already covers the whole
+         turn, which is why four sufficed while this was an absolute value.
+         Signed, four does not: half a turn reads one side's tail and calls it
+         the union.
+
+         The two axes then behave differently, and that difference is the whole
+         finding. y1 = y at every yaw at pitch 0 (cp = 1, sp = 0), so a
+         lopsided y is lopsided at every angle and a fixed offset removes it.
+         x's flips sign with the turn, so its union is symmetric about the
+         centre by construction and its offset comes out near zero on its own —
+         measured -0.6% of the width here, against -10.2% for y. A pan that
+         "corrected" x would be centring one half of the rotation and throwing
+         the other half out by as much. */
+      var yaw0 = cam.yaw, sampled = 0;
+      var lox = 1e9, hix = -1e9, loy = 1e9, hiy = -1e9, WALK = 8;
+      for (var a = 0; a < WALK; a++) {
+        cam.yaw = yaw0 + a * Math.PI * 2 / WALK;
         var xs = [], ys = [];
         for (var i = 0; i < pts.length; i++) {
           var d = pts[i];
           if (!d || typeof d.x !== 'number' || typeof d.y !== 'number') continue;
           var P = cam.proj(d.x, d.y, d.z);
-          xs.push(Math.abs(P[0] - W * 0.5));
-          ys.push(Math.abs(P[1] - H * cyFrac));
+          xs.push(P[0] - W * 0.5); ys.push(P[1] - H * cyFrac);
         }
         if (xs.length < 8) { cam.yaw = yaw0; return false; }
         xs.sort(asc); ys.sort(asc);
-        rx = Math.max(rx, q(xs)); ry = Math.max(ry, q(ys));
+        lox = Math.min(lox, pLo(xs)); hix = Math.max(hix, pHi(xs));
+        loy = Math.min(loy, pLo(ys)); hiy = Math.max(hiy, pHi(ys));
         sampled = xs.length;
       }
       cam.yaw = yaw0;
       if (!sampled) return false;
-      if (rx < 2 && ry < 2) return false;
-      /* proj scales linearly with zoom, so divide the measured extents back to
-         what they would be at zoom 1 and set an absolute zoom. Multiplying the
+
+      /* proj scales linearly with zoom, so divide the measured spread back to
+         what it would be at zoom 1 and set an absolute zoom. Multiplying the
          current zoom instead made fit() compound on itself: called twice it ran
          to the 3.0 clamp, pushed the cloud past the canvas edge, and the
          painted-pixel check read that as "100% of height" — a clipped cloud
          looks exactly like a perfectly framed one from the outside. */
       var z = cam.zoom || 1;
+      var offx = (lox + hix) / 2, offy = (loy + hiy) / 2;
+      var rx = (hix - lox) / 2, ry = (hiy - loy) / 2;
+      if (rx < 2 && ry < 2) return false;
       var rx1 = rx / z, ry1 = ry / z;
       var want = typeof frac === 'number' ? frac : 0.92;
-      var hy = H * Math.min(cyFrac, 1 - cyFrac);
+      /* the whole half-canvas, not the smaller of the two halves. `cyFrac` put
+         the centre at 0.53H, so without a pan the fit had to budget for the
+         shorter side and left the longer one empty; the pan below moves the
+         cloud's own middle to 0.5H, and then both halves are the same size. */
+      var hy = H * 0.5;
       var k = Math.min(rx1 >= 1 ? (W * 0.5 * want) / rx1 : 1e9,
                        ry1 >= 1 ? (hy * want) / ry1 : 1e9);
       if (!isFinite(k) || k <= 0) return false;
       cam.lastFit = {W: W, H: H, n: sampled, rx: rx, ry: ry,
-                     rx1: rx1, ry1: ry1, z: z, k: k};
+                     rx1: rx1, ry1: ry1, z: z, k: k,
+                     /* signed union bbox over a full turn, and its midpoint:
+                        0 means the cloud's extent is centred where it is drawn */
+                     sx: [lox, hix], sy: [loy, hiy], offx: offx, offy: offy,
+                     /* every px above is at zoom z, the zoom in force while the
+                        loops ran; the view ships at k. A reader wanting the
+                        framing a visitor sees scales by k/z. */
+                     cy: cyFrac, sc: scFrac};
       cam.setZoom(k, false);
+      /* `pan` is in sc units, so dividing by sc-at-z converts these px, and proj
+         multiplying by sc-at-k converts them back at the shipped zoom — the
+         offset then tracks zoom and canvas rather than freezing at the size it
+         was measured on. `mid` moves the anchor from cyFrac to the middle of
+         the canvas, which is what the fit above budgeted for. */
+      var u = Math.min(W, H) * scFrac * z;
+      cam.pan = [-offx / u, -offy / u];
+      cam.mid = [0.5, 0.5];
       cam.home = cam.zoom;   /* 0 and Home return here, not to a zoom that framed nothing */
       return true;
     };
@@ -448,7 +519,10 @@
       else if (k === 'Enter') {
         steer = false;
         var s = o.size();
-        cam.pick(cam.nearest(s[0] * 0.5, s[1] * cyFrac), 'No point near the middle of the map.');
+        /* the middle the cloud is actually framed on, which after a fit is the
+           middle of the canvas and before one is still cyFrac */
+        cam.pick(cam.nearest(s[0] * cam.mid[0], s[1] * cam.mid[1]),
+                 'No point near the middle of the map.');
       } else if (k === 'h' || k === 'H' || k === '?') { steer = false; cam.say(HELP); }
       else hit = false;
       if (!hit) return;
