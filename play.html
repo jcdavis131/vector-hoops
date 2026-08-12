@@ -784,7 +784,22 @@ if('serviceWorker'in navigator){try{navigator.serviceWorker.register('/sw.js')}c
    exists anyway. Fired eagerly they were competing with game_vectors.json for a
    slow link's bandwidth, which is the one download standing between a visitor
    and a real game. `.catch` above resolves, so this still runs if the pool fails. */
-vhPoolReady.then(function(){ fetchTrajCache(); fetchManifest(); });})();</script>
+vhPoolReady.then(function(){
+  /* ...and not at all when the visitor has said not to. Warming costs 1.97 MB
+     on every first visit, and it buys one thing: the win animation draws without
+     a pause the first time. Save-Data is a person telling the browser they are
+     paying for bytes, and effectiveType 2g is a link on which two megabytes of
+     prefetch is worse than a pause. Both paths still work — the win handler
+     already awaits fetchTrajCache() at the moment it draws, and both are
+     memoised, so declining to warm costs a wait and never a failure.
+
+     No signal means no opinion: Safari exposes neither, `c` is {}, and the warm
+     proceeds exactly as before. */
+  var c = navigator.connection || {};
+  if (c.saveData) return;
+  if (/2g/.test(c.effectiveType || '')) return;
+  fetchTrajCache(); fetchManifest();
+});})();</script>
 
 <!-- ══ accessibility layer ═════════════════════════════════════════════════
      Added as a separate, purely additive block. The page above is one
