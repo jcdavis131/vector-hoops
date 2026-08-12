@@ -333,6 +333,9 @@ def check_assets(fail) -> None:
 
 RE_HTML_COMMENT = re.compile(r"<!--.*?-->", re.S)
 RE_BLOCK_COMMENT = re.compile(r"/\*.*?\*/", re.S)
+# `/* */` is a comment in JS and CSS and nothing at all in prose. Only the text
+# inside these is handed to RE_BLOCK_COMMENT.
+RE_CODE_BLOCK = re.compile(r"(<(script|style)\b[^>]*>)(.*?)(</\2>)", re.S | re.I)
 
 
 def without_comments(text: str) -> str:
@@ -343,8 +346,25 @@ def without_comments(text: str) -> str:
     reported as defining it twice. The id was quoted, not declared. Only `<!-- -->`
     and `/* */` are stripped; `//` is left alone because it would take the rest
     of any line containing `https://` with it.
+
+    `/* */` is stripped **only inside `<script>` and `<style>`**, because that is
+    the only place it means anything. Applied to the whole document it also fires
+    on prose: /player's map caption names the path `/assets/*`, and the `/*`
+    ending that glob opened a comment that ran 5,763 characters to the next `*/`
+    — swallowing the markup for `#q`, `#twin`, `#teamCap`, `#foreT` and `#props`
+    and reporting five ids as missing from a file that declares all five. A
+    checker that reads copy as code invents failures in the copy's own words.
     """
-    return RE_BLOCK_COMMENT.sub(" ", RE_HTML_COMMENT.sub(" ", text))
+    out, at = [], 0
+    stripped = RE_HTML_COMMENT.sub(" ", text)
+    for m in RE_CODE_BLOCK.finditer(stripped):
+        out.append(stripped[at:m.start()])
+        out.append(m.group(1))
+        out.append(RE_BLOCK_COMMENT.sub(" ", m.group(3)))
+        out.append(m.group(4))
+        at = m.end()
+    out.append(stripped[at:])
+    return "".join(out)
 
 
 def check_ids(fail) -> None:

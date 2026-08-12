@@ -60,7 +60,7 @@ if hasattr(sys.stdout, "reconfigure"):
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from check_viewport import WS, BROWSERS  # noqa: E402
 
-PAGES = ("index", "players", "trends")
+PAGES = ("index", "players", "trends", "player")
 DEFER = {"trends": "smLoad"}   # maps that wait for a click before they exist
 
 OFF_MAX = 0.02      # bbox midpoint, as a fraction of the canvas

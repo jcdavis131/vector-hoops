@@ -1,4 +1,6 @@
-<!doctype html><html lang=en><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name=theme-color content="#fafaf8"><title>Player — Stay On Floor — Vector Hoops</title><meta name=description content="1,764 player-seasons placed by a 64-d embedding, with a nearest-neighbour search over the map and per-team payroll and wins."><link rel=manifest href="/manifest.json"><link rel=icon href="/assets/icon-192.png"><!-- This was a Google Fonts stylesheet. The same face has been committed under
+<!doctype html><html lang=en><meta charset=utf-8>
+<script>/* early error queue — drained by assets/error-boundary.js. Installed here because a listener only sees scripts parsed after it, and the page's own inline block used to be first. */window.__vhErr=[];window.addEventListener("error",function(e){try{var t=e.target,r=t&&(t.src||t.href);window.__vhErr.push({type:r?"resource":"js",message:e.message||("Failed to load "+(r||"")),source:e.filename||r||"",lineno:e.lineno||0,colno:e.colno||0,stack:(e.error&&e.error.stack)||""});}catch(_){}} ,true);window.addEventListener("unhandledrejection",function(e){try{window.__vhErr.push({type:"unhandledrejection",message:String((e.reason&&e.reason.message)||e.reason||"")});}catch(_){}});</script>
+<meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name=theme-color content="#fafaf8"><title>Player — Stay On Floor — Vector Hoops</title><meta name=description content="1,764 player-seasons placed by a 64-d embedding, with a nearest-neighbour search over the map and per-team payroll and wins."><link rel=manifest href="/manifest.json"><link rel=icon href="/assets/icon-192.png"><!-- This was a Google Fonts stylesheet. The same face has been committed under
      assets/fonts/ with its OFL licence since 2026-08-10 and every other page links
      assets/fonts.css for it; /player was the page that lived only in public/ and so
      was skipped by every check that would have said so. A font request is a render
@@ -35,6 +37,9 @@ input,select{border:2.2px solid var(--ink);border-radius:12px;padding:8px 10px;b
    titles and pushed the 390px layout to 478. Same definitions the rest of
    the site uses. */
 .vh-sr{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;border:0}
+/* map-camera.js toggles these two, same as on / and /players */
+.grabbing{cursor:grabbing}
+.overdot{cursor:pointer}
 .vh-skip{position:absolute;left:-9999px;top:0;z-index:99;background:var(--paper,#fafaf8);border:2.2px solid var(--ink,#111);padding:10px 14px;font-family:ui-monospace,Menlo,monospace;font-weight:800;text-decoration:none;border-radius:0 0 10px 0}
 .vh-skip:focus{left:0}
 
@@ -49,7 +54,7 @@ input,select{border:2.2px solid var(--ink);border-radius:12px;padding:8px 10px;b
 <h1 style="position:absolute;width:1px;height:1px;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap">Player</h1><a class="vh-skip" href="#main">Skip to the content</a><div class=top><a href="/" class=brand>◐ DUMB MODEL <b style="font-family:ui-monospace">VECTOR HOOPS</b></a><div style="display:flex;flex-wrap:wrap;gap:7px"><span class="pill o">PLAYER · STAY ON FLOOR · 64-D OKABE 8</span><span class="pill g">CLOSER 🟢</span><span class="pill rr">EXPLOITABLE 🔴</span><span class="pill yy">DEPENDENT 🟡</span><span class="pill dark" id=live>Loading the map…</span></div></div><main id="main" tabindex="-1">
 <div class=wrap>
 <div class=grid2>
-<div class=card><h2 class="vh-sr">Map — player-seasons placed by the 64-d embedding, coloured by cluster</h2><div class=hd>MAP — 64-D POSITION, COLOURED BY CLUSTER <span class="pill y" style="font-size:10px">PWA OFFLINE-FIRST</span></div><canvas id=map width=560 height=320 style="width:100%;border:1.8px solid var(--ink);border-radius:12px;background:#0F141E;margin-top:8px"></canvas><div id=leg style="display:flex;flex-wrap:wrap;gap:6px;margin-top:8px"></div><div class=small>PWA: embedding_map_points_limited.json is cached by the service worker, and the canvas draws offline from that cache.</div><div class=sg style="margin-top:6px">Tap Jordan → position only, not auto-start — deliberate. That's respect, not autoplay.</div></div>
+<div class=card><h2 class="vh-sr">Map — player-seasons placed by the 64-d embedding, coloured by cluster</h2><div class=hd>MAP — 64-D POSITION, COLOURED BY CLUSTER <span class="pill y" style="font-size:10px">PWA OFFLINE-FIRST</span></div><canvas id=map width=560 height=320 aria-label="The embedding map. Each dot is one player-season, placed by the model and coloured by cluster. Drag to turn it, arrow keys turn it too, and Enter selects the dot nearest the middle. The nearest-neighbour search below reaches any player without a mouse." style="width:100%;height:340px;display:block;border:1.8px solid var(--ink);border-radius:12px;background:#0F141E;margin-top:8px;touch-action:pan-y;cursor:grab"></canvas><div style="display:flex;flex-wrap:wrap;gap:8px;justify-content:space-between;margin-top:6px"><span id=mapHov class=small style="font-size:10.5px">◎ hover a dot to name it · click to search its twins · drag to rotate</span><span id=mapOri class=small style="font-size:10.5px;display:none"></span></div><div id=mapLive class="vh-sr" role=status aria-live=polite aria-atomic=true></div><div id=leg style="display:flex;flex-wrap:wrap;gap:6px;margin-top:8px"></div><div class=small>Offline: the map file is <b>not</b> in the service worker's cache — sw.js bypasses <code>.json</code>, <code>.f32</code> and <code>.bin</code> on purpose, so a stale model asset can never be served. What keeps this drawing without a network is the browser's own HTTP cache, which holds <code>/assets/*</code> as immutable. This line used to say the worker cached it, which the worker's own <code>DATA</code> pattern has always contradicted.</div><div class=sg style="margin-top:6px">Tap Jordan → position only, not auto-start — deliberate. That's respect, not autoplay.</div></div>
 <div class=card><h2 class="vh-sr">CLOSER vs EXPLOITABLE ARCHETYPE YELLOW SIGNAL</h2><div class=hd>CLOSER vs EXPLOITABLE ARCHETYPE <span class="pill y">YELLOW SIGNAL</span></div>
 <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:8px"><div class=card style="background:var(--g)"><h2 class="vh-sr">CLOSER FIT</h2><b class=hd>CLOSER FIT</b><div class=kpi style="font-size:22px">🟢</div><div class=small>Stays on the floor late. The site carries no closer score, so no number is quoted for it.</div><div class="pill g" style="margin-top:6px">#E7F6EA GREEN</div></div><div class=card style="background:var(--r)"><h2 class="vh-sr">EXPLOITABLE</h2><b class=hd>EXPLOITABLE</b><div class=kpi style="font-size:22px">🔴</div><div class=small>Targeted late. Same — a colour, not a measured score.</div><div class="pill rr" style="margin-top:6px">#FFD8D5 RED</div></div><div class=card style="background:var(--y)"><h2 class="vh-sr">DEPENDENT</h2><b class=hd>DEPENDENT</b><div class=kpi style="font-size:22px">🟡</div><div class=small>Needs someone else to create. Same — a colour, not a measured score.</div></div></div>
 <div class=small style="margin-top:8px">Viz: a sample of the 12,966 player-seasons, placed by the 64-d embedding. Measured on the v5 baseline: archetype purity@20 0.67, adjacent-season top-1 retrieval 0.51.</div>
@@ -62,6 +67,7 @@ input,select{border:2.2px solid var(--ink);border-radius:12px;padding:8px 10px;b
 </div>
 </main><div class=foot><div style="display:flex;gap:7px;flex-wrap:wrap"><span class="pill o">DUMB MODEL</span><a class=pill href="/">HOME MAP</a><a class=pill href="/owner">OWNER</a><a class=pill href="/player-fit">FIT CALC</a><a class=pill href="/brand">BRAND</a><a class=pill href="/dfs">DFS</a></div><div class=sm>THEME #FAFAF8 — ZERO-DEPS — PWA — MONO 900 UPPERCASE — PAPER CARD 2.2PX 4PX SHADOW — YELLOW PILL #F0E442</div></div>
 </div>
+<script src="assets/map-camera.js?v=dc7dc4c5"></script>
 <script>
 (async()=>{
 const OKABE=["#E69F00","#56B4E9","#009E73","#F0E442","#0072B2","#D55E00","#CC79A7","#D60022"];let teams=[],V={vectors:[]},props=[];
@@ -87,7 +93,7 @@ document.getElementById('live').textContent = (teams.length && PTS.length)
   ? teams.length+' teams · '+PTS.length.toLocaleString()+' map points'
   : 'Team and map files did not load. Nothing below is drawn from them.';
 const tSel=document.getElementById('teamCap');teams.sort((a,b)=>(a.cap_pct||0)-(b.cap_pct||0)).forEach(t=>{let o=document.createElement('option');o.value=t.abbr;o.textContent=`${t.abbr} cap%${((t.cap_pct_normalized||t.cap_pct)*100).toFixed(1)}% ${t.flexibility_2025_26||''}`;tSel.appendChild(o);});
-let c=document.getElementById('map').getContext('2d');let leg=document.getElementById('leg');
+let mapCv=document.getElementById('map');let c=mapCv.getContext('2d');let leg=document.getElementById('leg');
 /* This paired eight hand-typed archetype names with eight colours while the
    canvas coloured by the loop index, so the key described nothing. Colour is
    the cluster id the map file carries; the committed data does not name the
@@ -95,20 +101,83 @@ let c=document.getElementById('map').getContext('2d');let leg=document.getElemen
 [0,1,2,3,4,5,6,7].forEach(function(k){var s=document.createElement('span');s.className='pill';s.style.background='#fff';s.innerHTML='<span style="width:10px;height:10px;border-radius:50%;display:inline-block;background:'+OKABE[k]+'"></span> cluster '+k;leg.appendChild(s);});
 /* `v.x||Math.random()` put a point at a random spot whenever x was missing or
    zero, and the caption quoted figures that are in no committed file. A point
-   without coordinates is now skipped rather than invented. */
+   without coordinates is now skipped rather than invented.
+
+   This map used to be the odd one out. Three pages draw this exact file —
+   assets/embedding_map_points_limited.json, the same 1,764 rows — as a cloud you
+   can turn, pinch, walk with the arrow keys and hover to name. Here it was a
+   single pass of ctx.arc at v.x*540+10, drawn once and never again: no drag, no
+   hover, no keyboard, no zoom, and `z` thrown away entirely, so a third of what
+   the model placed each player by was not on screen at all. map-camera.js exists
+   because "a visitor who learns the map on one page should not have to learn it
+   again on the next", and this was the page that made that sentence false.
+
+   The flat mapping also framed it badly, in the most basic way the fit exists to
+   fix: x runs 0.011..0.849 in the file, so x*540+10 put the cloud 16px from the
+   left edge and 91px from the right. cam.fit measures and centres it. */
+
+/* The camera works in -1..1 and this file stores 0..1, so the conversion happens
+   once here rather than once per point per frame — the same trade /trends
+   documents. PTS keeps the file's own numbers: twinQ reports neighbours in the
+   map's own coordinates, and rescaling underneath it would change every distance
+   it prints. */
+var dots=[];
+PTS.forEach(function(v){
+  if(typeof v.x!=='number'||typeof v.y!=='number') return;
+  dots.push({x:(v.x-0.5)*2, y:(v.y-0.5)*2,
+             z:((typeof v.z==='number'?v.z:0.5)-0.5)*2,
+             col:OKABE[(v.c||0)%8], cur:!!v.is_current,
+             nm:v.display_name||('player '+v.pid), se:v.season||''});
+});
+
+var W=0,H=0,DPR=Math.min(window.devicePixelRatio||1,1.4);
+function rs(){var r=mapCv.getBoundingClientRect();
+  W=Math.round((r.width||560)*DPR); H=Math.round((r.height||340)*DPR);
+  mapCv.width=W; mapCv.height=H;}
+rs();
+window.addEventListener('resize',function(){
+  DPR=Math.min(window.devicePixelRatio||1,1.4); rs(); });
+
+var cam=window.VHMapCamera?VHMapCamera.attach(mapCv,{
+  size:function(){return [W,H];},
+  points:function(){return dots;},
+  label:function(d){return '◎ '+d.nm+(d.se?' · '+d.se:'')+' — click to search its twins';},
+  hoverIdle:'◎ hover a dot to name it · click to search its twins · drag to rotate',
+  /* picking a dot runs the search that is already on this page rather than
+     inventing a second way to say the same thing */
+  onPick:function(d){
+    var qEl=document.getElementById('q');
+    if(qEl){ qEl.value=d.nm; twinQ(); }
+    cam.say(d.nm+(d.se?', '+d.se:'')+' selected — nearest neighbours are listed below the map.');
+  },
+  live:'mapLive', status:'mapOri', hover:'mapHov', cy:0.5
+}):null;
+
 function draw(){
-  c.clearRect(0,0,560,320);c.fillStyle='#0F141E';c.fillRect(0,0,560,320);
-  var drawn=0;
-  PTS.forEach(function(v){
-    if(typeof v.x!=='number'||typeof v.y!=='number') return;
-    c.fillStyle=OKABE[(v.c||0)%8]; c.globalAlpha=v.is_current?0.95:0.7;
-    c.beginPath(); c.arc(v.x*540+10, v.y*300+10, v.is_current?4:2.6, 0, 6.28); c.fill();
-    drawn++;
-  });
-  c.globalAlpha=1;c.fillStyle='#FAFAF8';c.font='800 11px ui-monospace';
-  c.fillText(drawn?drawn.toLocaleString()+' player-seasons, coloured by cluster'
-                  :'the map file did not load',10,16);
-}draw();
+  c.clearRect(0,0,W,H); c.fillStyle='#0F141E'; c.fillRect(0,0,W,H);
+  if(cam){
+    cam.tick();
+    for(var i=0;i<dots.length;i++){
+      var d=dots[i], P=cam.proj(d.x,d.y,d.z);
+      if(P[0]<-12||P[0]>W+12||P[1]<-12||P[1]>H+12) continue;
+      cam.hit(d,P[0],P[1]);
+      c.fillStyle=d.col; c.globalAlpha=d.cur?0.95:0.62;
+      c.beginPath();
+      c.arc(P[0],P[1],(d.cur?1.7:1.15)*DPR*(0.55+P[2]*1.05),0,6.28);
+      c.fill();
+    }
+    cam.frameEnd();
+  }
+  c.globalAlpha=1;c.fillStyle='#FAFAF8';c.font='800 '+Math.round(11*DPR)+'px ui-monospace';
+  c.fillText(dots.length?dots.length.toLocaleString()+' player-seasons, coloured by cluster'
+                        :'the map file did not load',10*DPR,16*DPR);
+  requestAnimationFrame(draw);
+}
+/* fit needs a canvas with a size. It returns false on a zero-sized one — which
+   is what a canvas still being laid out reports — so the answer is checked
+   rather than assumed, and retried on the next frame. */
+if(cam&&cam.fit&&!cam.fit()) requestAnimationFrame(function(){cam.fit();});
+requestAnimationFrame(draw);
 /* This filtered on v.n and v.name. The map file carries neither, so no query
    could ever match and every visitor read the `else` — which quoted two
    figures that are in no committed file. The result line then printed
@@ -193,4 +262,12 @@ function calc(){
 if('serviceWorker' in navigator)navigator.serviceWorker.register('/sw.js').catch(()=>{});
 })();
 </script>
+<!-- This page carried one inline script and nothing else: alone on the site it
+     had no error boundary, so a failure here reported itself to nobody, and no
+     keyboard-a11y.js, which is where every other page's focus ring comes from —
+     and the map card below has just become a tab stop. pwa-install.js is
+     deliberately not here: the install prompt is a site-wide thing a visitor
+     meets once, and this is not the page to meet it on. -->
+<script src="assets/error-boundary.js?v=b5444017"></script>
+<script src="assets/keyboard-a11y.js?v=d840cbf5"></script>
 </html>
