@@ -277,7 +277,13 @@ so nothing here is downloaded that is not about the player you asked for.</p>
 .attr-row{display:grid;grid-template-columns:132px 1fr 54px;gap:8px;align-items:center;padding:3px 0;font-family:var(--mono);font-size:11px}
 .attr-name{font-weight:800;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .attr-track{background:#f0efe9;border:1.4px solid var(--ink);border-radius:999px;height:12px;overflow:hidden}
-.attr-fill{height:100%;background:var(--blue);border-right:1.4px solid var(--ink)}
+/* display:block, or none of this applies. .attr-fill is a <span>, and width and
+   height are both ignored on an inline box — so every bar rendered at 1px, which
+   is its 1.4px right border and nothing else, no matter what the inline
+   width:79.3% said. Twelve feature attributions drew as identical empty
+   outlines beside their real numbers, on the page whose subject is what the
+   model actually weighs. */
+.attr-fill{display:block;height:100%;background:var(--blue);border-right:1.4px solid var(--ink)}
 .attr-fill.partial{background:repeating-linear-gradient(45deg,var(--orange),var(--orange) 4px,#f6c9b8 4px,#f6c9b8 8px)}
 .attr-val{text-align:right;font-variant-numeric:tabular-nums}
 .attr-fam{font-weight:400;color:var(--muted);text-transform:none}
