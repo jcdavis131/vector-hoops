@@ -1,15 +1,17 @@
 # frontend-live — readiness
 
-**Nothing here is live.** Everything below is measured at **`0e95b151`** — the sha is the anchor,
-because the commit that records a count is never inside the count it records. All of it is on
-`frontend-live`; `master` is untouched, and pushing `master` is what deploys the site. Suite green
-at that commit.
+**This is live.** Everything below is measured at **`945bcdb8`**, which is also `origin/master`,
+and pushing `master` is what deploys hoops.dumbmodel.com. An earlier version of this header said
+"Nothing here is live" and "`master` is untouched" while anchored at `0e95b151`; both stopped being
+true the first time this branch was pushed to `master`, and a readiness document that misstates
+whether it has shipped is the one sentence in it that has to be right. The sha is the anchor because
+the commit that records a count is never inside the count it records.
 
 | | |
 |---|---|
-| commits this session | 258 on this branch's own line at `0e95b151`, now on `master` (a plain `rev-list` says 294 — it walks both sides of the merge and counts Scout's 36) |
-| paths changed, across the merge | 2,652 (2,547 under `public/`, 45 scripts) |
-| insertions / deletions | +211,573 / −310,582 |
+| commits this session | 312 on this branch's own line at `945bcdb8`, on `master` and deployed (a plain `rev-list` says 348 — it walks both sides of the merge and counts Scout's 36) |
+| paths changed, across the merge | 2,712 |
+| insertions / deletions | +229,440 / −310,696 |
 | working notes | `tasks/frontend-live-buildout-2026-08-10.md`, 6,839 lines |
 
 **Where to look at it.** The branch is pushed and Vercel builds every commit on it:
