@@ -727,11 +727,16 @@ var vhPoolReady = (function(){
       // synthesised trajectory. Leaving pid off lets the manifest join run.
       POOL.length=0;
       past.forEach(function(p){ POOL.push({i:p.i,n:p.n+' '+p.s,v:p.v,x:p.x,y:p.y,c:p.c}); });
+      var seasonSet = [...new Set(modern.map(function(m){return m.s;}))].sort();
+      var latestSeason = seasonSet[seasonSet.length-1] || '2025-26';
+      var modernFull = modern.filter(function(m){return m.s===latestSeason;});
+      if(!modernFull.length) modernFull = modern; // safety: fallback to all if filter empty
       MODERN.length=0;
       // tag is printed in the guess readout; the placeholder rows carried a
       // hand-assigned one and these do not, so give it a neutral value rather
       // than letting "undefined" reach the page
-      modern.forEach(function(p){ MODERN.push({i:p.i,n:p.n+' '+p.s,v:p.v,tag:'—',x:p.x,y:p.y,c:p.c}); });
+      // Only latest full season (e.g. 2025-26) is guessable – fixes pool offering 2022-23 etc
+      modernFull.forEach(function(p){ MODERN.push({i:p.i,n:p.n+' '+p.s,v:p.v,tag:'—',x:p.x,y:p.y,c:p.c,s:p.s}); });
       fillGuessList();   // the pool changed, so the suggestions have to
 
       var chips=document.querySelectorAll('.chip');
