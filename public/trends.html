@@ -165,7 +165,7 @@ span.proj{color:var(--orange-ink)}
 <meta name="twitter:description" content="30 seasons of NBA player-seasons measured in one embedding space. Orthogonal Procrustes rotation between consecutive seasons, archetype prevalence 1996-2026, and what moved in each season — every number recomputable.">
 <!-- build_social_meta.py: end -->
 <!-- the camera every embedding map on this site shares -->
-<script src="assets/map-camera.js?v=c2833d40"></script>
+<script src="assets/map-camera.js?v=6a484e18"></script>
 </head><body>
 <a class="vh-skip" href="#main">Skip to the research</a>
 <nav>
@@ -1079,6 +1079,23 @@ $('twinInput').addEventListener('change',lookup);
           'counted from the points drawn. Colour names come from assets/mtnn_arch.json; if that ' +
           'file cannot be loaded the mix shows indices rather than inventing names.';
         start();
+        /* Frame the whole run, not the season that happens to be showing.
+           Measured before this: the cloud used 14% of the canvas width and 39%
+           of its height, the worst of the three maps on the site, and it
+           orbited the origin rather than turning in place. Rows are
+           [pid,x,y,z,c] in 0..1; the camera works in -1..1. */
+        try {
+          var fitAll = [];
+          for (var fs = 0; fs < j.seasons.length; fs++) {
+            var fr = j.frames[j.seasons[fs]] || [];
+            for (var fj = 0; fj < fr.length; fj++) {
+              var fr2 = fr[fj];
+              fitAll.push({x: (fr2[1] - 0.5) * 2, y: (fr2[2] - 0.5) * 2,
+                           z: (fr2[3] - 0.5) * 2});
+            }
+          }
+          if (cam && cam.fit) cam.fit(0.92, fitAll);
+        } catch (e) {}
         say(j.seasons.length + ' seasons loaded. Use the season slider, or the map itself.');
         return fetch('assets/mtnn_arch.json?v=d9922089');
       })

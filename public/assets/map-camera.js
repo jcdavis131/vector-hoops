@@ -223,8 +223,13 @@
        off the top. The canvas is wider than the data is; that is aspect ratio,
        not something to solve by cropping. */
     cam.home = 1;
-    cam.fit = function (frac) {
-      var pts = (typeof o.points === 'function' && o.points()) || [];
+    /* `explicit` is for a map that draws one slice at a time. /trends shows a
+       single season and steps through thirty, so fitting what is on screen
+       would reframe the view at every step and the animation would breathe.
+       It passes the union of all seasons once instead, and the framing then
+       holds for the whole run. */
+    cam.fit = function (frac, explicit) {
+      var pts = explicit || (typeof o.points === 'function' && o.points()) || [];
       var s = o.size(), W = s[0], H = s[1];
       if (!pts.length || !W || !H) return false;
       /* The map turns. A cloud's projected extent depends on the angle you
