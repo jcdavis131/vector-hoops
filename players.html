@@ -174,7 +174,23 @@ function listMatches(){
         || String(d.pid||'').indexOf(v)>=0;
   });
 }
-function renderList(){let L=$('list');L.innerHTML='';var hits=listMatches();
+function renderList(){let L=$('list');L.innerHTML='';
+  /* The placeholder cloud has coordinates and nothing else — no name, no season,
+     no pid — because it exists to put something on a dark rectangle while the
+     real file arrives. Listing it rendered eighty rows of "undefined • pid
+     undefined" under a line reading "80 of 1,764 shown", which is the map's
+     invented positions being presented as players. The map's own label already
+     guards on mapState; this list did not.
+
+     Same defect smoke_mapload was written for on /index, one element over. */
+  if(mapState!=='real'){
+    var c0=$('pqCount');
+    if(c0) c0.textContent = mapState==='failed'
+      ? 'The player file did not load, so there is no list to search. The dots above are placeholder positions, not players.'
+      : 'Loading the players…';
+    return;
+  }
+  var hits=listMatches();
   var shown=Math.min(hits.length,LIST_CAP);
   var c=$('pqCount');
   if(c) c.textContent = !hits.length
