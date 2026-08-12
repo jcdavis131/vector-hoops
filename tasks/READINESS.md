@@ -58,6 +58,7 @@ python scripts/check_responsive.py
 python scripts/check_focus.py               # tabs 18 pages in Chrome
 python scripts/check_motion.py              # 18 pages under prefers-reduced-motion
 python scripts/check_selectors.py           # type selectors against elements that exist
+python scripts/check_degraded.py            # 19 pages with every data file refused
 python scripts/check_target_size.py --mobile # 2.5.8 at 390x844, the viewport it is about
 python scripts/check_viewport.py --widths 320,360,390
 python scripts/smoke_render.py              # 8 pages, empty console
