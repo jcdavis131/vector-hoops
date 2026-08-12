@@ -471,7 +471,7 @@ span.pill.mono.ink,.pill.ink{color:#C9C6C0}
      the caveat the file carries and the markup did not: the best model's
      numbers are PROJECTED from a prior version, not retrained. */
   var zt=document.getElementById('zooTable'), zn=document.getElementById('zooNote'), zc=document.getElementById('zooCaveat');
-  fetch('assets/model_zoo.json?v=15a50de0',{cache:'force-cache'}).then(function(r){
+  fetch('assets/model_zoo.json?v=87d8632f',{cache:'force-cache'}).then(function(r){
     if(!r.ok) throw new Error('HTTP '+r.status);
     return r.json();
   }).then(function(j){

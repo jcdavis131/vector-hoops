@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Front Office Lab · hoops.dumbmodel.com</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
+<title>Front Office Lab · hoops.dumbmodel.com</title><link rel="stylesheet" href="/assets/fonts.css?v=31e5658b">
+
 <style>
 :root{--bg:#fdfcf9;--ink:#1a1a1a;--muted:#6b665e;--line:#e8e2d8;--accent:#2a6b4f;--card:#ffffff;--amber:#f6ede0}
 *{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 ui-serif, Georgia, serif}
@@ -33,6 +33,19 @@ td{padding:7px 6px;border-bottom:1px dashed #efe9de}
 .tabbar{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0 8px}
 .tabbar a{border:1px solid var(--line);background:#fff;border-radius:999px;padding:7px 12px;font:13px ui-sans-system,sans-serif}
 </style>
+<!-- build_social_meta.py: start -->
+<link rel="canonical" href="https://hoops.dumbmodel.com/lab">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="dumbmodel">
+<meta property="og:url" content="https://hoops.dumbmodel.com/lab">
+<meta property="og:title" content="Front Office Lab · hoops.dumbmodel.com">
+<meta property="og:image" content="https://hoops.dumbmodel.com/assets/og-1200x630.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Front Office Lab · hoops.dumbmodel.com">
+<meta name="twitter:image" content="https://hoops.dumbmodel.com/assets/og-1200x630.png">
+<!-- build_social_meta.py: end -->
 </head>
 <body>
 <header>
@@ -58,9 +71,9 @@ td{padding:7px 6px;border-bottom:1px dashed #efe9de}
 </div>
 
 <!-- 1 PAYROLL -->
-<section id="payroll" class="card">
+<section id="payroll" tabindex="-1" class="card">
   <h2>1 · 2025-26 Payroll Projection <span class="small mono" id="capTag"></span></h2>
-  <div class="small">Cap $154,647,000 · Tax $187,895,000 · Apron1 $195,945,000 · Apron2 $207,824,000 · TV $76B/11yr · Source: cap_history SSOT 26K/31 seasons · Payroll: assets/data/payroll_by_season.json (Forbes synth where paywalled 360 valuations).</div>
+  <div class="small">Cap $154,647,000 · Tax $187,895,000 · Apron1 $195,945,000 · Apron2 $207,824,000 · TV $76B/11yr · Source: cap_history SSOT 26K/31 seasons · Payroll: assets/data/payroll_by_season.json (Forbes synth where the 360 valuations are not public).</div>
   <div class="kv"><span id="medianTag"></span><span id="teamsCount"></span><span>season_focus 2025-26</span></div>
   <div class="grid grid2">
     <div>
@@ -78,7 +91,7 @@ td{padding:7px 6px;border-bottom:1px dashed #efe9de}
 </section>
 
 <!-- 2 DRAFT -->
-<section id="draft" class="card" style="margin-top:18px">
+<section id="draft" tabindex="-1" class="card" style="margin-top:18px">
   <h2>2 · Draft Expectation <span class="small">first-5-yr quality-adj minutes</span></h2>
   <div class="small">Construct: <em>Draft Quality = surplus minutes vs expected at slot (pick1 17,483 avg baseline). Completion factor + matchup tag + closing risk + zero-usage flag. Predictive: linear beats trimmedMean MAE 4496 vs 4501 baseline.</em></div>
   <div class="kv"><span id="draftBest"></span><span>dataset 1598 1996-2022</span><span>seed 42 5-fold shuffle</span></div>
@@ -102,7 +115,7 @@ td{padding:7px 6px;border-bottom:1px dashed #efe9de}
 </section>
 
 <!-- 3 CAP -->
-<section id="cap" class="card" style="margin-top:18px">
+<section id="cap" tabindex="-1" class="card" style="margin-top:18px">
   <h2>3 · Cap Efficiency vs Wins <span class="small">wins ~ payroll_m / cap_pct · linear</span></h2>
   <div class="small">Construct: <em>Cap Efficiency = wins per $1M (median 0.30 W/$M), weighted wins = W + 2.5·POwins, cap_pct = payroll/cap. Convergent cap_pct ↔ flex r0.82. Discriminant market size not used. Predictive wins MAE 8.9 multi-tower beats linear 10.08 prior.</em></div>
   <div class="kv"><span id="capN"></span><span>seasons 2018-2025 236 team-seasons</span><span>k=5 </span></div>
@@ -125,7 +138,7 @@ td{padding:7px 6px;border-bottom:1px dashed #efe9de}
 </section>
 
 <!-- 4 FORESIGHT -->
-<section id="foresight" class="card" style="margin-top:18px">
+<section id="foresight" tabindex="-1" class="card" style="margin-top:18px">
   <h2>4 · Foresight Surplus <span class="small">flat $26M '18 = $55M now, timing mult 0.85-2.2</span></h2>
   <div class="small">Construct: <em>Surplus = exp_sal – actual where exp_sal from median_perf → 0.4+0.8·min(perf_ratio,3). Retained bargain deals where performance > salary, growth < cap, timing mult (1+capGrowth)/(1+salGrowth) capped, maturation_ratio .7-1.5 + era 4. Convergent foresight↔flex r0.25. Foresight MAE 0.75M best baseline 1.3M.</em></div>
   <div class="kv"><span id="foreN"></span><span>seasons 2018-2024</span><span>2918 deals</span><span>triple = salary retained + bargain + cap inflation</span></div>

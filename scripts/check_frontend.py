@@ -726,8 +726,15 @@ def check_fragments(fail) -> None:
         top of a 19-entry glossary. tabindex="-1" is the whole fix, and all 23
         skip links already had it — only the content anchors were missed.
         """
-        m = re.search(r"<(\w+)([^>]*\sid=[\"']?" + re.escape(frag) + r"[\"']?[^>]*)>",
-                      raw.get(target, ""))
+        # The id has to be exactly the fragment. With the closing quote optional
+        # — id=["']?cap["']? — `#cap` also matched `id="capTag"`, and since that
+        # span appears earlier in lab.html it was the element whose tabindex got
+        # checked. The page was reported as unable to hold focus on a section
+        # that carries tabindex="-1"; any site with #cap and a capTag beside it
+        # gets the same false report.
+        f = re.escape(frag)
+        m = re.search(r"<(\w+)([^>]*\sid=(?:\"" + f + r"\"|'" + f + r"'|"
+                      + f + r"(?=[\s>]))[^>]*)>", raw.get(target, ""))
         if not m:
             return True     # `ids` above already reported a missing target
         return bool(native.match(m.group(1)) or re.search(r"tabindex=", m.group(2)))
@@ -1065,7 +1072,7 @@ COUNTS = (
     # model_zoo by 1,544 — and nothing could see it, because a file's size is
     # never written inside the file. A page that says how big something is has
     # to be checked against how big it is.
-    ("inventory.html", "1,160,938", None, "bytes of assets/data/front_office.json",
+    ("inventory.html", "1,136,233", None, "bytes of assets/data/front_office.json",
      lambda _: (ROOT / "assets/data/front_office.json").stat().st_size),
     ("inventory.html", "9,992,186", None, "bytes of assets/matchup_players.json",
      lambda _: (ROOT / "assets/matchup_players.json").stat().st_size),
