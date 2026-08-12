@@ -157,11 +157,22 @@ def main() -> int:
                 return {"err": str(r["exceptionDetails"])[:140]}
             return (r.get("result") or {}).get("value")
 
+        def fetched():
+            return ev("performance.getEntriesByType('resource')"
+                      ".filter(function(e){return e.name.indexOf('game_vectors')>-1}).length") or 0
+
         def run(a, b):
+            before = ev("(document.getElementById('fitOut')||{}).innerText||''") or ""
             ev(f"(function(){{var A=document.getElementById('fitA'),"
                f"B=document.getElementById('fitB');A.value={json.dumps(a)};"
                f"B.value={json.dumps(b)};document.getElementById('fitGo').click();}})()")
-            time.sleep(0.5)
+            # the pool is fetched on first touch now, so the answer arrives a
+            # request later than the click rather than in the same tick
+            for _ in range(40):
+                time.sleep(0.25)
+                out = ev("(document.getElementById('fitOut')||{}).innerText||''") or ""
+                if out and out != before and "Pick two seasons" not in out:
+                    return out
             return ev("(document.getElementById('fitOut')||{}).innerText||''") or ""
 
         mut = f"  [mutation {args.mutate}]" if args.mutate else ""
@@ -169,13 +180,34 @@ def main() -> int:
         ws.call("Page.navigate", {"url": f"http://127.0.0.1:{site}/player-fit.html"})
         for _ in range(30):
             time.sleep(0.4)
-            if ev("!!document.getElementById('fitGo') && "
-                  "!document.getElementById('fitGo').disabled"):
+            if ev("!!document.getElementById('fitGo')"):
                 break
-        pool = ev("(document.getElementById('fitPool')||{}).innerText||''") or ""
-        print(f"  pool      {pool!r}")
-        if "2,273" not in pool.replace(" ", " "):
-            fails.append(f"the pool label reads {pool!r}; the file holds 2,273 seasons")
+        # 398 KB on a 14 KB page, for a tool that may never be used: it must not
+        # be on the wire until something touches the calculator.
+        early = fetched()
+        print(f"  on load   game_vectors requests: {early}")
+        if early:
+            fails.append(f"game_vectors.json was fetched {early} time(s) before anything "
+                         f"touched the tool — 398 KB on a page that is 14 KB of markup")
+
+        # A real pointer press, not element.focus(): in headless the document is
+        # not focused, so a programmatic focus() does not reliably fire the event
+        # the page listens for. This is also what a visitor actually does.
+        box = ev("(function(){var r=document.getElementById('fitA')"
+                 ".getBoundingClientRect();return [r.left+r.width/2, r.top+r.height/2];})()")
+        for kind in ("mousePressed", "mouseReleased"):
+            ws.call("Input.dispatchMouseEvent", {"type": kind, "x": box[0], "y": box[1],
+                                                 "button": "left", "clickCount": 1})
+        pool = ""
+        for _ in range(40):
+            time.sleep(0.25)
+            pool = ev("(document.getElementById('fitPool')||{}).innerText||''") or ""
+            if "2,273" in pool:
+                break
+        print(f"  on focus  {pool!r}  requests: {fetched()}")
+        if "2,273" not in pool:
+            fails.append(f"after focusing an input the pool label reads {pool!r}; the file "
+                         f"holds 2,273 seasons")
 
         for a, b in PAIRS:
             got = run(a, b)

@@ -91,29 +91,49 @@ span.proj{color:var(--orange-ink)}
   }
   function cos(a,b){ var s=0,i; for(i=0;i<a.length;i++) s+=a[i]*b[i]; return s; }
 
-  GO.disabled=true;
-  fetch('assets/game_vectors.json?v=b98e3a0b',{cache:'force-cache'})
-    .then(function(r){ if(!r.ok) throw new Error('HTTP '+r.status); return r.json(); })
-    .then(function(d){
-      rows=(d.past||[]).concat(d.modern||[]);
-      criteria=d.criteria||null;
-      byKey={};
-      var frag=document.createDocumentFragment();
-      rows.forEach(function(p){
-        if(!p.v||!p.v.length) return;
-        p.u=unit(p.v);
-        byKey[key(p.n,p.s)]=p;
-        var o=document.createElement('option'); o.value=p.n+' '+p.s; frag.appendChild(o);
+  /* 398 KB, fetched when it is needed and not before. This page is 14 KB of
+     markup around a calculator; loading the pool eagerly made 96% of a first
+     visit a file that only matters if the tool is used, which is the thing
+     /index and /trends both put behind a labelled button. Deferring is better
+     than labelling here: the fetch starts the moment a finger or a caret
+     touches either box, so it is already in flight while the first name is
+     still being typed.
+
+     Memoised as a promise rather than a flag, so two rapid triggers share one
+     request. compare() awaits it, which is what makes the button work for
+     someone who presses it before touching an input at all. */
+  var poolReady = null;
+  function ensurePool(){
+    if(poolReady) return poolReady;
+    if(POOL) POOL.textContent='loading the pool…';
+    poolReady = fetch('assets/game_vectors.json?v=b98e3a0b',{cache:'force-cache'})
+      .then(function(r){ if(!r.ok) throw new Error('HTTP '+r.status); return r.json(); })
+      .then(function(d){
+        rows=(d.past||[]).concat(d.modern||[]);
+        criteria=d.criteria||null;
+        byKey={};
+        var frag=document.createDocumentFragment();
+        rows.forEach(function(p){
+          if(!p.v||!p.v.length) return;
+          p.u=unit(p.v);
+          byKey[key(p.n,p.s)]=p;
+          var o=document.createElement('option'); o.value=p.n+' '+p.s; frag.appendChild(o);
+        });
+        LIST.appendChild(frag);
+        if(POOL) POOL.textContent=rows.length.toLocaleString()+' seasons · '+d.dim+'-d';
+      })
+      .catch(function(e){
+        poolReady = null;                    /* a failed load may be retried */
+        if(POOL) POOL.textContent='';
+        OUT.textContent='The vector file did not load ('+e.message+'), so nothing here can be '+
+                        'computed. Nothing below is a fallback number.';
+        throw e;
       });
-      LIST.appendChild(frag);
-      GO.disabled=false;
-      if(POOL) POOL.textContent=rows.length.toLocaleString()+' seasons · '+d.dim+'-d';
-    })
-    .catch(function(e){
-      if(POOL) POOL.textContent='';
-      OUT.textContent='The vector file did not load ('+e.message+'), so nothing here can be '+
-                      'computed. Nothing below is a fallback number.';
-    });
+    return poolReady;
+  }
+  ['focus','pointerdown'].forEach(function(evt){
+    [A,B,GO].forEach(function(el){ el.addEventListener(evt, ensurePool, {once:false}); });
+  });
 
   function find(raw){
     var q=(raw||'').trim();
@@ -132,6 +152,9 @@ span.proj{color:var(--orange-ink)}
   }
 
   function compare(){
+    ensurePool().then(runCompare, function(){});
+  }
+  function runCompare(){
     if(!byKey){ return; }
     var a=find(A.value), b=find(B.value);
     if(a.err||b.err){ OUT.textContent=a.err||b.err; return; }
