@@ -70,10 +70,42 @@ MUTATIONS = {
              "if (cam.reduce) cam.spin = true;"),
 }
 
-ANIMS = """(function(){
+# Shadow roots, or this measures the wrong pages. /player-animations mounts
+# eight <posecode-player> custom elements, and its sixteen canvases all live
+# inside their shadow roots: document.querySelectorAll('canvas') returns 0 there
+# and document.getAnimations() does not reach in either. The first version of
+# this file reported that page as "0 canvas · 0 running animation(s)" and counted
+# it towards a clean 18 of 18 — a blind check reads exactly like a clean one.
+WALK = """
+function vhWalk(fn){
+  (function rec(root){
+    var all = root.querySelectorAll('*');
+    for (var i = 0; i < all.length; i++) {
+      var e = all[i];
+      fn(e, root);
+      if (e.shadowRoot) rec(e.shadowRoot);
+    }
+  })(document);
+}
+function vhAnimations(){
+  var out = document.getAnimations ? document.getAnimations().slice() : [];
+  vhWalk(function(e){
+    if (e.shadowRoot && e.shadowRoot.getAnimations)
+      out = out.concat(e.shadowRoot.getAnimations());
+  });
+  return out;
+}
+function vhCanvases(){
+  var out = [];
+  vhWalk(function(e){ if (e.tagName === 'CANVAS') out.push(e); });
+  return out;
+}
+"""
+
+ANIMS = WALK + """(function(){
   if (!document.getAnimations) return {unsupported:true};
   var out = [];
-  document.getAnimations().forEach(function(a){
+  vhAnimations().forEach(function(a){
     if (a.playState !== 'running') return;
     var e = a.effect, t = e && e.getTiming ? e.getTiming() : {};
     var iters = t.iterations;
@@ -92,14 +124,18 @@ ANIMS = """(function(){
   return {list: out.slice(0, 8), n: out.length};
 })()"""
 
-SHOOT = """(function(){
-  var out = [], cs = document.querySelectorAll('canvas');
+SHOOT = WALK + """(function(){
+  var out = [], cs = vhCanvases();
   for (var i = 0; i < cs.length; i++) {
     var c = cs[i];
     if (!c.width || !c.height) { out.push(null); continue; }
     var r = c.getBoundingClientRect();
     if (!r.width || !r.height) { out.push(null); continue; }   /* not displayed */
-    try { out.push(c.id + '|' + c.toDataURL().length + '|' + c.toDataURL().slice(-96)); }
+    /* a canvas inside a shadow root usually has no id, so it is named by the
+       host that owns it — "0 canvas" is useless in a failure message */
+    var owner = c.getRootNode && c.getRootNode().host;
+    var tag = c.id || (owner ? owner.tagName.toLowerCase() + '[' + i + ']' : 'canvas[' + i + ']');
+    try { out.push(tag + '|' + c.toDataURL().length + '|' + c.toDataURL().slice(-96)); }
     catch (e) { out.push(null); }
   }
   return out;
