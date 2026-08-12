@@ -34,7 +34,11 @@ a{color:inherit;text-decoration:none}a:focus-visible,button:focus-visible{outlin
 .card{background:var(--surface);border:2px solid var(--ink);border-radius:14px;box-shadow:var(--shadow);overflow:hidden;transition:transform .12s,box-shadow .12s}
 .card:hover{transform:translateY(-1px);box-shadow:6px 6px 0 var(--ink)}.mono{font-family:var(--mono);font-size:11px;font-weight:800;letter-spacing:.03em;text-transform:uppercase}
 .mono-sm{font-family:var(--mono);font-size:10.5px;color:var(--ink-muted);text-transform:uppercase;letter-spacing:.06em}
-.grid{max-width:1120px;margin:0 auto;padding:12px var(--gutter);display:grid;grid-template-columns:1.32fr .68fr;gap:14px}
+/* align-items:start, or the shorter column's card is stretched to the height of
+   the taller one and ends in ~90px of empty white inside its own border, which
+   reads as content that failed to load rather than as a card that is simply
+   shorter. Cards size to what is in them. */
+.grid{max-width:1120px;margin:0 auto;padding:12px var(--gutter);display:grid;grid-template-columns:1.32fr .68fr;gap:14px;align-items:start}
 @media(max-width:900px){.grid{grid-template-columns:1fr}}
 .map-head{display:flex;flex-wrap:wrap;gap:8px;justify-content:space-between;align-items:center;padding:10px 12px;border-bottom:2px solid var(--ink);background:linear-gradient(90deg,var(--paper),#FFF6C8)}
 .map-box{position:relative;background:radial-gradient(1100px 600px at 18% -10%,#1A233A 0%,#121A2D 32%,var(--void) 72%);isolation:isolate}
@@ -60,7 +64,11 @@ canvas{display:block;width:100%;height:440px}
 .pop{display:grid;grid-template-columns:1fr;gap:6px;margin-top:10px}.pop button{display:flex;justify-content:space-between;align-items:center;text-align:left;padding:9px 11px;border-radius:12px;border:2px solid var(--ink);background:var(--surface);font-weight:800;font-size:12.6px;cursor:pointer;box-shadow:2.5px 2.5px 0 var(--ink);transition:.12s}.pop button:hover{transform:translateY(-1px);box-shadow:3.5px 3.5px 0 var(--ink)}.pop button.on{background:var(--yellow)}.sub{color:#5A5550;font-size:12.8px;line-height:1.5}
 .dots{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}.dot{width:12px;height:12px;border-radius:50%;border:1.5px solid var(--ink);background:#fff;box-shadow:1px 1px 0 var(--ink);display:inline-block}.dot.on{background:var(--yellow)}.dot.filled{background:var(--ink)}.dot.war{background:var(--orange)}
 .edge{margin-top:10px;padding:14px}.t4{display:grid;grid-template-columns:1fr 1fr;gap:10px}@media(max-width:700px){.t4{grid-template-columns:1fr}}
-.mini{border:2px solid var(--ink);border-radius:14px;padding:11px;background:var(--surface);box-shadow:3px 3px 0 var(--ink)}.btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;padding:8px 12px;border-radius:999px;border:2px solid var(--ink);background:#fff;font-weight:900;font-family:var(--mono);cursor:pointer;box-shadow:2.6px 2.6px 0 var(--ink);transition:.12s;text-transform:uppercase;font-size:11.5px}.btn:hover{transform:translateY(-1px);box-shadow:3.6px 3.6px 0 var(--ink)}.btn:active{transform:translate(1px,1px);box-shadow:1px 1px 0 var(--ink)}.btn-xl{min-height:44px;padding:10px 16px;font-size:13px;border-radius:12px}.btn-p{background:var(--ink);color:var(--paper)}.btn-y{background:var(--yellow);color:var(--ink)}
+.mini{border:2px solid var(--ink);border-radius:14px;padding:11px;background:var(--surface);box-shadow:3px 3px 0 var(--ink)}
+/* The lane pill and the lane's headline are siblings, both inline, so they ran
+   together with no gap at all: "OWNERFOR = 0.35 Draft…", "PLAYERCloser stays
+   green…", on all four cards. The headline gets its own line. */
+.mini>b{display:block;margin-top:7px;line-height:1.3}.btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;padding:8px 12px;border-radius:999px;border:2px solid var(--ink);background:#fff;font-weight:900;font-family:var(--mono);cursor:pointer;box-shadow:2.6px 2.6px 0 var(--ink);transition:.12s;text-transform:uppercase;font-size:11.5px}.btn:hover{transform:translateY(-1px);box-shadow:3.6px 3.6px 0 var(--ink)}.btn:active{transform:translate(1px,1px);box-shadow:1px 1px 0 var(--ink)}.btn-xl{min-height:44px;padding:10px 16px;font-size:13px;border-radius:12px}.btn-p{background:var(--ink);color:var(--paper)}.btn-y{background:var(--yellow);color:var(--ink)}
 footer{max-width:1120px;margin:0 auto;padding:10px var(--gutter);display:flex;flex-wrap:wrap;gap:8px;justify-content:space-between;color:#6b6760;font-size:11.5px;font-family:var(--mono)}
 .lod{display:inline-flex;gap:6px}.lod button{font-family:var(--mono);font-size:11px;padding:5px 9px;border-radius:999px;border:1.5px solid var(--ink);background:var(--surface);box-shadow:1.5px 1.5px 0 var(--ink);cursor:pointer;font-weight:800}.lod button.on{background:var(--yellow)}
 
@@ -161,7 +169,7 @@ footer{max-width:1120px;margin:0 auto;padding:10px var(--gutter);display:flex;fl
 <div class="dots" id="wwDots"></div><div class="mono-sm" id="wwLab" style="margin-top:4px">weekStreak 0/7</div>
 <a class="btn btn-y btn-xl" href="/play" style="margin-top:10px;width:100%">Play Past→Modern → /play</a>
 </div>
-<div class="card" style="padding:10px"><h2 class="vh-sr">Four ways in</h2><div class="mono">Owner / Player / Brand / DFS</div><div class="mono-sm" style="margin-top:4px">Four ways into the same map. Pick Your Edge below. All of it free.</div><div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap"><a class="btn btn-xl" href="/owner">Owner</a><a class="btn" href="/player">Player</a><a class="btn" href="/brand">Brand</a><a class="btn btn-y" href="/dfs">DFS</a></div></div>
+<div class="card" style="padding:10px"><h2 class="vh-sr">Four ways in</h2><div class="mono">Owner / Player / Brand / DFS</div><div class="mono-sm" style="margin-top:4px">Four ways into the same map. Pick Your Edge below. All of it free.</div><div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap"><a class="btn" href="/owner">Owner</a><a class="btn" href="/player">Player</a><a class="btn" href="/brand">Brand</a><a class="btn" href="/dfs">DFS</a></div></div>
 </div>
 </div>
 
@@ -171,10 +179,10 @@ footer{max-width:1120px;margin:0 auto;padding:10px var(--gutter);display:flex;fl
 <div class="mono" style="margin-top:8px;font-size:18px;text-transform:none;font-weight:900;letter-spacing:-.01em">Four ways to use the same 64-d map</div>
 <div class="mono-sm">64-d MTNN → Owner/Player/Brand/DFS lanes · zero-deps · inline</div>
 <div class="t4" style="margin-top:10px">
-<div class="mini"><span class="pill" style="background:var(--yellow)">🏆 Owner</span><b>FOR = 0.35 Draft + 0.35 Cap + 0.30 Foresight</b><div class="sub">Draft surplus z, cap W/$M, foresight maturation + vegas_alpha props_alpha champ_bonus + val growth z*0.10 ±2. Trophy wall $10.09B top.</div><a class="btn btn-y btn-xl" href="/owner" style="margin-top:8px;width:100%">/owner →</a><div class="mono-sm" style="margin-top:6px">W* = W+2.5·PO+0.12·realG</div></div>
+<div class="mini"><span class="pill" style="background:var(--yellow)">🏆 Owner</span><b>FOR = 0.35 Draft + 0.35 Cap + 0.30 Foresight</b><div class="sub">Draft surplus z, cap W/$M, foresight maturation + vegas_alpha props_alpha champ_bonus + val growth z*0.10 ±2. Trophy wall $10.09B top.</div><a class="btn btn-xl" href="/owner" style="margin-top:8px;width:100%">/owner →</a><div class="mono-sm" style="margin-top:6px">W* = W+2.5·PO+0.12·realG</div></div>
 <div class="mini"><span class="pill">👟 Player</span><b>Closer stays green, exploitable turns red</b><div class="sub">Shot-making tower. Stay-on-floor pid, fit finder. Closer green nightly, playoff minute security, injury flags.</div><a class="btn btn-xl" href="/player" style="margin-top:8px;width:100%">/player →</a></div>
 <div class="mini"><span class="pill pill-g">📈 Brand</span><b>Wins/$B • ValΔ% story → CMO deck</b><div class="sub">Wins into sponsor ROI. Who moves needle? Market lift vs cap, ValΔ% NYK16 SAS7.</div><a class="btn btn-xl" href="/brand" style="margin-top:8px;width:100%">📈 /brand →</a></div>
-<div class="mini"><span class="pill pill-y">🎯 DFS</span><b>Locks / fades • 20k slate MTNN props</b><div class="sub">OU 944 seasonal 33S trends. Daily: 2 locks 1 fade 1 pivot, minute-lock safety. Pack jitter salary.</div><a class="btn btn-y btn-xl" href="/dfs" style="margin-top:8px;width:100%">🎯 /dfs →</a></div>
+<div class="mini"><span class="pill pill-y">🎯 DFS</span><b>Locks / fades • 20k slate MTNN props</b><div class="sub">OU 944 seasonal 33S trends. Daily: 2 locks 1 fade 1 pivot, minute-lock safety. Pack jitter salary.</div><a class="btn btn-xl" href="/dfs" style="margin-top:8px;width:100%">🎯 /dfs →</a></div>
 </div>
 </div>
 </div>
