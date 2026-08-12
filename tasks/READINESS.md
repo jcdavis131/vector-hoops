@@ -1,18 +1,23 @@
 # frontend-live — readiness
 
-**This is live.** Everything below is measured at **`945bcdb8`**, which is also `origin/master`,
+**This is live.** Everything below is measured at **`7ff3d8ba`**, which is also `origin/master`,
 and pushing `master` is what deploys hoops.dumbmodel.com. An earlier version of this header said
 "Nothing here is live" and "`master` is untouched" while anchored at `0e95b151`; both stopped being
 true the first time this branch was pushed to `master`, and a readiness document that misstates
 whether it has shipped is the one sentence in it that has to be right. The sha is the anchor because
 the commit that records a count is never inside the count it records.
 
-| | |
-|---|---|
-| commits this session | 312 on this branch's own line at `945bcdb8`, on `master` and deployed (a plain `rev-list` says 348 — it walks both sides of the merge and counts Scout's 36) |
-| paths changed, across the merge | 2,712 |
-| insertions / deletions | +229,440 / −310,696 |
-| working notes | `tasks/frontend-live-buildout-2026-08-10.md`, 6,839 lines |
+Counts are against baseline **`adb33291`**, named here because the previous version of this table
+quoted them against nothing — which makes a number no one can re-derive, including whoever wrote it.
+Re-run any row with the range `adb33291..7ff3d8ba`:
+
+| | | |
+|---|---|---|
+| commits this session | 314 on this branch's own line | `git rev-list --first-parent --count adb33291..7ff3d8ba` |
+| commits including merged-in work | 362 — walks both sides of the merge and counts Scout's | `git rev-list --count adb33291..7ff3d8ba` |
+| paths changed, across the merge | 2,713 | `git diff --name-only adb33291..7ff3d8ba \| wc -l` |
+| insertions / deletions | +229,831 / −310,710 | `git diff --shortstat adb33291..7ff3d8ba` |
+| working notes | `tasks/frontend-live-buildout-2026-08-10.md`, 6,839 lines | |
 
 **Where to look at it.** The branch is pushed and Vercel builds every commit on it:
 
@@ -21,11 +26,18 @@ vector-hoops-git-frontend-live-cams-projects-c5c4c5f6.vercel.app
 ```
 
 That alias always serves the newest build on the branch, so it does not go stale as this file does
-— which is why no specific deployment id is quoted here. Every
-`frontend-live` deployment carries `target: null`; only `master` commits carry
-`target: "production"`, so none of this has touched the live site. Previews sit behind
-`ssoProtection: all_except_custom_domains`, so that URL works for you and cannot be fetched
-from here — which is why everything below was verified locally instead.
+— which is why no specific deployment id is quoted here. Previews sit behind
+`ssoProtection: all_except_custom_domains`, so that URL works for you and cannot be fetched from
+here, which is why everything below was verified against a local server and a headless browser.
+
+**The production site is the other half of that, and it is this branch.** A previous version of this
+paragraph said every `frontend-live` deployment carries `target: null` and "none of this has touched
+the live site". That was true of the *preview* builds and false about the work, because this branch
+is pushed to `master` as each piece lands, and `master` is what carries `target: "production"`. The
+sentence outlived the workflow it described by several hundred commits. Production is verified by
+fetching it — `curl -s https://hoops.dumbmodel.com/assets/map-camera.js | wc -c` against the local
+byte count, since `?v=` is a cache-buster the server ignores and a 200 on it proves only that the
+path exists.
 
 Deletions outweigh insertions because two duplications came out: an 84.8 MB orphan asset tree
 (187 files, zero references) and a byte-identical 913,467-byte JSON copy.
@@ -35,7 +47,7 @@ Deletions outweigh insertions because two duplications came out: an 84.8 MB orph
 Run against both roots. All exit 0.
 
 ```
-python scripts/check_frontend.py            # 13 checks, 22 pages, 93 scripts parsed
+python scripts/check_frontend.py            # 20 checks, 18 pages, 93 scripts parsed
 # build_*.py --check now runs inside check_frontend's `derived` check, all seven of them
 python scripts/check_a11y.py                # 11 WCAG A/AA criteria
 python scripts/check_contrast.py            # WCAG 1.4.3
@@ -47,6 +59,8 @@ python scripts/smoke_play.py                # plays a full round
 python scripts/smoke_index.py               # presses the landing page's map control
 python scripts/smoke_cards.py               # searches before the 539 KB index lands
 python scripts/smoke_players.py             # filters the Explorer without re-fetching
+python scripts/smoke_framing.py             # every map's cloud centred on its canvas
+python scripts/smoke_framing.py --mobile    # and at 390x844, where the aspect is inverted
 node scripts/smoke_owner_table.mjs          # + arch_map, retrieval_map, name_fix, early_errors
 ```
 
@@ -704,10 +718,12 @@ never reaches the DOM, and settling it needs the asset regenerated, which is for
 
 ## Not covered
 
-- Nothing is deployed to production. The branch has never been merged; its preview builds (see the
-  URL above) are all `target: null` and only `master` carries `target: "production"`. The preview is
-  SSO-gated, so it was never something this session could open — every claim below was verified
-  against a local server and a headless browser instead.
+- The **preview** builds are not production: they are all `target: null`, only `master` carries
+  `target: "production"`, and the preview is SSO-gated so it was never something this session could
+  open. Every claim here was verified against a local server and a headless browser instead. What
+  this bullet used to say — "nothing is deployed to production, the branch has never been merged" —
+  is the same stale claim the header carried, in the section named for things that are not covered.
+  Production *is* covered: this branch is pushed to `master` as each piece lands.
 - Fourteen findings were false alarms caught before acting. A closed `<details>` still reports a
   layout box in Chrome; IntersectionObserver sections look broken if you scroll past them;
   `captureBeyondViewport` screenshots do not re-rasterise canvas. Twice a screenshot sent me after a
