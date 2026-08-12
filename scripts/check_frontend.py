@@ -1161,8 +1161,45 @@ def check_nav(fail) -> None:
     print(f"  {checked} page(s) can reach the rest of the site from their own navigation")
 
 
+RE_HEAD = re.compile(r"<head\b[^>]*>(.*?)</head>", re.S | re.I)
+RE_HEAD_ELEMS = re.compile(r"<(script|style|title|noscript)\b[^>]*>.*?</\1>", re.S | re.I)
+
+
+def check_markup(fail) -> None:
+    """Nothing but markup in <head>.
+
+    player-animations.html lost its opening <style> tag: 2,745 characters of CSS
+    sat in the head as text, and the browser painted every byte of it into the
+    page. A visitor got a wall of `:root{ --paper:#FFFEF7; ... }` where the
+    content should be, on a live page, and the page was 7,063px tall because of
+    it.
+
+    Nothing here could see that. `syntax` parses <script> and not <style>;
+    `assets` resolves paths; the a11y and contrast checkers read <style> regions
+    and so read straight past CSS that was not in one. Every gate looked at a
+    property that was still correct.
+
+    The rule is the simplest one that catches it: strip comments, the elements
+    whose contents are legitimately not markup, and then every tag — what is left
+    of a <head> must be whitespace.
+    """
+    checked = 0
+    for page in pages():
+        m = RE_HEAD.search(page.read_text(encoding="utf-8", errors="replace"))
+        if not m:
+            continue
+        checked += 1
+        head = RE_HEAD_ELEMS.sub(" ", RE_HTML_COMMENT.sub(" ", m.group(1)))
+        text = re.sub(r"<[^>]*>", " ", head).strip()
+        if text:
+            fail(f"{label(page)} has {len(text)} characters of text loose in <head>, "
+                 f"which the browser renders into the page: {text[:70]!r}")
+    print(f"  {checked} page(s) carry nothing but markup in <head>")
+
+
 CHECKS = {
     "syntax": check_syntax,
+    "markup": check_markup,
     "nav": check_nav,
     "external": check_external,
     "mirror": check_mirror,

@@ -7,18 +7,18 @@
 <meta name="theme-color" content="#1A150F">
 <link rel="manifest" href="/manifest.json">
 <title>Player Animations — Vector Hoops Posecode Lab</title>
-<link rel="stylesheet" href="assets/shell.css?v=2c546973"/>
-<link rel="stylesheet" href="assets/responsive.css?v=76008eae"/>
+<link rel="stylesheet" href="assets/shell.css?v=785384a9"/>
+<link rel="stylesheet" href="assets/responsive.css?v=1c60b241"/>
 <link rel="stylesheet" href="assets/final-qa.css?v=f90cd6cc"/>
 <link rel="stylesheet" href="assets/unified.css?v=63e1a36d"/>
 <link rel="stylesheet" href="assets/motion.css?v=e42ecf0a"/>
-
+<style>
 :root{
   --paper:#FFFEF7; --ink:#1A150F; --ink-soft:#3A332A; --muted:#6B6256;
   --okabe-blue:#0072B2; --okabe-verm:#D55E00; --okabe-yellow:#F0E442; --okabe-sky:#56B4E9;
 }
 html,body{margin:0; background:var(--paper); color:var(--ink); font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif; overflow-x:hidden;overflow-wrap:break-word}
-.topbar{position:sticky; top:0; z-index:20; background:var(--paper); border-bottom:2px solid var(--ink); display:flex; align-items:center; justify-content:space-between; padding:10px 14px; padding-top:calc(10px + env(safe-area-inset-bottom))
+.topbar{position:sticky; top:0; z-index:20; background:var(--paper); border-bottom:2px solid var(--ink); display:flex; align-items:center; justify-content:space-between; padding:10px 14px; padding-top:calc(10px + env(safe-area-inset-bottom))}
 .vh-skip{position:absolute;left:-9999px;top:0;z-index:99;background:var(--paper,#fafaf8);border:2.2px solid var(--ink,#111);padding:10px 14px;font-family:ui-monospace,Menlo,monospace;font-weight:800;text-decoration:none;border-radius:0 0 10px 0}
 .vh-skip:focus{left:0}
 
@@ -99,7 +99,7 @@ posecode-player:focus{outline:3px solid #0072B2;outline-offset:3px}
 
 <nav class="site-nav" data-active="/player-animations" aria-label="Vector Hoops site"><a href="/">Map</a><a href="/play">Play</a><a href="/trends">Trends</a><a href="/model">Model</a><a href="/players">Explorer</a><a href="/player-cards">Players</a><a href="/teams">Teams</a><a href="/dictionary">Dictionary</a></nav>
 <header class="topbar">
-  <a class="brand" href="/">🏀 Vector Hoops <span style="font-weight:800; color:var(--okabe-verm);">Posecode Lab</span></a>
+  <a class="brand" href="/">🏀 Vector Hoops <span style="font-weight:800; color:var(--orange-ink,#C84714);">Posecode Lab</span></a>
   <span class="badge">8 NBA moves • 60fps • MIT</span>
 </header>
 <main class="main" id="main" tabindex="-1">
@@ -117,8 +117,6 @@ posecode-player:focus{outline:3px solid #0072B2;outline-offset:3px}
   <section class="grid" id="grid">
     <!-- Cards injected by JS for clean src attribution -->
   </section>
-
-  <</p>
 </main>
 
 <script type="module">
