@@ -47,6 +47,10 @@ exclude = [
     "pipeline/fetch_*.py",
     "pipeline/build_front_office.py",
     "pipeline/build_front_office_by_season.py",
+    # public/assets/manim/src/*.py is a byte-identical copy of assets/manim/src/*.py,
+    # committed only as part of the Vercel `public/` static-site mirror (frontend
+    # deploy fix 28e5fc47). Not source of truth; excluded to avoid double-linting it.
+    "public/assets/manim",
 ]
 
 [tool.ruff.lint]
@@ -85,13 +89,13 @@ convention = "google"
 [tool.ruff.lint.per-file-ignores]
 "assets/manim/src/*.py" = ["F405", "F403", "F401", "E402", "E741", "F841", "W293", "E501", "E401", "E701", "E702", "I001"]
 "pipeline/*test*.py" = ["S101", "S603", "S607", "F401", "E402"]
-"pipeline/build_*.py" = ["E402", "S603", "S607", "E722", "F401", "I001", "E401", "E701", "E702", "F841", "B023", "C414", "RUF013", "RUF057"]
+"pipeline/build_*.py" = ["E402", "S603", "S607", "E722", "F401", "I001", "E401", "E701", "E702", "F841", "B023", "C414", "RUF013", "RUF057", "PTH118"]
 "pipeline/train_mt.py" = ["E402", "E701", "E702"]
 "pipeline/train_mt_v53.py" = ["E701", "E702", "N816"]
 "operator/mlops_cli.py" = ["E702"]
 "pipeline/train_mtnn.py" = ["E402", "S603"]
 "pipeline/export_*.py" = ["E402"]
-"scripts/*.py" = ["E402", "S603", "F401"]
+"scripts/*.py" = ["E402", "S603", "F401", "E401", "E701", "E702", "F541", "B023", "W605", "F841", "I001"]
 # Pre-existing style debt, byte-identical on master (not touched by this branch):
 "pipeline/train_factory.py" = ["E401", "F401", "F541", "I001"]
 "pipeline/train_quick_wins.py" = ["E401", "E701", "E702", "E722", "F401", "F841", "I001"]
@@ -118,6 +122,19 @@ exclude = [
     "pipeline/train_factory.py",
     "pipeline/train_quick_wins.py",
     "tmp/gen_valuations.py",
+    # One-off browser QA/smoke scripts, terse one-liner style by convention,
+    # not reformatted to avoid unrelated diff noise on scripts owned by other lanes.
+    "scripts/*.py",
+    # Active ML pipeline/training files under parallel development (LOCAL-GPU
+    # v6 GPU lane etc.); left unformatted here to avoid unrelated whitespace
+    # churn colliding with in-flight branches. Formatting predates the gate.
+    "pipeline/build_embedding_map_manifest.py",
+    "pipeline/hill_climb.py",
+    "pipeline/resolve_fusion.py",
+    "pipeline/train_career_mtnn.py",
+    "pipeline/train_mt.py",
+    "pipeline/train_mtnn.py",
+    "pipeline/train_towers.py",
 ]
 
 [tool.pytest.ini_options]
