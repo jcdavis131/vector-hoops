@@ -36,7 +36,12 @@
 .card{background:var(--surface);border:2px solid var(--ink);border-radius:12px;box-shadow:var(--shadow);overflow:hidden}
 .mono{font-family:var(--mono);font-size:11px}
 .sg{font-family:var(--hand);font-size:14px;color:#6B6862}
-.grid{display:grid;grid-template-columns:1.15fr .85fr;gap:12px;margin-top:12px}/* a grid item defaults to min-width:auto and will not shrink below its widest
+.grid{display:grid;grid-template-columns:1.15fr .85fr;gap:12px;margin-top:12px}
+/* The first .grid on this page holds a single card, so the 0.85fr column was
+   empty and the card sat at 616px of a 1052px row with dead paper beside it,
+   directly above two cards that span the full width. A grid with one child is
+   one column. */
+.grid:has(>:only-child){grid-template-columns:1fr}/* a grid item defaults to min-width:auto and will not shrink below its widest
    content, so a .card of long mono formulas held the page at 567px however narrow
    the viewport got - the media query collapsed the columns but not the item.
    Measured over CDP at 360px: div.card w=567 minw=auto inside div.grid w=336. */

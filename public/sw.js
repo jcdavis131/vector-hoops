@@ -1,4 +1,4 @@
-/* Network-first, with the pages you have visited kept for when the link dies — v7.8
+/* Network-first, with the pages you have visited kept for when the link dies — v7.10
 
    v7.1 never installed. Its SHELL was ['/','/index.html','/offline.html',
    '/manifest.json'] and cache.addAll() is atomic: one bad entry rejects the
@@ -64,8 +64,15 @@
 
    Three bumps went unrecorded here and the line above still said v7.4 while the
    constant read v7-8 — a version history that stops being written is worse than
-   none, because it reads as complete. */
-const C = 'hoops-v7-9';
+   none, because it reads as complete.
+
+   v7.9: keyboard-a11y.js now puts the focus ring into open shadow roots, so
+   its token moved on 17 pages.
+
+   v7.10: index.html changed — four hub cards had their headline glued to
+   their label, three button treatments across four equal lanes, and a card
+   stretched to 90px of empty white. '/' is in SHELL. */
+const C = 'hoops-v7-10';
 const SHELL = ['/', '/offline', '/manifest.json'];
 const FALLBACK = ['/offline', '/'];
 const DATA = /\.(json|f32|bin)$/;
