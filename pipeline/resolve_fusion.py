@@ -60,8 +60,13 @@ def main() -> int:
             and f"{WIDER}|s{s}|e{args.epochs}" in cache]
     print(f"seeds {seeds}, {len(have)} already cached for both: {have}", flush=True)
 
-    hc.evaluate(CONTROL, arch_c, [], seeds, args.epochs, cache)
-    hc.evaluate(WIDER, arch_w, [], seeds, args.epochs, cache)
+    # Seed outer, configuration inner. Running every seed of the control first
+    # means the first *paired* comparison costs five trials; this way each seed
+    # completes a pair, so two trials already say something and a run that is
+    # interrupted leaves whole pairs rather than a lopsided cache.
+    for s in seeds:
+        hc.evaluate(CONTROL, arch_c, [], [s], args.epochs, cache)
+        hc.evaluate(WIDER, arch_w, [], [s], args.epochs, cache)
 
     print("\n  seed   cqs 256 -> 384        purity 256 -> 384         recall 256 -> 384")
     rows = []
