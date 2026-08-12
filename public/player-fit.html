@@ -152,7 +152,24 @@ span.proj{color:var(--orange-ink)}
   }
 
   function compare(){
-    ensurePool().then(runCompare, function(){});
+    /* Say so, where the answer will appear. Deferring the pool to first touch
+       means a press can land before the file has: measured on a 400 kbps link,
+       pressing Compare left "Pick two seasons and press Compare." on screen for
+       8.5 seconds while a grey "loading the pool…" sat beside the button, which
+       is not where anyone is looking after pressing it. /index's "Draw all"
+       button already does this — a busy state and a line that says what is
+       happening. No count in the message: the number of seasons comes out of the
+       file and the file has not arrived yet. */
+    if(!byKey){
+      OUT.textContent='Loading the season pool — the comparison runs the moment it lands.';
+      GO.setAttribute('aria-busy','true');
+    }
+    ensurePool().then(function(){
+      GO.removeAttribute('aria-busy');
+      runCompare();
+    }, function(){
+      GO.removeAttribute('aria-busy');   /* ensurePool has written the failure */
+    });
   }
   function runCompare(){
     if(!byKey){ return; }
