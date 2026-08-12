@@ -29,7 +29,7 @@ td{padding:7px 6px;border-bottom:1px dashed #efe9de}
 .shap-bar{height:9px;background:var(--accent);border-radius:6px}
 .small{font:12px ui-sans-system,sans-serif;color:var(--muted)}
 .mono{font-family:ui-monospace, SFMono-Regular, monospace}
-.provenance{font:11px ui-sans-system,sans-serif;color:#7a746a;background:#faf6ef;border:1px dashed var(--line);padding:10px 12px;border-radius:12px;margin-top:12px;white-space:pre-wrap;word-break:break-word}
+.provenance{font:11px ui-sans-system,sans-serif;color:#6b665d;background:#faf6ef;border:1px dashed var(--line);padding:10px 12px;border-radius:12px;margin-top:12px;white-space:pre-wrap;word-break:break-word}
 .tabbar{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0 8px}
 .tabbar a{border:1px solid var(--line);background:#fff;border-radius:999px;padding:7px 12px;font:13px ui-sans-system,sans-serif}
 </style>
@@ -48,6 +48,7 @@ td{padding:7px 6px;border-bottom:1px dashed #efe9de}
 <!-- build_social_meta.py: end -->
 </head>
 <body>
+<nav aria-label="Site" style="display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:10px 16px;border-bottom:2px solid #111;background:#fff;font:800 11.5px ui-monospace,Menlo,monospace;text-transform:uppercase;letter-spacing:.05em"><a href="/" style="color:#111;text-decoration:none">◐ Dumb<span style="color:#C84714">model</span></a><span style="flex:1"></span><a href="/players" style="color:#52514e;text-decoration:none">Explorer</a><a href="/trends" style="color:#52514e;text-decoration:none">Trends</a><a href="/model" style="color:#52514e;text-decoration:none">Model</a><a href="/teams" style="color:#52514e;text-decoration:none">Teams</a><a href="/owner" style="color:#52514e;text-decoration:none">Owner</a><a href="/play" style="color:#111;text-decoration:none;background:#f0e442;border:2px solid #111;border-radius:8px;padding:6px 12px">Play today's →</a></nav>
 <header>
   <h1>Front Office Lab <span style="font-family: ui-sans-system; font-weight:400; font-size:16px">· hoops.dumbmodel.com/lab</span></h1>
   <div class="sub">Draft expectation · Cap efficiency vs wins · Foresight surplus · 2025-26 payroll projection — all glass-box, no vanity metric.</div>
@@ -59,6 +60,7 @@ td{padding:7px 6px;border-bottom:1px dashed #efe9de}
   </div>
   <div id="built" class="small" style="margin-top:8px">built: loading…</div>
 </header>
+<main id="main" tabindex="-1">
 
 <div class="wrap">
 <div class="tabbar">
@@ -77,7 +79,7 @@ td{padding:7px 6px;border-bottom:1px dashed #efe9de}
   <div class="kv"><span id="medianTag"></span><span id="teamsCount"></span><span>season_focus 2025-26</span></div>
   <div class="grid grid2">
     <div>
-      <table id="payrollTbl"><thead><tr><th>#</th><th>Team</th><th>$M</th><th>% Cap</th><th>Flex</th></tr></thead><tbody></tbody></table>
+      <table id="payrollTbl"><thead><tr><th scope="col">#</th><th scope="col">Team</th><th scope="col">$M</th><th scope="col">% Cap</th><th scope="col">Flex</th></tr></thead><tbody></tbody></table>
       <div class="small" style="margin-top:8px">Flex = off-the-cuff: &lt;95% cap = full MLE · 95-110% = taxpayer MLE · &gt;110% = minimal. Real flex grade from cap_efficiency model r 0.82 with volatility proxy.</div>
     </div>
     <div>
@@ -98,10 +100,10 @@ td{padding:7px 6px;border-bottom:1px dashed #efe9de}
   <div class="grid grid2">
     <div>
       <div class="small" style="margin-top:8px"><strong>5-fold CV — LinearRegression (draft)</strong> · glass-box</div>
-      <table id="draftTbl"><thead><tr><th>Fold</th><th>MAE</th><th>RMSE</th><th>R²</th></tr></thead><tbody></tbody></table>
+      <table id="draftTbl"><thead><tr><th scope="col">Fold</th><th scope="col">MAE</th><th scope="col">RMSE</th><th scope="col">R²</th></tr></thead><tbody></tbody></table>
       <div class="small" id="draftOverall" style="margin-top:6px"></div>
       <div style="margin-top:10px"><strong class="small">Other models (model_zoo_eval)</strong></div>
-      <table id="draftZooTbl"><thead><tr><th>Model</th><th>avg MAE</th><th>avg RMSE</th><th>avg R²</th></tr></thead><tbody></tbody></table>
+      <table id="draftZooTbl"><thead><tr><th scope="col">Model</th><th scope="col">avg MAE</th><th scope="col">avg RMSE</th><th scope="col">avg R²</th></tr></thead><tbody></tbody></table>
       <div class="small" style="margin-top:8px">Expected minutes by pick (trimmed-mean 50% middle, 1996-2022, qual-adj): <span id="expPicks" class="mono"></span></div>
     </div>
     <div>
@@ -122,10 +124,10 @@ td{padding:7px 6px;border-bottom:1px dashed #efe9de}
   <div class="grid grid2">
     <div>
       <div class="small"><strong>5-fold CV wins~payroll_m</strong></div>
-      <table id="capPayTbl"><thead><tr><th>Fold</th><th>MAE</th><th>RMSE</th><th>R²</th></tr></thead><tbody></tbody></table>
+      <table id="capPayTbl"><thead><tr><th scope="col">Fold</th><th scope="col">MAE</th><th scope="col">RMSE</th><th scope="col">R²</th></tr></thead><tbody></tbody></table>
       <div class="small" id="capPayOverall"></div>
       <div class="small" style="margin-top:10px"><strong>wins~cap_pct</strong></div>
-      <table id="capPctTbl"><thead><tr><th>Fold</th><th>MAE</th><th>RMSE</th><th>R²</th></tr></thead><tbody></tbody></table>
+      <table id="capPctTbl"><thead><tr><th scope="col">Fold</th><th scope="col">MAE</th><th scope="col">RMSE</th><th scope="col">R²</th></tr></thead><tbody></tbody></table>
       <div class="small" id="capPctOverall"></div>
       <div class="small" style="margin-top:10px">Coeffs payroll linear: <span class="mono" id="capCoeffs"></span> · Coeffs cap_pct linear: <span class="mono" id="capPctCoeffs"></span></div>
     </div>
@@ -145,10 +147,10 @@ td{padding:7px 6px;border-bottom:1px dashed #efe9de}
   <div class="grid grid2">
     <div>
       <div class="small"><strong>5-fold CV tm → exp_sal (linear)</strong></div>
-      <table id="foreTmTbl"><thead><tr><th>Fold</th><th>MAE ($)</th><th>RMSE</th><th>R²</th></tr></thead><tbody></tbody></table>
+      <table id="foreTmTbl"><thead><tr><th scope="col">Fold</th><th scope="col">MAE ($)</th><th scope="col">RMSE</th><th scope="col">R²</th></tr></thead><tbody></tbody></table>
       <div class="small" id="foreTmOverall"></div>
       <div class="small" style="margin-top:10px"><strong>tm,mpg,gp → exp_sal</strong></div>
-      <table id="foreFullTbl"><thead><tr><th>Fold</th><th>MAE ($)</th><th>RMSE</th><th>R²</th></tr></thead><tbody></tbody></table>
+      <table id="foreFullTbl"><thead><tr><th scope="col">Fold</th><th scope="col">MAE ($)</th><th scope="col">RMSE</th><th scope="col">R²</th></tr></thead><tbody></tbody></table>
       <div class="small" id="foreFullOverall"></div>
     </div>
     <div>
@@ -163,6 +165,7 @@ td{padding:7px 6px;border-bottom:1px dashed #efe9de}
 <div class="provenance" id="globalProv" style="margin-top:16px"></div>
 
 </div>
+</main>
 <script>
 async function loadJson(p){ try{let r=await fetch(p); if(!r.ok) throw 0; return await r.json()}catch(e){return null} }
 function bar(v,max){ let w=Math.max(2, Math.min(100, Math.round(100*v/max))); return `<div class="shap-bar" style="width:${w}%"></div><span class="mono small">${v}</span>` }
