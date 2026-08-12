@@ -30,7 +30,9 @@ Read-only. Never writes. Exit 0 clean, 1 on any failure.
 from __future__ import annotations
 
 import argparse
+import functools
 import json
+import math
 import re
 import shutil
 import importlib.util
@@ -987,9 +989,62 @@ def check_external(fail) -> None:
 # trajectories.json indexes, and /player-cards' 2,293 is how many player cards
 # are committed. Checking them by recomputation is the only way they stay true
 # the day a generator's output changes.
+@functools.lru_cache(maxsize=1)
+def _map_vs_score() -> tuple[int, int]:
+    """How often the dot nearest the crosshair is the answer the game scores best.
+
+    /play draws the pool at its `proj` coordinates — two of the three components
+    in assets/vectors.json — and scores a guess on a cosine over all fourteen
+    features. So "click the closest dot" and "give the best answer" are two
+    different moves, and the footer under the map says by how much. This
+    recomputes it, because a figure describing a data file has to be checked
+    against that file.
+
+    Counts, not a median. The median rank here is exactly 38.5 — the two middle
+    ranks of 968 are 38 and 39 — so any integer median is a rounding, and two
+    implementations of it duly disagreed (numpy 38, plain Python 39) while
+    agreeing on every other figure. A count of exact hits cannot round.
+
+    ~1.2s, no numpy: the gate must not grow a dependency to check a sentence.
+    """
+    d = json.loads((ROOT / "assets/game_vectors.json").read_text(encoding="utf-8"))
+    past, mod = d["past"], d["modern"]
+
+    def unit(v):
+        n = math.sqrt(sum(x * x for x in v)) or 1.0
+        return [x / n for x in v]
+
+    mu = [unit(m["v"]) for m in mod]
+    mxy = [(m["x"], m["y"]) for m in mod]
+    top1 = top10 = 0
+    for p in past:
+        pu, px, py = unit(p["v"]), p["x"], p["y"]
+        j = min(range(len(mod)),
+                key=lambda k: (mxy[k][0] - px) ** 2 + (mxy[k][1] - py) ** 2)
+        near = sum(a * b for a, b in zip(pu, mu[j]))
+        rank = 1 + sum(1 for v in mu if sum(a * b for a, b in zip(pu, v)) > near)
+        top1 += rank == 1
+        top10 += rank <= 10
+    return top1, top10
+
+
 COUNTS = (
     ("trends.html", "12,038", "public/assets/season_map.json",
      "sum of counts", lambda d: sum(d["counts"].values())),
+    # The footer under /play's map tells a visitor how far to trust it. Nothing
+    # on the page said the map was a projection at all before — /trends and
+    # /model both state that caveat about their own figures, and the game, which
+    # is the page that invites you to click the dots, was the one that did not.
+    ("play.html", "148", None,
+     "past seasons whose nearest dot on the map is the answer the game scores highest",
+     lambda _: _map_vs_score()[0]),
+    ("play.html", "289", None,
+     "past seasons whose nearest dot on the map is in the scored top ten",
+     lambda _: _map_vs_score()[1]),
+    ("play.html", "968", "assets/game_vectors.json",
+     "past seasons in the game pool", lambda d: d["counts"]["past"]),
+    ("play.html", "1,305", "assets/game_vectors.json",
+     "modern seasons in the game pool", lambda d: d["counts"]["modern"]),
     ("trends.html", "1,308", "public/assets/trajectories.json",
      "playerIndex entries", lambda d: len(d["playerIndex"])),
     # "over 10,104 eligible pairs", named to assets/eval_scoreboard.json on the
