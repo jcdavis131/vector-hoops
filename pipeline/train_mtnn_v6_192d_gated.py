@@ -452,7 +452,6 @@ def main():
             return [to_py(x) for x in o]
         return o
     glass=to_py(glass)
-    eval_fwd=to_py(eval_fwd)
     cv=to_py(cv)
     print(f"Glass-box → {out_glass} top10 {top10[:2]}")
     # also copy to assets/data for frontend
