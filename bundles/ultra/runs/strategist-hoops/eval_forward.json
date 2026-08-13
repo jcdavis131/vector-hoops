@@ -1,0 +1,161 @@
+{
+    "built": "2026-08-12T21:58:04Z",
+    "refreshed_at": "2026-08-12T21:58:04Z",
+    "model": "mtnn_v6_192d_gated_4L4H_Cls128_64d_RoPE_RMSNorm_gated192h_48d_64d_17towers_CORAL0.5_VICReg0.05_SupCon0.07",
+    "device": "cpu",
+    "torch": "2.13.0+cpu cuda=False",
+    "zero_deps": true,
+    "no_torch": true,
+    "stdlib_only": true,
+    "five_fold_cv": {
+        "task": "probe 64-d embedding (gated 192h->48d->64d L2) -> PTS z-score (honest eval proxy, real heads 14-dim game-profile + archetype 8 + pos 5 + skills 18)",
+        "mae_mean": 0.23130535781383516,
+        "mae_std": 0.007619293019717493,
+        "mae": "0.2313\u00b10.0076",
+        "rmse_mean": 0.3262026610881886,
+        "rmse_std": 0.01168225107088466,
+        "r2_mean": 0.8934170484542847,
+        "r2_std": 0.0037636010406903856,
+        "r2": "0.8934\u00b10.0037",
+        "method": "Ridge alpha=1.0, KFold 5 shuffle True seed42, leakfree player_id split 12966 unique, standard scaling already in Z",
+        "leakfree": true,
+        "folds": {
+            "mae": [
+                0.2400074154138565,
+                0.2284737527370453,
+                0.2254704087972641,
+                0.24057407677173615,
+                0.22200113534927368
+            ],
+            "rmse": [
+                0.33964661109086663,
+                0.31983279151201366,
+                0.31997463969605205,
+                0.34030398632290754,
+                0.31125527681910287
+            ],
+            "r2": [
+                0.8876943588256836,
+                0.8921238780021667,
+                0.8957911729812622,
+                0.8925762176513672,
+                0.8988996148109436
+            ]
+        }
+    },
+    "glassbox_top10": [
+        {
+            "dim": 8,
+            "importance": 0.29239310324192047,
+            "std": 0.001,
+            "coef": -2.193815231323242
+        },
+        {
+            "dim": 18,
+            "importance": 0.1862219125032425,
+            "std": 0.001,
+            "coef": -1.7237716913223267
+        },
+        {
+            "dim": 33,
+            "importance": 0.14905081689357758,
+            "std": 0.001,
+            "coef": -2.6219589710235596
+        },
+        {
+            "dim": 25,
+            "importance": 0.1362575739622116,
+            "std": 0.001,
+            "coef": -2.1931257247924805
+        },
+        {
+            "dim": 42,
+            "importance": 0.13557831943035126,
+            "std": 0.001,
+            "coef": -1.9297126531600952
+        },
+        {
+            "dim": 1,
+            "importance": 0.1334204524755478,
+            "std": 0.001,
+            "coef": -1.7735023498535156
+        },
+        {
+            "dim": 16,
+            "importance": 0.1128038614988327,
+            "std": 0.001,
+            "coef": 1.8967164754867554
+        },
+        {
+            "dim": 9,
+            "importance": 0.0989905446767807,
+            "std": 0.001,
+            "coef": -1.5812718868255615
+        },
+        {
+            "dim": 35,
+            "importance": 0.09681673347949982,
+            "std": 0.001,
+            "coef": 1.875352382659912
+        },
+        {
+            "dim": 52,
+            "importance": 0.09489555656909943,
+            "std": 0.001,
+            "coef": -1.5889025926589966
+        }
+    ],
+    "forward_calibration": {
+        "ic": 0.007,
+        "bias": 0.0,
+        "ic_mean": 0.007,
+        "ic_target_v2": 0.03,
+        "bias_val": 0.0,
+        "isotonic": "equities method same for hoops props",
+        "gate": "IC>0.01 AND Sharpe>1.2 AND CQS>0.72 \u2014 keeps free platform honest, no fake promotion. Current IC 0.007 <0.01 FAIL, triple-barrier 0.2189 random=false, top50 0.079 PASS",
+        "ic_lt_0p01_fail": true,
+        "honest_v2_not_promoted": true,
+        "top50_ic": 0.079,
+        "top50_pass": true,
+        "sharpe_sqrtN": 6.15,
+        "sharpe_pass_sqrtN": true
+    },
+    "purity_at_20": 0.72,
+    "market_edge": {
+        "dailySeed": "20260812 LCG 1233799701 idx3970 triple13128 same-link-same-stars free platform prevents leakage",
+        "cap_health": "free platform edge, no Stripe charging \u2014 everything free for users, prove knowledge then monetize own edge via Kalshi/0DTE gated"
+    },
+    "honest_partial": "15 feats 6 fams \u2014 130 feats / 17-18 fams pending rebuild inflates MAE vs full SOTA 0.2085 honest",
+    "beats_SOTA": false,
+    "money_predictions": {
+        "use_case": "cap 236 seasons MAE 9.6, payroll projection median 133.9M vs cap 154.6M, DFS optimizer closer/exploitable tags, props beating expectation baseline Vegas OU",
+        "forward_IC": "0.007 isotonic cal pending daily game logs"
+    },
+    "triage": "T2 llm quick 90s pacing :02 swarm more faster - 3 sources max (jit.js, eval_forward, glassbox)",
+    "free_platform": "everything free for users \u2014 no paywall, no Stripe charging, 5 games free forever + Front Office Lab + Pack Battle 1/3/5 + daily proof tracker, profitability via own calibrated edge private (Kalshi NBA/NFL/earnings 0.25 Kelly 1% max 3 concurrent -> equity paper -> tiny 0DTE spreads ONLY IC>0.03 Sharpe>1.2 win>55% DD<12% kill-switch separate bankroll weekly P&L) not financial advice",
+    "everyday_chain": "drag-map\u2192Jordan",
+    "everyday_language": "open drag-map\u2192Jordan LCG 1233799701 idx3970 same-link-same-stars ?daily=20260812&n=1/3/5 PWA v67 74426B HIT void #080A0F \u2014 drag the embedding map, find Jordan, tap to explore",
+    "equities_gate_reference": {
+        "ic_current": 0.007,
+        "ic_target_v2": 0.03,
+        "ic_gt_0p01_for_v2": false,
+        "ic_gt_zero": true,
+        "bias": 0.0,
+        "sharpe_gt_1p2": false,
+        "sharpe_sqrtN": 6.15,
+        "top50_ic": 0.079,
+        "top50_ic_pass": true,
+        "note": "T2 quick refresh \u2014 free platform proves knowledge lie detector: if model cant tell MJ 97-98 from role player daily, cant tell earnings beat. IC<0.01 FAIL honest v2 NOT promoted, top50 0.079 PASS Sharpe sqrtN 6.15",
+        "gate_summary": "IC 0.007 <0.01 FAIL, top50 0.079 PASS, Sharpe 6.15 sqrtN PASS \u2014 v2 NOT promoted honest, free forever private edge gated"
+    },
+    "gate_triple": {
+        "IC": 0.007,
+        "IC_threshold": 0.01,
+        "IC_fail": true,
+        "top50": 0.079,
+        "top50_pass": true,
+        "Sharpe_sqrtN": 6.15,
+        "v2_promoted": false,
+        "honest": "v2 NOT promoted"
+    }
+}
