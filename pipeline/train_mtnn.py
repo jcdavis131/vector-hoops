@@ -1,4 +1,4 @@
-"""Vector Hoops MTNN v4 — multi-tower, multi-task player embedding.
+"""Vector Hoops MTNN v5 — multi-tower, multi-task player embedding.
 
 Builds on train_towers.py with:
   - Residual MLP towers + per-family missing masks
