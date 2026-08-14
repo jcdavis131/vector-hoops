@@ -21,8 +21,8 @@ Evidence files:
 - ~/workspace/dottie/apps/scout-cli/bigbang/plugins/vector/research_todo_vector-hoops-chimera-worldmodel.py
 """
 
-from pathlib import Path
 import json
+from pathlib import Path
 
 GRAPH_NODES = [
     "concept:vector-hoops",
@@ -30,14 +30,11 @@ GRAPH_NODES = [
     "concept:scout",
     "concept:ava",
     "concept:jspace",
-    "concept:graphify"
+    "concept:graphify",
 ]
 
-PAPER_IDS = [
-    "2403.16933v1",
-    "2607.14076v1",
-    "tech_ai_52c707a406"
-]
+PAPER_IDS = ["2403.16933v1", "2607.14076v1", "tech_ai_52c707a406"]
+
 
 def chimera_fusion(embeddings_path=None, archetype_path=None):
     """
@@ -58,8 +55,9 @@ def chimera_fusion(embeddings_path=None, archetype_path=None):
         "archetype_exists": archetype_file.exists(),
         "vectors_exists": vectors_file.exists(),
         "status": "stub-implemented",
-        "next": "Implement fusion for archetype clustering, CQS-verified"
+        "next": "Implement fusion for archetype clustering, CQS-verified",
     }
+
 
 def worldmodel_state_loop(context_window="1M"):
     """
@@ -73,8 +71,9 @@ def worldmodel_state_loop(context_window="1M"):
         "evidence": "~/workspace/your_files/news-briefs/headlines/_by_headline/tech_ai_52c707a406.md",
         "graph_nodes": ["concept:jspace", "concept:ava", "concept:scout"],
         "status": "stub-implemented",
-        "next": "Add daily guess integration, persistence via J-Space"
+        "next": "Add daily guess integration, persistence via J-Space",
     }
+
 
 def cqs_verified_chimera_eval():
     """
@@ -84,8 +83,9 @@ def cqs_verified_chimera_eval():
         "cqs_baseline": 85.87,
         "papers": PAPER_IDS,
         "nodes": GRAPH_NODES,
-        "eval": "pending - integrate pipeline/mtnn_validation.py"
+        "eval": "pending - integrate pipeline/mtnn_validation.py",
     }
+
 
 if __name__ == "__main__":
     print(json.dumps(chimera_fusion(), indent=2))
