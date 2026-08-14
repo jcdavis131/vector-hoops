@@ -26,7 +26,7 @@ async function ensure() {
      matrix and returns confident nonsense rather than failing. If the metadata
      cannot be read, that is worth an error. */
   const [metaJson, E] = await Promise.all([
-    fetch('/assets/mtnn_meta.json?v=37335d35').then(r=>{
+    fetch('/assets/mtnn_meta.json?v=3f0ebfcb').then(r=>{
       if(!r.ok) throw new Error('mtnn_meta.json '+r.status);
       return r.json();
     }),
