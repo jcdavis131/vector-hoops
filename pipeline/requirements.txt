@@ -5,7 +5,10 @@
 # on a GPU box). Keeping this file to the gate's real needs is what lets CI stay
 # a few seconds instead of pulling a 2 GB wheel.
 #
-# vector_core is NOT here: it is not on PyPI. It lives in jcdavis131/vector-hub
-# under packages/vector-core, and ci.yml checks that repo out and installs it.
+# Two things ci.yml installs that are deliberately not listed here, because they
+# are CI's problem and not a runtime dependency of this directory:
+#   - vector-core, which is not on PyPI (jcdavis131/vector-hub packages/vector-core)
+#   - torch, CPU wheel, needed only because tests/test_vector_core_parity.py execs
+#     a historical realmlp_preproc.py that imports it
 numpy>=1.24
 pytest>=7.0

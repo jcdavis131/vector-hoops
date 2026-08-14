@@ -33,6 +33,11 @@ jobs:
         run: |
           pip install -r pipeline/requirements.txt
           pip install ./.vector-hub/packages/vector-core
+          # CPU wheel only, and only because tests/test_vector_core_parity.py
+          # execs a historical pipeline/realmlp_preproc.py that imports torch.
+          # The CUDA build is never wanted here: CI does not train, and the cpu
+          # index keeps this a ~200 MB install instead of ~2 GB.
+          pip install torch --index-url https://download.pytorch.org/whl/cpu
 
       # These two were previously `|| true`. Verified passing, so they now gate.
       - name: Offline fetch (no external network)
