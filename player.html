@@ -83,7 +83,7 @@ const OKABE=["#E69F00","#56B4E9","#009E73","#F0E442","#0072B2","#D55E00","#CC79A
    on itself — the numbers are either the model's or absent. */
 try{let j=await fetch('/assets/front_office_lite.json?v=7416a08d').then(r=>r.json());teams=j.teams||[]}catch(e){teams=[]}
 try{V=await fetch('/assets/embedding_map_points_limited.json?v=407d2cbc').then(r=>r.json());}catch(e){V=null}
-try{props=await fetch('/assets/props_summary.json?v=4c0129e9').then(r=>r.json());}catch(e){props=null}
+try{props=await fetch('/assets/props_summary.json?v=367a49f4').then(r=>r.json());}catch(e){props=null}
 /* This read V.vectors, and the map file's key is `players` — so it was
    undefined on every visit and the page said a loaded file had not loaded.
    The rows it draws are map coordinates, not the 64-d vectors, so saying
@@ -268,6 +268,6 @@ if('serviceWorker' in navigator)navigator.serviceWorker.register('/sw.js').catch
      and the map card below has just become a tab stop. pwa-install.js is
      deliberately not here: the install prompt is a site-wide thing a visitor
      meets once, and this is not the page to meet it on. -->
-<script src="assets/error-boundary.js?v=dfe16efe"></script>
+<script src="assets/error-boundary.js?v=b5444017"></script>
 <script src="assets/keyboard-a11y.js?v=8bd158d1"></script>
 </html>
