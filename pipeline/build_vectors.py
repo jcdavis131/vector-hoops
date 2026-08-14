@@ -150,6 +150,39 @@ SCORING_COLS = [
     "PCT_UAST_FGM",
 ]
 BIO_COLS = ["PLAYER_HEIGHT_INCHES", "PLAYER_WEIGHT", "AGE", "DRAFT_NUMBER"]
+
+# Which columns each wide source may contribute to a player-season row.
+#
+# advanced/scoring arrive from fetch_dash with an explicit column list, so they
+# are already held to their contract by the fetch itself and need no entry here.
+# fetch_bio has no such list: it returns whatever pipeline/cache/bio_*.json
+# holds, and those files have since gained ten keys nobody declared --
+# combine_method, combine_source, wingspan_in, standing_reach_in,
+# vertical_max_in, vertical_max, wingspan, standing_reach, vertical_standing_in,
+# pos_used.
+#
+# Two of those are strings and abort the float cast in the matrix build, which
+# is the visible half of the problem. The other eight are the dangerous half,
+# precisely because they do NOT abort: they are synthetic. fetch_combine.py:154
+# builds wingspan from "inches + 4.5 + deterministic jitter"; fetch_missing_
+# combine.py:9 uses "height*1.07 + pos_adj + bounded_noise". Unfiltered, the
+# next rebuild widens the bio tower from 4 columns to 11 with fabricated
+# measurements, and audit_features.py's whole rationale is that a family's width
+# is its fusion share. A source is entitled to its contract, not to its cache.
+SOURCE_CONTRACTS: dict[str, frozenset[str]] = {"bio": frozenset(BIO_COLS)}
+
+# Identity columns, never features.
+_NEVER_FEATURES = ("PLAYER_ID", "PLAYER_NAME")
+
+
+def source_columns(name: str, record: dict) -> dict:
+    """The subset of `record` that source `name` is allowed to contribute."""
+    allowed = SOURCE_CONTRACTS.get(name)
+    return {
+        k: v
+        for k, v in record.items()
+        if k not in _NEVER_FEATURES and (allowed is None or k in allowed)
+    }
 TRACKING_SPECS = [  # (pt_measure_type, wanted columns)
     ("SpeedDistance", ["DIST_MILES", "AVG_SPEED"]),
     ("Drives", ["DRIVES", "DRIVE_PTS", "DRIVE_PASSES"]),
@@ -764,10 +797,9 @@ def main() -> None:
             row["_total_min"] = total_min
             for src, name in ((adv, "advanced"), (sco, "scoring"), (bio, "bio")):
                 extra = src.get(pid, {})
-                for k, v in extra.items():
-                    if k not in ("PLAYER_ID", "PLAYER_NAME"):
-                        row[k] = v
-                        extra_presence[name].add(k)
+                for k, v in source_columns(name, extra).items():
+                    row[k] = v
+                    extra_presence[name].add(k)
             for k, v in (trk.get(pid) or {}).items():
                 row[k] = v
                 extra_presence["tracking"].add(k)
