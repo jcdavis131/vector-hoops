@@ -57,4 +57,4 @@ lf.ln1=nn.LayerNorm(96); self.fc2=nn.Linear(96,24); self.ln2=nn.LayerNorm(24); s
 # - surplus_value = (DK_FPts_actual - salary_implied_expected)/salary_k
 # - props_beating_exp = actual DK - Vegas OU mapped DK via market expectation baseline
 # - IC rank_corr >0.15 AND ROI_IC>0.05 AND MAE<5.0 gate DFS ROI hoop
-CLS_DIM=64
+N_TOWERS=17  # fusion wide
