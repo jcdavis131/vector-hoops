@@ -286,6 +286,18 @@ FORM_FEATURES = [
 ]
 for f in FORM_FEATURES:
     FAMILY_OF[f] = "form"
+# Within-season trajectory, from the same per-game logs. The form family asks
+# "how good, how steady"; shape asks "which direction, and when" -- two
+# player-seasons with identical FORM_* can be a rookie earning minutes all year
+# and a veteran losing them, and nothing in the other 18 towers separates them.
+SHAPE_FEATURES = [
+    "SHAPE_PTS_H2H1",
+    "SHAPE_REB_H2H1",
+    "SHAPE_MIN_SLOPE",
+    "SHAPE_PEAK_POS",
+]
+for f in SHAPE_FEATURES:
+    FAMILY_OF[f] = "shape"
 
 UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0 Safari/537.36"
 
@@ -588,6 +600,95 @@ def compute_form_features(season: str) -> dict[str, dict]:
 
 
 # ---------------------------------------------------------------------------
+# Within-season shape from the same per-game logs: did production rise or fade
+# across the player's OWN game sequence, and where did the peak sit?
+#
+# The method (halves split at the player's own game-sequence midpoint, per-36
+# rate stats) is lifted from faderfinisher_analysis.py, which has computed this
+# since the quiz shipped -- but it writes assets/faderfinisher.json for trivia
+# and has never fed the model. Its eligibility band (>=25 games per half, delta
+# in 1.5-6.0 per-36) is deliberately NOT reused: those thresholds exist to keep
+# quiz answers unambiguous, and applying them here would mask every player whose
+# arc is small or whose season was short, which is most of them.
+#
+# Coverage tracks the form/injury families exactly (~0.26 pre-2021, ~0.86 after)
+# because it reads the same gamelogs_*.jsonl, which start at 2015-16. A player
+# with no usable log simply has no SHAPE_* keys and is masked, same as form.
+# ---------------------------------------------------------------------------
+
+# Both halves need enough games for a half-mean to mean anything. form uses 10
+# games for a season-level stat; shape splits the season, so it needs twice that.
+MIN_SHAPE_GAMES = 20
+PEAK_WINDOW = 5
+
+
+def compute_shape_features(season: str) -> dict[str, dict]:
+    p = DATA_DIR / f"gamelogs_{season}.jsonl"
+    if not p.exists():
+        return {}
+    games: dict[int, list[dict]] = {}
+    with p.open(encoding="utf-8") as f:
+        for line in f:
+            try:
+                g = json.loads(line)
+            except json.JSONDecodeError:
+                continue
+            if (g.get("MIN") or 0) <= 0:
+                continue
+            pid = g.get("PLAYER_ID")
+            if pid is None:
+                continue
+            games.setdefault(int(pid), []).append(g)
+
+    out: dict[str, dict] = {}
+    for pid, rows in games.items():
+        if len(rows) < MIN_SHAPE_GAMES:
+            continue
+        # Chronological order is the whole point here; form never needed it.
+        rows.sort(key=lambda r: r.get("GAME_DATE") or "")
+        n = len(rows)
+
+        def per36(rs, key):
+            tot_min = sum(r["MIN"] for r in rs)
+            if tot_min <= 0:
+                return 0.0
+            if key == "REB":
+                tot = sum((r.get("OREB") or 0) + (r.get("DREB") or 0) for r in rs)
+            else:
+                tot = sum(r.get(key) or 0 for r in rs)
+            return 36.0 * tot / tot_min
+
+        half = n // 2
+        h1, h2 = rows[:half], rows[half:]
+
+        # Minutes trajectory: OLS slope over game index, expressed as the share
+        # of an average night gained (or lost) across the whole season, so a
+        # bench player growing into 20 mpg is comparable to a starter shedding 8.
+        mins = [r["MIN"] for r in rows]
+        mean_min = sum(mins) / n
+        mean_i = (n - 1) / 2.0
+        denom = sum((i - mean_i) ** 2 for i in range(n))
+        slope = sum((i - mean_i) * (m - mean_min) for i, m in enumerate(mins)) / denom if denom else 0.0
+
+        # Where the hot stretch sat, as a 0-1 position in the season.
+        w = min(PEAK_WINDOW, n)
+        best_v, best_i = None, 0
+        for i in range(n - w + 1):
+            v = per36(rows[i : i + w], "PTS")
+            if best_v is None or v > best_v:
+                best_v, best_i = v, i
+        peak_pos = (best_i + (w - 1) / 2.0) / (n - 1) if n > 1 else 0.5
+
+        out[str(pid)] = {
+            "SHAPE_PTS_H2H1": per36(h2, "PTS") - per36(h1, "PTS"),
+            "SHAPE_REB_H2H1": per36(h2, "REB") - per36(h1, "REB"),
+            "SHAPE_MIN_SLOPE": slope * (n - 1) / mean_min if mean_min > 0 else 0.0,
+            "SHAPE_PEAK_POS": peak_pos,
+        }
+    return out
+
+
+# ---------------------------------------------------------------------------
 # Salary sources
 # ---------------------------------------------------------------------------
 
@@ -753,6 +854,7 @@ def main() -> None:
         "tracking": set(),
         "hustle": set(),
         "form": set(),
+        "shape": set(),
     }
     fetched, missing = [], []
 
@@ -766,6 +868,7 @@ def main() -> None:
         bio = {str(r["PLAYER_ID"]): r for r in (fetch_bio(season, args.offline) or [])}
         trk = fetch_tracking(season, args.offline) or {}
         form = compute_form_features(season)
+        shape = compute_shape_features(season)
         hustle = load_wide_skills_defense(season)
         gate = gates_for_season(season, schedule_aware=schedule_aware)
         if schedule_aware:
@@ -806,6 +909,9 @@ def main() -> None:
             for k, v in (form.get(pid) or {}).items():
                 row[k] = v
                 extra_presence["form"].add(k)
+            for k, v in (shape.get(pid) or {}).items():
+                row[k] = v
+                extra_presence["shape"].add(k)
             for k, v in (hustle.get(norm_name(row["PLAYER_NAME"])) or {}).items():
                 if v is not None:
                     row[k] = v
@@ -838,7 +944,10 @@ def main() -> None:
 
     # ---- wide feature list: game contract first (frozen order) ----
     wide_features = list(GAME_FEATURES)
-    for name in ("advanced", "scoring", "bio", "tracking", "form", "hustle"):
+    # "shape" is last so every pre-existing column keeps its index -- the frozen
+    # order above is a contract, and the baseline arm of the A/B must be exactly
+    # today's matrix with the new tail removed.
+    for name in ("advanced", "scoring", "bio", "tracking", "form", "hustle", "shape"):
         for c in sorted(extra_presence[name]):
             if c not in wide_features:
                 wide_features.append(c)
