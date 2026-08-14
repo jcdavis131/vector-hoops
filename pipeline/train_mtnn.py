@@ -182,11 +182,26 @@ def season_index(seasons) -> np.ndarray:
     return np.array([m[str(s)] for s in seasons], dtype=np.int64)
 
 
-def family_slices(manifest) -> dict[str, list[int]]:
+def family_slices(manifest, drop: set[str] | None = None) -> dict[str, list[int]]:
+    """Column indices per family, minus any feature named in ``drop``.
+
+    audit_features.py flags redundant pairs and clock candidates and ends with a
+    standing instruction: "any claim built on this matrix should survive an
+    ablation that removes these columns". Until now there was no way to run that
+    ablation -- ablate_v5.py ablates ARCHITECTURE, and nothing here could drop a
+    feature -- so the recommendation could be read but not acted on.
+
+    A family that loses every one of its columns is removed entirely rather than
+    left as an empty tower, which would otherwise reach the model as a zero-width
+    matmul.
+    """
+    drop = drop or set()
     fams: dict[str, list[int]] = defaultdict(list)
     for j, f in enumerate(manifest["features"]):
+        if f in drop:
+            continue
         fams[manifest["families"][f]].append(j)
-    return dict(fams)
+    return {k: v for k, v in fams.items() if v}
 
 
 def adjacent_season_pairs(pids, seasons, names=None) -> list[tuple[int, int]]:
@@ -1153,6 +1168,15 @@ def emit_training_snapshot(args, weights, fams, history, val_trace, status) -> N
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--epochs", type=int, default=40)
+    ap.add_argument(
+        "--drop-features",
+        default="",
+        help="comma-separated feature names to exclude, for running the ablation "
+             "audit_features.py asks for. Example: --drop-features INJ_MISS_N "
+             "(r=-0.9998 with INJ_GP_PCT; games missed is the algebraic inverse of "
+             "games played, so the injury tower gets two votes for one signal). "
+             "A family that loses all its columns is dropped, not left empty.",
+    )
     ap.add_argument("--device", type=str, default="cpu", help="cpu or cuda — forced cpu per 2026-08-10 user request")
     ap.add_argument("--dim", type=int, default=48)
     ap.add_argument(
@@ -1418,7 +1442,22 @@ def main() -> None:
         Z = preproc.transform(Z, [str(s) for s in seasons])
         print("robust-scaling: replaced season z-scores with median/IQR clip[-3,3]")
 
-    fams = family_slices(manifest)
+    # Feature-level ablation, one rung finer than --mask-families/--exclude-families.
+    # A redundant PAIR (audit_features.py: INJ_GP_PCT ~ INJ_MISS_N, r=-0.9998)
+    # cannot be tested by removing a whole family -- that removes the signal along
+    # with the duplication. Dropping one column narrows that family's tower input
+    # but leaves the TOWER COUNT unchanged, so fusion stays 17 tokens wide and the
+    # delta does not confound "column was redundant" with "fusion was re-sized" --
+    # the same confound --mask-families was written to avoid.
+    drop_feats = {s.strip() for s in args.drop_features.split(",") if s.strip()}
+    if drop_feats:
+        known = set(manifest["features"])
+        unknown = sorted(drop_feats - known)
+        if unknown:
+            raise SystemExit(f"--drop-features names features not in the manifest: {unknown}")
+        print(f"dropped features: {sorted(drop_feats)} ({len(drop_feats)} columns removed before tower construction)")
+
+    fams = family_slices(manifest, drop_feats)
     mask_fams = {s.strip() for s in args.mask_families.split(",") if s.strip()}
     if mask_fams:
         # Ablate by zeroing a family's values AND its mask bits while keeping the
@@ -1426,7 +1465,7 @@ def main() -> None:
         # fusion input (17x32 -> 16x32), so every arm becomes a different
         # architecture and the delta confounds "family carries signal" with
         # "fusion was re-sized". Masking holds the architecture fixed.
-        all_slices = family_slices(manifest)
+        all_slices = family_slices(manifest, drop_feats)
         zeroed = 0
         for fam in sorted(mask_fams):
             for c in all_slices.get(fam) or []:
