@@ -1,8 +1,8 @@
 # Within-season shape — measured negative
 
-> **Status:** measured, rejected (2026-08-13)
-> **Verdict:** a `shape` tower does not earn its place. **−0.81 CQS** over 6 seeds, inside seed noise but negative in every summary statistic, with wider dispersion than the baseline.
-> **Default:** off. `build_vectors.py --with-shape` to reproduce.
+> **Status:** measured, rejected, and the cause isolated (2026-08-13 / 2026-08-14)
+> **Verdict:** the `SHAPE_*` features carry harm. As a 20th tower, **−0.81 CQS**; folded into `form` with the tower count held constant, **−1.56 CQS** and recall 0.8123 → 0.7303. Worse without the extra tower, so the architecture was never the problem — the columns are.
+> **Default:** off. `build_vectors.py --with-shape` to reproduce. Closed, not parked.
 
 ## The gap
 
@@ -85,9 +85,51 @@ tracking     0.3698    0.9973     0.9971
 
 What remains is dispersion from widening the fusion itself. This repo has seen that before: `baseline_provenance.dispersion_note` records seed 42 historically collapsing to CQS ~70.7 / recall ~0.47 under concat fusion on the 130-feature recipe, a basin the current recipe closed. Adding a 20th tower appears to reopen a basin of that kind for seeds 5 and 13. Unproven — stated as the surviving hypothesis, not a finding.
 
-## The follow-up worth running
+## The follow-up — run 2026-08-14, and it settles it
 
-The A/B confounds two changes: **new features** and **a wider fusion**. They can be separated by mapping `SHAPE_*` into the existing `form` family instead of creating a 20th tower — same four columns, same information, no change in tower count. If the collapse disappears, the fusion width is the problem and the features are fine; if it survives, the features are noise. That run has not been done.
+The A/B above confounds two changes: **new features** and **a wider fusion**.
+Separating them: map `SHAPE_*` into the existing `form` family instead of
+creating a 20th tower. Same four columns, same information, and the tower count
+never moves — 146 features, still **18 input towers**, `form` widened 5 → 9.
+
+Hypothesis was that the fusion was at fault. It is not.
+
+```
+seed   CQS      recall@10
+   5   75.90    0.7720
+   7   75.00    0.7380
+  13   77.20    0.8400
+  21   73.79    0.6680
+  42   74.10    0.6720
+  99   74.45    0.6920
+
+variant  n=6  CQS 75.0733 +/- 1.2802  recall@10 0.7303
+delta -1.5550 vs baseline 76.6283  ->  DISCARD (recall floor 0.8123 -> 0.7303)
+```
+
+Side by side:
+
+| arrangement | towers | ΔCQS | recall | shape of failure |
+|---|---|---|---|---|
+| shape as a 20th tower | 19 | −0.81 | 0.8123 → 0.7647 | bimodal: 3 seeds flat, 2 collapse |
+| shape inside `form` | 18 | **−1.56** | 0.8123 → **0.7303** | uniform: every seed down |
+
+Holding the tower count constant made it **worse, not better** — the damage
+roughly doubled — and the bimodality disappeared into uniform degradation.
+That is the signature of the columns polluting a tower directly rather than the
+fusion occasionally falling into a bad basin.
+
+**Conclusion: the fusion width was never the problem. The `SHAPE_*` features
+themselves carry harm.** Within-season trajectory, as constructed here, is not a
+useful input to this model. Shape stays gated off, and this line of work is
+closed rather than parked.
+
+Worth noting how the verdict was reached: the discard fired on the **recall
+floor**, not the headline. CQS alone would also have failed it (−1.56 against a
+seed sd of 0.83), but it was the floor that named what actually broke.
+
+Measured through `gpu/climb.py` on herdmux — screen, then a 6-seed panel, tree
+frozen at `295e1dd2`, journalled to `gpu/results.tsv`.
 
 ## Reproduce
 
