@@ -358,6 +358,39 @@ def main() -> int:
                 fails.append(f"the play button reported {pressed!r} then {after!r}")
             if i2 != i1:
                 fails.append("Stop did not stop it")
+
+            # A traced career you can send to somebody — and the 406 KB opt-in
+            # has to survive it. A ?pid= link presses the button for a visitor
+            # who has already asked for that career; a bare visit must not.
+            ws.call("Page.navigate", {"url": f"http://127.0.0.1:{site}/trends.html"})
+            time.sleep(4.5)
+            bare = ev(ws, "performance.getEntriesByType('resource')"
+                          ".filter(function(e){return e.name.indexOf('season_map')>-1}).length")
+            print(f"  no link  season_map fetches={bare}")
+            if bare:
+                fails.append(f"a visit with no ?pid= fetched season_map {bare} time(s) — the "
+                             f"406 KB is meant to stay behind its button")
+
+            ws.call("Page.navigate", {"url": f"http://127.0.0.1:{site}/trends.html?pid=2544"})
+            time.sleep(9.0)
+            got = ev(ws, "performance.getEntriesByType('resource')"
+                         ".filter(function(e){return e.name.indexOf('season_map')>-1}).length")
+            said = (ev(ws, "(document.getElementById('smState')||{}).textContent||''") or "")
+            print(f"  ?pid=    fetches={got} state={said[:52]!r}")
+            if not got:
+                fails.append("a ?pid= link did not load the season map, so the career it names "
+                             "cannot be drawn")
+            if "traced from the link" not in said:
+                fails.append(f"a ?pid= link left the state line reading {said[:60]!r}; it should "
+                             f"name the career it traced")
+
+            ws.call("Page.navigate", {"url": f"http://127.0.0.1:{site}/trends.html?pid=99999999"})
+            time.sleep(9.0)
+            miss = (ev(ws, "(document.getElementById('smState')||{}).textContent||''") or "")
+            print(f"  bad pid  state={miss[:52]!r}")
+            if "99999999" not in miss:
+                fails.append(f"a pid the file does not carry answered {miss[:60]!r} rather than "
+                             f"naming the pid it could not find")
     finally:
         if ws:
             try:

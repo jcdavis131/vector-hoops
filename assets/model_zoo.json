@@ -1,5 +1,5 @@
 {
- "built": "2026-08-09T17:36:40Z",
+ "built": "2026-08-12T03:15:12Z",
  "generator": "scripts/build_model_zoo.py",
  "model_eval": {
   "model_zoo": {

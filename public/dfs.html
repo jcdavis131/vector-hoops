@@ -57,7 +57,7 @@ span.proj{color:var(--orange-ink)}
 <!-- build_social_meta.py: end -->
 </head><body>
 <a class="vh-skip" href="#main">Skip to the content</a>
-<nav><a class="brand" href="/">DUMB<span>MODEL</span></a><div style="display:flex;gap:6px;flex-wrap:wrap"><a class="pill" href="/owner">Owner</a><a class="pill" href="/player">Player</a><a class="pill" href="/brand">Brand</a><a class="pill pill-y" href="/dfs">DFS</a></div><a class="pill" href="/play">Play</a><a class="pill" href="/trends">Trends</a><a class="pill" href="/model">Model</a><a class="pill" href="/players">Explorer</a><a class="pill" href="/player-cards">Players</a><a class="pill" href="/teams">Teams</a><a class="pill" href="/dictionary">Dictionary</a></nav>
+<nav><a class="brand" href="/">DUMB<span>MODEL</span></a><div style="display:flex;gap:6px;flex-wrap:wrap"><a class="pill" href="/owner">Owner</a><a class="pill" href="/player">Player</a><a class="pill" href="/brand">Brand</a><a class="pill" href="/dfs">DFS</a></div><a class="pill" href="/play">Play</a><a class="pill" href="/trends">Trends</a><a class="pill" href="/model">Model</a><a class="pill" href="/players">Explorer</a><a class="pill" href="/player-cards">Players</a><a class="pill" href="/teams">Teams</a><a class="pill" href="/dictionary">Dictionary</a></nav>
 <main id="main" tabindex="-1"><h1 style="position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;border:0">Projections — what the model can and cannot see coming</h1>
 <div class="card"><h2 class="vh-sr">What the model can and cannot see coming</h2><div class="mono">Projections • held-out error, per part of a player's game</div>
 <div class="mono" style="font-size:20px;margin:6px 0" id="dpHead">Reading <code>assets/projection_eval.json</code>…</div>
@@ -108,7 +108,7 @@ shows the error instead.</p>
   function n2(v){ return (Math.round(v*100)/100).toFixed(2); }
   function n0(v){ return Math.round(v).toLocaleString(); }
 
-  fetch('assets/projection_eval.json?v=460f4462')
+  fetch('assets/projection_eval.json?v=1f639c3e')
     .then(function(r){ if(!r.ok) throw new Error('HTTP '+r.status); return r.json(); })
     .then(function(j){
       var F=j.features||[];
@@ -160,7 +160,7 @@ shows the error instead.</p>
 
 </main>
 <footer style="max-width:980px;margin:0 auto;padding:8px 12px;display:flex;justify-content:space-between;font-family:var(--mono);font-size:11px;color:#717171"><span>dumbmodel #fafaf8 • paper aesthetic • Architects Daughter</span><a class="pill" href="/">Home</a></footer>
-<script src="assets/error-boundary.js?v=b5444017"></script>
-<script src="assets/keyboard-a11y.js?v=d840cbf5"></script>
+<script src="assets/error-boundary.js?v=dfe16efe"></script>
+<script src="assets/keyboard-a11y.js?v=8bd158d1"></script>
 <script src="assets/pwa-install.js?v=11551699"></script>
 </body></html>

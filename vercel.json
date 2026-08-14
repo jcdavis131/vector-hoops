@@ -24,7 +24,6 @@
     { "source": "/arcade/:path*", "destination": "/play", "permanent": true },
     { "source": "/dashboard", "destination": "/model#training-cockpit", "permanent": true },
     { "source": "/dashboard.html", "destination": "/model#training-cockpit", "permanent": true },
-    { "source": "/lab", "destination": "/model", "permanent": true },
     { "destination": "https://hoops.dumbmodel.com/:path*", "has": [{ "type": "host", "value": "hoops.jcamd.com"}], "permanent": true, "source": "/:path*" }
   ],
   "rewrites": [
@@ -43,6 +42,7 @@
     { "source": "/inventory", "destination": "/inventory.html" },
     { "source": "/methods", "destination": "/methods.html" },
     { "source": "/offline", "destination": "/offline.html" },
-    { "source": "/player-animations", "destination": "/player-animations.html" }
+    { "source": "/player-animations", "destination": "/player-animations.html" },
+    { "source": "/lab", "destination": "/lab.html" }
   ]
 }

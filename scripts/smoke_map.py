@@ -348,8 +348,13 @@ def main() -> int:
         key(ws, "0", "Digit0", 48, text="0")
         rst = ev(ws, "JSON.stringify([" + CAM + ".yaw," + CAM + ".pitch," + CAM + ".zoom])")
         print(f"  reset    '0' -> yaw/pitch/zoom {rst}")
-        if [round(v, 4) for v in rst] != [0, 0, 1]:
-            fails.append(f"'0' left the camera at {rst}, not at rest")
+        # Rest is the framed view, not zoom 1. cam.fit runs when the real cloud
+        # lands and cam.reset returns to cam.home, so a reset that went back to
+        # 1.0 would undo the framing — which is the thing 0 and Home are for.
+        fitz = ev(ws, CAM + ".home") or 1
+        if [round(v, 4) for v in rst] != [0, 0, round(fitz, 4)]:
+            fails.append(f"'0' left the camera at {rst}; rest is yaw 0, pitch 0 and the "
+                         f"fitted zoom {fitz}")
 
         # ── Home resets too, Space toggles the spin, H speaks ────────────────
         ev(ws, CAM + ".yaw=1.4;" + CAM + ".zoom=2")
@@ -365,8 +370,9 @@ def main() -> int:
         helped = ev(ws, "document.getElementById('" + P['live'] + "').textContent") or ""
         print(f"  contract Home -> {home}, Space {spin0} -> {spin1} "
               f"(button {glyph!r}), H says {helped[:34]!r}")
-        if [round(v, 4) for v in home] != [0, 1]:
-            fails.append(f"Home left the camera at {home}, not at rest")
+        if [round(v, 4) for v in home] != [0, round(fitz, 4)]:
+            fails.append(f"Home left the camera at {home}; rest is yaw 0 and the fitted "
+                         f"zoom {fitz}")
         if spin1 == spin0:
             fails.append("Space did not start or stop the automatic rotation")
         if glyph != P["glyph"](spin1):

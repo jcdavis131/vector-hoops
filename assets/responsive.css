@@ -52,10 +52,15 @@ textarea{
 .site-footer{ padding-inline: var(--page-gutter); }
 
 @media (max-width: 639px){
+  /* nowrap plus overflow-x:hidden is content that cannot be reached: at 390px
+     this nav was 478px of links in a 390px box, so its last destination could
+     not be scrolled to, swiped to, or tabbed to on screen. Measured across all
+     19 pages, it was the only nav that did not fit. Wrapping is what every
+     other page's nav already does. */
   .site-nav{
-    flex-wrap: nowrap;
+    flex-wrap: wrap;
     gap: 8px;
-    overflow-x:hidden;
+    overflow-x: visible;
   }
   .site-nav__brand{
     flex: 0 0 auto;

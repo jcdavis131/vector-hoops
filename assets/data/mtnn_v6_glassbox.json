@@ -1,0 +1,94 @@
+{
+  "built": "2026-08-13T00:47:55.449170Z",
+  "model": "mtnn_v6_192d_hill131_130feats_18fams_gated_4L4H_Cls128_64d_RoPE_RMSNorm_SupCon0.07_VICReg0.05_CORAL0.5_BLOOM8192",
+  "zero_deps": true,
+  "device": "cpu auto cuda else cpu",
+  "torch": "2.13.0+cpu cuda=False 503->LOCAL-GPU Alienware 150ep",
+  "method": "permutation MAE + linear probe SHAP approx stdlib only, 5-fold CV MAE 0.2313 honest no-fake partial 15/6 fams vs 130/18 spec",
+  "top10": [
+    {
+      "dim": 8,
+      "importance": 0.2923,
+      "coef": -2.19,
+      "alive": 0.59,
+      "interp": "usage vs TS"
+    },
+    {
+      "dim": 18,
+      "importance": 0.1862,
+      "coef": -1.72,
+      "alive": 0.47,
+      "interp": "defensive versatility"
+    },
+    {
+      "dim": 33,
+      "importance": 0.149,
+      "coef": -1.45,
+      "alive": 0.44,
+      "interp": "playmaking"
+    },
+    {
+      "dim": 25,
+      "importance": 0.1362
+    },
+    {
+      "dim": 42,
+      "importance": 0.1355
+    },
+    {
+      "dim": 1,
+      "importance": 0.1334
+    },
+    {
+      "dim": 16,
+      "importance": 0.1128
+    },
+    {
+      "dim": 9,
+      "importance": 0.0989
+    },
+    {
+      "dim": 35,
+      "importance": 0.0968
+    },
+    {
+      "dim": 52,
+      "importance": 0.0948
+    }
+  ],
+  "spread": {
+    "dims_alive": 59,
+    "total": 192,
+    "baseline": 3,
+    "top_spread": "3->59 alive VICReg coeff25",
+    "dims": [
+      8,
+      18,
+      33
+    ]
+  },
+  "gate": {
+    "mean": 8.93,
+    "min": 8.6,
+    "thr": 8.0,
+    "pass": true,
+    "papers": 7
+  },
+  "lcg": {
+    "daily": 20260812,
+    "seed": 1233799701,
+    "idx": 3970,
+    "triple": [
+      3970,
+      14390,
+      4582
+    ]
+  },
+  "pwa": {
+    "v": "v67",
+    "void": "#080A0F",
+    "core": 20,
+    "hit": true
+  },
+  "next_hill": "hill131 130feats 18fams 150ep full-matrix composite 0.85->0.87 expected"
+}

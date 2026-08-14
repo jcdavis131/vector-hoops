@@ -5,8 +5,8 @@
 <script>/* early error queue — drained by assets/error-boundary.js. Installed here because a listener only sees scripts parsed after it, and the page's own inline block used to be first. */window.__vhErr=[];window.addEventListener("error",function(e){try{var t=e.target,r=t&&(t.src||t.href);window.__vhErr.push({type:r?"resource":"js",message:e.message||("Failed to load "+(r||"")),source:e.filename||r||"",lineno:e.lineno||0,colno:e.colno||0,stack:(e.error&&e.error.stack)||""});}catch(_){}} ,true);window.addEventListener("unhandledrejection",function(e){try{window.__vhErr.push({type:"unhandledrejection",message:String((e.reason&&e.reason.message)||e.reason||"")});}catch(_){}});</script>
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#fafaf8">
-<title>Vector Hoops — Players Explorer · 1764 filtered</title>
-<meta name="description" content="1764 players filtered · current/all · click trajectory orange polyline · dark canvas #0A0C10 · OKABE vivid.">
+<title>Vector Hoops — Players Explorer · 1,764 filtered</title>
+<meta name="description" content="1,764 players filtered · current/all · click trajectory orange polyline · dark canvas #0A0C10 · OKABE vivid.">
 <link rel="stylesheet" href="/assets/fonts.css?v=31e5658b">
 
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23111111'/%3E%3Ccircle cx='11' cy='12' r='3' fill='%23EB6834'/%3E%3Ccircle cx='21' cy='19' r='3' fill='%232A78D6'/%3E%3Cpath d='M11 12 L21 19' stroke='%23FAFAF8' stroke-width='1.6'/%3E%3C/svg%3E">
@@ -14,7 +14,7 @@
 <style>
 :root{--paper:#FAFAF8;--surface:#FFFFFF;--ink:#111111;--ink-soft:#52514E;--ink-muted:#878580;--orange:#EB6834;--blue:#2A78D6;--purple:#7A5AE6;--yellow:#F0E442;--green:#009E73;--red:#D8452A;--mono:ui-monospace,"IBM Plex Mono",Menlo,monospace;--sans:ui-sans-serif,system-ui,Segoe UI,Roboto,sans-serif;--hand:"Architects Daughter",cursive;--r:12px;--shadow:4px 4px 0 var(--ink);--shadow-sm:3px 3px 0 var(--ink)}
 *{box-sizing:border-box}html,body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.6;-webkit-font-smoothing:antialiased;overflow-wrap:break-word}
-.site-nav{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:11px clamp(12px,3vw,22px);padding-top:calc(11px + env(safe-area-inset-top,0));background:var(--surface);border-bottom:2px solid var(--ink)}
+.site-nav{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:11px clamp(12px,3vw,22px);padding-top:calc(11px + env(safe-area-inset-top,0));background:var(--surface);border-bottom:2px solid var(--ink)}@media(max-width:640px){.site-nav{flex-direction:column;align-items:flex-start;gap:8px}.site-nav__links{justify-content:flex-start;width:100%}}
 .site-nav .brand{font-family:var(--mono);font-weight:900;text-transform:uppercase;font-size:15px;text-decoration:none;color:var(--ink)}
 .site-nav .links{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
 .site-nav .links a{font:800 11.5px var(--mono);text-transform:uppercase;letter-spacing:.05em;color:var(--ink-soft);text-decoration:none;padding:7px 10px;border:2px solid transparent;border-radius:9px}
@@ -64,29 +64,29 @@ canvas{display:block;width:100%;height:440px}
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="dumbmodel">
 <meta property="og:url" content="https://hoops.dumbmodel.com/players">
-<meta property="og:title" content="Vector Hoops — Players Explorer · 1764 filtered">
+<meta property="og:title" content="Vector Hoops — Players Explorer · 1,764 filtered">
 <meta property="og:image" content="https://hoops.dumbmodel.com/assets/og-1200x630.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Vector Hoops — Players Explorer · 1764 filtered">
+<meta name="twitter:title" content="Vector Hoops — Players Explorer · 1,764 filtered">
 <meta name="twitter:image" content="https://hoops.dumbmodel.com/assets/og-1200x630.png">
-<meta property="og:description" content="1764 players filtered · current/all · click trajectory orange polyline · dark canvas #0A0C10 · OKABE vivid.">
-<meta name="twitter:description" content="1764 players filtered · current/all · click trajectory orange polyline · dark canvas #0A0C10 · OKABE vivid.">
+<meta property="og:description" content="1,764 players filtered · current/all · click trajectory orange polyline · dark canvas #0A0C10 · OKABE vivid.">
+<meta name="twitter:description" content="1,764 players filtered · current/all · click trajectory orange polyline · dark canvas #0A0C10 · OKABE vivid.">
 <!-- build_social_meta.py: end -->
 <!-- the camera every embedding map on this site shares. In <head> because the
      inline map script below calls VHMapCamera.attach() while it runs. -->
-<script src="assets/map-camera.js?v=6a484e18"></script>
+<script src="assets/map-camera.js?v=dc7dc4c5"></script>
 </head>
 <body>
 <a class="vh-skip" href="#main">Skip to the content</a>
 <nav class="site-nav"><a class="brand" href="/">DUMB<span style="color:var(--orange-ink)">MODEL</span></a><div class="links"><a href="/players">Explorer</a><a href="/player-cards">Players</a><a href="/trends">Trends</a><a href="/model">Model</a><a href="/teams">Teams</a><a href="/dictionary">Dictionary</a><a class="cta" href="/play">Play today's →</a></div></nav>
 <main id="main" tabindex="-1">
-<div class="hero-band"><div class="hero"><p class="eyebrow">Six models · five daily puzzles · free · no account</p><div class="roster"><div class="tile t-o"><svg aria-hidden="true" viewBox="0 0 40 40" fill="none"><circle cx="14" cy="11" r="5" stroke="#EB6834" stroke-width="2.5"/><circle cx="26" cy="29" r="5" stroke="#2A78D6" stroke-width="2.5"/><path d="M17 15 L23 25" stroke="#111" stroke-width="2.5" stroke-linecap="round"/></svg></div><div class="tile t-b"><svg aria-hidden="true" viewBox="0 0 40 40" fill="none"><path d="M8 30 L16 22 L22 26 L34 10" stroke="#2A78D6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M27 10 L34 10 L34 17" stroke="#111" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="tile t-p"><svg aria-hidden="true" viewBox="0 0 40 40" fill="none"><path d="M8 32 L8 8 M8 32 L34 32" stroke="#111" stroke-width="2.5" stroke-linecap="round"/><circle cx="15" cy="25" r="2.6" fill="#7A5AE6"/><circle cx="23" cy="18" r="2.6" fill="#7A5AE6"/><circle cx="30" cy="13" r="2.6" fill="#7A5AE6"/></svg></div><div class="tile t-g"><svg aria-hidden="true" viewBox="0 0 40 40" fill="none"><rect x="8" y="10" width="5" height="14" rx="1" stroke="#009E73" stroke-width="2"/><rect x="15.5" y="8" width="5" height="18" rx="1" stroke="#009E73" stroke-width="2"/><rect x="23" y="14" width="5" height="10" rx="1" fill="#009E73"/><path d="M8 28 L33 28" stroke="#111" stroke-width="2" stroke-linecap="round"/></svg></div><div class="tile t-c"><svg aria-hidden="true" viewBox="0 0 40 40" fill="none"><circle cx="13" cy="13" r="5" stroke="#D8452A" stroke-width="2.2"/><circle cx="27" cy="14.5" r="4.2" stroke="#1b45a7" stroke-width="2.2"/><circle cx="20" cy="27" r="3.8" stroke="#9b6bc4" stroke-width="2.2"/><path d="M16.2 16.5 L18.5 23" stroke="#111" stroke-width="1.5" stroke-dasharray="2 2"/><path d="M23.8 18 L21.5 23.2" stroke="#111" stroke-width="1.5" stroke-dasharray="2 2"/></svg></div></div><div><h1 class="mono" style="font-weight:900;font-size:18px;text-transform:uppercase;margin:0">Players Explorer · 1764 filtered</h1><p class="mono" style="color:var(--ink-soft);margin:2px 0 0;font-size:11.2px">Current+allstars+3+ seasons — best/latest vivid OKABE 8 — grey rest hidden • <span class="sg">click list 80 → orange trajectory</span></p></div></div></div>
+<div class="hero-band"><div class="hero"><p class="eyebrow">Six models · five daily puzzles · free · no account</p><div class="roster"><div class="tile t-o"><svg aria-hidden="true" viewBox="0 0 40 40" fill="none"><circle cx="14" cy="11" r="5" stroke="#EB6834" stroke-width="2.5"/><circle cx="26" cy="29" r="5" stroke="#2A78D6" stroke-width="2.5"/><path d="M17 15 L23 25" stroke="#111" stroke-width="2.5" stroke-linecap="round"/></svg></div><div class="tile t-b"><svg aria-hidden="true" viewBox="0 0 40 40" fill="none"><path d="M8 30 L16 22 L22 26 L34 10" stroke="#2A78D6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M27 10 L34 10 L34 17" stroke="#111" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="tile t-p"><svg aria-hidden="true" viewBox="0 0 40 40" fill="none"><path d="M8 32 L8 8 M8 32 L34 32" stroke="#111" stroke-width="2.5" stroke-linecap="round"/><circle cx="15" cy="25" r="2.6" fill="#7A5AE6"/><circle cx="23" cy="18" r="2.6" fill="#7A5AE6"/><circle cx="30" cy="13" r="2.6" fill="#7A5AE6"/></svg></div><div class="tile t-g"><svg aria-hidden="true" viewBox="0 0 40 40" fill="none"><rect x="8" y="10" width="5" height="14" rx="1" stroke="#009E73" stroke-width="2"/><rect x="15.5" y="8" width="5" height="18" rx="1" stroke="#009E73" stroke-width="2"/><rect x="23" y="14" width="5" height="10" rx="1" fill="#009E73"/><path d="M8 28 L33 28" stroke="#111" stroke-width="2" stroke-linecap="round"/></svg></div><div class="tile t-c"><svg aria-hidden="true" viewBox="0 0 40 40" fill="none"><circle cx="13" cy="13" r="5" stroke="#D8452A" stroke-width="2.2"/><circle cx="27" cy="14.5" r="4.2" stroke="#1b45a7" stroke-width="2.2"/><circle cx="20" cy="27" r="3.8" stroke="#9b6bc4" stroke-width="2.2"/><path d="M16.2 16.5 L18.5 23" stroke="#111" stroke-width="1.5" stroke-dasharray="2 2"/><path d="M23.8 18 L21.5 23.2" stroke="#111" stroke-width="1.5" stroke-dasharray="2 2"/></svg></div></div><div><h1 class="mono" style="font-weight:900;font-size:18px;text-transform:uppercase;margin:0">Players Explorer · 1,764 filtered</h1><p class="mono" style="color:var(--ink-soft);margin:2px 0 0;font-size:11.2px">Current+allstars+3+ seasons — best/latest vivid OKABE 8 — grey rest hidden • <span class="sg">click list 80 → orange trajectory</span></p></div></div></div>
 <div class="wrap">
 <div class="grid2">
 <div class="card" style="padding:0"><h2 class="vh-sr">The map</h2>
-<div style="padding:10px 12px;display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;border-bottom:2px solid var(--ink);background:linear-gradient(90deg,var(--surface),#FFF6CC)"><span class="mono" style="font-weight:800">1,764 players • drag to explore</span><span class="mono" style="display:flex;gap:6px"><button id="fAll" class="pill on mono">All 1764</button><button id="fCur" class="pill mono">Current 532</button></span></div>
+<div style="padding:10px 12px;display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;border-bottom:2px solid var(--ink);background:linear-gradient(90deg,var(--surface),#FFF6CC)"><span class="mono" style="font-weight:800">1,764 players • drag to explore</span><span class="mono" style="display:flex;gap:6px"><button id="fAll" class="pill on mono">All 1,764</button><button id="fCur" class="pill mono">Current 532</button></span></div>
 <div class="map-box"><canvas id="c" width="900" height="480" aria-label="The embedding map. Each dot is one player-season, placed by the model and coloured by archetype. The list below the map carries the same players as text, and the search above it reaches any of them without a mouse."></canvas><div style="position:absolute;left:10px;top:10px;display:flex;gap:6px;flex-wrap:wrap;pointer-events:none"><span class="pill mono" id="lab" style="font-size:10.5px">Loading the map…</span><span class="pill mono" id="plOri" style="font-size:10.5px;display:none">yaw 0° · pitch 0° · zoom 1.0×</span></div><div style="position:absolute;left:10px;right:10px;bottom:10px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;pointer-events:none"><span class="pill mono" id="plHov" style="font-size:10.5px">◎ hover a dot to name it · click to select · drag to rotate</span><span class="pill mono" style="font-size:10.5px">◎ pulse = selected</span></div></div>
 <div id="plKey" class="archetype-legend-dark" style="margin-top:10px;background:#0A0C10;border:2px solid #0A0C10;border-radius:10px;padding:10px 12px;box-shadow:2px 2px 0 var(--ink)"></div>
 <div style="padding:8px 12px;display:flex;justify-content:space-between;gap:8px;border-top:2px solid var(--ink)"><span class="mono" id="selLab" style="color:var(--ink-soft)">select player → trajectory</span><span class="mono"><span class="pill mono" style="font-size:10px">Top 8 archetypes</span> <a class="pill mono" style="font-size:10px;text-decoration:none" href="/dictionary#retrieval">how we score it</a></span></div>
@@ -128,7 +128,7 @@ var cam=VHMapCamera.attach(cv,{
    four times, 1.07 MB for a file whose contents never change — and because the
    button class flips synchronously while the map waits on the fetch, the button
    read "Current" for about two seconds while the map still said
-   "all • 1764 pts", with nothing on screen saying why.
+   "all • 1,764 pts", with nothing on screen saying why.
 
    One fetch, held as a promise so overlapping presses share it, then a synchronous
    redraw. Fetching once also removes the possibility of two filter responses
@@ -146,6 +146,7 @@ function applyFilter(f){
   $('lab').textContent = mapState==='real' ? f+' • '+dots.length.toLocaleString()+' of '+allPts.length.toLocaleString()+' points' : mapState==='failed'   ? 'The map file did not load. These points are a placeholder, not players.'   : 'Loading the map…';
   renderList();
 }
+var deepLinked=false;
 async function loadPts(f='all'){try{
   if(!allPts.length){
     if(!ptsPromise) ptsPromise=fetch('assets/embedding_map_points_limited.json?v=407d2cbc').then(r=>r.json());
@@ -155,6 +156,18 @@ async function loadPts(f='all'){try{
   mapState='real';
   applyFilter(f);
   if(cam&&cam.fit)cam.fit();   /* frame the data, not the cube */
+  /* Once, and only once the real points exist — sel() needs a pid that is in
+     the file, and the placeholder cloud has none. A pid that is not in the file
+     says so rather than selecting nothing quietly. */
+  if(!deepLinked){
+    deepLinked = true;
+    var want = new URLSearchParams(location.search).get('pid');
+    if(want){
+      var hit = allPts.find(function(p){ return String(p.pid) === String(want); });
+      if(hit) sel(hit.pid, {nm: hit.display_name || hit.nm});
+      else $('selLab').textContent = 'No player with pid ' + want + ' in this file.';
+    }
+  }
 }catch(e){ptsPromise=null;mapState='failed';if(!dots.length)seedPlaceholder();applyFilter(f);}}
 /* The list showed the first 80 of however many the filter left — 1,814 with
    All selected — and said nothing about the other 1,684. The label beside the
@@ -174,7 +187,23 @@ function listMatches(){
         || String(d.pid||'').indexOf(v)>=0;
   });
 }
-function renderList(){let L=$('list');L.innerHTML='';var hits=listMatches();
+function renderList(){let L=$('list');L.innerHTML='';
+  /* The placeholder cloud has coordinates and nothing else — no name, no season,
+     no pid — because it exists to put something on a dark rectangle while the
+     real file arrives. Listing it rendered eighty rows of "undefined • pid
+     undefined" under a line reading "80 of 1,764 shown", which is the map's
+     invented positions being presented as players. The map's own label already
+     guards on mapState; this list did not.
+
+     Same defect smoke_mapload was written for on /index, one element over. */
+  if(mapState!=='real'){
+    var c0=$('pqCount');
+    if(c0) c0.textContent = mapState==='failed'
+      ? 'The player file did not load, so there is no list to search. The dots above are placeholder positions, not players.'
+      : 'Loading the players…';
+    return;
+  }
+  var hits=listMatches();
   var shown=Math.min(hits.length,LIST_CAP);
   var c=$('pqCount');
   if(c) c.textContent = !hits.length
@@ -184,7 +213,22 @@ function renderList(){let L=$('list');L.innerHTML='';var hits=listMatches();
         : hits.length+(hits.length===1?' player':' players')+' shown.');
   hits.slice(0,LIST_CAP).forEach(d=>{let div=document.createElement('div');div.className='it';div.innerHTML=`<b style="font-size:12.5px">${d.nm}</b><div class="mono" style="color:var(--ink-soft)">${d.se} • pid ${d.pid} ${d.cur?'• current':''}</div>`;div.onclick=()=>sel(d.pid,d);L.appendChild(div)})}
 async function loadTraj(){if(Object.keys(tCache).length)return tCache;try{let r=await fetch('assets/embedding_map_trajectories.json?v=2e787a46'),j=await r.json();tCache=j.trajectories||{}}catch{}return tCache}
-async function sel(pid,hint){let trs=await loadTraj(),tr=trs[String(pid)];if(!tr){$('selLab').textContent='no trajectory for pid '+pid+' — points only';return}curTr=tr;$('selLab').textContent= (hint?hint.nm+' • ':'')+'trajectory '+tr.length+' seasons '+tr[0].season+'→'+tr[tr.length-1].season+' • orange #EB6834 polyline';document.querySelectorAll('.it').forEach(el=>{if(el.textContent.includes(String(pid)))el.classList.add('on')})}
+/* A selection you can send to somebody.
+
+   Picking a dot or a list row highlights that player and draws their career as
+   an orange polyline, and until now that state lived only in memory: no way to
+   link to it, bookmark it, or get it back after a reload. This site already
+   thinks in shareable links — /play carries ?pack= — and the Explorer is the
+   page whose whole job is looking at one player in the space.
+
+   replaceState, not pushState: a visitor clicking through twenty dots should not
+   have to press Back twenty times to leave the page. The address bar stays
+   shareable either way. */
+function markUrl(pid){
+  try{ history.replaceState(null,'', pid ? (location.pathname+'?pid='+encodeURIComponent(pid))
+                                         : location.pathname); }catch(_){}
+}
+async function sel(pid,hint){markUrl(pid);let trs=await loadTraj(),tr=trs[String(pid)];if(!tr){$('selLab').textContent='no trajectory for pid '+pid+' — points only';return}curTr=tr;$('selLab').textContent= (hint?hint.nm+' • ':'')+'trajectory '+tr.length+' seasons '+tr[0].season+'→'+tr[tr.length-1].season+' • orange #EB6834 polyline';document.querySelectorAll('.it').forEach(el=>{if(el.textContent.includes(String(pid)))el.classList.add('on')})}
 (function(){var q=$('pq');if(!q)return;q.disabled=false;q.addEventListener('input',renderList);q.addEventListener('search',renderList);})();
 $('fAll').onclick=()=>{filter='all';$('fAll').classList.add('on');$('fCur').classList.remove('on');loadPts('all')};$('fCur').onclick=()=>{filter='current';$('fCur').classList.add('on');$('fAll').classList.remove('on');loadPts('current')};$('bAll2').onclick=$('fAll').onclick;$('bCur2').onclick=$('fCur').onclick;$('bClr').onclick=()=>{curTr=null;$('selLab').textContent='cleared trajectory'};/* the DPR toggle lost its button when 2d032a4b cleared the instrument pills.
    DPR is a rendering detail, not a thing to ask a visitor about, so the
@@ -310,7 +354,7 @@ span.proj{color:var(--orange-ink)}
     if(lab && lab.parentNode) lab.parentNode.insertBefore(host, lab.nextSibling);
   }
   host.innerHTML='<div class="mono" style="font-size:10.5px;color:#C9C6C0">Colour = archetype · loading names…</div>';
-  fetch('assets/mtnn_arch.json?v=d9922089',{cache:'force-cache'})
+  fetch('assets/mtnn_arch.json?v=758a3d56',{cache:'force-cache'})
     .then(function(r){ if(!r.ok) throw new Error('HTTP '+r.status); return r.json(); })
     .then(function(j){
       var names=j.gameArchetypes||[];
@@ -397,9 +441,9 @@ span.proj{color:var(--orange-ink)}
 })();
 </script>
 </main>
-<script src="assets/error-boundary.js?v=b5444017"></script>
-<script src="assets/keyboard-a11y.js?v=d840cbf5"></script>
+<script src="assets/error-boundary.js?v=dfe16efe"></script>
+<script src="assets/keyboard-a11y.js?v=8bd158d1"></script>
 <script src="assets/pwa-install.js?v=11551699"></script>
-<script src="assets/name-fix.js?v=70a28907"></script>
+<script src="assets/name-fix.js?v=b420fb43"></script>
 </body>
 </html>

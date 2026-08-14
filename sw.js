@@ -1,4 +1,4 @@
-/* Network-first, with the pages you have visited kept for when the link dies — v7.4
+/* Network-first, with the pages you have visited kept for when the link dies — v7.13
 
    v7.1 never installed. Its SHELL was ['/','/index.html','/offline.html',
    '/manifest.json'] and cache.addAll() is atomic: one bad entry rejects the
@@ -49,8 +49,41 @@
    this cache is keyed on the request URL — so a visitor who had /model cached
    still got the offline notice from a link written /model.html. The stamped
    error-boundary.js changed with them, so every page's ?v= moved. Bumping C
-   purges the cache that was filled under the old URLs. */
-const C = 'hoops-v7-6';
+   purges the cache that was filled under the old URLs.
+
+   v7.6: /player read `V.vectors` from a file whose key is `players`, so four
+   reads were undefined behind `||` fallbacks and the fix moved the page to
+   embedding_map_points_limited.json — a new stamped token on a shell page.
+
+   v7.7: cam.fit stopped framing the cloud's widest reach and started framing its
+   middle; assets/map-camera.js is loaded by '/', which is in the shell.
+
+   v7.8: loadFull() now re-fits after swapping 1,764 points for 12,966. It had
+   been keeping the zoom chosen for the smaller cloud, which put 22 dots off the
+   canvas against 1 for the limited one. index.html *is* '/'.
+
+   Three bumps went unrecorded here and the line above still said v7.4 while the
+   constant read v7-8 — a version history that stops being written is worse than
+   none, because it reads as complete.
+
+   v7.9: keyboard-a11y.js now puts the focus ring into open shadow roots, so
+   its token moved on 17 pages.
+
+   v7.10: index.html changed — four hub cards had their headline glued to
+   their label, three button treatments across four equal lanes, and a card
+   stretched to 90px of empty white. '/' is in SHELL.
+
+   v7.11-7.13: unrecorded. The note at v7.8 said a version history that stops
+   being written reads as complete, and then three more bumps went unwritten
+   anyway. Recording the gap rather than inventing what they were.
+
+   v7.14: twenty pages carried stale ?v= tokens - error-boundary.js alone was
+   wrong on eighteen of them - because nothing ever ran stamp_assets.py --check.
+   CI runs it now. The first attempt at this stamped from a Windows checkout and
+   wrote tokens for bytes the server never serves; .gitattributes now marks
+   assets/** as -text so a stamp means the same thing on every box. '/' is in
+   SHELL and its tokens moved, so C purges the old fill. */
+const C = 'hoops-v7-14';
 const SHELL = ['/', '/offline', '/manifest.json'];
 const FALLBACK = ['/offline', '/'];
 const DATA = /\.(json|f32|bin)$/;

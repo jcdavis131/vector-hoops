@@ -93,16 +93,28 @@ MUTATIONS = {
     # the fit score multiplied a random term and printed three decimals
     "random": [("t.w_per_m.toFixed(2)", "(t.w_per_m*(1+Math.random()*0.2)).toFixed(3)")],
     # the map placed a point at a random spot rather than skipping it
-    "scatter": [("c.arc(v.x*540+10, v.y*300+10,",
-                 "c.arc(Math.random()*540+10, Math.random()*300+10,")],
+    "scatter": [("dots.push({x:(v.x-0.5)*2, y:(v.y-0.5)*2,",
+                 "dots.push({x:(Math.random()-0.5)*2, y:(Math.random()-0.5)*2,")],
 }
 
 BLOCKED = ("/assets/front_office_lite.json", "/assets/embedding_map_points_limited.json",
            "/assets/props_summary.json")
 
 
+# Freeze the camera to the rest pose, let one frame paint at it, then read the
+# bitmap back. Returns a promise, which is why ev awaits.
+FREEZE_THEN_SHOOT = """new Promise(function(res){
+  var c=(window.VHMapCamera&&window.VHMapCamera.cams||[])[0];
+  if(c){ c.spin=false; c.reset(false); }
+  requestAnimationFrame(function(){ requestAnimationFrame(function(){
+    res(document.getElementById('map').toDataURL());
+  }); });
+})"""
+
+
 def ev(ws, expr):
-    r = ws.call("Runtime.evaluate", {"expression": expr, "returnByValue": True})
+    r = ws.call("Runtime.evaluate", {"expression": expr, "returnByValue": True,
+                                     "awaitPromise": True})
     if "exceptionDetails" in r:
         return {"err": str(r["exceptionDetails"].get("text", "exception"))}
     v = (r.get("result") or {}).get("value")
@@ -312,10 +324,16 @@ def main() -> int:
             # landed somewhere new every visit. No assertion over innerText can
             # see that — a smoke that reads only text would have passed it. Two
             # loads of one file over one dataset must paint the same bytes.
-            first = ev(ws, "document.getElementById('map').toDataURL()")
+            #
+            # The map turns now, so "the same bytes" only means anything from the
+            # same pose: without freezing, two captures land at different yaws and
+            # differ for a reason that is not randomness at all, which would read
+            # as exactly the bug this is here to catch. Reset to yaw 0, pitch 0 and
+            # the fitted zoom, stop the rotation, give it a frame to paint.
+            first = ev(ws, FREEZE_THEN_SHOOT)
             ws.call("Page.navigate", {"url": f"http://127.0.0.1:{site}/player.html"})
             time.sleep(3.0)
-            second = ev(ws, "document.getElementById('map').toDataURL()")
+            second = ev(ws, FREEZE_THEN_SHOOT)
             same = isinstance(first, str) and first == second
             print(f"  canvas   {len(first) if isinstance(first, str) else '?'} chars, "
                   f"identical across two loads: {same}")

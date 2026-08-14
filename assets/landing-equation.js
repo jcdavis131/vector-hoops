@@ -48,7 +48,7 @@
     var avatar=document.createElement('div');
     avatar.style.cssText='width:28px; height:28px; border-radius:50%; border:2px solid #111; display:grid; place-items:center; font-weight:900; font-size:11px; box-shadow:1.5px 1.5px 0 #111;';
     var hash=0; for(var i=0;i<name.length;i++) hash=(hash*31+name.charCodeAt(i))%8;
-    var okabe=['#0072B2','#D55E00','#009E73','#CC79A7','#F0E442','#56B4E9','#E69F00','#000'];
+    var okabe=['#0072B2','#D55E00','#009E73','#CC79A7','#F0E442','#56B4E9','#E69F00','#FF4F6B'];
     var icon=['⬢','■','▲','◆','★','●','◼','⬣'];
     avatar.style.background=okabe[hash]; avatar.style.color=hash===4?'#111':'#fff'; avatar.textContent=icon[hash];
     var txt=document.createElement('div'); txt.textContent=name.split(' ').slice(-1)[0];

@@ -96,7 +96,7 @@ def main() -> int:
 
     failures: list[str] = []
     titles: dict[str, str] = {}
-    counts = {k: 0 for k in ("lang", "title", "img-alt", "label", "main", "h1", "heading", "btn-name", "tabindex", "th-scope", "target-size")}
+    counts = {k: 0 for k in ("lang", "title", "img-alt", "label", "main", "nav", "h1", "heading", "btn-name", "tabindex", "th-scope", "target-size")}
 
     for page in pages(root):
         name = str(page.relative_to(root)).replace("\\", "/")
@@ -145,6 +145,19 @@ def main() -> int:
             counts["main"] += 1
             if not re.search(r"<main\b", body, re.I) and not re.search(r"""role\s*=\s*["']?main""", body, re.I):
                 failures.append(f"{name}: no <main> or role=main landmark (WCAG 1.3.1)")
+
+        if on("nav"):
+            # A landmark is how a screen reader user skips to the links without
+            # reading the page. Two pages had none: player.html kept its site
+            # links in a plain <div> in the footer, and lab.html had no links to
+            # the rest of the site at all — nothing links to /lab either, so
+            # arriving there by URL was a dead end in both directions.
+            counts["nav"] += 1
+            if not re.search(r"<nav\b", body, re.I) and not re.search(
+                    r"""role\s*=\s*["']?navigation""", body, re.I):
+                failures.append(f"{name}: no <nav> or role=navigation landmark — a "
+                                f"screen reader has no way to jump to the links "
+                                f"(WCAG 1.3.1)")
 
         heads = [(int(m.group(1)), re.sub(r"<[^>]+>", "", m.group(2)).strip())
                  for m in re.finditer(r"<h([1-6])[^>]*>(.*?)</h\1>", body, re.S | re.I)]

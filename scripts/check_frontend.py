@@ -30,7 +30,9 @@ Read-only. Never writes. Exit 0 clean, 1 on any failure.
 from __future__ import annotations
 
 import argparse
+import functools
 import json
+import math
 import re
 import shutil
 import importlib.util
@@ -215,7 +217,13 @@ def check_mutations(fail) -> None:
         blobs[q.name] = q.read_text(encoding="utf-8", errors="replace")
 
     total = 0
-    for smoke in sorted(folder.glob("smoke_*.py")):
+    # checkers carry mutation tables too — check_motion.py breaks the camera's
+    # reduced-motion guard to prove it can see the fault — and a mutation string
+    # rots the same way whatever the file is called. `check_frontend.py` itself
+    # is skipped: exec'ing this module from inside it would run the gate again.
+    files = sorted(folder.glob("smoke_*.py")) + [
+        p for p in sorted(folder.glob("check_*.py")) if p.name != Path(__file__).name]
+    for smoke in files:
         spec = importlib.util.spec_from_file_location(smoke.stem, smoke)
         mod = importlib.util.module_from_spec(spec)
         try:
@@ -235,7 +243,8 @@ def check_mutations(fail) -> None:
                     fail(f"{smoke.name} --mutate {name} searches for a string no served file "
                          f"contains, so it cannot apply and its run is not evidence: "
                          f"{find[:70]!r}")
-    print(f"  {total} mutation string(s) across the smokes still match a served file")
+    print(f"  {total} mutation string(s) across the smokes and checkers still match "
+          f"a served file")
 
 
 def check_syntax(fail) -> None:
@@ -333,6 +342,9 @@ def check_assets(fail) -> None:
 
 RE_HTML_COMMENT = re.compile(r"<!--.*?-->", re.S)
 RE_BLOCK_COMMENT = re.compile(r"/\*.*?\*/", re.S)
+# `/* */` is a comment in JS and CSS and nothing at all in prose. Only the text
+# inside these is handed to RE_BLOCK_COMMENT.
+RE_CODE_BLOCK = re.compile(r"(<(script|style)\b[^>]*>)(.*?)(</\2>)", re.S | re.I)
 
 
 def without_comments(text: str) -> str:
@@ -343,8 +355,25 @@ def without_comments(text: str) -> str:
     reported as defining it twice. The id was quoted, not declared. Only `<!-- -->`
     and `/* */` are stripped; `//` is left alone because it would take the rest
     of any line containing `https://` with it.
+
+    `/* */` is stripped **only inside `<script>` and `<style>`**, because that is
+    the only place it means anything. Applied to the whole document it also fires
+    on prose: /player's map caption names the path `/assets/*`, and the `/*`
+    ending that glob opened a comment that ran 5,763 characters to the next `*/`
+    — swallowing the markup for `#q`, `#twin`, `#teamCap`, `#foreT` and `#props`
+    and reporting five ids as missing from a file that declares all five. A
+    checker that reads copy as code invents failures in the copy's own words.
     """
-    return RE_BLOCK_COMMENT.sub(" ", RE_HTML_COMMENT.sub(" ", text))
+    out, at = [], 0
+    stripped = RE_HTML_COMMENT.sub(" ", text)
+    for m in RE_CODE_BLOCK.finditer(stripped):
+        out.append(stripped[at:m.start()])
+        out.append(m.group(1))
+        out.append(RE_BLOCK_COMMENT.sub(" ", m.group(3)))
+        out.append(m.group(4))
+        at = m.end()
+    out.append(stripped[at:])
+    return "".join(out)
 
 
 def check_ids(fail) -> None:
@@ -697,8 +726,15 @@ def check_fragments(fail) -> None:
         top of a 19-entry glossary. tabindex="-1" is the whole fix, and all 23
         skip links already had it — only the content anchors were missed.
         """
-        m = re.search(r"<(\w+)([^>]*\sid=[\"']?" + re.escape(frag) + r"[\"']?[^>]*)>",
-                      raw.get(target, ""))
+        # The id has to be exactly the fragment. With the closing quote optional
+        # — id=["']?cap["']? — `#cap` also matched `id="capTag"`, and since that
+        # span appears earlier in lab.html it was the element whose tabindex got
+        # checked. The page was reported as unable to hold focus on a section
+        # that carries tabindex="-1"; any site with #cap and a capTag beside it
+        # gets the same false report.
+        f = re.escape(frag)
+        m = re.search(r"<(\w+)([^>]*\sid=(?:\"" + f + r"\"|'" + f + r"'|"
+                      + f + r"(?=[\s>]))[^>]*)>", raw.get(target, ""))
         if not m:
             return True     # `ids` above already reported a missing target
         return bool(native.match(m.group(1)) or re.search(r"tabindex=", m.group(2)))
@@ -967,9 +1003,62 @@ def check_external(fail) -> None:
 # trajectories.json indexes, and /player-cards' 2,293 is how many player cards
 # are committed. Checking them by recomputation is the only way they stay true
 # the day a generator's output changes.
+@functools.lru_cache(maxsize=1)
+def _map_vs_score() -> tuple[int, int]:
+    """How often the dot nearest the crosshair is the answer the game scores best.
+
+    /play draws the pool at its `proj` coordinates — two of the three components
+    in assets/vectors.json — and scores a guess on a cosine over all fourteen
+    features. So "click the closest dot" and "give the best answer" are two
+    different moves, and the footer under the map says by how much. This
+    recomputes it, because a figure describing a data file has to be checked
+    against that file.
+
+    Counts, not a median. The median rank here is exactly 38.5 — the two middle
+    ranks of 968 are 38 and 39 — so any integer median is a rounding, and two
+    implementations of it duly disagreed (numpy 38, plain Python 39) while
+    agreeing on every other figure. A count of exact hits cannot round.
+
+    ~1.2s, no numpy: the gate must not grow a dependency to check a sentence.
+    """
+    d = json.loads((ROOT / "assets/game_vectors.json").read_text(encoding="utf-8"))
+    past, mod = d["past"], d["modern"]
+
+    def unit(v):
+        n = math.sqrt(sum(x * x for x in v)) or 1.0
+        return [x / n for x in v]
+
+    mu = [unit(m["v"]) for m in mod]
+    mxy = [(m["x"], m["y"]) for m in mod]
+    top1 = top10 = 0
+    for p in past:
+        pu, px, py = unit(p["v"]), p["x"], p["y"]
+        j = min(range(len(mod)),
+                key=lambda k: (mxy[k][0] - px) ** 2 + (mxy[k][1] - py) ** 2)
+        near = sum(a * b for a, b in zip(pu, mu[j]))
+        rank = 1 + sum(1 for v in mu if sum(a * b for a, b in zip(pu, v)) > near)
+        top1 += rank == 1
+        top10 += rank <= 10
+    return top1, top10
+
+
 COUNTS = (
     ("trends.html", "12,038", "public/assets/season_map.json",
      "sum of counts", lambda d: sum(d["counts"].values())),
+    # The footer under /play's map tells a visitor how far to trust it. Nothing
+    # on the page said the map was a projection at all before — /trends and
+    # /model both state that caveat about their own figures, and the game, which
+    # is the page that invites you to click the dots, was the one that did not.
+    ("play.html", "148", None,
+     "past seasons whose nearest dot on the map is the answer the game scores highest",
+     lambda _: _map_vs_score()[0]),
+    ("play.html", "289", None,
+     "past seasons whose nearest dot on the map is in the scored top ten",
+     lambda _: _map_vs_score()[1]),
+    ("play.html", "968", "assets/game_vectors.json",
+     "past seasons in the game pool", lambda d: d["counts"]["past"]),
+    ("play.html", "1,305", "assets/game_vectors.json",
+     "modern seasons in the game pool", lambda d: d["counts"]["modern"]),
     ("trends.html", "1,308", "public/assets/trajectories.json",
      "playerIndex entries", lambda d: len(d["playerIndex"])),
     # "over 10,104 eligible pairs", named to assets/eval_scoreboard.json on the
@@ -983,7 +1072,7 @@ COUNTS = (
     # model_zoo by 1,544 — and nothing could see it, because a file's size is
     # never written inside the file. A page that says how big something is has
     # to be checked against how big it is.
-    ("inventory.html", "1,160,938", None, "bytes of assets/data/front_office.json",
+    ("inventory.html", "1,136,233", None, "bytes of assets/data/front_office.json",
      lambda _: (ROOT / "assets/data/front_office.json").stat().st_size),
     ("inventory.html", "9,992,186", None, "bytes of assets/matchup_players.json",
      lambda _: (ROOT / "assets/matchup_players.json").stat().st_size),
@@ -1031,8 +1120,87 @@ def check_counts(fail) -> None:
     print(f"  {checked} count(s) on a page still equal what recomputing them gives")
 
 
+# The destinations every page must offer. Not a style rule — this is whether a
+# visitor who lands anywhere can reach the rest of the site.
+CANON_NAV = ("play", "players", "player-cards", "trends", "model", "teams", "dictionary")
+
+# /offline is served when the network is gone. Its links are the pages the worker
+# can actually answer for; a link to an unvisited route lands the reader back on
+# the offline notice, which is worse than not offering it.
+NAV_EXEMPT = {"offline.html"}
+
+
+def check_nav(fail) -> None:
+    """Every page can reach the rest of the site from its own navigation.
+
+    Measured before this existed: /player offered five links — owner, player-fit,
+    brand, dfs and home — and none of the seven below. From a page the landing
+    map links to, there was no way to reach the game, the Explorer, trends, the
+    model page, teams or the dictionary without editing the address bar. Three
+    other pages were each missing two or more.
+
+    It reads <nav> only. Links buried in body copy are not navigation: a reader
+    cannot be expected to find them, and a screen reader user jumping by landmark
+    never sees them at all.
+    """
+    checked = 0
+    for page in pages():
+        name = label(page)
+        if name in NAV_EXEMPT:
+            continue
+        text = without_comments(page.read_text(encoding="utf-8", errors="replace"))
+        navs = " ".join(re.findall(r"<nav\b[^>]*>(.*?)</nav>", text, re.S | re.I))
+        if not navs:
+            continue        # check_a11y owns "has a nav landmark at all"
+        have = set(re.findall(r'href="/([a-z-]*)"', navs))
+        checked += 1
+        missing = [d for d in CANON_NAV if d not in have and page.stem != d]
+        if missing:
+            fail(f"{name}'s navigation cannot reach {', '.join('/' + m for m in missing)} — "
+                 f"a visitor landing here has no way on without editing the address bar")
+    print(f"  {checked} page(s) can reach the rest of the site from their own navigation")
+
+
+RE_HEAD = re.compile(r"<head\b[^>]*>(.*?)</head>", re.S | re.I)
+RE_HEAD_ELEMS = re.compile(r"<(script|style|title|noscript)\b[^>]*>.*?</\1>", re.S | re.I)
+
+
+def check_markup(fail) -> None:
+    """Nothing but markup in <head>.
+
+    player-animations.html lost its opening <style> tag: 2,745 characters of CSS
+    sat in the head as text, and the browser painted every byte of it into the
+    page. A visitor got a wall of `:root{ --paper:#FFFEF7; ... }` where the
+    content should be, on a live page, and the page was 7,063px tall because of
+    it.
+
+    Nothing here could see that. `syntax` parses <script> and not <style>;
+    `assets` resolves paths; the a11y and contrast checkers read <style> regions
+    and so read straight past CSS that was not in one. Every gate looked at a
+    property that was still correct.
+
+    The rule is the simplest one that catches it: strip comments, the elements
+    whose contents are legitimately not markup, and then every tag — what is left
+    of a <head> must be whitespace.
+    """
+    checked = 0
+    for page in pages():
+        m = RE_HEAD.search(page.read_text(encoding="utf-8", errors="replace"))
+        if not m:
+            continue
+        checked += 1
+        head = RE_HEAD_ELEMS.sub(" ", RE_HTML_COMMENT.sub(" ", m.group(1)))
+        text = re.sub(r"<[^>]*>", " ", head).strip()
+        if text:
+            fail(f"{label(page)} has {len(text)} characters of text loose in <head>, "
+                 f"which the browser renders into the page: {text[:70]!r}")
+    print(f"  {checked} page(s) carry nothing but markup in <head>")
+
+
 CHECKS = {
     "syntax": check_syntax,
+    "markup": check_markup,
+    "nav": check_nav,
     "external": check_external,
     "mirror": check_mirror,
     "tokens": check_tokens,

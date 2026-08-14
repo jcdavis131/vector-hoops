@@ -14,7 +14,7 @@
 <style>
 :root{--paper:#FAFAF8;--surface:#FFFFFF;--ink:#111111;--ink-soft:#52514E;--ink-muted:#878580;--orange:#EB6834;--blue:#2A78D6;--purple:#7A5AE6;--yellow:#F0E442;--green:#009E73;--red:#D8452A;--mono:ui-monospace,"IBM Plex Mono",Menlo,Consolas,monospace;--sans:ui-sans-serif,system-ui,Segoe UI,Roboto,sans-serif;--hand:"Architects Daughter",cursive;--r:12px;--shadow:4px 4px 0 var(--ink);--shadow-sm:3px 3px 0 var(--ink)}
 *{box-sizing:border-box}html,body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.6;-webkit-font-smoothing:antialiased;overflow-wrap:break-word}
-.site-nav{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:11px clamp(12px,3vw,22px);padding-top:calc(11px + env(safe-area-inset-top,0));background:var(--surface);border-bottom:2px solid var(--ink)}
+.site-nav{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:11px clamp(12px,3vw,22px);padding-top:calc(11px + env(safe-area-inset-top,0));background:var(--surface);border-bottom:2px solid var(--ink)}@media(max-width:640px){.site-nav{flex-direction:column;align-items:flex-start;gap:8px}.site-nav__links{justify-content:flex-start;width:100%}}
 .site-nav .brand{font-family:var(--mono);font-weight:900;text-transform:uppercase;font-size:15px;text-decoration:none;color:var(--ink)}
 .site-nav .links{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
 .site-nav .links a{font:800 11.5px var(--mono);text-transform:uppercase;letter-spacing:.05em;color:var(--ink-soft);text-decoration:none;padding:7px 10px;border:2px solid transparent;border-radius:9px}
@@ -36,7 +36,12 @@
 .card{background:var(--surface);border:2px solid var(--ink);border-radius:12px;box-shadow:var(--shadow);overflow:hidden}
 .mono{font-family:var(--mono);font-size:11px}
 .sg{font-family:var(--hand);font-size:14px;color:#6B6862}
-.grid{display:grid;grid-template-columns:1.15fr .85fr;gap:12px;margin-top:12px}/* a grid item defaults to min-width:auto and will not shrink below its widest
+.grid{display:grid;grid-template-columns:1.15fr .85fr;gap:12px;margin-top:12px}
+/* The first .grid on this page holds a single card, so the 0.85fr column was
+   empty and the card sat at 616px of a 1052px row with dead paper beside it,
+   directly above two cards that span the full width. A grid with one child is
+   one column. */
+.grid:has(>:only-child){grid-template-columns:1fr}/* a grid item defaults to min-width:auto and will not shrink below its widest
    content, so a .card of long mono formulas held the page at 567px however narrow
    the viewport got - the media query collapsed the columns but not the item.
    Measured over CDP at 360px: div.card w=567 minw=auto inside div.grid w=336. */
@@ -192,7 +197,7 @@ p.eyebrow,div.mono-sm,span.mono-sm,.pill.mono-sm,.mv-move,p.mono{color:#6F6D68}
   <div class="card">
     <h2 class="hd" id="foH" style="font-size:18px;margin:0 0 4px">All 30 teams</h2>
     <p class="mono" style="color:#57534E;font-size:11.6px;line-height:1.5;margin:0" id="foSub">Loading <code>assets/front_office_lite.json</code>…</p>
-    <div id="foWrap"><table id="foTable"><caption class="fo-sr">Front-office rating for all 30 teams. Column headers sort; press Enter on a header to re-sort.</caption></table></div>
+    <div id="foWrap" tabindex="0" role="region" aria-label="All 30 teams — scrolls sideways"><table id="foTable"><caption class="fo-sr">Front-office rating for all 30 teams. Column headers sort; press Enter on a header to re-sort.</caption></table></div>
     <p class="mono" style="font-size:10.5px;color:#6F6D68;margin:8px 0 0" id="foProv"></p>
     <p class="fo-method" style="margin-top:10px" id="foCaveat"></p>
     <details style="margin-top:10px"><summary class="mono" style="cursor:pointer;font-size:11px">Method, verbatim from the file</summary><div id="foMethod"></div></details>
@@ -347,7 +352,7 @@ $('foTable').addEventListener('keydown',function(e){
 var lowerBooted=false;
 function bootLower(){
 if(lowerBooted) return; lowerBooted=true;
-fetch('assets/deadline.json?v=03a54d6c',{cache:'force-cache'})
+fetch('assets/deadline.json?v=e1dc20d3',{cache:'force-cache'})
   .then(function(r){ if(!r.ok) throw new Error('HTTP '+r.status); return r.json(); })
   .then(function(j){
     var up=(j.thrives||[]).slice(0,10), down=(j.craters||[]).slice(0,10);
@@ -394,7 +399,7 @@ if(lowerSec && window.IntersectionObserver){
   lio.observe(lowerSec);
 } else { bootLower(); }
 
-fetch('assets/front_office_lite.json?v=f6949ae3',{cache:'force-cache'})
+fetch('assets/front_office_lite.json?v=7416a08d',{cache:'force-cache'})
   .then(function(r){ if(!r.ok) throw new Error('HTTP '+r.status); return r.json(); })
   .then(function(j){
     if(!j.teams||!j.teams.length) throw new Error('no teams in file');
@@ -493,8 +498,8 @@ fetch('assets/front_office_lite.json?v=f6949ae3',{cache:'force-cache'})
 })();
 </script>
 </main>
-<script src="assets/error-boundary.js?v=b5444017"></script>
-<script src="assets/keyboard-a11y.js?v=d840cbf5"></script>
+<script src="assets/error-boundary.js?v=dfe16efe"></script>
+<script src="assets/keyboard-a11y.js?v=8bd158d1"></script>
 <script src="assets/pwa-install.js?v=11551699"></script>
 </body>
 </html>

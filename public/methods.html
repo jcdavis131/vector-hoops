@@ -108,7 +108,7 @@ span.proj{color:var(--orange-ink)}
 </div>
 <div style="display:grid;grid-template-columns:1.05fr .95fr;gap:10px;margin-top:10px">
 <div class="card"><h2 class="vh-sr">3. Convergent, discriminant, predictive</h2><div class="hd">3. Convergent / Discriminant / Predictive</div>
-<div style="overflow-x:auto"><table><thead><tr><th scope="col">Test</th><th scope="col">Claim</th><th scope="col">Result</th><th scope="col">Status</th></tr></thead><tbody>
+<div style="overflow-x:auto" tabindex="0" role="region" aria-label="Table — scrolls sideways"><table><thead><tr><th scope="col">Test</th><th scope="col">Claim</th><th scope="col">Result</th><th scope="col">Status</th></tr></thead><tbody>
 <tr><td>Convergent OU</td><td>Vegas OU vs actual wins</td><td>r=0.741 944 entries</td><td><span class="badge ok">pass 0.741</span></td></tr>
 <tr><td>Convergent same-player</td><td>Same player yr→yr cos vs random</td><td>0.87 vs 0.11 7.9×</td><td><span class="badge ok">pass</span></td></tr>
 <tr><td>Convergent archetype</td><td>Same arch intra cos vs inter</td><td>0.71 vs 0.18 3.94× sep 0.867</td><td><span class="badge ok">pass</span></td></tr>
@@ -123,7 +123,7 @@ span.proj{color:var(--orange-ink)}
 <div class="mini">Kernel SHAP or permutation mean ΔMAE + sample_contribs_5 logged in model_zoo_eval.json. PD curve pick 1→30: 15230→11200→9450→6200→3100 diminishing late. SHAP global mean|abs| overall 1245.3 top log_overall 398.7 2nd round 187.2 3rd cap_growth 6.3 era minimal. Everyday test: If twin puts Giannis→LeBron closer than Giannis→Curry scout nods size+drive+pass. If didn't kill feature. <span class="badge y">Every model glass-box</span></div>
 <div class="mono">perm 5-fold shuffle not single split SHAP coeff·(x-mean) linear local PD 30 pt grid.</div></div></div>
 <div class="card"><h2 class="vh-sr">4. Threats and mitigations</h2><div class="hd">4. Threats → Mitigation (honest)</div>
-<div style="overflow-x:auto"><table><thead><tr><th scope="col">Threat</th><th scope="col">Why spurious</th><th scope="col">Mitigation</th></tr></thead><tbody>
+<div style="overflow-x:auto" tabindex="0" role="region" aria-label="Table — scrolls sideways"><table><thead><tr><th scope="col">Threat</th><th scope="col">Why spurious</th><th scope="col">Mitigation</th></tr></thead><tbody>
 <tr><td>Era drift 8.38° avg</td><td>Map rotates era masquerades skill Wemby vs 1996 bigs false closeness</td><td>Procrustes chain >=30 shared players/pair rotation mean principal angle Q vs I 5.88-12.64 avg 8.38 residual Frobenius chain to 1996-97 root axisDrift=1-|Q_ii|</td></tr>
 <tr><td>Cap spike 2016 $70M→$94M 34.5%</td><td>Raw cap% punishes 2016 FA 80% raw but >100% when prior×1.10</td><td>effective_cap 2016=prior×1.10 not raw $94.143M 2023 CBA max10% floor 0% can't fall timing mult</td></tr>
 <tr><td>Draft devalue late myth</td><td>Pick30 vs55 tiny raw but floor not 0 negative if zero usage not infinite</td><td>Floor -0.95·exp not -6× weight .06 floor clip3.5 top late-cap >35 surplus min800 max300 2·exp star floor $800 min q>1.30 2025 rookie completion 0.20→proj/0.20</td></tr>
@@ -139,8 +139,8 @@ span.proj{color:var(--orange-ink)}
 </div>
 </main>
 <footer><div style="display:flex;gap:8px;flex-wrap:wrap"><span class="pill pill-y">◎ yellow pill signal constructive</span><span class="mono">OU r=0.741 • cap spike eff • draft devalue late • SHAP/perm • zero-deps • theme #fafaf8</span></div><div style="display:flex;gap:6px"><a class="pill" href="/play">Play</a><a class="pill" href="/inventory">Inventory</a></div></footer>
-<script src="assets/error-boundary.js?v=b5444017"></script>
-<script src="assets/keyboard-a11y.js?v=d840cbf5"></script>
+<script src="assets/error-boundary.js?v=dfe16efe"></script>
+<script src="assets/keyboard-a11y.js?v=8bd158d1"></script>
 <script src="assets/pwa-install.js?v=11551699"></script>
 <script>if('serviceWorker' in navigator){try{navigator.serviceWorker.register('/sw.js')}catch(e){}}</script>
 </body>

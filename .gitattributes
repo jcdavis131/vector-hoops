@@ -27,7 +27,16 @@ public/assets/posecode-embed-0.1.0.js  -text
 # with 362 CRLF, and check_frontend immediately reported the tokens on three
 # pages as stale. Same mechanism, wider blast radius than the one bundle.
 
-assets/*.js         -text
-assets/*.css        -text
-public/assets/*.js  -text
-public/assets/*.css -text
+# These four rules were right about the mechanism and too narrow about the paths.
+# `assets/*.js` does not match `assets/lemmino/drift-void.js`, `assets/js/*.js`,
+# `assets/posecode/parser.js` or `assets/workers/*.js`, and nothing covered .json
+# at all — so assets/data/*.json and every nested bundle still came out of a
+# Windows checkout with CRLF. Measured: 56 files under assets/ differ that way,
+# and stamp_assets.py on this box therefore wrote tokens describing bytes that
+# only exist here. The same --check passed locally and failed on ubuntu with 12
+# pages stale, which is the drift arriving exactly where the comment predicted.
+#
+# `**` matches at any depth, so these subsume the four narrow rules.
+
+assets/**            -text
+public/assets/**     -text

@@ -209,7 +209,7 @@ so nothing here is downloaded that is not about the player you asked for.</p>
   Promise.all([
     fetch('assets/attr_index.json?v=807ae9aa').then(function(r){
       if(!r.ok) throw new Error('attr_index HTTP ' + r.status); return r.json(); }),
-    fetch('assets/mtnn_attr_pop.json?v=0438ec8c', {cache:'force-cache'}).then(function(r){
+    fetch('assets/mtnn_attr_pop.json?v=ee83d0db', {cache:'force-cache'}).then(function(r){
       if(!r.ok) throw new Error('attr_pop HTTP ' + r.status); return r.json(); }),
     fetch('assets/embedding_map_points_limited.json?v=407d2cbc', {cache:'force-cache'}).then(function(r){
       if(!r.ok) throw new Error('points HTTP ' + r.status); return r.json(); })
@@ -272,12 +272,18 @@ so nothing here is downloaded that is not about the player you asked for.</p>
 <p class="mono" id="flowProv" style="margin-top:8px;opacity:.7;text-transform:none"></p>
 </div>
 
-<div class="card"><h2 class="vh-sr">Construct validity and threats</h2><div class="mono">Construct validity • threat mitigation</div><div class="sub">Define construct plain-English → operationalize → convergent/discriminant + predictive → document threats. No vanity metric. Operation = MTNN vector → 2d projection distance • op = cosine twin • threat = map distortion → logged LOD 1764 vs 12,966 drift • trade timing → historical 30 season snapshots.</div></div>
+<div class="card"><h2 class="vh-sr">Construct validity and threats</h2><div class="mono">Construct validity • threat mitigation</div><div class="sub">Define construct plain-English → operationalize → convergent/discriminant + predictive → document threats. No vanity metric. Operation = MTNN vector → 2d projection distance • op = cosine twin • threat = map distortion → logged LOD 1,764 vs 12,966 drift • trade timing → historical 30 season snapshots.</div></div>
 <style>
 .attr-row{display:grid;grid-template-columns:132px 1fr 54px;gap:8px;align-items:center;padding:3px 0;font-family:var(--mono);font-size:11px}
 .attr-name{font-weight:800;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .attr-track{background:#f0efe9;border:1.4px solid var(--ink);border-radius:999px;height:12px;overflow:hidden}
-.attr-fill{height:100%;background:var(--blue);border-right:1.4px solid var(--ink)}
+/* display:block, or none of this applies. .attr-fill is a <span>, and width and
+   height are both ignored on an inline box — so every bar rendered at 1px, which
+   is its 1.4px right border and nothing else, no matter what the inline
+   width:79.3% said. Twelve feature attributions drew as identical empty
+   outlines beside their real numbers, on the page whose subject is what the
+   model actually weighs. */
+.attr-fill{display:block;height:100%;background:var(--blue);border-right:1.4px solid var(--ink)}
 .attr-fill.partial{background:repeating-linear-gradient(45deg,var(--orange),var(--orange) 4px,#f6c9b8 4px,#f6c9b8 8px)}
 .attr-val{text-align:right;font-variant-numeric:tabular-nums}
 .attr-fam{font-weight:400;color:var(--muted);text-transform:none}
@@ -433,7 +439,7 @@ span.pill.mono.ink,.pill.ink{color:#C9C6C0}
           ' at '+(rows[0].v*scale).toFixed(2)+'.');
     }
   }
-  fetch('assets/mtnn_attr_pop.json?v=0438ec8c',{cache:'force-cache'}).then(function(r){
+  fetch('assets/mtnn_attr_pop.json?v=ee83d0db',{cache:'force-cache'}).then(function(r){
     if(!r.ok) throw new Error('HTTP '+r.status);
     return r.json();
   }).then(function(j){
@@ -465,7 +471,7 @@ span.pill.mono.ink,.pill.ink{color:#C9C6C0}
      the caveat the file carries and the markup did not: the best model's
      numbers are PROJECTED from a prior version, not retrained. */
   var zt=document.getElementById('zooTable'), zn=document.getElementById('zooNote'), zc=document.getElementById('zooCaveat');
-  fetch('assets/model_zoo.json?v=15a50de0',{cache:'force-cache'}).then(function(r){
+  fetch('assets/model_zoo.json?v=87d8632f',{cache:'force-cache'}).then(function(r){
     if(!r.ok) throw new Error('HTTP '+r.status);
     return r.json();
   }).then(function(j){
@@ -527,7 +533,7 @@ span.pill.mono.ink,.pill.ink{color:#C9C6C0}
   var flowEl=document.getElementById('flow'), flowDet=document.getElementById('flowDetail'),
       flowLead=document.getElementById('flowLead'), flowProv=document.getElementById('flowProv');
   function esc2(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
-  fetch('assets/mtnn_arch.json?v=d9922089',{cache:'force-cache'}).then(function(r){
+  fetch('assets/mtnn_arch.json?v=758a3d56',{cache:'force-cache'}).then(function(r){
     if(!r.ok) throw new Error('HTTP '+r.status);
     return r.json();
   }).then(function(a){
@@ -689,7 +695,7 @@ span.pill.mono.ink,.pill.ink{color:#C9C6C0}
         .then(function(r){ if(!r.ok) throw new Error('HTTP '+r.status); return r.json(); }),
       fetch('assets/embedding_map_points_limited.json?v=407d2cbc',{cache:'force-cache'})
         .then(function(r){ return r.ok?r.json():null; }).catch(function(){ return null; }),
-      fetch('assets/eval_scoreboard.json?v=a436661b',{cache:'force-cache'})
+      fetch('assets/eval_scoreboard.json?v=bb54ebdf',{cache:'force-cache'})
         .then(function(r){ return r.ok?r.json():null; }).catch(function(){ return null; })
     ]).then(function(all){
       TR=(all[0]&&all[0].trajectories)||null;
@@ -745,7 +751,7 @@ span.pill.mono.ink,.pill.ink{color:#C9C6C0}
 })();
 </script>
 </main>
-<script src="assets/error-boundary.js?v=b5444017"></script>
-<script src="assets/keyboard-a11y.js?v=d840cbf5"></script>
+<script src="assets/error-boundary.js?v=dfe16efe"></script>
+<script src="assets/keyboard-a11y.js?v=8bd158d1"></script>
 <script src="assets/pwa-install.js?v=11551699"></script>
 </body></html>

@@ -14,6 +14,7 @@ that are small and alone, and speaks the moment two of them crowd.
 """
 from __future__ import annotations
 
+import argparse
 import functools, http.server, json, shutil, socket, socketserver, subprocess, sys, tempfile, threading, time, urllib.request
 from pathlib import Path
 
@@ -28,7 +29,22 @@ from check_viewport import WS, BROWSERS  # noqa: E402
 PROBE = r"""(function(){
   var SEL='a[href],button,input,select,textarea,summary,[role="button"],[role="option"],'+
           '[role="columnheader"][tabindex],[tabindex]:not([tabindex="-1"])';
-  var els=[].slice.call(document.querySelectorAll(SEL)).filter(function(e){
+  /* Shadow roots too. document.querySelectorAll stops at the shadow boundary,
+     and /player-animations mounts eight <posecode-player> elements holding
+     sixteen focusable controls between them — this gate reported 26 targets on
+     that page, which is the light-DOM count exactly, and said nothing about the
+     other sixteen. They are judged by the same two exceptions below as everything
+     else; nothing here is special-cased for being in a shadow root. */
+  function collect(root, out){
+    var all=root.querySelectorAll('*');
+    for(var i=0;i<all.length;i++){
+      var e=all[i];
+      if(e.matches && e.matches(SEL)) out.push(e);
+      if(e.shadowRoot) collect(e.shadowRoot, out);
+    }
+    return out;
+  }
+  var els=collect(document, []).filter(function(e){
     if(typeof e.getClientRects!=='function' || !e.getClientRects().length) return false;
     var cs=getComputedStyle(e);
     if(cs.visibility==='hidden'||cs.display==='none'||+cs.opacity===0) return false;
@@ -89,6 +105,12 @@ def ev(ws, e):
 
 
 def main() -> int:
+    # WCAG 2.5.8 is a touch criterion and this had only ever run at 1280x900,
+    # where a phone's layout does not exist. --mobile emulates 390x844 at DPR 2
+    # with touch, which is the shape the rule is actually about.
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--mobile", action="store_true", help="390x844 at DPR 2, touch")
+    args = ap.parse_args()
     browser = next((b for b in BROWSERS if b.exists()), None)
 
     class Q(http.server.SimpleHTTPRequestHandler):
@@ -124,7 +146,27 @@ def main() -> int:
                 if target: break
             except Exception: time.sleep(0.25)
         ws = WS(target)
+        # Both viewports are emulated, not left to the window flag. A launch
+        # --window-size is the OUTER window, so 1280 gave an innerWidth of 1258
+        # once the scrollbar took its 22px — close enough to look right and not
+        # the width the run says it measured.
+        ws.call("Emulation.setDeviceMetricsOverride",
+                {"width": 390, "height": 844, "deviceScaleFactor": 2, "mobile": True}
+                if args.mobile else
+                {"width": 1280, "height": 900, "deviceScaleFactor": 1, "mobile": False})
         ws.call("Page.enable"); ws.call("Runtime.enable")
+        # assert the viewport the run claims. Identical totals at 1280 and 390
+        # would otherwise read as "the layout is the same", when it means the
+        # override never applied and both runs measured one viewport.
+        ws.call("Page.navigate", {"url": f"http://127.0.0.1:{site}/index.html"})
+        time.sleep(1.0)
+        vw = ev(ws, "innerWidth")
+        want = 390 if args.mobile else 1280
+        print(f"viewport innerWidth={vw} (wanted {want})")
+        if vw != want:
+            print(f"  ABORT — the viewport is {vw}, not {want}; nothing below would "
+                  f"be measuring the layout this run claims to test")
+            return 2
         for page in pages:
             ws.call("Page.navigate", {"url": f"http://127.0.0.1:{site}{page}"})
             time.sleep(2.0)

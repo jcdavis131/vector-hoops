@@ -44,20 +44,29 @@ def counts() -> tuple[int, int]:
 
 def patterns(total: int, current: int) -> list[tuple[re.Pattern[str], str]]:
     """(what to find, what it should say) — anchored, never a bare number swap."""
-    t, c = f"{total:,}".replace(",", ""), f"{current:,}".replace(",", "")
+    # Thousands separator, which this deliberately stripped. The page it writes
+    # renders "1,764 players" and "1,764 of 1,764 points" from its own script, so
+    # stripping it here put both spellings of one number on one screen — the
+    # heading read "PLAYERS EXPLORER · 1764 FILTERED" directly above "1,764
+    # players". Every string below is prose a visitor reads.
+    #
+    # The finders take [\d,]+ so a run over already-formatted markup still
+    # matches; on \d+ alone the check read "764 players filtered" out of "1,764
+    # players filtered" and reported drift against a page that was correct.
+    t, c = f"{total:,}", f"{current:,}"
     return [
-        (re.compile(r"Players Explorer · \d+ filtered"), f"Players Explorer · {t} filtered"),
-        (re.compile(r"\d+ players filtered · current/all"), f"{t} players filtered · current/all"),
-        (re.compile(r">All \d+</button>"), f">All {t}</button>"),
-        (re.compile(r">Current \d+</button>"), f">Current {c}</button>"),
-        (re.compile(r">loading \d+ pts<"), f">loading {t} pts<"),
-        (re.compile(r"Current = \d+ latest seasons"), f"Current = {c} latest seasons"),
-        (re.compile(r"All = \d+ filtered \(current"), f"All = {t} filtered (current"),
-        (re.compile(r"· \d+ → 80 list subset"), f"· {t} → 80 list subset"),
+        (re.compile(r"Players Explorer · [\d,]+ filtered"), f"Players Explorer · {t} filtered"),
+        (re.compile(r"[\d,]+ players filtered · current/all"), f"{t} players filtered · current/all"),
+        (re.compile(r">All [\d,]+</button>"), f">All {t}</button>"),
+        (re.compile(r">Current [\d,]+</button>"), f">Current {c}</button>"),
+        (re.compile(r">loading [\d,]+ pts<"), f">loading {t} pts<"),
+        (re.compile(r"Current = [\d,]+ latest seasons"), f"Current = {c} latest seasons"),
+        (re.compile(r"All = [\d,]+ filtered \(current"), f"All = {t} filtered (current"),
+        (re.compile(r"· [\d,]+ → 80 list subset"), f"· {t} → 80 list subset"),
         # index.html and model.html quote the same count in their own words
-        (re.compile(r"\d+ pts filt"), f"{t} pts filt"),
-        (re.compile(r"map \d+ filt"), f"map {t} filt"),
-        (re.compile(r"LOD \d+ vs "), f"LOD {t} vs "),
+        (re.compile(r"[\d,]+ pts filt"), f"{t} pts filt"),
+        (re.compile(r"map [\d,]+ filt"), f"map {t} filt"),
+        (re.compile(r"LOD [\d,]+ vs "), f"LOD {t} vs "),
     ]
 
 
