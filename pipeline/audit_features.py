@@ -210,21 +210,23 @@ def main() -> None:
             continue
         r = float(np.corrcoef(v, y)[0, 1])
         if abs(r) >= CLOCK_R:
-            clocks.append({
-                "feature": f,
-                "family": fam_of.get(f, "?"),
-                "r": round(r, 4),
-                "coverage": round(float(obs.mean()), 4),
-            })
+            clocks.append(
+                {
+                    "feature": f,
+                    "family": fam_of.get(f, "?"),
+                    "r": round(r, 4),
+                    "coverage": round(float(obs.mean()), 4),
+                }
+            )
     clocks.sort(key=lambda d: -abs(d["r"]))
     report["clock_candidates"] = clocks
     report["clock_check"] = {
         "threshold": CLOCK_R,
         "why": "identity retrieval over adjacent seasons is cheatable by any feature that "
-               "encodes the season; a per-season z-score cannot, because every season is "
-               "centred at zero by construction",
+        "encodes the season; a per-season z-score cannot, because every season is "
+        "centred at zero by construction",
         "action": "reported, not silently dropped -- any claim built on this matrix should "
-                  "survive an ablation that removes these columns",
+        "survive an ablation that removes these columns",
     }
 
     OUT.write_text(json.dumps(report, indent=1), encoding="utf-8")
