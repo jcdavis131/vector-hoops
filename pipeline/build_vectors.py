@@ -178,11 +178,7 @@ _NEVER_FEATURES = ("PLAYER_ID", "PLAYER_NAME")
 def source_columns(name: str, record: dict) -> dict:
     """The subset of `record` that source `name` is allowed to contribute."""
     allowed = SOURCE_CONTRACTS.get(name)
-    return {
-        k: v
-        for k, v in record.items()
-        if k not in _NEVER_FEATURES and (allowed is None or k in allowed)
-    }
+    return {k: v for k, v in record.items() if k not in _NEVER_FEATURES and (allowed is None or k in allowed)}
 
 
 TRACKING_SPECS = [  # (pt_measure_type, wanted columns)
