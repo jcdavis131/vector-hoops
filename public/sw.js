@@ -71,8 +71,19 @@
 
    v7.10: index.html changed — four hub cards had their headline glued to
    their label, three button treatments across four equal lanes, and a card
-   stretched to 90px of empty white. '/' is in SHELL. */
-const C = 'hoops-v7-13';
+   stretched to 90px of empty white. '/' is in SHELL.
+
+   v7.11-7.13: unrecorded. The note at v7.8 said a version history that stops
+   being written reads as complete, and then three more bumps went unwritten
+   anyway. Recording the gap rather than inventing what they were.
+
+   v7.14: twenty pages carried stale ?v= tokens - error-boundary.js alone was
+   wrong on eighteen of them - because nothing ever ran stamp_assets.py --check.
+   CI runs it now. The first attempt at this stamped from a Windows checkout and
+   wrote tokens for bytes the server never serves; .gitattributes now marks
+   assets/** as -text so a stamp means the same thing on every box. '/' is in
+   SHELL and its tokens moved, so C purges the old fill. */
+const C = 'hoops-v7-14';
 const SHELL = ['/', '/offline', '/manifest.json'];
 const FALLBACK = ['/offline', '/'];
 const DATA = /\.(json|f32|bin)$/;

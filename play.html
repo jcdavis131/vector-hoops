@@ -78,7 +78,7 @@ function drawBase(poolObj){let W=c.clientWidth,H=c.clientHeight;ctx.clearRect(0,
   if(done) done.innerHTML='Done for today. New puzzle tomorrow — keep exploring the map below.';
   var gi=$('guess');
   if(gi) gi.placeholder='Done — explore the map or share';
-  return}let pid=seq[idx];let past=POOL.find(p=>p.i===pid)||POOL[pid%POOL.length];cur=past;$('q').innerHTML='<b>'+past.n+'</b> → ?';drawBase(past);$('trajChips').innerHTML='';$('seasonChips').innerHTML='';let rb=$('resultBox');if(rb)rb.style.display='none';let ov=trajOver.getContext('2d');ov.clearRect(0,0,trajOver.width,trajOver.height)}function log(h){$('log').innerHTML+='<div>'+h+'</div>';$('log').scrollTop=9999}async function fetchTrajCache(){if(trajCache)return trajCache;try{let r=await fetch('assets/embedding_map_trajectories.json?v=2e787a46');let j=await r.json();trajCache=j.trajectories||j;return trajCache}catch(e){return{}}}async function fetchManifest(){if(manifestCache)return manifestCache;try{let r=await fetch('assets/embedding_map_manifest.json?v=c4042e09');let j=await r.json();manifestCache=j.players||[];return manifestCache}catch(e){return[]}}function norm(s){return(s||'').toLowerCase().replace(/[^a-z]/g,'')}function findPid(name){if(!manifestCache)return null;let nb=norm(name.replace(/\s+\d{2}-\d{2}.*/,'').replace(/\s+\d{4}.*/,'').trim());let f=manifestCache.find(p=>norm(p.display_name).includes(nb)||nb.includes(norm(p.display_name)));return f?f.player_id:null}/* Two pool shapes reach this. The real rows from game_vectors.json carry x and
+  return}let pid=seq[idx];let past=POOL.find(p=>p.i===pid)||POOL[pid%POOL.length];cur=past;$('q').innerHTML='<b>'+past.n+'</b> → ?';drawBase(past);$('trajChips').innerHTML='';$('seasonChips').innerHTML='';let rb=$('resultBox');if(rb)rb.style.display='none';let ov=trajOver.getContext('2d');ov.clearRect(0,0,trajOver.width,trajOver.height)}function log(h){$('log').innerHTML+='<div>'+h+'</div>';$('log').scrollTop=9999}async function fetchTrajCache(){if(trajCache)return trajCache;try{let r=await fetch('assets/embedding_map_trajectories.json?v=2e787a46');let j=await r.json();trajCache=j.trajectories||j;return trajCache}catch(e){return{}}}async function fetchManifest(){if(manifestCache)return manifestCache;try{let r=await fetch('assets/embedding_map_manifest.json?v=e4a12140');let j=await r.json();manifestCache=j.players||[];return manifestCache}catch(e){return[]}}function norm(s){return(s||'').toLowerCase().replace(/[^a-z]/g,'')}function findPid(name){if(!manifestCache)return null;let nb=norm(name.replace(/\s+\d{2}-\d{2}.*/,'').replace(/\s+\d{4}.*/,'').trim());let f=manifestCache.find(p=>norm(p.display_name).includes(nb)||nb.includes(norm(p.display_name)));return f?f.player_id:null}/* Two pool shapes reach this. The real rows from game_vectors.json carry x and
    y already in [0,1]; the hardcoded fallback rows carry xy in [-1,1]. Only `xy`
    used to be read, and the real pool has no such field — so every guess whose
    pid missed the trajectory cache threw on undefined[0]. That rejection was
@@ -575,7 +575,7 @@ function installRealMap(dim){
      The swatches carry a solid ink border: MAP_OKABE[7] is #FFFEF7, picked to
      be visible on the near-black canvas, and it would vanish on the white card
      without one. */
-  fetch('assets/mtnn_arch.json?v=d9922089')
+  fetch('assets/mtnn_arch.json?v=758a3d56')
     .then(function(r){ return r.ok?r.json():null; })
     .then(function(j){
       var names=j&&j.gameArchetypes;
@@ -1024,8 +1024,8 @@ span.proj{color:var(--orange-ink)}
   // The static link works with JavaScript off, so it is the one to keep.
 })();
 </script>
-<script src="assets/error-boundary.js?v=b5444017"></script>
+<script src="assets/error-boundary.js?v=dfe16efe"></script>
 <script src="assets/keyboard-a11y.js?v=8bd158d1"></script>
 <script src="assets/pwa-install.js?v=11551699"></script>
-<script src="assets/name-fix.js?v=70a28907"></script>
+<script src="assets/name-fix.js?v=b420fb43"></script>
 </body></html>

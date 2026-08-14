@@ -352,7 +352,7 @@ $('foTable').addEventListener('keydown',function(e){
 var lowerBooted=false;
 function bootLower(){
 if(lowerBooted) return; lowerBooted=true;
-fetch('assets/deadline.json?v=03a54d6c',{cache:'force-cache'})
+fetch('assets/deadline.json?v=e1dc20d3',{cache:'force-cache'})
   .then(function(r){ if(!r.ok) throw new Error('HTTP '+r.status); return r.json(); })
   .then(function(j){
     var up=(j.thrives||[]).slice(0,10), down=(j.craters||[]).slice(0,10);
@@ -498,7 +498,7 @@ fetch('assets/front_office_lite.json?v=7416a08d',{cache:'force-cache'})
 })();
 </script>
 </main>
-<script src="assets/error-boundary.js?v=b5444017"></script>
+<script src="assets/error-boundary.js?v=dfe16efe"></script>
 <script src="assets/keyboard-a11y.js?v=8bd158d1"></script>
 <script src="assets/pwa-install.js?v=11551699"></script>
 </body>

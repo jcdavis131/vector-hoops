@@ -416,13 +416,13 @@ q.disabled=false;
 q.addEventListener('input',applyFilter);
 q.addEventListener('search',applyFilter);
 
-fetch('assets/mtnn_arch.json?v=d9922089',{cache:'force-cache'}).then(function(r){return r.ok?r.json():null;})
+fetch('assets/mtnn_arch.json?v=758a3d56',{cache:'force-cache'}).then(function(r){return r.ok?r.json():null;})
  .then(function(j){
    if(!j||!j.gameArchetypes) return;
    $('archList').innerHTML=j.gameArchetypes.map(function(a){return '<li>'+esc(a)+'</li>';}).join('');
  }).catch(function(){ $('archList').innerHTML='<li class="dim">Archetype list could not be loaded.</li>'; });
 
-fetch('assets/eval_scoreboard.json?v=a436661b',{cache:'force-cache'}).then(function(r){return r.ok?r.json():null;})
+fetch('assets/eval_scoreboard.json?v=bb54ebdf',{cache:'force-cache'}).then(function(r){return r.ok?r.json():null;})
  .then(function(j){
    if(!j||!j.results||!j.results.mtnn) throw new Error('shape');
    var m=j.results.mtnn, b=j.results.baseline_transparent_14d;
@@ -443,7 +443,7 @@ fetch('assets/eval_scoreboard.json?v=a436661b',{cache:'force-cache'}).then(funct
  });
 })();
 </script>
-<script src="assets/error-boundary.js?v=b5444017"></script>
+<script src="assets/error-boundary.js?v=dfe16efe"></script>
 <script src="assets/keyboard-a11y.js?v=8bd158d1"></script>
 <script src="assets/pwa-install.js?v=11551699"></script>
 </body></html>
