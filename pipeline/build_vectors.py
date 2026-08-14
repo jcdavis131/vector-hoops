@@ -183,6 +183,8 @@ def source_columns(name: str, record: dict) -> dict:
         for k, v in record.items()
         if k not in _NEVER_FEATURES and (allowed is None or k in allowed)
     }
+
+
 TRACKING_SPECS = [  # (pt_measure_type, wanted columns)
     ("SpeedDistance", ["DIST_MILES", "AVG_SPEED"]),
     ("Drives", ["DRIVES", "DRIVE_PTS", "DRIVE_PASSES"]),
@@ -835,6 +837,12 @@ def main() -> None:
         default=None,
         help="fixed minimum total minutes GP*MIN (requires --fixed-gates)",
     )
+    ap.add_argument(
+        "--with-shape",
+        action="store_true",
+        help="emit the SHAPE_* within-season trajectory family (off by default: "
+        "measured at -0.81 CQS over 6 seeds, see docs/MTNN_STABILITY_2026-08-13_shape.md)",
+    )
     args = ap.parse_args()
     schedule_aware = not args.fixed_gates
 
@@ -868,7 +876,7 @@ def main() -> None:
         bio = {str(r["PLAYER_ID"]): r for r in (fetch_bio(season, args.offline) or [])}
         trk = fetch_tracking(season, args.offline) or {}
         form = compute_form_features(season)
-        shape = compute_shape_features(season)
+        shape = compute_shape_features(season) if args.with_shape else {}
         hustle = load_wide_skills_defense(season)
         gate = gates_for_season(season, schedule_aware=schedule_aware)
         if schedule_aware:
