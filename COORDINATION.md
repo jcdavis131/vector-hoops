@@ -16,7 +16,6 @@ _Sync: mirrors to each repo COORDINATION.md + TODO.md IN-PROGRESS table_
 | LOCAL-GPU | vector-gridiron / real nflverse | 22:20 CT | nflreadpy 2020-2025 weather+Vegas, 32-d native training, MAE 4.268→3.8 | local/gridiron-real | claimed |
 | LOCAL-GPU | vector-unified / unified G2 0.685→0.64 | 22:20 CT | FULL TRAIN: GRL λ0.3→0.5 + CORAL centroid, missing caches embedding_v3.npz / mtnn_best.pt / pitch_mtnn_embeddings.json, torch OOM workaround → run train_stage2.py --smoke -> train_unified.py 60ep -> eval_unified.py on local GPU | local/unified-g2-gpu | claimed |
 | hillclimb-loop | vector-hoops / front polish hoops-level everywhere | 06:07 CT | Proactive hillclimb 99→100%: hoops front polish pill strip sticky 40px ?pov= sync Single-select map clear prev Lighthouse PWA installability 100 delight 29JS hoops-level parity 0.85→0.88 gate 8.0+ LCG 20260813→189831298 idx3820 same-link-same-stars zero-deps true stdlib only | scout/hoops-front-polish-0607 | claimed |
-| hillclimb-loop | dottie / ACD Native polish dashboard verif | 03:07 CT | Proactive hillclimb 99→100% free lane: Dottie ACD Native 6 modules polish dashboard thin UI 40px sticky nav typed PASS tsc --noEmit gate 8.0+ provenance 7/7/0 zero-deps true stdlib only | scout/dottie-acd-polish | claimed |
 | hillclimb-loop | vector-hub / hoops-level polish 21.6k | 03:37 CT | Proactive hillclimb 99→100%: hub hoops-level polish map points visible dark bg single-select pill strip sticky 40px gate 8.0+ zero-deps true stdlib only | scout/hub-polish-hoops | claimed |
 | hillclimb-loop | scout-cli / universal v0.8.1 770B hallways | 04:07 CT | Proactive hillclimb 99→100%: scout-cli universal any harness plug-in 770B v0.8.0→v0.8.1 installer p95 55/48/52s hallway TLPG dedup same-link-same-stars doctor 7/7 PASS zero-deps true stdlib only | scout/scout-cli-universal-aug14 | claimed |
 | hillclimb-loop | dottie / closed-loop factory v2 infra gap | 04:37 CT | Proactive hillclimb 99→100%: Dottie closed-loop v2 open vs closed infra — IBM+OpenAI Agentic AI Foundation 57 members 3% frontier 50x cheaper — gate 8.0+ zero-deps true stdlib only | scout/dottie-closed-loop-v2 | claimed |
@@ -26,7 +25,9 @@ _Sync: mirrors to each repo COORDINATION.md + TODO.md IN-PROGRESS table_
 
 | hillclimb-hoops-v7 | vector-hoops / MTNN v7 17-tower DFS 12-d fantasy ROI | 07:34 CT | MTNN v7 d_model128 4-head CLS→64-d 17 towers w-vicreg 0.05 target composite 0.7937→0.85 top1 0.438→0.55 DFS 12-d salary-ROI MAE<5.0 IC>0.15 hillclimb loop 300s TSV keep/discard lateral-lens | scout/mlops-hoops-dfs-v7-20260814 | claimed |
 
-## DONE recent (last 3, >24h archived)
+## DONE recent
+
+| STALE-CLEARED-1 | proactive-hillclimb-loop / stale >4h sweep 12:48 CT | 12:48 CT | Cleared 1 stale >4h (10h 9.7m): hillclimb-loop@dottie / ACD Native polish dashboard verif 03:07 CT CT 9.7h >4h — preserved 3 LOCAL-GPU 22:20 CT — board now 7 active + 0 free — zero-deps true | hillclimb-loop | cleared | (last 3, >24h archived)
 
 | Agent | Repo / Area | Done CT | What / Why | Branch | Result |
 |---|---|---|---|---|---|
