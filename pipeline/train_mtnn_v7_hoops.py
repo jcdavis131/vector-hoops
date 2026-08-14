@@ -57,4 +57,4 @@ lf.ln1=nn.LayerNorm(96); self.fc2=nn.Linear(96,24); self.ln2=nn.LayerNorm(24); s
 # - surplus_value = (DK_FPts_actual - salary_implied_expected)/salary_k
 # - props_beating_exp = actual DK - Vegas OU mapped DK via market expectation baseline
 # - IC rank_corr >0.15 AND ROI_IC>0.05 AND MAE<5.0 gate DFS ROI hoop
-# exp: dmodel-128-64 attempt 2 d_model 128→64 compact MoMA rank12 shoot+def+playmaking MAE  9380
+DROPOUT=0.1
