@@ -109,7 +109,7 @@ def main():
     args=ap.parse_args()
     ts_start=time.time()
     device_str=device_auto(args.device)
-    print(f"v6 gated 192h→48d→64d 17 towers? (6 active today honest partial) 4L4H CLS 128→64 RoPE θ{args.rope_theta} RMSNorm eps{args.rmsnorm_eps} CORAL {args.w_coral} VICReg {args.w_vicreg} SupCon {args.w_supcon} device={device_str} auto — free platform edge, zero-deps true")
+    print(f"v6 gated 192h→48d→64d RoPE θ{args.rope_theta} RMSNorm eps{args.rmsnorm_eps} CORAL {args.w_coral} VICReg {args.w_vicreg} SupCon {args.w_supcon} device={device_str} auto — free platform edge, zero-deps true")
 
     try:
         import torch, torch.nn as nn, torch.nn.functional as F
@@ -336,7 +336,10 @@ def main():
             print(f"ep{ep+1}/{epochs} loss {loss.item():.4f} VICReg {float(lv):.4f} CORAL {float(lc):.4f} SupCon {float(ls):.4f} L2 ok")
 
     ckpt_path=DATA_DIR/f"mtnn_v6_gated_192h_48d_64d_{args.d_model}d_{args.n_heads}h_{args.n_layers}L.pt"
-    torch.save({"model":model.state_dict(),"args":vars(args),"loss":loss_hist,"fam_dims":fam_dims,"n_seasons":n_seasons,"train_matrix":"15 feats 6 fams honest partial"},ckpt_path)
+    # Was the literal "15 feats 6 fams honest partial", which described a matrix
+    # this checkpoint was not trained on. A checkpoint that misreports its own
+    # inputs cannot be compared to anything later.
+    torch.save({"model":model.state_dict(),"args":vars(args),"loss":loss_hist,"fam_dims":fam_dims,"n_seasons":n_seasons,"train_matrix":f"{D} feats {len(fam_dims)} fams"},ckpt_path)
     print(f"Checkpoint → {ckpt_path} {ckpt_path.stat().st_size} bytes")
 
     # Export embeddings for all N
@@ -421,7 +424,15 @@ def main():
         "device":device_str,"torch":str(torch.__version__) if 'torch' in sys.modules else "cpu",
         "gated_architecture":{
             "input": f"{D} feats cat([x*m,m]) -> {D*2} -> {args.tower_width}→{args.tower_hidden}→{args.tower_width} 3 blocks",
-            "tokens": f"{len(fam_dims)+2} = 1 CLS 128 + 1 season 12→128 + {len(fam_dims)} towers {args.tower_width}→128 honest partial 6 active",
+            # Computed, not asserted. This string used to end "honest partial 6
+            # active" as a literal, left over from when the matrix carried 6
+            # families. The model has always built one tower per family in
+            # fam_dims, so with a 19-family matrix it reported 19 towers and "6
+            # active" in the same sentence -- and the report is what a reader
+            # trusts. Provenance that contradicts the run is worse than no
+            # provenance.
+            "tokens": f"{len(fam_dims)+2} = 1 CLS 128 + 1 season 12→128 + "
+                      f"{len(fam_dims)} towers {args.tower_width}→128, all active",
             "fusion": f"Transformer d_model {args.d_model} n_heads {args.n_heads} n_layers {args.n_layers} ff {args.ff} pre-LN RoPE θ{args.rope_theta} RMSNorm eps{args.rmsnorm_eps}",
             "cls_head": f"CLS {args.d_model}→192→48→64 L2 gated",
             "losses":{"coral":f"λ{args.w_coral}+centroid{args.w_coral_centroid}","vicreg":f"λ_var{args.vicreg_var_w} λ_cov{args.vicreg_cov_w} w{args.w_vicreg}","supcon":f"τ{args.supcon_tau} w{args.w_supcon}"},
