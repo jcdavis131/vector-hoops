@@ -183,6 +183,8 @@ def source_columns(name: str, record: dict) -> dict:
         for k, v in record.items()
         if k not in _NEVER_FEATURES and (allowed is None or k in allowed)
     }
+
+
 TRACKING_SPECS = [  # (pt_measure_type, wanted columns)
     ("SpeedDistance", ["DIST_MILES", "AVG_SPEED"]),
     ("Drives", ["DRIVES", "DRIVE_PTS", "DRIVE_PASSES"]),
