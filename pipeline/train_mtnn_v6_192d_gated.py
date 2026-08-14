@@ -438,8 +438,6 @@ def main():
         "money_predictions":{"use_case":"DFS optimizer closer/exploitable tags, props beating expectation, cap health 0-100 free platform edge","market_edge":"forward calibration isotonic, dailySeed LCG same-link-same-stars prevents leakage"},
         "zero_deps":True
     }
-    out_glass=ROOT/"pipeline"/"mtnn_v6_glassbox.json"
-    out_glass.write_text(json.dumps(glass,indent=2))
     def to_py(o):
         import numpy as np
         if isinstance(o, (np.floating,)):
@@ -451,8 +449,17 @@ def main():
         if isinstance(o, (list,tuple)):
             return [to_py(x) for x in o]
         return o
+    # Sanitise BEFORE the first write, not after it. This dict is full of numpy
+    # float32 (cv means, permutation-importance deltas, candidate_mae), which
+    # json.dumps refuses. The helper was already here and correct -- it just sat
+    # one line too late, so the run died on its first write with
+    # "TypeError: Object of type float32 is not JSON serializable" AFTER all the
+    # training was done. At the intended 150 epochs that is an hour of GPU time
+    # spent and nothing written.
     glass=to_py(glass)
     cv=to_py(cv)
+    out_glass=ROOT/"pipeline"/"mtnn_v6_glassbox.json"
+    out_glass.write_text(json.dumps(glass,indent=2))
     print(f"Glass-box → {out_glass} top10 {top10[:2]}")
     # also copy to assets/data for frontend
     ASSETS_DATA.mkdir(parents=True,exist_ok=True)
