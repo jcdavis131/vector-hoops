@@ -66,10 +66,7 @@ def test_headline_exists():
 
     import pytest
 
-    hpath = (
-        pathlib.Path.home()
-        / "workspace/your_files/news-briefs/headlines/_by_headline/tech_ai_52c707a406.md"
-    )
+    hpath = pathlib.Path.home() / "workspace/your_files/news-briefs/headlines/_by_headline/tech_ai_52c707a406.md"
     if not hpath.exists():
         pytest.skip(f"evidence file not on this machine: {hpath}")
     text = hpath.read_text()
