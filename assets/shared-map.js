@@ -1,4 +1,5 @@
-/* shared-map.js v4-filtered — 3+ seasons OR rookie last 3
+/* shared-map.js v4-filtered — LOD 4000 mobile / 8000 desktop DPR1 fillRect void dark
+   - DPR1 enforced: canvas.width=W, canvas.height=H, style.width/height=Wpx/Hpx, no devicePixelRatio scaling, fillRect void dark — 3+ seasons OR rookie last 3
    - Fast lite 4322 first paint
    - Full progressive filtered: only players with 3+ player-seasons, plus any player whose max season is in last 3 seasons window (rookies)
    - Cache API + session reuse, pending focus queue, injection always works even if filtered out
@@ -68,7 +69,8 @@ export async function mountSharedMap(canvas, opts={}){
       const key = pid ? ('pid:'+pid) : ('name:'+(p.n||'').trim().toLowerCase());
       if(keepKeys.has(key)) kept++;
     }
-    console.log('season filter v5 pid-aware: maxYear',maxYear,'recentMin',recentMin,'keptPersons',keepKeys.size,'keptPts',kept,'/',arr.length);
+    // filtered merge info — keep minimal for dev, debug level to avoid prod noise
+    if(typeof console.debug==='function') console.debug('season filter v5 pid-aware: maxYear',maxYear,'recentMin',recentMin,'keptPersons',keepKeys.size,'keptPts',kept,'/',arr.length);
     return {keepKeys, maxYear, recentMin, kept, raw:arr.length};
   }
 
@@ -121,6 +123,7 @@ export async function mountSharedMap(canvas, opts={}){
     if(!canvas) return;
     const sz=getSize();
     if(W===sz.w && H===sz.h && canvas.width===sz.w && canvas.height===sz.h) return;
+    // DPR1 enforced: use CSS pixels only, no devicePixelRatio * W/H to avoid OOM; canvas.width=W not DPR*W
     W=sz.w; H=sz.h; canvas.width=W; canvas.height=H;
     if(canvas.style.width!==W+'px') canvas.style.width=W+'px';
     if(canvas.style.height!==H+'px') canvas.style.height=H+'px';
@@ -164,7 +167,7 @@ export async function mountSharedMap(canvas, opts={}){
         let localMax=0;
         for(let i=0;i<N;i++){ const p=arr[i]||{}; baseOx[i]=((p.x??0.5)-0.5)*2; baseOy[i]=((p.y??0.5)-0.5)*2; baseOz[i]=((p.z??0.5)-0.5)*2; baseC[i]=(p.c|0)&7; baseI[i]=p.i!=null? (p.i|0) : i; baseN[i]=p.n||''; baseS[i]=p.s||''; baseP[i]=p.p??-1; projected[i].c=baseC[i]; if(baseI[i]>localMax) localMax=baseI[i]; }
         maxId=localMax; projById=new Int32Array(maxId+1); projById.fill(-1); for(let i=0;i<N;i++){ const id=baseI[i]; if(id>=0&&id<=maxId) projById[id]=i; }
-        console.log('shared-map v4 lite loaded',N,u); return true;
+        if(typeof console.debug==='function') console.debug('shared-map v4 lite loaded',N,u); return true;
       }catch(e){ console.warn('lite load fail',u,e); }
     }
     return false;
@@ -222,7 +225,7 @@ export async function mountSharedMap(canvas, opts={}){
         } else { baseOx=newOx; baseOy=newOy; baseOz=newOz; baseC=newC; baseI=newI; baseN=newNArr; baseS=newSArr; baseP=newPArr; projected=newProj; N=fullN; }
       } else { baseOx=newOx; baseOy=newOy; baseOz=newOz; baseC=newC; baseI=newI; baseN=newNArr; baseS=newSArr; baseP=newPArr; projected=newProj; N=fullN; }
       maxId=newMax; projById=new Int32Array(maxId+1); projById.fill(-1); for(let i=0;i<N;i++){ const id=baseI[i]; if(id>=0&&id<=maxId) projById[id]=i; }
-      fullLoaded=true; console.log('shared-map v4 filtered merged',N,'from raw',raw,'maxYear',maxYear,'recentMin',recentMin);
+      fullLoaded=true; if(typeof console.debug==='function') console.debug('shared-map v4 filtered merged',N,'from raw',raw,'maxYear',maxYear,'recentMin',recentMin);
       projectFrame(); draw();
       if(pendingFocus){ const {id,label}=pendingFocus; pendingFocus=null; if(projById[id]>=0){ targetId=id; projectFrame(); draw(); focusOnTargetInternal(); if(label&&document.getElementById('popular-current')) document.getElementById('popular-current').textContent='Showing '+label+' — ★ on map · '+N+' filtered stars'; } else {
         // target was filtered out? inject anyway
@@ -247,7 +250,7 @@ export async function mountSharedMap(canvas, opts={}){
   }
   async function loadNamesLazy(){
     if(baseN[0] && baseN[0].length) return;
-    try{ const game=await gameSearchLite(6000); if(game){ console.log('shared-map v4 names merged from game state', mergeNames(game)); return; } }catch{}
+    try{ const game=await gameSearchLite(6000); if(game){ if(typeof console.debug==='function') console.debug('shared-map v4 names merged from game state', mergeNames(game)); return; } }catch{}
     if(fullLoaded) return;
   }
 
@@ -309,7 +312,7 @@ export async function mountSharedMap(canvas, opts={}){
     rafPending=false; if(embedPaused) return;
     const now=t||performance.now(); if(now-lastRender < frameBudget){ scheduleLoop(); return; } lastRender=now;
     if(!lastT) lastT=now; const dt=Math.min(50, now-lastT); lastT=now;
-    if(!isDragging && auto){ rotY+=dt*0.00022; idleMs+=dt; if(idleMs>8000){ auto=false; embedPaused=true; console.log('map idle pause'); return; } }
+    if(!isDragging && auto){ rotY+=dt*0.00022; idleMs+=dt; if(idleMs>8000){ auto=false; embedPaused=true; if(typeof console.debug==='function') console.debug('map idle pause'); return; } }
     else if(!isDragging && !auto){ projectFrame(); try{ draw(); }catch(e){ console.warn('draw fail',e); } return; } else idleMs=0;
     projectFrame(); try{ draw(); }catch(e){ console.warn('draw fail',e); } scheduleLoop();
   }
@@ -338,16 +341,29 @@ export async function mountSharedMap(canvas, opts={}){
   if(ok){ projectFrame(); draw(); scheduleLoop(); loadNamesLazy().then(()=>{ projectFrame(); draw(); }); setTimeout(()=>{ loadFullProgressive(); }, 120); }
   else { ctx.fillStyle='#FFFEF7'; ctx.fillText('Map failed to load',14,22); }
 
+  // single-select: only one targetId at a time, prev cleared on replacement (no multi-select accumulation)
   function ensureFullThenFocus(id,label){
+    const newId = (id==null? null : id|0);
+    // DPR1 & clearPrev: draw() full clears each frame (clearRect+fillRect W,H), so previous highlight voided automatically
     if(!fullLoaded && !fullLoading){ loadFullProgressive(); }
-    if(fullLoaded && projById && id>=0 && id<=maxId && projById[id]>=0){ targetId=id|0; if(label&&document.getElementById('popular-current')) document.getElementById('popular-current').textContent='Showing '+label+' — ★ on map · '+N+' stars'; projectFrame(); draw(); focusOnTargetInternal(); return true; }
+    if(fullLoaded && projById && newId!=null && newId>=0 && newId<=maxId && projById[newId]>=0){
+      // single-select replacement — clear previous highlight
+      targetId=newId;
+      if(label&&document.getElementById('popular-current')) document.getElementById('popular-current').textContent='Showing '+label+' — ★ on map · '+N+' filtered stars';
+      projectFrame(); draw(); focusOnTargetInternal(); return true;
+    }
     if(!fullLoaded){
-      pendingFocus={id:id|0,label:label||''};
-      if(document.getElementById('popular-current')) document.getElementById('popular-current').textContent='Loading filtered set for '+(label||id)+' … '+N+'/'+(totalRaw||12966);
+      if(newId!=null){
+        pendingFocus={id:newId,label:label||''};
+        if(document.getElementById('popular-current')) document.getElementById('popular-current').textContent='Loading filtered set for '+(label||newId)+' … '+N+'/'+(totalRaw||12966);
+      } else {
+        pendingFocus=null;
+      }
       return false;
     }
-    if(!projById||projById[id]<0){ _injectPoint({i:id,x:0.5,y:0.5,z:0.5,c:7}); }
-    targetId=id|0; projectFrame(); draw(); focusOnTargetInternal(); return true;
+    if(newId!=null && (!projById||projById[newId]<0)){ _injectPoint({i:newId,x:0.5,y:0.5,z:0.5,c:7}); }
+    targetId=newId; // single-select: replaces previous, null clears all highlights
+    projectFrame(); draw(); if(targetId!=null) focusOnTargetInternal(); return true;
   }
   function focusOnTargetInternal(){
     if(targetId==null||!projById||targetId<0||targetId>maxId) return;
@@ -357,7 +373,18 @@ export async function mountSharedMap(canvas, opts={}){
   }
 
   return {
-    setTarget(id){ if(!ensureFullThenFocus(id,null)){ targetId=id==null?null:id|0; draw(); return; } targetId=id==null?null:id|0; draw(); },
+    setTarget(id){
+      // single-select enforcement: clear prev, highlight only current, no array accumulation
+      const newId = (id==null? null : id|0);
+      if(targetId===newId){ draw(); return; } // already selected
+      if(!ensureFullThenFocus(newId,null)){
+        // pending full load — temporarily set single target, will be re-resolved when full loads
+        targetId=newId;
+        draw();
+        return;
+      }
+      // ensureFullThenFocus already set targetId = newId and cleared prev via full redraw
+    },
     setGuesses(ids){ guessIds=normalizeGuesses(ids); try{ for(const gm of guessIds){ if(!gm||gm.idx==null) continue; if(projById && gm.idx>=0 && gm.idx<=maxId && projById[gm.idx]>=0) continue; if(gm.x!=null && gm.y!=null && gm.z!=null){ _injectPoint({i:gm.idx, x:gm.x, y:gm.y, z:gm.z, c:gm.c??0, n:gm.n||'', s:gm.s||'', p:gm.p??-1}); } else if(window.VHPastModern && VHPastModern.state){ try{ const sl=VHPastModern.state().searchLite; const arr=sl&&(sl.players||sl); const row=Array.isArray(arr)&&arr.find(p=>p&&p.i===gm.idx); if(row) _injectPoint(row); }catch{} } } }catch(e){ console.warn('setGuesses inject fail',e); } draw(); },
     focusOnTarget(){ if(!ensureFullThenFocus(targetId,'')) { focusOnTargetInternal(); } else focusOnTargetInternal(); },
     hasPoint(id){ if(!projById) return false; return id>=0&&id<=maxId&&projById[id]>=0; },

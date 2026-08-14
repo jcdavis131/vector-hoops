@@ -1,3 +1,5 @@
+> You are in Hatch shared swarm — read `bundles/coordination/active-tasks.md` or `<repo>/TODO.md` to claim lane.
+
 # Claim Board Prompt — for any helper (Hatch or local)
 
 Copy this into your other agent as its SYSTEM / task preamble. It works both ways (Hatch ↔ outside).

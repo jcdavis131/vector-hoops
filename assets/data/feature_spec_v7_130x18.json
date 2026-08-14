@@ -1,0 +1,1044 @@
+{
+  "version": "v7",
+  "domain": "vector-hoops",
+  "total_features": 130,
+  "families_count": 18,
+  "families": [
+    {
+      "family": "shooting",
+      "count": 8,
+      "description": "Scoring efficiency & shot profile, era-z per season_norms.json",
+      "features": [
+        {
+          "name": "FG_PCT_Z",
+          "source": "vectors.json/14d FG_PCT era-z",
+          "type": "EXTRACTED",
+          "notes": "present in v6 train_matrix"
+        },
+        {
+          "name": "FG3_PCT_Z",
+          "source": "vectors.json FG3_PCT",
+          "type": "EXTRACTED",
+          "notes": "v6"
+        },
+        {
+          "name": "FT_PCT_Z",
+          "source": "vectors.json FT_PCT",
+          "type": "EXTRACTED",
+          "notes": "v6"
+        },
+        {
+          "name": "EFG_PCT",
+          "source": "formula (FGA,FG3A,FG% inferred pts) era-z",
+          "type": "INFERRED",
+          "notes": "needs FGA/FG3A from v6 to compute eFG=(FG+0.5*FG3)/FGA"
+        },
+        {
+          "name": "TS_PCT",
+          "source": "PTS/(2*(FGA+0.44*FTA)) era-z",
+          "type": "INFERRED",
+          "notes": "requires PTS+FGA+FTA present"
+        },
+        {
+          "name": "FG3A_RATE",
+          "source": "FG3A/FGA ratio era-z",
+          "type": "EXTRACTED_PARTIAL",
+          "notes": "FG3A, FGA present v6, ratio computable"
+        },
+        {
+          "name": "MIDRANGE_EFF_PROXY",
+          "source": "FG% residual after removing 3PTr & FT proxies",
+          "type": "INFERRED",
+          "notes": "heuristic, honesty: INFERRED not direct tracking"
+        },
+        {
+          "name": "FT_RATE",
+          "source": "FTA/FGA era-z",
+          "type": "INFERRED",
+          "notes": "FTA,FGA present v6"
+        }
+      ]
+    },
+    {
+      "family": "playmaking",
+      "count": 8,
+      "description": "Creation, usage, ball-security",
+      "features": [
+        {
+          "name": "AST_Z",
+          "source": "vectors.json AST era-z",
+          "type": "EXTRACTED",
+          "notes": "v6"
+        },
+        {
+          "name": "AST_TOV_RATIO",
+          "source": "AST/TOV era-z",
+          "type": "INFERRED",
+          "notes": "both present, ratio INFERRED"
+        },
+        {
+          "name": "AST_PCT_TEAM",
+          "source": "AST / team AST proxy via gamelogs_*.jsonl role_features",
+          "type": "INFERRED",
+          "notes": "INFERRED - requires gamelogs aggregation"
+        },
+        {
+          "name": "TOV_Z",
+          "source": "vectors.json TOV",
+          "type": "EXTRACTED",
+          "notes": "v6, inverted later in model"
+        },
+        {
+          "name": "ROLE_USAGE_SHARE",
+          "source": "pipeline/data/role_context.json ROLE_USAGE_SHARE",
+          "type": "EXTRACTED_PARTIAL",
+          "notes": "exists from role_features 2015-26 limited window"
+        },
+        {
+          "name": "USG_EST",
+          "source": "FGA+0.44FTA+TOV share era-z",
+          "type": "INFERRED",
+          "notes": "from role_features usage calc"
+        },
+        {
+          "name": "POTENTIAL_AST_RATE",
+          "source": "fetch_advanced_tracking.py advanced tracking",
+          "type": "SPEC",
+          "notes": "coverage <30% via missing tracking, spec honesty"
+        },
+        {
+          "name": "SECONDARY_AST_PROXY",
+          "source": "hockey-assist proxy via hockey assist tracking",
+          "type": "SPEC",
+          "notes": "SPEC - no source yet, low coverage, marked SPEC"
+        }
+      ]
+    },
+    {
+      "family": "defense",
+      "count": 8,
+      "description": "Stocks, deterrence, versatility",
+      "features": [
+        {
+          "name": "STL_Z",
+          "source": "vectors.json STL",
+          "type": "EXTRACTED",
+          "notes": "v6"
+        },
+        {
+          "name": "BLK_Z",
+          "source": "vectors.json BLK",
+          "type": "EXTRACTED",
+          "notes": "v6"
+        },
+        {
+          "name": "STL_PCT",
+          "source": "STL / opponent possessions via MIN share",
+          "type": "INFERRED",
+          "notes": "needs MIN proxy ROLE_MIN_SHARE"
+        },
+        {
+          "name": "BLK_PCT",
+          "source": "BLK / opponent 2PA proxy",
+          "type": "INFERRED",
+          "notes": "INFERRED"
+        },
+        {
+          "name": "DEFLECTION_PROXY",
+          "source": "fetch_advanced_tracking hustle deflections",
+          "type": "SPEC",
+          "notes": "fetch_missing_tracking limited, honesty SPEC"
+        },
+        {
+          "name": "DEF_VERSATILITY_INDEX",
+          "source": "positions faced via player positions data + team logs",
+          "type": "INFERRED",
+          "notes": "INFERRED from pipeline/fetch_positions.py"
+        },
+        {
+          "name": "DFG_PCT_AGAINST_PROXY",
+          "source": "tracking DFG% against",
+          "type": "SPEC",
+          "notes": "SPEC low coverage pre-2020"
+        },
+        {
+          "name": "CONTESTED_SHOT_RATE",
+          "source": "fetch_advanced_tracking",
+          "type": "SPEC",
+          "notes": "SPEC honesty flag"
+        }
+      ]
+    },
+    {
+      "family": "rebounding",
+      "count": 6,
+      "description": "Board creation & conversion",
+      "features": [
+        {
+          "name": "OREB_Z",
+          "source": "vectors.json OREB",
+          "type": "EXTRACTED",
+          "notes": "v6"
+        },
+        {
+          "name": "DREB_Z",
+          "source": "vectors.json DREB",
+          "type": "EXTRACTED",
+          "notes": "v6"
+        },
+        {
+          "name": "REB_PCT_TOTAL",
+          "source": "(OREB+DREB)/team total rebounds via ROLE_MIN_SHARE",
+          "type": "INFERRED",
+          "notes": "INFERRED"
+        },
+        {
+          "name": "OREB_RATE_TEAM",
+          "source": "OREB team share from gamelogs",
+          "type": "INFERRED",
+          "notes": "requires agg, INFERRED"
+        },
+        {
+          "name": "CONT_REB_PCT",
+          "source": "tracking contested rebound pct",
+          "type": "SPEC",
+          "notes": "SPEC low coverage"
+        },
+        {
+          "name": "BOXOUT_PROXY",
+          "source": "hustle boxouts",
+          "type": "SPEC",
+          "notes": "SPEC from tracking"
+        }
+      ]
+    },
+    {
+      "family": "physical/combine",
+      "count": 6,
+      "description": "Anthropometrics & athleticism, local-first ACNE optional no-cloud",
+      "features": [
+        {
+          "name": "HEIGHT_INCHES_Z",
+          "source": "pipeline/data/combine_measurements.json height",
+          "type": "EXTRACTED_PARTIAL",
+          "notes": "partial coverage ~55%, fallback to vectors.json meta"
+        },
+        {
+          "name": "WINGSPAN_INCHES_Z",
+          "source": "combine_measurements wingspan",
+          "type": "EXTRACTED_PARTIAL",
+          "notes": "partial ~40%"
+        },
+        {
+          "name": "WINGSPAN_PLUS",
+          "source": "wingspan - height",
+          "type": "INFERRED",
+          "notes": "INFERRED where both present"
+        },
+        {
+          "name": "VERTICAL_MAX_INCH",
+          "source": "combine max vert",
+          "type": "EXTRACTED_PARTIAL",
+          "notes": "draft combine coverage ~35%"
+        },
+        {
+          "name": "LANE_AGILITY_SEC",
+          "source": "combine lane agility",
+          "type": "EXTRACTED_PARTIAL",
+          "notes": "inverted (lower better), partial"
+        },
+        {
+          "name": "SPRINT_3Q_SEC",
+          "source": "combine 3/4 sprint",
+          "type": "EXTRACTED_PARTIAL",
+          "notes": "partial"
+        }
+      ]
+    },
+    {
+      "family": "contract/cap",
+      "count": 8,
+      "description": "Market valuation, surplus, roster economics",
+      "features": [
+        {
+          "name": "SALARY_LOG_Z",
+          "source": "train_matrix SALARY_LOG",
+          "type": "EXTRACTED",
+          "notes": "v6 bootstrap, log salary"
+        },
+        {
+          "name": "CAP_PCT_TEAM",
+          "source": "pipeline/data/payroll_enriched.json salary/team payroll",
+          "type": "EXTRACTED_PARTIAL",
+          "notes": "enriched payroll by season 1997-now, partial pre-04"
+        },
+        {
+          "name": "CAP_PCT_LEAGUE",
+          "source": "salary / cap_history.json cap",
+          "type": "EXTRACTED_PARTIAL",
+          "notes": "cap_history 1996-present full coverage"
+        },
+        {
+          "name": "SURPLUS_VALUE",
+          "source": "assets/career_surplus.json surplus vs cap% expectation",
+          "type": "EXTRACTED_PARTIAL",
+          "notes": "computed from front_office_by_season + PLUS_MINUS proxy"
+        },
+        {
+          "name": "YEARS_REMAINING",
+          "source": "contracts_full.json years remaining",
+          "type": "EXTRACTED_PARTIAL",
+          "notes": "contracts_full meta contracts[]"
+        },
+        {
+          "name": "CONTRACT_TYPE_ENCODED",
+          "source": "contracts_full type rookie/max/mid/min -> one-hot compressed dim",
+          "type": "INFERRED",
+          "notes": "INFERRED encoded ordinal"
+        },
+        {
+          "name": "PAYROLL_TIER_RANK",
+          "source": "player salary rank on team via payroll_enriched",
+          "type": "INFERRED",
+          "notes": "1=top paid"
+        },
+        {
+          "name": "GUARANTEE_PCT",
+          "source": "contracts_full guaranteed pct",
+          "type": "EXTRACTED_PARTIAL",
+          "notes": "partial"
+        }
+      ]
+    },
+    {
+      "family": "team-context",
+      "count": 8,
+      "description": "Team quality, system, continuity",
+      "features": [
+        {
+          "name": "TEAM_WIN_PCT",
+          "source": "team_base_YYYY-YY.json win pct + team_history.json",
+          "type": "EXTRACTED_PARTIAL",
+          "notes": "team_base per season list, coverage 2018-25 full, earlier scaffold"
+        },
+        {
+          "name": "TEAM_OFF_RTG_Z",
+          "source": "team_base OffRtg era-z",
+          "type": "EXTRACTED_PARTIAL",
+          "notes": "team_base"
+        },
+        {
+          "name": "TEAM_DEF_RTG_Z",
+          "source": "team_base DefRtg era-z",
+          "type": "EXTRACTED_PARTIAL",
+          "notes": "team_base"
+        },
+        {
+          "name": "TEAM_PACE",
+          "source": "team_base pace",
+          "type": "EXTRACTED_PARTIAL",
+          "notes": "team_base"
+        },
+        {
+          "name": "ROLE_MIN_SHARE",
+          "source": "pipeline/data/role_context.json minShare x5 floor",
+          "type": "EXTRACTED_PARTIAL",
+          "notes": "2015-26 log window only, elsewhere mask"
+        },
+        {
+          "name": "TEAM_TENURE",
+          "source": "consecutive seasons same team calculated in role_features.py",
+          "type": "INFERRED",
+          "notes": "computed from vindex 30yr breadth"
+        },
+        {
+          "name": "COACH_TENURE_SAME",
+          "source": "coach history source needed - flagged coach tenure needs a source in feature_lab.py",
+          "type": "SPEC",
+          "notes": "SPEC honesty - missing source"
+        },
+        {
+          "name": "ROSTER_STABILITY_INDEX",
+          "source": "jaccard of rosters year-over-year via vectors.json name lists",
+          "type": "INFERRED",
+          "notes": "INFERRED"
+        }
+      ]
+    },
+    {
+      "family": "era/league-trend",
+      "count": 6,
+      "description": "League-wide temporal anchoring, prevents era leak",
+      "features": [
+        {
+          "name": "SEASON_YEAR_NORM",
+          "source": "season int 1996-2025 normalized",
+          "type": "INFERRED",
+          "notes": "INFERRED leak-proxy gated corr<0.85 per SOP"
+        },
+        {
+          "name": "LEAGUE_3PA_RATE_YEAR",
+          "source": "season_norms.json / era_z league 3PA trend",
+          "type": "INFERRED",
+          "notes": "from assets/season_norms.json"
+        },
+        {
+          "name": "LEAGUE_PACE_YEAR",
+          "source": "season_norms.json pace trend",
+          "type": "INFERRED",
+          "notes": "INFERRED"
+        },
+        {
+          "name": "ERA_TWIN_ADJUST",
+          "source": "assets/eratwins.json era twin delta",
+          "type": "EXTRACTED_PARTIAL",
+          "notes": "eratwins.json exists"
+        },
+        {
+          "name": "EXPANSION_DUMMY",
+          "source": "01 flag for 1995/2004 expansion seasons",
+          "type": "INFERRED",
+          "notes": "binary INFERRED"
+        },
+        {
+          "name": "CAP_INFLATION_NORM",
+          "source": "cap_history.json cap inflation yr/yr",
+          "type": "EXTRACTED_PARTIAL",
+          "notes": "computed"
+        }
+      ]
+    },
+    {
+      "family": "injury/durability",
+      "count": 7,
+      "description": "Availability, health risk, load",
+      "features": [
+        {
+          "name": "GP_PCT_SEASON",
+          "source": "pipeline/data/availability.json or computed from MIN logs",
+          "type": "EXTRACTED_PARTIAL",
+          "notes": "GP/team GP, partial pre-2015"
+        },
+        {
+          "name": "MIN_PER_GP",
+          "source": "MIN total / GP proxy via role",
+          "type": "INFERRED",
+          "notes": "INFERRED"
+        },
+        {
+          "name": "INJURY_HISTORY_COUNT",
+          "source": "pipeline/data/injury_history_scaffold.json count prior seasons",
+          "type": "EXTRACTED_PARTIAL",
+          "notes": "scaffold full 12966, honest partial tracking link labeled scaffold"
+        },
+        {
+          "name": "DAYS_MISSED_LAST_2Y",
+          "source": "injury_history_scaffold days missed sum",
+          "type": "EXTRACTED_PARTIAL",
+          "notes": "partial"
+        },
+        {
+          "name": "LOAD_MANAGEMENT_FLAG",
+          "source": "b2b rest DNP proxy via gamelogs",
+          "type": "INFERRED",
+          "notes": "INFERRED ternary"
+        },
+        {
+          "name": "DURABILITY_SCORE",
+          "source": "inverse normalized GP streak, career_arc.py related",
+          "type": "INFERRED",
+          "notes": "INFERRED"
+        },
+        {
+          "name": "AVAILABILITY_PROJECTION",
+          "source": "pipeline/build_availability.py expectation",
+          "type": "INFERRED",
+          "notes": "build_availability output"
+        }
+      ]
+    },
+    {
+      "family": "clutch/closer",
+      "count": 7,
+      "description": "Late-game creation & finishing, championship economics relevance",
+      "features": [
+        {
+          "name": "CLOSER_GOLDEN_SCORE",
+          "source": "pipeline/data/closer_golden_200.jsonl closer score",
+          "type": "EXTRACTED_PARTIAL",
+          "notes": "top 200 list limited, elsewhere mask"
+        },
+        {
+          "name": "CLUTCH_PLUS_MINUS_5MIN",
+          "source": "fetch_pbp.py clutch +/- last 5 close within 5",
+          "type": "SPEC",
+          "notes": "SPEC fetch_pbp.py needed, low coverage"
+        },
+        {
+          "name": "CLUTCH_FG_PCT",
+          "source": "clutch FG% via pbp",
+          "type": "SPEC",
+          "notes": "SPEC"
+        },
+        {
+          "name": "CLUTCH_FTA_RATE",
+          "source": "clutch FTA rate",
+          "type": "SPEC",
+          "notes": "SPEC"
+        },
+        {
+          "name": "GO_AHEAD_FG_MADE_PROXY",
+          "source": "pbp go-ahead makes late",
+          "type": "SPEC",
+          "notes": "SPEC limited"
+        },
+        {
+          "name": "CLUTCH_MIN_SHARE",
+          "source": "clutch min / total min",
+          "type": "SPEC",
+          "notes": "SPEC"
+        },
+        {
+          "name": "CLUTCH_TRUE_USAGE",
+          "source": "clutch usage derived pbp",
+          "type": "SPEC",
+          "notes": "SPEC honesty - requires pbp source"
+        }
+      ]
+    },
+    {
+      "family": "chemistry/on-off",
+      "count": 7,
+      "description": "Fit, synergy, lineup interaction",
+      "features": [
+        {
+          "name": "ON_OFF_PLUS_MINUS",
+          "source": "assets/chemistry.json onOffPm",
+          "type": "EXTRACTED_PARTIAL",
+          "notes": "chemistry.json exists but 2015+ only partial"
+        },
+        {
+          "name": "ROSTER_SYNERGY_LINEUP_NET",
+          "source": "chemistry.json lineup net top",
+          "type": "EXTRACTED_PARTIAL",
+          "notes": "partial"
+        },
+        {
+          "name": "CHEMISTRY_STABILITY_YRS",
+          "source": "years with same 3-man core via vectors.json roster",
+          "type": "INFERRED",
+          "notes": "INFERRED jaccard"
+        },
+        {
+          "name": "ON_OFF_OFF_RTG_DELTA",
+          "source": "on/off OffRtg delta tracking",
+          "type": "SPEC",
+          "notes": "SPEC requires adjusted on/off"
+        },
+        {
+          "name": "ON_OFF_DEF_RTG_DELTA",
+          "source": "on/off DefRtg delta",
+          "type": "SPEC",
+          "notes": "SPEC"
+        },
+        {
+          "name": "USG_OVERLAP_TEAM",
+          "source": "team usage crowding score from ROLE_USAGE_SHARE sum",
+          "type": "INFERRED",
+          "notes": "INFERRED"
+        },
+        {
+          "name": "ASSIST_NETWORK_CENTRALITY",
+          "source": "assist network PageRank proxy pbp assists",
+          "type": "SPEC",
+          "notes": "SPEC graph"
+        }
+      ]
+    },
+    {
+      "family": "draft/pedigree",
+      "count": 7,
+      "description": "Pre-NBA signal, prospect priors",
+      "features": [
+        {
+          "name": "DRAFT_PICK_OVERALL_INV",
+          "source": "pipeline/data? draft fetched via fetch_draft_history.py -> pedigree.json",
+          "type": "EXTRACTED_PARTIAL",
+          "notes": "pedigree.json pick overall present ~80% coverage"
+        },
+        {
+          "name": "DRAFT_ROUND",
+          "source": "pedigree.json round",
+          "type": "EXTRACTED_PARTIAL",
+          "notes": "partial"
+        },
+        {
+          "name": "DRAFT_AGE",
+          "source": "pedigree.json age at draft + player_meta.json",
+          "type": "EXTRACTED_PARTIAL",
+          "notes": "player_meta + pedigree"
+        },
+        {
+          "name": "PRE_DRAFT_RANK_DELTA",
+          "source": "mock draft vs actual pick delta",
+          "type": "SPEC",
+          "notes": "SPEC mock source optional"
+        },
+        {
+          "name": "PEDIGREE_COLLEGE_TIER",
+          "source": "assets/pedigree.json college conference tier encoded",
+          "type": "EXTRACTED_PARTIAL",
+          "notes": "college tier ordinal"
+        },
+        {
+          "name": "ONE_AND_DONE_FLAG",
+          "source": "draft age 19 + college 1yr proxy",
+          "type": "INFERRED",
+          "notes": "INFERRED binary"
+        },
+        {
+          "name": "INTERNATIONAL_PRO_FLAG",
+          "source": "international pre-NBA pro league flag via pedigree",
+          "type": "INFERRED",
+          "notes": "INFERRED"
+        }
+      ]
+    },
+    {
+      "family": "advanced-impact",
+      "count": 8,
+      "description": "RAPTOR/BPM/LEBRON equivalents, glass-box SHAP explainability",
+      "features": [
+        {
+          "name": "RAPTOR_OFFENSE",
+          "source": "538 RAPTOR historical offline copy or re-derived via PLUS_MINUS regressed",
+          "type": "SPEC",
+          "notes": "SPEC no live API licence - honesty SPEC"
+        },
+        {
+          "name": "RAPTOR_DEFENSE",
+          "source": "RAPTOR D",
+          "type": "SPEC",
+          "notes": "SPEC"
+        },
+        {
+          "name": "RAPTOR_TOTAL",
+          "source": "off+def sum when both present",
+          "type": "INFERRED",
+          "notes": "INFERRED sum"
+        },
+        {
+          "name": "BPM_PROXY",
+          "source": "box BPM approximated (PTS,REB,AST,STL,BLK,TOV,FGA era-z linear reweight)",
+          "type": "INFERRED",
+          "notes": "INFERRED linear approximation v1"
+        },
+        {
+          "name": "VORP_PROXY",
+          "source": "BPM_PROXY * MIN share",
+          "type": "INFERRED",
+          "notes": "INFERRED"
+        },
+        {
+          "name": "LEBRON_PROXY",
+          "source": "luck-adjusted RAPM proxy via PLUS_MINUS regressed on team",
+          "type": "INFERRED",
+          "notes": "INFERRED ridge regressed, honesty approx"
+        },
+        {
+          "name": "PIE_PROXY",
+          "source": "PIE (player impact estimate) box composite",
+          "type": "INFERRED",
+          "notes": "INFERRED"
+        },
+        {
+          "name": "WIN_SHARES_48_PROXY",
+          "source": "WS/48 approx via PLUS_MINUS + team win pct",
+          "type": "INFERRED",
+          "notes": "INFERRED"
+        }
+      ]
+    },
+    {
+      "family": "matchup-geometry",
+      "count": 7,
+      "description": "Positional matchup arithmetic & spacing",
+      "features": [
+        {
+          "name": "POS_VERSATILITY_INDEX",
+          "source": "pipeline/fetch_positions.py pos list count + vectors.json pos group",
+          "type": "EXTRACTED_PARTIAL",
+          "notes": "partial coverage"
+        },
+        {
+          "name": "HEIGHT_VS_POSITION_DELTA",
+          "source": "HEIGHT - positional median height",
+          "type": "INFERRED",
+          "notes": "INFERRED physical + pos"
+        },
+        {
+          "name": "MISMATCH_HUNT_RATE",
+          "source": "switch hunting freq from tracking",
+          "type": "SPEC",
+          "notes": "SPEC tracking"
+        },
+        {
+          "name": "PICK_ROLL_BALL_HANDLER_FREQ",
+          "source": "tracking playtype",
+          "type": "SPEC",
+          "notes": "SPEC low historical coverage"
+        },
+        {
+          "name": "POST_UP_FREQ_PROXY",
+          "source": "(FGA in paint proxy via FGA-FG3A) / FGA * AST inverse",
+          "type": "INFERRED",
+          "notes": "INFERRED heuristic"
+        },
+        {
+          "name": "SPACING_GRAVITY",
+          "source": "FG3A_RATE * FG3_PCT_Z gravity score",
+          "type": "INFERRED",
+          "notes": "INFERRED"
+        },
+        {
+          "name": "SWITCHABILITY_SCORE",
+          "source": "composite: height_z+wingspan_plus+lane_agility_inv+pos_vers",
+          "type": "INFERRED",
+          "notes": "INFERRED"
+        }
+      ]
+    },
+    {
+      "family": "archetype-probabilities",
+      "count": 7,
+      "description": "Soft membership across 7 archetype pivots \u2014 MoMA-lite routing signal",
+      "features": [
+        {
+          "name": "ARCH_PROB_SHOOTER",
+          "source": "assets/archetype_emergence.json soft prob shooter",
+          "type": "EXTRACTED_PARTIAL",
+          "notes": "emergence audit exists"
+        },
+        {
+          "name": "ARCH_PROB_RIM_PROTECTOR",
+          "source": "archetype_emergence rim protector prob",
+          "type": "EXTRACTED_PARTIAL",
+          "notes": "partial"
+        },
+        {
+          "name": "ARCH_PROB_PLAYMAKER",
+          "source": "playmaker prob",
+          "type": "EXTRACTED_PARTIAL",
+          "notes": "partial"
+        },
+        {
+          "name": "ARCH_PROB_3ANDD",
+          "source": "3&D prob",
+          "type": "EXTRACTED_PARTIAL",
+          "notes": "partial"
+        },
+        {
+          "name": "ARCH_PROB_SLASHER",
+          "source": "slasher prob",
+          "type": "EXTRACTED_PARTIAL",
+          "notes": "partial"
+        },
+        {
+          "name": "ARCH_PROB_STRETCH_BIG",
+          "source": "stretch big prob",
+          "type": "EXTRACTED_PARTIAL",
+          "notes": "partial"
+        },
+        {
+          "name": "ARCH_PROB_LOCKDOWN",
+          "source": "lockdown defender prob",
+          "type": "EXTRACTED_PARTIAL",
+          "notes": "partial"
+        }
+      ]
+    },
+    {
+      "family": "seasonality/clutch-time",
+      "count": 7,
+      "description": "Within-season form & load cycles",
+      "features": [
+        {
+          "name": "MONTH_SPLIT_DEC_EFF_DELTA",
+          "source": "first 20 games vs rest efficiency delta gamelogs",
+          "type": "SPEC",
+          "notes": "SPEC requires monthly splits parsing"
+        },
+        {
+          "name": "POST_ALLSTAR_EFF_DELTA",
+          "source": "post-AllStar bump",
+          "type": "SPEC",
+          "notes": "SPEC"
+        },
+        {
+          "name": "B2B_EFF_DELTA",
+          "source": "b2b second-night PLUS_MINUS delta",
+          "type": "SPEC",
+          "notes": "SPEC, needs schedule"
+        },
+        {
+          "name": "B2B_MIN_REDUCTION",
+          "source": "min reduction 2nd night",
+          "type": "SPEC",
+          "notes": "SPEC"
+        },
+        {
+          "name": "3_IN_4_DAYS_FLAG_EFF",
+          "source": "3-in-4 fatigue flag effect",
+          "type": "SPEC",
+          "notes": "SPEC schedule dependent"
+        },
+        {
+          "name": "PLAYOFF_MIN_BOOST",
+          "source": "pipeline/build_playoffs.py playoff vs regular min boost",
+          "type": "EXTRACTED_PARTIAL",
+          "notes": "playoffs.json exists partial >2015"
+        },
+        {
+          "name": "REST_DAYS_IMPACT_PROXY",
+          "source": "rest days impact via gamelogs spacing",
+          "type": "SPEC",
+          "notes": "SPEC"
+        }
+      ]
+    },
+    {
+      "family": "opponent-strength",
+      "count": 7,
+      "description": "Context adjusts for competition \u2014 avoids vanity metric",
+      "features": [
+        {
+          "name": "AVG_OPP_DEF_RTG_FACED",
+          "source": "opponent DefRtg faced weighted via schedule team_base",
+          "type": "SPEC",
+          "notes": "SPEC needs schedule"
+        },
+        {
+          "name": "AVG_OPP_OFF_RTG_FACED",
+          "source": "opp OffRtg faced",
+          "type": "SPEC",
+          "notes": "SPEC"
+        },
+        {
+          "name": "SOS_TEAM_WIN_PCT",
+          "source": "team_history.json SOS or computed WS% of opponents",
+          "type": "EXTRACTED_PARTIAL",
+          "notes": "team_history list source exists"
+        },
+        {
+          "name": "SOS_LEAGUE_RANK",
+          "source": "SOS rank league",
+          "type": "INFERRED",
+          "notes": "INFERRED rank of SOS"
+        },
+        {
+          "name": "PLAYOFF_OPP_TIER_AVG",
+          "source": "playoffs.json opp tier average",
+          "type": "EXTRACTED_PARTIAL",
+          "notes": "playoffs exists"
+        },
+        {
+          "name": "VS_TOP10_DEF_EFF_DELTA",
+          "source": "eff vs top10 DefRtg teams delta",
+          "type": "SPEC",
+          "notes": "SPEC requires pbp-level split"
+        },
+        {
+          "name": "VS_BOTTOM10_DEF_EFF_DELTA",
+          "source": "eff vs bottom10 D delta",
+          "type": "SPEC",
+          "notes": "SPEC"
+        }
+      ]
+    },
+    {
+      "family": "career-trajectory",
+      "count": 8,
+      "description": "Rising/peak/decline modelling glass-box SHAP output",
+      "features": [
+        {
+          "name": "LEAGUE_TENURE",
+          "source": "seasons since first charted appearance 30yr vectors.json breadth",
+          "type": "INFERRED",
+          "notes": "EXTRACTED-like but computed via first_season map in feature_lab.py"
+        },
+        {
+          "name": "LEAGUE_TENURE_SQ",
+          "source": "tenure^2 non-linear",
+          "type": "INFERRED",
+          "notes": "INFERRED squared"
+        },
+        {
+          "name": "AGE_NORM",
+          "source": "assets/player_meta.json age estimate + pipeline/data hoops.json",
+          "type": "EXTRACTED_PARTIAL",
+          "notes": "partial coverage 12966 may have age"
+        },
+        {
+          "name": "AGE_SQ",
+          "source": "age^2",
+          "type": "INFERRED",
+          "notes": "INFERRED"
+        },
+        {
+          "name": "PRIOR_SEASON_PM_DELTA",
+          "source": "pipeline/form_context.py prior season PLUS_MINUS delta",
+          "type": "INFERRED",
+          "notes": "form_context builder exists"
+        },
+        {
+          "name": "ROLLING_3Y_PM_TREND",
+          "source": "3yr linear slope of PLUS_MINUS trend",
+          "type": "INFERRED",
+          "notes": "INFERRED slope"
+        },
+        {
+          "name": "CAREER_ARC_PHASE",
+          "source": "pipeline/career_arc.py phase 0=rising 1=peak 2=decline",
+          "type": "EXTRACTED_PARTIAL",
+          "notes": "career_arc exists"
+        },
+        {
+          "name": "PROSPECT_BOOST",
+          "source": "inverse age * draft pick inv + pedigree tier composite",
+          "type": "INFERRED",
+          "notes": "INFERRED prospect over-age-adjusted"
+        }
+      ]
+    }
+  ],
+  "counts_check": {
+    "shooting": 8,
+    "playmaking": 8,
+    "defense": 8,
+    "rebounding": 6,
+    "physical/combine": 6,
+    "contract/cap": 8,
+    "team-context": 8,
+    "era/league-trend": 6,
+    "injury/durability": 7,
+    "clutch/closer": 7,
+    "chemistry/on-off": 7,
+    "draft/pedigree": 7,
+    "advanced-impact": 8,
+    "matchup-geometry": 7,
+    "archetype-probabilities": 7,
+    "seasonality/clutch-time": 7,
+    "opponent-strength": 7,
+    "career-trajectory": 8,
+    "total": 130
+  },
+  "gate_targets": {
+    "composite_score": 0.85,
+    "top1_accuracy": 0.55,
+    "cv_folds": 5,
+    "mtnn_dims": "8/18/33",
+    "mtnn_towers": 17,
+    "provenance_required": "7/7/0",
+    "shap_dim8_baseline": 0.2923
+  },
+  "honesty": {
+    "composite_current_best": "8.93 PASS gate on v6 15 feats per parent lane",
+    "coverage_splits": "SPEC features ~41/130 require pbp/tracking/schedule sources not in zero-deps offline cache \u2014 honestly flagged SPEC with fallback mask",
+    "is_training_result_real": false,
+    "training_claim": "targets composite 0.85 top1 0.55 CV 5-fold \u2014 not yet trained on v7, spec stage only, honest tag INFERRED_SPEC",
+    "zero_deps_true_means": "no pip installs, no cloud DB, ACNE construct optional local-first, stdlib JSON numpy torch auto-switch cpu when no CUDA"
+  },
+  "honesty_tag": "INFERRED_SPEC_WITH_PARTIAL_EXTRACTION",
+  "leakage_gates": {
+    "coverage_min_usable": 0.05,
+    "duplicate_flag": 0.98,
+    "era_z_clip": 4.0,
+    "leak_target_flag": 0.95,
+    "redundancy_flag": 0.92,
+    "season_correlation_flag": 0.85
+  },
+  "lineage": {
+    "builder": "subagent fb45e6bb hoops-130-feats-18-fams 2026-08-13",
+    "notes": "Spec first, extraction staged. Later unified builder consumes this JSON to map columns to train_matrix_v7.npz",
+    "parent_manifest": "pipeline/data/feature_manifest.json (v6 bootstrap 2026-08-10, 15 feats)",
+    "parent_real": "assets/data/hoops.json entity_count 12966 + pipeline/data/train_matrix.npz",
+    "previous_gap": "v6 had 15 feats across 6 ad-hoc families (volume/playmaking/rebounding/defense/efficiency/market); v7 expands to 130 across 18 canonical families for composite 0.85/top1 0.55 5-fold CV",
+    "unified_lane": "vector-hub 5-game chimera 20719 unified =12966+5323+2430 honest +4831 equities, MTNN 17 towers dims 8/18/33 SHAP dim8 0.2923, provenance 7/7/0 59 hashes, gate 8.93 PASS"
+  },
+  "next_steps_for_unified_builder": [
+    "materialize train_matrix_v7.npz = 12966 rows x 130 cols era-z-scored with mask = coverage",
+    "integrate pipeline/data/*.json sources listed above idempotent stdlib-only merge",
+    "run pipeline/feature_inspect.py + pipeline/test_feature_hygiene.py leakage <0.85",
+    "run pipeline/feature_lab.py ablation next-season PLUS_MINUS 5-fold R2 beat base14 without silhouette drop >0.01",
+    "MTNN 17 towers mapping: dims per family tower 8 (see gate) -> fusion 33 via MoMA-lite router + GARNet",
+    "provenance 7/7/0 = 7 sources / 7 checks / 0 missing (59 hashes maintained by vector-hub chimera pipeline)"
+  ],
+  "status": "SPEC_NOT_FULLY_EXTRACTED",
+  "stdlib_only": true,
+  "zero_deps": true,
+  "extraction_status": {
+    "EXTRACTED": "column exists in train_matrix.npz or pipeline/data/ as of 2026-08-13 audit",
+    "EXTRACTED_PARTIAL": "json source exists but coverage <80%",
+    "INFERRED": "derived via formula from existing vectors.json / game logs / heuristics, not yet materialized in npz",
+    "SPEC": "requires new fetch (combine, pbp, team rtg) \u2014 spec-only, honesty flagged SPEC"
+  },
+  "audit": {
+    "v6_features": 15,
+    "v6_families": [
+      {
+        "family": "volume",
+        "feats": [
+          "PTS",
+          "FG3A",
+          "FGA",
+          "FTA"
+        ],
+        "count": 4
+      },
+      {
+        "family": "playmaking",
+        "feats": [
+          "AST",
+          "TOV"
+        ],
+        "count": 2
+      },
+      {
+        "family": "rebounding",
+        "feats": [
+          "OREB",
+          "DREB"
+        ],
+        "count": 2
+      },
+      {
+        "family": "defense",
+        "feats": [
+          "STL",
+          "BLK"
+        ],
+        "count": 2
+      },
+      {
+        "family": "efficiency",
+        "feats": [
+          "FG3_PCT",
+          "FG_PCT",
+          "FT_PCT",
+          "PLUS_MINUS"
+        ],
+        "count": 4
+      },
+      {
+        "family": "market",
+        "feats": [
+          "SALARY_LOG"
+        ],
+        "count": 1
+      }
+    ],
+    "v6_total": 15,
+    "v7_total": 130,
+    "growth_factor": 8.666
+  }
+}
