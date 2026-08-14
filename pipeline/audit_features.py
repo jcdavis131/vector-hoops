@@ -33,6 +33,10 @@ OUT = DATA / "feature_audit.json"
 DUP_R = 0.98
 LEAK_R = 0.95
 MIN_OVERLAP = 400
+# |corr(feature, season year)| above which a column is behaving like a clock.
+# Matches the threshold vector-realty's matrix report uses, so "suspicious" means
+# the same thing in both repos.
+CLOCK_R = 0.5
 NEAR_CONST_STD = 0.01
 
 # Families whose columns are the durability head's labels. An input tower
@@ -175,6 +179,56 @@ def main() -> None:
             }
     report["within_family_redundancy"] = fam_red
 
+    # 6. clock check: does any column encode the SEASON itself?
+    #
+    # The MTNN task is identity retrieval over ADJACENT seasons, which is
+    # trivially cheatable by a feature that is a timestamp in disguise.
+    # CAREER_EXP_YEARS is the obvious candidate -- it increments by one every
+    # season a player is active.
+    #
+    # Measured 2026-08-13 across all 142 columns: the largest |r| is 0.011 and
+    # every CAREER_* column sits at |r| <= 0.004. Nothing here is a clock, and
+    # the reason is structural rather than lucky -- build_vectors z-scores every
+    # feature WITHIN its season, so each season is centred at zero and a column
+    # cannot carry the year. Era normalisation was added for era-honesty; it
+    # doubles as a leak guard.
+    #
+    # This check therefore finds nothing today. It is here for the column added
+    # later, un-normalised, that would quietly make the task cheatable -- the
+    # same class as the two silent data bugs named at the top of this file, both
+    # of which moved quality more than any hyperparameter and neither of which
+    # showed up in the loss curve. vector-realty runs the equivalent check and
+    # names it the leak its task is trivially cheatable by.
+    clocks = []
+    for j, f in enumerate(feats):
+        obs = M[:, j] > 0
+        if obs.sum() < MIN_OVERLAP:
+            continue
+        v = Z[obs, j].astype(float)
+        y = yr[obs].astype(float)
+        if np.std(v) == 0 or np.std(y) == 0:
+            continue
+        r = float(np.corrcoef(v, y)[0, 1])
+        if abs(r) >= CLOCK_R:
+            clocks.append(
+                {
+                    "feature": f,
+                    "family": fam_of.get(f, "?"),
+                    "r": round(r, 4),
+                    "coverage": round(float(obs.mean()), 4),
+                }
+            )
+    clocks.sort(key=lambda d: -abs(d["r"]))
+    report["clock_candidates"] = clocks
+    report["clock_check"] = {
+        "threshold": CLOCK_R,
+        "why": "identity retrieval over adjacent seasons is cheatable by any feature that "
+        "encodes the season; a per-season z-score cannot, because every season is "
+        "centred at zero by construction",
+        "action": "reported, not silently dropped -- any claim built on this matrix should "
+        "survive an ablation that removes these columns",
+    }
+
     OUT.write_text(json.dumps(report, indent=1), encoding="utf-8")
 
     print(f"rows={report['rows']} features={report['features']} families={report['families']}")
@@ -190,6 +244,9 @@ def main() -> None:
     print(f"coverage cliffs at 2024: {len(cliffs)}")
     for c in cliffs:
         print(f"  {c['family']}: {c['le_2021']} -> {c['2024_plus']}")
+    print(f"clock candidates |corr with season| >= {CLOCK_R}: {len(clocks)}")
+    for c in clocks[:8]:
+        print(f"  {c['feature']:26s} r={c['r']:+.4f} [{c['family']}] cov={c['coverage']:.1%}")
     print("most redundant families (mean |r|):")
     for fam, v in sorted(fam_red.items(), key=lambda kv: -kv[1]["mean_abs_r"])[:6]:
         print(f"  {fam:14s} n={v['n_features']:2d} mean|r|={v['mean_abs_r']:.3f} max={v['max_abs_r']:.3f}")
