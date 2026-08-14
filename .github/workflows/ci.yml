@@ -10,7 +10,13 @@ jobs:
   offline-build:
     runs-on: ubuntu-latest
     steps:
+      # fetch-depth: 0 is required, not tidiness. tests/test_vector_core_parity.py
+      # asserts parity against a historical blob via `git show 1b0570bc:<file>`,
+      # and checkout's default depth-1 clone does not contain that commit — the
+      # test fails on the runner while passing on any full local clone.
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - uses: actions/setup-python@v5
         with: {python-version: '3.11'}
 
