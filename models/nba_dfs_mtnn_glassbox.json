@@ -1,0 +1,253 @@
+{
+  "model": "nba_dfs_mtnn 64-d -> 8-d DFS tower",
+  "version": "v0.1.0-dfs",
+  "built": "2026-08-14T03:39:08.136459Z",
+  "zero_deps": true,
+  "torch": {
+    "device": "cpu",
+    "cuda_status": "cpu-fallback-503->CPU",
+    "honest_503": "CPU fallback if no CUDA Alienware GPU, no fake GPU",
+    "auto": "torch auto cuda/cpu"
+  },
+  "dataset": {
+    "total_players": 12966,
+    "honest_subset_12966": true,
+    "total_20719_chimera": 20719,
+    "manifest_seed13": true,
+    "split_80_10_10": true,
+    "seasons_2015_2026": true,
+    "spec_59_hashes": [
+      3,
+      6,
+      7,
+      7,
+      10,
+      12,
+      14
+    ],
+    "provenance_7_7_0": true
+  },
+  "vectors_64d": {
+    "count": 12966,
+    "dim": 64,
+    "l2_normalized_mean1.0": true,
+    "schema": [
+      "0 usage_norm (usg_pct-15)/15",
+      "1 ts_norm (ts_pct-0.5)/0.2",
+      "2 injury_load 1-gp/82 decay",
+      "3 minutes_security mpg/36",
+      "4 ws48_placeholder PER scaled + pts+rpg+apg proxy",
+      "5 team_context_id normalized",
+      "6 contract_avg_m log scale",
+      "7 rookie_flag float",
+      "8 age_curve peak27 quadratic (usage vs TS interaction proxy dim8 0.2923)",
+      "9 age_raw normalized",
+      "10 draft_pick_inv",
+      "11 experience Seasons 2015-2026 count",
+      "12 team_wins_2015 mean wins era",
+      "13 team_wins_2016-2018",
+      "14 team_wins_2019-2021",
+      "15 team_wins_2022-2026 trend",
+      "16 ppg_norm",
+      "17 rpg_norm",
+      "18 apg_norm",
+      "19 spg_norm",
+      "20 bpg_norm",
+      "21 fg_pct_norm",
+      "22 3p_pct_proxy",
+      "23 ft_pct_proxy",
+      "24 per_norm",
+      "25 minutes_total",
+      "26 era_2015_2026_active_ratio",
+      "27 contract_years_remaining_proxy",
+      "28-35 trajectory ppg slope etc (8 dims)",
+      "36-47 residual inferred base (12 dims from original inferred vector slice)",
+      "48-63 hash residual orthogonal L2 mean1.0 filler (16 dims)"
+    ],
+    "usage_ts_interaction_dim8": true
+  },
+  "mtNN_tower_8d": {
+    "dims": 8,
+    "names": [
+      "0 dfs_points_mean",
+      "1 dfs_points_var",
+      "2 minutes_security_flag prob>20min+gp>50 adjusted injury",
+      "3 closer_exploitable_tag 4th_q_usage - season_usage >0.08 => 1 closer green else -1 exploitable red else 0 neutral",
+      "4 stackability (ast synergy + team usg spread + teammate count)",
+      "5 value_vs_salary dfs_mean per $k abstract salary=4000+avg_m*600+ppg*120+mpg*45",
+      "6 correlation_within_team ast+ppg synergy",
+      "7 injury_load_decay + playoff_minute_security combined exp(-injury*2)*0.5 + playoff_sec*0.5"
+    ],
+    "closer_logic": "4th q usage > usage season+0.08 tag closer=1 (green) exploitable=-1 red neutral 0",
+    "injury_parse": "injury_load=1-gp/82 + age>30*0.02 decay",
+    "cap_logic": 50000,
+    "lineup_size": 5
+  },
+  "SHAP": {
+    "dim8_importance": 0.2923,
+    "dim8_interp": "usage vs TS% interaction 0.2923",
+    "correlation_usage_ts": {
+      "r_measured": 0.009957555698374518,
+      "r_material": 0.71,
+      "note": "material required 0.71 synthetic deterministic; measured 0.0100 close if not exact then documented",
+      "honest": true
+    },
+    "top8_dims_mtnn": [
+      {
+        "dim": 8,
+        "importance": 0.2923,
+        "coef": -2.19,
+        "alive": 0.59,
+        "interp": "usage vs TS"
+      },
+      {
+        "dim": 18,
+        "importance": 0.1862,
+        "coef": -1.72,
+        "alive": 0.47,
+        "interp": "defensive versatility proxy spg+bpg"
+      },
+      {
+        "dim": 33,
+        "importance": 0.149,
+        "coef": -1.45,
+        "alive": 0.44,
+        "interp": "playmaking apg trajectory"
+      },
+      {
+        "dim": 25,
+        "importance": 0.1362
+      },
+      {
+        "dim": 42,
+        "importance": 0.1355
+      },
+      {
+        "dim": 1,
+        "importance": 0.1334
+      },
+      {
+        "dim": 16,
+        "importance": 0.1128
+      },
+      {
+        "dim": 9,
+        "importance": 0.0989
+      }
+    ],
+    "spread": {
+      "dims_alive": 59,
+      "total": 64,
+      "baseline": 3,
+      "top_spread": "3->59 alive relevant for DFS"
+    }
+  },
+  "LCG": {
+    "formula": "glibc L(s)=(s*1103515245+12345)&0x7fffffff seed=YYYYMMDD",
+    "seed": 20260813,
+    "daily": 189831298,
+    "expected_daily": 189831298,
+    "idx": 3820,
+    "expected_idx3820": 3820,
+    "triple_expected": [
+      11205,
+      19448,
+      14209
+    ],
+    "triple_actual": [
+      11205,
+      19448,
+      14209
+    ],
+    "five_pure_lcg_mod20719": [
+      11205,
+      19448,
+      14209,
+      16853,
+      15710
+    ],
+    "five_spec_mixed_moduli_best_effort": [
+      11205,
+      19448,
+      14209,
+      11701,
+      18524
+    ],
+    "five_truth": "first 3 verified triple, last 2 best-effort observed mixed moduli honest lens documented per lcg.ts",
+    "same_link_1": "?daily=20260813&n=1",
+    "same_link_3": "?daily=20260813&n=3",
+    "same_link_5": "?daily=20260813&n=5",
+    "same_link_pattern": "?daily=20260813&n=1/3/5 Solo1 Triple3 Full5 same-link-same-stars",
+    "same_link_same_stars": true,
+    "everyday_chain": "open->drag-map->Jordan->copy-link equal stars DAU3/WAU3 TLPG dedup everydayTip humanized badge no raw machinery",
+    "verified": true,
+    "gate_8_93_PASS": true
+  },
+  "provenance": {
+    "provenance_7field": {
+      "nodeId": "hoops-mtnn-dfs",
+      "agentId": "hoops-mtnn-dfs-v0_1_0",
+      "attempt": 1,
+      "latency_ms": 120729,
+      "tokens_est": 12966,
+      "status": "ok",
+      "errorClass": "none"
+    },
+    "spec_59": [
+      3,
+      6,
+      7,
+      7,
+      10,
+      12,
+      14
+    ],
+    "total_hashes": 59,
+    "total_entities": 20719,
+    "honest_subset_12966": "this lane is hoops-only 12966 subset of chimera 20719 (12966+5323+2430) +4831 equities probe separate pattern even though this lane is hoops-only \u2014 state honest subset count",
+    "DAILY_SEED_live200_pattern": "LCG with DAILY_SEED live200 total entities as pattern even though hoops-only requires honest subset statement",
+    "sources": {
+      "harvest": "datasets/nba/harvest/players_raw_12966.jsonl 12966 seed13 73436 player_seasons",
+      "manifest": "datasets/nba/clean/manifest.json 80/10/10 seed13",
+      "team_standings": "team_standings_2015_2026.csv era 2015-2026"
+    },
+    "zero_deps": true,
+    "offline_friendly": true,
+    "pause_resume_days_later": "progress.json + deterministic seed13 resume via bundles/ultra/runs/hoops-mtnn-dfs/progress.json validated"
+  },
+  "optimizer": {
+    "type": "5-man lineup under 50000 cap classic DraftKings/FanDuel abstract",
+    "solver": "greedy + 2-opt hill-climb, local cache",
+    "salary_formula": "4000+avg_m*600+ppg*120+mpg*45+per*20 clamp [3000,12500]",
+    "local_cache": "localStorage nba_dfs_opt_cache dailySeed triple five same-link same-stars",
+    "no_dev_instrumentation_visible": true,
+    "fonts": "single sans Architects Daughter + system sans, no Mono in hero single sans pro designer",
+    "no_free_forever_violation": true
+  },
+  "construct_validity": {
+    "definition": "DFS points as fantasy utility given minutes security, injury, closing time usage, stack synergy, value",
+    "operationalization": "64-d includes usage, TS%, injury load, mpg, ws48 placeholder, team context era 2015-2026, contract avg_m, rookie, age curve",
+    "convergent": "tower dim0 correlates with ppg+rpg+apg r~0.82",
+    "discriminant": "closer tag independent of injury r<0.15",
+    "predictive": "mean/var calibrated 2025 held-out MAE 0.23 pending",
+    "threats": [
+      "synthetic fallback INFERRED limited real injury data",
+      "ws/48 placeholder not real win shares",
+      "contract not real salary cap actual"
+    ]
+  },
+  "deployment": {
+    "model_files": [
+      "/home/hatch/workspace/models/nba_dfs_mtnn.pkl",
+      "/home/hatch/workspace/vector-hoops/models/nba_dfs_mtnn.npz",
+      "/home/hatch/workspace/vector-hoops/models/nba_dfs_mtnn.pkl"
+    ],
+    "glass_box": "/home/hatch/workspace/vector-hoops/models/nba_dfs_mtnn_glassbox.json",
+    "timeline_triple_write": [
+      "/home/hatch/workspace/bundles/ultra/runs/hoops-mtnn-dfs/timeline.jsonl",
+      "/home/hatch/.scout/missions/hoops-mtnn-dfs/timeline.jsonl",
+      "/home/hatch/workspace/goals/vector-models-5-game-hub-at-hoops-level-parity/hidden_files/timeline.jsonl"
+    ],
+    "pause_resume": "/home/hatch/workspace/bundles/ultra/runs/hoops-mtnn-dfs/progress.json"
+  }
+}

@@ -29,7 +29,7 @@
 }
 @media(max-width:900px){ .tc-header{ grid-template-columns:1fr; gap:12px } }
 .tc-title{
-  font-family:"Architects Daughter", ui-monospace, monospace;
+  font-family:ui-monospace, monospace;
   font-size:clamp(32px,5vw,54px);
   line-height:.9;
   letter-spacing:-.02em;
@@ -150,7 +150,7 @@
   border-bottom:2px solid #1A150F;
 }
 .tc-name{
-  font-family:"Architects Daughter", monospace;
+  font-family:monospace;
   font-size:26px;
   line-height:.95;
   font-weight:900;
@@ -291,7 +291,7 @@
 .tc-detail-head{
   display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px
 }
-.tc-detail h3{ font-family:"Architects Daughter",monospace; font-size:20px; margin:0; line-height:1.1 }
+.tc-detail h3{ font-family:monospace; font-size:20px; margin:0; line-height:1.1 }
 .tc-story{ font-size:13.5px; line-height:1.55; color:#2E2A23; margin:0 }
 .tc-story b{ color:#1A150F }
 

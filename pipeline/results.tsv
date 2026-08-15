@@ -1,0 +1,6 @@
+commit	metric	secondary	status	description
+fcc60dd	0.544277	13.4	keep	salary-8d salary embed 8-d 8-d justification N=2430 -36% variance OLS β4.3-5.1
+b4c5ffc	0.518211	16.6	keep	dmodel-128-64 d_model 128→64 compact MoMA rank12 shoot+def+playmaking MAE 0.2313→0.219
+5ff0027	0.518214	16.1	keep	dropout-01 dropout 0.1 regularization glass-box SHAP stable equal-but-simpler keep gz=1.6 lines=60
+d762e64	0.518212	16.1	keep	rope-rmsnorm RoPE RMSNorm T5 G2 Δ-0.0851 128/4=32 T5
+5ae4067	0.518212	16.1	keep	cls-64d CLS 64-d MoMA deterministic rank12 SupCon0.07 equal-but-simpler keep gz=1.6 lines=59

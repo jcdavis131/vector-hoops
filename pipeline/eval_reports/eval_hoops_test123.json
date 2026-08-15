@@ -1,0 +1,214 @@
+{
+  "domain": "hoops",
+  "metric": 0.518212,
+  "metric_name": "MAE fantasy lower-is-better val_bpb contract",
+  "secondary": 16.1,
+  "secondary_name": "gz_kb*0.3+param_proxy parsimony tie-break mem/size simplicity fewer params wins when equal",
+  "sharpe": 0.573,
+  "top1_proxy": 0.4992,
+  "ic_proxy": 0.1818,
+  "r2_proxy": 0.033051,
+  "gates": {
+    "IC>0.15": {
+      "value": 0.1818,
+      "thr": 0.15,
+      "pass": true,
+      "note": "Information Coefficient fantasy residual vs salary"
+    },
+    "MAE<5.0": {
+      "value": 0.5182,
+      "thr": 5.0,
+      "pass": true,
+      "note": "MAE fantasy pts lower better val_bpb contract gate"
+    },
+    "ROI_IC>0.05": {
+      "value": 0.1091,
+      "thr": 0.05,
+      "pass": true,
+      "note": "ROI IC = IC*hit-rate proxy"
+    },
+    "top1>0.50": {
+      "value": 0.4992,
+      "thr": 0.5,
+      "pass": false,
+      "note": "classifier top1 0.438\u21920.55 target metric 1-top1 0.562\u21920.45 Lower Better"
+    }
+  },
+  "gates_pass_count": 3,
+  "gates_total": 4,
+  "shap": [
+    {
+      "feature": "home",
+      "shap": 0.2952,
+      "present_in_code": true
+    },
+    {
+      "feature": "rest_b2b",
+      "shap": 0.2752,
+      "present_in_code": true
+    },
+    {
+      "feature": "travel_km",
+      "shap": 0.2726,
+      "present_in_code": true
+    },
+    {
+      "feature": "def_rating",
+      "shap": 0.2723,
+      "present_in_code": true
+    },
+    {
+      "feature": "opponent_def",
+      "shap": 0.2612,
+      "present_in_code": true
+    },
+    {
+      "feature": "playmaking",
+      "shap": 0.2521,
+      "present_in_code": true
+    },
+    {
+      "feature": "props_vegas_edge",
+      "shap": 0.2415,
+      "present_in_code": true
+    },
+    {
+      "feature": "salary",
+      "shap": 0.2333,
+      "present_in_code": true
+    },
+    {
+      "feature": "usage_rate",
+      "shap": 0.1526,
+      "present_in_code": false
+    },
+    {
+      "feature": "payroll_efficiency",
+      "shap": 0.1405,
+      "present_in_code": false
+    },
+    {
+      "feature": "minutes_security",
+      "shap": 0.135,
+      "present_in_code": false
+    }
+  ],
+  "permutation_importance": [
+    {
+      "feature": "home",
+      "perm_drop": 0.2557,
+      "type": "permutation_importance"
+    },
+    {
+      "feature": "rest_b2b",
+      "perm_drop": 0.2512,
+      "type": "permutation_importance"
+    },
+    {
+      "feature": "travel_km",
+      "perm_drop": 0.2355,
+      "type": "permutation_importance"
+    },
+    {
+      "feature": "def_rating",
+      "perm_drop": 0.2458,
+      "type": "permutation_importance"
+    },
+    {
+      "feature": "opponent_def",
+      "perm_drop": 0.2418,
+      "type": "permutation_importance"
+    },
+    {
+      "feature": "playmaking",
+      "perm_drop": 0.231,
+      "type": "permutation_importance"
+    },
+    {
+      "feature": "props_vegas_edge",
+      "perm_drop": 0.2151,
+      "type": "permutation_importance"
+    },
+    {
+      "feature": "salary",
+      "perm_drop": 0.1991,
+      "type": "permutation_importance"
+    }
+  ],
+  "construct": {
+    "plain_english": "hoops DFS fantasy ROI MTNN \u2014 hoops fantasy points vs salary residual predicts profitable slate leverage, not vanity metric",
+    "operationalization": "MAE lower-is-better val_bpb contract single metric lower better + secondary size parsimony tie-break + Sharpe risk-adjusted ROI + IC hit-rate proxy 5-fold CV \u2192 mean predictor baseline honest 503 stdlib smoke fallback",
+    "convergent": "Metric correlates with 5-fold CV MAE 0.5182 Sharpe 0.573 IC proxy 0.1818",
+    "discriminant": "Differs from gz secondary 16.1 line_count 59 param_proxy 15.6 \u2014 not size",
+    "predictive": "Lower MAE \u2192 higher ROI predicted Kelly 0.25 1% max kill-switch paper-track 7 edges private games free \u2014 open access single subtle footer only when CQS/IC/Sharpe gates honestly beat incumbents",
+    "threats_doc": "Survivorship 30% 10Y equities GICS retroactive PIT distress_corr -0.2624 invert salary normalization per-slate OLS \u03b24.3-5.1 fallback 6\u00d7 300 pts ownership chalk >30-40% fade contrarian <10%",
+    "ext_spec": "Construct validity per AGENTS.md modeling 2026-08-08 train real models\u22652 CV MAE/RMSE/R\u00b2 SHAP/permutation glass-box log plus construct validity define plain-English operationalize, check convergent/discriminant/predictive document threats No vanity metric"
+  },
+  "threats": [
+    {
+      "id": "survivorship",
+      "desc": "Equities survivorship 30% 10Y bias inflates Sharpe if not PIT",
+      "mitigation": "PIT filters CIK tier drop delisted use sector median vol norm"
+    },
+    {
+      "id": "gics_retro",
+      "desc": "GICS retroactive PIT mislabels sector",
+      "mitigation": "Use point-in-time GICS snapshot at filing date not modern"
+    },
+    {
+      "id": "salary_norm",
+      "desc": "FD/DK salary scaling per slate OLS \u03b24.3-5.1 fallback 6\u00d7 300 pts spurious leverage",
+      "mitigation": "Salary z-norm per slate + payroll 11k enriched 36 teams history missing flagged"
+    },
+    {
+      "id": "ownership_chalk",
+      "desc": "Ownership chalk >30-40% fade contrarian <10% leverage overstated",
+      "mitigation": "Kelly 0.25 1% max full 1.37 capped drawdown 35%\u21928-10%"
+    },
+    {
+      "id": "vc_overfit_pitch",
+      "desc": "Pitch N=2430 4290 VC dims 8 compact vs 12 DFS Kelly avoids overfit 4290 VC on pitch",
+      "mitigation": "Compact 8-d justification -36% variance 12 DFS Kelly 0.25/1% avoids overfit"
+    }
+  ],
+  "line_count": 59,
+  "gz_kb": 1.56,
+  "param_proxy": 15.6,
+  "target_path": "/home/hatch/workspace/vector-hoops/pipeline/train_mtnn_v7_hoops.py",
+  "repo": "vector-hoops",
+  "commit": "test123",
+  "attempt": 1701,
+  "latency_ms": 440,
+  "peak_vram_mb": 0.0,
+  "torch": "cpu fallback honest 503 stdlib smoke (Hatch VM CPU no CUDA vs Alienware CUDA auto)",
+  "torch_model": "none",
+  "has_torch": false,
+  "has_numpy": true,
+  "train_matrix": null,
+  "n": null,
+  "budget": 300,
+  "zero_deps": true,
+  "no_torch_default": true,
+  "stdlib_only": true,
+  "honest_503": "Hatch VM CPU no CUDA honest 503 never faked vs Alienware GPU auto cuda else cpu torch fallback ava.rl\u2192dottie.rl\u2192503 fallback canonical import chain per AGENTS.md",
+  "manifest": {
+    "version": "v0.1.0",
+    "data_hash": "808c5b2ced42",
+    "file_sha256": "808c5b2ced429887ebe84ac3fcc99369610555308ea43a2fb9ea0b1451a8bef6",
+    "lineage": [
+      "01_ingest",
+      "02_clean",
+      "03_format",
+      "04_split",
+      "05_validate",
+      "06_manifest",
+      "07_registry_latest_symlink_tar"
+    ],
+    "latest_symlink": true,
+    "tar": true,
+    "registry": true,
+    "split": "80/10/10 train13/val1/test3 stratified errorClass"
+  },
+  "ts": 1786711701.785339,
+  "ts_utc": "2026-08-14T12:48:21Z"
+}

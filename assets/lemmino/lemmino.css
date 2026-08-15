@@ -106,7 +106,7 @@
   width:28px; height:1px; background:rgba(234,230,222,0.42); display:inline-block;
 }
 .lemmino-chapter h2{
-  margin:0; font-family:"Architects Daughter",ui-monospace,monospace;
+  margin:0; font-family:ui-monospace,monospace;
   font-size:clamp(20px, 2.6vw, 32px); line-height:0.95; letter-spacing:-0.02em; color:#FFFEF7;
   text-shadow:0 2px 22px rgba(0,0,0,0.8);
 }

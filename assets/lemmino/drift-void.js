@@ -96,7 +96,7 @@ export async function mountDriftVoid(canvas){
     <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:flex-start;justify-content:space-between">
       <div style="max-width:640px">
         <div style="display:inline-flex;gap:8px;align-items:center;background:#1A150F;color:#FFFEF7;border-radius:999px;padding:8px 14px;font-family:ui-monospace,monospace;font-size:11px;font-weight:900;letter-spacing:.1em"><span style="width:8px;height:8px;border-radius:999px;background:#F0E442;display:inline-block"></span> #2 CAREER FLOOR • CENTERED HERO • 1 OF 5 / 1 OF 15</div>
-        <h2 style="font-family:'Architects Daughter',ui-monospace,monospace;font-size:clamp(30px,4.8vw,48px);line-height:.95;letter-spacing:-.03em;margin:12px 0 8px;color:#1A150F">Where you stood,<br>how you grew.</h2>
+        <h2 style="font-family:ui-monospace,monospace;font-size:clamp(30px,4.8vw,48px);line-height:.95;letter-spacing:-.03em;margin:12px 0 8px;color:#1A150F">Where you stood,<br>how you grew.</h2>
         <p style="font-family:ui-sans-serif,system-ui;font-size:15px;line-height:1.55;color:#3A332A;margin:0">Paint → arc = offensive evolution. Skills sparklines = real 0-99 grades era-normalized. Roster = real MPG sort. This is now the hero viz on every player card.</p>
       </div>
       <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;position:relative">

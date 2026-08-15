@@ -1,0 +1,22 @@
+{
+  "domain": "hoops",
+  "metric": 0.544277,
+  "secondary": 13.4,
+  "sharpe": 0.534,
+  "commit": "fcc60dd",
+  "attempt": 1,
+  "status": "keep",
+  "line_count": 64,
+  "gz_kb": 1.83,
+  "shap": [],
+  "permutation": [],
+  "gates": {},
+  "construct": {
+    "plain": "hoops fantasy ROI",
+    "operational": "salary vs pts residual MAE lower-better"
+  },
+  "threats": [],
+  "latency_ms": 2759,
+  "torch": "cpu fallback honest 503 stdlib smoke",
+  "zero_deps": true
+}

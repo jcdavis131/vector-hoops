@@ -178,7 +178,7 @@
   z-index:1;
 }
 .pp-name{
-  font-family:"Architects Daughter",ui-monospace,monospace;
+  font-family:ui-monospace,monospace;
   font-size:clamp(26px,5vw,38px);
   line-height:.95;
   font-weight:900;
@@ -498,7 +498,7 @@
   box-shadow:3px 3px 0 #1A150F;
 }
 .pp-discover__title{
-  font-family:"Architects Daughter",ui-monospace,monospace;
+  font-family:ui-monospace,monospace;
   font-size:18px;
   line-height:1.1;
   margin:0 0 4px;

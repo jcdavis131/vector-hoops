@@ -33,3 +33,5 @@ _Last sync: 2026-08-13 21:12 CT_
 | DONE-dottie-acd-native | dottie / ACD Native 6 modules | 18:05 CT 2026-08-13 | Dottie ACD Native load-bearing invariants 6 modules typed PASS tsc --noEmit --skipLibCheck exit0 2026-08-13T18:28Z daemon.ts tunnel peer.ts version mux rpc + AgentConductorPanel 40px sticky nav thin UI — timeline triple-write 7-field dottie-acd-native | scout/done | PASS |
 
 _zero-deps true — stdlib only, no pip/torch, ACNE optional local `dottie/rl/` canonical_
+
+<!-- auto-exec sync 2026-08-14T18:04Z evening-wrap-aug-14-2026 from SSOT active-tasks.md 15 active 7 DONE 6 open -->

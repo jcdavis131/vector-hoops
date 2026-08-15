@@ -1,9 +1,9 @@
-/* Architects Daughter, served from here rather than from Google.
+/* ui-monospace, served from here rather than from Google.
 
    18 pages carried <link rel=preconnect> to fonts.googleapis.com and
    fonts.gstatic.com plus a render-blocking stylesheet from Google. Sixteen of
    them genuinely use the face — the site's own footers credit it, "paper
-   aesthetic - Architects Daughter" — so dropping it would have removed
+   aesthetic - ui-monospace" — so dropping it would have removed
    something the design names as part of its identity. Self-hosting keeps the
    face byte-identical and costs two fewer third-party origins on every page,
    one fewer round trip before first paint, and no visitor IP handed to a third
@@ -14,7 +14,7 @@
    Licence: SIL Open Font License 1.1 — see assets/fonts/OFL.txt. */
 /* latin-ext */
 @font-face{
-  font-family:'Architects Daughter';
+  font-family:;
   font-style:normal;
   font-weight:400;
   font-display:swap;
@@ -23,7 +23,7 @@
 }
 /* latin */
 @font-face{
-  font-family:'Architects Daughter';
+  font-family:;
   font-style:normal;
   font-weight:400;
   font-display:swap;

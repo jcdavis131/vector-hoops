@@ -230,7 +230,7 @@ export async function mountTradingCardVoid(root){
       const detailArcHeight = rec.rows.length>14 ? 140 : 120;
 
       detail.innerHTML=`
-        <div class="tc-detail-head"><h3 style="font-size:22px;line-height:1.15;margin:0;font-family:'Architects Daughter',monospace">${esc(curName)} — ${esc(curRow.season)}</h3><span class="tc-pill" style="background:#1A150F;color:#fff;min-height:32px">${count99?count99+'×99':count90?count90+'×90+':'avg '+avg}</span></div>
+        <div class="tc-detail-head"><h3 style="font-size:22px;line-height:1.15;margin:0;font-family:monospace">${esc(curName)} — ${esc(curRow.season)}</h3><span class="tc-pill" style="background:#1A150F;color:#fff;min-height:32px">${count99?count99+'×99':count90?count90+'×90+':'avg '+avg}</span></div>
         ${timelineHTML}
         <div class="tc-detail-dots" id="tc-detail-dots">
           ${rec.rows.map((r,idx)=>`<button class="tc-season-dot ${idx===curSeasonIdx?'is-active':''}" data-idx="${idx}" style="--col:${OKABE[r.c%8]}" aria-label="${r.season}"><span class="dot" style="background:${OKABE[r.c%8]}"></span><span class="yr">${esc(r.season.slice(2,7))}</span></button>`).join('')}
