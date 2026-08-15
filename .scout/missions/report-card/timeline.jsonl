@@ -1,0 +1,2 @@
+{"nodeId": "report-card-01", "agentId": "report-card-builder", "attempt": 1, "latency_ms": 2501, "tokens_est": 4200, "status": "success", "errorClass": "none", "ts": 1786821569.4012733, "msg": "built report-card.html + public sync"}
+{"nodeId": "report-card-01", "agentId": "report-card-builder", "attempt": 2, "latency_ms": 180, "tokens_est": 320, "status": "success", "errorClass": "none", "ts": 1786821571.6323369, "msg": "sw bump hoops-v7-16 sync public/sw.js PWA v67 shell /report-card /report-card.html"}

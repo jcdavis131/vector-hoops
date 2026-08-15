@@ -1,0 +1,1 @@
+{"nodeId": "oracle-vs-vegas-01", "agentId": "oracle-builder", "attempt": 1, "latency_ms": 2847, "tokens_est": 9123, "latency": 2847, "tokens": 9123, "status": "ok", "errorClass": "none", "ts": "2026-08-15T19:19:54.320318+00:00", "runId": "oracle", "layer": "L3", "ooda": "Act", "tempo": ":13"}
