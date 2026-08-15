@@ -1,0 +1,812 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Everyday Streak — Wordle for Hoops Heads • dumbmodel</title>
+<meta name="description" content="3 past→modern twins a day. Same puzzle for everyone. Build your streak, no account.">
+<meta name="theme-color" content="#F5F2ED">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23111111'/%3E%3Ccircle cx='11' cy='12' r='3' fill='%23eb6834'/%3E%3Ccircle cx='21' cy='19' r='3' fill='%232a78d6'/%3E%3C/svg%3E">
+<link rel="manifest" href="/manifest.json">
+<style>
+
+:root{
+  --base:#F5F2ED; --paper:#F5F2ED; --surface:#FFFCF7; --surface-muted:#EDE7DC;
+  --ink:#2B2A27; --ink-soft:#3A3835; --ink-mut:#6B6560;
+  --wood:#C9A77E; --moss:#6B7A6B; --clay:#B07B54;
+  --border:#E0D8CA; --hair:#E0D8CA;
+  --orange:#B07B54; --blue:#4A7CB8; --yellow:#D9C36C; --green:#6B9B7A;
+  --void:#F5F2ED; --void-2:#EDE7DC;
+  --mono:ui-monospace,"IBM Plex Mono",Menlo,monospace; --sans:ui-sans-system,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+  --shadow:0 2px 12px rgba(43,42,39,0.06);
+  --r:16px
+}
+*{box-sizing:border-box}html,body{margin:0;background:var(--base);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased}
+/* paper grain 3% */
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:-1;opacity:0.03;background-image:radial-gradient(#000 1px,transparent 1px);background-size:18px 18px;background-position:-2px -2px}
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:2px solid var(--moss);outline-offset:2px}
+/* NAV 40px sticky */
+.site-nav{position:sticky;top:0;z-index:50;height:40px;min-height:40px;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:0 14px;background:var(--surface);border-bottom:1.2px solid var(--border);color:var(--ink)}
+.site-nav__brand{font-family:var(--mono);font-weight:800;font-size:13.5px;letter-spacing:.04em;text-transform:uppercase;white-space:nowrap;color:var(--ink)}
+.site-nav__brand span{color:var(--moss)}
+.site-nav__links{display:flex;gap:4px;align-items:center}
+.site-nav__link{font-family:var(--mono);font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.04em;padding:6px 9px;border-radius:8px;border:1.2px solid transparent}
+.site-nav__link:hover{background:var(--surface-muted);border-color:var(--border)}
+.site-nav__cta{font-family:var(--mono);font-size:11px;font-weight:800;text-transform:uppercase;background:var(--ink);color:var(--surface);border:1.2px solid var(--ink);border-radius:8px;padding:5px 10px;min-height:28px;display:inline-flex;align-items:center}
+/* POV 44px */
+.pov-strip{position:sticky;top:40px;z-index:40;min-height:44px;height:44px;display:flex;align-items:center;gap:8px;padding:0 12px;overflow-x:auto;background:rgba(245,242,237,0.92);backdrop-filter:blur(10px);border-bottom:2px solid var(--border)}
+.pov-pill{min-height:36px;padding:0 13px;border:1.2px solid var(--border);border-radius:999px;background:var(--surface);font-family:var(--mono);font-weight:800;font-size:11px;text-transform:uppercase;letter-spacing:.03em;white-space:nowrap;cursor:pointer;flex:0 0 auto;color:var(--ink);box-shadow:0 1px 4px rgba(43,42,39,0.04)}
+.pov-pill.on{background:var(--moss);color:var(--surface);border-color:var(--moss)}
+.mono{font-family:var(--mono);font-size:11px;letter-spacing:.03em;text-transform:uppercase}
+.mono-sm{font-family:var(--mono);font-size:10.8px;color:var(--ink-mut);text-transform:uppercase;letter-spacing:.05em}
+/* hero void replaced warm */
+.hero-void{background:radial-gradient(1100px 600px at 18% -10%,#FFFCF7 0%,#F5F2ED 52%,#EDE7DC 100%);color:var(--ink);border-bottom:1.2px solid var(--border);position:relative;overflow:hidden}
+.wrap{max-width:1080px;margin:0 auto;padding:0 14px}
+.hero-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:14px;padding:14px 0}
+@media(max-width:860px){.hero-grid{grid-template-columns:1fr}}
+.kicker{font-family:var(--mono);font-size:10.8px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-mut);margin:0 0 6px}
+.title{font-size:clamp(26px,5vw,38px);line-height:.95;font-weight:900;letter-spacing:-.02em;margin:4px 0 8px;text-transform:uppercase;color:var(--ink)}
+.title b{background:var(--surface);color:var(--ink);padding:2px 6px;border:1.2px solid var(--border);box-shadow:var(--shadow);display:inline-block;transform:rotate(-.4deg)}
+.tag{font-size:13.8px;line-height:1.55;max-width:48ch;color:var(--ink-mut)}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:16px;box-shadow:var(--shadow);overflow:hidden}
+.grid{max-width:1080px;margin:0 auto;padding:12px;display:grid;grid-template-columns:1.05fr .95fr;gap:12px;align-items:start}
+@media(max-width:900px){.grid{grid-template-columns:1fr}}
+.map-head{display:flex;justify-content:space-between;align-items:center;padding:9px 12px;border-bottom:1.2px solid var(--border);background:linear-gradient(90deg,var(--surface),var(--surface-muted))}
+.canvas-box{position:relative;background:var(--surface-muted)}
+canvas{display:block;width:100%;height:380px}
+@media(max-width:600px){canvas{height:320px}}
+.pill{display:inline-flex;align-items:center;gap:6px;padding:6px 11px;border-radius:999px;border:1.2px solid var(--border);background:var(--surface);font-family:var(--mono);font-size:11px;font-weight:800;text-transform:uppercase;box-shadow:var(--shadow)}
+.pill-y{background:var(--surface-muted)}
+.btn{appearance:none;border:1.2px solid var(--border);border-radius:11px;padding:9px 13px;font:800 12px var(--mono);text-transform:uppercase;cursor:pointer;background:var(--surface);box-shadow:var(--shadow);min-height:36px;display:inline-flex;align-items:center;justify-content:center;gap:6px;color:var(--ink)}
+.btn:hover{transform:translate(-1px,-1px);box-shadow:0 4px 16px rgba(43,42,39,0.10)}
+.btn:active{transform:translate(1px,1px);box-shadow:var(--shadow)}
+.btn-p{background:var(--ink);color:var(--surface);border-color:var(--ink)}
+.btn-y{background:var(--moss);color:var(--surface);border-color:var(--moss)}
+.btn:disabled{opacity:.55;cursor:not-allowed}
+.chip{display:inline-flex;align-items:center;min-height:28px;padding:4px 10px;border-radius:999px;border:1.2px solid var(--border);background:var(--surface);font-family:var(--mono);font-size:11px;font-weight:800;box-shadow:var(--shadow);margin:2px;cursor:pointer;transition:.15s;color:var(--ink)}
+.chip.on{background:var(--moss);color:var(--surface);border-color:var(--moss);transform:rotate(-0.5deg) scale(1.01)}
+.chip.active{background:var(--clay);color:var(--surface);border-color:var(--clay)}
+.log{font-family:var(--mono);font-size:11.2px;line-height:1.5;background:var(--surface-muted);border:1px dashed var(--border);border-radius:10px;padding:8px;min-height:54px;max-height:150px;overflow:auto}
+#log:empty::before{content:'Your 3 guesses land here — closest first.';color:var(--ink-mut)}
+.dotw{width:12px;height:12px;border-radius:50%;border:1.2px solid var(--border);display:inline-block;margin:1px 2px;background:var(--surface)}
+.dotw.on{background:var(--moss);border-color:var(--moss)}.dotw.fire{background:var(--clay);border-color:var(--clay);box-shadow:0 0 8px rgba(176,123,84,0.4)}
+.sparkle{position:absolute;pointer-events:none;font-weight:900;font-size:18px;transform:translate(-50%,-50%) scale(0);animation:spark 800ms ease forwards}
+@keyframes spark{0%{transform:translate(-50%,-50%) scale(.2) rotate(0deg);opacity:0}30%{transform:translate(-50%,-70%) scale(1.25) rotate(12deg);opacity:1}100%{transform:translate(-50%,-160%) scale(.8) rotate(-10deg);opacity:0}}
+#confetti{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.star{position:absolute;font-size:14px;animation:popStar 720ms ease forwards}
+@keyframes popStar{0%{transform:translate(-50%,-50%) scale(0)}60%{transform:translate(-50%,-80%) scale(1.3)}100%{transform:translate(-50%,-150%) scale(.7);opacity:0}}
+/* share overlay warm */
+.share-pop{position:fixed;inset:0;background:rgba(245,242,237,.78);backdrop-filter:blur(10px);z-index:80;display:none;place-items:center;padding:14px}
+.share-pop.on{display:grid}
+.share-card{width:min(720px,96vw);background:#F5F2ED;border:1.2px solid #E0D8CA;border-radius:16px;overflow:hidden;box-shadow:0 8px 24px rgba(43,42,39,0.12)}
+/* OKABE warm desaturated 0.78 */
+.okabe-dot{opacity:0.78}
+/* Built free footer */
+.footer-built{color:#6B6560;font-family:var(--mono);font-size:10px;letter-spacing:.05em}
+
+</style>
+</head>
+<body>
+<nav class="site-nav" aria-label="Primary">
+  <a class="site-nav__brand" href="/">DUMB<span>MODEL</span> — Hoops</a>
+  <div class="site-nav__links">
+    <a class="site-nav__link" href="/play">Play</a>
+    <a class="site-nav__link" href="/everyday" aria-current="page">Everyday</a>
+    <a class="site-nav__link" href="/players">Explorer</a>
+    <a class="site-nav__link" href="/leaderboard">Board</a>
+    <a class="site-nav__cta" href="/play">Play today's →</a>
+  </div>
+</nav>
+<div class="pov-strip" role="tablist" aria-label="POV">
+  <button class="pov-pill" data-pov="all">All</button>
+  <button class="pov-pill on" data-pov="everyday" aria-selected="true">Everyday 3</button>
+  <button class="pov-pill" data-pov="owner">Owner</button>
+  <button class="pov-pill" data-pov="player">Player</button>
+  <button class="pov-pill" data-pov="dfs">DFS</button>
+  <span class="mono-sm" style="margin-left:auto">🔒 same-link-same-stars • LCG ↻</span>
+</div>
+
+<div class="hero-void">
+  <div class="wrap">
+    <div class="hero-grid">
+      <div>
+        <p class="kicker">Wordle for Hoops Heads • 3 daily • same for everyone • no account</p>
+        <h1 class="title">Build a streak. <b>Skip a day, start over.</b></h1>
+        <p class="tag">Every 00:00 CT the LCG rolls one seed: <code style="background:#0e1730;border:1px solid #203060;padding:2px 6px;border-radius:6px">L(s)=(s*1103515245+12345)&0x7fffffff</code>. That seed picks 3 past player–seasons from the 968 All-Star/NBA pool. Same link → same triple → same stars. Type or tap a modern name to guess the twin. 14-d cosine scores it — map narrows, name box wins.</p>
+        <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap">
+          <span class="pill pill-y" id="dailyMeta">loading LCG…</span>
+          <span class="pill" id="streakPill">streak 0 • 0/7 dots</span>
+          <span class="pill" id="seedPill">seed —</span>
+        </div>
+        <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap">
+          <button class="btn btn-p" id="bToday">Today's 3 →</button>
+          <button class="btn btn-y" id="bShare3">Share 3-card</button>
+          <button class="btn" id="bCal">Calendar</button>
+          <span id="calMini" class="mono-sm" style="align-self:center"></span>
+        </div>
+      </div>
+      <div class="card" style="background:#fafaf8;color:#111">
+        <div style="padding:12px">
+          <div class="mono" style="font-weight:900;font-size:13px">How Everyday Works</div>
+          <div class="mono-sm" style="margin-top:4px;text-transform:none;line-height:1.5;color:#3a3732">One past player appears. Guess which modern player plays most like them. Score >68% locks it, shows orange career path. Finish 3 → streak ticks. Miss a calendar day → streak resets to 0. Built free · Open-source · No paywall — no login, PWA offline.</div>
+          <div style="margin-top:10px;display:flex;flex-wrap:wrap"><span class="chip" style="background:var(--yellow)">10 past × 1305 modern pool</span><span class="chip">14-d MTNN cosine</span><span class="chip">OKABE dots visible on void #F5F2ED</span><span class="chip">single-select clears prev</span></div>
+          <div id="streakDots" style="margin-top:10px"></div>
+          <div id="wwDetail" class="mono-sm" style="margin-top:4px"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="grid" id="main">
+  <div style="display:flex;flex-direction:column;gap:12px">
+    <div class="card">
+      <div class="map-head"><span class="mono" style="font-weight:800">1 of 3 • past → modern twin</span><span class="pill pill-y" id="pos1">tap map or type to guess</span></div>
+      <div id="q1" style="font-weight:900;font-size:16px;padding:9px 12px;min-height:26px">—</div>
+      <div style="display:flex;gap:8px;padding:0 12px 10px">
+        <input id="guess1" list="guessList" autocomplete="off" placeholder="Modern twin — Curry, Wemby, Joker…" style="flex:1;font-family:var(--mono);font-size:12.5px;padding:9px 11px;border:1.8px solid var(--ink);border-radius:10px">
+        <datalist id="guessList"></datalist>
+        <button class="btn btn-p" id="go1">Guess ◎</button>
+      </div>
+      <div id="log1" class="log" style="margin:0 12px 8px"></div>
+      <div class="mono-sm" style="padding:0 12px 8px" id="hint1">Hint: tap map dots (all 1305 in suggestions) • score on 14-d</div>
+      <div style="display:flex;gap:6px;padding:0 12px 10px;align-items:center"><button class="btn" id="hintBtn1">Hint</button><button class="btn" id="reveal1">Reveal</button><span id="score1" class="mono-sm"></span><span style="margin-left:auto" id="lock1" class="mono-sm"></span></div>
+    </div>
+    <div class="card" id="card2" style="opacity:.86">
+      <div class="map-head"><span class="mono" style="font-weight:800">2 of 3 • locked to play</span><span class="pill" id="pos2">finish #1 first</span></div>
+      <div id="q2" style="font-weight:900;font-size:16px;padding:9px 12px;min-height:26px;color:#6b6760">Locked — beat #1</div>
+      <div style="display:flex;gap:8px;padding:0 12px 10px">
+        <input id="guess2" list="guessList" disabled placeholder="Beat #1 to unlock…" style="flex:1;font-family:var(--mono);font-size:12.5px;padding:9px 11px;border:1.6px solid #ccc;border-radius:10px">
+        <button class="btn" id="go2" disabled>Guess ◎</button>
+      </div>
+      <div id="log2" class="log" style="margin:0 12px 8px"></div>
+      <div style="display:flex;gap:6px;padding:0 12px 10px"><button class="btn" id="hintBtn2" disabled>Hint</button><span id="score2" class="mono-sm"></span></div>
+    </div>
+    <div class="card" id="card3" style="opacity:.84">
+      <div class="map-head"><span class="mono" style="font-weight:800">3 of 3 • streak on line</span><span class="pill" id="pos3">last one wins streak dot</span></div>
+      <div id="q3" style="font-weight:900;font-size:16px;padding:9px 12px;min-height:26px;color:#6b6760">Locked — beat #2</div>
+      <div style="display:flex;gap:8px;padding:0 12px 10px">
+        <input id="guess3" list="guessList" disabled placeholder="Beat #2 to unlock…" style="flex:1;font-family:var(--mono);font-size:12.5px;padding:9px 11px;border:1.6px solid #ccc;border-radius:10px">
+        <button class="btn" id="go3" disabled>Guess ◎</button>
+      </div>
+      <div id="log3" class="log" style="margin:0 12px 8px"></div>
+      <div style="display:flex;gap:6px;padding:0 12px 10px;align-items:center"><button class="btn" id="hintBtn3" disabled>Hint</button><span id="score3" class="mono-sm"></span><span id="fire3" style="margin-left:auto" class="mono-sm"></span></div>
+      <div id="streakCall" style="display:none;padding:0 12px 12px"><button class="btn btn-y" id="celebrate" style="width:100%">🔥 Streak +1 • Share Wordle card</button></div>
+    </div>
+  </div>
+
+  <div style="display:flex;flex-direction:column;gap:12px">
+    <div class="card" style="overflow:hidden;padding:0">
+      <div style="display:flex;justify-content:space-between;padding:9px 12px;border-bottom:2px solid var(--ink);background:#fff"><span class="mono" style="font-weight:800">Map — 15-d proj + 1305 modern pool</span><span class="mono-sm">Past ★ Modern ○ • OKABE visible on void</span></div>
+      <div style="position:relative" class="canvas-box">
+        <canvas id="c" width="640" height="380" aria-label="Everyday map. Modern pool 1305 points positioned by model, coloured by archetype, crosshair target past. Tap any dot to fill guess box — all also in suggestions."></canvas>
+        <canvas id="trajOver" width="640" height="380" style="position:absolute;inset:0;pointer-events:none;background:transparent"></canvas>
+        <div style="position:absolute;left:10px;top:10px;z-index:3;display:flex;gap:6px"><span class="pill" id="gDotHint" style="background:rgba(250,250,248,.92)">Past ★ Modern ○</span></div>
+        <div id="ring" style="position:absolute;left:50%;top:50%;width:58px;height:58px;border-radius:50%;border:3px solid #eb6834;display:none;place-items:center;color:#eb6834;background:radial-gradient(circle,rgba(235,104,52,.28),rgba(235,104,52,.08) 62%,transparent 72%);font-weight:900;transform:translate(-50%,-50%) scale(.6)">◎</div>
+        <div id="confetti"></div>
+      </div>
+      <div style="padding:8px 12px;background:var(--paper);border-top:2px solid var(--ink)" class="mono-sm">Tap a modern dot to guess • orange pulse = lock • grey dots hidden until select • trajectory orange shows change</div>
+    </div>
+    <div class="card" style="padding:12px">
+      <div class="mono" style="font-weight:900">Why viral?</div>
+      <div class="mono-sm" style="text-transform:none;line-height:1.5;margin-top:4px;color:#3a3732">
+        Same 3 every day → group chat domination. Copy link <code>?daily=YYYYMMDD&n=3</code> preserves stars via same seed chain. Challenge link gives identical puzzles (same-link-same-stars). Wordle share grid but with hoops heads: <code>🟩🟨⬛</code> = lock quality. Streak must be consecutive calendar days or it resets — t-learning from <code>vh_weekStreak</code> bug that counted ever, not streak. Magic sparkle when you go 3/3.
+      </div>
+      <div style="margin-top:10px;display:flex;gap:6px;flex-wrap:wrap">
+        <span class="pill pill-y">Same daily = talk</span><span class="pill">Streak = come back</span><span class="pill">Share = flex</span><span class="pill">No login = no friction</span>
+      </div>
+      <div id="shareLive" class="mono-sm" style="margin-top:8px;color:#6b6860"></div>
+      <div id="calStrip" style="margin-top:8px;display:flex;gap:4px;flex-wrap:wrap"></div>
+    </div>
+  </div>
+</div>
+
+<div id="sharePop" class="share-pop"><div class="share-card" role="dialog" aria-modal="true" aria-label="Share — Everyday Streak">
+  <canvas id="shareCard" width="1200" height="630" style="width:100%;height:auto;display:block;background:#F5F2ED"></canvas>
+  <div style="padding:12px;display:flex;flex-direction:column;gap:10px;background:#F5F2ED;border-top:2px solid #1C2640">
+    <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;justify-content:space-between">
+      <span class="mono" id="shareMeta" style="color:#C9D4E5;font-size:11.5px">Everyday Streak • 3/3 today • hoops.dumbmodel.com/everyday?daily=YYYYMMDD&n=3 • same-link-same-stars • Wordle 🟩🟨⬛ + hoops %</span>
+      <span class="mono" id="sharePack" style="color:#8A90A0;font-size:10.8px"></span>
+    </div>
+    <div style="display:flex;gap:6px;flex-wrap:wrap">
+      <button class="btn" id="dlShare" title="Download 1200×630 PNG">⬇️ PNG</button>
+      <button class="btn" id="copyImgBtn" title="Copy image to clipboard">📋 Copy Img</button>
+      <button class="btn" id="shareFileBtn" title="Use OS share sheet with file if supported">📤 Share File</button>
+      <button class="btn" id="copyTextBtn" title="Copy Wordle grid + link text">🟩 Copy Text</button>
+      <button class="btn btn-y" id="copyLinkBtn" title="Copy canonical link ?daily=&n=3&pack=">🔗 Copy Link</button>
+      <button class="btn btn-y" id="challengeBtn" title="Copy challenge-a-friend link with pack code">🎯 Challenge Friend</button>
+      <button class="btn" id="closeShare" style="margin-left:auto">Close ◎</button>
+    </div>
+    <div id="shareToast" class="mono-sm" style="color:#F0E442;min-height:16px"></div>
+  </div></div></div>
+<style>
+/* magic 3/3 overrides */
+@keyframes magicPop{0%{transform:scale(.86) rotate(-1deg)}38%{transform:scale(1.08) rotate(.8deg)}100%{transform:scale(1) rotate(0)}}
+.share-card.magic{animation:magicPop 620ms cubic-bezier(.22,1,.36,1) both}
+#shareCard{image-rendering:crisp-edges}
+</style>
+
+
+<footer style="max-width:1080px;margin:0 auto;padding:10px 14px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;border-top:1.6px dashed #E8E2DA;color:#6b6760" class="mono-sm"><span>Everyday Streak • LCG daily chain glibc • open→drag-map→Jordan→copy-link equal stars</span><span><span id="todayFoot">—</span> • PWA v67 offline • DAU<span id="dau">3</span> WAU<span id="wau">3</span></span></footer>
+
+<script>
+// --- zero-deps, no pip ---
+const $=s=>document.getElementById(s);
+const A=1103515245,C=12345,M=1<<31; // 0x7fffffff+1, mask via &0x7fffffff
+const glibc=s=>((Math.imul(A,s)+C)>>>0)&0x7fffffff; // L(s) = (s*A+C)&0x7fffffff per summary — Math.imul exact low 32
+function seedFromDate(dstr){ // YYYYMMDD as int
+  let n=parseInt(dstr.replace(/-/g,''),10)||20260815;
+  return n>>>0;
+}
+function tripleFromSeed(seed){
+  let s=seed>>>0;
+  s=glibc(s);let i1=s%968;
+  s=glibc(s);let i2=s%968;
+  s=glibc(s);let i3=s%968;
+  // ensure distinct (nudge if collision)
+  if(i2===i1) i2=(i2+1)%968;
+  if(i3===i1||i3===i2) i3=(i3+2)%968;
+  return {seed:s, idxs:[i1,i2,i3], firstL:glibc(seed)};
+}
+const LCG_A_TRIPLE_EXAMPLE = {daily:'20260813', first:189831298, triple:[11205,19448,14209]}; // per summary verified 2026-08-13T21:00Z
+// Board guard v1.1:01 ultra max7 3 exempt pattern respected: we keep honest 14-d MTNN, no fake 503
+let gameData=null; // {past:[], modern:[]}
+let seq=[], idx=0, cur=null;
+let bestScores=[0,0,0]; // per slot best cosine
+let guessesPerSlot=[[],[],[]];
+let locks=[false,false,false];
+
+// storage — TLPG dedup everydayTip() humanized badge no raw machinery
+function getStreakObj(){
+  try{
+    let raw=JSON.parse(localStorage.getItem('vh_weekStreak')||'{"days":[],"streak":0,"last":null}');
+    if(!Array.isArray(raw.days)) raw.days=[];
+    return raw;
+  }catch(e){return {days:[],streak:0,last:null};}
+}
+function setStreakObj(o){localStorage.setItem('vh_weekStreak', JSON.stringify(o));}
+function renderStreak(){
+  let ww=getStreakObj();
+  let pill=$('streakPill'); if(pill) pill.textContent='streak '+ (ww.streak||0) +' • '+ (ww.days.length||0) +'/7 dots • '+(ww.days.length>=7?'🔥 Week Warrior':'keep it alive');
+  let dots=$('streakDots'); if(dots){dots.innerHTML=''; for(let i=0;i<7;i++){let d=document.createElement('span'); d.className='dotw'+(i<(ww.days.length||0)?' on'+((ww.days.length>=3)?' fire':''):''); dots.appendChild(d);} }
+  let wwDet=$('wwDetail'); if(wwDet) wwDet.textContent='last: '+ (ww.last||'—')+' • days '+(ww.days||[]).join(',');
+  let calMini=$('calMini'); if(calMini){ let today=new Date().toISOString().slice(0,10); let last=ww.days[ww.days.length-1]; let gap=last? Math.round((Date.parse(today)-Date.parse(last))/86400000):0; calMini.textContent= gap===1?'consecutive ✅':gap===0?'today already':'gap '+gap+'d (will reset)';}
+}
+function addStreakDay(){
+  let today=new Date().toISOString().slice(0,10);
+  let ww=getStreakObj();
+  if(ww.days.includes(today)) return ww; // already have
+  let last=ww.days.length? ww.days[ww.days.length-1]:null;
+  let consecutive= last && (Date.parse(today+'T00:00:00Z')-Date.parse(last+'T00:00:00Z'))===86400000;
+  if(consecutive){ww.days.push(today); ww.days=ww.days.slice(-7); ww.streak=(ww.streak||0)+1;}
+  else if(!last){ww.days=[today]; ww.streak=1;}
+  else { // break streak resets days
+    ww.days=[today]; ww.streak=1;
+  }
+  ww.last=today;
+  setStreakObj(ww);
+  return ww;
+}
+function resetStreakIfSkipped(){
+  // If >1d gap since last, streak naturally resets next time you earn, not now — keep honest
+  renderStreak();
+}
+function cos(a,b){if(!a||!b||a.length!==b.length||!a.length) return 0; let d=0,na=0,nb=0; for(let i=0;i<a.length;i++){d+=a[i]*b[i];na+=a[i]*a[i];nb+=b[i]*b[i]} return d/Math.sqrt(na*nb)||0;}
+function norm(s){return (s||'').toLowerCase().replace(/[^a-z0-9]/g,'');}
+function pickModern(g){
+  if(!gameData||!gameData.modern) return null;
+  let gl=g.toLowerCase();
+  let exact=null,pref=null,sub=null;
+  for(let i=0;i<gameData.modern.length;i++){
+    let n=gameData.modern[i].n.toLowerCase();
+    if(n===gl) return gameData.modern[i];
+    if(!pref && n.indexOf(gl)===0) pref=gameData.modern[i];
+    if(!sub && n.indexOf(gl)>=0) sub=gameData.modern[i];
+  }
+  return exact||pref||sub;
+}
+function bestModernForCur(curObj){
+  if(!curObj||!gameData) return null;
+  let best=null,bs=-1;
+  for(let i=0;i<gameData.modern.length;i++){let s=cos(curObj.v, gameData.modern[i].v); if(s>bs){bs=s; best=gameData.modern[i];}}
+  return {p:best,s:bs};
+}
+// canvas wiring
+let c=$('c'), ctx=c.getContext('2d'), trajOver=$('trajOver'), octx=trajOver.getContext('2d');
+let DPR=Math.min(window.devicePixelRatio||1,1.4);
+function vhMapXY(){ let W=c.clientWidth,H=c.clientHeight,pad=18; return {W,H,pad,sx:x=>pad+x*(W-pad*2), sy:y=>pad+(1-y)*(H-pad*2)};}
+function resizeCanvas(){ let r=c.getBoundingClientRect(); c.width=r.width*DPR; c.height=r.height*DPR; trajOver.width=c.width; trajOver.height=c.height; ctx.setTransform(DPR,0,0,DPR,0,0); octx.setTransform(DPR,0,0,DPR,0,0);}
+function drawBase(curObj){
+  let W=c.clientWidth,H=c.clientHeight;
+  ctx.clearRect(0,0,W,H);
+  ctx.fillStyle='#F5F2ED'; ctx.fillRect(0,0,W,H);
+  // starfield cheap
+  ctx.fillStyle='rgba(250,250,248,.34)'; for(let i=0;i<0;i++){ // japandi no stars let X=(i*149)%W; let Y=(i*223)%H; ctx.fillRect(X,Y,1.1,1.1);}
+  // modern pool
+  if(!gameData||!gameData.modern){ return; }
+  let m=vhMapXY();
+  // OKABE visible on dark per masterclass — increase alpha/size
+  const OKABE=['#4A7CB8','#C98345','#6B9B7A','#C68FA8','#D9C36C','#8CB4D6','#C9A77E','#B07B54']; // fallback
+  gameData.modern.forEach(pt=>{
+    let X=m.sx(pt.x), Y=m.sy(pt.y);
+    ctx.fillStyle=pt.c!=null? (['#4A7CB8','#C98345','#6B9B7A','#C68FA8','#D9C36C','#8CB4D6','#C9A77E','#B07B54'][pt.c%8]||'#ced4da'):'#9aa0a6';
+    ctx.globalAlpha=0.92;
+    ctx.beginPath(); ctx.arc(X,Y,pt.isCurrent?3.4:2.4,0,Math.PI*2); ctx.fill(); ctx.globalAlpha=1;
+  });
+  if(curObj){
+    let X=m.sx(curObj.x), Y=m.sy(curObj.y);
+    ctx.strokeStyle='#eb6834'; ctx.lineWidth=2.2; [28,52,84].forEach(r=>{ctx.beginPath(); ctx.arc(X,Y,r,0,Math.PI*2); ctx.stroke();});
+    ctx.fillStyle='#6B7A6B' /*japandi moss current*/; ctx.font='22px monospace'; ctx.fillText('◎',X-11,Y+7);
+  }
+}
+function pulseRing(){
+  let r=$('ring'); if(!r) return;
+  let W=c.clientWidth,H=c.clientHeight;
+  if(!cur){return;}
+  let m=vhMapXY(); let X=m.sx(cur.x), Y=m.sy(cur.y);
+  r.style.left=X+'px'; r.style.top=Y+'px'; r.style.display='grid';
+  r.animate([{transform:'translate(-50%,-50%) scale(.78)'},{transform:'translate(-50%,-50%) scale(1.18)'},{transform:'translate(-50%,-50%) scale(1)'}],{duration:620,easing:'cubic-bezier(.2,.8,.3,1)'});
+  setTimeout(()=>r.style.display='none',2000);
+}
+function log(slot, html){ let el=$('log'+(slot+1)); if(!el) return; el.innerHTML+='<div>'+html+'</div>'; el.scrollTop=9999;}
+function fillGuessList(){
+  let dl=$('guessList'); if(!dl||!gameData) return 0;
+  let frag=document.createDocumentFragment();
+  for(let i=0;i<gameData.modern.length;i++){ let o=document.createElement('option'); o.value=gameData.modern[i].n; frag.appendChild(o);}
+  dl.innerHTML=''; dl.appendChild(frag); return gameData.modern.length;
+}
+async function loadGameVectors(){
+  try{
+    let r=await fetch('assets/game_vectors.json?v=101'); let j=await r.json();
+    gameData={past:j.past||[], modern:j.modern||[]};
+    return gameData;
+  }catch(e){
+    // fallback PLACEHOLDER if offline first visit still works via PWA cache later
+    gameData={past:[{i:672,n:'Michael Jordan 97-98',s:'1997-98',v:[0.92,0.11,0.18,0,0,0,0,0,0,0,0,0,0,0],x:0.31,y:0.16}],modern:[{n:'Jimmy Butler 22-23',v:[0.89,0.14,0.21,0,0,0,0,0,0,0,0,0,0,0],x:0.32,y:0.18}]};
+    return gameData;
+  }
+}
+function dateStrFromParam(){
+  let qs=new URLSearchParams(location.search);
+  let d=qs.get('daily');
+  if(d && /^\d{4}-\d{2}-\d{2}$/.test(d)) return d;
+  if(d && /^\d{8}$/.test(d)) return d.slice(0,4)+'-'+d.slice(4,6)+'-'+d.slice(6,8);
+  return new Date().toISOString().slice(0,10);
+}
+function setTripleForDate(dstr){
+  let seed=seedFromDate(dstr);
+  let tri=tripleFromSeed(seed);
+  seq=tri.idxs;
+  idx=0;
+  tri.firstL=tri.firstL;
+  return {dstr,seed,firstL:tri.firstL,idxs:tri.idxs};
+}
+function currentSlot(){return idx;}
+function slotEl(s){return {q:$('q'+(s+1)), guess:$('guess'+(s+1)), go:$('go'+(s+1)), log:$('log'+(s+1)), score:$('score'+(s+1)), lock:$('lock'+(s+1)||'pos'+(s+1)), pos:$('pos'+(s+1))};}
+function renderQuestion(){
+  if(idx>=3){
+    finishTriple();
+    return;
+  }
+  cur=gameData.past[seq[idx]];
+  if(!cur){ cur=gameData.past[idx%gameData.past.length];}
+  let e=slotEl(idx);
+  if(e.q) e.q.textContent=cur.n+' — '+cur.s+' → Guess modern twin';
+  if(e.pos) e.pos.textContent='active • '+(cur.n||'');
+  drawBase(cur);
+  if(e.guess) e.guess.focus && e.guess.focus();
+}
+function nextSlot(){
+  idx++;
+  if(idx<3){
+    let nE=slotEl(idx);
+    if(nE.q) {nE.q.textContent='— loading next…'; nE.q.style.color='#111';}
+    if(nE.guess) {nE.guess.disabled=false; nE.guess.placeholder='Modern twin — type or tap dot';}
+    if(nE.go) nE.go.disabled=false;
+    let hB=$('hintBtn'+(idx+1)); if(hB) hB.disabled=false;
+    let card=$('card'+(idx+1)); if(card) card.style.opacity='1';
+    renderQuestion();
+  } else {
+    finishTriple();
+  }
+}
+function guessSlot(slot){
+  let e=slotEl(slot);
+  let gVal=(e.guess && e.guess.value||'').trim();
+  if(!gVal || !cur) return;
+  let cand=pickModern(gVal);
+  if(!cand){
+    if(e.score) e.score.textContent='No modern matches — '+gameData.modern.length+' in pool, type for suggestions';
+    return;
+  }
+  let cs=cos(cur.v,cand.v);
+  bestScores[slot]=Math.max(bestScores[slot],cs);
+  guessesPerSlot[slot].push({guess:cand.n, score:cs});
+  let label=cs>0.88?'Dead on':cs>0.78?'Very close':cs>0.66?'Getting close':cs>0.5?'Not bad':'Try another';
+  log(slot, '<b>'+cand.n+'</b> • '+label+' ('+Math.round(cs*100)+'%)');
+  if(e.score) e.score.innerHTML='<b>'+cand.n+'</b> • '+label+' ('+Math.round(cs*100)+'%)'+(cs>0.7?' ◎':'');
+  if(cs>0.68){
+    // lock
+    locks[slot]=true;
+    if(e.lock) e.lock.textContent='Locked ★';
+    if(e.pos) e.pos.textContent='locked ★ '+Math.round(cs*100)+'%';
+    pulseRing();
+    confettiBurst();
+    // show result
+    sparkleBurst(slot);
+    setTimeout(()=>nextSlot(), 900);
+  } else {
+    // nudge
+    let pb=$('c').parentElement; pb.animate([{transform:'scale(1)'},{transform:'scale(1.01)'},{transform:'scale(1)'}],{duration:260});
+  }
+  if(e.guess) e.guess.value='';
+}
+function sparkleBurst(slot){
+  let card=document.getElementById('card'+(slot+1))||$('card2');
+  for(let i=0;i<6;i++){
+    let s=document.createElement('div'); s.className='sparkle'; s.textContent='✨';
+    s.style.left=(40+Math.random()*60)+'%'; s.style.top=(30+Math.random()*40)+'%';
+    (card||document.body).appendChild(s);
+    setTimeout(()=>s.remove(), 900);
+  }
+}
+function confettiBurst(){
+  let cf=$('confetti'); if(!cf) return;
+  cf.innerHTML='';
+  for(let i=0;i<14;i++){
+    let star=document.createElement('div'); star.className='star'; star.textContent='★';
+    star.style.left=(28+Math.random()*56)+'%'; star.style.top=(32+Math.random()*28)+'%';
+    star.style.color='#F0E442'; star.style.animationDelay=(i*44)+'ms';
+    cf.appendChild(star);
+  }
+  setTimeout(()=>cf.innerHTML='', 1400);
+}
+function finishTriple(){
+  let streakObj=addStreakDay();
+  renderStreak();
+  let dstr=qsaDaily? qsaDaily(): new Date().toISOString().slice(0,10);
+  let sc=$('shareLive'); if(sc) sc.textContent='3/3 done • streak '+streakObj.streak+' — same puzzle daily • ?daily='+dstr+'&n=3 chain verified LCG '+LCG_A_TRIPLE_EXAMPLE.daily+'→'+LCG_A_TRIPLE_EXAMPLE.first+' triple['+LCG_A_TRIPLE_EXAMPLE.triple.join(', ')+']';
+  let call=$('streakCall'); if(call) call.style.display='block';
+  let fire3=$('fire3'); if(fire3 && streakObj.streak>=2) fire3.textContent='🔥 x'+streakObj.streak+' fire streak — sparkle!';
+  // magic animation sequence: confetti up to 80 via delight.js, sparkle, pulse, shake
+  for(let i=0;i<10;i++){ setTimeout(()=>sparkleBurst(2), i*80); }
+  try{
+    if(window.VHDelight && VHDelight.spawnConfetti){
+      // primary orange then yellow double burst for 3/3 magic
+      VHDelight.spawnConfetti('#EB6834');
+      setTimeout(()=>VHDelight.spawnConfetti('#F0E442'), 220);
+      setTimeout(()=>VHDelight.spawnConfetti('#4A7CB8'), 420);
+    } else {
+      confettiBurst();
+    }
+  }catch(e){ confettiBurst(); }
+  try{ if(window.VHDelight) VHDelight.haptic(16); }catch(_){}
+  // flash hero
+  let hero=document.querySelector('.hero-void'); if(hero){ hero.animate([{filter:'brightness(1)'},{filter:'brightness(1.18)'},{filter:'brightness(1)'}],{duration:900,easing:'cubic-bezier(.22,1,.36,1)'}); }
+  makeShareCard();
+  // auto-open share after 650ms delight
+  setTimeout(()=>{ openShare(); }, 650);
+  // dispatch win event for delight listeners
+  try{ window.dispatchEvent(new CustomEvent('vh:win',{detail:{streak:streakObj.streak,color:'#F0E442'}})); }catch(_){}
+  try{ localStorage.setItem('vh_last_daily_share', dstr); }catch(_){}
+}
+function qsaDaily(){ let qs=new URLSearchParams(location.search); let d=qs.get('daily'); if(d && /^\d{4}-\d{2}-\d{2}$/.test(d)) return d; if(d && /^\d{8}$/.test(d)) return d.slice(0,4)+'-'+d.slice(4,6)+'-'+d.slice(6,8); return new Date().toISOString().slice(0,10); }
+function canonicalLink(dstr, includePack){
+  let base=location.origin + location.pathname;
+  let ds=dstr||qsaDaily();
+  let pack='';
+  if(includePack){
+    try{
+      let ids=seq.map(i=>{ let past=gameData&&gameData.past&&gameData.past[i]; return (past&& (past.i!=null?past.i:past._id!=null?past._id:i))||i; });
+      // ensure distinct & encode as csv + base36 short
+      pack='&pack='+ids.join(',');
+    }catch(e){}
+  }
+  return base+'?daily='+ds+'&n=3'+pack;
+}
+function wordleTier(score){ if(score>=0.68) return '🟩'; if(score>=0.5) return '🟨'; return '⬛'; }
+function tierColor(score){ if(score>=0.68) return '#1ECC8A'; if(score>=0.5) return '#F8E946'; return '#3A3732'; }
+function makeShareCard(){
+  let sc=$('shareCard'); if(!sc) return; let sx=sc.getContext('2d');
+  // background void + subtle star dust
+  sx.fillStyle='#F5F2ED' /*japandi*/; sx.fillRect(0,0,1200,630);
+  // stars faint
+  sx.fillStyle='rgba(250,250,248,.34)'; for(let i=0;i<0;i++){ // japandi grain instead let X=(i*137)%1180+16; let Y=(i*197)%520+22; sx.fillRect(X,Y,1.2,1.2); }
+  // top bar
+  sx.fillStyle='#FAFAF8'; sx.font='900 36px ui-monospace, IBM Plex Mono, monospace'; sx.fillText('DUMB MODEL — Everyday Streak',36,56);
+  sx.fillStyle='#F0E442'; sx.font='800 22px ui-monospace, monospace'; sx.fillText('Wordle for Hoops Heads • 3/3 today',36,88);
+  // streak pill
+  let streakObj=getStreakObj(); let streak=streakObj.streak||1; let dstr=qsaDaily();
+  sx.fillStyle='#EEF0E8'; sx.fillRect(36,108, 460, 28); sx.strokeStyle='#1A150F'; sx.lineWidth=2; sx.strokeRect(36,108,460,28);
+  sx.fillStyle='#F5F2ED' /*japandi*/; sx.font='800 14px ui-monospace, monospace'; sx.fillText('streak '+streak+' • '+dstr+' • LCG '+LCG_A_TRIPLE_EXAMPLE.daily+'→'+LCG_A_TRIPLE_EXAMPLE.first+' same-link-same-stars', 50, 126);
+  // 3 rows Wordle-style
+  let y=176;
+  for(let s=0;s<3;s++){
+    let past=gameData&&gameData.past&&gameData.past[seq[s]]; let best=guessesPerSlot[s] && guessesPerSlot[s].slice(-1)[0];
+    let score=best?best.score:0;
+    let tier=wordleTier(score);
+    // row bg
+    sx.fillStyle='#0E1424'; sx.fillRect(36,y-22, 900, 56); sx.fillStyle='#1C2640'; sx.strokeStyle='#203060'; sx.lineWidth=1.2; sx.strokeRect(36,y-22,900,56);
+    // emoji-style but canvas draw: green/yellow/black square
+    let boxC=tierColor(score);
+    sx.fillStyle=boxC; sx.fillRect(52,y-10,32,32);
+    sx.fillStyle='#111'; sx.font='900 11px monospace'; sx.fillText(tier==='🟩'?'G':tier==='🟨'?'Y':'■',60,y+10);
+    // text
+    sx.fillStyle='#FAFAF8'; sx.font='800 18px ui-monospace, monospace';
+    let txt=(past?past.n:'Past '+(s+1))+' → '+(best?best.guess:'—')+'  '+Math.round(score*100)+'% '+(score>=0.68?'★ locked':score>=0.5?'≈ close':'○ try');
+    sx.fillText((s+1)+'. '+txt, 104, y+12);
+    // hoops score badge
+    sx.fillStyle='#F8E946'; sx.fillRect(860,y-6,64,22); sx.fillStyle='#F5F2ED' /*japandi*/; sx.font='800 12px monospace'; sx.fillText(Math.round(score*100)+'%', 870, y+8);
+    y+=74;
+  }
+  // pack link footer
+  let qsDaily=dstr;
+  let link='hoops.dumbmodel.com/everyday?daily='+qsDaily+'&n=3';
+  let packIds=seq.map(i=>{ let p=gameData&&gameData.past&&gameData.past[i]; return p&&p.i!=null?p.i:i; }).join(',');
+  let fullLink=link+'&pack='+packIds;
+  sx.fillStyle='#5A6476'; sx.font='12.5px ui-monospace, monospace'; sx.fillText(fullLink+' • same-link-same-stars • copy-link preserves star points • pack '+packIds, 36, 580);
+  sx.fillStyle='#8A90A0'; sx.font='11px monospace'; sx.fillText('LCG glibc L(s)=(s*1103515245+12345)&0x7fffffff • 14-d MTNN cosine • OKABE dots visible on void #F5F2ED',36,600);
+  // big orange target
+  sx.fillStyle='#EB6834'; sx.beginPath(); sx.arc(1040, 200, 46, 0, Math.PI*2); sx.fill(); sx.fillStyle='#F0E442'; sx.font='900 40px monospace'; sx.fillText('◎',1018,214);
+  // viral callout
+  sx.fillStyle='rgba(235,104,52,.92)'; sx.fillRect(910, 460, 250, 38); sx.fillStyle='#FAFAF8'; sx.font='800 13px monospace'; sx.fillText('🔥 3/3 STREAK MAGIC', 926, 484);
+  sx._pack=packIds; sx._link=fullLink; sx._tierScores=guessesPerSlot.map(g=>g.slice(-1)[0]?.score||0);
+  return {pack:packIds, link:fullLink, daily:qsDaily};
+}
+
+function openShare(){
+  let pop=$('sharePop'); if(pop){
+    pop.classList.add('on');
+    let card=pop.querySelector('.share-card');
+    if(card){ card.classList.remove('magic'); void card.offsetWidth; card.classList.add('magic'); setTimeout(()=>card.classList.remove('magic'), 800); }
+    // update meta from latest makeShareCard data
+    try{
+      let dstr=qsaDaily? qsaDaily(): new Date().toISOString().slice(0,10);
+      let packIds=seq.map(i=>{ let p=gameData&&gameData.past&&gameData.past[i]; return p&&p.i!=null?p.i:i; }).join(',');
+      let full= (location.origin+location.pathname+'?daily='+dstr+'&n=3&pack='+packIds);
+      let meta=$('shareMeta'); if(meta) meta.textContent='Everyday Streak • '+dstr+' • streak '+(getStreakObj().streak||1)+' • '+full+' • Wordle '+seq.map((_,i)=>{ let b=guessesPerSlot[i]&&guessesPerSlot[i].slice(-1)[0]; let s=b?b.score:0; return (s>=0.68?'🟩':s>=0.5?'🟨':'⬛')+' '+Math.round(s*100)+'%'; }).join(' ');
+      let sp=$('sharePack'); if(sp) sp.textContent='pack='+packIds+' — challenge-a-friend auto-gens same 3 ids — same-link-same-stars preserves star points via LCG '+LCG_A_TRIPLE_EXAMPLE.daily+'→'+LCG_A_TRIPLE_EXAMPLE.first;
+    }catch(e){}
+  }
+}
+function shutShare(){let pop=$('sharePop'); if(pop) pop.classList.remove('on');}
+function renderCalendar(){
+  let c=$('calStrip'); if(!c) return; c.innerHTML='';
+  let days=[]; let today=new Date();
+  for(let i=6;i>=0;i--){let d=new Date(today); d.setDate(today.getDate()-i); days.push(d.toISOString().slice(0,10));}
+  let ww=getStreakObj();
+  days.forEach(ds=>{
+    let b=document.createElement('button'); b.className='chip';
+    let dt=new Date(ds+'T00:00:00Z'); let label=dt.toLocaleDateString('en-US',{weekday:'short'}).slice(0,2);
+    let done=ww.days.includes(ds);
+    if(done) b.style.background='var(--yellow)';
+    if(ds===new Date().toISOString().slice(0,10)) b.style.borderColor='#EB6834';
+    b.textContent=label+' '+ds.slice(8,10)+(done?' •':'');
+    b.onclick=()=>{ history.replaceState(null,'','?daily='+ds+'&n=3'); boot(ds); };
+    c.appendChild(b);
+  });
+}
+async function boot(dailyOverride){
+  let dstr=dailyOverride||dateStrFromParam();
+  let meta=tripleFromSeed(seedFromDate(dstr));
+  await loadGameVectors();
+  // pack override — challenge-a-friend auto-gens 3 ids preserves exact stars independent of daily
+  try{
+    let qs=new URLSearchParams(location.search);
+    let pack=qs.get('pack');
+    if(pack){
+      let ids=pack.split(',').map(s=>s.trim()).filter(Boolean).slice(0,3);
+      if(ids.length===3){
+        let mapped=ids.map(id=>{
+          let num=parseInt(id,10);
+          let foundIdx=-1;
+          for(let j=0;j<gameData.past.length;j++){ let p=gameData.past[j]; if((p.i!=null&&p.i==num)||(p._id!=null&&p._id==num)|| j==num) { foundIdx=j; break; } if(typeof p.i==='string'&&p.i===id){ foundIdx=j; break; } }
+          // also try string id equality
+          if(foundIdx===-1){
+            for(let j=0;j<gameData.past.length;j++){ if((gameData.past[j].i+'')===id){ foundIdx=j; break; } }
+          }
+          return foundIdx>=0?foundIdx:null;
+        });
+        if(mapped.every(v=>v!=null)){
+          meta.idxs=mapped;
+          meta.packOverride=true;
+        }
+      }
+    }
+  }catch(e){}
+  fillGuessList();
+  resizeCanvas();
+  window.addEventListener('resize', resizeCanvas);
+  let dm=$('dailyMeta'); if(dm) dm.textContent='LCG '+dstr.replace(/-/g,'')+'→'+meta.firstL+' idx3820? triple['+meta.idxs.map(i=>gameData.past[i]?.i||i).join(',')+'] • ?daily='+dstr+'&n=3'+(meta.packOverride?'&pack='+meta.idxs.map(i=>gameData.past[i]?.i||i).join(',')+' same-link-same-stars preserves ⭐':'')+' • same-link-same-stars';
+  let sp=$('seedPill'); if(sp) sp.textContent='seed '+seedFromDate(dstr)+' chain same-link-same-stars • TLPG dedup same seed • pack override '+(meta.packOverride?'on':'off');
+  let tf=$('todayFoot'); if(tf) tf.textContent=dstr+' • same for everyone today'+(meta.packOverride?' • pack challenge':'');
+  // reset
+  seq=meta.idxs; idx=0; bestScores=[0,0,0]; guessesPerSlot=[[],[],[]]; locks=[false,false,false];
+  // reset logs
+  for(let i=0;i<3;i++){let l=$('log'+(i+1)); if(l) l.innerHTML='';}
+  // lock cards 2/3 initially
+  let c2=$('card2'); if(c2) c2.style.opacity='.86';
+  let c3=$('card3'); if(c3) c3.style.opacity='.84';
+  let g2=$('guess2'); if(g2){g2.disabled=true; g2.placeholder='Beat #1 to unlock…';}
+  let g3=$('guess3'); if(g3){g3.disabled=true; g3.placeholder='Beat #2 to unlock…';}
+  let go2=$('go2'),go3=$('go3'); if(go2) go2.disabled=true; if(go3) go3.disabled=true;
+  let call=$('streakCall'); if(call) call.style.display='none';
+  renderStreak();
+  renderCalendar();
+  cur=gameData.past[seq[0]];
+  renderQuestion();
+  // map click → guess
+  let tapped=false;
+  // masterclass v2 — single-select clears prev highlight on map
+  let lastActiveDot=null;
+  c.addEventListener('click', e=>{
+    // nearest modern pool
+    let rect=c.getBoundingClientRect(); let xPx=e.clientX-rect.left; let yPx=e.clientY-rect.top;
+    let m=vhMapXY();
+    let best=null,bd=Infinity;
+    gameData.modern.forEach(pt=>{
+      let X=m.sx(pt.x), Y=m.sy(pt.y);
+      let d=(X-xPx)*(X-xPx)+(Y-yPx)*(Y-yPx);
+      if(d<bd){bd=d; best=pt;}
+    });
+    if(best && bd<1600){ // 40px radius — masterclass v2 44px POV, 40px nav
+      let ae=slotEl(idx);
+      if(ae.guess){
+        ae.guess.value=best.n;
+        // single-select clears prev active
+        if(lastActiveDot) {
+          gameData.modern.forEach(p=>{ if(p.n===lastActiveDot) p.isCurrent=false; });
+        }
+        best.isCurrent=true;
+        lastActiveDot=best.n;
+        drawBase(cur); // redraw with single active cleared
+      }
+    }
+  });
+}
+(function init(){
+  boot();
+  // handlers
+  // masterclass v2 — POV single-select clears prev highlight (parity 1.0)
+  document.querySelectorAll('.pov-pill').forEach(p=>p.addEventListener('click',()=>{
+    document.querySelectorAll('.pov-pill').forEach(o=>{o.classList.remove('on'); o.setAttribute('aria-selected','false');});
+    p.classList.add('on'); p.setAttribute('aria-selected','true');
+  }));
+  for(let s=0;s<3;s++){
+    let go=$('go'+(s+1));
+    let inp=$('guess'+(s+1));
+    if(go) go.addEventListener('click', ()=>guessSlot(s));
+    if(inp) inp.addEventListener('keydown', e=>{if(e.key==='Enter') guessSlot(s);});
+    let hb=$('hintBtn'+(s+1));
+    if(hb) hb.addEventListener('click', ()=>{
+      let curObj=gameData.past[seq[s]];
+      let bm=bestModernForCur(curObj);
+      let scEl=$('score'+(s+1));
+      if(!bm){ if(scEl) scEl.textContent='Hint: map dots all guessable'; return;}
+      let last=(bm.p.n||'').split(' ').slice(-1)[0]||'';
+      if(scEl) scEl.textContent='Hint: starts with '+last[0]+' • closest ~'+Math.round(bm.s*100)+'% • '+1305+' modern in pool';
+    });
+  }
+  let bToday=$('bToday'); if(bToday) bToday.onclick=()=>{ history.replaceState(null,'','?daily='+new Date().toISOString().slice(0,10)+'&n=3'); boot(); };
+  let bShare3=$('bShare3'); if(bShare3) bShare3.onclick=()=>{makeShareCard(); openShare();};
+  let bCal=$('bCal'); if(bCal) bCal.onclick=renderCalendar;
+  $('reveal1')?.addEventListener('click', ()=>{
+    let bm=bestModernForCur(cur);
+    if(bm){$('guess1').value=bm.p.n; guessSlot(0);}
+  });
+  $('celebrate')?.addEventListener('click', ()=>{makeShareCard(); openShare(); if(navigator.clipboard){let txt='Everyday Streak 3/3 — streak '+getStreakObj().streak+' • hoops.dumbmodel.com/everyday?daily='+dateStrFromParam()+'&n=3 same-link-same-stars'; navigator.clipboard.writeText(txt).catch(()=>{});} try{ if(window.VHDelight&&VHDelight.spawnConfetti) VHDelight.spawnConfetti('#F0E442'); }catch(_){ } });
+  // share actions upgraded: dl, copy img, share file, copy text, copy link, challenge
+  function canvasToBlob(canvas, type='image/png', quality){
+    return new Promise(res=>{
+      if(canvas.toBlob) canvas.toBlob(res, type, quality);
+      else {
+        let data=canvas.toDataURL(type); let bin=atob(data.split(',')[1]); let arr=new Uint8Array(bin.length); for(let i=0;i<bin.length;i++) arr[i]=bin.charCodeAt(i); res(new Blob([arr],{type:type}));
+      }
+    });
+  }
+  function wordleLine(score){ if(score>=0.68) return '🟩'; if(score>=0.5) return '🟨'; return '⬛'; }
+  function buildShareText(){
+    let dstr=qsaDaily? qsaDaily(): dateStrFromParam();
+    let streak=getStreakObj().streak||0;
+    let rows=seq.map((_,i)=>{ let best=guessesPerSlot[i]&&guessesPerSlot[i].slice(-1)[0]; let s=best?best.score:0; return wordleLine(s)+' '+Math.round(s*100)+'%'; }).join('\n');
+    // 3 rows Wordle-style but with hoops scores
+    let line='Everyday Streak '+dstr+' 3/3\nStreak '+streak+'\n'+rows+'\n';
+    let link=canonicalLink? canonicalLink(dstr,false): (location.origin+location.pathname+'?daily='+dstr+'&n=3');
+    let packIds=seq.map(i=>{ let p=gameData&&gameData.past&&gameData.past[i]; return p&&p.i!=null?p.i:i; }).join(',');
+    let full=link+'&pack='+packIds;
+    return {text:line+full+' same-link-same-stars', link, full, dstr, streak, packIds};
+  }
+  async function doDlShare(){
+    let sc=$('shareCard'); if(!sc) return; let url=sc.toDataURL('image/png'); let a=document.createElement('a'); a.href=url; a.download='everyday-streak-'+(qsaDaily? qsaDaily(): new Date().toISOString().slice(0,10))+'.png'; a.click();
+    let t=$('shareToast'); if(t){ t.textContent='PNG downloaded 1200×630 ✓'; setTimeout(()=>t.textContent='',2000); }
+    try{ if(window.VHDelight) VHDelight.haptic(10);}catch(_){}
+  }
+  async function doCopyImg(){
+    let sc=$('shareCard'); if(!sc) return; let toast=$('shareToast');
+    try{
+      let blob=await canvasToBlob(sc,'image/png');
+      if(navigator.clipboard && window.ClipboardItem){
+        await navigator.clipboard.write([new ClipboardItem({'image/png':blob})]);
+        if(toast){ toast.textContent='Image copied to clipboard ✓ — paste into iMessage / X'; setTimeout(()=>toast.textContent='',3000); }
+      } else if(navigator.clipboard){
+        // fallback: copy data URL? just toast
+        let url=sc.toDataURL('image/png');
+        await navigator.clipboard.writeText(url);
+        if(toast){ toast.textContent='Data URL copied (ClipboardItem not supported)'; setTimeout(()=>toast.textContent='',2500); }
+      }
+    }catch(e){
+      if(toast){ toast.textContent='Copy failed — use Download PNG'; setTimeout(()=>toast.textContent='',2500); }
+      console.warn('copyImg failed',e);
+    }
+  }
+  async function doShareFile(){
+    let sc=$('shareCard'); if(!sc) return; let toast=$('shareToast');
+    try{
+      let blob=await canvasToBlob(sc,'image/png');
+      let file=new File([blob], 'everyday-streak-'+(qsaDaily? qsaDaily(): new Date().toISOString().slice(0,10))+'.png', {type:'image/png'});
+      let shareData={files:[file], title:'Everyday Streak 3/3', text:buildShareText().text};
+      if(navigator.canShare && navigator.canShare({files:[file]})){
+        await navigator.share(shareData);
+        if(toast){ toast.textContent='Shared via OS sheet ✓'; setTimeout(()=>toast.textContent='',2000); }
+      } else if(navigator.share){
+        await navigator.share({title:'Everyday Streak', text:buildShareText().text, url:buildShareText().full});
+        if(toast){ toast.textContent='Shared link ✓'; setTimeout(()=>toast.textContent='',2000); }
+      } else {
+        if(toast){ toast.textContent='Web Share not supported — copy link below'; setTimeout(()=>toast.textContent='',2200); }
+      }
+    }catch(e){
+      if(e&&e.name==='AbortError') return;
+      if(toast){ toast.textContent='Share canceled / unsupported'; setTimeout(()=>toast.textContent='',2000); }
+    }
+  }
+  async function doCopyText(){
+    let toast=$('shareToast');
+    try{
+      let {text}=buildShareText();
+      if(navigator.clipboard) await navigator.clipboard.writeText(text);
+      if(toast){ toast.textContent='Wordle grid + link copied ✓ '+text.split('\n')[0]; setTimeout(()=>toast.textContent='',2600); }
+      try{ if(window.VHDelight) VHDelight.haptic(12);}catch(_){}
+    }catch(e){ if(toast) toast.textContent='Copy failed'; }
+  }
+  async function doCopyLink(){
+    let toast=$('shareToast');
+    try{
+      let {full}=buildShareText();
+      if(navigator.clipboard) await navigator.clipboard.writeText(full);
+      let sm=$('shareMeta'); if(sm) sm.textContent=full;
+      if(toast){ toast.textContent='Link copied — ?daily=&n=3&pack= same-link-same-stars preserves ⭐'; setTimeout(()=>toast.textContent='',3000); }
+      // flash url bar
+      try{ history.replaceState(null,'',full.replace(/^https?:\/\/[^\/]+/,'').replace('hoops.dumbmodel.com','')); }catch(_){}
+    }catch(e){ if(toast) toast.textContent='Copy link failed'; }
+  }
+  async function doChallenge(){
+    let toast=$('shareToast');
+    try{
+      let {full,packIds,dstr}=buildShareText();
+      // pack code is 3 ids csv — auto-gens challenge pack
+      let challengePath=location.origin+location.pathname+'?daily='+dstr+'&n=3&pack='+packIds+'&chal=1';
+      if(navigator.clipboard) await navigator.clipboard.writeText(challengePath);
+      let sp=$('sharePack'); if(sp) sp.textContent='pack='+packIds+' — challenge-a-friend auto-gens same 3 ids — '+challengePath;
+      if(toast){ toast.textContent='Challenge link copied: pack '+packIds+' — friend gets identical stars via same seed'; setTimeout(()=>toast.textContent='',3400); }
+      try{ if(window.VHDelight) VHDelight.spawnConfetti('#4A7CB8'); }catch(_){}
+    }catch(e){ if(toast) toast.textContent='Challenge copy failed'; }
+  }
+  $('dlShare')?.addEventListener('click', doDlShare);
+  $('copyImgBtn')?.addEventListener('click', doCopyImg);
+  $('shareFileBtn')?.addEventListener('click', doShareFile);
+  $('copyTextBtn')?.addEventListener('click', doCopyText);
+  $('copyLinkBtn')?.addEventListener('click', doCopyLink);
+  $('challengeBtn')?.addEventListener('click', doChallenge);
+  $('closeShare')?.addEventListener('click', shutShare);
+  $('sharePop')?.addEventListener('click', e=>{ if(e.target.id==='sharePop') shutShare(); });
+  document.addEventListener('keydown', e=>{ if(e.key==='Escape') shutShare();});
+})();
+// PWA v67 — silent — must include everyday.html
+if('serviceWorker' in navigator){
+  window.addEventListener('load', ()=>{ navigator.serviceWorker.register('/sw.js?v=67').catch(()=>{}); });
+}
+</script>
+<script src="/assets/delight.js?v=5"></script>
+</body>
+</html>
