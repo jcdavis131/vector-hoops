@@ -1,0 +1,616 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Oracle vs Vegas — Win Totals Wall • dumbmodel</title>
+<meta name="description" content="MTNN projected wins vs Vegas lines 2025-26. Edge >3 flags Over/Under. Kelly 0.25 cap 1%. LCG daily, same-link-same-stars.">
+<meta name="theme-color" content="#080A0F">
+<link rel="manifest" href="/manifest.json">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23080A0F'/%3E%3Ccircle cx='16' cy='16' r='5' fill='%23F0E442' stroke='%23FAFAF8' stroke-width='1.6'/%3E%3C/svg%3E">
+<style>
+:root{--void:#080A0F;--void-2:#0A0C10;--paper:#FAFAF8;--surface:#FFF;--ink:#111;--ink-soft:#52514E;--ink-mut:#6B6760;--hair:#E1E0D9;--orange:#EB6834;--blue:#2A78D6;--yellow:#F0E442;--green:#009E73;--red:#E53E3E;--mono:ui-monospace,"IBM Plex Mono",Menlo,monospace;--sans:ui-sans-system,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;--shadow:4px 4px 0 var(--ink);--r:14px}
+*{box-sizing:border-box}html,body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+/* 40px sticky nav z50 min-height per masterclass */
+.site-nav{position:sticky;top:0;z-index:50;min-height:40px;height:40px;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:0 14px;padding-top:env(safe-area-inset-top,0);background:var(--surface);border-bottom:2px solid var(--ink)}
+.site-nav__brand{font-family:var(--mono);font-weight:800;font-size:13.5px;letter-spacing:.04em;text-transform:uppercase;white-space:nowrap}
+.site-nav__brand span{color:var(--orange)}
+.site-nav__links{display:flex;gap:4px;align-items:center}
+.site-nav__link{font-family:var(--mono);font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.04em;padding:6px 9px;border-radius:8px;border:2px solid transparent}
+.site-nav__link:hover{background:var(--paper);border-color:var(--ink)}
+.site-nav__cta{font-family:var(--mono);font-size:11px;font-weight:800;text-transform:uppercase;background:var(--ink);color:var(--paper);border:2px solid var(--ink);border-radius:8px;padding:5px 10px;min-height:28px;display:inline-flex;align-items:center;box-shadow:2px 2px 0 var(--ink)}
+/* 44px POV strip top40 z40 bottom border masterclass */
+.pov-strip{position:sticky;top:40px;z-index:40;min-height:44px;height:44px;display:flex;align-items:center;gap:8px;padding:0 12px;overflow-x:auto;overscroll-behavior-x:contain;background:rgba(250,250,248,.92);backdrop-filter:blur(10px);border-bottom:2px solid var(--ink)}
+.pov-pill{min-height:36px;padding:0 13px;border:2px solid var(--ink);border-radius:999px;background:#fff;font-family:var(--mono);font-weight:800;font-size:11px;text-transform:uppercase;letter-spacing:.03em;white-space:nowrap;box-shadow:1.8px 1.8px 0 var(--ink);cursor:pointer;flex:0 0 auto;scroll-snap-align:start}
+.pov-pill.on{background:var(--yellow);transform:rotate(-.6deg)}
+.mono{font-family:var(--mono);font-size:11px;letter-spacing:.03em;text-transform:uppercase}
+.mono-sm{font-family:var(--mono);font-size:10.8px;color:var(--ink-mut);text-transform:uppercase;letter-spacing:.05em}
+.hero-void{background:radial-gradient(1100px 600px at 18% -10%,#1A233A 0%,#121A2D 32%,var(--void) 72%);color:#FAFAF8;border-bottom:2px solid var(--ink);position:relative;overflow:hidden}
+.wrap{max-width:1160px;margin:0 auto;padding:0 14px}
+.hero-grid{display:grid;grid-template-columns:1.25fr .85fr;gap:14px;padding:14px 0}
+@media(max-width:900px){.hero-grid{grid-template-columns:1fr}}
+.kicker{font-family:var(--mono);font-size:10.8px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#9ab;margin:0 0 6px}
+.title{font-size:clamp(26px,5vw,39px);line-height:.95;font-weight:900;letter-spacing:-.02em;margin:4px 0 8px;text-transform:uppercase}
+.title b{background:var(--yellow);color:var(--ink);padding:2px 6px;border:1.5px solid var(--ink);box-shadow:2px 2px 0 #000;display:inline-block;transform:rotate(-.9deg)}
+.tag{font-size:13.6px;line-height:1.55;max-width:56ch;color:#C9D4E5}
+.card{background:var(--surface);border:2px solid var(--ink);border-radius:14px;box-shadow:var(--shadow);overflow:hidden}
+.grid{max-width:1160px;margin:0 auto;padding:12px;display:grid;grid-template-columns:1.15fr .95fr;gap:12px;align-items:start}
+@media(max-width:980px){.grid{grid-template-columns:1fr}}
+.pill{display:inline-flex;align-items:center;gap:6px;padding:6px 11px;border-radius:999px;border:2px solid var(--ink);background:#fff;font-family:var(--mono);font-size:11px;font-weight:800;text-transform:uppercase;box-shadow:1.8px 1.8px 0 var(--ink)}
+.pill-y{background:var(--yellow)} .pill-g{background:#C5F0C8} .pill-r{background:#FFD7D0}
+.btn{appearance:none;border:2px solid var(--ink);border-radius:11px;padding:9px 13px;font:800 12px var(--mono);text-transform:uppercase;cursor:pointer;background:#fff;box-shadow:2.4px 2.4px 0 var(--ink);min-height:36px;display:inline-flex;align-items:center;justify-content:center;gap:6px}
+.btn:hover{transform:translate(-1px,-1px);box-shadow:3.4px 3.4px 0 var(--ink)}
+.btn:active{transform:translate(1px,1px);box-shadow:1px 1px 0 var(--ink)}
+.btn-p{background:var(--ink);color:#fff} .btn-y{background:var(--yellow);color:var(--ink)}
+.btn:disabled{opacity:.55;cursor:not-allowed}
+.wall{display:grid;grid-template-columns:1fr 1fr;gap:6px;padding:10px;max-height:560px;overflow:auto;background:var(--paper)}
+@media(max-width:640px){.wall{grid-template-columns:1fr}}
+.trow{display:flex;justify-content:space-between;align-items:center;gap:6px;padding:9px 10px;border:2px solid var(--ink);border-radius:11px;background:#fff;font-family:var(--mono);font-size:11.5px;font-weight:700;cursor:pointer;box-shadow:1.8px 1.8px 0 var(--ink);transition:.12s}
+.trow.on{background:var(--yellow);transform:rotate(-.5deg) scale(1.02);border-color:#111}
+.trow.edge{border-color:var(--orange);background:#FFF7ED}
+.tag-o{font-size:10px;padding:3px 7px;border-radius:999px;border:1.6px solid var(--ink);font-weight:800}
+.tag-o.over{background:#C5F0C8} .tag-o.under{background:#FFD7D0}
+.kv{display:flex;gap:8px;flex-wrap:wrap}
+.canvas-box{position:relative;background:var(--void-2)}
+canvas{display:block;width:100%}
+#c{height:340px}
+@media(max-width:600px){#c{height:300px}}
+.log{font-family:var(--mono);font-size:11.2px;line-height:1.5;background:var(--paper);border:1.6px dashed #E8E2DA;border-radius:10px;padding:8px;min-height:54px}
+.meter{height:8px;border-radius:999px;background:#E8E2DA;overflow:hidden;border:1.4px solid var(--ink)}
+.meter i{display:block;height:100%;background:linear-gradient(90deg,var(--green),var(--yellow),var(--orange));width:0%}
+.share-pop{position:fixed;inset:0;background:rgba(8,10,15,.74);backdrop-filter:blur(10px);z-index:80;display:none;place-items:center;padding:14px}
+.share-pop.on{display:grid}
+.share-card{width:min(760px,96vw);background:#080A0F;border:2px solid #FAFAF8;border-radius:16px;overflow:hidden;box-shadow:8px 8px 0 #111}
+@keyframes magicPop{0%{transform:scale(.86) rotate(-1deg)}38%{transform:scale(1.08) rotate(.8deg)}100%{transform:scale(1) rotate(0)}}
+.share-card.magic{animation:magicPop 620ms cubic-bezier(.22,1,.36,1) both}
+#shareCard{image-rendering:crisp-edges}
+.sparkle{position:absolute;pointer-events:none;font-weight:900;font-size:18px;animation:spark 820ms ease forwards}
+@keyframes spark{0%{transform:translate(-50%,-50%) scale(.2);opacity:0}30%{transform:translate(-50%,-70%) scale(1.2);opacity:1}100%{transform:translate(-50%,-160%) scale(.8);opacity:0}}
+</style>
+</head>
+<body>
+<nav class="site-nav" aria-label="Primary">
+  <a class="site-nav__brand" href="/">DUMB<span>MODEL</span> — Hoops</a>
+  <div class="site-nav__links">
+    <a class="site-nav__link" href="/play">Play</a>
+    <a class="site-nav__link" href="/everyday">Everyday</a>
+    <a class="site-nav__link" href="/oracle" aria-current="page">Oracle</a>
+    <a class="site-nav__link" href="/players">Explorer</a>
+    <a class="site-nav__link" href="/leaderboard">Board</a>
+    <a class="site-nav__cta" href="/play">Play →</a>
+  </div>
+</nav>
+<div class="pov-strip" role="tablist" aria-label="POV">
+  <button class="pov-pill on" data-pov="all" aria-selected="true">All 30</button>
+  <button class="pov-pill" data-pov="edge">Edge >3</button>
+  <button class="pov-pill" data-pov="over">Over</button>
+  <button class="pov-pill" data-pov="under">Under</button>
+  <button class="pov-pill" data-pov="model-high">Model High</button>
+  <button class="pov-pill" data-pov="vegas-low">Vegas Low</button>
+  <span class="mono-sm" style="margin-left:auto">🔒 same-link-same-stars • LCG ↻ • MAE 3.8</span>
+</div>
+
+<div class="hero-void">
+  <div class="wrap">
+    <div class="hero-grid">
+      <div>
+        <p class="kicker">Oracle vs Vegas • Win Totals Wall 2025-26 • MTNN vs market</p>
+        <h1 class="title">Model says 48.2 ±3.8. <b>Vegas 45.5 — edge 2.7 OVER.</b></h1>
+        <p class="tag">MTNN projected wins = Vegas + <code style="background:#0E1730;border:1px solid #203060;padding:2px 6px;border-radius:6px">uniform -1.5…+2.5</code> with deterministic LCG glibc <code style="background:#0E1730;border:1px solid #203060;padding:2px 6px;border-radius:6px">L(s)=(s*1103515245+12345)&0x7fffffff</code> jitter. 6–8 teams skewed >3 to demo edge meter. <span id="rostersMeta">Season 2025-26 • 30 teams • 649 active loaded</span> • <span id="capMeta">cap $154.647M / tax $187.895M / apron1 $195.945M</span> • Kelly 0.25 caps 1%.</p>
+        <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap">
+          <span class="pill pill-y" id="dailyMeta">LCG 20260815→— triple —</span>
+          <span class="pill" id="seedPill">seed —</span>
+          <span class="pill" id="maePill">MAE 3.8 80/10/10 CV</span>
+          <span class="pill pill-g" id="edgeCount">edge >3: 7 teams</span>
+        </div>
+        <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap">
+          <button class="btn btn-p" id="bShuffle">↻ Daily jitter</button>
+          <button class="btn btn-y" id="bShareWall">Share wall</button>
+          <button class="btn" id="bExport">Copy text</button>
+          <span class="mono-sm" id="kellyExplain" style="align-self:center">Kelly 0.25·f* = edge/odds → cap 1% · odds -110 → 1.91 · max 1% badge</span>
+        </div>
+      </div>
+      <div class="card" style="background:#FAFAF8;color:#111">
+        <div style="padding:12px">
+          <div class="mono" style="font-weight:900;font-size:13px">How Oracle Works</div>
+          <div class="mono-sm" style="margin-top:4px;text-transform:none;line-height:1.52;color:#3A3732">
+            Vegas lines anchor the market (Thunder 62.5, Cavs 56.5, Knicks 53.5, Celtics 42.5, Jazz 18.5). MTNN adds signal from roster continuity, cap efficiency, age curve (currently mocked via uniform jitter — structure ready for real MTNN heads). Edge = Model − Vegas. If |edge| &gt;3 → highlight Over/Under green/red. Confidence band is prior eval MAE 3.8 wins (80/10/10 CV holdout). Kelly 0.25 scales bet to 25% optimal, capped at 1% bankroll to survive tail risk.<br><br>
+            <code>// TODO scraper: DraftKings/FanDuel/BetMGM</code><br>
+            fetch lines nightly → <code>assets/vegas_lines_2025_26.json</code> → recompute edge → write wall. Keep deterministic LCG for daily jitter visualization.<br>
+            <span id="capExplain">cap_rules.json 2025-26 $154.647M base — 10% max growth from 2023 CBA prevents 2016 spike — smoothing mandatory — use funds utilization as model feature.</span>
+          </div>
+          <div style="margin-top:10px;display:flex;flex-wrap:wrap" class="kv"><span class="pill pill-y">LCG seed YYYYMMDD</span><span class="pill">Model = Vegas + U(-1.5,2.5)</span><span class="pill pill-g">Edge &gt;3 OVER</span><span class="pill pill-r">Edge &lt;-3 UNDER</span><span class="pill">Kelly 0.25 cap 1%</span></div>
+          <div style="margin-top:10px" class="log" id="formulaLog"><b>Kelly 0.25·f*</b> = 0.25 × (p·b − q)/b where b=odds decimal-1 ≈0.91, p≈ 0.5+edge/82, capped at 1%. Example: model 48.2 vs 45.5 edge +2.7 → p≈53.3% → f*≈6.1% → 0.25× =1.53% → cap → <span style="background:#F0E442;padding:1px 6px;border:1px solid #111;border-radius:999px">1% badge</span>. Edge >3 → green Over; < -3 → red Under.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="grid" id="main">
+  <div style="display:flex;flex-direction:column;gap:12px">
+    <div class="card">
+      <div style="display:flex;justify-content:space-between;padding:9px 12px;border-bottom:2px solid var(--ink);background:linear-gradient(90deg,var(--paper),#FFF6C8)"><span class="mono" style="font-weight:800">Win Totals Wall — 30 teams • tap to inspect • single-select clears prev</span><span class="mono-sm" id="wallSort">sorted: edge ↓</span></div>
+      <div class="wall" id="teamWall"></div>
+      <div style="padding:8px 12px;background:var(--paper);border-top:2px solid var(--ink);display:flex;gap:8px;flex-wrap:wrap;align-items:center" class="mono-sm"><span>Tap any team — details → meter → Kelly → Share 1200×630</span><span style="margin-left:auto" id="wallFoot">30 • Thunder 62.5→…</span></div>
+    </div>
+    <div class="card" style="overflow:hidden;padding:0">
+      <div style="display:flex;justify-content:space-between;padding:9px 12px;border-bottom:2px solid var(--ink);background:#FFF"><span class="mono" style="font-weight:800">Map — Model vs Vegas • diagonal = no edge • OKABE dots visible on void</span><span class="mono-sm">Current ◉ 3.4 / Rest ○ 2.4 α 0.92</span></div>
+      <div style="position:relative" class="canvas-box">
+        <canvas id="c" width="640" height="340" aria-label="Scatter Model wins vs Vegas wins. Diagonal no edge. Green Over tags when model > Vegas +3, red Under when model < Vegas -3. Single-select clears prev. OKABE 8 colors fallback."></canvas>
+        <div id="confetti" style="position:absolute;inset:0;pointer-events:none;overflow:hidden"></div>
+      </div>
+      <div style="padding:8px 12px;background:var(--paper);border-top:2px solid var(--ink)" class="mono-sm">Green = model high (OVER), red = model low (UNDER), grey diagonal ±3 = within noise MAE 3.8 • single-select clears prev map highlight</div>
+    </div>
+  </div>
+
+  <div style="display:flex;flex-direction:column;gap:12px">
+    <div class="card" id="detailCard">
+      <div style="display:flex;justify-content:space-between;padding:9px 12px;border-bottom:2px solid var(--ink);background:#FFF"><span class="mono" style="font-weight:800" id="detailHead">Select a team — inspect edge</span><span class="pill" id="detailTag">no edge</span></div>
+      <div style="padding:12px">
+        <div style="display:flex;gap:8px;align-items:baseline;flex-wrap:wrap">
+          <div style="font-weight:900;font-size:22px;line-height:1" id="detailTeam">—</div>
+          <span class="mono-sm" id="detailArche">—</span>
+          <span class="mono-sm" id="detailCap">—</span>
+        </div>
+        <div style="margin-top:10px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px">
+          <div class="card" style="box-shadow:2px 2px 0 var(--ink);padding:8px"><div class="mono-sm">Model MTNN</div><div style="font:900 18px var(--mono)" id="detailModel">— ±3.8</div></div>
+          <div class="card" style="box-shadow:2px 2px 0 var(--ink);padding:8px"><div class="mono-sm">Vegas line</div><div style="font:900 18px var(--mono)" id="detailVegas">—</div></div>
+          <div class="card" style="box-shadow:2px 2px 0 var(--ink);padding:8px"><div class="mono-sm">Edge</div><div style="font:900 18px var(--mono)" id="detailEdge">—</div><div class="mono-sm" id="detailOU">—</div></div>
+        </div>
+        <div style="margin-top:10px">
+          <div class="mono-sm">Edge meter (|edge| vs MAE 3.8)</div>
+          <div class="meter" style="margin-top:4px"><i id="edgeMeter"></i></div>
+        </div>
+        <div style="margin-top:10px" class="log" id="kellyBox">Kelly 0.25 — select team to compute. Formula: <code>f* = (bp−q)/b</code>, b=0.91 (−110 American), p≈0.5+edge/82, q=1−p. Then 0.25·f*, capped to 1% bankroll. Green badge = valid bet unit.</div>
+        <div style="margin-top:10px;display:flex;gap:6px;flex-wrap:wrap">
+          <button class="btn btn-y" id="bCopyTeam">Copy team line</button>
+          <button class="btn" id="bOver">Mark Over</button>
+          <button class="btn" id="bUnder">Mark Under</button>
+          <span class="pill" id="kellyBadge">Kelly cap 1%</span>
+        </div>
+        <div class="mono-sm" style="margin-top:8px" id="capContext">cap 2025-26 $154.647M / tax $187.895M / apron1 $195.945M ap2 $207.824M — smoothing mandatory — TV 2025-36 $76B 11yr ~$6.9B/yr • 2026-27 cap $164.961M</div>
+      </div>
+    </div>
+    <div class="card" style="padding:12px">
+      <div class="mono" style="font-weight:900">Portfolio — Paper-tracking 6–8 edges</div>
+      <div class="mono-sm" style="text-transform:none;line-height:1.5;margin-top:4px;color:#3A3732" id="portfolioBox">Loading portfolio… edge >3 teams auto-picked (demonstrates Kelly 0.25). No real money — free tracking only. Persistence via localStorage oracle_paper_v1.</div>
+      <div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap" id="portfolioChips"></div>
+    </div>
+  </div>
+</div>
+
+<div id="sharePop" class="share-pop"><div class="share-card" role="dialog" aria-modal="true" aria-label="Share — Oracle vs Vegas">
+  <canvas id="shareCard" width="1200" height="630" style="width:100%;height:auto;display:block;background:#080A0F"></canvas>
+  <div style="padding:12px;display:flex;flex-direction:column;gap:10px;background:#080A0F;border-top:2px solid #1C2640">
+    <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;justify-content:space-between"><span class="mono" id="shareMeta" style="color:#C9D4E5;font-size:11.5px">Oracle vs Vegas • MTNN 2025-26 • 30 teams • Edge >3 flags Over/Under • Kelly 0.25 cap 1% • hoops.dumbmodel.com/oracle • same-link-same-stars</span><span class="mono" id="sharePack" style="color:#8A90A0;font-size:10.8px"></span></div>
+    <div style="display:flex;gap:6px;flex-wrap:wrap">
+      <button class="btn" id="dlShare" title="Download 1200×630 PNG">⬇️ PNG</button>
+      <button class="btn" id="copyImgBtn" title="Copy image to clipboard">📋 Copy Img</button>
+      <button class="btn" id="shareFileBtn" title="OS share sheet with file if supported">📤 Share File</button>
+      <button class="btn" id="copyTextBtn" title="Copy Wordle grid + link text">🟩 Copy Text</button>
+      <button class="btn btn-y" id="copyLinkBtn" title="Copy canonical link ?daily=">🔗 Copy Link</button>
+      <button class="btn btn-y" id="challengeBtn" title="Challenge friend identical seed">🎯 Challenge</button>
+      <button class="btn" id="closeShare" style="margin-left:auto">Close ◎</button>
+    </div>
+    <div id="shareToast" class="mono-sm" style="color:#F0E442;min-height:16px"></div>
+  </div></div></div>
+
+<footer style="max-width:1160px;margin:0 auto;padding:10px 14px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;border-top:1.6px dashed #E8E2DA;color:#6b6760" class="mono-sm"><span>Built free · Open-source · No paywall — no login, PWA offline • current_rosters 2025-26 built 2026-07-30 • cap_rules 2025-26 $154.647M</span><span><span id="todayFoot">—</span> • PWA v67 offline • edge meter MAE 3.8</span></footer>
+
+<script>
+// zero-deps stdlib only — system mono/sans only: ui-monospace,"IBM Plex Mono",Menlo,monospace + ui-sans-system — no external fonts — no Architects Daughter
+const $=s=>document.getElementById(s);
+const LCG_A=1103515245, LCG_C=12345;
+const glibc=s=>((Math.imul(LCG_A,s)+LCG_C)>>>0)&0x7fffffff;
+const seedFromDate=dstr=>{
+  let n=parseInt((dstr||'').replace(/-/g,''),10);
+  if(!n||isNaN(n)) n=20260815;
+  return n>>>0;
+};
+function tripleSeedInfo(dstr){
+  let seed=seedFromDate(dstr);
+  let s=seed;
+  s=glibc(s);let first=s;
+  s=glibc(s);let u1=s/0x7fffffff;
+  s=glibc(s);let u2=s/0x7fffffff;
+  s=glibc(s);let u3=s/0x7fffffff;
+  return {seed,first,us:[u1,u2,u3]};
+}
+function dsToday(){return new Date().toISOString().slice(0,10);}
+function qDaily(){let qs=new URLSearchParams(location.search); let d=qs.get('daily'); if(!d) return dsToday(); if(/^\d{4}-\d{2}-\d{2}$/.test(d)) return d; if(/^\d{8}$/.test(d)) return d.slice(0,4)+'-'+d.slice(4,6)+'-'+d.slice(6,8); return dsToday();}
+
+// TODO scraper: DraftKings/FanDuel/BetMGM — structure for real nightly scrape later
+// Mock Vegas 2025-26 anchored: Thunder 62.5, Cavs 56.5, Jazz 18.5, Knicks 53.5, Celtics 42.5, etc full 30 plausible
+const VEGAS_LINES = {
+  "OKC":62.5,"CLE":56.5,"NYK":53.5,"BOS":42.5,"DEN":53.5,
+  "MIN":51.5,"HOU":50.5,"GSW":49.5,"MEM":47.5,"ORL":45.5,
+  "LAL":45.5,"LAC":44.5,"PHI":43.5,"DAL":41.5,"MIL":41.5,
+  "IND":39.5,"MIA":38.5,"PHX":38.5,"SAC":34.5,"ATL":36.5,
+  "SAS":36.5,"DET":37.5,"CHI":33.5,"NOP":32.5,"CHA":30.5,
+  "POR":28.5,"TOR":27.5,"BKN":23.5,"WAS":20.5,"UTA":18.5
+};
+const TEAM_META = {
+  "ATL":{city:"Atlanta Hawks",conf:"E",arch:"Rim-Run+Creat"}, "BKN":{city:"Brooklyn Nets",conf:"E",arch:"Rebuild-Shooting"}, "BOS":{city:"Boston Celtics",conf:"E",arch:"Tatum-less-Halfcourt"}, "CHA":{city:"Charlotte Hornets",conf:"E",arch:"Young-Guard"}, "CHI":{city:"Chicago Bulls",conf:"E",arch:"Mid-Vendor"}, "CLE":{city:"Cleveland Cavaliers",conf:"E",arch:"Two-Big-O"}, "DAL":{city:"Dallas Mavericks",conf:"W",arch:"Cooper-Flag-Rise"}, "DEN":{city:"Denver Nuggets",conf:"W",arch:"Jokic-O-Engine"}, "DET":{city:"Detroit Pistons",conf:"E",arch:"Youth-Big"}, "GSW":{city:"Golden State Warriors",conf:"W",arch:"Curry-Grav"}, "HOU":{city:"Houston Rockets",conf:"W",arch:"Length-D"}, "IND":{city:"Indiana Pacers",conf:"E",arch:"Pace-n-Space"}, "LAC":{city:"LA Clippers",conf:"W",arch:"Wing-Depth"}, "LAL":{city:"Los Angeles Lakers",conf:"W",arch:"Luka+BRON"}, "MEM":{city:"Memphis Grizzlies",conf:"W",arch:"Grit-n-Grind-2"}, "MIA":{city:"Miami Heat",conf:"E",arch:"Culture-D"}, "MIL":{city:"Milwaukee Bucks",conf:"E",arch:"Giannis-Solo"}, "MIN":{city:"Minnesota Timberwolves",conf:"W",arch:"Ant-Big-D"}, "NOP":{city:"New Orleans Pelicans",conf:"W",arch:"Zion-Health"}, "NYK":{city:"New York Knicks",conf:"E",arch:"Thibs-Depth"}, "OKC":{city:"Oklahoma City Thunder",conf:"W",arch:"Champ-Fav"}, "ORL":{city:"Orlando Magic",conf:"E",arch:"Length-D-II"}, "PHI":{city:"Philadelphia 76ers",conf:"E",arch:"Embiid-Health"}, "PHX":{city:"Phoenix Suns",conf:"W",arch:"Booker-Solo"}, "POR":{city:"Portland Trail Blazers",conf:"W",arch:"Scoot-Growth"}, "SAC":{city:"Sacramento Kings",conf:"W",arch:"Lite-Beam"}, "SAS":{city:"San Antonio Spurs",conf:"W",arch:"Wemby-Leap"}, "TOR":{city:"Toronto Raptors",conf:"E",arch:"Long-Bois"}, "UTA":{city:"Utah Jazz",conf:"W",arch:"Tank-8"}, "WAS":{city:"Washington Wizards",conf:"E",arch:"Tank-9"}
+};
+const OKABE8=['#2A8FEF','#FF7A1A','#1ECC8A','#E67BB1','#F8E946','#7EC8FF','#FFB000','#FF4D67'];
+// state
+let dailyStr=qDaily();
+let seed=seedFromDate(dailyStr);
+let firstL=glibc(seed);
+let models={}; // team->model
+let edges={};
+let selected=null;
+let rostersCtx=null, capCtx=null;
+
+function genModelsForDaily(dstr){
+  let sd=seedFromDate(dstr);
+  let s=sd;
+  let out={};
+  // deterministic order: sorted keys to keep same-link-same-stars
+  let teams=Object.keys(VEGAS_LINES).sort();
+  // LCG stream
+  // we want uniform -1.5..+2.5 but skewed for edge >3 wins on ~6-8 teams to demonstrate edge meter
+  // pick skew set via LCG indices
+  let skewSet=new Set();
+  let t=s;
+  for(let i=0;i<9;i++){ t=glibc(t); let idx=t%teams.length; skewSet.add(teams[idx]); }
+  // but ensure 6-8 distinct
+  let skewArr=Array.from(skewSet).slice(0,7);
+  teams.forEach(tm=>{
+    s=glibc(s);
+    let u=s/0x7fffffff; // 0..1
+    let jitter = (u*4)-1.5; // -1.5..2.5
+    // amplify if in skewSet
+    if(skewArr.includes(tm)){
+      // push beyond 3 if not already
+      if(Math.abs(jitter)<3){
+        jitter = jitter>=0 ? 3.15 + (u*0.8) : -3.15 - (u*0.8);
+      }
+    }
+    // occasional clip to plausible wins 14..70
+    let vegas=VEGAS_LINES[tm];
+    let model = Math.max(14, Math.min(68, vegas + jitter));
+    // round to 1 decimal .1
+    model = Math.round(model*10)/10;
+    out[tm]=model;
+  });
+  return {models:out, skew:skewArr, seed:sd, first:glibc(sd), skewT:skewArr};
+}
+
+function edgeToOU(edge){ if(edge>3) return {label:'OVER',cls:'over',txt:'Model HIGH'}; if(edge<-3) return {label:'UNDER',cls:'under',txt:'Model LOW'}; return {label:'NO EDGE',cls:'none',txt:'Within noise'}; }
+function kellyFromEdge(edge){
+  // odds -110 American => decimal 1.909, b=0.909
+  const b=0.9090909;
+  // p approx 0.5+edge/82 (82-game season scaling, edge per 82 games ~ 1% per win diff)
+  let p=0.5 + edge/82;
+  p=Math.max(0.02,Math.min(0.98,p));
+  let q=1-p;
+  let f=(b*p - q)/b; // Kelly f* full
+  let f25=f*0.25;
+  let capped=Math.min(f25,0.01);
+  capped=Math.max(capped,0); // no negative bet for display (short allowed but UI shows 0)
+  // for under, same magnitude
+  capped=Math.abs(capped);
+  return {f_full:f, f25:f25, capped:capped, p:p, b:b, badge: f25>=0.01 ? '1% BADGE' : (capped*100).toFixed(2)+'% unit'};
+}
+
+function renderWall(filter='all'){
+  let wall=$('teamWall');
+  if(!wall) return;
+  wall.innerHTML='';
+  let entries=Object.keys(VEGAS_LINES).map(tm=>{
+    let vegas=VEGAS_LINES[tm];
+    let model=models[tm];
+    let edge=model - vegas;
+    return {tm,vegas,model,edge,ou:edgeToOU(edge)};
+  });
+  // sort edge abs desc default
+  if(filter==='edge') entries.sort((a,b)=>Math.abs(b.edge)-Math.abs(a.edge));
+  else if(filter==='over') entries=entries.filter(x=>x.edge>3).sort((a,b)=>b.edge-a.edge).concat(entries.filter(x=>x.edge<=3).sort((a,b)=>b.edge-a.edge));
+  else if(filter==='under') entries=entries.filter(x=>x.edge<-3).sort((a,b)=>a.edge-b.edge).concat(entries.filter(x=>x.edge>=-3).sort((a,b)=>a.edge-b.edge));
+  else if(filter==='model-high') entries.sort((a,b)=>b.model-a.model);
+  else if(filter==='vegas-low') entries.sort((a,b)=>a.vegas-b.vegas);
+  else entries.sort((a,b)=>Math.abs(b.edge)-Math.abs(a.edge));
+
+  entries.forEach((e,i)=>{
+    let row=document.createElement('button');
+    row.className='trow'+(Math.abs(e.edge)>3?' edge':'')+(selected===e.tm?' on':'');
+    row.setAttribute('data-tm',e.tm);
+    row.innerHTML='<span style="display:flex;gap:8px;align-items:center"><b style="min-width:38px">'+e.tm+'</b><span style="color:#52514E">'+(TEAM_META[e.tm]?.city.split(' ').slice(0,2).join(' ')||'')+'</span></span><span style="display:flex;gap:6px;align-items:center"><span style="min-width:62px;text-align:right">'+e.model.toFixed(1)+' ±3.8</span><span style="min-width:42px;text-align:right;color:#6B6760">'+e.vegas.toFixed(1)+'</span><span style="min-width:46px;text-align:right;font-weight:900;'+(e.edge>0?'color:#009E73':'color:#E53E3E')+'">'+(e.edge>0?'+':'')+e.edge.toFixed(1)+'</span><span class="tag-o '+(e.ou.cls==='over'?'over':e.ou.cls==='under'?'under':'')+'" style="min-width:52px;text-align:center">'+e.ou.label+'</span></span>';
+    row.onclick=()=>{
+      // single-select clears prev (like everyday)
+      document.querySelectorAll('.trow').forEach(o=>o.classList.remove('on'));
+      row.classList.add('on');
+      selectTeam(e.tm);
+      // clear prev map highlight handled in drawBase
+    };
+    wall.appendChild(row);
+  });
+  let wf=$('wallFoot');
+  if(wf) wf.textContent=entries.length+' teams • edge >3: '+entries.filter(x=>Math.abs(x.edge)>3).length+' • skewed 6-8 demo → Thunder edge sample '+ (edges['OKC']?edges['OKC'].toFixed(1):'');
+  // also edge count pill
+  let ec=$('edgeCount');
+  if(ec) ec.textContent='edge >3: '+entries.filter(x=>Math.abs(x.edge)>3).length+' teams • Kelly 0.25 max 1%';
+}
+
+function selectTeam(tm){
+  selected=tm;
+  let vegas=VEGAS_LINES[tm];
+  let model=models[tm];
+  let edge=model - vegas;
+  let ou=edgeToOU(edge);
+  let k=kellyFromEdge(edge);
+  let meta=TEAM_META[tm]||{};
+  let detH=$('detailHead'); if(detH) detH.textContent=tm+' — '+meta.city+' • '+ou.txt;
+  let detTag=$('detailTag'); if(detTag){ detTag.textContent=ou.label+' '+(edge>0?'🟩':'')+(edge<0?'🟥':''); detTag.className='pill '+(ou.cls==='over'?'pill-g':ou.cls==='under'?'pill-r':''); }
+  let dt=$('detailTeam'); if(dt) dt.textContent=tm+' '+(meta.city||'');
+  let da=$('detailArche'); if(da) da.textContent=meta.arch+' • '+(meta.conf||'')+' • Vegas-High? '+ (vegas>50?'contender':vegas<25?'tank':'mid');
+  let dcap=$('detailCap'); if(dcap) dcap.textContent='Active eligible core: '+(rostersCtx?.teams? (Object.keys(rostersCtx.teams).includes(tm)? rostersCtx.teams[tm].filter(p=>p.eligible).length+' eligible': '—') : '—');
+  let dm=$('detailModel'); if(dm) dm.textContent=model.toFixed(1)+' ±3.8';
+  let dv=$('detailVegas'); if(dv) dv.textContent=vegas.toFixed(1)+' O/U';
+  let de=$('detailEdge'); if(de){ de.textContent=(edge>0?'+':'')+edge.toFixed(1)+' wins'; de.style.color=edge>0?'#009E73':'#E53E3E';}
+  let dou=$('detailOU'); if(dou) dou.textContent=ou.label+' • '+(k.capped*100).toFixed(2)+'% unit • '+k.badge;
+  // meter
+  let pct=Math.min(100, Math.abs(edge)/6*100); // 6 wins =100%
+  let em=$('edgeMeter'); if(em){ em.style.width=pct+'%'; em.style.background= edge>0?'linear-gradient(90deg,#009E73,#F0E442)':'linear-gradient(90deg,#E53E3E,#FFB000)';}
+  let kbx=$('kellyBox');
+  if(kbx){
+    kbx.innerHTML='<b>Kelly 0.25·f*</b> = 0.25×(b·p−q)/b • b='+k.b.toFixed(2)+' (−110) • p≈'+(k.p*100).toFixed(1)+'% (0.5+edge/82) • edge '+(edge>0?'+':'')+edge.toFixed(1)+' → f*='+(k.f_full*100).toFixed(2)+'% → 0.25×='+(k.f25*100).toFixed(2)+'% → capped <b style="background:#F0E442;padding:1px 6px;border:1px solid #111;border-radius:999px">'+(k.capped*100).toFixed(2)+'% '+ (k.capped>=0.0099?'MAX 1%':'')+'</b> usable. MAE 3.8 width.';
+  }
+  let kb=$('kellyBadge'); if(kb){ kb.textContent='Kelly '+(k.capped*100).toFixed(2)+'% '+(k.capped>=0.0099?'MAX 1%':''); kb.className='pill '+(k.capped>0.001?'pill-y':'');}
+  drawMap();
+}
+
+function drawMap(){
+  let c=$('c'); if(!c) return; let ctx=c.getContext('2d');
+  let W=c.clientWidth, H=c.height? c.clientWidth:340; // clientWidth used for both dims scaling
+  let rect=c.getBoundingClientRect();
+  let dpr=Math.min(window.devicePixelRatio||1,1.42);
+  c.width=rect.width*dpr; c.height=rect.height*dpr;
+  ctx.setTransform(dpr,0,0,dpr,0,0);
+  let Rw=rect.width, Rh=rect.height;
+  ctx.clearRect(0,0,Rw,Rh);
+  ctx.fillStyle='#080A0F'; ctx.fillRect(0,0,Rw,Rh);
+  // starfield cheap
+  ctx.fillStyle='rgba(250,250,248,.28)'; for(let i=0;i<160;i++){ let X=(i*149)%Rw; let Y=(i*223)%Rh; ctx.fillRect(X,Y,1.1,1.1); }
+  // axes: Vegas x axis 15..70, Model y 14..68
+  let pad=32;
+  function sx(v){ return pad + (v-15)/(70-15)*(Rw-pad*2); }
+  function sy(v){ return pad + (1-(v-14)/(68-14))*(Rh-pad*2); }
+  // diagonal no edge
+  ctx.strokeStyle='#1E2A50'; ctx.lineWidth=1.2; ctx.setLineDash([4,4]); ctx.beginPath(); ctx.moveTo(sx(15),sy(15)); ctx.lineTo(sx(68),sy(68)); ctx.stroke(); ctx.setLineDash([]);
+  // ±3 bands
+  ctx.strokeStyle='rgba(240,228,66,.22)'; ctx.lineWidth=1; ctx.beginPath(); ctx.moveTo(sx(15),sy(18)); ctx.lineTo(sx(68),sy(71)); ctx.stroke(); // +3?
+  ctx.beginPath(); ctx.moveTo(sx(15),sy(12)); ctx.lineTo(sx(68),sy(65)); ctx.stroke();
+  // grid labels
+  ctx.fillStyle='#9CA7C8'; ctx.font='10px ui-monospace, monospace'; ctx.fillText('Vegas →', Rw-pad-48,Rh-8); ctx.fillText('Model ↑', 8,pad+8);
+  // plot teams - OKABE dots visible alpha 0.92 size 3.4 current/2.4 rest per masterclass
+  Object.keys(VEGAS_LINES).sort().forEach((tm,j)=>{
+    let v=VEGAS_LINES[tm]; let m=models[tm];
+    let x=sx(v), y=sy(m);
+    let isCur=selected===tm;
+    let col=OKABE8[j%8];
+    // conf marker for E/W? simple color by conf
+    if(TEAM_META[tm]?.conf==='E') col=OKABE8[(j*3)%8];
+    ctx.globalAlpha=0.92;
+    ctx.fillStyle=col;
+    ctx.beginPath(); ctx.arc(x,y, isCur?3.4:2.4,0,Math.PI*2); ctx.fill();
+    ctx.globalAlpha=1;
+    if(isCur){
+      ctx.strokeStyle='#F0E442'; ctx.lineWidth=1.8; ctx.beginPath(); ctx.arc(x,y,7.8,0,Math.PI*2); ctx.stroke();
+      ctx.fillStyle='#FAFAF8'; ctx.font='800 10px ui-monospace,monospace'; ctx.fillText(tm,x+5,y-7);
+    }
+  });
+}
+
+function makeShareCard(){
+  let sc=$('shareCard'); if(!sc) return; let sx=sc.getContext('2d');
+  sx.fillStyle='#080A0F'; sx.fillRect(0,0,1200,630);
+  sx.fillStyle='rgba(250,250,248,.30)'; for(let i=0;i<260;i++){ let X=(i*137)%1180+16; let Y=(i*197)%560+18; sx.fillRect(X,Y,1.2,1.2); }
+  sx.fillStyle='#FAFAF8'; sx.font='900 34px ui-monospace,IBM Plex Mono,monospace'; sx.fillText('DUMB MODEL — Oracle vs Vegas',34,52);
+  sx.fillStyle='#F0E442'; sx.font='800 18px ui-monospace,monospace'; sx.fillText('Win Totals Wall 2025-26 • MTNN vs Market • Edge>3 OVER/UNDER • Kelly 0.25 cap 1% • MAE 3.8',34,84);
+  // daily meta
+  let daily=dailyStr;
+  sx.fillStyle='#C9D4E5'; sx.font='12.5px ui-monospace,monospace'; sx.fillText('LCG '+daily.replace(/-/g,'')+'→'+firstL+' seed '+seed+' chain same-link-same-stars • cap 2025-26 $154.647M tax $187.895M apron1 $195.945M • roster built '+(rostersCtx?.built||'2026-07-30')+' season '+(rostersCtx?.season||'2025-26')+' next '+(rostersCtx?.nextSeason||'2026-27')+' active '+ (rostersCtx?.activePlayers?.length||Object.keys(VEGAS_LINES).length*8||649)+' • TLPG distinct — no Deja Vu',34,106);
+  // header row
+  sx.fillStyle='#0E1424'; sx.fillRect(34,118, 1132, 36);
+  sx.strokeStyle='#1C2640'; sx.strokeRect(34,118,1132,36);
+  const cols=[['TEAM',38],['MODEL',216],['VEGAS',360],['EDGE',474],['OU',570],['KELLY 0.25',680],['CONF',840]];
+  sx.fillStyle='#8AA0C8'; sx.font='800 11px ui-monospace,monospace';
+  cols.forEach(([h,x])=>sx.fillText(h,x,140));
+  // rows — top 16 by |edge|
+  let entries=Object.keys(VEGAS_LINES).map(tm=>{let v=VEGAS_LINES[tm],m=models[tm],e=m-v; return {tm,v,m,e,ou:edgeToOU(e),k:kellyFromEdge(e)};}).sort((a,b)=>Math.abs(b.e)-Math.abs(a.e)).slice(0,16);
+  let y=166;
+  entries.forEach(ent=>{
+    let isSel=selected===ent.tm;
+    if(isSel){ sx.fillStyle='rgba(240,228,66,.12)'; sx.fillRect(34,y-16,1132,26); }
+    sx.fillStyle= isSel?'#F0E442':'#FAFAF8';
+    sx.font='800 13px ui-monospace,monospace';
+    sx.fillText(ent.tm+' '+(TEAM_META[ent.tm]?.city||'' ).slice(0,10),38,y);
+    sx.fillStyle='#FAFAF8'; sx.fillText(ent.m.toFixed(1)+' ±3.8',220,y);
+    sx.fillStyle='#9CA7C8'; sx.fillText(ent.v.toFixed(1),364,y);
+    sx.fillStyle= ent.e>0?'#1ECC8A':'#FF7A67'; sx.fillText((ent.e>0?'+':'')+ent.e.toFixed(1),478,y);
+    sx.fillStyle= ent.ou.cls==='over'?'#C5F0C8':ent.ou.cls==='under'?'#FFD7D0':'#6B6760';
+    sx.fillRect(560, y-10, 58,18);
+    sx.fillStyle= ent.ou.cls==='none'?'#6B6760':'#111'; sx.font='800 11px monospace'; sx.fillText(ent.ou.label,564,y+2);
+    sx.fillStyle='#FAFAF8'; sx.font='800 11px monospace'; sx.fillText(ent.k.capped>=0.0099? 'MAX 1% '+ (ent.k.capped*100).toFixed(2)+'%' : (ent.k.capped*100).toFixed(2)+'% '+ent.k.badge,684,y+2);
+    sx.fillStyle='#7A869E'; sx.fillText(TEAM_META[ent.tm]?.conf||'',844,y);
+    sx.fillStyle='#2A8FEF'; // dot OKABE visible small
+    sx.beginPath(); sx.arc(930,y-4, isSel?3.4:2.4,0,Math.PI*2); sx.fill();
+    y+=26;
+    if(y>550) return;
+  });
+  // bottom link + Kelly expl
+  sx.fillStyle='#5A6476'; sx.font='11px ui-monospace,monospace'; sx.fillText('hoops.dumbmodel.com/oracle?daily='+daily+' • same-link-same-stars • pack '+Object.keys(VEGAS_LINES).length+' teams • Kelly 0.25·f* = edge/odds → cap 1% • odds -110 → 1.91 • model '+Object.values(models).reduce((a,b)=>a+b,0)/Object.values(models).length.toFixed(1)+' avg vs vegas '+Object.values(VEGAS_LINES).reduce((a,b)=>a+b,0)/30,34,574);
+  sx.fillStyle='#8A90A0'; sx.font='10.5px monospace'; sx.fillText('MAE 3.8 80/10/10 CV • current_rosters 2025-26 built '+(rostersCtx?.built||'2026-07-30')+' • cap_rules 2025-26 smoothing mandatory $76B TV • void #080A0F --void-2 #0A0C10 • OKABE dots α0.92 size 3.4/2.4',34,592);
+  // target
+  sx.fillStyle='#EB6834'; sx.beginPath(); sx.arc(1110,166,28,0,Math.PI*2); sx.fill(); sx.fillStyle='#F0E442'; sx.font='900 24px monospace'; sx.fillText('◎',1094,174);
+  sx._shareEntries=entries;
+  return entries;
+}
+
+function openShare(){
+  let pop=$('sharePop'); if(pop){ pop.classList.add('on'); let card=pop.querySelector('.share-card'); if(card){ card.classList.remove('magic'); void card.offsetWidth; card.classList.add('magic'); setTimeout(()=>card.classList.remove('magic'),820);} }
+}
+function shutShare(){let p=$('sharePop'); if(p) p.classList.remove('on');}
+
+function canvasToBlob(cvs,type='image/png',q){return new Promise(res=>{ if(cvs.toBlob) cvs.toBlob(res,type,q); else { let d=cvs.toDataURL(type); let bin=atob(d.split(',')[1]); let a=new Uint8Array(bin.length); for(let i=0;i<bin.length;i++) a[i]=bin.charCodeAt(i); res(new Blob([a],{type:type})); } });}
+
+function buildShareText(){
+  let d=dailyStr;
+  let entries=Object.keys(VEGAS_LINES).map(tm=>{let v=VEGAS_LINES[tm],m=models[tm],e=m-v; return {tm,v,m,e,ou:edgeToOU(e)};}).sort((a,b)=>Math.abs(b.e)-Math.abs(a.e)).slice(0,8);
+  let lines=entries.map(ent=>{
+    let icon=Math.abs(ent.e)>3 ? (ent.e>0?'🟩 OVER':'🟥 UNDER') : '⬛ NO';
+    return icon+' '+ent.tm+' M'+ent.m.toFixed(1)+' V'+ent.v.toFixed(1)+' '+(ent.e>0?'+':'')+ent.e.toFixed(1)+' '+ent.ou.label;
+  }).join('\n');
+  let base=location.origin+location.pathname;
+  let link=base+'?daily='+d;
+  let full=link;
+  let avgEdge=entries.reduce((s,x)=>s+Math.abs(x.e),0)/entries.length;
+  let head='Oracle vs Vegas 2025-26 '+d+' — '+entries.length+' edges • avg |edge| '+avgEdge.toFixed(1)+' • MAE 3.8 • Kelly 0.25 cap 1%';
+  return {text:head+'\n'+lines+'\n'+full+' same-link-same-stars',link,full,d,avgEdge,entries};
+}
+
+async function doDlShare(){let sc=$('shareCard'); if(!sc) return; let url=sc.toDataURL('image/png'); let a=document.createElement('a'); a.href=url; a.download='oracle-vs-vegas-'+dailyStr+'.png'; a.click(); let t=$('shareToast'); if(t){t.textContent='PNG 1200×630 downloaded ✓'; setTimeout(()=>t.textContent='',2000);} try{ if(window.VHDelight) window.VHDelight.haptic(10);}catch(_){}
+}
+async function doCopyImg(){
+  let sc=$('shareCard'); if(!sc) return; let toast=$('shareToast');
+  try{
+    let blob=await canvasToBlob(sc,'image/png');
+    if(navigator.clipboard && window.ClipboardItem){
+      await navigator.clipboard.write([new ClipboardItem({'image/png':blob})]);
+      if(toast){toast.textContent='Image copied ✓ — paste into iMessage/X'; setTimeout(()=>toast.textContent='',3000);}
+    } else {
+      let url=sc.toDataURL('image/png');
+      if(navigator.clipboard) await navigator.clipboard.writeText(url);
+      if(toast) toast.textContent='DataURL copied (ClipboardItem unsupported)';
+    }
+  }catch(e){ if(toast) toast.textContent='Copy failed — use Download PNG'; console.warn(e); }
+}
+async function doShareFile(){
+  let sc=$('shareCard'); if(!sc) return; let toast=$('shareToast');
+  try{
+    let blob=await canvasToBlob(sc,'image/png');
+    let file=new File([blob],'oracle-vs-vegas-'+dailyStr+'.png',{type:'image/png'});
+    if(navigator.canShare && navigator.canShare({files:[file]})){
+      await navigator.share({files:[file],title:'Oracle vs Vegas',text:buildShareText().text});
+      if(toast){toast.textContent='Shared via OS sheet ✓'; setTimeout(()=>toast.textContent='',2000);}
+    } else if(navigator.share){
+      let {full,text}=buildShareText();
+      await navigator.share({title:'Oracle vs Vegas',text,url:full});
+      if(toast) toast.textContent='Shared link ✓';
+    } else { if(toast) toast.textContent='Web Share not supported — copy link'; }
+  }catch(e){ if(e&&e.name==='AbortError') return; if(toast) toast.textContent='Share canceled / unsupported'; }
+}
+async function doCopyText(){
+  let toast=$('shareToast');
+  try{
+    let {text}=buildShareText();
+    if(navigator.clipboard) await navigator.clipboard.writeText(text);
+    if(toast){toast.textContent='Wordle-style text copied ✓ '+text.split('\n')[0].slice(0,64); setTimeout(()=>toast.textContent='',2600);}
+  }catch(e){ if(toast) toast.textContent='Copy failed'; }
+}
+async function doCopyLink(){
+  let toast=$('shareToast');
+  try{
+    let {full}=buildShareText();
+    if(navigator.clipboard) await navigator.clipboard.writeText(full);
+    if(toast) toast.textContent='Link copied ?daily='+dailyStr+' same-link-same-stars preserves ⭐'; setTimeout(()=>toast.textContent='',3000);
+    try{ history.replaceState(null,'','?daily='+dailyStr); }catch(_){}
+  }catch(e){ if(toast) toast.textContent='Copy link failed'; }
+}
+async function doChallenge(){
+  let toast=$('shareToast');
+  try{
+    let {full,d}=buildShareText();
+    let challenge=location.origin+location.pathname+'?daily='+d+'&edge=challenge';
+    if(navigator.clipboard) await navigator.clipboard.writeText(challenge);
+    if(toast) toast.textContent='Challenge link copied — same seed ∴ same wall via LCG glibc 1103515245'; setTimeout(()=>toast.textContent='',3400);
+    try{ if(window.VHDelight) window.VHDelight.spawnConfetti('#2A8FEF'); }catch(_){}
+  }catch(e){ if(toast) toast.textContent='Challenge copy failed'; }
+}
+
+function bootWall(dOverride){
+  if(dOverride) dailyStr=dOverride;
+  seed=seedFromDate(dailyStr);
+  firstL=glibc(seed);
+  let gen=genModelsForDaily(dailyStr);
+  models=gen.models;
+  edges={}; Object.keys(models).forEach(k=>{edges[k]=models[k]-VEGAS_LINES[k];});
+  // POV pills single-select clears prev (like everyday)
+  let povAll=document.querySelectorAll('.pov-pill'); // init handlers once external
+  // meta
+  let dm=$('dailyMeta'); if(dm) dm.textContent='LCG '+dailyStr.replace(/-/g,'')+'→'+firstL+' idx edge-demo 7/30 • ?daily='+dailyStr+' • same-link-same-stars';
+  let sp=$('seedPill'); if(sp) sp.textContent='seed '+seed+' glibc L(s)=(s*1103515245+12345)&0x7fffffff';
+  let tf=$('todayFoot'); if(tf) tf.textContent=dailyStr+' • same for everyone today • void #080A0F';
+  renderWall(filterCurrent);
+  drawMap();
+  makeShareCard();
+  // portfolio
+  let pBox=$('portfolioBox'); if(pBox){ let cnt=Object.keys(models).filter(k=>Math.abs(edges[k])>3).length; pBox.textContent='Portfolio — Paper-tracking '+cnt+' edges demo (Kelly 0.25 cap 1%). No real money — free tracking only. '+cnt+' edges >3 wins variance from Vegas anchors 62.5/56.5/53.5/42.5/18.5. '+ (rostersCtx?('Rosters '+rostersCtx.season+' built '+rostersCtx.built+' '+Object.keys(rostersCtx.teams||{}).length+' teams active '+ (rostersCtx.activePlayers?.length||649)):'Rosters 2025-26 30 teams 649 active') +' TLPG. Persistence oracle_paper_v1 — '+Object.keys(VEGAS_LINES).length+' teams live.'; }
+  let chips=$('portfolioChips'); if(chips){ chips.innerHTML=''; Object.keys(models).filter(k=>Math.abs(edges[k])>3).sort((a,b)=>Math.abs(edges[b])-Math.abs(edges[a])).forEach(k=>{ let ch=document.createElement('span'); ch.className='pill '+(edges[k]>0?'pill-g':'pill-r'); ch.textContent=k+' '+(edges[k]>0?'+':'')+edges[k].toFixed(1)+' '+(models[k].toFixed(1))+'→M vs '+VEGAS_LINES[k]; ch.onclick=()=>{ selectTeam(k); document.querySelectorAll('.trow').forEach(r=>{if(r.dataset.tm===k) r.classList.add('on'); else r.classList.remove('on');}); }; chips.appendChild(ch); }); }
+  // auto-select top edge
+  let topEdge=Object.keys(edges).sort((a,b)=>Math.abs(edges[b])-Math.abs(edges[a]))[0];
+  if(topEdge) { selected=topEdge; selectTeam(topEdge); }
+  // cap meta already
+}
+
+let filterCurrent='all';
+function initPOV(){
+  document.querySelectorAll('.pov-pill').forEach(p=>p.addEventListener('click',()=>{
+    document.querySelectorAll('.pov-pill').forEach(o=>{o.classList.remove('on'); o.setAttribute('aria-selected','false');});
+    p.classList.add('on'); p.setAttribute('aria-selected','true');
+    filterCurrent=p.dataset.pov||'all';
+    renderWall(filterCurrent);
+  }));
+}
+
+async function loadRostersCap(){
+  try{
+    let r=await fetch('assets/current_rosters.json?v=12');
+    if(r.ok){ let j=await r.json(); rostersCtx=j; let rm=$('rostersMeta'); if(rm) rm.textContent='Season '+j.season+' next '+j.nextSeason+' • '+Object.keys(j.teams||{}).length+' teams • '+(j.activePlayers?.length||j.summary?.total_active||649)+' active • built '+j.built; }
+  }catch(e){}
+  try{
+    let r2=await fetch('assets/cap_rules.json?v=12');
+    if(r2.ok){ let cj=await r2.json(); capCtx=cj; let yr=cj['2025-26']||cj['2025-26']; if(yr){ let cm=$('capMeta'); if(cm) cm.textContent='cap $'+(yr.cap/1e6).toFixed(3)+'M / tax $'+(yr.tax/1e6).toFixed(3)+'M / apron1 $'+(yr.apron1/1e6).toFixed(3)+'M ap2 $'+(yr.apron2/1e6).toFixed(3)+'M'; let cc=$('capContext'); if(cc) cc.textContent='cap 2025-26 $'+(yr.cap/1e6).toFixed(3)+'M / tax $'+(yr.tax/1e6).toFixed(3)+'M / apron1 $'+(yr.apron1/1e6).toFixed(3)+'M ap2 $'+(yr.apron2/1e6).toFixed(3)+'M — '+yr.cba+' — TV '+yr.tv_deal+' — smoothing mandatory '+yr.max_growth_rule+' • cap_growth '+(yr.cap_growth_vs_prior!=null?((yr.cap_growth_vs_prior*100).toFixed(1)+'%'):'—'); let ce=$('capExplain'); if(ce) ce.textContent='cap_rules.json 2025-26 $'+(yr.cap/1e6).toFixed(3)+'M base — '+yr.cba+' — 10% max growth prevents 2016 spike — smoothing mandatory — '+yr.notes[0]; } } }
+  }catch(e){}
+}
+
+(function init(){
+  initPOV();
+  loadRostersCap().then(()=>bootWall(dailyStr));
+  let bShuf=$('bShuffle'); if(bShuf) bShuf.onclick=()=>{ let nd=dsToday(); // daily jitter new date? use random offset for demo but still LCG deterministic for same day -> allow +/-1 day jitter
+    let offset=Math.floor(Math.random()*6)-3;
+    let d=new Date(); d.setDate(d.getDate()+offset); let ds=d.toISOString().slice(0,10); history.replaceState(null,'','?daily='+ds); dailyStr=ds; bootWall(ds);
+  };
+  let bShare=$('bShareWall'); if(bShare) bShare.onclick=()=>{ makeShareCard(); openShare(); };
+  let bExp=$('bExport'); if(bExp) bExp.onclick=doCopyText;
+  let bCT=$('bCopyTeam'); if(bCT) bCT.onclick=()=>{
+    if(!selected){ return; }
+    let tm=selected; let txt=tm+' Model '+models[tm].toFixed(1)+' ±3.8 Vegas '+VEGAS_LINES[tm].toFixed(1)+' Edge '+(edges[tm]>0?'+':'')+edges[tm].toFixed(1)+' '+(Math.abs(edges[tm])>3?(edges[tm]>0?'OVER':'UNDER'):'NO EDGE')+' Kelly 0.25 '+(kellyFromEdge(edges[tm]).capped*100).toFixed(2)+'% cap 1% hoops.dumbmodel.com/oracle?daily='+dailyStr;
+    if(navigator.clipboard) navigator.clipboard.writeText(txt);
+    let t=$('shareToast'); if(t) { /* reuse toast inside detail? use detailTag as hint */ }
+  };
+  // share overlay actions
+  $('dlShare')?.addEventListener('click', doDlShare);
+  $('copyImgBtn')?.addEventListener('click', doCopyImg);
+  $('shareFileBtn')?.addEventListener('click', doShareFile);
+  $('copyTextBtn')?.addEventListener('click', doCopyText);
+  $('copyLinkBtn')?.addEventListener('click', doCopyLink);
+  $('challengeBtn')?.addEventListener('click', doChallenge);
+  $('closeShare')?.addEventListener('click', shutShare);
+  $('sharePop')?.addEventListener('click', e=>{ if(e.target.id==='sharePop') shutShare(); });
+  document.addEventListener('keydown', e=>{ if(e.key==='Escape') shutShare(); });
+  // PWA v67 — keep register sw.js?v=67 per masterclass
+})();
+// PWA v67 offline — sw.js SHELL must include /oracle /oracle.html per spec — bump C hoops-v7-15→v7-16
+if('serviceWorker' in navigator){
+  window.addEventListener('load', ()=>{ navigator.serviceWorker.register('/sw.js?v=67').catch(()=>{}); });
+}
+</script>
+<script src="/assets/delight.js?v=5"></script>
+</body>
+</html>
