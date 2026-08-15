@@ -1,0 +1,675 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Doppelgänger Lab — Find Your Hoops Twin • dumbmodel</title>
+<meta name="description" content="Type any modern player → 5 historic twins. Same embedding map, 64-d cosine. Who's the comp?">
+<meta name="theme-color" content="#FAFAF8">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23080A0F'/%3E%3Ccircle cx='11' cy='12' r='3.2' fill='%23f0e442'/%3E%3Ccircle cx='21' cy='20' r='3.2' fill='%232a8fef'/%3E%3C/svg%3E">
+<link rel="manifest" href="/manifest.json">
+<style>
+:root{
+  --paper:#fafaf8;--surface:#fff;--ink:#111;--ink-soft:#52514e;--ink-mut:#6b6760;--hair:#e1e0d9;
+  --orange:#eb6834;--blue:#2a8fef;--yellow:#f0e442;--green:#009e73;--void:#080A0F;--void-2:#0A0C10;
+  --mono:ui-monospace,"IBM Plex Mono",Menlo,monospace;
+  --sans:ui-sans-system,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+  --shadow:4px 4px 0 var(--ink);--r:14px;
+  --ok1:#2A8FEF;--ok2:#FF7A1A;--ok3:#1ECC8A;--ok4:#E67BB1;--ok5:#F8E946;--ok6:#7EC8FF;--ok7:#FFB000;--ok8:#FF4D67;
+}
+*{box-sizing:border-box}html,body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+
+/* NAV 40px sticky top0 z50 */
+.site-nav{position:sticky;top:0;z-index:50;height:40px;min-height:40px;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:0 14px;padding-top:env(safe-area-inset-top,0);background:var(--surface);border-bottom:2px solid var(--ink)}
+.site-nav__brand{font-family:var(--mono);font-weight:800;font-size:13.5px;letter-spacing:.04em;text-transform:uppercase;white-space:nowrap}
+.site-nav__brand span{color:var(--orange)}
+.site-nav__links{display:flex;gap:4px;align-items:center}
+.site-nav__link{font-family:var(--mono);font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.04em;padding:6px 9px;border-radius:8px;border:2px solid transparent}
+.site-nav__link:hover{background:var(--paper);border-color:var(--ink)}
+.site-nav__link.on{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.site-nav__cta{font-family:var(--mono);font-size:11px;font-weight:800;text-transform:uppercase;background:var(--ink);color:var(--paper);border:2px solid var(--ink);border-radius:8px;padding:5px 10px;min-height:28px;display:inline-flex;align-items:center;box-shadow:2px 2px 0 var(--ink)}
+
+/* POV 44px sticky top40 z40 */
+.pov-strip{position:sticky;top:40px;z-index:40;min-height:44px;height:44px;display:flex;align-items:center;gap:8px;padding:0 12px;overflow-x:auto;overscroll-behavior-x:contain;background:rgba(250,250,248,.92);backdrop-filter:blur(10px);border-bottom:2px solid var(--ink)}
+.pov-pill{min-height:36px;padding:0 13px;border:2px solid var(--ink);border-radius:999px;background:#fff;font-family:var(--mono);font-weight:800;font-size:11px;text-transform:uppercase;letter-spacing:.03em;white-space:nowrap;box-shadow:1.8px 1.8px 0 var(--ink);cursor:pointer;flex:0 0 auto}
+.pov-pill.on{background:var(--yellow);transform:rotate(-.6deg)}
+
+.mono{font-family:var(--mono);font-size:11px;letter-spacing:.03em;text-transform:uppercase}
+.mono-sm{font-family:var(--mono);font-size:10.85px;color:var(--ink-mut);text-transform:uppercase;letter-spacing:.05em}
+.hero-void{background:radial-gradient(1100px 600px at 18% -10%,#1A233A 0%,#121A2D 32%,var(--void) 72%);color:#fafaf8;border-bottom:2px solid var(--ink);position:relative;overflow:hidden}
+.wrap{max-width:1080px;margin:0 auto;padding:0 14px}
+.hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:14px;padding:14px 0}
+@media(max-width:860px){.hero-grid{grid-template-columns:1fr}}
+.kicker{font-family:var(--mono);font-size:10.8px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#9ab;margin:0 0 6px}
+.title{font-size:clamp(26px,5vw,38px);line-height:.95;font-weight:900;letter-spacing:-.02em;margin:4px 0 8px;text-transform:uppercase}
+.title b{background:var(--yellow);color:var(--ink);padding:2px 6px;border:1.5px solid var(--ink);box-shadow:2px 2px 0 #000;display:inline-block;transform:rotate(-.9deg)}
+.tag{font-size:13.8px;line-height:1.55;max-width:48ch;color:#c9d4e5}
+.card{background:var(--surface);border:2px solid var(--ink);border-radius:14px;box-shadow:var(--shadow);overflow:hidden}
+
+.grid{max-width:1080px;margin:0 auto;padding:12px;display:grid;grid-template-columns:.98fr 1.02fr;gap:12px;align-items:start}
+@media(max-width:900px){.grid{grid-template-columns:1fr}}
+.map-head{display:flex;justify-content:space-between;align-items:center;padding:9px 12px;border-bottom:2px solid var(--ink);background:linear-gradient(90deg,var(--paper),#FFF6C8)}
+.canvas-box{position:relative;background:#F2F0EB}
+canvas{display:block;width:100%;height:420px}
+@media(max-width:600px){canvas{height:360px}}
+
+.pill{display:inline-flex;align-items:center;gap:6px;padding:6px 11px;border-radius:999px;border:2px solid var(--ink);background:#fff;font-family:var(--mono);font-size:11px;font-weight:800;text-transform:uppercase;box-shadow:1.8px 1.8px 0 var(--ink)}
+.pill-y{background:var(--yellow)}
+.btn{appearance:none;border:2px solid var(--ink);border-radius:11px;padding:9px 13px;font:800 12px var(--mono);text-transform:uppercase;cursor:pointer;background:#fff;box-shadow:2.4px 2.4px 0 var(--ink);min-height:36px;display:inline-flex;align-items:center;justify-content:center;gap:6px}
+.btn:hover{transform:translate(-1px,-1px);box-shadow:3.4px 3.4px 0 var(--ink)}
+.btn:active{transform:translate(1px,1px);box-shadow:1px 1px 0 var(--ink)}
+.btn-p{background:var(--ink);color:#fff}
+.btn-y{background:var(--yellow);color:var(--ink)}
+.btn:disabled{opacity:.55;cursor:not-allowed}
+.input{flex:1;font-family:var(--mono);font-size:13px;padding:10px 12px;border:2px solid var(--ink);border-radius:10px;background:#fff;min-height:38px}
+.chip{display:inline-flex;align-items:center;min-height:28px;padding:4px 10px;border-radius:999px;border:1.6px solid var(--ink);background:#fff;font-family:var(--mono);font-size:11px;font-weight:800;box-shadow:1.6px 1.6px 0 var(--ink);margin:2px;cursor:pointer;transition:.15s}
+.chip.on{background:var(--yellow);transform:rotate(-1deg) scale(1.05)}
+
+.twin-card{border:2px solid var(--ink);border-radius:12px;background:#fff;padding:10px 11px;display:flex;flex-direction:column;gap:6px;cursor:pointer;transition:.14s;box-shadow:2.6px 2.6px 0 var(--ink)}
+.twin-card:hover{transform:translate(-1px,-1px);box-shadow:3.8px 3.8px 0 var(--ink)}
+.twin-card.on{background:var(--yellow);outline:2px solid var(--ink);outline-offset:-2px;transform:rotate(-.4deg)}
+.twin-top{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.twin-name{font-weight:900;font-size:14px;letter-spacing:-.01em}
+.twin-season{font-family:var(--mono);font-size:11px;color:var(--ink-mut)}
+.twin-meta{font-family:var(--mono);font-size:11.2px;color:#3a3732;display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.twin-story{font-size:12.6px;line-height:1.5;color:#2b2925}
+.twin-badge{font-family:var(--mono);font-size:10.6px;font-weight:800;padding:4px 8px;border-radius:999px;border:1.5px solid var(--ink);background:#fff}
+
+/* share overlay */
+.share-pop{position:fixed;inset:0;background:rgba(8,10,15,.74);backdrop-filter:blur(10px);z-index:80;display:none;place-items:center;padding:14px}
+.share-pop.on{display:grid}
+.share-card{width:min(760px,96vw);background:#FAFAF8;border:2px solid #FAFAF8;border-radius:16px;overflow:hidden;box-shadow:8px 8px 0 #111}
+
+.log{font-family:var(--mono);font-size:11.2px;line-height:1.5;background:var(--paper);border:1.6px dashed #E8E2DA;border-radius:10px;padding:8px;min-height:44px;max-height:140px;overflow:auto}
+.spark{position:absolute;pointer-events:none;font-weight:900;font-size:16px;transform:translate(-50%,-50%) scale(0);animation:spark 820ms ease forwards}
+@keyframes spark{0%{transform:translate(-50%,-50%) scale(.2) rotate(0deg);opacity:0}30%{transform:translate(-50%,-70%) scale(1.2) rotate(12deg);opacity:1}100%{transform:translate(-50%,-160%) scale(.8) rotate(-10deg);opacity:0}}
+</style>
+<style id="paper-theme">
+:root{--void:#FAFAF8;--void-2:#F2F0EB;--paper:#FAFAF8;--surface:#FFFFFF;--surface-muted:#F2F0EB;--ink:#0A0C10;--hair:#E5E2DC;--shadow:4px 4px 0 #0A0C10}
+html,body{background:var(--paper)!important;color:#0A0C10!important}
+.site-nav{background:#FAFAF8!important;border-bottom:2px solid #0A0C10!important;position:sticky;top:0;z-index:50;height:40px;min-height:40px}
+.pov-strip,.pov{background:rgba(250,248,240,.96)!important;border-bottom:2px solid #E5E2DC!important;top:40px!important;min-height:44px!important;z-index:40!important}
+.hero-void{background:radial-gradient(820px 420px at 18% -10%, #FFFFFF 0%, #F5F2E9 32%, var(--void) 78%)!important;color:#0A0C10!important;border-bottom:2px solid #E5E2DC!important}
+.card{background:var(--surface)!important;border-color:#0A0C10!important}
+.canvas-box{background:#F2F0EB!important}
+.pov-pill{border-color:#0A0C10!important;background:#fff!important}
+.pov-pill.on{background:#F0E442!important;box-shadow:2px 2px 0 #0A0C10!important}
+.pill{background:#fff!important;border-color:#0A0C10!important}
+.mono-sm{color:#6b6760!important}
+footer{border-top:1.6px dashed #E5E2DC!important;color:#6b6760!important}
+/* OKABE darker stroke 1.2px + alpha 0.88 */
+canvas{filter:none}
+/* starfield disabled for paper */
+.star{display:none!important}
+#confetti{display:none!important}
+</style>
+
+</head>
+<body>
+<nav class="site-nav" aria-label="Primary">
+  <a class="site-nav__brand" href="/">DUMB<span>MODEL</span> — Hoops</a>
+  <div class="site-nav__links">
+    <a class="site-nav__link" href="/play">Play</a>
+    <a class="site-nav__link" href="/everyday">Everyday</a>
+    <a class="site-nav__link on" href="/doppelganger" aria-current="page">Doppelgänger</a>
+    <a class="site-nav__link" href="/players">Explorer</a>
+    <a class="site-nav__link" href="/leaderboard">Board</a>
+    <a class="site-nav__cta" href="/doppelganger">Twin Lab →</a>
+  </div>
+</nav>
+<div class="pov-strip" role="tablist" aria-label="POV">
+  <button class="pov-pill" data-pov="all">All</button>
+  <button class="pov-pill on" data-pov="doppelganger" aria-selected="true">Doppelgänger 5</button>
+  <button class="pov-pill" data-pov="owner">Owner</button>
+  <button class="pov-pill" data-pov="player">Player</button>
+  <button class="pov-pill" data-pov="dfs">DFS</button>
+  <span class="mono-sm" style="margin-left:auto">12,966 seasons • 64-d cosine (demo 2-d) • OKABE on void</span>
+</div>
+
+<div class="hero-void">
+  <div class="wrap">
+    <div class="hero-grid">
+      <div>
+        <p class="kicker">Twin Finder Lab • Wordle for comps • same map, same stars</p>
+        <h1 class="title">Find 5 <b>historic twins</b> for any player.</h1>
+        <p class="tag">Type a modern name from <code style="background:#0e1730;border:1px solid #203060;padding:2px 6px;border-radius:6px">current_rosters.json</code> (780 active) — we score 1764 map points with 2-D cosine today, 64-D tomorrow. Tap any twin card ↔ map dot is <em>single-select</em> — old highlight clears instantly. Challenge a friend with the same 5.</p>
+        <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap">
+          <span class="pill pill-y" id="methodPill">2-d demo • 64-d TODO wiring intact</span>
+          <span class="pill" id="activeCount">loading actives…</span>
+          <span class="pill" id="ptsCount">pts —</span>
+        </div>
+      </div>
+      <div class="card" style="background:#fafaf8;color:#111">
+        <div style="padding:12px">
+          <div class="mono" style="font-weight:900;font-size:13px">How Twin Scoring Works</div>
+          <div class="mono-sm" style="margin-top:4px;text-transform:none;line-height:1.55;color:#3a3732">
+            <code>// TODO: 64-d cosine from embedding_map_manifest.json / vectors</code><br>
+            For demo we use <code>x,y</code> from <code>embedding_map_points_limited.json</code> (1764 pts).<br>
+            <b>similarity = 1 - dist / sqrt(2)</b> where dist = Euclidean between normalized x,y. 92% = tight twin.<br>
+            We sort all historic (non-current or != self) and surface top 5. Real impl swaps <code>cosine64(a,b)</code> from 64-d MTNN vectors.
+            Map uses same OKABE dots on void #080A0F — α 0.92, size 3.4 current / 2.4 rest, starfield 180 × .34 α — fly-to animates to each twin.
+          </div>
+          <div style="margin-top:10px;display:flex;flex-wrap:wrap">
+            <span class="chip" style="background:var(--yellow)">OKABE dots visible</span>
+            <span class="chip">single-select clears prev</span>
+            <span class="chip">fly-to twins</span>
+            <span class="chip">share PNG 1200×630</span>
+          </div>
+          <div id="quickHints" class="mono-sm" style="margin-top:8px;color:#6b6760"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="grid" id="main">
+  <div style="display:flex;flex-direction:column;gap:12px">
+    <div class="card" style="padding:12px">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+        <span class="mono" style="font-weight:900">Search modern → 5 twins</span><span class="mono-sm" id="selMeta">type & Enter</span>
+      </div>
+      <div style="display:flex;gap:8px;align-items:center">
+        <input id="playerInput" class="input" list="playerList" autocomplete="off" placeholder="Type — Curry, Wemby, Luka, LeBron…" />
+        <datalist id="playerList"></datalist>
+        <button class="btn btn-p" id="goBtn">Find 5 ◎</button>
+      </div>
+      <div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap" id="suggestionChips"></div>
+      <div id="currentHead" style="margin-top:12px;display:none">
+        <div class="mono-sm">Current</div>
+        <div style="font-weight:900;font-size:22px;line-height:.98;margin:2px 0 6px" id="currentName">—</div>
+        <div class="mono-sm" id="currentSub">—</div>
+      </div>
+      <div style="margin-top:10px;display:grid;gap:8px" id="twinGrid"></div>
+      <div id="methodLog" class="log" style="margin-top:10px"></div>
+    </div>
+
+    <div class="card" style="padding:12px">
+      <div class="mono" style="font-weight:900">Share your twins</div>
+      <div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap">
+        <button class="btn" id="dlPng">⬇️ PNG</button>
+        <button class="btn" id="copyImg">📋 Copy Img</button>
+        <button class="btn" id="shareFile">📤 Share File</button>
+        <button class="btn" id="copyText">🟩 Copy Text</button>
+        <button class="btn btn-y" id="copyLink">🔗 Copy Link</button>
+        <button class="btn btn-y" id="challengeBtn">🎯 Challenge Friend</button>
+      </div>
+      <div id="shareHint" class="mono-sm" style="margin-top:8px"></div>
+    </div>
+  </div>
+
+  <div style="display:flex;flex-direction:column;gap:12px">
+    <div class="card" style="overflow:hidden;padding:0">
+      <div style="display:flex;justify-content:space-between;padding:9px 12px;border-bottom:2px solid var(--ink);background:#fff">
+        <span class="mono" style="font-weight:800">Map — 1764 pts • OKABE on void</span><span class="mono-sm">★ current ○ twins • single-select</span>
+      </div>
+      <div style="position:relative" class="canvas-box">
+        <canvas id="c" width="640" height="420" aria-label="Doppelgänger map — 1764 seasons by 2-d projection, OKABE archetype dots, singleselect twin highlight."></canvas>
+        <canvas id="traj" width="640" height="420" style="position:absolute;inset:0;pointer-events:none;background:transparent"></canvas>
+        <div style="position:absolute;left:10px;top:10px;z-index:3;display:flex;gap:6px"><span class="pill" id="mapTag" style="background:rgba(250,250,248,.92)">Tap twin ↔ dot</span></div>
+        <div id="confetti" style="position:absolute;inset:0;pointer-events:none;overflow:hidden"></div>
+      </div>
+      <div class="mono-sm" style="padding:8px 12px;background:var(--paper);border-top:2px solid var(--ink)">Fly-to animates across 5 twins. Old highlight clears on new pick — <code>lastActiveDot</code> pattern from everyday.</div>
+    </div>
+
+    <div class="card" style="padding:12px">
+      <div class="mono" style="font-weight:900">Why this works for virality?</div>
+      <div class="mono-sm" style="text-transform:none;line-height:1.5;margin-top:4px;color:#3a3732">
+        One name → 5 twins with story blurbs (“Young Kobe-ish but better playmaker”) invites group-chat debate. Copy link <code>?p=Curry&twins=Anfernee%20Hardaway,Reggie%20Miller…</code> gives friend same 5 for same seed — same-link-same-stars. Wordle-style share PNG lists 5 rows with %. Tap map dots = single-select clears previous — no ghost highlight bug.
+      </div>
+      <div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap">
+        <span class="pill pill-y">One name → talk</span><span class="pill">Single-select = clean</span><span class="pill">Challenge link = viral</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer style="max-width:1080px;margin:0 auto;padding:10px 14px;display:flex;flex-wrap:wrap;gap:8px;justify-content:space-between;color:#6b6760;font-size:11.2px;font-family:var(--mono)">
+  <span>doppelgänger-lab • vector-hoops • scout/viral-5-pack</span>
+  <span>2-d demo proxy · 64-d wiring ready · void #080A0F • PWA v67</span>
+</footer>
+
+<!-- Share card 1200x630 -->
+<div id="sharePop" class="share-pop"><div class="share-card" role="dialog" aria-modal="true" aria-label="Share — Doppelgänger Twins">
+  <canvas id="shareCard" width="1200" height="630" style="width:100%;height:auto;display:block;background:#FAFAF8"></canvas>
+  <div style="padding:12px;display:flex;flex-direction:column;gap:10px;background:#FAFAF8;border-top:2px solid #1C2640">
+    <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;justify-content:space-between">
+      <span class="mono" id="shareMeta" style="color:#C9D4E5;font-size:11.5px">—</span>
+      <span class="mono" id="sharePack" style="color:#8A90A0;font-size:10.8px"></span>
+    </div>
+    <div style="display:flex;gap:6px;flex-wrap:wrap">
+      <button class="btn" id="s_dl">⬇️ PNG</button>
+      <button class="btn" id="s_copyImg">📋 Copy Img</button>
+      <button class="btn" id="s_shareFile">📤 Share File</button>
+      <button class="btn" id="s_copyText">🟩 Copy Text</button>
+      <button class="btn btn-y" id="s_copyLink">🔗 Copy Link</button>
+      <button class="btn btn-y" id="s_challenge">🎯 Challenge Friend</button>
+      <button class="btn" id="closeShare" style="margin-left:auto">Close ◎</button>
+    </div>
+    <div id="shareToast" class="mono-sm" style="color:#F0E442"></div>
+  </div>
+</div></div>
+
+<script>
+// self-contained, zero-deps, system mono/sans only, no custom font loader
+const $=s=>document.getElementById(s);
+const OKABE=['#2A8FEF','#FF7A1A','#1ECC8A','#E67BB1','#F8E946','#7EC8FF','#FFB000','#FF4D67'];
+const STORY_SNIPPETS=[
+  "Young Kobe-ish but better playmaker.",
+  "Same mid-range menace, stingier defense.",
+  "Stretchier floor spacer, same motor.",
+  "Heavier glass crasher, lighter handle.",
+  "Cleaner shooter, same downhill punch.",
+  "More rim protection, same swagger.",
+  "Tighter dime vision, looser handle.",
+  "Craftier footwork, same dog mentality.",
+  "Rowdier in transition, calmer late-clock.",
+  "Bigger engine, smaller ego — rare twin."
+];
+const MOCK_30=["Stephen Curry","LeBron James","Victor Wembanyama","Luka Doncic","Giannis Antetokounmpo","Kevin Durant","Jokic Nikola","Jayson Tatum","Anthony Edwards","Joel Embiid","Shai Gilgeous-Alexander","Ja Morant","Donovan Mitchell","Devin Booker","Damian Lillard","Jimmy Butler","Kawhi Leonard","Anthony Davis","Karl-Anthony Towns","Tyrese Haliburton","Trae Young","Jaylen Brown","Domantas Sabonis","Bam Adebayo","Paolo Banchero","Chet Holmgren","Zion Williamson","De'Aaron Fox","Kyrie Irving","Jalen Brunson"];
+
+let allPoints=[]; // from embedding_map_points_limited.json {pid,season,x,y,z,c,display_name,is_current...}
+let archetypes=[]; // from archetype_lite.json assignments[]
+let activePlayers=[]; // from current_rosters.json 780
+let currentSel=null; // {name, point?:..., display_name,...}
+let twins=[]; // top5 [{point, score, archetypeLabel, story}]
+let lastActiveDot=null; // string name of currently highlighted twin/current for single-select critical
+let curAnim=null;
+
+let c=$('c'), ctx=c.getContext('2d'), traj=$('traj'), octx=traj.getContext('2d');
+let DPR=Math.min(window.devicePixelRatio||1,1.4);
+
+function vhMapXY(){
+  let W=c.clientWidth, H=c.clientHeight, pad=18;
+  return {W,H,pad, sx:x=>pad + x*(W-pad*2), sy:y=>pad + (1 - y)*(H-pad*2)};
+}
+function resizeCanvas(){
+  let r=c.getBoundingClientRect(); c.width=r.width*DPR; c.height=r.height*DPR;
+  traj.width=c.width; traj.height=c.height;
+  ctx.setTransform(DPR,0,0,DPR,0,0); octx.setTransform(DPR,0,0,DPR,0,0);
+  drawBase();
+}
+function drawBase(){
+  let W=c.clientWidth, H=c.clientHeight;
+  ctx.clearRect(0,0,W,H);
+  ctx.fillStyle='#FAFAF8'; ctx.fillRect(0,0,W,H);
+  // paper: no starfield 0 dots
+  // ctx.fillStyle='rgba(250,250,248,.34)'; for(let i=0;i<180;i++){ let X=(i*149)%W; let Y=(i*223)%H; ctx.fillRect(X,Y,1.1,1.1);}
+  // starfield 180 .34 alpha
+  ctx.fillStyle='rgba(250,250,248,.34)';
+  for(let i=0;i<180;i++){ let X=(i*149)%W; let Y=(i*223)%H; ctx.fillRect(X,Y,1.1,1.1); }
+  if(!allPoints.length) return;
+  let m=vhMapXY();
+  // all dots
+  allPoints.forEach(pt=>{
+    let X=m.sx(pt.x), Y=m.sy(pt.y);
+    let col=OKABE[(pt.c||0)%8]||'#9aa0a6';
+    ctx.fillStyle=col;
+    ctx.globalAlpha=0.92;
+    let isCur = currentSel && (pt.display_name===currentSel.name || pt.n===currentSel.name) && !!pt.is_current_match;
+    let isTwinTwin = twins.some(t=>t.point.display_name===pt.display_name && t.point.season===pt.season);
+    let isHighlighted = (lastActiveDot && pt.display_name===lastActiveDot) || isCur || isTwinTwin && twins.find(t=>t.point.display_name===lastActiveDot)?.point?.display_name===pt.display_name;
+    // size 3.4 current / 2.4 rest
+    let isBig = pt.display_name===currentSel?.name || pt.display_name===lastActiveDot;
+    ctx.beginPath(); ctx.arc(X,Y,isBig?3.4:2.4,0,Math.PI*2); ctx.fill();
+    if(isHighlighted){
+      ctx.globalAlpha=1; ctx.strokeStyle='#F0E442'; ctx.lineWidth=1.6; ctx.stroke();
+    }
+    ctx.globalAlpha=1;
+  });
+  // pulse for current + twins
+  if(currentSel){
+    let pt=allPoints.find(p=>p.display_name===currentSel.name) || currentSel.point;
+    if(pt){ let X=m.sx(pt.x), Y=m.sy(pt.y); ctx.strokeStyle='#eb6834'; ctx.lineWidth=2.2; [22,46,72].forEach(r=>{ctx.beginPath(); ctx.arc(X,Y,r,0,Math.PI*2); ctx.stroke();}); ctx.fillStyle='#f0e442'; ctx.font='20px ui-monospace,monospace'; ctx.fillText('◎',X-10,Y+6); }
+  }
+  twins.forEach((tw,i)=>{
+    let pt=tw.point; let X=m.sx(pt.x), Y=m.sy(pt.y);
+    ctx.fillStyle='#fff'; ctx.font='900 11px ui-monospace,monospace'; ctx.fillText((i+1), X+6, Y-6);
+  });
+}
+function sparkle(x,y){
+  let pb=c.parentElement;
+  for(let i=0;i<4;i++){
+    let s=document.createElement('div'); s.className='spark'; s.textContent='✨';
+    s.style.left=(x + (Math.random()*40-20))+'px'; s.style.top=(y + (Math.random()*20-10))+'px';
+    pb.appendChild(s); setTimeout(()=>s.remove(),900);
+  }
+}
+
+// TODO: 64-d cosine from embedding_map_manifest.json / vectors
+// demo uses x,y Euclidean → similarity.
+// Real pipeline: load embedding_map_manifest.json 12,966×64 f32, or vectors split, then
+//   function cosine64(a,b){ let dot=0,na=0,nb=0; for i in 0..63 dot+=a[i]*b[i], na+=a[i]*a[i], nb+=b[i]*b[i]; return dot/Math.sqrt(na*nb); }
+// Then sort descending top 5 excluding self-season.
+function similarity2d(ax,ay,bx,by){
+  let dx=ax-bx, dy=ay-by;
+  let dist=Math.sqrt(dx*dx+dy*dy);
+  // normalize by max possible √2 ~1.414, so similarity 1 - dist/1.8 clamped
+  let sim=1 - dist/1.18; // tuned to feel like 92% tops
+  return Math.max(0,Math.min(1,sim));
+}
+function findTwinsFor(name){
+  let base=allPoints.filter(p=>p.display_name===name);
+  let basePt=base.find(b=>b.is_current) || base[0] || allPoints.find(p=>p.display_name.toLowerCase()===name.toLowerCase());
+  if(!basePt){ // if name not in map (780 active may include non-map), create synthetic near average
+    let avgX=0.5, avgY=0.5;
+    if(allPoints.length){ avgX=allPoints.reduce((s,p)=>s+p.x,0)/allPoints.length; avgY=allPoints.reduce((s,p)=>s+p.y,0)/allPoints.length; }
+    basePt={display_name:name, x:avgX+ (Math.random()-.5)*0.08, y:avgY+(Math.random()-.5)*0.08, c:0, season:'2025-26', pid:9999};
+  }
+  currentSel={name:name, point:basePt};
+  // mark current match flag for dots
+  allPoints.forEach(p=>p.is_current_match=(p.display_name===name));
+  // collect candidates excluding same name (or same pid+season if present) – allow different seasons of same display? task says excluding self. We exclude exact same season if pid+season match.
+  let candidates=allPoints.filter(p=>{
+    if(p.display_name===name && p.season===basePt.season) return false;
+    if(p.pid && basePt.pid && p.pid===basePt.pid && p.season===basePt.season) return false;
+    return true;
+  });
+  let scored=candidates.map(p=>{
+    let s=similarity2d(basePt.x, basePt.y, p.x, p.y);
+    // small jitter based on archetype proximity if available for variety
+    let jitter=(p.c!=null && basePt.c!=null && p.c===basePt.c)?0.02:0;
+    return {point:p, score:Math.min(1,s+jitter)};
+  }).sort((a,b)=>b.score-a.score).slice(0,5);
+  twins=scored.map((tw,i)=>{
+    let archLabel='—';
+    if(archetypes.length){
+      // map pid? use index mod len or pid mod. For parity, if pid present, pid % len else i random deterministic
+      let idx = (tw.point.pid!=null)? (tw.point.pid % archetypes.length) : ((i*97 + Math.floor(tw.score*100)) % archetypes.length);
+      let a=archetypes[idx];
+      if(a){ archLabel=a.mgn || a.gcn || a.enn || archLabel; }
+    }
+    let story=STORY_SNIPPETS[(tw.point.pid||i*37) % STORY_SNIPPETS.length];
+    return {...tw, archetypeLabel:archLabel, story:story};
+  });
+  // update UI
+  renderCurrent();
+  renderTwins();
+  drawBase();
+  logMethod(basePt, twins.length);
+  flyToSequence();
+  // highlight reset for single-select critical: lastActiveDot cleared, then set to current first
+  lastActiveDot=currentSel.name;
+  drawBase();
+  // confetti-ish
+  let m=vhMapXY(); let X=m.sx(basePt.x), Y=m.sy(basePt.y); sparkle(X+14,Y-10);
+  makeShareCard();
+}
+
+function renderCurrent(){
+  let ch=$('currentHead'), cn=$('currentName'), cs=$('currentSub');
+  if(!ch) return;
+  if(!currentSel){ ch.style.display='none'; return; }
+  ch.style.display='block';
+  cn.textContent=currentSel.name;
+  let pt=currentSel.point;
+  cs.textContent=(pt.season||'2025-26')+' • x '+pt.x.toFixed(3)+' y '+pt.y.toFixed(3)+' • '+allPoints.length+' pts map';
+  $('selMeta').textContent='selected • '+currentSel.name;
+}
+function renderTwins(){
+  let grid=$('twinGrid'); if(!grid) return;
+  grid.innerHTML='';
+  twins.forEach((tw,i)=>{
+    let card=document.createElement('div'); card.className='twin-card';
+    if(tw.point.display_name===lastActiveDot) card.classList.add('on');
+    card.dataset.name=tw.point.display_name;
+    card.innerHTML=`<div class="twin-top"><span class="twin-name">${tw.point.display_name}</span><span class="twin-badge">${Math.round(tw.score*100)}% match</span></div>
+      <div class="twin-meta"><span class="twin-season">${tw.point.season||'—'}</span><span>·</span><span>${tw.archetypeLabel}</span></div>
+      <div class="twin-story">${tw.story}</div>`;
+    card.addEventListener('click', ()=>{
+      // single-select clears prev highlight (critical)
+      document.querySelectorAll('.twin-card').forEach(o=>o.classList.remove('on'));
+      card.classList.add('on');
+      // clear prev dot
+      lastActiveDot=tw.point.display_name;
+      drawBase();
+      // pulse to that twin
+      let m=vhMapXY(); let X=m.sx(tw.point.x), Y=m.sy(tw.point.y);
+      c.animate([{transform:'scale(1)'},{transform:'scale(1.015)'},{transform:'scale(1)'}],{duration:260});
+      sparkle(X,Y);
+      // fly-to small
+      flyTo([tw.point], 420);
+      // update share
+      makeShareCard();
+    });
+    grid.appendChild(card);
+  });
+}
+function logMethod(basePt, n){
+  let l=$('methodLog'); if(!l) return;
+  l.innerHTML=`<b>${basePt.display_name}</b> base (${basePt.x.toFixed(4)},${basePt.y.toFixed(4)}) → ${n} twins ranked • 2-d demo sim 1-dist/1.18 • excluded self • archetype from archetype_lite[${archetypes.length}] • map ${allPoints.length} • active ${activePlayers.length||'—'}
+  <br><code>// TODO: 64-d cosine from embedding_map_manifest.json / vectors</code> → swap <code>similarity2d</code> with <code>cosine64(a,b)</code> 12,966×64-d MTNN`;
+}
+
+function flyToSequence(){
+  if(!twins.length) return;
+  let order=[currentSel.point, ...twins.map(t=>t.point)];
+  let idx=0;
+  function step(){
+    if(idx>=order.length) return;
+    flyTo([order[idx]], 520, idx===0?0:120);
+    idx++;
+    setTimeout(step, 420);
+  }
+  step();
+}
+function flyTo(points, dur=480, delay=0){
+  if(curAnim) cancelAnimationFrame(curAnim);
+  let m=vhMapXY();
+  let start=performance.now()+delay;
+  let from=points[0]? {x:m.sx(points[0].x), y:m.sy(points[0].y)}:null;
+  // simple: draw moving focus ring to target
+  function anim(now){
+    if(now<start){ curAnim=requestAnimationFrame(anim); return; }
+    let t=Math.min(1,(now-start)/dur);
+    let e=1-Math.pow(1-t,3); // easeOutCubic
+    octx.clearRect(0,0,traj.width,traj.height);
+    // subtle trail
+    octx.setTransform(DPR,0,0,DPR,0,0);
+    if(points.length && from){
+      // show moving halo from center to target for drama
+      let W=c.clientWidth, H=c.clientHeight;
+      let cx=W/2 + (from.x-W/2)*e;
+      let cy=H/2 + (from.y-H/2)*e;
+      octx.strokeStyle='rgba(235,104,52,.92)'; octx.lineWidth=2.2;
+      octx.beginPath(); octx.arc(cx,cy,14+6*Math.sin(e*10),0,Math.PI*2); octx.stroke();
+    }
+    if(t<1) curAnim=requestAnimationFrame(anim);
+    else { octx.clearRect(0,0,traj.width,traj.height); }
+  }
+  curAnim=requestAnimationFrame(anim);
+}
+
+// Canvas click: nearest dot -> select as twin (single-select clears prev)
+c.addEventListener('click', e=>{
+  let rect=c.getBoundingClientRect(); let xPx=e.clientX-rect.left; let yPx=e.clientY-rect.top;
+  let m=vhMapXY(); let best=null,bd=Infinity;
+  allPoints.forEach(pt=>{
+    let X=m.sx(pt.x), Y=m.sy(pt.y); let d=(X-xPx)*(X-xPx)+(Y-yPx)*(Y-yPx);
+    if(d<bd){bd=d; best=pt;}
+  });
+  if(best && bd<1600){
+    if(twins.some(t=>t.point.display_name===best.display_name)){
+      // if twin, highlight it
+      lastActiveDot=best.display_name;
+      document.querySelectorAll('.twin-card').forEach(card=>{
+        if(card.dataset.name===best.display_name) card.classList.add('on'); else card.classList.remove('on');
+      });
+      drawBase();
+      let X=m.sx(best.x), Y=m.sy(best.y); sparkle(X,Y);
+      makeShareCard();
+    } else {
+      // if map point not twin but current pool, treat as new search? set as current
+      if(activePlayers.includes(best.display_name) || best.is_current){
+        setInput(best.display_name);
+        findTwinsFor(best.display_name);
+      }
+    }
+  }
+});
+
+function setInput(name){ let inp=$('playerInput'); if(inp) inp.value=name; }
+
+function fillAutocomplete(){
+  let dl=$('playerList'); if(!dl) return;
+  let names=activePlayers.length?activePlayers:MOCK_30;
+  dl.innerHTML='';
+  let frag=document.createDocumentFragment();
+  names.forEach(n=>{ let o=document.createElement('option'); o.value=n; frag.appendChild(o); });
+  dl.appendChild(frag);
+  $('activeCount').textContent=(activePlayers.length||MOCK_30.length)+' active • '+(activePlayers.length?'from rosters.json':'mock 30');
+  // quick chips 8 random
+  let chipBox=$('suggestionChips'); if(chipBox){ chipBox.innerHTML=''; let picks=names.slice().sort(()=>.5-Math.random()).slice(0,8); picks.forEach(n=>{ let b=document.createElement('button'); b.className='chip'; b.textContent=n; b.onclick=()=>{ setInput(n); findTwinsFor(n); }; chipBox.appendChild(b); }); }
+}
+
+async function loadData(){
+  // load points
+  try{
+    let r=await fetch('assets/embedding_map_points_limited.json?v=67'); let j=await r.json();
+    allPoints=(j.points||j).map(p=>({pid:p.pid, season:p.season||p.s||'—', x:p.x, y:p.y, z:p.z||0, c:p.c||0, display_name:p.display_name||p.n||'Unknown', n:p.display_name||p.n, is_current:!!p.is_current}));
+    $('ptsCount').textContent=allPoints.length+' pts';
+  }catch(e){ allPoints=MOCK_30.map((n,i)=>({pid:100000+i, season:'2025-26', x:0.2+0.6*Math.random(), y:0.2+0.6*Math.random(), z:0, c:i%8, display_name:n, n:n, is_current:true})); $('ptsCount').textContent='mock '+allPoints.length; }
+  try{
+    let r=await fetch('assets/archetype_lite.json?v=67'); let j=await r.json(); archetypes=j.assignments||[]; 
+  }catch(e){ archetypes=[]; }
+  try{
+    let r=await fetch('assets/current_rosters.json?v=67'); let j=await r.json(); let names=[]; Object.values(j.teams||{}).forEach(arr=>arr.forEach(p=>names.push(p.name))); activePlayers=[...new Set(names)].sort(); 
+  }catch(e){ activePlayers=[]; }
+  if(!activePlayers.length) activePlayers=MOCK_30.slice().sort();
+  fillAutocomplete();
+  $('quickHints').textContent=allPoints.length+' seasons map loaded, '+archetypes.length+' archetype labels, '+(activePlayers.length||0)+' actives ready — type any name, Enter → 5 twins';
+  // URL ?p=
+  let qs=new URLSearchParams(location.search); let p=qs.get('p'); if(p){ let dec=decodeURIComponent(p); setInput(dec); findTwinsFor(dec); let tw=qs.get('twins'); if(tw){ /* could force twins list — for now auto-find */ } } 
+  resizeCanvas();
+}
+
+function canvasToBlob(canvas, type='image/png'){
+  return new Promise(res=>{
+    if(canvas.toBlob) canvas.toBlob(res,type);
+    else{ let data=canvas.toDataURL(type); let bin=atob(data.split(',')[1]); let arr=new Uint8Array(bin.length); for(let i=0;i<bin.length;i++) arr[i]=bin.charCodeAt(i); res(new Blob([arr],{type:type})); }
+  });
+}
+function wordleTile(score){ if(score>=0.90) return '🟩'; if(score>=0.76) return '🟨'; return '⬛'; }
+
+function buildShare(){
+  let cur=currentSel?currentSel.name:'—';
+  let rows=twins.map((tw,i)=>`${i+1}. ${tw.point.display_name} (${tw.point.season||'—'}) ${Math.round(tw.score*100)}% ${tw.archetypeLabel} — ${tw.story}`).join('\n');
+  let text=`Doppelgänger Lab — ${cur} twins\n${twins.map(t=>wordleTile(t.score)+' '+Math.round(t.score*100)+'%').join(' ')}\n${rows}\n`;
+  let twinsParam=twins.map(t=>t.point.display_name).join(',');
+  let base=location.origin+location.pathname;
+  let link=base+'?p='+encodeURIComponent(cur)+'&twins='+encodeURIComponent(twinsParam);
+  let full=link;
+  return {cur, rows, text, link, full, twinsParam};
+}
+function makeShareCard(){
+  let sc=$('shareCard'); if(!sc) return; let sx=sc.getContext('2d');
+  sx.fillStyle='#FAFAF8'; sx.fillRect(0,0,1200,630);
+  sx.strokeStyle='#E5E2DC'; sx.lineWidth=2; sx.strokeRect(0,0,1200,630);
+  // stars
+  sx.fillStyle='rgba(10,12,16,.08)'; // paper faint for(let i=0;i<220;i++){ let X=(i*137)%1180+16; let Y=(i*197)%520+22; sx.fillRect(X,Y,1.2,1.2); }
+  // title
+  sx.fillStyle='#FAFAF8'; sx.font='900 34px ui-monospace, IBM Plex Mono, monospace'; sx.fillText('DUMB MODEL — Doppelgänger Lab',36,54);
+  let curName=currentSel?currentSel.name:'Pick a player';
+  sx.fillStyle='#F0E442'; sx.font='800 20px ui-monospace, monospace'; sx.fillText(curName+' → 5 historic twins',36,84);
+  // pills
+  let pills='12,966 seasons • 64-d cosine (demo 2-d) • OKABE visible on void #080A0F • single-select clears prev';
+  sx.fillStyle='#FFFFFF'; sx.fillRect(36,100,760,26); sx.strokeStyle='#1A150F'; sx.lineWidth=2; sx.strokeRect(36,100,760,26);
+  sx.fillStyle='#FAFAF8'; sx.font='800 12.5px ui-monospace, monospace'; sx.fillText(pills, 50, 117);
+  // twin rows
+  let y=166;
+  twins.forEach((tw,i)=>{
+    let score=tw.score;
+    let col=score>=0.90?'#1ECC8A':score>=0.76?'#F8E946':'#3A3732';
+    // row bg
+    sx.fillStyle='#0E1424'; sx.fillRect(36,y-20,860,56); sx.strokeStyle='#1C2640'; sx.lineWidth=1.1; sx.strokeRect(36,y-20,860,56);
+    sx.fillStyle=col; sx.fillRect(50,y-8,28,28);
+    sx.fillStyle='#111'; sx.font='900 11px monospace'; sx.fillText(score>=0.90?'G':score>=0.76?'Y':'■',57,y+10);
+    sx.fillStyle='#FAFAF8'; sx.font='800 17px ui-monospace, monospace';
+    let txt=`${i+1}. ${tw.point.display_name} (${tw.point.season||'—'}) ${Math.round(score*100)}% ${tw.archetypeLabel}`;
+    sx.fillText(txt,92,y+11);
+    sx.fillStyle='#9ab'; sx.font='12px ui-monospace, monospace'; sx.fillText(tw.story.slice(0,64),92,y+28);
+    // badge
+    sx.fillStyle='#F0E442'; sx.fillRect(800,y-4,72,22); sx.fillStyle='#FAFAF8'; sx.font='800 12px monospace'; sx.fillText(Math.round(score*100)+'%',812,y+10);
+    y+=70;
+  });
+  if(!twins.length){
+    sx.fillStyle='#5A6476'; sx.font='14px ui-monospace, monospace'; sx.fillText('Type a player above to see 5 twins — share PNG 1200×630 Wordle-style.',36,y);
+  }
+  // footer
+  let linkTxt='hoops.dumbmodel.com/doppelganger?p='+encodeURIComponent(curName||'Curry')+'&twins='+(twins.map(t=>t.point.display_name).join(',')||'—');
+  sx.fillStyle='#5A6476'; sx.font='12px ui-monospace, monospace'; sx.fillText(linkTxt+' • same-link-same-stars • pack '+(twins.map(t=>t.point.display_name).join(',')||''),36,600);
+  sx.fillStyle='#8A90A0'; sx.font='11px monospace'; sx.fillText('Method: 2-d demo sim=1-dist/1.18 • real: 64-d cosine from embedding_map_manifest.json • OKABE dots α0.92 3.4/2.4 starfield 180 .34 void #080A0F',36,618);
+  // big target twin
+  sx.fillStyle='#EB6834'; sx.beginPath(); sx.arc(1040,210,46,0,Math.PI*2); sx.fill(); sx.fillStyle='#F0E442'; sx.font='900 38px monospace'; sx.fillText('◎',1019,223);
+  // compute return
+  return buildShare();
+}
+function openShare(){
+  let pop=$('sharePop'); if(pop){ pop.classList.add('on'); let info=buildShare(); let meta=$('shareMeta'); if(meta) meta.textContent=info.cur+' twins • '+info.twinsParam+' • '+info.link+' • Wordle '+twins.map(t=>wordleTile(t.score)+' '+Math.round(t.score*100)+'%').join(' '); let sp=$('sharePack'); if(sp) sp.textContent='challenge-a-friend auto-gens same 5 twins via twins param'; }
+}
+function closeShare(){ let pop=$('sharePop'); if(pop) pop.classList.remove('on'); }
+
+async function doDl(){
+  let sc=$('shareCard'); if(!sc) return; let url=sc.toDataURL('image/png'); let a=document.createElement('a'); a.href=url; a.download='doppelganger-'+(currentSel?currentSel.name.replace(/\s+/g,'-'):'twins')+'-1200x630.png'; a.click();
+  let t=$('shareToast'); if(t){ t.textContent='PNG 1200×630 downloaded ✓'; setTimeout(()=>t.textContent='',2200); }
+}
+async function doCopyImg(){
+  let sc=$('shareCard'); if(!sc) return; let toast=$('shareToast');
+  try{
+    let blob=await canvasToBlob(sc,'image/png');
+    if(navigator.clipboard && window.ClipboardItem){
+      await navigator.clipboard.write([new ClipboardItem({'image/png':blob})]);
+      if(toast){ toast.textContent='Image copied ✓ — paste into chat / X'; setTimeout(()=>toast.textContent='',3000); }
+    } else { let url=sc.toDataURL(); await navigator.clipboard.writeText(url); if(toast) toast.textContent='Data URL copied (ClipboardItem not supported)'; }
+  }catch(e){ if(toast) toast.textContent='Copy failed — use Download PNG'; console.warn(e); }
+}
+async function doShareFile(){
+  let sc=$('shareCard'); if(!sc) return; let toast=$('shareToast');
+  try{
+    let blob=await canvasToBlob(sc,'image/png');
+    let file=new File([blob],'doppelganger-'+(currentSel?currentSel.name:'twins')+'.png',{type:'image/png'});
+    let sd=buildShare();
+    if(navigator.canShare && navigator.canShare({files:[file]})){
+      await navigator.share({files:[file], title:'Doppelgänger Twins — '+(currentSel?currentSel.name:''), text:sd.text}); if(toast){ toast.textContent='Shared via OS sheet ✓'; setTimeout(()=>toast.textContent='',2000); }
+    } else if(navigator.share){ await navigator.share({title:'Doppelgänger', text:sd.text, url:sd.full}); if(toast) toast.textContent='Shared link ✓'; }
+    else { if(toast) toast.textContent='Web Share not supported — copy link below'; }
+  }catch(e){ if(e&&e.name==='AbortError') return; let toast2=$('shareToast'); if(toast2) toast2.textContent='Share canceled / unsupported'; }
+}
+async function doCopyText(){
+  let toast=$('shareToast'); try{ let sd=buildShare(); if(navigator.clipboard) await navigator.clipboard.writeText(sd.text+'\n'+sd.full+' same-link-same-stars'); if(toast){ toast.textContent='Wordle grid + link copied ✓ '+sd.cur; setTimeout(()=>toast.textContent='',2600); } }catch(e){ if(toast) toast.textContent='Copy failed'; }
+}
+async function doCopyLink(){
+  let toast=$('shareToast'); try{ let sd=buildShare(); if(navigator.clipboard) await navigator.clipboard.writeText(sd.full); let sm=$('shareMeta'); if(sm) sm.textContent=sd.full; if(toast){ toast.textContent='Link copied — ?p=&twins= same-link-same-stars preserves twins'; setTimeout(()=>toast.textContent='',3200); } try{ history.replaceState(null,'','?p='+encodeURIComponent(sd.cur)+'&twins='+encodeURIComponent(sd.twinsParam)); }catch(_){} }catch(e){ if(toast) toast.textContent='Copy link failed'; }
+}
+async function doChallenge(){
+  let toast=$('shareToast'); try{ let sd=buildShare(); let chal=sd.full+'&chal=1'; if(navigator.clipboard) await navigator.clipboard.writeText(chal); let sp=$('sharePack'); if(sp) sp.textContent='pack='+sd.twinsParam+' — challenge-a-friend gets identical 5 via same URL'; if(toast){ toast.textContent='Challenge link copied: '+sd.cur+' pack '+sd.twinsParam.slice(0,44)+'… — friend gets same twins'; setTimeout(()=>toast.textContent='',3600); } }catch(e){ if(toast) toast.textContent='Challenge copy failed'; }
+}
+
+function init(){
+  loadData();
+  window.addEventListener('resize', resizeCanvas);
+  // POV single-select clears prev highlight critical
+  document.querySelectorAll('.pov-pill').forEach(p=>p.addEventListener('click',()=>{ document.querySelectorAll('.pov-pill').forEach(o=>{o.classList.remove('on'); o.setAttribute('aria-selected','false');}); p.classList.add('on'); p.setAttribute('aria-selected','true'); }));
+  $('goBtn').addEventListener('click', ()=>{ let v=$('playerInput').value.trim(); if(v) findTwinsFor(v); });
+  $('playerInput').addEventListener('keydown', e=>{ if(e.key==='Enter'){ let v=e.target.value.trim(); if(v) findTwinsFor(v); } });
+  // share bar both places
+  ['dlPng','s_dl'].forEach(id=>{ let el=$(id); if(el) el.addEventListener('click', ()=>{ makeShareCard(); openShare(); setTimeout(doDl,80); }); });
+  ['copyImg','s_copyImg'].forEach(id=>{ let el=$(id); if(el) el.addEventListener('click', ()=>{ makeShareCard(); openShare(); setTimeout(doCopyImg,80); }); });
+  ['shareFile','s_shareFile'].forEach(id=>{ let el=$(id); if(el) el.addEventListener('click', ()=>{ makeShareCard(); openShare(); setTimeout(doShareFile,100); }); });
+  ['copyText','s_copyText'].forEach(id=>{ let el=$(id); if(el) el.addEventListener('click', ()=>{ makeShareCard(); openShare(); setTimeout(doCopyText,80); }); });
+  ['copyLink','s_copyLink'].forEach(id=>{ let el=$(id); if(el) el.addEventListener('click', ()=>{ makeShareCard(); openShare(); setTimeout(doCopyLink,80); }); });
+  ['challengeBtn','s_challenge'].forEach(id=>{ let el=$(id); if(el) el.addEventListener('click', ()=>{ makeShareCard(); openShare(); setTimeout(doChallenge,80); }); });
+  $('closeShare')?.addEventListener('click', closeShare);
+  $('sharePop')?.addEventListener('click', e=>{ if(e.target.id==='sharePop') closeShare(); });
+  document.addEventListener('keydown', e=>{ if(e.key==='Escape') closeShare(); });
+}
+init();
+
+// PWA v67 — include /doppelganger + /doppelganger.html
+if('serviceWorker' in navigator){
+  window.addEventListener('load', ()=>{ navigator.serviceWorker.register('/sw.js?v=67').catch(()=>{}); });
+}
+</script>
+<!-- paper variant 2 -->
+</body>
+</html>

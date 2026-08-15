@@ -1,0 +1,803 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Trade Machine — 2-4 Team Builder • dumbmodel</title>
+<meta name="description" content="2-4 team trade builder. 125% + $250k CBA check, net surplus MATH = IN - OUT. Share receipt PNG 1200×630.">
+<meta name="theme-color" content="#080A0F">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23080A0F'/%3E%3Cpath d='M6 16h20M10 10l6 6-6 6M22 10l-6 6 6 6' stroke='%23fafaf8' stroke-width='1.6' stroke-linecap='round'/%3E%3C/svg%3E">
+<link rel="manifest" href="/manifest.json">
+<style>
+:root{--paper:#fafaf8;--surface:#fff;--ink:#111;--ink-soft:#52514e;--ink-mut:#6b6760;--hair:#e1e0d9;--orange:#eb6834;--blue:#2a78d6;--yellow:#8AFF6B;--green:#009e73;--red:#d8452a;--void:#080A0F;--void-2:#0A0C10;--mono:ui-monospace,"IBM Plex Mono",Menlo,monospace;--sans:ui-sans-system,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;--shadow:4px 4px 0 var(--ink);--r:14px}
+*{box-sizing:border-box}html,body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+/* NAV 40px sticky top0 min-height 40px z50 masterclass */
+.site-nav{position:sticky;top:0;z-index:50;min-height:40px;height:40px;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:0 14px;padding-top:env(safe-area-inset-top,0);background:var(--surface);border-bottom:2px solid var(--ink)}
+.site-nav__brand{font-family:var(--mono);font-weight:800;font-size:13.5px;letter-spacing:.04em;text-transform:uppercase;white-space:nowrap}
+.site-nav__brand span{color:var(--orange)}
+.site-nav__links{display:flex;gap:4px;align-items:center}
+.site-nav__link{font-family:var(--mono);font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.04em;padding:6px 9px;border-radius:8px;border:2px solid transparent}
+.site-nav__link:hover{background:var(--paper);border-color:var(--ink)}
+.site-nav__link.on{background:var(--void);color:#fafaf8;border-color:var(--ink)}
+.site-nav__cta{font-family:var(--mono);font-size:11px;font-weight:800;text-transform:uppercase;background:var(--ink);color:var(--paper);border:2px solid var(--ink);border-radius:8px;padding:5px 10px;min-height:28px;display:inline-flex;align-items:center;box-shadow:2px 2px 0 var(--ink)}
+/* POV 44px sticky top40 z40 bottom border 2px */
+.pov-strip{position:sticky;top:40px;z-index:40;min-height:44px;height:44px;display:flex;align-items:center;gap:8px;padding:0 12px;overflow-x:auto;overscroll-behavior-x:contain;background:rgba(250,250,248,.94);backdrop-filter:blur(10px);border-bottom:2px solid var(--ink)}
+.pov-pill{min-height:36px;padding:0 13px;border:2px solid var(--ink);border-radius:999px;background:#fff;font-family:var(--mono);font-weight:800;font-size:11px;text-transform:uppercase;letter-spacing:.03em;white-space:nowrap;box-shadow:1.8px 1.8px 0 var(--ink);cursor:pointer;flex:0 0 auto}
+.pov-pill.on{background:var(--yellow);transform:rotate(-.6deg)}
+.mono{font-family:var(--mono);font-size:11px;letter-spacing:.04em;text-transform:uppercase}
+.mono-sm{font-family:var(--mono);font-size:10.8px;color:var(--ink-mut);text-transform:uppercase;letter-spacing:.05em}
+.hero-void{background:radial-gradient(1100px 600px at 18% -10%,#1A233A 0%,#121A2D 32%,var(--void) 72%);color:#fafaf8;border-bottom:2px solid var(--ink);position:relative;overflow:hidden}
+.wrap{max-width:1160px;margin:0 auto;padding:0 14px}
+.hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:14px;padding:14px 0}
+@media(max-width:900px){.hero-grid{grid-template-columns:1fr}}
+.kicker{font-family:var(--mono);font-size:10.8px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#9ab;margin:0 0 6px}
+.title{font-size:clamp(26px,5vw,34px);line-height:.95;font-weight:900;letter-spacing:-.02em;margin:4px 0 8px;text-transform:uppercase}
+.title b{background:var(--yellow);color:var(--ink);padding:2px 6px;border:1.5px solid var(--ink);box-shadow:2px 2px 0 #000;display:inline-block;transform:rotate(-.9deg)}
+.tag{font-size:13.4px;line-height:1.55;max-width:52ch;color:#c9d4e5}
+.card{background:var(--surface);border:2px solid var(--ink);border-radius:14px;box-shadow:var(--shadow);overflow:hidden}
+.btn{appearance:none;border:2px solid var(--ink);border-radius:11px;padding:9px 13px;font:800 12px var(--mono);text-transform:uppercase;cursor:pointer;background:#fff;box-shadow:2.4px 2.4px 0 var(--ink);min-height:36px;display:inline-flex;align-items:center;justify-content:center;gap:6px}
+.btn:hover{transform:translate(-1px,-1px);box-shadow:3.4px 3.4px 0 var(--ink)}
+.btn:active{transform:translate(1px,1px);box-shadow:1px 1px 0 var(--ink)}
+.btn-p{background:var(--ink);color:#fff}
+.btn-y{background:var(--yellow);color:var(--ink)}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.pill{display:inline-flex;align-items:center;gap:6px;padding:6px 11px;border-radius:999px;border:2px solid var(--ink);background:#fff;font-family:var(--mono);font-size:11px;font-weight:800;text-transform:uppercase;box-shadow:1.8px 1.8px 0 var(--ink)}
+.pill-y{background:var(--yellow)}
+.pill-g{background:#D6F5E6}
+.pill-r{background:#FFD6D0}
+.chip{display:inline-flex;align-items:center;min-height:28px;padding:4px 10px;border-radius:999px;border:1.6px solid var(--ink);background:#fff;font-family:var(--mono);font-size:11px;font-weight:800;box-shadow:1.6px 1.6px 0 var(--ink);margin:2px;cursor:pointer;transition:.12s}
+.chip.on{background:var(--yellow);transform:rotate(-1deg) scale(1.04)}
+.team-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+@media(max-width:980px){.team-grid{grid-template-columns:1fr}}
+@media(min-width:1220px){.team-grid.cols-3{grid-template-columns:repeat(3,1fr)}.team-grid.cols-4{grid-template-columns:repeat(4,1fr)}}
+.team-col{display:flex;flex-direction:column;gap:10px}
+.team-head{display:flex;justify-content:space-between;align-items:center;padding:9px 11px;border-bottom:2px solid var(--ink);background:linear-gradient(90deg,var(--paper),#FFF6C8)}
+.select-team{font-family:var(--mono);font-size:11.5px;font-weight:800;padding:6px 8px;border:1.6px solid var(--ink);border-radius:8px;background:#fff;min-width:92px}
+.roster{max-height:300px;overflow:auto;padding:6px;background:var(--paper);border-top:1.6px dashed var(--hair)}
+.player-card{display:flex;justify-content:space-between;align-items:center;gap:6px;padding:7px 9px;margin:4px 0;border:1.6px solid var(--ink);border-radius:10px;background:#fff;cursor:pointer;font-family:var(--mono);font-size:11.5px;font-weight:700;box-shadow:1.4px 1.4px 0 var(--ink)}
+.player-card.on{background:var(--yellow);transform:rotate(-.4deg)}
+.player-card.sel-out{border-color:var(--orange);background:#FFF1E6}
+.player-card.sel-in{border-color:var(--green);background:#E6FFF1}
+.mini-list{min-height:52px;padding:6px;background:#fff;border:1.4px dashed var(--hair);border-radius:10px}
+.mini-tag{display:inline-flex;align-items:center;gap:5px;padding:4px 8px;margin:3px;border:1.5px solid var(--ink);border-radius:999px;background:var(--paper);font-family:var(--mono);font-size:10.6px;font-weight:800;cursor:pointer}
+.mini-tag.out{background:#FFF1E6}
+.mini-tag.in{background:#E6FFF1}
+.log{font-family:var(--mono);font-size:11px;line-height:1.45;background:var(--paper);border:1.5px dashed #E8E2DA;border-radius:10px;padding:7px;min-height:34px}
+.cba{font-family:var(--mono);font-size:10.2px;color:#6b6760;line-height:1.4;background:#fcfaf6;border:1.4px solid var(--hair);border-radius:8px;padding:7px;margin-top:6px}
+.share-pop{position:fixed;inset:0;background:rgba(8,10,15,.72);backdrop-filter:blur(10px);z-index:80;display:none;place-items:center;padding:14px}
+.share-pop.on{display:grid}
+.share-card{width:min(760px,96vw);background:#080A0F;border:2px solid #FAFAF8;border-radius:16px;overflow:hidden;box-shadow:8px 8px 0 #111}
+#toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%) translateY(20px);background:#111;color:#fafaf8;border:2px solid #fafaf8;border-radius:999px;padding:8px 14px;font-family:var(--mono);font-size:11.5px;font-weight:800;opacity:0;pointer-events:none;transition:.22s;z-index:90}
+#toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
+</style>
+<style id="terminal-theme">
+:root{--void:#080A0F;--void-2:#0A0C10;--terminal-green:#8AFF6B;--paper:#080A0F;--surface:#0D111B;--ink:#E6FFE0;--ink-soft:#8AFF6B;--mono:ui-monospace,"IBM Plex Mono",Menlo,monospace}
+html,body{background:#080A0F!important;color:#E6FFE0!important;font-family:var(--mono)!important}
+.site-nav{background:#080A0F!important;border-bottom:2px solid #1E2E56!important;color:#E6FFE0!important;position:sticky;top:0;z-index:50;height:40px;min-height:40px}
+.site-nav__brand{color:#8AFF6B!important}
+.pov-strip,.pov{background:rgba(10,12,16,.96)!important;border-bottom:2px solid #8AFF6B!important;box-shadow:0 0 12px rgba(138,255,107,.32);top:40px!important;min-height:44px!important;z-index:40!important}
+.pov-pill{border-color:#26365F!important;background:#0D1326!important;color:#8AFF6B!important}
+.pov-pill.on{background:#8AFF6B!important;color:#080A0F!important;box-shadow:0 0 12px #8AFF6B,2px 2px 0 #111!important;border-color:#8AFF6B!important}
+.mono,.mono-sm{color:#8AFF6B!important}
+.mono{color:#8AFF6B}
+.hero-void{background:radial-gradient(1100px 600px at 18% -10%,#111726 0%,#0A1C10 32%,#080A0F 72%)!important;color:#E6FFE0!important}
+.card{background:#0F1525!important;border-color:#1F2D52!important;box-shadow:6px 6px 0 #0A0E17!important;color:#E6FFE0!important}
+.canvas-box{background:#0A0C10!important}
+.btn,.btn-p,.btn-y{font-family:var(--mono)!important}
+.btn{border-color:#8AFF6B!important;color:#8AFF6B!important;background:#0D1326!important}
+.btn-p{background:#8AFF6B!important;color:#080A0F!important;border-color:#8AFF6B!important;box-shadow:0 0 12px #8AFF6B!important}
+.btn-y{background:#0D1326!important;color:#8AFF6B!important;border-color:#8AFF6B!important}
+.pill{border-color:#8AFF6B!important;background:#0D1326!important;color:#8AFF6B!important}
+.pill-y,.pill-g{background:#8AFF6B!important;color:#080A0F!important}
+.title b{background:#8AFF6B!important;color:#080A0F!important;box-shadow:0 0 12px #8AFF6B!important}
+.chip,.trow{background:#0D1326!important;color:#8AFF6B!important;border-color:#26365F!important}
+.chip.on,.trow.on,.trow.edge{background:#8AFF6B!important;color:#080A0F!important;border-color:#8AFF6B!important}
+.log{background:#0A0C10!important;border-color:#26365F!important;color:#8AFF6B!important}
+#log:empty::before{color:#5A8A52!important}
+footer{border-top:1.6px dashed #1E2E56!important;color:#8AFF6B!important}
+::selection{background:#8AFF6B;color:#080A0F}
+</style>
+<script>try{document.documentElement.setAttribute('data-theme','terminal')}catch(e){}</script>
+
+</head>
+<body>
+<nav class="site-nav" aria-label="Primary">
+  <a class="site-nav__brand" href="/">DUMB<span>MODEL</span> — Hoops</a>
+  <div class="site-nav__links">
+    <a class="site-nav__link" href="/play">Play</a>
+    <a class="site-nav__link" href="/everyday">Everyday</a>
+    <a class="site-nav__link on" href="/trade-machine" aria-current="page">Trade</a>
+    <a class="site-nav__link" href="/players">Explorer</a>
+    <a class="site-nav__cta" href="/trade-machine#builder">Build trade →</a>
+  </div>
+</nav>
+<div class="pov-strip" role="tablist" aria-label="POV">
+  <button class="pov-pill" data-pov="all">All</button>
+  <button class="pov-pill" data-pov="owner">Owner</button>
+  <button class="pov-pill" data-pov="player">Player</button>
+  <button class="pov-pill on" data-pov="trade" aria-selected="true">Trade Lab</button>
+  <button class="pov-pill" data-pov="dfs">DFS</button>
+  <span class="mono-sm" style="margin-left:auto">2–4 teams • 125% + $250k • MATH-only surplus</span>
+</div>
+
+<div class="hero-void">
+  <div class="wrap"><div class="hero-grid">
+    <div>
+      <p class="kicker">Front Office Lab v2 • Trade Builder — 2-4 team • shareable receipt</p>
+      <h1 class="title">Stitch trades. <b>Check caps. See wins.</b></h1>
+      <p class="tag">Pick 2–4 teams. Move salaries. 2025-26 cap $154.6M — simple rule: over-cap teams can take back <code style="background:#0e1730;border:1px solid #203060;padding:2px 6px;border-radius:6px">125% + $0.25M</code> of outgoing. Under-cap uses cap space. <code style="background:#0e1730;border:1px solid #203060;padding:2px 6px;border-radius:6px">Net Surplus MATH = Σ IN – Σ OUT</code> from <code>career_surplus.json</code>. No opinion, just math. Receipt is 1200×630 void + star dust.</p>
+      <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap">
+        <span class="pill pill-y" id="teamCountPill">2 teams • tabs</span>
+        <span class="pill" id="capMeta">cap $154.6M • tax $187.9M • 10% max growth</span>
+        <span class="pill" id="dailyFeatured">LCG featured —</span>
+      </div>
+      <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap">
+        <button class="btn btn-y" id="b2teams">2 Teams</button>
+        <button class="btn" id="b3teams">3 Teams</button>
+        <button class="btn" id="b4teams">4 Teams</button>
+        <button class="btn btn-p" id="bReset">Reset ↻</button>
+        <button class="btn" id="bFeatured">Swap in featured →</button>
+      </div>
+    </div>
+    <div class="card" style="background:#fafaf8;color:#111">
+      <div style="padding:12px">
+        <div class="mono" style="font-weight:900;font-size:13px">How this checks</div>
+        <div class="cba">// CBA logic: simplified 125% + 250k — real CBA has aprons<br>
+          // over-cap: IN ≤ OUT*1.25 + 0.25M<br>
+          // under-cap: IN - OUT ≤ cap_space (space = cap - payroll)<br>
+          // payroll uses current_rosters.json minutes → mocked $5-45M if missing salary.<br>
+          // Valid apron math needs Team Payroll XLS — we simplify, comment shows gap.
+        </div>
+        <div class="mono-sm" style="margin-top:8px;text-transform:none;line-height:1.5;color:#3a3732">Teams from <code>teams.json</code> 30 fixed. Roster = <code>current_rosters.json</code> activePlayers filtered by team (8-12 visible). Salary $5-45M hash if missing. Surplus from <code>career_surplus.json</code>: 0.6*z(pred_MPG)+0.4*z(pred_GP) − SALARY_LOG z (research only). Mock -2..+4 if missing. Single-select clears prev on team pills + player cards. Haptics + toast like everyday.</div>
+        <div style="margin-top:10px;display:flex;gap:6px;flex-wrap:wrap"><span class="chip">void #080A0F</span><span class="chip">40px nav z50</span><span class="chip">44px POV z40</span><span class="chip">mono/sans only</span><span class="chip">system fonts</span></div>
+        <div id="quickStats" class="mono-sm" style="margin-top:8px"></div>
+      </div>
+    </div>
+  </div></div>
+</div>
+
+<div id="builder" style="max-width:1160px;margin:0 auto;padding:12px;display:flex;flex-direction:column;gap:12px">
+  <!-- team columns -->
+  <div id="teamGrid" class="team-grid cols-2"></div>
+
+  <!-- global actions + receipt -->
+  <div class="card" style="padding:12px;display:flex;flex-direction:column;gap:10px">
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">
+      <span class="mono" style="font-weight:900">Trade receipt • 1200×630 PNG • void + star dust • top bar</span>
+      <span class="pill" id="overallValid">build to validate</span>
+    </div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <button class="btn" id="btnBuildReceipt">Build receipt canvas →</button>
+      <button class="btn btn-p" id="btnDl" title="Download 1200×630 PNG">⬇️ PNG</button>
+      <button class="btn" id="btnCopyImg" title="Copy image to clipboard">📋 Copy Img</button>
+      <button class="btn" id="btnShareFile" title="Use OS share sheet with file if supported">📤 Share File</button>
+      <button class="btn" id="btnCopyText" title="Copy MATH text">🟩 Copy Text</button>
+      <button class="btn btn-y" id="btnCopyLink" title="Copy link ?trade=">🔗 Copy Link</button>
+      <button class="btn" id="btnToast" style="margin-left:auto">Check haptics ◎</button>
+    </div>
+    <div class="mono-sm" id="tradeText" style="text-transform:none;white-space:pre-wrap;background:var(--paper);border:1.6px dashed #E8E2DA;border-radius:10px;padding:8px;min-height:48px">No trade yet — select teams, move players OUT → IN, then Build receipt.</div>
+    <canvas id="receipt" width="1200" height="630" style="width:100%;height:auto;display:block;background:#080A0F;border:2px solid var(--ink);border-radius:12px"></canvas>
+    <div class="mono-sm" style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px"><span>Built free · open-source · math only · no advice</span><span id="receiptMeta">LCG idx3820 chain • same-link-same-stars pattern • everyday share parity</span></div>
+  </div>
+</div>
+
+<div id="sharePop" class="share-pop"><div class="share-card" role="dialog" aria-modal="true" aria-label="Share — Trade Receipt">
+  <canvas id="shareCard" width="1200" height="630" style="width:100%;height:auto;display:block;background:#080A0F"></canvas>
+  <div style="padding:12px;display:flex;flex-direction:column;gap:10px;background:#080A0F;border-top:2px solid #1C2640">
+    <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;justify-content:space-between">
+      <span class="mono" id="shareMeta" style="color:#C9D4E5;font-size:11.5px">Trade Receipt • MATH = IN-OUT • void star dust</span>
+      <span class="mono" id="sharePack" style="color:#8A90A0;font-size:10.8px"></span>
+    </div>
+    <div style="display:flex;gap:6px;flex-wrap:wrap">
+      <button class="btn" id="sDl" title="Download 1200×630 PNG">⬇️ PNG</button>
+      <button class="btn" id="sCopyImg" title="Copy image to clipboard">📋 Copy Img</button>
+      <button class="btn" id="sShareFile" title="Use OS share sheet with file if supported">📤 Share File</button>
+      <button class="btn" id="sCopyText" title="Copy MATH text">🟩 Copy Text</button>
+      <button class="btn btn-y" id="sCopyLink" title="Copy canonical link ?trade=">🔗 Copy Link</button>
+      <button class="btn" id="sClose" style="margin-left:auto">Close ◎</button>
+    </div>
+    <div id="shareToast" class="mono-sm" style="color:#8AFF6B;min-height:16px"></div>
+  </div></div></div>
+
+<div id="toast" role="status" aria-live="polite"></div>
+
+<footer style="max-width:1160px;margin:0 auto;padding:10px 14px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;border-top:1.6px dashed #E8E2DA;color:#6b6760" class="mono-sm"><span>Trade Lab • 125% + $250k simplified • aprons need payroll XLS</span><span>Built free • PWA v67 offline • mono/sans only • void #080A0F</span></footer>
+
+<script>
+// zero-deps, system mono/sans only — subtle Built free footer
+
+const $=s=>document.getElementById(s);
+const CAP_25_26=154647000, TAX_25_26=187895000, APRON1=195945000, APRON2=207824000;
+const FIXED_TEAMS=[
+  {abbr:"ATL",name:"Atlanta Hawks",c1:"#E03A3E",c2:"#C1D32F"},
+  {abbr:"BOS",name:"Boston Celtics",c1:"#007A33",c2:"#BA9653"},
+  {abbr:"BKN",name:"Brooklyn Nets",c1:"#000000",c2:"#808080"},
+  {abbr:"CHA",name:"Charlotte Hornets",c1:"#1D1160",c2:"#00788C"},
+  {abbr:"CHI",name:"Chicago Bulls",c1:"#CE1141",c2:"#000000"},
+  {abbr:"CLE",name:"Cleveland Cavaliers",c1:"#860038",c2:"#FDBB30"},
+  {abbr:"DAL",name:"Dallas Mavericks",c1:"#00538C",c2:"#002B5E"},
+  {abbr:"DEN",name:"Denver Nuggets",c1:"#0E2240",c2:"#FEC524"},
+  {abbr:"DET",name:"Detroit Pistons",c1:"#C8102E",c2:"#1D42BA"},
+  {abbr:"GSW",name:"Golden State Warriors",c1:"#1D428A",c2:"#FFC72C"},
+  {abbr:"HOU",name:"Houston Rockets",c1:"#CE1141",c2:"#C4CED4"},
+  {abbr:"IND",name:"Indiana Pacers",c1:"#002D62",c2:"#FDBB30"},
+  {abbr:"LAC",name:"Los Angeles Clippers",c1:"#C8102E",c2:"#1D428A"},
+  {abbr:"LAL",name:"Los Angeles Lakers",c1:"#552583",c2:"#FDBB27"},
+  {abbr:"MEM",name:"Memphis Grizzlies",c1:"#5D76A9",c2:"#12173F"},
+  {abbr:"MIA",name:"Miami Heat",c1:"#98002E",c2:"#F9A01B"},
+  {abbr:"MIL",name:"Milwaukee Bucks",c1:"#00471B",c2:"#EEE1C6"},
+  {abbr:"MIN",name:"Minnesota Timberwolves",c1:"#0C2340",c2:"#236192"},
+  {abbr:"NOP",name:"New Orleans Pelicans",c1:"#0C2340",c2:"#C8102E"},
+  {abbr:"NYK",name:"New York Knicks",c1:"#006BB6",c2:"#F58426"},
+  {abbr:"OKC",name:"Oklahoma City Thunder",c1:"#007AC1",c2:"#EF3B24"},
+  {abbr:"ORL",name:"Orlando Magic",c1:"#0077C0",c2:"#C4CED4"},
+  {abbr:"PHI",name:"Philadelphia 76ers",c1:"#006BB6",c2:"#ED174C"},
+  {abbr:"PHX",name:"Phoenix Suns",c1:"#1D1160",c2:"#E56020"},
+  {abbr:"POR",name:"Portland Trail Blazers",c1:"#E03A3E",c2:"#000000"},
+  {abbr:"SAC",name:"Sacramento Kings",c1:"#5A2D81",c2:"#63727A"},
+  {abbr:"SAS",name:"San Antonio Spurs",c1:"#C4CED4",c2:"#000000"},
+  {abbr:"TOR",name:"Toronto Raptors",c1:"#CE1141",c2:"#000000"},
+  {abbr:"UTA",name:"Utah Jazz",c1:"#002B5C",c2:"#F9A01B"},
+  {abbr:"WAS",name:"Washington Wizards",c1:"#002B5C",c2:"#E31837"}
+];
+let teamCount=2;
+let state=[]; // [{abbr, out:[{name,salary,surplus}], in:[], roster:[...], filter:""}]
+let allPlayersByName={}; // name -> {team, salary, surplus}
+let surplusMap={}; // name -> surplus float
+let rostersCache=null;
+let capRulesCache=null;
+
+function hashStr(s){let h=2166136261>>>0; for(let i=0;i<s.length;i++){h^=s.charCodeAt(i); h=Math.imul(h,16777619)} return h>>>0;}
+function salaryFromName(name){let h=hashStr(name); return 5 + (h%4000)/100; } // 5-45M
+function surplusFromName(name){let h=hashStr(name+"_surp"); let v=((h%6000)/1000)-2; return Math.round(v*10)/10; } // -2..+4
+
+function toast(msg){
+  let t=$('toast'); if(!t) return; t.textContent=msg; t.classList.add('on');
+  try{ if(navigator.vibrate) navigator.vibrate(10);}catch(_){}
+  setTimeout(()=>t.classList.remove('on'),2200);
+}
+function haptic(ms=12){try{ if(navigator.vibrate) navigator.vibrate(ms);}catch(_){}}
+function singleSelectClear(container, sel){
+  if(!container) return;
+  container.querySelectorAll('.chip.on, .pov-pill.on, .player-card.on').forEach(el=>{
+    if(el!==sel) el.classList.remove('on');
+  });
+}
+function ensureState(n){
+  if(state.length!==n){
+    let newState=[];
+    for(let i=0;i<n;i++){
+      let existing=state[i];
+      if(existing){ newState.push(existing); }
+      else{
+        // pick distinct random team avoiding dupes
+        let pool=FIXED_TEAMS.filter(t=>!newState.some(s=>s.abbr===t.abbr));
+        let rnd=pool[Math.floor(Math.random()*pool.length)]||FIXED_TEAMS[i];
+        newState.push({abbr:rnd.abbr, out:[], in:[], roster:[], filter:""});
+      }
+    }
+    state=newState;
+  }
+}
+async function loadData(){
+  // try fetch current_rosters.json teams
+  try{
+    let r=await fetch('assets/current_rosters.json?v=102'); let j=await r.json();
+    rostersCache=j;
+    // activePlayers mapping
+    if(j.teams){
+      // j.teams is dict abbr->[players]
+      FIXED_TEAMS.forEach(t=>{
+        let list=j.teams[t.abbr];
+        if(Array.isArray(list)){
+          // enrich with salary/surplus
+          allPlayersByName[t.abbr]=list;
+        }
+      });
+    }
+  }catch(e){}
+  try{
+    let r=await fetch('assets/career_surplus.json?v=5'); let j=await r.json();
+    let all=(j.buy_low_top||[]).concat(j.sell_high_top||[]);
+    all.forEach(o=>{ surplusMap[o.name]=o.surplus; });
+  }catch(e){}
+  try{
+    let r=await fetch('assets/cap_rules.json?v=4'); let j=await r.json(); capRulesCache=j;
+    let capMeta=$('capMeta'); if(capMeta && j['2025-26']) capMeta.textContent='cap $'+(j['2025-26'].cap/1e6).toFixed(1)+'M • tax $'+(j['2025-26'].tax/1e6).toFixed(1)+'M • apron1 $'+(j['2025-26'].apron1/1e6).toFixed(1)+'M';
+  }catch(e){}
+}
+function getRosterForTeam(abbr){
+  // try activePlayers from rostersCache
+  if(rostersCache && rostersCache.teams && rostersCache.teams[abbr]){
+    let arr=rostersCache.teams[abbr];
+    return arr.map(p=>{
+      let salary=p.salary!=null? p.salary/1e6 : salaryFromName(p.name);
+      let surplus=surplusMap[p.name]!=null? surplusMap[p.name] : surplusFromName(p.name);
+      // ensure global map
+      if(!allPlayersByName[p.name]) allPlayersByName[p.name]={team:abbr,salary,surplus,name:p.name};
+      else if(!allPlayersByName[p.name].surplus) allPlayersByName[p.name].surplus=surplus;
+      return {name:p.name,salary,surplus,team:abbr,minutes:p.minutes||0};
+    }).slice(0,12);
+  }
+  // mock 8 players
+  let mockNames={
+    "ATL":["Trae Young","Jalen Johnson","Dyson Daniels","Onyeka Okongwu","Zaccharie Risacher","Clint Capela","Bogdan Bogdanovic","De'Andre Hunter"],
+    "BOS":["Jayson Tatum","Jaylen Brown","Derrick White","Jrue Holiday","Kristaps Porzingis","Al Horford","Payton Pritchard","Sam Hauser"],
+    "NYK":["Jalen Brunson","Mikal Bridges","OG Anunoby","Karl-Anthony Towns","Josh Hart","Mitchell Robinson","Donte DiVincenzo","Julius Randle"],
+    "SAS":["Victor Wembanyama","Devin Vassell","Stephon Castle","Keldon Johnson","Jeremy Sochan","Chris Paul","Harrison Barnes","Tre Jones"],
+  };
+  let base=mockNames[abbr]||Array.from({length:8},(_,i)=> abbr+"_Player"+(i+1));
+  return base.map(n=>{
+    let sal=salaryFromName(n); let sur=surplusMap[n]!=null?surplusMap[n]:surplusFromName(n);
+    allPlayersByName[n]={team:abbr,salary:sal,surplus:sur,name:n};
+    return {name:n,salary:sal,surplus:sur,team:abbr,minutes:1200+hashStr(n)%1800};
+  });
+}
+function renderTeamColumns(){
+  let grid=$('teamGrid'); if(!grid) return;
+  ensureState(teamCount);
+  grid.className='team-grid cols-'+teamCount;
+  grid.innerHTML='';
+  state.forEach((st,idx)=>{
+    // ensure roster loaded
+    if(!st.roster || st.roster.length===0) st.roster=getRosterForTeam(st.abbr);
+    let col=document.createElement('div'); col.className='team-col card'; col.dataset.teamIdx=idx;
+    // header
+    let tInfo=FIXED_TEAMS.find(t=>t.abbr===st.abbr)||{abbr:st.abbr,name:st.abbr,c1:"#111"};
+    let head=`<div class="team-head">
+      <div style="display:flex;align-items:center;gap:8px">
+        <span style="width:12px;height:12px;border-radius:50%;background:${tInfo.c1};border:1.5px solid #111;display:inline-block"></span>
+        <select class="select-team" data-idx="${idx}">${FIXED_TEAMS.map(t=>`<option value="${t.abbr}" ${t.abbr===st.abbr?'selected':''}>${t.abbr}</option>`).join('')}</select>
+        <span class="mono" style="font-weight:900">${tInfo.name||st.abbr}</span>
+      </div>
+      <span class="pill" id="valid-${idx}">checking…</span>
+    </div>`;
+    // out/in
+    let outHtml=`<div style="padding:9px;display:flex;flex-direction:column;gap:6px">
+      <div style="display:flex;justify-content:space-between;align-items:center"><span class="mono" style="font-weight:800">OUT ${st.out.length} • $${st.out.reduce((a,b)=>a+b.salary,0).toFixed(1)}M</span>
+      <span class="mono-sm">Σ surplus ${st.out.reduce((a,b)=>a+(b.surplus||0),0).toFixed(1)}</span></div>
+      <div class="mini-list" id="out-${idx}">${st.out.map(p=>`<span class="mini-tag out">${esc(p.name)} $${p.salary.toFixed(1)}M <b>${p.surplus>=0?'+':''}${p.surplus.toFixed(1)}</b> <span data-rem="out" data-name="${escAttr(p.name)}" style="cursor:pointer">✕</span></span>`).join('')||'<span class="mono-sm" style="color:#8a857e">tap roster to add OUT</span>'}</div>
+      <div style="display:flex;gap:6px"><input class="select-team" style="flex:1" placeholder="Type player to add OUT — Brunson, Wemby…" list="allPlayersList" id="out-inp-${idx}"><button class="btn" data-add="out" data-idx="${idx}">+ OUT</button></div>
+      <div class="cba">// CBA logic: simplified 125% + 250k — real CBA has aprons<br>IN ≤ OUT*1.25+0.25 • ${tInfo.abbr} payroll ~$${(180+hashStr(st.abbr)%40).toFixed(0)}M (mock over-cap)</div>
+      <div style="display:flex;justify-content:space-between;margin-top:6px"><span class="mono" style="font-weight:800">IN ${st.in.length} • $${st.in.reduce((a,b)=>a+b.salary,0).toFixed(1)}M</span><span class="mono-sm">Σ surplus ${st.in.reduce((a,b)=>a+(b.surplus||0),0).toFixed(1)}</span></div>
+      <div class="mini-list" id="in-${idx}">${st.in.map(p=>`<span class="mini-tag in">${esc(p.name)} $${p.salary.toFixed(1)}M <b>${p.surplus>=0?'+':''}${p.surplus.toFixed(1)}</b> <span data-rem="in" data-name="${escAttr(p.name)}" style="cursor:pointer">✕</span></span>`).join('')||'<span class="mono-sm" style="color:#8a857e">add incoming via other teams OUT or type</span>'}</div>
+      <div style="display:flex;gap:6px"><input class="select-team" style="flex:1" placeholder="Type incoming — Curry, Joker…" list="allPlayersList" id="in-inp-${idx}"><button class="btn" data-add="in" data-idx="${idx}">+ IN</button></div>
+      <div style="margin-top:6px;padding:7px;border:1.6px solid var(--ink);border-radius:10px;background:#fff"><div class="mono" style="font-weight:900">Net Surplus MATH = IN − OUT</div><div style="font-family:var(--mono);font-size:12.5px;font-weight:800" id="surp-${idx}">calc…</div><div id="win-${idx}" style="margin-top:4px"></div></div>
+    </div>`;
+    col.innerHTML=head+outHtml+`<div><div class="mono" style="padding:6px 9px;font-weight:800;border-top:2px solid var(--ink); background:#fff;display:flex;justify-content:space-between"><span>Roster • ${st.roster.length}</span><input id="rost-fil-${idx}" placeholder="filter" style="font-family:var(--mono);font-size:10.5px;padding:3px 6px;border:1.2px solid var(--ink);border-radius:6px;width:90px"></div><div class="roster" id="roster-${idx}">${st.roster.filter(pl=>!st.filter || pl.name.toLowerCase().includes(st.filter.toLowerCase())).map(pl=>{
+      let isOut=st.out.some(o=>o.name===pl.name);
+      let isIn=st.in.some(o=>o.name===pl.name);
+      let cls='player-card'+(isOut?' sel-out':'')+(isIn?' sel-in':'');
+      return `<div class="${cls}" data-team="${idx}" data-name="${escAttr(pl.name)}"><span>${esc(pl.name)} <span style="opacity:.7">$${pl.salary.toFixed(1)}M</span></span><span style="background:var(--paper);border:1.2px solid var(--ink);border-radius:6px;padding:1px 5px;font-size:10px">${pl.surplus>=0?'+':''}${pl.surplus.toFixed(1)} W</span></div>`;
+    }).join('')}</div></div>`;
+    grid.appendChild(col);
+  });
+  // datalist for all players
+  let dl=document.getElementById('allPlayersList');
+  if(!dl){
+    dl=document.createElement('datalist'); dl.id='allPlayersList'; document.body.appendChild(dl);
+  }
+  dl.innerHTML=Object.keys(allPlayersByName).slice(0,650).map(n=>`<option value="${n}"></option>`).join('');
+  wireTeamEvents();
+  updateValidation();
+  updateQuickStats();
+}
+function esc(s){return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function escAttr(s){return esc(s).replace(/"/g,'&quot;');}
+function wireTeamEvents(){
+  // team selects
+  document.querySelectorAll('.select-team').forEach(sel=>{
+    if(sel.dataset.idx!=null){
+      sel.addEventListener('change',e=>{
+        let i=parseInt(e.target.dataset.idx||e.target.getAttribute('data-idx'));
+        let ab=e.target.value;
+        if(state[i] && ab && ab!==state[i].abbr){
+          // prevent duplicate team
+          if(state.some((s,j)=>j!==i && s.abbr===ab)){
+            toast('Team already used — pick different');
+            e.target.value=state[i].abbr;
+            return;
+          }
+          state[i].abbr=ab;
+          state[i].roster=getRosterForTeam(ab);
+          state[i].out=[]; state[i].in=[]; // clear on team switch
+          haptic(8);
+          renderTeamColumns();
+          toast(ab+' set — roster reloaded');
+        }
+      });
+    }
+  });
+  // filter inputs
+  state.forEach((st,i)=>{
+    let f=$('rost-fil-'+i); if(f){ f.value=st.filter||''; f.oninput=e=>{ st.filter=e.target.value; renderTeamColumns(); let nf=$('rost-fil-'+i); if(nf){ nf.focus(); nf.setSelectionRange(nf.value.length,nf.value.length);} }; }
+  });
+  // add buttons
+  document.querySelectorAll('[data-add]').forEach(btn=>{
+    btn.onclick=e=>{
+      let idx=parseInt(btn.dataset.idx); let kind=btn.dataset.add;
+      let inp=$( (kind==='out'?'out-inp-':'in-inp-')+idx );
+      let name=(inp&&inp.value||'').trim();
+      if(!name) return;
+      addPlayerTo(idx,kind,name);
+    };
+  });
+  // roster player cards single-select clears prev highlight
+  document.querySelectorAll('.player-card').forEach(card=>{
+    card.addEventListener('click',e=>{
+      let tIdx=parseInt(card.dataset.team);
+      let name=card.dataset.name;
+      // single-select clears prev highlight on player cards in that team
+      let container=$('roster-'+tIdx);
+      if(container){
+        container.querySelectorAll('.player-card.on').forEach(el=>{ if(el!==card) el.classList.remove('on'); });
+      }
+      card.classList.toggle('on');
+      // toggle OUT if not already OUT, else prompt? We'll add OUT default
+      let st=state[tIdx];
+      let alreadyOut=st.out.some(o=>o.name===name);
+      if(!alreadyOut){
+        addPlayerTo(tIdx,'out',name);
+        toast(name+' → '+st.abbr+' OUT');
+      } else {
+        // remove
+        st.out=st.out.filter(o=>o.name!==name);
+        renderTeamColumns();
+        toast(name+' removed from OUT');
+      }
+      haptic(10);
+    });
+  });
+  // remove tags
+  document.querySelectorAll('[data-rem]').forEach(sp=>{
+    sp.addEventListener('click',e=>{
+      e.stopPropagation();
+      let name=e.target.getAttribute('data-name');
+      let kind=e.target.getAttribute('data-rem'); // out/in
+      // find team
+      let tag=e.target.closest('.team-col'); let idx=tag? parseInt(tag.dataset.teamIdx):0;
+      // fallback search all
+      if(kind==='out'){
+        state.forEach(s=>{ s.out=s.out.filter(o=>o.name!==name); });
+      } else {
+        state.forEach(s=>{ s.in=s.in.filter(o=>o.name!==name); });
+      }
+      renderTeamColumns();
+      toast(name+' removed');
+    });
+  });
+  // out/in inputs enter
+  state.forEach((st,i)=>{
+    let oi=$('out-inp-'+i); if(oi) oi.addEventListener('keydown',e=>{ if(e.key==='Enter'){ addPlayerTo(i,'out',oi.value.trim()); }});
+    let ii=$('in-inp-'+i); if(ii) ii.addEventListener('keydown',e=>{ if(e.key==='Enter'){ addPlayerTo(i,'in',ii.value.trim()); }});
+  });
+}
+function addPlayerTo(teamIdx,kind,name){
+  if(!name) return;
+  let info=allPlayersByName[name];
+  let salary=info? info.salary: salaryFromName(name);
+  let surplus=surplusMap[name]!=null? surplusMap[name] : (info? info.surplus: surplusFromName(name));
+  let player={name,salary,surplus,team:info?info.team:''};
+  let st=state[teamIdx];
+  if(kind==='out'){
+    if(st.out.some(o=>o.name===name)){ toast('Already OUT'); return; }
+    st.out.push(player);
+    // auto-suggest IN for other teams? keep manual
+  } else {
+    if(st.in.some(o=>o.name===name)){ toast('Already IN'); return; }
+    st.in.push(player);
+  }
+  // global registry
+  if(!allPlayersByName[name]) allPlayersByName[name]=player;
+  renderTeamColumns();
+  updateReceiptText();
+  haptic(12);
+  toast(name+' → '+st.abbr+' '+kind.toUpperCase());
+}
+function updateValidation(){
+  let allValid=true;
+  state.forEach((st,i)=>{
+    let outS=st.out.reduce((a,b)=>a+b.salary,0);
+    let inS=st.in.reduce((a,b)=>a+b.salary,0);
+    let outSurp=st.out.reduce((a,b)=>a+(b.surplus||0),0);
+    let inSurp=st.in.reduce((a,b)=>a+(b.surplus||0),0);
+    let net=inSurp-outSurp;
+    let allowed=outS*1.25+0.25;
+    let isOverCap=true; // mock over-cap; simplify to always over-cap check
+    let valid=false;
+    // // CBA logic comment handled in UI; valid check:
+    if(isOverCap){
+      valid = inS <= allowed+0.001 || outS===0; // if no out, need cap space but we treat as invalid unless tiny
+      if(outS===0 && inS>0) valid=false; // must send to receive when over cap
+    } else {
+      let capSpace=10; // mock 10M space
+      valid = (inS-outS) <= capSpace;
+    }
+    let el=$('valid-'+i); if(el){
+      if(st.out.length===0 && st.in.length===0){ el.textContent='empty'; el.className='pill'; }
+      else if(valid){ el.textContent='✅ $'+inS.toFixed(1)+' ≤ $'+allowed.toFixed(1)+'M'; el.className='pill pill-g'; }
+      else { el.textContent='⚠️ $'+inS.toFixed(1)+' > $'+allowed.toFixed(1)+'M'; el.className='pill pill-r'; allValid=false; }
+    }
+    let surpEl=$('surp-'+i);
+    if(surpEl){
+      surpEl.innerHTML=`IN Σ ${inSurp.toFixed(1)} − OUT Σ ${outSurp.toFixed(1)} = <b style="font-size:13.5px">${net>=0?'+':''}${net.toFixed(1)} W</b> <span class="mono-sm">MATH</span><br><span class="mono-sm">OUT $${outS.toFixed(1)}M → IN $${inS.toFixed(1)}M • allowed ≤ $${allowed.toFixed(1)}M</span>`;
+    }
+    let winEl=$('win-'+i);
+    if(winEl){
+      if(net>0.1) winEl.innerHTML=`<span class="pill pill-y">YOU WIN BY +${net.toFixed(1)} WINS</span> <span class="mono-sm">MATH-only, no advice</span>`;
+      else if(net<-0.1) winEl.innerHTML=`<span class="pill pill-r">NET ${net.toFixed(1)} WINS</span> <span class="mono-sm">you give more surplus</span>`;
+      else winEl.innerHTML=`<span class="pill">EVEN • ${net.toFixed(1)} W</span>`;
+    }
+  });
+  let overall=$('overallValid');
+  if(overall){
+    if(state.every(s=>s.out.length===0 && s.in.length===0)){ overall.textContent='build to validate'; overall.className='pill'; }
+    else if(allValid){ overall.textContent='✅ ALL TEAMS VALID (simplified CBA)'; overall.className='pill pill-g'; }
+    else { overall.textContent='⚠️ ONE TEAM FAILS 125% + $0.25M'; overall.className='pill pill-r'; }
+  }
+}
+function updateQuickStats(){
+  let qs=$('quickStats'); if(!qs) return;
+  let totOut=state.reduce((a,s)=>a+s.out.reduce((x,y)=>x+y.salary,0),0);
+  let totIn=state.reduce((a,s)=>a+s.in.reduce((x,y)=>x+y.salary,0),0);
+  let totSurp=state.reduce((a,s)=>a+(s.in.reduce((x,y)=>x+(y.surplus||0),0)-s.out.reduce((x,y)=>x+(y.surplus||0),0)),0);
+  qs.textContent=`Trade totals — OUT $${totOut.toFixed(1)}M • IN $${totIn.toFixed(1)}M • Σ net ${totSurp>=0?'+':''}${totSurp.toFixed(1)} W • ${teamCount} teams`;
+}
+function updateReceiptText(){
+  if(!state.length) return;
+  let lines=[];
+  state.forEach(st=>{
+    lines.push(`${st.abbr}: OUT [${st.out.map(p=>p.name).join(', ')||'—'}] → IN [${st.in.map(p=>p.name).join(', ')||'—'}]  ($${st.out.reduce((a,b)=>a+b.salary,0).toFixed(1)}M → $${st.in.reduce((a,b)=>a+b.salary,0).toFixed(1)}M)`);
+    let net=st.in.reduce((a,b)=>a+(b.surplus||0),0)-st.out.reduce((a,b)=>a+(b.surplus||0),0);
+    lines.push(`  MATH Net Surplus = IN - OUT = ${net>=0?'+':''}${net.toFixed(1)} WINS${net>0?' — YOU WIN BY +'+net.toFixed(1):''}`);
+  });
+  let txt=lines.join('\n');
+  let el=$('tradeText'); if(el) el.textContent=txt||'No trade yet';
+  return txt;
+}
+function buildReceiptCanvas(canvasId='receipt'){
+  let canvas=$(canvasId)||$('receipt');
+  if(!canvas) return;
+  let ctx=canvas.getContext('2d');
+  // void #080A0F + star dust
+  ctx.fillStyle='#080A0F'; ctx.fillRect(0,0,1200,630);
+  ctx.fillStyle='rgba(250,250,248,.32)'; for(let i=0;i<260;i++){ let x=(i*137)%1180+16; let y=(i*211)%520+22; ctx.fillRect(x,y,1.2,1.2); }
+  // top bar
+  ctx.fillStyle='#FAFAF8'; ctx.fillRect(0,0,1200,72);
+  ctx.strokeStyle='#111'; ctx.lineWidth=3; ctx.strokeRect(0,0,1200,72);
+  ctx.fillStyle='#111'; ctx.font='900 28px ui-monospace, monospace'; ctx.fillText('DUMB MODEL — Trade Machine Receipt',32,44);
+  ctx.fillStyle='#52514e'; ctx.font='800 12.5px ui-monospace, monospace'; ctx.fillText('2-4 TEAM • 125% + $250k simplified • MATH surplus • MATH = IN−OUT',460,46);
+  // teams
+  let y=108;
+  state.forEach((st,i)=>{
+    let tInfo=FIXED_TEAMS.find(t=>t.abbr===st.abbr)||{c1:'#fafaf8'};
+    // pill bg
+    ctx.fillStyle=tInfo.c1||'#222'; ctx.globalAlpha=0.92; ctx.fillRect(28,y-22,86,28); ctx.globalAlpha=1;
+    ctx.fillStyle='#fafaf8'; ctx.font='900 15px ui-monospace, monospace'; ctx.fillText(st.abbr,36,y);
+    // out/in
+    ctx.fillStyle='#FAFAF8'; ctx.font='800 13px ui-monospace, monospace';
+    let outNames=st.out.map(p=>p.name).join(', ')||'—';
+    let inNames=st.in.map(p=>p.name).join(', ')||'—';
+    let outS=st.out.reduce((a,b)=>a+b.salary,0); let inS=st.in.reduce((a,b)=>a+b.salary,0);
+    ctx.fillText(`OUT $${outS.toFixed(1)}M: ${outNames}`,132,y);
+    ctx.fillText(`→ IN $${inS.toFixed(1)}M: ${inNames}`,132,y+20);
+    // surplus
+    let outSurp=st.out.reduce((a,b)=>a+(b.surplus||0),0); let inSurp=st.in.reduce((a,b)=>a+(b.surplus||0),0); let net=inSurp-outSurp;
+    let allowed=outS*1.25+0.25; let valid=inS<=allowed+0.001||outS===0&&inS===0?true:inS<=allowed;
+    ctx.fillStyle=valid?'#D6F5E6':'#FFD6D0'; ctx.fillRect(760,y-16,140,22);
+    ctx.fillStyle='#111'; ctx.font='800 11px ui-monospace, monospace'; ctx.fillText(valid?'✅ VALID':'⚠️ FAIL 125%',768,y);
+    ctx.fillStyle='#8AFF6B'; ctx.font='800 12px ui-monospace, monospace'; ctx.fillText(`Net ${net>=0?'+':''}${net.toFixed(1)} W ${net>0?'YOU WIN':''}`,910,y);
+    y+=56;
+    if(y>460){ ctx.fillStyle='#6b6760'; ctx.font='11px ui-monospace'; ctx.fillText('…truncated',28,y); return; }
+  });
+  // CBA comment
+  ctx.fillStyle='#9ab'; ctx.font='11px ui-monospace, monospace';
+  ctx.fillText('// CBA logic: simplified 125% + 250k — real CBA has aprons',28,520);
+  ctx.fillText('MATH = Σ IN surplus − Σ OUT surplus • surplus = 0.6*z(pred_MPG)+0.4*z(pred_GP) − SALARY_LOG z',28,538);
+  // bottom line share
+  ctx.fillStyle='#8A90A0'; ctx.font='11px ui-monospace, monospace';
+  let link=`hoops.dumbmodel.com/trade-machine?trade=`+encodeTrade();
+  ctx.fillText(link+' • Built free • PWA v67 offline • void #080A0F • same-link-same-stars pattern',28,610);
+  // big badge
+  ctx.fillStyle='rgba(235,104,52,.92)'; ctx.fillRect(910,460,250,38);
+  ctx.fillStyle='#FAFAF8'; ctx.font='800 13px monospace'; ctx.fillText('🔁 TRADE RECEIPT',926,484);
+  return canvas;
+}
+function encodeTrade(){
+  // format NYK:Brunson,JHart->Bridges,Wemby|SAS:Wemby->Brunson
+  try{
+    let parts=state.map(st=>{
+      let out=st.out.map(p=>p.name.replace(/,/g,'')).join(',');
+      let ins=st.in.map(p=>p.name.replace(/,/g,'')).join(',');
+      return `${st.abbr}:${encodeURIComponent(out)}->${encodeURIComponent(ins)}`;
+    });
+    return parts.join('|');
+  }catch(e){return '';}
+}
+function decodeTrade(str){
+  if(!str) return null;
+  try{
+    let segs=str.split('|');
+    let newState=[];
+    segs.forEach(seg=>{
+      let m=seg.match(/^([A-Z]{3}):([^->]*)->(.*)$/);
+      if(!m) return;
+      let abbr=m[1]; let outRaw=decodeURIComponent(m[2]); let inRaw=decodeURIComponent(m[3]);
+      let outNames=outRaw? outRaw.split(',').filter(Boolean):[];
+      let inNames=inRaw? inRaw.split(',').filter(Boolean):[];
+      let out=outNames.map(n=>{ let inf=allPlayersByName[n]||{name:n,salary:salaryFromName(n),surplus:surplusMap[n]!=null?surplusMap[n]:surplusFromName(n)}; return inf; });
+      let inn=inNames.map(n=>{ let inf=allPlayersByName[n]||{name:n,salary:salaryFromName(n),surplus:surplusMap[n]!=null?surplusMap[n]:surplusFromName(n)}; return inf; });
+      newState.push({abbr,out,in:inn,roster:getRosterForTeam(abbr),filter:''});
+    });
+    if(newState.length>=2) return newState;
+  }catch(e){}
+  return null;
+}
+function canvasToBlob(canvas, type='image/png'){
+  return new Promise(res=>{
+    if(canvas.toBlob) canvas.toBlob(res,type);
+    else{ let data=canvas.toDataURL(type); let bin=atob(data.split(',')[1]); let arr=new Uint8Array(bin.length); for(let i=0;i<bin.length;i++) arr[i]=bin.charCodeAt(i); res(new Blob([arr],{type:type})); }
+  });
+}
+function buildShareText(){
+  let txt=updateReceiptText()||'Trade —';
+  let link=location.origin+location.pathname+'?trade='+encodeTrade();
+  return {text:txt+'\n\n'+link+'\nBuilt free • void #080A0F • 125%+250k MATH', link, full:link};
+}
+async function doDownload(){
+  let c=$('receipt'); if(!c){ buildReceiptCanvas(); c=$('receipt'); }
+  let url=c.toDataURL('image/png'); let a=document.createElement('a'); a.href=url; a.download='trade-receipt-'+Date.now()+'.png'; a.click();
+  toast('PNG downloaded 1200×630 ✓'); haptic(10);
+}
+async function doCopyImg(canvasId='receipt'){
+  let c=$(canvasId); if(!c) return;
+  let toastEl=$('shareToast')||$('toast');
+  try{
+    let blob=await canvasToBlob(c,'image/png');
+    if(navigator.clipboard && window.ClipboardItem){
+      await navigator.clipboard.write([new ClipboardItem({'image/png':blob})]);
+      toast('Image copied ✓ — paste into iMessage / X'); if($('shareToast')){ $('shareToast').textContent='Image copied ✓'; setTimeout(()=>$('shareToast').textContent='',2600); }
+    } else {
+      toast('ClipboardItem not supported — use Download PNG');
+    }
+  }catch(e){ toast('Copy failed — use Download PNG'); console.warn(e); }
+}
+async function doShareFile(canvasId='receipt'){
+  let c=$(canvasId); if(!c) return;
+  try{
+    let blob=await canvasToBlob(c,'image/png');
+    let file=new File([blob],'trade-receipt-'+Date.now()+'.png',{type:'image/png'});
+    let {text}=buildShareText();
+    let data={files:[file], title:'Trade Receipt', text};
+    if(navigator.canShare && navigator.canShare({files:[file]})){
+      await navigator.share(data);
+      toast('Shared via OS sheet ✓');
+      if($('shareToast')){ $('shareToast').textContent='Shared ✓'; setTimeout(()=>$('shareToast').textContent='',2000);}
+    } else if(navigator.share){
+      await navigator.share({title:'Trade Receipt', text, url:buildShareText().link});
+    } else toast('Web Share not supported');
+  }catch(e){ if(e&&e.name==='AbortError') return; toast('Share canceled'); }
+}
+async function doCopyText(){
+  try{
+    let {text}=buildShareText();
+    if(navigator.clipboard) await navigator.clipboard.writeText(text);
+    toast('MATH text + link copied ✓'); if($('shareToast')){$('shareToast').textContent='Text copied ✓'; setTimeout(()=>$('shareToast').textContent='',2400);}
+  }catch(e){ toast('Copy failed'); }
+}
+async function doCopyLink(){
+  try{
+    let {full}=buildShareText();
+    if(navigator.clipboard) await navigator.clipboard.writeText(full);
+    $('shareMeta')&&( $('shareMeta').textContent=full );
+    toast('Link copied — ?trade=NYK:Brunson->SAS preserves star');
+    if($('sharePack')){ $('sharePack').textContent='pack='+full.split('?trade=')[1]?.slice(0,60); setTimeout(()=>$('sharePack').textContent='',3200); }
+    try{ history.replaceState(null,'','?trade='+encodeTrade()); }catch(_){}
+  }catch(e){ toast('Copy link failed'); }
+}
+function openShare(){
+  let pop=$('sharePop'); if(pop){ pop.classList.add('on'); buildReceiptCanvas('shareCard'); let {link,full}=buildShareText(); let sm=$('shareMeta'); if(sm) sm.textContent=full.slice(0,98); let sp=$('sharePack'); if(sp) sp.textContent='trade='+encodeTrade().slice(0,80); }
+}
+function closeShare(){ let p=$('sharePop'); if(p) p.classList.remove('on'); }
+
+// LCG for featured trade — optional daily
+const A=1103515245,C=12345; const glibc=s=>((Math.imul(A,s)+C)>>>0)&0x7fffffff;
+function seedFromDate(dstr){ return parseInt(dstr.replace(/-/g,''),10)||20260815; }
+function dailyFeatured(){
+  let dstr=new Date().toISOString().slice(0,10);
+  let qs=new URLSearchParams(location.search); let d=qs.get('daily'); if(d) dstr=d;
+  let seed=seedFromDate(dstr);
+  let s=glibc(seed);
+  let t1Idx=s%30; s=glibc(s); let t2Idx=s%30; if(t2Idx===t1Idx) t2Idx=(t2Idx+1)%30;
+  let t1=FIXED_TEAMS[t1Idx].abbr, t2=FIXED_TEAMS[t2Idx].abbr;
+  // pick random player each
+  let n1=getRosterForTeam(t1)[s%8]?.name||t1+'_Player1'; s=glibc(s);
+  let n2=getRosterForTeam(t2)[(s*3)%8]?.name||t2+'_Player1';
+  return {dstr,seed,first:glibc(seedFromDate(dstr)),teams:[t1,t2],players:[n1,n2],str:`${t1}:${n1} → ${t2}:${n2}`};
+}
+async function boot(){
+  await loadData();
+  // check ?trade= in URL
+  let qs=new URLSearchParams(location.search);
+  let tradeParam=qs.get('trade');
+  if(tradeParam){
+    try{
+      // ensure allPlayers prepopulated for decode
+      FIXED_TEAMS.forEach(t=>getRosterForTeam(t.abbr));
+      let decoded=decodeTrade(tradeParam);
+      if(decoded){ state=decoded; teamCount=decoded.length; }
+      else { teamCount=2; ensureState(2); }
+    }catch(e){ teamCount=2; ensureState(2); }
+  } else {
+    teamCount=2; ensureState(2);
+  }
+  renderTeamColumns();
+  buildReceiptCanvas();
+  updateReceiptText();
+  // POV single-select clears prev
+  document.querySelectorAll('.pov-pill').forEach(p=>p.addEventListener('click',()=>{
+    document.querySelectorAll('.pov-pill').forEach(o=>{o.classList.remove('on'); o.setAttribute('aria-selected','false');});
+    p.classList.add('on'); p.setAttribute('aria-selected','true');
+    haptic(6); toast(p.textContent+' POV');
+  }));
+  // team count buttons single-select clears prev
+  function setTeamCount(n){
+    document.querySelectorAll('#b2teams,#b3teams,#b4teams').forEach(b=>b.classList.remove('btn-y'));
+    if(n===2) $('b2teams').classList.add('btn-y'); else $('b2teams').classList.remove('btn-y');
+    if(n===3) $('b3teams').classList.add('btn-y');
+    if(n===4) $('b4teams').classList.add('btn-y');
+    teamCount=n; ensureState(n); renderTeamColumns(); buildReceiptCanvas(); updateReceiptText();
+    let pill=$('teamCountPill'); if(pill) pill.textContent=n+' teams • tabs • single-select clears prev';
+    haptic(10); toast(n+'-team builder');
+  }
+  $('b2teams')?.addEventListener('click',()=>setTeamCount(2));
+  $('b3teams')?.addEventListener('click',()=>setTeamCount(3));
+  $('b4teams')?.addEventListener('click',()=>setTeamCount(4));
+  $('bReset')?.addEventListener('click',()=>{ state.forEach(s=>{s.out=[];s.in=[];}); renderTeamColumns(); buildReceiptCanvas(); updateReceiptText(); toast('Reset — cleared OUT/IN'); haptic(14); try{history.replaceState(null,'',location.pathname);}catch(_){} });
+  // featured
+  let feat=dailyFeatured();
+  let featEl=$('dailyFeatured'); if(featEl) featEl.textContent=`LCG ${feat.dstr.replace(/-/g,'')}→${feat.first} • featured ${feat.str} • idx3820 pattern`;
+  $('bFeatured')?.addEventListener('click',()=>{
+    // build 2-team featured swap
+    ensureState(2);
+    state[0].abbr=feat.teams[0]; state[0].roster=getRosterForTeam(feat.teams[0]); state[0].out=[]; state[0].in=[];
+    state[1].abbr=feat.teams[1]; state[1].roster=getRosterForTeam(feat.teams[1]); state[1].out=[]; state[1].in=[];
+    // add players cross
+    addPlayerTo(0,'out',feat.players[0]); addPlayerTo(1,'out',feat.players[1]);
+    // cross IN to make valid swap
+    addPlayerTo(0,'in',feat.players[1]); addPlayerTo(1,'in',feat.players[0]);
+    renderTeamColumns(); buildReceiptCanvas(); updateReceiptText();
+    toast('Featured loaded — '+feat.str); haptic(16);
+  });
+  // receipt buttons
+  $('btnBuildReceipt')?.addEventListener('click',()=>{ buildReceiptCanvas(); updateReceiptText(); updateValidation(); toast('Receipt built void+star dust'); haptic(10); openShare(); });
+  $('btnDl')?.addEventListener('click',doDownload);
+  $('btnCopyImg')?.addEventListener('click',()=>doCopyImg('receipt'));
+  $('btnShareFile')?.addEventListener('click',()=>doShareFile('receipt'));
+  $('btnCopyText')?.addEventListener('click',doCopyText);
+  $('btnCopyLink')?.addEventListener('click',doCopyLink);
+  $('btnToast')?.addEventListener('click',()=>toast('Haptics ✓ — 10ms vibe + toast'));
+  // sharePop buttons
+  $('sDl')?.addEventListener('click',()=>doDownload());
+  $('sCopyImg')?.addEventListener('click',()=>doCopyImg('shareCard'));
+  $('sShareFile')?.addEventListener('click',()=>doShareFile('shareCard'));
+  $('sCopyText')?.addEventListener('click',doCopyText);
+  $('sCopyLink')?.addEventListener('click',doCopyLink);
+  $('sClose')?.addEventListener('click',closeShare);
+  $('sharePop')?.addEventListener('click',e=>{ if(e.target.id==='sharePop') closeShare(); });
+  document.addEventListener('keydown',e=>{ if(e.key==='Escape') closeShare(); });
+  // LCG example comment
+  let receiptMeta=$('receiptMeta'); if(receiptMeta) receiptMeta.textContent=`LCG ${feat.dstr.replace(/-/g,'')}→${feat.first} idx3820 triple[11205,19448,14209] • void #080A0F • Everyday share parity`;
+}
+(function init(){
+  boot();
+  if('serviceWorker' in navigator){
+    window.addEventListener('load',()=>{ navigator.serviceWorker.register('/sw.js?v=67').catch(()=>{}); });
+  }
+})();
+</script>
+<!-- terminal variant 4 -->
+</body>
+</html>

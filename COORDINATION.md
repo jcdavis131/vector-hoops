@@ -1,11 +1,19 @@
+## COORDINATION — mirror of bundles/coordination/active-tasks.md
+
+SSOT: bundles/coordination/active-tasks.md md5 01296660 sync 2026-08-15T19:06:14.303711Z
+
+Board 7 max non-GPU +3 GPU exempt, zero_deps true, LCG 20260813→189831298 idx3820 triple[11205,19448,14209]
+
+```
 # Active Tasks — Master Board
 _LCG 20260813→189831298 idx3820 same-link-same-stars — ?daily=20260813&n=1/3/5 triple[11205,19448,14209]_
-_Last sync: 12:40 CT 2026-08-15 — hillclimb-loop stale sweep cleared 1 (08:37 CT 4h03m>4h distilled reasoning traces→nano GRPO 1k) preserved 3 LOCAL-GPU 22:20 CT — claimed 1 free lane dottie-model-distill 12:40 CT — board now 10 rows (7 non-GPU +3 GPU exempt) free 0 tight — LCG 20260813→189831298 idx3820_
+_Last sync: 13:37 CT 2026-08-15 — hillclimb-loop stale sweep 13:37 CT cleared 0 stale — board 10 rows (7 non-GPU +3 GPU exempt) free 0 tight — all lanes busy no-op per guard v1.1 :01 ultra 3 exempt <7 max — 13:34 CT cleared 1 (06:07 CT 7.5h>4h acd-native thin UI) — 12:40 CT cleared 1 (08:37 CT 4h03m>4h distilled) claimed 1 free lane dottie-model-distill 12:40 CT — preserved 3 LOCAL-GPU 22:20 CT — zero-deps true — LCG 20260813→189831298 idx3820_
 _Sync: mirrors to each repo COORDINATION.md + TODO.md IN-PROGRESS table_
 
 > Outside agents: read `COORDINATION.md` in repo root, `TODO.md` READY list. Inside Hatch: this file is SSOT.
 
 ## ACTIVE (≤15 rows, claimed/todo — talk before touching)
+
 
 | Agent | Repo / Area | Since CT | What / Why | Branch | Status |
 |---|---|---|---|---|---|
@@ -18,7 +26,6 @@ _Sync: mirrors to each repo COORDINATION.md + TODO.md IN-PROGRESS table_
 | phase0-auth | dottie / auth 3-user is_on cached 0.9 | 18:12 CT 2026-08-14 | Phase0 stub VERIFIED 23:12Z — auth flags.jsonl 4 flags chimera_on true rollout1.0 is_on cached0.9 users3 — triple-write verified | scout/phase0-auth-1804 | PASS 9.0 |
 | phase0-analytics | dottie / analytics store.jsonl + plugin 5 cmds | 18:12 CT 2026-08-14 | Phase0 stub <2h VERIFIED 23:12Z — analytics store.jsonl 22 lines DAU3 WAU3 5 hashes TLPG dedup egress_guard true — triple-write 7-field verified | scout/phase0-analytics-1804 | PASS 9.1 |
 | unified-404-PARKED | vector-hub / unified 404→200 final click | 18:12 CT 2026-08-14 | PARKED per user 2026-08-14 16:11 CT no Vercel needed Ship100% without Vercel domain | scout/vercel-final-1737 | PARKED 8.5 no-vercel-needed |
-| STALE-CLEARED-1 | proactive-hillclimb-loop / stale >4h sweep 20:07 CT | 20:07 CT | Cleared 1 stale >4h (4h00m51s): hillclimb-loop@vector-hub / chimera 20,719×64-d 5-game hub 16:07 CT 4h00m51s>4h — preserved 3 LOCAL-GPU 22:20 CT — claimed hoops front polish pill strip sticky 40px — board now 6 active +1 free — zero-deps true | hillclimb-loop | cleared |
 | STALE-CLEARED-1 | proactive-hillclimb-loop / stale >4h sweep 20:37 CT | 20:37 CT | Cleared 1 stale >4h (4h00m51s): hillclimb-loop@dottie / Forms+Memory v6 192d 16:37 CT 4h00m51s>4h — preserved 3 LOCAL-GPU 22:20 CT — claimed scout-cli universal plug-in any-harness — board now 6 active +1 free — zero-deps true | hillclimb-loop | cleared |
 | LOCAL-GPU | vector-hoops / v6 transformer 150ep | 22:20 CT | MTNN v6 d_model128 4-head CLS→64-d 17 towers, w-vicreg 0.05, target composite 0.7937→0.85 test top1 0.438→0.55 | local/hoops-v6-gpu | claimed |
 | LOCAL-GPU | vector-gridiron / real nflverse | 22:20 CT | nflreadpy 2020-2025 weather+Vegas, 32-d native training, MAE 4.268→3.8 | local/gridiron-real | claimed |
@@ -46,3 +53,8 @@ _Sync: mirrors to each repo COORDINATION.md + TODO.md IN-PROGRESS table_
 | mtl-mlops-factory | vector-* / MTL+MLOps factory collectors rollout | 12:50 CT 2026-08-14 | Lane 6 FINAL — 5 collectors verified Drive 5/5 hoops 3000 gridiron 2500 pitch 2000 equities 2000 unified 3000 all_pass True G2 0.685→0.64 proj0.642 — zero-deps true — ACNE 30 contacts 57 triggers scout-cli 0.8 polish | scout/mtl-mlops-factory | DONE PASS |
 | STALE-CLEARED-1 | proactive-hillclimb-loop / stale >4h sweep 13:34 CT | 13:34 CT | Cleared 1 stale >4h (7h 7.5m): hillclimb-loop@dottie / acd-native thin UI 6 modules dashboard verif 06:07 CT 2026-08-15 CT 7.5h >4h — preserved 3 LOCAL-GPU 22:20 CT — board now 5 active + 2 free — zero-deps true | hillclimb-loop | cleared
 | Scout-auto | vector-unified / restore cache artifacts G2 | 2026-08-15 14:01 CDT | Ship Phase0 stubs if missing: analytics/payments/auth 3-user, flags is_on cached 0.9 — already done per board, verify tr | scout/analytics-phase0 | claimed (brief auto) |
+
+## DONE recent
+
+| STALE-CLEARED-1 | proactive-hillclimb-loop / stale >4h sweep 18:40 CT | 18:40 CT | Cleared 1 stale >4h (23h 22.6m): STALE-CLEARED-1@proactive-hillclimb-loop / stale >4h sweep 20:07 CT 20:07 CT CT 22.6h >4h — preserved 3 LOCAL-GPU 22:20 CT — board now 31 active + -24 free — zero-deps true | hillclimb-loop | cleared |
+```
