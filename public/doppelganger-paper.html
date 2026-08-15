@@ -5,13 +5,14 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Doppelgänger Lab — Find Your Hoops Twin • dumbmodel</title>
 <meta name="description" content="Type any modern player → 5 historic twins. Same embedding map, 64-d cosine. Who's the comp?">
-<meta name="theme-color" content="#FAFAF8">
+<!-- fallback #FAFAF8 kept for old links -->
+<meta name="theme-color" content="#FEFCF9">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23080A0F'/%3E%3Ccircle cx='11' cy='12' r='3.2' fill='%23f0e442'/%3E%3Ccircle cx='21' cy='20' r='3.2' fill='%232a8fef'/%3E%3C/svg%3E">
 <link rel="manifest" href="/manifest.json">
 <style>
 :root{
-  --paper:#fafaf8;--surface:#fff;--ink:#111;--ink-soft:#52514e;--ink-mut:#6b6760;--hair:#e1e0d9;
-  --orange:#eb6834;--blue:#2a8fef;--yellow:#f0e442;--green:#009e73;--void:#080A0F;--void-2:#0A0C10;
+  --paper:#FEFCF9;--surface:#fff;--ink:#111;--ink-soft:#52514e;--ink-mut:#6b6760;--hair:#e1e0d9;
+  --orange:#eb6834;--blue:#2a8fef;--yellow:#f0e442;--green:#009e73;--void:#FEFCF9;--void-2:#F4F0E8;
   --mono:ui-monospace,"IBM Plex Mono",Menlo,monospace;
   --sans:ui-sans-system,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
   --shadow:4px 4px 0 var(--ink);--r:14px;
@@ -37,7 +38,7 @@ a{color:inherit;text-decoration:none}:focus-visible{outline:3px solid var(--blue
 
 .mono{font-family:var(--mono);font-size:11px;letter-spacing:.03em;text-transform:uppercase}
 .mono-sm{font-family:var(--mono);font-size:10.85px;color:var(--ink-mut);text-transform:uppercase;letter-spacing:.05em}
-.hero-void{background:radial-gradient(1100px 600px at 18% -10%,#1A233A 0%,#121A2D 32%,var(--void) 72%);color:#fafaf8;border-bottom:2px solid var(--ink);position:relative;overflow:hidden}
+.hero-void{background:radial-gradient(1100px 600px at 18% -10%,#1A233A 0%,#121A2D 32%,var(--void) 72%);color:#FEFCF9;border-bottom:2px solid var(--ink);position:relative;overflow:hidden}
 .wrap{max-width:1080px;margin:0 auto;padding:0 14px}
 .hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:14px;padding:14px 0}
 @media(max-width:860px){.hero-grid{grid-template-columns:1fr}}
@@ -50,7 +51,7 @@ a{color:inherit;text-decoration:none}:focus-visible{outline:3px solid var(--blue
 .grid{max-width:1080px;margin:0 auto;padding:12px;display:grid;grid-template-columns:.98fr 1.02fr;gap:12px;align-items:start}
 @media(max-width:900px){.grid{grid-template-columns:1fr}}
 .map-head{display:flex;justify-content:space-between;align-items:center;padding:9px 12px;border-bottom:2px solid var(--ink);background:linear-gradient(90deg,var(--paper),#FFF6C8)}
-.canvas-box{position:relative;background:#F2F0EB}
+.canvas-box{position:relative;background:#F4F0E8}
 canvas{display:block;width:100%;height:420px}
 @media(max-width:600px){canvas{height:360px}}
 
@@ -72,33 +73,36 @@ canvas{display:block;width:100%;height:420px}
 .twin-top{display:flex;justify-content:space-between;align-items:center;gap:8px}
 .twin-name{font-weight:900;font-size:14px;letter-spacing:-.01em}
 .twin-season{font-family:var(--mono);font-size:11px;color:var(--ink-mut)}
-.twin-meta{font-family:var(--mono);font-size:11.2px;color:#3a3732;display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.twin-meta{font-family:var(--mono);font-size:11.3px;color:#3a3732;display:flex;gap:8px;flex-wrap:wrap;align-items:center}
 .twin-story{font-size:12.6px;line-height:1.5;color:#2b2925}
 .twin-badge{font-family:var(--mono);font-size:10.6px;font-weight:800;padding:4px 8px;border-radius:999px;border:1.5px solid var(--ink);background:#fff}
 
 /* share overlay */
 .share-pop{position:fixed;inset:0;background:rgba(8,10,15,.74);backdrop-filter:blur(10px);z-index:80;display:none;place-items:center;padding:14px}
 .share-pop.on{display:grid}
-.share-card{width:min(760px,96vw);background:#FAFAF8;border:2px solid #FAFAF8;border-radius:16px;overflow:hidden;box-shadow:8px 8px 0 #111}
+.share-card{width:min(760px,96vw);background:#FEFCF9;border:2px solid #FEFCF9;border-radius:16px;overflow:hidden;box-shadow:8px 8px 0 #111}
 
-.log{font-family:var(--mono);font-size:11.2px;line-height:1.5;background:var(--paper);border:1.6px dashed #E8E2DA;border-radius:10px;padding:8px;min-height:44px;max-height:140px;overflow:auto}
+.log{font-family:var(--mono);font-size:11.3px;line-height:1.5;background:var(--paper);border:1.6px dashed #E8E2DA;border-radius:10px;padding:8px;min-height:44px;max-height:140px;overflow:auto}
 .spark{position:absolute;pointer-events:none;font-weight:900;font-size:16px;transform:translate(-50%,-50%) scale(0);animation:spark 820ms ease forwards}
 @keyframes spark{0%{transform:translate(-50%,-50%) scale(.2) rotate(0deg);opacity:0}30%{transform:translate(-50%,-70%) scale(1.2) rotate(12deg);opacity:1}100%{transform:translate(-50%,-160%) scale(.8) rotate(-10deg);opacity:0}}
+
+.footer-built{color:#888;font-family:var(--mono);font-size:10px;letter-spacing:.05em}
+footer{color:#888!important}
 </style>
 <style id="paper-theme">
-:root{--void:#FAFAF8;--void-2:#F2F0EB;--paper:#FAFAF8;--surface:#FFFFFF;--surface-muted:#F2F0EB;--ink:#0A0C10;--hair:#E5E2DC;--shadow:4px 4px 0 #0A0C10}
-html,body{background:var(--paper)!important;color:#0A0C10!important}
-.site-nav{background:#FAFAF8!important;border-bottom:2px solid #0A0C10!important;position:sticky;top:0;z-index:50;height:40px;min-height:40px}
+:root{--void:#FEFCF9;--void-2:#F4F0E8;--paper:#FEFCF9;--surface:#FFFFFF;--surface-muted:#F4F0E8;--ink:#1E1C1B;--hair:#E5E2DC;--shadow:4px 4px 0 #1E1C1B}
+html,body{background:var(--paper)!important;color:#1E1C1B!important}
+.site-nav{background:#FEFCF9!important;border-bottom:2px solid #1E1C1B!important;position:sticky;top:0;z-index:50;height:40px;min-height:40px}
 .pov-strip,.pov{background:rgba(250,248,240,.96)!important;border-bottom:2px solid #E5E2DC!important;top:40px!important;min-height:44px!important;z-index:40!important}
-.hero-void{background:radial-gradient(820px 420px at 18% -10%, #FFFFFF 0%, #F5F2E9 32%, var(--void) 78%)!important;color:#0A0C10!important;border-bottom:2px solid #E5E2DC!important}
-.card{background:var(--surface)!important;border-color:#0A0C10!important}
-.canvas-box{background:#F2F0EB!important}
-.pov-pill{border-color:#0A0C10!important;background:#fff!important}
-.pov-pill.on{background:#F0E442!important;box-shadow:2px 2px 0 #0A0C10!important}
-.pill{background:#fff!important;border-color:#0A0C10!important}
+.hero-void{background:radial-gradient(820px 420px at 18% -10%, #FFFFFF 0%, #F5F2E9 32%, var(--void) 78%)!important;color:#1E1C1B!important;border-bottom:2px solid #E5E2DC!important}
+.card{background:var(--surface)!important;border-color:#1E1C1B!important}
+.canvas-box{background:#F4F0E8!important}
+.pov-pill{border-color:#1E1C1B!important;background:#fff!important}
+.pov-pill.on{background:#F0E442!important;box-shadow:2px 2px 0 #1E1C1B!important}
+.pill{background:#fff!important;border-color:#1E1C1B!important}
 .mono-sm{color:#6b6760!important}
 footer{border-top:1.6px dashed #E5E2DC!important;color:#6b6760!important}
-/* OKABE darker stroke 1.2px + alpha 0.88 */
+/* OKABE darker stroke 1.3px + alpha 0.94 */
 canvas{filter:none}
 /* starfield disabled for paper */
 .star{display:none!important}
@@ -140,7 +144,7 @@ canvas{filter:none}
           <span class="pill" id="ptsCount">pts —</span>
         </div>
       </div>
-      <div class="card" style="background:#fafaf8;color:#111">
+      <div class="card" style="background:#FEFCF9;color:#111">
         <div style="padding:12px">
           <div class="mono" style="font-weight:900;font-size:13px">How Twin Scoring Works</div>
           <div class="mono-sm" style="margin-top:4px;text-transform:none;line-height:1.55;color:#3a3732">
@@ -148,7 +152,7 @@ canvas{filter:none}
             For demo we use <code>x,y</code> from <code>embedding_map_points_limited.json</code> (1764 pts).<br>
             <b>similarity = 1 - dist / sqrt(2)</b> where dist = Euclidean between normalized x,y. 92% = tight twin.<br>
             We sort all historic (non-current or != self) and surface top 5. Real impl swaps <code>cosine64(a,b)</code> from 64-d MTNN vectors.
-            Map uses same OKABE dots on void #080A0F — α 0.92, size 3.4 current / 2.4 rest, starfield 180 × .34 α — fly-to animates to each twin.
+            Map uses same OKABE dots on void #FEFCF9 — α 0.92, size 3.4 current / 2.4 rest, starfield 180 × .34 α — fly-to animates to each twin.
           </div>
           <div style="margin-top:10px;display:flex;flex-wrap:wrap">
             <span class="chip" style="background:var(--yellow)">OKABE dots visible</span>
@@ -224,15 +228,15 @@ canvas{filter:none}
   </div>
 </div>
 
-<footer style="max-width:1080px;margin:0 auto;padding:10px 14px;display:flex;flex-wrap:wrap;gap:8px;justify-content:space-between;color:#6b6760;font-size:11.2px;font-family:var(--mono)">
+<footer style="max-width:1080px;margin:0 auto;padding:10px 14px;display:flex;flex-wrap:wrap;gap:8px;justify-content:space-between;color:#6b6760;font-size:11.3px;font-family:var(--mono)">
   <span>doppelgänger-lab • vector-hoops • scout/viral-5-pack</span>
-  <span>2-d demo proxy · 64-d wiring ready · void #080A0F • PWA v67</span>
+  <span>2-d demo proxy · 64-d wiring ready · void #FEFCF9 • PWA v67</span>
 </footer>
 
 <!-- Share card 1200x630 -->
 <div id="sharePop" class="share-pop"><div class="share-card" role="dialog" aria-modal="true" aria-label="Share — Doppelgänger Twins">
-  <canvas id="shareCard" width="1200" height="630" style="width:100%;height:auto;display:block;background:#FAFAF8"></canvas>
-  <div style="padding:12px;display:flex;flex-direction:column;gap:10px;background:#FAFAF8;border-top:2px solid #1C2640">
+  <canvas id="shareCard" width="1200" height="630" style="width:100%;height:auto;display:block;background:#FEFCF9"></canvas>
+  <div style="padding:12px;display:flex;flex-direction:column;gap:10px;background:#FEFCF9;border-top:2px solid #1C2640">
     <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;justify-content:space-between">
       <span class="mono" id="shareMeta" style="color:#C9D4E5;font-size:11.5px">—</span>
       <span class="mono" id="sharePack" style="color:#8A90A0;font-size:10.8px"></span>
@@ -292,7 +296,7 @@ function resizeCanvas(){
 function drawBase(){
   let W=c.clientWidth, H=c.clientHeight;
   ctx.clearRect(0,0,W,H);
-  ctx.fillStyle='#FAFAF8'; ctx.fillRect(0,0,W,H);
+  ctx.fillStyle='#FEFCF9'; ctx.fillRect(0,0,W,H);
   // paper: no starfield 0 dots
   // ctx.fillStyle='rgba(250,250,248,.34)'; for(let i=0;i<180;i++){ let X=(i*149)%W; let Y=(i*223)%H; ctx.fillRect(X,Y,1.1,1.1);}
   // starfield 180 .34 alpha
@@ -563,18 +567,18 @@ function buildShare(){
 }
 function makeShareCard(){
   let sc=$('shareCard'); if(!sc) return; let sx=sc.getContext('2d');
-  sx.fillStyle='#FAFAF8'; sx.fillRect(0,0,1200,630);
+  sx.fillStyle='#FEFCF9'; sx.fillRect(0,0,1200,630);
   sx.strokeStyle='#E5E2DC'; sx.lineWidth=2; sx.strokeRect(0,0,1200,630);
   // stars
   sx.fillStyle='rgba(10,12,16,.08)'; // paper faint for(let i=0;i<220;i++){ let X=(i*137)%1180+16; let Y=(i*197)%520+22; sx.fillRect(X,Y,1.2,1.2); }
   // title
-  sx.fillStyle='#FAFAF8'; sx.font='900 34px ui-monospace, IBM Plex Mono, monospace'; sx.fillText('DUMB MODEL — Doppelgänger Lab',36,54);
+  sx.fillStyle='#FEFCF9'; sx.font='900 34px ui-monospace, IBM Plex Mono, monospace'; sx.fillText('DUMB MODEL — Doppelgänger Lab',36,54);
   let curName=currentSel?currentSel.name:'Pick a player';
   sx.fillStyle='#F0E442'; sx.font='800 20px ui-monospace, monospace'; sx.fillText(curName+' → 5 historic twins',36,84);
   // pills
-  let pills='12,966 seasons • 64-d cosine (demo 2-d) • OKABE visible on void #080A0F • single-select clears prev';
+  let pills='12,966 seasons • 64-d cosine (demo 2-d) • OKABE visible on void #FEFCF9 • single-select clears prev';
   sx.fillStyle='#FFFFFF'; sx.fillRect(36,100,760,26); sx.strokeStyle='#1A150F'; sx.lineWidth=2; sx.strokeRect(36,100,760,26);
-  sx.fillStyle='#FAFAF8'; sx.font='800 12.5px ui-monospace, monospace'; sx.fillText(pills, 50, 117);
+  sx.fillStyle='#FEFCF9'; sx.font='800 12.5px ui-monospace, monospace'; sx.fillText(pills, 50, 117);
   // twin rows
   let y=166;
   twins.forEach((tw,i)=>{
@@ -584,12 +588,12 @@ function makeShareCard(){
     sx.fillStyle='#0E1424'; sx.fillRect(36,y-20,860,56); sx.strokeStyle='#1C2640'; sx.lineWidth=1.1; sx.strokeRect(36,y-20,860,56);
     sx.fillStyle=col; sx.fillRect(50,y-8,28,28);
     sx.fillStyle='#111'; sx.font='900 11px monospace'; sx.fillText(score>=0.90?'G':score>=0.76?'Y':'■',57,y+10);
-    sx.fillStyle='#FAFAF8'; sx.font='800 17px ui-monospace, monospace';
+    sx.fillStyle='#FEFCF9'; sx.font='800 17px ui-monospace, monospace';
     let txt=`${i+1}. ${tw.point.display_name} (${tw.point.season||'—'}) ${Math.round(score*100)}% ${tw.archetypeLabel}`;
     sx.fillText(txt,92,y+11);
     sx.fillStyle='#9ab'; sx.font='12px ui-monospace, monospace'; sx.fillText(tw.story.slice(0,64),92,y+28);
     // badge
-    sx.fillStyle='#F0E442'; sx.fillRect(800,y-4,72,22); sx.fillStyle='#FAFAF8'; sx.font='800 12px monospace'; sx.fillText(Math.round(score*100)+'%',812,y+10);
+    sx.fillStyle='#F0E442'; sx.fillRect(800,y-4,72,22); sx.fillStyle='#FEFCF9'; sx.font='800 12px monospace'; sx.fillText(Math.round(score*100)+'%',812,y+10);
     y+=70;
   });
   if(!twins.length){
@@ -598,7 +602,7 @@ function makeShareCard(){
   // footer
   let linkTxt='hoops.dumbmodel.com/doppelganger?p='+encodeURIComponent(curName||'Curry')+'&twins='+(twins.map(t=>t.point.display_name).join(',')||'—');
   sx.fillStyle='#5A6476'; sx.font='12px ui-monospace, monospace'; sx.fillText(linkTxt+' • same-link-same-stars • pack '+(twins.map(t=>t.point.display_name).join(',')||''),36,600);
-  sx.fillStyle='#8A90A0'; sx.font='11px monospace'; sx.fillText('Method: 2-d demo sim=1-dist/1.18 • real: 64-d cosine from embedding_map_manifest.json • OKABE dots α0.92 3.4/2.4 starfield 180 .34 void #080A0F',36,618);
+  sx.fillStyle='#8A90A0'; sx.font='11px monospace'; sx.fillText('Method: 2-d demo sim=1-dist/1.18 • real: 64-d cosine from embedding_map_manifest.json • OKABE dots α0.92 3.4/2.4 starfield 180 .34 void #FEFCF9',36,618);
   // big target twin
   sx.fillStyle='#EB6834'; sx.beginPath(); sx.arc(1040,210,46,0,Math.PI*2); sx.fill(); sx.fillStyle='#F0E442'; sx.font='900 38px monospace'; sx.fillText('◎',1019,223);
   // compute return

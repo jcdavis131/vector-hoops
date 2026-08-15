@@ -5,11 +5,12 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Oracle vs Vegas — Win Totals Wall • dumbmodel</title>
 <meta name="description" content="MTNN projected wins vs Vegas lines 2025-26. Edge >3 flags Over/Under. Kelly 0.25 cap 1%. LCG daily, same-link-same-stars.">
-<meta name="theme-color" content="#FAFAF8">
+<!-- fallback #FAFAF8 kept for old links -->
+<meta name="theme-color" content="#FEFCF9">
 <link rel="manifest" href="/manifest.json">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23080A0F'/%3E%3Ccircle cx='16' cy='16' r='5' fill='%23F0E442' stroke='%23FAFAF8' stroke-width='1.6'/%3E%3C/svg%3E">
 <style>
-:root{--void:#080A0F;--void-2:#0A0C10;--paper:#FAFAF8;--surface:#FFF;--ink:#111;--ink-soft:#52514E;--ink-mut:#6B6760;--hair:#E1E0D9;--orange:#EB6834;--blue:#2A78D6;--yellow:#F0E442;--green:#009E73;--red:#E53E3E;--mono:ui-monospace,"IBM Plex Mono",Menlo,monospace;--sans:ui-sans-system,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;--shadow:4px 4px 0 var(--ink);--r:14px}
+:root{--void:#FEFCF9;--void-2:#F4F0E8;--paper:#FEFCF9;--surface:#FFF;--ink:#111;--ink-soft:#52514E;--ink-mut:#6B6760;--hair:#E1E0D9;--orange:#EB6834;--blue:#2A78D6;--yellow:#F0E442;--green:#009E73;--red:#E53E3E;--mono:ui-monospace,"IBM Plex Mono",Menlo,monospace;--sans:ui-sans-system,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;--shadow:4px 4px 0 var(--ink);--r:14px}
 *{box-sizing:border-box}html,body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased}
 a{color:inherit;text-decoration:none}
 :focus-visible{outline:3px solid var(--blue);outline-offset:2px}
@@ -27,7 +28,7 @@ a{color:inherit;text-decoration:none}
 .pov-pill.on{background:var(--yellow);transform:rotate(-.6deg)}
 .mono{font-family:var(--mono);font-size:11px;letter-spacing:.03em;text-transform:uppercase}
 .mono-sm{font-family:var(--mono);font-size:10.8px;color:var(--ink-mut);text-transform:uppercase;letter-spacing:.05em}
-.hero-void{background:radial-gradient(1100px 600px at 18% -10%,#1A233A 0%,#121A2D 32%,var(--void) 72%);color:#FAFAF8;border-bottom:2px solid var(--ink);position:relative;overflow:hidden}
+.hero-void{background:radial-gradient(1100px 600px at 18% -10%,#1A233A 0%,#121A2D 32%,var(--void) 72%);color:#FEFCF9;border-bottom:2px solid var(--ink);position:relative;overflow:hidden}
 .wrap{max-width:1160px;margin:0 auto;padding:0 14px}
 .hero-grid{display:grid;grid-template-columns:1.25fr .85fr;gap:14px;padding:14px 0}
 @media(max-width:900px){.hero-grid{grid-template-columns:1fr}}
@@ -53,36 +54,39 @@ a{color:inherit;text-decoration:none}
 .tag-o{font-size:10px;padding:3px 7px;border-radius:999px;border:1.6px solid var(--ink);font-weight:800}
 .tag-o.over{background:#C5F0C8} .tag-o.under{background:#FFD7D0}
 .kv{display:flex;gap:8px;flex-wrap:wrap}
-.canvas-box{position:relative;background:#F2F0EB}
+.canvas-box{position:relative;background:#F4F0E8}
 canvas{display:block;width:100%}
 #c{height:340px}
 @media(max-width:600px){#c{height:300px}}
-.log{font-family:var(--mono);font-size:11.2px;line-height:1.5;background:var(--paper);border:1.6px dashed #E8E2DA;border-radius:10px;padding:8px;min-height:54px}
+.log{font-family:var(--mono);font-size:11.3px;line-height:1.5;background:var(--paper);border:1.6px dashed #E8E2DA;border-radius:10px;padding:8px;min-height:54px}
 .meter{height:8px;border-radius:999px;background:#E8E2DA;overflow:hidden;border:1.4px solid var(--ink)}
 .meter i{display:block;height:100%;background:linear-gradient(90deg,var(--green),var(--yellow),var(--orange));width:0%}
 .share-pop{position:fixed;inset:0;background:rgba(8,10,15,.74);backdrop-filter:blur(10px);z-index:80;display:none;place-items:center;padding:14px}
 .share-pop.on{display:grid}
-.share-card{width:min(760px,96vw);background:#FAFAF8;border:2px solid #FAFAF8;border-radius:16px;overflow:hidden;box-shadow:8px 8px 0 #111}
+.share-card{width:min(760px,96vw);background:#FEFCF9;border:2px solid #FEFCF9;border-radius:16px;overflow:hidden;box-shadow:8px 8px 0 #111}
 @keyframes magicPop{0%{transform:scale(.86) rotate(-1deg)}38%{transform:scale(1.08) rotate(.8deg)}100%{transform:scale(1) rotate(0)}}
 .share-card.magic{animation:magicPop 620ms cubic-bezier(.22,1,.36,1) both}
 #shareCard{image-rendering:crisp-edges}
 .sparkle{position:absolute;pointer-events:none;font-weight:900;font-size:18px;animation:spark 820ms ease forwards}
 @keyframes spark{0%{transform:translate(-50%,-50%) scale(.2);opacity:0}30%{transform:translate(-50%,-70%) scale(1.2);opacity:1}100%{transform:translate(-50%,-160%) scale(.8);opacity:0}}
+
+.footer-built{color:#888;font-family:var(--mono);font-size:10px;letter-spacing:.05em}
+footer{color:#888!important}
 </style>
 <style id="paper-theme">
-:root{--void:#FAFAF8;--void-2:#F2F0EB;--paper:#FAFAF8;--surface:#FFFFFF;--surface-muted:#F2F0EB;--ink:#0A0C10;--hair:#E5E2DC;--shadow:4px 4px 0 #0A0C10}
-html,body{background:var(--paper)!important;color:#0A0C10!important}
-.site-nav{background:#FAFAF8!important;border-bottom:2px solid #0A0C10!important;position:sticky;top:0;z-index:50;height:40px;min-height:40px}
+:root{--void:#FEFCF9;--void-2:#F4F0E8;--paper:#FEFCF9;--surface:#FFFFFF;--surface-muted:#F4F0E8;--ink:#1E1C1B;--hair:#E5E2DC;--shadow:4px 4px 0 #1E1C1B}
+html,body{background:var(--paper)!important;color:#1E1C1B!important}
+.site-nav{background:#FEFCF9!important;border-bottom:2px solid #1E1C1B!important;position:sticky;top:0;z-index:50;height:40px;min-height:40px}
 .pov-strip,.pov{background:rgba(250,248,240,.96)!important;border-bottom:2px solid #E5E2DC!important;top:40px!important;min-height:44px!important;z-index:40!important}
-.hero-void{background:radial-gradient(820px 420px at 18% -10%, #FFFFFF 0%, #F5F2E9 32%, var(--void) 78%)!important;color:#0A0C10!important;border-bottom:2px solid #E5E2DC!important}
-.card{background:var(--surface)!important;border-color:#0A0C10!important}
-.canvas-box{background:#F2F0EB!important}
-.pov-pill{border-color:#0A0C10!important;background:#fff!important}
-.pov-pill.on{background:#F0E442!important;box-shadow:2px 2px 0 #0A0C10!important}
-.pill{background:#fff!important;border-color:#0A0C10!important}
+.hero-void{background:radial-gradient(820px 420px at 18% -10%, #FFFFFF 0%, #F5F2E9 32%, var(--void) 78%)!important;color:#1E1C1B!important;border-bottom:2px solid #E5E2DC!important}
+.card{background:var(--surface)!important;border-color:#1E1C1B!important}
+.canvas-box{background:#F4F0E8!important}
+.pov-pill{border-color:#1E1C1B!important;background:#fff!important}
+.pov-pill.on{background:#F0E442!important;box-shadow:2px 2px 0 #1E1C1B!important}
+.pill{background:#fff!important;border-color:#1E1C1B!important}
 .mono-sm{color:#6b6760!important}
 footer{border-top:1.6px dashed #E5E2DC!important;color:#6b6760!important}
-/* OKABE darker stroke 1.2px + alpha 0.88 */
+/* OKABE darker stroke 1.3px + alpha 0.94 */
 canvas{filter:none}
 /* starfield disabled for paper */
 .star{display:none!important}
@@ -132,7 +136,7 @@ canvas{filter:none}
           <span class="mono-sm" id="kellyExplain" style="align-self:center">Kelly 0.25·f* = edge/odds → cap 1% · odds -110 → 1.91 · max 1% badge</span>
         </div>
       </div>
-      <div class="card" style="background:#FAFAF8;color:#111">
+      <div class="card" style="background:#FEFCF9;color:#111">
         <div style="padding:12px">
           <div class="mono" style="font-weight:900;font-size:13px">How Oracle Works</div>
           <div class="mono-sm" style="margin-top:4px;text-transform:none;line-height:1.52;color:#3A3732">
@@ -203,8 +207,8 @@ canvas{filter:none}
 </div>
 
 <div id="sharePop" class="share-pop"><div class="share-card" role="dialog" aria-modal="true" aria-label="Share — Oracle vs Vegas">
-  <canvas id="shareCard" width="1200" height="630" style="width:100%;height:auto;display:block;background:#FAFAF8"></canvas>
-  <div style="padding:12px;display:flex;flex-direction:column;gap:10px;background:#FAFAF8;border-top:2px solid #1C2640">
+  <canvas id="shareCard" width="1200" height="630" style="width:100%;height:auto;display:block;background:#FEFCF9"></canvas>
+  <div style="padding:12px;display:flex;flex-direction:column;gap:10px;background:#FEFCF9;border-top:2px solid #1C2640">
     <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;justify-content:space-between"><span class="mono" id="shareMeta" style="color:#C9D4E5;font-size:11.5px">Oracle vs Vegas • MTNN 2025-26 • 30 teams • Edge >3 flags Over/Under • Kelly 0.25 cap 1% • hoops.dumbmodel.com/oracle • same-link-same-stars</span><span class="mono" id="sharePack" style="color:#8A90A0;font-size:10.8px"></span></div>
     <div style="display:flex;gap:6px;flex-wrap:wrap">
       <button class="btn" id="dlShare" title="Download 1200×630 PNG">⬇️ PNG</button>
@@ -393,7 +397,7 @@ function drawMap(){
   ctx.setTransform(dpr,0,0,dpr,0,0);
   let Rw=rect.width, Rh=rect.height;
   ctx.clearRect(0,0,Rw,Rh);
-  ctx.fillStyle='#FAFAF8'; ctx.fillRect(0,0,Rw,Rh);
+  ctx.fillStyle='#FEFCF9'; ctx.fillRect(0,0,Rw,Rh);
   // starfield cheap
   ctx.fillStyle='rgba(250,250,248,.28)'; for(let i=0;i<160;i++){ let X=(i*149)%Rw; let Y=(i*223)%Rh; ctx.fillRect(X,Y,1.1,1.1); }
   // axes: Vegas x axis 15..70, Model y 14..68
@@ -421,17 +425,17 @@ function drawMap(){
     ctx.globalAlpha=1;
     if(isCur){
       ctx.strokeStyle='#F0E442'; ctx.lineWidth=1.8; ctx.beginPath(); ctx.arc(x,y,7.8,0,Math.PI*2); ctx.stroke();
-      ctx.fillStyle='#FAFAF8'; ctx.font='800 10px ui-monospace,monospace'; ctx.fillText(tm,x+5,y-7);
+      ctx.fillStyle='#FEFCF9'; ctx.font='800 10px ui-monospace,monospace'; ctx.fillText(tm,x+5,y-7);
     }
   });
 }
 
 function makeShareCard(){
   let sc=$('shareCard'); if(!sc) return; let sx=sc.getContext('2d');
-  sx.fillStyle='#FAFAF8'; sx.fillRect(0,0,1200,630);
+  sx.fillStyle='#FEFCF9'; sx.fillRect(0,0,1200,630);
   sx.strokeStyle='#E5E2DC'; sx.lineWidth=2; sx.strokeRect(0,0,1200,630);
   sx.fillStyle='rgba(250,250,248,.30)'; for(let i=0;i<260;i++){ let X=(i*137)%1180+16; let Y=(i*197)%560+18; sx.fillRect(X,Y,1.2,1.2); }
-  sx.fillStyle='#FAFAF8'; sx.font='900 34px ui-monospace,IBM Plex Mono,monospace'; sx.fillText('DUMB MODEL — Oracle vs Vegas',34,52);
+  sx.fillStyle='#FEFCF9'; sx.font='900 34px ui-monospace,IBM Plex Mono,monospace'; sx.fillText('DUMB MODEL — Oracle vs Vegas',34,52);
   sx.fillStyle='#F0E442'; sx.font='800 18px ui-monospace,monospace'; sx.fillText('Win Totals Wall 2025-26 • MTNN vs Market • Edge>3 OVER/UNDER • Kelly 0.25 cap 1% • MAE 3.8',34,84);
   // daily meta
   let daily=dailyStr;
@@ -448,16 +452,16 @@ function makeShareCard(){
   entries.forEach(ent=>{
     let isSel=selected===ent.tm;
     if(isSel){ sx.fillStyle='rgba(240,228,66,.12)'; sx.fillRect(34,y-16,1132,26); }
-    sx.fillStyle= isSel?'#F0E442':'#FAFAF8';
+    sx.fillStyle= isSel?'#F0E442':'#FEFCF9';
     sx.font='800 13px ui-monospace,monospace';
     sx.fillText(ent.tm+' '+(TEAM_META[ent.tm]?.city||'' ).slice(0,10),38,y);
-    sx.fillStyle='#FAFAF8'; sx.fillText(ent.m.toFixed(1)+' ±3.8',220,y);
+    sx.fillStyle='#FEFCF9'; sx.fillText(ent.m.toFixed(1)+' ±3.8',220,y);
     sx.fillStyle='#9CA7C8'; sx.fillText(ent.v.toFixed(1),364,y);
     sx.fillStyle= ent.e>0?'#1ECC8A':'#FF7A67'; sx.fillText((ent.e>0?'+':'')+ent.e.toFixed(1),478,y);
     sx.fillStyle= ent.ou.cls==='over'?'#C5F0C8':ent.ou.cls==='under'?'#FFD7D0':'#6B6760';
     sx.fillRect(560, y-10, 58,18);
     sx.fillStyle= ent.ou.cls==='none'?'#6B6760':'#111'; sx.font='800 11px monospace'; sx.fillText(ent.ou.label,564,y+2);
-    sx.fillStyle='#FAFAF8'; sx.font='800 11px monospace'; sx.fillText(ent.k.capped>=0.0099? 'MAX 1% '+ (ent.k.capped*100).toFixed(2)+'%' : (ent.k.capped*100).toFixed(2)+'% '+ent.k.badge,684,y+2);
+    sx.fillStyle='#FEFCF9'; sx.font='800 11px monospace'; sx.fillText(ent.k.capped>=0.0099? 'MAX 1% '+ (ent.k.capped*100).toFixed(2)+'%' : (ent.k.capped*100).toFixed(2)+'% '+ent.k.badge,684,y+2);
     sx.fillStyle='#7A869E'; sx.fillText(TEAM_META[ent.tm]?.conf||'',844,y);
     sx.fillStyle='#2A8FEF'; // dot OKABE visible small
     sx.beginPath(); sx.arc(930,y-4, isSel?3.4:2.4,0,Math.PI*2); sx.fill();
@@ -466,7 +470,7 @@ function makeShareCard(){
   });
   // bottom link + Kelly expl
   sx.fillStyle='#5A6476'; sx.font='11px ui-monospace,monospace'; sx.fillText('hoops.dumbmodel.com/oracle?daily='+daily+' • same-link-same-stars • pack '+Object.keys(VEGAS_LINES).length+' teams • Kelly 0.25·f* = edge/odds → cap 1% • odds -110 → 1.91 • model '+Object.values(models).reduce((a,b)=>a+b,0)/Object.values(models).length.toFixed(1)+' avg vs vegas '+Object.values(VEGAS_LINES).reduce((a,b)=>a+b,0)/30,34,574);
-  sx.fillStyle='#8A90A0'; sx.font='10.5px monospace'; sx.fillText('MAE 3.8 80/10/10 CV • current_rosters 2025-26 built '+(rostersCtx?.built||'2026-07-30')+' • cap_rules 2025-26 smoothing mandatory $76B TV • void #080A0F --void-2 #0A0C10 • OKABE dots α0.92 size 3.4/2.4',34,592);
+  sx.fillStyle='#8A90A0'; sx.font='10.5px monospace'; sx.fillText('MAE 3.8 80/10/10 CV • current_rosters 2025-26 built '+(rostersCtx?.built||'2026-07-30')+' • cap_rules 2025-26 smoothing mandatory $76B TV • void #FEFCF9 --void-2 #F4F0E8 • OKABE dots α0.92 size 3.4/2.4',34,592);
   // target
   sx.fillStyle='#EB6834'; sx.beginPath(); sx.arc(1110,166,28,0,Math.PI*2); sx.fill(); sx.fillStyle='#F0E442'; sx.font='900 24px monospace'; sx.fillText('◎',1094,174);
   sx._shareEntries=entries;
@@ -566,7 +570,7 @@ function bootWall(dOverride){
   // meta
   let dm=$('dailyMeta'); if(dm) dm.textContent='LCG '+dailyStr.replace(/-/g,'')+'→'+firstL+' idx edge-demo 7/30 • ?daily='+dailyStr+' • same-link-same-stars';
   let sp=$('seedPill'); if(sp) sp.textContent='seed '+seed+' glibc L(s)=(s*1103515245+12345)&0x7fffffff';
-  let tf=$('todayFoot'); if(tf) tf.textContent=dailyStr+' • same for everyone today • void #080A0F';
+  let tf=$('todayFoot'); if(tf) tf.textContent=dailyStr+' • same for everyone today • paper #FEFCF9';
   renderWall(filterCurrent);
   drawMap();
   makeShareCard();

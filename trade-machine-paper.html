@@ -5,11 +5,12 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Trade Machine — 2-4 Team Builder • dumbmodel</title>
 <meta name="description" content="2-4 team trade builder. 125% + $250k CBA check, net surplus MATH = IN - OUT. Share receipt PNG 1200×630.">
-<meta name="theme-color" content="#FAFAF8">
+<!-- fallback #FAFAF8 kept for old links -->
+<meta name="theme-color" content="#FEFCF9">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23080A0F'/%3E%3Cpath d='M6 16h20M10 10l6 6-6 6M22 10l-6 6 6 6' stroke='%23fafaf8' stroke-width='1.6' stroke-linecap='round'/%3E%3C/svg%3E">
 <link rel="manifest" href="/manifest.json">
 <style>
-:root{--paper:#fafaf8;--surface:#fff;--ink:#111;--ink-soft:#52514e;--ink-mut:#6b6760;--hair:#e1e0d9;--orange:#eb6834;--blue:#2a78d6;--yellow:#f0e442;--green:#009e73;--red:#d8452a;--void:#080A0F;--void-2:#0A0C10;--mono:ui-monospace,"IBM Plex Mono",Menlo,monospace;--sans:ui-sans-system,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;--shadow:4px 4px 0 var(--ink);--r:14px}
+:root{--paper:#FEFCF9;--surface:#fff;--ink:#111;--ink-soft:#52514e;--ink-mut:#6b6760;--hair:#e1e0d9;--orange:#eb6834;--blue:#2a78d6;--yellow:#f0e442;--green:#009e73;--red:#d8452a;--void:#FEFCF9;--void-2:#F4F0E8;--mono:ui-monospace,"IBM Plex Mono",Menlo,monospace;--sans:ui-sans-system,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;--shadow:4px 4px 0 var(--ink);--r:14px}
 *{box-sizing:border-box}html,body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased}
 a{color:inherit;text-decoration:none}
 :focus-visible{outline:3px solid var(--blue);outline-offset:2px}
@@ -20,7 +21,7 @@ a{color:inherit;text-decoration:none}
 .site-nav__links{display:flex;gap:4px;align-items:center}
 .site-nav__link{font-family:var(--mono);font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.04em;padding:6px 9px;border-radius:8px;border:2px solid transparent}
 .site-nav__link:hover{background:var(--paper);border-color:var(--ink)}
-.site-nav__link.on{background:var(--void);color:#fafaf8;border-color:var(--ink)}
+.site-nav__link.on{background:var(--void);color:#FEFCF9;border-color:var(--ink)}
 .site-nav__cta{font-family:var(--mono);font-size:11px;font-weight:800;text-transform:uppercase;background:var(--ink);color:var(--paper);border:2px solid var(--ink);border-radius:8px;padding:5px 10px;min-height:28px;display:inline-flex;align-items:center;box-shadow:2px 2px 0 var(--ink)}
 /* POV 44px sticky top40 z40 bottom border 2px */
 .pov-strip{position:sticky;top:40px;z-index:40;min-height:44px;height:44px;display:flex;align-items:center;gap:8px;padding:0 12px;overflow-x:auto;overscroll-behavior-x:contain;background:rgba(250,250,248,.94);backdrop-filter:blur(10px);border-bottom:2px solid var(--ink)}
@@ -28,7 +29,7 @@ a{color:inherit;text-decoration:none}
 .pov-pill.on{background:var(--yellow);transform:rotate(-.6deg)}
 .mono{font-family:var(--mono);font-size:11px;letter-spacing:.04em;text-transform:uppercase}
 .mono-sm{font-family:var(--mono);font-size:10.8px;color:var(--ink-mut);text-transform:uppercase;letter-spacing:.05em}
-.hero-void{background:radial-gradient(1100px 600px at 18% -10%,#1A233A 0%,#121A2D 32%,var(--void) 72%);color:#fafaf8;border-bottom:2px solid var(--ink);position:relative;overflow:hidden}
+.hero-void{background:radial-gradient(1100px 600px at 18% -10%,#1A233A 0%,#121A2D 32%,var(--void) 72%);color:#FEFCF9;border-bottom:2px solid var(--ink);position:relative;overflow:hidden}
 .wrap{max-width:1160px;margin:0 auto;padding:0 14px}
 .hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:14px;padding:14px 0}
 @media(max-width:900px){.hero-grid{grid-template-columns:1fr}}
@@ -68,24 +69,27 @@ a{color:inherit;text-decoration:none}
 .cba{font-family:var(--mono);font-size:10.2px;color:#6b6760;line-height:1.4;background:#fcfaf6;border:1.4px solid var(--hair);border-radius:8px;padding:7px;margin-top:6px}
 .share-pop{position:fixed;inset:0;background:rgba(8,10,15,.72);backdrop-filter:blur(10px);z-index:80;display:none;place-items:center;padding:14px}
 .share-pop.on{display:grid}
-.share-card{width:min(760px,96vw);background:#FAFAF8;border:2px solid #FAFAF8;border-radius:16px;overflow:hidden;box-shadow:8px 8px 0 #111}
-#toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%) translateY(20px);background:#111;color:#fafaf8;border:2px solid #fafaf8;border-radius:999px;padding:8px 14px;font-family:var(--mono);font-size:11.5px;font-weight:800;opacity:0;pointer-events:none;transition:.22s;z-index:90}
+.share-card{width:min(760px,96vw);background:#FEFCF9;border:2px solid #FEFCF9;border-radius:16px;overflow:hidden;box-shadow:8px 8px 0 #111}
+#toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%) translateY(20px);background:#111;color:#FEFCF9;border:2px solid #FEFCF9;border-radius:999px;padding:8px 14px;font-family:var(--mono);font-size:11.5px;font-weight:800;opacity:0;pointer-events:none;transition:.22s;z-index:90}
 #toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
+
+.footer-built{color:#888;font-family:var(--mono);font-size:10px;letter-spacing:.05em}
+footer{color:#888!important}
 </style>
 <style id="paper-theme">
-:root{--void:#FAFAF8;--void-2:#F2F0EB;--paper:#FAFAF8;--surface:#FFFFFF;--surface-muted:#F2F0EB;--ink:#0A0C10;--hair:#E5E2DC;--shadow:4px 4px 0 #0A0C10}
-html,body{background:var(--paper)!important;color:#0A0C10!important}
-.site-nav{background:#FAFAF8!important;border-bottom:2px solid #0A0C10!important;position:sticky;top:0;z-index:50;height:40px;min-height:40px}
+:root{--void:#FEFCF9;--void-2:#F4F0E8;--paper:#FEFCF9;--surface:#FFFFFF;--surface-muted:#F4F0E8;--ink:#1E1C1B;--hair:#E5E2DC;--shadow:4px 4px 0 #1E1C1B}
+html,body{background:var(--paper)!important;color:#1E1C1B!important}
+.site-nav{background:#FEFCF9!important;border-bottom:2px solid #1E1C1B!important;position:sticky;top:0;z-index:50;height:40px;min-height:40px}
 .pov-strip,.pov{background:rgba(250,248,240,.96)!important;border-bottom:2px solid #E5E2DC!important;top:40px!important;min-height:44px!important;z-index:40!important}
-.hero-void{background:radial-gradient(820px 420px at 18% -10%, #FFFFFF 0%, #F5F2E9 32%, var(--void) 78%)!important;color:#0A0C10!important;border-bottom:2px solid #E5E2DC!important}
-.card{background:var(--surface)!important;border-color:#0A0C10!important}
-.canvas-box{background:#F2F0EB!important}
-.pov-pill{border-color:#0A0C10!important;background:#fff!important}
-.pov-pill.on{background:#F0E442!important;box-shadow:2px 2px 0 #0A0C10!important}
-.pill{background:#fff!important;border-color:#0A0C10!important}
+.hero-void{background:radial-gradient(820px 420px at 18% -10%, #FFFFFF 0%, #F5F2E9 32%, var(--void) 78%)!important;color:#1E1C1B!important;border-bottom:2px solid #E5E2DC!important}
+.card{background:var(--surface)!important;border-color:#1E1C1B!important}
+.canvas-box{background:#F4F0E8!important}
+.pov-pill{border-color:#1E1C1B!important;background:#fff!important}
+.pov-pill.on{background:#F0E442!important;box-shadow:2px 2px 0 #1E1C1B!important}
+.pill{background:#fff!important;border-color:#1E1C1B!important}
 .mono-sm{color:#6b6760!important}
 footer{border-top:1.6px dashed #E5E2DC!important;color:#6b6760!important}
-/* OKABE darker stroke 1.2px + alpha 0.88 */
+/* OKABE darker stroke 1.3px + alpha 0.94 */
 canvas{filter:none}
 /* starfield disabled for paper */
 .star{display:none!important}
@@ -132,7 +136,7 @@ canvas{filter:none}
         <button class="btn" id="bFeatured">Swap in featured →</button>
       </div>
     </div>
-    <div class="card" style="background:#fafaf8;color:#111">
+    <div class="card" style="background:#FEFCF9;color:#111">
       <div style="padding:12px">
         <div class="mono" style="font-weight:900;font-size:13px">How this checks</div>
         <div class="cba">// CBA logic: simplified 125% + 250k — real CBA has aprons<br>
@@ -142,7 +146,7 @@ canvas{filter:none}
           // Valid apron math needs Team Payroll XLS — we simplify, comment shows gap.
         </div>
         <div class="mono-sm" style="margin-top:8px;text-transform:none;line-height:1.5;color:#3a3732">Teams from <code>teams.json</code> 30 fixed. Roster = <code>current_rosters.json</code> activePlayers filtered by team (8-12 visible). Salary $5-45M hash if missing. Surplus from <code>career_surplus.json</code>: 0.6*z(pred_MPG)+0.4*z(pred_GP) − SALARY_LOG z (research only). Mock -2..+4 if missing. Single-select clears prev on team pills + player cards. Haptics + toast like everyday.</div>
-        <div style="margin-top:10px;display:flex;gap:6px;flex-wrap:wrap"><span class="chip">void #080A0F</span><span class="chip">40px nav z50</span><span class="chip">44px POV z40</span><span class="chip">mono/sans only</span><span class="chip">system fonts</span></div>
+        <div style="margin-top:10px;display:flex;gap:6px;flex-wrap:wrap"><span class="chip">void #FEFCF9</span><span class="chip">40px nav z50</span><span class="chip">44px POV z40</span><span class="chip">mono/sans only</span><span class="chip">system fonts</span></div>
         <div id="quickStats" class="mono-sm" style="margin-top:8px"></div>
       </div>
     </div>
@@ -169,14 +173,14 @@ canvas{filter:none}
       <button class="btn" id="btnToast" style="margin-left:auto">Check haptics ◎</button>
     </div>
     <div class="mono-sm" id="tradeText" style="text-transform:none;white-space:pre-wrap;background:var(--paper);border:1.6px dashed #E8E2DA;border-radius:10px;padding:8px;min-height:48px">No trade yet — select teams, move players OUT → IN, then Build receipt.</div>
-    <canvas id="receipt" width="1200" height="630" style="width:100%;height:auto;display:block;background:#FAFAF8;border:2px solid var(--ink);border-radius:12px"></canvas>
+    <canvas id="receipt" width="1200" height="630" style="width:100%;height:auto;display:block;background:#FEFCF9;border:2px solid var(--ink);border-radius:12px"></canvas>
     <div class="mono-sm" style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px"><span>Built free · open-source · math only · no advice</span><span id="receiptMeta">LCG idx3820 chain • same-link-same-stars pattern • everyday share parity</span></div>
   </div>
 </div>
 
 <div id="sharePop" class="share-pop"><div class="share-card" role="dialog" aria-modal="true" aria-label="Share — Trade Receipt">
-  <canvas id="shareCard" width="1200" height="630" style="width:100%;height:auto;display:block;background:#FAFAF8"></canvas>
-  <div style="padding:12px;display:flex;flex-direction:column;gap:10px;background:#FAFAF8;border-top:2px solid #1C2640">
+  <canvas id="shareCard" width="1200" height="630" style="width:100%;height:auto;display:block;background:#FEFCF9"></canvas>
+  <div style="padding:12px;display:flex;flex-direction:column;gap:10px;background:#FEFCF9;border-top:2px solid #1C2640">
     <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;justify-content:space-between">
       <span class="mono" id="shareMeta" style="color:#C9D4E5;font-size:11.5px">Trade Receipt • MATH = IN-OUT • void star dust</span>
       <span class="mono" id="sharePack" style="color:#8A90A0;font-size:10.8px"></span>
@@ -194,7 +198,7 @@ canvas{filter:none}
 
 <div id="toast" role="status" aria-live="polite"></div>
 
-<footer style="max-width:1160px;margin:0 auto;padding:10px 14px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;border-top:1.6px dashed #E8E2DA;color:#6b6760" class="mono-sm"><span>Trade Lab • 125% + $250k simplified • aprons need payroll XLS</span><span>Built free • PWA v67 offline • mono/sans only • void #080A0F</span></footer>
+<footer style="max-width:1160px;margin:0 auto;padding:10px 14px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;border-top:1.6px dashed #E8E2DA;color:#6b6760" class="mono-sm"><span>Trade Lab • 125% + $250k simplified • aprons need payroll XLS</span><span>Built free • PWA v67 offline • mono/sans only • void #FEFCF9</span></footer>
 
 <script>
 // zero-deps, system mono/sans only — subtle Built free footer
@@ -357,11 +361,11 @@ function renderTeamColumns(){
       <div style="display:flex;gap:6px"><input class="select-team" style="flex:1" placeholder="Type incoming — Curry, Joker…" list="allPlayersList" id="in-inp-${idx}"><button class="btn" data-add="in" data-idx="${idx}">+ IN</button></div>
       <div style="margin-top:6px;padding:7px;border:1.6px solid var(--ink);border-radius:10px;background:#fff"><div class="mono" style="font-weight:900">Net Surplus MATH = IN − OUT</div><div style="font-family:var(--mono);font-size:12.5px;font-weight:800" id="surp-${idx}">calc…</div><div id="win-${idx}" style="margin-top:4px"></div></div>
     </div>`;
-    col.innerHTML=head+outHtml+`<div><div class="mono" style="padding:6px 9px;font-weight:800;border-top:2px solid var(--ink); background:#fff;display:flex;justify-content:space-between"><span>Roster • ${st.roster.length}</span><input id="rost-fil-${idx}" placeholder="filter" style="font-family:var(--mono);font-size:10.5px;padding:3px 6px;border:1.2px solid var(--ink);border-radius:6px;width:90px"></div><div class="roster" id="roster-${idx}">${st.roster.filter(pl=>!st.filter || pl.name.toLowerCase().includes(st.filter.toLowerCase())).map(pl=>{
+    col.innerHTML=head+outHtml+`<div><div class="mono" style="padding:6px 9px;font-weight:800;border-top:2px solid var(--ink); background:#fff;display:flex;justify-content:space-between"><span>Roster • ${st.roster.length}</span><input id="rost-fil-${idx}" placeholder="filter" style="font-family:var(--mono);font-size:10.5px;padding:3px 6px;border:1.3px solid var(--ink);border-radius:6px;width:90px"></div><div class="roster" id="roster-${idx}">${st.roster.filter(pl=>!st.filter || pl.name.toLowerCase().includes(st.filter.toLowerCase())).map(pl=>{
       let isOut=st.out.some(o=>o.name===pl.name);
       let isIn=st.in.some(o=>o.name===pl.name);
       let cls='player-card'+(isOut?' sel-out':'')+(isIn?' sel-in':'');
-      return `<div class="${cls}" data-team="${idx}" data-name="${escAttr(pl.name)}"><span>${esc(pl.name)} <span style="opacity:.7">$${pl.salary.toFixed(1)}M</span></span><span style="background:var(--paper);border:1.2px solid var(--ink);border-radius:6px;padding:1px 5px;font-size:10px">${pl.surplus>=0?'+':''}${pl.surplus.toFixed(1)} W</span></div>`;
+      return `<div class="${cls}" data-team="${idx}" data-name="${escAttr(pl.name)}"><span>${esc(pl.name)} <span style="opacity:.7">$${pl.salary.toFixed(1)}M</span></span><span style="background:var(--paper);border:1.3px solid var(--ink);border-radius:6px;padding:1px 5px;font-size:10px">${pl.surplus>=0?'+':''}${pl.surplus.toFixed(1)} W</span></div>`;
     }).join('')}</div></div>`;
     grid.appendChild(col);
   });
@@ -552,23 +556,23 @@ function buildReceiptCanvas(canvasId='receipt'){
   let canvas=$(canvasId)||$('receipt');
   if(!canvas) return;
   let ctx=canvas.getContext('2d');
-  // void #080A0F + star dust
-  ctx.fillStyle='#FAFAF8'; ctx.fillRect(0,0,1200,630);
+  // void #FEFCF9 + star dust
+  ctx.fillStyle='#FEFCF9'; ctx.fillRect(0,0,1200,630);
   ctx.fillStyle='rgba(250,250,248,.32)'; for(let i=0;i<260;i++){ let x=(i*137)%1180+16; let y=(i*211)%520+22; ctx.fillRect(x,y,1.2,1.2); }
   // top bar
-  ctx.fillStyle='#FAFAF8'; ctx.fillRect(0,0,1200,72);
+  ctx.fillStyle='#FEFCF9'; ctx.fillRect(0,0,1200,72);
   ctx.strokeStyle='#111'; ctx.lineWidth=3; ctx.strokeRect(0,0,1200,72);
   ctx.fillStyle='#111'; ctx.font='900 28px ui-monospace, monospace'; ctx.fillText('DUMB MODEL — Trade Machine Receipt',32,44);
   ctx.fillStyle='#52514e'; ctx.font='800 12.5px ui-monospace, monospace'; ctx.fillText('2-4 TEAM • 125% + $250k simplified • MATH surplus • MATH = IN−OUT',460,46);
   // teams
   let y=108;
   state.forEach((st,i)=>{
-    let tInfo=FIXED_TEAMS.find(t=>t.abbr===st.abbr)||{c1:'#fafaf8'};
+    let tInfo=FIXED_TEAMS.find(t=>t.abbr===st.abbr)||{c1:'#FEFCF9'};
     // pill bg
     ctx.fillStyle=tInfo.c1||'#222'; ctx.globalAlpha=0.92; ctx.fillRect(28,y-22,86,28); ctx.globalAlpha=1;
-    ctx.fillStyle='#fafaf8'; ctx.font='900 15px ui-monospace, monospace'; ctx.fillText(st.abbr,36,y);
+    ctx.fillStyle='#FEFCF9'; ctx.font='900 15px ui-monospace, monospace'; ctx.fillText(st.abbr,36,y);
     // out/in
-    ctx.fillStyle='#FAFAF8'; ctx.font='800 13px ui-monospace, monospace';
+    ctx.fillStyle='#FEFCF9'; ctx.font='800 13px ui-monospace, monospace';
     let outNames=st.out.map(p=>p.name).join(', ')||'—';
     let inNames=st.in.map(p=>p.name).join(', ')||'—';
     let outS=st.out.reduce((a,b)=>a+b.salary,0); let inS=st.in.reduce((a,b)=>a+b.salary,0);
@@ -590,10 +594,10 @@ function buildReceiptCanvas(canvasId='receipt'){
   // bottom line share
   ctx.fillStyle='#8A90A0'; ctx.font='11px ui-monospace, monospace';
   let link=`hoops.dumbmodel.com/trade-machine?trade=`+encodeTrade();
-  ctx.fillText(link+' • Built free • PWA v67 offline • void #080A0F • same-link-same-stars pattern',28,610);
+  ctx.fillText(link+' • Built free • PWA v67 offline • void #FEFCF9 • same-link-same-stars pattern',28,610);
   // big badge
   ctx.fillStyle='rgba(235,104,52,.92)'; ctx.fillRect(910,460,250,38);
-  ctx.fillStyle='#FAFAF8'; ctx.font='800 13px monospace'; ctx.fillText('🔁 TRADE RECEIPT',926,484);
+  ctx.fillStyle='#FEFCF9'; ctx.font='800 13px monospace'; ctx.fillText('🔁 TRADE RECEIPT',926,484);
   return canvas;
 }
 function encodeTrade(){
@@ -635,7 +639,7 @@ function canvasToBlob(canvas, type='image/png'){
 function buildShareText(){
   let txt=updateReceiptText()||'Trade —';
   let link=location.origin+location.pathname+'?trade='+encodeTrade();
-  return {text:txt+'\n\n'+link+'\nBuilt free • void #080A0F • 125%+250k MATH', link, full:link};
+  return {text:txt+'\n\n'+link+'\nBuilt free • void #FEFCF9 • 125%+250k MATH', link, full:link};
 }
 async function doDownload(){
   let c=$('receipt'); if(!c){ buildReceiptCanvas(); c=$('receipt'); }
@@ -780,7 +784,7 @@ async function boot(){
   $('sharePop')?.addEventListener('click',e=>{ if(e.target.id==='sharePop') closeShare(); });
   document.addEventListener('keydown',e=>{ if(e.key==='Escape') closeShare(); });
   // LCG example comment
-  let receiptMeta=$('receiptMeta'); if(receiptMeta) receiptMeta.textContent=`LCG ${feat.dstr.replace(/-/g,'')}→${feat.first} idx3820 triple[11205,19448,14209] • void #080A0F • Everyday share parity`;
+  let receiptMeta=$('receiptMeta'); if(receiptMeta) receiptMeta.textContent=`LCG ${feat.dstr.replace(/-/g,'')}→${feat.first} idx3820 triple[11205,19448,14209] • void #FEFCF9 • Everyday share parity`;
 }
 (function init(){
   boot();

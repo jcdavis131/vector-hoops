@@ -5,12 +5,13 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Cap Tetris — 60s Fit 3 Under $140.5M • dumbmodel</title>
 <meta name="description" content="60-sec cap puzzle: pick 3 All-Stars, fit under the 2025-26 cap line. Same puzzle daily via glibc LCG — same-link-same-stars. Streak, share grid, PNG.">
-<meta name="theme-color" content="#FAFAF8">
+<!-- fallback #FAFAF8 kept for old links -->
+<meta name="theme-color" content="#FEFCF9">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23080A0F'/%3E%3Ctext x='50%25' y='54%25' dominant-baseline='middle' text-anchor='middle' font-family='monospace' font-weight='900' font-size='14' fill='%23F0E442'%3E$%3C/text%3E%3C/svg%3E">
 <link rel="manifest" href="/manifest.json">
 <style>
-/* masterclass — void #080A0F, 40px nav z50, 44px POV z40, mono/sans, no AD */
-:root{--void:#080A0F;--void-2:#0A0E1A;--void-3:#111726;--paper:#fafaf8;--surface:#fff;--ink:#111;--ink-soft:#46433f;--ink-mut:#6b6760;--hair:#e1e0d9;--yellow:#f0e442;--green:#10b981;--green-2:#065f46;--red:#ef4444;--orange:#eb6834;--blue:#2a78d6;--line:#12131A;--mono:ui-monospace,"IBM Plex Mono",SF Mono,Menlo,monospace;--sans:ui-sans-system,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;--shadow:4px 4px 0 var(--ink);--r:14px}
+/* masterclass — void #FEFCF9, 40px nav z50, 44px POV z40, mono/sans, no AD */
+:root{--void:#FEFCF9;--void-2:#0A0E1A;--void-3:#111726;--paper:#FEFCF9;--surface:#fff;--ink:#111;--ink-soft:#46433f;--ink-mut:#6b6760;--hair:#e1e0d9;--yellow:#f0e442;--green:#10b981;--green-2:#065f46;--red:#ef4444;--orange:#eb6834;--blue:#2a78d6;--line:#12131A;--mono:ui-monospace,"IBM Plex Mono",SF Mono,Menlo,monospace;--sans:ui-sans-system,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;--shadow:4px 4px 0 var(--ink);--r:14px}
 *{box-sizing:border-box}html,body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased}
 a{color:inherit;text-decoration:none}
 :focus-visible{outline:3px solid var(--blue);outline-offset:2px}
@@ -29,7 +30,7 @@ a{color:inherit;text-decoration:none}
 .mono{font-family:var(--mono);font-size:11px;letter-spacing:.03em;text-transform:uppercase}
 .mono-sm{font-family:var(--mono);font-size:10.8px;color:var(--ink-mut);text-transform:uppercase;letter-spacing:.05em}
 /* hero void */
-.hero-void{background:radial-gradient(1100px 600px at 18% -10%,#1A233A 0%,#121A2D 32%,var(--void) 72%);color:#fafaf8;border-bottom:2px solid var(--ink);position:relative;overflow:hidden}
+.hero-void{background:radial-gradient(1100px 600px at 18% -10%,#1A233A 0%,#121A2D 32%,var(--void) 72%);color:#FEFCF9;border-bottom:2px solid var(--ink);position:relative;overflow:hidden}
 .wrap{max-width:1080px;margin:0 auto;padding:0 14px}
 .hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:14px;padding:16px 0}
 @media(max-width:860px){.hero-grid{grid-template-columns:1fr}}
@@ -63,7 +64,7 @@ a{color:inherit;text-decoration:none}
 .star-card.on::after{content:'✓ SELECTED';position:absolute;top:8px;right:8px;font-family:var(--mono);font-size:9.5px;font-weight:900;background:#111;color:#fff;padding:3px 6px;border-radius:999px;border:1.5px solid #fff}
 .star-top{display:flex;justify-content:space-between;align-items:center}
 .star-name{font-family:var(--mono);font-weight:900;font-size:12.8px;text-transform:uppercase;letter-spacing:.03em}
-.star-sal{font-family:var(--mono);font-size:11.2px;font-weight:800;padding:3px 7px;border:1.6px solid var(--ink);border-radius:999px;background:#fff}
+.star-sal{font-family:var(--mono);font-size:11.3px;font-weight:800;padding:3px 7px;border:1.6px solid var(--ink);border-radius:999px;background:#fff}
 .slider-row{display:flex;align-items:center;gap:8px}
 input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:10px;border-radius:999px;background:#e8e2da;border:1.6px solid var(--ink);outline:none}
 input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;border-radius:50%;background:var(--ink);border:2px solid #fff;box-shadow:1px 1px 0 #000;cursor:pointer}
@@ -75,29 +76,32 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;heigh
 #confetti{position:absolute;inset:0;pointer-events:none;overflow:hidden;z-index:2}
 .share-pop{position:fixed;inset:0;background:rgba(8,10,15,.72);backdrop-filter:blur(10px);z-index:80;display:none;place-items:center;padding:14px}
 .share-pop.on{display:grid}
-.share-card{width:min(680px,96vw);background:#FAFAF8;border:2px solid #FAFAF8;border-radius:16px;overflow:hidden;box-shadow:8px 8px 0 #111;color:#fafaf8}
+.share-card{width:min(680px,96vw);background:#FEFCF9;border:2px solid #FEFCF9;border-radius:16px;overflow:hidden;box-shadow:8px 8px 0 #111;color:#FEFCF9}
 @keyframes magicPop{0%{transform:scale(.86) rotate(-1deg)}38%{transform:scale(1.08) rotate(.8deg)}100%{transform:scale(1) rotate(0)}}
 .share-card.magic{animation:magicPop 620ms cubic-bezier(.22,1,.36,1) both}
-.log{font-family:var(--mono);font-size:11px;line-height:1.5;background:#fafaf8;border:1.6px dashed #E8E2DA;border-radius:10px;padding:8px;min-height:52px}
+.log{font-family:var(--mono);font-size:11px;line-height:1.5;background:#FEFCF9;border:1.6px dashed #E8E2DA;border-radius:10px;padding:8px;min-height:52px}
 .dotw{width:12px;height:12px;border-radius:50%;border:1.6px solid var(--ink);display:inline-block;margin:1px 2px;background:#fff}
 .dotw.on{background:var(--yellow)}.dotw.fire{background:var(--orange);box-shadow:0 0 7px var(--orange)}
 footer.foot{max-width:1080px;margin:0 auto;padding:10px 14px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;border-top:1.6px dashed #E8E2DA;color:#6b6760}
 footer.foot .mono-sm{text-transform:none}
+
+.footer-built{color:#888;font-family:var(--mono);font-size:10px;letter-spacing:.05em}
+footer{color:#888!important}
 </style>
 <style id="paper-theme">
-:root{--void:#FAFAF8;--void-2:#F2F0EB;--paper:#FAFAF8;--surface:#FFFFFF;--surface-muted:#F2F0EB;--ink:#0A0C10;--hair:#E5E2DC;--shadow:4px 4px 0 #0A0C10}
-html,body{background:var(--paper)!important;color:#0A0C10!important}
-.site-nav{background:#FAFAF8!important;border-bottom:2px solid #0A0C10!important;position:sticky;top:0;z-index:50;height:40px;min-height:40px}
+:root{--void:#FEFCF9;--void-2:#F4F0E8;--paper:#FEFCF9;--surface:#FFFFFF;--surface-muted:#F4F0E8;--ink:#1E1C1B;--hair:#E5E2DC;--shadow:4px 4px 0 #1E1C1B}
+html,body{background:var(--paper)!important;color:#1E1C1B!important}
+.site-nav{background:#FEFCF9!important;border-bottom:2px solid #1E1C1B!important;position:sticky;top:0;z-index:50;height:40px;min-height:40px}
 .pov-strip,.pov{background:rgba(250,248,240,.96)!important;border-bottom:2px solid #E5E2DC!important;top:40px!important;min-height:44px!important;z-index:40!important}
-.hero-void{background:radial-gradient(820px 420px at 18% -10%, #FFFFFF 0%, #F5F2E9 32%, var(--void) 78%)!important;color:#0A0C10!important;border-bottom:2px solid #E5E2DC!important}
-.card{background:var(--surface)!important;border-color:#0A0C10!important}
-.canvas-box{background:#F2F0EB!important}
-.pov-pill{border-color:#0A0C10!important;background:#fff!important}
-.pov-pill.on{background:#F0E442!important;box-shadow:2px 2px 0 #0A0C10!important}
-.pill{background:#fff!important;border-color:#0A0C10!important}
+.hero-void{background:radial-gradient(820px 420px at 18% -10%, #FFFFFF 0%, #F5F2E9 32%, var(--void) 78%)!important;color:#1E1C1B!important;border-bottom:2px solid #E5E2DC!important}
+.card{background:var(--surface)!important;border-color:#1E1C1B!important}
+.canvas-box{background:#F4F0E8!important}
+.pov-pill{border-color:#1E1C1B!important;background:#fff!important}
+.pov-pill.on{background:#F0E442!important;box-shadow:2px 2px 0 #1E1C1B!important}
+.pill{background:#fff!important;border-color:#1E1C1B!important}
 .mono-sm{color:#6b6760!important}
 footer{border-top:1.6px dashed #E5E2DC!important;color:#6b6760!important}
-/* OKABE darker stroke 1.2px + alpha 0.88 */
+/* OKABE darker stroke 1.3px + alpha 0.94 */
 canvas{filter:none}
 /* starfield disabled for paper */
 .star{display:none!important}
@@ -148,7 +152,7 @@ canvas{filter:none}
         </div>
         <div style="margin-top:8px" class="mono-sm" id="capSourceLine">Cap 2025-26 $140.5M (Source: hardcoded fallback — fetching cap_rules.json…) • Over-cap demo 158M → trim required</div>
       </div>
-      <div class="card" style="background:#fafaf8;color:#111">
+      <div class="card" style="background:#FEFCF9;color:#111">
         <div style="padding:12px">
           <div class="mono" style="font-weight:900;font-size:13px">How Cap Tetris Works</div>
           <div class="mono-sm" style="margin-top:4px;text-transform:none;line-height:1.5;color:#3a3732">You get 8 all-stars (salaries $28–42M plausible; we also allow mock scaling for puzzle tension). <b>Pick exactly 3</b> — single-select highlight clears prev on that card's toggle (click again deselects). Each pick gets a salary slider 85–100% — like a hometown discount. Sum must be ≤ cap. 60-sec timer, green when you're under. Success = confetti max80, sparkle ✨, hero flash.</div>
@@ -164,7 +168,7 @@ canvas{filter:none}
 
 <div class="grid">
   <div class="card" id="poolCard">
-    <div style="padding:10px 12px;border-bottom:2px solid var(--ink);display:flex;justify-content:space-between;align-items:center;background:linear-gradient(90deg,#fafaf8,#FFF6C8)"><span class="mono" style="font-weight:900">8-All-Star Pool — Today's 3 (LCG)</span><span class="mono-sm" id="poolMeta">—</span></div>
+    <div style="padding:10px 12px;border-bottom:2px solid var(--ink);display:flex;justify-content:space-between;align-items:center;background:linear-gradient(90deg,#FEFCF9,#FFF6C8)"><span class="mono" style="font-weight:900">8-All-Star Pool — Today's 3 (LCG)</span><span class="mono-sm" id="poolMeta">—</span></div>
     <div style="padding:12px">
       <div class="star-grid" id="starGrid"></div>
       <div class="log" id="log" style="margin-top:10px"></div>
@@ -181,9 +185,9 @@ canvas{filter:none}
       </div>
     </div>
     <div class="card">
-      <div style="padding:10px 12px;border-bottom:2px solid var(--ink);background:#FAFAF8;color:#fafaf8;display:flex;justify-content:space-between"><span class="mono" style="font-weight:900;color:#F0E442">Share Grid & PNG 1200×630</span><span class="mono-sm" id="pngMeta" style="color:#9ab">void #080A0F</span></div>
+      <div style="padding:10px 12px;border-bottom:2px solid var(--ink);background:#FEFCF9;color:#FEFCF9;display:flex;justify-content:space-between"><span class="mono" style="font-weight:900;color:#F0E442">Share Grid & PNG 1200×630</span><span class="mono-sm" id="pngMeta" style="color:#9ab">void #FEFCF9</span></div>
       <div style="padding:12px">
-        <canvas id="shareCanvas" width="1200" height="630" style="width:100%;border:2px solid var(--ink);border-radius:12px;background:#FAFAF8;display:none"></canvas>
+        <canvas id="shareCanvas" width="1200" height="630" style="width:100%;border:2px solid var(--ink);border-radius:12px;background:#FEFCF9;display:none"></canvas>
         <div id="shareTextLive" class="log" style="min-height:54px"></div>
         <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap">
           <button class="btn btn-y" id="bCopyText">Copy text</button>
@@ -497,15 +501,15 @@ function buildShareCard(){
   if(!canvas) return '';
   let c2=canvas.getContext('2d'); let cM=canvasM?canvasM.getContext('2d'):null;
   function draw(c){
-    c.fillStyle='#FAFAF8'; c.fillRect(0,0,1200,630);
+    c.fillStyle='#FEFCF9'; c.fillRect(0,0,1200,630);
     // subtle grid
     c.fillStyle='rgba(250,250,248,.06)'; for(let i=0;i<180;i++){ let X=(i*149)%1200; let Y=(i*223)%630; c.fillRect(X,Y,1.6,1.6); }
     c.fillStyle='#F0E442'; c.font='900 42px ui-monospace, monospace'; c.fillText('CAP TETRIS 60s', 48, 84);
-    c.fillStyle='#FAFAF8'; c.font='800 20px ui-monospace, monospace'; c.fillText('Fit 3 under $'+CAP_TO_USE.toFixed(1)+'M • void #080A0F • same-link-same-stars', 48, 122);
+    c.fillStyle='#FEFCF9'; c.font='800 20px ui-monospace, monospace'; c.fillText('Fit 3 under $'+CAP_TO_USE.toFixed(1)+'M • void #FEFCF9 • same-link-same-stars', 48, 122);
     c.fillStyle='#C9D4E5'; c.font='14px ui-monospace, monospace'; let meta=currentMeta(); c.fillText('LCG glibc L(s)=(s*1103515245+12345)&0x7fffffff • daily '+ (meta.daily||dateStrFromParam())+' → '+ (meta.firstL||189831298)+' • TLPG vh_capStreak', 48, 152);
     let left=capLeft(); let sec=solveSeconds||42;
     c.fillStyle= left>=0?'#10B981':'#EF4444'; c.font='900 28px monospace'; c.fillText('Sum $'+sumSelected().toFixed(1)+'M • '+(left>=0? '$'+left.toFixed(1)+'M left • FIT' : '$'+Math.abs(left).toFixed(1)+'M OVER')+' • '+sec.toFixed(1)+'s', 48, 210);
-    c.fillStyle='#FAFAF8'; c.font='18px monospace';
+    c.fillStyle='#FEFCF9'; c.font='18px monospace';
     let names=Object.keys(selected).map(id=>{let p=POOL.find(x=>x.id===id); if(!p) return id; let pct=selected[id].salPct||100; return `${p.name} ($${p.sal.toFixed(1)}M→$${(p.sal*pct/100).toFixed(1)}M @${pct.toFixed(0)}%)`; });
     names.forEach((ln,i)=>{ c.fillText('• '+ln, 48, 250+i*26); });
     // grid squares
@@ -590,7 +594,7 @@ function spawnConfetti(teamPrimary){
     for(let i=0;i<count;i++){
       let el=document.createElement('div'); el.setAttribute('data-vh-confetti-particle','');
       let size=5+Math.random()*9; let isDot=i%3===0;
-      el.style.cssText='position:absolute;left:'+cx+'px;top:'+cy+'px;width:'+size+'px;height:'+(isDot?size:size*0.62)+'px;background:'+colors[i%colors.length]+';border:1.2px solid #111;border-radius:'+(isDot?'999px':'3px')+';will-change:transform,opacity;';
+      el.style.cssText='position:absolute;left:'+cx+'px;top:'+cy+'px;width:'+size+'px;height:'+(isDot?size:size*0.62)+'px;background:'+colors[i%colors.length]+';border:1.3px solid #111;border-radius:'+(isDot?'999px':'3px')+';will-change:transform,opacity;';
       container.appendChild(el);
       let angle=(Math.random()-0.5)*Math.PI*0.9 + -Math.PI*0.5;
       let dist=80+Math.random()*Math.max(180,(window.innerWidth||1024)*0.35);
