@@ -1,6 +1,6 @@
-/* hoops sw v7-14 — Lighthouse PWA 100: skipWaiting, clients.claim, navigate network-first offline fallback, CORE immutable SWR, DENY vectors heavy, no fake weights */
-const C = 'hoops-v7-14';
-const SHELL = ['/', '/index.html', '/offline', '/offline.html', '/manifest.json'];
+/* hoops sw v7-15 — Lighthouse PWA 100: skipWaiting, clients.claim, navigate network-first offline fallback, CORE immutable SWR, DENY vectors heavy, no fake weights — PWA v67 must include everyday.html */
+const C = 'hoops-v7-15';
+const SHELL = ['/', '/index.html', '/everyday', '/everyday.html', '/offline', '/offline.html', '/manifest.json'];
 const FALLBACK = ['/offline', '/offline.html', '/'];
 const DENY_RE = /\.(json|f32|bin|wasm|onnx)$|(^|\/)assets\/(vectors|data)\//;
 const API_RE = /\/api\//;

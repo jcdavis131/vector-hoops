@@ -427,96 +427,34 @@ function confettiBurst(){
 function finishTriple(){
   let streakObj=addStreakDay();
   renderStreak();
-  let dstr=qsaDaily? qsaDaily(): new Date().toISOString().slice(0,10);
-  let sc=$('shareLive'); if(sc) sc.textContent='3/3 done • streak '+streakObj.streak+' — same puzzle daily • ?daily='+dstr+'&n=3 chain verified LCG '+LCG_A_TRIPLE_EXAMPLE.daily+'→'+LCG_A_TRIPLE_EXAMPLE.first+' triple['+LCG_A_TRIPLE_EXAMPLE.triple.join(', ')+']';
+  let sc=$('shareLive'); if(sc) sc.textContent='3/3 done • streak '+streakObj.streak+' — same puzzle daily • ?daily='+new Date().toISOString().slice(0,10)+'&n=3 chain verified LCG '+LCG_A_TRIPLE_EXAMPLE.daily+'→'+LCG_A_TRIPLE_EXAMPLE.first+' triple['+LCG_A_TRIPLE_EXAMPLE.triple.join(', ')+']';
   let call=$('streakCall'); if(call) call.style.display='block';
   let fire3=$('fire3'); if(fire3 && streakObj.streak>=2) fire3.textContent='🔥 x'+streakObj.streak+' fire streak — sparkle!';
-  // magic animation sequence: confetti up to 80 via delight.js, sparkle, pulse, shake
+  // magic
   for(let i=0;i<10;i++){ setTimeout(()=>sparkleBurst(2), i*80); }
-  try{
-    if(window.VHDelight && VHDelight.spawnConfetti){
-      // primary orange then yellow double burst for 3/3 magic
-      VHDelight.spawnConfetti('#EB6834');
-      setTimeout(()=>VHDelight.spawnConfetti('#F0E442'), 220);
-      setTimeout(()=>VHDelight.spawnConfetti('#2A8FEF'), 420);
-    } else {
-      confettiBurst();
-    }
-  }catch(e){ confettiBurst(); }
-  try{ if(window.VHDelight) VHDelight.haptic(16); }catch(_){}
-  // flash hero
-  let hero=document.querySelector('.hero-void'); if(hero){ hero.animate([{filter:'brightness(1)'},{filter:'brightness(1.18)'},{filter:'brightness(1)'}],{duration:900,easing:'cubic-bezier(.22,1,.36,1)'}); }
   makeShareCard();
-  // auto-open share after 650ms delight
-  setTimeout(()=>{ openShare(); }, 650);
-  // dispatch win event for delight listeners
-  try{ window.dispatchEvent(new CustomEvent('vh:win',{detail:{streak:streakObj.streak,color:'#F0E442'}})); }catch(_){}
-  try{ localStorage.setItem('vh_last_daily_share', dstr); }catch(_){}
 }
-function qsaDaily(){ let qs=new URLSearchParams(location.search); let d=qs.get('daily'); if(d && /^\d{4}-\d{2}-\d{2}$/.test(d)) return d; if(d && /^\d{8}$/.test(d)) return d.slice(0,4)+'-'+d.slice(4,6)+'-'+d.slice(6,8); return new Date().toISOString().slice(0,10); }
-function canonicalLink(dstr, includePack){
-  let base=location.origin + location.pathname;
-  let ds=dstr||qsaDaily();
-  let pack='';
-  if(includePack){
-    try{
-      let ids=seq.map(i=>{ let past=gameData&&gameData.past&&gameData.past[i]; return (past&& (past.i!=null?past.i:past._id!=null?past._id:i))||i; });
-      // ensure distinct & encode as csv + base36 short
-      pack='&pack='+ids.join(',');
-    }catch(e){}
-  }
-  return base+'?daily='+ds+'&n=3'+pack;
-}
-function wordleTier(score){ if(score>=0.68) return '🟩'; if(score>=0.5) return '🟨'; return '⬛'; }
-function tierColor(score){ if(score>=0.68) return '#1ECC8A'; if(score>=0.5) return '#F8E946'; return '#3A3732'; }
 function makeShareCard(){
   let sc=$('shareCard'); if(!sc) return; let sx=sc.getContext('2d');
-  // background void + subtle star dust
   sx.fillStyle='#080A0F'; sx.fillRect(0,0,1200,630);
-  // stars faint
-  sx.fillStyle='rgba(250,250,248,.34)'; for(let i=0;i<220;i++){ let X=(i*137)%1180+16; let Y=(i*197)%520+22; sx.fillRect(X,Y,1.2,1.2); }
-  // top bar
-  sx.fillStyle='#FAFAF8'; sx.font='900 36px ui-monospace, IBM Plex Mono, monospace'; sx.fillText('DUMB MODEL — Everyday Streak',36,56);
-  sx.fillStyle='#F0E442'; sx.font='800 22px ui-monospace, monospace'; sx.fillText('Wordle for Hoops Heads • 3/3 today',36,88);
-  // streak pill
-  let streakObj=getStreakObj(); let streak=streakObj.streak||1; let dstr=qsaDaily();
-  sx.fillStyle='#EEF0E8'; sx.fillRect(36,108, 460, 28); sx.strokeStyle='#1A150F'; sx.lineWidth=2; sx.strokeRect(36,108,460,28);
-  sx.fillStyle='#080A0F'; sx.font='800 14px ui-monospace, monospace'; sx.fillText('streak '+streak+' • '+dstr+' • LCG '+LCG_A_TRIPLE_EXAMPLE.daily+'→'+LCG_A_TRIPLE_EXAMPLE.first+' same-link-same-stars', 50, 126);
-  // 3 rows Wordle-style
-  let y=176;
+  sx.fillStyle='#FAFAF8'; sx.font='800 34px monospace'; sx.fillText('DUMB MODEL — Everyday Streak',36,58);
+  sx.fillStyle='#F0E442'; sx.font='900 40px monospace';
+  let line='3/3 today • streak '+ (getStreakObj().streak||1) +' • '+new Date().toISOString().slice(0,10);
+  sx.fillText(line,36,108);
+  let y=160;
   for(let s=0;s<3;s++){
-    let past=gameData&&gameData.past&&gameData.past[seq[s]]; let best=guessesPerSlot[s] && guessesPerSlot[s].slice(-1)[0];
-    let score=best?best.score:0;
-    let tier=wordleTier(score);
-    // row bg
-    sx.fillStyle='#0E1424'; sx.fillRect(36,y-22, 900, 56); sx.fillStyle='#1C2640'; sx.strokeStyle='#203060'; sx.lineWidth=1.2; sx.strokeRect(36,y-22,900,56);
-    // emoji-style but canvas draw: green/yellow/black square
-    let boxC=tierColor(score);
-    sx.fillStyle=boxC; sx.fillRect(52,y-10,32,32);
-    sx.fillStyle='#111'; sx.font='900 11px monospace'; sx.fillText(tier==='🟩'?'G':tier==='🟨'?'Y':'■',60,y+10);
-    // text
-    sx.fillStyle='#FAFAF8'; sx.font='800 18px ui-monospace, monospace';
-    let txt=(past?past.n:'Past '+(s+1))+' → '+(best?best.guess:'—')+'  '+Math.round(score*100)+'% '+(score>=0.68?'★ locked':score>=0.5?'≈ close':'○ try');
-    sx.fillText((s+1)+'. '+txt, 104, y+12);
-    // hoops score badge
-    sx.fillStyle='#F8E946'; sx.fillRect(860,y-6,64,22); sx.fillStyle='#080A0F'; sx.font='800 12px monospace'; sx.fillText(Math.round(score*100)+'%', 870, y+8);
-    y+=74;
+    let past=gameData.past[seq[s]]; let best=guessesPerSlot[s].slice(-1)[0];
+    sx.fillStyle='#9AA0A6'; sx.font='16px monospace';
+    let txt=(past?past.n:'?')+' → '+(best?best.guess:'—')+' '+(best?Math.round(best.score*100)+'%':'');
+    let boxes='▇'.repeat(Math.max(1,Math.min(5, Math.round((best?best.score:0.5)*5))));
+    sx.fillText((s+1)+'. '+txt+' '+boxes,36,y); y+=34;
   }
-  // pack link footer
-  let qsDaily=dstr;
-  let link='hoops.dumbmodel.com/everyday?daily='+qsDaily+'&n=3';
-  let packIds=seq.map(i=>{ let p=gameData&&gameData.past&&gameData.past[i]; return p&&p.i!=null?p.i:i; }).join(',');
-  let fullLink=link+'&pack='+packIds;
-  sx.fillStyle='#5A6476'; sx.font='12.5px ui-monospace, monospace'; sx.fillText(fullLink+' • same-link-same-stars • copy-link preserves star points • pack '+packIds, 36, 580);
-  sx.fillStyle='#8A90A0'; sx.font='11px monospace'; sx.fillText('LCG glibc L(s)=(s*1103515245+12345)&0x7fffffff • 14-d MTNN cosine • OKABE dots visible on void #080A0F',36,600);
-  // big orange target
-  sx.fillStyle='#EB6834'; sx.beginPath(); sx.arc(1040, 200, 46, 0, Math.PI*2); sx.fill(); sx.fillStyle='#F0E442'; sx.font='900 40px monospace'; sx.fillText('◎',1018,214);
-  // viral callout
-  sx.fillStyle='rgba(235,104,52,.92)'; sx.fillRect(910, 460, 250, 38); sx.fillStyle='#FAFAF8'; sx.font='800 13px monospace'; sx.fillText('🔥 3/3 STREAK MAGIC', 926, 484);
-  sx._pack=packIds; sx._link=fullLink; sx._tierScores=guessesPerSlot.map(g=>g.slice(-1)[0]?.score||0);
-  return {pack:packIds, link:fullLink, daily:qsDaily};
+  // link
+  sx.fillStyle='#5A6476'; sx.font='13px monospace';
+  let qs=new URLSearchParams(location.search); let daily=qs.get('daily')||new Date().toISOString().slice(0,10);
+  sx.fillText('hoops.dumbmodel.com/everyday?daily='+daily+'&n=3 • same-link-same-stars • LCG glibc • 14-d MTNN cosine',36,600);
+  sx.fillStyle='#EB6834'; sx.font='26px monospace'; sx.fillText('◎', 900, 300);
 }
-
 function openShare(){
   let pop=$('sharePop'); if(pop) pop.classList.add('on');
 }
