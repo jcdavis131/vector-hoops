@@ -1,6 +1,7 @@
 # Active Tasks — Master Board
 _LCG 20260813→189831298 idx3820 same-link-same-stars — ?daily=20260813&n=1/3/5 triple[11205,19448,14209]_
-_Last sync: 2026-08-14 21:07 CT — hillclimb-loop sweep cleared 1 stale 17:07 CT 4h00m51s preserved 3 GPU — claimed 1 free lane vector-hub chimera 5th — board 5 non-GPU active +2 free → 6 active +1 free after claim — zero-deps true hillclimb_backoff conf0.82_
+_Last sync: 2026-08-14 22:07 CT — hillclimb-loop sweep cleared 0 stale preserved 3 GPU — claimed 1 free lane dottie model-distill nano GRPO trace→preference — board 6 non-GPU active +1 free → 7 active +0 free after claim — zero-deps true hillclimb_backoff conf0.82_
+
 _Sync: mirrors to each repo COORDINATION.md + TODO.md IN-PROGRESS table_
 
 > Outside agents: read `COORDINATION.md` in repo root, `TODO.md` READY list. Inside Hatch: this file is SSOT.
@@ -16,6 +17,8 @@ _Sync: mirrors to each repo COORDINATION.md + TODO.md IN-PROGRESS table_
 | hillclimb-loop | dottie / infra open vs closed gap | 19:07 CT 2026-08-14 | Open vs closed infra gap — IBM+OpenAI Agentic AI Foundation 57 members 3% frontier 50x cheaper — Dottie closed-loop v2 — typed RPC no shell exec guard single-use LRU 90s ephemeral HMAC 90s rate20/min audit last4 — 7 requirements AGI bit-exact reconstructability — verifier econ threshold8.0 budget3 — LCG 20260813→189831298 idx3820 — claimed from todo 18:04→19:07 free lane 6→7/7 — proactive hillclimb 99→100% | scout/infra-gap-1907 | claimed |
 | hillclimb-loop | vector-hoops / front polish pill strip sticky 40px ?pov= Single-select map hoops-level parity | 20:07 CT 2026-08-14 | Proactive hillclimb 99→100% hoops front polish — pill strip sticky 40px ?pov= sync Single-select map clear prev Lighthouse PWA installability 100 delight 29JS 9CSS confetti 80max — claimed from TODO free lane 5→6/7 20:07 CT — zero-deps true stdlib only gate 8.0+ LCG 20260813→189831298 idx3820 triple[11205,19448,14209] ?daily=20260813&n=1/3/5 — everyday chain open→drag-map→Jordan copy-link equal stars | scout/hoops-front-polish-2007 | claimed |
 | hillclimb-loop | vector-hub / 5th game chimera unified 20,719×64-d 5-game hub provenance 7/7/0 LCG dailySeed | 21:07 CT 2026-08-14 | Proactive hillclimb 99→100% hub chimera 5th game unified 20,719×64-d cross-sport 12966 hoops 5323 gridiron 2430 pitch 4831 equities chimera 20,719 7/7/0 59 hashes LCG dailySeed same-link-same-stars ?daily=20260813&n=1/3/5 triple[11205,19448,14209] — claimed from TODO free lane 5→6/7 21:07 CT — zero-deps true stdlib only gate 8.0+ hoops-level parity | scout/hub-chimera-5th-2107 | claimed |
+| hillclimb-loop | dottie / acd-native thin UI 6 modules dashboard verif typed PASS | 21:37 CT 2026-08-14 | Proactive hillclimb 99→100% Dottie ACD Native thin UI 6 modules daemon+peer+tunnel+mux+rpc+panel sticky 40px — claimed from TODO free lane 6→7/7 21:37 CT — zero-deps true stdlib only gate 8.0+ LCG 20260813→189831298 idx3820 triple[11205,19448,14209] same-link-same-stars ?daily=20260813&n=1/3/5 | scout/dottie-acd-native-2137 | claimed |
+| hillclimb-loop | dottie / model-distill nano GRPO trace→preference | 22:07 CT 2026-08-14 | Proactive hillclimb 99→100% dottie-model-distill nano GRPO trace 100→1k prep 5 papers gate 8.0 Ideas next hill — zero-deps true stdlib only gate 8.0+ LCG 20260813→189831298 idx3820 triple[11205,19448,14209] ?daily=20260813&n=1/3/5 — everyday chain open→drag-map→Jordan copy-link equal stars DAU3/WAU3 TLPG dedup — deferred heavy MoMA BEIR KaLM to next tick | scout/dottie-nano-grpo-2207 | claimed |
 
 ## DONE recent
 
