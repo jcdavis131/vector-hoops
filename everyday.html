@@ -183,12 +183,31 @@ canvas{display:block;width:100%;height:380px}
   </div>
 </div>
 
-<div id="sharePop" class="share-pop"><div class="share-card" role="dialog" aria-modal="true" aria-label="Share">
+<div id="sharePop" class="share-pop"><div class="share-card" role="dialog" aria-modal="true" aria-label="Share — Everyday Streak">
   <canvas id="shareCard" width="1200" height="630" style="width:100%;height:auto;display:block;background:#080A0F"></canvas>
-  <div style="padding:10px 12px;display:flex;gap:8px;justify-content:space-between;align-items:center;background:#080A0F">
-    <span class="mono" style="color:#C9D4E5">Everyday Streak • 3/3 today • hoops.dumbmodel.com/everyday</span>
-    <div style="display:flex;gap:6px"><button class="btn" id="dlShare">Download</button><button class="btn btn-y" id="closeShare">Close ◎</button></div>
+  <div style="padding:12px;display:flex;flex-direction:column;gap:10px;background:#080A0F;border-top:2px solid #1C2640">
+    <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;justify-content:space-between">
+      <span class="mono" id="shareMeta" style="color:#C9D4E5;font-size:11.5px">Everyday Streak • 3/3 today • hoops.dumbmodel.com/everyday?daily=YYYYMMDD&n=3 • same-link-same-stars • Wordle 🟩🟨⬛ + hoops %</span>
+      <span class="mono" id="sharePack" style="color:#8A90A0;font-size:10.8px"></span>
+    </div>
+    <div style="display:flex;gap:6px;flex-wrap:wrap">
+      <button class="btn" id="dlShare" title="Download 1200×630 PNG">⬇️ PNG</button>
+      <button class="btn" id="copyImgBtn" title="Copy image to clipboard">📋 Copy Img</button>
+      <button class="btn" id="shareFileBtn" title="Use OS share sheet with file if supported">📤 Share File</button>
+      <button class="btn" id="copyTextBtn" title="Copy Wordle grid + link text">🟩 Copy Text</button>
+      <button class="btn btn-y" id="copyLinkBtn" title="Copy canonical link ?daily=&n=3&pack=">🔗 Copy Link</button>
+      <button class="btn btn-y" id="challengeBtn" title="Copy challenge-a-friend link with pack code">🎯 Challenge Friend</button>
+      <button class="btn" id="closeShare" style="margin-left:auto">Close ◎</button>
+    </div>
+    <div id="shareToast" class="mono-sm" style="color:#F0E442;min-height:16px"></div>
   </div></div></div>
+<style>
+/* magic 3/3 overrides */
+@keyframes magicPop{0%{transform:scale(.86) rotate(-1deg)}38%{transform:scale(1.08) rotate(.8deg)}100%{transform:scale(1) rotate(0)}}
+.share-card.magic{animation:magicPop 620ms cubic-bezier(.22,1,.36,1) both}
+#shareCard{image-rendering:crisp-edges}
+</style>
+
 
 <footer style="max-width:1080px;margin:0 auto;padding:10px 14px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;border-top:1.6px dashed #E8E2DA;color:#6b6760" class="mono-sm"><span>Everyday Streak • LCG daily chain glibc • open→drag-map→Jordan→copy-link equal stars</span><span><span id="todayFoot">—</span> • PWA v67 offline • DAU<span id="dau">3</span> WAU<span id="wau">3</span></span></footer>
 
@@ -518,7 +537,19 @@ function makeShareCard(){
 }
 
 function openShare(){
-  let pop=$('sharePop'); if(pop) pop.classList.add('on');
+  let pop=$('sharePop'); if(pop){
+    pop.classList.add('on');
+    let card=pop.querySelector('.share-card');
+    if(card){ card.classList.remove('magic'); void card.offsetWidth; card.classList.add('magic'); setTimeout(()=>card.classList.remove('magic'), 800); }
+    // update meta from latest makeShareCard data
+    try{
+      let dstr=qsaDaily? qsaDaily(): new Date().toISOString().slice(0,10);
+      let packIds=seq.map(i=>{ let p=gameData&&gameData.past&&gameData.past[i]; return p&&p.i!=null?p.i:i; }).join(',');
+      let full= (location.origin+location.pathname+'?daily='+dstr+'&n=3&pack='+packIds);
+      let meta=$('shareMeta'); if(meta) meta.textContent='Everyday Streak • '+dstr+' • streak '+(getStreakObj().streak||1)+' • '+full+' • Wordle '+seq.map((_,i)=>{ let b=guessesPerSlot[i]&&guessesPerSlot[i].slice(-1)[0]; let s=b?b.score:0; return (s>=0.68?'🟩':s>=0.5?'🟨':'⬛')+' '+Math.round(s*100)+'%'; }).join(' ');
+      let sp=$('sharePack'); if(sp) sp.textContent='pack='+packIds+' — challenge-a-friend auto-gens same 3 ids — same-link-same-stars preserves star points via LCG '+LCG_A_TRIPLE_EXAMPLE.daily+'→'+LCG_A_TRIPLE_EXAMPLE.first;
+    }catch(e){}
+  }
 }
 function shutShare(){let pop=$('sharePop'); if(pop) pop.classList.remove('on');}
 function renderCalendar(){
@@ -541,12 +572,36 @@ async function boot(dailyOverride){
   let dstr=dailyOverride||dateStrFromParam();
   let meta=tripleFromSeed(seedFromDate(dstr));
   await loadGameVectors();
+  // pack override — challenge-a-friend auto-gens 3 ids preserves exact stars independent of daily
+  try{
+    let qs=new URLSearchParams(location.search);
+    let pack=qs.get('pack');
+    if(pack){
+      let ids=pack.split(',').map(s=>s.trim()).filter(Boolean).slice(0,3);
+      if(ids.length===3){
+        let mapped=ids.map(id=>{
+          let num=parseInt(id,10);
+          let foundIdx=-1;
+          for(let j=0;j<gameData.past.length;j++){ let p=gameData.past[j]; if((p.i!=null&&p.i==num)||(p._id!=null&&p._id==num)|| j==num) { foundIdx=j; break; } if(typeof p.i==='string'&&p.i===id){ foundIdx=j; break; } }
+          // also try string id equality
+          if(foundIdx===-1){
+            for(let j=0;j<gameData.past.length;j++){ if((gameData.past[j].i+'')===id){ foundIdx=j; break; } }
+          }
+          return foundIdx>=0?foundIdx:null;
+        });
+        if(mapped.every(v=>v!=null)){
+          meta.idxs=mapped;
+          meta.packOverride=true;
+        }
+      }
+    }
+  }catch(e){}
   fillGuessList();
   resizeCanvas();
   window.addEventListener('resize', resizeCanvas);
-  let dm=$('dailyMeta'); if(dm) dm.textContent='LCG '+dstr.replace(/-/g,'')+'→'+meta.firstL+' idx3820? triple['+meta.idxs.map(i=>gameData.past[i]?.i||i).join(',')+'] • ?daily='+dstr+'&n=3';
-  let sp=$('seedPill'); if(sp) sp.textContent='seed '+seedFromDate(dstr)+' chain same-link-same-stars • TLPG dedup same seed';
-  let tf=$('todayFoot'); if(tf) tf.textContent=dstr+' • same for everyone today';
+  let dm=$('dailyMeta'); if(dm) dm.textContent='LCG '+dstr.replace(/-/g,'')+'→'+meta.firstL+' idx3820? triple['+meta.idxs.map(i=>gameData.past[i]?.i||i).join(',')+'] • ?daily='+dstr+'&n=3'+(meta.packOverride?'&pack='+meta.idxs.map(i=>gameData.past[i]?.i||i).join(',')+' same-link-same-stars preserves ⭐':'')+' • same-link-same-stars';
+  let sp=$('seedPill'); if(sp) sp.textContent='seed '+seedFromDate(dstr)+' chain same-link-same-stars • TLPG dedup same seed • pack override '+(meta.packOverride?'on':'off');
+  let tf=$('todayFoot'); if(tf) tf.textContent=dstr+' • same for everyone today'+(meta.packOverride?' • pack challenge':'');
   // reset
   seq=meta.idxs; idx=0; bestScores=[0,0,0]; guessesPerSlot=[[],[],[]]; locks=[false,false,false];
   // reset logs
@@ -621,10 +676,109 @@ async function boot(dailyOverride){
     let bm=bestModernForCur(cur);
     if(bm){$('guess1').value=bm.p.n; guessSlot(0);}
   });
-  $('celebrate')?.addEventListener('click', ()=>{makeShareCard(); openShare(); if(navigator.clipboard){let txt='Everyday Streak 3/3 — streak '+getStreakObj().streak+' • hoops.dumbmodel.com/everyday?daily='+dateStrFromParam()+'&n=3 same-link-same-stars'; navigator.clipboard.writeText(txt).catch(()=>{});} });
-  $('dlShare')?.addEventListener('click', ()=>{
-    let sc=$('shareCard'); if(!sc) return; let url=sc.toDataURL('image/png'); let a=document.createElement('a'); a.href=url; a.download='everyday-streak-'+new Date().toISOString().slice(0,10)+'.png'; a.click();
-  });
+  $('celebrate')?.addEventListener('click', ()=>{makeShareCard(); openShare(); if(navigator.clipboard){let txt='Everyday Streak 3/3 — streak '+getStreakObj().streak+' • hoops.dumbmodel.com/everyday?daily='+dateStrFromParam()+'&n=3 same-link-same-stars'; navigator.clipboard.writeText(txt).catch(()=>{});} try{ if(window.VHDelight&&VHDelight.spawnConfetti) VHDelight.spawnConfetti('#F0E442'); }catch(_){ } });
+  // share actions upgraded: dl, copy img, share file, copy text, copy link, challenge
+  function canvasToBlob(canvas, type='image/png', quality){
+    return new Promise(res=>{
+      if(canvas.toBlob) canvas.toBlob(res, type, quality);
+      else {
+        let data=canvas.toDataURL(type); let bin=atob(data.split(',')[1]); let arr=new Uint8Array(bin.length); for(let i=0;i<bin.length;i++) arr[i]=bin.charCodeAt(i); res(new Blob([arr],{type:type}));
+      }
+    });
+  }
+  function wordleLine(score){ if(score>=0.68) return '🟩'; if(score>=0.5) return '🟨'; return '⬛'; }
+  function buildShareText(){
+    let dstr=qsaDaily? qsaDaily(): dateStrFromParam();
+    let streak=getStreakObj().streak||0;
+    let rows=seq.map((_,i)=>{ let best=guessesPerSlot[i]&&guessesPerSlot[i].slice(-1)[0]; let s=best?best.score:0; return wordleLine(s)+' '+Math.round(s*100)+'%'; }).join('\n');
+    // 3 rows Wordle-style but with hoops scores
+    let line='Everyday Streak '+dstr+' 3/3\nStreak '+streak+'\n'+rows+'\n';
+    let link=canonicalLink? canonicalLink(dstr,false): (location.origin+location.pathname+'?daily='+dstr+'&n=3');
+    let packIds=seq.map(i=>{ let p=gameData&&gameData.past&&gameData.past[i]; return p&&p.i!=null?p.i:i; }).join(',');
+    let full=link+'&pack='+packIds;
+    return {text:line+full+' same-link-same-stars', link, full, dstr, streak, packIds};
+  }
+  async function doDlShare(){
+    let sc=$('shareCard'); if(!sc) return; let url=sc.toDataURL('image/png'); let a=document.createElement('a'); a.href=url; a.download='everyday-streak-'+(qsaDaily? qsaDaily(): new Date().toISOString().slice(0,10))+'.png'; a.click();
+    let t=$('shareToast'); if(t){ t.textContent='PNG downloaded 1200×630 ✓'; setTimeout(()=>t.textContent='',2000); }
+    try{ if(window.VHDelight) VHDelight.haptic(10);}catch(_){}
+  }
+  async function doCopyImg(){
+    let sc=$('shareCard'); if(!sc) return; let toast=$('shareToast');
+    try{
+      let blob=await canvasToBlob(sc,'image/png');
+      if(navigator.clipboard && window.ClipboardItem){
+        await navigator.clipboard.write([new ClipboardItem({'image/png':blob})]);
+        if(toast){ toast.textContent='Image copied to clipboard ✓ — paste into iMessage / X'; setTimeout(()=>toast.textContent='',3000); }
+      } else if(navigator.clipboard){
+        // fallback: copy data URL? just toast
+        let url=sc.toDataURL('image/png');
+        await navigator.clipboard.writeText(url);
+        if(toast){ toast.textContent='Data URL copied (ClipboardItem not supported)'; setTimeout(()=>toast.textContent='',2500); }
+      }
+    }catch(e){
+      if(toast){ toast.textContent='Copy failed — use Download PNG'; setTimeout(()=>toast.textContent='',2500); }
+      console.warn('copyImg failed',e);
+    }
+  }
+  async function doShareFile(){
+    let sc=$('shareCard'); if(!sc) return; let toast=$('shareToast');
+    try{
+      let blob=await canvasToBlob(sc,'image/png');
+      let file=new File([blob], 'everyday-streak-'+(qsaDaily? qsaDaily(): new Date().toISOString().slice(0,10))+'.png', {type:'image/png'});
+      let shareData={files:[file], title:'Everyday Streak 3/3', text:buildShareText().text};
+      if(navigator.canShare && navigator.canShare({files:[file]})){
+        await navigator.share(shareData);
+        if(toast){ toast.textContent='Shared via OS sheet ✓'; setTimeout(()=>toast.textContent='',2000); }
+      } else if(navigator.share){
+        await navigator.share({title:'Everyday Streak', text:buildShareText().text, url:buildShareText().full});
+        if(toast){ toast.textContent='Shared link ✓'; setTimeout(()=>toast.textContent='',2000); }
+      } else {
+        if(toast){ toast.textContent='Web Share not supported — copy link below'; setTimeout(()=>toast.textContent='',2200); }
+      }
+    }catch(e){
+      if(e&&e.name==='AbortError') return;
+      if(toast){ toast.textContent='Share canceled / unsupported'; setTimeout(()=>toast.textContent='',2000); }
+    }
+  }
+  async function doCopyText(){
+    let toast=$('shareToast');
+    try{
+      let {text}=buildShareText();
+      if(navigator.clipboard) await navigator.clipboard.writeText(text);
+      if(toast){ toast.textContent='Wordle grid + link copied ✓ '+text.split('\n')[0]; setTimeout(()=>toast.textContent='',2600); }
+      try{ if(window.VHDelight) VHDelight.haptic(12);}catch(_){}
+    }catch(e){ if(toast) toast.textContent='Copy failed'; }
+  }
+  async function doCopyLink(){
+    let toast=$('shareToast');
+    try{
+      let {full}=buildShareText();
+      if(navigator.clipboard) await navigator.clipboard.writeText(full);
+      let sm=$('shareMeta'); if(sm) sm.textContent=full;
+      if(toast){ toast.textContent='Link copied — ?daily=&n=3&pack= same-link-same-stars preserves ⭐'; setTimeout(()=>toast.textContent='',3000); }
+      // flash url bar
+      try{ history.replaceState(null,'',full.replace(/^https?:\/\/[^\/]+/,'').replace('hoops.dumbmodel.com','')); }catch(_){}
+    }catch(e){ if(toast) toast.textContent='Copy link failed'; }
+  }
+  async function doChallenge(){
+    let toast=$('shareToast');
+    try{
+      let {full,packIds,dstr}=buildShareText();
+      // pack code is 3 ids csv — auto-gens challenge pack
+      let challengePath=location.origin+location.pathname+'?daily='+dstr+'&n=3&pack='+packIds+'&chal=1';
+      if(navigator.clipboard) await navigator.clipboard.writeText(challengePath);
+      let sp=$('sharePack'); if(sp) sp.textContent='pack='+packIds+' — challenge-a-friend auto-gens same 3 ids — '+challengePath;
+      if(toast){ toast.textContent='Challenge link copied: pack '+packIds+' — friend gets identical stars via same seed'; setTimeout(()=>toast.textContent='',3400); }
+      try{ if(window.VHDelight) VHDelight.spawnConfetti('#2A8FEF'); }catch(_){}
+    }catch(e){ if(toast) toast.textContent='Challenge copy failed'; }
+  }
+  $('dlShare')?.addEventListener('click', doDlShare);
+  $('copyImgBtn')?.addEventListener('click', doCopyImg);
+  $('shareFileBtn')?.addEventListener('click', doShareFile);
+  $('copyTextBtn')?.addEventListener('click', doCopyText);
+  $('copyLinkBtn')?.addEventListener('click', doCopyLink);
+  $('challengeBtn')?.addEventListener('click', doChallenge);
   $('closeShare')?.addEventListener('click', shutShare);
   $('sharePop')?.addEventListener('click', e=>{ if(e.target.id==='sharePop') shutShare(); });
   document.addEventListener('keydown', e=>{ if(e.key==='Escape') shutShare();});
