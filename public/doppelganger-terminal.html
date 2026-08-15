@@ -11,7 +11,7 @@
 <style>
 :root{
   --paper:#fafaf8;--surface:#fff;--ink:#111;--ink-soft:#52514e;--ink-mut:#6b6760;--hair:#e1e0d9;
-  --orange:#eb6834;--blue:#2a8fef;--yellow:#A6FF8E;--green:#009e73;--void:#080A0F;--void-2:#0A0C10;
+  --orange:#eb6834;--blue:#2a8fef;--yellow:#8FB89F;--green:#009e73;--void:#080A0F;--void-2:#0A0C10;
   --mono:ui-monospace,"IBM Plex Mono",Menlo,monospace;
   --sans:ui-sans-system,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
   --shadow:4px 4px 0 var(--ink);--r:14px;
@@ -89,34 +89,32 @@ canvas{display:block;width:100%;height:420px}
 footer{color:#5A6B4F!important}
 </style>
 <style id="terminal-theme">
-:root{--void:#080A0F;--font-tab:tabular-nums;--void-2:#0A0C10;--terminal-green:#A6FF8E;--paper:#080A0F;--surface:#0D111B;--ink:#E6FFE0;--ink-soft:#A6FF8E;--mono:ui-monospace,"IBM Plex Mono",Menlo,monospace}
+:root{--void:#080A0F;--font-tab:tabular-nums;--void-2:#0A0C10;--terminal-green:#8FB89F;--paper:#080A0F;--surface:#0D111B;--ink:#E6FFE0;--ink-soft:#8FB89F;--mono:ui-monospace,"IBM Plex Mono",Menlo,monospace}
 html,body{background:#080A0F!important;color:#E6FFE0!important;font-family:var(--mono);font-variant-numeric:tabular-nums!important}
 .site-nav{background:#080A0F!important;border-bottom:2px solid #1E2E56!important;color:#E6FFE0!important;position:sticky;top:0;z-index:50;height:40px;min-height:40px}
-.site-nav__brand{color:#A6FF8E!important}
-.pov-strip,.pov{background:rgba(10,12,16,.96)!important;border-bottom:2px solid #A6FF8E!important;box-shadow:0 0 10px #A6FF8E, 0 0 22px rgba(166,255,142,.35); /* double */ box-shadow:0 0 10px rgba(138,255,107,.32);top:40px!important;min-height:44px!important;z-index:40!important}
-.pov-pill{border-color:#26365F!important;background:#0D1326!important;color:#A6FF8E!important}
-.pov-pill.on{background:#A6FF8E!important;color:#080A0F!important;box-shadow:0 0 10px #A6FF8E, 0 0 22px rgba(166,255,142,.35),2px 2px 0 #111!important;border-color:#A6FF8E!important}
-.mono,.mono-sm{color:#A6FF8E!important}
-.mono{color:#A6FF8E}
+.site-nav__brand{color:#8FB89F!important}
+.pov-strip,.pov{background:rgba(10,12,16,.96)!important;border-bottom:2px solid #6E8A7A!important;box-shadow:0 0 10px rgba(143,184,159,0.32), 0 0 22px rgba(143,184,159,0.18); /* double */ box-shadow:0 0 10px rgba(138,255,107,.32);top:40px!important;min-height:44px!important;z-index:40!important}
+.pov-pill{border-color:#6E8A7A!important;background:#0D1326!important;color:#8FB89F!important}
+.pov-pill.on{background:#8FB89F!important;color:#080A0F!important;box-shadow:0 0 10px rgba(143,184,159,0.32), 0 0 22px rgba(143,184,159,0.18);border-color:#8FB89F!important}
+.mono,.mono-sm{color:#8FB89F!important}
+.mono{color:#8FB89F}
 .hero-void{background:radial-gradient(1100px 600px at 18% -10%,#111726 0%,#0A1C10 32%,#080A0F 72%)!important;color:#E6FFE0!important}
 .card{background:#0F1525!important;border-color:#1F2D52!important;box-shadow:6px 6px 0 #0A0E17!important;color:#E6FFE0!important}
 .canvas-box{background:#0A0C10!important}
 .btn,.btn-p,.btn-y{font-family:var(--mono);font-variant-numeric:tabular-nums!important}
-.btn{border-color:#A6FF8E!important;color:#A6FF8E!important;background:#0D1326!important}
-.btn-p{background:#A6FF8E!important;color:#080A0F!important;border-color:#A6FF8E!important;box-shadow:0 0 10px #A6FF8E, 0 0 22px rgba(166,255,142,.35)!important}
-.btn-y{background:#0D1326!important;color:#A6FF8E!important;border-color:#A6FF8E!important}
-.pill{border-color:#A6FF8E!important;background:#0D1326!important;color:#A6FF8E!important}
-.pill-y,.pill-g{background:#A6FF8E!important;color:#080A0F!important}
-.title b{background:#A6FF8E!important;color:#080A0F!important;box-shadow:0 0 10px #A6FF8E, 0 0 22px rgba(166,255,142,.35)!important}
-.chip,.trow{background:#0D1326!important;color:#A6FF8E!important;border-color:#26365F!important}
-.chip.on,.trow.on,.trow.edge{background:#A6FF8E!important;color:#080A0F!important;border-color:#A6FF8E!important}
-.log{background:#0A0C10!important;border-color:#26365F!important;color:#A6FF8E!important}
+.btn{border-color:#8FB89F!important;color:#8FB89F!important;background:#0D1326!important}
+.btn-p{background:#8FB89F!important;color:#080A0F!important;border-color:#8FB89F!important;box-shadow:0 0 10px rgba(143,184,159,0.32), 0 0 22px rgba(143,184,159,0.18);color:#8FB89F!important;border-color:#8FB89F!important}
+.pill{border-color:#8FB89F!important;background:#0D1326!important;color:#8FB89F!important}
+.pill-y,.pill-g{background:#8FB89F!important;color:#080A0F!important}
+.title b{background:#8FB89F!important;color:#080A0F!important;box-shadow:0 0 10px rgba(143,184,159,0.32), 0 0 22px rgba(143,184,159,0.18);color:#8FB89F!important;border-color:#6E8A7A!important}
+.chip.on,.trow.on,.trow.edge{background:#8FB89F!important;color:#080A0F!important;border-color:#8FB89F!important}
+.log{background:#0A0C10!important;border-color:#6E8A7A!important;color:#8FB89F!important}
 #log:empty::before{color:#5A8A52!important}
-footer{border-top:1.6px dashed #1E2E56!important;color:#A6FF8E!important}
+footer{border-top:1.6px dashed #1E2E56!important;color:#8FB89F!important}
 
 /* 2% scanline CRT subtle */
-body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:2;opacity:0.04;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(166,255,142,.5) 3px);mix-blend-mode:screen}
-::selection{background:#A6FF8E;color:#080A0F}
+body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:2;opacity:0.04;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(143,184,159,.5) 3px);mix-blend-mode:screen}
+::selection{background:#8FB89F;color:#080A0F}
 </style>
 <script>try{document.documentElement.setAttribute('data-theme','terminal')}catch(e){}</script>
 
@@ -261,14 +259,14 @@ body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:2;opac
       <button class="btn btn-y" id="s_challenge">🎯 Challenge Friend</button>
       <button class="btn" id="closeShare" style="margin-left:auto">Close ◎</button>
     </div>
-    <div id="shareToast" class="mono-sm" style="color:#A6FF8E"></div>
+    <div id="shareToast" class="mono-sm" style="color:#8FB89F"></div>
   </div>
 </div></div>
 
 <script>
 // self-contained, zero-deps, system mono/sans only, no custom font loader
 const $=s=>document.getElementById(s);
-const OKABE=['#2A8FEF','#FF7A1A','#1ECC8A','#E67BB1','#F8E946','#7EC8FF','#FFB000','#FF4D67'];
+const OKABE=['#8FB89F','#7E9B8F','#9AAFA3','#8EA89E','#A8B8AD','#7A9A8E','#9DB0A5','#8CA59A'];
 const STORY_SNIPPETS=[
   "Young Kobe-ish but better playmaker.",
   "Same mid-range menace, stingier defense.",
@@ -307,7 +305,7 @@ function resizeCanvas(){
 function drawBase(){
   let W=c.clientWidth, H=c.clientHeight;
   ctx.clearRect(0,0,W,H);
-  ctx.fillStyle='#080A0F'; ctx.fillRect(0,0,W,H);
+  ctx.fillStyle='#080A0F'; ctx.fillRect(0,0,W,H); ctx.strokeStyle='#6E8A7A'; ctx.lineWidth=8; ctx.strokeRect(4,4,W-8,H-8); /* moss border terminal */
   // starfield 180 .34 alpha
   ctx.fillStyle='rgba(250,250,248,.34)';
   for(let i=0;i<180;i++){ let X=(i*149)%W; let Y=(i*223)%H; ctx.fillRect(X,Y,1.1,1.1); }
@@ -318,7 +316,7 @@ function drawBase(){
     let X=m.sx(pt.x), Y=m.sy(pt.y);
     let col=OKABE[(pt.c||0)%8]||'#9aa0a6';
     ctx.fillStyle=col;
-    ctx.globalAlpha=0.92;
+    ctx.globalAlpha=0.72;
     let isCur = currentSel && (pt.display_name===currentSel.name || pt.n===currentSel.name) && !!pt.is_current_match;
     let isTwinTwin = twins.some(t=>t.point.display_name===pt.display_name && t.point.season===pt.season);
     let isHighlighted = (lastActiveDot && pt.display_name===lastActiveDot) || isCur || isTwinTwin && twins.find(t=>t.point.display_name===lastActiveDot)?.point?.display_name===pt.display_name;
@@ -326,14 +324,14 @@ function drawBase(){
     let isBig = pt.display_name===currentSel?.name || pt.display_name===lastActiveDot;
     ctx.beginPath(); ctx.arc(X,Y,isBig?3.4:2.4,0,Math.PI*2); ctx.fill();
     if(isHighlighted){
-      ctx.globalAlpha=1; ctx.strokeStyle='#A6FF8E'; ctx.lineWidth=1.6; ctx.stroke();
+      ctx.globalAlpha=1; ctx.strokeStyle='#8FB89F'; ctx.lineWidth=1.6; ctx.stroke();
     }
     ctx.globalAlpha=1;
   });
   // pulse for current + twins
   if(currentSel){
     let pt=allPoints.find(p=>p.display_name===currentSel.name) || currentSel.point;
-    if(pt){ let X=m.sx(pt.x), Y=m.sy(pt.y); ctx.strokeStyle='#eb6834'; ctx.lineWidth=2.2; [22,46,72].forEach(r=>{ctx.beginPath(); ctx.arc(X,Y,r,0,Math.PI*2); ctx.stroke();}); ctx.fillStyle='#A6FF8E'; ctx.font='20px ui-monospace,monospace'; ctx.fillText('◎',X-10,Y+6); }
+    if(pt){ let X=m.sx(pt.x), Y=m.sy(pt.y); ctx.strokeStyle='#eb6834'; ctx.lineWidth=2.2; [22,46,72].forEach(r=>{ctx.beginPath(); ctx.arc(X,Y,r,0,Math.PI*2); ctx.stroke();}); ctx.fillStyle='#8FB89F'; ctx.font='20px ui-monospace,monospace'; ctx.fillText('◎',X-10,Y+6); }
   }
   twins.forEach((tw,i)=>{
     let pt=tw.point; let X=m.sx(pt.x), Y=m.sy(pt.y);
@@ -582,7 +580,7 @@ function makeShareCard(){
   // title
   sx.fillStyle='#FAFAF8'; sx.font='900 34px ui-monospace, IBM Plex Mono, monospace'; sx.fillText('DUMB MODEL — Doppelgänger Lab',36,54);
   let curName=currentSel?currentSel.name:'Pick a player';
-  sx.fillStyle='#A6FF8E'; sx.font='800 20px ui-monospace, monospace'; sx.fillText(curName+' → 5 historic twins',36,84);
+  sx.fillStyle='#8FB89F'; sx.font='800 20px ui-monospace, monospace'; sx.fillText(curName+' → 5 historic twins',36,84);
   // pills
   let pills='12,966 seasons • 64-d cosine (demo 2-d) • OKABE visible on void #080A0F • single-select clears prev';
   sx.fillStyle='#EEF0E8'; sx.fillRect(36,100,760,26); sx.strokeStyle='#1A150F'; sx.lineWidth=2; sx.strokeRect(36,100,760,26);
@@ -601,7 +599,7 @@ function makeShareCard(){
     sx.fillText(txt,92,y+11);
     sx.fillStyle='#9ab'; sx.font='12px ui-monospace, monospace'; sx.fillText(tw.story.slice(0,64),92,y+28);
     // badge
-    sx.fillStyle='#A6FF8E'; sx.fillRect(800,y-4,72,22); sx.fillStyle='#080A0F'; sx.font='800 12px monospace'; sx.fillText(Math.round(score*100)+'%',812,y+10);
+    sx.fillStyle='#8FB89F'; sx.fillRect(800,y-4,72,22); sx.fillStyle='#080A0F'; sx.font='800 12px monospace'; sx.fillText(Math.round(score*100)+'%',812,y+10);
     y+=70;
   });
   if(!twins.length){
@@ -612,7 +610,7 @@ function makeShareCard(){
   sx.fillStyle='#5A6476'; sx.font='12px ui-monospace, monospace'; sx.fillText(linkTxt+' • same-link-same-stars • pack '+(twins.map(t=>t.point.display_name).join(',')||''),36,600);
   sx.fillStyle='#8A90A0'; sx.font='11px monospace'; sx.fillText('Method: 2-d demo sim=1-dist/1.18 • real: 64-d cosine from embedding_map_manifest.json • OKABE dots α0.92 3.4/2.4 starfield 180 .34 void #080A0F',36,618);
   // big target twin
-  sx.fillStyle='#EB6834'; sx.beginPath(); sx.arc(1040,210,46,0,Math.PI*2); sx.fill(); sx.fillStyle='#A6FF8E'; sx.font='900 38px monospace'; sx.fillText('◎',1019,223);
+  sx.fillStyle='#EB6834'; sx.beginPath(); sx.arc(1040,210,46,0,Math.PI*2); sx.fill(); sx.fillStyle='#8FB89F'; sx.font='900 38px monospace'; sx.fillText('◎',1019,223);
   // compute return
   return buildShare();
 }

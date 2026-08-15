@@ -26,7 +26,7 @@ a{color:inherit;text-decoration:none}
 /* POV 44px sticky top40 z40 bottom border 2px */
 .pov-strip{position:sticky;top:40px;z-index:40;min-height:44px;height:44px;display:flex;align-items:center;gap:8px;padding:0 12px;overflow-x:auto;overscroll-behavior-x:contain;background:rgba(250,250,248,.94);backdrop-filter:blur(10px);border-bottom:2px solid var(--ink)}
 .pov-pill{min-height:36px;padding:0 13px;border:2px solid var(--ink);border-radius:999px;background:#fff;font-family:var(--mono);font-weight:800;font-size:11px;text-transform:uppercase;letter-spacing:.03em;white-space:nowrap;box-shadow:1.8px 1.8px 0 var(--ink);cursor:pointer;flex:0 0 auto}
-.pov-pill.on{background:var(--yellow);transform:rotate(-.6deg)}
+.pov-pill.on{background:#84948A;transform:rotate(-.6deg);color:#FFFCF9;border-color:#D6DAD7;box-shadow:2px 2px 0 #1E1C1B}}
 .mono{font-family:var(--mono);font-size:11px;letter-spacing:.04em;text-transform:uppercase}
 .mono-sm{font-family:var(--mono);font-size:10.8px;color:var(--ink-mut);text-transform:uppercase;letter-spacing:.05em}
 .hero-void{background:radial-gradient(1100px 600px at 18% -10%,#1A233A 0%,#121A2D 32%,var(--void) 72%);color:#FEFCF9;border-bottom:2px solid var(--ink);position:relative;overflow:hidden}
@@ -75,6 +75,7 @@ a{color:inherit;text-decoration:none}
 
 .footer-built{color:#888;font-family:var(--mono);font-size:10px;letter-spacing:.05em}
 footer{color:#888!important}
+.pov-pill.on::after{content:"";display:inline-block;width:6px;height:6px;background:#9AA5A0;border-radius:50%;margin-left:6px;vertical-align:middle} /* nav moss dot */
 </style>
 <style id="paper-theme">
 :root{--void:#FEFCF9;--void-2:#F4F0E8;--paper:#FEFCF9;--surface:#FFFFFF;--surface-muted:#F4F0E8;--ink:#1E1C1B;--hair:#E5E2DC;--shadow:4px 4px 0 #1E1C1B}
@@ -85,15 +86,16 @@ html,body{background:var(--paper)!important;color:#1E1C1B!important}
 .card{background:var(--surface)!important;border-color:#1E1C1B!important}
 .canvas-box{background:#F4F0E8!important}
 .pov-pill{border-color:#1E1C1B!important;background:#fff!important}
-.pov-pill.on{background:#F0E442!important;box-shadow:2px 2px 0 #1E1C1B!important}
+.pov-pill.on{background:#84948A;box-shadow:2px 2px 0 #1E1C1B!important;color:#FFFCF9;border-color:#D6DAD7;box-shadow:2px 2px 0 #1E1C1B}}
 .pill{background:#fff!important;border-color:#1E1C1B!important}
 .mono-sm{color:#6b6760!important}
 footer{border-top:1.6px dashed #E5E2DC!important;color:#6b6760!important}
-/* OKABE darker stroke 1.3px + alpha 0.94 */
+/* OKABE muted moss 0.88 alpha greygreen */
 canvas{filter:none}
 /* starfield disabled for paper */
 .star{display:none!important}
 #confetti{display:none!important}
+.pov-pill.on::after{content:"";display:inline-block;width:6px;height:6px;background:#9AA5A0;border-radius:50%;margin-left:6px;vertical-align:middle} /* nav moss dot */
 </style>
 
 </head>
@@ -569,7 +571,7 @@ function buildReceiptCanvas(canvasId='receipt'){
   state.forEach((st,i)=>{
     let tInfo=FIXED_TEAMS.find(t=>t.abbr===st.abbr)||{c1:'#FEFCF9'};
     // pill bg
-    ctx.fillStyle=tInfo.c1||'#222'; ctx.globalAlpha=0.92; ctx.fillRect(28,y-22,86,28); ctx.globalAlpha=1;
+    ctx.fillStyle=tInfo.c1||'#222'; ctx.globalAlpha=0.88; ctx.fillRect(28,y-22,86,28); ctx.globalAlpha=1;
     ctx.fillStyle='#FEFCF9'; ctx.font='900 15px ui-monospace, monospace'; ctx.fillText(st.abbr,36,y);
     // out/in
     ctx.fillStyle='#FEFCF9'; ctx.font='800 13px ui-monospace, monospace';

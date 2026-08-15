@@ -9,7 +9,7 @@
 <link rel="manifest" href="/manifest.json">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23080A0F'/%3E%3Ccircle cx='16' cy='16' r='5' fill='%23F0E442' stroke='%23FAFAF8' stroke-width='1.6'/%3E%3C/svg%3E">
 <style>
-:root{--void:#080A0F;--font-tab:tabular-nums;--void-2:#0A0C10;--paper:#FAFAF8;--surface:#FFF;--ink:#111;--ink-soft:#52514E;--ink-mut:#6B6760;--hair:#E1E0D9;--orange:#EB6834;--blue:#2A78D6;--yellow:#A6FF8E;--green:#009E73;--red:#E53E3E;--mono:ui-monospace,"IBM Plex Mono",Menlo,monospace;--sans:ui-sans-system,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;--shadow:4px 4px 0 var(--ink);--r:14px}
+:root{--void:#080A0F;--font-tab:tabular-nums;--void-2:#0A0C10;--paper:#FAFAF8;--surface:#FFF;--ink:#111;--ink-soft:#52514E;--ink-mut:#6B6760;--hair:#E1E0D9;--orange:#EB6834;--blue:#2A78D6;--yellow:#8FB89F;--green:#009E73;--red:#E53E3E;--mono:ui-monospace,"IBM Plex Mono",Menlo,monospace;--sans:ui-sans-system,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;--shadow:4px 4px 0 var(--ink);--r:14px}
 *{box-sizing:border-box}html,body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased}
 a{color:inherit;text-decoration:none}
 :focus-visible{outline:3px solid var(--blue);outline-offset:2px}
@@ -73,34 +73,32 @@ canvas{display:block;width:100%}
 footer{color:#5A6B4F!important}
 </style>
 <style id="terminal-theme">
-:root{--void:#080A0F;--font-tab:tabular-nums;--void-2:#0A0C10;--terminal-green:#A6FF8E;--paper:#080A0F;--surface:#0D111B;--ink:#E6FFE0;--ink-soft:#A6FF8E;--mono:ui-monospace,"IBM Plex Mono",Menlo,monospace}
+:root{--void:#080A0F;--font-tab:tabular-nums;--void-2:#0A0C10;--terminal-green:#8FB89F;--paper:#080A0F;--surface:#0D111B;--ink:#E6FFE0;--ink-soft:#8FB89F;--mono:ui-monospace,"IBM Plex Mono",Menlo,monospace}
 html,body{background:#080A0F!important;color:#E6FFE0!important;font-family:var(--mono);font-variant-numeric:tabular-nums!important}
 .site-nav{background:#080A0F!important;border-bottom:2px solid #1E2E56!important;color:#E6FFE0!important;position:sticky;top:0;z-index:50;height:40px;min-height:40px}
-.site-nav__brand{color:#A6FF8E!important}
-.pov-strip,.pov{background:rgba(10,12,16,.96)!important;border-bottom:2px solid #A6FF8E!important;box-shadow:0 0 10px #A6FF8E, 0 0 22px rgba(166,255,142,.35); /* double */ box-shadow:0 0 10px rgba(138,255,107,.32);top:40px!important;min-height:44px!important;z-index:40!important}
-.pov-pill{border-color:#26365F!important;background:#0D1326!important;color:#A6FF8E!important}
-.pov-pill.on{background:#A6FF8E!important;color:#080A0F!important;box-shadow:0 0 10px #A6FF8E, 0 0 22px rgba(166,255,142,.35),2px 2px 0 #111!important;border-color:#A6FF8E!important}
-.mono,.mono-sm{color:#A6FF8E!important}
-.mono{color:#A6FF8E}
+.site-nav__brand{color:#8FB89F!important}
+.pov-strip,.pov{background:rgba(10,12,16,.96)!important;border-bottom:2px solid #6E8A7A!important;box-shadow:0 0 10px rgba(143,184,159,0.32), 0 0 22px rgba(143,184,159,0.18); /* double */ box-shadow:0 0 10px rgba(138,255,107,.32);top:40px!important;min-height:44px!important;z-index:40!important}
+.pov-pill{border-color:#6E8A7A!important;background:#0D1326!important;color:#8FB89F!important}
+.pov-pill.on{background:#8FB89F!important;color:#080A0F!important;box-shadow:0 0 10px rgba(143,184,159,0.32), 0 0 22px rgba(143,184,159,0.18);border-color:#8FB89F!important}
+.mono,.mono-sm{color:#8FB89F!important}
+.mono{color:#8FB89F}
 .hero-void{background:radial-gradient(1100px 600px at 18% -10%,#111726 0%,#0A1C10 32%,#080A0F 72%)!important;color:#E6FFE0!important}
 .card{background:#0F1525!important;border-color:#1F2D52!important;box-shadow:6px 6px 0 #0A0E17!important;color:#E6FFE0!important}
 .canvas-box{background:#0A0C10!important}
 .btn,.btn-p,.btn-y{font-family:var(--mono);font-variant-numeric:tabular-nums!important}
-.btn{border-color:#A6FF8E!important;color:#A6FF8E!important;background:#0D1326!important}
-.btn-p{background:#A6FF8E!important;color:#080A0F!important;border-color:#A6FF8E!important;box-shadow:0 0 10px #A6FF8E, 0 0 22px rgba(166,255,142,.35)!important}
-.btn-y{background:#0D1326!important;color:#A6FF8E!important;border-color:#A6FF8E!important}
-.pill{border-color:#A6FF8E!important;background:#0D1326!important;color:#A6FF8E!important}
-.pill-y,.pill-g{background:#A6FF8E!important;color:#080A0F!important}
-.title b{background:#A6FF8E!important;color:#080A0F!important;box-shadow:0 0 10px #A6FF8E, 0 0 22px rgba(166,255,142,.35)!important}
-.chip,.trow{background:#0D1326!important;color:#A6FF8E!important;border-color:#26365F!important}
-.chip.on,.trow.on,.trow.edge{background:#A6FF8E!important;color:#080A0F!important;border-color:#A6FF8E!important}
-.log{background:#0A0C10!important;border-color:#26365F!important;color:#A6FF8E!important}
+.btn{border-color:#8FB89F!important;color:#8FB89F!important;background:#0D1326!important}
+.btn-p{background:#8FB89F!important;color:#080A0F!important;border-color:#8FB89F!important;box-shadow:0 0 10px rgba(143,184,159,0.32), 0 0 22px rgba(143,184,159,0.18);color:#8FB89F!important;border-color:#8FB89F!important}
+.pill{border-color:#8FB89F!important;background:#0D1326!important;color:#8FB89F!important}
+.pill-y,.pill-g{background:#8FB89F!important;color:#080A0F!important}
+.title b{background:#8FB89F!important;color:#080A0F!important;box-shadow:0 0 10px rgba(143,184,159,0.32), 0 0 22px rgba(143,184,159,0.18);color:#8FB89F!important;border-color:#6E8A7A!important}
+.chip.on,.trow.on,.trow.edge{background:#8FB89F!important;color:#080A0F!important;border-color:#8FB89F!important}
+.log{background:#0A0C10!important;border-color:#6E8A7A!important;color:#8FB89F!important}
 #log:empty::before{color:#5A8A52!important}
-footer{border-top:1.6px dashed #1E2E56!important;color:#A6FF8E!important}
+footer{border-top:1.6px dashed #1E2E56!important;color:#8FB89F!important}
 
 /* 2% scanline CRT subtle */
-body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:2;opacity:0.04;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(166,255,142,.5) 3px);mix-blend-mode:screen}
-::selection{background:#A6FF8E;color:#080A0F}
+body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:2;opacity:0.04;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(143,184,159,.5) 3px);mix-blend-mode:screen}
+::selection{background:#8FB89F;color:#080A0F}
 </style>
 <script>try{document.documentElement.setAttribute('data-theme','terminal')}catch(e){}</script>
 
@@ -157,7 +155,7 @@ body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:2;opac
             <span id="capExplain">cap_rules.json 2025-26 $154.647M base — 10% max growth from 2023 CBA prevents 2016 spike — smoothing mandatory — use funds utilization as model feature.</span>
           </div>
           <div style="margin-top:10px;display:flex;flex-wrap:wrap" class="kv"><span class="pill pill-y">LCG seed YYYYMMDD</span><span class="pill">Model = Vegas + U(-1.5,2.5)</span><span class="pill pill-g">Edge &gt;3 OVER</span><span class="pill pill-r">Edge &lt;-3 UNDER</span><span class="pill">Kelly 0.25 cap 1%</span></div>
-          <div style="margin-top:10px" class="log" id="formulaLog"><b>Kelly 0.25·f*</b> = 0.25 × (p·b − q)/b where b=odds decimal-1 ≈0.91, p≈ 0.5+edge/82, capped at 1%. Example: model 48.2 vs 45.5 edge +2.7 → p≈53.3% → f*≈6.1% → 0.25× =1.53% → cap → <span style="background:#A6FF8E;padding:1px 6px;border:1px solid #111;border-radius:999px">1% badge</span>. Edge >3 → green Over; < -3 → red Under.</div>
+          <div style="margin-top:10px" class="log" id="formulaLog"><b>Kelly 0.25·f*</b> = 0.25 × (p·b − q)/b where b=odds decimal-1 ≈0.91, p≈ 0.5+edge/82, capped at 1%. Example: model 48.2 vs 45.5 edge +2.7 → p≈53.3% → f*≈6.1% → 0.25× =1.53% → cap → <span style="background:#8FB89F;padding:1px 6px;border:1px solid #111;border-radius:999px">1% badge</span>. Edge >3 → green Over; < -3 → red Under.</div>
         </div>
       </div>
     </div>
@@ -230,7 +228,7 @@ body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:2;opac
       <button class="btn btn-y" id="challengeBtn" title="Challenge friend identical seed">🎯 Challenge</button>
       <button class="btn" id="closeShare" style="margin-left:auto">Close ◎</button>
     </div>
-    <div id="shareToast" class="mono-sm" style="color:#A6FF8E;min-height:16px"></div>
+    <div id="shareToast" class="mono-sm" style="color:#8FB89F;min-height:16px"></div>
   </div></div></div>
 
 <footer style="max-width:1160px;margin:0 auto;padding:10px 14px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;border-top:1.6px dashed #E8E2DA;color:#6b6760" class="mono-sm"><span>Built free · Open-source · No paywall — no login, PWA offline • current_rosters 2025-26 built 2026-07-30 • cap_rules 2025-26 $154.647M</span><span><span id="todayFoot">—</span> • PWA v67 offline • edge meter MAE 3.8</span></footer>
@@ -270,7 +268,7 @@ const VEGAS_LINES = {
 const TEAM_META = {
   "ATL":{city:"Atlanta Hawks",conf:"E",arch:"Rim-Run+Creat"}, "BKN":{city:"Brooklyn Nets",conf:"E",arch:"Rebuild-Shooting"}, "BOS":{city:"Boston Celtics",conf:"E",arch:"Tatum-less-Halfcourt"}, "CHA":{city:"Charlotte Hornets",conf:"E",arch:"Young-Guard"}, "CHI":{city:"Chicago Bulls",conf:"E",arch:"Mid-Vendor"}, "CLE":{city:"Cleveland Cavaliers",conf:"E",arch:"Two-Big-O"}, "DAL":{city:"Dallas Mavericks",conf:"W",arch:"Cooper-Flag-Rise"}, "DEN":{city:"Denver Nuggets",conf:"W",arch:"Jokic-O-Engine"}, "DET":{city:"Detroit Pistons",conf:"E",arch:"Youth-Big"}, "GSW":{city:"Golden State Warriors",conf:"W",arch:"Curry-Grav"}, "HOU":{city:"Houston Rockets",conf:"W",arch:"Length-D"}, "IND":{city:"Indiana Pacers",conf:"E",arch:"Pace-n-Space"}, "LAC":{city:"LA Clippers",conf:"W",arch:"Wing-Depth"}, "LAL":{city:"Los Angeles Lakers",conf:"W",arch:"Luka+BRON"}, "MEM":{city:"Memphis Grizzlies",conf:"W",arch:"Grit-n-Grind-2"}, "MIA":{city:"Miami Heat",conf:"E",arch:"Culture-D"}, "MIL":{city:"Milwaukee Bucks",conf:"E",arch:"Giannis-Solo"}, "MIN":{city:"Minnesota Timberwolves",conf:"W",arch:"Ant-Big-D"}, "NOP":{city:"New Orleans Pelicans",conf:"W",arch:"Zion-Health"}, "NYK":{city:"New York Knicks",conf:"E",arch:"Thibs-Depth"}, "OKC":{city:"Oklahoma City Thunder",conf:"W",arch:"Champ-Fav"}, "ORL":{city:"Orlando Magic",conf:"E",arch:"Length-D-II"}, "PHI":{city:"Philadelphia 76ers",conf:"E",arch:"Embiid-Health"}, "PHX":{city:"Phoenix Suns",conf:"W",arch:"Booker-Solo"}, "POR":{city:"Portland Trail Blazers",conf:"W",arch:"Scoot-Growth"}, "SAC":{city:"Sacramento Kings",conf:"W",arch:"Lite-Beam"}, "SAS":{city:"San Antonio Spurs",conf:"W",arch:"Wemby-Leap"}, "TOR":{city:"Toronto Raptors",conf:"E",arch:"Long-Bois"}, "UTA":{city:"Utah Jazz",conf:"W",arch:"Tank-8"}, "WAS":{city:"Washington Wizards",conf:"E",arch:"Tank-9"}
 };
-const OKABE8=['#2A8FEF','#FF7A1A','#1ECC8A','#E67BB1','#F8E946','#7EC8FF','#FFB000','#FF4D67'];
+const OKABE=['#8FB89F','#7E9B8F','#9AAFA3','#8EA89E','#A8B8AD','#7A9A8E','#9DB0A5','#8CA59A'];
 // state
 let dailyStr=qDaily();
 let seed=seedFromDate(dailyStr);
@@ -390,10 +388,10 @@ function selectTeam(tm){
   let dou=$('detailOU'); if(dou) dou.textContent=ou.label+' • '+(k.capped*100).toFixed(2)+'% unit • '+k.badge;
   // meter
   let pct=Math.min(100, Math.abs(edge)/6*100); // 6 wins =100%
-  let em=$('edgeMeter'); if(em){ em.style.width=pct+'%'; em.style.background= edge>0?'linear-gradient(90deg,#009E73,#A6FF8E)':'linear-gradient(90deg,#E53E3E,#FFB000)';}
+  let em=$('edgeMeter'); if(em){ em.style.width=pct+'%'; em.style.background= edge>0?'linear-gradient(90deg,#009E73,#8FB89F)':'linear-gradient(90deg,#E53E3E,#FFB000)';}
   let kbx=$('kellyBox');
   if(kbx){
-    kbx.innerHTML='<b>Kelly 0.25·f*</b> = 0.25×(b·p−q)/b • b='+k.b.toFixed(2)+' (−110) • p≈'+(k.p*100).toFixed(1)+'% (0.5+edge/82) • edge '+(edge>0?'+':'')+edge.toFixed(1)+' → f*='+(k.f_full*100).toFixed(2)+'% → 0.25×='+(k.f25*100).toFixed(2)+'% → capped <b style="background:#A6FF8E;padding:1px 6px;border:1px solid #111;border-radius:999px">'+(k.capped*100).toFixed(2)+'% '+ (k.capped>=0.0099?'MAX 1%':'')+'</b> usable. MAE 3.8 width.';
+    kbx.innerHTML='<b>Kelly 0.25·f*</b> = 0.25×(b·p−q)/b • b='+k.b.toFixed(2)+' (−110) • p≈'+(k.p*100).toFixed(1)+'% (0.5+edge/82) • edge '+(edge>0?'+':'')+edge.toFixed(1)+' → f*='+(k.f_full*100).toFixed(2)+'% → 0.25×='+(k.f25*100).toFixed(2)+'% → capped <b style="background:#8FB89F;padding:1px 6px;border:1px solid #111;border-radius:999px">'+(k.capped*100).toFixed(2)+'% '+ (k.capped>=0.0099?'MAX 1%':'')+'</b> usable. MAE 3.8 width.';
   }
   let kb=$('kellyBadge'); if(kb){ kb.textContent='Kelly '+(k.capped*100).toFixed(2)+'% '+(k.capped>=0.0099?'MAX 1%':''); kb.className='pill '+(k.capped>0.001?'pill-y':'');}
   drawMap();
@@ -430,12 +428,12 @@ function drawMap(){
     let col=OKABE8[j%8];
     // conf marker for E/W? simple color by conf
     if(TEAM_META[tm]?.conf==='E') col=OKABE8[(j*3)%8];
-    ctx.globalAlpha=0.92;
+    ctx.globalAlpha=0.72;
     ctx.fillStyle=col;
     ctx.beginPath(); ctx.arc(x,y, isCur?3.4:2.4,0,Math.PI*2); ctx.fill();
     ctx.globalAlpha=1;
     if(isCur){
-      ctx.strokeStyle='#A6FF8E'; ctx.lineWidth=1.8; ctx.beginPath(); ctx.arc(x,y,7.8,0,Math.PI*2); ctx.stroke();
+      ctx.strokeStyle='#8FB89F'; ctx.lineWidth=1.8; ctx.beginPath(); ctx.arc(x,y,7.8,0,Math.PI*2); ctx.stroke();
       ctx.fillStyle='#FAFAF8'; ctx.font='800 10px ui-monospace,monospace'; ctx.fillText(tm,x+5,y-7);
     }
   });
@@ -446,7 +444,7 @@ function makeShareCard(){
   sx.fillStyle='#080A0F'; sx.fillRect(0,0,1200,630);
   sx.fillStyle='rgba(250,250,248,.30)'; for(let i=0;i<260;i++){ let X=(i*137)%1180+16; let Y=(i*197)%560+18; sx.fillRect(X,Y,1.2,1.2); }
   sx.fillStyle='#FAFAF8'; sx.font='900 34px ui-monospace,IBM Plex Mono,monospace'; sx.fillText('DUMB MODEL — Oracle vs Vegas',34,52);
-  sx.fillStyle='#A6FF8E'; sx.font='800 18px ui-monospace,monospace'; sx.fillText('Win Totals Wall 2025-26 • MTNN vs Market • Edge>3 OVER/UNDER • Kelly 0.25 cap 1% • MAE 3.8',34,84);
+  sx.fillStyle='#8FB89F'; sx.font='800 18px ui-monospace,monospace'; sx.fillText('Win Totals Wall 2025-26 • MTNN vs Market • Edge>3 OVER/UNDER • Kelly 0.25 cap 1% • MAE 3.8',34,84);
   // daily meta
   let daily=dailyStr;
   sx.fillStyle='#C9D4E5'; sx.font='12.5px ui-monospace,monospace'; sx.fillText('LCG '+daily.replace(/-/g,'')+'→'+firstL+' seed '+seed+' chain same-link-same-stars • cap 2025-26 $154.647M tax $187.895M apron1 $195.945M • roster built '+(rostersCtx?.built||'2026-07-30')+' season '+(rostersCtx?.season||'2025-26')+' next '+(rostersCtx?.nextSeason||'2026-27')+' active '+ (rostersCtx?.activePlayers?.length||Object.keys(VEGAS_LINES).length*8||649)+' • TLPG distinct — no Deja Vu',34,106);
@@ -462,7 +460,7 @@ function makeShareCard(){
   entries.forEach(ent=>{
     let isSel=selected===ent.tm;
     if(isSel){ sx.fillStyle='rgba(240,228,66,.12)'; sx.fillRect(34,y-16,1132,26); }
-    sx.fillStyle= isSel?'#A6FF8E':'#FAFAF8';
+    sx.fillStyle= isSel?'#8FB89F':'#FAFAF8';
     sx.font='800 13px ui-monospace,monospace';
     sx.fillText(ent.tm+' '+(TEAM_META[ent.tm]?.city||'' ).slice(0,10),38,y);
     sx.fillStyle='#FAFAF8'; sx.fillText(ent.m.toFixed(1)+' ±3.8',220,y);
@@ -482,7 +480,7 @@ function makeShareCard(){
   sx.fillStyle='#5A6476'; sx.font='11px ui-monospace,monospace'; sx.fillText('hoops.dumbmodel.com/oracle?daily='+daily+' • same-link-same-stars • pack '+Object.keys(VEGAS_LINES).length+' teams • Kelly 0.25·f* = edge/odds → cap 1% • odds -110 → 1.91 • model '+Object.values(models).reduce((a,b)=>a+b,0)/Object.values(models).length.toFixed(1)+' avg vs vegas '+Object.values(VEGAS_LINES).reduce((a,b)=>a+b,0)/30,34,574);
   sx.fillStyle='#8A90A0'; sx.font='10.5px monospace'; sx.fillText('MAE 3.8 80/10/10 CV • current_rosters 2025-26 built '+(rostersCtx?.built||'2026-07-30')+' • cap_rules 2025-26 smoothing mandatory $76B TV • void #080A0F --void-2 #0A0C10 • OKABE dots α0.92 size 3.4/2.4',34,592);
   // target
-  sx.fillStyle='#EB6834'; sx.beginPath(); sx.arc(1110,166,28,0,Math.PI*2); sx.fill(); sx.fillStyle='#A6FF8E'; sx.font='900 24px monospace'; sx.fillText('◎',1094,174);
+  sx.fillStyle='#EB6834'; sx.beginPath(); sx.arc(1110,166,28,0,Math.PI*2); sx.fill(); sx.fillStyle='#8FB89F'; sx.font='900 24px monospace'; sx.fillText('◎',1094,174);
   sx._shareEntries=entries;
   return entries;
 }

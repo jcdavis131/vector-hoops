@@ -34,7 +34,7 @@ a{color:inherit;text-decoration:none}:focus-visible{outline:3px solid var(--blue
 /* POV 44px sticky top40 z40 */
 .pov-strip{position:sticky;top:40px;z-index:40;min-height:44px;height:44px;display:flex;align-items:center;gap:8px;padding:0 12px;overflow-x:auto;overscroll-behavior-x:contain;background:rgba(250,250,248,.92);backdrop-filter:blur(10px);border-bottom:2px solid var(--ink)}
 .pov-pill{min-height:36px;padding:0 13px;border:2px solid var(--ink);border-radius:999px;background:#fff;font-family:var(--mono);font-weight:800;font-size:11px;text-transform:uppercase;letter-spacing:.03em;white-space:nowrap;box-shadow:1.8px 1.8px 0 var(--ink);cursor:pointer;flex:0 0 auto}
-.pov-pill.on{background:var(--yellow);transform:rotate(-.6deg)}
+.pov-pill.on{background:#84948A;transform:rotate(-.6deg);color:#FFFCF9;border-color:#D6DAD7;box-shadow:2px 2px 0 #1E1C1B}}
 
 .mono{font-family:var(--mono);font-size:11px;letter-spacing:.03em;text-transform:uppercase}
 .mono-sm{font-family:var(--mono);font-size:10.85px;color:var(--ink-mut);text-transform:uppercase;letter-spacing:.05em}
@@ -88,6 +88,7 @@ canvas{display:block;width:100%;height:420px}
 
 .footer-built{color:#888;font-family:var(--mono);font-size:10px;letter-spacing:.05em}
 footer{color:#888!important}
+.pov-pill.on::after{content:"";display:inline-block;width:6px;height:6px;background:#9AA5A0;border-radius:50%;margin-left:6px;vertical-align:middle} /* nav moss dot */
 </style>
 <style id="paper-theme">
 :root{--void:#FEFCF9;--void-2:#F4F0E8;--paper:#FEFCF9;--surface:#FFFFFF;--surface-muted:#F4F0E8;--ink:#1E1C1B;--hair:#E5E2DC;--shadow:4px 4px 0 #1E1C1B}
@@ -98,15 +99,16 @@ html,body{background:var(--paper)!important;color:#1E1C1B!important}
 .card{background:var(--surface)!important;border-color:#1E1C1B!important}
 .canvas-box{background:#F4F0E8!important}
 .pov-pill{border-color:#1E1C1B!important;background:#fff!important}
-.pov-pill.on{background:#F0E442!important;box-shadow:2px 2px 0 #1E1C1B!important}
+.pov-pill.on{background:#84948A;box-shadow:2px 2px 0 #1E1C1B!important;color:#FFFCF9;border-color:#D6DAD7;box-shadow:2px 2px 0 #1E1C1B}}
 .pill{background:#fff!important;border-color:#1E1C1B!important}
 .mono-sm{color:#6b6760!important}
 footer{border-top:1.6px dashed #E5E2DC!important;color:#6b6760!important}
-/* OKABE darker stroke 1.3px + alpha 0.94 */
+/* OKABE muted moss 0.88 alpha greygreen */
 canvas{filter:none}
 /* starfield disabled for paper */
 .star{display:none!important}
 #confetti{display:none!important}
+.pov-pill.on::after{content:"";display:inline-block;width:6px;height:6px;background:#9AA5A0;border-radius:50%;margin-left:6px;vertical-align:middle} /* nav moss dot */
 </style>
 
 </head>
@@ -257,7 +259,7 @@ canvas{filter:none}
 <script>
 // self-contained, zero-deps, system mono/sans only, no custom font loader
 const $=s=>document.getElementById(s);
-const OKABE=['#2A8FEF','#FF7A1A','#1ECC8A','#E67BB1','#F8E946','#7EC8FF','#FFB000','#FF4D67'];
+const OKABE=['#6D859E','#A88B76','#7D9585','#A88F9A','#B8B08A','#8A9FAE','#A0987F','#9B8E91'];
 const STORY_SNIPPETS=[
   "Young Kobe-ish but better playmaker.",
   "Same mid-range menace, stingier defense.",
@@ -296,7 +298,7 @@ function resizeCanvas(){
 function drawBase(){
   let W=c.clientWidth, H=c.clientHeight;
   ctx.clearRect(0,0,W,H);
-  ctx.fillStyle='#FEFCF9'; ctx.fillRect(0,0,W,H);
+  ctx.fillStyle='#FEFCF9'; ctx.fillRect(0,0,W,H); ctx.strokeStyle='#84948A'; ctx.lineWidth=8; ctx.strokeRect(4,4,W-8,H-8); /* moss border paper */
   // paper: no starfield 0 dots
   // ctx.fillStyle='rgba(250,250,248,.34)'; for(let i=0;i<180;i++){ let X=(i*149)%W; let Y=(i*223)%H; ctx.fillRect(X,Y,1.1,1.1);}
   // starfield 180 .34 alpha
@@ -309,7 +311,7 @@ function drawBase(){
     let X=m.sx(pt.x), Y=m.sy(pt.y);
     let col=OKABE[(pt.c||0)%8]||'#9aa0a6';
     ctx.fillStyle=col;
-    ctx.globalAlpha=0.92;
+    ctx.globalAlpha=0.88;
     let isCur = currentSel && (pt.display_name===currentSel.name || pt.n===currentSel.name) && !!pt.is_current_match;
     let isTwinTwin = twins.some(t=>t.point.display_name===pt.display_name && t.point.season===pt.season);
     let isHighlighted = (lastActiveDot && pt.display_name===lastActiveDot) || isCur || isTwinTwin && twins.find(t=>t.point.display_name===lastActiveDot)?.point?.display_name===pt.display_name;
@@ -567,7 +569,7 @@ function buildShare(){
 }
 function makeShareCard(){
   let sc=$('shareCard'); if(!sc) return; let sx=sc.getContext('2d');
-  sx.fillStyle='#FEFCF9'; sx.fillRect(0,0,1200,630);
+  sx.fillStyle='#FEFCF9'; sx.fillRect(0,0,1200,630); sx.strokeStyle='#84948A'; sx.lineWidth=8; sx.strokeRect(4,4,1192,622); /* moss border paper */
   sx.strokeStyle='#E5E2DC'; sx.lineWidth=2; sx.strokeRect(0,0,1200,630);
   // stars
   sx.fillStyle='rgba(10,12,16,.08)'; // paper faint for(let i=0;i<220;i++){ let X=(i*137)%1180+16; let Y=(i*197)%520+22; sx.fillRect(X,Y,1.2,1.2); }

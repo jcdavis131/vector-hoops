@@ -11,12 +11,12 @@
 <style>
 
 :root{
-  --base:#F5F2ED; --paper:#F5F2ED; --surface:#FFFCF7; --surface-muted:#EDE7DC;
-  --ink:#2B2A27; --ink-soft:#3A3835; --ink-mut:#6B6560;
-  --wood:#D0AE80; --moss:#768B74; --clay:#A76E43;
-  --border:#DED5C4; --hair:#DED5C4;
-  --orange:#A76E43; --blue:#4A7CB8; --yellow:#D9C36C; --green:#6B9B7A;
-  --void:#F5F2ED; --void-2:#EDE7DC;
+  --base:#F5F2ED; --paper:#F5F2ED; --surface:#FFFCF7; --surface-muted:#E6E4DD;
+  --ink:#2B2A27; --ink-soft:#3A3835; --ink-mut:#767672;
+  --wood:#B9A48E; --moss:#7E8F7D; --clay:#9C8A7A;
+  --border:#D6D2C7; --hair:#D6D2C7;
+  --orange:#9C8A7A; --blue:#4A7CB8; --yellow:#D9C36C; --green:#6B9B7A;
+  --void:#F5F2ED; --void-2:#E6E4DD;
   --mono:ui-monospace,"IBM Plex Mono",Menlo,monospace; --sans:ui-sans-system,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
   --shadow:0 2px 12px rgba(43,42,39,0.06);
   --r:16px
@@ -41,7 +41,7 @@ a{color:inherit;text-decoration:none}
 .mono{font-family:var(--mono);font-size:11px;letter-spacing:.03em;text-transform:uppercase}
 .mono-sm{font-family:var(--mono);font-size:10.8px;color:var(--ink-mut);text-transform:uppercase;letter-spacing:.05em}
 /* hero void replaced warm */
-.hero-void{background:radial-gradient(1100px 600px at 18% -10%,#FFFCF7 0%,#F5F2ED 52%,#EDE7DC 100%);color:var(--ink);border-bottom:1.1px solid var(--border);position:relative;overflow:hidden}
+.hero-void{background:radial-gradient(1100px 600px at 18% -10%,#FFFCF7 0%,#F5F2ED 52%,#E6E4DD 100%);color:var(--ink);border-bottom:1.1px solid var(--border);position:relative;overflow:hidden}
 .wrap{max-width:1080px;margin:0 auto;padding:0 14px}
 .hero-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:14px;padding:14px 0}
 @media(max-width:860px){.hero-grid{grid-template-columns:1fr}}
@@ -79,12 +79,14 @@ canvas{display:block;width:100%;height:380px}
 /* share overlay warm */
 .share-pop{position:fixed;inset:0;background:rgba(245,242,237,.78);backdrop-filter:blur(10px);z-index:80;display:none;place-items:center;padding:14px}
 .share-pop.on{display:grid}
-.share-card{width:min(720px,96vw);background:#F5F2ED;border:1.1px solid #DED5C4;border-radius:16px;overflow:hidden;box-shadow:0 8px 24px rgba(43,42,39,0.12)}
+.share-card{width:min(720px,96vw);background:#F5F2ED;border:1.1px solid #D6D2C7;border-radius:16px;overflow:hidden;box-shadow:0 8px 24px rgba(43,42,39,0.12)}
 /* OKABE warm desaturated 0.84 */
 .okabe-dot{opacity:0.84}
 /* Built free footer */
-.footer-built{color:#6B6560;font-family:var(--mono);font-size:10px;letter-spacing:.05em}
+.footer-built{color:#767672;font-family:var(--mono);font-size:10px;letter-spacing:.05em}
 
+
+body::after{content:'';position:fixed;top:-20%;right:-15%;width:120%;height:120%;background:radial-gradient(800px 600px at 80% 15%, rgba(126,143,125,0.02), transparent 70%);pointer-events:none;z-index:1} /* moss wash 0.02 */
 </style>
 </head>
 <body>
@@ -559,7 +561,7 @@ function buildReceiptCanvas(canvasId='receipt'){
   state.forEach((st,i)=>{
     let tInfo=FIXED_TEAMS.find(t=>t.abbr===st.abbr)||{c1:'#fafaf8'};
     // pill bg
-    ctx.fillStyle=tInfo.c1||'#222'; ctx.globalAlpha=0.92; ctx.fillRect(28,y-22,86,28); ctx.globalAlpha=1;
+    ctx.fillStyle=tInfo.c1||'#222'; ctx.globalAlpha=0.80; ctx.fillRect(28,y-22,86,28); ctx.globalAlpha=1;
     ctx.fillStyle='#fafaf8'; ctx.font='900 15px ui-monospace, monospace'; ctx.fillText(st.abbr,36,y);
     // out/in
     ctx.fillStyle='#FAFAF8'; ctx.font='800 13px ui-monospace, monospace';

@@ -11,12 +11,12 @@
 <style>
 
 :root{
-  --base:#F5F2ED; --paper:#F5F2ED; --surface:#FFFCF7; --surface-muted:#EDE7DC;
-  --ink:#2B2A27; --ink-soft:#3A3835; --ink-mut:#6B6560;
-  --wood:#D0AE80; --moss:#768B74; --clay:#A76E43;
-  --border:#DED5C4; --hair:#DED5C4;
-  --orange:#A76E43; --blue:#4A7CB8; --yellow:#D9C36C; --green:#6B9B7A;
-  --void:#F5F2ED; --void-2:#EDE7DC;
+  --base:#F5F2ED; --paper:#F5F2ED; --surface:#FFFCF7; --surface-muted:#E6E4DD;
+  --ink:#2B2A27; --ink-soft:#3A3835; --ink-mut:#767672;
+  --wood:#B9A48E; --moss:#7E8F7D; --clay:#9C8A7A;
+  --border:#D6D2C7; --hair:#D6D2C7;
+  --orange:#9C8A7A; --blue:#4A7CB8; --yellow:#D9C36C; --green:#6B9B7A;
+  --void:#F5F2ED; --void-2:#E6E4DD;
   --mono:ui-monospace,"IBM Plex Mono",Menlo,monospace; --sans:ui-sans-system,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
   --shadow:0 2px 12px rgba(43,42,39,0.06);
   --r:16px
@@ -41,7 +41,7 @@ a{color:inherit;text-decoration:none}
 .mono{font-family:var(--mono);font-size:11px;letter-spacing:.03em;text-transform:uppercase}
 .mono-sm{font-family:var(--mono);font-size:10.8px;color:var(--ink-mut);text-transform:uppercase;letter-spacing:.05em}
 /* hero void replaced warm */
-.hero-void{background:radial-gradient(1100px 600px at 18% -10%,#FFFCF7 0%,#F5F2ED 52%,#EDE7DC 100%);color:var(--ink);border-bottom:1.1px solid var(--border);position:relative;overflow:hidden}
+.hero-void{background:radial-gradient(1100px 600px at 18% -10%,#FFFCF7 0%,#F5F2ED 52%,#E6E4DD 100%);color:var(--ink);border-bottom:1.1px solid var(--border);position:relative;overflow:hidden}
 .wrap{max-width:1080px;margin:0 auto;padding:0 14px}
 .hero-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:14px;padding:14px 0}
 @media(max-width:860px){.hero-grid{grid-template-columns:1fr}}
@@ -79,12 +79,14 @@ canvas{display:block;width:100%;height:380px}
 /* share overlay warm */
 .share-pop{position:fixed;inset:0;background:rgba(245,242,237,.78);backdrop-filter:blur(10px);z-index:80;display:none;place-items:center;padding:14px}
 .share-pop.on{display:grid}
-.share-card{width:min(720px,96vw);background:#F5F2ED;border:1.1px solid #DED5C4;border-radius:16px;overflow:hidden;box-shadow:0 8px 24px rgba(43,42,39,0.12)}
+.share-card{width:min(720px,96vw);background:#F5F2ED;border:1.1px solid #D6D2C7;border-radius:16px;overflow:hidden;box-shadow:0 8px 24px rgba(43,42,39,0.12)}
 /* OKABE warm desaturated 0.84 */
 .okabe-dot{opacity:0.84}
 /* Built free footer */
-.footer-built{color:#6B6560;font-family:var(--mono);font-size:10px;letter-spacing:.05em}
+.footer-built{color:#767672;font-family:var(--mono);font-size:10px;letter-spacing:.05em}
 
+
+body::after{content:'';position:fixed;top:-20%;right:-15%;width:120%;height:120%;background:radial-gradient(800px 600px at 80% 15%, rgba(126,143,125,0.02), transparent 70%);pointer-events:none;z-index:1} /* moss wash 0.02 */
 </style>
 </head>
 <body>
@@ -225,6 +227,8 @@ canvas{display:block;width:100%;height:380px}
 @keyframes magicPop{0%{transform:scale(.86) rotate(-1deg)}38%{transform:scale(1.08) rotate(.8deg)}100%{transform:scale(1) rotate(0)}}
 .share-card.magic{animation:magicPop 620ms cubic-bezier(.22,1,.36,1) both}
 #shareCard{image-rendering:crisp-edges}
+
+body::after{content:'';position:fixed;top:-20%;right:-15%;width:120%;height:120%;background:radial-gradient(800px 600px at 80% 15%, rgba(126,143,125,0.02), transparent 70%);pointer-events:none;z-index:1} /* moss wash 0.02 */
 </style>
 
 
@@ -320,24 +324,24 @@ function resizeCanvas(){ let r=c.getBoundingClientRect(); c.width=r.width*DPR; c
 function drawBase(curObj){
   let W=c.clientWidth,H=c.clientHeight;
   ctx.clearRect(0,0,W,H);
-  ctx.fillStyle='#F5F2ED'; ctx.fillRect(0,0,W,H);
+  ctx.fillStyle='#F5F2ED'; ctx.fillRect(0,0,W,H); ctx.strokeStyle='#7E8F7D'; ctx.lineWidth=8; ctx.strokeRect(4,4,W-8,H-8); /* moss border japandi */
   // starfield cheap
   ctx.fillStyle='rgba(250,250,248,.34)'; for(let i=0;i<0;i++){ // japandi no stars let X=(i*149)%W; let Y=(i*223)%H; ctx.fillRect(X,Y,1.1,1.1);}
   // modern pool
   if(!gameData||!gameData.modern){ return; }
   let m=vhMapXY();
   // OKABE visible on dark per masterclass — increase alpha/size
-  const OKABE=['#4A7CB8','#C98345','#6B9B7A','#C68FA8','#D9C36C','#8CB4D6','#D0AE80','#A76E43']; // fallback
+  const OKABE=['#6D8A7F','#9A8C7B','#7B9A86','#9C8EA0','#A9A28A','#7E8F7D','#8C9B8F','#9A978F']; // fallback greyscale moss
   gameData.modern.forEach(pt=>{
     let X=m.sx(pt.x), Y=m.sy(pt.y);
-    ctx.fillStyle=pt.c!=null? (['#4A7CB8','#C98345','#6B9B7A','#C68FA8','#D9C36C','#8CB4D6','#D0AE80','#A76E43'][pt.c%8]||'#ced4da'):'#9aa0a6';
-    ctx.globalAlpha=0.92;
+    ctx.fillStyle=pt.c!=null? (['#4A7CB8','#C98345','#6B9B7A','#C68FA8','#D9C36C','#8CB4D6','#B9A48E','#9C8A7A'][pt.c%8]||'#ced4da'):'#9aa0a6';
+    ctx.globalAlpha=0.80;
     ctx.beginPath(); ctx.arc(X,Y,pt.isCurrent?3.4:2.4,0,Math.PI*2); ctx.fill(); ctx.globalAlpha=1;
   });
   if(curObj){
     let X=m.sx(curObj.x), Y=m.sy(curObj.y);
     ctx.strokeStyle='#eb6834'; ctx.lineWidth=2.2; [28,52,84].forEach(r=>{ctx.beginPath(); ctx.arc(X,Y,r,0,Math.PI*2); ctx.stroke();});
-    ctx.fillStyle='#768B74' /*japandi moss current*/; ctx.font='22px monospace'; ctx.fillText('◎',X-11,Y+7);
+    ctx.fillStyle='#7E8F7D' /*japandi moss current*/; ctx.font='22px monospace'; ctx.fillText('◎',X-11,Y+7);
   }
 }
 function pulseRing(){
@@ -510,7 +514,7 @@ function tierColor(score){ if(score>=0.68) return '#1ECC8A'; if(score>=0.5) retu
 function makeShareCard(){
   let sc=$('shareCard'); if(!sc) return; let sx=sc.getContext('2d');
   // background void + subtle star dust
-  sx.fillStyle='#F5F2ED' /*japandi*/; sx.fillRect(0,0,1200,630);
+  sx.fillStyle='#F5F2ED'; sx.fillRect(0,0,1200,630); sx.strokeStyle='#7E8F7D'; sx.lineWidth=8; sx.strokeRect(4,4,1192,622); /* moss border japandi */ sx.strokeStyle='#7E8F7D'; sx.lineWidth=8; sx.strokeRect(4,4,1192,622); /* moss border japandi */
   // stars faint
   sx.fillStyle='rgba(250,250,248,.34)'; for(let i=0;i<0;i++){ // japandi grain instead let X=(i*137)%1180+16; let Y=(i*197)%520+22; sx.fillRect(X,Y,1.2,1.2); }
   // top bar

@@ -25,7 +25,7 @@ a{color:inherit;text-decoration:none}
 /* 44px POV strip top40 z40 bottom border masterclass */
 .pov-strip{position:sticky;top:40px;z-index:40;min-height:44px;height:44px;display:flex;align-items:center;gap:8px;padding:0 12px;overflow-x:auto;overscroll-behavior-x:contain;background:rgba(250,250,248,.92);backdrop-filter:blur(10px);border-bottom:2px solid var(--ink)}
 .pov-pill{min-height:36px;padding:0 13px;border:2px solid var(--ink);border-radius:999px;background:#fff;font-family:var(--mono);font-weight:800;font-size:11px;text-transform:uppercase;letter-spacing:.03em;white-space:nowrap;box-shadow:1.8px 1.8px 0 var(--ink);cursor:pointer;flex:0 0 auto;scroll-snap-align:start}
-.pov-pill.on{background:var(--yellow);transform:rotate(-.6deg)}
+.pov-pill.on{background:#84948A;transform:rotate(-.6deg);color:#FFFCF9;border-color:#D6DAD7;box-shadow:2px 2px 0 #1E1C1B}}
 .mono{font-family:var(--mono);font-size:11px;letter-spacing:.03em;text-transform:uppercase}
 .mono-sm{font-family:var(--mono);font-size:10.8px;color:var(--ink-mut);text-transform:uppercase;letter-spacing:.05em}
 .hero-void{background:radial-gradient(1100px 600px at 18% -10%,#1A233A 0%,#121A2D 32%,var(--void) 72%);color:#FEFCF9;border-bottom:2px solid var(--ink);position:relative;overflow:hidden}
@@ -72,6 +72,7 @@ canvas{display:block;width:100%}
 
 .footer-built{color:#888;font-family:var(--mono);font-size:10px;letter-spacing:.05em}
 footer{color:#888!important}
+.pov-pill.on::after{content:"";display:inline-block;width:6px;height:6px;background:#9AA5A0;border-radius:50%;margin-left:6px;vertical-align:middle} /* nav moss dot */
 </style>
 <style id="paper-theme">
 :root{--void:#FEFCF9;--void-2:#F4F0E8;--paper:#FEFCF9;--surface:#FFFFFF;--surface-muted:#F4F0E8;--ink:#1E1C1B;--hair:#E5E2DC;--shadow:4px 4px 0 #1E1C1B}
@@ -82,15 +83,16 @@ html,body{background:var(--paper)!important;color:#1E1C1B!important}
 .card{background:var(--surface)!important;border-color:#1E1C1B!important}
 .canvas-box{background:#F4F0E8!important}
 .pov-pill{border-color:#1E1C1B!important;background:#fff!important}
-.pov-pill.on{background:#F0E442!important;box-shadow:2px 2px 0 #1E1C1B!important}
+.pov-pill.on{background:#84948A;box-shadow:2px 2px 0 #1E1C1B!important;color:#FFFCF9;border-color:#D6DAD7;box-shadow:2px 2px 0 #1E1C1B}}
 .pill{background:#fff!important;border-color:#1E1C1B!important}
 .mono-sm{color:#6b6760!important}
 footer{border-top:1.6px dashed #E5E2DC!important;color:#6b6760!important}
-/* OKABE darker stroke 1.3px + alpha 0.94 */
+/* OKABE muted moss 0.88 alpha greygreen */
 canvas{filter:none}
 /* starfield disabled for paper */
 .star{display:none!important}
 #confetti{display:none!important}
+.pov-pill.on::after{content:"";display:inline-block;width:6px;height:6px;background:#9AA5A0;border-radius:50%;margin-left:6px;vertical-align:middle} /* nav moss dot */
 </style>
 
 </head>
@@ -259,7 +261,7 @@ const VEGAS_LINES = {
 const TEAM_META = {
   "ATL":{city:"Atlanta Hawks",conf:"E",arch:"Rim-Run+Creat"}, "BKN":{city:"Brooklyn Nets",conf:"E",arch:"Rebuild-Shooting"}, "BOS":{city:"Boston Celtics",conf:"E",arch:"Tatum-less-Halfcourt"}, "CHA":{city:"Charlotte Hornets",conf:"E",arch:"Young-Guard"}, "CHI":{city:"Chicago Bulls",conf:"E",arch:"Mid-Vendor"}, "CLE":{city:"Cleveland Cavaliers",conf:"E",arch:"Two-Big-O"}, "DAL":{city:"Dallas Mavericks",conf:"W",arch:"Cooper-Flag-Rise"}, "DEN":{city:"Denver Nuggets",conf:"W",arch:"Jokic-O-Engine"}, "DET":{city:"Detroit Pistons",conf:"E",arch:"Youth-Big"}, "GSW":{city:"Golden State Warriors",conf:"W",arch:"Curry-Grav"}, "HOU":{city:"Houston Rockets",conf:"W",arch:"Length-D"}, "IND":{city:"Indiana Pacers",conf:"E",arch:"Pace-n-Space"}, "LAC":{city:"LA Clippers",conf:"W",arch:"Wing-Depth"}, "LAL":{city:"Los Angeles Lakers",conf:"W",arch:"Luka+BRON"}, "MEM":{city:"Memphis Grizzlies",conf:"W",arch:"Grit-n-Grind-2"}, "MIA":{city:"Miami Heat",conf:"E",arch:"Culture-D"}, "MIL":{city:"Milwaukee Bucks",conf:"E",arch:"Giannis-Solo"}, "MIN":{city:"Minnesota Timberwolves",conf:"W",arch:"Ant-Big-D"}, "NOP":{city:"New Orleans Pelicans",conf:"W",arch:"Zion-Health"}, "NYK":{city:"New York Knicks",conf:"E",arch:"Thibs-Depth"}, "OKC":{city:"Oklahoma City Thunder",conf:"W",arch:"Champ-Fav"}, "ORL":{city:"Orlando Magic",conf:"E",arch:"Length-D-II"}, "PHI":{city:"Philadelphia 76ers",conf:"E",arch:"Embiid-Health"}, "PHX":{city:"Phoenix Suns",conf:"W",arch:"Booker-Solo"}, "POR":{city:"Portland Trail Blazers",conf:"W",arch:"Scoot-Growth"}, "SAC":{city:"Sacramento Kings",conf:"W",arch:"Lite-Beam"}, "SAS":{city:"San Antonio Spurs",conf:"W",arch:"Wemby-Leap"}, "TOR":{city:"Toronto Raptors",conf:"E",arch:"Long-Bois"}, "UTA":{city:"Utah Jazz",conf:"W",arch:"Tank-8"}, "WAS":{city:"Washington Wizards",conf:"E",arch:"Tank-9"}
 };
-const OKABE8=['#2A8FEF','#FF7A1A','#1ECC8A','#E67BB1','#F8E946','#7EC8FF','#FFB000','#FF4D67'];
+const OKABE=['#6D859E','#A88B76','#7D9585','#A88F9A','#B8B08A','#8A9FAE','#A0987F','#9B8E91'];
 // state
 let dailyStr=qDaily();
 let seed=seedFromDate(dailyStr);
@@ -419,7 +421,7 @@ function drawMap(){
     let col=OKABE8[j%8];
     // conf marker for E/W? simple color by conf
     if(TEAM_META[tm]?.conf==='E') col=OKABE8[(j*3)%8];
-    ctx.globalAlpha=0.92;
+    ctx.globalAlpha=0.88;
     ctx.fillStyle=col;
     ctx.beginPath(); ctx.arc(x,y, isCur?3.4:2.4,0,Math.PI*2); ctx.fill();
     ctx.globalAlpha=1;
