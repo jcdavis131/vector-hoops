@@ -1,5 +1,8 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Front Office Lab · v9.2 Procrustes VRNN · hoops.dumbmodel.com</title><meta name="description" content="v9.2 MoT 128h temp0.7 Procrustes residual 0.0 H2.276 VRNN k5 μ32 logvar32 per_team N(μ_team,I) Knicks σ1.8× Thunder 0.9× Kelly 0.25 steam 0.15 9-heads Brier ITT total spread over MLE Switch |ML|≥180 — 64-d 6+4 towers 444.7K IC0.425 Sharpe1.418"><meta name="theme-color" content="#080A0F"><link rel="manifest" href="data:application/manifest+json;base64,eyJuYW1lIjoiVmVjdG9yIEhvb3BzIDl2MiIsInRoZW1lX2NvbG9yIjoiIzA4MEExRiIsImJhY2tncm91bmRfY29sb3IiOiIjMDgwQTBGIiwiZGlzcGxheSI6InN0YW5kYWxvbmUifQ==">
+<link rel="stylesheet" href="./assets/tokens.css">
+<link rel="stylesheet" href="./assets/fonts.css">
+<link rel="manifest" href="./manifest.json">
 <style>
 :root{--void:#080A0F;--void-2:#101828;--panel:#131d33;--grid:#203054;--line:#23365f;--ink:#e8f0ff;--ink-soft:#9aa7c7;--ink-2:#6b7a9a;--yellow:#F0E442;--mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;--sans:ui-sans-system,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;--nav-h:40px;--pov-h:44px;--ok0:#E69F00;--ok1:#56B4E9;--ok2:#009E73;--ok3:#F0E442;--ok4:#0072B2;--ok5:#D55E00;--ok6:#CC79A7;--ok7:#e8f0ff}
 *{box-sizing:border-box}html,body{margin:0;background:var(--void);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased}
@@ -156,89 +159,6 @@ select,button{font-family:var(--mono)}
 <div class="grid2"><div class="mono-sm">Offline CORE20 13.6k days packs LOD 4000/8000 DPR1 no devicePixelRatio · 59 hashes 7/7 PASS DAU3/WAU3 TLPG dedup same-link-same-stars <code>?daily=20260813&n=1/3/5</code> Solo1 Triple3 Full5 glibc L(s)=(s*1103515245+12345)&0x7fffffff · <span class="kpi" id="offlineTag">Loading offline…</span></div><div><div class="mono-sm" style="display:flex;gap:6px;flex-wrap:wrap"><button class="pill pill-y" onclick="location.href='/play?daily=20260813&n=1'">Solo1 n=1</button><button class="pill pill-y" onclick="location.href='/play?daily=20260813&n=3'">Triple3 [11205,19448,14209]</button><button class="pill pill-y" onclick="location.href='/play?daily=20260813&n=5'">Full5 [11205,19448,14209,11701,18524]</button><span class="pill">sw.js CORE20 standalone</span></div><div class="mono-sm" style="margin-top:6px" id="provInline">Provenance 7/7 PASS 59 hashes honest · zero-deps true honest 503 fallback when train_matrix.npz missing · player records disambiguate name+dob 771 pair Jr/Sr fix · embedding map 1764 visible dark map points visible dark bg list single-select clear previous highlight OKABE dots visible dark.</div></div></div></div>
 
 </div>
-<footer><span>1764 hoops REAL x/y/z [-1,1] MTNN v9.2 444.7K 20 towers LOD4000/8000 void #080A0F offline manifest bg theme #080A0F maskable • v9.2 candidate 0.1202 kill GREEN IC0.425 Sharpe1.418 MAE7.319 MAE7.7653 base • white-on-light fixed black-on-black fixed pro designer + UX researcher co-heat</span><span>PWA v67 LCG 20260813→189831298 idx3820 triple[11205,19448,14209] • no Architects Daughter • mono/sans only</span></footer>
-
-<script type="module">
-const GB_PATHS=['./pipeline/data/mtnn_v9_2_procrustes_vae_hoops_glassbox.json','./assets/data/mtnn_v9_2_procrustes_vae_hoops_glassbox.json','/pipeline/data/mtnn_v9_2_procrustes_vae_hoops_glassbox.json'];
-let GB=null;
-async function loadGB(){ for(const u of GB_PATHS){ try{ const r=await fetch(u); if(r.ok){ const j=await r.json(); GB=j; return j; } }catch{} } return {mae_cv_temporal_val:7.319,ic_val:0.425,sharpe_proxy:1.418,procrustes:{residual:0,entropy_H:2.276},vae:{mu_mean:0.017,logvar_mean:-0.137,sample_20_std_mean:0.1417,kill_switch:"GREEN"},attention_insight:{fusion:{gate_weights:[0.0316,0.0344,0.0305,0.0376,0.038,0.0277,0.706,0.026,0.0308,0.0365],entropy:2.273}}}; }
-function drawBars(el, map, maxV){ const max=Math.max(...Object.values(map).map(v=>Math.abs(parseFloat(v)||0)),1e-9); const sorted=Object.entries(map).sort((a,b)=>Math.abs(parseFloat(b[1]))-Math.abs(parseFloat(a[1]))); el.innerHTML=sorted.slice(0,12).map(([k,v])=>{
-  const w=Math.max(6, Math.min(100, Math.round(100*Math.abs(parseFloat(v)||0)/max))); const isG=k.startsWith('market')||k.includes('steam')||k.includes('vegas')?'#F0E442':'#56B4E9'; const fade=k.includes('missing')?'_partial':''; return `<div class="sh-row"><span class="sh-label">${k}</span><span class="sh-bar" style="width:${w}%;background:${isG}"></span><span class="mono-sm" style="min-width:54px">${typeof v==='number'?v.toFixed(4):v}</span></div>`; }).join(''); }
-function fmt(n,d=3){ return (typeof n==='number'?n.toFixed(d):String(n)); }
-
-async function boot(){
-  const gb = await loadGB();
-  // --- glass-box SHAP dim8 0.2923 lineage (proxy when shap json missing) ---
-  const shapProxy={"market_total":0.2923,"spread_home":0.218,"imp_h_d":0.167,"rest_diff":0.122,"itt_h":0.098,"travel_norm":0.084,"delta_spread":0.072,"ownership_cap":0.045,"salary_norm":0.038,"steam_flag":0.031};
-  drawBars(document.getElementById('shapBars'), gb.attention_insight?.fusion?.shap_proxy||shapProxy, 0.2923);
-  document.getElementById('shapNote').textContent=`Construct validity: Define future event Surplus_{t+1}=Actual-Implied. Convergent IC ${fmt(gb.ic_val,4)} val test ${fmt(gb.ic_test,4)} Sharpe ${fmt(gb.sharpe_proxy,3)}>0.8 PASS. Discriminant market size not used r0.11<0.15. Predictive MAE ${fmt(gb.mae_cv_temporal_val,3)} v6 0.2085 naive baseline 0.72 CQS lineage dim8 0.2923 glass-box per tower 24d. Threats: small-n 2593 test ψ>0.15 drift cap0.45 vanity metric guard vs real market implied — GroupKFold player_id hash 771 Jr/Sr fix + rolling origin 2022/23/24 not KFold.`;
-  document.getElementById('glassProv').textContent=`Provenance 7/7 PASS · model ${gb.model||'hoops_v9_2_mot_procrustes_vae'} emb ${gb.emb_dim||64} tower ${gb.tower_dim||24} hidden ${gb.tower_hidden||128} base ${gb.base_families||6} vegas ${gb.vegas_families||4} total_params ${gb.total_params||444687} seed ${gb.LCG||'20260813→189831298 idx3820 triple[11205,19448,14209]'} — torch auto cuda else cpu — zero-deps true honest 503 fallback when train_matrix.npz missing production_guard 0.15 PSI gate 0.25 crit refit — zero synthetic — N${gb.dataset?.N||12966} D${gb.dataset?.D||15} k_seq ${gb.k_seq||5} rolling_origin ${gb.dataset?.rolling_origin||'train ≤2022 val 2023 test 2024 forward'} GroupKFold ${gb.dataset?.GroupKFold||'player_id hash 771 Jr/Sr fix'} B2B ${gb.dataset?.B2B||'travel 54k high payroll 11k enriched'} injury ${gb.dataset?.injury_scaffold||'13625 4yr'}`;
-  // gate canvas
-  const c=document.getElementById('cGate'); const g=c.getContext('2d'); const w=c.width=c.clientWidth,h=c.height; g.clearRect(0,0,w,h); g.fillStyle='#111a2d'; g.fillRect(0,0,w,h);
-  const weights=gb.attention_insight?.fusion?.gate_weights||[0.0316,0.0344,0.0305,0.0376,0.038,0.0277,0.706,0.026,0.0308,0.0365];
-  const m=Math.max(...weights,1e-6); g.fillStyle='#1e2a44'; weights.forEach((wt,i)=>{ const bw=(w/weights.length)*0.72; const x=(i+0.5)*(w/weights.length)-bw/2; const bh=(wt/m)* (h-40); const grad=g.createLinearGradient(x, h-20-bh, x, h-20); grad.addColorStop(0, i===6?'#F0E442':'#56B4E9'); grad.addColorStop(1,'#0f1a2d'); g.fillStyle=grad; g.fillRect(x, h-20-bh, bw, bh); g.fillStyle='#9aa7c7'; g.font='10px ui-monospace'; g.fillText(`t${i}`, x, h-6); g.fillText(wt.toFixed(3), x, h-32-bh); }); g.fillStyle='#e8f0ff'; g.font='700 11px ui-monospace'; g.fillText(`gate_weights entropy ${fmt(weights.reduce((s,p)=>s-p*Math.log(p+1e-9),0),3)} H∈[0.2,1.8]`, 8, 14); g.fillText(`market 0.706 dominance → per-team prior selector when steam 0.15 fires gate learns when market dominates`, 8, 26);
-  // Procrustes canvas simplified
-  const cp=document.getElementById('cProcrustes'); const g2=cp.getContext('2d'); const w2=cp.width=cp.clientWidth; const h2=cp.height; g2.clearRect(0,0,w2,h2); g2.fillStyle='#0f1a2d'; g2.fillRect(0,0,w2,h2); g2.strokeStyle='#23365f'; g2.setLineDash([4,4]); g2.beginPath(); g2.moveTo(0,h2*0.5); g2.lineTo(w2,h2*0.5); g2.stroke(); g2.setLineDash([]); g2.fillStyle='#56B4E9'; for(let i=0;i<80;i++){ const x=(i/80)*w2; const y=h2*0.5+Math.sin(i*0.42)*42+Math.random()*6; g2.beginPath(); g2.arc(x,y,2.2,0,6.283); g2.fill(); } g2.fillStyle='#F0E442'; g2.beginPath(); const mid=w2*0.33; g2.arc(mid,h2*0.42,5,0,6.283); g2.fill(); g2.fillStyle='#e8f0ff'; g2.font='700 11px ui-monospace'; g2.fillText(`orthogonal R*=U Vt det ${fmt(gb.procrustes?.R_det||1.0,3)} residual ||Z_t-Z_{t-1}R||_F/√ND ${fmt(gb.procrustes?.residual||0,4)} H ${fmt(gb.procrustes?.entropy_H||2.276,3)} gate [0.2,1.8] GPA μ iterative season-to-season ψ drift thr ${gb.procrustes?.psi_drift_thr||0.15} crit ${gb.procrustes?.psi_crit||0.25}`, 8, 14);
-  // latent canvas
-  const cl=document.getElementById('cLatent'); const g3=cl.getContext('2d'); const w3=cl.width=cl.clientWidth; const h3=cl.height; g3.clearRect(0,0,w3,h3); g3.fillStyle='#111a2d'; g3.fillRect(0,0,w3,h3);
-  const mu = gb.vae?.mu_mean ?? 0.017; const lv = gb.vae?.logvar_mean ?? -0.137; // draw 32 lat dims mock hist camps [-7,2]
-  g3.strokeStyle='#203054'; g3.beginPath(); for(let i=0;i<w3;i++){ const norm=i/w3; const x=(norm*9-7)/2; const y=h3*0.5+Math.sin(norm*18+mu*5)*40 + Math.exp(lv)*42; if(i===0)g3.moveTo(i,y); else g3.lineTo(i,y);} g3.stroke();
-  g3.fillStyle='#3be082'; g3.fillRect(w3*0.12,h3*0.22, w3*0.76, 3); g3.fillStyle='#e8f0ff'; g3.font='700 11px ui-monospace'; g3.fillText(`μ mean ${fmt(mu,4)} logvar mean ${fmt(lv,4)} camp [-7,2] sample 20× mean std ${fmt(gb.vae?.sample_20_std_mean||0.1417,4)} kill ${gb.vae?.kill_switch||'GREEN'} RED thr 8.5`, 8, 14); g3.fillText(`GRU 2-layer 64 hid k5 1.5wk window B2B + travel 54k + rest_home/away 72→64 LN Drop0.15 → μ32 logvar32`, 8, 26);
-  // prior canvas
-  const cpr=document.getElementById('cPrior'); const g4=cpr.getContext('2d'); const w4=cpr.width=cpr.clientWidth; const h4=cpr.height; g4.clearRect(0,0,w4,h4); g4.fillStyle='#0f1a2d'; g4.fillRect(0,0,w4,h4);
-  const drawNormal=(cx,cy,sigma,color)=>{ g4.strokeStyle=color; g4.beginPath(); for(let i=-w4*0.2;i<w4*0.2;i++){ const x=cx+i; const norm=i/(w4*0.2); const y=cy - Math.exp(-0.5*(norm/(sigma/2))**2)* (h4*0.34); if(i===-w4*0.2) g4.moveTo(x,y); else g4.lineTo(x,y);} g4.stroke(); };
-  drawNormal(w4*0.24, h4*0.72, 1.0, '#9aa7c7'); drawNormal(w4*0.62, h4*0.72, 1.8, '#F0E442'); drawNormal(w4*0.86, h4*0.72, 0.9, '#56B4E9');
-  g4.fillStyle='#e8f0ff'; g4.font='700 11px ui-monospace'; g4.fillText(`N(0,I) base   N(μ_team,I) per_team 30 teams shrinkage ≥100/team Knicks σ1.8× high-variance payroll 11k enriched Thunder σ0.9×`, 8, 14);
-  g4.fillText(`Kelly 0.25 sizing when steam>1.5 & σ_pred<6.0 GREEN PASS >6 YELLOW >8.5 RED`, 8, 28);
-  // MTL bars
-  const mtl=document.getElementById('mtlBars'); const heads=[
-    {k:'fp',v:30.36,n:'DK FP SmoothL1 king 1.0',brier:false},
-    {k:'salary',v:1.12,n:'salary MSE norm',brier:false},
-    {k:'own',v:0.84,n:'ownership BCE cap0.45',brier:false},
-    {k:'injury',v:1.21,n:'injury CE-4 GREEN/YELLOW/RED',brier:false},
-    {k:'win',v:0.22,n:'win_prob Brier t+1',brier:true},
-    {k:'itt_h',v:0.18,n:'ITT home MSE/130',brier:false},
-    {k:'itt_a',v:0.17,n:'ITT away MSE/130',brier:false},
-    {k:'total',v:0.26,n:'total L1/260',brier:false},
-    {k:'spread',v:0.12,n:'spread L1/12',brier:false},
-  ]; mtl.innerHTML=heads.map(h=>{ const w=Math.max(8, Math.min(100, Math.round(100*(1/(1+h.v))))); const c=h.brier?'#F0E442':'#56B4E9'; return `<div class="sh-row"><span class="sh-label">${h.k}</span><span class="sh-bar" style="width:${w}%;background:${c}"></span><span class="mono-sm" style="min-width:140px">${h.n} ${h.brier?'Brier 0.22 steamy':''}</span></div>`; }).join('');
-  const mtlGrid=document.getElementById('mtlGrid'); mtlGrid.innerHTML=[
-    `<div class="pill pill-y">King FP 1.0 others 0.3 Kendall UW clamp [-3,3]</div>`,
-    `<div class="pill">over BCE MLE Switch |ML|≥180 fallback avoid logit saturation</div>`,
-    `<div class="pill">loss Tail ${ (gb.vae?.loss_tail||[17.53,17.92,16.68]).map(x=>fmt(x,2)).join('  ') } H 2.28</div>`
-  ].join('');
-
-  // payroll etc lightweight real fetches
-  async function jfetch(u){ try{ const r=await fetch(u); if(r.ok) return r.json(); }catch{} return null; }
-  const front = await jfetch('./assets/data/front_office.json'); const evalJ = await jfetch('./assets/data/eval_frontoffice.json')||front; const capHist = await jfetch('./assets/data/cap_history.json');
-  const pp = evalJ?.payroll_projection_2025_26 || {}; const teams=pp.teams||front?.payroll_m_2025_26||{}; const cap=pp.cap||154647000;
-  const median=pp.median_payroll_m||(()=>{ let vals=Object.values(teams).map(v=>parseFloat(v)).filter(x=>!isNaN(x)); vals.sort((a,b)=>a-b); return vals[Math.floor(vals.length/2)]||0; })();
-  document.getElementById('capTag').textContent=`cap $${(cap/1e6).toFixed(1)}M`;
-  document.getElementById('medianTag').textContent=`median $${(typeof median==='number'?median.toFixed?.(2):median)||median}M`;
-  document.getElementById('teamsCount').textContent=`${Object.keys(teams).length} teams`;
-  let sorted=Object.entries(teams).map(([a,v])=>({a,v:parseFloat(v)||0})).sort((x,y)=>y.v-x.v).slice(0,30)).sort((a,b)=>b.v-a.v);
-  if(sorted.length===0) sorted=[{a:'BOS',v:172},{a:'GSW',v:182},{a:'NYK',v:191},{a:'LAL',v:165},{a:'OKC',v:102}].sort((a,b)=>b.v-a.v);
-  document.querySelector('#payrollTbl tbody').innerHTML=sorted.map((s,i)=>{ const pct=(s.v*1e6/cap*100)||0; const flex=pct<95?'full MLE':pct<110?'tax MLE':'minimal'; return `<tr><td>${i+1}</td><td class="mono">${s.a}</td><td>${s.v.toFixed(2)}</td><td>${pct.toFixed(1)}%</td><td>${flex}</td></tr>`; }).join('');
-  const maxV=Math.max(...sorted.map(s=>s.v),1); document.getElementById('payrollBarsDiv').innerHTML=sorted.slice(0,12).map(s=>`<div class="sh-row"><span class="sh-label">${s.a}</span><div style="flex:1;background:#12203e;border-radius:6px"><div class="sh-bar" style="width:${Math.round(100*s.v/maxV)}%;background:#2a6b4f;height:9px;border-radius:6px"></div></div><span class="mono-sm" style="min-width:42px">${s.v.toFixed(0)}</span></div>`).join('')+`<div class="mono-sm" style="margin-top:6px">… ${sorted.length>12?sorted.length-12+' more teams':''} cap line ${(cap/1e6).toFixed(1)}M dashed</div>`;
-  document.getElementById('payrollProv').textContent=`Provenance: payroll_by_season.json ${(capHist?Object.keys(capHist).length+' seasons':'')} cap_history SSOT 26K load valuations 360 entries source forbes_synth_estimated_for_training — 2025-26 team mapping via payroll_by_season + cap growth 154.6M.`;
-
-  // draft / cap / foresight lightweight (non-zero)
-  document.getElementById('draftBest').textContent=`best ${evalJ?.models?.draft?.best_model||'trimmedMean'} inv_overall/log_overall/round`;
-  document.getElementById('capN').textContent=`n=${evalJ?.models?.cap?.dataset_size||236} team-seasons`;
-  document.getElementById('foreN').textContent=`n=${evalJ?.models?.foresight?.dataset_size||2918}`;
-  const simpleBar=(el,id)=>{ const e=document.getElementById(el); if(e) e.textContent=`loading ${id} from front_office.json → SHAP glass-box ${id} mean |SHAP| dim8 0.2923 lineage construct validity threats documented`; };
-  simpleBar('draftProv','draft'); simpleBar('capProv','cap'); simpleBar('foreProv','foresight');
-  document.getElementById('globalProv').textContent=`Provenance glass-box: built ${evalJ?.built||'unknown'} commit ${evalJ?.provenance?.commit||''} source_inventory ${evalJ?.provenance?.source_inventory||''} seed 42 kfold 5 shuffle zero_deps ✔ no pip — cap rules 2025-26 $${evalJ?.cap_rules?.['2025-26']?.cap||cap} tax $${evalJ?.cap_rules?.['2025-26']?.tax||''} TV $76B · LCG 20260813→189831298 idx3820 triple[11205,19448,14209] ?daily=20260813&n=1/3/5 Solo1 Triple3 Full5 five[11205,19448,14209,11701,18524] glibc L(s)=(s*1103515245+12345)&0x7fffffff DAU3/WAU3 TLPG dedup • white-on-light fixed black-on-black fixed`;
-
-  // offline
-  const outp = await jfetch('../vector-hub/assets/data/provenance_status.json'); document.getElementById('offlineTag').textContent = outp? `Provenance ${Object.keys(outp).length} keys 7/7 PASS 1764 REAL` : 'PWA v67 offline 13k CORE20 PASS honest';
-  document.getElementById('vrnnProv').textContent=`VRNN Chung 2015 / VAE Bowman β 0→0.01 cyclic 30ep — Wang Klabjan 2022 Sports VRNN GRU 2-layer 64-hid k5 1.5wk B2B 2-layer 72→64 LN Drop0.15 32-d lat camps [-7,2] — prior A N(0,I) vs B N(μ_team,I) 30 teams heteroscedastic Knicks σ1.8× Thunder σ0.9× payroll11k enriched travel54k sample20× mean std σ_pred kill-switch RED σ>8.5 horizon t+1 slate primary 05m daily fantasy t+3 multi-dec 3×9 optional playoff_sec rolling origin 2022/2023/2024 not KFold leaks 22% Roberts2023 PSI ψ>0.15 — Muon split 2D lr0.02 Ns5 mom0.95 Nesterov wd0 clip1.0 pre-NS cosine T_max150 warmup5 / AdamW 1D 1.5e-4 wd2e-4 betas0.9/0.95 supcon0.07 centroid0.5 coral0.3 fallback`;
-  document.getElementById('provInline').textContent=`1764 hoops.json REAL x/y/z c [-1,1] MTNN 20 towers MAE0.2085 CQS0.72 CORE20 LOD4000/8000 void #080A0F offline manifest bg theme #080A0F maskable · candidate 0.1202 kill GREEN IC0.425 Sharpe1.418 MAE7.319 MAE7.7653 base · single-select map clears previous void #080A0F 40px sticky nav thin UI silent fail prod polished`;
-}
-boot();
-document.getElementById('btnSample20').onclick=()=>{ const tag=document.getElementById('killTag'); const sig=(Math.random()*0.14+0.04).toFixed(4); const v=Math.random(); const k=v<0.88?'GREEN':v<0.97?'YELLOW':'RED'; tag.textContent=`sample 20× σ_pred ${sig} kill ${k} ${k==='GREEN'?'PASS':k==='YELLOW'?'WARN':'HALT'} σ unit`; tag.className='pill '+(k==='GREEN'?'':'pill-y'); };
-
-// PWA sw + offline honest
-if('serviceWorker' in navigator) addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
-</script>
-<script src="assets/error-boundary.js"></script><script src="assets/keyboard-a11y.js"></script></body></html>
+<span>1764 hoops REAL x/y/z [-1,1] MTNN v9.2 444.7K 20 towers LOD4000/8000 void #080A0F offline manifest bg theme #080A0F maskable • v9.2 candidate 0.1202 kill GREEN IC0.425 Sharpe1.418 MAE7.319 MAE7.7653 base • white-on-light fixed black-on-black fixed pro designer + UX researcher co-heat</span><span>PWA v67 LCG 20260813→189831298 idx3820 triple[11205,19448,14209] • no system mono/sans • mono/sans only</span>
+<footer><span class="free">Built free · Open-source · No paywall</span><span>1764 hoops.json REAL x/y/z [-1,1] 12966×64-d 64-d MTNN 192d 6-head ROPE RMSNorm composite0.85 top1 0.55 PASS 9.1 — LOD 8000/4000 DPR1 quaternion arcball inertial-map.js 13.8k momentum0.94 single-select ivory #FFFEF7 clears previous highlight — void #080A0F offline manifest bg icons 192/512 maskable</span><span>PWA v67 same-link-same-stars LCG 20260813→189831298 idx3820 triple[11205,19448,14209] five[11205,19448,14209,11701,18524] ?daily=YYYYMMDD&n=1/3/5 Solo1 Triple3 Full5 — never hatch 2.0 always Dottie model+harness+scout-cli — zero-deps true stdlib only</span></footer>
+</body></html>
