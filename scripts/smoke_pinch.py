@@ -281,7 +281,7 @@ def main() -> int:
         out = zoom()
         want = start * 146 / 80
         print(f"  spread   zoom {start} -> {out}   (80px -> 146px, so about {want:.2f})")
-        if not isinstance(out, (int, float)) or abs(out - want) > 0.12:
+        if not isinstance(out, int | float) or abs(out - want) > 0.12:
             fails.append(f"two fingers moved 80px -> 146px apart, a ratio of 1.83, and zoom "
                          f"went from {start} to {out} — {want:.2f} is what that gesture means")
 
@@ -289,7 +289,7 @@ def main() -> int:
         pinch(146, 80)
         back = zoom()
         print(f"  squeeze  zoom {mid} -> {back}")
-        if not isinstance(back, (int, float)) or back >= mid - 0.05:
+        if not isinstance(back, int | float) or back >= mid - 0.05:
             fails.append(f"two fingers moved 146px -> 80px apart and zoom went from "
                          f"{mid} to {back}; the map did not zoom out")
 
@@ -301,10 +301,10 @@ def main() -> int:
         lo = zoom()
         print(f"  clamp    {narrow:.0f}px<->{wide:.0f}px on a {span:.0f}px canvas "
               f"-> {hi} / {lo}   (bounds 0.55-3)")
-        if not isinstance(hi, (int, float)) or round(hi, 4) != 3:
+        if not isinstance(hi, int | float) or round(hi, 4) != 3:
             fails.append(f"spreading from {narrow:.0f}px to {wide:.0f}px should hit the "
                          f"camera's upper bound of 3 exactly; zoom is {hi}")
-        if not isinstance(lo, (int, float)) or round(lo, 4) != 0.55:
+        if not isinstance(lo, int | float) or round(lo, 4) != 0.55:
             fails.append(f"squeezing from {wide:.0f}px to {narrow:.0f}px should hit the "
                          f"camera's lower bound of 0.55 exactly; zoom is {lo}")
 
@@ -343,7 +343,7 @@ def main() -> int:
             fails.append(f"pinching with both fingers drifting down scrolled the page from "
                          f"{sy0} to {sy1}; the map moved out from under the gesture")
         want_zd = min(3.0, z_before * 150 / 80)
-        if not isinstance(zd, (int, float)) or abs(zd - want_zd) > 0.12:
+        if not isinstance(zd, int | float) or abs(zd - want_zd) > 0.12:
             fails.append(f"a pinch with 120px of vertical drift left zoom at {zd}; from "
                          f"{z_before:.3f} a 80px -> 150px spread means {want_zd:.2f} "
                          f"(the camera clamps at 3). The browser took the gesture as a scroll.")
@@ -367,10 +367,10 @@ def main() -> int:
         want_p = 100 * 0.005
         print(f"  tilt     two fingers slid 100px up -> pitch {tilt} (want {want_p:.2f}), "
               f"zoom {tz}, scrollY {sy2} -> {sy3}")
-        if not isinstance(tilt, (int, float)) or abs(tilt - want_p) > 0.08:
+        if not isinstance(tilt, int | float) or abs(tilt - want_p) > 0.08:
             fails.append(f"two fingers slid 100px up left pitch at {tilt}; the camera moves "
                          f"0.005 per pixel, so {want_p:.2f} is what that gesture means")
-        if not isinstance(tz, (int, float)) or abs(tz - z_slide) > 0.05:
+        if not isinstance(tz, int | float) or abs(tz - z_slide) > 0.05:
             fails.append(f"a slide with the fingers a constant 120px apart moved zoom from "
                          f"{z_slide} to {tz}; sliding is not pinching and must not zoom")
         if sy2 != sy3:

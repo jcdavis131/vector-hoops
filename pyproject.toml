@@ -66,6 +66,7 @@ ignore = [
     "N806",
     "N803",
     "N812",
+    "N802",
     "RUF001",
     "RUF002",
     "RUF003",
@@ -73,10 +74,9 @@ ignore = [
     "RUF007",
     "UP035",
     "UP006",
-    "UP045",
     "W293",
     "C408", "C420", "C401", "C416",
-    "RUF005", "RUF046", "RUF010", "RUF059", "RUF100", "RUF019", "RUF021", "RUF022", "RUF034",
+    "RUF005", "RUF046", "RUF010", "RUF100", "RUF019", "RUF021", "RUF022", "RUF034",
     "S110", "S112",
     "S310", "S311", "S324",
     "B007",
@@ -92,6 +92,7 @@ convention = "google"
 [tool.ruff.lint.per-file-ignores]
 "assets/manim/src/*.py" = ["F405", "F403", "F401", "E402", "E741", "F841", "W293", "E501", "E401", "E701", "E702", "I001"]
 "pipeline/*test*.py" = ["S101", "S603", "S607", "F401", "E402"]
+"scripts/smoke_wiki.py" = ["N802"]
 "pipeline/build_*.py" = ["E402", "S603", "S607", "E722", "F401", "I001", "E401", "E701", "E702", "F841", "B023", "C414", "RUF013", "RUF057", "PTH118"]
 "pipeline/train_mt.py" = ["E402", "E701", "E702"]
 "pipeline/train_mt_v53.py" = ["E701", "E702", "N816"]

@@ -43,7 +43,7 @@ def norm_name(name: str) -> str:
 
 
 def parse_salary(raw: str | float | int) -> float:
-    if isinstance(raw, (int, float)):
+    if isinstance(raw, int | float):
         return float(raw)
     cleaned = re.sub(r"[^0-9.]", "", str(raw).strip())
     if not cleaned:
@@ -54,7 +54,7 @@ def parse_salary(raw: str | float | int) -> float:
 def parse_cap_pct(raw: str | float | int | None) -> float | None:
     if raw is None or str(raw).strip() == "":
         return None
-    if isinstance(raw, (int, float)):
+    if isinstance(raw, int | float):
         v = float(raw)
         return v / 100.0 if v > 1.0 else v
     s = str(raw).strip().rstrip("%")

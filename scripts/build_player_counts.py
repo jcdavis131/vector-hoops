@@ -36,9 +36,9 @@ def counts() -> tuple[int, int]:
     j = json.loads(ASSET.read_text(encoding="utf-8"))
     pts = j.get("points") or []
     usable = [p for p in pts
-              if isinstance(p.get("x"), (int, float))
-              and isinstance(p.get("y"), (int, float))
-              and isinstance(p.get("c"), (int, float))]
+              if isinstance(p.get("x"), int | float)
+              and isinstance(p.get("y"), int | float)
+              and isinstance(p.get("c"), int | float)]
     return len(usable), sum(1 for p in usable if p.get("is_current"))
 
 

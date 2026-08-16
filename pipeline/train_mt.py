@@ -34,7 +34,7 @@ import subprocess
 import time
 import uuid
 from pathlib import Path
-from typing import Any, Dict, Optional, Tuple
+from typing import Any, Dict, Tuple
 
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parent
@@ -157,7 +157,7 @@ class CheckpointManager:
         epoch: int,
         loss: float,
         mae: Dict[str, float],
-        extra: Optional[Dict[str, Any]] = None,
+        extra: Dict[str, Any] | None = None,
     ) -> Path:
         ensure_dirs()
         fname = f"mt_{self.version}_{epoch}_{loss:.4f}.pt"
@@ -199,7 +199,7 @@ class CheckpointManager:
 
     def load_latest(
         self, model: torch.nn.Module = None, optimizer=None, auto_resume: bool = True
-    ) -> Optional[Dict[str, Any]]:
+    ) -> Dict[str, Any] | None:
         if not self.latest_pt.exists():
             return None
         if auto_resume:
@@ -228,7 +228,7 @@ class CheckpointManager:
             print(f"[ckpt] load failed {e}")
             return None
 
-    def rollback(self) -> Optional[Dict[str, Any]]:
+    def rollback(self) -> Dict[str, Any] | None:
         # find second newest if latest is NaN
         try:
             cands = sorted(self.root.glob(f"mt_{self.version}_*.pt"), key=lambda p: p.stat().st_mtime, reverse=True)
@@ -279,7 +279,7 @@ class MissionLogWriter:
         tokens_est: int,
         status: str = "ok",
         errorClass: str = "none",
-        extras: Optional[Dict[str, Any]] = None,
+        extras: Dict[str, Any] | None = None,
     ):
         entry = {
             "nodeId": self.node_id,

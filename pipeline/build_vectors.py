@@ -1026,7 +1026,7 @@ def main() -> None:
                 for r in rows if isinstance(rows, list) else []:
                     pid = str(r.get("PLAYER_ID") or r.get("id") or "")
                     age = r.get("AGE")
-                    if pid and isinstance(age, (int, float)):
+                    if pid and isinstance(age, int | float):
                         by = int(sy - float(age))
                         if pid not in pid_birth:
                             pid_birth[pid] = by

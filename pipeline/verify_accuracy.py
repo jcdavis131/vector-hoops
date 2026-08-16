@@ -337,7 +337,7 @@ def v10_honors_playoffs(data: dict) -> None:
             continue
         doc = json.loads(path.read_text(encoding="utf-8"))
         bucket = doc.get(key_field, doc.get("players", {}))
-        n = len(bucket) if isinstance(bucket, (dict, list)) else 0
+        n = len(bucket) if isinstance(bucket, dict | list) else 0
         print(f"  {fname}: {n} keys/rows")
 
     po_path = ASSETS / "playoffs.json"

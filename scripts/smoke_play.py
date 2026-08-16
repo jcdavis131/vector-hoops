@@ -373,7 +373,7 @@ def main() -> int:
         for label, o in (("the past player being asked about", t),
                          ("the best modern match", p["best"]),
                          ("the worst modern match", p["worst"])):
-            if not isinstance(o.get("x"), (int, float)) or not isinstance(o.get("y"), (int, float)):
+            if not isinstance(o.get("x"), int | float) or not isinstance(o.get("y"), int | float):
                 failures.append(
                     f"{label} ({o['n']!r}) has no map coordinates - drawBase guards on "
                     f"typeof x === 'number' and skips silently, so it is never drawn on "

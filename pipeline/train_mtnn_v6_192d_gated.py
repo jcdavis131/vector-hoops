@@ -451,13 +451,13 @@ def main():
     }
     def to_py(o):
         import numpy as np
-        if isinstance(o, (np.floating,)):
+        if isinstance(o, np.floating):
             return float(o)
-        if isinstance(o, (np.integer,)):
+        if isinstance(o, np.integer):
             return int(o)
         if isinstance(o, dict):
             return {k: to_py(v) for k,v in o.items()}
-        if isinstance(o, (list,tuple)):
+        if isinstance(o, list | tuple):
             return [to_py(x) for x in o]
         return o
     # Sanitise BEFORE the first write, not after it. This dict is full of numpy

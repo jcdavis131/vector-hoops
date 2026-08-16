@@ -114,7 +114,11 @@ def main() -> None:
                     continue
                 proj_stats_z[k] = round(float(np.clip(z, -4, 4)), 3)
 
-        conf = float((lambda lg: (np.exp(lg - lg.max()) / np.exp(lg - lg.max()).sum())[arch_idx])(arch_logits[i]))
+        conf = float(
+            (lambda lg, _arch_idx=arch_idx: (np.exp(lg - lg.max()) / np.exp(lg - lg.max()).sum())[_arch_idx])(
+                arch_logits[i]
+            )
+        )
         players.append(
             {
                 "name": name,
