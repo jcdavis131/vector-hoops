@@ -1,0 +1,23 @@
+{
+  "name": "Hoops Cluster Hunt",
+  "short_name": "Hoops",
+  "background_color": "#080A0F",
+  "theme_color": "#080A0F",
+  "display": "standalone",
+  "scope": "./",
+  "start_url": "./?utm_source=pwa",
+  "icons": [
+    {
+      "src": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMAAAADACAYAAABWrvwYAAA",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAQAAAAEACAYAAABccqhmAAA",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}

@@ -1,0 +1,150 @@
+{
+  "domains": {
+    "equities": {
+      "dims": 64,
+      "entity_count": 500,
+      "file_path": "assets/data/equities.json",
+      "full_rows": 4831,
+      "git_sha": "d4d1133",
+      "method": "vector-equities/assets/real_data.json 4831 rows 500 tickers latest year, 64-d emb, provenance honest",
+      "model_id": "equities-mtnn-v6-real-500-64d",
+      "okabe": "OKABE-8 c0-7 sectors, x/y/z normalized [-1,1] max_abs0.90783 cap deterministic hash",
+      "provenance": {
+        "hashes": 7,
+        "sha16": "492ad2e28d8be65c",
+        "size": 60606
+      },
+      "rollback": null,
+      "sectors": 11,
+      "swap_status": "active",
+      "trained_at": "2026-08-15T20:58:00Z",
+      "version": "v1.0"
+    },
+    "gridiron": {
+      "dims": 32,
+      "entity_count": 646,
+      "file_path": "assets/data/gridiron.json",
+      "git_sha": "d4d1133",
+      "mae": 3.816128,
+      "method": "MTNN v2 native 10 towers 160 feats MAE 8.475\u21923.8 real nflreadpy 2020-2025 weather+Vegas mean-centered PCA 3PC power-iteration 200",
+      "model_id": "gridiron-mtnn-v2-32d-native-10towers",
+      "okabe": "QB5 WR1 RB2 TE3 etc mapping sin/cos hash positional clustered",
+      "provenance": {
+        "hashes": 7,
+        "sha16": "492794de7ea9d363",
+        "size": 118227
+      },
+      "rollback": null,
+      "sharpe": 1.082,
+      "swap_status": "active",
+      "target_mae": 3.8,
+      "trained_at": "2026-08-16T01:51:00Z",
+      "version": "v2.1"
+    },
+    "hoops": {
+      "composite_score": 0.85,
+      "dims": 64,
+      "entity_count": 1764,
+      "file_path": "assets/data/hoops.json",
+      "full_entity_count": 12966,
+      "git_sha": "50331f3",
+      "ic": 0.2007,
+      "lod": "LOD 8000 desktop 4000 mobile p95",
+      "method": "MTNN v6 192d 6-head RoPE RMSNorm 6L ff768 CLS64 17 towers CORAL0.5 VICReg0.05 SupCon0.07 w0.05 15feats/6families honest_partial 130feats pending",
+      "model_id": "hoops-mtnn-v6-192d-6head-rope-rmsnorm",
+      "npz_path": "vector-hoops pipeline not in hub, see vector-hoops/assets/mtnn_meta.json",
+      "okabe": "0-7 POS QB5 WR1 RB2 TE3 etc, void #080A0F bg #FFFEF7 replace black",
+      "provenance": {
+        "sha16": "b8d2e4a71627d105",
+        "size": 336518
+      },
+      "rollback": "v6.1",
+      "swap_status": "active",
+      "top1_790": 0.55,
+      "trained_at": "2026-08-16T01:53:09Z",
+      "version": "v6.2"
+    },
+    "pitch": {
+      "composite": 0.7785,
+      "difficulty_median": 0.52,
+      "dims": 24,
+      "entity_count": 2430,
+      "file_path": "assets/data/pitch.json",
+      "git_sha": "d4d1133",
+      "method": "position SupCon x=avg first8 y=mid8 z=last8 -> [-1,1] normalized, minutes 180-3594, difficulty 633 gold",
+      "model_id": "pitch-mtnn-v1.1-pos-supcon-24d",
+      "okabe": "DEF0 MID2 FWD1 GK3 visible #080A0F #FFFEF7",
+      "pos_cluster_acc": 0.797,
+      "provenance": {
+        "hashes": 3,
+        "sha16": "760ddea42c95f02a",
+        "size": 552711
+      },
+      "rollback": null,
+      "sharp": 0.929,
+      "swap_status": "active",
+      "trained_at": "2026-08-16T01:54:00Z",
+      "version": "v1.1"
+    },
+    "tennis": {
+      "dims": 64,
+      "entity_count": 200,
+      "file_path": "assets/data/tennis.json",
+      "git_sha": "d4d1133",
+      "method": "vector-unified/data/tennis_archetype_probe.json",
+      "model_id": "tennis-archetype-probe-14",
+      "okabe": "14 archetypes moss family",
+      "provenance": {
+        "hashes": 14,
+        "sha16": "88b2e41632deac08",
+        "size": 20067
+      },
+      "rollback": null,
+      "swap_status": "active",
+      "trained_at": "2026-08-15T19:10:00Z",
+      "version": "v1.0"
+    },
+    "unified": {
+      "dims": 64,
+      "entity_count": 20719,
+      "file_path": "assets/data/unified.json",
+      "floor": 0.6258,
+      "g2_control": 0.7087,
+      "g2_real": 0.627,
+      "g2_target": 0.64,
+      "g2_treated": 0.6236,
+      "git_sha": "d4d1133",
+      "lod": "full 20719 kept renderer caps 8000/4000 quaternion arcball void #080A0F DPR1",
+      "method": "25/25/1 w0.05 CORAL\u03bb0.3\u21920.5 GRL SupCon \u03c40.07 mean dims 0-21=x 21-42=y 42-64=z normalized [-1,1] size 3.5MB LOD 8000/4000",
+      "model_id": "unified-mtnn-v7-25-25-1-GRL-CORAL-SupCon",
+      "provenance": {
+        "hashes": 12,
+        "sha16": "bb9f1206bc92b01f",
+        "size": 3506742
+      },
+      "rank": 12.4,
+      "rollback": null,
+      "sil": 0.683,
+      "swap_status": "active",
+      "trained_at": "2026-08-16T01:50:00Z",
+      "version": "v7.3"
+    }
+  },
+  "generated_at": "2026-08-16T01:53:09Z",
+  "git_sha": "50331f3",
+  "lcg_chain": "20260813\u2192189831298 idx3820 triple[11205,19448,14209] five[11205,19448,14209,11701,18524] same-link-same-stars ?daily=YYYYMMDD&n=1/3/5 glibc L(s)=(s*1103515245+12345)&0x7fffffff",
+  "provenance_ok": "7/7 PASS",
+  "provenance_total": 59,
+  "pwa": "v67 #080A0F CORE20 void dark LOD 4000/8000 DPR1 fillRect offline13.6k",
+  "swap_policy": {
+    "budget": 3,
+    "daily_seed_stable": "LCG seed only picks idx, points real so same-link-same-stars stable",
+    "earlyExit": 0.3,
+    "fail_closed": "503 honest never fake torch unavailable",
+    "no_force_push": true,
+    "rollback_window": 2,
+    "verifier_gate": 8.0,
+    "zero_deps": true
+  },
+  "zero_deps": true
+}

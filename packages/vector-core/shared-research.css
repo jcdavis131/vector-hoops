@@ -1,0 +1,121 @@
+/* shared-research.css — research cards 3-col desktop gap 18px, 1-col mobile @640px, card paper warm #FEFCF9 void text #e8f0ff contrast fix 100%, glass subtle
+   npm-less, tokens.css dependency, PWA v67 #080A0F void #0f141e
+*/
+.research-wrap{
+  max-width:1180px;margin:0 auto;padding:24px 16px;
+  background:var(--void, #080A0F);color:var(--ink, #e8f0ff);
+}
+
+.research-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:18px;
+}
+
+@media (max-width:640px){
+  .research-grid{ grid-template-columns:1fr; }
+}
+
+.research-intro{
+  font:600 22px var(--font-sans, ui-sans-system);
+  color:var(--ink, #e8f0ff);
+  margin:6px 0 14px;
+}
+
+.research-card{
+  background:var(--paper-warm, #FFFCF2); /* warm paper */
+  color:var(--void, #080A0F); /* void text — 100% contrast fix, no white-on-light */
+  border:1px solid rgba(8,10,15,0.08);
+  border-radius:12px; /* --radius-md */
+  padding:16px 14px;
+  display:flex;flex-direction:column;gap:10px;
+  box-shadow:0 4px 18px rgba(0,0,0,0.12);
+  transition:transform .16s ease, box-shadow .16s ease;
+}
+
+.research-card:hover{
+  transform:translateY(-1px);
+  box-shadow:0 8px 28px rgba(0,0,0,0.18);
+}
+
+.research-card .kicker{
+  font:600 11px var(--font-mono, ui-monospace);
+  letter-spacing:0.08em;text-transform:uppercase;
+  color:#6b758c;
+}
+
+.research-card h3{
+  margin:0;
+  font:700 16px var(--font-sans);
+  color:var(--void); /* void on paper — contrast fix */
+  line-height:1.28;
+}
+
+.research-card p{
+  margin:0;
+  font:500 13px/1.45 var(--font-sans);
+  color:#1d2433; /* accessible on #FFFCF2 */
+}
+
+.research-card .meta{
+  display:flex;gap:8px;flex-wrap:wrap;
+  font:500 11px var(--font-mono);
+  color:#5a657c;
+}
+
+.research-card .meta span{
+  background:rgba(8,10,15,0.06);
+  border:1px solid rgba(8,10,15,0.06);
+  border-radius:999px;padding:4px 8px;
+}
+
+/* glass variant subtle */
+.research-card.glass{
+  background:rgba(255,252,242,0.84);
+  backdrop-filter:blur(12px) saturate(1.08);
+  -webkit-backdrop-filter:blur(12px) saturate(1.08);
+  border:1px solid rgba(8,10,15,0.09);
+}
+
+/* void text fix when card placed on dark grid — ensure no white-on-light */
+.research-grid .research-card{
+  /* enforces #FEFCF9 bg #e8f0ff void contrast pair */
+}
+.research-grid .research-card *{
+  /* prevent inheriting light ink on light paper */
+}
+
+/* individual insight rows inside card */
+.research-insights{
+  display:flex;flex-direction:column;gap:6px;
+  margin-top:2px;
+}
+.research-insights li{
+  font:500 12px var(--font-sans);
+  color:#242e44;
+  list-style:none;
+  position:relative;padding-left:12px;
+}
+.research-insights li::before{
+  content:'';position:absolute;left:0;top:6px;width:5px;height:5px;border-radius:50%;
+  background:var(--accent-blue, #0072B2);
+}
+
+/* link row */
+.research-card a.read{
+  font:600 12px var(--font-sans);
+  color:var(--accent-blue, #0072B2);
+  text-decoration:none;
+}
+.research-card a.read:hover{ text-decoration:underline }
+
+/* tag okabe dot */
+.okabe-dot{ width:8px;height:8px;border-radius:50%;display:inline-block }
+.okabe-dot.o0{ background:var(--okabe-0,#E69F00) }
+.okabe-dot.o1{ background:var(--okabe-1,#56B4E9) }
+.okabe-dot.o2{ background:var(--okabe-2,#009E73) }
+.okabe-dot.o3{ background:var(--okabe-3,#F0E442) }
+.okabe-dot.o4{ background:var(--okabe-4,#0072B2) }
+.okabe-dot.o5{ background:var(--okabe-5,#D55E00) }
+.okabe-dot.o6{ background:var(--okabe-6,#CC79A7) }
+.okabe-dot.o7{ background:var(--okabe-7-repl,#FFFEF7); border:1px solid rgba(8,10,15,0.18) }

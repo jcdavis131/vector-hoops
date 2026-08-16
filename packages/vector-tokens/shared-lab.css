@@ -1,0 +1,12 @@
+/* shared-lab.css — glassbox SHAP / permutation / PDP — npm-less */
+.lab-panel{background:rgba(15,20,30,0.72);backdrop-filter:blur(16px) saturate(1.2);-webkit-backdrop-filter:blur(16px) saturate(1.2);border:1px solid rgba(232,240,255,0.1);border-radius:12px;padding:12px}
+.lab-table{width:100%;border-collapse:collapse;font:500 12.5px var(--font-sans,system-ui)}
+.lab-table th{font:700 11px var(--font-mono);text-transform:uppercase;letter-spacing:0.06em;color:var(--ink-2);text-align:left;padding:6px 8px;border-bottom:1px solid rgba(232,240,255,0.12)}
+.lab-table td{padding:7px 8px;border-bottom:1px solid rgba(232,240,255,0.06);color:var(--ink,#e8f0ff)}
+.shap-bar{height:8px;border-radius:999px;background:rgba(232,240,255,0.12);overflow:hidden}
+.shap-bar i{display:block;height:100%;background:var(--okabe-1,#56B4E9);border-radius:999px}
+.pdp-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:12px}
+.kpi-strip{display:flex;gap:8px;flex-wrap:wrap}
+.kpi{padding:6px 10px;border-radius:999px;font:700 11px var(--font-mono);border:1px solid rgba(232,240,255,0.12);color:var(--ink)}
+.kpi.pass{border-color:#009E73;color:#a8f0d8}
+.kpi.fail{border-color:#D55E00;color:#ffd0b8}

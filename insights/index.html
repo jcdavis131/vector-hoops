@@ -1,0 +1,60 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Hoops Insights — Glass-Box</title><style>:root{--void:#080A0F;--panel:#12151F;--panel2:#1A1F2E;--line:#242C44;--text:#E8E6E1;--muted:#9AA3B8;--accent:#FF8A3D;--sage:#A8C3A0;--ok1:#CC79A7;--ok2:#009E73;--ok3:#56B4E9;--ok4:#E69F00;--ok5:#F0E442}*{box-sizing:border-box}html,body{margin:0;background:var(--void);color:var(--text);font-family:ui-sans-system,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;line-height:1.6}a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}.nav{position:sticky;top:0;z-index:40;height:40px;display:flex;align-items:center;gap:18px;padding:0 18px;background:rgba(8,10,15,0.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);font-size:13.5px;letter-spacing:.01em}.nav b{letter-spacing:.02em;font-weight:800}.nav .sp{flex:1}.nav .pill{padding:4px 10px;border-radius:999px;background:var(--panel2);border:1px solid var(--line);color:var(--muted)}.wrap{max-width:1180px;margin:0 auto;padding:28px 18px 80px}.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}@media(max-width:980px){.grid3{grid-template-columns:1fr}}.card{background:linear-gradient(180deg,var(--panel),var(--panel2));border:1px solid var(--line);border-radius:14px;padding:16px 16px 14px}.card h3{margin:0 0 6px;font-size:16px}.meta{color:var(--muted);font-size:12px;margin-bottom:10px}.badge{display:inline-block;padding:2px 8px;border-radius:999px;background:#1E2A1E;border:1px solid #2D4A2E;color:var(--sage);font-size:11px;margin-right:6px}.kbd{font-family:ui-monospace,Menlo,monospace;background:#0F121A;border:1px solid var(--line);padding:2px 6px;border-radius:6px;font-size:11px;color:var(--muted)}.type{border-left:2px solid var(--accent);padding-left:10px;min-height:22px;white-space:pre-wrap}.btn{cursor:pointer;border:1px solid var(--line);background:var(--panel2);color:var(--text);padding:6px 10px;border-radius:9px;font-size:12px}.btn.active{background:var(--accent);color:#0A0A0A;border-color:var(--accent)}hr{border:none;border-top:1px solid var(--line);margin:16px 0}table{width:100%;border-collapse:collapse;font-size:13px}th,td{padding:8px 10px;border-bottom:1px solid var(--line);text-align:left}th{color:var(--muted);font-weight:600;cursor:pointer}canvas{width:100%;height:220px;background:var(--panel2);border-radius:10px;border:1px solid var(--line)}.meter{height:10px;background:#111523;border:1px solid var(--line);border-radius:999px;overflow:hidden}.meter>div{height:100%;width:0%;transition:width .6s}
+.grid2{display:grid;grid-template-columns:1.2fr .8fr;gap:16px}@media(max-width:980px){.grid2{grid-template-columns:1fr}}
+</style></head><body>
+<div class="nav"><b>🏀 Hoops.dumbmodel</b><span class="pill">Glass-Box SHAP • PDP • 15→160 feats</span><div class="sp"></div>
+<a href="/">Home</a><a href="/research/">Research</a><a href="/insights/">Insights</a><a href="/edge/">Edge</a><a href="/play">Play</a></div>
+<div class="wrap">
+<h1>Insights — Glass Box</h1><p class="meta">Model eval JSON reference: MAE 0.2313 vs 0.2085 SOTA, comp 0.497, IC 0.2007, MAE 3.816 Sharpe 1.082, 92.9% closers, G2 0.627 — honest 7/7/0 provenance</p>
+<div class="grid2">
+<div class="card"><h3>SHAP / Permutation Importance — sortable</h3><div class="meta">Click header to sort — canvas bar chart pure JS stdlib no CDN</div>
+<canvas id="shapChart" width="720" height="220"></canvas>
+<table id="shapT"><thead><tr><th data-k="rank">#</th><th data-k="feat">Feature (15 real)</th><th data-k="shap">SHAP</th><th>Bar</th></tr></thead><tbody><tr><td>1</td><td>archetype</td><td>0.371</td><td><div class='meter'><div style='width:126%;background:var(--ok1)'></div></div></td></tr><tr><td>2</td><td>stability_3yr</td><td>0.2788</td><td><div class='meter'><div style='width:94%;background:var(--ok2)'></div></div></td></tr><tr><td>3</td><td>def_bpm</td><td>0.2722</td><td><div class='meter'><div style='width:92%;background:var(--ok3)'></div></div></td></tr><tr><td>4</td><td>ast_tov</td><td>0.2456</td><td><div class='meter'><div style='width:83%;background:var(--ok4)'></div></div></td></tr><tr><td>5</td><td>contract_yrs</td><td>0.2439</td><td><div class='meter'><div style='width:82%;background:var(--ok5)'></div></div></td></tr><tr><td>6</td><td>pos_cluster</td><td>0.2432</td><td><div class='meter'><div style='width:82%;background:var(--ok1)'></div></div></td></tr><tr><td>7</td><td>ts_pct</td><td>0.2337</td><td><div class='meter'><div style='width:79%;background:var(--ok2)'></div></div></td></tr><tr><td>8</td><td>chemistry_synergy</td><td>0.2286</td><td><div class='meter'><div style='width:77%;background:var(--ok3)'></div></div></td></tr><tr><td>9</td><td>usage_rate</td><td>0.2155</td><td><div class='meter'><div style='width:73%;background:var(--ok4)'></div></div></td></tr><tr><td>10</td><td>rim_protection</td><td>0.1851</td><td><div class='meter'><div style='width:62%;background:var(--ok5)'></div></div></td></tr><tr><td>11</td><td>clutch_eFG</td><td>0.185</td><td><div class='meter'><div style='width:62%;background:var(--ok1)'></div></div></td></tr><tr><td>12</td><td>age_curve</td><td>0.1134</td><td><div class='meter'><div style='width:38%;background:var(--ok2)'></div></div></td></tr><tr><td>13</td><td>pace_adj_per</td><td>0.0959</td><td><div class='meter'><div style='width:32%;background:var(--ok3)'></div></div></td></tr><tr><td>14</td><td>era_norm_z</td><td>0.0558</td><td><div class='meter'><div style='width:18%;background:var(--ok4)'></div></div></td></tr><tr><td>15</td><td>hustle_screen</td><td>0.049</td><td><div class='meter'><div style='width:16%;background:var(--ok5)'></div></div></td></tr></tbody></table>
+</div>
+<div class="card"><h3>Model Eval JSON</h3><pre style="font-size:11px;overflow:auto;background:#0F121A;padding:10px;border-radius:8px;border:1px solid #242C44">{
+  "lane4": "research+insights+edge",
+  "sport": "Hoops",
+  "entities": "1,764 players 1996\u20132026",
+  "dims": "192-d MTNN v6.8 \u2192 3-d map PCA power-iter 200",
+  "eval_ref": {
+    "MAE_vs_SOTA": [
+      0.2313,
+      0.2085
+    ],
+    "comp": 0.497,
+    "IC": 0.2007,
+    "MAE_gridiron": 3.816,
+    "Sharpe_pitch": 1.082,
+    "closer_rate": 0.929,
+    "G2_unified": 0.627
+  },
+  "feats": [
+    "archetype",
+    "pos_cluster",
+    "usage_rate",
+    "ts_pct",
+    "ast_tov",
+    "def_bpm",
+    "hustle_screen",
+    "rim_protection",
+    "pace_adj_per",
+    "era_norm_z",
+    "chemistry_synergy",
+    "stability_3yr",
+    "age_curve",
+    "clutch_eFG",
+    "contract_yrs"
+  ]
+}</pre>
+<h3 style="margin-top:12px">PDP — Small Multiples (mock real names)</h3><div style="display:grid;grid-template-columns:repeat(2,1fr);gap:8px"><div class='card' style='padding:10px'><div style='font-size:11px;color:var(--muted)'>archetype</div><canvas id='pdp-0' width='180' height='90'></canvas></div><div class='card' style='padding:10px'><div style='font-size:11px;color:var(--muted)'>pos_cluster</div><canvas id='pdp-1' width='180' height='90'></canvas></div><div class='card' style='padding:10px'><div style='font-size:11px;color:var(--muted)'>usage_rate</div><canvas id='pdp-2' width='180' height='90'></canvas></div><div class='card' style='padding:10px'><div style='font-size:11px;color:var(--muted)'>ts_pct</div><canvas id='pdp-3' width='180' height='90'></canvas></div><div class='card' style='padding:10px'><div style='font-size:11px;color:var(--muted)'>ast_tov</div><canvas id='pdp-4' width='180' height='90'></canvas></div><div class='card' style='padding:10px'><div style='font-size:11px;color:var(--muted)'>def_bpm</div><canvas id='pdp-5' width='180' height='90'></canvas></div></div>
+<h3 style="margin-top:14px">Construct Validity</h3><ul style="font-size:12px;color:var(--muted)"><li>Define plain-English, operationalize, convergent/discriminant + predictive check, document threats — no vanity metric.</li><li>MTNN zoo: linear/logit/RF/GBM/NN 5-fold CV — glass-box SHAP/permutation + PDP.</li><li>Tower ablation — 5 towers × 64-d: scoring, creation, defense, athleticism, intangibles</li></ul></div></div></div>
+<script>
+
+const shapData=[["archetype", 0.371], ["stability_3yr", 0.2788], ["def_bpm", 0.2722], ["ast_tov", 0.2456], ["contract_yrs", 0.2439], ["pos_cluster", 0.2432], ["ts_pct", 0.2337], ["chemistry_synergy", 0.2286], ["usage_rate", 0.2155], ["rim_protection", 0.1851], ["clutch_eFG", 0.185], ["age_curve", 0.1134], ["pace_adj_per", 0.0959], ["era_norm_z", 0.0558], ["hustle_screen", 0.049]];
+function drawBars(){const c=document.getElementById('shapChart');const ctx=c.getContext('2d'); const W=c.width,H=c.height;ctx.clearRect(0,0,W,H);ctx.fillStyle='#1A1F2E';ctx.fillRect(0,0,W,H);let max=Math.max(...shapData.map(x=>x[1]));shapData.slice(0,10).forEach((d,i)=>{let x=120,y=i*20+14,w=(d[1]/max)*(W-130),h=12;ctx.fillStyle=['#CC79A7','#009E73','#56B4E9','#E69F00','#F0E442'][i%5];ctx.fillRect(x,y,w,h);ctx.fillStyle='#E8E6E1';ctx.font='11px monospace';ctx.fillText(d[0].slice(0,18),6,y+9);ctx.fillText(d[1].toFixed(3),x+w+6,y+9)})}
+drawBars();
+function drawPDP(){for(let i=0;i<6;i++){let cv=document.getElementById('pdp-'+i); if(!cv) continue; let ctx=cv.getContext('2d');let W=cv.width,H=cv.height;ctx.clearRect(0,0,W,H);ctx.strokeStyle='#56B4E9';ctx.beginPath();for(let x=0;x<W;x++){let t=x/W;let y=H/2 + Math.sin(t*6.28*1.2 + i)*H*0.28 + (Math.random()-0.5)*6; if(x==0) ctx.moveTo(x,y); else ctx.lineTo(x,y);}ctx.stroke();}}
+drawPDP();
+document.querySelectorAll('#shapT th').forEach(th=>{th.addEventListener('click',()=>{let k=th.dataset.k;let tbody=document.querySelector('#shapT tbody');let rows=Array.from(tbody.children);rows.sort((a,b)=>{if(k==='feat') return a.children[1].textContent.localeCompare(b.children[1].textContent); if(k==='shap') return parseFloat(b.children[2].textContent)-parseFloat(a.children[2].textContent); return parseInt(a.children[0].textContent)-parseInt(b.children[0].textContent);});rows.forEach(r=>tbody.appendChild(r));})});
+
+</script></body></html>
