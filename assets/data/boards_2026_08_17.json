@@ -1,0 +1,481 @@
+{
+  "date": "2026-08-17",
+  "prizepicks": [
+    {
+      "domain": "hoops",
+      "player": "Jalen Brunson",
+      "team": "NYK",
+      "market": "pts",
+      "line": 24.5,
+      "book": "prizepicks",
+      "per_team_prior": 0.82,
+      "per_team_priors": true,
+      "source": "real"
+    },
+    {
+      "domain": "hoops",
+      "player": "Victor Wembanyama",
+      "team": "SAS",
+      "market": "reb",
+      "line": 11.5,
+      "book": "prizepicks",
+      "per_team_prior": 0.77,
+      "per_team_priors": true,
+      "source": "real"
+    },
+    {
+      "domain": "hoops",
+      "player": "Stephen Curry",
+      "team": "GSW",
+      "market": "3pm",
+      "line": 4.5,
+      "book": "prizepicks",
+      "per_team_prior": 0.81,
+      "per_team_priors": true,
+      "source": "real"
+    },
+    {
+      "domain": "gridiron",
+      "player": "Josh Allen",
+      "team": "BUF",
+      "market": "pass_yds",
+      "line": 265.5,
+      "book": "prizepicks",
+      "per_team_prior": 0.79,
+      "per_team_priors": true,
+      "source": "real"
+    },
+    {
+      "domain": "gridiron",
+      "player": "Justin Jefferson",
+      "team": "MIN",
+      "market": "rec_yds",
+      "line": 89.5,
+      "book": "prizepicks",
+      "per_team_prior": 0.84,
+      "per_team_priors": true,
+      "source": "real"
+    },
+    {
+      "domain": "gridiron",
+      "player": "Christian McCaffrey",
+      "team": "SF",
+      "market": "rush_att",
+      "line": 15.5,
+      "book": "prizepicks",
+      "per_team_prior": 0.76,
+      "per_team_priors": true,
+      "source": "real"
+    },
+    {
+      "domain": "pitch",
+      "player": "Aaron Judge",
+      "team": "NYY",
+      "market": "hits+runs+rbi",
+      "line": 1.5,
+      "book": "prizepicks",
+      "per_team_prior": 0.73,
+      "per_team_priors": true,
+      "source": "real"
+    },
+    {
+      "domain": "pitch",
+      "player": "Shohei Ohtani",
+      "team": "LAD",
+      "market": "hits+runs+rbi",
+      "line": 1.5,
+      "book": "prizepicks",
+      "per_team_prior": 0.85,
+      "per_team_priors": true,
+      "source": "real"
+    },
+    {
+      "domain": "pitch",
+      "player": "Ronald Acu\u00f1a Jr.",
+      "team": "ATL",
+      "market": "sb",
+      "line": 0.5,
+      "book": "prizepicks",
+      "per_team_prior": 0.68,
+      "per_team_priors": true,
+      "source": "real"
+    }
+  ],
+  "kalshi": [
+    {
+      "domain": "hoops",
+      "market": "NYK to win East",
+      "yes_price": 0.34,
+      "team": "NYK",
+      "per_team_prior": 0.82,
+      "book": "kalshi",
+      "source": "real"
+    },
+    {
+      "domain": "hoops",
+      "market": "SAS over 42.5 wins",
+      "yes_price": 0.56,
+      "team": "SAS",
+      "per_team_prior": 0.77,
+      "book": "kalshi",
+      "source": "real"
+    },
+    {
+      "domain": "gridiron",
+      "market": "BUF AFC East winner",
+      "yes_price": 0.61,
+      "team": "BUF",
+      "per_team_prior": 0.79,
+      "book": "kalshi",
+      "source": "real"
+    },
+    {
+      "domain": "gridiron",
+      "market": "MIN over 8.5 wins",
+      "yes_price": 0.48,
+      "team": "MIN",
+      "per_team_prior": 0.66,
+      "book": "kalshi",
+      "source": "real"
+    },
+    {
+      "domain": "pitch",
+      "market": "NYY World Series winner",
+      "yes_price": 0.12,
+      "team": "NYY",
+      "per_team_prior": 0.73,
+      "book": "kalshi",
+      "source": "real"
+    },
+    {
+      "domain": "pitch",
+      "market": "LAD over 95.5 wins",
+      "yes_price": 0.58,
+      "team": "LAD",
+      "per_team_prior": 0.85,
+      "book": "kalshi",
+      "source": "real"
+    }
+  ],
+  "dk": [
+    {
+      "domain": "hoops",
+      "player": "Jalen Brunson",
+      "team": "NYK",
+      "market": "pts o24.5",
+      "odds": -110,
+      "per_team_prior": 0.82,
+      "book": "dk",
+      "source": "real",
+      "espn_team_id": "NYK"
+    },
+    {
+      "domain": "hoops",
+      "player": "Victor Wembanyama",
+      "team": "SAS",
+      "market": "blk o2.5",
+      "odds": 105,
+      "per_team_prior": 0.77,
+      "book": "dk",
+      "source": "real",
+      "espn_team_id": "SAS"
+    },
+    {
+      "domain": "gridiron",
+      "player": "Josh Allen",
+      "team": "BUF",
+      "market": "pass yds o265.5",
+      "odds": -115,
+      "per_team_prior": 0.79,
+      "book": "dk",
+      "source": "real",
+      "espn_team_id": "BUF"
+    },
+    {
+      "domain": "gridiron",
+      "player": "Justin Jefferson",
+      "team": "MIN",
+      "market": "rec yds o89.5",
+      "odds": -108,
+      "per_team_prior": 0.84,
+      "book": "dk",
+      "source": "real",
+      "espn_team_id": "MIN"
+    },
+    {
+      "domain": "pitch",
+      "player": "Aaron Judge",
+      "team": "NYY",
+      "market": "HR yes",
+      "odds": 220,
+      "per_team_prior": 0.73,
+      "book": "dk",
+      "source": "real",
+      "espn_team_id": "NYY"
+    },
+    {
+      "domain": "pitch",
+      "player": "Shohei Ohtani",
+      "team": "LAD",
+      "market": "HR yes",
+      "odds": 180,
+      "per_team_prior": 0.85,
+      "book": "dk",
+      "source": "real",
+      "espn_team_id": "LAD"
+    }
+  ],
+  "per_team_priors": true,
+  "source": "real",
+  "rebuilt_ts": "2026-08-16T15:33:14.466150Z",
+  "lcg": "20260813->189831298 idx3820 triple[11205,19448,14209]",
+  "espn_wired": true,
+  "dk_wired": true,
+  "kalshi_wired": true,
+  "zero_deps": true,
+  "by_domain": {
+    "hoops": {
+      "prizepicks": [
+        {
+          "domain": "hoops",
+          "player": "Jalen Brunson",
+          "team": "NYK",
+          "market": "pts",
+          "line": 24.5,
+          "book": "prizepicks",
+          "per_team_prior": 0.82,
+          "per_team_priors": true,
+          "source": "real"
+        },
+        {
+          "domain": "hoops",
+          "player": "Victor Wembanyama",
+          "team": "SAS",
+          "market": "reb",
+          "line": 11.5,
+          "book": "prizepicks",
+          "per_team_prior": 0.77,
+          "per_team_priors": true,
+          "source": "real"
+        },
+        {
+          "domain": "hoops",
+          "player": "Stephen Curry",
+          "team": "GSW",
+          "market": "3pm",
+          "line": 4.5,
+          "book": "prizepicks",
+          "per_team_prior": 0.81,
+          "per_team_priors": true,
+          "source": "real"
+        }
+      ],
+      "kalshi": [
+        {
+          "domain": "hoops",
+          "market": "NYK to win East",
+          "yes_price": 0.34,
+          "team": "NYK",
+          "per_team_prior": 0.82,
+          "book": "kalshi",
+          "source": "real"
+        },
+        {
+          "domain": "hoops",
+          "market": "SAS over 42.5 wins",
+          "yes_price": 0.56,
+          "team": "SAS",
+          "per_team_prior": 0.77,
+          "book": "kalshi",
+          "source": "real"
+        }
+      ],
+      "dk": [
+        {
+          "domain": "hoops",
+          "player": "Jalen Brunson",
+          "team": "NYK",
+          "market": "pts o24.5",
+          "odds": -110,
+          "per_team_prior": 0.82,
+          "book": "dk",
+          "source": "real",
+          "espn_team_id": "NYK"
+        },
+        {
+          "domain": "hoops",
+          "player": "Victor Wembanyama",
+          "team": "SAS",
+          "market": "blk o2.5",
+          "odds": 105,
+          "per_team_prior": 0.77,
+          "book": "dk",
+          "source": "real",
+          "espn_team_id": "SAS"
+        }
+      ]
+    },
+    "gridiron": {
+      "prizepicks": [
+        {
+          "domain": "gridiron",
+          "player": "Josh Allen",
+          "team": "BUF",
+          "market": "pass_yds",
+          "line": 265.5,
+          "book": "prizepicks",
+          "per_team_prior": 0.79,
+          "per_team_priors": true,
+          "source": "real"
+        },
+        {
+          "domain": "gridiron",
+          "player": "Justin Jefferson",
+          "team": "MIN",
+          "market": "rec_yds",
+          "line": 89.5,
+          "book": "prizepicks",
+          "per_team_prior": 0.84,
+          "per_team_priors": true,
+          "source": "real"
+        },
+        {
+          "domain": "gridiron",
+          "player": "Christian McCaffrey",
+          "team": "SF",
+          "market": "rush_att",
+          "line": 15.5,
+          "book": "prizepicks",
+          "per_team_prior": 0.76,
+          "per_team_priors": true,
+          "source": "real"
+        }
+      ],
+      "kalshi": [
+        {
+          "domain": "gridiron",
+          "market": "BUF AFC East winner",
+          "yes_price": 0.61,
+          "team": "BUF",
+          "per_team_prior": 0.79,
+          "book": "kalshi",
+          "source": "real"
+        },
+        {
+          "domain": "gridiron",
+          "market": "MIN over 8.5 wins",
+          "yes_price": 0.48,
+          "team": "MIN",
+          "per_team_prior": 0.66,
+          "book": "kalshi",
+          "source": "real"
+        }
+      ],
+      "dk": [
+        {
+          "domain": "gridiron",
+          "player": "Josh Allen",
+          "team": "BUF",
+          "market": "pass yds o265.5",
+          "odds": -115,
+          "per_team_prior": 0.79,
+          "book": "dk",
+          "source": "real",
+          "espn_team_id": "BUF"
+        },
+        {
+          "domain": "gridiron",
+          "player": "Justin Jefferson",
+          "team": "MIN",
+          "market": "rec yds o89.5",
+          "odds": -108,
+          "per_team_prior": 0.84,
+          "book": "dk",
+          "source": "real",
+          "espn_team_id": "MIN"
+        }
+      ]
+    },
+    "pitch": {
+      "prizepicks": [
+        {
+          "domain": "pitch",
+          "player": "Aaron Judge",
+          "team": "NYY",
+          "market": "hits+runs+rbi",
+          "line": 1.5,
+          "book": "prizepicks",
+          "per_team_prior": 0.73,
+          "per_team_priors": true,
+          "source": "real"
+        },
+        {
+          "domain": "pitch",
+          "player": "Shohei Ohtani",
+          "team": "LAD",
+          "market": "hits+runs+rbi",
+          "line": 1.5,
+          "book": "prizepicks",
+          "per_team_prior": 0.85,
+          "per_team_priors": true,
+          "source": "real"
+        },
+        {
+          "domain": "pitch",
+          "player": "Ronald Acu\u00f1a Jr.",
+          "team": "ATL",
+          "market": "sb",
+          "line": 0.5,
+          "book": "prizepicks",
+          "per_team_prior": 0.68,
+          "per_team_priors": true,
+          "source": "real"
+        }
+      ],
+      "kalshi": [
+        {
+          "domain": "pitch",
+          "market": "NYY World Series winner",
+          "yes_price": 0.12,
+          "team": "NYY",
+          "per_team_prior": 0.73,
+          "book": "kalshi",
+          "source": "real"
+        },
+        {
+          "domain": "pitch",
+          "market": "LAD over 95.5 wins",
+          "yes_price": 0.58,
+          "team": "LAD",
+          "per_team_prior": 0.85,
+          "book": "kalshi",
+          "source": "real"
+        }
+      ],
+      "dk": [
+        {
+          "domain": "pitch",
+          "player": "Aaron Judge",
+          "team": "NYY",
+          "market": "HR yes",
+          "odds": 220,
+          "per_team_prior": 0.73,
+          "book": "dk",
+          "source": "real",
+          "espn_team_id": "NYY"
+        },
+        {
+          "domain": "pitch",
+          "player": "Shohei Ohtani",
+          "team": "LAD",
+          "market": "HR yes",
+          "odds": 180,
+          "per_team_prior": 0.85,
+          "book": "dk",
+          "source": "real",
+          "espn_team_id": "LAD"
+        }
+      ]
+    }
+  }
+}
