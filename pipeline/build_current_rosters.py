@@ -73,25 +73,29 @@ def main() -> None:
                 player_primary[name] = abbr
             eligible = season_eligible(gp, mins / max(gp, 1), season=season)
             charted = (name, season) in charted_keys
-            teams[abbr].append({
-                "name": name,
-                "minutes": round(mins, 1),
-                "games": gp,
-                "charted": charted,
-                "eligible": eligible,
-            })
+            teams[abbr].append(
+                {
+                    "name": name,
+                    "minutes": round(mins, 1),
+                    "games": gp,
+                    "charted": charted,
+                    "eligible": eligible,
+                }
+            )
         teams[abbr].sort(key=lambda r: (-r["minutes"], r["name"]))
 
     active = []
     for name, mins in sorted(player_total_minutes.items(), key=lambda x: (-x[1], x[0])):
         if mins <= 0:
             continue
-        active.append({
-            "name": name,
-            "team": player_primary.get(name, ""),
-            "minutes": round(mins, 1),
-            "charted": (name, season) in charted_keys,
-        })
+        active.append(
+            {
+                "name": name,
+                "team": player_primary.get(name, ""),
+                "minutes": round(mins, 1),
+                "charted": (name, season) in charted_keys,
+            }
+        )
 
     payload = {
         "built": time.strftime("%Y-%m-%d"),

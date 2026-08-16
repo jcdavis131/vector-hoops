@@ -1,0 +1,19 @@
+# Skip heavy ML / data folders for Vercel static deploy
+pipeline/
+data/
+datasets/
+__pycache__/
+*.pyc
+*.pyo
+*.npz
+*.npy
+*.pt
+*.pth
+*.parquet
+*.csv
+node_modules/
+.venv/
+venv/
+exports/
+bundles/
+*.log

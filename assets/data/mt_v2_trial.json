@@ -1,0 +1,7 @@
+{
+  "v2_best_loss": 0.7954673767089844,
+  "draft_mae": 1416.9915771484375,
+  "wins_mae": 9.028362274169922,
+  "arch": "tower32 shared128-64 LayerNorm residual gate dropout0.25 cosAnneal lr1e-3 wd1e-4 pat15 winsHead deeper 32-16",
+  "early_stop": 93
+}

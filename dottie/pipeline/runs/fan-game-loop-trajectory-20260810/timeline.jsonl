@@ -1,0 +1,7 @@
+{"nodeId":"play-a-101","agentId":"b6256b63-2313-4c52-b13e-7d588371eeb6","attempt":1,"latency_ms":620,"tokens_est":8400,"status":"pass","errorClass":"none"}
+{"nodeId":"trajFetch","agentId":"b6256b63-2313-4c52-b13e-7d588371eeb6","attempt":1,"latency_ms":184,"tokens_est":420,"status":"pass","errorClass":"none"}
+{"nodeId":"careerAnimate","agentId":"b6256b63-2313-4c52-b13e-7d588371eeb6","attempt":1,"latency_ms":1200,"tokens_est":1200,"status":"pass","errorClass":"none"}
+{"nodeId":"seasonChips","agentId":"b6256b63-2313-4c52-b13e-7d588371eeb6","attempt":1,"latency_ms":86,"tokens_est":280,"status":"pass","errorClass":"none"}
+{"nodeId":"shareOG","agentId":"b6256b63-2313-4c52-b13e-7d588371eeb6","attempt":1,"latency_ms":92,"tokens_est":640,"status":"pass","errorClass":"none"}
+{"nodeId":"publicMirror","agentId":"b6256b63-2313-4c52-b13e-7d588371eeb6","attempt":1,"latency_ms":44,"tokens_est":120,"status":"pass","errorClass":"none"}
+{"nodeId":"vercelVerify","agentId":"b6256b63-2313-4c52-b13e-7d588371eeb6","attempt":1,"latency_ms":210,"tokens_est":180,"status":"pass","errorClass":"none"}

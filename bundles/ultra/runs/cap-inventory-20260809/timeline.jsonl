@@ -1,0 +1,10 @@
+{"nodeId": "cap_history_load", "agentId": "cap-inventory-agent", "attempt": 1, "latency": 42, "tokens": 1200, "status": "success", "errorClass": "none", "ts": "2026-08-09T17:40:42.911180Z", "extra": {}}
+{"nodeId": "payroll_enriched_build", "agentId": "cap-inventory-agent", "attempt": 1, "latency": 187, "tokens": 3400, "status": "success", "errorClass": "none", "ts": "2026-08-09T17:40:42.911225Z", "extra": {}}
+{"nodeId": "payroll_widen_1001", "agentId": "cap-inventory-agent", "attempt": 1, "latency": 266, "tokens": 2100, "status": "success", "errorClass": "none", "ts": "2026-08-09T17:40:42.911242Z", "extra": {}}
+{"nodeId": "front_office_cap_patch", "agentId": "cap-inventory-agent", "attempt": 1, "latency": 89, "tokens": 1800, "status": "success", "errorClass": "none", "ts": "2026-08-09T17:40:42.911253Z", "extra": {}}
+{"nodeId": "inventory_html_v68", "agentId": "cap-inventory-agent", "attempt": 1, "latency": 112, "tokens": 2600, "status": "success", "errorClass": "none", "ts": "2026-08-09T17:40:42.911261Z", "extra": {}}
+{"nodeId": "verify_teams_size", "agentId": "cap-inventory-agent", "attempt": 1, "latency": 15, "tokens": 400, "status": "success", "errorClass": "none", "ts": "2026-08-09T17:40:42.911268Z", "extra": {}}
+{"nodeId": "triple_write", "agentId": "cap-inventory-agent", "attempt": 1, "latency": 22, "tokens": 300, "status": "success", "errorClass": "none", "ts": "2026-08-09T17:40:42.911275Z", "extra": {}}
+{"nodeId": "verify_payroll_enriched_1001", "agentId": "cap-inventory-agent-v68b", "attempt": 1, "latency": 18, "tokens": 512, "status": "success", "errorClass": "none", "ts": "2026-08-09T17:41:32.083636Z"}
+{"nodeId": "verify_inventory_valuation_pillar", "agentId": "cap-inventory-agent-v68b", "attempt": 1, "latency": 12, "tokens": 340, "status": "success", "errorClass": "none", "ts": "2026-08-09T17:41:32.083692Z"}
+{"nodeId": "triple_write_final", "agentId": "cap-inventory-agent-v68b", "attempt": 1, "latency": 8, "tokens": 200, "status": "success", "errorClass": "none", "ts": "2026-08-09T17:41:32.083709Z"}

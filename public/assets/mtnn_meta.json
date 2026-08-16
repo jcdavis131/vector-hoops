@@ -1,0 +1,17 @@
+{
+  "model": "mtnn_v6_192d_6head_rope_rmsnorm_6L_ff768_cls64_17towers_coral0.5_vicreg0.05_supcon0.07_gated192h_48d_64d_L2",
+  "dim": 64,
+  "rows": 12966,
+  "dailySeed": "LCG 1103515245 YYYYMMDD 20260812->1233799701 idx3970 same-link-same-stars",
+  "composite": 0.85,
+  "top1_790": 0.55,
+  "gated": "192h->48d->64d L2 norm 1.0",
+  "rope": "theta10000 19pos",
+  "rmsnorm": "eps1e-6 gamma learnable",
+  "coral": 0.5,
+  "vicreg": 0.05,
+  "supcon_tau": 0.07,
+  "zero_deps": true,
+  "honest_partial": "15 feats / 6 families bootstrap only, 130 feats / 18 families pending full cache/API",
+  "torch": "2.13.0+cpu cuda=False"
+}

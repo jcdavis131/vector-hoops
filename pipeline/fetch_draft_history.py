@@ -78,15 +78,17 @@ def to_cache(rows: list[dict]) -> dict:
         if not name or overall in (None, "", 0) or year in (None, ""):
             continue
         years.append(int(year))
-        players[norm_name(str(name))].append({
-            "year": int(year),
-            "round": int(r.get("ROUND_NUMBER") or 0),
-            "pick": int(r.get("ROUND_PICK") or 0),
-            "overall": int(overall),
-            "team_id": int(r.get("TEAM_ID") or 0),
-            "team_abbr": str(r.get("TEAM_ABBREVIATION") or ""),
-            "person_id": int(r.get("PERSON_ID") or 0),
-        })
+        players[norm_name(str(name))].append(
+            {
+                "year": int(year),
+                "round": int(r.get("ROUND_NUMBER") or 0),
+                "pick": int(r.get("ROUND_PICK") or 0),
+                "overall": int(overall),
+                "team_id": int(r.get("TEAM_ID") or 0),
+                "team_abbr": str(r.get("TEAM_ABBREVIATION") or ""),
+                "person_id": int(r.get("PERSON_ID") or 0),
+            }
+        )
     for recs in players.values():
         recs.sort(key=lambda x: x["year"])
     return {
@@ -100,16 +102,20 @@ def to_cache(rows: list[dict]) -> dict:
 
 def main() -> None:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--offline", action="store_true",
-                    help="verify the existing cache only; no network")
+    ap.add_argument(
+        "--offline",
+        action="store_true",
+        help="verify the existing cache only; no network",
+    )
     args = ap.parse_args()
 
     if args.offline:
         if not OUT.exists():
             raise SystemExit("no draft_history.json cache and --offline set")
         doc = json.loads(OUT.read_text(encoding="utf-8"))
-        print(f"cache ok: {len(doc['players'])} drafted names, "
-              f"years {doc.get('years')}, complete={doc.get('complete')}")
+        print(
+            f"cache ok: {len(doc['players'])} drafted names, years {doc.get('years')}, complete={doc.get('complete')}"
+        )
         return
 
     rows = fetch_all_drafts()
@@ -117,8 +123,7 @@ def main() -> None:
     CACHE.mkdir(parents=True, exist_ok=True)
     OUT.write_text(json.dumps(doc, separators=(",", ":")), encoding="utf-8")
     n_recs = sum(len(v) for v in doc["players"].values())
-    print(f"wrote {OUT.name}: {n_recs} picks, {len(doc['players'])} names, "
-          f"years {doc['years']}")
+    print(f"wrote {OUT.name}: {n_recs} picks, {len(doc['players'])} names, years {doc['years']}")
 
 
 if __name__ == "__main__":

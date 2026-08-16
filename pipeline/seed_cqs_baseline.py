@@ -1,4 +1,5 @@
 """One-shot: seed CQS baseline from the current mtnn_report.json."""
+
 from __future__ import annotations
 
 import json
@@ -42,6 +43,7 @@ def main() -> None:
 
     # Reload module constants for promote check
     import importlib
+
     importlib.reload(cqs)
     r["composite"] = cqs.composite_quality(r)
     ok, why = cqs.should_promote(r)

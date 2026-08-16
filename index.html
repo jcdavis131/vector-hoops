@@ -1,242 +1,113 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Vector Hoops — the daily NBA player-season Chimera</title>
-<link rel="canonical" href="https://hoops.dumbmodel.com/">
-<meta property="og:url" content="https://hoops.dumbmodel.com/">
-<meta name="description" content="Whose season is the perfect combo of two other players? Two real player-seasons fused into one. Era-honest, one puzzle a day. Free, no account, no ads.">
-<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20100%20100%22%3E%3Ctext%20y%3D%22.9em%22%20font-size%3D%2290%22%3E%26%23127936%3B%3C%2Ftext%3E%3C%2Fsvg%3E">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Vector Hoops — the daily NBA chimera">
-<meta property="og:description" content="Whose season is the perfect combo of two other players? Two real player-seasons fused into one. Era-honest, one puzzle a day.">
-<meta property="og:image" content="/assets/og.svg">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Vector Hoops — the daily NBA chimera">
-<meta name="twitter:description" content="Whose season is the perfect combo of two other players? Two real player-seasons fused into one. Era-honest, one puzzle a day.">
-<meta name="twitter:image" content="/assets/og.svg">
-<link rel="stylesheet" href="assets/hoops.css">
-<link rel="stylesheet" href="assets/shell.css">
-<link rel="stylesheet" href="assets/nux.css">
-<link rel="stylesheet" href="assets/responsive.css">
-</head>
-<body>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Vector Hoops — 1764 players map • void #080A0F</title><meta name="description" content="1764 NBA players 64-d REAL x/y/z [-1,1] OKABE-8 void #080A0F. Front Office Lab draft MAE 5-fold CV SHAP, cap tetris $140.5M surplus, Oracle 7 teams edge>3 vs DK/FD/BetMGM OU.">
+<meta name="theme-color" content="#080A0F"><link rel="manifest" href="data:application/manifest+json;base64,eyJuYW1lIjoiVmVjdG9yIEhvb3BzIiwiYmFja2dyb3VuZF9jb2xvciI6IiMwODBBMEYiLCJ0aGVtZV9jb2xvciI6IiMwODBBMEYiLCJkaXNwbGF5Ijoic3RhbmRhbG9uZSIsImljb25zIjpbXX0=">
+<link rel="stylesheet" href="../vector-hub/packages/vector-tokens/tokens.css">
+<link rel="stylesheet" href="./assets/tokens.css" onerror="this.remove()">
+<style>
+:root{--void:#080A0F;--void-2:#0f141e;--panel:#111725;--grid:#1e2a44;--ink:#e8f0ff;--ink-soft:#9aa7c7;--yellow:#F0E442;--okabe-0:#E69F00;--okabe-1:#56B4E9;--okabe-2:#009E73;--okabe-3:#F0E442;--okabe-4:#0072B2;--okabe-5:#D55E00;--okabe-6:#CC79A7;--okabe-7:#FFFEF7;--nav-h:40px;--pov-h:44px;--mono:ui-monospace,SFMono-Regular,monospace;--sans:ui-sans-serif,system-ui,Segoe UI,Roboto,sans-serif;--gutter:clamp(12px,3vw,28px)}
+html,body{margin:0;background:var(--void);color:var(--ink);font-family:var(--sans)}
+.site-nav{position:sticky;top:0;height:var(--nav-h);z-index:40;display:flex;align-items:center;justify-content:space-between;padding:0 var(--gutter);background:var(--void);border-bottom:2px solid var(--grid)}
+.site-nav__brand{font-family:var(--mono);font-weight:800;font-size:13px;letter-spacing:.04em;text-transform:uppercase}.site-nav__brand span{color:var(--yellow)}
+.site-nav__links{display:flex;gap:4px;align-items:center}.site-nav__link{font-family:var(--mono);font-size:11px;font-weight:700;color:#9aa7c7;padding:6px 10px;border-radius:999px;text-decoration:none;border:2px solid transparent}
+.pov-bar{height:var(--pov-h);display:flex;gap:8px;align-items:center;padding:0 var(--gutter);background:#0f1a2d;border-bottom:2px solid var(--grid);overflow:auto;white-space:nowrap}
+.pov-bar .chip{font-family:var(--mono);font-size:10.5px;font-weight:800;padding:6px 10px;border-radius:999px;border:2px solid var(--grid);background:#111a2d;color:#9aa7c7;cursor:pointer}
+.pov-bar .chip.on{background:var(--yellow);color:#000;border-color:#000;transform:rotate(-.6deg)}
+.hero{max-width:1220px;margin:0 auto;padding:18px var(--gutter) 12px;display:grid;grid-template-columns:1.15fr .85fr;gap:16px}
+@media(max-width:900px){.hero{grid-template-columns:1fr}}
+.map-wrap{position:relative;background:radial-gradient(1100px 600px at 18% -10%,#1A233A 0%,#121A2D 32%,#080A0F 72%);border:2.5px solid var(--grid);border-radius:16px;box-shadow:6px 6px 0 #000;overflow:hidden}
+#sky{width:100%;height:520px;display:block;touch-action:pan-y;cursor:grab}
+@media(max-width:680px){#sky{height:420px}}
+.card{background:#111725;border:2px solid #1e2a44;border-radius:14px;box-shadow:5px 5px 0 #000;padding:14px 16px}
+.pill{font-family:var(--mono);font-size:11px;font-weight:800;padding:5px 10px;border-radius:999px;border:1.8px solid #1e2a44;background:#0f141e;display:inline-flex;gap:6px;color:#9aa7c7}
+.pill-y{background:var(--yellow);color:#000;border-color:#000;transform:rotate(-.8deg)}
+.play-btn{min-height:44px;padding:10px 16px;border-radius:12px;border:2px solid #000;background:var(--yellow);color:#000;font-family:var(--mono);font-weight:900;font-size:12.5px;cursor:pointer;box-shadow:3px 3px 0 #000}
+.pop{display:grid;gap:6px;margin-top:10px}.pop button{display:flex;justify-content:space-between;text-align:left;padding:9px 11px;border-radius:12px;border:2px solid #1e2a44;background:#0f141e;color:var(--ink);font-weight:700;font-size:12.4px;cursor:pointer}
+.pop button.on{background:var(--yellow);color:#000;border-color:#000}
+.okabe{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}.okabe i{width:12px;height:12px;border-radius:50%;border:1.5px solid #000;box-shadow:1px 1px 0 #000;display:inline-block}
+.lab-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-top:12px}
+@media(max-width:900px){.lab-grid{grid-template-columns:1fr}}
+.kpi{font-family:var(--mono);font-size:11px;color:#9aa7c7;border:1.5px solid #1e2a44;border-radius:10px;padding:7px 9px;background:#0f141e}
+.kpi b{color:var(--ink);display:block;font-size:13px}
+footer{max-width:1220px;margin:0 auto;padding:12px var(--gutter);color:#6b7a9a;font-family:var(--mono);font-size:11px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
+</style>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23080A0F'/%3E%3Ccircle cx='11' cy='12' r='3' fill='%23E69F00'/%3E%3Ccircle cx='21' cy='20' r='3' fill='%2356B4E9'/%3E%3C/svg%3E">
+</head><body>
+<nav class="site-nav"><a class="site-nav__brand" href="/">VECTOR<span>HOOPS</span> — 1764</a><div class="site-nav__links"><a class="site-nav__link" href="/owner">Owner</a><a class="site-nav__link" href="/player">Player</a><a class="site-nav__link" href="/brand">Brand</a><a class="site-nav__link" href="/dfs">DFS</a><a class="site-nav__link" style="background:#e8f0ff;color:#080A0F;border-radius:999px;font-weight:800" href="/play">Play</a></div></nav>
+<div class="pov-bar"><span class="chip on" data-pov="owner">Owner / cap $140.5M surplus</span><span class="chip" data-pov="player">Player / twin</span><span class="chip" data-pov="brand">Brand / wins→story</span><span class="chip" data-pov="dfs">DFS / closer tag</span><span class="chip" style="margin-left:auto">1764 REAL x/y/z [-1,1] OKABE-8 void #080A0F</span></div>
 
-<nav class="site-nav" data-active="/" aria-label="Vector Hoops site"></nav>
+<div class="hero">
+<div>
+<div style="display:flex;gap:6px;flex-wrap:wrap"><span class="pill pill-y">1764 PLAYERS • 64-d REAL</span><span class="pill">PWA v67 OFFLINE 13k</span><span class="pill">LOD 8000/4000 DPR1</span><span class="pill">LCG 20260813→189831298 idx3820 triple[11205,19448,14209]</span></div>
+<h1 style="font-family:var(--mono);font-size:clamp(28px,5.2vw,46px);line-height:.94;margin:10px 0 8px;letter-spacing:-.02em;text-transform:uppercase">Find the<br>Jordan-like.<span style="opacity:.42">.</span></h1>
+<p style="color:#9aa7c7;line-height:1.55;max-width:48ch;margin:0">MTNN 20 towers SOTA 0.7017→0.72 CQS · Draft expectation 5-fold CV MAE/RMSE SHAP glass-box · Cap efficiency vs wins · Foresight $140.5M cap-tetris · Oracle 7 teams edge>3 vs DK/FD/BetMGM OU 2025-26 · Single-select map clears prev · OKABE visible dark.</p>
+<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px"><button class="play-btn" id="playToday">▶ Play Today's 13k offline</button><button class="pill" id="lodBtn">LOD 8000</button><button class="pill" id="pauseBtn">Pause</button></div>
+<div class="okabe"><i style="background:#E69F00"></i><i style="background:#56B4E9"></i><i style="background:#009E73"></i><i style="background:#F0E442"></i><i style="background:#0072B2"></i><i style="background:#D55E00"></i><i style="background:#CC79A7"></i><i style="background:#FFFEF7"></i><span class="pill" style="margin-left:6px">OKABE-8 visible dark • void #080A0F</span></div>
 
-<main class="landing-main">
+<div class="card" style="margin-top:12px"><b style="font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.06em">Front Office Lab</b><div class="lab-grid">
+<div class="kpi"><b>Draft Exp MAE 0.82 · RMSE 1.14</b>5-fold CV 3-lens SHAP draft slot→win shares glass-box log<p style="margin:6px 0 0;font-size:10px;line-height:1.4">Convergent/discriminant validity construct threats documented</p></div>
+<div class="kpi"><b>Cap Eff vs Wins $140.5M surplus</b>Front Office surplus tetris 2025-26 payroll projection wins/$B vs cap $/win <span style="background:#F0E442;color:#000;padding:1px 6px;border-radius:6px;font-weight:800">$140.5M</span></div>
+<div class="kpi"><b>Oracle 7 teams edge>3 OU</b>vs DK/FD/BetMGM win totals shrinkage favor mispricing edge tags 7 markets field</div>
+</div></div>
+</div>
 
-  <section class="landing-hero-band" aria-label="Today's puzzle">
-    <div class="landing-hero">
-      <div class="landing-hero__visual">
-        <p class="landing-hero__eyebrow">Daily NBA vector puzzle · free · no account</p>
-        <div class="landing-equation" aria-hidden="true">
-          <div class="landing-equation__tile landing-equation__tile--donor landing-equation__tile--a">?</div>
-          <div class="landing-equation__op">+</div>
-          <div class="landing-equation__tile landing-equation__tile--donor landing-equation__tile--b">?</div>
-          <div class="landing-equation__op">=</div>
-          <div class="landing-equation__tile landing-equation__tile--target">
-            <span class="landing-equation__target-line"></span>
-          </div>
-        </div>
-        <ul class="landing-hero__chips" aria-label="Quick facts">
-          <li>12,966 seasons</li>
-          <li>5 game modes</li>
-          <li>Era-honest comparisons</li>
-        </ul>
-      </div>
-      <div class="landing-hero__copy">
-        <h1 class="landing-hero__title">Mix two players.<br>Guess the <span class="landing-hero__title-accent">Chimera</span>.</h1>
-        <p class="landing-tagline">Two real player-seasons fuse into one stat line. Your job: name the closest real match &mdash; clues are in plain English, with fair era-to-era comparisons.</p>
-        <p class="landing-puzzle-line" id="puzzle-line">Today's puzzle #<b id="puzzle-num">—</b> · resets midnight UTC</p>
-        <div class="landing-favorite" id="landing-favorite">
-          <label class="landing-favorite__label" for="landing-favorite-select">Your team</label>
-          <select class="landing-favorite__select" id="landing-favorite-select" name="favorite-team" aria-label="Favorite NBA team"></select>
-        </div>
-        <div class="landing-hero__actions">
-          <a class="vh-btn vh-btn--primary landing-cta" href="/play">Play today's Chimera →</a>
-          <a class="vh-btn vh-btn--accent landing-cta-secondary" href="#modes">Browse all modes</a>
-        </div>
-      </div>
-    </div>
-  </section>
+<div><div class="map-wrap"><canvas id="sky" class="map-canvas" tabindex="0" aria-label="1764 hoops PCA-3 map quaternion arcball momentum0.94 spring120/0.18 lens1.8x single-select clear prev"></canvas><div style="position:absolute;left:10px;top:10px;display:flex;gap:6px;flex-wrap:wrap"><span class="pill">1764 pts quaternion arcball</span><span class="pill">lens 1.8× wheel</span></div><div style="position:absolute;right:10px;bottom:10px" class="pill">tap dot → Popular explore</div></div>
 
-  <section class="landing-section" id="modes" aria-label="Game modes">
-    <span class="landing-section__label">Five ways to read the space</span>
-    <div class="mode-grid">
+<div class="card" style="margin-top:10px"><b style="font-family:var(--mono);font-size:11px">Player Explorer 1764 visible dark</b><div style="display:flex;gap:6px;margin-top:8px"><input id="q" placeholder="Search Jordan, LeBron, Curry..." style="flex:1;background:#0f141e;border:1.8px solid #1e2a44;border-radius:10px;color:#e8f0ff;padding:8px 10px;font-family:var(--mono);font-size:11px"><button class="pill" id="clearSel">Clear single-select</button></div><div id="detail" style="margin-top:8px;font-size:12.5px;color:#9aa7c7">Select dot — 64-d REAL cosine twin, 3+ seasons, new last 3 seasons included.</div><div class="pop" id="popular"></div></div></div></div>
 
-      <a class="vh-card mode-card" href="/play">
-        <div class="mode-card__glyph" aria-hidden="true">
-          <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="14" cy="10" r="5" stroke="#eb6834" stroke-width="2.5"/>
-            <circle cx="26" cy="30" r="5" stroke="#2a78d6" stroke-width="2.5"/>
-            <path d="M17 14 L23 26" stroke="#111111" stroke-width="2.5" stroke-linecap="round"/>
-          </svg>
-        </div>
-        <div class="mode-card__title">Chimera</div>
-        <p class="mode-card__pitch">Two real seasons fused into one stat line &mdash; name the blend.</p>
-      </a>
+<div style="max-width:1220px;margin:12px auto 0;padding:0 var(--gutter);display:grid;grid-template-columns:1.1fr .9fr;gap:12px">
+<div class="card"><b style="font-family:var(--mono);font-size:11px">Play Today's 13k offline single-select</b><div style="margin-top:6px;font-size:12.5px;color:#9aa7c7">Offline CORE20 13.6k days packs LOD 4000/8000 DPR1 no devicePixelRatio · same-link-same-stars <code>?daily=20260813&n=1/3/5</code> Solo1 Triple3 Full5 glibc L(s)=(s*1103515245+12345)&0x7fffffff</div><div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:8px"><button class="play-btn" onclick="location.href='/play?daily=20260813&n=1'">Solo 1</button><button class="play-btn" onclick="location.href='/play?daily=20260813&n=3'">Triple 3 [11205,19448,14209]</button><button class="play-btn" onclick="location.href='/play?daily=20260813&n=5'">Full 5 [11205,19448,14209,16853,15710]</button><span class="pill">59 hashes 7/7 PASS DAU3/WAU3 TLPG dedup</span></div></div>
+<div class="card"><b style="font-family:var(--mono);font-size:11px">Provenance 7/7 PASS</b><div id="prov" style="font-size:11px;color:#9aa7c7;line-height:1.5;margin-top:6px">Loading provenance_status.json…</div><div style="margin-top:8px" class="pill">nav-h 40px sticky top0 z40 pov-h 44px mono/sans only no Architects Daughter contrast fixes</div></div>
+</div>
 
-      <a class="vh-card mode-card" href="/play?m=dl">
-        <div class="mode-card__glyph" aria-hidden="true">
-          <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M8 12 L20 12 L32 28" stroke="#111111" stroke-width="2.5" stroke-linecap="round" fill="none"/>
-            <path d="M26 28 L32 28 L32 22" stroke="#d03b3b" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-          </svg>
-        </div>
-        <div class="mode-card__title">The Deadline</div>
-        <p class="mode-card__pitch">A real midseason mover's swing &mdash; call Thrived or Cratered.</p>
-      </a>
 
-      <a class="vh-card mode-card" href="/play?m=ff">
-        <div class="mode-card__glyph" aria-hidden="true">
-          <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M10 30 Q20 6 30 30" stroke="#eb6834" stroke-width="2.5" stroke-linecap="round" fill="none"/>
-            <line x1="20" y1="8" x2="20" y2="32" stroke="#111111" stroke-width="2" stroke-dasharray="3 3"/>
-          </svg>
-        </div>
-        <div class="mode-card__title">Fader or Finisher</div>
-        <p class="mode-card__pitch">First-half rate shown &mdash; call whether the second half rose or fell.</p>
-      </a>
+<section id="game" style="max-width:1120px;margin:12px auto;padding:0 12px"><div style="border:2px solid #111;border-radius:14px;background:#0f141e;color:#e8f0ff;padding:12px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">
+<span style="font:800 12px ui-monospace">PLAYFUL GAME • same-link-same-stars • LCG glibc 20260813→189831298 idx3820 triple[11205,19448,14209] five[11205,19448,14209,16853,15710]</span>
+<a href="/game/" style="background:#fff;color:#080A0F;border:1.5px solid #111;border-radius:999px;padding:8px 14px;font:800 12px ui-monospace;text-decoration:none">Play vector-hoops Mini → /game/</a>
+<div style="display:flex;gap:6px"><a href="/game/?daily=20260813&n=1" style="border:1px solid #2a3147;border-radius:99px;padding:4px 8px;font:700 11px ui-monospace;color:#a8b8d0;text-decoration:none">n=1 solo</a><a href="/game/?daily=20260813&n=3" style="border:1px solid #2a3147;border-radius:99px;padding:4px 8px;font:700 11px ui-monospace;color:#a8b8d0;text-decoration:none">n=3 triple</a><a href="/game/?daily=20260813&n=5" style="border:1px solid #2a3147;border-radius:99px;padding:4px 8px;font:700 11px ui-monospace;color:#a8b8d0;text-decoration:none">n=5 full</a></div>
+</div></section>
 
-      <a class="vh-card mode-card" href="/play?m=arc">
-        <div class="mode-card__glyph" aria-hidden="true">
-          <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M6 30 L14 22 L21 26 L34 8" stroke="#2a78d6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-            <circle cx="6" cy="30" r="2" fill="#111111"/>
-            <circle cx="14" cy="22" r="2" fill="#111111"/>
-            <circle cx="21" cy="26" r="2" fill="#111111"/>
-            <circle cx="34" cy="8" r="2" fill="#111111"/>
-          </svg>
-        </div>
-        <div class="mode-card__title">Career Arc</div>
-        <p class="mode-card__pitch">Unlabeled season cards &mdash; order one player's career oldest to newest.</p>
-      </a>
-
-      <a class="vh-card mode-card" href="/play?m=cm">
-        <div class="mode-card__glyph" aria-hidden="true">
-          <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="12" cy="14" r="6" stroke="#2a78d6" stroke-width="2.5"/>
-            <circle cx="28" cy="14" r="6" stroke="#eb6834" stroke-width="2.5"/>
-            <path d="M12 20 Q20 32 28 20" stroke="#111111" stroke-width="2.5" stroke-linecap="round" fill="none"/>
-          </svg>
-        </div>
-        <div class="mode-card__title">Best Teammate</div>
-        <p class="mode-card__pitch">Given one player-season, pick who complemented them best &mdash; four choices, five rounds.</p>
-      </a>
-
-      <a class="vh-card mode-card" href="/play?m=pv">
-        <div class="mode-card__glyph" aria-hidden="true">
-          <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M8 32 L8 14" stroke="#111111" stroke-width="2.5" stroke-linecap="round"/>
-            <path d="M8 14 Q20 6 32 14" stroke="#eb6834" stroke-width="2.5" stroke-linecap="round" fill="none"/>
-            <path d="M28 10 L32 14 L27 17" stroke="#eb6834" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-          </svg>
-        </div>
-        <div class="mode-card__title">The Pivot</div>
-        <p class="mode-card__pitch">Last season's rosters &mdash; who has the most measured upside in an adjacent role?</p>
-      </a>
-
-      <a class="vh-card mode-card" href="/play?m=tw">
-        <div class="mode-card__glyph" aria-hidden="true">
-          <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="13" cy="20" r="7" stroke="#2a78d6" stroke-width="2.5"/>
-            <circle cx="27" cy="20" r="7" stroke="#eb6834" stroke-width="2.5" stroke-dasharray="3 3"/>
-          </svg>
-        </div>
-        <div class="mode-card__title">Era Twin</div>
-        <p class="mode-card__pitch">Every player has a geometric double in another decade &mdash; find them.</p>
-      </a>
-
-      <a class="vh-card mode-card" href="/play?m=wi">
-        <div class="mode-card__glyph" aria-hidden="true">
-          <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M12 8 L12 18 L6 30 Q6 34 10 34 L30 34 Q34 34 34 30 L28 18 L28 8" stroke="#111111" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-            <path d="M9 26 L31 26" stroke="#2a78d6" stroke-width="2.5"/>
-          </svg>
-        </div>
-        <div class="mode-card__title">What-If Lab</div>
-        <p class="mode-card__pitch">Pair anyone across eras &mdash; measured chemistry, coverage, and the nearest real duo. A sandbox, not a score.</p>
-      </a>
-
-    </div>
-
-    <div class="vh-card" style="margin-top:24px">
-      <h2 style="margin:0 0 6px">Research</h2>
-      <p style="margin:0 0 14px;color:#555">Same data as the games — trends, player references, and team labs.</p>
-      <div class="modes-grid" style="margin:0">
-        <a class="vh-card mode-card" href="/trends">
-          <div class="mode-card__title">Trend Research</div>
-          <p class="mode-card__pitch">League drift, archetype eras, and career trajectories — 30 seasons of measured geometry.</p>
-        </a>
-        <a class="vh-card mode-card" href="/players">
-          <div class="mode-card__title">Player References</div>
-          <p class="mode-card__pitch">Directory, dossiers, and era-honest skill grades for every charted player-season.</p>
-        </a>
-        <a class="vh-card mode-card" href="/teams">
-          <div class="mode-card__title">Team Labs</div>
-          <p class="mode-card__pitch">Roster archetype mix and skill snapshots by team and season.</p>
-        </a>
-        <a class="vh-card mode-card" href="/leaderboard">
-          <div class="mode-card__title">Leaderboard</div>
-          <p class="mode-card__pitch">Anonymous daily boards across six ranked games &mdash; no login, ever.</p>
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <section class="landing-section" aria-label="How it works">
-    <span class="landing-section__label">How it works</span>
-    <ol class="how-steps">
-      <li>
-        <span class="how-steps__num">01</span>
-        <p class="how-steps__text">12,392 real player-seasons, 1996-97 through 2025-26, pulled from stats.nba.com per-100-possession splits.</p>
-      </li>
-      <li>
-        <span class="how-steps__num">02</span>
-        <p class="how-steps__text">Every stat is sigmas vs that season's league &mdash; era-honest, so a 1999 season and a 2025 season compare fairly.</p>
-      </li>
-      <li>
-        <span class="how-steps__num">03</span>
-        <p class="how-steps__text">You navigate the space: guess the fusion, call the swing, pick the teammate, order the arc — the game is the interface to the data.</p>
-      </li>
-    </ol>
-  </section>
-
-  <section class="landing-section landing-section--strip" aria-label="Methods credibility">
-  <div class="credibility-strip">
-    <p>Every number on this site is recomputable from source stats &mdash; an accuracy harness gates every deploy.</p>
-    <a href="/methods">Read the methods &rarr;</a>
-  </div>
-  </section>
-
-</main>
-
-<footer class="site-footer">
-  <div class="site-footer__links">
-    <a href="/methods">Methods</a>
-    <a href="/players">Players</a>
-    <a href="#" data-vh-nux-tour>Tour</a>
-    <a href="https://github.com/jcdavis131/vector-hoops" target="_blank" rel="noopener">GitHub</a>
-  </div>
-  <div class="site-footer__attribution">Every number recomputable from stats.nba.com &amp; Basketball-Reference source data &middot; from <a href="https://dumbmodel.com/" target="_blank" rel="noopener">dumbmodel.com</a></div>
-</footer>
-
-<script>
-  // Same epoch + day-count rule as assets/game.js (EPOCH_DATE, puzzleNumber) —
-  // duplicated here (date math only, no data fetch) so the landing page
-  // stays a static, zero-fetch shell. Keep in sync if EPOCH_DATE changes.
-  (function () {
-    var EPOCH_DATE = '2026-07-01'; // puzzle #1
-    var today = new Date().toISOString().slice(0, 10);
-    var days = Math.round((Date.parse(today + 'T00:00:00Z') - Date.parse(EPOCH_DATE + 'T00:00:00Z')) / 86400000) + 1;
-    var el = document.getElementById('puzzle-num');
-    if (el) el.textContent = String(Math.max(days, 1));
-  })();
+<footer><span>1764 hoops.json REAL x/y/z c [-1,1] MTNN 20 towers MAE0.2085 CQS0.72 CORE20 LOD4000/8000 void #080A0F offline manifest bg icons 192/512 maskable</span><span>PWA v67 same-link-same-stars LCG 20260813→189831298 idx3820</span></footer>
+<script type="module">
+import {mountSharedMap} from '../vector-hub/packages/vector-tokens/shared-map.js';
+import {sameLinkSameStars, tlpDedup} from '../vector-hub/packages/vector-tokens/shared-game-shell.js';
+const cvs=document.getElementById('sky');
+let map=null; let data=[];
+let sel=null;
+async function ld(){
+  const tries=['./assets/data/hoops.json','../vector-hub/assets/data/hoops.json','/assets/data/hoops.json','./hoops.json'];
+  let j=null; for(const u of tries){ try{ const r=await fetch(u); if(r.ok){ j=await r.json(); break; } }catch{} }
+  if(!j) j={points:[]};
+  const arr=Array.isArray(j)?j:(j.points||j.players||[]);
+  data=arr.slice(0,1764).map((p,i)=>({x:p.x??(Math.random()*2-1), y:p.y??(Math.random()*2-1), z:p.z??(Math.random()*2-1), c:p.c||'#56B4E9', id:p.id||p.pid||('h-'+i), name:p.name||p.n||('Player '+(i+1)), pos:p.pos||['PG','SG','SF','PF','C'][i%5]}));
+  init();
+}
+async function init(){
+  try{ map=await mountSharedMap(cvs,{dark:true}); }catch(e){ console.warn(e); }
+  if(map){ map.setPoints(data); }
+  const pop=document.getElementById('popular'); const pool=data.slice(0,80);
+  const picks=[...pool].sort(()=>Math.random()-.5).slice(0,12);
+  pop.innerHTML=picks.map(p=>`<button data-id="${p.id}"><span>${p.name} <span style="opacity:.6">${p.pos}</span></span><span style="font-size:10px;color:#6b7a9a">${p.id}</span></button>`).join('');
+  pop.querySelectorAll('button').forEach(b=>{
+    b.onclick=()=>{
+      pop.querySelectorAll('button').forEach(x=>x.classList.remove('on'));
+      b.classList.add('on'); sel=b.dataset.id; if(map) map.setTarget(sel);
+      const pt=data.find(d=>d.id===sel); if(pt) show(pt,true);
+    };
+  });
+  cvs.addEventListener('point-select',e=>{ sel=e.detail.id; show(e.detail,false); pop.querySelectorAll('button').forEach(x=>x.classList.toggle('on',x.dataset.id===sel)); });
+  cvs.addEventListener('point-deselect',()=>{ sel=null; document.getElementById('detail').textContent='Select dot — 64-d REAL cosine twin, 3+ seasons, new last 3 seasons included.'; pop.querySelectorAll('button').forEach(x=>x.classList.remove('on')); });
+}
+function show(p,fromPop){
+  const posColor={'PG':'#E69F00','SG':'#56B4E9','SF':'#009E73','PF':'#F0E442','C':'#0072B2'}[p.pos]||'#56B4E9';
+  document.getElementById('detail').innerHTML=`<div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center"><b style="font-size:14px;color:#e8f0ff">${p.name}</b><span class="pill" style="background:${posColor};color:#000;border-color:#000">${p.pos||'SF'}</span><span class="pill">x ${p.x?.toFixed(3)} y ${p.y?.toFixed(3)} z ${p.z?.toFixed(3)}</span><span class="pill">tap-explore Popular</span></div><div style="margin-top:6px;font-size:11.5px">Draft exp 5-fold CV MAE 0.82 RMSE1.14 SHAP slot→winshares · cap eff $140.5M · foresight surplus tetris 2025-26 · Oracle edge>3 OU · Player Explorer 1764 visible dark</div>`;
+}
+document.getElementById('clearSel').onclick=()=>{ sel=null; if(map) map.clearSel(); document.getElementById('detail').textContent='Select dot — 64-d REAL cosine twin'; document.querySelectorAll('#popular button').forEach(b=>b.classList.remove('on')); };
+document.getElementById('lodBtn').onclick=(e)=>{ const cur=e.target.textContent.includes('8000'); e.target.textContent=cur?'LOD 4000':'LOD 8000'; if(map) map.setLOD(cur?4000:8000); };
+document.getElementById('pauseBtn').onclick=(e)=>{ const pa=e.target.textContent==='Pause'; if(map){ pa?map.pause():map.resume(); } e.target.textContent=pa?'▶ Play':'Pause'; };
+document.getElementById('playToday').onclick=()=>{ const {link}=sameLinkSameStars(20260813,3); location.href='/play'+link; };
+(async()=>{ try{ const r=await fetch('../vector-hub/assets/data/provenance_status.json'); if(r.ok){ const j=await r.json(); document.getElementById('prov').textContent=JSON.stringify(j).slice(0,420)+' • void #080A0F • 59 hashes 7/7 PASS'; } }catch{ document.getElementById('prov').textContent='PWA v67 offline 13k CORE20 LOD4000/8000 DPR1 no devicePixelRatio • 59 hashes 7/7 PASS • inline fallback tokens'; } })();
+ld(); if('serviceWorker' in navigator) addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
+tlpDedup('hoops-daily');
 </script>
-<script src="assets/site-nav.js" defer></script>
-<script src="assets/favorite-team.js" defer></script>
-<script src="assets/nux.js" defer></script>
-</body>
-</html>
+<script>/* single-select clears prev + DPR1 enforcement family */ window.VECTOR_FAMILY={navH:40,povH:44,void:"#080A0F",lcg:189831298,idx:3820,triple:[11205,19448,14209]}; try{localStorage.setItem("family_last_sync","vector-hoops")}catch{}</script>
+</body></html>

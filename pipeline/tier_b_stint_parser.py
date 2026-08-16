@@ -44,8 +44,9 @@ def canonical_pair(a: str, b: str) -> tuple[str, str]:
     return (a, b) if a <= b else (b, a)
 
 
-def parse_season(path: Path) -> tuple[str, dict[tuple[str, str, str], int],
-                                      dict[tuple[int, str], dict]]:
+def parse_season(
+    path: Path,
+) -> tuple[str, dict[tuple[str, str, str], int], dict[tuple[int, str], dict]]:
     """Return season label, shared-game pair counts, and per-team GP totals."""
     season = path.stem.split("_", 1)[1]
     pair_counts: dict[tuple[str, str, str], int] = defaultdict(int)
@@ -80,10 +81,12 @@ def parse_season(path: Path) -> tuple[str, dict[tuple[str, str, str], int],
     return season, pair_counts, gp
 
 
-def build_edges(season: str,
-                pair_counts: dict[tuple[str, str, str], int],
-                gp: dict[tuple[int, str], dict],
-                min_shared: int = MIN_SHARED) -> list[dict]:
+def build_edges(
+    season: str,
+    pair_counts: dict[tuple[str, str, str], int],
+    gp: dict[tuple[int, str], dict],
+    min_shared: int = MIN_SHARED,
+) -> list[dict]:
     """Materialize edges with team_id resolved from GP table."""
     name_team_gp: dict[tuple[str, str], tuple[int, int, str]] = {}
     for (tid, name), info in gp.items():
@@ -102,27 +105,32 @@ def build_edges(season: str,
         if gp_a < MIN_GP or gp_b < MIN_GP:
             continue
         denom = min(gp_a, gp_b)
-        edges.append({
-            "a": a,
-            "b": b,
-            "season": season,
-            "team_id": tid,
-            "team": team,
-            "shared_games": shared,
-            "gp_a": gp_a,
-            "gp_b": gp_b,
-            "weight": round(shared / denom, 4) if denom else 0.0,
-        })
+        edges.append(
+            {
+                "a": a,
+                "b": b,
+                "season": season,
+                "team_id": tid,
+                "team": team,
+                "shared_games": shared,
+                "gp_a": gp_a,
+                "gp_b": gp_b,
+                "weight": round(shared / denom, 4) if denom else 0.0,
+            }
+        )
     edges.sort(key=lambda e: (-e["shared_games"], e["season"], e["a"], e["b"]))
     return edges
 
 
 def main() -> None:
     ap = argparse.ArgumentParser(description="Tier B shared-game stint parser")
-    ap.add_argument("--dry-run", action="store_true",
-                    help="print stats only; do not write jsonl")
-    ap.add_argument("--min-shared", type=int, default=MIN_SHARED,
-                    help=f"minimum shared games per edge (default {MIN_SHARED})")
+    ap.add_argument("--dry-run", action="store_true", help="print stats only; do not write jsonl")
+    ap.add_argument(
+        "--min-shared",
+        type=int,
+        default=MIN_SHARED,
+        help=f"minimum shared games per edge (default {MIN_SHARED})",
+    )
     args = ap.parse_args()
 
     log_files = sorted(DATA.glob("gamelogs_*.jsonl"))

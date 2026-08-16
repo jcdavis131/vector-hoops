@@ -12,7 +12,6 @@ from __future__ import annotations
 
 import argparse
 import json
-import math
 from collections import defaultdict
 from pathlib import Path
 
@@ -32,8 +31,7 @@ def load_bundle():
     man_path = DATA_DIR / "feature_manifest.json"
     if not npz_path.exists() or not man_path.exists():
         raise SystemExit(
-            "missing train_matrix.npz or feature_manifest.json — "
-            "run bootstrap_train_matrix.py + integrate_context.py"
+            "missing train_matrix.npz or feature_manifest.json — run bootstrap_train_matrix.py + integrate_context.py"
         )
     npz = np.load(npz_path, allow_pickle=False)
     manifest = json.loads(man_path.read_text(encoding="utf-8"))
@@ -63,14 +61,16 @@ def per_feature_stats(Z, mask, features: list[str]) -> list[dict]:
         out_of_clip = 0
         if n_present:
             out_of_clip = int(np.sum(np.abs(present_vals) > Z_CLIP))
-        rows.append({
-            "feature": f,
-            "present_pct": round(pct, 2),
-            "present_n": n_present,
-            "mean": round(float(np.mean(present_vals)), 4) if n_present else None,
-            "std": round(float(np.std(present_vals)), 4) if n_present else None,
-            "out_of_clip": out_of_clip,
-        })
+        rows.append(
+            {
+                "feature": f,
+                "present_pct": round(pct, 2),
+                "present_n": n_present,
+                "mean": round(float(np.mean(present_vals)), 4) if n_present else None,
+                "std": round(float(np.std(present_vals)), 4) if n_present else None,
+                "out_of_clip": out_of_clip,
+            }
+        )
     return rows
 
 
@@ -82,12 +82,14 @@ def per_family_stats(feature_rows: list[dict], families: dict[str, str]) -> list
     out = []
     for fam in sorted(by_fam):
         pcts = by_fam[fam]
-        out.append({
-            "family": fam,
-            "features": len(pcts),
-            "mean_present_pct": round(float(np.mean(pcts)), 2),
-            "min_present_pct": round(float(np.min(pcts)), 2),
-        })
+        out.append(
+            {
+                "family": fam,
+                "features": len(pcts),
+                "mean_present_pct": round(float(np.mean(pcts)), 2),
+                "min_present_pct": round(float(np.min(pcts)), 2),
+            }
+        )
     return out
 
 
@@ -105,12 +107,14 @@ def correlation_flags(Z, mask, features: list[str], threshold: float) -> list[di
                 continue
             r = float(np.corrcoef(xi, xj)[0, 1])
             if abs(r) >= threshold:
-                flags.append({
-                    "a": features[i],
-                    "b": features[j],
-                    "r": round(r, 4),
-                    "n": int(both.sum()),
-                })
+                flags.append(
+                    {
+                        "a": features[i],
+                        "b": features[j],
+                        "r": round(r, 4),
+                        "n": int(both.sum()),
+                    }
+                )
     flags.sort(key=lambda x: -abs(x["r"]))
     return flags
 
@@ -127,11 +131,13 @@ def leakage_flags(Z, mask, features: list[str], season_ids: np.ndarray) -> list[
             continue
         r = float(np.corrcoef(col, sid)[0, 1])
         if abs(r) >= LEAK_FLAG:
-            flags.append({
-                "feature": f,
-                "season_r": round(r, 4),
-                "n": int(m.sum()),
-            })
+            flags.append(
+                {
+                    "feature": f,
+                    "season_r": round(r, 4),
+                    "n": int(m.sum()),
+                }
+            )
     return flags
 
 
@@ -141,9 +147,7 @@ def season_coverage(seasons, mask) -> dict:
     any_present: dict[str, list[float]] = {s: [] for s in uniq}
     for i, s in enumerate(seasons):
         any_present[str(s)].append(float(mask[i].max() > 0.5))
-    return {
-        s: round(100.0 * float(np.mean(any_present[s])), 2) for s in uniq
-    }
+    return {s: round(100.0 * float(np.mean(any_present[s])), 2) for s in uniq}
 
 
 def main() -> None:
@@ -171,26 +175,18 @@ def main() -> None:
 
     low_cov = [r for r in feat_rows if r["present_pct"] < 5.0]
     if low_cov:
-        report["warnings"].append(
-            f"{len(low_cov)} features below 5% coverage — document or drop"
-        )
+        report["warnings"].append(f"{len(low_cov)} features below 5% coverage — document or drop")
     clip_bad = [r for r in feat_rows if r["out_of_clip"] > 0]
     if clip_bad:
-        report["warnings"].append(
-            f"{len(clip_bad)} features have values outside [-4,4]"
-        )
+        report["warnings"].append(f"{len(clip_bad)} features have values outside [-4,4]")
     if report["leakage_flags"]:
-        report["warnings"].append(
-            f"{len(report['leakage_flags'])} leakage proxy flags (|season_r|>={LEAK_FLAG})"
-        )
+        report["warnings"].append(f"{len(report['leakage_flags'])} leakage proxy flags (|season_r|>={LEAK_FLAG})")
 
     if args.correlation:
         corr = correlation_flags(Z, mask, features, CORR_FLAG)
         report["correlation_flags"] = corr
         if corr:
-            report["warnings"].append(
-                f"{len(corr)} feature pairs |r|>={CORR_FLAG}"
-            )
+            report["warnings"].append(f"{len(corr)} feature pairs |r|>={CORR_FLAG}")
 
     OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text(json.dumps(report, indent=2), encoding="utf-8")

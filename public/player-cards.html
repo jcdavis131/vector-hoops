@@ -1,0 +1,535 @@
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8">
+<script>/* early error queue — drained by assets/error-boundary.js. Installed here because a listener only sees scripts parsed after it, and the page's own inline block used to be first. */window.__vhErr=[];window.addEventListener("error",function(e){try{var t=e.target,r=t&&(t.src||t.href);window.__vhErr.push({type:r?"resource":"js",message:e.message||("Failed to load "+(r||"")),source:e.filename||r||"",lineno:e.lineno||0,colno:e.colno||0,stack:(e.error&&e.error.stack)||""});}catch(_){}} ,true);window.addEventListener("unhandledrejection",function(e){try{window.__vhErr.push({type:"unhandledrejection",message:String((e.reason&&e.reason.message)||e.reason||"")});}catch(_){}});</script>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Vector Hoops — Player cards</title>
+<meta name="description" content="A card for every charted NBA player, 1996-97 to 2025-26: vector identity, signature season, season-by-season archetypes, and the closest career shapes in the embedding.">
+<meta name="theme-color" content="#fafaf8">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23111'/%3E%3Ccircle cx='11' cy='12' r='3' fill='%23eb6834'/%3E%3C/svg%3E">
+<style>
+:root{
+  --paper:#fafaf8;--surface:#fff;--ink:#111;--ink-soft:#52514e;--muted:#6b6760;--hair:#e1e0d9;
+  --orange:#eb6834;--blue:#2a78d6;--yellow:#f0e442;--green:#009e73;
+  --mono:ui-monospace,"IBM Plex Mono",Menlo,monospace;--sans:ui-sans-serif,system-ui,sans-serif;
+  --shadow:4px 4px 0 var(--ink);--shadow-sm:3px 3px 0 var(--ink);
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased;overflow-x:clip;overflow-wrap:break-word}
+a{color:inherit}
+nav{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:12px 16px;background:var(--surface);border-bottom:2px solid var(--ink);position:sticky;top:0;z-index:10;flex-wrap:wrap}
+.brand{font-family:var(--mono);font-weight:800;letter-spacing:.04em;text-transform:uppercase;text-decoration:none}
+.brand span{color:var(--orange)}
+.pill{display:inline-flex;align-items:center;gap:5px;padding:5px 10px;border:1.6px solid var(--ink);border-radius:999px;background:#fff;box-shadow:2px 2px 0 var(--ink);font-family:var(--mono);font-size:11px;font-weight:800;text-transform:uppercase;text-decoration:none}
+.pill-y{background:var(--yellow)}
+main{max-width:900px;margin:0 auto;padding:16px clamp(12px,3vw,20px) 80px}
+.card{background:var(--surface);border:2.2px solid var(--ink);border-radius:14px;box-shadow:var(--shadow);padding:16px;margin:14px 0}
+h1{font-size:clamp(26px,4.4vw,40px);line-height:1.08;letter-spacing:-.02em;margin:10px 0 8px}
+.sub{font-size:13.5px;color:var(--ink-soft);line-height:1.6;max-width:68ch}
+.mono{font-family:var(--mono);font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.05em}
+.dim{color:var(--muted)}
+input[type=search]{width:100%;max-width:460px;padding:11px 13px;border:2px solid var(--ink);border-radius:10px;font-family:var(--mono);font-size:15px;box-shadow:var(--shadow-sm);background:#fff}
+.hits{list-style:none;margin:8px 0 0;padding:0;display:flex;flex-direction:column;gap:4px;max-width:460px}
+.hits li[role="option"]{display:flex;justify-content:space-between;gap:10px;align-items:baseline;width:100%;text-align:left;border:1.6px solid var(--ink);border-radius:9px;background:#fff;padding:8px 10px;font:inherit;font-size:14px;cursor:pointer;min-height:40px}
+/* focus stays in the input, so the active row has to carry the visible cue itself */
+.hits li[role="option"]:hover,.hits li.is-active{background:var(--yellow)}
+.hits li.is-active{outline:3px solid var(--blue);outline-offset:2px}
+.hits .meta{font-family:var(--mono);font-size:10.5px;color:var(--muted);white-space:nowrap}
+/* the card itself, rendered from the wiki markdown */
+#card h2{font-size:clamp(24px,3.6vw,32px);letter-spacing:-.02em;margin:0 0 6px}
+#card h3{font-size:16px;margin:18px 0 4px;letter-spacing:-.01em}
+#card p{font-size:14.5px;line-height:1.65;margin:8px 0}
+#card ul{margin:8px 0;padding-left:18px}
+#card li{font-size:14px;line-height:1.6;margin:2px 0}
+#card table{border-collapse:collapse;width:100%;margin:8px 0;font-family:var(--mono);font-size:11.5px}
+#card th,#card td{border:1px solid var(--hair);padding:4px 7px;text-align:left;vertical-align:top}
+#card th{background:#f4f3ee;white-space:nowrap}
+.tablewrap{overflow-x:auto}
+.badges{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0 2px}
+.badge{display:inline-flex;align-items:center;gap:5px;border:1.5px solid var(--ink);border-radius:999px;padding:3px 9px;font-family:var(--mono);font-size:10.5px;font-weight:800;background:#fff}
+.badge-y{background:var(--yellow)}
+.sk-wrap{margin-top:8px}
+.sk-row{display:grid;grid-template-columns:132px 1fr 30px auto;gap:8px;align-items:center;padding:2px 0;font-family:var(--mono);font-size:11px}
+.sk-name{font-weight:800;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;cursor:help}
+.sk-track{background:#f0efe9;border:1.3px solid var(--ink);border-radius:999px;height:11px;overflow:hidden}
+.sk-fill{display:block;height:100%;background:var(--blue);border-right:1.3px solid var(--ink)}
+.sk-fill.badge{background:var(--green)}
+.sk-fill.gold{background:var(--yellow)}
+.sk-val{text-align:right;font-variant-numeric:tabular-nums;font-weight:800}
+.sk-val.gold{color:#8a6d00}
+.sk-badge{font-size:9.5px;font-weight:800;text-transform:uppercase;border:1.2px solid var(--ink);border-radius:999px;padding:1px 6px;background:#fff;white-space:nowrap}
+.sk-badge.gold{background:var(--yellow)}
+.sk-badge.badge{background:#dff3ec}
+@media(max-width:600px){.sk-row{grid-template-columns:104px 1fr 28px}.sk-badge{display:none}}a.wikilink{font-weight:700;text-decoration:underline;text-underline-offset:2px}
+:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+.vh-sr{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;border:0}
+.vh-skip{position:absolute;left:-9999px;top:0;z-index:99;background:var(--paper);border:2.2px solid var(--ink);padding:10px 14px;font-family:var(--mono);font-weight:800;text-decoration:none;border-radius:0 0 10px 0}
+.vh-skip:focus{left:0}
+/* The browse row. min-height is declared rather than left to padding so the
+   target-size check can settle it instead of estimating: 28px clears the 24px
+   WCAG 2.5.8 minimum with room to spare. */
+.hubrow{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.hubrow button{border:1.6px solid var(--ink);border-radius:999px;background:#fff;
+  padding:5px 11px;font-family:var(--mono);font-size:11px;font-weight:800;
+  cursor:pointer;min-height:28px;box-shadow:2px 2px 0 var(--ink)}
+.hubrow button:hover{background:var(--paper,#fafaf8)}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.001ms!important;transition-duration:.001ms!important}}
+
+/* ── text inks, solved for WCAG AA on what the browser paints ──────────────
+   Measured per element with its real backdrop composited through transparent
+   ancestors: the brand colours were carrying text at 3.20:1 (#EB6834), 3.42:1
+   (#009E73) and 4.42:1 (#2A78D6) against white.
+
+   These are new tokens, not new values for the brand colours. Every ring, fill,
+   polyline and border still draws #EB6834 / #2A78D6 / #009E73; only text moves.
+   Two earlier attempts changed a shared token instead and traded one failure for
+   another — darkening --ink-muted to clear 4.5 on paper took the same text on the
+   #0A0C10 map inset from 5.3:1 to 4.14:1. The muted greys are left alone here
+   for that reason: they need per-container scoping, not a page-level value. */
+:root{--orange-ink:#C84714;--blue-ink:#2873CF;--green-ink:#008460}
+.brand span,.site-nav__brand span{color:var(--orange-ink)}
+.sm__delta.down,.down{color:var(--orange-ink)}
+.sm__delta.up,.up{color:var(--blue-ink)}
+.fl-dim{color:var(--blue-ink)}
+.fo-ring{color:var(--orange-ink)}
+.proj{color:var(--orange-ink)}
+.mv-score.up{color:var(--green-ink)}
+
+/* #F0E442 is a bright yellow: an ink solved for white reads 3.64:1 on it, and the
+   white-on-yellow badge read 1.27:1. Keyed off the class that puts the yellow
+   there, so this cannot reach another ground. */
+span.pill.mono{color:#5A6476}
+.pill-y,.pill-y.mono,.pill-y.mono-sm,.pill.pill-y,.pill.pill-y.mono,.pill.pill-y.mono-sm,
+a.pill.pill-y,.pill.y,.pill.y.mono{color:#3A2E00}
+/* muted small print, on pages whose every ground is light */
+p.eyebrow,div.mono-sm,span.mono-sm,.pill.mono-sm,.mv-move,p.mono{color:#6F6D68}
+.mv-score.down{color:#D33F24}
+/* the archetype key and the dark pills sit on near-black: the light-ground inks
+   above must not reach them */
+#plKey span,#plKey .n{color:#FAFAF8}
+span.pill.mono.ink,.pill.ink{color:#C9C6C0}
+/* a rule in a later <style> block was still winning on this one */
+span.proj{color:var(--orange-ink)}
+
+
+</style><!-- build_social_meta.py: start -->
+<link rel="canonical" href="https://hoops.dumbmodel.com/player-cards">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="dumbmodel">
+<meta property="og:url" content="https://hoops.dumbmodel.com/player-cards">
+<meta property="og:title" content="Vector Hoops — Player cards">
+<meta property="og:image" content="https://hoops.dumbmodel.com/assets/og-1200x630.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Vector Hoops — Player cards">
+<meta name="twitter:image" content="https://hoops.dumbmodel.com/assets/og-1200x630.png">
+<meta property="og:description" content="A card for every charted NBA player, 1996-97 to 2025-26: vector identity, signature season, season-by-season archetypes, and the closest career shapes in the embedding.">
+<meta name="twitter:description" content="A card for every charted NBA player, 1996-97 to 2025-26: vector identity, signature season, season-by-season archetypes, and the closest career shapes in the embedding.">
+<!-- build_social_meta.py: end -->
+</head><body>
+<a class="vh-skip" href="#main">Skip to the search</a>
+<nav>
+  <a class="brand" href="/">DUMB<span>MODEL</span></a>
+  <div style="display:flex;gap:6px;flex-wrap:wrap"><a class="pill" href="/players">Explorer</a><a class="pill" href="/player-cards">Players</a><a class="pill" href="/trends">Trends</a><a class="pill" href="/model">Model</a><a class="pill" href="/teams">Teams</a><a class="pill" href="/dictionary">Dictionary</a><a class="pill pill-y" href="/play">Play today's →</a></div>
+</nav>
+
+<main id="main" tabindex="-1">
+  <div class="card">
+    <div class="mono dim">Player cards</div>
+    <h1>Every charted player has a page</h1>
+    <p class="sub">2,293 of them, 1996-97 to 2025-26 — generated from the same vectors the game
+    scores against. Each card gives a career identity in standard deviations against its own era,
+    a signature season, an archetype for every year, and the closest career shapes in the
+    embedding. Until now nothing on this site linked them.</p>
+    <div style="margin-top:14px">
+      <label class="mono" for="q">Find a player</label>
+      <input type="search" id="q" autocomplete="off" spellcheck="false" placeholder="Wembanyama, Jordan, Nash…"
+             aria-describedby="qhelp" aria-controls="hits" role="combobox"
+             aria-expanded="false" aria-autocomplete="list" style="margin-top:5px">
+      <div class="mono dim" id="qhelp" style="margin-top:5px">Arrow keys move through results · Enter opens</div>
+      <ul class="hits" id="hits" role="listbox" aria-label="Matching players"></ul>
+<!-- build_player_hubs.py: start -->
+<div style="margin-top:16px;border-top:2px solid var(--hair,#e1e0d9);padding-top:4px">
+<p class="sub dim" style="margin:8px 0 0">Or start from a shape rather than a name — every charted player belongs to at least one of these.</p>
+<div class="mono dim" style="margin-top:12px">By archetype</div><div class="hubrow" role="group" aria-label="Browse players by archetype"><button type="button" class="hub" data-path="archetypes/defensive-glass-rim-pressure-fts">Defensive Glass + Rim Pressure (Fts)</button><button type="button" class="hub" data-path="archetypes/offensive-glass-defensive-glass">Offensive Glass + Defensive Glass</button><button type="button" class="hub" data-path="archetypes/offensive-glass-low-on-court-impact">Offensive Glass (Low On-Court Impact)</button><button type="button" class="hub" data-path="archetypes/playmaking-steals">Playmaking + Steals</button><button type="button" class="hub" data-path="archetypes/rim-protection-offensive-glass">Rim Protection + Offensive Glass</button><button type="button" class="hub" data-path="archetypes/scoring-volume-shot-volume">Scoring Volume + Shot Volume</button><button type="button" class="hub" data-path="archetypes/three-point-accuracy-low-turnovers">Three-Point Accuracy (Low Turnovers)</button><button type="button" class="hub" data-path="archetypes/three-point-volume-three-point-accuracy">Three-Point Volume + Three-Point Accuracy</button></div>
+<div class="mono dim" style="margin-top:12px">By position</div><div class="hubrow" role="group" aria-label="Browse players by position"><button type="button" class="hub" data-path="positions/c">Center</button><button type="button" class="hub" data-path="positions/pf">Power forward</button><button type="button" class="hub" data-path="positions/pg">Point guard</button><button type="button" class="hub" data-path="positions/sf">Small forward</button><button type="button" class="hub" data-path="positions/sg">Shooting guard</button></div>
+</div>
+<!-- build_player_hubs.py: end -->
+    </div>
+  </div>
+
+  <div class="card" id="cardWrap" hidden><h2 class="vh-sr">The card you opened</h2>
+    <div id="card"></div>
+    <p class="sub dim" id="cardSrc" style="margin-top:14px"></p>
+  </div>
+
+  <div id="live" class="vh-sr" role="status" aria-live="polite" aria-atomic="true"></div>
+</main>
+
+<script>
+(function(){
+'use strict';
+var $=function(id){return document.getElementById(id);};
+var esc=function(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');};
+var IDX=null, byslug=null, cursor=-1, hits=[];
+function say(m){var l=$('live');if(!l||!m)return;if(l.textContent===m)l.textContent='';l.textContent=m;}
+
+/* A deliberately small markdown renderer. These pages are machine-written by
+   pipeline/build_wiki.py to a fixed shape — headings, bold, tables, lists and
+   [[slug|Label]] wikilinks — so a full parser would be a dependency bought for
+   nothing. Everything is escaped before any markup is applied, so page content
+   can never inject HTML. */
+/* Wikilink targets come in three shapes across the 2,293 pages, counted rather
+   than assumed: 29,809 bare player slugs with a label, 2,293 bare slugs alone,
+   and 6,750 relative paths like ../archetypes/<slug> pointing at the 8
+   archetype and 5 position hubs. Normalising all three to a knowledge/ path
+   means the hubs become reachable too — they are the same markdown format. */
+function normTarget(t){
+  var raw=String(t||'').trim();
+  /* An explicit ./ or ../ says "this target carries its own path". Stripping it
+     and then re-prefixing players/ turned [[../OKF]] into players/OKF, a page
+     that does not exist. Only a bare slug is a player. */
+  var rel=/^\.{1,2}\//.test(raw);
+  var s=raw.replace(/^\.{1,2}\//,'').replace(/\.md$/,'');
+  if(rel || s.indexOf('/')>=0) return s;
+  /* a bare slug is a player unless there is no such player and there IS a
+     top-level card by that name: knowledge/INDEX.md links to [[OKF]], and
+     forcing every bare slug under players/ pointed it at nothing */
+  return knows('players/'+s) ? 'players/'+s : (knows(s) ? s : 'players/'+s);
+}
+/* Every target these pages can reach, built from what is already on the page:
+   the 2,293 slugs in the search index and the archetype and position hubs the
+   markup already lists. OKF and INDEX are the two top-level cards; they are
+   named here and check_frontend's `wiki` check fails if either stops existing.
+
+   Before this, `inline` turned EVERY [[x]] into an anchor whether or not x was
+   a page. 2,306 of the 39,386 wikilinks across the cards resolve to nothing —
+   2,304 of them the word "wikilinks", which appears in a boilerplate sentence
+   on every single player card, so every card shipped a dead link. Clicking it
+   asked for knowledge/players/wikilinks.md and got a 404. */
+var KNOWN=null;
+function knownTargets(){
+  /* never cache a KNOWN built before the index arrived: it would hold the 13
+     hubs and nothing else, and every player link on the first card opened would
+     be demoted to plain text for the life of the page */
+  if(KNOWN && IDX) return KNOWN;
+  KNOWN={'OKF':1,'INDEX':1};
+  if(IDX&&IDX.players) IDX.players.forEach(function(r){ if(r&&r.slug) KNOWN['players/'+r.slug]=1; });
+  Array.prototype.forEach.call(document.querySelectorAll('.hub[data-path]'),function(b){
+    KNOWN[b.getAttribute('data-path')]=1;
+  });
+  return KNOWN;
+}
+function knows(path){ return knownTargets()[path]===1; }
+function href(path){
+  return path.indexOf('players/')===0 ? '?p='+encodeURIComponent(path.slice(8))
+                                      : '?w='+encodeURIComponent(path);
+}
+function inline(s){
+  s=esc(s);
+  /* Code spans come out first and go back last. OKF.md documents the link
+     format with `[[slug|Display Name]]` inside backticks, and running the
+     wikilink pass first turned the site's own format contract into the thing it
+     was describing — the example read "Display Name". Whatever is in backticks
+     is a quotation, not markup. */
+  var code=[];
+  s=s.replace(/`([^`]+)`/g,function(_,c){ code.push(c); return '\u0000'+(code.length-1)+'\u0000'; });
+  /* a target with no page behind it becomes its own words, not a link to a 404 */
+  s=s.replace(/\[\[([^\]|]+)\|([^\]]+)\]\]/g,function(_,t,label){
+    var p=normTarget(t);
+    if(!knows(p)) return label;
+    return '<a class="wikilink" href="'+href(p)+'" data-path="'+esc(p)+'">'+label+'</a>';
+  });
+  s=s.replace(/\[\[([^\]|]+)\]\]/g,function(_,t){
+    var p=normTarget(t);
+    if(!knows(p)) return esc(t);
+    return '<a class="wikilink" href="'+href(p)+'" data-path="'+esc(p)+'">'+esc(t)+'</a>';
+  });
+  s=s.replace(/\*\*([^*]+)\*\*/g,'<b>$1</b>');
+  s=s.replace(/\u0000(\d+)\u0000/g,function(_,i){ return '<code>'+code[+i]+'</code>'; });
+  return s;
+}
+function render(md){
+  // Drop the frontmatter block and the generator's own HTML comments.
+  // \r?\n throughout: the repo has no .gitattributes and core.autocrlf is on,
+  // so these files are CRLF in a Windows working tree and LF elsewhere. An
+  // LF-only regex silently leaks the whole frontmatter into the card.
+  md=md.replace(/^---\r?\n[\s\S]*?\r?\n---\r?\n/,'').replace(/<!--[\s\S]*?-->/g,'');
+  var out=[], lines=md.split(/\r?\n/), i=0;
+  while(i<lines.length){
+    var ln=lines[i];
+    if(/^\s*$/.test(ln)){ i++; continue; }
+    var h=ln.match(/^(#{1,4})\s+(.*)$/);
+    if(h){ var lv=Math.min(4,h[1].length+1); out.push('<h'+lv+'>'+inline(h[2])+'</h'+lv+'>'); i++; continue; }
+    if(/^\s*\|/.test(ln)){
+      var rows=[];
+      while(i<lines.length && /^\s*\|/.test(lines[i])){ rows.push(lines[i]); i++; }
+      /* A wikilink carries its own pipe — [[slug|Label]] — so splitting the row
+         on every | put the target in one cell and the label in the next. Every
+         archetype and position hub rendered its member table as raw markdown:
+         "[[../players/rajon-rondo" in one column and "Rajon Rondo]]" in the
+         next. Split only on pipes that are not inside a wikilink. */
+      var cells=function(r){
+        var s=r.replace(/^\s*\|/,'').replace(/\|\s*$/,'');
+        var out=[], buf='', depth=0;
+        for(var k=0;k<s.length;k++){
+          if(s[k]==='[' && s[k+1]==='['){ depth++; buf+='[['; k++; continue; }
+          if(s[k]===']' && s[k+1]===']'){ if(depth) depth--; buf+=']]'; k++; continue; }
+          if(s[k]==='|' && !depth){ out.push(buf.trim()); buf=''; continue; }
+          buf+=s[k];
+        }
+        out.push(buf.trim());
+        return out;
+      };
+      var head=cells(rows[0]);
+      var body=rows.slice(rows.length>1 && /^[\s|:\-]+$/.test(rows[1])?2:1);
+      out.push('<div class="tablewrap"><table><thead><tr>'+head.map(function(c){return '<th>'+inline(c)+'</th>';}).join('')+
+        '</tr></thead><tbody>'+body.map(function(r){
+          return '<tr>'+cells(r).map(function(c){return '<td>'+inline(c)+'</td>';}).join('')+'</tr>';
+        }).join('')+'</tbody></table></div>');
+      continue;
+    }
+    if(/^\s*[-*]\s+/.test(ln)){
+      var items=[];
+      while(i<lines.length && /^\s*[-*]\s+/.test(lines[i])){ items.push(lines[i].replace(/^\s*[-*]\s+/,'')); i++; }
+      out.push('<ul>'+items.map(function(t){return '<li>'+inline(t)+'</li>';}).join('')+'</ul>');
+      continue;
+    }
+    var para=[];
+    while(i<lines.length && !/^\s*$/.test(lines[i]) && !/^\s*\|/.test(lines[i]) && !/^\s*[-*]\s+/.test(lines[i]) && !/^#{1,4}\s/.test(lines[i])){ para.push(lines[i]); i++; }
+    out.push('<p>'+inline(para.join(' '))+'</p>');
+  }
+  return out.join('');
+}
+
+/* The Skills Lens. README calls it shipped — "grades all 12,392 player-seasons
+   on 12 transparent skills and ships live" — and until now nothing on the site
+   read assets/skills.json. The peak-graded season per player is resolved at
+   build time by scripts/build_wiki_index.py, so 12 integers travel instead of
+   478 KB. Grades are percentiles within that season's pool, so 99 means top of
+   that year, not top of all time. */
+function skillBlock(rec){
+  if(!rec || !rec.sk || !IDX || !IDX.skills || !IDX.skills.length) return '';
+  var meta=IDX.skills, g=rec.sk;
+  if(g.length!==meta.length) return '';   // never pair a grade with the wrong label
+  var rows=meta.map(function(m,i){
+    var v=g[i];
+    var tier=v>=97?'gold':(v>=90?'badge':'');
+    var formula=Object.keys(m.w||{}).map(function(k){ return k+' '+m.w[k]; }).join(' · ');
+    return '<div class="sk-row"><span class="sk-name" title="'+esc(formula)+'">'+esc(m.label)+'</span>'+
+      '<span class="sk-track"><span class="sk-fill '+tier+'" style="width:'+Math.max(2,v)+'%"></span></span>'+
+      '<span class="sk-val '+tier+'">'+v+'</span>'+
+      (tier?'<span class="sk-badge '+tier+'">'+esc(m.badge||'')+'</span>':'<span></span>')+'</div>';
+  }).join('');
+  return '<h3 style="margin-top:18px">Skills Lens — '+esc(rec.skS||'peak season')+'</h3>'+
+    '<p class="sub">Percentile within that season’s pool, from '+
+    '<code>assets/skills.json</code>. 90+ earns the badge, 97+ is gold. Hover a name for its '+
+    'formula — every grade is a linear composite of era-z features, not a rating anyone typed.</p>'+
+    '<div class="sk-wrap">'+rows+'</div>';
+}
+function badges(rec){
+  if(!rec) return '';
+  var b=[];
+  if(rec.span) b.push('<span class="badge">'+esc(rec.span)+'</span>');
+  if(rec.seasons) b.push('<span class="badge">'+rec.seasons+' season'+(rec.seasons===1?'':'s')+'</span>');
+  (rec.positions||[]).forEach(function(p){ b.push('<span class="badge">'+esc(p)+'</span>'); });
+  (rec.archetypes||[]).forEach(function(a){ b.push('<span class="badge badge-y">'+esc(a)+'</span>'); });
+  return '<div class="badges">'+b.join('')+'</div>';
+}
+/* Which open() is the current one. Every card write below is guarded on it,
+   because the fetch that finishes last used to win regardless of which card the
+   visitor asked for last. Measured by holding one request for three seconds and
+   clicking a second card in between:
+
+     1s later   card 'Skills Lens — 1998-99'  title 'Gerald Brown'   url '?p=gerald-brown'
+     5s later   card 'Skills Lens — 2000-01'  title 'Vince Carter'   url '?p=vince-carter'
+                announced 'Vince Carter card loaded.'
+
+   Someone who changed their mind was dragged back three seconds later, and
+   history.pushState ran after they had already navigated away — so Back went
+   somewhere they had never chosen to be. */
+var openSeq=0;
+function open(path,push){
+  if(!path) return;
+  path=normTarget(path);
+  var mine=++openSeq;
+  var slug=path.indexOf('players/')===0?path.slice(8):null;
+  var rec=(slug&&byslug)?byslug[slug]:null;
+  var label=rec?rec.name:path.split('/').pop().replace(/-/g,' ');
+  $('cardWrap').hidden=false;
+  $('card').innerHTML='<p class="sub dim">Loading '+esc(label)+'…</p>';
+  fetch('knowledge/'+path.split('/').map(encodeURIComponent).join('/')+'.md',{cache:'force-cache'})
+    .then(function(r){ if(!r.ok) throw new Error('HTTP '+r.status); return r.text(); })
+    .then(function(md){
+      if(mine!==openSeq) return;   // a newer card has been asked for; this one is stale
+      $('card').innerHTML=badges(rec)+skillBlock(rec)+render(md);
+      $('cardSrc').innerHTML='Source: <code>knowledge/'+esc(path)+'.md</code> — generated by '+
+        '<code>pipeline/build_wiki.py</code> from the committed vectors. Sigma values are against '+
+        'that player’s own era; see the <a href="/dictionary#era-z">dictionary</a>.';
+      if(push) history.pushState({path:path},'',href(path));
+      document.title=label+' — Vector Hoops';
+      say(label+' card loaded.');
+      $('cardWrap').scrollIntoView({block:'start'});
+    })
+    .catch(function(e){
+      // a stale failure must not replace a card the visitor has since opened
+      if(mine!==openSeq) return;
+      // no invented card: if the page is missing, say which one and why
+      $('card').innerHTML='<p class="sub">No wiki page at <code>knowledge/'+esc(path)+'.md</code> ('+
+        esc(e.message)+'). 2,293 charted players have one, plus 8 archetype and 5 position hubs; '+
+        'a player below the charting floor will not.</p>';
+      $('cardSrc').textContent='';
+    });
+}
+function setExpanded(open){
+  var q=$('q'), want=open?'true':'false';
+  if(q && q.getAttribute('aria-expanded')!==want) q.setAttribute('aria-expanded',want);
+}
+function search(){
+  var v=($('q').value||'').trim().toLowerCase();
+  cursor=-1;
+  // role=presentation: this is a status line, not a choice. #hits is a listbox,
+  // and an <li> in one without a role reads as an option a screen reader can pick.
+  // Expanded stays false for the same reason — there is nothing to choose yet.
+  if(!IDX){ $('hits').innerHTML='<li class="sub dim" role="presentation">Loading index…</li>';
+            setExpanded(false); return; }
+  if(v.length<2){ $('hits').innerHTML=''; hits=[]; setExpanded(false); return; }
+  /* The input points aria-controls at a listbox and never said whether that
+     listbox was open, so a screen reader announced a combobox with no state
+     while five results sat under it. Set where the list is actually written,
+     and guarded so a repeat write is a no-op. */
+  var all=IDX.players.filter(function(p){ return p.name.toLowerCase().indexOf(v)>=0; })
+    .sort(function(a,b){
+      var ai=a.name.toLowerCase().indexOf(v), bi=b.name.toLowerCase().indexOf(v);
+      return ai!==bi ? ai-bi : (b.seasons||0)-(a.seasons||0);
+    });
+  /* Ten is the list, `all.length` is the truth. Slicing before counting made the
+     announcement state the cap: forty matches were called "10 matches", and the
+     list showed ten with nothing saying there were more. */
+  hits=all.slice(0,10);
+  $('hits').innerHTML=hits.length
+    ? hits.map(function(p,i){
+        /* The option IS the option. This used to be a <button> inside the
+           li[role=option], which puts a button inside an option as far as a
+           screen reader is concerned, and moved DOM focus out of the combobox
+           onto it — so aria-selected never moved off "false" and the input's
+           aria-activedescendant was never used. Focus stays in the input now. */
+        return '<li role="option" id="hit-'+i+'" aria-selected="false" tabindex="-1" '+
+          'data-slug="'+esc(p.slug)+'" data-i="'+i+'">'+
+          '<span>'+esc(p.name)+'</span><span class="meta">'+esc(p.span)+'</span></li>';
+      }).join('')
+    : '<li class="sub dim">No charted player matches that.</li>';
+  setExpanded(hits.length>0);
+  say(all.length+' match'+(all.length===1?'':'es')+
+      (all.length>hits.length?(', showing the first '+hits.length+'. Keep typing to narrow it.'):'.'));
+}
+/* Memoising the RESULT was not enough. IDX stays null for the whole flight, so
+   focus plus five keystrokes entered here six times and started six downloads of
+   a 539 KB index. Measured on Fast 3G: five requests while typing "curry", and
+   the contention turned a 2.7-second fetch into first results at 12.0 seconds.
+   Holding the promise makes it one download however fast anyone types. */
+var IDXP=null;
+function loadIndex(){
+  if(IDX) return Promise.resolve(IDX);
+  if(IDXP) return IDXP;
+  say('Loading the player index.');
+  IDXP=fetch('assets/wiki_index.json?v=4e63a03b',{cache:'force-cache'})
+    .then(function(r){ if(!r.ok) throw new Error('HTTP '+r.status); return r.json(); })
+    .then(function(j){
+      IDX=j; byslug={};
+      j.players.forEach(function(p){ byslug[p.slug]=p; });
+      search();
+      return j;
+    })
+    .catch(function(e){
+      // cleared so a later keystroke can retry rather than being stuck on a
+      // promise that will never resolve
+      IDXP=null;
+      $('hits').innerHTML='<li class="sub" role="presentation">Index unavailable ('+esc(e.message)+').</li>';
+      say('The player index could not be loaded.');
+    });
+  return IDXP;
+}
+
+/* Both, always. `IDX ? search() : loadIndex()` never called search() while the
+   index was missing — which is the one case search() already handles, with a
+   "Loading index…" line it could therefore never reach. Twelve seconds of an
+   empty list on Fast 3G, and the page had the right words sitting unreachable. */
+$('q').addEventListener('input',function(){ loadIndex(); search(); });
+$('q').addEventListener('focus',loadIndex);
+function setActive(i){
+  var opts=$('hits').querySelectorAll('li[role="option"]');
+  if(!opts.length){ cursor=-1; $('q').removeAttribute('aria-activedescendant'); return; }
+  cursor=Math.max(0,Math.min(opts.length-1,i));
+  for(var k=0;k<opts.length;k++){
+    var on=(k===cursor);
+    if((opts[k].getAttribute('aria-selected')==='true')!==on)
+      opts[k].setAttribute('aria-selected', on?'true':'false');
+    opts[k].classList.toggle('is-active', on);
+  }
+  $('q').setAttribute('aria-activedescendant', opts[cursor].id);
+  if(opts[cursor].scrollIntoView) opts[cursor].scrollIntoView({block:'nearest'});
+}
+$('q').addEventListener('keydown',function(e){
+  var opts=$('hits').querySelectorAll('li[role="option"]');
+  if(e.key==='ArrowDown'||e.key==='ArrowUp'){
+    if(!opts.length) return;
+    e.preventDefault();
+    setActive(cursor + (e.key==='ArrowDown'?1:-1));
+  } else if(e.key==='Enter' && opts.length){
+    e.preventDefault(); open(opts[Math.max(0,cursor)].dataset.slug,true);
+  } else if(e.key==='Escape'){
+    $('hits').innerHTML=''; hits=[]; setExpanded(false);
+    cursor=-1; $('q').removeAttribute('aria-activedescendant');
+  }
+});
+/* The browse row opens a hub card through the same path the search results use,
+   so an archetype page behaves exactly like a player page once it is open. */
+document.addEventListener('click',function(e){
+  var b=e.target.closest?e.target.closest('.hubrow button'):null;
+  if(b&&b.dataset.path) open(b.dataset.path,true);
+});
+$('hits').addEventListener('click',function(e){
+  var li=e.target.closest?e.target.closest('li[role="option"]'):null;
+  if(li && li.dataset.slug){ setActive(+li.dataset.i||0); open(li.dataset.slug,true); }
+});
+/* The list had its own ArrowUp/ArrowDown handler because focus used to move
+   into it. Focus stays on the input now and setActive() moves
+   aria-activedescendant, so there is nothing in here to steer. */
+// wikilinks between cards stay in-page
+$('card').addEventListener('click',function(e){
+  var a=e.target.closest?e.target.closest('a.wikilink'):null;
+  if(a && a.dataset.path){ e.preventDefault(); open(a.dataset.path,true); }
+});
+// ?p= is the short form for a player; ?w= addresses any other knowledge/ page
+function fromUrl(){
+  var q=new URLSearchParams(location.search);
+  return q.get('w') || q.get('p') || null;
+}
+/* The title the page arrived with, so backing out of a card can put it back. */
+var BASE_TITLE=document.title;
+window.addEventListener('popstate',function(){
+  var t=fromUrl();
+  if(t){ open(t,false); return; }
+  /* Backing out to the bare URL hid the card and left everything else where the
+     card had put it. Measured by opening two cards and pressing Back twice:
+
+       Back   url ''   hidden=True   title 'Vince Carter — Vector Hoops'
+
+     A document title is what the tab shows, what a bookmark saves, and what a
+     screen reader reads on navigation — so with no card on screen it has to stop
+     naming one. The close is announced for the same reason the open is: nothing
+     else tells a non-visual visitor the card went away. */
+  $('cardWrap').hidden=true;
+  document.title=BASE_TITLE;
+  say('Card closed.');
+});
+
+var initial=fromUrl();
+if(initial){ loadIndex().then(function(){ open(initial,false); }); }
+})();
+</script>
+<script src="assets/error-boundary.js?v=dfe16efe"></script>
+<script src="assets/keyboard-a11y.js?v=8bd158d1"></script>
+<script src="assets/pwa-install.js?v=11551699"></script>
+</body></html>

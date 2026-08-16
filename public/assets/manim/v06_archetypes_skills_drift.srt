@@ -1,0 +1,15 @@
+1
+00:00:00,000 --> 00:00:02,400
+Eight archetypes — k-means on era-z normalized sphere — rim, wing, play, three-and-D.
+
+2
+00:00:02,400 --> 00:00:05,000
+Twelve skills percentile zero to ninety-nine — scoring, playmaking, defense, rebounding — triple encoded color plus icon plus text.
+
+3
+00:00:05,000 --> 00:00:07,800
+Procrustes finds rotation Q — minimize Frobenius between 1990s and 2020s centroids.
+
+4
+00:00:07,800 --> 00:00:11,000
+Angle theta from trace Q — drift quantified — three-point up, rim protection shift — game evolves.

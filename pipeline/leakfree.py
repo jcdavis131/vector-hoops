@@ -25,12 +25,12 @@ Splits (train_mtnn.eval_split, by the row's own season):
     val:   2022, 2023
     test:  >= 2024
 """
+
 from __future__ import annotations
 
 import hashlib
 
 import numpy as np
-
 import train_mtnn as T
 
 
@@ -39,8 +39,7 @@ def row_split(seasons) -> np.ndarray:
     return np.array([T.eval_split(str(s)) for s in seasons], dtype=object)
 
 
-def player_split(names, seed: int = 7, val_frac: float = 0.10,
-                 test_frac: float = 0.10) -> np.ndarray:
+def player_split(names, seed: int = 7, val_frac: float = 0.10, test_frac: float = 0.10) -> np.ndarray:
     """Assign each PLAYER (all his seasons) to one split, deterministically.
 
     Why not the temporal split for model selection:
@@ -60,10 +59,9 @@ def player_split(names, seed: int = 7, val_frac: float = 0.10,
     """
     out = np.empty(len(names), dtype=object)
     for i, n in enumerate(names):
-        h = hashlib.md5(f"{seed}:{n}".encode("utf-8")).hexdigest()
+        h = hashlib.md5(f"{seed}:{n}".encode()).hexdigest()
         u = int(h[:8], 16) / 0xFFFFFFFF
-        out[i] = "test" if u < test_frac else (
-            "val" if u < test_frac + val_frac else "train")
+        out[i] = "test" if u < test_frac else ("val" if u < test_frac + val_frac else "train")
     return out
 
 
@@ -89,8 +87,7 @@ def pairs_in_split(pair_arr: np.ndarray, split: np.ndarray, which: str) -> np.nd
     return pair_arr[keep] if keep.any() else np.zeros((0, 2), int)
 
 
-def restrict_next_idx_split(next_idx: np.ndarray, split: np.ndarray,
-                            which: str = "train") -> np.ndarray:
+def restrict_next_idx_split(next_idx: np.ndarray, split: np.ndarray, which: str = "train") -> np.ndarray:
     """Blank next-season targets unless source AND target are in `which`."""
     out = np.full_like(next_idx, -1)
     valid = next_idx >= 0
@@ -101,9 +98,13 @@ def restrict_next_idx_split(next_idx: np.ndarray, split: np.ndarray,
     return out
 
 
-def next_profile_metrics(pred: np.ndarray, target: np.ndarray,
-                         next_idx: np.ndarray, split: np.ndarray,
-                         feature_names: list[str]) -> dict:
+def next_profile_metrics(
+    pred: np.ndarray,
+    target: np.ndarray,
+    next_idx: np.ndarray,
+    split: np.ndarray,
+    feature_names: list[str],
+) -> dict:
     """Held-out next-season regression, scored by the TARGET row's split."""
     out: dict = {}
     valid = next_idx >= 0
@@ -118,16 +119,15 @@ def next_profile_metrics(pred: np.ndarray, target: np.ndarray,
         resid = y - p
         ss_tot = float(((y - y.mean(axis=0, keepdims=True)) ** 2).sum())
         out[s] = {
-            "rows": int(len(rows)),
+            "rows": len(rows),
             "mae_z": round(float(np.abs(resid).mean()), 4),
-            "rmse_z": round(float(np.sqrt((resid ** 2).mean())), 4),
-            "r2": round(1.0 - float((resid ** 2).sum()) / max(ss_tot, 1e-9), 4),
+            "rmse_z": round(float(np.sqrt((resid**2).mean())), 4),
+            "r2": round(1.0 - float((resid**2).sum()) / max(ss_tot, 1e-9), 4),
         }
     return out
 
 
-def leakfree_clusters(Zg: np.ndarray, is_train: np.ndarray, k: int = 8,
-                      seed: int = 7, iters: int = 40) -> np.ndarray:
+def leakfree_clusters(Zg: np.ndarray, is_train: np.ndarray, k: int = 8, seed: int = 7, iters: int = 40) -> np.ndarray:
     """k-means fit on TRAIN rows only, then assign every row to a centroid.
 
     Mirrors build_vectors.py (K=8, rng(7), 40 Lloyd iterations, on the 14
@@ -164,9 +164,14 @@ def restrict_next_idx(next_idx: np.ndarray, is_train: np.ndarray) -> np.ndarray:
     return out
 
 
-def purity_at_20(E: np.ndarray, clusters: np.ndarray, seasons,
-                 sample_rows: np.ndarray, k: int = 20,
-                 n_sample: int = 400) -> float | None:
+def purity_at_20(
+    E: np.ndarray,
+    clusters: np.ndarray,
+    seasons,
+    sample_rows: np.ndarray,
+    k: int = 20,
+    n_sample: int = 400,
+) -> float | None:
     """Cross-era archetype neighbor purity, restricted to `sample_rows`.
 
     Same math as train_mtnn.cross_era_archetype_purity but lets us score only
@@ -198,12 +203,12 @@ def audit(seasons, pair_arr: np.ndarray, next_idx: np.ndarray) -> dict:
     tgt_split = np.full(len(next_idx), "", dtype=object)
     tgt_split[valid] = split[next_idx[valid]]
     return {
-        "rows_total": int(len(seasons)),
+        "rows_total": len(seasons),
         "rows_train": int(is_train.sum()),
         "rows_val": int((split == "val").sum()),
         "rows_test": int((split == "test").sum()),
-        "pairs_total": int(len(pair_arr)),
-        "pairs_train_only": int(len(restrict_pairs(pair_arr, is_train))),
+        "pairs_total": len(pair_arr),
+        "pairs_train_only": len(restrict_pairs(pair_arr, is_train)),
         "leaked_pair_positives": int(len(pair_arr) - len(restrict_pairs(pair_arr, is_train))),
         "leaked_next_targets_val": int((tgt_split == "val").sum()),
         "leaked_next_targets_test": int((tgt_split == "test").sum()),

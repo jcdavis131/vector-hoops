@@ -1,0 +1,73 @@
+{
+  "model": "draft_expectation_linear_inv_overall_log_overall_round",
+  "dataset_size": 1598,
+  "feature_names": [
+    "inv",
+    "log",
+    "round",
+    "overall",
+    "draft_year_norm"
+  ],
+  "fold_metrics": [
+    {
+      "mae": 4422.88,
+      "rmse": 5450.75,
+      "r2": 0.4243
+    },
+    {
+      "mae": 4490.44,
+      "rmse": 5460.02,
+      "r2": 0.404
+    },
+    {
+      "mae": 4535.12,
+      "rmse": 5546.03,
+      "r2": 0.4016
+    },
+    {
+      "mae": 4446.17,
+      "rmse": 5412.87,
+      "r2": 0.4184
+    },
+    {
+      "mae": 4589.16,
+      "rmse": 5741.43,
+      "r2": 0.3387
+    }
+  ],
+  "avg_mae": 4496.75,
+  "avg_rmse": 5522.22,
+  "avg_r2": 0.3974,
+  "coeffs_full": {
+    "coeffs": [
+      -10592.578159992998,
+      -4975.193047392441,
+      -2769.207530729227,
+      29204.38292331778
+    ],
+    "feature_names": [
+      "inv_overall",
+      "log_overall",
+      "round"
+    ]
+  },
+  "global_mean_abs_shap": {
+    "inv": -10.8,
+    "log": 385.4,
+    "round": 216.5,
+    "overall": 1251.02,
+    "draft_year_norm": 4.77
+  },
+  "perm_importance": {
+    "inv": -10.8,
+    "log": 385.4,
+    "round": 216.5,
+    "overall": 1251.02,
+    "draft_year_norm": 4.77
+  },
+  "shap_linear_note": "Kernel SHAP approx via linear SHAP = coeff*(x-mean) when model is linear; global mean|SHAP| reported.",
+  "base_value": 9500,
+  "samples": [],
+  "provenance": "5-fold CV seed42 shuffle, zero-deps, model_zoo_eval.json",
+  "eval_link": "models/eval_frontoffice.json"
+}

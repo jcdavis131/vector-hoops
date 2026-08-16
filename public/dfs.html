@@ -1,0 +1,166 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<script>/* early error queue — drained by assets/error-boundary.js. Installed here because a listener only sees scripts parsed after it, and the page's own inline block used to be first. */window.__vhErr=[];window.addEventListener("error",function(e){try{var t=e.target,r=t&&(t.src||t.href);window.__vhErr.push({type:r?"resource":"js",message:e.message||("Failed to load "+(r||"")),source:e.filename||r||"",lineno:e.lineno||0,colno:e.colno||0,stack:(e.error&&e.error.stack)||""});}catch(_){}} ,true);window.addEventListener("unhandledrejection",function(e){try{window.__vhErr.push({type:"unhandledrejection",message:String((e.reason&&e.reason.message)||e.reason||"")});}catch(_){}});</script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Vector Hoops — Projections • what the model can and cannot see coming</title><meta name="theme-color" content="#fafaf8"><link rel="stylesheet" href="/assets/fonts.css?v=31e5658b">
+<style>:root{--paper:#fafaf8;--surface:#fff;--ink:#111;--muted:#6b6760;--orange:#eb6834;--blue:#2a78d6;--purple:#7a5ae6;--yellow:#f0e442;--green:#009e73;--mono:ui-monospace,Menlo,monospace;--shadow:4px 4px 0 var(--ink)}*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;overflow-wrap:break-word}nav{display:flex;justify-content:space-between;align-items:center;padding:10px 14px;background:#fff;border-bottom:2px solid var(--ink);position:sticky;top:0;z-index:10;flex-wrap:wrap;gap:8px}.brand{font-family:var(--mono);font-weight:800;text-transform:uppercase}.brand span{color:var(--orange)}.pill{display:inline-flex;padding:5px 10px;border:1.6px solid var(--ink);border-radius:999px;background:#fff;box-shadow:2px 2px 0 var(--ink);font-family:var(--mono);font-size:11px;font-weight:800;text-transform:uppercase}.pill-y{background:var(--yellow)}.pill-o{background:#ffe7d6}.card{background:#fff;border:2px solid var(--ink);border-radius:14px;box-shadow:var(--shadow);padding:12px;margin:12px auto;max-width:980px}.mono{font-family:var(--mono);font-size:11px;font-weight:800;text-transform:uppercase}.sub{font-size:12.8px;color:#555;line-height:1.5}.btn{border:2px solid var(--ink);border-radius:999px;padding:8px 12px;background:#111;color:#fff;box-shadow:2px 2px 0 var(--ink);font-family:var(--mono);font-weight:800;cursor:pointer}.btn-y{background:var(--yellow);color:#111}
+.vh-skip{position:absolute;left:-9999px;top:0;z-index:99;background:var(--paper,#fafaf8);border:2.2px solid var(--ink,#111);padding:10px 14px;font-family:ui-monospace,Menlo,monospace;font-weight:800;text-decoration:none;border-radius:0 0 10px 0}
+.vh-skip:focus{left:0}
+.vh-sr{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;border:0}
+
+/* ── text inks, solved for WCAG AA on what the browser paints ──────────────
+   Measured per element with its real backdrop composited through transparent
+   ancestors: the brand colours were carrying text at 3.20:1 (#EB6834), 3.42:1
+   (#009E73) and 4.42:1 (#2A78D6) against white.
+
+   These are new tokens, not new values for the brand colours. Every ring, fill,
+   polyline and border still draws #EB6834 / #2A78D6 / #009E73; only text moves.
+   Two earlier attempts changed a shared token instead and traded one failure for
+   another — darkening --ink-muted to clear 4.5 on paper took the same text on the
+   #0A0C10 map inset from 5.3:1 to 4.14:1. The muted greys are left alone here
+   for that reason: they need per-container scoping, not a page-level value. */
+:root{--orange-ink:#C84714;--blue-ink:#2873CF;--green-ink:#008460}
+.brand span,.site-nav__brand span{color:var(--orange-ink)}
+.sm__delta.down,.down{color:var(--orange-ink)}
+.sm__delta.up,.up{color:var(--blue-ink)}
+.fl-dim{color:var(--blue-ink)}
+.fo-ring{color:var(--orange-ink)}
+.proj{color:var(--orange-ink)}
+.mv-score.up{color:var(--green-ink)}
+
+/* #F0E442 is a bright yellow: an ink solved for white reads 3.64:1 on it, and the
+   white-on-yellow badge read 1.27:1. Keyed off the class that puts the yellow
+   there, so this cannot reach another ground. */
+span.pill.mono{color:#5A6476}
+.pill-y,.pill-y.mono,.pill-y.mono-sm,.pill.pill-y,.pill.pill-y.mono,.pill.pill-y.mono-sm,
+a.pill.pill-y,.pill.y,.pill.y.mono{color:#3A2E00}
+/* muted small print, on pages whose every ground is light */
+p.eyebrow,div.mono-sm,span.mono-sm,.pill.mono-sm,.mv-move,p.mono{color:#6F6D68}
+.mv-score.down{color:#D33F24}
+/* the archetype key and the dark pills sit on near-black: the light-ground inks
+   above must not reach them */
+#plKey span,#plKey .n{color:#FAFAF8}
+span.pill.mono.ink,.pill.ink{color:#C9C6C0}
+/* a rule in a later <style> block was still winning on this one */
+span.proj{color:var(--orange-ink)}
+
+
+</style><!-- build_social_meta.py: start -->
+<link rel="canonical" href="https://hoops.dumbmodel.com/dfs">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="dumbmodel">
+<meta property="og:url" content="https://hoops.dumbmodel.com/dfs">
+<meta property="og:title" content="Vector Hoops — Projections • what the model can and cannot see coming">
+<meta property="og:image" content="https://hoops.dumbmodel.com/assets/og-1200x630.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Vector Hoops — Projections • what the model can and cannot see coming">
+<meta name="twitter:image" content="https://hoops.dumbmodel.com/assets/og-1200x630.png">
+<!-- build_social_meta.py: end -->
+</head><body>
+<a class="vh-skip" href="#main">Skip to the content</a>
+<nav><a class="brand" href="/">DUMB<span>MODEL</span></a><div style="display:flex;gap:6px;flex-wrap:wrap"><a class="pill" href="/owner">Owner</a><a class="pill" href="/player">Player</a><a class="pill" href="/brand">Brand</a><a class="pill" href="/dfs">DFS</a></div><a class="pill" href="/play">Play</a><a class="pill" href="/trends">Trends</a><a class="pill" href="/model">Model</a><a class="pill" href="/players">Explorer</a><a class="pill" href="/player-cards">Players</a><a class="pill" href="/teams">Teams</a><a class="pill" href="/dictionary">Dictionary</a></nav>
+<main id="main" tabindex="-1"><h1 style="position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;border:0">Projections — what the model can and cannot see coming</h1>
+<div class="card"><h2 class="vh-sr">What the model can and cannot see coming</h2><div class="mono">Projections • held-out error, per part of a player's game</div>
+<div class="mono" style="font-size:20px;margin:6px 0" id="dpHead">Reading <code>assets/projection_eval.json</code>…</div>
+<p class="sub" style="margin:0">This page used to promise which players to start and which to sit. The file
+behind those projections says, in its own words, that it is <b>not a minutes or pace forecast</b> —
+and the part of a player's game it predicts worst is the one you would have been betting on. So it
+shows the error instead.</p>
+<div style="margin-top:10px;display:flex;gap:6px;flex-wrap:wrap"><span class="pill">Free</span><span class="pill">No account</span><span class="pill pill-y" id="dpScored">— scored</span></div>
+<div id="dpBars" style="margin-top:12px"></div>
+<p class="sub" id="dpRead" style="margin-top:8px"></p>
+<p class="sub" id="dpMethod" style="margin-top:10px;border-left:3px solid var(--orange);padding-left:8px"></p>
+<div style="margin-top:10px;display:flex;gap:6px;flex-wrap:wrap"><a class="pill" href="/model">Model — why a prediction came out that way</a><a class="pill" href="/trends">Trends — the same space over thirty seasons</a><a class="pill" href="/players">Explorer — every charted season</a></div>
+</div>
+<style>
+.dp-row{display:grid;grid-template-columns:minmax(0,1fr) 110px 58px;gap:8px;align-items:center;padding:3px 0;font-family:var(--mono);font-size:11.5px}
+.dp-lab{color:#26241F;overflow-wrap:break-word}
+.dp-track{position:relative;background:#f0efe9;border:1.4px solid var(--ink);border-radius:4px;height:13px;overflow:hidden}
+.dp-fill{position:absolute;left:0;top:0;bottom:0;background:#2A78D6}
+.dp-fill.weak{background:#D55E00}
+.dp-num{text-align:right;font-weight:800;font-variant-numeric:tabular-nums;color:#26241F}
+.dp-cap{font-family:var(--mono);font-size:10.5px;text-transform:uppercase;letter-spacing:.05em;color:#6F6D68;margin-bottom:4px}
+.dp-tbl{border:1.6px solid var(--ink);border-radius:10px;padding:8px 10px;background:#fff}
+</style>
+<script>
+/* ── What the model can and cannot see coming ────────────────────────────────
+   This page was 784 characters offering "locks / fades", "minute-lock safety"
+   and an optimizer. assets/projections.json - the file those would have come
+   from - ends its own method line with:
+
+       "Not a minutes or pace forecast — treat as geometry-implied next-year
+        profile pending held-out eval."
+
+   The eval does exist, in assets/next_profile_eval.json: 10,108 player-seasons
+   where the prediction can be compared with what actually happened. Its summary
+   gives one number, meanAbsErrPrimary 0.459, and on its own that is unreadable -
+   0.459 of what, and is it good? So build_projection_eval.py computes the error
+   of predicting the era mean for everybody alongside it. That is the number to
+   read against, and the ratio between them is what this page draws.
+
+   The result is the honest answer to what the page used to promise: shape is
+   predictable, impact is not. */
+(function(){
+  'use strict';
+  var $=function(s){return document.getElementById(s);};
+  if(!$('dpBars')) return;
+  function esc(s){ return String(s).replace(/[&<>"]/g,function(c){
+    return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
+  function n2(v){ return (Math.round(v*100)/100).toFixed(2); }
+  function n0(v){ return Math.round(v).toLocaleString(); }
+
+  fetch('assets/projection_eval.json?v=1f639c3e')
+    .then(function(r){ if(!r.ok) throw new Error('HTTP '+r.status); return r.json(); })
+    .then(function(j){
+      var F=j.features||[];
+      if(!F.length) throw new Error('no features in the file');
+      var c=j.counts||{};
+      var best=F[0], worst=F[F.length-1];
+
+      $('dpScored').textContent=n0(c.scored||0)+' scored';
+      $('dpHead').innerHTML='It sees a player’s <b>shape</b> coming and not their '+
+        '<b>impact</b>: '+esc(best.label)+' lands at <b>'+n2(best.ratio)+'</b> of the '+
+        'guessing error, '+esc(worst.label)+' at <b>'+n2(worst.ratio)+'</b>.';
+
+      $('dpBars').innerHTML='<div class="dp-tbl"><div class="dp-cap">Held-out error as a share '+
+        'of guessing the era mean · '+n0(c.scored||0)+' player-seasons · lower is more signal'+
+        '</div>'+F.map(function(f){
+          var pct=Math.max(2,Math.min(100,f.ratio*100));
+          return '<div class="dp-row"><span class="dp-lab">'+esc(f.label)+
+            (f.primary?'':' <span style="color:#6F6D68">(secondary)</span>')+'</span>'+
+            '<span class="dp-track" role="img" aria-label="'+esc(f.label)+', '+n2(f.ratio)+
+            ' of the guessing error">'+
+            '<span class="dp-fill'+(f.ratio>=0.75?' weak':'')+'" style="width:'+
+            pct.toFixed(1)+'%"></span></span>'+
+            '<span class="dp-num">'+n2(f.ratio)+'</span></div>';
+        }).join('')+'</div>';
+
+      $('dpRead').innerHTML='Across the primary features the model is off by <b>'+
+        n2(j.meanAbsErrPrimary)+'</b> era-z on average, against <b>'+n2(j.baselinePrimary)+
+        '</b> for predicting the era mean for everybody. So there is real signal in aggregate — '+
+        'and almost none of it in '+esc(worst.label)+', which at '+n2(worst.ratio)+
+        ' is barely better than not trying. '+n0(c.pending||0)+' projections for the season '+
+        'after '+esc(j.latestSeason||'')+' have no result to score against yet; that is what '+
+        '<i>pending</i> means, and it is the same '+n0(j.projectedPlayers||0)+' players '+
+        '<code>assets/projections.json</code> carries.';
+
+      $('dpMethod').innerHTML='<b>Why this is not a lineup.</b> The projection file’s own '+
+        'method line ends: <i>“'+esc((j.method||'').split('—').pop().trim())+'”</i> '+
+        'The error above is measured in era-z per feature over '+n0(c.scored||0)+' scored '+
+        'player-seasons from <code>assets/next_profile_eval.json</code>, cut by '+
+        '<code>scripts/build_projection_eval.py</code>. It says nothing about minutes, nothing '+
+        'about a given night, and least of all about the feature you would actually be paid on.';
+    })
+    .catch(function(e){
+      $('dpHead').textContent='The projection evaluation could not be loaded ('+e.message+').';
+      $('dpRead').textContent='Nothing is shown here rather than a number that was typed in.';
+      $('dpMethod').textContent='';
+    });
+})();
+</script>
+
+</main>
+<footer style="max-width:980px;margin:0 auto;padding:8px 12px;display:flex;justify-content:space-between;font-family:var(--mono);font-size:11px;color:#717171"><span>dumbmodel #fafaf8 • paper aesthetic • ui-monospace</span><a class="pill" href="/">Home</a></footer>
+<script src="assets/error-boundary.js?v=dfe16efe"></script>
+<script src="assets/keyboard-a11y.js?v=8bd158d1"></script>
+<script src="assets/pwa-install.js?v=11551699"></script>
+</body></html>

@@ -49,8 +49,8 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "pipeline"))
-from nba_http import real_playoff_cache_paths
 from name_utils import norm_name
+from nba_http import real_playoff_cache_paths
 
 VECTORS = ROOT / "assets" / "vectors.json"
 CACHE_DIR = ROOT / "pipeline" / "cache"
@@ -83,7 +83,8 @@ def load_caches(use_fixture: bool) -> tuple[dict, dict, bool]:
     if not FIXTURE.exists():
         raise SystemExit(
             f"no playoff caches and no fixture at {FIXTURE} — run "
-            "pipeline/fetch_playoffs.py on an operator machine (or --fixture)")
+            "pipeline/fetch_playoffs.py on an operator machine (or --fixture)"
+        )
     doc = json.loads(FIXTURE.read_text(encoding="utf-8"))
     complete = bool(doc.get("complete"))
     for season, recs in doc.get("players", {}).items():
@@ -170,16 +171,18 @@ def compact_series(series: list[dict], *, champion: bool) -> list[dict]:
         label = s["roundLabel"]
         if is_finals and champion and won:
             label = "NBA Finals"
-        out.append({
-            "round": s["round"],
-            "label": label,
-            "opp": s["opp"],
-            "result": s["result"],
-            "wins": s["wins"],
-            "losses": s["losses"],
-            "won": won,
-            "finals": bool(is_finals),
-        })
+        out.append(
+            {
+                "round": s["round"],
+                "label": label,
+                "opp": s["opp"],
+                "result": s["result"],
+                "wins": s["wins"],
+                "losses": s["losses"],
+                "won": won,
+                "finals": bool(is_finals),
+            }
+        )
     return out
 
 
@@ -189,8 +192,11 @@ def delta(a, b):
 
 def main() -> None:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--fixture", action="store_true",
-                    help="force the committed example fixture (tests)")
+    ap.add_argument(
+        "--fixture",
+        action="store_true",
+        help="force the committed example fixture (tests)",
+    )
     args = ap.parse_args()
 
     players_idx, teams_idx, complete = load_caches(args.fixture)
@@ -227,7 +233,8 @@ def main() -> None:
         gfeat = player_game_features(pgames, team_pts_idx.get(season, {})) if pgames else {}
 
         row = {
-            "name": name, "season": season,
+            "name": name,
+            "season": season,
             "PO_GP": float(po["GP"]),
             "PO_MIN": float(po["MIN"]),
             "PO_MIN_DELTA": delta(po.get("MIN"), rs.get("MIN")),
@@ -248,9 +255,12 @@ def main() -> None:
         seasons_seen.add(season)
 
         split = {
-            "po": po, "rs": rs,
-            "wins": team.get("po_wins"), "rounds": team.get("rounds"),
-            "pts_delta": row["PO_PTS_DELTA"], "min_delta": row["PO_MIN_DELTA"],
+            "po": po,
+            "rs": rs,
+            "wins": team.get("po_wins"),
+            "rounds": team.get("rounds"),
+            "pts_delta": row["PO_PTS_DELTA"],
+            "min_delta": row["PO_MIN_DELTA"],
             "usg_delta": row["PO_USG_DELTA"],
         }
         if series is not None:
@@ -269,47 +279,66 @@ def main() -> None:
         splits[f"{name}|{season}"] = split
 
     OUT.parent.mkdir(parents=True, exist_ok=True)
-    OUT.write_text(json.dumps({
-        "built": time.strftime("%Y-%m-%d"),
-        "cache_complete": complete,
-        "game_logs": bool(game_docs),
-        "coverage": {
-            "appearances": appearances,
-            "seasons_covered": len(seasons_seen),
-            "rows_total": len(vec["players"]),
-            "with_series_path": with_path,
-            "game_log_seasons": len(game_docs),
-        },
-        "players": entries,
-    }, separators=(",", ":")), encoding="utf-8")
+    OUT.write_text(
+        json.dumps(
+            {
+                "built": time.strftime("%Y-%m-%d"),
+                "cache_complete": complete,
+                "game_logs": bool(game_docs),
+                "coverage": {
+                    "appearances": appearances,
+                    "seasons_covered": len(seasons_seen),
+                    "rows_total": len(vec["players"]),
+                    "with_series_path": with_path,
+                    "game_log_seasons": len(game_docs),
+                },
+                "players": entries,
+            },
+            separators=(",", ":"),
+        ),
+        encoding="utf-8",
+    )
 
     if complete and appearances:
-        ASSET_OUT.write_text(json.dumps({
-            "built": time.strftime("%Y-%m-%d"),
-            "note": (
-                "regular-season vs playoff per-100 splits; riser/fader = "
-                "PO minus RS pts/100. Series path + game logs from "
-                "leaguegamelog when playoff_games_*.json caches exist. "
-                "Source: stats.nba.com."
+        ASSET_OUT.write_text(
+            json.dumps(
+                {
+                    "built": time.strftime("%Y-%m-%d"),
+                    "note": (
+                        "regular-season vs playoff per-100 splits; riser/fader = "
+                        "PO minus RS pts/100. Series path + game logs from "
+                        "leaguegamelog when playoff_games_*.json caches exist. "
+                        "Source: stats.nba.com."
+                    ),
+                    "splits": splits,
+                },
+                separators=(",", ":"),
             ),
-            "splits": splits,
-        }, separators=(",", ":")), encoding="utf-8")
-        PATHS_OUT.write_text(json.dumps({
-            "built": time.strftime("%Y-%m-%d"),
-            "note": "Compact playoff series path + per-game box for Skills Lens.",
-            "paths": paths,
-        }, separators=(",", ":")), encoding="utf-8")
+            encoding="utf-8",
+        )
+        PATHS_OUT.write_text(
+            json.dumps(
+                {
+                    "built": time.strftime("%Y-%m-%d"),
+                    "note": "Compact playoff series path + per-game box for Skills Lens.",
+                    "paths": paths,
+                },
+                separators=(",", ":"),
+            ),
+            encoding="utf-8",
+        )
         asset_msg = (
             f"wrote {ASSET_OUT.relative_to(ROOT)} ({len(splits)} splits); "
             f"{PATHS_OUT.relative_to(ROOT)} ({len(paths)} paths)"
         )
     else:
-        asset_msg = ("assets/playoffs.json NOT written (partial cache — game "
-                     "Playoff Lens stays dormant)")
+        asset_msg = "assets/playoffs.json NOT written (partial cache — game Playoff Lens stays dormant)"
 
-    print(f"playoffs: {appearances} appearances across {len(seasons_seen)} seasons "
-          f"of {len(vec['players'])} player-seasons (cache complete={complete}; "
-          f"game-log seasons={len(game_docs)}; with series={with_path})")
+    print(
+        f"playoffs: {appearances} appearances across {len(seasons_seen)} seasons "
+        f"of {len(vec['players'])} player-seasons (cache complete={complete}; "
+        f"game-log seasons={len(game_docs)}; with series={with_path})"
+    )
     print(f"wrote {OUT.relative_to(ROOT)}; {asset_msg}")
 
 

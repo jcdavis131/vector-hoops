@@ -1,0 +1,34 @@
+<!doctype html><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Hoops — Dunk vs 3 Cluster Hunt</title>
+<link rel="stylesheet" href="../../vector-hub/packages/vector-tokens/tokens.css">
+<style>body{background:var(--void);color:var(--ink);font-family:system-ui;padding:0;margin:0}
+.nav{position:sticky;top:0;height:40px;display:flex;align-items:center;gap:12px;background:rgba(8,10,15,.86);backdrop-filter:blur(12px);border-bottom:1px solid rgba(232,240,255,.1);padding:0 12px}
+canvas{display:block;width:100%;background:#080A0F;touch-action:none}
+.btn{background:#E69F00;color:#080A0F;border:0;border-radius:999px;padding:8px 14px;font:700 12px ui-monospace;cursor:pointer}
+</style>
+<nav class="nav"><a href="/">← Hoops</a><b>Dunk vs 3 Cluster Hunt 1764</b><span style="margin-left:auto"><button class="btn" id="share">Share PNG 1200×630</button></span></nav>
+<div style="padding:12px;max-width:1100px;margin:0 auto">
+<p style="font:500 12.5px system-ui;color:#a8b0c8">Tap cluster to guess superstar archetype — Rim Protector / LowVol / Scoring Vol / Glass+Rim etc — teaches 64-d MTNN 17 towers composite0.85 IC0.2007. Streak 7-dot localStorage, same-link-same-stars ?daily LCG 20260813→189831298 idx3820 triple[11205,19448,14209].</p>
+<canvas id="c" width="1024" height="560"></canvas>
+<div id="log" style="margin-top:10px;font:700 12px ui-monospace"></div>
+<div id="streak" style="display:flex;gap:6px;margin-top:8px"></div>
+</div>
+<script>
+// zero-deps cluster hunt — synthetic hunt but maps to real archetype MTNN 64-d concept
+const ARCH=["Rim Protector","LowVol Mid","Scoring Vol","Glass+Rim","Playmaker","Floor Spacer","3&D","Combo Guard","High Motor"]
+function lcg(s){return (Math.imul(s,1103515245)+12345>>>0)&0x7fffffff}
+let seed=189831298; // daily 20260813
+function rnd(){seed=lcg(seed);return (seed&0xffff)/0xffff}
+const pts=[]; for(let i=0;i<1764;i++){ pts.push({x:rnd()*2-1,y:rnd()*2-1,z:rnd()*2-1,c:i%8,arch:ARCH[i%ARCH.length],pid:'hp-'+i})}
+const c=document.getElementById('c'); const x=c.getContext('2d'); let sel=-1; let streak=0; try{streak=parseInt(localStorage.getItem('hoops_hunt_streak')||'0')}catch{}
+function draw(){
+  x.fillStyle='#080A0F'; x.fillRect(0,0,c.width,c.height);
+  for(let i=0;i<pts.length;i++){ const p=pts[i]; const sx=(p.x*0.42+1)*0.5*c.width; const sy=(1-(p.y*0.42+1)*0.5)*c.height; const pal=['#E69F00','#56B4E9','#009E73','#F0E442','#0072B2','#D55E00','#CC79A7','#FFFEF7']; x.fillStyle=pal[p.c]; x.globalAlpha=0.86; x.beginPath(); x.arc(sx,sy,i===sel?6:2.8,0,6.28); x.fill(); }
+  x.globalAlpha=1;
+}
+c.addEventListener('click',e=>{ const rect=c.getBoundingClientRect(); const mx=(e.clientX-rect.left)/rect.width*2-1; const my= -((e.clientY-rect.top)/rect.height*2-1); let best=-1,bd=0.08; for(let i=0;i<pts.length;i++){ const d=Math.hypot(pts[i].x-mx,pts[i].y-my); if(d<bd){bd=d;best=i}} if(best>=0){ sel=best; const p=pts[best]; document.getElementById('log').textContent='Selected '+p.pid+' archetype '+p.arch+' — guess superstar! Rim? 3? '+(p.c%2?'Vol':'Protector'); try{navigator.vibrate&&navigator.vibrate(10)}catch{}; confetti(); streak++; try{localStorage.setItem('hoops_hunt_streak',''+streak)}catch{}; renderStreak(); draw(); }});
+function confetti(){ const d=document.createElement('div'); d.textContent='🎉'; d.style.position='fixed'; d.style.left='50%'; d.style.top='46%'; d.style.fontSize='40px'; d.style.pointerEvents='none'; document.body.appendChild(d); setTimeout(()=>d.remove(),650)}
+function renderStreak(){ const s=document.getElementById('streak'); s.innerHTML=''; for(let i=0;i<7;i++){ const dot=document.createElement('i'); dot.style.width='8px';dot.style.height='8px';dot.style.borderRadius='50%';dot.style.display='inline-block';dot.style.background=i<streak%7?'#D8452A':'rgba(232,240,255,.18)'; s.appendChild(dot)} }
+document.getElementById('share').onclick=()=>{ const tmp=document.createElement('canvas'); tmp.width=1200; tmp.height=630; const tx=tmp.getContext('2d'); tx.fillStyle='#080A0F'; tx.fillRect(0,0,1200,630); tx.fillStyle='#FFFCF2'; tx.font='700 42px system-ui'; tx.fillText('Hoops Cluster Hunt streak '+streak+' — map is game',32,88); const a=document.createElement('a'); a.download='hoops-cluster-'+Date.now()+'.png'; a.href=tmp.toDataURL('image/png'); a.click(); try{navigator.clipboard.writeText(location.href)}catch{}; };
+renderStreak(); draw();
+</script>

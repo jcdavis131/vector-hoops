@@ -34,7 +34,7 @@ HERE = Path(__file__).resolve().parent
 ASSETS = HERE.parent / "assets"
 RNG = np.random.default_rng(42)
 
-from role_features import compute_role_raw
+from role_features import compute_role_raw  # noqa: E402
 
 
 def zscore_by_season(vals: dict, seasons: dict) -> dict:
@@ -42,9 +42,7 @@ def zscore_by_season(vals: dict, seasons: dict) -> dict:
     for k, v in vals.items():
         by_s[seasons[k]].append(v)
     stats = {s: (np.mean(v), np.std(v) or 1.0) for s, v in by_s.items()}
-    return {k: float(np.clip((v - stats[seasons[k]][0]) /
-                             stats[seasons[k]][1], -4, 4))
-            for k, v in vals.items()}
+    return {k: float(np.clip((v - stats[seasons[k]][0]) / stats[seasons[k]][1], -4, 4)) for k, v in vals.items()}
 
 
 def ridge_cv_r2(X: np.ndarray, y: np.ndarray, lam: float = 10.0) -> float:
@@ -68,20 +66,19 @@ def ridge_cv_r2(X: np.ndarray, y: np.ndarray, lam: float = 10.0) -> float:
 
 def silhouette_sub(X: np.ndarray, k: int = 8, n: int = 1500) -> float:
     from numpy.linalg import norm
+
     sub = X[RNG.choice(len(X), min(n, len(X)), replace=False)]
     cents = sub[RNG.choice(len(sub), k, replace=False)]
     for _ in range(40):
         d = ((sub[:, None] - cents[None]) ** 2).sum(-1)
         lab = d.argmin(1)
-        cents = np.stack([sub[lab == i].mean(0) if (lab == i).any()
-                          else cents[i] for i in range(k)])
+        cents = np.stack([sub[lab == i].mean(0) if (lab == i).any() else cents[i] for i in range(k)])
     D = norm(sub[:, None] - sub[None], axis=-1)
     sil = []
     for i in range(len(sub)):
         same = lab == lab[i]
         a = D[i][same & (np.arange(len(sub)) != i)].mean() if same.sum() > 1 else 0
-        bs = [D[i][lab == j].mean() for j in range(k)
-              if j != lab[i] and (lab == j).any()]
+        bs = [D[i][lab == j].mean() for j in range(k) if j != lab[i] and (lab == j).any()]
         b = min(bs) if bs else a
         sil.append((b - a) / (max(a, b) or 1))
     return float(np.mean(sil))
@@ -119,7 +116,7 @@ def main() -> None:
         # consecutive same-team prior seasons (within log window)
         t, y = 0, int(season[:4])
         while True:
-            prev = (name, f"{y-1-t}-{str(y-t)[2:].zfill(2)}")
+            prev = (name, f"{y - 1 - t}-{str(y - t)[2:].zfill(2)}")
             if team_of.get(prev) == team_of.get(k) and team_of.get(k):
                 t += 1
             else:
@@ -130,8 +127,7 @@ def main() -> None:
     feats = {
         "minShare": zscore_by_season(min_share, seasons_map),
         "usageShare": zscore_by_season(usage_share, seasons_map),
-        "scoreRank": zscore_by_season(
-            {k: -v for k, v in score_rank.items()}, seasons_map),
+        "scoreRank": zscore_by_season({k: -v for k, v in score_rank.items()}, seasons_map),
         "leagueTenure": zscore_by_season(league_tenure, seasons_map),
         "teamTenure": zscore_by_season(team_tenure, seasons_map),
     }
@@ -143,23 +139,23 @@ def main() -> None:
     for k in keys:
         name, season = k
         y = int(season[:4])
-        nxt = vindex.get((name, f"{y+1}-{str(y+2)[2:].zfill(2)}"))
+        nxt = vindex.get((name, f"{y + 1}-{str(y + 2)[2:].zfill(2)}"))
         if nxt is None:
             continue
         rows.append(k)
         targets.append(nxt["v"][pm_idx])
         positions.append(vindex[k].get("p") or vindex[k].get("pos") or "")
     base = np.array([vindex[k]["v"] for k in rows])
-    role = np.array([[feats["minShare"][k], feats["usageShare"][k],
-                      feats["scoreRank"][k]] for k in rows])
-    tenure = np.array([[feats["leagueTenure"][k], feats["teamTenure"][k]]
-                       for k in rows])
+    role = np.array([[feats["minShare"][k], feats["usageShare"][k], feats["scoreRank"][k]] for k in rows])
+    tenure = np.array([[feats["leagueTenure"][k], feats["teamTenure"][k]] for k in rows])
     y = np.array(targets)
 
-    sets = {"base14": base,
-            "base+role": np.hstack([base, role]),
-            "base+tenure": np.hstack([base, tenure]),
-            "base+all": np.hstack([base, role, tenure])}
+    sets = {
+        "base14": base,
+        "base+role": np.hstack([base, role]),
+        "base+tenure": np.hstack([base, tenure]),
+        "base+all": np.hstack([base, role, tenure]),
+    }
     print(f"ablation on {len(rows)} player-seasons with next-season targets\n")
     results = {}
     for name, X in sets.items():
@@ -167,8 +163,7 @@ def main() -> None:
         c2 = silhouette_sub(X)
         c3 = nn_position_coherence(X, positions)
         results[name] = (c1, c2, c3)
-        print(f"  {name:12s}  C1 next-PMz R2={c1:.4f}  "
-              f"C2 silhouette={c2:.4f}  C3 posNN={c3:.4f}")
+        print(f"  {name:12s}  C1 next-PMz R2={c1:.4f}  C2 silhouette={c2:.4f}  C3 posNN={c3:.4f}")
 
     b = results["base14"]
     print("\nverdicts (gate: beat base C1 without degrading C2/C3 >0.01):")
@@ -176,15 +171,17 @@ def main() -> None:
         if name == "base14":
             continue
         ok = r[0] > b[0] and r[1] > b[1] - 0.01 and r[2] > b[2] - 0.01
-        print(f"  {name}: {'PASS' if ok else 'FAIL'} "
-              f"(dC1={r[0]-b[0]:+.4f}, dC2={r[1]-b[1]:+.4f}, dC3={r[2]-b[2]:+.4f})")
+        print(
+            f"  {name}: {'PASS' if ok else 'FAIL'} "
+            f"(dC1={r[0] - b[0]:+.4f}, dC2={r[1] - b[1]:+.4f}, dC3={r[2] - b[2]:+.4f})"
+        )
 
     # --- role tiers (independent of ablation; stated rules) ---
     tiers = {}
     by_team_season = defaultdict(list)
     for k in keys:
         by_team_season[(team_of[k], k[1])].append(k)
-    for ts, ks in by_team_season.items():
+    for _ts, ks in by_team_season.items():
         by_usage = sorted(ks, key=lambda k: -usage_share[k])
         by_min = sorted(ks, key=lambda k: -min_share[k])
         for k in ks:
@@ -200,24 +197,31 @@ def main() -> None:
                 tiers[k] = "specialist"
             else:
                 tiers[k] = "fringe"
-    from collections import Counter
     print("\nrole tiers (2015-26):", dict(Counter(tiers.values())))
 
-    out = {"method": ("role/tenure features from own game logs 2015-26 "
-                      "(minShare x5-on-floor, usage-rate share, team "
-                      "scoring rank, league tenure from 30-yr charts, "
-                      "consecutive team tenure); tiers rule-based as "
-                      "documented; ablation gate = beat base14 on "
-                      "next-season PMz ridge R2 without degrading "
-                      "silhouette/position-NN >0.01; salary excluded "
-                      "(current-season-only cache + sourcing caveat); "
-                      "coach tenure needs a source — flagged"),
-           "ablation": {k: {"nextPMzR2": round(v[0], 4),
-                            "silhouette": round(v[1], 4),
-                            "posNN": round(v[2], 4)} for k, v in results.items()},
-           "tiers": {f"{k[0]}|{k[1]}": t for k, t in tiers.items()}}
-    (ASSETS / "roles.json").write_text(json.dumps(out, separators=(",", ":")),
-                                       encoding="utf-8")
+    out = {
+        "method": (
+            "role/tenure features from own game logs 2015-26 "
+            "(minShare x5-on-floor, usage-rate share, team "
+            "scoring rank, league tenure from 30-yr charts, "
+            "consecutive team tenure); tiers rule-based as "
+            "documented; ablation gate = beat base14 on "
+            "next-season PMz ridge R2 without degrading "
+            "silhouette/position-NN >0.01; salary excluded "
+            "(current-season-only cache + sourcing caveat); "
+            "coach tenure needs a source — flagged"
+        ),
+        "ablation": {
+            k: {
+                "nextPMzR2": round(v[0], 4),
+                "silhouette": round(v[1], 4),
+                "posNN": round(v[2], 4),
+            }
+            for k, v in results.items()
+        },
+        "tiers": {f"{k[0]}|{k[1]}": t for k, t in tiers.items()},
+    }
+    (ASSETS / "roles.json").write_text(json.dumps(out, separators=(",", ":")), encoding="utf-8")
     print("\nassets/roles.json written")
 
 

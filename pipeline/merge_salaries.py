@@ -43,7 +43,7 @@ def norm_name(name: str) -> str:
 
 
 def parse_salary(raw: str | float | int) -> float:
-    if isinstance(raw, (int, float)):
+    if isinstance(raw, int | float):
         return float(raw)
     cleaned = re.sub(r"[^0-9.]", "", str(raw).strip())
     if not cleaned:
@@ -54,7 +54,7 @@ def parse_salary(raw: str | float | int) -> float:
 def parse_cap_pct(raw: str | float | int | None) -> float | None:
     if raw is None or str(raw).strip() == "":
         return None
-    if isinstance(raw, (int, float)):
+    if isinstance(raw, int | float):
         v = float(raw)
         return v / 100.0 if v > 1.0 else v
     s = str(raw).strip().rstrip("%")
@@ -161,8 +161,10 @@ def merge_csv(csv_path: Path, *, strict: bool = False) -> dict[str, dict]:
                 **({"cap_pct": rec["cap_pct"]} if rec["cap_pct"] is not None else {}),
             }
 
-    print(f"merged {len(merged)} (name,season) rows from {csv_path.name}"
-          f" ({dupes} duplicate keys overwritten, {skipped} rows skipped)")
+    print(
+        f"merged {len(merged)} (name,season) rows from {csv_path.name}"
+        f" ({dupes} duplicate keys overwritten, {skipped} rows skipped)"
+    )
     return merged
 
 
@@ -204,12 +206,23 @@ def load_merged_salaries(cache_dir: Path | None = None) -> dict[tuple[str, str],
 
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__)
-    ap.add_argument("--csv", type=Path, default=DEFAULT_CSV,
-                    help="input CSV (default: pipeline/cache/salaries_history.csv)")
-    ap.add_argument("--out", type=Path, default=DEFAULT_OUT,
-                    help="output JSON (default: pipeline/cache/salaries_merged.json)")
-    ap.add_argument("--strict", action="store_true",
-                    help="fail on first invalid row instead of skipping")
+    ap.add_argument(
+        "--csv",
+        type=Path,
+        default=DEFAULT_CSV,
+        help="input CSV (default: pipeline/cache/salaries_history.csv)",
+    )
+    ap.add_argument(
+        "--out",
+        type=Path,
+        default=DEFAULT_OUT,
+        help="output JSON (default: pipeline/cache/salaries_merged.json)",
+    )
+    ap.add_argument(
+        "--strict",
+        action="store_true",
+        help="fail on first invalid row instead of skipping",
+    )
     args = ap.parse_args()
 
     merged = merge_csv(args.csv, strict=args.strict)

@@ -1,0 +1,146 @@
+{
+ "baselinePrimary": 0.789,
+ "built": "projection_eval",
+ "counts": {
+  "meanAbsErrPrimary": 0.459,
+  "noNext": 2367,
+  "pending": 491,
+  "rows": 12966,
+  "scored": 10108
+ },
+ "features": [
+  {
+   "baseline": 0.825,
+   "key": "OREB",
+   "label": "offensive glass",
+   "mae": 0.337,
+   "n": 10108,
+   "primary": false,
+   "ratio": 0.409
+  },
+  {
+   "baseline": 0.858,
+   "key": "FG3A",
+   "label": "three-point volume",
+   "mae": 0.369,
+   "n": 10108,
+   "primary": true,
+   "ratio": 0.431
+  },
+  {
+   "baseline": 0.788,
+   "key": "AST",
+   "label": "playmaking",
+   "mae": 0.364,
+   "n": 10108,
+   "primary": true,
+   "ratio": 0.461
+  },
+  {
+   "baseline": 0.83,
+   "key": "DREB",
+   "label": "defensive glass",
+   "mae": 0.397,
+   "n": 10108,
+   "primary": true,
+   "ratio": 0.478
+  },
+  {
+   "baseline": 0.732,
+   "key": "BLK",
+   "label": "rim protection",
+   "mae": 0.376,
+   "n": 10108,
+   "primary": true,
+   "ratio": 0.515
+  },
+  {
+   "baseline": 0.819,
+   "key": "FGA",
+   "label": "shot volume",
+   "mae": 0.448,
+   "n": 10108,
+   "primary": true,
+   "ratio": 0.547
+  },
+  {
+   "baseline": 0.806,
+   "key": "PTS",
+   "label": "scoring volume",
+   "mae": 0.45,
+   "n": 10108,
+   "primary": true,
+   "ratio": 0.558
+  },
+  {
+   "baseline": 0.779,
+   "key": "FTA",
+   "label": "rim pressure (FTs)",
+   "mae": 0.491,
+   "n": 10108,
+   "primary": false,
+   "ratio": 0.63
+  },
+  {
+   "baseline": 0.805,
+   "key": "FG3_PCT",
+   "label": "three-point accuracy",
+   "mae": 0.509,
+   "n": 10108,
+   "primary": false,
+   "ratio": 0.632
+  },
+  {
+   "baseline": 0.766,
+   "key": "TOV",
+   "label": "turnovers",
+   "mae": 0.52,
+   "n": 10108,
+   "primary": true,
+   "ratio": 0.679
+  },
+  {
+   "baseline": 0.732,
+   "key": "FT_PCT",
+   "label": "free-throw touch",
+   "mae": 0.522,
+   "n": 10108,
+   "primary": false,
+   "ratio": 0.712
+  },
+  {
+   "baseline": 0.721,
+   "key": "FG_PCT",
+   "label": "finishing",
+   "mae": 0.516,
+   "n": 10108,
+   "primary": false,
+   "ratio": 0.716
+  },
+  {
+   "baseline": 0.757,
+   "key": "STL",
+   "label": "steals",
+   "mae": 0.554,
+   "n": 10108,
+   "primary": true,
+   "ratio": 0.732
+  },
+  {
+   "baseline": 0.741,
+   "key": "PLUS_MINUS",
+   "label": "on-court impact",
+   "mae": 0.65,
+   "n": 10108,
+   "primary": true,
+   "ratio": 0.878
+  }
+ ],
+ "latestSeason": "2025-26",
+ "meanAbsErrPrimary": 0.459,
+ "method": "MTNN next_profile head: predicted next-season era-z game features from the current-season embedding. Actuals are the charted next-season vector from vectors.json when it exists. For 2025-26, next-season stats are not available yet — UI shows prediction only (status=pending).",
+ "projectedPlayers": 491,
+ "projections": "assets/projections.json",
+ "source": "assets/next_profile_eval.json",
+ "unit": "mean absolute error in era-z per feature. The baseline is the error of predicting the era mean (zero) for everybody, so ratio below 1 is signal and ratio at 1 is none."
+}

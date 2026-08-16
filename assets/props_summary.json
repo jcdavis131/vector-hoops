@@ -1,0 +1,101 @@
+{
+ "biggestMovers": [
+  {
+   "gp": 47.0,
+   "name": "Micah Potter",
+   "ptsActual": 22.9,
+   "ptsDelta": 11.9,
+   "ptsProp": 11.0
+  },
+  {
+   "gp": 70.0,
+   "name": "Jalen Duren",
+   "ptsActual": 32.9,
+   "ptsDelta": 11.4,
+   "ptsProp": 21.5
+  },
+  {
+   "gp": 78.0,
+   "name": "Nickeil Alexander-Walker",
+   "ptsActual": 28.7,
+   "ptsDelta": 10.7,
+   "ptsProp": 18.0
+  },
+  {
+   "gp": 54.0,
+   "name": "Cameron Johnson",
+   "ptsActual": 18.9,
+   "ptsDelta": -10.6,
+   "ptsProp": 29.5
+  },
+  {
+   "gp": 56.0,
+   "name": "Dillon Brooks",
+   "ptsActual": 31.8,
+   "ptsDelta": 10.3,
+   "ptsProp": 21.5
+  }
+ ],
+ "built": "props_summary",
+ "latestScoredSeason": "2025-26",
+ "meanPtsDelta": -0.035,
+ "medianPtsDelta": 0.0,
+ "moversMinGp": 41,
+ "moversQualified": 329,
+ "note": "A prop here is the prior season's average rounded to 0.5, not a market line. pts_delta is actual minus that. Seasons with no actuals yet are counted and left unscored rather than filled in.",
+ "players": 3989,
+ "scored": 3407,
+ "seasons": [
+  {
+   "meanPtsDelta": -0.005,
+   "medianPtsDelta": 0.0,
+   "players": 540,
+   "scored": 540,
+   "season": "2020-21"
+  },
+  {
+   "meanPtsDelta": -0.291,
+   "medianPtsDelta": 0.0,
+   "players": 605,
+   "scored": 605,
+   "season": "2021-22"
+  },
+  {
+   "meanPtsDelta": 0.042,
+   "medianPtsDelta": 0.0,
+   "players": 539,
+   "scored": 539,
+   "season": "2022-23"
+  },
+  {
+   "meanPtsDelta": -0.529,
+   "medianPtsDelta": -0.1,
+   "players": 572,
+   "scored": 572,
+   "season": "2023-24"
+  },
+  {
+   "meanPtsDelta": 0.309,
+   "medianPtsDelta": 0.0,
+   "players": 569,
+   "scored": 569,
+   "season": "2024-25"
+  },
+  {
+   "meanPtsDelta": 0.283,
+   "medianPtsDelta": 0.0,
+   "players": 582,
+   "scored": 582,
+   "season": "2025-26"
+  },
+  {
+   "meanPtsDelta": null,
+   "medianPtsDelta": null,
+   "players": 582,
+   "scored": 0,
+   "season": "2026-27"
+  }
+ ],
+ "source": "assets/data/player_season_props.json",
+ "sourceMethod": "baseline prior-season avg rounded to 0.5 as prop; fallback current rounded if rookie"
+}

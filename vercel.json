@@ -1,29 +1,103 @@
 {
   "cleanUrls": true,
-  "rewrites": [
+  "trailingSlash": false,
+  "headers": [
     {
-      "source": "/model",
-      "destination": "/model.html"
+      "source": "/assets/(.*)\\.(json|js|css|png|webp|svg|woff2|f32|bin)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable, stale-while-revalidate=86400"
+        },
+        {
+          "key": "Access-Control-Allow-Origin",
+          "value": "*"
+        }
+      ]
     },
     {
-      "source": "/trends",
-      "destination": "/trends.html"
+      "source": "/assets/(.*)\\.f32",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        },
+        {
+          "key": "Content-Type",
+          "value": "application/octet-stream"
+        }
+      ]
     },
     {
-      "source": "/dashboard",
-      "destination": "/dashboard.html"
+      "source": "/sw.js",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, must-revalidate"
+        }
+      ]
+    },
+    {
+      "source": "/manifest.json",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=3600, stale-while-revalidate=86400"
+        }
+      ]
+    },
+    {
+      "source": "/(.*)\\.html",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, must-revalidate, stale-while-revalidate=600"
+        },
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        }
+      ]
+    },
+    {
+      "source": "/",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, must-revalidate, stale-while-revalidate=600"
+        }
+      ]
     }
   ],
   "redirects": [
     {
-      "source": "/:path*",
-      "has": [
-        {
-          "type": "host",
-          "value": "hoops.jcamd.com"
-        }
-      ],
-      "destination": "https://hoops.dumbmodel.com/:path*",
+      "source": "/arena",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/arena.html",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/arena/:path*",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/fingerprint",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/fingerprint.html",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/fingerprint/:path*",
+      "destination": "/",
       "permanent": true
     },
     {
@@ -40,6 +114,116 @@
       "source": "/drift",
       "destination": "/trends",
       "permanent": true
+    },
+    {
+      "source": "/games",
+      "destination": "/play",
+      "permanent": true
+    },
+    {
+      "source": "/arcade",
+      "destination": "/play",
+      "permanent": true
+    },
+    {
+      "source": "/arcade/:path*",
+      "destination": "/play",
+      "permanent": true
+    },
+    {
+      "source": "/dashboard",
+      "destination": "/model#training-cockpit",
+      "permanent": true
+    },
+    {
+      "source": "/dashboard.html",
+      "destination": "/model#training-cockpit",
+      "permanent": true
+    },
+    {
+      "destination": "https://hoops.dumbmodel.com/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "hoops.jcamd.com"
+        }
+      ],
+      "permanent": true,
+      "source": "/:path*"
     }
-  ]
+  ],
+  "rewrites": [
+    {
+      "source": "/",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/teams",
+      "destination": "/teams.html"
+    },
+    {
+      "source": "/owner",
+      "destination": "/owner/index.html"
+    },
+    {
+      "source": "/player",
+      "destination": "/player/index.html"
+    },
+    {
+      "source": "/player-fit",
+      "destination": "/player-fit/index.html"
+    },
+    {
+      "source": "/brand",
+      "destination": "/brand/index.html"
+    },
+    {
+      "source": "/dfs",
+      "destination": "/dfs/index.html"
+    },
+    {
+      "source": "/players",
+      "destination": "/players.html"
+    },
+    {
+      "source": "/model",
+      "destination": "/model.html"
+    },
+    {
+      "source": "/trends",
+      "destination": "/trends.html"
+    },
+    {
+      "source": "/play",
+      "destination": "/play.html"
+    },
+    {
+      "source": "/leaderboard",
+      "destination": "/leaderboard.html"
+    },
+    {
+      "source": "/inventory",
+      "destination": "/inventory.html"
+    },
+    {
+      "source": "/methods",
+      "destination": "/methods.html"
+    },
+    {
+      "source": "/offline",
+      "destination": "/offline.html"
+    },
+    {
+      "source": "/player-animations",
+      "destination": "/player-animations.html"
+    },
+    {
+      "source": "/lab",
+      "destination": "/lab.html"
+    }
+  ],
+  "framework": null,
+  "buildCommand": null,
+  "installCommand": null,
+  "outputDirectory": "."
 }
