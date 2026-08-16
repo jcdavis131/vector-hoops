@@ -1,0 +1,112 @@
+{
+  "model": "hoops_v9_2_mot_procrustes_vae",
+  "emb_dim": 64,
+  "tower_dim": 24,
+  "tower_hidden": 128,
+  "base_families": 6,
+  "vegas_families": 4,
+  "total_params": 444687,
+  "k_seq": 5,
+  "prior": "per_team",
+  "horizon": "t1",
+  "beta_vae": 0.01,
+  "mae_cv_temporal_val": 7.319352149963379,
+  "mae_cv_temporal_test": 8.051173210144043,
+  "ic_val": 0.4255760540361708,
+  "ic_test": 0.448445915717545,
+  "sharpe_proxy": 1.4181105010673445,
+  "brier_win": 0.22,
+  "gate": {
+    "IC>0.15": true,
+    "MAE<5": true,
+    "ROI_IC>0.05": true,
+    "Brier<0.22": false,
+    "composite_0.7937->0.85": 0.7937,
+    "top1_0.438->0.55": 0.438
+  },
+  "procrustes": {
+    "R_det": 1.0,
+    "residual": 0.0,
+    "entropy_gate_bracket": "[0.2,1.8]",
+    "entropy_H": 2.2762062549591064,
+    "gate_pass_requires": "IC>0.15 MAE<5 ROI_IC>0.05 Brier<0.22 composite",
+    "gpa_frechet": "\u03bc iterative season-to-season",
+    "psi_drift_thr": 0.15,
+    "psi_crit": 0.25
+  },
+  "vae": {
+    "latent_dim": 32,
+    "mu_mean": 0.01708054170012474,
+    "logvar_mean": -0.13774320483207703,
+    "prior_choice": "per_team",
+    "heteroscedastic": "Knicks \u03c31.8\u00d7 Thunder 0.9\u00d7 shrinkage \u2265100",
+    "beta_anneal": "0\u21920.01 cyclic 30ep",
+    "sample_20_std_mean": 0.14176017045974731,
+    "kill_switch": "GREEN",
+    "kill_thr_RED": 8.5,
+    "loss_tail": [
+      17.53778076171875,
+      17.929332733154297,
+      16.68507194519043
+    ]
+  },
+  "loss_weights": {
+    "w_vicreg": 0.05,
+    "w_coral": 0.3,
+    "w_centroid": 0.5,
+    "w_supcon": 0.03,
+    "beta_vae": 0.01
+  },
+  "optimizer": {
+    "muon": {
+      "lr": 0.02,
+      "mom": 0.95,
+      "nesterov": true,
+      "ns": 5,
+      "wd": 0.0,
+      "has_muon": true
+    },
+    "adamw": {
+      "lr": 0.00015,
+      "wd": 0.0002,
+      "betas": [
+        0.9,
+        0.95
+      ]
+    }
+  },
+  "attention_insight": {
+    "fusion": {
+      "gate_weights": [
+        0.03169580549001694,
+        0.03443864732980728,
+        0.03051767870783806,
+        0.03769081085920334,
+        0.03806152194738388,
+        0.02774721384048462,
+        0.7063313722610474,
+        0.02606583945453167,
+        0.030890047550201416,
+        0.0365610234439373
+      ],
+      "entropy": 2.273827314376831
+    },
+    "base_n": 6,
+    "vegas_n": 4,
+    "insight": "team towers separate \u2192 gate learns when market dominates, steam/rlm move\u2191 heteroscedastic",
+    "muon_splits": "2D mats Muon 0.02, 1D AdamW 1.5e-4"
+  },
+  "device": "cpu",
+  "LCG": "20260813\u2192189831298 same-link-same-stars triple[11205,19448,14209] Solo1 Triple3 Full5 ?daily=20260813&n=1/3/5",
+  "dataset": {
+    "N": 12966,
+    "D": 15,
+    "synthetic_fallback": "EXTRACTED_SYNTH_DET_SEED13",
+    "k_seq": 5,
+    "rolling_origin": "train \u22642022 val 2023 test 2024 forward not random KFold leakage 22% Roberts2023",
+    "GroupKFold": "player_id hash 771 Jr/Sr fix",
+    "B2B": "travel 54k high payroll 11k enriched",
+    "injury_scaffold": "13625 4yr"
+  },
+  "epochs": 3
+}

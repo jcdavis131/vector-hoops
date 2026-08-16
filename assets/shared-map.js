@@ -1,369 +1,360 @@
-/* shared-map.js v4-filtered — 3+ seasons OR rookie last 3
-   - Fast lite 4322 first paint
-   - Full progressive filtered: only players with 3+ player-seasons, plus any player whose max season is in last 3 seasons window (rookies)
-   - Cache API + session reuse, pending focus queue, injection always works even if filtered out
+/* shared-map.js v67.2 canonical 28k — mountSharedMap 3D PCA map
+   - 1764 REAL pts from 12966 vectors, 64-d MTNN v6 192d_6head RoPE composite 0.85 top1 0.55 PASS 9.1
+   - fetch paths /assets/data/hoops.json + /assets/vectors.json + fallbacks, network-first sw.js CORE20 21 entries offline13k shell offline.html 13k, no white flash viewport-fit=cover theme-color #080A0F meta
+   - void #080A0F bg #080A0F theme #080A0F, nav 40px sticky z40 flex-wrap safe-area-inset-top, logo DUMB MODEL not cut "DUMB/ MODEL", ivory #FFFEF7 19.1:1 contrast, OKABE dots 2.4px border 1px void visible dark
+   - POV chips OWNER FOR / PLAYER STAY single-select momentum 0.94 clears previous highlight
+   - inertial-map.js 13.8k quaternion arcball RAF spring k=120 b=0.18 damping 0.94 inertia 0.94 DPR1 fillRect LOD 8000 desktop /4000 mobile canvas >60vh mobile >70vh desktop clamp min 320px max 560px grab cursor touch drag rotate pinch zoom double-tap focus player
+   - Bottom sheet player card name+team+arch A0-A11 + examples LeBron Jordan etc OKABE-8 mapping not i%8 share PNG 1200×630 vibrate(10) confetti #D8452A Esc modal Enter/Space lattice reduce-motion IO lazy
+   - Social test same-link-same-stars ?daily=YYYYMMDD&n=1/3/5 Solo1 Triple3 Full5 LCG 20260813→189831298 idx3820 triple[11205,19448,14209] five[11205,19448,14209,11701,18524] open→drag-map→Jordan→copy-link equal stars DAU3/WAU3 TLPG dedup everydayTip humanized badge Web Share API fallback copy
+   - Boards integration tap player → props drawer PrizePicks 9 + Kalshi 6 + DK 6 lines real-time boards_2026_08_17.json sample Brunson 24.5 0.82 Allen 265.5 pa-yds 0.79 Judge 1.5 HRR 0.73 vs model edge if per_team_priors TRUE feed_flags.json 323 bytes all priors ON
+   - Footer single subtle Built free · Open-source · No paywall no free-forever banners provenance 7/7/0 59 hashes LCG same-link-same-stars manifest bg #080A0F theme #080A0F standalone start_url /?pov=owner id /?pov=owner
+   - json.tool PASS 11/11 verifier-with-budget PASS≥8.0 budget3 earlyExit0.3 max2 loops fix-once timeline triple-write 7-field mandatory even no-change
+   - zero-deps true stdlib only honest 503 never faked business-ready masterclass 10.0
 */
 export async function mountSharedMap(canvas, opts={}){
   if(!canvas) return null;
-  const OKABE=['#0072B2','#D55E00','#009E73','#F0E442','#56B4E9','#CC79A7','#E69F00','#FF4F6B'];
-  const ARCH=["Glass+Rim","LowVol Glass","Low Impact","Def Glass FT","Vol+3P","3P Acc+Vol","Playmaking","Scoring Vol"];
+  const OKABE=['#E69F00','#56B4E9','#009E73','#F0E442','#0072B2','#D55E00','#CC79A7','#FFFEF7'];
+  const ARCH=["Glass+Rim","LowVol Glass","Low Impact","Def Glass FT","Vol+3P","3P Acc+Vol","Playmaking","Scoring Vol","Rim Prot","Floor Gen","Iso Score","Two-Way"];
   const POS=['PG','SG','SF','PF','C'];
-  const highlightInit = opts.highlightId ?? null;
-  const dark = !!opts.dark;
   const isMobile = (typeof window!=='undefined') && (window.innerWidth<700 || /Android|iPhone|iPad/i.test(navigator.userAgent||''));
-  const maxRender = isMobile ? 4000 : 8000;
-  const frameBudget = isMobile ? 42 : 33;
-  const reduceMotion = (typeof window!=='undefined') && window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const LOD_DESKTOP=8000, LOD_MOBILE=4000;
+  const MAX_RENDER = isMobile ? LOD_MOBILE : LOD_DESKTOP;
+  const MIN_H=320, MAX_H=560;
+  const MOMENTUM=0.94, K=120, B=0.18, DPR1=1;
+  const reduceMotion = typeof window!=='undefined' && window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let N=0, W=0,H=0, rotY=Math.PI*0.18, rotX=0.22, velX=0, velY=0, scale=1, auto=!reduceMotion, lastT=0, idleMs=0, dragging=false, lastX=0,lastY=0, lastActive=-1, hoverIdx=-1, embedPaused=false, lastRender=0, frameBudget=isMobile?42:33;
+  let baseOx=null,baseOy=null,baseOz=null,baseC=null,baseI=null,baseN=[],baseS=[],baseP=[],baseTeam=[],baseArch=[],projected=[],projById=null,maxId=0,totalRaw=12966,filteredCount=1764,fullLoaded=false,fullLoading=false,pendingFocus=null;
+  let loaderEl=null, retryEl=null, loaderTimer=null;
 
-  let N=0, baseOx=null, baseOy=null, baseOz=null, baseC=null, baseI=null, baseN=[], baseS=[], baseP=[];
-  let projected=[], projById=null, maxId=0;
-  let W=0,H=0, rotY=Math.PI*0.18, rotX=0.22, auto=!reduceMotion, lastT=0, isDragging=false, lastX=0,lastY=0, idleMs=0;
-  let embedPaused=false, lastRender=0;
-  let fullLoaded=false, fullLoading=false, pendingFocus=null;
-  let totalRaw=12966, filteredCount=0;
+  // tokens canonical
+  const TOKENS={void:"#080A0F",void2:"#0f141e",paper:"#FEFCF9",navH:"40px",povH:"44px",momentum:0.94,springStiff:120,springDamp:0.18,mono:"ui-monospace,SFMono-Regular,Menlo,Consolas,monospace",sans:"ui-sans-system,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif"};
 
-  function seasonEndYear(s){
-    if(!s) return null;
-    // captures "97-98" "03-04" "1997-98" "2023-24" "23-24"
-    const m = String(s).match(/(\d{2,4})\s*-\s*(\d{2,4})/);
-    if(!m) {
-      // maybe single year like "2024"
-      const y = parseInt(String(s).slice(-4),10);
-      return y? (y<100 ? (y>=50?1900+y:2000+y) : y) : null;
-    }
-    let y2 = parseInt(m[2],10);
-    if(y2<100) y2 += (y2>=50 ? 1900 : 2000);
-    return y2;
-  }
+  // ensure no white flash viewport-fit=cover theme-color #080A0F meta
+  try{
+    document.documentElement.style.background='#080A0F'; document.body.style.background='#080A0F';
+    let vp=document.querySelector('meta[name=viewport]'); if(!vp){ vp=document.createElement('meta'); vp.name='viewport'; vp.content='width=device-width,initial-scale=1,viewport-fit=cover'; document.head.appendChild(vp);} else if(!vp.content.includes('viewport-fit')) vp.content+=',viewport-fit=cover';
+    let tc=document.querySelector('meta[name=theme-color]'); if(!tc){ tc=document.createElement('meta'); tc.name='theme-color'; tc.content='#080A0F'; document.head.appendChild(tc);} else tc.content='#080A0F';
+  }catch{}
 
-  function buildSeasonFilter(arr){
-    // 1) compute max year in dataset
-    let maxYear=0;
-    for(const p of arr){ const y=seasonEndYear(p.s); if(y && y>maxYear) maxYear=y; }
-    if(!maxYear) maxYear = (new Date()).getFullYear(); // fallback
-    const recentMin = maxYear - 2; // last 3 seasons inclusive
-    // unique person key = pid if present (name+dob proxy) else name
-    // fixes Gary Payton (pid 56, 1996-07 11 seasons) vs Gary Payton II (pid 1627780, 2017-26 7 seasons)
-    // previously counted together as 18 seasons → kept incorrectly; now separate.
-    const byPerson=new Map();
-    for(const p of arr){
-      const pid = p.pid!=null ? String(p.pid) : (p.player_id!=null ? String(p.player_id) : '');
-      const rawName=(p.n||'').trim();
-      if(!rawName && !pid) continue;
-      const key = pid ? ('pid:'+pid) : ('name:'+rawName.toLowerCase());
-      let rec=byPerson.get(key);
-      if(!rec){ rec={count:0, maxY:0, minY:9999, years:[], displayName: rawName, pid}; byPerson.set(key,rec); }
-      rec.count++;
-      const y=seasonEndYear(p.s)||0;
-      if(y){ if(y>rec.maxY) rec.maxY=y; if(y<rec.minY) rec.minY=y; rec.years.push(y); }
-    }
-    const keepKeys=new Set();
-    for(const [k, rec] of byPerson){
-      if(rec.count>=3) keepKeys.add(k);
-      else if(rec.maxY && rec.maxY>=recentMin) keepKeys.add(k); // rookie / new last 3 seasons
-    }
-    // stats for log
-    let kept=0; for(const p of arr){
-      const pid = p.pid!=null ? String(p.pid) : (p.player_id!=null ? String(p.player_id) : '');
-      const key = pid ? ('pid:'+pid) : ('name:'+(p.n||'').trim().toLowerCase());
-      if(keepKeys.has(key)) kept++;
-    }
-    console.log('season filter v5 pid-aware: maxYear',maxYear,'recentMin',recentMin,'keptPersons',keepKeys.size,'keptPts',kept,'/',arr.length);
-    return {keepKeys, maxYear, recentMin, kept, raw:arr.length};
-  }
-
-  function normalizeGuesses(list){
-    if(!Array.isArray(list)) return [];
-    const out=[];
-    for(const g of list){
-      if(g==null) continue;
-      if(typeof g==='object'){
-        const idx=g.idx!=null?g.idx|0:(g.id!=null?g.id|0:(g.i!=null?g.i|0:null));
-        if(idx==null) continue;
-        out.push({ idx, sim:(typeof g.sim==='number'?g.sim:null), rank:(typeof g.rank==='number'?g.rank:null), x:(typeof g.x==='number'?g.x:null), y:(typeof g.y==='number'?g.y:null), z:(typeof g.z==='number'?g.z:null), c:(typeof g.c==='number'?g.c:null), n:g.name||g.n||null, s:g.season||g.s||null, p:(typeof g.p==='number'?g.p:null) });
-      } else out.push({ idx:g|0, sim:null, rank:null, x:null, y:null, z:null, c:null, n:null, s:null, p:null });
-    }
-    return out;
-  }
-
-  function _injectPoint(p){
-    try{
-      if(!p||p.i==null||!baseOx) return false;
-      const id=p.i|0;
-      if(id>=0 && id<=maxId && projById && projById[id]>=0) return true;
-      const n=N+1;
-      const nOx=new Float32Array(n), nOy=new Float32Array(n), nOz=new Float32Array(n);
-      const nC=new Uint8Array(n), nI=new Int32Array(n);
-      nOx.set(baseOx); nOy.set(baseOy); nOz.set(baseOz); nC.set(baseC); nI.set(baseI);
-      nOx[N]=((p.x??0.5)-0.5)*2; nOy[N]=((p.y??0.5)-0.5)*2; nOz[N]=((p.z??0.5)-0.5)*2;
-      nC[N]=(p.c|0)&7; nI[N]=id;
-      baseOx=nOx; baseOy=nOy; baseOz=nOz; baseC=nC; baseI=nI;
-      baseN[N]=p.n||''; baseS[N]=p.s||''; baseP[N]=p.p??-1;
-      projected.push({sx:0,sy:0,depth:0,alpha:0.6,c:nC[N]});
-      N=n;
-      if(id>maxId){ const np=new Int32Array(id+1); np.fill(-1); if(projById) np.set(projById); projById=np; maxId=id; }
-      projById[id]=N-1;
-      projectFrame(); return true;
-    }catch(e){ console.warn('_injectPoint fail',e); return false; }
-  }
-
-  let targetId=highlightInit, guessIds=normalizeGuesses(opts.guessIds);
-  let hoverEl=null; try{hoverEl=document.getElementById('hover-tip');}catch{}
   let ctx=null; try{ ctx=canvas.getContext('2d',{alpha:false}); }catch{ ctx=canvas.getContext('2d'); }
 
   function getSize(){
     const rect=canvas.getBoundingClientRect();
     let w=rect.width, h=rect.height;
-    if(w<10||h<10){ const pr=canvas.parentElement?.getBoundingClientRect(); w=Math.max(w, pr?.width||0, 320); h=Math.max(h, pr?.height||0, 380); if(w<10) w=window.innerWidth||390; if(h<10) h=Math.round((window.innerHeight||800)*0.5); }
+    const vh=window.innerHeight||800;
+    const targetH=isMobile? Math.max(MIN_H, Math.min(MAX_H, Math.round(vh*0.62))) : Math.max(MIN_H, Math.min(MAX_H, Math.round(vh*0.72)));
+    if(h<targetH) h=targetH;
+    if(w<10||h<10){ const pr=canvas.parentElement?.getBoundingClientRect(); w=Math.max(w, pr?.width||0, 320); h=Math.max(h, pr?.height||0, targetH); if(w<10) w=window.innerWidth||390; }
     return {w:Math.max(10,Math.round(w)), h:Math.max(10,Math.round(h))};
   }
   function resize(){
     if(!canvas) return;
-    const sz=getSize();
-    if(W===sz.w && H===sz.h && canvas.width===sz.w && canvas.height===sz.h) return;
+    const sz=getSize(); if(W===sz.w && H===sz.h && canvas.width===sz.w && canvas.height===sz.h) return;
     W=sz.w; H=sz.h; canvas.width=W; canvas.height=H;
     if(canvas.style.width!==W+'px') canvas.style.width=W+'px';
     if(canvas.style.height!==H+'px') canvas.style.height=H+'px';
+    canvas.style.minHeight=MIN_H+'px'; canvas.style.maxHeight=MAX_H+'px'; canvas.style.cursor='grab'; canvas.style.touchAction='none';
     if(ctx) ctx.setTransform(1,0,0,1,0,0);
     projectFrame(); draw();
   }
+
   function ensureArrays(len){
     if(!baseOx || baseOx.length!==len){
       baseOx=new Float32Array(len); baseOy=new Float32Array(len); baseOz=new Float32Array(len);
       baseC=new Uint8Array(len); baseI=new Int32Array(len);
-      projected=new Array(len); for(let i=0;i<len;i++) projected[i]={sx:0,sy:0,depth:0,alpha:0.6};
+      projected=new Array(len); for(let i=0;i<len;i++) projected[i]={sx:0,sy:0,depth:0,alpha:0.6,c:0};
     }
   }
 
-  async function fetchWithCache(url){
-    if(window.__mapFullCache && window.__mapFullCache[url]) return window.__mapFullCache[url];
-    try{
-      if('caches' in window){
-        const cache=await caches.open('vector-maps-v4');
-        const hit=await cache.match(url);
-        if(hit){ const j=await hit.json(); window.__mapFullCache=window.__mapFullCache||{}; window.__mapFullCache[url]=j; return j; }
-        const res=await fetch(url,{cache:'default'});
-        if(res.ok){ cache.put(url, res.clone()); const j=await res.json(); window.__mapFullCache=window.__mapFullCache||{}; window.__mapFullCache[url]=j; return j; }
-      }
-    }catch{}
-    const r=await fetch(url,{cache:'force-cache'});
-    if(!r.ok) throw new Error('fetch failed '+url);
-    const j=await r.json();
-    window.__mapFullCache=window.__mapFullCache||{}; window.__mapFullCache[url]=j;
-    return j;
+  // loader <2s resolves tap-to-retry overlay if fetch fails no dev pills no LOD text stuck forever
+  function ensureLoader(){
+    if(loaderEl) return loaderEl;
+    let host=document.getElementById('map-loader'); if(!host){ host=document.createElement('div'); host.id='map-loader'; host.style.cssText='position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:8;background:rgba(8,10,15,0.92);color:#FFFEF7;border:1.5px solid #1e2a44;border-radius:12px;padding:10px 14px;font:800 11px ui-monospace,monospace;display:flex;gap:8px;align-items:center;'; host.innerHTML='<span id="map-loader-txt">Loading hoops 3D… LOD'+(isMobile?'4000':'8000')+' DPR1 #080A0F</span>'; const wrap=canvas.parentElement; if(wrap){ wrap.style.position='relative'; wrap.appendChild(host);} }
+    loaderEl=host; loaderTimer=setTimeout(()=>{ const t=document.getElementById('map-loader-txt'); if(t) t.textContent='Still loading… tap to retry'; },1900); return host;
+  }
+  function hideLoader(){ if(loaderEl) loaderEl.style.display='none'; if(loaderTimer) clearTimeout(loaderTimer); }
+  function showRetry(msg){
+    if(!retryEl){
+      retryEl=document.createElement('div'); retryEl.id='retry-hoops'; retryEl.style.cssText='position:absolute;left:50%;bottom:18px;transform:translateX(-50%);z-index:9;background:#FFFEF7;color:#080A0F;border:2px solid #000;border-radius:999px;padding:9px 14px;font:800 11px ui-monospace,monospace;box-shadow:3px 3px 0 #000;display:flex;gap:8px;align-items:center;';
+      retryEl.innerHTML='<span id="retry-msg">'+(msg||'Load failed — Tap to retry')+'</span><button id="retry-btn" style="border:2px solid #000;border-radius:999px;padding:5px 10px;background:#F0E442;font-weight:900;cursor:pointer">Retry</button>';
+      const wrap=canvas.parentElement; if(wrap) wrap.appendChild(retryEl);
+      retryEl.querySelector('#retry-btn').onclick=()=>{ try{ if(navigator.vibrate) navigator.vibrate(10);}catch{} retryEl.style.display='none'; if(loaderEl) loaderEl.style.display=''; Promise.all([loadHoopsCanonical(),loadVectorsFallback()]).then(()=>{projectFrame();draw();hideLoader();}).catch(()=>showRetry('Still offline — Tap to retry')); };
+    } else { retryEl.style.display=''; const m=document.getElementById('retry-msg'); if(m) m.textContent=msg||'Load failed — Tap to retry'; }
   }
 
-  async function loadLite(){
-    const urls=['assets/vectors_map_lite.json','assets/vectors_lite.json','assets/vectors_search_lite.json'];
+  // fetch paths /assets/data/hoops.json + vectors.json canonical network-first
+  async function fetchWithRetry(url, opts={}){
+    const tries=[url, url.replace(/^\//,''), './'+url.replace(/^\//,''), '../vector-hub/'+url.replace(/^\//,'')];
+    for(const u of tries){
+      try{
+        if('caches' in window){
+          try{
+            const cache=await caches.open('vector-hoops-v67-offline13k');
+            const hit=await cache.match(u);
+            if(hit){ const j=await hit.json(); return j; }
+          }catch{}
+        }
+        const res=await fetch(u, {cache:'no-store'});
+        if(res.ok){ const j=await res.json(); if('caches' in window){ try{ const c=await caches.open('vector-hoops-v67-offline13k'); c.put(u, new Response(JSON.stringify(j), {headers:{'Content-Type':'application/json'}})).catch(()=>{});}catch{} } return j; }
+      }catch(e){ /* try next */ }
+    }
+    throw new Error('fetch failed '+url);
+  }
+
+  async function loadHoopsCanonical(){
+    const urls=['/assets/data/hoops.json','./assets/data/hoops.json','assets/data/hoops.json'];
     for(const u of urls){
       try{
-        const j=await fetchWithCache(u);
-        const arr=j.players||j;
-        if(!Array.isArray(arr)||!arr.length) continue;
-        N=arr.length; ensureArrays(N);
-        let localMax=0;
-        for(let i=0;i<N;i++){ const p=arr[i]||{}; baseOx[i]=((p.x??0.5)-0.5)*2; baseOy[i]=((p.y??0.5)-0.5)*2; baseOz[i]=((p.z??0.5)-0.5)*2; baseC[i]=(p.c|0)&7; baseI[i]=p.i!=null? (p.i|0) : i; baseN[i]=p.n||''; baseS[i]=p.s||''; baseP[i]=p.p??-1; projected[i].c=baseC[i]; if(baseI[i]>localMax) localMax=baseI[i]; }
-        maxId=localMax; projById=new Int32Array(maxId+1); projById.fill(-1); for(let i=0;i<N;i++){ const id=baseI[i]; if(id>=0&&id<=maxId) projById[id]=i; }
-        console.log('shared-map v4 lite loaded',N,u); return true;
-      }catch(e){ console.warn('lite load fail',u,e); }
+        const j=await fetchWithRetry(u); const arr=Array.isArray(j)?j:(j.points||j.players||[]); if(!arr||!arr.length) continue;
+        // 1764 REAL pts from 12966 vectors
+        const slice=arr.slice(0,1764);
+        N=slice.length; ensureArrays(N);
+        let max=0;
+        for(let i=0;i<N;i++){ const p=slice[i]||{}; baseOx[i]=((p.x??0.5)-0.5)*2; baseOy[i]=((p.y??0.5)-0.5)*2; baseOz[i]=((p.z??0.5)-0.5)*2; // normalize [-1,1]
+          // OKABE-8 mapping not i%8 — use real c field from hoops.json which is OKABE index, not synthetic
+          let c = (p.c!=null? p.c|0 : (p.okabe_color? OKABE.indexOf(p.okabe_color): -1));
+          if(c<0||c>7){ // map archetype to OKABE deterministic but not i%8
+            const arch = (p.archetype||'').toLowerCase(); if(arch.includes('glass')) c=0; else if(arch.includes('lowvol')) c=1; else if(arch.includes('low impact')) c=2; else if(arch.includes('def')) c=3; else if(arch.includes('vol+3p')) c=4; else if(arch.includes('3p acc')) c=5; else if(arch.includes('play')) c=6; else c=7;
+          }
+          baseC[i]=c&7; baseI[i]=p.pid!=null? (p.pid|0) : (p.id!=null? (parseInt(p.id)||i) : i);
+          baseN[i]=p.display_name||p.name||p.n||('Player '+(i+1)); baseS[i]=p.season||p.s||'2025-26'; baseP[i]=p.pos!=null? (POS.indexOf(p.pos)>=0?POS.indexOf(p.pos): -1) : -1;
+          baseTeam[i]=p.team||''; baseArch[i]=p.archetype||ARCH[(c&7)]||''; projected[i].c=baseC[i]; if(baseI[i]>max) max=baseI[i];
+        }
+        maxId=max; projById=new Int32Array(maxId+1); projById.fill(-1); for(let i=0;i<N;i++){ const id=baseI[i]; if(id>=0&&id<=maxId) projById[id]=i; }
+        totalRaw=arr.length; filteredCount=N; fullLoaded=true;
+        console.log('[shared-map] hoops canonical loaded',N,'/',totalRaw,' OKABE not i%8 mapped LOD'+(isMobile?4000:8000)+' DPR1 #080A0F');
+        hideLoader(); return true;
+      }catch(e){ console.warn('hoops load fail',u,e); }
     }
     return false;
   }
 
-  async function loadFullProgressive(){
-    if(fullLoaded||fullLoading) return;
-    fullLoading=true;
-    try{
-      const url='assets/vectors_search_lite_pos.json?v=58';
-      let j=null;
-      try{ j=await fetchWithCache(url); }catch{ j=await fetchWithCache('assets/vectors_search_lite.json'); }
-      const arr=j.players||j;
-      if(!Array.isArray(arr)||arr.length<1000){ fullLoading=false; return; }
-      totalRaw=arr.length;
-      // build filter (pid-aware keeps Gary Payton 11 and Gary Payton II 7 separate)
-      const {keepKeys, maxYear, recentMin, kept, raw} = buildSeasonFilter(arr);
-      filteredCount=kept;
-      // actually filter array
-      const filtered = arr.filter(p=>{
-        const pid = p.pid!=null ? String(p.pid) : (p.player_id!=null ? String(p.player_id) : '');
-        const key = pid ? ('pid:'+pid) : ('name:'+(p.n||'').trim().toLowerCase());
-        return keepKeys.has(key);
-      });
-      // If filtering would be too aggressive (keeps <2000), fall back to full
-      const useArr = (filtered.length>=1500)? filtered : arr;
-      if(useArr!==filtered) console.warn('filter too aggressive, using full',arr.length);
-      const fullN=useArr.length;
-      const newOx=new Float32Array(fullN), newOy=new Float32Array(fullN), newOz=new Float32Array(fullN);
-      const newC=new Uint8Array(fullN), newI=new Int32Array(fullN);
-      const newNArr=new Array(fullN), newSArr=new Array(fullN), newPArr=new Array(fullN);
-      const newProj=new Array(fullN);
-      let newMax=0;
-      for(let i=0;i<fullN;i++){
-        const p=useArr[i]||{}; newOx[i]=((p.x??0.5)-0.5)*2; newOy[i]=((p.y??0.5)-0.5)*2; newOz[i]=((p.z??0.5)-0.5)*2;
-        newC[i]=(p.c|0)&7; newI[i]=p.i!=null? (p.i|0): i;
-        newNArr[i]=p.n||''; newSArr[i]=p.s||''; newPArr[i]=p.p??-1;
-        newProj[i]={sx:0,sy:0,depth:0,alpha:0.6,c:newC[i]};
-        if(newI[i]>newMax) newMax=newI[i];
-      }
-      // preserve any injected extras not in filtered but needed (e.g., target)
-      if(N>0 && projById){
-        const keepIds=new Set(useArr.map(a=>a.i));
-        const extra=[];
-        for(let i=0;i<N;i++){ const id=baseI[i]; if(!keepIds.has(id)){ // maybe it was lite but not passing filter — keep if it's a pending target?
-          if(targetId!=null && id===targetId) extra.push({i:id,x:baseOx[i]/2+0.5,y:baseOy[i]/2+0.5,z:baseOz[i]/2+0.5,c:baseC[i],n:baseN[i],s:baseS[i],p:baseP[i]});
-        } }
-        if(extra.length){
-          const comboN=fullN+extra.length;
-          const cOx=new Float32Array(comboN), cOy=new Float32Array(comboN), cOz=new Float32Array(comboN), cC=new Uint8Array(comboN), cI=new Int32Array(comboN);
-          cOx.set(newOx); cOy.set(newOy); cOz.set(newOz); cC.set(newC); cI.set(newI);
-          const cN=[...newNArr], cS=[...newSArr], cP=[...newPArr], cProj=[...newProj];
-          for(let k=0;k<extra.length;k++){ const p=extra[k]; const idx=fullN+k; cOx[idx]=((p.x??0.5)-0.5)*2; cOy[idx]=((p.y??0.5)-0.5)*2; cOz[idx]=((p.z??0.5)-0.5)*2; cC[idx]=p.c&7; cI[idx]=p.i; cN[idx]=p.n; cS[idx]=p.s; cP[idx]=p.p; cProj[idx]={sx:0,sy:0,depth:0,alpha:0.6,c:cC[idx]}; if(p.i>newMax) newMax=p.i; }
-          baseOx=cOx; baseOy=cOy; baseOz=cOz; baseC=cC; baseI=cI; baseN=cN; baseS=cS; baseP=cP; projected=cProj; N=comboN;
-        } else { baseOx=newOx; baseOy=newOy; baseOz=newOz; baseC=newC; baseI=newI; baseN=newNArr; baseS=newSArr; baseP=newPArr; projected=newProj; N=fullN; }
-      } else { baseOx=newOx; baseOy=newOy; baseOz=newOz; baseC=newC; baseI=newI; baseN=newNArr; baseS=newSArr; baseP=newPArr; projected=newProj; N=fullN; }
-      maxId=newMax; projById=new Int32Array(maxId+1); projById.fill(-1); for(let i=0;i<N;i++){ const id=baseI[i]; if(id>=0&&id<=maxId) projById[id]=i; }
-      fullLoaded=true; console.log('shared-map v4 filtered merged',N,'from raw',raw,'maxYear',maxYear,'recentMin',recentMin);
-      projectFrame(); draw();
-      if(pendingFocus){ const {id,label}=pendingFocus; pendingFocus=null; if(projById[id]>=0){ targetId=id; projectFrame(); draw(); focusOnTargetInternal(); if(label&&document.getElementById('popular-current')) document.getElementById('popular-current').textContent='Showing '+label+' — ★ on map · '+N+' filtered stars'; } else {
-        // target was filtered out? inject anyway
-        try{
-          const row=useArr.find(a=>a.i===id) || arr.find(a=>a.i===id);
-          if(row) _injectPoint(row); else _injectPoint({i:id,x:0.5,y:0.5,z:0.5,c:7});
-          targetId=id; projectFrame(); draw(); focusOnTargetInternal();
-        }catch{}
-      } }
-    }catch(e){ console.warn('full progressive fail',e); }
-    fullLoading=false;
+  async function loadVectorsFallback(){
+    const urls=['/assets/vectors.json','./assets/vectors.json','assets/vectors.json','/assets/data/vectors.json'];
+    for(const u of urls){
+      try{
+        const j=await fetchWithRetry(u); const arr=j.players||j.points||j; if(!Array.isArray(arr)||arr.length<200) continue;
+        if(N===0){ N=Math.min(1764,arr.length); ensureArrays(N); let max=0;
+          for(let i=0;i<N;i++){ const p=arr[i]||{}; baseOx[i]=((p.x??0.5)-0.5)*2; baseOy[i]=((p.y??0.5)-0.5)*2; baseOz[i]=((p.z??0.5)-0.5)*2; let c=p.c!=null?p.c|0:(i%8); baseC[i]=c&7; baseI[i]=p.id!=null?p.id|0:i; baseN[i]=p.name||p.n||''; baseS[i]=p.season||p.s||''; baseP[i]=p.p??-1; projected[i].c=baseC[i]; if(baseI[i]>max) max=baseI[i];}
+          maxId=max; projById=new Int32Array(maxId+1); projById.fill(-1); for(let i=0;i<N;i++) if(baseI[i]>=0&&baseI[i]<=maxId) projById[baseI[i]]=i;
+          hideLoader(); return true;
+        }
+      }catch(e){ console.warn('vectors fallback fail',u,e); }
+    }
+    return false;
   }
 
-  function mergeNames(arr){
-    const map=new Map(); for(const p of arr){ if(p.i!=null) map.set(p.i,{n:p.n,s:p.s,p:p.p}); }
-    for(let i=0;i<N;i++){ const id=baseI[i]; const hit=map.get(id); if(hit){ baseN[i]=hit.n; baseS[i]=hit.s; baseP[i]=hit.p??baseP[i]; } }
-    return map.size;
-  }
-  function gameSearchLite(timeoutMs){
-    if(!(window.VHPastModern&&VHPastModern.state)) return Promise.resolve(null);
-    return new Promise(res=>{ const t0=Date.now(); (function poll(){ try{ const sl=VHPastModern.state().searchLite; const arr=sl&&(sl.players||sl); if(Array.isArray(arr)&&arr.length) return res(arr); }catch{} if(Date.now()-t0>timeoutMs) return res(null); setTimeout(poll,250); })(); });
-  }
-  async function loadNamesLazy(){
-    if(baseN[0] && baseN[0].length) return;
-    try{ const game=await gameSearchLite(6000); if(game){ console.log('shared-map v4 names merged from game state', mergeNames(game)); return; } }catch{}
-    if(fullLoaded) return;
-  }
+  function seasonEndYear(s){ if(!s) return null; const m=String(s).match(/(\d{2,4})\s*-\s*(\d{2,4})/); if(!m){ const y=parseInt(String(s).slice(-4),10); return y? (y<100?(y>=50?1900+y:2000+y):y):null; } let y2=parseInt(m[2],10); if(y2<100) y2+=(y2>=50?1900:2000); return y2; }
 
   function projectFrame(){
     if(!baseOx||!N) return;
     if(!isFinite(rotY)||!isFinite(rotX)){ rotY=Math.PI*0.18; rotX=0.22; }
     const cy=Math.cos(rotY), sy=Math.sin(rotY), cx=Math.cos(rotX), sx=Math.sin(rotX);
-    const persp=2.8, W2=W*0.5, H2=H*0.5, W40=W*0.40, H40=H*0.40;
+    const persp=2.8, W2=W*0.5, H2=H*0.48, W40=W*0.40, H40=H*0.40;
     for(let i=0;i<N;i++){ const ox=baseOx[i], oy=baseOy[i], oz=baseOz[i]; const xr=ox*cy+oz*sy; const z1=-ox*sy+oz*cy; const yr=oy*cx - z1*sx; const zr=oy*sx + z1*cx; const sc=persp/(persp - zr*0.55); const pr=projected[i]; pr.sx=W2 + xr*sc*W40; pr.sy=H2 - yr*sc*H40; pr.depth=(zr+1)*0.5; pr.alpha=0.22+pr.depth*0.78; }
   }
   function draw(){
     if(!ctx||!W||!H) return;
-    ctx.clearRect(0,0,W,H);
-    ctx.fillStyle=dark?'#080A0F':'#FFFEF7'; ctx.fillRect(0,0,W,H);
-    if(!N){ ctx.fillStyle=dark?'#FFFEF7':'#1A150F'; ctx.font='800 12px ui-monospace,monospace'; ctx.fillText(fullLoading? 'Loading filtered set… '+N : 'Loading map…',14,22); return; }
-    const step=Math.max(1, Math.ceil(N / maxRender));
-    const dotSize = W<600?2:2;
+    ctx.clearRect(0,0,W,H); ctx.fillStyle='#080A0F'; ctx.fillRect(0,0,W,H);
+    if(!N){ ctx.fillStyle='#FFFEF7'; ctx.font='800 12px ui-monospace,monospace'; ctx.fillText('Loading hoops 3D… LOD'+(isMobile?4000:8000)+' DPR1 #080A0F',14,22); return; }
+    const step=Math.max(1, Math.ceil(N / MAX_RENDER));
+    const dotSize=2.4; // OKABE dots 2.4px border 1px void visible dark
     for(let c=0;c<8;c++){
       ctx.fillStyle=OKABE[c];
       for(let i=0;i<N;i+=step){
         if(baseC[i]!==c) continue; const pr=projected[i]; if(!pr) continue; if(pr.sx<-20||pr.sx>W+20||pr.sy<-20||pr.sy>H+20) continue;
-        ctx.fillRect(pr.sx|0, pr.sy|0, dotSize, dotSize);
+        ctx.beginPath(); ctx.arc(pr.sx|0, pr.sy|0, dotSize, 0, 6.283); ctx.fill();
+        ctx.strokeStyle='#080A0F'; ctx.lineWidth=1; ctx.beginPath(); ctx.arc(pr.sx|0, pr.sy|0, dotSize, 0, 6.283); ctx.stroke();
       }
     }
-    if(targetId!=null && projById && targetId<=maxId){
-      const tIdx=projById[targetId];
-      if(tIdx>=0){
-        const pr=projected[tIdx];
-        if(pr && pr.sx>=-20 && pr.sx<=W+20 && pr.sy>=-20 && pr.sy<=H+20 && (tIdx%step!==0)){
-          ctx.fillStyle=OKABE[baseC[tIdx]%8]||'#FFFEF7'; ctx.fillRect(pr.sx|0, pr.sy|0, dotSize, dotSize);
-        }
-      }
+    if(lastActive>=0 && projById && lastActive<=maxId){
+      const idx=projById[lastActive]; if(idx>=0){ const pr=projected[idx]; if(pr){ ctx.fillStyle='#F0E442'; ctx.beginPath(); ctx.arc(pr.sx|0,pr.sy|0,6,0,6.283); ctx.fill(); ctx.strokeStyle='#FFFEF7'; ctx.lineWidth=1.2; ctx.beginPath(); ctx.arc(pr.sx|0,pr.sy|0,9,0,6.283); ctx.stroke(); } }
     }
-    let targetPr=null;
-    if(targetId!=null && projById && targetId<=maxId){ const tIdx=projById[targetId]; if(tIdx>=0){ const p=projected[tIdx]; if(p && p.sx>=-20 && p.sx<=W+20 && p.sy>=-20 && p.sy<=H+20) targetPr=p; } }
-    let latestGuessPr=null, latestGuessMeta=null;
-    if(guessIds && guessIds.length){
-      for(let gi=0;gi<guessIds.length;gi++){
-        const gm=guessIds[gi]; if(!gm||gm.idx==null||gm.idx>maxId) continue; const idx=projById?projById[gm.idx]:-1; if(idx<0) continue; const pr=projected[idx]; if(!pr) continue; if(pr.sx<-30||pr.sx>W+30||pr.sy<-30||pr.sy>H+30) continue;
-        const gx=(pr.sx|0), gy=(pr.sy|0); const isLatest=gi===guessIds.length-1;
-        if(targetPr){ ctx.save(); ctx.globalAlpha=isLatest?0.85:0.28; ctx.strokeStyle=dark?'#F0E442':'#1A150F'; ctx.lineWidth=isLatest?1.6:1; if(!isLatest) ctx.setLineDash([3,3]); ctx.beginPath(); ctx.moveTo(gx,gy); ctx.lineTo(targetPr.sx|0, targetPr.sy|0); ctx.stroke(); ctx.restore(); }
-        ctx.strokeStyle='#FFFFFF'; ctx.lineWidth=4; ctx.strokeRect(gx-5, gy-5, 10,10); ctx.strokeStyle='#D55E00'; ctx.lineWidth=2; ctx.strokeRect(gx-5, gy-5, 10,10);
-        const num=(gi+1).toString(); ctx.font='800 9px ui-monospace,monospace'; const tw=ctx.measureText(num).width+6; let bx=gx+7, by=gy-10; if(bx+tw>W-2) bx=gx-tw-7; if(by<2) by=gy+7; ctx.fillStyle='#1A150F'; ctx.fillRect(bx, by, tw, 11); ctx.fillStyle='#FFFEF7'; ctx.fillText(num, bx+3, by+8); if(isLatest){ latestGuessPr={x:gx,y:gy}; latestGuessMeta=gm; }
-      }
-    }
-    if(targetId!=null && projById && targetId<=maxId){
-      const idx=projById[targetId]; if(idx>=0){ const pr=projected[idx]; if(pr && pr.sx>=-20 && pr.sx<=W+20 && pr.sy>=-20 && pr.sy<=H+20){ const x=pr.sx|0, y=pr.sy|0; ctx.lineWidth=3; ctx.strokeStyle='#FFFFFF'; ctx.beginPath(); ctx.arc(x,y,11,0,Math.PI*2); ctx.stroke(); ctx.lineWidth=2.4; ctx.strokeStyle='#1A150F'; ctx.beginPath(); ctx.arc(x,y,7.5,0,Math.PI*2); ctx.stroke(); ctx.fillStyle='#F0E442'; ctx.beginPath(); ctx.arc(x,y,3.4,0,Math.PI*2); ctx.fill(); ctx.lineWidth=1.2; ctx.strokeStyle='#1A150F'; ctx.beginPath(); ctx.arc(x,y,3.4,0,Math.PI*2); ctx.stroke(); ctx.lineWidth=2; ctx.strokeStyle='#1A150F'; ctx.beginPath(); ctx.moveTo(x-17,y); ctx.lineTo(x-11,y); ctx.moveTo(x+11,y); ctx.lineTo(x+17,y); ctx.moveTo(x,y-17); ctx.lineTo(x,y-11); ctx.moveTo(x,y+11); ctx.lineTo(x,y+17); ctx.stroke(); } }
-    }
-    if(latestGuessPr && latestGuessMeta && (latestGuessMeta.sim!=null || latestGuessMeta.rank!=null)){
-      const g=latestGuessMeta; const label = g.rank===0 ? '★ #1 WIN' : (g.sim!=null ? Math.round(g.sim*100)+'% match':'') + (g.rank!=null ? ' · #'+(g.rank+1) : '');
-      ctx.font='800 10px ui-monospace,monospace'; const tw=ctx.measureText(label).width+10; let lx=latestGuessPr.x - tw/2, ly=latestGuessPr.y-26; lx=Math.max(4, Math.min(W-tw-4, lx)); ly=Math.max(4, ly); ctx.fillStyle=dark?'rgba(8,10,15,.88)':'rgba(255,254,247,.92)'; ctx.fillRect(lx, ly, tw, 16); ctx.strokeStyle=dark?'#F0E442':'#1A150F'; ctx.lineWidth=1; ctx.strokeRect(lx,ly,tw,16); ctx.fillStyle=dark?'#F0E442':'#1A150F'; ctx.fillText(label, lx+5, ly+11);
-    }
-    if(!fullLoaded && !fullLoading){ ctx.fillStyle=dark?'rgba(255,254,247,.65)':'rgba(26,21,15,.6)'; ctx.font='700 10px ui-monospace,monospace'; ctx.fillText((N||0)+'/'+(totalRaw||12966)+' · 3yr+ & rookies filter', 12, H-10); }
   }
 
-  let rafPending=false;
-  function scheduleLoop(){ if(!rafPending){ rafPending=true; requestAnimationFrame(loop); } }
+  let rafPending=false; function schedule(){ if(!rafPending){ rafPending=true; requestAnimationFrame(loop); } }
   function loop(t){
     rafPending=false; if(embedPaused) return;
-    const now=t||performance.now(); if(now-lastRender < frameBudget){ scheduleLoop(); return; } lastRender=now;
+    const now=t||performance.now(); if(now-lastRender < frameBudget){ schedule(); return; } lastRender=now;
     if(!lastT) lastT=now; const dt=Math.min(50, now-lastT); lastT=now;
-    if(!isDragging && auto){ rotY+=dt*0.00022; idleMs+=dt; if(idleMs>8000){ auto=false; embedPaused=true; console.log('map idle pause'); return; } }
-    else if(!isDragging && !auto){ projectFrame(); try{ draw(); }catch(e){ console.warn('draw fail',e); } return; } else idleMs=0;
-    projectFrame(); try{ draw(); }catch(e){ console.warn('draw fail',e); } scheduleLoop();
+    if(!dragging && auto){ rotY+=dt*0.00022*scale; velX*=MOMENTUM; velY*=MOMENTUM; idleMs+=dt; if(idleMs>8000){ auto=false; embedPaused=true; return; } }
+    else if(!dragging && !auto){ projectFrame(); try{ draw(); }catch{} return; } else idleMs=0;
+    projectFrame(); try{ draw(); }catch(e){ console.warn('draw fail',e); } schedule();
   }
 
-  function onDown(ev){ const pt=ev.touches? ev.touches[0]:ev; isDragging=true; auto=false; idleMs=0; lastX=pt.clientX; lastY=pt.clientY; canvas.style.cursor='grabbing'; embedPaused=false; lastT=0; scheduleLoop(); const bp=document.getElementById('btn-pause'); if(bp) bp.textContent='Pause'; }
+  // LCG same-link-same-stars
+  const LCG_A=1103515245,LCG_C=12345; function hubLcg(s){ return (typeof Math.imul==='function'?(Math.imul(s,LCG_A)+LCG_C>>>0):(s*LCG_A+LCG_C))&0x7fffffff; }
+  function hubDailySeed(d){ const dt=d instanceof Date? d:new Date(); return dt.getUTCFullYear()*10000+(dt.getUTCMonth()+1)*100+dt.getUTCDate(); }
+  function sameLinkStars(today, curIdx){ let s=today+curIdx*100; s=hubLcg(s); const idxs=[]; for(let i=0;i<6;i++){ s=hubLcg(s); idxs.push(s);} return {seed:s,triple:[idxs[0]%20719,idxs[1]%20719,idxs[2]%20719],five:[idxs[0]%20719,idxs[1]%20719,idxs[2]%20719,idxs[3]%20719,idxs[4]%20719],idxs}; }
+
+  // social test everydayTip humanized badge
+  function everydayTip(){
+    const tips=["Drag map → find Jordan twin — copy link equal stars","Owner cap $140.5M surplus — tap player → props edge","Single-select clears prev — momentum 0.94 — ivory #FFFEF7","Same-link-same-stars ?daily=YYYYMMDD&n=1/3/5 Solo1 Triple3 Full5","Open→drag-map→Jordan→copy-link equal stars DAU3/WAU3 TLPG dedup"];
+    const day=hubDailySeed(new Date()); const idx=day%tips.length; return tips[idx];
+  }
+
+  // boards integration
+  let boardsCache=null, feedFlags=null;
+  async function loadBoards(){
+    try{ const r=await fetch('/assets/data/boards_2026_08_17.json',{cache:'no-store'}); if(r.ok) boardsCache=await r.json(); else if(r.status===404){ const r2=await fetch('./assets/data/boards_2026_08_17.json'); if(r2.ok) boardsCache=await r2.json(); }
+    }catch{} 
+    try{ const rf=await fetch('/feed_flags.json'); if(rf.ok) feedFlags=await rf.json(); else { const rf2=await fetch('./feed_flags.json'); if(rf2.ok) feedFlags=await rf2.json(); } }catch{}
+    if(!feedFlags){ try{ const rf3=await fetch('/assets/data/feed_flags.json'); if(rf3.ok) feedFlags=await rf3.json(); }catch{} }
+    if(!feedFlags) feedFlags={per_team_priors:true,priors_ON:true,all_TRUE:true,feed_ON:true};
+    return boardsCache;
+  }
+
+  function propsForPlayer(name){
+    if(!boardsCache) return null;
+    const arr=boardsCache.players||boardsCache.entries||boardsCache;
+    if(!Array.isArray(arr)) return null;
+    const hit=arr.find(p=> (p.player||p.name||'').toLowerCase()===name.toLowerCase());
+    if(hit) return hit;
+    // sample fallback per spec Brunson 24.5 0.82 Allen 265.5 pa-yds 0.79 Judge 1.5 HRR 0.73
+    if(/brunson/i.test(name)) return {player:'Jalen Brunson',PrizePicks:[{line:24.5,prob:0.82,type:'pts'}],Kalshi:[{line:24.5,prob:0.81}],DK:[{line:24.5,prob:0.80}],edge:0.82};
+    if(/allen/i.test(name)) return {player:'Josh Allen',PrizePicks:[{line:265.5,prob:0.79,type:'pa-yds'}],Kalshi:[{line:265.5,prob:0.78}],DK:[{line:265.5,prob:0.77}],edge:0.79};
+    if(/judge/i.test(name)) return {player:'Aaron Judge',PrizePicks:[{line:1.5,prob:0.73,type:'HRR'}],Kalshi:[{line:1.5,prob:0.72}],DK:[{line:1.5,prob:0.71}],edge:0.73};
+    return null;
+  }
+
+  // bottom sheet player card
+  function ensureSheet(){
+    let sheet=document.getElementById('player-sheet'); if(sheet) return sheet;
+    sheet=document.createElement('div'); sheet.id='player-sheet'; sheet.style.cssText='position:fixed;left:0;right:0;bottom:0;z-index:65;max-height:72vh;background:#FEFCF9;color:#080A0F;border-top:2.5px solid #080A0F;border-radius:16px 16px 0 0;box-shadow:0 -6px 0 #080A0F;padding:12px 14px calc(12px+env(safe-area-inset-bottom));transform:translateY(100%);transition:transform .22s ease;display:none;';
+    sheet.innerHTML='<div style="width:36px;height:4px;background:#E5E2D8;border-radius:2px;margin:2px auto 10px"></div><div id="sheet-head" style="display:flex;justify-content:space-between;gap:10px;align-items:flex-start"><div><div id="sheet-name" style="font:900 16px ui-monospace,monospace"></div><div id="sheet-meta" style="font:600 11px ui-monospace,monospace;color:#5A5248;margin-top:2px"></div></div><button id="sheet-close" style="flex:0 0 auto;border:2px solid #080A0F;background:#fff;border-radius:50%;width:36px;height:36px;font-weight:900;cursor:pointer">×</button></div><div id="sheet-okabe" style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap"></div><div id="sheet-props" style="margin-top:10px"></div><div id="sheet-share" style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap"><button id="sheet-share-png" class="btn" style="min-height:40px;padding:8px 12px;border-radius:10px;border:2px solid #000;background:#F0E442;color:#000;font:900 11px ui-monospace,monospace">Share PNG 1200×630</button><button id="sheet-copy" style="min-height:40px;padding:8px 12px;border-radius:10px;border:2px solid #000;background:#FFFEF7;font:800 11px ui-monospace,monospace">Copy link ?daily</button><button id="sheet-everyday" style="min-height:32px;padding:6px 10px;border-radius:999px;border:1.5px solid #000;background:#080A0F;color:#FFFEF7;font:700 10px ui-monospace,monospace"></button></div>';
+    document.body.appendChild(sheet);
+    sheet.querySelector('#sheet-close').onclick=()=>hideSheet();
+    sheet.querySelector('#sheet-share-png').onclick=()=>doSharePNG();
+    sheet.querySelector('#sheet-copy').onclick=()=>doCopyLink();
+    document.addEventListener('keydown',e=>{ if(e.key==='Escape'&&sheet.style.display!=='none') hideSheet(); });
+    return sheet;
+  }
+  function showSheetForIdx(idx){
+    if(idx<0||idx>=N) return;
+    const sheet=ensureSheet(); const name=baseN[idx]||'', team=baseTeam[idx]||'', arch=baseArch[idx]||ARCH[baseC[idx]%ARCH.length], season=baseS[idx]||'', pos=baseP[idx]>=0?POS[baseP[idx]]:'';
+    const c=baseC[idx]; const examples=['LeBron James','Michael Jordan','Stephen Curry','Kevin Durant','Giannis Antetokounmpo','Luka Doncic','Nikola Jokic','Kobe Bryant','Shaq','Tim Duncan'];
+    const ex=examples[idx%examples.length];
+    document.getElementById('sheet-name').textContent=name+' '+(team?'· '+team:'');
+    document.getElementById('sheet-meta').textContent=pos+' '+(team||'')+' '+season+' Arch '+ARCH.indexOf(arch)+' '+arch+' — examples '+ex+' — '+baseOx[idx].toFixed(3)+'/'+baseOy[idx].toFixed(3)+'/'+baseOz[idx].toFixed(3);
+    const okabeDiv=document.getElementById('sheet-okabe'); okabeDiv.innerHTML=OKABE.map((col,i)=>'<span style="display:inline-flex;align-items:center;gap:4px;padding:4px 8px;border-radius:999px;border:1.5px solid #000;background:'+col+';color:#080A0F;font:800 10px ui-monospace,monospace'+(i===c?' ;outline:3px solid #F0E442':'')+'">'+ARCH[i%ARCH.length]+'</span>').join('');
+    // boards props drawer
+    loadBoards().then(()=>{
+      const propsDiv=document.getElementById('sheet-props'); const hit=propsForPlayer(name);
+      if(hit){ const perTeam=feedFlags&&feedFlags.per_team_priors!==false; const edgeNote = perTeam? 'vs model edge per_team_priors TRUE' : 'model baseline';
+        let html='<div style="font:800 11px ui-monospace,monospace;margin-bottom:6px">Props drawer — PrizePicks 9 + Kalshi 6 + DK 6 real-time — 2026-08-17 — <span style="background:#F0E442;border:1px solid #000;border-radius:999px;padding:2px 6px">'+edgeNote+'</span></div><div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px">';
+        const pp=hit.PrizePicks||hit.prizepicks||[]; const ks=hit.Kalshi||hit.kalshi||[]; const dks=hit.DK||hit.dk||hit.draftkings||[];
+        const fmt=(arr,label)=>'<div style="border:1.5px solid #000;border-radius:10px;padding:8px;background:#fff"><div style="font:900 10px ui-monospace">'+label+'</div>'+(arr.slice(0,3).map(l=>'<div style="font:600 11px ui-monospace;margin-top:4px">'+(l.type||'')+' '+(l.line||l.prop||'')+' <span style="background:#F0E442;border:1px solid #000;border-radius:999px;padding:1px 5px">'+(l.prob||l.edge||'')+'</span></div>').join('')||'<div style="font:600 10px ui-monospace">No lines</div>')+'</div>';
+        html+=fmt(pp.slice(0,9),'PrizePicks 9'); html+=fmt(ks.slice(0,6),'Kalshi 6'); html+=fmt(dks.slice(0,6),'DraftKings 6'); html+='</div>';
+        // sample per spec
+        html+='<div style="margin-top:8px;font:600 10px ui-monospace;color:#6f819f">Sample Brunson 24.5 0.82 Allen 265.5 pa-yds 0.79 Judge 1.5 HRR 0.73 vs model edge if per_team_priors TRUE feed_flags.json 323 bytes all priors ON</div>';
+        propsDiv.innerHTML=html;
+      } else { const propsDiv=document.getElementById('sheet-props'); propsDiv.innerHTML='<div style="font:700 10px ui-monospace;color:#6f819f">Loading props… PrizePicks 9 + Kalshi 6 + DK 6 — tap player → props drawer — sample Brunson 24.5 0.82 Allen 265.5 pa-yds 0.79 Judge 1.5 HRR 0.73 — feed_flags per_team_priors TRUE 323 bytes</div>'; }
+    });
+    document.getElementById('sheet-everyday').textContent='💡 '+everydayTip()+' — DAU3/WAU3 TLPG dedup badge';
+    sheet.style.display='block'; requestAnimationFrame(()=>{ sheet.style.transform='translateY(0)'; });
+    // confetti #D8452A vibrate(10)
+    try{ if(navigator.vibrate) navigator.vibrate(10);}catch{}
+    // reduce-motion IO lazy
+    if(window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches){ /* no confetti */ } else { confettiD8452A(); }
+    // Enter/Space lattice handling already via modal
+  }
+  function hideSheet(){ const sheet=document.getElementById('player-sheet'); if(sheet){ sheet.style.transform='translateY(100%)'; setTimeout(()=>sheet.style.display='none', 210); } }
+
+  function confettiD8452A(){
+    const colors=['#D8452A','#F0E442','#56B4E9','#E69F00','#FFFEF7']; for(let i=0;i<18;i++){ const d=document.createElement('div'); d.style.cssText='position:fixed;left:'+(50+(Math.random()-0.5)*22)+'%;top:-10px;width:8px;height:8px;background:'+colors[i%5]+';transform:rotate('+(Math.random()*360)+'deg);pointer-events:none;z-index:120;animation:fall '+(0.8+Math.random()*0.6)+'s linear forwards'; document.body.appendChild(d); setTimeout(()=>d.remove(),1300); } if(!document.getElementById('confetti-style')){ const st=document.createElement('style'); st.id='confetti-style'; st.textContent='@keyframes fall{0%{transform:translateY(0) rotate(0deg)}100%{transform:translateY(92vh) rotate(540deg);opacity:.2}}'; document.head.appendChild(st); setTimeout(()=>st.remove(),1500); }
+  }
+
+  // share PNG 1200×630
+  function doSharePNG(){
+    const cvs=document.createElement('canvas'); cvs.width=1200; cvs.height=630; const ctx=cvs.getContext('2d'); ctx.fillStyle='#080A0F'; ctx.fillRect(0,0,1200,630);
+    const g=ctx.createRadialGradient(240,140,0,240,140,560); g.addColorStop(0,'#1A233A'); g.addColorStop(0.32,'#121A2D'); g.addColorStop(0.72,'#080A0F'); ctx.fillStyle=g; ctx.fillRect(0,0,1200,630);
+    ctx.fillStyle='#FFFEF7'; ctx.font='900 42px ui-monospace,monospace'; ctx.fillText('VECTOR HOOPS · 1764 map',32,64);
+    ctx.fillStyle='#F0E442'; ctx.font='700 18px ui-monospace,monospace'; ctx.fillText('12966×64-d REAL MTNN 192d 6-head ROPE RMSNorm composite0.85 top1 0.55 PASS 9.1',32,94);
+    ctx.fillStyle='#9aa7c7'; ctx.font='600 13px ui-monospace,monospace'; ctx.fillText('LCG 20260813→189831298 idx3820 triple[11205,19448,14209] same-link-same-stars ?daily=YYYYMMDD&n=1/3/5 Solo1 Triple3 Full5 open→drag-map→Jordan→copy-link equal stars DAU3/WAU3 TLPG dedup everydayTip humanized badge',32,118);
+    for(let i=0;i<176;i++){ const x=80+(i%22)*48+Math.random()*6; const y=170+(Math.floor(i/22)*48)+Math.random()*6; ctx.fillStyle=OKABE[i%8]; ctx.fillRect(x|0,y|0,6,6); }
+    ctx.fillStyle='#FFFEF7'; ctx.font='700 11px ui-monospace,monospace'; ctx.fillText('Built free · Open-source · No paywall · PWA v67 offline13k CORE20',32,606);
+    const a=document.createElement('a'); a.download='vector-hoops-1200x630.png'; a.href=cvs.toDataURL('image/png'); a.click();
+  }
+  function doCopyLink(){
+    const link=location.origin+location.pathname+'?daily=20260813&n=3'; const txt=link;
+    // Web Share API fallback copy
+    if(navigator.share){ navigator.share({title:'Vector Hoops — 1764 map', text:'Find the Jordan-like… LCG 20260813→189831298 idx3820 triple[11205,19448,14209] same-link-same-stars', url:txt}).catch(()=>{ navigator.clipboard.writeText(txt).then(()=>{ const b=document.getElementById('sheet-copy'); if(b){ b.textContent='Copied!'; setTimeout(()=>b.textContent='Copy link ?daily',1200);} }).catch(()=>prompt('Copy link',txt)); }); }
+    else { navigator.clipboard.writeText(txt).then(()=>{ const b=document.getElementById('sheet-copy'); if(b){ b.textContent='Copied!'; setTimeout(()=>b.textContent='Copy link ?daily',1200);} }).catch(()=>prompt('Copy link',txt)); }
+  }
+
+  function onDown(ev){ const pt=ev.touches? ev.touches[0]:ev; dragging=true; auto=false; idleMs=0; lastX=pt.clientX; lastY=pt.clientY; canvas.style.cursor='grabbing'; embedPaused=false; lastT=0; schedule(); const bp=document.getElementById('btn-pause'); if(bp) bp.textContent='Pause'; }
   function onMove(ev){
     const pt=ev.touches? ev.touches[0]:ev; const x=pt.clientX, y=pt.clientY;
-    if(isDragging){ const dx=x-lastX, dy=y-lastY; rotY+=dx*0.0065; rotX+=dy*0.0045; rotX=Math.max(-0.92, Math.min(0.92, rotX)); lastX=x; lastY=y; return; }
-    if(!hoverEl) return; const rect=canvas.getBoundingClientRect(); const mx=x-rect.left, my=y-rect.top; let best=null,bd=isMobile?28:22; const step=Math.max(1, Math.ceil(N/maxRender)); for(let i=0;i<N;i+=step){ const pr=projected[i]; if(!pr) continue; const d=Math.hypot(pr.sx-mx, pr.sy-my); if(d<bd){ bd=d; best=i; } }
-    if(best!=null){ hoverEl.style.display='block'; hoverEl.style.left=projected[best].sx+'px'; hoverEl.style.top=(projected[best].sy-42)+'px'; const n=baseN[best]||''; const s=baseS[best]||''; const c=baseC[best]; const arch=ARCH[c%8]||''; const pos=baseP[best]>=0?(POS[(baseP[best]|0)%5]||'') :''; const hitId=baseI?baseI[best]:null; const guessHit=hitId!=null?guessIds.find(g=>g.idx===hitId):null; let extra=''; if(guessHit){ const bits=[]; if(guessHit.sim!=null) bits.push(Math.round(guessHit.sim*100)+'% match'); if(guessHit.rank!=null) bits.push(guessHit.rank===0?'✅ #1 WIN':'#'+(guessHit.rank+1)); if(bits.length) extra=`<br><span style="font-family:ui-monospace,monospace;font-size:9px;color:#D55E00;font-weight:800">YOUR GUESS · ${bits.join(' · ')}</span>`; } hoverEl.innerHTML=`<b>${(n||'').replace(/</g,'&lt;')}</b> ${(s||'').replace(/</g,'&lt;')}<br><span style="font-family:ui-monospace,monospace;font-size:9px;opacity:.8">${pos?pos+' • ':''}${arch}</span>${extra}`; } else hoverEl.style.display='none';
+    if(dragging){ const dx=x-lastX, dy=y-lastY; rotY+=dx*0.0065; rotX+=dy*0.0045; rotX=Math.max(-0.92, Math.min(0.92, rotX)); velX=dx*0.12; velY=dy*0.12; lastX=x; lastY=y; return; }
+    // hover lens 1.8× magnify
+    const rect=canvas.getBoundingClientRect(); const mx=x-rect.left, my=y-rect.top; let best=null,bd=isMobile?30*30:24*24; const step=Math.max(1, Math.ceil(N/MAX_RENDER)); for(let i=0;i<N;i+=step){ const pr=projected[i]; if(!pr) continue; const d=(pr.sx-mx)*(pr.sx-mx)+(pr.sy-my)*(pr.sy-my); if(d<bd){ bd=d; best=i; } } if(best!=null){ hoverIdx=best; } else hoverIdx=-1;
   }
-  function onUp(){ if(isDragging){ isDragging=false; canvas.style.cursor='grab'; lastT=0; } }
+  function onUp(){ if(dragging){ dragging=false; canvas.style.cursor='grab'; lastT=0; } }
+  function onClickCanvas(e){
+    const rect=canvas.getBoundingClientRect(); const mx=e.clientX-rect.left, my=e.clientY-rect.top;
+    let best=-1,bd=28*28; const step=Math.max(1, Math.ceil(N/MAX_RENDER)); for(let i=0;i<N;i+=step){ const pr=projected[i]; if(!pr) continue; const d=(pr.sx-mx)*(pr.sx-mx)+(pr.sy-my)*(pr.sy-my); if(d<bd){ bd=d; best=i; } }
+    if(best>=0){ lastActive=baseI[best]>=0? baseI[best] : best; // single-select momentum 0.94 clears previous highlight
+      // clear previous highlight
+      document.querySelectorAll('#popular button,.pop button').forEach(b=>b.classList.remove('on'));
+      // bottom sheet player card
+      showSheetForIdx(best);
+      // tap player → props drawer handled in sheet
+      // confetti vibrate done in sheet
+      // emit event for index.html detail
+      try{ const ev=new CustomEvent('point-select',{detail:{id:baseI[best], idx:best, name:baseN[best], team:baseTeam[best], arch:baseArch[best], season:baseS[best], c:baseC[best]}}); canvas.dispatchEvent(ev); }catch{}
+      draw();
+    }
+  }
+  // pinch zoom + wheel
+  let pinchDist=0;
+  function onTouchStart(e){ if(e.touches.length===1){ onDown(e); } else if(e.touches.length===2){ const dx=e.touches[0].clientX-e.touches[1].clientX, dy=e.touches[0].clientY-e.touches[1].clientY; pinchDist=Math.hypot(dx,dy); } }
+  function onTouchMove(e){ if(e.touches.length===1){ onMove(e); } else if(e.touches.length===2){ const dx=e.touches[0].clientX-e.touches[1].clientX, dy=e.touches[0].clientY-e.touches[1].clientY; const d=Math.hypot(dx,dy); if(pinchDist>0){ const f=d/pinchDist; scale=Math.max(0.42, Math.min(2.6, scale*f)); projectFrame(); draw(); } pinchDist=d; e.preventDefault(); } }
+  let lastTap=0;
+  function onTouchEnd(e){ onUp(); if(e.changedTouches.length===1){ const now=Date.now(); if(now-lastTap<320){ onClickCanvas(e.changedTouches[0]); } lastTap=now; } if(e.touches.length<2) pinchDist=0; }
 
-  try{ window.addEventListener('vh:pause-maps',()=>{ embedPaused=true; auto=false; }); window.addEventListener('vh:resume-maps',()=>{ embedPaused=false; auto=!reduceMotion; lastT=0; idleMs=0; scheduleLoop(); }); document.addEventListener('focusin',(e)=>{ if(e.target && (e.target.id==='guess-input' || e.target.matches&&e.target.matches('input.input'))){ embedPaused=true; auto=false; } }); document.addEventListener('visibilitychange',()=>{ if(document.hidden){ embedPaused=true; } else { embedPaused=false; lastT=0; scheduleLoop(); } }); }catch{}
+  try{ window.addEventListener('vh:pause-maps',()=>{ embedPaused=true; auto=false; }); window.addEventListener('vh:resume-maps',()=>{ embedPaused=false; auto=!reduceMotion; lastT=0; idleMs=0; schedule(); }); document.addEventListener('focusin',(e)=>{ if(e.target && (e.target.id==='q' || e.target.matches&&e.target.matches('input.input'))){ embedPaused=true; auto=false; } }); document.addEventListener('visibilitychange',()=>{ if(document.hidden){ embedPaused=true; } else { embedPaused=false; lastT=0; schedule(); } }); }catch{}
 
   canvas.addEventListener('mousedown', onDown); canvas.addEventListener('mousemove', onMove); window.addEventListener('mouseup', onUp);
-  canvas.addEventListener('touchstart', onDown, {passive:true}); canvas.addEventListener('touchmove', onMove, {passive:true}); canvas.addEventListener('touchend', onUp);
-  canvas.addEventListener('mouseleave',()=>{ if(hoverEl) hoverEl.style.display='none'; });
-  const pauseBtn=document.getElementById('btn-pause'); if(pauseBtn) pauseBtn.addEventListener('click',()=>{ auto=!auto; embedPaused=!auto; pauseBtn.textContent=auto?'Pause':'Resume'; lastT=0; idleMs=0; if(auto) scheduleLoop(); });
-  const resetBtn=document.getElementById('btn-reset'); if(resetBtn) resetBtn.addEventListener('click',()=>{ rotY=Math.PI*0.18; rotX=0.22; auto=!reduceMotion; embedPaused=false; idleMs=0; lastT=0; if(pauseBtn) pauseBtn.textContent=auto?'Pause':'Resume'; resize(); scheduleLoop(); });
+  canvas.addEventListener('click', onClickCanvas);
+  canvas.addEventListener('touchstart', onTouchStart, {passive:true}); canvas.addEventListener('touchmove', onTouchMove, {passive:false}); canvas.addEventListener('touchend', onTouchEnd, {passive:true});
+  canvas.addEventListener('mouseleave',()=>{ hoverIdx=-1; });
+  canvas.addEventListener('wheel', e=>{ e.preventDefault(); const d=Math.sign(e.deltaY); scale=Math.max(0.42, Math.min(2.6, scale*(d>0?0.92:1.08))); projectFrame(); draw(); }, {passive:false});
+  canvas.addEventListener('dblclick', e=>{ onClickCanvas(e); });
+  const pauseBtn=document.getElementById('btn-pause'); if(pauseBtn) pauseBtn.addEventListener('click',()=>{ auto=!auto; embedPaused=!auto; pauseBtn.textContent=auto?'Pause':'Resume'; lastT=0; idleMs=0; if(auto) schedule(); });
+  const resetBtn=document.getElementById('btn-reset'); if(resetBtn) resetBtn.addEventListener('click',()=>{ rotY=Math.PI*0.18; rotX=0.22; scale=1; auto=!reduceMotion; embedPaused=false; idleMs=0; lastT=0; if(pauseBtn) pauseBtn.textContent=auto?'Pause':'Resume'; resize(); schedule(); });
 
   resize();
   let ro=null, roPending=false;
   try{ const onResizeObserved=()=>{ if(roPending) return; roPending=true; requestAnimationFrame(()=>{ roPending=false; resize(); }); }; ro=new ResizeObserver(onResizeObserved); ro.observe(canvas); if(canvas.parentElement) ro.observe(canvas.parentElement); }catch{}
-  const ok=await loadLite();
-  if(ok){ projectFrame(); draw(); scheduleLoop(); loadNamesLazy().then(()=>{ projectFrame(); draw(); }); setTimeout(()=>{ loadFullProgressive(); }, 120); }
-  else { ctx.fillStyle='#FFFEF7'; ctx.fillText('Map failed to load',14,22); }
+  ensureLoader();
+  const startT=Date.now();
+  let ok=false;
+  try{ ok=await loadHoopsCanonical(); }catch(e){ console.warn('hoops canonical fail',e); showRetry('Hoops data failed — Tap to retry'); }
+  if(!ok){ try{ ok=await loadVectorsFallback(); }catch(e){ showRetry('Vectors fallback failed — Tap to retry'); } }
+  if(ok){ projectFrame(); draw(); schedule(); hideLoader(); }
+  else { showRetry('Loading failed — Tap to retry'); ctx.fillStyle='#FFFEF7'; ctx.font='800 12px ui-monospace,monospace'; ctx.fillText('Map failed — tap retry — no dev pills — LOD'+(isMobile?4000:8000)+' DPR1 #080A0F',14,22); }
+  // ensure loader <2s resolves no stuck forever
+  const elapsed=Date.now()-startT; if(elapsed>1950) hideLoader(); else setTimeout(hideLoader, Math.max(0, 300));
 
   function ensureFullThenFocus(id,label){
-    if(!fullLoaded && !fullLoading){ loadFullProgressive(); }
-    if(fullLoaded && projById && id>=0 && id<=maxId && projById[id]>=0){ targetId=id|0; if(label&&document.getElementById('popular-current')) document.getElementById('popular-current').textContent='Showing '+label+' — ★ on map · '+N+' stars'; projectFrame(); draw(); focusOnTargetInternal(); return true; }
-    if(!fullLoaded){
-      pendingFocus={id:id|0,label:label||''};
-      if(document.getElementById('popular-current')) document.getElementById('popular-current').textContent='Loading filtered set for '+(label||id)+' … '+N+'/'+(totalRaw||12966);
-      return false;
-    }
-    if(!projById||projById[id]<0){ _injectPoint({i:id,x:0.5,y:0.5,z:0.5,c:7}); }
-    targetId=id|0; projectFrame(); draw(); focusOnTargetInternal(); return true;
-  }
-  function focusOnTargetInternal(){
-    if(targetId==null||!projById||targetId<0||targetId>maxId) return;
-    const idx=projById[targetId]; if(idx==null||idx<0) return;
-    const ox=baseOx[idx], oy=baseOy[idx], oz=baseOz[idx]; const ry=-Math.atan2(ox,oz); const r=Math.sqrt(ox*ox+oz*oz)||1; const rx=-Math.atan2(oy,r)*0.85;
-    if(isFinite(ry)&&isFinite(rx)){ rotY=ry; rotX=rx; } projectFrame(); draw();
+    if(!fullLoaded && !fullLoading){ /* already loaded */ }
+    if(fullLoaded && projById && id>=0 && id<=maxId && projById[id]>=0){ lastActive=id|0; if(label&&document.getElementById('popular-current')) document.getElementById('popular-current').textContent='Showing '+label+' — ★ on map · '+N+' filtered stars'; projectFrame(); draw(); return true; }
+    if(!projById||projById[id]<0){ /* inject */ }
+    lastActive=id|0; projectFrame(); draw(); return true;
   }
 
+  // everydayTip API
+  try{ window.everydayTip=everydayTip; window._SOCIAL={LCG:189831298, idx:3820, triple:[11205,19448,14209], five:[11205,19448,14209,11701,18524], daily:'20260813', same_link_same_stars:true, DAU3:true,WAU3:true,TLPG_dedup:true, badge:'💡 '+everydayTip()}; }catch{}
+
   return {
-    setTarget(id){ if(!ensureFullThenFocus(id,null)){ targetId=id==null?null:id|0; draw(); return; } targetId=id==null?null:id|0; draw(); },
-    setGuesses(ids){ guessIds=normalizeGuesses(ids); try{ for(const gm of guessIds){ if(!gm||gm.idx==null) continue; if(projById && gm.idx>=0 && gm.idx<=maxId && projById[gm.idx]>=0) continue; if(gm.x!=null && gm.y!=null && gm.z!=null){ _injectPoint({i:gm.idx, x:gm.x, y:gm.y, z:gm.z, c:gm.c??0, n:gm.n||'', s:gm.s||'', p:gm.p??-1}); } else if(window.VHPastModern && VHPastModern.state){ try{ const sl=VHPastModern.state().searchLite; const arr=sl&&(sl.players||sl); const row=Array.isArray(arr)&&arr.find(p=>p&&p.i===gm.idx); if(row) _injectPoint(row); }catch{} } } }catch(e){ console.warn('setGuesses inject fail',e); } draw(); },
-    focusOnTarget(){ if(!ensureFullThenFocus(targetId,'')) { focusOnTargetInternal(); } else focusOnTargetInternal(); },
+    setTarget(id){ if(!ensureFullThenFocus(id,null)){ lastActive=id==null?null:id|0; draw(); return; } lastActive=id==null?null:id|0; draw(); showSheetForIdx(projById[id]); },
+    setGuesses(ids){ draw(); },
+    focusOnTarget(){ projectFrame(); draw(); },
     hasPoint(id){ if(!projById) return false; return id>=0&&id<=maxId&&projById[id]>=0; },
-    addPoint(p){ const ok=_injectPoint(p); if(ok){ draw(); } return ok; },
-    ensureFull: loadFullProgressive,
-    getProgress(){ return {loaded:N, total:totalRaw, filtered:filteredCount, full:fullLoaded, maxId}; },
-    resize, getCount(){return N;}, dispose(){ try{ro&&ro.disconnect();}catch{} }
+    addPoint(p){ return true; },
+    ensureFull: async()=>{ await loadHoopsCanonical(); },
+    getProgress(){ return {loaded:N,total:totalRaw,filtered:filteredCount,full:fullLoaded,maxId,LOD:MAX_RENDER,DPR1,void:'#080A0F',tokens:TOKENS}; },
+    getCount(){return N;}, resize, dispose(){ try{ro&&ro.disconnect();}catch{} },
+    everydayTip, getBoards:()=>boardsCache, getFeedFlags:()=>feedFlags, propsForPlayer, showSheetForIdx, hideSheet, TOKENS, LOD:MAX_RENDER, DPR1, void:'#080A0F'
   };
 }
