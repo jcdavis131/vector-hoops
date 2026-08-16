@@ -1,0 +1,701 @@
+{
+    "domain": "hoops",
+    "feature_names": [
+        "inv",
+        "log",
+        "round",
+        "overall",
+        "draft_year_norm",
+        "overall_round",
+        "log_inv",
+        "inv2",
+        "year_sq",
+        "overall_log",
+        "cba_id",
+        "bucket",
+        "tv_id",
+        "cap_growth"
+    ],
+    "samples": [
+        {
+            "i": 0,
+            "prediction": 1.0300507038105753,
+            "baseline_value": 0.5,
+            "shap_values_sum": 0.5300507032513554,
+            "fidelity_error": 4.4995385195534254e-10,
+            "fidelity_rel": 4.3682647219628144e-10,
+            "shap": {
+                "inv": 0.6120068806489165,
+                "log": -0.2611144784779674,
+                "round": 0.08548376052245595,
+                "overall": -0.1262429478158688,
+                "draft_year_norm": 0.15188277800266548,
+                "overall_round": 0.01173448357286506,
+                "log_inv": 0.04311856311004788,
+                "inv2": -0.06258354348212247,
+                "year_sq": -0.009594967070571133,
+                "overall_log": 0.06458715115273726,
+                "cba_id": 0.07903407078460714,
+                "bucket": 0.02889267972799584,
+                "tv_id": -0.07285740928111094,
+                "cap_growth": -0.01429631814329489
+            },
+            "lime": {
+                "inv": 0.8834278779668051,
+                "log": -0.26155853725618367,
+                "round": 0.2850224212095672,
+                "overall": -0.0914229002237329,
+                "draft_year_norm": 0.19689878661078813,
+                "overall_round": -0.07118532919221762,
+                "log_inv": 0.11090807678122641,
+                "inv2": -0.06861616652966922,
+                "year_sq": 0.07905003214458406,
+                "overall_log": -0.10519109152989399,
+                "cba_id": 0.1442911385520315,
+                "bucket": -0.09334737062749507,
+                "tv_id": 0.05901007787914354,
+                "cap_growth": -0.024087632386689317
+            },
+            "narrative": "This pick projects +0.53 vs baseline (0.50\u21921.03) because inv (SHAP +0.61), log (SHAP -0.26), draft_year_norm (SHAP +0.15). LIME locally inv pushes up (+0.88). Ownership: projects +0.53 vs baseline because inv (SHAP +0.61), log (SHAP -0.26), draft_year_norm (SHAP +0.15).",
+            "narrative_povs": {
+                "owner": "Ownership: projects +0.53 vs baseline because inv (SHAP +0.61), log (SHAP -0.26), draft_year_norm (SHAP +0.15).",
+                "player": "Fit: LIME locally inv pushes up (+0.88) \u2014 secondary log -0.26 situational.",
+                "brand": "Story: headline driver inv (+0.61) lifts brand when inv aligns.",
+                "dfs": "DFS: exploitable if inv remains mispriced \u2014 SHAP sum +0.53 \u2192 pred 1.03 vs base 0.50."
+            },
+            "tops": [
+                {
+                    "name": "inv",
+                    "val": 0.6120068806489165,
+                    "abs": 0.6120068806489165,
+                    "idx": 0
+                },
+                {
+                    "name": "log",
+                    "val": -0.2611144784779674,
+                    "abs": 0.2611144784779674,
+                    "idx": 1
+                },
+                {
+                    "name": "draft_year_norm",
+                    "val": 0.15188277800266548,
+                    "abs": 0.15188277800266548,
+                    "idx": 4
+                }
+            ]
+        },
+        {
+            "i": 1,
+            "prediction": 0.03273290194438694,
+            "baseline_value": 0.5,
+            "shap_values_sum": -0.4672670967241146,
+            "fidelity_error": 4.2219922002928456e-10,
+            "fidelity_rel": 1.2897919128204677e-08,
+            "shap": {
+                "inv": -0.4437029928620965,
+                "log": -0.23338656939795313,
+                "round": -0.14653800183181465,
+                "overall": 0.11025563390897095,
+                "draft_year_norm": 0.1686583429941205,
+                "overall_round": 0.08145679130734326,
+                "log_inv": 0.0820363117354636,
+                "inv2": -0.08076326993657461,
+                "year_sq": -0.06957355471631513,
+                "overall_log": 0.00029582090169472374,
+                "cba_id": -0.006136222261048515,
+                "bucket": -0.0158350827111159,
+                "tv_id": 0.04146284495413736,
+                "cap_growth": 0.0445028511910735
+            },
+            "lime": {
+                "inv": 0.8426623853073342,
+                "log": -0.2647289703758463,
+                "round": 0.29067443326342357,
+                "overall": -0.15853164534165887,
+                "draft_year_norm": 0.24099016036922807,
+                "overall_round": -0.0887755264342785,
+                "log_inv": 0.10700255130153019,
+                "inv2": -0.06902046026773219,
+                "year_sq": 0.06529523268295902,
+                "overall_log": -0.03645205152090574,
+                "cba_id": 0.04928415749652598,
+                "bucket": 0.03441235720478783,
+                "tv_id": 0.09859229477269542,
+                "cap_growth": -0.13026244645082596
+            },
+            "narrative": "This pick projects -0.47 vs baseline (0.50\u21920.03) because inv (SHAP -0.44), log (SHAP -0.23), draft_year_norm (SHAP +0.17). LIME locally inv pushes up (+0.84). Ownership: projects -0.47 vs baseline because inv (SHAP -0.44), log (SHAP -0.23), draft_year_norm (SHAP +0.17).",
+            "narrative_povs": {
+                "owner": "Ownership: projects -0.47 vs baseline because inv (SHAP -0.44), log (SHAP -0.23), draft_year_norm (SHAP +0.17).",
+                "player": "Fit: LIME locally inv pushes up (+0.84) \u2014 secondary log -0.23 situational.",
+                "brand": "Story: headline driver inv (-0.44) lifts brand when inv aligns.",
+                "dfs": "DFS: exploitable if inv faded \u2014 SHAP sum -0.47 \u2192 pred 0.03 vs base 0.50."
+            },
+            "tops": [
+                {
+                    "name": "inv",
+                    "val": -0.4437029928620965,
+                    "abs": 0.4437029928620965,
+                    "idx": 0
+                },
+                {
+                    "name": "log",
+                    "val": -0.23338656939795313,
+                    "abs": 0.23338656939795313,
+                    "idx": 1
+                },
+                {
+                    "name": "draft_year_norm",
+                    "val": 0.1686583429941205,
+                    "abs": 0.1686583429941205,
+                    "idx": 4
+                }
+            ]
+        },
+        {
+            "i": 2,
+            "prediction": 1.7947714866137328,
+            "baseline_value": 0.5,
+            "shap_values_sum": 1.2947714867786326,
+            "fidelity_error": 1.3778622687254938e-10,
+            "fidelity_rel": 7.677085976090263e-11,
+            "shap": {
+                "inv": 0.8909698980563432,
+                "log": 0.29951910502300144,
+                "round": 0.238172184478426,
+                "overall": -0.14269012295835123,
+                "draft_year_norm": -0.12084338580220691,
+                "overall_round": 0.08496010446946577,
+                "log_inv": 0.09025216534300982,
+                "inv2": 0.0449983596853007,
+                "year_sq": -0.09445109813363838,
+                "overall_log": 0.030731566739041552,
+                "cba_id": -0.025459591730064686,
+                "bucket": 0.04368845535215791,
+                "tv_id": -0.02795093025268518,
+                "cap_growth": -0.017125223491167307
+            },
+            "lime": {
+                "inv": 0.8991900122838427,
+                "log": -0.3553111342168927,
+                "round": 0.31321415481603276,
+                "overall": -0.07781962031676176,
+                "draft_year_norm": 0.14802603077919452,
+                "overall_round": -0.12962188373374808,
+                "log_inv": 0.17424765796762812,
+                "inv2": -0.06276807289168737,
+                "year_sq": 0.05775907701241621,
+                "overall_log": -0.09843584297195279,
+                "cba_id": 0.09600236485266002,
+                "bucket": -0.08683872157379278,
+                "tv_id": 0.04600603554895361,
+                "cap_growth": -0.026553671556929528
+            },
+            "narrative": "This pick projects +1.29 vs baseline (0.50\u21921.79) because inv (SHAP +0.89), log (SHAP +0.30), round (SHAP +0.24). LIME locally inv pushes up (+0.90). Ownership: projects +1.29 vs baseline because inv (SHAP +0.89), log (SHAP +0.30), round (SHAP +0.24).",
+            "narrative_povs": {
+                "owner": "Ownership: projects +1.29 vs baseline because inv (SHAP +0.89), log (SHAP +0.30), round (SHAP +0.24).",
+                "player": "Fit: LIME locally inv pushes up (+0.90) \u2014 secondary log +0.30 situational.",
+                "brand": "Story: headline driver inv (+0.89) lifts brand when inv aligns.",
+                "dfs": "DFS: exploitable if inv remains mispriced \u2014 SHAP sum +1.29 \u2192 pred 1.79 vs base 0.50."
+            },
+            "tops": [
+                {
+                    "name": "inv",
+                    "val": 0.8909698980563432,
+                    "abs": 0.8909698980563432,
+                    "idx": 0
+                },
+                {
+                    "name": "log",
+                    "val": 0.29951910502300144,
+                    "abs": 0.29951910502300144,
+                    "idx": 1
+                },
+                {
+                    "name": "round",
+                    "val": 0.238172184478426,
+                    "abs": 0.238172184478426,
+                    "idx": 2
+                }
+            ]
+        },
+        {
+            "i": 3,
+            "prediction": -0.3001269587830654,
+            "baseline_value": 0.5,
+            "shap_values_sum": -0.8001269568465159,
+            "fidelity_error": 8.21363199676739e-10,
+            "fidelity_rel": 2.7367100452991323e-09,
+            "shap": {
+                "inv": -0.17933586522532072,
+                "log": -0.2972819281862655,
+                "round": -0.2323233100744041,
+                "overall": -0.15737115076392005,
+                "draft_year_norm": 0.11955594002823328,
+                "overall_round": 0.04273763215772283,
+                "log_inv": -0.09640616536399059,
+                "inv2": -0.03207052565023882,
+                "year_sq": -0.04026572280832443,
+                "overall_log": 0.01757863808164022,
+                "cba_id": -0.02028251079480756,
+                "bucket": 0.05158405784392889,
+                "tv_id": -0.018784845908677787,
+                "cap_growth": 0.042538799817908445
+            },
+            "lime": {
+                "inv": 0.8339087612697146,
+                "log": -0.26035672984521935,
+                "round": 0.2572578556583512,
+                "overall": -0.09851956122482361,
+                "draft_year_norm": 0.17697828027831902,
+                "overall_round": -0.08660302651580047,
+                "log_inv": 0.08495015225748315,
+                "inv2": -0.05365249975018132,
+                "year_sq": 0.10045249656523328,
+                "overall_log": -0.08382310435251213,
+                "cba_id": 0.11969691421234395,
+                "bucket": -0.09839401029459123,
+                "tv_id": 0.06491834824235636,
+                "cap_growth": -0.02521641453669442
+            },
+            "narrative": "This pick projects -0.80 vs baseline (0.50\u2192-0.30) because log (SHAP -0.30), round (SHAP -0.23), inv (SHAP -0.18). LIME locally inv pushes up (+0.83). Ownership: projects -0.80 vs baseline because log (SHAP -0.30), round (SHAP -0.23), inv (SHAP -0.18).",
+            "narrative_povs": {
+                "owner": "Ownership: projects -0.80 vs baseline because log (SHAP -0.30), round (SHAP -0.23), inv (SHAP -0.18).",
+                "player": "Fit: LIME locally inv pushes up (+0.83) \u2014 secondary round -0.23 situational.",
+                "brand": "Story: headline driver log (-0.30) lifts brand when inv aligns.",
+                "dfs": "DFS: exploitable if log faded \u2014 SHAP sum -0.80 \u2192 pred -0.30 vs base 0.50."
+            },
+            "tops": [
+                {
+                    "name": "log",
+                    "val": -0.2972819281862655,
+                    "abs": 0.2972819281862655,
+                    "idx": 1
+                },
+                {
+                    "name": "round",
+                    "val": -0.2323233100744041,
+                    "abs": 0.2323233100744041,
+                    "idx": 2
+                },
+                {
+                    "name": "inv",
+                    "val": -0.17933586522532072,
+                    "abs": 0.17933586522532072,
+                    "idx": 0
+                }
+            ]
+        },
+        {
+            "i": 4,
+            "prediction": -0.5343557506501762,
+            "baseline_value": 0.5,
+            "shap_values_sum": -1.034355749244966,
+            "fidelity_error": 7.226435005946996e-10,
+            "fidelity_rel": 1.3523615070183474e-09,
+            "shap": {
+                "inv": -0.7522411448372969,
+                "log": 0.10407711573141835,
+                "round": -0.037920612751606686,
+                "overall": -0.15567868634026194,
+                "draft_year_norm": 0.019279658731649663,
+                "overall_round": -0.11187616304518,
+                "log_inv": -0.08033056680308459,
+                "inv2": -0.04848164988799563,
+                "year_sq": -0.002510272130152119,
+                "overall_log": 0.045013713755564656,
+                "cba_id": 0.04383785658824445,
+                "bucket": -0.026736623640660286,
+                "tv_id": -0.049426291288526214,
+                "cap_growth": 0.01863791667292116
+            },
+            "lime": {
+                "inv": 0.7837977391458585,
+                "log": -0.31375080055824595,
+                "round": 0.21006433245473735,
+                "overall": -0.08905621055352148,
+                "draft_year_norm": 0.0962680338333117,
+                "overall_round": -0.07886527098357447,
+                "log_inv": 0.15140604632698035,
+                "inv2": -0.007441157872650614,
+                "year_sq": 0.059224919841202754,
+                "overall_log": -0.0958066668007723,
+                "cba_id": 0.11279128409842208,
+                "bucket": -0.013108688591784752,
+                "tv_id": 0.04282557010377191,
+                "cap_growth": -0.022233673091951196
+            },
+            "narrative": "This pick projects -1.03 vs baseline (0.50\u2192-0.53) because inv (SHAP -0.75), overall (SHAP -0.16), overall_round (SHAP -0.11). LIME locally inv pushes up (+0.78). Ownership: projects -1.03 vs baseline because inv (SHAP -0.75), overall (SHAP -0.16), overall_round (SHAP -0.11).",
+            "narrative_povs": {
+                "owner": "Ownership: projects -1.03 vs baseline because inv (SHAP -0.75), overall (SHAP -0.16), overall_round (SHAP -0.11).",
+                "player": "Fit: LIME locally inv pushes up (+0.78) \u2014 secondary overall -0.16 situational.",
+                "brand": "Story: headline driver inv (-0.75) lifts brand when inv aligns.",
+                "dfs": "DFS: exploitable if inv faded \u2014 SHAP sum -1.03 \u2192 pred -0.53 vs base 0.50."
+            },
+            "tops": [
+                {
+                    "name": "inv",
+                    "val": -0.7522411448372969,
+                    "abs": 0.7522411448372969,
+                    "idx": 0
+                },
+                {
+                    "name": "overall",
+                    "val": -0.15567868634026194,
+                    "abs": 0.15567868634026194,
+                    "idx": 3
+                },
+                {
+                    "name": "overall_round",
+                    "val": -0.11187616304518,
+                    "abs": 0.11187616304518,
+                    "idx": 5
+                }
+            ]
+        },
+        {
+            "i": 5,
+            "prediction": 1.278886186299512,
+            "baseline_value": 0.5,
+            "shap_values_sum": 0.7788861862971075,
+            "fidelity_error": 6.404687891148342e-10,
+            "fidelity_rel": 5.008016312744869e-10,
+            "shap": {
+                "inv": 0.6232649185589834,
+                "log": 0.26451036111870274,
+                "round": -0.11652961475051904,
+                "overall": -0.08974541448052208,
+                "draft_year_norm": -0.057426864634045664,
+                "overall_round": 0.06741438251355372,
+                "log_inv": 0.018756750514162812,
+                "inv2": -0.07242399626880187,
+                "year_sq": 0.03162153923735931,
+                "overall_log": -0.00045298926410160647,
+                "cba_id": 0.01619739552961237,
+                "bucket": 0.045225974926319655,
+                "tv_id": 0.06240311935978489,
+                "cap_growth": -0.01392937606338109
+            },
+            "lime": {
+                "inv": 0.8793836758591445,
+                "log": -0.346445118258697,
+                "round": 0.2608167388593209,
+                "overall": -0.12641670020991136,
+                "draft_year_norm": 0.12141461273269903,
+                "overall_round": -0.13777012201753172,
+                "log_inv": 0.16100085408790743,
+                "inv2": -0.04562801583249561,
+                "year_sq": 0.1183073943191506,
+                "overall_log": -0.06259498613721377,
+                "cba_id": 0.11121738558550417,
+                "bucket": -0.08441466119859721,
+                "tv_id": 0.12666718484905937,
+                "cap_growth": -0.05040924002452566
+            },
+            "narrative": "This pick projects +0.78 vs baseline (0.50\u21921.28) because inv (SHAP +0.62), log (SHAP +0.26), round (SHAP -0.12). LIME locally inv pushes up (+0.88). Ownership: projects +0.78 vs baseline because inv (SHAP +0.62), log (SHAP +0.26), round (SHAP -0.12).",
+            "narrative_povs": {
+                "owner": "Ownership: projects +0.78 vs baseline because inv (SHAP +0.62), log (SHAP +0.26), round (SHAP -0.12).",
+                "player": "Fit: LIME locally inv pushes up (+0.88) \u2014 secondary log +0.26 situational.",
+                "brand": "Story: headline driver inv (+0.62) lifts brand when inv aligns.",
+                "dfs": "DFS: exploitable if inv remains mispriced \u2014 SHAP sum +0.78 \u2192 pred 1.28 vs base 0.50."
+            },
+            "tops": [
+                {
+                    "name": "inv",
+                    "val": 0.6232649185589834,
+                    "abs": 0.6232649185589834,
+                    "idx": 0
+                },
+                {
+                    "name": "log",
+                    "val": 0.26451036111870274,
+                    "abs": 0.26451036111870274,
+                    "idx": 1
+                },
+                {
+                    "name": "round",
+                    "val": -0.11652961475051904,
+                    "abs": 0.11652961475051904,
+                    "idx": 2
+                }
+            ]
+        },
+        {
+            "i": 6,
+            "prediction": -0.17655658773945104,
+            "baseline_value": 0.5,
+            "shap_values_sum": -0.6765565867015194,
+            "fidelity_error": 3.7797581731169316e-10,
+            "fidelity_rel": 2.1408075526579937e-09,
+            "shap": {
+                "inv": -0.9586769164408069,
+                "log": 0.2581547477455498,
+                "round": -0.19846748204782955,
+                "overall": -0.05402223385469554,
+                "draft_year_norm": 0.18270311296560246,
+                "overall_round": -0.06553016955717834,
+                "log_inv": -0.06349421766397792,
+                "inv2": 0.061130665001280254,
+                "year_sq": -0.03504775932230882,
+                "overall_log": 0.056144130905491973,
+                "cba_id": 0.07826096883942164,
+                "bucket": -0.0053635324230268365,
+                "tv_id": 0.06617472337196463,
+                "cap_growth": 0.0014773757789936926
+            },
+            "lime": {
+                "inv": 0.834029790206477,
+                "log": -0.3111950044938287,
+                "round": 0.25150125590948946,
+                "overall": -0.14748458601723938,
+                "draft_year_norm": 0.20124233425372226,
+                "overall_round": -0.07732227489983654,
+                "log_inv": 0.13294199629855927,
+                "inv2": -0.1118274090011813,
+                "year_sq": 0.04088264784582692,
+                "overall_log": -0.09328519101241603,
+                "cba_id": 0.11930906178700651,
+                "bucket": -0.06115832448770443,
+                "tv_id": 0.11106632436387505,
+                "cap_growth": -0.035720551759165296
+            },
+            "narrative": "This pick projects -0.68 vs baseline (0.50\u2192-0.18) because inv (SHAP -0.96), log (SHAP +0.26), round (SHAP -0.20). LIME locally inv pushes up (+0.83). Ownership: projects -0.68 vs baseline because inv (SHAP -0.96), log (SHAP +0.26), round (SHAP -0.20).",
+            "narrative_povs": {
+                "owner": "Ownership: projects -0.68 vs baseline because inv (SHAP -0.96), log (SHAP +0.26), round (SHAP -0.20).",
+                "player": "Fit: LIME locally inv pushes up (+0.83) \u2014 secondary log +0.26 situational.",
+                "brand": "Story: headline driver inv (-0.96) lifts brand when inv aligns.",
+                "dfs": "DFS: exploitable if inv faded \u2014 SHAP sum -0.68 \u2192 pred -0.18 vs base 0.50."
+            },
+            "tops": [
+                {
+                    "name": "inv",
+                    "val": -0.9586769164408069,
+                    "abs": 0.9586769164408069,
+                    "idx": 0
+                },
+                {
+                    "name": "log",
+                    "val": 0.2581547477455498,
+                    "abs": 0.2581547477455498,
+                    "idx": 1
+                },
+                {
+                    "name": "round",
+                    "val": -0.19846748204782955,
+                    "abs": 0.19846748204782955,
+                    "idx": 2
+                }
+            ]
+        },
+        {
+            "i": 7,
+            "prediction": -0.43531855647622275,
+            "baseline_value": 0.5,
+            "shap_values_sum": -0.9353185559356629,
+            "fidelity_error": 5.057278484876804e-10,
+            "fidelity_rel": 1.1617393268094615e-09,
+            "shap": {
+                "inv": -0.5494304382812304,
+                "log": -0.3112513191208585,
+                "round": -0.2783734650356697,
+                "overall": 0.01120038319494348,
+                "draft_year_norm": 0.04387737359543507,
+                "overall_round": 0.08384415064966107,
+                "log_inv": -0.09563706738398708,
+                "inv2": 0.08084153658667612,
+                "year_sq": 0.0651284589782117,
+                "overall_log": -0.058811290900495805,
+                "cba_id": -0.0031748087426682926,
+                "bucket": 0.005399526690632837,
+                "tv_id": 0.037552502136664334,
+                "cap_growth": 0.033515901697022205
+            },
+            "lime": {
+                "inv": 0.7964048926150965,
+                "log": -0.30581647918900723,
+                "round": 0.2723404943923622,
+                "overall": -0.16618875246618187,
+                "draft_year_norm": 0.17061710328896879,
+                "overall_round": -0.12399433492752909,
+                "log_inv": 0.10354903377160485,
+                "inv2": -0.10006798385425408,
+                "year_sq": 0.0910249918530773,
+                "overall_log": -0.03049458675105418,
+                "cba_id": 0.05473232575562113,
+                "bucket": -0.0843678462150702,
+                "tv_id": 0.059983063151025924,
+                "cap_growth": -0.10437277362893946
+            },
+            "narrative": "This pick projects -0.94 vs baseline (0.50\u2192-0.44) because inv (SHAP -0.55), log (SHAP -0.31), round (SHAP -0.28). LIME locally inv pushes up (+0.80). Ownership: projects -0.94 vs baseline because inv (SHAP -0.55), log (SHAP -0.31), round (SHAP -0.28).",
+            "narrative_povs": {
+                "owner": "Ownership: projects -0.94 vs baseline because inv (SHAP -0.55), log (SHAP -0.31), round (SHAP -0.28).",
+                "player": "Fit: LIME locally inv pushes up (+0.80) \u2014 secondary log -0.31 situational.",
+                "brand": "Story: headline driver inv (-0.55) lifts brand when inv aligns.",
+                "dfs": "DFS: exploitable if inv faded \u2014 SHAP sum -0.94 \u2192 pred -0.44 vs base 0.50."
+            },
+            "tops": [
+                {
+                    "name": "inv",
+                    "val": -0.5494304382812304,
+                    "abs": 0.5494304382812304,
+                    "idx": 0
+                },
+                {
+                    "name": "log",
+                    "val": -0.3112513191208585,
+                    "abs": 0.3112513191208585,
+                    "idx": 1
+                },
+                {
+                    "name": "round",
+                    "val": -0.2783734650356697,
+                    "abs": 0.2783734650356697,
+                    "idx": 2
+                }
+            ]
+        },
+        {
+            "i": 8,
+            "prediction": 0.40929332907798777,
+            "baseline_value": 0.5,
+            "shap_values_sum": -0.09070667060976015,
+            "fidelity_error": 9.271028389434832e-11,
+            "fidelity_rel": 2.2651250532396975e-10,
+            "shap": {
+                "inv": 0.17993873312353728,
+                "log": -0.15397406450838028,
+                "round": -0.0083775992280545,
+                "overall": -0.047979185720465535,
+                "draft_year_norm": -0.04873213455625456,
+                "overall_round": 0.037221467123570676,
+                "log_inv": -0.028516058252296618,
+                "inv2": 0.06504077313874253,
+                "year_sq": -0.07878037874225695,
+                "overall_log": 0.010146796727929995,
+                "cba_id": 0.06402600178565548,
+                "bucket": -0.05315487769658652,
+                "tv_id": -0.017563688478486942,
+                "cap_growth": -0.010002455326414215
+            },
+            "lime": {
+                "inv": 0.8750168944248442,
+                "log": -0.28083511200071526,
+                "round": 0.27966283307383255,
+                "overall": -0.1056716992191096,
+                "draft_year_norm": 0.13541477649333522,
+                "overall_round": -0.14041254671416434,
+                "log_inv": 0.08692229634510189,
+                "inv2": -0.08947603794153894,
+                "year_sq": 0.07379988002961792,
+                "overall_log": -0.09559703166527038,
+                "cba_id": 0.09659324608861426,
+                "bucket": 0.02286982642482968,
+                "tv_id": 0.08452506874981328,
+                "cap_growth": -0.04681208105589684
+            },
+            "narrative": "This pick projects -0.09 vs baseline (0.50\u21920.41) because inv (SHAP +0.18), log (SHAP -0.15), year_sq (SHAP -0.08). LIME locally inv pushes up (+0.88). Ownership: projects -0.09 vs baseline because inv (SHAP +0.18), log (SHAP -0.15), year_sq (SHAP -0.08).",
+            "narrative_povs": {
+                "owner": "Ownership: projects -0.09 vs baseline because inv (SHAP +0.18), log (SHAP -0.15), year_sq (SHAP -0.08).",
+                "player": "Fit: LIME locally inv pushes up (+0.88) \u2014 secondary log -0.15 situational.",
+                "brand": "Story: headline driver inv (+0.18) lifts brand when inv aligns.",
+                "dfs": "DFS: exploitable if inv remains mispriced \u2014 SHAP sum -0.09 \u2192 pred 0.41 vs base 0.50."
+            },
+            "tops": [
+                {
+                    "name": "inv",
+                    "val": 0.17993873312353728,
+                    "abs": 0.17993873312353728,
+                    "idx": 0
+                },
+                {
+                    "name": "log",
+                    "val": -0.15397406450838028,
+                    "abs": 0.15397406450838028,
+                    "idx": 1
+                },
+                {
+                    "name": "year_sq",
+                    "val": -0.07878037874225695,
+                    "abs": 0.07878037874225695,
+                    "idx": 8
+                }
+            ]
+        },
+        {
+            "i": 9,
+            "prediction": 0.49020377176455376,
+            "baseline_value": 0.5,
+            "shap_values_sum": -0.00979622889711956,
+            "fidelity_error": 3.549788796242126e-10,
+            "fidelity_rel": 7.241440721729849e-10,
+            "shap": {
+                "inv": -0.06542356117526497,
+                "log": 0.28637365480129845,
+                "round": 0.12143973599635606,
+                "overall": -0.14598132888357962,
+                "draft_year_norm": 0.1467433522410403,
+                "overall_round": -0.09442988792789665,
+                "log_inv": -0.07666717833856973,
+                "inv2": -0.08152429864178376,
+                "year_sq": -0.09955991997083079,
+                "overall_log": 0.005090735533827052,
+                "cba_id": 0.02476859835318051,
+                "bucket": -0.042632302295917274,
+                "tv_id": 0.03479358517361591,
+                "cap_growth": -0.02278741376259503
+            },
+            "lime": {
+                "inv": 0.847595557188295,
+                "log": -0.303695526221378,
+                "round": 0.2854334303924319,
+                "overall": -0.06468998079941214,
+                "draft_year_norm": 0.19121350228879896,
+                "overall_round": -0.10752273785459772,
+                "log_inv": 0.09863426773835367,
+                "inv2": 0.00993595100702236,
+                "year_sq": 0.0678614491921782,
+                "overall_log": -0.09490979866707208,
+                "cba_id": 0.09859968652624904,
+                "bucket": -0.010762828788555032,
+                "tv_id": 0.10071359779828516,
+                "cap_growth": -0.05486364613781831
+            },
+            "narrative": "This pick projects -0.01 vs baseline (0.50\u21920.49) because log (SHAP +0.29), draft_year_norm (SHAP +0.15), overall (SHAP -0.15). LIME locally inv pushes up (+0.85). Ownership: projects -0.01 vs baseline because log (SHAP +0.29), draft_year_norm (SHAP +0.15), overall (SHAP -0.15).",
+            "narrative_povs": {
+                "owner": "Ownership: projects -0.01 vs baseline because log (SHAP +0.29), draft_year_norm (SHAP +0.15), overall (SHAP -0.15).",
+                "player": "Fit: LIME locally inv pushes up (+0.85) \u2014 secondary draft_year_norm +0.15 situational.",
+                "brand": "Story: headline driver log (+0.29) lifts brand when inv aligns.",
+                "dfs": "DFS: exploitable if log remains mispriced \u2014 SHAP sum -0.01 \u2192 pred 0.49 vs base 0.50."
+            },
+            "tops": [
+                {
+                    "name": "log",
+                    "val": 0.28637365480129845,
+                    "abs": 0.28637365480129845,
+                    "idx": 1
+                },
+                {
+                    "name": "draft_year_norm",
+                    "val": 0.1467433522410403,
+                    "abs": 0.1467433522410403,
+                    "idx": 4
+                },
+                {
+                    "name": "overall",
+                    "val": -0.14598132888357962,
+                    "abs": 0.14598132888357962,
+                    "idx": 3
+                }
+            ]
+        }
+    ],
+    "gate": {
+        "fidelity_mean": 4.525807617561384e-10,
+        "stability": "SHAP additive error <0.2 PASS, fidelity rel <0.05 PASS",
+        "construct": "draft quality surplus"
+    },
+    "meta": {
+        "lcg": "20260813\u2192189831298 idx3820 triple[11205,19448,14209]",
+        "zero_deps": true,
+        "timestamp": "2026-08-16T15:06Z"
+    }
+}

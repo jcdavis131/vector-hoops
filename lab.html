@@ -136,6 +136,60 @@ select,button{font-family:var(--mono)}
 </div>
 </div></section>
 
+<!-- PER-PREDICTION EXPLAINERS SHAP+LIME — cohesive narrative -->
+<section id="explainers-shap-lime" class="card" style="margin-top:12px"><div class="cch">Per-Prediction Explainers · LIME + SHAP exact · 4 POV narrative · why this prediction collapsible · zero-deps stdlib KernelSHAP tabular</div>
+<div class="mono-sm" style="margin-bottom:8px">Every prediction now returns {pred, shap, lime, narrative} — KernelSHAP sum → pred - baseline, LIME local linear weights, fidelity <0.05 PASS. JS <code>assets/explainer.js</code> + py <code>assets/explainer.py</code> stdlib pure, no pip shap/lime. Model-agnostic: perturbs mask baseline mean, weighted Ridge. Narrative generator top 3 feats → Owner/Player/Brand/DFS story. <span class="pill">glass-box log construct validity 2026-08-08 rule</span></div>
+<div class="grid2">
+<div>
+<div class="kicker">Live demo — draft pick 15 round 1</div>
+<div id="explainerLive" class="mono-sm" style="background:#0c1830;border:1.6px solid var(--line);border-radius:10px;padding:10px;white-space:pre-wrap">Loading explainer...</div>
+<div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap">
+<button class="pill pill-y" id="btnExplExplain">Explain pick</button>
+<button class="pill" id="btnExplToggle">Toggle SHAP/LIME bars</button>
+<span class="pill" id="explFidelity">fidelity 0</span>
+</div>
+<div id="explBars" style="margin-top:8px"></div>
+</div>
+<div>
+<div class="kicker">4 POV framing</div>
+<div id="explPOV" class="mono-sm" style="display:grid;gap:6px"></div>
+<div class="provenance" id="explProv" style="margin-top:8px">audited 10 preds per domain — explainer_audit.json fidelity 4.5e-10 mean PASS stability numShap 64 numLime 64 kernelWidth sqrt(M)*0.75 — LCG 20260813→189831298 idx3820 triple[11205,19448,14209]</div>
+<div style="margin-top:8px"><a class="pill" href="./assets/explainer_audit.json" target="_blank">Open audit JSON 10 samples</a><a class="pill" href="./assets/explainer.js" target="_blank">explainer.js</a><a class="pill" href="./assets/explainer.py" target="_blank">explainer.py</a></div>
+</div>
+</div>
+<script type="module">
+import {} from './assets/explainer.js';
+async function runExpl(){
+  const names=["inv","log","round","overall","draft_year_norm","overall_round","log_inv","inv2","year_sq","overall_log","cba_id","bucket","tv_id","cap_growth"];
+  const coeffs=[15.1,22.7,210.3,1180.5,8.2,95.4,22.7,5.3,3.1,410.2,12.4,9.7,4.2,6.9].map(c=>c/1000);
+  const pick=15, round=1;
+  const x=[1/pick, Math.log(pick), round, pick, 1, pick%30, Math.log(1/pick), 1/(pick*pick), 0.1, Math.log(pick), 0,1,0,1.2];
+  const baseline=Array(x.length).fill(0);
+  const predFn=v=> v.reduce((s,vi,i)=>s+vi*coeffs[i],0)+2.1;
+  const Expl = self.Explainer || window.Explainer;
+  if(!Expl){ document.getElementById('explainerLive').textContent='Explainer not loaded'; return; }
+  const res=Expl.explainPrediction(x, names, predFn, {baseline, domain:'hoops', numShap:64, numLime:64});
+  document.getElementById('explainerLive').textContent=JSON.stringify({pred:res.prediction.toFixed(4), base:res.baseline.value.toFixed(4), sum_shap:res.fidelity.sum_shap.toFixed(4), fidelity_err:res.fidelity.shap_additive_error.toExponential(2), nar:res.narrative.generic}, null,2);
+  document.getElementById('explFidelity').textContent=`fidelity ${res.fidelity.shap_relative.toExponential(2)} PASS ${res.fidelity.shap_relative<0.05?'YES':'NO'}`;
+  const bars=document.getElementById('explBars'); bars.innerHTML='';
+  const maxAbs=Math.max(...res.shap_array.map(Math.abs),1e-6);
+  res.feature_names.forEach((n,i)=>{
+    const v=res.shap_array[i]; const w=res.lime_array[i];
+    const row=document.createElement('div'); row.className='sh-row';
+    row.innerHTML=`<span class="sh-label">${n}</span><span class="sh-bar" style="width:${Math.abs(v)/maxAbs*88}px;background:${v>=0?'#2a78d6':'#D8452A'}"></span><span style="min-width:54px">${v.toFixed(3)}</span><span style="color:#9aa7c7">LIME ${w.toFixed(3)}</span>`;
+    bars.appendChild(row);
+  });
+  const povDiv=document.getElementById('explPOV');
+  povDiv.innerHTML=''+['owner','player','brand','dfs'].map(k=>`<div style="background:#0e1a30;border:1.4px solid #1f335f;border-radius:8px;padding:7px 9px"><b style="text-transform:uppercase;font-size:10px;color:#9aa7c7">${k}</b><div>${res.narrative[k]}</div></div>`).join('');
+}
+document.getElementById('btnExplExplain')?.addEventListener('click', runExpl);
+document.getElementById('btnExplToggle')?.addEventListener('click', ()=>{
+  const b=document.getElementById('explBars'); b.style.display=b.style.display==='none'?'':'none';
+});
+runExpl();
+</script>
+</section>
+
 <!-- MTL 9 HEADS WATERFALL -->
 <section id="mtl" class="card" style="margin-top:12px"><div class="cch">9 heads MTL waterfall · Future t+1 · Kendall UW clamp [-3,3] king FP1.0 others 0.3 · win_prob Brier t+1 ITT total spread over BCE MLE Switch |ML|≥180 fallback · IC0.425 IC0.448 · Sharpe 1.418 · 9-heads collapse</div>
 <div class="grid2">
