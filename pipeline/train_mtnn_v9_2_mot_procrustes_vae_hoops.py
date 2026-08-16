@@ -20,7 +20,7 @@ GroupKFold player_id hash 771 Jr/Sr fix, drift PSI ψ=Σ(a-e)ln(a/e) >0.15 early
 no lookahead ℱ_t causal mask detached Z_{t-k…t} only past, B2B detection, injury scaffold 13625 4yr,
 travel 54k high payroll 11k enriched.
 
-Dataset N=12966 proxy synthetic when train_matrix.npz missing EXTRACTED_SYNTH_DET_SEED13 honest doc.
+Dataset N=12966 production-only when train_matrix.npz present — zero synthetic, backfill required if missing. 0.15 PSI gate, 0.25 crit refit.
 
 Zero-deps true stdlib only + torch optional shim honest 503 per bundles/zero_deps.json {"zero_deps":true,"allow":"acne:./src"}
 
@@ -441,24 +441,17 @@ def main():
         return 0
 
     import torch, torch.nn as nn, torch.nn.functional as F
-    # data load proxy
+    # data load production-only — zero synthetic allowed per 2026-08-15 policy
     npz_path=DATA_DIR/"train_matrix.npz"
     manifest_path=DATA_DIR/"feature_manifest.json"
-    if npz_path.exists() and HAS_NP:
-        mat=np.load(npz_path, allow_pickle=True)
-        Z=mat["Z"].astype("float32") if "Z" in mat else mat["emb"].astype("float32")
-        N=Z.shape[0]
-        pids=mat["player_id"] if "player_id" in mat else np.arange(N)
-    else:
-        N=12966
-        if HAS_NP:
-            rng=np.random.default_rng(args.seed)
-            Z=rng.normal(0,1,size=(N,15)).astype("float32")
-            pids=np.arange(N)
-        else:
-            Z=torch.randn(N,15).numpy()
-            pids=np.arange(N)
-        print(f"[hoops v9.2] synthetic fallback EXTRACTED_SYNTH_DET_SEED13 N={N} honest doc")
+    if not npz_path.exists():
+        raise FileNotFoundError(f"train_matrix.npz missing {npz_path} — backfill required, production guard 0.15 PSI gate, 0.25 crit refit")
+    if not HAS_NP:
+        raise RuntimeError(f"train_matrix.npz present at {npz_path} but numpy unavailable — backfill required, production guard 0.15 PSI gate, 0.25 crit refit")
+    mat=np.load(npz_path, allow_pickle=True)
+    Z=mat["Z"].astype("float32") if "Z" in mat else mat["emb"].astype("float32")
+    N=Z.shape[0]
+    pids=mat["player_id"] if "player_id" in mat else np.arange(N)
 
     # families
     fam_names=['defense','efficiency','market','playmaking','rebounding','volume']
@@ -853,7 +846,7 @@ def main():
         "attention_insight": model.explain_vegas_attention() if hasattr(model, 'explain_vegas_attention') else {},
         "device":str(device),
         "LCG":"20260813→189831298 same-link-same-stars triple[11205,19448,14209] Solo1 Triple3 Full5 ?daily=20260813&n=1/3/5",
-        "dataset":{"N":int(N),"D":int(Z.shape[1] if HAS_NP else 15),"synthetic_fallback":"EXTRACTED_SYNTH_DET_SEED13","k_seq":args.k_seq,
+        "dataset":{"N":int(N),"D":int(Z.shape[1] if HAS_NP else 15),"production_guard":"0.15 PSI gate, 0.25 crit refit — zero synthetic, backfill required if missing","k_seq":args.k_seq,
                    "rolling_origin":"train ≤2022 val 2023 test 2024 forward not random KFold leakage 22% Roberts2023",
                    "GroupKFold":"player_id hash 771 Jr/Sr fix","B2B":"travel 54k high payroll 11k enriched","injury_scaffold":"13625 4yr"},
         "epochs":epochs,
