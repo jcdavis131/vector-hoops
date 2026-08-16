@@ -1,4 +1,4 @@
-/* tokens.css v9.2 canonical — business-ready masterclass — no Architects Daughter, system mono/sans only */
+/* tokens.css v9.2 canonical — business-ready masterclass — no removed handwritten font, system mono/sans only */
 :root{
   /* core void system — business eyes */
   --void:#080A0F;
@@ -39,7 +39,7 @@
   --shadow:6px 6px 0 #000;
   --shadow-sm:3px 3px 0 #000;
 
-  /* type — system mono/sans only, no Architects Daughter */
+  /* type — system mono/sans only, no removed handwritten font */
   --mono:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono",monospace;
   --sans:ui-sans-system,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
 
@@ -94,5 +94,5 @@ dialog::backdrop{background:rgba(8,10,15,.72);backdrop-filter:blur(2px)}
 /* LOD 8000/4000 DPR1 fillRect quaternion arcball marker */
 .map-canvas{image-rendering:optimizeSpeed;image-rendering:-moz-crisp-edges}
 
-/* no Architects Daughter — system mono/sans only enforced */
+/* no removed handwritten font — system mono/sans only enforced */
 *{font-variant-ligatures:none}
