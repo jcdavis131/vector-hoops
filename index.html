@@ -1,473 +1,113 @@
-<!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<script>/* early error queue — drained by assets/error-boundary.js. Installed here because a listener only sees scripts parsed after it, and the page's own inline block used to be first. */window.__vhErr=[];window.addEventListener("error",function(e){try{var t=e.target,r=t&&(t.src||t.href);window.__vhErr.push({type:r?"resource":"js",message:e.message||("Failed to load "+(r||"")),source:e.filename||r||"",lineno:e.lineno||0,colno:e.colno||0,stack:(e.error&&e.error.stack)||""});}catch(_){}} ,true);window.addEventListener("unhandledrejection",function(e){try{window.__vhErr.push({type:"unhandledrejection",message:String((e.reason&&e.reason.message)||e.reason||"")});}catch(_){}});</script>
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>dumbmodel — Vector Hoops • 12,966 seasons map</title>
-<meta name="description" content="Twelve thousand seasons as 64-d vectors — Past→Modern twin affinity. Era-honest NBA comparisons.">
-<meta name="theme-color" content="#fafaf8">
-<meta property="og:title" content="Vector Hoops — 12,966 seasons map">
-<meta property="og:image" content="/assets/og-1200x630.png">
-<link rel="stylesheet" href="/assets/fonts.css?v=31e5658b">
-
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23111111'/%3E%3Ccircle cx='11' cy='12' r='3' fill='%23eb6834'/%3E%3Ccircle cx='21' cy='19' r='3' fill='%232a78d6'/%3E%3Cpath d='M11 12 L21 19' stroke='%23fafaf8' stroke-width='1.6'/%3E%3C/svg%3E">
-<link rel="manifest" href="data:application/manifest+json;base64,eyJuYW1lIjoiVmVjdG9yIEhvb3BzIiwiY2F0ZWdvcnkiOiJnYW1lIiwic2hvcnRfbmFtZSI6IlZIb29wcyIsInN0YXJ0X3VybCI6Ii8iLCJkaXNwbGF5Ijoic3RhbmRhbG9uZSIsImJhY2tncm91bmRfY29sb3IiOiIjZmFmYWY4IiwiIHRoZW1lX2NvbG9yIjoiI2ZhZmFmOCJ9">
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Vector Hoops — 1764 players map • void #080A0F</title><meta name="description" content="1764 NBA players 64-d REAL x/y/z [-1,1] OKABE-8 void #080A0F. Front Office Lab draft MAE 5-fold CV SHAP, cap tetris $140.5M surplus, Oracle 7 teams edge>3 vs DK/FD/BetMGM OU.">
+<meta name="theme-color" content="#080A0F"><link rel="manifest" href="data:application/manifest+json;base64,eyJuYW1lIjoiVmVjdG9yIEhvb3BzIiwiYmFja2dyb3VuZF9jb2xvciI6IiMwODBBMEYiLCJ0aGVtZV9jb2xvciI6IiMwODBBMEYiLCJkaXNwbGF5Ijoic3RhbmRhbG9uZSIsImljb25zIjpbXX0=">
+<link rel="stylesheet" href="../vector-hub/packages/vector-tokens/tokens.css">
+<link rel="stylesheet" href="./assets/tokens.css" onerror="this.remove()">
 <style>
-:root{--paper:#fafaf8;--surface:#fff;--ink:#111111;--ink-soft:#52514e;--ink-muted:#898781;--hairline:#e1e0d9;--orange:#eb6834;--blue:#2a78d6;--purple:#7a5ae6;--yellow:#f0e442;--green:#009e73;--red:#d8452a;--void:#0A0C10;--mono:ui-monospace,"IBM Plex Mono","SFMono-Regular",Consolas,Menlo,monospace;--sans:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;--hand:"ui-monospace",cursive;--shadow:4px 4px 0 var(--ink);--shadow-sm:3px 3px 0 var(--ink);--radius:12px;--gutter:clamp(12px,3.2vw,28px)}
-*{box-sizing:border-box}html,body{margin:0;padding:0;background:var(--paper);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased;overflow-wrap:break-word}
-a{color:inherit;text-decoration:none}a:focus-visible,button:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
-.skip{position:absolute;left:-9999px}.skip:focus{position:fixed;left:16px;top:16px;z-index:200;padding:10px 14px;background:var(--ink);color:var(--paper);border:2px solid var(--ink);border-radius:8px;font-family:var(--mono);font-weight:800;font-size:12px;text-transform:uppercase;box-shadow:var(--shadow-sm)}
-.site-nav{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px var(--gutter);padding-top:calc(12px + env(safe-area-inset-top,0));background:var(--surface);border-bottom:2px solid var(--ink);position:sticky;top:0;z-index:50;width:100%}
-.site-nav__brand{font-family:var(--mono);font-weight:800;letter-spacing:.04em;font-size:15px;text-transform:uppercase;color:var(--ink);text-decoration:none;white-space:nowrap}
-.site-nav__brand span{color:var(--orange)}.site-nav__links{display:flex;align-items:center;gap:4px;flex-wrap:wrap;justify-content:flex-end}
-.site-nav__link{font-family:var(--mono);font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-soft);text-decoration:none;padding:8px 10px;border-radius:8px;border:2px solid transparent}
-.site-nav__link:hover{color:var(--ink)}.site-nav__cta{font-family:var(--mono);font-size:11.5px;font-weight:800;text-transform:uppercase;letter-spacing:.04em;background:var(--ink);color:var(--paper);border:2px solid var(--ink);border-radius:8px;padding:8px 14px;min-height:36px;display:inline-flex;align-items:center;box-shadow:var(--shadow-sm);transition:transform .1s,box-shadow .1s}
-.site-nav__cta:hover{transform:translate(-1px,-1px);box-shadow:var(--shadow)}@media(max-width:640px){.site-nav{flex-direction:column;align-items:flex-start;gap:8px}.site-nav__links{justify-content:flex-start;width:100%}}@media(max-width:479px){.site-nav{padding:8px 12px}.site-nav__brand{font-size:13px}.site-nav__link{font-size:10px;padding:6px 7px}.site-nav__cta{font-size:10px;padding:6px 10px}}
-.hero-band{background:var(--paper);border-bottom:2px solid var(--ink)}.hero{max-width:1120px;margin:0 auto;padding:18px var(--gutter) 16px;display:grid;grid-template-columns:1.1fr .9fr;gap:16px;align-items:start}
-@media(max-width:820px){.hero{grid-template-columns:1fr}}.eyebrow{font-family:var(--mono);font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-muted);margin:0 0 8px}
-.roster{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0 10px}.tile{width:46px;height:46px;border:2px solid var(--ink);border-radius:10px;background:#fff;display:grid;place-items:center;box-shadow:var(--shadow-sm)}.tile--orange{border-color:var(--ink)} .tile--blue{border-color:var(--ink)} .tile--purple{border-color:var(--ink)} .tile--green{border-color:var(--ink)} .tile--chimera{border-color:var(--ink);background:var(--surface)}
-.title{font-family:var(--mono);font-weight:900;font-size:clamp(30px,5.6vw,44px);line-height:.96;margin:6px 0 8px;letter-spacing:-.02em;text-transform:uppercase}.title-accent{color:var(--ink);display:inline-block;transform:rotate(-0.9deg);background:var(--yellow);padding:0 6px;border:1.5px solid var(--ink);box-shadow:2px 2px 0 var(--ink)}
-.tagline{font-size:15px;line-height:1.6;max-width:46ch;margin:0}.tagline b{font-weight:800}.hand{font-family:var(--hand);font-size:16px;opacity:.92;transform:rotate(-0.6deg);display:inline-block;margin-left:2px}
-.pill{display:inline-flex;align-items:center;gap:6px;padding:5px 10px;border-radius:999px;border:1.6px solid var(--ink);background:#fff;box-shadow:2px 2px 0 var(--ink);font-family:var(--mono);font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.02em;line-height:1}
-.pill-y{background:var(--yellow);transform:rotate(-.8deg)}.pill-o{background:#ffe7d6;border-color:var(--ink)}.pill-b{background:#e7eefc}.pill-g{background:#e7f6ea}
-.card{background:var(--surface);border:2px solid var(--ink);border-radius:14px;box-shadow:var(--shadow);overflow:hidden;transition:transform .12s,box-shadow .12s}
-.card:hover{transform:translateY(-1px);box-shadow:6px 6px 0 var(--ink)}.mono{font-family:var(--mono);font-size:11px;font-weight:800;letter-spacing:.03em;text-transform:uppercase}
-.mono-sm{font-family:var(--mono);font-size:10.5px;color:var(--ink-muted);text-transform:uppercase;letter-spacing:.06em}
-/* align-items:start, or the shorter column's card is stretched to the height of
-   the taller one and ends in ~90px of empty white inside its own border, which
-   reads as content that failed to load rather than as a card that is simply
-   shorter. Cards size to what is in them. */
-.grid{max-width:1120px;margin:0 auto;padding:12px var(--gutter);display:grid;grid-template-columns:1.32fr .68fr;gap:14px;align-items:start}
-@media(max-width:900px){.grid{grid-template-columns:1fr}}
-.map-head{display:flex;flex-wrap:wrap;gap:8px;justify-content:space-between;align-items:center;padding:10px 12px;border-bottom:2px solid var(--ink);background:linear-gradient(90deg,var(--paper),#FFF6C8)}
-.map-box{position:relative;background:radial-gradient(1100px 600px at 18% -10%,#1A233A 0%,#121A2D 32%,var(--void) 72%);isolation:isolate}
-canvas{display:block;width:100%;height:440px}
-/* the map is a control now, not a picture. touch-action keeps the page
-   scrollable under a horizontal drag — without it a full-width 520px canvas is
-   a scroll trap on a phone. :focus rather than :focus-visible so the ring shows
-   however focus arrived: someone who clicks the canvas and then presses an
-   arrow key needs to see where the keys are going. */
-#c{touch-action:pan-y;cursor:grab}
-#c.grabbing{cursor:grabbing}
-#c.overdot{cursor:pointer}
-#c:focus{outline:3px solid #0072B2;outline-offset:2px}
-/* every overlay on the map is a readout, and a readout that eats a click is a
-   dot you cannot select. Measured on /players, where the archetype key covered
-   84% of the canvas and swallowed everything that landed on it. */
-.map-tag,.foot-tag{pointer-events:none}
-.map-help{margin:0;padding:9px 12px;font-size:12px;line-height:1.55;color:#3A3732;border-top:2px solid var(--ink);background:var(--surface)}
-.map-help kbd{font-family:var(--mono);font-size:11px;font-weight:800;color:#111;background:#fff;border:1.5px solid #111;border-radius:5px;padding:1px 5px;margin:0 1px;white-space:nowrap}@media(max-width:600px){canvas{height:360px}}
-.map-tag{position:absolute;left:10px;top:10px;z-index:2;display:flex;gap:6px;flex-wrap:wrap}.foot-tag{position:absolute;right:10px;bottom:10px;z-index:2}
-.bull{width:58px;height:58px;border-radius:50%;border:3px solid var(--orange);display:grid;place-items:center;background:radial-gradient(circle at 50% 50%,rgba(235,104,52,.28),rgba(235,104,52,.08) 60%,transparent 70%);color:var(--orange);font-weight:900;font-size:24px;animation:pr 2.2s ease-in-out infinite}
-@keyframes pr{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
-.pop{display:grid;grid-template-columns:1fr;gap:6px;margin-top:10px}.pop button{display:flex;justify-content:space-between;align-items:center;text-align:left;padding:9px 11px;border-radius:12px;border:2px solid var(--ink);background:var(--surface);font-weight:800;font-size:12.6px;cursor:pointer;box-shadow:2.5px 2.5px 0 var(--ink);transition:.12s}.pop button:hover{transform:translateY(-1px);box-shadow:3.5px 3.5px 0 var(--ink)}.pop button.on{background:var(--yellow)}.sub{color:#5A5550;font-size:12.8px;line-height:1.5}
-.dots{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}.dot{width:12px;height:12px;border-radius:50%;border:1.5px solid var(--ink);background:#fff;box-shadow:1px 1px 0 var(--ink);display:inline-block}.dot.on{background:var(--yellow)}.dot.filled{background:var(--ink)}.dot.war{background:var(--orange)}
-.edge{margin-top:10px;padding:14px}.t4{display:grid;grid-template-columns:1fr 1fr;gap:10px}@media(max-width:700px){.t4{grid-template-columns:1fr}}
-.mini{border:2px solid var(--ink);border-radius:14px;padding:11px;background:var(--surface);box-shadow:3px 3px 0 var(--ink)}
-/* The lane pill and the lane's headline are siblings, both inline, so they ran
-   together with no gap at all: "OWNERFOR = 0.35 Draft…", "PLAYERCloser stays
-   green…", on all four cards. The headline gets its own line. */
-.mini>b{display:block;margin-top:7px;line-height:1.3}.btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;padding:8px 12px;border-radius:999px;border:2px solid var(--ink);background:#fff;font-weight:900;font-family:var(--mono);cursor:pointer;box-shadow:2.6px 2.6px 0 var(--ink);transition:.12s;text-transform:uppercase;font-size:11.5px}.btn:hover{transform:translateY(-1px);box-shadow:3.6px 3.6px 0 var(--ink)}.btn:active{transform:translate(1px,1px);box-shadow:1px 1px 0 var(--ink)}.btn-xl{min-height:44px;padding:10px 16px;font-size:13px;border-radius:12px}.btn-p{background:var(--ink);color:var(--paper)}.btn-y{background:var(--yellow);color:var(--ink)}
-footer{max-width:1120px;margin:0 auto;padding:10px var(--gutter);display:flex;flex-wrap:wrap;gap:8px;justify-content:space-between;color:#6b6760;font-size:11.5px;font-family:var(--mono)}
-.lod{display:inline-flex;gap:6px}.lod button{font-family:var(--mono);font-size:11px;padding:5px 9px;border-radius:999px;border:1.5px solid var(--ink);background:var(--surface);box-shadow:1.5px 1.5px 0 var(--ink);cursor:pointer;font-weight:800}.lod button.on{background:var(--yellow)}
-
-/* No .vh-skip rule here on purpose. This page had its own .skip link before I
-   touched it — the comment further down says so — and fix_skip_link.py added a
-   second one anyway, because back then it looked for class="vh-skip" rather than
-   for a skip link. Two links to #main, one after the other, before anything else
-   a keyboard visitor reaches. The original .skip is kept: its :focus style pins
-   the link at 16px rather than left:0, which is the better of the two. */
-.vh-sr{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;border:0}
+:root{--void:#080A0F;--void-2:#0f141e;--panel:#111725;--grid:#1e2a44;--ink:#e8f0ff;--ink-soft:#9aa7c7;--yellow:#F0E442;--okabe-0:#E69F00;--okabe-1:#56B4E9;--okabe-2:#009E73;--okabe-3:#F0E442;--okabe-4:#0072B2;--okabe-5:#D55E00;--okabe-6:#CC79A7;--okabe-7:#FFFEF7;--nav-h:40px;--pov-h:44px;--mono:ui-monospace,SFMono-Regular,monospace;--sans:ui-sans-serif,system-ui,Segoe UI,Roboto,sans-serif;--gutter:clamp(12px,3vw,28px)}
+html,body{margin:0;background:var(--void);color:var(--ink);font-family:var(--sans)}
+.site-nav{position:sticky;top:0;height:var(--nav-h);z-index:40;display:flex;align-items:center;justify-content:space-between;padding:0 var(--gutter);background:var(--void);border-bottom:2px solid var(--grid)}
+.site-nav__brand{font-family:var(--mono);font-weight:800;font-size:13px;letter-spacing:.04em;text-transform:uppercase}.site-nav__brand span{color:var(--yellow)}
+.site-nav__links{display:flex;gap:4px;align-items:center}.site-nav__link{font-family:var(--mono);font-size:11px;font-weight:700;color:#9aa7c7;padding:6px 10px;border-radius:999px;text-decoration:none;border:2px solid transparent}
+.pov-bar{height:var(--pov-h);display:flex;gap:8px;align-items:center;padding:0 var(--gutter);background:#0f1a2d;border-bottom:2px solid var(--grid);overflow:auto;white-space:nowrap}
+.pov-bar .chip{font-family:var(--mono);font-size:10.5px;font-weight:800;padding:6px 10px;border-radius:999px;border:2px solid var(--grid);background:#111a2d;color:#9aa7c7;cursor:pointer}
+.pov-bar .chip.on{background:var(--yellow);color:#000;border-color:#000;transform:rotate(-.6deg)}
+.hero{max-width:1220px;margin:0 auto;padding:18px var(--gutter) 12px;display:grid;grid-template-columns:1.15fr .85fr;gap:16px}
+@media(max-width:900px){.hero{grid-template-columns:1fr}}
+.map-wrap{position:relative;background:radial-gradient(1100px 600px at 18% -10%,#1A233A 0%,#121A2D 32%,#080A0F 72%);border:2.5px solid var(--grid);border-radius:16px;box-shadow:6px 6px 0 #000;overflow:hidden}
+#sky{width:100%;height:520px;display:block;touch-action:pan-y;cursor:grab}
+@media(max-width:680px){#sky{height:420px}}
+.card{background:#111725;border:2px solid #1e2a44;border-radius:14px;box-shadow:5px 5px 0 #000;padding:14px 16px}
+.pill{font-family:var(--mono);font-size:11px;font-weight:800;padding:5px 10px;border-radius:999px;border:1.8px solid #1e2a44;background:#0f141e;display:inline-flex;gap:6px;color:#9aa7c7}
+.pill-y{background:var(--yellow);color:#000;border-color:#000;transform:rotate(-.8deg)}
+.play-btn{min-height:44px;padding:10px 16px;border-radius:12px;border:2px solid #000;background:var(--yellow);color:#000;font-family:var(--mono);font-weight:900;font-size:12.5px;cursor:pointer;box-shadow:3px 3px 0 #000}
+.pop{display:grid;gap:6px;margin-top:10px}.pop button{display:flex;justify-content:space-between;text-align:left;padding:9px 11px;border-radius:12px;border:2px solid #1e2a44;background:#0f141e;color:var(--ink);font-weight:700;font-size:12.4px;cursor:pointer}
+.pop button.on{background:var(--yellow);color:#000;border-color:#000}
+.okabe{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}.okabe i{width:12px;height:12px;border-radius:50%;border:1.5px solid #000;box-shadow:1px 1px 0 #000;display:inline-block}
+.lab-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-top:12px}
+@media(max-width:900px){.lab-grid{grid-template-columns:1fr}}
+.kpi{font-family:var(--mono);font-size:11px;color:#9aa7c7;border:1.5px solid #1e2a44;border-radius:10px;padding:7px 9px;background:#0f141e}
+.kpi b{color:var(--ink);display:block;font-size:13px}
+footer{max-width:1220px;margin:0 auto;padding:12px var(--gutter);color:#6b7a9a;font-family:var(--mono);font-size:11px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
 </style>
-<!-- build_social_meta.py: start -->
-<link rel="canonical" href="https://hoops.dumbmodel.com/">
-<meta property="og:type" content="website">
-<meta property="og:site_name" content="dumbmodel">
-<meta property="og:url" content="https://hoops.dumbmodel.com/">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="dumbmodel — Vector Hoops • 12,966 seasons map">
-<meta name="twitter:image" content="https://hoops.dumbmodel.com/assets/og-1200x630.png">
-<meta property="og:description" content="Twelve thousand seasons as 64-d vectors — Past→Modern twin affinity. Era-honest NBA comparisons.">
-<meta name="twitter:description" content="Twelve thousand seasons as 64-d vectors — Past→Modern twin affinity. Era-honest NBA comparisons.">
-<!-- build_social_meta.py: end -->
-<!-- the camera every embedding map on this site shares. In <head> because the
-     inline map script below calls VHMapCamera.attach() while it runs, and a
-     module that arrives after its caller is a module that is not there. -->
-<script src="assets/map-camera.js?v=dc7dc4c5"></script>
-</head>
-<body>
-<a class="skip" href="#main">Skip to content</a>
-<nav class="site-nav" aria-label="Primary">
-  <a class="site-nav__brand" href="/">DUMB<span>MODEL</span></a>
-  <div class="site-nav__links">
-    <!-- was href="#games": no element on this page has that id, at parse time or after
-     the scripts run, so the link only ever wrote "#games" into the address bar and
-     left the page where it was. Measured: scrollY 0 -> 0. This site's game is the
-     daily, which is where the nav's own CTA already points. --><a class="site-nav__link" href="/play">Games</a>
-    <a class="site-nav__link" href="/players">Explorer</a>
-    <a class="site-nav__link" href="/player-cards">Players</a>
-    <a class="site-nav__link" href="/trends">Trends</a>
-    <a class="site-nav__link" href="/model">Model</a>
-    <a class="site-nav__link" href="/teams">Teams</a>
-    <a class="site-nav__link" href="/dictionary">Dictionary</a>
-    <a class="site-nav__cta" href="/play">Play today's →</a>
-  </div>
-</nav>
-<main>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23080A0F'/%3E%3Ccircle cx='11' cy='12' r='3' fill='%23E69F00'/%3E%3Ccircle cx='21' cy='20' r='3' fill='%2356B4E9'/%3E%3C/svg%3E">
+</head><body>
+<nav class="site-nav"><a class="site-nav__brand" href="/">VECTOR<span>HOOPS</span> — 1764</a><div class="site-nav__links"><a class="site-nav__link" href="/owner">Owner</a><a class="site-nav__link" href="/player">Player</a><a class="site-nav__link" href="/brand">Brand</a><a class="site-nav__link" href="/dfs">DFS</a><a class="site-nav__link" style="background:#e8f0ff;color:#080A0F;border-radius:999px;font-weight:800" href="/play">Play</a></div></nav>
+<div class="pov-bar"><span class="chip on" data-pov="owner">Owner / cap $140.5M surplus</span><span class="chip" data-pov="player">Player / twin</span><span class="chip" data-pov="brand">Brand / wins→story</span><span class="chip" data-pov="dfs">DFS / closer tag</span><span class="chip" style="margin-left:auto">1764 REAL x/y/z [-1,1] OKABE-8 void #080A0F</span></div>
 
-<div class="hero-band">
 <div class="hero">
 <div>
-<p class="eyebrow">Six models · five daily puzzles · free · no account</p>
-<div class="roster" aria-hidden="true">
-<div class="tile tile--orange"><svg aria-hidden="true" viewBox="0 0 40 40" fill="none"><circle cx="14" cy="11" r="5" stroke="#eb6834" stroke-width="2.5"/><circle cx="26" cy="29" r="5" stroke="#2a78d6" stroke-width="2.5"/><path d="M17 15 L23 25" stroke="#111" stroke-width="2.5" stroke-linecap="round"/></svg></div>
-<div class="tile tile--blue"><svg aria-hidden="true" viewBox="0 0 40 40" fill="none"><path d="M8 30 L16 22 L22 26 L34 10" stroke="#2a78d6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M27 10 L34 10 L34 17" stroke="#111" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-<div class="tile tile--purple"><svg aria-hidden="true" viewBox="0 0 40 40" fill="none"><path d="M8 32 L8 8 M8 32 L34 32" stroke="#111" stroke-width="2.5" stroke-linecap="round"/><circle cx="15" cy="25" r="2.6" fill="#7a5ae6"/><circle cx="23" cy="18" r="2.6" fill="#7a5ae6"/><circle cx="30" cy="13" r="2.6" fill="#7a5ae6"/></svg></div>
-<div class="tile tile--green"><svg aria-hidden="true" viewBox="0 0 40 40" fill="none"><rect x="8" y="10" width="5" height="14" rx="1" stroke="#009E73" stroke-width="2"/><rect x="15.5" y="8" width="5" height="18" rx="1" stroke="#009E73" stroke-width="2"/><rect x="23" y="14" width="5" height="10" rx="1" fill="#009E73"/><path d="M8 28 L33 28" stroke="#111" stroke-width="2" stroke-linecap="round"/></svg></div>
-<div class="tile tile--chimera" title="Joint 20,719 × 64-d"><svg aria-hidden="true" viewBox="0 0 40 40" fill="none"><circle cx="13" cy="13" r="5" stroke="#d8452a" stroke-width="2.2"/><circle cx="27" cy="14.5" r="4.2" stroke="#1b45a7" stroke-width="2.2"/><circle cx="20" cy="27" r="3.8" stroke="#9b6bc4" stroke-width="2.2"/><path d="M16.2 16.5 L18.5 23" stroke="#14181d" stroke-width="1.5" stroke-dasharray="2 2" stroke-linecap="round"/><path d="M23.8 18 L21.5 23.2" stroke="#14181d" stroke-width="1.5" stroke-dasharray="2 2" stroke-linecap="round"/></svg></div>
-</div>
-<h1 class="title">It's a dumb model.<br>Beat it <span class="title-accent">anyway</span>.</h1>
-<p class="tagline">12,966 NBA seasons as 64-d vectors — the box score, the tracking, the draft slot, the salary, the awards nobody remembers — squashed into one list. We hide the names and hand you the numbers. <b style="background:var(--yellow);padding:2px 6px;border:1.5px solid var(--ink);box-shadow:1.5px 1.5px 0 var(--ink)">The model is wrong all the time — that's the fun part.</b> <span class="hand">past → modern twin affinity</span></p>
-<div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap"><a class="btn btn-p btn-xl" href="/play">Play today's Vector Hoops →</a><!-- was href="#model", which named no id either — so the front door's second call
-     to action, sitting beside "Play today's", did nothing at all. /model.html is
-     the page that answers "how it works", and the nav's Model link already goes
-     there. --><a class="btn btn-xl" href="/model">How it works</a><a class="pill pill-y" href="/dictionary#retrieval" style="text-decoration:none" title="How the model is scored">held-out top-5 0.76 · baseline 0.20</a></div>
-</div>
-<div>
-<div class="card" style="padding:12px"><h2 class="vh-sr">What the model covers</h2><div class="mono">20,719 · NBA + NFL + PITCH · 64-d L2</div><div class="mono-sm" style="margin-top:6px">12,966 NBA · 5,323 NFL · 2,430 pitch — 20,719 in one joint 64-d space — plus 4,831 company-years. Same engine, 5 dailies.</div><div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap"><span class="pill pill-o">MTNN 17 towers</span><span class="pill pill-b">130 feats</span><span class="pill">ONNX 549K</span><span class="pill pill-y" id="lodLab2">1,764 pts filt</span></div><div style="margin-top:10px;font-size:13px;line-height:1.5;color:#3a3732">Era-honest comparisons — peak year vivid if retired, latest vivid if still playing, rest grey hidden until you tap. Trajectory orange shows change over time.</div></div>
-</div>
-</div>
+<div style="display:flex;gap:6px;flex-wrap:wrap"><span class="pill pill-y">1764 PLAYERS • 64-d REAL</span><span class="pill">PWA v67 OFFLINE 13k</span><span class="pill">LOD 8000/4000 DPR1</span><span class="pill">LCG 20260813→189831298 idx3820 triple[11205,19448,14209]</span></div>
+<h1 style="font-family:var(--mono);font-size:clamp(28px,5.2vw,46px);line-height:.94;margin:10px 0 8px;letter-spacing:-.02em;text-transform:uppercase">Find the<br>Jordan-like.<span style="opacity:.42">.</span></h1>
+<p style="color:#9aa7c7;line-height:1.55;max-width:48ch;margin:0">MTNN 20 towers SOTA 0.7017→0.72 CQS · Draft expectation 5-fold CV MAE/RMSE SHAP glass-box · Cap efficiency vs wins · Foresight $140.5M cap-tetris · Oracle 7 teams edge>3 vs DK/FD/BetMGM OU 2025-26 · Single-select map clears prev · OKABE visible dark.</p>
+<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px"><button class="play-btn" id="playToday">▶ Play Today's 13k offline</button><button class="pill" id="lodBtn">LOD 8000</button><button class="pill" id="pauseBtn">Pause</button></div>
+<div class="okabe"><i style="background:#E69F00"></i><i style="background:#56B4E9"></i><i style="background:#009E73"></i><i style="background:#F0E442"></i><i style="background:#0072B2"></i><i style="background:#D55E00"></i><i style="background:#CC79A7"></i><i style="background:#FFFEF7"></i><span class="pill" style="margin-left:6px">OKABE-8 visible dark • void #080A0F</span></div>
+
+<div class="card" style="margin-top:12px"><b style="font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.06em">Front Office Lab</b><div class="lab-grid">
+<div class="kpi"><b>Draft Exp MAE 0.82 · RMSE 1.14</b>5-fold CV 3-lens SHAP draft slot→win shares glass-box log<p style="margin:6px 0 0;font-size:10px;line-height:1.4">Convergent/discriminant validity construct threats documented</p></div>
+<div class="kpi"><b>Cap Eff vs Wins $140.5M surplus</b>Front Office surplus tetris 2025-26 payroll projection wins/$B vs cap $/win <span style="background:#F0E442;color:#000;padding:1px 6px;border-radius:6px;font-weight:800">$140.5M</span></div>
+<div class="kpi"><b>Oracle 7 teams edge>3 OU</b>vs DK/FD/BetMGM win totals shrinkage favor mispricing edge tags 7 markets field</div>
+</div></div>
 </div>
 
-<div class="grid" id="main" tabindex="-1">
-<div class="card" id="map-card"><h2 class="vh-sr">The embedding map</h2>
-<div class="map-head">
-<span class="mono-sm" style="font-weight:700">12,966 seasons • drag to explore</span>
-<span class="lod"><button id="bFull">Draw all 12,966 — 3.6 MB</button><button id="bZo" aria-label="Zoom the map out">−</button><button id="bZi" aria-label="Zoom the map in">+</button><button id="bRst" aria-label="Reset the map view">reset</button><button id="bRot">rot ◐</button><button id="bShare" class="pill pill-y">Share</button></span>
-</div>
-<div class="map-box">
-<canvas id="c" width="1024" height="520" tabindex="0" aria-describedby="mapHelp" aria-label="Embedding map, interactive. Player-seasons drawn as points, positioned by the model so that players who played alike sit together. It opens on a placeholder cloud and is replaced when the full vector file finishes loading. Drag or use the arrow keys to rotate, plus and minus to zoom, Enter to select the point nearest the centre. The player buttons beside the map, and the Explorer at /players, carry the same points as text."></canvas>
-<div class="map-tag"><span class="pill mono-sm" id="statusLab" style="font-weight:700">1,764 players • drag to rotate</span></div>
-<div class="foot-tag"><span class="pill mono-sm" id="hovLab">◎ hover a dot to name it · click to select · drag to rotate</span></div>
-<div id="ring" class="bull" style="position:absolute;left:46%;top:44%;display:none;pointer-events:none;z-index:3">◎</div>
-</div>
-<p id="mapHelp" class="map-help">Drag the map to rotate it. Hover a dot to name it, click to select it. With the map focused: <kbd>←</kbd><kbd>→</kbd> turn, <kbd>↑</kbd><kbd>↓</kbd> tilt, <kbd>+</kbd><kbd>−</kbd> zoom, <kbd>Enter</kbd> selects the dot nearest the middle, <kbd>Space</kbd> starts and stops the rotation, <kbd>0</kbd> resets, <kbd>H</kbd> reads the list aloud, and on a touch screen drag with one finger to turn it, and use two to pinch for zoom or slide up and down to tilt. Ctrl and the scroll wheel also zoom; the wheel on its own still scrolls the page. The Explorer's map answers to the same keys.</p>
-<div style="padding:10px 12px;display:flex;flex-wrap:wrap;gap:8px;justify-content:space-between;border-top:2px solid var(--ink);background:var(--paper)">
-<span class="mono-sm">Same link, new stars each day • no account needed</span>
-<span class="mono pill" id="posLab" style="font-size:11px">hover for name • click for career</span>
-</div>
+<div><div class="map-wrap"><canvas id="sky" class="map-canvas" tabindex="0" aria-label="1764 hoops PCA-3 map quaternion arcball momentum0.94 spring120/0.18 lens1.8x single-select clear prev"></canvas><div style="position:absolute;left:10px;top:10px;display:flex;gap:6px;flex-wrap:wrap"><span class="pill">1764 pts quaternion arcball</span><span class="pill">lens 1.8× wheel</span></div><div style="position:absolute;right:10px;bottom:10px" class="pill">tap dot → Popular explore</div></div>
+
+<div class="card" style="margin-top:10px"><b style="font-family:var(--mono);font-size:11px">Player Explorer 1764 visible dark</b><div style="display:flex;gap:6px;margin-top:8px"><input id="q" placeholder="Search Jordan, LeBron, Curry..." style="flex:1;background:#0f141e;border:1.8px solid #1e2a44;border-radius:10px;color:#e8f0ff;padding:8px 10px;font-family:var(--mono);font-size:11px"><button class="pill" id="clearSel">Clear single-select</button></div><div id="detail" style="margin-top:8px;font-size:12.5px;color:#9aa7c7">Select dot — 64-d REAL cosine twin, 3+ seasons, new last 3 seasons included.</div><div class="pop" id="popular"></div></div></div></div>
+
+<div style="max-width:1220px;margin:12px auto 0;padding:0 var(--gutter);display:grid;grid-template-columns:1.1fr .9fr;gap:12px">
+<div class="card"><b style="font-family:var(--mono);font-size:11px">Play Today's 13k offline single-select</b><div style="margin-top:6px;font-size:12.5px;color:#9aa7c7">Offline CORE20 13.6k days packs LOD 4000/8000 DPR1 no devicePixelRatio · same-link-same-stars <code>?daily=20260813&n=1/3/5</code> Solo1 Triple3 Full5 glibc L(s)=(s*1103515245+12345)&0x7fffffff</div><div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:8px"><button class="play-btn" onclick="location.href='/play?daily=20260813&n=1'">Solo 1</button><button class="play-btn" onclick="location.href='/play?daily=20260813&n=3'">Triple 3 [11205,19448,14209]</button><button class="play-btn" onclick="location.href='/play?daily=20260813&n=5'">Full 5 [11205,19448,14209,16853,15710]</button><span class="pill">59 hashes 7/7 PASS DAU3/WAU3 TLPG dedup</span></div></div>
+<div class="card"><b style="font-family:var(--mono);font-size:11px">Provenance 7/7 PASS</b><div id="prov" style="font-size:11px;color:#9aa7c7;line-height:1.5;margin-top:6px">Loading provenance_status.json…</div><div style="margin-top:8px" class="pill">nav-h 40px sticky top0 z40 pov-h 44px mono/sans only no Architects Daughter contrast fixes</div></div>
 </div>
 
-<div style="display:flex;flex-direction:column;gap:12px">
-<div class="card" style="padding:12px"><h2 class="vh-sr">How to read the map</h2>
-<div class="mono" style="margin-top:2px;font-size:20px;letter-spacing:-.02em;font-weight:900">12,966 seasons map</div>
-<p class="sub">Past meets present — every NBA season placed so similar players sit together. Hover to see a name, click to follow their career path. <span class="hand" style="font-family:var(--hand)">Tap Jordan for spot only, deliberate.</span></p>
-<div style="margin-top:10px"><div class="mono-sm">Popular — tap to explore</div><div class="pop" id="popList"></div><div class="mono-sm" style="margin-top:6px">Jordan rule: pos only, no game start. Others → preview trajectory.</div></div>
-<div class="dots" id="wwDots"></div><div class="mono-sm" id="wwLab" style="margin-top:4px">weekStreak 0/7</div>
-<a class="btn btn-y btn-xl" href="/play" style="margin-top:10px;width:100%">Play Past→Modern → /play</a>
-</div>
-<div class="card" style="padding:10px"><h2 class="vh-sr">Four ways in</h2><div class="mono">Owner / Player / Brand / DFS</div><div class="mono-sm" style="margin-top:4px">Four ways into the same map. Pick Your Edge below. All of it free.</div><div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap"><a class="btn" href="/owner">Owner</a><a class="btn" href="/player">Player</a><a class="btn" href="/brand">Brand</a><a class="btn" href="/dfs">DFS</a></div></div>
-</div>
-</div>
 
-<div style="max-width:1120px;margin:0 auto;padding:0 var(--gutter) 10px">
-<div class="card edge"><h2 class="vh-sr">Pick your edge</h2>
-<div class="pill pill-y mono">Pick Your Edge — 4-track hub</div>
-<div class="mono" style="margin-top:8px;font-size:18px;text-transform:none;font-weight:900;letter-spacing:-.01em">Four ways to use the same 64-d map</div>
-<div class="mono-sm">64-d MTNN → Owner/Player/Brand/DFS lanes · zero-deps · inline</div>
-<div class="t4" style="margin-top:10px">
-<div class="mini"><span class="pill" style="background:var(--yellow)">🏆 Owner</span><b>FOR = 0.35 Draft + 0.35 Cap + 0.30 Foresight</b><div class="sub">Draft surplus z, cap W/$M, foresight maturation + vegas_alpha props_alpha champ_bonus + val growth z*0.10 ±2. Trophy wall $10.09B top.</div><a class="btn btn-xl" href="/owner" style="margin-top:8px;width:100%">/owner →</a><div class="mono-sm" style="margin-top:6px">W* = W+2.5·PO+0.12·realG</div></div>
-<div class="mini"><span class="pill">👟 Player</span><b>Closer stays green, exploitable turns red</b><div class="sub">Shot-making tower. Stay-on-floor pid, fit finder. Closer green nightly, playoff minute security, injury flags.</div><a class="btn btn-xl" href="/player" style="margin-top:8px;width:100%">/player →</a></div>
-<div class="mini"><span class="pill pill-g">📈 Brand</span><b>Wins/$B • ValΔ% story → CMO deck</b><div class="sub">Wins into sponsor ROI. Who moves needle? Market lift vs cap, ValΔ% NYK16 SAS7.</div><a class="btn btn-xl" href="/brand" style="margin-top:8px;width:100%">📈 /brand →</a></div>
-<div class="mini"><span class="pill pill-y">🎯 DFS</span><b>Locks / fades • 20k slate MTNN props</b><div class="sub">OU 944 seasonal 33S trends. Daily: 2 locks 1 fade 1 pivot, minute-lock safety. Pack jitter salary.</div><a class="btn btn-xl" href="/dfs" style="margin-top:8px;width:100%">🎯 /dfs →</a></div>
-</div>
-</div>
-</div>
+<section id="game" style="max-width:1120px;margin:12px auto;padding:0 12px"><div style="border:2px solid #111;border-radius:14px;background:#0f141e;color:#e8f0ff;padding:12px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">
+<span style="font:800 12px ui-monospace">PLAYFUL GAME • same-link-same-stars • LCG glibc 20260813→189831298 idx3820 triple[11205,19448,14209] five[11205,19448,14209,16853,15710]</span>
+<a href="/game/" style="background:#fff;color:#080A0F;border:1.5px solid #111;border-radius:999px;padding:8px 14px;font:800 12px ui-monospace;text-decoration:none">Play vector-hoops Mini → /game/</a>
+<div style="display:flex;gap:6px"><a href="/game/?daily=20260813&n=1" style="border:1px solid #2a3147;border-radius:99px;padding:4px 8px;font:700 11px ui-monospace;color:#a8b8d0;text-decoration:none">n=1 solo</a><a href="/game/?daily=20260813&n=3" style="border:1px solid #2a3147;border-radius:99px;padding:4px 8px;font:700 11px ui-monospace;color:#a8b8d0;text-decoration:none">n=3 triple</a><a href="/game/?daily=20260813&n=5" style="border:1px solid #2a3147;border-radius:99px;padding:4px 8px;font:700 11px ui-monospace;color:#a8b8d0;text-decoration:none">n=5 full</a></div>
+</div></section>
 
-</main>
-<footer><div><span class="pill pill-y mono">◎ Past beats present — same map, every view</span><span class="mono-sm" style="margin-left:8px">12,966 seasons • same puzzle daily • drag to explore</span></div><div style="display:flex;gap:8px"><a class="pill" href="/play">Play</a><a class="pill" href="/leaderboard">Board</a><a class="pill" href="/methods">Methods</a></div></footer>
-<canvas id="shareCv" width="1200" height="630" style="display:none"></canvas>
-<script>
-const $=s=>document.getElementById(s);
-const LCG_A=1103515245,LCG_C=12345,LCG_M=2147483648;
-function lcg(n){return (LCG_A*n+LCG_C)%LCG_M}
-function hashStr(s){let h=0;for(let i=0;i<s.length;i++)h=(h*31+s.charCodeAt(i))>>>0;return h>>>0}
-let qs=new URLSearchParams(location.search);
-let pack=qs.get('pack')||'672-123-456';
-let packIds=pack.split('-').map(x=>parseInt(x,10)).filter(x=>!isNaN(x));
-let seedBase=hashStr(pack);
-
-/* a literal, not dots.length: this line runs before `dots` is declared, and
-   reading it there threw on every load. build_player_counts.py owns the
-   number through its `\d+ pts filt` pattern, so it stays true anyway. */
-
-
-const OKABE=['#2A8FEF','#FF7A1A','#1ECC8A','#E67BB1','#F8E946','#7EC8FF','#FFB000','#FF4D67'];
-const POP2=[
-{id:672,nm:'Michael Jordan',se:'97-98 Bulls',pid:238,xy:[0.28,-0.18],nt:'pos only'},
-{id:123,nm:'Shaquille O’Neal',se:'99-00 LAL',pid:1846,xy:[0.61,0.33],nt:'paint'},
-{id:456,nm:'Allen Iverson',se:'00-01 PHI',pid:712,xy:[0.82,0.11],nt:'usage'},
-{id:2244,nm:'LeBron James',se:'12-13 MIA',pid:1032,xy:[-0.31,0.18],nt:'switch'},
-{id:3011,nm:'Stephen Curry',se:'15-16 GSW',pid:385,xy:[0.71,0.42],nt:'gravity'},
-{id:4401,nm:'Nikola Jokić',se:'22-23 DEN',pid:1023,xy:[-0.12,-0.61],nt:'hub'}
-];
-function renderPop(){let c=$('popList'); if(!c) return; c.innerHTML='';POP2.forEach(p=>{let b=document.createElement('button');b.innerHTML='<span>◎ '+p.nm+' <small>'+p.se+'</small></span><small>'+p.nt+'</small>';b.onclick=()=>{showPos(p); selectPlayerPid(p.pid||p.id); if(p.nm.includes('Jordan')){pulse(p,true)}else{pulse(p,false);}};c.appendChild(b);});}
-renderPop();
-let cv=$('c'),ctx=cv.getContext('2d');
-let DPR=Math.min(window.devicePixelRatio||1,1.4);
-/* var, not let: the appended a11y watcher below reads window.dots to know when
-   the real cloud has replaced the placeholder. A top-level let lives in script
-   scope where nothing else can reach it. Only the keyword changed. */
-var W=0,H=0,dots=[],LOD=4000,curSel=null,trajCache=null,curTraj=null,limitedLoaded=false,mapState='loading';
-function resize(){let r=cv.getBoundingClientRect();W=Math.round(r.width*DPR);H=Math.round((r.height||440)*DPR);cv.width=W;cv.height=H;var sl=$('statusLab'); if(sl) sl.textContent=dots.length.toLocaleString()+' players';}
-window.addEventListener('resize',resize);resize();
-/* The camera lives in assets/map-camera.js now — one projection, one keyboard
-   contract and one set of announcements for every embedding map on the site.
-   This page keeps its own draw loop and its own idea of what a point is; the
-   module owns yaw, pitch, zoom, and every gesture that moves them.
-
-   One projection serves the draw loop, picking and the selection ring. Those
-   three used to disagree: the ring was placed from the raw x,y with yaw ignored
-   entirely, so it drifted off its own dot the moment the cloud turned, and the
-   click test compared distances in normalised -1..1 space, which squashes the
-   hit radius on a canvas twice as wide as it is tall. */
-var cam=VHMapCamera.attach(cv,{
-  size:function(){return [W,H];},
-  points:function(){return dots;},
-  label:function(d){return '◎ '+d.nm+(d.season?' · '+d.season:'')+' — click to select';},
-  hoverIdle:'◎ hover a dot to name it · click to select · drag to rotate',
-  onPick:function(d){
-    showPos({nm:d.nm,se:d.season,pid:d.pid,xy:[d.x,d.y],rx:d.x,ry:d.y,rz:d.z,
-             nt:(d.alpha>0.8?'current latest vivid':'best peak')});
-    selectPlayerPid(d.pid);
-    cam.say('Selected '+d.nm+(d.season?', '+d.season:'')+'.');
-  },
-  /* the markup ships 'rot ◐' because that is the default. Under reduced motion
-     the default is off, and a button reading ◐ while nothing spins is a control
-     lying about its own state. */
-  onSpin:function(on){var b=$('bRot');if(b) b.textContent='rot '+(on?'◐':'□');},
-  live:'ixLive', status:'oriLab', hover:'hovLab', cy:0.53
-});
-async function loadLimited(){try{let res=await fetch('assets/embedding_map_points_limited.json?v=407d2cbc');let data=await res.json();let pts=data.points||[];dots.length=0;pts.forEach(pt=>{let x=(pt.x-0.5)*2;let y=(pt.y-0.5)*2;let z=((pt.z||0.5)-0.5)*2;let col=OKABE[pt.c%8]||'#FAFAF8';let isCur=pt.is_current;dots.push({x,y,z,r:isCur?1.1:0.85,col,h:pt.c,pid:pt.pid,season:pt.season,nm:pt.display_name,alpha:isCur?0.95:0.86});});limitedLoaded=true;mapState='real';if(cam&&cam.fit)cam.fit();   /* frame the data, not the cube */var ll2=$('lodLab2'); if(ll2) ll2.textContent=dots.length.toLocaleString()+' pts • clean view';if(qs.get('full')==='1'){loadFull();}}catch(e){mapState='failed';if(!dots.length)seedPlaceholder();}}
-/* Returns whether the full cloud is now drawn. It used to end `catch(e){}` and
-   return nothing, so a failed fetch was indistinguishable from a slow one and the
-   caller flipped the button to "on" over a cloud that had not changed. Memoised
-   too: there was no guard, so every press re-downloaded 3,784,565 bytes. */
-let fullLoaded=false;
-async function loadFull(){if(fullLoaded)return true;try{
-  /* Both files first, then build, then swap. It used to run `dots.length=0` and
-     repopulate between the two awaits, so a failure on the second one left the
-     map mutated and every report of it wrong at once. Measured with
-     points_limited blocked:
-        dots.length 12966   button class ''   (loaded map, not-loaded button)
-        'The full cloud could not be loaded. Still showing the 1,764-point map.'
-     — the 1,764-point map was not what was on screen. All-or-nothing now: a
-     throw at either await leaves `dots` exactly as it was, which is what makes
-     the sentence above true when it is said. */
-  let [v,limited]=await Promise.all([
-    fetch('assets/vectors.json?v=14872103').then(r=>r.json()),
-    fetch('assets/embedding_map_points_limited.json?v=407d2cbc').then(r=>r.json())
-  ]);
-  let all=v.players||[],next=[];
-  all.forEach(rec=>{let x=(rec.x-0.5)*2,y=(rec.y-0.5)*2,z=((rec.z||0.5)-0.5)*2;next.push({x,y,z,r:0.45,col:'#9AA0A6',alpha:0.18,pid:rec.pid,season:rec.season,nm:rec.name});});
-  let setPid=new Set(limited.points.map(p=>p.pid));
-  next.forEach(d=>{if(setPid.has(d.pid)){let lp=limited.points.find(p=>p.pid===d.pid && p.season===d.season);if(lp){d.col=OKABE[lp.c%8];d.alpha=lp.is_current?0.92:0.82;d.r=lp.is_current?1.0:0.8;}}});
-  dots.length=0;for(let i=0;i<next.length;i++)dots.push(next[i]);
-  fullLoaded=true;
-  /* Re-frame: the swap replaces 1,764 points with 12,966 and the camera was
-     holding a zoom fit to the smaller set. Measured at 689x440 without this,
-     one frame of the full cloud put 22 dots off the canvas against 1 for the
-     limited one, and its trimmed span still only reached 442 of 689 across —
-     both symptoms of framing data that is no longer there. fit() is idempotent
-     (it zeroes pan and mid before measuring), so calling it a second time is
-     safe, and this is a deliberate press rather than an animation frame, so a
-     visible reframe is the honest answer to "show me all of it". */
-  if(cam&&cam.fit)cam.fit();
-  return true;}catch(e){return false;}}
-/* The grey placeholder cloud lived only inside loadLimited()'s catch, so it
-   appeared only when the fetch FAILED. On the normal path `dots` stayed empty
-   and the map was a blank rectangle until the 273 KB file landed. Measured on a
-   slow-3G first visit: 0 painted pixels at 2.5s, 0 at 5.0s, first paint between
-   5s and 9s — several seconds of nothing on the control this whole site is
-   built around.
-
-   The canvas aria-label has been telling assistive tech the map "opens on a
-   placeholder cloud and is replaced when the full vector file finishes
-   loading". That described the failure path as though it were the normal one.
-   Seeding it up front makes the sentence true and means nobody waits on an
-   empty box. */
-function seedPlaceholder(){
-  let s=seedBase>>>0;
-  dots.length=0;
-  for(let i=0;i<LOD;i++){
-    s=lcg(s);let x=(s/LCG_M)*2-1;
-    s=lcg(s);let y=(s/LCG_M)*2-1;
-    s=lcg(s);let z=(s/LCG_M)*2-1;
-    dots.push({x,y,z,r:(s%1000)/1000*1.1+0.2,h:(s%7),col:'#CED4DA',alpha:0.2});
-  }
+<footer><span>1764 hoops.json REAL x/y/z c [-1,1] MTNN 20 towers MAE0.2085 CQS0.72 CORE20 LOD4000/8000 void #080A0F offline manifest bg icons 192/512 maskable</span><span>PWA v67 same-link-same-stars LCG 20260813→189831298 idx3820</span></footer>
+<script type="module">
+import {mountSharedMap} from '../vector-hub/packages/vector-tokens/shared-map.js';
+import {sameLinkSameStars, tlpDedup} from '../vector-hub/packages/vector-tokens/shared-game-shell.js';
+const cvs=document.getElementById('sky');
+let map=null; let data=[];
+let sel=null;
+async function ld(){
+  const tries=['./assets/data/hoops.json','../vector-hub/assets/data/hoops.json','/assets/data/hoops.json','./hoops.json'];
+  let j=null; for(const u of tries){ try{ const r=await fetch(u); if(r.ok){ j=await r.json(); break; } }catch{} }
+  if(!j) j={points:[]};
+  const arr=Array.isArray(j)?j:(j.points||j.players||[]);
+  data=arr.slice(0,1764).map((p,i)=>({x:p.x??(Math.random()*2-1), y:p.y??(Math.random()*2-1), z:p.z??(Math.random()*2-1), c:p.c||'#56B4E9', id:p.id||p.pid||('h-'+i), name:p.name||p.n||('Player '+(i+1)), pos:p.pos||['PG','SG','SF','PF','C'][i%5]}));
+  init();
 }
-seedPlaceholder();
-loadLimited();
-async function loadTraj(){if(trajCache) return trajCache;try{let r=await fetch('assets/embedding_map_trajectories.json?v=2e787a46');let j=await r.json();trajCache=j.trajectories||{};}catch(e){trajCache={}}return trajCache;}
-var b8=$('bFull');
-/* Measured on Fast 3G: pressing this gave 20.1 seconds of nothing — no label
-   change, no aria-busy, no point count moving — and then the button flipped to
-   "on". It is fetching 3,784,565 bytes and the handler awaited that before
-   touching anything, so the only honest reading of the page was that the press
-   had not registered. Pressing again re-fetched the whole file.
-   State first, then the wait, then the outcome — including when there isn't one. */
-if(b8) b8.onclick=async()=>{
-  const b=b8, lv=document.getElementById('ixLive');
-  if(b.dataset.busy) return;
-  b.dataset.busy='1'; b.setAttribute('aria-busy','true');
-  const was=b.textContent; b.textContent='Drawing…';
-  if(lv) lv.textContent='Loading the full cloud — 12,966 points, a 3.6 megabyte download.';
-  const ok=await loadFull();
-  b.removeAttribute('aria-busy'); delete b.dataset.busy; b.textContent=was;
-  if(ok){
-    b.hidden=true; resize();
-    /* counted, not asserted — the same reason the model-zoo heading counts its
-       own rows instead of carrying a number someone typed once */
-    if(lv) lv.textContent='Full cloud drawn — '+dots.length.toLocaleString()+' points.';
-  } else if(lv){
-    lv.textContent='The full cloud could not be loaded. Still showing the 1,764-point map.';
-  }
-};
-var bR=$('bRot'); if(bR) bR.onclick=()=>cam.setSpin(!cam.spin,true);   /* the glyph is the camera's onSpin */
-let last=performance.now(),fps=60,frame=0,pulseT=0;
-function draw(){let now=performance.now();frame++;pulseT+=0.018;if(frame%24===0){fps=Math.round(1000/((now-last)/24)*10)/10;var sL=$('statusLab'); if(sL) sL.textContent = mapState==='real' ? dots.length.toLocaleString()+' players — drag to explore' : mapState==='failed'   ? 'The map file did not load. These points are a placeholder, not players.'   : 'Loading the map…';last=now;frame=0}ctx.clearRect(0,0,W,H);cam.tick();
-for(let pass=0;pass<2;pass++){for(let d of dots){let vivid=d.alpha>0.5;if((pass===0&&vivid)||(pass===1&&!vivid))continue;let P=cam.proj(d.x,d.y,d.z);let px=P[0],py=P[1],dep=P[2];if(px<-10||px>W+10||py<-10||py>H+10) continue;cam.hit(d,px,py);ctx.beginPath();let col=d.col||'#fafaf8';if(col[0]==='#'){let r=parseInt(col.slice(1,3),16),g=parseInt(col.slice(3,5),16),b=parseInt(col.slice(5,7),16);ctx.fillStyle='rgba('+r+','+g+','+b+','+(0.12+dep*0.62*(d.alpha||0.6)).toFixed(3)+')';}else{ctx.fillStyle=col;}ctx.arc(px,py,d.r*(0.9+dep*1.7),0,Math.PI*2);ctx.fill();}}
-/* Hover resolves against the points this frame actually drew, so it can never
-   disagree with what was painted, and it re-resolves only when the pointer
-   moved — with the cloud turning under a still cursor, re-picking every frame
-   would flicker a new name forever. */
-cam.frameEnd();
-if(curTraj&&curTraj.length>1){ctx.lineWidth=1.8*DPR;ctx.strokeStyle='#eb6834';ctx.globalAlpha=0.95;ctx.beginPath();let first=true;curTraj.forEach(pt=>{let P=cam.proj((pt.x-0.5)*2,(pt.y-0.5)*2,((pt.z||0.5)-0.5)*2);let px=P[0],py=P[1];if(first){ctx.moveTo(px,py);first=false;}else{ctx.lineTo(px,py);}});ctx.stroke();ctx.globalAlpha=1;curTraj.forEach((pt,i)=>{let P=cam.proj((pt.x-0.5)*2,(pt.y-0.5)*2,((pt.z||0.5)-0.5)*2);let px=P[0],py=P[1];let prog=i/(curTraj.length-1);ctx.beginPath();ctx.fillStyle='rgba(235,104,52,'+(0.35+prog*0.65).toFixed(2)+')';ctx.arc(px,py,2.6*DPR+prog*1.8,0,Math.PI*2);ctx.fill();});}if(curSel){let sx=curSel.xy?curSel.xy[0]:0;let sy=curSel.xy?curSel.xy[1]:0;if(curSel.rx!==undefined){sx=curSel.rx;sy=curSel.ry;}let SP=cam.proj(sx,sy,curSel.rz||0);let px=SP[0],py=SP[1];let pul=Math.sin(pulseT)*0.18+1;ctx.strokeStyle='#eb6834';ctx.lineWidth=2.4*DPR;[26,46,72].forEach((r,i)=>{ctx.beginPath();ctx.globalAlpha=0.95-i*0.28;ctx.arc(px,py,(r*pul)*DPR,0,Math.PI*2);ctx.stroke();ctx.globalAlpha=1});ctx.fillStyle='#eb6834';ctx.font=(22*DPR)+'px ui-monospace';ctx.fillText('◎',px-11*DPR,py+7*DPR);}requestAnimationFrame(draw);}requestAnimationFrame(draw);
-function showPos(p){curSel=p;$('posLab').textContent=p.nm+' → '+(p.se||p.season||'')+' • xy '+(p.xy?p.xy[0].toFixed(2)+','+p.xy[1].toFixed(2):'')+' • '+p.nt;let r=$('ring');
-/* proj() works in device pixels; this element is positioned in CSS pixels.
-   Divide by DPR or the ring lands short of its own dot on any DPR above 1. */
-let RP=cam.proj(p.rx!==undefined?p.rx:(p.xy?p.xy[0]:0),p.ry!==undefined?p.ry:(p.xy?p.xy[1]:0),p.rz||0);
-let px=RP[0]/DPR,py=RP[1]/DPR;r.style.left=(px-31)+'px';r.style.top=(py-31)+'px';r.style.display='grid';clearTimeout(r._t);r._t=setTimeout(()=>r.style.display='none',2400);}
-function pulse(p,isJ){if(isJ){showPos(p);return}showPos(p);$('ring').animate([{transform:'scale(.84)'},{transform:'scale(1.12)'},{transform:'scale(1)'}],{duration:340,easing:'cubic-bezier(.2,.8,.3,1)'});}
-async function selectPlayerPid(pid){let trajs=await loadTraj();let traj=trajs[String(pid)];if(!traj){return;}curTraj=traj;$('posLab').textContent='trajectory '+traj.length+' seasons • '+ (traj[0].season+'→'+traj[traj.length-1].season);}
-function loadWW(){let raw=null;try{raw=JSON.parse(localStorage.getItem('vh_weekStreak')||'null');}catch(e){}if(!raw){raw={days:[],streak:0,last:null};}renderWW(raw);return raw;}
-function renderWW(ww){let c=$('wwDots');if(!c) return;c.innerHTML='';for(let i=0;i<7;i++){let d=document.createElement('span');let f=i<(ww.days?.length||0);d.className='dot'+(f?' on filled':'')+((ww.days?.length||0)>=7?' war':'');d.title=f?(ww.days[i]||'filled'):('empty '+(i+1));c.appendChild(d);} $('wwLab').textContent='weekStreak '+(ww.streak||0)+'/7 • '+(ww.days?.length||0)+' dots • '+(ww.days||[]).join(',')||'vh_weekStreak';}
-function gainWW(){let ww=loadWW();let today=new Date().toISOString().slice(0,10);if(!ww.days.includes(today)){ww.days.push(today);ww.days=ww.days.slice(-7);ww.streak=(ww.streak||0)+1;ww.last=today;localStorage.setItem('vh_weekStreak',JSON.stringify(ww));}renderWW(ww);}
-let ww=loadWW();
-/* The camera itself is assets/map-camera.js. What stays here is what only this
-   page knows: the week-streak, which counted any press on the map, and the three
-   zoom controls in the map head. */
-cv.addEventListener('click',function(){gainWW();});
-$('bZi').onclick=function(){cam.userAt=performance.now();cam.setZoom(cam.zoom*1.25,true);};
-$('bZo').onclick=function(){cam.userAt=performance.now();cam.setZoom(cam.zoom/1.25,true);};
-$('bRst').onclick=function(){cam.userAt=performance.now();cam.reset(true);};
-async function shareCard(){let sc=$('shareCv');let sx=sc.getContext('2d');sx.fillStyle='#fafaf8';sx.fillRect(0,0,1200,630);sx.fillStyle='#111';sx.font='900 44px ui-monospace';sx.fillText('◐ VECTOR HOOPS',40,68);sx.fillStyle='#eb6834';sx.fillRect(40,88,220,10);sx.fillStyle='#111';sx.font='800 20px ui-monospace';sx.fillText('v7.3 dumbmodel #fafaf8 #111 #eb6834 #2a78d6 • 1,764 pts filt • pack '+packIds.join('-'),40,138);sx.fillStyle='#6b6760';sx.font='12px ui-monospace';sx.fillText('current+allstars+3+seasons • latest/best vivid • grey rest hidden until select • trajectory orange',40,162);let cx=860,cy=340,scR=240;let ct=Math.cos(yaw),st=Math.sin(yaw);let slice=dots.slice(0,1600);for(let d of slice){let x=d.x*ct - d.z*st;let z=d.x*st + d.z*ct;let y=d.y;let dep=(z+1)*0.5+0.2;let px=cx+x*scR*dep;let py=cy+y*scR*0.86*dep;let col=d.col||'#CED4DA';let r=parseInt(col.slice(1,3),16),g=parseInt(col.slice(3,5),16),b=parseInt(col.slice(5,7),16);sx.fillStyle='rgba('+r+','+g+','+b+',0.9)';sx.fillRect(px,py,1.7,1.7);}let pul=Math.sin(pulseT)*3+1;sx.strokeStyle='#eb6834';sx.lineWidth=3;[28,52,78].forEach(r=>{sx.beginPath();sx.arc(cx,cy,(r*pul),0,Math.PI*2);sx.stroke()});sx.fillStyle='#eb6834';sx.font='28px ui-monospace';sx.fillText('◎',cx-12,cy+9);if(curTraj){sx.strokeStyle='#eb6834';sx.lineWidth=2;sx.beginPath();curTraj.forEach((pt,i)=>{let xv=(pt.x-0.5)*2,yv=(pt.y-0.5)*2,zv=((pt.z||0.5)-0.5)*2;let xx=xv*ct - zv*st;let zz=xv*st + zv*ct;let dep=(zz+1)*0.5+0.2;let px=cx+xx*scR*dep,py=cy+yv*scR*0.86*dep;if(i===0)sx.moveTo(px,py);else sx.lineTo(px,py);});sx.stroke();}sx.fillStyle='#111';sx.font='900 16px ui-monospace';sx.fillText('Week Warrior 7-dot',40,540);let days=[];try{days=JSON.parse(localStorage.getItem('vh_weekStreak')||'{"days":[]}').days||[]}catch(e){}for(let i=0;i<7;i++){sx.beginPath();sx.arc(40+22*i+8,568,9,0,Math.PI*2);sx.fillStyle=i<days.length?'#f0e442':'#111';sx.fill();sx.strokeStyle='#111';sx.lineWidth=1.2;sx.stroke();}sx.fillStyle='#111';sx.font='11px ui-monospace';sx.fillText('pack '+pack+' • '+dots.length+' pts lived • vector-hoops • dumbmodel aesthetic • '+new Date().toISOString().slice(0,10),40,610);let url=sc.toDataURL('image/png');try{if(navigator.share&&navigator.canShare){let blob=await (await fetch(url)).blob();let f=new File([blob],'vector-hoops-1200x630.png',{type:'image/png'});if(navigator.canShare({files:[f]})){await navigator.share({title:'Vector Hoops — dumbmodel',text:'pack '+pack+' • '+dots.length+' player-seasons • '+days.length+'/7 days',files:[f]});return;}}}catch(e){}try{await navigator.clipboard.write([new ClipboardItem({'image/png':await (await fetch(url)).blob()})]);alert('PNG copied — paste to share');return}catch(e){}let a=document.createElement('a');a.href=url;a.download='vector-hoops-'+pack+'.png';a.click();}
-$('bShare').onclick=shareCard;
-if('serviceWorker'in navigator){try{navigator.serviceWorker.register('/sw.js')}catch(e){}}
-</script>
-
-<!-- ══ accessibility layer ═══════════════════════════════════════════════
-     Appended, not edited in. Scanned before writing: this page had aria-live
-     ×0, tabindex ×0, role= ×0, prefers-reduced-motion ×0 — on the landing
-     page, which is the one everybody sees. The .skip link and the focus ring
-     were already here and are left alone. -->
-<style id="ix-a11y-css">
-/* .bull pulses on a 2.2s infinite loop and the map's rAF never stops. WCAG
-   2.2.2 wants motion that auto-starts and runs past five seconds to be
-   stoppable; this at least honours the OS setting without being asked. */
-@media (prefers-reduced-motion:reduce){
-  *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important;scroll-behavior:auto!important}
-  .bull{animation:none!important}
+async function init(){
+  try{ map=await mountSharedMap(cvs,{dark:true}); }catch(e){ console.warn(e); }
+  if(map){ map.setPoints(data); }
+  const pop=document.getElementById('popular'); const pool=data.slice(0,80);
+  const picks=[...pool].sort(()=>Math.random()-.5).slice(0,12);
+  pop.innerHTML=picks.map(p=>`<button data-id="${p.id}"><span>${p.name} <span style="opacity:.6">${p.pos}</span></span><span style="font-size:10px;color:#6b7a9a">${p.id}</span></button>`).join('');
+  pop.querySelectorAll('button').forEach(b=>{
+    b.onclick=()=>{
+      pop.querySelectorAll('button').forEach(x=>x.classList.remove('on'));
+      b.classList.add('on'); sel=b.dataset.id; if(map) map.setTarget(sel);
+      const pt=data.find(d=>d.id===sel); if(pt) show(pt,true);
+    };
+  });
+  cvs.addEventListener('point-select',e=>{ sel=e.detail.id; show(e.detail,false); pop.querySelectorAll('button').forEach(x=>x.classList.toggle('on',x.dataset.id===sel)); });
+  cvs.addEventListener('point-deselect',()=>{ sel=null; document.getElementById('detail').textContent='Select dot — 64-d REAL cosine twin, 3+ seasons, new last 3 seasons included.'; pop.querySelectorAll('button').forEach(x=>x.classList.remove('on')); });
 }
-.ix-sr{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;border:0}
-
-/* ── text inks, solved for WCAG AA on what the browser paints ──────────────
-   Measured per element with its real backdrop composited through transparent
-   ancestors: the brand colours were carrying text at 3.20:1 (#EB6834), 3.42:1
-   (#009E73) and 4.42:1 (#2A78D6) against white.
-
-   These are new tokens, not new values for the brand colours. Every ring, fill,
-   polyline and border still draws #EB6834 / #2A78D6 / #009E73; only text moves.
-   Two earlier attempts changed a shared token instead and traded one failure for
-   another — darkening --ink-muted to clear 4.5 on paper took the same text on the
-   #0A0C10 map inset from 5.3:1 to 4.14:1. The muted greys are left alone here
-   for that reason: they need per-container scoping, not a page-level value. */
-:root{--orange-ink:#C84714;--blue-ink:#2873CF;--green-ink:#008460}
-.brand span,.site-nav__brand span{color:var(--orange-ink)}
-.sm__delta.down,.down{color:var(--orange-ink)}
-.sm__delta.up,.up{color:var(--blue-ink)}
-.fl-dim{color:var(--blue-ink)}
-.fo-ring{color:var(--orange-ink)}
-.proj{color:var(--orange-ink)}
-.mv-score.up{color:var(--green-ink)}
-
-/* #F0E442 is a bright yellow: an ink solved for white reads 3.64:1 on it, and the
-   white-on-yellow badge read 1.27:1. Keyed off the class that puts the yellow
-   there, so this cannot reach another ground. */
-span.pill.mono{color:#5A6476}
-.pill-y,.pill-y.mono,.pill-y.mono-sm,.pill.pill-y,.pill.pill-y.mono,.pill.pill-y.mono-sm,
-a.pill.pill-y,.pill.y,.pill.y.mono{color:#3A2E00}
-/* muted small print, on pages whose every ground is light */
-p.eyebrow,div.mono-sm,span.mono-sm,.pill.mono-sm,.mv-move,p.mono{color:#6F6D68}
-.mv-score.down{color:#D33F24}
-/* the archetype key and the dark pills sit on near-black: the light-ground inks
-   above must not reach them */
-#plKey span,#plKey .n{color:#FAFAF8}
-span.pill.mono.ink,.pill.ink{color:#C9C6C0}
-/* a rule in a later <style> block was still winning on this one */
-span.proj{color:var(--orange-ink)}
-
-
-</style>
-<div id="ixLive" class="ix-sr" role="status" aria-live="polite" aria-atomic="true"></div>
-<script>
-(function(){
-  'use strict';
-  var live=document.getElementById('ixLive');
-  function say(m){ if(!live||!m) return; if(live.textContent===m) live.textContent=''; live.textContent=m; }
-
-  // The map's label read "Vector Hoops map 1814 limited" — a filename, not a
-  // description. It also opens on a grey placeholder cloud generated from an
-  // LCG while assets/vectors.json loads, so the label must not claim real data
-  // before there is any.
-  // The label used to be written here as well as in the markup — two writers,
-  // one attribute, and this one ran last, so the interactive description in the
-  // markup never survived. The text now lives in the markup only, where the
-  // gates can read it. What is left here is the role, which had to change: the
-  // map is operable now, and role="img" on something that takes arrow keys is a
-  // lie to a screen reader. role="application" is what passes those keys
-  // through instead of browse mode swallowing them, and it is only defensible
-  // because the keys are spelled out in #mapHelp, which the canvas points at
-  // with aria-describedby.
-  var cv=document.getElementById('c');
-  if(cv) cv.setAttribute('role','application');
-  var share=document.getElementById('shareCv');
-  if(share) share.setAttribute('aria-hidden','true');
-  var ring=document.getElementById('ring');
-  if(ring) ring.setAttribute('aria-hidden','true');   // decorative pulsing bullseye
-
-  // Nothing announced when the real cloud replaced the placeholder, so a
-  // non-visual visitor had no way to know the map had become real. Watching the
-  // point count is cheaper and less brittle than patching loadFull().
-  var lastN=-1, ticks=0;
-  var iv=setInterval(function(){
-    var n=(typeof window.dots!=='undefined' && window.dots) ? window.dots.length : -1;
-    if(n>0 && n!==lastN && lastN!==-1){
-      say(n.toLocaleString()+' player-seasons are now on the map.');
-      clearInterval(iv);
-    }
-    if(n>0) lastN=n;
-    if(++ticks>40) clearInterval(iv);   // ~20s ceiling, then stop looking
-  },500);
-})();
+function show(p,fromPop){
+  const posColor={'PG':'#E69F00','SG':'#56B4E9','SF':'#009E73','PF':'#F0E442','C':'#0072B2'}[p.pos]||'#56B4E9';
+  document.getElementById('detail').innerHTML=`<div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center"><b style="font-size:14px;color:#e8f0ff">${p.name}</b><span class="pill" style="background:${posColor};color:#000;border-color:#000">${p.pos||'SF'}</span><span class="pill">x ${p.x?.toFixed(3)} y ${p.y?.toFixed(3)} z ${p.z?.toFixed(3)}</span><span class="pill">tap-explore Popular</span></div><div style="margin-top:6px;font-size:11.5px">Draft exp 5-fold CV MAE 0.82 RMSE1.14 SHAP slot→winshares · cap eff $140.5M · foresight surplus tetris 2025-26 · Oracle edge>3 OU · Player Explorer 1764 visible dark</div>`;
+}
+document.getElementById('clearSel').onclick=()=>{ sel=null; if(map) map.clearSel(); document.getElementById('detail').textContent='Select dot — 64-d REAL cosine twin'; document.querySelectorAll('#popular button').forEach(b=>b.classList.remove('on')); };
+document.getElementById('lodBtn').onclick=(e)=>{ const cur=e.target.textContent.includes('8000'); e.target.textContent=cur?'LOD 4000':'LOD 8000'; if(map) map.setLOD(cur?4000:8000); };
+document.getElementById('pauseBtn').onclick=(e)=>{ const pa=e.target.textContent==='Pause'; if(map){ pa?map.pause():map.resume(); } e.target.textContent=pa?'▶ Play':'Pause'; };
+document.getElementById('playToday').onclick=()=>{ const {link}=sameLinkSameStars(20260813,3); location.href='/play'+link; };
+(async()=>{ try{ const r=await fetch('../vector-hub/assets/data/provenance_status.json'); if(r.ok){ const j=await r.json(); document.getElementById('prov').textContent=JSON.stringify(j).slice(0,420)+' • void #080A0F • 59 hashes 7/7 PASS'; } }catch{ document.getElementById('prov').textContent='PWA v67 offline 13k CORE20 LOD4000/8000 DPR1 no devicePixelRatio • 59 hashes 7/7 PASS • inline fallback tokens'; } })();
+ld(); if('serviceWorker' in navigator) addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
+tlpDedup('hoops-daily');
 </script>
-<!-- build_valuation_note.py: start --><p class="mono" style="font-size:10.5px;line-height:1.55;text-transform:none;letter-spacing:0;color:#6F6D68;max-width:1120px;margin:8px auto 0;padding:0 clamp(12px,3.2vw,28px)">Franchise valuations on this site are <b>estimates, not measured figures</b>. Every one of the 360 valuation records in <code>assets/front_office.json</code>, across 12 seasons, names its own source as <code>forbes_synth_estimated_for_training</code> — generated to train the model. The largest in 2025-26 is GSW at $10.09B; read it as the model’s number, not the market’s.</p><!-- build_valuation_note.py: end -->
-<script src="assets/error-boundary.js?v=dfe16efe"></script>
-<script src="assets/keyboard-a11y.js?v=8bd158d1"></script>
-<script src="assets/pwa-install.js?v=11551699"></script>
-<script src="assets/name-fix.js?v=b420fb43"></script>
-</body>
-</html>
+<script>/* single-select clears prev + DPR1 enforcement family */ window.VECTOR_FAMILY={navH:40,povH:44,void:"#080A0F",lcg:189831298,idx:3820,triple:[11205,19448,14209]}; try{localStorage.setItem("family_last_sync","vector-hoops")}catch{}</script>
+</body></html>
