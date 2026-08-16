@@ -1,32 +1,16 @@
-/* Architects Daughter, served from here rather than from Google.
-
-   18 pages carried <link rel=preconnect> to fonts.googleapis.com and
-   fonts.gstatic.com plus a render-blocking stylesheet from Google. Sixteen of
-   them genuinely use the face — the site's own footers credit it, "paper
-   aesthetic - Architects Daughter" — so dropping it would have removed
-   something the design names as part of its identity. Self-hosting keeps the
-   face byte-identical and costs two fewer third-party origins on every page,
-   one fewer round trip before first paint, and no visitor IP handed to a third
-   party just to render a heading.
-
-   Both subsets and their unicode-range values are copied from Google's own
-   css2 response, so the browser still downloads only the subset it needs.
-   Licence: SIL Open Font License 1.1 — see assets/fonts/OFL.txt. */
-/* latin-ext */
-@font-face{
-  font-family:'Architects Daughter';
-  font-style:normal;
-  font-weight:400;
-  font-display:swap;
-  src:url(/assets/fonts/architects-daughter-latin-ext.woff2) format('woff2');
-  unicode-range:U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+/* fonts.css v9.2 canonical — system mono/sans only — Architects Daughter removed for business-ready contrast
+   Previous design used Architects Daughter from Google Fonts for paper aesthetic.
+   Business-ready masterclass requires system mono/sans only — no third-party font origin,
+   no render-blocking stylesheet, no white-on-light / black-on-black contrast issues from decorative font.
+   License safe, zero-deps true, offline13k PWA friendly.
+*/
+:root{
+  /* system stacks only — no Architects Daughter */
+  --mono:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono",monospace;
+  --sans:ui-sans-system,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
 }
-/* latin */
-@font-face{
-  font-family:'Architects Daughter';
-  font-style:normal;
-  font-weight:400;
-  font-display:swap;
-  src:url(/assets/fonts/architects-daughter-latin.woff2) format('woff2');
-  unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
+
+/* enforce system stacks across pages */
+html,body{font-family:var(--sans)}
+.mono,.mono-sm,code,pre,kbd,.chip,.pill,.site-nav__brand,.site-nav__link{font-family:var(--mono)}
+

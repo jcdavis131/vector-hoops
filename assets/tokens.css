@@ -1,0 +1,98 @@
+/* tokens.css v9.2 canonical — business-ready masterclass — no Architects Daughter, system mono/sans only */
+:root{
+  /* core void system — business eyes */
+  --void:#080A0F;
+  --void-2:#0f141e;
+  --panel:#111725;
+  --grid:#1e2a44;
+  --line:#23365f;
+  --paper:#FEFCF9;
+  --ivory:#FFFEF7;
+  --ink:#e8f0ff;
+  --ink-soft:#9aa7c7;
+  --ink-2:#6f819f;
+  --yellow:#F0E442;
+  --coral:#D8452A;
+  --lime:#8AFF6B;
+
+  /* OKABE-8 visible dark bg — ivory replaces black */
+  --ok0:#E69F00;
+  --ok1:#56B4E9;
+  --ok2:#009E73;
+  --ok3:#F0E442;
+  --ok4:#0072B2;
+  --ok5:#D55E00;
+  --ok6:#CC79A7;
+  --ok7:#FFFEF7;
+
+  /* layout */
+  --nav-h:40px;
+  --pov-h:44px;
+  --gutter:clamp(12px,3vw,28px);
+  --radius:14px;
+  --radius-pill:999px;
+
+  /* motion */
+  --momentum:0.94;
+  --ease:0.94;
+  --dur:220ms;
+  --shadow:6px 6px 0 #000;
+  --shadow-sm:3px 3px 0 #000;
+
+  /* type — system mono/sans only, no Architects Daughter */
+  --mono:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono",monospace;
+  --sans:ui-sans-system,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+
+  /* LOD */
+  --lod-desktop:8000;
+  --lod-mobile:4000;
+  --dpr:1;
+}
+
+/* contrast fixes — ivory #FFFEF7 on void visible, points visible dark bg */
+html,body{background:var(--void);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased}
+a{color:inherit}
+::selection{background:var(--yellow);color:#000}
+
+/* 40px sticky nav z40 void #080A0F */
+.site-nav{position:sticky;top:0;height:var(--nav-h);z-index:40;display:flex;align-items:center;justify-content:space-between;padding:0 var(--gutter);background:var(--void);border-bottom:2px solid var(--grid);backdrop-filter:blur(4px)}
+.site-nav__brand{font-family:var(--mono);font-weight:900;font-size:12.8px;letter-spacing:.05em;text-transform:uppercase;text-decoration:none;color:var(--ivory)}
+.site-nav__brand span{color:var(--yellow)}
+.site-nav__links{display:flex;gap:4px;align-items:center;flex-wrap:wrap}
+.site-nav__link{font-family:var(--mono);font-size:11px;font-weight:700;color:var(--ink-soft);padding:6px 10px;border-radius:var(--radius-pill);text-decoration:none;border:1.6px solid transparent}
+.site-nav__link.on{background:var(--ivory);color:var(--void);border-color:#000;font-weight:900}
+
+/* 44px POV bar */
+.pov-bar{position:sticky;top:var(--nav-h);z-index:39;height:var(--pov-h);display:flex;gap:8px;align-items:center;padding:0 var(--gutter);background:#0f1a2d;border-bottom:2px solid var(--grid);overflow:auto;white-space:nowrap}
+.chip{font-family:var(--mono);font-size:10.6px;font-weight:800;padding:6px 10px;border-radius:var(--radius-pill);border:1.8px solid var(--grid);background:#101c36;color:var(--ink-soft);display:inline-flex;gap:6px;align-items:center;cursor:pointer;user-select:none;transition:transform var(--dur) ease}
+.chip.on{background:var(--yellow);color:#000;border-color:#000;transform:rotate(-.55deg)}
+.chip:focus-visible{outline:2px solid var(--yellow);outline-offset:2px}
+
+/* ivory #FFFEF7 visible dark bg — no black-on-black, no white-on-light */
+.ivory{color:var(--ivory)}
+.void{background:var(--void)}
+.pill{font-family:var(--mono);font-size:11px;font-weight:800;padding:5px 10px;border-radius:var(--radius-pill);border:1.6px solid var(--grid);background:#0f141e;color:var(--ink-soft);display:inline-flex;gap:6px;align-items:center}
+.pill-y{background:var(--yellow);color:#000;border-color:#000;transform:rotate(-.6deg)}
+
+/* reduced motion + IO lazy */
+@media(prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
+.lazy{content-visibility:auto;contain-intrinsic-size:0 420px}
+
+/* single subtle footer */
+footer{max-width:1240px;margin:0 auto;padding:14px var(--gutter);color:var(--ink-2);font-family:var(--mono);font-size:11px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;border-top:1.5px solid var(--grid);background:var(--void)}
+footer .free{color:var(--ivory);opacity:.88}
+
+/* share PNG 1200×630 — no dev pills — confetti #D8452A */
+.share-canvas{width:1200px;height:630px;background:var(--void);color:var(--ivory)}
+
+/* Esc modal Enter/Space lattice — keyboard a11y */
+dialog{border:2.5px solid var(--grid);border-radius:16px;background:var(--panel);color:var(--ink);box-shadow:var(--shadow);padding:0}
+dialog::backdrop{background:rgba(8,10,15,.72);backdrop-filter:blur(2px)}
+.modal-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:14px}
+@media(max-width:700px){.modal-grid{grid-template-columns:1fr}}
+
+/* LOD 8000/4000 DPR1 fillRect quaternion arcball marker */
+.map-canvas{image-rendering:optimizeSpeed;image-rendering:-moz-crisp-edges}
+
+/* no Architects Daughter — system mono/sans only enforced */
+*{font-variant-ligatures:none}

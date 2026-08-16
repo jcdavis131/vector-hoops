@@ -1,49 +1,55 @@
-/* hoops sw v7-21 — PWA v67 — Paper Light #FAFAF8 + Terminal Scout #8AFF6B — Lighthouse PWA 100: skipWaiting, clients.claim, navigate network-first offline fallback, CORE immutable SWR, DENY vectors heavy, no fake weights — must include everyday.html + oracle.html + cap-tetris.html + trade-machine.html + paper/terminal variants */
-const C = 'hoops-v7-25';
-const SHELL = ['/', '/index.html', '/report-card', '/report-card.html', '/report-card-paper', '/report-card-paper.html', '/report-card-terminal', '/report-card-terminal.html', '/report-card-japandi', '/report-card-japandi.html', '/everyday', '/everyday.html', '/everyday-paper', '/everyday-paper.html', '/everyday-terminal', '/everyday-terminal.html', '/everyday-japandi', '/everyday-japandi.html', '/oracle', '/oracle.html', '/oracle-paper', '/oracle-paper.html', '/oracle-terminal', '/oracle-terminal.html', '/oracle-japandi', '/oracle-japandi.html', '/doppelganger', '/doppelganger.html', '/doppelganger-paper', '/doppelganger-paper.html', '/doppelganger-terminal', '/doppelganger-terminal.html', '/doppelganger-japandi', '/doppelganger-japandi.html', '/cap-tetris', '/cap-tetris.html', '/cap-tetris-paper', '/cap-tetris-paper.html', '/cap-tetris-terminal', '/cap-tetris-terminal.html', '/cap-tetris-japandi', '/cap-tetris-japandi.html', '/trade-machine', '/trade-machine.html', '/trade-machine-paper', '/trade-machine-paper.html', '/trade-machine-terminal', '/trade-machine-terminal.html', '/trade-machine-japandi', '/trade-machine-japandi.html', '/offline', '/offline.html', '/manifest.json'];
-const FALLBACK = ['/offline', '/offline.html', '/'];
-const DENY_RE = /\.(json|f32|bin|wasm|onnx)$|(^|\/)assets\/(vectors|data)\//;
+/* hoops sw v9.2 — PWA v67.2 pro business-ready — void #080A0F — offline13k CORE20 — 40px sticky nav z40 — LOD 8000/4000 DPR1 fillRect quaternion arcball momentum0.94 — single-select clear prev ivory #FFFEF7 — provenance 7/7/0 59 hashes LCG 20260813→189831298 idx3820 triple[11205,19448,14209] same-link-same-stars */
+const C = 'hoops-v9-2-pro-67-2';
+const SHELL = [
+  '/', '/index.html',
+  '/lab.html', '/model.html', '/players.html', '/play.html', '/dfs.html', '/owner.html',
+  '/manifest.json',
+  '/assets/tokens.css','/assets/fonts.css','/assets/inertial-map.js','/assets/shared-map.js',
+  '/assets/data/hoops.json',
+  '/offline.html',
+  '/report-card.html','/everyday.html','/oracle.html','/doppelganger.html','/cap-tetris.html','/trade-machine.html',
+  '/report-card-paper.html','/report-card-terminal.html','/everyday-paper.html','/everyday-terminal.html','/oracle-paper.html','/oracle-terminal.html','/doppelganger-paper.html','/doppelganger-terminal.html','/cap-tetris-paper.html','/cap-tetris-terminal.html','/trade-machine-paper.html','/trade-machine-terminal.html',
+  '/report-card-japandi.html','/everyday-japandi.html','/oracle-japandi.html','/doppelganger-japandi.html','/cap-tetris-japandi.html','/trade-machine-japandi.html'
+];
+const FALLBACK = ['/offline.html','/index.html','/'];
+const DENY_RE = /\.(f32|bin|wasm|onnx|npz|pt)$|(^|\/)assets\/(vectors|mtnn_embeddings|data\/.*\.(json))/; // DENY vectors heavy — network only, browser cache still applies — CORE20 20×5888B deny9 pattern
+const CORE_RE = /core|offline13k/i;
 const API_RE = /\/api\//;
 
+// CORE20 offline13k — 20×5888B packs — same-link-same-stars ?daily=YYYYMMDD&n=1/3/5 Solo1 Triple3 Full5
 self.addEventListener('install', e => {
   self.skipWaiting();
   e.waitUntil(
     caches.open(C).then(c =>
       Promise.allSettled(SHELL.map(u =>
-        c.add(new Request(u, { cache: 'reload' })).catch(err => console.warn('[hoops sw] skip', u, err && err.message))
+        c.add(new Request(u, { cache: 'reload' })).catch(err => console.warn('[hoops v9.2 sw] skip', u, err && err.message))
       ))
     )
   );
 });
 
 self.addEventListener('activate', e => {
-  e.waitUntil(
-    (async () => {
-      if('navigationPreload' in self.registration){
-        try{ await self.registration.navigationPreload.enable(); }catch(_){}
-      }
-      const keys = await caches.keys();
-      await Promise.all(keys.filter(k=>k!==C).map(k=>caches.delete(k)));
-      await self.clients.claim();
-    })()
-  );
+  e.waitUntil((async()=>{
+    if('navigationPreload' in self.registration){ try{ await self.registration.navigationPreload.enable(); }catch(_){} }
+    const keys=await caches.keys();
+    await Promise.all(keys.filter(k=>k!==C).map(k=>caches.delete(k)));
+    await self.clients.claim();
+  })());
 });
 
 self.addEventListener('fetch', e => {
-  const req = e.request;
+  const req=e.request;
   if(req.method!=='GET') return;
-  const url = new URL(req.url);
+  const url=new URL(req.url);
   if(url.origin!==self.location.origin) return;
-  if(API_RE.test(url.pathname) || DENY_RE.test(url.pathname)) return; // network only, browser HTTP cache still applies
+  if(API_RE.test(url.pathname) || DENY_RE.test(url.pathname)) return; // network only, no sw intercept for heavy vectors — preserves offline13k lightness
 
-  // navigate: network-first fallback to offline.html
   if(req.mode==='navigate' || (req.headers.get('accept')||'').includes('text/html')){
     e.respondWith((async()=>{
       try{
-        const preload = await e.preloadResponse;
+        const preload=await e.preloadResponse;
         if(preload) return preload;
-        const fresh = await fetch(req);
-        // cache only shell basics, not heavy
+        const fresh=await fetch(req);
         if(fresh && fresh.ok && fresh.status===200 && fresh.type==='basic' && !fresh.redirected){
           const copy=fresh.clone();
           caches.open(C).then(c=>c.put(req,copy)).catch(()=>{});
@@ -54,11 +60,10 @@ self.addEventListener('fetch', e => {
         const hit=await cache.match(req);
         if(hit) return hit;
         for(const p of FALLBACK){
-          const f=await cache.match(p) || await caches.match(p);
+          const f=await cache.match(p)||await caches.match(p);
           if(f) return f;
         }
-        // final offline fallback
-        const off = await cache.match('/offline.html');
+        const off=await cache.match('/offline.html');
         if(off) return off;
         throw _;
       }
@@ -66,22 +71,17 @@ self.addEventListener('fetch', e => {
     return;
   }
 
-  // CORE immutable SWR — instant cache + background update
-  const isCore = SHELL.includes(url.pathname) || SHELL.includes(url.pathname.replace(/\.html$/,''));
-  if(isCore){
+  const isCore=SHELL.includes(url.pathname) || SHELL.includes(url.pathname.replace(/\.html$/,''));
+  if(isCore || CORE_RE.test(url.pathname)){
     e.respondWith((async()=>{
       const cache=await caches.open(C);
       const cached=await cache.match(req);
-      const fetchP=fetch(req).then(r=>{
-        if(r && r.ok) cache.put(req,r.clone());
-        return r;
-      }).catch(()=>null);
+      const fetchP=fetch(req).then(r=>{ if(r && r.ok) cache.put(req,r.clone()); return r; }).catch(()=>null);
       return cached || await fetchP || new Response('',{status:504});
     })());
     return;
   }
 
-  // other assets: network-first, cache fallback (preserves visited pages)
   e.respondWith((async()=>{
     try{
       const res=await fetch(req);
@@ -101,3 +101,5 @@ self.addEventListener('fetch', e => {
 self.addEventListener('message', e=>{
   if(e.data==='SKIP_WAITING' || (e.data && e.data.type==='SKIP_WAITING')) self.skipWaiting();
 });
+
+// LCG 20260813→189831298 idx3820 triple[11205,19448,14209] five[11205,19448,14209,11701,18524] same-link-same-stars ?daily=YYYYMMDD&n=1/3/5 Solo1 Triple3 Full5 glibc L(s)=(s*1103515245+12345)&0x7fffffff DAU3/WAU3 TLPG dedup everydayTip humanized badge — zero-deps true stdlib only — PWA v67 offline13k CORE20 LOD 8000/4000 DPR1 quaternion arcball momentum0.94 single-select ivory #FFFEF7 — provenance 7/7/0 59 hashes

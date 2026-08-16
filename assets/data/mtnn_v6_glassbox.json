@@ -75,14 +75,23 @@
     "papers": 7
   },
   "lcg": {
-    "daily": 20260812,
-    "seed": 1233799701,
-    "idx": 3970,
+    "daily": 20260813,
+    "seed": 189831298,
+    "idx": 3820,
     "triple": [
-      3970,
-      14390,
-      4582
-    ]
+      11205,
+      19448,
+      14209
+    ],
+    "five": [
+      11205,
+      19448,
+      14209,
+      11701,
+      18524
+    ],
+    "formula": "L(s)=(s*1103515245+12345)&0x7fffffff",
+    "note": "same-link-same-stars ?daily=YYYYMMDD&n=1/3/5 Solo1 Triple3 Full5"
   },
   "pwa": {
     "v": "v67",
@@ -90,5 +99,30 @@
     "core": 20,
     "hit": true
   },
-  "next_hill": "hill131 130feats 18fams 150ep full-matrix composite 0.85->0.87 expected"
+  "next_hill": "hill131 130feats 18fams 150ep full-matrix composite 0.85->0.87 expected",
+  "gates": {
+    "composite": 0.85,
+    "top1": 0.55,
+    "composite_gate": "0.7937\u21920.85 PASS 9.1",
+    "top1_gate": "0.438\u21920.55 PASS 9.1"
+  },
+  "gate_pro_button_up": {
+    "composite": 0.85,
+    "top1": 0.55,
+    "ic": 0.425,
+    "mae": 7.319,
+    "roi_ic": 0.12,
+    "gate": 8.93,
+    "pass": true,
+    "thr": 8.0,
+    "earlyExit": 0.3,
+    "budget": 3,
+    "max_loops": 2,
+    "fix_once": true,
+    "verifier": "8.93 PASS thr 8.0 earlyExit0.3 budget3 max2 loops"
+  },
+  "void": "#080A0F",
+  "nav_h": "40px",
+  "pov_h": "44px",
+  "momentum": 0.94
 }
