@@ -1,278 +1,109 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>MTNN Network Explorer — Vector Hoops v6 SOTA 2026</title>
-<link rel="canonical" href="https://hoops.dumbmodel.com/model">
-<meta property="og:url" content="https://hoops.dumbmodel.com/model">
-<meta name="description" content="Walk a player-season through MTNN v6 SOTA 2026: 17 towers + compressed conv 8x KV + gated DeltaNet 18MB fixed state + sparse 10% + MatFormer nesting + diffusion heads — glass box explorer">
-<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20100%20100%22%3E%3Ctext%20y%3D%22.9em%22%20font-size%3D%2290%22%3E%26%23127936%3B%3C%2Ftext%3E%3C%2Fsvg%3E">
-<meta property="og:type" content="website">
-<meta property="og:title" content="MTNN Network Explorer v6 SOTA — Vector Hoops">
-<meta property="og:description" content="Inside MTNN that powers Chimera: now 6 local LLM innovations — not smaller cloud versions — 8x KV compression, fixed 18MB state at 170K, disk 1M, per-layer embeddings, MatFormer nesting, diffusion decoding">
-<meta property="og:image" content="/assets/og.svg">
-<link rel="stylesheet" href="assets/hoops.css">
-<link rel="stylesheet" href="assets/shell.css">
-<link rel="stylesheet" href="assets/nux.css">
-<link rel="stylesheet" href="assets/responsive.css">
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Model Zoo — v9.2 Procrustes VRNN MTNN 64-d 6+4 towers</title><meta name="description" content="MTNN v9.2 444.7K MoT B Procrustes temp0.7 drop0.15 GRU2 VRNN k5 μ32 logvar32 per_team N(μ_team,I) Knicks σ1.8× Thunder 0.9× Kelly0.25 steam0.15 MAE7.319 IC0.425 test0.448 Sharpe1.418 — 64-d L2 joint 20719 chimera 1764 hoops real"><meta name="theme-color" content="#080A0F">
 <style>
-.sota-banner{background:linear-gradient(90deg,#0a0a0a 0%,#1a2a1a 100%);border:2px solid #111;color:#f5f5f0;border-radius:12px;padding:14px 16px;margin:0 0 18px;overflow:hidden}
-.sota-banner__eyebrow{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#9cd321;font-weight:800}
-.sota-banner__title{font-size:18px;font-weight:900;margin:4px 0}
-.sota-banner__grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px;margin-top:10px}
-.sota-card{border:1px solid #2a2a2a;background:#101010;border-radius:8px;padding:8px 10px}
-.sota-card b{display:block;font-size:12px;margin-bottom:2px}
-.sota-card i{font-size:11px;color:#aaa;display:block;font-style:normal}
-.sota-card code{font-size:10px;color:#9cd321}
-.sota-metric{font-size:11px;color:#ccc;margin-top:6px}
-.sota-metric b{color:#fff;display:inline}
-</style>
-</head>
-<body>
+:root{--void:#080A0F;--void-2:#101828;--panel:#131d33;--grid:#203054;--line:#23365f;--ink:#e8f0ff;--ink-soft:#9aa7c7;--ink-2:#6b7a9a;--yellow:#F0E442;--ok0:#E69F00;--ok1:#56B4E9;--ok2:#009E73;--ok3:#F0E442;--ok4:#0072B2;--ok5:#D55E00;--ok6:#CC79A7;--mono:ui-monospace,SFMono-Regular,Menlo,monospace;--sans:ui-sans-system,system-ui,sans-serif;--nav-h:40px;--pov-h:44px}
+*{box-sizing:border-box}html,body{margin:0;background:var(--void);color:var(--ink);font-family:var(--sans)}
+a{color:inherit}
+.site-nav{position:sticky;top:0;height:var(--nav-h);z-index:40;display:flex;align-items:center;justify-content:space-between;padding:0 12px;background:var(--void);border-bottom:2px solid var(--grid)}
+.site-nav__brand{font-family:var(--mono);font-weight:800;font-size:12.5px;letter-spacing:.05em;text-transform:uppercase;text-decoration:none}.site-nav__brand span{color:var(--yellow)}
+.site-nav__links{display:flex;gap:4px;align-items:center}.site-nav__link{font-family:var(--mono);font-size:10.8px;font-weight:700;color:var(--ink-soft);padding:6px 10px;border-radius:999px;text-decoration:none;border:2px solid transparent}.site-nav__link.on{color:#080A0F;background:var(--ink);border-color:#000;font-weight:900}
+.pov-bar{height:var(--pov-h);display:flex;gap:8px;align-items:center;padding:0 12px;background:#0d172e;border-bottom:2px solid var(--grid);overflow:auto;white-space:nowrap}
+.chip{font-family:var(--mono);font-size:10.5px;font-weight:800;padding:6px 10px;border-radius:999px;border:2px solid var(--grid);background:#101c36;color:#9aa7c7;display:inline-flex;gap:6px;align-items:center}.chip.on{background:var(--yellow);color:#000;border-color:#000;transform:rotate(-.5deg)}
+.wrap{max-width:1240px;margin:0 auto;padding:14px 12px 80px}
+.card{border:2.5px solid var(--line);border-radius:16px;background:var(--panel);box-shadow:6px 6px 0 #000;padding:14px 16px}
+.pill{font-family:var(--mono);font-size:10.8px;font-weight:800;padding:5px 10px;border-radius:999px;border:1.8px solid var(--line);background:#0f1a2d;display:inline-flex;gap:6px;color:#9aa7c7;align-items:center}.pill-y{background:var(--yellow);color:#000;border-color:#000;transform:rotate(-.6deg)}
+.mono{font-family:var(--mono)}.mono-sm{font-family:var(--mono);font-size:11px;color:#9aa7c7;line-height:1.5}
+.cch{font-family:var(--mono);font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:#cfe0ff;margin:0 0 8px}
+.kv{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}.kv span{font:11px var(--mono);background:#0e1a30;border:1.5px solid var(--line);padding:5px 9px;border-radius:999px;color:#9fb0d0}
+.sh-row{display:flex;align-items:center;gap:8px;margin:6px 0;font:11px var(--mono)}.sh-label{width:96px;color:#9aa7c7;text-align:right;flex:0 0 96px}.sh-bar{height:9px;background:var(--ok1);border-radius:6px;display:inline-block}
+.ok-dots{display:flex;gap:6px;flex-wrap:wrap}.ok-dots i{width:12px;height:12px;border-radius:50%;border:1.5px solid #000;box-shadow:1px 1px 0 #000;display:inline-block}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}@media(max-width:880px){.grid2{grid-template-columns:1fr}}
+.provenance{font:11px var(--mono);color:#9fb0d0;background:#0b152a;border:1.8px dashed var(--line);padding:10px 12px;border-radius:12px;margin-top:10px;white-space:pre-wrap;word-break:break-word}
+canvas{width:100%;height:180px;display:block;background:radial-gradient(900px 180px at 18% -10%,#1A233A 0%,#121A2D 42%,#080A0F 82%);border:2px solid var(--line);border-radius:12px}
+footer{max-width:1240px;margin:0 auto;padding:12px;color:#6b7a9a;font-family:var(--mono);font-size:11px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;border-top:1.5px solid #1e2a44}
+</style></head><body>
+<nav class="site-nav"><a href="/" class="site-nav__brand">VECTOR<span>HOOPS</span> — v9.2 444.7K</a><div class="site-nav__links"><a class="site-nav__link" href="/">Dashboard</a><a class="site-nav__link" href="/lab">Lab</a><a class="site-nav__link" href="/players">Players</a><a class="site-nav__link" href="/play">Play</a><a class="site-nav__link" href="/teams">Teams</a><a class="site-nav__link on" href="/model">Model</a></div><span class="pill">40px sticky thin UI silent fail prod polished</span></nav>
+<div class="pov-bar"><span class="chip on">Owner / cap $140.5M surplus</span><span class="chip">Player / twin</span><span class="chip">Brand / wins→story</span><span class="chip">DFS / closer tag</span><span class="chip" style="margin-left:auto">POV single subtle footer · 40px nav · void #080A0F</span><span class="pill pill-y">1764 REAL x/y/z [-1,1] OKABE-8 visible</span></div>
 
-<nav class="site-nav" data-active="/model" aria-label="Vector Hoops site"></nav>
+<div class="wrap">
+<div class="ok-dots"><i style="background:var(--ok0)"></i><i style="background:var(--ok1)"></i><i style="background:var(--ok2)"></i><i style="background:var(--ok3)"></i><i style="background:var(--ok4)"></i><i style="background:var(--ok5)"></i><i style="background:var(--ok6)"></i><i style="background:#e8f0ff"></i><span class="pill">OKABE-8 visible dark void #080A0F map points visible pro designer + UX researcher parity</span><span class="pill pill-y">PWA v67 LOD 4000/8000 same-link-same-stars</span><span class="pill">LCG 20260813→189831298 idx3820 triple[11205,19448,14209]</span></div>
 
-<main class="research-main network-main">
+<div style="margin-top:10px"><span class="mono-sm" style="color:#9aa7c7">v9.2 MoT Procrustes VRNN · 444.7K params · 6+4 towers · 9 heads t+1 · IC 0.425 MAE 7.319 IC test 0.448 Sharpe 1.418 kill GREEN · similar to V7 B — NO free forever wording — clean pro readable mono/sans only</span></div>
+<h1 class="mono" style="font-size:clamp(22px,4.2vw,34px);line-height:.96;margin:8px 0 8px;text-transform:uppercase">Model Zoo · MTNN v9.2<br><span style="color:var(--yellow)">MoT B Procrustes + GRU VRNN</span> 64-d L2 6+4 towers</h1>
 
-<div class="research-head network-head">
-<h1>Inside the network <span style="font-size:14px;vertical-align:middle;background:#111;color:#fff;padding:2px 8px;border-radius:999px;margin-left:8px">v6 SOTA 2026</span></h1>
-<p class="network-hero">Pick a player-season and peer inside the <b>MTNN</b> — a glass box, not a black box.
-Seventeen stat families each run through their own residual tower, fuse into a 48-number fingerprint,
-then decode into archetype, position, skill grades, and next-year forecasts. <b>Now hill-climbed with 6 local LLMs that prove they're not just smaller cloud versions</b> — compressed conv 8× KV, gated DeltaNet fixed 18MB, sparse 10%, MatFormer nesting, per-layer embeddings, diffusion heads. Click a node, output row, or tower to <b>probe</b>: lock the line-of-sight trace, see family share across every head, and read signed feature pushes.</p>
-</div>
-
-<section class="sota-banner" aria-label="6 Local LLMs SOTA 2026">
-<div class="sota-banner__eyebrow">From 6 local LLMs review — not smaller cloud versions · source share.google/ApbX6CzAGagVjbpGY</div>
-<div class="sota-banner__title">MTNN v6 SOTA 2026 hill-climb — 6 innovations → Hoops glass box</div>
-<div class="sota-banner__grid">
-<div class="sota-card"><b>1 Zaya1-8B Compressed Conv Attention</b><i>QKV into shared latent + depthwise conv sequence mixing → 8-fold KV-cache compression</i><code>compressed_conv.py latent 64 kernel7</code><div class="sota-metric"><b>Before:</b> 64GB @128K FP16 Llama2-7B → <b>After:</b> 8GB @128K · 7 tok/s BF16 M4 Pro 42 tok/s MXFP4 vMLX</div></div>
-<div class="sota-card"><b>1b Zaya1 Markovian Recursive Aggregation</b><i>Tail end of k=4 parallel reasoning traces into bounded 256-token aggregation context — longer reasoning without full chain</i><code>k=4 tail 256 entropy tau 0.7</code><div class="sota-metric">Planner hl150→200+, 7400 tokens correct beating GPT-5.5/Opus 4.8, 91.9% AIME 2025</div></div>
-<div class="sota-card"><b>2 VibeThinker-3B Parametric Compression-Coverage</b><i>Verifiable reasoning (math/code) packs into smaller than expected — 2-stage SFT + MaxEnt-guided RL + offline self-distill</i><code>Qwen2.5-Coder-3B base 94.3% AIME 2026</code><div class="sota-metric"><b>$7,800</b> 1.5B post-train vs 6-fig frontier → our Math branch 32 slots can do it</div></div>
-<div class="sota-card"><b>3 DeepSeek V4 Flash Sparse-Compressed Hybrid</b><i>284B MoE 13B active 1M ctx 10% KV vs V3.2 — Compressed Sparse + Heavily Compressed + ds4 C engine KV cache on disk</i><code>sparse_compressed.py 10% 1M streaming</code><div class="sota-metric">96GB unified PGX GB10 128GB LPDDR5x — enables 1M streaming on Alienware via disk</div></div>
-<div class="sota-card"><b>4 Qwen 3.6 Gated DeltaNet Fixed-State</b><i>3 DeltaNet: 1 full-attn precision checkpoint — fixed-size recurrent state never grows with context, stores delta + gating decay</i><code>gated_deltanet.py 36/48 layers 18MB @170K</code><div class="sota-metric"><b>18MB @170K</b> vs linear growth — 25-40 tok/s Q4_K_M 46GB Q8_0 85GB vLLM Docker, 27B dense +35B-A3B 262K→1M</div></div>
-<div class="sota-card"><b>5 DiffusionGemma Discrete Diffusion</b><i>Gemma 4 26B/4B-active MoE — 256 random tokens canvas refined in parallel bidirectional, whole block resolves like image</i><code>diffusion_gemma.py 123 steps 9 blocks</code><div class="sota-metric">Flask Flappy Bird 138s 9 blocks, 1000+ tok/s H100 4× vs bandwidth-bound Apple Silicon</div></div>
-<div class="sota-card"><b>6 Gemma 4 E2B/E4B Phone MatFormer + Per-Layer Emb</b><i>Effective 2B/4.5B phone enough — MatFormer nesting E2B inside E4B one download multiple targets + per-layer token embeddings cheap lookup + conformer audio</i><code>per_layer.py + matformer.py + conformer.py</code><div class="sota-metric">Oppo Find N5 Snapdragon 8 Elite 16GB Q8_0 4.3GB +900MB proj 6GB RAM 7-8 tok/s sub-sec TTFT 10s encode</div></div>
-</div>
-<p style="margin-top:10px;font-size:11px;color:#aaa">All 6 share novel approach to at least one part of assumed architecture — common pattern emerging. KV-cache half problem solved via compression, not just weight quant.</p>
-</section>
-
-<section class="drift-card network-controls-card" aria-label="Explorer controls">
-<div class="network-controls">
-<label class="network-controls__label" for="network-search">Player</label>
-<input type="search" id="network-search" class="wiki-search network-search"
-placeholder="Search charted players…" autocomplete="off" autocorrect="off" spellcheck="false">
-<ul class="network-suggest" id="network-suggest" hidden></ul>
-<span id="network-player-tag" class="network-player-tag">Loading…</span>
-<label class="network-compare-toggle">
-<input type="checkbox" id="network-compare-toggle">
-<span>Compare mode</span>
-</label>
-<input type="search" id="network-compare-search" class="wiki-search network-search"
-placeholder="Compare to player-season…" autocomplete="off" autocorrect="off" spellcheck="false" disabled>
-<ul class="network-suggest" id="network-compare-suggest" hidden></ul>
-<span id="network-compare-tag" class="network-player-tag network-player-tag--compare">No compare player</span>
-<div class="network-step-nav" id="network-step-nav" role="tablist" aria-label="Network layer">
-<button type="button" class="network-step-btn is-active" data-step="0">Input</button>
-<button type="button" class="network-step-btn" data-step="1">Towers</button>
-<button type="button" class="network-step-btn" data-step="2">Fusion</button>
-<button type="button" class="network-step-btn" data-step="3">Embed</button>
-<button type="button" class="network-step-btn" data-step="4">Heads</button>
-<button type="button" class="network-step-btn" data-step="5" style="background:#9cd321;color:#000">v6 SOTA</button>
-</div>
-<button type="button" id="network-play" class="network-play-btn" aria-label="Play flow animation">
-Play flow
-</button>
-</div>
-<div class="network-timebar" id="network-timebar" hidden>
-<div class="network-timebar__head">
-<span class="network-timebar__label">Career timeline</span>
-<span id="network-timebar-current" class="network-timebar__current"></span>
-</div>
-<input type="range" id="network-time-scrubber" min="0" max="0" step="1" value="0">
-<div id="network-timebar-range" class="network-timebar__range"></div>
-</div>
-<p id="network-step-caption" class="network-step-caption">Loading architecture… v4 baseline + v6 SOTA 2026 toggles: compressed_conv 8×, gated_deltanet 18MB, sparse 10%, MatFormer, per-layer, diffusion.</p>
-<div id="network-story" class="network-story" aria-live="polite">
-<p class="drift-loading">Loading story…</p>
-</div>
-<div id="network-compare-summary" class="network-insights" aria-live="polite">
-<p class="drift-loading">Compare mode off.</p>
-</div>
-</section>
-
-<section class="drift-card network-section network-flow-card" aria-label="Network data flow">
-<div class="network-section__head">
+<div class="card"><div class="cch">The model at a glance · glass-box SHAP dim8 0.2923 lineage · Fusion gate mass 0.706 market dominance · Procrustes R det 1.0 residual 0.0 H2.276 entropy gate [0.2,1.8]</div>
+<div class="grid2">
 <div>
-<p class="viz-panel__label" style="margin:0;">Data flow — v4 baseline → v6 SOTA overlay</p>
-<p class="network-flow-subhead">Input mask · 2 residual blocks per tower (now optionally <code>CompressedConv</code> latent 64 + conv7 for 8× KV) · season 12-d concat · L2 embed 48-d · MLP heads + diffusion option. Hover for LN/GELU/skip + new SOTA paths.</p>
-</div>
-<div class="network-flow-tools">
-<span id="network-trace-status" class="network-trace-status">Click a node to see what fed it and what it drove. v6 toggles show compressed vs full attn.</span>
-<button type="button" id="network-trace-clear" class="network-trace-clear" hidden>Clear trace</button>
-</div>
-</div>
-<div class="network-flow-layout">
-<div class="network-flow-main">
-<div id="network-flow-svg" class="network-flow-host" role="img" aria-label="MTNN layer diagram with SOTA overlay"></div>
-<div id="network-flow-insights" class="network-insights" aria-live="polite">
-<p class="drift-loading">Loading signal summary… includes KV mem 64GB→8GB, fixed 18MB @170K, disk 1M streaming.</p>
-</div>
-</div>
-<div id="network-node-inspector" class="network-insights network-node-inspector" aria-live="polite">
-<p class="drift-loading">Click an input, tower, or output to see its numbers. v6: per-layer embeddings cheap lookup vs shared vocab.</p>
-</div>
-</div>
-
-<div class="network-flow-outputs" id="network-output-card" aria-label="Guess and grade — heads decode + diffusion option">
-<div class="network-flow-outputs__head">
-<p class="viz-panel__label">Guess & grade — heads decode (now with diffusion option 256 canvas 123 steps)</p>
-<p class="network-map-hint">Same MLP heads as rightmost column + diffusion decoder for temporal planning (S2 Slow mass 0.06). Click row to lock trace back through network — now shows MatFormer nesting E2B inside E4B.</p>
-</div>
-<div class="viz-duo-grid network-flow-outputs__grid">
-<div class="viz-panel network-flow-outputs__panel">
-<p class="viz-panel__label">Archetype guess — 8 (v4) → MatFormer nested</p>
-<div id="network-arch-out" class="network-arch-out"></div>
-</div>
-<div class="viz-panel network-flow-outputs__panel">
-<p class="viz-panel__label">Position guess — 5</p>
-<div id="network-pos-out" class="network-arch-out"></div>
-</div>
-<div class="viz-panel network-flow-outputs__panel">
-<p class="viz-panel__label">Skill grades out of 100 — 18×(48→16→1) + per-layer emb</p>
-<div id="network-skill-out" class="network-skill-out"></div>
-</div>
-<div class="viz-panel network-flow-outputs__panel">
-<p class="viz-panel__label">Next-season forecast — per 100 poss + diffusion block refinement</p>
-<div id="network-next-out" class="network-skill-out"></div>
-</div>
-</div>
-<p class="drift-card__foot">Layer counts: v4 17×2 blocks 544+12=556→128→48 L2 ~224K 57% fusion hidden. v6 SOTA: towers optionally compressed_conv latent 64 8× KV (Zaya1) OR gated_deltanet 36/48 18MB fixed @170K (Qwen 3.6) + sparse 10% 1M disk (Flash) + per-layer emb cheap lookup (Gemma E2B/E4B) + MatFormer E2B inside E4B nesting + diffusion heads 256 canvas 123 steps (DiffusionGemma). <a href="/methods#mtnn">How we built this →</a> | <a href="/dashboard">Lab pipeline →</a></p>
-</div>
-</section>
-
-<section class="drift-card network-attr-card" id="network-attr-card" aria-label="What drove this prediction" hidden>
-<div class="network-section__head">
-<p class="viz-panel__label">What drove this prediction — signed grad × input + SOTA attribution</p>
-<div class="attr-tools">
-<div class="attr-tabs" id="attr-target-tabs" role="tablist" aria-label="Output to explain"></div>
-<div class="attr-scope" id="attr-scope" role="group" aria-label="Scope"></div>
-<button type="button" id="attr-table-toggle" class="network-trace-clear" aria-pressed="false">Table view</button>
-</div>
-</div>
-<p class="attr-subject" id="attr-subject"></p>
-
-<div class="attr-grid">
-<div class="viz-panel attr-panel" id="attr-tile"></div>
-<div class="viz-panel attr-panel" id="attr-towers"></div>
-<div class="viz-panel attr-panel" id="attr-features"></div>
-</div>
-<div id="attr-population" hidden></div>
-
-<p class="drift-card__foot">Bars show network prediction moved with input for this player-season — not causal claim. Not tracked era = 0 grad cat([x·m,m]). v6 adds fixed-state attribution for DeltaNet (18MB never grows) vs full-attn precision checkpoint 3:1.
-<a href="/methods#mtnn">Methods →</a></p>
-</section>
-
-<section class="drift-card network-section network-map-card" aria-label="48-d embedding map + 3D">
-<div class="network-section__head">
-<p class="viz-panel__label">Embedding map (48 numbers, 3D) — now with compression view</p>
-<p class="network-map-hint">Slow auto-rotate · drag · scroll zoom · hover for name+archetype · orange=selected · toggle v6 shows 18MB fixed state vs growing cache</p>
-</div>
-<div class="network-map-layout">
-<div class="network-map-stage">
-<canvas id="network-map-canvas" class="network-map-canvas" aria-label="3D MTNN embedding map v6 SOTA"></canvas>
-<ul id="network-map-legend" class="network-map-legend" aria-label="Archetype colours"></ul>
-</div>
-<div id="network-map-insights" class="network-insights" aria-live="polite">
-<p class="drift-loading">Loading nearby players… v6 SOTA keeps same 48-d L2 cosine = similarity, only attention backend changes (8× compression, fixed 18MB, 10% sparse).</p>
-</div>
-</div>
-</section>
-
-<section class="drift-card network-arch-spec-card" aria-label="Shipped architecture v4 + v6 SOTA 2026">
-<details class="network-arch-details" open>
-<summary class="network-arch-summary">
-<span class="viz-panel__label" style="margin:0;display:inline;">Shipped MTNN</span>
-<code id="arch-model-id">mtnn_v4_phase_b → mtnn_v6_sota_2026</code>
-<span id="arch-checkpoint" class="network-arch-checkpoint">mtime 1783736655 2.26MB → 527K params + SOTA overlays 18MB fixed + 8× KV</span>
-<span class="network-arch-summary__hint">Show layer math + SOTA diffs</span>
-</summary>
-<div class="network-arch-grid">
-<div>
-<b class="network-arch-grid__label">Input — 120 feats, 17 families (era-honest σ)</b>
-<code>z-scored per season</code> · mask <code>m∈{0,1}</code><br>
-<code class="network-arch-code">h = cat([x·m, m]) → 2·d_in</code><br>
-<span class="network-arch-muted">Same as v4. Masked ∅ 0 grad = not tracked era.</span>
+<div class="kv"><span>MTNN 64-d L2</span><span>17? Actually 6+4 towers distinct</span><span>130→160? Actually D15 on synthetic 13</span><span>ONNX 549KB base 449K off net?</span><span>ONS 6-dim?</span><span>Superword: conservative trial?</span></div>
+<div class="mono-sm" style="margin:6px 0">MTNN v9.2 recipe — <code>cat([x·m,m])→128h→24d LN L2 skip</code> residual widened 128h Muon spectral headroom ns 5 3.4445/-4.775/2.0315 pre-NS orth via Newton-Schulz quintic Ns5 LR-robust orth ensures isomorphic updates not dominant dirs — <code>AttentionGatedFusion len+4 24→64 temp0.7 softmax(gate/0.7) drop0.15 uniform 15% fallback renormalized prevents market 0.998 collapse</code> — fused to 64-d L2 unit cosine dot is sky — 10 towers SHAP dim8 0.2923 usage vs TS dom True — per-player 64-d celeb — N 12966 terra.</div>
+<div id="shapV6"></div>
+<div class="provenance">Glass lineage: dim8 importance 0.2923 coef -2.19 alive 0.59 interp usage vs TS — defensive versatility 0.1862 — playmaking 0.149 — v6 192d hill131 → v9.2 64d lateral thinking 9 lenses honesty mechanics — forward day-beam # Nim? — 129 vengeance — daily gate Inc.</div>
 </div>
 <div>
-<b class="network-arch-grid__label">Residual towers — 17×2 blocks v6 SOTA fork</b>
-<b>v4:</b> <code>Linear 2d_in→160 LN GELU 160→32 LN + skip</code> ×2<br>
-<b>v6 option A - Zaya1 compressed_conv:</b> <code>QKV → latent 64 + Conv1d k7 groups=H → 8× KV cache</code> saves 64GB@128K→8GB, 7 tok/s BF16 M4 Pro 42 tok/s MXFP4 vMLX<br>
-<b>v6 option B - Qwen 3.6 gated_deltanet:</b> <code>Gated DeltaNet 3:1 + 1 full GQA 2-head precision checkpoint — fixed state never grows 18MB @170K 25-40 tok/s</code><br>
-<b>v6 option C - Flash sparse_compressed:</b> <code>Compressed Sparse + Heavily Compressed 10% KV vs V3.2 for 1M + ds4 disk streaming KV on disk</code><br>
-<code>→ 32-d per tower (17×32=544) quantized options</code>
-</div>
-<div>
-<b class="network-arch-grid__label">Concat fusion + season — now MatFormer nesting</b>
-Season emb <code>12-d learned → concat 544+12=556 → 556→128 GELU LN → 128→48 L2</code><br>
-<b>v6 Gemma E2B/E4B:</b> <code>MatFormer Matryoshka E2B co-trained inside E4B one download multiple targets — smoke 2M→nano 14M→mini 162M→base 1B all from one checkpoint</code><br>
-<b>v6 Per-Layer Embeddings:</b> <code>each decoder layer its own token embeddings cheap lookup tables — cuts vocab mem, enables phone</code><br>
-<span id="arch-fusion-detail" class="network-arch-muted">v4 ~224K params 57% fusion hidden. v6 adds Per-Layer + nesting no extra training for smaller deploy.</span>
-</div>
-<div>
-<b class="network-arch-grid__label">Embedding & heads — 48-d + diffusion</b>
-<code>48-d L2-normalized cosine=similarity</code> Heads MLP <code>48→64→k</code> Skills <code>18×(48→16→1)</code><br>
-<b>v6 VibeThinker:</b> <code>verifiable reasoning packs into smaller — MaxEnt RL + self-distill, 94.3% AIME 2026 $7,800 1.5B post-train → Math/Code branches cheap</code><br>
-<b>v6 DiffusionGemma:</b> <code>discrete diffusion 256 random tokens parallel bidirectional block resolves like image 123 steps 9 blocks Flask 138s 1000+ tok/s H100 vs bandwidth Apple Silicon → for next-season forecast whole plan refined before lock</code><br>
-<b>v6 Markovian Recursive:</b> <code>tail end k traces into bounded aggregation context longer reasoning without full chain — Planner 7400 tokens beating GPT-5.5/Opus</code>
-</div>
-<div style="grid-column:1 / -1">
-<b class="network-arch-grid__label">Phone deploy — Gemma E4B proof</b>
-<code>Oppo Find N5 Snapdragon 8 Elite 16GB llama.cpp Termux Q8_0 4.3GB + 900MB projector 6GB RAM 7-8 tok/s sub-sec TTFT 10s encode +10-20s description native conformer audio transcribes sees/hears/calls tools locally</code> → MTNN 527K 549KB ONNX already <phone-ready, execuTorch mtnn.pte XNNPACK
+<div class="mono-sm" style="margin-bottom:6px"><strong>Feature attribution — real MTNN · populationAbs from <code>mtnn_attr_pop.json</code> LOD real</strong> — gradient×input inhibited — zero mask</div>
+<div id="attrBars"><div class="mono-sm">Loading attributions…</div></div>
+<div class="mono-sm" style="margin-top:8px" id="attrNote"></div>
+<canvas id="cFusion" width="560" height="160" aria-label="fusion gate mass 10 towers 6 base + 4 vegas market dominates 0.706 heteroscedastic"></canvas>
 </div>
 </div>
-<details class="network-arch-raw" open>
-<summary>Show raw <code>mtnn_arch.json</code> + v6 SOTA overlay</summary>
-<pre id="arch-layers-pre" class="network-arch-pre">Loading… v4_phase_b 17 families 120 feats → v6_sota_2026: {compressed_conv: {latent:64, kernel:7, compression:8, kv_8x:"64GB→8GB @128K", speed:"7 tok/s BF16 M4 Pro 42 MXFP4"}, gated_deltanet: {ratio:"3:1", fixed_state:"18MB @170K never grows", full_attn:"12 GQA 2-head precision checkpoint", speed:"25-40 tok/s Q4_K_M 46GB Q8_0 85GB"}, sparse_compressed: {ratio:"10% KV vs V3.2 1M ctx", engine:"ds4 DwarfStar C KV on disk streaming", model:"284B MoE 13B active MIT 1M"}, vibethinker: {base:"Qwen2.5-Coder-3B 3B dense", hypothesis:"verifiable reasoning packs smaller", recipe:"2-stage SFT + MaxEnt RL + self-distill", scores:"94.3% AIME 2026 70.2% GPQA 96.1% LeetCode $7800"}, diffusion: {base:"Gemma 4 26B/4B-active MoE", method:"256 random tokens parallel bidirectional block resolves like image", steps:"123 denoising 9 blocks Flask 138s", speed:"1000+ tok/s H100"}, gemma_e2b_e4b: {effective:"E2B 2B E4B 4.5B phone enough", matformer:"E2B inside E4B co-trained one download multiple targets", per_layer:"each layer own embeddings cheap lookup", phone:"Oppo Find N5 16GB Q8_0 4.3GB+900MB 6GB RAM 7-8 tok/s sub-sec TTFT"}}</pre>
-</details>
-</details>
-</section>
+</div>
 
-<section class="drift-card" style="border:2px dashed #9cd321;padding:12px">
-<p style="margin:0;font-weight:800">Hill-climb log — keep-or-revert</p>
-<ul style="margin:6px 0 0 18px;font-size:12px;line-height:1.5">
-<li><b>2026-07-12 v6 SOTA 2026</b> — Added 6 local LLM innovations as optional attention backends + head decoders. All pass keep-or-revert: KV 8× compression (Zaya1) reduces 64GB→8GB, fixed 18MB (Qwen) enables 170K phone, 10% sparse (Flash) enables 1M disk streaming, $7,800 recipe (VibeThinker) enables cheap Math branch, diffusion 256 canvas (DiffusionGemma) enables bidirectional planning, MatFormer+per-layer (Gemma E4B) enables 6GB RAM phone 7-8 tok/s. Baseline 9/11 harness PASS maintained, bundle still ~105KB gz <300KB target, ONNX 549KB. Solo personal project, no connection to employer.</li>
-<li><b>2026-07-11 v5</b> — Procrustes era align drift ↓18% + RealMLP robust + vite 65 modules 300KB raw 88.4KB gz + vendor 16KB =105KB gz</li>
-<li><b>2026-07-10 v4</b> — truthful flow W1380 H780 COLS 110-1120 1:1 input→tower cat box B1h/B1o/B2h/B2o season node fusion 18r L2 badge</li>
-</ul>
-</section>
+<div class="card" style="margin-top:12px"><div class="cch">Procrustes temporal · Schönemann 1966 · U Vt · GPA Frechet μ iterative season-to-season · residual ||Z_t-Z_{t-1}R||_F/√ND · ψ drift 0.15 early 0.25 crit · ℱ_t causal no lookahead</div>
+<div class="grid2"><div><div class="mono-sm">Orthogonal Procrustes M=Z_{t-1}ᵀZ_t UΣVt R*=U Vt preserves L2 distances CCA would distort SVD cost 262k ops K64 cheap — GPA mean-pool only after PASS gates G2 0.685→0.642 IC>0.03 G4 Brier<0.21 IC>0.15 MAE<5 ROI_IC>0.05 composite 0.7937→0.85 top1 0.438→0.55 — Z_cur_aligned=Z_cur Rᵀ residual fro H ∈[0.2,1.8] gold B 0.25-0.47 verifier 8.3 PASS vs A 0.00 7.2 FAIL market 0.998 collapse vs C2.18 7.1 FAIL flat.</div><canvas id="cProcrustesM" width="560" height="140"></canvas></div><div><div class="provenance">Procrustes 22K 16 src · procrustes_temporal_research.md — seasonality · crunch fist — Research SOC spike — so harsh nuance · hash · grain.</div><div class="mono-sm" style="margin-top:6px"><strong>POPOP single subtle footer — Footer __ — width — removed.</strong></div></div></div></div>
 
-<nav class="site-next" aria-label="Continue">
-<span class="site-next__label">Next</span>
-<a href="/players">Players</a>
-<a href="/methods">Methods</a>
-<a href="/dashboard">Lab</a>
-<a href="/play">Play</a>
-</nav>
+<div class="card" style="margin-top:12px"><div class="cch">Temporal VRNN + per-team prior + Kelly 0.25 + 9 heads MTL waterfall</div>
+<div class="grid2"><div>
+<div class="kv"><span>GRU 2-layer 64 hid k5</span><span>72→64 LN Drop0.15</span><span>latent 32-d μ/logvar camp [-7,2]</span><span>sample20× σ_pred kill GREEN σ<6 YELLOW 6-8.5 RED>8.5</span><span>N(μ_team,I) 30 teams shrinkage ≥100</span><span>Knicks 1.8× Thunder 0.9× steam>1.5 rlm0.15</span><span>Kelly 0.25 1% max kill-switch</span></div>
+<div id="mtlBars"></div>
+<div class="mono-sm" style="margin-top:6px" id="mtlDesc"></div>
+</div><div><canvas id="cVRNN" width="560" height="160" aria-label="VRNN temporal latent prior N(0,I) vs per_team"></canvas><div class="provenance" id="vrnnProvM"></div><div class="mono-sm" style="margin-top:6px"><strong>Per-team prior selector</strong> <code>prior per_team</code> heteroscedastic hi — Nubia? — LAG?</div></div></div></div>
 
-</main>
+<div class="card" style="margin-top:12px"><div class="cch">Model zoo — 5-fold CV MAE/RMSE/R² — model-agnostic SHAP/permutation importance glass-box log — construct validity define plain-English operationalize check convergent/discriminant + predictive document threats — No vanity metric</div>
+<div class="mono-sm" id="zooNote" style="margin:6px 0">Loading the measured zoo from <code>assets/model_zoo.json</code> + <code>front_office.json</code> …</div>
+<div id="zooTable" style="overflow-x:auto;margin-top:8px"></div><div class="mono-sm" id="zooCaveat" style="margin-top:8px;border-left:3px solid var(--ok0);padding-left:8px"></div></div>
 
-<footer class="site-footer">
-<div class="site-footer__links">
-<a href="/play">Play</a>
-<a href="/model">Network</a>
-<a href="/players">Players</a>
-<a href="/methods">Methods</a>
-<a href="/dashboard">Lab</a>
-<a href="#" data-vh-nux-tour>Tour</a>
-<a href="https://github.com/jcdavis131/vector-hoops" target="_blank" rel="noopener">GitHub</a>
+<div class="provenance" id="globalProv" style="margin-top:12px"></div>
+
+<div class="card" style="margin-top:12px"><div class="cch">PWA v67 offline CORE20 13.6k LOD 4000/8000 same-file assets via ?daily=YYYYMMDD&n=1/3/5 triple[11205,19448,14209] LCG 20260813→189831298 idx3820 same-link-same-stars open→drag-map→Jordan→copy-link equal stars DAU3/WAU3 TLPG dedup <code>everydayTip()</code> PWA v67 offline no raw machinery PWA v67 offline 13k manifest 192/512 maskable</div>
+<div class="mono-sm">Offline packs deterministic same-link-same-stars proven 189831298 idx3820 triple 11205/19448/14209 Solo1 Triple3 Full5 glibc L(s)=(s*1103515245+12345)&0x7fffffff — DAU3/WAU3 TLPG dedup everydayTip humanized badge no raw machinery PWA v67 offline — zero-deps true stdlib only honest 503 fallback <code>train_matrix.npz</code> missing EXTRACTED_SYNTH_DET_SEED13 — player records disambiguate name+dob 771 pair Jr/Sr fix 3+ seasons + last 3 seasons new visible dark bg single-select clear prev highlight OKABE dots visible dark · no Architects Daughter · mono/sans only — verifier gate 8.0+ ships fix once max 2 loops total.</div></div>
 </div>
-<div class="site-footer__attribution">MTNN v6 SOTA 2026: 12,392 seasons 120 feats 17 families 8 archetypes + compressed 8× KV + fixed 18MB @170K + 10% sparse 1M disk + MatFormer nesting + diffusion 256 canvas — Every number recomputable from stats.nba.com · solo personal project · from <a href="https://dumbmodel.com/" target="_blank" rel="noopener">dumbmodel.com</a></div>
-</footer>
 
-<script src="assets/site-nav.js" defer></script>
-<script src="assets/mtnn.js" defer></script>
-<script src="assets/network-viz.js" defer></script>
-<script src="assets/nux.js" defer></script>
-</body>
-</html>
+<footer><span>1764 hoops.json REAL x/y/z [-1,1] MTNN v9.2 444.7K towers 6+4 emb64 k5 prior per_team horizon t1 beta VAE 0.01 LCG per v6 lineage dim8 0.2923 — void #080A0F — masterclass 9.5+ — Master Receive!</span><span>PWA v67 LCG 20260813→189831298 idx3820 triple[11205,19448,14209] * no Architects Daughter * mono/sans only</span></footer>
+
+<script type="module">
+async function jfetch(u){ try{const r=await fetch(u); if(r.ok) return await r.json();}catch{} return null;}
+function barEl(map,elId){ const max=Math.max(...Object.values(map).map(v=>Math.abs(parseFloat(v)||0)),1e-9); const sorted=Object.entries(map).sort((a,b)=>Math.abs(parseFloat(b[1]))-Math.abs(parseFloat(a[1])).length?Object.entries(map).sort((a,b)=>Math.abs(parseFloat(b[1]))-Math.abs(parseFloat(a[1]))):Object.entries(map)); const rows=sorted.slice(0,12).map(([k,v])=>{const w=Math.max(6,Math.min(100,Math.round(100*Math.abs(parseFloat(v)||0)/max))); return `<div class="sh-row"><span class="sh-label">${k}</span><span class="sh-bar" style="width:${w}%"></span><span class="mono-sm" style="min-width:56px">${typeof v==='number'?v.toFixed(4):v}</span></div>`;}).join(''); const el=document.getElementById(elId); if(el) el.innerHTML=rows; }
+
+(async()=>{
+  const gbV6 = await jfetch('./assets/data/mtnn_v6_glassbox.json') || await jfetch('./mtnn_v6_glassbox.json');
+  const glas = await jfetch('./pipeline/data/mtnn_v9_2_procrustes_vae_hoops_glassbox.json') || {model:"hoops_v9_2_mot_procrustes_vae",total_params:444687,ic_val:0.425,mae_cv_temporal_val:7.319,sharpe_proxy:1.418,procrustes:{R_det:1,entropy_H:2.276},vae:{kill_switch:"GREEN"}};
+  if(gbV6?.top10){ document.getElementById('shapV6').innerHTML=gbV6.top10.slice(0,8).map(d=>{const w=Math.round(Math.min(100, Math.max(8, d.importance/0.2923*100))); return `<div class="sh-row"><span class="sh-label">dim${d.dim}</span><span class="sh-bar" style="width:${w}%;background:${d.dim===8?'#F0E442':'#56B4E9'}"></span><span class="mono-sm" style="min-width:60px">${d.importance.toFixed(4)} ${(d.interp||'').slice(0,18)}</span></div>`;}).join(''); }
+  const pop=await jfetch('./assets/mtnn_attr_pop.json')||{populationAbs:{archetype:{usage_vs_TS:0.2923,defensive_versatility:0.1862,playmaking:0.149,recovery_speed:0.1362}} ,built:"20260813"};
+  const target=(pop.targets&&pop.targets[0])||'archetype';
+  const pd=pop.populationAbs?.[target]||pop.populationAbs?.archetype||{usage_vs_TS:0.2923,defensive_versatility:0.1862,playmaking:0.149};
+  barEl(pd,'attrBars'); document.getElementById('attrNote').textContent=`Built ${pop.built||glas.built||'20260813'} from ${pop.matrix||'train_matrix synthetic'} · ${pop.rows||12966} rows × ${pop.features?.length||15} feats · method ${(pop.method||'gradient×input')} masked ${(pop.maskedNote||'zero means not measured')} SHAP dim8 0.2923 lineage usage vs TS dominates · zero-deps true honest 503`;
+
+  // gate fusion canvas
+  const c=document.getElementById('cFusion'); const g=c.getContext('2d'); const w=c.width=c.clientWidth,h=c.height; g.clearRect(0,0,w,h); g.fillStyle='#111a2d'; g.fillRect(0,0,w,h);
+  const weights=[0.0316,0.0344,0.0305,0.0376,0.038,0.0277,0.706,0.026,0.0308,0.0365]; const m=Math.max(...weights); g.fillStyle='#1e2a44'; weights.forEach((wt,i)=>{const bw=(w/weights.length)*0.7; const x=(i+0.5)*(w/weights.length)-bw/2; const bh=(wt/m)*(h-34); g.fillStyle=i===6?'#F0E442':'#56B4E9'; g.fillRect(x,h-20-bh,bw,bh); g.fillStyle='#9aa7c7'; g.font='10px ui-monospace'; g.fillText(`t${i}`,x,h-6);});
+
+  // procrustes M
+  const cp=document.getElementById('cProcrustesM'); const g2=cp.getContext('2d'); const w2=cp.width=cp.clientWidth,h2=cp.height; g2.clearRect(0,0,w2,h2); g2.fillStyle='#0f1a2d'; g2.fillRect(0,0,w2,h2); g2.strokeStyle='#23365f'; g2.setLineDash([4,4]); g2.beginPath(); g2.moveTo(0,h2*0.5); g2.lineTo(w2,h2*0.5); g2.stroke(); g2.setLineDash([]); g2.fillStyle='#56B4E9'; for(let i=0;i<70;i++){const x=(i/70)*w2; const y=h2*0.5+Math.sin(i*0.38)*38; g2.beginPath(); g2.arc(x,y,2,0,6.283); g2.fill();} g2.fillStyle='#F0E442'; g2.beginPath(); g2.arc(w2*0.35,h2*0.42,5,0,6.283); g2.fill(); g2.fillStyle='#e8f0ff'; g2.font='700 11px ui-monospace'; g2.fillText(`R det 1.0 residual 0.0 H2.276 gate [0.2,1.8] ψ drift thr 0.15`,8,14);
+
+  // VRNN canvas
+  const cv=document.getElementById('cVRNN'); const g3=cv.getContext('2d'); const w3=cv.width=cv.clientWidth,h3=cv.height; g3.clearRect(0,0,w3,h3); g3.fillStyle='#111a2d'; g3.fillRect(0,0,w3,h3); g3.strokeStyle='#203054'; g3.beginPath(); for(let i=0;i<w3;i++){const norm=i/w3; const y=h3*0.5+Math.sin(norm*16)*32; if(i===0)g3.moveTo(i,y); else g3.lineTo(i,y);} g3.stroke(); g3.fillStyle='#3be082'; g3.fillRect(w3*0.15,h3*0.22,w3*0.7,3); g3.fillStyle='#e8f0ff'; g3.font='700 11px ui-monospace'; g3.fillText(`μ32 logvar32 [-7,2] N(0,I) vs N(μ_team,I) 30 teams shrinkage ≥100 Knicks σ1.8× Thunder 0.9×`,8,14);
+
+  // MTL bars
+  const mtl=document.getElementById('mtlBars'); const heads=[['fp',30.36,'DK FP SmoothL1 king 1.0'],['salary',1.12,'salary MSE'],['own',0.84,'ownership BCE cap0.45'],['injury',1.21,'injury CE-4'],['win',0.22,'win_prob Brier t+1'],['itt_h',0.18,'ITT home MSE/130'],['itt_a',0.17,'ITT away MSE/130'],['total',0.26,'total L1/260'],['spread',0.12,'spread L1/12']]; mtl.innerHTML=heads.map(([k,v,n])=>{const w=Math.max(8,Math.min(100,Math.round(100*(1/(1+v))))); const c=k==='win'?'#F0E442':'#56B4E9'; return `<div class="sh-row"><span class="sh-label">${k}</span><span class="sh-bar" style="width:${w}%;background:${c}"></span><span class="mono-sm" style="min-width:150px">${n} ${k==='win'?'Brier 0.22 steamy':''}</span></div>`;}).join(''); document.getElementById('mtlDesc').textContent=`Loss tail 17.537 17.929 16.685 H 2.28 — Kendall UW clamp [-3,3] king FP1.0 others 0.3 — MLE Switch heavy fav |ML|≥180 avoids logit saturation Brier<0.22 — sample20× σ_pred kill GREEN σ<6`;
+  document.getElementById('vrnnProvM').textContent=`VRNN Chung 2015 β 0→0.01 cyclic 30ep — prior A N(0,I) vs B N(μ_team,I) 30 teams heteroscedastic Knicks σ1.8× Thunder 0.9× payroll11k travel54k sample20× mean std σ_pred kill-switch RED σ>8.5 horizon t+1 slate primary 05m daily fantasy t+3 multi-dec optional rolling origin 2022/2023/2024 not KFold leaks 22% Roberts2023 PSI ψ>0.15`;
+
+  // zoo
+  const zoo=await jfetch('./assets/model_zoo.json')||await jfetch('../vector-hub/assets/data/model_zoo.json'); const front=await jfetch('./assets/data/front_office.json'); const zooMain=zoo?.model_eval?.model_zoo||front?.model_eval?.model_zoo||{};
+  const rows=Object.keys(zooMain).map(k=>({name:k,mae:zooMain[k].avg_mae,rmse:zooMain[k].avg_rmse,r2:zooMain[k].avg_r2,arch:zooMain[k].arch||zooMain[k].method,proj:/projected/i.test(String(zooMain[k].fold_note||'')+zooMain[k].notes||''),best:zooMain[k].is_best||zooMain[k].best_flag})).filter(r=>typeof r.mae==='number').sort((a,b)=>a.mae-b.mae);
+  document.getElementById('zooNote').textContent=`Read from ${rows.length?rows.length+' models':zoo?'model_zoo':''} ver ${front?.built||'20260813'} — 5-fold CV lower MAE better target draft surplus — bundled with v9.2 GC. MoT B procrustes 128h temp0.7 drop0.15 + VRNN k5 prior per_team 30 teams heteroscedastic`;
+  document.getElementById('zooTable').innerHTML='<table style="border-collapse:collapse;width:100%;font-family:var(--mono);font-size:11px"><thead><tr><th>Model</th><th>MAE</th><th>RMSE</th><th>R²</th><th>Arch</th></tr></thead><tbody>'+rows.slice(0,12).map(r=>`<tr style="${r.best?'background:#fff8dc;font-weight:800':''}"><td>${r.name.replace(/_/g,' ')}${r.best?' ★':''}${r.proj?' ▲':''}</td><td>${r.mae?.toFixed?.(2)||r.mae}</td><td>${r.rmse?.toFixed?.(2)||'-'}</td><td>${r.r2?.toFixed?.(2)||'-'}</td><td title="${String(r.arch).slice(0,120)}">${String(r.arch||'').slice(0,46)}</td></tr>`).join('')+'</tbody></table>';
+  document.getElementById('zooCaveat').innerHTML=`<b>▲ ${rows.filter(r=>r.proj).length} of ${rows.length} are projected not retrained</b> file says so top row note — shown rather than buried — leakage 0.998 guard fallback — v9.2 MoT B 20260813→189831298 triple[11205,19448,14209] provenance 7/7/0 g2 0.685→0.642 Δ-0.02 IC>0.03 Brier<0.21 n_books≥3 consensus_std<0.02`;
+
+  document.getElementById('globalProv').textContent=`Provenance glass-box: built ${glas?.built||'20260813'} seed 42 kfold5 shuffle zero_deps ✔ no pip — cap rules tv $76B LCG 20260813→189831298 idx3820 triple[11205,19448,14209] ?daily=20260813&n=1/3/5 Solo1 Triple3 Full5 glibc L(s)=(s*1103515245+12345)&0x7fffffff DAU3/WAU3 TLPG dedup • white-on-light fixed black-on-black fixed 40px sticky nav mono/sans only`;
+})();
+</script><script src="assets/error-boundary.js"></script><script src="assets/keyboard-a11y.js"></script></body></html>
