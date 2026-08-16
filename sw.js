@@ -10,7 +10,7 @@
    - viewport-fit=cover theme-color #080A0F no white flash — no dev pills — loader <2s resolves tap-to-retry overlay
    - OKABE dots 2.4px border 1px void visible dark ivory #FFFEF7 19.1:1
 */
-const CACHE_NAME = 'vector-hoops-v67-offline13k';
+const CACHE_NAME = 'vector-hoops-v67-japandi-book-20';
 const CORE = [
 '/', 
 '/index.html',
