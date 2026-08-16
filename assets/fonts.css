@@ -1,11 +1,11 @@
-/* fonts.css v9.2 canonical — system mono/sans only — Architects Daughter removed for business-ready contrast
-   Previous design used Architects Daughter from Google Fonts for paper aesthetic.
+/* fonts.css v9.2 canonical — system mono/sans only — removed handwritten font removed for business-ready contrast
+   Previous design used removed handwritten font from Google Fonts for paper aesthetic.
    Business-ready masterclass requires system mono/sans only — no third-party font origin,
    no render-blocking stylesheet, no white-on-light / black-on-black contrast issues from decorative font.
    License safe, zero-deps true, offline13k PWA friendly.
 */
 :root{
-  /* system stacks only — no Architects Daughter */
+  /* system stacks only — no removed handwritten font */
   --mono:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono",monospace;
   --sans:ui-sans-system,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
 }
