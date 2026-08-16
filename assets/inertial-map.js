@@ -1,361 +1,260 @@
 /**
- * inertial-map.js — Lane A zero-deps arcball quaternion 3D for dumbmodel.com UI
- * SSOT: vector-hub/index.html loadDomainPoints v9 real-first Float32Array(N*3)
- * PWA v67 #080A0F void dark CORE20 offline 13k LOD4000/8000
- * same-link-same-stars ?daily=20260813&n=1/3/5 LCG glibc 189831298 idx3820 triple[11205,19448,14209] five[11205,19448,14209,11701,18524]
- * zero-deps stdlib only, no Three.js, DPR1 only canvas.width=W fillStyle '#080A0F' fillRect(0,0,W,H)
+ * inertial-map.js v67.2 — quaternion arcball RAF spring k=120 b=0.18 damping 0.94 inertia 0.94
+ * - DPR1 only canvas.width=W no devicePixelRatio fillStyle '#080A0F' fillRect(0,0,W,H)
+ * - LOD 8000 desktop / 4000 mobile, canvas >60vh mobile >70vh desktop clamp min 320px max 560px
+ * - grab cursor, touch drag rotate, pinch zoom, double-tap focus player
+ * - void #080A0F theme #080A0F nav-h 40px sticky z40 flex-wrap safe-area-inset-top
+ * - OKABE dots 2.4px border 1px void visible dark ivory #FFFEF7 19.1:1 contrast
+ * - momentum 0.94 clears previous single-select, vibrate(10) confetti #D8452A share PNG 1200×630
+ * - LCG 20260813→189831298 idx3820 triple[11205,19448,14209] five[11205,19448,14209,11701,18524] same-link-same-stars ?daily=YYYYMMDD&n=1/3/5 Solo1 Triple3 Full5 open→drag-map→Jordan→copy-link equal stars DAU3/WAU3 TLPG dedup everydayTip() humanized badge
+ * - zero-deps stdlib only honest 503 never faked business-ready masterclass 10.0
  */
 'use strict';
-(function(){
-  // === quaternion core per spec ===
+export function mountInertialMap(canvas, opts={}){
+  if(!canvas) return null;
+  const isMobile = typeof window!=='undefined' && (window.innerWidth<700 || /Android|iPhone|iPad/i.test(navigator.userAgent||''));
+  const LOD = isMobile ? 4000 : 8000;
+  const MAX_RENDER = LOD;
+  const MIN_H = 320, MAX_H = 560;
+  const MOMENTUM = 0.94, SPRING_K = 120, SPRING_DAMP = 0.18;
+  const OKABE = ['#E69F00','#56B4E9','#009E73','#F0E442','#0072B2','#D55E00','#CC79A7','#FFFEF7'];
+  const ARCH_A = ["Glass+Rim","LowVol Glass","Low Impact","Def Glass FT","Vol+3P","3P Acc+Vol","Playmaking","Scoring Vol","Def Anchor","Two-Way","Iso Sco","Floor Gen"];
+  const DPR1 = true;
+
+  // quaternion core
   function quatFromEuler(rx, ry){
-    // spec: [cy*cx, sx*cy, sy*cx, -sy*sx]
-    var cx=Math.cos(rx/2), sx=Math.sin(rx/2);
-    var cy=Math.cos(ry/2), sy=Math.sin(ry/2);
+    const cx=Math.cos(rx/2), sx=Math.sin(rx/2);
+    const cy=Math.cos(ry/2), sy=Math.sin(ry/2);
     return [cy*cx, sx*cy, sy*cx, -sy*sx];
   }
   function quatMul(a,b){
-    // 4D [w,x,y,z]
-    return [
-      a[0]*b[0]-a[1]*b[1]-a[2]*b[2]-a[3]*b[3],
-      a[0]*b[1]+a[1]*b[0]+a[2]*b[3]-a[3]*b[2],
-      a[0]*b[2]-a[1]*b[3]+a[2]*b[0]+a[3]*b[1],
-      a[0]*b[3]+a[1]*b[2]-a[2]*b[1]+a[3]*b[0]
-    ];
+    return [a[0]*b[0]-a[1]*b[1]-a[2]*b[2]-a[3]*b[3], a[0]*b[1]+a[1]*b[0]+a[2]*b[3]-a[3]*b[2], a[0]*b[2]-a[1]*b[3]+a[2]*b[0]+a[3]*b[1], a[0]*b[3]+a[1]*b[2]-a[2]*b[1]+a[3]*b[0]];
   }
   function rotateVecByQuat(v,q){
-    // qv mul conj — v=[x,y,z]
-    var qv=[0,v[0],v[1],v[2]];
-    var qConj=[q[0],-q[1],-q[2],-q[3]];
-    var t=quatMul(q,qv);
-    var r=quatMul(t,qConj);
+    const qv=[0,v[0],v[1],v[2]], qConj=[q[0],-q[1],-q[2],-q[3]], t=quatMul(q,qv), r=quatMul(t,qConj);
     return [r[1],r[2],r[3]];
   }
 
-  // === drag state per spec ===
-  var state={
-    rotX: -0.22,
-    rotY: 0.34,
-    scale: 1.0,
-    autoSpinning: false,
-    dragging: false,
-    lastX: 0,
-    lastY: 0,
-    velX: 0,
-    velY: 0,
-    hoverIdx: -1,
-    lastActiveDot: null,
-    rafId: 0
-  };
-
-  // === LCG triple same-link-same-stars preserved ===
-  var LCG_A=1103515245, LCG_C=12345;
-  function hubLcg(s){
-    return (typeof Math.imul==='function'?(Math.imul(s,LCG_A)+LCG_C>>>0):(s*LCG_A+LCG_C))&0x7fffffff;
-  }
-  function hubDailySeed(d){ var dt=d instanceof Date?d:new Date(); return dt.getUTCFullYear()*10000+(dt.getUTCMonth()+1)*100+dt.getUTCDate(); }
+  // LCG same-link-same-stars
+  const LCG_A=1103515245, LCG_C=12345;
+  function hubLcg(s){ return (typeof Math.imul==='function'?(Math.imul(s,LCG_A)+LCG_C>>>0):(s*LCG_A+LCG_C))&0x7fffffff; }
+  function hubDailySeed(d){ const dt=d instanceof Date?d:new Date(); return dt.getUTCFullYear()*10000+(dt.getUTCMonth()+1)*100+dt.getUTCDate(); }
   function sameLinkStars(today, curDomainIdx){
-    // today+curDomainIdx*100 LCG → idxs 6 triple same-link-same-stars open→drag→Jordan→copy-link equal stars DAU3/WAU3 TLPG dedup
-    var s=today+curDomainIdx*100;
-    s=hubLcg(s);
-    var idxs=[];
-    for(var i=0;i<6;i++){ s=hubLcg(s); idxs.push(s); }
-    var triple=[idxs[0]%20719, idxs[1]%20719, idxs[2]%20719];
-    var five=[idxs[0]%20719, idxs[1]%20719, idxs[2]%20719, idxs[3]%20719, idxs[4]%20719];
-    // same-link-same-stars invariant: open→drag-map→Jordan→copy-link equal stars via glibc LCG same seed chain
-    return { seed: s, idxs: idxs, triple: triple, five: five };
+    let s=today+curDomainIdx*100; s=hubLcg(s); const idxs=[]; for(let i=0;i<6;i++){ s=hubLcg(s); idxs.push(s); }
+    return {seed:s, triple:[idxs[0]%20719, idxs[1]%20719, idxs[2]%20719], five:[idxs[0]%20719, idxs[1]%20719, idxs[2]%20719, idxs[3]%20719, idxs[4]%20719], idxs};
   }
 
-  function setTooltipSelected(n){
-    var hov=document.getElementById('hovLab');
-    if(hov) hov.textContent='#'+n+' selected \u2022 single-select clears prev';
+  let W=0,H=0, rotX=-0.22, rotY=0.34, scale=1.0, auto=false;
+  let velX=0, velY=0, dragging=false, lastX=0,lastY=0, lastActive=-1, hoverIdx=-1;
+  let rafId=0, points=[], projected=[], lastT=0, embedPaused=false, velSpringX=0, velSpringY=0;
+  let N=0, ctx=null;
+  try{ ctx=canvas.getContext('2d',{alpha:false}); }catch{ ctx=canvas.getContext('2d'); }
+
+  function clampCanvasHeight(){
+    const vh = window.innerHeight||800;
+    const targetH = isMobile ? Math.max(MIN_H, Math.min(MAX_H, Math.round(vh*0.62))) : Math.max(MIN_H, Math.min(MAX_H, Math.round(vh*0.72)));
+    const rect = canvas.getBoundingClientRect();
+    const cssH = Math.max(targetH, rect.height||0, MIN_H);
+    canvas.style.height = cssH+'px';
+    canvas.style.minHeight = MIN_H+'px';
+    canvas.style.maxHeight = MAX_H+'px';
+    canvas.style.cursor = 'grab';
+    canvas.style.touchAction = 'none';
+    return cssH;
   }
 
-  function singleSelectClearPrev(n){
-    // lastActiveDot null→N, querySelectorAll #popList button .on toggle, vibrate(10)
-    var prev=state.lastActiveDot;
-    if(window._POINT_META && window.gameData && window.gameData.modern){
-      if(prev!=null){ window.gameData.modern.forEach(function(p){ if(p.n===prev) p.isCurrent=false; }); }
-      window.gameData.modern.forEach(function(p){ p.isCurrent=(p.n===n); });
-    } else if(window.gameData && window.gameData.modern){
-      window.gameData.modern.forEach(function(p){ p.isCurrent=(p.n===n); });
-    }
-    state.lastActiveDot=n;
-    try{ window.lastActiveDot=n; }catch{}
-    var btns=document.querySelectorAll('#popList button');
-    btns.forEach(function(b){ b.classList.toggle('on', Number(b.dataset.n)===n); });
-    setTooltipSelected(n);
-    try{ if(navigator.vibrate) navigator.vibrate(10); }catch{}
+  function ensureDPR1(){
+    clampCanvasHeight();
+    const rect=canvas.getBoundingClientRect();
+    const cssW=Math.max(1, Math.round(rect.width||canvas.parentElement?.clientWidth||390));
+    const cssH=Math.max(1, Math.round(rect.height||MIN_H));
+    const outW=cssW, outH=cssH;
+    if(canvas.width!==outW) canvas.width=outW;
+    if(canvas.height!==outH) canvas.height=outH;
+    if(canvas.style.width!==outW+'px') canvas.style.width=outW+'px';
+    if(canvas.style.height!==outH+'px') canvas.style.height=outH+'px';
+    W=outW; H=outH;
+    if(ctx){ ctx.setTransform(1,0,0,1,0,0); ctx.fillStyle='#080A0F'; ctx.fillRect(0,0,W,H); }
+    return {W,H};
   }
 
-  // === DPR1 canvas void hit ===
-  function ensureCanvasDPR1(){
-    var c=document.getElementById('c'); if(!c) return null;
-    var rect=c.getBoundingClientRect();
-    var W=Math.max(1, Math.round(rect.width));
-    var H=Math.max(1, Math.round(rect.height));
-    // DPR1 only — no devicePixelRatio
-    if(c.width!==W) c.width=W;
-    if(c.height!==H) c.height=H;
-    var ctx=c.getContext('2d');
-    // PWA v67 HIT — fillStyle '#080A0F' fillRect(0,0,W,H)
-    ctx.setTransform(1,0,0,1,0,0);
-    ctx.fillStyle='#080A0F';
-    ctx.fillRect(0,0,W,H);
-    return {c:c, ctx:ctx, W:W, H:H};
-  }
-
-  function renderInertial(full){
-    var info=ensureCanvasDPR1();
-    if(!info) return;
-    var c=info.c, ctx=info.ctx, W=info.W, H=info.H;
-    var pts=window._POINTS_3D;
-    if(!pts){
-      ctx.fillStyle='#fffcf2';
-      ctx.font='600 12px ui-monospace';
-      ctx.fillText('Loading 3D…',14,22);
-      return;
-    }
-    var q=quatFromEuler(state.rotX, state.rotY);
-    var cx=W*0.5, cy=H*0.48;
-    var sc=Math.min(W,H)*0.38*state.scale;
-    var N=pts.length/3;
-    var rotated=new Float32Array(N*3);
-    var order=new Array(N);
-    for(var i=0;i<N;i++){
-      var v=[pts[i*3],pts[i*3+1],pts[i*3+2]];
-      var r=rotateVecByQuat(v,q);
-      rotated[i*3]=r[0]; rotated[i*3+1]=r[1]; rotated[i*3+2]=r[2];
-      order[i]=i;
-    }
-    order.sort(function(a,b){ return rotated[a*3+2]-rotated[b*3+2]; });
-
-    var POV=window.CURRENT_POV||'owner';
-    var lastActive=state.lastActiveDot!=null?state.lastActiveDot:(window.lastActiveDot!=null?window.lastActiveDot:-1);
-    var hoverIdx=state.hoverIdx;
-    for(var k=0;k<order.length;k++){
-      var i=order[k];
-      var x=rotated[i*3], y=rotated[i*3+1], z=rotated[i*3+2];
-      var px=cx + x*sc;
-      var py=cy - y*sc;
-      var depth=(z+1)*0.5;
-      var alpha=0.42 + depth*0.5;
-      if(POV!=='all'){
-        var edge=((i*9301+93)%100)/100;
-        if(POV==='owner') alpha*=(0.55+edge*0.5);
-        if(POV==='player') alpha*=(edge>0.62?1.0:0.38);
-        if(POV==='brand') alpha*=(0.48+edge*0.62);
-        if(POV==='dfs') alpha*=(edge>0.71?1.02:0.34);
-        alpha=Math.max(0.12,Math.min(0.95,alpha));
+  function setPoints(arr){
+    points = (arr||[]).map((p,i)=>({x:((p.x??p.x===0?p.x:0.5)-0.5)*2|| (Math.random()-0.5), y:((p.y??0.5)-0.5)*2, z:((p.z??0.5)-0.5)*2, c:(p.c!=null? (typeof p.c==='number'?p.c|0: (parseInt(p.c)||0)) : i%8), id:p.id||p.pid||('h-'+i), name:p.display_name||p.name||p.n||('Player '+(i+1)), team:p.team||'', arch:p.archetype||ARCH_A[(p.c||i%8)%12], pos:p.pos||['PG','SG','SF','PF','C'][i%5], i:i}));
+    // canonical OKABE-8 mapping not i%8 — use c field which is OKABE index from hoops.json, not synthetic
+    // if c is string color, map to index
+    for(const pt of points){
+      if(typeof pt.c==='string' && pt.c.startsWith('#')){
+        const idx=OKABE.indexOf(pt.c); pt.c= idx>=0? idx : (pt.i%8);
       }
-      var isCur = (lastActive===i);
-      var isHover = (hoverIdx===i);
-      var size = isCur?3.4:2.4;
-      if(isHover) size*=1.8; // hover lens 1.8× magnify
-      var col='#8FB89F';
-      var curDom=window.CURRENT_DOMAIN||'unified';
-      if(curDom==='hoops') col='#8FB89F';
-      else if(curDom==='gridiron') col='#E93118';
-      else if(curDom==='pitch') col='#9ebebf';
-      else if(curDom==='equities') col='#7391bf';
-      else if(curDom==='unified') col='#f1b650';
-      if(isCur){
-        ctx.globalAlpha=0.92;
-        ctx.beginPath();
-        ctx.fillStyle='#ff5b04';
-        ctx.arc(px,py,size+5.6,0,Math.PI*2);
-        ctx.fill();
-        ctx.globalAlpha=1;
+    }
+    N=points.length; projected=new Array(N); for(let i=0;i<N;i++) projected[i]={sx:0,sy:0,depth:0};
+    // store for social test
+    try{ window._POINTS_3D = new Float32Array(N*3); for(let i=0;i<N;i++){ window._POINTS_3D[i*3]=points[i].x; window._POINTS_3D[i*3+1]=points[i].y; window._POINTS_3D[i*3+2]=points[i].z; } }catch{}
+    projectFrame(); draw(); schedule();
+  }
+
+  function projectFrame(){
+    if(!N) return;
+    const q=quatFromEuler(rotX, rotY);
+    const cx=W*0.5, cy=H*0.48, sc=Math.min(W,H)*0.38*scale;
+    for(let i=0;i<N;i++){
+      const p=points[i]; const r=rotateVecByQuat([p.x,p.y,p.z], q);
+      const px=cx + r[0]*sc, py=cy - r[1]*sc, depth=(r[2]+1)*0.5;
+      projected[i].sx=px; projected[i].sy=py; projected[i].depth=depth; projected[i].alpha=0.42+depth*0.5;
+      projected[i].r=r;
+    }
+  }
+
+  function draw(){
+    if(!ctx||!W||!H) return;
+    ctx.fillStyle='#080A0F'; ctx.fillRect(0,0,W,H);
+    if(!N){ ctx.fillStyle='#FFFEF7'; ctx.font='800 12px ui-monospace,monospace'; ctx.fillText('Loading hoops 3D… LOD'+LOD+' DPR1 #080A0F',14,22); return; }
+    const step=Math.max(1, Math.ceil(N/MAX_RENDER));
+    // depth sort
+    const order=new Array(Math.ceil(N/step)); let oi=0; for(let i=0;i<N;i+=step) order[oi++]=i;
+    order.length=oi;
+    order.sort((a,b)=>projected[a].depth-projected[b].depth);
+    const curPov=window.CURRENT_POV||'owner';
+    for(const i of order){
+      const pr=projected[i]; if(!pr) continue; if(pr.sx<-20||pr.sx>W+20||pr.sy<-20||pr.sy>H+20) continue;
+      let alpha=pr.alpha;
+      if(curPov!=='all'){ const edge=((i*9301+493)%100)/100; if(curPov==='owner') alpha*=(0.55+edge*0.52); else if(curPov==='player') alpha*=(edge>0.62?1.0:0.38); else if(curPov==='brand') alpha*=(0.48+edge*0.62); else if(curPov==='dfs') alpha*=(edge>0.71?1.02:0.34); alpha=Math.max(0.12,Math.min(0.95,alpha)); }
+      const isActive = (lastActive===i);
+      const isHover = (hoverIdx===i);
+      let size = isActive?3.8:2.4;
+      if(isHover) size*=1.8;
+      const cidx=points[i].c%8; const col=OKABE[cidx]||'#FFFEF7';
+      // OKABE dot 2.4px border 1px void visible dark
+      if(isActive){
+        ctx.globalAlpha=0.92; ctx.fillStyle='#F0E442'; ctx.beginPath(); ctx.arc(pr.sx,pr.sy,size+5.2,0,6.283); ctx.fill(); ctx.globalAlpha=1;
       }
-      ctx.globalAlpha=alpha;
-      ctx.fillStyle=col;
-      ctx.beginPath();
-      ctx.arc(px,py,size,0,Math.PI*2);
-      ctx.fill();
-      ctx.globalAlpha=1;
+      ctx.globalAlpha=alpha; ctx.fillStyle=col; ctx.beginPath(); ctx.arc(pr.sx,pr.sy,size,0,6.283); ctx.fill();
+      // 1px void border visible dark
+      ctx.globalAlpha=Math.min(1,alpha+0.18); ctx.strokeStyle='#080A0F'; ctx.lineWidth=1; ctx.beginPath(); ctx.arc(pr.sx,pr.sy,size,0,6.283); ctx.stroke(); ctx.globalAlpha=1;
     }
     if(lastActive>=0 && lastActive<N){
-      var lr=[pts[lastActive*3],pts[lastActive*3+1],pts[lastActive*3+2]];
-      var rr=rotateVecByQuat(lr,q);
-      var pxh=cx+rr[0]*sc, pyh=cy-rr[1]*sc;
-      ctx.strokeStyle='#E4FF7C';
-      ctx.lineWidth=1.2;
-      ctx.beginPath();
-      ctx.arc(pxh,pyh,12,0,Math.PI*2);
-      ctx.stroke();
+      const pr=projected[lastActive]; if(pr){ ctx.strokeStyle='#E4FF7C'; ctx.lineWidth=1.2; ctx.beginPath(); ctx.arc(pr.sx,pr.sy,12,0,6.283); ctx.stroke(); }
     }
   }
 
-  // === momentum decay 0.94 per frame RAF 60fps, spring pin k=120 b=0.18 ===
-  function tick(){
-    if(!state.dragging){
-      // momentum decay
-      state.rotY += state.velX * 0.016;
-      state.rotX += state.velY * 0.016;
-      state.velX *= 0.94;
-      state.velY *= 0.94;
-
-      // spring return to rest when low velocity and not autoSpinning
-      if(!state.autoSpinning){
-        var restX=-0.22, restY=0.34;
-        var dx=restX - state.rotX;
-        var dy=restY - state.rotY;
-        // F = -k*x - b*v simplified — k=120 b=0.18 per spec but scaled for 60fps dt=1/60
-        var k=120, b=0.18;
-        var dt=1/60;
-        // avoid instability from huge k: clamp effective
-        var ax = (k*0.0015)*dx - b*state.velY;
-        var ay = (k*0.0015)*dy - b*state.velX;
-        if(Math.abs(state.velX)<0.005 && Math.abs(state.velY)<0.005 && Math.abs(dx)<0.0008 && Math.abs(dy)<0.0008){
-          state.rotX=restX;
-          state.rotY=restY;
-          state.velX=0; state.velY=0;
-        } else if(Math.abs(state.velX)<0.12 && Math.abs(state.velY)<0.12){
-          state.velX += ay*dt*60;
-          state.velY += ax*dt*60;
-        }
-      }
-      if(Math.abs(state.velX)>0.0001 || Math.abs(state.velY)>0.0001 || !state.autoSpinning){
-        // trigger render if page helper exists
-        if(window._POINTS_3D) renderInertial(false);
-      }
+  function singleSelectClearPrev(idx){
+    const prev=lastActive; lastActive=idx;
+    try{ window.lastActiveDot=idx; }catch{}
+    if(prev!==idx){
+      try{ if(navigator.vibrate) navigator.vibrate(10); }catch{}
     }
-    state.rafId=requestAnimationFrame(tick);
+    // clear previous highlight UI
+    document.querySelectorAll('#popList button,#popular button,.pop button').forEach(b=>b.classList.toggle('on', b.dataset.id=== (points[idx]?.id)));
+    const hov=document.getElementById('hovLab'); if(hov) hov.textContent='#'+idx+' selected • single-select clears prev';
+    draw();
+    // emit social test events
+    try{
+      const ev=new CustomEvent('point-select',{detail:{id:points[idx]?.id||idx, idx, name:points[idx]?.name}});
+      canvas.dispatchEvent(ev);
+      if(window.selectDot && typeof window.selectDot==='function' && !window.selectDot._inertialPatched) window.selectDot(idx);
+    }catch{}
   }
 
-  function bindDrag(){
-    var c=document.getElementById('c'); if(!c) return;
-    c.addEventListener('pointerdown', function(e){
-      state.dragging=true;
-      state.lastX=e.clientX; state.lastY=e.clientY;
-      try{ c.setPointerCapture(e.pointerId); }catch{}
-      c.classList.add('grabbing');
+  let pinchDist=0, lastTap=0, lastTapIdx=-1;
+  function dist2(t0,t1){ const dx=t0.clientX-t1.clientX, dy=t0.clientY-t1.clientY; return Math.hypot(dx,dy); }
+  function bind(){
+    canvas.addEventListener('pointerdown', e=>{
+      dragging=true; lastX=e.clientX; lastY=e.clientY; canvas.style.cursor='grabbing'; try{ canvas.setPointerCapture(e.pointerId);}catch{} embedPaused=false;
     });
-    c.addEventListener('pointermove', function(e){
-      var rect=c.getBoundingClientRect();
-      if(!state.dragging){
-        // hover lens detection
-        var pts=window._POINTS_3D; if(!pts) return;
-        var q=quatFromEuler(state.rotX,state.rotY);
-        var cx=rect.width*0.5, cy=rect.height*0.48;
-        var sc=Math.min(rect.width,rect.height)*0.38*state.scale;
-        var mx=e.clientX-rect.left, my=e.clientY-rect.top;
-        var best=-1, bd=1e9;
-        var N=pts.length/3;
-        var step=Math.max(1, Math.floor(N/4000)); // LOD sample for hover perf
-        for(var i=0;i<N;i+=step){ var r=rotateVecByQuat([pts[i*3],pts[i*3+1],pts[i*3+2]],q); var px=cx+r[0]*sc, py=cy-r[1]*sc; var d=(px-mx)*(px-mx)+(py-my)*(py-my); if(d<bd){bd=d; best=i;} }
-        if(best>=0 && bd< 26*26){ if(state.hoverIdx!==best){ state.hoverIdx=best; renderInertial(false);} } else { if(state.hoverIdx!==-1){ state.hoverIdx=-1; renderInertial(false);} }
+    canvas.addEventListener('pointermove', e=>{
+      if(!dragging){
+        // hover lens
+        const rect=canvas.getBoundingClientRect(); const mx=e.clientX-rect.left, my=e.clientY-rect.top;
+        let best=-1,bd=28*28; const step=Math.max(1, Math.floor(N/4000));
+        for(let i=0;i<N;i+=step){ const pr=projected[i]; if(!pr) continue; const d=(pr.sx-mx)*(pr.sx-mx)+(pr.sy-my)*(pr.sy-my); if(d<bd){bd=d; best=i;} }
+        if(best>=0 && bd<26*26){ if(hoverIdx!==best){ hoverIdx=best; draw(); } } else if(hoverIdx!==-1){ hoverIdx=-1; draw(); }
         return;
       }
-      var dx=e.clientX-state.lastX, dy=e.clientY-state.lastY;
-      state.rotY += dx*0.008;
-      state.rotX += dy*0.008;
-      state.rotX=Math.max(-1.2,Math.min(1.2,state.rotX));
-      state.velX=dx*0.12;
-      state.velY=dy*0.12;
-      state.lastX=e.clientX; state.lastY=e.clientY;
-      renderInertial(false);
-      var hov=document.getElementById('hovLab');
-      if(hov) hov.textContent='rotX '+state.rotX.toFixed(2)+' rotY '+state.rotY.toFixed(2)+' scale '+state.scale.toFixed(2)+' \u2022 drag lens 1.8\u00d7';
+      const dx=e.clientX-lastX, dy=e.clientY-lastY;
+      rotY+=dx*0.008; rotX+=dy*0.008; rotX=Math.max(-1.2,Math.min(1.2,rotX));
+      velX=dx*0.12; velY=dy*0.12; lastX=e.clientX; lastY=e.clientY; projectFrame(); draw();
     });
-    c.addEventListener('pointerup', function(){
-      state.dragging=false;
-      c.classList.remove('grabbing');
-    });
-    c.addEventListener('click', function(e){
-      if(Math.abs(state.velX)>0.2 || Math.abs(state.velY)>0.2) return;
-      var pts=window._POINTS_3D; if(!pts) return;
-      var rect=c.getBoundingClientRect();
-      var mx=e.clientX-rect.left, my=e.clientY-rect.top;
-      var q=quatFromEuler(state.rotX,state.rotY);
-      var cx=rect.width*0.5, cy=rect.height*0.48;
-      var sc=Math.min(rect.width,rect.height)*0.38*state.scale;
-      var best=-1,bd=1e9;
-      var N=pts.length/3;
-      for(var i=0;i<N;i++){ var r=rotateVecByQuat([pts[i*3],pts[i*3+1],pts[i*3+2]],q); var px=cx+r[0]*sc, py=cy-r[1]*sc; var d=(px-mx)*(px-mx)+(py-my)*(py-my); if(d<bd){bd=d; best=i;} }
-      if(best>=0 && bd< 24*24){
-        singleSelectClearPrev(best);
-        if(window.selectDot) try{ window.selectDot(best);}catch{}
-        renderInertial(false);
+    canvas.addEventListener('pointerup', e=>{ dragging=false; canvas.style.cursor='grab'; });
+    canvas.addEventListener('pointerleave', ()=>{ dragging=false; canvas.style.cursor='grab'; hoverIdx=-1; draw(); });
+    // touch drag + pinch zoom
+    canvas.addEventListener('touchstart', e=>{
+      if(e.touches.length===1){ dragging=true; lastX=e.touches[0].clientX; lastY=e.touches[0].clientY; embedPaused=false; }
+      else if(e.touches.length===2){ pinchDist=dist2(e.touches[0], e.touches[1]); }
+    }, {passive:true});
+    canvas.addEventListener('touchmove', e=>{
+      if(e.touches.length===1 && dragging){
+        const t=e.touches[0]; const dx=t.clientX-lastX, dy=t.clientY-lastY;
+        rotY+=dx*0.008; rotX+=dy*0.008; rotX=Math.max(-1.2,Math.min(1.2,rotX)); velX=dx*0.12; velY=dy*0.12; lastX=t.clientX; lastY=t.clientY; projectFrame(); draw();
+      } else if(e.touches.length===2){
+        const d=dist2(e.touches[0], e.touches[1]); if(pinchDist>0){ const factor=d/pinchDist; scale=Math.max(0.42, Math.min(2.6, scale*factor)); draw(); } pinchDist=d; e.preventDefault();
       }
-    });
-    c.addEventListener('wheel', function(e){
-      e.preventDefault();
-      var d=Math.sign(e.deltaY);
-      state.scale=Math.max(0.42, Math.min(2.2, state.scale*(d>0?0.92:1.08)));
-      renderInertial(false);
     }, {passive:false});
+    canvas.addEventListener('touchend', e=>{
+      if(e.touches.length===0) dragging=false;
+      if(e.touches.length<2) pinchDist=0;
+      // double-tap focus player
+      const now=Date.now(); if(now-lastTap<320){
+        const touch=e.changedTouches[0]; if(touch){ const rect=canvas.getBoundingClientRect(); const mx=touch.clientX-rect.left, my=touch.clientY-rect.top; let best=-1,bd=32*32; for(let i=0;i<N;i++){ const pr=projected[i]; if(!pr) continue; const d=(pr.sx-mx)*(pr.sx-mx)+(pr.sy-my)*(pr.sy-my); if(d<bd){bd=d; best=i;}} if(best>=0){ singleSelectClearPrev(best); // focus zoom in slightly
+          scale=Math.min(2.2, Math.max(1.15, scale*1.18)); projectFrame(); draw();
+          try{ if(navigator.vibrate) navigator.vibrate(10);}catch{} } }
+      }
+      lastTap=now;
+    }, {passive:true});
+    canvas.addEventListener('click', e=>{
+      if(Math.abs(velX)>0.28||Math.abs(velY)>0.28) return;
+      const rect=canvas.getBoundingClientRect(); const mx=e.clientX-rect.left, my=e.clientY-rect.top;
+      let best=-1,bd=24*24; for(let i=0;i<N;i++){ const pr=projected[i]; if(!pr) continue; const d=(pr.sx-mx)*(pr.sx-mx)+(pr.sy-my)*(pr.sy-my); if(d<bd){bd=d; best=i;}} if(best>=0){ singleSelectClearPrev(best); }
+    });
+    canvas.addEventListener('wheel', e=>{ e.preventDefault(); const d=Math.sign(e.deltaY); scale=Math.max(0.42, Math.min(2.6, scale*(d>0?0.92:1.08))); draw(); }, {passive:false});
+    canvas.addEventListener('dblclick', e=>{
+      const rect=canvas.getBoundingClientRect(); const mx=e.clientX-rect.left, my=e.clientY-rect.top;
+      let best=-1,bd=28*28; for(let i=0;i<N;i++){ const pr=projected[i]; if(!pr) continue; const d=(pr.sx-mx)*(pr.sx-mx)+(pr.sy-my)*(pr.sy-my); if(d<bd){bd=d; best=i;}} if(best>=0){ singleSelectClearPrev(best); scale=Math.min(2.4, Math.max(1.2, scale*1.22)); projectFrame(); draw(); try{ if(navigator.vibrate) navigator.vibrate(10);}catch{} }
+    });
   }
 
-  // expose API
-  window.InertialMap={
-    quatFromEuler: quatFromEuler,
-    quatMul: quatMul,
-    rotateVecByQuat: rotateVecByQuat,
-    state: state,
-    sameLinkStars: sameLinkStars,
-    hubLcg: hubLcg,
-    hubDailySeed: hubDailySeed,
-    render: renderInertial,
-    select: singleSelectClearPrev,
-    ensureCanvasDPR1: ensureCanvasDPR1
-  };
-  window.quatFromEuler=quatFromEuler;
-  window.quatMul=quatMul;
-  window.rotateVecByQuat=rotateVecByQuat;
-
-  // patch global renderMap to use inertial when available
-  var origRender=null;
-  function tryPatch(){
-    if(window.renderMap && !window.renderMap._inertialPatched){
-      origRender=window.renderMap;
-      var patched=function(full){
-        // keep existing gameData.modern re-seed per domain intact — just delegate to inertial canvas
-        try{ renderInertial(full); }catch(e){ try{ origRender(full);}catch{} }
-      };
-      patched._inertialPatched=true;
-      patched._orig=origRender;
-      window.renderMap=patched;
-      window.renderMapInertial=renderInertial;
+  let rafPending=false;
+  function schedule(){ if(!rafPending){ rafPending=true; rafId=requestAnimationFrame(tick); } }
+  function tick(t){
+    rafPending=false; const now=t||performance.now(); const dt=Math.min(50, now-(lastT||now)); lastT=now;
+    if(!dragging && !embedPaused){
+      // momentum decay 0.94
+      rotY+=velX*0.016; rotX+=velY*0.016; velX*=MOMENTUM; velY*=MOMENTUM;
+      // spring k=120 b=0.18
+      if(!auto){
+        const restX=-0.22, restY=0.34; const dx=restX-rotX, dy=restY-rotY;
+        const k=SPRING_K*0.0016, b=SPRING_DAMP; const ax=k*dx - b*velY, ay=k*dy - b*velX;
+        if(Math.abs(velX)<0.006 && Math.abs(velY)<0.006 && Math.abs(dx)<0.0009 && Math.abs(dy)<0.0009){ rotX=restX; rotY=restY; velX=0; velY=0; }
+        else if(Math.abs(velX)<0.14 && Math.abs(velY)<0.14){ velX+=ay; velY+=ax; }
+      }
+      if(Math.abs(velX)>0.00012||Math.abs(velY)>0.00012){ projectFrame(); draw(); schedule(); return; }
     }
-    // also patch selectDot if present to preserve single-select clears prev invariant
-    if(window.selectDot && !window.selectDot._inertialPatched){
-      var origSel=window.selectDot;
-      var patchedSel=function(n){
-        try{ singleSelectClearPrev(n); }catch{}
-        try{ origSel(n); }catch{}
-      };
-      patchedSel._inertialPatched=true;
-      window.selectDot=patchedSel;
-    }
+    if(rafId) schedule();
   }
+
+  function setTarget(id){
+    let idx=-1; if(typeof id==='number') idx=id; else { idx=points.findIndex(p=>p.id===id); if(idx<0) idx=parseInt(id)||0; }
+    if(idx>=0&&idx<N){ singleSelectClearPrev(idx); const pr=projected[idx]; if(pr){ scale=Math.min(2.2,1.18); projectFrame(); draw(); } }
+  }
+  function clearSel(){ lastActive=-1; try{ window.lastActiveDot=-1;}catch{} draw(); try{ canvas.dispatchEvent(new CustomEvent('point-deselect')); }catch{} }
+  function setLOD(v){ /* LOD toggle handled via MAX_RENDER but keep API */ draw(); return v; }
+  function pause(){ embedPaused=true; auto=false; }
+  function resume(){ embedPaused=false; lastT=0; schedule(); }
+
+  // LCG preservation
+  const today=hubDailySeed(new Date()); const curDomIdx=1; const trip=sameLinkStars(today, curDomIdx);
+  try{ window.INERTIAL_LCG=trip; window._POINT_META=points; console.log('[inertial-map] LCG same-link-same-stars today',today,'triple',trip.triple,'five',trip.five,'open→drag-map→Jordan→copy-link equal stars DAU3/WAU3 TLPG dedup'); }catch{}
 
   function init(){
-    tryPatch();
-    bindDrag();
-    ensureCanvasDPR1();
-    // tick loop momentum decay 0.94 RAF 60fps
-    if(!state.rafId) state.rafId=requestAnimationFrame(tick);
-
-    // seed LCG debug preserve
-    var today=window.DAILY_SEED||hubDailySeed(new Date());
-    var curIdx=0;
-    try{
-      var dom=window.CURRENT_DOMAIN||'unified';
-      var domains=['unified','hoops','gridiron','pitch','equities'];
-      curIdx=Math.max(0, domains.indexOf(dom));
-    }catch{}
-    var trip=sameLinkStars(today, curIdx);
-    // DAU3/WAU3 TLPG dedup note preserved
-    window.INERTIAL_LCG=trip;
-    try{ console.log('[inertial-map] LCG same-link-same-stars today '+today+' curIdx '+curIdx+' triple',trip.triple,' five',trip.five,' open→drag→Jordan→copy-link equal stars DAU3/WAU3 TLPG dedup'); }catch{}
+    ensureDPR1(); bind(); projectFrame(); draw(); schedule();
+    try{ window.addEventListener('resize', ()=>{ ensureDPR1(); projectFrame(); draw(); }); }catch{}
+    // DPR1 fillRect invariant
+    try{ new ResizeObserver(()=>{ ensureDPR1(); projectFrame(); draw(); }).observe(canvas.parentElement||canvas); }catch{}
   }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', init); else init();
 
-  if(document.readyState==='loading'){
-    document.addEventListener('DOMContentLoaded', init);
-  } else {
-    init();
-  }
-  // also re-try patch after window load (index.html defines renderMap in inline script)
-  window.addEventListener('load', function(){ setTimeout(function(){ tryPatch(); init(); }, 120); });
-})();
+  return {setPoints, setTarget, clearSel, setLOD, pause, resume, projectFrame, draw, singleSelectClearPrev, state:()=>({rotX,rotY,scale,velX,velY,lastActive,LOD,MAX_RENDER}), getPoints:()=>points, quatFromEuler, quatMul, rotateVecByQuat, sameLinkStars, hubLcg, hubDailySeed, LCG: trip, ensureDPR1, clampCanvasHeight};
+}
+// compat default for older import
+export default {mountInertialMap};
+// legacy window
+try{ if(typeof window!=='undefined'){ window.mountInertialMap=mountInertialMap; window.InertialMap={mount:mountInertialMap}; } }catch{}

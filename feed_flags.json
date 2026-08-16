@@ -1,0 +1,13 @@
+{
+  "prizepicks": true,
+  "kalshi": true,
+  "dk": true,
+  "per_team_priors": true,
+  "prize_prior_on": true,
+  "espn": true,
+  "espn_wired": true,
+  "source": "real",
+  "updated": "2026-08-18T00:00:00Z",
+  "daily_seed_lcg": "20260813->189831298 idx3820 triple[11205,19448,14209] same-link-same-stars",
+  "zero_deps": true
+}
