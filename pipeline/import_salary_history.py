@@ -18,10 +18,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 CACHE = ROOT / "pipeline" / "cache"
 OUT = CACHE / "salaries_history.csv"
-HIST_URL = (
-    "https://raw.githubusercontent.com/jerrytigerxu/"
-    "NBA-Salary-Prediction/master/data/1990_to_2018.csv"
-)
+HIST_URL = "https://raw.githubusercontent.com/jerrytigerxu/NBA-Salary-Prediction/master/data/1990_to_2018.csv"
 
 
 def norm_name(name: str) -> str:

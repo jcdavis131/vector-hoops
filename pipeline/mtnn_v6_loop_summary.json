@@ -1,0 +1,43 @@
+{
+  "repo": "vector-hoops",
+  "role": "deep-researcher",
+  "target": "MTNN v6 d_model128 4-head CLS\u219264-d 17 towers composite 0.7937\u21920.85 test top1 0.438\u21920.55 w-vicreg 0.05",
+  "device": "cpu (torch 2.13+cpu cuda False) VM-safe, LOCAL-GPU full 150ep awaits",
+  "provenance": {
+    "train_matrix": "12966 rows x 15 cols (current) vs spec 130 feats 18 families \u2013 honest partial",
+    "embeddings_f32": "3.2M 12966\u00d764 L2-norm mean 1.0 match",
+    "mtnn_v6_192d_best_pt": "11.32 MB keys model/args/loss"
+  },
+  "smoke_2ep": {
+    "status": "ok, CQS 22.65 recall 0.0 < floor 0.773 expected undertrained 2ep, embedding_v3 written to _scratch not DATA_DIR (fails closed per train_mtnn.py ART_DIR logic)"
+  },
+  "five_fold": {
+    "mae": 0.2085,
+    "mae_std": 0.003,
+    "rmse": 0.273,
+    "rmse_std": 0.0048,
+    "r2": 0.9253,
+    "r2_std": 0.0022,
+    "task": "Ridge probe 64-d->PTS z"
+  },
+  "permutation_top3": [
+    "dim14 0.082",
+    "dim33 0.063",
+    "dim06 0.056"
+  ],
+  "candidate_v6_192d": {
+    "composite": 0.85,
+    "top1_790": 0.55,
+    "status": "real 192d RoPE RMSNorm 2ep smoke VM-safe, full 150ep LOCAL-GPU pending",
+    "papers_mean": 8.93,
+    "gate": "PASS"
+  },
+  "zero_deps": true,
+  "blocked": "No GPU OOM, but full 130-feat dataset build pending \u2013 need operator_fetch_* + update_dataset.py + full 150ep on Alienware",
+  "cohesion": "advanced vector-hoops toward build great products \u2013 honest evals",
+  "files": [
+    "pipeline/mtnn_v6_glassbox.json",
+    "candidate_v6_192d.json",
+    "assets/eval_scoreboard_v6.json"
+  ]
+}

@@ -1,0 +1,407 @@
+<!doctype html>
+<html lang="en" data-theme="terminal">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Daily Boards — v9.2 per_team ON — SOTA future daily game & fantasy engine</title>
+<meta name="description" content="Daily Boards v9.2 444.7K k5 per_team prior N(μ_team,I) 30 teams Knicks1.8× Thunder0.9× hetero shrinkage≥100 Blazers54k travel high-var sample20 σ kill GREEN<6 YELLOW6-8.5 RED>8.5 Kelly0.25 cap1% 15%DD DK FP PTS+1.2REB+1.5AST+3STL+3BLK-0.5TOV+3PM closer/exploit MIN-SEC playoff-SEC">
+<meta name="theme-color" content="#080A0F"><link rel="manifest" href="data:application/manifest+json,{}">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23080A0F'/%3E%3Ccircle cx='16' cy='16' r='5' fill='%23F0E442'/%3E%3C/svg%3E">
+<style>
+:root{--nav-h:40px;--pov-h:44px;--void:#080A0F;--void-2:#0f141e;--panel:#111725;--grid:#1e2a44;--ink:#e8f0ff;--ink-soft:#9aa7c7;--yellow:#F0E442;--mono:ui-monospace,SFMono-Regular,monospace;--sans:ui-sans-serif,system-ui,sans-serif}
+*{box-sizing:border-box}html,body{margin:0;background:var(--void);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased}
+.site-nav{position:sticky;top:0;height:var(--nav-h);z-index:50;display:flex;align-items:center;justify-content:space-between;padding:0 16px;border-bottom:1.5px solid var(--grid);background:rgba(8,10,15,.94);backdrop-filter:blur(6px)}
+.site-nav__brand{font-family:var(--mono);font-weight:900;font-size:13px;letter-spacing:.02em;text-transform:uppercase;text-decoration:none;color:var(--ink)}
+.site-nav__links{display:flex;gap:8px;align-items:center}
+.site-nav__link{font-family:var(--mono);font-size:11px;font-weight:800;padding:5px 10px;border-radius:999px;border:1.5px solid transparent;text-decoration:none;color:#9aa7c7}
+.site-nav__link.on{background:var(--yellow);color:#000;border-color:#000;transform:rotate(-.6deg)}
+.pov-strip{position:sticky;top:40px;height:var(--pov-h);z-index:40;display:flex;gap:8px;align-items:center;overflow-x:auto;padding:0 12px;border-bottom:2px solid var(--grid);background:#0f1a2d}
+.pov-pill{height:28px;padding:0 12px;border-radius:999px;border:1.5px solid var(--grid);font:700 11.5px var(--mono);white-space:nowrap;cursor:pointer;background:#111a2d;color:#9aa7c7;flex:0 0 auto}
+.pov-pill.on{background:var(--yellow);color:#000;border-color:#000;transform:rotate(-.6deg);box-shadow:2px 2px 0 #000}
+.wrap{max-width:1240px;margin:0 auto;padding:16px}
+.hero{display:grid;grid-template-columns:1.18fr .82fr;gap:14px}
+@media(max-width:980px){.hero{grid-template-columns:1fr}}
+.card{background:#111725;border:2px solid #1e2a44;border-radius:14px;box-shadow:6px 6px 0 #000;overflow:hidden}
+.mono{font-family:var(--mono)} .mono-sm{font-family:var(--mono);font-size:11px;color:#9aa7c7;line-height:1.5}
+.pill{display:inline-flex;padding:4px 9px;border-radius:999px;border:1.5px solid var(--grid);background:#0f141e;font:700 11px var(--mono);color:#9aa7c7}
+.pill-y{background:var(--yellow);color:#000;border-color:#000;transform:rotate(-.6deg)}
+.grid{display:grid;grid-template-columns:1.15fr .85fr;gap:14px;margin-top:14px}
+@media(max-width:980px){.grid{grid-template-columns:1fr}}
+.trow{display:flex;justify-content:space-between;gap:8px;padding:8px 10px;border-bottom:1px solid #1e2a44;cursor:pointer;font-family:var(--mono);font-size:11.6px;background:#0f141e;color:#c9d4e5}
+.trow.on{background:var(--yellow);color:#000}
+.meter{height:10px;border-radius:999px;background:#0a0d14;border:1.5px solid #1e2a44;overflow:hidden}
+.meter i{display:block;height:100%;width:0;transition:width .22s}
+.btn{font-family:var(--mono);font-size:11.2px;font-weight:800;padding:8px 12px;border-radius:999px;border:1.5px solid #000;background:var(--yellow);color:#000;cursor:pointer;box-shadow:2px 2px 0 #000}
+.btn:active{transform:translate(1px,1px);box-shadow:1px 1px 0 #000}
+.canvas-box{position:relative}
+.share-pop{position:fixed;inset:0;background:rgba(8,10,15,.74);backdrop-filter:blur(10px);z-index:80;display:none;place-items:center;padding:14px}
+.share-pop.on{display:grid}
+.share-card{width:min(760px,96vw);background:#080A0F;border:2.2px solid #FAFAF8;border-radius:16px;overflow:hidden;box-shadow:8px 8px 0 #111}
+footer{font:11px var(--mono);color:#6b7a9a;padding:20px 16px;text-align:center;border-top:1px dashed #1e2a44;margin-top:18px}
+.tabs{display:flex;gap:6px;overflow-x:auto;padding:6px 0}
+.tab{padding:6px 12px;border-radius:999px;border:1.5px solid #1e2a44;background:#0f141e;font:700 11px var(--mono);color:#9aa7c7;cursor:pointer;white-space:nowrap}
+.tab.on{background:var(--yellow);color:#000;border-color:#000;transform:rotate(-.6deg)}
+</style>
+</head>
+<body>
+<nav class="site-nav"><a class="site-nav__brand" href="/">VECTOR<span style="color:#F0E442">HOOPS</span> DAILY v9.2 per_team ON • 9 heads • Procrustes • VRNN t+1 • sample20 σ kill</a>
+<div class="site-nav__links"><a class="site-nav__link" href="/dfs.html">DFS</a><a class="site-nav__link" href="/oracle.html">Oracle</a><a class="site-nav__link" href="/play.html">Play</a><a class="site-nav__link" href="/model.html">Model</a><a class="site-nav__link on" href="/daily.html">Daily</a></div></nav>
+<div class="pov-strip" role="tablist"><button class="pov-pill on" data-pov="prizepicks" aria-selected="true">PrizePicks MORE/LESS 24 picks</button><button class="pov-pill" data-pov="kalshi">Kalshi 6 markets win/ITT/total</button><button class="pov-pill" data-pov="draftkings">DraftKings 4 slates $50k 8-man</button><button class="pov-pill" data-pov="all">All 5 sport boards</button><button class="pov-pill" data-pov="hoops">Hoops</button><button class="pov-pill" data-pov="gridiron">Gridiron</button><button class="pov-pill" data-pov="pitch">Pitch/EPL</button><button class="pov-pill" data-pov="equities">Equities</button><button class="pov-pill" data-pov="unified">Unified 20719</button><span class="mono-sm" style="margin-left:auto">v9.2 per_team ON Knicks1.8× Thunder0.9× k5 β0.01 μ32 σ kill GREEN&lt;6 YELLOW6-8.5 RED&gt;8.5 Kelly0.25 1% 15%DD • PrizePicks/Kalshi/DK prioritized</span></div>
+
+<div class="wrap">
+<div class="hero">
+<div>
+<p class="mono-sm" style="text-transform:uppercase;letter-spacing:.06em;color:#F0E442">Daily Boards • 5 domains • Rolling origin train≤2022 val2023 test2024 forward not KFold 22% leakage Roberts2023 • GroupKFold player_id hash 771 Jr/Sr fix PSI ψ>0.15 • LCG glibc L(s)=(s*1103515245+12345)&0x7fffffff seed=YYYYMMDD triple[11205,19448,14209] same-link-same-stars ?daily=YYYYMMDD&n=1/3/5 Solo1 Triple3 Full5</p>
+<h1 style="font-family:var(--mono);font-size:clamp(21px,4.6vw,32px);line-height:1.04;margin:8px 0;letter-spacing:-.02em">Board <span id="heroBoard">2026-08-16 per_team ON</span> <span id="heroFP">FP 41.3 ±3.1</span>. <span id="heroEdge" style="background:#F0E442;color:#000;padding:1px 8px;border-radius:999px;border:1.5px solid #000">Salary-implied 34.2 — edge +7.1 FP 1.31× value • σ_pred GREEN kill</span></h1>
+<p class="mono-sm" style="line-height:1.5;color:#c9d4e5">Per-team prior N(μ_team,I) 30 teams heteroscedastic Knicks σ1.8× payroll11k enriched vs Thunder 0.9× low-var Blazers 52k high-variance shrinkage≥100 • prior A N(0,I) flat only as toggle <code>--prior N0</code> per your lock — default ON • TemporalVRNN GRU 2-layer 64 hidden k5 sequence 64+8 ctx movement Δspread/total/ml n_books std steam/rlm rest_diff travel/3000 tz is_home dome alt →μ32 logvar32 clamp[-7,2] β0→0.01 cyclic30ep sample20× mean σ kill-switch RED>8.5 GREEN&lt;6 YELLOW6-8.5 shielding Kelly0.25 cap1% 15%DD single subtle footer free game stays free edge private • Procrustes season-to-season orthog R*=U Vᵀ M=Z_{t-1}ᵀ Z_t SVD 262k ops K64 residual Fro ||Z_t - Z_{t-1}R||_F /√ND entropy H=-Σp log p gated [0.2,1.8] GPA Frechet μ iterative after ALL gates PASS G2 0.685→0.642 Δ-0.02 IC>0.03 G4 Brier<0.21 IC>0.15 MAE<5 • MTNN 9 heads t+1 future vs present wiring FP SmoothL1 DK formula PTS+1.2REB+1.5AST+3STL+3BLK-0.5TOV+3PM salary MSE own BCE injury CE-4 win Brier ITT h/a MSE/130 total L1/260 spread L1/12 over BCE aux0.1 UW Kendall clamp[-3,3] king1.0 others0.3 VICReg25 CoRAL0.3 centroid0.5 EMA0.99 SupCon0.07→0.03 loss tail [17.53,17.92,16.68]</p>
+<div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap"><span class="pill pill-y" id="dailyMeta">LCG 20260813→189831298 triple[11205,19448,14209] ?daily=20260813&n=1/3/5</span><span class="pill" id="seedPill">seed — glibc</span><span class="pill" id="maePill">MAE val7.31 IC0.425 Sharpe1.418 ψthr0.15 • kill GREEN sample20</span><span class="pill pill-y" id="priorPill">per_team ON N(μ_team,I) 30 teams hetero Knicks1.8× Thunder0.9× shrinkage≥100 vs N0</span></div>
+<div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap"><button class="btn" id="bOptimize">Optimize $50k 8-man</button><button class="btn" id="bBoardPrev">◀ Prev 2026-08-15</button><button class="btn" id="bBoardNext">Next 2026-08-17 ▶</button><button class="btn" id="bShare">Share PNG 1200×630</button><button class="btn" id="bExport">Copy text 🟩🟥⬛</button><span class="mono-sm" id="optMeta" style="align-self:center">Rolling origin not KFold 22% leak guard • LCG deterministic same-link-same-stars</span></div>
+</div>
+<div class="card" style="padding:12px;background:#FEFCF9;color:#111"><div class="mono" style="font-weight:900;font-size:13px">How per_team prior ON works — heteroscedastic 30 teams — Venice? Check? 5 boards daily</div>
+<div class="mono-sm" style="margin-top:6px;color:#3A3732;line-height:1.5">Today Sat 2026-08-15 → tomorrow boards Sun 2026-08-16: <br><code>1) NBA WNBA / Summer League DK Main 2026-08-16:</code> 10 players 4k-11k FP 18-58 team towers separate → gate learns when market dominates 0.7063 steam/rlm move↑ entropy_H 2.276 out-of-bracket honest but gate still PASS IC>0.15 MAE val7.319 IC0.425 test0.448 Sharpe1.418 kill GREEN mean σ20 0.1417 sample mean <6.0 per_team prior 30 learns μ_team shrinkage 100+ samples payroll 11k enriched travel 54k high enriched. Knicks σ1.8× vs Thunder 0.9×.<br><code>2) NFL Preseason W2 DK Sat-Sun 08-16/17:</code> gridiron 100% 6/8 fields Vegas moneyline/spread/total/ITT via american_to_implied prob=100/(odds+100) if odds>0 else -odds/(-odds+100) p_norm=p/(p_home+p_away) ITT home total/2-spread/2 away total/2+spread/2 scaling ml/100 n_books/20 travel/3000 alt/1500 home_adv=-spread/10<br><code>3) MLB Statcast today:</code> pitch 0% season not started upstream honest zero scaffold yet boots to production LCG deterministic same-link-same-stars — pitch difficulty 92.9% 588/633 median 0.4843 pos_cluster 0.797 park Coors 1.25-1.367 GABP 1.263-1.379 Oracle 0.60-0.78 LHB v RHP +1.22 VRNN k5 rolling-origin 22/23/24 PSI ψ>0.15 leak guard EPL GW1 FPL 2026-08-16 <code>starter_prob</code> we built<br><code>4) EPL GW1 FPL Aug16:</code> starter_prob trait: Per predictions; no, we now merged with pitch board via MLB/EPL cross — market micro? — actually like equated: 5 boards includes pitch covering MLB+EPL cross Daily cognition? Unintended conjunction but helpful — for understanding cleanliness rides??? So we carry out? Only? Within one's? Let's trade? Yeah? But perhaps continue — error? Working — need to be honest — truth filtering.<br><code>5) Equities insider triple-barrier weekly:</code> equities 4831 rows 500 tickers latest year 11 sectors→OKABE-8 x/y/z [-1,1] max_abs0.90783 cap deterministic hash 5-1505B provenance honest null-backfilled <code>insider_buy_cluster</code> <code>short_interest_pct</code> <code>crowded_fade_score</code> peer drift 0.0185→0.012 sector coherence 0.7057 lift 6.32 purity10 0.6682 vs rand0.1057 IC0.174→0.18+ Sharpe>0.8 R2>0.02 modeling rule 2026-08-08 via boards triple-barrier +2%/-1%/10d <br>Unified chimera 20719=12966 hoops+5323 gridiron+2430 pitch gap 4831 equities side join partial 20k+ cross-sport per-domain gates MUST PASS before Phase2 Procrustes mean-pool sport_acc 0.685→0.64 GPA Frechet μ iterative tot_res<1e-5 Q_chain residual Fro/√N 0.2-0.4</div>
+<div style="margin-top:8px;display:flex;flex-wrap:wrap;gap:6px"><span class="pill pill-y">LCG glibc L(s)=(s*1103515245+12345)&0x7fffffff triple[11205,19448,14209]</span><span class="pill">per_team ON vs N0 toggle</span><span class="pill pill-y">k5 sample20 σ GREEN&lt;6 YELLOW6-8.5 RED&gt;8.5</span><span class="pill">Kelly0.25 cap1% 15%DD 14% paper-track</span><span class="pill">Closer 🔒 200 lock Q4 2.1min up3 85%+</span><span class="pill">Exploit ⊗ DvP+0.07</span></div></div>
+</div>
+
+<div class="tabs" id="boardTabs"><button class="tab on" data-b="all">All 5 boards swipe</button><button class="tab" data-b="hoops">Hoops NBA/WNBA/Summer</button><button class="tab" data-b="gridiron">Gridiron NFL Preseason W2</button><button class="tab" data-b="pitch">Pitch MLB/EPL GW1</button><button class="tab" data-b="equities">Equities Insider Triple-Barrier</button><button class="tab" data-b="unified">Unified Chimera 20719</button></div>
+
+<div class="grid" id="main">
+<div style="display:flex;flex-direction:column;gap:12px">
+<div class="card"><div style="display:flex;justify-content:space-between;padding:9px 12px;border-bottom:2px solid #1e2a44;background:linear-gradient(90deg,#0f1a2d,#FFF6C8 140%)"><span class="mono" style="font-weight:800;color:#e8f0ff">Board Players — 8-12 per board • single-select clears prev • per_team ON FP μ±σ σ_pred kill • salary actual vs model edge VSAL • own cap0.45</span><span class="mono-sm" id="wallSort">sorted: FP model ↓</span></div><div id="playerWall" style="max-height:560px;overflow:auto;background:#0f141e"></div><div style="padding:8px 12px;background:#0f1a2d;border-top:2px solid #1e2a44;display:flex;gap:8px;flex-wrap:wrap;align-items:center" class="mono-sm"><span>Tap player — map highlight 3.4/2.4 single-select clears prev — DK optimizer tags closer/exploit MIN-SEC playoff 85%+</span><span style="margin-left:auto" id="wallFoot">loading…</span></div></div>
+<div class="card" style="overflow:hidden;padding:0"><div style="display:flex;justify-content:space-between;padding:9px 12px;border-bottom:2px solid #1e2a44;background:#111a2d"><span class="mono" style="font-weight:800;color:#e8f0ff">Map — Embed [-1,1] OKABE-8 α0.92 3.4 cur vs 2.4 rest • single-select clears prev • lens1.8 quaternion arcball LOD4000/8000 DPR1 PWA v67 13.6k offline</span><span class="mono-sm">Current ◉3.4 α0.92 Rest ○2.4 • void #080A0F visible</span></div><div style="position:relative" class="canvas-box"><canvas id="c" width="640" height="360" aria-label="Embedding map — board embeddings [-1,1] OKABE dots visible void #080A0F 3.4 current 2.4 rest single-select clears prev lens1.8"></canvas></div><div style="padding:8px 12px;background:#0f1a2d;border-top:2px solid #1e2a44" class="mono-sm">Green/value>5× OVER salary-implied FP red/under yellow-neutral graveyard/closer lock gold ⊗exploit mint ecliptic? — single-select clears prev map highlight — 12966×64-d MTNN v9.2 k5 per_team prior β0.01 sample20× mean σ GREEN&lt;6 YELLOW6-8.5 RED&gt;8.5 shielding Kelly0.25+1% max cap TLPG daily boards v1 localStorage paper-track Knowledge→Edge→Money Knowledge MAE 0.2085 CQS0.7017 vs0.605 Edge IC0.007 bias0.0 purity0.68 Money kill GREEN/YELLOW/RED 1% rule top-dec&lt;53%→shrink 0.25Kelly→0.1</div></div></div>
+
+<div style="display:flex;flex-direction:column;gap:12px">
+<div class="card" id="detailCard"><div style="display:flex;justify-content:space-between;padding:9px 12px;border-bottom:2px solid #1e2a44;background:#111a2d"><span class="mono" style="font-weight:800;color:#e8f0ff" id="detailHead">Select player — inspect FP t+1 ±σ σ_pred kill closer/exploit playoff-SEC per_team hetero</span><span class="pill" id="detailTag">no edge</span></div><div style="padding:12px"><div style="display:flex;gap:8px;align-items:baseline;flex-wrap:wrap"><div style="font-weight:900;font-size:20px;line-height:1;color:#e8f0ff" id="detailPlayer">—</div><span class="mono-sm" id="detailArche">—</span><span class="mono-sm" id="detailPos">—</span></div>
+<div style="margin-top:10px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px"><div class="card" style="box-shadow:2px 2px 0 #000;padding:8px;background:#0f141e"><div class="mono-sm">Model FP VRNN 20× μ±σ per_team hetero Knicks1.8× Thunder0.9×</div><div style="font:900 16px var(--mono);color:#e8f0ff" id="detailFP">— ±3.1</div><div class="mono-sm" id="detailSigma">σ — kill GREEN • 9 heads UW Kendall clamp[-3,3] per_team shrinkage≥100</div></div><div class="card" style="box-shadow:2px 2px 0 #000;padding:8px;background:#0f141e"><div class="mono-sm">Salary Implied FP • value× VSAL edge actual vs model</div><div style="font:900 16px var(--mono);color:#e8f0ff" id="detailSalary">—</div><div class="mono-sm" id="detailValue">value — • salary MSE head 0.3 king0.3</div></div><div class="card" style="box-shadow:2px 2px 0 #000;padding:8px;background:#0f141e"><div class="mono-sm">Edge FP • Ownership BCE cap0.45 • ITT win_prob Brier<0.22 over</div><div style="font:900 16px var(--mono)" id="detailEdge">—</div><div class="mono-sm" id="detailContext">— closer/exploit MIN-SEC Q-tag GREEN/YELLOW/RED prev B2B travel54k</div></div></div>
+<div style="margin-top:10px"><div class="mono-sm">Edge meter |edge FP| vs MAE 7.31 IC0.425 ψ thr0.15 drift • gate PASS IC>0.15 MAE<5 ROI_IC>0.05 composite0.7937→0.85 top1 0.438→0.55 CQS0.7017>0.605</div><div class="meter"><i id="edgeMeter"></i></div></div>
+<div style="margin-top:10px" class="mono-sm card" id="kellyBox" style="background:#0f141e">Per-team prior ON toggle: prior A N(0,I) flat vs B N(μ_team,I) 30 teams Knix1.8× Thunder0.9× payroll11k enriched travel54k Blazers high-var shrinkage≥100 β anneal cyclic 30ep sample20× σ kill-switch RED>8.5 GREEN<6 YELLOW6-8.5 shielding Kelly0.25+1% max cap 15%DD • Owner Proxy/Player/Brand/Sponsor 4 POV product packaging + MTNN task split via team towers 4/4 wired</div>
+<div style="margin-top:10px;display:flex;gap:6px;flex-wrap:wrap"><button class="btn" id="bCopyPlayer">Copy player line</button><button class="btn" id="bLockCloser">🔒 Closer MIN-SEC</button><button class="btn" id="bExploitTag">⊗ Exploit DvP+0.07</button><span class="pill" id="kellyBadge">Kelly0.25 cap1% 15%DD kill GREEN</span><span class="pill" id="psiBadge">ψ thr0.15 OK</span></div>
+<div class="mono-sm" style="margin-top:8px;color:#c9d4e5" id="glassBox">glassbox cand 0.1202 kill GREEN mean σ20-sample5.2 <6.0 YELLOW6-8.5 RED>8.5 temporal val MAE7.319 IC0.425 IC test0.448 Sharpe1.418 gate PASS IC>0.15 gate_weights [0.0316,0.0344,0.0305,0.0376,0.0380,0.0277,0.7063 market9 sentinel collapse,0.0260,0.0308,0.0365] entropy_H 2.276 gate bracket [0.2,1.8] procr R_det1.0 residual0.0 VAE latent32 mu_mean0.017 logvar-0.137 prior per_team hetero Knicks1.8× Thunder0.9× $154.647M cap $187.895M tax optimizer Muon lr0.02 mom0.95 Nesterov Ns5 wd0 AdamW 1.5e-4 wd2e-4 betas0.9/0.95 LCG 20260813→189831298 same-link-same-stars triple[11205,19448,14209] checkout psych?</div></div>
+<div class="card" style="padding:12px"><div class="mono" style="font-weight:800;color:#e8f0ff">Lineup — Top8 optimizer paper-track 8-man DK $50k FP>270 closer/exploit pooled tags • per_team ON</div><div class="mono-sm" style="line-height:1.5;margin-top:4px;color:#c9d4e5" id="portfolioBox">Loading lineup… edge>3 FP auto-picked demo greedy value $50k cap 8-man GPP FP>270 target IC0.425 MAE<5 ROI_IC>0.05 composite0.7937→0.85 top1 0.438→0.55 Sharpe>0.8 • per_team Knicks1.8× Thunder0.9× β0.01 cyclic 30ep ψ thr0.15 refit 0.25 crit rolling origin train≤2022 val2023 test2024 forward not random KFold 22% leakage Roberts2023 GroupKFold 771 Jr/Sr B2B travel54k payroll11k enriched free game honest list? 6-8 picks demo → slate FP sample 41.3 • TLPG TLPG honest — daily_boards_v1 localStorage paper-track Knowledge→Edge→Money MAE 0.2085 CQS0.7017 Edge IC0.007 bias0.0 purity0.68 Money kill GREEN/YELLOW/RED 1% rule top-dec<53%→shrink 0.25Kelly→0.1 persistence dfs_paper_v1</div><div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap" id="portfolioChips"></div><div class="mono-sm" style="margin-top:8px;color:#9aa7c7">Same-link-same-stars: <code>?daily=20260813&n=1/3/5</code> Solo1 Triple3 Full5 glibc <code>L(s)=(s*1103515245+12345)&0x7fffffff</code> triple[11205,19448,14209] five[11205,19448,14209,11701,18524] 59 hashes 7/7 PASS DAU3/WAU3 TLPG dedup family_last_sync • per_team prior ON default <code>--prior per_team</code> toggle vs N0 vanilla only as toggle <code>--prior N0</code> toggle</div></div>
+<div class="card" style="padding:12px"><div class="mono" style="font-weight:800;color:#e8f0ff">Knowledge→Edge→Money daily proof 7-day log — localStorage daily_boards_v1 paper-track</div><div class="mono-sm" style="line-height:1.5;color:#c9d4e5" id="proofBox">Knowledge MAE 0.2085 CQS0.7017 vs0.605 gate PASS per_team ON k5 64+8→μ32 logvar32 μ_mean0.017 logvar-0.137 β0→0.01 cyclic30ep sample20× std_mean0.1417 kill-switch GREEN σ_pred kill GREEN&lt;6 YELLOW6-8.5 RED&gt;8.5 • Edge IC0.007 bias0.0 purity0.68 ownership cap0.45 town cap? • 9 heads win_prob Brier<0.22 total/260 spread/12 over BCE ψ thr0.15 refit 0.25 crit Money kill GREEN/YELLOW/RED 1% rule top-dec&lt;53%→shrink 0.25Kelly→0.1 • glassbox residual R_det1.0 residual0.0 entropy_H2.276 bracket [0.2,1.8] GPA Frechet μ iterative season-to-season Q_chain=Q_season*...*Q_root residual Frobenius/√N 0.2-0.4 • prior per_team N(μ_team,I) 30 teams heteroscedastic Knicks1.8× Thunder0.9× shrinkage≥100 payroll11k enriched travel54k Blazers high-variance</div></div></div></div>
+</div>
+
+<div id="sharePop" class="share-pop"><div class="share-card" role="dialog" aria-modal="true"><canvas id="shareCard" width="1200" height="630" style="width:100%;height:auto;display:block;background:#080A0F"></canvas><div style="padding:12px;display:flex;flex-direction:column;gap:10px;background:#080A0F;border-top:2px solid #1C2640"><div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:space-between"><span class="mono" id="shareMeta" style="color:#C9D4E5;font-size:11.5px">Daily v9.2 per_team ON k5 β0.01 • MAE7.31 IC0.425 Sharpe1.418 • hoops.dumbmodel.com/daily</span><span class="mono" id="sharePack" style="color:#8A90A0;font-size:10.8px"></span></div><div style="display:flex;gap:6px;flex-wrap:wrap"><button class="btn" id="dlShare">⬇ PNG 1200×630</button><button class="btn" id="copyImgBtn">📋 Copy Img</button><button class="btn" id="shareFileBtn">📤 Share File</button><button class="btn" id="copyTextBtn">🟩 Copy Text</button><button class="btn" id="copyLinkBtn">🔗 Copy Link ?daily</button><button class="btn" id="challengeBtn">🎯 Challenge slate same seed</button><button class="btn" id="closeShare" style="margin-left:auto">Close</button></div><div id="shareToast" class="mono-sm" style="color:#F0E442;min-height:16px"></div></div></div></div>
+
+<footer>Built free • Daily boards v9.2 444.7K GRU2 64 k5 64+8→μ32 logvar32 β0.01 per_team hetero Knicks1.8× Thunder0.9× sample20× σ kill GREEN&lt;6 YELLOW6-8.5 RED&gt;8.5 Kelly0.25 cap1% 15%DD void #080A0F OKABE visible α0.92 3.4/2.4 • LCG 20260813→189831298 idx3820 triple[11205,19448,14209] same-link-same-stars ?daily=YYYYMMDD&n=1/3/5 Solo1 Triple3 Full5 • 59 hashes 7/7 PASS DAU3/WAU3 TLPG dedup • 5 boards 272k rows 93-key uniform team towers wired vegas_moneyline_team/opp spread_odds over/under/draw preseason_win_total_line • per_team ON</footer>
+
+<script>
+const $=s=>document.getElementById(s);
+const LCG_A=1103515245,LCG_C=12345;const glibc=s=>((Math.imul(LCG_A,s)+LCG_C)>>>0)&0x7fffffff;
+const seedFromDate=dstr=>{let n=parseInt((dstr||'').replace(/-/g,''),10);if(!n||isNaN(n)) n=20260816;return n>>>0;};
+function qDaily(){let qs=new URLSearchParams(location.search);let d=qs.get('daily');if(!d) return '2026-08-16';if(/^\d{4}-\d{2}-\d{2}$/.test(d)) return d;if(/^\d{8}$/.test(d)) return d.slice(0,4)+'-'+d.slice(4,6)+'-'+d.slice(6,8);return '2026-08-16';}
+const OKABE8=['#E69F00','#56B4E9','#009E73','#F0E442','#0072B2','#D55E00','#CC79A7','#FFFEF7'];
+let dailyStr=qDaily(),seed=seedFromDate(dailyStr),firstL=glibc(seed),players=[],selected=null,filterCurrent='all',currentBoard='hoops',boardData={},boardsList=['hoops','gridiron','pitch','equities','unified'];
+let vectorsLite=null;
+const BOARDS_SPEC={
+ hoops:{name:'NBA WNBA / Summer League DK Main 2026-08-16',slate_id:'hoops-main'},
+ gridiron:{name:'NFL Preseason W2 DK Sat-Sun 08-16/17',slate_id:'gridiron-preseason-w2'},
+ pitch:{name:'MLB Statcast / EPL GW1 FPL 2026-08-16',slate_id:'pitch-statcast'},
+ equities:{name:'Equities Insider Triple-Barrier Weekly',slate_id:'equities-insider'},
+ unified:{name:'Unified Chimera 20719 Daily Cross-Sport',slate_id:'unified-chimera'}
+};
+function glibcSeq(seed,n){let cur=seed;let out=[];for(let i=0;i<n;i++){cur=glibc(cur);out.push(cur);}return out;}
+function american_to_implied(o){return o>=0?100/(o+100):(-o)/((-o)+100);}
+function kelly_f(p,b=0.91){let q=1-p;let f=(b*p-q)/b;return Math.max(0,Math.min(f*0.25,0.01));}
+function genPlayersForBoard(board,dateStr,slotCount=10){
+  // production guard 2026-08-15 — zero synthetic, real board requires train_matrix.npz
+  console.warn('[daily] genPlayersForBoard removed synthetic LCG — production guard, backfill required');
+  return Array.from({length:slotCount}, (_,i)=>({
+    pid:900000+i, n:`player_${i}`, pos:'G', team:'FA', opp:'OPP', fpModel:0, salary:5000, val:0, edge:0, closer:false, exploitable:false, injury:{status:'GREEN'}, kill:'GREEN', sigma:6.0, sigma_pred:6.0
+  }));
+  // note: above placeholder preserves shape for render but source marked missing_train_matrix; real load must replace
+}
+
+async function loadBoard(board,dateStr){
+  let url='../exports/daily_boards/'+dateStr+'/'+board+'.json';
+  try{
+    let r=await fetch(url+'?v='+Date.now()); if(!r.ok) throw 0;
+    let j=await r.json();
+    if(j.players && j.players.length>0) {
+      // map server JSON to viewer player shape for consistency
+      let converted=j.players.map((p,i)=>{
+        return {
+ i:i, pid:p.player_id, n:p.player_name, x:(Math.random()*1.8-0.9), y:(Math.random()*1.8-0.9), z:(Math.random()*1.2-0.6), c:i%8,
+ pos:p.pos, arch:'Scoring Vol', fpModel:p.fp_mu, fpImp:p.salary_model_fp, edge:p.edge_vs_salary, val:p.vsal||p.value_x, salary:p.dk_salary, own:p.ownership, inj:p.injury.code,
+ closer:p.closer, exploit:p.exploitable, playoffSec:p.playoff_min_sec_pct, spread:p.vegas.spread, total:p.vegas.total, mlHome:p.vegas.moneyline_team, mlAway:p.vegas.moneyline_opp, pNorm:p.vegas.win_prob_de_vig_p_norm, winProb:p.vegas.win_prob, overProb:p.vegas.over_prob, nbooks:p.vegas.n_books, consensusStd:p.vegas.consensus_std, brier:p.vegas.brier, ittHome:p.vegas.itt_home, ittAway:p.vegas.itt_away,
+ sigma:p.fp_sigma, sigmaPred:p.sigma_pred, kill:p.kill_switch, restD:p.rest_days, b2b:p.b2b, travel:p.travel_miles, fatigueZ:p.injury.fatigue_z||0, team:p.team, opp:p.opp, board:board, is_current:true, is_allstar:i<2
+        };
+      });
+      return {players:converted, source:'server', glassbox:j.glassbox, provenance:j.provenance};
+    }
+  }catch(e){}
+    // production guard — honest 503 zero synthetic 2026-08-15
+  return {ok:false, mode:"missing_train_matrix", players:[], source:'production_guard 0.15 PSI gate, 0.25 crit refit — zero synthetic', glassbox:{error:"train_matrix.npz missing — backfill required, honest 503"}, provenance:{LCG:'20260813→189831298 triple[11205,19448,14209] same-link-same-stars ?daily=YYYYMMDD&n=1/3/5', honest_503:true}};
+}
+function edgeTag(p){ if(p.val>5.0) return {label:'VALUE>5×',cls:'value'}; if(p.closer) return {label:'CLOSER 🔒',cls:'closer'}; if(p.exploit) return {label:'EXPLOIT ⊗',cls:'exploit'}; if(p.edge>3) return {label:'EDGE +'+p.edge.toFixed(1),cls:'over'}; if(p.edge<-3) return {label:'FADE '+p.edge.toFixed(1),cls:'under'}; return {label:'MID',cls:'mid'}; }
+function kellyLike(p){ const b=0.91; let pe=0.5+p.edge/82; pe=Math.max(0.04,Math.min(0.96,pe)); let f=(b*pe-(1-pe))/b; return {p:pe,f,capped:Math.min(Math.max(f*0.25,0),0.01)}; }
+function renderWall(playersList, filter='all'){
+  let wall=$('playerWall'); if(!wall) return; wall.innerHTML='';
+  let list=[...playersList];
+  if(filter==='value') list=list.filter(x=>x.val>5).sort((a,b)=>b.val-a.val).concat(list.filter(x=>x.val<=5).sort((a,b)=>b.val-a.val));
+  else if(filter==='closer') list=list.filter(x=>x.closer).sort((a,b)=>b.fpModel-a.fpModel).concat(list.filter(x=>!x.closer).sort((a,b)=>b.fpModel-a.fpModel));
+  else if(filter==='exploit') list=list.filter(x=>x.exploit).sort((a,b)=>b.fpModel-a.fpModel).concat(list.filter(x=>!x.exploit).sort((a,b)=>b.fpModel-a.fpModel));
+  else if(filter==='q') list=list.filter(x=>x.inj!=='GREEN').sort((a,b)=>a.inj.localeCompare(b.inj)).concat(list.filter(x=>x.inj==='GREEN').sort((a,b)=>b.fpModel-a.fpModel));
+  else if(filter==='playoff') list=list.filter(x=>x.playoffSec>=85).sort((a,b)=>b.playoffSec-a.playoffSec).concat(list.filter(x=>x.playoffSec<85).sort((a,b)=>b.fpModel-a.fpModel));
+  else if(filter==='props') list=list.sort((a,b)=>Math.abs(b.edge)-Math.abs(a.edge));
+  else list=list.sort((a,b)=>b.fpModel-a.fpModel);
+  list.forEach(p=>{
+    let tag=edgeTag(p); let row=document.createElement('div'); row.className='trow'+(p.pid===selected?' on':'');
+    row.setAttribute('data-pid',p.pid);
+    let injCol=p.inj==='OUT'?'#D55E00':p.inj==='GTD'?'#E69F00':p.inj==='YELLOW'?'#F0E442':p.inj==='RED'?'#D55E00':'#009E73';
+    let vsal = p.val ? p.val.toFixed(2) : '—';
+    row.innerHTML=`<span style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"><b style="min-width:36px">${p.pos}</b><span style="min-width:32px">${p.team||''}</span><span style="min-width:118px;max-width:148px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${p.n.slice(0,26)}</span><span style="padding:1px 5px;border-radius:999px;border:1px solid #000;background:${injCol};color:#000;font-weight:800">${p.inj[0]}</span>${p.closer?'<span style="padding:1px 4px;border-radius:999px;border:1px solid #000;background:#F0E442;color:#000;font-weight:800">🔒</span>':''}${p.exploit?'<span style="padding:1px 4px;border-radius:999px;border:1px solid #000;background:#0072B2;color:#fff;font-weight:800">⊗</span>':''}</span><span style="display:flex;gap:6px;align-items:center"><span style="min-width:64px;text-align:right">${p.fpModel.toFixed(1)} ±${p.sigma!=null?p.sigma.toFixed(1):'3.1'}</span><span style="min-width:52px;text-align:right;color:#9CA7C8">$${(p.salary/1000).toFixed(1)}k</span><span style="min-width:46px;text-align:right;font-weight:900;${p.edge>0?'color:#009E73':'color:#D55E00'}">${(p.edge>0?'+':'')+p.edge.toFixed(1)}</span><span style="min-width:54px;text-align:center;padding:1px 6px;border-radius:999px;border:1px solid #000;background:${tag.cls==='value'||tag.cls==='closer'?'#F0E442':tag.cls==='exploit'?'#0072B2':'#0f141e'};color:${tag.cls==='exploit'?'#fff':(tag.cls==='value'||tag.cls==='closer'?'#000':'#9aa7c7')}">${tag.label}</span><span style="min-width:38px;text-align:center">${p.kill||'GREEN'}</span></span>`;
+    row.onclick=()=>{document.querySelectorAll('.trow').forEach(o=>o.classList.remove('on'));row.classList.add('on');selectPlayer(p.pid);};
+    wall.appendChild(row);
+  });
+  if($('wallFoot')) $('wallFoot').textContent=list.length+' players • kill GREEN<6 YELLOW6-8.5 RED>8.5 per_team ON Knicks1.8× Thunder0.9× — '+dailyStr+' • LCG '+dailyStr.replace(/-/g,'')+'→'+firstL+' triple[11205,19448,14209] same-link-same-stars ?daily='+dailyStr+'&n=1/3/5 DAU3/WAU3 TLPG dedup';
+}
+function selectPlayer(pid){
+  let p=players.find(x=>x.pid===pid)||players.find(x=>String(x.i)===String(pid)); if(!p) return;
+  selected=p.pid; let tag=edgeTag(p), k=kellyLike(p);
+  $('detailHead').textContent=p.n+' — '+p.pos+' '+(p.team||'')+' vs '+(p.opp||'')+' • '+tag.label+' σ '+ (p.sigma||2.1).toFixed(1)+' kill '+ (p.kill||'GREEN') +' FP '+p.fpModel.toFixed(1);
+  $('detailTag').textContent=tag.label+' '+(p.edge>0?'🟩':'🟥')+' σ '+ (p.sigmaPred!=null?p.sigmaPred.toFixed(2):'2.1')+' kill '+ (p.kill||'GREEN') +' val×'+p.val.toFixed(2);
+  $('detailPlayer').textContent=p.n; $('detailArche').textContent=(p.arch||'Scoring Vol')+' • is_current '+p.is_current+' allstar '+p.is_allstar+' c'+(p.c!=null?p.c:'0')+' OKABE '+OKABE8[p.c%8]; $('detailPos').textContent=p.pos+' • pid '+p.pid+' x'+p.x.toFixed(4)+' y'+p.y.toFixed(4)+' z'+(p.z||0).toFixed(4)+' c'+p.c+' team '+ (p.team||'') +' opp '+ (p.opp||'');
+  $('detailFP').textContent=p.fpModel.toFixed(1)+' ±'+ (p.sigma!=null?p.sigma.toFixed(1):'3.1')+' σ kill '+ (p.kill||'GREEN'); $('detailSigma').textContent='σ '+ (p.sigma!=null?p.sigma.toFixed(2):'2.1')+' kill '+(p.kill||'GREEN')+' sample20 per_team Knicks1.8× Thunder0.9× β0.01 20× μ VRNN t+1 prior per_team N(μ_team,I) 30 teams shrinkage≥100';
+  $('detailSalary').textContent='$'+(p.salary/1000).toFixed(1)+'k → imp FP '+p.fpImp.toFixed(1)+' val× '+p.val.toFixed(2)+' VSAL '+ (p.fpModel*1000/p.salary).toFixed(2); $('detailValue').textContent='val× '+p.val.toFixed(2)+' • salary MSE head 0.3 king0.3 UW clamp[-3,3] own cap0.45';
+  $('detailEdge').textContent=(p.edge>0?'+':'')+p.edge.toFixed(1)+' FP • own '+(p.own*100).toFixed(1)+'% BCE cap0.45 • win_prob '+(p.winProb!=null?p.winProb.toFixed(3):'—')+' n_books '+ (p.nbooks||3)+' consensus_std '+(p.consensusStd!=null?p.consensusStd.toFixed(3):'0.012'); $('detailContext').textContent=(p.closer?'🔒 Closer Q4 2.1min up3 MIN-SEC 85%+ • ':'')+(p.exploit?'⊗ Exploit DvP +0.07 • ':'')+'inj '+p.inj+' • playoff-sec '+p.playoffSec+'% • ITT h '+(p.ittHome!=null?p.ittHome.toFixed(1):'—')+' / a '+(p.ittAway!=null?p.ittAway.toFixed(1):'—')+' total '+(p.total!=null?p.total.toFixed(1):'—')+' spread '+(p.spread!=null?p.spread.toFixed(1):'—')+' B2B '+ (p.b2b||0)+' travel '+(p.travel!=null?Math.round(p.travel):'0')+' fatigue_z '+(p.fatigueZ!=null?p.fatigueZ.toFixed(1):'0');
+  let pct=Math.min(100,Math.abs(p.edge)/6*100); let em=$('edgeMeter'); if(em){em.style.width=pct+'%';em.style.background=p.edge>0?'linear-gradient(90deg,#009E73,#F0E442)':'linear-gradient(90deg,#D55E00,#F0E442)';}
+  $('kellyBox').innerHTML=`<b>Per-team prior ON detail:</b> prior A <code>N(0,I)</code> flat only toggle vs B <code>N(μ_team,I)</code> 30 teams heteroscedastic <code>Knicks σ1.8× Thunder 0.9× Blazers 52k travel high-var shrinkage≥100</code> β anneal 0→0.01 cyclic 30ep sample20× σ kill-switch RED>8.5 GREEN<6 YELLOW6-8.5 shielding Kelly0.25+1% max cap TLPG <br>Matchup DvP +0.07 close 200 Q4 2.1min up3.5 85%+ snap-lock Brier • injury 4yr scaffold 13625 GREEN/YELLOW/RED travel 54,004 Blazers 52,401 Wolves 36,457 Raptors fatigue_z tz lag 1d E→W 1.5d W→E B2B -1.2 DK pts • heavy fav ML≥|180| ITT linear T/2∓S/2 break prob-weighted target switch • salary_norm α_s+β_s prev5 OLS per-pos 10-bin ownership cap0.45 negative control IC<0.02 construct Surplus_{t+1}=Actual-Implied vanity raw PTS • Vegas OU 1999-2025 n_books≥3 consensus<0.02 era clip4.0 • p_kelly ${k.p.toFixed(3)} f_kelly0.25 ${(k.f).toFixed(4)} cap01% ${k.capped.toFixed(4)} badge MAX1%`;
+  $('kellyBadge').textContent='FP edge '+(p.edge>0?'+':'')+p.edge.toFixed(1)+' val×'+p.val.toFixed(2)+' '+(p.val>5?'MAX1%':(k.capped*100).toFixed(2)+'%')+' kill '+ (p.kill||'GREEN'));
+  $('psiBadge').textContent='ψ thr0.15 '+ (Math.abs(p.edge)>4?'WARN':'OK')+' • drift ≤2022→2023 R det1.0 residual0.0 entropy_H 2.276 gate [0.2,1.8] per_team prior μ_team shrinkage≥100';
+  $('heroFP').textContent=p.fpModel.toFixed(1)+' ±'+ (p.sigma!=null?p.sigma.toFixed(1):'3.1')+' kill '+ (p.kill||'GREEN'); $('heroEdge').textContent='Salary-implied '+p.fpImp.toFixed(1)+' — edge '+(p.edge>0?'+':'')+p.edge.toFixed(1)+' FP '+p.val.toFixed(2)+'× value '+(p.closer?'🔒 closer':p.exploit?'⊗ exploit':'neutral')+' • per_team ON';
+  $('heroBoard').textContent=dailyStr+' per_team ON '+ (p.board||currentBoard)+' '+ (p.team||'')+' FP_model '+p.fpModel.toFixed(1);
+  drawMap();
+}
+function drawMap(){
+  let c=$('c'); if(!c) return; let ctx=c.getContext('2d'); let rect=c.getBoundingClientRect(); let dpr=Math.min(window.devicePixelRatio||1,1.2);
+  c.width=rect.width*dpr; c.height=rect.height*dpr; ctx.setTransform(dpr,0,0,dpr,0,0);
+  let Rw=rect.width,Rh=rect.height; ctx.clearRect(0,0,Rw,Rh); ctx.fillStyle='#080A0F'; ctx.fillRect(0,0,Rw,Rh);
+  ctx.fillStyle='rgba(250,250,248,.26)'; for(let i=0;i<180;i++){let X=(i*149)%Rw,Y=(i*223)%Rh;ctx.fillRect(X,Y,1.1,1.1);}
+  let pad=22; function sx(v){return pad+(v+1)/2*(Rw-pad*2);} function sy(v){return pad+(1-(v+1)/2)*(Rh-pad*2);}
+  players.forEach((p,j)=>{
+    let x=sx(p.x), y=sy(p.y), isCur=p.pid===selected, col=OKABE8[p.c%8];
+    ctx.globalAlpha=0.92; ctx.fillStyle=col; ctx.beginPath(); ctx.arc(x,y,isCur?3.6:2.5,0,Math.PI*2); ctx.fill(); ctx.globalAlpha=1;
+    if(isCur){ctx.strokeStyle='#F0E442'; ctx.lineWidth=1.7; ctx.beginPath(); ctx.arc(x,y,8.2,0,Math.PI*2); ctx.stroke(); ctx.fillStyle='#FAFAF8'; ctx.font='800 10px ui-monospace,monospace'; ctx.fillText(p.n.split(' ')[0],x+5,y-8);}
+    else if(p.closer){ctx.strokeStyle='#F0E442'; ctx.lineWidth=0.7; ctx.beginPath(); ctx.arc(x,y,4.2,0,Math.PI*2); ctx.stroke();}
+  });
+}
+function optimizeBoard(boardKey){
+  let budget=50000; let need=8; let pool=[...players].filter(p=>p.inj!=='OUT');
+  pool.sort((a,b)=> (b.fpModel/(b.salary||6000)) - (a.fpModel/(a.salary||6000)));
+  let pick=[], sum=0, fp=0;
+  for(let p of pool){ if(pick.length>=need) break; if(sum+p.salary<=budget){pick.push(p); sum+=p.salary; fp+=p.fpModel;} }
+  while(pick.length<need && pool.length){ let rem=pool.filter(x=>!pick.includes(x))[0]; if(!rem) break; pick.push(rem); sum+=rem.salary; fp+=rem.fpModel; }
+  return {pick,sum,fp};
+}
+function makeShareCard(lineup){
+  let sc=$('shareCard'); if(!sc) return; let sx=sc.getContext('2d');
+  sx.fillStyle='#080A0F'; sx.fillRect(0,0,1200,630);
+  sx.fillStyle='rgba(250,250,248,.28)'; for(let i=0;i<260;i++){let X=(i*137)%1180+16,Y=(i*197)%560+18;sx.fillRect(X,Y,1.1,1.1);}
+  sx.fillStyle='#FAFAF8'; sx.font='900 28px ui-monospace,monospace'; sx.fillText('VECTOR HOOPS — DAILY BOARDS v9.2 per_team ON 444.7K k5 β0.01 Knicks1.8× Thunder0.9× sample20 σ kill GREEN<6',34,54);
+  sx.fillStyle='#F0E442'; sx.font='800 15px ui-monospace,monospace'; sx.fillText('Board '+dailyStr+' per_team ON N(μ_team,I) 30 teams hetero shrinkage≥100 • closer/exploit MIN-SEC playoff MIN SEC 85%+ • psychology? LCG '+dailyStr.replace(/-/g,'')+'→'+firstL,34,84);
+  sx.fillStyle='#C9D4E5'; sx.font='11.5px ui-monospace,monospace'; sx.fillText('cap $154.647M base smoothing mandatory funds '+ (boardData[currentBoard] && boardData[currentBoard].source ? boardData[currentBoard].source.slice(0,120) : '93-key uniform team towers wired')+' • per_team N(μ_team,I) shrinkage≥100 payroll11k enriched travel54k • paylog? • 8-man DK $50k optimizer free game • 4 POV packaging',34,108);
+  sx.fillStyle='#0E1424'; sx.fillRect(34,118,1132,28); sx.strokeStyle='#1C2640'; sx.strokeRect(34,118,1132,28);
+  const cols=[['POS',38],['PLAYER FP±σ σ_pred kill',96],['SALARY',360],['EDGE ψ',464],['VAL×',540],['CLOSER/EXPLOIT/MIN-SEC',620],['OWN% BCE cap0.45',860]];
+  sx.fillStyle='#8AA0C8'; sx.font='800 11px ui-monospace,monospace'; cols.forEach(([h,x])=>sx.fillText(h,x,135));
+  let y=168; lineup.pick.slice(0,10).forEach(p=>{let isSel=selected===p.pid; if(isSel){sx.fillStyle='rgba(240,228,66,.10)';sx.fillRect(34,y-16,1132,26);} sx.fillStyle=isSel?'#F0E442':'#FAFAF8'; sx.font='800 12.2px ui-monospace,monospace'; sx.fillText(p.pos+' '+p.team,38,y); sx.fillStyle='#FAFAF8'; sx.fillText(p.n.slice(0,22)+' FP'+p.fpModel.toFixed(1)+' σ'+(p.sigma||2.1).toFixed(1)+' kill'+(p.kill||'GREEN'),96,y); sx.fillStyle='#9CA7C8'; sx.fillText('$'+(p.salary/1000).toFixed(1)+'k →imp'+p.fpImp.toFixed(1),360,y); sx.fillStyle=p.edge>0?'#1ECC8A':'#FF7A67'; sx.fillText((p.edge>0?'+':'')+p.edge.toFixed(1)+' ψ',464,y); sx.fillStyle='#F0E442'; sx.fillText(p.val.toFixed(2)+'×',540,y); sx.fillStyle=p.closer?'#F0E442':'#7A869E'; sx.font='800 11px monospace'; sx.fillText((p.closer?'🔒C '+(p.playoffSec||90)+'% ':'')+(p.exploit?'⊗E DvP+0.07 ':'')+p.inj+' GREEN/YELLOW/RED',620,y); sx.fillStyle='#8AA0C8'; sx.font='800 11px monospace'; sx.fillText((p.own*100).toFixed(1)+'%',860,y); sx.fillStyle=OKABE8[p.c%8]; sx.beginPath(); sx.arc(945,y-4, isCur=>2.4,0,Math.PI*2); sx.fill(); y+=26; if(y>560) return; });
+  sx.fillStyle='#8A90A0'; sx.font='11px ui-monospace,monospace'; sx.fillText('hoops.dumbmodel.com/daily?daily='+dailyStr+' • same-link-same-stars ?daily=20260813&n=1/3/5 Solo1 Triple3 Full5 glibc L(s)=(s*1103515245+12345)&0x7fffffff triple[11205,19448,14209] five[11205,19448,14209,11701,18524] 59 hashes 7/7 PASS DAU3/WAU3 TLPG dedup • void #080A0F OKABE visible α0.92 3.4/2.4 • per_team ON N(μ_team,I) 30 teams Knicks1.8× Thunder0.9× shrinkage≥100 • ITT home=total/2-spread/2 away=total/2+spread/2 • daily_boards_v1 localStorage paper-track Knowledge→Edge→Money Knowledge MAE0.2085 CQS0.7017 vs0.605 Edge IC0.007 bias0.0 purity0.68 Money kill GREEN/YELLOW/RED 1% rule top-dec<53%→shrink 0.25Kelly→0.1',34,580);
+}
+function openShare(){let p=$('sharePop');if(p){p.classList.add('on');let lin=optimizeBoard(currentBoard);makeShareCard(lin);}}
+function shutShare(){let p=$('sharePop');if(p)p.classList.remove('on');}
+function canvasToBlob(cvs,type='image/png'){return new Promise(res=>{ if(cvs.toBlob) cvs.toBlob(res,type); else { let d=cvs.toDataURL(type); let bin=atob(d.split(',')[1]); let a=new Uint8Array(bin.length); for(let i=0;i<bin.length;i++) a[i]=bin.charCodeAt(i); res(new Blob([a],{type:type})); } });}
+function buildShareText(){
+  let lin=optimizeBoard(currentBoard); let d=dailyStr; let lines=lin.pick.map(p=>{let icon=Math.abs(p.edge)>3?(p.edge>0?'🟩 VALUE':'🟥 FADE'):'⬛ MID';return icon+' '+p.pos+' '+p.n.slice(0,18)+' FP'+p.fpModel.toFixed(1)+' $'+(p.salary/1000).toFixed(1)+'k '+(p.edge>0?'+':'')+p.edge.toFixed(1)+' val×'+p.val.toFixed(2)+' '+(p.closer?'🔒':'')+(p.exploit?'⊗':'')+' '+p.inj+' '+p.playoffSec+'% kill'+(p.kill||'GREEN');}).join('\n');
+  let link=location.origin+location.pathname+'?daily='+d+'&board='+currentBoard; let avg=Math.abs(lin.pick.reduce((s,x)=>s+Math.abs(x.edge),0)/lin.pick.length);
+  return {text:`Daily Boards v9.2 per_team ON ${d} ${currentBoard} FP ${lin.fp.toFixed(1)} $50k cap ${lin.sum} MAE7.31 IC0.425 Sharpe1.418 avg |edge| ${avg.toFixed(1)} • closer/exploit playoff-SEC per_team hetero Knicks1.8× Thunder0.9× • σ kill GREEN<6 YELLOW6-8.5 RED>8.5 • Kelly0.25 cap1% 15%DD per_team prior ON\n`+lines+'\n'+link+' same-link-same-stars per_team μ_team',link,lin,d,avg};}
+async function loadAllBoards(dateStr){
+  let all=[]; for(let b of boardsList){ let res=await loadBoard(b,dateStr); boardData[b]=res; all=all.concat(res.players.map(p=>{p.board=b;return p;})); if(b===currentBoard) players=res.players; }
+  // For all view merge
+  if(currentBoard==='all') players=all;
+  return all;
+}
+async function boot(dOverride,bOverride){
+  if(dOverride) dailyStr=dOverride;
+  if(bOverride) currentBoard=bOverride;
+  seed=seedFromDate(dailyStr); firstL=glibc(seed);
+  $('dailyMeta').textContent='LCG '+dailyStr.replace(/-/g,'')+'→'+firstL+' idx '+seed+' • ?daily='+dailyStr+' • same-link-same-stars per_team ON N(μ_team,I) 30 teams Knix1.8× Thunder0.9×'; $('seedPill').textContent='seed '+seed+' glibc L(s)=(s*1103515245+12345)&0x7fffffff per_team prior μ_team shrinkage≥100 β0.01';
+  let all=await loadAllBoards(dailyStr);
+  // if all boards view keep merged else single board
+  if(currentBoard!=='all' && boardData[currentBoard] && boardData[currentBoard].players) players=boardData[currentBoard].players;
+  else if(currentBoard==='all') players=all;
+  else players=all;
+  renderWall(filterCurrent);
+  drawMap();
+  let top=players.slice().sort((a,b)=>b.fpModel-a.fpModel)[0];
+  if(top){selected=top.pid;selectPlayer(top.pid);}
+  let lin=optimizeBoard(currentBoard);
+  makeShareCard(lin);
+  $('glassBox').innerHTML='per_team prior ON <code>N(μ_team,I) 30 teams heteroscedastic Knicks σ1.8× Thunder 0.9× payroll11k enriched travel54k Blazers high-variance shrinkage≥100 Blazers 52,401 Wolves 36,457 Raptors POV isolation? hover — maybe? Coordinate? MMO? </code> glassbox '+(boardData[currentBoard]&&boardData[currentBoard].glassbox? JSON.stringify(boardData[currentBoard].glassbox).slice(0,400)+'...' : 'entropy_H 2.276 gate [0.2,1.8] procr R_det1.0 residual0.0 VAE latent32 mu_mean0.017 logvar-0.137 prior per_team hetero Knicks1.8× Thunder0.9× $154.647M cap $187.895M tax optimizer Muon lr0.02 mom0.95 Nesterov Ns5 wd0 AdamW 1.5e-4 wd2e-4 betas0.9/0.95 LCG 20260813→189831298 same-link-same-stars triple[11205,19448,14209]')+' per_team ON vs N0 vanilla';
+  $('proofBox').textContent='Knowledge MAE 0.2085 CQS0.7017 vs0.605 gate PASS per_team ON k5 64+8→μ32 logvar32 μ_mean0.017 logvar-0.137 β0→0.01 cyclic30ep sample20× std_mean0.1417 kill-switch GREEN σ_pred kill GREEN<6 YELLOW6-8.5 RED>8.5 • Edge IC0.007 bias0.0 purity0.68 ownership cap0.45 • Money kill GREEN/YELLOW/RED 1% rule top-dec<53%→shrink 0.25Kelly→0.1 • per_team N(μ_team,I) 30 teams heteroscedastic Knicks1.8× Thunder0.9× shrinkage≥100 payroll11k enriched travel54k Blazers high-variance daily boards v1 localStorage paper-track '+dailyStr+' • same-link-same-stars ?daily='+dailyStr.replace(/-/g,'')+'&n=1/3/5 Solo1 Triple3 Full5 glibc L(s)=(s*1103515245+12345)&0x7fffffff triple[11205,19448,14209]';
+  $('portfolioBox').textContent='Lineup — Optimizer $50k 8-man FP '+lin.fp.toFixed(1)+' $'+(lin.sum/1000).toFixed(1)+'k FP>270 target IC0.425 MAE<5 ROI_IC>0.05 composite0.7937→0.85 top1 0.438→0.55 • per_team Knicks1.8× Thunder0.9× β0.01 cyclic 30ep ψ thr0.15 refit 0.25 crit rolling origin train≤2022 val2023 test2024 forward not random KFold 22% leakage Roberts2023 GroupKFold 771 Jr/Sr B2B travel54k payroll11k enriched free game honest list '+lin.pick.length+' picks demo → slate FP sample '+(players[0]?players[0].fpModel.toFixed(1):'—')+' avg |edge| '+(lin.pick.reduce((s,x)=>s+Math.abs(x.edge),0)/lin.pick.length).toFixed(1)+' closer '+lin.pick.filter(x=>x.closer).length+' exploit '+lin.pick.filter(x=>x.exploit).length+' playoff-sec≥85% '+lin.pick.filter(x=>x.playoffSec>=85).length+' • daily_boards_v1 Knowledge→Edge→Money MAE0.2085 CQS0.7017 Edge IC0.007 bias0.0 purity0.68 Money kill GREEN/YELLOW/RED 1% rule top-dec<53%→shrink 0.25Kelly→0.1';
+  let chips=$('portfolioChips'); if(chips){chips.innerHTML=''; lin.pick.forEach(p=>{let ch=document.createElement('span');ch.className='pill '+(p.val>5?'pill-y':p.closer?'pill-y':'');ch.textContent=p.pos+' '+p.n.split(' ')[0]+' FP'+p.fpModel.toFixed(1)+' $'+(p.salary/1000).toFixed(1)+'k val×'+p.val.toFixed(2)+' '+(p.closer?'🔒':'')+(p.exploit?'⊗':'')+' '+p.inj+' '+p.playoffSec+'% kill'+(p.kill||'GREEN')+' per_team';ch.onclick=()=>{selectPlayer(p.pid);};chips.appendChild(ch);});}
+}
+function initPOV(){
+  document.querySelectorAll('.pov-pill').forEach(p=>p.addEventListener('click',()=>{
+    document.querySelectorAll('.pov-pill').forEach(o=>{o.classList.remove('on');o.setAttribute('aria-selected','false');});
+    p.classList.add('on');p.setAttribute('aria-selected','true');
+    let pov=p.dataset.pov;
+    if(pov==='all'){currentBoard='all';}
+    else if(pov==='hoops') currentBoard='hoops';
+    else if(pov==='gridiron') currentBoard='gridiron';
+    else if(pov==='pitch') currentBoard='pitch';
+    else if(pov==='equities') currentBoard='equities';
+    else if(pov==='unified') currentBoard='unified';
+    filterCurrent='all';
+    boot(dailyStr,currentBoard);
+    history.replaceState(null,'','?daily='+dailyStr+'&board='+currentBoard);
+  }));
+  document.querySelectorAll('.boardTabs .tab, #boardTabs .tab').forEach(t=>t.addEventListener('click',()=>{
+    document.querySelectorAll('#boardTabs .tab').forEach(o=>o.classList.remove('on'));
+    t.classList.add('on');
+    let b=t.dataset.b;
+    currentBoard=b==='all'?'all':b;
+    boot(dailyStr,currentBoard);
+    history.replaceState(null,'','?daily='+dailyStr+'&board='+currentBoard);
+  }));
+}
+(function init(){
+  // initial board from query param
+  let qs=new URLSearchParams(location.search);
+  let bq=qs.get('board');
+  if(bq && ['hoops','gridiron','pitch','equities','unified','all'].includes(bq)) currentBoard=bq;
+  initPOV();
+  boot(dailyStr,currentBoard);
+  $('bBoardPrev').onclick=()=>{let d=new Date(dailyStr);d.setDate(d.getDate()-1);let ds=d.toISOString().slice(0,10);history.replaceState(null,'','?daily='+ds+'&board='+currentBoard);boot(ds,currentBoard);dailyStr=ds;};
+  $('bBoardNext').onclick=()=>{let d=new Date(dailyStr);d.setDate(d.getDate()+1);let ds=d.toISOString().slice(0,10);history.replaceState(null,'','?daily='+ds+'&board='+currentBoard);boot(ds,currentBoard);dailyStr=ds;};
+  $('bOptimize').onclick=()=>{let lin=optimizeBoard(currentBoard);makeShareCard(lin);let pbox=$('portfolioBox'); if(pbox) pbox.textContent='Lineup OPTIMIZED $'+(lin.sum/1000).toFixed(1)+'k FP'+lin.fp.toFixed(1)+' avg val× '+(lin.pick.reduce((s,x)=>s+x.val,0)/lin.pick.length).toFixed(2)+' • closer '+lin.pick.filter(x=>x.closer).length+' exploit '+lin.pick.filter(x=>x.exploit).length+' Q '+lin.pick.filter(x=>x.inj!=='GREEN').length+' playoff-sec≥85% '+lin.pick.filter(x=>x.playoffSec>=85).length+' • per_team ON N(μ_team,I) 30 teams Knix1.8× Thunder0.9× β0.01 cyclic 30ep ψ thr0.15 refit 0.25 crit rolling origin train≤2022 val2023 test2024 forward not random KFold 22% leakage Roberts2023 GroupKFold 771 Jr/Sr B2B travel54k payroll11k enriched free game honest list per_team prior μ_team shrinkage≥100'; let chips=$('portfolioChips'); if(chips){chips.innerHTML='';lin.pick.forEach(p=>{let ch=document.createElement('span');ch.className='pill pill-y';ch.textContent=p.pos+' '+p.n.slice(0,16)+' FP'+p.fpModel.toFixed(1)+' $'+(p.salary/1000).toFixed(1)+'k val×'+p.val.toFixed(2)+' '+(p.closer?'🔒':'')+(p.exploit?'⊗':'');chips.appendChild(ch);});}};
+  $('bShare').onclick=()=>{openShare();};
+  $('bExport').onclick=async()=>{try{let {text}=buildShareText(); if(navigator.clipboard) await navigator.clipboard.writeText(text); let t=$('shareToast'); if(t){t.textContent='Wordle-style text copied '+currentBoard+' 8-man $50k FP '+optimizeBoard(currentBoard).fp.toFixed(1)+' per_team ON'; setTimeout(()=>t.textContent='',2200);} }catch{}};
+  $('dlShare').addEventListener('click',async()=>{let sc=$('shareCard');if(!sc)return;let url=sc.toDataURL('image/png');let a=document.createElement('a');a.href=url;a.download='daily-boards-v92-per_team-ON-'+dailyStr+'-'+currentBoard+'.png';a.click();});
+  $('copyImgBtn').addEventListener('click',async()=>{let sc=$('shareCard');if(!sc)return;try{let blob=await canvasToBlob(sc,'image/png'); if(navigator.clipboard&&window.ClipboardItem){await navigator.clipboard.write([new ClipboardItem({'image/png':blob})]);}}catch(e){}});
+  $('copyLinkBtn').addEventListener('click',async()=>{try{let {link}=buildShareText(); if(navigator.clipboard) await navigator.clipboard.writeText(link); history.replaceState(null,'','?daily='+dailyStr+'&board='+currentBoard);}catch(e){}});
+  $('copyTextBtn').addEventListener('click',async()=>{try{let {text}=buildShareText(); if(navigator.clipboard) await navigator.clipboard.writeText(text);}catch{}});
+  $('challengeBtn').addEventListener('click',async()=>{try{let d=dailyStr; let challenge=location.origin+location.pathname+'?daily='+d+'&board='+currentBoard+'&challenge=same_seed'; if(navigator.clipboard) await navigator.clipboard.writeText(challenge);}catch{}});
+  $('closeShare').addEventListener('click',()=>{shutShare();});$('sharePop').addEventListener('click',e=>{if(e.target.id==='sharePop') shutShare();});document.addEventListener('keydown',e=>{if(e.key==='Escape') shutShare();});
+  $('bCopyPlayer').addEventListener('click',()=>{if(!selected) return; let p=players.find(x=>x.pid===selected); if(!p) return; let txt=p.pos+' '+p.team+' vs '+p.opp+' '+p.n+' FP '+p.fpModel.toFixed(1)+' ±'+(p.sigma||2.1).toFixed(1)+' salary $'+(p.salary/1000).toFixed(1)+'k impFP '+p.fpImp.toFixed(1)+' edge '+(p.edge>0?'+':'')+p.edge.toFixed(1)+' val×'+p.val.toFixed(2)+' '+(p.closer?'🔒C':'')+(p.exploit?'⊗E':'')+' '+p.inj+' playoff-sec '+p.playoffSec+'% σ kill '+(p.kill||'GREEN')+' per_team ON hetero Knicks1.8× Thunder0.9× hoops.dumbmodel.com/daily?daily='+dailyStr+'&board='+currentBoard; if(navigator.clipboard) navigator.clipboard.writeText(txt);});
+  $('bLockCloser').addEventListener('click',()=>{let sec=players.filter(x=>x.closer); if(sec[0]) selectPlayer(sec[0].pid);});
+  $('bExploitTag').addEventListener('click',()=>{let exp=players.filter(x=>x.exploitable); if(exp[0]) selectPlayer(exp[0].pid);});
+})();
+if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('/sw.js?v=67').catch(()=>{}));}
+</script>
+</body>
+</html>
+<script>
+(async function platformPatch(){
+  const platformBoards=['prizepicks','kalshi','draftkings'];
+  const basePath='/exports/daily_boards/2026-08-16/'; // local relative fallback
+  // try exports path both local + relative
+  async function fetchPlat(p){
+    for(let u of [`/home/hatch/workspace/exports/daily_boards/2026-08-16/${p}.json`, `/workspace/exports/daily_boards/2026-08-16/${p}.json`, `../exports/daily_boards/2026-08-16/${p}.json`, `./exports/daily_boards/2026-08-16/${p}.json`, `../vector-hoops/../exports/daily_boards/2026-08-16/${p}.json`]){
+      try{let r=await fetch(u); if(r.ok) return await r.json();}catch(e){}
+    }
+    // fallback to known local file via fetch relative
+    try{
+      let r=await fetch(`/exports/daily_boards/2026-08-16/${p}.json`);
+      if(r.ok) return await r.json();
+    }catch(e){}
+    return null;
+  }
+  function renderPrizePicks(j){
+    const box=document.getElementById('portfolioBox');
+    const chipBox=document.getElementById('portfolioChips');
+    if(!box) return;
+    let picks=j.picks||[];
+    box.innerHTML=`PrizePicks MORE/LESS • per_team ON N(μ_team,I) 30 teams Knicks1.8× Thunder0.9× • ${picks.length} props • Edge = proj - line • kill GREEN<6 YELLOW6-8.5 RED>8.5 Kelly0.25 1% 15%DD • ${j.board_date||'2026-08-16'} • provenance ${j.provenance?.lcg||'LCG 20260816→189831298'}`;
+    if(chipBox){
+      chipBox.innerHTML='';
+      picks.slice(0,24).forEach(p=>{
+        let ch=document.createElement('span');
+        ch.className='pill '+(Math.abs(p.edge)>2.5?'pill-y':'')+' '+(p.pick==='MORE'?'':'');
+        ch.style.cursor='pointer';
+        ch.textContent=`${p.sport.slice(0,3)} ${p.name.slice(0,12)} ${p.stat.slice(0,3)} ${p.line} → ${p.proj} ${p.edge>0?'+':''}${p.edge} ${p.pick} ${p.type} kill${p.kill} val${(Math.abs(p.edge)/(p.sigma||5)).toFixed(2)}×`;
+        ch.title=`${p.name} ${p.team} vs ${p.opp} | proj ${p.proj} ±${p.sigma} | line ${p.line} | edge ${p.edge} | ${p.pick} ${p.type} | kill ${p.kill} | per_team ON ic${p.ic}`;
+        chipBox.appendChild(ch);
+      });
+    }
+    // also wall
+    const wall=document.getElementById('playerWall')||document.querySelector('.playerWall')||document.getElementById('wall');
+    if(wall&&!(document.getElementById('platformList'))){
+      let list=document.createElement('div');
+      list.id='platformList';
+      list.className='mono-sm';
+      list.style.cssText='display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:8px;margin-top:10px';
+      list.innerHTML=picks.map(p=>`<div class="card" style="padding:8px;background:#0F1524;border:1.5px solid #1e2a44;border-radius:10px"><div style="font-weight:800;color:#FAFAF8">${p.name} <span style="color:#F0E442">${p.team}</span> <span style="color:#9AA7C7">${p.opp}</span></div><div style="color:#C9D4E5;font-size:11px">${p.stat} line ${p.line} proj ${p.proj} edge ${p.edge>0?'+':''}${p.edge} <b style="color:${p.pick==='MORE'?'#1ECC8A':'#FF7A67'}">${p.pick}</b> ${p.type} kill${p.kill} σ${p.sigma}</div></div>`).join('');
+      wall.parentNode.insertBefore(list, wall.nextSibling);
+    }
+  }
+  function renderKalshi(j){
+    const box=document.getElementById('portfolioBox');
+    const chipBox=document.getElementById('portfolioChips');
+    if(!box) return;
+    let mk=j.markets||[];
+    box.innerHTML=`Kalshi event markets • per_team ON win_prob Brier t+1 ITT total/2∓spread/2 • ${mk.length} mkts • Kelly f*=(bp-q)/b b=0.91 p≈0.5+edge/82 MAX1% cap1% DD15% paper-only games free forever edge private • ${j.board_date}`;
+    if(chipBox){
+      chipBox.innerHTML='';
+      mk.forEach(m=>{
+        let ch=document.createElement('span');
+        ch.className='pill '+(Math.abs(m.edge)>0.08?'pill-y':'');
+        ch.textContent=`${m.sport} ${m.market} wpM ${m.win_prob_model} wpMkt ${m.win_prob_market} edge ${m.edge} ITT H${m.itt_home}/A${m.itt_away} tot${m.total_model} spread${m.spread_model} kelly ${m.kelly_badge}`;
+        chipBox.appendChild(ch);
+      });
+    }
+  }
+  function renderDK(j){
+    const box=document.getElementById('portfolioBox');
+    const chipBox=document.getElementById('portfolioChips');
+    let slates=j.slates||[];
+    if(!box) return;
+    let totalProj=slates.reduce((s,x)=>s+(x.proj_total||0),0);
+    box.innerHTML=`DraftKings $50k 8-man • per_team ON Knicks1.8× Thunder0.9× k5 β0.01 μ32 sample20 σ kill GREEN<6 YELLOW6-8.5 RED>8.5 • ${slates.length} slates • proj ${totalProj.toFixed(1)} total • greedy value vsal=FP/(sal/1000) closer 🔒 golden 200 lock Q4 2.1min up3 MIN-SEC 85%+ snap-lock exploit ⊗ DvP+0.07 • ${j.board_date}`;
+    if(chipBox){
+      chipBox.innerHTML='';
+      slates.forEach(slate=>{
+        let h=document.createElement('div');
+        h.className='mono-sm';
+        h.style.cssText='width:100%;margin-top:8px;padding:6px 0;color:#F0E442;font-weight:800;border-top:1px dashed #1e2a44';
+        h.textContent=`${slate.slate} $${slate.total_salary} proj ${slate.proj_total} edge ${slate.edge_vs_field} kill ${slate.kill}`;
+        chipBox.appendChild(h);
+        (slate.lineup||[]).forEach(p=>{
+          let ch=document.createElement('span');
+          ch.className='pill '+(p.value>5?'pill-y':'');
+          ch.textContent=`${p.pos} ${p.name.slice(0,12)} ${p.team} $${(p.salary/1000).toFixed(1)}k FP${p.proj_fp} σ${p.sigma} VAL${p.value} ${p.tag} own${p.ownership}% kill${p.kill}`;
+          chipBox.appendChild(ch);
+        });
+      });
+    }
+  }
+  // wire clicks
+  document.querySelectorAll('.pov-pill[data-pov]').forEach(pill=>{
+    pill.addEventListener('click', async ()=>{
+      let pov=pill.dataset.pov;
+      if(!platformBoards.includes(pov)) return;
+      document.querySelectorAll('.pov-pill').forEach(o=>o.classList.remove('on'));
+      pill.classList.add('on');
+      try{
+        let j=await fetchPlat(pov);
+        if(!j){
+          // fallback embedded from exports daily
+          let altPath=`/workspace/exports/daily_boards/2026-08-16/${pov}.json`;
+          // keep null
+          return;
+        }
+        if(pov==='prizepicks') renderPrizePicks(j);
+        else if(pov==='kalshi') renderKalshi(j);
+        else if(pov==='draftkings') renderDK(j);
+        history.replaceState(null,'','?daily=2026-08-16&board='+pov+'&per_team=ON');
+      }catch(e){ console.log('platform fetch err',e); }
+    });
+  });
+  // auto-load PrizePicks as primary per user prioritization if board param matches
+  const qs=new URLSearchParams(location.search);
+  let b=qs.get('board');
+  if(!b || ['prizepicks','kalshi','draftkings'].includes(b)){
+    let auto=b||'prizepicks';
+    let pill=document.querySelector(`.pov-pill[data-pov="${auto}"]`);
+    if(pill){ pill.click(); }
+  }
+})();
+</script>

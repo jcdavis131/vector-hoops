@@ -28,7 +28,7 @@ def fix_rows(rows: list[dict], dry_run: bool) -> int:
     changed = 0
     for r in rows:
         for field in NAME_FIELDS:
-            if field in r and r[field]:
+            if r.get(field):
                 new = canonical_name(str(r[field]))
                 if new != r[field]:
                     if not dry_run:
@@ -63,8 +63,7 @@ def main() -> None:
             if n:
                 print(f"{'would fix' if args.dry_run else 'fixed'} {n} names in {path.name}")
                 if not args.dry_run:
-                    path.write_text(json.dumps(data, separators=(",", ":")),
-                                    encoding="utf-8")
+                    path.write_text(json.dumps(data, separators=(",", ":")), encoding="utf-8")
                 total += n
 
     if VECTORS.exists():
@@ -72,7 +71,7 @@ def main() -> None:
             data = json.loads(VECTORS.read_text(encoding="utf-8"))
             n = 0
             for p in data.get("players", []):
-                if "name" in p and p["name"]:
+                if p.get("name"):
                     new = canonical_name(str(p["name"]))
                     if new != p["name"]:
                         if not args.dry_run:
@@ -81,8 +80,7 @@ def main() -> None:
             if n:
                 print(f"{'would fix' if args.dry_run else 'fixed'} {n} names in vectors.json")
                 if not args.dry_run:
-                    VECTORS.write_text(json.dumps(data, separators=(",", ":")),
-                                       encoding="utf-8")
+                    VECTORS.write_text(json.dumps(data, separators=(",", ":")), encoding="utf-8")
                 total += n
         except (OSError, json.JSONDecodeError) as e:
             print(f"vectors.json: skip ({e})")

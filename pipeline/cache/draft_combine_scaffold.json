@@ -1,0 +1,64 @@
+{
+  "built": "2026-08-09",
+  "complete": false,
+  "note": "scaffold \u2014 real NBA combine measurements require curl_cffi + stats.nba.com draftcombinestats endpoint; estimated values are realistic proxies",
+  "fields": [
+    "wingspan_in",
+    "standing_reach_in",
+    "vertical_max_in",
+    "vertical_standing_in",
+    "combine_method"
+  ],
+  "sample": [
+    {
+      "PLAYER_NAME": "AC Green",
+      "PLAYER_ID": 920,
+      "height_in": 81.0,
+      "wingspan_in": 88.3,
+      "standing_reach_in": 109.6,
+      "vertical_max_in": 28.9,
+      "pos_used": "PF",
+      "method": "estimated"
+    },
+    {
+      "PLAYER_NAME": "Aaron McKie",
+      "PLAYER_ID": 243,
+      "height_in": 77.0,
+      "wingspan_in": 83.4,
+      "standing_reach_in": 103.0,
+      "vertical_max_in": 30.6,
+      "pos_used": "SF",
+      "method": "estimated"
+    },
+    {
+      "PLAYER_NAME": "Aaron Williams",
+      "PLAYER_ID": 1425,
+      "height_in": 81.0,
+      "wingspan_in": 87.0,
+      "standing_reach_in": 111.7,
+      "vertical_max_in": 29.9,
+      "pos_used": "C",
+      "method": "estimated"
+    },
+    {
+      "PLAYER_NAME": "Acie Earl",
+      "PLAYER_ID": 768,
+      "height_in": 83.0,
+      "wingspan_in": 91.8,
+      "standing_reach_in": 113.1,
+      "vertical_max_in": 30.0,
+      "pos_used": "C",
+      "method": "estimated"
+    },
+    {
+      "PLAYER_NAME": "Adam Keefe",
+      "PLAYER_ID": 228,
+      "height_in": 81.0,
+      "wingspan_in": 87.6,
+      "standing_reach_in": 110.1,
+      "vertical_max_in": 29.1,
+      "pos_used": "PF",
+      "method": "estimated"
+    }
+  ]
+}

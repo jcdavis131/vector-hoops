@@ -1,0 +1,19 @@
+1
+00:00:00,000 --> 00:00:02,500
+Seventeen towers — each family lifted one-sixty dims, squeezed to thirty-two.
+
+2
+00:00:02,500 --> 00:00:05,000
+LayerNorm then GELU, residual twice — stable, deep, tiny.
+
+3
+00:00:05,000 --> 00:00:07,500
+Concat seventeen times thirty-two is five-forty-four, plus twelve time embeddings is five-fifty-six.
+
+4
+00:00:07,500 --> 00:00:10,000
+Five-fifty-six to one-twenty-eight to sixty-four, then L2 — unit length, twelve thousand nine sixty six on sphere.
+
+5
+00:00:10,000 --> 00:00:12,800
+Four heads — archetype eight, position five, next fourteen, skills eighteen — two hundred twenty four K params, five-forty-nine KB ONNX.

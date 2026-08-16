@@ -21,6 +21,7 @@ Run:
     python pipeline/fetch_salary_history.py --write-csv    # merge into salaries_history.csv
     python pipeline/fetch_salary_history.py --status
 """
+
 from __future__ import annotations
 
 import argparse
@@ -38,14 +39,40 @@ CACHE = ROOT / "pipeline" / "cache"
 SAL_DIR = CACHE / "bbref_salaries"
 CSV_PATH = CACHE / "salaries_history.csv"
 
-UA = ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
-      "(KHTML, like Gecko) Chrome/126.0 Safari/537.36")
+UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0 Safari/537.36"
 
 # Stable BBRef franchise codes for 2019-2025 (no relocations in range).
 BBREF_TEAMS = [
-    "ATL", "BOS", "BRK", "CHO", "CHI", "CLE", "DAL", "DEN", "DET", "GSW",
-    "HOU", "IND", "LAC", "LAL", "MEM", "MIA", "MIL", "MIN", "NOP", "NYK",
-    "OKC", "ORL", "PHI", "PHO", "POR", "SAC", "SAS", "TOR", "UTA", "WAS",
+    "ATL",
+    "BOS",
+    "BRK",
+    "CHO",
+    "CHI",
+    "CLE",
+    "DAL",
+    "DEN",
+    "DET",
+    "GSW",
+    "HOU",
+    "IND",
+    "LAC",
+    "LAL",
+    "MEM",
+    "MIA",
+    "MIL",
+    "MIN",
+    "NOP",
+    "NYK",
+    "OKC",
+    "ORL",
+    "PHI",
+    "PHO",
+    "POR",
+    "SAC",
+    "SAS",
+    "TOR",
+    "UTA",
+    "WAS",
 ]
 # BBRef code -> abbreviation used elsewhere in this repo (assets/teams.json).
 TEAM_OUT = {"BRK": "BKN", "CHO": "CHA", "PHO": "PHX"}
@@ -88,8 +115,7 @@ def cache_path(team: str, end_year: int) -> Path:
 
 
 def parse_salaries(html: str) -> list[dict]:
-    blob = next((c for c in re.findall(r"<!--(.*?)-->", html, re.S)
-                 if "salaries2" in c), None)
+    blob = next((c for c in re.findall(r"<!--(.*?)-->", html, re.S) if "salaries2" in c), None)
     if blob is None:
         return []
     body = re.search(r"<tbody>(.*?)</tbody>", blob, re.S)
@@ -110,8 +136,7 @@ def parse_salaries(html: str) -> list[dict]:
     return out
 
 
-def fetch_team_season(team: str, end_year: int, delay: float,
-                      force: bool = False) -> list[dict]:
+def fetch_team_season(team: str, end_year: int, delay: float, force: bool = False) -> list[dict]:
     path = cache_path(team, end_year)
     if path.exists() and not force:
         return json.loads(path.read_text(encoding="utf-8"))
@@ -147,12 +172,10 @@ def existing_seasons() -> set[str]:
 def status() -> None:
     have = existing_seasons()
     print("salaries_history.csv seasons:", len(have))
-    missing = [season_label(y) for y in DEFAULT_END_YEARS
-               if season_label(y) not in have]
+    missing = [season_label(y) for y in DEFAULT_END_YEARS if season_label(y) not in have]
     print("target backfill seasons:", [season_label(y) for y in DEFAULT_END_YEARS])
     print("still missing from CSV:", missing or "none")
-    cached = sum(1 for y in DEFAULT_END_YEARS for t in BBREF_TEAMS
-                 if cache_path(t, y).exists())
+    cached = sum(1 for y in DEFAULT_END_YEARS for t in BBREF_TEAMS if cache_path(t, y).exists())
     print(f"cached (team,season) pages: {cached}/{len(DEFAULT_END_YEARS) * len(BBREF_TEAMS)}")
 
 
@@ -172,8 +195,10 @@ def collect(end_years: list[int]) -> dict[tuple[str, str], dict]:
                 prev = best.get(key)
                 if prev is None or rec["salary"] > prev["salary"]:
                     best[key] = {
-                        "name": name, "season": season,
-                        "salary": rec["salary"], "team": TEAM_OUT.get(team, team),
+                        "name": name,
+                        "season": season,
+                        "salary": rec["salary"],
+                        "team": TEAM_OUT.get(team, team),
                     }
     return best
 
@@ -206,16 +231,22 @@ def write_csv(end_years: list[int]) -> None:
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--status", action="store_true")
-    ap.add_argument("--write-csv", action="store_true",
-                    help="append cached rows into salaries_history.csv")
+    ap.add_argument(
+        "--write-csv",
+        action="store_true",
+        help="append cached rows into salaries_history.csv",
+    )
     ap.add_argument("--delay", type=float, default=3.5, help="seconds between requests")
     ap.add_argument("--force", action="store_true", help="refetch cached pages")
-    ap.add_argument("--end-years", type=str, default="",
-                    help="comma-separated season END years (default 2019..2025)")
+    ap.add_argument(
+        "--end-years",
+        type=str,
+        default="",
+        help="comma-separated season END years (default 2019..2025)",
+    )
     args = ap.parse_args()
 
-    end_years = ([int(x) for x in args.end_years.split(",") if x.strip()]
-                 or DEFAULT_END_YEARS)
+    end_years = [int(x) for x in args.end_years.split(",") if x.strip()] or DEFAULT_END_YEARS
 
     if args.status:
         status()

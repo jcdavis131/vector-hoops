@@ -1,0 +1,199 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<script>/* early error queue — drained by assets/error-boundary.js. Installed here because a listener only sees scripts parsed after it, and the page's own inline block used to be first. */window.__vhErr=[];window.addEventListener("error",function(e){try{var t=e.target,r=t&&(t.src||t.href);window.__vhErr.push({type:r?"resource":"js",message:e.message||("Failed to load "+(r||"")),source:e.filename||r||"",lineno:e.lineno||0,colno:e.colno||0,stack:(e.error&&e.error.stack)||""});}catch(_){}} ,true);window.addEventListener("unhandledrejection",function(e){try{window.__vhErr.push({type:"unhandledrejection",message:String((e.reason&&e.reason.message)||e.reason||"")});}catch(_){}});</script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Vector Hoops — Player Fit</title><meta name="theme-color" content="#fafaf8">
+<style>:root{--paper:#fafaf8;--surface:#fff;--ink:#111;--muted:#6b6760;--orange:#eb6834;--blue:#2a78d6;--purple:#7a5ae6;--yellow:#f0e442;--green:#009e73;--mono:ui-monospace,Menlo,monospace;--shadow:4px 4px 0 var(--ink)}*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;overflow-wrap:break-word}nav{display:flex;justify-content:space-between;align-items:center;padding:10px 14px;background:#fff;border-bottom:2px solid var(--ink);position:sticky;top:0;z-index:10;flex-wrap:wrap;gap:8px}.brand{font-family:var(--mono);font-weight:800;text-transform:uppercase}.brand span{color:var(--orange)}.pill{display:inline-flex;padding:5px 10px;border:1.6px solid var(--ink);border-radius:999px;background:#fff;box-shadow:2px 2px 0 var(--ink);font-family:var(--mono);font-size:11px;font-weight:800;text-transform:uppercase}.pill-y{background:var(--yellow)}.pill-o{background:#ffe7d6}.card{background:#fff;border:2px solid var(--ink);border-radius:14px;box-shadow:var(--shadow);padding:12px;margin:12px auto;max-width:980px}.mono{font-family:var(--mono);font-size:11px;font-weight:800;text-transform:uppercase}.sub{font-size:12.8px;color:#555;line-height:1.5}.btn{border:2px solid var(--ink);border-radius:999px;padding:8px 12px;background:#111;color:#fff;box-shadow:2px 2px 0 var(--ink);font-family:var(--mono);font-weight:800;cursor:pointer}.btn-y{background:var(--yellow);color:#111}
+.vh-skip{position:absolute;left:-9999px;top:0;z-index:99;background:var(--paper,#fafaf8);border:2.2px solid var(--ink,#111);padding:10px 14px;font-family:ui-monospace,Menlo,monospace;font-weight:800;text-decoration:none;border-radius:0 0 10px 0}
+.vh-skip:focus{left:0}
+.vh-sr{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;border:0}
+
+/* ── text inks, solved for WCAG AA on what the browser paints ──────────────
+   Measured per element with its real backdrop composited through transparent
+   ancestors: the brand colours were carrying text at 3.20:1 (#EB6834), 3.42:1
+   (#009E73) and 4.42:1 (#2A78D6) against white.
+
+   These are new tokens, not new values for the brand colours. Every ring, fill,
+   polyline and border still draws #EB6834 / #2A78D6 / #009E73; only text moves.
+   Two earlier attempts changed a shared token instead and traded one failure for
+   another — darkening --ink-muted to clear 4.5 on paper took the same text on the
+   #0A0C10 map inset from 5.3:1 to 4.14:1. The muted greys are left alone here
+   for that reason: they need per-container scoping, not a page-level value. */
+:root{--orange-ink:#C84714;--blue-ink:#2873CF;--green-ink:#008460}
+.brand span,.site-nav__brand span{color:var(--orange-ink)}
+.sm__delta.down,.down{color:var(--orange-ink)}
+.sm__delta.up,.up{color:var(--blue-ink)}
+.fl-dim{color:var(--blue-ink)}
+.fo-ring{color:var(--orange-ink)}
+.proj{color:var(--orange-ink)}
+.mv-score.up{color:var(--green-ink)}
+
+/* #F0E442 is a bright yellow: an ink solved for white reads 3.64:1 on it, and the
+   white-on-yellow badge read 1.27:1. Keyed off the class that puts the yellow
+   there, so this cannot reach another ground. */
+span.pill.mono{color:#5A6476}
+.pill-y,.pill-y.mono,.pill-y.mono-sm,.pill.pill-y,.pill.pill-y.mono,.pill.pill-y.mono-sm,
+a.pill.pill-y,.pill.y,.pill.y.mono{color:#3A2E00}
+/* muted small print, on pages whose every ground is light */
+p.eyebrow,div.mono-sm,span.mono-sm,.pill.mono-sm,.mv-move,p.mono{color:#6F6D68}
+.mv-score.down{color:#D33F24}
+/* the archetype key and the dark pills sit on near-black: the light-ground inks
+   above must not reach them */
+#plKey span,#plKey .n{color:#FAFAF8}
+span.pill.mono.ink,.pill.ink{color:#C9C6C0}
+/* a rule in a later <style> block was still winning on this one */
+span.proj{color:var(--orange-ink)}
+
+
+</style><!-- build_social_meta.py: start -->
+<link rel="canonical" href="https://hoops.dumbmodel.com/player-fit">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="dumbmodel">
+<meta property="og:url" content="https://hoops.dumbmodel.com/player-fit">
+<meta property="og:title" content="Vector Hoops — Player Fit">
+<meta property="og:image" content="https://hoops.dumbmodel.com/assets/og-1200x630.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Vector Hoops — Player Fit">
+<meta name="twitter:image" content="https://hoops.dumbmodel.com/assets/og-1200x630.png">
+<!-- build_social_meta.py: end -->
+</head><body>
+<a class="vh-skip" href="#main">Skip to the content</a>
+<nav><a class="brand" href="/">DUMB<span>MODEL</span></a><div style="display:flex;gap:6px;flex-wrap:wrap"><a class="pill" href="/owner">Owner</a><a class="pill" href="/player">Player</a><a class="pill" href="/brand">Brand</a><a class="pill" href="/dfs">DFS</a></div><a class="pill" href="/play">Play</a><a class="pill" href="/trends">Trends</a><a class="pill" href="/model">Model</a><a class="pill" href="/players">Explorer</a><a class="pill" href="/player-cards">Players</a><a class="pill" href="/teams">Teams</a><a class="pill" href="/dictionary">Dictionary</a></nav>
+<main id="main" tabindex="-1"><h1 style="position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;border:0">Player Fit</h1>
+<div class="card"><h2 class="vh-sr">Player Fit — role geometry</h2><div class="mono">Player Fit • 14-d game contract • <code>assets/game_vectors.json</code></div><div class="mono" style="font-size:18px;margin:6px 0">Fit calc • cosine = v̂·ŵ</div><div class="sub">Two seasons in, one number out: how alike the model reads them. Every feature is a z-score inside its own season, so a 1997 line and a 2025 line are compared on equal terms.</div><div id="fitBox" style="margin-top:10px;border:2px solid var(--ink);border-radius:12px;padding:11px;background:var(--paper)"><div style="display:grid;grid-template-columns:1fr 1fr;gap:10px"><div><label class="mono" for="fitA" style="display:block;margin-bottom:4px">First season</label><input id="fitA" list="fitList" autocomplete="off" placeholder="Karl Malone 2001-02" style="width:100%;border:2px solid var(--ink);border-radius:10px;padding:9px 10px;font-size:13px;min-height:40px"></div><div><label class="mono" for="fitB" style="display:block;margin-bottom:4px">Second season</label><input id="fitB" list="fitList" autocomplete="off" placeholder="Domantas Sabonis 2024-25" style="width:100%;border:2px solid var(--ink);border-radius:10px;padding:9px 10px;font-size:13px;min-height:40px"></div></div><datalist id="fitList"></datalist><div style="margin-top:9px;display:flex;gap:8px;flex-wrap:wrap;align-items:center"><button class="btn btn-y" id="fitGo" type="button">Compare →</button><span class="mono" id="fitPool" style="color:#6F6D68">loading the pool…</span></div><div id="fitOut" role="status" aria-live="polite" class="sub" style="margin-top:10px">Pick two seasons and press Compare.</div></div><p class="sub" style="margin-top:10px">This is not the twin search on <a href="/player">/player</a>. That one ranks neighbours by distance on the <b>3-D projection</b> the maps are drawn from; this computes the cosine in the <b>space a guess is actually scored in</b> — the same fourteen features <a href="/play">/play</a> uses, and the same thresholds it calls a lock. The 64-d MTNN embedding is a separate, ungated step and is not what this reads.</p><p class="sub" style="margin-top:6px;color:#6F6D68">A text box and a <b>Find fit →</b> button once stood here with no handler behind them, and were removed rather than left to teach a visitor that a control on this site might do nothing. This is that control, built.</p><div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap"><a class="pill" href="/players">Explorer — click any point, the nearest careers are the fit</a><a class="pill" href="/player-cards">Player cards — closest career shapes, with the cosine</a><a class="pill" href="/model">Model — how that cosine is computed</a></div></div>
+</main>
+<footer style="max-width:980px;margin:0 auto;padding:8px 12px;display:flex;justify-content:space-between;font-family:var(--mono);font-size:11px;color:#717171"><span>dumbmodel #fafaf8 • paper aesthetic • ui-monospace</span><a class="pill" href="/">Home</a></footer>
+<script>
+/* The fit calculator. Reads assets/game_vectors.json — the frozen 14-d game
+   contract, 968 past and 1,305 modern seasons — and returns the cosine between
+   two of them. That file is what /play scores a guess against, so the number
+   here is on the same scale as the game's, and the verdict thresholds below are
+   /play's own (0.92 / 0.82 / 0.68) rather than a second opinion invented here.
+
+   Entries are "Name Season", not "Name". play.html documents why a bare surname
+   is a trap: type "curry" and there is no non-arbitrary way to choose between
+   Stephen and Seth, and ranking them would need a prominence signal this data
+   does not carry. A season-level key has no such choice to make.
+
+   force-cache, same as /play: the file is immutable under its ?v= token and a
+   visitor arriving from the game already has it. */
+(function(){
+  var A=document.getElementById('fitA'), B=document.getElementById('fitB'),
+      GO=document.getElementById('fitGo'), OUT=document.getElementById('fitOut'),
+      LIST=document.getElementById('fitList'), POOL=document.getElementById('fitPool');
+  if(!A||!B||!GO||!OUT||!LIST) return;
+  var rows=null, byKey=null, criteria=null;
+
+  function key(n,s){ return (n+' '+s).toLowerCase(); }
+  function unit(v){
+    var n=0,i; for(i=0;i<v.length;i++) n+=v[i]*v[i];
+    n=Math.sqrt(n)||1; var o=new Array(v.length);
+    for(i=0;i<v.length;i++) o[i]=v[i]/n; return o;
+  }
+  function cos(a,b){ var s=0,i; for(i=0;i<a.length;i++) s+=a[i]*b[i]; return s; }
+
+  /* 398 KB, fetched when it is needed and not before. This page is 14 KB of
+     markup around a calculator; loading the pool eagerly made 96% of a first
+     visit a file that only matters if the tool is used, which is the thing
+     /index and /trends both put behind a labelled button. Deferring is better
+     than labelling here: the fetch starts the moment a finger or a caret
+     touches either box, so it is already in flight while the first name is
+     still being typed.
+
+     Memoised as a promise rather than a flag, so two rapid triggers share one
+     request. compare() awaits it, which is what makes the button work for
+     someone who presses it before touching an input at all. */
+  var poolReady = null;
+  function ensurePool(){
+    if(poolReady) return poolReady;
+    if(POOL) POOL.textContent='loading the pool…';
+    poolReady = fetch('assets/game_vectors.json?v=b98e3a0b',{cache:'force-cache'})
+      .then(function(r){ if(!r.ok) throw new Error('HTTP '+r.status); return r.json(); })
+      .then(function(d){
+        rows=(d.past||[]).concat(d.modern||[]);
+        criteria=d.criteria||null;
+        byKey={};
+        var frag=document.createDocumentFragment();
+        rows.forEach(function(p){
+          if(!p.v||!p.v.length) return;
+          p.u=unit(p.v);
+          byKey[key(p.n,p.s)]=p;
+          var o=document.createElement('option'); o.value=p.n+' '+p.s; frag.appendChild(o);
+        });
+        LIST.appendChild(frag);
+        if(POOL) POOL.textContent=rows.length.toLocaleString()+' seasons · '+d.dim+'-d';
+      })
+      .catch(function(e){
+        poolReady = null;                    /* a failed load may be retried */
+        if(POOL) POOL.textContent='';
+        OUT.textContent='The vector file did not load ('+e.message+'), so nothing here can be '+
+                        'computed. Nothing below is a fallback number.';
+        throw e;
+      });
+    return poolReady;
+  }
+  ['focus','pointerdown'].forEach(function(evt){
+    [A,B,GO].forEach(function(el){ el.addEventListener(evt, ensurePool, {once:false}); });
+  });
+
+  function find(raw){
+    var q=(raw||'').trim();
+    if(!q) return {err:'Type a season in both boxes — start typing a name and the list will offer them.'};
+    var hit=byKey[q.toLowerCase()];
+    if(hit) return {row:hit};
+    var near=[], ql=q.toLowerCase();
+    for(var k in byKey){ if(k.indexOf(ql)===0 || k.indexOf(ql)>-1){ near.push(byKey[k]); if(near.length>6) break; } }
+    if(near.length===1) return {row:near[0]};
+    if(near.length>1)
+      return {err:'“'+q+'” matches '+near.length+(near.length>6?'+':'')+' seasons — '+
+                  near.slice(0,4).map(function(p){return p.n+' '+p.s;}).join(' · ')+
+                  '. Pick one from the list.'};
+    var why=criteria ? ' The pool is: past — '+criteria.past+'; modern — '+criteria.modern+'.' : '';
+    return {err:'“'+q+'” is not in this pool.'+why};
+  }
+
+  function compare(){
+    /* Say so, where the answer will appear. Deferring the pool to first touch
+       means a press can land before the file has: measured on a 400 kbps link,
+       pressing Compare left "Pick two seasons and press Compare." on screen for
+       8.5 seconds while a grey "loading the pool…" sat beside the button, which
+       is not where anyone is looking after pressing it. /index's "Draw all"
+       button already does this — a busy state and a line that says what is
+       happening. No count in the message: the number of seasons comes out of the
+       file and the file has not arrived yet. */
+    if(!byKey){
+      OUT.textContent='Loading the season pool — the comparison runs the moment it lands.';
+      GO.setAttribute('aria-busy','true');
+    }
+    ensurePool().then(function(){
+      GO.removeAttribute('aria-busy');
+      runCompare();
+    }, function(){
+      GO.removeAttribute('aria-busy');   /* ensurePool has written the failure */
+    });
+  }
+  function runCompare(){
+    if(!byKey){ return; }
+    var a=find(A.value), b=find(B.value);
+    if(a.err||b.err){ OUT.textContent=a.err||b.err; return; }
+    if(a.row===b.row){ OUT.textContent='Those are the same season, which is a cosine of 1.00 by definition.'; return; }
+    var c=cos(a.row.u,b.row.u);
+    /* /play's thresholds, so this number means there what it means here */
+    var verdict = c>0.92 ? 'the same shape'
+                : c>0.82 ? 'very close'
+                : c>0.68 ? 'related'
+                : 'different shapes';
+    OUT.innerHTML='<b>'+a.row.n+' '+a.row.s+'</b> vs <b>'+b.row.n+' '+b.row.s+'</b> — cosine '+
+      '<b>'+c.toFixed(2)+'</b> ('+Math.round(c*100)+'%), '+verdict+
+      '. <span style="color:#6F6D68">Over the 14 features in the game contract; '+
+      '/play calls anything above 0.92 a lock.</span>';
+  }
+  GO.addEventListener('click', compare);
+  [A,B].forEach(function(el){
+    el.addEventListener('keydown', function(e){ if(e.key==='Enter'){ e.preventDefault(); compare(); } });
+  });
+})();
+</script>
+<script src="assets/error-boundary.js?v=dfe16efe"></script>
+<script src="assets/keyboard-a11y.js?v=8bd158d1"></script>
+<script src="assets/pwa-install.js?v=11551699"></script>
+</body></html>

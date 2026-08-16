@@ -48,8 +48,7 @@ CSV_PATH = CACHE / "salaries_history.csv"
 EXAMPLE_CSV = CACHE / "salaries_history.example.csv"
 BBREF_CACHE = CACHE / "salary_bbref_current.json"
 
-UA = ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
-      "(KHTML, like Gecko) Chrome/126.0 Safari/537.36")
+UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0 Safari/537.36"
 
 
 def norm_name(name: str) -> str:
@@ -74,12 +73,10 @@ def fetch_bbref_contracts() -> dict[str, float]:
     html = r.text
     head = re.search(r"<thead>.*?</thead>", html, re.S)
     seasons = re.findall(r">(\d{4}-\d{2})<", head.group(0)) if head else []
-    for m in re.finditer(
-            r'<tr[^>]*>.*?data-stat="player"[^>]*>.*?>([^<]+)</a>(.*?)</tr>',
-            html, re.S):
+    for m in re.finditer(r'<tr[^>]*>.*?data-stat="player"[^>]*>.*?>([^<]+)</a>(.*?)</tr>', html, re.S):
         name, rest = m.group(1), m.group(2)
         sals = re.findall(r'data-stat="y\d+"[^>]*>\$?([\d,]+)', rest)
-        for i, s in enumerate(sals[:len(seasons)]):
+        for i, s in enumerate(sals[: len(seasons)]):
             try:
                 key = f"{norm_name(name)}|{seasons[i]}"
                 out[key] = float(s.replace(",", ""))
@@ -109,14 +106,22 @@ def status() -> None:
 
 
 def main() -> None:
-    ap = argparse.ArgumentParser(description=__doc__,
-                                 formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("--document-only", action="store_true",
-                    help="print sourcing status and exit (default when no flags)")
-    ap.add_argument("--fetch-bbref", action="store_true",
-                    help="fetch current BBRef contracts into salary_bbref_current.json")
-    ap.add_argument("--merge", action="store_true",
-                    help="run merge_salaries on salaries_history.csv if present")
+    ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    ap.add_argument(
+        "--document-only",
+        action="store_true",
+        help="print sourcing status and exit (default when no flags)",
+    )
+    ap.add_argument(
+        "--fetch-bbref",
+        action="store_true",
+        help="fetch current BBRef contracts into salary_bbref_current.json",
+    )
+    ap.add_argument(
+        "--merge",
+        action="store_true",
+        help="run merge_salaries on salaries_history.csv if present",
+    )
     args = ap.parse_args()
 
     if not args.fetch_bbref and not args.merge:
@@ -126,7 +131,7 @@ def main() -> None:
     if args.fetch_bbref:
         try:
             data = fetch_bbref_contracts()
-        except Exception as exc:  # noqa: BLE001 — surface fetch errors to CLI
+        except Exception as exc:
             print(f"bbref fetch failed: {exc}", file=sys.stderr)
             sys.exit(1)
         if not data:
@@ -138,7 +143,7 @@ def main() -> None:
         if not CSV_PATH.exists():
             print(f"--merge: {CSV_PATH} not found", file=sys.stderr)
             sys.exit(1)
-        from merge_salaries import merge_csv, write_merged, DEFAULT_OUT
+        from merge_salaries import DEFAULT_OUT, merge_csv, write_merged
 
         merged = merge_csv(CSV_PATH)
         write_merged(merged, DEFAULT_OUT)

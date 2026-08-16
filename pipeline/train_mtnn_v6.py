@@ -71,36 +71,11 @@ def main():
     print(f"MTNN v6 config: era-align={args.era_align} robust={args.robust_scaling} pl={args.pl_embed} fusion={args.fusion} tabpfn={args.tabpfn_distill}")
     print(f"Targeting SOTA vs v5_concat_b2_h160_t32_d48_mlp128 (224K params, CQS 85.87)")
     
-    # Load bundle
+    # Load bundle — production-only
     try:
         Z, M, names, seasons, pids, clusters, positions, season_ids, manifest = load_bundle()
     except Exception as e:
-        print(f"No train_matrix.npz found (expected in shallow clone). Using mock audit mode: {e}")
-        # Audit mode: just report architecture and improvements
-        print("\n=== AUDIT MODE (no training data in this clone) ===")
-        print("Current champion: mtnn_v5_concat_b2_h160_t32_d48_mlp128")
-        print("  120 feats, 17 families, 160->32 towers, 544+12=556 ->128->48 L2")
-        print("  Heads: 8 archetype / 5 pos / 14 next_profile / 18 skills + aux")
-        print("  Params ~224K, checkpoint 2.2MB, recall@10 1.0 transductive, purity 0.806")
-        print("\nProposed v6 improvements:")
-        print("  1. Procrustes era alignment: drift.json chainedToRoot rotates each season to 1996-97 root")
-        print("     -> should improve cross-era purity 0.806 -> 0.89, reduce rotationDeg mean")
-        print("  2. RealMLP robust scaling: median/IQR + clip [-4,4] replaces vanilla z")
-        print("     -> outlier rate gt3 from ~1.2% to ~0.3%, stable training")
-        print("  3. PL embeddings: sin/cos k=8 per feature, d_out=16 -> tower input 2*d_in becomes 16*d_in")
-        print("     -> periodic structure for age/draft etc, +0.01-0.02 recall")
-        print("  4. FT-Transformer hybrid: per-feature tokens instead of per-family, already have transformer fusion")
-        print("     -> attention across 120 tokens vs 17 towers, better feature interaction")
-        print("  5. TabPFN-distill: train TabPFN on archetype labels (50k x 2k limit) then distill logits via KL")
-        print("     -> TabPFN 2.5 is 100% vs XGB <=10k, AutoGluon 4h match, distill to MLP for onnx")
-        print("  6. Gridiron MAE 4.268->3.8: same RealMLP + Vegas/rest/def-vs-pos PL embeds")
-        print("\nProduction checklist:")
-        print("  - mobile-first responsive.css done 2026-07-10 ✓")
-        print("  - vercel.json cleanUrls true + redirects hoops.jcamd.com ✓")
-        print("  - ONNX WASM export script (see scripts/export_onnx.py)")
-        print("  - ExecuTorch .pte optional (see scripts/export_executorch.py)")
-        print("  - bundle <300KB gz via quantization + f32 binaries -> keep mtnn.js <300KB")
-        return
+        raise FileNotFoundError("train_mtnn_v6 requires production train_matrix.npz — mock audit mode removed per 2026-08-15 policy") from e
     
     # Full training path when data exists
     if args.era_align == "procrustes" and HAS_PROCRUSTES:

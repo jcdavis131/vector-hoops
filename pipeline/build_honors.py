@@ -75,9 +75,7 @@ def load_award_index(use_fixture: bool) -> tuple[dict[str, dict], bool]:
         return by_season, complete
 
     if not FIXTURE.exists():
-        raise SystemExit(
-            f"no honor caches and no fixture at {FIXTURE} — run "
-            "pipeline/fetch_honors.py (or --fixture)")
+        raise SystemExit(f"no honor caches and no fixture at {FIXTURE} — run pipeline/fetch_honors.py (or --fixture)")
     doc = json.loads(FIXTURE.read_text(encoding="utf-8"))
     complete = bool(doc.get("complete"))
     for season, recs in doc.get("players", {}).items():
@@ -150,36 +148,52 @@ def main() -> None:
             vote_reco_rows += 1
 
     OUT.parent.mkdir(parents=True, exist_ok=True)
-    OUT.write_text(json.dumps({
-        "built": time.strftime("%Y-%m-%d"),
-        "cache_complete": complete,
-        "coverage": {
-            "lagged_rows": lagged_rows,
-            "vote_recognized_rows": vote_reco_rows,
-            "contemporaneous_keys": len(contemporaneous),
-            "finals_mvp_keys": fmvp_rows,
-            "award_seasons": len(award_idx),
-            "rows_total": len(vec["players"]),
-        },
-        "players": entries,
-        "contemporaneous": contemporaneous,
-    }, separators=(",", ":")), encoding="utf-8")
+    OUT.write_text(
+        json.dumps(
+            {
+                "built": time.strftime("%Y-%m-%d"),
+                "cache_complete": complete,
+                "coverage": {
+                    "lagged_rows": lagged_rows,
+                    "vote_recognized_rows": vote_reco_rows,
+                    "contemporaneous_keys": len(contemporaneous),
+                    "finals_mvp_keys": fmvp_rows,
+                    "award_seasons": len(award_idx),
+                    "rows_total": len(vec["players"]),
+                },
+                "players": entries,
+                "contemporaneous": contemporaneous,
+            },
+            separators=(",", ":"),
+        ),
+        encoding="utf-8",
+    )
 
     if complete and contemporaneous:
-        ASSET_OUT.write_text(json.dumps({
-            "built": time.strftime("%Y-%m-%d"),
-            "note": ("All-NBA voting expands beyond the 15 team slots. "
-                     "Same-season keys for UI include Finals MVP when "
-                     "honors_finals_mvp.json is present. Lagged HON_* in pipeline/data."),
-            "bySeason": contemporaneous,
-        }, separators=(",", ":")), encoding="utf-8")
+        ASSET_OUT.write_text(
+            json.dumps(
+                {
+                    "built": time.strftime("%Y-%m-%d"),
+                    "note": (
+                        "All-NBA voting expands beyond the 15 team slots. "
+                        "Same-season keys for UI include Finals MVP when "
+                        "honors_finals_mvp.json is present. Lagged HON_* in pipeline/data."
+                    ),
+                    "bySeason": contemporaneous,
+                },
+                separators=(",", ":"),
+            ),
+            encoding="utf-8",
+        )
         asset_msg = f"wrote {ASSET_OUT.relative_to(ROOT)} ({len(contemporaneous)} keys)"
     else:
         asset_msg = "assets/honors.json NOT written (partial cache)"
 
-    print(f"honors: {lagged_rows} lagged rows ({vote_reco_rows} with vote pts), "
-          f"{len(contemporaneous)} contemporaneous keys ({fmvp_rows} Finals MVP), "
-          f"{len(award_idx)} award seasons (complete={complete})")
+    print(
+        f"honors: {lagged_rows} lagged rows ({vote_reco_rows} with vote pts), "
+        f"{len(contemporaneous)} contemporaneous keys ({fmvp_rows} Finals MVP), "
+        f"{len(award_idx)} award seasons (complete={complete})"
+    )
     print(f"wrote {OUT.relative_to(ROOT)}; {asset_msg}")
 
 

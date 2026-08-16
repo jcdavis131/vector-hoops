@@ -102,8 +102,7 @@ def load_gp() -> dict[tuple[str, str], int]:
     return gp
 
 
-def build_features(draft_z: float, age_z: float, pos: int,
-                   lag1: np.ndarray | None) -> np.ndarray | None:
+def build_features(draft_z: float, age_z: float, pos: int, lag1: np.ndarray | None) -> np.ndarray | None:
     if pos < 0 or lag1 is None:
         return None
     onehot = np.zeros(len(POSITIONS))
@@ -135,26 +134,31 @@ def main() -> None:
     for p in players:
         history = sorted(by_name[norm_name(p["name"])], key=lambda x: season_start(x["season"]))
         lag1 = next(
-            (np.array(x["v"], dtype=np.float64)
-             for x in reversed(history) if season_start(x["season"]) < season_start(p["season"])),
+            (
+                np.array(x["v"], dtype=np.float64)
+                for x in reversed(history)
+                if season_start(x["season"]) < season_start(p["season"])
+            ),
             None,
         )
         pos = int(p.get("p", -1))
         key = (p["name"], p["season"])
         draft_z, age_z = bio.get(key, (0.0, 0.0))
-        records.append({
-            "name": p["name"],
-            "season": p["season"],
-            "position": POSITIONS[pos] if 0 <= pos < len(POSITIONS) else None,
-            "pos": pos,
-            "lag1": lag1,
-            "actual": np.array(p["v"], dtype=np.float64),
-            "draft_z": draft_z,
-            "age_z": age_z,
-            "bioMissing": key not in bio_present,
-            "gp": gp_map.get(key, 0),
-            "x": build_features(draft_z, age_z, pos, lag1),
-        })
+        records.append(
+            {
+                "name": p["name"],
+                "season": p["season"],
+                "position": POSITIONS[pos] if 0 <= pos < len(POSITIONS) else None,
+                "pos": pos,
+                "lag1": lag1,
+                "actual": np.array(p["v"], dtype=np.float64),
+                "draft_z": draft_z,
+                "age_z": age_z,
+                "bioMissing": key not in bio_present,
+                "gp": gp_map.get(key, 0),
+                "x": build_features(draft_z, age_z, pos, lag1),
+            }
+        )
 
     train = [r for r in records if r["x"] is not None]
     use_ridge = len(train) >= 200
@@ -189,20 +193,22 @@ def main() -> None:
 
         residual = r["actual"] - expected
         gp = r["gp"]
-        scored.append({
-            "name": r["name"],
-            "season": r["season"],
-            "position": r["position"],
-            "gp": gp,
-            "gpQualified": gp >= MIN_GP,
-            "bioMissing": r["bioMissing"],
-            "modelUsed": model_used,
-            "residualNorm": round(float(np.linalg.norm(residual)), 4),
-            "underperfScore": underperf_score(r["actual"], expected),
-            "residual": [round(float(x), 4) for x in residual],
-            "expected": [round(float(x), 4) for x in expected],
-            "actual": [round(float(x), 4) for x in r["actual"]],
-        })
+        scored.append(
+            {
+                "name": r["name"],
+                "season": r["season"],
+                "position": r["position"],
+                "gp": gp,
+                "gpQualified": gp >= MIN_GP,
+                "bioMissing": r["bioMissing"],
+                "modelUsed": model_used,
+                "residualNorm": round(float(np.linalg.norm(residual)), 4),
+                "underperfScore": underperf_score(r["actual"], expected),
+                "residual": [round(float(x), 4) for x in residual],
+                "expected": [round(float(x), 4) for x in expected],
+                "actual": [round(float(x), 4) for x in r["actual"]],
+            }
+        )
 
     qualified = [s for s in scored if s["gpQualified"]]
     collapses = sorted(qualified, key=lambda s: s["underperfScore"])[:POOL_EACH]
@@ -229,13 +235,20 @@ def main() -> None:
         "quizPool": collapses + exceeded,
     }
 
-    print(f"fall_analysis: {len(scored)} scored ({payload['model']}) | "
-          f"GP>={MIN_GP}: {len(qualified)} | pool: {len(payload['quizPool'])}")
+    print(
+        f"fall_analysis: {len(scored)} scored ({payload['model']}) | "
+        f"GP>={MIN_GP}: {len(qualified)} | pool: {len(payload['quizPool'])}"
+    )
 
     if args.dry_run:
         if collapses:
-            print("sample collapse:", collapses[0]["name"], collapses[0]["season"],
-                  "underperf=", collapses[0]["underperfScore"])
+            print(
+                "sample collapse:",
+                collapses[0]["name"],
+                collapses[0]["season"],
+                "underperf=",
+                collapses[0]["underperfScore"],
+            )
         return
 
     DATA.mkdir(parents=True, exist_ok=True)

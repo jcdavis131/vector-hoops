@@ -1,0 +1,58 @@
+{
+  "runId": "dottie-scout-vector-v5prime-20260807T1432Z",
+  "dag_version": 1,
+  "nodes": [
+    {
+      "nodeId": "triple_write_audit",
+      "agentId": "executor",
+      "attempt": 1,
+      "latency_ms": 850,
+      "tokens_est": 0,
+      "status": "ok",
+      "errorClass": null
+    },
+    {
+      "nodeId": "scout_cli_polish",
+      "agentId": "builder",
+      "attempt": 1,
+      "latency_ms": 1200,
+      "tokens_est": 0,
+      "status": "ok",
+      "errorClass": null
+    },
+    {
+      "nodeId": "vector_honesty",
+      "agentId": "forensic-auditor",
+      "attempt": 1,
+      "latency_ms": 600,
+      "tokens_est": 0,
+      "status": "ok",
+      "errorClass": null
+    },
+    {
+      "nodeId": "candidate_push",
+      "agentId": "action-operator",
+      "attempt": 1,
+      "latency_ms": 400,
+      "tokens_est": 0,
+      "status": "ok",
+      "errorClass": null
+    }
+  ],
+  "created": "2026-08-07T14:35:33.346850+00:00",
+  "saved_at": "2026-08-07T14:35:33.346850+00:00",
+  "version": "v0.8-scout-v3.3-parity",
+  "provenance": {
+    "workspace_canonical": "bundles/ultra/runs/<runId>",
+    "seven": [
+      "bundles/ultra/runs",
+      "dottie/pipeline/runs",
+      "dottie/bundles/ultra/runs",
+      "dottie/apps/scout-cli/dottie/pipeline/runs",
+      "apps/ava-factory/bundles/ultra/runs",
+      "apps/ava-factory/dottie/pipeline/runs",
+      "goals/.../hidden_files/brief-auto-exec-checkpoints"
+    ],
+    "note": "v5 Prime SOTA polish \u2014 triple-write 15/15 PASSED, scout-cli 0.8.0, vector honesty 8.9, zero_deps true"
+  }
+}

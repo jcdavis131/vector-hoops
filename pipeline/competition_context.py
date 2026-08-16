@@ -16,18 +16,35 @@ from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 OUT = HERE / "data" / "competition.json"
-EAST = {1610612737, 1610612738, 1610612751, 1610612766, 1610612741, 1610612739,
-        1610612765, 1610612754, 1610612748, 1610612749, 1610612752, 1610612753,
-        1610612755, 1610612761, 1610612764, 1610612740}
+EAST = {
+    1610612737,
+    1610612738,
+    1610612751,
+    1610612766,
+    1610612741,
+    1610612739,
+    1610612765,
+    1610612754,
+    1610612748,
+    1610612749,
+    1610612752,
+    1610612753,
+    1610612755,
+    1610612761,
+    1610612764,
+    1610612740,
+}
 
 
 def team_net(season: str) -> dict[int, float]:
     p = HERE / "data" / f"team_season_{season}.json"
     if not p.exists():
         return {}
-    return {int(t["TEAM_ID"]): float(t["NET_RATING"])
-            for t in json.loads(p.read_text(encoding="utf-8"))
-            if t.get("NET_RATING") is not None}
+    return {
+        int(t["TEAM_ID"]): float(t["NET_RATING"])
+        for t in json.loads(p.read_text(encoding="utf-8"))
+        if t.get("NET_RATING") is not None
+    }
 
 
 def conf_avg(tid: int, nets: dict[int, float]) -> float | None:
@@ -82,12 +99,18 @@ def main() -> None:
     ap = argparse.ArgumentParser(description="Build competition context")
     ap.add_argument("--dry-run", action="store_true")
     args = ap.parse_args()
-    players = json.loads((HERE.parent / "assets" / "vectors.json")
-                         .read_text(encoding="utf-8"))["players"]
+    players = json.loads((HERE.parent / "assets" / "vectors.json").read_text(encoding="utf-8"))["players"]
     comp = from_logs()
     rows = sorted(
-        [{"id": p["id"], "name": p["name"], "season": p["season"],
-          **comp.get((p["name"], p["season"]), {})} for p in players],
+        [
+            {
+                "id": p["id"],
+                "name": p["name"],
+                "season": p["season"],
+                **comp.get((p["name"], p["season"]), {}),
+            }
+            for p in players
+        ],
         key=lambda r: (int(r["season"][:4]), r["name"]),
     )
     n = sum("SOS_NET_RTG" in r for r in rows)
@@ -96,13 +119,21 @@ def main() -> None:
         print("sample:", next(r for r in rows if "SOS_NET_RTG" in r))
         return
     OUT.parent.mkdir(parents=True, exist_ok=True)
-    OUT.write_text(json.dumps({
-        "method": ("opponent NET_RATING via shared GAME_ID; B2B/REST from game dates; "
-                   "CONF_STRENGTH = conference avg NET (static TEAM_ID map)"),
-        "source": "gamelogs_*.jsonl + team_season_{season}.json",
-        "gamelogSeasons": sorted({s for _, s in comp}),
-        "players": rows,
-    }, separators=(",", ":")), encoding="utf-8")
+    OUT.write_text(
+        json.dumps(
+            {
+                "method": (
+                    "opponent NET_RATING via shared GAME_ID; B2B/REST from game dates; "
+                    "CONF_STRENGTH = conference avg NET (static TEAM_ID map)"
+                ),
+                "source": "gamelogs_*.jsonl + team_season_{season}.json",
+                "gamelogSeasons": sorted({s for _, s in comp}),
+                "players": rows,
+            },
+            separators=(",", ":"),
+        ),
+        encoding="utf-8",
+    )
     print(f"wrote {OUT}")
 
 

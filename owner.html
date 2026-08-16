@@ -1,0 +1,174 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<script>/* early error queue — drained by assets/error-boundary.js. Installed here because a listener only sees scripts parsed after it, and the page's own inline block used to be first. */window.__vhErr=[];window.addEventListener("error",function(e){try{var t=e.target,r=t&&(t.src||t.href);window.__vhErr.push({type:r?"resource":"js",message:e.message||("Failed to load "+(r||"")),source:e.filename||r||"",lineno:e.lineno||0,colno:e.colno||0,stack:(e.error&&e.error.stack)||""});}catch(_){}} ,true);window.addEventListener("unhandledrejection",function(e){try{window.__vhErr.push({type:"unhandledrejection",message:String((e.reason&&e.reason.message)||e.reason||"")});}catch(_){}});</script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Vector Hoops — Owner • Championship Economics</title><meta name="theme-color" content="#fafaf8"><link rel="stylesheet" href="/assets/fonts.css?v=31e5658b"><style>:root{--paper:#fafaf8;--surface:#fff;--ink:#111;--muted:#6b6760;--hair:#e1e0d9;--orange:#eb6834;--blue:#2a78d6;--purple:#7a5ae6;--yellow:#f0e442;--green:#009e73;--mono:ui-monospace,Menlo,monospace;--hand:"ui-monospace",cursive;--shadow:4px 4px 0 var(--ink)}*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;overflow-wrap:break-word}nav{display:flex;justify-content:space-between;padding:10px 14px;background:#fff;border-bottom:2px solid var(--ink);position:sticky;top:0;z-index:10;flex-wrap:wrap;gap:8px}.brand{font-family:var(--mono);font-weight:800;text-transform:uppercase}.brand span{color:var(--orange)}.pill{display:inline-flex;padding:5px 10px;border:1.6px solid var(--ink);border-radius:999px;background:#fff;box-shadow:2px 2px 0 var(--ink);font-family:var(--mono);font-size:11px;font-weight:800;text-transform:uppercase}.pill-y{background:var(--yellow)}.pill-o{background:#ffe7d6}.card{background:#fff;border:2.2px solid var(--ink);border-radius:14px;box-shadow:var(--shadow);padding:12px;margin:12px auto;max-width:980px}.mono{font-family:var(--mono);font-size:11px;font-weight:800;text-transform:uppercase}.sub{font-size:12.8px;color:#555;line-height:1.6}.btn{border:2px solid var(--ink);border-radius:999px;padding:9px 14px;background:#111;color:#fff;box-shadow:2px 2px 0 var(--ink);font-family:var(--mono);font-weight:800;cursor:pointer}.btn-y{background:var(--yellow);color:#111}table{width:100%;border-collapse:collapse;font-family:var(--mono);font-size:11px}th{border-bottom:2px solid var(--ink);text-align:left;padding:6px}td{border-bottom:1px solid var(--hair);padding:6px}
+.vh-skip{position:absolute;left:-9999px;top:0;z-index:99;background:var(--paper,#fafaf8);border:2.2px solid var(--ink,#111);padding:10px 14px;font-family:ui-monospace,Menlo,monospace;font-weight:800;text-decoration:none;border-radius:0 0 10px 0}
+.vh-skip:focus{left:0}
+.vh-sr{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;border:0}
+
+/* ── text inks, solved for WCAG AA on what the browser paints ──────────────
+   Measured per element with its real backdrop composited through transparent
+   ancestors: the brand colours were carrying text at 3.20:1 (#EB6834), 3.42:1
+   (#009E73) and 4.42:1 (#2A78D6) against white.
+
+   These are new tokens, not new values for the brand colours. Every ring, fill,
+   polyline and border still draws #EB6834 / #2A78D6 / #009E73; only text moves.
+   Two earlier attempts changed a shared token instead and traded one failure for
+   another — darkening --ink-muted to clear 4.5 on paper took the same text on the
+   #0A0C10 map inset from 5.3:1 to 4.14:1. The muted greys are left alone here
+   for that reason: they need per-container scoping, not a page-level value. */
+:root{--orange-ink:#C84714;--blue-ink:#2873CF;--green-ink:#008460}
+.brand span,.site-nav__brand span{color:var(--orange-ink)}
+.sm__delta.down,.down{color:var(--orange-ink)}
+.sm__delta.up,.up{color:var(--blue-ink)}
+.fl-dim{color:var(--blue-ink)}
+.fo-ring{color:var(--orange-ink)}
+.proj{color:var(--orange-ink)}
+.mv-score.up{color:var(--green-ink)}
+
+/* #F0E442 is a bright yellow: an ink solved for white reads 3.64:1 on it, and the
+   white-on-yellow badge read 1.27:1. Keyed off the class that puts the yellow
+   there, so this cannot reach another ground. */
+span.pill.mono{color:#5A6476}
+.pill-y,.pill-y.mono,.pill-y.mono-sm,.pill.pill-y,.pill.pill-y.mono,.pill.pill-y.mono-sm,
+a.pill.pill-y,.pill.y,.pill.y.mono{color:#3A2E00}
+/* muted small print, on pages whose every ground is light */
+p.eyebrow,div.mono-sm,span.mono-sm,.pill.mono-sm,.mv-move,p.mono{color:#6F6D68}
+.mv-score.down{color:#D33F24}
+/* the archetype key and the dark pills sit on near-black: the light-ground inks
+   above must not reach them */
+#plKey span,#plKey .n{color:#FAFAF8}
+span.pill.mono.ink,.pill.ink{color:#C9C6C0}
+/* a rule in a later <style> block was still winning on this one */
+span.proj{color:var(--orange-ink)}
+
+
+</style><!-- build_social_meta.py: start -->
+<link rel="canonical" href="https://hoops.dumbmodel.com/owner">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="dumbmodel">
+<meta property="og:url" content="https://hoops.dumbmodel.com/owner">
+<meta property="og:title" content="Vector Hoops — Owner • Championship Economics">
+<meta property="og:image" content="https://hoops.dumbmodel.com/assets/og-1200x630.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Vector Hoops — Owner • Championship Economics">
+<meta name="twitter:image" content="https://hoops.dumbmodel.com/assets/og-1200x630.png">
+<!-- build_social_meta.py: end -->
+</head><body>
+<a class="vh-skip" href="#main">Skip to the content</a>
+<nav><a class="brand" href="/">DUMB<span>MODEL</span></a><div style="display:flex;gap:6px;flex-wrap:wrap"><a class="pill" href="/owner">Owner</a><a class="pill" href="/player">Player</a><a class="pill" href="/brand">Brand</a><a class="pill" href="/dfs">DFS</a></div><a class="pill" href="/play">Play</a><a class="pill" href="/trends">Trends</a><a class="pill" href="/model">Model</a><a class="pill" href="/players">Explorer</a><a class="pill" href="/player-cards">Players</a><a class="pill" href="/teams">Teams</a><a class="pill" href="/dictionary">Dictionary</a></nav>
+<main id="main" tabindex="-1"><h1 style="position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;border:0">Owner • Championship Economics</h1>
+<div class="card"><h2 class="vh-sr">Owner Lab — championship economics</h2><div class="mono">Owner Lab • Championship Economics v6.9 • FOR min99 base 0.35D+0.35C+0.30F+.15vegas+.08props+champ_bonus NYK16 SAS7 CLE3 OKC3 + valuation_alpha ±2</div><div class="mono" style="font-size:21px;margin:6px 0;text-transform:none;font-weight:900">W* = W+2.5·PO+0.12·realG • retained-star weighting • Trophy wall $10.09B top</div><div class="sub">FOR = min(99, base + champ_bonus + valuation_alpha) where valuation_alpha=0.10*z capped ±2 z-score wins/$B. Cap_history 31 seasons $24.36M→$154.647M→$164.961M valuations 360 entries + valuation_history 30. Weighted W* 94.8/85.8 W/$M W*/$M PO/$M sortable. <span style="font-family:var(--hand)">Owner = cap tools / win+valuation.</span> Flex Grades + apron badges $207.8M 2nd apron no-MLE • Tax apron CBA TV-rights deals rev-sharing • retained-only x1.25 effective_cap prior*1.10 2016 spike. Cap_pct normalized.</div><div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap"><span class="pill pill-y">Free</span><span class="pill">No account</span><span class="pill pill-o">Every figure recomputable</span></div></div>
+<div class="card"><h2 class="vh-sr">The 30-team rating table</h2><div class="mono">Sortable FOR table • 30 teams • vercel.json public:true</div><p class="sub" style="margin:4px 0 8px;font-size:11.6px;line-height:1.5">The two seasons in this table are deliberate and are now labelled. Wins and W* are <b>2025-26</b>; payroll is <b>2024-25</b>, because cap efficiency asks what the roster you paid for went on to win. Every rate column divides one by the other — BOS 56 ÷ $129.33M = 0.43 W/$M. The 2025-26 payroll exists in <code>front_office.json</code> as <code>payroll_m_2025_26</code> and is not what these columns use.</p><div style="overflow-x:auto" tabindex="0" role="region" aria-label="All 30 teams — scrolls sideways"><table><caption id="owCap" style="position:absolute;width:1px;height:1px;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap">Team spend and front-office rating. Column headers sort; press Enter on a header to re-sort.</caption><thead><tr><th scope="col">Team</th><th scope="col">W 25-26</th><th scope="col">W* 25-26</th><th scope="col">Pay 24-25</th><th scope="col">W/$M</th><th scope="col">W*/$M</th><th scope="col">PO/$M</th><th scope="col">Val</th><th scope="col">FOR</th></tr></thead><tbody id="tb"></tbody></table></div></div>
+<div class="card"><h2 class="vh-sr">Construct validity — market truth</h2><div class="mono">Construct validity • market truth</div><div class="sub">OU r=0.741 33S 944 verified • props actual-minus-prop averages -0.04 over the scored player-seasons in assets/props_summary.json, which /player prints from the file. Wembanyama +5.7 in 2025-26 is the largest qualified move in it. The closer and exploitable colours carry no score, and the contract formula that stood here was invented 1.25× SHAP tm/mpg/closing_risk/playoff_impact_proxy. Owner PWA manifest+SW. Free, no account.</div><div style="margin-top:8px;display:flex;gap:8px"><a class="btn" href="/teams">Teams FOR →</a><a class="btn btn-y" href="/play">Play →</a></div></div>
+<script>
+/* Every one of these nine columns used to be Math.random(). Wins, weighted wins,
+   payroll, franchise valuation and the FOR score itself were invented on each
+   page load and reshuffled on reload, underneath copy that documents the real
+   method in detail — "FOR = min(99, base + champ_bonus + valuation_alpha)".
+
+   assets/front_office_lite.json carries all nine for all 30 teams. It is thirteen fields per team, derived by scripts/build_front_office_lite.py from assets/front_office.json - 8,121 bytes against 1,127,784, because this table reads thirteen fields and that file also holds draft histories, cap rules and the model zoo for other pages.
+   The copy above is even quoting it: "Weighted W* 94.8/85.8" is SAS at 94.8 and
+   OKC at 85.8, straight out of the file. Checked before trusting it — the wins
+   column sums to 1230.0 across 30 teams, which is a real NBA season, for_rank is
+   a complete 1..30, and for_score_base + champ_bonus + valuation_alpha equals
+   for_final for every team. It reads the file now.
+
+   The header also promised "Sortable FOR table" and nothing was sortable, so the
+   columns sort here — by pointer and by keyboard, announced on an aria-live
+   region, matching the pattern teams.html already uses. */
+(function(){
+'use strict';
+var tb=document.getElementById('tb');
+if(!tb) return;
+var esc=function(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');};
+var n2=function(v){return (v==null||isNaN(v))?'—':(Math.round(v*100)/100).toFixed(2);};
+
+// Column order matches the <thead> already in the markup, one entry per <th>.
+// v() is the sort value, f() the cell. Two decimals everywhere, per the repo rule.
+var COLS=[
+  {k:'abbr', t:'Team', v:function(r){return r.abbr;},
+   f:function(r){return '<span style="display:inline-block;width:9px;height:9px;border-radius:2px;vertical-align:middle;margin-right:5px;background:'+esc(r.primary||'#111')+'"></span>'+esc(r.abbr)+(r.is_champion?' ◆':'');}},
+  {k:'wins', t:'W', v:function(r){return r.wins;}, f:function(r){return r.wins==null?'—':Math.round(r.wins);}},
+  {k:'weighted_wins', t:'W*', v:function(r){return r.weighted_wins;}, f:function(r){return n2(r.weighted_wins);}},
+  {k:'payroll_m', t:'Pay24-25', v:function(r){return r.payroll_m;}, f:function(r){return r.payroll_m==null?'—':'$'+n2(r.payroll_m)+'M';}},
+  {k:'w_per_m', t:'W/$M', v:function(r){return r.w_per_m;}, f:function(r){return n2(r.w_per_m);}},
+  {k:'weighted_wpm', t:'W*/$M', v:function(r){return r.weighted_wpm;}, f:function(r){return n2(r.weighted_wpm);}},
+  {k:'po_wins_per_m', t:'PO/$M', v:function(r){return r.po_wins_per_m;}, f:function(r){return n2(r.po_wins_per_m);}},
+  {k:'valuation_m', t:'Val', v:function(r){return r.valuation_m;}, f:function(r){return r.valuation_m==null?'—':'$'+n2(r.valuation_m/1000)+'B';}},
+  {k:'for_final', t:'FOR', v:function(r){return r.for_final;}, f:function(r){return '<b>'+n2(r.for_final)+'</b> '+esc(r.for_grade||'');}}
+];
+
+var live=document.createElement('div');
+live.setAttribute('role','status'); live.setAttribute('aria-live','polite'); live.setAttribute('aria-atomic','true');
+live.style.cssText='position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap';
+tb.parentNode.parentNode.appendChild(live);
+
+var ROWS=null, sortKey='for_final', sortDir=-1;
+var ths=tb.parentNode.querySelectorAll('thead th');
+
+function draw(){
+  if(!ROWS) return;
+  var col=COLS.filter(function(c){return c.k===sortKey;})[0]||COLS[8];
+  var rows=ROWS.slice().sort(function(a,b){
+    var av=col.v(a), bv=col.v(b);
+    if(av==null) return 1; if(bv==null) return -1;
+    if(typeof av==='string') return sortDir*String(av).localeCompare(String(bv));
+    return sortDir*(av-bv);
+  });
+  /* The table had no caption and no aria-label, so a screen reader announced nine
+     columns and thirty rows of nothing in particular. teams.html already names its
+     table and its current sort this way; this is the same pattern on the sibling
+     page. Counted from the rows actually drawn rather than asserting thirty — the
+     same rule as the model-zoo heading. */
+  var cap=document.getElementById('owCap');
+  if(cap) cap.textContent=rows.length+' teams by spend and front-office rating, sorted by '+
+    col.t+', '+(sortDir===1?'ascending':'descending')+
+    '. Column headers sort; press Enter on a header to re-sort.';
+
+  tb.innerHTML=rows.map(function(r){
+    return '<tr title="'+esc(r.name||'')+'">'+COLS.map(function(c){return '<td>'+c.f(r)+'</td>';}).join('')+'</tr>';
+  }).join('');
+  Array.prototype.forEach.call(ths,function(th,i){
+    th.setAttribute('aria-sort', COLS[i]&&COLS[i].k===sortKey?(sortDir===1?'ascending':'descending'):'none');
+  });
+}
+function sortBy(i){
+  var c=COLS[i]; if(!c) return;
+  if(c.k===sortKey) sortDir=-sortDir; else { sortKey=c.k; sortDir=(c.k==='abbr')?1:-1; }
+  draw();
+  live.textContent='Sorted by '+c.t+', '+(sortDir===1?'ascending':'descending')+'.';
+}
+Array.prototype.forEach.call(ths,function(th,i){
+  th.setAttribute('scope','col'); th.setAttribute('tabindex','0');
+  th.setAttribute('role','columnheader'); th.setAttribute('aria-sort','none');
+  th.style.cursor='pointer';
+  th.addEventListener('click',function(){sortBy(i);});
+  th.addEventListener('keydown',function(e){
+    if(e.key!=='Enter'&&e.key!==' '&&e.key!=='Spacebar') return;
+    e.preventDefault(); sortBy(i);
+  });
+});
+
+tb.innerHTML='<tr><td colspan="9">Loading 30 teams…</td></tr>';
+fetch('/assets/front_office_lite.json?v=7416a08d').then(function(r){
+  if(!r.ok) throw new Error('HTTP '+r.status);
+  return r.json();
+}).then(function(d){
+  ROWS=(d&&d.teams)||[];
+  if(!ROWS.length) throw new Error('no teams in front_office_lite.json');
+  draw();
+  live.textContent=ROWS.length+' teams loaded, sorted by FOR, descending.';
+}).catch(function(e){
+  // Say what failed. The previous version could not fail, because it invented
+  // its own numbers — which is exactly the problem.
+  tb.innerHTML='<tr><td colspan="9">Could not load assets/front_office_lite.json ('+esc(e&&e.message)+'). No numbers are shown rather than made-up ones.</td></tr>';
+});
+})();
+</script>
+</main>
+<!-- build_valuation_note.py: start --><p class="mono" style="font-size:10.5px;line-height:1.55;text-transform:none;letter-spacing:0;color:#6F6D68;max-width:1120px;margin:8px auto 0;padding:0 clamp(12px,3.2vw,28px)">Franchise valuations on this site are <b>estimates, not measured figures</b>. Every one of the 360 valuation records in <code>assets/front_office.json</code>, across 12 seasons, names its own source as <code>forbes_synth_estimated_for_training</code> — generated to train the model. The largest in 2025-26 is GSW at $10.09B; read it as the model’s number, not the market’s.</p><!-- build_valuation_note.py: end -->
+<script src="assets/error-boundary.js?v=dfe16efe"></script>
+<script src="assets/keyboard-a11y.js?v=8bd158d1"></script>
+<script src="assets/pwa-install.js?v=11551699"></script>
+</body></html>

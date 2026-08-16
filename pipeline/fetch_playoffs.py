@@ -19,8 +19,8 @@ import time
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from nba_http import fetch_stats_json, legacy_result_set_rows, real_playoff_cache_paths
 from name_utils import norm_name
+from nba_http import fetch_stats_json, legacy_result_set_rows
 
 ROOT = Path(__file__).resolve().parents[1]
 CACHE = ROOT / "pipeline" / "cache"
@@ -66,14 +66,15 @@ def dash_team_params(season: str, season_type: str, per_mode: str = "Totals") ->
         "LeagueID": "00",
     }
 
+
 def with_retries(fn, label: str):
     last: Exception | None = None
     for attempt in range(5):
         try:
             return fn()
-        except Exception as e:  # noqa: BLE001 — retry throttle wall
+        except Exception as e:
             last = e
-            wait = min(120, 5 * 2 ** attempt)
+            wait = min(120, 5 * 2**attempt)
             print(f"  {label}: attempt {attempt + 1} failed ({e}); backoff {wait}s")
             time.sleep(wait)
     raise SystemExit(f"{label} failed after retries: {last}")
@@ -196,8 +197,7 @@ def build_season_cache(season: str) -> dict:
 
 def main() -> None:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--offline", action="store_true",
-                    help="verify existing caches only; no network")
+    ap.add_argument("--offline", action="store_true", help="verify existing caches only; no network")
     ap.add_argument("--season", default=None, help="fetch one season only")
     args = ap.parse_args()
 
@@ -216,8 +216,7 @@ def main() -> None:
             continue
         doc = build_season_cache(season)
         p.write_text(json.dumps(doc, separators=(",", ":")), encoding="utf-8")
-        print(f"{season}: {len(doc['players'])} playoff players, "
-              f"{len(doc['teams'])} teams -> {p.name}")
+        print(f"{season}: {len(doc['players'])} playoff players, {len(doc['teams'])} teams -> {p.name}")
 
 
 if __name__ == "__main__":

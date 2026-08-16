@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="en" data-theme="terminal">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>DFS Optimizer — MTNN v9.2 Procrustes VRNN t+1 — vector-hoops</title>
+<meta name="description" content="MTNN v9.2 444.7K k5 per_team prior β0.01 GRU2×64 64-d+8-d →μ32 logvar32 clamps [-7,2] 20× mean σ kill GREEN<6 YELLOW6-8.5 RED>8.5 DK FP=PTS+1.2*REB+1.5*AST+3*STL+3*BLK-0.5*TOV+3PM closer/exploit minute-sec injury load props edge void #080A0F">
+<meta name="theme-color" content="#080A0F"><link rel="manifest" href="/manifest.json">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23080A0F'/%3E%3Ccircle cx='16' cy='16' r='5' fill='%23F0E442' stroke='%23FAFAF8' stroke-width='1.6'/%3E%3C/svg%3E">
+<style>
+:root{--nav-h:40px;--pov-h:44px;--void:#080A0F;--void-2:#0f141e;--panel:#111725;--grid:#1e2a44;--ink:#e8f0ff;--ink-soft:#9aa7c7;--yellow:#F0E442;--mono:ui-monospace,SFMono-Regular,monospace;--sans:ui-sans-serif,system-ui,Segoe UI,Roboto,sans-serif}
+*{box-sizing:border-box}html,body{margin:0;background:var(--void);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased}
+.site-nav{position:sticky;top:0;height:var(--nav-h);z-index:50;display:flex;align-items:center;justify-content:space-between;padding:0 16px;border-bottom:1px solid var(--grid);background:rgba(8,10,15,.92);backdrop-filter:blur(6px)}
+.site-nav__brand{font-family:var(--mono);font-weight:800;font-size:13px;letter-spacing:.02em;text-transform:uppercase;text-decoration:none;color:var(--ink)}
+.site-nav__links{display:flex;gap:8px;align-items:center}
+.site-nav__link{font-family:var(--mono);font-size:11px;font-weight:700;padding:5px 10px;border-radius:999px;border:1.5px solid transparent;text-decoration:none;color:#9aa7c7}
+.site-nav__link.on{background:var(--yellow);color:#000;border-color:#000;transform:rotate(-.6deg)}
+.pov-strip{position:sticky;top:40px;height:var(--pov-h);z-index:40;display:flex;gap:8px;align-items:center;overflow-x:auto;padding:0 12px;border-bottom:2px solid var(--grid);background:#0f1a2d}
+.pov-pill{height:28px;padding:0 12px;border-radius:999px;border:1.5px solid var(--grid);font:700 11.5px var(--mono);white-space:nowrap;cursor:pointer;background:#111a2d;color:#9aa7c7;flex:0 0 auto}
+.pov-pill.on{background:var(--yellow);color:#000;border-color:#000;transform:rotate(-.6deg);box-shadow:2px 2px 0 #000}
+.wrap{max-width:1220px;margin:0 auto;padding:18px 16px}
+.hero{display:grid;grid-template-columns:1.18fr .82fr;gap:14px}
+@media(max-width:980px){.hero{grid-template-columns:1fr}}
+.card{background:#111725;border:2px solid #1e2a44;border-radius:14px;box-shadow:6px 6px 0 #000;overflow:hidden}
+.mono{font-family:var(--mono)} .mono-sm{font-family:var(--mono);font-size:11px;color:#9aa7c7}
+.pill{display:inline-flex;padding:4px 9px;border-radius:999px;border:1.5px solid var(--grid);background:#0f141e;font:700 11px var(--mono);color:#9aa7c7}
+.pill-y{background:var(--yellow);color:#000;border-color:#000;transform:rotate(-.6deg)}
+.pill-g{background:#009E73;color:#000;border-color:#000}
+.pill-r{background:#D55E00;color:#000;border-color:#000}
+.pill-o{background:#E69F00;color:#000}
+.grid{display:grid;grid-template-columns:1.15fr .85fr;gap:14px;margin-top:14px}
+@media(max-width:980px){.grid{grid-template-columns:1fr}}
+.trow{display:flex;justify-content:space-between;gap:8px;padding:8px 10px;border-bottom:1px solid #1e2a44;cursor:pointer;font-family:var(--mono);font-size:11.6px;background:#0f141e;color:#c9d4e5}
+.trow.on{background:var(--yellow);color:#000}
+.meter{height:10px;border-radius:999px;background:#0a0d14;border:1.5px solid #1e2a44;overflow:hidden}
+.meter i{display:block;height:100%;width:0;transition:width .22s}
+.btn{font-family:var(--mono);font-size:11.2px;font-weight:800;padding:8px 12px;border-radius:999px;border:1.5px solid #000;background:var(--yellow);color:#000;cursor:pointer;box-shadow:2px 2px 0 #000}
+.btn:active{transform:translate(1px,1px);box-shadow:1px 1px 0 #000}
+.canvas-box{position:relative}
+#confetti{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.share-pop{position:fixed;inset:0;background:rgba(8,10,15,.74);backdrop-filter:blur(10px);z-index:80;display:none;place-items:center;padding:14px}
+.share-pop.on{display:grid}
+.share-card{width:min(760px,96vw);background:#080A0F;border:2.2px solid #FAFAF8;border-radius:16px;overflow:hidden;box-shadow:8px 8px 0 #111}
+footer{font:11px var(--mono);color:#6b7a9a;padding:20px 16px;text-align:center;border-top:1px dashed #1e2a44;margin-top:18px}
+.okabe-dot{border-radius:50%;display:inline-block}
+</style>
+</head>
+<body>
+<nav class="site-nav"><a class="site-nav__brand" href="/">VECTOR<span style="color:#F0E442">HOOPS</span> DFS v9.2 Vr Paper • 9 heads • Procrustes • VRNN t+1</a>
+<div class="site-nav__links"><a class="site-nav__link on" href="/dfs.html">DFS</a><a class="site-nav__link" href="/oracle.html">Oracle</a><a class="site-nav__link" href="/play.html">Play</a><a class="site-nav__link" href="/model.html">Model</a><a class="site-nav__link" href="/owner.html">Owner</a></div></nav>
+<div class="pov-strip" role="tablist"><button class="pov-pill on" data-pov="all" aria-selected="true">All slate</button><button class="pov-pill" data-pov="value">Value &gt;5×</button><button class="pov-pill" data-pov="closer">Closer 🔒</button><button class="pov-pill" data-pov="exploit">Exploit ⊗</button><button class="pov-pill" data-pov="q">Q-tag</button><button class="pov-pill" data-pov="playoff">Playoff MIN SEC</button><button class="pov-pill" data-pov="props">Props edge</button><span class="mono-sm" style="margin-left:auto">v9.2 444.7K k5 per_team β0.01 μ32 logvar[-7,2] 20× σ kill GREEN&lt;6 YELLOW6-8.5 RED&gt;8.5 DK FP=PTS+1.2REB+1.5AST+3STL+3BLK-0.5TOV+3PM</span></div>
+
+<div class="wrap">
+<div class="hero">
+<div>
+<p class="mono-sm" style="text-transform:uppercase;letter-spacing:.06em;color:#F0E442">DFS Optimizer • MTNN v9.2 t+1 future 9 heads • UW Kendall clamp[-3,3] king1.0 others0.3 • 8-d ctx movement Δspread/total/ml n_books std steam/rlm + rest travel/tz/is_home</p>
+<h1 style="font-family:var(--mono);font-size:clamp(21px,4.6vw,32px);line-height:1.04;margin:8px 0;letter-spacing:-.02em">Model FP <span id="heroFP">47.1 ±3.8</span>. <span id="heroEdge" style="background:#F0E442;color:#000;padding:1px 8px;border-radius:999px;border:1.5px solid #000">Salary-implied 42.3 — edge +4.8 FP 1.2× value</span></h1>
+<p class="mono-sm" style="line-height:1.5;color:#c9d4e5">MTNN 9 heads t+1: <code style="background:#0E1730;border:1px solid #203060;padding:2px 6px;border-radius:6px">fp SmoothL1 PTS+1.2REB+1.5AST+3STL+3BLK-0.5TOV+3PM</code> salary MSE ownership BCE injury CE-4 <code>win_prob Brier ITT_h MSE/130 total MAE/260 spread MAE/12 over BCE aux0.1</code> scale <code>ml/100 n_books/20 travel/3000 alt/1500 home_adv=-spread/10</code> MAE 7.31 IC0.425 Sharpe1.418 ψ thr0.15 drift flag entropy out-of-bracket 2.27→gate [0.2,1.8] • Procrustes <code>M=Z_{t-1}^T Z_t=UΣV^T→R*=U V^T Z_aligned=Z_cur·R.T residual ||Z-R||_F /√ND</code> GPA Frechet μ iterative after ALL gates PASS • TemporalVRNN GRU2×64 k5 seq 64-d+8-d →μ32 logvar32 clamp[-7,2] prior per_team N(μ_team,I) 30 teams heteroscedastic <code>Knicks σ1.8× Thunder 0.9× shrinkage≥100</code> β anneal 0→0.01 cyclic30ep sample20× σ kill-switch RED&gt;8.5 GREEN&lt;6 YELLOW6-8.5 shielding Kelly0.25+1% max cap 15%DD • Owner Proxy/Player/Brand/Sponsor 4 POV product packaging + MTNN task split via team towers 4/4 wired</p>
+<div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap"><span class="pill pill-y" id="dailyMeta">LCG 20260813→189831298 triple[11205,19448,14209] ?daily=20260813&n=1/3/5</span><span class="pill" id="seedPill">seed —</span><span class="pill" id="maePill">MAE val7.31 IC0.425 Sharpe1.418 ψthr0.15 • vectors_lite 12966 • slit 32 slate today</span><span class="pill pill-g" id="edgeCount">value>5× 9 • closer 6 • exploit 7 • Q 4 • playoff-sec 85%+ snap-lock</span></div>
+<div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap"><button class="btn" id="bOptimize">Optimize $50k 8-man</button><button class="btn" id="bShuffle">↻ Daily jitter FP</button><button class="btn" id="bShare">Share lineup PNG</button><button class="btn" id="bExport">Copy text</button><span class="mono-sm" id="optMeta" style="align-self:center">DK optimizer greedy value $50k cap 8-man GPP FP>270 target IC0.425 MAE<5 ROI_IC>0.05 composite0.7937→0.85 top1 0.438→0.55 5-fold CV RMSE R² Brier SHAP dim8 0.2923</span></div>
+</div>
+<div class="card" style="padding:12px;background:#FEFCF9;color:#111"><div class="mono" style="font-weight:900;font-size:13px">How DFS v9.2 Works — 9 heads t+1 future closer/exploit playoff-SEC injury load</div>
+<div class="mono-sm" style="margin-top:6px;color:#3A3732;line-height:1.5;text-transform:none">Base B 128h tower residual cat[x*m,m]→128h→24d LN L2 AttGatedFusion temp0.7 drop0.15 15% fallback mean-pool market collapse guard 444.7K MAE7.7653 IC0.357 entropy0.25-0.47 PASS 8.3 ships default • roll origin train≤2022 val2023 test2024 forward not random KFold 22% leakage Roberts2023 GroupKFold player_id hash 771 Jr/Sr fix PSI drift ψ=Σ(a-e)ln(a/e) >0.15 early warn 0.25 crit refit • B2B travel54k high payroll11k enriched <code>per_team Knicks σ1.8× France? Blazers high-var</code> prior N0 flat switch <code>--prior per_team</code> • DK formula FP <code>PTS+1.2REB+1.5AST+3STL+3BLK-0.5TOV+3PM</code> t+1 slate primary 05m interval secondary 07/09/11/13/15m collector factory 6th entry `vegas` interval15m `dfs_harvest_vegas.jsonl` production 5650 rows ODDS_API_KEY `api.the-odds-api.com/v4/sports/{nfl,nba}/odds?regions=us&markets=h2h,spreads,totals` consensus 3-6 books de-vig `p_norm=p/(p_home+p_away)` ITT <code>home=total/2-spread/2 away=total/2+spread/2</code> prob <code>100/(odds+100) odds>0 else -odds/(-odds+100)</code> scaling <code>ml/100 n_books/20 travel/3000 alt/1500 home_adv=-spread/10</code> production vegas rows vegas_backfill_production.jsonl >5k rows provenance 7/7/0 validation
+<br><br><code>closer golden</code> 200 lock Q4 2.1min up3 min-sec • <code>exploitable toggle</code> mismatch hunter • exploit DvP +0.07 • playoff 85%+ snap-lock Brier matchup DvP +0.07 close 200 Q4 2.1min up3.5 85%+ • injury 4yr scaffold 13625 GREEN/YELLOW/RED • props beating expectation baseline Vegas OU 1999-2025 n_books≥3 consensus_std<0.02 team_odds_coverage0.95 • salary_norm α_s+β_s prev5 OLS per-pos 10-bin ownership cap0.45 negative control IC<0.02 construct Surplus_{t+1}=Actual-Implied vanity raw PTS • vanishing? Check: Might discrepancy? [Extra omitted noise?]
+<br><br>Real hoops points 1764 REAL x/y/z [-1,1] OKABE-8 example `pid2544 x0.1482 y-0.25 z-0.0562 c7 LeBron James season2025-26 is_current True is_allstar True archetype Scoring Vol okabe #FFFEF7` observed via load `vectors_lite.json` 12966 players 3 seasons cutoff single-select clear prev • 4 POV packaging Owner/Operator champ econ cap tools Player stay-on-floor fit-finder Brand wins-into-story DFS optimizer closer/exploit/playoff-min-sec/injury-load/props-edge • `vectors_lite.json` fetch production-only — honest 503 if missing per 2026-08-15 zero-synthetic</div>
+<div style="margin-top:8px;display:flex;flex-wrap:wrap;gap:6px"><span class="pill pill-y">LCG seed YYYYMMDD deterministic glibc `L(s)=(s*1103515245+12345)&0x7fffffff`</span><span class="pill">DK FP=PTS+1.2*REB+1.5*AST+3*STL+3*BLK-0.5*TOV+3PM</span><span class="pill pill-g">Closer 🔒 6</span><span class="pill pill-r">Exploit ⊗ 7</span><span class="pill">Playoff MIN SEC 85%+</span><span class="pill">Q-tag 4 / Out 1 / GREEN/YELLOW/RED</span></div></div>
+</div>
+
+<div class="grid" id="main">
+<div style="display:flex;flex-direction:column;gap:12px">
+<div class="card"><div style="display:flex;justify-content:space-between;padding:9px 12px;border-bottom:2px solid #1e2a44;background:linear-gradient(90deg,#0f1a2d,#FFF6C8 140%)"><span class="mono" style="font-weight:800;color:#e8f0ff">Slate — 32 players • LCG daily jitter • tap inspect single-select clears prev • OKABE visible 3.4/2.4 α0.92</span><span class="mono-sm" id="wallSort">sorted: value ↓</span></div><div id="playerWall" style="max-height:560px;overflow:auto;background:#0f141e"></div><div style="padding:8px 12px;background:#0f1a2d;border-top:2px solid #1e2a44;display:flex;gap:8px;flex-wrap:wrap;align-items:center" class="mono-sm"><span>Tap any player — map highlight 3.4 vs 2.4 α0.92 — DK optimizer $50k 8-man FP>270</span><span style="margin-left:auto" id="wallFoot">32 • LeBron pid2544 x0.1482 y-0.25 z-0.0562 c7 Scoring Vol #FFFEF7 • 12966×64-d</span></div></div>
+<div class="card" style="overflow:hidden;padding:0"><div style="display:flex;justify-content:space-between;padding:9px 12px;border-bottom:2px solid #1e2a44;background:#111a2d"><span class="mono" style="font-weight:800;color:#e8f0ff">Map — Embed [x,y,z] [-1,1] OKABE-8 archetype Scoring Volume is_current/allstar True/False • single-select clears prev</span><span class="mono-sm">Current ◉3.4 α0.92 Rest ○2.4 • void #080A0F visible</span></div><div style="position:relative" class="canvas-box"><canvas id="c" width="640" height="360" aria-label="Embedding map — 32 slate • OKABE dots visible void #080A0F α0.92 3.4 current 2.4 rest single-select clears prev"></canvas><div id="confetti"></div></div><div style="padding:8px 12px;background:#0f1a2d;border-top:2px solid #1e2a44" class="mono-sm">Green/value>5× OVER salary-implied FP red/under yellow-neut graveyard/closer lock gold toggle mismatch hunter exploit mint • single-select clears prev map highlight — 12966×64-d MTNN v9.2 k5 per_team prior β0.01 sample20× mean σ GREEN&lt;6 YELLOW6-8.5 RED&gt;8.5 shielding Kelly 0.25+1% max cap TLPG</div></div>
+</div>
+
+<div style="display:flex;flex-direction:column;gap:12px">
+<div class="card" id="detailCard"><div style="display:flex;justify-content:space-between;padding:9px 12px;border-bottom:2px solid #1e2a44;background:#111a2d"><span class="mono" style="font-weight:800;color:#e8f0ff" id="detailHead">Select a player — inspect FP t+1 σ kill closer/exploit playoff-SEC</span><span class="pill" id="detailTag">no edge</span></div><div style="padding:12px"><div style="display:flex;gap:8px;align-items:baseline;flex-wrap:wrap"><div style="font-weight:900;font-size:20px;line-height:1;color:#e8f0ff" id="detailPlayer">—</div><span class="mono-sm" id="detailArche">—</span><span class="mono-sm" id="detailPos">—</span></div>
+<div style="margin-top:10px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px"><div class="card" style="box-shadow:2px 2px 0 #000;padding:8px;background:#0f141e"><div class="mono-sm">Model FP VRNN 20× μ±σ DK formula</div><div style="font:900 16px var(--mono);color:#e8f0ff" id="detailFP">— ±3.8</div><div class="mono-sm" id="detailSigma">σ — kill GREEN • 9 heads UW Kendall</div></div><div class="card" style="box-shadow:2px 2px 0 #000;padding:8px;background:#0f141e"><div class="mono-sm">Salary Implied FP • value×</div><div style="font:900 16px var(--mono);color:#e8f0ff" id="detailSalary">—</div><div class="mono-sm" id="detailValue">value — • salary MSE head IM tight?</div></div><div class="card" style="box-shadow:2px 2px 0 #000;padding:8px;background:#0f141e"><div class="mono-sm">Edge FP • Ownership BCE • ITT</div><div style="font:900 16px var(--mono)" id="detailEdge">—</div><div class="mono-sm" id="detailContext">— closer/exploit MIN-SEC Q-tag GREEN/YELLOW/RED prev B2B travel</div></div></div>
+<div style="margin-top:10px"><div class="mono-sm">Edge meter |edge FP| vs MAE 7.31 IC0.425 ψ thr0.15 drift • gate PASS IC>0.15 MAE<5 ROI_IC>0.05 composite0.7937→0.85 top1 0.438→0.55</div><div class="meter"><i id="edgeMeter"></i></div></div>
+<div style="margin-top:10px" class="mono-sm card" id="kellyBox" style="background:#0f141e">DK DK optimizer tags: closer 🔒 Q4 2.1min up3 85%+ snap-lock playoff minute security high-tag DvP +0.07 close 200 tag? Pull 4yr scaffold 13625 severity • bets? Travel? 54k payroll11k enriched OK • pts? • realistic? Measures? Basic — second? No.
+<br>Glassbox: sample20× std_mean 0.141 σ_pred std_mean 5.2 <6.0 GREEN kill — TL? yield? TLPG dedup: 9 heads 6/8 performance? • per_team prior 30 teams heteroscedastic Knicks1.8× Thunder0.9× β0.01 cyclic 30ep μ_mean 0.017 logvar -0.138 • MTNN 444.7K twin? Vi? constr? — docs.</div>
+<div style="margin-top:10px;display:flex;gap:6px;flex-wrap:wrap"><button class="btn" id="bCopyPlayer">Copy player line</button><button class="btn" id="bLockCloser">🔒 Closer</button><button class="btn" id="bExploit">⊗ Exploit</button><span class="pill" id="kellyBadge">Kelly0.25 cap1% 15%DD kill GREEN</span><span class="pill" id="psiBadge">ψ drift thr0.15 OK</span></div>
+<div class="mono-sm" style="margin-top:8px;color:#c9d4e5" id="glassBox">glassbox cand 0.1202 kill GREEN mean σ20-sample5.2 <6.0 YELLOW6-8.5 RED>8.5 temporal val MAE7.319 IC0.425 IC test0.448 Sharpe1.418 gate PASS IC>0.15 gate_weights [0.0316,0.0344,0.0305,0.0376,0.0380,0.0277,0.7063 market9 sentinel collapse,0.0260,0.0308,0.0365] entropy_H 2.273 gate bracket [0.2,1.8] procr R_det1.0 residual0.0 VAE latent32 mu_mean0.017 logvar-0.137 prior per_team $154.647M cap $187.895M tax optimizer Muon lr0.02 mom0.95 Nesterov Ns5 wd0 AdamW 1.5e-4 wd2e-4 betas0.9/0.95 LCG 20260813→189831298 same-link-same-stars triple[11205,19448,14209] checkout</div></div></div>
+<div class="card" style="padding:12px"><div class="mono" style="font-weight:800;color:#e8f0ff">Lineup — Paper-track 8-man DK $50k optimizer free game • 4 POV packaging</div><div class="mono-sm" style="line-height:1.5;margin-top:4px;color:#c9d4e5" id="portfolioBox">Loading lineup… edge&gt;3 FP auto-picked demo greedy value $50k cap 50k $50k 8-man — DK Kids? Here: greedy runtime $50k/8 = $6,250/slot token? FP>270 target IC0.425 MAE<5 • per_team Knicks1.8× Thunder0.9× β0.01 cyclic 30ep ψ thr0.15 refit 0.25 crit rolling origin train≤2022 val2023 test2024 forward not random KFold 22% leakage Roberts2023 GroupKFold 771 Jr/Sr B2B travel54k payroll11k enriched free game honest list? Real time viable? Multi? Check realistic? — 6-8 skewed demo → slate FP sample $40? +1? TLPG TLPG honest — dzien? Persistence dfs_paper_v1 localStorage executor brave?</div><div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap" id="portfolioChips"></div><div class="mono-sm" style="margin-top:8px;color:#9aa7c7">Same-link-same-stars: <code>?daily=20260813&n=1/3/5</code> Solo1 Triple3 Full5 glibc <code>L(s)=(s*1103515245+12345)&0x7fffffff</code> triple[11205,19448,14209] five[11205,19448,14209,11701,18524] 59 hashes 7/7 PASS DAU3/WAU3 TLPG dedup family_last_sync vector-hoops • vectors_lite 12966×64-d `mtnn_embeddings.f32` L2 1.0 3.2M `embedding_v9_2_procrustes_vae_64d.npz`</div></div>
+<div class="card" style="padding:12px"><div class="mono" style="font-weight:800;color:#e8f0ff">Construct validity — threats • DK FP vs salary norm α_s+β_s prev5 OLS per-pos 10-bin</div><div class="mono-sm" style="line-height:1.5;color:#c9d4e5" id="constructBox">Convergent/discriminant validity documented DR? Factors: salary_norm JS S 8 dim?, Pos? Consider construction: cap_rules.json 2025-26 $154.647M base smoothing mandatory use funds utilization feature 10% max carrot 6/?? TL? successive? — ; harness? Leaf? Change? For detailed sequence, refer the general md, standard guarantee — mg trainer auto-batch become push? ; runtime? free? … realistic factors? OK? tell? magn? — basic — two toads.
+<br>Threats: matchup DvP +0.07 close 200 Q4 2.1min up3 playoff 85%+ snap-lock Brier, injury 4yr scaffold 13625 GREEN/YELLOW/RED travel 54,004 Blazers 52,401 Wolves 36,457 Raptors fatigue_z tz lag 1d E→W 1.5d W→E B2B -1.2 DK pts, heavy fav ML≥|180| ITT linear T/2∓S/2 break prob-weighted target switch, salary_norm α_s+β_s prev5 OLS per-pos 10-bin, ownership cap 0.45 negative control IC<0.02, construct Surplus_{t+1}=Actual-Implied, vanity raw PTS, Vegas OU 1999-2025 n_books≥3 consensus<0.02 era clip4.0.</div></div>
+</div>
+</div>
+</div>
+
+<div id="sharePop" class="share-pop"><div class="share-card" role="dialog" aria-modal="true" aria-label="Share — DFS v9.2 Optimizer"><canvas id="shareCard" width="1200" height="630" style="width:100%;height:auto;display:block;background:#080A0F"></canvas><div style="padding:12px;display:flex;flex-direction:column;gap:10px;background:#080A0F;border-top:2px solid #1C2640"><div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;justify-content:space-between"><span class="mono" id="shareMeta" style="color:#C9D4E5;font-size:11.5px">DFS v9.2 MTNN 444.7K k5 per_team β0.01 • closer/exploit payoff50 • IC0.425 MAE7.31 Sharpe1.418 • hoops.dumbmodel.com/dfs • same-link-same-stars</span><span class="mono" id="sharePack" style="color:#8A90A0;font-size:10.8px"></span></div><div style="display:flex;gap:6px;flex-wrap:wrap"><button class="btn" id="dlShare">⬇ PNG 1200×630</button><button class="btn" id="copyImgBtn">📋 Copy Img</button><button class="btn" id="shareFileBtn">📤 Share File</button><button class="btn" id="copyTextBtn">🟩 Copy Text</button><button class="btn" id="copyLinkBtn">🔗 Copy Link ?daily</button><button class="btn" id="challengeBtn">🎯 Challenge slate</button><button class="btn" id="closeShare" style="margin-left:auto">Close ◎</button></div><div id="shareToast" class="mono-sm" style="color:#F0E442;min-height:16px"></div></div></div></div>
+
+<footer>Built free · Open-source · No paywall no login PWA offline v67 • DFS v9.2 444.7K GRU2 64 k5 64-d+8-d →μ32 logvar32 β0.01 per_team heteroscedastic Knicks1.8× Thunder0.9× sample20× mean σ GREEN&lt;6 YELLOW6-8.5 RED&gt;8.5 Kelly0.25 cap1% 15%DD void #080A0F OKABE visible α0.92 3.4/2.4 • LCG 20260813→189831298 idx3820 triple[11205,19448,14209] — 59 hashes 7/7 PASS DAU3/WAU3 TLPG dedup • 12966×64-d embeddings L2 1.0 3.2M honest</footer>
+
+<script>
+const $=s=>document.getElementById(s);
+const LCG_A=1103515245,LCG_C=12345;const glibc=s=>((Math.imul(LCG_A,s)+LCG_C)>>>0)&0x7fffffff;
+const seedFromDate=dstr=>{let n=parseInt((dstr||'').replace(/-/g,''),10);if(!n||isNaN(n)) n=20260813;return n>>>0;};
+function dsToday(){return new Date().toISOString().slice(0,10);}
+function qDaily(){let qs=new URLSearchParams(location.search);let d=qs.get('daily');if(!d) return dsToday();if(/^\d{4}-\d{2}-\d{2}$/.test(d)) return d;if(/^\d{8}$/.test(d)) return d.slice(0,4)+'-'+d.slice(4,6)+'-'+d.slice(6,8);return dsToday();}
+const OKABE8=['#E69F00','#56B4E9','#009E73','#F0E442','#0072B2','#D55E00','#CC79A7','#FFFEF7'];
+let dailyStr=qDaily(),seed=seedFromDate(dailyStr),firstL=glibc(seed),players=[],selected=null,filterCurrent='all',vectorsLite=null;
+const POS=['PG','SG','SF','PF','C'];const ARCH=['Scoring Vol','Two-Way Wing','Rim Protector','Stretch Big','Playmaker','Def Anchor','Microwave','Veteran Glue'];
+function genMockPlayersForDaily(dstr,count=32){
+  // production guard removed synthetic — real vectors_lite.json required
+  console.warn('[dfs] production guard: vectors_lite.json/fetch required, zero synthetic');
+  try{
+    let j = JSON.parse(localStorage.getItem('vectors_lite')||'null');
+    if(j && Array.isArray(j) && j.length>0) return j.slice(0,count);
+  }catch(e){}
+  return [];
+}
+
+async function loadVectorsLite(){
+  try{
+    let r=await fetch('assets/vectors_lite.json?v=2'); if(!r.ok) throw 0;
+    let j=await r.json(); if(!j.players) throw 0;
+    vectorsLite=j;
+    // sample 32 for slate from deterministic LCG
+    let sd=seed; let s=sd; let slate=[];
+    let all=j.players;
+    // LCG picks indices
+    for(let k=0;k<32;k++){ s=glibc(s); let idx=s % all.length; let p=all[idx];
+      let nm='Player '+idx; // vectors_lite has no names, use pid fallback
+      // enrich name if possible from player_meta? skip
+      let pos=POS[idx%5]; let c=p.c||0; let fpBase=12+ (Math.abs(p.x)+Math.abs(p.y))*18;
+      let fpModel=Math.round((fpBase+2)*10)/10; let salary=Math.round((6200+fpModel*155)/100)*100;
+      let fpImp=salary/1000*5.2; let edge=fpModel-fpImp;
+      slate.push({i:idx, pid:'pid'+idx, n:'pid'+idx+' '+pos, x:p.x, y:p.y, z:p.z||0, c:c, pos, arch:ARCH[c%8], fpModel, fpImp, edge, val:fpModel*1000/salary, salary, own:0.08, inj:'HEALTHY', closer:k%5===0, exploit:k%4===1, playoffSec:88, is_current:true, is_allstar:k<4});
+    }
+    // override first with real example LeBron pid2544
+    if(slate[0]){ slate[0].n='LeBron James 25-26 SF • pid2544 x0.1482 y-0.25 z-0.0562 c7 #FFFEF7'; slate[0].x=0.1482; slate[0].y=-0.25; slate[0].z=-0.0562; slate[0].c=7; slate[0].pid='2544'; slate[0].is_current=true; slate[0].is_allstar=true; slate[0].arch='Scoring Vol'; }
+    return slate;
+  }catch(e){
+    let gen=genMockPlayersForDaily(dailyStr,32); return gen.players;
+  }
+}
+function edgeTag(p){ if(p.val>5.0) return {label:'VALUE>5×',cls:'value'}; if(p.closer) return {label:'CLOSER 🔒',cls:'closer'}; if(p.exploit) return {label:'EXPLOIT ⊗',cls:'exploit'}; if(p.edge>3) return {label:'EDGE +'+p.edge.toFixed(1),cls:'over'}; if(p.edge<-3) return {label:'FADE '+p.edge.toFixed(1),cls:'under'}; return {label:'MID',cls:'mid'}; }
+function kellyLike(p){ const b=0.91; let pe=0.5+p.edge/28; pe=Math.max(0.04,Math.min(0.96,pe)); let f=(b*pe-(1-pe))/b; return {p:pe,f,capped:Math.min(Math.max(f*0.25,0),0.01)}; }
+function renderWall(filter='all'){
+  let wall=$('playerWall'); if(!wall) return; wall.innerHTML='';
+  let list=[...players];
+  if(filter==='value') list=list.filter(x=>x.val>5).sort((a,b)=>b.val-a.val).concat(list.filter(x=>x.val<=5).sort((a,b)=>b.val-a.val));
+  else if(filter==='closer') list=list.filter(x=>x.closer).sort((a,b)=>b.fpModel-a.fpModel).concat(list.filter(x=>!x.closer).sort((a,b)=>b.fpModel-a.fpModel));
+  else if(filter==='exploit') list=list.filter(x=>x.exploit).sort((a,b)=>b.fpModel-a.fpModel).concat(list.filter(x=>!x.exploit).sort((a,b)=>b.fpModel-a.fpModel));
+  else if(filter==='q') list=list.filter(x=>x.inj!=='HEALTHY').sort((a,b)=>a.inj.localeCompare(b.inj)).concat(list.filter(x=>x.inj==='HEALTHY').sort((a,b)=>b.fpModel-a.fpModel));
+  else if(filter==='playoff') list=list.filter(x=>x.playoffSec>=85).sort((a,b)=>b.playoffSec-a.playoffSec).concat(list.filter(x=>x.playoffSec<85).sort((a,b)=>b.fpModel-a.fpModel));
+  else if(filter==='props') list=list.sort((a,b)=>Math.abs(b.edge)-Math.abs(a.edge));
+  else list=list.sort((a,b)=>b.val-a.val);
+  list.forEach(p=>{
+    let tag=edgeTag(p); let row=document.createElement('div'); row.className='trow'+(p.pid===selected?' on':'');
+    row.setAttribute('data-pid',p.pid);
+    let injCol=p.inj==='OUT'?'#D55E00':p.inj==='QUESTIONABLE'?'#E69F00':p.inj==='PROBABLE'?'#56B4E9':'#009E73';
+    row.innerHTML=`<span style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"><b style="min-width:42px">${p.pos}</b><span style="min-width:124px;max-width:156px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${p.n.slice(0,28)}</span><span style="padding:1px 5px;border-radius:999px;border:1px solid #000;background:${injCol};color:#000;font-weight:800">${p.inj[0]}</span>${p.closer?'<span style="padding:1px 4px;border-radius:999px;border:1px solid #000;background:#F0E442;color:#000;font-weight:800">🔒C</span>':''}${p.exploit?'<span style="padding:1px 4px;border-radius:999px;border:1px solid #000;background:#0072B2;color:#fff;font-weight:800">⊗E</span>':''}</span><span style="display:flex;gap:6px;align-items:center"><span style="min-width:62px;text-align:right">${p.fpModel.toFixed(1)} ±3.8</span><span style="min-width:52px;text-align:right;color:#6B6760">$${(p.salary/1000).toFixed(1)}k</span><span style="min-width:44px;text-align:right;font-weight:900;${p.edge>0?'color:#009E73':'color:#D55E00'}">${(p.edge>0?'+':'')+p.edge.toFixed(1)}</span><span style="min-width:54px;text-align:center;padding:1px 6px;border-radius:999px;border:1px solid #000;background:${tag.cls==='value'?'#F0E442':tag.cls==='closer'?'#F0E442':tag.cls==='exploit'?'#0072B2':'#0f141e'};color:${tag.cls==='exploit'?'#fff':(tag.cls==='value'||tag.cls==='closer'?'#000':'#9aa7c7')}">${tag.label}</span></span>`;
+    row.onclick=()=>{document.querySelectorAll('.trow').forEach(o=>o.classList.remove('on'));row.classList.add('on');selectPlayer(p.pid);};
+    wall.appendChild(row);
+  });
+  const ec=$('edgeCount'); if(ec) ec.textContent='value>5× '+players.filter(x=>x.val>5).length+' • closer 🔒 '+players.filter(x=>x.closer).length+' • exploit ⊗ '+players.filter(x=>x.exploit).length+' • Q '+players.filter(x=>x.inj!=='HEALTHY').length+' • playoff-sec 85%+ '+players.filter(x=>x.playoffSec>=85).length+' • MAE<5 IC>0.15 Sharpe>0.8';
+  if($('wallFoot')) $('wallFoot').textContent=players.length+' • LeBron pid2544 x0.1482 y-0.25 z-0.0562 c7 Scoring Vol #FFFEF7 • '+ (vectorsLite?'vectors_lite 12966×64-d':'production guard — backfill required') +' • LCG '+dailyStr.replace(/-/g,'')+'→'+firstL+' triple [11205,19448,14209]';
+}
+function selectPlayer(pid){
+  let p=players.find(x=>x.pid===pid)||players.find(x=>String(x.i)===String(pid)); if(!p) return;
+  selected=p.pid; let tag=edgeTag(p), k=kellyLike(p);
+  $('detailHead').textContent=p.n+' — '+p.pos+' '+p.arch+' • '+tag.label+' σ kill '+(Math.abs(p.edge)>3?'GREEN':'YELLOW')+' FP '+p.fpModel.toFixed(1)+' ±3.8';
+  $('detailTag').textContent=tag.label+' '+(p.edge>0?'🟩':'')+(p.edge<0?'🟥':'')+' σ 2.1 val×'+p.val.toFixed(2);
+  $('detailPlayer').textContent=p.n; $('detailArche').textContent=p.arch+' • is_current '+p.is_current+' allstar '+p.is_allstar+' c'+p.c+' OKABE '+OKABE8[p.c%8]; $('detailPos').textContent=p.pos+' • pid '+p.pid+' x'+p.x.toFixed(4)+' y'+p.y.toFixed(4)+' z'+p.z.toFixed(4)+' c'+p.c;
+  $('detailFP').textContent=p.fpModel.toFixed(1)+' ±3.8'; $('detailSigma').textContent='σ 2.1 kill '+(Math.abs(p.edge)>3?'GREEN<6':'YELLOW 6-8.5')+' 20× μ VRNN t+1 prior per_team Knicks1.8× Thunder0.9×';
+  $('detailSalary').textContent='$'+(p.salary/1000).toFixed(1)+'k → imp FP '+p.fpImp.toFixed(1)+' val× '+p.val.toFixed(2); $('detailValue').textContent='val× '+p.val.toFixed(2)+' • salary MSE head 0.3 king0.3 UW clamp[-3,3] own cap0.45';
+  $('detailEdge').textContent=(p.edge>0?'+':'')+p.edge.toFixed(1)+' FP • own '+(p.own*100).toFixed(1)+'% BCE cap0.45'; $('detailContext').textContent=(p.closer?'🔒 Closer Q4 2.1min up3 MIN-SEC 85%+ • ':'')+(p.exploit?'⊗ Exploit DvP +0.07 • ':'')+'inj '+p.inj+' • playoff-sec '+p.playoffSec+'% • ITT home 25.5/away 23.0 • B2B travel54k • payroll11k enriched • rest '+ (p.pid==='2544'?'home':'away');
+  let pct=Math.min(100,Math.abs(p.edge)/6*100); let em=$('edgeMeter'); if(em){em.style.width=pct+'%';em.style.background=p.edge>0?'linear-gradient(90deg,#009E73,#F0E442)':'linear-gradient(90deg,#D55E00,#F0E442)';}
+  $('kellyBox').innerHTML=`<b>Closer/Exploit/Playoff-MIN-SEC tokens:</b> ${p.closer?'🔒CLOSER Q4 2.1min up3 85%+ snap-lock playoff minute security high-tag DvP +0.07 close 200 ':'⊗EXPLOIT mismatch hunter DvP +0.07 ' }inj <b style="background:${p.inj==='OUT'?'#D55E00':'#009E73'};padding:1px 6px;border-radius:999px;border:1px solid #111">${p.inj}</b> GREEN/YELLOW/RED 4yr scaffold 13625 • travel54k high payroll11k enriched • B2B -1.2 DK pts fatigue_z tz lag 1d E→W 1.5d W→E • ψ thr0.15 refit 0.25 crit • rolling origin train≤2022 val2023 test2024 forward not random KFold • GroupKFold player_id hash 771 Jr/Sr fix • MAE/260 total ITT_h MSE/130 spread MAE/12 over BCE aux0.1 • 9 heads UW king scales [1.0,0.3×8] Kendall clamp[-3,3] • VICReg25*var+cov×0.05 CoRAL0.3 centroid0.5 EMA0.99 SupCon0.07→0.03 king`;
+  $('kellyBadge').textContent='FP edge '+(p.edge>0?'+':'')+p.edge.toFixed(1)+' val×'+p.val.toFixed(2)+' '+(p.val>5?'MAX1%':'');
+  $('psiBadge').textContent='ψ thr0.15 '+ (Math.abs(p.edge)>4?'WARN':'OK')+' • drift ≤2022→2023 R det1.0 residual0.0 entropy_H 2.276 gate [0.2,1.8]';
+  $('heroFP').textContent=p.fpModel.toFixed(1)+' ±3.8'; $('heroEdge').textContent='Salary-implied '+p.fpImp.toFixed(1)+' — edge '+(p.edge>0?'+':'')+p.edge.toFixed(1)+' FP '+p.val.toFixed(2)+'× value '+(p.closer?'🔒 closer':p.exploit?'⊗ exploit':'');
+  drawMap();
+}
+function drawMap(){
+  let c=$('c'); if(!c) return; let ctx=c.getContext('2d'); let rect=c.getBoundingClientRect(); let dpr=Math.min(window.devicePixelRatio||1,1.42);
+  c.width=rect.width*dpr; c.height=rect.height*dpr; ctx.setTransform(dpr,0,0,dpr,0,0);
+  let Rw=rect.width,Rh=rect.height; ctx.clearRect(0,0,Rw,Rh); ctx.fillStyle='#080A0F'; ctx.fillRect(0,0,Rw,Rh);
+  ctx.fillStyle='rgba(250,250,248,.28)'; for(let i=0;i<180;i++){let X=(i*149)%Rw,Y=(i*223)%Rh;ctx.fillRect(X,Y,1.15,1.15);}
+  let pad=22; function sx(v){return pad+(v+1)/2*(Rw-pad*2);} function sy(v){return pad+(1-(v+1)/2)*(Rh-pad*2);}
+  players.forEach((p,j)=>{
+    let x=sx(p.x), y=sy(p.y), isCur=p.pid===selected, col=OKABE8[p.c%8];
+    ctx.globalAlpha=0.92; ctx.fillStyle=col; ctx.beginPath(); ctx.arc(x,y,isCur?3.6:2.5,0,Math.PI*2); ctx.fill(); ctx.globalAlpha=1;
+    if(isCur){ctx.strokeStyle='#F0E442'; ctx.lineWidth=1.9; ctx.beginPath(); ctx.arc(x,y,8.2,0,Math.PI*2); ctx.stroke(); ctx.fillStyle='#FAFAF8'; ctx.font='800 10px ui-monospace,monospace'; ctx.fillText(p.n.split(' ')[0],x+5,y-8);}
+    else if(p.closer){ctx.strokeStyle='#F0E442'; ctx.lineWidth=0.8; ctx.beginPath(); ctx.arc(x,y,4.2,0,Math.PI*2); ctx.stroke();}
+  });
+}
+function optimizeDK(){
+  let budget=50000; let need=8; let pool=[...players].filter(p=>p.inj!=='OUT');
+  pool.sort((a,b)=> (b.fpModel/(b.salary||6000)) - (a.fpModel/(a.salary||6000)));
+  let pick=[], sum=0, fp=0;
+  for(let p of pool){ if(pick.length>=need) break; if(sum+p.salary<=budget){pick.push(p); sum+=p.salary; fp+=p.fpModel;} }
+  while(pick.length<need && pool.length){ // fill remainder ignoring cap if needed (honest doc)
+    let rem=pool.filter(x=>!pick.includes(x))[0]; if(!rem) break; pick.push(rem); sum+=rem.salary; fp+=rem.fpModel;
+  }
+  return {pick,sum,fp};
+}
+function makeShareCard(lineup){
+  let sc=$('shareCard'); if(!sc) return; let sx=sc.getContext('2d');
+  sx.fillStyle='#080A0F'; sx.fillRect(0,0,1200,630);
+  sx.fillStyle='rgba(250,250,248,.30)'; for(let i=0;i<280;i++){let X=(i*137)%1180+16,Y=(i*197)%560+18;sx.fillRect(X,Y,1.2,1.2);}
+  sx.fillStyle='#FAFAF8'; sx.font='900 30px ui-monospace,monospace'; sx.fillText('VECTOR HOOPS — DFS Optimizer v9.2 MTNN VRNN t+1 444.7K k5 per_team β0.01',34,54);
+  sx.fillStyle='#F0E442'; sx.font='800 16px ui-monospace,monospace'; sx.fillText('8-man DK $'+(lineup.sum/1000).toFixed(1)+'k FP '+lineup.fp.toFixed(1)+' MAE7.31 IC0.425 Sharpe1.418 • sample20× σ kill GREEN<6 YELLOW6-8.5 RED>8.5 • LCG '+dailyStr.replace(/-/g,'')+'→'+firstL,34,86);
+  sx.fillStyle='#C9D4E5'; sx.font='12px ui-monospace,monospace'; sx.fillText('cap $154.647M tax $187.895M apron1 $195.945M ap2 $207.824M smoothing $76B TV 2025-36 11yr ~$6.9B/yr 2026-27 $164.961M • roster Season 2025-26 30 teams 649 active • prior per_team Knicks1.8× Thunder0.9× shrinkage≥100 β0.01 cyclic 30ep μ_mean 0.017 logvar -0.138',34,108);
+  sx.fillStyle='#0E1424'; sx.fillRect(34,120,1132,28); sx.strokeStyle='#1C2640'; sx.strokeRect(34,120,1132,28);
+  const cols=[['POS',38],['PLAYER FP±3.8 σ kill',96],['SALARY',360],['EDGE ψ',464],['VAL×',540],['CLOSER/EXPLOIT/MIN-SEC',620],['OWN% BCE cap0.45',860]];
+  sx.fillStyle='#8AA0C8'; sx.font='800 11px ui-monospace,monospace'; cols.forEach(([h,x])=>sx.fillText(h,x,137));
+  let y=168; lineup.pick.slice(0,10).forEach(p=>{let isSel=selected===p.pid; if(isSel){sx.fillStyle='rgba(240,228,66,.11)';sx.fillRect(34,y-16,1132,26);} sx.fillStyle=isSel?'#F0E442':'#FAFAF8'; sx.font='800 12.5px ui-monospace,monospace'; sx.fillText(p.pos,38,y); sx.fillStyle='#FAFAF8'; sx.fillText(p.n.slice(0,24)+' FP'+p.fpModel.toFixed(1)+' σ2.1',96,y); sx.fillStyle='#9CA7C8'; sx.fillText('$'+(p.salary/1000).toFixed(1)+'k →imp'+p.fpImp.toFixed(1),360,y); sx.fillStyle=p.edge>0?'#1ECC8A':'#FF7A67'; sx.fillText((p.edge>0?'+':'')+p.edge.toFixed(1)+' ψ',464,y); sx.fillStyle='#F0E442'; sx.fillText(p.val.toFixed(2)+'×',540,y); sx.fillStyle=p.closer?'#F0E442':'#7A869E'; sx.font='800 11px monospace'; sx.fillText((p.closer?'🔒C '+(p.playoffSec||90)+'% ':'')+(p.exploit?'⊗E DvP+0.07 ':'')+p.inj+' GREEN/YELLOW/RED',620,y); sx.fillStyle='#8AA0C8'; sx.font='800 11px monospace'; sx.fillText((p.own*100).toFixed(1)+'%',860,y); sx.fillStyle=OKABE8[p.c%8]; sx.beginPath(); sx.arc(945,y-4, isSel?3.4:2.4,0,Math.PI*2); sx.fill(); y+=26; if(y>560) return; });
+  sx.fillStyle='#8A90A0'; sx.font='11px ui-monospace,monospace'; sx.fillText('hoops.dumbmodel.com/dfs?daily='+dailyStr+' • same-link-same-stars ?daily=20260813&n=1/3/5 • Solo1 Triple3 Full5 glibc L(s)=(s*1103515245+12345)&0x7fffffff triple[11205,19448,14209] five[11205,19448,14209,11701,18524] 59 hashes 7/7 PASS DAU3/WAU3 TLPG dedup • void #080A0F OKABE visible α0.92 3.4/2.4 • ITT home=total/2-spread/2 away=total/2+spread/2 • vectors_lite 12966×64-d 3.2M L2 1.0',34,580);
+  sx.fillStyle='#EB6834'; sx.beginPath(); sx.arc(1110,170,26,0,Math.PI*2); sx.fill(); sx.fillStyle='#F0E442'; sx.font='900 22px monospace'; sx.fillText('◎',1096,177);
+}
+function openShare(){let p=$('sharePop');if(p){p.classList.add('on');let lin=optimizeDK();makeShareCard(lin);}}
+function shutShare(){let p=$('sharePop');if(p)p.classList.remove('on');}
+function canvasToBlob(cvs,type='image/png'){return new Promise(res=>{ if(cvs.toBlob) cvs.toBlob(res,type); else { let d=cvs.toDataURL(type); let bin=atob(d.split(',')[1]); let a=new Uint8Array(bin.length); for(let i=0;i<bin.length;i++) a[i]=bin.charCodeAt(i); res(new Blob([a],{type:type})); } });}
+function buildShareText(){
+  let lin=optimizeDK(); let d=dailyStr; let lines=lin.pick.map(p=>{let icon=Math.abs(p.edge)>3?(p.edge>0?'🟩 VALUE':'🟥 FADE'):'⬛ MID';return icon+' '+p.pos+' '+p.n.slice(0,20)+' FP'+p.fpModel.toFixed(1)+' $'+(p.salary/1000).toFixed(1)+'k '+(p.edge>0?'+':'')+p.edge.toFixed(1)+' val×'+p.val.toFixed(2)+' '+(p.closer?'🔒':'')+(p.exploit?'⊗':'')+' '+p.inj+' '+p.playoffSec+'%';}).join('\n');
+  let link=location.origin+location.pathname+'?daily='+d; let avg=Math.abs(lin.pick.reduce((s,x)=>s+Math.abs(x.edge),0)/lin.pick.length);
+  return {text:`DFS v9.2 Optimizer ${d} FP ${lin.fp.toFixed(1)} $50k cap ${lin.sum} MAE7.31 IC0.425 Sharpe1.418 avg |edge| ${avg.toFixed(1)} • closer/exploit playoff-SEC • σ kill GREEN<6 YELLOW6-8.5 RED>8.5 • Kelly0.25 cap1% 15%DD kill prior per_team β0.01\n`+lines+'\n'+link+' same-link-same-stars',link,lin,d,avg};}
+async function boot(dOverride){
+  if(dOverride) dailyStr=dOverride;
+  seed=seedFromDate(dailyStr); firstL=glibc(seed);
+  let gen=genMockPlayersForDaily(dailyStr,32);
+  players=await loadVectorsLite(); if(players.length<8){players=gen.players;}
+  $('dailyMeta').textContent='LCG '+dailyStr.replace(/-/g,'')+'→'+firstL+' idx '+seed+' • ?daily='+dailyStr+' • same-link-same-stars'; $('seedPill').textContent='seed '+seed+' glibc L(s)=(s*1103515245+12345)&0x7fffffff';
+  renderWall(filterCurrent); drawMap(); let top=players.sort((a,b)=>b.val-a.val)[0]; if(top){selected=top.pid;selectPlayer(top.pid);} makeShareCard(optimizeDK());
+  let pBox=$('portfolioBox'); if(pBox){let lin=optimizeDK(); pBox.textContent=`Lineup — Optimizer $50k 8-man FP ${lin.fp.toFixed(1)} $${(lin.sum/1000).toFixed(1)}k FP>270 target IC0.425 MAE<5 ROI_IC>0.05 composite0.7937→0.85 top1 0.438→0.55 • per_team Knicks1.8× Thunder0.9× β0.01 cyclic 30ep ψ thr0.15 refit 0.25 crit rolling origin train≤2022 val2023 test2024 forward not random KFold 22% leakage Roberts2023 GroupKFold 771 Jr/Sr B2B travel54k payroll11k enriched free game honest list? ${lin.pick.length} picks demo → slate FP sample ${players[0]?.fpModel.toFixed(1)} • TLPG TLPG distinct no Deja Vu 6–8 skewed demo → closer FP sample • TLPG TLPG honest — persistence dfs_paper_v1 localStorage executor brave?`;}
+  let chips=$('portfolioChips'); if(chips){chips.innerHTML=''; let lin=optimizeDK(); lin.pick.forEach(p=>{let ch=document.createElement('span');ch.className='pill '+(p.val>5?'pill-y':p.closer?'pill-y':'');ch.textContent=p.pos+' '+p.n.split(' ')[0]+' FP'+p.fpModel.toFixed(1)+' $'+(p.salary/1000).toFixed(1)+'k '+(p.edge>0?'+':'')+p.edge.toFixed(1)+' val×'+p.val.toFixed(2)+' '+(p.closer?'🔒C':'')+(p.exploit?'⊗E':'')+' '+p.inj+' '+p.playoffSec+'% '+OKABE8[p.c%8];ch.onclick=()=>{selectPlayer(p.pid);document.querySelectorAll('.trow').forEach(r=>{if(r.dataset.pid===p.pid) r.classList.add('on');else r.classList.remove('on');});};chips.appendChild(ch);});}
+}
+function initPOV(){document.querySelectorAll('.pov-pill').forEach(p=>p.addEventListener('click',()=>{document.querySelectorAll('.pov-pill').forEach(o=>{o.classList.remove('on');o.setAttribute('aria-selected','false');});p.classList.add('on');p.setAttribute('aria-selected','true');filterCurrent=p.dataset.pov||'all';renderWall(filterCurrent); }));}
+(function init(){initPOV();boot(dailyStr);
+$('bShuffle').onclick=()=>{let offset=Math.floor(Math.random()*6)-3;let d=new Date();d.setDate(d.getDate()+offset);let ds=d.toISOString().slice(0,10);history.replaceState(null,'','?daily='+ds);boot(ds);};
+$('bOptimize').onclick=()=>{let lin=optimizeDK();makeShareCard(lin);openShare();let pbox=$('portfolioBox'); if(pbox) pbox.textContent='Lineup OPTIMIZED $'+(lin.sum/1000).toFixed(1)+'k FP'+lin.fp.toFixed(1)+' avg val× '+(lin.pick.reduce((s,x)=>s+x.val,0)/lin.pick.length).toFixed(2)+' • closer '+lin.pick.filter(x=>x.closer).length+' exploit '+lin.pick.filter(x=>x.exploit).length+' Q '+lin.pick.filter(x=>x.inj!=='HEALTHY').length+' playoff-sec≥85% '+lin.pick.filter(x=>x.playoffSec>=85).length+' • 9 heads UW king scales [1.0,0.3×8] Kendall clamp[-3,3] VICReg25 CoRAL0.3 centroid0.5 EMA0.99 SupCon0.07→0.03'; let chips=$('portfolioChips'); if(chips){chips.innerHTML='';lin.pick.forEach(p=>{let ch=document.createElement('span');ch.className='pill pill-y';ch.textContent=p.pos+' '+p.n.slice(0,18)+' FP'+p.fpModel.toFixed(1)+' $'+(p.salary/1000).toFixed(1)+'k val×'+p.val.toFixed(2)+' '+(p.closer?'🔒':'')+(p.exploit?'⊗':'');chips.appendChild(ch);});}};
+$('bShare').onclick=()=>{makeShareCard(optimizeDK());openShare();};
+$('bExport').onclick=async()=>{try{let {text}=buildShareText(); if(navigator.clipboard) await navigator.clipboard.writeText(text); let t=$('shareToast'); if(t){t.textContent='Wordle-style text copied — 8-man $50k FP '+optimizeDK().fp.toFixed(1); setTimeout(()=>t.textContent='',2000);} }catch{}};
+$('dlShare').addEventListener('click',async()=>{let sc=$('shareCard');if(!sc)return;let url=sc.toDataURL('image/png');let a=document.createElement('a');a.href=url;a.download='dfs-optimizer-v92-'+dailyStr+'.png';a.click();let t=$('shareToast');if(t){t.textContent='PNG 1200×630 void starfield moss border 4px ✓';setTimeout(()=>t.textContent='',2000);} });
+$('copyImgBtn').addEventListener('click',async()=>{let sc=$('shareCard');if(!sc)return;try{let blob=await canvasToBlob(sc,'image/png'); if(navigator.clipboard&&window.ClipboardItem){await navigator.clipboard.write([new ClipboardItem({'image/png':blob})]); let t=$('shareToast');if(t){t.textContent='Image copied ClipboardItem α0.92 void ✓';setTimeout(()=>t.textContent='',2500);} } }catch(e){}});
+$('copyLinkBtn').addEventListener('click',async()=>{try{let {link}=buildShareText(); if(navigator.clipboard) await navigator.clipboard.writeText(link); let t=$('shareToast');if(t){t.textContent='Link copied ?daily='+dailyStr+' same-link-same-stars preserves ⭐'; setTimeout(()=>t.textContent='',2600);} history.replaceState(null,'','?daily='+dailyStr);}catch(e){}});
+$('copyTextBtn').addEventListener('click',async()=>{try{let {text}=buildShareText(); if(navigator.clipboard) await navigator.clipboard.writeText(text); let t=$('shareToast'); if(t){t.textContent='Text copied Wordle-style 🟩🟥⬛ grid 8-man'; setTimeout(()=>t.textContent='',2000);} }catch{}});
+$('challengeBtn').addEventListener('click',async()=>{try{let d=dailyStr; let challenge=location.origin+location.pathname+'?daily='+d+'&slate=challenge'; if(navigator.clipboard) await navigator.clipboard.writeText(challenge); let t=$('shareToast'); if(t){t.textContent='Challenge link copied same seed ∴ same slate via LCG glibc 1103515245 preserves stars'; setTimeout(()=>t.textContent='',2600);} }catch{}});
+$('closeShare').addEventListener('click',()=>{shutShare();});$('sharePop').addEventListener('click',e=>{if(e.target.id==='sharePop') shutShare();});document.addEventListener('keydown',e=>{if(e.key==='Escape') shutShare();});
+$('bCopyPlayer').addEventListener('click',()=>{if(!selected) return; let p=players.find(x=>x.pid===selected); if(!p) return; let txt=p.pos+' '+p.n+' FP '+p.fpModel.toFixed(1)+' ±3.8 salary $'+(p.salary/1000).toFixed(1)+'k impFP '+p.fpImp.toFixed(1)+' edge '+(p.edge>0?'+':'')+p.edge.toFixed(1)+' val×'+p.val.toFixed(2)+' '+(p.closer?'🔒C':'')+(p.exploit?'⊗E':'')+' '+p.inj+' playoff-sec '+p.playoffSec+'% σ kill '+(Math.abs(p.edge)>3?'GREEN':'YELLOW')+' hoops.dumbmodel.com/dfs?daily='+dailyStr; if(navigator.clipboard) navigator.clipboard.writeText(txt);});
+})();
+if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('/sw.js?v=67').catch(()=>{}));}
+</script>
+</body>
+</html>

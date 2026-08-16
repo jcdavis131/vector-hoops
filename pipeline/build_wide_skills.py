@@ -175,61 +175,71 @@ def main() -> None:
         # (self-created, off-dribble) weighted heaviest so movement shooters
         # like Curry outrank stationary spot-up specialists; plus 3PA volume
         # and accuracy. A proxy for spacing gravity, not Second Spectrum data.
-        shoot_g = (0.40 * zscore(col("pull_up_fg3a")[m]) +
-                   0.35 * zscore(cfeat("FG3A")[m]) +
-                   0.25 * zscore(cfeat("FG3_PCT")[m]))
+        shoot_g = (
+            0.40 * zscore(col("pull_up_fg3a")[m]) + 0.35 * zscore(cfeat("FG3A")[m]) + 0.25 * zscore(cfeat("FG3_PCT")[m])
+        )
         # Rim gravity = interior deterrence that warps offenses: shot-blocking
         # + contested shots, minus opponent FG% allowed. Rim protectors like
         # Wembanyama top it. A proxy, not Second Spectrum rim gravity.
-        rim_g = (0.50 * zscore(cfeat("BLK")[m]) +
-                 0.30 * zscore(col("contested_shots")[m]) -
-                 0.20 * zscore(col("d_fg_pct")[m]))
+        rim_g = (
+            0.50 * zscore(cfeat("BLK")[m])
+            + 0.30 * zscore(col("contested_shots")[m])
+            - 0.20 * zscore(col("d_fg_pct")[m])
+        )
         # Perimeter disruption gravity — on-ball pressure + event creation
         # that shrinks opponent scoring chances (STL + deflections + charges).
-        disrupt_g = (0.45 * zscore(cfeat("STL")[m]) +
-                     0.35 * zscore(col("deflections")[m]) +
-                     0.20 * zscore(col("charges")[m]))
+        disrupt_g = (
+            0.45 * zscore(cfeat("STL")[m]) + 0.35 * zscore(col("deflections")[m]) + 0.20 * zscore(col("charges")[m])
+        )
         # Tie-break each skill by its own volume.
         grades["post"][m] = percentile_grade(post, col("post_freq")[m])
         grades["transition"][m] = percentile_grade(trans, col("trans_freq")[m])
         grades["motor"][m] = percentile_grade(motor, motor_cols.sum(axis=0))
         grades["shooting_gravity"][m] = percentile_grade(shoot_g, col("pull_up_fg3a")[m])
         grades["rim_gravity"][m] = percentile_grade(rim_g, cfeat("BLK")[m])
-        grades["disruption_gravity"][m] = percentile_grade(
-            disrupt_g, col("deflections")[m] + cfeat("STL")[m])
+        grades["disruption_gravity"][m] = percentile_grade(disrupt_g, col("deflections")[m] + cfeat("STL")[m])
 
     built = time.strftime("%Y-%m-%d")
     splits = {}
     for k, i in enumerate(covered_idx):
-        splits[f"{names[k]}|{seasons[k]}"] = {
-            sk["key"]: int(grades[sk["key"]][k]) for sk in WIDE_SKILLS}
+        splits[f"{names[k]}|{seasons[k]}"] = {sk["key"]: int(grades[sk["key"]][k]) for sk in WIDE_SKILLS}
 
     # assets/skills_wide.json ships only from a complete cache.
     if complete:
-        ASSET_OUT.write_text(json.dumps({
-            "built": built,
-            "note": ("masked wide-matrix skills — synergy play-types + hustle, "
-                     "2015-16+. Same era-z percentile grading as the core lens."),
-            "skills": [{"key": s["key"], "label": s["label"], "badge": s["badge"]}
-                       for s in WIDE_SKILLS],
-            "badgeGrade": BADGE_GRADE, "goldGrade": GOLD_GRADE,
-            "grades": splits,
-        }, separators=(",", ":")), encoding="utf-8")
+        ASSET_OUT.write_text(
+            json.dumps(
+                {
+                    "built": built,
+                    "note": (
+                        "masked wide-matrix skills — synergy play-types + hustle, "
+                        "2015-16+. Same era-z percentile grading as the core lens."
+                    ),
+                    "skills": [{"key": s["key"], "label": s["label"], "badge": s["badge"]} for s in WIDE_SKILLS],
+                    "badgeGrade": BADGE_GRADE,
+                    "goldGrade": GOLD_GRADE,
+                    "grades": splits,
+                },
+                separators=(",", ":"),
+            ),
+            encoding="utf-8",
+        )
         asset_msg = f"wrote {ASSET_OUT.relative_to(ROOT)} ({len(splits)} rows)"
     else:
-        asset_msg = ("assets/skills_wide.json NOT written (partial cache — "
-                     "wide skills stay dormant in the game)")
+        asset_msg = "assets/skills_wide.json NOT written (partial cache — wide skills stay dormant in the game)"
 
     LABELS_OUT.parent.mkdir(parents=True, exist_ok=True)
     np.savez_compressed(
         LABELS_OUT,
-        name=names, season=seasons,
+        name=names,
+        season=seasons,
         keys=np.array([s["key"] for s in WIDE_SKILLS]),
         grades=np.stack([grades[s["key"]] for s in WIDE_SKILLS], axis=1).astype(np.float32) / 100.0,
     )
 
-    print(f"wide skills: {len(covered_idx)} covered rows across "
-          f"{len(set(seasons.tolist()))} seasons (cache complete={complete})")
+    print(
+        f"wide skills: {len(covered_idx)} covered rows across "
+        f"{len(set(seasons.tolist()))} seasons (cache complete={complete})"
+    )
     for sk in WIDE_SKILLS:
         top = [str(n) for n in names[np.argsort(-grades[sk["key"]])[:3]]]
         print(f"  {sk['key']:<11} top: {_safe_console(', '.join(top))}")

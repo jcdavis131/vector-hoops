@@ -100,9 +100,7 @@ class MTNNValidationTests(unittest.TestCase):
             held_out_pairs=pairs,
         )
 
-        self.assertTrue(
-            report["collapse_flags"]["systematically_weak_next_year_signal"]["flagged"]
-        )
+        self.assertTrue(report["collapse_flags"]["systematically_weak_next_year_signal"]["flagged"])
 
     def test_promotion_rejects_a_flagged_population_validation(self) -> None:
         report = {

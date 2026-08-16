@@ -16,3 +16,12 @@ tasks/session-monologue.md
 # Local rollback snapshots (salary CSV, train matrix)
 *.bak
 *.prefix_bak
+dist/
+.vercel/
+node_modules/
+.vscode/
+.DS_Store
+
+# Live training cockpit scratch — regenerated per run, never a build artifact
+assets/mtnn_training/
+.audit-backups/

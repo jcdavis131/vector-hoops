@@ -55,10 +55,7 @@ def tag_player_roles(
     tags: list[str] = []
 
     shoot_hi = g[idx["shooting"]] >= p75[idx["shooting"]]
-    defense_hi = (
-        g[idx["hands"]] >= p50[idx["hands"]] + 8
-        or g[idx["dreb"]] >= p50[idx["dreb"]] + 8
-    )
+    defense_hi = g[idx["hands"]] >= p50[idx["hands"]] + 8 or g[idx["dreb"]] >= p50[idx["dreb"]] + 8
     pm_lo = g[idx["playmaking"]] <= p50[idx["playmaking"]]
     score_lo = g[idx["scoring"]] <= p75[idx["scoring"]]
     glass_hi = g[idx["oreb"]] >= p50[idx["oreb"]] + 5
@@ -115,10 +112,7 @@ def kmeans(X: np.ndarray, k: int, seed: int = 42, iters: int = 60) -> tuple[np.n
     for _ in range(iters):
         d = ((X[:, None, :] - cents[None]) ** 2).sum(-1)
         lab = d.argmin(1)
-        new = np.stack([
-            X[lab == i].mean(0) if (lab == i).any() else cents[i]
-            for i in range(k)
-        ])
+        new = np.stack([X[lab == i].mean(0) if (lab == i).any() else cents[i] for i in range(k)])
         if np.allclose(new, cents):
             break
         cents = new
@@ -126,7 +120,10 @@ def kmeans(X: np.ndarray, k: int, seed: int = 42, iters: int = 60) -> tuple[np.n
 
 
 def silhouette_sample(
-    X: np.ndarray, lab: np.ndarray, max_n: int = 2000, seed: int = 7,
+    X: np.ndarray,
+    lab: np.ndarray,
+    max_n: int = 2000,
+    seed: int = 7,
 ) -> float:
     n = len(X)
     if n < 50 or len(set(lab.tolist())) < 2:
@@ -183,12 +180,31 @@ SKILL_FAMILY: dict[str, str] = {
 
 # Chimera half-court zone recipe (assets/game.js zoneRaw) on era-z 14-d vectors.
 GAME_FEATURES = [
-    "PTS", "AST", "OREB", "DREB", "STL", "BLK", "TOV",
-    "FG3A", "FGA", "FTA", "FG3_PCT", "FG_PCT", "FT_PCT", "PLUS_MINUS",
+    "PTS",
+    "AST",
+    "OREB",
+    "DREB",
+    "STL",
+    "BLK",
+    "TOV",
+    "FG3A",
+    "FGA",
+    "FTA",
+    "FG3_PCT",
+    "FG_PCT",
+    "FT_PCT",
+    "PLUS_MINUS",
 ]
 ZONE_KEYS = (
-    "rim", "paintFT", "mid", "arc", "oreb", "ast",
-    "paintD", "perimeterD", "glassD",
+    "rim",
+    "paintFT",
+    "mid",
+    "arc",
+    "oreb",
+    "ast",
+    "paintD",
+    "perimeterD",
+    "glassD",
 )
 
 
@@ -237,7 +253,9 @@ def _format_skill_name(indices: list[int], skill_meta: list[dict]) -> str:
 
 
 def assign_cluster_names_from_members(
-    member_lists: list[list[int]], grades: np.ndarray, skill_meta: list[dict],
+    member_lists: list[list[int]],
+    grades: np.ndarray,
+    skill_meta: list[dict],
 ) -> list[str]:
     """Name each cluster from distinctive skill z-scores (cross-family pairs)."""
     pool_mean, pool_std = _skill_pool_stats(grades)
@@ -269,23 +287,28 @@ def assign_cluster_names_from_members(
 
 
 def assign_cluster_names(
-    lab: np.ndarray, k: int, ids: list[int], grades: np.ndarray, skill_meta: list[dict],
+    lab: np.ndarray,
+    k: int,
+    ids: list[int],
+    grades: np.ndarray,
+    skill_meta: list[dict],
 ) -> list[str]:
     """Name each cluster; disambiguate collisions with a third skill dimension."""
-    member_lists = [
-        [ids[j] for j in range(len(ids)) if lab[j] == i]
-        for i in range(k)
-    ]
+    member_lists = [[ids[j] for j in range(len(ids)) if lab[j] == i] for i in range(k)]
     return assign_cluster_names_from_members(member_lists, grades, skill_meta)
 
 
 def name_cluster_from_skills(
-    member_ids: list[int], grades: np.ndarray, skill_meta: list[dict],
+    member_ids: list[int],
+    grades: np.ndarray,
+    skill_meta: list[dict],
 ) -> str:
     if not member_ids:
         return "Unlabeled"
     return assign_cluster_names_from_members(
-        [member_ids], grades, skill_meta,
+        [member_ids],
+        grades,
+        skill_meta,
     )[0]
 
 
@@ -309,27 +332,30 @@ def zone_from_vector(v: np.ndarray | list[float]) -> dict[str, float]:
 
 
 def mean_zone_profile(
-    vectors: np.ndarray, member_row_idxs: list[int],
+    vectors: np.ndarray,
+    member_row_idxs: list[int],
 ) -> dict[str, float]:
     if not member_row_idxs:
-        return {k: 0.0 for k in ZONE_KEYS}
+        return dict.fromkeys(ZONE_KEYS, 0.0)
     mean_v = vectors[member_row_idxs].mean(0)
     z = zone_from_vector(mean_v)
     return {k: round(z[k], 4) for k in ZONE_KEYS}
 
 
 def mix_zone_profiles(
-    profiles: list[dict[str, float]], shares: list[float],
+    profiles: list[dict[str, float]],
+    shares: list[float],
 ) -> dict[str, float]:
-    out = {k: 0.0 for k in ZONE_KEYS}
-    for profile, share in zip(profiles, shares):
+    out = dict.fromkeys(ZONE_KEYS, 0.0)
+    for profile, share in zip(profiles, shares, strict=False):
         for k in ZONE_KEYS:
             out[k] += float(share) * float(profile.get(k, 0.0))
     return {k: round(out[k], 4) for k in ZONE_KEYS}
 
 
 def zone_delta(
-    late: dict[str, float], early: dict[str, float],
+    late: dict[str, float],
+    early: dict[str, float],
 ) -> dict[str, float]:
     return {k: round(late.get(k, 0.0) - early.get(k, 0.0), 4) for k in ZONE_KEYS}
 

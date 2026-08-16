@@ -31,9 +31,24 @@ MANIFEST = DATA / "feature_manifest.json"
 # and any new family is appended -- the diagram must describe the net that
 # actually ships, not a frozen list.
 TOWER_FAMILY_ORDER = [
-    "volume", "playmaking", "rebounding", "defense", "efficiency", "shotmix",
-    "bio", "tracking", "form", "market", "roster", "career", "competition",
-    "team", "pedigree", "playoffs", "honors", "game_ratings",
+    "volume",
+    "playmaking",
+    "rebounding",
+    "defense",
+    "efficiency",
+    "shotmix",
+    "bio",
+    "tracking",
+    "form",
+    "market",
+    "roster",
+    "career",
+    "competition",
+    "team",
+    "pedigree",
+    "playoffs",
+    "honors",
+    "game_ratings",
 ]
 
 
@@ -42,6 +57,7 @@ def tower_families(family_order: list[str]) -> list[str]:
     ordered = [f for f in TOWER_FAMILY_ORDER if f in present]
     ordered += [f for f in family_order if f not in set(ordered)]
     return ordered
+
 
 OUT_ARCH = ASSETS / "mtnn_arch.json"
 OUT_MAP = ASSETS / "mtnn_map.json"
@@ -110,7 +126,7 @@ def infer_axes(
 
     out = []
     for j in range(min(3, raw_coords.shape[1])):
-        pc = raw_coords[:, j:j+1].astype(np.float64)
+        pc = raw_coords[:, j : j + 1].astype(np.float64)
         pc -= pc.mean(axis=0, keepdims=True)
         pc_std = pc.std(axis=0, keepdims=True)
         pc_std[pc_std == 0] = 1.0
@@ -120,13 +136,15 @@ def infer_axes(
         lo_idx = np.argsort(corr)[:2]
         hi = ", ".join(feature_names[i] for i in hi_idx)
         lo = ", ".join(feature_names[i] for i in lo_idx)
-        out.append({
-            "pc": f"PC{j + 1}",
-            "axis": "XYZ"[j],
-            "name": f"Craft axis {j + 1}",
-            "lo": f"higher {lo}",
-            "hi": f"higher {hi}",
-        })
+        out.append(
+            {
+                "pc": f"PC{j + 1}",
+                "axis": "XYZ"[j],
+                "name": f"Craft axis {j + 1}",
+                "lo": f"higher {lo}",
+                "hi": f"higher {hi}",
+            }
+        )
     return out
 
 
@@ -169,8 +187,7 @@ def main() -> None:
         p = players[idx]
         if str(t_names[idx]) != p["name"] or str(t_seasons[idx]) != p["season"]:
             raise SystemExit(
-                f"train alignment fail row {idx}: "
-                f"{t_names[idx]!r}|{t_seasons[idx]!r} vs {p['name']!r}|{p['season']!r}"
+                f"train alignment fail row {idx}: {t_names[idx]!r}|{t_seasons[idx]!r} vs {p['name']!r}|{p['season']!r}"
             )
 
     manifest = json.loads(MANIFEST.read_text(encoding="utf-8"))
@@ -191,7 +208,11 @@ def main() -> None:
         numer = (zf * mf).sum(axis=1)
         with np.errstate(divide="ignore", invalid="ignore"):
             mean = np.where(valid_cnt > 0, numer / np.maximum(valid_cnt, 1e-8), np.nan)
-        mean = np.where(np.isfinite(mean), mean, np.nanmedian(mean[np.isfinite(mean)]) if np.isfinite(mean).any() else 0.0)
+        mean = np.where(
+            np.isfinite(mean),
+            mean,
+            np.nanmedian(mean[np.isfinite(mean)]) if np.isfinite(mean).any() else 0.0,
+        )
         mean = np.clip(mean, -4, 4)
         fam_raw[:, fi] = mean.astype(np.float32)
         lo = float(np.percentile(mean, 5))
@@ -209,10 +230,11 @@ def main() -> None:
     ckpt_path = DATA / "mtnn_best.pt"
     if ckpt_path.exists():
         try:
-            import torch  # local import: viz export must work without torch
-            ckpt_args = torch.load(
-                ckpt_path, map_location="cpu", weights_only=False).get("args", {})
-        except Exception as exc:  # noqa: BLE001
+            import torch  # noqa: F401  local import: viz export must work without torch
+            from _torch_safe import safe_torch_load
+
+            ckpt_args = safe_torch_load(ckpt_path, map_location="cpu").get("args", {})
+        except Exception as exc:
             print(f"  warn: could not read checkpoint args ({exc}); using defaults")
 
     fams_used = tower_families(family_order)
@@ -231,9 +253,14 @@ def main() -> None:
         "dEmb": d_emb,
         # Provenance stamp; the Jacobian export carries the same fingerprint so
         # the client can reject a stale attribution file (see network-viz.js).
-        "checkpoint": ({"mtime": int(ckpt_path.stat().st_mtime),
-                        "bytes": int(ckpt_path.stat().st_size)}
-                       if ckpt_path.exists() else None),
+        "checkpoint": (
+            {
+                "mtime": int(ckpt_path.stat().st_mtime),
+                "bytes": int(ckpt_path.stat().st_size),
+            }
+            if ckpt_path.exists()
+            else None
+        ),
         "towerBlocks": n_blocks,
         "mlpHeads": mlp_heads,
         "nArchetypes": int(arch.shape[1]),
@@ -246,16 +273,32 @@ def main() -> None:
         "gameFeatureKeys": game_feature_keys,
         "gameArchetypes": cluster_names,
         "layers": [
-            {"id": "input", "label": "Masked inputs",
-             "detail": f"{len(feats)} features in {len(fams_used)} families"},
-            {"id": "towers", "label": "Residual towers",
-             "detail": (f"{len(fams_used)} × {n_blocks} block"
-                        f"{'s' if n_blocks != 1 else ''} ({d_hidden} → {d_tower})")},
-            {"id": "fusion", "label": f"{fusion.title()} fusion",
-             "detail": (f"{len(fams_used) * d_tower} + season → {d_emb}-d, L2 norm"
-                        if fusion == "concat"
-                        else f"attention over {len(fams_used)} towers → {d_emb}-d, L2 norm")},
-            {"id": "embedding", "label": "Embedding", "detail": "Contrastive craft space"},
+            {
+                "id": "input",
+                "label": "Masked inputs",
+                "detail": f"{len(feats)} features in {len(fams_used)} families",
+            },
+            {
+                "id": "towers",
+                "label": "Residual towers",
+                "detail": (
+                    f"{len(fams_used)} × {n_blocks} block{'s' if n_blocks != 1 else ''} ({d_hidden} → {d_tower})"
+                ),
+            },
+            {
+                "id": "fusion",
+                "label": f"{fusion.title()} fusion",
+                "detail": (
+                    f"{len(fams_used) * d_tower} + season → {d_emb}-d, L2 norm"
+                    if fusion == "concat"
+                    else f"attention over {len(fams_used)} towers → {d_emb}-d, L2 norm"
+                ),
+            },
+            {
+                "id": "embedding",
+                "label": "Embedding",
+                "detail": "Contrastive craft space",
+            },
             {
                 "id": "heads",
                 "label": "Decode heads",
@@ -271,8 +314,7 @@ def main() -> None:
         "built": time.strftime("%Y-%m-%d"),
         "dim": 3,
         "rows": n,
-        "method": (f"PCA(3) on {d_emb}-d MTNN embeddings; axes min-max scaled "
-                   "for the explorer map."),
+        "method": (f"PCA(3) on {d_emb}-d MTNN embeddings; axes min-max scaled for the explorer map."),
         "axes": axis_meta,
         "coords": coords.tolist(),
     }

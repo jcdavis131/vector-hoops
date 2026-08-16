@@ -1,0 +1,757 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<script>/* early error queue — drained by assets/error-boundary.js. Installed here because a listener only sees scripts parsed after it, and the page's own inline block used to be first. */window.__vhErr=[];window.addEventListener("error",function(e){try{var t=e.target,r=t&&(t.src||t.href);window.__vhErr.push({type:r?"resource":"js",message:e.message||("Failed to load "+(r||"")),source:e.filename||r||"",lineno:e.lineno||0,colno:e.colno||0,stack:(e.error&&e.error.stack)||""});}catch(_){}} ,true);window.addEventListener("unhandledrejection",function(e){try{window.__vhErr.push({type:"unhandledrejection",message:String((e.reason&&e.reason.message)||e.reason||"")});}catch(_){}});</script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Vector Hoops — Model Zoo • MTNN 64-d 17 towers</title><meta name="description" content="MTNN 64-d, 17 towers, 130 features, ONNX 549KB. Held-out adjacent-season retrieval: top-5 0.93 overall, 0.76 on the test split, against a 0.20 transparent baseline."><meta name="theme-color" content="#fafaf8"><link rel="stylesheet" href="/assets/fonts.css?v=31e5658b"><link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23111'/%3E%3Ccircle cx='11' cy='12' r='3' fill='%23eb6834'/%3E%3C/svg%3E">
+<style>:root{--paper:#fafaf8;--surface:#fff;--ink:#111;--ink-soft:#52514e;--muted:#6b6760;--hair:#e1e0d9;--orange:#eb6834;--blue:#2a78d6;--purple:#7a5ae6;--yellow:#f0e442;--green:#009e73;--red:#d8452a;--mono:ui-monospace,"IBM Plex Mono",Menlo,monospace;--sans:ui-sans-serif,system-ui;--hand:"ui-monospace",cursive;--shadow:4px 4px 0 var(--ink);--shadow-sm:3px 3px 0 var(--ink)}*{box-sizing:border-box}html,body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased;overflow-wrap:break-word}a{color:inherit}nav{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;background:var(--surface);border-bottom:2px solid var(--ink);position:sticky;top:0;z-index:10;flex-wrap:wrap;gap:8px}.brand{font-family:var(--mono);font-weight:800;letter-spacing:.04em;text-transform:uppercase}.brand span{color:var(--orange)}.pill{display:inline-flex;padding:5px 10px;border:1.6px solid var(--ink);border-radius:999px;background:#fff;box-shadow:2px 2px 0 var(--ink);font-family:var(--mono);font-size:11px;font-weight:800;text-transform:uppercase}.pill-y{background:var(--yellow)}.card{background:var(--surface);border:2.2px solid var(--ink);border-radius:14px;box-shadow:var(--shadow);padding:14px;margin:12px auto;max-width:1100px}.mono{font-family:var(--mono);font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.04em}.mono-lg{font-family:var(--mono);font-size:16px;font-weight:900;letter-spacing:-.01em}.sub{font-size:12.8px;color:#555;line-height:1.6}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}/* a grid item defaults to min-width:auto, so it refuses to shrink below its widest content - here a long assets/... path in a <code> - and pushed the page to 450px at a 360px viewport. min-width:0 lets it wrap instead. */.grid2>*{min-width:0}@media(max-width:820px){.grid2{grid-template-columns:1fr}}canvas{width:100%;height:160px;background:radial-gradient(100% 80% at 30% 10%,rgba(235,104,52,.12),transparent),radial-gradient(100% 80% at 80% 20%,rgba(42,120,214,.10),transparent),#0A0C10;border:2px solid var(--ink);border-radius:10px}
+.vh-skip{position:absolute;left:-9999px;top:0;z-index:99;background:var(--paper,#fafaf8);border:2.2px solid var(--ink,#111);padding:10px 14px;font-family:ui-monospace,Menlo,monospace;font-weight:800;text-decoration:none;border-radius:0 0 10px 0}
+.vh-skip:focus{left:0}
+.vh-sr{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;border:0}
+</style><!-- build_social_meta.py: start -->
+<link rel="canonical" href="https://hoops.dumbmodel.com/model">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="dumbmodel">
+<meta property="og:url" content="https://hoops.dumbmodel.com/model">
+<meta property="og:title" content="Vector Hoops — Model Zoo • MTNN 64-d 17 towers">
+<meta property="og:image" content="https://hoops.dumbmodel.com/assets/og-1200x630.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Vector Hoops — Model Zoo • MTNN 64-d 17 towers">
+<meta name="twitter:image" content="https://hoops.dumbmodel.com/assets/og-1200x630.png">
+<meta property="og:description" content="MTNN 64-d, 17 towers, 130 features, ONNX 549KB. Held-out adjacent-season retrieval: top-5 0.93 overall, 0.76 on the test split, against a 0.20 transparent baseline.">
+<meta name="twitter:description" content="MTNN 64-d, 17 towers, 130 features, ONNX 549KB. Held-out adjacent-season retrieval: top-5 0.93 overall, 0.76 on the test split, against a 0.20 transparent baseline.">
+<!-- build_social_meta.py: end -->
+</head><body>
+<a class="vh-skip" href="#main">Skip to the content</a>
+<nav><a class="brand" href="/">DUMB<span>MODEL</span></a><div style="display:flex;gap:6px;flex-wrap:wrap"><a class="pill" href="/players">Explorer</a><a class="pill" href="/player-cards">Players</a><a class="pill" href="/trends">Trends</a><a class="pill" href="/model">Model</a><a class="pill" href="/teams">Teams</a><a class="pill" href="/dictionary">Dictionary</a><a class="pill pill-y" href="/play">Play today's →</a></div></nav>
+<main id="main" tabindex="-1"><h1 style="position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;border:0">Model Zoo • MTNN 64-d 17 towers</h1>
+<div class="card"><h2 class="vh-sr">The model at a glance</h2><div class="mono">MTNN • ONNX 549KB • 17 towers • 130 feats • 64-d L2 • SupCon 224K • CORAL+GRL • towerBlocks2 h160 d32</div><div class="mono-lg" id="zooHead" style="margin:6px 0">Loading the measured headline…</div><div class="sub">17 towers (bio / career / playstyle / shooting / defense / context / salary / draft / awards / clutch / fatigue / opponent / pace / chemistry / market / durability / volume) → 64-d L2 unit cosine is dot. 12 archetypes A0-A11. Shared space 64/32/24 →64 trunk. On the committed held-out scoreboard (<code>assets/eval_scoreboard.json</code>, computed 2026-07-25): adjacent-season retrieval top-1 <b>0.51</b> / top-5 <b>0.93</b> over 10,104 eligible pairs, and on the truly held-out test split (n=790) top-1 <b>0.44</b> / top-5 <b>0.76</b> — against a transparent 14-d baseline of top-5 <b>0.20</b>. Ties count against the target. ONNX input [1,130]→[1,64] L2. Joint 20,719 ×64-d over NBA, NFL and pitch — the three lives sports, not all five. <span style="font-family:var(--hand)">Real models not vibes.</span></div><div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap"><span class="pill pill-y">MT v4 MHA loss 0.6847 wins MAE 8.9</span><span class="pill">MT v3 loss 0.6641 wins MAE 8.99</span><span class="pill">both from <code>assets/data/model_zoo_eval.json</code></span><span class="pill">CORAL + contrastive + GRL</span><span class="pill">gradient × input attribution</span></div></div>
+<div class="card grid2"><h2 class="vh-sr">Feature attribution</h2><div><div class="mono">Feature attribution — real, from <code>assets/mtnn_attr_pop.json</code></div>
+<div id="attrTargets" role="group" aria-label="Attribution target" style="display:flex;gap:6px;flex-wrap:wrap;margin:8px 0"></div>
+<div id="attrBars"><div class="sub">Loading attributions…</div></div>
+<div class="sub" style="margin-top:8px"><b>How this is computed</b> — <span id="attrMethod"></span></div>
+<div class="sub" style="margin-top:6px;border-left:3px solid var(--orange);padding-left:8px"><b>Read zero carefully</b> — <span id="attrMasked"></span></div>
+<div class="mono" id="attrProv" style="margin-top:8px;opacity:.7;text-transform:none"></div></div><div><div class="mono" id="zooCount">Model zoo · 5-fold CV</div>
+<div class="sub" id="zooNote" style="margin:6px 0">Loading the measured zoo from <code>assets/model_zoo.json</code>…</div>
+<div id="zooTable" style="margin-top:8px"></div>
+<div class="sub" id="zooCaveat" style="margin-top:8px;border-left:3px solid var(--orange);padding-left:8px"></div></div></div>
+<div class="card" id="pxCard"><h2 class="vh-sr">Why this player</h2>
+<div class="mono">Why this player — the model's own gradient, one season at a time</div>
+<p class="sub" style="margin:6px 0 0">The bars above are the population: what moves the model across
+12,966 player-seasons. This is one of them. <code>assets/mtnn_attr_topk.bin</code> holds, for every
+row, the eight input features that moved each prediction most — signed, ranked by size. Reading one
+player's slice takes <b>two HTTP Range requests totalling 48 bytes</b> out of a 2,489,472-byte file,
+so nothing here is downloaded that is not about the player you asked for.</p>
+<div class="px-pick">
+  <label class="mono" for="pxName">Player-season</label>
+  <input id="pxName" list="pxList" autocomplete="off" spellcheck="false"
+         placeholder="Type a name — the map's 1,764 signature seasons" disabled>
+  <datalist id="pxList"></datalist>
+  <button id="pxGo" class="pill" type="button" disabled>Explain</button>
+</div>
+<p class="sub" id="pxState" style="margin:8px 0 0">Loading the row index from
+<code>assets/attr_index.json</code>…</p>
+<div id="pxTabs" role="group" aria-label="Prediction to explain"
+     style="display:flex;gap:6px;flex-wrap:wrap;margin:8px 0"></div>
+<div id="pxBars"></div>
+<p class="sub" id="pxMethod" style="margin-top:8px"></p>
+<p class="sub" id="pxZero" style="margin-top:6px;border-left:3px solid var(--orange);padding-left:8px"></p>
+<p class="mono" id="pxProv" style="margin-top:8px;opacity:.75;text-transform:none"></p>
+<p id="pxLive" class="vh-sr" role="status" aria-live="polite" aria-atomic="true"></p>
+</div>
+<style>
+.px-pick{display:flex;gap:8px;align-items:flex-end;flex-wrap:wrap;margin-top:10px}
+.px-pick label{display:block;color:#3A2E00;margin-bottom:3px}
+.px-pick input{font-family:var(--mono);font-size:13px;padding:8px 10px;border:1.8px solid var(--ink);border-radius:10px;background:#fff;min-width:min(320px,100%);color:#111}
+.px-pick input:disabled{background:#F2F1EC;color:#6B6760;border-color:#B9B6AE;cursor:not-allowed}
+.px-pick button{cursor:pointer;min-height:32px}
+.px-pick button:disabled{background:#F2F1EC;color:#6B6760;border-color:#B9B6AE;cursor:not-allowed;box-shadow:none}
+.px-row{display:grid;grid-template-columns:158px 1fr 62px;gap:8px;align-items:center;padding:3px 0;font-family:var(--mono);font-size:11px}
+.px-name{font-weight:800;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:#26241F}
+.px-fam{font-weight:700;color:#5A6476}
+.px-track{position:relative;background:#f0efe9;border:1.4px solid var(--ink);border-radius:4px;height:14px}
+.px-track::before{content:"";position:absolute;left:50%;top:0;bottom:0;width:1.4px;background:#8C8981}
+.px-fill{position:absolute;top:1px;bottom:1px;border:1.2px solid var(--ink);border-radius:2px}
+.px-fill.pos{background:#2A78D6;left:50%}
+.px-fill.neg{background:#D55E00;right:50%}
+.px-val{text-align:right;font-variant-numeric:tabular-nums;color:#26241F}
+.px-zero{color:#6B6760;font-style:italic}
+</style>
+<script>
+/* ── Why this player ───────────────────────────────────────────────────────────
+   The card above shows the population attribution. This shows one row of it.
+
+   assets/mtnn_attr_topk.bin is [12966][4][8] — for every player-season, the eight
+   input features that moved each of four predictions most, signed. Its layout is
+   fully described by mtnn_attr_pop.json.topkLayout, so one player's slice is two
+   byte ranges: 16 bytes of uint16 feature indices and 32 bytes of float32 values.
+   The host answers 206 with accept-ranges: bytes — checked against production
+   before this was written — and if it ever stops, the fallback below reads the
+   same offsets out of whatever it did send instead of guessing.
+
+   What this deliberately does NOT say: that changing a stat would move the
+   prediction. The file's own method line calls it a local linearization and not a
+   counterfactual ablation, and that sentence is printed on screen rather than
+   paraphrased away. Nor does it claim these gradients came from the model the
+   architecture panel describes: the two files record different checkpoints, and
+   that is stated rather than smoothed over. */
+(function(){
+  'use strict';
+  var $ = function(s){ return document.getElementById(s); };
+  var elName=$('pxName'), elGo=$('pxGo'), elState=$('pxState'), elTabs=$('pxTabs'),
+      elBars=$('pxBars'), elMethod=$('pxMethod'), elZero=$('pxZero'), elProv=$('pxProv'),
+      elList=$('pxList');
+  if(!elName) return;
+
+  var IDX = null, POP = null, LAYOUT = null, VAL_OFF = 0, K = 8, NT = 4;
+  var TENSOR = 'assets/mtnn_attr_topk.bin';
+  var target = 0, current = null, byLabel = {};
+
+  function say(m){ var l=$('pxLive'); if(!l||!m) return;
+    if(l.textContent===m) l.textContent=''; l.textContent=m; }
+  function esc(s){ return String(s).replace(/[&<>"]/g, function(c){
+    return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
+  function pretty(t){ return t.replace(/_/g,' ').replace(/\b\w/g, function(c){
+    return c.toUpperCase(); }); }
+
+  function slice(a, b){
+    /* one range. If the host ignores Range and sends the whole file, the reply is
+       200 and the full buffer arrives — take the same bytes out of it rather than
+       failing, because the answer is still in there. */
+    return fetch(TENSOR, {headers:{'Range':'bytes='+a+'-'+b}}).then(function(r){
+      if(!r.ok && r.status!==206) throw new Error('HTTP '+r.status);
+      return r.arrayBuffer().then(function(buf){
+        var want = b - a + 1;
+        if(buf.byteLength === want) return {buf:buf, base:0, ranged:true};
+        if(buf.byteLength > b) return {buf:buf, base:a, ranged:false};
+        throw new Error('short read: '+buf.byteLength+' bytes for '+want);
+      });
+    });
+  }
+
+  function explain(key, label){
+    var row = IDX.rows[key];
+    if(row === undefined){ elState.textContent = 'No row for ' + label + '.'; return; }
+    var flat = (row * NT + target) * K;
+    elState.textContent = 'Reading row ' + row.toLocaleString() + ' of ' +
+      IDX.tensorRows.toLocaleString() + ' — 48 bytes…';
+    Promise.all([slice(flat*2, flat*2 + K*2 - 1),
+                 slice(VAL_OFF + flat*4, VAL_OFF + flat*4 + K*4 - 1)])
+      .then(function(parts){
+        var iv = new DataView(parts[0].buf), vv = new DataView(parts[1].buf);
+        var ib = parts[0].base ? flat*2 : 0;
+        var vb = parts[1].base ? VAL_OFF + flat*4 : 0;
+        var rows = [];
+        for(var k=0;k<K;k++){
+          var fi = iv.getUint16(ib + k*2, true);
+          rows.push({f: POP.features[fi] || ('feature ' + fi),
+                     v: vv.getFloat32(vb + k*4, true),
+                     fam: (POP.featureFamily && POP.featureFamily[POP.features[fi]]) || ''});
+        }
+        current = {key:key, label:label, row:row, rows:rows,
+                   ranged: parts[0].ranged && parts[1].ranged};
+        draw();
+      })
+      .catch(function(e){
+        elBars.innerHTML = '';
+        elState.textContent = 'Could not read row ' + row + ' (' + e.message + '). ' +
+          'Nothing is drawn rather than a guess.';
+        say('Could not read that row.');
+      });
+  }
+
+  function draw(){
+    if(!current){ return; }
+    var rows = current.rows;
+    var max = 0, i;
+    for(i=0;i<rows.length;i++) max = Math.max(max, Math.abs(rows[i].v));
+    if(!max) max = 1;
+    var html = rows.map(function(r){
+      var pct = Math.abs(r.v) / max * 50;
+      var zero = r.v === 0;
+      return '<div class="px-row">' +
+        '<span class="px-name">' + esc(r.f) +
+          (r.fam ? ' <span class="px-fam">' + esc(r.fam) + '</span>' : '') + '</span>' +
+        '<span class="px-track" role="img" aria-label="' + esc(r.f) + ', ' +
+          (zero ? 'not measured in this season' : r.v.toFixed(3)) + '">' +
+          (zero ? '' : '<span class="px-fill ' + (r.v > 0 ? 'pos' : 'neg') +
+                       '" style="width:' + pct.toFixed(1) + '%"></span>') +
+        '</span>' +
+        '<span class="px-val' + (zero ? ' px-zero' : '') + '">' +
+          (zero ? 'n/m' : r.v.toFixed(3)) + '</span></div>';
+    }).join('');
+    var tname = POP.targets[target];
+    elBars.innerHTML = '<div class="mono" style="opacity:.7;text-transform:none;margin-bottom:4px">' +
+      esc(current.label) + ' · ' + esc(pretty(tname)) + ' · the eight features with the ' +
+      'largest signed contribution · blue pushes up, orange pushes down</div>' + html;
+    elState.textContent = 'Row ' + current.row.toLocaleString() + ' of ' +
+      IDX.tensorRows.toLocaleString() + ', read as ' +
+      (current.ranged ? '48 bytes over two Range requests' :
+                        'two reads (the host did not honour Range, so the whole file came down)') +
+      '.';
+    Array.prototype.forEach.call(elTabs.children, function(b, i){
+      b.setAttribute('aria-pressed', i === target ? 'true' : 'false');
+    });
+    say(current.label + ', ' + pretty(tname) + ': led by ' + rows[0].f + ' at ' +
+        rows[0].v.toFixed(2) + '.');
+  }
+
+  function go(){
+    var v = (elName.value || '').trim();
+    var key = byLabel[v];
+    if(!key){
+      elState.textContent = 'No player-season called “' + v + '”. Pick one from the list — ' +
+        'nothing is guessed from a partial name.';
+      say('That name is not in the list.');
+      return;
+    }
+    explain(key, v);
+  }
+
+  Promise.all([
+    fetch('assets/attr_index.json?v=807ae9aa').then(function(r){
+      if(!r.ok) throw new Error('attr_index HTTP ' + r.status); return r.json(); }),
+    fetch('assets/mtnn_attr_pop.json?v=ee83d0db', {cache:'force-cache'}).then(function(r){
+      if(!r.ok) throw new Error('attr_pop HTTP ' + r.status); return r.json(); }),
+    fetch('assets/embedding_map_points_limited.json?v=407d2cbc', {cache:'force-cache'}).then(function(r){
+      if(!r.ok) throw new Error('points HTTP ' + r.status); return r.json(); })
+  ]).then(function(all){
+    IDX = all[0]; POP = all[1];
+    LAYOUT = POP.topkLayout || {};
+    K = LAYOUT.k || 8;
+    NT = (LAYOUT.shape && LAYOUT.shape[1]) || (POP.targets || []).length || 4;
+    (LAYOUT.blocks || []).forEach(function(b){ if(b.name === 'value') VAL_OFF = b.offset; });
+    if(!VAL_OFF) throw new Error('the layout does not say where the values start');
+
+    var pts = all[2].points || [], n = 0;
+    pts.forEach(function(p){
+      var key = p.pid + '|' + p.season;
+      if(IDX.rows[key] === undefined) return;
+      var label = p.display_name + ' — ' + p.season;
+      byLabel[label] = key;
+      var o = document.createElement('option'); o.value = label;
+      elList.appendChild(o); n++;
+    });
+
+    (POP.targets || []).forEach(function(t, i){
+      var b = document.createElement('button');
+      b.className = 'pill tbtn'; b.type = 'button'; b.textContent = pretty(t);
+      b.setAttribute('aria-pressed', i === 0 ? 'true' : 'false');
+      b.addEventListener('click', function(){
+        target = i;
+        if(current) explain(current.key, current.label); else draw();
+      });
+      elTabs.appendChild(b);
+    });
+
+    elName.disabled = false; elGo.disabled = false;
+    elState.textContent = n.toLocaleString() + ' player-seasons can be explained. ' +
+      'Pick one and press Explain.';
+    elMethod.textContent = 'How this is computed — ' + (POP.method || '');
+    elZero.textContent = 'Read zero carefully — ' + (POP.maskedNote || '');
+    var ck = POP.checkpoint || {};
+    elProv.textContent = 'Built ' + (POP.built || '?') + ' from ' + (POP.matrix || '?') +
+      ' · ' + (POP.rows || 0).toLocaleString() + ' rows × ' + NT + ' targets × top ' + K +
+      ' · checkpoint ' + (ck.bytes ? ck.bytes.toLocaleString() + ' bytes' : 'unrecorded') +
+      '. That is not the same checkpoint record as the architecture panel above quotes, so read ' +
+      'these gradients as the model that produced this file, not as the one serving the map.';
+    elGo.addEventListener('click', go);
+    elName.addEventListener('change', go);
+    elName.addEventListener('keydown', function(e){ if(e.key === 'Enter'){ e.preventDefault(); go(); } });
+  }).catch(function(e){
+    elState.textContent = 'The per-player attributions could not be loaded (' + e.message +
+      '). No placeholder is shown here on purpose — the numbers on this page are either the ' +
+      'model’s or absent.';
+  });
+})();
+</script>
+<div class="card" id="flowCard"><h2 class="vh-sr">End to end — one stat to one prediction</h2>
+<div class="mono">End to end — one stat to one prediction</div>
+<p class="sub" id="flowLead" style="margin:6px 0 0">Loading the architecture from <code>assets/mtnn_arch.json</code>…</p>
+<ol class="flow" id="flow" aria-label="Model pipeline, five stages"></ol>
+<div id="flowDetail" class="flow-detail"></div>
+<p id="modelLive" class="vh-sr" role="status" aria-live="polite" aria-atomic="true"></p>
+<p class="mono" id="flowProv" style="margin-top:8px;opacity:.7;text-transform:none"></p>
+</div>
+
+<div class="card"><h2 class="vh-sr">Construct validity and threats</h2><div class="mono">Construct validity • threat mitigation</div><div class="sub">Define construct plain-English → operationalize → convergent/discriminant + predictive → document threats. No vanity metric. Operation = MTNN vector → 2d projection distance • op = cosine twin • threat = map distortion → logged LOD 1,764 vs 12,966 drift • trade timing → historical 30 season snapshots.</div></div>
+<style>
+.attr-row{display:grid;grid-template-columns:132px 1fr 54px;gap:8px;align-items:center;padding:3px 0;font-family:var(--mono);font-size:11px}
+.attr-name{font-weight:800;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.attr-track{background:#f0efe9;border:1.4px solid var(--ink);border-radius:999px;height:12px;overflow:hidden}
+/* display:block, or none of this applies. .attr-fill is a <span>, and width and
+   height are both ignored on an inline box — so every bar rendered at 1px, which
+   is its 1.4px right border and nothing else, no matter what the inline
+   width:79.3% said. Twelve feature attributions drew as identical empty
+   outlines beside their real numbers, on the page whose subject is what the
+   model actually weighs. */
+.attr-fill{display:block;height:100%;background:var(--blue);border-right:1.4px solid var(--ink)}
+.attr-fill.partial{background:repeating-linear-gradient(45deg,var(--orange),var(--orange) 4px,#f6c9b8 4px,#f6c9b8 8px)}
+.attr-val{text-align:right;font-variant-numeric:tabular-nums}
+.attr-fam{font-weight:400;color:var(--muted);text-transform:none}
+.tbtn{cursor:pointer}
+/* every cell is white-space:nowrap and there are ten columns, so on a phone this
+   has to scroll inside itself or it drags the page sideways */
+#zooTable{overflow-x:auto}
+#zooTable table{border-collapse:collapse;width:100%;font-family:var(--mono);font-size:11px}
+#zooTable th,#zooTable td{border:1px solid var(--hair);padding:3px 6px;text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+#zooTable th:first-child,#zooTable td:first-child{text-align:left;white-space:normal}
+#zooTable th{background:#f4f3ee}
+#zooTable tr.best td{background:#fff8dc;font-weight:800}
+#zooTable .proj{color:var(--orange);font-weight:900}
+/* pipeline flow */
+.flow{list-style:none;display:flex;gap:0;margin:12px 0 0;padding:0;flex-wrap:wrap;align-items:stretch}
+.flow li{flex:1 1 168px;display:flex;align-items:stretch;min-width:0}
+.flow button{width:100%;text-align:left;border:2px solid var(--ink);border-radius:11px;background:#fff;
+  box-shadow:var(--shadow-sm);padding:9px 10px;font:inherit;cursor:pointer;min-height:74px;display:flex;flex-direction:column;gap:3px}
+.flow button:hover{background:#fffbe8}
+.flow button[aria-expanded="true"]{background:var(--ink);color:var(--paper)}
+.flow button[aria-expanded="true"] .fl-dim{color:var(--yellow)}
+.fl-step{font-family:var(--mono);font-size:9.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;opacity:.65}
+.fl-label{font-size:13.5px;font-weight:700;line-height:1.2}
+.fl-dim{font-family:var(--mono);font-size:11px;font-weight:900;color:var(--blue);font-variant-numeric:tabular-nums}
+.flow li::after{content:"→";align-self:center;padding:0 6px;font-weight:900;color:var(--muted)}
+.flow li:last-child::after{content:""}
+@media(max-width:700px){.flow{flex-direction:column}.flow li::after{content:"↓";align-self:center;padding:4px 0}}
+.flow-detail{margin-top:10px;border:1.6px dashed var(--ink);border-radius:10px;padding:10px 12px;background:#f4f3ee;font-size:13px;line-height:1.6}
+.fam{display:inline-block;font-family:var(--mono);font-size:10.5px;font-weight:800;border:1.3px solid var(--ink);border-radius:999px;padding:1px 7px;margin:2px 3px 0 0;background:#fff}
+.fam.readout{background:#fbe3de}
+.tbtn[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+@media(prefers-reduced-motion:reduce){.attr-fill{transition:none}}
+/* This page still carries a bare `canvas{…}` rule that paints height:160px and a
+   #0A0C10 background with two radial gradients. It is vestigial — #retrMap is now
+   the only canvas here — but it would still apply, and the faint grey cloud and
+   the near-black last-season dot drawn below are chosen for a light surface and
+   would have been invisible on it. Overridden explicitly rather than left to
+   selector specificity, and matched to the archetype map on trends.html. */
+#retrMap{display:block;width:100%;height:auto;min-width:520px;touch-action:pan-y;
+  background:var(--surface);border:1.8px solid var(--ink);border-radius:10px}
+#retrWrap{margin-top:12px;overflow-x:auto}
+#retrPick{font-family:var(--mono);font-size:12px;padding:6px 8px;border:1.6px solid var(--ink);border-radius:8px;background:#fff;min-height:34px;max-width:100%}
+.retr-sr{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;border:0}
+
+/* ── text inks, solved for WCAG AA on what the browser paints ──────────────
+   Measured per element with its real backdrop composited through transparent
+   ancestors: the brand colours were carrying text at 3.20:1 (#EB6834), 3.42:1
+   (#009E73) and 4.42:1 (#2A78D6) against white.
+
+   These are new tokens, not new values for the brand colours. Every ring, fill,
+   polyline and border still draws #EB6834 / #2A78D6 / #009E73; only text moves.
+   Two earlier attempts changed a shared token instead and traded one failure for
+   another — darkening --ink-muted to clear 4.5 on paper took the same text on the
+   #0A0C10 map inset from 5.3:1 to 4.14:1. The muted greys are left alone here
+   for that reason: they need per-container scoping, not a page-level value. */
+:root{--orange-ink:#C84714;--blue-ink:#2873CF;--green-ink:#008460}
+.brand span,.site-nav__brand span{color:var(--orange-ink)}
+.sm__delta.down,.down{color:var(--orange-ink)}
+.sm__delta.up,.up{color:var(--blue-ink)}
+.fl-dim{color:var(--blue-ink)}
+.fo-ring{color:var(--orange-ink)}
+.proj{color:var(--orange-ink)}
+.mv-score.up{color:var(--green-ink)}
+
+/* #F0E442 is a bright yellow: an ink solved for white reads 3.64:1 on it, and the
+   white-on-yellow badge read 1.27:1. Keyed off the class that puts the yellow
+   there, so this cannot reach another ground. */
+span.pill.mono{color:#5A6476}
+.pill-y,.pill-y.mono,.pill-y.mono-sm,.pill.pill-y,.pill.pill-y.mono,.pill.pill-y.mono-sm,
+a.pill.pill-y,.pill.y,.pill.y.mono{color:#3A2E00}
+/* muted small print, on pages whose every ground is light */
+p.eyebrow,div.mono-sm,span.mono-sm,.pill.mono-sm,.mv-move,p.mono{color:#6F6D68}
+.mv-score.down{color:#D33F24}
+/* the archetype key and the dark pills sit on near-black: the light-ground inks
+   above must not reach them */
+#plKey span,#plKey .n{color:#FAFAF8}
+span.pill.mono.ink,.pill.ink{color:#C9C6C0}
+/* a rule in a later <style> block was still winning on this one */
+#zooTable .proj,span.proj{color:var(--orange-ink)}
+
+
+</style>
+
+<section class="card" id="retrSection" aria-labelledby="h-retr">
+  <h2 id="h-retr" style="font-size:18px;margin:0 0 4px">The test the model is scored on, drawn</h2>
+  <p class="sub" id="retrLead">Loading the scoreboard…</p>
+  <div id="retrWrap"><canvas id="retrMap" width="900" height="520"></canvas></div>
+  <div style="margin-top:10px;display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+    <label class="mono" for="retrPick">Career</label>
+    <select id="retrPick" disabled><option>loading…</option></select>
+  </div>
+  <p class="sub" id="retrRead" style="margin-top:8px"></p>
+  <details style="margin-top:10px"><summary class="mono" style="cursor:pointer;font-size:11px">Table view — every season on this path</summary>
+    <div style="overflow-x:auto"><table id="retrTable"></table></div>
+  </details>
+  <div class="mini" id="retrMethod" style="margin-top:10px"></div>
+  <div id="retrLive" class="retr-sr" role="status" aria-live="polite" aria-atomic="true"></div>
+</section>
+
+<script>
+/* The chart this replaces was labelled "SHAP" and "glass-box SHAP" and drew
+   eight hardcoded bars — its own comment called it a placeholder. The numbers
+   below are read from assets/mtnn_attr_pop.json, the attribution export the
+   pipeline actually produces: 12,966 rows, 120 input features, 4 targets.
+   method and maskedNote are printed verbatim from that file rather than
+   paraphrased, because the caveat is the point: a masked feature has exactly
+   zero gradient, so a zero bar means NEVER MEASURED, not "no effect". */
+(function(){
+  'use strict';
+  var TOP=12, data=null, target=null, pressed=false;
+  /* A container that receives a whole chart announces the whole chart. The site's
+     pattern everywhere else is a status node fed one sentence, and `pressed`
+     keeps the first render silent: nobody asked for it. */
+  function say(m){var l=document.getElementById('modelLive');
+    if(!l||!m)return; if(l.textContent===m) l.textContent=''; l.textContent=m;}
+  var elBars=document.getElementById('attrBars'),
+      elTabs=document.getElementById('attrTargets'),
+      elMethod=document.getElementById('attrMethod'),
+      elMasked=document.getElementById('attrMasked'),
+      elProv=document.getElementById('attrProv');
+
+  function label(t){
+    return ({archetype:'Archetype',position:'Position',skills:'Skills',next_profile:'Next profile'})[t]||t;
+  }
+  function render(){
+    var pop=data.populationAbs[target]||{};
+    var rows=Object.keys(pop).map(function(f){
+      return {f:f, v:Math.abs(+pop[f]||0), cov:(data.coverage&&+data.coverage[f]), fam:(data.featureFamily||{})[f]||''};
+    }).sort(function(a,b){return b.v-a.v;}).slice(0,TOP);
+    var max=rows.length?rows[0].v:1;
+    // 2 decimals: the repo rule is never to show a user more than two, and the
+    // spread across targets is 1.93 down to 0.008, so the small targets get a
+    // shared multiplier in the header rather than more digits per row.
+    var scale=max<0.1?100:1;
+    var html=rows.map(function(r){
+      var pct=max?Math.max(2,(r.v/max)*100):0;
+      var partial=(r.cov!=null && r.cov<1);
+      var covTxt=partial?(' — measured on '+Math.round(r.cov*100)+'% of seasons'):'';
+      return '<div class="attr-row">'+
+        '<span class="attr-name" title="'+r.f+covTxt+'">'+r.f+'<br><span class="attr-fam">'+r.fam+'</span></span>'+
+        '<span class="attr-track" role="img" aria-label="'+r.f+', '+(r.v*scale).toFixed(2)+covTxt+'">'+
+          '<span class="attr-fill'+(partial?' partial':'')+'" style="width:'+pct.toFixed(1)+'%"></span></span>'+
+        '<span class="attr-val">'+(r.v*scale).toFixed(2)+'</span></div>';
+    }).join('');
+    elBars.innerHTML='<div class="mono" style="opacity:.7;text-transform:none;margin-bottom:4px">'+
+      'Mean |gradient × input| per feature'+(scale!==1?' — ×100':'')+
+      ' · hatched = partially measured</div>'+html;
+    Array.prototype.forEach.call(elTabs.children,function(b){
+      b.setAttribute('aria-pressed', b.dataset.t===target?'true':'false');
+    });
+    if(pressed && rows.length){
+      say(label(target)+' — '+rows.length+' features, led by '+rows[0].f+
+          ' at '+(rows[0].v*scale).toFixed(2)+'.');
+    }
+  }
+  fetch('assets/mtnn_attr_pop.json?v=ee83d0db',{cache:'force-cache'}).then(function(r){
+    if(!r.ok) throw new Error('HTTP '+r.status);
+    return r.json();
+  }).then(function(j){
+    data=j; target=(j.targets&&j.targets[0])||'archetype';
+    (j.targets||[]).forEach(function(t){
+      var b=document.createElement('button');
+      b.className='pill tbtn'; b.type='button'; b.dataset.t=t;
+      b.textContent=label(t); b.setAttribute('aria-pressed','false');
+      b.addEventListener('click',function(){ target=t; pressed=true; render(); });
+      elTabs.appendChild(b);
+    });
+    elMethod.textContent=j.method||'';
+    elMasked.textContent=j.maskedNote||'';
+    var lowCov=Object.keys(j.coverage||{}).filter(function(k){return +j.coverage[k]<1;}).length;
+    elProv.textContent='Built '+(j.built||'?')+' from '+(j.matrix||'?')+' · '+
+      (j.rows||0).toLocaleString()+' player-seasons · '+((j.features||[]).length)+' input features · '+
+      lowCov+' of '+((j.features||[]).length)+' are not measured in every season.';
+    render();
+  }).catch(function(e){
+    // no fabricated fallback: if the real numbers will not load, say so
+    elBars.innerHTML='<div class="sub">Attributions could not be loaded ('+e.message+'). '+
+      'No placeholder is shown here on purpose — the numbers on this page are either the model’s or absent.</div>';
+  });
+
+  /* Model zoo. These figures were hardcoded in the markup and I labelled them
+     "Unsourced" — that was wrong, and this corrects it. Every one of them is in
+     assets/front_office.json under model_eval.model_zoo, with 5-fold metrics,
+     seeds and architectures. Reading them beats retyping them, and it surfaces
+     the caveat the file carries and the markup did not: the best model's
+     numbers are PROJECTED from a prior version, not retrained. */
+  var zt=document.getElementById('zooTable'), zn=document.getElementById('zooNote'), zc=document.getElementById('zooCaveat');
+  fetch('assets/model_zoo.json?v=87d8632f',{cache:'force-cache'}).then(function(r){
+    if(!r.ok) throw new Error('HTTP '+r.status);
+    return r.json();
+  }).then(function(j){
+    var zoo=(j.model_eval||{}).model_zoo;
+    if(!zoo) throw new Error('model_eval.model_zoo missing');
+    var rows=Object.keys(zoo).map(function(k){
+      var m=zoo[k];
+      return {name:k, mae:m.avg_mae, rmse:m.avg_rmse, r2:m.avg_r2,
+              best:!!(m.is_best||m.best_flag),
+              proj:/projected/i.test(String(m.fold_note||'')+String(m.notes||'')),
+              folds:(m.fold_metrics||[]).length, arch:m.arch||m.method||''};
+    }).filter(function(r){ return typeof r.mae==='number'; })
+      .sort(function(a,b){ return a.mae-b.mae; });
+    var nProj=rows.filter(function(r){return r.proj;}).length;
+    // The card headline duplicated these figures in hardcoded markup. Filling
+    // it from the same rows means the headline and the table can never drift,
+    // and it names which question the number answers — this page's subject is
+    // the embedding model, and a draft-surplus MAE is a different benchmark.
+    var head=document.getElementById('zooHead'), b0=rows[0], base=rows.filter(function(r){return /trimmedMean/i.test(r.name);})[0];
+    if(head&&b0){
+      head.innerHTML=b0.name.replace(/_/g,' ')+' leads the draft-surplus zoo at MAE '+
+        (Math.round(b0.mae*100)/100).toFixed(2)+
+        (base?(' against the '+(Math.round(base.mae*100)/100).toFixed(2)+' trimmed-mean baseline'):'')+
+        (b0.proj?' <span class="proj" title="projected, not retrained">▲ projected</span>':'')+
+        ' — a separate benchmark from the retrieval score above.';
+    }
+    // The heading said "10 models" in hardcoded markup while the table drew 12 —
+    // the slice holds 13 and one carries no numeric MAE. Counting the same rows
+    // the table is built from is the only version that cannot drift.
+    var zcnt=document.getElementById('zooCount');
+    if(zcnt) zcnt.textContent='Model zoo · '+rows.length+' models · 5-fold CV';
+    zn.innerHTML='Read from <code>assets/model_zoo.json</code>, a verbatim slice of <code>assets/front_office.json</code> → <code>model_eval.model_zoo</code>: '+
+      rows.length+' models, 5-fold CV, lower MAE is better. Predicting draft-pick surplus, '+
+      'not player similarity — a different job from the retrieval score above.';
+    zt.innerHTML='<table><thead><tr><th>Model</th><th>MAE</th><th>RMSE</th><th>R²</th><th>Folds</th></tr></thead><tbody>'+
+      rows.map(function(r){
+        return '<tr'+(r.best?' class="best"':'')+'><td title="'+String(r.arch).replace(/"/g,'&quot;')+'">'+
+          r.name.replace(/_/g,' ')+(r.best?' ★':'')+(r.proj?' <span class="proj" title="projected, not retrained">▲</span>':'')+
+          '</td><td>'+(Math.round(r.mae*100)/100).toFixed(2)+'</td><td>'+
+          (r.rmse==null?'—':(Math.round(r.rmse*100)/100).toFixed(2))+'</td><td>'+
+          (r.r2==null?'—':(Math.round(r.r2*100)/100).toFixed(2))+'</td><td>'+r.folds+'</td></tr>';
+      }).join('')+'</tbody></table>';
+    zc.innerHTML='<b>▲ '+nProj+' of these '+rows.length+' are projected, not retrained.</b> '+
+      'The file says so itself for the top row: <i>“'+
+      String(((zoo.DeepMLP_era14_256_128_64_32||{}).notes)||'projected from v5.3 measured').replace(/</g,'&lt;')+
+      '”</i> — so the winning margin is a carried-forward estimate, not a fresh measurement. '+
+      'Shown rather than buried, because a leaderboard whose leader was not re-run is a claim about the past.';
+  }).catch(function(e){
+    zn.textContent='The model zoo could not be loaded ('+e.message+'). No numbers are shown in its place.';
+    zt.innerHTML=''; zc.textContent='';
+  });
+
+  /* End-to-end pipeline. mtnn_arch.json already ships a `layers` array — five
+     stages, each with a label and a one-line detail, written by the pipeline
+     that built the model. No page rendered it. Every number below is read from
+     that file; the dimension under each stage is derived from its own fields
+     (dIn, towerFamilies.length, dTower, dEmb, nArchetypes …) rather than parsed
+     out of the prose, so a retrain that changes the shape changes the diagram. */
+  var flowEl=document.getElementById('flow'), flowDet=document.getElementById('flowDetail'),
+      flowLead=document.getElementById('flowLead'), flowProv=document.getElementById('flowProv');
+  function esc2(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+  fetch('assets/mtnn_arch.json?v=758a3d56',{cache:'force-cache'}).then(function(r){
+    if(!r.ok) throw new Error('HTTP '+r.status);
+    return r.json();
+  }).then(function(a){
+    var layers=a.layers||[];
+    if(!layers.length) throw new Error('layers missing');
+    var nFam=(a.towerFamilies||[]).length, nHeads=(a.nArchetypes||0)+(a.nPositions||0)+(a.nNextProfile||0)+(a.nSkills||0);
+    // dimension shown per stage, computed from the file's own numbers
+    var dims={ input:(a.dIn||0)+' features',
+               towers:nFam+' × '+(a.dTower||0)+'-d = '+(nFam*(a.dTower||0))+'-d',
+               fusion:'→ '+(a.dEmb||0)+'-d',
+               embedding:(a.dEmb||0)+'-d unit',
+               heads:nHeads+' outputs' };
+    flowLead.innerHTML='A player-season enters as '+(a.dIn||0)+' numbers and leaves as a point on a '+
+      (a.dEmb||0)+'-dimensional sphere plus '+nHeads+' predictions. These five stages, and every figure '+
+      'in them, are read from <code>assets/mtnn_arch.json</code>. Select a stage to read what it does.';
+    flowEl.innerHTML=layers.map(function(L,i){
+      return '<li><button type="button" data-i="'+i+'" aria-expanded="false" aria-controls="flowDetail">'+
+        '<span class="fl-step">Stage '+(i+1)+'</span>'+
+        '<span class="fl-label">'+esc2(L.label||L.id)+'</span>'+
+        '<span class="fl-dim">'+esc2(dims[L.id]||'')+'</span></button></li>';
+    }).join('');
+    var stagePressed=false;
+    function sayStage(m){var l=document.getElementById('modelLive');
+      if(!l||!m)return; if(l.textContent===m) l.textContent=''; l.textContent=m;}
+    function pick(i){
+      var L=layers[i];
+      Array.prototype.forEach.call(flowEl.querySelectorAll('button'),function(b){
+        b.setAttribute('aria-expanded', +b.dataset.i===i?'true':'false');
+      });
+      var extra='';
+      if(L.id==='towers'){
+        extra='<div style="margin-top:7px"><b>The '+nFam+' input families</b>, each with its own tower:<div style="margin-top:4px">'+
+          (a.towerFamilies||[]).map(function(f){return '<span class="fam">'+esc2(f)+'</span>';}).join('')+'</div>'+
+          ((a.readoutFamilies||[]).length
+            ? '<div style="margin-top:7px"><b>Not an input tower:</b> '+
+              (a.readoutFamilies||[]).map(function(f){return '<span class="fam readout">'+esc2(f)+'</span>';}).join('')+
+              ' — read out of the embedding rather than fed into it, so it cannot leak into the geometry.</div>'
+            : '')+'</div>';
+      }
+      if(L.id==='heads'){
+        extra='<div style="margin-top:7px"><b>'+(a.nSkills||0)+' skill heads:</b><div style="margin-top:4px">'+
+          (a.skillKeys||[]).map(function(s){return '<span class="fam">'+esc2(s)+'</span>';}).join('')+'</div>'+
+          '<div style="margin-top:7px"><b>'+(a.nArchetypes||0)+' archetypes:</b> '+
+          esc2((a.gameArchetypes||[]).join(' · '))+'</div></div>';
+      }
+      if(L.id==='embedding'){
+        extra='<div style="margin-top:7px">This is the number every comparison on the site is made of — '+
+          'see <a href="/dictionary#cosine">cosine</a> and <a href="/dictionary#era-twin">era twin</a>.</div>';
+      }
+      if(L.id==='input'){
+        extra='<div style="margin-top:7px">The mask is why a zero attribution is not "no effect" — '+
+          'see <a href="/dictionary#coverage">coverage</a>, and the chart above.</div>';
+      }
+      flowDet.innerHTML='<b>Stage '+(i+1)+' — '+esc2(L.label||L.id)+'.</b> '+esc2(L.detail||'')+extra;
+      if(stagePressed) sayStage('Stage '+(i+1)+' of '+layers.length+', '+(L.label||L.id)+'.');
+    }
+    flowEl.addEventListener('click',function(e){
+      var b=e.target.closest?e.target.closest('button[data-i]'):null;
+      if(b){ stagePressed=true; pick(+b.dataset.i); }
+    });
+    flowProv.textContent='Model '+(a.model||'?')+' · built '+(a.built||'?')+
+      ' · trained '+((a.training||{}).epochs||'?')+' epochs, fusion '+(a.fusion||'?')+
+      ', tower blocks '+(a.towerBlocks||'?')+' at hidden '+(a.towerHidden||'?')+'.';
+    pick(0);
+  }).catch(function(e){
+    flowLead.textContent='The architecture could not be loaded ('+e.message+'), so no pipeline is drawn. '+
+      'Nothing here is sketched from memory.';
+  });
+})();
+
+/* The retrieval test, drawn. This page states the model's headline score in prose
+   and never showed the space that score is about — phase 3 of the brief being the
+   explainability page, and the map being what everything is meant to centre on.
+
+   One trap avoided deliberately. The scoreboard's top-1 and top-5 are 64-d cosine
+   over 10,104 pairs. Ranking neighbours by distance in this 2-D projection would
+   be a different metric with a different answer, so nothing here computes a rank.
+   The picture shows what the task *is* — one career, season by season, through the
+   space — and every number beside it is read from assets/eval_scoreboard.json.
+   The caveat is printed on the page, not just kept here.
+
+   Data: assets/embedding_map_trajectories.json alone carries 12,038 points across
+   1,764 careers, so it supplies the faint background cloud *and* the paths from
+   one file. embedding_map_points_limited.json is fetched only for names — it has
+   exactly one row per player and cannot supply a path.
+
+   1.4 MB, so it loads when the section approaches the viewport, using the same
+   IntersectionObserver pattern trends.html already uses for era twins. */
+(function(){
+  var $=function(id){return document.getElementById(id);};
+  var sec=$('retrSection'); if(!sec) return;
+  var cv=$('retrMap'), pick=$('retrPick'), live=$('retrLive');
+  var TR=null, NAMES=null, SB=null, cur=null, loading=false;
+
+  function say(m){ if(!live||!m) return; if(live.textContent===m) live.textContent=''; live.textContent=m; }
+  function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+  function n2(v){return (v==null||isNaN(v))?'—':(Math.round(v*100)/100).toFixed(2);}
+
+  cv.setAttribute('role','img');
+  cv.setAttribute('aria-label',
+    'A two-dimensional projection of the embedding space. Faint dots are 12,038 '+
+    'player-seasons; the highlighted line is one career, one dot per season, in order. '+
+    'The table below carries the same path as text.');
+
+  function draw(){
+    if(!TR) return;
+    var dpr=Math.min(window.devicePixelRatio||1,1.4);
+    var w=cv.clientWidth||900, h=Math.round(w*520/900);
+    cv.width=Math.round(w*dpr); cv.height=Math.round(h*dpr); cv.style.height=h+'px';
+    var g=cv.getContext('2d'); g.setTransform(dpr,0,0,dpr,0,0); g.clearRect(0,0,w,h);
+    var pad=16, iw=w-pad*2, ih=h-pad*2;
+    var X=function(x){return pad+x*iw;}, Y=function(y){return pad+(1-y)*ih;};
+
+    /* Was #b9b7b0 at 0.22, which on this white surface renders as about
+       rgb(240,239,236) — a contrast ratio near 1.07:1 against #fff. Screenshotting
+       the canvas rather than measuring its backing store showed what that means:
+       the cloud was there and nobody could see it. These are 1.1px dots, and small
+       marks need more separation than large ones to register at all.
+       Darker at a moderate alpha rather than the same grey turned up, so that
+       overlapping points still accumulate and density stays readable. Kept
+       deliberately grey and subordinate — the orange retrieval path is the
+       subject of this figure and colouring the cloud would compete with it. */
+    g.globalAlpha=0.42; g.fillStyle='#7d7a73';
+    for(var k in TR){ var pth=TR[k];
+      for(var j=0;j<pth.length;j++){ g.beginPath(); g.arc(X(pth[j].x),Y(pth[j].y),1.1,0,6.2832); g.fill(); } }
+    g.globalAlpha=1;
+
+    var p=cur&&TR[cur]; if(!p||!p.length) return;
+    g.strokeStyle='#EB6834'; g.lineWidth=2.2; g.lineJoin='round'; g.lineCap='round';
+    g.beginPath();
+    for(var i=0;i<p.length;i++){ var fx=X(p[i].x), fy=Y(p[i].y); if(i)g.lineTo(fx,fy); else g.moveTo(fx,fy); }
+    g.stroke();
+    for(i=0;i<p.length;i++){
+      g.beginPath(); g.arc(X(p[i].x),Y(p[i].y),i===0||i===p.length-1?5:3,0,6.2832);
+      g.fillStyle = i===p.length-1 ? '#111' : '#EB6834';
+      g.fill();
+      g.lineWidth=1.6; g.strokeStyle='#fafaf8'; g.stroke();
+    }
+  }
+
+  function show(pid){
+    cur=pid; var p=TR[pid]||[];
+    var nm=(NAMES&&NAMES[pid])||('Player '+pid);
+    $('retrRead').textContent=nm+' — '+p.length+' season'+(p.length===1?'':'s')+
+      (p.length?', '+p[0].season+' to '+p[p.length-1].season:'')+
+      '. Each dot is one season; the dark dot is the last one.';
+    $('retrTable').innerHTML='<thead><tr><th scope="col">#</th><th scope="col">Season</th>'+
+      '<th scope="col">Games</th><th scope="col">x</th><th scope="col">y</th></tr></thead><tbody>'+
+      p.map(function(s,i){ return '<tr><td>'+(i+1)+'</td><td>'+esc(s.season)+'</td><td>'+
+        (s.gp==null?'—':s.gp)+'</td><td>'+n2(s.x)+'</td><td>'+n2(s.y)+'</td></tr>'; }).join('')+'</tbody>';
+    draw();
+    say(nm+', '+p.length+' seasons drawn.');
+  }
+
+  function boot(){
+    if(loading) return; loading=true;
+    Promise.all([
+      fetch('assets/embedding_map_trajectories.json?v=2e787a46',{cache:'force-cache'})
+        .then(function(r){ if(!r.ok) throw new Error('HTTP '+r.status); return r.json(); }),
+      fetch('assets/embedding_map_points_limited.json?v=407d2cbc',{cache:'force-cache'})
+        .then(function(r){ return r.ok?r.json():null; }).catch(function(){ return null; }),
+      fetch('assets/eval_scoreboard.json?v=bb54ebdf',{cache:'force-cache'})
+        .then(function(r){ return r.ok?r.json():null; }).catch(function(){ return null; })
+    ]).then(function(all){
+      TR=(all[0]&&all[0].trajectories)||null;
+      if(!TR) throw new Error('no trajectories in the file');
+      NAMES={}; ((all[1]&&all[1].points)||[]).forEach(function(r){ NAMES[String(r.pid)]=r.display_name; });
+      SB=all[2];
+
+      var ids=Object.keys(TR).filter(function(k){ return TR[k] && TR[k].length>=4; });
+      ids.sort(function(a,b){ return String(NAMES[a]||a).localeCompare(String(NAMES[b]||b)); });
+      pick.innerHTML=ids.map(function(k){
+        return '<option value="'+esc(k)+'">'+esc(NAMES[k]||('Player '+k))+' ('+TR[k].length+')</option>';
+      }).join('');
+      pick.disabled=false;
+
+      var mtnn=SB&&SB.results&&SB.results.mtnn&&SB.results.mtnn.overall;
+      var base=SB&&SB.results&&SB.results.baseline_transparent_14d&&SB.results.baseline_transparent_14d.overall;
+      $('retrLead').innerHTML= mtnn
+        ? 'The model is scored by handing it one season and asking for that same player&rsquo;s <em>next</em> '+
+          'season out of every other player-season. Across <b>'+(SB.eligible_pairs||mtnn.n).toLocaleString()+
+          '</b> pairs it puts the right one first <b>'+Math.round(mtnn.top1*100)+'%</b> of the time and in its '+
+          'top five <b>'+Math.round(mtnn.top5*100)+'%</b>'+
+          (base?', against a transparent 14-d baseline that manages <b>'+Math.round(base.top5*100)+'%</b> on the same test':'')+
+          '. Below is what one career looks like in the space that score is measured in.'
+        : 'The scoreboard could not be loaded, so no score is quoted here. The map below still shows the space.';
+
+      var defaultId = TR['2544'] ? '2544' : ids[0];
+      pick.value=defaultId;
+      show(defaultId);
+
+      $('retrMethod').textContent=
+        '12,038 player-seasons from assets/embedding_map_trajectories.json; names from '+
+        'assets/embedding_map_points_limited.json; score from assets/eval_scoreboard.json. '+
+        'Read the picture and the number as two different things: this is a 2-D projection, and the '+
+        'score above is 64-d cosine. Nothing on this canvas computes a rank, because ranking '+
+        'neighbours by distance on screen would be a different measurement with a different answer. '+
+        'Careers with fewer than four charted seasons are left out of the picker.';
+    }).catch(function(e){
+      $('retrLead').textContent='The retrieval map could not be loaded ('+e.message+'). '+
+        'Nothing is drawn in its place.';
+      $('retrMethod').textContent='';
+    });
+  }
+
+  pick.addEventListener('change',function(){ if(TR) show(pick.value); });
+  window.addEventListener('resize',function(){ if(TR) draw(); });
+
+  if(window.IntersectionObserver){
+    var io=new IntersectionObserver(function(en){
+      if(en.some(function(x){return x.isIntersecting;})){ io.disconnect(); boot(); }
+    },{rootMargin:'320px'});
+    io.observe(sec);
+  } else { boot(); }
+})();
+</script>
+</main>
+<script src="assets/error-boundary.js?v=dfe16efe"></script>
+<script src="assets/keyboard-a11y.js?v=8bd158d1"></script>
+<script src="assets/pwa-install.js?v=11551699"></script>
+</body></html>

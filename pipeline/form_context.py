@@ -17,8 +17,12 @@ ASSETS = HERE.parent / "assets"
 OUT = DATA / "form_context.json"
 
 FORM_KEYS = (
-    "FORM_VOL", "FORM_CEIL", "FORM_DD_RATE", "FORM_TD_RATE",
-    "FORM_GP", "FORM_MIN_AVG",
+    "FORM_VOL",
+    "FORM_CEIL",
+    "FORM_DD_RATE",
+    "FORM_TD_RATE",
+    "FORM_GP",
+    "FORM_MIN_AVG",
 )
 
 

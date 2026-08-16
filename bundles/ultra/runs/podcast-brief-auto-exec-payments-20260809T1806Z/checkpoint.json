@@ -1,0 +1,1 @@
+{"runId": "podcast-brief-auto-exec-payments-20260809T1806Z", "dag_version": 1, "nodes": [{"id": "phase0-payments-verify", "status": "ok", "agent": "podcast-brief-auto-exec-payments", "attempt": 1, "latency_ms": 92, "tokens_est": 0}], "version": "v3.3-OODA-Agentic-Checkpoint", "zero_deps": true, "tempo": ":13"}

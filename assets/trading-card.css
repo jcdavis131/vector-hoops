@@ -1,0 +1,348 @@
+/* Trading Card Void v35 — collectible career arc card — Sunni gate AAA */
+.trading-card-void{
+  position:relative;
+  width:100%;
+  background:
+    radial-gradient(110% 90% at 18% 12%, rgba(0,114,178,.08), transparent 50%),
+    radial-gradient(90% 70% at 88% 18%, rgba(240,228,66,.14), transparent 48%),
+    radial-gradient(80% 60% at 50% 85%, rgba(213,94,0,.06), transparent 56%),
+    #ECE7DB;
+  border-top:3px solid #1A150F;
+  border-bottom:3px solid #1A150F;
+  padding:32px clamp(12px,3vw,28px) 40px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  overflow:hidden;
+}
+@media(max-width:980px){
+  .trading-card-void{ width:100vw; margin-left:calc(50% - 50vw); border-left:0; border-right:0; padding:20px 14px 28px }
+}
+.tc-header{
+  max-width:1180px;
+  width:100%;
+  display:grid;
+  grid-template-columns:1.15fr .85fr;
+  gap:22px;
+  align-items:end;
+  margin-bottom:18px;
+}
+@media(max-width:900px){ .tc-header{ grid-template-columns:1fr; gap:12px } }
+.tc-title{
+  font-family:"Architects Daughter", ui-monospace, monospace;
+  font-size:clamp(32px,5vw,54px);
+  line-height:.9;
+  letter-spacing:-.02em;
+  margin:0;
+}
+.tc-title .accent{ background:#1A150F; color:#FFFEF7; padding:0 .18em; border-radius:10px; transform:rotate(-1.2deg); display:inline-block }
+.tc-sub{
+  font-family:ui-monospace,monospace;
+  font-size:13px;
+  line-height:1.5;
+  color:#3A332A;
+  margin:8px 0 0;
+  max-width:48ch;
+}
+.tc-search-wrap{
+  background:#FFFEF7;
+  border:2.5px solid #1A150F;
+  border-radius:16px;
+  box-shadow:5px 5px 0 #1A150F;
+  padding:10px;
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
+.tc-search-row{ display:flex; gap:8px; align-items:center }
+.tc-search-row input{
+  flex:1 1 auto;
+  min-height:48px;
+  border:2.2px solid #1A150F;
+  border-radius:12px;
+  padding:0 14px;
+  font-family:ui-monospace,monospace;
+  font-weight:800;
+  font-size:15px;
+  background:#fff;
+  outline:none;
+}
+.tc-search-row input:focus{ box-shadow:0 0 0 3px rgba(0,114,178,.25) }
+.tc-btn{
+  border:2.2px solid #1A150F;
+  border-radius:999px;
+  background:#fff;
+  box-shadow:2px 2px 0 #1A150F;
+  font-family:ui-monospace,monospace;
+  font-weight:900;
+  font-size:11px;
+  text-transform:uppercase;
+  letter-spacing:.06em;
+  padding:0 14px;
+  min-height:48px;
+  cursor:pointer;
+  white-space:nowrap;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  transition:transform .08s, box-shadow .08s;
+}
+.tc-btn:active{ transform:translate(1px,1px); box-shadow:1px 1px 0 #1A150F }
+.tc-btn--yellow{ background:#F0E442 }
+.tc-btn--ink{ background:#1A150F; color:#fff }
+.tc-suggest{
+  list-style:none;
+  margin:0; padding:0;
+  display:flex; flex-direction:column; gap:6px;
+  max-height:260px; overflow:auto;
+}
+.tc-suggest li{ border:2px solid #1A150F; border-radius:12px; background:#fff; box-shadow:2px 2px 0 #1A150F }
+.tc-suggest button{ width:100%; display:flex; justify-content:space-between; gap:10px; padding:10px 12px; background:transparent; border:0; cursor:pointer; text-align:left; font-family:ui-sans-serif }
+.tc-suggest button:hover{ background:#FFFEF7 }
+.tc-stage{
+  max-width:1180px;
+  width:100%;
+  display:grid;
+  grid-template-columns: 380px 1fr;
+  gap:20px;
+  align-items:start;
+}
+@media(max-width:980px){ .tc-stage{ grid-template-columns:1fr; justify-items:center } }
+
+/* Card itself */
+.tc-card{
+  position:relative;
+  width:100%;
+  max-width:380px;
+  background:#fff;
+  border:3px solid #1A150F;
+  border-radius:18px;
+  box-shadow:8px 8px 0 #1A150F;
+  overflow:hidden;
+  transform:rotate(-0.4deg);
+  transition:transform .18s cubic-bezier(.2,.8,.2,1), box-shadow .18s;
+}
+.tc-card:hover{ transform:rotate(0deg) translate(-1px,-1px); box-shadow:10px 10px 0 #1A150F }
+.tc-card[data-rarity="gold"]{ border-color:#1A150F }
+.tc-foil{
+  height:10px;
+  background:linear-gradient(90deg, #0072B2 0%, #D55E00 20%, #009E73 40%, #F0E442 60%, #56B4E9 75%, #CC79A7 90%, #E69F00 100%);
+  position:relative;
+  overflow:hidden;
+}
+.tc-foil::after{
+  content:'';
+  position:absolute; inset:0;
+  background:linear-gradient(105deg, transparent 0%, rgba(255,255,255,.55) 18%, transparent 36%, transparent 62%, rgba(255,255,255,.7) 78%, transparent 92%);
+  background-size:220% 100%;
+  animation:foilShift 3.8s ease-in-out infinite;
+}
+@keyframes foilShift{ 0%{ background-position:-120% 0 } 50%{ background-position:120% 0 } 100%{ background-position:120% 0 } }
+.tc-foil--c0{ background:#0072B2 } .tc-foil--c1{ background:#D55E00 } .tc-foil--c2{ background:#009E73 } .tc-foil--c3{ background:#F0E442 } .tc-foil--c4{ background:#56B4E9 } .tc-foil--c5{ background:#CC79A7 } .tc-foil--c6{ background:#E69F00 } .tc-foil--c7{ background:#1A150F }
+
+.tc-head{
+  padding:14px 14px 10px;
+  display:flex;
+  justify-content:space-between;
+  align-items:baseline;
+  gap:10px;
+  background:#FFFEF7;
+  border-bottom:2px solid #1A150F;
+}
+.tc-name{
+  font-family:"Architects Daughter", monospace;
+  font-size:26px;
+  line-height:.95;
+  font-weight:900;
+  margin:0;
+  letter-spacing:-.01em;
+  flex:1;
+}
+.tc-mega{
+  border:2px solid #1A150F;
+  border-radius:999px;
+  background:#1A150F;
+  color:#fff;
+  font-family:ui-monospace,monospace;
+  font-weight:900;
+  font-size:11px;
+  padding:2px 10px;
+  display:inline-flex;
+  gap:4px;
+  align-items:baseline;
+  box-shadow:2px 2px 0 rgba(0,0,0,.15);
+}
+.tc-mega b{ color:#F0E442; font-size:14px }
+
+.tc-meta{ padding:8px 12px; display:flex; gap:6px; flex-wrap:wrap; background:#fff; border-bottom:1.6px dashed #E9E2D6 }
+.tc-pill{ border:1.5px solid #1A150F; border-radius:999px; padding:2px 8px; background:#fff; font-family:ui-monospace,monospace; font-size:10.5px; font-weight:800; display:inline-flex; gap:5px; align-items:center; box-shadow:1px 1px 0 #1A150F }
+.tc-pill--arch{ background:#1A150F; color:#fff }
+.tc-dot{ width:7px; height:7px; border-radius:50%; display:inline-block }
+
+.tc-art{
+  position:relative;
+  height:184px;
+  background:#FFFEF7;
+  border-bottom:2px solid #1A150F;
+  overflow:hidden;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.tc-art--light{ background:#FFFEF7 }
+.tc-art canvas{ position:relative; width:100%; height:100%; display:block; z-index:1 }
+.tc-art-initials{ display:none !important }
+.tc-art-axis{ position:absolute; font-family:ui-monospace,monospace; font-size:9px; font-weight:800; letter-spacing:.08em; text-transform:uppercase; color:#5A544D; z-index:2; line-height:1 }
+.tc-art-axis--x{ bottom:6px; left:12px; right:12px; text-align:center }
+.tc-art-axis--y{ left:6px; top:50%; transform:rotate(-90deg) translateX(-50%); transform-origin:left center; opacity:.7 }
+
+.tc-rarity{
+  padding:7px 12px;
+  font-family:ui-monospace,monospace;
+  font-size:10.5px;
+  display:flex; gap:8px; flex-wrap:wrap;
+  background:#F0E442;
+  border-bottom:2px solid #1A150F;
+}
+.tc-rarity--gold{ background:#F0E442 }
+.tc-rarity--blue{ background:#D6EFFF }
+
+.tc-tabs{ display:flex; gap:6px; padding:8px 10px; background:#FFFEF7; border-bottom:2px solid #1A150F }
+.tc-tabs button{
+  border:1.8px solid #1A150F;
+  border-radius:999px;
+  padding:5px 11px;
+  background:#fff;
+  font-family:ui-monospace,monospace;
+  font-size:10.5px;
+  font-weight:800;
+  cursor:pointer;
+  box-shadow:1.5px 1.5px 0 #1A150F;
+  min-height:32px;
+}
+.tc-tabs button.is-active{ background:#1A150F; color:#fff }
+
+.tc-body{ padding:10px 12px 12px; background:#fff; min-height:196px; display:flex; flex-direction:column; gap:10px }
+.tc-body[hidden]{ display:none !important }
+.tc-section-head{
+  font-family:ui-monospace,monospace;
+  font-size:9.5px; font-weight:800; letter-spacing:.1em; text-transform:uppercase; color:#5A5248;
+  display:flex; align-items:center; gap:8px; margin:6px 0 2px;
+}
+.tc-section-head::after{ content:''; flex:1; height:1.5px; background:#E9E2D6 }
+
+.tc-arc-row{ display:flex; gap:8px; overflow-x:auto; padding:6px 2px 8px; scrollbar-width:thin }
+.tc-chip{
+  border:1.8px solid #1A150F;
+  border-radius:999px;
+  padding:10px 14px;
+  font-family:ui-monospace,monospace;
+  font-size:12.5px;
+  font-weight:800;
+  white-space:nowrap;
+  cursor:pointer;
+  box-shadow:1.5px 1.5px 0 #1A150F;
+  flex:0 0 auto;
+  min-height:44px;
+  min-width:44px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:6px;
+  transition:transform .08s;
+}
+.tc-chip.is-active{ background:#1A150F; color:#fff; transform:translateY(-1px) }
+.tc-chip--past{ background:#fff }
+.tc-chip--future{ opacity:.55; border-style:dashed }
+
+.tc-badges{ display:grid; grid-template-columns:repeat(auto-fill,minmax(124px,1fr)); gap:6px }
+.tc-badge{
+  border:2px solid #1A150F; border-radius:11px; padding:7px 8px 6px; background:#fff; box-shadow:2px 2px 0 #1A150F;
+  display:flex; flex-direction:column; gap:4px;
+}
+.tc-badge__top{ display:flex; justify-content:space-between; align-items:center; gap:6px }
+.tc-badge__name{ font-family:ui-monospace,monospace; font-size:9.5px; font-weight:800; text-transform:uppercase; letter-spacing:.03em }
+.tc-badge__grade{ border:1.5px solid #1A150F; border-radius:999px; padding:1px 6px; font-family:ui-monospace,monospace; font-size:11px; font-weight:900; background:#F0E442; min-width:24px; text-align:center }
+.tc-badge__bar{ height:5px; background:#EEE8D9; border-radius:999px; border:1px solid #1A150F; overflow:hidden }
+.tc-badge__fill{ height:100%; border-radius:999px }
+
+.tc-skills{ list-style:none; margin:0; padding:0; display:grid; grid-template-columns:1fr 1fr; gap:6px }
+@media(max-width:520px){ .tc-skills{ grid-template-columns:1fr } }
+.tc-skill{ border:2px solid #1A150F; border-radius:11px; background:#fff; box-shadow:1.5px 1.5px 0 #1A150F; padding:7px 8px; display:flex; flex-direction:column; gap:5px }
+.tc-skill__head{ display:flex; justify-content:space-between; gap:8px; align-items:center }
+.tc-skill__label{ font-family:ui-monospace,monospace; font-size:9.5px; font-weight:800; text-transform:uppercase }
+.tc-skill__grade{ font-family:ui-monospace,monospace; font-size:11px; font-weight:900; border:1.5px solid #1A150F; border-radius:999px; padding:1px 7px; min-width:28px; text-align:center; background:#fff }
+.tc-skill__track{ height:6px; background:#F2EFE6; border-radius:999px; border:1.2px solid #1A150F; overflow:hidden }
+.tc-skill__fill{ height:100%; border-radius:999px; transition:width .45s }
+.tc-skill__foot{ font-family:ui-monospace,monospace; font-size:8.5px; color:#7A746B; display:flex; justify-content:space-between }
+
+.tc-detail{
+  flex:1;
+  background:#FFFEF7;
+  border:2px solid #1A150F;
+  border-radius:14px;
+  box-shadow:5px 5px 0 #1A150F;
+  padding:14px;
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+  min-width:0;
+}
+.tc-detail-head{
+  display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px
+}
+.tc-detail h3{ font-family:"Architects Daughter",monospace; font-size:20px; margin:0; line-height:1.1 }
+.tc-story{ font-size:13.5px; line-height:1.55; color:#2E2A23; margin:0 }
+.tc-story b{ color:#1A150F }
+
+.tc-spark{
+  border:2.2px solid #1A150F;
+  border-radius:14px;
+  padding:10px 12px 10px;
+  background:#FFFEF7;
+  box-shadow:2.5px 2.5px 0 #1A150F;
+}
+.tc-spark canvas{ width:100%; height:56px; display:block }
+.tc-spark--tall{ min-height:96px; padding:12px }
+.tc-spark--tall canvas{ height:96px }
+.tc-footnote--clear{ font-size:11px; line-height:1.5; color:#3A332A; margin-top:8px; font-family:ui-sans-serif, system-ui; font-weight:600 }
+
+/* clean timeline v38 */
+.tc-timeline-clean{ display:flex; flex-direction:column; gap:10px; }
+.tc-timeline-stable{
+  display:flex; gap:12px; align-items:center;
+  border:2.5px solid #1A150F; border-radius:14px; padding:12px 14px;
+  background:#fff; box-shadow:3px 3px 0 #1A150F;
+  min-height:56px;
+}
+.tc-timeline-stable__icon{ width:36px; height:36px; border-radius:999px; display:flex; align-items:center; justify-content:center; border:2px solid #1A150F; flex:0 0 36px }
+.tc-timeline-stable__text{ font-family:ui-sans-serif,system-ui; font-size:14px; line-height:1.4; color:#1A150F }
+.tc-timeline-years{ display:flex; align-items:center; gap:10px; font-family:ui-monospace,monospace; font-size:11px; font-weight:800; color:#5A544D }
+.tc-timeline-years__line{ flex:1; height:4px; background:#E9E2D6; border-radius:999px; position:relative }
+.tc-timeline-years__dot{ position:absolute; left:50%; top:50%; width:14px; height:14px; border-radius:999px; border:2px solid #1A150F; transform:translate(-50%,-50%) }
+.tc-timeline-bar{ display:flex; gap:4px; width:100% }
+.tc-timeline-seg{
+  flex:1; border:2.5px solid #1A150F; border-radius:12px; padding:8px 10px;
+  background:#fff; box-shadow:2px 2px 0 #1A150F;
+  display:flex; flex-direction:column; gap:2px; min-width:0;
+}
+.tc-timeline-seg .seg-color{ height:8px; border-radius:999px; border:1.5px solid #1A150F }
+.tc-timeline-seg .seg-label{ font-family:ui-monospace,monospace; font-size:11px; font-weight:800; white-space:nowrap; overflow:hidden; text-overflow:ellipsis }
+.tc-timeline-seg .seg-years{ font-family:ui-monospace,monospace; font-size:10px; color:#6B665E }
+.tc-timeline-foot{ font-family:ui-monospace,monospace; font-size:11px; color:#5A544D; line-height:1.4 }
+.tc-detail-dots{ display:flex; gap:8px; overflow-x:auto; padding:6px 2px 4px; scrollbar-width:thin }
+.tc-season-dot{
+  border:1.8px solid #1A150F; border-radius:999px; background:#fff; min-height:44px; min-width:44px;
+  padding:6px 10px; display:inline-flex; flex-direction:column; align-items:center; justify-content:center; gap:2px;
+  font-family:ui-monospace,monospace; font-size:10px; font-weight:800; cursor:pointer; box-shadow:1.5px 1.5px 0 #1A150F; flex:0 0 auto;
+}
+.tc-season-dot .dot{ width:12px; height:12px; border-radius:50%; border:1.5px solid #1A150F; display:block }
+.tc-season-dot.is-active{ background:#1A150F; color:#fff }
+.tc-season-dot.is-active .yr{ color:#fff }
+
+.tc-actions{ display:flex; gap:8px; flex-wrap:wrap; margin-top:4px }
+
+.tc-footnote{
+  font-family:ui-monospace,monospace;
+  font-size:10px; color:#6B665E; line-height:1.4;
+}

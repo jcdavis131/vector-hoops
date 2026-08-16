@@ -28,8 +28,13 @@ import numpy as np
 
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
-from trend_mtnn import (
-    assign_cluster_names, kmeans, load_mtnn_embeddings, load_skill_grades,
+import itertools  # noqa: E402
+
+from trend_mtnn import (  # noqa: E402
+    assign_cluster_names,
+    kmeans,
+    load_mtnn_embeddings,
+    load_skill_grades,
 )
 
 ASSETS = HERE.parent / "assets"
@@ -38,20 +43,42 @@ GLOBAL_K = 8
 EXAMPLES_PER_CLASS = 3
 
 NOTABLE = {
-    "LeBron James", "Stephen Curry", "Kevin Durant", "Chris Paul",
-    "Nikola Jokic", "Giannis Antetokounmpo", "Kawhi Leonard",
-    "Damian Lillard", "Jimmy Butler", "Kyle Lowry", "Pau Gasol",
-    "Dirk Nowitzki", "Tim Duncan", "Kobe Bryant", "Vince Carter",
-    "Shaquille O'Neal", "Tracy McGrady", "Grant Hill", "Karl Malone",
-    "John Stockton", "Jason Kidd", "Ray Allen", "Reggie Miller",
-    "Al Horford", "Brook Lopez", "Blake Griffin", "DeMar DeRozan",
-    "Russell Westbrook", "James Harden", "Anthony Davis",
+    "LeBron James",
+    "Stephen Curry",
+    "Kevin Durant",
+    "Chris Paul",
+    "Nikola Jokic",
+    "Giannis Antetokounmpo",
+    "Kawhi Leonard",
+    "Damian Lillard",
+    "Jimmy Butler",
+    "Kyle Lowry",
+    "Pau Gasol",
+    "Dirk Nowitzki",
+    "Tim Duncan",
+    "Kobe Bryant",
+    "Vince Carter",
+    "Shaquille O'Neal",
+    "Tracy McGrady",
+    "Grant Hill",
+    "Karl Malone",
+    "John Stockton",
+    "Jason Kidd",
+    "Ray Allen",
+    "Reggie Miller",
+    "Al Horford",
+    "Brook Lopez",
+    "Blake Griffin",
+    "DeMar DeRozan",
+    "Russell Westbrook",
+    "James Harden",
+    "Anthony Davis",
 }
 
 
 def classify(seq: list[int]) -> str:
     n = len(seq)
-    modal, modal_n = Counter(seq).most_common(1)[0]
+    _modal, modal_n = Counter(seq).most_common(1)[0]
     if modal_n / n >= 0.75:
         return "stable"
     distinct = len(set(seq))
@@ -81,12 +108,14 @@ def skill_arc_summary(grade_rows: list[np.ndarray], skill_meta: list[dict]) -> d
         if abs(d) < 3:
             continue
         direction = "rose" if d > 0 else "fell"
-        highlights.append({
-            "skill": skill_meta[i]["label"],
-            "key": skill_meta[i]["key"],
-            "delta": round(d, 1),
-            "direction": direction,
-        })
+        highlights.append(
+            {
+                "skill": skill_meta[i]["label"],
+                "key": skill_meta[i]["key"],
+                "delta": round(d, 1),
+                "direction": direction,
+            }
+        )
     if not highlights:
         narrative = "Skill profile flat across halves."
     else:
@@ -112,14 +141,16 @@ def pick_examples(rows: list[dict], klass: str) -> list[dict]:
         if sig in seen_sigs and r["name"] not in NOTABLE:
             continue
         seen_sigs.add(sig)
-        chosen.append({
-            "name": r["name"],
-            "n": r["n"],
-            "class": r["class"],
-            "path": r["path"],
-            "skillArc": r.get("skillArc", {}),
-            "meanPMz": r.get("meanPMz"),
-        })
+        chosen.append(
+            {
+                "name": r["name"],
+                "n": r["n"],
+                "class": r["class"],
+                "path": r["path"],
+                "skillArc": r.get("skillArc", {}),
+                "meanPMz": r.get("meanPMz"),
+            }
+        )
         if len(chosen) >= EXAMPLES_PER_CLASS:
             break
     return chosen
@@ -147,85 +178,98 @@ def main() -> None:
         seasons.sort(key=lambda t: t[0]["season"])
         seq = [int(global_lab[j]) for _, j in seasons]
         arch_path = [
-            {"season": p["season"], "archetype": cluster_names[c]}
-            for (p, _), c in zip(seasons, seq)
+            {"season": p["season"], "archetype": cluster_names[c]} for (p, _), c in zip(seasons, seq, strict=False)
         ]
         grade_rows = [grades[j] for _, j in seasons]
         skill_arc = skill_arc_summary(grade_rows, skill_meta)
-        changes = sum(1 for a, b in zip(seq, seq[1:]) if a != b)
+        changes = sum(1 for a, b in itertools.pairwise(seq) if a != b)
         klass = classify(seq)
         mid_year = int(seasons[len(seasons) // 2][0]["season"][:4])
-        rows.append({
-            "name": name, "n": len(seasons),
-            "path": arch_path,
-            "changes": changes,
-            "transitionRate": round(changes / (len(seasons) - 1), 3),
-            "class": klass,
-            "decade": f"{mid_year // 10 * 10}s",
-            "meanPMz": round(float(np.mean([p["v"][pm_idx] for p, _ in seasons])), 3),
-            "skillArc": skill_arc,
-        })
+        rows.append(
+            {
+                "name": name,
+                "n": len(seasons),
+                "path": arch_path,
+                "changes": changes,
+                "transitionRate": round(changes / (len(seasons) - 1), 3),
+                "class": klass,
+                "decade": f"{mid_year // 10 * 10}s",
+                "meanPMz": round(float(np.mean([p["v"][pm_idx] for p, _ in seasons])), 3),
+                "skillArc": skill_arc,
+            }
+        )
 
     by_class = defaultdict(list)
     for r in rows:
         by_class[r["class"]].append(r)
-    class_stats = [{
-        "class": c,
-        "count": len(v),
-        "share": round(len(v) / len(rows), 4),
-        "meanCareerLength": round(float(np.mean([r["n"] for r in v])), 2),
-        "meanPMz": round(float(np.mean([r["meanPMz"] for r in v])), 3),
-    } for c, v in sorted(by_class.items(), key=lambda kv: -len(kv[1]))]
+    class_stats = [
+        {
+            "class": c,
+            "count": len(v),
+            "share": round(len(v) / len(rows), 4),
+            "meanCareerLength": round(float(np.mean([r["n"] for r in v])), 2),
+            "meanPMz": round(float(np.mean([r["meanPMz"] for r in v])), 3),
+        }
+        for c, v in sorted(by_class.items(), key=lambda kv: -len(kv[1]))
+    ]
 
     by_dec = defaultdict(list)
     for r in rows:
         by_dec[r["decade"]].append(r["transitionRate"])
-    era_rates = [{"decade": d, "careers": len(v),
-                  "meanTransitionRate": round(float(np.mean(v)), 3)}
-                 for d, v in sorted(by_dec.items())]
+    era_rates = [
+        {
+            "decade": d,
+            "careers": len(v),
+            "meanTransitionRate": round(float(np.mean(v)), 3),
+        }
+        for d, v in sorted(by_dec.items())
+    ]
 
     motifs = Counter()
     for r in rows:
         if r["class"] in ("reinvention", "late-bloom"):
             seq = [p["archetype"] for p in r["path"]]
-            pre_modal = Counter(seq[:len(seq) // 2]).most_common(1)[0][0]
-            post_modal = Counter(seq[len(seq) // 2:]).most_common(1)[0][0]
+            pre_modal = Counter(seq[: len(seq) // 2]).most_common(1)[0][0]
+            post_modal = Counter(seq[len(seq) // 2 :]).most_common(1)[0][0]
             if pre_modal != post_modal:
                 motifs[(pre_modal, post_modal)] += 1
-    top_motifs = [{"from": a, "to": b, "count": n}
-                  for (a, b), n in motifs.most_common(8)]
+    top_motifs = [{"from": a, "to": b, "count": n} for (a, b), n in motifs.most_common(8)]
 
     class_examples = {}
     for klass in ("stable", "reinvention", "late-bloom", "migrator", "drifter"):
         class_examples[klass] = pick_examples(rows, klass)
 
-    index = {r["name"]: {"class": r["class"], "changes": r["changes"]}
-             for r in rows}
+    index = {r["name"]: {"class": r["class"], "changes": r["changes"]} for r in rows}
 
-    (ASSETS / "trajectories.json").write_text(json.dumps({
-        "n_charted": len(data["players"]),
-        "embeddingSpace": "mtnn",
-        "globalArchetypes": cluster_names,
-        "method": (
-            "careers >=4 charted seasons; per-season global MTNN K=8 archetype "
-            "labels (same fit as archetypes_time layer 1); skill-arc deltas from "
-            "first-half vs second-half mean skill grades; taxonomy rule-based as "
-            "documented; era comparison by career-midpoint decade; correlates "
-            "observed with selection effects; examples are illustrative careers "
-            "per class, not a ranking"
+    (ASSETS / "trajectories.json").write_text(
+        json.dumps(
+            {
+                "n_charted": len(data["players"]),
+                "embeddingSpace": "mtnn",
+                "globalArchetypes": cluster_names,
+                "method": (
+                    "careers >=4 charted seasons; per-season global MTNN K=8 archetype "
+                    "labels (same fit as archetypes_time layer 1); skill-arc deltas from "
+                    "first-half vs second-half mean skill grades; taxonomy rule-based as "
+                    "documented; era comparison by career-midpoint decade; correlates "
+                    "observed with selection effects; examples are illustrative careers "
+                    "per class, not a ranking"
+                ),
+                "totalCareers": len(rows),
+                "classStats": class_stats,
+                "classExamples": class_examples,
+                "eraTransitionRates": era_rates,
+                "topReinventionMotifs": top_motifs,
+                "playerIndex": index,
+            },
+            separators=(",", ":"),
         ),
-        "totalCareers": len(rows),
-        "classStats": class_stats,
-        "classExamples": class_examples,
-        "eraTransitionRates": era_rates,
-        "topReinventionMotifs": top_motifs,
-        "playerIndex": index,
-    }, separators=(",", ":")), encoding="utf-8")
+        encoding="utf-8",
+    )
 
     print(f"{len(rows)} careers classified (MTNN archetypes)")
     for c in class_stats:
-        print(f"  {c['class']}: {c['share']:.1%} (len {c['meanCareerLength']}, "
-              f"PMz {c['meanPMz']:+.2f})")
+        print(f"  {c['class']}: {c['share']:.1%} (len {c['meanCareerLength']}, PMz {c['meanPMz']:+.2f})")
     print("examples per class:")
     for klass, ex in class_examples.items():
         names = ", ".join(e["name"] for e in ex)

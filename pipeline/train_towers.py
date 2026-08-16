@@ -37,6 +37,7 @@ pipeline/data/train_matrix.npz + feature_manifest.json).
 from __future__ import annotations
 
 import argparse
+import itertools
 import json
 import time
 from collections import defaultdict
@@ -54,6 +55,7 @@ DATA_DIR = ROOT / "pipeline" / "data"
 # ---------------------------------------------------------------------------
 # Data
 # ---------------------------------------------------------------------------
+
 
 def load_bundle():
     npz = np.load(DATA_DIR / "train_matrix.npz", allow_pickle=False)
@@ -74,18 +76,19 @@ def family_slices(manifest) -> dict[str, list[int]]:
 
 
 def adjacent_season_pairs(pids, seasons, names=None) -> list[tuple[int, int]]:
-    """(i, j) where the same player appears in consecutive seasons."""
+    """(i, j) where the same PLAYER_ID appears in consecutive seasons."""
+    del names
+
     def season_start(s: str) -> int:
         return int(s[:4])
 
-    by_key: dict[str | int, list[tuple[int, int]]] = defaultdict(list)
-    for i, (pid, s) in enumerate(zip(pids, seasons)):
-        key: str | int = str(names[i]) if names is not None else int(pid)
-        by_key[key].append((season_start(str(s)), i))
+    by_key: dict[int, list[tuple[int, int]]] = defaultdict(list)
+    for i, (pid, s) in enumerate(zip(pids, seasons, strict=False)):
+        by_key[int(pid)].append((season_start(str(s)), i))
     pairs = []
     for rows in by_key.values():
         rows.sort()
-        for (y1, i1), (y2, i2) in zip(rows, rows[1:]):
+        for (y1, i1), (y2, i2) in itertools.pairwise(rows):
             if y2 - y1 == 1:
                 pairs.append((i1, i2))
     return pairs
@@ -94,6 +97,7 @@ def adjacent_season_pairs(pids, seasons, names=None) -> list[tuple[int, int]]:
 # ---------------------------------------------------------------------------
 # Model
 # ---------------------------------------------------------------------------
+
 
 class Tower(nn.Module):
     def __init__(self, d_in: int, d_out: int = 16, d_hidden: int = 64):
@@ -112,12 +116,12 @@ class MultiTowerNet(nn.Module):
     def __init__(self, fam_dims: dict[str, int], d_tower: int = 16, d_emb: int = 32):
         super().__init__()
         self.families = sorted(fam_dims)
-        self.towers = nn.ModuleDict({
-            fam: Tower(fam_dims[fam], d_tower) for fam in self.families
-        })
+        self.towers = nn.ModuleDict({fam: Tower(fam_dims[fam], d_tower) for fam in self.families})
         d_cat = d_tower * len(self.families)
         self.fuse = nn.Sequential(
-            nn.Linear(d_cat, 128), nn.GELU(), nn.Linear(128, d_emb),
+            nn.Linear(d_cat, 128),
+            nn.GELU(),
+            nn.Linear(128, d_emb),
         )
         self.salary_head = nn.Linear(d_emb, 1)
 
@@ -132,6 +136,7 @@ class MultiTowerNet(nn.Module):
 # ---------------------------------------------------------------------------
 # Training
 # ---------------------------------------------------------------------------
+
 
 def split_by_family(Z, M, fams, device):
     xs, ms = {}, {}
@@ -156,8 +161,7 @@ def batch_views(xs, ms, idx, drop_p=0.15):
 def info_nce(za, zb, temp=0.1):
     logits = za @ zb.T / temp
     target = torch.arange(len(za), device=za.device)
-    return 0.5 * (F.cross_entropy(logits, target) +
-                  F.cross_entropy(logits.T, target))
+    return 0.5 * (F.cross_entropy(logits, target) + F.cross_entropy(logits.T, target))
 
 
 def main() -> None:
@@ -171,12 +175,11 @@ def main() -> None:
 
     torch.manual_seed(args.seed)
     np.random.seed(args.seed)
-    device = "cuda" if torch.cuda.is_available() else "cpu"
+    device = args.device or ("cuda" if torch.cuda.is_available() else "cpu")  # auto: GPU on personal local (CUDA avail), CPU in Hatch VM
 
     Z, M, names, seasons, pids, manifest = load_bundle()
     fams = family_slices(manifest)
-    print(f"{len(Z)} rows, {Z.shape[1]} features, "
-          f"{len(fams)} towers: { {k: len(v) for k, v in fams.items()} }")
+    print(f"{len(Z)} rows, {Z.shape[1]} features, {len(fams)} towers: { {k: len(v) for k, v in fams.items()} }")
 
     pairs = adjacent_season_pairs(pids, seasons, names)
     print(f"{len(pairs)} same-player adjacent-season positive pairs")
@@ -186,8 +189,7 @@ def main() -> None:
     sal_m = torch.tensor(M[:, sal_j], device=device)
 
     xs, ms = split_by_family(Z, M, fams, device)
-    model = MultiTowerNet({f: len(c) for f, c in fams.items()},
-                          d_emb=args.dim).to(device)
+    model = MultiTowerNet({f: len(c) for f, c in fams.items()}, d_emb=args.dim).to(device)
     opt = torch.optim.AdamW(model.parameters(), lr=args.lr, weight_decay=1e-4)
 
     n = len(Z)
@@ -198,7 +200,7 @@ def main() -> None:
         perm = np.random.permutation(n)
         total, steps = 0.0, 0
         for s in range(0, n, args.batch):
-            idx = perm[s:s + args.batch]
+            idx = perm[s : s + args.batch]
             if len(idx) < 8:
                 continue
             idx_t = torch.tensor(idx, device=device)
@@ -237,14 +239,12 @@ def main() -> None:
     with torch.no_grad():
         emb, _ = model(xs, ms)
     E = emb.cpu().numpy().astype(np.float32)
-    np.savez_compressed(DATA_DIR / "embedding_v2.npz",
-                        E=E, player_id=pids, season=seasons, name=names)
+    np.savez_compressed(DATA_DIR / "embedding_v2.npz", E=E, player_id=pids, season=seasons, name=names)
 
     # ---- retrieval sanity: same-player-next-season recall@10 ----
     recall = None
     if len(pair_arr):
-        sample = pair_arr[np.random.choice(len(pair_arr),
-                                           min(500, len(pair_arr)), replace=False)]
+        sample = pair_arr[np.random.choice(len(pair_arr), min(500, len(pair_arr)), replace=False)]
         hits = 0
         for a, b in sample:
             sims = E @ E[a]
@@ -252,17 +252,26 @@ def main() -> None:
             top = np.argpartition(-sims, 10)[:10]
             hits += int(b in top)
         recall = hits / len(sample)
-        print(f"same-player-next-season recall@10: {recall:.3f} "
-              f"(transparent 14-dim baseline should be compared before promoting)")
+        print(
+            f"same-player-next-season recall@10: {recall:.3f} "
+            f"(transparent 14-dim baseline should be compared before promoting)"
+        )
 
-    (DATA_DIR / "tower_report.json").write_text(json.dumps({
-        "trained": time.strftime("%Y-%m-%d %H:%M"),
-        "epochs": args.epochs, "dim": args.dim,
-        "towers": {k: len(v) for k, v in fams.items()},
-        "positive_pairs": len(pairs),
-        "final_loss": history[-1] if history else None,
-        "recall_at_10_same_player_next_season": recall,
-    }, indent=2), encoding="utf-8")
+    (DATA_DIR / "tower_report.json").write_text(
+        json.dumps(
+            {
+                "trained": time.strftime("%Y-%m-%d %H:%M"),
+                "epochs": args.epochs,
+                "dim": args.dim,
+                "towers": {k: len(v) for k, v in fams.items()},
+                "positive_pairs": len(pairs),
+                "final_loss": history[-1] if history else None,
+                "recall_at_10_same_player_next_season": recall,
+            },
+            indent=2,
+        ),
+        encoding="utf-8",
+    )
     print("wrote embedding_v2.npz + tower_report.json")
 
 

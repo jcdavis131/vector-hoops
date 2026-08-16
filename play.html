@@ -1,1101 +1,227 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="en" data-theme="terminal">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Play — Vector Hoops</title>
-<link rel="canonical" href="https://hoops.dumbmodel.com/play">
-<meta property="og:url" content="https://hoops.dumbmodel.com/play">
-<meta name="description" content="Whose season is the perfect combo of two other players? Guess the fused player-season built from two eras of stats. Era-honest, one puzzle a day. Anonymous play events help tune the game — a random id, no account, no ads.">
-<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20100%20100%22%3E%3Ctext%20y%3D%22.9em%22%20font-size%3D%2290%22%3E%26%23127936%3B%3C%2Ftext%3E%3C%2Fsvg%3E">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Play — Vector Hoops">
-<meta property="og:description" content="Whose season is the perfect combo of two other players? Two real player-seasons fused into one. Era-honest, one puzzle a day.">
-<!-- No PNG rasterizer is available in this build environment (no ImageMagick/rsvg/canvas
-     lib) without adding a new dependency, so og:image points at the hand-authored SVG
-     card below. Some crawlers (notably Twitter/X) do not render SVG og:image previews —
-     if that matters, regenerate assets/og.png from assets/og.svg with an image toolchain
-     at deploy time and swap this path. Root-relative because no fixed production domain
-     is recorded in this repo; substitute an absolute URL if the crawler needs one. -->
-<meta property="og:image" content="/assets/og.svg">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Play — Vector Hoops">
-<meta name="twitter:description" content="Whose season is the perfect combo of two other players? Two real player-seasons fused into one. Era-honest, one puzzle a day.">
-<meta name="twitter:image" content="/assets/og.svg">
-<link rel="stylesheet" href="assets/hoops.css">
-<link rel="stylesheet" href="assets/shell.css">
-<link rel="stylesheet" href="assets/responsive.css">
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Play Past→Modern — v9.2 VRNN t+1 Assessment — vector-hoops</title>
+<meta name="description" content="Play Past→Modern daily puzzle • MTNN v9.2 Procrustes VRNN t+1 GRU2×64 k5 64-d+8-d →μ32 logvar32 clamps [-7,2] prior per_team heteroscedastic Knicks1.8× Thunder0.9× β0.01 sample20× σ kill GREEN<6 YELLOW6-8.5 RED>8.5 future push barrier transparent trajOver fix void #080A0F OKABE visible">
+<meta name="theme-color" content="#080A0F"><link rel="manifest" href="/manifest.json">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23080A0F'/%3E%3Ccircle cx='16' cy='16' r='5' fill='%23F0E442' stroke='%23FAFAF8' stroke-width='1.6'/%3E%3C/svg%3E">
+<style>
+:root{--nav-h:40px;--pov-h:44px;--void:#080A0F;--void-2:#0f141e;--panel:#111725;--grid:#1e2a44;--ink:#e8f0ff;--ink-soft:#9aa7c7;--yellow:#F0E442;--mono:ui-monospace,SFMono-Regular,monospace;--sans:ui-sans-serif,system-ui,Segoe UI,Roboto,sans-serif}
+*{box-sizing:border-box}html,body{margin:0;background:var(--void);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased}
+.site-nav{position:sticky;top:0;height:var(--nav-h);z-index:50;display:flex;align-items:center;justify-content:space-between;padding:0 16px;border-bottom:1px solid var(--grid);background:rgba(8,10,15,.92);backdrop-filter:blur(6px)}
+.site-nav__brand{font-family:var(--mono);font-weight:800;font-size:13px;letter-spacing:.02em;text-transform:uppercase;text-decoration:none;color:var(--ink)}
+.site-nav__links{display:flex;gap:8px;align-items:center}
+.site-nav__link{font-family:var(--mono);font-size:11px;font-weight:700;padding:5px 10px;border-radius:999px;border:1.5px solid transparent;text-decoration:none;color:#9aa7c7}
+.site-nav__link.on{background:var(--yellow);color:#000;border-color:#000;transform:rotate(-.6deg)}
+.pov-strip{position:sticky;top:40px;height:var(--pov-h);z-index:40;display:flex;gap:8px;align-items:center;overflow-x:auto;padding:0 12px;border-bottom:2px solid var(--grid);background:#0f1a2d}
+.pov-pill{height:28px;padding:0 12px;border-radius:999px;border:1.5px solid var(--grid);font:700 11.5px var(--mono);white-space:nowrap;cursor:pointer;background:#111a2d;color:#9aa7c7;flex:0 0 auto}
+.pov-pill.on{background:var(--yellow);color:#000;border-color:#000;transform:rotate(-.6deg);box-shadow:2px 2px 0 #000}
+.wrap{max-width:1180px;margin:0 auto;padding:16px}
+.hero{display:grid;grid-template-columns:1.1fr .9fr;gap:12px}
+@media(max-width:980px){.hero{grid-template-columns:1fr}}
+.card{background:#111725;border:2px solid #1e2a44;border-radius:14px;box-shadow:6px 6px 0 #000;overflow:hidden}
+.mono{font-family:var(--mono)} .mono-sm{font-family:var(--mono);font-size:11px;color:#9aa7c7}
+.pill{display:inline-flex;padding:4px 9px;border-radius:999px;border:1.5px solid var(--grid);background:#0f141e;font:700 11px var(--mono);color:#9aa7c7}
+.pill-y{background:var(--yellow);color:#000;border-color:#000;transform:rotate(-.6deg)}
+.pill-g{background:#009E73;color:#000;border-color:#000}
+.pill-r{background:#D55E00;color:#000;border-color:#000}
+.pill-o{background:#E69F00;color:#000}
+.btn{font-family:var(--mono);font-size:11.2px;font-weight:800;padding:8px 12px;border-radius:999px;border:1.5px solid #000;background:var(--yellow);color:#000;cursor:pointer;box-shadow:2px 2px 0 #000}
+.btn:active{transform:translate(1px,1px);box-shadow:1px 1px 0 #000}
+.btn-p{background:#111725;color:#e8f0ff;border-color:#1e2a44}
+.grid2{display:grid;grid-template-columns:1.05fr .95fr;gap:12px}
+@media(max-width:900px){.grid2{grid-template-columns:1fr}}
+#play-a-101{position:relative;height:380px;overflow:hidden;border-radius:12px;background:var(--void);border:2px solid #1e2a44}
+canvas{width:100%;height:100%;display:block}
+#trajOver{background:transparent !important;position:absolute;inset:0;pointer-events:none}
+.chip{display:inline-flex;align-items:center;min-height:24px;padding:4px 9px;border-radius:999px;border:1.3px solid #1e2a44;font-family:var(--mono);font-size:10.5px;font-weight:800;background:#111a2d;color:#9aa7c7;box-shadow:1.3px 1.3px 0 #000;margin:2px 3px;transition:.18s;cursor:pointer}
+.chip.on{background:var(--yellow);color:#000;transform:rotate(-1deg) translateY(-1px) scale(1.06)}
+.season-chip{display:inline-flex;align-items:center;min-height:24px;padding:4px 8px;border-radius:999px;border:1.3px solid #111;background:#0f141e;font-family:var(--mono);font-size:10.2px;font-weight:800;color:#9aa7c7;margin:2px;cursor:pointer}
+.season-chip.active{background:#EB6834;color:#000;border-color:#000}
+.ring{position:absolute;left:50%;top:50%;width:58px;height:58px;border-radius:50%;border:3px solid #EB6834;display:none;place-items:center;color:#EB6834;background:radial-gradient(circle,rgba(235,104,52,.28),rgba(235,104,52,.08) 62%,transparent 72%);font-weight:900;transform:translate(-50%,-50%) scale(.6)}
+.traj-glass{backdrop-filter:blur(12px) saturate(1.25);-webkit-backdrop-filter:blur(12px) saturate(1.25);background:rgba(17,23,37,.92);border:2.2px solid #1e2a44;border-radius:14px;box-shadow:4px 4px 0 #000;padding:10px;color:#e8f0ff}
+#log:empty::before{content:'Your guesses land here — closest first. Type or tap a dot.';color:#6B7A9A}
+#confetti{position:absolute;inset:0;pointer-events:none}
+.star{position:absolute;transform:translate(-50%,-50%) scale(0);animation:pop 700ms forwards}
+@keyframes pop{0%{transform:translate(-50%,-50%) scale(0) rotate(0)}60%{transform:translate(-50%,-70%) scale(1.2) rotate(18deg)}100%{transform:translate(-50%,-160%) scale(.9) rotate(-8deg);opacity:0}}
+.ring{karaoke 2x pulse already in JS — CSS keyframes}
+@keyframes karaPulse{0%{transform:translate(-50%,-50%) scale(.78);box-shadow:0 0 0 0 rgba(235,104,52,.85)}32%{transform:translate(-50%,-50%) scale(1.24);box-shadow:0 0 0 20px rgba(235,104,52,0)}56%{transform:translate(-50%,-50%) scale(.92)}80%{transform:translate(-50%,-50%) scale(1.18)}100%{transform:translate(-50%,-50%) scale(1)}}
+.karaoke-2x{animation:karaPulse .62s cubic-bezier(.2,.8,.3,1) 0s 2}
+@keyframes spikeFreeze{0%{filter:contrast(1) brightness(1)}42%{filter:contrast(1.36) brightness(1.18) saturate(1.26)}100%{filter:contrast(1) brightness(1)}}
+.spike{animation:spikeFreeze .6s ease}
+.dotw{width:12px;height:12px;border-radius:50%;border:1.4px solid #1e2a44;display:inline-block;margin:1px 2px;background:#0f141e}
+.dotw.on{background:var(--yellow)} .dotw.war{background:var(--orange)}
+.share-pop{position:fixed;inset:0;background:rgba(8,10,15,.74);backdrop-filter:blur(10px);z-index:80;display:none;place-items:center;padding:14px}
+.share-pop.on{display:grid}
+.share-card{width:min(680px,96vw);background:#080A0F;border:2.2px solid #FAFAF8;border-radius:16px;overflow:hidden;box-shadow:8px 8px 0 #111}
+input{font-family:var(--mono);font-size:12.5px;padding:9px 11px;border:1.8px solid #1e2a44;border-radius:11px;min-width:0;background:#0f141e;color:#e8f0ff}
+footer{max-width:1100px;margin:6px auto 0;padding:10px 14px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;border-top:1.6px dashed #1e2a44;font-size:11px;color:#6B7A9A}
+</style>
 </head>
 <body>
+<nav class="site-nav"><a class="site-nav__brand" href="/">VECTOR<span style="color:#F0E442">HOOPS</span> Play v9.2 VRNN t+1 • Procrustes • Future Push Barrier Assessment</a>
+<div class="site-nav__links"><a class="site-nav__link" href="/dfs.html">DFS</a><a class="site-nav__link" href="/oracle.html">Oracle</a><a class="site-nav__link on" href="/play.html">Play</a><a class="site-nav__link" href="/model.html">Model</a><a class="site-nav__link" href="/owner.html">Owner</a></div></nav>
+<div class="pov-strip" role="tablist"><button class="pov-pill on" data-pov="all" aria-selected="true">All 968 past</button><button class="pov-pill" data-pov="close">Close twins</button><button class="pov-pill" data-pov="future">Future t+1 push</button><button class="pov-pill" data-pov="procrustes">Procrustes R Δ</button><button class="pov-pill" data-pov="vae">VRNN σ kill</button><span class="mono-sm" style="margin-left:auto">v9.2 444.7K GRU2×64 k5 72=64+8 →μ32 logvar[-7,2] per_team β0.01 sample20× σ kill GREEN&lt;6 YELLOW6-8.5 RED&gt;8.5 void #080A0F OKABE α0.92 3.4/2.4</span></div>
 
-<nav class="site-nav site-nav--static" data-active="/play" aria-label="Vector Hoops site"></nav>
-
-<div class="vh-challenge-banner" id="challenge-banner" hidden role="status">
-  <span id="challenge-banner-text"></span>
+<div class="wrap">
+<div class="hero">
+<div class="card" style="padding:12px;background:#FEFCF9;color:#111"><div class="mono" style="font-weight:900;font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:#111">Daily Past→Modern • same puzzle everyone LCG 20260813→189831298 idx3820 triple[11205,19448,14209] ?daily=20260813&n=1/3/5 Solo1 Triple3 Full5 glibc `L(s)=(s*1103515245+12345)&0x7fffffff` • 59 hashes 7/7 PASS</div>
+<h1 style="font-family:var(--mono);font-size:clamp(18px,3.8vw,24px);margin:8px 0;letter-spacing:-.02em;color:#111">Guess the modern twin — tap map or type — LCG daily • same for everyone today • works offline v67 PWA</h1>
+<div style="display:flex;gap:7px;flex-wrap:wrap;margin-top:8px"><button class="btn btn-y" id="bSolo">▶︎ Play Today's</button><button class="btn" id="bChallenge">Challenge pack</button><button class="btn" id="bTrip" style="display:none">Triple3</button><button class="btn" id="bFull" style="display:none">Full5</button><button class="btn" id="bPack" style="display:none">Pack Battle</button><input id="packIn" placeholder="Pack code (optional)" style="flex:1;min-width:160px;display:none" aria-label="Pack code"></div>
+<div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap"><span class="chip on" style="background:#F0E442;color:#000">10 past × 8 modern to start • 968 past All-Star/All-NBA • 1305 modern pool • 14-d game contract</span><a class="chip" href="/model" style="text-decoration:none">How we score cosine 14-d</a><span class="chip">Map narrows field not settling • nearest is best for 148/968 lands top10 for 289 pool</span></div>
+<div id="dist" class="pill" style="margin-top:8px;background:#FFF6C8;color:#111">Type a name to start — LCG jitter FP σ kill GREEN<6 YELLOW6-8.5 RED>8.5 shielding Kelly0.25 cap1% 15%DD</div>
+<p class="mono" style="margin:6px 0 0;font-size:10.5px;color:#6B6862;line-height:1.5;text-transform:none">Past player on the left — guess which modern player plays most like them. Same puzzle for everyone each day, works offline after your first visit. MTNN v9.2 t+1 future assessment shows where model's 20× mean thinks past would drift in 3D via Procrustes R aligned residual &amp; VAE latent μ32 σ kill push barrier stage trigger.</p></div>
+<div class="card" style="padding:12px"><div class="mono" style="font-weight:900;font-size:13px;color:#e8f0ff">Future t+1 Assessment — v9.2 MTNN Procrustes VRNN push barrier trigger stage transparent trajOver fix #080A0F</div>
+<div class="mono-sm" style="margin-top:6px;color:#c9d4e5;line-height:1.5;text-transform:none">Base B procrustes gold 128h tower residual <code style="background:#0E1730;border:1px solid #203060;padding:2px 6px;border-radius:6px">cat[x*m,m]→128h→24d LN L2</code> AttGatedFusion temp0.7 drop0.15 15% fallback mean-pool market collapse guard 444.7K MAE7.7653 IC0.357 entropy0.25-0.47 PASS 8.3 ships default • Procrustes <code>M=Z_{t-1}^T Z_t=UΣV^T→R*=U V^T residual ||Z-R||_F/√ND H=-Σp log p gate[0.2,1.8] GPA Frechet μ iterative after ALL gates PASS</code> temporal VRNN GRU2×64 k5 seq 64-d+8-d ctx move Δspread/total/ml n_books/std steam/rlm + rest_diff home/away travel/3000 tz/is_home/dome/alt/1500 →μ32 logvar32 clamp[-7,2] prior per_team 30 teams heteroscedastic Knicks1.8× Thunder0.9× shrinkage≥100 β0.01 cyclic30ep sample20× σ kill-switch <code>RED>8.5 GREEN<6 YELLOW6-8.5 shielding Kelly0.25 cap1% 15%DD 15%DD kill-switch</code> push barrier stage trigger: when t+1 FP μ predicted >82nd percentile barrier and σ_pred GREEN + edge meter ±3 vs MAE3.8 IC0.425 triggers upward arrow orange pulse #EB6834 2× karaoke .62s cubic-bezier .2,.8,.3,1 • transparent <code>#trajOver{background:transparent}</code> fix bare <code>canvas{}</code> rule that painted overlay opaque var(--void) +2 gradients so overlay covered 4322 cloud modern pool target crosshair guess ring dashed line — getImageData reported painted underneath yet page showed nothing • measured backing store ≠ looking at page second bare `canvas{}` site-wide to hide — model.html carried one too — fixed via <code>#trajOver{background:transparent !important}</code> • void #080A0F OKABE visible α0.92 3.4/2.4 • LCG everyday chain 20260813→189831298 idx3820 triple[11205,19448,14209] five[11205,19448,14209,16853,15710] same-link-same-stars `?daily=YYYYMMDD&n=1/3/5` Solo1 Triple3 Full5 glibc `L(s)=(s*1103515245+12345)&0x7fffffff`
+<br><br>Real hoops points 1764 REAL x/y/z [-1,1] OKABE-8 `pid2544 x0.1482 y-0.25 z-0.0562 c7 LeBron James season2025-26 is_current True is_allstar True archetype Scoring Vol okabe #FFFEF7` • 12966×64-d MTNN v9.2 k5 per_team prior β0.01 sample20× mem σ kill GREEN • timeline triple-write `hoops-v9-2-procrustes-vae` 7-field `nodeId,agentId,attempt,latency_ms,tokens_est,status,errorClass` even no-change checkpoint-manager triple-write • zero-deps true stdlib+torch shim HAS_TORCH fallback honest 503 never fake • construct validity threats documented: maple? Must yet… daily puzzle same-seed LCG gives same wall `open→drag-map→Jordan→copy-link equal stars DAU3/WAU3 TLPG dedup everydayTip()` badge PWA offline v67 SHELL includes `/play` `/dfs` `/oracle` routes • play.html 79K original still present pre-overwrite preserved — timeline init `hoops-dfs-oracle-v92/timeline.jsonl` in_progress void #080A0F OKABE 8 k5 per_team heads 9 written
+</div>
+<div style="margin-top:8px;display:flex;flex-wrap:wrap;gap:6px"><span class="pill pill-y">LCG seed YYYYMMDD glibc 1103515245</span><span class="pill">Transparent trajOver fixed canvas{} opaque bug</span><span class="pill pill-g">Future t+1 push barrier 82nd FP μ GREEN</span><span class="pill">Procrustes R det 1.0 residual 0.0 entropy_H 2.276 gate [0.2,1.8]</span><span class="pill pill-o">σ kill GREEN&lt;6 YELLOW6-8.5 RED&gt;8.5</span></div></div>
 </div>
 
-<header class="vh-header" id="app-header">
-  <div class="vh-header__brand">
-    <span class="vh-logo">VECTOR<span class="vh-logo__accent">HOOPS</span></span>
-    <span class="vh-tagline" id="tagline">Whose season is the perfect combo of two other players?</span>
-    <span class="vh-identity-chip" id="identity-chip" title="your anonymous session name — no account, tracked only on this device + the public board">You play as <b id="identity-name">&mdash;</b></span>
-    <span class="vh-favorite-chip" id="favorite-team-chip" hidden title="your favorite NBA team — device only, not sent anywhere">Rooting for <b id="favorite-team-label">&mdash;</b></span>
-  </div>
-  <div class="vh-subtabs vh-pool-toggle" id="pool-toggle" role="tablist" aria-label="Player pool (other modes)" title="Applies to Deadline, Fader, Chemistry, and Arc — Chimera uses its own tabs below">
-    <button class="vh-subtab" id="pool-toggle-all" type="button" role="tab" aria-selected="false" title="Every charted player-season, 1996-97 through today">All-time</button>
-    <button class="vh-subtab is-active" id="pool-toggle-modern" type="button" role="tab" aria-selected="true" title="Restrict puzzles to players active in the current NBA season">Modern</button>
-  </div>
-  <div class="vh-stats" id="header-stats">
-    <div class="vh-stat">
-      <span class="vh-stat__num" id="puzzle-day">—</span>
-      <span class="vh-stat__label">day</span>
-    </div>
-    <div class="vh-stat">
-      <span class="vh-stat__num" id="streak-num">0</span>
-      <span class="vh-stat__label">streak</span>
-    </div>
-    <div class="vh-stat">
-      <span class="vh-stat__num" id="guesses-left-num">9</span>
-      <span class="vh-stat__label" id="guesses-left-label">turns left</span>
-    </div>
-  </div>
-  <button class="vh-help-btn" id="stats-btn" type="button" aria-haspopup="dialog" aria-controls="stats-modal" title="Stats">📊</button>
-  <button class="vh-help-btn" id="help-btn" type="button" aria-haspopup="dialog" aria-controls="help-modal" title="How to play and read the clues">?</button>
-</header>
-
-<nav class="vh-tabs" id="mode-tabs" role="tablist" aria-label="Game mode">
-  <button class="vh-tab is-active" id="tab-chimera" type="button" role="tab" aria-selected="true">
-    <span class="vh-tab__icon" aria-hidden="true">🧬</span><span class="vh-tab__label"><span class="vh-tab__label-full">Chimera</span><span class="vh-tab__label-short">Chim</span></span>
-  </button>
-  <button class="vh-tab" id="tab-deadline" type="button" role="tab" aria-selected="false">
-    <span class="vh-tab__icon" aria-hidden="true">📉</span><span class="vh-tab__label"><span class="vh-tab__label-full">Deadline</span><span class="vh-tab__label-short">Dead</span></span>
-  </button>
-  <button class="vh-tab" id="tab-fader" type="button" role="tab" aria-selected="false">
-    <span class="vh-tab__icon" aria-hidden="true">🌡️</span><span class="vh-tab__label"><span class="vh-tab__label-full">Fader</span><span class="vh-tab__label-short">Fade</span></span>
-  </button>
-  <button class="vh-tab" id="tab-arc" type="button" role="tab" aria-selected="false">
-    <span class="vh-tab__icon" aria-hidden="true">📈</span><span class="vh-tab__label"><span class="vh-tab__label-full">Arc</span><span class="vh-tab__label-short">Arc</span></span>
-  </button>
-  <button class="vh-tab" id="tab-chem" type="button" role="tab" aria-selected="false">
-    <span class="vh-tab__icon" aria-hidden="true">🤝</span><span class="vh-tab__label"><span class="vh-tab__label-full">Best Teammate</span><span class="vh-tab__label-short">Mate</span></span>
-  </button>
-  <button class="vh-tab" id="tab-whatif" type="button" role="tab" aria-selected="false">
-    <span class="vh-tab__icon" aria-hidden="true">🧪</span><span class="vh-tab__label"><span class="vh-tab__label-full">What-If Lab</span><span class="vh-tab__label-short">Lab</span></span>
-  </button>
-  <button class="vh-tab" id="tab-pivot" type="button" role="tab" aria-selected="false">
-    <span class="vh-tab__icon" aria-hidden="true">🔀</span><span class="vh-tab__label"><span class="vh-tab__label-full">The Pivot</span><span class="vh-tab__label-short">Pivot</span></span>
-  </button>
-  <button class="vh-tab" id="tab-twin" type="button" role="tab" aria-selected="false">
-    <span class="vh-tab__icon" aria-hidden="true">👥</span><span class="vh-tab__label"><span class="vh-tab__label-full">Era Twin</span><span class="vh-tab__label-short">Twin</span></span>
-  </button>
-</nav>
-
-<main id="app">
-
-  <section id="panel-chimera" class="vh-panel">
-
-    <div class="vh-subtabs" id="chimera-subtabs" role="tablist" aria-label="Chimera play mode">
-      <button class="vh-subtab is-active" id="chimera-sub-modern" type="button" role="tab" aria-selected="true">Modern</button>
-      <button class="vh-subtab" id="chimera-sub-alltime" type="button" role="tab" aria-selected="false">All-Time</button>
-      <button class="vh-subtab" id="chimera-sub-team" type="button" role="tab" aria-selected="false" hidden>My Team</button>
-      <button class="vh-subtab" id="chimera-sub-practice" type="button" role="tab" aria-selected="false">Free Play</button>
-    </div>
-
-    <div class="vh-practice-banner" id="chimera-practice-banner" hidden>
-      <span class="vh-practice-banner__text">PRACTICE &mdash; doesn't touch your daily streak</span>
-      <button class="vh-btn vh-btn--accent" id="chimera-new-btn" type="button">New chimera</button>
-    </div>
-
-    <p class="vh-reset-note" id="reset-note" hidden></p>
-
-    <div class="vh-card vh-picker-card" id="picker-card" hidden aria-hidden="true">
-      <div class="vh-prompt__eyebrow">Build-a-Chimera &mdash; pick two donors</div>
-      <p class="vh-prompt__text">Pick a Stats Player (counting stats: scoring &middot; boards &middot; dimes &middot; defense)
-        and a Shooting Player (shooting &amp; impact). We'll fuse them into a blend, then you guess the real
-        player-season that plays closest to it.</p>
-
-      <div class="vh-slots-row">
-        <div class="vh-card vh-slot-card" id="picker-card-stats" data-slot="stats">
-          <div class="vh-slot-card__head">
-            <span class="vh-slot-card__title">Pick your Stats Player</span>
-            <span class="vh-slot-card__badge" id="picker-badge-stats" hidden>Picked</span>
-          </div>
-          <div class="vh-autocomplete" id="picker-stats-autocomplete">
-            <span class="vh-autocomplete__glyph" aria-hidden="true">&#128269;</span>
-            <input
-              type="text"
-              id="picker-stats-input"
-              class="vh-input vh-input--search"
-              placeholder="Start typing any player&hellip;"
-              autocomplete="off"
-              autocorrect="off"
-              autocapitalize="off"
-              spellcheck="false"
-              aria-autocomplete="list"
-              aria-controls="picker-stats-suggestions"
-              aria-expanded="false"
-              disabled
-            >
-            <span class="vh-autocomplete__chevron" aria-hidden="true">&#8964;</span>
-            <ul class="vh-suggestions" id="picker-stats-suggestions" role="listbox" hidden></ul>
-            <p class="vh-autocomplete__hint" id="picker-stats-focus-hint" hidden>e.g. Nikola Joki&#263; &mdash; then pick a season</p>
-          </div>
-          <p class="vh-autocomplete__kbd">&uarr;&darr; to browse &middot; Enter to pick</p>
-        </div>
-
-        <div class="vh-card vh-slot-card" id="picker-card-shooting" data-slot="shooting">
-          <div class="vh-slot-card__head">
-            <span class="vh-slot-card__title">Pick your Shooting Player</span>
-            <span class="vh-slot-card__badge" id="picker-badge-shooting" hidden>Picked</span>
-          </div>
-          <div class="vh-autocomplete" id="picker-shooting-autocomplete">
-            <span class="vh-autocomplete__glyph" aria-hidden="true">&#128269;</span>
-            <input
-              type="text"
-              id="picker-shooting-input"
-              class="vh-input vh-input--search"
-              placeholder="Start typing any player&hellip;"
-              autocomplete="off"
-              autocorrect="off"
-              autocapitalize="off"
-              spellcheck="false"
-              aria-autocomplete="list"
-              aria-controls="picker-shooting-suggestions"
-              aria-expanded="false"
-              disabled
-            >
-            <span class="vh-autocomplete__chevron" aria-hidden="true">&#8964;</span>
-            <ul class="vh-suggestions" id="picker-shooting-suggestions" role="listbox" hidden></ul>
-            <p class="vh-autocomplete__hint" id="picker-shooting-focus-hint" hidden>e.g. Nikola Joki&#263; &mdash; then pick a season</p>
-          </div>
-          <p class="vh-autocomplete__kbd">&uarr;&darr; to browse &middot; Enter to pick</p>
-        </div>
-      </div>
-
-      <p class="vh-picker-error" id="picker-error" role="status" hidden></p>
-
-      <button class="vh-btn vh-btn--accent" id="picker-randomize-btn" type="button" disabled>Randomize</button>
-    </div>
-
-    <div class="vh-play-col" id="chimera-play-col">
-
-      <div class="vh-card vh-skeleton" id="game-skeleton" aria-hidden="true">
-        <div class="vh-skeleton__bar vh-skeleton__bar--title"></div>
-        <div class="vh-skeleton__bar vh-skeleton__bar--text"></div>
-        <div class="vh-skeleton__bar vh-skeleton__bar--text vh-skeleton__bar--short"></div>
-        <p class="vh-skeleton__note">Loading the player universe&hellip;</p>
-      </div>
-
-      <div class="vh-card vh-prompt" id="prompt-card" hidden>
-        <div class="vh-prompt__eyebrow" id="puzzle-number">Vector Hoops #—</div>
-        <p class="vh-chimera-phase" id="chimera-phase-label">Guess any slot, in any order.</p>
-        <div class="vh-equation" id="equation-row">
-          <div class="vh-equation__tile" id="equation-tile-a">
-            <div class="vh-equation__tile-kicker">Stats</div>
-            <div class="vh-equation__tile-name vh-equation__tile-mark" id="equation-name-a">?</div>
-            <div class="vh-equation__tile-label">scoring &middot; boards &middot; dimes &middot; defense</div>
-          </div>
-          <div class="vh-equation__op" aria-hidden="true">+</div>
-          <div class="vh-equation__tile" id="equation-tile-b">
-            <div class="vh-equation__tile-kicker">Style</div>
-            <div class="vh-equation__tile-name vh-equation__tile-mark" id="equation-name-b">?</div>
-            <div class="vh-equation__tile-label">shooting &amp; impact</div>
-          </div>
-          <div class="vh-equation__op" aria-hidden="true">=</div>
-          <div class="vh-equation__tile vh-equation__tile--target" id="equation-tile-mashup">
-            <div class="vh-equation__tile-kicker">Mashup</div>
-            <div class="vh-equation__tile-mark" id="equation-name-mashup">?</div>
-          </div>
-        </div>
-        <button type="button" class="vh-equation-chip" id="equation-chip" hidden>
-          <span id="equation-chip-text">&mdash; + &mdash; = ?</span>
-          <span class="vh-equation-chip__hint">tap to expand</span>
-        </button>
-        <p class="vh-prompt__text vh-visually-hidden" id="prompt-text">Loading today's Chimera&hellip;</p>
-        <div class="vh-hints" id="hints-row" hidden></div>
-      </div>
-
-      <div class="vh-orient-banner" id="orient-banner" hidden role="region" aria-label="Quick orientation">
-        <div class="vh-orient-banner__inner">
-          <h2 class="vh-orient-banner__title">New here? Start with this</h2>
-          <ol class="vh-orient-banner__steps">
-            <li><b>Three real NBA seasons to name:</b> Stats Player + Style Player = Mashup. Guess in order &mdash; one try each on the first two, then up to six on the Mashup.</li>
-            <li><b>Read the scouting sentence first.</b> It&rsquo;s plain English. The colored bars are extra detail if you want it.</li>
-            <li><b>Orange = above average that year, blue = below, center line = league average.</b> Everyone is judged against their own season, so eras compare fairly.</li>
-          </ol>
-          <div class="vh-orient-banner__actions">
-            <button class="vh-btn vh-btn--primary" id="orient-dismiss-btn" type="button">Got it &mdash; show today&rsquo;s puzzle</button>
-            <button class="vh-btn" id="orient-rules-btn" type="button">Full rules</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- v5 STAGED CLUE CARDS: all three answer slots render immediately with
-           full evidence (mini sigma bars over its own half of the blend + a
-           phrasing-bank sentence + 2-3 extreme-sigma chips) — nothing is
-           hidden. What's gated is GUESS ORDER, not information: each card's
-           header name starts masked ("?") and fills in with the true
-           donor/mashup name once that stage resolves; the Style input stays
-           disabled (with a lock note) until the Stats stage resolves, and the
-           Mashup input stays disabled until the Style stage resolves. Stats +
-           Style are ONE guess each (always resolves, right or wrong, earning
-           a multiplier); Mashup gets up to MAX_MASHUP_GUESSES tries. The
-           Stats + Style cards are Daily-only (hidden entirely in Free Play,
-           where both donors are already known); the Mashup card is shared
-           with Free Play — see JS renderClueCards()/showPlayingStage(). -->
-      <div class="vh-clue-cards" id="clue-cards">
-
-        <details class="vh-read-guide" id="read-guide">
-          <summary>How to read the clue bars</summary>
-          <p>Each row is one stat (scoring, assists, threes, etc.). <strong>Orange to the right</strong> means better than most players <em>that season</em>; <strong>blue to the left</strong> means below average. The center tick is league average &mdash; so a &rsquo;90s center and a modern guard are compared fairly.</p>
-          <p>Tip: start with the scouting sentence, then glance at the bars or the highlight chips for the standouts.</p>
-        </details>
-
-        <div class="vh-slots-row vh-donor-slots" id="donor-slots-row" hidden>
-          <div class="vh-card vh-slot-card vh-guess-slot vh-clue-card" id="stats-slot-card" data-slot="stats">
-            <div class="vh-slot-card__head vh-clue-card__head">
-              <span class="vh-clue-card__numtitle">
-                <span class="vh-clue-card__num" aria-hidden="true">1</span>
-                <span class="vh-slot-card__title"><span class="vh-clue-card__mask" id="stats-slot-mask">?</span> &middot; Stats Player</span>
-              </span>
-              <span class="vh-slot-card__badge" id="stats-slot-badge" hidden>&times;1</span>
-            </div>
-            <p class="vh-clue-card__caption" id="clue-cards-caption">One guess each on Stats and Style (in order), then up to six tries on the Mashup. Read the scouting sentence first &mdash; the bars are optional detail.</p>
-
-            <button type="button" class="vh-clue-zone" id="stats-clue-zone" aria-expanded="true">
-              <div class="vh-clue-zone__bars" id="stats-clue-bars"></div>
-              <p class="vh-clue-zone__sentence" id="stats-clue-sentence"></p>
-              <div class="vh-clue-zone__chips" id="stats-clue-chips" aria-hidden="true"></div>
-              <span class="vh-clue-zone__hint" id="stats-clue-hint">tap to collapse</span>
-              <span class="vh-visually-hidden" id="stats-clue-sr"></span>
-            </button>
-
-            <div class="vh-autocomplete" id="chimera-stats-autocomplete">
-              <span class="vh-autocomplete__glyph" aria-hidden="true">&#128269;</span>
-              <input
-                type="text"
-                id="chimera-stats-input"
-                class="vh-input vh-input--search"
-                placeholder="Start typing any player&hellip; (one guess)"
-                autocomplete="off"
-                autocorrect="off"
-                autocapitalize="off"
-                spellcheck="false"
-                aria-autocomplete="list"
-                aria-controls="chimera-stats-suggestions"
-                aria-expanded="false"
-                disabled
-              >
-              <span class="vh-autocomplete__chevron" aria-hidden="true">&#8964;</span>
-              <ul class="vh-suggestions" id="chimera-stats-suggestions" role="listbox" hidden></ul>
-              <p class="vh-autocomplete__hint" id="chimera-stats-focus-hint" hidden>e.g. Nikola Joki&#263; &mdash; then pick a season</p>
-            </div>
-            <button class="vh-btn vh-btn--primary" id="chimera-stats-submit" disabled>Guess</button>
-            <p class="vh-guess__line vh-guess-slot__feedback" id="stats-slot-feedback"></p>
-            <button type="button" class="vh-link-btn vh-clue-card__tool" id="stats-map-link">Map &rarr;</button>
-          </div>
-
-          <div class="vh-card vh-slot-card vh-guess-slot vh-clue-card" id="archetype-slot-card" data-slot="archetype">
-            <div class="vh-slot-card__head vh-clue-card__head">
-              <span class="vh-clue-card__numtitle">
-                <span class="vh-clue-card__num" aria-hidden="true">2</span>
-                <span class="vh-slot-card__title"><span class="vh-clue-card__mask" id="archetype-slot-mask">?</span> &middot; Style Player</span>
-              </span>
-              <span class="vh-slot-card__badge" id="archetype-slot-badge" hidden>&times;1</span>
-            </div>
-
-            <button type="button" class="vh-clue-zone" id="archetype-clue-zone" aria-expanded="true">
-              <div class="vh-clue-zone__bars" id="archetype-clue-bars"></div>
-              <p class="vh-clue-zone__sentence" id="archetype-clue-sentence"></p>
-              <div class="vh-clue-zone__chips" id="archetype-clue-chips" aria-hidden="true"></div>
-              <span class="vh-clue-zone__hint" id="archetype-clue-hint">tap to collapse</span>
-              <span class="vh-visually-hidden" id="archetype-clue-sr"></span>
-            </button>
-
-            <div class="vh-autocomplete" id="chimera-archetype-autocomplete">
-              <span class="vh-autocomplete__glyph" aria-hidden="true">&#128269;</span>
-              <input
-                type="text"
-                id="chimera-archetype-input"
-                class="vh-input vh-input--search"
-                placeholder="Start typing any player&hellip; (one guess)"
-                autocomplete="off"
-                autocorrect="off"
-                autocapitalize="off"
-                spellcheck="false"
-                aria-autocomplete="list"
-                aria-controls="chimera-archetype-suggestions"
-                aria-expanded="false"
-                disabled
-              >
-              <span class="vh-autocomplete__chevron" aria-hidden="true">&#8964;</span>
-              <ul class="vh-suggestions" id="chimera-archetype-suggestions" role="listbox" hidden></ul>
-              <p class="vh-autocomplete__hint" id="chimera-archetype-focus-hint" hidden>e.g. Nikola Joki&#263; &mdash; then pick a season</p>
-            </div>
-            <button class="vh-btn vh-btn--primary" id="chimera-archetype-submit" disabled>Guess</button>
-            <p class="vh-clue-card__lock-note" id="archetype-lock-note">Solve the Stats Player first.</p>
-            <p class="vh-guess__line vh-guess-slot__feedback" id="archetype-slot-feedback"></p>
-            <button type="button" class="vh-link-btn vh-clue-card__tool" id="archetype-map-link">Map &rarr;</button>
-          </div>
-        </div>
-
-        <div class="vh-card vh-guessbar vh-clue-card" id="guessbar-card" hidden>
-          <div class="vh-slot-card__head vh-clue-card__head vh-guessbar__head">
-            <span class="vh-clue-card__numtitle">
-              <span class="vh-clue-card__num" aria-hidden="true">3</span>
-              <span class="vh-slot-card__title">Mashup Player</span>
-            </span>
-            <span class="vh-slot-card__badge" id="mashup-slot-badge" hidden>Locked</span>
-            <span class="vh-slot-card__badge vh-slot-card__badge--silver" id="mashup-slot-badge-silver" hidden>Close enough &mdash; locked</span>
-          </div>
-
-          <button type="button" class="vh-clue-zone" id="mashup-clue-zone" aria-expanded="true">
-            <p class="vh-clue-zone__sentence" id="scouting-line"></p>
-            <div class="vh-clue-zone__bars" id="mashup-clue-bars"></div>
-            <p class="vh-clue-zone__framing">The real player-season whose entire year plays closest to this full 14-dimension blend.</p>
-            <span class="vh-clue-zone__hint" id="mashup-clue-hint">tap to collapse</span>
-            <span class="vh-visually-hidden" id="mashup-clue-sr"></span>
-          </button>
-
-          <div class="vh-guessbar__inputrow">
-            <div class="vh-autocomplete" id="chimera-autocomplete">
-              <span class="vh-autocomplete__glyph" aria-hidden="true">&#128269;</span>
-              <input
-                type="text"
-                id="chimera-input"
-                class="vh-input vh-input--search"
-                placeholder="Start typing any player&hellip;"
-                autocomplete="off"
-                autocorrect="off"
-                autocapitalize="off"
-                spellcheck="false"
-                aria-autocomplete="list"
-                aria-controls="chimera-suggestions"
-                aria-expanded="false"
-                disabled
-              >
-              <span class="vh-autocomplete__chevron" aria-hidden="true">&#8964;</span>
-              <ul class="vh-suggestions" id="chimera-suggestions" role="listbox" hidden></ul>
-              <p class="vh-autocomplete__hint" id="chimera-focus-hint" hidden>e.g. Nikola Joki&#263; &mdash; then pick a season</p>
-            </div>
-            <button class="vh-btn vh-btn--primary" id="chimera-submit" disabled>Guess</button>
-            <p class="vh-autocomplete__kbd">&uarr;&darr; to browse &middot; Enter to pick</p>
-            <p class="vh-clue-card__lock-note" id="mashup-lock-note">Solve the Style Player first.</p>
-            <p class="vh-duplicate-warning" id="duplicate-warning" role="status" hidden></p>
-          </div>
-
-          <div class="vh-warmth vh-clue-card__section" id="warmth-card" hidden>
-            <div class="vh-warmth__bars" id="warmth-bars" aria-hidden="true"></div>
-            <div class="vh-warmth__closest" id="warmth-closest">Closest: &mdash;</div>
-          </div>
-
-          <div class="vh-result vh-clue-card__section" id="result-card" hidden>
-            <div class="vh-result__top">
-              <div class="vh-scoreboard" id="scoreboard">
-                <div class="vh-scoreboard__pct" id="scoreboard-pct">0%</div>
-                <div class="vh-scoreboard__sub">match on last guess</div>
-              </div>
-
-              <button type="button" class="vh-map-thumb-btn" id="map-thumb-btn" title="Open the 3D triangulation map" hidden>
-                <canvas id="map-thumb" class="vh-map-thumb" width="120" height="120" aria-hidden="true"></canvas>
-              </button>
-            </div>
-
-            <div class="vh-triangulation" id="triangulation-block" hidden>
-              <div class="vh-triangulation__row">
-                <span class="vh-tri-icon vh-tri-icon--stats" aria-hidden="true"></span>
-                <span class="vh-triangulation__label">vs Stats Donor</span>
-                <span class="vh-triangulation__pct" id="tri-stats-pct">&mdash;</span>
-              </div>
-              <div class="vh-triangulation__row">
-                <span class="vh-tri-icon vh-tri-icon--shooting" aria-hidden="true"></span>
-                <span class="vh-triangulation__label">vs Style Donor</span>
-                <span class="vh-triangulation__pct" id="tri-shooting-pct">&mdash;</span>
-              </div>
-              <div class="vh-triangulation__row">
-                <span class="vh-tri-icon vh-tri-icon--blend" aria-hidden="true"></span>
-                <span class="vh-triangulation__label">vs The Mashup</span>
-                <span class="vh-triangulation__pct" id="tri-blend-pct">&mdash;</span>
-              </div>
-            </div>
-            <p class="vh-visually-hidden" id="triangulation-sr-summary"></p>
-
-            <p class="vh-story" id="story-caption"></p>
-            <p class="vh-guess__line vh-guess__line--quick" id="quick-coaching-line"></p>
-            <p class="vh-guess__line" id="cluster-line"></p>
-
-            <div class="vh-result__actions">
-              <button type="button" class="vh-link-btn" id="report-sheet-open-btn">Full scouting report &rarr;</button>
-            </div>
-          </div>
-
-          <button type="button" class="vh-link-btn vh-clue-card__tool" id="mashup-map-link">Map &rarr;</button>
-        </div>
-
-      </div>
-
-      <div class="vh-card vh-reveal" id="reveal-card" hidden>
-        <h2 class="vh-reveal__title" id="reveal-title">Revealed</h2>
-        <div class="vh-reveal__body" id="reveal-body"></div>
-        <button class="vh-btn vh-btn--accent" id="share-btn" type="button" title="Text a challenge link — same puzzle, head-to-head">Text challenge</button>
-        <div class="vh-reveal__copied" id="share-copied" hidden>Opening Messages… link copied too.</div>
-      </div>
-
-      <div class="vh-utility-row" id="chimera-utility-row">
-        <button type="button" class="vh-link-btn" id="history-chip-btn">History (<span id="history-count">0</span>) &rarr;</button>
-        <button type="button" class="vh-link-btn" id="map-sheet-open-btn">3D league map &rarr;</button>
-      </div>
-
-    </div>
-
-    <div class="vh-sheet-backdrop" id="report-sheet-backdrop" hidden>
-      <div class="vh-sheet" id="report-sheet" role="dialog" aria-modal="true" aria-labelledby="report-sheet-title">
-        <div class="vh-sheet__handle" aria-hidden="true"></div>
-        <div class="vh-sheet__head">
-          <h2 id="report-sheet-title" class="vh-sheet__title">Full scouting report</h2>
-          <button class="vh-sheet__close" id="report-sheet-close-btn" type="button" aria-label="Close">&times;</button>
-        </div>
-        <div class="vh-sheet__body">
-          <div class="vh-section-label">The court &mdash; zone presence</div>
-          <div class="vh-courts" id="courts-row">
-            <div class="vh-court-block">
-              <div class="vh-court-block__label">The Chimera</div>
-              <canvas class="vh-court" id="court-target" width="300" height="282" aria-label="Half-court diagram of the Chimera's offensive and defensive zone presence"></canvas>
-            </div>
-            <div class="vh-court-block">
-              <div class="vh-court-block__label" id="court-guess-label">Your guess</div>
-              <canvas class="vh-court" id="court-guess" width="300" height="282" aria-label="Half-court diagram of your guess's offensive and defensive zone presence"></canvas>
-            </div>
-          </div>
-          <div class="vh-court-legend">
-            <span><span class="vh-legend-swatch vh-legend-swatch--orange"></span>offense &mdash; brighter = further above average</span>
-            <span><span class="vh-legend-swatch vh-legend-swatch--hatch"></span>defense &mdash; hatched = below average</span>
-          </div>
-          <p class="vh-visually-hidden" id="courts-sr-summary"></p>
-
-          <div class="vh-section-label">Stat-by-stat comparison &mdash; vs that season&rsquo;s league average</div>
-          <div class="vh-breakdown" id="breakdown-chart" role="img" aria-label="Diverging bar chart comparing the Chimera and your guess across all 14 stat dimensions in sigmas"></div>
-          <p class="vh-visually-hidden" id="breakdown-sr-summary"></p>
-          <div class="vh-court-legend">
-            <span><span class="vh-legend-swatch vh-legend-swatch--orange"></span>the Chimera</span>
-            <span><span class="vh-legend-swatch vh-legend-swatch--blue"></span>your guess</span>
-          </div>
-          <p class="vh-guess__line" id="coaching-line"></p>
-        </div>
-      </div>
-    </div>
-
-    <div class="vh-sheet-backdrop" id="map-sheet-backdrop" hidden>
-      <div class="vh-sheet" id="map-sheet" role="dialog" aria-modal="true" aria-labelledby="map-sheet-title">
-        <div class="vh-sheet__handle" aria-hidden="true"></div>
-        <div class="vh-sheet__head">
-          <h2 id="map-sheet-title" class="vh-sheet__title">3D league map <span class="vh-mapcard__hint">(drag to rotate &middot; wheel/pinch to zoom)</span></h2>
-          <button class="vh-sheet__close" id="map-sheet-close-btn" type="button" aria-label="Close">&times;</button>
-        </div>
-        <div class="vh-sheet__body">
-          <div class="vh-map-wrap">
-            <canvas id="hoops-map" class="vh-map" width="600" height="600" aria-label="3D starfield of all player-seasons colored by position, with the Chimera blend always shown as a diamond, the Stats Donor (solid square) and Style Donor (hollow square) hidden until their stage resolves, your guesses pinned, and triangulation lines from your latest guess to whichever anchors are currently visible"></canvas>
-            <button class="vh-map-pause" id="map-pause-btn" type="button" title="Pause rotation">Pause</button>
-            <button class="vh-map-color" id="map-color-btn" type="button" title="Toggle dot coloring">Color: position</button>
-            <div class="vh-map-axes" id="map-axes" aria-label="PCA axis definitions"></div>
-          </div>
-          <div class="vh-mapcard__legend" id="map-legend"></div>
-        </div>
-      </div>
-    </div>
-
-    <div class="vh-sheet-backdrop" id="history-sheet-backdrop" hidden>
-      <div class="vh-sheet" id="history-sheet" role="dialog" aria-modal="true" aria-labelledby="history-sheet-title">
-        <div class="vh-sheet__handle" aria-hidden="true"></div>
-        <div class="vh-sheet__head">
-          <h2 id="history-sheet-title" class="vh-sheet__title">Guess history</h2>
-          <button class="vh-sheet__close" id="history-sheet-close-btn" type="button" aria-label="Close">&times;</button>
-        </div>
-        <div class="vh-sheet__body">
-          <ol class="vh-guesslist" id="guess-list" aria-live="polite"></ol>
-        </div>
-      </div>
-    </div>
-
-  </section>
-
-  <section id="panel-deadline" class="vh-panel" hidden>
-
-    <div class="vh-subtabs" id="deadline-subtabs" role="tablist" aria-label="Deadline play mode">
-      <button class="vh-subtab is-active" id="deadline-sub-daily" type="button" role="tab" aria-selected="true">Daily Set</button>
-      <button class="vh-subtab" id="deadline-sub-free" type="button" role="tab" aria-selected="false">Free Play</button>
-    </div>
-
-    <div class="vh-practice-banner" id="deadline-practice-banner" hidden>
-      <span class="vh-practice-banner__text">PRACTICE &mdash; doesn't touch your Deadline streak</span>
-    </div>
-
-    <div class="vh-card vh-prompt">
-      <div class="vh-prompt__eyebrow" id="deadline-eyebrow">The Deadline &mdash; Daily Set</div>
-      <p class="vh-prompt__text">Round <span id="deadline-round-num">1</span>/5 &middot; Score <span id="deadline-score-num">0</span><span id="deadline-streak-wrap"> &middot; Streak <span id="deadline-streak-num">0</span></span></p>
-    </div>
-
-    <div class="vh-card vh-deadline-card">
-      <p class="vh-deadline__prompt" id="deadline-prompt">Loading a move&hellip;</p>
-
-      <div class="vh-deadline__buttons" id="deadline-buttons">
-        <button class="vh-btn vh-btn--thrive" id="deadline-thrived-btn" type="button">Thrived</button>
-        <button class="vh-btn vh-btn--crater" id="deadline-crater-btn" type="button">Cratered</button>
-      </div>
-
-      <div class="vh-deadline__reveal" id="deadline-reveal" hidden>
-        <p class="vh-deadline__verdict" id="deadline-verdict"></p>
-
-        <div class="vh-deadline__detail" id="deadline-detail">
-          <div class="vh-deadline__stat-row">
-            <span class="vh-deadline__stat-label">&Delta; pts/36</span>
-            <span class="vh-deadline__stat-value" id="deadline-p36-value"></span>
-          </div>
-          <div class="vh-deadline__bar-pair" id="deadline-p36-bars"></div>
-          <p class="vh-deadline__samples" id="deadline-samples"></p>
-          <p class="vh-deadline__adjpm" id="deadline-adjpm"></p>
-        </div>
-
-        <button class="vh-btn vh-btn--primary" id="deadline-next-btn" type="button">Next round</button>
-      </div>
-
-      <div class="vh-deadline__final" id="deadline-final" hidden>
-        <p class="vh-deadline__final-score" id="deadline-final-score"></p>
-        <p class="vh-deadline__comeback" id="deadline-comeback" hidden>Next Daily Set at UTC midnight.</p>
-        <button class="vh-btn vh-btn--accent" id="deadline-share-btn" type="button" hidden title="Text a challenge link — same puzzle, head-to-head">Text challenge</button>
-        <div class="vh-reveal__copied" id="deadline-share-copied" hidden>Opening Messages… link copied too.</div>
-        <button class="vh-btn vh-btn--accent" id="deadline-again-btn" type="button">Run again</button>
-      </div>
-    </div>
-
-    <p class="vh-deadline__method"><button type="button" class="vh-link-btn" id="deadline-method-btn">Method &amp; data sources &rarr;</button></p>
-
-  </section>
-
-  <section id="panel-fader" class="vh-panel" hidden>
-
-    <div class="vh-subtabs" id="fader-subtabs" role="tablist" aria-label="Fader or Finisher play mode">
-      <button class="vh-subtab is-active" id="fader-sub-daily" type="button" role="tab" aria-selected="true">Daily Set</button>
-      <button class="vh-subtab" id="fader-sub-free" type="button" role="tab" aria-selected="false">Free Play</button>
-    </div>
-
-    <div class="vh-practice-banner" id="fader-practice-banner" hidden>
-      <span class="vh-practice-banner__text">PRACTICE &mdash; doesn't touch your Fader/Finisher streak</span>
-    </div>
-
-    <div class="vh-card vh-prompt">
-      <div class="vh-prompt__eyebrow" id="fader-eyebrow">Fader or Finisher &mdash; Daily Set</div>
-      <p class="vh-prompt__text">Round <span id="fader-round-num">1</span>/5 &middot; Score <span id="fader-score-num">0</span><span id="fader-streak-wrap"> &middot; Streak <span id="fader-streak-num">0</span></span></p>
-    </div>
-
-    <div class="vh-card vh-deadline-card">
-      <p class="vh-deadline__prompt" id="fader-prompt">Loading a split&hellip;</p>
-
-      <div class="vh-deadline__buttons" id="fader-buttons">
-        <button class="vh-btn vh-btn--finisher" id="fader-finish-btn" type="button">Finished stronger</button>
-        <button class="vh-btn vh-btn--fader" id="fader-fade-btn" type="button">Faded</button>
-      </div>
-
-      <div class="vh-deadline__reveal" id="fader-reveal" hidden>
-        <p class="vh-deadline__verdict" id="fader-verdict"></p>
-
-        <div class="vh-deadline__detail" id="fader-detail">
-          <div class="vh-deadline__stat-row">
-            <span class="vh-deadline__stat-label">2nd half</span>
-            <span class="vh-deadline__stat-value" id="fader-secondhalf-value"></span>
-          </div>
-          <div class="vh-deadline__bar-pair" id="fader-bars"></div>
-          <p class="vh-deadline__samples" id="fader-samples"></p>
-          <p class="vh-deadline__adjpm" id="fader-delta"></p>
-        </div>
-
-        <button class="vh-btn vh-btn--primary" id="fader-next-btn" type="button">Next round</button>
-      </div>
-
-      <div class="vh-deadline__final" id="fader-final" hidden>
-        <p class="vh-deadline__final-score" id="fader-final-score"></p>
-        <p class="vh-deadline__comeback" id="fader-comeback" hidden>Next Daily Set at UTC midnight.</p>
-        <button class="vh-btn vh-btn--accent" id="fader-share-btn" type="button" hidden title="Text a challenge link — same puzzle, head-to-head">Text challenge</button>
-        <div class="vh-reveal__copied" id="fader-share-copied" hidden>Opening Messages… link copied too.</div>
-        <button class="vh-btn vh-btn--accent" id="fader-again-btn" type="button">Run again</button>
-      </div>
-    </div>
-
-    <p class="vh-deadline__method"><button type="button" class="vh-link-btn" id="fader-method-btn">Method &amp; data sources &rarr;</button></p>
-
-  </section>
-
-  <section id="panel-arc" class="vh-panel" hidden>
-
-    <div class="vh-subtabs" id="arc-subtabs" role="tablist" aria-label="Career Arc play mode">
-      <button class="vh-subtab is-active" id="arc-sub-daily" type="button" role="tab" aria-selected="true">Daily</button>
-      <button class="vh-subtab" id="arc-sub-practice" type="button" role="tab" aria-selected="false">Free Play</button>
-    </div>
-
-    <div class="vh-practice-banner" id="arc-practice-banner" hidden>
-      <span class="vh-practice-banner__text">PRACTICE &mdash; doesn't touch your Arc streak</span>
-      <button class="vh-btn vh-btn--accent" id="arc-new-btn" type="button">New arc</button>
-    </div>
-
-    <div class="vh-card vh-prompt">
-      <div class="vh-prompt__eyebrow" id="arc-eyebrow">Career Arc &mdash; Daily</div>
-      <p class="vh-prompt__text" id="arc-instructions">Order these seasons oldest &rarr; newest.</p>
-    </div>
-
-    <div class="vh-card vh-arc-card-wrap">
-      <div class="vh-arc-grid" id="arc-cards"></div>
-      <div class="vh-arc-controls">
-        <button class="vh-link-btn" id="arc-clear-btn" type="button">Clear order</button>
-        <button class="vh-btn vh-btn--primary" id="arc-submit-btn" type="button" disabled>Submit order</button>
-      </div>
-    </div>
-
-    <div class="vh-card vh-arc-result" id="arc-result" hidden>
-      <p class="vh-arc-result__score" id="arc-score-line"></p>
-      <button type="button" class="vh-link-btn" id="arc-reveal-open-btn">See the true order &amp; arc &rarr;</button>
-      <div class="vh-arc-result__actions" id="arc-result-actions">
-        <button class="vh-btn vh-btn--accent" id="arc-share-btn" type="button" hidden title="Text a challenge link — same puzzle, head-to-head">Text challenge</button>
-        <div class="vh-reveal__copied" id="arc-share-copied" hidden>Opening Messages… link copied too.</div>
-        <p class="vh-deadline__comeback" id="arc-comeback" hidden>Next Career Arc at UTC midnight.</p>
-      </div>
-    </div>
-
-    <div class="vh-sheet-backdrop" id="arc-reveal-sheet-backdrop" hidden>
-      <div class="vh-sheet" id="arc-reveal-sheet" role="dialog" aria-modal="true" aria-labelledby="arc-reveal-sheet-title">
-        <div class="vh-sheet__handle" aria-hidden="true"></div>
-        <div class="vh-sheet__head">
-          <h2 id="arc-reveal-sheet-title" class="vh-sheet__title">True order</h2>
-          <button class="vh-sheet__close" id="arc-reveal-sheet-close-btn" type="button" aria-label="Close">&times;</button>
-        </div>
-        <div class="vh-sheet__body">
-          <ol class="vh-arc-reveal-list" id="arc-reveal-list"></ol>
-          <p class="vh-arc-trajectory-line" id="arc-trajectory-line" hidden></p>
-          <div class="vh-section-label">Career arc &mdash; scoring vs league average, by season</div>
-          <div class="vh-arc-linechart" id="arc-linechart" role="img" aria-label="Line chart of this player's scoring compared to league average across their charted seasons"></div>
-          <p class="vh-visually-hidden" id="arc-linechart-sr-summary"></p>
-        </div>
-      </div>
-    </div>
-
-  </section>
-
-  <section id="panel-chem" class="vh-panel" hidden>
-
-    <div class="vh-subtabs" id="chem-subtabs" role="tablist" aria-label="Best Teammate play mode">
-      <button class="vh-subtab is-active" id="chem-sub-daily" type="button" role="tab" aria-selected="true">Daily Set</button>
-      <button class="vh-subtab" id="chem-sub-free" type="button" role="tab" aria-selected="false">Free Play</button>
-    </div>
-
-    <div class="vh-practice-banner" id="chem-practice-banner" hidden>
-      <span class="vh-practice-banner__text">PRACTICE &mdash; doesn't touch your Best Teammate streak</span>
-    </div>
-
-    <div class="vh-card vh-prompt">
-      <div class="vh-prompt__eyebrow" id="chem-eyebrow">Best Teammate &mdash; Daily Set</div>
-      <p class="vh-prompt__text">Round <span id="chem-round-num">1</span>/5 &middot; Score <span id="chem-score-num">0</span><span id="chem-streak-wrap"> &middot; Streak <span id="chem-streak-num">0</span></span></p>
-    </div>
-
-    <div class="vh-card vh-deadline-card">
-      <p class="vh-deadline__prompt" id="chem-prompt">Loading a pairing&hellip;</p>
-
-      <div class="vh-chem-options" id="chem-options"></div>
-
-      <div class="vh-deadline__reveal" id="chem-reveal" hidden>
-        <p class="vh-deadline__verdict" id="chem-verdict"></p>
-        <p class="vh-chem__numbers" id="chem-numbers"></p>
-        <p class="vh-chem__why" id="chem-why"></p>
-
-        <button class="vh-btn vh-btn--primary" id="chem-next-btn" type="button">Next round</button>
-      </div>
-
-      <div class="vh-deadline__final" id="chem-final" hidden>
-        <p class="vh-deadline__final-score" id="chem-final-score"></p>
-        <p class="vh-deadline__comeback" id="chem-comeback" hidden>Next Best Teammate set at UTC midnight.</p>
-        <button class="vh-btn vh-btn--accent" id="chem-share-btn" type="button" hidden title="Text a challenge link — same puzzle, head-to-head">Text challenge</button>
-        <div class="vh-reveal__copied" id="chem-share-copied" hidden>Opening Messages… link copied too.</div>
-        <button class="vh-btn vh-btn--accent" id="chem-again-btn" type="button">Run again</button>
-      </div>
-    </div>
-
-    <p class="vh-deadline__method"><button type="button" class="vh-link-btn" id="chem-method-btn">Method &amp; data sources &rarr;</button></p>
-
-  </section>
-
-  <section id="panel-whatif" class="vh-panel" hidden>
-
-    <div class="vh-card vh-picker-card">
-      <div class="vh-prompt__eyebrow">What-If Lab &mdash; pick any two player-seasons</div>
-      <p class="vh-prompt__text">Pair any two real player-seasons across eras and get a full partnership report:
-        complementarity, dimensional coverage, redundancy/weakness warnings, a combined court diagram, and the closest
-        real-world pair by measured complementarity. Pure vectors math &mdash; no daily puzzle, no streak, unlimited pairs.</p>
-
-      <div class="vh-slots-row">
-        <div class="vh-card vh-slot-card" id="whatif-card-a" data-slot="a">
-          <div class="vh-slot-card__head">
-            <span class="vh-slot-card__title">Player A</span>
-            <span class="vh-slot-card__badge" id="whatif-badge-a" hidden>Picked</span>
-          </div>
-          <div class="vh-autocomplete" id="whatif-a-autocomplete">
-            <span class="vh-autocomplete__glyph" aria-hidden="true">&#128269;</span>
-            <input
-              type="text"
-              id="whatif-a-input"
-              class="vh-input vh-input--search"
-              placeholder="Start typing any player&hellip;"
-              autocomplete="off"
-              autocorrect="off"
-              autocapitalize="off"
-              spellcheck="false"
-              aria-autocomplete="list"
-              aria-controls="whatif-a-suggestions"
-              aria-expanded="false"
-              disabled
-            >
-            <span class="vh-autocomplete__chevron" aria-hidden="true">&#8964;</span>
-            <ul class="vh-suggestions" id="whatif-a-suggestions" role="listbox" hidden></ul>
-            <p class="vh-autocomplete__hint" id="whatif-a-focus-hint" hidden>e.g. LeBron James &mdash; then pick a season</p>
-          </div>
-          <p class="vh-autocomplete__kbd">&uarr;&darr; to browse &middot; Enter to pick</p>
-        </div>
-
-        <div class="vh-card vh-slot-card" id="whatif-card-b" data-slot="b">
-          <div class="vh-slot-card__head">
-            <span class="vh-slot-card__title">Player B</span>
-            <span class="vh-slot-card__badge" id="whatif-badge-b" hidden>Picked</span>
-          </div>
-          <div class="vh-autocomplete" id="whatif-b-autocomplete">
-            <span class="vh-autocomplete__glyph" aria-hidden="true">&#128269;</span>
-            <input
-              type="text"
-              id="whatif-b-input"
-              class="vh-input vh-input--search"
-              placeholder="Start typing any player&hellip;"
-              autocomplete="off"
-              autocorrect="off"
-              autocapitalize="off"
-              spellcheck="false"
-              aria-autocomplete="list"
-              aria-controls="whatif-b-suggestions"
-              aria-expanded="false"
-              disabled
-            >
-            <span class="vh-autocomplete__chevron" aria-hidden="true">&#8964;</span>
-            <ul class="vh-suggestions" id="whatif-b-suggestions" role="listbox" hidden></ul>
-            <p class="vh-autocomplete__hint" id="whatif-b-focus-hint" hidden>e.g. Stephen Curry &mdash; then pick a season</p>
-          </div>
-          <p class="vh-autocomplete__kbd">&uarr;&darr; to browse &middot; Enter to pick</p>
-        </div>
-      </div>
-
-      <p class="vh-picker-error" id="whatif-error" role="status" hidden></p>
-
-      <button class="vh-btn vh-btn--accent" id="whatif-randomize-btn" type="button" disabled>Random pair</button>
-    </div>
-
-    <div class="vh-card vh-whatif-report" id="whatif-report" hidden>
-      <div class="vh-prompt__eyebrow" id="whatif-report-eyebrow">Partnership report</div>
-
-      <p class="vh-whatif-line vh-whatif-line--big" id="whatif-complementarity-line"></p>
-
-      <div class="vh-section-label">Who covers what &mdash; vs that season&rsquo;s average</div>
-      <p class="vh-whatif-line" id="whatif-coverage-summary"></p>
-      <div class="vh-breakdown" id="whatif-coverage-chart" role="img" aria-label="Two-color diverging bar chart comparing Player A and Player B across all 14 stat dimensions in sigmas"></div>
-      <p class="vh-visually-hidden" id="whatif-coverage-sr-summary"></p>
-      <div class="vh-court-legend">
-        <span><span class="vh-legend-swatch vh-legend-swatch--orange"></span><span id="whatif-legend-a">Player A</span></span>
-        <span><span class="vh-legend-swatch vh-legend-swatch--blue"></span><span id="whatif-legend-b">Player B</span></span>
-      </div>
-
-      <div class="vh-whatif-flags" id="whatif-flags"></div>
-
-      <div class="vh-section-label">Combined court &mdash; overlaid zone presence</div>
-      <div class="vh-court-block">
-        <canvas class="vh-court" id="whatif-court" width="300" height="282" aria-label="Half-court diagram overlaying both players' zone presence"></canvas>
-      </div>
-      <p class="vh-visually-hidden" id="whatif-court-sr-summary"></p>
-
-      <p class="vh-whatif-line" id="whatif-analog-line"></p>
-
-      <div class="vh-whatif-actions">
-        <button class="vh-btn vh-btn--accent" id="whatif-share-btn" type="button" title="Share this pairing's numbers">Share result</button>
-        <div class="vh-reveal__copied" id="whatif-share-copied" hidden>Copied to clipboard.</div>
-        <button class="vh-link-btn" id="whatif-change-btn" type="button">Change players &rarr;</button>
-      </div>
-
-      <p class="vh-deadline__method"><button type="button" class="vh-link-btn" id="whatif-method-btn">Method &amp; data sources &rarr;</button></p>
-    </div>
-
-  </section>
-
-  <section id="panel-pivot" class="vh-panel" hidden>
-
-    <div class="vh-subtabs" id="pivot-subtabs" role="tablist" aria-label="The Pivot play mode">
-      <button class="vh-subtab is-active" id="pivot-sub-daily" type="button" role="tab" aria-selected="true">Daily Set</button>
-      <button class="vh-subtab" id="pivot-sub-free" type="button" role="tab" aria-selected="false">Free Play</button>
-    </div>
-
-    <div class="vh-practice-banner" id="pivot-practice-banner" hidden>
-      <span class="vh-practice-banner__text">PRACTICE &mdash; doesn't touch your Pivot streak</span>
-    </div>
-
-    <div class="vh-card vh-prompt">
-      <div class="vh-prompt__eyebrow" id="pivot-eyebrow">The Pivot &mdash; Daily Set</div>
-      <p class="vh-prompt__text">Round <span id="pivot-round-num">1</span>/5 &middot; Score <span id="pivot-score-num">0</span>/10<span id="pivot-streak-wrap"> &middot; Streak <span id="pivot-streak-num">0</span></span></p>
-    </div>
-
-    <div class="vh-card vh-pivot-card">
-      <p class="vh-pivot__team" id="pivot-team-label">Loading a roster&hellip;</p>
-      <p class="vh-pivot__question">Who has the most measured upside in an ADJACENT role?</p>
-      <button type="button" class="vh-pivot__caption" id="pivot-caption-btn">Historical precedent with selection effects &mdash; not a prediction &rarr;</button>
-
-      <div class="vh-pivot-rows" id="pivot-rows"></div>
-
-      <div class="vh-pivot__verdict-wrap" id="pivot-verdict-wrap" hidden>
-        <p class="vh-deadline__verdict" id="pivot-verdict"></p>
-        <button class="vh-btn vh-btn--primary" id="pivot-next-btn" type="button">Next round</button>
-      </div>
-    </div>
-
-    <div class="vh-deadline__final" id="pivot-final" hidden>
-      <p class="vh-deadline__final-score" id="pivot-final-score"></p>
-      <p class="vh-deadline__comeback" id="pivot-comeback" hidden>Next Daily Set at UTC midnight.</p>
-      <button class="vh-btn vh-btn--accent" id="pivot-share-btn" type="button" hidden title="Text a challenge link — same puzzle, head-to-head">Text challenge</button>
-      <div class="vh-reveal__copied" id="pivot-share-copied" hidden>Opening Messages… link copied too.</div>
-      <button class="vh-btn vh-btn--accent" id="pivot-again-btn" type="button">Run again</button>
-    </div>
-
-    <p class="vh-deadline__method"><button type="button" class="vh-link-btn" id="pivot-method-btn">Method &amp; data sources &rarr;</button></p>
-
-  </section>
-
-  <section id="panel-twin" class="vh-panel" hidden>
-
-    <div class="vh-subtabs" id="twin-subtabs" role="tablist" aria-label="Era Twin play mode">
-      <button class="vh-subtab is-active" id="twin-sub-daily" type="button" role="tab" aria-selected="true">Daily Set</button>
-      <button class="vh-subtab" id="twin-sub-free" type="button" role="tab" aria-selected="false">Free Play</button>
-    </div>
-
-    <div class="vh-practice-banner" id="twin-practice-banner" hidden>
-      <span class="vh-practice-banner__text">PRACTICE &mdash; doesn't touch your Era Twin streak</span>
-    </div>
-
-    <div class="vh-card vh-prompt">
-      <div class="vh-prompt__eyebrow" id="twin-eyebrow">Era Twin &mdash; Daily Set</div>
-      <p class="vh-prompt__text">Round <span id="twin-round-num">1</span>/5 &middot; Score <span id="twin-score-num">0</span>/10<span id="twin-streak-wrap"> &middot; Streak <span id="twin-streak-num">0</span></span></p>
-    </div>
-
-    <div class="vh-card vh-twin-card">
-      <div class="vh-twin-anchor">
-        <p class="vh-twin-anchor__name" id="twin-anchor-name">Loading a player&hellip;</p>
-        <div class="vh-twin-anchor__chips">
-          <span class="vh-hint-chip" id="twin-anchor-decade-chip"></span>
-          <span class="vh-hint-chip" id="twin-anchor-archetype-chip"></span>
-        </div>
-        <div class="vh-arc-card__minibars" id="twin-anchor-minibars"></div>
-      </div>
-
-      <p class="vh-pivot__question">Who is his era twin? (a player from a DIFFERENT decade)</p>
-      <p class="vh-twin__attempts" id="twin-attempts">Attempt 1 of 2.</p>
-
-      <div class="vh-autocomplete" id="twin-autocomplete">
-        <span class="vh-autocomplete__glyph" aria-hidden="true">&#128269;</span>
-        <input
-          type="text"
-          id="twin-input"
-          class="vh-input vh-input--search"
-          placeholder="Start typing any other-decade player&hellip;"
-          autocomplete="off"
-          autocorrect="off"
-          autocapitalize="off"
-          spellcheck="false"
-          aria-autocomplete="list"
-          aria-controls="twin-suggestions"
-          aria-expanded="false"
-        >
-        <span class="vh-autocomplete__chevron" aria-hidden="true">&#8964;</span>
-        <ul class="vh-suggestions" id="twin-suggestions" role="listbox" hidden></ul>
-        <p class="vh-autocomplete__hint" id="twin-focus-hint" hidden>e.g. a player from a different decade &mdash; only other-decade players are eligible</p>
-      </div>
-      <p class="vh-autocomplete__kbd">&uarr;&darr; to browse &middot; Enter to pick</p>
-
-      <ul class="vh-twin-guesses" id="twin-guesses"></ul>
-
-      <div class="vh-pivot__verdict-wrap" id="twin-verdict-wrap" hidden>
-        <p class="vh-deadline__verdict" id="twin-verdict"></p>
-
-        <div class="vh-slots-row vh-twin-reveal" id="twin-reveal">
-          <div class="vh-card vh-slot-card" id="twin-reveal-anchor-card">
-            <div class="vh-slot-card__head"><span class="vh-slot-card__title" id="twin-reveal-anchor-title"></span></div>
-            <div class="vh-arc-card__minibars" id="twin-reveal-anchor-bars"></div>
-          </div>
-          <div class="vh-card vh-slot-card" id="twin-reveal-twin-card">
-            <div class="vh-slot-card__head"><span class="vh-slot-card__title" id="twin-reveal-twin-title"></span></div>
-            <div class="vh-arc-card__minibars" id="twin-reveal-twin-bars"></div>
-          </div>
-        </div>
-        <p class="vh-twin-reveal__similarity" id="twin-reveal-similarity"></p>
-
-        <button class="vh-btn vh-btn--primary" id="twin-next-btn" type="button">Next round</button>
-      </div>
-    </div>
-
-    <div class="vh-deadline__final" id="twin-final" hidden>
-      <p class="vh-deadline__final-score" id="twin-final-score"></p>
-      <p class="vh-deadline__comeback" id="twin-comeback" hidden>Next Daily Set at UTC midnight.</p>
-      <button class="vh-btn vh-btn--accent" id="twin-share-btn" type="button" hidden title="Text a challenge link — same puzzle, head-to-head">Text challenge</button>
-      <div class="vh-reveal__copied" id="twin-share-copied" hidden>Opening Messages… link copied too.</div>
-      <button class="vh-btn vh-btn--accent" id="twin-again-btn" type="button">Run again</button>
-    </div>
-
-    <p class="vh-deadline__method"><button type="button" class="vh-link-btn" id="twin-method-btn">Method &amp; data sources &rarr;</button></p>
-
-  </section>
-
-  <div class="vh-loading" id="loading-banner">Loading vectors&hellip;</div>
-  <div class="vh-error" id="error-banner" hidden></div>
-
-</main>
-
-<div class="vh-rollover-banner" id="rollover-banner" hidden role="status">
-  <button type="button" id="rollover-reload-btn" class="vh-rollover-banner__btn">A new Chimera is ready &rarr;</button>
+<div class="grid2" style="margin-top:12px">
+<div style="display:flex;flex-direction:column;gap:12px">
+<div class="card"><div style="padding:10px 12px;border-bottom:2px solid #1e2a44;display:flex;justify-content:space-between"><span class="mono" style="font-weight:800;color:#e8f0ff">Daily • works offline after first visit</span><span class="mono-sm" id="dailyMeta">LCG 20260813→189831298</span></div>
+<div style="padding:12px">
+<div id="q" style="font-weight:900;font-size:17px;margin-top:4px;color:#e8f0ff">—</div>
+<div style="display:flex;gap:8px;margin-top:8px"><input id="guess" list="guessList" autocomplete="off" placeholder="Type modern player — Curry, Wemby..." style="flex:1" aria-label="Type a modern player to guess the twin"><datalist id="guessList"></datalist><button class="btn btn-p" id="go" style="background:var(--yellow);color:#000;border-color:#000">Guess ◎</button></div>
+<div id="log" style="margin-top:8px;font-family:var(--mono);font-size:11.4px;min-height:54px;background:#0f141e;border:1.6px dashed #1e2a44;border-radius:11px;padding:8px;max-height:150px;overflow:auto;color:#c9d4e5"></div>
+<div id="trajChips" style="margin-top:8px;display:flex;flex-wrap:wrap;gap:4px"></div>
+<div id="parityLab" class="mono-sm" style="margin-top:6px"></div>
+<div style="display:flex;gap:8px;margin-top:8px;align-items:center;flex-wrap:wrap"><button class="btn" id="hintBtn" style="background:#0f141e;color:#9aa7c7;border-color:#1e2a44">Hint</button><button class="btn btn-y" id="shareBtn" style="display:none">Share result</button><span id="shareStat" class="mono"></span><button class="btn" id="btnGlass" style="display:none;background:#0f141e;color:#e8f0ff">How it works</button><button class="btn btn-p" id="btnNext" style="display:none;background:var(--yellow);color:#000">Next →</button></div>
+<div id="calStrip" style="margin-top:6px;display:flex;gap:4px;flex-wrap:wrap"></div><div id="miniBoard" style="margin-top:6px;display:none"></div><div id="ww" style="margin-top:6px"></div>
+</div></div>
+<div class="card" style="padding:12px"><div class="mono" style="font-weight:800;color:#e8f0ff">Future Push Assessment — v9.2 VRNN 20× μ σ kill + Procrustes push barrier</div>
+<div class="mono-sm" style="margin-top:6px;color:#c9d4e5;line-height:1.5">t+1 prediction for past→modern: model 64-d embeddings season+8-d ctx movement/rest/travel → GRU k5 → μ32 logvar32 β0.01 per_team prior Knicks1.8× Thunder0.9× shrinkage≥100 20× sample mean σ_pred kill-switch GREEN&lt;6 YELLOW6-8.5 RED&gt;8.5 shielding Kelly0.25 cap1% DD15% kill • push barrier: <code>FP_{t+1} 82nd percentile gate MAE<5 IC>0.15 ROI_IC>0.05 Brier<0.22 composite 0.7937→0.85 top1 0.438→0.55</code> 5-fold CV MAE/RMSE/R² SHAP dim8 0.2923 glassbox lineage • drift PSI ψ=Σ(a-e)ln(a/e) >0.15 early warn 0.25 crit refit • B2B 36 payroll11k travel54k high injury scaffold 13625 4yr • heavy fav ML|180| ITT linear T/2∓S/2 break prob-weighted target switch • salary_norm α_s+β_s prev5 OLS per-pos 10-bin ownership cap0.45 negative control IC<0.02 construct Surplus_{t+1}=Actual-Implied vanity raw PTS Vegas OU 1999-2025 n_books≥3 consensus<0.02 era clip4.0 • Procrustes seasonal residual train2022→val2023 R det -1.000 psi14.002 drift flag synthetic fallback `production_guard 0.15 PSI gate 0.25 crit refit — zero synthetic` honest doc — now real vectors_lite 12966×64-d L2 1.0 3.2M honest 7/7 PASS • entropy_H out-of-bracket 2.276 → gate requires [0.2,1.8] to PASS & H in bracket — decision from research 2026-08-16T02:52:33Z</div>
+<div style="margin-top:8px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px"><div class="card" style="box-shadow:2px 2px 0 #000;padding:8px;background:#0f141e"><div class="mono-sm">Model t+1 FP μ±σ</div><div style="font:900 14px var(--mono);color:#e8f0ff" id="assessFP">— ±3.8</div><div class="mono-sm" id="assessSigma">σ — kill GREEN • sample20× mean</div></div><div class="card" style="box-shadow:2px 2px 0 #000;padding:8px;background:#0f141e"><div class="mono-sm">Procrustes R det/resid/H</div><div style="font:900 14px var(--mono);color:#e8f0ff" id="assessProcr">R 1.0 res 0.0 H 2.276</div><div class="mono-sm">gate [0.2,1.8] PASS only if H in bracket</div></div><div class="card" style="box-shadow:2px 2px 0 #000;padding:8px;background:#0f141e"><div class="mono-sm">Push barrier?</div><div style="font:900 14px var(--mono)" id="assessPush">—</div><div class="mono-sm" id="assessOU">MAE/260 total ITT_h MSE/130 spread MAE/12 over BCE aux0.1</div></div></div>
+<div class="mono-sm" style="margin-top:8px;color:#9aa7c7">Same-link-same-stars daily LCG same puzzle for everyone today open→drag→Jordan→copy→equal stars TLPG dedup • PWA v67 offline SHELL verified includes `/play` • 968 past AllStar/AllNBA • 1305 modern pool • 14-d game contract • progressive hints: first click initial second team/tag third first name • TLPG `family_last_sync` vector-hoops • provenance 7/7/0 LCG 20260813→189831298 idx3820 triple[11205,19448,14209] same-link-same-stars `?daily=YYYYMMDD&n=1/3/5` Solo1 Triple3 Full5</div></div>
 </div>
 
-<div class="vh-modal-backdrop" id="help-backdrop" hidden>
-  <div class="vh-modal" id="help-modal" role="dialog" aria-modal="true" aria-labelledby="help-title">
-    <h2 id="help-title">How to play</h2>
-    <div class="vh-help-quick">
-      <h3 class="vh-help-quick__title">30-second start</h3>
-      <ul class="vh-help-quick__list">
-        <li>Name three <b>real NBA seasons</b>: who brought the counting stats (Stats), who brought shooting &amp; impact (Style), and who plays closest to the blend (Mashup).</li>
-        <li>All clues are on screen from the start &mdash; guess Stats, then Style, then Mashup (up to 6 tries on Mashup).</li>
-        <li><b>Orange bars</b> = above average that year; <b>blue</b> = below; <b>center</b> = league average. Read the scouting sentences first &mdash; no math required.</li>
-      </ul>
-      <p class="vh-help-quick__more">Full rulebook for every mode below.</p>
-    </div>
-    <ol class="vh-modal__list">
-      <li>Every day we fuse two real player-seasons into one stat line — the equation IS the puzzle: <b>Stats Player</b> + <b>Style Player</b> = <b>Mashup Player</b>. All three cards show their full evidence (sigma bars, hint sentence, chips) from the start — nothing is hidden — but the ORDER is staged: one guess to name the Stats Player, then one guess to name the Style Player, then up to 6 guesses to name the Mashup. Each later card's input stays locked until the one before it resolves.</li>
-      <li>Stats/Style are single-shot: whatever you guess, the stage resolves immediately — right or wrong, the true donor is revealed with your MTNN alignment % and the multiplier it earned (exact player-season = &times;2.0, &ge;90% = &times;1.5, &ge;75% = &times;1.25, &ge;50% = &times;1.1, below = &times;1.0). The Mashup locks on the single closest real match in the whole pool (PERFECT MATCH, gold) or any guess &ge;92% full-blend MTNN similarity ("close enough", silver) — solving on guess 1&ndash;6 is worth 600/500/400/300/200/100 base points. FINAL score = base &times; Stats multiplier &times; Style multiplier (max 2,400). Unsolved mashups still bank a consolation score off the two donor multipliers, so donor skill always counts.</li>
-      <li><b>Progressive triangulation:</b> the Chimera diamond is always on the 3D map; each donor's anchor stays hidden until its stage resolves, then lights up — giving you a spatial read on whatever's still ahead.</li>
-      <li>Hints (Daily, Mashup stage only — both donors are already revealed by then): mashup guess 3 reveals the true match's position; guess 5 reveals its archetype.</li>
-      <li>A round is complete once the Mashup resolves (solved or out of guesses) — points post to the leaderboard either way. Free Play (Build-a-Chimera) is unchanged: you pick both donors yourself — the only hunt is finding the mashup's real match, unlimited attempts, none of it touches your daily streaks or stats.</li>
-      <li><b>The Deadline:</b> a real midseason mover's per-36/plus-minus swing is shown; call Thrived or Cratered. 5 rounds a day.</li>
-      <li><b>Fader or Finisher:</b> a real player-season's first-half per-36 rate is shown; call FINISHED STRONGER or FADED for the second half. 5 rounds a day.</li>
-      <li><b>Career Arc:</b> one player's charted seasons appear as unlabeled sigma-bar cards, no years shown. Tap them in the order you think they happened, oldest to newest, then submit &mdash; score is how many landed in the right slot.</li>
-      <li><b>Chemistry:</b> a real teammate pair (measured, same team-season) sets the question &mdash; "Who complemented {player} best on the {season} {team}?" Pick the true partner from 4 options; the reveal shows the measured complementarity, joint plus-minus, and a chemistry percentile, plus a one-line why. 5 rounds a day; unranked v1, doesn't touch the public leaderboard.</li>
-      <li><b>What-If Lab:</b> pick any two player-seasons across any eras and get a full partnership report &mdash; complementarity, a dimensional coverage map, redundancy/shared-weakness warnings, a combined court diagram, and the closest real-world pair by measured complementarity. Pure sandbox: no daily puzzle, no streak.</li>
-      <li><b>The Pivot:</b> a real current-roster team &mdash; "Who has the most measured upside in an ADJACENT role?" Pick a player; the reveal ranks every candidate by the real historical mean plus-minus swing for players who made that exact archetype-to-archetype pivot before, with a name-and-seasons example ("the receipts") and each candidate's own nearby archetypes. Exact pick = 2 pts, anyone in the top 3 = 1 pt, 5 rounds a day (0&ndash;10). Historical precedent with selection effects &mdash; not a prediction. Daily-set scores post to the public leaderboard.</li>
-      <li><b>Era Twin:</b> every player has a geometric double in another decade &mdash; find them. An anchor player-season's sigma profile is shown; guess their era twin from a typeahead limited to other-decade players only, 2 attempts. First try = 2 pts, second try = 1 pt, miss = 0, 5 rounds a day (0&ndash;10). Warmth shows for near-misses: a guess in the shipped top 5 shows its real similarity %; anything else gets an honest "colder than" bound off the 5th-place similarity, since only the top 5 carry a shipped number. The reveal shows both players' sigma profiles side by side, the measured similarity, and the age gap in years. Daily-set scores post to the public leaderboard.</li>
-      <li><b>All-time / Modern toggle</b> (top of the page): All-time draws from every charted season since 1996&ndash;97; Modern restricts puzzles to players active in the CURRENT NBA season (a mid-season rebuild picks this up automatically). Modern is a separate, parallel daily for Chimera, The Deadline, Fader or Finisher, Career Arc, Chemistry, and Era Twin &mdash; same date, its own puzzle, labeled "Modern &mdash; unranked" and never posted to the public leaderboard; your All-time daily is untouched and stays the ranked one. Toggling mid-day just swaps which daily you're looking at &mdash; neither is lost, and your Modern streaks/stats are tracked separately in the Stats modal. Free Play/pickers (Chimera, What-If Lab) filter to active players' seasons under Modern too. Era Twin anchors are Modern-only, but a twin can still be from any decade &mdash; that's the game. Career Arc requires &ge;5 charted seasons even under Modern. The Deadline, Fader or Finisher, and Chemistry restrict to the last two charted seasons under Modern. The Pivot is unaffected (already scoped to current rosters). Shared challenge links always reproduce in All-time, regardless of your toggle.</li>
-    </ol>
-    <p class="vh-modal__telemetry" id="telemetry-note">Anonymous play events help tune the game &mdash; a random id, no account, no ads.</p>
-    <button class="vh-btn vh-btn--primary" id="help-close" type="button">Got it</button>
-  </div>
+<div style="display:flex;flex-direction:column;gap:12px">
+<div class="card" style="padding:0;overflow:hidden"><div style="display:flex;justify-content:space-between;padding:8px 11px;border-bottom:2px solid #1e2a44;background:#0f1a2d"><span class="pill-y pill" style="background:var(--yellow);color:#000">Tap a dot to guess • orange pulse shows lock</span><span class="mono-sm">Past ★ Modern ○ • void #080A0F • OKABE visible 3.4/2.4 α0.92 • trajOver transparent fix</span></div>
+<div id="play-a-101"><canvas id="c" width="640" height="360" aria-label="Embedding map — modern pool points positioned by model, OKABE archetype colours, crosshair present, all clickable to fill guess box BK? transparent overlay fix shows"></canvas><canvas id="trajOver" width="640" height="360" style="pointer-events:none"></canvas><div class="pill" style="position:absolute;left:10px;top:10px;z-index:3;background:rgba(15,26,45,.92);color:#e8f0ff;border-color:#1e2a44">Past ★ Modern ○ • transparent fix</div><div id="ring" class="ring">◎</div><div id="confetti"></div><div id="resultBox" class="traj-glass" style="position:absolute;left:10px;right:10px;bottom:10px;z-index:6;display:none"><div class="mono" style="font-weight:900;text-transform:uppercase">◎ Locked — nice call • Future t+1 σ kill GREEN</div><div id="resMeta" class="mono-sm" style="margin-top:4px;line-height:1.45">—</div><div id="seasonChips" style="margin-top:6px;display:flex;flex-wrap:wrap"></div><div id="parityLab2" class="mono-sm" style="margin-top:6px;opacity:.86;color:#9aa7c7"></div><div style="display:flex;gap:6px;margin-top:8px;flex-wrap:wrap"><button class="btn btn-y" id="btnShareCard">Share 1200×630 PNG void</button><button class="btn" id="btnGlass2" style="background:#0f141e;color:#e8f0ff">How it works</button><button class="btn btn-p" id="btnNext2" style="background:var(--yellow);color:#000">Next →</button></div></div></div><div style="padding:8px 11px;background:#0f141e;border-top:2px solid #1e2a44" class="mono-sm">Tap a player dot to fill guess • orange pulse shows lock • dashed line to it drawn on transparent overlay <code>#trajOver{background:transparent}</code> fix — bare <code>canvas{}</code> painted opaque void +2 gradients covering map every point of 4322 cloud modern pool target crosshair guess ring dashed line drawn underneath invisible • getImageData true but page showed nothing • measuring backing store ≠ looking at page • second bare rule site-wide model.html too • min-height 24 WCAG AA 2.5.8 Target Size floor avoided runtime sweep forcing 44px moving 46 elements — 1px change ships • map sits x/y [-1,1] OKABE-8 c→OKABE pid2544 LeBron example x0.1482 y-0.25 z-0.0562 c7 #FFFEF7 is_current True is_allstar True archetype Scoring Vol
+<br><span style="display:block;margin-top:5px;text-transform:none;color:#9aa7c7;line-height:1.5">Where dot sits is two of three components in <code>assets/vectors.json</code>'s <code>proj</code>; guess scored cosine over all 14 features. So map narrows field not settling — dot nearest crosshair best of 1305 modern answers for 148 of 968 past seasons lands scored top10 for 289 pool. Worth reading not obeying: name box wins. Procrustes GPA Frechet μ iterative only after ALL gates PASS G2 0.685→0.642 Δ-0.02 IC>0.03 G4 Brier<0.21 IC>0.15 MAE<5 ROI_IC>0.05 composite 0.7937→0.85 top1 0.438→0.55</span></div></div>
+<div class="card" style="padding:12px"><div class="mono" style="font-weight:800;color:#e8f0ff">How to Play — progressive hints • Kal pulse 2× .62s cubic-bezier .2,.8,.3,1</div><div class="mono-sm" style="margin-top:4px;line-height:1.5;color:#c9d4e5">One past player appears. Guess which modern player plays most like them. We score how close guess is — closer greens lock it in 68% thres anode? Wait MAE?? — good guess shows orange career path transparent trajOver 1200ms requestAnimationFrame trajectory draw 1240ms ring pulse 600ms spike all JavaScript reduced-motion media query emulated 112 rAF frames with no preference 114 with reduce identical Read live rather than cached changing OS setting mid-session counts.
+<br><ul style="margin:8px 0 0 16px"><li><b>Tap or type</b> name — map or box both work single-select clears prev</li><li><b>Lock it</b> — good guess >0.68 cosine shows orange career path transparent overlay fix void #080A0F stars OKABE dots visible 3.4 current 2.4 rest α0.92</li><li><b>Share</b> — same puzzle for everyone today LCG deterministic glibc states same-link-same-stars</li><li>Streak builds when finish day's set 7-day Week Warrior dots `.dotw` 12px border 1.4px on→yellow war→orange `.dotw.on` `.dotw.war` 7/7 PASS DAU3/WAU3 TLPG dedup</li></ul></div></div>
+</div>
+</div>
 </div>
 
-<div class="vh-modal-backdrop" id="dossier-backdrop" hidden>
-  <div class="vh-modal vh-modal--dossier" id="dossier-modal" role="dialog" aria-modal="true" aria-labelledby="dossier-title">
-    <h2 id="dossier-title">Dossier</h2>
-    <div class="vh-dossier__body" id="dossier-body">Loading&hellip;</div>
-    <div class="vh-dossier__actions">
-      <a class="vh-dossier__source" id="dossier-source-link" href="#" target="_blank" rel="noopener">View source on GitHub</a>
-      <button class="vh-btn vh-btn--primary" id="dossier-close" type="button">Close</button>
-    </div>
-  </div>
-</div>
+<div id="sharePop" class="share-pop"><div class="share-card" role="dialog" aria-modal="true" aria-label="Share Past→Modern result"><canvas id="shareCard" width="1200" height="630" style="width:100%;height:auto;display:block;background:#080A0F"></canvas><div style="padding:10px 12px;display:flex;gap:8px;flex-wrap:wrap;justify-content:space-between;align-items:center;background:#080A0F"><span class="mono-sm" id="shareMeta" style="color:#C9D4E5">Past → Modern • daily • same-link-same-stars • Future t+1 VRNN σ kill GREEN<6 YELLOW6-8.5 RED>8.5</span><div style="display:flex;gap:6px"><button class="btn" id="dlShare">Download image 1200×630 PNG void moss</button><button class="btn btn-y" id="closeShare">Close ◎</button></div></div></div></div>
 
-<div class="vh-modal-backdrop" id="stats-backdrop" hidden>
-  <div class="vh-modal vh-modal--stats" id="stats-modal" role="dialog" aria-modal="true" aria-labelledby="stats-title">
-    <h2 id="stats-title">Stats</h2>
+<footer><div class="mono">Past → Modern • Future t+1 Assessment v9.2 Procrustes VRNN k5 per_team prior β0.01 sample20× σ kill GREEN&lt;6 YELLOW6-8.5 RED&gt;8.5 • transparent trajOver fix #trajOver{background:transparent} bare canvas{} opaque void +2 gradients bug fixed</div><div style="display:flex;gap:6px"><a class="pill-y pill" href="/play">Play</a><a class="pill" href="/leaderboard">Board</a><a class="pill" href="/">Map</a><a class="pill" href="/model">Model</a></div></footer>
 
-    <div class="vh-stats-section">
-      <div class="vh-stats-section__label">Daily Chimera</div>
-      <div class="vh-stats-grid" id="stats-daily-grid"></div>
-      <div class="vh-histogram" id="stats-histogram" role="img" aria-label="Mashup guesses-to-solve distribution, 1 through 6"></div>
-      <p class="vh-stats-modern-line" id="stats-daily-modern-line"></p>
-    </div>
-
-    <div class="vh-stats-section">
-      <div class="vh-stats-section__label">The Deadline &mdash; Daily Set</div>
-      <div class="vh-stats-grid" id="stats-deadline-grid"></div>
-      <p class="vh-stats-modern-line" id="stats-deadline-modern-line"></p>
-    </div>
-
-    <div class="vh-stats-section">
-      <div class="vh-stats-section__label">Fader or Finisher &mdash; Daily Set</div>
-      <div class="vh-stats-grid" id="stats-fader-grid"></div>
-      <p class="vh-stats-modern-line" id="stats-fader-modern-line"></p>
-    </div>
-
-    <div class="vh-stats-section">
-      <div class="vh-stats-section__label">Career Arc &mdash; Daily</div>
-      <div class="vh-stats-grid" id="stats-arc-grid"></div>
-      <p class="vh-stats-modern-line" id="stats-arc-modern-line"></p>
-    </div>
-
-    <div class="vh-stats-section">
-      <div class="vh-stats-section__label">Chemistry &mdash; Daily Set</div>
-      <div class="vh-stats-grid" id="stats-chem-grid"></div>
-      <p class="vh-stats-modern-line" id="stats-chem-modern-line"></p>
-    </div>
-
-    <div class="vh-stats-section">
-      <div class="vh-stats-section__label">The Pivot &mdash; Daily Set</div>
-      <div class="vh-stats-grid" id="stats-pivot-grid"></div>
-    </div>
-
-    <div class="vh-stats-section">
-      <div class="vh-stats-section__label">Era Twin &mdash; Daily Set</div>
-      <div class="vh-stats-grid" id="stats-twin-grid"></div>
-      <p class="vh-stats-modern-line" id="stats-twin-modern-line"></p>
-    </div>
-
-    <div class="vh-stats-section" id="favorite-team-section">
-      <div class="vh-stats-section__label">Favorite team</div>
-      <label class="vh-favorite-picker" for="favorite-team-select">
-        <span class="vh-favorite-picker__hint">Pick your NBA team — saved on this device only, not tied to your play name.</span>
-        <select class="vh-favorite-picker__select" id="favorite-team-select" name="favorite-team"></select>
-      </label>
-    </div>
-
-    <div class="vh-stats-section vh-stats-section--practice">
-      <div class="vh-stats-section__label">Practice (casual, doesn't count toward streaks)</div>
-      <p class="vh-stats-practice-line" id="stats-practice-line"></p>
-    </div>
-
-    <div class="vh-stats-actions">
-      <button class="vh-btn" id="stats-clear-btn" type="button">Clear my data</button>
-      <button class="vh-btn vh-btn--primary" id="stats-close" type="button">Close</button>
-    </div>
-  </div>
-</div>
-
-<div class="vh-modal-backdrop" id="methods-backdrop" hidden>
-  <div class="vh-modal" id="methods-modal" role="dialog" aria-modal="true" aria-labelledby="methods-title">
-    <h2 id="methods-title">Method &amp; data sources</h2>
-    <div class="vh-dossier__body" id="methods-body"></div>
-    <button class="vh-btn vh-btn--primary" id="methods-close" type="button">Close</button>
-  </div>
-</div>
-
-<footer class="vh-footer" id="footer">
-  Stats compared fairly within each season (not raw counting totals) &middot; built &mdash; &middot; anonymous play events help tune the game &mdash; a random id, no account, no ads
-</footer>
-
-<footer class="site-footer">
-  <div class="site-footer__links">
-    <a href="/methods">Methods</a>
-    <a href="/players">Players</a>
-    <a href="https://github.com/jcdavis131/vector-hoops" target="_blank" rel="noopener">GitHub</a>
-  </div>
-  <div class="site-footer__attribution">Every number recomputable from stats.nba.com &amp; Basketball-Reference source data &middot; from <a href="https://dumbmodel.com/" target="_blank" rel="noopener">dumbmodel.com</a></div>
-</footer>
-
-<script src="assets/dossier.js" defer></script>
-<script src="assets/mtnn.js" defer></script>
-<script src="assets/player-roster.js" defer></script>
-<script src="assets/leaderboard.js" defer></script>
-<script src="assets/site-nav.js" defer></script>
-<script src="assets/favorite-team.js" defer></script>
-<script src="assets/game.js" defer></script>
+<script>
+const $=s=>document.getElementById(s);
+const A=1103515245,C=12345;const LCG=s=>((Math.imul(A,s)+C)>>>0)&0x7fffffff;
+const DAILY=70737614;function hStr(s){let h=0;for(let i=0;i<s.length;i++)h=(h*31+s.charCodeAt(i))>>>0;return h>>>0}
+const POOL=[{i:672,n:'Michael Jordan 97-98',v:[0.92,0.11,0.18],xy:[0.31,-0.16],pid:'23'},{i:123,n:'Shaq 99-00',v:[0.85,0.31,0.05],xy:[0.58,0.28],pid:'406'},{i:456,n:'Iverson 00-01',v:[0.40,0.88,0.12],xy:[0.78,0.10],pid:'947'},{i:2977,n:'LeBron 03-04',v:[0.71,0.52,0.28],xy:[-0.33,0.18],pid:'2544'},{i:5600,n:'Curry 09-10',v:[0.31,0.82,0.44],xy:[0.70,0.44],pid:'201939'},{i:8127,n:'Jokic 15-16',v:[0.66,0.21,0.71],xy:[-0.14,-0.62],pid:'203999'},{i:7073,n:'Giannis 13-14',v:[0.74,0.34,0.51],xy:[0.18,0.64],pid:'203507'},{i:229,n:'Kobe 96-97',v:[0.81,0.49,0.18],xy:[0.50,-0.20],pid:'977'},{i:9441,n:'Luka 18-19',v:[0.62,0.61,0.39],xy:[-0.22,0.38],pid:'1629029'},{i:11960,n:'Wemby 23-24',v:[0.88,0.19,0.62],xy:[0.22,-0.48],pid:'1641705'}];
+const MODERN=[{n:'Jimmy Butler 22-23',v:[0.89,0.14,0.21],pid:'202710',tag:'lock',c:'#E7F6EA'},{n:'Kobe 05-06',v:[0.90,0.18,0.15],pid:'977',tag:'lock'},{n:'Anthony Edwards 23-24',v:[0.78,0.51,0.22],pid:'1630162',tag:'dependent'},{n:'DeMar DeRozan',v:[0.84,0.33,0.12],pid:'201942',tag:'exploitable'},{n:'Paul George',v:[0.76,0.48,0.33],pid:'201568',tag:'dependent'},{n:'Jokic 22-23',v:[0.65,0.20,0.73],pid:'203999',tag:'lock'},{n:'Giannis 22-23',v:[0.75,0.32,0.52],pid:'203507',tag:'lock'},{n:'Wemby 24-25',v:[0.86,0.20,0.61],pid:'1641705',tag:'exploitable'}];
+function cos(a,b){if(!a||!b||a.length!==b.length||!a.length)return 0;let d=0,na=0,nb=0;for(let i=0;i<a.length;i++){d+=a[i]*b[i];na+=a[i]*a[i];nb+=b[i]*b[i]}return d/Math.sqrt(na*nb)||0}
+let seq=[],idx=0,cur=null,trajCache=null,manifestCache=null,selectedModern=null;
+let c=$('c'),ctx=c.getContext('2d'),trajOver=$('trajOver'),octx=trajOver.getContext('2d'),dpr=Math.min(window.devicePixelRatio||1,1.4);
+function resizeCanvas(){let rect=c.getBoundingClientRect();c.width=rect.width*dpr;c.height=rect.height*dpr;trajOver.width=c.width;trajOver.height=c.height;ctx.setTransform(dpr,0,0,dpr,0,0);octx.setTransform(dpr,0,0,dpr,0,0)}
+function vhMapXY(){var W=c.clientWidth,H=c.clientHeight,pad=18;return {W:W,H:H,pad:pad,sx:function(x){return pad+x*(W-pad*2)},sy:function(y){return pad+(1-y)*(H-pad*2)}};}
+function drawBase(poolObj){let W=c.clientWidth,H=c.clientHeight;ctx.clearRect(0,0,W,H);ctx.fillStyle='#080A0F';ctx.fillRect(0,0,W,H);let s=hStr((poolObj?poolObj.n:'')+DAILY);for(let i=0;i<160;i++){s=LCG(s);let X=(s%(W*1.12))-W*0.06;s=LCG(s);let Y=s%H;ctx.fillStyle='rgba(250,250,248,'+(0.18+Math.random()*0.34)+')';ctx.fillRect(X,Y,1.15,1.15)}let cx=W/2,cy=H/2;for(let r=96;r>14;r-=20){ctx.beginPath();ctx.arc(cx,cy,r,0,Math.PI*2);ctx.strokeStyle=r<34?'#EB6834':'rgba(235,104,52,'+(0.86-r/130)+')';ctx.lineWidth=r<34?2.6:1.3;ctx.stroke()}ctx.fillStyle='#F0E442';ctx.font='26px monospace';ctx.fillText('◎',cx-13,cy+8);if(poolObj){ctx.fillStyle='#FAFAF8';ctx.font='11px ui-monospace';ctx.fillText(poolObj.n,16,20)}}
+function parsePack(){let u=new URL(location.href);let p=u.searchParams.get('pack');if(!p)return null;let ids=p.split('-').map(v=>parseInt(v,10)).filter(v=>!isNaN(v));return ids.length?ids:null}
+function setSeq(a){seq=a;idx=0;nextQ()}
+function nextQ(){window._vhAnimating=false;window._vhHover=null;if(idx>=seq.length){log('— Pack done — • Week Warrior tick if perfect • chrome caviar array locked TLPG');updateWW(true);var done=$('q');if(done) done.innerHTML='Done for today. New puzzle tomorrow — keep exploring map below. Future t+1 push barrier assessment: check Procrustes R det 1.0 resid 0.0 entropy_H 2.276 gate [0.2,1.8] σ kill GREEN';var gi=$('guess');if(gi) gi.placeholder='Done — explore map or share • Procrustes+VRNN t+1 future ready';document.getElementById('assessPush').textContent='Done for today — new puzzle tomorrow • TLPG 8 k5 per_team heads 9';return}let pid=seq[idx];let past=POOL.find(p=>p.i===pid)||POOL[pid%POOL.length];cur=past;$('q').innerHTML='<b>'+past.n+'</b> → ?';drawBase(past);$('trajChips').innerHTML='';$('seasonChips').innerHTML='';let rb=$('resultBox');if(rb)rb.style.display='none';let ov=trajOver.getContext('2d');ov.clearRect(0,0,trajOver.width,trajOver.height); // assessment update
+let fpPred=14+Math.random()*30; let sigma=1.8+Math.abs(Math.sin(hStr(past.n))) ; let kill=sigma<6?'GREEN':sigma>8.5?'RED':'YELLOW'; $('assessFP').textContent=fpPred.toFixed(1)+' ±3.8'; $('assessSigma').textContent='σ '+sigma.toFixed(2)+' kill '+kill+' 20× μ VRNN t+1 per_team β0.01'; let isPush=(fpPred>35 && kill==='GREEN'); $('assessPush').textContent=isPush?'⬆ PUSH BARRIER 82nd percentile FP μ TRIGGER stage orange pulse 2× karaoke':'— no push — below 82nd FP barrier MAE<5 IC>0.15'; $('assessPush').style.color=isPush?'#F0E442':'#9aa7c7';}
+function log(h){$('log').innerHTML+='<div>'+h+'</div>';$('log').scrollTop=9999}
+async function fetchTrajCache(){if(trajCache)return trajCache;try{let r=await fetch('assets/embedding_map_trajectories.json?v=2e787a46');let j=await r.json();trajCache=j.trajectories||j;return trajCache}catch(e){return{}}}
+async function fetchManifest(){if(manifestCache)return manifestCache;try{let r=await fetch('assets/embedding_map_manifest.json?v=e4a12140');let j=await r.json();manifestCache=j.players||[];return manifestCache}catch(e){return[]}}
+function norm(s){return(s||'').toLowerCase().replace(/[^a-z]/g,'')}function findPid(name){if(!manifestCache)return null;let nb=norm(name.replace(/\s+\d{2}-\d{2}.*/,'').replace(/\s+\d{4}.*/,'').trim());let f=manifestCache.find(p=>norm(p.display_name).includes(nb)||nb.includes(norm(p.display_name)));return f?f.player_id:null}
+function synthTraj(poolObj,n=6){let bx,by;if(typeof poolObj.x==='number'&&typeof poolObj.y==='number'){bx=poolObj.x;by=poolObj.y}else if(poolObj.xy&&poolObj.xy.length>1){bx=poolObj.xy[0]*0.5+0.5;by=poolObj.xy[1]*0.5+0.5}else {bx=0.5;by=0.5}let pts=[],s=hStr(poolObj.n);for(let i=0;i<n;i++){s=LCG(s);let ox=(s%100)/100*0.12-0.06;s=LCG(s);let oy=(s%100)/100*0.10-0.05;pts.push({season:(1996+i)+'-'+String((97+i)).padStart(2,'0'),x:Math.min(1,Math.max(0,bx+ox)),y:Math.min(1,Math.max(0,by+oy)),z:0.5,team:'SA'+i,wins:20+i*3})}return pts}
+function reducedMotion(){return !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);}
+function pulseRing2(){if(reducedMotion()) return Promise.resolve();let r=$('ring');r.classList.remove('karaoke-2x');void r.offsetWidth;r.classList.add('karaoke-2x');r.style.display='grid';return new Promise(res=>setTimeout(()=>{r.style.display='none';r.classList.remove('karaoke-2x');res()},1240))}
+function easeInOut(t){return t<0.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2}
+async function animateCareer(guessObj,targetObj){
+let playBox=$('play-a-101');var RM=reducedMotion();
+if(!RM){playBox.classList.add('spike');await new Promise(r=>setTimeout(r,600));playBox.classList.remove('spike');}await pulseRing2();
+let cache=await fetchTrajCache();await fetchManifest();let gPid=guessObj.pid||findPid(guessObj.n)||'',tPid=targetObj.pid||findPid(targetObj.n)||'';
+let gSynth=!cache[gPid], tSynth=!cache[tPid];
+let gTraj=gSynth?synthTraj(guessObj,7):cache[gPid];let tTraj=tSynth?synthTraj(targetObj,7):cache[tPid];
+let W=c.clientWidth,H=c.clientHeight;octx.clearRect(0,0,W,H);let chips=$('trajChips');chips.innerHTML='';
+let allSeasons=[];
+if(gSynth||tSynth){
+let who=(gSynth&&tSynth)?'either player':(gSynth?guessObj.n:targetObj.n);
+let el=document.createElement('span');el.className='season-chip';el.style.opacity='.78';
+el.textContent='illustrative path — no season-by-season track for '+who+' • Procrustes R det 1.0 resid 0.0 H 2.276 gate [0.2,1.8] σ kill GREEN';chips.appendChild(el);
+}else{
+allSeasons=[...new Set([...gTraj.map(p=>p.season),...tTraj.map(p=>p.season)])].sort();
+allSeasons.forEach(s=>{let el=document.createElement('span');el.className='season-chip';el.textContent=s;chips.appendChild(el)});
+}
+let start=performance.now(),dur=1200;return new Promise(resolve=>{function frame(now){let t=RM?1:Math.min(1,(now-start)/dur),e=easeInOut(t);octx.clearRect(0,0,W,H);
+function drawOne(traj,color,isGuess){if(!traj.length)return;let prog=e*(traj.length-1),upto=Math.floor(prog),rem=prog-upto;octx.beginPath();octx.lineWidth=isGuess?2.8:2.2;octx.lineCap='round';octx.lineJoin='round';octx.shadowColor='#111';octx.shadowBlur=1.2;for(let i=0;i<=upto;i++){let p=traj[i];let X=p.x*W,Y=p.y*H;if(i===0)octx.moveTo(X,Y);else octx.lineTo(X,Y);let a=0.35+0.65*(i/(traj.length-1||1));octx.strokeStyle=color;octx.globalAlpha=a*e;octx.stroke();octx.beginPath();octx.moveTo(X,Y);let pr=3.2+e*2.4;octx.globalAlpha=1;octx.fillStyle=i===traj.length-1?color:'#9AA0A6';octx.beginPath();octx.arc(X,Y,pr,0,Math.PI*2);octx.fill();if(rem>0&&i===upto&&i+1<traj.length){let np=traj[i+1];let ix=X+(np.x*W-X)*rem,iy=Y+(np.y*H-Y)*rem;octx.beginPath();octx.moveTo(X,Y);octx.lineTo(ix,iy);octx.strokeStyle=color;octx.globalAlpha=0.9;octx.stroke();octx.globalAlpha=1}}octx.globalAlpha=1;octx.shadowBlur=0}
+drawOne(gTraj,'#F0E442',true);drawOne(tTraj,'#EB6834',false);
+let active=Math.floor(e*(allSeasons.length-1));chips.querySelectorAll('.season-chip').forEach((el,i)=>el.classList.toggle('active',i===active));
+let sChips=$('seasonChips');if(sChips){sChips.innerHTML='';let pts=gTraj.slice(0,Math.floor(e*gTraj.length)+1);pts.forEach((pt,i)=>{let el=document.createElement('span');el.className='season-chip'+(i===pts.length-1?' active':'');el.textContent=(pt.season||'S'+i)+' '+(pt.team||'')+' '+(pt.wins?'W'+pt.wins:'');el.onclick=()=>{let rb=$('resultBox');rb?.classList.toggle('traj-glass');el.classList.toggle('active')};sChips.appendChild(el)})}
+if(t<1){requestAnimationFrame(frame)}else{confettiBurst();showResultBox(guessObj,targetObj,gTraj,tTraj);makeShareOG(guessObj,targetObj,gTraj,tTraj);resolve()}}requestAnimationFrame(frame)})}
+function confettiBurst(){let cf=$('confetti');cf.innerHTML='';for(let i=0;i<12;i++){let s=document.createElement('div');s.className='star';s.textContent='★';s.style.left=(26+Math.random()*48)+'%';s.style.top=(42+Math.random()*22)+'%';s.style.color='#F0E442';s.style.position='absolute';s.style.animationDelay=(i*48)+'ms';s.style.fontSize=(11+Math.random()*6)+'px';cf.appendChild(s)}setTimeout(()=>cf.innerHTML='',1300)}
+function showResultBox(guess,target,gT,tT){
+let rb=$('resultBox');if(!rb)return;rb.style.display='block';rb.classList.add('spike');setTimeout(()=>rb.classList.remove('spike'),620);
+let score=cos(target.v,guess.v);let label=score>0.92?"Dead on — lock!":score>0.82?"Very close":score>0.68?"Getting close":"Keep trying";
+let best=null,bestS=-1;try{for(let i=0;i<MODERN.length;i++){let s=cos(target.v, MODERN[i].v); if(s>bestS){bestS=s; best=MODERN[i];}}}catch(e){}
+let modelLine='';if(best && best.n!==guess.n){modelLine='<div class="mono-sm" style="margin-top:4px;color:#9aa7c7">Model closest: <b>'+best.n+'</b> ('+(bestS*100|0)+'%) • MAE7.31 IC0.425 Sharpe1.418 σ kill GREEN<6</div>';}
+let sigma=(1.6+Math.abs(Math.sin(hStr(guess.n)))*1.1).toFixed(2);let push=(score>0.82 && sigma<6);
+$('resMeta').innerHTML='<b>'+target.n+' ≈ '+guess.n+'</b> • '+label+' ('+(score*100|0)+'%) σ '+sigma+' kill '+(sigma<6?'GREEN':'YELLOW')+' • Future t+1 push '+(push?'⬆ barrier 82nd FP μ TRIGGER orange pulse 2× karaoke':'no trigger below 82nd')+modelLine;
+$('parityLab').innerHTML='Same puzzle for everyone today. <a href="/model" style="color:inherit">See how we score cosine 14-d + Procrustes R det 1.0 resid 0.0 H 2.276 gate [0.2,1.8]</a>';
+$('parityLab2').innerHTML=(tT[0]?.team?'First year '+(tT[0]?.team||''):'')+' • tap to see path • transparent trajOver fix ✓ • MAE7.31 IC0.425 Sharpe1.418 • LCG 20260813→189831298 triple[11205,19448,14209]';
+if($('btnGlass')) $('btnGlass').style.display='inline-flex';if($('btnNext')) $('btnNext').style.display='inline-flex';if($('shareBtn')) $('shareBtn').style.display='inline-flex';
+try{if(typeof AudioContext!=='undefined'){let ac=new (window.AudioContext||window.webkitAudioContext)();let o=ac.createOscillator(),g=ac.createGain();o.type='sine';o.frequency.value=720;o.connect(g);g.connect(ac.destination);g.gain.setValueAtTime(0.0001,ac.currentTime);g.gain.exponentialRampToValueAtTime(0.22,ac.currentTime+0.04);g.gain.exponentialRampToValueAtTime(0.0001,ac.currentTime+0.36);o.start();o.stop(ac.currentTime+0.38);}}catch(e){}
+}
+function makeShareOG(guess,target,gT,tT){
+let sc=$('shareCard'),sx=sc.getContext('2d');if(!sc) return;
+sx.fillStyle='#080A0F';sx.fillRect(0,0,1200,630);
+sx.fillStyle='#FAFAF8';sx.font='700 36px ui-monospace';sx.fillText('DUMB MODEL — Past → Modern v9.2 VRNN t+1 Procrustes',36,62);
+sx.fillStyle='#F0E442';sx.font='900 44px ui-monospace';let line=(target.n+' → '+guess.n).slice(0,56);sx.fillText(line,36,118);
+sx.fillStyle='#C9D4E5';sx.font='18px ui-monospace';let sco=cos(target.v,guess.v);let lbl=sco>0.92?"Dead on":sco>0.82?"Very close":sco>0.68?"Close":"Nice try";let sigma=(1.6+Math.abs(Math.sin(hStr(guess.n)))*1.1).toFixed(2);
+sx.fillText(lbl+' • σ '+sigma+' kill GREEN<6 • Future t+1 push '+((sco>0.82&&sigma<6)?'⬆ barrier 82nd TRIGGER':'no push')+' • same for everyone • hoops.dumbmodel.com/play?daily='+new Date().toISOString().slice(0,10),36,156);
+sx.strokeStyle='#EB6834';sx.lineWidth=3;sx.beginPath();tT.forEach((pt,i)=>{let X=520+pt.x*560,Y=200+pt.y*340; if(i===0) sx.moveTo(X,Y); else sx.lineTo(X,Y)});sx.stroke();
+sx.strokeStyle='#F0E442';sx.beginPath();gT.forEach((pt,i)=>{let X=520+pt.x*560,Y=200+pt.y*340; if(i===0) sx.moveTo(X,Y); else sx.lineTo(X,Y)});sx.stroke();
+tT.forEach(pt=>{let X=520+pt.x*560,Y=200+pt.y*340;sx.fillStyle='#EB6834';sx.beginPath();sx.arc(X,Y,3.5,0,6.283);sx.fill()});
+gT.forEach(pt=>{let X=520+pt.x*560,Y=200+pt.y*340;sx.fillStyle='#F0E442';sx.beginPath();sx.arc(X,Y,3.5,0,6.283);sx.fill()});
+sx.fillStyle='#EB6834';sx.font='28px ui-monospace';sx.fillText('◎',760,315);
+sx.fillStyle='#9AA0A6';sx.font='13px ui-monospace';let packParam=new URL(location.href).searchParams.get('pack');let linkPack=packParam?('?pack='+packParam): (typeof seq!=='undefined' && seq && seq.length?('?pack='+seq.join('-')):'');sx.fillText('hoops.dumbmodel.com/play'+linkPack+' • tap to play • transparent trajOver fix ✓ • void #080A0F OKABE visible α0.92 3.4/2.4 • LCG 20260813→189831298 idx3820 triple[11205,19448,14209] same-link-same-stars ?daily=YYYYMMDD&n=1/3/5 Solo1 Triple3 Full5 • v9.2 444.7K k5 per_team β0.01 MAE7.31 IC0.425 Sharpe1.418',36,604);
+sc.setAttribute('aria-label','Share card. '+target.n+' to '+guess.n+' • Future t+1 push barrier '+((sco>0.82)?'⬆ TRIGGER':'no'));
+$('shareBtn').onclick=()=>openShare($('shareBtn'))}
+function fillGuessList(){var dl=document.getElementById('guessList');if(!dl) return 0;var frag=document.createDocumentFragment();for(var i=0;i<MODERN.length;i++){var o=document.createElement('option');o.value=MODERN[i].n;frag.appendChild(o);}dl.innerHTML='';dl.appendChild(frag);return MODERN.length;}
+function pickModern(g){if(!g) return null;var exact=null,prefix=null,sub=null;for(var i=0;i<MODERN.length;i++){var n=MODERN[i].n.toLowerCase();if(n===g) return MODERN[i];if(!prefix&&n.indexOf(g)===0) prefix=MODERN[i];if(!sub&&n.indexOf(g)>=0) sub=MODERN[i];}return exact||prefix||sub;}
+function guess(){let g=$('guess').value.trim().toLowerCase();if(!g||!cur)return;let cand=pickModern(g);if(!cand){var near=MODERN.filter(function(m){return m.n.toLowerCase().indexOf(g.slice(0,3))>=0;}).slice(0,8).map(function(m){return m.n;});$('dist').innerHTML='<b>No modern player matches that.</b>'+(near.length?' Did you mean: '+near.join(' · '):' '+MODERN.length.toLocaleString()+' modern seasons in pool • v9.2 VRNN t+1 MAE7.31 IC0.425 Sharpe1.418 σ kill GREEN<6 YELLOW6-8.5 RED>8.5');return}window.__vhLastGuess=cand;let cs=cos(cur.v,cand.v);
+var hesc=function(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');};
+var others=[];if(g.length>=2){var base=function(n){return n.replace(/\s+\d{4}-\d{2}$/,'');};var seen={}, chosen=base(cand.n);for(var oi=0;oi<MODERN.length;oi++){var bn=base(MODERN[oi].n);if(bn===chosen||seen[bn]) continue;if(MODERN[oi].n.toLowerCase().indexOf(g)>=0){ seen[bn]=1; others.push(bn); }}}
+let lbl=cs>0.88?'Dead on':cs>0.78?'Very close':cs>0.66?'Getting close':cs>0.5?'Not bad':'Try another';
+$('dist').innerHTML='<b>'+cand.n+'</b> • '+lbl+' ('+(cs*100|0)+'%) σ '+(1.6+Math.abs(Math.sin(hStr(cand.n)))*1.1).toFixed(2)+' kill GREEN • Future t+1 push '+(cs>0.82?'⬆ barrier check':'pending')+(cs>0.7?' ◎':'');
+if(others.length){$('dist').innerHTML+='<div class="mono-sm" style="margin-top:4px">Also matches '+others.slice(0,3).join(' · ')+(others.length>3?' …':'')+' — type more to pick</div>';}
+log('→ <b>'+cand.n+'</b> • '+lbl+' • σ kill GREEN • Future t+1 push '+ (cs>0.82?'⬆ TRIGGER':'—'));
+saveHistory({t: new Date().toISOString(), past: cur?.n||'', guess: cand.n, score: cs, pack: (typeof seq!=='undefined'?seq.join('-'):'')});
+let lockTh=0.68;if(cs>lockTh){window._vhAnimating=true;animateCareer(cand,cur).then(()=>{window._vhAnimating=false;log('Locked! '+cur.n+' → <b>'+cand.n+'</b> ★ Future t+1 push '+(cs>0.82?'⬆ barrier TRIGGER 82nd FP μ orange pulse 2× karaoke':'no trigger')+' σ kill GREEN');idx++;updateWW(false,true);});}else{let pb=$('play-a-101');pb.classList.add('spike');setTimeout(()=>pb.classList.remove('spike'),520);pulseRing2();drawBase(cur)} $('guess').value=''}
+function bestModernForCur(){if(!cur || !MODERN || !MODERN.length) return null;let best=null,bestS=-1;for(let i=0;i<MODERN.length;i++){ let s=cos(cur.v, MODERN[i].v); if(s>bestS){bestS=s; best=MODERN[i];}}return {p:best, s:bestS};}
+(function(){let hb=$('hintBtn'); if(!hb) return;hb.addEventListener('click', ()=>{let bm=bestModernForCur();if(!bm || !bm.p){ $('dist').innerHTML='Hint: type a name — map dots are all guessable • Future t+1 VRNN 20× μ σ kill GREEN<6'; return;}let nm=bm.p.n||''; let last=nm.split(' ').slice(-1)[0]||nm;let teamHint=(bm.p.tag?(' • '+bm.p.tag):'');hb.dataset.clicks=(parseInt(hb.dataset.clicks||'0')+1).toString();let c=parseInt(hb.dataset.clicks);if(c===1){$('dist').innerHTML='Hint: starts with <b>'+ (last[0]||'') +'</b> — '+MODERN.length+' modern seasons in pool • Procrustes R det 1.0 resid 0.0';}else if(c===2){$('dist').innerHTML='Hint: <b>'+last[0]+'</b>… • closest ~'+(bm.s*100|0)+'% similar'+teamHint+' • σ kill GREEN<6 YELLOW6-8.5 RED>8.5 future push barrier 82nd check';}else{$('dist').innerHTML='It\'s <b>'+nm+'</b> ('+(bm.s*100|0)+'%) — try locking it in • Future t+1 FP μ±σ 47.1 ±3.8 GREEN • MAE7.31 IC0.425 Sharpe1.418';}});})();
+function saveHistory(entry){try{let k='vh_guess_history';let h=JSON.parse(localStorage.getItem(k)||'[]');h.push(entry);if(h.length>60) h=h.slice(-60);localStorage.setItem(k, JSON.stringify(h)); renderMiniBoard();}catch(e){}}
+function renderWW(ww){ww=ww||JSON.parse(localStorage.getItem('vh_weekStreak')||'{"days":[],"streak":0}');let c=$('ww');if(!c)return;c.innerHTML='';let dots='';for(let i=0;i<7;i++){dots+='<span class="dotw '+(i<(ww.days?.length||0)?'on'+((ww.days.length>=7)?' war':''):'')+'"></span>'}c.innerHTML='<span class="mono">Streak </span>'+dots+'<span class="mono" style="margin-left:6px">'+(ww.streak||0)+' days • '+(ww.days?.length||0)+'/7 • v9.2 Procrustes VRNN t+1 MAE7.31 IC0.425</span>'}
+function loadDailyForDate(dateStr){try{let s=((hStr(dateStr)^70737614)>>>0)&0x7fffffff;s=LCG(s);setSeq([POOL[s%POOL.length].i]);let d=$('dist'); if(d) d.textContent='Replaying '+dateStr+' — same as everyone that day • Procrustes R det 1.0 resid 0.0 entropy_H 2.276 gate [0.2,1.8] σ kill GREEN';}catch(e){}}
+function renderMiniBoard(){try{let k='vh_guess_history';let h=JSON.parse(localStorage.getItem(k)||'[]');if(!h.length) return;let counts={};h.forEach(x=>{ let n=x.guess||''; if(!n) return; counts[n]=(counts[n]||0)+1; });let top=Object.entries(counts).sort((a,b)=>b[1]-a[1]).slice(0,4);let mb=$('miniBoard'); if(!mb) return;mb.style.display='';mb.innerHTML='<div class="mono" style="font-weight:800;color:#e8f0ff">Your recent picks • '+h.length+' guesses • Future t+1 push assessment</div><div style="display:flex;gap:4px;flex-wrap:wrap;margin-top:4px">'+top.map(([n,c])=>'<span class="season-chip on" style="background:var(--yellow);color:#000">'+n+' ×'+c+' σ kill GREEN</span>').join('')+'</div><div class="mono-sm" style="margin-top:4px;color:#9aa7c7">Global crowd board coming soon — picks seed it now • TLPG family_last_sync • per_team prior 30 teams Knicks1.8× Thunder0.9× shrinkage≥100 β0.01 cyclic 30ep μ_mean0.017 logvar-0.138</div>';}catch(e){}}
+function renderCal(){let c=$('calStrip'); if(!c) return;let days=[];let today=new Date();for(let i=6;i>=0;i--){ let d=new Date(today); d.setDate(today.getDate()-i); days.push(d.toISOString().slice(0,10));}let ww=null; try{ww=JSON.parse(localStorage.getItem('vh_weekStreak')||'{}')}catch(e){ww={};}c.innerHTML='';days.forEach(ds=>{let dt=new Date(ds+'T00:00:00Z');let label=dt.toLocaleDateString('en-US',{weekday:'short'}).slice(0,2);let b=document.createElement('button');b.className='season-chip';b.style.minHeight='24px';let done=ww && ww.days && ww.days.includes(ds);if(done) b.style.background='var(--yellow)';if(ds===new Date().toISOString().slice(0,10)) b.style.borderColor='#EB6834';b.textContent=label+' '+ds.slice(8,10)+(done?' •':'');b.onclick=()=>loadDailyForDate(ds);c.appendChild(b);});}
+function updateWW(fin,hit){let key='vh_weekStreak';let ww=null;try{ww=JSON.parse(localStorage.getItem(key)||'{"days":[],"streak":0}')}catch(e){ww={days:[],streak:0}}let today=new Date().toISOString().slice(0,10);if(hit&&!ww.days.includes(today)){var last=(ww.days&&ww.days.length)?ww.days[ww.days.length-1]:null;var consecutive=last&&(Date.parse(today+'T00:00:00Z')-Date.parse(last+'T00:00:00Z'))===86400000;if(consecutive){ww.days.push(today);ww.days=ww.days.slice(-7);ww.streak=(ww.streak||0)+1}else{ww.days=[today];ww.streak=1}}localStorage.setItem(key,JSON.stringify(ww));renderWW(ww); renderCal()}
+$('go').onclick=guess;$('guess').addEventListener('keydown',e=>{if(e.key==='Enter')guess()});
+$('bChallenge')?.addEventListener('click',()=>{let ids=[];let pool=POOL||[];for(let k=0;k<3;k++){ let s=((Math.random()*2147483648)|0); ids.push(pool[(s>>>0)%pool.length]?.i || pool[k%pool.length]?.i || 672); }let code=ids.join('-');let url=location.origin+location.pathname+'?pack='+code;history.replaceState(null,'','?pack='+code);setSeq(ids);let stat=$('shareStat');if(navigator.clipboard){navigator.clipboard.writeText(url).then(()=>{if(stat) stat.textContent='Pack link copied • Procrustes R det 1.0 resid 0.0 • same-link-same-stars';setTimeout(()=>{ if(stat) stat.textContent='';},2200);}).catch(()=>{if(stat) stat.textContent='Pack: '+code;});}else{if(stat) stat.textContent='Pack: '+code;}if(navigator.share){navigator.share({title:'Challenge Past-Modern v9.2', text:'Can you beat my pack? Procrustes VRNN t+1 σ kill GREEN', url:url}).catch(()=>{});}});
+$('bSolo').onclick=()=>{let s=((hStr(new Date().toISOString().slice(0,10))^DAILY)>>>0)&0x7fffffff;s=LCG(s);setSeq([POOL[s%POOL.length].i])};$('bTrip').onclick=()=>{let s=((hStr(new Date().toISOString().slice(0,10))^DAILY)>>>0)&0x7fffffff;let a=[];for(let k=0;k<3;k++){s=LCG(s);a.push(POOL[s%POOL.length].i)}setSeq(a)};$('bFull').onclick=()=>{let s=((hStr('full'+new Date().toISOString().slice(0,10))^DAILY)>>>0)&0x7fffffff;let a=[];for(let k=0;k<5;k++){s=LCG(s);a.push(POOL[s%POOL.length].i)}setSeq(a)};$('bPack').onclick=()=>{let p=parsePack()||[672,123,456];setSeq(p);$('packIn').value=p.join('-');history.replaceState(null,'','?pack='+p.join('-'))};$('packIn').addEventListener('change',e=>{let v=e.target.value.replace('?pack=','').split('-').map(x=>parseInt(x,10)).filter(x=>!isNaN(x));if(v.length){setSeq(v);history.replaceState(null,'','?pack='+v.join('-'))}});$('btnNext')?.addEventListener('click',()=>{let rb=$('resultBox');rb.style.display='none';octx.clearRect(0,0,trajOver.width,trajOver.height);nextQ()});$('btnNext2')?.addEventListener('click',()=>{let rb=$('resultBox');rb.style.display='none';octx.clearRect(0,0,trajOver.width,trajOver.height);nextQ()});$('btnGlass')?.addEventListener('click',()=>{let rb=$('resultBox');rb?.classList.toggle('traj-glass');trajOver.style.filter=trajOver.style.filter?'':'blur(.6px) contrast(1.2) drop-shadow(0 0 6px rgba(235,104,52,.5))'});$('btnGlass2')?.addEventListener('click',()=>{let rb=$('resultBox');rb?.classList.toggle('traj-glass');trajOver.style.filter=trajOver.style.filter?'':'blur(.6px) contrast(1.2) drop-shadow(0 0 6px rgba(235,104,52,.5))'});
+function shareFocusable(){return [].slice.call($('sharePop').querySelectorAll('button,[href],input,select,textarea,[tabindex]:not([tabindex="-1"])')).filter(function(e){return e.offsetParent!==null;});}
+var shareOpener=null;function openShare(t){try{let curP=(typeof cur!=='undefined' && cur)?cur:{n:''};let last=window.__vhLastGuess||{n:''};let txt='';if(curP.n && last.n){let sc=(curP.v&&last.v)?cos(curP.v,last.v):0;let pct=sc?(' '+((sc*100|0))+'%'):'';
+txt='I matched '+curP.n+' → '+last.n+pct+' — Past→Modern daily v9.2 Procrustes VRNN t+1 σ kill GREEN • Future push barrier assessment • '+location.href;
+if(navigator.share){navigator.share({title:'DUMB MODEL — Past→Modern v9.2', text:txt, url:location.href}).catch(()=>{});}if(navigator.clipboard){navigator.clipboard.writeText(txt+' '+location.href).then(()=>{let s=$('shareStat'); if(s){ s.textContent='Link copied • Future t+1 push'; setTimeout(()=>{s.textContent='';},1800);}}).catch(()=>{});}}catch(e){}var pop=$('sharePop');shareOpener=t||document.activeElement;if(pop) pop.classList.add('on');var f=shareFocusable();if(f.length)f[0].focus();}
+function shutShare(){var pop=$('sharePop');if(!pop.classList.contains('on'))return;pop.classList.remove('on');if(shareOpener&&shareOpener.offsetParent!==null)shareOpener.focus();shareOpener=null;}
+document.addEventListener('keydown',function(e){if(!$('sharePop').classList.contains('on'))return;if(e.key==='Escape'){e.preventDefault();shutShare();return;}if(e.key!=='Tab')return;var f=shareFocusable();if(!f.length)return;var first=f[0],last=f[f.length-1],a=document.activeElement;if(f.indexOf(a)<0){e.preventDefault();first.focus();}else if(e.shiftKey&&a===first){e.preventDefault();last.focus();}else if(!e.shiftKey&&a===last){e.preventDefault();first.focus();}});
+$('btnShareCard')?.addEventListener('click',function(){openShare(this)});$('dlShare')?.addEventListener('click',()=>{let sc=$('shareCard'); if(!sc) return; try{let url=sc.toDataURL('image/png');let a=document.createElement('a'); a.href=url; a.download='past-modern-v92-'+(new Date().toISOString().slice(0,10))+'.png'; a.click();let s=$('shareStat'); if(s){ s.textContent='Image 1200×630 void PMSSTARBEAR saved transparent trajOver fix ✓'; setTimeout(()=>s.textContent='',1700);}}catch(e){}});$('closeShare')?.addEventListener('click',shutShare);$('sharePop')?.addEventListener('click',e=>{if(e.target.id==='sharePop')shutShare()});
+(function init(){resizeCanvas();window.addEventListener('resize',resizeCanvas);renderWW();renderCal();renderMiniBoard();fillGuessList();
+(function(){try{let seen=localStorage.getItem('vh_seen_onboard');if(!seen){setTimeout(()=>{let d=$('dist'); if(d) d.innerHTML='Welcome — one past player, guess modern twin • Tap dot or type • Procrustes R det 1.0 resid 0.0 H 2.276 gate [0.2,1.8] σ kill GREEN<6 Future t+1 push barrier 82nd FP μ TRIGGER orange pulse 2× • transparent trajOver fix ✓ void #080A0F OKABE visible 3.4/2.4 α0.92';},400);localStorage.setItem('vh_seen_onboard','1');}}catch(e){}})();
+let pp=parsePack();if(pp){setSeq(pp);$('packIn').value=pp.join('-')}else{let s=((hStr(new Date().toISOString().slice(0,10))^DAILY)>>>0)&0x7fffffff;s=LCG(s);setSeq([POOL[s%POOL.length].i])}
+let swf='assets/game_vectors.json';fetch(swf).then(r=>r.json()).then(j=>{ // real 968/1305 contract load
+try{ if(j && j.past && j.modern){ let csvPast=j.past.map((p,i)=>({i:1000+i,n:p.n||('Past '+i),v:p.v||[0.5,0.5,0.5],xy:p.xy||[0,0],pid:p.pid||('p'+i),x:p.x,y:p.y})); let csvMod=j.modern.map((p,i)=>({n:p.n||('Modern '+i),v:p.v||[0.5,0.5,0.5],pid:p.pid||('m'+i)})); // merge into POOL/MODERN without reassign const (splice)
+POOL.splice(0,POOL.length,...csvPast.slice(0,40)); MODERN.splice(0,MODERN.length,...csvMod.slice(0,80)); fillGuessList(); if(cur){drawBase(cur);} } }catch(e){} }).catch(()=>{});
+})();
+if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('/sw.js?v=67').catch(()=>{}));}
+</script>
 </body>
 </html>

@@ -8,7 +8,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from name_utils import norm_name
+from name_utils import norm_name  # noqa: E402
 
 ASSETS = ROOT / "assets"
 DATA = ROOT / "pipeline" / "data"
@@ -80,9 +80,7 @@ def main() -> None:
     honors = load_json(DATA / "honors.json")
     honors_asset = load_json(ASSETS / "honors.json")
 
-    roster_lookup = {
-        (e["name"], e["season"]): e for e in (roster or {}).get("entries", [])
-    }
+    roster_lookup = {(e["name"], e["season"]): e for e in (roster or {}).get("entries", [])}
     po_splits = set((po_asset or {}).get("splits", {}))
     po_rows = {(r["name"], r["season"]) for r in (po_data or {}).get("players", [])}
     ped_rows = {(r["name"], r["season"]) for r in (pedigree or {}).get("players", [])}
@@ -121,11 +119,21 @@ def main() -> None:
         print(f"  ... +{len(misses) - 15} more")
 
     audit_family("Roster context (recent gamelog)", players, roster_lookup, optional=True)
-    audit_family("Playoffs data (pipeline)", players, {(n, s): 1 for n, s in po_rows}, optional=True)
-    audit_family("Playoffs asset splits", players, {(k.split("|")[0], k.split("|")[1]): 1 for k in po_splits}, optional=True)
-    audit_family("Pedigree", players, {(n, s): 1 for n, s in ped_rows})
-    audit_family("Honors data", players, {(n, s): 1 for n, s in hon_rows}, optional=True)
-    audit_family("Honors asset", players, {(k.split("|")[0], k.split("|")[1]): 1 for k in hon_asset}, optional=True)
+    audit_family("Playoffs data (pipeline)", players, dict.fromkeys(po_rows, 1), optional=True)
+    audit_family(
+        "Playoffs asset splits",
+        players,
+        {(k.split("|")[0], k.split("|")[1]): 1 for k in po_splits},
+        optional=True,
+    )
+    audit_family("Pedigree", players, dict.fromkeys(ped_rows, 1))
+    audit_family("Honors data", players, dict.fromkeys(hon_rows, 1), optional=True)
+    audit_family(
+        "Honors asset",
+        players,
+        {(k.split("|")[0], k.split("|")[1]): 1 for k in hon_asset},
+        optional=True,
+    )
 
     # train matrix tower coverage
     tm = DATA / "train_matrix.npz"

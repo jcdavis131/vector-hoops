@@ -43,15 +43,16 @@ def main() -> None:
     check(E.shape == (rows, dim), "f32 shape matches meta")
 
     norms = np.linalg.norm(E, axis=1)
-    check(float(norms.min()) > 0.99 and float(norms.max()) < 1.01,
-          "rows L2-normalized (~1.0)")
+    check(
+        float(norms.min()) > 0.99 and float(norms.max()) < 1.01,
+        "rows L2-normalized (~1.0)",
+    )
 
     cents = np.array(meta["centroids"], dtype=np.float32)
     check(cents.shape == (8, dim), f"8 archetype centroids × {dim}-d")
 
     purity = meta.get("purity_at_20")
-    check(purity is not None and purity >= 0.63,
-          f"purity@20 >= 0.63 (got {purity})")
+    check(purity is not None and purity >= 0.63, f"purity@20 >= 0.63 (got {purity})")
 
     if FAILURES:
         print(f"\n{len(FAILURES)} MTNN export gate(s) failed")

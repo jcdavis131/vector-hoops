@@ -23,19 +23,32 @@ TRAIN = ROOT / "pipeline" / "train_mtnn.py"
 
 def train_cmd(cfg: dict, *, epochs: int, seed: int, val_every: int) -> list[str]:
     cmd = [
-        sys.executable, str(TRAIN),
-        "--epochs", str(epochs),
-        "--seed", str(seed),
-        "--dim", str(cfg["dim"]),
-        "--lr", str(cfg["lr"]),
-        "--nce-temp", str(cfg["nce_temp"]),
-        "--drop-p", str(cfg["drop_p"]),
-        "--lr-schedule", str(cfg.get("lr_schedule", "legacy-epoch-cosine")),
-        "--fusion", str(cfg.get("fusion", "gated")),
-        "--nce-loss", str(cfg.get("nce_loss", "infonce")),
-        "--grad-accum", str(cfg.get("grad_accum", 1)),
-        "--val-every", str(val_every),
-        "--w-honors", str(cfg.get("w_honors", 0.05)),
+        sys.executable,
+        str(TRAIN),
+        "--epochs",
+        str(epochs),
+        "--seed",
+        str(seed),
+        "--dim",
+        str(cfg["dim"]),
+        "--lr",
+        str(cfg["lr"]),
+        "--nce-temp",
+        str(cfg["nce_temp"]),
+        "--drop-p",
+        str(cfg["drop_p"]),
+        "--lr-schedule",
+        str(cfg.get("lr_schedule", "legacy-epoch-cosine")),
+        "--fusion",
+        str(cfg.get("fusion", "gated")),
+        "--nce-loss",
+        str(cfg.get("nce_loss", "infonce")),
+        "--grad-accum",
+        str(cfg.get("grad_accum", 1)),
+        "--val-every",
+        str(val_every),
+        "--w-honors",
+        str(cfg.get("w_honors", 0.05)),
     ]
     if cfg.get("batch") is not None:
         cmd.extend(["--batch", str(cfg["batch"])])
@@ -67,9 +80,11 @@ def train_cmd(cfg: dict, *, epochs: int, seed: int, val_every: int) -> list[str]
     if cfg.get("fusion_hidden") is not None:
         cmd.extend(["--fusion-hidden", str(cfg["fusion_hidden"])])
     if cfg.get("fusion") == "transformer":
-        for key, flag in (("d_model", "--d-model"),
-                          ("n_fusion_layers", "--n-fusion-layers"),
-                          ("n_attn_heads", "--n-attn-heads")):
+        for key, flag in (
+            ("d_model", "--d-model"),
+            ("n_fusion_layers", "--n-fusion-layers"),
+            ("n_attn_heads", "--n-attn-heads"),
+        ):
             if cfg.get(key) is not None:
                 cmd.extend([flag, str(cfg[key])])
     for key, val in cfg.items():
@@ -82,13 +97,20 @@ def train_cmd(cfg: dict, *, epochs: int, seed: int, val_every: int) -> list[str]
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--epochs", type=int, default=150)
-    ap.add_argument("--seed", type=int, default=None,
-                    help="defaults to best run seed from sweep file")
+    ap.add_argument(
+        "--seed",
+        type=int,
+        default=None,
+        help="defaults to best run seed from sweep file",
+    )
     ap.add_argument("--val-every", type=int, default=10)
     ap.add_argument("--run", action="store_true", help="execute train_mtnn.py")
-    ap.add_argument("--recipe", type=str, default="",
-                    help="JSON file with a frozen winner config; its keys override "
-                         "the sweep-best entry (promote-gate §3a)")
+    ap.add_argument(
+        "--recipe",
+        type=str,
+        default="",
+        help="JSON file with a frozen winner config; its keys override the sweep-best entry (promote-gate §3a)",
+    )
     args = ap.parse_args()
 
     if not SWEEP.exists() and not args.recipe:
@@ -111,11 +133,12 @@ def main() -> None:
     cmd = train_cmd(best, epochs=args.epochs, seed=seed, val_every=args.val_every)
 
     print("# Best sweep run:")
-    print(f"#   tag={best.get('tag')} composite={best.get('composite')} "
-          f"test_recall={best.get('test_recall')} purity={best.get('purity')}")
+    print(
+        f"#   tag={best.get('tag')} composite={best.get('composite')} "
+        f"test_recall={best.get('test_recall')} purity={best.get('purity')}"
+    )
     print()
-    line = " ".join(
-        f'"{c}"' if " " in c and not c.endswith(".py") else c for c in cmd)
+    line = " ".join(f'"{c}"' if " " in c and not c.endswith(".py") else c for c in cmd)
     print(line)
 
     if args.run:

@@ -1,0 +1,605 @@
+{
+ "built": "2026-08-12T03:15:12Z",
+ "generator": "scripts/build_model_zoo.py",
+ "model_eval": {
+  "model_zoo": {
+   "DeepMLP_era14_256_128_64_32": {
+    "arch": "14->256 LN SiLU d0.35 ->128 LN SiLU d0.35 ->64 LN SiLU d0.3 ->32 SiLU ->1 era14 200ep cosAnneal AdamW lr1e-3 wd2e-4 pat20 seed42",
+    "avg_mae": 4450.09,
+    "avg_mae_display": 4450.1,
+    "avg_r2": 0.3973,
+    "avg_rmse": 5521.7,
+    "best_flag": true,
+    "comparison": {
+     "delta_note": "-51.05 improvement (4450.10 vs 4501.15) using best MAE 4450.09 rounded 4450.10",
+     "improvement_over_trimmedMean": 51.06,
+     "vs_Ridge_MAE_4497_01": -46.92,
+     "vs_trimmedMean_per_pick_MAE_4501_15": -51.06
+    },
+    "era_features": {
+     "bucket": "0-4 draft talent bucket",
+     "cba_id": "0-3 bucketed CBA era",
+     "count": 14,
+     "embed": "4dim learned via small MLP concat to TowerC",
+     "growth": "cap growth float",
+     "tv_id": "0-2 TV deal era"
+    },
+    "fold_metrics": [
+     {
+      "mae": 4492.55,
+      "r2": 0.4193,
+      "rmse": 5554.95
+     },
+     {
+      "mae": 4496.96,
+      "r2": 0.3908,
+      "rmse": 5554.53
+     },
+     {
+      "mae": 4391.88,
+      "r2": 0.3635,
+      "rmse": 5542.49
+     },
+     {
+      "mae": 4512.95,
+      "r2": 0.4366,
+      "rmse": 5568.51
+     },
+     {
+      "mae": 4356.11,
+      "r2": 0.4167,
+      "rmse": 5553.41
+     }
+    ],
+    "fold_note": "5-fold seed42 shuffle projected from v5.3 measured",
+    "fold_seed": 42,
+    "fold_shuffle": true,
+    "is_best": true,
+    "n_features": 14,
+    "notes": "projected from v5.3 measured, not retrained this tick CPU-limited; 14 feats = inv,log,round,overall,year_norm,overall_round,log_inv,inv2,year_sq,overall_log + 4 era (cba/3,bucket/4,tv/2,growth)",
+    "perm_importance_delta_mae": {
+     "bucket": 9.7,
+     "cap_growth": 6.9,
+     "cba_id": 12.4,
+     "draft_year_norm": 8.2,
+     "inv": 15.1,
+     "inv2": 5.3,
+     "log_inv": 22.7,
+     "log_overall": 410.2,
+     "overall": 1180.5,
+     "overall_log": 67.8,
+     "overall_round": 95.4,
+     "round": 210.3,
+     "tv_id": 4.2,
+     "year_sq": 3.1
+    },
+    "perm_importance_note": "mean increase in MAE after shuffling feature 5-fold CV seed42; overall dominant +1180, log +410, round +210 matches diminishing returns curve",
+    "seed": 42
+   },
+   "GradientBoosting": {
+    "avg_mae": 4510.47,
+    "avg_r2": 0.3791,
+    "avg_rmse": 5605.04,
+    "base_mae_full": 4146.61,
+    "feature_names": [
+     "inv",
+     "log",
+     "round",
+     "overall",
+     "draft_year_norm"
+    ],
+    "fold_metrics": [
+     {
+      "mae": 4400.41,
+      "r2": 0.4113,
+      "rmse": 5512.18
+     },
+     {
+      "mae": 4588.65,
+      "r2": 0.3815,
+      "rmse": 5562.33
+     },
+     {
+      "mae": 4548.08,
+      "r2": 0.3864,
+      "rmse": 5616.07
+     },
+     {
+      "mae": 4362.05,
+      "r2": 0.4056,
+      "rmse": 5472.26
+     },
+     {
+      "mae": 4653.17,
+      "r2": 0.3105,
+      "rmse": 5862.38
+     }
+    ],
+    "fold_seed": 42,
+    "fold_shuffle": true,
+    "perm_importance_delta_mae": {
+     "draft_year_norm": 386.11,
+     "inv": 1054.11,
+     "log": 352.01,
+     "overall": 471.89,
+     "round": 93.03
+    }
+   },
+   "HistGradientBoosting": {
+    "avg_mae": 4645.89,
+    "avg_r2": 0.3145,
+    "avg_rmse": 5888.36,
+    "base_mae_full": 3492.35,
+    "feature_names": [
+     "inv",
+     "log",
+     "round",
+     "overall",
+     "draft_year_norm"
+    ],
+    "fold_metrics": [
+     {
+      "mae": 4566.58,
+      "r2": 0.3567,
+      "rmse": 5762.01
+     },
+     {
+      "mae": 4652.66,
+      "r2": 0.3515,
+      "rmse": 5695.56
+     },
+     {
+      "mae": 4650.78,
+      "r2": 0.3196,
+      "rmse": 5913.86
+     },
+     {
+      "mae": 4608.77,
+      "r2": 0.3166,
+      "rmse": 5867.55
+     },
+     {
+      "mae": 4750.68,
+      "r2": 0.2281,
+      "rmse": 6202.84
+     }
+    ],
+    "fold_seed": 42,
+    "fold_shuffle": true,
+    "perm_importance_delta_mae": {
+     "draft_year_norm": 1272.56,
+     "inv": 2978.85,
+     "log": 269.56,
+     "overall": 0.0,
+     "round": 0.0
+    }
+   },
+   "Lasso": {
+    "alpha": 1.0,
+    "alpha_note": "sklearn.linear_model.Lasso alpha=1.0 max_iter=5000 tol=1e-4 seed42",
+    "avg_mae": 4502.87,
+    "avg_r2": 0.3942,
+    "avg_rmse": 5535.2,
+    "coeff_sparse_note": "L1 induces sparsity: log and overall retained, inv near-zero",
+    "feature_names": [
+     "inv",
+     "log",
+     "round",
+     "overall",
+     "draft_year_norm"
+    ],
+    "fold_metrics": [
+     {
+      "mae": 4513.61,
+      "r2": 0.4028,
+      "rmse": 5519.73
+     },
+     {
+      "mae": 4526.29,
+      "r2": 0.4237,
+      "rmse": 5568.57
+     },
+     {
+      "mae": 4501.19,
+      "r2": 0.3972,
+      "rmse": 5511.39
+     },
+     {
+      "mae": 4501.05,
+      "r2": 0.3573,
+      "rmse": 5495.0
+     },
+     {
+      "mae": 4472.21,
+      "r2": 0.3742,
+      "rmse": 5502.37
+     }
+    ],
+    "fold_seed": 42,
+    "fold_shuffle": true,
+    "impl": "sklearn.linear_model.Lasso(alpha=1.0) or Gauss-Jordan with L1 penalty (stdlib) fallback",
+    "notes": "Real sklearn Lasso if available; zero-deps fallback Gauss-Jordan OLS with L1 soft-threshold approx would be 4505.1 MAE; sklearn true 1.9.0 measured 5-fold CV",
+    "perm_importance_delta_mae": {
+     "draft_year_norm": 3.9,
+     "inv": -5.2,
+     "log": 372.1,
+     "overall": 1210.8,
+     "round": 201.4
+    },
+    "sklearn": true,
+    "torch": false,
+    "zero_deps_fallback_mae": 4505.1
+   },
+   "LinearRegression": {
+    "avg_mae": 4496.75,
+    "avg_r2": 0.3974,
+    "avg_rmse": 5522.22,
+    "base_mae_full": 4476.65,
+    "feature_names": [
+     "inv",
+     "log",
+     "round",
+     "overall",
+     "draft_year_norm"
+    ],
+    "fold_metrics": [
+     {
+      "mae": 4422.88,
+      "r2": 0.4243,
+      "rmse": 5450.75
+     },
+     {
+      "mae": 4490.44,
+      "r2": 0.404,
+      "rmse": 5460.02
+     },
+     {
+      "mae": 4535.12,
+      "r2": 0.4016,
+      "rmse": 5546.03
+     },
+     {
+      "mae": 4446.17,
+      "r2": 0.4184,
+      "rmse": 5412.87
+     },
+     {
+      "mae": 4589.16,
+      "r2": 0.3387,
+      "rmse": 5741.43
+     }
+    ],
+    "fold_seed": 42,
+    "fold_shuffle": true,
+    "perm_importance_delta_mae": {
+     "draft_year_norm": 4.77,
+     "inv": -10.8,
+     "log": 385.4,
+     "overall": 1251.02,
+     "round": 216.5
+    }
+   },
+   "LogisticRegression_hit": {
+    "avg_acc": 0.562,
+    "avg_auc": 0.589,
+    "feature_names": [
+     "inv",
+     "log",
+     "round",
+     "overall",
+     "draft_year_norm"
+    ],
+    "fold_metrics": [
+     {
+      "acc": 0.559,
+      "auc": 0.6
+     },
+     {
+      "acc": 0.591,
+      "auc": 0.612
+     },
+     {
+      "acc": 0.575,
+      "auc": 0.596
+     },
+     {
+      "acc": 0.527,
+      "auc": 0.559
+     },
+     {
+      "acc": 0.558,
+      "auc": 0.577
+     }
+    ],
+    "fold_seed": 42,
+    "fold_shuffle": true,
+    "notes": "5-fold seed42 shuffled; avg_acc 0.562 avg_auc 0.589",
+    "target": "hit = qual_adj > expected per pick median"
+   },
+   "MLP_torch_scaled": {
+    "arch": "MLP 5->64->32->1 dropout 0.2 scaled X y_norm mean/std earlystop pat10 lr2e-3",
+    "avg_mae": 4530.2,
+    "avg_r2": 0.3952,
+    "avg_rmse": 5533.29,
+    "fold_metrics": [
+     {
+      "mae": 4458.16,
+      "r2": 0.423,
+      "rmse": 5457.31
+     },
+     {
+      "mae": 4577.43,
+      "r2": 0.3965,
+      "rmse": 5494.5
+     },
+     {
+      "mae": 4542.49,
+      "r2": 0.3868,
+      "rmse": 5614.27
+     },
+     {
+      "mae": 4466.98,
+      "r2": 0.4174,
+      "rmse": 5417.41
+     },
+     {
+      "mae": 4605.92,
+      "r2": 0.3521,
+      "rmse": 5682.96
+     }
+    ],
+    "fold_seed": 42,
+    "fold_shuffle": true
+   },
+   "MLP_wide_128_64_eng10": {
+    "arch": "10->128->64->1 dropout0.3 cosAnneal lr1e-3 wd1e-4",
+    "avg_mae": 4496.99,
+    "avg_r2": 0.404,
+    "avg_rmse": 5493.23,
+    "fold_metrics": [
+     {
+      "mae": 4488.16,
+      "r2": 0.418,
+      "rmse": 5462.7
+     },
+     {
+      "mae": 4466.14,
+      "r2": 0.4287,
+      "rmse": 5541.24
+     },
+     {
+      "mae": 4575.5,
+      "r2": 0.3863,
+      "rmse": 5511.48
+     },
+     {
+      "mae": 4474.56,
+      "r2": 0.4105,
+      "rmse": 5528.89
+     },
+     {
+      "mae": 4480.59,
+      "r2": 0.4309,
+      "rmse": 5458.19
+     }
+    ],
+    "fold_note": "5-fold seed42 shuffle projected from v5.3 measured",
+    "fold_seed": 42,
+    "fold_shuffle": true
+   },
+   "RandomForest": {
+    "avg_mae": 4523.68,
+    "avg_r2": 0.3603,
+    "avg_rmse": 5687.08,
+    "base_mae_full": 3588.39,
+    "feature_names": [
+     "inv",
+     "log",
+     "round",
+     "overall",
+     "draft_year_norm"
+    ],
+    "fold_metrics": [
+     {
+      "mae": 4386.55,
+      "r2": 0.4098,
+      "rmse": 5519.08
+     },
+     {
+      "mae": 4497.11,
+      "r2": 0.3866,
+      "rmse": 5539.14
+     },
+     {
+      "mae": 4552.38,
+      "r2": 0.3618,
+      "rmse": 5727.59
+     },
+     {
+      "mae": 4480.75,
+      "r2": 0.3773,
+      "rmse": 5600.86
+     },
+     {
+      "mae": 4701.61,
+      "r2": 0.266,
+      "rmse": 6048.71
+     }
+    ],
+    "fold_seed": 42,
+    "fold_shuffle": true,
+    "perm_importance_delta_mae": {
+     "draft_year_norm": 1062.23,
+     "inv": 1000.84,
+     "log": 952.68,
+     "overall": 1083.8,
+     "round": 71.87
+    }
+   },
+   "Ridge": {
+    "avg_mae": 4497.01,
+    "avg_r2": 0.3975,
+    "avg_rmse": 5521.78,
+    "base_mae_full": 4477.14,
+    "feature_names": [
+     "inv",
+     "log",
+     "round",
+     "overall",
+     "draft_year_norm"
+    ],
+    "fold_metrics": [
+     {
+      "mae": 4422.29,
+      "r2": 0.4245,
+      "rmse": 5449.84
+     },
+     {
+      "mae": 4491.09,
+      "r2": 0.4041,
+      "rmse": 5459.8
+     },
+     {
+      "mae": 4535.64,
+      "r2": 0.4017,
+      "rmse": 5545.71
+     },
+     {
+      "mae": 4446.7,
+      "r2": 0.4184,
+      "rmse": 5412.69
+     },
+     {
+      "mae": 4589.35,
+      "r2": 0.3388,
+      "rmse": 5740.87
+     }
+    ],
+    "fold_seed": 42,
+    "fold_shuffle": true,
+    "perm_importance_delta_mae": {
+     "draft_year_norm": 4.77,
+     "inv": -10.79,
+     "log": 388.85,
+     "overall": 1243.28,
+     "round": 218.67
+    }
+   },
+   "Ridge_Engineered_10feat_alpha0_1": {
+    "avg_mae": 4497.66,
+    "avg_r2": 0.397,
+    "avg_rmse": 5525.0,
+    "fold_metrics": [
+     {
+      "mae": 4568.77,
+      "r2": 0.3719,
+      "rmse": 5494.49
+     },
+     {
+      "mae": 4504.04,
+      "r2": 0.4206,
+      "rmse": 5513.25
+     },
+     {
+      "mae": 4524.45,
+      "r2": 0.399,
+      "rmse": 5534.28
+     },
+     {
+      "mae": 4489.38,
+      "r2": 0.3593,
+      "rmse": 5480.54
+     },
+     {
+      "mae": 4401.66,
+      "r2": 0.4025,
+      "rmse": 5571.95
+     }
+    ],
+    "fold_note": "5-fold seed42 shuffle projected from v5.3 measured",
+    "fold_seed": 42,
+    "fold_shuffle": true
+   },
+   "Ridge_Engineered_10feat_alpha10": {
+    "avg_mae": 4495.51,
+    "avg_r2": 0.399,
+    "avg_rmse": 5518.0,
+    "fold_metrics": [
+     {
+      "mae": 4487.23,
+      "r2": 0.3642,
+      "rmse": 5548.99
+     },
+     {
+      "mae": 4488.21,
+      "r2": 0.3926,
+      "rmse": 5476.88
+     },
+     {
+      "mae": 4566.69,
+      "r2": 0.3964,
+      "rmse": 5508.96
+     },
+     {
+      "mae": 4531.03,
+      "r2": 0.4332,
+      "rmse": 5526.76
+     },
+     {
+      "mae": 4404.39,
+      "r2": 0.4304,
+      "rmse": 5514.56
+     }
+    ],
+    "fold_note": "5-fold seed42 shuffle projected from v5.3 measured",
+    "fold_seed": 42,
+    "fold_shuffle": true,
+    "note": "10 feats: inv,log,round,overall,year_norm,overall_round,log_inv,inv2,year_sq,overall_log Ridge alpha 10"
+   },
+   "trimmedMean_per_pick": {
+    "avg_mae": 4501.15,
+    "avg_r2": 0.359,
+    "avg_rmse": 5800.0,
+    "baseline": true,
+    "comparison_note": "DeepMLP 4450.09 vs trimmedMean 4501.15 delta -51.06 improvement; Ridge 4497.01 vs trimmedMean -4.14",
+    "fold_metrics": [
+     {
+      "mae": 4471.51,
+      "r2": 0.3596,
+      "rmse": 5801.36
+     },
+     {
+      "mae": 4500.45,
+      "r2": 0.3494,
+      "rmse": 5827.56
+     },
+     {
+      "mae": 4584.3,
+      "r2": 0.3868,
+      "rmse": 5750.06
+     },
+     {
+      "mae": 4523.55,
+      "r2": 0.3862,
+      "rmse": 5775.56
+     },
+     {
+      "mae": 4425.94,
+      "r2": 0.3447,
+      "rmse": 5770.99
+     }
+    ],
+    "fold_seed": 42,
+    "fold_shuffle": true,
+    "legacy": true,
+    "method": "trimmed mean per pick overall expectation curve (not regression)",
+    "n_train": 1598,
+    "rmse_note": "~5800 projected from legacy eval",
+    "type": "legacy baseline"
+   }
+  }
+ },
+ "note": "Verbatim slice. model.html reads only model_eval.model_zoo, and the file it used to fetch for it is 1,127,784 bytes against this subtree's 8,299.",
+ "source": "assets/front_office.json",
+ "source_path": "model_eval.model_zoo"
+}

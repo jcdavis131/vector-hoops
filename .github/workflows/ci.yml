@@ -1,0 +1,72 @@
+name: CI
+on:
+  push:
+    branches: [master, main]
+  pull_request:
+    branches: [master, main]
+permissions:
+  contents: read
+jobs:
+  offline-build:
+    runs-on: ubuntu-latest
+    steps:
+      # fetch-depth: 0 is required, not tidiness. tests/test_vector_core_parity.py
+      # asserts parity against a historical blob via `git show 1b0570bc:<file>`,
+      # and checkout's default depth-1 clone does not contain that commit — the
+      # test fails on the runner while passing on any full local clone.
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.11'}
+
+      # vector_core is imported by tests/test_vector_core_parity.py and by
+      # train_mtnn.py's --era-align / --robust-scaling paths. It is not on PyPI.
+      - name: Check out vector-hub (for vector-core)
+        uses: actions/checkout@v4
+        with:
+          repository: jcdavis131/vector-hub
+          ref: main
+          path: .vector-hub
+
+      - name: Install deps
+        run: |
+          pip install -r pipeline/requirements.txt
+          pip install ./.vector-hub/packages/vector-core
+          # CPU wheel only, and only because tests/test_vector_core_parity.py
+          # execs a historical pipeline/realmlp_preproc.py that imports torch.
+          # The CUDA build is never wanted here: CI does not train, and the cpu
+          # index keeps this a ~200 MB install instead of ~2 GB.
+          pip install torch --index-url https://download.pytorch.org/whl/cpu
+
+      # These two were previously `|| true`. Verified passing, so they now gate.
+      - name: Offline fetch (no external network)
+        run: |
+          python pipeline/fetch_bbref_advanced.py --offline
+          python pipeline/fetch_2k_ratings.py --offline
+
+      # Previously this named pipeline/test_arena.py, which does not exist, and
+      # swallowed the result with `|| true` — so the suite had never actually run
+      # in CI. It is the whole suite now, and it fails the build.
+      #
+      # test_provenance_gate.py is excluded because it calls sys.exit() at module
+      # scope: it is a script, not a pytest module, and it aborts collection for
+      # every other file. It gets its own step below, run the way it expects.
+      - name: Pytest gates
+        run: pytest pipeline tests -q --ignore=pipeline/test_provenance_gate.py
+
+      - name: Provenance gate (script-style)
+        run: python pipeline/test_provenance_gate.py
+
+      # scripts/stamp_assets.py has had a --check mode all along; nothing ever ran
+      # it. vercel.json serves assets as `immutable, max-age=31536000`, so a stale
+      # ?v= token means a returning visitor never gets the new file — not on the
+      # next deploy, not ever.
+      #
+      # This step is also the reason .gitattributes now marks assets/** as -text.
+      # The token is a hash of the file, so if a Windows checkout converts an
+      # asset to CRLF the stamp describes bytes the server never serves, and this
+      # check passes locally while failing here. It caught exactly that.
+      - name: Asset cache tokens are current
+        run: python scripts/stamp_assets.py --check

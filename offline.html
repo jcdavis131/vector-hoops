@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<script>/* early error queue — drained by assets/error-boundary.js. Installed here because a listener only sees scripts parsed after it, and the page's own inline block used to be first. */window.__vhErr=[];window.addEventListener("error",function(e){try{var t=e.target,r=t&&(t.src||t.href);window.__vhErr.push({type:r?"resource":"js",message:e.message||("Failed to load "+(r||"")),source:e.filename||r||"",lineno:e.lineno||0,colno:e.colno||0,stack:(e.error&&e.error.stack)||""});}catch(_){}} ,true);window.addEventListener("unhandledrejection",function(e){try{window.__vhErr.push({type:"unhandledrejection",message:String((e.reason&&e.reason.message)||e.reason||"")});}catch(_){}});</script>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#fafaf8">
+<title>Vector Hoops — Offline</title>
+<link rel="manifest" href="/manifest.json">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='10' fill='%23FAFAF8'/%3E%3Ctext x='50%25' y='54%25' dominant-baseline='middle' text-anchor='middle' font-size='14' fill='%23080A0F'%3E%E2%97%8E%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="/assets/fonts.css?v=31e5658b">
+
+<style>
+:root{--paper:#FAFAF8;--ink:#111111;--orange:#EB6834;--blue:#2A78D6;--purple:#7A5AE6;--yellow:#F0E442;--void:#080A0F;--line:#E9DDD0}
+*{box-sizing:border-box}html,body{margin:0;background:var(--paper);color:var(--ink);font-family:ui-sans-serif,system-ui,Segoe UI,Roboto,sans-serif;overflow-wrap:break-word}
+a{color:inherit;text-decoration:none}
+header{max-width:900px;margin:0 auto;padding:10px 14px;display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;align-items:center;border-bottom:2.5px solid var(--ink)}
+.brand{font-family:ui-monospace,Menlo,monospace;font-weight:900;text-transform:uppercase;letter-spacing:-.02em;font-size:18px}
+.sg{font-family:"ui-monospace",cursive;font-size:14px;opacity:.9;transform:rotate(-0.6deg);display:inline-block}
+.pill{display:inline-flex;align-items:center;gap:6px;padding:6px 11px;border-radius:999px;border:1.6px solid var(--ink);background:#fff;box-shadow:1.8px 1.8px 0 var(--ink);font-weight:800;font-size:11.5px;font-family:ui-monospace,Menlo,monospace;min-height:44px;cursor:pointer}
+.pill-y{background:var(--yellow)} .pill-o{background:var(--orange);color:#111} .pill-d{background:#080A0F;color:#FAFAF8;border-color:#111}
+.wrap{max-width:900px;margin:0 auto;padding:12px}
+.card{background:#080A0F;color:#FAFAF8;border:2.2px solid #111;border-radius:18px;padding:16px;box-shadow:4px 4px 0 #111}
+.mono{font-family:ui-monospace,Menlo,monospace;font-size:11px} .sub{font-size:12.6px;line-height:1.5;color:#C9D4E5}
+.dot{width:16px;height:16px;border-radius:50%;border:1.6px solid #111;display:inline-block;margin:3px;background:#fff;box-shadow:1px 1px 0 #111}
+.dot.on{background:var(--yellow)} .dot.war{background:var(--orange)}
+.btn{appearance:none;border:2px solid #111;border-radius:12px;padding:11px 14px;font-family:ui-monospace,Menlo,monospace;font-weight:900;cursor:pointer;background:#FAFAF8;color:#111;box-shadow:2.5px 2.5px 0 #111;min-height:44px}
+.btn-y{background:var(--yellow)} .btn:active{transform:translate(1px,1px);box-shadow:1px 1px 0 #111}
+
+/* Every other page gets this ring from assets/keyboard-a11y.js. This page is
+   the one that cannot: it renders when the network is down and sw.js does not
+   precache that module, so the rule is inlined here to match. Same colour and
+   geometry as the module injects, so focus looks identical site-wide. */
+:focus-visible{outline:3px solid #0072B2;outline-offset:2px;box-shadow:0 0 0 5px rgba(0,114,178,.22)}
+nav [aria-current="page"]{box-shadow:inset 0 -3px 0 currentColor;font-weight:900}
+@media(prefers-reduced-motion:reduce){*{animation-duration:.001ms !important;transition-duration:.001ms !important}}
+
+.vh-skip{position:absolute;left:-9999px;top:0;z-index:99;background:var(--paper,#fafaf8);border:2.2px solid var(--ink,#111);padding:10px 14px;font-family:ui-monospace,Menlo,monospace;font-weight:800;text-decoration:none;border-radius:0 0 10px 0}
+.vh-skip:focus{left:0}
+
+/* ── text inks, solved for WCAG AA on what the browser paints ──────────────
+   Measured per element with its real backdrop composited through transparent
+   ancestors: the brand colours were carrying text at 3.20:1 (#EB6834), 3.42:1
+   (#009E73) and 4.42:1 (#2A78D6) against white.
+
+   These are new tokens, not new values for the brand colours. Every ring, fill,
+   polyline and border still draws #EB6834 / #2A78D6 / #009E73; only text moves.
+   Two earlier attempts changed a shared token instead and traded one failure for
+   another — darkening --ink-muted to clear 4.5 on paper took the same text on the
+   #0A0C10 map inset from 5.3:1 to 4.14:1. The muted greys are left alone here
+   for that reason: they need per-container scoping, not a page-level value. */
+:root{--orange-ink:#C84714;--blue-ink:#2873CF;--green-ink:#008460}
+.brand span,.site-nav__brand span{color:var(--orange-ink)}
+.sm__delta.down,.down{color:var(--orange-ink)}
+.sm__delta.up,.up{color:var(--blue-ink)}
+.fl-dim{color:var(--blue-ink)}
+.fo-ring{color:var(--orange-ink)}
+.proj{color:var(--orange-ink)}
+.mv-score.up{color:var(--green-ink)}
+
+/* #F0E442 is a bright yellow: an ink solved for white reads 3.64:1 on it, and the
+   white-on-yellow badge read 1.27:1. Keyed off the class that puts the yellow
+   there, so this cannot reach another ground. */
+span.pill.mono{color:#5A6476}
+.pill-y,.pill-y.mono,.pill-y.mono-sm,.pill.pill-y,.pill.pill-y.mono,.pill.pill-y.mono-sm,
+a.pill.pill-y,.pill.y,.pill.y.mono{color:#3A2E00}
+/* muted small print, on pages whose every ground is light */
+p.eyebrow,div.mono-sm,span.mono-sm,.pill.mono-sm,.mv-move,p.mono{color:#6F6D68}
+.mv-score.down{color:#D33F24}
+/* the archetype key and the dark pills sit on near-black: the light-ground inks
+   above must not reach them */
+#plKey span,#plKey .n{color:#FAFAF8}
+span.pill.mono.ink,.pill.ink{color:#C9C6C0}
+/* a rule in a later <style> block was still winning on this one */
+span.proj{color:var(--orange-ink)}
+
+
+</style>
+<!-- build_social_meta.py: start -->
+<link rel="canonical" href="https://hoops.dumbmodel.com/offline">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="dumbmodel">
+<meta property="og:url" content="https://hoops.dumbmodel.com/offline">
+<meta property="og:title" content="Vector Hoops — Offline">
+<meta property="og:image" content="https://hoops.dumbmodel.com/assets/og-1200x630.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Vector Hoops — Offline">
+<meta name="twitter:image" content="https://hoops.dumbmodel.com/assets/og-1200x630.png">
+<!-- build_social_meta.py: end -->
+</head>
+<body>
+<a class="vh-skip" href="#main">Skip to the content</a>
+<header>
+<div class="brand">◐ DUMB MODEL <span class="pill pill-y" style="transform:rotate(-1deg)">network-first cache • visited pages kept</span> <span class="sg">dark card #080A0F core only</span></div>
+<nav style="display:flex;gap:8px;flex-wrap:wrap"><a class="pill" href="/">Map</a><a class="pill" href="/play">Play</a><a class="pill" href="/leaderboard">Board</a><a class="pill" href="/inventory">Inventory</a><a class="pill" href="/methods">Methods</a><a class="pill pill-d" href="/offline" aria-current="page">Offline</a></nav>
+</header>
+<main id="main" tabindex="-1">
+<div class="wrap">
+<div class="card">
+<div class="mono" style="text-transform:uppercase;letter-spacing:.06em;opacity:.75;font-weight:800">offline • pages you have opened are kept • no .json, .f32 or .bin cached • cache hoops-v7-14</div>
+<h1 style="margin:10px 0 8px;font-size:26px;letter-spacing:-.02em;font-family:ui-monospace,Menlo,monospace;text-transform:uppercase">You're offline — shell is here.</h1>
+<p class="sub">You are offline. sw.js is network-first and keeps every same-origin page, script, style and font you have already loaded, so a page you have opened before still works — measured with the server stopped, /play still has its question, its 1,305 suggestions, its pool and its map. Data never enters that cache: no /api/, no .json, no .f32, no .bin, so the season data and every model asset need a connection and a stale one can never be served. Retry pings navigator.onLine then reloads, else void pulse. Week Warrior 7-dot still works from hub-streak.</p>
+<div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap">
+<button class="btn btn-y" id="retry">↻ Retry connection</button>
+<a class="pill pill-y" href="/play" style="text-decoration:none;display:inline-flex;align-items:center">▶ Play offline arcade</a>
+<a class="pill" href="/leaderboard" style="text-decoration:none;display:inline-flex;align-items:center;color:#080A0F">Board cached</a>
+</div>
+<div id="dots" style="margin-top:12px;display:flex;flex-wrap:wrap;gap:4px"></div>
+<div class="mono" id="streakLab" style="margin-top:6px;color:#C9D4E5">weekStreak 0/7 • hub-streak</div>
+<div style="margin-top:12px;display:grid;grid-template-columns:1fr 1fr;gap:10px">
+<div><div class="mono">What is actually cached</div><code style="font-size:11px;background:rgba(250,250,248,.08);border:1px solid rgba(250,250,248,.15);padding:6px 8px;border-radius:8px;display:block;white-space:pre-wrap">/
+/offline
+/manifest.json</code><div class="mono" style="margin-top:6px">Three entries installed up front, read from sw.js SHELL — cache hoops-v7-14 — everything else arrives by being visited.</div></div>
+<div><div class="mono">never cached — data only</div><code style="font-size:11px;background:rgba(250,250,248,.08);border:1px solid rgba(250,250,248,.15);padding:6px 8px;border-radius:8px;display:block;white-space:pre-wrap">/api/* .json /assets/data/* large 2.6MB props / 9.9MB matchup / 141K vals / 51K hist / FO 1.1M / 3.2M embeddings / 2.3M heads / 524K projections</code><div class="mono" style="margin-top:6px">keeping data out of the cache keeps it small • theme #fafaf8 still</div></div>
+</div>
+<div class="mono" id="status" style="margin-top:12px;display:inline-flex;padding:5px 10px;border-radius:999px;border:1px solid #FAFAF8">status: offline — pages you have opened are cached</div>
+</div>
+<div style="margin-top:12px;background:#fff;border:2.2px solid #111;border-radius:14px;padding:10px;box-shadow:3px 3px 0 #111">
+<div class="mono" style="font-weight:800;text-transform:uppercase;letter-spacing:.04em">PWA manifest • inline only • network-first</div>
+<ul style="margin:6px 0 0 16px;font-size:12.3px;line-height:1.5"><li>manifest.json link present theme-color #fafaf8 inline CSS/JS no external fetch (Google Fonts handwriting optional)</li><li>sw.js installs SHELL (3 entries), keeps same-origin pages, scripts, styles and fonts as you load them, and falls back to /offline; /api/*, .json, .f32 and .bin are never cached, so a stale model asset can never be served</li><li>Week Warrior 7-dot reads hub-streak hub-best local not server 44px taps</li><li>Past→Modern plays offline once you have opened it — LCG deterministic, same link same trio, no embeddings fetch</li><li>This page is inline and zero-deps. The cache is the three SHELL entries in sw.js plus whatever you have visited, not a size budget.</li></ul>
+</div>
+</div>
+</main>
+<footer style="max-width:900px;margin:8px auto 0;padding:10px 14px;display:flex;flex-wrap:wrap;gap:8px;justify-content:space-between;border-top:1.6px dashed var(--line)"><span class="mono">network-first • visited pages kept • no data cached • Week Warrior 7-dot • local only</span><div style="display:flex;gap:6px"><a class="pill" href="/play">Play</a><a class="pill" href="/leaderboard">Board</a></div></footer>
+<script>
+function read(k,fb){try{let v=JSON.parse(localStorage.getItem(k)||'null');return v||fb}catch(e){return fb}}
+function getWW(){let s=read('hub-streak',{days:[],streak:0,last:null});if(!s.days)s.days=[];let old=null;try{old=JSON.parse(localStorage.getItem('vh_weekStreak')||'null')}catch(e){}if(s.days.length===0&&old&&old.days)s=old;return s}
+function renderWW(){let ww=getWW();let c=document.getElementById('dots');if(!c)return;c.innerHTML='';let t=document.createElement('div');t.className='mono';t.style.color='#C9D4E5';t.textContent='Week Warrior 7-dot via hub-streak — '+ww.days.length+'/7 '+(ww.days.length>=7?'◎ WARRIOR':'');c.appendChild(t);let row=document.createElement('div');row.style.display='flex';row.style.flexWrap='wrap';for(let i=0;i<7;i++){let d=document.createElement('span');let on=i<ww.days.length;d.className='dot '+(on?'on'+(ww.days.length>=7?' war':''):'');d.title=on?(ww.days[i]||''):('empty '+(i+1));row.appendChild(d);}c.appendChild(row);let lab=document.getElementById('streakLab');if(lab)lab.textContent='weekStreak '+(ww.streak||0)+' /7 • '+ww.days.length+' dots • '+((ww.days||[]).join(',')||'hub-streak')+(localStorage.getItem('hub-best')?' • best '+localStorage.getItem('hub-best'):'');}
+function upd(){let s=document.getElementById('status');if(!s)return;if(navigator.onLine){s.textContent='status: online — reloading';s.style.background='#E7F6EA';s.style.color='#111'}else{s.textContent='status: offline — pages you have opened are cached';s.style.background='#080A0F';s.style.color='#FAFAF8'}}
+setInterval(()=>{upd();renderWW()},2000);upd();renderWW();
+document.getElementById('retry').onclick=()=>{if(navigator.onLine)location.reload();else{let c=document.querySelector('.card');c.animate([{transform:'scale(1)'},{transform:'scale(1.02)'},{transform:'scale(1)'}],{duration:320});document.getElementById('status').textContent='still offline — cached arcade works';}};
+if('serviceWorker' in navigator){try{navigator.serviceWorker.register('/sw.js')}catch(e){}}
+</script>
+</body>
+</html>

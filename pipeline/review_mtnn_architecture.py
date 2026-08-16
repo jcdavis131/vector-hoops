@@ -87,12 +87,14 @@ def main() -> None:
             if not vals:
                 continue
             med = float(np.median(vals))
-            cross.append({
-                "famA": a,
-                "famB": b,
-                "median_abs_corr": round(med, 4),
-                "n_pairs": len(vals),
-            })
+            cross.append(
+                {
+                    "famA": a,
+                    "famB": b,
+                    "median_abs_corr": round(med, 4),
+                    "n_pairs": len(vals),
+                }
+            )
     cross.sort(key=lambda r: r["median_abs_corr"], reverse=True)
 
     suggestions = []
@@ -102,12 +104,14 @@ def main() -> None:
         ma = family_stats[a]["median_abs_corr"] or 0.0
         mb = family_stats[b]["median_abs_corr"] or 0.0
         if row["median_abs_corr"] >= 0.35 and (ma < 0.28 or mb < 0.28):
-            suggestions.append({
-                "proposal": f"consider shared block for {a} + {b}",
-                "cross_median_abs_corr": row["median_abs_corr"],
-                "within_a": family_stats[a]["median_abs_corr"],
-                "within_b": family_stats[b]["median_abs_corr"],
-            })
+            suggestions.append(
+                {
+                    "proposal": f"consider shared block for {a} + {b}",
+                    "cross_median_abs_corr": row["median_abs_corr"],
+                    "within_a": family_stats[a]["median_abs_corr"],
+                    "within_b": family_stats[b]["median_abs_corr"],
+                }
+            )
 
     doc = {
         "built": time.strftime("%Y-%m-%d"),
@@ -129,4 +133,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-

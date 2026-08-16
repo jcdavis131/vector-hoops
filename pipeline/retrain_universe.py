@@ -52,16 +52,22 @@ def snapshot_vectors() -> dict:
 
 def main() -> None:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--skip-build", action="store_true",
-                    help="vectors.json already rebuilt with new gates")
+    ap.add_argument(
+        "--skip-build",
+        action="store_true",
+        help="vectors.json already rebuilt with new gates",
+    )
     ap.add_argument("--epochs", type=int, default=150)
-    ap.add_argument("--seed", type=int, default=99,
-                    help="hybrid-040 best seed from hp sweep")
+    ap.add_argument("--seed", type=int, default=99, help="hybrid-040 best seed from hp sweep")
     ap.add_argument("--skip-train", action="store_true")
     ap.add_argument("--skip-drift", action="store_true")
-    ap.add_argument("--recipe", type=str, default="",
-                    help="frozen winner config JSON (promote-gate §3a); without it "
-                         "this retrains the OLD hp-sweep recipe, not a v5 winner")
+    ap.add_argument(
+        "--recipe",
+        type=str,
+        default="",
+        help="frozen winner config JSON (promote-gate §3a); without it "
+        "this retrains the OLD hp-sweep recipe, not a v5 winner",
+    )
     args = ap.parse_args()
 
     py = sys.executable
@@ -92,16 +98,21 @@ def main() -> None:
 
     if not args.skip_train:
         train = [
-            py, "pipeline/apply_hp_sweep.py",
-            "--epochs", str(args.epochs),
-            "--seed", str(args.seed),
+            py,
+            "pipeline/apply_hp_sweep.py",
+            "--epochs",
+            str(args.epochs),
+            "--seed",
+            str(args.seed),
             "--run",
         ]
         if args.recipe:
             train.extend(["--recipe", args.recipe])
         else:
-            print("WARNING: no --recipe; retraining the OLD hp-sweep recipe "
-                  "(no v5 architecture flags).", flush=True)
+            print(
+                "WARNING: no --recipe; retraining the OLD hp-sweep recipe (no v5 architecture flags).",
+                flush=True,
+            )
         run("mtnn_train", train)
         run("export_mtnn", [py, "pipeline/export_mtnn_embeddings.py"], required=False)
         run("test_mtnn_export", [py, "pipeline/test_mtnn_export.py"], required=False)
@@ -113,8 +124,10 @@ def main() -> None:
         # causal edges under the new net's predictions — a same-shape retrain
         # (d_emb unchanged) changes no dimension that would otherwise catch it.
         run("export_mtnn_viz", [py, "pipeline/export_mtnn_viz.py"])
-        run("export_mtnn_jacobian",
-            [py, "pipeline/export_mtnn_jacobian.py", "--granularity", "both"])
+        run(
+            "export_mtnn_jacobian",
+            [py, "pipeline/export_mtnn_jacobian.py", "--granularity", "both"],
+        )
 
     if not args.skip_drift:
         run("drift_suite", [py, "pipeline/rebuild_drift_suite.py", "--skip-skills"])

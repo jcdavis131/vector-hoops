@@ -33,7 +33,17 @@ VECTORS = ASSETS / "vectors.json"
 OUT = ASSETS / "next_profile_eval.json"
 
 # Compact UI set — full 14 stay in ``features``; these drive the default table.
-PRIMARY_FEATURES = ("PTS", "AST", "DREB", "STL", "BLK", "TOV", "FG3A", "FGA", "PLUS_MINUS")
+PRIMARY_FEATURES = (
+    "PTS",
+    "AST",
+    "DREB",
+    "STL",
+    "BLK",
+    "TOV",
+    "FG3A",
+    "FGA",
+    "PLUS_MINUS",
+)
 
 
 def next_season_label(season: str) -> str:
@@ -65,9 +75,7 @@ def main() -> None:
     if vec_features != feature_keys:
         # Align by name if order drifted; require identical set.
         if set(vec_features) != set(feature_keys):
-            raise SystemExit(
-                f"feature key mismatch: emb={feature_keys} vectors={vec_features}"
-            )
+            raise SystemExit(f"feature key mismatch: emb={feature_keys} vectors={vec_features}")
         order = [feature_keys.index(k) for k in vec_features]
         pred = pred[:, order]
         feature_keys = vec_features
@@ -85,7 +93,7 @@ def main() -> None:
     mae_sum = 0.0
     mae_n = 0
 
-    for i, (name, season) in enumerate(zip(names, seasons)):
+    for i, (name, season) in enumerate(zip(names, seasons, strict=False)):
         to_season = next_season_label(season)
         pred_row = [round_z(pred[i, j]) for j in range(len(feature_keys))]
         key = f"{name}|{season}"

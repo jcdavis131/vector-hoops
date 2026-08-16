@@ -1,0 +1,1031 @@
+<!doctype html><html lang=en><head><meta charset=utf-8>
+<script>/* early error queue — drained by assets/error-boundary.js. Installed here because a listener only sees scripts parsed after it, and the page's own inline block used to be first. */window.__vhErr=[];window.addEventListener("error",function(e){try{var t=e.target,r=t&&(t.src||t.href);window.__vhErr.push({type:r?"resource":"js",message:e.message||("Failed to load "+(r||"")),source:e.filename||r||"",lineno:e.lineno||0,colno:e.colno||0,stack:(e.error&&e.error.stack)||""});}catch(_){}} ,true);window.addEventListener("unhandledrejection",function(e){try{window.__vhErr.push({type:"unhandledrejection",message:String((e.reason&&e.reason.message)||e.reason||"")});}catch(_){}});</script><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name=theme-color content="#FAFAF8"><title>DUMB MODEL — Play Past→Modern</title><link rel="stylesheet" href="/assets/fonts.css?v=31e5658b"><style>:root{--paper:#FAFAF8;--ink:#111111;--orange:#EB6834;--blue:#2A78D6;--purple:#7A5AE6;--yellow:#F0E442;--green:#009E73;--void:#0A0C10;--line:#E8E2DA}*{box-sizing:border-box}html,body{margin:0;background:var(--paper);color:var(--ink);font:400 14px/1.5 ui-sans,system-ui,-apple-system,Segoe UI,sans-serif;-webkit-font-smoothing:antialiased;overflow-wrap:break-word}nav{display:flex;flex-wrap:wrap;gap:8px;justify-content:space-between;align-items:center;padding:10px 14px;border-bottom:2.2px solid var(--ink);background:var(--paper);position:sticky;top:0;z-index:9}/* the brand block is a flex row of pills; without wrap it ran 32px past a
+   360px viewport */
+.brand{font-family:"ui-monospace",cursive;font-weight:900;font-size:21px;display:flex;gap:8px;align-items:center;flex-wrap:wrap}.pill{display:inline-flex;align-items:center;gap:6px;padding:5px 11px;border-radius:999px;border:1.5px solid var(--ink);background:#fff;box-shadow:1.8px 1.8px 0 var(--ink);font:800 11px ui-monospace;transform:rotate(-.7deg)}.pill.y{background:var(--yellow)}.pill.o{background:var(--orange);color:#111}.pill.b{background:#0072b2;color:#fff}.pill.i{background:var(--ink);color:var(--paper);transform:none}.chrome-caviar{background:linear-gradient(90deg,#F0E442 0%,#EB6834 38%,#009E73 72%,#F0E442 100%);background-size:260% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;animation:chromeShift 3.2s linear infinite;font-weight:900}@keyframes chromeShift{0%{background-position:0% 50%}100%{background-position:260% 50%}}@keyframes spikeFreeze{0%{filter:contrast(1) brightness(1)}42%{filter:contrast(1.36) brightness(1.18) saturate(1.26)}100%{filter:contrast(1) brightness(1)}}@keyframes karaPulse{0%{transform:translate(-50%,-50%) scale(.78);box-shadow:0 0 0 0 rgba(235,104,52,.85)}32%{transform:translate(-50%,-50%) scale(1.24);box-shadow:0 0 0 20px rgba(235,104,52,0)}56%{transform:translate(-50%,-50%) scale(.92)}80%{transform:translate(-50%,-50%) scale(1.18)}100%{transform:translate(-50%,-50%) scale(1)}}.spike{animation:spikeFreeze .6s ease}.karaoke-2x{animation:karaPulse .62s cubic-bezier(.2,.8,.3,1) 0s 2}main{max-width:1100px;margin:0 auto;padding:12px;display:grid;grid-template-columns:1.05fr .95fr;gap:12px}@media(max-width:900px){main{grid-template-columns:1fr}}.card{background:#fff;border:2.2px solid var(--ink);border-radius:16px;box-shadow:4px 4px 0 var(--ink);padding:12px;transition:.15s}.card:hover{transform:translateY(-1px);box-shadow:5px 5px 0 var(--ink)}.mono{font-family:ui-monospace,Menlo,monospace;font-size:11px}.sub{color:#5B5752;font-size:12.3px;line-height:1.45}.btn{appearance:none;border:1.7px solid var(--ink);border-radius:11px;padding:8px 11px;font:900 11px ui-monospace;cursor:pointer;background:#fff;box-shadow:2.4px 2.4px 0 var(--ink)}.btn:active{transform:translate(1px,1px);box-shadow:1px 1px 0 var(--ink)}.btn-p{background:var(--ink);color:#fff}.btn-y{background:var(--yellow)}#play-a-101{position:relative;height:360px;overflow:hidden;border-radius:12px;background:var(--void)}canvas{width:100%;height:100%;display:block;background:radial-gradient(120% 90% at 68% 18%,rgba(235,104,52,.18),transparent 40%),radial-gradient(90% 70% at 18% 62%,rgba(240,228,66,.14),transparent 46%),var(--void)}
+/* #trajOver is position:absolute;inset:0 directly over #c, and the bare rule
+   above is a *bare* one — it painted the overlay an opaque var(--void) plus two
+   gradients, so the overlay covered the map completely. Every point of the 4,322
+   cloud, the whole modern pool layer, the target crosshair, the guess ring and
+   the dashed line to it were drawn into a canvas nobody could see. getImageData
+   reported them all, because they really were painted; they were just painted
+   underneath. Measuring the backing store is not the same as looking at the
+   page, and this is the second bare `canvas{}` rule on this site to hide
+   something — model.html carried one too. */
+#trajOver{background:transparent} /* min-height 24 is WCAG 2.5.8 Target Size (Minimum), AA in WCAG 2.2. Without it
+   these render about 23.2px tall — 4+4 padding, 10.5px text at the browser's
+   `normal` line-height of roughly 1.2, and 1.3px of border each side. That is
+   under the floor by a hair, on the page the brief puts first.
+   This is a one-pixel change, which is why it ships, unlike the runtime sweep
+   that forced every control on the site to 44px and moved 46 elements on this
+   page alone. align-items centres the text in the slightly taller box. */
+.chip{display:inline-flex;align-items:center;min-height:24px;padding:4px 9px;border-radius:999px;border:1.3px solid var(--ink);font-family:ui-monospace;font-size:10.5px;font-weight:800;background:#fff;box-shadow:1.3px 1.3px 0 var(--ink);margin:2px 3px;transition:.18s;cursor:pointer}.chip.on{background:var(--yellow);transform:rotate(-1deg) translateY(-1px) scale(1.06)}.chip.active{background:var(--orange);color:#111;border-color:#111}/* same again, and this one was further under: 4+4 padding, 10.2px text, 1.3px
+   borders comes to about 22.8px. My first pass missed it because the pattern I
+   scanned for was `\.chip`, which does not match `-chip`. */
+.season-chip{display:inline-flex;align-items:center;min-height:24px;padding:4px 8px;border-radius:999px;border:1.3px solid #111;background:#fff;font-size:10.2px;font-weight:800;box-shadow:1.4px 1.4px 0 #111;margin:2px;cursor:pointer}.season-chip.active{background:#EB6834;color:#111}.ring{position:absolute;left:50%;top:50%;width:58px;height:58px;border-radius:50%;border:3px solid #EB6834;display:none;place-items:center;color:#EB6834;background:radial-gradient(circle,rgba(235,104,52,.28),rgba(235,104,52,.08) 62%,transparent 72%);font-weight:900;transform:translate(-50%,-50%) scale(.6)}.traj-glass{backdrop-filter:blur(12px) saturate(1.25);-webkit-backdrop-filter:blur(12px) saturate(1.25);background:rgba(250,250,248,.92);border:2.2px solid var(--ink);border-radius:14px;box-shadow:4px 4px 0 var(--ink);padding:10px}#trajChips{min-height:30px;display:flex;flex-wrap:wrap;gap:4px}#resultBox{position:absolute;left:10px;right:10px;bottom:10px;z-index:6;display:none}#confetti{position:absolute;inset:0;pointer-events:none}.star{position:absolute;transform:translate(-50%,-50%) scale(0);animation:pop 700ms forwards}@keyframes pop{0%{transform:translate(-50%,-50%) scale(0) rotate(0)}60%{transform:translate(-50%,-70%) scale(1.2) rotate(18deg)}100%{transform:translate(-50%,-160%) scale(.9) rotate(-8deg);opacity:0}}.dotw{width:12px;height:12px;border-radius:50%;border:1.4px solid var(--ink);display:inline-block;margin:1px 2px;background:#fff}.dotw.on{background:var(--yellow)}.dotw.war{background:var(--orange)}#shareCardD{display:none}.share-pop{position:fixed;inset:0;background:rgba(8,10,15,.74);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);z-index:80;display:none;place-items:center;padding:14px}.share-pop.on{display:grid}.share-card{width:min(680px,96vw);background:#080A0F;border:2.2px solid #FAFAF8;border-radius:16px;overflow:hidden;box-shadow:8px 8px 0 #111}input{font-family:ui-monospace;font-size:12.5px;padding:9px 11px;border:1.8px solid var(--ink);border-radius:11px;min-width:0} footer{max-width:1100px;margin:6px auto 0;padding:10px 14px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;border-top:1.6px dashed #E8E2DA;font-size:11px;color:#6B657F}
+/* #log reserves 54px so the first guess does not shove the page down, but
+   empty it was a dashed box around nothing — which reads as something that
+   failed to load. Labelled instead of hidden: hiding it would reintroduce
+   the jump it exists to prevent. ::before is not textContent, so the
+   'has a game started' check that reads #log is unaffected. */
+#log:empty::before{content:'Your guesses land here — closest first.';color:#8A857E}
+</style><!-- build_social_meta.py: start -->
+<link rel="canonical" href="https://hoops.dumbmodel.com/play">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="dumbmodel">
+<meta property="og:url" content="https://hoops.dumbmodel.com/play">
+<meta property="og:title" content="DUMB MODEL — Play Past→Modern">
+<meta property="og:image" content="https://hoops.dumbmodel.com/assets/og-1200x630.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="DUMB MODEL — Play Past→Modern">
+<meta name="twitter:image" content="https://hoops.dumbmodel.com/assets/og-1200x630.png">
+<!-- build_social_meta.py: end -->
+</head><body>
+<a class="vh-skip" href="#main">Skip to the content</a><nav><div class=brand><span style="border:2.2px solid var(--ink);padding:4px 9px;border-radius:9px;background:var(--yellow);box-shadow:2px 2px 0 var(--ink);transform:rotate(-1deg)">DUMB MODEL</span><span>Past → Modern</span></div><div style="display:flex;gap:6px;flex-wrap:wrap"><a class="pill y" href="/play">Play</a><a class="pill" href="/players">Explorer</a><a class="pill" href="/player-cards">Players</a><a class="pill" href="/trends">Trends</a><a class="pill" href="/model">Model</a><a class="pill" href="/teams">Teams</a><a class="pill" href="/dictionary">Dictionary</a><a class="pill" href="/leaderboard">Board</a></div><a class="pill" href="/">Map</a></nav><main id="main" tabindex="-1"><h1 style="position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;border:0">DUMB MODEL — Play Past→Modern</h1><div style="display:flex;flex-direction:column;gap:12px"><div class=card><div class=mono style="text-transform:uppercase;letter-spacing:.06em;opacity:.75">Daily puzzle • same for everyone today</div><h2 style="margin:6px 0 4px;font-size:18px;letter-spacing:-.02em">Guess the modern twin — tap to lock</h2><div style="display:flex;gap:7px;flex-wrap:wrap;margin-top:8px"><button class="btn btn-p" id=bSolo>Play Today's</button><button class="btn btn-y" id=bChallenge>Challenge a friend</button><button class="btn" id=bTrip style="display:none">Triple3</button><button class="btn" id=bFull style="display:none">Full5</button><button class="btn" id=bPack style="display:none">Pack Battle</button><input id=packIn placeholder="Pack code (optional)" style="flex:1;min-width:160px;display:none" aria-label="Pack code"></div><div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap"><span class=chip style="background:var(--yellow)">10 past × 8 modern to start</span><a class=chip href="/model" style="text-decoration:none">How we score it</a></div><div id=dist class=pill style="margin-top:8px">Type a name to start</div>
+<p class=mono style="margin:6px 0 0;font-size:10.5px;color:#6B6862;line-height:1.5;text-transform:none">Past player on the left — guess which modern player plays most like them. Same puzzle for everyone each day, works offline after your first visit.</p></div><div class=card><h2 class="vh-sr">Today's question</h2><div class=mono>Daily • works offline after first visit</div><div id=q style="font-weight:900;font-size:17px;margin-top:4px">—</div><div style="display:flex;gap:8px;margin-top:8px"><input id=guess list=guessList autocomplete=off placeholder="Type modern player — Curry, Wemby..." style="flex:1" aria-label="Type a modern player to guess the twin"><datalist id=guessList></datalist><button class="btn btn-p" id=go>Guess ◎</button></div><div id=log style="margin-top:8px;font-family:ui-monospace;font-size:11.4px;min-height:54px;background:var(--paper);border:1.6px dashed #E8E2DA;border-radius:11px;padding:8px;max-height:150px;overflow:auto"></div><div id=trajChips style="margin-top:8px"></div><div id=parityLab class=mono style="margin-top:6px;font-size:10.6px;color:#5B5752"></div><div style="display:flex;gap:8px;margin-top:8px;align-items:center;flex-wrap:wrap"><button class="btn" id=hintBtn>Hint</button><button class="btn btn-y" id=shareBtn style="display:none">Share result</button><span id=shareStat class=mono></span><button class="btn" id=btnGlass style="display:none">How it works</button><button class="btn btn-p" id=btnNext style="display:none">Next →</button></div><div id=calStrip style="margin-top:6px;display:flex;gap:4px;flex-wrap:wrap"></div><div id=miniBoard style="margin-top:6px;display:none"></div><div id=ww style="margin-top:6px"></div></div></div><div style="display:flex;flex-direction:column;gap:12px"><div class=card style="padding:0;overflow:hidden"><h2 class="vh-sr">The embedding map</h2><div style="display:flex;justify-content:space-between;padding:8px 11px;border-bottom:2.2px solid var(--ink);background:#fff"><span class="pill y">Tap a dot to guess</span><span class=mono>Past ★ Modern ○</span></div><div id=play-a-101><canvas id=c width=640 height=360 aria-label="Embedding map. The modern player pool is drawn as points positioned by the model, coloured by archetype, with the season being asked about marked by a crosshair. Points can be clicked to fill the guess box; every one of them is also in the guess box suggestions, so nothing here needs a mouse."></canvas><canvas id=trajOver width=640 height=360 style="position:absolute;inset:0;pointer-events:none"></canvas><div class=pill style="position:absolute;left:10px;top:10px;z-index:3;background:rgba(250,250,248,.92)">Past ★ Modern ○</div><div id=ring class=ring>◎</div><div id=confetti></div><div id=resultBox class=traj-glass><div class=mono style="font-weight:900;text-transform:uppercase">◎ Locked — nice call</div><div id=resMeta class=mono style="margin-top:4px;font-size:11px;line-height:1.45">—</div><div id=seasonChips style="margin-top:6px;display:flex;flex-wrap:wrap"></div><div id=parityLab2 class=mono style="margin-top:6px;font-size:10.5px;opacity:.86"></div><div style="display:flex;gap:6px;margin-top:8px;flex-wrap:wrap"><button class="btn btn-y" id=btnShareCard>Share</button><button class="btn" id=btnGlass2>How it works</button><button class="btn btn-p" id=btnNext2>Next →</button></div></div></div><div style="padding:8px 11px;background:var(--paper);border-top:1.6px solid var(--ink)" class=mono>Tap a player dot to fill your guess • orange pulse shows the lock<span style="display:block;margin-top:5px;text-transform:none;color:#6B6862;line-height:1.5">Where a dot sits is two of the three components in <code>assets/vectors.json</code>'s <code>proj</code>; your guess is scored on a cosine over all fourteen features. So the map narrows the field rather than settling it — across the pool, the dot nearest the crosshair is the best of the 1,305 modern answers for 148 of the 968 past seasons, and lands in the scored top ten for 289 of them. Worth reading, not worth obeying: the name box is where you win it.</span></div></div><div class=card><h2 style="font-size:14px;margin:0">How to play</h2><div class=sub style="margin-top:4px">One past player appears. Guess which modern player plays most like them. We score how close your guess is — closer greens lock it in.</div><ul style="margin:8px 0 0 16px;font-size:12.4px;line-height:1.45" class=sub><li><b>Tap or type</b> a name — map or box, both work</li><li><b>Lock it</b> — good guess shows orange career path</li><li><b>Share</b> — same puzzle for everyone today</li><li>Streak builds when you finish the day's set</li></ul></div></div></main><div id=sharePop class=share-pop><div class=share-card role=dialog aria-modal=true aria-label="Share this result"><canvas id=shareCard role=img aria-label="Share card. Drawn when a round ends." width=1200 height=630 style="width:100%;height:auto;display:block;background:#080A0F"></canvas><div style="padding:10px 12px;display:flex;gap:8px;flex-wrap:wrap;justify-content:space-between;align-items:center;background:#080A0F"><span class=mono style="color:#C9D4E5">Past → Modern • share your twin match</span><div style="display:flex;gap:6px"><button class="btn" id=dlShare>Download image</button><button class="btn btn-y" id=closeShare>Close ◎</button></div></div></div></div><canvas id=shareCardD width=1200 height=630></canvas><footer><div class=mono>Past → Modern • one puzzle a day</div><div style="display:flex;gap:6px"><a class="pill y" href="/play">Play</a><a class="pill" href="/leaderboard">Board</a><a class="pill" href="/">Map</a><a class="pill" href="/model">Model</a></div></footer><script>const $=s=>document.getElementById(s);const A=1103515245,C=12345,M=2147483648;/* Math.imul, not *: A*s reaches 2.37e18 for s near 2^31 and
+   Number.MAX_SAFE_INTEGER is 9.01e15, so the plain multiply loses the low bits
+   that %M then reads. Measured effect: 120 distinct daily puzzles across 730
+   days instead of the ~513 a uniform draw over a 968-row pool predicts.
+   Math.imul does the 32-bit multiply exactly; >>>0 then %M reproduces the
+   mod-2^31 this line always meant. */
+const LCG=s=>((Math.imul(A,s)+C)>>>0)%M;const DAILY=70737614;function hStr(s){let h=0;for(let i=0;i<s.length;i++)h=(h*31+s.charCodeAt(i))>>>0;return h>>>0}const POOL=[{i:672,n:'Michael Jordan 97-98',v:[0.92,0.11,0.18],xy:[0.31,-0.16],pid:'23'},{i:123,n:'Shaq 99-00',v:[0.85,0.31,0.05],xy:[0.58,0.28],pid:'406'},{i:456,n:'Iverson 00-01',v:[0.40,0.88,0.12],xy:[0.78,0.10],pid:'947'},{i:2977,n:'LeBron 03-04',v:[0.71,0.52,0.28],xy:[-0.33,0.18],pid:'2544'},{i:5600,n:'Curry 09-10',v:[0.31,0.82,0.44],xy:[0.70,0.44],pid:'201939'},{i:8127,n:'Jokic 15-16',v:[0.66,0.21,0.71],xy:[-0.14,-0.62],pid:'203999'},{i:7073,n:'Giannis 13-14',v:[0.74,0.34,0.51],xy:[0.18,0.64],pid:'203507'},{i:229,n:'Kobe 96-97',v:[0.81,0.49,0.18],xy:[0.50,-0.20],pid:'977'},{i:9441,n:'Luka 18-19',v:[0.62,0.61,0.39],xy:[-0.22,0.38],pid:'1629029'},{i:11960,n:'Wemby 23-24',v:[0.88,0.19,0.62],xy:[0.22,-0.48],pid:'1641705'}];const MODERN=[{n:'Jimmy Butler 22-23',v:[0.89,0.14,0.21],pid:'202710',tag:'lock',c:'#E7F6EA'},{n:'Kobe 05-06',v:[0.90,0.18,0.15],pid:'977',tag:'lock'},{n:'Anthony Edwards 23-24',v:[0.78,0.51,0.22],pid:'1630162',tag:'dependent'},{n:'DeMar DeRozan',v:[0.84,0.33,0.12],pid:'201942',tag:'exploitable'},{n:'Paul George',v:[0.76,0.48,0.33],pid:'201568',tag:'dependent'},{n:'Jokic 22-23',v:[0.65,0.20,0.73],pid:'203999',tag:'lock'},{n:'Giannis 22-23',v:[0.75,0.32,0.52],pid:'203507',tag:'lock'},{n:'Wemby 24-25',v:[0.86,0.20,0.61],pid:'1641705',tag:'exploitable'}];/* Was hardcoded to i<3 for the 3-value placeholder vectors. Now runs over the
+   whole vector, so it works on the real 14-d game contract loaded below. The
+   length guard is the point: comparing a 3-value demo row against a 14-d real
+   row would otherwise score on the first three components and look fine. */
+function cos(a,b){if(!a||!b||a.length!==b.length||!a.length)return 0;let d=0,na=0,nb=0;for(let i=0;i<a.length;i++){d+=a[i]*b[i];na+=a[i]*a[i];nb+=b[i]*b[i]}return d/Math.sqrt(na*nb)||0}let seq=[],idx=0,cur=null,trajCache=null,manifestCache=null;let c=$('c'),ctx=c.getContext('2d'),trajOver=$('trajOver'),octx=trajOver.getContext('2d'),dpr=Math.min(window.devicePixelRatio||1,1.4);function resizeCanvas(){let rect=c.getBoundingClientRect();c.width=rect.width*dpr;c.height=rect.height*dpr;trajOver.width=c.width;trajOver.height=c.height;ctx.setTransform(dpr,0,0,dpr,0,0);octx.setTransform(dpr,0,0,dpr,0,0)}
+/* One definition of where a model coordinate lands on this canvas. The base
+   draw, the hover hit-test and the pick highlight all have to agree about it,
+   and three copies of `pad+x*(W-pad*2)` is precisely how they would stop
+   agreeing. Both contexts are setTransform(dpr,...), so this is in CSS pixels
+   and getBoundingClientRect offsets can be compared against it directly. */
+function vhMapXY(){
+  var W=c.clientWidth,H=c.clientHeight,pad=18;
+  return {W:W,H:H,pad:pad,
+    sx:function(x){return pad+x*(W-pad*2)},
+    sy:function(y){return pad+(1-y)*(H-pad*2)}};
+}
+function drawBase(poolObj){let W=c.clientWidth,H=c.clientHeight;ctx.clearRect(0,0,W,H);ctx.fillStyle='#0A0C10';ctx.fillRect(0,0,W,H);let s=hStr((poolObj?poolObj.n:'')+DAILY);for(let i=0;i<140;i++){s=LCG(s);let X=(s%(W*1.12))-W*0.06;s=LCG(s);let Y=s%H;ctx.fillStyle='rgba(250,250,248,'+(0.18+Math.random()*0.34)+')';ctx.fillRect(X,Y,1.15,1.15)}let cx=W/2,cy=H/2;for(let r=96;r>14;r-=20){ctx.beginPath();ctx.arc(cx,cy,r,0,Math.PI*2);ctx.strokeStyle=r<34?'#EB6834':'rgba(235,104,52,'+(0.86-r/130)+')';ctx.lineWidth=r<34?2.6:1.3;ctx.stroke()}ctx.fillStyle='#F0E442';ctx.font='26px monospace';ctx.fillText('◎',cx-13,cy+8);if(poolObj){ctx.fillStyle='#FAFAF8';ctx.font='11px ui-monospace';ctx.fillText(poolObj.n,16,20)}}function parsePack(){let u=new URL(location.href);let p=u.searchParams.get('pack');if(!p)return null;let ids=p.split('-').map(v=>parseInt(v,10)).filter(v=>!isNaN(v));return ids.length?ids:null}function setSeq(a){seq=a;idx=0;nextQ()}function nextQ(){vhAnimating=false;vhHover=null;if(idx>=seq.length){
+  log('— Pack done — • Week Warrior tick if perfect • chrome caviar array locked');
+  updateWW(true);
+  /* Say it where the player is looking. This branch used to return here, which
+     left the question line still reading "Russell Westbrook 2010-11 → ?" with an
+     empty guess box — so winning the daily and pressing Next looked identical to
+     the game being stuck, and the only word that it was over went into the log
+     panel. The daily seed is the date string (hStr of toISOString().slice(0,10)),
+     so "tomorrow" is a fact about the code, not a promise. */
+  var done=$('q');
+  if(done) done.innerHTML='Done for today. New puzzle tomorrow — keep exploring the map below.';
+  var gi=$('guess');
+  if(gi) gi.placeholder='Done — explore the map or share';
+  return}let pid=seq[idx];let past=POOL.find(p=>p.i===pid)||POOL[pid%POOL.length];cur=past;$('q').innerHTML='<b>'+past.n+'</b> → ?';drawBase(past);$('trajChips').innerHTML='';$('seasonChips').innerHTML='';let rb=$('resultBox');if(rb)rb.style.display='none';let ov=trajOver.getContext('2d');ov.clearRect(0,0,trajOver.width,trajOver.height)}function log(h){$('log').innerHTML+='<div>'+h+'</div>';$('log').scrollTop=9999}async function fetchTrajCache(){if(trajCache)return trajCache;try{let r=await fetch('assets/embedding_map_trajectories.json?v=2e787a46');let j=await r.json();trajCache=j.trajectories||j;return trajCache}catch(e){return{}}}async function fetchManifest(){if(manifestCache)return manifestCache;try{let r=await fetch('assets/embedding_map_manifest.json?v=e4a12140');let j=await r.json();manifestCache=j.players||[];return manifestCache}catch(e){return[]}}function norm(s){return(s||'').toLowerCase().replace(/[^a-z]/g,'')}function findPid(name){if(!manifestCache)return null;let nb=norm(name.replace(/\s+\d{2}-\d{2}.*/,'').replace(/\s+\d{4}.*/,'').trim());let f=manifestCache.find(p=>norm(p.display_name).includes(nb)||nb.includes(norm(p.display_name)));return f?f.player_id:null}/* Two pool shapes reach this. The real rows from game_vectors.json carry x and
+   y already in [0,1]; the hardcoded fallback rows carry xy in [-1,1]. Only `xy`
+   used to be read, and the real pool has no such field — so every guess whose
+   pid missed the trajectory cache threw on undefined[0]. That rejection was
+   unhandled inside animateCareer's promise chain, which meant a correct guess
+   scored nothing and the pack stopped advancing. Falling back to the centre
+   keeps a synthetic trajectory drawable rather than fatal. */
+function synthTraj(poolObj,n=6){
+  let bx,by;
+  if(typeof poolObj.x==='number'&&typeof poolObj.y==='number'){bx=poolObj.x;by=poolObj.y}
+  else if(poolObj.xy&&poolObj.xy.length>1){bx=poolObj.xy[0]*0.5+0.5;by=poolObj.xy[1]*0.5+0.5}
+  else {bx=0.5;by=0.5}let pts=[],s=hStr(poolObj.n);for(let i=0;i<n;i++){s=LCG(s);let ox=(s%100)/100*0.12-0.06;s=LCG(s);let oy=(s%100)/100*0.10-0.05;pts.push({season:(1996+i)+'-'+String((97+i)).padStart(2,'0'),x:Math.min(1,Math.max(0,bx+ox)),y:Math.min(1,Math.max(0,by+oy)),z:0.5,team:'SA'+i,wins:20+i*3})}return pts}/* The page carries a @media (prefers-reduced-motion:reduce) block, which stops
+   CSS animation and does nothing at all to the motion that matters here: the
+   1200ms requestAnimationFrame trajectory draw, the 1240ms ring pulse and the
+   600ms spike are all JavaScript. Measured over CDP with the media feature
+   emulated: 112 rAF frames with no preference, 114 with reduce — identical.
+   Read live rather than cached, so changing the OS setting mid-session counts. */
+function reducedMotion(){
+  return !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+}
+function pulseRing2(){
+  // the ring exists to be a flash; asked for no motion, it simply does not appear
+  if(reducedMotion()) return Promise.resolve();
+let r=$('ring');r.classList.remove('karaoke-2x');void r.offsetWidth;r.classList.add('karaoke-2x');r.style.display='grid';return new Promise(res=>setTimeout(()=>{r.style.display='none';r.classList.remove('karaoke-2x');res()},1240))}function easeInOut(t){return t<0.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2}async function animateCareer(guessObj,targetObj){let playBox=$('play-a-101');var RM=reducedMotion();
+  if(!RM){ playBox.classList.add('spike'); await new Promise(r=>setTimeout(r,600)); playBox.classList.remove('spike'); }await pulseRing2();let cache=await fetchTrajCache();await fetchManifest();let gPid=guessObj.pid||findPid(guessObj.n)||'',tPid=targetObj.pid||findPid(targetObj.n)||'';
+  /* targetObj.i used to be the second lookup here. It is a vectors.json row
+     index and this cache is keyed by NBA player_id, so it could only ever hit
+     by coincidence — findPid is the join that actually resolves one to the
+     other. Whether each side fell back to a synthesised path is tracked, because
+     a synthesised path carries invented seasons and must never be presented as
+     a real career. */
+  let gSynth=!cache[gPid], tSynth=!cache[tPid];
+  let gTraj=gSynth?synthTraj(guessObj,7):cache[gPid];let tTraj=tSynth?synthTraj(targetObj,7):cache[tPid];let W=c.clientWidth,H=c.clientHeight;octx.clearRect(0,0,W,H);let chips=$('trajChips');chips.innerHTML='';
+  /* Season chips are only real when the trajectory came out of the cache.
+     synthTraj invents its seasons — 1996-97 onwards, teams 'SA0'..'SA6' — so
+     printing them next to a 2024-25 player states something false about a
+     career. When either side is synthesised the chips are replaced by one that
+     says so. */
+  // declared out here: the animation frame highlights the chip for the season
+  // it is currently drawing, so this has to stay in scope for the whole closure
+  let allSeasons=[];
+  if(gSynth||tSynth){
+    let who=(gSynth&&tSynth)?'either player':(gSynth?guessObj.n:targetObj.n);
+    let el=document.createElement('span');el.className='season-chip';
+    el.style.opacity='.78';
+    el.textContent='illustrative path — no season-by-season track for '+who;
+    chips.appendChild(el);
+  } else {
+    allSeasons=[...new Set([...gTraj.map(p=>p.season),...tTraj.map(p=>p.season)])].sort();
+    allSeasons.forEach(s=>{let el=document.createElement('span');el.className='season-chip';el.textContent=s;chips.appendChild(el)});
+  }let start=performance.now(),dur=1200;return new Promise(resolve=>{function frame(now){let t=RM?1:Math.min(1,(now-start)/dur),e=easeInOut(t);octx.clearRect(0,0,W,H);function drawOne(traj,color,isGuess){if(!traj.length)return;let prog=e*(traj.length-1),upto=Math.floor(prog),rem=prog-upto;octx.beginPath();octx.lineWidth=isGuess?2.8:2.2;octx.lineCap='round';octx.lineJoin='round';octx.shadowColor='#111';octx.shadowBlur=1.2;for(let i=0;i<=upto;i++){let p=traj[i];let X=p.x*W,Y=p.y*H;if(i===0)octx.moveTo(X,Y);else octx.lineTo(X,Y);let a=0.35+0.65*(i/(traj.length-1||1));octx.strokeStyle=color;octx.globalAlpha=a*e;octx.stroke();octx.beginPath();octx.moveTo(X,Y);let pr=3.2+e*2.4;octx.globalAlpha=1;octx.fillStyle=i===traj.length-1?color:'#9AA0A6';octx.beginPath();octx.arc(X,Y,pr,0,Math.PI*2);octx.fill();if(rem>0&&i===upto&&i+1<traj.length){let np=traj[i+1];let ix=X+(np.x*W-X)*rem,iy=Y+(np.y*H-Y)*rem;octx.beginPath();octx.moveTo(X,Y);octx.lineTo(ix,iy);octx.strokeStyle=color;octx.globalAlpha=0.9;octx.stroke();octx.globalAlpha=1}}octx.globalAlpha=1;octx.shadowBlur=0}drawOne(gTraj,'#F0E442',true);drawOne(tTraj,'#EB6834',false);let active=Math.floor(e*(allSeasons.length-1));chips.querySelectorAll('.season-chip').forEach((el,i)=>el.classList.toggle('active',i===active));let sChips=$('seasonChips');if(sChips){sChips.innerHTML='';let pts=gTraj.slice(0,Math.floor(e*gTraj.length)+1);pts.forEach((pt,i)=>{let el=document.createElement('span');el.className='season-chip'+(i===pts.length-1?' active':'');el.textContent=(pt.season||'S'+i)+' '+(pt.team||'')+' '+(pt.wins?'W'+pt.wins:'');el.onclick=()=>{let rb=$('resultBox');rb?.classList.toggle('traj-glass');el.classList.toggle('active')};sChips.appendChild(el)})}if(t<1){requestAnimationFrame(frame)}else{confettiBurst();showResultBox(guessObj,targetObj,gTraj,tTraj);makeShareOG(guessObj,targetObj,gTraj,tTraj);resolve()}}requestAnimationFrame(frame)})}function confettiBurst(){let cf=$('confetti');cf.innerHTML='';for(let i=0;i<12;i++){let s=document.createElement('div');s.className='star';s.textContent='★';s.style.left=(26+Math.random()*48)+'%';s.style.top=(42+Math.random()*22)+'%';s.style.color='#F0E442';s.style.position='absolute';s.style.animationDelay=(i*48)+'ms';s.style.fontSize=(11+Math.random()*6)+'px';cf.appendChild(s)}setTimeout(()=>cf.innerHTML='',1300)}function showResultBox(guess,target,gT,tT){
+  let rb=$('resultBox');if(!rb)return;rb.style.display='block';rb.classList.add('spike');setTimeout(()=>rb.classList.remove('spike'),620);
+  let score=cos(target.v,guess.v);
+  let label=score>0.92?"Dead on — lock!":score>0.82?"Very close":score>0.68?"Getting close":"Keep trying";
+  let best=null,bestS=-1;
+  try{
+    for(let i=0;i<MODERN.length;i++){let s=cos(target.v, MODERN[i].v); if(s>bestS){bestS=s; best=MODERN[i];}}
+  }catch(e){}
+  let modelLine='';
+  if(best && best.n!==guess.n){
+    modelLine='<div class="sub" style="margin-top:4px">Model closest: <b>'+best.n+'</b> ('+(bestS*100|0)+'%)</div>';
+  }
+  $('resMeta').innerHTML='<b>'+target.n+' ≈ '+guess.n+'</b> • '+label+' ('+(score*100|0)+'%)'+modelLine;
+  $('parityLab').innerHTML='Same puzzle for everyone today. <a href="/model" style="color:inherit">See how we score it</a>';
+  $('parityLab2').innerHTML=(tT[0]?.team?'First year '+(tT[0]?.team||''):'')+' • tap to see path';
+  if($('btnGlass')) $('btnGlass').style.display='inline-flex';
+  if($('btnNext')) $('btnNext').style.display='inline-flex';
+  if($('shareBtn')) $('shareBtn').style.display='inline-flex';
+  try{
+    if(typeof AudioContext!=='undefined'){
+      let ac=new (window.AudioContext||window.webkitAudioContext)();
+      let o=ac.createOscillator(), g=ac.createGain();
+      o.type='sine'; o.frequency.value=720; o.connect(g); g.connect(ac.destination);
+      g.gain.setValueAtTime(0.0001, ac.currentTime);
+      g.gain.exponentialRampToValueAtTime(0.22, ac.currentTime+0.04);
+      g.gain.exponentialRampToValueAtTime(0.0001, ac.currentTime+0.36);
+      o.start(); o.stop(ac.currentTime+0.38);
+    }
+  }catch(e){}
+}function makeShareOG(guess,target,gT,tT){
+  let sc=$('shareCard'),sx=sc.getContext('2d');
+  if(!sc) return;
+  sx.fillStyle='#080A0F';sx.fillRect(0,0,1200,630);
+  sx.fillStyle='#FAFAF8';sx.font='700 36px ui-monospace';
+  sx.fillText('DUMB MODEL — Past → Modern',36,62);
+  sx.fillStyle='#F0E442';sx.font='900 44px ui-monospace';
+  let line=(target.n+' → '+guess.n).slice(0,56);
+  sx.fillText(line,36,118);
+  sx.fillStyle='#C9D4E5';sx.font='18px ui-monospace';
+  let sco=cos(target.v,guess.v);
+  let lbl=sco>0.92?"Dead on":sco>0.82?"Very close":sco>0.68?"Close":"Nice try";
+  sx.fillText(lbl+' • same puzzle for everyone today • hoops.dumbmodel.com/play',36,156);
+  sx.strokeStyle='#EB6834';sx.lineWidth=3;sx.beginPath();
+  tT.forEach((pt,i)=>{let X=520+pt.x*560,Y=200+pt.y*340; if(i===0) sx.moveTo(X,Y); else sx.lineTo(X,Y)});sx.stroke();
+  sx.strokeStyle='#F0E442';sx.beginPath();
+  gT.forEach((pt,i)=>{let X=520+pt.x*560,Y=200+pt.y*340; if(i===0) sx.moveTo(X,Y); else sx.lineTo(X,Y)});sx.stroke();
+  tT.forEach(pt=>{let X=520+pt.x*560,Y=200+pt.y*340;sx.fillStyle='#EB6834';sx.beginPath();sx.arc(X,Y,3.5,0,6.283);sx.fill()});
+  gT.forEach(pt=>{let X=520+pt.x*560,Y=200+pt.y*340;sx.fillStyle='#F0E442';sx.beginPath();sx.arc(X,Y,3.5,0,6.283);sx.fill()});
+  sx.fillStyle='#EB6834';sx.font='28px ui-monospace';sx.fillText('◎',760,315);
+  sx.fillStyle='#9AA0A6';sx.font='13px ui-monospace';
+  let packParam=new URL(location.href).searchParams.get('pack');
+  let linkPack=packParam?('?pack='+packParam): (typeof seq!=='undefined' && seq && seq.length?('?pack='+seq.join('-')):'');
+  sx.fillText('hoops.dumbmodel.com/play'+linkPack+' • tap to play',36,604);
+  sc.setAttribute('aria-label','Share card. '+target.n+' to '+guess.n);
+  $('shareBtn').onclick=()=>openShare($('shareBtn'))}/* Matching used to be MODERN.find(includes) over 8 hardcoded names, and the
+   miss message listed all of them. Both were fine at 8 and wrong at 1,305:
+   "james" hit whoever appeared first, and a miss printed the entire pool.
+   Rank exact, then prefix, then substring, and cap the suggestions. */
+/* The guess box is <input id=guess list=guessList>, and #guessList shipped as
+   an empty <datalist> that no code ever put an option into. The one control the
+   whole game runs through promised suggestions and offered none, against a pool
+   of 1,305 modern seasons a player has no way to enumerate.
+
+   That is worse than a plain text box, because pickModern falls back to a
+   substring match: a wrong or half-remembered name usually resolves to
+   *something* rather than saying it was not recognised, so you get scored
+   against a player you did not mean to name and never find out.
+
+   Filled from MODERN itself rather than a written-out list, so it always
+   describes the pool that actually loaded — including the placeholder rows, if
+   the fetch failed and those are all there is. */
+function fillGuessList(){
+  var dl=document.getElementById('guessList');
+  if(!dl) return 0;
+  var frag=document.createDocumentFragment();
+  for(var i=0;i<MODERN.length;i++){
+    var o=document.createElement('option');
+    o.value=MODERN[i].n;
+    frag.appendChild(o);
+  }
+  dl.innerHTML='';
+  dl.appendChild(frag);     // one reflow, not 1,305
+  return MODERN.length;
+}
+function pickModern(g){
+  if(!g) return null;
+  var exact=null,prefix=null,sub=null;
+  for(var i=0;i<MODERN.length;i++){
+    var n=MODERN[i].n.toLowerCase();
+    if(n===g) return MODERN[i];
+    if(!prefix&&n.indexOf(g)===0) prefix=MODERN[i];
+    if(!sub&&n.indexOf(g)>=0) sub=MODERN[i];
+  }
+  return exact||prefix||sub;
+}
+function guess(){let g=$('guess').value.trim().toLowerCase();if(!g||!cur)return;let cand=pickModern(g);if(!cand){var near=MODERN.filter(function(m){return m.n.toLowerCase().indexOf(g.slice(0,3))>=0;}).slice(0,8).map(function(m){return m.n;});$('dist').innerHTML='<b>No modern player matches that.</b>'+(near.length?' Did you mean: '+near.join(' · '):' '+MODERN.length.toLocaleString()+' modern seasons are in the pool — start typing for suggestions.');return}window.__vhLastGuess=cand;let cs=cos(cur.v,cand.v);
+  /* Say when the fragment was ambiguous. pickModern ranks exact › prefix ›
+     substring, and where several names contain the fragment the tie is broken by
+     position in MODERN — which is not relevance, it is array order. Type "curry"
+     and you are scored against Seth, not Stephen; type "ant" and you get Anthony
+     Davis out of 53 matches, on a page whose own placeholder offers "Ant" as an
+     example.
+     There is no prominence field in this data, so ranking them properly would
+     mean inventing a signal, and ranking by cosine to the target would hand you
+     the answer. Naming the alternatives is the honest option: the pick stands,
+     and you can see it was a pick. */
+  /* The typed fragment is the first user input on this page to reach
+     innerHTML, so it gets escaped rather than trusted. */
+  var hesc=function(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;')
+    .replace(/>/g,'&gt;').replace(/"/g,'&quot;');};
+  var others=[];
+  if(g.length>=2){
+    // strip the trailing season so "Giannis 2022-23" and "Giannis 2023-24" count
+    // as one player — the alternatives worth naming are other people, not other
+    // seasons of the person already picked
+    var base=function(n){return n.replace(/\s+\d{4}-\d{2}$/,'');};
+    var seen={}, chosen=base(cand.n);
+    for(var oi=0;oi<MODERN.length;oi++){
+      var bn=base(MODERN[oi].n);
+      if(bn===chosen||seen[bn]) continue;
+      if(MODERN[oi].n.toLowerCase().indexOf(g)>=0){ seen[bn]=1; others.push(bn); }
+    }
+  }
+  let lbl=cs>0.88?'Dead on':cs>0.78?'Very close':cs>0.66?'Getting close':cs>0.5?'Not bad':'Try another';
+  $('dist').innerHTML='<b>'+cand.n+'</b> • '+lbl+' ('+(cs*100|0)+'%)'+(cs>0.7?' ◎':"");
+  if(others.length){
+    $('dist').innerHTML+='<div class="sub" style="margin-top:4px">Also matches '+others.slice(0,3).join(' · ')+(others.length>3?' …':'')+' — type more to pick</div>';
+  }
+  log('→ <b>'+cand.n+'</b> • '+lbl);
+  saveHistory({t: new Date().toISOString(), past: cur?.n||'', guess: cand.n, score: cs, pack: (typeof seq!=='undefined'?seq.join('-'):'')});
+  let lockTh=0.68;
+  if(cs>lockTh){vhAnimating=true;animateCareer(cand,cur).then(()=>{vhAnimating=false;log('Locked! '+cur.n+' → <b>'+cand.n+'</b> ★');idx++;updateWW(false,true);});}else{let pb=$('play-a-101');pb.classList.add('spike');setTimeout(()=>pb.classList.remove('spike'),520);pulseRing2();drawBase(cur)} $('guess').value=''}
+function bestModernForCur(){
+  if(!cur || !MODERN || !MODERN.length) return null;
+  let best=null,bestS=-1;
+  for(let i=0;i<MODERN.length;i++){ let s=cos(cur.v, MODERN[i].v); if(s>bestS){bestS=s; best=MODERN[i];}}
+  return {p:best, s:bestS};
+}
+(function(){
+  let hb=$('hintBtn'); if(!hb) return;
+  hb.addEventListener('click', ()=>{
+    let bm=bestModernForCur();
+    if(!bm || !bm.p){ $('dist').innerHTML='Hint: type a name — the map dots are all guessable'; return;}
+    let nm=bm.p.n||''; 
+    let last=nm.split(' ').slice(-1)[0]||nm;
+    let teamHint=(bm.p.tag?(' • '+bm.p.tag):'');
+    // progressive hints: first click shows initial, second shows team/tag, third shows first name
+    hb.dataset.clicks=(parseInt(hb.dataset.clicks||'0')+1).toString();
+    let c=parseInt(hb.dataset.clicks);
+    if(c===1){
+      $('dist').innerHTML='Hint: starts with <b>'+ (last[0]||'') +'</b> — '+MODERN.length+' modern seasons in pool';
+    }else if(c===2){
+      $('dist').innerHTML='Hint: <b>'+last[0]+'</b>… • closest is ~'+(bm.s*100|0)+'% similar'+teamHint;
+    }else{
+      $('dist').innerHTML='It\'s <b>'+nm+'</b> ('+(bm.s*100|0)+'%) — try locking it in';
+    }
+  });
+})();
+
+
+function saveHistory(entry){
+  try{
+    let k='vh_guess_history';
+    let h=JSON.parse(localStorage.getItem(k)||'[]');
+    h.push(entry);
+    if(h.length>60) h=h.slice(-60);
+    localStorage.setItem(k, JSON.stringify(h)); renderMiniBoard();
+  }catch(e){}
+}
+
+function renderWW(ww){ww=ww||JSON.parse(localStorage.getItem('vh_weekStreak')||'{"days":[],"streak":0}');let c=$('ww');if(!c)return;c.innerHTML='';let dots='';for(let i=0;i<7;i++){dots+='<span class="dotw '+(i<(ww.days?.length||0)?'on'+((ww.days.length>=7)?' war':''):'')+'"></span>'}c.innerHTML='<span class="mono">Streak </span>'+dots+'<span class="mono" style="margin-left:6px">'+(ww.streak||0)+' days • '+(ww.days?.length||0)+'/7</span>'}
+function loadDailyForDate(dateStr){
+  try{
+    let s=((hStr(dateStr)^DAILY)>>>0)%M;
+    s=LCG(s);
+    setSeq([POOL[s%POOL.length].i]);
+    let d=$('dist'); if(d) d.textContent='Replaying '+dateStr+' — same as everyone that day';
+  }catch(e){}
+}
+
+function renderMiniBoard(){
+  try{
+    let k='vh_guess_history';
+    let h=JSON.parse(localStorage.getItem(k)||'[]');
+    if(!h.length) return;
+    let counts={};
+    h.forEach(x=>{ let n=x.guess||''; if(!n) return; counts[n]=(counts[n]||0)+1; });
+    let top=Object.entries(counts).sort((a,b)=>b[1]-a[1]).slice(0,4);
+    let mb=$('miniBoard'); if(!mb) return;
+    mb.style.display='';
+    mb.innerHTML='<div class="mono" style="font-weight:800">Your recent picks • '+h.length+' guesses</div><div style="display:flex;gap:4px;flex-wrap:wrap;margin-top:4px">'+top.map(([n,c])=>'<span class="season-chip">'+n+' ×'+c+'</span>').join('')+'</div><div class="sub" style="margin-top:4px">Global crowd board coming soon — your picks seed it now</div>';
+  }catch(e){}
+}
+
+function renderCal(){
+  let c=$('calStrip'); if(!c) return;
+  let days=[];
+  let today=new Date();
+  for(let i=6;i>=0;i--){ let d=new Date(today); d.setDate(today.getDate()-i); days.push(d.toISOString().slice(0,10));}
+  let ww=null; try{ww=JSON.parse(localStorage.getItem('vh_weekStreak')||'{}')}catch(e){ww={};}
+  c.innerHTML='';
+  days.forEach(ds=>{
+    let dt=new Date(ds+'T00:00:00Z');
+    let label=dt.toLocaleDateString('en-US',{weekday:'short'}).slice(0,2);
+    let b=document.createElement('button');
+    b.className='season-chip';
+    b.style.minHeight='24px';
+    let done=ww && ww.days && ww.days.includes(ds);
+    if(done) b.style.background='var(--yellow)';
+    if(ds===new Date().toISOString().slice(0,10)) b.style.borderColor='#EB6834';
+    b.textContent=label+' '+ds.slice(8,10)+(done?' •':'');
+    b.onclick=()=>loadDailyForDate(ds);
+    c.appendChild(b);
+  });
+}
+
+function updateWW(fin,hit){let key='vh_weekStreak';let ww=null;try{ww=JSON.parse(localStorage.getItem(key)||'{"days":[],"streak":0}')}catch(e){ww={days:[],streak:0}}let today=new Date().toISOString().slice(0,10);
+  if(hit&&!ww.days.includes(today)){
+    /* A streak that survives a gap is not a streak. This used to be
+       ww.streak=(ww.streak||0)+1 with no check on when the last day was, so it
+       counted days played, ever, while the page called it a streak and drew a
+       seven-dot "Week Warrior" beside it. Measured over a shimmed clock: play
+       three days running then skip nine and it read 4.
+       The dots reset with the count, so seven of them now mean seven days in a
+       row rather than seven days scattered across months. */
+    var last=(ww.days&&ww.days.length)?ww.days[ww.days.length-1]:null;
+    var consecutive=last&&(Date.parse(today+'T00:00:00Z')-Date.parse(last+'T00:00:00Z'))===86400000;
+    if(consecutive){ww.days.push(today);ww.days=ww.days.slice(-7);ww.streak=(ww.streak||0)+1}
+    else{ww.days=[today];ww.streak=1}
+  }localStorage.setItem(key,JSON.stringify(ww));renderWW(ww); renderCal()}$('go').onclick=guess;$('guess').addEventListener('keydown',e=>{if(e.key==='Enter')guess()});
+$('bChallenge')?.addEventListener('click',()=>{
+  let ids=[];
+  let pool=POOL||[];
+  for(let k=0;k<3;k++){ let s=((Math.random()*2147483648)|0); ids.push(pool[(s>>>0)%pool.length]?.i || pool[k%pool.length]?.i || 672); }
+  let code=ids.join('-');
+  let url=location.origin+location.pathname+'?pack='+code;
+  history.replaceState(null,'','?pack='+code);
+  setSeq(ids);
+  let stat=$('shareStat');
+  if(navigator.clipboard){
+    navigator.clipboard.writeText(url).then(()=>{
+      if(stat) stat.textContent='Pack link copied';
+      setTimeout(()=>{ if(stat) stat.textContent='';},2200);
+    }).catch(()=>{
+      if(stat) stat.textContent='Pack: '+code;
+    });
+  }else{
+    if(stat) stat.textContent='Pack: '+code;
+  }
+  if(navigator.share){
+    navigator.share({title:'Challenge Past-Modern', text:'Can you beat my pack?', url:url}).catch(()=>{});
+  }
+});
+
+$('bSolo').onclick=()=>{let s=((hStr(new Date().toISOString().slice(0,10))^DAILY)>>>0)%M;s=LCG(s);setSeq([POOL[s%POOL.length].i])};$('bTrip').onclick=()=>{let s=((hStr(new Date().toISOString().slice(0,10))^DAILY)>>>0)%M;let a=[];for(let k=0;k<3;k++){s=LCG(s);a.push(POOL[s%POOL.length].i)}setSeq(a)};$('bFull').onclick=()=>{let s=((hStr('full'+new Date().toISOString().slice(0,10))^DAILY)>>>0)%M;let a=[];for(let k=0;k<5;k++){s=LCG(s);a.push(POOL[s%POOL.length].i)}setSeq(a)};$('bPack').onclick=()=>{let p=parsePack()||[672,123,456];setSeq(p);$('packIn').value=p.join('-');history.replaceState(null,'','?pack='+p.join('-'))};$('packIn').addEventListener('change',e=>{let v=e.target.value.replace('?pack=','').split('-').map(x=>parseInt(x,10)).filter(x=>!isNaN(x));if(v.length){setSeq(v);history.replaceState(null,'','?pack='+v.join('-'))}});$('btnNext')?.addEventListener('click',()=>{let rb=$('resultBox');rb.style.display='none';octx.clearRect(0,0,trajOver.width,trajOver.height);nextQ()});$('btnNext2')?.addEventListener('click',()=>{let rb=$('resultBox');rb.style.display='none';octx.clearRect(0,0,trajOver.width,trajOver.height);nextQ()});$('btnGlass')?.addEventListener('click',()=>{let rb=$('resultBox');rb?.classList.toggle('traj-glass');trajOver.style.filter=trajOver.style.filter?'':'blur(.6px) contrast(1.2) drop-shadow(0 0 6px rgba(235,104,52,.5))'});$('btnGlass2')?.addEventListener('click',()=>{let rb=$('resultBox');rb?.classList.toggle('traj-glass');trajOver.style.filter=trajOver.style.filter?'':'blur(.6px) contrast(1.2) drop-shadow(0 0 6px rgba(235,104,52,.5))'});/* ── the share overlay was a div with a class on it ──────────────────────────
+   Measured in a browser: opening it left focus on the button behind it, and Tab
+   then walked two live controls the visitor could no longer see through a
+   blurred backdrop — the second being "Next Q →", which moves the game on
+   underneath the card they are looking at. Three tabs to reach Close, and
+   Escape did nothing at all. Closing dropped focus to <body>, so the next Tab
+   restarted at the skip link.
+   A dialog has to take focus, keep it while it is up, and give it back. */
+function shareFocusable(){return [].slice.call($('sharePop').querySelectorAll(
+  'button,[href],input,select,textarea,[tabindex]:not([tabindex="-1"])'))
+  .filter(function(e){return e.offsetParent!==null;});}
+var shareOpener=null;
+function openShare(t){
+  // one-click share text
+  try{
+    let curP=(typeof cur!=='undefined' && cur)?cur:{n:''};
+    let last=window.__vhLastGuess||{n:''};
+    let txt='';
+    if(curP.n && last.n){
+      let sc=(curP.v&&last.v)?cos(curP.v,last.v):0;
+      let pct=sc?(' '+((sc*100|0))+'%'):'';
+      txt='I matched '+curP.n+' → '+last.n+pct+' — Past → Modern daily on hoops.dumbmodel.com/play';
+    }else{
+      txt='Past → Modern daily — hoops.dumbmodel.com/play';
+    }
+    if(navigator.share){
+      navigator.share({title:'DUMB MODEL — Past→Modern', text:txt, url:location.href}).catch(()=>{});
+    }
+    if(navigator.clipboard){
+      navigator.clipboard.writeText(txt+' '+location.href).then(()=>{
+        let s=$('shareStat'); if(s){ s.textContent='Link copied'; setTimeout(()=>{s.textContent='';},1800);}
+      }).catch(()=>{});
+    }
+  }catch(e){}
+  var pop=$('sharePop');
+  shareOpener=t||document.activeElement;
+  if(pop) pop.classList.add('on');
+  var f=shareFocusable();if(f.length)f[0].focus();
+}
+function shutShare(){var pop=$('sharePop');
+  if(!pop.classList.contains('on'))return;
+  pop.classList.remove('on');
+  /* back to the control that opened it: someone who closes a dialog belongs
+     where they were, not at the top of the document */
+  if(shareOpener&&shareOpener.offsetParent!==null)shareOpener.focus();
+  shareOpener=null;}
+document.addEventListener('keydown',function(e){
+  if(!$('sharePop').classList.contains('on'))return;
+  if(e.key==='Escape'){e.preventDefault();shutShare();return;}
+  if(e.key!=='Tab')return;
+  var f=shareFocusable();if(!f.length)return;
+  var first=f[0],last=f[f.length-1],a=document.activeElement;
+  /* everything outside is behind the backdrop, so Tab wraps instead of leaving */
+  if(f.indexOf(a)<0){e.preventDefault();first.focus();}
+  else if(e.shiftKey&&a===first){e.preventDefault();last.focus();}
+  else if(!e.shiftKey&&a===last){e.preventDefault();first.focus();}
+});
+$('btnShareCard')?.addEventListener('click',function(){openShare(this)});
+$('dlShare')?.addEventListener('click',()=>{
+  let sc=$('shareCard'); if(!sc) return; 
+  try{
+    let url=sc.toDataURL('image/png');
+    let a=document.createElement('a'); a.href=url; a.download='past-modern-'+(new Date().toISOString().slice(0,10))+'.png'; a.click();
+    let s=$('shareStat'); if(s){ s.textContent='Image saved'; setTimeout(()=>s.textContent='',1700);}
+  }catch(e){}
+});$('closeShare')?.addEventListener('click',shutShare);$('sharePop')?.addEventListener('click',e=>{if(e.target.id==='sharePop')shutShare()});(function init(){resizeCanvas();window.addEventListener('resize',resizeCanvas);renderWW(); renderCal(); renderMiniBoard();fillGuessList();installMapPicker();
+(function(){try{
+  let seen=localStorage.getItem('vh_seen_onboard');
+  if(!seen){
+    setTimeout(()=>{
+      let d=$('dist'); if(d) d.innerHTML='Welcome — one past player, guess the modern twin. Tap a dot or type a name, then Guess.';
+      /* The welcome line stays; moving focus does not. This ran 400ms after
+         load on a first visit, which is exactly when a keyboard visitor is
+         orienting - it took focus out of the document flow, past the skip
+         link and the whole nav, and check_focus read the first Tab landing
+         on #go with no way back up. Telling someone what to do is not the
+         same as doing it for them. */
+    },400);
+    localStorage.setItem('vh_seen_onboard','1');
+  }
+}catch(e){}
+})();
+let pp=parsePack();if(pp){setSeq(pp);$('packIn').value=pp.join('-')}else{let s=((hStr(new Date().toISOString().slice(0,10))^DAILY)>>>0)%M;s=LCG(s);setSeq([POOL[s%POOL.length].i])}/* ── swap the placeholder pool for the real one ──────────────────────────
+   POOL and MODERN above are const, so they are emptied and refilled rather
+   than reassigned. assets/game_vectors.json carries the frozen 14-d game
+   contract for 968 All-Star/All-NBA past seasons and 1,305 modern ones, built
+   by scripts/build_game_vectors.py from assets/vectors.json + honors.json.
+   Ids are vectors.json row indices, so ?pack= links keep resolving.
+   The hardcoded rows stay as the pre-load fallback: if this fetch fails the
+   page still plays, on the demo pool, and says so. */
+/* Replace the 140-dot random starfield with the actual embedding.
+   drawBase() is a function declaration, so it can be reassigned from here once
+   the real pool has loaded. Background cloud is assets/vectors_map_lite.json
+   (4,322 rows of {i,x,y,z,c}), already committed and used by shared-map.js —
+   fetched rather than duplicated into game_vectors.json.
+
+   Palette note: index 7 is #FFFEF7 here, not the #000000 that index.html and
+   players.html use. This canvas is #0A0C10, and black points on near-black are
+   invisible. 0-6 match those two pages so the maps agree with each other; the
+   unresolved order split between them is logged on the board. */
+/* Pick a guess off the map.
+
+   This is a convenience layered on the guess box, never a replacement for it.
+   The canvas stays out of the tab order and every name remains typable and
+   suggestable, so no function of this page is mouse-only (WCAG 2.1.1) — the
+   datalist fixed in the commit before this one is the keyboard path, and that is
+   why it had to be filled before this could be built.
+
+   Clicking fills the box and focuses it rather than submitting, so a stray click
+   on a dense map cannot spend a guess for you. */
+var vhAnimating=false, vhHover=null;
+function vhHitTest(ev){
+  var r=c.getBoundingClientRect(), m=vhMapXY();
+  var px=ev.clientX-r.left, py=ev.clientY-r.top;
+  var best=null, bd=11*11;                    // 11 CSS px, forgiving on a phone
+  for(var i=0;i<MODERN.length;i++){
+    var p=MODERN[i];
+    if(typeof p.x!=='number') continue;
+    var dx=m.sx(p.x)-px, dy=m.sy(p.y)-py, d=dx*dx+dy*dy;
+    if(d<bd){bd=d;best=p}
+  }
+  return best;
+}
+function vhDrawHover(p){
+  // the overlay canvas belongs to the trajectory animation while it is running;
+  // clearing it mid-flight would wipe the career path being drawn
+  if(vhAnimating) return;
+  var m=vhMapXY();
+  octx.clearRect(0,0,m.W,m.H);
+  if(!p||typeof p.x!=='number') return;
+  var X=m.sx(p.x), Y=m.sy(p.y);
+  octx.strokeStyle='#FAFAF8'; octx.lineWidth=3.2;
+  octx.beginPath(); octx.arc(X,Y,8,0,6.283); octx.stroke();
+  octx.strokeStyle='#EB6834'; octx.lineWidth=1.8;
+  octx.beginPath(); octx.arc(X,Y,8,0,6.283); octx.stroke();
+  octx.font='700 12px ui-monospace,Menlo,monospace';
+  var tw=octx.measureText(p.n).width;
+  var lx=Math.min(Math.max(6,X-tw/2-6), Math.max(6,m.W-tw-14));
+  var ly=Y>34?Y-16:Y+26;
+  octx.fillStyle='rgba(10,12,16,.94)';
+  octx.fillRect(lx,ly-13,tw+12,19);
+  octx.strokeStyle='#EB6834'; octx.lineWidth=1;
+  octx.strokeRect(lx,ly-13,tw+12,19);
+  octx.fillStyle='#FAFAF8';
+  octx.fillText(p.n,lx+6,ly+1);
+}
+function installMapPicker(){
+  if(!c) return;
+  c.addEventListener('pointermove',function(ev){
+    var p=vhHitTest(ev);
+    if(p!==vhHover){ vhHover=p; vhDrawHover(p); c.style.cursor=p?'pointer':'default' }
+  });
+  c.addEventListener('pointerleave',function(){
+    vhHover=null; vhDrawHover(null); c.style.cursor='default';
+  });
+  c.addEventListener('pointerdown',function(ev){
+    var p=vhHitTest(ev); if(!p) return;
+    var g=$('guess'); g.value=p.n; g.focus();
+    $('dist').innerHTML='picked <span class="chrome-caviar">'+p.n+
+      '</span> off the map — press Enter or Guess to score it';
+  });
+}
+function installRealMap(dim){
+  var MAP_OKABE=['#0072B2','#D55E00','#009E73','#CC79A7','#F0E442','#56B4E9','#E69F00','#D60022'];
+  var cloud=null;
+  fetch('assets/vectors_map_lite.json?v=ad8fed2b',{cache:'force-cache'})
+    .then(function(r){ return r.ok?r.json():null; })
+    .then(function(j){
+      var arr=j&&(j.players||j);
+      if(Array.isArray(arr)&&arr.length) cloud=arr;
+      swapDraw();
+    })
+    .catch(function(){ swapDraw(); });   // target-only map still beats a starfield
+
+  /* A colour key. The map paints eight archetype colours and, until now, said
+     nowhere what any of them meant — identity carried by colour alone, on the
+     surface this whole page is built around. trends.html has had a key for its
+     archetype map all along; this one did not.
+
+     Names come from assets/mtnn_arch.json, the same gameArchetypes array
+     trends.html reads, and the index lines up with the colour: trends pairs
+     #0072B2 with "Offensive Glass + Rim Protection", which is MAP_OKABE[0] and
+     gameArchetypes[0]. Checked before writing this rather than assumed, because
+     a key that mislabels a colour is worse than no key.
+
+     Built here rather than in the markup so that it exists only when the names
+     do. If the fetch fails there is no key and no swatches — showing colours
+     with nothing to read them by is the thing being fixed, so a half-loaded
+     version of it is not an improvement.
+
+     The swatches carry a solid ink border: MAP_OKABE[7] is #FFFEF7, picked to
+     be visible on the near-black canvas, and it would vanish on the white card
+     without one. */
+  fetch('assets/mtnn_arch.json?v=758a3d56')
+    .then(function(r){ return r.ok?r.json():null; })
+    .then(function(j){
+      var names=j&&j.gameArchetypes;
+      if(!Array.isArray(names)||!names.length) return;
+      var host=c.closest('.card'); if(!host) return;
+      var ul=document.createElement('ul');
+      ul.id='mapKey';
+      ul.setAttribute('aria-label','What the colours on the map mean');
+      ul.style.cssText='display:flex;flex-wrap:wrap;gap:6px 13px;margin:0;padding:9px 11px;'+
+        'list-style:none;border-top:2.2px solid var(--ink);background:#fff;'+
+        'font-family:var(--mono);font-size:10.5px;font-weight:800;color:var(--ink)';
+      names.slice(0,8).forEach(function(n,i){
+        var li=document.createElement('li');
+        li.style.cssText='display:inline-flex;align-items:center;gap:5px';
+        var sw=document.createElement('i');
+        sw.setAttribute('aria-hidden','true');
+        sw.style.cssText='width:11px;height:11px;flex:none;border:1.4px solid var(--ink);'+
+          'border-radius:2px;background:'+MAP_OKABE[i];
+        li.appendChild(sw);
+        li.appendChild(document.createTextNode(n));
+        ul.appendChild(li);
+      });
+      host.appendChild(ul);
+    })
+    .catch(function(){});
+
+  function swapDraw(){
+    drawBase=function(poolObj){
+      var m=vhMapXY(), W=m.W, H=m.H, sx=m.sx, sy=m.sy;
+      ctx.clearRect(0,0,W,H);
+      ctx.fillStyle='#0A0C10'; ctx.fillRect(0,0,W,H);
+      if(cloud){
+        // one fillRect per point, batched by colour — same approach the other
+        // map surfaces use, so 4k points stay cheap
+        for(var k=0;k<8;k++){
+          ctx.fillStyle=MAP_OKABE[k];
+          ctx.globalAlpha=0.34;
+          for(var i=0;i<cloud.length;i++){
+            var p=cloud[i];
+            if(((p.c|0)&7)!==k) continue;
+            ctx.fillRect(sx(p.x)|0, sy(p.y)|0, 1.6, 1.6);
+          }
+        }
+        ctx.globalAlpha=1;
+      }
+      /* The pickable layer, drawn brighter and larger over the context cloud.
+         The cloud is vectors_map_lite.json and only 441 of the 1,305 modern
+         seasons appear in it — hit-testing those dots would name about one in
+         six of them and leave most guessable players with no mark at all. So the
+         modern pool gets its own layer: every mark here is a season you can
+         actually guess, which makes the hoverable set and the guessable set the
+         same set. The ids agree across both files (coordinates match to a median
+         of 0.005, which is just the cloud's two-decimal rounding), so a row that
+         is in both lands in exactly one place.
+
+         Deliberately no similarity on hover. Showing cosine would let you sweep
+         the map for the highest number and the puzzle would answer itself. */
+      for(var mk=0;mk<8;mk++){
+        ctx.fillStyle=MAP_OKABE[mk];
+        ctx.globalAlpha=0.85;
+        for(var mj=0;mj<MODERN.length;mj++){
+          var mp=MODERN[mj];
+          if(typeof mp.x!=='number'||((mp.c|0)&7)!==mk) continue;
+          ctx.fillRect(sx(mp.x)-1.3, sy(mp.y)-1.3, 2.6, 2.6);
+        }
+      }
+      ctx.globalAlpha=1;
+      // your last guess, and the line to the target — the whole point of
+      // playing on a map rather than beside one
+      var lg=window.__vhLastGuess;
+      if(lg && typeof lg.x==='number' && poolObj && typeof poolObj.x==='number'){
+        var gx=sx(lg.x), gy=sy(lg.y);
+        ctx.save();
+        ctx.strokeStyle='#EB6834'; ctx.lineWidth=1.4; ctx.globalAlpha=.8;
+        ctx.setLineDash([4,3]);
+        ctx.beginPath(); ctx.moveTo(gx,gy); ctx.lineTo(sx(poolObj.x),sy(poolObj.y)); ctx.stroke();
+        ctx.restore();
+        ctx.strokeStyle='#FAFAF8'; ctx.lineWidth=3.4;
+        ctx.beginPath(); ctx.arc(gx,gy,7,0,6.283); ctx.stroke();
+        ctx.strokeStyle='#EB6834'; ctx.lineWidth=2;
+        ctx.beginPath(); ctx.arc(gx,gy,7,0,6.283); ctx.stroke();
+      }
+      if(poolObj && typeof poolObj.x==='number'){
+        var tx=sx(poolObj.x), ty=sy(poolObj.y);
+        ctx.strokeStyle='#FAFAF8'; ctx.lineWidth=3;
+        ctx.beginPath(); ctx.arc(tx,ty,12,0,6.283); ctx.stroke();
+        ctx.strokeStyle='#EB6834'; ctx.lineWidth=2.2;
+        ctx.beginPath(); ctx.arc(tx,ty,8,0,6.283); ctx.stroke();
+        ctx.fillStyle='#F0E442';
+        ctx.beginPath(); ctx.arc(tx,ty,3.4,0,6.283); ctx.fill();
+        ctx.strokeStyle='#EB6834'; ctx.lineWidth=1.6;
+        ctx.beginPath();
+        ctx.moveTo(tx-19,ty); ctx.lineTo(tx-13,ty); ctx.moveTo(tx+13,ty); ctx.lineTo(tx+19,ty);
+        ctx.moveTo(tx,ty-19); ctx.lineTo(tx,ty-13); ctx.moveTo(tx,ty+13); ctx.lineTo(tx,ty+19);
+        ctx.stroke();
+      }
+      /* Bottom-left, not (14,20): the top-left corner already holds an HTML pill
+         and the two overlapped as soon as the map became visible. Nobody had
+         seen them collide because nobody had seen either. */
+      ctx.fillStyle='#FAFAF8'; ctx.font='11px ui-monospace';
+      ctx.fillText((poolObj?poolObj.n+' ':'')+'◎ target · '+(cloud?cloud.length.toLocaleString()+' seasons':'target only')+
+                   ' · '+MODERN.length.toLocaleString()+' pickable · '+dim+'-d contract',14,H-9);
+    };
+    if(typeof cur!=='undefined'&&cur) drawBase(cur);
+    var cv=document.getElementById('c');
+    if(cv) cv.setAttribute('aria-label',
+      'Embedding map. '+(cloud?cloud.length.toLocaleString()+' player-seasons drawn as points, coloured by archetype, ':'')+
+      'with the target season marked by a crosshair. Positions come from the model, not decoration.');
+  }
+}
+
+/* Held rather than discarded so the win-animation prefetch at the end of this
+   script can wait for it. Measured on Fast 3G with a cold cache: this file is
+   397.6 KB and takes ~2.0s alone, but took 6.2s while 2 MB of trajectory and
+   manifest prefetch shared the pipe — and until it lands the page is running on
+   an 8-name demo pool. */
+var vhPoolReady = (function(){
+  return fetch('assets/game_vectors.json?v=b98e3a0b',{cache:'force-cache'})
+    .then(function(r){ if(!r.ok) throw new Error('HTTP '+r.status); return r.json(); })
+    .then(function(j){
+      var past=j.past||[], modern=j.modern||[];
+      if(!past.length||!modern.length) throw new Error('empty pool');
+      var dim=j.dim||(past[0].v||[]).length;
+      // every row must carry a full-length vector — cos() returns 0 on a
+      // mismatch, so a short row would silently read as "no similarity"
+      var bad=past.concat(modern).filter(function(p){ return !p.v || p.v.length!==dim; }).length;
+      if(bad) throw new Error(bad+' rows have a wrong-length vector');
+
+      // x/y/c come along. Every row in game_vectors.json already carries them
+      // and this loop used to drop all three, which broke the whole premise of
+      // the page in two places at once and threw no error in either:
+      //   drawBase() guards on `typeof poolObj.x === 'number'` before drawing
+      //   the target crosshair, your guess ring and the line between them — the
+      //   code's own comment calls that line "the whole point of playing on a
+      //   map rather than beside one". With no x it drew the cloud and nothing
+      //   else, silently.
+      //   synthTraj() reads poolObj.xy[0], so a cache-missing trajectory threw
+      //   "Cannot read properties of undefined" — an unhandled rejection that
+      //   left a *correct* guess without a score and the pack never advancing.
+      // The placeholder rows above still use `xy`, so synthTraj now accepts
+      // either shape.
+      // No `pid` here, deliberately. `p.i` is a vectors.json row index; the
+      // trajectory cache and the manifest are both keyed by NBA player_id.
+      // Writing the row index into `pid` made `gPid=guessObj.pid||findPid(...)`
+      // short-circuit on a truthy wrong value, so findPid — which exists purely
+      // to bridge names to player_ids — was dead code, and cache[gPid] looked
+      // row indices up against player_id keys. Only 52 of 2,149 ids collide, so
+      // roughly 98% of guesses missed the cache and fell through to a
+      // synthesised trajectory. Leaving pid off lets the manifest join run.
+      POOL.length=0;
+      past.forEach(function(p){ POOL.push({i:p.i,n:p.n+' '+p.s,v:p.v,x:p.x,y:p.y,c:p.c}); });
+      var seasonSet = [...new Set(modern.map(function(m){return m.s;}))].sort();
+      var latestSeason = seasonSet[seasonSet.length-1] || '2025-26';
+      var modernFull = modern.filter(function(m){return m.s===latestSeason;});
+      if(!modernFull.length) modernFull = modern; // safety: fallback to all if filter empty
+      MODERN.length=0;
+      // tag is printed in the guess readout; the placeholder rows carried a
+      // hand-assigned one and these do not, so give it a neutral value rather
+      // than letting "undefined" reach the page
+      // Only latest full season (e.g. 2025-26) is guessable – fixes pool offering 2022-23 etc
+      modernFull.forEach(function(p){ MODERN.push({i:p.i,n:p.n+' '+p.s,v:p.v,tag:'—',x:p.x,y:p.y,c:p.c,s:p.s}); });
+      fillGuessList();   // the pool changed, so the suggestions have to
+
+      var chips=document.querySelectorAll('.chip');
+      for(var i=0;i<chips.length;i++){
+        if(/demo pool/i.test(chips[i].textContent)){
+          chips[i].textContent=POOL.length+' past × '+MODERN.length+' modern · '+dim+'-d contract';
+        }
+      }
+      var note=document.querySelector('#dist')&&document.querySelector('#dist').nextElementSibling;
+      if(note&&/demo pool/i.test(note.textContent)){
+        note.innerHTML='Scored on the frozen '+dim+'-dimension game contract from '+
+          '<code>assets/vectors.json</code> — '+POOL.length.toLocaleString()+' past All-Star and All-NBA '+
+          'seasons against '+MODERN.length.toLocaleString()+' modern ones. Not the 64-d MTNN embedding; '+
+          'promoting that into the game is a separate gated step. See the '+
+          '<a href="/dictionary#era-z">dictionary</a>.';
+      }
+      // Re-draw the opening puzzle from the real pool, but only if nothing has
+      // been played yet — swapping under a game in progress would be worse than
+      // letting that one game finish on the demo pool.
+      var log=document.getElementById('log');
+      if(log && !log.textContent.trim()){
+        try{
+          var s=((hStr(new Date().toISOString().slice(0,10))^DAILY)>>>0)%M; s=LCG(s);
+          setSeq([POOL[s%POOL.length].i]);
+        }catch(e){ console.warn('reseed after pool swap failed',e); }
+      }
+      // 1,305 names is unusable without suggestions. A native <datalist> gets
+      // the filtering, keyboard behaviour and screen-reader support for free.
+      var dl=document.getElementById('guessList');
+      if(dl){
+        var frag=document.createDocumentFragment();
+        MODERN.forEach(function(m){ var o=document.createElement('option'); o.value=m.n; frag.appendChild(o); });
+        dl.innerHTML=''; dl.appendChild(frag);
+        var gi=document.getElementById('guess');
+        if(gi) gi.placeholder='type a modern player — '+MODERN.length.toLocaleString()+' to choose from';
+      }
+      console.log('game pool: real',POOL.length,'past /',MODERN.length,'modern, dim',dim);
+      installRealMap(dim);
+    })
+    .catch(function(e){
+      // the page already says it is a demo pool; leave that copy standing
+      console.warn('game_vectors.json not loaded, staying on the demo pool:',e.message);
+    });
+})();
+
+if('serviceWorker'in navigator){try{navigator.serviceWorker.register('/sw.js')}catch(e){}}setTimeout(()=>{let pb=$('play-a-101');pb?.classList.add('spike');setTimeout(()=>pb?.classList.remove('spike'),560)},520);/* Both of these warm the cache for the win animation — 1.08 MB of trajectories
+   and 0.89 MB of manifest. Neither is needed to play: the win path already does
+   `await fetchTrajCache()` at the moment it draws, and both are memoised, so
+   deferring costs nothing on a win and cannot be reached before the real pool
+   exists anyway. Fired eagerly they were competing with game_vectors.json for a
+   slow link's bandwidth, which is the one download standing between a visitor
+   and a real game. `.catch` above resolves, so this still runs if the pool fails. */
+/* Warmed on the first sign of a player, not on arrival.
+
+   These two are 1.97 MB and they buy one thing: the win animation draws without
+   a pause the first time. A visitor who lands, reads the question and leaves —
+   which is most of them — was paying for an animation they never saw. Nothing
+   here is needed to play: the win handler already awaits fetchTrajCache() at the
+   moment it draws and both are memoised, so warming late costs a wait and never
+   a failure.
+
+   The trigger is touching the guess box or the map, because those are the two
+   ways a guess starts and both take seconds of human time that the download can
+   run inside. Same shape as /player-fit's pool, deliberately.
+
+   Save-Data still opts out entirely: someone paying for bytes should not get
+   two megabytes of prefetch even once they are playing, and the win path will
+   fetch what it needs when it needs it. No signal means no opinion. */
+(function(){
+  var warmed = false;
+  function warmWin(){
+    if (warmed) return;
+    warmed = true;
+    var c = navigator.connection || {};
+    if (c.saveData) return;
+    if (/2g/.test(c.effectiveType || '')) return;
+    fetchTrajCache(); fetchManifest();
+  }
+  var gi = document.getElementById('guess'), cv = document.getElementById('c');
+  ['focus','pointerdown','keydown'].forEach(function(e){
+    if (gi) gi.addEventListener(e, warmWin);
+  });
+  if (cv) cv.addEventListener('pointerdown', warmWin);
+})();})();</script>
+
+<!-- ══ accessibility layer ═════════════════════════════════════════════════
+     Added as a separate, purely additive block. The page above is one
+     27,938-byte generated line; editing inside it risks the game, and none of
+     what follows needs to. Scanned before writing this: the live page had
+     aria-live x0, tabindex x0, role= x0, prefers-reduced-motion x0. -->
+<style id="vh-a11y-css">
+/* WCAG 2.3.3. The page ships 4 @keyframes and 4 animation rules — the 1200ms
+   trajectory sweep, the card spike, the 12-star confetti burst — and gated
+   none of them. Motion-sensitive visitors got all of it. */
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{
+    animation-duration:.001ms!important;
+    animation-iteration-count:1!important;
+    transition-duration:.001ms!important;
+    scroll-behavior:auto!important;
+  }
+  #confetti{display:none!important}
+}
+/* Nothing on the page had a focus style, so keyboard position was invisible. */
+:focus-visible{outline:3px solid #2a78d6;outline-offset:2px}
+.vh-sr{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;border:0}
+.vh-skip{position:absolute;left:-9999px;top:0;z-index:999;background:#fafaf8;color:#111;border:2.2px solid #111;border-radius:0 0 10px 0;padding:10px 14px;font-family:ui-monospace,Menlo,monospace;font-weight:800;text-decoration:none}
+.vh-skip:focus{left:0}
+#seasonChips [role="button"]{cursor:pointer}
+
+/* ── text inks, solved for WCAG AA on what the browser paints ──────────────
+   Measured per element with its real backdrop composited through transparent
+   ancestors: the brand colours were carrying text at 3.20:1 (#EB6834), 3.42:1
+   (#009E73) and 4.42:1 (#2A78D6) against white.
+
+   These are new tokens, not new values for the brand colours. Every ring, fill,
+   polyline and border still draws #EB6834 / #2A78D6 / #009E73; only text moves.
+   Two earlier attempts changed a shared token instead and traded one failure for
+   another — darkening --ink-muted to clear 4.5 on paper took the same text on the
+   #0A0C10 map inset from 5.3:1 to 4.14:1. The muted greys are left alone here
+   for that reason: they need per-container scoping, not a page-level value. */
+:root{--orange-ink:#C84714;--blue-ink:#2873CF;--green-ink:#008460}
+.brand span,.site-nav__brand span{color:var(--orange-ink)}
+.sm__delta.down,.down{color:var(--orange-ink)}
+.sm__delta.up,.up{color:var(--blue-ink)}
+.fl-dim{color:var(--blue-ink)}
+.fo-ring{color:var(--orange-ink)}
+.proj{color:var(--orange-ink)}
+.mv-score.up{color:var(--green-ink)}
+
+/* #F0E442 is a bright yellow: an ink solved for white reads 3.64:1 on it, and the
+   white-on-yellow badge read 1.27:1. Keyed off the class that puts the yellow
+   there, so this cannot reach another ground. */
+span.pill.mono{color:#5A6476}
+.pill-y,.pill-y.mono,.pill-y.mono-sm,.pill.pill-y,.pill.pill-y.mono,.pill.pill-y.mono-sm,
+a.pill.pill-y,.pill.y,.pill.y.mono{color:#3A2E00}
+/* muted small print, on pages whose every ground is light */
+p.eyebrow,div.mono-sm,span.mono-sm,.pill.mono-sm,.mv-move,p.mono{color:#6F6D68}
+.mv-score.down{color:#D33F24}
+/* the archetype key and the dark pills sit on near-black: the light-ground inks
+   above must not reach them */
+#plKey span,#plKey .n{color:#FAFAF8}
+span.pill.mono.ink,.pill.ink{color:#C9C6C0}
+/* a rule in a later <style> block was still winning on this one */
+span.proj{color:var(--orange-ink)}
+
+
+</style>
+<div id="vh-live" class="vh-sr" role="status" aria-live="polite" aria-atomic="true"></div>
+<script>
+(function(){
+  'use strict';
+  var $=function(id){return document.getElementById(id);};
+  var live=$('vh-live');
+  function say(msg){
+    if(!live||!msg) return;
+    // identical textContent is not a mutation, so a repeated result would be
+    // announced once and then never again
+    if(live.textContent===msg) live.textContent='';
+    live.textContent=msg;
+  }
+  function clean(s){ return (s||'').replace(/\s+/g,' ').trim(); }
+
+  // ── the map ────────────────────────────────────────────────────────────
+  // Its aria-label read "game canvas karaoke trajectory orange rings": five
+  // nouns describing the implementation, telling a non-visual visitor nothing
+  // about what is on screen or what the game wants from them.
+  //
+  // CORRECTION (2026-08-10): an earlier version of this label said the canvas
+  // showed "1,814 NBA players placed by the model". It does not. Read the draw
+  // loop: the background is 140 dots at LCG-derived positions with
+  // Math.random() alpha — decoration, not data. What IS real on this canvas is
+  // the two career paths, drawn from assets/embedding_map_trajectories.json.
+  // Describing decoration as data is the same failure this branch is fixing
+  // elsewhere, so the label now says only what is true.
+  var map=$('c');
+  if(map){
+    map.setAttribute('role','img');
+    map.setAttribute('aria-label',
+      'Game canvas. A dark field with a decorative star background. When you '+
+      'lock a pick, two real career paths are drawn across it — yours and the '+
+      'target’s — each point one season, taken from the model’s trajectory '+
+      'data. The comparison itself is announced as text below.');
+  }
+  // decorative overlays: an empty canvas announced as "canvas" is pure noise
+  ['trajOver','shareCard','shareCardD','confetti'].forEach(function(id){
+    var el=$(id); if(el) el.setAttribute('aria-hidden','true');
+  });
+
+  // ── the result ─────────────────────────────────────────────────────────
+  // showResultBox() sets resultBox.style.display='block' and writes innerHTML.
+  // Neither is an event a screen reader hears, so the entire payoff of a guess
+  // — who the twin was, how close it landed — was silent.
+  var res=$('resultBox');
+  if(res && window.MutationObserver){
+    new MutationObserver(function(){
+      if(res.style.display==='none'||!res.offsetParent) return;
+      var meta=clean(($('resMeta')||{}).textContent);
+      var parity=clean(($('parityLab')||{}).textContent);
+      if(meta) say('Result. '+meta+(parity?'. '+parity:''));
+    }).observe(res,{attributes:true,attributeFilter:['style'],childList:true,subtree:true,characterData:true});
+  }
+
+  // ── every guess, not only the last one ─────────────────────────────────
+  // The block above announces the payoff. Every guess before it was silent.
+  // The line a sighted player reads —
+  //
+  //     guess → AJ Griffin 2022-23 cos -0.67 ◐ • row 11029
+  //
+  // goes into #log, which is not a live region, so nothing ever reached the
+  // status node. Measured over the accessibility tree on 2026-08-10: #vh-live
+  // was empty before a guess and still empty after one, while #log carried the
+  // line above. With six guesses and no way to hear how close the last one
+  // landed, the game cannot be played without sight — knowing you are at
+  // -0.67 rather than 0.94 is the entire loop.
+  //
+  // Announced verbatim apart from decorative glyphs, so what is heard and what
+  // is shown cannot drift apart. Only `cos` is expanded, to `cosine`; every
+  // number, name and season is untouched.
+  function speakable(s){
+    return clean(String(s||'')
+      .replace(/[◎◐★☆◆●○▲△]/g,' ')
+      .replace(/[→·•—–]/g,'. ')
+      .replace(/\bcos\b/g,'cosine')
+      .replace(/\s*\.\s*(?=\.)/g,''));
+  }
+  var logEl=$('log');
+  if(logEl && window.MutationObserver){
+    // log() appends with innerHTML +=, which re-parses the container and so
+    // reports every existing entry as removed and re-added. Reading
+    // lastElementChild is correct whatever the mutation looked like, and the
+    // guard stops one appended line being announced several times over.
+    var lastSpoken='';
+    new MutationObserver(function(){
+      var el=logEl.lastElementChild;
+      if(!el) return;
+      // Once the result box is up it owns this region — it carries the payoff,
+      // and the log goes on appending underneath it. Measured through a win
+      // before this guard existed: the result was announced at 9,197 ms and
+      // replaced 4 ms later by 'Trajectory done … confetti 12 … karaoke-grade
+      // 1.24s … glass-click'. A polite region voices the last write, so the
+      // change meant to help a blind player would have read them the telemetry
+      // instead of the answer.
+      if(res && res.style.display!=='none' && res.offsetParent) return;
+      var msg=speakable(el.textContent);
+      if(!msg || msg===lastSpoken) return;
+      lastSpoken=msg;
+      say(msg);
+    }).observe(logEl,{childList:true});
+  }
+
+  // ── season chips ───────────────────────────────────────────────────────
+  // Built as bare <span> with an .onclick handler: clickable by mouse, and
+  // invisible to Tab and to assistive tech. Stamped as they are created.
+  var chips=$('seasonChips');
+  if(chips){
+    var stamp=function(){
+      var kids=chips.children;
+      for(var i=0;i<kids.length;i++){
+        var el=kids[i];
+        if(el.getAttribute('role')==='button') continue;
+        el.setAttribute('role','button');
+        el.setAttribute('tabindex','0');
+      }
+    };
+    stamp();
+    if(window.MutationObserver) new MutationObserver(stamp).observe(chips,{childList:true});
+    chips.addEventListener('keydown',function(e){
+      if(e.key!=='Enter'&&e.key!==' '&&e.key!=='Spacebar') return;
+      var t=e.target;
+      if(!t||t.getAttribute('role')!=='button') return;
+      e.preventDefault();
+      t.click();
+      say(clean(t.textContent)+' selected.');
+    });
+  }
+
+  // ── skip link ──────────────────────────────────────────────────────────
+  // Removed. This injected a second one: the page already carries a static
+  // <a class="vh-skip" href="#main">Skip to the content</a> right after <body>,
+  // and this ran afterwards and inserted "Skip to the game" at
+  // body.firstChild — so it went in *ahead* of the static one and a keyboard
+  // visitor met two skip links before anything else. Same defect as
+  // players.html, on a page I did not think to check when I fixed that one.
+  // The static link works with JavaScript off, so it is the one to keep.
+})();
+</script>
+<script src="assets/error-boundary.js?v=dfe16efe"></script>
+<script src="assets/keyboard-a11y.js?v=8bd158d1"></script>
+<script src="assets/pwa-install.js?v=11551699"></script>
+<script src="assets/name-fix.js?v=b420fb43"></script>
+</body></html>

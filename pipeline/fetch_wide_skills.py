@@ -117,7 +117,7 @@ def hustle_params(season: str) -> dict:
 
 
 def ptstats_params(season: str, measure: str) -> dict:
-  return {
+    return {
         **_empty_filter_params(),
         "LastNGames": 0,
         "Month": 0,
@@ -143,23 +143,20 @@ def rows_by_name(rows: list[dict]) -> dict[str, dict]:
 
 
 def fetch_synergy(season: str, play_type: str) -> dict[str, dict]:
-    rows = stats_rows(
-        "synergyplaytypes", synergy_params(season, play_type), "SynergyPlayType")
+    rows = stats_rows("synergyplaytypes", synergy_params(season, play_type), "SynergyPlayType")
     time.sleep(_CALL_GAP_S)
     return rows_by_name(rows)
 
 
 def fetch_hustle(season: str) -> dict[str, dict]:
-    rows = stats_rows(
-        "leaguehustlestatsplayer", hustle_params(season), "HustleStatsPlayer")
+    rows = stats_rows("leaguehustlestatsplayer", hustle_params(season), "HustleStatsPlayer")
     time.sleep(_CALL_GAP_S)
     return rows_by_name(rows)
 
 
 def fetch_ptstats(season: str, measure: str) -> dict[str, dict]:
     """Player tracking (leaguedashptstats) — PullUpShot / Defense measures."""
-    rows = stats_rows(
-        "leaguedashptstats", ptstats_params(season, measure), "LeagueDashPtStats")
+    rows = stats_rows("leaguedashptstats", ptstats_params(season, measure), "LeagueDashPtStats")
     time.sleep(_CALL_GAP_S)
     return rows_by_name(rows)
 
@@ -195,21 +192,24 @@ def build_season_cache(season: str, *, skip_tracking: bool = False) -> dict:
         }
     return {
         "built": time.strftime("%Y-%m-%d"),
-        "source": ("stats.nba.com synergyplaytypes + leaguehustlestatsplayer "
-                   "+ leaguedashptstats via nba_http (curl_cffi)"),
-        "complete": True, "season": season, "players": players,
+        "source": (
+            "stats.nba.com synergyplaytypes + leaguehustlestatsplayer + leaguedashptstats via nba_http (curl_cffi)"
+        ),
+        "complete": True,
+        "season": season,
+        "players": players,
     }
 
 
 def _require_curl_cffi() -> None:
     try:
         import curl_cffi  # noqa: F401
-    except ImportError:
+    except ImportError as err:
         raise SystemExit(
             "curl_cffi is required for stats.nba.com fetches.\n"
             "  pip install curl_cffi\n"
             "Plain nba_api/requests TLS is blocked by Akamai (RemoteDisconnected)."
-        )
+        ) from err
 
 
 def main() -> None:
@@ -217,9 +217,10 @@ def main() -> None:
     ap.add_argument("--offline", action="store_true")
     ap.add_argument("--season", default=None)
     ap.add_argument(
-        "--skip-tracking", action="store_true",
+        "--skip-tracking",
+        action="store_true",
         help="synergy+hustle only (post/transition/motor/disruption); "
-             "omit pull-up + defense pulls for shooting/rim gravity",
+        "omit pull-up + defense pulls for shooting/rim gravity",
     )
     args = ap.parse_args()
     seasons = [args.season] if args.season else SEASONS

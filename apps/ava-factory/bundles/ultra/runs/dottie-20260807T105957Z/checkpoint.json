@@ -1,0 +1,32 @@
+{
+  "runId": "dottie-20260807T105957Z",
+  "version": "v0.8-scout-v3.3-parity",
+  "created": "2026-08-07T10:59:57.510384+00:00",
+  "dag_version": 1,
+  "nodes": [],
+  "provenance": {
+    "dottie_hub": "dottie/pipeline/runs/<runId>",
+    "dumbmodel_hub": "vector-hub/assets/data/",
+    "link": "provenance-honest \u2014 triple-write workspace+bundles+dottie pipeline",
+    "workspace_canonical": "bundles/ultra/runs/<runId> (dashboard reads client-only)",
+    "dottie_local": "dottie/pipeline/runs/<runId>",
+    "ava_legacy": "apps/ava-factory/bundles/ultra/runs/<runId>"
+  },
+  "guarantees": {
+    "structured_workflow": true,
+    "tool_safety": "schema+sandbox 30s",
+    "memory_discipline": "read/update summaries",
+    "reasoning_boundaries": "max 7 steps",
+    "eval_hooks": 6,
+    "multi_agent": "routing+message passing+shared mem+hierarchical"
+  },
+  "finished": "2026-08-07T10:59:57.770685+00:00",
+  "status": "ok",
+  "moma": {
+    "tier": "deterministic",
+    "cost": "cheap",
+    "rationale": "heartbeat/monitor no LLM"
+  },
+  "curation_tier": "healthcheck",
+  "saved_at": "2026-08-07T10:59:57.770698+00:00"
+}

@@ -1,0 +1,42 @@
+# Deliberately NOT `* text=auto`.
+#
+# That would renormalise every file in the repo in one commit, and this checkout
+# is shared with another agent mid-work. The line-ending warnings on every commit
+# are cosmetic and stay.
+#
+# What is here is the case that is not cosmetic: files whose bytes are the point.
+# assets/posecode-embed-0.1.0.js carries its own sha256 in a comment on
+# player-animations.html, and git's text detection would hand a Windows clone a
+# CRLF copy that no longer matches the hash the page publishes. The tensors and
+# the font are binary in fact; saying so keeps any future heuristic from deciding
+# otherwise.
+
+assets/posecode-embed-0.1.0.js         -text
+public/assets/posecode-embed-0.1.0.js  -text
+
+*.f32    -text
+*.bin    -text
+*.woff2  -text
+*.png    -text
+*.ico    -text
+
+# Every file under assets/ whose content hash becomes a `?v=` cache token has to
+# have the same bytes everywhere, or the token a Windows checkout stamps will not
+# describe the bytes Vercel serves. Measured on this box, with core.autocrlf
+# true: `git checkout -- assets/map-camera.js` turned 16,869 bytes into 17,231
+# with 362 CRLF, and check_frontend immediately reported the tokens on three
+# pages as stale. Same mechanism, wider blast radius than the one bundle.
+
+# These four rules were right about the mechanism and too narrow about the paths.
+# `assets/*.js` does not match `assets/lemmino/drift-void.js`, `assets/js/*.js`,
+# `assets/posecode/parser.js` or `assets/workers/*.js`, and nothing covered .json
+# at all — so assets/data/*.json and every nested bundle still came out of a
+# Windows checkout with CRLF. Measured: 56 files under assets/ differ that way,
+# and stamp_assets.py on this box therefore wrote tokens describing bytes that
+# only exist here. The same --check passed locally and failed on ubuntu with 12
+# pages stale, which is the drift arriving exactly where the comment predicted.
+#
+# `**` matches at any depth, so these subsume the four narrow rules.
+
+assets/**            -text
+public/assets/**     -text

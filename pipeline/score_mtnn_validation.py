@@ -7,12 +7,12 @@ from pathlib import Path
 
 import numpy as np
 import torch
-
+from _torch_safe import safe_torch_load
 from mtnn_validation import build_validation_report, role_labels_from_context
 from train_mtnn import (
     BBREF_FEATURES,
-    FORM_FEATURES,
     DATA_DIR,
+    FORM_FEATURES,
     MTNN,
     adjacent_season_pairs,
     family_slices,
@@ -32,13 +32,11 @@ OUT = DATA_DIR / "mtnn_validation_baseline.json"
 
 
 def main() -> None:
-    checkpoint = torch.load(CHECKPOINT, map_location="cpu", weights_only=False)
+    checkpoint = safe_torch_load(CHECKPOINT, map_location="cpu")
     args = checkpoint["args"]
     Z, M, names, seasons, pids, clusters, positions, _, manifest = load_bundle()
     families = family_slices(manifest)
-    excluded = {
-        value.strip() for value in args.get("exclude_families", "").split(",") if value.strip()
-    }
+    excluded = {value.strip() for value in args.get("exclude_families", "").split(",") if value.strip()}
     families = {name: cols for name, cols in families.items() if name not in excluded}
     game_cols = game_feature_cols(manifest)
     form_cols = feature_cols(manifest, FORM_FEATURES)

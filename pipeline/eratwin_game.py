@@ -78,39 +78,60 @@ def main() -> None:
                 continue
             if decade_of(sigs[other]["season"]) == dec:
                 continue
-            cands.append({"name": other,
-                          "season": sigs[other]["season"],
-                          "sim": round(float(sims[j]), 3)})
+            cands.append(
+                {
+                    "name": other,
+                    "season": sigs[other]["season"],
+                    "sim": round(float(sims[j]), 3),
+                }
+            )
             if len(cands) == 5:
                 break
         if not cands:
             continue
         t = cands[0]
-        out.append({
-            "name": name, "season": sig["season"], "decade": dec,
-            "archetype": clusters[sig["c"]],
-            "twin": {"name": t["name"], "season": t["season"],
-                     "decade": decade_of(t["season"]),
-                     "similarity": t["sim"]},
-            "top5": cands,
-        })
+        out.append(
+            {
+                "name": name,
+                "season": sig["season"],
+                "decade": dec,
+                "archetype": clusters[sig["c"]],
+                "twin": {
+                    "name": t["name"],
+                    "season": t["season"],
+                    "decade": decade_of(t["season"]),
+                    "similarity": t["sim"],
+                },
+                "top5": cands,
+            }
+        )
 
-    (ASSETS / "eratwins.json").write_text(json.dumps({
-        "method": ("signature seasons matched in the promoted MTNN embedding "
-                   "(48-d, L2-normalized, index-aligned with vectors.json); "
-                   "twin = nearest OTHER-DECADE career by embedding cosine; "
-                   "quiz pool = careers with >=4 charted seasons; top-5 "
-                   "candidates shipped for warmth feedback; similarity shown "
-                   "so thin matches can be weighed"),
-        "players": out,
-    }, separators=(",", ":")), encoding="utf-8")
+    (ASSETS / "eratwins.json").write_text(
+        json.dumps(
+            {
+                "method": (
+                    "signature seasons matched in the promoted MTNN embedding "
+                    "(48-d, L2-normalized, index-aligned with vectors.json); "
+                    "twin = nearest OTHER-DECADE career by embedding cosine; "
+                    "quiz pool = careers with >=4 charted seasons; top-5 "
+                    "candidates shipped for warmth feedback; similarity shown "
+                    "so thin matches can be weighed"
+                ),
+                "players": out,
+            },
+            separators=(",", ":"),
+        ),
+        encoding="utf-8",
+    )
     print(f"{len(out)} quiz-eligible players with era twins")
     for name in ("LeBron James", "Stephen Curry", "Shaquille O'Neal"):
         e = next((x for x in out if x["name"] == name), None)
         if e:
-            print(f"  {e['name']} ({e['season']}, {e['decade']}) -> "
-                  f"{e['twin']['name']} '{e['twin']['season']} "
-                  f"({e['twin']['similarity']:.0%})")
+            print(
+                f"  {e['name']} ({e['season']}, {e['decade']}) -> "
+                f"{e['twin']['name']} '{e['twin']['season']} "
+                f"({e['twin']['similarity']:.0%})"
+            )
 
 
 if __name__ == "__main__":
