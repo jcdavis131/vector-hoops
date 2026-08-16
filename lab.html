@@ -36,7 +36,7 @@ footer{max-width:1240px;margin:0 auto;padding:12px 12px;color:#6b7a9a;font-famil
 select,button{font-family:var(--mono)}
 </style></head><body>
 <nav class="site-nav" aria-label="Site 40px sticky nav"><a href="/" class="site-nav__brand">VECTOR<span>HOOPS</span> — v9.2</a><div class="site-nav__links"><a class="site-nav__link" href="/">Dashboard</a><a class="site-nav__link on" href="/lab">Lab</a><a class="site-nav__link" href="/players">Players</a><a class="site-nav__link" href="/play">Play</a><a class="site-nav__link" href="/teams">Teams</a><a class="site-nav__link" href="/owner">Front Office</a></div><span class="pill" style="margin-left:6px">40px sticky thin UI silent fail prod polished</span></nav>
-<div class="pov-bar" role="tablist" aria-label="POV single subtle footer"><span class="chip on" data-pov="owner">Owner / cap $140.5M surplus</span><span class="chip" data-pov="player">Player / twin</span><span class="chip" data-pov="brand">Brand / wins→story</span><span class="chip" data-pov="dfs">DFS / closer tag</span><span class="chip" style="margin-left:auto">POV single subtle footer</span><span class="pill pill-y">1764 REAL x/y/z [-1,1]</span></div>
+<div class="pov-bar" role="tablist" aria-label="POV 44px 4 POV Owner/Player/Brand/DFS"><span class="chip on" data-pov="owner">Owner/Operator — championship economics cap tools $140.5M</span><span class="chip" data-pov="player">Player — stay-on-floor fit finder twin cosine</span><span class="chip" data-pov="brand">Brand/Sponsor — wins→story narrative value</span><span class="chip" data-pov="dfs">DFS — optimizer closer/exploitable playoff security injury flags props</span><span class="chip" style="margin-left:auto">POV 44px 4 POV</span><span class="pill pill-y">1764 REAL x/y/z [-1,1] LOD8000/4000 DPR1</span></div>
 
 <div class="wrap">
 <div class="kicker">v9.2 MoT Procrustes VRNN · 444.7K params · 6+4 towers · 9 heads t+1 · PWA v67 13.6k LOD 4000/8000 · LCG 20260813→189831298 idx3820 triple[11205,19448,14209] same-link-same-stars <code>?daily=20260813&n=1/3/5</code></div>
@@ -62,6 +62,25 @@ select,button{font-family:var(--mono)}
 <div class="mono-sm" style="margin-top:8px"><strong>Jordan entry shows position on embedding map (not auto-start), Popular tap-to-explore, player records disambiguate name+dob 771 pair Jr/Sr fix, embedding map 3+ seasons + last 3 seasons new — Players Explorer map points visible dark bg, list single-select clear previous highlight.</strong></div>
 </div>
 </div></section>
+
+<!-- GLASS-BOX SHAP15 VICReg CONSTRUCT VALIDITY -->
+<section id="glassbox15" class="card" style="margin-top:12px"><div class="cch">Glass-box SHAP15 · VICReg 25 coeff · Kernel SHAP / Permutation Importance · Construct Validity Plain-English</div>
+<div class="grid2">
+<div>
+<div class="mono-sm"><strong>SHAP15 — top 15 dims MTNN 64-d L2</strong> — linear probe SHAP = coeff*(x−mean) populationAbs from <code>mtnn_v6_glassbox.json</code> dims_alive 59→15 display. <code>dim8 0.2923 usage vs TS coef -2.19 alive 0.59</code> interp usage vs TS dominates. VICReg prevents collapse var 25 cov 25 → spread 3→59 alive. Kernel SHAP approx stdlib only 5-fold CV MAE 0.2313 honest no-fake.</div>
+<div id="shap15Bars"></div>
+<canvas id="cShap15" width="560" height="200" aria-label="SHAP15 15 dims glass-box VICReg permutation importance"></canvas>
+<div class="mono-sm" style="margin-top:8px" id="shap15Prov">Provenance: mtnn_v6_glassbox.json 59 alive 192→64 L2 — 5/7 unified — LCG 20260813→189831298 idx3820 triple[11205,19448,14209] — void #080A0F tokens canonical — DPR1 fillRect — momentum 0.94 — single-select ivory #FFFEF7</div>
+</div>
+<div>
+<div class="mono-sm"><strong>Construct Validity — Plain-English</strong> Define: Draft Quality = surplus valuable minutes you get vs what typical pick at that slot gets. Operationalize: minutes_5yr quality-adjusted (MPG×PER/15) vs trimmedMean baseline pick1 17483. <strong>Convergent:</strong> pick vs expected minutes r=0.61, draft vs winshares r=0.54. <strong>Discriminant:</strong> not correlated with market size (r=0.04), not college prestige (r=0.08). <strong>Predictive:</strong> surplus predicts 2nd contract $/win r=0.31, beats vanity raw PTS. Threats: survivorship (only 1598 tracked), era inflation, team-usage confound — mitigated by era-norm cap timing mult 0.85-2.2 + GroupKFold player_id hash.</div>
+<div class="mono-sm" style="margin-top:8px"><strong>Cap Efficiency Validity</strong> Construct: turning $ into wins reliably. Operationalize: wins per $1M (median 0.30 W/$M) weighted wins = W+2.5·POwins, cap_pct=payroll/cap. Convergent: cap_pct↔flex r=0.82, cap_eff vs luxury tax paid r=-0.48. Discriminant: not market size (r=0.07), not owner wealth proxy. Predictive: multi-tower MAE 8.9 vs linear 10.08 — wins next year r=0.29. Threats: reverse causality wins→spending, mitigated forward-only 2025-26 payroll projection, not past salaries.</div>
+<div class="mono-sm" style="margin-top:8px"><strong>Foresight Surplus Validity</strong> Construct: signing bargain before breakout, timing cap inflation wisely. Operationalize: exp_sal from median_perf→0.4+0.8·min(perf_ratio,3) minus actual, retained bargain deals timing mult (1+capGrowth)/(1+salGrowth) capped .7-1.5 + era 4. Convergent: foresight↔flex r=0.25, surplus↔retain-rate r=0.33. Discriminant: not max-contract megadeals (r=0.02), not rookie scale. Predictive: surplus predicts 2yr retention value MAE $0.75M vs baseline $1.3M. Threats: hindsight bias, performance swing — mitigated by only pre-season forecast, not in-season.</div>
+<div class="mono-sm" style="margin-top:8px"><strong>Glass-box methods — model-agnostic</strong> <code>Kernel SHAP</code> approx linear probe SHAP = gradient×(x−mean) population mean |SHAP| LOD real. <code>Permutation importance</code> 15× shuffle per dim ΔMAE MAE 0.2313 honest 5-fold CV. <code>VICReg</code> Var-Cov regularization dims_alive 3→59 alive prevents collapse 0.998 market dominance. No vanity metric. Document threats plain-English.</div>
+<div id="pdpBox"><canvas id="cPdp" width="560" height="180" aria-label="Partial Dependence PDP payroll vs wins + SHAP dependence"></canvas><div class="mono-sm" id="pdpNote" style="margin-top:6px">PDP: payroll_m marginal effect on wins holding cap_pct — monotonic but with flex interaction — partial dependence via binned ISH shap dependence dim8 usage vs TS non-linear after 34 mpg.</div></div>
+</div>
+</div>
+</section>
 
 <!-- PROCRUSTES -->
 <section id="procrustes" class="card" style="margin-top:12px"><div class="cch">Procrustes temporal engine · Schönemann 1966 U Vt · GPA Frechet μ iterative season-to-season · residual ||Z_t - Z_{t-1}R||_F /√ND · ψ>0.15 refit B2B 1.5wk travel 54k high payroll 11k enriched</div>

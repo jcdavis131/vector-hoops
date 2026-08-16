@@ -51,6 +51,24 @@ footer{max-width:1240px;margin:0 auto;padding:12px;color:#6b7a9a;font-family:var
 </div>
 </div>
 
+<div class="card" style="margin-top:12px"><div class="cch">Glass-box SHAP15 · VICReg · Kernel SHAP / Permutation · Construct Validity Plain-English · PDP</div>
+<div class="grid2">
+<div>
+<div class="mono-sm"><strong>SHAP15 15 dims MTNN 64-d L2 quaternary</strong> — top15 dims from <code>mtnn_v6_glassbox.json</code> dims_alive 59→15. dim8 0.2923 usage vs TS coef -2.19 alive 0.59 · defensive versatility 0.1862 · playmaking 0.149. VICReg 25·var+cov spread 3→59 alive prevents collapse market 0.998→collapse mitigation. Kernel SHAP approx = coeff*(x−mean) stdlib only 5-fold CV MAE 0.2313 honest no-fake. Permutation importance SHAP15 ΔMAE Δloss 15× shuffle.</div>
+<div id="shap15Bars"></div>
+<canvas id="cShap15" width="560" height="200" aria-label="SHAP15 glass-box 15 dims VICReg kernel SHAP permutation importance"></canvas>
+<div class="provenance" id="shap15Prov">mtnn_v6_glassbox.json 59 alive 192→64 L2 — dim8 importance 0.2923 coef -2.19 — VICReg 25 coeff — LCG 20260813→189831298 idx3820 triple[11205,19448,14209] same-link-same-stars ?daily=20260813&n=1/3/5 — void #080A0F — DPR1 fillRect momentum 0.94 — single-select ivory #FFFEF7 — PWA v67.2 offline13k CORE20</div>
+<div class="mono-sm" style="margin-top:8px"><strong>Model-agnostic explainer</strong> Kernel SHAP approx linear probe + permutation importance + partial dependence where feasible, logged in eval JSON + surfaced glass-box in Lab page — construct validity first — no vanity metric.</div>
+</div>
+<div>
+<div class="mono-sm"><strong>Construct Validity — Plain-English Operationalize</strong> Construct = abstract idea we want to measure (e.g., “draft quality = surplus value over expectation at slot”). Operationalize = concrete numbers we actually compute to measure it (e.g., minutes_5yr quality-adjusted MP×PER/15 minus trimmedMean baseline pick1 17483). Convergent validity = correlates with things it should (pick vs expected minutes r=0.61, draft vs winshares r=0.54). Discriminant = does NOT correlate with things it shouldn’t (not market size r=0.04, not college prestige r=0.08). Predictive validity = predicts future useful outcomes (surplus predicts 2nd contract $/win r=0.31). Threats: survivorship 1598 tracked, era inflation, usage confound — mitigated by era-norm cap timing mult 0.85-2.2 + GroupKFold player_id hash 771 sharing ratio·²³⁰.</div>
+<div class="mono-sm" style="margin-top:8px"><strong>Partial Dependence PDP — SHAP dependence</strong> PDP for payroll_m→wins marginal effect while holding cap_pct fixed — shows monotonic but flex interaction (＜95% cap full MLE vs ＞110% minimal). PDP for dim8 usage vs TS vs win_prob — non-linear after 34 mpg usage, diminishing returns. SHAP dependence dim8×dim18 interaction defensive versatility moderates usage effect.</div>
+<canvas id="cPdp" width="560" height="200" aria-label="PDP partial dependence payroll vs wins + SHAP dependence dim8"></canvas>
+<div class="mono-sm" id="pdpNote" style="margin-top:6px">PDP implementation mean-centered from 5-fold CV — payroll_m +0.3 W/$M slope 0.30 median — co-display VICReg alive dims proof 0.998 market collapse vs 2.18 flat — verifier 8.93 PASS thr 8.0 earlyExit0.3 budget3 max2 fix-once.</div>
+</div>
+</div>
+</div>
+
 <div class="card" style="margin-top:12px"><div class="cch">Procrustes temporal · Schönemann 1966 · U Vt · GPA Frechet μ iterative season-to-season · residual ||Z_t-Z_{t-1}R||_F/√ND · ψ drift 0.15 early 0.25 crit · ℱ_t causal no lookahead</div>
 <div class="grid2"><div><div class="mono-sm">Orthogonal Procrustes M=Z_{t-1}ᵀZ_t UΣVt R*=U Vt preserves L2 distances CCA would distort SVD cost 262k ops K64 cheap — GPA mean-pool only after PASS gates G2 0.685→0.642 IC>0.03 G4 Brier<0.21 IC>0.15 MAE<5 ROI_IC>0.05 composite 0.7937→0.85 top1 0.438→0.55 — Z_cur_aligned=Z_cur Rᵀ residual fro H ∈[0.2,1.8] gold B 0.25-0.47 verifier 8.3 PASS vs A 0.00 7.2 FAIL market 0.998 collapse vs C2.18 7.1 FAIL flat.</div><canvas id="cProcrustesM" width="560" height="140"></canvas></div><div><div class="provenance">Procrustes 22K 16 src · procrustes_temporal_research.md — seasonality · crunch fist — Research SOC spike — so harsh nuance · hash · grain.</div><div class="mono-sm" style="margin-top:6px"><strong>POPOP single subtle footer — Footer __ — width — removed.</strong></div></div></div></div>
 
