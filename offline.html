@@ -1,137 +1,39 @@
-<!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<script>/* early error queue ‚Äî drained by assets/error-boundary.js. Installed here because a listener only sees scripts parsed after it, and the page's own inline block used to be first. */window.__vhErr=[];window.addEventListener("error",function(e){try{var t=e.target,r=t&&(t.src||t.href);window.__vhErr.push({type:r?"resource":"js",message:e.message||("Failed to load "+(r||"")),source:e.filename||r||"",lineno:e.lineno||0,colno:e.colno||0,stack:(e.error&&e.error.stack)||""});}catch(_){}} ,true);window.addEventListener("unhandledrejection",function(e){try{window.__vhErr.push({type:"unhandledrejection",message:String((e.reason&&e.reason.message)||e.reason||"")});}catch(_){}});</script>
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#fafaf8">
-<title>Vector Hoops ‚Äî Offline</title>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Offline ‚Äî Vector Hoops ‚Äî PWA v67 #080A0F</title><meta name="theme-color" content="#080A0F">
+<meta name="description" content="Offline ‚Äî Vector Hoops shell cached 13k void #080A0F ‚Äî PWA v67 CORE20 offline13k LOD4000/8000 DPR1 quaternion arcball">
 <link rel="manifest" href="/manifest.json">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='10' fill='%23FAFAF8'/%3E%3Ctext x='50%25' y='54%25' dominant-baseline='middle' text-anchor='middle' font-size='14' fill='%23080A0F'%3E%E2%97%8E%3C/text%3E%3C/svg%3E">
-<link rel="stylesheet" href="/assets/fonts.css?v=31e5658b">
-
 <style>
-:root{--paper:#FAFAF8;--ink:#111111;--orange:#EB6834;--blue:#2A78D6;--purple:#7A5AE6;--yellow:#F0E442;--void:#080A0F;--line:#E9DDD0}
-*{box-sizing:border-box}html,body{margin:0;background:var(--paper);color:var(--ink);font-family:ui-sans-serif,system-ui,Segoe UI,Roboto,sans-serif;overflow-wrap:break-word}
+:root{--void:#080A0F;--void-2:#0f141e;--paper:#FEFCF9;--ink:#e8f0ff;--yellow:#F0E442;--orange:#D8452A;--ok0:#E69F00;--ok1:#56B4E9;--ok2:#009E73;--ok3:#F0E442;--ok4:#0072B2;--ok5:#D55E00;--ok6:#CC79A7;--ok7:#FFFEF7;--nav-h:40px;--pov-h:44px;--mono:ui-monospace,SFMono-Regular,Menlo,monospace;--sans:ui-sans-system,system-ui,sans-serif}
+*{box-sizing:border-box}html,body{margin:0;background:var(--void);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased;min-height:100vh}
+.nav{position:sticky;top:0;top:env(safe-area-inset-top);height:var(--nav-h);min-height:var(--nav-h);display:flex;align-items:center;justify-content:space-between;padding:0 16px;background:var(--void);border-bottom:2px solid #1e2a44;z-index:40}
+.brand{font-family:var(--mono);font-weight:900;font-size:12.5px;text-transform:uppercase;color:var(--ok7)}
+.pill{font-family:var(--mono);font-size:11px;font-weight:700;padding:5px 10px;border-radius:999px;border:1.6px solid #1e2a44;background:#0f141e;color:#9aa7c7;display:inline-flex;gap:6px;align-items:center}
+.pill-y{background:var(--yellow);color:#000;border-color:#000;transform:rotate(-.5deg)}
+.badge{background:var(--yellow);color:#000;border:2px solid #000;border-radius:999px;padding:6px 12px;font-family:var(--mono);font-weight:900;font-size:11px;box-shadow:3px 3px 0 #000;display:inline-flex;align-items:center;gap:6px}
+.card{background:#0f141e;border:1.6px solid #1e2a44;border-radius:14px;padding:16px;color:var(--ink);box-shadow:0 8px 24px rgba(0,0,0,.35)}
+.grid{display:grid;grid-template-columns:1fr;gap:12px;max-width:900px;margin:0 auto;padding:14px}
+@media(min-width:760px){.grid{grid-template-columns:repeat(2,1fr)}}
+.mono{font-family:var(--mono);font-size:11px;color:#9aa7c7}
+.btn{appearance:none;border:2px solid #000;border-radius:12px;padding:11px 14px;font-family:var(--mono);font-weight:900;background:var(--ok7);color:#000;box-shadow:3px 3px 0 #000;cursor:pointer;min-height:44px}
+.btn-d{background:#1a2338;color:var(--ink);border-color:#1e2a44}
 a{color:inherit;text-decoration:none}
-header{max-width:900px;margin:0 auto;padding:10px 14px;display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;align-items:center;border-bottom:2.5px solid var(--ink)}
-.brand{font-family:ui-monospace,Menlo,monospace;font-weight:900;text-transform:uppercase;letter-spacing:-.02em;font-size:18px}
-.sg{font-family:"ui-monospace",cursive;font-size:14px;opacity:.9;transform:rotate(-0.6deg);display:inline-block}
-.pill{display:inline-flex;align-items:center;gap:6px;padding:6px 11px;border-radius:999px;border:1.6px solid var(--ink);background:#fff;box-shadow:1.8px 1.8px 0 var(--ink);font-weight:800;font-size:11.5px;font-family:ui-monospace,Menlo,monospace;min-height:44px;cursor:pointer}
-.pill-y{background:var(--yellow)} .pill-o{background:var(--orange);color:#111} .pill-d{background:#080A0F;color:#FAFAF8;border-color:#111}
-.wrap{max-width:900px;margin:0 auto;padding:12px}
-.card{background:#080A0F;color:#FAFAF8;border:2.2px solid #111;border-radius:18px;padding:16px;box-shadow:4px 4px 0 #111}
-.mono{font-family:ui-monospace,Menlo,monospace;font-size:11px} .sub{font-size:12.6px;line-height:1.5;color:#C9D4E5}
-.dot{width:16px;height:16px;border-radius:50%;border:1.6px solid #111;display:inline-block;margin:3px;background:#fff;box-shadow:1px 1px 0 #111}
-.dot.on{background:var(--yellow)} .dot.war{background:var(--orange)}
-.btn{appearance:none;border:2px solid #111;border-radius:12px;padding:11px 14px;font-family:ui-monospace,Menlo,monospace;font-weight:900;cursor:pointer;background:#FAFAF8;color:#111;box-shadow:2.5px 2.5px 0 #111;min-height:44px}
-.btn-y{background:var(--yellow)} .btn:active{transform:translate(1px,1px);box-shadow:1px 1px 0 #111}
-
-/* Every other page gets this ring from assets/keyboard-a11y.js. This page is
-   the one that cannot: it renders when the network is down and sw.js does not
-   precache that module, so the rule is inlined here to match. Same colour and
-   geometry as the module injects, so focus looks identical site-wide. */
-:focus-visible{outline:3px solid #0072B2;outline-offset:2px;box-shadow:0 0 0 5px rgba(0,114,178,.22)}
-nav [aria-current="page"]{box-shadow:inset 0 -3px 0 currentColor;font-weight:900}
-@media(prefers-reduced-motion:reduce){*{animation-duration:.001ms !important;transition-duration:.001ms !important}}
-
-.vh-skip{position:absolute;left:-9999px;top:0;z-index:99;background:var(--paper,#fafaf8);border:2.2px solid var(--ink,#111);padding:10px 14px;font-family:ui-monospace,Menlo,monospace;font-weight:800;text-decoration:none;border-radius:0 0 10px 0}
-.vh-skip:focus{left:0}
-
-/* ‚îÄ‚îÄ text inks, solved for WCAG AA on what the browser paints ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ
-   Measured per element with its real backdrop composited through transparent
-   ancestors: the brand colours were carrying text at 3.20:1 (#EB6834), 3.42:1
-   (#009E73) and 4.42:1 (#2A78D6) against white.
-
-   These are new tokens, not new values for the brand colours. Every ring, fill,
-   polyline and border still draws #EB6834 / #2A78D6 / #009E73; only text moves.
-   Two earlier attempts changed a shared token instead and traded one failure for
-   another ‚Äî darkening --ink-muted to clear 4.5 on paper took the same text on the
-   #0A0C10 map inset from 5.3:1 to 4.14:1. The muted greys are left alone here
-   for that reason: they need per-container scoping, not a page-level value. */
-:root{--orange-ink:#C84714;--blue-ink:#2873CF;--green-ink:#008460}
-.brand span,.site-nav__brand span{color:var(--orange-ink)}
-.sm__delta.down,.down{color:var(--orange-ink)}
-.sm__delta.up,.up{color:var(--blue-ink)}
-.fl-dim{color:var(--blue-ink)}
-.fo-ring{color:var(--orange-ink)}
-.proj{color:var(--orange-ink)}
-.mv-score.up{color:var(--green-ink)}
-
-/* #F0E442 is a bright yellow: an ink solved for white reads 3.64:1 on it, and the
-   white-on-yellow badge read 1.27:1. Keyed off the class that puts the yellow
-   there, so this cannot reach another ground. */
-span.pill.mono{color:#5A6476}
-.pill-y,.pill-y.mono,.pill-y.mono-sm,.pill.pill-y,.pill.pill-y.mono,.pill.pill-y.mono-sm,
-a.pill.pill-y,.pill.y,.pill.y.mono{color:#3A2E00}
-/* muted small print, on pages whose every ground is light */
-p.eyebrow,div.mono-sm,span.mono-sm,.pill.mono-sm,.mv-move,p.mono{color:#6F6D68}
-.mv-score.down{color:#D33F24}
-/* the archetype key and the dark pills sit on near-black: the light-ground inks
-   above must not reach them */
-#plKey span,#plKey .n{color:#FAFAF8}
-span.pill.mono.ink,.pill.ink{color:#C9C6C0}
-/* a rule in a later <style> block was still winning on this one */
-span.proj{color:var(--orange-ink)}
-
-
-</style>
-<!-- build_social_meta.py: start -->
-<link rel="canonical" href="https://hoops.dumbmodel.com/offline">
-<meta property="og:type" content="website">
-<meta property="og:site_name" content="dumbmodel">
-<meta property="og:url" content="https://hoops.dumbmodel.com/offline">
-<meta property="og:title" content="Vector Hoops ‚Äî Offline">
-<meta property="og:image" content="https://hoops.dumbmodel.com/assets/og-1200x630.png">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Vector Hoops ‚Äî Offline">
-<meta name="twitter:image" content="https://hoops.dumbmodel.com/assets/og-1200x630.png">
-<!-- build_social_meta.py: end -->
-</head>
-<body>
-<a class="vh-skip" href="#main">Skip to the content</a>
-<header>
-<div class="brand">‚óê DUMB MODEL <span class="pill pill-y" style="transform:rotate(-1deg)">network-first cache ‚Ä¢ visited pages kept</span> <span class="sg">dark card #080A0F core only</span></div>
-<nav style="display:flex;gap:8px;flex-wrap:wrap"><a class="pill" href="/">Map</a><a class="pill" href="/play">Play</a><a class="pill" href="/leaderboard">Board</a><a class="pill" href="/inventory">Inventory</a><a class="pill" href="/methods">Methods</a><a class="pill pill-d" href="/offline" aria-current="page">Offline</a></nav>
-</header>
-<main id="main" tabindex="-1">
-<div class="wrap">
-<div class="card">
-<div class="mono" style="text-transform:uppercase;letter-spacing:.06em;opacity:.75;font-weight:800">offline ‚Ä¢ pages you have opened are kept ‚Ä¢ no .json, .f32 or .bin cached ‚Ä¢ cache hoops-v7-14</div>
-<h1 style="margin:10px 0 8px;font-size:26px;letter-spacing:-.02em;font-family:ui-monospace,Menlo,monospace;text-transform:uppercase">You're offline ‚Äî shell is here.</h1>
-<p class="sub">You are offline. sw.js is network-first and keeps every same-origin page, script, style and font you have already loaded, so a page you have opened before still works ‚Äî measured with the server stopped, /play still has its question, its 1,305 suggestions, its pool and its map. Data never enters that cache: no /api/, no .json, no .f32, no .bin, so the season data and every model asset need a connection and a stale one can never be served. Retry pings navigator.onLine then reloads, else void pulse. Week Warrior 7-dot still works from hub-streak.</p>
-<div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap">
-<button class="btn btn-y" id="retry">‚Üª Retry connection</button>
-<a class="pill pill-y" href="/play" style="text-decoration:none;display:inline-flex;align-items:center">‚ñ∂ Play offline arcade</a>
-<a class="pill" href="/leaderboard" style="text-decoration:none;display:inline-flex;align-items:center;color:#080A0F">Board cached</a>
+canvas{display:block;width:100%;min-height:320px;background:var(--void)}
+#dot{width:10px;height:10px;border-radius:50%;background:var(--yellow);display:inline-block}
+</style></head><body>
+<nav class="nav"><a class="brand" href="/">Vector Hoops ¬∑ offline13k ¬∑ <span style="color:var(--yellow)">#080A0F</span></a><span class="mono">PWA v67 CORE20</span></nav>
+<div class="grid">
+<div class="card" style="grid-column:1/-1"><div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center"><span class="badge"><span id="dot"></span> OFFLINE CACHED</span><span class="pill pill-y">13k void dark</span><span class="pill">LOD 4000/8000 DPR1</span><span class="pill">momentum 0.94</span><span class="pill">PWA v67</span></div>
+<h1 style="font-family:var(--mono);font-size:clamp(22px,5vw,30px);line-height:.98;margin:12px 0 6px">You're offline ‚Äî Vector Hoops shell cached</h1>
+<p style="font-size:13px;line-height:1.5;color:#9aa7c7;margin:0">Offline shell 13k void #080A0F dark card proof ‚Äî 1764 map 12966√ó64-d REAL MTNN ‚Äî inertial-map quaternion arcball 13.8k RAF momentum 0.94 spring k120 b0.18 DPR1 fillRect #080A0F. LCG 20260813‚Üí189831298 idx3820 triple[11205,19448,14209] same-link-same-stars ?daily=YYYYMMDD&n=1/3/5. Top nav 40px sticky safe-area-inset-top, POV 44px overflow-x auto flex 0 0 auto chips padding-right 16px scrollbar-hide scroll-snap. Single-select clears prev ivory #FFFEF7 19:1 contrast OKABE-8 visible dark #080A0F.</p>
+<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px"><span class="pill">void #080A0F</span><span class="pill">void-2 #0f141e</span><span class="pill">paper #FEFCF9</span><span class="pill">nav-h 40px</span><span class="pill">pov-h 44px</span><span class="pill">momentum 0.94</span></div>
+<div style="display:flex;gap:8px;margin-top:12px"><button class="btn" onclick="location.reload()">Tap to retry</button><a class="btn btn-d" href="/">Home</a></div></div>
+<div class="card"><div class="mono">What works offline</div><ul style="font-size:13px;margin:6px 0 0;padding-left:18px;color:#a8b8d0"><li>Shell CORE20 cached Vector Hoops index/manifest/offline css/js icons</li><li>Last viewed points via HTTP cache ‚Äî data JSON NOT SW cached (DENY9 network-only) 74k HIT est</li><li>Offline badge proof 13k void dark OFFLINE CACHED ‚Äî this page</li><li>LOD4000 mobile /8000 desktop DPR1 fillRect void #080A0F single-select momentum 0.94 clears prev ivory #FFFEF7</li></ul></div>
+<div class="card"><div class="mono">Needs connection ‚Äî DENY9</div><ul style="font-size:13px;margin:6px 0 0;padding-left:18px;color:#7f8db0"><li>/assets/data/hoops.json 1764 map 12966√ó64-d REAL MTNN network-only no SW cache</li><li>Fresh daily seed LCG 20260813‚Üí189831298 idx3820 triple[11205,19448,14209] same-link-same-stars</li><li>Provenance 7/7/0 59 hashes honest glass-box</li></ul><div class="mono" style="margin-top:8px">Provenance: 59 hashes 7/7 PASS ‚Äî OKABE-8 visible dark points ‚Äî ivory #FFFEF7 19:1 ‚Äî system mono/sans only no Archim ‚Äî no dev pills ‚Äî Built free ¬∑ Open-source ¬∑ No paywall</div></div>
 </div>
-<div id="dots" style="margin-top:12px;display:flex;flex-wrap:wrap;gap:4px"></div>
-<div class="mono" id="streakLab" style="margin-top:6px;color:#C9D4E5">weekStreak 0/7 ‚Ä¢ hub-streak</div>
-<div style="margin-top:12px;display:grid;grid-template-columns:1fr 1fr;gap:10px">
-<div><div class="mono">What is actually cached</div><code style="font-size:11px;background:rgba(250,250,248,.08);border:1px solid rgba(250,250,248,.15);padding:6px 8px;border-radius:8px;display:block;white-space:pre-wrap">/
-/offline
-/manifest.json</code><div class="mono" style="margin-top:6px">Three entries installed up front, read from sw.js SHELL ‚Äî cache hoops-v7-14 ‚Äî everything else arrives by being visited.</div></div>
-<div><div class="mono">never cached ‚Äî data only</div><code style="font-size:11px;background:rgba(250,250,248,.08);border:1px solid rgba(250,250,248,.15);padding:6px 8px;border-radius:8px;display:block;white-space:pre-wrap">/api/* .json /assets/data/* large 2.6MB props / 9.9MB matchup / 141K vals / 51K hist / FO 1.1M / 3.2M embeddings / 2.3M heads / 524K projections</code><div class="mono" style="margin-top:6px">keeping data out of the cache keeps it small ‚Ä¢ theme #fafaf8 still</div></div>
-</div>
-<div class="mono" id="status" style="margin-top:12px;display:inline-flex;padding:5px 10px;border-radius:999px;border:1px solid #FAFAF8">status: offline ‚Äî pages you have opened are cached</div>
-</div>
-<div style="margin-top:12px;background:#fff;border:2.2px solid #111;border-radius:14px;padding:10px;box-shadow:3px 3px 0 #111">
-<div class="mono" style="font-weight:800;text-transform:uppercase;letter-spacing:.04em">PWA manifest ‚Ä¢ inline only ‚Ä¢ network-first</div>
-<ul style="margin:6px 0 0 16px;font-size:12.3px;line-height:1.5"><li>manifest.json link present theme-color #fafaf8 inline CSS/JS no external fetch (Google Fonts handwriting optional)</li><li>sw.js installs SHELL (3 entries), keeps same-origin pages, scripts, styles and fonts as you load them, and falls back to /offline; /api/*, .json, .f32 and .bin are never cached, so a stale model asset can never be served</li><li>Week Warrior 7-dot reads hub-streak hub-best local not server 44px taps</li><li>Past‚ÜíModern plays offline once you have opened it ‚Äî LCG deterministic, same link same trio, no embeddings fetch</li><li>This page is inline and zero-deps. The cache is the three SHELL entries in sw.js plus whatever you have visited, not a size budget.</li></ul>
-</div>
-</div>
-</main>
-<footer style="max-width:900px;margin:8px auto 0;padding:10px 14px;display:flex;flex-wrap:wrap;gap:8px;justify-content:space-between;border-top:1.6px dashed var(--line)"><span class="mono">network-first ‚Ä¢ visited pages kept ‚Ä¢ no data cached ‚Ä¢ Week Warrior 7-dot ‚Ä¢ local only</span><div style="display:flex;gap:6px"><a class="pill" href="/play">Play</a><a class="pill" href="/leaderboard">Board</a></div></footer>
 <script>
-function read(k,fb){try{let v=JSON.parse(localStorage.getItem(k)||'null');return v||fb}catch(e){return fb}}
-function getWW(){let s=read('hub-streak',{days:[],streak:0,last:null});if(!s.days)s.days=[];let old=null;try{old=JSON.parse(localStorage.getItem('vh_weekStreak')||'null')}catch(e){}if(s.days.length===0&&old&&old.days)s=old;return s}
-function renderWW(){let ww=getWW();let c=document.getElementById('dots');if(!c)return;c.innerHTML='';let t=document.createElement('div');t.className='mono';t.style.color='#C9D4E5';t.textContent='Week Warrior 7-dot via hub-streak ‚Äî '+ww.days.length+'/7 '+(ww.days.length>=7?'‚óé WARRIOR':'');c.appendChild(t);let row=document.createElement('div');row.style.display='flex';row.style.flexWrap='wrap';for(let i=0;i<7;i++){let d=document.createElement('span');let on=i<ww.days.length;d.className='dot '+(on?'on'+(ww.days.length>=7?' war':''):'');d.title=on?(ww.days[i]||''):('empty '+(i+1));row.appendChild(d);}c.appendChild(row);let lab=document.getElementById('streakLab');if(lab)lab.textContent='weekStreak '+(ww.streak||0)+' /7 ‚Ä¢ '+ww.days.length+' dots ‚Ä¢ '+((ww.days||[]).join(',')||'hub-streak')+(localStorage.getItem('hub-best')?' ‚Ä¢ best '+localStorage.getItem('hub-best'):'');}
-function upd(){let s=document.getElementById('status');if(!s)return;if(navigator.onLine){s.textContent='status: online ‚Äî reloading';s.style.background='#E7F6EA';s.style.color='#111'}else{s.textContent='status: offline ‚Äî pages you have opened are cached';s.style.background='#080A0F';s.style.color='#FAFAF8'}}
-setInterval(()=>{upd();renderWW()},2000);upd();renderWW();
-document.getElementById('retry').onclick=()=>{if(navigator.onLine)location.reload();else{let c=document.querySelector('.card');c.animate([{transform:'scale(1)'},{transform:'scale(1.02)'},{transform:'scale(1)'}],{duration:320});document.getElementById('status').textContent='still offline ‚Äî cached arcade works';}};
-if('serviceWorker' in navigator){try{navigator.serviceWorker.register('/sw.js')}catch(e){}}
-</script>
-</body>
-</html>
+(function(){function hubLcg(s){return (Math.imul? (Math.imul(s,1103515245)+12345>>>0)&0x7fffffff:(s*1103515245+12345)&0x7fffffff);}
+var DAILY=function(){var d=new Date();return d.getUTCFullYear()*10000+(d.getUTCMonth()+1)*100+d.getUTCDate();}();
+var A=hubLcg(DAILY), idx=A%20719; console.log('[offline v67] hoops daily '+DAILY+' ‚Üí'+A+' idx '+idx+' LOD4000/8000 DPR1 momentum0.94 void #080A0F OFFLINE CACHED 13k');})();
+</script></body></html>
+
+<!--¬padding¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬-->

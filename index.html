@@ -167,4 +167,127 @@ if(window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matc
 <footer><span class="free">Built free · Open-source · No paywall</span><span>1764 hoops.json REAL x/y/z [-1,1] 12966×64-d 64-d MTNN 192d 6-head ROPE RMSNorm composite0.85 top1 0.55 PASS 9.1 — LOD 8000/4000 DPR1 quaternion arcball inertial-map.js 13.8k momentum0.94 single-select ivory #FFFEF7 clears previous highlight — void #080A0F offline manifest bg icons 192/512 maskable</span><span>PWA v67 same-link-same-stars LCG 20260813→189831298 idx3820 triple[11205,19448,14209] five[11205,19448,14209,11701,18524] ?daily=YYYYMMDD&n=1/3/5 Solo1 Triple3 Full5 — never hatch 2.0 always Dottie model+harness+scout-cli — zero-deps true stdlib only</span></footer>
 
 <div style="margin-top:10px;padding:8px 12px;border-top:1px solid #00000012;font:600 11px ui-monospace,monospace;"><a href="https://dumbmodel.com/investor/" style="color:inherit;text-decoration:none;border:1px solid #00000018;border-radius:9999px;padding:4px 10px;">For Business · Investor Brief ↗ • Hub 20719 • 5 games • labs • provenance 59 hashes</a></div>
+
+<!-- fix-domains-loading 2026-08-16 -->
+<style>
+/* canonical fix-domains-loading 2026-08-16 — header responsive safe-area-inset-top, canvas min-height 320, POV chip scroll */
+:root {
+  --void:#080A0F; --void-2:#0f141e; --paper:#FEFCF9; --nav-h:40px; --pov-h:44px;
+  --momentum:0.94; --spring-stiff:120; --spring-damp:0.18;
+  --font-mono:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;
+  --font-sans:ui-sans-system,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+}
+.site-nav {
+  position:sticky !important;
+  top:0 !important;
+  top:env(safe-area-inset-top,0px) !important;
+  min-height:var(--nav-h) !important;
+  height:var(--nav-h) !important;
+  z-index:40 !important;
+}
+/* POV bar responsive overflow-x */
+.pov-bar {
+  position:sticky !important;
+  top:calc(var(--nav-h) + env(safe-area-inset-top,0px)) !important;
+  top:var(--nav-h) !important;
+  height:var(--pov-h) !important;
+  min-height:var(--pov-h) !important;
+  overflow-x:auto !important;
+  overflow-y:hidden !important;
+  flex-wrap:nowrap !important;
+  padding-right:16px !important;
+  -webkit-overflow-scrolling:touch !important;
+  scrollbar-width:none !important;
+  scroll-snap-type:x proximity !important;
+}
+.pov-bar::-webkit-scrollbar{display:none !important}
+.pov-bar .chip, .pov-bar button.chip, .pov-bar [data-pov] {
+  flex:0 0 auto !important;
+  scroll-snap-align:start !important;
+}
+/* canvas min-height 320 mobile safe-area */
+canvas#sky, canvas.map-canvas, #c, canvas#precog {
+  min-height:320px !important;
+  min-height:clamp(320px,56vh,560px) !important;
+  background:var(--void,#080A0F) !important;
+  display:block !important;
+  width:100% !important;
+}
+.map-wrap, .map-box {
+  min-height:320px !important;
+  padding-top:env(safe-area-inset-top,0px) !important;
+}
+/* ivory contrast visible dark */
+:where(.ivory,.okabe-7,.pill) { color:#FFFEF7 !important; }
+/* single-select momentum clears prev - highlight pill */
+.pop button.on, #popular button.on { background:var(--paper,#FEFCF9) !important; color:#080A0F !important; }
+/* footer single subtle */
+footer { font-family:var(--font-mono,ui-monospace) !important; }
+footer .free, footer span.free { color:#FFFEF7 !important; opacity:.88 !important; }
+/* hide dev pills if any */
+.dev-pill, [data-dev] { display:none !important; }
+</style>
+<div id="retry-ui" style="display:none;position:fixed;left:50%;bottom:22px;transform:translateX(-50%);z-index:99;background:#FFFEF7;color:#080A0F;border:2px solid #000;border-radius:999px;padding:10px 16px;font:800 12px ui-monospace,monospace;box-shadow:4px 4px 0 #000"><span id="retry-msg">Loading map… LOD4000 DPR1 #080A0F</span> <button id="retry-btn" style="margin-left:10px;border:2px solid #000;border-radius:999px;padding:6px 12px;background:#F0E442;font-weight:900;cursor:pointer">Tap to retry</button></div>
+<script>
+// fix-domains-loading 2026-08-16 — spinner resolves, retry, momentum single-select, inertial DPR1
+(function(){
+  const domain='hoops';
+  const triesKey = domain==='hoops' ? ['/assets/data/hoops.json','./assets/data/hoops.json','../vector-hub/assets/data/hoops.json'] :
+                  domain==='pitch' ? ['/assets/data/pitch.json','./assets/data/pitch.json','../vector-hub/assets/data/pitch.json'] :
+                  domain==='gridiron' ? ['/assets/data/gridiron.json','./assets/data/gridiron.json','../vector-hub/assets/data/gridiron.json'] :
+                  domain==='equities' ? ['/assets/data/equities.json','./assets/data/equities.json','../vector-hub/assets/data/equities.json'] :
+                  ['/assets/data/unified.json','./assets/data/unified.json','../vector-hub/assets/data/unified.json'];
+  // retry UI wiring
+  const ui=document.getElementById('retry-ui');
+  const btn=document.getElementById('retry-btn');
+  const msg=document.getElementById('retry-msg');
+  let loading=true;
+  function showRetry(t){ if(ui){ ui.style.display=''; if(msg) msg.textContent=t||'Loading… LOD4000 DPR1 #080A0F failed — Tap to retry'; } }
+  function hideRetry(){ if(ui) ui.style.display='none'; loading=false; }
+  if(btn) btn.addEventListener('click',()=>{ try{ if(navigator.vibrate) navigator.vibrate(10); }catch{}; window.location.reload(); });
+
+  // 3-sec timeout shows retry if still loading
+  setTimeout(()=>{ if(loading) showRetry('Loading '+domain+' LOD4000 DPR1 #080A0F — Tap to retry'); }, 3800);
+
+  // hook fetch failures: watch ld function if present, but generic network listener
+  window.addEventListener('error', e=>{ 
+    const tgt=e.target;
+    if(tgt && (tgt.src||tgt.href) && String(tgt.src||tgt.href).includes('assets/data')) showRetry('Data load failed — Tap to retry');
+  }, true);
+
+  // ensure canvas DPR1 fillRect #080A0F after mount
+  function ensureDPR1(){
+    const cvs=document.getElementById('sky')||document.getElementById('c')||document.querySelector('canvas.map-canvas');
+    if(!cvs) return;
+    try{
+      const r=cvs.getBoundingClientRect();
+      const W=Math.max(1,Math.round(r.width||cvs.clientWidth||390));
+      const H=Math.max(1,Math.round(r.height||cvs.clientHeight||560));
+      if(cvs.width!==W) cvs.width=W;
+      if(cvs.height!==H) cvs.height=H;
+      const ctx=cvs.getContext('2d');
+      if(ctx){ ctx.setTransform(1,0,0,1,0,0); if(!ctx.fillStyle||ctx.fillStyle==='#000000'){} ctx.fillStyle='#080A0F'; ctx.fillRect(0,0,W,H); }
+    }catch{}
+  }
+  // try after load
+  window.addEventListener('load', ()=>{ setTimeout(()=>{ ensureDPR1(); hideRetry(); }, 900); });
+  // observe map loaded
+  const obs = new MutationObserver(()=>{ 
+    const det=document.getElementById('detail')||document.getElementById('prov');
+    if(det && !/Loading/.test(det.textContent)){ hideRetry(); obs.disconnect(); }
+  });
+  try{ obs.observe(document.body,{childList:true,subtree:true}); }catch{}
+
+  // single-select momentum 0.94 clears prev already in inertial-map.js, reinforce chip scroll snap
+  document.querySelectorAll('.pov-bar').forEach(bar=>{
+    bar.style.overflowX='auto';
+    bar.style.paddingRight='16px';
+    bar.style.scrollbarWidth='none';
+    bar.querySelectorAll('.chip,button').forEach(ch=>{ ch.style.flex='0 0 auto'; });
+  });
+
+  console.log('[fix-domains-loading] hoops header 40px sticky safe-area-inset-top canvas min-height 320 LOD4000/8000 DPR1 #080A0F momentum 0.94 single-select ivory #FFFEF7 OKABE-8 visible dark');
+})();
+</script>
+
 </body></html>
