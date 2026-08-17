@@ -124,11 +124,14 @@ var cam=VHMapCamera.attach(cv,{
   label:function(d){return '◎ '+d.nm+(d.se?' · '+d.se:'')+' — click to fill guess';},
   hoverIdle:'◎ hover a dot to name it · click to fill guess · drag to rotate',
   onPick:function(d){ if(!d) return;
+    if(selectedDot && selectedDot._origCol){ selectedDot.col = selectedDot._origCol; delete selectedDot._origCol; }
+    if(d && d.col && !d._origCol){ d._origCol = d.col; }
+    selectedPid = d.pid; selectedDot = d;
     // single-select for game: fill guess box with modern player clicked
     let nm = d.nm || '';
-    let base = nm.replace(/\s+\d{4}-\d{2}.*$/,'').trim();
-    // try to match to MODERN entry for scoring — allow base match
-    $('guess').value = base || nm;
+    let base = nm.replace(/\s+\d{4}-\d{2}.*$/, '').trim();
+    // scoring match helper kept
+    $('guess').value$('guess').value = base || nm;
     // also pulse visual — set curTr selection highlight via log
     $('dist').innerHTML = '<b>'+nm+'</b> filled — hit Guess ◎';
     cv.focus();
@@ -152,7 +155,7 @@ function seedPlaceholder(){var s=1013904223>>>0,M=4294967296;function lcg(v){ret
 
 function parsePack(){let u=new URL(location.href);let p=u.searchParams.get('pack');if(!p)return null;let ids=p.split('-').map(v=>parseInt(v,10)).filter(v=>!isNaN(v));return ids.length?ids:null}
 function setSeq(a){seq=a;idx=0;nextQ()}
-function nextQ(){window._vhAnimating=false;if(idx>=seq.length){$('q').innerHTML='Done for today — new puzzle tomorrow.';$('guess').placeholder='Done — explore 3D map below';$('assessPush').textContent='Done — new puzzle tomorrow';return}let pid=seq[idx];let past=POOL.find(p=>p.i===pid)||POOL[pid%POOL.length];cur=past;$('q').innerHTML='<b>'+past.n+'</b> → ?';$('trajChips').innerHTML='';let rb=$('resultBox');if(rb)rb.style.display='none';octxClear();
+function nextQ(){if(selectedDot && selectedDot._origCol){selectedDot.col=selectedDot._origCol; delete selectedDot._origCol;} selectedPid=null; selectedDot=null; window._vhAnimating=false;if(idx>=seq.length){$('q').innerHTML='Done for today — new puzzle tomorrow.';$('guess').placeholder='Done — explore 3D map below';$('assessPush').textContent='Done — new puzzle tomorrow';return}let pid=seq[idx];let past=POOL.find(p=>p.i===pid)||POOL[pid%POOL.length];cur=past;$('q').innerHTML='<b>'+past.n+'</b> → ?';$('trajChips').innerHTML='';let rb=$('resultBox');if(rb)rb.style.display='none';octxClear();
 let fpPred=14+Math.random()*30;let sigma=1.8+Math.abs(Math.sin(hStr(past.n)));let kill=sigma<6?'GREEN':sigma>8.5?'RED':'YELLOW';$('assessFP').textContent=fpPred.toFixed(1)+' ±3.8';$('assessSigma').textContent='σ '+sigma.toFixed(2)+' kill '+kill+' 20× VRNN';let isPush=(fpPred>35&&kill==='GREEN');$('assessPush').textContent=isPush?'⬆ PUSH 82nd TRIGGER 2× pulse':'— no push — below barrier';$('assessPush').style.color=isPush?'#F0E442':'#9aa7c7';}
 
 function octxClear(){ if(curTr&&curTr.length){ /* placeholder */ } }
