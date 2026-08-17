@@ -211,7 +211,7 @@ function renderList(){let L=$('list');L.innerHTML='';
     : (hits.length>shown
         ? shown+' of '+hits.length+' shown — keep typing to narrow it.'
         : hits.length+(hits.length===1?' player':' players')+' shown.');
-  hits.slice(0,LIST_CAP).forEach(d=>{let div=document.createElement('div');div.className='it';div.innerHTML=`<b style="font-size:12.5px">${d.nm}</b><div class="mono" style="color:var(--ink-soft)">${d.se} • pid ${d.pid} ${d.cur?'• current':''}</div>`;div.onclick=()=>sel(d.pid,d);L.appendChild(div)})}
+  hits.slice(0,LIST_CAP).forEach(d=>{let div=document.createElement('div');div.className='it';div.dataset.pid=String(d.pid);div.innerHTML=`<b style="font-size:12.5px">${d.nm}</b><div class="mono" style="color:var(--ink-soft)">${d.se} • pid ${d.pid} ${d.cur?'• current':''}</div>`;div.onclick=()=>sel(d.pid,d);L.appendChild(div)})}
 async function loadTraj(){if(Object.keys(tCache).length)return tCache;try{let r=await fetch('assets/embedding_map_trajectories.json?v=2e787a46'),j=await r.json();tCache=j.trajectories||{}}catch{}return tCache}
 /* A selection you can send to somebody.
 
@@ -228,7 +228,11 @@ function markUrl(pid){
   try{ history.replaceState(null,'', pid ? (location.pathname+'?pid='+encodeURIComponent(pid))
                                          : location.pathname); }catch(_){}
 }
-async function sel(pid,hint){markUrl(pid);let trs=await loadTraj(),tr=trs[String(pid)];if(!tr){$('selLab').textContent='no trajectory for pid '+pid+' — points only';return}curTr=tr;$('selLab').textContent= (hint?hint.nm+' • ':'')+'trajectory '+tr.length+' seasons '+tr[0].season+'→'+tr[tr.length-1].season+' • orange #EB6834 polyline';document.querySelectorAll('.it').forEach(el=>{if(el.textContent.includes(String(pid)))el.classList.add('on')})}
+async function sel(pid,hint){markUrl(pid);let trs=await loadTraj(),tr=trs[String(pid)];if(!tr){$('selLab').textContent='no trajectory for pid '+pid+' — points only';return}curTr=tr;$('selLab').textContent= (hint?hint.nm+' • ':'')+'trajectory '+tr.length+' seasons '+tr[0].season+'→'+tr[tr.length-1].season+' • orange #EB6834 polyline';
+// single-select clears prev — only current player highlighted, exact pid match
+document.querySelectorAll('.it').forEach(el=>{el.classList.remove('on')});
+document.querySelectorAll('.it[data-pid="'+String(pid).replace(/"/g,'')+'"]').forEach(el=>{el.classList.add('on')});
+say($('selLab').textContent);}
 (function(){var q=$('pq');if(!q)return;q.disabled=false;q.addEventListener('input',renderList);q.addEventListener('search',renderList);})();
 $('fAll').onclick=()=>{filter='all';$('fAll').classList.add('on');$('fCur').classList.remove('on');loadPts('all')};$('fCur').onclick=()=>{filter='current';$('fCur').classList.add('on');$('fAll').classList.remove('on');loadPts('current')};$('bAll2').onclick=$('fAll').onclick;$('bCur2').onclick=$('fCur').onclick;$('bClr').onclick=()=>{curTr=null;$('selLab').textContent='cleared trajectory'};/* the DPR toggle lost its button when 2d032a4b cleared the instrument pills.
    DPR is a rendering detail, not a thing to ask a visitor about, so the
