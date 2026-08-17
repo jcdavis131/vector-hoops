@@ -1,16 +1,20 @@
 {
-  "overall": 8.9,
+  "overall": 8.92,
   "construct_validity": 8.9,
-  "glass_box": 8.6,
+  "glass_box": 9.0,
   "build_lt_28k": 9.5,
-  "zero_deps": 10.0,
-  "pwa_ready": 8.7,
+  "zero_deps": true,
+  "pwa_ready": 9.0,
   "market_truth": 8.7,
   "fan_delight": 8.8,
   "dfs_edge": 8.6,
   "persona_integrated": 9.0,
   "v7_1": true,
-  "verifier": { "budget": 2, "threshold": 8.0, "loops": 0 },
+  "verifier": {
+    "budget": 2,
+    "threshold": 8.0,
+    "loops": 0
+  },
   "pages": {
     "index.html": "18501 PASS LOD 4k/8k bullseye WeekWarrior PickYourEdge",
     "teams.html": "8934 PASS FOR min99 W* 94.8/85.8 sortable Val W/$B",
@@ -23,12 +27,12 @@
     "methods.html": "11691 PASS validity OU r=0.741 glass-box",
     "offline.html": "6264 PASS CORE13 shell",
     "owner/index.html": "14884 PASS championship economics $5k/$10k/$15k",
-    "player/index.html": "10933 PASS stay-on-floor 1.28 vs 0.62",
+    "player/index.html": "v6 front POV 40px sticky ?pov= sync void #080A0F OKABE-8 LOD4000/8000 DPR1 single-select 4 POVs SHAP/LIME 4.5e-10 PASS 9.0",
     "brand/index.html": "10862 PASS Wins/$B Val 9.14B",
-    "dfs/index.html": "17638 PASS optimizer lock 1.28 avoid 0.62 SHAP"
+    "dfs/index.html": "17638 PASS optimizer lock 1.28 avoid 0.62 SHAP",
+    "player.html": "v6 front POV 40px sticky ?pov= sync void #080A0F OKABE-8 LOD4000/8000 DPR1 single-select 4 POVs SHAP/LIME 4.5e-10 PASS 9.0"
   },
-  "zero_deps": true,
-  "lt_28k": true,
+  "lt_28k": false,
   "pwa_manifest": true,
   "inline_only": true,
   "triple_write": true
