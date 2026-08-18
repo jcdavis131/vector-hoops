@@ -1,7 +1,0 @@
-{"nodeId":"frontend-rebuild-index-teams","agentId":"c3dc754a","attempt":1,"latency_ms":5200,"tokens_est":8200,"status":"pass","errorClass":"none"}
-{"nodeId":"frontend-rebuild-players-model-trends","agentId":"8fb67e1a","attempt":1,"latency_ms":6100,"tokens_est":9400,"status":"pass","errorClass":"none"}
-{"nodeId":"frontend-rebuild-play-leader-inv-methods-offline","agentId":"ebc06d68","attempt":1,"latency_ms":7800,"tokens_est":11200,"status":"pass","errorClass":"none"}
-{"nodeId":"frontend-rebuild-persona-5","agentId":"51309028","attempt":1,"latency_ms":9500,"tokens_est":13800,"status":"pass","errorClass":"none"}
-{"nodeId":"frontend-rebuild-vercel-candidate-public","agentId":"5cf312f2","attempt":1,"latency_ms":1200,"tokens_est":2100,"status":"pass","errorClass":"none"}
-{"nodeId":"frontend-rebuild-curl-verify","agentId":"5cf312f2","attempt":1,"latency_ms":3400,"tokens_est":1200,"status":"pass","errorClass":"none"}
-{"nodeId":"frontend-rebuild-v7-complete","agentId":"5cf312f2","attempt":1,"latency_ms":35000,"tokens_est":49900,"status":"pass","errorClass":"none"}

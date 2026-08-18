@@ -1,0 +1,251 @@
+{
+  "date": "2026-08-17",
+  "players": [
+    {
+      "player": "Jalen Brunson",
+      "team": "NYK",
+      "market": "pts",
+      "line": 24.5,
+      "prob": 0.82,
+      "book": "prizepicks",
+      "per_team_prior": 0.82,
+      "per_team_priors": true,
+      "type": "pts"
+    },
+    {
+      "player": "Victor Wembanyama",
+      "team": "SAS",
+      "market": "reb",
+      "line": 11.5,
+      "prob": 0.77,
+      "book": "prizepicks",
+      "type": "reb"
+    },
+    {
+      "player": "Stephen Curry",
+      "team": "GSW",
+      "market": "3pm",
+      "line": 4.5,
+      "prob": 0.81,
+      "book": "prizepicks",
+      "type": "3pm"
+    },
+    {
+      "player": "Josh Allen",
+      "team": "BUF",
+      "market": "pa-yds",
+      "line": 265.5,
+      "prob": 0.79,
+      "book": "prizepicks",
+      "per_team_prior": 0.79,
+      "type": "pa-yds"
+    },
+    {
+      "player": "Patrick Mahomes",
+      "team": "KC",
+      "market": "pa-yds",
+      "line": 275.5,
+      "prob": 0.82,
+      "book": "prizepicks",
+      "type": "pa-yds"
+    },
+    {
+      "player": "Lamar Jackson",
+      "team": "BAL",
+      "market": "rush_yds",
+      "line": 45.5,
+      "prob": 0.81,
+      "book": "prizepicks",
+      "type": "rush_yds"
+    },
+    {
+      "player": "Justin Jefferson",
+      "team": "MIN",
+      "market": "rec_yds",
+      "line": 89.5,
+      "prob": 0.84,
+      "book": "prizepicks",
+      "type": "rec_yds"
+    },
+    {
+      "player": "Aaron Judge",
+      "team": "NYY",
+      "market": "HRR",
+      "line": 1.5,
+      "prob": 0.73,
+      "book": "prizepicks",
+      "per_team_prior": 0.73,
+      "type": "HRR"
+    },
+    {
+      "player": "Shohei Ohtani",
+      "team": "LAD",
+      "market": "HRR",
+      "line": 2.5,
+      "prob": 0.78,
+      "book": "prizepicks",
+      "type": "HRR"
+    }
+  ],
+  "prizepicks": [
+    {
+      "player": "Jalen Brunson",
+      "line": 24.5,
+      "prob": 0.82,
+      "market": "pts"
+    },
+    {
+      "player": "Victor Wembanyama",
+      "line": 11.5,
+      "prob": 0.77,
+      "market": "reb"
+    },
+    {
+      "player": "Stephen Curry",
+      "line": 4.5,
+      "prob": 0.81,
+      "market": "3pm"
+    },
+    {
+      "player": "Josh Allen",
+      "line": 265.5,
+      "prob": 0.79,
+      "market": "pa-yds"
+    },
+    {
+      "player": "Justin Jefferson",
+      "line": 89.5,
+      "prob": 0.84,
+      "market": "rec_yds"
+    },
+    {
+      "player": "Aaron Judge",
+      "line": 1.5,
+      "prob": 0.73,
+      "market": "HRR"
+    },
+    {
+      "player": "Patrick Mahomes",
+      "line": 275.5,
+      "prob": 0.82,
+      "market": "pa-yds"
+    },
+    {
+      "player": "Lamar Jackson",
+      "line": 45.5,
+      "prob": 0.81,
+      "market": "rush_yds"
+    },
+    {
+      "player": "Shohei Ohtani",
+      "line": 2.5,
+      "prob": 0.78,
+      "market": "HRR"
+    }
+  ],
+  "kalshi": [
+    {
+      "player": "Jalen Brunson",
+      "line": 24.5,
+      "prob": 0.81
+    },
+    {
+      "player": "Josh Allen",
+      "line": 265.5,
+      "prob": 0.78
+    },
+    {
+      "player": "Aaron Judge",
+      "line": 1.5,
+      "prob": 0.72
+    },
+    {
+      "player": "Stephen Curry",
+      "line": 4.5,
+      "prob": 0.8
+    },
+    {
+      "player": "Victor Wembanyama",
+      "line": 11.5,
+      "prob": 0.76
+    },
+    {
+      "player": "Patrick Mahomes",
+      "line": 275.5,
+      "prob": 0.8
+    }
+  ],
+  "dk": [
+    {
+      "player": "Jalen Brunson",
+      "line": 24.5,
+      "prob": 0.8
+    },
+    {
+      "player": "Josh Allen",
+      "line": 265.5,
+      "prob": 0.77
+    },
+    {
+      "player": "Aaron Judge",
+      "line": 1.5,
+      "prob": 0.71
+    },
+    {
+      "player": "Stephen Curry",
+      "line": 4.5,
+      "prob": 0.79
+    },
+    {
+      "player": "Justin Jefferson",
+      "line": 89.5,
+      "prob": 0.83
+    },
+    {
+      "player": "Shohei Ohtani",
+      "line": 2.5,
+      "prob": 0.77
+    }
+  ],
+  "samples": {
+    "Brunson": {
+      "line": 24.5,
+      "prob": 0.82
+    },
+    "Allen": {
+      "line": 265.5,
+      "pa_yds": 265.5,
+      "prob": 0.79
+    },
+    "Judge": {
+      "line": 1.5,
+      "HRR": 1.5,
+      "prob": 0.73
+    }
+  },
+  "per_team_priors": true,
+  "feed_flags": {
+    "per_team_priors": true,
+    "priors_ON": true,
+    "all_TRUE": true
+  },
+  "vs_model_edge": "per_team_priors TRUE",
+  "LCG": {
+    "daily": 20260813,
+    "seed": 189831298,
+    "idx": 3820,
+    "triple": [
+      11205,
+      19448,
+      14209
+    ],
+    "five": [
+      11205,
+      19448,
+      14209,
+      11701,
+      18524
+    ],
+    "note": "same-link-same-stars ?daily=YYYYMMDD&n=1/3/5 Solo1 Triple3 Full5 open\u2192drag-map\u2192Jordan\u2192copy-link equal stars DAU3/WAU3 TLPG dedup everydayTip humanized badge"
+  }
+}

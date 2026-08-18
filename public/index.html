@@ -165,6 +165,16 @@ footer{margin:14px 0 0;padding:14px var(--gutter) calc(14px + env(safe-area-inse
 
 /* motion */
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+
+/* --- Hill-Climb: 44px min thumb targets + thumb dock (Fitts 75% one-thumb) --- */
+@media(max-width:780px){.j-pill{min-height:44px;min-width:44px}}
+.thumb-dock{
+  position:fixed;left:0;right:0;bottom:0;z-index:60;display:flex;gap:8px;
+  padding:10px 12px calc(10px + env(safe-area-inset-bottom));background:rgba(11,18,36,.92);
+  border-top:1.5px solid #24365D;backdrop-filter:blur(10px)
+}
+.thumb-dock .j-pill{min-height:44px;flex:1;justify-content:center}
+@media(min-width:820px){.thumb-dock{display:none}}
 </style>
 </head>
 <body>
@@ -349,4 +359,4 @@ if('serviceWorker' in navigator) addEventListener('load',()=>navigator.serviceWo
 try{ tlpDedup('hoops-daily'); }catch{}
 </script>
 <script>window.VECTOR_FAMILY={navH:44,povH:48,void:"#080A0F",lcg:189831298,idx:3820,triple:[11205,19448,14209]}; try{localStorage.setItem("family_last_sync","vector-hoops")}catch{}</script>
-</body></html>
+<div class="thumb-dock" id="thumbDock"><a class="j-pill" href="#main">Map</a><a class="j-pill" href="/play.html">Play Today</a><a class="j-pill" href="/players.html">Players</a></div></body></html>

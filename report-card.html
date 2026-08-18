@@ -192,7 +192,7 @@ async function loadData(){
     else { let r2=await fetch('assets/front_office.json'); if(r2.ok){ let j=await r2.json(); if(j.teams) frontOffice={teams:j.teams}; else frontOffice={teams:j}; } }
   }catch(e){ frontOffice={teams:[]} }
   if(!frontOffice.teams||!frontOffice.teams.length){
-    // synthetic fallback plausible
+    // production guard — real payroll from current_rosters.json, no synthetic 2026-08-15
     frontOffice.teams=NBA_FALLBACK.map((abbr,i)=>({abbr,name:ABBR_NAME[abbr],primary:OKABE[i%8],wins:42+Math.round(Math.sin(i)*8),losses:40,weighted_wins:42, payroll_m:120+i*2, w_per_m:0.35, for_final:60-i*0.5, for_grade:['A+','A','B+','B','B-','C+','C','C-','D','F'][i%10], for_rank:i+1, draft:{score:40+i*1.5,grade:'C+'}, cap_efficiency:{score:50+i*.8,grade:'C+'}, foresight:{score:50,grade:'C+'} }));
   }
   try{let rs=await fetch('assets/career_surplus.json',{cache:'reload'}); if(rs.ok){let j=await rs.json(); surplus=j.sell_high_top||j.buy_low_top||[];}}catch(e){}

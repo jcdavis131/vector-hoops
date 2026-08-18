@@ -1,61 +1,100 @@
-# Vector Hoops
+# Vector Hoops — NBA Embedding & Daily Chimera Game
 
-![CI](https://github.com/jcdavis131/vector-hoops/actions/workflows/ci.yml/badge.svg)
-![Python 3.11](https://img.shields.io/badge/python-3.11-blue)
+**Purpose:** Production-grade NBA player embedding space and static-site daily game. Provides 12,966 player-seasons (1996–2026), a multi-tower neural net (MTNN v5 shipped, v6-v9 candidates), and a PWA static site (no backend) hosting daily chimera puzzles, 3D embedding maps, DFS/oracle, and front-office analytics.
 
-A daily NBA "chimera" puzzle played over an era-honest player-embedding space: guess the blend of real player-seasons behind each day's composite. Static site, no backend.
+Live: https://hoops.dumbmodel.com — plain HTML/JS, no framework, PWA-capable.
 
-Live at https://hoops.dumbmodel.com — plain HTML/JS, no framework.
+## Structure
 
-> Solo personal project, no connection to employer, built with public/free-tier only (free data pipeline, ONNX optional, static Vercel).
-
-> **Picking up in-progress work?** Start at [`docs/HANDOFF.md`](docs/HANDOFF.md) — current state, dormant data tracks and how to activate them, verification commands, and open follow-ups.
-
-## The embedding
-
-12,966 player-seasons (1996–2026), per-100-possession stats z-scored within season so eras compare honestly. A multi-tower neural net (MTNN v5: 130 features in 18 families, 17 of them towers (injury feeds a durability head, not an input tower), fused to a 64-dim L2-normalized embedding with archetype / position / next-profile / skills heads) produces the space the game scores in. On the player-split leak-free eval: 0.977 recall@10, 0.6717 purity@20, composite 0.7937 from eval_scoreboard.json (0.4*recall + 0.6*purity, see assets/manifest.json mtnn_leakfree.composite 0.7937, assets/eval_scoreboard.json adjacent-season test n=790 top1 0.438 top5 0.757, overall top1 0.5081 top5 0.9339; see `docs/DATA_MODEL_2026-07-16.md`, `docs/MTNN_V5_PROMOTE_GATE.md`, and `assets/eval_scoreboard.json` for how the gate is defined — an earlier season-split eval that scored recall@10 = 1.0 was memorization and was replaced).
-
-The shipped artifacts (`assets/mtnn_meta.json`, `assets/mtnn.onnx`, `assets/vectors.json`, `assets/skills.json`) are committed, so the site runs from a static host with client-side inference (ONNX optional).
-
-## The site
-
-Plain HTML/JS/Canvas/WebGL, no framework or game engine, PWA-capable (`sw.js`, `offline.html`). Pages: the daily game (`play.html`), a 3D embedding map (`model.html`), player dossiers (`players.html`), trends, teams, leaderboard, and methods (`methods.html`). `knowledge/` holds a generated, interlinked markdown wiki page per charted player (AUTO block regenerated from data, CURATED block preserved) — contract in `knowledge/OKF.md`, rebuilt with `python pipeline/build_wiki.py`.
-
-## Data pipeline
-
-```bash
-python pipeline/build_vectors.py     # frozen 14-dim game contract + wide training matrix
-python pipeline/build_skills.py      # 12-skill grades + client-side probe weights
-python pipeline/update_dataset.py    # growth loop: fetch -> rebuild -> gate -> ledger
+```
+.
+├── assets/                 # Shipped artifacts: vectors.json, mtnn_meta.json, mtnn.onnx, skills.json, eval JSONs
+├── data/                   # Training matrices and curated model weights (intentionally tracked, see Large Assets)
+├── pipeline/               # Data pipeline, training, evaluation (stdlib + torch, zero-deps noted)
+│   ├── build_vectors.py
+│   ├── build_skills.py
+│   ├── train_mtnn*.py
+│   ├── cache/              # API cache, resumable — gitignored
+│   └── data/               # Derived intermediates — gitignored
+├── public/                 # Static-site mirror for deploy (Vercel static)
+├── bundles/                # Execution harness — manifest, ultra runs (canonical: bundles/ultra/runs/)
+├── docs/                   # Architecture, data model, gates, handoff
+├── knowledge/              # Player wiki generated (AUTO + CURATED contract)
+├── scripts/                # Utilities, verification
+├── tests/                  # Pipeline gates
+├── api/, apps/, game/      # Site modules
+└── index.html, play.html, model.html, players.html, etc. — static pages
 ```
 
-Sources: stats.nba.com league dashboards (Base/Advanced/Scoring/bio/tracking) and Basketball-Reference contracts. Every response is cached under `pipeline/cache/`; stats.nba.com throttles hard, so reruns resume, and `--offline` rebuilds from cache only. Rebuilds are gated by `pipeline/test_skills.py` before anything ships.
-
-Three data tracks are built but dormant, each cache-ready and gated on a committed fixture until one operator fetch from a residential IP (stats.nba.com blocks datacenter IPs):
-
-- **Pedigree (Track H)** — draft slot and entry expectations: `bash pipeline/operator_fetch_pedigree.sh`
-- **Playoffs (Track I)** — postseason-vs-regular-season deltas: `bash pipeline/operator_fetch_playoffs.sh`
-- **Wide skills (Track J)** — post/transition/motor from synergy + hustle feeds: `bash pipeline/operator_fetch_wide_skills.sh`
-
-## Training
-
-`train.sh` drives MTNN training (`pipeline/train_mtnn.py`, torch). Promotion of a new embedding into the game is a deliberate, separate step behind the leak-free gate above — the transparent 14-dim contract stays until a candidate beats it there. Research notes live in `docs/` (`MTNN_V5_DEEP_ARCHITECTURE.md`, `MTNN_V6_SOTA.md`, `RESEARCH.md`).
-
-### v6 transformer fusion candidate (not shipped, 2026-08-05)
-
-- **Arch:** 17 towers `cat([x·m,m])→96h→24d` LayerNorm skip L2 `d_in×2→40→192→40 ×3 blocks`, tokens 17×40→proj 128, fusion `CLS + season 12-d→128 + 17 tokens = 19 tokens` transformer `d_model128 n_layers4 n_heads4 ff512 pre-LN dropout0.15` → `CLS 128→512→64 L2` (shared lib `towers.py` ResidualTower + `TransformerFusion` 128d 4-head CLS→64-d)
-- **Losses:** InfoNCE hybrid player 0.65 arch 0.35 hard_neg_boost 0.4 SupCon + CORAL/GRL λ0.3 VICReg var25 cov1 w0.05, mask fix (B,1) expand (B,D)
-- **Shipped eval (v5, player-split leak-free, season-split 1.0 replaced):** recall@10 0.977, purity@20 0.6717, composite 0.7937, adjacent-season retrieval test `n=790` top1 0.438 top5 0.757 (overall top1 0.5081 top5 0.9339), val `n=761` top1 0.2668 — see `assets/eval_scoreboard.json` computed 2026-07-25
-- **Target v6:** composite 0.7937→0.85, test top1 0.438→0.55, CQS 85.87→87.5-88.0, purity@20 0.8726→0.89-0.91 — requires `train_mtnn_v6.py --epochs 150` on local GPU (Hatch OOM, torch wheel). Candidate gates `candidate.json` first, promote only if beats shipped on leak-free player-split (no season leak).
-- **Status:** Code scaffolded (`pipeline/train_mtnn_v6.py` forwards to `train_mtnn.py` with v6 defaults, `pipeline/towers.py` shared lib), local training claimed by LOCAL-GPU lane `local/hoops-v6-gpu`, no push to main until eval passes.
-
-## Running locally
+## Quick Start
 
 ```bash
-python -m http.server 8000   # static site, open http://localhost:8000
-python -m pytest pipeline/ -q   # pipeline gates (needs the dev extras in pyproject.toml)
+# Static site (no build)
+python -m http.server 8000
+# open http://localhost:8000
+
+# Pipeline gates (dev extras)
+python -m pytest pipeline/ -q
+
+# Build vectors / skills
+python pipeline/build_vectors.py
+python pipeline/build_skills.py
+
+# Training (GPU recommended for v6+)
+bash train.sh
+# or
+python pipeline/train_mtnn_v6_192d.py --epochs 150 --batch 512 --device cuda --d-model 192 --n-heads 6 --n-layers 6
 ```
+
+Promotion gate: candidate.json must beat shipped eval on player-split leak-free (composite ≥0.85, top1 ≥0.55 vs shipped 0.7937/0.438). See `docs/MTNN_V5_PROMOTE_GATE.md` and `assets/eval_scoreboard.json`.
+
+## Embedding
+
+- 12,966 player-seasons, per-100-poss z-scored within season (era-honest).
+- MTNN v5 shipped: 130 feats 18 families, 17 towers → 64-d L2 normalized.
+  - Eval leak-free player-split: recall@10 0.977, purity@20 0.6717, composite 0.7937, adjacent-season n=790 top1 0.438 top5 0.757.
+- v6+ transformer fusion candidates scaffolded (17 towers → tokens → CLS transformer 128d 4L4H → 64-d L2), targeting composite 0.85+, gated via `candidate.json`.
+
+Shipped artifacts in `assets/` allow client-side inference (ONNX optional).
+
+## Data Pipeline
+
+- Sources: stats.nba.com dashboards + Basketball-Reference contracts, cached under `pipeline/cache/` with resume + `--offline`.
+
+Dormant tracks (one-time residential-IP fetch required due to stats.nba.com datacenter block):
+
+- Pedigree: `bash pipeline/operator_fetch_pedigree.sh`
+- Playoffs: `bash pipeline/operator_fetch_playoffs.sh`
+- Wide skills: `bash pipeline/operator_fetch_wide_skills.sh`
+
+## Zero-Deps Note
+
+Core site is zero-deps stdlib HTML/JS. Pipeline uses stdlib + `numpy`, `pandas`, `scikit-learn`, `torch`, `nba_api` declared in `pyproject.toml`. Bundles harness declares `{"zero_deps":true,"allow":"acne:./src"}` — no pip installs at runtime, ACNE optional local at `dottie/rl/` canonical. Torch device auto: cuda if available else cpu (Hatch VM CPU-only → honest 503 waiting GPU, Alienware RTX 4090 24GB when available).
+
+## LCG Deterministic
+
+Daily packs use glibc LCG deterministic chain same-link-same-stars:
+
+- Seed = YYYYMMDD
+- `L(s) = (s * 1103515245 + 12345) & 0x7fffffff`
+- Daily: `20260813 → 189831298 idx3820 triple[11205,19448,14209] ?daily=YYYYMMDD&n=1/3/5`
+- Guarantees same-link-same-stars across open → drag-map → Jordan → copy-link (DAU3/WAU3 TLPG dedup).
+
+Chain verified: 2026-08-13T21:00:15Z, 21:01:02Z, 01:34:50Z.
+
+## Large Assets & Git Hygiene
+
+- `assets/matchup_players.json` (9.9 MB), `assets/playoff_paths.json` (9.0 MB), `public/assets/` mirrors — intentionally committed for static hosting, treated as data artifact.
+- `datasets/vegas/dfs/dfs_harvest_vegas.jsonl` (7.3 MB), `exports/dfs/dfs_harvest_vegas.jsonl` same — harvested Vegas lines, kept in data for reproducibility; exports pruned to last 30 days.
+- `data/*.pt` (e.g., mtnn_v9_2_procrustes_vae) intentionally tracked as curated model weight (small 1-3 MB) for static inference; general `*.pt/*.pth` and `pipeline/data/*.pt`, `pipeline/cache/checkpoints/*.pt` are gitignored and should use LFS or be untracked.
+- `pipeline/cache/checkpoints/` historically tracked — now ignored; use `git rm --cached` to untrack if present.
+
+## Coordination
+
+- Master board: `bundles/coordination/active-tasks.md` (see also repo root `COORDINATION.md` mirror, `COORDINATION_LOCAL_GPU.md` for GPU lanes).
+- Active tasks ≤15 rows, CLAIM flow in COORDINATION.md, branch `scout/<slug>`, candidate.json first, triple-write timeline.jsonl mandatory 7 fields `nodeId,agentId,attempt,latency_ms,tokens_est,status,errorClass`.
+- Zero-deps, offline-friendly, PWA v67 void #080A0F 40px sticky OKABE-8.
 
 ## License
 
-MIT. Solo personal project, no connection to employer, built with public/free-tier only.
+MIT — solo personal project, no employer connection, public/free-tier only.

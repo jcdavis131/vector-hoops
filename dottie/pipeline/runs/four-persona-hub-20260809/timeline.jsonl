@@ -1,3 +1,0 @@
-{"nodeId":"persona-hub-index","agentId":"scout-prime","attempt":1,"latency_ms":1840,"tokens_est":4200,"status":"pass","errorClass":"none"}
-{"nodeId":"persona-hub-verify","agentId":"forensic-auditor","attempt":1,"latency_ms":310,"tokens_est":600,"status":"pass","errorClass":"none"}
-{"nodeId":"persona-hub-push","agentId":"operator","attempt":1,"latency_ms":2235,"tokens_est":300,"status":"pass","errorClass":"none"}

@@ -1,8 +1,0 @@
-{"nodeId":"owner-landing","agentId":"cfea7d80-de5e-476c-be96-51a8ddcafb36","attempt":1,"latency_ms":4200,"tokens_est":1800,"status":"pass","errorClass":"none"}
-{"nodeId":"player-landing","agentId":"f4b979e5-c5aa-40b7-bdba-d3de79e515a8","attempt":1,"latency_ms":3800,"tokens_est":1650,"status":"pass","errorClass":"none"}
-{"nodeId":"brand-landing","agentId":"aaec8859-44a5-4561-938e-a7e707e4c7c5","attempt":1,"latency_ms":2900,"tokens_est":1420,"status":"pass","errorClass":"none"}
-{"nodeId":"dfs-landing","agentId":"5df7ac7f-220b-4fae-8c48-b3149229032b","attempt":1,"latency_ms":5100,"tokens_est":2100,"status":"pass","errorClass":"none"}
-{"nodeId":"size-gate","agentId":"35f603f0-b310-4baf-8c5b-acda23647e8e","attempt":1,"latency_ms":120,"tokens_est":80,"status":"pass","errorClass":"none"}
-{"nodeId":"zero-deps-gate","agentId":"35f603f0-b310-4baf-8c5b-acda23647e8e","attempt":1,"latency_ms":40,"tokens_est":30,"status":"pass","errorClass":"none"}
-{"nodeId":"candidate-gate","agentId":"35f603f0-b310-4baf-8c5b-acda23647e8e","attempt":1,"latency_ms":250,"tokens_est":120,"status":"pass","errorClass":"none"}
-{"nodeId":"vercel-root-expose","agentId":"35f603f0-b310-4baf-8c5b-acda23647e8e","attempt":1,"latency_ms":800,"tokens_est":200,"status":"pass","errorClass":"none"}

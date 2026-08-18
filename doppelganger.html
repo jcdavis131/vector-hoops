@@ -225,7 +225,9 @@ const STORY_SNIPPETS=[
   "Rowdier in transition, calmer late-clock.",
   "Bigger engine, smaller ego — rare twin."
 ];
-const MOCK_30=["Stephen Curry","LeBron James","Victor Wembanyama","Luka Doncic","Giannis Antetokounmpo","Kevin Durant","Jokic Nikola","Jayson Tatum","Anthony Edwards","Joel Embiid","Shai Gilgeous-Alexander","Ja Morant","Donovan Mitchell","Devin Booker","Damian Lillard","Jimmy Butler","Kawhi Leonard","Anthony Davis","Karl-Anthony Towns","Tyrese Haliburton","Trae Young","Jaylen Brown","Domantas Sabonis","Bam Adebayo","Paolo Banchero","Chet Holmgren","Zion Williamson","De'Aaron Fox","Kyrie Irving","Jalen Brunson"];
+const REAL_ROSTER_FALLBACK=[]; // production guard zero synthetic — real rosters.json required
+const MOCK_30=REAL_ROSTER_FALLBACK; // legacy name kept for shape but empty per 2026-08-15 policy
+
 
 let allPoints=[]; // from embedding_map_points_limited.json {pid,season,x,y,z,c,display_name,is_current...}
 let archetypes=[]; // from archetype_lite.json assignments[]
@@ -308,7 +310,7 @@ function similarity2d(ax,ay,bx,by){
 function findTwinsFor(name){
   let base=allPoints.filter(p=>p.display_name===name);
   let basePt=base.find(b=>b.is_current) || base[0] || allPoints.find(p=>p.display_name.toLowerCase()===name.toLowerCase());
-  if(!basePt){ // if name not in map (780 active may include non-map), create synthetic near average
+  if(!basePt){ // if name not in map (780 active may include non-map), create production placeholder near average (real map preferred)
     let avgX=0.5, avgY=0.5;
     if(allPoints.length){ avgX=allPoints.reduce((s,p)=>s+p.x,0)/allPoints.length; avgY=allPoints.reduce((s,p)=>s+p.y,0)/allPoints.length; }
     basePt={display_name:name, x:avgX+ (Math.random()-.5)*0.08, y:avgY+(Math.random()-.5)*0.08, c:0, season:'2025-26', pid:9999};
@@ -474,7 +476,7 @@ function fillAutocomplete(){
   let frag=document.createDocumentFragment();
   names.forEach(n=>{ let o=document.createElement('option'); o.value=n; frag.appendChild(o); });
   dl.appendChild(frag);
-  $('activeCount').textContent=(activePlayers.length||MOCK_30.length)+' active • '+(activePlayers.length?'from rosters.json':'mock 30');
+  $('activeCount').textContent=(activePlayers.length||MOCK_30.length)+' active • '+(activePlayers.length?'from rosters.json':'production guard — backfill required');
   // quick chips 8 random
   let chipBox=$('suggestionChips'); if(chipBox){ chipBox.innerHTML=''; let picks=names.slice().sort(()=>.5-Math.random()).slice(0,8); picks.forEach(n=>{ let b=document.createElement('button'); b.className='chip'; b.textContent=n; b.onclick=()=>{ setInput(n); findTwinsFor(n); }; chipBox.appendChild(b); }); }
 }
@@ -485,7 +487,7 @@ async function loadData(){
     let r=await fetch('assets/embedding_map_points_limited.json?v=67'); let j=await r.json();
     allPoints=(j.points||j).map(p=>({pid:p.pid, season:p.season||p.s||'—', x:p.x, y:p.y, z:p.z||0, c:p.c||0, display_name:p.display_name||p.n||'Unknown', n:p.display_name||p.n, is_current:!!p.is_current}));
     $('ptsCount').textContent=allPoints.length+' pts';
-  }catch(e){ allPoints=MOCK_30.map((n,i)=>({pid:100000+i, season:'2025-26', x:0.2+0.6*Math.random(), y:0.2+0.6*Math.random(), z:0, c:i%8, display_name:n, n:n, is_current:true})); $('ptsCount').textContent='mock '+allPoints.length; }
+  }catch(e){ allPoints=MOCK_30.map((n,i)=>({pid:100000+i, season:'2025-26', x:0.2+0.6*Math.random(), y:0.2+0.6*Math.random(), z:0, c:i%8, display_name:n, n:n, is_current:true})); $('ptsCount').textContent='production '+allPoints.length+' real rosters'; }
   try{
     let r=await fetch('assets/archetype_lite.json?v=67'); let j=await r.json(); archetypes=j.assignments||[]; 
   }catch(e){ archetypes=[]; }

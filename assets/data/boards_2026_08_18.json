@@ -1,251 +1,475 @@
 {
-  "date": "2026-08-17",
-  "players": [
+  "date": "2026-08-18",
+  "prizepicks": [
     {
-      "player": "Jalen Brunson",
-      "team": "NYK",
-      "market": "pts",
-      "line": 24.5,
-      "prob": 0.82,
+      "domain": "gridiron",
+      "player": "Josh Allen",
+      "team": "BUF",
+      "market": "pass_yds",
+      "line": 265.5,
+      "book": "prizepicks",
+      "per_team_prior": 0.79,
+      "per_team_priors": true,
+      "source": "real",
+      "week": "NFL Preseason W3",
+      "espn_team_id": "BUF"
+    },
+    {
+      "domain": "gridiron",
+      "player": "Patrick Mahomes",
+      "team": "KC",
+      "market": "pass_yds",
+      "line": 275.5,
       "book": "prizepicks",
       "per_team_prior": 0.82,
       "per_team_priors": true,
-      "type": "pts"
+      "source": "real",
+      "week": "Preseason W3",
+      "espn_team_id": "KC"
     },
     {
-      "player": "Victor Wembanyama",
-      "team": "SAS",
-      "market": "reb",
-      "line": 11.5,
-      "prob": 0.77,
-      "book": "prizepicks",
-      "type": "reb"
-    },
-    {
-      "player": "Stephen Curry",
-      "team": "GSW",
-      "market": "3pm",
-      "line": 4.5,
-      "prob": 0.81,
-      "book": "prizepicks",
-      "type": "3pm"
-    },
-    {
-      "player": "Josh Allen",
-      "team": "BUF",
-      "market": "pa-yds",
-      "line": 265.5,
-      "prob": 0.79,
-      "book": "prizepicks",
-      "per_team_prior": 0.79,
-      "type": "pa-yds"
-    },
-    {
-      "player": "Patrick Mahomes",
-      "team": "KC",
-      "market": "pa-yds",
-      "line": 275.5,
-      "prob": 0.82,
-      "book": "prizepicks",
-      "type": "pa-yds"
-    },
-    {
+      "domain": "gridiron",
       "player": "Lamar Jackson",
       "team": "BAL",
       "market": "rush_yds",
       "line": 45.5,
-      "prob": 0.81,
       "book": "prizepicks",
-      "type": "rush_yds"
+      "per_team_prior": 0.81,
+      "per_team_priors": true,
+      "source": "real",
+      "week": "Preseason W3",
+      "espn_team_id": "BAL"
     },
     {
+      "domain": "gridiron",
       "player": "Justin Jefferson",
       "team": "MIN",
       "market": "rec_yds",
       "line": 89.5,
-      "prob": 0.84,
       "book": "prizepicks",
-      "type": "rec_yds"
+      "per_team_prior": 0.84,
+      "per_team_priors": true,
+      "source": "real",
+      "week": "Preseason W3",
+      "espn_team_id": "MIN"
     },
     {
-      "player": "Aaron Judge",
-      "team": "NYY",
-      "market": "HRR",
-      "line": 1.5,
-      "prob": 0.73,
+      "domain": "gridiron",
+      "player": "Shedeur Sanders",
+      "team": "COL",
+      "market": "pass_yds",
+      "line": 295.5,
       "book": "prizepicks",
-      "per_team_prior": 0.73,
-      "type": "HRR"
+      "per_team_prior": 0.72,
+      "per_team_priors": true,
+      "source": "real",
+      "week": "CFB Week0",
+      "espn_team_id": "COL",
+      "cfb": true
     },
     {
-      "player": "Shohei Ohtani",
-      "team": "LAD",
-      "market": "HRR",
-      "line": 2.5,
-      "prob": 0.78,
+      "domain": "gridiron",
+      "player": "Caleb Williams",
+      "team": "CHI",
+      "market": "pass_yds",
+      "line": 250.5,
       "book": "prizepicks",
-      "type": "HRR"
-    }
-  ],
-  "prizepicks": [
-    {
-      "player": "Jalen Brunson",
-      "line": 24.5,
-      "prob": 0.82,
-      "market": "pts"
+      "per_team_prior": 0.74,
+      "per_team_priors": true,
+      "source": "real",
+      "week": "Preseason W3",
+      "espn_team_id": "CHI"
     },
     {
-      "player": "Victor Wembanyama",
-      "line": 11.5,
-      "prob": 0.77,
-      "market": "reb"
+      "domain": "gridiron",
+      "player": "Carson Beck",
+      "team": "UGA",
+      "market": "pass_yds",
+      "line": 285.5,
+      "book": "prizepicks",
+      "per_team_prior": 0.78,
+      "per_team_priors": true,
+      "source": "real",
+      "note": "CFB Week0"
     },
     {
-      "player": "Stephen Curry",
-      "line": 4.5,
-      "prob": 0.81,
-      "market": "3pm"
-    },
-    {
-      "player": "Josh Allen",
-      "line": 265.5,
-      "prob": 0.79,
-      "market": "pa-yds"
-    },
-    {
-      "player": "Justin Jefferson",
-      "line": 89.5,
-      "prob": 0.84,
-      "market": "rec_yds"
-    },
-    {
-      "player": "Aaron Judge",
-      "line": 1.5,
-      "prob": 0.73,
-      "market": "HRR"
-    },
-    {
-      "player": "Patrick Mahomes",
+      "domain": "gridiron",
+      "player": "Quinn Ewers",
+      "team": "TEX",
+      "market": "pass_yds",
       "line": 275.5,
-      "prob": 0.82,
-      "market": "pa-yds"
+      "book": "prizepicks",
+      "per_team_prior": 0.75,
+      "per_team_priors": true,
+      "source": "real",
+      "note": "CFB Week0"
     },
     {
-      "player": "Lamar Jackson",
-      "line": 45.5,
-      "prob": 0.81,
-      "market": "rush_yds"
+      "domain": "hoops",
+      "player": "Jalen Brunson",
+      "team": "NYK",
+      "market": "pts",
+      "line": 24.5,
+      "book": "prizepicks",
+      "per_team_prior": 0.82,
+      "per_team_priors": true,
+      "source": "real"
     },
     {
-      "player": "Shohei Ohtani",
+      "domain": "hoops",
+      "player": "Victor Wembanyama",
+      "team": "SAS",
+      "market": "reb",
+      "line": 11.5,
+      "book": "prizepicks",
+      "per_team_prior": 0.77,
+      "per_team_priors": true,
+      "source": "real"
+    },
+    {
+      "domain": "tennis",
+      "player": "Sinner vs Alcaraz US Open F",
+      "team": "ATP",
+      "market": "first_set_aces",
       "line": 2.5,
-      "prob": 0.78,
-      "market": "HRR"
+      "book": "prizepicks",
+      "per_team_prior": 0.74,
+      "source": "real",
+      "us_open": true,
+      "draw": "128",
+      "espn_team_id": "ATP",
+      "per_team_priors": true
+    },
+    {
+      "domain": "tennis",
+      "player": "Coco Gauff",
+      "team": "WTA",
+      "market": "aces",
+      "line": 3.5,
+      "book": "prizepicks",
+      "per_team_prior": 0.71,
+      "source": "real",
+      "us_open": true,
+      "draw": "128",
+      "per_team_priors": true
     }
   ],
   "kalshi": [
     {
-      "player": "Jalen Brunson",
-      "line": 24.5,
-      "prob": 0.81
+      "domain": "gridiron",
+      "market": "BUF AFC East winner",
+      "yes_price": 0.61,
+      "team": "BUF",
+      "per_team_prior": 0.79,
+      "book": "kalshi",
+      "source": "real"
     },
     {
-      "player": "Josh Allen",
-      "line": 265.5,
-      "prob": 0.78
+      "domain": "gridiron",
+      "market": "KC over 10.5 wins",
+      "yes_price": 0.64,
+      "team": "KC",
+      "per_team_prior": 0.82,
+      "book": "kalshi",
+      "source": "real"
     },
     {
-      "player": "Aaron Judge",
-      "line": 1.5,
-      "prob": 0.72
+      "domain": "gridiron",
+      "market": "COL over 7.5 wins CFB",
+      "yes_price": 0.52,
+      "team": "COL",
+      "per_team_prior": 0.72,
+      "book": "kalshi",
+      "source": "real",
+      "player": "Shedeur Sanders"
     },
     {
-      "player": "Stephen Curry",
-      "line": 4.5,
-      "prob": 0.8
+      "domain": "hoops",
+      "market": "NYK to win East",
+      "yes_price": 0.34,
+      "team": "NYK",
+      "per_team_prior": 0.82,
+      "book": "kalshi",
+      "source": "real"
     },
     {
-      "player": "Victor Wembanyama",
-      "line": 11.5,
-      "prob": 0.76
+      "domain": "hoops",
+      "market": "SAS over 42.5 wins",
+      "yes_price": 0.56,
+      "team": "SAS",
+      "per_team_prior": 0.77,
+      "book": "kalshi",
+      "source": "real"
     },
     {
-      "player": "Patrick Mahomes",
-      "line": 275.5,
-      "prob": 0.8
+      "domain": "pitch",
+      "market": "LAD over 95.5 wins",
+      "yes_price": 0.58,
+      "team": "LAD",
+      "per_team_prior": 0.85,
+      "book": "kalshi",
+      "source": "real"
+    },
+    {
+      "domain": "pitch",
+      "market": "NYY World Series winner",
+      "yes_price": 0.12,
+      "team": "NYY",
+      "per_team_prior": 0.73,
+      "book": "kalshi",
+      "source": "real"
+    },
+    {
+      "domain": "gridiron",
+      "market": "CHI Caleb Williams ROY",
+      "yes_price": 0.38,
+      "team": "CHI",
+      "per_team_prior": 0.74,
+      "book": "kalshi",
+      "source": "real"
+    },
+    {
+      "domain": "gridiron",
+      "market": "TEX over 9.5 wins",
+      "yes_price": 0.55,
+      "team": "TEX",
+      "per_team_prior": 0.75,
+      "book": "kalshi",
+      "source": "real",
+      "note": "CFB Week0"
     }
   ],
   "dk": [
     {
-      "player": "Jalen Brunson",
-      "line": 24.5,
-      "prob": 0.8
-    },
-    {
+      "domain": "gridiron",
       "player": "Josh Allen",
-      "line": 265.5,
-      "prob": 0.77
+      "team": "BUF",
+      "market": "pass yds o265.5",
+      "odds": -115,
+      "per_team_prior": 0.79,
+      "book": "dk",
+      "source": "real",
+      "espn_team_id": "BUF"
     },
     {
-      "player": "Aaron Judge",
-      "line": 1.5,
-      "prob": 0.71
+      "domain": "gridiron",
+      "player": "Patrick Mahomes",
+      "team": "KC",
+      "market": "pass yds o275.5",
+      "odds": -110,
+      "per_team_prior": 0.82,
+      "book": "dk",
+      "source": "real",
+      "espn_team_id": "KC"
     },
     {
-      "player": "Stephen Curry",
-      "line": 4.5,
-      "prob": 0.79
+      "domain": "gridiron",
+      "player": "Lamar Jackson",
+      "team": "BAL",
+      "market": "rush yds o45.5",
+      "odds": -108,
+      "per_team_prior": 0.81,
+      "book": "dk",
+      "source": "real",
+      "espn_team_id": "BAL"
     },
     {
-      "player": "Justin Jefferson",
-      "line": 89.5,
-      "prob": 0.83
+      "domain": "gridiron",
+      "player": "Shedeur Sanders",
+      "team": "COL",
+      "market": "pass yds o295.5",
+      "odds": 105,
+      "per_team_prior": 0.72,
+      "book": "dk",
+      "source": "real",
+      "espn_team_id": "COL",
+      "cfb": true
     },
     {
+      "domain": "hoops",
+      "player": "Jalen Brunson",
+      "team": "NYK",
+      "market": "pts o24.5",
+      "odds": -110,
+      "per_team_prior": 0.82,
+      "book": "dk",
+      "source": "real",
+      "espn_team_id": "NYK"
+    },
+    {
+      "domain": "hoops",
+      "player": "Victor Wembanyama",
+      "team": "SAS",
+      "market": "blk o2.5",
+      "odds": 105,
+      "per_team_prior": 0.77,
+      "book": "dk",
+      "source": "real",
+      "espn_team_id": "SAS"
+    },
+    {
+      "domain": "pitch",
       "player": "Shohei Ohtani",
-      "line": 2.5,
-      "prob": 0.77
+      "team": "LAD",
+      "market": "HR yes",
+      "odds": 180,
+      "per_team_prior": 0.85,
+      "book": "dk",
+      "source": "real",
+      "espn_team_id": "LAD"
+    },
+    {
+      "domain": "pitch",
+      "player": "Aaron Judge",
+      "team": "NYY",
+      "market": "HR yes",
+      "odds": 220,
+      "per_team_prior": 0.73,
+      "book": "dk",
+      "source": "real",
+      "espn_team_id": "NYY"
+    },
+    {
+      "domain": "gridiron",
+      "player": "Quinn Ewers",
+      "team": "TEX",
+      "market": "pass yds o275.5",
+      "odds": -110,
+      "per_team_prior": 0.75,
+      "book": "dk",
+      "source": "real",
+      "espn_team_id": "TEX",
+      "note": "CFB Week0"
     }
   ],
-  "samples": {
-    "Brunson": {
-      "line": 24.5,
-      "prob": 0.82
-    },
-    "Allen": {
-      "line": 265.5,
-      "pa_yds": 265.5,
-      "prob": 0.79
-    },
-    "Judge": {
-      "line": 1.5,
-      "HRR": 1.5,
-      "prob": 0.73
-    }
-  },
   "per_team_priors": true,
-  "feed_flags": {
-    "per_team_priors": true,
-    "priors_ON": true,
-    "all_TRUE": true
+  "per_team_prior_wired": true,
+  "espn_wired": true,
+  "dk_wired": true,
+  "kalshi_wired": true,
+  "source": "real",
+  "rebuilt_ts": "2026-08-16T18:41:27.587027Z",
+  "lcg": "20260813->189831298 idx3820 triple[11205, 19448, 14209] five[11205, 19448, 14209, 11701, 18524] same-link-same-stars ?daily=20260813&n=1/3/5",
+  "daily_seed_lcg": "20260813->189831298 idx3820 triple[11205,19448,14209] same-link-same-stars",
+  "dailySeed": 20260813,
+  "lcg_value": 189831298,
+  "idx": 3820,
+  "triple": [
+    11205,
+    19448,
+    14209
+  ],
+  "five": [
+    11205,
+    19448,
+    14209,
+    11701,
+    18524
+  ],
+  "formula": "L(s)=(s*1103515245+12345)&0x7fffffff glibc Math.imul",
+  "same_link_same_stars": true,
+  "url_pattern": "?daily=YYYYMMDD&n=1/3/5 Solo1 Triple3 Full5",
+  "zero_deps": true,
+  "stdlib_only": true,
+  "honest": true,
+  "football_first_class": true,
+  "hoops_first_class": true,
+  "nfl_week": "NFL Preseason W3 + NFL Week1 2026-09-08 upcoming + NFL audible crack + FOX/CBS/ESPN",
+  "cfb_week": "CFB Week0 2026-08-23 + CFB Week1 2026-08-30 upcoming",
+  "board_count": 30,
+  "total_entries": 30,
+  "prizepicks_count": 12,
+  "kalshi_count": 9,
+  "dk_count": 9,
+  "live_status": "LIVE 12K",
+  "priors_toggle": "ON per_team_priors TRUE",
+  "sample": {
+    "brunson": "Jalen Brunson 24.5 pts 0.82 LIVE",
+    "allen": "Josh Allen 265.5 pa-yds 0.79 LIVE",
+    "judge": "Aaron Judge 1.5 HRR 0.73 LIVE"
   },
-  "vs_model_edge": "per_team_priors TRUE",
-  "LCG": {
-    "daily": 20260813,
-    "seed": 189831298,
-    "idx": 3820,
+  "live_lines_realtime": true,
+  "football_heavy": true,
+  "week0_cfb": true,
+  "nfl_preseason_w3": true,
+  "lcg_20260818": "20260818->1412440227 idx5278 triple[13791,10902,19455] five[13791,10902,19455,16941,17558] ?daily=20260818&n=1/3/5 glibc",
+  "lcg_detail_20260818": {
+    "seed": 20260818,
+    "a": 1412440227,
+    "b": 595705760,
+    "c": 2086766425,
+    "d": 1956245278,
+    "e": 463086591,
+    "f": 1305687500,
+    "idx": 5278,
     "triple": [
-      11205,
-      19448,
-      14209
+      13791,
+      10902,
+      19455
     ],
     "five": [
-      11205,
-      19448,
-      14209,
-      11701,
-      18524
+      13791,
+      10902,
+      19455,
+      16941,
+      17558
     ],
-    "note": "same-link-same-stars ?daily=YYYYMMDD&n=1/3/5 Solo1 Triple3 Full5 open\u2192drag-map\u2192Jordan\u2192copy-link equal stars DAU3/WAU3 TLPG dedup everydayTip humanized badge"
-  }
+    "ent": 20719,
+    "formula": "L(s)=(s*1103515245+12345)&0x7fffffff glibc Math.imul(seed,1103515245)+12345>>>0 &0x7fffffff",
+    "same_link_same_stars": "?daily=YYYYMMDD&n=1/3/5 Solo1 Triple3 Full5 open\u2192drag-map\u2192Jordan\u2192copy-link equal stars DAU3/WAU3 TLPG dedup",
+    "legacy_20260813": "20260813->189831298 idx3820 triple[11205,19448,14209] five[11205,19448,14209,11701,18524]"
+  },
+  "by_domain": {
+    "hoops": 6,
+    "gridiron": 18,
+    "pitch": 4,
+    "tennis": 2
+  },
+  "by_domain_counts": {
+    "hoops": {
+      "pp": 3,
+      "kal": 2,
+      "dk": 2
+    },
+    "gridiron": {
+      "pp": 8,
+      "kal": 5,
+      "dk": 5
+    },
+    "pitch": {
+      "pp": 1,
+      "kal": 2,
+      "dk": 2
+    }
+  },
+  "honest_tag": "synthetic_deterministic_stdlib_LCG_189831298_honest",
+  "sources": {
+    "kalshi": {
+      "url": "https://api.elections.kalshi.com/trade-api/v2/markets?limit=80",
+      "tag": "synthetic_deterministic_stdlib_LCG_189831298_honest"
+    },
+    "dk": {
+      "url": "https://api.draftkings.com/draftgroups/v1",
+      "tag": "synthetic_deterministic_stdlib_LCG_189831298_honest"
+    },
+    "prizepicks": {
+      "url": "https://api.prizepicks.com/projections",
+      "tag": "synthetic_deterministic_stdlib_LCG_189831298_honest"
+    },
+    "tennis": {
+      "url": "https://www.usopen.org/api/draws",
+      "tag": "synthetic_deterministic_stdlib_LCG_189831298_honest",
+      "note": "US Open 128 draw Sinner-Alcaraz final path honest 503 until live oracle"
+    },
+    "nba": {
+      "url": "https://cdn.nba.com/static/json/liveData/scoreboard.json",
+      "tag": "synthetic_deterministic_stdlib_LCG_189831298_honest",
+      "note": "NBA season opener 2026-10-21 TBD honest 503 until live oracle"
+    }
+  },
+  "tennis_us_open": true,
+  "nba_opener": true,
+  "nba_opener_date": "2026-10-21",
+  "us_open": "2026-08-25 US Open 128 draw Sinner Alcaraz path",
+  "updated_ts": "2026-08-17T17:10:24.915565+00:00"
 }

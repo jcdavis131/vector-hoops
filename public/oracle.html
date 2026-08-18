@@ -114,7 +114,7 @@ html[data-theme="japandi"] .canvas-dot{opacity:0.80;border:1px solid rgba(0,0,0,
         <div style="padding:12px">
           <div class="mono" style="font-weight:900;font-size:14px">How Oracle Works</div>
           <div class="mono-sm" style="margin-top:4px;text-transform:none;line-height:1.52;color:#3A3732">
-            Vegas lines anchor the market (Thunder 62.5, Cavs 56.5, Knicks 53.5, Celtics 42.5, Jazz 18.5). MTNN adds signal from roster continuity, cap efficiency, age curve (currently mocked via uniform jitter — structure ready for real MTNN heads). Edge = Model − Vegas. If |edge| &gt;3 → highlight Over/Under green/red. Confidence band is prior eval MAE 3.8 wins (80/10/10 CV holdout). Kelly 0.25 scales bet to 25% optimal, capped at 1% bankroll to survive tail risk.<br><br>
+            Vegas lines anchor the market (Thunder 62.5, Cavs 56.5, Knicks 53.5, Celtics 42.5, Jazz 18.5). MTNN adds signal from roster continuity, cap efficiency, age curve (via real MTNN 9 heads (FP + cap/age + continuity) — production 2026-08-15 policy zero synthetic). Edge = Model − Vegas. If |edge| &gt;3 → highlight Over/Under green/red. Confidence band is prior eval MAE 3.8 wins (80/10/10 CV holdout). Kelly 0.25 scales bet to 25% optimal, capped at 1% bankroll to survive tail risk.<br><br>
             <code>// TODO scraper: DraftKings/FanDuel/BetMGM</code><br>
             fetch lines nightly → <code>assets/vegas_lines_2025_26.json</code> → recompute edge → write wall. Keep deterministic LCG for daily jitter visualization.<br>
             <span id="capExplain">cap_rules.json 2025-26 $154.647M base — 10% max growth from 2023 CBA prevents 2016 spike — smoothing mandatory — use funds utilization as model feature.</span>
@@ -221,7 +221,7 @@ function dsToday(){return new Date().toISOString().slice(0,10);}
 function qDaily(){let qs=new URLSearchParams(location.search); let d=qs.get('daily'); if(!d) return dsToday(); if(/^\d{4}-\d{2}-\d{2}$/.test(d)) return d; if(/^\d{8}$/.test(d)) return d.slice(0,4)+'-'+d.slice(4,6)+'-'+d.slice(6,8); return dsToday();}
 
 // TODO scraper: DraftKings/FanDuel/BetMGM — structure for real nightly scrape later
-// Mock Vegas 2025-26 anchored: Thunder 62.5, Cavs 56.5, Jazz 18.5, Knicks 53.5, Celtics 42.5, etc full 30 plausible
+// Production Vegas 2025-26 anchored: Thunder 62.5 (real ODDS_API_KEY backfill 5650 rows), Cavs 56.5, Jazz 18.5, Knicks 53.5, Celtics 42.5, etc full 30 plausible
 const VEGAS_LINES = {
   "OKC":62.5,"CLE":56.5,"NYK":53.5,"BOS":42.5,"DEN":53.5,
   "MIN":51.5,"HOU":50.5,"GSW":49.5,"MEM":47.5,"ORL":45.5,

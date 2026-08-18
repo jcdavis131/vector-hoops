@@ -1,3 +1,0 @@
-{"nodeId":"valuation-build","agentId":"main","attempt":1,"latency_ms":1442,"tokens_est":8500,"status":"success","errorClass":"none"}
-{"nodeId":"valuation-ui","agentId":"main","attempt":1,"latency_ms":320,"tokens_est":4200,"status":"success","errorClass":"none"}
-{"nodeId":"valuation-verify","agentId":"main","attempt":1,"latency_ms":75,"tokens_est":800,"status":"success","errorClass":"none"}

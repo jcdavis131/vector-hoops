@@ -1,0 +1,5 @@
+{"nodeId":"hoops-map-first-class-index-wire","agentId":"scout-prime","attempt":1,"latency_ms":1240,"tokens_est":18400,"status":"ok","errorClass":"none"}
+{"nodeId":"hoops-map-first-class-sw-core21","agentId":"builder","attempt":1,"latency_ms":880,"tokens_est":8200,"status":"ok","errorClass":"none"}
+{"nodeId":"hoops-map-first-class-social-test","agentId":"synthesist","attempt":1,"latency_ms":1060,"tokens_est":11200,"status":"ok","errorClass":"none"}
+{"nodeId":"hoops-map-first-class-verifier-budget","agentId":"critic","attempt":1,"latency_ms":420,"tokens_est":3400,"status":"ok","errorClass":"none","score":9.4,"thr":8.0,"pass":true}
+{"nodeId":"hoops-map-first-class-merge-push","agentId":"executor","attempt":1,"latency_ms":560,"tokens_est":1200,"status":"ok","errorClass":"none"}

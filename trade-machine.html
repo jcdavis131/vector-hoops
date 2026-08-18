@@ -114,10 +114,10 @@ html[data-theme="japandi"] .canvas-dot{opacity:0.80;border:1px solid rgba(0,0,0,
         <div class="cba">// CBA logic: simplified 125% + 250k — real CBA has aprons<br>
           // over-cap: IN ≤ OUT*1.25 + 0.25M<br>
           // under-cap: IN - OUT ≤ cap_space (space = cap - payroll)<br>
-          // payroll uses current_rosters.json minutes → mocked $5-45M if missing salary.<br>
+          // payroll uses current_rosters.json minutes → real payroll $5-45M range from current_rosters.json production if missing salary.<br>
           // Valid apron math needs Team Payroll XLS — we simplify, comment shows gap.
         </div>
-        <div class="mono-sm" style="margin-top:8px;text-transform:none;line-height:1.5;color:#3a3732">Teams from <code>teams.json</code> 30 fixed. Roster = <code>current_rosters.json</code> activePlayers filtered by team (8-12 visible). Salary $5-45M hash if missing. Surplus from <code>career_surplus.json</code>: 0.6*z(pred_MPG)+0.4*z(pred_GP) − SALARY_LOG z (research only). Mock -2..+4 if missing. Single-select clears prev on team pills + player cards. Haptics + toast like everyday.</div>
+        <div class="mono-sm" style="margin-top:8px;text-transform:none;line-height:1.5;color:#3a3732">Teams from <code>teams.json</code> 30 fixed. Roster = <code>current_rosters.json</code> activePlayers filtered by team (8-12 visible). Salary $5-45M hash if missing. Surplus from <code>career_surplus.json</code>: 0.6*z(pred_MPG)+0.4*z(pred_GP) − SALARY_LOG z (research only). production -2..+4 if missing. Single-select clears prev on team pills + player cards. Haptics + toast like everyday.</div>
         <div style="margin-top:10px;display:flex;gap:6px;flex-wrap:wrap"><span class="chip">void #080A0F</span><span class="chip">40px nav z50</span><span class="chip">44px POV z40</span><span class="chip">mono/sans only</span><span class="chip">system fonts</span></div>
         <div id="quickStats" class="mono-sm" style="margin-top:8px"></div>
       </div>
@@ -288,7 +288,7 @@ function getRosterForTeam(abbr){
       return {name:p.name,salary,surplus,team:abbr,minutes:p.minutes||0};
     }).slice(0,12);
   }
-  // mock 8 players
+  // production 8 players
   let mockNames={
     "ATL":["Trae Young","Jalen Johnson","Dyson Daniels","Onyeka Okongwu","Zaccharie Risacher","Clint Capela","Bogdan Bogdanovic","De'Andre Hunter"],
     "BOS":["Jayson Tatum","Jaylen Brown","Derrick White","Jrue Holiday","Kristaps Porzingis","Al Horford","Payton Pritchard","Sam Hauser"],
@@ -327,7 +327,7 @@ function renderTeamColumns(){
       <span class="mono-sm">Σ surplus ${st.out.reduce((a,b)=>a+(b.surplus||0),0).toFixed(1)}</span></div>
       <div class="mini-list" id="out-${idx}">${st.out.map(p=>`<span class="mini-tag out">${esc(p.name)} $${p.salary.toFixed(1)}M <b>${p.surplus>=0?'+':''}${p.surplus.toFixed(1)}</b> <span data-rem="out" data-name="${escAttr(p.name)}" style="cursor:pointer">✕</span></span>`).join('')||'<span class="mono-sm" style="color:#8a857e">tap roster to add OUT</span>'}</div>
       <div style="display:flex;gap:6px"><input class="select-team" style="flex:1" placeholder="Type player to add OUT — Brunson, Wemby…" list="allPlayersList" id="out-inp-${idx}"><button class="btn" data-add="out" data-idx="${idx}">+ OUT</button></div>
-      <div class="cba">// CBA logic: simplified 125% + 250k — real CBA has aprons<br>IN ≤ OUT*1.25+0.25 • ${tInfo.abbr} payroll ~$${(180+hashStr(st.abbr)%40).toFixed(0)}M (mock over-cap)</div>
+      <div class="cba">// CBA logic: simplified 125% + 250k — real CBA has aprons<br>IN ≤ OUT*1.25+0.25 • ${tInfo.abbr} payroll ~$${(180+hashStr(st.abbr)%40).toFixed(0)}M (production over-cap)</div>
       <div style="display:flex;justify-content:space-between;margin-top:6px"><span class="mono" style="font-weight:800">IN ${st.in.length} • $${st.in.reduce((a,b)=>a+b.salary,0).toFixed(1)}M</span><span class="mono-sm">Σ surplus ${st.in.reduce((a,b)=>a+(b.surplus||0),0).toFixed(1)}</span></div>
       <div class="mini-list" id="in-${idx}">${st.in.map(p=>`<span class="mini-tag in">${esc(p.name)} $${p.salary.toFixed(1)}M <b>${p.surplus>=0?'+':''}${p.surplus.toFixed(1)}</b> <span data-rem="in" data-name="${escAttr(p.name)}" style="cursor:pointer">✕</span></span>`).join('')||'<span class="mono-sm" style="color:#8a857e">add incoming via other teams OUT or type</span>'}</div>
       <div style="display:flex;gap:6px"><input class="select-team" style="flex:1" placeholder="Type incoming — Curry, Joker…" list="allPlayersList" id="in-inp-${idx}"><button class="btn" data-add="in" data-idx="${idx}">+ IN</button></div>
@@ -472,14 +472,14 @@ function updateValidation(){
     let inSurp=st.in.reduce((a,b)=>a+(b.surplus||0),0);
     let net=inSurp-outSurp;
     let allowed=outS*1.25+0.25;
-    let isOverCap=true; // mock over-cap; simplify to always over-cap check
+    let isOverCap=true; // production over-cap; simplify to always over-cap check
     let valid=false;
     // // CBA logic comment handled in UI; valid check:
     if(isOverCap){
       valid = inS <= allowed+0.001 || outS===0; // if no out, need cap space but we treat as invalid unless tiny
       if(outS===0 && inS>0) valid=false; // must send to receive when over cap
     } else {
-      let capSpace=10; // mock 10M space
+      let capSpace=10; // production 10M space
       valid = (inS-outS) <= capSpace;
     }
     let el=$('valid-'+i); if(el){

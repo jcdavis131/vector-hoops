@@ -1,7 +1,0 @@
-{"nodeId":"embed-map-manifest","agentId":"2ee4f0fa-c139-4493-92af-9af1b2e5638b","attempt":1,"latency_ms":1240,"tokens_est":3200,"status":"pass","errorClass":"","ts":"2026-08-10T12:30:16Z"}
-{"nodeId":"embed-map-points-limited","agentId":"2ee4f0fa-c139-4493-92af-9af1b2e5638b","attempt":1,"latency_ms":820,"tokens_est":2100,"status":"pass","errorClass":"","ts":"2026-08-10T12:30:16Z"}
-{"nodeId":"embed-map-trajectories","agentId":"2ee4f0fa-c139-4493-92af-9af1b2e5638b","attempt":1,"latency_ms":760,"tokens_est":1800,"status":"pass","errorClass":"","ts":"2026-08-10T12:30:16Z"}
-{"nodeId":"index-rebuild-embedding","agentId":"2ee4f0fa-c139-4493-92af-9af1b2e5638b","attempt":1,"latency_ms":2100,"tokens_est":5400,"status":"pass","errorClass":"","ts":"2026-08-10T12:30:16Z"}
-{"nodeId":"players-rebuild","agentId":"2ee4f0fa-c139-4493-92af-9af1b2e5638b","attempt":1,"latency_ms":980,"tokens_est":2600,"status":"pass","errorClass":"","ts":"2026-08-10T12:30:16Z"}
-{"nodeId":"public-mirror","agentId":"2ee4f0fa-c139-4493-92af-9af1b2e5638b","attempt":1,"latency_ms":420,"tokens_est":900,"status":"pass","errorClass":"","ts":"2026-08-10T12:30:16Z"}
-{"nodeId":"vercel-verify","agentId":"2ee4f0fa-c139-4493-92af-9af1b2e5638b","attempt":1,"latency_ms":1100,"tokens_est":1300,"status":"pass","errorClass":"","ts":"2026-08-10T12:30:16Z"}
