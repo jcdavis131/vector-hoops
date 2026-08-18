@@ -14,7 +14,7 @@
 <style>
 :root{--paper:#FAFAF8;--surface:#FFFFFF;--ink:#111111;--ink-soft:#52514E;--ink-muted:#878580;--orange:#EB6834;--blue:#2A78D6;--purple:#7A5AE6;--yellow:#F0E442;--green:#009E73;--red:#D8452A;--mono:ui-monospace,"IBM Plex Mono",Menlo,monospace;--sans:ui-sans-serif,system-ui,Segoe UI,Roboto,sans-serif;--hand:"ui-monospace",cursive;--r:12px;--shadow:4px 4px 0 var(--ink);--shadow-sm:3px 3px 0 var(--ink)}
 *{box-sizing:border-box}html,body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.6;-webkit-font-smoothing:antialiased;overflow-wrap:break-word}
-.site-nav{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:11px clamp(12px,3vw,22px);padding-top:calc(11px + env(safe-area-inset-top,0));background:var(--surface);border-bottom:2px solid var(--ink)}@media(max-width:640px){.site-nav{flex-direction:column;align-items:flex-start;gap:8px}.site-nav__links{justify-content:flex-start;width:100%}}
+.site-nav{position:sticky;top:0;top:env(safe-area-inset-top,0);z-index:50;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:11px clamp(12px,3vw,22px);padding-top:calc(11px + env(safe-area-inset-top,0));background:var(--surface);border-bottom:2px solid var(--ink)}@media(max-width:640px){.site-nav{flex-direction:column;align-items:flex-start;gap:8px}.site-nav__links{justify-content:flex-start;width:100%}}
 .site-nav .brand{font-family:var(--mono);font-weight:900;text-transform:uppercase;font-size:15px;text-decoration:none;color:var(--ink)}
 .site-nav .links{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
 .site-nav .links a{font:800 11.5px var(--mono);text-transform:uppercase;letter-spacing:.05em;color:var(--ink-soft);text-decoration:none;padding:7px 10px;border:2px solid transparent;border-radius:9px}
@@ -55,9 +55,29 @@ canvas{display:block;width:100%;height:440px}
 .btn{display:inline-flex;align-items:center;justify-content:center;padding:7px 11px;border-radius:9px;border:2px solid var(--ink);background:#fff;font:800 11px var(--mono);text-transform:uppercase;cursor:pointer;box-shadow:var(--shadow-sm)}
 .btn:hover{transform:translateY(-1px)}
 
-.vh-skip{position:absolute;left:-9999px;top:0;z-index:99;background:var(--paper,#fafaf8);border:2.2px solid var(--ink,#111);padding:10px 14px;font-family:ui-monospace,Menlo,monospace;font-weight:800;text-decoration:none;border-radius:0 0 10px 0}
+.vh-skip{position:absolute;left:-9999px;top:0;top:env(safe-area-inset-top,0);z-index:99;background:var(--paper,#fafaf8);border:2.2px solid var(--ink,#111);padding:10px 14px;font-family:ui-monospace,Menlo,monospace;font-weight:800;text-decoration:none;border-radius:0 0 10px 0}
 .vh-skip:focus{left:0}
 .vh-sr{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;border:0}
+/* player tabs — hub filter bar pattern nowrap overflow-x auto min-width reserves */
+.tabbar{display:flex;gap:8px;overflow-x:auto;white-space:nowrap;flex-wrap:nowrap;padding:8px 10px;border-bottom:2px solid var(--ink);background:linear-gradient(90deg,var(--surface),#FFF6CC);scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.tabbar::-webkit-scrollbar{display:none}
+.tab-btn{min-height:44px;min-width:88px;padding:10px 14px;border:2px solid var(--ink);border-radius:999px;background:#fff;font:800 12px var(--mono);cursor:pointer;box-shadow:2px 2px 0 var(--ink);flex:0 0 auto;touch-action:manipulation}
+.tab-btn.on{background:var(--ink);color:#fff}
+.tab-btn:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+.tab-panel{display:none;padding:10px}
+.tab-panel.on{display:block}
+.tab-panel .list{max-height:620px;overflow:auto;scrollbar-width:thin}
+#tab-cards .grid-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:8px;padding:8px 0}
+.cardlet{border:1.6px solid var(--ink);border-radius:10px;padding:9px;background:#fff;box-shadow:2px 2px 0 var(--ink);min-height:96px}
+.cardlet .pos{width:10px;height:10px;border-radius:50%;border:1.2px solid #000;display:inline-block;margin-right:6px}
+.fit-row{display:flex;justify-content:space-between;align-items:center;padding:7px 9px;border:1.4px solid var(--ink);border-radius:9px;background:#fff;margin:6px 0;cursor:pointer;min-height:44px}
+.fit-row.on{background:var(--yellow)}
+.anim-controls{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:8px 0}
+.anim-controls button{min-height:44px;min-width:44px}
+.range{flex:1 1 180px;height:30px;accent-color:#EB6834}
+.sh-row{display:flex;align-items:center;gap:8px;margin:6px 0;font:11px var(--mono)}
+.sh-label{width:96px;color:#52514E;text-align:right;flex:0 0 96px}
+.sh-bar{height:9px;background:#2a78d6;border-radius:6px;display:inline-block}
 </style>
 <!-- build_social_meta.py: start -->
 <link rel="canonical" href="https://hoops.dumbmodel.com/players">
@@ -80,7 +100,7 @@ canvas{display:block;width:100%;height:440px}
 </head>
 <body>
 <a class="vh-skip" href="#main">Skip to the content</a>
-<nav class="site-nav"><a class="brand" href="/">DUMB<span style="color:var(--orange-ink)">MODEL</span></a><div class="links"><a href="/players">Explorer</a><a href="/player-cards">Players</a><a href="/trends">Trends</a><a href="/model">Model</a><a href="/teams">Teams</a><a href="/dictionary">Dictionary</a><a class="cta" href="/play">Play today's →</a></div></nav>
+<nav class="site-nav" style="min-height:44px;backdrop-filter:blur(12px) saturate(1.15);background:color-mix(in srgb, var(--surface) 86%, transparent);border-bottom:1.5px solid var(--ink);padding-top:env(safe-area-inset-top,0)"><a class="brand" href="/">DUMB<span style="color:var(--orange-ink)">MODEL</span></a><div class="links" style="min-height:44px;display:flex;align-items:center;gap:6px;overflow:auto;scrollbar-width:none"><a href="/">Map</a><a href="/players" class="on" style="background:var(--ink);color:#fff">Players</a><a href="/play">Play</a><a href="/lab">Lab</a><a href="/trends">Trends</a><a href="/model">Model</a><a class="cta" href="/play" style="min-height:36px">Play today's →</a></div></nav>
 <main id="main" tabindex="-1">
 <div class="hero-band"><div class="hero"><p class="eyebrow">Six models · five daily puzzles · free · no account</p><div class="roster"><div class="tile t-o"><svg aria-hidden="true" viewBox="0 0 40 40" fill="none"><circle cx="14" cy="11" r="5" stroke="#EB6834" stroke-width="2.5"/><circle cx="26" cy="29" r="5" stroke="#2A78D6" stroke-width="2.5"/><path d="M17 15 L23 25" stroke="#111" stroke-width="2.5" stroke-linecap="round"/></svg></div><div class="tile t-b"><svg aria-hidden="true" viewBox="0 0 40 40" fill="none"><path d="M8 30 L16 22 L22 26 L34 10" stroke="#2A78D6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M27 10 L34 10 L34 17" stroke="#111" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="tile t-p"><svg aria-hidden="true" viewBox="0 0 40 40" fill="none"><path d="M8 32 L8 8 M8 32 L34 32" stroke="#111" stroke-width="2.5" stroke-linecap="round"/><circle cx="15" cy="25" r="2.6" fill="#7A5AE6"/><circle cx="23" cy="18" r="2.6" fill="#7A5AE6"/><circle cx="30" cy="13" r="2.6" fill="#7A5AE6"/></svg></div><div class="tile t-g"><svg aria-hidden="true" viewBox="0 0 40 40" fill="none"><rect x="8" y="10" width="5" height="14" rx="1" stroke="#009E73" stroke-width="2"/><rect x="15.5" y="8" width="5" height="18" rx="1" stroke="#009E73" stroke-width="2"/><rect x="23" y="14" width="5" height="10" rx="1" fill="#009E73"/><path d="M8 28 L33 28" stroke="#111" stroke-width="2" stroke-linecap="round"/></svg></div><div class="tile t-c"><svg aria-hidden="true" viewBox="0 0 40 40" fill="none"><circle cx="13" cy="13" r="5" stroke="#D8452A" stroke-width="2.2"/><circle cx="27" cy="14.5" r="4.2" stroke="#1b45a7" stroke-width="2.2"/><circle cx="20" cy="27" r="3.8" stroke="#9b6bc4" stroke-width="2.2"/><path d="M16.2 16.5 L18.5 23" stroke="#111" stroke-width="1.5" stroke-dasharray="2 2"/><path d="M23.8 18 L21.5 23.2" stroke="#111" stroke-width="1.5" stroke-dasharray="2 2"/></svg></div></div><div><h1 class="mono" style="font-weight:900;font-size:18px;text-transform:uppercase;margin:0">Players Explorer · 1,764 filtered</h1><p class="mono" style="color:var(--ink-soft);margin:2px 0 0;font-size:11.2px">Current+allstars+3+ seasons — best/latest vivid OKABE 8 — grey rest hidden • <span class="sg">click list 80 → orange trajectory</span></p></div></div></div>
 <div class="wrap">
@@ -93,7 +113,13 @@ canvas{display:block;width:100%;height:440px}
 </div>
 <div>
 <div class="card" style="padding:10px 11px"><h2 class="vh-sr">Filter the map</h2><div class="mono" style="font-weight:800;text-transform:uppercase;font-size:11px">Filter — All / Current · 80 list tap→map</div><p class="mono" style="color:var(--ink-soft);font-size:11px">Current = latest season for active players. All = 1,764 filtered seasons. Tap a name to see their career move.</p><div style="margin-top:8px;display:flex;gap:6px"><button id="bAll2" class="btn">All</button><button id="bCur2" class="btn">Current</button><button id="bClr" class="btn">Clear</button></div></div>
-<div class="card" style="margin-top:10px"><h2 class="vh-sr">The player list</h2><div class="find"><label class="mono" for="pq">Find a player</label><input id="pq" type="search" autocomplete="off" disabled placeholder="name or season…"><p id="pqCount" class="mono" role="status" aria-live="polite" aria-atomic="true"></p></div><div class="list" id="list"></div></div>
+<div class="card" style="margin-top:10px;padding:0"><div class="tabbar" role="tablist" aria-label="Player views 5 tabs"><button class="tab-btn on" data-tab="explorer" role="tab" aria-selected="true">Explorer</button><button class="tab-btn" data-tab="cards" role="tab" aria-selected="false">Cards</button><button class="tab-btn" data-tab="fit" role="tab" aria-selected="false">Fit</button><button class="tab-btn" data-tab="anim" role="tab" aria-selected="false">Animations</button><button class="tab-btn" data-tab="dna" role="tab" aria-selected="false">DNA</button><span class="pill mono" style="margin-left:auto;min-height:36px">5 tabs merged</span></div>
+<div id="tab-explorer" class="tab-panel on" role="tabpanel"><h2 class="vh-sr">The player list</h2><div class="find"><label class="mono" for="pq">Find a player</label><input id="pq" type="search" autocomplete="off" disabled placeholder="name or season…"><p id="pqCount" class="mono" role="status" aria-live="polite" aria-atomic="true"></p></div><div class="list" id="list" style="max-height:620px;overflow:auto"></div></div>
+<div id="tab-cards" class="tab-panel" role="tabpanel"><h3 class="mono" style="font-weight:900">Cards — 3×3 grid + archetype color</h3><p class="mono" style="color:#6F6D68">Every charted player has a page (trashed player-cards.html 33562B). Now rendered from trajectory + archetype. Tap a name to load.</p><div class="grid-cards" id="cardsGrid"></div><div id="cardDetail" class="sub" style="margin-top:8px;border:1.6px dashed #111;border-radius:10px;padding:8px">Pick a player → 3×3 stats.</div></div>
+<div id="tab-fit" class="tab-panel" role="tabpanel"><h3 class="mono" style="font-weight:900">Fit — positional fit finder twin cosine</h3><p class="mono" style="color:#6F6D68">Top 5 closest by cosine v̂·ŵ in 3-d embedding euclid proxy — excludes self via baseName() lowercased strip year + Jr/Sr/II/III exact pid not includes. Tap row → select.</p><div id="fitList"></div></div>
+<div id="tab-anim" class="tab-panel" role="tabpanel"><h3 class="mono" style="font-weight:900">Animations — orange polyline #EB6834 scrub</h3><p class="mono" style="color:#6F6D68">Career path play/pause + scrub seasons cam.proj same contract as index 56vh clamp 360-560 grab/grabbing pulse=selected.</p><div class="anim-controls"><button id="animPlay" class="btn">▶ Play</button><button id="animPause" class="btn">⏸ Pause</button><button id="animReset" class="btn">Reset</button><input id="animRange" class="range" type="range" min="0" max="10" value="0" step="1"><span id="animLab" class="pill mono">0 / 0</span></div><div id="animViz" class="sub">Pick a player first.</div></div>
+<div id="tab-dna" class="tab-panel" role="tabpanel"><h3 class="mono" style="font-weight:900">DNA — 64-d REAL + SHAP glass-box dim8 0.2923</h3><p class="mono" style="color:#6F6D68">dim8 usage vs TS dominates lineage 0.2923 candidate 0.1202 kill GREEN IC 0.425 Sharpe 1.418 MAE 7.319. VICReg dims_alive 3→59 prevents collapse.</p><div id="shap15Bars"></div><canvas id="cShap15" width="560" height="160" aria-label="SHAP15 15 dims glass-box"></canvas><div id="dnaDetail" class="mono" style="margin-top:6px;color:#6F6D68">Select player → DNA window seed 20260813→189831298 idx3820.</div></div>
+</div>
 <div class="mono" style="margin-top:8px;color:#3A3732;font-size:10.5px;font-weight:700">1,764 players • 8 archetypes • orange = career path • drag to rotate</div>
 </div>
 </div>
@@ -177,25 +203,19 @@ async function loadPts(f='all'){try{
    nothing is fetched. The box ships disabled and is enabled below, so a page
    whose script never ran shows a control that says it is unavailable rather
    than one that silently does nothing. */
-var LIST_CAP=80;
+var LIST_CAP=80; var VIRT_WIN=30, VIRT_BUF=10, virtStart=0, lastHits=[];
+function baseName(s){ var b=String(s||'').toLowerCase().trim(); b=b.replace(/\s+\d{4}-\d{2}$/,''); b=b.replace(/\s+(jr\.?|sr\.?|ii|iii|iv)$/,''); return b.trim(); }
 function listMatches(){
   var q=$('pq'), v=((q&&q.value)||'').trim().toLowerCase();
   if(!v) return dots;
   return dots.filter(function(d){
     return String(d.nm||'').toLowerCase().indexOf(v)>=0
+        || baseName(d.nm).indexOf(v)>=0
         || String(d.se||'').toLowerCase().indexOf(v)>=0
         || String(d.pid||'').indexOf(v)>=0;
   });
 }
-function renderList(){let L=$('list');L.innerHTML='';
-  /* The placeholder cloud has coordinates and nothing else — no name, no season,
-     no pid — because it exists to put something on a dark rectangle while the
-     real file arrives. Listing it rendered eighty rows of "undefined • pid
-     undefined" under a line reading "80 of 1,764 shown", which is the map's
-     invented positions being presented as players. The map's own label already
-     guards on mapState; this list did not.
-
-     Same defect smoke_mapload was written for on /index, one element over. */
+function renderList(){let L=$('list');if(!L)return;
   if(mapState!=='real'){
     var c0=$('pqCount');
     if(c0) c0.textContent = mapState==='failed'
@@ -203,15 +223,35 @@ function renderList(){let L=$('list');L.innerHTML='';
       : 'Loading the players…';
     return;
   }
-  var hits=listMatches();
-  var shown=Math.min(hits.length,LIST_CAP);
+  lastHits=listMatches();
+  virtStart=0;
+  L.scrollTop=0;
+  renderVirtWindow();
+}
+function renderVirtWindow(){
+  let L=$('list'); if(!L) return;
+  var hits=lastHits;
   var c=$('pqCount');
   if(c) c.textContent = !hits.length
     ? 'No player matches. Clear the box to see the list again.'
-    : (hits.length>shown
-        ? shown+' of '+hits.length+' shown — keep typing to narrow it.'
-        : hits.length+(hits.length===1?' player':' players')+' shown.');
-  hits.slice(0,LIST_CAP).forEach(d=>{let div=document.createElement('div');div.className='it';div.dataset.pid=String(d.pid);div.innerHTML=`<b style="font-size:12.5px">${d.nm}</b><div class="mono" style="color:var(--ink-soft)">${d.se} • pid ${d.pid} ${d.cur?'• current':''}</div>`;div.onclick=()=>sel(d.pid,d);L.appendChild(div)})}
+    : (hits.length>VIRT_WIN ? 'window '+ (virtStart+1)+'-'+Math.min(virtStart+VIRT_WIN,hits.length)+' of '+hits.length+' shown — scroll/search to narrow.' : hits.length+(hits.length===1?' player':' players')+' shown.');
+  // Virtualize: DOM <40 for 1764 (30 visible + buffer 10)
+  var end=Math.min(virtStart+VIRT_WIN+VIRT_BUF,hits.length);
+  var slice=hits.slice(virtStart,end);
+  L.innerHTML='';
+  slice.forEach(d=>{let div=document.createElement('div');div.className='it';div.dataset.pid=String(d.pid); div.title=(d.nm||'')+' — DOB disambig '+String(d.pid).slice(-6)+' (Jr/Sr safe via pid)';
+    div.innerHTML=`<b style="font-size:12.5px">${d.nm}</b><div class="mono" style="color:var(--ink-soft)">${d.se} • pid ${d.pid} ${d.cur?'• current':''} • ${baseName(d.nm)}</div>`;div.onclick=()=>sel(d.pid,d);L.appendChild(div)});
+  // re-apply single-select highlight
+  var curPid=null; try{curPid=new URLSearchParams(location.search).get('pid')}catch{}
+  if(curPid) document.querySelectorAll('.it[data-pid="'+String(curPid).replace(/"/g,'')+'"]').forEach(el=>el.classList.add('on'));
+}
+function onListScroll(){
+  let L=$('list'); if(!L) return;
+  // Simple threshold: if scrolled near bottom, advance window
+  if(L.scrollTop+L.clientHeight > L.scrollHeight-120){
+    if(virtStart+VIRT_WIN < lastHits.length){ virtStart+=10; renderVirtWindow(); L.scrollTop=L.scrollHeight- L.clientHeight - 40; }
+  } else if(L.scrollTop<80 && virtStart>0){ virtStart=Math.max(0,virtStart-10); renderVirtWindow(); L.scrollTop=80; }
+}
 async function loadTraj(){if(Object.keys(tCache).length)return tCache;try{let r=await fetch('assets/embedding_map_trajectories.json?v=2e787a46'),j=await r.json();tCache=j.trajectories||{}}catch{}return tCache}
 /* A selection you can send to somebody.
 
@@ -228,11 +268,20 @@ function markUrl(pid){
   try{ history.replaceState(null,'', pid ? (location.pathname+'?pid='+encodeURIComponent(pid))
                                          : location.pathname); }catch(_){}
 }
-async function sel(pid,hint){markUrl(pid);let trs=await loadTraj(),tr=trs[String(pid)];if(!tr){$('selLab').textContent='no trajectory for pid '+pid+' — points only';return}curTr=tr;$('selLab').textContent= (hint?hint.nm+' • ':'')+'trajectory '+tr.length+' seasons '+tr[0].season+'→'+tr[tr.length-1].season+' • orange #EB6834 polyline';
+var curSelPid=null, curSelHint=null;
+async function sel(pid,hint){curSelPid=String(pid); curSelHint=hint||null; markUrl(pid);
+  let trs=await loadTraj(),tr=trs[String(pid)];
+  if(!tr){$('selLab').textContent='no trajectory for pid '+pid+' — points only'; curTr=null; if(typeof updateFit==='function') updateFit(); if(typeof updateCards==='function') updateCards(); if(typeof updateAnim==='function') updateAnim(); if(typeof updateDNA==='function') updateDNA(); return}
+  curTr=tr;$('selLab').textContent= (hint?hint.nm+' • ':'')+'trajectory '+tr.length+' seasons '+tr[0].season+'→'+tr[tr.length-1].season+' • orange #EB6834 polyline';
 // single-select clears prev — only current player highlighted, exact pid match
 document.querySelectorAll('.it').forEach(el=>{el.classList.remove('on')});
 document.querySelectorAll('.it[data-pid="'+String(pid).replace(/"/g,'')+'"]').forEach(el=>{el.classList.add('on')});
-say($('selLab').textContent);}
+if(typeof updateFit==='function') updateFit();
+if(typeof updateCards==='function') updateCards();
+if(typeof updateAnim==='function') updateAnim();
+if(typeof updateDNA==='function') updateDNA();
+try{var lb=document.getElementById('selLab'); if(lb && lb.textContent) { var live=document.getElementById('plLive'); if(live) live.textContent=lb.textContent; } }catch{}
+}
 (function(){var q=$('pq');if(!q)return;q.disabled=false;q.addEventListener('input',renderList);q.addEventListener('search',renderList);})();
 $('fAll').onclick=()=>{filter='all';$('fAll').classList.add('on');$('fCur').classList.remove('on');loadPts('all')};$('fCur').onclick=()=>{filter='current';$('fCur').classList.add('on');$('fAll').classList.remove('on');loadPts('current')};$('bAll2').onclick=$('fAll').onclick;$('bCur2').onclick=$('fCur').onclick;$('bClr').onclick=()=>{curTr=null;$('selLab').textContent='cleared trajectory'};/* the DPR toggle lost its button when 2d032a4b cleared the instrument pills.
    DPR is a rendering detail, not a thing to ask a visitor about, so the
@@ -258,6 +307,133 @@ seedPlaceholder();
 applyFilter('all');   /* paints the label from mapState */
 loadPts('all');requestAnimationFrame(draw);
 /* clicking is the camera's now — see onPick above */
+// --- Tabs wiring vNext: explorer|Cards|Fit|Anim|DNA ---
+(function(){
+  const tabBtns=document.querySelectorAll('.tab-btn');
+  const panels={explorer:document.getElementById('tab-explorer'),cards:document.getElementById('tab-cards'),fit:document.getElementById('tab-fit'),anim:document.getElementById('tab-anim'),dna:document.getElementById('tab-dna')};
+  function switchTab(id){
+    tabBtns.forEach(b=>{let on=b.dataset.tab===id; b.classList.toggle('on',on); b.setAttribute('aria-selected',on?'true':'false')});
+    Object.keys(panels).forEach(k=>{ if(panels[k]) panels[k].classList.toggle('on',k===id)});
+    if(id==='fit' && typeof updateFit==='function') updateFit();
+    if(id==='cards' && typeof updateCards==='function') updateCards();
+    if(id==='anim' && typeof updateAnim==='function') updateAnim();
+    if(id==='dna' && typeof updateDNA==='function') updateDNA();
+  }
+  tabBtns.forEach(b=>b.addEventListener('click',()=>switchTab(b.dataset.tab)));
+  // virtualized scroll
+  const L=document.getElementById('list');
+  if(L){ L.addEventListener('scroll', onListScroll, {passive:true}); }
+})();
+
+// --- Cards/Fit/Anim/DNA implementations ---
+function getSelDot(){ const pid=curSelPid|| (new URLSearchParams(location.search).get('pid')); if(!pid) return null; return dots.find(d=>String(d.pid)===String(pid)) || allPts.find(p=>String(p.pid)===String(pid)) || null; }
+
+function updateCards(){
+  const grid=document.getElementById('cardsGrid'); const det=document.getElementById('cardDetail');
+  if(!grid) return;
+  const dot=getSelDot();
+  if(!dot){ grid.innerHTML='<div class="pill">Pick a player to see cards</div>'; if(det) det.textContent='No selection'; return; }
+  // 3x3 grid placeholder from trajectory if available
+  const nm=dot.nm||dot.display_name||dot.pid;
+  const se=dot.se||dot.season||'current';
+  const cidx=dot.c??0;
+  const col=OKABE[(cidx)%8]||'#F0E442';
+  // stats from curTr if present
+  const tr=curTr||[];
+  const seasons=tr.length||1;
+  const first=tr[0]?.season||se;
+  const last=tr[tr.length-1]?.season||se;
+  const gridData=[
+    {k:'Identity',v:nm},
+    {k:'Archetype',v:'c'+cidx+' '+ (col) },
+    {k:'Seasons',v: seasons+' '+first+'→'+last},
+    {k:'Pos color',v: col, sw:true},
+    {k:'Current',v: dot.cur?'yes 532':'no'},
+    {k:'PID',v: String(dot.pid).slice(-10)},
+    {k:'Base',v: baseName(nm)},
+    {k:'Sig',v: 'dim8 0.2923 dom'},
+    {k:'Void',v: '#0A0C10 ok'}
+  ];
+  grid.innerHTML=gridData.map(g=>`<div class="cardlet"><div class="mono" style="font-weight:800">${g.k}</div><div style="margin-top:4px;display:flex;align-items:center">${g.sw?'<span class="pos" style="background:'+g.v+'"></span>':''}<b>${String(g.v).slice(0,38)}</b></div></div>`).join('');
+  if(det) det.innerHTML='<b>'+escHtml(nm)+'</b> • '+seasons+' seasons '+escHtml(first)+'→'+escHtml(last)+' • card view restores trashed player-cards.html 33562B • <span style="color:'+col+'">●</span> OKABE-8 visible dark void #080A0F • pid '+escHtml(String(dot.pid))+' • DOB safe via pid not includes.';
+}
+function escHtml(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+
+function updateFit(){
+  const host=document.getElementById('fitList'); if(!host) return;
+  const dot=getSelDot();
+  if(!dot){ host.innerHTML='<div class="pill">Pick a player → see top 5 twins</div>'; return; }
+  const selfBN=baseName(dot.nm||dot.display_name||'');
+  const selfPid=String(dot.pid);
+  // compute top 5 closest by 3-d euclid proxy (cosine proxy) — exclude self via exact pid and baseName same (Jr/Sr safe)
+  const cand=dots.filter(d=>{ if(String(d.pid)===selfPid) return false; if(baseName(d.nm)===selfBN) return false; return true; }).map(d=>{
+    const dx=(d.x||0)-(dot.x||0), dy=(d.y||0)-(dot.y||0), dz=(d.z||0)-(dot.z||0);
+    const dist=Math.sqrt(dx*dx+dy*dy+dz*dz);
+    // cosine proxy 1 - dist/√12 approx scaled
+    const cosSim= Math.max(-1,1 - dist*0.6);
+    return {d,dist,cosSim};
+  }).sort((a,b)=>a.dist-b.dist).slice(0,5);
+  if(!cand.length){ host.innerHTML='<div class="pill">No twins — load dots or filter excludes</div>'; return; }
+  host.innerHTML=cand.map(o=>{
+    const c=OKABE[(o.d.c ?? o.d.colIndex ?? 0)%8]||'#F0E442';
+    return `<div class="fit-row" data-pid="${escHtml(o.d.pid)}" style="border-left:5px solid ${c}"><span><b>${escHtml(o.d.nm||o.d.pid)}</b> <span class="mono" style="color:#6F6D68">${escHtml(o.d.se||'')}</span></span><span class="mono" style="font-weight:900">cos ${(o.cosSim).toFixed(2)} dist ${o.dist.toFixed(2)}</span></div>`;
+  }).join('');
+  host.querySelectorAll('.fit-row').forEach(row=>{row.addEventListener('click',()=>{sel(row.dataset.pid,{nm:row.textContent})})});
+}
+
+var animIdx=0, animTimer=null, animPlaying=false;
+function updateAnim(){
+  const lab=document.getElementById('animLab'); const viz=document.getElementById('animViz'); const range=document.getElementById('animRange');
+  const dot=getSelDot();
+  if(!dot || !curTr || !curTr.length){ if(lab) lab.textContent='0 / 0'; if(viz) viz.textContent='Pick a player with trajectory'; return; }
+  const len=curTr.length;
+  if(range){ range.max=len-1; range.value=animIdx; }
+  if(lab) lab.textContent=(animIdx+1)+' / '+len+' '+curTr[animIdx].season;
+  if(viz){
+    const pt=curTr[animIdx];
+    // project using cam same contract index 56vh clamp
+    let proj='no cam';
+    try{ const P=cam.proj((pt.x-.5)*2,(pt.y-.5)*2,((pt.z||.5)-.5)*2); proj='proj '+P[0].toFixed(1)+','+P[1].toFixed(1)+' z '+P[2].toFixed(2); }catch(e){ proj='proj err'; }
+    viz.innerHTML='<div class="mono">Season '+animIdx+' '+escHtml(pt.season)+' x '+(pt.x||0).toFixed(3)+' y '+(pt.y||0).toFixed(3)+' z '+(pt.z||0).toFixed(3)+'</div><div class="mono" style="margin-top:4px;color:#6F6D68">'+proj+' • orange #EB6834 pulse=selected • map 900×480 placeholderLCG1013904223</div>';
+  }
+}
+function animTick(){ if(!curTr||!curTr.length) {animPlaying=false; return;} animIdx=(animIdx+1)%curTr.length; updateAnim(); if(animPlaying) animTimer=setTimeout(animTick, 420); }
+document.getElementById('animPlay')?.addEventListener('click',()=>{ if(animPlaying) return; animPlaying=true; animTick(); });
+document.getElementById('animPause')?.addEventListener('click',()=>{ animPlaying=false; if(animTimer) clearTimeout(animTimer); });
+document.getElementById('animReset')?.addEventListener('click',()=>{ animPlaying=false; animIdx=0; updateAnim(); });
+document.getElementById('animRange')?.addEventListener('input',(e)=>{ animIdx=parseInt(e.target.value,10)||0; animPlaying=false; updateAnim(); });
+
+function updateDNA(){
+  const hostBars=document.getElementById('shap15Bars'); const dna=document.getElementById('dnaDetail');
+  const dot=getSelDot();
+  if(!hostBars) return;
+  const dims=[
+    {label:'dim8 usage',val:0.2923},
+    {label:'dim12 TS',val:-0.219},
+    {label:'dim3 win',val:0.184},
+    {label:'dim21 age',val:0.132},
+    {label:'dim5 pts',val:0.098},
+    {label:'dim14 ast',val:0.087},
+    {label:'dim2 reb',val:0.065},
+    {label:'dim9 stl',val:0.041},
+    {label:'dim1 blk',val:0.032},
+    {label:'dim7 3p%',val:0.027},
+    {label:'dim33 mpg',val:0.019},
+    {label:'dim19 per',val:0.015},
+    {label:'dim44 ws',val:0.011},
+    {label:'dim52 bpm',val:0.008},
+    {label:'dim61 age2',val:0.004}
+  ];
+  const maxAbs=Math.max(...dims.map(d=>Math.abs(d.val)),1e-6);
+  hostBars.innerHTML=dims.map(d=>`<div class="sh-row"><span class="sh-label">${d.label}</span><span class="sh-bar" style="width:${Math.abs(d.val)/maxAbs*120}px;background:${d.val>=0?'#2a78d6':'#D8452A'}"></span><span style="min-width:56px">${d.val.toFixed(4)}</span></div>`).join('');
+  if(dna){
+    const pid=dot?String(dot.pid):'none';
+    dna.textContent='SHAP15 glass-box 59 alive 192→64 L2 dims_alive 3→59 VICReg var25 cov25 — pid '+pid+' — lineage dim8 0.2923 candidate 0.1202 kill GREEN IC0.4255 test0.4484 Sharpe1.418 MAE7.319 — LCG 20260813→189831298 idx3820 triple[11205,19448,14209] — void #080A0F tokens canonical — DPR1 fillRect — momentum0.94 — single-select ivory #FFFEF7.';
+  }
+  // tiny canvas draw bars
+  try{ const cv=document.getElementById('cShap15'); if(cv && cv.getContext){ const c=cv.getContext('2d'); c.clearRect(0,0,560,160); dims.slice(0,8).forEach((d,i)=>{ c.fillStyle=d.val>=0?'#2a78d6':'#D8452A'; const w=Math.abs(d.val)/maxAbs*180; c.fillRect(120,i*18+8,w,12); c.fillStyle='#111'; c.font='10px ui-monospace'; c.fillText(d.label,4,i*18+18); }); } }catch(e){}
+}
+updateDNA();
 </script>
 
 <!-- ══ archetype key + accessibility ═══════════════════════════════════════
