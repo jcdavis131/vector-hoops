@@ -9,7 +9,7 @@
 <style>
 :root{--nav-h:40px;--pov-h:44px;--void:#080A0F;--void-2:#0f141e;--panel:#111725;--grid:#1e2a44;--ink:#e8f0ff;--ink-soft:#9aa7c7;--yellow:#F0E442;--mono:ui-monospace,SFMono-Regular,monospace;--sans:ui-sans-serif,system-ui,Segoe UI,Roboto,sans-serif}
 *{box-sizing:border-box}html,body{margin:0;background:var(--void);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased}
-.site-nav{position:sticky;top:0;height:var(--nav-h);z-index:50;display:flex;align-items:center;justify-content:space-between;padding:0 16px;border-bottom:1px solid var(--grid);background:rgba(8,10,15,.92);backdrop-filter:blur(6px)}
+.site-nav{position:sticky;top:0;top:env(safe-area-inset-top,0);height:var(--nav-h);z-index:50;display:flex;align-items:center;justify-content:space-between;padding:0 16px;border-bottom:1px solid var(--grid);background:rgba(8,10,15,.92);backdrop-filter:blur(6px)}
 .site-nav__brand{font-family:var(--mono);font-weight:800;font-size:13px;letter-spacing:.02em;text-transform:uppercase;text-decoration:none;color:var(--ink)}
 .site-nav__links{display:flex;gap:8px;align-items:center}
 .site-nav__link{font-family:var(--mono);font-size:11px;font-weight:700;padding:5px 10px;border-radius:999px;border:1.5px solid transparent;text-decoration:none;color:#9aa7c7}

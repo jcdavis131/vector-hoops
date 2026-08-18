@@ -14,7 +14,7 @@
 <style>
 :root{--paper:#FAFAF8;--surface:#FFFFFF;--ink:#111111;--ink-soft:#52514E;--ink-muted:#878580;--orange:#EB6834;--blue:#2A78D6;--purple:#7A5AE6;--yellow:#F0E442;--green:#009E73;--red:#D8452A;--mono:ui-monospace,"IBM Plex Mono",Menlo,monospace;--sans:ui-sans-serif,system-ui,Segoe UI,Roboto,sans-serif;--hand:"ui-monospace",cursive;--r:12px;--shadow:4px 4px 0 var(--ink);--shadow-sm:3px 3px 0 var(--ink)}
 *{box-sizing:border-box}html,body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.6;-webkit-font-smoothing:antialiased;overflow-wrap:break-word}
-.site-nav{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:11px clamp(12px,3vw,22px);padding-top:calc(11px + env(safe-area-inset-top,0));background:var(--surface);border-bottom:2px solid var(--ink)}@media(max-width:640px){.site-nav{flex-direction:column;align-items:flex-start;gap:8px}.site-nav__links{justify-content:flex-start;width:100%}}
+.site-nav{position:sticky;top:0;top:env(safe-area-inset-top,0);z-index:50;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:11px clamp(12px,3vw,22px);padding-top:calc(11px + env(safe-area-inset-top,0));background:var(--surface);border-bottom:2px solid var(--ink)}@media(max-width:640px){.site-nav{flex-direction:column;align-items:flex-start;gap:8px}.site-nav__links{justify-content:flex-start;width:100%}}
 .site-nav .brand{font-family:var(--mono);font-weight:900;text-transform:uppercase;font-size:15px;text-decoration:none;color:var(--ink)}
 .site-nav .links{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
 .site-nav .links a{font:800 11.5px var(--mono);text-transform:uppercase;letter-spacing:.05em;color:var(--ink-soft);text-decoration:none;padding:7px 10px;border:2px solid transparent;border-radius:9px}
@@ -55,7 +55,7 @@ canvas{display:block;width:100%;height:440px}
 .btn{display:inline-flex;align-items:center;justify-content:center;padding:7px 11px;border-radius:9px;border:2px solid var(--ink);background:#fff;font:800 11px var(--mono);text-transform:uppercase;cursor:pointer;box-shadow:var(--shadow-sm)}
 .btn:hover{transform:translateY(-1px)}
 
-.vh-skip{position:absolute;left:-9999px;top:0;z-index:99;background:var(--paper,#fafaf8);border:2.2px solid var(--ink,#111);padding:10px 14px;font-family:ui-monospace,Menlo,monospace;font-weight:800;text-decoration:none;border-radius:0 0 10px 0}
+.vh-skip{position:absolute;left:-9999px;top:0;top:env(safe-area-inset-top,0);z-index:99;background:var(--paper,#fafaf8);border:2.2px solid var(--ink,#111);padding:10px 14px;font-family:ui-monospace,Menlo,monospace;font-weight:800;text-decoration:none;border-radius:0 0 10px 0}
 .vh-skip:focus{left:0}
 .vh-sr{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;border:0}
 </style>
@@ -80,7 +80,7 @@ canvas{display:block;width:100%;height:440px}
 </head>
 <body>
 <a class="vh-skip" href="#main">Skip to the content</a>
-<nav class="site-nav"><a class="brand" href="/">DUMB<span style="color:var(--orange-ink)">MODEL</span></a><div class="links"><a href="/players">Explorer</a><a href="/player-cards">Players</a><a href="/trends">Trends</a><a href="/model">Model</a><a href="/teams">Teams</a><a href="/dictionary">Dictionary</a><a class="cta" href="/play">Play today's →</a></div></nav>
+<nav class="site-nav" style="min-height:44px;backdrop-filter:blur(12px) saturate(1.15);background:color-mix(in srgb, var(--surface) 86%, transparent);border-bottom:1.5px solid var(--ink);padding-top:env(safe-area-inset-top,0)"><a class="brand" href="/">DUMB<span style="color:var(--orange-ink)">MODEL</span></a><div class="links" style="min-height:44px;display:flex;align-items:center;gap:6px;overflow:auto;scrollbar-width:none"><a href="/">Map</a><a href="/players" class="on" style="background:var(--ink);color:#fff">Players</a><a href="/play">Play</a><a href="/lab">Lab</a><a href="/trends">Trends</a><a href="/model">Model</a><a class="cta" href="/play" style="min-height:36px">Play today's →</a></div></nav>
 <main id="main" tabindex="-1">
 <div class="hero-band"><div class="hero"><p class="eyebrow">Six models · five daily puzzles · free · no account</p><div class="roster"><div class="tile t-o"><svg aria-hidden="true" viewBox="0 0 40 40" fill="none"><circle cx="14" cy="11" r="5" stroke="#EB6834" stroke-width="2.5"/><circle cx="26" cy="29" r="5" stroke="#2A78D6" stroke-width="2.5"/><path d="M17 15 L23 25" stroke="#111" stroke-width="2.5" stroke-linecap="round"/></svg></div><div class="tile t-b"><svg aria-hidden="true" viewBox="0 0 40 40" fill="none"><path d="M8 30 L16 22 L22 26 L34 10" stroke="#2A78D6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M27 10 L34 10 L34 17" stroke="#111" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="tile t-p"><svg aria-hidden="true" viewBox="0 0 40 40" fill="none"><path d="M8 32 L8 8 M8 32 L34 32" stroke="#111" stroke-width="2.5" stroke-linecap="round"/><circle cx="15" cy="25" r="2.6" fill="#7A5AE6"/><circle cx="23" cy="18" r="2.6" fill="#7A5AE6"/><circle cx="30" cy="13" r="2.6" fill="#7A5AE6"/></svg></div><div class="tile t-g"><svg aria-hidden="true" viewBox="0 0 40 40" fill="none"><rect x="8" y="10" width="5" height="14" rx="1" stroke="#009E73" stroke-width="2"/><rect x="15.5" y="8" width="5" height="18" rx="1" stroke="#009E73" stroke-width="2"/><rect x="23" y="14" width="5" height="10" rx="1" fill="#009E73"/><path d="M8 28 L33 28" stroke="#111" stroke-width="2" stroke-linecap="round"/></svg></div><div class="tile t-c"><svg aria-hidden="true" viewBox="0 0 40 40" fill="none"><circle cx="13" cy="13" r="5" stroke="#D8452A" stroke-width="2.2"/><circle cx="27" cy="14.5" r="4.2" stroke="#1b45a7" stroke-width="2.2"/><circle cx="20" cy="27" r="3.8" stroke="#9b6bc4" stroke-width="2.2"/><path d="M16.2 16.5 L18.5 23" stroke="#111" stroke-width="1.5" stroke-dasharray="2 2"/><path d="M23.8 18 L21.5 23.2" stroke="#111" stroke-width="1.5" stroke-dasharray="2 2"/></svg></div></div><div><h1 class="mono" style="font-weight:900;font-size:18px;text-transform:uppercase;margin:0">Players Explorer · 1,764 filtered</h1><p class="mono" style="color:var(--ink-soft);margin:2px 0 0;font-size:11.2px">Current+allstars+3+ seasons — best/latest vivid OKABE 8 — grey rest hidden • <span class="sg">click list 80 → orange trajectory</span></p></div></div></div>
 <div class="wrap">
@@ -178,11 +178,13 @@ async function loadPts(f='all'){try{
    whose script never ran shows a control that says it is unavailable rather
    than one that silently does nothing. */
 var LIST_CAP=80;
+function baseName(s){ var b=String(s||'').toLowerCase().trim(); b=b.replace(/\s+\d{4}-\d{2}$/,''); b=b.replace(/\s+(jr\.?|sr\.?|ii|iii|iv)$/,''); return b.trim(); }
 function listMatches(){
   var q=$('pq'), v=((q&&q.value)||'').trim().toLowerCase();
   if(!v) return dots;
   return dots.filter(function(d){
     return String(d.nm||'').toLowerCase().indexOf(v)>=0
+        || baseName(d.nm).indexOf(v)>=0
         || String(d.se||'').toLowerCase().indexOf(v)>=0
         || String(d.pid||'').indexOf(v)>=0;
   });
@@ -211,7 +213,8 @@ function renderList(){let L=$('list');L.innerHTML='';
     : (hits.length>shown
         ? shown+' of '+hits.length+' shown — keep typing to narrow it.'
         : hits.length+(hits.length===1?' player':' players')+' shown.');
-  hits.slice(0,LIST_CAP).forEach(d=>{let div=document.createElement('div');div.className='it';div.dataset.pid=String(d.pid);div.innerHTML=`<b style="font-size:12.5px">${d.nm}</b><div class="mono" style="color:var(--ink-soft)">${d.se} • pid ${d.pid} ${d.cur?'• current':''}</div>`;div.onclick=()=>sel(d.pid,d);L.appendChild(div)})}
+  hits.slice(0,LIST_CAP).forEach(d=>{let div=document.createElement('div');div.className='it';div.dataset.pid=String(d.pid); div.title=(d.nm||'')+' — DOB disambig '+String(d.pid).slice(-6)+' (Jr/Sr safe via pid)';
+    div.innerHTML=`<b style="font-size:12.5px">${d.nm}</b><div class="mono" style="color:var(--ink-soft)">${d.se} • pid ${d.pid} ${d.cur?'• current':''} • ${baseName(d.nm)}</div>`;div.onclick=()=>sel(d.pid,d);L.appendChild(div)})}
 async function loadTraj(){if(Object.keys(tCache).length)return tCache;try{let r=await fetch('assets/embedding_map_trajectories.json?v=2e787a46'),j=await r.json();tCache=j.trajectories||{}}catch{}return tCache}
 /* A selection you can send to somebody.
 
