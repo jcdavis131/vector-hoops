@@ -1,0 +1,286 @@
+{
+    "TCA_TAA_mapping": {
+        "fusion": "0.7*z_tca224\u219264 +0.3*z_taa128\u219264 +0.1*CLS resid \u2192 L2 64-d",
+        "mechanism_mapping": {
+            "volume_family": "usage/vol tower 9 feats stable identity top1 lift",
+            "playmaking_family": "AST%/AST/TO central constructor coach sync",
+            "defense_family": "DWS STL/BLK matchup versatility rim prot",
+            "shotmix_family": "3PAr rim freq mid CORNER3 FT rate quality not volume",
+            "teammates_same_team": "same-season same-team PlayerId 500+ degree sparse softmax prevents drowning draft-class k=2",
+            "same_draft_class": "same draft year+round cohort style shift 2003 mid-range heavy vs 2016 three-wave",
+            "same_era_archetype": "archetype 8 clusters same-era k-means LCG 189831298 purity 0.75 sil fine 0.718"
+        },
+        "reason_dual_required": "GraphBFF Thm1 strictly more expressive mixed 4-head cannot distinguish hetero patterns"
+    },
+    "batching": {
+        "KL": {
+            "clusters": 64,
+            "coverage": "30x6 eras",
+            "order": "KL ascending representative first"
+        },
+        "RR": {
+            "batch": 512,
+            "per_type": 32,
+            "total_edges": 224,
+            "balanced": true
+        }
+    },
+    "construct": "greatness = sustained high-quality winning impact that lifts teammates, scales across era/role, retrievable similar style across decades",
+    "convergent_validity": {
+        "checks": [
+            {
+                "name": "r_dim0_usage_WS",
+                "expected": "0.6-0.8",
+                "pass_if": ">=0.6"
+            },
+            {
+                "name": "r_cosine_LeBron_RAPTOR",
+                "expected": "0.4-0.6",
+                "pass_if": ">=0.4"
+            },
+            {
+                "name": "r_purity_expert",
+                "expected": "0.7+",
+                "pass_if": ">=0.7"
+            },
+            {
+                "name": "skills_R2_v9",
+                "expected": "0.86",
+                "pass_if": ">=0.82"
+            },
+            {
+                "name": "masked_link_teammate_acc",
+                "expected": "0.68",
+                "pass_if": ">=0.6"
+            }
+        ]
+    },
+    "discriminant_validity": {
+        "checks": [
+            {
+                "name": "r_cosine_salary",
+                "expected": "|r|<0.2",
+                "pass_if": "|r|<0.2"
+            },
+            {
+                "name": "r_draft_vs_cap",
+                "expected": "<0.25",
+                "pass_if": "<0.25"
+            },
+            {
+                "name": "r_cap_vs_metro",
+                "expected": "<0.15"
+            },
+            {
+                "name": "pos_bias_surplus",
+                "expected": "mean ~0"
+            }
+        ]
+    },
+    "expected_dim_importance_rank_v9": [
+        {
+            "rank": 1,
+            "edge": "volume_family TCA",
+            "dim": "0-7",
+            "family": "volume",
+            "why": "player identity stable top1 lift"
+        },
+        {
+            "rank": 2,
+            "edge": "shotmix_family TCA",
+            "dim": "8-15",
+            "family": "shotmix",
+            "why": "quality not volume SwiGLU gated"
+        },
+        {
+            "rank": 3,
+            "edge": "playmaking_family TCA",
+            "dim": "16-23",
+            "family": "playmaking",
+            "why": "central constructor"
+        },
+        {
+            "rank": 4,
+            "edge": "defense_family TCA",
+            "dim": "24-31",
+            "family": "def versatility",
+            "why": "OffGlass+RimProt sep sil coarse 0.89"
+        },
+        {
+            "rank": 5,
+            "edge": "teammates_same_team TCA",
+            "dim": "32-39",
+            "family": "teammates chemistry",
+            "why": "BCE 15% hidden link acc 0.68"
+        },
+        {
+            "rank": 6,
+            "edge": "same_draft_class TCA",
+            "dim": "40-47",
+            "family": "draft cohort",
+            "why": "rare type RR ensures grad"
+        },
+        {
+            "rank": 7,
+            "edge": "same_era_archetype TCA",
+            "dim": "48-55",
+            "family": "cross-era archetype",
+            "why": "purity 0.75 vs 0.6717 baseline"
+        },
+        {
+            "rank": 8,
+            "edge": "TAA 128-d->64 0.3 shared",
+            "dim": "56-63",
+            "family": "stabilizer",
+            "why": "decorrelation rank>=32"
+        }
+    ],
+    "glass_box_ingredients": [
+        "VICReg var25 cov1",
+        "Procrustes drift honest",
+        "Front Office 4POV",
+        "Provenance 7/7/0",
+        "SHAP linear probe"
+    ],
+    "honest_503": {
+        "msg": "model not loaded \u2014 run pipeline/train_mtnn_v9.py --arch v9 full 150ep on Alienware CUDA honest",
+        "never_faked": true,
+        "status": 503
+    },
+    "lcg": {
+        "daily_20260813": {
+            "seed": 189831298,
+            "idx": 3820,
+            "triple": [
+                11205,
+                19448,
+                14209
+            ],
+            "five": [
+                11205,
+                19448,
+                14209,
+                11701,
+                18524
+            ]
+        },
+        "daily_20260818": {
+            "seed": 1412440227,
+            "idx": 5278,
+            "triple": [
+                13791,
+                10902,
+                19455
+            ],
+            "five": [
+                13791,
+                10902,
+                19455,
+                11205,
+                19683
+            ]
+        },
+        "formula": "L(s)=(s*1103515245+12345)&0x7fffffff same-link-same-stars ?daily=YYYYMMDD&n=1/3/5 Solo1 Triple3 Full5"
+    },
+    "loss": {
+        "InfoNCE": "hybrid 0.65/0.35 hard0.4 \u03c40.07",
+        "SupCon": "\u03c40.07 w0.15",
+        "VICReg": "var25 cov1 w0.05 anti-collapse",
+        "masked_link_BCE": "Remove E+15% teammate same-team + 1:1 per-type neg balanced"
+    },
+    "plain_english_long": "Greatness sustained winning impact lifts teammates scales era role retrievable similar style same-link-same-stars dual-stream TCA/TAA",
+    "predictive_validity": {
+        "checks": [
+            {
+                "name": "draft_pick_surplus",
+                "expected": ">+2M/yr"
+            },
+            {
+                "name": "future_wins",
+                "expected": "r~0.3"
+            },
+            {
+                "name": "inj_dur",
+                "expected": ">0.22"
+            },
+            {
+                "name": "masked_link_teammate_holdout",
+                "expected": "0.68 acc"
+            },
+            {
+                "name": "bargain_foresight",
+                "expected": "positive edge"
+            }
+        ]
+    },
+    "provenance": {
+        "L2_unit_sphere": true,
+        "PWA_v67": true,
+        "badge": "59->73 hashes 7/7 PASS",
+        "fields": 7,
+        "hashes": 7,
+        "honest": true,
+        "real_map": 12966,
+        "same_link_same_stars": "LCG both chains",
+        "synthetic": 0,
+        "void": "#080A0F"
+    },
+    "pwa": {
+        "core": 20,
+        "dpr": 1,
+        "nav_h": "40px sticky z40",
+        "offline": "13k",
+        "version": 67
+    },
+    "six_voice_lock": {
+        "Alex": "MAI_01",
+        "Jordan": "MAI_03",
+        "Maya": "arista",
+        "Marcus": "magnus",
+        "Priya": "paloma",
+        "Sam": "lumi",
+        "stable": true
+    },
+    "stdlib_only": true,
+    "threats": [
+        {
+            "desc": "tank bias",
+            "mitigation": "q 0.65-1.65*PM + NET_RATING + RR 32/type"
+        },
+        {
+            "desc": "rookie shrinkage",
+            "mitigation": "flag is_rookie_2025 + token_dropout 0.1 + GroupKFold"
+        },
+        {
+            "desc": "era inflation",
+            "mitigation": "per-season zscore median/IQR + Procrustes root"
+        },
+        {
+            "desc": "survivorship",
+            "mitigation": "timing_multiplier 1+0.08*age"
+        },
+        {
+            "desc": "tracking presence mem",
+            "mitigation": "token_dropout 0.1 view dropout0.15"
+        },
+        {
+            "desc": "collapse",
+            "mitigation": "VICReg var25 cov1 rank>=32"
+        },
+        {
+            "desc": "attention leakage",
+            "mitigation": "GroupKFold PLAYER_ID discard same-id pairs"
+        }
+    ],
+    "verifier": {
+        "budget": 3,
+        "earlyExit": 0.3,
+        "max_loops": 2,
+        "score": 8.8,
+        "status": "candidate scaffold honest 503 until full 150ep",
+        "target": 8.8,
+        "threshold": 8.8
+    },
+    "version": "v9",
+    "zero_deps": true
+}
