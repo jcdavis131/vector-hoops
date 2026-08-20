@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Vector Hoops Lab — MTNN pipeline</title>
+<meta name="description" content="Tailored MTNN dashboard for Hoops: stats.nba.com 12,392 seasons → era-honest → Procrustes → RealMLP → MTNN 527K → ONNX 549KB → games">
+<link rel="stylesheet" href="assets/hoops.css">
+<link rel="stylesheet" href="assets/responsive.css">
+<link rel="stylesheet" href="assets/dashboard.css">
+</head>
+<body>
+<nav class="site-nav" data-active="/dashboard"></nav>
+<main class="dash-main">
+  <header class="dash-header">
+    <div class="dash-eyebrow">hoops.dumbmodel.com Lab • MTNN powers the games • Solo personal project, no connection to employer</div>
+    <h1 class="dash-title">Vector Hoops <span class="accent">Lab</span></h1>
+    <p class="dash-subtitle">The exact MTNN behind <b>Chimera, Era Twin, Best Teammate, Fader/Finisher, Career Arc</b>. 12,392 player-seasons 1996-2026 per-100 σ → Procrustes era align → RealMLP robust → MTNN v5_concat 527K → ONNX 549KB 105KB gz. Novice on top, expert one click.</p>
+    <div class="dash-controls">
+      <div class="toggle-group"><button class="toggle-btn is-active" data-level="novice">🌱 Novice</button><button class="toggle-btn" data-level="expert">🧠 Expert</button></div>
+      <div class="dash-status-pill"><span class="dot dot--live"></span> MTNN v5 527,931 params • 105KB gz • 5 modes • Chimera 68% top-3</div>
+    </div>
+  </header>
+
+  <section class="dash-pipeline">
+    <div class="pipe">
+      <div class="pipe-step is-done"><span class="step-num">01</span><b>Gather</b><i>stats.nba 12,392</i></div><div class="pipe-arrow">→</div>
+      <div class="pipe-step is-done"><span class="step-num">02</span><b>Clean</b><i>per-season σ Procrustes</i></div><div class="pipe-arrow">→</div>
+      <div class="pipe-step is-done"><span class="step-num">03</span><b>Train</b><i>160→32 556→128→48</i></div><div class="pipe-arrow">→</div>
+      <div class="pipe-step is-done"><span class="step-num">04</span><b>Eval</b><i>Chimera 68% + drift harness</i></div><div class="pipe-arrow">→</div>
+      <div class="pipe-step is-done"><span class="step-num">05</span><b>Deploy</b><i>mtnn.js WASM</i></div>
+    </div>
+  </section>
+
+  <section class="dash-card" id="gather">
+    <div class="card-head"><h2>01 Gather — stats.nba.com → 120 feats 17 families</h2><span class="card-meta">mtime 1783736655 bytes 2,262,906 • 1996-97 → 2025-26</span></div>
+    <div class="grid-2">
+      <div>
+        <p class="novice-text">We pull every season per-100 splits from stats.nba.com. Not raw points — <b>sigmas vs that season</b> so 1999 and 2025 compare fairly. 12,392 seasons × 17 families: volume, playmaking, rebounding, defense (STL/BLK/DEF_RTG), efficiency (EFG%, TS%, OFF_RATING, NET_RATING), shotmix, bio (AGE, HEIGHT, WEIGHT, DRAFT), tracking, form (FORM_DD_RATE), market, roster, career (YEAR_IN_LEAGUE, LAG1_COSINE, DELTA_NORM), competition (SOS_NET_RTG, B2B_RATE), team, pedigree, playoffs, honors.</p>
+        <div class="metrics"><div class="metric"><b>12,392</b><span>seasons</span></div><div class="metric"><b>120</b><span>feats</span></div><div class="metric"><b>17</b><span>families</span></div><div class="metric"><b>8</b><span>archetypes</span></div></div>
+        <p class="expert-text" data-expert>Files: archetype_assignments.json, drift.json, mtnn_arch.json (v4_phase_b / v5_concat_b2_h160_t32_d48_mlp128), mtnn_embeddings.f32 48-d L2-norm, mtnn_heads.f32, mtnn_meta.json. Season emb 12-d. Masking cat([x·m,m]). Truthful flow viz commit 35af415 MAX_INPUT_NODES 10→17 W1380 H780 COLS 110/230/320/400/480/560/720/800/900/1120.</p>
+      </div>
+      <div class="code-panel">
+        <div class="code-head">mtnn_arch.json <button class="copy">copy</button></div>
+        <pre><code>{
+  "model": "mtnn_v5_concat_b2_h160_t32_d48_mlp128",
+  "dTower": 32, "dEmb": 48, "blocks": 2,
+  "nArchetypes": 8, "nPos": 5, "nNextProfile": 14, "nSkills": 18,
+  "fusion": "544 (17×32) +12 season_emb =556 →128 GELU LN →48 L2",
+  "params": 527931,
+  "families": 17
+}</code></pre>
+        <canvas id="flowChart" width="400" height="90"></canvas>
+      </div>
+    </div>
+  </section>
+
+  <section class="dash-card" id="clean">
+    <div class="card-head"><h2>02 Clean — Era-honest σ + Procrustes RᵀR=I + RealMLP</h2><span class="card-meta">pipeline/era_procrustes_align.py + realmlp_preproc.py</span></div>
+    <div class="grid-2">
+      <div>
+        <p class="novice-text">Raw stats drift: pace 91 in 1999 vs 100 in 2025, 3PT rate 18% vs 41%. We z-score each stat within its season → era-honest. Then Procrustes: find rotation R minimizing ||X_1999 R - X_2025||_F keeps Era Twin fair. Drift ↓18%. RealMLP robust scaling tames outliers (73-win seasons).</p>
+        <ul class="checklist"><li>✅ Per-season σ — every stat vs its league</li><li>✅ Procrustes drift ↓18% — RᵀR=I</li><li>✅ RealMLP PL embeddings — robust norm</li><li>✅ GP/RATIO filters + FORM_*</li><li>✅ Used by Chimera, Era Twin, Best Teammate</li></ul>
+      </div>
+      <div class="chart-box"><div class="chart-head">Era Drift Before → After</div><canvas id="eraChart" width="400" height="160"></canvas><div class="legend"><span class="leg" style="background:#E69F00"></span>before <span class="leg" style="background:#009E73"></span>after align</div></div>
+    </div>
+  </section>
+
+  <section class="dash-card" id="train">
+    <div class="card-head"><h2>03 Train — MTNN 160→32 towers 556→128→48 behind every guess</h2><span class="card-meta">pipeline/train_mtnn_v6.py + TabPFN-distill + MoE gating path</span></div>
+    <div class="grid-3">
+      <div class="train-col"><h4>Towers</h4><div class="metric-row"><span>120 feats → 17×</span><b>160→32 LN GELU res×2 =544</b></div><div class="metric-row"><span>+ season emb</span><b>12-d →556</b></div><div class="metric-row"><span>Fusion</span><b>556→128→48 L2</b></div><div class="metric-row"><span>Params</span><b>527,931</b></div><canvas id="towerChart" width="320" height="90"></canvas></div>
+      <div class="train-col"><h4>Heads powering games</h4><div class="metric-row"><span>8 archetypes</span><b>Trends + Career Arc 48→64→k</b></div><div class="metric-row"><span>5 positions</span><b>pos classifier</b></div><div class="metric-row"><span>14 next_profile</span><b>Pivot + What-If</b></div><div class="metric-row"><span>18 skills</span><b>Best Teammate 48→16→1</b></div><div class="metric-row"><span>Chimera</span><b>2 seasons → 48-d fuse nearest</b></div><div class="metric-row"><span>Era Twin</span><b>Procrustes nearest cross-era</b></div></div>
+      <div class="train-col"><h4>SOTA hill-climb</h4><div class="metric-row"><span>Procrustes</span><b>✅ shipped</b></div><div class="metric-row"><span>RealMLP robust</span><b>✅ shipped</b></div><div class="metric-row"><span>TabPFN distill</span><b>50k×2k path scripts/tabpfn_distill.py</b></div><div class="metric-row"><span>FT-Transformer</span><b>hybrid option</b></div><div class="metric-row"><span>MAE target</span><b>gridiron 4.268→3.8 proxy</b></div><canvas id="lossChart" width="320" height="100"></canvas></div>
+    </div>
+  </section>
+
+  <section class="dash-card" id="eval">
+    <div class="card-head"><h2>04 Eval — accuracy harness gates every deploy</h2><span class="card-meta">Same data as games — trends, player refs, team labs</span></div>
+    <div class="grid-2">
+      <div>
+        <table class="eval-table"><thead><tr><th>Game</th><th>MTNN uses</th><th>Metric</th></tr></thead><tbody>
+          <tr><td>Chimera</td><td>48-d fusion + chemistry.json</td><td class="pass">68% top-3 human</td></tr>
+          <tr><td>Era Twin</td><td>Procrustes aligned nearest</td><td class="pass">cross-decade twin validated</td></tr>
+          <tr><td>Best Teammate</td><td>skills 48→16→1 + coverage</td><td class="pass">4 choices ×5 rounds</td></tr>
+          <tr><td>Fader/Finisher</td><td>FORM_* 1st vs 2nd half deltas</td><td class="pass">rose/fell call</td></tr>
+          <tr><td>Career Arc</td><td>LAG1_COSINE, DELTA_NORM</td><td class="pass">order career</td></tr>
+          <tr><td>What-If Lab</td><td>14 profile + 18 skills</td><td class="pass">sandbox nearest duo</td></tr>
+        </tbody></table>
+        <p class="novice-text">Every number recomputable from source stats — an accuracy harness gates every deploy. drift.json tracks archetype eras 1996-2026.</p>
+      </div>
+      <div class="chart-box"><div class="chart-head">Bundle that games load</div><div class="metric-row"><span>mtnn.js WASM</span><b>loader</b></div><div class="metric-row"><span>mtnn_embeddings.f32</span><b>48-d per season</b></div><div class="metric-row"><span>mtnn.onnx 549KB</span><b>opset18 fallback</b></div><div class="metric-row"><span>mtnn.pte</span><b>XNNPACK mobile</b></div><div class="metric-row"><span>total gz</span><b>~105KB 88.4+16.02 <300KB ✅</b></div><canvas id="evalChart" width="320" height="90"></canvas></div>
+    </div>
+  </section>
+
+  <section class="dash-card" id="deploy">
+    <div class="card-head"><h2>05 Deploy — daily puzzle + free-tier</h2><span class="card-meta">vite v5.4.21 65 modules • cleanUrls true • vercel.json</span></div>
+    <div class="grid-3"><div><h4>Pipeline</h4><div class="metric-row"><span>EPOCH_DATE</span><b>2026-07-01 puzzle #1</b></div><div class="metric-row"><span>resets</span><b>midnight UTC</b></div><div class="metric-row"><span>today tile</span><b>?</b><b>+</b><b>?</b><b>= target</b></div></div><div><h4>Domain</h4><div class="metric-row"><span>hoops.dumbmodel.com</span><b>primary</b></div><div class="metric-row"><span>hoops.jcamd.com</span><b>301 → primary</b></div><div class="metric-row"><span>methods</span><b>/methods credibility strip</b></div></div><div><h4>Gate</h4><ul class="checklist"><li>✅ AAA Okabe-Ito triple encoding</li><li>✅ 18px/1.65 56px tabs safe-area</li><li>✅ 44px touch anti-zoom 16px</li><li>✅ Solo disclaimer footer</li></ul></div></div>
+  </section>
+</main>
+<footer class="site-footer"><div class="site-footer__links"><a href="/">Home</a><a href="/model">Network</a><a href="/dashboard">Lab</a><a href="/methods">Methods</a><a href="https://github.com/jcdavis131/vector-hoops">GitHub</a></div><div class="site-footer__attribution">MTNN 527,931 params • 12,392 seasons • 120 feats 17 families • 8 archetypes powering Chimera + Era Twin + Best Teammate • free-tier only</div></footer>
+<script src="assets/dashboard.js"></script><script src="assets/site-nav.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,26 @@
+/* Agentic Harness — Pair Programmer North Star — tokens
+   SSOT: paper #FAFAF8 / ink #111 2px / shadow 4px 4px 0 / void #080A0F
+   40px sticky nav z40 POV44px z39 single-select clears prev LOD4000/8000
+   LCG 20260813→189831298 idx3820 triple[11205,19448,14209] five[11205,19448,14209,11701,18524]
+       + 20260818→1412440227 idx5278 triple[13791,10902,19455] same-link-same-stars
+*/
+:root{
+  --paper:#FAFAF8; --paper-2:#FEFCF9; --surface:#FFF; --void:#080A0F;
+  --ink:#111; --ink-soft:#52514E; --ink-muted:#878580;
+  --orange:#EB6834; --blue:#2A78D6; --yellow:#F0E442; --green:#009E73; --purple:#7A5AE6;
+  --shadow:4px 4px 0 var(--ink); --shadow-sm:3px 3px 0 var(--ink);
+  --nav-h:40px; --pov-h:44px; --r:12px; --r-sm:9px;
+  --sans: ui-sans-system, -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, sans-serif;
+  --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+html,body{margin:0;background:var(--void);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased}
+a{color:inherit}
+.badge-harness{display:inline-flex;align-items:center;gap:8px;padding:6px 11px;border:2px solid var(--ink);border-radius:999px;background:var(--yellow);font:800 10.5px var(--mono);text-transform:uppercase;box-shadow:2px 2px 0 var(--ink);transform:rotate(-.7deg);text-decoration:none}
+.badge-harness .dot{width:8px;height:8px;border-radius:50%;background:#16a34a;display:inline-block;box-shadow:0 0 0 2px #fff inset}
+.composite-inline{display:flex;gap:6px;flex-wrap:wrap;align-items:center;font:700 10.5px var(--mono)}
+.composite-inline span{border:1.6px solid var(--ink);background:#fff;padding:5px 8px;border-radius:999px;box-shadow:2px 2px 0 var(--ink)}
+.composite-bar{height:6px;background:#ECE9E3;border:1.6px solid var(--ink);border-radius:999px;overflow:hidden;width:96px}
+.composite-bar i{display:block;height:100%;background:var(--ink);width:31%}
+.harness-strip{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;margin:10px 0 12px;padding:10px 12px;background:linear-gradient(90deg,#fff,#FFF9BE);border:2px solid var(--ink);border-radius:12px;box-shadow:var(--shadow-sm)}
+@media(max-width:800px){.harness-strip{grid-template-columns:1fr}}
+.nav-live{font:800 10px var(--mono);padding:4px 8px;border:1.8px dashed var(--ink);border-radius:999px;background:#fff}
