@@ -1,0 +1,5 @@
+/* fonts.css — zero-deps system stacks, no external fetch to stay PWA offline-ready.
+   System mono + sans mirrors hoops.css tokens; keeps FOUT away.
+*/
+@font-face{font-family:'system-sans';src:local("-apple-system"),local("BlinkMacSystemFont"),local("Segoe UI"),local("Roboto");font-display:swap}
+:root{--sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;--mono:ui-monospace,"IBM Plex Mono","SFMono-Regular",Consolas,"Liberation Mono",Menlo,monospace}

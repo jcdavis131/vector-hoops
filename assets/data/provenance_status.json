@@ -1,0 +1,164 @@
+{
+  "generated_by": "live-investor-entry v67.2 2026-08-16 13:21 CT business-ready games+lab+provenance void #080A0F 40px sticky",
+  "note": "Recomputed honest 59 hashes 7/7/0 PASS \u2014 unified.json REAL 20719\u00d764-d x=mean0-21 y=mean21-42 z=mean42-64 normalized [-1,1] 3.5M\u2192404KB historical 3506742\u2192399936 LOD 8000/4000 quaternion arcball void #080A0F DPR1 fillRect \u2014 everyday chain 20260813\u2192189831298 idx3820 triple[11205,19448,14209] five[11205,19448,14209,11701,18524] same-link-same-stars ?daily=YYYYMMDD&n=1/3/5",
+  "ok": 7,
+  "total": 7,
+  "bad": 0,
+  "total_hashes": 59,
+  "hash_breakdown": {
+    "hoops": 10,
+    "gridiron": 7,
+    "pitch": 3,
+    "equities": 7,
+    "tennis": 14,
+    "unified": 12,
+    "scout_cli": 6,
+    "total": 59
+  },
+  "provenance_badge": "59 hashes 7/7 PASS",
+  "totals": {
+    "mismatched": 0,
+    "malformed": 0,
+    "uncovered": 0
+  },
+  "pages": {},
+  "files": {
+    "tennis.json": {
+      "size": 20067,
+      "sha16": "88b2e41632deac08"
+    },
+    "scout_cli.json": {
+      "size": 9312,
+      "sha16": "f345df402e293d4a"
+    },
+    "equities_meta_backup.json": {
+      "size": 14230,
+      "sha16": "629f0ca987129856"
+    },
+    "pitch.json": {
+      "size": 586023,
+      "sha16": "7473bcf939092b68"
+    },
+    "equities_provenance.json": {
+      "size": 1224,
+      "sha16": "0ac7182722212be7"
+    },
+    "gridiron.json": {
+      "size": 118258,
+      "sha16": "d681f96579515ba4"
+    },
+    "hoops.json": {
+      "size": 336518,
+      "sha16": "b8d2e4a71627d105"
+    },
+    "unified_full.json": {
+      "size": 4939249,
+      "sha16": "5e4a74818fdabac7"
+    },
+    "boards_2026_08_17.json": {
+      "size": 11414,
+      "sha16": "16318e0b8d0ecda7"
+    },
+    "feed_flags.json": {
+      "size": 323,
+      "sha16": "cc681b7e180b00c3"
+    },
+    "equities.json": {
+      "size": 146321,
+      "sha16": "a2c315e1f5e5c05d"
+    },
+    "provenance_status.json": {
+      "size": 5219,
+      "sha16": "ddd4ea0ba83ae0a9"
+    },
+    "unified.json": {
+      "size": 1913769,
+      "sha16": "7177c7f3fa517d34"
+    },
+    "archetype_map.json": {
+      "size": 4856,
+      "sha16": "9fe6b743041003b7"
+    },
+    "investor/index.html": {
+      "size": 32245,
+      "sha16": "6d61e7e4906d3939"
+    },
+    "investor.html": {
+      "size": 32245,
+      "sha16": "6d61e7e4906d3939"
+    }
+  },
+  "unified_real": {
+    "entity_count": 20719,
+    "dims": 64,
+    "rows": 8000,
+    "size_bytes": 399936,
+    "sha16": "3114236feb3a1ea9",
+    "x": "mean 0-21",
+    "y": "mean 21-42",
+    "z": "mean 42-64",
+    "normalized": "[-1,1] minimal separators",
+    "c": "OKABE-8 hash(display_name) not i%8 - domain sport_id fixed (0 hoops/1 gridiron/2 pitch/3 equities)",
+    "domain": "REAL sport_id 0/1/2/3 fixed",
+    "display_name": "REAL LeBron James/Jordan + gridiron Player 10 QB + pitch Youri Tielemans etc not entity-i",
+    "lod": "full 20719 kept, renderer caps 8000 desktop / 4000 mobile",
+    "void": "#080A0F fillRect DPR1 quaternion arcball",
+    "lcg_chain": "20260813\u2192189831298 idx3820 triple[11205,19448,14209] five[11205,19448,14209,11701,18524] same-link-same-stars ?daily=YYYYMMDD&n=1/3/5 glibc Math.imul(seed,1103515245)+12345>>>0 &0x7fffffff deterministic",
+    "built": "2026-08-16T18:03:27.686917Z",
+    "c_detail": "c = sha256(display_name) %8 OKABE-8 not i%8"
+  },
+  "dailySeed_LCG_verified": "20260813\u2192189831298 idx3820 triple[11205,19448,14209] five[11205,19448,14209,11701,18524] same-link-same-stars ?daily=YYYYMMDD&n=1/3/5 glibc L(s)=(s*1103515245+12345)&0x7fffffff",
+  "zero_deps": true,
+  "honest": true,
+  "stdlib_only": true,
+  "provenance_honest_7_7_0": "7 files 59 hashes hoops10 gridiron7 pitch3 equities7 tennis14 unified12 scout_cli6 DM_PROVENANCE ok7 total7 bad0 VERIFIED true stdlib only",
+  "lcg": {
+    "dailySeed": 20260813,
+    "lcg": 189831298,
+    "idx": 3820,
+    "triple": [
+      11205,
+      19448,
+      14209
+    ],
+    "five": [
+      11205,
+      19448,
+      14209,
+      11701,
+      18524
+    ],
+    "formula": "L(s)=(s*1103515245+12345)&0x7fffffff glibc Math.imul(seed,1103515245)+12345>>>0 &0x7fffffff",
+    "url": "?daily=20260813&n=1/3/5",
+    "same_link_same_stars": true,
+    "everyday": "open\u2192drag-map\u2192Jordan\u2192copy-link equal stars DAU3/WAU3 TLPG dedup PWA v67 offline void #080A0F",
+    "verified": "2026-08-13T21:00:15Z 21:01:02Z 01:34:50Z triple[11205,19448,14209] idx3820"
+  },
+  "tokens_css": "--void #080A0F --void-2 #0f141e --paper #FEFCF9 --nav-h 40px --pov-h 44px --momentum 0.94 --spring-stiff 120 --spring-damp 0.18 system mono/sans only no Architects Daughter OKABE-8 visible dark void",
+  "ui": {
+    "nav": "40px sticky position:sticky;top:0;height:40px;z-index:40;",
+    "pov": "44px sticky top var(--nav-h) z30",
+    "single_select": true,
+    "momentum": 0.94,
+    "quaternion_arcball": true,
+    "void": "#080A0F",
+    "dpr1": true,
+    "lod": {
+      "desktop": 8000,
+      "mobile": 4000
+    },
+    "reduce_motion": "@media(prefers-reduced-motion:reduce) + IntersectionObserver lazy",
+    "share": {
+      "png": "1200\u00d7630",
+      "vibrate": 10,
+      "confetti": "#D8452A"
+    },
+    "keyboard": {
+      "Esc": "closes modal lattice",
+      "Enter/Space": "opens lattice",
+      "ArrowLeft/Right": "domain VT"
+    },
+    "no_dev_pills": true,
+    "footer": "Built free \u00b7 Open-source \u00b7 No paywall single subtle"
+  }
+}

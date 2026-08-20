@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Trend Research — Vector Hoops</title>
+<link rel="canonical" href="https://hoops.dumbmodel.com/trends">
+<meta property="og:url" content="https://hoops.dumbmodel.com/trends">
+<meta name="description" content="League-wide trend research: Procrustes drift, archetype eras, and career trajectories across 30 NBA seasons — measured geometry, not narrative.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20100%20100%22%3E%3Ctext%20y%3D%22.9em%22%20font-size%3D%2290%22%3E%26%23127936%3B%3C%2Ftext%3E%3C%2Fsvg%3E">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Trend Research — Vector Hoops">
+<meta property="og:description" content="How much did the SHAPE of basketball change each season? Measured by Procrustes alignment, 1996-97 through 2025-26.">
+<meta property="og:image" content="/assets/og.svg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Trend Research — Vector Hoops">
+<meta name="twitter:description" content="How much did the SHAPE of basketball change each season? Measured by Procrustes alignment.">
+<meta name="twitter:image" content="/assets/og.svg">
+<link rel="stylesheet" href="assets/hoops.css">
+<link rel="stylesheet" href="assets/shell.css">
+<link rel="stylesheet" href="assets/nux.css">
+<link rel="stylesheet" href="assets/responsive.css">
+</head>
+<body>
+
+<nav class="site-nav" data-active="/trends" aria-label="Vector Hoops site"></nav>
+
+<main class="drift-main research-main">
+
+  <div class="drift-head research-head">
+    <h1>Trend Research</h1>
+    <p class="drift-hero-line">How much did the <b>shape</b> of the league change from one season to the next?
+      We measure it with Procrustes alignment &mdash; details on the <a href="/methods#drift">methods page</a>.</p>
+  </div>
+
+  <section class="drift-card trends-viz-card" aria-label="What changed this season">
+    <div class="drift-card__head">
+      <h2>What changed this season?</h2>
+      <p>When the league rotates, some stats stop meaning the same thing year over year.
+        Pick a season below &mdash; or tap a story chip &mdash; to see how big the shift was
+        and which numbers moved most.</p>
+    </div>
+    <div id="trends-biggest-shifts" class="trends-biggest-shifts" aria-label="Biggest geometric shifts">
+      <p class="drift-loading">Loading biggest shifts&hellip;</p>
+    </div>
+    <div class="trends-viz-grid trends-viz-grid--story">
+      <div class="trends-viz-panel trends-viz-panel--gauge">
+        <div id="trends-rotation-gauge" class="trends-viz-svg" role="img"
+          aria-label="Loading rotation gauge"></div>
+        <p class="trends-viz-panel__label">How big was the shift?</p>
+      </div>
+      <div class="trends-viz-panel trends-viz-panel--compass">
+        <div id="trends-tilt-compass" class="trends-viz-svg" role="img"
+          aria-label="Loading league tilt compass"></div>
+        <p class="trends-viz-panel__label">Which style of play gained ground?</p>
+      </div>
+    </div>
+    <div class="trends-viz-panel trends-viz-panel--bars">
+      <div id="trends-shift-bars" class="trends-viz-svg trends-viz-svg--wide" role="img"
+        aria-label="Loading stat shift bars"></div>
+      <p class="trends-viz-panel__label">Stats that changed meaning (ranked)</p>
+    </div>
+    <div id="trends-stat-narratives" class="trends-stat-narratives" aria-live="polite">
+      <p class="drift-loading">Loading stat narratives&hellip;</p>
+    </div>
+    <div class="trends-viz-controls">
+      <label class="trends-viz-slider-label" for="trends-season-slider">Season</label>
+      <input type="range" id="trends-season-slider" class="trends-viz-slider" min="0" max="28" value="28"
+        aria-valuemin="0" aria-valuemax="28" aria-label="Scrub through seasons">
+      <span id="trends-season-label" class="trends-viz-season-tag">2025-26</span>
+    </div>
+    <div id="trends-story-chips" class="trends-story-chips" aria-label="Jump to notable seasons"></div>
+    <p id="trends-viz-caption" class="trends-viz-caption">Loading&hellip;</p>
+  </section>
+
+  <section class="drift-card" aria-label="Drift timeline">
+    <div class="drift-card__head">
+      <h2>Rotation, season to season</h2>
+      <p>Each point is one year-to-year step: how far the league&rsquo;s 14-stat player profile
+        had to rotate to line up with the next season. Shaded bands are the five research eras;
+        orange rings mark the five biggest jumps.</p>
+    </div>
+    <div id="drift-chart" class="drift-chart" role="img" aria-label="Loading league drift chart&hellip;"></div>
+    <ul id="drift-era-legend" class="drift-era-legend" aria-label="Archetype era legend"></ul>
+    <p class="drift-annotation-note">Blue markers are our read on league events near spikes &mdash; not derived from the math.
+      &ldquo;Scoring era&rdquo; at 2022-23 was wrong (7.6&deg;); post-bubble spacing at 2021-22 (11.1&deg;) is the better recent tag.</p>
+  </section>
+
+  <section class="drift-card" aria-label="Biggest geometric shifts">
+    <div class="drift-card__head">
+      <h2>Biggest shifts</h2>
+      <p>The five season-pairs with the largest rotation &mdash; where the league's statistical
+        geometry moved the most in one year.</p>
+    </div>
+    <div class="drift-table-wrap">
+      <table class="drift-table" id="drift-shifts-table">
+        <thead>
+          <tr><th>Season pair</th><th>Rotation</th><th>Residual</th><th>Shared players</th><th>Most-rotated features</th><th>Interpretation</th></tr>
+        </thead>
+        <tbody><tr><td colspan="6" class="drift-loading">Loading&hellip;</td></tr></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="methods-section drift-method" id="method" aria-label="Method">
+    <h2>Method</h2>
+    <p id="drift-method-quote" class="drift-method-quote">Loading&hellip;</p>
+    <p>Full write-up, the era-twin cross-era matching this same chained transform powers, and every
+      other method on the site: <a href="/methods#drift">read the methods page &rarr;</a></p>
+  </section>
+
+  <section class="drift-card" aria-label="Archetypes over time">
+    <div class="drift-card__head drift-card__head--compact">
+      <h2>Archetypes over 30 seasons</h2>
+      <p>Eight player types tracked across 30 seasons, who gained or lost share, and how types
+        shift within each era.</p>
+    </div>
+    <div id="archetype-stream-chart" class="drift-chart archetype-stream-chart" role="img" aria-label="Loading archetype share chart&hellip;"></div>
+    <ul id="archetype-legend" class="archetype-legend" aria-label="Archetype legend"></ul>
+    <div class="viz-duo-grid">
+      <div class="viz-panel">
+        <p class="viz-panel__label">Biggest type shifts (first 5 vs last 5 seasons)</p>
+        <div id="archetype-shifts-chart" class="viz-panel__chart" role="img" aria-label="Loading archetype shift bars&hellip;"></div>
+      </div>
+      <div class="viz-panel">
+        <p class="viz-panel__label">Top types by era</p>
+        <div id="archetype-era-panels" class="archetype-era-compact">
+          <p class="drift-loading">Loading&hellip;</p>
+        </div>
+      </div>
+    </div>
+    <div class="court-heatmap" id="archetype-court-heatmap" aria-label="League court zone heatmap">
+      <div class="court-heatmap__head">
+        <p class="viz-panel__label">Court zone map</p>
+        <div class="court-heatmap__modes" role="tablist" aria-label="Court heatmap mode">
+          <button type="button" class="court-heatmap__mode" data-mode="diff" role="tab" aria-selected="false">30-year change</button>
+          <button type="button" class="court-heatmap__mode" data-mode="early" role="tab" aria-selected="false">Early years</button>
+          <button type="button" class="court-heatmap__mode" data-mode="late" role="tab" aria-selected="false">Recent years</button>
+          <button type="button" class="court-heatmap__mode is-active" data-mode="era" role="tab" aria-selected="true">By era</button>
+        </div>
+      </div>
+      <div class="court-heatmap__body">
+        <div class="court-heatmap__stage">
+          <canvas id="archetype-court-canvas" class="court-heatmap__canvas" width="400" height="376" aria-label="Half-court zone intensity"></canvas>
+          <p id="archetype-court-caption" class="court-heatmap__caption">Loading&hellip;</p>
+        </div>
+        <div class="court-heatmap__side">
+          <div id="archetype-court-era-tabs" class="court-heatmap__era-tabs" hidden></div>
+          <div id="archetype-court-zone-list" class="court-heatmap__zones"></div>
+          <div id="archetype-court-tags" class="court-heatmap__tags" aria-label="Role tags"></div>
+        </div>
+      </div>
+      <p class="court-heatmap__legend">
+        <span class="court-heatmap__swatch court-heatmap__swatch--up"></span> More than baseline
+        <span class="court-heatmap__swatch court-heatmap__swatch--down"></span> Less than baseline
+        <span class="court-heatmap__swatch court-heatmap__swatch--def"></span> Defense zones (hatched)
+      </p>
+    </div>
+    <p class="drift-card__foot">Eight global player types, plus era-specific re-clusters for research.
+      Court zones map where each era&rsquo;s play showed up on the floor; by-era view compares each window
+      to the one before (the first era is compared to today).
+      <a href="/methods#archetypes">How we built this &rarr;</a></p>
+  </section>
+
+  <section class="drift-card" aria-label="Archetype emergence">
+    <div class="drift-card__head drift-card__head--compact">
+      <h2>Archetype emergence</h2>
+      <p>Did genuinely new role shapes show up? Role tags by era and how crowded the type landscape got.</p>
+    </div>
+    <div id="emergence-verdict" class="emergence-verdict">Loading&hellip;</div>
+    <div class="viz-duo-grid">
+      <div class="viz-panel">
+        <p class="viz-panel__label">Roles by era</p>
+        <div id="emergence-role-chart" class="drift-chart emergence-role-chart" role="img"
+          aria-label="Loading role prevalence chart&hellip;"></div>
+      </div>
+      <div class="viz-panel">
+        <p class="viz-panel__label">How many player types fit each era</p>
+        <div id="emergence-rolling-chart" class="drift-chart emergence-rolling-chart" role="img"
+          aria-label="Loading rolling archetype diversity chart&hellip;"></div>
+      </div>
+    </div>
+    <p class="viz-panel__label">What we tested</p>
+    <div id="emergence-claims-viz" class="emergence-claims-viz" aria-label="Hypothesis claims"></div>
+    <p class="viz-panel__label">New types by era</p>
+    <div id="emergence-novel-badges" class="emergence-novel-badges">Loading&hellip;</div>
+    <p class="drift-card__foot">A type counts as &ldquo;new&rdquo; when it doesn&rsquo;t resemble anything from the prior era.
+      <a href="/methods#archetypes">How we built this &rarr;</a></p>
+  </section>
+
+  <section class="drift-card" aria-label="Career shapes">
+    <div class="drift-card__head drift-card__head--compact">
+      <h2>Career shapes</h2>
+      <p>How players move between archetypes over a career &mdash; class mix, example paths, and common switches.</p>
+    </div>
+    <div id="trajectory-class-viz" class="trajectory-class-viz" role="img" aria-label="Loading career class mix&hellip;"></div>
+    <p class="viz-panel__label">Example paths (one per class)</p>
+    <div id="trajectory-path-gallery" class="trajectory-path-gallery">
+      <p class="drift-loading">Loading&hellip;</p>
+    </div>
+    <div class="viz-duo-grid">
+      <div class="viz-panel">
+        <p class="viz-panel__label">Careers migrate more now</p>
+        <div id="trajectory-era-chart" class="drift-chart trajectory-era-chart" role="img" aria-label="Loading transition rate by decade&hellip;"></div>
+      </div>
+      <div class="viz-panel">
+        <p class="viz-panel__label">Common reinvention paths</p>
+        <div id="trajectory-motif-flow" class="trajectory-motif-flow" role="img" aria-label="Loading reinvention paths&hellip;"></div>
+      </div>
+    </div>
+    <p class="drift-card__foot">Path labels under common switches are our read, not model output.
+      <a href="/methods#trajectories">How we built this &rarr;</a></p>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="site-footer__links">
+    <a href="/methods">Methods</a>
+    <a href="/players">Players</a>
+    <a href="#" data-vh-nux-tour>Tour</a>
+    <a href="https://github.com/jcdavis131/vector-hoops" target="_blank" rel="noopener">GitHub</a>
+  </div>
+  <div class="site-footer__attribution">Every number recomputable from stats.nba.com &amp; Basketball-Reference source data &middot; from <a href="https://dumbmodel.com/" target="_blank" rel="noopener">dumbmodel.com</a></div>
+</footer>
+
+<script src="assets/site-nav.js" defer></script>
+<script src="assets/trends-viz.js" defer></script>
+<script src="assets/drift.js"></script>
+<script src="assets/nux.js" defer></script>
+</body>
+</html>
