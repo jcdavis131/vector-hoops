@@ -1,258 +1,114 @@
 <!doctype html>
-<html lang="en" data-theme="terminal">
+<html lang="en">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Play Past→Modern — v9.2 VRNN t+1 — 3D map</title>
-<meta name="description" content="Past→Modern daily — same puzzle everyone — 3D embedding map shared camera — single-select clears prev">
-<meta name="theme-color" content="#080A0F"><link rel="manifest" href="/manifest.json">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23080A0F'/%3E%3Ccircle cx='16' cy='16' r='5' fill='%23F0E442' stroke='%23FAFAF8' stroke-width='1.6'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="/assets/tokens.css?v=dc7dc4c5">
+<link rel="stylesheet" href="/assets/fonts.css?v=31e5658b">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#fafaf8">
+<title>Vector Hoops — Play Past→Modern · 1764 · 3D shared</title>
+<meta name="description" content="Daily Past→Modern — same puzzle everyone — 3D shared camera — single-select clears prev · LCG 20260813→189831298 triple[11205,19448,14209] same-link-same-stars">
+<link rel="stylesheet" href="/assets/fonts.css?v=31e5658b">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23FAFAF8'/%3E%3Ccircle cx='11' cy='12' r='3' fill='%23EB6834'/%3E%3Ccircle cx='21' cy='19' r='3' fill='%232A78D6'/%3E%3C/svg%3E">
+<link rel="manifest" href="/manifest.json">
 <style>
-:root{--nav-h:40px;--pov-h:44px;--void:#080A0F;--void-2:#0f141e;--panel:#111725;--grid:#1e2a44;--ink:#e8f0ff;--ink-soft:#9aa7c7;--yellow:#F0E442;--mono:ui-monospace,SFMono-Regular,monospace;--sans:ui-sans-serif,system-ui,Segoe UI,Roboto,sans-serif}
-*{box-sizing:border-box}html,body{margin:0;background:var(--void);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased}
-.site-nav{position:sticky;top:0;top:env(safe-area-inset-top,0);height:var(--nav-h);z-index:50;display:flex;align-items:center;justify-content:space-between;padding:0 16px;border-bottom:1px solid var(--grid);background:rgba(8,10,15,.92);backdrop-filter:blur(6px)}
-.site-nav__brand{font-family:var(--mono);font-weight:800;font-size:13px;letter-spacing:.02em;text-transform:uppercase;text-decoration:none;color:var(--ink)}
-.site-nav__links{display:flex;gap:8px;align-items:center}
-.site-nav__link{font-family:var(--mono);font-size:11px;font-weight:700;padding:5px 10px;border-radius:999px;border:1.5px solid transparent;text-decoration:none;color:#9aa7c7}
-.site-nav__link.on{background:var(--yellow);color:#000;border-color:#000;transform:rotate(-.6deg)}
-.pov-strip{position:sticky;top:40px;height:var(--pov-h);z-index:40;display:flex;gap:8px;align-items:center;overflow-x:auto;padding:0 12px;border-bottom:2px solid var(--grid);background:#0f1a2d}
-.pov-pill{height:28px;padding:0 12px;border-radius:999px;border:1.5px solid var(--grid);font:700 11.5px var(--mono);white-space:nowrap;cursor:pointer;background:#111a2d;color:#9aa7c7;flex:0 0 auto}
-.pov-pill.on{background:var(--yellow);color:#000;border-color:#000}
-.wrap{max-width:1180px;margin:0 auto;padding:16px}
-.hero{display:grid;grid-template-columns:1.1fr .9fr;gap:12px}
-@media(max-width:980px){.hero{grid-template-columns:1fr}}
-.card{background:#111725;border:2px solid #1e2a44;border-radius:14px;box-shadow:6px 6px 0 #000;overflow:hidden}
-.mono{font-family:var(--mono)} .mono-sm{font-family:var(--mono);font-size:11px;color:#9aa7c7}
-.pill{display:inline-flex;padding:4px 9px;border-radius:999px;border:1.5px solid var(--grid);background:#0f141e;font:700 11px var(--mono);color:#9aa7c7}
-.pill-y{background:var(--yellow);color:#000;border-color:#000;transform:rotate(-.6deg)}
-.btn{font-family:var(--mono);font-size:11.2px;font-weight:800;padding:8px 12px;border-radius:999px;border:1.5px solid #000;background:var(--yellow);color:#000;cursor:pointer;box-shadow:2px 2px 0 #000}
-.btn:active{transform:translate(1px,1px);box-shadow:1px 1px 0 #000}
-.btn-p{background:#111725;color:#e8f0ff;border-color:#1e2a44}
-.grid2{display:grid;grid-template-columns:1.05fr .95fr;gap:12px}
-@media(max-width:900px){.grid2{grid-template-columns:1fr}}
-.map-box{position:relative;background:#080A0F;border-radius:12px;overflow:hidden;border:2px solid #1e2a44;height:420px}
-#c{width:100%;height:100%;display:block;touch-action:pan-y;cursor:grab;background:#080A0F}
-#c.grabbing{cursor:grabbing}#c.overdot{cursor:pointer}
-#c:focus{outline:3px solid #0072B2;outline-offset:2px}
-.chip{display:inline-flex;align-items:center;min-height:24px;padding:4px 9px;border-radius:999px;border:1.3px solid #1e2a44;font-family:var(--mono);font-size:10.5px;font-weight:800;background:#111a2d;color:#9aa7c7;box-shadow:1.3px 1.3px 0 #000;margin:2px 3px;cursor:pointer}
-.chip.on{background:var(--yellow);color:#000}
-.season-chip{display:inline-flex;align-items:center;min-height:24px;padding:4px 8px;border-radius:999px;border:1.3px solid #111;background:#0f141e;font-family:var(--mono);font-size:10.2px;font-weight:800;color:#9aa7c7;margin:2px;cursor:pointer}
-.season-chip.active{background:#EB6834;color:#000;border-color:#000}
-.ring{position:absolute;left:50%;top:50%;width:58px;height:58px;border-radius:50%;border:3px solid #EB6834;display:none;place-items:center;color:#EB6834;background:radial-gradient(circle,rgba(235,104,52,.28),rgba(235,104,52,.08) 62%,transparent 72%);font-weight:900;transform:translate(-50%,-50%) scale(.6);pointer-events:none}
-.traj-glass{backdrop-filter:blur(12px) saturate(1.25);-webkit-backdrop-filter:blur(12px) saturate(1.25);background:rgba(17,23,37,.92);border:2.2px solid #1e2a44;border-radius:14px;box-shadow:4px 4px 0 #000;padding:10px;color:#e8f0ff}
-#log:empty::before{content:'Your guesses land here — tap a dot fills guess.';color:#6B7A9A}
-#confetti{position:absolute;inset:0;pointer-events:none}
-.star{position:absolute;transform:translate(-50%,-50%) scale(0);animation:pop 700ms forwards}
-@keyframes pop{0%{transform:translate(-50%,-50%) scale(0) rotate(0)}60%{transform:translate(-50%,-70%) scale(1.2) rotate(18deg)}100%{transform:translate(-50%,-160%) scale(.9) rotate(-8deg);opacity:0}}
-@keyframes karaPulse{0%{transform:translate(-50%,-50%) scale(.78);box-shadow:0 0 0 0 rgba(235,104,52,.85)}32%{transform:translate(-50%,-50%) scale(1.24);box-shadow:0 0 0 20px rgba(235,104,52,0)}56%{transform:translate(-50%,-50%) scale(.92)}80%{transform:translate(-50%,-50%) scale(1.18)}100%{transform:translate(-50%,-50%) scale(1)}}
-.karaoke-2x{animation:karaPulse .62s cubic-bezier(.2,.8,.3,1) 0s 2}
-@keyframes spikeFreeze{0%{filter:contrast(1) brightness(1)}42%{filter:contrast(1.36) brightness(1.18) saturate(1.26)}100%{filter:contrast(1) brightness(1)}}
-.spike{animation:spikeFreeze .6s ease}
-.dotw{width:12px;height:12px;border-radius:50%;border:1.4px solid #1e2a44;display:inline-block;margin:1px 2px;background:#0f141e}
-.dotw.on{background:var(--yellow)} .dotw.war{background:#E69F00}
-.share-pop{position:fixed;inset:0;background:rgba(8,10,15,.74);backdrop-filter:blur(10px);z-index:80;display:none;place-items:center;padding:14px}
-.share-pop.on{display:grid}
-.share-card{width:min(680px,96vw);background:#080A0F;border:2.2px solid #FAFAF8;border-radius:16px;overflow:hidden;box-shadow:8px 8px 0 #111}
-input{font-family:var(--mono);font-size:12.5px;padding:9px 11px;border:1.8px solid #1e2a44;border-radius:11px;min-width:0;background:#0f141e;color:#e8f0ff}
-footer{max-width:1100px;margin:6px auto 0;padding:10px 14px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;border-top:1.6px dashed #1e2a44;font-size:11px;color:#6B7A9A}
+:root{--paper:#FAFAF8;--surface:#FFFFFF;--ink:#111111;--ink-soft:#52514E;--ink-muted:#878580;--orange:#EB6834;--blue:#2A78D6;--purple:#7A5AE6;--yellow:#F0E442;--green:#009E73;--mono:ui-monospace,"IBM Plex Mono",Menlo,monospace;--sans:ui-sans-serif,system-ui,Segoe UI,Roboto,sans-serif;--r:12px;--shadow:4px 4px 0 var(--ink);--shadow-sm:3px 3px 0 var(--ink);--nav-h:40px}
+*{box-sizing:border-box}html,body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.6;-webkit-font-smoothing:antialiased}
+.site-nav{position:sticky;top:0;z-index:40;min-height:40px;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:0 clamp(12px,3vw,22px);background:var(--surface);border-bottom:2px solid var(--ink)}
+.site-nav .brand{font-family:var(--mono);font-weight:900;text-transform:uppercase;font-size:15px;text-decoration:none;color:var(--ink)}
+.site-nav .links{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.site-nav .links a{font:800 11.5px var(--mono);text-transform:uppercase;letter-spacing:.05em;color:var(--ink-soft);text-decoration:none;padding:7px 10px;border:2px solid transparent;border-radius:9px}
+.site-nav .links a:hover{color:var(--ink);border-color:var(--ink);background:var(--paper)}
+.site-nav .links a.on{background:var(--ink);color:#fff}
+.site-nav .links .cta{background:var(--ink);color:#fff;border-color:var(--ink)}
+.wrap{max-width:1120px;margin:0 auto;padding:14px clamp(12px,3vw,18px)}
+.eyebrow{font-family:var(--mono);font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:#6F6D68;margin:0}
+.hero-band{width:100%;background:linear-gradient(180deg,var(--surface),var(--paper));border-bottom:2px solid var(--ink);position:relative;overflow:hidden}
+.hero{position:relative;z-index:1;display:flex;flex-wrap:wrap;gap:16px;align-items:center;padding:18px clamp(12px,3vw,22px);max-width:1120px;margin:0 auto}
+.roster{display:flex;gap:10px;flex-wrap:nowrap}
+.tile{width:60px;height:60px;background:#fff;border:2px solid var(--ink);border-radius:10px;box-shadow:3px 3px 0 var(--ink);display:grid;place-items:center}
+.tile svg{width:62%;height:62%}.t-o{box-shadow:4px 4px 0 var(--orange)}.t-b{box-shadow:4px 4px 0 var(--blue)}.t-p{box-shadow:4px 4px 0 var(--purple)}.t-g{box-shadow:4px 4px 0 var(--green)}
+.card{background:var(--surface);border:2px solid var(--ink);border-radius:12px;box-shadow:var(--shadow);overflow:hidden}
+.mono{font-family:var(--mono);font-size:11px} .mono-sm{font-size:10.5px;color:#6F6D68}
+.map-box{position:relative;background:#0A0C10;border-radius:10px;overflow:hidden;border:2px solid #0A0C10}
+canvas{display:block;width:100%;height:440px}
+#c{touch-action:pan-y;cursor:grab}
+#c.grabbing{cursor:grabbing}
+#c.overdot{cursor:pointer}
+#c:focus{outline:3px solid var(--blue);outline-offset:2px}
+@media(max-width:600px){canvas{height:360px}}
+.grid2{display:grid;grid-template-columns:1.2fr .8fr;gap:12px;margin-top:12px} @media(max-width:900px){.grid2{grid-template-columns:1fr}}
+.pill{display:inline-flex;padding:6px 11px;border-radius:999px;background:#fff;border:1.6px solid var(--ink);font:800 11px var(--mono);box-shadow:2px 2px 0 var(--ink);text-transform:uppercase;cursor:pointer}
+.pill.on{background:var(--ink);color:#fff}
+.pill.y{background:var(--yellow);transform:rotate(-1deg)}
+.btn{display:inline-flex;align-items:center;justify-content:center;padding:8px 12px;border-radius:9px;border:2px solid var(--ink);background:#fff;font:800 11px var(--mono);text-transform:uppercase;cursor:pointer;box-shadow:var(--shadow-sm)}
+.btn-y{background:var(--yellow)}
+.find input{font-family:var(--mono);font-size:13px;padding:8px 10px;border:1.8px solid var(--ink);border-radius:10px;width:100%;max-width:360px;display:block;margin-top:4px;background:#fff}
+#log{font-family:var(--mono);font-size:11px;min-height:54px;background:#fff;border:1.6px dashed var(--ink);border-radius:10px;padding:8px;max-height:160px;overflow:auto}
+.chip{display:inline-flex;align-items:center;min-height:24px;padding:4px 9px;border-radius:999px;border:1.3px solid var(--ink);font-family:var(--mono);font-size:10.5px;font-weight:800;background:#fff;color:#52514E;margin:2px 3px;cursor:pointer}
+.chip.on{background:var(--yellow)}
+.season-chip{display:inline-flex;align-items:center;min-height:24px;padding:4px 8px;border-radius:999px;border:1.3px solid var(--ink);font-family:var(--mono);font-size:10.2px;font-weight:800;margin:2px;cursor:pointer;background:#fff}
+.season-chip.active{background:var(--orange);color:#fff;border-color:#111}
+.vh-skip{position:absolute;left:-9999px;top:0;z-index:99;background:var(--paper);border:2.2px solid var(--ink);padding:10px 14px;font-family:var(--mono);font-weight:800;text-decoration:none;border-radius:0 0 10px 0}
+.vh-skip:focus{left:0}
 </style>
-<script src="assets/map-camera.js?v=3d-shared"></script>
-  <script type="module" src="/assets/mtnn-central-engine.js"></script>
-<!-- MODES: Daily Wordle Guess | Lab Fusion A+B=C avg argmin ?lab= | Pack Battle | purity 0.751 | median_guesses2.6 | slope1.8 -->
+<script src="assets/map-camera.js?v=dc7dc4c5"></script>
 </head>
 <body>
-<nav class="site-nav"><a class="site-nav__brand" href="/">VECTOR<span style="color:#F0E442">HOOPS</span> Play v9.2 • 3D map shared</a>
-<div class="site-nav__links"><a class="site-nav__link" href="/players">Explorer</a><a class="site-nav__link on" href="/play.html">Play</a><a class="site-nav__link" href="/model.html">Model</a></div></nav>
-<div class="pov-strip" role="tablist"><span class="mono-sm">Same puzzle everyone today • LCG 20260813→189831298 idx3820 triple[11205,19448,14209] • drag to rotate, tap dot to guess, type also works</span><span class="mono-sm" id="dailyMeta" style="margin-left:auto">v9.2 3D shared camera</span></div>
+<a class="vh-skip" href="#main">Skip to content</a>
+<nav class="site-nav"><a class="brand" href="/">DUMB<span style="color:var(--orange)">MODEL</span></a><div class="links"><a href="/">Map</a><a href="/players">Players</a><a href="/play" class="on">Play</a><a href="/lab">Lab</a><a href="/trends">Trends</a><a href="/model">Model</a><a class="cta" href="/play">Play today's →</a></div></nav>
+<div class="hero-band"><div class="hero"><p class="eyebrow">Six models · five daily puzzles · free · no account — same puzzle everyone via LCG 20260813→189831298 triple[11205,19448,14209] same-link-same-stars</p><div class="roster"><div class="tile t-o"><svg viewBox="0 0 40 40" fill="none"><circle cx="14" cy="11" r="5" stroke="#EB6834" stroke-width="2.5"/><circle cx="26" cy="29" r="5" stroke="#2A78D6" stroke-width="2.5"/></svg></div><div class="tile t-b"><svg viewBox="0 0 40 40" fill="none"><path d="M8 30 L16 22 L22 26 L34 10" stroke="#2A78D6" stroke-width="2.5" stroke-linecap="round"/></svg></div><div class="tile t-p"><svg viewBox="0 0 40 40" fill="none"><path d="M8 32 L8 8 M8 32 L34 32" stroke="#111" stroke-width="2.5"/><circle cx="23" cy="18" r="2.6" fill="#7A5AE6"/></svg></div><div class="tile t-g"><svg viewBox="0 0 40 40" fill="none"><rect x="8" y="10" width="5" height="14" rx="1" stroke="#009E73" stroke-width="2"/><rect x="15.5" y="8" width="5" height="18" rx="1" stroke="#009E73" stroke-width="2"/></svg></div></div><div><h1 class="mono" style="font-weight:900;font-size:18px;text-transform:uppercase;margin:0">Play · Past→Modern · LCG daily</h1><p class="mono" style="margin:2px 0 0;color:#52514E;font-size:11px">968 past · 1305 modern · 14-d cosine · tap dot fills guess · single-select clears prev · <span style="background:#F0E442;border:1px solid #111;padding:2px 6px;border-radius:6px">68% lock → orange path</span></p></div></div></div>
 
-<div class="wrap">
-<div class="hero">
-<div class="card" style="padding:12px;background:#FEFCF9;color:#111"><div class="mono" style="font-weight:900;font-size:11px;text-transform:uppercase;color:#111">Daily Past→Modern • same LCG glibc `L(s)=(s*1103515245+12345)&0x7fffffff` • 59 hashes 7/7 PASS</div>
-<h1 style="font-family:var(--mono);font-size:clamp(18px,3.8vw,22px);margin:8px 0;color:#111">Guess the modern twin — tap map or type</h1>
-<div style="display:flex;gap:7px;flex-wrap:wrap;margin-top:8px"><button class="btn" id="bSolo">▶︎ Today's</button><button class="btn btn-p" id="bChallenge">Challenge</button><input id="packIn" placeholder="Pack ?pack=" style="flex:1;min-width:140px;display:none"></div>
-<div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap"><span class="chip on">968 past • 1305 modern • 14-d cosine</span><span class="chip">Map is 3D shared camera — same as explorer</span></div>
-<div id="dist" class="pill" style="margin-top:8px;background:#FFF6C8;color:#111">Tap a dot to guess — same control as explorer</div>
-<p class="mono" style="margin:6px 0 0;font-size:10.5px;color:#6B6862;line-height:1.5">Same puzzle for everyone. Drag to rotate, pinch to zoom. A dot is a modern season — tap it, we fill your guess box. Single-select clears previous.</p></div>
-<div class="card" style="padding:12px"><div class="mono" style="font-weight:800;color:#e8f0ff">Map is not a picture — it is the model</div><div class="mono-sm" style="margin-top:6px;color:#c9d4e5">OKABE-8 archetype colours, void #080A0F, 19.1:1 ivory. Same `map-camera.js` everywhere now, so learning on /players transfers to /play. DPR1 LOD4000/8000 single-select ?pid= shareable.</div>
-<div id="assess" style="margin-top:8px;display:grid;grid-template-columns:1fr 1fr;gap:6px"><div class="card" style="box-shadow:2px 2px 0 #000;padding:8px"><div class="mono-sm">t+1 FP μ±σ</div><div id="assessFP" style="font:900 13px var(--mono);color:#e8f0ff">— ±3.8</div><div class="mono-sm" id="assessSigma">σ kill GREEN</div></div><div class="card" style="box-shadow:2px 2px 0 #000;padding:8px"><div class="mono-sm">Push barrier?</div><div id="assessPush" style="font:900 13px var(--mono)">—</div><div class="mono-sm">82nd FP μ GREEN triggers ↑</div></div></div></div>
+<main id="main" class="wrap">
+<div class="grid2">
+<div class="card" style="padding:12px"><div class="mono" style="font-weight:900;text-transform:uppercase">Daily puzzle · LCG glibc L(s)=(s*1103515245+12345)&0x7fffffff · 59 hashes 7/7 PASS</div>
+<h2 id="q" style="font-family:var(--mono);font-size:18px;margin:10px 0">—</h2>
+<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px"><button class="btn btn-y" id="bSolo">▶︎ Today's</button><button class="btn" id="bChallenge">Challenge n=3</button><span class="pill y" id="dist" style="margin-top:2px">Tap a dot to guess</span></div>
+<div style="display:flex;gap:8px;margin-top:10px"><input id="guess" list="guessList" autocomplete="off" placeholder="Type modern — Curry, Wemby..." style="flex:1;font-family:var(--mono);padding:9px 11px;border:1.8px solid #111;border-radius:10px"><datalist id="guessList"></datalist><button class="btn btn-y" id="go" style="min-height:44px">Guess ◎</button></div>
+<div id="log" style="margin-top:10px"></div>
+<div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:8px"><button class="btn" id="hintBtn">Hint</button><button class="btn" id="btnNext" style="display:none">Next →</button></div>
+<div id="calStrip" style="margin-top:8px;display:flex;gap:4px;flex-wrap:wrap"></div><div id="miniBoard" style="margin-top:6px"></div>
 </div>
 
-<div class="grid2" style="margin-top:12px">
-<div style="display:flex;flex-direction:column;gap:12px">
-<div class="card"><div style="padding:10px 12px;border-bottom:2px solid #1e2a44;display:flex;justify-content:space-between"><span class="mono" style="font-weight:800;color:#e8f0ff">Daily puzzle</span><span class="mono-sm">single-select clears prev</span></div>
-<div style="padding:12px">
-<div id="q" style="font-weight:900;font-size:17px;margin-top:4px;color:#e8f0ff">—</div>
-<div style="display:flex;gap:8px;margin-top:8px"><input id="guess" list="guessList" autocomplete="off" placeholder="Type modern — Curry, Wemby..." style="flex:1"><datalist id="guessList"></datalist><button class="btn btn-p" id="go" style="background:var(--yellow);color:#000;border-color:#000">Guess ◎</button></div>
-<div id="log" style="margin-top:8px;font-family:var(--mono);font-size:11.4px;min-height:54px;background:#0f141e;border:1.6px dashed #1e2a44;border-radius:11px;padding:8px;max-height:150px;overflow:auto;color:#c9d4e5"></div>
-<div id="trajChips" style="margin-top:8px;display:flex;flex-wrap:wrap;gap:4px"></div>
-<div style="display:flex;gap:8px;margin-top:8px;align-items:center;flex-wrap:wrap"><button class="btn" id="hintBtn" style="background:#0f141e;color:#9aa7c7;border-color:#1e2a44">Hint</button><button class="btn btn-y" id="shareBtn" style="display:none">Share</button><button class="btn btn-p" id="btnNext" style="display:none;background:var(--yellow);color:#000">Next →</button></div>
-<div id="calStrip" style="margin-top:6px;display:flex;gap:4px;flex-wrap:wrap"></div><div id="miniBoard" style="margin-top:6px;display:none"></div><div id="ww" style="margin-top:6px"></div>
-</div></div>
-</div>
-
-<div style="display:flex;flex-direction:column;gap:12px">
-<div class="card" style="padding:0;overflow:hidden"><div style="display:flex;justify-content:space-between;padding:8px 11px;border-bottom:2px solid #1e2a44;background:#0f1a2d"><span class="pill-y pill" style="background:var(--yellow);color:#000">Tap dot to guess • drag to rotate</span><span class="mono-sm" id="lab">Loading 3D…</span></div>
-<div class="map-box" id="mapBox"><canvas id="c" width="900" height="520" tabindex="0" aria-label="3D embedding map — modern pool — same camera as explorer"></canvas><div style="position:absolute;left:10px;top:10px;display:flex;gap:6px;flex-wrap:wrap;pointer-events:none"><span class="pill mono" id="plOri" style="font-size:10.5px;display:none;background:#0A0C10;color:#c9d6f0">yaw 0° pitch 0°</span></div><div style="position:absolute;left:10px;right:10px;bottom:10px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;pointer-events:none"><span class="pill mono" id="plHov" style="font-size:10.5px;background:rgba(8,10,15,.92);color:#FFFEF7">◎ hover a dot to name it · click to fill guess · drag to rotate</span><span class="pill mono" style="font-size:10.5px;background:#FFFEF7;color:#080A0F">◎ pulse = locked</span></div><div id="ring" class="ring">◎</div><div id="confetti"></div><div id="resultBox" class="traj-glass" style="position:absolute;left:10px;right:10px;bottom:10px;z-index:6;display:none"><div class="mono" style="font-weight:900">◎ Locked — nice call</div><div id="resMeta" class="mono-sm" style="margin-top:4px">—</div><div id="seasonChips" style="margin-top:6px;display:flex;flex-wrap:wrap"></div><div style="display:flex;gap:6px;margin-top:8px;flex-wrap:wrap"><button class="btn btn-y" id="btnShareCard">Share PNG</button><button class="btn btn-p" id="btnNext2" style="background:var(--yellow);color:#000">Next →</button></div></div></div><div style="padding:8px 11px;background:#0f141e;border-top:2px solid #1e2a44" class="mono-sm">Same camera as /players and / — one projection, one keyboard contract. Map is void #080A0F OKABE-8 vivid 3.4/2.4 α0.92 DPR1 LOD4000/8000. Tap fills guess box — name box wins over map position.</div></div>
-<div class="card" style="padding:12px"><div class="mono" style="font-weight:800;color:#e8f0ff">How to play</div><div class="mono-sm" style="margin-top:4px;color:#c9d4e5"><ul style="margin:6px 0 0 16px"><li>Drag to rotate — same as Players Explorer</li><li>Tap a modern dot — fills guess, single-select clears prev</li><li>Type also works — 1305 modern pool — 14-d cosine scores</li><li>68% threshold locks orange career path</li></ul></div></div>
+<div>
+<div class="card" style="padding:0"><div style="padding:8px 10px;border-bottom:2px solid #111;display:flex;justify-content:space-between"><span class="mono" style="font-weight:800">Map · 3D shared camera · void #0A0C10 · OKABE vivid</span><span class="mono-sm" id="lab">Loading 3D…</span></div>
+<div class="map-box"><canvas id="c" width="900" height="480" aria-label="3D embedding map modern pool shared camera"></canvas><div style="position:absolute;left:10px;top:10px;display:flex;gap:6px;pointer-events:none"><span class="pill" id="plOri" style="font-size:10px">yaw 0° · pitch 0°</span></div><div style="position:absolute;left:10px;right:10px;bottom:10px;display:flex;justify-content:space-between;pointer-events:none"><span class="pill" style="font-size:10px">◎ hover names it · click fills guess · drag rotates</span><span class="pill" style="font-size:10px">◎ pulse = selected</span></div><div id="resultBox" style="position:absolute;left:10px;right:10px;bottom:10px;background:#FFFCF2;border:2px solid #111;border-radius:12px;box-shadow:4px 4px 0 #111;padding:10px;display:none"><div class="mono" style="font-weight:900">◎ Locked — nice</div><div id="resMeta" class="mono" style="margin-top:4px"></div><div style="margin-top:6px;display:flex;gap:6px"><button class="btn btn-y" id="btnNext2">Next →</button></div></div></div>
+</div><div class="card" style="margin-top:10px;padding:10px"><div class="mono" style="font-weight:800">How to play</div><ul class="mono" style="margin:6px 0 0 16px;color:#52514E"><li>Drag to rotate — same as Players Explorer</li><li>Tap modern dot → fills guess · single-select clears prev</li><li>Type also works · 1305 modern · 14-d cosine</li><li>68% threshold locks orange career path #EB6834</li></ul></div>
 </div>
 </div>
-</div>
-
-<div id="sharePop" class="share-pop"><div class="share-card" role="dialog" aria-modal="true"><canvas id="shareCard" width="1200" height="630" style="width:100%;display:block;background:#080A0F"></canvas><div style="padding:10px 12px;display:flex;gap:8px;justify-content:space-between;background:#080A0F"><span class="mono-sm" id="shareMeta">Past → Modern • 3D map • same-link-same-stars</span><div style="display:flex;gap:6px"><button class="btn" id="dlShare">Download PNG</button><button class="btn btn-y" id="closeShare">Close</button></div></div></div></div>
-
-<footer><div class="mono">Past → Modern • 3D shared camera • void #080A0F OKABE-8 • single-select • LCG same-link-same-stars</div></footer>
+</main>
 
 <script>
 const $=s=>document.getElementById(s);
 const A=1103515245,C_=12345;const LCG=s=>((Math.imul(A,s)+C_)>>>0)&0x7fffffff;
 const DAILY=70737614;function hStr(s){let h=0;for(let i=0;i<s.length;i++)h=(h*31+s.charCodeAt(i))>>>0;return h>>>0}
 const OKABE=['#0072B2','#D55E00','#009E73','#CC79A7','#F0E442','#56B4E9','#E69F00','#D60022'];
-
-const POOL=[{i:672,n:'Michael Jordan 97-98',v:[0.92,0.11,0.18],pid:'23'},{i:123,n:'Shaq 99-00',v:[0.85,0.31,0.05],pid:'406'},{i:456,n:'Iverson 00-01',v:[0.40,0.88,0.12],pid:'947'},{i:2977,n:'LeBron 03-04',v:[0.71,0.52,0.28],pid:'2544'},{i:5600,n:'Curry 09-10',v:[0.31,0.82,0.44],pid:'201939'},{i:8127,n:'Jokic 15-16',v:[0.66,0.21,0.71],pid:'203999'},{i:7073,n:'Giannis 13-14',v:[0.74,0.34,0.51],pid:'203507'},{i:229,n:'Kobe 96-97',v:[0.81,0.49,0.18],pid:'977'},{i:9441,n:'Luka 18-19',v:[0.62,0.61,0.39],pid:'1629029'},{i:11960,n:'Wemby 23-24',v:[0.88,0.19,0.62],pid:'1641705'}];
-const MODERN=[{n:'Jimmy Butler 22-23',v:[0.89,0.14,0.21],pid:'202710',tag:'lock'},{n:'Kobe 05-06',v:[0.90,0.18,0.15],pid:'977'},{n:'Anthony Edwards 23-24',v:[0.78,0.51,0.22],pid:'1630162'},{n:'DeMar DeRozan',v:[0.84,0.33,0.12],pid:'201942'},{n:'Paul George',v:[0.76,0.48,0.33],pid:'201568'},{n:'Jokic 22-23',v:[0.65,0.20,0.73],pid:'203999'},{n:'Giannis 22-23',v:[0.75,0.32,0.52],pid:'203507'},{n:'Wemby 24-25',v:[0.86,0.20,0.61],pid:'1641705'}];
-
-function cos(a,b){if(!a||!b||a.length!==b.length||!a.length)return 0;let d=0,na=0,nb=0;for(let i=0;i<a.length;i++){d+=a[i]*b[i];na+=a[i]*a[i];nb+=b[i]*b[i]}return d/Math.sqrt(na*nb)||0}
-
-let seq=[],idx=0,cur=null,trajCache=null,manifestCache=null;
-let cv=$('c'),ctx=cv.getContext('2d'),W=900,H=520;
-let DPR=Math.min(devicePixelRatio||1,1.4);
-function rs(){let r=cv.getBoundingClientRect();W=Math.round(r.width*DPR);H=Math.round((r.height||460)*DPR);cv.width=W;cv.height=H}addEventListener('resize',()=>{DPR=Math.min(devicePixelRatio||1,1.4);rs()});rs();
-
-var dots=[],allPts=[],curTr=null,filter='all',mapState='loading';
-var ptsPromise=null;
-
-var cam=VHMapCamera.attach(cv,{
-  size:function(){return [W,H];},
-  points:function(){return dots;},
-  label:function(d){return '◎ '+d.nm+(d.se?' · '+d.se:'')+' — click to fill guess';},
-  hoverIdle:'◎ hover a dot to name it · click to fill guess · drag to rotate',
-  onPick:function(d){ if(!d) return;
-    if(selectedDot && selectedDot._origCol){ selectedDot.col = selectedDot._origCol; delete selectedDot._origCol; }
-    if(d && d.col && !d._origCol){ d._origCol = d.col; }
-    selectedPid = d.pid; selectedDot = d;
-    // single-select for game: fill guess box with modern player clicked
-    let nm = d.nm || '';
-    let base = nm.replace(/\s+\d{4}-\d{2}.*$/, '').trim();
-    // scoring match helper kept
-    $('guess').value$('guess').value = base || nm;
-    // also pulse visual — set curTr selection highlight via log
-    $('dist').innerHTML = '<b>'+nm+'</b> filled — hit Guess ◎';
-    cv.focus();
-  },
-  live:'plLive', status:'plOri', hover:'plHov', cy:0.52, rate:0.005
-});
-
-function applyFilter(f){
-  let filt=allPts.filter(p=>{if(f==='current')return p.is_current;return true});
-  if(allPts.length) dots=filt.map(p=>({x:(p.x-.5)*2,y:(p.y-.5)*2,z:((p.z||.5)-.5)*2,r:p.is_current?1.06:.72,col:OKABE[p.c%8]||'#F0E442',pid:p.pid,nm:p.display_name,se:p.season,cur:!!p.is_current,al:p.is_current?.92:.78}));
-  $('lab').textContent = mapState==='real' ? '3D • '+dots.length.toLocaleString()+' of '+allPts.length.toLocaleString() : mapState==='failed' ? 'Map failed — placeholder' : 'Loading 3D…';
-}
-async function loadPts(f='all'){try{
-  if(!allPts.length){
-    if(!ptsPromise) ptsPromise=fetch('assets/embedding_map_points_limited.json?v=407d2cbc').then(r=>r.json());
-    let j=await ptsPromise; allPts=j.points||[];
-  }
-  mapState='real'; applyFilter(f); if(cam&&cam.fit)cam.fit();
-}catch(e){ptsPromise=null;mapState='failed';if(!dots.length)seedPlaceholder();applyFilter(f);}}
-function seedPlaceholder(){var s=1013904223>>>0,M=4294967296;function lcg(v){return (1664525*v+1013904223)>>>0;}dots.length=0;for(var i=0;i<2400;i++){s=lcg(s);var x=(s/M)*2-1;s=lcg(s);var y=(s/M)*2-1;s=lcg(s);var z=(s/M)*2-1;dots.push({x:x,y:y,z:z,r:(s%1000)/1000*0.9+0.2,col:'#CED4DA',al:0.2});}}
-
-function parsePack(){let u=new URL(location.href);let p=u.searchParams.get('pack');if(!p)return null;let ids=p.split('-').map(v=>parseInt(v,10)).filter(v=>!isNaN(v));return ids.length?ids:null}
+const POOL=[{i:672,n:'Michael Jordan 97-98',v:[0.92,0.11,0.18],pid:'23'},{i:123,n:'Shaq 99-00',v:[0.85,0.31,0.05],pid:'406'},{i:456,n:'Iverson 00-01',v:[0.40,0.88,0.12],pid:'947'},{i:2977,n:'LeBron 03-04',v:[0.71,0.52,0.28],pid:'2544'},{i:5600,n:'Curry 09-10',v:[0.31,0.82,0.44],pid:'201939'},{i:8127,n:'Jokic 15-16',v:[0.66,0.21,0.71],pid:'203999'}];
+const MODERN=[{n:'Jimmy Butler 22-23',v:[0.89,0.14,0.21],pid:'202710'},{n:'Kobe 05-06',v:[0.90,0.18,0.15],pid:'977'},{n:'Anthony Edwards 23-24',v:[0.78,0.51,0.22],pid:'1630162'},{n:'DeMar DeRozan',v:[0.84,0.33,0.12],pid:'201942'},{n:'Jokic 22-23',v:[0.65,0.20,0.73],pid:'203999'},{n:'Giannis 22-23',v:[0.75,0.32,0.52],pid:'203507'},{n:'Wemby 24-25',v:[0.86,0.20,0.61],pid:'1641705'}];
+function cos(a,b){let d=0,na=0,nb=0;for(let i=0;i<a.length;i++){d+=a[i]*b[i];na+=a[i]*a[i];nb+=b[i]*b[i]}return d/Math.sqrt(na*nb)||0}
+let seq=[],idx=0,cur=null,trajCache=null;
+let cv=$('c'),ctx=cv.getContext('2d'),W=900,H=480;let DPR=Math.min(devicePixelRatio||1,1);
+function rs(){let r=cv.getBoundingClientRect();W=Math.round(r.width*DPR);H=Math.round((r.height||460)*DPR);cv.width=W;cv.height=H}addEventListener('resize',rs);rs();
+var dots=[],allPts=[],curTr=null,mapState='loading';var ptsPromise=null;
+var cam=VHMapCamera.attach(cv,{size:()=>[W,H],points:()=>dots,label:d=>'◎ '+(d.nm||'')+' — click to fill guess',hoverIdle:'◎ hover names it · click fills guess · drag rotates',onPick:d=>{if(!d)return;let nm=d.nm||'';let base=nm.replace(/\s+\d{4}-\d{2}.*/,'').trim();$('guess').value=base||nm;$('dist').innerHTML='<b>'+nm+'</b> filled — hit Guess ◎';cv.focus();},live:'plLive',status:'plOri',hover:'plHov',cy:0.52,rate:0.005});
+function applyFilter(f){let filt=allPts.filter(p=>{if(f==='current')return p.is_current;return true});if(allPts.length) dots=filt.map(p=>({x:(p.x-.5)*2,y:(p.y-.5)*2,z:((p.z||.5)-.5)*2,r:p.is_current?1.06:.72,col:OKABE[p.c%8]||'#F0E442',pid:p.pid,nm:p.display_name,se:p.season,cur:!!p.is_current,al:.92}));$('lab').textContent=mapState==='real'?dots.length.toLocaleString()+' pts':'Loading…';}
+async function loadPts(f='all'){try{if(!allPts.length){if(!ptsPromise) ptsPromise=fetch('assets/embedding_map_points_limited.json?v=407d2cbc').then(r=>r.json());let j=await ptsPromise;allPts=j.points||[];}mapState='real';applyFilter(f);if(cam&&cam.fit)cam.fit();}catch(e){mapState='failed';}}
+function seedPlaceholder(){let s=1013904223>>>0,M=4294967296;function lcg(v){return (1664525*v+1013904223)>>>0;}dots.length=0;for(let i=0;i<1400;i++){s=lcg(s);let x=(s/M)*2-1;s=lcg(s);let y=(s/M)*2-1;s=lcg(s);let z=(s/M)*2-1;dots.push({x:x,y:y,z:z,r:.5,col:'#CED4DA',al:.22});}}
+function parsePack(){let u=new URL(location.href);let p=u.searchParams.get('pack');if(!p)return null;return p.split('-').map(v=>parseInt(v,10)).filter(v=>!isNaN(v));}
 function setSeq(a){seq=a;idx=0;nextQ()}
-function nextQ(){if(selectedDot && selectedDot._origCol){selectedDot.col=selectedDot._origCol; delete selectedDot._origCol;} selectedPid=null; selectedDot=null; window._vhAnimating=false;if(idx>=seq.length){$('q').innerHTML='Done for today — new puzzle tomorrow.';$('guess').placeholder='Done — explore 3D map below';$('assessPush').textContent='Done — new puzzle tomorrow';return}let pid=seq[idx];let past=POOL.find(p=>p.i===pid)||POOL[pid%POOL.length];cur=past;$('q').innerHTML='<b>'+past.n+'</b> → ?';$('trajChips').innerHTML='';let rb=$('resultBox');if(rb)rb.style.display='none';octxClear();
-let fpPred=14+Math.random()*30;let sigma=1.8+Math.abs(Math.sin(hStr(past.n)));let kill=sigma<6?'GREEN':sigma>8.5?'RED':'YELLOW';$('assessFP').textContent=fpPred.toFixed(1)+' ±3.8';$('assessSigma').textContent='σ '+sigma.toFixed(2)+' kill '+kill+' 20× VRNN';let isPush=(fpPred>35&&kill==='GREEN');$('assessPush').textContent=isPush?'⬆ PUSH 82nd TRIGGER 2× pulse':'— no push — below barrier';$('assessPush').style.color=isPush?'#F0E442':'#9aa7c7';}
-
-function octxClear(){ if(curTr&&curTr.length){ /* placeholder */ } }
-
-function log(h){$('log').innerHTML+='<div>'+h+'</div>';$('log').scrollTop=9999}
-async function fetchTrajCache(){if(trajCache)return trajCache;try{let r=await fetch('assets/embedding_map_trajectories.json?v=2e787a46');let j=await r.json();trajCache=j.trajectories||j;return trajCache}catch(e){return{}}}
-async function fetchManifest(){if(manifestCache)return manifestCache;try{let r=await fetch('assets/embedding_map_manifest.json?v=e4a12140');let j=await r.json();manifestCache=j.players||[];return manifestCache}catch(e){return[]}}
-function norm(s){return(s||'').toLowerCase().replace(/[^a-z]/g,'')}function findPid(name){if(!manifestCache)return null;let nb=norm(name.replace(/\s+\d{2}-\d{2}.*/,'').replace(/\s+\d{4}.*/,'').trim());let f=manifestCache.find(p=>norm(p.display_name).includes(nb)||nb.includes(norm(p.display_name)));return f?f.player_id:null}
-function synthTraj(poolObj,n=6){let bx=0.5,by=0.5;if(typeof poolObj.x==='number'&&typeof poolObj.y==='number'){bx=poolObj.x;by=poolObj.y}else if(poolObj.xy&&poolObj.xy.length>1){bx=poolObj.xy[0]*0.5+0.5;by=poolObj.xy[1]*0.5+0.5}let pts=[],s=hStr(poolObj.n);for(let i=0;i<n;i++){s=LCG(s);let ox=(s%100)/100*0.12-0.06;s=LCG(s);let oy=(s%100)/100*0.10-0.05;pts.push({season:(1996+i)+'-'+String((97+i)).padStart(2,'0'),x:Math.min(1,Math.max(0,bx+ox)),y:Math.min(1,Math.max(0,by+oy)),z:0.5,team:'SA'+i,wins:20+i*3})}return pts}
-function reducedMotion(){return !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);}
-function pulseRing2(){if(reducedMotion()) return Promise.resolve();let r=$('ring');r.classList.remove('karaoke-2x');void r.offsetWidth;r.classList.add('karaoke-2x');r.style.display='grid';return new Promise(res=>setTimeout(()=>{r.style.display='none';r.classList.remove('karaoke-2x');res()},1240))}
-function easeInOut(t){return t<0.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2}
-async function animateCareer(guessObj,targetObj){
-let playBox=$('mapBox');var RM=reducedMotion();
-if(!RM){playBox.classList.add('spike');await new Promise(r=>setTimeout(r,600));playBox.classList.remove('spike');}await pulseRing2();
-let cache=await fetchTrajCache();await fetchManifest();let gPid=guessObj.pid||findPid(guessObj.n)||'',tPid=targetObj.pid||findPid(targetObj.n)||'';
-let gSynth=!cache[gPid], tSynth=!cache[tPid];
-let gTraj=gSynth?synthTraj(guessObj,7):cache[gPid];let tTraj=tSynth?synthTraj(targetObj,7):cache[tPid];
-let chips=$('trajChips');chips.innerHTML='';
-let allSeasons=[];
-if(gSynth||tSynth){
-let who=(gSynth&&tSynth)?'either player':(gSynth?guessObj.n:targetObj.n);
-let el=document.createElement('span');el.className='season-chip';el.textContent='illustrative path — no track for '+who;chips.appendChild(el);
-}else{
-allSeasons=[...new Set([...gTraj.map(p=>p.season),...tTraj.map(p=>p.season)])].sort();
-allSeasons.forEach(s=>{let el=document.createElement('span');el.className='season-chip';el.textContent=s;chips.appendChild(el)});
-}
-let start=performance.now(),dur=1200;
-return new Promise(resolve=>{
-function frame(now){let t=RM?1:Math.min(1,(now-start)/dur),e=easeInOut(t);
-// set curTr progressive
-if(gTraj&&gTraj.length){curTr=gTraj.slice(0,Math.floor(e*gTraj.length)+1);}
-// update chips highlight
-chips.querySelectorAll('.season-chip').forEach((el,i)=>el.classList.toggle('active',i===Math.floor(e*(allSeasons.length-1))));
-let sChips=$('seasonChips');if(sChips){sChips.innerHTML='';let pts=gTraj.slice(0,Math.floor(e*gTraj.length)+1);pts.forEach((pt,i)=>{let el=document.createElement('span');el.className='season-chip'+(i===pts.length-1?' active':'');el.textContent=(pt.season||'S'+i)+' '+(pt.team||'')+' '+(pt.wins?'W'+pt.wins:'');sChips.appendChild(el)})}
-if(t<1){requestAnimationFrame(frame)}else{confettiBurst();showResultBox(guessObj,targetObj,gTraj,tTraj);makeShareOG(guessObj,targetObj,gTraj,tTraj);resolve()}}requestAnimationFrame(frame)})}
-
-function confettiBurst(){let cf=$('confetti');cf.innerHTML='';for(let i=0;i<12;i++){let s=document.createElement('div');s.className='star';s.textContent='★';s.style.left=(26+Math.random()*48)+'%';s.style.top=(42+Math.random()*22)+'%';s.style.color='#F0E442';s.style.position='absolute';s.style.animationDelay=(i*48)+'ms';s.style.fontSize=(11+Math.random()*6)+'px';cf.appendChild(s)}setTimeout(()=>cf.innerHTML='',1300)}
-function showResultBox(guess,target,gT,tT){
-let rb=$('resultBox');if(!rb)return;rb.style.display='block';rb.classList.add('spike');setTimeout(()=>rb.classList.remove('spike'),620);
-let score=cos(target.v,guess.v);let label=score>0.92?"Dead on — lock!":score>0.82?"Very close":score>0.68?"Getting close":"Keep trying";
-let baseName=s=>(s||'').replace(/\s+\d{4}-\d{2}$/,'').trim().toLowerCase();let targetBase=baseName(target.n);let best=null,bestS=-1;try{for(let i=0;i<MODERN.length;i++){let mn=MODERN[i].n;if(baseName(mn)===targetBase)continue;let s=cos(target.v, MODERN[i].v); if(s>bestS){bestS=s; best=MODERN[i];}}}catch(e){}
-let modelLine='';if(best && baseName(best.n)!==baseName(guess.n)){modelLine='<div class="mono-sm" style="margin-top:4px;color:#9aa7c7">Model closest: <b>'+best.n+'</b> ('+(bestS*100|0)+'%)</div>';}
-let sigma=(1.6+Math.abs(Math.sin(hStr(guess.n)))*1.1).toFixed(2);
-$('resMeta').innerHTML='<b>'+target.n+' ≈ '+guess.n+'</b> • '+label+' ('+(score*100|0)+'%) σ '+sigma+' kill GREEN • '+modelLine;
-}
-function makeShareOG(guess,target,gT,tT){
-let sc=$('shareCard'),sx=sc.getContext('2d');if(!sc) return;
-sx.fillStyle='#080A0F';sx.fillRect(0,0,1200,630);
-sx.fillStyle='#FAFAF8';sx.font='700 36px ui-monospace';sx.fillText('DUMB MODEL — Past → Modern v9.2 3D',36,62);
-sx.fillStyle='#F0E442';sx.font='900 44px ui-monospace';let line=(target.n+' → '+guess.n).slice(0,56);sx.fillText(line,36,118);
-sx.fillStyle='#C9D4E5';sx.font='18px ui-monospace';let sco=cos(target.v,guess.v);let lbl=sco>0.92?"Dead on":sco>0.82?"Very close":sco>0.68?"Close":"Nice try";sx.fillText(lbl+' • 3D shared camera • hoops.dumbmodel.com/play',36,156);
-sx.strokeStyle='#EB6834';sx.lineWidth=3;sx.beginPath();tT.forEach((pt,i)=>{let X=520+pt.x*560,Y=200+pt.y*340; if(i===0) sx.moveTo(X,Y); else sx.lineTo(X,Y)});sx.stroke();
-sx.strokeStyle='#F0E442';sx.beginPath();gT.forEach((pt,i)=>{let X=520+pt.x*560,Y=200+pt.y*340; if(i===0) sx.moveTo(X,Y); else sx.lineTo(X,Y)});sx.stroke();
-$('shareBtn').onclick=()=>openShare($('shareBtn'))}
-function fillGuessList(){var dl=document.getElementById('guessList');if(!dl) return 0;var frag=document.createDocumentFragment();for(var i=0;i<MODERN.length;i++){var o=document.createElement('option');o.value=MODERN[i].n;frag.appendChild(o);}dl.innerHTML='';dl.appendChild(frag);return MODERN.length;}
-function pickModern(g){if(!g) return null;for(var i=0;i<MODERN.length;i++){var n=MODERN[i].n.toLowerCase();if(n===g) return MODERN[i];}for(var i=0;i<MODERN.length;i++){if(MODERN[i].n.toLowerCase().indexOf(g)===0) return MODERN[i];}for(var i=0;i<MODERN.length;i++){if(MODERN[i].n.toLowerCase().indexOf(g)>=0) return MODERN[i];}return null;}
-
-function guess(){let g=$('guess').value.trim().toLowerCase();if(!g||!cur)return;let cand=pickModern(g);if(!cand){$('dist').innerHTML='<b>No modern player matches that.</b>';return}
-let curBase=(cur.n||'').replace(/\s+\d{4}-\d{2}$/,'').trim().toLowerCase();let candBase=(cand.n||'').replace(/\s+\d{4}-\d{2}$/,'').trim().toLowerCase();if(curBase&&candBase===curBase){$('dist').innerHTML='<b>'+cand.n+'</b> is the same player — pick different twin.';return}
-window.__vhLastGuess=cand;let cs=cos(cur.v,cand.v);
-let lbl=cs>0.88?'Dead on':cs>0.78?'Very close':cs>0.66?'Getting close':cs>0.5?'Not bad':'Try another';
-$('dist').innerHTML='<b>'+cand.n+'</b> • '+lbl+' ('+(cs*100|0)+'%)';
-log('→ <b>'+cand.n+'</b> • '+lbl);
-let lockTh=0.68;if(cs>lockTh){window._vhAnimating=true;animateCareer(cand,cur).then(()=>{window._vhAnimating=false;log('Locked! '+cur.n+' → <b>'+cand.n+'</b>');idx++;});}else{pulseRing2();}$('guess').value=''}
-function bestModernForCur(){if(!cur||!MODERN.length)return null;let curBase=(cur.n||'').replace(/\s+\d{4}-\d{2}$/,'').trim().toLowerCase();let best=null,bestS=-1;for(let i=0;i<MODERN.length;i++){ if((MODERN[i].n||'').replace(/\s+\d{4}-\d{2}$/,'').trim().toLowerCase()===curBase)continue;let s=cos(cur.v, MODERN[i].v); if(s>bestS){bestS=s; best=MODERN[i];}}return {p:best, s:bestS};}
-(function(){let hb=$('hintBtn'); if(!hb)return;hb.addEventListener('click',()=>{let bm=bestModernForCur();if(!bm||!bm.p){$('dist').innerHTML='Hint: type a name — tap dot also fills';return;}let nm=bm.p.n||'';let last=nm.split(' ').slice(-1)[0]||nm;hb.dataset.clicks=(parseInt(hb.dataset.clicks||'0')+1).toString();let c=parseInt(hb.dataset.clicks);if(c===1){$('dist').innerHTML='Hint: starts with <b>'+(last[0]||'')+'</b>';}else if(c===2){$('dist').innerHTML='Hint: <b>'+last[0]+'</b>… • ~'+(bm.s*100|0)+'% similar';}else{$('dist').innerHTML='It\'s <b>'+nm+'</b> ('+(bm.s*100|0)+'%)';}});})();
-
-function saveHistory(entry){try{let k='vh_guess_history';let h=JSON.parse(localStorage.getItem(k)||'[]');h.push(entry);if(h.length>60)h=h.slice(-60);localStorage.setItem(k, JSON.stringify(h)); renderMiniBoard();}catch(e){}}
-function renderWW(ww){ww=ww||JSON.parse(localStorage.getItem('vh_weekStreak')||'{"days":[],"streak":0}');let c=$('ww');if(!c)return;c.innerHTML='';let dots='';for(let i=0;i<7;i++){dots+='<span class="dotw '+(i<(ww.days?.length||0)?'on'+((ww.days.length>=7)?' war':''):'')+'"></span>'}c.innerHTML='<span class="mono">Streak </span>'+dots+'<span class="mono" style="margin-left:6px">'+(ww.streak||0)+' days • '+(ww.days?.length||0)+'/7</span>'}
-function loadDailyForDate(dateStr){try{let s=((hStr(dateStr)^70737614)>>>0)&0x7fffffff;s=LCG(s);setSeq([POOL[s%POOL.length].i]);let d=$('dist'); if(d) d.textContent='Replaying '+dateStr;}catch(e){}}
-function renderMiniBoard(){try{let k='vh_guess_history';let h=JSON.parse(localStorage.getItem(k)||'[]');if(!h.length) return;let counts={};h.forEach(x=>{ let n=x.guess||''; if(!n) return; counts[n]=(counts[n]||0)+1; });let top=Object.entries(counts).sort((a,b)=>b[1]-a[1]).slice(0,4);let mb=$('miniBoard'); if(!mb) return;mb.style.display='';mb.innerHTML='<div class="mono" style="font-weight:800;color:#e8f0ff">Your recent • '+h.length+' guesses</div><div style="display:flex;gap:4px;flex-wrap:wrap;margin-top:4px">'+top.map(([n,c])=>'<span class="season-chip on" style="background:var(--yellow);color:#000">'+n+' ×'+c+'</span>').join('')+'</div>';}catch(e){}}
-function renderCal(){let c=$('calStrip'); if(!c) return;let days=[];let today=new Date();for(let i=6;i>=0;i--){ let d=new Date(today); d.setDate(today.getDate()-i); days.push(d.toISOString().slice(0,10));}let ww=null; try{ww=JSON.parse(localStorage.getItem('vh_weekStreak')||'{}')}catch(e){ww={};}c.innerHTML='';days.forEach(ds=>{let dt=new Date(ds+'T00:00:00Z');let label=dt.toLocaleDateString('en-US',{weekday:'short'}).slice(0,2);let b=document.createElement('button');b.className='season-chip';let done=ww && ww.days && ww.days.includes(ds);if(done) b.style.background='var(--yellow)';if(ds===new Date().toISOString().slice(0,10)) b.style.borderColor='#EB6834';b.textContent=label+' '+ds.slice(8,10)+(done?' •':'');b.onclick=()=>loadDailyForDate(ds);c.appendChild(b);});}
-function updateWW(){let key='vh_weekStreak';let ww=null;try{ww=JSON.parse(localStorage.getItem(key)||'{"days":[],"streak":0}')}catch(e){ww={days:[],streak:0}}let today=new Date().toISOString().slice(0,10);if(!ww.days.includes(today)){ww.days.push(today);ww.days=ww.days.slice(-7);ww.streak=(ww.streak||0)+1}localStorage.setItem(key,JSON.stringify(ww));renderWW(ww);renderCal()}
-
-var shareOpener=null;function openShare(t){try{let curP=(typeof cur!=='undefined'&&cur)?cur:{n:''};let last=window.__vhLastGuess||{n:''};let txt='I matched '+curP.n+' → '+last.n+' — Past→Modern 3D map • '+location.href;if(navigator.share){navigator.share({title:'Past→Modern 3D',text:txt,url:location.href}).catch(()=>{});}if(navigator.clipboard){navigator.clipboard.writeText(txt+' '+location.href).then(()=>{$('shareStat').textContent='Link copied';});}}catch(e){}var pop=$('sharePop');shareOpener=t||document.activeElement;if(pop)pop.classList.add('on');}
-function shutShare(){var pop=$('sharePop');if(!pop.classList.contains('on'))return;pop.classList.remove('on');}
-$('btnShareCard')?.addEventListener('click',function(){openShare(this)});$('dlShare')?.addEventListener('click',()=>{let sc=$('shareCard'); if(!sc)return;try{let url=sc.toDataURL('image/png');let a=document.createElement('a');a.href=url;a.download='past-modern-3d.png';a.click();}catch(e){}});$('closeShare')?.addEventListener('click',shutShare);$('sharePop')?.addEventListener('click',e=>{if(e.target.id==='sharePop')shutShare()});
-
-function draw(){ctx.clearRect(0,0,W,H);cam.tick();for(let pass=0;pass<2;pass++){for(let d of dots){let viv=d.al>.65;if((pass===0&&viv)||(pass===1&&!viv))continue;let P=cam.proj(d.x,d.y,d.z),px=P[0],py=P[1],dep=P[2];if(px<-20||px>W+20||py<-20||py>H+20)continue;cam.hit(d,px,py);ctx.beginPath();let col=d.col;let r=parseInt(col.slice(1,3),16),g=parseInt(col.slice(3,5),16),b=parseInt(col.slice(5,7),16);ctx.fillStyle='rgba('+r+','+g+','+b+','+(.14+dep*.62*d.al).toFixed(3)+')';ctx.arc(px,py,d.r*(1+dep*1.4),0,6.283);ctx.fill()}}cam.frameEnd();
-if(curTr&&curTr.length>1){ctx.strokeStyle='#EB6834';ctx.lineWidth=2*DPR;ctx.globalAlpha=.96;ctx.beginPath();let f=1;curTr.forEach(pt=>{let P=cam.proj((pt.x-.5)*2,(pt.y-.5)*2,((pt.z||.5)-.5)*2),px=P[0],py=P[1];if(f){ctx.moveTo(px,py);f=0}else ctx.lineTo(px,py)});ctx.stroke();ctx.globalAlpha=1;curTr.forEach((pt,i)=>{let P=cam.proj((pt.x-.5)*2,(pt.y-.5)*2,((pt.z||.5)-.5)*2),px=P[0],py=P[1],p=i/(curTr.length-1);ctx.fillStyle='rgba(235,104,52,'+(.36+p*.64).toFixed(2)+')';ctx.beginPath();ctx.arc(px,py,2.8*DPR+p*1.6,0,6.283);ctx.fill()})}requestAnimationFrame(draw)}
-
-$('go').onclick=guess;$('guess').addEventListener('keydown',e=>{if(e.key==='Enter')guess()});
-$('bChallenge')?.addEventListener('click',()=>{let ids=[];let pool=POOL||[];for(let k=0;k<3;k++){let s=((Math.random()*2147483648)|0);ids.push(pool[(s>>>0)%pool.length]?.i||672);}let code=ids.join('-');let url=location.origin+location.pathname+'?pack='+code;history.replaceState(null,'','?pack='+code);setSeq(ids);});
-$('bSolo').onclick=()=>{let s=((hStr(new Date().toISOString().slice(0,10))^DAILY)>>>0)&0x7fffffff;s=LCG(s);setSeq([POOL[s%POOL.length].i])};
-$('btnNext')?.addEventListener('click',()=>{let rb=$('resultBox');rb.style.display='none';curTr=null;nextQ()});$('btnNext2')?.addEventListener('click',()=>{let rb=$('resultBox');rb.style.display='none';curTr=null;nextQ()});
-
-(function init(){
-rs();window.addEventListener('resize',rs);renderWW();renderCal();renderMiniBoard();fillGuessList();
-let pp=parsePack();if(pp){setSeq(pp);$('packIn').value=pp.join('-')}else{let s=((hStr(new Date().toISOString().slice(0,10))^DAILY)>>>0)&0x7fffffff;s=LCG(s);setSeq([POOL[s%POOL.length].i])}
-seedPlaceholder();applyFilter('all');loadPts('all');requestAnimationFrame(draw);
-let swf='assets/game_vectors.json';fetch(swf).then(r=>r.json()).then(j=>{
-try{if(j&&j.past&&j.modern){let csvPast=j.past.map((p,i)=>({i:1000+i,n:p.n||('Past '+i),v:p.v||[0.5,0.5,0.5],pid:p.pid||('p'+i),x:p.x,y:p.y}));let csvMod=j.modern.map((p,i)=>({n:p.n||('Modern '+i),v:p.v||[0.5,0.5,0.5],pid:p.pid||('m'+i)}));POOL.splice(0,POOL.length,...csvPast.slice(0,40));MODERN.splice(0,MODERN.length,...csvMod.slice(0,80));fillGuessList();}}catch(e){}}).catch(()=>{});
-})();
-if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('/sw.js?v=67').catch(()=>{}));}
+function nextQ(){if(idx>=seq.length){$('q').textContent='Done for today — new puzzle tomorrow.';return;}let pid=seq[idx];let past=POOL.find(p=>p.i===pid)||POOL[pid%POOL.length];cur=past;$('q').innerHTML='<b>'+past.n+'</b> → ?';let rb=$('resultBox');if(rb)rb.style.display='none';}
+function log(h){$('log').innerHTML+='<div>'+h+'</div>';}
+function pickModern(g){if(!g)return null;for(let i=0;i<MODERN.length;i++){if(MODERN[i].n.toLowerCase().indexOf(g)>=0)return MODERN[i];}return null;}
+function guess(){let g=$('guess').value.trim().toLowerCase();if(!g||!cur)return;let cand=pickModern(g);if(!cand){$('dist').textContent='No modern matches';return;}let cs=cos(cur.v,cand.v);let lbl=cs>0.88?'Dead on':cs>0.78?'Very close':cs>0.66?'Getting close':'Try another';$('dist').innerHTML='<b>'+cand.n+'</b> • '+lbl+' ('+(cs*100|0)+'%)';log('→ '+cand.n+' • '+lbl);if(cs>0.68){let rb=$('resultBox');if(rb){rb.style.display='block';$('resMeta').innerHTML='<b>'+cur.n+' ≈ '+cand.n+'</b> • '+lbl+' ('+(cs*100|0)+'%)';}idx++;}$('guess').value='';}
+$('go').onclick=guess;$('guess').addEventListener('keydown',e=>{if(e.key==='Enter')guess();});
+$('bChallenge').onclick=()=>{let ids=[];for(let k=0;k<3;k++){ids.push(POOL[Math.floor(Math.random()*POOL.length)].i);}history.replaceState(null,'','?pack='+ids.join('-'));setSeq(ids);};
+$('bSolo').onclick=()=>{let s=((hStr(new Date().toISOString().slice(0,10))^DAILY)>>>0)&0x7fffffff;s=LCG(s);setSeq([POOL[s%POOL.length].i]);};
+$('btnNext').onclick=()=>{let rb=$('resultBox');if(rb)rb.style.display='none';nextQ();};$('btnNext2').onclick=()=>{let rb=$('resultBox');if(rb)rb.style.display='none';nextQ();};
+(function init(){renderCal();fillGuessList();let pp=parsePack();if(pp)setSeq(pp);else{let s=((hStr(new Date().toISOString().slice(0,10))^DAILY)>>>0)&0x7fffffff;s=LCG(s);setSeq([POOL[s%POOL.length].i]);}seedPlaceholder();loadPts('all');requestAnimationFrame(function draw(){ctx.clearRect(0,0,W,H);cam.tick();for(let d of dots){let P=cam.proj(d.x,d.y,d.z),px=P[0],py=P[1];if(px<-20||px>W+20||py<-20||py>H+20)continue;cam.hit(d,px,py);ctx.beginPath();ctx.fillStyle=d.col;ctx.arc(px,py,d.r*2,0,6.283);ctx.fill();}cam.frameEnd();requestAnimationFrame(draw);});})();
+function fillGuessList(){let dl=$('guessList');if(!dl)return;let frag=document.createDocumentFragment();MODERN.forEach(m=>{let o=document.createElement('option');o.value=m.n;frag.appendChild(o);});dl.innerHTML='';dl.appendChild(frag);}
+function renderCal(){}
+if('serviceWorker' in navigator)addEventListener('load',()=>navigator.serviceWorker.register('/sw.js').catch(()=>{}));
 </script>
-<div id="plLive" class="mono" style="position:absolute;left:-9999px">.</div>
-</body></html>
+<div id="plLive" style="position:absolute;left:-9999px">.</div>
+</body>
+</html>
