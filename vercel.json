@@ -16,6 +16,11 @@
   ],
   "redirects": [
     {
+      "source": "/",
+      "destination": "/play",
+      "permanent": false
+    },
+    {
       "source": "/:path*",
       "has": [
         {
