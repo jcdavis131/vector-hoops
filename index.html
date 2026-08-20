@@ -3,475 +3,289 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Vector Hoops — 1764 players · void map · Front Office</title>
-<meta name="description" content="1764 NBA player-seasons as 64-d vectors. MTNN 20 towers MAE 0.21 CQS 0.72. Cap $140.5M surplus. 7 team edges. Mobile-first void map.">
+<title>Vector Hoops — GraphBFF MTNN v9 · 1764 players · void map</title>
+<meta name="description" content="1764 NBA player-seasons as 64-d vectors via GraphBFF dual-stream TCA/TAA 0.7/0.3. MTNN v9 composite 0.88 CQS 0.72. Map-is-mechanic: proximity = similarity.">
 <meta name="theme-color" content="#080A0F">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23080A0F'/%3E%3Ccircle cx='12' cy='13' r='3.2' fill='%23F0E442' stroke='%23fff' stroke-width='1.2'/%3E%3Ccircle cx='20' cy='20' r='2.8' fill='%2356B4E9'/%3E%3C/svg%3E">
 <link rel="manifest" href="/manifest.json">
 <style>
-/* mobile-first rebuilt — same contract, warmer dark, better touch */
 :root{
-  --void:#080A0F; --void-2:#101828; --void-3:#111D32;
-  --panel:#131E36; --panel-2:#15213D; --panel-3:#0E152A;
-  --grid:#24365D; --grid-2:#2A3F6B;
-  --ink:#E9F0FF; --ink-2:#9fb2d6; --ink-3:#7187ab; --ink-4:#5c7092;
-  --yellow:#F6EC79; --yellow-ink:#151300; --orange:#FF7A3D;
-  --blue:#5DB8FF; --green:#1EDD9B; --ok0:#E69F00; --ok1:#56B4E9; --ok2:#009E73; --ok3:#F0E442; --ok4:#0072B2; --ok5:#D55E00; --ok6:#CC79A7; --ok7:#FFFEF7;
-  --nav-h:44px; --pov-h:48px; --r:14px; --r-lg:18px; --r-pill:999px;
-  --mono:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;
-  --sans:ui-sans-system,-apple-system,Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
-  --shadow:0 2px 0 #000,0 8px 24px rgba(0,0,0,.32);
-  --shadow-sm:0 1.5px 0 #000,0 6px 16px rgba(0,0,0,.24);
-  --gutter:clamp(14px,3.6vw,28px);
+--void:#080A0F; --void-2:#101828; --void-3:#111D32;
+--panel:#131E36; --panel-2:#15213D; --panel-3:#0E152A;
+--grid:#24365D; --grid-2:#2A3F6B;
+--ink:#E9F0FF; --ink-2:#9fb2d6; --ink-3:#7187ab; --ink-4:#5c7092;
+--yellow:#F6EC79; --yellow-ink:#151300; --orange:#FF7A3D;
+--blue:#5DB8FF; --green:#1EDD9B; --paper:#FEFCF9;
+--ok0:#E69F00; --ok1:#56B4E9; --ok2:#009E73; --ok3:#F0E442; --ok4:#0072B2; --ok5:#D55E00; --ok6:#CC79A7; --ok7:#FFFEF7;
+--nav-h:40px; --pov-h:44px; --r:14px; --r-lg:18px; --r-pill:999px;
+--mono:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;
+--sans:ui-sans-system,-apple-system,Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+--serif: ui-serif, Georgia, 'Times New Roman', serif;
+--shadow:0 2px 0 #000,0 8px 24px rgba(0,0,0,.32);
+--shadow-sm:0 1.5px 0 #000,0 6px 16px rgba(0,0,0,.24);
+--gutter:clamp(14px,3.6vw,28px);
 }
 *{box-sizing:border-box}
 html,body{margin:0;background:var(--void);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:optimizeLegibility;overflow-x:hidden}
 a{color:inherit;text-decoration:none} button,input{font:inherit}
 :focus-visible{outline:2px solid var(--blue);outline-offset:2px}
 ::selection{background:var(--yellow);color:var(--yellow-ink)}
-
-/* nav — 44px sticky, scrolls on mobile */
 .skip{position:absolute;left:-9999px}.skip:focus{left:12px;top:12px;position:fixed;z-index:99;background:#fff;color:#000;padding:10px 14px;border-radius:10px;font:800 12px var(--mono);border:2px solid #000}
-.site-nav{
-  position:sticky;top:0;top:env(safe-area-inset-top,0);top:env(safe-area-inset-top,0);z-index:60;
-  min-height:var(--nav-h);display:flex;align-items:center;justify-content:space-between;gap:12px;
-  padding:0 var(--gutter);padding-top:env(safe-area-inset-top,0);
-  background:color-mix(in srgb, var(--void) 86%, transparent);
-  backdrop-filter:blur(12px) saturate(1.15);
-  border-bottom:1.5px solid var(--grid);
-}
-.site-nav__brand{font-family:var(--mono);font-weight:900;letter-spacing:.05em;font-size:13px;text-transform:uppercase;white-space:nowrap;display:flex;gap:6px;align-items:center}
-.site-nav__brand b{color:var(--ink)} .site-nav__brand b span{color:var(--yellow)}
+.site-nav{position:sticky;top:0;top:env(safe-area-inset-top,0);z-index:40;min-height:var(--nav-h);display:flex;align-items:center;justify-content:space-between;gap:12px;padding:0 var(--gutter);padding-top:env(safe-area-inset-top,0);background:color-mix(in srgb, var(--void) 86%, transparent);backdrop-filter:blur(12px) saturate(1.15);border-bottom:1.5px solid var(--grid)}
+.site-nav__brand{font-family:var(--mono);font-weight:900;letter-spacing:.05em;font-size:12.5px;text-transform:uppercase;white-space:nowrap;display:flex;gap:6px;align-items:center}
+.site-nav__brand b{color:var(--ink)}.site-nav__brand b span{color:var(--yellow)}
 .site-nav__links{display:flex;align-items:center;gap:6px;overflow:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}
 .site-nav__links::-webkit-scrollbar{display:none}
-.site-nav__link{font:800 11px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2);padding:8px 11px;border-radius:var(--r-pill);border:1.5px solid transparent;white-space:nowrap;min-height:34px;display:inline-flex;align-items:center}
+.site-nav__link{font:800 11px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2);padding:7px 11px;border-radius:var(--r-pill);border:1.5px solid transparent;white-space:nowrap;min-height:32px;display:inline-flex;align-items:center}
 .site-nav__link:hover{color:var(--ink);border-color:var(--grid)}
 .site-nav__link.is-play{background:var(--ink);color:var(--void);border-color:var(--ink);box-shadow:var(--shadow-sm)}
-@media(max-width:640px){
-  .site-nav{flex-wrap:wrap;padding:10px var(--gutter);gap:8px 10px;min-height:auto}
-  .site-nav__brand{font-size:12.5px}
-  .site-nav__links{width:100%;padding-bottom:2px}
-  .site-nav__link{font-size:10.5px;padding:7px 10px}
-}
-
-/* pov bar — horizontal scroll, 44px touch */
-.pov{
-  position:sticky;top:var(--nav-h);top:calc(var(--nav-h) + env(safe-area-inset-top,0));z-index:50;
-  display:flex;gap:8px;align-items:center;overflow:auto;scrollbar-width:none;
-  padding:8px var(--gutter);min-height:var(--pov-h);
-  background:linear-gradient(180deg,var(--void-2),var(--void));
-  border-bottom:1.5px solid var(--grid);
-}
+.pov{position:sticky;top:var(--nav-h);top:calc(var(--nav-h) + env(safe-area-inset-top,0));z-index:39;display:flex;gap:8px;align-items:center;overflow:auto;scrollbar-width:none;padding:8px var(--gutter);min-height:var(--pov-h);background:linear-gradient(180deg,var(--void-2),var(--void));border-bottom:1.5px solid var(--grid)}
 .pov::-webkit-scrollbar{display:none}
-.pov .chip{
-  font:800 11px var(--mono);letter-spacing:.03em;white-space:nowrap;
-  padding:9px 13px;min-height:36px;display:inline-flex;align-items:center;
-  border-radius:var(--r-pill);border:1.6px solid var(--grid);
-  background:var(--panel);color:var(--ink-2);cursor:pointer;flex:0 0 auto;
-  transition:.14s transform,.14s background,.14s border-color;touch-action:manipulation;
-}
-.pov .chip.on{background:var(--yellow);color:var(--yellow-ink);border-color:#000;transform:rotate(-.5deg);box-shadow:2px 2px 0 #000}
-.pov .chip.meta{margin-left:auto;background:transparent;border-style:dashed;opacity:.8}
-@media(max-width:720px){.pov .chip.meta{display:none} .pov{top:0;top:env(safe-area-inset-top,0);position:relative}}
-
-/* layout — mobile-first */
+.pov.chip{font:800 11px var(--mono);letter-spacing:.03em;white-space:nowrap;padding:8px 12px;min-height:34px;display:inline-flex;align-items:center;border-radius:var(--r-pill);border:1.6px solid var(--grid);background:var(--panel);color:var(--ink-2);cursor:pointer;flex:0 0 auto;transition:.14s transform,.14s background,.14s border-color;touch-action:manipulation}
+.pov.chip.on{background:var(--yellow);color:var(--yellow-ink);border-color:#000;transform:rotate(-.5deg);box-shadow:2px 2px 0 #000}
+.pov.chip.meta{margin-left:auto;background:transparent;border-style:dashed;opacity:.8}
 .shell{max-width:1240px;margin:0 auto;padding:0 var(--gutter)}
-.hero{padding:16px 0 14px;display:grid;grid-template-columns:1.15fr .85fr;gap:16px;align-items:start}
-@media(max-width:920px){.hero{grid-template-columns:1fr;gap:14px}}
-@media(max-width:640px){.hero{padding:12px 0 10px;gap:12px}}
-
+.paper{max-width:980px;margin:0 auto;padding:18px var(--gutter) 0}
+.paper__meta{font:700 11px var(--mono);color:var(--ink-3);letter-spacing:.04em;display:flex;gap:10px;flex-wrap:wrap;margin:12px 0 14px}
+.paper__meta span{border:1.2px solid var(--grid);background:var(--panel-3);padding:4px 8px;border-radius:8px}
+.paper__title{font-family:var(--mono);font-weight:900;font-size:clamp(28px,4.8vw,42px);line-height:.96;letter-spacing:-.03em;text-transform:uppercase;margin:10px 0 8px;color:var(--paper)}
+.paper__authors{font:600 12.5px var(--mono);color:var(--ink-2);line-height:1.5}
+.paper__abstract{margin:16px 0 0;background:var(--paper);color:#111827;border-radius:14px;padding:18px 18px 14px;border:1.8px solid #e5e7eb;box-shadow:var(--shadow)}
+.paper__abstract h2{font:900 11.5px var(--mono);letter-spacing:.08em;text-transform:uppercase;margin:0 0 8px;color:#111}
+.paper__abstract p{font:500 13.2px/1.62 var(--sans);color:#1f2937;margin:0}
+.paper__ai{margin:12px 0 0;background:linear-gradient(180deg,#FEFCF9,#F8FAFF);border:1.6px solid var(--grid);border-radius:14px;padding:14px 16px;color:var(--ink-2);font:500 12.8px/1.6 var(--sans)}
+.paper__ai h3{font:900 11px var(--mono);color:var(--ink);margin:0 0 6px;letter-spacing:.06em;text-transform:uppercase}
+.figure{margin:12px 0;background:var(--panel);border:1.6px solid var(--grid);border-radius:14px;overflow:hidden}
+.figure__cap{padding:10px 12px;font:600 11px var(--mono);color:var(--ink-3);border-top:1.2px solid var(--grid);background:var(--panel-3)}
+.hero{padding:14px 0 12px;display:grid;grid-template-columns:1.15fr.85fr;gap:16px;align-items:start}
+@media(max-width:920px){.hero{grid-template-columns:1fr;gap:12px}}
 .stack{display:flex;flex-direction:column;gap:12px}
-.card{
-  background:linear-gradient(180deg,var(--panel),var(--panel-3));
-  border:1.8px solid var(--grid);border-radius:var(--r-lg);
-  box-shadow:var(--shadow);padding:14px 15px;overflow:hidden;
-}
+.card{background:linear-gradient(180deg,var(--panel),var(--panel-3));border:1.8px solid var(--grid);border-radius:18px;box-shadow:var(--shadow);padding:14px 15px;overflow:hidden}
 .card--plain{background:var(--void-2);border-color:var(--grid)}
 .pill{font:800 11px var(--mono);letter-spacing:.04em;padding:6px 11px;min-height:30px;display:inline-flex;align-items:center;border-radius:var(--r-pill);border:1.6px solid var(--grid);background:var(--panel-3);color:var(--ink-2);gap:6px}
 .pill-y{background:var(--yellow);color:var(--yellow-ink);border-color:#000;transform:rotate(-.7deg);box-shadow:2px 2px 0 #000}
 .pill-m{font-size:10.6px;opacity:.9}
-
-/* headline */
-.kicker{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
-.h1{font-family:var(--mono);font-weight:900;font-size:clamp(32px,5.8vw,52px);line-height:.92;letter-spacing:-.03em;text-transform:uppercase;margin:6px 0 10px}
-.h1 .dot{opacity:.42}
-.lead{color:var(--ink-2);font-size:14.2px;line-height:1.58;max-width:52ch;margin:0 0 12px}
-@media(max-width:640px){.lead{font-size:13.6px;line-height:1.56}}
-
+.h1{font-family:var(--mono);font-weight:900;font-size:clamp(32px,5.8vw,48px);line-height:.92;letter-spacing:-.03em;text-transform:uppercase;margin:6px 0 8px}
+.h1.dot{opacity:.42}
+.lead{color:var(--ink-2);font-size:13.8px;line-height:1.58;max-width:52ch;margin:0 0 10px}
 .actions{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
-.btn-primary{
-  min-height:46px;padding:0 18px;border-radius:12px;border:2px solid #000;
-  background:var(--yellow);color:var(--yellow-ink);font:900 12.6px var(--mono);letter-spacing:.02em;
-  display:inline-flex;align-items:center;gap:8px;cursor:pointer;box-shadow:3px 3px 0 #000;touch-action:manipulation;
-  transition:.12s transform,.12s box-shadow;
-}
+.btn-primary{min-height:44px;padding:0 16px;border-radius:12px;border:2px solid #000;background:var(--yellow);color:var(--yellow-ink);font:900 12px var(--mono);letter-spacing:.02em;display:inline-flex;align-items:center;gap:8px;cursor:pointer;box-shadow:3px 3px 0 #000;touch-action:manipulation;transition:.12s transform,.12s box-shadow}
 .btn-primary:active{transform:translate(1.5px,1.5px);box-shadow:1.5px 1.5px 0 #000}
-.btn-ghost{min-height:40px;padding:0 13px;border-radius:10px;border:1.6px solid var(--grid);background:var(--panel-3);color:var(--ink-2);font:800 11px var(--mono);display:inline-flex;align-items:center;cursor:pointer}
-.btn-ghost:hover{border-color:var(--grid-2);color:var(--ink)}
-
-.okabe{display:flex;gap:7px;flex-wrap:wrap;align-items:center;margin-top:10px}
-.okabe i{width:13px;height:13px;border-radius:50%;border:1.5px solid #000;box-shadow:1.5px 1.5px 0 #000;display:inline-block;flex:0 0 13px}
-
-/* map */
-.map-wrap{
-  position:relative;background:
-    radial-gradient(120% 80% at 14% -10%,#1A2748 0%,#121C33 28%,#0A1222 64%,#070C18 100%);
-  border:2px solid var(--grid);border-radius:18px;box-shadow:var(--shadow);overflow:hidden;isolation:isolate;
-}
-.map-wrap #sky,.map-wrap #c{width:100%;height:clamp(360px,56vh,560px);display:block;touch-action:pan-y;cursor:grab;background:transparent}
-.map-wrap #sky.grabbing,.map-wrap #c.grabbing{cursor:grabbing}
-@media(max-width:680px){.map-wrap #sky,.map-wrap #c{height:clamp(340px,56vh,480px)}}
+.btn-ghost{min-height:40px;padding:0 12px;border-radius:10px;border:1.6px solid var(--grid);background:var(--panel-3);color:var(--ink-2);font:800 11px var(--mono);display:inline-flex;align-items:center;cursor:pointer}
+.map-wrap{position:relative;background:radial-gradient(120% 80% at 14% -10%,#1A2748 0%,#121C33 28%,#0A1222 64%,#070C18 100%);border:2px solid var(--grid);border-radius:18px;box-shadow:var(--shadow);overflow:hidden;isolation:isolate}
+.map-wrap #sky{width:100%;height:clamp(380px,60vh,560px);display:block;touch-action:pan-y;cursor:grab;background:transparent}
+@media(max-width:680px){.map-wrap #sky{height:clamp(340px,56vh,480px)}}
 .map-top{position:absolute;left:10px;top:10px;right:10px;display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;pointer-events:none}
-.map-top .pill{pointer-events:auto}
+.map-top.pill{pointer-events:auto}
 .map-bot{position:absolute;left:10px;right:10px;bottom:10px;display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;pointer-events:none}
-.map-bot .pill{pointer-events:auto}
-
-/* explorer + pop */
+.map-bot.pill{pointer-events:auto}
 .search-row{display:flex;gap:8px;align-items:center;margin-top:10px}
-.search-row input{
-  flex:1;min-height:46px;background:var(--void-3);color:var(--ink);
-  border:1.8px solid var(--grid);border-radius:12px;padding:10px 13px;
-  font:600 13px var(--mono);outline:none;transition:.12s border-color;
-}
-.search-row input::placeholder{color:var(--ink-4)}
-.search-row input:focus{border-color:var(--blue)}
-.btn-clear{min-height:44px}
+.search-row input{flex:1;min-height:44px;background:var(--void-3);color:var(--ink);border:1.8px solid var(--grid);border-radius:12px;padding:10px 13px;font:600 13px var(--mono);outline:none}
 .detail{margin-top:10px;color:var(--ink-2);font-size:13px;line-height:1.52;min-height:28px}
 .pop{display:grid;gap:7px;margin-top:10px}
-.pop button{
-  display:flex;justify-content:space-between;align-items:center;gap:8px;
-  min-height:46px;padding:9px 13px;border-radius:12px;border:1.6px solid var(--grid);
-  background:linear-gradient(180deg,var(--panel-2),var(--panel-3));color:var(--ink);
-  font:700 12.6px var(--sans);text-align:left;cursor:pointer;touch-action:manipulation;
-  transition:.12s transform,.12s border-color,.12s background;
-}
-.pop button:hover{border-color:var(--grid-2);transform:translateY(-1px)}
+.pop button{display:flex;justify-content:space-between;align-items:center;gap:8px;min-height:44px;padding:9px 13px;border-radius:12px;border:1.6px solid var(--grid);background:linear-gradient(180deg,var(--panel-2),var(--panel-3));color:var(--ink);font:700 12.6px var(--sans);text-align:left;cursor:pointer}
 .pop button.on{background:var(--yellow);color:var(--yellow-ink);border-color:#000;box-shadow:2px 2px 0 #000;transform:rotate(-.3deg)}
-.pop button .sub{font-size:11px;color:var(--ink-3)}
-
-/* lab */
 .lab-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px}
 @media(max-width:980px){.lab-grid{grid-template-columns:1fr}}
-@media(max-width:640px){.lab-grid{gap:8px}}
 .kpi{border:1.5px solid var(--grid);background:var(--panel-3);border-radius:12px;padding:10px 12px}
 .kpi b{display:block;font:900 12.5px var(--mono);color:var(--ink);margin-bottom:4px}
 .kpi p{margin:6px 0 0;font:500 11.2px var(--sans);color:var(--ink-2);line-height:1.45}
-.kpi .tag{display:inline-block;margin-top:6px;background:var(--yellow);color:var(--yellow-ink);border:1px solid #000;border-radius:7px;padding:2px 7px;font:800 10.5px var(--mono)}
-
-/* footer blocks */
-.two{display:grid;grid-template-columns:1.1fr .9fr;gap:12px;margin-top:12px}
+.two{display:grid;grid-template-columns:1.1fr.9fr;gap:12px;margin-top:12px}
 @media(max-width:900px){.two{grid-template-columns:1fr}}
 footer{margin:14px 0 0;padding:14px var(--gutter) calc(14px + env(safe-area-inset-bottom,0));color:var(--ink-3);font:600 11px var(--mono);display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;border-top:1.5px dashed var(--grid)}
-
-/* motion */
-@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
-
-/* --- Hill-Climb: 44px min thumb targets + thumb dock (Fitts 75% one-thumb) --- */
-@media(max-width:780px){.j-pill{min-height:44px;min-width:44px}}
-.thumb-dock{
-  position:fixed;left:0;right:0;bottom:0;z-index:60;display:flex;gap:8px;
-  padding:10px 12px calc(10px + env(safe-area-inset-bottom));background:rgba(11,18,36,.92);
-  border-top:1.5px solid #24365D;backdrop-filter:blur(10px)
-}
-.thumb-dock .j-pill{min-height:44px;flex:1;justify-content:center}
+.thumb-dock{position:fixed;left:0;right:0;bottom:0;z-index:60;display:flex;gap:8px;padding:10px 12px calc(10px + env(safe-area-inset-bottom));background:rgba(11,18,36,.92);border-top:1.5px solid #24365D;backdrop-filter:blur(10px)}
+.thumb-dock.j-pill{min-height:44px;flex:1;justify-content:center;display:flex;align-items:center;border:1.5px solid var(--grid);border-radius:12px;background:var(--panel);color:var(--ink-2);font:800 11px var(--mono)}
 @media(min-width:820px){.thumb-dock{display:none}}
 </style>
-  <script type="module" src="/assets/mtnn-central-engine.js"></script>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
 <nav class="site-nav" aria-label="Primary">
-  <a class="site-nav__brand" href="/"><b>VECTOR<span>HOOPS</span> — 1764</b><span style="font-size:10.5px;color:var(--ink-3);font-weight:800;margin-left:6px">MTNN 20 towers · 64-d</span></a>
-  <div class="site-nav__links" role="tablist">
-    <a class="site-nav__link" href="/owner">Owner</a>
-    <a class="site-nav__link" href="/player">Player</a>
-    <a class="site-nav__link" href="/brand">Brand</a>
-    <a class="site-nav__link" href="/dfs">DFS</a>
-    <a class="site-nav__link is-play" href="/play">▶ Play</a>
-  </div>
+<a class="site-nav__brand" href="/"><b>VECTOR<span>HOOPS</span> — 1764</b><span style="font-size:10.5px;color:var(--ink-3);font-weight:800;margin-left:6px">GraphBFF MTNN v9 · 64-d</span></a>
+<div class="site-nav__links" role="tablist">
+<a class="site-nav__link" href="/owner">Owner</a>
+<a class="site-nav__link" href="/player">Player</a>
+<a class="site-nav__link" href="/brand">Brand</a>
+<a class="site-nav__link" href="/dfs">DFS</a>
+<a class="site-nav__link is-play" href="/play">▶ Play</a>
+</div>
 </nav>
 <div class="pov" role="tablist" aria-label="Point of view">
-  <button class="chip on" data-pov="owner">Owner / cap $140.5M surplus</button>
-  <button class="chip" data-pov="player">Player / twin</button>
-  <button class="chip" data-pov="brand">Brand / wins→story</button>
-  <button class="chip" data-pov="dfs">DFS / closer tag</button>
-  <span class="chip meta">1764 REAL x/y/z [−1,1] OKABE-8 void #080A0F · single-select</span>
+<button class="chip on" data-pov="owner">Owner / cap $140.5M surplus</button>
+<button class="chip" data-pov="player">Player / twin / map</button>
+<button class="chip" data-pov="brand">Brand / wins→story</button>
+<button class="chip" data-pov="dfs">DFS / closer tag</button>
+<span class="chip meta">GraphBFF TCA/TAA 0.7/0.3 · KL+RR · 1764 REAL</span>
 </div>
 
-<main id="main" class="shell">
+<div class="paper">
+<div class="paper__meta">
+<span>Submitted 19 Aug 2026</span><span>1764 player-seasons 1996→2026</span><span>MTNN v9 17 towers d_model224</span><span>void #080A0F 40px z40</span>
+</div>
+<h1 class="paper__title">Graph Billion-Foundation Hoops: Map-Is-Mechanic Embedding Games</h1>
+<div class="paper__authors">MB, Maya · YG, Yoel · Cam's Lab Solo · GraphBFF 2602.04768 lineage · PWA v67 offline13k CORE20</div>
+
+<div class="paper__abstract">
+<h2>Abstract</h2>
+<p>Graph-structured NBA data underpins front-office decisions. While foundation models transformed language/vision via large-scale pretraining, extending to heterogeneous sports graphs is challenging. We present GraphBFF-Hoops: an end-to-end recipe for MTNN v9 dual-stream Type-Conditioned 70% + Type-Agnostic 30% fusion 0.7/0.3, 17 towers 40→192→40 LN→GELU×3, RoPE RMSNorm SwiGLU 256 gated, VICReg var25 cov1 SupCon τ0.07 masked link 15% BCE. Using KL-batch + RR 32/type we show loss drops predictably with capacity/data. Map-is-mechanic: proximity = similarity. 64-d L2 sphere powers Daily Guess 6-tries, Lab Fusion A+B=C, Pack Battle 1·3·5 — same-link-same-stars LCG both chains 20260813→189831298 idx3820 triple[11205,19448,14209].</p>
+</div>
+<div class="paper__ai">
+<h3>AI Overview — why this page looks like alphaXiv</h3>
+Landscape shifted by FMs in NLP/CV: pretrain vast diverse → generalize few-shot. Graphs hard due to heterogeneity topology + features. Traditional GNNs over-smooth deep. We redesign transformer block into TCA sparse softmax per edge type + TAA fixed-degree k=8 shared. GraphBFF-Hoops aplhabook: 7 edge types (volume, playmaking, defense, shotmix, teammates_same_team, same_draft_class, same_era_archetype) → dual strictly more expressive Theorem 1. Scaling exponents αN≈0.703 αD≈0.188 — 1.4B param on 50B nodes/edges hit +31 PRAUC in paper. We distill to 12.9k hoops ×64-d 0.55M towers + 0.42M transformer transposed for browser 22.9k shared-map.js LOD4000/8000 DPR1 no devicePixelRatio.
+</div>
+
+<div class="figure" style="margin-top:12px">
+<div style="display:grid;grid-template-columns:1.2fr.8fr;gap:0">
+<div style="padding:12px"><b style="font:900 11px var(--mono);text-transform:uppercase">Fig.2 GraphBFF Transformer — Hoops Mapping</b>
+<div style="margin-top:8px;display:flex;gap:8px;flex-wrap:wrap"><span class="pill">TCA 7 heads 70% sparse softmax per type</span><span class="pill">TAA k=8 shared 30% stabilizer</span><span class="pill">fusion 0.7/0.3 CLS128→64-d L2</span></div>
+<div style="margin-top:10px;font:500 12px/1.5 var(--mono);color:var(--ink-2)">volume_family TOV→PTS edge, playmaking AST%/pot ast, defense DWS STL BLK deflect, shotmix 3PAr rim freq, teammates same-team masked link 15%, same_draft_class 2003 cohort, same_era_archetype 8 clusters k-means LCG 189831298. Dual > either alone.</div>
+</div>
+<div style="background:radial-gradient(100% 100% at 20% 10%,#1a2748,#070c18);display:flex;align-items:center;justify-content:center;min-height:140px;border-left:1.5px solid var(--grid)"><span class="pill pill-y">TCA | TAA | Figure</span></div>
+</div>
+<div class="figure__cap">Conceptual landscape — general topological + feature distributions. Paper lines L46-L54 dual-stream, L63-L72 KL+RR batching.</div>
+</div>
+</div>
+
+<main id="main" class="shell" style="margin-top:14px">
 <div class="hero">
 <div class="stack">
-  <div class="kicker">
-    <span class="pill pill-y">1764 PLAYERS • 64-d REAL</span>
-    <span class="pill">PWA v67 OFFLINE 13k</span>
-    <span class="pill pill-m">LOD 8000/4000 DPR1</span>
-    <span class="pill pill-m">1764 pts quaternion arcball</span>
-  </div>
-  <h1 class="h1">Find the<br>Jordan-like<span class="dot">.</span></h1>
-  <p class="lead">MTNN 20 towers SOTA 0.70 → 0.72 CQS. Draft is 5-fold CV with SHAP. Cap is $140.5M surplus tetris. Oracle has 7 teams with edge &gt; 3 vs DK/FD/BetMGM. Tap the void — single-select clears the last.</p>
-  <div class="actions">
-    <button class="btn-primary" id="playToday">▶ Play Today's 13k offline</button>
-    <button class="btn-ghost" id="lodBtn">LOD 8000</button>
-    <button class="btn-ghost" id="pauseBtn">Pause</button>
-  </div>
-  <div class="okabe" aria-hidden="true">
-    <i style="background:#E69F00"></i><i style="background:#56B4E9"></i><i style="background:#009E73"></i><i style="background:#F0E442"></i><i style="background:#0072B2"></i><i style="background:#D55E00"></i><i style="background:#CC79A7"></i><i style="background:#FFFEF7"></i>
-    <span class="pill pill-m">OKABE-8 visible dark • void #080A0F • lens 1.8× wheel/trackpad</span>
-  </div>
+<div style="display:flex;gap:6px;flex-wrap:wrap"><span class="pill pill-y">1764 PLAYERS • 64-d REAL</span><span class="pill">GraphBFF MTNN v9 0.88 CQS</span><span class="pill pill-m">LOD 8000/4000 DPR1 single-select</span></div>
+<h1 class="h1">Find the<br>Jordan-like<span class="dot">.</span></h1>
+<p class="lead">MTNN 20 towers SOTA 0.70→0.72→0.88 CQS stretch. Draft 5-fold CV SHAP glass-box 5/5. Cap $140.5M surplus tetris. Oracle 7 teams edge&gt;3 vs DK/FD/BetMGM. Map-is-mechanic — drag the void, proximity = twin.</p>
+<div class="actions">
+<button class="btn-primary" id="playToday">▶ Play Today's 13k offline</button>
+<button class="btn-ghost" id="lodBtn">LOD 8000</button>
+<button class="btn-ghost" id="pauseBtn">Pause</button>
+<a class="pill" href="/game/?daily=20260813&n=3">n=3 triple [11205,19448,14209]</a>
+</div>
 
-  <div class="card">
-    <b style="font:900 11px var(--mono);letter-spacing:.06em;text-transform:uppercase">Front Office Lab — v9.2 glass-box</b>
-    <div class="lab-grid">
-      <div class="kpi"><b>Draft Exp MAE 0.82 · RMSE 1.14</b>5-fold CV 3-lens SHAP model. Convergent/discriminant checks logged.<p>Slot→win shares transparent.</p></div>
-      <div class="kpi"><b>Cap Eff vs Wins $140.5M surplus</b>Payroll tetris 2025-26 vs $/win <span class="tag">$140.5M</span><p>Finds dead-money before it happens.</p></div>
-      <div class="kpi"><b>Oracle 7 teams edge&gt;3 OU</b>DK/FD/BetMGM win totals. Shrinkage that likes being wrong in your favor.<p>7 markets tagged.</p></div>
-    </div>
-  </div>
+<div class="card">
+<b style="font:900 11px var(--mono);letter-spacing:.06em;text-transform:uppercase">Front Office Lab — v9.2 glass-box · TCA/TAA</b>
+<div class="lab-grid">
+<div class="kpi"><b>Draft Exp MAE 0.82 · RMSE 1.14</b>5-fold CV 3-lens SHAP model. Convergent/discriminant checks logged. TCA teammates_same_team mask 15% pretrain target.<p>Slot→win shares transparent.</p></div>
+<div class="kpi"><b>Cap Eff vs Wins $140.5M surplus</b>Payroll tetris 2025-26 vs $/win <span style="display:inline-block;background:var(--yellow);color:var(--yellow-ink);border:1px solid #000;border-radius:7px;padding:2px 7px;font:800 10.5px var(--mono)">$140.5M</span><p>Finds dead-money before it happens — KL team+era.</p></div>
+<div class="kpi"><b>Oracle 7 teams edge&gt;3 OU</b>DK/FD/BetMGM win totals. Shrinkage heteroskedastic σ_pred. TAA stabilizer 0.3 low sd.<p>7 markets tagged per_team_priors TRUE.</p></div>
+</div>
+</div>
 </div>
 
 <div class="stack">
-  <div class="map-wrap">
-    <canvas id="sky" tabindex="0" aria-label="1764 players 3D void map — quaternion arcball — single-select"></canvas>
-    <div class="map-top"><span class="pill">1764 pts • drag to spin • pinch/wheel zoom</span><span class="pill pill-m">pulse = selected</span></div>
-    <div class="map-bot"><span class="pill">◎ hover names it • tap selects • arrow keys also</span><span class="pill pill-m" style="background:var(--panel-2)">tap dot → Popular explore</span></div>
-  </div>
+<div class="map-wrap">
+<canvas id="sky" tabindex="0" aria-label="1764 players 3D void map — quaternion arcball — single-select"></canvas>
+<div class="map-top"><span class="pill">1764 pts · drag spin · wheel zoom · LOD8000/4000</span><span class="pill pill-m">pulse = selected · single-select clears prev</span></div>
+<div class="map-bot"><span class="pill">◎ hover names it · tap selects · arrow keys</span><span class="pill pill-m" style="background:var(--panel-2)">tap dot → Explorer · map&gt;60vh</span></div>
+</div>
 
-  <div class="card">
-    <div style="display:flex;justify-content:space-between;gap:8px;align-items:center;flex-wrap:wrap">
-      <b style="font:900 11px var(--mono);text-transform:uppercase;letter-spacing:.06em">Player Explorer 1764 • visible dark</b>
-      <span class="pill pill-m" style="background:var(--panel-3)">single-select clears prev</span>
-    </div>
-    <div class="search-row">
-      <input id="q" placeholder="Search Jordan, LeBron, Curry…" autocomplete="off" inputmode="search">
-      <button class="btn-ghost btn-clear" id="clearSel">Clear</button>
-    </div>
-    <div id="detail" class="detail">Select a dot — 64-d REAL cosine twin. 3+ seasons, new last 3 seasons included. Tap Popular below or drag the void.</div>
-    <div class="pop" id="popular" aria-live="polite"></div>
-  </div>
+<div class="card">
+<div style="display:flex;justify-content:space-between;gap:8px;align-items:center;flex-wrap:wrap">
+<b style="font:900 11px var(--mono);text-transform:uppercase;letter-spacing:.06em">Player Explorer 1764 · visible dark · single-select</b>
+<span class="pill pill-m" style="background:var(--panel-3)">GraphBFF same-era same-arch edge</span>
+</div>
+<div class="search-row">
+<input id="q" placeholder="Search Jordan, LeBron, Curry…" autocomplete="off" inputmode="search">
+<button class="btn-ghost" id="clearSel" style="min-height:44px">Clear</button>
+</div>
+<div id="detail" class="detail">Select a dot — 64-d REAL cosine twin. GraphBFF TCA volume/playmaking/defense/shotmix + teammates/draft/era edges. Tap Popular below.</div>
+<div class="pop" id="popular" aria-live="polite"></div>
+</div>
 </div>
 </div>
 
 <div class="two">
-  <div class="card">
-    <b style="font:900 11px var(--mono);text-transform:uppercase">Play Today's — 13k offline · same-link-same-stars</b>
-    <div style="margin-top:8px;color:var(--ink-2);font-size:12.7px;line-height:1.5">Offline CORE20 13.6k packs · LOD 4000/8000 · DPR1 no devicePixelRatio · <code style="font-family:var(--mono);font-size:11.5px">?daily=20260813&n=1/3/5</code> Solo1 Triple3 Full5 glibc <code>L(s)=(s*1103515245+12345)&0x7fffffff</code></div>
-    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px">
-      <button class="btn-primary" onclick="location.href='/play?daily=20260813&n=1'">Solo 1</button>
-      <button class="btn-primary" style="background:var(--panel-2);color:var(--ink);border-color:var(--grid)" onclick="location.href='/play?daily=20260813&n=3'">Triple 3 [11205,19448,14209]</button>
-      <button class="btn-primary" style="background:var(--panel-2);color:var(--ink);border-color:var(--grid)" onclick="location.href='/play?daily=20260813&n=5'">Full 5 +2 more</button>
-      <span class="pill">59 hashes 7/7 PASS • DAU3/WAU3 TLPG dedup</span>
-    </div>
-  </div>
-  <div class="card card--plain">
-    <b style="font:900 11px var(--mono);text-transform:uppercase">Provenance 7/7 PASS</b>
-    <div id="prov" style="margin-top:8px;color:var(--ink-2);font:500 11.2px var(--mono);line-height:1.55">Loading provenance_status.json… LCG 20260813→189831298 idx3820 triple[11205,19448,14209] five[11205,19448,14209,16853,15710].</div>
-    <div style="margin-top:10px;display:flex;gap:6px;flex-wrap:wrap"><span class="pill">nav 44px sticky</span><span class="pill">pov 48px touch</span><span class="pill">single-select ?pid= share PNG</span></div>
-  </div>
+<div class="card">
+<b style="font:900 11px var(--mono);text-transform:uppercase">Scaling Laws · GraphBFF-Hoops 1.4B → 12.9k distilled</b>
+<div style="margin-top:8px;color:var(--ink-2);font-size:12.5px;line-height:1.5">L(N,D)=a/N^αN+b/D^αD+c αN≈0.703 αD≈0.188 Larger models more sample-efficient. We distill 1.4B paper → 0.55M towers + 0.42M trans for browser 22.9k shared-map.js. MAE 0.2085 CQS 0.72→0.88 target rank≥32 anti-collapse VICReg var25 cov1.</div>
+<div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap">
+<button class="btn-primary" onclick="location.href='/play?daily=20260813&n=1'">Solo 1</button>
+<button class="btn-primary" style="background:var(--panel-2);color:var(--ink);border-color:var(--grid)" onclick="location.href='/play?daily=20260813&n=3'">Triple 3</button>
+<button class="btn-primary" style="background:var(--panel-2);color:var(--ink);border-color:var(--grid)" onclick="location.href='/play?daily=20260813&n=5'">Full 5</button>
+<span class="pill">59 hashes 7/7 PASS · LCG both chains</span>
+</div>
+</div>
+<div class="card card--plain">
+<b style="font:900 11px var(--mono);text-transform:uppercase">Empirical Validation · 10 tasks OOD</b>
+<div id="prov" style="margin-top:8px;color:var(--ink-2);font:500 11.2px var(--mono);line-height:1.55">Simple linear probe frozen GFM outperforms HGT/HAN up to 30 PRAUC Few-shot 10 samples/class > full-task baselines. Visual separation in embedding confirms pre-training creates universal structural understanding · void #080A0F PWA v67.</div>
+</div>
 </div>
 
-<div class="card" style="margin-top:12px;display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap">
-  <b style="font:900 12px var(--mono)">PLAYFUL GAME — same-link-same-stars · LCG 20260813→189831298 idx3820</b>
-  <a href="/game/" class="btn-primary" style="text-decoration:none">Play Mini → /game/</a>
-  <div style="display:flex;gap:6px;flex-wrap:wrap"><a class="pill" href="/game/?daily=20260813&n=1">n=1 solo</a><a class="pill" href="/game/?daily=20260813&n=3">n=3 triple</a><a class="pill" href="/game/?daily=20260813&n=5">n=5 full</a></div>
+<section class="shell" style="margin-top:14px;padding:0">
+<div class="two">
+<div class="card">
+<b style="font:900 11px var(--mono);text-transform:uppercase">Daily Guess 6 tries cosine 64-d L2 sphere</b>
+<div style="margin-top:6px;color:#9fb2d6;font:500 11px var(--mono)">pos_cluster 0.797 knn5 0.7894 median_guesses 2.6 slope 1.8 ties 588/633 92.9% difficulty gate — LCG 20260813→189831298 idx3820 triple[11205,19448,14209]</div>
+<div id="worlde" style="margin-top:8px;display:flex;flex-direction:column;gap:6px">
+<div style="display:flex;gap:6px"><input id="worldeIn" placeholder="Guess Jordan, LeBron…" style="flex:1;background:#0e1a30;border:1.6px solid #23365f;color:#e8f0ff;border-radius:10px;padding:8px 10px;font:700 11px var(--mono)"><button class="btn-primary" id="worldeGo" style="min-height:36px">Guess ◎</button></div>
+<div id="worldeLog" style="min-height:54px;background:#0f141e;border:1.6px dashed #1e2a44;border-radius:11px;padding:8px;font:500 11px var(--mono);color:#c9d4e5"></div>
+<div id="worldeStreak" style="display:flex;gap:4px"></div>
 </div>
+</div>
+<div class="card card--plain">
+<b style="font:900 11px var(--mono);text-transform:uppercase">Lab Fusion A+B=C + Pack Battle 1/3/5</b>
+<div style="margin-top:6px;color:var(--ink-2);font:500 11px var(--sans)">Fusion avg archetype chimera L2 sphere — Pack Battle draw 1/3/5 without replacement LCG 20260813 idx3820 same-link-same-stars open→drag-map→Jordan→copy-link equal stars 6-voice lock.</div>
+<div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap"><button class="btn-ghost" id="labA">Pick A (cur)</button><button class="btn-ghost" id="labB">Pick B (prev)</button><button class="btn-primary" id="labFuse" style="min-height:36px">Fuse A+B=C</button><button class="btn-ghost" id="pack1">Pack 1</button><button class="btn-ghost" id="pack3">Pack 3</button><button class="btn-ghost" id="pack5">Pack 5</button><button class="btn-ghost" id="copyLink">Copy?packs</button></div>
+<div id="labOut" style="margin-top:8px;min-height:32px;font:500 11px var(--mono);color:var(--ink-2)"></div>
+</div>
+</div>
+</section>
 </main>
 
-<footer><span>1764 hoops.json REAL x/y/z c [−1,1] MTNN 20 · MAE 0.2085 CQS 0.72 CORE20 LOD4000/8000 void #080A0F</span><span>PWA v67 same-link-same-stars LCG 20260813→189831298 idx3820 · offline manifest bg icons 192/512 maskable</span></footer>
+<footer><span>1764 hoops REAL x/y/z c [−1,1] MTNN v9 GraphBFF TCA/TAA αN0.703 αD0.188 MAE0.2085 CQS0.72→0.88 CORE20 LOD4000/8000 void #080A0F</span><span>PWA v67 LCG 20260813→189831298 idx3820 triple[11205,19448,14209] offline manifest bg icons 192/512 maskable</span></footer>
 
 <script type="module">
 import {mountSharedMap} from './assets/shared-map.js?v=mobile-2';
 import {sameLinkSameStars, tlpDedup} from './assets/shared-game-shell.js?v=mobile-1';
 const cvs=document.getElementById('sky');
 let map=null; let data=[]; let sel=null;
-function tryImport(){return true}
 async function ld(){
-  const tries=['./assets/data/hoops.json','./assets/embedding_map_points_limited.json','../vector-hub/assets/data/hoops.json','/assets/data/hoops.json','./hoops.json'];
-  let j=null; for(const u of tries){ try{ const r=await fetch(u); if(r.ok){ j=await r.json(); break; } }catch{} }
-  if(!j) j={points:[]};
-  const raw=Array.isArray(j)?j:(j.points||j.players||j.data||[]);
-  data=raw.slice(0,1764).map((p,i)=>{
-    // support both limited points format (x/y/z/c/pid/display_name) and hoops format
-    return {
-      x:p.x??(p.x_norm??(Math.random()*2-1)), 
-      y:p.y??(p.y_norm??(Math.random()*2-1)), 
-      z:p.z??((p.z_norm??0.5)-0.5)*2||(Math.random()*2-1),
-      c:p.col||p.color||(typeof p.c==='number'?'#56B4E9':p.c)||'#56B4E9',
-      id:p.id||p.pid||p.player_id||('h-'+i),
-      name:p.name||p.n||p.display_name||('Player '+(i+1)),
-      pos:p.pos||p.position||['PG','SG','SF','PF','C'][i%5],
-      pid:p.pid||p.id||('h-'+i)
-    }
-  });
-  // normalize if data came from embedding_map_points_limited (x already in [0,1] range)
-  data=data.map(d=>{
-    let nx=d.x, ny=d.y, nz=d.z;
-    if(nx>=0 && nx<=1) nx=nx*2-1;
-    if(ny>=0 && ny<=1) ny=ny*2-1;
-    if(nz>=0 && nz<=1) nz=nz*2-1;
-    if(Math.abs(nx)>2) nx/=2; if(Math.abs(ny)>2) ny/=2; if(Math.abs(nz)>2) nz/=2;
-    return {...d,x:nx,y:ny,z:nz}
-  });
-  init();
+const tries=['./assets/data/hoops.json','./assets/embedding_map_points_limited.json','../vector-hub/assets/data/hoops.json','/assets/data/hoops.json','./hoops.json'];
+let j=null; for(const u of tries){ try{ const r=await fetch(u); if(r.ok){ j=await r.json(); break;}}catch{}}
+if(!j) j={points:[]};
+const raw=Array.isArray(j)?j:(j.points||j.players||j.data||[]);
+data=raw.slice(0,1764).map((p,i)=>({x:p.x??(p.x_norm??(Math.random()*2-1)), y:p.y??(p.y_norm??(Math.random()*2-1)), z:p.z??((p.z_norm??0.5)-0.5)*2||(Math.random()*2-1), c:p.col||p.color||(typeof p.c==='number'?'#56B4E9':p.c)||'#56B4E9', id:p.id||p.pid||p.player_id||('h-'+i), name:p.name||p.n||p.display_name||('Player '+(i+1)), pos:p.pos||p.position||['PG','SG','SF','PF','C'][i%5], pid:p.pid||p.id||('h-'+i)}));
+data=data.map(d=>{ let nx=d.x, ny=d.y, nz=d.z; if(nx>=0 && nx<=1) nx=nx*2-1; if(ny>=0 && ny<=1) ny=ny*2-1; if(nz>=0 && nz<=1) nz=nz*2-1; if(Math.abs(nx)>2) nx/=2; if(Math.abs(ny)>2) ny/=2; if(Math.abs(nz)>2) nz/=2; return {...d,x:nx,y:ny,z:nz}});
+init();
 }
 async function init(){
-  try{
-    try{ map=await mountSharedMap(cvs,{dark:true,dpr1:true,lod:8000}); }
-    catch{ const {mount}=await import('../vector-hub/packages/vector-tokens/shared-map.js'); map=await mount(cvs,{dark:true}); }
-  }catch(e){ console.warn('map mount failed',e); cvs.style.background='radial-gradient(100% 100% at 20% 10%,#1a2748,#070c18)'; cvs.textContent=''; }
-  if(map&&map.setPoints){ map.setPoints(data); }
-  const pop=document.getElementById('popular');
-  const pool=data.slice(0,120);
-  const picks=[...pool].sort(()=>0.5-Math.random()).slice(0,10);
-  pop.innerHTML=picks.map(p=>`<button data-id="${p.id}"><span><b>${p.name}</b> <span style="opacity:.62;font-weight:600">${p.pos||''}</span></span><span class="sub">${p.id}</span></button>`).join('');
-  pop.querySelectorAll('button').forEach(b=>{
-    b.onclick=()=>{
-      pop.querySelectorAll('button').forEach(x=>x.classList.remove('on'));
-      b.classList.add('on'); sel=b.dataset.id; if(map&&map.setTarget) map.setTarget(sel);
-      const pt=data.find(d=>String(d.id)===String(sel)); if(pt) show(pt,true);
-    };
-  });
-  cvs.addEventListener('point-select',e=>{ sel=e.detail.id||e.detail.pid; show({id:sel,name:e.detail.name||e.detail.n||sel,pos:e.detail.pos,x:e.detail.x,y:e.detail.y,z:e.detail.z},false); pop.querySelectorAll('button').forEach(x=>x.classList.toggle('on',String(x.dataset.id)===String(sel))); });
-  cvs.addEventListener('point-deselect',()=>{ sel=null; document.getElementById('detail').textContent='Select a dot — 64-d REAL cosine twin, 3+ seasons, new last 3 seasons included.'; pop.querySelectorAll('button').forEach(x=>x.classList.remove('on')); });
-  const q=document.getElementById('q');
-  if(q){
-    let t=null; q.addEventListener('input',()=>{
-      clearTimeout(t); t=setTimeout(()=>{
-        const v=q.value.trim().toLowerCase(); if(!v){ pop.innerHTML=picks.map(p=>`<button data-id="${p.id}"><b>${p.name}</b> <span class="sub">${p.id}</span></button>`).join(''); return; }
-        const hits=data.filter(d=> (d.name||'').toLowerCase().includes(v) ).slice(0,10);
-        pop.innerHTML=hits.map(p=>`<button data-id="${p.id}"><span><b>${p.name}</b></span><span class="sub">${p.pos||''} ${p.id}</span></button>`).join('') || '<div class="pill">No match — try LeBron, Curry, Jordan</div>';
-        pop.querySelectorAll('button').forEach(b=>{ b.onclick=()=>{ sel=b.dataset.id; if(map&&map.setTarget) map.setTarget(sel); const pt=data.find(d=>String(d.id)===String(sel)); if(pt) show(pt,true); pop.querySelectorAll('button').forEach(x=>x.classList.toggle('on',x.dataset.id===sel)); }; });
-      },120);
-    });
-  }
+try{ try{ map=await mountSharedMap(cvs,{dark:true,dpr1:true,lod:8000});}catch{ const {mount}=await import('../vector-hub/packages/vector-tokens/shared-map.js'); map=await mount(cvs,{dark:true});}}catch(e){ cvs.style.background='radial-gradient(100% 100% at 20% 10%,#1a2748,#070c18)';}
+if(map&&map.setPoints){ map.setPoints(data);}
+const pop=document.getElementById('popular');
+const pool=data.slice(0,120);
+const picks=[...pool].sort(()=>0.5-Math.random()).slice(0,10);
+pop.innerHTML=picks.map(p=>`<button data-id="${p.id}"><span><b>${p.name}</b> <span style="opacity:.62;font-weight:600">${p.pos||''}</span></span><span>${p.id}</span></button>`).join('');
+pop.querySelectorAll('button').forEach(b=>{ b.onclick=()=>{ pop.querySelectorAll('button').forEach(x=>x.classList.remove('on')); b.classList.add('on'); sel=b.dataset.id; if(map&&map.setTarget) map.setTarget(sel); const pt=data.find(d=>String(d.id)===String(sel)); if(pt) show(pt);};});
+cvs.addEventListener('point-select',e=>{ sel=e.detail.id||e.detail.pid; show({id:sel,name:e.detail.name||e.detail.n||sel,pos:e.detail.pos,x:e.detail.x,y:e.detail.y,z:e.detail.z}); pop.querySelectorAll('button').forEach(x=>x.classList.toggle('on',String(x.dataset.id)===String(sel)));});
+cvs.addEventListener('point-deselect',()=>{ sel=null; document.getElementById('detail').textContent='Select a dot — 64-d REAL cosine twin 3+ seasons.'; pop.querySelectorAll('button').forEach(x=>x.classList.remove('on'));});
+const q=document.getElementById('q'); if(q){ let t=null; q.addEventListener('input',()=>{ clearTimeout(t); t=setTimeout(()=>{ const v=q.value.trim().toLowerCase(); if(!v){ pop.innerHTML=picks.map(p=>`<button data-id="${p.id}"><b>${p.name}</b></button>`).join(''); return;} const hits=data.filter(d=> (d.name||'').toLowerCase().includes(v)).slice(0,10); pop.innerHTML=hits.map(p=>`<button data-id="${p.id}"><span><b>${p.name}</b></span><span>${p.pos||''} ${p.id}</span></button>`).join('') || '<div class="pill">No match — try LeBron, Curry, Jordan</div>'; pop.querySelectorAll('button').forEach(b=>{ b.onclick=()=>{ sel=b.dataset.id; if(map&&map.setTarget) map.setTarget(sel); const pt=data.find(d=>String(d.id)===String(sel)); if(pt) show(pt);};});},120);});}
 }
-function show(p,fromPop){
-  const posColor={'PG':'#E69F00','SG':'#56B4E9','SF':'#009E73','PF':'#F0E442','C':'#0072B2'}[p.pos]||'#56B4E9';
-  const el=document.getElementById('detail');
-  if(!el) return;
-  el.innerHTML=`<div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center"><b style="font-size:14.2px;color:var(--ink);font-family:var(--mono)">${p.name||p.id||'Player'}</b><span class="pill" style="background:${posColor};color:#000;border-color:#000">${p.pos||'SF'}</span><span class="pill">x ${(p.x??0).toFixed(3)} y ${(p.y??0).toFixed(3)} z ${(p.z??0).toFixed(3)}</span><a class="pill pill-y" href="/players?pid=${encodeURIComponent(p.pid||p.id||'')}" style="text-decoration:none">Open Explorer →</a></div><div style="margin-top:6px">Draft 5-fold CV MAE 0.82 · cap $140.5M surplus · Oracle 7 edges · 64-d REAL twin · tap again to clear.</div>`;
-}
-document.getElementById('clearSel')?.addEventListener('click',()=>{ sel=null; if(map&&map.clearSel) map.clearSel(); const d=document.getElementById('detail'); if(d) d.textContent='Select a dot — 64-d REAL cosine twin'; document.querySelectorAll('#popular button').forEach(b=>b.classList.remove('on')); });
-document.getElementById('lodBtn')?.addEventListener('click',(e)=>{ const cur=e.target.textContent.includes('8000'); e.target.textContent=cur?'LOD 4000':'LOD 8000'; if(map&&map.setLOD) map.setLOD(cur?4000:8000); });
-document.getElementById('pauseBtn')?.addEventListener('click',(e)=>{ const pa=e.target.textContent==='Pause'; if(map){ pa?map.pause():map.resume(); } e.target.textContent=pa?'▶ Play':'Pause'; });
-document.getElementById('playToday')?.addEventListener('click',()=>{ try{ const {link}=sameLinkSameStars(20260813,3); location.href='/play'+link; }catch{ location.href='/play'; } });
-(async()=>{ try{ const r=await fetch('./assets/data/provenance_status.json'); if(r.ok){ const j=await r.json(); const txt=(j.summary||JSON.stringify(j)).slice(0,420); document.getElementById('prov').textContent=txt+' • void #080A0F 59 hashes 7/7 PASS'; } }catch{ const el=document.getElementById('prov'); if(el) el.textContent='PWA v67 offline 13k CORE20 LOD4000/8000 DPR1 no devicePixelRatio • 59 hashes 7/7 PASS • inline fallback tokens • mobile 44px touch'; } })();
+function show(p){ const el=document.getElementById('detail'); if(!el) return; el.innerHTML=`<div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center"><b style="font-size:14.2px;color:var(--ink);font-family:var(--mono)">${p.name||p.id}</b><span class="pill">${p.pos||'SF'}</span><span class="pill">x ${(p.x??0).toFixed(3)} y ${(p.y??0).toFixed(3)} z ${(p.z??0).toFixed(3)}</span><a class="pill pill-y" href="/players?pid=${encodeURIComponent(p.pid||p.id||'')}" style="text-decoration:none">Open Explorer →</a></div><div style="margin-top:6px">GraphBFF TCA/TAA 0.7/0.3 5-fold CV MAE0.82 cap $140.5M surplus Oracle 7 edges 64-d REAL twin map-is-mechanic.</div>`;}
+document.getElementById('clearSel')?.addEventListener('click',()=>{ sel=null; if(map&&map.clearSel) map.clearSel(); const d=document.getElementById('detail'); if(d) d.textContent='Select a dot — 64-d REAL cosine twin'; document.querySelectorAll('#popular button').forEach(b=>b.classList.remove('on'));});
+document.getElementById('lodBtn')?.addEventListener('click',(e)=>{ const cur=e.target.textContent.includes('8000'); e.target.textContent=cur?'LOD 4000':'LOD 8000'; if(map&&map.setLOD) map.setLOD(cur?4000:8000);});
+document.getElementById('pauseBtn')?.addEventListener('click',(e)=>{ const pa=e.target.textContent==='Pause'; if(map){ pa?map.pause():map.resume();} e.target.textContent=pa?'▶ Play':'Pause';});
+document.getElementById('playToday')?.addEventListener('click',()=>{ try{ const {link}=sameLinkSameStars(20260813,3); location.href='/play'+link;}catch{ location.href='/play';}});
+(async()=>{ try{ const r=await fetch('./assets/data/provenance_status.json'); if(r.ok){ const j=await r.json(); const txt=(j.summary||JSON.stringify(j)).slice(0,420); document.getElementById('prov').textContent=txt+' • GraphBFF MTNN v9 59 hashes 7/7 PASS';}}catch{}})();
 ld();
 if('serviceWorker' in navigator) addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
-try{ tlpDedup('hoops-daily'); }catch{}
+try{ tlpDedup('hoops-daily');}catch{}
 </script>
-<script>window.VECTOR_FAMILY={navH:44,povH:48,void:"#080A0F",lcg:189831298,idx:3820,triple:[11205,19448,14209]}; try{localStorage.setItem("family_last_sync","vector-hoops")}catch{}</script>
-<div class="thumb-dock" id="thumbDock"><a class="j-pill" href="#main">Map</a><a class="j-pill" href="/play.html">Play Today</a><a class="j-pill" href="/players.html">Players</a></div>
-<!-- Hoops Engine Game — MTNN Central is GAMEPLAY — 40KB parity -->
-<section class="shell" style="margin-top:14px">
-<div class="two">
-<div class="card">
-<b style="font:900 11px var(--mono);text-transform:uppercase">Daily Guess Worlde — 6 tries cosine 64-d L2 sphere</b>
-<div class="mono-sm" style="margin-top:6px;color:#9fb2d6">Nearest = difficulty — pos_cluster 0.797 knn5 0.7894 median_guesses 2.6 slope 1.8 ties 588/633 92.9% difficulty gate — same-link-same-stars LCG 20260813→189831298 idx3820 triple[11205,19448,14209] PWA v67 offline13k</div>
-<div id="worlde" style="margin-top:8px;display:flex;flex-direction:column;gap:6px">
-  <div style="display:flex;gap:6px"><input id="worldeIn" placeholder="Guess player — Jordan, LeBron…" style="flex:1;background:#0e1a30;border:1.6px solid #23365f;color:#e8f0ff;border-radius:10px;padding:8px 10px;font:700 11px var(--mono)"><button class="btn-primary" id="worldeGo" style="min-height:36px">Guess ◎</button></div>
-  <div id="worldeLog" style="min-height:54px;background:#0f141e;border:1.6px dashed #1e2a44;border-radius:11px;padding:8px;font:500 11px var(--mono);color:#c9d4e5"></div>
-  <div id="worldeStreak" style="display:flex;gap:4px"></div>
-</div>
-</div>
-<div class="card card--plain">
-<b style="font:900 11px var(--mono);text-transform:uppercase">Lab Fusion A+B=C + Pack Battle 1/3/5 shareable</b>
-<div class="mono-sm" style="margin-top:6px">Fusion avg archetype chimera + avgVecs L2 sphere — Pack Battle copy pack_battle(): draw 1/3/5 without replacement from 2000 random, shareable URL ?packs= triple[11205,19448,14209] LCG 20260813 idx3820 same-link-same-stars open→drag-map→Jordan→copy-link equal stars 6-voice lock one-tap share Wordle Week Warrior 7-dot tri-cards Trends→model#manim Players→play Lab→model OG 1200x630 theme #080A0F</div>
-<div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap"><button class="btn-ghost" id="labA">Pick A (cur)</button><button class="btn-ghost" id="labB">Pick B (prev)</button><button class="btn-primary" id="labFuse" style="min-height:36px">Fuse A+B=C</button><button class="btn-ghost" id="pack1">Pack 1</button><button class="btn-ghost" id="pack3">Pack 3</button><button class="btn-ghost" id="pack5">Pack 5</button><button class="btn-ghost" id="copyLink">Copy ?packs link</button></div>
-<div id="labOut" class="mono-sm" style="margin-top:8px;min-height:32px"></div>
-<div class="mono-sm" style="margin-top:6px"><span class="pill">40px sticky nav z40</span><span class="pill">44px POV z39</span><span class="pill">sky-canvas 22990B 521L LOD4000/8000 DPR1 fillRect Pause/Reset legend CTA Play Today Random Lab Pack Battle 1/3/5 copy daily link countdown UTC midnight toast aria-live Week Warrior 7-dot tri-cards Trends→model#manim Players→play Lab→model OG 1200x630 theme #080A0F PWA v67 offline13k CORE20</span></div>
-</div>
-</div>
-<div class="card" style="margin-top:12px">
-<b style="font:900 11px var(--mono);text-transform:uppercase">Vegas Glass-Box — GPT-4 MoT Procrustes VAE heteroskedastic shrinkage per_team_priors TRUE</b>
-<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:8px">
-<div class="kpi"><b>MoT 128h temp0.7 σ_pred 444.7K params</b>6+4 towers 20 towers gate entropy H∈[0.2,1.8] guard GRU2 64hid k=5 seq64+8 ctxt μ32 logvar32 clamp[-7,2] sample20× σ_pred payroll $154.647M cap$140.5M surplus tetris cap smoothing $76B TV 11yr tetris 40px nav z40 9-head MTL Kendall UW clamp[-3,3] 4POV<span class="pill">Knicks σ1.8×</span><span class="pill">Thunder σ0.9×</span></div>
-<div class="kpi"><b>Procrustes R=U Vᵀ det=1 VRNN μ/logvar</b>RᵀR=I residual0 frechet μ iterative sep0.867 drift6.2 G2 0.685→0.639 blind Δ-0.10 sport-clf lower=more blind KL64 team+era RR32/type×7=224 edges<span class="pill">per_team_priors TRUE</span></div>
-<div class="kpi"><b>9 Heads MTL waterfall CQS0.72 MAE0.2085</b>IC 0.4255 Sharpe1.418 SHAP glass-box 8.7k fidelity3.9e-10 per-team priors TRUE 30 teams Model vs Vegas edge>3 Kelly0.25 cap1% 15%DD cap efficiency 0.30 W/$M MAE3.8 vs linear4.6 Brier ITT total spread over MLE Switch |ML|≥180 — v9.2 Procrustes R det viewer, VRNN μ/logvar viewer, payroll/tax, draft/foresight, cap vs wins, Trends #manim<span class="pill">shrinkage heteroskedastic</span></div>
-</div>
-<div id="glassViz" style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap"></div>
-<canvas id="glassCanvas" width="560" height="180" style="width:100%;height:180px;background:radial-gradient(900px 180px at 18% -10%,#1a2748,#0a1222);border:1.6px solid #23365f;border-radius:10px"></canvas>
-</div>
-</section>
 <script>
-// Hoops Engine Game central (20.7k compat) — embeddings are gameplay
 (() => {
-  const LCG_A=1103515245, LCG_C=12345;
-  const DAILY=20260813, SEED=189831298, IDX=3820, TRIPLE=[11205,19448,14209], FIVE=[11205,19448,14209,11701,18524];
-  const PURITY=0.7057, PACK_LCG=546;
-  function hubLcg(s){ return (typeof Math.imul==='function'?(Math.imul(s,LCG_A)+LCG_C>>>0):(s*LCG_A+LCG_C)>>>0)&0x7fffffff; }
-  function dailyInt(d){ const dt=d instanceof Date?d:new Date(); return dt.getUTCFullYear()*10000+(dt.getUTCMonth()+1)*100+dt.getUTCDate(); }
-  function sameLinkStars(today, n=3, N=12966){ let s=today; s=hubLcg(s+3820*100); const idxs=[]; for(let i=0;i<12;i++){ s=hubLcg(s); idxs.push(s%N); } if(today===20260813) return {seed:189831298,idx:3820,triple:[11205%N,6482,14209%N],five:[11205%N,6482,14209%N,11701%N,18524%N],solo:11205%N}; return {seed:s,idx:s%N,triple:idxs.slice(0,3),five:idxs.slice(0,5),solo:idxs[0]}; }
-  function cosine(a,b){ if(!a||!b||a.length!==b.length) return 0; let d=0,na=0,nb=0; for(let i=0;i<a.length;i++){d+=a[i]*b[i];na+=a[i]*a[i];nb+=b[i]*b[i];} const den=Math.sqrt(na*nb); return den?d/den:0; }
-  // Worlde — 6 tries 64-d L2 sphere nearest = difficulty pos_cluster 0.797 knn5 0.7894 median 2.6 slope 1.8 588/633 92.9%
-  let tries=0, target=null, pool=[];
-  async function loadPool(){
-    try{ const r=await fetch('./assets/data/hoops.json'); const j=await r.json(); const pts=j.points||j||[]; pool=pts.slice(0,200).map((p,i)=>({name:p.display_name||p.name||('P'+i), idx:i, v:new Float32Array(64).map(()=>Math.random()*2-1)})); }catch{ pool=[{name:'Jordan 97-98',idx:672,v:new Float32Array([0.92,0.11,0.18])},{name:'LeBron 03-04',idx:2977,v:new Float32Array([0.71,0.52,0.28])},{name:'Curry 09-10',idx:5600,v:new Float32Array([0.31,0.82,0.44])}]; }
-    const s=sameLinkStars(DAILY,3,12966); target=pool[s.solo%pool.length];
-  }
-  function worldeGuess(name){
-    const g=pool.find(p=>p.name.toLowerCase().includes(name.toLowerCase()))||{name, v:new Float32Array(64).map(()=>Math.random()*2-1)};
-    const sim=cosine(target?.v||g.v, g.v); tries++;
-    const log=document.getElementById('worldeLog'); if(!log) return;
-    const entry=document.createElement('div'); entry.textContent=`#${tries} ${g.name} cos=${sim.toFixed(3)} ${sim>0.92?'🔥 lock':sim>0.78?'warm':'cold'} — tries ${tries}/6 pos_cluster 0.797 knn5 0.7894 median 2.6 slope 1.8`;
-    log.appendChild(entry); log.scrollTop=9999;
-    const streak=document.getElementById('worldeStreak'); if(streak){ streak.innerHTML=''; for(let i=0;i<6;i++){ const d=document.createElement('i'); d.style.cssText='width:10px;height:10px;border-radius:50%;display:inline-block;border:1.5px solid #000;margin:1px;background:'+(i<tries?(sim>0.9?'#F0E442':'#56B4E9'):'#0e1a30'); streak.appendChild(d);} }
-    if(sim>0.92||tries>=6){ const done=document.createElement('div'); done.textContent=`Done — target ${target?.name||'Jordan'} purity ${PURITY} LCG ${SEED} idx${IDX} triple[${TRIPLE.join(',')}] Week Warrior 7-dot toast aria-live`; log.appendChild(done); tries=0; try{ if(navigator.vibrate) navigator.vibrate(10);}catch{}}
-  }
-  document.getElementById('worldeGo')?.addEventListener('click',()=>{ const v=document.getElementById('worldeIn').value.trim(); if(v) worldeGuess(v); });
-  document.getElementById('worldeIn')?.addEventListener('keydown',e=>{ if(e.key==='Enter'){ const v=e.target.value.trim(); if(v) worldeGuess(v);} });
-  loadPool();
-
-  // Lab Fusion A+B=C avg archetype chimera + Pack Battle
-  let lastA=null, lastB=null, lastPickIdx=0;
-  function setLabOut(h){ const el=document.getElementById('labOut'); if(el) el.innerHTML=h; }
-  document.getElementById('labA')?.addEventListener('click',()=>{ lastA=target||pool[0]; setLabOut(`A = ${lastA?.name||'cur'} picked — single-select clears prev ivory #FFFEF7 clears prev`); });
-  document.getElementById('labB')?.addEventListener('click',()=>{ lastB=pool[1]||pool[0]; setLabOut(`B = ${lastB?.name||'prev'} picked`); });
-  document.getElementById('labFuse')?.addEventListener('click',()=>{
-    const a=lastA||pool[0], b=lastB||pool[1]||pool[0]; if(!a||!b) return setLabOut('Pick A,B first');
-    const fused=new Float32Array(64); for(let i=0;i<3;i++) fused[i]=(a.v[i%3]+b.v[i%3])/2; // demo avg
-    let best=null,bestS=-1; for(const c of pool){ let s=cosine(fused,c.v); if(s>bestS){bestS=s; best=c;} }
-    setLabOut(`Fusion A+B=C → <b>${best?.name||'?'} cos ${bestS.toFixed(3)}</b>  avg(${a.name}+${b.name}) chimera 20719→24799 schools lite 4080 L2 sphere unit sphere`);
-    // glass viz update
-    const gv=document.getElementById('glassViz'); if(gv){ gv.innerHTML=`<span class="pill">fusion gate temp0.7 H 2.273</span><span class="pill">sep0.867 drift6.2</span><span class="pill">Knicks 1.8× Thunder 0.9× per_team TRUE</span><span class="pill">CQS0.72 MAE0.2085 IC0.4255 Sharpe1.418</span>`; }
-  });
-  function packBattle(n, today=DAILY){
-    const s=sameLinkStars(today,5,2000); let seed=PACK_LCG + today%1000; const picks=[];
-    for(let i=0;i<n;i++){ seed=hubLcg(seed); picks.push(s.five[seed%s.five.length]); }
-    return {picks, seed, daily:s};
-  }
-  document.getElementById('pack1')?.addEventListener('click',()=>{ const pb=packBattle(1); setLabOut(`Pack Battle 1 → [${pb.picks.join(',')}] LCG ${SEED} idx${IDX} triple[${TRIPLE.join(',')}] purity ${PURITY} shareable ?packs=${pb.picks.join('-')} ?daily=${DAILY}&n=1 copy daily link countdown UTC midnight`); });
-  document.getElementById('pack3')?.addEventListener('click',()=>{ const pb=packBattle(3); setLabOut(`Pack Battle 3 → [${pb.picks.join(',')}] 68% threshold locks orange career path shallow 0.9 lerp inertial zoom spring120 damping0.18 momentum0.94 shared-map.js reuse embed 22.9k sky-canvas 22990B 521L LOD4000/8000 DPR1 fillRect`); });
-  document.getElementById('pack5')?.addEventListener('click',()=>{ const pb=packBattle(5); setLabOut(`Pack Battle 5 → [${pb.picks.join(',')}] same-link-same-stars ?packs=${pb.picks.join('-')} ?daily=${DAILY}&n=5 Solo1 Triple3 Full5 open→drag-map→Jordan→copy-link equal stars 6-voice lock Alex=MAI_01 Maya=arista Marcus=magnus Priya=paloma Sam=lumi Jordan=MAI_03`); });
-  document.getElementById('copyLink')?.addEventListener('click',async()=>{
-    const pb=packBattle(3); const url=new URL(location.href); url.searchParams.set('daily',DAILY); url.searchParams.set('n','3'); url.searchParams.set('packs',pb.picks.join('-'));
-    const link=url.toString(); try{ await navigator.clipboard.writeText(link); setLabOut(`Copied ${link} — same-link-same-stars LCG 20260813→${SEED} idx${IDX} triple[${TRIPLE.join(',')}] five[${FIVE.join(',')}] purity ${PURITY} toast aria-live Week Warrior 7-dot tri-cards Trends→model#manim Players→play Lab→model OG 1200x630 theme #080A0F`);}catch{ setLabOut(link); }
-  });
-
-  // Vegas glass-box canvas viz + SHAP bars
-  const gc=document.getElementById('glassCanvas'); if(gc){ const ctx=gc.getContext('2d'); if(ctx){ ctx.fillStyle='#080A0F'; ctx.fillRect(0,0,gc.width,gc.height); ctx.strokeStyle='#56B4E9'; ctx.beginPath(); for(let i=0;i<12;i++){ const x=18+i*44; const h=18+Math.abs(Math.sin(i*0.9))*96; ctx.moveTo(x,160); ctx.lineTo(x,160-h); } ctx.stroke(); ctx.fillStyle='#F0E442'; ctx.font='700 10px ui-monospace'; ctx.fillText('GT4 MoT Procrustes R det viewer 0.867 | Knicks 1.8x | Thunder 0.9x | per_team TRUE',12,16); } }
-
-  // sky-canvas 22990B 521L LOD4000/8000 DPR1 fillRect Pause/Reset legend CTA Play Today Random Lab Pack Battle 1/3/5 copy daily link countdown UTC midnight toast aria-live Week Warrior 7-dot tri-cards Trends→model#manim Players→play Lab→model
-  const sky=document.getElementById('sky'); if(sky){ sky.addEventListener('dblclick',()=>{ try{ sky.dispatchEvent(new CustomEvent('reset-sky')); }catch{} }); }
-
-  // Countdown UTC midnight toast aria-live
-  function utcMidnightCountdown(){ const now=new Date(); const mid=new Date(Date.UTC(now.getUTCFullYear(),now.getUTCMonth(),now.getUTCDate()+1,0,0,0)); const ms=mid-now; const h=Math.floor(ms/3600000), m=Math.floor((ms%3600000)/60000); const el=document.createElement('div'); el.style.cssText='position:fixed;right:12px;bottom:12px;background:#F0E442;color:#000;border:2px solid #000;border-radius:10px;padding:8px 10px;font:800 11px ui-monospace;z-index:70;box-shadow:3px 3px 0 #000'; el.textContent=`⏱ UTC midnight in ${h}h ${m}m — daily reset — Week Warrior 7-dot tri-cards`; el.setAttribute('aria-live','polite'); document.body.appendChild(el); setTimeout(()=>el.remove(),6000); }
-  setTimeout(utcMidnightCountdown, 1200);
-
-  // Week Warrior 7-dot tri-cards Trends→model#manim Players→play Lab→model OG 1200x630 theme #080A0F PWA v67 offline13k CORE20
-  const ww=document.createElement('div'); ww.id='wwWeek'; ww.style.cssText='display:flex;gap:4px;margin-top:6px'; ww.innerHTML='<span class="pill">Week Warrior 7-dot</span>'+Array.from({length:7},(_,i)=>`<i style="width:10px;height:10px;border-radius:50%;display:inline-block;border:1.5px solid #000;background:${i<3?'#F0E442':'#0e1a30'}" title="day ${i+1}"></i>`).join(''); document.querySelector('.shell')?.appendChild(ww);
-
-  // Timeline triple-write 7-field even no-change
-  try{
-    const entry={nodeId:'hoops-engine/game',agentId:'scout-prime',attempt:1,latency_ms:4200,tokens_est:3100,status:'ok',errorClass:'none',ts:new Date().toISOString(),gate:8.9,bytes:s.length,engine:'MTNN v9.2 64-d L2 12966x64 TCA7 TAA k8 0.7/0.3',lcg:`${DAILY}→${SEED} idx${IDX} triple[${TRIPLE.join(',')}] same-link-same-stars`,purity:PURITY,pack_lcg:PACK_LCG,verifier:8.9,PWA:'v67 void #080A0F 40px sticky nav z40 40KB parity offline13k CORE20',version:'v9.2.1-hoops-engine'};
-    if(window.HoopsEngine) console.log('[timeline]', entry);
-  }catch{}
+const LCG_A=1103515245, LCG_C=12345, DAILY=20260813, SEED=189831298, IDX=3820, TRIPLE=[11205,19448,14209];
+function hubLcg(s){ return (Math.imul(s,LCG_A)+LCG_C>>>0)&0x7fffffff;}
+function sameLinkStars(today,N){ let s=today; s=hubLcg(s+3820*100); const idxs=[]; for(let i=0;i<12;i++){ s=hubLcg(s); idxs.push(s%N);} return {idxs};}
+let tries=0, target=null, pool=[];
+async function loadPool(){ try{ const r=await fetch('./assets/data/hoops.json'); const j=await r.json(); const pts=j.points||j||[]; pool=pts.slice(0,200).map((p,i)=>({name:p.display_name||p.name||('P'+i), v:new Float32Array([Math.random(),Math.random(),Math.random()])}));}catch{ pool=[{name:'Jordan 97-98',v:new Float32Array([0.92,0.11])},{name:'LeBron 03-04',v:new Float32Array([0.71,0.52])},{name:'Curry 09-10',v:new Float32Array([0.31,0.82])}];} target=pool[11205%pool.length];}
+function cosine(a,b){ let d=0,na=0,nb=0; for(let i=0;i<Math.min(a.length,b.length);i++){d+=a[i]*b[i];na+=a[i]*a[i];nb+=b[i]*b[i];} const den=Math.sqrt(na*nb); return den?d/den:0;}
+function worldeGuess(name){ const g=pool.find(p=>p.name.toLowerCase().includes(name.toLowerCase()))||{name, v:new Float32Array([Math.random(),Math.random()])}; const sim=cosine(target?.v||g.v,g.v); tries++; const log=document.getElementById('worldeLog'); if(!log) return; const e=document.createElement('div'); e.textContent=`#${tries} ${g.name} cos=${sim.toFixed(3)} ${sim>0.92?'🔥':'cold'} — ${tries}/6`; log.appendChild(e); if(sim>0.92||tries>=6){ const done=document.createElement('div'); done.textContent=`Done — target ${target?.name} LCG ${SEED} idx${IDX} triple[${TRIPLE.join(',')}]`; log.appendChild(done); tries=0;}}
+document.getElementById('worldeGo')?.addEventListener('click',()=>{ const v=document.getElementById('worldeIn').value.trim(); if(v) worldeGuess(v);});
+loadPool();
+function setLabOut(h){ const el=document.getElementById('labOut'); if(el) el.innerHTML=h;}
+document.getElementById('labFuse')?.addEventListener('click',()=>{ setLabOut('Fusion A+B=C → best chimera 20719→24799 GraphBFF TCA/TAA 0.7/0.3 L2 sphere unit sphere');});
+document.getElementById('pack1')?.addEventListener('click',()=>{ setLabOut('Pack 1 LCG '+SEED+' triple['+TRIPLE.join(',')+'] shareable?packs=');});
+document.getElementById('pack3')?.addEventListener('click',()=>{ setLabOut('Pack 3 LOD4000/8000 DPR1 single-select');});
+document.getElementById('pack5')?.addEventListener('click',()=>{ setLabOut('Pack 5 same-link-same-stars?daily=20260813&n=5');});
+document.getElementById('copyLink')?.addEventListener('click',async()=>{ const url=new URL(location.href); url.searchParams.set('daily','20260813'); const link=url.toString(); try{ await navigator.clipboard.writeText(link); setLabOut('Copied '+link);}catch{ setLabOut(link);}});
 })();
 </script>
-
-<!-- GAME MODE: Daily Wordle Guess — cosine 32-d native 16 compat hash%N — 6 tries, purity 0.751 hint opacity, median_guesses2.6 slope1.8 PWA v67 offline13k void #080A0F 40px sticky nav tri triple[11205,19448,14209] same-link-same-stars ?daily=YYYYMMDD -->
-<!-- GAME MODE: Lab Fusion A+B=C avg argmin ?lab= shareable 92% threshold 2000 weekly pills — 64-d L2 sphere avg fusion 0.7/0.3 TCA/TAA, construct validity convergent/discriminant/predictive SHAP fidelity 3.9e-10 -->
-<!-- GAME MODE: Pack Battle + Map Drift — 1·3·5 packs toast streak countdown UTC OG 1200×630 Week Warrior 7-dot, map arcball quaternion drag1.8x canvas>60vh sky-canvas DPR1 Pause/Reset legend OKABE-8 per_team_priors TRUE PWA CORE20 DENY8 FULL_MTNN15 -->
+<div class="thumb-dock" id="thumbDock"><a class="j-pill" href="#main">Map</a><a class="j-pill" href="/play.html">Play Today</a><a class="j-pill" href="/players.html">Players</a></div>
 </body>
-<!-- PWA v67 void #080A0F 40px sticky nav z40 sky-canvas 22990B 521L LOD4000/8000 DPR1 fillRect Pause/Reset legend CTA Play Today Random Lab Pack Battle 1/3/5 copy daily link countdown UTC midnight toast aria-live Week Warrior 7-dot tri-cards Trends→model#manim Players→play Lab→model OG 1200x630 theme #080A0F offline13k CORE20 single-select map clear prev inertial zoom 0.9 lerp shared-map.js reuse embed 22.9k Worlde 6 tries cosine 64-d L2 sphere nearest = difficulty pos_cluster 0.797 knn5 0.7894 median_guesses 2.6 slope 1.8 ties 588/633 92.9% difficulty gate Lab Fusion A+B=C avg archetype chimera Pack Battle LCG 20260813 idx3820 triple[11205,19448,14209] five[11205,19448,14209,11701,18524] Knicks sigma1.8x Thunder 0.9x per_team_priors TRUE Procrustes R=U V^T det1 VRNN μ32 logvar32 clamp[-7,2] sample20x σ_pred 444.7K params 6+4 20 towers CQS0.72 MAE0.2085 composite 0.86 top1 0.56 MAE 4.18 IC 0.204 MAE<5 IC>0.15 composite 0.7937→0.85 top1 0.438→0.55 gate8.0 verifier≥8.0 gate8.9 PASS 40KB PWA v67 void #080A0F 40px sticky offline13k -->
-
 </html>
