@@ -1,278 +1,45 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>MTNN Network Explorer — Vector Hoops v6 SOTA 2026</title>
-<link rel="canonical" href="https://hoops.dumbmodel.com/model">
-<meta property="og:url" content="https://hoops.dumbmodel.com/model">
-<meta name="description" content="Walk a player-season through MTNN v6 SOTA 2026: 17 towers + compressed conv 8x KV + gated DeltaNet 18MB fixed state + sparse 10% + MatFormer nesting + diffusion heads — glass box explorer">
-<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20100%20100%22%3E%3Ctext%20y%3D%22.9em%22%20font-size%3D%2290%22%3E%26%23127936%3B%3C%2Ftext%3E%3C%2Fsvg%3E">
-<meta property="og:type" content="website">
-<meta property="og:title" content="MTNN Network Explorer v6 SOTA — Vector Hoops">
-<meta property="og:description" content="Inside MTNN that powers Chimera: now 6 local LLM innovations — not smaller cloud versions — 8x KV compression, fixed 18MB state at 170K, disk 1M, per-layer embeddings, MatFormer nesting, diffusion decoding">
-<meta property="og:image" content="/assets/og.svg">
-<link rel="stylesheet" href="assets/hoops.css">
-<link rel="stylesheet" href="assets/shell.css">
-<link rel="stylesheet" href="assets/nux.css">
-<link rel="stylesheet" href="assets/responsive.css">
+<link rel="stylesheet" href="/assets/tokens.css?v=dc7dc4c5">
+<link rel="stylesheet" href="/assets/fonts.css?v=31e5658b">
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#fafaf8">
+<title>Vector Hoops — Model · MTNN v9.2 dual-stream</title>
+<meta name="description" content="Lab dashboard Data→Clean→Train→Eval GraphBFF dual-stream TCA+TAA MTNN v9.2 1,764 players · single-select clears prev · LCG both chains">
+<link rel="stylesheet" href="/assets/fonts.css">
+<link rel="manifest" href="/manifest.json">
 <style>
-.sota-banner{background:linear-gradient(90deg,#0a0a0a 0%,#1a2a1a 100%);border:2px solid #111;color:#f5f5f0;border-radius:12px;padding:14px 16px;margin:0 0 18px;overflow:hidden}
-.sota-banner__eyebrow{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#9cd321;font-weight:800}
-.sota-banner__title{font-size:18px;font-weight:900;margin:4px 0}
-.sota-banner__grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px;margin-top:10px}
-.sota-card{border:1px solid #2a2a2a;background:#101010;border-radius:8px;padding:8px 10px}
-.sota-card b{display:block;font-size:12px;margin-bottom:2px}
-.sota-card i{font-size:11px;color:#aaa;display:block;font-style:normal}
-.sota-card code{font-size:10px;color:#9cd321}
-.sota-metric{font-size:11px;color:#ccc;margin-top:6px}
-.sota-metric b{color:#fff;display:inline}
+:root{--paper:#FAFAF8;--surface:#fff;--ink:#111;--ink-soft:#52514E;--orange:#EB6834;--blue:#2A78D6;--yellow:#F0E442;--mono:ui-monospace,Menlo,monospace;--sans:ui-sans-serif,system-ui,sans-serif;--shadow:4px 4px 0 var(--ink)}
+*{box-sizing:border-box}html,body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans)}
+.site-nav{position:sticky;top:0;z-index:40;min-height:40px;display:flex;align-items:center;justify-content:space-between;padding:0 16px;background:var(--surface);border-bottom:2px solid var(--ink)}
+.site-nav a{font:800 11.5px var(--mono);text-transform:uppercase;text-decoration:none;color:var(--ink-soft);padding:6px 10px;border-radius:8px}
+.site-nav a.on{background:var(--ink);color:#fff}
+.wrap{max-width:1120px;margin:0 auto;padding:14px}
+.card{background:var(--surface);border:2px solid var(--ink);border-radius:12px;box-shadow:var(--shadow);padding:12px}
+.mono{font-family:var(--mono);font-size:11px}
+.hero-band{border-bottom:2px solid var(--ink);background:linear-gradient(180deg,#fff,var(--paper));padding:12px 16px}
+.grid2{display:grid;grid-template-columns:1.2fr .8fr;gap:12px}@media(max-width:900px){.grid2{grid-template-columns:1fr}}
+.pill{display:inline-flex;padding:5px 10px;border-radius:999px;border:1.6px solid var(--ink);background:#fff;font:800 11px var(--mono);box-shadow:2px 2px 0 var(--ink)}
+.pill.on{background:var(--ink);color:#fff}
+.pill.y{background:var(--yellow);transform:rotate(-1deg)}
 </style>
+<script src="assets/map-camera.js"></script>
 </head>
 <body>
-
-<nav class="site-nav" data-active="/model" aria-label="Vector Hoops site"></nav>
-
-<main class="research-main network-main">
-
-<div class="research-head network-head">
-<h1>Inside the network <span style="font-size:14px;vertical-align:middle;background:#111;color:#fff;padding:2px 8px;border-radius:999px;margin-left:8px">v6 SOTA 2026</span></h1>
-<p class="network-hero">Pick a player-season and peer inside the <b>MTNN</b> — a glass box, not a black box.
-Seventeen stat families each run through their own residual tower, fuse into a 48-number fingerprint,
-then decode into archetype, position, skill grades, and next-year forecasts. <b>Now hill-climbed with 6 local LLMs that prove they're not just smaller cloud versions</b> — compressed conv 8× KV, gated DeltaNet fixed 18MB, sparse 10%, MatFormer nesting, per-layer embeddings, diffusion heads. Click a node, output row, or tower to <b>probe</b>: lock the line-of-sight trace, see family share across every head, and read signed feature pushes.</p>
-</div>
-
-<section class="sota-banner" aria-label="6 Local LLMs SOTA 2026">
-<div class="sota-banner__eyebrow">From 6 local LLMs review — not smaller cloud versions · source share.google/ApbX6CzAGagVjbpGY</div>
-<div class="sota-banner__title">MTNN v6 SOTA 2026 hill-climb — 6 innovations → Hoops glass box</div>
-<div class="sota-banner__grid">
-<div class="sota-card"><b>1 Zaya1-8B Compressed Conv Attention</b><i>QKV into shared latent + depthwise conv sequence mixing → 8-fold KV-cache compression</i><code>compressed_conv.py latent 64 kernel7</code><div class="sota-metric"><b>Before:</b> 64GB @128K FP16 Llama2-7B → <b>After:</b> 8GB @128K · 7 tok/s BF16 M4 Pro 42 tok/s MXFP4 vMLX</div></div>
-<div class="sota-card"><b>1b Zaya1 Markovian Recursive Aggregation</b><i>Tail end of k=4 parallel reasoning traces into bounded 256-token aggregation context — longer reasoning without full chain</i><code>k=4 tail 256 entropy tau 0.7</code><div class="sota-metric">Planner hl150→200+, 7400 tokens correct beating GPT-5.5/Opus 4.8, 91.9% AIME 2025</div></div>
-<div class="sota-card"><b>2 VibeThinker-3B Parametric Compression-Coverage</b><i>Verifiable reasoning (math/code) packs into smaller than expected — 2-stage SFT + MaxEnt-guided RL + offline self-distill</i><code>Qwen2.5-Coder-3B base 94.3% AIME 2026</code><div class="sota-metric"><b>$7,800</b> 1.5B post-train vs 6-fig frontier → our Math branch 32 slots can do it</div></div>
-<div class="sota-card"><b>3 DeepSeek V4 Flash Sparse-Compressed Hybrid</b><i>284B MoE 13B active 1M ctx 10% KV vs V3.2 — Compressed Sparse + Heavily Compressed + ds4 C engine KV cache on disk</i><code>sparse_compressed.py 10% 1M streaming</code><div class="sota-metric">96GB unified PGX GB10 128GB LPDDR5x — enables 1M streaming on Alienware via disk</div></div>
-<div class="sota-card"><b>4 Qwen 3.6 Gated DeltaNet Fixed-State</b><i>3 DeltaNet: 1 full-attn precision checkpoint — fixed-size recurrent state never grows with context, stores delta + gating decay</i><code>gated_deltanet.py 36/48 layers 18MB @170K</code><div class="sota-metric"><b>18MB @170K</b> vs linear growth — 25-40 tok/s Q4_K_M 46GB Q8_0 85GB vLLM Docker, 27B dense +35B-A3B 262K→1M</div></div>
-<div class="sota-card"><b>5 DiffusionGemma Discrete Diffusion</b><i>Gemma 4 26B/4B-active MoE — 256 random tokens canvas refined in parallel bidirectional, whole block resolves like image</i><code>diffusion_gemma.py 123 steps 9 blocks</code><div class="sota-metric">Flask Flappy Bird 138s 9 blocks, 1000+ tok/s H100 4× vs bandwidth-bound Apple Silicon</div></div>
-<div class="sota-card"><b>6 Gemma 4 E2B/E4B Phone MatFormer + Per-Layer Emb</b><i>Effective 2B/4.5B phone enough — MatFormer nesting E2B inside E4B one download multiple targets + per-layer token embeddings cheap lookup + conformer audio</i><code>per_layer.py + matformer.py + conformer.py</code><div class="sota-metric">Oppo Find N5 Snapdragon 8 Elite 16GB Q8_0 4.3GB +900MB proj 6GB RAM 7-8 tok/s sub-sec TTFT 10s encode</div></div>
-</div>
-<p style="margin-top:10px;font-size:11px;color:#aaa">All 6 share novel approach to at least one part of assumed architecture — common pattern emerging. KV-cache half problem solved via compression, not just weight quant.</p>
-</section>
-
-<section class="drift-card network-controls-card" aria-label="Explorer controls">
-<div class="network-controls">
-<label class="network-controls__label" for="network-search">Player</label>
-<input type="search" id="network-search" class="wiki-search network-search"
-placeholder="Search charted players…" autocomplete="off" autocorrect="off" spellcheck="false">
-<ul class="network-suggest" id="network-suggest" hidden></ul>
-<span id="network-player-tag" class="network-player-tag">Loading…</span>
-<label class="network-compare-toggle">
-<input type="checkbox" id="network-compare-toggle">
-<span>Compare mode</span>
-</label>
-<input type="search" id="network-compare-search" class="wiki-search network-search"
-placeholder="Compare to player-season…" autocomplete="off" autocorrect="off" spellcheck="false" disabled>
-<ul class="network-suggest" id="network-compare-suggest" hidden></ul>
-<span id="network-compare-tag" class="network-player-tag network-player-tag--compare">No compare player</span>
-<div class="network-step-nav" id="network-step-nav" role="tablist" aria-label="Network layer">
-<button type="button" class="network-step-btn is-active" data-step="0">Input</button>
-<button type="button" class="network-step-btn" data-step="1">Towers</button>
-<button type="button" class="network-step-btn" data-step="2">Fusion</button>
-<button type="button" class="network-step-btn" data-step="3">Embed</button>
-<button type="button" class="network-step-btn" data-step="4">Heads</button>
-<button type="button" class="network-step-btn" data-step="5" style="background:#9cd321;color:#000">v6 SOTA</button>
-</div>
-<button type="button" id="network-play" class="network-play-btn" aria-label="Play flow animation">
-Play flow
-</button>
-</div>
-<div class="network-timebar" id="network-timebar" hidden>
-<div class="network-timebar__head">
-<span class="network-timebar__label">Career timeline</span>
-<span id="network-timebar-current" class="network-timebar__current"></span>
-</div>
-<input type="range" id="network-time-scrubber" min="0" max="0" step="1" value="0">
-<div id="network-timebar-range" class="network-timebar__range"></div>
-</div>
-<p id="network-step-caption" class="network-step-caption">Loading architecture… v4 baseline + v6 SOTA 2026 toggles: compressed_conv 8×, gated_deltanet 18MB, sparse 10%, MatFormer, per-layer, diffusion.</p>
-<div id="network-story" class="network-story" aria-live="polite">
-<p class="drift-loading">Loading story…</p>
-</div>
-<div id="network-compare-summary" class="network-insights" aria-live="polite">
-<p class="drift-loading">Compare mode off.</p>
-</div>
-</section>
-
-<section class="drift-card network-section network-flow-card" aria-label="Network data flow">
-<div class="network-section__head">
-<div>
-<p class="viz-panel__label" style="margin:0;">Data flow — v4 baseline → v6 SOTA overlay</p>
-<p class="network-flow-subhead">Input mask · 2 residual blocks per tower (now optionally <code>CompressedConv</code> latent 64 + conv7 for 8× KV) · season 12-d concat · L2 embed 48-d · MLP heads + diffusion option. Hover for LN/GELU/skip + new SOTA paths.</p>
-</div>
-<div class="network-flow-tools">
-<span id="network-trace-status" class="network-trace-status">Click a node to see what fed it and what it drove. v6 toggles show compressed vs full attn.</span>
-<button type="button" id="network-trace-clear" class="network-trace-clear" hidden>Clear trace</button>
-</div>
-</div>
-<div class="network-flow-layout">
-<div class="network-flow-main">
-<div id="network-flow-svg" class="network-flow-host" role="img" aria-label="MTNN layer diagram with SOTA overlay"></div>
-<div id="network-flow-insights" class="network-insights" aria-live="polite">
-<p class="drift-loading">Loading signal summary… includes KV mem 64GB→8GB, fixed 18MB @170K, disk 1M streaming.</p>
-</div>
-</div>
-<div id="network-node-inspector" class="network-insights network-node-inspector" aria-live="polite">
-<p class="drift-loading">Click an input, tower, or output to see its numbers. v6: per-layer embeddings cheap lookup vs shared vocab.</p>
-</div>
-</div>
-
-<div class="network-flow-outputs" id="network-output-card" aria-label="Guess and grade — heads decode + diffusion option">
-<div class="network-flow-outputs__head">
-<p class="viz-panel__label">Guess & grade — heads decode (now with diffusion option 256 canvas 123 steps)</p>
-<p class="network-map-hint">Same MLP heads as rightmost column + diffusion decoder for temporal planning (S2 Slow mass 0.06). Click row to lock trace back through network — now shows MatFormer nesting E2B inside E4B.</p>
-</div>
-<div class="viz-duo-grid network-flow-outputs__grid">
-<div class="viz-panel network-flow-outputs__panel">
-<p class="viz-panel__label">Archetype guess — 8 (v4) → MatFormer nested</p>
-<div id="network-arch-out" class="network-arch-out"></div>
-</div>
-<div class="viz-panel network-flow-outputs__panel">
-<p class="viz-panel__label">Position guess — 5</p>
-<div id="network-pos-out" class="network-arch-out"></div>
-</div>
-<div class="viz-panel network-flow-outputs__panel">
-<p class="viz-panel__label">Skill grades out of 100 — 18×(48→16→1) + per-layer emb</p>
-<div id="network-skill-out" class="network-skill-out"></div>
-</div>
-<div class="viz-panel network-flow-outputs__panel">
-<p class="viz-panel__label">Next-season forecast — per 100 poss + diffusion block refinement</p>
-<div id="network-next-out" class="network-skill-out"></div>
-</div>
-</div>
-<p class="drift-card__foot">Layer counts: v4 17×2 blocks 544+12=556→128→48 L2 ~224K 57% fusion hidden. v6 SOTA: towers optionally compressed_conv latent 64 8× KV (Zaya1) OR gated_deltanet 36/48 18MB fixed @170K (Qwen 3.6) + sparse 10% 1M disk (Flash) + per-layer emb cheap lookup (Gemma E2B/E4B) + MatFormer E2B inside E4B nesting + diffusion heads 256 canvas 123 steps (DiffusionGemma). <a href="/methods#mtnn">How we built this →</a> | <a href="/dashboard">Lab pipeline →</a></p>
-</div>
-</section>
-
-<section class="drift-card network-attr-card" id="network-attr-card" aria-label="What drove this prediction" hidden>
-<div class="network-section__head">
-<p class="viz-panel__label">What drove this prediction — signed grad × input + SOTA attribution</p>
-<div class="attr-tools">
-<div class="attr-tabs" id="attr-target-tabs" role="tablist" aria-label="Output to explain"></div>
-<div class="attr-scope" id="attr-scope" role="group" aria-label="Scope"></div>
-<button type="button" id="attr-table-toggle" class="network-trace-clear" aria-pressed="false">Table view</button>
-</div>
-</div>
-<p class="attr-subject" id="attr-subject"></p>
-
-<div class="attr-grid">
-<div class="viz-panel attr-panel" id="attr-tile"></div>
-<div class="viz-panel attr-panel" id="attr-towers"></div>
-<div class="viz-panel attr-panel" id="attr-features"></div>
-</div>
-<div id="attr-population" hidden></div>
-
-<p class="drift-card__foot">Bars show network prediction moved with input for this player-season — not causal claim. Not tracked era = 0 grad cat([x·m,m]). v6 adds fixed-state attribution for DeltaNet (18MB never grows) vs full-attn precision checkpoint 3:1.
-<a href="/methods#mtnn">Methods →</a></p>
-</section>
-
-<section class="drift-card network-section network-map-card" aria-label="48-d embedding map + 3D">
-<div class="network-section__head">
-<p class="viz-panel__label">Embedding map (48 numbers, 3D) — now with compression view</p>
-<p class="network-map-hint">Slow auto-rotate · drag · scroll zoom · hover for name+archetype · orange=selected · toggle v6 shows 18MB fixed state vs growing cache</p>
-</div>
-<div class="network-map-layout">
-<div class="network-map-stage">
-<canvas id="network-map-canvas" class="network-map-canvas" aria-label="3D MTNN embedding map v6 SOTA"></canvas>
-<ul id="network-map-legend" class="network-map-legend" aria-label="Archetype colours"></ul>
-</div>
-<div id="network-map-insights" class="network-insights" aria-live="polite">
-<p class="drift-loading">Loading nearby players… v6 SOTA keeps same 48-d L2 cosine = similarity, only attention backend changes (8× compression, fixed 18MB, 10% sparse).</p>
-</div>
-</div>
-</section>
-
-<section class="drift-card network-arch-spec-card" aria-label="Shipped architecture v4 + v6 SOTA 2026">
-<details class="network-arch-details" open>
-<summary class="network-arch-summary">
-<span class="viz-panel__label" style="margin:0;display:inline;">Shipped MTNN</span>
-<code id="arch-model-id">mtnn_v4_phase_b → mtnn_v6_sota_2026</code>
-<span id="arch-checkpoint" class="network-arch-checkpoint">mtime 1783736655 2.26MB → 527K params + SOTA overlays 18MB fixed + 8× KV</span>
-<span class="network-arch-summary__hint">Show layer math + SOTA diffs</span>
-</summary>
-<div class="network-arch-grid">
-<div>
-<b class="network-arch-grid__label">Input — 120 feats, 17 families (era-honest σ)</b>
-<code>z-scored per season</code> · mask <code>m∈{0,1}</code><br>
-<code class="network-arch-code">h = cat([x·m, m]) → 2·d_in</code><br>
-<span class="network-arch-muted">Same as v4. Masked ∅ 0 grad = not tracked era.</span>
-</div>
-<div>
-<b class="network-arch-grid__label">Residual towers — 17×2 blocks v6 SOTA fork</b>
-<b>v4:</b> <code>Linear 2d_in→160 LN GELU 160→32 LN + skip</code> ×2<br>
-<b>v6 option A - Zaya1 compressed_conv:</b> <code>QKV → latent 64 + Conv1d k7 groups=H → 8× KV cache</code> saves 64GB@128K→8GB, 7 tok/s BF16 M4 Pro 42 tok/s MXFP4 vMLX<br>
-<b>v6 option B - Qwen 3.6 gated_deltanet:</b> <code>Gated DeltaNet 3:1 + 1 full GQA 2-head precision checkpoint — fixed state never grows 18MB @170K 25-40 tok/s</code><br>
-<b>v6 option C - Flash sparse_compressed:</b> <code>Compressed Sparse + Heavily Compressed 10% KV vs V3.2 for 1M + ds4 disk streaming KV on disk</code><br>
-<code>→ 32-d per tower (17×32=544) quantized options</code>
-</div>
-<div>
-<b class="network-arch-grid__label">Concat fusion + season — now MatFormer nesting</b>
-Season emb <code>12-d learned → concat 544+12=556 → 556→128 GELU LN → 128→48 L2</code><br>
-<b>v6 Gemma E2B/E4B:</b> <code>MatFormer Matryoshka E2B co-trained inside E4B one download multiple targets — smoke 2M→nano 14M→mini 162M→base 1B all from one checkpoint</code><br>
-<b>v6 Per-Layer Embeddings:</b> <code>each decoder layer its own token embeddings cheap lookup tables — cuts vocab mem, enables phone</code><br>
-<span id="arch-fusion-detail" class="network-arch-muted">v4 ~224K params 57% fusion hidden. v6 adds Per-Layer + nesting no extra training for smaller deploy.</span>
-</div>
-<div>
-<b class="network-arch-grid__label">Embedding & heads — 48-d + diffusion</b>
-<code>48-d L2-normalized cosine=similarity</code> Heads MLP <code>48→64→k</code> Skills <code>18×(48→16→1)</code><br>
-<b>v6 VibeThinker:</b> <code>verifiable reasoning packs into smaller — MaxEnt RL + self-distill, 94.3% AIME 2026 $7,800 1.5B post-train → Math/Code branches cheap</code><br>
-<b>v6 DiffusionGemma:</b> <code>discrete diffusion 256 random tokens parallel bidirectional block resolves like image 123 steps 9 blocks Flask 138s 1000+ tok/s H100 vs bandwidth Apple Silicon → for next-season forecast whole plan refined before lock</code><br>
-<b>v6 Markovian Recursive:</b> <code>tail end k traces into bounded aggregation context longer reasoning without full chain — Planner 7400 tokens beating GPT-5.5/Opus</code>
-</div>
-<div style="grid-column:1 / -1">
-<b class="network-arch-grid__label">Phone deploy — Gemma E4B proof</b>
-<code>Oppo Find N5 Snapdragon 8 Elite 16GB llama.cpp Termux Q8_0 4.3GB + 900MB projector 6GB RAM 7-8 tok/s sub-sec TTFT 10s encode +10-20s description native conformer audio transcribes sees/hears/calls tools locally</code> → MTNN 527K 549KB ONNX already <phone-ready, execuTorch mtnn.pte XNNPACK
-</div>
-</div>
-<details class="network-arch-raw" open>
-<summary>Show raw <code>mtnn_arch.json</code> + v6 SOTA overlay</summary>
-<pre id="arch-layers-pre" class="network-arch-pre">Loading… v4_phase_b 17 families 120 feats → v6_sota_2026: {compressed_conv: {latent:64, kernel:7, compression:8, kv_8x:"64GB→8GB @128K", speed:"7 tok/s BF16 M4 Pro 42 MXFP4"}, gated_deltanet: {ratio:"3:1", fixed_state:"18MB @170K never grows", full_attn:"12 GQA 2-head precision checkpoint", speed:"25-40 tok/s Q4_K_M 46GB Q8_0 85GB"}, sparse_compressed: {ratio:"10% KV vs V3.2 1M ctx", engine:"ds4 DwarfStar C KV on disk streaming", model:"284B MoE 13B active MIT 1M"}, vibethinker: {base:"Qwen2.5-Coder-3B 3B dense", hypothesis:"verifiable reasoning packs smaller", recipe:"2-stage SFT + MaxEnt RL + self-distill", scores:"94.3% AIME 2026 70.2% GPQA 96.1% LeetCode $7800"}, diffusion: {base:"Gemma 4 26B/4B-active MoE", method:"256 random tokens parallel bidirectional block resolves like image", steps:"123 denoising 9 blocks Flask 138s", speed:"1000+ tok/s H100"}, gemma_e2b_e4b: {effective:"E2B 2B E4B 4.5B phone enough", matformer:"E2B inside E4B co-trained one download multiple targets", per_layer:"each layer own embeddings cheap lookup", phone:"Oppo Find N5 16GB Q8_0 4.3GB+900MB 6GB RAM 7-8 tok/s sub-sec TTFT"}}</pre>
-</details>
-</details>
-</section>
-
-<section class="drift-card" style="border:2px dashed #9cd321;padding:12px">
-<p style="margin:0;font-weight:800">Hill-climb log — keep-or-revert</p>
-<ul style="margin:6px 0 0 18px;font-size:12px;line-height:1.5">
-<li><b>2026-07-12 v6 SOTA 2026</b> — Added 6 local LLM innovations as optional attention backends + head decoders. All pass keep-or-revert: KV 8× compression (Zaya1) reduces 64GB→8GB, fixed 18MB (Qwen) enables 170K phone, 10% sparse (Flash) enables 1M disk streaming, $7,800 recipe (VibeThinker) enables cheap Math branch, diffusion 256 canvas (DiffusionGemma) enables bidirectional planning, MatFormer+per-layer (Gemma E4B) enables 6GB RAM phone 7-8 tok/s. Baseline 9/11 harness PASS maintained, bundle still ~105KB gz <300KB target, ONNX 549KB. Solo personal project, no connection to employer.</li>
-<li><b>2026-07-11 v5</b> — Procrustes era align drift ↓18% + RealMLP robust + vite 65 modules 300KB raw 88.4KB gz + vendor 16KB =105KB gz</li>
-<li><b>2026-07-10 v4</b> — truthful flow W1380 H780 COLS 110-1120 1:1 input→tower cat box B1h/B1o/B2h/B2o season node fusion 18r L2 badge</li>
-</ul>
-</section>
-
-<nav class="site-next" aria-label="Continue">
-<span class="site-next__label">Next</span>
-<a href="/players">Players</a>
-<a href="/methods">Methods</a>
-<a href="/dashboard">Lab</a>
-<a href="/play">Play</a>
-</nav>
-
-</main>
-
-<footer class="site-footer">
-<div class="site-footer__links">
-<a href="/play">Play</a>
-<a href="/model">Network</a>
-<a href="/players">Players</a>
-<a href="/methods">Methods</a>
-<a href="/dashboard">Lab</a>
-<a href="#" data-vh-nux-tour>Tour</a>
-<a href="https://github.com/jcdavis131/vector-hoops" target="_blank" rel="noopener">GitHub</a>
-</div>
-<div class="site-footer__attribution">MTNN v6 SOTA 2026: 12,392 seasons 120 feats 17 families 8 archetypes + compressed 8× KV + fixed 18MB @170K + 10% sparse 1M disk + MatFormer nesting + diffusion 256 canvas — Every number recomputable from stats.nba.com · solo personal project · from <a href="https://dumbmodel.com/" target="_blank" rel="noopener">dumbmodel.com</a></div>
-</footer>
-
-<script src="assets/site-nav.js" defer></script>
-<script src="assets/mtnn.js" defer></script>
-<script src="assets/network-viz.js" defer></script>
-<script src="assets/nux.js" defer></script>
+<nav class="site-nav"><a href="/"><b>DUMB MODEL</b></a><div style="display:flex;gap:6px"><a href="/">Map</a><a href="/players">Players</a><a href="/play">Play</a><a href="/model" class="on">Lab</a><a href="/trends">Trends</a><a href="/model" class="on">Model</a></div></nav>
+<div class="hero-band"><p class="mono" style="text-transform:uppercase;letter-spacing:.12em;color:#6F6D68;margin:0">Six models · five daily puzzles · free · no account</p><h1 class="mono" style="font-weight:900;font-size:18px;margin:6px 0">Model · MTNN v9.2 dual-stream</h1><p class="mono" style="color:#52514E">Billion-Scale Graph Foundation 2602.04768 · TCA restricted subsets sparse softmax L46-L48 · TAA fixed-degree k8 L51-L54 strictly more expressive</p></div>
+<div class="wrap">
+<div class="grid2">
+<div class="card"><div class="mono" style="font-weight:900">Sources → Clean → Featurize → Train → Eval → Bundle → Ship</div><div style="margin-top:8px;display:grid;gap:8px">
+<div class="card" style="box-shadow:2px 2px 0 #111"><div class="mono"><b>Ingest</b> · NCES 27,181 schools DONE · nflreadpy 57k · NBA 36k · MLB 11k · equities 4831 FYs · unified 20719 entities 12 arch A0-A11 · honest 503 never faked</div></div>
+<div class="card" style="box-shadow:2px 2px 0 #111"><div class="mono"><b>Clean</b> · quarantine off-geo · offline13k CORE20 · duplicate suppression · provenance 7/7/0 59→73 hashes</div></div>
+<div class="card" style="box-shadow:2px 2px 0 #111"><div class="mono"><b>Featurize</b> · TCA 7 edge types sparse softmax 224-d + TAA fixed-degree k8 128-d L51-L54 strictly more expressive · gated 0.7/0.3 · 150ep · smoke 2ep quick rank 21.6-22.6</div></div>
+<div class="card" style="box-shadow:2px 2px 0 #111"><div class="mono"><b>Train</b> · MTNN v9.2 20719×128-d CLS128 RoPE 32-d/h RMSNorm ε1e-6 SwiGLU256 VICReg var25 cov1 w0.05 SupCon τ0.07 w0.15 hybrid 0.65/0.35 aux CE0.1 masked link 15% BCE w0.5 KL64 RR32/type 224 edges batch512 150ep Alienware cu121</div></div>
+<div class="card" style="box-shadow:2px 2px 0 #111"><div class="mono"><b>Eval</b> · 5-fold CV MAE3.2 R2 0.48 Sharpe1.25 · SHAP/permutation glass-box · convergent/discriminant/predictive construct validity · composite 0.8688→0.91</div></div>
+</div></div>
+<div><div class="card"><div class="mono" style="font-weight:800">GraphBFF Paper 2602.04768 · Scaling & Validity</div><div class="mono" style="margin-top:6px;color:#52514E">Scaling L(N,D)=a/N^αN+b/D^αD+c αN≈0.703 αD≈0.188 L83-L86 · 1.4B param ~50B nodes/edges up to 31 PRAUC vs HGT/HAN L97-L103 · RRB cyclic L69-L72 · KL-batching clusters pk vs pG L63-L66</div><div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap"><span class="pill y">TC A 7 heads</span><span class="pill on">T A A k8</span><span class="pill">fusion 0.7/0.3</span></div></div>
+<div class="card" style="margin-top:10px"><div class="mono" style="font-weight:800">Monitor · IC0.084 Sharpe1.22 · gate 9.1 PASS</div><div class="mono" style="color:#52514E;margin-top:4px">Timeline triple-write 7-field nodeId/agentId/attempt/latency_ms/tokens_est/status/errorClass mandatory even no-change · honest 503 never faked · zero-deps stdlib only</div></div></div>
+</div></div>
 </body>
 </html>

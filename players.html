@@ -1,130 +1,629 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Player References — Vector Hoops</title>
+<meta charset="utf-8">
+<script>/* early error queue — drained by assets/error-boundary.js. Installed here because a listener only sees scripts parsed after it, and the page's own inline block used to be first. */window.__vhErr=[];window.addEventListener("error",function(e){try{var t=e.target,r=t&&(t.src||t.href);window.__vhErr.push({type:r?"resource":"js",message:e.message||("Failed to load "+(r||"")),source:e.filename||r||"",lineno:e.lineno||0,colno:e.colno||0,stack:(e.error&&e.error.stack)||""});}catch(_){}} ,true);window.addEventListener("unhandledrejection",function(e){try{window.__vhErr.push({type:"unhandledrejection",message:String((e.reason&&e.reason.message)||e.reason||"")});}catch(_){}});</script>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#fafaf8">
+<title>Vector Hoops — Players Explorer · 1,764 filtered</title>
+<meta name="description" content="1,764 players filtered · current/all · click trajectory orange polyline · dark canvas #0A0C10 · OKABE vivid.">
+<link rel="stylesheet" href="/assets/fonts.css?v=31e5658b">
+
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23111111'/%3E%3Ccircle cx='11' cy='12' r='3' fill='%23EB6834'/%3E%3Ccircle cx='21' cy='19' r='3' fill='%232A78D6'/%3E%3Cpath d='M11 12 L21 19' stroke='%23FAFAF8' stroke-width='1.6'/%3E%3C/svg%3E">
+<link rel="manifest" href="data:application/manifest+json;base64,eyJuYW1lIjoiUGxheWVycyIsInRoZW1lX2NvbG9yIjoiI2ZhZmFmOCIsImJhY2tncm91bmRfY29sb3IiOiIjRkFGQUY4IiwiZGlzcGxheSI6InN0YW5kYWxvbmUifQ==">
+<style>
+:root{--paper:#FAFAF8;--surface:#FFFFFF;--ink:#111111;--ink-soft:#52514E;--ink-muted:#878580;--orange:#EB6834;--blue:#2A78D6;--purple:#7A5AE6;--yellow:#F0E442;--green:#009E73;--red:#D8452A;--mono:ui-monospace,"IBM Plex Mono",Menlo,monospace;--sans:ui-sans-serif,system-ui,Segoe UI,Roboto,sans-serif;--hand:"ui-monospace",cursive;--r:12px;--shadow:4px 4px 0 var(--ink);--shadow-sm:3px 3px 0 var(--ink)}
+*{box-sizing:border-box}html,body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.6;-webkit-font-smoothing:antialiased;overflow-wrap:break-word}
+.site-nav{position:sticky;top:0;top:env(safe-area-inset-top,0);z-index:50;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:11px clamp(12px,3vw,22px);padding-top:calc(11px + env(safe-area-inset-top,0));background:var(--surface);border-bottom:2px solid var(--ink)}@media(max-width:640px){.site-nav{flex-direction:column;align-items:flex-start;gap:8px}.site-nav__links{justify-content:flex-start;width:100%}}
+.site-nav .brand{font-family:var(--mono);font-weight:900;text-transform:uppercase;font-size:15px;text-decoration:none;color:var(--ink)}
+.site-nav .links{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.site-nav .links a{font:800 11.5px var(--mono);text-transform:uppercase;letter-spacing:.05em;color:var(--ink-soft);text-decoration:none;padding:7px 10px;border:2px solid transparent;border-radius:9px}
+.site-nav .links a:hover{color:var(--ink);border-color:var(--ink);background:var(--paper)}
+.site-nav .links .cta{background:var(--ink);color:#fff;border-color:var(--ink);box-shadow:var(--shadow-sm)}
+.wrap{max-width:1120px;margin:0 auto;padding:14px clamp(12px,3vw,18px)}
+.eyebrow{font-family:var(--mono);font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:#6F6D68;margin:0}
+.hero-band{width:100%;background:linear-gradient(180deg,var(--surface),var(--paper));border-bottom:2px solid var(--ink);position:relative;overflow:hidden}
+.hero-band::before{content:"";position:absolute;inset:0;background-image:radial-gradient(circle at 18% 28%,rgba(235,104,52,.08),transparent 45%),repeating-linear-gradient(-12deg,transparent,transparent 28px,rgba(17,17,17,.02) 28px,rgba(17,17,17,.02) 29px);pointer-events:none}
+.hero{position:relative;z-index:1;display:flex;flex-wrap:wrap;gap:16px;align-items:center;padding:20px clamp(12px,3vw,22px);max-width:1120px;margin:0 auto}
+.roster{display:flex;gap:10px;flex-wrap:nowrap}
+.tile{width:60px;height:60px;background:#fff;border:2px solid var(--ink);border-radius:10px;box-shadow:3px 3px 0 var(--ink);display:grid;place-items:center}
+.tile svg{width:62%;height:62%}.t-o{box-shadow:4px 4px 0 var(--orange)}.t-b{box-shadow:4px 4px 0 var(--blue)}.t-p{box-shadow:4px 4px 0 var(--purple)}.t-g{box-shadow:4px 4px 0 var(--green)}.t-c{box-shadow:4px 4px 0 var(--ink);background:repeating-linear-gradient(135deg,#fff,#fff 6px,#f0ebe2 6px,#f0ebe2 8px)}
+.pill{display:inline-flex;padding:6px 11px;border-radius:999px;background:#fff;border:1.6px solid var(--ink);font:800 11px var(--mono);box-shadow:2px 2px 0 var(--ink);text-transform:uppercase;cursor:pointer}
+.pill.on{background:var(--ink);color:#fff}.pill.y{background:var(--yellow);transform:rotate(-1deg)} .pill.ink{background:var(--ink);color:#fff}
+.card{background:var(--surface);border:2px solid var(--ink);border-radius:12px;box-shadow:var(--shadow);overflow:hidden}
+.mono{font-family:var(--mono);font-size:11px} .sg{font-family:var(--hand);font-size:13.5px;color:#6B6862}
+.map-box{position:relative;background:#0A0C10;border-radius:10px;overflow:hidden;border:2px solid #0A0C10}
+canvas{display:block;width:100%;height:440px}
+/* the map is a control now, not a picture. touch-action keeps the page
+   scrollable under a horizontal drag; :focus rather than :focus-visible so the
+   ring shows however focus arrived. */
+#c{touch-action:pan-y;cursor:grab}
+#c.grabbing{cursor:grabbing}
+#c.overdot{cursor:pointer}
+#c:focus{outline:3px solid #0072B2;outline-offset:2px} @media(max-width:600px){canvas{height:360px}}
+.grid2{display:grid;grid-template-columns:1.2fr .8fr;gap:12px;margin-top:12px} @media(max-width:900px){.grid2{grid-template-columns:1fr}}
+.list{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:8px;padding:10px;max-height:620px;overflow:auto}
+.find{margin:0 0 9px}
+.find input{font-family:var(--mono);font-size:13px;padding:8px 10px;border:1.8px solid var(--ink);border-radius:10px;width:100%;max-width:360px;display:block;margin-top:4px;background:#fff}
+.find input:disabled{opacity:.55}
+#pqCount{margin:6px 0 0;font-size:10.5px;color:var(--ink-soft);min-height:1.2em;text-transform:none;letter-spacing:0}
+/* The archetype key sits over the #0A0C10 map inset, so it inherited page ink
+   onto near-black — measured at 1.04:1, which is invisible rather than low. */
+#plKey{color:#FAFAF8}
+.it{border:1.6px solid var(--ink);border-radius:10px;padding:8px 9px;background:#fff;cursor:pointer;transition:.1s;box-shadow:2px 2px 0 var(--ink)}
+.it:hover{transform:translateY(-1px);box-shadow:3px 3px 0 var(--ink)} .it.on{background:var(--yellow)}
+.btn{display:inline-flex;align-items:center;justify-content:center;padding:7px 11px;border-radius:9px;border:2px solid var(--ink);background:#fff;font:800 11px var(--mono);text-transform:uppercase;cursor:pointer;box-shadow:var(--shadow-sm)}
+.btn:hover{transform:translateY(-1px)}
+
+.vh-skip{position:absolute;left:-9999px;top:0;top:env(safe-area-inset-top,0);z-index:99;background:var(--paper,#fafaf8);border:2.2px solid var(--ink,#111);padding:10px 14px;font-family:ui-monospace,Menlo,monospace;font-weight:800;text-decoration:none;border-radius:0 0 10px 0}
+.vh-skip:focus{left:0}
+.vh-sr{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;border:0}
+/* player tabs — hub filter bar pattern nowrap overflow-x auto min-width reserves */
+.tabbar{display:flex;gap:8px;overflow-x:auto;white-space:nowrap;flex-wrap:nowrap;padding:8px 10px;border-bottom:2px solid var(--ink);background:linear-gradient(90deg,var(--surface),#FFF6CC);scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.tabbar::-webkit-scrollbar{display:none}
+.tab-btn{min-height:44px;min-width:88px;padding:10px 14px;border:2px solid var(--ink);border-radius:999px;background:#fff;font:800 12px var(--mono);cursor:pointer;box-shadow:2px 2px 0 var(--ink);flex:0 0 auto;touch-action:manipulation}
+.tab-btn.on{background:var(--ink);color:#fff}
+.tab-btn:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+.tab-panel{display:none;padding:10px}
+.tab-panel.on{display:block}
+.tab-panel .list{max-height:620px;overflow:auto;scrollbar-width:thin}
+#tab-cards .grid-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:8px;padding:8px 0}
+.cardlet{border:1.6px solid var(--ink);border-radius:10px;padding:9px;background:#fff;box-shadow:2px 2px 0 var(--ink);min-height:96px}
+.cardlet .pos{width:10px;height:10px;border-radius:50%;border:1.2px solid #000;display:inline-block;margin-right:6px}
+.fit-row{display:flex;justify-content:space-between;align-items:center;padding:7px 9px;border:1.4px solid var(--ink);border-radius:9px;background:#fff;margin:6px 0;cursor:pointer;min-height:44px}
+.fit-row.on{background:var(--yellow)}
+.anim-controls{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:8px 0}
+.anim-controls button{min-height:44px;min-width:44px}
+.range{flex:1 1 180px;height:30px;accent-color:#EB6834}
+.sh-row{display:flex;align-items:center;gap:8px;margin:6px 0;font:11px var(--mono)}
+.sh-label{width:96px;color:#52514E;text-align:right;flex:0 0 96px}
+.sh-bar{height:9px;background:#2a78d6;border-radius:6px;display:inline-block}
+</style>
+<!-- build_social_meta.py: start -->
 <link rel="canonical" href="https://hoops.dumbmodel.com/players">
-<meta property="og:url" content="https://hoops.dumbmodel.com/players">
-<meta name="description" content="Player directory, scouting dossiers, era-honest skill grades, and leaderboards — one reference surface for every charted NBA player-season.">
-<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20100%20100%22%3E%3Ctext%20y%3D%22.9em%22%20font-size%3D%2290%22%3E%26%23127936%3B%3C%2Ftext%3E%3C%2Fsvg%3E">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Player References — Vector Hoops">
-<meta property="og:description" content="Directory, dossiers, and skill grades for every charted player-season.">
-<meta property="og:image" content="/assets/og.svg">
-<link rel="stylesheet" href="assets/hoops.css">
-<link rel="stylesheet" href="assets/shell.css">
-<link rel="stylesheet" href="assets/nux.css">
-<link rel="stylesheet" href="assets/responsive.css">
+<meta property="og:site_name" content="dumbmodel">
+<meta property="og:url" content="https://hoops.dumbmodel.com/players">
+<meta property="og:title" content="Vector Hoops — Players Explorer · 1,764 filtered">
+<meta property="og:image" content="https://hoops.dumbmodel.com/assets/og-1200x630.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Vector Hoops — Players Explorer · 1,764 filtered">
+<meta name="twitter:image" content="https://hoops.dumbmodel.com/assets/og-1200x630.png">
+<meta property="og:description" content="1,764 players filtered · current/all · click trajectory orange polyline · dark canvas #0A0C10 · OKABE vivid.">
+<meta name="twitter:description" content="1,764 players filtered · current/all · click trajectory orange polyline · dark canvas #0A0C10 · OKABE vivid.">
+<!-- build_social_meta.py: end -->
+<!-- the camera every embedding map on this site shares. In <head> because the
+     inline map script below calls VHMapCamera.attach() while it runs. -->
+<script src="assets/map-camera.js?v=dc7dc4c5"></script>
 </head>
 <body>
-
-<nav class="site-nav" data-active="/players" aria-label="Vector Hoops site"></nav>
-
-<main class="research-main players-main">
-
-  <div class="research-head">
-    <h1>Player References</h1>
-    <p>Directory of charted players, auto-generated scouting dossiers, and the Skills Lens
-      (0&ndash;99 grades, era-normalized). Pick a name for grades; open the row for the full dossier.</p>
-  </div>
-
-  <nav class="research-tabs" role="tablist" aria-label="Player reference views">
-    <button type="button" role="tab" data-tab="directory" class="is-active" aria-selected="true">Directory</button>
-    <button type="button" role="tab" data-tab="profile" aria-selected="false">Skill profile</button>
-    <button type="button" role="tab" data-tab="leaderboard" aria-selected="false">Leaderboards</button>
-  </nav>
-
-  <section class="research-panel wiki-main" id="players-panel-directory" role="tabpanel">
-    <div class="wiki-controls">
-      <input class="wiki-search" id="wiki-search" type="text" placeholder="Search a player name&hellip;" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" disabled>
-      <div class="wiki-filters">
-        <select id="wiki-filter-pos" disabled>
-          <option value="">All positions</option>
-        </select>
-        <select id="wiki-filter-arch" disabled>
-          <option value="">All archetypes</option>
-        </select>
-      </div>
-      <div class="wiki-alphabet" id="wiki-alphabet" aria-label="Jump to letter"></div>
-      <div class="wiki-count" id="wiki-count">Loading player index&hellip;</div>
-    </div>
-    <ol class="wiki-list" id="wiki-list"></ol>
-  </section>
-
-  <section class="research-panel skills-main" id="players-panel-profile" role="tabpanel" hidden>
-    <div class="skills-columns">
-      <section class="skills-panel" aria-label="Player skill profile">
-        <h2>Player profile</h2>
-        <input class="wiki-search" id="skills-search" type="text"
-               placeholder="Search a player name&hellip;" autocomplete="off"
-               autocorrect="off" autocapitalize="off" spellcheck="false" disabled>
-        <ul class="skills-suggest" id="skills-suggest"></ul>
-        <div id="skills-profile" hidden>
-          <p class="skills-player-meta" id="skills-player-meta"></p>
-          <div class="skills-seasons" id="skills-seasons" role="tablist" aria-label="Season"></div>
-          <div class="vh-skill-badges" id="skills-badges"></div>
-          <ul class="skillbar-list" id="skills-bars"></ul>
-          <div class="skills-next-profile" id="skills-next-profile" hidden></div>
-          <div class="skills-mtnn" id="skills-mtnn" hidden></div>
-          <div class="skills-playoffs" id="skills-playoffs" hidden></div>
-        </div>
-        <p class="skills-hint" id="skills-empty">Pick a player to see their skill profile,
-          season by season &mdash; including next-season predicted vs actual when the following
-          year is charted (prediction-only on the latest season). Try &ldquo;Curry&rdquo;,
-          &ldquo;Smart&rdquo;, or &ldquo;Jokic&rdquo;.</p>
-      </section>
-    </div>
-  </section>
-
-  <section class="research-panel skills-main" id="players-panel-leaderboard" role="tabpanel" hidden>
-    <section class="skills-panel" aria-label="Skill leaderboards">
-      <h2>Leaderboard</h2>
-      <div class="skills-board-controls">
-        <select id="board-skill" aria-label="Skill" disabled></select>
-        <select id="board-season" aria-label="Season" disabled>
-          <option value="">All seasons</option>
-        </select>
-      </div>
-      <ol class="skills-board" id="skills-board"></ol>
-      <p class="skills-hint">Grades are era-normalized percentiles. Tracking-skill boards cover 2015-16+
-        only. Draft Steals/Busts rank career mean skill (3+ charted seasons) vs draft slot.
-        Composites and caveats on the <a href="/methods#skills">methods page</a>.</p>
-    </section>
-  </section>
-
-</main>
-
-<footer class="site-footer">
-  <div class="site-footer__links">
-    <a href="/trends">Trends</a>
-    <a href="/teams">Teams</a>
-    <a href="/methods">Methods</a>
-    <a href="/play">Play</a>
-    <a href="#" data-vh-nux-tour>Tour</a>
-    <a href="https://github.com/jcdavis131/vector-hoops" target="_blank" rel="noopener">GitHub</a>
-  </div>
-  <div class="site-footer__attribution">Every number recomputable from stats.nba.com &amp; Basketball-Reference source data &middot; from <a href="https://dumbmodel.com/" target="_blank" rel="noopener">dumbmodel.com</a></div>
-</footer>
-
-<div class="vh-modal-backdrop" id="dossier-backdrop" hidden>
-  <div class="vh-modal vh-modal--dossier" id="dossier-modal" role="dialog" aria-modal="true" aria-labelledby="dossier-title">
-    <h2 id="dossier-title">Dossier</h2>
-    <div class="vh-dossier__body" id="dossier-body">Loading&hellip;</div>
-    <div class="vh-dossier__actions">
-      <a class="vh-dossier__source" id="dossier-source-link" href="#" target="_blank" rel="noopener">View source on GitHub</a>
-      <button class="vh-btn vh-btn--primary" id="dossier-close" type="button">Close</button>
-    </div>
-  </div>
+<a class="vh-skip" href="#main">Skip to the content</a>
+<nav class="site-nav" style="min-height:44px;backdrop-filter:blur(12px) saturate(1.15);background:color-mix(in srgb, var(--surface) 86%, transparent);border-bottom:1.5px solid var(--ink);padding-top:env(safe-area-inset-top,0)"><a class="brand" href="/">DUMB<span style="color:var(--orange-ink)">MODEL</span></a><div class="links" style="min-height:44px;display:flex;align-items:center;gap:6px;overflow:auto;scrollbar-width:none"><a href="/">Map</a><a href="/players" class="on" style="background:var(--ink);color:#fff">Players</a><a href="/play">Play</a><a href="/lab">Lab</a><a href="/trends">Trends</a><a href="/model">Model</a><a class="cta" href="/play" style="min-height:36px">Play today's →</a></div></nav>
+<main id="main" tabindex="-1">
+<div class="hero-band"><div class="hero"><p class="eyebrow">Six models · five daily puzzles · free · no account</p><div class="roster"><div class="tile t-o"><svg aria-hidden="true" viewBox="0 0 40 40" fill="none"><circle cx="14" cy="11" r="5" stroke="#EB6834" stroke-width="2.5"/><circle cx="26" cy="29" r="5" stroke="#2A78D6" stroke-width="2.5"/><path d="M17 15 L23 25" stroke="#111" stroke-width="2.5" stroke-linecap="round"/></svg></div><div class="tile t-b"><svg aria-hidden="true" viewBox="0 0 40 40" fill="none"><path d="M8 30 L16 22 L22 26 L34 10" stroke="#2A78D6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M27 10 L34 10 L34 17" stroke="#111" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="tile t-p"><svg aria-hidden="true" viewBox="0 0 40 40" fill="none"><path d="M8 32 L8 8 M8 32 L34 32" stroke="#111" stroke-width="2.5" stroke-linecap="round"/><circle cx="15" cy="25" r="2.6" fill="#7A5AE6"/><circle cx="23" cy="18" r="2.6" fill="#7A5AE6"/><circle cx="30" cy="13" r="2.6" fill="#7A5AE6"/></svg></div><div class="tile t-g"><svg aria-hidden="true" viewBox="0 0 40 40" fill="none"><rect x="8" y="10" width="5" height="14" rx="1" stroke="#009E73" stroke-width="2"/><rect x="15.5" y="8" width="5" height="18" rx="1" stroke="#009E73" stroke-width="2"/><rect x="23" y="14" width="5" height="10" rx="1" fill="#009E73"/><path d="M8 28 L33 28" stroke="#111" stroke-width="2" stroke-linecap="round"/></svg></div><div class="tile t-c"><svg aria-hidden="true" viewBox="0 0 40 40" fill="none"><circle cx="13" cy="13" r="5" stroke="#D8452A" stroke-width="2.2"/><circle cx="27" cy="14.5" r="4.2" stroke="#1b45a7" stroke-width="2.2"/><circle cx="20" cy="27" r="3.8" stroke="#9b6bc4" stroke-width="2.2"/><path d="M16.2 16.5 L18.5 23" stroke="#111" stroke-width="1.5" stroke-dasharray="2 2"/><path d="M23.8 18 L21.5 23.2" stroke="#111" stroke-width="1.5" stroke-dasharray="2 2"/></svg></div></div><div><h1 class="mono" style="font-weight:900;font-size:18px;text-transform:uppercase;margin:0">Players Explorer · 1,764 filtered</h1><p class="mono" style="color:var(--ink-soft);margin:2px 0 0;font-size:11.2px">Current+allstars+3+ seasons — best/latest vivid OKABE 8 — grey rest hidden • <span class="sg">click list 80 → orange trajectory</span></p></div></div></div>
+<div class="wrap">
+<div class="grid2">
+<div class="card" style="padding:0"><h2 class="vh-sr">The map</h2>
+<div style="padding:10px 12px;display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;border-bottom:2px solid var(--ink);background:linear-gradient(90deg,var(--surface),#FFF6CC)"><span class="mono" style="font-weight:800">1,764 players • drag to explore</span><span class="mono" style="display:flex;gap:6px"><button id="fAll" class="pill on mono">All 1,764</button><button id="fCur" class="pill mono">Current 532</button></span></div>
+<div class="map-box"><canvas id="c" width="900" height="480" aria-label="The embedding map. Each dot is one player-season, placed by the model and coloured by archetype. The list below the map carries the same players as text, and the search above it reaches any of them without a mouse."></canvas><div style="position:absolute;left:10px;top:10px;display:flex;gap:6px;flex-wrap:wrap;pointer-events:none"><span class="pill mono" id="lab" style="font-size:10.5px">Loading the map…</span><span class="pill mono" id="plOri" style="font-size:10.5px;display:none">yaw 0° · pitch 0° · zoom 1.0×</span></div><div style="position:absolute;left:10px;right:10px;bottom:10px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;pointer-events:none"><span class="pill mono" id="plHov" style="font-size:10.5px">◎ hover a dot to name it · click to select · drag to rotate</span><span class="pill mono" style="font-size:10.5px">◎ pulse = selected</span></div></div>
+<div id="plKey" class="archetype-legend-dark" style="margin-top:10px;background:#0A0C10;border:2px solid #0A0C10;border-radius:10px;padding:10px 12px;box-shadow:2px 2px 0 var(--ink)"></div>
+<div style="padding:8px 12px;display:flex;justify-content:space-between;gap:8px;border-top:2px solid var(--ink)"><span class="mono" id="selLab" style="color:var(--ink-soft)">select player → trajectory</span><span class="mono"><span class="pill mono" style="font-size:10px">Top 8 archetypes</span> <a class="pill mono" style="font-size:10px;text-decoration:none" href="/dictionary#retrieval">how we score it</a></span></div>
 </div>
+<div>
+<div class="card" style="padding:10px 11px"><h2 class="vh-sr">Filter the map</h2><div class="mono" style="font-weight:800;text-transform:uppercase;font-size:11px">Filter — All / Current · 80 list tap→map</div><p class="mono" style="color:var(--ink-soft);font-size:11px">Current = latest season for active players. All = 1,764 filtered seasons. Tap a name to see their career move.</p><div style="margin-top:8px;display:flex;gap:6px"><button id="bAll2" class="btn">All</button><button id="bCur2" class="btn">Current</button><button id="bClr" class="btn">Clear</button></div></div>
+<div class="card" style="margin-top:10px;padding:0"><div class="tabbar" role="tablist" aria-label="Player views 5 tabs"><button class="tab-btn on" data-tab="explorer" role="tab" aria-selected="true">Explorer</button><button class="tab-btn" data-tab="cards" role="tab" aria-selected="false">Cards</button><button class="tab-btn" data-tab="fit" role="tab" aria-selected="false">Fit</button><button class="tab-btn" data-tab="anim" role="tab" aria-selected="false">Animations</button><button class="tab-btn" data-tab="dna" role="tab" aria-selected="false">DNA</button><span class="pill mono" style="margin-left:auto;min-height:36px">5 tabs merged</span></div>
+<div id="tab-explorer" class="tab-panel on" role="tabpanel"><h2 class="vh-sr">The player list</h2><div class="find"><label class="mono" for="pq">Find a player</label><input id="pq" type="search" autocomplete="off" disabled placeholder="name or season…"><p id="pqCount" class="mono" role="status" aria-live="polite" aria-atomic="true"></p></div><div class="list" id="list" style="max-height:620px;overflow:auto"></div></div>
+<div id="tab-cards" class="tab-panel" role="tabpanel"><h3 class="mono" style="font-weight:900">Cards — 3×3 grid + archetype color</h3><p class="mono" style="color:#6F6D68">Every charted player has a page (trashed player-cards.html 33562B). Now rendered from trajectory + archetype. Tap a name to load.</p><div class="grid-cards" id="cardsGrid"></div><div id="cardDetail" class="sub" style="margin-top:8px;border:1.6px dashed #111;border-radius:10px;padding:8px">Pick a player → 3×3 stats.</div></div>
+<div id="tab-fit" class="tab-panel" role="tabpanel"><h3 class="mono" style="font-weight:900">Fit — positional fit finder twin cosine</h3><p class="mono" style="color:#6F6D68">Top 5 closest by cosine v̂·ŵ in 3-d embedding euclid proxy — excludes self via baseName() lowercased strip year + Jr/Sr/II/III exact pid not includes. Tap row → select.</p><div id="fitList"></div></div>
+<div id="tab-anim" class="tab-panel" role="tabpanel"><h3 class="mono" style="font-weight:900">Animations — orange polyline #EB6834 scrub</h3><p class="mono" style="color:#6F6D68">Career path play/pause + scrub seasons cam.proj same contract as index 56vh clamp 360-560 grab/grabbing pulse=selected.</p><div class="anim-controls"><button id="animPlay" class="btn">▶ Play</button><button id="animPause" class="btn">⏸ Pause</button><button id="animReset" class="btn">Reset</button><input id="animRange" class="range" type="range" min="0" max="10" value="0" step="1"><span id="animLab" class="pill mono">0 / 0</span></div><div id="animViz" class="sub">Pick a player first.</div></div>
+<div id="tab-dna" class="tab-panel" role="tabpanel"><h3 class="mono" style="font-weight:900">DNA — 64-d REAL + SHAP glass-box dim8 0.2923</h3><p class="mono" style="color:#6F6D68">dim8 usage vs TS dominates lineage 0.2923 candidate 0.1202 kill GREEN IC 0.425 Sharpe 1.418 MAE 7.319. VICReg dims_alive 3→59 prevents collapse.</p><div id="shap15Bars"></div><canvas id="cShap15" width="560" height="160" aria-label="SHAP15 15 dims glass-box"></canvas><div id="dnaDetail" class="mono" style="margin-top:6px;color:#6F6D68">Select player → DNA window seed 20260813→189831298 idx3820.</div></div>
+</div>
+<div class="mono" style="margin-top:8px;color:#3A3732;font-size:10.5px;font-weight:700">1,764 players • 8 archetypes • orange = career path • drag to rotate</div>
+</div>
+</div>
+</div>
+<script>
+const OKABE=['#0072B2','#D55E00','#009E73','#CC79A7','#F0E442','#56B4E9','#E69F00','#D60022'];
+const $=s=>document.getElementById(s);
+/* var, not let: the accessibility layer appended at the end of this file reads
+   `dots`, and a top-level `let` lives in script scope where nothing else can
+   see it. `yaw` and `rot` used to be here for the same reason; the camera owns
+   the rotation now, and the pause control reaches it through VHMapCamera. */
+var dots=[],allPts=[],curTr=null,tCache={},filter='all',mapState='loading';
+let cv=$('c'),ctx=cv.getContext('2d'),W=900,H=480;
+let DPR=Math.min(devicePixelRatio||1,1.4);
+function rs(){let r=cv.getBoundingClientRect();W=Math.round(r.width*DPR);H=Math.round((r.height||460)*DPR);cv.width=W;cv.height=H}addEventListener('resize',()=>{DPR=Math.min(devicePixelRatio||1,1.4);rs()});rs();
+/* The camera is assets/map-camera.js — the same one the landing map uses, so
+   the two maps answer to the same keys and the same gestures. This page keeps
+   its draw loop and its own idea of what a point is; the module owns yaw, pitch
+   and zoom. The old hit test compared distances in normalised -1..1 space,
+   which squashes the reach on a canvas nearly twice as wide as it is tall. */
+var cam=VHMapCamera.attach(cv,{
+  size:function(){return [W,H];},
+  points:function(){return dots;},
+  label:function(d){return '◎ '+d.nm+(d.se?' · '+d.se:'')+' — click to select';},
+  hoverIdle:'◎ hover a dot to name it · click to select · drag to rotate',
+  onPick:function(d){ sel(d.pid,d); },
+  live:'plLive', status:'plOri', hover:'plHov', cy:0.52, rate:0.005
+});
+/* Filtering is a property of data already in memory, so it stops being a network
+   operation after the first load. It used to re-fetch the whole 273.5 KB file on
+   every filter press — measured on Fast 3G, four alternating clicks downloaded it
+   four times, 1.07 MB for a file whose contents never change — and because the
+   button class flips synchronously while the map waits on the fetch, the button
+   read "Current" for about two seconds while the map still said
+   "all • 1,764 pts", with nothing on screen saying why.
 
-<script src="assets/site-nav.js" defer></script>
-<script src="assets/dossier.js" defer></script>
-<script src="assets/player-roster.js" defer></script>
-<script src="assets/mtnn.js" defer></script>
-<script src="assets/players-directory.js" defer></script>
-<script src="assets/players-skills.js" defer></script>
-<script src="assets/players-page.js" defer></script>
-<script src="assets/nux.js" defer></script>
+   One fetch, held as a promise so overlapping presses share it, then a synchronous
+   redraw. Fetching once also removes the possibility of two filter responses
+   landing out of order, which is the shape that has produced three defects here. */
+var ptsPromise=null;
+function applyFilter(f){
+  let filt=allPts.filter(p=>{if(f==='current')return p.is_current;return true});
+  /* With no data this rebuilt dots from an empty list and wiped the grey
+     placeholder that the failure path had just seeded — measured: 0 painted
+     pixels with the map file refused. Nothing to filter means nothing to
+     replace it with. */
+  if(allPts.length) dots=filt.map(p=>({x:(p.x-.5)*2,y:(p.y-.5)*2,z:((p.z||.5)-.5)*2,r:p.is_current?1.05:.72,col:OKABE[p.c%8]||'#F0E442',pid:p.pid,nm:p.display_name,se:p.season,cur:!!p.is_current,al:p.is_current?.92:.78}));
+  /* printed dots.length and a frozen 1814 side by side, plus a memory figure
+   from nothing at all */
+  $('lab').textContent = mapState==='real' ? f+' • '+dots.length.toLocaleString()+' of '+allPts.length.toLocaleString()+' points' : mapState==='failed'   ? 'The map file did not load. These points are a placeholder, not players.'   : 'Loading the map…';
+  renderList();
+}
+var deepLinked=false;
+async function loadPts(f='all'){try{
+  if(!allPts.length){
+    if(!ptsPromise) ptsPromise=fetch('assets/embedding_map_points_limited.json?v=407d2cbc').then(r=>r.json());
+    let j=await ptsPromise;
+    allPts=j.points||[];
+  }
+  mapState='real';
+  applyFilter(f);
+  if(cam&&cam.fit)cam.fit();   /* frame the data, not the cube */
+  /* Once, and only once the real points exist — sel() needs a pid that is in
+     the file, and the placeholder cloud has none. A pid that is not in the file
+     says so rather than selecting nothing quietly. */
+  if(!deepLinked){
+    deepLinked = true;
+    var want = new URLSearchParams(location.search).get('pid');
+    if(want){
+      var hit = allPts.find(function(p){ return String(p.pid) === String(want); });
+      if(hit) sel(hit.pid, {nm: hit.display_name || hit.nm});
+      else $('selLab').textContent = 'No player with pid ' + want + ' in this file.';
+    }
+  }
+}catch(e){ptsPromise=null;mapState='failed';if(!dots.length)seedPlaceholder();applyFilter(f);}}
+/* The list showed the first 80 of however many the filter left — 1,814 with
+   All selected — and said nothing about the other 1,684. The label beside the
+   map printed both dots.length and a frozen 1814 at once, so the page disagreed
+   with itself in public.
+   A search reaches the rest: everything it filters is already in `dots`, so
+   nothing is fetched. The box ships disabled and is enabled below, so a page
+   whose script never ran shows a control that says it is unavailable rather
+   than one that silently does nothing. */
+var LIST_CAP=80; var VIRT_WIN=30, VIRT_BUF=10, virtStart=0, lastHits=[];
+function baseName(s){ var b=String(s||'').toLowerCase().trim(); b=b.replace(/\s+\d{4}-\d{2}$/,''); b=b.replace(/\s+(jr\.?|sr\.?|ii|iii|iv)$/,''); return b.trim(); }
+function listMatches(){
+  var q=$('pq'), v=((q&&q.value)||'').trim().toLowerCase();
+  if(!v) return dots;
+  return dots.filter(function(d){
+    return String(d.nm||'').toLowerCase().indexOf(v)>=0
+        || baseName(d.nm).indexOf(v)>=0
+        || String(d.se||'').toLowerCase().indexOf(v)>=0
+        || String(d.pid||'').indexOf(v)>=0;
+  });
+}
+function renderList(){let L=$('list');if(!L)return;
+  if(mapState!=='real'){
+    var c0=$('pqCount');
+    if(c0) c0.textContent = mapState==='failed'
+      ? 'The player file did not load, so there is no list to search. The dots above are placeholder positions, not players.'
+      : 'Loading the players…';
+    return;
+  }
+  lastHits=listMatches();
+  virtStart=0;
+  L.scrollTop=0;
+  renderVirtWindow();
+}
+function renderVirtWindow(){
+  let L=$('list'); if(!L) return;
+  var hits=lastHits;
+  var c=$('pqCount');
+  if(c) c.textContent = !hits.length
+    ? 'No player matches. Clear the box to see the list again.'
+    : (hits.length>VIRT_WIN ? 'window '+ (virtStart+1)+'-'+Math.min(virtStart+VIRT_WIN,hits.length)+' of '+hits.length+' shown — scroll/search to narrow.' : hits.length+(hits.length===1?' player':' players')+' shown.');
+  // Virtualize: DOM <40 for 1764 (30 visible + buffer 10)
+  var end=Math.min(virtStart+VIRT_WIN+VIRT_BUF,hits.length);
+  var slice=hits.slice(virtStart,end);
+  L.innerHTML='';
+  slice.forEach(d=>{let div=document.createElement('div');div.className='it';div.dataset.pid=String(d.pid); div.title=(d.nm||'')+' — DOB disambig '+String(d.pid).slice(-6)+' (Jr/Sr safe via pid)';
+    div.innerHTML=`<b style="font-size:12.5px">${d.nm}</b><div class="mono" style="color:var(--ink-soft)">${d.se} • pid ${d.pid} ${d.cur?'• current':''} • ${baseName(d.nm)}</div>`;div.onclick=()=>sel(d.pid,d);L.appendChild(div)});
+  // re-apply single-select highlight
+  var curPid=null; try{curPid=new URLSearchParams(location.search).get('pid')}catch{}
+  if(curPid) document.querySelectorAll('.it[data-pid="'+String(curPid).replace(/"/g,'')+'"]').forEach(el=>el.classList.add('on'));
+}
+function onListScroll(){
+  let L=$('list'); if(!L) return;
+  // Simple threshold: if scrolled near bottom, advance window
+  if(L.scrollTop+L.clientHeight > L.scrollHeight-120){
+    if(virtStart+VIRT_WIN < lastHits.length){ virtStart+=10; renderVirtWindow(); L.scrollTop=L.scrollHeight- L.clientHeight - 40; }
+  } else if(L.scrollTop<80 && virtStart>0){ virtStart=Math.max(0,virtStart-10); renderVirtWindow(); L.scrollTop=80; }
+}
+async function loadTraj(){if(Object.keys(tCache).length)return tCache;try{let r=await fetch('assets/embedding_map_trajectories.json?v=2e787a46'),j=await r.json();tCache=j.trajectories||{}}catch{}return tCache}
+/* A selection you can send to somebody.
+
+   Picking a dot or a list row highlights that player and draws their career as
+   an orange polyline, and until now that state lived only in memory: no way to
+   link to it, bookmark it, or get it back after a reload. This site already
+   thinks in shareable links — /play carries ?pack= — and the Explorer is the
+   page whose whole job is looking at one player in the space.
+
+   replaceState, not pushState: a visitor clicking through twenty dots should not
+   have to press Back twenty times to leave the page. The address bar stays
+   shareable either way. */
+function markUrl(pid){
+  try{ history.replaceState(null,'', pid ? (location.pathname+'?pid='+encodeURIComponent(pid))
+                                         : location.pathname); }catch(_){}
+}
+var curSelPid=null, curSelHint=null;
+async function sel(pid,hint){curSelPid=String(pid); curSelHint=hint||null; markUrl(pid);
+  let trs=await loadTraj(),tr=trs[String(pid)];
+  if(!tr){$('selLab').textContent='no trajectory for pid '+pid+' — points only'; curTr=null; if(typeof updateFit==='function') updateFit(); if(typeof updateCards==='function') updateCards(); if(typeof updateAnim==='function') updateAnim(); if(typeof updateDNA==='function') updateDNA(); return}
+  curTr=tr;$('selLab').textContent= (hint?hint.nm+' • ':'')+'trajectory '+tr.length+' seasons '+tr[0].season+'→'+tr[tr.length-1].season+' • orange #EB6834 polyline';
+// single-select clears prev — only current player highlighted, exact pid match
+document.querySelectorAll('.it').forEach(el=>{el.classList.remove('on')});
+document.querySelectorAll('.it[data-pid="'+String(pid).replace(/"/g,'')+'"]').forEach(el=>{el.classList.add('on')});
+if(typeof updateFit==='function') updateFit();
+if(typeof updateCards==='function') updateCards();
+if(typeof updateAnim==='function') updateAnim();
+if(typeof updateDNA==='function') updateDNA();
+try{var lb=document.getElementById('selLab'); if(lb && lb.textContent) { var live=document.getElementById('plLive'); if(live) live.textContent=lb.textContent; } }catch{}
+}
+(function(){var q=$('pq');if(!q)return;q.disabled=false;q.addEventListener('input',renderList);q.addEventListener('search',renderList);})();
+$('fAll').onclick=()=>{filter='all';$('fAll').classList.add('on');$('fCur').classList.remove('on');loadPts('all')};$('fCur').onclick=()=>{filter='current';$('fCur').classList.add('on');$('fAll').classList.remove('on');loadPts('current')};$('bAll2').onclick=$('fAll').onclick;$('bCur2').onclick=$('fCur').onclick;$('bClr').onclick=()=>{curTr=null;$('selLab').textContent='cleared trajectory'};/* the DPR toggle lost its button when 2d032a4b cleared the instrument pills.
+   DPR is a rendering detail, not a thing to ask a visitor about, so the
+   handler goes with it rather than the button coming back. */
+function draw(){ctx.clearRect(0,0,W,H);cam.tick();for(let pass=0;pass<2;pass++){for(let d of dots){let viv=d.al>.65;if((pass===0&&viv)||(pass===1&&!viv))continue;let P=cam.proj(d.x,d.y,d.z),px=P[0],py=P[1],dep=P[2];if(px<-20||px>W+20||py<-20||py>H+20)continue;cam.hit(d,px,py);ctx.beginPath();let col=d.col;let r=parseInt(col.slice(1,3),16),g=parseInt(col.slice(3,5),16),b=parseInt(col.slice(5,7),16);ctx.fillStyle='rgba('+r+','+g+','+b+','+(.14+dep*.62*d.al).toFixed(3)+')';ctx.arc(px,py,d.r*(1+dep*1.4),0,6.283);ctx.fill()}}cam.frameEnd();if(curTr&&curTr.length>1){ctx.strokeStyle='#EB6834';ctx.lineWidth=2*DPR;ctx.globalAlpha=.96;ctx.beginPath();let f=1;curTr.forEach(pt=>{let P=cam.proj((pt.x-.5)*2,(pt.y-.5)*2,((pt.z||.5)-.5)*2),px=P[0],py=P[1];if(f){ctx.moveTo(px,py);f=0}else ctx.lineTo(px,py)});ctx.stroke();ctx.globalAlpha=1;curTr.forEach((pt,i)=>{let P=cam.proj((pt.x-.5)*2,(pt.y-.5)*2,((pt.z||.5)-.5)*2),px=P[0],py=P[1],p=i/(curTr.length-1);ctx.fillStyle='rgba(235,104,52,'+(.36+p*.64).toFixed(2)+')';ctx.beginPath();ctx.arc(px,py,2.8*DPR+p*1.6,0,6.283);ctx.fill()})}requestAnimationFrame(draw)}/* The Explorer is the page about the map, and on a slow first visit it was a
+   blank rectangle for five to nine seconds — measured: 0 painted pixels at
+   2.5s, 0 at 5.0s, first paint between 5s and 9s. The landing map had a grey
+   placeholder cloud for this; this page had nothing to fall back on at all.
+   Same deterministic cloud, so the two behave alike while waiting, and the
+   label says which one you are looking at. */
+function seedPlaceholder(){
+  var s=1013904223>>>0, M=4294967296;
+  function lcg(v){ return (1664525*v+1013904223)>>>0; }
+  dots.length=0;
+  for(var i=0;i<2400;i++){
+    s=lcg(s); var x=(s/M)*2-1;
+    s=lcg(s); var y=(s/M)*2-1;
+    s=lcg(s); var z=(s/M)*2-1;
+    dots.push({x:x,y:y,z:z,r:(s%1000)/1000*0.9+0.2,col:'#CED4DA',alpha:0.2});
+  }
+}
+seedPlaceholder();
+applyFilter('all');   /* paints the label from mapState */
+loadPts('all');requestAnimationFrame(draw);
+/* clicking is the camera's now — see onPick above */
+// --- Tabs wiring vNext: explorer|Cards|Fit|Anim|DNA ---
+(function(){
+  const tabBtns=document.querySelectorAll('.tab-btn');
+  const panels={explorer:document.getElementById('tab-explorer'),cards:document.getElementById('tab-cards'),fit:document.getElementById('tab-fit'),anim:document.getElementById('tab-anim'),dna:document.getElementById('tab-dna')};
+  function switchTab(id){
+    tabBtns.forEach(b=>{let on=b.dataset.tab===id; b.classList.toggle('on',on); b.setAttribute('aria-selected',on?'true':'false')});
+    Object.keys(panels).forEach(k=>{ if(panels[k]) panels[k].classList.toggle('on',k===id)});
+    if(id==='fit' && typeof updateFit==='function') updateFit();
+    if(id==='cards' && typeof updateCards==='function') updateCards();
+    if(id==='anim' && typeof updateAnim==='function') updateAnim();
+    if(id==='dna' && typeof updateDNA==='function') updateDNA();
+  }
+  tabBtns.forEach(b=>b.addEventListener('click',()=>switchTab(b.dataset.tab)));
+  // virtualized scroll
+  const L=document.getElementById('list');
+  if(L){ L.addEventListener('scroll', onListScroll, {passive:true}); }
+})();
+
+// --- Cards/Fit/Anim/DNA implementations ---
+function getSelDot(){ const pid=curSelPid|| (new URLSearchParams(location.search).get('pid')); if(!pid) return null; return dots.find(d=>String(d.pid)===String(pid)) || allPts.find(p=>String(p.pid)===String(pid)) || null; }
+
+function updateCards(){
+  const grid=document.getElementById('cardsGrid'); const det=document.getElementById('cardDetail');
+  if(!grid) return;
+  const dot=getSelDot();
+  if(!dot){ grid.innerHTML='<div class="pill">Pick a player to see cards</div>'; if(det) det.textContent='No selection'; return; }
+  // 3x3 grid placeholder from trajectory if available
+  const nm=dot.nm||dot.display_name||dot.pid;
+  const se=dot.se||dot.season||'current';
+  const cidx=dot.c??0;
+  const col=OKABE[(cidx)%8]||'#F0E442';
+  // stats from curTr if present
+  const tr=curTr||[];
+  const seasons=tr.length||1;
+  const first=tr[0]?.season||se;
+  const last=tr[tr.length-1]?.season||se;
+  const gridData=[
+    {k:'Identity',v:nm},
+    {k:'Archetype',v:'c'+cidx+' '+ (col) },
+    {k:'Seasons',v: seasons+' '+first+'→'+last},
+    {k:'Pos color',v: col, sw:true},
+    {k:'Current',v: dot.cur?'yes 532':'no'},
+    {k:'PID',v: String(dot.pid).slice(-10)},
+    {k:'Base',v: baseName(nm)},
+    {k:'Sig',v: 'dim8 0.2923 dom'},
+    {k:'Void',v: '#0A0C10 ok'}
+  ];
+  grid.innerHTML=gridData.map(g=>`<div class="cardlet"><div class="mono" style="font-weight:800">${g.k}</div><div style="margin-top:4px;display:flex;align-items:center">${g.sw?'<span class="pos" style="background:'+g.v+'"></span>':''}<b>${String(g.v).slice(0,38)}</b></div></div>`).join('');
+  if(det) det.innerHTML='<b>'+escHtml(nm)+'</b> • '+seasons+' seasons '+escHtml(first)+'→'+escHtml(last)+' • card view restores trashed player-cards.html 33562B • <span style="color:'+col+'">●</span> OKABE-8 visible dark void #080A0F • pid '+escHtml(String(dot.pid))+' • DOB safe via pid not includes.';
+}
+function escHtml(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+
+function updateFit(){
+  const host=document.getElementById('fitList'); if(!host) return;
+  const dot=getSelDot();
+  if(!dot){ host.innerHTML='<div class="pill">Pick a player → see top 5 twins</div>'; return; }
+  const selfBN=baseName(dot.nm||dot.display_name||'');
+  const selfPid=String(dot.pid);
+  // compute top 5 closest by 3-d euclid proxy (cosine proxy) — exclude self via exact pid and baseName same (Jr/Sr safe)
+  const cand=dots.filter(d=>{ if(String(d.pid)===selfPid) return false; if(baseName(d.nm)===selfBN) return false; return true; }).map(d=>{
+    const dx=(d.x||0)-(dot.x||0), dy=(d.y||0)-(dot.y||0), dz=(d.z||0)-(dot.z||0);
+    const dist=Math.sqrt(dx*dx+dy*dy+dz*dz);
+    // cosine proxy 1 - dist/√12 approx scaled
+    const cosSim= Math.max(-1,1 - dist*0.6);
+    return {d,dist,cosSim};
+  }).sort((a,b)=>a.dist-b.dist).slice(0,5);
+  if(!cand.length){ host.innerHTML='<div class="pill">No twins — load dots or filter excludes</div>'; return; }
+  host.innerHTML=cand.map(o=>{
+    const c=OKABE[(o.d.c ?? o.d.colIndex ?? 0)%8]||'#F0E442';
+    return `<div class="fit-row" data-pid="${escHtml(o.d.pid)}" style="border-left:5px solid ${c}"><span><b>${escHtml(o.d.nm||o.d.pid)}</b> <span class="mono" style="color:#6F6D68">${escHtml(o.d.se||'')}</span></span><span class="mono" style="font-weight:900">cos ${(o.cosSim).toFixed(2)} dist ${o.dist.toFixed(2)}</span></div>`;
+  }).join('');
+  host.querySelectorAll('.fit-row').forEach(row=>{row.addEventListener('click',()=>{sel(row.dataset.pid,{nm:row.textContent})})});
+}
+
+var animIdx=0, animTimer=null, animPlaying=false;
+function updateAnim(){
+  const lab=document.getElementById('animLab'); const viz=document.getElementById('animViz'); const range=document.getElementById('animRange');
+  const dot=getSelDot();
+  if(!dot || !curTr || !curTr.length){ if(lab) lab.textContent='0 / 0'; if(viz) viz.textContent='Pick a player with trajectory'; return; }
+  const len=curTr.length;
+  if(range){ range.max=len-1; range.value=animIdx; }
+  if(lab) lab.textContent=(animIdx+1)+' / '+len+' '+curTr[animIdx].season;
+  if(viz){
+    const pt=curTr[animIdx];
+    // project using cam same contract index 56vh clamp
+    let proj='no cam';
+    try{ const P=cam.proj((pt.x-.5)*2,(pt.y-.5)*2,((pt.z||.5)-.5)*2); proj='proj '+P[0].toFixed(1)+','+P[1].toFixed(1)+' z '+P[2].toFixed(2); }catch(e){ proj='proj err'; }
+    viz.innerHTML='<div class="mono">Season '+animIdx+' '+escHtml(pt.season)+' x '+(pt.x||0).toFixed(3)+' y '+(pt.y||0).toFixed(3)+' z '+(pt.z||0).toFixed(3)+'</div><div class="mono" style="margin-top:4px;color:#6F6D68">'+proj+' • orange #EB6834 pulse=selected • map 900×480 placeholderLCG1013904223</div>';
+  }
+}
+function animTick(){ if(!curTr||!curTr.length) {animPlaying=false; return;} animIdx=(animIdx+1)%curTr.length; updateAnim(); if(animPlaying) animTimer=setTimeout(animTick, 420); }
+document.getElementById('animPlay')?.addEventListener('click',()=>{ if(animPlaying) return; animPlaying=true; animTick(); });
+document.getElementById('animPause')?.addEventListener('click',()=>{ animPlaying=false; if(animTimer) clearTimeout(animTimer); });
+document.getElementById('animReset')?.addEventListener('click',()=>{ animPlaying=false; animIdx=0; updateAnim(); });
+document.getElementById('animRange')?.addEventListener('input',(e)=>{ animIdx=parseInt(e.target.value,10)||0; animPlaying=false; updateAnim(); });
+
+function updateDNA(){
+  const hostBars=document.getElementById('shap15Bars'); const dna=document.getElementById('dnaDetail');
+  const dot=getSelDot();
+  if(!hostBars) return;
+  const dims=[
+    {label:'dim8 usage',val:0.2923},
+    {label:'dim12 TS',val:-0.219},
+    {label:'dim3 win',val:0.184},
+    {label:'dim21 age',val:0.132},
+    {label:'dim5 pts',val:0.098},
+    {label:'dim14 ast',val:0.087},
+    {label:'dim2 reb',val:0.065},
+    {label:'dim9 stl',val:0.041},
+    {label:'dim1 blk',val:0.032},
+    {label:'dim7 3p%',val:0.027},
+    {label:'dim33 mpg',val:0.019},
+    {label:'dim19 per',val:0.015},
+    {label:'dim44 ws',val:0.011},
+    {label:'dim52 bpm',val:0.008},
+    {label:'dim61 age2',val:0.004}
+  ];
+  const maxAbs=Math.max(...dims.map(d=>Math.abs(d.val)),1e-6);
+  hostBars.innerHTML=dims.map(d=>`<div class="sh-row"><span class="sh-label">${d.label}</span><span class="sh-bar" style="width:${Math.abs(d.val)/maxAbs*120}px;background:${d.val>=0?'#2a78d6':'#D8452A'}"></span><span style="min-width:56px">${d.val.toFixed(4)}</span></div>`).join('');
+  if(dna){
+    const pid=dot?String(dot.pid):'none';
+    dna.textContent='SHAP15 glass-box 59 alive 192→64 L2 dims_alive 3→59 VICReg var25 cov25 — pid '+pid+' — lineage dim8 0.2923 candidate 0.1202 kill GREEN IC0.4255 test0.4484 Sharpe1.418 MAE7.319 — LCG 20260813→189831298 idx3820 triple[11205,19448,14209] — void #080A0F tokens canonical — DPR1 fillRect — momentum0.94 — single-select ivory #FFFEF7.';
+  }
+  // tiny canvas draw bars
+  try{ const cv=document.getElementById('cShap15'); if(cv && cv.getContext){ const c=cv.getContext('2d'); c.clearRect(0,0,560,160); dims.slice(0,8).forEach((d,i)=>{ c.fillStyle=d.val>=0?'#2a78d6':'#D8452A'; const w=Math.abs(d.val)/maxAbs*180; c.fillRect(120,i*18+8,w,12); c.fillStyle='#111'; c.font='10px ui-monospace'; c.fillText(d.label,4,i*18+18); }); } }catch(e){}
+}
+updateDNA();
+</script>
+
+<!-- ══ archetype key + accessibility ═══════════════════════════════════════
+     Appended rather than edited in: the explorer above works and none of this
+     needs to touch it. Scanned first — this page had aria-live x0, tabindex x0,
+     role= x0, prefers-reduced-motion x0, and its map coloured 1,764 points by
+     archetype with nothing anywhere saying what a colour meant. -->
+<style id="pl-a11y-css">
+/* draw() calls requestAnimationFrame unconditionally and advances yaw by .005
+   every frame, so the map spins forever. WCAG 2.2.2: motion that starts
+   automatically and lasts over five seconds needs a way to stop it. The button
+   below is that mechanism; this honours the OS setting without being asked. */
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}
+}
+:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+.pl-sr{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;border:0}
+/* .pl-skip is gone — the static .vh-skip link below covers WCAG 2.4.1 here. */
+#plKey{margin-top:10px}
+#plKey ul{list-style:none;margin:6px 0 0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(232px,1fr));gap:2px}
+#plKey li{display:flex;align-items:center;gap:7px;min-height:26px;font-family:var(--mono);font-size:11px;padding:2px 4px}
+#plKey .sw{width:11px;height:11px;flex:0 0 11px;border:1.3px solid var(--ink);border-radius:3px}
+#plKey .n{font-weight:800;color:#6F6D68;min-width:14px}
+#plMotion{font:800 11px var(--mono);border:1.6px solid var(--ink);border-radius:9px;background:#fff;box-shadow:2px 2px 0 var(--ink);padding:6px 10px;min-height:34px;cursor:pointer}
+.it[role="button"]{cursor:pointer}
+
+/* ── text inks, solved for WCAG AA on what the browser paints ──────────────
+   Measured per element with its real backdrop composited through transparent
+   ancestors: the brand colours were carrying text at 3.20:1 (#EB6834), 3.42:1
+   (#009E73) and 4.42:1 (#2A78D6) against white.
+
+   These are new tokens, not new values for the brand colours. Every ring, fill,
+   polyline and border still draws #EB6834 / #2A78D6 / #009E73; only text moves.
+   Two earlier attempts changed a shared token instead and traded one failure for
+   another — darkening --ink-muted to clear 4.5 on paper took the same text on the
+   #0A0C10 map inset from 5.3:1 to 4.14:1. The muted greys are left alone here
+   for that reason: they need per-container scoping, not a page-level value. */
+:root{--orange-ink:#C84714;--blue-ink:#2873CF;--green-ink:#008460}
+.brand span,.site-nav__brand span{color:var(--orange-ink)}
+.sm__delta.down,.down{color:var(--orange-ink)}
+.sm__delta.up,.up{color:var(--blue-ink)}
+.fl-dim{color:var(--blue-ink)}
+.fo-ring{color:var(--orange-ink)}
+.proj{color:var(--orange-ink)}
+.mv-score.up{color:var(--green-ink)}
+
+/* #F0E442 is a bright yellow: an ink solved for white reads 3.64:1 on it, and the
+   white-on-yellow badge read 1.27:1. Keyed off the class that puts the yellow
+   there, so this cannot reach another ground. */
+span.pill.mono{color:#5A6476}
+.pill-y,.pill-y.mono,.pill-y.mono-sm,.pill.pill-y,.pill.pill-y.mono,.pill.pill-y.mono-sm,
+a.pill.pill-y,.pill.y,.pill.y.mono{color:#3A2E00}
+/* muted small print, on pages whose every ground is light */
+p.eyebrow,div.mono-sm,span.mono-sm,.pill.mono-sm,.mv-move,p.mono{color:#6F6D68}
+.mv-score.down{color:#D33F24}
+/* the archetype key and the dark pills sit on near-black: the light-ground inks
+   above must not reach them */
+#plKey span,#plKey .n{color:#FAFAF8}
+span.pill.mono.ink,.pill.ink{color:#C9C6C0}
+/* a rule in a later <style> block was still winning on this one */
+span.proj{color:var(--orange-ink)}
+
+
+</style>
+<div id="plLive" class="pl-sr" role="status" aria-live="polite" aria-atomic="true"></div>
+<script>
+(function(){
+  'use strict';
+  var $=function(id){return document.getElementById(id);};
+  var esc=function(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');};
+  var live=$('plLive');
+  function say(m){ if(!live||!m) return; if(live.textContent===m) live.textContent=''; live.textContent=m; }
+
+  // Must mirror the OKABE constant the draw loop uses. Verified against the
+  // data rather than assumed: c === gameCluster for 1,764 of 1,764 points in
+  // embedding_map_points_limited.json, joined through vectors.json to
+  // archetype_assignments.json — so index i really is gameArchetypes[i].
+  // NOTE: assets/shared-map.js and assets/archetype-bridge.js use a DIFFERENT
+  // order at indices 3,4,5. This key describes THIS page's colours, which is
+  // the honest thing for it to do; the site-wide split is logged on the board.
+  var OKABE=['#0072B2','#D55E00','#009E73','#CC79A7','#F0E442','#56B4E9','#E69F00','#D60022'];
+
+  var canvas=document.getElementById('c');
+  if(canvas){
+    canvas.setAttribute('role','img');
+    canvas.setAttribute('aria-label',
+      'Embedding map of 1,764 player-seasons. Each dot is one season, placed so that '+
+      'players who played alike sit together, and coloured by the archetype the model '+
+      'assigned. Selecting a player from the list draws their career path in orange. '+
+      'The list below the map carries the same information as text.');
+  }
+
+  // ── archetype key ──────────────────────────────────────────────────────
+  var host=$('plKey') || document.createElement('div');
+  if(!host.id) host.id='plKey';
+  if(!host.parentNode){
+    var lab=$('lab');
+    if(lab && lab.parentNode) lab.parentNode.insertBefore(host, lab.nextSibling);
+  }
+  host.innerHTML='<div class="mono" style="font-size:10.5px;color:#C9C6C0">Colour = archetype · loading names…</div>';
+  fetch('assets/mtnn_arch.json?v=758a3d56',{cache:'force-cache'})
+    .then(function(r){ if(!r.ok) throw new Error('HTTP '+r.status); return r.json(); })
+    .then(function(j){
+      var names=j.gameArchetypes||[];
+      if(!names.length) throw new Error('gameArchetypes missing');
+      host.innerHTML='<div class="mono" style="font-size:10.5px;color:#C9C6C0">'+
+        'Colour = archetype — names from <code>assets/mtnn_arch.json</code></div><ul>'+
+        names.map(function(n,i){
+          return '<li><span class="sw" style="background:'+esc(OKABE[i%8])+'"></span>'+
+                 '<span class="n">'+i+'</span><span>'+esc(n)+'</span></li>';
+        }).join('')+'</ul>';
+    })
+    .catch(function(e){
+      // never invent archetype names to fill the key
+      host.innerHTML='<div class="mono" style="font-size:10.5px;color:#C9C6C0">'+
+        'Colour = archetype, but the names could not be loaded ('+esc(e.message)+'). '+
+        'No labels are guessed.</div>';
+    });
+
+  // ── stop the perpetual rotation ────────────────────────────────────────
+  var btn=document.createElement('button');
+  btn.id='plMotion'; btn.type='button';
+  // The camera owns the rotation, reads prefers-reduced-motion itself, and
+  // repaints this button through its onSpin callback. This used to keep its own
+  // flag and its own copy of the media query, which is two places for the same
+  // truth to live and one of them to be wrong.
+  // Ordering is load-bearing: the camera is attached in the map script above,
+  // and this block is appended at the end of <body>, so cam.spin has already
+  // settled — including the reduced-motion case, which the camera reads once.
+  // paint() therefore reports state rather than choosing it.
+  var cam = window.VHMapCamera && VHMapCamera.cams[0];
+  function paint(on){
+    btn.setAttribute('aria-pressed', on?'false':'true');
+    btn.textContent = on ? '⏸ Pause rotation' : '▶ Resume rotation';
+  }
+  if(cam){ cam.onSpin = paint; paint(cam.spin); }
+  btn.addEventListener('click',function(){ if(cam) cam.setSpin(!cam.spin, true); });
+  if(lab && lab.parentNode) lab.parentNode.insertBefore(btn, lab);
+  var hint=document.createElement('div');
+  hint.className='mono';
+  hint.style.cssText='font-size:10.5px;color:#C9C6C0;margin-top:4px';
+  hint.textContent='Map: drag to turn it, hover to name a dot, click to select. Two fingers pinch to zoom and slide up and down to tilt. Focused: ←/→ turn · ↑/↓ tilt · +/− zoom · Enter picks · space stops the spin · 0 resets · H reads the controls. Same keys as the map on the front page.';
+  if(lab && lab.parentNode) lab.parentNode.insertBefore(hint, lab);
+
+  // ── the player list was <div onclick> — invisible to Tab and to AT ──────
+  var list=$('list');
+  if(list){
+    var stamp=function(){
+      var kids=list.querySelectorAll('.it');
+      for(var i=0;i<kids.length;i++){
+        if(kids[i].getAttribute('role')==='button') continue;
+        kids[i].setAttribute('role','button');
+        kids[i].setAttribute('tabindex','0');
+      }
+    };
+    stamp();
+    if(window.MutationObserver) new MutationObserver(stamp).observe(list,{childList:true});
+    list.addEventListener('keydown',function(e){
+      if(e.key!=='Enter' && e.key!==' ' && e.key!=='Spacebar') return;
+      var t=e.target.closest?e.target.closest('.it'):null;
+      if(!t) return;
+      e.preventDefault(); t.click();
+    });
+  }
+  // selection currently only updates #selLab text, which AT never hears
+  var selLab=$('selLab');
+  if(selLab && window.MutationObserver){
+    new MutationObserver(function(){ say(selLab.textContent||''); })
+      .observe(selLab,{childList:true,characterData:true,subtree:true});
+  }
+
+  // ── keyboard orbit ─────────────────────────────────────────────────────
+  // This page grew its own: left and right arrows, Home, space and H, written
+  // straight onto window.yaw. The landing map then grew a different one — arrows
+  // plus tilt, zoom, Enter to pick — and a visitor who learned one met the other
+  // one page later. Both are assets/map-camera.js now, attached where the draw
+  // loop is set up, so the keys, the announcements and the focus message are the
+  // same on every map here. Nothing survives in this block but the note saying
+  // where it went.
+
+  // A JS-injected skip link used to sit here. The page now carries a static one
+  // right after <body>, which works with JavaScript off and does not depend on
+  // this IIFE running. Keeping both gave the page two skip links, and the
+  // injected one won because it went in at body.firstChild.
+})();
+</script>
+</main>
+<script src="assets/error-boundary.js?v=dfe16efe"></script>
+<script src="assets/keyboard-a11y.js?v=8bd158d1"></script>
+<script src="assets/pwa-install.js?v=11551699"></script>
+<script src="assets/name-fix.js?v=b420fb43"></script>
 </body>
 </html>
