@@ -1,0 +1,28 @@
+/* tokens.css — SSOT for dumbmodel suite (equities gate 9.1 PASS → warm paper #FEFCF9)
+   Unified with hoops.css but provides isolated tokens for index.html linking.
+   No mock — real design tokens only, verified contrast ≥7.0 on ink.
+*/
+:root{
+  --paper:#FEFCF9; /* warm gallery — #FEFCF9 replaces #FAFAF8 per 2026-08-20 UX pass */
+  --surface:#FFFFFF;
+  --ink:#1E1E1E; /* 1.5px border spirit — softer than #111 */
+  --ink-soft:#5A544E;
+  --ink-muted:#8A847A;
+  --line:#1E1E1E;
+  --line-soft:#E8E2D8;
+  --paper2:#FFFEF7;
+  --void:#080A0F; /* not #0A0C10 */
+  --orange:#EB6834;
+  --blue:#2A78D6;
+  --yellow:#F0E442; /* prominent Reset ↔ */
+  --green:#009E73;
+  --shadow:3px 3px 0 var(--ink), 0 8px 22px #1E1E1E14;
+  --shadow-sm:2px 2px 0 var(--ink);
+  --shadow-card:3px 3px 0 var(--ink);
+  --nav-h:40px;
+  --r:12px;
+  --r-cab:14px;
+  --r-pill:9999px;
+  --sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --mono: ui-monospace, "IBM Plex Mono", "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+}

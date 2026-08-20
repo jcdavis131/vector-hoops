@@ -1,0 +1,2816 @@
+/* Vector Hoops — black & white neobrutalist (fleet-aligned)
+   Paper white + near-black ink, 2px ink borders, hard offset block shadows,
+   bold uppercase labels, mono numerals. Color is reserved for DATA:
+   orange = the Chimera / offense, blue = your guess / defense,
+   status greens/reds for match heat. */
+
+:root{
+  --paper: #fafaf8;
+  --surface: #ffffff;
+  --ink: #111111;
+  --ink-soft: #52514e;
+  --ink-muted: #898781;
+  --hairline: #e1e0d9;
+  --panel-dark: #131312;
+
+  --data-orange: #eb6834;  /* Chimera / offense */
+  --data-blue: #2a78d6;    /* your guess / defense */
+  --hot: #006300;
+  --warm: #7a5b00;
+  --cold: #d03b3b;
+  --identified: #e8b500;      /* IDENTIFIED win state — gold, never red */
+  --identified-bg: #fff8e0;
+  --silver: #8f96a3;          /* Mashup "close enough" (>=92%) win state — a second, distinct WON color, never red */
+  --silver-bg: #eef1f4;
+  --data-purple: #7d5cc9;     /* Archetype slot accent — a third color alongside orange/blue, not a status color */
+
+  --shadow-block: 4px 4px 0 var(--ink);
+  --shadow-block-sm: 3px 3px 0 var(--ink);
+  --mono: ui-monospace, "IBM Plex Mono", "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+  --sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --radius: 10px;
+  --gap: clamp(12px, 2.5vw, 18px);
+
+  /* Fluid layout — mobile-first */
+  --page-gutter: clamp(12px, 3.2vw, 28px);
+  --layout-max: 720px;
+  --layout-wide: 1120px;
+  --touch-min: 44px;
+  --text-body: clamp(14px, 0.35vw + 13px, 16px);
+  --text-small: clamp(11px, 0.25vw + 10px, 13px);
+  --heading-page: clamp(18px, 2.2vw + 12px, 26px);
+}
+
+*, *::before, *::after{ box-sizing: border-box; }
+
+html{
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+html, body{
+  margin: 0;
+  padding: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: var(--text-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+body{
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Applied to <body> whenever the modal stack is non-empty (any modal or
+   sheet open) and removed once it's empty again — see pushModal/popModal
+   in game.js. Stops background scroll under an open overlay, including
+   the iOS Safari rubber-band bounce via overscroll-behavior. */
+body.vh-modal-open{
+  overflow: hidden;
+  touch-action: none;
+  overscroll-behavior: contain;
+}
+
+button, input{ font-family: inherit; }
+
+/* ---------- header / scoreboard strip ---------- */
+
+.vh-header{
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 12px var(--page-gutter);
+  padding-top: calc(12px + env(safe-area-inset-top, 0));
+  background: var(--surface);
+  border-bottom: 2px solid var(--ink);
+  position: sticky;
+  top: 0;
+  z-index: 20;
+}
+
+.vh-header__brand{
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.vh-logo{
+  font-family: var(--mono);
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  font-size: 15px;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+@media (min-width: 480px){
+  .vh-logo{ font-size: 18px; }
+}
+.vh-logo__accent{ color: var(--data-orange); }
+
+.vh-tagline{
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--ink-soft);
+  max-width: 260px;
+  line-height: 1.3;
+}
+
+.vh-stats{
+  display: flex;
+  gap: 0;
+  margin-left: auto;
+  background: var(--surface);
+  border: 2px solid var(--ink);
+  border-radius: 8px;
+  box-shadow: var(--shadow-block-sm);
+  overflow: hidden;
+}
+
+.vh-stat{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  line-height: 1.1;
+  padding: 4px 9px;
+  font-family: var(--mono);
+}
+@media (min-width: 480px){
+  .vh-stat{ padding: 5px 14px; }
+}
+.vh-stat + .vh-stat{ border-left: 2px solid var(--ink); }
+.vh-stat__num{ font-size: 17px; font-weight: 800; color: var(--ink); font-variant-numeric: tabular-nums; }
+.vh-stat__label{ font-size: 9px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--ink-soft); font-weight: 700; }
+
+.vh-help-btn{
+  appearance: none;
+  border: 2px solid var(--ink);
+  background: var(--surface);
+  color: var(--ink);
+  border-radius: 50%;
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  font-weight: 800;
+  font-size: 15px;
+  cursor: pointer;
+  box-shadow: var(--shadow-block-sm);
+}
+.vh-help-btn:hover{ transform: translate(-1px, -1px); box-shadow: 4px 4px 0 var(--ink); }
+.vh-help-btn:active{ transform: translate(3px, 3px); box-shadow: none; }
+
+/* ---------- layout ---------- */
+
+main{
+  flex: 1;
+  width: min(100%, var(--layout-max));
+  max-width: var(--layout-max);
+  min-width: 0;
+  margin-inline: auto;
+  padding: clamp(16px, 3vw, 24px) var(--page-gutter);
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap);
+  box-sizing: border-box;
+}
+
+.vh-panel,
+.vh-card,
+.vh-clue-card,
+.vh-autocomplete,
+.vh-guessbar,
+.vh-play-col{
+  min-width: 0;
+}
+
+.vh-panel{
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap);
+}
+
+.vh-card{
+  background: var(--surface);
+  border: 2px solid var(--ink);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-block);
+  padding: clamp(12px, 2.5vw, 18px);
+}
+
+/* ---------- prompt ---------- */
+
+.vh-prompt__eyebrow{
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 800;
+  color: var(--ink);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 6px;
+  border-bottom: 2px solid var(--data-orange);
+  display: inline-block;
+  padding-bottom: 2px;
+}
+
+.vh-prompt__text{
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.55;
+  color: var(--ink);
+}
+.vh-prompt__text b{ color: var(--data-orange); }
+
+.vh-chimera-phase{
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--data-orange);
+  margin: 0 0 12px;
+  line-height: 1.45;
+}
+
+/* ---------- the equation (prompt centerpiece) ---------- */
+
+.vh-equation{
+  display: flex;
+  align-items: stretch;
+  gap: 8px;
+  margin: 4px 0 12px;
+}
+
+.vh-equation__tile{
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  text-align: center;
+  border: 2px solid var(--ink);
+  border-radius: 8px;
+  background: var(--paper);
+  padding: 8px 6px;
+}
+.vh-equation__tile:not(.vh-equation__tile--target){
+  flex: 0 1 38%;
+  max-width: 42%;
+}
+
+.vh-equation__tile-label{
+  font-size: 9px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--ink-soft);
+  line-height: 1.35;
+}
+
+/* v4 THREE-PART ANSWERS: each tile's own slot name — Stats / Archetype /
+   Mashup — the equation reads as the puzzle statement itself. */
+.vh-equation__tile-kicker{
+  font-family: var(--mono);
+  font-size: 9px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--ink-muted);
+}
+.vh-equation__tile--target .vh-equation__tile-kicker{ color: var(--paper); opacity: 0.7; }
+
+/* locked tile states — gold (exact) never red; silver (Mashup >=92%) is a
+   second, distinct WON color, not a lesser one. */
+.vh-equation__tile--gold{
+  border-color: var(--identified);
+  background: var(--identified-bg);
+  box-shadow: 3px 3px 0 var(--identified);
+}
+.vh-equation__tile--gold .vh-equation__tile-kicker{ color: #6b5200; }
+.vh-equation__tile--silver{
+  border-color: var(--silver);
+  background: var(--silver-bg);
+  box-shadow: 3px 3px 0 var(--silver);
+}
+.vh-equation__tile--silver .vh-equation__tile-kicker{ color: var(--ink-soft); }
+
+.vh-equation__op{
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--mono);
+  font-weight: 800;
+  font-size: 20px;
+  color: var(--ink);
+  padding: 0 2px;
+}
+
+.vh-equation__tile--target{
+  flex: 0 1 72px;
+  background: var(--ink);
+  border-color: var(--ink);
+}
+
+.vh-equation__tile-mark{
+  font-family: var(--mono);
+  font-weight: 800;
+  font-size: 30px;
+  color: var(--data-orange);
+}
+
+/* donor name shown openly in tiles 1 + 2 — the mystery is now the closest
+   real match (the target tile's "?"), not the donors themselves. */
+.vh-equation__tile-name{
+  font-weight: 800;
+  font-size: 12px;
+  color: var(--ink);
+  line-height: 1.25;
+  word-break: break-word;
+  hyphens: auto;
+}
+
+@media (max-width: 639px){
+  .vh-equation{
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .vh-equation__tile:not(.vh-equation__tile--target){
+    flex: 1 1 auto;
+    max-width: none;
+  }
+  .vh-equation__op{ padding: 2px 0; }
+  .vh-equation__tile--target{
+    flex-basis: auto;
+    max-width: none;
+  }
+}
+
+/* ---------- guess bar / autocomplete ---------- */
+
+.vh-guessbar{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: stretch;
+}
+
+/* v5 clue cards: the guessbar card also holds the clue zone + warmth +
+   result sections above/below the input row, so only the input row itself
+   (typeahead + submit + kbd caption + duplicate warning) flips to a row at
+   >=480px — the card as a whole always stacks its sections vertically. */
+.vh-guessbar__inputrow{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: stretch;
+}
+@media (min-width: 480px){
+  .vh-guessbar__inputrow{ flex-direction: row; flex-wrap: wrap; }
+}
+
+.vh-autocomplete{
+  position: relative;
+  flex: 1 1 260px;
+  min-width: 0;
+}
+
+.vh-input{
+  width: 100%;
+  background: var(--surface);
+  border: 2px solid var(--ink);
+  color: var(--ink);
+  border-radius: 8px;
+  padding: 12px 14px;
+  font-size: 16px;
+  min-height: 44px;
+}
+.vh-input::placeholder{ color: var(--ink-muted); }
+.vh-input:focus{
+  outline: none;
+  border-color: var(--data-blue);
+  box-shadow: 3px 3px 0 var(--data-blue);
+}
+.vh-input:disabled{ opacity: 0.45; }
+
+.vh-suggestions{
+  position: absolute;
+  z-index: 70;
+  top: calc(100% + 6px);
+  left: 0;
+  right: 0;
+  margin: 0;
+  padding: 4px;
+  list-style: none;
+  background: var(--surface);
+  border: 2px solid var(--ink);
+  border-radius: 8px;
+  max-height: 320px;
+  overflow-y: auto;
+  box-shadow: var(--shadow-block);
+}
+
+.vh-suggestions li{
+  padding: 10px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  color: var(--ink);
+}
+.vh-suggestions li.active,
+.vh-suggestions li:hover{
+  background: var(--ink);
+  color: var(--paper);
+}
+.vh-suggestions li.vh-suggestions__empty{
+  cursor: default;
+  color: var(--ink-muted);
+  font-style: italic;
+}
+.vh-suggestions li.vh-suggestions__empty:hover{
+  background: transparent;
+  color: var(--ink-muted);
+}
+
+.vh-duplicate-warning{
+  flex: 1 1 100%;
+  margin: 0;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--warm);
+}
+
+/* ---------- typeahead obviousness: glyph + chevron + focus hint + kbd caption ---------- */
+
+.vh-input--search{ padding-left: 36px; padding-right: 32px; }
+
+.vh-autocomplete__glyph{
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 15px;
+  opacity: 0.55;
+  pointer-events: none;
+}
+
+.vh-autocomplete__chevron{
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%) rotate(0deg);
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--ink-muted);
+  pointer-events: none;
+  transition: opacity 0.12s ease;
+}
+.vh-autocomplete.has-value .vh-autocomplete__chevron{ opacity: 0; }
+
+.vh-autocomplete__hint{
+  margin: 6px 0 0;
+  font-size: 12px;
+  font-style: italic;
+  color: var(--ink-muted);
+}
+
+.vh-autocomplete__kbd{
+  margin: 4px 0 0;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  color: var(--ink-muted);
+  display: none;
+  flex: 1 1 100%;
+}
+@media (hover: hover) and (pointer: fine){
+  .vh-autocomplete__kbd{ display: block; }
+}
+
+/* richer suggestion rows: bold name + season + position chip, so the
+   panel reads as a menu of real player-seasons, not a bare list of text. */
+.vh-suggestions__row{
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+.vh-suggestions__name{ font-weight: 800; flex: 1 1 auto; }
+.vh-suggestions__season{
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--ink-soft);
+  white-space: nowrap;
+}
+.vh-suggestions li.active .vh-suggestions__season,
+.vh-suggestions li:hover .vh-suggestions__season{ color: var(--paper); opacity: 0.85; }
+.vh-suggestions__chip{
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.03em;
+  color: var(--ink-soft);
+  background: var(--paper);
+  border: 1px solid var(--hairline);
+  border-radius: 4px;
+  padding: 1px 6px;
+  white-space: nowrap;
+}
+.vh-suggestions li.active .vh-suggestions__chip,
+.vh-suggestions li:hover .vh-suggestions__chip{
+  background: transparent;
+  border-color: rgba(250,250,248,0.4);
+  color: var(--paper);
+}
+
+/* ---------- Build-a-Chimera donor picker (Free Play) ---------- */
+
+.vh-picker-card{ display: flex; flex-direction: column; gap: 12px; }
+
+.vh-slots-row{
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+@media (min-width: 600px){
+  .vh-slots-row{ flex-direction: row; align-items: stretch; }
+}
+
+.vh-slot-card{
+  flex: 1 1 220px;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.vh-slot-card__head{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+.vh-slot-card__title{
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--ink);
+}
+.vh-slot-card__badge{
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #6b5200;
+  background: var(--identified);
+  border: 1px solid var(--ink);
+  border-radius: 999px;
+  padding: 2px 8px;
+}
+/* Mashup slot's "close enough" (>=92%, not exact) lock — silver, still a
+   WON state, never a lesser/red one. */
+.vh-slot-card__badge--silver{
+  color: var(--ink-soft);
+  background: var(--silver-bg);
+  border-color: var(--silver);
+}
+
+/* Mashup slot's title/badge row always gets its own full-width line above
+   the clue zone + input row. */
+.vh-guessbar__head{ flex: 1 1 100%; }
+
+/* Compact feedback line under the two Daily donor-slot inputs — same
+   typography as .vh-guess__line, just tighter above a small card. */
+.vh-guess-slot__feedback{ margin-top: 4px; min-height: 1.4em; }
+
+/* v5 staged flow: the masked donor name in each card's title ("? · Stats
+   Player") — fills in with the true donor once that stage resolves. */
+.vh-clue-card__mask{ color: var(--data-blue); }
+
+/* Lock note shown under a later stage's disabled input ("Solve the Stats
+   Player first.") — same italic/muted treatment as other secondary lines,
+   hidden once its gating stage resolves. */
+.vh-clue-card__lock-note{
+  margin: 6px 0 0;
+  font-size: 11px;
+  font-style: italic;
+  color: var(--ink-muted);
+}
+
+/* ---------- v5 clue cards ----------
+   Each answer slot (Stats / Archetype / Mashup) is one self-contained
+   .vh-card: a numbered head, its own evidence "clue zone" (mini sigma bars
+   + a phrasing-bank sentence + 2-3 extreme-sigma chips, all derived from
+   the exact same TARGET.vector halves the game scores against — see
+   STATS_DIMS/SHOOTING_DIMS in game.js), then its own typeahead/submit/lock
+   state directly below. The clue zone is a <button> so tapping it toggles
+   between full evidence and a collapsed chips+sentence view — same
+   collapse-after-first-submission / tap-to-reexpand pattern as the
+   equation chip (see .vh-equation-chip). */
+
+.vh-orient-banner{
+  margin: 0 0 10px;
+  border: 2px solid var(--ink);
+  border-radius: 10px;
+  background: linear-gradient(135deg, #fff8f3 0%, #f3f8ff 100%);
+  box-shadow: 4px 4px 0 var(--ink);
+}
+.vh-orient-banner__inner{ padding: 14px 16px; }
+.vh-orient-banner__title{
+  margin: 0 0 8px;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+.vh-orient-banner__steps{
+  margin: 0 0 12px;
+  padding-left: 1.2rem;
+  font-size: 13px;
+  line-height: 1.45;
+}
+.vh-orient-banner__steps li + li{ margin-top: 6px; }
+.vh-orient-banner__actions{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.vh-read-guide{
+  margin: 0 0 4px;
+  padding: 8px 10px;
+  border: 1px dashed var(--ink-muted);
+  border-radius: 8px;
+  background: #fafaf7;
+  font-size: 12px;
+  line-height: 1.45;
+}
+.vh-read-guide summary{
+  cursor: pointer;
+  font-weight: 600;
+  color: var(--data-blue);
+  list-style: none;
+}
+.vh-read-guide summary::-webkit-details-marker{ display: none; }
+.vh-read-guide summary::before{
+  content: '▸ ';
+  display: inline-block;
+  transition: transform 0.15s ease;
+}
+.vh-read-guide[open] summary::before{ transform: rotate(90deg); }
+.vh-read-guide p{ margin: 8px 0 0; color: var(--ink-muted); }
+.vh-read-guide p + p{ margin-top: 6px; }
+
+.vh-clue-cards{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Daily donor slots (cards 1 & 2) — tighter than Mashup */
+.vh-donor-slots{
+  gap: 10px;
+}
+.vh-donor-slots .vh-clue-card{
+  padding: 10px 12px;
+}
+.vh-donor-slots .vh-clue-card__head{ margin-bottom: 4px; }
+.vh-donor-slots .vh-clue-card__caption{
+  margin: 0 0 6px;
+  font-size: 11px;
+  line-height: 1.4;
+}
+.vh-donor-slots .vh-clue-zone{
+  padding: 8px 10px;
+  margin: 0 0 6px;
+}
+.vh-donor-slots .vh-clue-zone__sentence{
+  margin: 0 0 6px;
+  font-size: 12px;
+}
+.vh-clue-card:not(.vh-donor-slots .vh-clue-card){
+  padding: 12px 14px;
+}
+#mashup-slot-card .vh-clue-zone{
+  margin-bottom: 8px;
+}
+
+.vh-clue-card__head{ margin-bottom: 8px; }
+
+/* groups the number badge + title as one flex item so the head's existing
+   title/badge space-between layout (.vh-slot-card__head, shared with every
+   other slot-card in the game) still sees exactly two children. */
+.vh-clue-card__numtitle{
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.vh-clue-card__num{
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 800;
+  color: var(--paper);
+  background: var(--ink);
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.vh-clue-card__caption{
+  margin: 0 0 10px;
+  font-size: 12px;
+  font-style: italic;
+  line-height: 1.5;
+  color: var(--ink-soft);
+}
+
+.vh-clue-zone{
+  appearance: none;
+  display: block;
+  width: 100%;
+  text-align: left;
+  font-family: inherit;
+  background: var(--paper);
+  border: 1px solid var(--hairline);
+  border-radius: 8px;
+  padding: 8px 10px;
+  margin: 0 0 10px;
+  cursor: pointer;
+}
+.vh-clue-zone:hover{ border-color: var(--ink-muted); }
+.vh-clue-zone:focus-visible{ outline: 2px solid var(--data-blue); outline-offset: 1px; }
+
+.vh-clue-zone__bars{ width: 100%; margin-bottom: 6px; }
+.vh-clue-zone__bars svg{ width: 100%; height: auto; display: block; max-height: 220px; }
+.vh-clue-zone.is-collapsed .vh-clue-zone__bars{ display: none; }
+.vh-clue-zone.is-collapsed{
+  padding-bottom: 6px;
+  margin-bottom: 6px;
+}
+
+/* Resolved donor slots: hide guess UI — name + evidence only */
+.vh-donor-slots .vh-clue-card.is-resolved .vh-autocomplete,
+.vh-donor-slots .vh-clue-card.is-resolved > .vh-btn--primary,
+.vh-donor-slots .vh-clue-card.is-resolved .vh-clue-card__caption,
+.vh-donor-slots .vh-clue-card.is-resolved .vh-clue-card__lock-note{
+  display: none;
+}
+.vh-donor-slots .vh-clue-card.is-resolved .vh-guess-slot__feedback{
+  margin-top: 0;
+  min-height: 0;
+}
+
+.vh-clue-zone__sentence{
+  margin: 0 0 8px;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.5;
+  color: var(--ink-soft);
+}
+
+.vh-clue-zone__chips{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.vh-clue-zone__framing{
+  margin: 8px 0 0;
+  font-size: 11px;
+  font-style: italic;
+  color: var(--ink-muted);
+}
+
+.vh-clue-zone__hint{
+  display: block;
+  margin-top: 8px;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--ink-muted);
+}
+
+/* warmth/result sections nested inside the Mashup clue card — a hairline
+   divider instead of a second nested .vh-card box (one unified card). */
+.vh-clue-card__section{
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid var(--hairline);
+}
+
+.vh-clue-card__tool{
+  display: inline-block;
+  margin-top: 8px;
+}
+@media (min-width: 1000px){
+  /* report/map sheets are already pinned open as a static right column at
+     this width (see the two-column desktop rule below) — the per-card
+     shortcut is redundant there. */
+  .vh-clue-card__tool{ display: none; }
+}
+
+.vh-picker-error{
+  margin: 0;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--cold);
+}
+
+/* ---------- honest state-migration note (v3 bump) ---------- */
+
+.vh-reset-note{
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.5;
+  color: var(--ink-soft);
+  background: var(--paper);
+  border: 2px dashed var(--hairline);
+  border-radius: var(--radius);
+  padding: 10px 14px;
+  margin: 0;
+}
+
+.vh-btn{
+  appearance: none;
+  border: 2px solid var(--ink);
+  background: var(--surface);
+  color: var(--ink);
+  border-radius: 8px;
+  padding: 12px 18px;
+  font-size: 14px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  min-height: 44px;
+  box-shadow: var(--shadow-block-sm);
+}
+.vh-btn:hover:not(:disabled){ transform: translate(-1px, -1px); box-shadow: 4px 4px 0 var(--ink); }
+.vh-btn:active:not(:disabled){ transform: translate(3px, 3px); box-shadow: none; }
+.vh-btn:disabled{ opacity: 0.4; cursor: default; }
+.vh-btn--primary{
+  background: var(--ink);
+  color: var(--paper);
+}
+.vh-btn--accent{
+  background: var(--surface);
+  border-color: var(--ink);
+  color: var(--ink);
+  margin-top: 10px;
+}
+
+/* ---------- result card (scoreboard + courts + breakdown) ---------- */
+
+.vh-result__top{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+.vh-map-thumb-btn{
+  appearance: none;
+  border: 2px solid var(--ink);
+  background: var(--panel-dark);
+  border-radius: 8px;
+  padding: 0;
+  width: 120px;
+  height: 120px;
+  min-width: 44px;
+  min-height: 44px;
+  cursor: pointer;
+  box-shadow: var(--shadow-block-sm);
+  overflow: hidden;
+  flex: 0 0 auto;
+}
+.vh-map-thumb-btn:hover{ transform: translate(-1px, -1px); box-shadow: 4px 4px 0 var(--ink); }
+.vh-map-thumb-btn:active{ transform: translate(2px, 2px); box-shadow: none; }
+.vh-map-thumb{
+  width: 100%;
+  height: 100%;
+  display: block;
+  pointer-events: none;
+}
+
+.vh-scoreboard{
+  text-align: center;
+  padding: 4px 16px 16px;
+}
+.vh-scoreboard__pct{
+  font-family: var(--mono);
+  font-weight: 800;
+  font-size: clamp(38px, 10vw, 60px);
+  line-height: 1;
+  color: var(--ink);
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+.vh-scoreboard__sub{
+  font-size: 11px;
+  color: var(--ink-soft);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 700;
+  margin-top: 6px;
+}
+
+.vh-section-label{
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--ink);
+  margin: 18px 0 8px;
+  border-bottom: 1px solid var(--hairline);
+  padding-bottom: 4px;
+}
+
+.vh-courts{
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+@media (min-width: 480px){
+  .vh-courts{ grid-template-columns: 1fr 1fr; }
+}
+
+.vh-court-block{ text-align: center; }
+.vh-court-block__label{
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--ink-soft);
+  margin-bottom: 6px;
+}
+.vh-court{
+  width: 100%;
+  height: auto;
+  aspect-ratio: 50 / 47;
+  display: block;
+  background: var(--surface);
+  border-radius: 8px;
+  border: 2px solid var(--ink);
+}
+
+.vh-court-legend{
+  display: flex;
+  justify-content: center;
+  gap: 18px;
+  margin-top: 10px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--ink-soft);
+}
+.vh-court-legend span{ display: inline-flex; align-items: center; gap: 5px; }
+.vh-legend-swatch{
+  width: 10px; height: 10px; border-radius: 50%; display: inline-block;
+  border: 1px solid var(--ink);
+}
+.vh-legend-swatch--orange{ background: var(--data-orange); }
+.vh-legend-swatch--blue{ background: var(--data-blue); }
+.vh-legend-swatch--hatch{
+  border-radius: 2px;
+  background: repeating-linear-gradient(
+    45deg,
+    var(--data-blue) 0 1.5px,
+    transparent 1.5px 4px
+  );
+}
+
+/* dimensional breakdown (SVG) */
+.vh-breakdown{ width: 100%; }
+.vh-breakdown svg{ width: 100%; height: auto; display: block; }
+
+.vh-story{
+  margin: 14px 0 4px;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--ink);
+  text-align: center;
+  line-height: 1.5;
+}
+
+/* ---------- guess list ---------- */
+
+.vh-guesslist{
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.vh-guesslist__empty{
+  color: var(--ink-muted);
+  font-size: 13px;
+  font-style: italic;
+}
+
+.vh-guess{
+  background: var(--surface);
+  border: 2px solid var(--ink);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-block-sm);
+  padding: 10px 14px;
+}
+
+.vh-guess.is-identified{
+  border-color: var(--identified);
+  box-shadow: 3px 3px 0 var(--identified);
+  background: var(--identified-bg);
+}
+/* Mashup "close enough" (>=92%, not exact) lock — silver overrides gold,
+   still a WON row, never a lesser/red one. */
+.vh-guess.is-identified.is-silver{
+  border-color: var(--silver);
+  box-shadow: 3px 3px 0 var(--silver);
+  background: var(--silver-bg);
+}
+.vh-guess.is-identified.is-silver .vh-guess__badge{
+  color: var(--ink-soft);
+  background: var(--silver-bg);
+  border-color: var(--silver);
+}
+
+.vh-guess__badge{
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #6b5200;
+  background: var(--identified);
+  border: 1px solid var(--ink);
+  border-radius: 999px;
+  padding: 2px 8px;
+}
+
+.vh-guess__pct--identified{
+  color: var(--ink-soft);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.vh-guess__line--season{
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.vh-guess__head{
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.vh-guess__num{
+  font-family: var(--mono);
+  color: var(--ink-muted);
+  font-weight: 700;
+  font-size: 12px;
+  min-width: 20px;
+}
+
+.vh-guess__phase{
+  font-family: var(--mono);
+  font-size: 9px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--ink-muted);
+  background: var(--paper);
+  border: 1px solid var(--hairline);
+  border-radius: 4px;
+  padding: 1px 6px;
+  flex: 0 0 auto;
+}
+/* Unified guess-history list, tagged per slot (v4 THREE-PART ANSWERS) —
+   same three colors used for the warmth bars/equation kicker. */
+.vh-guess__phase--archetype{ color: var(--data-purple); border-color: var(--data-purple); }
+.vh-guess__phase--mashup{ color: var(--data-orange); border-color: var(--data-orange); }
+
+.vh-guess__name{
+  font-weight: 700;
+  font-size: 14px;
+  flex: 1 1 auto;
+  color: var(--ink);
+}
+
+.vh-guess__pct{
+  font-family: var(--mono);
+  font-weight: 800;
+  font-size: 16px;
+  font-variant-numeric: tabular-nums;
+}
+.vh-guess__pct--hot{ color: var(--hot); }
+.vh-guess__pct--warm{ color: var(--warm); }
+.vh-guess__pct--cold{ color: var(--cold); }
+
+.vh-guess__line{
+  font-size: 13px;
+  color: var(--ink-soft);
+  margin: 6px 0 0;
+  line-height: 1.5;
+}
+.vh-guess__line b{ color: var(--ink); font-weight: 700; }
+
+/* secondary, per-half read on each guess row in history — kept for context,
+   subordinate to the primary full-blend % (and the Triangulation block,
+   which shows this same read for the latest guess only). */
+.vh-guess__row-halves{
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--ink-muted);
+  margin: 4px 0 0;
+}
+
+/* ---------- reveal ---------- */
+
+.vh-reveal__title{
+  font-family: var(--mono);
+  font-size: 14px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--ink);
+  margin: 0 0 10px;
+  border-bottom: 2px solid var(--data-orange);
+  display: inline-block;
+  padding-bottom: 2px;
+}
+.vh-reveal__body{
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--ink);
+}
+.vh-reveal__body b{ color: var(--data-orange); }
+.vh-reveal__copied{
+  margin-top: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--hot);
+}
+.vh-challenge-banner{
+  background: var(--data-orange);
+  color: var(--paper);
+  padding: 10px 16px;
+  text-align: center;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.45;
+  border-bottom: 2px solid var(--ink);
+}
+
+/* ---------- 3D map (dark panel: the one black element) ---------- */
+
+.vh-mapcard{ padding: 12px; }
+.vh-mapcard > summary{
+  cursor: pointer;
+  list-style: none;
+}
+.vh-mapcard > summary::-webkit-details-marker{ display: none; }
+.vh-mapcard__hint{
+  text-transform: none;
+  letter-spacing: normal;
+  font-weight: 400;
+  color: var(--ink-muted);
+}
+
+.vh-map-wrap{ position: relative; }
+.vh-map{
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1 / 1;
+  display: block;
+  background: var(--panel-dark);
+  border-radius: 8px;
+  border: 2px solid var(--ink);
+  touch-action: none;
+  cursor: grab;
+}
+.vh-map:active{ cursor: grabbing; }
+
+.vh-map-pause{
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  appearance: none;
+  border: 1px solid #52514e;
+  background: rgba(19,19,18,0.8);
+  color: #c3c2b7;
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  border-radius: 999px;
+  padding: 5px 12px;
+  cursor: pointer;
+}
+
+.vh-map-color{
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  appearance: none;
+  border: 1px solid #52514e;
+  background: rgba(19,19,18,0.8);
+  color: #c3c2b7;
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  border-radius: 999px;
+  padding: 5px 12px;
+  cursor: pointer;
+}
+
+.vh-map-axes{
+  position: absolute;
+  bottom: 8px;
+  left: 12px;
+  right: 12px;
+  font-family: var(--mono);
+  font-size: 10px;
+  line-height: 1.45;
+  color: #898781;
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.vh-map-axis-def{
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 8px;
+}
+.vh-map-axis-def:first-child{ margin-top: 0; }
+.vh-map-axis-swatch{
+  width: 8px;
+  height: 8px;
+  border-radius: 2px;
+  flex-shrink: 0;
+  align-self: center;
+}
+.vh-map-axis-def b{ font-weight: 700; }
+.vh-map-axis-end{
+  font-size: 9px;
+  letter-spacing: 0.01em;
+}
+.vh-map-axis-end--lo{
+  color: #6f6e69;
+  text-transform: lowercase;
+}
+.vh-map-axis-end--hi{
+  font-weight: 700;
+  text-transform: lowercase;
+}
+
+.drift-interpret{ max-width: 28rem; font-size: 11px; line-height: 1.45; color: var(--ink-soft); }
+
+.trajectory-examples{
+  margin: 10px 0 0;
+  padding-left: 1.1rem;
+  font-size: 11px;
+  line-height: 1.5;
+  color: var(--ink-soft);
+}
+.trajectory-examples__item{ margin-bottom: 8px; }
+.trajectory-examples__item b{ color: var(--ink); }
+.trajectory-examples__arc{
+  display: block;
+  margin-top: 3px;
+  font-style: italic;
+  color: #6b6a63;
+}
+
+.vh-reveal__okf{
+  margin-top: 10px;
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--ink-soft);
+}
+.vh-reveal__okf a{ color: var(--ink); font-weight: 700; }
+
+.vh-reveal__prevalence{
+  margin-top: 8px;
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--ink-soft);
+}
+
+.vh-mapcard__legend{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 14px;
+  margin-top: 10px;
+  font-size: 11px;
+  color: var(--ink-soft);
+}
+.vh-mapcard__legend span{
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+.vh-legend-dot{
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  display: inline-block;
+  border: 1px solid var(--ink);
+}
+
+/* Progressive triangulation: a donor anchor's legend row before its slot
+   locks — dimmed, not a color the map otherwise uses, so "still hidden"
+   reads as its own state rather than a data value. */
+.vh-legend-pending{ opacity: 0.55; font-style: italic; }
+
+/* ---------- how-to-play modal ---------- */
+
+.vh-modal-backdrop{
+  position: fixed;
+  inset: 0;
+  background: rgba(17,17,17,0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--page-gutter, 16px);
+  z-index: 100;
+}
+
+.vh-modal{
+  background: var(--surface);
+  border: 2px solid var(--ink);
+  border-radius: var(--radius);
+  box-shadow: 6px 6px 0 var(--ink);
+  padding: clamp(16px, 3vw, 22px);
+  max-width: min(420px, calc(100vw - 2 * var(--page-gutter, 16px)));
+  width: 100%;
+  max-height: min(85dvh, calc(100dvh - 2 * var(--page-gutter, 16px)));
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* how-to-play lists every mode — scroll so "Got it" stays reachable on short viewports */
+#help-modal{
+  max-height: min(85dvh, calc(100dvh - 2 * var(--page-gutter, 16px)));
+}
+.vh-modal h2{
+  margin: 0 0 14px;
+  font-family: var(--mono);
+  font-size: 15px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--ink);
+  border-bottom: 2px solid var(--data-orange);
+  display: inline-block;
+  padding-bottom: 2px;
+}
+.vh-help-quick{
+  margin: 0 0 14px;
+  padding: 12px 14px;
+  border: 2px solid var(--data-blue);
+  border-radius: 8px;
+  background: #f6f9ff;
+}
+.vh-help-quick__title{
+  margin: 0 0 8px;
+  font-size: 13px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--data-blue);
+}
+.vh-help-quick__list{
+  margin: 0;
+  padding-left: 1.15rem;
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--ink-soft);
+}
+.vh-help-quick__list li + li{ margin-top: 6px; }
+.vh-help-quick__more{
+  margin: 10px 0 0;
+  font-size: 12px;
+  color: var(--ink-muted);
+  font-style: italic;
+}
+.vh-modal__list{
+  margin: 0 0 18px;
+  padding-left: 20px;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--ink-soft);
+}
+.vh-modal__list li + li{ margin-top: 10px; }
+
+/* ---------- loading / error ---------- */
+
+.vh-loading, .vh-error{
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--ink-soft);
+  text-align: center;
+  padding: 24px;
+}
+.vh-error{ color: var(--cold); font-weight: 700; }
+
+/* ---------- footer ---------- */
+
+.vh-footer{
+  text-align: center;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--ink-soft);
+  padding: 14px 16px 24px;
+  border-top: 2px solid var(--ink);
+  background: var(--surface);
+}
+
+/* ---------- utility ---------- */
+
+[hidden]{ display: none !important; }
+
+.vh-visually-hidden{
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.vh-btn{ width: 100%; }
+@media (min-width: 480px){
+  .vh-btn{ width: auto; }
+}
+
+@media (prefers-reduced-motion: reduce){
+  .vh-map{ cursor: default; }
+  .vh-btn:hover:not(:disabled),
+  .vh-help-btn:hover{ transform: none; }
+}
+
+/* ---------- mode tabs ---------- */
+
+.vh-tabs{
+  display: flex;
+  gap: 0;
+  border: 2px solid var(--ink);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: var(--shadow-block-sm);
+}
+
+.vh-tab{
+  appearance: none;
+  border: none;
+  background: var(--surface);
+  color: var(--ink-soft);
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 8px 12px;
+  cursor: pointer;
+}
+.vh-tab + .vh-tab{ border-left: 2px solid var(--ink); }
+.vh-tab.is-active{
+  background: var(--ink);
+  color: var(--paper);
+}
+.vh-tab:disabled{
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* ---------- warmth tracker ---------- */
+
+.vh-warmth{
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 12px 16px;
+}
+
+.vh-warmth__bars{
+  display: flex;
+  align-items: flex-end;
+  gap: 4px;
+  height: 44px;
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow-x: auto;
+}
+
+.vh-warmth__bar{
+  width: 8px;
+  min-width: 8px;
+  background: var(--ink);
+  border-radius: 2px 2px 0 0;
+}
+/* v4 THREE-PART ANSWERS: unified turn history, colored per slot glyph. */
+.vh-warmth__bar--stats{ background: var(--ink-soft); }
+.vh-warmth__bar--archetype{ background: var(--data-purple); }
+.vh-warmth__bar--mashup{ background: var(--data-orange); }
+.vh-warmth__bar.is-best{ background: var(--identified); }
+.vh-warmth__bar.is-best.is-silver{ background: var(--silver); }
+
+.vh-warmth__closest{
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 800;
+  color: var(--ink);
+  white-space: nowrap;
+}
+
+.vh-guess__line--quick{
+  font-weight: 700;
+  color: var(--ink);
+}
+
+/* ---------- triangulation block (3D-map anchors, mirrored as numbers) ----------
+   Same three glyphs as the map: solid square (stats donor), hollow square
+   (shooting donor), diamond (the mashup) — map and card read as one system.
+   Percentages here are the exact same cosines used everywhere else
+   (entry.halves.stats / entry.halves.shooting / entry.sim) — one source
+   of truth, never recomputed differently for the map vs. the card. */
+
+.vh-triangulation{
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 10px 4px;
+  border-top: 1px solid var(--hairline);
+  border-bottom: 1px solid var(--hairline);
+  margin-bottom: 4px;
+}
+.vh-triangulation__row{
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.vh-triangulation__label{
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--ink-soft);
+  flex: 1 1 auto;
+}
+.vh-triangulation__pct{
+  font-family: var(--mono);
+  font-weight: 800;
+  font-size: 13px;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+
+.vh-tri-icon{
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  flex: 0 0 auto;
+}
+.vh-tri-icon--stats{
+  background: var(--data-orange);
+  border: 1.5px solid var(--ink);
+}
+.vh-tri-icon--shooting{
+  background: transparent;
+  border: 1.5px solid var(--data-orange);
+}
+.vh-tri-icon--blend{
+  background: var(--data-orange);
+  border: 1.5px solid var(--ink);
+  transform: rotate(45deg);
+  width: 8px;
+  height: 8px;
+}
+
+/* ---------- the deadline mode ---------- */
+
+.vh-deadline-card{ text-align: center; }
+
+.vh-deadline__prompt{
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.55;
+  margin: 0 0 16px;
+  color: var(--ink);
+}
+
+.vh-deadline__buttons{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+@media (min-width: 480px){
+  .vh-deadline__buttons{ flex-direction: row; }
+}
+
+.vh-btn--thrive{ background: var(--surface); border-color: var(--hot); color: var(--hot); }
+.vh-btn--crater{ background: var(--surface); border-color: var(--cold); color: var(--cold); }
+
+.vh-deadline__reveal{ margin-top: 16px; }
+.vh-deadline__verdict{
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--ink);
+  margin: 0 0 6px;
+}
+.vh-deadline__final{ margin-top: 10px; }
+.vh-deadline__final-score{
+  font-family: var(--mono);
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--ink);
+  margin: 0 0 14px;
+}
+
+.vh-deadline__method{
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--ink-muted);
+  line-height: 1.5;
+  padding: 0 4px;
+}
+
+/* ---------- telemetry disclosure ---------- */
+
+.vh-modal__telemetry{
+  font-size: 12px;
+  color: var(--ink-muted);
+  line-height: 1.5;
+  margin: -6px 0 16px;
+}
+
+/* ---------- loading skeleton (first paint) ---------- */
+
+.vh-skeleton{ }
+
+.vh-skeleton__bar{
+  height: 16px;
+  border-radius: 6px;
+  margin-bottom: 10px;
+  background: linear-gradient(90deg, var(--hairline) 25%, #ececE4 37%, var(--hairline) 63%);
+  background-size: 400% 100%;
+  animation: vh-skeleton-pulse 1.5s ease-in-out infinite;
+}
+.vh-skeleton__bar--title{ height: 20px; width: 60%; }
+.vh-skeleton__bar--text{ width: 100%; }
+.vh-skeleton__bar--short{ width: 75%; margin-bottom: 0; }
+
+.vh-skeleton__note{
+  margin: 14px 0 0;
+  padding-top: 10px;
+  border-top: 1px solid var(--hairline);
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--ink-soft);
+}
+
+@keyframes vh-skeleton-pulse{
+  0%{ background-position: 100% 50%; }
+  100%{ background-position: 0 50%; }
+}
+
+@media (prefers-reduced-motion: reduce){
+  .vh-skeleton__bar{ animation: none; }
+}
+
+/* ---------- dossier modal ---------- */
+
+.vh-modal--dossier{
+  max-width: 560px;
+  max-height: 85vh;
+  display: flex;
+  flex-direction: column;
+}
+.vh-dossier__body{
+  overflow-y: auto;
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--ink);
+  padding-right: 2px;
+}
+.vh-dossier__h{
+  font-family: var(--mono);
+  font-size: 15px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin: 0 0 10px;
+  color: var(--ink);
+}
+.vh-dossier__h4{
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--ink-soft);
+  margin: 16px 0 6px;
+  border-top: 1px solid var(--hairline);
+  padding-top: 10px;
+}
+.vh-dossier__p{ margin: 0 0 10px; }
+.vh-dossier__p b{ color: var(--data-orange); }
+.vh-dossier__row{
+  font-size: 12px;
+  color: var(--ink-soft);
+  padding: 4px 0;
+  border-bottom: 1px solid var(--hairline);
+}
+.vh-dossier__bullet{
+  font-size: 13px;
+  color: var(--ink-soft);
+  padding-left: 12px;
+  position: relative;
+  margin: 0 0 6px;
+}
+.vh-dossier__bullet::before{
+  content: '\2013';
+  position: absolute;
+  left: 0;
+  color: var(--data-orange);
+}
+.vh-dossier__actions{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 16px;
+  padding-top: 12px;
+  border-top: 1px solid var(--hairline);
+}
+.vh-dossier__source{
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--ink-soft);
+}
+.vh-dossier__source:hover{ color: var(--ink); }
+
+/* ---------- rollover banner ---------- */
+
+.vh-rollover-banner{
+  position: fixed;
+  left: 50%;
+  bottom: 20px;
+  transform: translateX(-50%);
+  z-index: 90;
+}
+.vh-rollover-banner__btn{
+  appearance: none;
+  border: 2px solid var(--ink);
+  background: var(--data-orange);
+  color: #111111;
+  font-family: var(--mono);
+  font-weight: 800;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  border-radius: 999px;
+  padding: 12px 20px;
+  min-height: 44px;
+  cursor: pointer;
+  box-shadow: var(--shadow-block);
+}
+.vh-rollover-banner__btn:hover{ transform: translate(-1px, -1px); box-shadow: 5px 5px 0 var(--ink); }
+.vh-rollover-banner__btn:active{ transform: translate(3px, 3px); box-shadow: none; }
+
+/* ---------- mode sub-tabs: Daily vs Free Play ---------- */
+
+.vh-subtabs{
+  display: flex;
+  align-self: flex-start;
+  gap: 0;
+  border: 2px solid var(--ink);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: var(--shadow-block-sm);
+}
+
+.vh-subtab{
+  appearance: none;
+  border: none;
+  background: var(--surface);
+  color: var(--ink-soft);
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 9px 16px;
+  min-height: 40px;
+  cursor: pointer;
+}
+.vh-subtab + .vh-subtab{ border-left: 2px solid var(--ink); }
+.vh-subtab.is-active{
+  background: var(--data-orange);
+  color: #111111;
+}
+
+/* ---------- header pool toggle: All-time vs Modern ---------- */
+
+.vh-pool-toggle{
+  align-self: center;
+}
+.vh-pool-toggle .vh-subtab{
+  padding: 6px 11px;
+  font-size: 10px;
+  min-height: 32px;
+}
+.vh-pool-toggle .vh-subtab.is-active{
+  background: var(--ink);
+  color: var(--surface);
+}
+@media (max-width: 640px){
+  .vh-pool-toggle .vh-subtab{ padding: 5px 8px; font-size: 9px; }
+}
+
+/* ---------- practice banner (state isolation, always visible in Free Play) ---------- */
+
+.vh-practice-banner{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+  background: #fff8ee;
+  border: 2px dashed var(--data-orange);
+  border-radius: var(--radius);
+  padding: 10px 14px;
+}
+.vh-practice-banner__text{
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #7a4415;
+}
+
+/* ---------- hint chips (M2 hint economy) ---------- */
+
+.vh-hints{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid var(--hairline);
+}
+.vh-hint-chip{
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.03em;
+  color: var(--ink);
+  background: var(--paper);
+  border: 2px solid var(--ink);
+  border-radius: 999px;
+  padding: 4px 10px;
+}
+
+/* ---------- stats modal ---------- */
+
+.vh-modal--stats{ max-width: 480px; max-height: 85vh; overflow-y: auto; }
+
+.vh-stats-section{
+  margin-bottom: 14px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--hairline);
+}
+.vh-stats-section:last-of-type{ border-bottom: none; }
+.vh-stats-section__label{
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--ink-soft);
+  margin-bottom: 10px;
+}
+
+.vh-stats-grid{
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(70px, 1fr));
+  gap: 8px;
+  text-align: center;
+}
+.vh-stats-tile{
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.vh-stats-tile__num{
+  font-family: var(--mono);
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+.vh-stats-tile__label{
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: 700;
+  color: var(--ink-soft);
+}
+
+.vh-histogram{
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 12px;
+}
+.vh-hist-row{
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.vh-hist-row__label{
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--ink-soft);
+  width: 10px;
+  flex: 0 0 auto;
+}
+.vh-hist-row__track{
+  flex: 1 1 auto;
+  min-width: 0;
+  background: var(--paper);
+  border: 1px solid var(--hairline);
+  border-radius: 4px;
+  height: 20px;
+}
+.vh-hist-row__bar{
+  height: 100%;
+  min-width: 18px;
+  background: var(--data-orange);
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 6px;
+}
+.vh-hist-row__count{
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  color: #111111;
+}
+
+.vh-stats-practice-line{
+  font-size: 13px;
+  color: var(--ink-soft);
+  margin: 0;
+  line-height: 1.5;
+}
+
+.vh-stats-modern-line{
+  font-size: 11px;
+  font-family: var(--mono);
+  color: var(--ink-soft);
+  margin: 6px 0 0;
+  line-height: 1.4;
+}
+.vh-stats-modern-line:empty{ display: none; }
+
+.vh-stats-actions{
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 4px;
+}
+.vh-stats-actions .vh-btn{ flex: 1 1 auto; width: auto; }
+
+/* ---------- deadline post-round detail (M7) ---------- */
+
+.vh-deadline__detail{
+  text-align: left;
+  background: var(--paper);
+  border: 1px solid var(--hairline);
+  border-radius: 8px;
+  padding: 12px 14px;
+  margin-bottom: 14px;
+}
+.vh-deadline__stat-row{
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-family: var(--mono);
+}
+.vh-deadline__stat-label{
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--ink-soft);
+}
+.vh-deadline__stat-value{
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+
+.vh-deadline__bar-pair{
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin: 10px 0;
+}
+.vh-deadline__bar-row{
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.vh-deadline__bar-label{
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  width: 42px;
+  flex: 0 0 auto;
+}
+.vh-deadline__bar-track{
+  flex: 1 1 auto;
+  min-width: 0;
+  background: var(--surface);
+  border: 1px solid var(--hairline);
+  border-radius: 4px;
+  height: 12px;
+  overflow: hidden;
+}
+.vh-deadline__bar{ height: 100%; border-radius: 3px; }
+.vh-deadline__bar--before{ width: 2px; background: var(--ink-muted); }
+.vh-deadline__bar--after.vh-deadline__bar--pos{ background: var(--hot); }
+.vh-deadline__bar--after.vh-deadline__bar--neg{ background: var(--cold); }
+
+.vh-deadline__samples{
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--ink-soft);
+  margin: 0 0 4px;
+}
+.vh-deadline__adjpm{
+  font-size: 12px;
+  color: var(--ink-soft);
+  margin: 0;
+}
+
+.vh-deadline__comeback{
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--ink-muted);
+  margin: 0 0 12px;
+}
+
+.vh-link-btn{
+  appearance: none;
+  background: none;
+  border: none;
+  padding: 0;
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--ink-soft);
+  text-decoration: underline;
+  cursor: pointer;
+}
+.vh-link-btn:hover{ color: var(--ink); }
+
+.vh-dossier-link{
+  color: inherit;
+  font-weight: 700;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+/* =======================================================================
+   Mobile-first restructure: bottom tab bar, compact header, collapsible
+   equation, bottom sheets (report/map/history/arc-reveal), two-column
+   desktop layout. Reuses the existing modal stack (focus trap + Escape)
+   for every sheet — a sheet IS a modal, just styled to dock at the
+   bottom on narrow viewports and behave like a normal modal from ~480px.
+   ======================================================================= */
+
+/* ---------- tab bar: bottom nav on phones, top tabs from 720px ---------- */
+
+#mode-tabs{
+  box-sizing: border-box;
+  margin: 0 var(--page-gutter) 14px;
+}
+@media (min-width: 720px){
+  #mode-tabs{
+    width: min(var(--layout-max), calc(100% - 2 * var(--page-gutter)));
+    max-width: var(--layout-max);
+    margin-inline: auto;
+    margin-bottom: 16px;
+  }
+}
+
+.vh-tab{
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  justify-content: center;
+}
+.vh-tab__icon{ display: none; font-size: 15px; line-height: 1; }
+.vh-tab__label{ white-space: nowrap; }
+.vh-tab__label-short{ display: none; }
+
+@media (max-width: 719px){
+  .vh-tab__label-full{ display: none; }
+  .vh-tab__label-short{ display: inline; }
+  #mode-tabs{
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: 0;
+    width: 100%;
+    border-width: 2px 0 0 0;
+    border-radius: 0;
+    box-shadow: 0 -2px 0 var(--ink);
+    z-index: 60;
+    /* thumb-zone bottom nav: safe-area padding for notched phones */
+    padding-bottom: env(safe-area-inset-bottom, 0);
+    /* 6 tabs no longer guarantee a comfortable fit on the narrowest phones —
+       scroll horizontally instead of squeezing labels unreadable, with a
+       soft edge-fade (mask, not extra DOM) hinting there's more off-screen. */
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    -webkit-mask-image: linear-gradient(to right, transparent, black 14px, black calc(100% - 14px), transparent);
+    mask-image: linear-gradient(to right, transparent, black 14px, black calc(100% - 14px), transparent);
+  }
+  #mode-tabs::-webkit-scrollbar{ display: none; }
+  .vh-tab{
+    flex: 1 1 auto;
+    min-width: 60px;
+    flex-direction: column;
+    gap: 2px;
+    min-height: 52px;
+    padding: 7px 4px;
+    font-size: 9px;
+  }
+  .vh-tab__icon{ display: block; }
+  main#app{ padding-bottom: calc(64px + env(safe-area-inset-bottom, 0)); }
+  /* footers sit after main — clear the fixed mode tab bar when scrolled to the bottom */
+  .vh-footer,
+  .site-footer{
+    padding-bottom: calc(56px + env(safe-area-inset-bottom, 0));
+  }
+  /* site-nav already brands the page; drop the duplicate logo in the game header */
+  #app-header .vh-logo{ display: none; }
+  #app-header .vh-header__brand{ gap: 4px; }
+}
+
+/* ---------- compact single-row header ---------- */
+/* Tagline hides on phones once the player has closed how-to-play at least
+   once ("no taglines on mobile after first visit") — desktop keeps it, it
+   has the room. */
+@media (max-width: 719px){
+  .vh-header--compact .vh-tagline{ display: none; }
+}
+
+@media (max-width: 479px){
+  .vh-header{ padding: 8px 10px; padding-top: calc(8px + env(safe-area-inset-top, 0)); gap: 8px; }
+  .vh-header__brand{ gap: 0; }
+  .vh-tagline{ max-width: 150px; }
+}
+
+/* ---------- equation collapse-to-chip (after first guess) ---------- */
+
+.vh-equation-chip{
+  appearance: none;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin: 4px 0 12px;
+  padding: 10px 14px;
+  border: 2px solid var(--ink);
+  border-radius: 8px;
+  background: var(--paper);
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 800;
+  color: var(--ink);
+  cursor: pointer;
+  text-align: left;
+}
+.vh-equation-chip__hint{
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--ink-muted);
+  white-space: nowrap;
+}
+
+/* ---------- utility row (history / 3D map triggers, always visible) ---------- */
+
+.vh-utility-row{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  padding: 2px 4px;
+}
+
+.vh-result__actions{
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px solid var(--hairline);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+
+/* ---------- bottom sheets: report / map / history / arc-reveal ---------- */
+
+.vh-sheet-backdrop{
+  position: fixed;
+  inset: 0;
+  background: rgba(17,17,17,0.55);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  z-index: 110;
+}
+
+.vh-sheet{
+  background: var(--surface);
+  width: 100%;
+  max-width: var(--layout-max);
+  max-height: min(88dvh, calc(100dvh - var(--page-gutter)));
+  overflow-y: auto;
+  border: 2px solid var(--ink);
+  border-bottom: none;
+  border-radius: 16px 16px 0 0;
+  box-shadow: 0 -6px 0 var(--ink);
+  padding: 10px 16px 24px;
+  padding-bottom: calc(16px + env(safe-area-inset-bottom, 0));
+  animation: vh-sheet-up 0.22s ease-out;
+}
+@keyframes vh-sheet-up{
+  from{ transform: translateY(100%); }
+  to{ transform: translateY(0); }
+}
+@media (prefers-reduced-motion: reduce){
+  .vh-sheet{ animation: none; }
+}
+
+.vh-sheet__handle{
+  width: 36px;
+  height: 4px;
+  background: var(--hairline);
+  border-radius: 2px;
+  margin: 2px auto 12px;
+}
+.vh-sheet__head{
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+.vh-sheet__title{
+  margin: 0;
+  font-family: var(--mono);
+  font-size: 14px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--ink);
+  border-bottom: 2px solid var(--data-orange);
+  display: inline-block;
+  padding-bottom: 2px;
+}
+.vh-sheet__close{
+  flex: 0 0 auto;
+  appearance: none;
+  border: 2px solid var(--ink);
+  background: var(--surface);
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  min-width: 36px;
+  font-size: 16px;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: var(--shadow-block-sm);
+}
+.vh-sheet__close:hover{ transform: translate(-1px, -1px); box-shadow: 4px 4px 0 var(--ink); }
+.vh-sheet__close:active{ transform: translate(2px, 2px); box-shadow: none; }
+
+@media (min-width: 480px){
+  .vh-sheet-backdrop{ align-items: center; padding: 20px; }
+  .vh-sheet{
+    max-height: 80vh;
+    border-bottom: 2px solid var(--ink);
+    border-radius: var(--radius);
+    box-shadow: 6px 6px 0 var(--ink);
+    animation: vh-sheet-fade 0.16s ease-out;
+  }
+  @keyframes vh-sheet-fade{
+    from{ opacity: 0; transform: translateY(8px); }
+    to{ opacity: 1; transform: translateY(0); }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .vh-sheet{ animation: none; }
+  }
+}
+
+/* ---------- two-column desktop: play column left, report/map right ---------- */
+
+@media (min-width: 1000px){
+  #panel-chimera{
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(300px, 400px);
+    gap: 20px;
+    align-items: start;
+  }
+  #chimera-subtabs, #chimera-practice-banner{ grid-column: 1 / -1; }
+  #chimera-play-col{
+    grid-column: 1;
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap);
+    min-width: 0;
+  }
+  #report-sheet-backdrop, #map-sheet-backdrop{
+    grid-column: 2;
+    position: static;
+    background: none;
+    display: block;
+    z-index: auto;
+    padding: 0;
+  }
+  /* pinned static panels override the page-wide [hidden]{display:none!important}
+     rule so they read as an always-visible right rail rather than a sheet —
+     the JS still flips their `hidden` attribute per-breakpoint on resize. */
+  #report-sheet-backdrop:not([hidden]), #map-sheet-backdrop:not([hidden]){
+    display: block;
+  }
+  #report-sheet, #map-sheet{
+    max-height: none;
+    max-width: none;
+    animation: none;
+    border-bottom: 2px solid var(--ink);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-block);
+    position: sticky;
+    top: 20px;
+  }
+  #report-sheet-open-btn, #map-sheet-open-btn{ display: none; }
+}
+
+/* ---------- Fader or Finisher: verdict styling (orange finish / blue fade) ---------- */
+
+.vh-btn--finisher{ background: var(--surface); border-color: var(--data-orange); color: var(--data-orange); }
+.vh-btn--fader{ background: var(--surface); border-color: var(--data-blue); color: var(--data-blue); }
+
+.vh-ff-verdict--finisher{ color: var(--data-orange); }
+.vh-ff-verdict--fader{ color: var(--data-blue); }
+
+/* ---------- Career Arc ---------- */
+
+.vh-arc-card-wrap{ display: flex; flex-direction: column; gap: 14px; }
+
+.vh-arc-grid{
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+@media (min-width: 560px){
+  .vh-arc-grid{ grid-template-columns: repeat(5, 1fr); }
+}
+
+.vh-arc-card{
+  appearance: none;
+  border: 2px solid var(--ink);
+  background: var(--surface);
+  border-radius: 10px;
+  padding: 10px 8px;
+  box-shadow: var(--shadow-block-sm);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  text-align: center;
+}
+.vh-arc-card:hover:not(:disabled){ transform: translate(-1px, -1px); box-shadow: 4px 4px 0 var(--ink); }
+.vh-arc-card:active:not(:disabled){ transform: translate(2px, 2px); box-shadow: none; }
+.vh-arc-card:disabled{ cursor: default; opacity: 0.85; }
+.vh-arc-card.is-selected{ background: #fff8ee; border-color: var(--data-orange); }
+.vh-arc-card.is-correct{ border-color: var(--hot); background: #eefbe9; }
+.vh-arc-card.is-wrong{ border-color: var(--cold); background: #fdeeee; }
+
+.vh-arc-card__order{
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 800;
+  color: var(--paper);
+  background: var(--ink-muted);
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.vh-arc-card.is-selected .vh-arc-card__order{ background: var(--data-orange); }
+.vh-arc-card__order:empty{ visibility: hidden; }
+
+.vh-arc-card__minibars{ width: 100%; }
+.vh-arc-card__minibars svg{ width: 100%; height: auto; display: block; }
+
+.vh-arc-card__chips{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 4px;
+}
+.vh-arc-card__chips .vh-hint-chip{
+  padding: 2px 7px;
+  font-size: 9px;
+}
+
+.vh-arc-controls{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.vh-arc-controls .vh-btn{ width: auto; }
+
+.vh-arc-result__score{
+  font-family: var(--mono);
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--ink);
+  margin: 0 0 8px;
+}
+.vh-arc-result__actions{ margin-top: 10px; }
+
+.vh-arc-reveal-list{
+  list-style: none;
+  margin: 0 0 16px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.vh-arc-reveal-row{
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding: 8px 10px;
+  border: 1px solid var(--hairline);
+  border-radius: 8px;
+  font-size: 13px;
+}
+.vh-arc-reveal-row.is-correct{ border-color: var(--hot); background: #eefbe9; }
+.vh-arc-reveal-row.is-wrong{ border-color: var(--cold); background: #fdeeee; }
+.vh-arc-reveal-row__top{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.vh-arc-reveal-row__rank{
+  font-family: var(--mono);
+  font-weight: 800;
+  width: 18px;
+  flex: 0 0 auto;
+}
+.vh-arc-reveal-row__season{ font-family: var(--mono); font-weight: 700; }
+.vh-arc-reveal-row__mark{ margin-left: auto; font-weight: 800; }
+.vh-arc-reveal-row__transition{
+  padding-left: 28px;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--data-blue);
+}
+
+.vh-arc-trajectory-line{
+  margin: 0 0 16px;
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--ink-soft);
+}
+
+.vh-arc-linechart{ width: 100%; }
+.vh-arc-linechart svg{ width: 100%; height: auto; display: block; }
+
+/* ---------- Chemistry: 4-option quiz grid ---------- */
+
+.vh-chem-options{
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+  margin: 4px 0 0;
+}
+@media (min-width: 480px){
+  .vh-chem-options{ grid-template-columns: 1fr 1fr; }
+}
+.vh-chem-option{
+  appearance: none;
+  border: 2px solid var(--ink);
+  background: var(--surface);
+  color: var(--ink);
+  border-radius: 8px;
+  padding: 12px 14px;
+  font-size: 13px;
+  font-weight: 700;
+  text-align: left;
+  cursor: pointer;
+}
+.vh-chem-option:hover:not(:disabled){ transform: translate(-1px, -1px); box-shadow: 3px 3px 0 var(--ink); }
+.vh-chem-option:disabled{ cursor: default; }
+.vh-chem-option.is-correct{ border-color: var(--hot); background: #eefbe9; color: var(--hot); }
+.vh-chem-option.is-wrong{ border-color: var(--cold); background: #fdeeee; color: var(--cold); }
+
+.vh-chem__numbers{
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--ink-soft);
+  margin: 8px 0 4px;
+}
+.vh-chem__why{
+  font-size: 13px;
+  font-style: italic;
+  color: var(--ink-soft);
+  margin: 0 0 12px;
+}
+
+/* ---------- What-If Lab ---------- */
+
+.vh-whatif-report{ display: flex; flex-direction: column; }
+.vh-whatif-line{
+  font-size: 13px;
+  color: var(--ink-soft);
+  margin: 4px 0 10px;
+  line-height: 1.5;
+}
+.vh-whatif-line--big{
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.vh-whatif-flags{
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 14px 0;
+}
+.vh-whatif-flag{
+  margin: 0;
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  border: 1px solid var(--hairline);
+}
+.vh-whatif-flag--redundancy{ border-color: var(--warm); background: #fff8e0; color: #6b5200; }
+.vh-whatif-flag--weakness{ border-color: var(--cold); background: #fdeeee; color: var(--cold); }
+.vh-whatif-flag--none{ color: var(--ink-muted); font-weight: 600; border-style: dashed; }
+
+.vh-whatif-actions{
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-top: 14px;
+}
+.vh-whatif-actions .vh-btn{ width: auto; }
+
+/* ---------- The Pivot: team roster + adjacent-archetype upside pick ---------- */
+
+.vh-pivot-card{ display: flex; flex-direction: column; }
+
+.vh-pivot__team{
+  font-family: var(--mono);
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--ink);
+  margin: 0 0 4px;
+}
+.vh-pivot__question{
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--ink-soft);
+  margin: 0 0 6px;
+}
+.vh-pivot__caption{
+  appearance: none;
+  border: none;
+  background: none;
+  padding: 0 0 12px;
+  margin: 0;
+  font-size: 11px;
+  font-style: italic;
+  color: var(--ink-muted);
+  text-decoration: underline dashed;
+  text-underline-offset: 3px;
+  cursor: pointer;
+  text-align: left;
+}
+.vh-pivot__caption:hover{ color: var(--ink-soft); }
+
+.vh-pivot-rows{
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.vh-pivot-row{
+  appearance: none;
+  border: 2px solid var(--ink);
+  background: var(--surface);
+  color: var(--ink);
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-size: 13px;
+  font-weight: 700;
+  text-align: left;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  width: 100%;
+}
+button.vh-pivot-row:hover{ transform: translate(-1px, -1px); box-shadow: 3px 3px 0 var(--ink); }
+
+.vh-pivot-row__name{ flex: 0 1 auto; }
+.vh-pivot-row__chip{ margin-left: auto; }
+
+/* details/summary reveal rows: strip default marker, add our own chevron */
+details.vh-pivot-row--reveal{ cursor: default; }
+details.vh-pivot-row--reveal > summary{
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  cursor: pointer;
+  list-style: none;
+}
+details.vh-pivot-row--reveal > summary::-webkit-details-marker{ display: none; }
+details.vh-pivot-row--reveal > summary::after{
+  content: '\25be';
+  margin-left: auto;
+  color: var(--ink-muted);
+}
+details.vh-pivot-row--reveal[open] > summary::after{ content: '\25b4'; }
+details.vh-pivot-row--reveal[open] > summary .vh-pivot-row__chip{ margin-left: 0; }
+details.vh-pivot-row--reveal.is-correct{ border-color: var(--hot); background: #eefbe9; }
+details.vh-pivot-row--reveal.is-picked:not(.is-correct){ border-color: var(--data-blue); }
+
+.vh-pivot-row__rank{
+  font-family: var(--mono);
+  font-weight: 800;
+  color: var(--ink-muted);
+  flex: 0 0 auto;
+}
+.vh-pivot-row--reveal.is-correct .vh-pivot-row__rank{ color: var(--hot); }
+.vh-pivot-row__mark{ color: var(--hot); }
+.vh-pivot-row__your-pick{
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--data-blue);
+  border: 1px solid var(--data-blue);
+  border-radius: 999px;
+  padding: 2px 7px;
+}
+
+.vh-pivot-row__detail{
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid var(--hairline);
+  font-size: 12px;
+  color: var(--ink-soft);
+  line-height: 1.5;
+}
+.vh-pivot-row__pivot{ margin: 0 0 6px; }
+.vh-pivot-row__receipts{ margin: 0 0 8px; }
+.vh-pivot-row__neighborhood{
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.vh-pivot-row__neighborhood-label{
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--ink-muted);
+}
+.vh-pivot-row__chip--adj{
+  font-size: 10px;
+  opacity: 0.6;
+}
+.vh-pivot-row__chip--adj.is-used{ opacity: 1; border-color: var(--hot); color: var(--hot); }
+
+.vh-pivot__verdict-wrap{ margin-top: 14px; }
+
+/* ---------- Era Twin: anchor card + typeahead + side-by-side reveal ---------- */
+
+.vh-twin-card{ display: flex; flex-direction: column; }
+
+.vh-twin-anchor{ margin-bottom: 10px; }
+.vh-twin-anchor__name{
+  font-family: var(--mono);
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--ink);
+  margin: 0 0 6px;
+}
+.vh-twin-anchor__chips{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+.vh-twin-anchor .vh-arc-card__minibars{ max-width: 260px; }
+
+.vh-twin__attempts{
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  margin: 0 0 8px;
+}
+
+.vh-twin-guesses{
+  list-style: none;
+  margin: 10px 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.vh-twin-guess{
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--ink-soft);
+  padding: 6px 10px;
+  border: 1px solid var(--hairline);
+  border-radius: 6px;
+  background: var(--paper);
+}
+
+.vh-twin-reveal{ margin-top: 12px; }
+.vh-twin-reveal .vh-slot-card__title{ text-transform: none; letter-spacing: 0; font-size: 12px; }
+.vh-twin-reveal__similarity{
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 800;
+  color: var(--ink);
+  margin: 10px 0 0;
+}
