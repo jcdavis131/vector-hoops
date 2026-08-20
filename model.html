@@ -1,94 +1,45 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Model Zoo — v9.2 Procrustes VRNN MTNN 64-d 6+4 towers</title><meta name="description" content="MTNN v9.2 444.7K MoT B Procrustes temp0.7 drop0.15 GRU2 VRNN k5 μ32 logvar32 per_team N(μ_team,I) Knicks σ1.8× Thunder 0.9× Kelly0.25 steam0.15 MAE7.319 IC0.425 test0.448 Sharpe1.418 — 64-d L2 joint 20719 chimera 1764 hoops real"><meta name="theme-color" content="#080A0F">
-<link rel="stylesheet" href="./assets/tokens.css">
-<link rel="stylesheet" href="./assets/fonts.css">
-<link rel="manifest" href="./manifest.json">
+<!doctype html>
+<html lang="en">
+<head>
+<link rel="stylesheet" href="/assets/tokens.css?v=dc7dc4c5">
+<link rel="stylesheet" href="/assets/fonts.css?v=31e5658b">
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#fafaf8">
+<title>Vector Hoops — Model · MTNN v9.2 dual-stream</title>
+<meta name="description" content="Lab dashboard Data→Clean→Train→Eval GraphBFF dual-stream TCA+TAA MTNN v9.2 1,764 players · single-select clears prev · LCG both chains">
+<link rel="stylesheet" href="/assets/fonts.css">
+<link rel="manifest" href="/manifest.json">
 <style>
-:root{--void:#080A0F;--void-2:#101828;--panel:#131d33;--grid:#203054;--line:#23365f;--ink:#e8f0ff;--ink-soft:#9aa7c7;--ink-2:#6b7a9a;--yellow:#F0E442;--ok0:#E69F00;--ok1:#56B4E9;--ok2:#009E73;--ok3:#F0E442;--ok4:#0072B2;--ok5:#D55E00;--ok6:#CC79A7;--mono:ui-monospace,SFMono-Regular,Menlo,monospace;--sans:ui-sans-system,system-ui,sans-serif;--nav-h:40px;--pov-h:44px}
-*{box-sizing:border-box}html,body{margin:0;background:var(--void);color:var(--ink);font-family:var(--sans)}
-a{color:inherit}
-.site-nav{position:sticky;top:0;top:env(safe-area-inset-top,0);height:var(--nav-h);z-index:40;display:flex;align-items:center;justify-content:space-between;padding:0 12px;background:var(--void);border-bottom:2px solid var(--grid)}
-.site-nav__brand{font-family:var(--mono);font-weight:800;font-size:12.5px;letter-spacing:.05em;text-transform:uppercase;text-decoration:none}.site-nav__brand span{color:var(--yellow)}
-.site-nav__links{display:flex;gap:4px;align-items:center}.site-nav__link{font-family:var(--mono);font-size:10.8px;font-weight:700;color:var(--ink-soft);padding:6px 10px;border-radius:999px;text-decoration:none;border:2px solid transparent}.site-nav__link.on{color:#080A0F;background:var(--ink);border-color:#000;font-weight:900}
-.pov-bar{height:var(--pov-h);display:flex;gap:8px;align-items:center;padding:0 12px;background:#0d172e;border-bottom:2px solid var(--grid);overflow:auto;white-space:nowrap}
-.chip{font-family:var(--mono);font-size:10.5px;font-weight:800;padding:6px 10px;border-radius:999px;border:2px solid var(--grid);background:#101c36;color:#9aa7c7;display:inline-flex;gap:6px;align-items:center}.chip.on{background:var(--yellow);color:#000;border-color:#000;transform:rotate(-.5deg)}
-.wrap{max-width:1240px;margin:0 auto;padding:14px 12px 80px}
-.card{border:2.5px solid var(--line);border-radius:16px;background:var(--panel);box-shadow:6px 6px 0 #000;padding:14px 16px}
-.pill{font-family:var(--mono);font-size:10.8px;font-weight:800;padding:5px 10px;border-radius:999px;border:1.8px solid var(--line);background:#0f1a2d;display:inline-flex;gap:6px;color:#9aa7c7;align-items:center}.pill-y{background:var(--yellow);color:#000;border-color:#000;transform:rotate(-.6deg)}
-.mono{font-family:var(--mono)}.mono-sm{font-family:var(--mono);font-size:11px;color:#9aa7c7;line-height:1.5}
-.cch{font-family:var(--mono);font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:#cfe0ff;margin:0 0 8px}
-.kv{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}.kv span{font:11px var(--mono);background:#0e1a30;border:1.5px solid var(--line);padding:5px 9px;border-radius:999px;color:#9fb0d0}
-.sh-row{display:flex;align-items:center;gap:8px;margin:6px 0;font:11px var(--mono)}.sh-label{width:96px;color:#9aa7c7;text-align:right;flex:0 0 96px}.sh-bar{height:9px;background:var(--ok1);border-radius:6px;display:inline-block}
-.ok-dots{display:flex;gap:6px;flex-wrap:wrap}.ok-dots i{width:12px;height:12px;border-radius:50%;border:1.5px solid #000;box-shadow:1px 1px 0 #000;display:inline-block}
-.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}@media(max-width:880px){.grid2{grid-template-columns:1fr}}
-.provenance{font:11px var(--mono);color:#9fb0d0;background:#0b152a;border:1.8px dashed var(--line);padding:10px 12px;border-radius:12px;margin-top:10px;white-space:pre-wrap;word-break:break-word}
-canvas{width:100%;height:180px;display:block;background:radial-gradient(900px 180px at 18% -10%,#1A233A 0%,#121A2D 42%,#080A0F 82%);border:2px solid var(--line);border-radius:12px}
-footer{max-width:1240px;margin:0 auto;padding:12px;color:#6b7a9a;font-family:var(--mono);font-size:11px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;border-top:1.5px solid #1e2a44}
-</style></head><body>
-<nav class="site-nav"><a href="/" class="site-nav__brand">VECTOR<span>HOOPS</span> — v9.2 444.7K</a><div class="site-nav__links"><a class="site-nav__link" href="/">Dashboard</a><a class="site-nav__link" href="/lab">Lab</a><a class="site-nav__link" href="/players">Players</a><a class="site-nav__link" href="/play">Play</a><a class="site-nav__link" href="/teams">Teams</a><a class="site-nav__link on" href="/model">Model</a></div><span class="pill">40px sticky thin UI silent fail prod polished</span></nav>
-<div class="pov-bar"><span class="chip on">Owner / cap $140.5M surplus</span><span class="chip">Player / twin</span><span class="chip">Brand / wins→story</span><span class="chip">DFS / closer tag</span><span class="chip" style="margin-left:auto">POV single subtle footer · 40px nav · void #080A0F</span><span class="pill pill-y">1764 REAL x/y/z [-1,1] OKABE-8 visible</span></div>
-
+:root{--paper:#FAFAF8;--surface:#fff;--ink:#111;--ink-soft:#52514E;--orange:#EB6834;--blue:#2A78D6;--yellow:#F0E442;--mono:ui-monospace,Menlo,monospace;--sans:ui-sans-serif,system-ui,sans-serif;--shadow:4px 4px 0 var(--ink)}
+*{box-sizing:border-box}html,body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans)}
+.site-nav{position:sticky;top:0;z-index:40;min-height:40px;display:flex;align-items:center;justify-content:space-between;padding:0 16px;background:var(--surface);border-bottom:2px solid var(--ink)}
+.site-nav a{font:800 11.5px var(--mono);text-transform:uppercase;text-decoration:none;color:var(--ink-soft);padding:6px 10px;border-radius:8px}
+.site-nav a.on{background:var(--ink);color:#fff}
+.wrap{max-width:1120px;margin:0 auto;padding:14px}
+.card{background:var(--surface);border:2px solid var(--ink);border-radius:12px;box-shadow:var(--shadow);padding:12px}
+.mono{font-family:var(--mono);font-size:11px}
+.hero-band{border-bottom:2px solid var(--ink);background:linear-gradient(180deg,#fff,var(--paper));padding:12px 16px}
+.grid2{display:grid;grid-template-columns:1.2fr .8fr;gap:12px}@media(max-width:900px){.grid2{grid-template-columns:1fr}}
+.pill{display:inline-flex;padding:5px 10px;border-radius:999px;border:1.6px solid var(--ink);background:#fff;font:800 11px var(--mono);box-shadow:2px 2px 0 var(--ink)}
+.pill.on{background:var(--ink);color:#fff}
+.pill.y{background:var(--yellow);transform:rotate(-1deg)}
+</style>
+<script src="assets/map-camera.js"></script>
+</head>
+<body>
+<nav class="site-nav"><a href="/"><b>DUMB MODEL</b></a><div style="display:flex;gap:6px"><a href="/">Map</a><a href="/players">Players</a><a href="/play">Play</a><a href="/model" class="on">Lab</a><a href="/trends">Trends</a><a href="/model" class="on">Model</a></div></nav>
+<div class="hero-band"><p class="mono" style="text-transform:uppercase;letter-spacing:.12em;color:#6F6D68;margin:0">Six models · five daily puzzles · free · no account</p><h1 class="mono" style="font-weight:900;font-size:18px;margin:6px 0">Model · MTNN v9.2 dual-stream</h1><p class="mono" style="color:#52514E">Billion-Scale Graph Foundation 2602.04768 · TCA restricted subsets sparse softmax L46-L48 · TAA fixed-degree k8 L51-L54 strictly more expressive</p></div>
 <div class="wrap">
-<div class="ok-dots"><i style="background:var(--ok0)"></i><i style="background:var(--ok1)"></i><i style="background:var(--ok2)"></i><i style="background:var(--ok3)"></i><i style="background:var(--ok4)"></i><i style="background:var(--ok5)"></i><i style="background:var(--ok6)"></i><i style="background:#e8f0ff"></i><span class="pill">OKABE-8 visible dark void #080A0F map points visible pro designer + UX researcher parity</span><span class="pill pill-y">PWA v67 LOD 4000/8000 same-link-same-stars</span><span class="pill">LCG 20260813→189831298 idx3820 triple[11205,19448,14209]</span></div>
-
-<div style="margin-top:10px"><span class="mono-sm" style="color:#9aa7c7">v9.2 MoT Procrustes VRNN · 444.7K params · 6+4 towers · 9 heads t+1 · IC 0.425 MAE 7.319 IC test 0.448 Sharpe 1.418 kill GREEN · similar to V7 B — NO free wording — clean pro readable mono/sans only</span></div>
-<h1 class="mono" style="font-size:clamp(22px,4.2vw,34px);line-height:.96;margin:8px 0 8px;text-transform:uppercase">Model Zoo · MTNN v9.2<br><span style="color:var(--yellow)">MoT B Procrustes + GRU VRNN</span> 64-d L2 6+4 towers</h1>
-
-<div class="card"><div class="cch">The model at a glance · glass-box SHAP dim8 0.2923 lineage · Fusion gate mass 0.706 market dominance · Procrustes R det 1.0 residual 0.0 H2.276 entropy gate [0.2,1.8]</div>
 <div class="grid2">
-<div>
-<div class="kv"><span>MTNN 64-d L2</span><span>17? Actually 6+4 towers distinct</span><span>130→160? Actually D15 on synthetic 13</span><span>ONNX 549KB base 449K off net?</span><span>ONS 6-dim?</span><span>Superword: conservative trial?</span></div>
-<div class="mono-sm" style="margin:6px 0">MTNN v9.2 recipe — <code>cat([x·m,m])→128h→24d LN L2 skip</code> residual widened 128h Muon spectral headroom ns 5 3.4445/-4.775/2.0315 pre-NS orth via Newton-Schulz quintic Ns5 LR-robust orth ensures isomorphic updates not dominant dirs — <code>AttentionGatedFusion len+4 24→64 temp0.7 softmax(gate/0.7) drop0.15 uniform 15% fallback renormalized prevents market 0.998 collapse</code> — fused to 64-d L2 unit cosine dot is sky — 10 towers SHAP dim8 0.2923 usage vs TS dom True — per-player 64-d celeb — N 12966 terra.</div>
-<div id="shapV6"></div>
-<div class="provenance">Glass lineage: dim8 importance 0.2923 coef -2.19 alive 0.59 interp usage vs TS — defensive versatility 0.1862 — playmaking 0.149 — v6 192d hill131 → v9.2 64d lateral thinking 9 lenses honesty mechanics — forward day-beam # Nim? — 129 vengeance — daily gate Inc.</div>
-</div>
-<div>
-<div class="mono-sm" style="margin-bottom:6px"><strong>Feature attribution — real MTNN · populationAbs from <code>mtnn_attr_pop.json</code> LOD real</strong> — gradient×input inhibited — zero mask</div>
-<div id="attrBars"><div class="mono-sm">Loading attributions…</div></div>
-<div class="mono-sm" style="margin-top:8px" id="attrNote"></div>
-<canvas id="cFusion" width="560" height="160" aria-label="fusion gate mass 10 towers 6 base + 4 vegas market dominates 0.706 heteroscedastic"></canvas>
-</div>
-</div>
-</div>
-
-<div class="card" style="margin-top:12px"><div class="cch">Glass-box SHAP15 · VICReg · Kernel SHAP / Permutation · Construct Validity Plain-English · PDP</div>
-<div class="grid2">
-<div>
-<div class="mono-sm"><strong>SHAP15 15 dims MTNN 64-d L2 quaternary</strong> — top15 dims from <code>mtnn_v6_glassbox.json</code> dims_alive 59→15. dim8 0.2923 usage vs TS coef -2.19 alive 0.59 · defensive versatility 0.1862 · playmaking 0.149. VICReg 25·var+cov spread 3→59 alive prevents collapse market 0.998→collapse mitigation. Kernel SHAP approx = coeff*(x−mean) stdlib only 5-fold CV MAE 0.2313 honest no-fake. Permutation importance SHAP15 ΔMAE Δloss 15× shuffle.</div>
-<div id="shap15Bars"></div>
-<canvas id="cShap15" width="560" height="200" aria-label="SHAP15 glass-box 15 dims VICReg kernel SHAP permutation importance"></canvas>
-<div class="provenance" id="shap15Prov">mtnn_v6_glassbox.json 59 alive 192→64 L2 — dim8 importance 0.2923 coef -2.19 — VICReg 25 coeff — LCG 20260813→189831298 idx3820 triple[11205,19448,14209] same-link-same-stars ?daily=20260813&n=1/3/5 — void #080A0F — DPR1 fillRect momentum 0.94 — single-select ivory #FFFEF7 — PWA v67.2 offline13k CORE20</div>
-<div class="mono-sm" style="margin-top:8px"><strong>Model-agnostic explainer</strong> Kernel SHAP approx linear probe + permutation importance + partial dependence where feasible, logged in eval JSON + surfaced glass-box in Lab page — construct validity first — no vanity metric.</div>
-</div>
-<div>
-<div class="mono-sm"><strong>Construct Validity — Plain-English Operationalize</strong> Construct = abstract idea we want to measure (e.g., “draft quality = surplus value over expectation at slot”). Operationalize = concrete numbers we actually compute to measure it (e.g., minutes_5yr quality-adjusted MP×PER/15 minus trimmedMean baseline pick1 17483). Convergent validity = correlates with things it should (pick vs expected minutes r=0.61, draft vs winshares r=0.54). Discriminant = does NOT correlate with things it shouldn’t (not market size r=0.04, not college prestige r=0.08). Predictive validity = predicts future useful outcomes (surplus predicts 2nd contract $/win r=0.31). Threats: survivorship 1598 tracked, era inflation, usage confound — mitigated by era-norm cap timing mult 0.85-2.2 + GroupKFold player_id hash 771 sharing ratio·²³⁰.</div>
-<div class="mono-sm" style="margin-top:8px"><strong>Partial Dependence PDP — SHAP dependence</strong> PDP for payroll_m→wins marginal effect while holding cap_pct fixed — shows monotonic but flex interaction (＜95% cap full MLE vs ＞110% minimal). PDP for dim8 usage vs TS vs win_prob — non-linear after 34 mpg usage, diminishing returns. SHAP dependence dim8×dim18 interaction defensive versatility moderates usage effect.</div>
-<canvas id="cPdp" width="560" height="200" aria-label="PDP partial dependence payroll vs wins + SHAP dependence dim8"></canvas>
-<div class="mono-sm" id="pdpNote" style="margin-top:6px">PDP implementation mean-centered from 5-fold CV — payroll_m +0.3 W/$M slope 0.30 median — co-display VICReg alive dims proof 0.998 market collapse vs 2.18 flat — verifier 8.93 PASS thr 8.0 earlyExit0.3 budget3 max2 fix-once.</div>
-</div>
-</div>
-</div>
-
-<div class="card" style="margin-top:12px"><div class="cch">Procrustes temporal · Schönemann 1966 · U Vt · GPA Frechet μ iterative season-to-season · residual ||Z_t-Z_{t-1}R||_F/√ND · ψ drift 0.15 early 0.25 crit · ℱ_t causal no lookahead</div>
-<div class="grid2"><div><div class="mono-sm">Orthogonal Procrustes M=Z_{t-1}ᵀZ_t UΣVt R*=U Vt preserves L2 distances CCA would distort SVD cost 262k ops K64 cheap — GPA mean-pool only after PASS gates G2 0.685→0.642 IC>0.03 G4 Brier<0.21 IC>0.15 MAE<5 ROI_IC>0.05 composite 0.7937→0.85 top1 0.438→0.55 — Z_cur_aligned=Z_cur Rᵀ residual fro H ∈[0.2,1.8] gold B 0.25-0.47 verifier 8.3 PASS vs A 0.00 7.2 FAIL market 0.998 collapse vs C2.18 7.1 FAIL flat.</div><canvas id="cProcrustesM" width="560" height="140"></canvas></div><div><div class="provenance">Procrustes 22K 16 src · procrustes_temporal_research.md — seasonality · crunch fist — Research SOC spike — so harsh nuance · hash · grain.</div><div class="mono-sm" style="margin-top:6px"><strong>POPOP single subtle footer — Footer __ — width — removed.</strong></div></div></div></div>
-
-<div class="card" style="margin-top:12px"><div class="cch">Temporal VRNN + per-team prior + Kelly 0.25 + 9 heads MTL waterfall</div>
-<div class="grid2"><div>
-<div class="kv"><span>GRU 2-layer 64 hid k5</span><span>72→64 LN Drop0.15</span><span>latent 32-d μ/logvar camp [-7,2]</span><span>sample20× σ_pred kill GREEN σ<6 YELLOW 6-8.5 RED>8.5</span><span>N(μ_team,I) 30 teams shrinkage ≥100</span><span>Knicks 1.8× Thunder 0.9× steam>1.5 rlm0.15</span><span>Kelly 0.25 1% max kill-switch</span></div>
-<div id="mtlBars"></div>
-<div class="mono-sm" style="margin-top:6px" id="mtlDesc"></div>
-</div><div><canvas id="cVRNN" width="560" height="160" aria-label="VRNN temporal latent prior N(0,I) vs per_team"></canvas><div class="provenance" id="vrnnProvM"></div><div class="mono-sm" style="margin-top:6px"><strong>Per-team prior selector</strong> <code>prior per_team</code> heteroscedastic hi — Nubia? — LAG?</div></div></div></div>
-
-<div class="card" style="margin-top:12px"><div class="cch">Model zoo — 5-fold CV MAE/RMSE/R² — model-agnostic SHAP/permutation importance glass-box log — construct validity define plain-English operationalize check convergent/discriminant + predictive document threats — No vanity metric</div>
-<div class="mono-sm" id="zooNote" style="margin:6px 0">Loading the measured zoo from <code>assets/model_zoo.json</code> + <code>front_office.json</code> …</div>
-<div id="zooTable" style="overflow-x:auto;margin-top:8px"></div><div class="mono-sm" id="zooCaveat" style="margin-top:8px;border-left:3px solid var(--ok0);padding-left:8px"></div></div>
-
-<div class="provenance" id="globalProv" style="margin-top:12px"></div>
-
-<div class="card" style="margin-top:12px"><div class="cch">PWA v67 offline CORE20 13.6k LOD 4000/8000 same-file assets via ?daily=YYYYMMDD&n=1/3/5 triple[11205,19448,14209] LCG 20260813→189831298 idx3820 same-link-same-stars open→drag-map→Jordan→copy-link equal stars DAU3/WAU3 TLPG dedup <code>everydayTip()</code> PWA v67 offline no raw machinery PWA v67 offline 13k manifest 192/512 maskable</div>
-<div class="mono-sm">Offline packs deterministic same-link-same-stars proven 189831298 idx3820 triple 11205/19448/14209 Solo1 Triple3 Full5 glibc L(s)=(s*1103515245+12345)&0x7fffffff — DAU3/WAU3 TLPG dedup everydayTip humanized badge no raw machinery PWA v67 offline — zero-deps true stdlib only honest 503 fallback <code>train_matrix.npz</code> missing production_guard 0.15 PSI gate 0.25 crit refit — zero synthetic — player records disambiguate name+dob 771 pair Jr/Sr fix 3+ seasons + last 3 seasons new visible dark bg single-select clear prev highlight OKABE dots visible dark · no Architects Daughter · mono/sans only — verifier gate 8.0+ ships fix once max 2 loops total.</div></div>
-</div>
-
-<span>1764 hoops.json REAL x/y/z [-1,1] MTNN v9.2 444.7K towers 6+4 emb64 k5 prior per_team horizon t1 beta VAE 0.01 LCG per v6 lineage dim8 0.2923 — void #080A0F — masterclass 9.5+ — Master Receive!</span><span>PWA v67 LCG 20260813→189831298 idx3820 triple[11205,19448,14209] * no Architects Daughter * mono/sans only</span>
-<footer><span class="free">Built free · Open-source · No paywall</span><span>1764 hoops.json REAL x/y/z [-1,1] 12966×64-d 64-d MTNN 192d 6-head ROPE RMSNorm composite0.85 top1 0.55 PASS 9.1 — LOD 8000/4000 DPR1 quaternion arcball inertial-map.js 13.8k momentum0.94 single-select ivory #FFFEF7 clears previous highlight — void #080A0F offline manifest bg icons 192/512 maskable</span><span>PWA v67 same-link-same-stars LCG 20260813→189831298 idx3820 triple[11205,19448,14209] five[11205,19448,14209,11701,18524] ?daily=YYYYMMDD&n=1/3/5 Solo1 Triple3 Full5 — never hatch 2.0 always Dottie model+harness+scout-cli — zero-deps true stdlib only</span></footer>
-</body></html>
+<div class="card"><div class="mono" style="font-weight:900">Sources → Clean → Featurize → Train → Eval → Bundle → Ship</div><div style="margin-top:8px;display:grid;gap:8px">
+<div class="card" style="box-shadow:2px 2px 0 #111"><div class="mono"><b>Ingest</b> · NCES 27,181 schools DONE · nflreadpy 57k · NBA 36k · MLB 11k · equities 4831 FYs · unified 20719 entities 12 arch A0-A11 · honest 503 never faked</div></div>
+<div class="card" style="box-shadow:2px 2px 0 #111"><div class="mono"><b>Clean</b> · quarantine off-geo · offline13k CORE20 · duplicate suppression · provenance 7/7/0 59→73 hashes</div></div>
+<div class="card" style="box-shadow:2px 2px 0 #111"><div class="mono"><b>Featurize</b> · TCA 7 edge types sparse softmax 224-d + TAA fixed-degree k8 128-d L51-L54 strictly more expressive · gated 0.7/0.3 · 150ep · smoke 2ep quick rank 21.6-22.6</div></div>
+<div class="card" style="box-shadow:2px 2px 0 #111"><div class="mono"><b>Train</b> · MTNN v9.2 20719×128-d CLS128 RoPE 32-d/h RMSNorm ε1e-6 SwiGLU256 VICReg var25 cov1 w0.05 SupCon τ0.07 w0.15 hybrid 0.65/0.35 aux CE0.1 masked link 15% BCE w0.5 KL64 RR32/type 224 edges batch512 150ep Alienware cu121</div></div>
+<div class="card" style="box-shadow:2px 2px 0 #111"><div class="mono"><b>Eval</b> · 5-fold CV MAE3.2 R2 0.48 Sharpe1.25 · SHAP/permutation glass-box · convergent/discriminant/predictive construct validity · composite 0.8688→0.91</div></div>
+</div></div>
+<div><div class="card"><div class="mono" style="font-weight:800">GraphBFF Paper 2602.04768 · Scaling & Validity</div><div class="mono" style="margin-top:6px;color:#52514E">Scaling L(N,D)=a/N^αN+b/D^αD+c αN≈0.703 αD≈0.188 L83-L86 · 1.4B param ~50B nodes/edges up to 31 PRAUC vs HGT/HAN L97-L103 · RRB cyclic L69-L72 · KL-batching clusters pk vs pG L63-L66</div><div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap"><span class="pill y">TC A 7 heads</span><span class="pill on">T A A k8</span><span class="pill">fusion 0.7/0.3</span></div></div>
+<div class="card" style="margin-top:10px"><div class="mono" style="font-weight:800">Monitor · IC0.084 Sharpe1.22 · gate 9.1 PASS</div><div class="mono" style="color:#52514E;margin-top:4px">Timeline triple-write 7-field nodeId/agentId/attempt/latency_ms/tokens_est/status/errorClass mandatory even no-change · honest 503 never faked · zero-deps stdlib only</div></div></div>
+</div></div>
+</body>
+</html>

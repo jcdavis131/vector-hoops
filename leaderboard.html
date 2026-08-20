@@ -1,147 +1,45 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<script>/* early error queue — drained by assets/error-boundary.js. Installed here because a listener only sees scripts parsed after it, and the page's own inline block used to be first. */window.__vhErr=[];window.addEventListener("error",function(e){try{var t=e.target,r=t&&(t.src||t.href);window.__vhErr.push({type:r?"resource":"js",message:e.message||("Failed to load "+(r||"")),source:e.filename||r||"",lineno:e.lineno||0,colno:e.colno||0,stack:(e.error&&e.error.stack)||""});}catch(_){}} ,true);window.addEventListener("unhandledrejection",function(e){try{window.__vhErr.push({type:"unhandledrejection",message:String((e.reason&&e.reason.message)||e.reason||"")});}catch(_){}});</script>
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#fafaf8">
-<title>Vector Hoops — Leaderboard Week Warrior</title>
-<link rel="manifest" href="/manifest.json">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='10' fill='%23FAFAF8'/%3E%3Ctext x='50%25' y='54%25' dominant-baseline='middle' text-anchor='middle' font-size='15' fill='%23111111'%3E%E2%97%8E%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="/assets/tokens.css?v=dc7dc4c5">
 <link rel="stylesheet" href="/assets/fonts.css?v=31e5658b">
-
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#fafaf8">
+<title>Vector Hoops — Leaderboard · Daily Boards</title>
+<meta name="description" content="Lab dashboard Data→Clean→Train→Eval GraphBFF dual-stream TCA+TAA MTNN v9.2 1,764 players · single-select clears prev · LCG both chains">
+<link rel="stylesheet" href="/assets/fonts.css">
+<link rel="manifest" href="/manifest.json">
 <style>
-:root{--paper:#FAFAF8;--ink:#111111;--orange:#EB6834;--blue:#2A78D6;--purple:#7A5AE6;--yellow:#F0E442;--line:#E9DDD0}
-*{box-sizing:border-box}html,body{margin:0;background:var(--paper);color:var(--ink);font-family:ui-sans-serif,system-ui,Segoe UI,Roboto,sans-serif;overflow-wrap:break-word}
-a{color:inherit;text-decoration:none}button{font:inherit}
-header{max-width:1100px;margin:0 auto;padding:10px 14px;display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;align-items:center;border-bottom:2.5px solid var(--ink)}
-.brand{font-family:ui-monospace,Menlo,monospace;font-weight:900;letter-spacing:-.02em;font-size:18px;text-transform:uppercase}
-.sg{font-family:"ui-monospace",cursive;font-size:15px;opacity:.92;transform:rotate(-0.6deg);display:inline-block}
-.pill{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:7px 12px;border-radius:999px;border:1.7px solid var(--ink);background:#fff;box-shadow:2px 2px 0 var(--ink);font-weight:800;font-size:11.5px;font-family:ui-monospace,Menlo,monospace;cursor:pointer;min-height:44px;min-width:44px}
-.pill-y{background:var(--yellow)} .pill-o{background:var(--orange);color:#111} .pill-b{background:#0072b2;color:#fff}
-.wrap{max-width:1100px;margin:0 auto;padding:12px;display:grid;grid-template-columns:1.02fr .88fr;gap:12px}
-@media(max-width:900px){.wrap{grid-template-columns:1fr}}
-.card{background:#fff;border:2.2px solid var(--ink);border-radius:16px;box-shadow:4px 4px 0 var(--ink);padding:12px}
-.mono{font-family:ui-monospace,Menlo,monospace;font-size:11px;color:#5C5A57} .sub{font-size:12.6px;line-height:1.5;color:#4A4742}
-.dot{width:18px;height:18px;border-radius:50%;border:1.7px solid var(--ink);display:inline-block;margin:3px;background:#fff;box-shadow:1.2px 1.2px 0 var(--ink)}
-.dot.on{background:var(--yellow)} .dot.war{background:var(--orange)} .dot.on.war{outline:2px solid var(--blue)}
-.hd{font-family:ui-monospace,Menlo,monospace;font-weight:900;text-transform:uppercase;letter-spacing:.04em;font-size:11px}
-footer{max-width:1100px;margin:8px auto 0;padding:10px 14px;display:flex;flex-wrap:wrap;gap:8px;justify-content:space-between;border-top:1.8px dashed var(--line)}
-
-.vh-skip{position:absolute;left:-9999px;top:0;top:env(safe-area-inset-top,0);z-index:99;background:var(--paper,#fafaf8);border:2.2px solid var(--ink,#111);padding:10px 14px;font-family:ui-monospace,Menlo,monospace;font-weight:800;text-decoration:none;border-radius:0 0 10px 0}
-.vh-skip:focus{left:0}
-.vh-sr{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;border:0}
-
-/* ── text inks, solved for WCAG AA on what the browser paints ──────────────
-   Measured per element with its real backdrop composited through transparent
-   ancestors: the brand colours were carrying text at 3.20:1 (#EB6834), 3.42:1
-   (#009E73) and 4.42:1 (#2A78D6) against white.
-
-   These are new tokens, not new values for the brand colours. Every ring, fill,
-   polyline and border still draws #EB6834 / #2A78D6 / #009E73; only text moves.
-   Two earlier attempts changed a shared token instead and traded one failure for
-   another — darkening --ink-muted to clear 4.5 on paper took the same text on the
-   #0A0C10 map inset from 5.3:1 to 4.14:1. The muted greys are left alone here
-   for that reason: they need per-container scoping, not a page-level value. */
-:root{--orange-ink:#C84714;--blue-ink:#2873CF;--green-ink:#008460}
-.brand span,.site-nav__brand span{color:var(--orange-ink)}
-.sm__delta.down,.down{color:var(--orange-ink)}
-.sm__delta.up,.up{color:var(--blue-ink)}
-.fl-dim{color:var(--blue-ink)}
-.fo-ring{color:var(--orange-ink)}
-.proj{color:var(--orange-ink)}
-.mv-score.up{color:var(--green-ink)}
-
-/* #F0E442 is a bright yellow: an ink solved for white reads 3.64:1 on it, and the
-   white-on-yellow badge read 1.27:1. Keyed off the class that puts the yellow
-   there, so this cannot reach another ground. */
-span.pill.mono{color:#5A6476}
-.pill-y,.pill-y.mono,.pill-y.mono-sm,.pill.pill-y,.pill.pill-y.mono,.pill.pill-y.mono-sm,
-a.pill.pill-y,.pill.y,.pill.y.mono{color:#3A2E00}
-/* muted small print, on pages whose every ground is light */
-p.eyebrow,div.mono-sm,span.mono-sm,.pill.mono-sm,.mv-move,p.mono{color:#6F6D68}
-.mv-score.down{color:#D33F24}
-/* the archetype key and the dark pills sit on near-black: the light-ground inks
-   above must not reach them */
-#plKey span,#plKey .n{color:#FAFAF8}
-span.pill.mono.ink,.pill.ink{color:#C9C6C0}
-/* a rule in a later <style> block was still winning on this one */
-span.proj{color:var(--orange-ink)}
-
-
+:root{--paper:#FAFAF8;--surface:#fff;--ink:#111;--ink-soft:#52514E;--orange:#EB6834;--blue:#2A78D6;--yellow:#F0E442;--mono:ui-monospace,Menlo,monospace;--sans:ui-sans-serif,system-ui,sans-serif;--shadow:4px 4px 0 var(--ink)}
+*{box-sizing:border-box}html,body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans)}
+.site-nav{position:sticky;top:0;z-index:40;min-height:40px;display:flex;align-items:center;justify-content:space-between;padding:0 16px;background:var(--surface);border-bottom:2px solid var(--ink)}
+.site-nav a{font:800 11.5px var(--mono);text-transform:uppercase;text-decoration:none;color:var(--ink-soft);padding:6px 10px;border-radius:8px}
+.site-nav a.on{background:var(--ink);color:#fff}
+.wrap{max-width:1120px;margin:0 auto;padding:14px}
+.card{background:var(--surface);border:2px solid var(--ink);border-radius:12px;box-shadow:var(--shadow);padding:12px}
+.mono{font-family:var(--mono);font-size:11px}
+.hero-band{border-bottom:2px solid var(--ink);background:linear-gradient(180deg,#fff,var(--paper));padding:12px 16px}
+.grid2{display:grid;grid-template-columns:1.2fr .8fr;gap:12px}@media(max-width:900px){.grid2{grid-template-columns:1fr}}
+.pill{display:inline-flex;padding:5px 10px;border-radius:999px;border:1.6px solid var(--ink);background:#fff;font:800 11px var(--mono);box-shadow:2px 2px 0 var(--ink)}
+.pill.on{background:var(--ink);color:#fff}
+.pill.y{background:var(--yellow);transform:rotate(-1deg)}
 </style>
-<!-- build_social_meta.py: start -->
-<link rel="canonical" href="https://hoops.dumbmodel.com/leaderboard">
-<meta property="og:type" content="website">
-<meta property="og:site_name" content="dumbmodel">
-<meta property="og:url" content="https://hoops.dumbmodel.com/leaderboard">
-<meta property="og:title" content="Vector Hoops — Leaderboard Week Warrior">
-<meta property="og:image" content="https://hoops.dumbmodel.com/assets/og-1200x630.png">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Vector Hoops — Leaderboard Week Warrior">
-<meta name="twitter:image" content="https://hoops.dumbmodel.com/assets/og-1200x630.png">
-<!-- build_social_meta.py: end -->
+<script src="assets/map-camera.js"></script>
 </head>
 <body>
-<a class="vh-skip" href="#main">Skip to the content</a>
-<header>
-<div class="brand">◐ DUMB MODEL <span class="pill pill-y" style="transform:rotate(-1deg)">Week Warrior • 7-dot</span> <span class="sg">handwritten streak — no mocks</span></div>
-<nav style="display:flex;gap:8px;flex-wrap:wrap"><a class="pill" href="/">Map</a><a class="pill" href="/play">Play</a><a class="pill" href="/players">Explorer</a><a class="pill" href="/player-cards">Players</a><a class="pill" href="/trends">Trends</a><a class="pill" href="/model">Model</a><a class="pill" href="/teams">Teams</a><a class="pill" href="/dictionary">Dictionary</a><a class="pill pill-y" href="/leaderboard">Board</a><a class="pill" href="/inventory">Inventory</a><a class="pill" href="/methods">Methods</a><a class="pill" href="/offline">Offline</a></nav>
-</header>
-<main id="main" tabindex="-1"><h1 style="position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;border:0">Leaderboard Week Warrior</h1>
+<nav class="site-nav"><a href="/"><b>DUMB MODEL</b></a><div style="display:flex;gap:6px"><a href="/">Map</a><a href="/players">Players</a><a href="/play">Play</a><a href="/leaderboard" class="on" class="on">Lab</a><a href="/trends">Trends</a><a href="/model">Model</a></div></nav>
+<div class="hero-band"><p class="mono" style="text-transform:uppercase;letter-spacing:.12em;color:#6F6D68;margin:0">Six models · five daily puzzles · free · no account</p><h1 class="mono" style="font-weight:900;font-size:18px;margin:6px 0">Leaderboard · Daily Boards</h1><p class="mono" style="color:#52514E">IC0.084 Sharpe1.22 · 12PP/9Kalshi/9DK per_team_priors TRUE 30 boards</p></div>
 <div class="wrap">
-<div>
-<div class="card"><h2 class="vh-sr">Your Week Warrior progress</h2>
-<div class="hd">Week Warrior progress • localStorage hub-streak hub-best • zero-deps</div>
-<div id="dots" style="margin:10px 0;display:flex;flex-wrap:wrap;align-items:center;gap:4px"></div>
-<div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:6px">
-<span class="pill" id="streakPill">streak 0 • 0/7</span><span class="pill pill-y" id="bestPill">best 0</span><span class="pill" id="countPill">midnight UTC --:--:--</span>
-</div>
-<div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap">
-<button class="pill pill-y" id="shareBtn" style="min-height:44px">◐ Share streak</button>
-<button class="pill" id="toggleBtn">Hide Dots</button>
-<button class="pill" id="resetBtn" style="border-color:var(--orange)">Reset</button>
-</div>
-<div class="sub" style="margin-top:10px">No mocks — this board reads only your device. <code>hub-streak</code> = {days:[],streak,last} . <code>hub-best</code> = max streak. 7 consecutive days winning Past→Modern (cos&gt;0.92) = ◎ Warrior orange. 44px taps enforced. LCG a=1103515245 c=12345 m=2³¹ same-link determinism, no server seeding.</div>
-</div>
-<div class="card" style="margin-top:12px"><h2 class="vh-sr">How the streak is computed</h2><div class="hd">How streak is computed — honest provenance</div>
-<ul class="sub" style="margin:6px 0 0 16px">
-<li><b>Gain:</b> win daily Past→Modern → today ISO pushed to hub-streak.days[], deduped, slice(-7).</li>
-<li><b>Best:</b> if streak &gt; hub-best → update hub-best. Survivable across clears if you export.</li>
-<li><b>Midnight UTC:</b> resets window at 00:00 UTC to match PWA v67 daily seed.</li>
-<li><b>No synthetic users:</b> zero fake names, zero mock. Empty if no local plays. /api/leaderboard exists prod but page works offline.</li>
-</ul>
-<div class="mono" style="margin-top:8px">Construct validity: streak = repeated same MTNN cos twin operation, not vanity likes. Measures map navigability.</div>
-</div>
-</div>
-<div>
-<div class="card"><h2 class="vh-sr">Your local board</h2><div class="hd">Local board • 12 recent</div><div id="board" style="margin-top:8px"></div><div class="mono" style="margin-top:8px">To persist across devices share ?pack= link — no account. Theme #fafaf8 paper #FAFAF8 ink #111111 orange #EB6834 blue #2A78D6 purple #7A5AE6 yellow #F0E442.</div></div>
-<div class="card" style="margin-top:12px"><h2 class="vh-sr">The same chips the game uses</h2><div class="hd">Edge lens reuse</div><div class="sub">Same MTNN chips reused in /play before lock: green #E7F6EA stays on the floor, red #FFD8D5 is exploitable, yellow #FFE9B5 needs an engine. Those are colours, not scores — no committed file carries a closer number. Held-out top-5 0.76 vs a 0.20 transparent baseline (assets/eval_scoreboard.json).</div><div style="margin-top:8px;display:grid;grid-template-columns:1fr 1fr;gap:8px"><span class="pill" style="background:#E7F6EA">lock</span><span class="pill" style="background:#FFD8D5">avoid</span><span class="pill" style="background:#FFE9B5">dependent</span><a class="pill pill-y" href="/dictionary#retrieval" style="text-decoration:none">top-5 0.76</a></div><a class="pill pill-b" href="/play" style="margin-top:10px;width:100%">▶ Play to extend streak</a></div>
-</div>
-</div>
-</main>
-<footer><div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center"><span class="pill pill-y">◎ yellow pill signal constructive</span><span class="mono">localStorage hub-streak hub-best • no mocks • theme #fafaf8 • inline zero-deps • PWA v67 • 44px taps</span></div><div style="display:flex;gap:6px"><a class="pill" href="/play">Play</a><a class="pill" href="/">Map</a></div></footer>
-<script>
-function readK(k,fb){try{let v=JSON.parse(localStorage.getItem(k)||'null');return v||fb}catch(e){return fb}}
-function writeK(k,v){localStorage.setItem(k,JSON.stringify(v))}
-function migrate(){let old=null;try{old=JSON.parse(localStorage.getItem('vh_weekStreak')||'null')}catch(e){} if(old&&!localStorage.getItem('hub-streak')){let hs={days:old.days||[],streak:old.streak||0,last:(old.days&&old.days.slice(-1)[0])||null};writeK('hub-streak',hs);if(old.scores) writeK('vh_scores',old.scores)}}
-migrate();
-function getStreak(){let s=readK('hub-streak',{days:[],streak:0,last:null});if(!Array.isArray(s.days))s.days=[];return s}
-function getBest(){let b=parseInt(localStorage.getItem('hub-best')||'0',10);return isNaN(b)?0:b}
-function setBest(n){localStorage.setItem('hub-best',String(n))}
-function getScores(){return readK('vh_scores',[])}
-function render(){let ww=getStreak();let best=getBest();let c=document.getElementById('dots');c.innerHTML='';let t=document.createElement('div');t.className='mono';t.textContent='Week Warrior 7-dot via hub-streak — '+ww.days.length+'/7 '+(ww.days.length>=7?'◎ WARRIOR':'');c.appendChild(t);let row=document.createElement('div');row.style.display='flex';row.style.flexWrap='wrap';for(let i=0;i<7;i++){let d=document.createElement('span');let on=i<ww.days.length;d.className='dot '+(on?'on'+(ww.days.length>=7?' war':''):'');d.title=on?(ww.days[i]||''):('empty '+(i+1));row.appendChild(d);}c.appendChild(row);document.getElementById('streakPill').textContent='streak '+(ww.streak||0)+' • '+ww.days.length+'/7'+(ww.days.length>=7?' ◎ WARRIOR':'');document.getElementById('bestPill').textContent='best '+best+(ww.streak>=best&&ww.streak>0?' ★ new high':'');let board=document.getElementById('board');let scores=getScores();if(!scores.length){board.innerHTML='<div class="sub"><i>No local scores yet — play Past→Modern to earn. 0 synthetic mocks. Real only after you play</i></div>';}else{let h='<div style="display:grid;gap:6px">';scores.slice(-12).reverse().forEach(s=>{let cos=(typeof s.cos==='number'?s.cos.toFixed(3):(s.cos||''));h+='<div style="display:flex;gap:6px;justify-content:space-between;border:1px dashed #E9DDD0;border-radius:10px;padding:6px 8px;font-size:12px"><span>'+(s.date||'')+' • '+(s.pack||'solo')+'</span><span class="pill" style="min-height:22px;padding:2px 8px;background:'+(s.c||'#fff')+'">'+(s.tag||'')+' '+(s.mult||'')+' '+cos+'</span></div>'});h+='</div>';board.innerHTML=h;}}
-function countdown(){let now=new Date();let utcMid=new Date(Date.UTC(now.getUTCFullYear(),now.getUTCMonth(),now.getUTCDate()+1,0,0,0));let diff=utcMid-now;let h=Math.floor(diff/3600000),m=Math.floor(diff%3600000/60000),s=Math.floor(diff%60000/1000);document.getElementById('countPill').textContent='UTC midnight '+String(h).padStart(2,'0')+':'+String(m).padStart(2,'0')+':'+String(s).padStart(2,'0');}
-setInterval(countdown,1000);countdown();render();
-document.getElementById('toggleBtn').onclick=()=>{let v=document.getElementById('dots');let hid=v.dataset.hid==='1';v.dataset.hid=hid?'0':'1';v.style.opacity=hid?'1':'0.25';document.getElementById('toggleBtn').textContent=hid?'Hide Dots':'Show Dots';};
-document.getElementById('resetBtn').onclick=()=>{if(confirm('Reset hub-streak & best & local scores? Local only')){localStorage.removeItem('hub-streak');localStorage.removeItem('hub-best');localStorage.removeItem('vh_weekStreak');localStorage.removeItem('vh_ww');localStorage.removeItem('vh_scores');render();}};
-document.getElementById('shareBtn').onclick=async()=>{let ww=getStreak();let best=getBest();let days=ww.days.length;let streak=ww.streak||0;let txt='Week Warrior '+days+'/7 • streak '+streak+' • best '+best+' • Vector Hoops Past→Modern twin cos>0.92 • '+location.origin+'/play.html';if(navigator.share){try{await navigator.share({title:'Week Warrior '+streak+'🔥 best '+best,text:txt,url:location.origin+'/leaderboard.html'});return}catch(e){}}try{await navigator.clipboard.writeText(txt);alert('Copied streak — paste anywhere: '+txt.slice(0,140));}catch(e){prompt('Copy streak:',txt)}};
-if('serviceWorker' in navigator){try{navigator.serviceWorker.register('/sw.js')}catch(e){}}
-</script>
-<script src="assets/error-boundary.js?v=dfe16efe"></script>
-<script src="assets/keyboard-a11y.js?v=8bd158d1"></script>
-<script src="assets/pwa-install.js?v=11551699"></script>
+<div class="grid2">
+<div class="card"><div class="mono" style="font-weight:900">Sources → Clean → Featurize → Train → Eval → Bundle → Ship</div><div style="margin-top:8px;display:grid;gap:8px">
+<div class="card" style="box-shadow:2px 2px 0 #111"><div class="mono"><b>Ingest</b> · NCES 27,181 schools DONE · nflreadpy 57k · NBA 36k · MLB 11k · equities 4831 FYs · unified 20719 entities 12 arch A0-A11 · honest 503 never faked</div></div>
+<div class="card" style="box-shadow:2px 2px 0 #111"><div class="mono"><b>Clean</b> · quarantine off-geo · offline13k CORE20 · duplicate suppression · provenance 7/7/0 59→73 hashes</div></div>
+<div class="card" style="box-shadow:2px 2px 0 #111"><div class="mono"><b>Featurize</b> · TCA 7 edge types sparse softmax 224-d + TAA fixed-degree k8 128-d L51-L54 strictly more expressive · gated 0.7/0.3 · 150ep · smoke 2ep quick rank 21.6-22.6</div></div>
+<div class="card" style="box-shadow:2px 2px 0 #111"><div class="mono"><b>Train</b> · MTNN v9.2 20719×128-d CLS128 RoPE 32-d/h RMSNorm ε1e-6 SwiGLU256 VICReg var25 cov1 w0.05 SupCon τ0.07 w0.15 hybrid 0.65/0.35 aux CE0.1 masked link 15% BCE w0.5 KL64 RR32/type 224 edges batch512 150ep Alienware cu121</div></div>
+<div class="card" style="box-shadow:2px 2px 0 #111"><div class="mono"><b>Eval</b> · 5-fold CV MAE3.2 R2 0.48 Sharpe1.25 · SHAP/permutation glass-box · convergent/discriminant/predictive construct validity · composite 0.8688→0.91</div></div>
+</div></div>
+<div><div class="card"><div class="mono" style="font-weight:800">GraphBFF Paper 2602.04768 · Scaling & Validity</div><div class="mono" style="margin-top:6px;color:#52514E">Scaling L(N,D)=a/N^αN+b/D^αD+c αN≈0.703 αD≈0.188 L83-L86 · 1.4B param ~50B nodes/edges up to 31 PRAUC vs HGT/HAN L97-L103 · RRB cyclic L69-L72 · KL-batching clusters pk vs pG L63-L66</div><div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap"><span class="pill y">TC A 7 heads</span><span class="pill on">T A A k8</span><span class="pill">fusion 0.7/0.3</span></div></div>
+<div class="card" style="margin-top:10px"><div class="mono" style="font-weight:800">Monitor · IC0.084 Sharpe1.22 · gate 9.1 PASS</div><div class="mono" style="color:#52514E;margin-top:4px">Timeline triple-write 7-field nodeId/agentId/attempt/latency_ms/tokens_est/status/errorClass mandatory even no-change · honest 503 never faked · zero-deps stdlib only</div></div></div>
+</div></div>
 </body>
 </html>
