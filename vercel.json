@@ -1,15 +1,28 @@
 {
   "cleanUrls": true,
+  "framework": null,
+  "buildCommand": null,
+  "outputDirectory": "public",
   "headers": [
-    {"source": "/(.*)", "headers": [{"key": "Cache-Control", "value": "public, max-age=0, must-revalidate"}]},
-    {"source": "/api/(.*)", "headers": [{"key": "Cache-Control", "value": "no-store"}]}
+    {
+      "source": "/(.*)",
+      "headers": [
+        {"key": "Cache-Control", "value": "public, max-age=0, must-revalidate"},
+        {"key": "X-Content-Type-Options", "value": "nosniff"}
+      ]
+    },
+    {
+      "source": "/sw.js",
+      "headers": [{"key": "Cache-Control", "value": "public, max-age=0, must-revalidate"}]
+    }
   ],
   "rewrites": [
-    {"source": "/model", "destination": "/model.html"},
-    {"source": "/trends", "destination": "/trends.html"},
-    {"source": "/", "destination": "/index.html"}
-  ],
-  "redirects": [
-    {"source": "/play", "destination": "/", "permanent": false}
+    {"source": "/play", "destination": "/index.html"},
+    {"source": "/players", "destination": "/index.html"},
+    {"source": "/model", "destination": "/index.html"},
+    {"source": "/trends", "destination": "/index.html"},
+    {"source": "/lab", "destination": "/index.html"},
+    {"source": "/dfs", "destination": "/index.html"},
+    {"source": "/(.*)", "destination": "/index.html"}
   ]
 }
