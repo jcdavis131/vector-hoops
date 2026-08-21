@@ -1,50 +1,15 @@
 {
   "cleanUrls": true,
+  "headers": [
+    {"source": "/(.*)", "headers": [{"key": "Cache-Control", "value": "public, max-age=0, must-revalidate"}]},
+    {"source": "/api/(.*)", "headers": [{"key": "Cache-Control", "value": "no-store"}]}
+  ],
   "rewrites": [
-    {
-      "source": "/model",
-      "destination": "/model.html"
-    },
-    {
-      "source": "/trends",
-      "destination": "/trends.html"
-    },
-    {
-      "source": "/dashboard",
-      "destination": "/dashboard.html"
-    }
+    {"source": "/model", "destination": "/model.html"},
+    {"source": "/trends", "destination": "/trends.html"},
+    {"source": "/", "destination": "/index.html"}
   ],
   "redirects": [
-    {
-      "source": "/",
-      "destination": "/play",
-      "permanent": false
-    },
-    {
-      "source": "/:path*",
-      "has": [
-        {
-          "type": "host",
-          "value": "hoops.jcamd.com"
-        }
-      ],
-      "destination": "https://hoops.dumbmodel.com/:path*",
-      "permanent": true
-    },
-    {
-      "source": "/wiki",
-      "destination": "/players",
-      "permanent": true
-    },
-    {
-      "source": "/skills",
-      "destination": "/players#profile",
-      "permanent": true
-    },
-    {
-      "source": "/drift",
-      "destination": "/trends",
-      "permanent": true
-    }
+    {"source": "/play", "destination": "/", "permanent": false}
   ]
 }
