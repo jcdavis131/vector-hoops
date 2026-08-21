@@ -1,1 +1,1 @@
-{"featurized_at":"2026-08-21T14:36:00Z","n_entities":0,"n_items":0,"features":{},"dim":16,"fusion":"0.60*tca+0.25*taa+0.15*news L2","provenance":"honest 503 fallback orphan","lcg":"20260813->189831298 idx3820"}
+{"featurized_at":"2026-08-21T14:37:00Z","n_entities":0,"n_items":0,"features":{},"dim":16,"fusion":"0.60*tca+0.25*taa+0.15*news L2","provenance":"honest 503 fallback"}
