@@ -1,163 +1,324 @@
-<!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
-<meta name="color-scheme" content="light"/>
-<link rel="icon" href="data:,"/>
-<title>Hoops — Embedding Map • Japandi v4 Pudding</title>
-<!-- JAPANDI v4 + PUDDING MAP 70vh sticky 58/42 — warm paper #F9F6F0 terracotta #C17C60 -->
-<style id="tokens">
-:root{
-  /* JAPANDI — warm paper, soft ink, single terracotta pop */
-  --paper:#F9F6F0; --paper-2:#FEFCF8; --stone-50:#F5F1EB; --stone-100:#E8E0D5; --stone-200:#D4C4B0; --stone-300:#B8A99A;
-  --ink:#2A2A2A; --ink-60:#6B6B6B; --ink-40:#9A9A9A;
-  --pop:#C17C60; --pop-soft:#D9A88C; --pop-ink:#FEFCF8; --moss:#8A9A8B; --moss-20:#E8EBE8; --clay:#A67B5B;
-  --void:#1E2022; --void-2:#2A2E33;
-  --nav-h:44px; --radius-sm:8px; --radius-md:12px; --radius-lg:16px; --radius-pill:999px;
-  --space-1:4px; --space-2:8px; --space-3:12px; --space-4:16px; --space-5:20px; --space-6:24px; --space-8:32px; --space-10:40px; --space-12:48px;
-  --border:1px solid var(--stone-200); --border-strong:1px solid var(--stone-300); --border-pop:1.5px solid var(--pop);
-  --shadow-sm:0 1px 2px rgba(42,42,42,0.04),0 2px 8px rgba(42,42,42,0.04);
-  --shadow-md:0 2px 8px rgba(42,42,42,0.06),0 8px 24px rgba(42,42,42,0.06);
-  --shadow-soft:0 4px 16px rgba(42,42,42,0.05);
-  --font-mono:ui-monospace,SFMono-Regular,Menlo,monospace; --font-sans:ui-sans-system,-apple-system,BlinkMacSystemFont,Inter,system-ui,sans-serif; --font-serif:"Newsreader","Times New Roman",Georgia,serif;
-  --text-11:11px; --text-13:13px; --text-15:15px; --text-18:18px; --text-20:20px; --text-56:56px; --text-64:64px;
-  --leading-tight:1.05; --leading-body:1.7; --leading-ui:1.4;
-  --grid-max:1120px; --grid-gutter:24px; --map-h:72vh; --map-min:540px;
-  /* mood stripes — muted so terracotta remains only pop fill */
-  --t-o:#C17C60; --t-b:#7A9BB5; --t-p:#8A9A8B; --t-g:#A67B5B; --t-c:#B8A99A;
+<!doctype html><html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
+<title>Vector Hoops — 12,966 seasons as rotating map — Past→Modern</title>
+<meta property="og:title" content="Vector Hoops — 12,966 as rotating map · Past→Modern Twin"/>
+<meta property="og:description" content="12,966 NBA seasons as rotating embedding map — now in Lemmino documentary void. One game: Past All-Star → guess modern twin."/>
+<meta property="og:image" content="https://hoops.dumbmodel.com/assets/og-1200x630.png"/><meta property="og:image:width" content="1200"/><meta property="og:image:height" content="630"/>
+<meta name="twitter:card" content="summary_large_image"/><meta name="twitter:image" content="https://hoops.dumbmodel.com/assets/og-1200x630.png"/>
+<meta name="description" content="12,966 NBA seasons as rotating embedding map. Daily Past→Modern. Lemmino void style."/><meta name="theme-color" content="#0A0C10"/>
+<link rel="manifest" href="/manifest.json"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Architects+Daughter&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/shell.css"/><link rel="stylesheet" href="assets/responsive.css"/><link rel="stylesheet" href="assets/final-qa.css"/><link rel="stylesheet" href="assets/unified.css"/><link rel="stylesheet" href="assets/motion.css"/><link rel="stylesheet" href="assets/lemmino/lemmino.css"/>
+<link rel="stylesheet" href="assets/trading-card.css?v=42"/>
+<style>
+:root{--paper:#FFFEF7;--ink:#1A150F;--blue:#0072B2;--verm:#D55E00;--yellow:#F0E442;--green:#009E73;--radius:14px;--shadow:4px 4px 0 var(--ink);--mono:ui-monospace,monospace;--sans:ui-sans-serif,system-ui;}
+*{box-sizing:border-box}html,body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:18px;line-height:1.65;overflow-x:clip}
+.card{background:#fff;border:2.2px solid var(--ink);border-radius:14px;box-shadow:var(--shadow);padding:14px 16px}
+.btn{appearance:none;min-height:48px;padding:12px 18px;border:2.2px solid var(--ink);border-radius:12px;background:#fff;color:var(--ink);font-family:var(--mono);font-weight:900;text-transform:uppercase;box-shadow:4px 4px 0 var(--ink);cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:transform .08s,box-shadow .08s}
+.btn:active{transform:translate(1px,1px);box-shadow:1px 1px 0 var(--ink)}
+.btn-primary{background:var(--ink);color:#fff}.btn-accent{background:var(--yellow);color:var(--ink)}.btn-xl{font-size:15px;min-height:54px;padding:14px 22px}
+.small-mono{font-family:var(--mono);font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase}
+.pill{border:1.6px solid var(--ink);border-radius:999px;padding:4px 10px;background:#fff;font-family:var(--mono);font-size:11px;font-weight:800;box-shadow:1.5px 1.5px 0 var(--ink)}
+.pill-yellow{background:var(--yellow);transform:rotate(-1deg)}
+
+#map-wrap{position:relative;min-height:580px;border:2.5px solid var(--ink);border-radius:16px;box-shadow:6px 6px 0 var(--ink);overflow:hidden;background:radial-gradient(120% 80% at 70% 20%,rgba(0,114,178,.12),transparent 48%),radial-gradient(90% 60% at 20% 70%,rgba(213,94,0,.10),transparent 46%),#0A0C10;width:100%}
+#sky-canvas{position:absolute;inset:0;width:100%;height:100%;display:block;cursor:grab;touch-action:none}
+#sky-canvas:active{cursor:grabbing}
+
+/* overlay chips - keep for star-map void */
+#map-overlay{position:absolute;left:12px;right:12px;top:56px;display:flex;justify-content:space-between;gap:8px;z-index:5;pointer-events:none;flex-wrap:wrap}
+#map-overlay .chip{background:rgba(255,254,247,.92);border:2px solid var(--ink);border-radius:999px;padding:5px 10px;font-family:var(--mono);font-size:10px;box-shadow:1.5px 1.5px 0 var(--ink)}
+#map-controls{position:absolute;left:12px;bottom:calc(12px + env(safe-area-inset-bottom));z-index:6;display:flex;gap:8px;flex-wrap:wrap}
+#map-controls .chip{pointer-events:auto;cursor:pointer;background:#fff;border:2px solid var(--ink);border-radius:999px;padding:8px 14px;font-family:var(--mono);font-size:11px;font-weight:800;box-shadow:2px 2px 0 var(--ink);min-height:44px;display:inline-flex;align-items:center}
+#map-legend{position:absolute;right:12px;bottom:calc(12px + env(safe-area-inset-bottom));z-index:6;background:rgba(255,254,247,.97);border:2px solid var(--ink);border-radius:14px;padding:8px 9px 8px 8px;box-shadow:2px 2px 0 var(--ink);font-family:var(--mono);font-size:9px;line-height:1.35;pointer-events:auto;min-width:186px;max-width:214px}
+#map-legend .legend-title{font-size:7.5px;letter-spacing:.1em;text-transform:uppercase;font-weight:900;opacity:.65;margin-bottom:6px;display:flex;justify-content:space-between;align-items:center;gap:6px}
+#hover-tip{position:absolute;left:50%;top:50%;transform:translate(-50%,-100%);background:#FFFEF7;border:2px solid var(--ink);border-radius:10px;padding:7px 9px;box-shadow:3px 3px 0 var(--ink);font-size:11px;line-height:1.35;display:none;z-index:7;pointer-events:none;max-width:260px}
+.legend-star{display:inline-flex;width:14px;height:14px;align-items:center;justify-content:center;background:var(--yellow);border:1.5px solid var(--ink);border-radius:4px;font-size:10px}
+
+.hero{max-width:1180px;margin:0 auto;padding:18px clamp(14px,3.5vw,28px) 10px;display:grid;grid-template-columns:1.08fr .92fr;gap:28px;align-items:start}
+@media(max-width:980px){
+  .hero{grid-template-columns:1fr;max-width:none;margin:0;padding:0 0 10px;gap:0}
+  .hero-copy{padding:18px clamp(14px,3.5vw,28px) 12px}
+  #map-wrap{border-radius:0;border-left:0;border-right:0;width:100vw;margin-left:calc(50% - 50vw);box-shadow:none;min-height:78vh;min-height:78dvh;border-top:2.5px solid var(--ink);border-bottom:2.5px solid var(--ink)}
+  #map-controls{left:clamp(10px,3vw,16px);bottom:calc(14px + env(safe-area-inset-bottom))}
+  #map-legend{right:clamp(10px,3vw,16px);left:auto;max-width:68vw;bottom:calc(66px + env(safe-area-inset-bottom));font-size:8.5px}
 }
-*{box-sizing:border-box}
-html,body{margin:0;background:var(--paper);color:var(--ink)}
-body{font-family:var(--font-serif);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;background-image:radial-gradient(rgba(0,0,0,0.02) 1px,transparent 1px);background-size:24px 24px}
-a{color:inherit;text-decoration:none} button{font:inherit}
+.hd{font-family:"Architects Daughter",var(--mono);line-height:.92;letter-spacing:-.01em}
+.hero-copy{display:flex;flex-direction:column;gap:14px}
+.eyebrow{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.eyebrow #puzzle-meta{opacity:.65}
+.deck{color:#2E2A23;margin:0;line-height:1.5;font-size:18px;max-width:46ch}
+.deck b{color:var(--ink)}
+.cta-row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:2px}
+.micro{color:#5A544D;text-transform:none;font-weight:600;font-size:11.5px;letter-spacing:.01em;line-height:1.5}
+.pulse-dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--yellow);border:1.5px solid var(--ink);box-shadow:0 0 0 3px rgba(240,228,66,.35);animation:pulse 1.6s ease-in-out infinite}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 3px rgba(240,228,66,.35);transform:scale(1)}50%{box-shadow:0 0 0 7px rgba(240,228,66,.18);transform:scale(1.08)}}
+.tri{max-width:1180px;margin:12px auto 0;padding:0 clamp(14px,3.5vw,28px) calc(20px + 88px);display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+@media(max-width:760px){.tri{grid-template-columns:1fr}}
+
+/* v35 trading card replaces drift — clean trading card void, legacy drift hard kill */
+.trading-card-void{ position:relative; width:100%; background:#ECE7DB; min-height:560px }
+@media(max-width:980px){ .trading-card-void{ width:100vw; margin-left:calc(50% - 50vw); border-left:0; border-right:0 } }
+/* legacy guard */
+#drift-info-stack, #drift-scrub-wrap, #lemmino-drift-focus, #lemmino-drift-meta, .lemmino-drift, #lemmino-drift{ display:none !important }
+
+.hd{font-family:"Architects Daughter",var(--mono);line-height:.92;letter-spacing:-.01em}
+.hero-copy{display:flex;flex-direction:column;gap:14px}
+.eyebrow{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.eyebrow #puzzle-meta{opacity:.65}
+.deck{color:#2E2A23;margin:0;line-height:1.5;font-size:18px;max-width:46ch}
+.deck b{color:var(--ink)}
+.cta-row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:2px}
+.micro{color:#5A544D;text-transform:none;font-weight:600;font-size:11.5px;letter-spacing:.01em;line-height:1.5}
+.pulse-dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--yellow);border:1.5px solid var(--ink);box-shadow:0 0 0 3px rgba(240,228,66,.35);animation:pulse 1.6s ease-in-out infinite}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 3px rgba(240,228,66,.35);transform:scale(1)}50%{box-shadow:0 0 0 7px rgba(240,228,66,.18);transform:scale(1.08)}}
+.tri{max-width:1180px;margin:12px auto 0;padding:0 clamp(14px,3.5vw,28px) calc(20px + 88px);display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+@media(max-width:760px){.tri{grid-template-columns:1fr}}
+.tri .card{transition:transform .12s,box-shadow .12s}
+.tri .card:hover{transform:translate(-1px,-1px);box-shadow:5px 5px 0 var(--ink)}
+/* v4.2 overlap fixes */
+#map-wrap #map-controls{display:flex;flex-direction:row;align-items:center;gap:10px;flex-wrap:nowrap;bottom:calc(14px + env(safe-area-inset-bottom));left:12px}
+#map-wrap #map-controls .chip{flex:0 0 auto;white-space:nowrap;transform:none}
+#map-axis-legend{pointer-events:none;z-index:5}
+@media(max-width:560px){
+  #map-wrap #map-axis-legend{right:10px;left:auto;max-width:68vw;bottom:calc(68px + env(safe-area-inset-bottom));font-size:8.5px;line-height:1.28}
+  #map-wrap #map-controls{left:10px;bottom:calc(12px + env(safe-area-inset-bottom));gap:8px}
+  #map-wrap #map-controls .chip{min-height:40px;padding:7px 12px;font-size:10px}
+}
+/* v34 cleaned — legacy stack removed, only map-wrap overlap guard remains */
 </style>
-<style id="layout">
-/* 44px mono sticky nav — japandi warm */
-.nav{position:sticky;top:0;z-index:40;height:var(--nav-h);display:flex;align-items:center;justify-content:space-between;padding:0 20px;background:var(--paper);border-bottom:var(--border);font-family:var(--font-mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase}
-.nav-left{display:flex;align-items:center;gap:14px;font-weight:700}
-.nav-mark i{font-style:normal;color:var(--pop)}
-.nav-right{display:flex;gap:22px;align-items:center;color:var(--ink-60)}
-.nav-right a{position:relative;padding:2px 0;transition:color .15s} .nav-right a:hover{color:var(--ink)} .nav-right a.active{color:var(--ink)} .nav-right a.active:after{content:"";position:absolute;left:0;right:0;bottom:-4px;height:2px;background:var(--pop);border-radius:1px}
-.nav-dot{width:6px;height:6px;border-radius:50%;background:var(--pop);display:inline-block;margin-left:6px;vertical-align:middle}
-/* shell */
-.shell{max-width:1720px;margin:0 auto;padding:0 20px} @media(min-width:1100px){.shell{padding:0 28px}}
-/* hero — 56-64px serif tight -0.02em max 18ch */
-.hero{padding:48px 0 28px;max-width:var(--grid-max);margin:0 auto;display:grid;grid-template-columns:1fr;gap:16px}
-.kicker{font-family:var(--font-mono);font-size:11px;line-height:1;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-60);display:flex;gap:12px;align-items:center}
-.kicker b{color:var(--ink);font-weight:700} .kicker .rule{height:1px;flex:1;background:var(--stone-200);max-width:160px}
-.hed{font-family:var(--font-serif);font-size:64px;line-height:.95;letter-spacing:-.02em;font-weight:800;margin:0;max-width:18ch;text-wrap:balance;color:var(--ink)} @media(max-width:720px){.hed{font-size:42px;line-height:1.0}}
-.deck{font-family:var(--font-sans);font-size:18px;line-height:1.7;color:var(--ink-60);max-width:60ch;margin:0;text-wrap:pretty}
-.dek-meta{font-family:var(--font-mono);font-size:11px;color:var(--ink-60);display:flex;gap:8px;flex-wrap:wrap;margin-top:6px} .dek-meta span{border:var(--border);padding:4px 10px;border-radius:var(--radius-pill);background:var(--paper-2)}
-/* split: sticky-left 58% map 72vh + story right 42% — pudding */
-.split-wrap{margin-top:20px;border-top:var(--border);display:flex;flex-wrap:wrap;gap:0;position:relative}
-.map-pane{flex:0 0 58%;max-width:58%;position:sticky;top:var(--nav-h);align-self:flex-start;height:var(--map-h);min-height:var(--map-min);background:var(--void);border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-soft);margin-top:16px}
-@media(max-width:980px){.map-pane{flex:0 0 100%;max-width:100%;position:relative;top:0;height:62vh;min-height:420px}}
-.map-frame{position:absolute;inset:0;display:flex;flex-direction:column}
-.map-toolbar{height:38px;display:flex;align-items:center;justify-content:space-between;padding:0 12px 0 14px;border-bottom:1px solid #2A2E33;font-family:var(--font-mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:#A8A29E;background:#1E2022}
-.map-toolbar b{color:#FEFCF8;font-weight:700} .map-toolbar .right{display:flex;gap:10px;align-items:center}
-.pill{border:1px solid #3A3E42;border-radius:999px;padding:3px 9px;background:#2A2E33;color:#A8A29E} .pill.live{color:var(--pop);border-color:rgba(193,124,96,0.35);background:rgba(193,124,96,0.12)}
-canvas#mapCanvas{display:block;width:100%;height:100%;flex:1;background:radial-gradient(1100px 700px at 55% 40%, #2A2E33 0%, var(--void) 58%)}
-.map-legend{position:absolute;left:12px;bottom:12px;background:rgba(30,32,34,.88);backdrop-filter:blur(8px);border:1px solid #3A3E42;border-radius:10px;padding:8px 10px;font-family:var(--font-mono);font-size:10px;color:#D4C4B0;line-height:1.45}
-.legend-dot{width:5px;height:5px;border-radius:50%;display:inline-block;margin-right:6px;vertical-align:middle}
-.crosshair{position:absolute;left:50%;top:50%;width:1px;height:18px;background:#3A3E42;transform:translate(-50%,-50%)} .crosshair:after{content:"";position:absolute;left:-9px;top:50%;width:18px;height:1px;background:#3A3E42}
-.story-pane{flex:0 0 42%;max-width:42%;padding:0 0 48px;background:var(--paper)} @media(max-width:980px){.story-pane{flex:0 0 100%;max-width:100%}}
-.steps{max-width:520px;margin:0 auto;padding:28px 20px 32px} @media(min-width:980px){.steps{padding:32px 28px 48px 32px}}
-.step{padding:28px 0 30px;border-top:var(--border);position:relative;opacity:.58;transition:opacity .25s ease,transform .25s ease} .step:first-child{border-top:none} .step.active{opacity:1} .step.active:before{content:"";position:absolute;left:-14px;top:28px;bottom:30px;width:2px;background:var(--pop);border-radius:2px} @media(max-width:980px){.step.active:before{left:-8px}}
-.step-label{font-family:var(--font-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-40);display:flex;align-items:center;gap:8px;margin:0 0 10px} .step-label b{color:var(--ink)} .step-label .n{width:18px;height:18px;border-radius:50%;border:var(--border);display:inline-grid;place-items:center;font-size:10px;font-weight:700;background:var(--paper-2)} .step.active .step-label .n{background:var(--pop);color:var(--pop-ink);border-color:var(--pop)}
-.step h3{font-family:var(--font-serif);font-size:22px;line-height:1.15;letter-spacing:-.015em;margin:0 0 10px;font-weight:700;color:var(--ink)} .step p{font-family:var(--font-sans);font-size:18px;line-height:1.62;color:var(--ink-60);margin:0 0 12px;text-wrap:pretty} .step .micro{font-family:var(--font-mono);font-size:11px;color:var(--ink-40)} .step .inline-dot{display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:6px;vertical-align:middle}
-</style>
-<style id="components">
-/* roster — grid 12 cols gap 24px, tiles paper-2 radius 8px soft shadow */
-.section-head{max-width:var(--grid-max);margin:36px auto 14px;padding:0;display:flex;align-items:end;justify-content:space-between;gap:18px;flex-wrap:wrap}
-.section-head h2{font-family:var(--font-serif);font-size:28px;letter-spacing:-.02em;margin:0;line-height:1;color:var(--ink)} .section-head .sans{font-family:var(--font-sans);font-size:13.5px;color:var(--ink-60);max-width:44ch}
-.roster-wrap{max-width:var(--grid-max);margin:0 auto 28px;display:grid;grid-template-columns:repeat(12,1fr);gap:12px}
-.tile{grid-column:span 3;background:var(--paper-2);border:var(--border);border-radius:var(--radius-sm);position:relative;display:flex;flex-direction:column;min-height:158px;transition:transform .16s ease,box-shadow .16s ease;box-shadow:var(--shadow-sm)}
-@media(max-width:1024px){.tile{grid-column:span 4}} @media(max-width:720px){.tile{grid-column:span 6}} @media(max-width:480px){.tile{grid-column:span 12}}
-.tile:hover{transform:translateY(-1px);box-shadow:var(--shadow-md)}
-.tile-stripe{position:absolute;left:0;top:0;bottom:0;width:4px;border-radius:var(--radius-sm) 0 0 var(--radius-sm)} .tile.t-o .tile-stripe{background:var(--t-o)} .tile.t-b .tile-stripe{background:var(--t-b)} .tile.t-p .tile-stripe{background:var(--t-p)} .tile.t-g .tile-stripe{background:var(--t-g)} .tile.t-c .tile-stripe{background:var(--t-c)}
-.tile-main{padding:12px 12px 10px 16px;display:flex;flex-direction:column;gap:8px;flex:1}
-.tile-top{display:flex;justify-content:space-between;gap:8px;align-items:start} .tile-type{font-family:var(--font-mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;padding:3px 6px;border:var(--border);background:var(--paper);border-radius:999px;line-height:1} .tile-pos{font-family:var(--font-mono);font-size:10px;color:var(--ink-40)}
-.tile-name{font-family:var(--font-serif);font-size:18px;line-height:1.05;font-weight:800;letter-spacing:-.01em;margin:0;color:var(--ink)} .tile-sub{font-family:var(--font-mono);font-size:11px;color:var(--ink-60);margin-top:-2px}
-.tile-metric{margin-top:auto;display:grid;grid-template-columns:1fr 1fr;gap:8px} .metric{border-top:1px dashed var(--stone-200);padding-top:7px} .metric b{font-family:var(--font-mono);font-size:11px;display:block;color:var(--ink)} .metric i{font-style:normal;font-family:var(--font-mono);font-size:10px;color:var(--ink-40)}
-.tile-cta{margin-top:10px;display:flex;gap:8px} .btn{font-family:var(--font-mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;border:var(--border);padding:6px 9px;background:var(--paper);border-radius:var(--radius-sm);cursor:pointer;transition:all .12s} .btn:hover{border-color:var(--stone-300)} .btn.pop{background:var(--pop);color:var(--pop-ink);border-color:var(--pop)} .btn.pop:hover{filter:brightness(1.05)} .btn:active{transform:translateY(1px)}
-/* news tower — stone-50 bg radius 12px */
-.news{max-width:var(--grid-max);margin:24px auto 28px;background:var(--stone-50);border:var(--border);border-radius:var(--radius-md);padding:18px 18px 14px}
-.news-inner{display:grid;gap:12px} .news-kicker{font-family:var(--font-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-60)} .news h2{font-family:var(--font-serif);font-size:22px;margin:0;line-height:1.1;color:var(--ink)} .news-dek{font-family:var(--font-sans);font-size:14px;line-height:1.6;color:var(--ink-60);margin:0;max-width:64ch}
-.news-feed{display:grid;gap:10px;grid-template-columns:repeat(auto-fill,minmax(260px,1fr))} .news-card{background:var(--paper-2);border:var(--border);border-radius:var(--radius-sm);padding:10px 12px;font-family:var(--font-sans);font-size:13px;line-height:1.5;color:var(--ink-60);box-shadow:var(--shadow-sm)} .news-card b{color:var(--ink)} .news-foot{font-family:var(--font-mono);font-size:10.5px;color:var(--ink-40);display:flex;gap:8px;flex-wrap:wrap}
-/* void cards */
-.void-row{max-width:var(--grid-max);margin:10px auto 22px;display:grid;grid-template-columns:1.25fr .75fr;gap:16px} @media(max-width:800px){.void-row{grid-template-columns:1fr}}
-.void-card{background:var(--void);color:#EDE8DF;border-radius:var(--radius-md);padding:16px 16px 14px;min-height:88px;display:flex;flex-direction:column;justify-content:space-between;box-shadow:var(--shadow-soft)} .void-card h4{margin:0 0 6px;font-family:var(--font-serif);font-size:16px;letter-spacing:-.01em;color:#FEFCF8} .void-card p{margin:0;font-family:var(--font-mono);font-size:11px;color:#D4C4B0;line-height:1.5} .void-card .k{color:#FEFCF8;font-weight:700}
-/* provenance */
-.prov{max-width:var(--grid-max);margin:28px auto 64px;border-top:var(--border);padding-top:14px;display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;align-items:start}
-.prov p{margin:0;font-family:var(--font-mono);font-size:11px;line-height:1.6;color:var(--ink-60);max-width:68ch} .prov b{color:var(--ink);font-weight:700} .prov .right{font-family:var(--font-mono);font-size:10.5px;display:flex;gap:8px;flex-wrap:wrap} .prov .tag{border:var(--border);background:var(--paper-2);padding:4px 10px;border-radius:999px}
-img,canvas{max-width:100%} /* focus */
-:focus-visible{outline:2px solid var(--pop);outline-offset:2px;border-radius:2px}
-</style>
-</head>
-<body>
-<nav class="nav" aria-label="Primary">
-  <div class="nav-left"><a class="nav-mark" href="#">HOOPS.DUMBMODEL.COM <i>★</i></a><span style="opacity:.35">/</span><span>japandi v4 map <span class="nav-dot"></span></span></div>
-  <div class="nav-right"><a class="active" href="#map">Map</a><a href="#roster">Ranks</a><a href="#news">News</a><a href="#about">About</a></div>
-</nav>
-<div class="shell">
-<header class="hero">
-  <div class="kicker"><b>Embedding • 12,966</b><span class="rule"></span><span>japandi v4 • 64-d→2-d • LOD 4k/8k • DPR1 • zero-deps</span></div>
-  <h1 class="hed">Proximity is the argument.</h1>
-  <p class="deck">Twelve thousand nine hundred sixty-six hoops vectors, laid flat in warm paper #F9F6F0. If two players feel alike, they sit close. Not a dashboard — a map you walk through, Pudding-style: one big sticky canvas (72vh, 58%), words that wake it (42%). Single terracotta pop #C17C60, soft diffuse shadows, 24px air, modular IIFEs.</p>
-  <div class="dek-meta"><span>paper #F9F6F0</span><span>void #1E2022</span><span>pop #C17C60</span><span>44px mono nav</span><span>stone hairline</span><span>radius 12/16</span><span>soft shadow</span><span>modular IIFEs</span></div>
-</header>
-<section id="map" class="split-wrap">
-  <div class="map-pane" role="img" aria-label="Hoops embedding map japandi v4">
-    <div class="map-frame">
-      <div class="map-toolbar"><div><b>SPACE</b> — 20,719× UMAP • <span id="countLabel">12,966 pts</span> • <span id="lodLabel">LOD 4000</span> • <span id="fusionLabel">fusion 0.60*tca+0.25*taa+0.15*news</span></div><div class="right"><span class="pill live">● live canvas</span><span class="pill" id="hoverPill">hover —</span></div></div>
-      <canvas id="mapCanvas" width="800" height="600"></canvas>
-      <div class="crosshair" aria-hidden="true"></div>
-      <div class="map-legend"><div><span class="legend-dot" style="background:#C17C60"></span><span id="legA">selected</span> — focus terracotta</div><div><span class="legend-dot" style="background:#A8A29E"></span>embedding — context 0.55</div><div style="margin-top:6px;opacity:.85">tip: click tile → fly. scroll → story isolates. news → recency.</div></div>
+</head><body>
+<noscript><div role="alert" style="padding:16px;text-align:center">Enable JS — Vector Hoops needs JavaScript for Daily Court + 3D void</div></noscript>
+
+<nav class="site-nav" data-active="/" aria-label="Vector Hoops site"></nav>
+
+<div class="hero">
+  <div class="hero-copy">
+    <div class="small-mono eyebrow">
+      <span class="pill pill-yellow">12,966 · ROTATING STARS</span>
+      <span id="viral-streak" class="pill" style="background:#1A150F;color:#FFFEF7">streak 0</span>
+      <span id="puzzle-meta" style="opacity:.6">Daily puzzle</span>
+    </div>
+
+    <h1 class="hd" style="font-size:clamp(38px,5.8vw,62px);margin:2px 0 0;letter-spacing:-.02em">
+      Find the<br>modern twin<span style="opacity:.35">.</span>
+    </h1>
+
+    <p class="deck" id="deck-line" style="margin-top:10px;font-size:17px;line-height:1.45">
+      <b id="deck-name" style="font-weight:900">Michael Jordan 1997-98</b> → who plays most like them now?<br>
+      <span id="viral-today" style="opacity:.6;font-size:14px">12,966 seasons as stars in Lemmino void — documentary style</span>
+    </p>
+
+    <div class="cta-row">
+      <a class="btn btn-primary btn-xl" href="/play?r=672" id="cta-primary">▶ Play — <span id="cta-past">Michael Jordan</span></a>
+      <a class="btn" href="/play?mode=random" id="btn-random-hero" style="min-height:54px">🎲 Random</a>
+    </div>
+    <div class="cta-row" id="pack-cta-row" style="margin-top:8px;display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+      <span class="small-mono" style="opacity:.7;text-transform:none;font-weight:800">Pack Battle — viral:</span>
+      <button class="btn" data-pack-hero="1" type="button" style="min-height:44px">⚡ Solo 1</button>
+      <button class="btn btn-accent" data-pack-hero="3" type="button" style="min-height:44px">🔥 Triple 3</button>
+      <button class="btn" data-pack-hero="5" type="button" style="min-height:44px;background:#fff">🏀 Full 5</button>
+      <span class="small-mono" id="pack-cta-hint" style="opacity:.55;text-transform:none;align-self:center">same link = same stars</span>
+    </div>
+
+    <div class="micro small-mono" style="text-transform:none;display:flex;gap:8px;align-items:center;margin-top:6px">
+      <span class="pulse-dot"></span><span id="sky-fact-inline">Drag to rotate · hover any star · ★ = MJ 97-98</span>
     </div>
   </div>
-  <div class="story-pane"><div class="steps" id="steps">
-    <article class="step active" data-step="intro"><div class="step-label"><span class="n">1</span><b>START</b> • void #1E2022</div><h3>What player does this space smell like?</h3><p>Before filters, before tables: a warm paper page with a soft charcoal card #1E2022. One question, one button. Map stays asleep till you say go — japandi calm, not brutalist.</p><div class="micro"><span class="inline-dot" style="background:var(--pop)"></span> Click <b>Start exploring</b> or scroll. Stone hairline, 12px radius, soft shadow.</div></article>
-    <article class="step" data-step="all"><div class="step-label"><span class="n">2</span><b>ALL</b> • 12,966 warm dots</div><h3>Every hoop, one dot.</h3><p>64-d flattened, 12,966 player-season vectors. 90% quiet stone gray #A8A29E 0.55. You learn shape first, not labels — warm whitespace 24-32px, not tight.</p><div class="micro">LOD 4000 scrolling, 8000 idle. DPR1 crisp, battery kind. Canvas only.</div></article>
-    <article class="step" data-step="clusters"><div class="step-label"><span class="n">3</span><b>CLUSTERS</b> • neighborhood</div><h3>Proximity ≙ similarity.</h3><p>Rim-runners bottom-right, creators top-left, 3-and-D wings bridge. Model found these, no playbook. Colors muted japandi so terracotta stays only pop.</p><div class="micro"><span class="inline-dot" style="background:var(--t-g)"></span>guard <span class="inline-dot" style="background:var(--t-p)"></span>paint <span class="inline-dot" style="background:var(--t-o)"></span>offense — muted.</div></article>
-    <article class="step" data-step="offense"><div class="step-label"><span class="n">4</span><b>OFFENSE — T-O</b></div><h3>Offense pulls.</h3><p>High-usage scorers stretch top edge. Lighting only <span style="border-bottom:2px solid var(--t-o)">t-o terracotta</span> shows where creation lives — not ranking, place.</p><div class="micro">Tile stripe terracotta #C17C60. Paper-2, 8px radius, soft shadow.</div></article>
-    <article class="step" data-step="bench"><div class="step-label"><span class="n">5</span><b>BENCH — T-B</b></div><h3>Bench is a continent.</h3><p>Dense interior where replacement stillness lives. Jiggle here to see why depth matters — stone-50 news tower below ties injuries to this zone.</p><div class="micro">t-b #7A9BB5 stripe • gap 12px roster keeps air like Pudding 3-up, wabi-sabi 1-2px variance ok.</div></article>
-    <article class="step" data-step="paint"><div class="step-label"><span class="n">6</span><b>PAINT — T-P</b></div><h3>The paint stays put.</h3><p>Bigs anchor bottom, tight variance. Honest: 64-d→2-d loses local distance; we don't claim tighter than truth. Moss #8A9A8B muted.</p><div class="micro">single pop terracotta #C17C60 remains only filled action. LCG same-link-same-stars.</div></article>
-    <article class="step" data-step="news"><div class="step-label"><span class="n">7</span><b>NEWS — TOWER 4</b></div><h3>What's being said.</h3><p>4th tower 16-d 0.15 weight — injuries, trades, rest. Real RSS (nba.com/espn_nba/cbs/yahoo) honest 503, zero-vector fallback never fake. Fusion 0.60*tca+0.25*taa+0.15*news L2 unit sphere.</p><div class="micro">Recency exp(-days/7), burst_3d z, league_sent. SHAP ≤0.15 prevents narrative overfit.</div></article>
-    <article class="step" data-step="finish"><div class="step-label"><span class="n">8</span><b>ROSTER</b> • 12 tiles</div><h3>Then, the names.</h3><p>Only after you feel space do we pull 12 flat paper-2 tiles with left-stripe moods — 8px radius, soft diffuse shadow, no brutalist 4px offset. Click to fly.</p><div class="micro">Scroll to <a href="#roster" style="text-decoration:underline">Ranks</a> or <a href="#news" style="text-decoration:underline">News</a>.</div></article>
-  </div></div>
-</section>
-<div class="section-head" id="roster"><h2>Roster — 12 flat tiles • japandi</h2><span class="sans">Left 4px stripe = mood (t-o terracotta, t-b stone blue, t-p moss, t-g clay, t-c stone). Paper-2 #FEFCF8 shell, stone-200 hairline, 8px radius, soft shadow, hover -1px 180ms. No harsh ink border.</span></div>
-<div class="roster-wrap" id="rosterGrid"></div>
-<section id="news" class="news"><div class="news-inner"><div class="news-kicker">NEWS TOWER • AI AGGREGATION • JAPANDI v4 • 16-d 0.15 weight • honest 503</div><h2>What’s being said about them.</h2><p class="news-dek">Real RSS — nba.com / espn_nba / cbs_nba / yahoo_nba — linked to players, no synthetic. Injuries, trades, starter flags, rest. Updates daily 06:00 CT, recency-weighted exp(-days/7), burst detection 3d z, league sentiment. Fusion 0.60*tca+0.25*taa+0.15*news L2 prevents narrative overfit. Zero-vector fallback if 503 >3 days.</p><div id="news-feed" class="news-feed"><div class="news-card" style="font-family:var(--font-mono)">Loading news tower… honest 503 if sources down — <span id="news-provenance">provenance 7/7/0→14/14 LCG 20260813→189831298 triple[11205,19448,14209] fusion 0.60*tca+0.25*taa+0.15*news</span></div></div><div class="news-foot">Sources: nba.com / espn_nba / cbs_nba / yahoo_nba • LCG 20260813→189831298 triple[11205,19448,14209] • ?daily=YYYYMMDD&n=1/3/5 same-link-same-stars • 12,966 pts • PWA v67 offline13k • CORE20 • stone-200 hairline • terracotta single pop • JAPANDI • NEWS TOWER</div></div></section>
-<div class="void-row"><div class="void-card"><h4>Editorial void card inside warm paper</h4><p><span class="k">Paper #F9F6F0 page, soft charcoal #1E2022 inset 16px radius.</span> Same move as Pudding Similes — text warm white, margin calm 24px, single terracotta action only when you mean it. Grain radial 24px subtle.</p></div><div class="void-card" style="background:#2A2E33"><h4>Zero-deps • LCG triple same-link-same-stars • modular IIFEs</h4><p>Same tech as hoops v2 daily: <span class="k">?daily=YYYYMMDD&n=1/3/5 → [11205,19448,14209]</span> deterministic. Canvas DPR1 LOD 4000/8000, stdlib only, offline 13k, init()/destroy()/update() extensible.</p></div></div>
-<footer class="prov" id="about"><p><b>Data provenance — honest 7/7/0→14/14 • JAPANDI v4 • PUDDING MAP 70vh 58/42.</b> Demo uses synthesized 12,966-point UMAP-layout with same LCG + cluster logic as hoops.dumbmodel.com embedding_v3 20719×128-d 64-d. Production binds real vectors via <code>assets/vectors.json</code> + <code>assets/news/news_features.json</code> 16-d honest 503 zero-vector fallback never fake. Map: 640 prose / 1120 grid / full bleed per Pudding taste. No team rainbow, no KPI ribbon, no parallax, no brutalist shadow. Verifier ≥8.0 contrast 15.8:1 ink #2A2A2A on paper #F9F6F0, focus ring 2px pop #C17C60, 44px nav mono 11px uppercase 0.06em, modular tokens/layout/components, window.DumbModel IIFEs, single-select clearPrev(), DPR1 LOD 4000/8000, PWA v67 offline13k CORE20, LCG 20260813→189831298 triple[11205,19448,14209] same-link-same-stars ?daily=YYYYMMDD&n=1/3/5, fusion 0.60*tca+0.25*taa+0.15*news L2 unit sphere, SHAP ≤0.15, honest 503, zero-deps true.</p><div class="right"><span class="tag">paper #F9F6F0</span><span class="tag">paper-2 #FEFCF8</span><span class="tag">void #1E2022</span><span class="tag">ink #2A2A2A 15.8:1</span><span class="tag">pop #C17C60 terracotta</span><span class="tag">stone hairline</span><span class="tag">radius 12/16</span><span class="tag">soft shadow</span><span class="tag">LOD 4000/8000 DPR1</span><span class="tag">12,966 pts</span><span class="tag">modular IIFEs</span><span class="tag">NEWS TOWER 16-d</span><span class="tag">7/7/0→14/14</span><span class="tag">zero-deps</span></div></footer>
+
+  <!-- LEMMINO COMBO: embedding map as stars -->
+  <div id="map-wrap" class="lemmino-map-void" style="background:#080A0F">
+    <canvas id="sky-canvas" width="640" height="580" aria-label="12,966 player-seasons as points, XYZ glass plates for orientation"></canvas>
+    <!-- minimal controls only — no inline bottom to allow safe-area CSS -->
+    <div id="map-controls">
+      <button class="chip" id="btn-pause" type="button" style="background:rgba(255,254,247,0.96);border:2px solid #1A150F;border-radius:999px;padding:8px 14px;font-family:ui-monospace,monospace;font-size:11px;font-weight:800;min-height:44px">Pause</button>
+      <button class="chip" id="btn-reset" type="button" style="background:rgba(255,254,247,0.96);border:2px solid #1A150F;border-radius:999px;padding:8px 14px;font-family:ui-monospace,monospace;font-size:11px;font-weight:800;min-height:44px">Reset view</button>
+    </div>
+    <div id="hover-tip" style="position:absolute;left:50%;top:50%;transform:translate(-50%,-100%);background:#FFFEF7;border:2px solid #1A150F;border-radius:10px;padding:7px 9px;box-shadow:3px 3px 0 #1A150F;font-size:12px;line-height:1.35;display:none;z-index:7;pointer-events:none;max-width:260px"></div>
+    <div id="map-axis-legend" style="position:absolute;right:clamp(12px,2.5vw,16px);bottom:calc(12px + env(safe-area-inset-bottom));z-index:5;background:rgba(255,254,247,0.96);border:2px solid #1A150F;border-radius:10px;padding:7px 8px;font-family:ui-monospace,monospace;font-size:9px;line-height:1.3;box-shadow:2px 2px 0 #1A150F;max-width:min(68vw,300px)">
+      <div style="font-weight:900;letter-spacing:.05em;margin-bottom:4px;display:flex;justify-content:space-between;gap:8px"><span>SHAPE=POS</span><span style="opacity:.55">COLOR=ARCHETYPE</span></div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:4px"><span>● PG</span><span>▲ SG</span><span>◆ SF</span><span>■ PF</span><span>✚ C</span></div>
+      <div style="opacity:.8">X Paint↔Perim · Y Role→Score · Z Def↔Off — drag to spin</div>
+    </div>
+  </div>
 </div>
-<script id="mod-tokens">window.DumbModel=window.DumbModel||{};window.DumbModel.tokens={paper:"#F9F6F0",paper2:"#FEFCF8",stone50:"#F5F1EB",stone200:"#D4C4B0",ink:"#2A2A2A",pop:"#C17C60",moss:"#8A9A8B",clay:"#A67B5B",void:"#1E2022",fusion:"0.60*tca+0.25*taa+0.15*news",lcg:"20260813->189831298 triple[11205,19448,14209]",gridMax:1120,gutter:24,mapH:"72vh",min:"540px",verifier:"≥8.0",contrast:"15.8:1",towers:4,newsWeight:0.15};window.DumbModel.init=function(){console.log("[JAPANDI] tokens",window.DumbModel.tokens)};window.DumbModel.destroy=function(){};window.DumbModel.update=function(d){if(d)Object.assign(window.DumbModel.tokens,d)};</script>
-<script id="mod-map">window.DumbModel=window.DumbModel||{};window.DumbModel.Map=(function(){const PAPER="#F9F6F0",VOID="#1E2022",POP="#C17C60",GRAY="#A8A29E";const N=12966,LOD_SCROLL=4000,LOD_IDLE=8000;function lcg(s){let a=s>>>0;return()=>{a=Math.imul(a,1664525)+1013904223>>>0;return a/4294967296}}const daily=new URLSearchParams(location.search).get("daily");let seed=42;if(daily){let h=0;for(let i=0;i<daily.length;i++)h=Math.imul(31,h)+daily.charCodeAt(i)|0;seed=Math.abs(h)%1e6}const rnd=lcg(seed||42);const centers=[{t:"o",x:.78,y:.22,sx:.12,sy:.14,count:.22,color:"#C17C60",label:"offense terracotta"},{t:"g",x:.22,y:.28,sx:.13,sy:.12,count:.22,color:"#A67B5B",label:"guard clay"},{t:"p",x:.72,y:.78,sx:.11,sy:.09,count:.18,color:"#8A9A8B",label:"paint moss"},{t:"b",x:.48,y:.52,sx:.18,sy:.16,count:.22,color:"#7A9BB5",label:"bench stone-blue"},{t:"c",x:.38,y:.68,sx:.14,sy:.12,count:.16,color:"#B8A99A",label:"composite stone"}];function gen(){const pts=[];for(let ci=0;ci<centers.length;ci++){const c=centers[ci];const n=Math.floor(N*c.count);for(let i=0;i<n;i++){const u1=rnd(),u2=rnd();const mag=Math.sqrt(-2*Math.log(u1+1e-9))*.44;const ang=u2*6.2831853;const x=c.x+mag*c.sx*Math.cos(ang)+(rnd()-.5)*.03;const y=c.y+mag*c.sy*Math.sin(ang)+(rnd()-.5)*.03;pts.push({x:Math.max(.02,Math.min(.98,x)),y:Math.max(.05,Math.min(.95,y)),ci,t:c.t,c:c.color})}}while(pts.length<N){const c=centers[Math.floor(rnd()*centers.length)];pts.push({x:Math.max(.02,Math.min(.98,c.x+(rnd()-.5)*.2)),y:Math.max(.05,Math.min(.95,c.y+(rnd()-.5)*.2)),ci:centers.indexOf(c),t:c.t,c:c.color})}for(let i=pts.length-1;i>0;i--){const j=Math.floor(rnd()*(i+1));const tmp=pts[i];pts[i]=pts[j];pts[j]=tmp}return pts}const points=gen();let W=0,H=0,focusIdx=-1,activeStep="intro",lod=LOD_SCROLL;const api={points,centers,init,resize,draw,clearPrev,update,setLOD,get state(){return{focusIdx,activeStep,lod}}};function init(){window.addEventListener("resize",resize);resize();setTimeout(resize,80);setLOD(LOD_SCROLL,`LOD ${LOD_SCROLL}`);setTimeout(()=>setLOD(LOD_IDLE,`LOD ${LOD_IDLE}`),700)}function resize(){const canvas=document.getElementById("mapCanvas");if(!canvas)return;const rect=canvas.getBoundingClientRect();W=Math.max(320,Math.floor(rect.width));H=Math.max(240,Math.floor(rect.height));canvas.width=W;canvas.height=H;draw()}function clearPrev(){focusIdx=-1;draw()}function setLOD(n,label){lod=n;const el=document.getElementById("lodLabel");if(el)el.textContent=label;draw()}function update(s){if(s&&s.step)activeStep=s.step;if(s&&typeof s.focus!=="undefined")focusIdx=s.focus;draw()}function draw(){const canvas=document.getElementById("mapCanvas");if(!canvas)return;const ctx=canvas.getContext("2d");if(!ctx)return;ctx.clearRect(0,0,W,H);ctx.fillStyle=VOID;ctx.fillRect(0,0,W,H);ctx.strokeStyle="rgba(255,255,255,0.04)";ctx.lineWidth=1;const gx=Math.floor(W/7);for(let x=gx;x<W;x+=gx){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke()}const gy=Math.floor(H/5);for(let y=gy;y<H;y+=gy){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke()}let filtered=points;if(activeStep==="offense")filtered=points.filter(p=>p.t==="o");else if(activeStep==="bench")filtered=points.filter(p=>p.t==="b");else if(activeStep==="paint")filtered=points.filter(p=>p.t==="p");const nDraw=Math.min(lod,filtered.length||points.length);ctx.globalAlpha=(activeStep==="intro")?.14:.55;for(let i=0;i<nDraw;i++){const p=filtered.length?filtered[Math.floor((i/nDraw)*filtered.length)]:points[(i*7)%points.length];const px=p.x*W,py=p.y*H;ctx.fillStyle=(activeStep==="clusters")?p.c:GRAY;if(activeStep==="offense"||activeStep==="bench"||activeStep==="paint")ctx.fillStyle="#3A425D";ctx.beginPath();ctx.arc(px,py,activeStep==="all"?1.6:1.9,0,Math.PI*2);ctx.fill()}ctx.globalAlpha=1;if(activeStep==="offense"||activeStep==="bench"||activeStep==="paint"){const use=filtered.slice(0,Math.min(900,filtered.length));for(const p of use){ctx.fillStyle=p.c;ctx.globalAlpha=.95;ctx.beginPath();ctx.arc(p.x*W,p.y*H,2.4,0,Math.PI*2);ctx.fill()}ctx.globalAlpha=1}else if(activeStep==="clusters"){for(let i=0;i<Math.min(1200,points.length);i++){const p=points[(i*31)%points.length];ctx.fillStyle=p.c;ctx.globalAlpha=.72;ctx.beginPath();ctx.arc(p.x*W,p.y*H,1.7,0,Math.PI*2);ctx.fill()}}else if(activeStep==="all"||activeStep==="intro"||activeStep==="finish"){for(let k=0;k<14;k++){const p=points[Math.floor(rnd()*points.length)%points.length];ctx.fillStyle=POP;ctx.globalAlpha=.85;ctx.beginPath();ctx.arc(p.x*W,p.y*H,2.0,0,Math.PI*2);ctx.fill()} }if(activeStep==="intro"){ctx.globalAlpha=1;ctx.fillStyle="rgba(254,252,248,0.92)";ctx.font=`${Math.max(18,Math.min(28,W*.035))}px ${"Newsreader"}`;ctx.fillText("What player does this space",18,42);ctx.fillText("smell like? — japandi v4",18,70);ctx.fillStyle="#D4C4B0";ctx.font="11px ui-monospace";ctx.fillText("Start exploring → scroll • warm paper #F9F6F0 • terracotta #C17C60",18,92)}if(focusIdx>=0){const names=["JA.MOR","A.EDWARDS","JOKIĆ","GIANNIS","HALIBURTON","TATUM","BAM","MILES","CARUSO","KAT","J.DUB","WHITE"];const name=names[focusIdx]||"FOCUS";ctx.globalAlpha=1;ctx.strokeStyle=POP;ctx.lineWidth=1.2;ctx.setLineDash([4,6]);const type=["g","o","c","p","g","o","b","b","g","p","c","g"][focusIdx]||"o";const c=centers.find(x=>x.t===type)||centers[0];ctx.beginPath();ctx.arc(c.x*W,c.y*H,Math.min(W,H)*.16,0,Math.PI*2);ctx.stroke();ctx.setLineDash([]);ctx.fillStyle="#FEFCF8";ctx.font="11px ui-monospace";ctx.fillText(`FLY → ${name} • terracotta`,16,H-16)}}return api})();</script>
-<script id="mod-story">window.DumbModel=window.DumbModel||{};window.DumbModel.Story=(function(){const api={init,destroy,update};let io=null,scrollTO=null;function init(){const steps=document.querySelectorAll(".step");io=new IntersectionObserver((entries)=>{entries.forEach(e=>{if(e.isIntersecting&&e.intersectionRatio>.55){document.querySelectorAll(".step").forEach(s=>s.classList.remove("active"));e.target.classList.add("active");const step=e.target.dataset.step||"all";if(window.DumbModel.Map)window.DumbModel.Map.update({step});const legA=document.getElementById("legA");if(legA){legA.textContent=step;legA.style.color="var(--pop)"}}})},{threshold:[.55]});steps.forEach(s=>io.observe(s));window.addEventListener("scroll",onScroll,{passive:true})}function onScroll(){if(window.DumbModel.Map&&window.DumbModel.Map.state.lod!==4000){window.DumbModel.Map.setLOD(4000,"LOD 4000")}clearTimeout(scrollTO);scrollTO=setTimeout(()=>{if(window.DumbModel.Map)window.DumbModel.Map.setLOD(8000,"LOD 8000")},420)}function update(d){if(!d)return;const t=document.querySelector(`[data-step="${d.step}"]`);if(t){document.querySelectorAll(".step").forEach(s=>s.classList.remove("active"));t.classList.add("active");if(window.DumbModel.Map)window.DumbModel.Map.update(d)}}function destroy(){if(io){io.disconnect();io=null}window.removeEventListener("scroll",onScroll)}return api})();</script>
-<script id="mod-roster">window.DumbModel=window.DumbModel||{};window.DumbModel.Roster=(function(){const rosterNames=[{name:"JA.MOR",type:"t-g",pos:"G • 01",sub:"creator • high usage",a:7.8,b:3.2},{name:"A.EDWARDS",type:"t-o",pos:"G/W • 02",sub:"offense • pull terracotta",a:6.9,b:4.1},{name:"JOKIĆ",type:"t-c",pos:"C • 05",sub:"composite • hub",a:9.1,b:6.3},{name:"GIANNIS",type:"t-p",pos:"F/C • 04",sub:"paint • freight moss",a:8.4,b:5.7},{name:"HALIBURTON",type:"t-g",pos:"G • 01",sub:"guard • connector clay",a:6.2,b:2.9},{name:"TATUM",type:"t-o",pos:"F • 03",sub:"offense • wing",a:7.2,b:4.6},{name:"BAM",type:"t-b",pos:"C • 05",sub:"bench • stabilizer",a:4.1,b:1.8},{name:"MILES",type:"t-b",pos:"F • 04",sub:"bench • depth",a:3.3,b:1.2},{name:"CARUSO",type:"t-g",pos:"G • 02",sub:"guard • POA",a:3.9,b:2.1},{name:"KAT",type:"t-p",pos:"C • 05",sub:"paint • stretch",a:5.6,b:3.8},{name:"J.DUB",type:"t-c",pos:"F • 03",sub:"composite • seam",a:5.0,b:2.7},{name:"WHITE",type:"t-g",pos:"G • 01",sub:"guard • bridge",a:4.4,b:2.4}];const api={init,destroy,update,rosterNames};function init(){const grid=document.getElementById("rosterGrid");if(!grid)return;grid.innerHTML="";rosterNames.forEach((r,i)=>{const el=document.createElement("div");el.className=`tile ${r.type}`;el.dataset.idx=String(i);el.innerHTML=`<div class="tile-stripe" aria-hidden="true"></div><div class="tile-main"><div class="tile-top"><span class="tile-type">${r.type}</span><span class="tile-pos">${r.pos}</span></div><h3 class="tile-name">${r.name}</h3><div class="tile-sub">${r.sub}</div><div class="tile-metric"><div class="metric"><b>${r.a.toFixed(1)} ↑</b><i>AR / stretch</i></div><div class="metric"><b>${r.b.toFixed(1)} →</b><i>either / depth</i></div></div><div class="tile-cta"><button class="btn pop" data-focus="${i}">FOCUS</button><button class="btn" data-mood="${r.type.replace("t-","")}">MOOD ${r.type}</button></div></div>`;grid.appendChild(el)});grid.addEventListener("click",onClick);document.getElementById("mapCanvas")?.addEventListener("mousemove",onHover)}function onClick(e){const btn=e.target.closest("[data-focus]");if(btn){const idx=parseInt(btn.getAttribute("data-focus"),10);if(window.DumbModel.Map){window.DumbModel.Map.update({focus:idx,step:"finish"});document.querySelectorAll(".step").forEach(s=>s.classList.remove("active"));document.querySelector('[data-step="finish"]')?.classList.add("active")}document.getElementById("mapCanvas")?.scrollIntoView({behavior:"smooth",block:"center"});return}const moodBtn=e.target.closest("[data-mood]");if(moodBtn){const m=moodBtn.getAttribute("data-mood");let step="all";if(m==="o")step="offense";else if(m==="b")step="bench";else if(m==="p")step="paint";else if(m==="g")step="all";else step="clusters";document.querySelectorAll(".step").forEach(s=>{if(s.dataset.step===step)s.classList.add("active");else s.classList.remove("active")});if(window.DumbModel.Map){window.DumbModel.Map.clearPrev();window.DumbModel.Map.update({step})}}}function onHover(e){const canvas=document.getElementById("mapCanvas");const pill=document.getElementById("hoverPill");if(!canvas||!pill)return;const r=canvas.getBoundingClientRect();const x=(e.clientX-r.left)/r.width;const y=(e.clientY-r.top)/r.height;const centers=window.DumbModel.Map?.centers||[];let best=centers[0],bd=1e9;for(const c of centers){const dx=x-c.x,dy=y-c.y;const d=dx*dx+dy*dy;if(d<bd){bd=d;best=c}}if(best)pill.textContent=`${(x*100).toFixed(1)}%, ${(y*100).toFixed(1)}% — ~${best.label}`}function update(d){if(d&&typeof d.focus!=="undefined"&&window.DumbModel.Map)window.DumbModel.Map.update(d)}function destroy(){document.getElementById("rosterGrid")?.removeEventListener("click",onClick)}return api})();</script>
-<script id="mod-news">window.DumbModel=window.DumbModel||{};window.DumbModel.News=(function(){const api={init,destroy,update};let data=null;function init(){fetchNews();document.getElementById("news-feed")?.addEventListener("click",onClick)}async function fetchNews(){const el=document.getElementById("news-feed");const prov=document.getElementById("news-provenance");try{const res=await fetch("assets/news/news_features.json",{cache:"no-store"});if(!res.ok)throw new Error("honest 503 "+res.status);const j=await res.json();data=j;render(j);if(prov)prov.textContent=`provenance 7/7/0→14/14 LCG 20260813→189831298 triple[11205,19448,14209] • ${j.n_entities||0} entities • ${Object.keys(j.features||{}).length} feats • dim16 • fusion 0.60*tca+0.25*taa+0.15*news • honest 503 ok`}catch(e){if(el)el.innerHTML=`<div class="news-card" style="font-family:var(--font-mono)">News tower honest 503 — sources down, zero-vector fallback active. <br/>nba.com / espn_nba / cbs_nba / yahoo_nba — no synthetic. Fusion 0.60*tca+0.25*taa+0.15*news L2 still works with zeros. <br/><span id="news-provenance">provenance 7/7/0→14/14 • LCG 20260813→189831298 • ${e.message}</span></div>`;if(prov)prov.textContent=`provenance 7/7/0→14/14 LCG 20260813→189831298 triple[11205,19448,14209] • honest 503 fallback • ${e.message}`}}function render(j){const el=document.getElementById("news-feed");if(!el)return;const feats=j.features||{};const ents=Object.keys(feats).slice(0,12);if(!ents.length){el.innerHTML=`<div class="news-card">No news yet — 0 entities — waiting for daily ingest 06:00 CT LCG chain. Zero-vector fallback active, map still works.</div>`;return}el.innerHTML=ents.map(k=>{const v=feats[k];const cnt7=v?.[0]?.toFixed?.(2)||v?.cnt7||0;const sent=v?.[2]||0;return `<div class="news-card"><b>${k}</b> • cnt7 ${cnt7} sent ${sent>0?"+":""}${Number(sent).toFixed(2)} • 16-d [cnt7 cnt30 sent7 sent30 inj trade starter rest transfer manager earnings guidance recency_exp burst_3d league_sent sector_sent] • fusion 0.60*tca+0.25*taa+0.15*news • <button class="btn" style="margin-top:6px" onclick="window.DumbModel.Map&&window.DumbModel.Map.update({step:'news'})">HIGHLIGHT NEWS BURST</button></div>`}).join("")}function onClick(e){const b=e.target.closest("button");if(b&&b.textContent.includes("NEWS")){if(window.DumbModel.Map)window.DumbModel.Map.update({step:"news"})}}function update(d){if(d&&d.features)render({features:d.features})}function destroy(){}return api})();</script>
+
+<div class="tri">
+  <a class="card" href="/trends" style="text-decoration:none;color:inherit"><div class="small-mono">Trends</div><b style="font-family:'Architects Daughter',mono;font-size:19px">How the game changed</b><div style="font-size:13px;color:#666;margin-top:5px;line-height:1.45">30 seasons of drift, archetype shifts, career shapes — one scrub to play it.</div></a>
+  <a class="card" href="/players" style="text-decoration:none;color:inherit"><div class="small-mono">Players</div><b style="font-family:'Architects Daughter',mono;font-size:19px">Directory + Skills</b><div style="font-size:13px;color:#666;margin-top:5px;line-height:1.45">Every season graded, search any name, compare eras side-by-side.</div></a>
+  <a class="card" href="/model" style="text-decoration:none;color:inherit"><div class="small-mono">Lab</div><b style="font-family:'Architects Daughter',mono;font-size:19px">Inside the model</b><div style="font-size:13px;color:#666;margin-top:5px;line-height:1.45">How the embedding is built, what it captures, and where it fails.</div></a>
+</div>
+
+<!-- TRADING CARD VOID — replaces heavy drift tube — career arc + skills trading card -->
+<div class="trading-card-void" id="trading-card-void">
+  <div style="padding:24px;font-family:ui-monospace;font-size:13px;text-align:center">Loading trading cards…</div>
+</div>
+
+<div id="viral-row" style="max-width:1180px;margin:10px auto 0;padding:0 clamp(14px,3.5vw,28px) calc(28px + 88px);display:grid;grid-template-columns:1.1fr .9fr;gap:12px">
+  <div class="card" id="random-rush-card" style="display:flex;flex-direction:column;gap:10px;border-width:2.5px">
+    <div class="small-mono" style="display:flex;justify-content:space-between;align-items:center"><span style="display:flex;gap:6px;align-items:center"><span class="pill" style="background:var(--ink);color:#fff">📦 Pack Battle</span><span>Viral 1·3·5</span></span><span class="pill pill-yellow">Shareable challenge</span></div>
+    <div style="display:flex;gap:10px;align-items:flex-start">
+      <div style="font-size:38px;line-height:1">⚡</div>
+      <div style="flex:1"><b style="font-family:'Architects Daughter',mono;font-size:18px;display:block">Pack Challenge — random All-Stars, same link for friends</b><div style="font-size:12px;color:#555;margin-top:4px;line-height:1.45">Random grouping of 1, 3 or 5 past All-Stars. Solve it, then share the <code style="font-size:10px;background:#FFFEF7;border:1px solid #ddd;padding:1px 5px;border-radius:6px">?pack=672-123-456</code> link — friends get identical pack. Streak-safe, beat your friend's score.</div></div>
+    </div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:4px">
+      <button class="btn btn-primary" data-pack-card="1" type="button">⚡ Solo · 1</button>
+      <button class="btn btn-accent" data-pack-card="3" type="button">🔥 Triple · 3</button>
+      <button class="btn" data-pack-card="5" type="button" style="background:#fff">🏀 Full Court · 5</button>
+      <button class="btn" id="btn-copy-random" type="button" style="min-height:48px">Copy last link</button>
+      <span class="small-mono" id="random-hint" style="align-self:center;opacity:.6;text-transform:none"></span>
+    </div>
+    <div class="small-mono" style="text-transform:none;opacity:.6;font-size:10px;line-height:1.3">Each pack = unique names · reproducible link · add &s=2-3-0 for score battle</div>
+  </div>
+  <div class="card" id="streak-card" style="display:flex;flex-direction:column;gap:8px">
+    <div class="small-mono" style="display:flex;justify-content:space-between;align-items:center"><span>🔥 Streak challenge · resets daily</span><span class="pill" id="streak-best-pill">best 0</span></div>
+    <div style="display:flex;gap:12px;align-items:center">
+      <div style="width:56px;height:56px;border:2.2px solid var(--ink);border-radius:14px;background:var(--paper);display:flex;align-items:center;justify-content:center;box-shadow:3px 3px 0 var(--ink);flex-shrink:0"><span id="streak-big" style="font-family:'Architects Daughter',mono;font-size:24px;font-weight:900;line-height:1">0</span></div>
+      <div style="flex:1">
+        <b id="streak-title" style="font-family:'Architects Daughter',mono;font-size:17px;display:block">Start your streak</b>
+        <div id="streak-desc" style="font-size:12px;color:#555;margin-top:3px;line-height:1.45">Win today's daily before midnight UTC to build. Miss a day and it resets. 7 days = Week Warrior.</div>
+        <div id="streak-track" style="display:flex;gap:4px;margin-top:8px"></div>
+        <div class="small-mono" id="next-countdown" style="margin-top:6px;text-transform:none;opacity:.7;display:none">Next in <span id="countdown-hms">--</span></div>
+      </div>
+    </div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:2px">
+      <a class="btn btn-primary" id="btn-continue-streak" href="/play">Play Today</a>
+      <button class="btn" id="btn-share-streak" type="button">Share Streak</button>
+      <button class="btn" id="btn-challenge" type="button">Challenge Friend</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast" style="position:fixed;left:50%;bottom:94px;transform:translateX(-50%);background:#1A150F;color:#FFFEF7;font-family:var(--mono);font-size:11px;font-weight:800;padding:9px 14px;border-radius:999px;box-shadow:4px 4px 0 var(--ink);z-index:40;display:none"></div>
+
 <script>
-// boot — japandi-pudding hybrid, zero-deps, honest 503
+/* Minimal viral init — keeps MJ placeholder as hero map star per request */
 (function(){
-  const DM=window.DumbModel;
-  DM.tokens&&DM.init&&DM.init();
-  DM.Map&&DM.Map.init();
-  DM.Story&&DM.Story.init();
-  DM.Roster&&DM.Roster.init();
-  DM.News&&DM.News.init();
-  // LCG triple same-link-same-stars ?daily=YYYYMMDD&n=1/3/5
-  const params=new URLSearchParams(location.search);
-  const daily=params.get("daily")||"20260813";
-  const n=params.get("n")||"3";
-  const lcg=(s)=>(s*1103515245+12345)&0x7fffffff;
-  let seed=parseInt(daily,10)||20260813;
-  const triple=[lcg(seed),lcg(lcg(seed)),lcg(lcg(lcg(seed)))];
-  document.documentElement.setAttribute("data-daily",daily);
-  document.documentElement.setAttribute("data-n",n);
-  console.log(`[JAPANDI] hoops v4 pudding-map 70vh sticky 58/42 warm paper #F9F6F0 terracotta #C17C60 stone hairline soft shadow 44px mono nav z40 modular IIFEs init/destroy/update single-select DPR1 LOD 4000/8000 fusion 0.60*tca+0.25*taa+0.15*news L2 7/7/0→14/14 LCG ${daily}→${lcg(seed)} triple[${triple.join(",")}] ?daily=${daily}&n=${n} PWA v67 offline13k CORE20 NEWS TOWER 16-d 0.15 weight honest 503 zero-deps`);
+  const HERO_MJ_ID = 672;
+  function showToast(msg, ms){
+    var t=document.getElementById('toast'); if(!t) return;
+    t.textContent=msg; t.style.display='block'; clearTimeout(t._tm); t._tm=setTimeout(function(){ t.style.display='none'; }, ms||2600);
+  }
+  async function initViral(){
+    try{
+      if(window.VHPastModern){
+        await window.VHPastModern.init();
+        if(window.VHMtnn){ try{ await VHMtnn.loadAsync(); }catch(e){} }
+        var st=window.VHPastModern.state();
+        var sInfo = VHPastModern.getStreak();
+        var big = document.getElementById('streak-big');
+        var title = document.getElementById('streak-title');
+        var desc = document.getElementById('streak-desc');
+        var bestPill = document.getElementById('streak-best-pill');
+        var track = document.getElementById('streak-track');
+        if(big) big.textContent = sInfo.streak;
+        if(bestPill) bestPill.textContent='best '+sInfo.best;
+        if(track){
+          track.innerHTML='';
+          for(var i=0;i<7;i++){
+            var dot=document.createElement('span');
+            dot.style.cssText='width:22px;height:6px;border-radius:999px;border:1.5px solid var(--ink);display:inline-block;'+(i < sInfo.streak%7 || (sInfo.streak>=7 && i<7) ? 'background:var(--yellow);box-shadow:1px 1px 0 var(--ink)' : 'background:#fff;opacity:.55');
+            track.appendChild(dot);
+          }
+        }
+        if(sInfo.streak===0){
+          if(title) title.textContent='Start your streak';
+          if(desc) desc.textContent='Win today\'s daily before midnight UTC to start. 7 in a row = Week Warrior badge. Random spins don\'t break streak.';
+        } else if(sInfo.streak>=7){
+          if(title) title.textContent='Week Warrior! '+sInfo.streak+'🔥';
+          if(desc) desc.textContent='Insane consistency. Keep it alive — daily resets at midnight UTC.';
+        } else {
+          if(title) title.textContent=sInfo.streak+' day'+(sInfo.streak===1?'':'s')+' — keep it alive';
+          if(desc) desc.textContent=(7-sInfo.streak)+' more to Week Warrior.';
+        }
+        var dn0=document.getElementById('deck-name'); if(dn0) dn0.textContent='Michael Jordan 1997-98';
+        var cp0=document.getElementById('cta-past'); if(cp0) cp0.textContent='Michael Jordan';
+        var cta0=document.getElementById('cta-primary'); if(cta0) cta0.href='/play?r='+HERO_MJ_ID;
+        var lsn0=document.getElementById('legend-star-name'); if(lsn0) lsn0.textContent='Michael Jordan 97-98';
+        var sfi=document.getElementById('sky-fact-inline'); if(sfi) sfi.textContent='Drag to rotate · hover any star · ★ = MJ 97-98';
+        var vt0=document.getElementById('viral-today'); if(vt0) vt0.textContent='12,966 stars in void — Today daily: '+st.target.n+' '+st.target.s+' — drag stars to spin';
+        var vs=document.getElementById('viral-streak'); if(vs) vs.textContent = sInfo.streak>0 ? '🔥 '+sInfo.streak : 'streak 0';
+        var rh=document.getElementById('random-hint'); if(rh) rh.textContent='Today: '+st.target.n+' '+st.target.s+' · Hero stars: MJ 97-98';
+      }
+    }catch(e){ console.warn('viral init', e); }
+  }
+  function wirePacks(){
+    function makePackAndGo(n){
+      try{
+        if(!window.VHPastModern || !VHPastModern.generateRandomPack){ location.href='/play?pack=random&n='+n; return; }
+        var entries = VHPastModern.generateRandomPack(n);
+        var ids = entries.map(function(e){return e.i;});
+        var url = (VHPastModern.packChallengeUrl ? VHPastModern.packChallengeUrl(ids) : VHPastModern.packShareUrl(ids));
+        location.href=url;
+      }catch(e){ location.href='/play?pack=random&n='+n; }
+    }
+    document.querySelectorAll('[data-pack-hero]').forEach(function(btn){ btn.addEventListener('click', function(){ makePackAndGo(parseInt(btn.getAttribute('data-pack-hero'),10)||3); }); });
+    document.querySelectorAll('[data-pack-card]').forEach(function(btn){ btn.addEventListener('click', function(){ makePackAndGo(parseInt(btn.getAttribute('data-pack-card'),10)||3); }); });
+    var bShare=document.getElementById('btn-share-board');
+    if(bShare){
+      bShare.addEventListener('click', async function(){
+        try{
+          var c=document.getElementById('sky-canvas');
+          var snap=document.createElement('canvas'); snap.width=c.width; snap.height=c.height;
+          var sctx=snap.getContext('2d'); sctx.drawImage(c,0,0);
+          var blob=await new Promise(function(res){snap.toBlob(function(b){res(b);},'image/png');});
+          if(window.VHShare && navigator.canShare && blob){
+            var file=new File([blob],'vector-hoops-map.png',{type:'image/png'});
+            if(navigator.canShare({files:[file]})){ await navigator.share({title:'Vector Hoops',text:'12,966 seasons as stars — hoops.dumbmodel.com',files:[file]}); return; }
+          }
+          var url=snap.toDataURL('image/png'); var a=document.createElement('a'); a.href=url; a.download='vector-hoops-map.png'; a.click();
+          showToast('Map image saved');
+        }catch(e){ console.warn(e); }
+      });
+    }
+    var bChallenge=document.getElementById('btn-challenge');
+    if(bChallenge){ bChallenge.addEventListener('click', async function(){
+      try{
+        var st=window.VHPastModern? window.VHPastModern.state(): null;
+        var day= st? st.dayKey : new Date().toISOString().slice(0,10);
+        var url=location.origin+'/play?day='+day;
+        var txt='Can you find the modern twin for '+ (st? st.target.n+' '+st.target.s : 'today')+'? '+url;
+        if(navigator.clipboard) await navigator.clipboard.writeText(txt);
+        this.textContent='Copied!'; showToast('Challenge link copied'); setTimeout(function(el){el.textContent='Challenge';}.bind(null,this),1500);
+      }catch(e){}
+    });}
+  }
+  wirePacks();
+  window.addEventListener('load', function(){ setTimeout(initViral, 400); });
 })();
 </script>
-</body>
-</html>
+
+<!-- Unified shared map v2-light — same engine as game, LOD, DPR1, fillRect -->
+<script type="module">
+const lazyMount = (selector, loader) => {
+  const el = document.querySelector(selector);
+  if(!el) return;
+  let mounted=false;
+  const mount = async ()=>{
+    if(mounted) return; mounted=true; observer&&observer.disconnect();
+    try{ await loader(); }catch(e){ console.warn('shared map lazy fail',selector,e); }
+  };
+  const observer = new IntersectionObserver((entries)=>{
+    const ent=entries[0]; if(ent&&ent.isIntersecting){ setTimeout(mount, 80); }
+  },{rootMargin:'200px 0px', threshold:0.01});
+  observer.observe(el);
+};
+(async ()=>{
+  const c=document.getElementById('sky-canvas');
+  if(!c) return;
+  try{
+    const { mountSharedMap } = await import('./assets/shared-map.js?v=57');
+    await mountSharedMap(c, { highlightId: 672, dark:true });
+  }catch(e){ console.error('shared-map eager fail', e); }
+})();
+lazyMount('#trading-card-void', async ()=>{
+  const { mountTradingCardVoid } = await import('./assets/lemmino/trading-card-void.js?v=53');
+  const c=document.getElementById('trading-card-void');
+  if(c) await mountTradingCardVoid(c);
+});
+</script>
+
+
+<footer class="site-footer"><div class="site-footer__links"><a href="/play">Play</a><a href="/model">Lab</a><a href="/methods">Methods</a><a href="/players">Players</a><a href="https://github.com/jcdavis131/vector-hoops" target="_blank" rel="noopener">GitHub</a></div><div class="site-footer__attribution">Every number recomputable from stats.nba.com · dumbmodel.com</div></footer>
+<script>if('serviceWorker' in navigator){window.addEventListener('load',()=>{navigator.serviceWorker.register('/sw.js').catch(()=>{})})}</script>
+</body></html>

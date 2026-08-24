@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
+<meta name="theme-color" content="#1A150F">
+<link rel="manifest" href="/manifest.json">
+<title>Players — Directory + Skills — Vector Hoops</title>
+<meta name="description" content="Every player-season graded, searchable directory + skills lens."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Architects+Daughter&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/shell.css"/>
+<link rel="stylesheet" href="assets/responsive.css"/>
+<link rel="stylesheet" href="assets/final-qa.css"/>
+<link rel="stylesheet" href="assets/unified.css"/>
+<link rel="stylesheet" href="assets/motion.css"/>
+<link rel="stylesheet" href="assets/player-profile-v28.css?v=28"/>
+
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://hoops.dumbmodel.com/players">
+<meta property="og:title" content="Players — Directory + Skills — Vector Hoops">
+<meta property="og:description" content="Every player-season graded, searchable directory + skills lens.">
+<meta property="og:image" content="/assets/og-1200x630.png">
+<meta name="twitter:card" content="summary_large_image"/>
+</head><body>
+<noscript><div role="alert" style="padding:16px;text-align:center">Enable JS — Vector Hoops needs JavaScript for Daily Court + Map</div></noscript>
+
+<nav class="site-nav" data-active="/players" aria-label="Vector Hoops site"></nav>
+<div class="main">
+  <div class="card">
+    <div class="kicker"><span class="kdot"></span> Players · 12,966 seasons · search any name</div>
+    <h1 class="hd" style="font-size:clamp(28px,4vw,38px);margin:8px 0 6px">Player Directory <span style="background:var(--ink);color:#fff;padding:0 .18em;border-radius:8px">+ Skills Lens</span></h1>
+    <p style="margin:0;font-size:14px;line-height:1.5;color:#3A332A">Directory of charted players, auto-generated scouting dossiers, and 0–99 grades era-normalized. Pick a name for grades, open a row for full dossier.</p>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px"><a class="pill" href="/play">Play →</a><a class="pill" href="/trends">Trends →</a><a class="pill" href="/model">Lab →</a></div>
+  </div>
+
+  <div class="card">
+    <div class="tab-pills" role="tablist" aria-label="Player reference views">
+      <button type="button" role="tab" data-tab="directory" class="is-active" aria-selected="true">Directory</button>
+      <button type="button" role="tab" data-tab="profile" aria-selected="false">Skill profile</button>
+      <button type="button" role="tab" data-tab="leaderboard" aria-selected="false">Leaderboards</button>
+    </div>
+  </div>
+
+  <section class="card" id="players-panel-directory" role="tabpanel">
+    <div class="wiki-controls">
+      <div class="wiki-search-row">
+        <input class="input wiki-search" id="wiki-search" type="text" placeholder="Search a player — Curry, Jokic, Wemby…" autocomplete="off" spellcheck="false" disabled>
+        <div class="wiki-filters">
+          <select id="wiki-filter-pos" disabled><option value="">All positions</option></select>
+          <select id="wiki-filter-arch" disabled><option value="">All archetypes</option></select>
+        </div>
+      </div>
+      <div class="wiki-alphabet" id="wiki-alphabet" aria-label="Jump to letter"></div>
+      <div class="wiki-count" id="wiki-count">Loading player index…</div>
+    </div>
+    <ol class="wiki-list" id="wiki-list" style="margin-top:10px"></ol>
+  </section>
+
+  <section class="card" id="players-panel-profile" role="tabpanel" hidden>
+    <div class="skills-panel">
+      <div class="pp-search-wrap">
+        <div class="pp-search-top">
+          <input class="input" id="skills-search" data-pp-alias="pp-search" type="text" placeholder="Search 12,966 seasons — try Curry, Jokic, Wemby…" autocomplete="off" disabled>
+          <button class="pp-btn pp-btn--yellow" id="pp-random" type="button" title="Surprise me">🎲 Random</button>
+        </div>
+        <div class="pp-quick-row" id="pp-quick-row">
+          <span class="pp-quick-label">Try:</span>
+          <button class="pp-quick-chip" data-q="Victor Wembanyama">Wemby</button>
+          <button class="pp-quick-chip" data-q="Stephen Curry">Curry</button>
+          <button class="pp-quick-chip" data-q="Nikola Jokic">Jokic</button>
+          <button class="pp-quick-chip" data-q="LeBron James">LeBron</button>
+          <button class="pp-quick-chip" data-q="Giannis Antetokounmpo">Giannis</button>
+          <button class="pp-quick-chip" data-q="Luka Doncic">Luka</button>
+        </div>
+        <ul class="skills-suggest" id="skills-suggest"></ul>
+      </div>
+
+      <div id="skills-profile" hidden>
+        <div class="pp-shell" id="pp-shell">
+          <div id="pp-court-skill-root" style="margin:0 0 18px"></div>
+
+          <div class="pp-hero" id="pp-hero">
+            <div class="pp-name-row">
+              <h2 class="pp-name" id="pp-name">Victor Wembanyama</h2>
+              <span class="pp-grade-mega" id="pp-mega"><b>99</b> ×6</span>
+            </div>
+            <p class="skills-player-meta pp-meta-line" id="skills-player-meta"></p>
+            <div class="skills-seasons pp-seasons" id="skills-seasons" role="tablist" aria-label="Season"></div>
+            <div class="pp-rarity-row" id="pp-rarity"></div>
+          </div>
+
+          <div class="pp-section">
+            <div class="pp-section-head">Elite badges — 90+ era-normalized</div>
+            <div class="vh-skill-badges pp-badges-grid" id="skills-badges"></div>
+          </div>
+
+          <div class="pp-section">
+            <div class="pp-section-head">Skill grades — 0-99 vs league that year</div>
+            <ul class="skillbar-list pp-skills-grid" id="skills-bars"></ul>
+          </div>
+
+          <div id="pp-wide-wrap"></div>
+          <div id="skills-next-profile" hidden></div>
+          <div id="skills-mtnn" hidden></div>
+          <div id="skills-playoffs" hidden></div>
+
+          <div class="pp-discover" id="pp-discover">
+            <h3 class="pp-discover__title">Keep pulling cards</h3>
+            <p class="pp-discover__sub">Every season is era-normalized. Seen Wemby? See how Chet, Shaq, or Curry compare.</p>
+            <div class="pp-discover__row" id="pp-discover-row">
+              <button class="pp-discover__chip" data-q="Chet Holmgren">Chet Holmgren</button>
+              <button class="pp-discover__chip" data-q="Shaquille O'Neal">Shaq</button>
+              <button class="pp-discover__chip" data-q="Anthony Davis">AD</button>
+              <button class="pp-discover__chip" data-q="Kevin Durant">KD</button>
+              <button class="pp-discover__chip" data-q="Draymond Green">Draymond</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="pp-empty" style="margin-top:10px">
+        <p style="font-size:13px;color:#666;margin:0" id="skills-empty">Pick a player to see skill profile, season by season — including next-season predicted vs actual when following year is charted. Try “Curry”, “Smart”, or “Jokic”.</p>
+        <div class="pp-featured" id="pp-featured"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="card" id="players-panel-leaderboard" role="tabpanel" hidden>
+    <h2 class="hd" style="font-size:20px;margin:0 0 6px">Leaderboard</h2>
+    <p style="font-size:13px;color:#555;margin:0 0 12px">0–99 skill grades, era-normalized. Pick a skill, see top seasons. Tracking boards cover 2015-16+ only. Draft Steals/Busts rank career mean vs draft slot.</p>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px">
+      <select id="board-skill" class="input" style="flex:1 1 180px;min-width:160px;min-height:44px" disabled><option>Loading skills…</option></select>
+      <select id="board-season" class="input" style="flex:0 0 160px;min-height:44px" disabled><option value="">All seasons</option></select>
+    </div>
+    <ol class="wiki-list" id="skills-board" style="margin-top:6px"></ol>
+    <p class="small-mono" style="margin-top:10px;color:#666;text-transform:none">Grades are era-normalized percentiles. Details on <a href="/methods#skills">methods</a>.</p>
+  </section>
+
+  <div id="dossier-backdrop" class="vh-modal-backdrop" hidden>
+    <div class="vh-modal" role="dialog" aria-modal="true" id="dossier-modal">
+      <div style="display:flex;justify-content:space-between;gap:10px;align-items:center">
+        <h3 class="hd" id="dossier-title" style="margin:0;font-size:18px">Dossier</h3>
+        <button class="btn" id="dossier-close" type="button" style="min-height:36px;padding:6px 10px">Close</button>
+      </div>
+      <div id="dossier-body" style="margin-top:10px;font-size:14px;line-height:1.6"></div>
+      <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap"><a class="btn btn-accent" id="dossier-source-link" href="#" target="_blank" rel="noopener" style="min-height:36px">View source →</a></div>
+    </div>
+  </div>
+</div>
+
+<footer class="site-footer"><div class="site-footer__links"><a href="/play">Play</a><a href="/model">Lab</a><a href="/methods">Methods</a><a href="/players">Players</a><a href="https://github.com/jcdavis131/vector-hoops" target="_blank" rel="noopener">GitHub</a></div><div class="site-footer__attribution">Every number recomputable from stats.nba.com · dumbmodel.com</div></footer>
+<script src="assets/error-boundary.js"></script>
+<script src="assets/keyboard-a11y.js"></script>
+<script src="assets/site-nav.js" defer></script>
+<script src="assets/pwa-install.js"></script>
+<script src="assets/dossier.js?v=28"></script>
+<script src="assets/player-roster.js?v=28"></script>
+<script src="assets/players-directory.js?v=28"></script>
+<script src="assets/players-skills.js?v=32"></script>
+<script src="assets/players-page.js?v=28"></script>
+<script>if('serviceWorker' in navigator){window.addEventListener('load',()=>{navigator.serviceWorker.register('/sw.js').catch(()=>{})})}</script>
+</body></html>
