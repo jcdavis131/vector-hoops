@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#1A150F">
+<link rel="manifest" href="/manifest.json">
+<title>How the vector knows — MTNN Training Cockpit — Vector Hoops</title>
+<link rel="canonical" href="https://hoops.dumbmodel.com/model">
+<meta property="og:url" content="https://hoops.dumbmodel.com/model">
+<meta name="description" content="From 12,966 player-seasons to a 48-d fingerprint: training cockpit, architecture, truthful flow, and Model explorer for MTNN v4→v6.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Ctext y=%22.9em%22 font-size=%2290%22%3E🏀%3C/text%3E%3C/svg%3E">
+<meta property="og:type" content="website">
+<meta property="og:title" content="How the vector knows — MTNN Training Cockpit">
+<meta property="og:description" content="12,966 seasons → 130 feats → 17 towers → 48-d embedding → 8 archetypes. Model training cockpit, flow, and explorer.">
+<meta property="og:image" content="/assets/og-1200x630.png">
+<meta name="twitter:card" content="summary_large_image"/>
+<link rel="stylesheet" href="assets/shell.css">
+<link rel="stylesheet" href="assets/responsive.css">
+<link rel="stylesheet" href="assets/final-qa.css">
+<link rel="stylesheet" href="assets/unified.css">
+<link rel="stylesheet" href="assets/motion.css">
+<style>
+:root{
+  --paper:#FFFEF7;--ink:#1A150F;--orange:#D55E00;--blue:#0072B2;--yellow:#F0E442;
+  --mono:ui-monospace,monospace;--sans:ui-sans-serif,system-ui;
+  --page-gutter:clamp(12px,3.2vw,20px);
+}
+html,body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:18px;line-height:1.65;overflow-x:clip;-webkit-text-size-adjust:100%}
+*,*::before,*::after{box-sizing:border-box}
+img,svg,video,canvas{max-width:100%;height:auto;display:block}
+a{color:inherit}
+.site-nav{position:sticky;top:0;z-index:100}
+
+/* main shell mobile-first */
+.research-main.network-main{
+  width:min(1180px,100%);
+  max-width:1180px;
+  margin:0 auto;
+  padding:12px var(--page-gutter) calc(96px + env(safe-area-inset-bottom));
+  display:flex;flex-direction:column;gap:16px;
+}
+.research-head.network-head{display:flex;flex-direction:column;gap:12px}
+.research-head h1{
+  margin:0;
+  font-family:"Architects Daughter",var(--mono);
+  font-size:clamp(28px,6vw,48px);
+  line-height:.95;
+  letter-spacing:-.02em;
+}
+.network-hero{
+  margin:0;max-width:68ch;
+  font-size:clamp(15px,3.6vw,18px);
+  line-height:1.55;color:#2E2A23;
+}
+.network-hero b{font-weight:900;color:var(--ink)}
+
+/* scrollable chip strips — thumb-friendly */
+.stats-strip,.cqs-strip{
+  display:flex;gap:8px;overflow-x:auto;overflow-y:hidden;
+  -webkit-overflow-scrolling:touch;scrollbar-width:none;
+  padding:2px 0 8px;margin:0 -2px;
+  scroll-snap-type:x proximity;
+  flex-wrap:nowrap;
+}
+.stats-strip::-webkit-scrollbar,.cqs-strip::-webkit-scrollbar{display:none}
+.stats-chip,.cqs-badge{
+  flex:0 0 auto;white-space:nowrap;
+  border:1.8px solid var(--ink);border-radius:999px;
+  padding:6px 12px;background:#fff;
+  font-family:var(--mono);font-size:11px;font-weight:800;
+  box-shadow:2px 2px 0 var(--ink);
+  scroll-snap-align:start;
+  min-height:32px;display:inline-flex;align-items:center;
+}
+.cqs-badge b{font-size:14px;margin-right:6px}
+.cqs-badge.is-primary{background:var(--ink);color:#fff}
+.cqs-badge.is-primary b{color:var(--yellow)}
+
+/* anchor nav as scrollable pills */
+.anchor-nav{
+  display:flex;gap:8px;overflow-x:auto;flex-wrap:nowrap;
+  padding:4px 0 6px;-webkit-overflow-scrolling:touch;scrollbar-width:none;
+  position:sticky;top:calc(48px + env(safe-area-inset-top,0));
+  z-index:5;background:var(--paper);
+  margin:0 calc(var(--page-gutter) * -1);padding-inline:var(--page-gutter);
+  border-bottom:1.5px solid #E5E2D8;
+}
+.anchor-nav::-webkit-scrollbar{display:none}
+.anchor-nav a{
+  flex:0 0 auto;white-space:nowrap;text-decoration:none;
+  border:1.8px solid var(--ink);border-radius:999px;
+  padding:8px 14px;background:#fff;
+  font-family:var(--mono);font-size:11px;font-weight:900;
+  text-transform:uppercase;letter-spacing:.04em;
+  box-shadow:2px 2px 0 var(--ink);
+  min-height:40px;display:inline-flex;align-items:center;
+}
+.anchor-nav a:active{transform:translate(1px,1px);box-shadow:1px 1px 0 var(--ink)}
+
+/* cards */
+.drift-card{
+  background:#fff;border:2.2px solid var(--ink);
+  border-radius:16px;box-shadow:4px 4px 0 var(--ink);
+  overflow:hidden;display:flex;flex-direction:column;
+}
+.drift-card__head{padding:14px 16px 10px;border-bottom:1.5px solid #E5E2D8}
+.card-kicker{
+  font-family:var(--mono);font-size:10px;font-weight:800;
+  text-transform:uppercase;letter-spacing:.08em;color:#5A5248;
+  display:flex;gap:6px;align-items:center;
+}
+.card-kicker::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--orange);display:inline-block}
+.drift-card__head h2{
+  margin:6px 0 0;
+  font-family:var(--mono);font-size:clamp(16px,4vw,22px);
+  line-height:1.15;letter-spacing:-.01em;
+}
+
+/* cockpit */
+.cockpit-grid{
+  display:grid;grid-template-columns:1fr;gap:0;
+  border-top:1px solid #f0ede5;
+}
+@media(min-width:900px){.cockpit-grid{grid-template-columns:1fr 1fr}}
+.cockpit-panel{padding:14px 16px;min-width:0}
+.cockpit-panel + .cockpit-panel{border-top:1.5px solid #E5E2D8}
+@media(min-width:900px){
+  .cockpit-panel + .cockpit-panel{border-top:0;border-left:1.5px solid #E5E2D8}
+}
+.cockpit-panel h3{
+  margin:0 0 8px;font-family:var(--mono);
+  font-size:12px;text-transform:uppercase;letter-spacing:.04em;
+}
+.code-block{
+  font-family:var(--mono);font-size:12px;line-height:1.5;
+  background:#0f0f0f;color:#e8e6e1;
+  border-radius:10px;padding:12px;
+  overflow-x:auto;white-space:pre-wrap;word-break:break-word;
+  border:1.5px solid var(--ink);
+  -webkit-overflow-scrolling:touch;
+}
+.pipe{
+  display:flex;gap:8px;overflow-x:auto;flex-wrap:nowrap;
+  padding:6px 0 8px;-webkit-overflow-scrolling:touch;scrollbar-width:none;
+}
+.pipe::-webkit-scrollbar{display:none}
+.pipe-step{
+  flex:0 0 auto;min-width:84px;
+  border:1.8px solid var(--ink);border-radius:12px;
+  padding:8px 10px;background:#fff;box-shadow:2px 2px 0 var(--ink);
+  display:flex;flex-direction:column;gap:2px;
+}
+.pipe-step b{font-size:12px}
+.pipe-step i{font-style:normal;font-family:var(--mono);font-size:10px;color:#5A5248}
+.step-num{
+  font-family:var(--mono);font-size:10px;font-weight:800;
+  background:var(--ink);color:#fff;border-radius:999px;
+  width:18px;height:18px;display:inline-flex;align-items:center;justify-content:center;
+}
+.pipe-arrow{flex:0 0 auto;display:flex;align-items:center;font-weight:900}
+
+/* weights */
+.weights-grid{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.weight-chip{
+  border:1.5px solid var(--ink);border-radius:999px;
+  padding:4px 8px;background:#FFFEF7;
+  font-family:var(--mono);font-size:10px;font-weight:800;
+  display:inline-flex;gap:6px;align-items:center;
+}
+.weight-chip b{opacity:.6}
+.weight-chip span{font-weight:900}
+
+/* manim videos */
+.manim-grid{
+  display:grid;grid-template-columns:1fr;gap:12px;
+  padding:12px;
+}
+@media(min-width:700px){.manim-grid{grid-template-columns:1fr 1fr}}
+.manim-card{
+  border:1.8px solid var(--ink);border-radius:14px;
+  overflow:hidden;background:#000;box-shadow:3px 3px 0 var(--ink);
+  display:flex;flex-direction:column;
+}
+.manim-card video{width:100%;aspect-ratio:16/9;object-fit:cover;background:#000}
+.manim-caption{
+  padding:10px 12px;background:#fff;
+  font-size:13px;line-height:1.5;color:#2B2B2B;
+  border-top:1.5px solid var(--ink)
+}
+.manim-caption b{font-weight:900}
+
+/* network flow */
+.network-section__head{padding:12px 14px;display:flex;flex-direction:column;gap:8px}
+.viz-panel__label{
+  font-family:var(--mono);font-size:11px;font-weight:900;
+  text-transform:uppercase;letter-spacing:.06em;
+}
+.network-flow-subhead{font-size:13px;line-height:1.5;color:#3A332A;margin:4px 0 0;max-width:70ch}
+.network-flow-tools{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.network-trace-status{font-family:var(--mono);font-size:11px;color:#5A5248;background:#FFFEF7;border:1.5px solid #E5E2D8;border-radius:999px;padding:5px 10px}
+.network-trace-clear{
+  appearance:none;border:1.5px solid var(--ink);border-radius:999px;
+  padding:6px 12px;background:#fff;font-family:var(--mono);font-size:11px;font-weight:800;
+  box-shadow:1.5px 1.5px 0 var(--ink);min-height:36px;cursor:pointer
+}
+.network-flow-layout{display:grid;grid-template-columns:1fr;gap:0}
+@media(min-width:980px){.network-flow-layout{grid-template-columns:1.2fr .8fr}}
+.network-flow-host{
+  min-height:280px;background:#FFFEF7;border-top:1.5px solid #E5E2D8;
+  border-bottom:1.5px solid #E5E2D8;overflow:hidden;
+  position:relative;
+}
+.network-flow-host svg{width:100%;height:auto;display:block}
+.network-insights{padding:12px 14px;font-size:13px;line-height:1.5}
+.network-node-inspector{border-top:1.5px solid #E5E2D8;background:#FFFEF7}
+@media(min-width:980px){.network-node-inspector{border-top:0;border-left:1.5px solid #E5E2D8}}
+
+.network-flow-outputs{border-top:2.5px solid var(--ink)}
+.network-flow-outputs__head{padding:12px 14px}
+.network-flow-outputs__grid{
+  display:grid;grid-template-columns:1fr;gap:10px;padding:0 12px 12px;
+}
+@media(min-width:700px){.network-flow-outputs__grid{grid-template-columns:1fr 1fr}}
+.viz-panel{background:#FFFEF7;border:1.5px solid var(--ink);border-radius:12px;padding:10px;box-shadow:2px 2px 0 var(--ink)}
+.network-arch-out,.network-skill-out{display:flex;flex-direction:column;gap:6px;margin-top:6px}
+
+/* explorer */
+.network-controls{display:flex;flex-direction:column;gap:12px}
+.search-row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.wiki-search.network-search{
+  flex:1 1 220px;min-width:0;
+  border:2.2px solid var(--ink);border-radius:12px;
+  padding:12px 14px;font-size:16px;min-height:48px;
+  background:#fff;box-shadow:2px 2px 0 var(--ink);
+}
+.network-player-tag{
+  font-family:var(--mono);font-size:11px;background:#fff;
+  border:1.5px solid var(--ink);border-radius:999px;
+  padding:5px 10px;box-shadow:1px 1px 0 var(--ink)
+}
+.network-step-nav{
+  display:flex;gap:6px;overflow-x:auto;flex-wrap:nowrap;
+  padding:2px 0 6px;-webkit-overflow-scrolling:touch;scrollbar-width:none
+}
+.network-step-nav::-webkit-scrollbar{display:none}
+.network-step-btn{
+  flex:0 0 auto;white-space:nowrap;
+  border:1.8px solid var(--ink);border-radius:999px;
+  padding:8px 12px;background:#fff;
+  font-family:var(--mono);font-size:11px;font-weight:800;
+  box-shadow:1.5px 1.5px 0 var(--ink);min-height:40px;cursor:pointer
+}
+.network-step-btn.is-active{background:var(--ink);color:#fff}
+.network-play-btn{
+  appearance:none;border:2.2px solid var(--ink);border-radius:12px;
+  padding:12px 16px;background:var(--ink);color:#fff;
+  font-family:var(--mono);font-size:12px;font-weight:900;
+  text-transform:uppercase;letter-spacing:.04em;
+  box-shadow:3px 3px 0 var(--ink);min-height:48px;cursor:pointer;
+  width:100%;justify-content:center;display:inline-flex;align-items:center;gap:8px;
+}
+@media(min-width:500px){.network-play-btn{width:auto}}
+.network-timebar{margin-top:8px;padding:10px 12px;background:#FFFEF7;border:1.5px solid var(--ink);border-radius:12px}
+.network-timebar__head{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap}
+.network-timebar__label,.network-timebar__current{font-family:var(--mono);font-size:11px;font-weight:800}
+#network-time-scrubber{width:100%;accent-color:var(--orange);height:36px}
+.network-step-caption{font-size:13px;line-height:1.5;color:#3A332A;margin:8px 0 0}
+.network-story{margin-top:10px;padding:12px;background:#FFFEF7;border:1.5px dashed var(--ink);border-radius:12px;font-size:14px;line-height:1.6}
+.attr-grid{display:grid;grid-template-columns:1fr;gap:10px;padding:12px}
+@media(min-width:800px){.attr-grid{grid-template-columns:1fr 1fr 1fr}}
+.attr-panel{min-height:120px}
+
+/* map */
+.network-map-layout{display:grid;grid-template-columns:1fr;gap:0}
+@media(min-width:900px){.network-map-layout{grid-template-columns:1fr 360px}}
+.network-map-stage{padding:12px;background:#0f0f0f}
+.network-map-canvas{width:100%;aspect-ratio:1/1;max-height:560px;background:#111;display:block;border-radius:12px;border:2px solid #222}
+.network-map-legend{display:flex;gap:6px;flex-wrap:wrap;padding:10px 0 0;list-style:none;margin:0}
+
+/* next */
+.site-next{
+  display:flex;gap:8px;flex-wrap:wrap;align-items:center;
+  padding:8px var(--page-gutter) 0;
+  font-family:var(--mono);font-size:12px;font-weight:800;
+}
+.site-next__label{color:#5A5248}
+.site-next a{
+  border:1.5px solid var(--ink);border-radius:999px;
+  padding:6px 12px;background:#fff;text-decoration:none;
+  box-shadow:1.5px 1.5px 0 var(--ink)
+}
+.network-arch-pre{
+  font-family:var(--mono);font-size:11px;line-height:1.5;
+  background:#111;color:#ddd;border-radius:10px;
+  padding:12px;overflow:auto;max-height:60vh;
+  border:1.5px solid var(--ink);white-space:pre-wrap;word-break:break-word;
+}
+.drift-loading{color:#6B665E;font-size:13px;font-style:italic}
+</style>
+</head>
+<body>
+<noscript><div role="alert" style="padding:16px;text-align:center">Enable JS — Vector Hoops needs JavaScript for Daily Court + Map</div></noscript>
+
+
+<nav class="site-nav" data-active="/model" aria-label="Vector Hoops site"></nav>
+
+<main class="research-main network-main">
+
+<div class="research-head network-head">
+<h1>How the vector knows</h1>
+<p class="network-hero">Every player-season is a fingerprint: <b>130 raw stats → 18 families with masking → 17 residual towers → fusion → 48-d unit sphere where cosine = similarity</b>. Training cockpit, architecture, and glass-box debugger — same source of truth for v4 now and v6 next.</p>
+
+<div class="stats-strip" aria-label="MTNN stats">
+<span class="stats-chip">12,966 seasons</span>
+<span class="stats-chip">1996–2026</span>
+<span class="stats-chip">130 feats × 17 towers</span>
+<span class="stats-chip">cat([x·m,m]) masked</span>
+<span class="stats-chip">17× 160→32 ×2 =544+12</span>
+<span class="stats-chip">556→128→48 L2</span>
+<span class="stats-chip">~224K params</span>
+<span class="stats-chip">heads 8/5/14/18</span>
+</div>
+
+<p class="mono" style="font-size:12px; color:#5A5248; margin:6px 0 2px;">Promote-gate baseline, re-anchored 2026-07-24. The old baseline (CQS 85.87, recall@10 1.0, purity 0.8726) was measured on the pre-protocol loop that trained on held-out positives — that 1.0 was memorization, so the gate demanded ≥0.98 and no honest model could ever pass it. These numbers are leak-free, averaged over 4 seeds.</p>
+<div class="cqs-strip" aria-label="Promote gate baseline (leak-free, 4 seeds)">
+<div class="cqs-badge is-primary"><b>75.62</b><span>CQS baseline (leak-free)</span></div>
+<div class="cqs-badge"><b>0.742</b><span>test recall@10 (sd 0.128)</span></div>
+<div class="cqs-badge"><b>0.7822</b><span>purity@20 archetype</span></div>
+<div class="cqs-badge"><b>0.119</b><span>continuity spread (guard)</span></div>
+<div class="cqs-badge"><b>6</b><span>seeds averaged</span></div>
+</div>
+<p class="mono" style="font-size:12px; color:#5A5248; margin:8px 0 2px;">Promoted 2026-07-25: <code>mtnn_v5_concat_b2_h160_t32_d64_mlp128_fus256</code>, replacing the 2026-07-14 build. On the identical held-out protocol it more than doubles top-5 retrieval on never-trained 2024+ pairs — <b>0.363 → 0.757</b> (top-1 0.163 → 0.438). The previous model predated the position-label, career-feature and durability-leak fixes.</p>
+
+<div class="cqs-strip" id="eval-scoreboard-strip" aria-label="Held-out retrieval scoreboard">
+<div class="cqs-badge is-primary"><b id="evsb-top5">…</b><span>held-out top-5 retrieval</span></div>
+<div class="cqs-badge"><b id="evsb-top1">…</b><span>held-out top-1</span></div>
+<div class="cqs-badge"><b id="evsb-base5">…</b><span>14-d baseline top-5</span></div>
+<div class="cqs-badge"><b id="evsb-pairs">…</b><span>eligible pairs</span></div>
+</div>
+<p id="evsb-caption" class="mono" style="font-size:12px; line-height:1.6; color:#5A5248; margin:6px 0 0;">Loading assets/eval_scoreboard.json…</p>
+
+<nav class="anchor-nav" aria-label="Page sections">
+<a href="#training-cockpit">Training Cockpit</a>
+<a href="#manim-mtnn">Architecture</a>
+<a href="#network-flow">Flow</a>
+<a href="#explorer">Explorer</a>
+<a href="#pipeline">Pipeline</a>
+<a href="#arch-spec">Spec</a>
+</nav>
+</div>
+
+<!-- 1. TRAINING COCKPIT -->
+<section class="drift-card" id="training-cockpit">
+<div class="drift-card__head"><span class="card-kicker">Live Training Cockpit • MTNN v4 → v6</span><h2>Training cockpit — what ships now and what trains next</h2></div>
+
+<div class="cockpit-grid">
+<div class="cockpit-panel">
+<h3>Current deployed — mtnn_v5_concat_b2_h160_t32_d64_mlp128_fus256</h3>
+<div id="arch-current-meta" class="mono" style="font-size:12px; line-height:1.6;">Loading mtnn_arch.json…</div>
+<div class="weights-grid" id="weights-grid"></div>
+<p style="font-size:13px; line-height:1.6; margin-top:12px; color:#333;">CQS weights from <code>pipeline/composite_score.py</code>: recall 0.18, purity 0.16, margin_14d 0.08, archetype 0.08, position 0.05, skills_r2 0.14, skill_nn 0.05, next_r2 0.12, next_mae 0.06, aux_r2 0.08. <b>Gate re-anchored 2026-07-25</b> to a leak-free baseline (CQS 75.62 / recall 0.742 / purity 0.7822, 6 seeds, 130-feature matrix). Thresholds are now 2× the standard error of the seed mean rather than a flat 0.02 — measured seed sd is 0.128 on test recall alone, so the old slack was adjudicating sampling noise. A candidate must also hold same-player continuity spread under its bar, which is what catches a model that memorizes the training window instead of generalizing.</p>
+</div>
+<div class="cockpit-panel">
+<h3>Hill-climb 01→05 + loss weights</h3>
+<div class="pipe">
+<div class="pipe-step is-done"><span class="step-num">01</span><b>Gather</b><i>stats.nba 12,966</i></div><div class="pipe-arrow">→</div>
+<div class="pipe-step is-done"><span class="step-num">02</span><b>Vectors</b><i>per-season z ±4 + mask</i></div><div class="pipe-arrow">→</div>
+<div class="pipe-step is-done"><span class="step-num">03</span><b>Towers</b><i>17×160→32×2</i></div><div class="pipe-arrow">→</div>
+<div class="pipe-step is-done"><span class="step-num">04</span><b>Fusion</b><i>556→128→48 L2 224K</i></div><div class="pipe-arrow">→</div>
+<div class="pipe-step is-done"><span class="step-num">05</span><b>Deploy</b><i>ONNX + WASM</i></div>
+</div>
+<p style="font-size:13px; margin-top:12px; line-height:1.6;">v4 is shallow: 4 linear layers to embedding, 57% of params in one fusion layer, concat with no cross-family attention, 48-d shared for 8+5+14+18 heads. Capacity caps around 86.0–86.5.</p>
+<p style="font-size:13px; margin-top:8px; line-height:1.6;"><b>v6 upgrade:</b> 120 feats → robust median/IQR clip[-3,3] → 17 families cat([x·m,m]) → towers d40 h192 ×3 → 17×40 tokens → CLS + season 12→128 + 17 tokens =19 tokens → Transformer 128-d 4L 4H FF512 drop0.15 → CLS 128→512→64 L2. ~1.2M params, target CQS 87.5–88.0, purity 0.89–0.91.</p>
+</div>
+</div>
+
+<div style="padding:0 16px 16px;">
+<div class="cockpit-panel" style="margin-top:4px;border:1.5px solid var(--ink);border-radius:12px;background:#FFFEF7;">
+<h3>Exact v6 training command — run from vector-hoops/</h3>
+<pre class="code-block" id="train-command">python pipeline/train_mtnn.py --epochs 150 --dim 64 --tower-width 40 --tower-hidden 192 --tower-blocks 3 --mlp-heads --d-head-hidden 128 --fusion transformer --d-model 128 --n-fusion-layers 4 --n-attn-heads 4 --fusion-hidden 512 --lr 0.001 --lr-schedule onecycle --warmup-pct 0.1 --anneal-strategy linear --weight-decay 0.0002 --nce-loss hybrid --nce-player-weight 0.65 --nce-arch-weight 0.35 --hard-neg-boost 0.4 --drop-p 0.15 --checkpoint-metric cqs --val-every 5 --era-align procrustes --robust-scaling --phase auto</pre>
+<p style="font-size:11px; color:#666; margin-top:8px;" class="mono">Preprocessing: Procrustes chains drift.json back to 1996-97 root RᵀR=I, robust median/IQR clip[-3,3]. Loss: NCE hybrid player 0.65 arch 0.35 + archetype/position/profile/next/skills/salary/team_fit/roster_lift/form_recon/career_slope/competition/pedigree/playoff/honors. Split: player leakfree. Optim: AdamW no decay bias/LN. Scheduler: OneCycle warmup 10% linear.</p>
+</div>
+</div>
+</section>
+
+<!-- 2. ARCHITECTURE — 4 VIDEOS -->
+<section class="drift-card" id="manim-mtnn">
+<div class="drift-card__head"><span class="card-kicker">Architecture — 4 animations • code-generated</span><h2>How MTNN actually works</h2></div>
+<div class="manim-grid">
+<div class="manim-card">
+<video autoplay loop muted playsinline controls preload="metadata" src="assets/manim/MTNNFlow.mp4" aria-label="MTNNFlow"></video>
+<div class="manim-caption"><b>MTNNFlow — glass box</b><br>17 towers, 120 feats cat([x·m,m]) → 17× 160→32 LN+GELU×2 → 544 +12 season → 556→128→48 L2 → heads 8/5/14/18. Every box is real dimension. <em>Render shows the 120-feature v4 matrix; it now carries 131 across 18 families (injury is a durability read-out, not an input tower).</em></div>
+</div>
+<div class="manim-card">
+<video autoplay loop muted playsinline controls preload="metadata" src="assets/manim/ChimeraEquation.mp4" aria-label="ChimeraEquation"></video>
+<div class="manim-caption"><b>ChimeraEquation — how Chimera scores</b><br>Donor A + Donor B → fuse in 48-d → nearest real among 12,966 by cosine. The argmin behind daily puzzle.</div>
+</div>
+<div class="manim-card">
+<video autoplay loop muted playsinline controls preload="metadata" src="assets/manim/InputFamilies.mp4" aria-label="InputFamilies"></video>
+<div class="manim-caption"><b>InputFamilies — 120 feats → 17 families → cat([x·m,m])</b><br>volume·play·reb·def·eff·shotmix·bio·tracking*·form*·market·roster·career·comp·team·pedig·playoffs·honors =120. Missing tracking pre-2013 masked to zero.</div>
+</div>
+<div class="manim-card">
+<video autoplay loop muted playsinline controls preload="metadata" src="assets/manim/EmbeddingL2.mp4" aria-label="EmbeddingL2"></video>
+<div class="manim-caption"><b>EmbeddingL2 — 48-d → L2 → unit sphere</b><br>v̂ = v/||v||₂, ||v̂||=1, cos = v̂·ŵ. 12,966 points on sphere powers Chimera + Era Twin.</div>
+</div>
+</div>
+</section>
+
+<!-- 3. FLOW -->
+<section class="drift-card" id="network-flow" aria-label="Network data flow">
+<div class="network-section__head">
+<div><p class="viz-panel__label" style="margin:0;">Data flow — truthful boxes measured</p><p class="network-flow-subhead">Input mask m∈{0,1} • cat([x·m,m]) → 2 residual blocks per tower 160→32 LN GELU + skip → season 12-d concat → L2 embed 48-d → MLP heads 8/5/14/18. Tap any node.</p></div>
+<div class="network-flow-tools"><span id="network-trace-status" class="network-trace-status">Tap a node to see what fed it.</span><button type="button" id="network-trace-clear" class="network-trace-clear" hidden>✕ Clear</button></div>
+</div>
+<div class="network-flow-layout">
+<div class="network-flow-main">
+<div id="network-flow-svg" class="network-flow-host" role="img" aria-label="MTNN layer diagram"></div>
+<div id="network-flow-insights" class="network-insights"><p class="drift-loading">Loading tower activations, family share per head…</p></div>
+</div>
+<div id="network-node-inspector" class="network-insights network-node-inspector"><p class="drift-loading">Tap an input, tower, or output to see exact numbers.</p></div>
+</div>
+
+<div class="network-flow-outputs" id="network-output-card">
+<div class="network-flow-outputs__head"><p class="viz-panel__label">Guess & grade — heads decode 48-d</p><p style="font-size:12px; color:#666; margin-top:4px;">Same MLP heads as rightmost column. Tap a row to lock trace back through network.</p></div>
+<div class="viz-duo-grid network-flow-outputs__grid">
+<div class="viz-panel"><p class="viz-panel__label">Archetype — 8</p><div id="network-arch-out" class="network-arch-out"></div></div>
+<div class="viz-panel"><p class="viz-panel__label">Position — 5</p><div id="network-pos-out" class="network-arch-out"></div></div>
+<div class="viz-panel"><p class="viz-panel__label">Skill grades — 18×(48→16→1)</p><div id="network-skill-out" class="network-skill-out"></div></div>
+<div class="viz-panel"><p class="viz-panel__label">Next-season forecast — per 100</p><div id="network-next-out" class="network-skill-out"></div></div>
+</div>
+</div>
+</section>
+
+<!-- 4. EXPLORER -->
+<section class="drift-card network-controls-card" id="explorer">
+<div class="drift-card__head"><span class="card-kicker">Explorer • Glass box debugger</span><h2>Probe any player-season</h2></div>
+
+<div class="network-controls" style="padding:14px 16px;">
+<div class="search-row">
+<label class="viz-panel__label" for="network-search">Player</label>
+<input type="search" id="network-search" class="wiki-search network-search" placeholder="Search 12,966 — e.g. LeBron 2013, Curry 2016…" autocomplete="off" autocorrect="off" spellcheck="false">
+<ul class="network-suggest" id="network-suggest" hidden></ul>
+<span id="network-player-tag" class="network-player-tag">Loading index…</span>
+</div>
+
+<div class="search-row">
+<label class="network-compare-toggle" for="network-compare-toggle"><input type="checkbox" id="network-compare-toggle"> <span style="font-family:var(--mono);font-size:12px;font-weight:800">Compare</span></label>
+<input type="search" id="network-compare-search" class="wiki-search network-search" placeholder="2nd player-season" autocomplete="off" autocorrect="off" spellcheck="false" disabled style="min-width:180px;">
+<ul class="network-suggest" id="network-compare-suggest" hidden></ul>
+<span id="network-compare-tag" class="network-player-tag">No compare</span>
+</div>
+
+<div class="network-step-nav" id="network-step-nav" role="tablist">
+<button type="button" class="network-step-btn is-active" data-step="0" role="tab" aria-selected="true">◉ Input</button>
+<button type="button" class="network-step-btn" data-step="1" role="tab" aria-selected="false">⬢ Towers</button>
+<button type="button" class="network-step-btn" data-step="2" role="tab" aria-selected="false">⬣ Fusion</button>
+<button type="button" class="network-step-btn" data-step="3" role="tab" aria-selected="false">⬔ Embed</button>
+<button type="button" class="network-step-btn" data-step="4" role="tab" aria-selected="false">⬕ Heads</button>
+</div>
+
+<button type="button" id="network-play" class="network-play-btn">▶ Play flow — trace signal</button>
+</div>
+
+<div style="padding:0 16px 16px;">
+<div class="network-timebar" id="network-timebar" hidden>
+<div class="network-timebar__head"><span class="network-timebar__label">Career timeline — scrub season</span><span id="network-timebar-current" class="network-timebar__current"></span></div>
+<input type="range" id="network-time-scrubber" min="0" max="0" step="1" value="0" aria-label="Career timeline">
+<div id="network-timebar-range" class="network-timebar__range"></div>
+</div>
+
+<p id="network-step-caption" class="network-step-caption">Loading architecture… 17×160→32 LN GELU ×2, 12-d season emb, 544+12=556→128→48 L2 ~224K. Era-honest sigma per-season, masked, Procrustes-aligned.</p>
+
+<div id="network-story" class="network-story"><p class="drift-loading">Loading story…</p></div>
+<div id="network-compare-summary" class="network-insights" style="margin-top:12px;"><p class="drift-loading">Compare off — toggle to diff two seasons.</p></div>
+</div>
+</section>
+
+<section class="drift-card network-attr-card" id="network-attr-card" aria-label="What drove this prediction" hidden>
+<div class="network-section__head" style="flex-direction:column; align-items:stretch;"><div style="display:flex; flex-wrap:wrap; justify-content:space-between; gap:10px; align-items:center;"><p class="viz-panel__label" style="margin:0;">What drove this prediction</p><div style="display:flex; flex-wrap:wrap; gap:6px;"><div id="attr-target-tabs" role="tablist"></div><div id="attr-scope" role="group"></div><button type="button" id="attr-table-toggle" class="network-trace-clear" aria-pressed="false">Table view</button></div></div><p class="attr-subject" id="attr-subject" style="margin:8px 0 0; font-size:13px;"></p></div>
+<div class="attr-grid"><div class="viz-panel attr-panel" id="attr-tile"></div><div class="viz-panel attr-panel" id="attr-towers"></div><div class="viz-panel attr-panel" id="attr-features"></div></div>
+<div id="attr-population" hidden></div>
+</section>
+
+<section class="drift-card network-map-card" aria-label="48-d embedding map">
+<div class="network-section__head"><div><p class="viz-panel__label" style="margin:0;">Embedding map — 48-d rendered in 3D</p><p style="font-size:12px; color:#666; margin-top:6px;">Slow auto-rotate • drag to orbit • scroll to zoom • orange=selected — 12,966 points L2-normalized.</p></div></div>
+<div class="network-map-layout">
+<div class="network-map-stage">
+<canvas id="network-map-canvas" class="network-map-canvas" aria-label="3D MTNN embedding map"></canvas>
+<ul id="network-map-legend" class="network-map-legend"></ul>
+</div>
+<div id="network-map-insights" class="network-insights"><p class="drift-loading">Loading nearby players…</p></div>
+</div>
+</section>
+
+<!-- 5. PIPELINE -->
+<section class="drift-card" id="pipeline">
+<div class="drift-card__head"><span class="card-kicker">Lab pipeline 01→05</span><h2>From box score to fingerprint</h2></div>
+<div class="cockpit-grid">
+<div class="cockpit-panel">
+<h3>01 Gather → 02 Vectors</h3>
+<p style="font-size:14px; line-height:1.6;">Pull every per-100 split from stats.nba.com 1996-2026. 12,966 player-seasons after MIN≥800 filter. Per-season z-score so 1999 and 2026 are both 0 = average of their era. Mask m creates cat([x·m,m]) so model knows never-measured vs zero.</p>
+<ul style="font-size:12px; line-height:1.6; margin:8px 0 0 18px;">
+<li>volume, playmaking, rebounding, defense, efficiency, shotmix</li>
+<li>bio age/height/weight/draft, tracking 2013+ masked, form 2015+ masked</li>
+<li>market salary, roster complement, career lag cosine, competition SOS, team, pedigree, playoffs, honors</li>
+</ul>
+</div>
+<div class="cockpit-panel">
+<h3>03 Train → 04 Export → 05 Deploy</h3>
+<p style="font-size:14px; line-height:1.6;">Residual towers 17×160→32 ×2 LN GELU + skip =544, +12 season =556, concat fusion 556→128→48 L2 ~224K. Next: transformer tokens 17×40→128, CLS token, 4 layers attend, 128→512→64. Heads MLP decode. ONNX WASM 2MB, ExecuTorch mobile. Drift uses Procrustes chained RᵀR=I root frame 1996-97 so Era Twin compares directly.</p>
+</div>
+</div>
+</section>
+
+<!-- 6. ARCH SPEC -->
+<section class="drift-card" id="arch-spec">
+<div class="drift-card__head"><span class="card-kicker">Shipped spec reproducible</span><h2>Arch spec — mtnn_arch.json</h2></div>
+<div style="padding:14px;">
+<pre id="arch-layers-pre" class="network-arch-pre">Loading mtnn_arch.json…</pre>
+</div>
+</section>
+
+<nav class="site-next" aria-label="Continue exploring">
+<span class="site-next__label">Next →</span>
+<a href="/play">Play</a>
+<a href="/trends">Trends</a>
+<a href="/players">Players</a>
+<a href="/methods">Methods</a>
+</nav>
+
+</main>
+
+<footer class="site-footer"><div class="site-footer__links"><a href="/play">Play</a><a href="/model">Lab</a><a href="/methods">Methods</a><a href="/players">Players</a><a href="https://github.com/jcdavis131/vector-hoops" target="_blank" rel="noopener">GitHub</a></div><div class="site-footer__attribution">Every number recomputable from stats.nba.com · dumbmodel.com</div></footer>
+
+<script src="assets/error-boundary.js"></script>
+<script src="assets/keyboard-a11y.js"></script>
+<script src="assets/site-nav.js" defer></script>
+<script src="assets/pwa-install.js"></script>
+<script src="assets/mtnn.js" defer></script>
+<script src="assets/network-viz.js" defer></script>
+<script>
+(() => {
+  async function loadArch(){
+    try{
+      const r = await fetch('assets/mtnn_arch.json?v='+Date.now());
+      const j = await r.json();
+      const el = document.getElementById('arch-current-meta');
+      const pre = document.getElementById('arch-layers-pre');
+      if(el){
+        el.innerHTML = `
+          <div><b>model</b> ${j.model||'mtnn_v4'} • <b>dTower</b> ${j.dTower||32} • <b>dEmb</b> ${j.dEmb||48} • <b>blocks</b> ${j.towerBlocks||2} • <b>fusion</b> ${j.fusion||'concat'}</div>
+          <div style="margin-top:6px;"><b>families</b> ${(j.towerFamilies||[]).join(', ')} (${(j.towerFamilies||[]).length})</div>
+          <div style="margin-top:6px;"><b>checkpoint</b> mtime ${j.checkpoint?.mtime||'—'} • ${(j.checkpoint?.bytes/1e6||0).toFixed(2)}MB • ${j.nArchetypes||8} archetypes • ${j.skillKeys?.length||18} skills</div>
+        `;
+      }
+      if(pre) pre.textContent = JSON.stringify(j, null, 2).slice(0, 12000);
+    }catch(e){
+      const el=document.getElementById('arch-current-meta');
+      if(el) el.textContent='Failed to load assets/mtnn_arch.json — ' + e;
+    }
+  }
+  function loadWeights(){
+    const WEIGHTS = {recall:0.18,purity:0.16,margin_14d:0.08,archetype:0.08,position:0.05,skills_r2:0.14,skill_nn:0.05,next_r2:0.12,next_mae:0.06,aux_r2:0.08};
+    const grid=document.getElementById('weights-grid');
+    if(!grid) return;
+    grid.innerHTML = Object.entries(WEIGHTS).map(([k,v])=>`<div class="weight-chip"><b>${k}</b><span>${v}</span></div>`).join('');
+  }
+  async function loadScoreboard(){
+    const cap = document.getElementById('evsb-caption');
+    try{
+      const r = await fetch('assets/eval_scoreboard.json?v='+Date.now());
+      const j = await r.json();
+      const pct = x => (x*100).toFixed(1) + '%';
+      const test = j.results.mtnn.by_split.test;
+      const base = j.results.baseline_transparent_14d.by_split.test;
+      const rnd = j.results.baseline_random;
+      document.getElementById('evsb-top5').textContent = pct(test.top5);
+      document.getElementById('evsb-top1').textContent = pct(test.top1);
+      document.getElementById('evsb-base5').textContent = pct(base.top5);
+      document.getElementById('evsb-pairs').textContent = j.eligible_pairs.toLocaleString('en-US');
+      if(cap) cap.textContent =
+        'Held-out retrieval: query the shipped 48-d space with a player’s season N — does that same player’s season N+1 rank in the top-5 nearest neighbors among all ' +
+        j.embedding_asset.rows.toLocaleString('en-US') + ' player-seasons? Scored on ' + test.n.toLocaleString('en-US') +
+        ' pairs whose target season (2024+) was never a training positive; ' + j.eligible_pairs.toLocaleString('en-US') +
+        ' adjacent-season pairs total, keyed by stable PLAYER_ID. Baselines: transparent 14-d era-z profile (' + pct(base.top5) +
+        ') and random rank (' + (rnd.top5*100).toFixed(2) + '%). Recomputed + gated every rebuild — pipeline/build_eval_scoreboard.py.';
+    }catch(e){
+      if(cap) cap.textContent = 'Failed to load assets/eval_scoreboard.json — ' + e;
+    }
+  }
+  window.addEventListener('DOMContentLoaded', ()=>{ loadArch(); loadWeights(); loadScoreboard(); });
+})();
+</script>
+<script>if('serviceWorker' in navigator){window.addEventListener('load',()=>{navigator.serviceWorker.register('/sw.js').catch(()=>{})})}</script>
+</body>
+</html>
