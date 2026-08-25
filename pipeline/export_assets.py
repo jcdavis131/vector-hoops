@@ -107,7 +107,7 @@ def leakfree_evidence() -> dict | None:
         return None
     try:
         doc = json.loads(path.read_text(encoding="utf-8"))
-    except Exception:  # noqa: BLE001
+    except Exception:
         return None
     ev = doc.get("_evidence", {})
     winner = ev.get(doc.get("_name", ""), {})
@@ -151,39 +151,57 @@ def main() -> None:
     steps_ok["skills"] = run("build_skills", [py, "pipeline/build_skills.py"])
     steps_ok["skill_gates"] = run("test_skills", [py, "pipeline/test_skills.py"])
     steps_ok["wide_skills"] = run(
-        "build_wide_skills", wide_skills_build_cmd(py), required=False)
+        "build_wide_skills", wide_skills_build_cmd(py), required=False
+    )
     steps_ok["wide_skill_gates"] = run(
-        "test_wide_skills", [py, "pipeline/test_wide_skills.py"], required=False)
+        "test_wide_skills", [py, "pipeline/test_wide_skills.py"], required=False
+    )
     steps_ok["pedigree"] = run(
-        "build_pedigree", [py, "pipeline/build_pedigree.py"], required=False)
+        "build_pedigree", [py, "pipeline/build_pedigree.py"], required=False
+    )
     steps_ok["pedigree_gates"] = run(
-        "test_pedigree", [py, "pipeline/test_pedigree.py"], required=False)
+        "test_pedigree", [py, "pipeline/test_pedigree.py"], required=False
+    )
     steps_ok["playoffs"] = run(
-        "build_playoffs", [py, "pipeline/build_playoffs.py"], required=False)
+        "build_playoffs", [py, "pipeline/build_playoffs.py"], required=False
+    )
     steps_ok["playoffs_gates"] = run(
-        "test_playoffs", [py, "pipeline/test_playoffs.py"], required=False)
+        "test_playoffs", [py, "pipeline/test_playoffs.py"], required=False
+    )
     steps_ok["honors"] = run(
-        "build_honors", [py, "pipeline/build_honors.py"], required=False)
+        "build_honors", [py, "pipeline/build_honors.py"], required=False
+    )
     steps_ok["honors_gates"] = run(
-        "test_honors", [py, "pipeline/test_honors.py"], required=False)
+        "test_honors", [py, "pipeline/test_honors.py"], required=False
+    )
     steps_ok["salary_market"] = run(
-        "build_salary_market", [py, "pipeline/build_salary_market.py"], required=False)
+        "build_salary_market", [py, "pipeline/build_salary_market.py"], required=False
+    )
     steps_ok["salary_gates"] = run(
-        "test_salaries", [py, "pipeline/test_salaries.py"], required=False)
+        "test_salaries", [py, "pipeline/test_salaries.py"], required=False
+    )
     steps_ok["game_ratings"] = run(
-        "build_game_ratings", [py, "pipeline/build_game_ratings.py", "--fixture"],
-        required=False)
+        "build_game_ratings",
+        [py, "pipeline/build_game_ratings.py", "--fixture"],
+        required=False,
+    )
     steps_ok["game_ratings_gates"] = run(
-        "test_game_ratings", [py, "pipeline/test_game_ratings.py"], required=False)
+        "test_game_ratings", [py, "pipeline/test_game_ratings.py"], required=False
+    )
     steps_ok["player_meta"] = run(
-        "build_player_meta", [py, "pipeline/build_player_meta.py"], required=False)
+        "build_player_meta", [py, "pipeline/build_player_meta.py"], required=False
+    )
     steps_ok["current_rosters"] = run(
-        "build_current_rosters", [py, "pipeline/build_current_rosters.py"], required=False)
+        "build_current_rosters",
+        [py, "pipeline/build_current_rosters.py"],
+        required=False,
+    )
     # Per-season league mean/SD so the client can turn z-scores back into real
     # per-100-possession numbers. Self-verifying: a (season, feature) pair that
     # fails the round-trip is dropped rather than shipped.
     steps_ok["season_norms"] = run(
-        "export_season_norms", [py, "pipeline/export_season_norms.py"], required=False)
+        "export_season_norms", [py, "pipeline/export_season_norms.py"], required=False
+    )
 
     # Archetype / drift sidecars (idempotent; fast when vectors unchanged).
     for script in (
@@ -191,24 +209,30 @@ def main() -> None:
         "archetype_time.py",
         "career_trajectories.py",
     ):
-        steps_ok[script] = run(
-            script, [py, f"pipeline/{script}"], required=False)
+        steps_ok[script] = run(script, [py, f"pipeline/{script}"], required=False)
 
     if mtnn_promotion_eligible(
-            json.loads(REPORT.read_text(encoding="utf-8")) if REPORT.exists() else None):
+        json.loads(REPORT.read_text(encoding="utf-8")) if REPORT.exists() else None
+    ):
         steps_ok["mtnn_export"] = run(
             "export_mtnn_embeddings",
             [py, "pipeline/export_mtnn_embeddings.py"],
-            required=False)
+            required=False,
+        )
         steps_ok["mtnn_export_gates"] = run(
-            "test_mtnn_export", [py, "pipeline/test_mtnn_export.py"], required=False)
+            "test_mtnn_export", [py, "pipeline/test_mtnn_export.py"], required=False
+        )
 
     emb_npz = ROOT / "pipeline" / "data" / "embedding_v3.npz"
     if emb_npz.exists():
         steps_ok["projections"] = run(
-            "project_next_season", [py, "pipeline/project_next_season.py"], required=False)
+            "project_next_season",
+            [py, "pipeline/project_next_season.py"],
+            required=False,
+        )
         steps_ok["mtnn_viz"] = run(
-            "export_mtnn_viz", [py, "pipeline/export_mtnn_viz.py"], required=False)
+            "export_mtnn_viz", [py, "pipeline/export_mtnn_viz.py"], required=False
+        )
 
     mtnn = None
     if REPORT.exists():
@@ -241,7 +265,9 @@ def main() -> None:
         "mtnn_promoted": mtnn_promotion_eligible(mtnn),
         "mtnn_promotion_note": (
             "embeddings promoted to assets/ and consumed by /model + neighbor UI"
-            if mtnn_promotion_eligible(mtnn) else None),
+            if mtnn_promotion_eligible(mtnn)
+            else None
+        ),
         "mtnn_model": mtnn.get("model") if mtnn else None,
         # The production model is an ATLAS: it trains on every charted row by
         # design, so the two figures below are TRANSDUCTIVE -- the pairs they
@@ -251,15 +277,22 @@ def main() -> None:
         "mtnn_eval_protocol": "transductive (atlas) — trained on all rows; NOT held-out",
         "mtnn_transductive_recall_at_10": (
             mtnn.get("held_out_recall", {}).get("test", {}).get("recall_at_10_mtnn")
-            if mtnn else None),
+            if mtnn
+            else None
+        ),
         "mtnn_transductive_purity_at_20": (
-            mtnn.get("cross_era_archetype_neighbor_purity_at_20") if mtnn else None),
+            mtnn.get("cross_era_archetype_neighbor_purity_at_20") if mtnn else None
+        ),
         "mtnn_leakfree": leakfree_evidence(),
         # Back-compat keys (same values, honest names above).
         "mtnn_test_recall_at_10": (
             mtnn.get("held_out_recall", {}).get("test", {}).get("recall_at_10_mtnn")
-            if mtnn else None),
-        "mtnn_purity_at_20": mtnn.get("cross_era_archetype_neighbor_purity_at_20") if mtnn else None,
+            if mtnn
+            else None
+        ),
+        "mtnn_purity_at_20": mtnn.get("cross_era_archetype_neighbor_purity_at_20")
+        if mtnn
+        else None,
         "hp_sweep_best": sweep_best,
         "dataset_ledger": ledger_tail,
         "steps": steps_ok,
@@ -272,7 +305,8 @@ def main() -> None:
             "present": (ASSETS / "mtnn_embeddings.f32").exists(),
             "bytes": (
                 (ASSETS / "mtnn_embeddings.f32").stat().st_size
-                if (ASSETS / "mtnn_embeddings.f32").exists() else None
+                if (ASSETS / "mtnn_embeddings.f32").exists()
+                else None
             ),
         },
     }

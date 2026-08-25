@@ -74,7 +74,8 @@ def resolve_team(
     if team:
         return team
     return roster_teams.get((name, season)) or roster_teams.get(
-        (sal.get("name", name), season))
+        (sal.get("name", name), season)
+    )
 
 
 def build_team_payrolls(
@@ -182,22 +183,30 @@ def main() -> None:
             cap_pct_rows += 1
 
     OUT.parent.mkdir(parents=True, exist_ok=True)
-    OUT.write_text(json.dumps({
-        "built": time.strftime("%Y-%m-%d"),
-        "coverage": {
-            "charted_rows": len(vec["players"]),
-            "labeled_rows": labeled,
-            "team_pct_rows": team_pct_rows,
-            "cap_pct_rows": cap_pct_rows,
-            "team_payroll_buckets": len(team_totals),
-            "salary_source_rows": len(salaries),
-        },
-        "players": entries,
-    }, separators=(",", ":")), encoding="utf-8")
+    OUT.write_text(
+        json.dumps(
+            {
+                "built": time.strftime("%Y-%m-%d"),
+                "coverage": {
+                    "charted_rows": len(vec["players"]),
+                    "labeled_rows": labeled,
+                    "team_pct_rows": team_pct_rows,
+                    "cap_pct_rows": cap_pct_rows,
+                    "team_payroll_buckets": len(team_totals),
+                    "salary_source_rows": len(salaries),
+                },
+                "players": entries,
+            },
+            separators=(",", ":"),
+        ),
+        encoding="utf-8",
+    )
 
-    print(f"salary market: {labeled} labeled rows "
-          f"({team_pct_rows} team%, {cap_pct_rows} cap%), "
-          f"{len(team_totals)} team-season payrolls")
+    print(
+        f"salary market: {labeled} labeled rows "
+        f"({team_pct_rows} team%, {cap_pct_rows} cap%), "
+        f"{len(team_totals)} team-season payrolls"
+    )
     print(f"wrote {OUT.relative_to(ROOT)}")
 
 

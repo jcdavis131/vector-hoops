@@ -11,7 +11,6 @@ from __future__ import annotations
 
 import json
 import math
-import statistics
 from collections import defaultdict
 from pathlib import Path
 
@@ -73,7 +72,7 @@ def pctile(vals: list[float], p: float) -> float:
         return 0.0
     s = sorted(vals)
     k = (len(s) - 1) * p
-    lo, hi = int(math.floor(k)), int(math.ceil(k))
+    lo, hi = math.floor(k), math.ceil(k)
     if lo == hi:
         return s[lo]
     return s[lo] + (s[hi] - s[lo]) * (k - lo)
@@ -82,9 +81,7 @@ def pctile(vals: list[float], p: float) -> float:
 def main() -> None:
     logs = load_gamelog_seasons()
     vec = json.loads(VECTORS.read_text(encoding="utf-8"))
-    vec_by_ns: set[tuple[str, str]] = {
-        (p["name"].lower(), p["season"]) for p in vec["players"]
-    }
+    {(p["name"].lower(), p["season"]) for p in vec["players"]}
 
     print(f"gamelog player-seasons: {len(logs)}")
     print(f"vectors.json rows: {len(vec['players'])}\n")
@@ -92,8 +89,10 @@ def main() -> None:
     print("Derived gates by season (schedule-aware):")
     sample_seasons = ["1998-99", "2011-12", "2019-20", "2020-21", "2023-24", "2024-25"]
     for s in sample_seasons:
-        print(f"  {s} ({season_games(s)} sched): "
-              f"min_gp={derive_min_gp(s)}, min_total_min={derive_min_total_minutes(s)}")
+        print(
+            f"  {s} ({season_games(s)} sched): "
+            f"min_gp={derive_min_gp(s)}, min_total_min={derive_min_total_minutes(s)}"
+        )
 
     # Per-season retention on gamelog ground truth
     by_season: dict[str, list[dict]] = defaultdict(list)
@@ -111,19 +110,21 @@ def main() -> None:
         rot_cut = pctile(rels, 0.30) if rels else 0
         rotation = sum(1 for r in rows if r["reliability"] >= rot_cut)
         new_in_rot = sum(
-            1 for r in rows
-            if eligible(r["gp"], r["total_min"], season)
-            and r["reliability"] >= rot_cut
+            1
+            for r in rows
+            if eligible(r["gp"], r["total_min"], season) and r["reliability"] >= rot_cut
         )
-        print(f"  {season}: n={n}  derived={new_keep} ({100*new_keep/n:.0f}%)  "
-              f"legacy={leg_keep} ({100*leg_keep/n:.0f}%)  "
-              f"rotation~70%={rotation}  derived_and_rot={new_in_rot}")
+        print(
+            f"  {season}: n={n}  derived={new_keep} ({100 * new_keep / n:.0f}%)  "
+            f"legacy={leg_keep} ({100 * leg_keep / n:.0f}%)  "
+            f"rotation~70%={rotation}  derived_and_rot={new_in_rot}"
+        )
 
     # Reliability distribution: where does the long tail end?
     all_rel = [r["reliability"] for r in logs.values()]
     print("\nReliability sqrt(GP*total_min) percentiles (gamelogs):")
     for p in (0.05, 0.10, 0.20, 0.30, 0.50, 0.70):
-        print(f"  p{int(p*100):02d}: {pctile(all_rel, p):.0f}")
+        print(f"  p{int(p * 100):02d}: {pctile(all_rel, p):.0f}")
 
     # Fixed gate comparison on pooled gamelogs
     rows_all = list(logs.values())
@@ -133,28 +134,33 @@ def main() -> None:
         ("GP>=10 min>=450", lambda r, s: r["gp"] >= 10 and r["total_min"] >= 450),
         ("GP>=12 min>=500", lambda r, s: r["gp"] >= 12 and r["total_min"] >= 500),
         ("GP>=15 min>=500", lambda r, s: r["gp"] >= 15 and r["total_min"] >= 500),
-        ("GP>=20 min>=800 (legacy)", lambda r, s: r["gp"] >= 20 and r["total_min"] >= 800),
+        (
+            "GP>=20 min>=800 (legacy)",
+            lambda r, s: r["gp"] >= 20 and r["total_min"] >= 800,
+        ),
     ]
     print("\nPooled gamelog retention:")
     for label, fn in gates:
         # season passed via key lookup — re-walk with season
         kept = 0
-        for (pid, season), row in logs.items():
+        for (_pid, season), row in logs.items():
             if fn(row, season):
                 kept += 1
-        print(f"  {label}: {kept}/{n} ({100*kept/n:.1f}%)")
+        print(f"  {label}: {kept}/{n} ({100 * kept / n:.1f}%)")
 
     # Show borderline examples excluded by legacy but kept by derived
     print("\nExamples kept by derived, dropped by legacy (2024-25 gamelogs):")
     shown = 0
-    for (pid, season), row in sorted(logs.items(), key=lambda x: -x[1]["reliability"]):
+    for (_pid, season), row in sorted(logs.items(), key=lambda x: -x[1]["reliability"]):
         if season != "2024-25":
             continue
         if eligible(row["gp"], row["total_min"], season) and not (
             row["gp"] >= 20 and row["total_min"] >= 800
         ):
-            print(f"  {row['name']}: {row['gp']} gp, {row['total_min']:.0f} min, "
-                  f"rel={row['reliability']:.0f}")
+            print(
+                f"  {row['name']}: {row['gp']} gp, {row['total_min']:.0f} min, "
+                f"rel={row['reliability']:.0f}"
+            )
             shown += 1
             if shown >= 8:
                 break

@@ -3,6 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#1A150F">
+<link rel="manifest" href="/manifest.json">
 <title>Leaderboard — Vector Hoops</title>
 <link rel="canonical" href="https://hoops.dumbmodel.com/leaderboard">
 <meta property="og:url" content="https://hoops.dumbmodel.com/leaderboard">
@@ -11,17 +13,23 @@
 <meta property="og:type" content="website">
 <meta property="og:title" content="Leaderboard — Vector Hoops">
 <meta property="og:description" content="Public daily leaderboards for all four Vector Hoops modes. Anonymous session names, no accounts.">
-<meta property="og:image" content="/assets/og.svg">
+<meta property="og:image" content="/assets/og-1200x630.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Leaderboard — Vector Hoops">
 <meta name="twitter:description" content="Public daily leaderboards for all four Vector Hoops modes.">
-<meta name="twitter:image" content="/assets/og.svg">
+<meta name="twitter:image" content="/assets/og-1200x630.png">
 <link rel="stylesheet" href="assets/hoops.css">
-<link rel="stylesheet" href="assets/shell.css">
 <link rel="stylesheet" href="assets/nux.css">
-<link rel="stylesheet" href="assets/responsive.css">
+<link rel="stylesheet" href="assets/shell.css"/>
+<link rel="stylesheet" href="assets/responsive.css"/>
+<link rel="stylesheet" href="assets/final-qa.css"/>
+<link rel="stylesheet" href="assets/unified.css"/>
+<link rel="stylesheet" href="assets/motion.css"/>
+
 </head>
 <body>
+<noscript><div role="alert" style="padding:16px;text-align:center">Enable JS — Vector Hoops needs JavaScript for Daily Court + Map</div></noscript>
+
 
 <nav class="site-nav" data-active="/leaderboard" aria-label="Vector Hoops site"></nav>
 
@@ -64,19 +72,14 @@
 
 </main>
 
-<footer class="site-footer">
-  <div class="site-footer__links">
-    <a href="/play">Play</a>
-    <a href="/methods">Methods</a>
-    <a href="/players">Players</a>
-    <a href="#" data-vh-nux-tour>Tour</a>
-    <a href="https://github.com/jcdavis131/vector-hoops" target="_blank" rel="noopener">GitHub</a>
-  </div>
-  <div class="site-footer__attribution">Every number recomputable from stats.nba.com &amp; Basketball-Reference source data &middot; from <a href="https://dumbmodel.com/" target="_blank" rel="noopener">dumbmodel.com</a></div>
-</footer>
+<footer class="site-footer"><div class="site-footer__links"><a href="/play">Play</a><a href="/model">Lab</a><a href="/methods">Methods</a><a href="/players">Players</a><a href="https://github.com/jcdavis131/vector-hoops" target="_blank" rel="noopener">GitHub</a></div><div class="site-footer__attribution">Every number recomputable from stats.nba.com · dumbmodel.com</div></footer>
 
+<script src="assets/error-boundary.js"></script>
+<script src="assets/keyboard-a11y.js"></script>
 <script src="assets/site-nav.js" defer></script>
+<script src="assets/pwa-install.js"></script>
 <script src="assets/leaderboard.js" defer></script>
 <script src="assets/nux.js" defer></script>
+<script>if('serviceWorker' in navigator){window.addEventListener('load',()=>{navigator.serviceWorker.register('/sw.js').catch(()=>{})})}</script>
 </body>
 </html>

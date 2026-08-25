@@ -64,23 +64,23 @@ def fetch_stats_json(
         session = _curl_session()
         _warmup(session)
         try:
-            r = session.get(
-                url, params=params, headers=_STATS_HEADERS, timeout=timeout)
+            r = session.get(url, params=params, headers=_STATS_HEADERS, timeout=timeout)
             r.raise_for_status()
             return r.json()
-        except Exception as e:  # noqa: BLE001 — retry throttle wall
+        except Exception as e:
             last_err = e
-            wait = min(120, 5 * 2 ** attempt)
-            print(f"  stats.nba.com/{endpoint}: attempt {attempt + 1} "
-                  f"failed ({e}); backoff {wait}s")
+            wait = min(120, 5 * 2**attempt)
+            print(
+                f"  stats.nba.com/{endpoint}: attempt {attempt + 1} "
+                f"failed ({e}); backoff {wait}s"
+            )
             time.sleep(wait)
         finally:
             try:
                 session.close()
-            except Exception:  # noqa: BLE001
+            except Exception:
                 pass
-    raise RuntimeError(
-        f"stats.nba.com/{endpoint} failed after retries: {last_err}")
+    raise RuntimeError(f"stats.nba.com/{endpoint} failed after retries: {last_err}")
 
 
 def _fetch_via_nba_api(
@@ -143,5 +143,6 @@ def patch_nba_api_session() -> bool:
 def real_playoff_cache_paths(cache_dir) -> list:
     """Per-season playoff caches only — excludes playoffs.example.json."""
     import re
+
     pat = re.compile(r"playoffs_\d{4}-\d{2}\.json$")
     return sorted(p for p in cache_dir.glob("playoffs_*.json") if pat.match(p.name))

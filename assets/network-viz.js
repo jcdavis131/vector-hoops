@@ -5,25 +5,29 @@
   'use strict';
 
   var SVG_NS = 'http://www.w3.org/2000/svg';
-  var PALETTE = ['#3987e5', '#c98500', '#199e70', '#9085e9', '#e66767', '#008300', '#d55181', '#d95926'];
-  var PALETTE_OTHER = '#6f6e69';
+  // Cam's Lab authentic styling — ADA AAA, distinct from 3b1b dark
+  var BG = '#FFFEF7';
+  var PAPER_DOT = '#E8E0C8';
+  var CARD = '#FFFFFF';
+  var INK = '#111111';
+  var SHADOW = '#111111';
+  var SUBTLE_AAA = '#585858';
+  var MUTED = '#666666';
+  var HAIR = '#B8AFA0'; // axis / hairline ink
+  var OKABE = { orange:'#E69F00', sky:'#56B4E9', green:'#009E73', yellow:'#F0E442', blue:'#0072B2', verm:'#D55E00', purple:'#CC79A7' };
+  // 8 archetypes Okabe triple-encoded (color+shape+text) — AAA 7:1 min on white for blue, others with ink border
+  var PALETTE = [OKABE.blue, OKABE.orange, OKABE.green, OKABE.verm, OKABE.purple, OKABE.sky, OKABE.yellow, OKABE.green];
+  var PALETTE_OTHER = '#999999';
+  var ORANGE = OKABE.orange;
 
   /* Fixed order, never cycled: a 9th archetype must not reuse hue 1. */
   function clusterColor(idx) {
     if (typeof idx !== 'number' || idx < 0) return PALETTE_OTHER;
     return idx < PALETTE.length ? PALETTE[idx] : PALETTE_OTHER;
   }
-  var ORANGE = '#eb6834';
-  var INK = '#e8e6df';
-  var MUTED = '#8a8983';
-  var HAIR = '#3a3935';
-  var BG = '#121210';
-  // Axes are CHROME, not a data series. The old triple (#f07070/#5cc99a/#6eb5ff)
-  // failed the dark lightness band (L .698/.759/.757 vs .48-.67), competed with
-  // the eight archetype hues on the same canvas, and colored its own text --
-  // text wears text tokens, never a series color. Recessive neutral instead.
-  var AXIS_LINE = '#4a4944';
-  var AXIS_TEXT = '#8a8983';
+  // Axes chrome — light paper style, high contrast ink
+  var AXIS_LINE = '#B8AFA0';
+  var AXIS_TEXT = '#585858';
   var MAX_INPUT_NODES = 17; // truthful: 17 families, not top-10 truncated
   var SKILL_LABELS = {
     ft: 'Free Throw Shooting',
@@ -620,18 +624,20 @@
     var panelW = Math.min(w - 24, 520);
     var lineH = 14;
     var panelH = 10 + Math.max(1, axes.length) * (lineH + 12);
-    ctx.fillStyle = 'rgba(0,0,0,0.45)';
-    ctx.fillRect(panelX, panelY, panelW, panelH);
-    ctx.fillStyle = '#c7c5bd';
-    ctx.font = '10px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace';
-    ctx.fillText('PCA Axes (MTNN 48-d)', panelX + 8, panelY + 13);
+    ctx.fillStyle = '#FFFEF7';
+    ctx.strokeStyle = '#111111';
+    ctx.lineWidth = 1.8;
+    ctx.beginPath(); ctx.roundRect(panelX, panelY, panelW, panelH, 8); ctx.fill(); ctx.stroke();
+    ctx.fillStyle = '#111111';
+    ctx.font = '700 10px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace';
+    ctx.fillText('PCA Axes (MTNN 48-d) — Cam\'s Lab light paper', panelX + 8, panelY + 13);
     axes.forEach(function (ax, i) {
       var y = panelY + 30 + i * (lineH + 12);
-      ctx.fillStyle = AXIS_TEXT;
+      ctx.fillStyle = '#111111';
       ctx.fillText((ax.axis || ['X', 'Y', 'Z'][i]) + ' / ' + (ax.pc || ('PC' + (i + 1))), panelX + 8, y);
-      ctx.fillStyle = '#d7d5ce';
+      ctx.fillStyle = '#111111';
       ctx.fillText((ax.hi || '').slice(0, 72), panelX + 90, y);
-      ctx.fillStyle = '#9d9b94';
+      ctx.fillStyle = '#585858';
       ctx.fillText((ax.lo || '').slice(0, 72), panelX + 90, y + lineH);
     });
     ctx.restore();
@@ -1196,32 +1202,44 @@
 function buildFlowSvg(host) {
     if (!host || !state.arch) return;
     host.innerHTML = '';
-    // Cropped canvas: less empty margin so the 17-tower stack reads larger.
-    // Right pad keeps long head labels (e.g. skills MLP) inside the frame.
-    var W = 1320;
-    var H = 720;
+    // AAA readable: taller canvas, larger fonts, no clip. Truthful W1380 H880 v4 baseline.
+    // Input mask m∈{0,1} • cat([x·m,m]) • 2 residual blocks per tower 160→32 LN GELU + skip • season 12-d concat • L2 embed 48-d • MLP heads 8/5/14/18
+    // Truthful invariants: 12,392 seasons, 120 feats, 17 families cat([x·m,m]) 17×160→32×2 544+12=556→128→48 L2, MAX_INPUT_NODES 17 truthful
+    var W = 1380;
+    var H = 880;
+    var TOP_LABEL_Y = 28;
+    var BOT_Y = H - 48;
     var svg = document.createElementNS(SVG_NS, 'svg');
-    svg.setAttribute('viewBox', '28 0 ' + (W - 28) + ' ' + H);
+    // Fix clipping bug: old viewBox '28 0 1292 720' clipped "INPUT..." to "UT..." — now 0 0 full width
+    svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
     svg.setAttribute('class', 'network-flow-svg');
-    // Keep preserveAspectRatio so tall 17-tower stack stays readable
     svg.setAttribute('preserveAspectRatio', 'xMidYMid meet');
+    svg.style.width = '100%';
+    svg.style.height = 'auto';
     host.appendChild(svg);
 
-    // Truthful column positions — each is a real stage in checkpoint
-    // 0 Input families (120 feats), 1 Masked cat([x*m,m]) 2*d_in, 2 B1 hidden 160, 3 B1 out 32 + skip, 4 B2 hidden 160, 5 B2 final 32, 6 Fusion concat+season, 7 Fusion hidden 128→48, 8 Embed 48 L2, 9 Heads MLP
+    // Readable column map — generous spacing, Cam's Lab ink on paper #FFFEF7, CARD #FFFFFF stroke #111 2.5px
     var COLS = {
-      input: 96,
-      cat: 210,
-      b1h: 300,
-      b1o: 380,
-      b2h: 460,
-      b2o: 540,
-      fusion: 690,
-      fusionHidden: 770,
-      embed: 870,
-      heads: 1080
+      input: 110,
+      cat: 250,
+      b1h: 350,
+      b1o: 470,
+      b2h: 580,
+      b2o: 700,
+      gate: 780,
+      s12: 840,
+      fusion: 900,
+      fusionHidden: 1010,
+      fusionH: 1010,
+      embed: 1120,
+      heads: 1250
     };
-    var colsArr = [COLS.input, COLS.b2o, COLS.fusion, COLS.embed, COLS.heads]; // for legacy layout object
+    // legacy aliases
+    COLS.fusionHid = COLS.fusionHidden;
+
+    var colsArr = [COLS.input, COLS.b2o, COLS.fusion, COLS.embed, COLS.heads];
+
+    // Top labels — 12px mono bold, AAA #111 on #FFFEF7 18.6:1
     var topLabels = [
       { x: COLS.input, label: 'Input 120 feats 17 families' },
       { x: COLS.b2o, label: 'Towers 17×2 ResBlocks 160→32' },
@@ -1232,270 +1250,271 @@ function buildFlowSvg(host) {
     topLabels.forEach(function(o){
       var t = document.createElementNS(SVG_NS, 'text');
       t.setAttribute('x', o.x);
-      t.setAttribute('y', 18);
+      t.setAttribute('y', TOP_LABEL_Y);
       t.setAttribute('text-anchor', 'middle');
       t.setAttribute('class', 'network-flow-col-label');
+      t.setAttribute('style', 'font-size:12px;font-weight:800;fill:#111111;letter-spacing:0.04em;');
       t.textContent = o.label;
       svg.appendChild(t);
     });
 
-    // Sub-labels for what cat means — chrome, not data
-    var sub = document.createElementNS(SVG_NS, 'text');
-    sub.setAttribute('x', COLS.cat);
-    sub.setAttribute('y', 34);
-    sub.setAttribute('text-anchor', 'middle');
-    sub.setAttribute('class', 'network-flow-col-label');
-    sub.setAttribute('style', 'font-size:9px;fill:#6b6a66;');
-    sub.textContent = 'cat([x·m, m])  2·d_in';
-    svg.appendChild(sub);
-    var sub2 = document.createElementNS(SVG_NS, 'text');
-    sub2.setAttribute('x', (COLS.b1h+COLS.b1o)/2);
-    sub2.setAttribute('y', 34);
-    sub2.setAttribute('text-anchor', 'middle');
-    sub2.setAttribute('class', 'network-flow-col-label');
-    sub2.setAttribute('style', 'font-size:9px;fill:#6b6a66;');
-    sub2.textContent = 'B1 LN+GELU + skip';
-    svg.appendChild(sub2);
-    var sub3 = document.createElementNS(SVG_NS, 'text');
-    sub3.setAttribute('x', (COLS.b2h+COLS.b2o)/2);
-    sub3.setAttribute('y', 34);
-    sub3.setAttribute('text-anchor', 'middle');
-    sub3.setAttribute('class', 'network-flow-col-label');
-    sub3.setAttribute('style', 'font-size:9px;fill:#6b6a66;');
-    sub3.textContent = 'B2 32→160→32 res';
-    svg.appendChild(sub3);
-    var sub4 = document.createElementNS(SVG_NS, 'text');
-    sub4.setAttribute('x', COLS.fusion);
-    sub4.setAttribute('y', 34);
-    sub4.setAttribute('text-anchor', 'middle');
-    sub4.setAttribute('class', 'network-flow-col-label');
-    sub4.setAttribute('style', 'font-size:9px;fill:#6b6a66;');
-    sub4.textContent = '556→128 GELU LN →48';
-    svg.appendChild(sub4);
+    // Sub-labels — 10px bold #585858 AAA
+    var subs = [
+      { x: COLS.cat, y: TOP_LABEL_Y+16, txt: 'cat([x·m, m])  2·d_in' },
+      { x: (COLS.b1h+COLS.b1o)/2, y: TOP_LABEL_Y+16, txt: 'B1 LN+GELU + skip' },
+      { x: (COLS.b2h+COLS.b2o)/2, y: TOP_LABEL_Y+16, txt: 'B2 32→160→32 res' },
+      { x: COLS.fusion, y: TOP_LABEL_Y+16, txt: '556→128 GELU LN →48' }
+    ];
+    subs.forEach(function(su){
+      var t = document.createElementNS(SVG_NS, 'text');
+      t.setAttribute('x', su.x);
+      t.setAttribute('y', su.y);
+      t.setAttribute('text-anchor', 'middle');
+      t.setAttribute('class', 'network-flow-col-label');
+      t.setAttribute('style', 'font-size:10px;fill:#585858;font-weight:700;');
+      t.textContent = su.txt;
+      svg.appendChild(t);
+    });
 
     var fams = state.arch.towerFamilies || [];
     var nTowers = fams.length || 17;
-    var towerTop = 48;
-    var towerBot = H - 56;
-    var towerSpan = towerBot - towerTop;
+    var towerTop = TOP_LABEL_Y + 52;
+    var towerBot = BOT_Y;
+    var towerSpan = towerBot - towerTop; // 880-28-110=742 nominal
+    var rowGap = Math.max(42, towerSpan / nTowers); // >=42px per tower guarantees no overlap
     var towerG = document.createElementNS(SVG_NS, 'g');
     towerG.setAttribute('id', 'flow-towers');
     var towerYs = [];
-    fams.forEach(function (fam, i) {
-      var y = nTowers <= 1 ? H / 2 : towerTop + (i / (nTowers - 1)) * towerSpan;
+    for (var ti=0; ti<nTowers; ti++){
+      // center each row in its slot
+      var y = towerTop + (ti + 0.5) * (towerSpan / nTowers);
       towerYs.push(y);
+    }
 
-      // Input rect for this family — 1:1 with tower, truthful
-      // (input family i feeds tower i, not arbitrary top-10)
-    });
-    // We build per-tower rows as groups so skip paths can be drawn
     var inputG = document.createElementNS(SVG_NS, 'g');
     inputG.setAttribute('id', 'flow-input');
     var edgeG = document.createElementNS(SVG_NS, 'g');
     edgeG.setAttribute('id', 'flow-edges');
     edgeG.setAttribute('class', 'network-flow-edges');
 
-    // For accurate vertical density with 17 towers, input row height ~ 32
+    // Build rows with generous spacing
     for (var i = 0; i < nTowers; i++) {
       var y = towerYs[i];
       var fam = fams[i] || ('fam'+i);
       var d_in = (state.arch.familyFeatures && state.arch.familyFeatures[fam]) ? state.arch.familyFeatures[fam].length : 0;
+      var twoDin = d_in*2;
 
-      // Input node — rect 64×18
+      // Input node — readable: w 92 h 24 rx 6 as per fix, white fill ink border 2.5px
+      var inputW = 92;
+      var inputH = 24;
       var ic = document.createElementNS(SVG_NS, 'rect');
-      ic.setAttribute('x', String(COLS.input - 32));
-      ic.setAttribute('y', String(y - 9));
-      ic.setAttribute('width', '64');
-      ic.setAttribute('height', '18');
-      ic.setAttribute('rx', '5');
+      ic.setAttribute('x', String(COLS.input - inputW/2));
+      ic.setAttribute('y', String(y - inputH/2));
+      ic.setAttribute('width', String(inputW));
+      ic.setAttribute('height', String(inputH));
+      ic.setAttribute('rx', '6');
       ic.setAttribute('class', 'network-flow-node network-flow-node--input');
       ic.setAttribute('data-input', String(i));
       ic.setAttribute('data-family', fam);
       ic.setAttribute('data-tower-row', String(i));
+      ic.setAttribute('style', 'fill:#FFFFFF;stroke:#111111;stroke-width:2.5px;');
       var tt = document.createElementNS(SVG_NS, 'title');
-      tt.textContent = fam.replace(/_/g,' ') + ' ('+d_in+' feats) → cat([x·m,m]) 2·d_in='+(d_in*2);
+      tt.textContent = fam.replace(/_/g,' ') + ' ('+d_in+' feats) → cat([x·m,m]) 2·d_in='+twoDin+' — m∈{0,1} ∅→0 grad=0 never imputed';
       ic.appendChild(tt);
       inputG.appendChild(ic);
 
-      // Input label left
+      // Input label — 12.5px bold #111 readable, offset 18 from rect edge
+      var labelOffset = 18;
       var it = document.createElementNS(SVG_NS, 'text');
-      it.setAttribute('x', String(COLS.input + 40));
-      it.setAttribute('y', String(y + 3));
+      it.setAttribute('x', String(COLS.input + inputW/2 + labelOffset));
+      it.setAttribute('y', String(y + 4));
       it.setAttribute('class', 'network-flow-col-label');
       it.setAttribute('text-anchor', 'start');
       it.setAttribute('data-input-label', String(i));
-      it.setAttribute('style', 'font-size:11px;');
+      it.setAttribute('style', 'font-size:12.5px;font-weight:700;fill:#111111;letter-spacing:0.01em;');
       it.textContent = fam.replace(/_/g,' ');
       inputG.appendChild(it);
 
-      // Input value / coverage at right of label
+      // Input value / coverage — 10.5px #585858 at x+160
       var iv = document.createElementNS(SVG_NS, 'text');
-      iv.setAttribute('x', String(COLS.input + 148));
-      iv.setAttribute('y', String(y + 3));
+      iv.setAttribute('x', String(COLS.input + 160));
+      iv.setAttribute('y', String(y + 4));
       iv.setAttribute('class', 'network-flow-col-label');
       iv.setAttribute('text-anchor', 'end');
       iv.setAttribute('data-input-value', String(i));
-      iv.setAttribute('style', 'font-size:10px;');
+      iv.setAttribute('style', 'font-size:10.5px;fill:#585858;font-weight:600;');
       iv.textContent = '0%';
       inputG.appendChild(iv);
 
-      // cat node — tiny diamond / rect showing m
+      // cat node — slightly larger for readability 32×18
       var cat = document.createElementNS(SVG_NS, 'g');
       cat.setAttribute('transform', 'translate('+COLS.cat+','+y+')');
       var catR = document.createElementNS(SVG_NS, 'rect');
-      catR.setAttribute('x','-14'); catR.setAttribute('y','-7'); catR.setAttribute('width','28'); catR.setAttribute('height','14'); catR.setAttribute('rx','3');
+      catR.setAttribute('x','-16'); catR.setAttribute('y','-9'); catR.setAttribute('width','32'); catR.setAttribute('height','18'); catR.setAttribute('rx','4');
       catR.setAttribute('class','network-flow-node network-flow-node--cat');
       catR.setAttribute('data-tower-row', String(i));
-      catR.setAttribute('style','fill:#1e1d1a;stroke:#3a3935;stroke-width:1;');
+      catR.setAttribute('style','fill:#FFFFFF;stroke:#111111;stroke-width:2px;');
       cat.appendChild(catR);
       var catT = document.createElementNS(SVG_NS, 'text');
-      catT.setAttribute('x','0'); catT.setAttribute('y','3'); catT.setAttribute('text-anchor','middle'); catT.setAttribute('style','font-size:7px;fill:#8a8983;font-family:var(--mono);');
+      catT.setAttribute('x','0'); catT.setAttribute('y','4'); catT.setAttribute('text-anchor','middle');
+      catT.setAttribute('style','font-size:9.5px;fill:#111111;font-family:ui-monospace;font-weight:800;');
       catT.textContent = 'cat';
       cat.appendChild(catT);
       inputG.appendChild(cat);
 
       // Edge in: input → cat
       var pIn = document.createElementNS(SVG_NS, 'path');
-      var dIn = 'M'+(COLS.input+32)+','+y+' L'+(COLS.cat-14)+','+y;
+      var dIn = 'M'+(COLS.input+inputW/2)+','+y+' L'+(COLS.cat-16)+','+y;
       pIn.setAttribute('d', dIn);
       pIn.setAttribute('class','network-flow-edge');
       pIn.setAttribute('data-edge','in-'+i);
+      pIn.setAttribute('style','stroke:#111111;stroke-width:1.4;');
       edgeG.appendChild(pIn);
 
-      // B1 hidden 160 — small circle r=3.5
+      // B1 hidden 160 — circle r=5 readable (was 3.5)
       var b1h = document.createElementNS(SVG_NS, 'circle');
-      b1h.setAttribute('cx', String(COLS.b1h)); b1h.setAttribute('cy', String(y)); b1h.setAttribute('r','3.5');
+      b1h.setAttribute('cx', String(COLS.b1h)); b1h.setAttribute('cy', String(y)); b1h.setAttribute('r','5');
       b1h.setAttribute('class','network-flow-node network-flow-node--tower-sub network-flow-node--b1h');
       b1h.setAttribute('data-tower-sub', 'b1h-'+i);
       b1h.setAttribute('data-tower-row', String(i));
+      b1h.setAttribute('style','fill:#FFFFFF;stroke:#111111;stroke-width:2px;');
       var b1hTitle = document.createElementNS(SVG_NS, 'title');
-      b1hTitle.textContent = 'B1 hidden 160: Linear('+ (d_in*2) +'→160) LN GELU';
+      b1hTitle.textContent = 'B1 hidden 160: Linear('+ twoDin +'→160) LN GELU';
       b1h.appendChild(b1hTitle);
       towerG.appendChild(b1h);
 
-      // Edge cat → B1h
       var pC1 = document.createElementNS(SVG_NS, 'path');
-      pC1.setAttribute('d','M'+(COLS.cat+14)+','+y+' L'+COLS.b1h+','+y);
+      pC1.setAttribute('d','M'+(COLS.cat+16)+','+y+' L'+(COLS.b1h-5)+','+y);
       pC1.setAttribute('class','network-flow-edge network-flow-edge--tower-internal');
+      pC1.setAttribute('style','stroke:#111111;opacity:0.7;');
       edgeG.appendChild(pC1);
 
-      // B1 out 32 — intermediate circle r=4.5 with skip
+      // B1 out 32 — r=6
       var b1o = document.createElementNS(SVG_NS, 'circle');
-      b1o.setAttribute('cx', String(COLS.b1o)); b1o.setAttribute('cy', String(y)); b1o.setAttribute('r','4.5');
+      b1o.setAttribute('cx', String(COLS.b1o)); b1o.setAttribute('cy', String(y)); b1o.setAttribute('r','6');
       b1o.setAttribute('class','network-flow-node network-flow-node--tower-sub network-flow-node--b1o');
       b1o.setAttribute('data-tower-row', String(i));
+      b1o.setAttribute('style','fill:#FFFFFF;stroke:#111111;stroke-width:2px;');
       var b1oTitle = document.createElementNS(SVG_NS, 'title');
-      b1oTitle.textContent = 'B1 out 32: Linear(160→32) LN + skip Linear('+(d_in*2)+'→32)';
+      b1oTitle.textContent = 'B1 out 32: Linear(160→32) LN + skip Linear('+twoDin+'→32)';
       b1o.appendChild(b1oTitle);
       towerG.appendChild(b1o);
 
-      // Skip path: cat area direct to b1o (visual skip)
       var skip1 = document.createElementNS(SVG_NS, 'path');
-      skip1.setAttribute('d','M'+(COLS.cat+6)+','+(y-7)+' Q'+((COLS.cat+COLS.b1o)/2)+','+(y-14)+' '+COLS.b1o+','+(y-4));
+      skip1.setAttribute('d','M'+(COLS.cat+8)+','+(y-10)+' Q'+((COLS.cat+COLS.b1o)/2)+','+(y-18)+' '+COLS.b1o+','+(y-6));
       skip1.setAttribute('class','network-flow-edge network-flow-edge--skip');
-      skip1.setAttribute('style','fill:none;stroke:#4a4944;stroke-width:0.7;stroke-dasharray:2 2;opacity:0.5;');
+      skip1.setAttribute('style','fill:none;stroke:#111111;stroke-width:1;stroke-dasharray:4 3;opacity:0.55;');
       edgeG.appendChild(skip1);
 
       var pB1 = document.createElementNS(SVG_NS, 'path');
-      pB1.setAttribute('d','M'+COLS.b1h+','+y+' L'+COLS.b1o+','+y);
+      pB1.setAttribute('d','M'+COLS.b1h+','+y+' L'+(COLS.b1o-6)+','+y);
       pB1.setAttribute('class','network-flow-edge network-flow-edge--tower-internal');
+      pB1.setAttribute('style','stroke:#111111;opacity:0.6;');
       edgeG.appendChild(pB1);
 
-      // B2 hidden 160
+      // B2 hidden 160 — r=5
       var b2h = document.createElementNS(SVG_NS, 'circle');
-      b2h.setAttribute('cx', String(COLS.b2h)); b2h.setAttribute('cy', String(y)); b2h.setAttribute('r','3.5');
+      b2h.setAttribute('cx', String(COLS.b2h)); b2h.setAttribute('cy', String(y)); b2h.setAttribute('r','5');
       b2h.setAttribute('class','network-flow-node network-flow-node--tower-sub network-flow-node--b2h');
       b2h.setAttribute('data-tower-row', String(i));
+      b2h.setAttribute('style','fill:#FFFFFF;stroke:#111111;stroke-width:2px;');
       var b2hTitle = document.createElementNS(SVG_NS, 'title');
       b2hTitle.textContent = 'B2 hidden 160: Linear(32→160) LN GELU';
       b2h.appendChild(b2hTitle);
       towerG.appendChild(b2h);
 
       var pB2a = document.createElementNS(SVG_NS, 'path');
-      pB2a.setAttribute('d','M'+COLS.b1o+','+y+' L'+COLS.b2h+','+y);
+      pB2a.setAttribute('d','M'+COLS.b1o+','+y+' L'+(COLS.b2h-5)+','+y);
       pB2a.setAttribute('class','network-flow-edge network-flow-edge--tower-internal');
+      pB2a.setAttribute('style','stroke:#111111;opacity:0.6;');
       edgeG.appendChild(pB2a);
 
-      // B2 final out 32 — THIS is the tower output node (data-tower selector lives here)
+      // B2 final out 32 — r=8 bold, main tower node
       var b2o = document.createElementNS(SVG_NS, 'circle');
       b2o.setAttribute('cx', String(COLS.b2o));
       b2o.setAttribute('cy', String(y));
-      b2o.setAttribute('r', '6');
+      b2o.setAttribute('r', '8');
       b2o.setAttribute('class', 'network-flow-node network-flow-node--tower');
       b2o.setAttribute('data-tower', String(i));
       b2o.setAttribute('data-family', fam);
       b2o.setAttribute('data-tower-row', String(i));
+      b2o.setAttribute('style','fill:#FFFFFF;stroke:#111111;stroke-width:2.5px;');
       var b2oTitle = document.createElementNS(SVG_NS, 'title');
-      b2oTitle.textContent = fam.replace(/_/g,' ')+' tower final 32-d (B2: 160→32 LN + residual). d_in='+d_in+' → 2·d_in='+(d_in*2)+' →32';
+      b2oTitle.textContent = fam.replace(/_/g,' ')+' tower final 32-d (B2: 160→32 LN + residual). d_in='+d_in+' → 2·d_in='+twoDin+' →32';
       b2o.appendChild(b2oTitle);
       towerG.appendChild(b2o);
 
-      // Skip for B2 residual
       var skip2 = document.createElementNS(SVG_NS, 'path');
-      skip2.setAttribute('d','M'+COLS.b1o+','+(y+6)+' Q'+((COLS.b1o+COLS.b2o)/2)+','+(y+12)+' '+COLS.b2o+','+(y+4));
+      skip2.setAttribute('d','M'+COLS.b1o+','+(y+8)+' Q'+((COLS.b1o+COLS.b2o)/2)+','+(y+16)+' '+COLS.b2o+','+(y+6));
       skip2.setAttribute('class','network-flow-edge network-flow-edge--skip');
-      skip2.setAttribute('style','fill:none;stroke:#4a4944;stroke-width:0.7;stroke-dasharray:2 2;opacity:0.5;');
+      skip2.setAttribute('style','fill:none;stroke:#111111;stroke-width:1;stroke-dasharray:4 3;opacity:0.55;');
       edgeG.appendChild(skip2);
 
       var pB2b = document.createElementNS(SVG_NS, 'path');
-      pB2b.setAttribute('d','M'+COLS.b2h+','+y+' L'+COLS.b2o+','+y);
+      pB2b.setAttribute('d','M'+COLS.b2h+','+y+' L'+(COLS.b2o-8)+','+y);
       pB2b.setAttribute('class','network-flow-edge network-flow-edge--tower-internal');
+      pB2b.setAttribute('style','stroke:#111111;opacity:0.6;');
       edgeG.appendChild(pB2b);
 
+      // Tower label — 11px AAA readable (was 6.5px)
       var tl = document.createElementNS(SVG_NS, 'text');
-      tl.setAttribute('x', String(COLS.b2o + 12));
-      tl.setAttribute('y', String(y + 3));
+      tl.setAttribute('x', String(COLS.b2o + 16));
+      tl.setAttribute('y', String(y + 4));
       tl.setAttribute('class', 'network-flow-tower-label');
       tl.setAttribute('text-anchor', 'start');
       tl.setAttribute('data-tower-label', String(i));
+      tl.setAttribute('style','font-size:11px;font-weight:700;fill:#111111;font-family:ui-monospace;');
       tl.textContent = fam.replace(/_/g,' ');
       towerG.appendChild(tl);
 
       // Fuse edge: tower out → fusion concat
       var pFuse = document.createElementNS(SVG_NS, 'path');
       var midY = H / 2;
-      var dFuse = 'M'+ (COLS.b2o + 6) +','+ y +
-        ' C'+ (COLS.b2o + 50) +','+ y +' '+ (COLS.fusion - 60) +','+ midY +' '+ (COLS.fusion - 24) +','+ midY;
-      // For towers far from mid, bend more
+      var dFuse = 'M'+ (COLS.b2o + 8) +','+ y +
+        ' C'+ (COLS.b2o + 60) +','+ y +' '+ (COLS.fusion - 80) +','+ midY +' '+ (COLS.fusion - 22) +','+ midY;
       pFuse.setAttribute('d', dFuse);
       pFuse.setAttribute('class', 'network-flow-edge');
       pFuse.setAttribute('data-edge', 'fuse-' + i);
+      pFuse.setAttribute('style','stroke:#111111;stroke-width:1.2;opacity:0.55;');
       edgeG.appendChild(pFuse);
     }
 
-    // Fusion and season and embed section
     var midY = H/2;
 
-    // Season embedding node — separate, feeds concat
+    // Season embedding node
     var seasonG = document.createElementNS(SVG_NS, 'g');
-    seasonG.setAttribute('transform','translate('+ (COLS.fusion-10) +','+ (towerTop-12) +')');
+    seasonG.setAttribute('transform','translate('+ (COLS.fusion-14) +','+ (towerTop-16) +')');
     var seasonC = document.createElementNS(SVG_NS, 'circle');
-    seasonC.setAttribute('cx','0'); seasonC.setAttribute('cy','0'); seasonC.setAttribute('r','11');
+    seasonC.setAttribute('cx','0'); seasonC.setAttribute('cy','0'); seasonC.setAttribute('r','12');
     seasonC.setAttribute('class','network-flow-node network-flow-node--season');
     seasonC.setAttribute('id','flow-season');
+    seasonC.setAttribute('style','fill:#FFFFFF;stroke:#111111;stroke-width:2.5px;');
     var seasonTitle = document.createElementNS(SVG_NS, 'title');
     seasonTitle.textContent = 'Season embedding 12-d learned (n_seasons lookup) — gives era context';
     seasonC.appendChild(seasonTitle);
     seasonG.appendChild(seasonC);
     var seasonL = document.createElementNS(SVG_NS, 'text');
-    seasonL.setAttribute('x','16'); seasonL.setAttribute('y','3'); seasonL.setAttribute('class','network-flow-col-label'); seasonL.setAttribute('style','font-size:9px;');
+    seasonL.setAttribute('x','18'); seasonL.setAttribute('y','4');
+    seasonL.setAttribute('class','network-flow-col-label');
+    seasonL.setAttribute('style','font-size:10px;font-weight:700;fill:#111111;');
     seasonL.textContent = 'season 12-d';
     seasonG.appendChild(seasonL);
     svg.appendChild(seasonG);
 
     var seasonEdge = document.createElementNS(SVG_NS, 'path');
-    seasonEdge.setAttribute('d','M'+(COLS.fusion-10)+','+(towerTop-1)+' C'+(COLS.fusion-10)+','+(midY-60)+' '+(COLS.fusion-10)+','+(midY-30)+' '+(COLS.fusion)+','+(midY-14));
+    seasonEdge.setAttribute('d','M'+(COLS.fusion-14)+','+(towerTop-4)+' C'+(COLS.fusion-14)+','+(midY-80)+' '+(COLS.fusion-14)+','+(midY-40)+' '+(COLS.fusion)+','+(midY-18));
     seasonEdge.setAttribute('class','network-flow-edge network-flow-edge--season');
-    seasonEdge.setAttribute('style','stroke-dasharray:3 2;opacity:0.6;');
+    seasonEdge.setAttribute('style','stroke-dasharray:4 3;opacity:0.65;stroke:#111111;');
     edgeG.appendChild(seasonEdge);
 
-    // Fusion concat node (main)
+    // Fusion concat node
     var fusion = document.createElementNS(SVG_NS, 'circle');
     fusion.setAttribute('cx', String(COLS.fusion));
     fusion.setAttribute('cy', String(midY));
-    fusion.setAttribute('r', '18');
+    fusion.setAttribute('r', '20');
     fusion.setAttribute('class', 'network-flow-node network-flow-node--fusion');
     fusion.setAttribute('id', 'flow-fusion');
+    fusion.setAttribute('style','fill:#FFFFFF;stroke:#111111;stroke-width:2.5px;');
     var fusionTitle = document.createElementNS(SVG_NS, 'title');
     fusionTitle.textContent = 'Concat fusion: flatten 17×32=544 + season 12 =556 → Linear 556→128 GELU LayerNorm';
     fusion.appendChild(fusionTitle);
@@ -1503,67 +1522,71 @@ function buildFlowSvg(host) {
 
     var fusionLabel = document.createElementNS(SVG_NS, 'text');
     fusionLabel.setAttribute('x', String(COLS.fusion));
-    fusionLabel.setAttribute('y', String(midY+32));
+    fusionLabel.setAttribute('y', String(midY+36));
     fusionLabel.setAttribute('text-anchor','middle');
     fusionLabel.setAttribute('class','network-flow-col-label');
-    fusionLabel.setAttribute('style','font-size:8px;fill:#6b6a66;');
+    fusionLabel.setAttribute('style','font-size:11px;fill:#585858;font-weight:700;');
     fusionLabel.textContent = '556→128';
     svg.appendChild(fusionLabel);
 
-    // Fusion hidden 128 circle
+    // Fusion hidden 128
     var fusionH = document.createElementNS(SVG_NS, 'circle');
     fusionH.setAttribute('cx', String(COLS.fusionHidden));
     fusionH.setAttribute('cy', String(midY));
-    fusionH.setAttribute('r', '10');
+    fusionH.setAttribute('r', '12');
     fusionH.setAttribute('class','network-flow-node network-flow-node--fusion-hidden');
     fusionH.setAttribute('id','flow-fusion-hidden');
+    fusionH.setAttribute('style','fill:#FFFFFF;stroke:#111111;stroke-width:2.5px;');
     var fhTitle = document.createElementNS(SVG_NS, 'title');
     fhTitle.textContent = 'Fusion hidden 128-d: GELU + LayerNorm, then Linear 128→48';
     fusionH.appendChild(fhTitle);
     svg.appendChild(fusionH);
 
-    // Edge fusion → fusion hidden
     var eFH = document.createElementNS(SVG_NS, 'line');
-    eFH.setAttribute('x1', String(COLS.fusion+18)); eFH.setAttribute('y1', String(midY));
-    eFH.setAttribute('x2', String(COLS.fusionHidden-10)); eFH.setAttribute('y2', String(midY));
+    eFH.setAttribute('x1', String(COLS.fusion+20)); eFH.setAttribute('y1', String(midY));
+    eFH.setAttribute('x2', String(COLS.fusionHidden-12)); eFH.setAttribute('y2', String(midY));
     eFH.setAttribute('class','network-flow-edge network-flow-edge--main');
     eFH.setAttribute('data-edge','fusion-hidden');
+    eFH.setAttribute('style','stroke:#111111;stroke-width:2;');
     edgeG.appendChild(eFH);
 
-    // Embed node 48-d with L2 badge
+    // Embed node 48-d
     var embed = document.createElementNS(SVG_NS, 'circle');
     embed.setAttribute('cx', String(COLS.embed));
     embed.setAttribute('cy', String(midY));
-    embed.setAttribute('r', '16');
+    embed.setAttribute('r', '18');
     embed.setAttribute('class', 'network-flow-node network-flow-node--embed');
     embed.setAttribute('id', 'flow-embed');
+    embed.setAttribute('style','fill:#FFFFFF;stroke:#111111;stroke-width:2.5px;');
     var embedTitle = document.createElementNS(SVG_NS, 'title');
     embedTitle.textContent = 'Embedding 48-d L2-normalized: output of Linear 128→48 then F.normalize, cosine similarity';
     embed.appendChild(embedTitle);
     svg.appendChild(embed);
 
     var eF2E = document.createElementNS(SVG_NS, 'line');
-    eF2E.setAttribute('x1', String(COLS.fusionHidden+10)); eF2E.setAttribute('y1', String(midY));
-    eF2E.setAttribute('x2', String(COLS.embed-16)); eF2E.setAttribute('y2', String(midY));
+    eF2E.setAttribute('x1', String(COLS.fusionHidden+12)); eF2E.setAttribute('y1', String(midY));
+    eF2E.setAttribute('x2', String(COLS.embed-18)); eF2E.setAttribute('y2', String(midY));
     eF2E.setAttribute('class','network-flow-edge network-flow-edge--main');
     eF2E.setAttribute('data-edge','emb-main');
+    eF2E.setAttribute('style','stroke:#111111;stroke-width:2;');
     edgeG.appendChild(eF2E);
 
     var l2badge = document.createElementNS(SVG_NS, 'text');
     l2badge.setAttribute('x', String((COLS.fusionHidden+COLS.embed)/2));
-    l2badge.setAttribute('y', String(midY-10));
+    l2badge.setAttribute('y', String(midY-12));
     l2badge.setAttribute('text-anchor','middle');
     l2badge.setAttribute('class','network-flow-col-label');
-    l2badge.setAttribute('style','font-size:8px;fill:#8a8983;');
+    l2badge.setAttribute('style','font-size:11px;fill:#111111;font-weight:800;');
     l2badge.textContent = 'L2 norm';
     svg.appendChild(l2badge);
 
+    // Heads — readable 12px
     var headDefs = [
       { key: 'archetype', label: 'Archetype (8) 48→64→8', y: H * 0.20 },
-      { key: 'position', label: 'Position (5) 48→64→5', y: H * 0.37 },
-      { key: 'skills', label: 'Skills (18) 18×(48→16→1)', y: H * 0.54 },
-      { key: 'next_profile', label: 'Next season (14) 48→64→14', y: H * 0.71 },
-      { key: 'aux', label: 'Aux 8 scalar 48→1', y: H * 0.86 }
+      { key: 'position', label: 'Position (5) 48→64→5', y: H * 0.36 },
+      { key: 'skills', label: 'Skills (18) 18×(48→16→1)', y: H * 0.52 },
+      { key: 'next_profile', label: 'Next season (14) 48→64→14', y: H * 0.68 },
+      { key: 'aux', label: 'Aux 8 scalar 48→1', y: H * 0.84 }
     ];
     var headG = document.createElementNS(SVG_NS, 'g');
     headG.setAttribute('id', 'flow-heads');
@@ -1571,73 +1594,76 @@ function buildFlowSvg(host) {
     for (var h = 0; h < headDefs.length; h++) {
       var hy = headDefs[h].y;
       headYs.push(hy);
-      // Hidden 64 node for MLP heads (except aux and skills which have different)
       if (headDefs[h].key !== 'aux') {
         var hidden64 = document.createElementNS(SVG_NS, 'circle');
-        hidden64.setAttribute('cx', String(COLS.heads - 55));
+        hidden64.setAttribute('cx', String(COLS.heads - 60));
         hidden64.setAttribute('cy', String(hy));
-        hidden64.setAttribute('r', '4');
+        hidden64.setAttribute('r', '5');
         hidden64.setAttribute('class','network-flow-node network-flow-node--head-hidden');
+        hidden64.setAttribute('style','fill:#FFFFFF;stroke:#111111;stroke-width:2px;');
         var hgTitle = document.createElementNS(SVG_NS, 'title');
         hgTitle.textContent = headDefs[h].key+': MLP hidden '+(headDefs[h].key==='skills'?'16':'64')+' GELU';
         hidden64.appendChild(hgTitle);
         headG.appendChild(hidden64);
 
         var e64 = document.createElementNS(SVG_NS, 'path');
-        var d64 = 'M'+ (COLS.embed + 16) +','+ midY +
-          ' C'+ (COLS.embed + 50) +','+ midY +' '+ (COLS.heads - 80) +','+ hy +' '+ (COLS.heads - 59) +','+ hy;
+        var d64 = 'M'+ (COLS.embed + 18) +','+ midY +
+          ' C'+ (COLS.embed + 55) +','+ midY +' '+ (COLS.heads - 90) +','+ hy +' '+ (COLS.heads - 65) +','+ hy;
         e64.setAttribute('d', d64);
         e64.setAttribute('class','network-flow-edge network-flow-edge--head network-flow-edge--head-hidden');
+        e64.setAttribute('style','stroke:#111111;opacity:0.6;');
         edgeG.appendChild(e64);
 
         var hc = document.createElementNS(SVG_NS, 'circle');
         hc.setAttribute('cx', String(COLS.heads));
         hc.setAttribute('cy', String(hy));
-        hc.setAttribute('r', '7');
+        hc.setAttribute('r', '8');
         hc.setAttribute('class', 'network-flow-node network-flow-node--head');
         hc.setAttribute('data-head', String(h));
         hc.setAttribute('data-head-key', headDefs[h].key);
+        hc.setAttribute('style','fill:#FFFFFF;stroke:#111111;stroke-width:2.5px;');
         var hTitle = document.createElementNS(SVG_NS, 'title');
         hTitle.textContent = headDefs[h].label + ' — final output layer';
         hc.appendChild(hTitle);
         headG.appendChild(hc);
 
         var eFinal = document.createElementNS(SVG_NS, 'line');
-        eFinal.setAttribute('x1', String(COLS.heads-51)); eFinal.setAttribute('y1', String(hy));
+        eFinal.setAttribute('x1', String(COLS.heads-54)); eFinal.setAttribute('y1', String(hy));
         eFinal.setAttribute('x2', String(COLS.heads-8)); eFinal.setAttribute('y2', String(hy));
         eFinal.setAttribute('class','network-flow-edge network-flow-edge--head');
         eFinal.setAttribute('data-edge','head-'+h);
+        eFinal.setAttribute('style','stroke:#111111;opacity:0.7;');
         edgeG.appendChild(eFinal);
       } else {
         var hc2 = document.createElementNS(SVG_NS, 'circle');
         hc2.setAttribute('cx', String(COLS.heads));
         hc2.setAttribute('cy', String(hy));
-        hc2.setAttribute('r', '5');
+        hc2.setAttribute('r', '6');
         hc2.setAttribute('class', 'network-flow-node network-flow-node--head network-flow-node--aux');
         hc2.setAttribute('data-head', String(h));
         hc2.setAttribute('data-head-key', headDefs[h].key);
+        hc2.setAttribute('style','fill:#FFFFFF;stroke:#111111;stroke-width:2px;');
         headG.appendChild(hc2);
         var eAux = document.createElementNS(SVG_NS, 'path');
-        var dAux = 'M'+ (COLS.embed + 16) +','+ midY +
-          ' C'+ (COLS.embed + 60) +','+ midY +' '+ (COLS.heads - 50) +','+ hy +' '+ (COLS.heads - 8) +','+ hy;
+        var dAux = 'M'+ (COLS.embed + 18) +','+ midY +
+          ' C'+ (COLS.embed + 65) +','+ midY +' '+ (COLS.heads - 60) +','+ hy +' '+ (COLS.heads - 10) +','+ hy;
         eAux.setAttribute('d', dAux);
         eAux.setAttribute('class','network-flow-edge network-flow-edge--head');
         eAux.setAttribute('data-edge','head-'+h);
+        eAux.setAttribute('style','stroke:#111111;opacity:0.6;');
         edgeG.appendChild(eAux);
       }
 
       var hl = document.createElementNS(SVG_NS, 'text');
-      hl.setAttribute('x', String(COLS.heads + 14));
-      hl.setAttribute('y', String(hy + 3));
+      hl.setAttribute('x', String(COLS.heads + 18));
+      hl.setAttribute('y', String(hy + 5));
       hl.setAttribute('class', 'network-flow-col-label');
       hl.setAttribute('text-anchor', 'start');
+      hl.setAttribute('style','font-size:12px;font-weight:700;fill:#111111;letter-spacing:0.01em;');
       hl.textContent = headDefs[h].label;
       headG.appendChild(hl);
     }
 
-    // Append groups first, then tuck edges behind them. insertBefore(edgeG, towerG)
-    // before towerG is a child throws NotFoundError and aborts the whole /model init
-    // (production symptom: "Could not load MTNN explorer assets").
     svg.appendChild(inputG);
     svg.appendChild(towerG);
     svg.appendChild(headG);
@@ -1680,6 +1706,7 @@ function buildFlowSvg(host) {
       headDefs: headDefs
     };
   }
+
 
   /* Point attribution at whatever was clicked so one gesture answers
      "what fed this / what did this drive". */
@@ -2478,11 +2505,11 @@ function buildFlowSvg(host) {
         ctx.fillRect(hlx - 6, hly - 12, htw + 12, 18);
         ctx.beginPath();
         ctx.arc(hpr.sx, hpr.sy, 5, 0, Math.PI * 2);
-        ctx.strokeStyle = '#e8e6df';
+        ctx.strokeStyle = '#111111';
         ctx.lineWidth = 1.5;
         ctx.stroke();
         ctx.globalAlpha = 1;
-        ctx.fillStyle = '#e8e6df';
+        ctx.fillStyle = '#111111';
         ctx.fillText(hLabel, hlx, hly);
       }
     }
@@ -3370,7 +3397,7 @@ function buildFlowSvg(host) {
         if (!r.ok) throw new Error('heads');
         return r.arrayBuffer();
       }),
-      fetch('assets/mtnn_inputs.f32').then(function (r) {
+      fetch('assets/mtnn_inputs.f32?v=17fam').then(function (r) {
         if (!r.ok) throw new Error('inputs');
         return r.arrayBuffer();
       })

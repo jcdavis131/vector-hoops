@@ -27,9 +27,20 @@ OUT = ROOT / "pipeline" / "data" / "game_ratings.json"
 ASSET_OUT = ROOT / "assets" / "game_ratings.json"
 
 ATTR_KEYS = (
-    "overall", "three_pt", "mid_range", "close_shot", "ball_handle",
-    "pass_accuracy", "perimeter_def", "interior_def", "steal", "block",
-    "off_rebound", "def_rebound", "speed", "strength",
+    "overall",
+    "three_pt",
+    "mid_range",
+    "close_shot",
+    "ball_handle",
+    "pass_accuracy",
+    "perimeter_def",
+    "interior_def",
+    "steal",
+    "block",
+    "off_rebound",
+    "def_rebound",
+    "speed",
+    "strength",
 )
 GAME_PREFIX = "GK_"
 
@@ -81,25 +92,36 @@ def main() -> None:
         rows.append(row)
 
     OUT.parent.mkdir(parents=True, exist_ok=True)
-    OUT.write_text(json.dumps({
-        "built": built,
-        "season": cache_season,
-        "complete": complete,
-        "players": rows,
-    }, indent=2), encoding="utf-8")
+    OUT.write_text(
+        json.dumps(
+            {
+                "built": built,
+                "season": cache_season,
+                "complete": complete,
+                "players": rows,
+            },
+            indent=2,
+        ),
+        encoding="utf-8",
+    )
 
     asset_msg = ""
     if complete and rows:
         ASSET_OUT.write_text(
-            json.dumps({"built": built, "season": cache_season, "players": rows},
-                       separators=(",", ":")),
-            encoding="utf-8")
+            json.dumps(
+                {"built": built, "season": cache_season, "players": rows},
+                separators=(",", ":"),
+            ),
+            encoding="utf-8",
+        )
         asset_msg = f" + {ASSET_OUT.name}"
     else:
         asset_msg = f"; {ASSET_OUT.name} NOT written (partial cache)"
 
-    print(f"game_ratings: {covered} rows for season {cache_season} "
-          f"(complete={complete}){asset_msg}")
+    print(
+        f"game_ratings: {covered} rows for season {cache_season} "
+        f"(complete={complete}){asset_msg}"
+    )
 
 
 if __name__ == "__main__":

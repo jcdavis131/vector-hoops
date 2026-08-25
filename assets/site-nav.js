@@ -3,14 +3,11 @@
   'use strict';
 
   var LINKS = [
-    { href: '/play', label: 'Play' },
-    { href: '/model', label: 'Network', title: 'MTNN Network Explorer' },
-    { href: '/trends', label: 'Trends', title: 'Trend Research' },
-    { href: '/players', label: 'Players', title: 'Player References' },
-    { href: '/teams', label: 'Teams', title: 'Team Labs' },
-    { href: '/methods', label: 'Methods' },
-    { href: '/leaderboard', label: 'Leaderboard' },
-    { href: '/dashboard', label: 'Lab', title: 'Dumbmodel Lab — Data→Clean→Train→Eval' },
+    { href: '/play', label: 'Play', title: '8 era-honest games — Chimera daily + 7 more' },
+    { href: '/model', label: 'Lab', title: 'MTNN Training Cockpit + Architecture + Glass-box Explorer' },
+    { href: '/trends', label: 'Trends', title: 'Trend Research — 30 seasons measured geometry' },
+    { href: '/players', label: 'Players', title: 'Player References — directory + dossiers + skill grades' },
+    { href: '/methods', label: 'Methods', title: 'Every number recomputable — sources + math' },
   ];
 
   function mount() {
@@ -19,10 +16,12 @@
     var active = nav.getAttribute('data-active') || '';
     var linksHtml = LINKS.map(function (l) {
       var isActive = active === l.href ||
-        (active === '/players' && (l.href === '/players')) ||
+        (active === '/players' && l.href === '/players') ||
         (active === '/trends' && l.href === '/trends') ||
         (active === '/model' && l.href === '/model') ||
-        (active === '/teams' && l.href === '/teams');
+        (active === '/methods' && l.href === '/methods') ||
+        (active === '/leaderboard' && l.href === '/play') ||
+        (active === '/teams' && l.href === '/players');
       return '<a class="site-nav__link' + (isActive ? ' is-active' : '') + '"' +
         ' href="' + l.href + '"' +
         (l.title ? ' title="' + l.title + '"' : '') +

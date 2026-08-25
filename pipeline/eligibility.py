@@ -62,7 +62,11 @@ def season_eligible(
     total = g * mpg
     if schedule_aware:
         mg = derive_min_gp(season) if min_gp is None else min_gp
-        mt = derive_min_total_minutes(season) if min_total_minutes is None else min_total_minutes
+        mt = (
+            derive_min_total_minutes(season)
+            if min_total_minutes is None
+            else min_total_minutes
+        )
     else:
         mg = min_gp if min_gp is not None else DEFAULT_MIN_GP
         mt = min_total_minutes if min_total_minutes is None else min_total_minutes

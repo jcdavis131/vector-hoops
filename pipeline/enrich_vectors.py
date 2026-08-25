@@ -13,12 +13,13 @@
 
 Run:  python pipeline/enrich_vectors.py
 """
+
 from __future__ import annotations
 
 import json
+import re
 import sys
 import unicodedata
-import re
 from pathlib import Path
 
 import numpy as np
@@ -45,9 +46,24 @@ ALIASES = {
 #   PC3: TOV  +0.58, STL  +0.55, AST +0.54
 # hi = the 1.0 end of the map axis, lo = the 0.0 end.
 AXIS_NAMES = [
-    {"pc": "PC1", "name": "Paint vs perimeter", "lo": "bigs (boards, blocks)", "hi": "shooters (3PA, 3P%)"},
-    {"pc": "PC2", "name": "Scoring load", "lo": "high-usage scorers (PTS, FGA, FTA)", "hi": "low-usage role players"},
-    {"pc": "PC3", "name": "Ball in hand", "lo": "off-ball, low-event", "hi": "handlers (AST, STL, TOV)"},
+    {
+        "pc": "PC1",
+        "name": "Paint vs perimeter",
+        "lo": "bigs (boards, blocks)",
+        "hi": "shooters (3PA, 3P%)",
+    },
+    {
+        "pc": "PC2",
+        "name": "Scoring load",
+        "lo": "high-usage scorers (PTS, FGA, FTA)",
+        "hi": "low-usage role players",
+    },
+    {
+        "pc": "PC3",
+        "name": "Ball in hand",
+        "lo": "off-ball, low-event",
+        "hi": "handlers (AST, STL, TOV)",
+    },
 ]
 
 
@@ -68,12 +84,12 @@ def season_start(season: str) -> int:
 
 
 def recover_projection(players: list[dict]) -> tuple[np.ndarray, np.ndarray, float]:
-    V = np.array([p["v"] for p in players])            # (n, 14)
+    V = np.array([p["v"] for p in players])  # (n, 14)
     XYZ = np.array([[p["x"], p["y"], p["z"]] for p in players])  # (n, 3)
-    A1 = np.hstack([V, np.ones((len(V), 1))])          # (n, 15)
+    A1 = np.hstack([V, np.ones((len(V), 1))])  # (n, 15)
     coef, _, _, _ = np.linalg.lstsq(A1, XYZ, rcond=None)
-    W = coef[:14]                                      # (14, 3)
-    b = coef[14]                                       # (3,)
+    W = coef[:14]  # (14, 3)
+    b = coef[14]  # (3,)
     resid = np.abs(A1 @ coef - XYZ).max()
     return W, b, float(resid)
 
@@ -158,7 +174,7 @@ def main() -> None:
 
     if POS_CACHE.exists():
         pos, stats = join_positions(players)
-        for p, v in zip(players, pos):
+        for p, v in zip(players, pos, strict=False):
             p["p"] = v
         data["positions"] = POSITIONS
         print(f"positions joined: {stats}")

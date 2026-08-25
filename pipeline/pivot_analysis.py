@@ -19,6 +19,7 @@ Output: assets/pivots.json
 
 from __future__ import annotations
 
+import itertools
 import json
 from collections import defaultdict
 from pathlib import Path
@@ -45,18 +46,24 @@ def main() -> None:
     cents = np.stack([np.mean(members[i], 0) for i in range(k)])
 
     def cos(a, b):
-        return float(np.dot(a, b) /
-                     ((np.linalg.norm(a) or 1) * (np.linalg.norm(b) or 1)))
+        return float(
+            np.dot(a, b) / ((np.linalg.norm(a) or 1) * (np.linalg.norm(b) or 1))
+        )
 
     adjacency = []
     for i in range(k):
-        sims = sorted(((cos(cents[i], cents[j]), j)
-                       for j in range(k) if j != i), reverse=True)
-        adjacency.append({
-            "archetype": clusters[i],
-            "adjacent": [{"archetype": clusters[j], "similarity": round(s, 3)}
-                         for s, j in sims[:3]],
-        })
+        sims = sorted(
+            ((cos(cents[i], cents[j]), j) for j in range(k) if j != i), reverse=True
+        )
+        adjacency.append(
+            {
+                "archetype": clusters[i],
+                "adjacent": [
+                    {"archetype": clusters[j], "similarity": round(s, 3)}
+                    for s, j in sims[:3]
+                ],
+            }
+        )
 
     # historical pivots: consecutive charted seasons, cluster changed
     by_player = defaultdict(list)
@@ -65,13 +72,17 @@ def main() -> None:
     paths = defaultdict(list)
     for name, rows in by_player.items():
         rows.sort(key=lambda r: r["season"])
-        for r1, r2 in zip(rows, rows[1:]):
+        for r1, r2 in itertools.pairwise(rows):
             y1, y2 = int(r1["season"][:4]), int(r2["season"][:4])
             if y2 - y1 == 1 and r1["c"] != r2["c"]:
-                paths[(r1["c"], r2["c"])].append({
-                    "name": name, "from": r1["season"], "to": r2["season"],
-                    "dPM": r2["v"][pm] - r1["v"][pm],
-                })
+                paths[(r1["c"], r2["c"])].append(
+                    {
+                        "name": name,
+                        "from": r1["season"],
+                        "to": r2["season"],
+                        "dPM": r2["v"][pm] - r1["v"][pm],
+                    }
+                )
 
     path_stats = []
     for (a, b), moves in paths.items():
@@ -79,14 +90,20 @@ def main() -> None:
             continue
         d = [m["dPM"] for m in moves]
         best = max(moves, key=lambda m: m["dPM"])
-        path_stats.append({
-            "from": clusters[a], "to": clusters[b], "n": len(moves),
-            "meanDPMz": round(float(np.mean(d)), 3),
-            "stdDPMz": round(float(np.std(d)), 3),
-            "bestExample": {"name": best["name"],
-                            "seasons": f"{best['from']} -> {best['to']}",
-                            "dPMz": round(best["dPM"], 2)},
-        })
+        path_stats.append(
+            {
+                "from": clusters[a],
+                "to": clusters[b],
+                "n": len(moves),
+                "meanDPMz": round(float(np.mean(d)), 3),
+                "stdDPMz": round(float(np.std(d)), 3),
+                "bestExample": {
+                    "name": best["name"],
+                    "seasons": f"{best['from']} -> {best['to']}",
+                    "dPMz": round(best["dPM"], 2),
+                },
+            }
+        )
     path_stats.sort(key=lambda p: -p["meanDPMz"])
     path_index = {(p["from"], p["to"]): p for p in path_stats}
 
@@ -114,47 +131,71 @@ def main() -> None:
     for (team, season), players in sorted(rosters.items()):
         cands = []
         for p in players:
-            sims = sorted(((cos(np.array(p["v"]), cents[j]), j)
-                           for j in range(k)), reverse=True)
+            sims = sorted(
+                ((cos(np.array(p["v"]), cents[j]), j) for j in range(k)), reverse=True
+            )
             adj = sims[1][1] if sims[0][1] == p["c"] else sims[0][1]
             st = path_index.get((clusters[p["c"]], clusters[adj]))
             if st is None:
                 continue
-            cands.append({
-                "name": p["name"], "current": clusters[p["c"]],
-                "adjacent": clusters[adj],
-                "pivotDistance": round(1 - sims[1][0], 3),
-                "path": {"n": st["n"], "meanDPMz": st["meanDPMz"],
-                         "example": st["bestExample"]},
-            })
+            cands.append(
+                {
+                    "name": p["name"],
+                    "current": clusters[p["c"]],
+                    "adjacent": clusters[adj],
+                    "pivotDistance": round(1 - sims[1][0], 3),
+                    "path": {
+                        "n": st["n"],
+                        "meanDPMz": st["meanDPMz"],
+                        "example": st["bestExample"],
+                    },
+                }
+            )
         if len(cands) < 4:
             continue
         cands.sort(key=lambda c: -c["path"]["meanDPMz"])
-        team_cards.append({"team": team, "season": season,
-                           "candidates": cands[:8],
-                           "answer": cands[0]["name"]})
+        team_cards.append(
+            {
+                "team": team,
+                "season": season,
+                "candidates": cands[:8],
+                "answer": cands[0]["name"],
+            }
+        )
 
-    (ASSETS / "pivots.json").write_text(json.dumps({
-        "method": ("adjacency = nearest other k-means centroids by "
-                   "cosine; pivots = real consecutive-season cluster "
-                   "changes 1996-2026; path stats = observed mean change "
-                   "in PLUS_MINUS z for players who made that exact "
-                   "directed pivot (n>=8 shown); roster upside = the "
-                   "historical path mean for each player's adjacent "
-                   "role — measured precedent WITH selection effects (players who pivoted are those whose games changed — precedent, not causation), NOT a prediction or "
-                   "simulation; rosters = last season only, >=1000 min, charted"),
-        "adjacency": adjacency,
-        "paths": path_stats,
-        "teams": team_cards,
-    }, separators=(",", ":")), encoding="utf-8")
+    (ASSETS / "pivots.json").write_text(
+        json.dumps(
+            {
+                "method": (
+                    "adjacency = nearest other k-means centroids by "
+                    "cosine; pivots = real consecutive-season cluster "
+                    "changes 1996-2026; path stats = observed mean change "
+                    "in PLUS_MINUS z for players who made that exact "
+                    "directed pivot (n>=8 shown); roster upside = the "
+                    "historical path mean for each player's adjacent "
+                    "role — measured precedent WITH selection effects (players who pivoted are those whose games changed — precedent, not causation), NOT a prediction or "
+                    "simulation; rosters = last season only, >=1000 min, charted"
+                ),
+                "adjacency": adjacency,
+                "paths": path_stats,
+                "teams": team_cards,
+            },
+            separators=(",", ":"),
+        ),
+        encoding="utf-8",
+    )
 
-    print(f"{len(path_stats)} pivot paths with n>={MIN_PATH_N}; "
-          f"{len(team_cards)} team cards")
+    print(
+        f"{len(path_stats)} pivot paths with n>={MIN_PATH_N}; "
+        f"{len(team_cards)} team cards"
+    )
     print("most valuable pivots (observed):")
     for p in path_stats[:3]:
-        print(f"  {p['from']} -> {p['to']}: {p['meanDPMz']:+.2f} dPMz "
-              f"(n={p['n']}, e.g. {p['bestExample']['name']} "
-              f"{p['bestExample']['seasons']})")
+        print(
+            f"  {p['from']} -> {p['to']}: {p['meanDPMz']:+.2f} dPMz "
+            f"(n={p['n']}, e.g. {p['bestExample']['name']} "
+            f"{p['bestExample']['seasons']})"
+        )
 
 
 if __name__ == "__main__":

@@ -3,78 +3,54 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Team Labs — Vector Hoops</title>
-<link rel="canonical" href="https://hoops.dumbmodel.com/teams">
-<meta property="og:url" content="https://hoops.dumbmodel.com/teams">
-<meta name="description" content="Team-specific research: charted roster composition, archetype mix, and skill profiles by NBA team and season.">
+<meta name="theme-color" content="#1A150F">
+<link rel="manifest" href="/manifest.json">
+<title>Team Labs Merged — Vector Hoops</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20100%20100%22%3E%3Ctext%20y%3D%22.9em%22%20font-size%3D%2290%22%3E%26%23127936%3B%3C%2Ftext%3E%3C%2Fsvg%3E">
-<meta property="og:title" content="Team Labs — Vector Hoops">
+<link rel="canonical" href="https://hoops.dumbmodel.com/players">
+<!-- teams restored: no auto-redirect -->
+<meta name="description" content="Team Labs merged into Player References while current roster data is rebuilt.">
 <link rel="stylesheet" href="assets/hoops.css">
-<link rel="stylesheet" href="assets/shell.css">
-<link rel="stylesheet" href="assets/nux.css">
-<link rel="stylesheet" href="assets/responsive.css">
+<link rel="stylesheet" href="assets/shell.css"/>
+<link rel="stylesheet" href="assets/responsive.css"/>
+<link rel="stylesheet" href="assets/final-qa.css"/>
+<link rel="stylesheet" href="assets/unified.css"/>
+<link rel="stylesheet" href="assets/motion.css"/>
+
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://hoops.dumbmodel.com/teams">
+<meta property="og:title" content="Teams — Vector Hoops">
+<meta property="og:description" content="Team Labs — explore teams, rosters, and embeddings.">
+<meta property="og:image" content="/assets/og-1200x630.png">
 </head>
 <body>
+<noscript><div role="alert" style="padding:16px;text-align:center">Enable JS — Vector Hoops needs JavaScript for Daily Court + Map</div></noscript>
 
 <nav class="site-nav" data-active="/teams" aria-label="Vector Hoops site"></nav>
-
-<main class="research-main teams-main">
-
-  <div class="research-head">
-    <h1>Team Labs</h1>
-    <p>Charted roster research for any team-season: archetype mix, mean skill grades,
-      and links into player profiles. Uses the same eligibility gates as the game universe.</p>
-  </div>
-
-  <div class="teams-controls drift-card">
-    <label>
-      <span class="teams-stat__label">Team</span>
-      <select id="teams-select" disabled aria-label="NBA team"></select>
-    </label>
-    <label>
-      <span class="teams-stat__label">Season</span>
-      <select id="teams-season" disabled aria-label="Season"></select>
-    </label>
-  </div>
-
-  <p class="skills-hint" id="teams-hint">Loading team data&hellip;</p>
-
-  <div class="teams-summary" id="teams-summary"></div>
-
-  <section class="drift-card" aria-label="Archetype mix">
-    <div class="drift-card__head">
-      <h2>Archetype mix</h2>
-      <p>Share of charted players on this roster in each global archetype.</p>
+<main class="research-main" style="max-width:1180px;margin:auto;padding:12px clamp(12px,3.2vw,20px) calc(92px + env(safe-area-inset-bottom))">
+  <div class="drift-card">
+    <p style="font-family:var(--mono);font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#666">Team Labs — restored minimal</p>
+    <h1 style="font-size:clamp(28px,5vw,38px);line-height:1.1;margin:8px 0">Team Labs</h1>
+    <p style="line-height:1.6;color:#333">Explore 30 NBA teams — rosters, archetype breakdown, mean skill grades. Data: <code>assets/teams.json</code> + <code>assets/current_rosters.json</code>.</p>
+    <div class="wiki-controls" style="margin-top:16px">
+      <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+        <select id="teams-select" class="input" style="flex:1 1 220px;min-height:44px"></select>
+        <select id="teams-season" class="input" style="flex:0 0 140px;min-height:44px"><option value="">2025-26</option></select>
+      </div>
+      <div id="teams-summary" style="margin-top:12px;font-size:14px"></div>
+      <div id="teams-archetypes" style="margin-top:10px;display:flex;gap:6px;flex-wrap:wrap"></div>
+      <div id="teams-roster" style="margin-top:12px"></div>
+      <div id="teams-hint" class="small-mono" style="margin-top:8px;color:#666"></div>
     </div>
-    <div id="teams-archetypes"></div>
-  </section>
-
-  <section class="drift-card" aria-label="Roster table">
-    <div class="drift-card__head">
-      <h2>Roster</h2>
-      <p>Sorted by mean skill grade. Last column is overall mean (0&ndash;99).</p>
-    </div>
-    <ol class="teams-roster" id="teams-roster"></ol>
-  </section>
-
+  </div>
+  <div class="card" id="team-leaderboard"><h2 class="hd" style="font-size:18px">Team board</h2><div id="team-board-count" class="small-mono" style="color:#666"></div><ol id="team-board-list" class="wiki-list"></ol></div>
 </main>
-
-<footer class="site-footer">
-  <div class="site-footer__links">
-    <a href="/players">Players</a>
-    <a href="/trends">Trends</a>
-    <a href="/methods">Methods</a>
-    <a href="/play">Play</a>
-    <a href="#" data-vh-nux-tour>Tour</a>
-  </div>
-  <div class="site-footer__attribution">Every number recomputable from stats.nba.com &amp; Basketball-Reference source data</div>
-</footer>
-
+<footer class="site-footer"><div class="site-footer__links"><a href="/play">Play</a><a href="/model">Lab</a><a href="/methods">Methods</a><a href="/players">Players</a><a href="https://github.com/jcdavis131/vector-hoops" target="_blank" rel="noopener">GitHub</a></div><div class="site-footer__attribution">Every number recomputable from stats.nba.com · dumbmodel.com</div></footer>
+<script src="assets/error-boundary.js"></script>
+<script src="assets/keyboard-a11y.js"></script>
 <script src="assets/site-nav.js" defer></script>
-<script src="assets/dossier.js" defer></script>
-<script src="assets/player-roster.js" defer></script>
-<script src="assets/favorite-team.js" defer></script>
-<script src="assets/teams-lab.js" defer></script>
-<script src="assets/nux.js" defer></script>
+<script src="assets/pwa-install.js"></script>
+<script> // teams restored: no auto-redirect </script>
+<script>if('serviceWorker' in navigator){window.addEventListener('load',()=>{navigator.serviceWorker.register('/sw.js').catch(()=>{})})}</script>
 </body>
 </html>

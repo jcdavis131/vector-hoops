@@ -7,6 +7,7 @@ Parse-and-discard: the raw HTML is never stored (disk-frugal).
 Rate-limited to stay well under BBRef's 20 req/min policy.
 Resumable: seasons already in the cache are skipped.
 """
+
 from __future__ import annotations
 
 import json
@@ -59,7 +60,9 @@ def fetch_season(season: str) -> dict[str, str]:
 
 
 def main() -> None:
-    vectors = json.loads((ROOT.parent / "assets" / "vectors.json").read_text(encoding="utf-8"))
+    vectors = json.loads(
+        (ROOT.parent / "assets" / "vectors.json").read_text(encoding="utf-8")
+    )
     first = int(vectors["seasons"][0][:4])
     last = int(vectors["seasons"][-1][:4])
     seasons = [f"{y}-{str(y + 1)[-2:]}" for y in range(first, last + 1)]
@@ -74,7 +77,7 @@ def main() -> None:
             continue
         try:
             rows = fetch_season(season)
-        except Exception as exc:  # noqa: BLE001 - log and keep going
+        except Exception as exc:
             print(f"{season}: FAIL {exc}", flush=True)
             time.sleep(DELAY_S)
             continue
@@ -87,7 +90,10 @@ def main() -> None:
         time.sleep(DELAY_S)
 
     total = sum(len(v) for v in cache.values())
-    print(f"done: {len(cache)}/{len(seasons)} seasons, {total} name-season positions", flush=True)
+    print(
+        f"done: {len(cache)}/{len(seasons)} seasons, {total} name-season positions",
+        flush=True,
+    )
     sys.exit(0 if len(cache) == len(seasons) else 1)
 
 

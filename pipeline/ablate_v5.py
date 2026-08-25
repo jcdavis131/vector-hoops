@@ -18,34 +18,52 @@ embedding_v3.npz, mtnn_centroids.npz, or mtnn_report.json.
 Run:  python pipeline/ablate_v5.py            (full: 35 epochs each)
       python pipeline/ablate_v5.py --quick    (12 epochs, smoke)
 """
+
 from __future__ import annotations
 
 import argparse
 import json
 import os
 import time
-from pathlib import Path
 
+import leakfree as LF  # same directory
 import numpy as np
 import torch
 import torch.nn.functional as F
-
-import leakfree as LF  # same directory
 import train_mtnn as T  # same directory
 
 OUT = T.DATA_DIR / "ablation"
 
 CONFIGS = {
-    "A_v4_control": dict(
-        fusion_mode="concat", d_tower=24, d_tower_hidden=96, d_emb=48,
-        n_tower_blocks=1, mlp_heads=False),
-    "B_deep_concat": dict(
-        fusion_mode="concat", d_tower=32, d_tower_hidden=160, d_emb=64,
-        n_tower_blocks=2, mlp_heads=True, d_head_hidden=64),
-    "C_transformer": dict(
-        fusion_mode="transformer", d_tower=32, d_tower_hidden=160, d_emb=64,
-        n_tower_blocks=2, mlp_heads=True, d_head_hidden=64,
-        d_model=96, n_fusion_layers=4, n_attn_heads=4),
+    "A_v4_control": {
+        "fusion_mode": "concat",
+        "d_tower": 24,
+        "d_tower_hidden": 96,
+        "d_emb": 48,
+        "n_tower_blocks": 1,
+        "mlp_heads": False,
+    },
+    "B_deep_concat": {
+        "fusion_mode": "concat",
+        "d_tower": 32,
+        "d_tower_hidden": 160,
+        "d_emb": 64,
+        "n_tower_blocks": 2,
+        "mlp_heads": True,
+        "d_head_hidden": 64,
+    },
+    "C_transformer": {
+        "fusion_mode": "transformer",
+        "d_tower": 32,
+        "d_tower_hidden": 160,
+        "d_emb": 64,
+        "n_tower_blocks": 2,
+        "mlp_heads": True,
+        "d_head_hidden": 64,
+        "d_model": 96,
+        "n_fusion_layers": 4,
+        "n_attn_heads": 4,
+    },
 }
 
 SEED = 7
@@ -59,7 +77,13 @@ ARCH_W = 0.2
 # Core multitask weights (the losses that drive the compared metrics; the
 # masked scalar aux heads are omitted from the ablation loop since they do
 # not materially affect purity / recall / next-profile).
-W = dict(archetype=0.25, position=0.15, profile=0.12, next_profile=0.08, skills=0.18)
+W = {
+    "archetype": 0.25,
+    "position": 0.15,
+    "profile": 0.12,
+    "next_profile": 0.08,
+    "skills": 0.18,
+}
 
 
 def resolve_device(pref: str = "auto") -> str:
@@ -69,19 +93,27 @@ def resolve_device(pref: str = "auto") -> str:
         if not torch.cuda.is_available():
             raise SystemExit(
                 "requested --device cuda but torch.cuda.is_available() is False — "
-                "install a CUDA build of torch (see docs/MTNN_V5_DEEP_ARCHITECTURE.md).")
+                "install a CUDA build of torch (see docs/MTNN_V5_DEEP_ARCHITECTURE.md)."
+            )
         return "cuda"
     return "cpu"
 
 
-def train_one(name: str, cfg: dict, epochs: int, seed: int = SEED,
-              device: str = "cpu", protocol: str = "legacy",
-              split_mode: str = "player") -> dict:
+def train_one(
+    name: str,
+    cfg: dict,
+    epochs: int,
+    seed: int = SEED,
+    device: str = "cpu",
+    protocol: str = "legacy",
+    split_mode: str = "player",
+) -> dict:
     torch.manual_seed(seed)
     np.random.seed(seed)
 
-    (Z, M, names, seasons, pids, clusters, positions, season_ids,
-     manifest) = T.load_bundle()
+    (Z, M, names, seasons, pids, clusters, positions, season_ids, manifest) = (
+        T.load_bundle()
+    )
     fams = T.family_slices(manifest)
     game_cols = T.game_feature_cols(manifest)
     game_z = torch.tensor(Z[:, game_cols], device=device)
@@ -117,25 +149,35 @@ def train_one(name: str, cfg: dict, epochs: int, seed: int = SEED,
 
     xs, ms = T.split_by_family(Z, M, fams, device)
     model = T.MTNN(
-        {f: len(c) for f, c in fams.items()}, n_seasons,
-        n_game=len(game_cols), n_skills=len(skill_keys), **cfg).to(device)
+        {f: len(c) for f, c in fams.items()},
+        n_seasons,
+        n_game=len(game_cols),
+        n_skills=len(skill_keys),
+        **cfg,
+    ).to(device)
     n_params = sum(p.numel() for p in model.parameters())
 
     opt = torch.optim.AdamW(T.adamw_param_groups(model, 1e-4), lr=LR)
     steps = T.optimizer_steps_per_epoch(len(row_pool), BATCH, 1)
     total = max(1, steps * epochs)
     sched, _ = T.build_lr_scheduler(
-        opt, schedule="onecycle", total_steps=total, epochs=epochs,
-        warmup_pct=0.1, max_lr=LR, anneal_strategy="linear")
+        opt,
+        schedule="onecycle",
+        total_steps=total,
+        epochs=epochs,
+        warmup_pct=0.1,
+        max_lr=LR,
+        anneal_strategy="linear",
+    )
 
-    n = len(Z)
+    len(Z)
     t0 = time.time()
     for ep in range(epochs):
         model.train()
         perm = np.random.permutation(row_pool)
         run_loss, nb_steps = 0.0, 0
         for s in range(0, len(row_pool), BATCH):
-            idx = perm[s:s + BATCH]
+            idx = perm[s : s + BATCH]
             if len(idx) < 8:
                 continue
             idx_t = torch.tensor(idx, device=device)
@@ -146,14 +188,24 @@ def train_one(name: str, cfg: dict, epochs: int, seed: int = SEED,
             za, out = model(xa, ma, seas_t[idx_t])
             zb, _ = model(xb, mb, seas_t[partner_t])
             loss = T.contrastive_loss(
-                za, zb, mode="hybrid", temp=TEMP,
-                pos_a=pos_t[idx_t], pos_b=pos_t[partner_t],
-                hard_neg_boost=HARD_NEG, arch_labels=arch_t[idx_t],
-                player_weight=PLAYER_W, arch_weight=ARCH_W)
-            loss = loss + W["archetype"] * F.cross_entropy(out["archetype"], arch_t[idx_t])
+                za,
+                zb,
+                mode="hybrid",
+                temp=TEMP,
+                pos_a=pos_t[idx_t],
+                pos_b=pos_t[partner_t],
+                hard_neg_boost=HARD_NEG,
+                arch_labels=arch_t[idx_t],
+                player_weight=PLAYER_W,
+                arch_weight=ARCH_W,
+            )
+            loss = loss + W["archetype"] * F.cross_entropy(
+                out["archetype"], arch_t[idx_t]
+            )
             if pos_mask[idx_t].any():
                 loss = loss + W["position"] * F.cross_entropy(
-                    out["position"][pos_mask[idx_t]], pos_t[idx_t][pos_mask[idx_t]])
+                    out["position"][pos_mask[idx_t]], pos_t[idx_t][pos_mask[idx_t]]
+                )
             loss = loss + W["profile"] * F.mse_loss(out["profile"], game_z[idx_t])
             nb = next_idx_train[idx]
             nv = nb >= 0
@@ -161,7 +213,8 @@ def train_one(name: str, cfg: dict, epochs: int, seed: int = SEED,
                 nt = torch.tensor(nb[nv], device=device)
                 nvt = torch.tensor(nv, device=device, dtype=torch.bool)
                 loss = loss + W["next_profile"] * F.smooth_l1_loss(
-                    out["next_profile"][nvt], game_z[nt])
+                    out["next_profile"][nvt], game_z[nt]
+                )
             if "skills" in out:
                 wm = skillm_t[idx_t]
                 if wm.sum() > 0:
@@ -175,8 +228,10 @@ def train_one(name: str, cfg: dict, epochs: int, seed: int = SEED,
             run_loss += float(loss)
             nb_steps += 1
         if ep % 5 == 0 or ep == epochs - 1:
-            print(f"  [{name}] epoch {ep:3d}  loss {run_loss / max(1, nb_steps):.4f}",
-                  flush=True)
+            print(
+                f"  [{name}] epoch {ep:3d}  loss {run_loss / max(1, nb_steps):.4f}",
+                flush=True,
+            )
 
     # ---- eval (reseed so recall sampling is identical across configs) ----
     np.random.seed(seed)
@@ -193,8 +248,12 @@ def train_one(name: str, cfg: dict, epochs: int, seed: int = SEED,
     # Eval always uses the FULL next_idx: under leakfree those targets were
     # never trained on, so this is a genuine held-out score.
     npr = LF.next_profile_metrics(
-        next_pred, Z[:, game_cols], next_idx, split,
-        [manifest["features"][j] for j in game_cols])
+        next_pred,
+        Z[:, game_cols],
+        next_idx,
+        split,
+        [manifest["features"][j] for j in game_cols],
+    )
     test_rows = np.where(split == "test")[0]
     is_test = split == "test"
     return {
@@ -203,10 +262,10 @@ def train_one(name: str, cfg: dict, epochs: int, seed: int = SEED,
         "device": device,
         "protocol": protocol,
         "split_mode": split_mode,
-        "train_rows": int(len(row_pool)),
-        "train_pairs": int(len(train_pairs)),
+        "train_rows": len(row_pool),
+        "train_pairs": len(train_pairs),
         "test_rows": int(is_test.sum()),
-        "test_pairs": int(len(test_pairs)),
+        "test_pairs": len(test_pairs),
         "test_recall_at_10": T.recall_at_k(E, test_pairs, 10),
         "val_recall_at_10": T.recall_at_k(E, val_pairs, 10),
         "purity_at_20": T.cross_era_archetype_purity(E, clusters, seasons),
@@ -215,7 +274,8 @@ def train_one(name: str, cfg: dict, epochs: int, seed: int = SEED,
         "archetype_top1_test": T.classification_acc(arch_logits, clusters, is_test),
         "position_top1": T.classification_acc(pos_logits, positions, positions >= 0),
         "position_top1_test": T.classification_acc(
-            pos_logits, positions, is_test & (positions >= 0)),
+            pos_logits, positions, is_test & (positions >= 0)
+        ),
         "next_profile": npr,
         "seconds": round(time.time() - t0, 1),
     }
@@ -232,7 +292,7 @@ def verdict(res: dict) -> dict:
     ra_test = _rmse(a["next_profile"], "test")
     rc_test = _rmse(c["next_profile"], "test")
     purity_gain = pc - pa
-    reg_better = (rc_test is not None and ra_test is not None and rc_test < ra_test)
+    reg_better = rc_test is not None and ra_test is not None and rc_test < ra_test
     recall_ok = (c["test_recall_at_10"] or 0) >= 0.99
     ship_c = purity_gain >= 0.02 and reg_better and recall_ok
     # is the transformer earning its cost over depth-only B?
@@ -247,10 +307,12 @@ def verdict(res: dict) -> dict:
         "transformer_earns_over_B": transformer_earns,
         "ship_C": ship_c,
         "recommendation": (
-            "SHIP v5 (config C: transformer fusion)" if ship_c and transformer_earns
+            "SHIP v5 (config C: transformer fusion)"
+            if ship_c and transformer_earns
             else "SHIP depth-only (config B); transformer not justified"
             if (b["purity_at_20"] or 0) >= pa + 0.02 and not ship_c
-            else "KEEP v4 (config A); no config clears the gate"),
+            else "KEEP v4 (config A); no config clears the gate"
+        ),
     }
 
 
@@ -274,7 +336,8 @@ def aggregate(per_seed: dict) -> dict:
         nr_m, nr_s = _mean_std([_rmse(r["next_profile"], "test") for r in rows])
         rc_m, _ = _mean_std([r["test_recall_at_10"] for r in rows])
         agg[cfg] = {
-            "params": rows[0]["params"], "n_seeds": len(rows),
+            "params": rows[0]["params"],
+            "n_seeds": len(rows),
             "protocol": rows[0].get("protocol"),
             "purity_at_20": {"mean": pu_m, "std": pu_s},
             "purity_at_20_test": {"mean": put_m, "std": put_s},
@@ -307,16 +370,30 @@ def confirm_decision(per_seed: dict, agg: dict) -> dict:
         dr = (rb - ra) if (ra is not None and rb is not None) else None
         pur_wins += int(dp > 0)
         reg_wins += int(dr is not None and dr < 0)
-        per.append({"seed": s, "purity_gain": round(dp, 4),
-                    "rmse_delta": round(dr, 4) if dr is not None else None})
+        per.append(
+            {
+                "seed": s,
+                "purity_gain": round(dp, 4),
+                "rmse_delta": round(dr, 4) if dr is not None else None,
+            }
+        )
     a_ag, b_ag = agg["A_v4_control"], agg["B_deep_concat"]
-    pk = "purity_at_20_test" if (b_ag.get("purity_at_20_test") or {}).get("mean") is not None \
+    pk = (
+        "purity_at_20_test"
+        if (b_ag.get("purity_at_20_test") or {}).get("mean") is not None
         else "purity_at_20"
+    )
     mean_pur_gain = round((b_ag[pk]["mean"] or 0) - (a_ag[pk]["mean"] or 0), 4)
-    reg_better = (b_ag["next_rmse_test"]["mean"] or 9) < (a_ag["next_rmse_test"]["mean"] or 9)
+    reg_better = (b_ag["next_rmse_test"]["mean"] or 9) < (
+        a_ag["next_rmse_test"]["mean"] or 9
+    )
     recall_ok = (b_ag["test_recall_at_10"]["mean"] or 0) >= 0.99
-    promote = (mean_pur_gain > 0 and pur_wins >= (len(seeds) + 1) // 2
-               and reg_better and recall_ok)
+    promote = (
+        mean_pur_gain > 0
+        and pur_wins >= (len(seeds) + 1) // 2
+        and reg_better
+        and recall_ok
+    )
     return {
         "seeds": seeds,
         "per_seed": per,
@@ -327,7 +404,9 @@ def confirm_decision(per_seed: dict, agg: dict) -> dict:
         "promote_B": promote,
         "recommendation": (
             "PROMOTE B recipe (deeper towers + MLP heads, concat fusion)"
-            if promote else "KEEP v4 — B gains not consistent across seeds"),
+            if promote
+            else "KEEP v4 — B gains not consistent across seeds"
+        ),
     }
 
 
@@ -336,18 +415,44 @@ def main() -> None:
     ap.add_argument("--quick", action="store_true", help="12 epochs (smoke)")
     ap.add_argument("--epochs", type=int, default=None)
     ap.add_argument("--only", type=str, default="", help="comma-separated config names")
-    ap.add_argument("--seeds", type=str, default=str(SEED),
-                    help="comma-separated seeds; >1 triggers aggregation")
-    ap.add_argument("--device", choices=("auto", "cpu", "cuda"), default="auto",
-                    help="auto uses the local GPU when a CUDA torch build is present")
-    ap.add_argument("--protocol", choices=("legacy", "leakfree"), default="leakfree",
-                    help="leakfree = inductive; val/test rows never supervise (default)")
-    ap.add_argument("--split", choices=("player", "temporal"), default="player",
-                    help="player = grouped by player (no era shift, no cross-split "
-                         "pairs, all seasons trained); temporal = forecasting claim")
+    ap.add_argument(
+        "--seeds",
+        type=str,
+        default=str(SEED),
+        help="comma-separated seeds; >1 triggers aggregation",
+    )
+    ap.add_argument(
+        "--device",
+        choices=("auto", "cpu", "cuda"),
+        default="auto",
+        help="auto uses the local GPU when a CUDA torch build is present",
+    )
+    ap.add_argument(
+        "--protocol",
+        choices=("legacy", "leakfree"),
+        default="leakfree",
+        help="leakfree = inductive; val/test rows never supervise (default)",
+    )
+    ap.add_argument(
+        "--split",
+        choices=("player", "temporal"),
+        default="player",
+        help="player = grouped by player (no era shift, no cross-split "
+        "pairs, all seasons trained); temporal = forecasting claim",
+    )
+    ap.add_argument(
+        "--w-next-profile",
+        type=float,
+        default=None,
+        help="override the next_profile loss weight (default 0.08); "
+        "tags output files so A/B runs do not collide",
+    )
     args = ap.parse_args()
+    if args.w_next_profile is not None:
+        W["next_profile"] = args.w_next_profile
     try:
         import sys
+
         sys.stdout.reconfigure(encoding="utf-8")
     except Exception:
         pass
@@ -356,8 +461,11 @@ def main() -> None:
     device = resolve_device(args.device)
     if device == "cpu":
         torch.set_num_threads(max(1, os.cpu_count() or 1))
-    print(f"device: {device}"
-          + ("" if device == "cpu" else f" ({torch.cuda.get_device_name(0)})"), flush=True)
+    print(
+        f"device: {device}"
+        + ("" if device == "cpu" else f" ({torch.cuda.get_device_name(0)})"),
+        flush=True,
+    )
     OUT.mkdir(parents=True, exist_ok=True)
 
     only = {s.strip() for s in args.only.split(",") if s.strip()}
@@ -367,21 +475,35 @@ def main() -> None:
     for name, cfg in configs.items():
         for seed in seeds:
             tag = f"{name}#s{seed}"
-            print(f"=== {tag} ({epochs} epochs, {args.protocol}, "
-                  f"{args.split}-split) ===", flush=True)
-            m = train_one(name, cfg, epochs, seed=seed, device=device,
-                          protocol=args.protocol, split_mode=args.split)
+            if args.w_next_profile is not None:
+                tag += f"_np{args.w_next_profile}"
+            print(
+                f"=== {tag} ({epochs} epochs, {args.protocol}, {args.split}-split) ===",
+                flush=True,
+            )
+            m = train_one(
+                name,
+                cfg,
+                epochs,
+                seed=seed,
+                device=device,
+                protocol=args.protocol,
+                split_mode=args.split,
+            )
             per_seed[name][seed] = m
             (OUT / f"{tag}.json").write_text(json.dumps(m, indent=2), encoding="utf-8")
             pt = m.get("purity_at_20_test")
             at = m.get("archetype_top1_test")
-            print(f"  -> params {m['params']:,} | train_rows {m.get('train_rows')} "
-                  f"pairs {m.get('train_pairs')} | test_recall {m['test_recall_at_10']} | "
-                  f"purity(all) {round(m['purity_at_20'],4) if m['purity_at_20'] else None} "
-                  f"purity(test) {round(pt,4) if pt else None} | "
-                  f"arch_top1(test) {round(at,4) if at else None} | "
-                  f"next_test_rmse {_rmse(m['next_profile'],'test')} | "
-                  f"{m['seconds']}s", flush=True)
+            print(
+                f"  -> params {m['params']:,} | train_rows {m.get('train_rows')} "
+                f"pairs {m.get('train_pairs')} | test_recall {m['test_recall_at_10']} | "
+                f"purity(all) {round(m['purity_at_20'], 4) if m['purity_at_20'] else None} "
+                f"purity(test) {round(pt, 4) if pt else None} | "
+                f"arch_top1(test) {round(at, 4) if at else None} | "
+                f"next_test_rmse {_rmse(m['next_profile'], 'test')} | "
+                f"{m['seconds']}s",
+                flush=True,
+            )
 
     multi = len(seeds) > 1
     report: dict = {"epochs": epochs, "seeds": seeds, "per_seed": per_seed}
@@ -390,23 +512,31 @@ def main() -> None:
         report["decision"] = confirm_decision(per_seed, report["aggregate"])
     elif set(CONFIGS).issubset(per_seed):
         report["verdict"] = verdict({k: v[seeds[0]] for k, v in per_seed.items()})
-    (OUT / "ablation_report.json").write_text(json.dumps(report, indent=2), encoding="utf-8")
+    (OUT / "ablation_report.json").write_text(
+        json.dumps(report, indent=2), encoding="utf-8"
+    )
 
     print("\n=== SUMMARY ===")
     if multi:
         ag = report["aggregate"]
-        print(f"{'config':<16}{'params':>10}{'purity@20(mean±std)':>24}{'arch1':>8}{'pos1':>8}{'nextRMSE':>10}{'recall':>8}")
+        print(
+            f"{'config':<16}{'params':>10}{'purity@20(mean±std)':>24}{'arch1':>8}{'pos1':>8}{'nextRMSE':>10}{'recall':>8}"
+        )
         for name, a in ag.items():
             pu = a["purity_at_20"]
             pu_str = "{}±{}".format(pu["mean"], pu["std"])
-            print(f"{name:<16}{a['params']:>10,}{pu_str:>24}"
-                  f"{str(a['archetype_top1']['mean']):>8}{str(a['position_top1']['mean']):>8}"
-                  f"{str(a['next_rmse_test']['mean']):>10}{str(a['test_recall_at_10']['mean']):>8}")
+            print(
+                f"{name:<16}{a['params']:>10,}{pu_str:>24}"
+                f"{a['archetype_top1']['mean']!s:>8}{a['position_top1']['mean']!s:>8}"
+                f"{a['next_rmse_test']['mean']!s:>10}{a['test_recall_at_10']['mean']!s:>8}"
+            )
         print("\nDECISION:", json.dumps(report["decision"], indent=2))
     else:
         for name, seeds_d in per_seed.items():
             m = seeds_d[seeds[0]]
-            print(f"{name:<16} purity@20 {m['purity_at_20']} recall {m['test_recall_at_10']}")
+            print(
+                f"{name:<16} purity@20 {m['purity_at_20']} recall {m['test_recall_at_10']}"
+            )
         if "verdict" in report:
             print("\nVERDICT:", json.dumps(report["verdict"], indent=2))
     print(f"\nwrote {OUT / 'ablation_report.json'}")

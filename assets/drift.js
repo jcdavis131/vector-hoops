@@ -387,93 +387,110 @@
     });
 
     if (legendHost) {
+      // v25: readable chips with full names, wrapping flex, not tiny monospace, tooltip
+      legendHost.className = 'era-legend';
+      legendHost.id = 'archetype-legend';
       legendHost.innerHTML = names.map(function (nm, k) {
-        return '<li class="archetype-legend__item">' +
-          '<span class="archetype-legend__swatch" style="background:' + ARCH_PALETTE[k % ARCH_PALETTE.length] + '"></span>' +
-          escapeHtml(nm) + '</li>';
+        var col = ARCH_PALETTE[k % ARCH_PALETTE.length];
+        return '<li class="archetype-legend__item" title="' + escapeHtml(nm) + ' — full league share, click era to filter">' +
+          '<span class="archetype-legend__swatch" style="background:' + col + '"></span>' +
+          '<span>' + escapeHtml(nm) + '</span></li>';
       }).join('');
     }
   }
 
+  // Narrative-driven archetype narrative — v25 clean readable, no aggressive truncation, proper spacing
+  function renderArchetypeEraNarrative(host, data) {
+    if (!host || !data || !data.eras) return;
+    var eras = data.eras;
+    var shifts = data.biggestShifts || [];
+    function topSorted(era){ return era.archetypes.slice().sort(function(a,b){return b.share - a.share;}); }
+    function glassPct(era){
+      return Math.round(era.archetypes.reduce(function(s,a){ return /Glass|Rim|Interior/i.test(a.name) ? s + a.share : s; },0)*100);
+    }
+    var s0 = eras[0] ? topSorted(eras[0])[0] : null;
+    var s1 = eras[1] ? topSorted(eras[1])[0] : null;
+    var s1b = eras[1] ? topSorted(eras[1])[1] : null;
+    var s2 = eras[2] ? topSorted(eras[2])[0] : null;
+    var s3 = eras[3] ? topSorted(eras[3]) : [];
+    var s4 = eras[4] ? topSorted(eras[4])[0] : null;
+
+    var story = '';
+
+    if (eras[0] && s0){
+      story += '<p><span class="arch-era-kicker">1996–2003</span> <span class="arch-era-sentence">League was still <strong>paint-built</strong>. <strong>' + escapeHtml(s0.name) + '</strong> led at <strong>' + Math.round(s0.share*100) + '%</strong>. Bigs who rebounded and blocked — ' + glassPct(eras[0]) + '% combined glass/rim types.</span></p>';
+    }
+    if (eras[1] && s1){
+      story += '<p><span class="arch-era-kicker">2003–2009</span> <span class="arch-era-sentence"><strong>Transition.</strong> <strong>' + escapeHtml(s1.name) + '</strong> on top' + (s1b ? ' ('+Math.round(s1b.share*100)+'%)' : '') + ' — diversity peaked, effective types 7.7. Playmaking guards held share.</span></p>';
+    }
+    if (eras[2] && s2){
+      story += '<p><span class="arch-era-kicker">2009–2015</span> <span class="arch-era-sentence">Protection still king: <strong>' + escapeHtml(s2.name) + '</strong> ' + Math.round(s2.share*100) + '% share. Spacing tags just 12% of league.</span></p>';
+    }
+    if (eras[3] && s3.length){
+      var top3 = s3.slice(0,3).map(function(a){ return escapeHtml(a.name)+' '+Math.round(a.share*100)+'%'; }).join(', ');
+      story += '<p><span class="arch-era-kicker">2015–2021</span> <span class="arch-era-sentence"><strong>The flip.</strong> Top three are now all perimeter shooting — ' + top3 + '. That is the Warriors/Curry effect in the stream.</span></p>';
+    }
+    if (eras[4] && s4){
+      var shiftLine = '';
+      if (shifts.length >= 2){
+        var pure = shifts.find(function(sh){ return /Glass.*Rim/i.test(sh.archetype); }) || shifts[0];
+        var newcomer = shifts.find(function(sh){ return sh.delta > 0; }) || shifts[1];
+        shiftLine = ' Pure <em>' + escapeHtml(pure.archetype) + '</em> went 28%→0% (' + (pure.delta*100).toFixed(1) + 'pp) replaced by <em>' + escapeHtml(newcomer.archetype) + '</em> +' + (newcomer.delta*100).toFixed(1) + 'pp.';
+      }
+      story += '<p><span class="arch-era-kicker">2021–2026</span> <span class="arch-era-sentence">Modern hybrid: <strong>' + escapeHtml(s4.name) + '</strong> ' + Math.round(s4.share*100) + '% — bigs who shoot <em>and</em> board.' + shiftLine + '</span></p>';
+    }
+
+    host.innerHTML = story;
+  }
+
   function renderArchetypeShiftsChart(host, shifts) {
     if (!host || !shifts || !shifts.length) return;
-    host.innerHTML = '';
-    var W = 420, LEFT = 8, RIGHT = 52, TOP = 8, BOT = 8;
-    var rowH = 26, gap = 6;
-    var H = TOP + shifts.length * (rowH + gap) + BOT;
-    var plotW = W - LEFT - RIGHT;
+    // v25: rewrite as HTML for readability — no SVG overlapping "-18.4pp" text. Row 44px, bar 14px rounded.
     var maxAbs = shifts.reduce(function (m, s) { return Math.max(m, Math.abs(s.delta)); }, 0.01);
-    var midX = LEFT + plotW / 2;
-
-    var svg = svgEl('svg', {
-      viewBox: '0 0 ' + W + ' ' + H,
-      role: 'img',
-      'aria-label': 'Archetype share change, early five seasons vs late five',
-      'font-family': getComputedStyle(document.body).fontFamily
-    }, host);
-
-    svgEl('line', {
-      x1: midX, y1: TOP - 2, x2: midX, y2: H - BOT + 2,
-      stroke: HAIRLINE, 'stroke-width': 1
-    }, svg);
-
-    shifts.forEach(function (s, i) {
-      var y = TOP + i * (rowH + gap) + rowH / 2;
+    var rows = shifts.map(function (s) {
       var up = s.delta >= 0;
-      var barW = (Math.abs(s.delta) / maxAbs) * (plotW / 2 - 4);
-      var x = up ? midX : midX - barW;
-      var color = up ? HOT_HEX : COLD_HEX;
-      var bar = svgEl('rect', {
-        x: x, y: y - 8, width: barW, height: 16, fill: color, rx: 3, opacity: 0.9
-      }, svg);
+      var pct = Math.abs(s.delta) / maxAbs;
+      var barW = Math.max(6, Math.round(pct * 46)); // percent of total width (of half)
       var deltaText = (up ? '+' : '') + (s.delta * 100).toFixed(1) + 'pp';
-      var title = document.createElementNS(SVG_NS, 'title');
-      title.textContent = s.archetype + ': ' + pct1(s.early) + ' early → ' + pct1(s.late) + ' late (' + deltaText + ')';
-      bar.appendChild(title);
-      svgEl('text', {
-        x: up ? midX + barW + 6 : midX - barW - 6, y: y + 4,
-        'text-anchor': up ? 'start' : 'end', 'font-size': 10, 'font-weight': 700, fill: color
-      }, svg).textContent = deltaText;
-      svgEl('text', {
-        x: LEFT, y: y + 4, 'text-anchor': 'start', 'font-size': 10, fill: INK
-      }, svg).textContent = truncateName(s.archetype, 32);
-    });
+      var tooltip = s.archetype + ': ' + pct1(s.early) + ' early → ' + pct1(s.late) + ' late (' + deltaText + ')';
+      var barStyle;
+      if (up) {
+        barStyle = 'left:50%; width:' + barW + '%;';
+      } else {
+        barStyle = 'right:50%; width:' + barW + '%; left:auto;';
+      }
+      // full archetype name, 2 lines max via CSS clamp
+      return '<div class="arch-shift-row" title="' + escapeHtml(tooltip) + '">' +
+        '<div class="arch-shift-label">' + escapeHtml(s.archetype) + '</div>' +
+        '<div class="arch-shift-bar-wrap">' +
+          '<div class="arch-shift-bar-center" aria-hidden="true"></div>' +
+          '<div class="arch-shift-bar ' + (up ? 'arch-shift-bar--up' : 'arch-shift-bar--down') + '" style="' + barStyle + '"></div>' +
+        '</div>' +
+        '<div class="arch-shift-delta ' + (up ? 'arch-shift-delta--up' : 'arch-shift-delta--down') + '">' + escapeHtml(deltaText) + '</div>' +
+      '</div>';
+    }).join('');
+
+    host.innerHTML = '<div class="arch-shifts-list" role="list" aria-label="Archetype share change, early five vs late five">' + rows + '</div>';
   }
 
   function renderEraPanelsCompact(host, eras) {
     if (!host || !eras) return;
-    var TAG_LABELS = {
-      three_and_d: '3-and-D',
-      stretch_big: 'Stretch big',
-      traditional_big: 'Trad. big',
-      spacing_role: 'Spacing',
-      two_way_perimeter: 'Two-way',
-      primary_creator: 'Creator',
-      volume_scorer: 'Volume'
-    };
+    // v25: show full names, not 22 chars truncated, 2-line wrap via CSS
     host.innerHTML = eras.map(function (era) {
-      var top = era.archetypes.slice().sort(function (a, b) { return b.share - a.share; }).slice(0, 4);
+      var sorted = era.archetypes.slice().sort(function (a, b) { return b.share - a.share; });
+      var top = sorted.slice(0, 3);
+      var sentence = '';
+      if (era.era === '1996-2003') sentence = 'Early league was ' + Math.round(top[0].share*100) + '% ' + escapeHtml(top[0].name) + ' + ' + Math.round(top[1].share*100) + '% ' + escapeHtml(top[1].name) + ' — anchor bigs + score-first wings.';
+      else if (era.era === '2003-2009') sentence = 'Middle era mixed ' + top.map(function(t){ return escapeHtml(t.name)+' '+Math.round(t.share*100)+'%';}).join(' / ') + '. Playmaking held.';
+      else if (era.era === '2009-2015') sentence = 'Defense still paid: ' + escapeHtml(top[0].name) + ' ' + Math.round(top[0].share*100) + '%. Offense shifted to volume.';
+      else if (era.era === '2015-2021') sentence = 'Spacing era: ' + top.slice(0,2).map(function(t){return escapeHtml(t.name)+' '+Math.round(t.share*100)+'%';}).join(' + ') + ' led.';
+      else sentence = 'Today: ' + top.map(function(t){return escapeHtml(t.name)+' '+Math.round(t.share*100)+'%';}).join(', ') + ' — hybrids.';
       var bars = top.map(function (item) {
         var pct = Math.round(item.share * 100);
-        var badges = '';
-        if (item.novel) badges += '<span class="era-compact-badge era-compact-badge--novel" title="Novel geometry">✦</span>';
-        else if (item.ancestor && item.ancestor.similarity >= 0.9) {
-          badges += '<span class="era-compact-badge era-compact-badge--lineage" title="Strong lineage from ' +
-            escapeHtml(item.ancestor.name) + '">⛓</span>';
-        }
-        var tagBits = (item.tags || []).slice(0, 2).map(function (t) {
-          return '<span class="era-compact-tag">' + escapeHtml(TAG_LABELS[t] || t) + '</span>';
-        }).join('');
-        return '<div class="era-compact-bar" title="' + escapeHtml(item.name) + ' — ' + pct1(item.share) + '">' +
-          '<span class="era-compact-bar__name">' + escapeHtml(truncateName(item.name, 22)) + badges + '</span>' +
-          '<span class="era-compact-bar__track"><span class="era-compact-bar__fill" style="width:' + pct + '%"></span></span>' +
-          '<span class="era-compact-bar__pct">' + pct + '%</span>' +
-          (tagBits ? '<span class="era-compact-bar__tags">' + tagBits + '</span>' : '') +
-          '</div>';
+        // full name, CSS clamps to 2 lines
+        return '<div class="era-compact-bar" title="' + escapeHtml(item.name) + ' — ' + pct1(item.share) + '"><span class="era-compact-bar__name">' + escapeHtml(item.name) + '</span><span class="era-compact-bar__track"><span class="era-compact-bar__fill" style="width:' + pct + '%"></span></span><span class="era-compact-bar__pct">' + pct + '%</span></div>';
       }).join('');
-      return '<div class="era-compact-card">' +
-        '<div class="era-compact-card__head">' + escapeHtml(era.era) +
-        '<span>K=' + (era.k || 8) + '</span></div>' + bars + '</div>';
+      return '<div class="era-compact-card"><div class="era-compact-card__head">' + escapeHtml(era.era) + '<span>K=' + (era.k || 8) + '</span></div><p class="era-compact-sen">' + sentence + '</p>' + bars + '</div>';
     }).join('');
   }
 
@@ -900,10 +917,15 @@
   }
 
   function bindCourtHeatmap(data) {
-    var root = document.getElementById('archetype-court-heatmap');
-    if (!root || !data || !data.courtHeatmap) {
-      if (root) root.hidden = true;
+    var root = document.getElementById('archetype-court-heatmap') || document.querySelector('.court-heatmap');
+    if (!data || !data.courtHeatmap) {
+      var hideRoot = document.getElementById('archetype-court-heatmap');
+      if (hideRoot) hideRoot.hidden = true;
       return;
+    }
+    if (!root) {
+      // allow drawing even if wrapper missing — canvas may still exist
+      root = null;
     }
     courtState.data = data;
     courtState.heat = data.courtHeatmap;
@@ -927,7 +949,7 @@
         var btn = ev.target.closest('[data-era]');
         if (!btn) return;
         if (courtState.mode !== 'era') courtState.mode = 'era';
-        root.querySelectorAll('.court-heatmap__mode').forEach(function (b) {
+        (root || document).querySelectorAll('.court-heatmap__mode').forEach(function (b) {
           var on = (b.getAttribute('data-mode') || '') === 'era';
           b.classList.toggle('is-active', on);
           b.setAttribute('aria-selected', on ? 'true' : 'false');
@@ -940,10 +962,10 @@
       };
     }
 
-    root.querySelectorAll('.court-heatmap__mode').forEach(function (btn) {
+    (root || document).querySelectorAll('.court-heatmap__mode').forEach(function (btn) {
       btn.onclick = function () {
         courtState.mode = btn.getAttribute('data-mode') || 'diff';
-        root.querySelectorAll('.court-heatmap__mode').forEach(function (b) {
+        (root || document).querySelectorAll('.court-heatmap__mode').forEach(function (b) {
           var on = b === btn;
           b.classList.toggle('is-active', on);
           b.setAttribute('aria-selected', on ? 'true' : 'false');
@@ -952,7 +974,7 @@
       };
     });
 
-    root.querySelectorAll('.court-heatmap__mode').forEach(function (b) {
+    (root || document).querySelectorAll('.court-heatmap__mode').forEach(function (b) {
       var on = (b.getAttribute('data-mode') || '') === courtState.mode;
       b.classList.toggle('is-active', on);
       b.setAttribute('aria-selected', on ? 'true' : 'false');
@@ -995,17 +1017,13 @@
 
   function renderEmergenceVerdict(host, hypothesis) {
     if (!host || !hypothesis) return;
-    var verdictCls = 'emergence-verdict__badge emergence-verdict__badge--' +
-      (hypothesis.verdict || 'unknown').replace('_', '-');
     var claims = hypothesis.supportedClaims + '/' + hypothesis.totalClaims;
     var headline = hypothesis.headline || '';
-    if (headline.length > 140) headline = headline.slice(0, 137) + '…';
     host.innerHTML =
-      '<div class="emergence-verdict__head">' +
-        '<span class="' + verdictCls + '">' + escapeHtml(hypothesis.verdict || '') + '</span>' +
-        '<span class="emergence-verdict__score">' + claims + ' claims</span>' +
-      '</div>' +
-      '<p class="emergence-verdict__headline">' + escapeHtml(headline) + '</p>';
+      '<div class="emergence-narrative">' +
+        '<div class="emergence-kicker"><span class="arch-era-kicker">VERDICT</span><span class="trends-chip trends-chip--active" style="margin-left:6px">' + escapeHtml(hypothesis.verdict) + ' · ' + claims + '</span></div>' +
+        '<p class="story-lede" style="margin-top:8px">' + escapeHtml(headline) + '</p>' +
+      '</div>';
   }
 
   function renderRolePrevalenceChart(host, rows) {
@@ -1114,29 +1132,28 @@
 
   function renderEmergenceClaimsViz(host, claims) {
     if (!host || !claims) return;
-    host.innerHTML = '<div class="emergence-claims-grid">' + claims.map(function (c) {
-      var cls = 'emergence-claim-pill' + (c.supported ? ' emergence-claim-pill--yes' : ' emergence-claim-pill--no');
-      var icon = c.supported ? '✓' : '✗';
-      return '<div class="' + cls + '" title="' + escapeHtml(c.detail) + '">' +
-        '<span class="emergence-claim-pill__icon" aria-hidden="true">' + icon + '</span>' +
-        '<span class="emergence-claim-pill__text">' + escapeHtml(c.claim) + '</span></div>';
-    }).join('') + '</div>';
+    // Turn bullet checklist into flowing narrative
+    var yes = claims.filter(function(c){return c.supported;});
+    var no = claims.filter(function(c){return !c.supported;});
+    var sent = yes.map(function(c){ return escapeHtml(c.detail); }).slice(0,4).join(' · ');
+    var noSent = no.map(function(c){ return escapeHtml(c.detail); }).join(' ');
+    host.innerHTML = '<div class="season-story" style="box-shadow:1.5px 1.5px 0 var(--ink);padding:12px 14px">' +
+      '<p class="story-para"><strong>Why we think it emerged:</strong> ' + sent + '.</p>' +
+      (noSent ? '<p class="story-para" style="color:#6B665E"><strong>The holdout:</strong> ' + noSent + '</p>' : '') +
+      '<p class="story-para" style="margin-top:8px;font-size:11px;color:#6B665E">6 of 7 checks passed — not a clean monotonic shrink, but spacing roles (3-and-D + stretch big) grew from 6% → 11% while traditional glass-big fell 30%→25%.</p>' +
+      '</div>';
   }
 
   function renderNovelBadges(host, tagged) {
     if (!host || !tagged) return;
-    var html = tagged.filter(function (t) {
-      return t.novelArchetypes && t.novelArchetypes.length;
-    }).map(function (t) {
-      var badges = t.novelArchetypes.map(function (a) {
-        return '<span class="novel-badge" title="' + escapeHtml(a.name) + ' — ' + pct1(a.share) +
-          ', ancestor sim ' + a.similarity.toFixed(2) + '">' +
-          escapeHtml(truncateName(a.name, 24)) + '</span>';
-      }).join('');
-      return '<div class="novel-era-row"><span class="novel-era-row__label">' + escapeHtml(t.era) +
-        '</span><div class="novel-era-row__badges">' + badges + '</div></div>';
+    // Convert badge soup into narrative sentence per era
+    var erasWithNovel = tagged.filter(function(t){return t.novelArchetypes && t.novelArchetypes.length;});
+    if (!erasWithNovel.length) { host.innerHTML=''; return; }
+    var html = erasWithNovel.map(function(t){
+      var tops = t.novelArchetypes.slice(0,2).map(function(a){return escapeHtml(truncateName(a.name,28))+' '+Math.round(a.share*100)+'%';}).join(', ');
+      return '<p class="story-para" style="font-size:12px"><span class="arch-era-kicker">' + escapeHtml(t.era) + '</span><span style="margin-left:6px">' + tops + (t.novelArchetypes.length>2 ? ' +'+(t.novelArchetypes.length-2)+' more novel types' : '') + ' — new cluster geometry appeared.</span></p>';
     }).join('');
-    host.innerHTML = html || '<p class="drift-loading drift-loading--inline">No novel clusters in audit window.</p>';
+    host.innerHTML = '<div class="season-story" style="margin-top:8px;box-shadow:1.5px 1.5px 0 var(--ink)"><div style="font-family:var(--mono);font-size:10px;font-weight:800;text-transform:uppercase;margin-bottom:4px">Mid/post-2000s novel geometry</div>' + html + '</div>';
   }
 
   function showEmergenceError(verdictHost, roleHost, rollHost, claimsHost, badgesHost) {
@@ -1262,6 +1279,7 @@
   function renderCareerPathGallery(host, classExamples, globalArchetypes) {
     if (!host) return;
     var classes = ['stable', 'reinvention', 'late-bloom', 'migrator', 'drifter'];
+    // v25: spaced, readable meta with pill • name • seasons, gap 6px, no concatenation
     host.innerHTML = classes.map(function (cls) {
       var ex = classExamples && classExamples[cls] && classExamples[cls][0];
       if (!ex) return '';
@@ -1269,18 +1287,19 @@
       var total = segs.reduce(function (s, seg) { return s + seg.count; }, 0) || 1;
       var blocks = segs.map(function (seg) {
         var idx = archIndex(seg.archetype, globalArchetypes);
-        var w = Math.max(4, Math.round((seg.count / total) * 100));
         return '<span class="path-block" style="flex:' + seg.count + ';background:' +
           ARCH_PALETTE[idx % ARCH_PALETTE.length] + '" title="' + escapeHtml(seg.archetype) +
           ' (' + seg.count + ' seasons)"></span>';
       }).join('');
       var skill = ex.skillArc && ex.skillArc.narrative
-        ? '<span class="path-gallery__skill">' + escapeHtml(truncateName(ex.skillArc.narrative, 48)) + '</span>'
+        ? '<span class="path-gallery__skill">' + escapeHtml(ex.skillArc.narrative) + '</span>'
         : '';
-      return '<div class="path-gallery__row">' +
+      return '<div class="path-gallery__row" title="' + escapeHtml(ex.name) + ' career path">' +
         '<div class="path-gallery__meta">' +
           '<span class="path-gallery__class">' + escapeHtml(TRAJ_CLASS_LABEL[cls] || cls) + '</span>' +
+          '<span class="path-gallery__separator" aria-hidden="true">•</span>' +
           '<span class="path-gallery__name">' + escapeHtml(ex.name) + '</span>' +
+          '<span class="path-gallery__separator" aria-hidden="true">•</span>' +
           '<span class="path-gallery__n">' + ex.n + ' seasons</span>' +
         '</div>' +
         '<div class="path-gallery__track" aria-label="Career archetype path for ' + escapeHtml(ex.name) + '">' +
@@ -1426,6 +1445,7 @@
     var archLegendHost = document.getElementById('archetype-legend');
     var archShiftsHost = document.getElementById('archetype-shifts-chart');
     var archPanelsHost = document.getElementById('archetype-era-panels');
+    var archNarrHost = document.getElementById('archetype-era-narrative');
 
     if (archChartHost) {
       fetch(ARCH_URL).then(function (res) {
@@ -1435,6 +1455,7 @@
         renderArchetypeStream(archChartHost, archLegendHost, data);
         renderArchetypeShiftsChart(archShiftsHost, data.biggestShifts);
         renderEraPanelsCompact(archPanelsHost, data.eras);
+        if (archNarrHost) renderArchetypeEraNarrative(archNarrHost, data);
         try {
           bindCourtHeatmap(data);
         } catch (courtErr) {

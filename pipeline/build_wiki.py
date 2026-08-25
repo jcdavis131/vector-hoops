@@ -14,6 +14,7 @@ nothing curated. See knowledge/OKF.md for the format contract.
 
 Run:  python pipeline/build_wiki.py
 """
+
 from __future__ import annotations
 
 import datetime
@@ -209,14 +210,15 @@ def season_abbrev(season: str) -> str:
 def career_shape_line(c, clusters) -> str:
     rows = c["rows"]
     n = len(rows)
-    span = (rows[0]["season"] if n == 1
-            else f"{rows[0]['season']}–{rows[-1]['season']}")
+    span = rows[0]["season"] if n == 1 else f"{rows[0]['season']}–{rows[-1]['season']}"
     plural = "season" if n == 1 else "seasons"
     first_arch = clusters[rows[0]["c"]]
     peak_arch = clusters[c["sig_row"]["c"]]
     if first_arch != peak_arch:
-        return (f"Charted {n} {plural} ({span}). Entered as a {first_arch} "
-                f"profile, peaked as a {peak_arch} identity.")
+        return (
+            f"Charted {n} {plural} ({span}). Entered as a {first_arch} "
+            f"profile, peaked as a {peak_arch} identity."
+        )
     return f"Charted {n} {plural} ({span}). Consistent {first_arch} profile across his career."
 
 
@@ -242,8 +244,10 @@ def trajectory_gloss_line(entry: dict) -> str:
         return ""
     changes = entry.get("changes", 0)
     plural = "" if changes == 1 else "s"
-    return (f" Career trajectory: {klass} ({changes} archetype change{plural} "
-            f"across his charted seasons) — {gloss}.")
+    return (
+        f" Career trajectory: {klass} ({changes} archetype change{plural} "
+        f"across his charted seasons) — {gloss}."
+    )
 
 
 BASE_WANTED = ["PTS", "AST", "OREB", "DREB", "STL", "BLK", "TOV"]
@@ -270,23 +274,29 @@ def fetch_base_stats(season: str) -> dict[str, dict] | None:
     for attempt in range(3):  # 1 try + 2 retries
         try:
             r = leaguedashplayerstats.LeagueDashPlayerStats(
-                season=season, per_mode_detailed="Per100Possessions",
-                measure_type_detailed_defense="Base", timeout=45)
+                season=season,
+                per_mode_detailed="Per100Possessions",
+                measure_type_detailed_defense="Base",
+                timeout=45,
+            )
             df = r.get_data_frames()[0]
             out: dict[str, dict] = {}
             for _, row in df.iterrows():
                 name = str(row["PLAYER_NAME"])
                 out[name] = {
                     k: (None if row.get(k) is None else float(row[k]))
-                    for k in BASE_WANTED if k in df.columns
+                    for k in BASE_WANTED
+                    if k in df.columns
                 }
             CACHE.mkdir(parents=True, exist_ok=True)
             path.write_text(json.dumps(out), encoding="utf-8")
             time.sleep(0.8)
             return out
         except Exception as e:
-            print(f"  base stats {season}: attempt {attempt + 1}/3 failed "
-                  f"({type(e).__name__})")
+            print(
+                f"  base stats {season}: attempt {attempt + 1}/3 failed "
+                f"({type(e).__name__})"
+            )
             time.sleep(0.8)
     print(f"  base stats {season}: EXHAUSTED retries -- degrading to sigma-only")
     return None
@@ -300,7 +310,7 @@ def split_curated(path: Path) -> str | None:
     idx = text.find(AUTO_END)
     if idx < 0:
         return None
-    return text[idx + len(AUTO_END):].lstrip("\n")
+    return text[idx + len(AUTO_END) :].lstrip("\n")
 
 
 DEFAULT_CURATED = """## Notes
@@ -324,16 +334,18 @@ def main() -> None:
     #      match vectors.json clusters just skips the context, never breaks
     #      the build. ----
     prevalence_by_season: dict[str, list[float]] = {}
-    today_season = today_shares = None
+    today_shares = None
     if ARCHETYPE_TIME.exists():
         _at = json.loads(ARCHETYPE_TIME.read_text(encoding="utf-8"))
         if _at.get("globalArchetypes") == clusters and _at.get("prevalence"):
             prevalence_by_season = {p["season"]: p["shares"] for p in _at["prevalence"]}
-            today_season = _at["prevalence"][-1]["season"]
+            _at["prevalence"][-1]["season"]
             today_shares = _at["prevalence"][-1]["shares"]
         else:
-            print("archetypes_time.json globalArchetypes order doesn't match "
-                  "vectors.json clusters -- skipping prevalence context")
+            print(
+                "archetypes_time.json globalArchetypes order doesn't match "
+                "vectors.json clusters -- skipping prevalence context"
+            )
 
     # ---- career trajectory classes (assets/trajectories.json), used to
     #      extend the Career shape line -- fails soft on any missing/
@@ -341,9 +353,13 @@ def main() -> None:
     traj_index: dict[str, dict] = {}
     if TRAJECTORIES.exists():
         try:
-            traj_index = json.loads(TRAJECTORIES.read_text(encoding="utf-8")).get("playerIndex", {})
+            traj_index = json.loads(TRAJECTORIES.read_text(encoding="utf-8")).get(
+                "playerIndex", {}
+            )
         except Exception:
-            print("trajectories.json failed to parse -- skipping career trajectory gloss")
+            print(
+                "trajectories.json failed to parse -- skipping career trajectory gloss"
+            )
             traj_index = {}
 
     # ---- team-standing tiers (assets/roles.json, 2015-26 window; rule-
@@ -352,7 +368,9 @@ def main() -> None:
     roles_path = ROOT / "assets" / "roles.json"
     if roles_path.exists():
         try:
-            roles_index = json.loads(roles_path.read_text(encoding="utf-8")).get("tiers", {})
+            roles_index = json.loads(roles_path.read_text(encoding="utf-8")).get(
+                "tiers", {}
+            )
         except Exception:
             print("roles.json failed to parse -- skipping team-standing lines")
             roles_index = {}
@@ -371,7 +389,9 @@ def main() -> None:
         mean_v = np.mean([r["v"] for r in rows], axis=0)
         # signature season: the most extreme statistical identity
         sig_row = max(rows, key=lambda r: float(np.linalg.norm(r["v"])))
-        pos_seen = [positions[r["p"]] for r in rows if positions and r.get("p", -1) >= 0]
+        pos_seen = [
+            positions[r["p"]] for r in rows if positions and r.get("p", -1) >= 0
+        ]
         arch_seen = [clusters[r["c"]] for r in rows]
         careers[name] = {
             "slug": slugify(name),
@@ -404,12 +424,21 @@ def main() -> None:
     #      Procrustes frame, on signature-season vectors ----
     if DRIFT.exists():
         drift = json.loads(DRIFT.read_text(encoding="utf-8"))
-        chain_np = {season: np.array(mat, float) for season, mat in drift["chainedToRoot"].items()}
+        chain_np = {
+            season: np.array(mat, float)
+            for season, mat in drift["chainedToRoot"].items()
+        }
         decades = np.array([decade_of(careers[n]["sig_row"]["season"]) for n in names])
-        ERA = np.stack([
-            root_frame_vector(careers[n]["sig_row"]["v"], careers[n]["sig_row"]["season"], chain_np)
-            for n in names
-        ])
+        ERA = np.stack(
+            [
+                root_frame_vector(
+                    careers[n]["sig_row"]["v"],
+                    careers[n]["sig_row"]["season"],
+                    chain_np,
+                )
+                for n in names
+            ]
+        )
         ERAn = ERA / np.maximum(np.linalg.norm(ERA, axis=1, keepdims=True), 1e-9)
         ES = ERAn @ ERAn.T
         for i, n in enumerate(names):
@@ -419,7 +448,11 @@ def main() -> None:
                 continue
             masked = np.where(other_decade, ES[i], -2.0)
             j = int(np.argmax(masked))
-            careers[n]["era_twin"] = (names[j], careers[names[j]]["sig_row"]["season"], float(ES[i, j]))
+            careers[n]["era_twin"] = (
+                names[j],
+                careers[names[j]]["sig_row"]["season"],
+                float(ES[i, j]),
+            )
     else:
         for n in names:
             careers[n]["era_twin"] = None
@@ -433,8 +466,10 @@ def main() -> None:
         base_cache[season] = fetch_base_stats(season)
         if base_cache[season] is not None:
             fetched_ok += 1
-    print(f"scouting raw lines: {fetched_ok}/{len(needed_seasons)} signature "
-          f"seasons available (cached or fetched)")
+    print(
+        f"scouting raw lines: {fetched_ok}/{len(needed_seasons)} signature "
+        f"seasons available (cached or fetched)"
+    )
 
     (KNOW / "players").mkdir(parents=True, exist_ok=True)
     (KNOW / "archetypes").mkdir(exist_ok=True)
@@ -458,26 +493,35 @@ def main() -> None:
             "okf: 1",
             "kind: player",
             f"id: {c['slug']}",
-            f"name: \"{name}\"",
+            f'name: "{name}"',
             f"seasons_charted: {len(rows)}",
             f"span: {span}",
             f"positions: [{', '.join(c['positions']) or 'unlisted'}]",
             f"archetypes: [{'; '.join(c['archetypes'][:2])}]",
         ]
         if c["ambiguous"]:
-            fm.append("ambiguous: true  # duplicate name+season rows — likely two different players share this name")
+            fm.append(
+                "ambiguous: true  # duplicate name+season rows — likely two different players share this name"
+            )
         fm += [f"updated: {TODAY}", "---"]
 
         body = ["", f"# {name}", "", AUTO_BEGIN, ""]
         id_bits = " · ".join(f"{lbl} {sig(z)}" for lbl, z in hi)
         lo_bits = " · ".join(f"{lbl} {sig(z * -1)}" for lbl, z in lo)
-        body.append(f"**Vector identity (career mean vs era):** {id_bits}" +
-                    (f" — thin: {lo_bits}" if lo else "") + ".")
+        body.append(
+            f"**Vector identity (career mean vs era):** {id_bits}"
+            + (f" — thin: {lo_bits}" if lo else "")
+            + "."
+        )
         body.append("")
         s = c["sig_row"]
-        s_traits = " · ".join(f"{lbl} {sig(z)}" for lbl, z in top_traits(s["v"], labels, 3, +1))
-        body.append(f"**Signature season:** {s['season']} — {s_traits} "
-                    f"(archetype: {clusters[s['c']]}).")
+        s_traits = " · ".join(
+            f"{lbl} {sig(z)}" for lbl, z in top_traits(s["v"], labels, 3, +1)
+        )
+        body.append(
+            f"**Signature season:** {s['season']} — {s_traits} "
+            f"(archetype: {clusters[s['c']]})."
+        )
         body.append("")
         body.append("## Season chart")
         body.append("")
@@ -485,7 +529,12 @@ def main() -> None:
         body.append("|---|---|---|---|")
         for r in rows:
             pos = positions[r["p"]] if positions and r.get("p", -1) >= 0 else "—"
-            traits = " · ".join(f"{lbl} {sig(z)}" for lbl, z in top_traits(r["v"], labels, 2, +1)) or "—"
+            traits = (
+                " · ".join(
+                    f"{lbl} {sig(z)}" for lbl, z in top_traits(r["v"], labels, 2, +1)
+                )
+                or "—"
+            )
             body.append(f"| {r['season']} | {pos} | {clusters[r['c']]} | {traits} |")
         body.append("")
         body.append("## Statistical neighbors")
@@ -499,26 +548,40 @@ def main() -> None:
         body.append("## Scouting report")
         body.append("")
         sig_pos_idx = s.get("p", -1)
-        sig_pos = positions[sig_pos_idx] if positions and sig_pos_idx is not None and sig_pos_idx >= 0 else None
+        sig_pos = (
+            positions[sig_pos_idx]
+            if positions and sig_pos_idx is not None and sig_pos_idx >= 0
+            else None
+        )
         pos_label = sig_pos or (c["positions"][0] if c["positions"] else "Unlisted")
         pos_group = POS_GROUP.get(pos_label, "wing")
         style_sentence = style_for(s["v"], data["features"], pos_group)
         prevalence_note = ""
         sig_shares = prevalence_by_season.get(s["season"])
         ci = s["c"]
-        if sig_shares is not None and today_shares is not None and 0 <= ci < len(sig_shares):
+        if (
+            sig_shares is not None
+            and today_shares is not None
+            and 0 <= ci < len(sig_shares)
+        ):
             x_pct = sig_shares[ci] * 100
             y_pct = today_shares[ci] * 100
-            prevalence_note = (f" — an archetype claiming {x_pct:.1f}% of the league in his "
-                                f"signature season, {y_pct:.1f}% today")
-        body.append(f"**Play style:** {pos_label} · {clusters[s['c']]}. "
-                    f"{style_sentence.rstrip('.')}{prevalence_note}.")
+            prevalence_note = (
+                f" — an archetype claiming {x_pct:.1f}% of the league in his "
+                f"signature season, {y_pct:.1f}% today"
+            )
+        body.append(
+            f"**Play style:** {pos_label} · {clusters[s['c']]}. "
+            f"{style_sentence.rstrip('.')}{prevalence_note}."
+        )
         standing = roles_index.get(f"{name}|{s['season']}")
         if standing:
             body.append("")
-            body.append(f"**Team standing (signature season):** {standing} "
-                        f"— rule-based from minutes/usage share and team "
-                        f"scoring rank (method in roles.json).")
+            body.append(
+                f"**Team standing (signature season):** {standing} "
+                f"— rule-based from minutes/usage share and team "
+                f"scoring rank (method in roles.json)."
+            )
         body.append("")
         raw_rows = base_cache.get(s["season"])
         raw = raw_rows.get(name) if raw_rows else None
@@ -526,12 +589,16 @@ def main() -> None:
             reb = (raw.get("OREB") or 0.0) + (raw.get("DREB") or 0.0)
             stl_v, blk_v = raw.get("STL") or 0.0, raw.get("BLK") or 0.0
             stat4_label, stat4_val = ("blk", blk_v) if blk_v > stl_v else ("stl", stl_v)
-            raw_line = (f"{raw['PTS']:.1f} pts · {reb:.1f} reb · {raw['AST']:.1f} ast · "
-                        f"{stat4_val:.1f} {stat4_label} per 100 ({s['season']})")
+            raw_line = (
+                f"{raw['PTS']:.1f} pts · {reb:.1f} reb · {raw['AST']:.1f} ast · "
+                f"{stat4_val:.1f} {stat4_label} per 100 ({s['season']})"
+            )
             body.append(f"**Signature-season stat line:** {raw_line}.")
         else:
-            body.append(f"**Signature-season stat line:** (era-relative profile; raw line "
-                        f"pending refetch) — {s['season']}.")
+            body.append(
+                f"**Signature-season stat line:** (era-relative profile; raw line "
+                f"pending refetch) — {s['season']}."
+            )
         body.append("")
         body.append("**Strengths:**")
         body.append("")
@@ -556,8 +623,10 @@ def main() -> None:
         for nb_name, cs2 in c["neighbors"]:
             nb_season = careers[nb_name]["sig_row"]["season"]
             pct = round(max(0.0, cs2) * 100)
-            body.append(f"- {wl(careers[nb_name]['slug'], nb_name)} "
-                        f"{season_abbrev(nb_season)} ({pct}% similar)")
+            body.append(
+                f"- {wl(careers[nb_name]['slug'], nb_name)} "
+                f"{season_abbrev(nb_season)} ({pct}% similar)"
+            )
         body.append("")
         shape_line = career_shape_line(c, clusters)
         traj_entry = traj_index.get(name)
@@ -569,9 +638,11 @@ def main() -> None:
         if twin:
             twin_name, twin_season, twin_cos = twin
             twin_pct = round(max(0.0, twin_cos) * 100)
-            body.append(f"**Era twin:** {wl(careers[twin_name]['slug'], twin_name)} "
-                        f"{season_abbrev(twin_season)} ({twin_pct}% aligned similarity — "
-                        f"cross-era via Procrustes chaining).")
+            body.append(
+                f"**Era twin:** {wl(careers[twin_name]['slug'], twin_name)} "
+                f"{season_abbrev(twin_season)} ({twin_pct}% aligned similarity — "
+                f"cross-era via Procrustes chaining)."
+            )
             body.append("")
 
         hubs = [f"[[../archetypes/{slugify(a)}|{a}]]" for a in c["archetypes"][:2]]
@@ -594,30 +665,52 @@ def main() -> None:
     # ---- archetype hubs ----
     for ci, cname in enumerate(clusters):
         centroid = np.mean([p["v"] for p in players if p["c"] == ci], axis=0)
-        traits = " · ".join(f"{lbl} {sig(z)}" for lbl, z in top_traits(centroid, labels, 4, +1))
+        traits = " · ".join(
+            f"{lbl} {sig(z)}" for lbl, z in top_traits(centroid, labels, 4, +1)
+        )
         member_counts = Counter()
         for name in names:
             k = sum(1 for r in careers[name]["rows"] if r["c"] == ci)
             if k:
                 member_counts[name] = k
         lines = [
-            "---", "okf: 1", "kind: archetype", f"id: {slugify(cname)}",
-            f"name: \"{cname}\"", f"player_seasons: {sum(member_counts.values())}",
-            f"updated: {TODAY}", "---", "",
-            f"# Archetype: {cname}", "", AUTO_BEGIN, "",
-            f"**Centroid identity:** {traits}.", "",
-            "## Most-charted members", "",
-            "| Player | Seasons in archetype |", "|---|---|",
+            "---",
+            "okf: 1",
+            "kind: archetype",
+            f"id: {slugify(cname)}",
+            f'name: "{cname}"',
+            f"player_seasons: {sum(member_counts.values())}",
+            f"updated: {TODAY}",
+            "---",
+            "",
+            f"# Archetype: {cname}",
+            "",
+            AUTO_BEGIN,
+            "",
+            f"**Centroid identity:** {traits}.",
+            "",
+            "## Most-charted members",
+            "",
+            "| Player | Seasons in archetype |",
+            "|---|---|",
         ]
         for mname, k in member_counts.most_common(40):
-            lines.append(f"| {wl('../players/' + careers[mname]['slug'], mname)} | {k} |")
+            lines.append(
+                f"| {wl('../players/' + careers[mname]['slug'], mname)} | {k} |"
+            )
         lines += ["", AUTO_END, "", DEFAULT_CURATED]
         (KNOW / "archetypes" / (slugify(cname) + ".md")).write_text(
-            "\n".join(lines), encoding="utf-8", newline="\n")
+            "\n".join(lines), encoding="utf-8", newline="\n"
+        )
 
     # ---- position hubs ----
-    pos_full = {"PG": "Point guard", "SG": "Shooting guard", "SF": "Small forward",
-                "PF": "Power forward", "C": "Center"}
+    pos_full = {
+        "PG": "Point guard",
+        "SG": "Shooting guard",
+        "SF": "Small forward",
+        "PF": "Power forward",
+        "C": "Center",
+    }
     for pi, pos in enumerate(positions):
         member_counts = Counter()
         for name in names:
@@ -625,44 +718,71 @@ def main() -> None:
             if k:
                 member_counts[name] = k
         lines = [
-            "---", "okf: 1", "kind: position", f"id: {pos.lower()}",
-            f"name: \"{pos_full.get(pos, pos)}\"",
+            "---",
+            "okf: 1",
+            "kind: position",
+            f"id: {pos.lower()}",
+            f'name: "{pos_full.get(pos, pos)}"',
             f"player_seasons: {sum(member_counts.values())}",
-            f"updated: {TODAY}", "---", "",
-            f"# Position: {pos} — {pos_full.get(pos, pos)}", "", AUTO_BEGIN, "",
-            "Positions are per season, as listed by Basketball-Reference.", "",
-            "## Most-charted players", "",
-            "| Player | Seasons at " + pos + " |", "|---|---|",
+            f"updated: {TODAY}",
+            "---",
+            "",
+            f"# Position: {pos} — {pos_full.get(pos, pos)}",
+            "",
+            AUTO_BEGIN,
+            "",
+            "Positions are per season, as listed by Basketball-Reference.",
+            "",
+            "## Most-charted players",
+            "",
+            "| Player | Seasons at " + pos + " |",
+            "|---|---|",
         ]
         for mname, k in member_counts.most_common(40):
-            lines.append(f"| {wl('../players/' + careers[mname]['slug'], mname)} | {k} |")
+            lines.append(
+                f"| {wl('../players/' + careers[mname]['slug'], mname)} | {k} |"
+            )
         lines += ["", AUTO_END, "", DEFAULT_CURATED]
         (KNOW / "positions" / (pos.lower() + ".md")).write_text(
-            "\n".join(lines), encoding="utf-8", newline="\n")
+            "\n".join(lines), encoding="utf-8", newline="\n"
+        )
 
     # ---- index ----
     ambiguous = sorted(n for n in names if careers[n]["ambiguous"])
     idx = [
-        "---", "okf: 1", "kind: index", f"players: {len(names)}",
+        "---",
+        "okf: 1",
+        "kind: index",
+        f"players: {len(names)}",
         f"player_seasons: {len(players)}",
         f"span: {data['seasons'][0]} – {data['seasons'][-1]}",
-        f"updated: {TODAY}", "---", "",
-        "# OKF LLM-Wiki — every charted NBA player, " +
-        f"{data['seasons'][0]} to {data['seasons'][-1]}", "",
+        f"updated: {TODAY}",
+        "---",
+        "",
+        "# OKF LLM-Wiki — every charted NBA player, "
+        + f"{data['seasons'][0]} to {data['seasons'][-1]}",
+        "",
         f"{len(names)} player pages · {len(players)} player-seasons · "
-        f"{len(clusters)} archetype hubs · {len(positions)} position hubs.", "",
+        f"{len(clusters)} archetype hubs · {len(positions)} position hubs.",
+        "",
         "- Format contract: [[OKF|OKF.md]]",
         "- Player pages: `players/<slug>.md` (slug rule shared with the game's reveal links)",
-        "- Hubs: `archetypes/`, `positions/`", "",
-        "## Ambiguous pages (same name, overlapping seasons — likely two people)", "",
+        "- Hubs: `archetypes/`, `positions/`",
+        "",
+        "## Ambiguous pages (same name, overlapping seasons — likely two people)",
+        "",
     ]
-    idx += [f"- {wl('players/' + careers[n]['slug'], n)}" for n in ambiguous] or ["- none"]
+    idx += [f"- {wl('players/' + careers[n]['slug'], n)}" for n in ambiguous] or [
+        "- none"
+    ]
     idx.append("")
     (KNOW / "INDEX.md").write_text("\n".join(idx), encoding="utf-8", newline="\n")
 
-    print(f"wiki: {len(names)} player pages ({n_new} new, {n_updated} refreshed), "
-          f"{len(clusters)} archetype hubs, {len(positions)} position hubs, "
-          f"{len(ambiguous)} flagged ambiguous")
+    print(
+        f"wiki: {len(names)} player pages ({n_new} new, {n_updated} refreshed), "
+        f"{len(clusters)} archetype hubs, {len(positions)} position hubs, "
+        f"{len(ambiguous)} flagged ambiguous"
+    )
 
 
 if __name__ == "__main__":

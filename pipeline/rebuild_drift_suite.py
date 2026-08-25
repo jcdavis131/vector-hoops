@@ -59,7 +59,8 @@ def verify_drift_assets() -> None:
     if len(drift.get("chainedToRoot", {})) != len(seasons):
         raise SystemExit(
             f"drift.json chainedToRoot {len(drift['chainedToRoot'])} != "
-            f"{len(seasons)} seasons in vectors.json")
+            f"{len(seasons)} seasons in vectors.json"
+        )
     covered = {p["to"] for p in drift.get("pairs", [])}
     missing = [s for s in seasons[1:] if s not in covered]
     if missing:
@@ -67,11 +68,14 @@ def verify_drift_assets() -> None:
 
     if arch.get("n_players") != n:
         raise SystemExit(
-            f"archetypes_time.json n_players {arch.get('n_players')} != {n}")
+            f"archetypes_time.json n_players {arch.get('n_players')} != {n}"
+        )
 
     if traj.get("n_charted") is None:
         raise SystemExit("trajectories.json missing n_charted")
-    print(f"  drift: {len(drift['pairs'])} pairs, {len(drift['chainedToRoot'])} chained")
+    print(
+        f"  drift: {len(drift['pairs'])} pairs, {len(drift['chainedToRoot'])} chained"
+    )
     print(f"  archetypes_time: {arch.get('n_players')} players")
     print(f"  trajectories: {traj.get('n_charted')} charted careers")
     print(f"  vectors.json: {n} player-seasons, {len(seasons)} seasons")
@@ -80,8 +84,11 @@ def verify_drift_assets() -> None:
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--skip-skills", action="store_true")
-    ap.add_argument("--full", action="store_true",
-                    help="also run integrate_context, export_assets, verify_accuracy")
+    ap.add_argument(
+        "--full",
+        action="store_true",
+        help="also run integrate_context, export_assets, verify_accuracy",
+    )
     args = ap.parse_args()
 
     if not VECTORS.exists():

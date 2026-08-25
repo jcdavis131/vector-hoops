@@ -28,9 +28,11 @@ import numpy as np
 
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
-from trend_mtnn import (
-    ERAS,
+import itertools  # noqa: E402
+
+from trend_mtnn import (  # noqa: E402
     ERA_K_RANGE,
+    ERAS,
     GLOBAL_K,
     NOVELTY_THRESH,
     ZONE_KEYS,
@@ -62,11 +64,14 @@ def game_prevalence(players: list[dict], game_clusters: list[str]) -> list[dict]
         c = int(p["c"])
         per_season[p["season"]][c] += 1
         totals[p["season"]] += 1
-    return [{
-        "season": s,
-        "shares": [round(per_season[s][c] / totals[s], 4) for c in range(GAME_K)],
-        "n": totals[s],
-    } for s in seasons]
+    return [
+        {
+            "season": s,
+            "shares": [round(per_season[s][c] / totals[s], 4) for c in range(GAME_K)],
+            "n": totals[s],
+        }
+        for s in seasons
+    ]
 
 
 def main() -> None:
@@ -81,10 +86,12 @@ def main() -> None:
 
     ids = [p["id"] for p in players]
     V = np.array([p["v"] for p in players], dtype=np.float64)
-    global_lab, global_cents = kmeans(E, GLOBAL_K, seed=42)
+    global_lab, _global_cents = kmeans(E, GLOBAL_K, seed=42)
     global_names = assign_cluster_names(global_lab, GLOBAL_K, ids, grades, skill_meta)
     global_zone_profiles = [
-        mean_zone_profile(V, [j for j in range(len(players)) if int(global_lab[j]) == c])
+        mean_zone_profile(
+            V, [j for j in range(len(players)) if int(global_lab[j]) == c]
+        )
         for c in range(GLOBAL_K)
     ]
 
@@ -95,25 +102,32 @@ def main() -> None:
         c = int(global_lab[j])
         per_season[p["season"]][c] += 1
         totals[p["season"]] += 1
-    prevalence = [{
-        "season": s,
-        "shares": [round(per_season[s][c] / totals[s], 4) for c in range(GLOBAL_K)],
-        "n": totals[s],
-    } for s in seasons]
+    prevalence = [
+        {
+            "season": s,
+            "shares": [round(per_season[s][c] / totals[s], 4) for c in range(GLOBAL_K)],
+            "n": totals[s],
+        }
+        for s in seasons
+    ]
 
     def mean_share(rows, c):
         return sum(r["shares"][c] for r in rows) / len(rows)
+
     early, late = prevalence[:5], prevalence[-5:]
     early_shares = [mean_share(early, c) for c in range(GLOBAL_K)]
     late_shares = [mean_share(late, c) for c in range(GLOBAL_K)]
-    deltas = [{
-        "archetype": global_names[c],
-        "cluster": c,
-        "early": round(early_shares[c], 4),
-        "late": round(late_shares[c], 4),
-        "delta": round(late_shares[c] - early_shares[c], 4),
-        "zoneProfile": global_zone_profiles[c],
-    } for c in range(GLOBAL_K)]
+    deltas = [
+        {
+            "archetype": global_names[c],
+            "cluster": c,
+            "early": round(early_shares[c], 4),
+            "late": round(late_shares[c], 4),
+            "delta": round(late_shares[c] - early_shares[c], 4),
+            "zoneProfile": global_zone_profiles[c],
+        }
+        for c in range(GLOBAL_K)
+    ]
     deltas.sort(key=lambda d: -abs(d["delta"]))
 
     early_zone = mix_zone_profiles(global_zone_profiles, early_shares)
@@ -143,11 +157,16 @@ def main() -> None:
 
     game_prev = game_prevalence(players, game_clusters)
     game_early, game_late = game_prev[:5], game_prev[-5:]
-    game_deltas = [{
-        "archetype": game_clusters[c],
-        "early": round(sum(r["shares"][c] for r in game_early) / len(game_early), 4),
-        "late": round(sum(r["shares"][c] for r in game_late) / len(game_late), 4),
-    } for c in range(GAME_K)]
+    game_deltas = [
+        {
+            "archetype": game_clusters[c],
+            "early": round(
+                sum(r["shares"][c] for r in game_early) / len(game_early), 4
+            ),
+            "late": round(sum(r["shares"][c] for r in game_late) / len(game_late), 4),
+        }
+        for c in range(GAME_K)
+    ]
     for d in game_deltas:
         d["delta"] = round(d["late"] - d["early"], 4)
     game_deltas.sort(key=lambda d: -abs(d["delta"]))
@@ -170,20 +189,24 @@ def main() -> None:
             for i in range(k_opt)
         ]
         era_names = assign_cluster_names_from_members(
-            member_ids_by_cluster, grades, skill_meta,
+            member_ids_by_cluster,
+            grades,
+            skill_meta,
         )
         archetypes = []
         for i in range(k_opt):
             members = member_ids_by_cluster[i]
             mean_g = grades[members].mean(0) if members else np.zeros(len(skill_meta))
             tags = tag_player_roles(mean_g, idx, pct)
-            archetypes.append({
-                "name": era_names[i],
-                "share": round(counts[i] / len(era_idxs), 4),
-                "mtnnCentroid": cents[i],
-                "tags": tags,
-                "zoneProfile": mean_zone_profile(V, member_rows_by_cluster[i]),
-            })
+            archetypes.append(
+                {
+                    "name": era_names[i],
+                    "share": round(counts[i] / len(era_idxs), 4),
+                    "mtnnCentroid": cents[i],
+                    "tags": tags,
+                    "zoneProfile": mean_zone_profile(V, member_rows_by_cluster[i]),
+                }
+            )
         era_zone = mix_zone_profiles(
             [a["zoneProfile"] for a in archetypes],
             [a["share"] for a in archetypes],
@@ -196,19 +219,19 @@ def main() -> None:
             "names": era_names,
             "pct": pct,
         }
-        by_era.append({
-            "era": era_name,
-            "k": k_opt,
-            "kSweep": k_sweep,
-            "archetypes": archetypes,
-            "n": len(era_idxs),
-            "zoneMix": era_zone,
-            "tagCounts": dict(Counter(
-                t for a in archetypes for t in a["tags"]
-            )),
-        })
+        by_era.append(
+            {
+                "era": era_name,
+                "k": k_opt,
+                "kSweep": k_sweep,
+                "archetypes": archetypes,
+                "n": len(era_idxs),
+                "zoneMix": era_zone,
+                "tagCounts": dict(Counter(t for a in archetypes for t in a["tags"])),
+            }
+        )
 
-    for prev, cur in zip(by_era, by_era[1:]):
+    for prev, cur in itertools.pairwise(by_era):
         for arch in cur["archetypes"]:
             cvec = arch["mtnnCentroid"]
             sims = [
@@ -235,102 +258,126 @@ def main() -> None:
             best_i = int(np.argmin(dists))
             era_native_name = model["names"][best_i]
             era_tags = tag_player_roles(grades[j], idx, model["pct"])
-        assignments.append({
-            "id": p["id"],
-            "gameCluster": int(p["c"]),
-            "gameClusterName": game_clusters[int(p["c"])],
-            "mtnnGlobal": int(global_lab[j]),
-            "mtnnGlobalName": global_names[int(global_lab[j])],
-            "era": era_name,
-            "eraNativeName": era_native_name,
-            "eraTags": era_tags,
-        })
+        assignments.append(
+            {
+                "id": p["id"],
+                "gameCluster": int(p["c"]),
+                "gameClusterName": game_clusters[int(p["c"])],
+                "mtnnGlobal": int(global_lab[j]),
+                "mtnnGlobalName": global_names[int(global_lab[j])],
+                "era": era_name,
+                "eraNativeName": era_native_name,
+                "eraTags": era_tags,
+            }
+        )
 
     export_eras = []
     for e in by_era:
-        export_eras.append({
-            "era": e["era"],
-            "k": e["k"],
-            "kSweep": e["kSweep"],
-            "n": e["n"],
-            "zoneMix": e["zoneMix"],
-            "tagCounts": e.get("tagCounts") or {},
-            "archetypes": [{
-                k: v for k, v in a.items() if k != "mtnnCentroid"
-            } for a in e["archetypes"]],
-        })
+        export_eras.append(
+            {
+                "era": e["era"],
+                "k": e["k"],
+                "kSweep": e["kSweep"],
+                "n": e["n"],
+                "zoneMix": e["zoneMix"],
+                "tagCounts": e.get("tagCounts") or {},
+                "archetypes": [
+                    {k: v for k, v in a.items() if k != "mtnnCentroid"}
+                    for a in e["archetypes"]
+                ],
+            }
+        )
 
     built = time.strftime("%Y-%m-%d")
-    (ASSETS / "archetypes_time.json").write_text(json.dumps({
-        "built": built,
-        "n_players": len(players),
-        "embeddingSpace": mtnn_meta.get("model", "mtnn"),
-        "globalK": GLOBAL_K,
-        "method": (
-            "layer 1: per-season share of global K=8 k-means on promoted MTNN "
-            "embeddings (48-d, L2-normalized), cluster names from distinctive "
-            "skill z-scores vs pool (cross-family pairs); layer 2: silhouette-"
-            "optimal K (6-12) re-fit within five era windows on the same MTNN "
-            "space, same naming rule; lineage = nearest predecessor-era "
-            "centroid by MTNN cosine; courtHeatmap = Chimera zone intensity "
-            "from mean era-z 14-d vectors weighted by early/late prevalence; "
-            "gameGlobalArchetypes/gamePrevalence = frozen 14-d K=8 game contract "
-            "from vectors.json; shares are charted player-seasons only"
+    (ASSETS / "archetypes_time.json").write_text(
+        json.dumps(
+            {
+                "built": built,
+                "n_players": len(players),
+                "embeddingSpace": mtnn_meta.get("model", "mtnn"),
+                "globalK": GLOBAL_K,
+                "method": (
+                    "layer 1: per-season share of global K=8 k-means on promoted MTNN "
+                    "embeddings (48-d, L2-normalized), cluster names from distinctive "
+                    "skill z-scores vs pool (cross-family pairs); layer 2: silhouette-"
+                    "optimal K (6-12) re-fit within five era windows on the same MTNN "
+                    "space, same naming rule; lineage = nearest predecessor-era "
+                    "centroid by MTNN cosine; courtHeatmap = Chimera zone intensity "
+                    "from mean era-z 14-d vectors weighted by early/late prevalence; "
+                    "gameGlobalArchetypes/gamePrevalence = frozen 14-d K=8 game contract "
+                    "from vectors.json; shares are charted player-seasons only"
+                ),
+                "globalArchetypes": global_names,
+                "prevalence": prevalence,
+                "biggestShifts": deltas,
+                "courtHeatmap": court_heatmap,
+                "gameGlobalArchetypes": game_clusters,
+                "gamePrevalence": game_prev,
+                "gameBiggestShifts": game_deltas,
+                "eras": export_eras,
+            },
+            separators=(",", ":"),
         ),
-        "globalArchetypes": global_names,
-        "prevalence": prevalence,
-        "biggestShifts": deltas,
-        "courtHeatmap": court_heatmap,
-        "gameGlobalArchetypes": game_clusters,
-        "gamePrevalence": game_prev,
-        "gameBiggestShifts": game_deltas,
-        "eras": export_eras,
-    }, separators=(",", ":")), encoding="utf-8")
+        encoding="utf-8",
+    )
 
-    (ASSETS / "archetype_assignments.json").write_text(json.dumps({
-        "built": built,
-        "n_players": len(players),
-        "method": (
-            "Per player-season: gameCluster (14-d K=8, Chimera contract), "
-            "mtnnGlobal (MTNN K=8 trends/careers), eraNativeName (nearest "
-            "era-native MTNN centroid), eraTags (era-relative skill heuristics: "
-            "three_and_d, stretch_big, traditional_big, spacing_role, etc.)"
+    (ASSETS / "archetype_assignments.json").write_text(
+        json.dumps(
+            {
+                "built": built,
+                "n_players": len(players),
+                "method": (
+                    "Per player-season: gameCluster (14-d K=8, Chimera contract), "
+                    "mtnnGlobal (MTNN K=8 trends/careers), eraNativeName (nearest "
+                    "era-native MTNN centroid), eraTags (era-relative skill heuristics: "
+                    "three_and_d, stretch_big, traditional_big, spacing_role, etc.)"
+                ),
+                "tagLabels": {
+                    "three_and_d": "3-and-D wing",
+                    "stretch_big": "Stretch big",
+                    "traditional_big": "Traditional big",
+                    "spacing_role": "Spacing role",
+                    "two_way_perimeter": "Two-way perimeter",
+                    "primary_creator": "Primary creator",
+                    "volume_scorer": "Volume scorer",
+                },
+                "assignments": assignments,
+            },
+            separators=(",", ":"),
         ),
-        "tagLabels": {
-            "three_and_d": "3-and-D wing",
-            "stretch_big": "Stretch big",
-            "traditional_big": "Traditional big",
-            "spacing_role": "Spacing role",
-            "two_way_perimeter": "Two-way perimeter",
-            "primary_creator": "Primary creator",
-            "volume_scorer": "Volume scorer",
-        },
-        "assignments": assignments,
-    }, separators=(",", ":")), encoding="utf-8")
+        encoding="utf-8",
+    )
 
     print(f"global MTNN archetypes (K={GLOBAL_K}):")
     for i, nm in enumerate(global_names):
         print(f"  [{i}] {nm}")
     print("\nMTNN prevalence shifts (early-5 vs late-5):")
     for d in deltas[:4]:
-        print(f"  {d['archetype']}: {d['early']:.1%} -> {d['late']:.1%} ({d['delta']:+.1%})")
+        print(
+            f"  {d['archetype']}: {d['early']:.1%} -> {d['late']:.1%} ({d['delta']:+.1%})"
+        )
     print("\ngame prevalence shifts (early-5 vs late-5):")
     for d in game_deltas[:4]:
-        print(f"  {d['archetype']}: {d['early']:.1%} -> {d['late']:.1%} ({d['delta']:+.1%})")
+        print(
+            f"  {d['archetype']}: {d['early']:.1%} -> {d['late']:.1%} ({d['delta']:+.1%})"
+        )
     print("\nera-native (K, top types, ancestor):")
     for e in by_era:
         print(f"  {e['era']} K={e['k']}")
         for a in sorted(e["archetypes"], key=lambda x: -x["share"])[:3]:
             anc = a.get("ancestor", {})
             nov = " [novel]" if a.get("novel") else ""
-            print(f"    {a['name']} ({a['share']:.1%}) <- {anc.get('name', '-')} "
-                  f"({anc.get('similarity', '')}){nov}")
+            print(
+                f"    {a['name']} ({a['share']:.1%}) <- {anc.get('name', '-')} "
+                f"({anc.get('similarity', '')}){nov}"
+            )
     tag_counts = Counter(t for a in assignments for t in a["eraTags"])
     print(f"\nwrote archetype_assignments.json ({len(assignments)} rows)")
     print("era tag counts:", dict(tag_counts.most_common(6)))
     print("courtHeatmap delta (top |zone|):")
     delta_items = sorted(
-        court_heatmap["delta"].items(), key=lambda kv: -abs(kv[1]),
+        court_heatmap["delta"].items(),
+        key=lambda kv: -abs(kv[1]),
     )
     for k, v in delta_items[:4]:
         print(f"  {k}: {v:+.3f}")

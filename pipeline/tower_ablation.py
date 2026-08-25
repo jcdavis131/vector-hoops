@@ -17,23 +17,76 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 REPORT = ROOT / "pipeline" / "data" / "mtnn_report.json"
 
+MANIFEST = ROOT / "pipeline" / "data" / "feature_manifest.json"
+
 # All context / extension families in integrate_context.py (2026-07).
 CONTEXT_FAMS = (
-    "roster", "career", "competition", "market", "team",
-    "form", "pedigree", "playoffs",
+    "roster",
+    "career",
+    "competition",
+    "market",
+    "team",
+    "form",
+    "pedigree",
+    "playoffs",
 )
+
+# injury never becomes an input tower (see train_mtnn.INJURY_FEATURES) -- it is
+# the durability head's target, so ablating it as a tower is meaningless.
+NON_TOWER_FAMS = {"injury"}
+
+# The shipping recipe (train.sh v5 winner). Ablation must measure families
+# against the architecture we actually deploy, not argparse defaults.
+# Keep flag/value pairs on one line each; ruff format would give one token per
+# line and make the recipe unreadable.
+# fmt: off
+ARCH = [
+    "--dim", "48",
+    "--tower-width", "32",
+    "--tower-hidden", "160",
+    "--tower-blocks", "2",
+    "--mlp-heads",
+    "--d-head-hidden", "128",
+    "--fusion", "concat",
+    "--fusion-hidden", "256",
+    "--nce-loss", "hybrid",
+    "--nce-player-weight", "0.7",
+    "--nce-arch-weight", "0.3",
+    "--hard-neg-boost", "0.3",
+    "--drop-p", "0.12",
+    "--weight-decay", "0.0001",
+    "--lr-schedule", "onecycle",
+    "--warmup-pct", "0.1",
+    "--anneal-strategy", "linear",
+    "--batch", "512",
+]
+# fmt: on
+
+
+def manifest_families() -> list[str]:
+    """Every family that actually becomes a tower, read from the manifest."""
+    man = json.loads(MANIFEST.read_text(encoding="utf-8"))
+    fams = sorted(set(man.get("families", {}).values()) - NON_TOWER_FAMS)
+    return fams
 
 
 def run_train(exclude: list[str], epochs: int, seed: int) -> dict:
     cmd = [
-        sys.executable, str(ROOT / "pipeline" / "train_mtnn.py"),
-        "--epochs", str(epochs),
-        "--seed", str(seed),
-        "--val-every", "0",
+        sys.executable,
+        str(ROOT / "pipeline" / "train_mtnn.py"),
+        "--epochs",
+        str(epochs),
+        "--seed",
+        str(seed),
+        "--val-every",
+        "0",
         "--no-best-checkpoint",
+        *ARCH,
     ]
     if exclude:
-        cmd += ["--exclude-families", ",".join(exclude)]
+        # mask, don't delete: keeps fusion width constant across arms so the
+        # delta measures information content, not a re-shaped architecture
+        cmd += ["--mask-families", ",".join(exclude)]
     subprocess.run(cmd, cwd=ROOT, check=True)
     return json.loads(REPORT.read_text(encoding="utf-8"))
 
@@ -42,10 +95,20 @@ def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--epochs", type=int, default=25)
     ap.add_argument("--seed", type=int, default=7)
+    ap.add_argument(
+        "--families",
+        choices=("all", "context"),
+        default="all",
+        help="'all' ablates every tower in the manifest; 'context' only the "
+        "integrate_context extensions (the original 2026-07 scope)",
+    )
     args = ap.parse_args()
 
+    fams = manifest_families() if args.families == "all" else list(CONTEXT_FAMS)
+    print(f"ablating {len(fams)} families: {fams}")
+
     configs: list[tuple[str, list[str]]] = [("full", [])]
-    for fam in CONTEXT_FAMS:
+    for fam in fams:
         configs.append((f"drop_{fam}", [fam]))
     configs.append(("drop_form_pedigree", ["form", "pedigree"]))
 
@@ -56,11 +119,18 @@ def main() -> None:
         rep = run_train(excl, args.epochs, args.seed)
         test = rep["held_out_recall"]["test"]["recall_at_10_mtnn"]
         val = rep["held_out_recall"]["val"]["recall_at_10_mtnn"]
+        # test is only ~790 pairs and swings ~0.2 between seeds; the all-pairs
+        # figure is ~10k pairs, so its sampling noise is ~3.5x smaller. Record it
+        # so context families (which purity structurally cannot judge -- the
+        # archetype labels are k-means over the box-score features themselves)
+        # can be settled on retrieval instead.
+        all_recall = rep["held_out_recall"].get("all", {}).get("recall_at_10_mtnn")
         purity = rep.get("cross_era_archetype_neighbor_purity_at_20")
         results[name] = {
             "exclude": excl,
             "test_recall": test,
             "val_recall": val,
+            "all_recall": all_recall,
             "purity": purity,
             "towers": rep.get("towers"),
             "loss_weights": rep.get("loss_weights"),
@@ -79,12 +149,15 @@ def main() -> None:
 
     out = ROOT / "pipeline" / "data" / "tower_ablation.json"
     out.write_text(
-        json.dumps({
-            "baseline_test": baseline_test,
-            "epochs": args.epochs,
-            "seed": args.seed,
-            "runs": results,
-        }, indent=2),
+        json.dumps(
+            {
+                "baseline_test": baseline_test,
+                "epochs": args.epochs,
+                "seed": args.seed,
+                "runs": results,
+            },
+            indent=2,
+        ),
         encoding="utf-8",
     )
     print(f"\nwrote {out}")

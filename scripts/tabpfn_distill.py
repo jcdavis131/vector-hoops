@@ -27,11 +27,13 @@ Bundle: <300KB still, teacher NOT shipped.
 from __future__ import annotations
 
 import argparse
-import numpy as np
 from pathlib import Path
+
+import numpy as np
 
 ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "pipeline" / "data"
+
 
 def train_teacher_mock():
     """Mock teacher when tabpfn not installed — for CI"""
@@ -44,10 +46,13 @@ def train_teacher_mock():
     np.savez_compressed(out, logits=logits, note="mock")
     print(f"Wrote mock {out}")
 
+
 def train_teacher_real():
     try:
-        from tabpfn import TabPFNClassifier
         import json
+
+        from tabpfn import TabPFNClassifier
+
         print("Training TabPFN 2.5 teacher on archetype labels")
         # Load real data if exists
         mat_path = DATA / "train_matrix.npz"
@@ -69,6 +74,7 @@ def train_teacher_real():
         print(f"tabpfn not installed: {e} — mock")
         train_teacher_mock()
 
+
 def distill_config():
     """Return distill loss config for MTNN training"""
     return {
@@ -76,16 +82,22 @@ def distill_config():
         "weight": 0.15,
         "loss": "kl_div",
         "teacher_path": str(DATA / "tabpfn_teacher_logits.npz"),
-        "note": "Add to MTNN loss: L_total = L_task + w * T^2 * KL(teacher/T || student/T)"
+        "note": "Add to MTNN loss: L_total = L_task + w * T^2 * KL(teacher/T || student/T)",
     }
+
 
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
-    ap.add_argument("--mode", choices=("train_teacher","config"), default="train_teacher")
-    ap.add_argument("--out", type=str, default="pipeline/data/tabpfn_teacher_logits.npz")
+    ap.add_argument(
+        "--mode", choices=("train_teacher", "config"), default="train_teacher"
+    )
+    ap.add_argument(
+        "--out", type=str, default="pipeline/data/tabpfn_teacher_logits.npz"
+    )
     args = ap.parse_args()
     if args.mode == "train_teacher":
         train_teacher_real()
     else:
         import json
+
         print(json.dumps(distill_config(), indent=2))

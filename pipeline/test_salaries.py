@@ -21,7 +21,8 @@ FAILURES: list[str] = []
 
 def check(cond: bool, msg: str) -> None:
     safe = msg.encode(sys.stdout.encoding or "utf-8", errors="backslashreplace").decode(
-        sys.stdout.encoding or "utf-8", errors="backslashreplace")
+        sys.stdout.encoding or "utf-8", errors="backslashreplace"
+    )
     print(f"  [{'PASS' if cond else 'FAIL'}] {safe}")
     if not cond:
         FAILURES.append(msg)
@@ -30,7 +31,9 @@ def check(cond: bool, msg: str) -> None:
 def rebuild() -> None:
     proc = subprocess.run(
         [sys.executable, "pipeline/build_salary_market.py"],
-        cwd=ROOT, capture_output=True, text=True,
+        cwd=ROOT,
+        capture_output=True,
+        text=True,
     )
     if proc.returncode != 0:
         print(proc.stdout + proc.stderr)
@@ -45,12 +48,12 @@ def main() -> None:
     cov = doc["coverage"]
 
     print("coverage")
-    check(cov["labeled_rows"] > 5000,
-          f"labeled rows > 5000 ({cov['labeled_rows']})")
-    check(cov["cap_pct_rows"] > 5000,
-          f"cap% rows > 5000 ({cov['cap_pct_rows']})")
-    check(cov["team_pct_rows"] > 4000,
-          f"team payroll % rows > 4000 ({cov['team_pct_rows']})")
+    check(cov["labeled_rows"] > 5000, f"labeled rows > 5000 ({cov['labeled_rows']})")
+    check(cov["cap_pct_rows"] > 5000, f"cap% rows > 5000 ({cov['cap_pct_rows']})")
+    check(
+        cov["team_pct_rows"] > 4000,
+        f"team payroll % rows > 4000 ({cov['team_pct_rows']})",
+    )
 
     print("bounds")
     cap_ok, team_ok, rank_ok, log_ok = True, True, True, True
@@ -73,21 +76,28 @@ def main() -> None:
     check(log_ok, "SALARY_LOG >= 4.0 for covered rows (min ~$10k)")
 
     print("spot checks")
+
     def field(name, season, f):
         r = by.get((name, season))
         return None if r is None else r.get(f)
 
     lebron = field("LeBron James", "2016-17", "SALARY_CAP_PCT")
-    check(lebron is not None and lebron >= 0.2,
-          f"LeBron 2016-17 cap% >= 20% (got {lebron})")
+    check(
+        lebron is not None and lebron >= 0.2,
+        f"LeBron 2016-17 cap% >= 20% (got {lebron})",
+    )
 
     jordan = field("Michael Jordan", "1996-97", "SALARY_TEAM_PCT")
-    check(jordan is not None and jordan >= 0.4,
-          f"Jordan 1996-97 team payroll% >= 40% (got {jordan})")
+    check(
+        jordan is not None and jordan >= 0.4,
+        f"Jordan 1996-97 team payroll% >= 40% (got {jordan})",
+    )
 
     garnett = field("Kevin Garnett", "2003-04", "SALARY_RANK_POS")
-    check(garnett is not None and garnett >= 0.95,
-          f"Garnett 2003-04 top salary rank (got {garnett})")
+    check(
+        garnett is not None and garnett >= 0.95,
+        f"Garnett 2003-04 top salary rank (got {garnett})",
+    )
 
     print()
     if FAILURES:

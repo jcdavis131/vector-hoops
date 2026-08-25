@@ -5,11 +5,10 @@ Run:  python pipeline/test_game_ratings.py
 
 from __future__ import annotations
 
+import json
 import subprocess
 import sys
 from pathlib import Path
-
-import json
 
 ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "pipeline" / "data" / "game_ratings.json"
@@ -27,7 +26,10 @@ def check(cond: bool, msg: str) -> None:
 def main() -> None:
     proc = subprocess.run(
         [sys.executable, "pipeline/build_game_ratings.py", "--fixture"],
-        cwd=ROOT, capture_output=True, text=True)
+        cwd=ROOT,
+        capture_output=True,
+        text=True,
+    )
     if proc.returncode != 0:
         print(proc.stdout + proc.stderr)
         raise SystemExit("build_game_ratings.py failed")
@@ -37,11 +39,15 @@ def main() -> None:
     rows = doc.get("players", doc.get("rows", []))
     check(len(rows) >= 2, f"fixture covers >=2 rows ({len(rows)})")
     curry = next((r for r in rows if "Curry" in r["name"]), None)
-    check(curry is not None and curry.get("GK_THREE_PT", 0) >= 95,
-          f"Curry three_pt high (got {curry.get('GK_THREE_PT') if curry else None})")
+    check(
+        curry is not None and curry.get("GK_THREE_PT", 0) >= 95,
+        f"Curry three_pt high (got {curry.get('GK_THREE_PT') if curry else None})",
+    )
     wemby = next((r for r in rows if "Wembanyama" in r["name"]), None)
-    check(wemby is not None and wemby.get("GK_BLOCK", 0) >= 95,
-          f"Wembanyama block high (got {wemby.get('GK_BLOCK') if wemby else None})")
+    check(
+        wemby is not None and wemby.get("GK_BLOCK", 0) >= 95,
+        f"Wembanyama block high (got {wemby.get('GK_BLOCK') if wemby else None})",
+    )
     check(not ASSET.exists(), "partial fixture did NOT write assets/game_ratings.json")
 
     print()

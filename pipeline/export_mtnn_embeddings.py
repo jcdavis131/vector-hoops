@@ -13,7 +13,6 @@ Gated by mtnn_promotion_eligible() — same contract as export_assets.py.
 from __future__ import annotations
 
 import json
-import sys
 import time
 from pathlib import Path
 
@@ -41,11 +40,7 @@ def promotion_eligible(report: dict | None) -> bool:
     arch = report.get("archetype_top1_acc")
     if mtnn_r is None or base_r is None or purity is None or arch is None:
         return False
-    return (
-        mtnn_r >= base_r + 0.05
-        and arch >= 0.55
-        and purity >= 0.63
-    )
+    return mtnn_r >= base_r + 0.05 and arch >= 0.55 and purity >= 0.63
 
 
 def main() -> None:
@@ -57,7 +52,8 @@ def main() -> None:
     report = json.loads(REPORT.read_text(encoding="utf-8")) if REPORT.exists() else {}
     if not promotion_eligible(report):
         raise SystemExit(
-            "MTNN promotion gates not met — embeddings stay in pipeline/data/")
+            "MTNN promotion gates not met — embeddings stay in pipeline/data/"
+        )
 
     data = np.load(EMB, allow_pickle=True)
     E = np.asarray(data["E"], dtype=np.float32)
@@ -78,7 +74,8 @@ def main() -> None:
         if str(names[idx]) != p["name"] or str(seasons[idx]) != p["season"]:
             raise SystemExit(
                 f"alignment fail row {idx}: "
-                f"{names[idx]!r}|{seasons[idx]!r} vs {p['name']!r}|{p['season']!r}")
+                f"{names[idx]!r}|{seasons[idx]!r} vs {p['name']!r}|{p['season']!r}"
+            )
 
     skill_keys = [str(k) for k in data.get("skill_keys", [])]
 
@@ -95,7 +92,8 @@ def main() -> None:
         "centroids": centroids.tolist(),
         "skill_keys": skill_keys,
         "test_recall_at_10": report.get("held_out_recall", {})
-            .get("test", {}).get("recall_at_10_mtnn"),
+        .get("test", {})
+        .get("recall_at_10_mtnn"),
         "purity_at_20": report.get("cross_era_archetype_neighbor_purity_at_20"),
         "archetype_top1_acc": report.get("archetype_top1_acc"),
         "nce_loss": report.get("nce_loss"),

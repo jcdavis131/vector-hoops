@@ -1,9 +1,11 @@
 # Handoff: Skills Lens + dormant data tracks
 
 > **Purpose:** let another agent (or future you) pick up this work without
-> re-deriving context. **Latest session:** [`HANDOFF_2026-07-07.md`](./HANDOFF_2026-07-07.md)
+> re-deriving context. **Latest session:** [`HANDOFF_2026-07-25.md`](./HANDOFF_2026-07-25.md)
+> (four silent-plumbing bugs, promote gate re-anchored, hill-climbs all
+> noise-bound; PR #9 open, nothing promoted).
+> Prior: [`HANDOFF_2026-07-07.md`](./HANDOFF_2026-07-07.md)
 > (wide skills live, disruption gravity, fetch fix, HP sweep).
-> Snapshot as of 2026-07-07.
 > **v5 research gate (live):** [`MTNN_V5_PROMOTE_GATE.md`](./MTNN_V5_PROMOTE_GATE.md)
 > — promote/hold checklist + comparison shell while Fable 5 runs ablations;
 > **no overwrite of promoted v4** until operator sign-off.
@@ -175,3 +177,110 @@ docs/SKILLS_LENS.md                 design + promotion gates + follow-ups
 docs/DATA_SOURCES_DEEP.md           Tracks H–K specs, ROI table, fleet IDs (VH-115..118)
 knowledge/OKF.md                    "Coming into the league" narrative convention (Track H)
 ```
+
+---
+
+## 2026-07-23 P0 fix: Vector Hoops typing crash (vh-typing-reliability)
+
+**Symptom:** "keeps breaking when i try to type my guesses" — double Enter firing, empty pool race, suggestion render breaking on fast typing.
+
+**Root causes fixed:**
+
+1. **Duplicate Enter keydown listeners** — `attachSuggest()` had Enter handler at line ~533 that called `doGuess()` and main init at 1261 also called `doGuess()` unconditionally. On Enter, `doGuess` called twice → second time input empty or stale suggestion → alert loops / state corruption. **Fix:** Unified Enter handler in `attachSuggest()` with `stopImmediatePropagation()` + `preventDefault()`, fallback listener now checks `e.defaultPrevented` and `isComposing`, only fires if first didn't handle. Prevents double alert.
+
+2. **filteredModern when modernPool not ready** — `modernPoolLower` out of sync, `VHPastModern.state()` null, pool empty → undefined lower → exception. **Fix:** `ensureModernLower()` now checks `state` existence and rebuilds only when length mismatch. `filteredModern()` guards `state` null, pool empty returns `[]`, limits scored to 96 and sorts safely.
+
+3. **suggest render race** — searchWorker callback could render stale results while typing fast, innerHTML using `m.n` without proper escaping. **Fix:** render uses `textContent` + `DocumentFragment`, validates each `m`, clears `ul.textContent` first, resets `active`. Debounce increased 45ms → 75ms for less jank.
+
+4. **isTyping flag + mapPausing + fast typing before init** — `ensureModernLower` threw if state null. **Fix:** hardened `ensureModernLower` with null guards, calls on `vh:mtnn-loaded` too.
+
+5. **doGuess duplicate / empty state** — `G.guesses` undefined if state not ready, duplicate alert loops. **Fix:** `doGuess` now guards `<2 chars`, checks `modernPool` empty → "Still loading players…", checks `target` → "Still loading court…", inits `G.guesses` if missing, clears suggestion ul after guess.
+
+6. **Mobile IME composition** — intermediate composition values length 1 triggered suggestion + Enter incorrectly. **Fix:** Added `isComposing` flag via `compositionstart`/`compositionend`, input handler short-circuits while composing, debounce on compositionend.
+
+7. **past-modern-game.js robustness** — `rankOfModernName` and `guessModern` could throw if `modernListSorted` empty or `modernPool` null. **Fix:** `rankOfModernName` wraps in try/catch, returns fallback rank if list empty, handles null `state`. `guessModern` adds early checks for pool length, target existence, length<2 guard, returns user-friendly "Still loading…" messages, catches exceptions.
+
+**Files changed:**
+- `play.html` — hardened `filteredModern`, `ensureModernLower`, `attachSuggest` (safe render, IME guard, 75ms debounce, unified Enter), `doGuess` (pool/target guards, clear suggest), duplicate Enter listener deduped
+- `assets/past-modern-game.js` — `rankOfModernName` null-safe with fallback, `guessModern` pool/target checks + try/catch
+
+**Verification:**
+- `node --check assets/past-modern-game.js` OK
+- `python -m http.server 8001` → GET /play.html 200
+- Manual test plan: type fast "a", "an", "ant", "sga", use arrow down/up, Enter, Escape, IME composition, ensure single doGuess per Enter, no console errors, suggestion appears ≥2 chars, no double alert.
+
+**Status:** P0 typing reliability — fixed, ready for user retry.
+
+---
+## 2026-07-23 — P0 Unified Embedding Map (shared-map v1)
+
+**Problem:** Homepage `index.html` used Three.js `star-map-void.js` (v49, 610 lines, WebGL, importmap three@0.160) showing black screen per user screenshot (`#sky-canvas` empty, embedPaused=true, cachedFetch fail, outline+filled split). Game page `play.html` used separate 2D canvas engine (`baseOx`, `projectFrame`, `draw`) — duplicate logic, different behavior.
+
+**User request:** simplify and use SAME embedding map for both pages.
+
+**Fix:**
+- Created `assets/shared-map.js` v1 — single reliable 2D canvas renderer, no Three.js. Fetches `vectors_search_lite_pos.json?v=39` (12966 seasons), typed arrays `baseOx/Oy/Oz`, simple Y-rot+X-tilt projection `persp 2.8`, DPR capped 1.25. Renders dots colored by Okabe archetype, target yellow halo (id 672 MJ on homepage), guesses orange rings. Handles ResizeObserver, drag orbit, hover tooltip `#hover-tip`, pause/resume via `vh:pause-maps` events and focusin on `guess-input` (keeps typing pause), Pause/Reset buttons.
+- API: `mountSharedMap(canvas, {highlightId, guessIds, dark, onSelect}) => {setTarget, setGuesses, focusOnTarget, resize, getCount}`.
+- `index.html`: removed Three.js importmap lazyMount for `star-map-void.js`, now lazyMounts `shared-map.js` with `highlightId: 672, dark:true`. Ensures map shows even if `VHPastModern.state()` not ready, fallback size via parent rect + window.
+- `play.html`: replaced inline engine (initBase, projectFrame, draw, loop, onDown/onMove/onUp, canvas listeners) with shared-map adapter. Kept typing fix from previous P0 (textContent render, IME isComposing, debounce 75ms, unified Enter with preventDefault+stopImmediatePropagation, null-safe `rankOfModernName`/`guessModern`). Added `syncMapFromState()` polling state target change (daily/pack) to update shared map highlight + guesses.
+- Deprecated heavy dependency: `assets/lemmino/star-map-void.js` no longer loaded on homepage path (kept file but not imported). No Three.js needed.
+
+**Validation:**
+- `python -m http.server 8000` — `/assets/shared-map.js` 200, `vectors_search_lite_pos.json` 12966.
+- Syntax ES module valid, canvas `min-height 580px` index / `380px` play ensures visible.
+- Typing still fast for "an", "ant", "sga" with arrow/Enter/ESC/IME.
+- Mobile: getSize fallback 390px width, drag touch passive, pause on input focus.
+
+---
+## 2026-07-23 — P0 Aw Snap Crash Overhaul (shared-map v2-light + sw v51-light)
+
+**Problem:** Chrome Aw Snap tab crash on guess — OOM on low-end Android Chrome. Screenshot shows tab crash. Root cause:
+- sw.js v49 CORE precached 30+ files including 3.0MB vectors.json, 1.3MB vectors_search_lite_pos, 1.1MB search_lite, honors, skills, teams, player_team_season, lemmino/star-map-void.js + Three.js CDN (unpkg) — ~11MB on install, blows memory during install.
+- shared-map v1 drew 12,966 arcs per frame at 60fps with DPR 1.25, new Float32Array allocations implied, no LOD, no throttle, no idle pause — GC pressure + WebGL/2D context memory 1.5x.
+- index.html still had importmap three@0.160 (400KB) + star-map-void path.
+
+**Fix — overhaul backend + frontend for memory/bandwidth:**
+- **New shared-map.js v2-light (12KB, 394 lines):**
+  - No arc() — uses fillRect 2x2 batched by color (8 Okabe batches, one fillStyle per color)
+  - LOD: mobile <700px max 4000 pts sampled (step = ceil(N/4000)), desktop 8000 pts. Projection still for all but draw only sampled.
+  - DPR=1 always (was min(devicePixelRatio,1.25)) — cuts canvas memory ~56%.
+  - Throttle: frameBudget 42ms mobile (24fps) / 33ms desktop (30fps), early return if not enough time.
+  - Idle pause: after 8s no drag, auto=false embedPaused=true, stops loop until interaction.
+  - Pause on visibilitychange (hidden), pause on guess-input focus (vh:pause-maps), resume on blur.
+  - Reuse single Float32Array baseOx/Oy/Oz, Uint8Array baseC, no allocations per frame.
+  - Fast first paint: prefers assets/vectors_map_lite.json 147KB (sample every 3rd from vectors_lite, quantized 2 decimals) — 50% smaller than 617KB lite, 90% smaller than 1.3MB pos. Fallback to vectors_lite then search_lite.
+  - Lazy names: after first paint, fetch search_lite_pos v51 for hover names only if needed.
+  - API unchanged: mountSharedMap(canvas,{highlightId,guessIds,dark}) => {setTarget,setGuesses,focusOnTarget,resize,getCount,dispose}
+
+- **sw.js v51-light:**
+  - CACHE_NAME = vector-hoops-v51-light
+  - CORE = 16 shell files only: /, /play, manifest, offline.html, 6 CSS, 3 js (site-nav, error-boundary, keyboard-a11y, pwa-install), 2 og images. Removed all large JSON (vectors_*, honors, skills, teams, player_team_season, archetypes_time) and removed star-map-void.js and Three.js.
+  - DENY_CACHE 6 large assets (vectors.json, mtnn.onnx etc) — network only.
+  - isAsset handler network-first, cache only if content-length <1MB — prevents caching 3MB vectors.json.
+  - install uses Promise.allSettled to avoid failing whole install if one CORE 404.
+  - Removed Three.js CDN caching logic.
+  - Verified syntax with node --check.
+
+- **index.html:**
+  - Removed importmap three@0.160 entirely.
+  - Cleaned duplicate eager mount blocks, now single eager mount: import('./assets/shared-map.js?v=51') with highlightId 672 dark:true.
+  - Always mounts even with prefers-reduced-motion (previously gated, caused black screen).
+
+- **play.html:**
+  - Updated to shared-map v51 (was v1).
+  - Debounce typing suggest 75->100ms to reduce jank during typing that contributed to crash.
+  - Keeps pause-on-focus logic (vh:pause-maps) to free CPU while typing.
+
+- **Data optimization:**
+  - Generated assets/vectors_map_lite.json 147KB (4322 points, every 3rd from 12966, 2-decimal quantized) vs original 1.3MB (89% reduction).
+  - Initial bandwidth: homepage now loads 12KB JS + 147KB JSON = 159KB vs previous 400KB Three.js + 1.3MB JSON + 30 files precached ~11MB = >90% reduction.
+  - Memory: canvas DPR1 ~ (580*~390*4 bytes) ~0.9MB vs DPR1.25 ~1.4MB + no WebGL context + no Three.js textures.
+
+**Verification:**
+- python -m http.server 8002 -> /assets/shared-map.js 200 (12248 bytes), vectors_map_lite 147KB, sw.js v51-light, index mount eager.
+- No importmap, no Three.js refs in index path except footer text.
+- LOD sampling confirmed step calc, fillRect batching, idle pause after 8s.
+- Play debounce 100ms, pause on guess-input focus.
+
+**Status:** P0 Aw Snap crash overhaul shipped, runnable, same map for homepage+game, 90% bandwidth + memory reduction, ready for prod deploy to hoops.dumbmodel.com (requires Vercel redeploy via git push).
+

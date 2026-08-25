@@ -25,8 +25,8 @@ from collections import defaultdict
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from nba_http import fetch_stats_json, legacy_result_set_rows
 from name_utils import norm_name
+from nba_http import fetch_stats_json, legacy_result_set_rows
 
 ROOT = Path(__file__).resolve().parents[1]
 CACHE = ROOT / "pipeline" / "cache"
@@ -49,9 +49,9 @@ def with_retries(fn, label: str):
     for attempt in range(5):
         try:
             return fn()
-        except Exception as e:  # noqa: BLE001
+        except Exception as e:
             last = e
-            wait = min(120, 5 * 2 ** attempt)
+            wait = min(120, 5 * 2**attempt)
             print(f"  {label}: attempt {attempt + 1} failed ({e}); backoff {wait}s")
             time.sleep(wait)
     raise SystemExit(f"{label} failed after retries: {last}")
@@ -73,67 +73,69 @@ def gamelog_params(season: str, player_or_team: str) -> dict:
 
 def fetch_team_games(season: str) -> list[dict]:
     def call():
-        payload = fetch_stats_json(
-            "leaguegamelog", gamelog_params(season, "T"))
+        payload = fetch_stats_json("leaguegamelog", gamelog_params(season, "T"))
         return legacy_result_set_rows(payload)
 
     rows = with_retries(call, f"{season} team playoff gamelog")
     out = []
     for r in rows:
-        out.append({
-            "gameId": str(r["GAME_ID"]),
-            "date": str(r["GAME_DATE"])[:10],
-            "teamId": int(r["TEAM_ID"]),
-            "abbr": str(r["TEAM_ABBREVIATION"]),
-            "matchup": str(r["MATCHUP"]),
-            "wl": str(r.get("WL") or ""),
-            "pts": int(r.get("PTS") or 0),
-            "plusMinus": float(r.get("PLUS_MINUS") or 0.0),
-        })
+        out.append(
+            {
+                "gameId": str(r["GAME_ID"]),
+                "date": str(r["GAME_DATE"])[:10],
+                "teamId": int(r["TEAM_ID"]),
+                "abbr": str(r["TEAM_ABBREVIATION"]),
+                "matchup": str(r["MATCHUP"]),
+                "wl": str(r.get("WL") or ""),
+                "pts": int(r.get("PTS") or 0),
+                "plusMinus": float(r.get("PLUS_MINUS") or 0.0),
+            }
+        )
     return out
 
 
 def fetch_player_games(season: str) -> list[dict]:
     def call():
-        payload = fetch_stats_json(
-            "leaguegamelog", gamelog_params(season, "P"))
+        payload = fetch_stats_json("leaguegamelog", gamelog_params(season, "P"))
         return legacy_result_set_rows(payload)
 
     rows = with_retries(call, f"{season} player playoff gamelog")
     out = []
     for r in rows:
-        out.append({
-            "gameId": str(r["GAME_ID"]),
-            "date": str(r["GAME_DATE"])[:10],
-            "playerId": int(r["PLAYER_ID"]),
-            "name": str(r["PLAYER_NAME"]),
-            "nn": norm_name(str(r["PLAYER_NAME"])),
-            "teamId": int(r["TEAM_ID"]),
-            "abbr": str(r["TEAM_ABBREVIATION"]),
-            "matchup": str(r["MATCHUP"]),
-            "wl": str(r.get("WL") or ""),
-            "min": float(r.get("MIN") or 0.0),
-            "pts": int(r.get("PTS") or 0),
-            "reb": int(r.get("REB") or 0),
-            "ast": int(r.get("AST") or 0),
-            "stl": int(r.get("STL") or 0),
-            "blk": int(r.get("BLK") or 0),
-            "tov": int(r.get("TOV") or 0),
-            "fgm": int(r.get("FGM") or 0),
-            "fga": int(r.get("FGA") or 0),
-            "fg3m": int(r.get("FG3M") or 0),
-            "fg3a": int(r.get("FG3A") or 0),
-            "ftm": int(r.get("FTM") or 0),
-            "fta": int(r.get("FTA") or 0),
-            "plusMinus": float(r.get("PLUS_MINUS") or 0.0),
-        })
+        out.append(
+            {
+                "gameId": str(r["GAME_ID"]),
+                "date": str(r["GAME_DATE"])[:10],
+                "playerId": int(r["PLAYER_ID"]),
+                "name": str(r["PLAYER_NAME"]),
+                "nn": norm_name(str(r["PLAYER_NAME"])),
+                "teamId": int(r["TEAM_ID"]),
+                "abbr": str(r["TEAM_ABBREVIATION"]),
+                "matchup": str(r["MATCHUP"]),
+                "wl": str(r.get("WL") or ""),
+                "min": float(r.get("MIN") or 0.0),
+                "pts": int(r.get("PTS") or 0),
+                "reb": int(r.get("REB") or 0),
+                "ast": int(r.get("AST") or 0),
+                "stl": int(r.get("STL") or 0),
+                "blk": int(r.get("BLK") or 0),
+                "tov": int(r.get("TOV") or 0),
+                "fgm": int(r.get("FGM") or 0),
+                "fga": int(r.get("FGA") or 0),
+                "fg3m": int(r.get("FG3M") or 0),
+                "fg3a": int(r.get("FG3A") or 0),
+                "ftm": int(r.get("FTM") or 0),
+                "fta": int(r.get("FTA") or 0),
+                "plusMinus": float(r.get("PLUS_MINUS") or 0.0),
+            }
+        )
     return out
 
 
 def opponent_abbr(matchup: str, team_abbr: str) -> tuple[str, str]:
     """Return (opponent_abbr, home_away) where home_away is 'H' or 'A'."""
     m = matchup.strip()
-    ha = "A" if " @" in m or m.endswith(f"@ {m.split()[-1]}") and "@" in m else "H"
+    ha = "A" if " @" in m or (m.endswith(f"@ {m.split()[-1]}") and "@" in m) else "H"
     if " @" in m:
         ha = "A"
         left, right = m.split(" @ ", 1)
@@ -191,25 +193,31 @@ def derive_series(team_games: list[dict]) -> dict[str, list[dict]]:
             elif g["wl"] == "L":
                 cur["losses"] += 1
             cur["gameIds"].append(g["gameId"])
-            cur["games"].append({
-                "gameId": g["gameId"],
-                "date": g["date"],
-                "ha": ha,
-                "wl": g["wl"],
-                "pts": g["pts"],
-                "plusMinus": g["plusMinus"],
-            })
+            cur["games"].append(
+                {
+                    "gameId": g["gameId"],
+                    "date": g["date"],
+                    "ha": ha,
+                    "wl": g["wl"],
+                    "pts": g["pts"],
+                    "plusMinus": g["plusMinus"],
+                }
+            )
         if cur is not None:
             series.append(cur)
         # Label rounds by order (0=R1 …); champion path length 4.
         labeled = []
         for i, s in enumerate(series):
-            labeled.append({
-                **s,
-                "round": i,
-                "roundLabel": ROUND_LABELS[i] if i < len(ROUND_LABELS) else f"R{i+1}",
-                "result": f"{s['wins']}-{s['losses']}",
-            })
+            labeled.append(
+                {
+                    **s,
+                    "round": i,
+                    "roundLabel": ROUND_LABELS[i]
+                    if i < len(ROUND_LABELS)
+                    else f"R{i + 1}",
+                    "result": f"{s['wins']}-{s['losses']}",
+                }
+            )
         series_out[str(tid)] = labeled
     return series_out
 

@@ -42,13 +42,13 @@ from __future__ import annotations
 import argparse
 import json
 import math
-import re
 import sys
 import time
-import unicodedata
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
+import itertools
+
 from name_utils import norm_name
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -64,8 +64,18 @@ DECAY_YEARS = 4.0  # e-folding of entry expectations
 # Stated expectation curve: CBA rookie-scale shape normalized to pick #1.
 # Log-linear interpolation between anchors; round 2 flat; undrafted floor.
 EXPECT_ANCHORS = [
-    (1, 1.00), (2, 0.90), (3, 0.81), (4, 0.73), (5, 0.66), (7, 0.55),
-    (10, 0.44), (14, 0.35), (18, 0.28), (21, 0.25), (25, 0.22), (30, 0.19),
+    (1, 1.00),
+    (2, 0.90),
+    (3, 0.81),
+    (4, 0.73),
+    (5, 0.66),
+    (7, 0.55),
+    (10, 0.44),
+    (14, 0.35),
+    (18, 0.28),
+    (21, 0.25),
+    (25, 0.22),
+    (30, 0.19),
 ]
 EXPECT_ROUND2 = 0.10
 EXPECT_UNDRAFTED = 0.06
@@ -76,7 +86,7 @@ def expect_slot(overall: int) -> float:
         return EXPECT_ROUND2
     if overall <= EXPECT_ANCHORS[0][0]:
         return EXPECT_ANCHORS[0][1]
-    for (p0, v0), (p1, v1) in zip(EXPECT_ANCHORS, EXPECT_ANCHORS[1:]):
+    for (p0, v0), (p1, v1) in itertools.pairwise(EXPECT_ANCHORS):
         if p0 <= overall <= p1:
             t = (overall - p0) / (p1 - p0)
             return round(math.exp(math.log(v0) + t * (math.log(v1) - math.log(v0))), 4)
@@ -99,8 +109,11 @@ def team_winpct_index() -> dict[str, dict[int, float]]:
             rows = json.loads(path.read_text(encoding="utf-8"))
         except (OSError, json.JSONDecodeError):
             continue
-        idx[season] = {int(r["TEAM_ID"]): float(r["W_PCT"])
-                       for r in rows if r.get("W_PCT") is not None}
+        idx[season] = {
+            int(r["TEAM_ID"]): float(r["W_PCT"])
+            for r in rows
+            if r.get("W_PCT") is not None
+        }
     return idx
 
 
@@ -112,22 +125,32 @@ def pick_record(recs: list[dict], first_year: int) -> dict | None:
 
 def main() -> None:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--cache", default=None,
-                    help="draft cache path (default pipeline/cache/draft_history.json)")
-    ap.add_argument("--fixture", action="store_true",
-                    help="use the committed example fixture (tests)")
+    ap.add_argument(
+        "--cache",
+        default=None,
+        help="draft cache path (default pipeline/cache/draft_history.json)",
+    )
+    ap.add_argument(
+        "--fixture",
+        action="store_true",
+        help="use the committed example fixture (tests)",
+    )
     args = ap.parse_args()
 
-    cache_path = Path(args.cache) if args.cache else (
-        DRAFT_FIXTURE if args.fixture else DRAFT_CACHE)
+    cache_path = (
+        Path(args.cache)
+        if args.cache
+        else (DRAFT_FIXTURE if args.fixture else DRAFT_CACHE)
+    )
     if not cache_path.exists():
         raise SystemExit(
             f"no draft cache at {cache_path} — run pipeline/fetch_draft_history.py "
-            "on an operator machine (or pass --fixture for the test fixture)")
+            "on an operator machine (or pass --fixture for the test fixture)"
+        )
 
     draft = json.loads(cache_path.read_text(encoding="utf-8"))
     complete = bool(draft.get("complete"))
-    dmin, dmax = (draft.get("years") or [None, None])
+    dmin, dmax = draft.get("years") or [None, None]
 
     vec = json.loads(VECTORS.read_text(encoding="utf-8"))
     players = vec["players"]
@@ -139,7 +162,7 @@ def main() -> None:
 
     teams = team_winpct_index()
 
-    resolved: dict[str, dict | None] = {}   # name -> draft record | None(=undrafted)
+    resolved: dict[str, dict | None] = {}  # name -> draft record | None(=undrafted)
     unmatched = 0
     for name, fy in first_year.items():
         recs = draft["players"].get(norm_name(name))
@@ -165,45 +188,57 @@ def main() -> None:
                 quality01 = (61 - min(overall, 61)) / 60.0
                 years = max(0, sy - rec["year"])
                 wp = teams.get(prior_season_str(rec["year"]), {}).get(rec["team_id"])
-                row.update({
-                    "PED_PICK_QUALITY": 61 - overall,
-                    "PED_ROUND_ONE": 1.0 if rec["round"] == 1 else 0.0,
-                    "PED_UNDRAFTED": 0.0,
-                    "PED_EXPECT_SLOT": expect_slot(overall),
-                    "PED_TEAM_WINPCT": wp,
-                    "PED_YEARS_SINCE": float(years),
-                    "PED_PICK_DECAY": round(quality01 * math.exp(-years / DECAY_YEARS), 4),
-                })
+                row.update(
+                    {
+                        "PED_PICK_QUALITY": 61 - overall,
+                        "PED_ROUND_ONE": 1.0 if rec["round"] == 1 else 0.0,
+                        "PED_UNDRAFTED": 0.0,
+                        "PED_EXPECT_SLOT": expect_slot(overall),
+                        "PED_TEAM_WINPCT": wp,
+                        "PED_YEARS_SINCE": float(years),
+                        "PED_PICK_DECAY": round(
+                            quality01 * math.exp(-years / DECAY_YEARS), 4
+                        ),
+                    }
+                )
             else:
                 years = max(0, sy - first_year[name])
-                row.update({
-                    "PED_PICK_QUALITY": None,
-                    "PED_ROUND_ONE": 0.0,
-                    "PED_UNDRAFTED": 1.0,
-                    "PED_EXPECT_SLOT": EXPECT_UNDRAFTED,
-                    "PED_TEAM_WINPCT": None,
-                    "PED_YEARS_SINCE": float(years),
-                    "PED_PICK_DECAY": 0.0,
-                })
+                row.update(
+                    {
+                        "PED_PICK_QUALITY": None,
+                        "PED_ROUND_ONE": 0.0,
+                        "PED_UNDRAFTED": 1.0,
+                        "PED_EXPECT_SLOT": EXPECT_UNDRAFTED,
+                        "PED_TEAM_WINPCT": None,
+                        "PED_YEARS_SINCE": float(years),
+                        "PED_PICK_DECAY": 0.0,
+                    }
+                )
         entries.append(row)
 
     n_drafted = sum(1 for r in resolved.values() if r is not None)
     n_undrafted = sum(1 for r in resolved.values() if r is None)
     covered_rows = sum(1 for e in entries if "PED_UNDRAFTED" in e)
     OUT.parent.mkdir(parents=True, exist_ok=True)
-    OUT.write_text(json.dumps({
-        "built": time.strftime("%Y-%m-%d"),
-        "cache": cache_path.name,
-        "cache_complete": complete,
-        "coverage": {
-            "players_drafted": n_drafted,
-            "players_undrafted": n_undrafted,
-            "players_unmatched_masked": unmatched,
-            "rows_covered": covered_rows,
-            "rows_total": len(entries),
-        },
-        "players": entries,
-    }, separators=(",", ":")), encoding="utf-8")
+    OUT.write_text(
+        json.dumps(
+            {
+                "built": time.strftime("%Y-%m-%d"),
+                "cache": cache_path.name,
+                "cache_complete": complete,
+                "coverage": {
+                    "players_drafted": n_drafted,
+                    "players_undrafted": n_undrafted,
+                    "players_unmatched_masked": unmatched,
+                    "rows_covered": covered_rows,
+                    "rows_total": len(entries),
+                },
+                "players": entries,
+            },
+            separators=(",", ":"),
+        ),
+        encoding="utf-8",
+    )
 
     # Transparent per-player draft facts for game surfaces (Steals of the
     # Draft) — ONLY from a complete cache, never the partial fixture.
@@ -212,33 +247,54 @@ def main() -> None:
         for name, rec in resolved.items():
             if rec is None:
                 asset_players[name] = {
-                    "undrafted": True, "overall": None, "round": None,
-                    "pick": None, "expect_slot": EXPECT_UNDRAFTED,
-                    "draft_year": None, "team": None,
+                    "undrafted": True,
+                    "overall": None,
+                    "round": None,
+                    "pick": None,
+                    "expect_slot": EXPECT_UNDRAFTED,
+                    "draft_year": None,
+                    "team": None,
                 }
             else:
                 asset_players[name] = {
-                    "undrafted": False, "overall": rec["overall"],
-                    "round": rec["round"], "pick": rec["pick"],
+                    "undrafted": False,
+                    "overall": rec["overall"],
+                    "round": rec["round"],
+                    "pick": rec["pick"],
                     "expect_slot": expect_slot(rec["overall"]),
-                    "draft_year": rec["year"], "team": rec.get("team_abbr") or None,
+                    "draft_year": rec["year"],
+                    "team": rec.get("team_abbr") or None,
                 }
-        ASSET_OUT.write_text(json.dumps({
-            "built": time.strftime("%Y-%m-%d"),
-            "note": ("per-player draft pick + stated rookie-scale expectation "
-                     "slot (#1 = 1.0). Pairs with assets/skills.json for the "
-                     "Steals of the Draft surface. Source: stats.nba.com."),
-            "players": asset_players,
-        }, separators=(",", ":")), encoding="utf-8")
-        asset_msg = f"wrote {ASSET_OUT.relative_to(ROOT)} ({len(asset_players)} players)"
+        ASSET_OUT.write_text(
+            json.dumps(
+                {
+                    "built": time.strftime("%Y-%m-%d"),
+                    "note": (
+                        "per-player draft pick + stated rookie-scale expectation "
+                        "slot (#1 = 1.0). Pairs with assets/skills.json for the "
+                        "Steals of the Draft surface. Source: stats.nba.com."
+                    ),
+                    "players": asset_players,
+                },
+                separators=(",", ":"),
+            ),
+            encoding="utf-8",
+        )
+        asset_msg = (
+            f"wrote {ASSET_OUT.relative_to(ROOT)} ({len(asset_players)} players)"
+        )
     else:
-        asset_msg = ("assets/pedigree.json NOT written (partial cache — Steals "
-                     "of the Draft surface stays dormant)")
+        asset_msg = (
+            "assets/pedigree.json NOT written (partial cache — Steals "
+            "of the Draft surface stays dormant)"
+        )
 
-    print(f"pedigree: {n_drafted} drafted, {n_undrafted} undrafted, "
-          f"{unmatched} unmatched (masked) of {len(first_year)} players; "
-          f"{covered_rows}/{len(entries)} rows covered "
-          f"(cache complete={complete})")
+    print(
+        f"pedigree: {n_drafted} drafted, {n_undrafted} undrafted, "
+        f"{unmatched} unmatched (masked) of {len(first_year)} players; "
+        f"{covered_rows}/{len(entries)} rows covered "
+        f"(cache complete={complete})"
+    )
     print(f"wrote {OUT.relative_to(ROOT)}; {asset_msg}")
 
 

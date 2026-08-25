@@ -39,33 +39,81 @@ N_QUANTILE_KNOTS = 101  # p0, p1, ..., p100
 # Composite weights over the 14 era-z contract features. Keep in sync with
 # docs/SKILLS_LENS.md section 1 — the doc is the review surface.
 SKILLS: list[dict] = [
-    {"key": "scoring", "label": "Scoring Volume", "badge": "Bucket Getter",
-     "w": {"PTS": 0.70, "FGA": 0.30}},
-    {"key": "shooting", "label": "Perimeter Shooting", "badge": "Sniper",
-     "w": {"FG3A": 0.55, "FG3_PCT": 0.45}},
-    {"key": "finishing", "label": "Interior Finishing", "badge": "Paint Presence",
-     "w": {"FG_PCT": 0.45, "FTA": 0.40, "FG3A": -0.15}},
-    {"key": "ft", "label": "Free-Throw Shooting", "badge": "Marksman",
-     "w": {"FT_PCT": 1.0}},
-    {"key": "playmaking", "label": "Playmaking", "badge": "Floor General",
-     "w": {"AST": 0.90, "TOV": -0.10}},
-    {"key": "security", "label": "Ball Security", "badge": "Safe Hands",
-     # 0.65*load - 0.35*TOV with load = mean(FGA, AST, FTA); tuned so
-     # high-usage careful stars outrank never-play low-TOV bench seasons
-     "w": {"FGA": 0.65 / 3, "AST": 0.65 / 3, "FTA": 0.65 / 3, "TOV": -0.35}},
-    {"key": "oreb", "label": "Offensive Glass", "badge": "Glass Crasher",
-     "w": {"OREB": 1.0}},
-    {"key": "dreb", "label": "Defensive Glass", "badge": "Board Vacuum",
-     "w": {"DREB": 1.0}},
-    {"key": "hands", "label": "Ball Pressure", "badge": "Pickpocket",
-     "w": {"STL": 1.0}},
-    {"key": "rim", "label": "Rim Protection", "badge": "Rim Protector",
-     "w": {"BLK": 0.85, "DREB": 0.15}},
-    {"key": "efficiency", "label": "Scoring Efficiency", "badge": "Efficient Engine",
-     "w": {"FG_PCT": 0.45, "FG3_PCT": 0.30, "FT_PCT": 0.25}},
-    {"key": "impact", "label": "Two-Way Impact", "badge": "Tide Turner",
-     # small PTS stabilizer damps garbage-time per-100 plus-minus spikes
-     "w": {"PLUS_MINUS": 0.80, "PTS": 0.20}},
+    {
+        "key": "scoring",
+        "label": "Scoring Volume",
+        "badge": "Bucket Getter",
+        "w": {"PTS": 0.70, "FGA": 0.30},
+    },
+    {
+        "key": "shooting",
+        "label": "Perimeter Shooting",
+        "badge": "Sniper",
+        "w": {"FG3A": 0.55, "FG3_PCT": 0.45},
+    },
+    {
+        "key": "finishing",
+        "label": "Interior Finishing",
+        "badge": "Paint Presence",
+        "w": {"FG_PCT": 0.45, "FTA": 0.40, "FG3A": -0.15},
+    },
+    {
+        "key": "ft",
+        "label": "Free-Throw Shooting",
+        "badge": "Marksman",
+        "w": {"FT_PCT": 1.0},
+    },
+    {
+        "key": "playmaking",
+        "label": "Playmaking",
+        "badge": "Floor General",
+        "w": {"AST": 0.90, "TOV": -0.10},
+    },
+    {
+        "key": "security",
+        "label": "Ball Security",
+        "badge": "Safe Hands",
+        # 0.65*load - 0.35*TOV with load = mean(FGA, AST, FTA); tuned so
+        # high-usage careful stars outrank never-play low-TOV bench seasons
+        "w": {"FGA": 0.65 / 3, "AST": 0.65 / 3, "FTA": 0.65 / 3, "TOV": -0.35},
+    },
+    {
+        "key": "oreb",
+        "label": "Offensive Glass",
+        "badge": "Glass Crasher",
+        "w": {"OREB": 1.0},
+    },
+    {
+        "key": "dreb",
+        "label": "Defensive Glass",
+        "badge": "Board Vacuum",
+        "w": {"DREB": 1.0},
+    },
+    {
+        "key": "hands",
+        "label": "Ball Pressure",
+        "badge": "Pickpocket",
+        "w": {"STL": 1.0},
+    },
+    {
+        "key": "rim",
+        "label": "Rim Protection",
+        "badge": "Rim Protector",
+        "w": {"BLK": 0.85, "DREB": 0.15},
+    },
+    {
+        "key": "efficiency",
+        "label": "Scoring Efficiency",
+        "badge": "Efficient Engine",
+        "w": {"FG_PCT": 0.45, "FG3_PCT": 0.30, "FT_PCT": 0.25},
+    },
+    {
+        "key": "impact",
+        "label": "Two-Way Impact",
+        "badge": "Tide Turner",
+        # small PTS stabilizer damps garbage-time per-100 plus-minus spikes
+        "w": {"PLUS_MINUS": 0.80, "PTS": 0.20},
+    },
 ]
 
 
@@ -78,8 +126,9 @@ def weight_matrix(features: list[str]) -> np.ndarray:
     return W
 
 
-def season_percentiles(scores: np.ndarray, volume: np.ndarray,
-                       season_idx: dict[str, np.ndarray]) -> np.ndarray:
+def season_percentiles(
+    scores: np.ndarray, volume: np.ndarray, season_idx: dict[str, np.ndarray]
+) -> np.ndarray:
     """Grade 0-99 = within-season percentile rank of each composite score.
 
     Exact composite ties are broken by `volume` (a usage/volume proxy), so
@@ -141,19 +190,21 @@ def main() -> None:
     skills_doc = {
         "built": built,
         "source": "assets/vectors.json (frozen 14-dim era-z contract)",
-        "method": ("linear composite of era-z features -> percentile grade "
-                   "0-99 within season pool; see docs/SKILLS_LENS.md"),
+        "method": (
+            "linear composite of era-z features -> percentile grade "
+            "0-99 within season pool; see docs/SKILLS_LENS.md"
+        ),
         "badgeGrade": BADGE_GRADE,
         "goldGrade": GOLD_GRADE,
         "skills": [
-            {"key": sk["key"], "label": sk["label"], "badge": sk["badge"],
-             "w": sk["w"]}
+            {"key": sk["key"], "label": sk["label"], "badge": sk["badge"], "w": sk["w"]}
             for sk in SKILLS
         ],
         "grades": grades.tolist(),
     }
     SKILLS_OUT.write_text(
-        json.dumps(skills_doc, separators=(",", ":")), encoding="utf-8")
+        json.dumps(skills_doc, separators=(",", ":")), encoding="utf-8"
+    )
 
     probe_doc = {
         "built": built,
@@ -164,32 +215,37 @@ def main() -> None:
         "badgeGrade": BADGE_GRADE,
         "goldGrade": GOLD_GRADE,
         "W": [[round(float(w), 6) for w in row] for row in W],
-        "quantiles": dict(zip(keys, pooled_quantiles(scores))),
-        "note": ("grade(x) = interp(W@x through pooled all-era quantile "
-                 "knots); valid for any vector in the 14-dim era-z "
-                 "contract, including fused chimera blends. Reference "
-                 "pool is ALL charted seasons, so probe grades rank vs "
-                 "history, not vs one season (r>=0.98 with season grades)."),
+        "quantiles": dict(zip(keys, pooled_quantiles(scores), strict=False)),
+        "note": (
+            "grade(x) = interp(W@x through pooled all-era quantile "
+            "knots); valid for any vector in the 14-dim era-z "
+            "contract, including fused chimera blends. Reference "
+            "pool is ALL charted seasons, so probe grades rank vs "
+            "history, not vs one season (r>=0.98 with season grades)."
+        ),
     }
-    PROBE_OUT.write_text(
-        json.dumps(probe_doc, separators=(",", ":")), encoding="utf-8")
+    PROBE_OUT.write_text(json.dumps(probe_doc, separators=(",", ":")), encoding="utf-8")
 
     DATA_DIR.mkdir(parents=True, exist_ok=True)
     np.savez_compressed(
         LABELS_OUT,
         grades=(grades / 100.0).astype(np.float32),
-        name=names, season=seasons,
+        name=names,
+        season=seasons,
         keys=np.array(keys),
     )
 
     n_badges = int((grades >= BADGE_GRADE).sum())
     print(f"{n} player-seasons x {len(SKILLS)} skills")
-    print(f"badges at >= {BADGE_GRADE}: {n_badges} "
-          f"({n_badges / n:.2f} per player-season)")
-    for sk, col in zip(SKILLS, grades.T):
-        top = names[np.argsort(-scores[:, keys.index(sk['key'])])[:3]]
-        print(f"  {sk['key']:<11} mean {col.mean():5.1f}  "
-              f"top: {', '.join(t for t in top)}")
+    print(
+        f"badges at >= {BADGE_GRADE}: {n_badges} ({n_badges / n:.2f} per player-season)"
+    )
+    for sk, col in zip(SKILLS, grades.T, strict=False):
+        top = names[np.argsort(-scores[:, keys.index(sk["key"])])[:3]]
+        print(
+            f"  {sk['key']:<11} mean {col.mean():5.1f}  "
+            f"top: {', '.join(t for t in top)}"
+        )
     print(f"wrote {SKILLS_OUT.name}, {PROBE_OUT.name}, {LABELS_OUT.name}")
 
 

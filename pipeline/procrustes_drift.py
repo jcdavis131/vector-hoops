@@ -17,6 +17,7 @@ Output: assets/drift.json
 
 from __future__ import annotations
 
+import itertools
 import json
 import math
 from collections import defaultdict
@@ -30,9 +31,20 @@ CACHE = HERE / "cache"
 
 # +1 = league generally better when higher; -1 = better when lower; 0 = neutral / frame-only
 FEATURE_VALENCE: dict[str, int] = {
-    "PTS": 0, "AST": 1, "OREB": 0, "DREB": 0, "STL": 1, "BLK": 0,
-    "TOV": -1, "FG3A": 1, "FGA": 0, "FTA": 0,
-    "FG3_PCT": 1, "FG_PCT": 1, "FT_PCT": 1, "PLUS_MINUS": 0,
+    "PTS": 0,
+    "AST": 1,
+    "OREB": 0,
+    "DREB": 0,
+    "STL": 1,
+    "BLK": 0,
+    "TOV": -1,
+    "FG3A": 1,
+    "FGA": 0,
+    "FTA": 0,
+    "FG3_PCT": 1,
+    "FG_PCT": 1,
+    "FT_PCT": 1,
+    "PLUS_MINUS": 0,
 }
 
 PCT_FEATURES = frozenset({"FG3_PCT", "FG_PCT", "FT_PCT"})
@@ -62,8 +74,9 @@ def most_rotated_features(Q: np.ndarray, features: list[str], k: int = 2):
     as a simple, honest proxy for how much that axis left itself)."""
     drift = 1 - np.abs(np.diag(Q))
     idx = np.argsort(-drift)[:k]
-    return [{"feature": features[i], "axisDrift": round(float(drift[i]), 3)}
-            for i in idx]
+    return [
+        {"feature": features[i], "axisDrift": round(float(drift[i]), 3)} for i in idx
+    ]
 
 
 def all_axis_drifts(Q: np.ndarray, features: list[str]) -> list[dict]:
@@ -76,7 +89,9 @@ def all_axis_drifts(Q: np.ndarray, features: list[str]) -> list[dict]:
     return rows
 
 
-def load_league_rates(seasons: list[str], features: list[str]) -> dict[str, dict[str, float]]:
+def load_league_rates(
+    seasons: list[str], features: list[str]
+) -> dict[str, dict[str, float]]:
     """Minutes-weighted league per-100 (or rate) averages from dash cache."""
     rates: dict[str, dict[str, float]] = {}
     for season in seasons:
@@ -91,7 +106,7 @@ def load_league_rates(seasons: list[str], features: list[str]) -> dict[str, dict
         if not rows:
             continue
         weights = []
-        sums = {f: 0.0 for f in features}
+        sums = dict.fromkeys(features, 0.0)
         wtot = 0.0
         for r in rows:
             gp = float(r.get("GP") or 0)
@@ -120,7 +135,9 @@ def load_league_rates(seasons: list[str], features: list[str]) -> dict[str, dict
 
 
 def prior_league_average(
-    league_rates: dict[str, dict[str, float]], feature: str, to_season: str,
+    league_rates: dict[str, dict[str, float]],
+    feature: str,
+    to_season: str,
 ) -> float | None:
     prior = [
         league_rates[s][feature]
@@ -141,7 +158,9 @@ def format_rate(feature: str, value: float) -> str:
 
 
 def evaluate_level(
-    feature: str, current: float, prior: float,
+    feature: str,
+    current: float,
+    prior: float,
 ) -> tuple[str, str, float]:
     """Return (direction, quality, deltaPct)."""
     if prior == 0:
@@ -169,15 +188,24 @@ def evaluate_level(
 
 
 def craft_stat_narrative(
-    feature: str, axis_drift: float, to_season: str,
-    current: float, prior: float, direction: str, quality: str, delta_pct: float,
+    feature: str,
+    axis_drift: float,
+    to_season: str,
+    current: float,
+    prior: float,
+    direction: str,
+    quality: str,
+    delta_pct: float,
 ) -> str:
     label = FEATURE_LABELS.get(feature, feature)
     cur_s = format_rate(feature, current)
     prior_s = format_rate(feature, prior)
     drift_word = (
-        "sharply" if axis_drift >= 0.06 else
-        "noticeably" if axis_drift >= 0.035 else "somewhat"
+        "sharply"
+        if axis_drift >= 0.06
+        else "noticeably"
+        if axis_drift >= 0.035
+        else "somewhat"
     )
     level_note = abs(delta_pct) >= 0.04
 
@@ -230,30 +258,47 @@ def build_stat_insights(
             continue
         current = league_rates[to_season][feat]
         direction, quality, delta_pct = evaluate_level(feat, current, prior)
-        insights.append({
-            "feature": feat,
-            "label": FEATURE_LABELS.get(feat, feat),
-            "axisDrift": drift,
-            "leagueRate": current,
-            "priorAvg": round(prior, 4),
-            "deltaPct": delta_pct,
-            "direction": direction,
-            "quality": quality,
-            "narrative": craft_stat_narrative(
-                feat, drift, to_season, current, prior, direction, quality, delta_pct,
-            ),
-        })
+        insights.append(
+            {
+                "feature": feat,
+                "label": FEATURE_LABELS.get(feat, feat),
+                "axisDrift": drift,
+                "leagueRate": current,
+                "priorAvg": round(prior, 4),
+                "deltaPct": delta_pct,
+                "direction": direction,
+                "quality": quality,
+                "narrative": craft_stat_narrative(
+                    feat,
+                    drift,
+                    to_season,
+                    current,
+                    prior,
+                    direction,
+                    quality,
+                    delta_pct,
+                ),
+            }
+        )
         if len(insights) >= 4:
             break
     return insights
 
 
 FEATURE_LABELS = {
-    "PTS": "scoring volume", "AST": "playmaking", "OREB": "offensive rebounding",
-    "DREB": "defensive rebounding", "STL": "steals", "BLK": "rim protection",
-    "TOV": "turnovers", "FG3A": "three-point volume", "FGA": "shot volume",
-    "FTA": "free-throw pressure", "FG3_PCT": "three-point accuracy",
-    "FG_PCT": "finishing efficiency", "FT_PCT": "free-throw shooting",
+    "PTS": "scoring volume",
+    "AST": "playmaking",
+    "OREB": "offensive rebounding",
+    "DREB": "defensive rebounding",
+    "STL": "steals",
+    "BLK": "rim protection",
+    "TOV": "turnovers",
+    "FG3A": "three-point volume",
+    "FGA": "shot volume",
+    "FTA": "free-throw pressure",
+    "FG3_PCT": "three-point accuracy",
+    "FG_PCT": "finishing efficiency",
+    "FT_PCT": "free-throw shooting",
     "PLUS_MINUS": "on-court impact",
 }
 
@@ -278,7 +323,11 @@ def interpret_shift(pair: dict) -> str:
         gist = "Spacing/shooting frame moved."
     elif m0["feature"] == "PLUS_MINUS" or m1["feature"] == "PLUS_MINUS":
         gist = "Impact harder to compare YoY."
-    elif m0["feature"] in ("OREB", "DREB", "BLK") or m1["feature"] in ("OREB", "DREB", "BLK"):
+    elif m0["feature"] in ("OREB", "DREB", "BLK") or m1["feature"] in (
+        "OREB",
+        "DREB",
+        "BLK",
+    ):
         gist = "Interior role frame moved."
     else:
         gist = "Stat comparison frame shifted."
@@ -298,7 +347,7 @@ def main() -> None:
     pairs = []
     chained = np.eye(len(features))
     chain_out = {seasons[0]: np.eye(len(features)).tolist()}
-    for s1, s2 in zip(seasons, seasons[1:]):
+    for s1, s2 in itertools.pairwise(seasons):
         shared = sorted(set(by_season[s1]) & set(by_season[s2]))
         if len(shared) < 30:
             continue
@@ -308,7 +357,9 @@ def main() -> None:
         deg = rotation_degrees(Q)
         axis_drifts = all_axis_drifts(Q, features)
         pair = {
-            "from": s1, "to": s2, "sharedPlayers": len(shared),
+            "from": s1,
+            "to": s2,
+            "sharedPlayers": len(shared),
             "rotationDeg": round(deg, 2),
             "residual": round(resid, 4),
             "mostRotated": axis_drifts[:2],
@@ -321,26 +372,36 @@ def main() -> None:
         chain_out[s2] = np.round(chained, 5).tolist()
 
     top = sorted(pairs, key=lambda p: -p["rotationDeg"])[:5]
-    (ASSETS / "drift.json").write_text(json.dumps({
-        "method": ("orthogonal Procrustes on consecutive-season shared "
-                   "players (>=30); rotation = mean principal angle of Q "
-                   "vs identity; residual = normalized Frobenius after "
-                   "alignment; no scaling (z-spaces pre-normalized); "
-                   "chained transforms map any season into the 1996-97 "
-                   "root frame; axisDrift = 1-|Q_ii|; statInsights compare "
-                   "league per-100 rates in the arrival season vs mean of "
-                   "all prior charted seasons (minutes-weighted from cache)"),
-        "pairs": pairs,
-        "biggestShifts": top,
-        "chainedToRoot": chain_out,
-        "leagueRates": league_rates,
-    }, separators=(",", ":")), encoding="utf-8")
+    (ASSETS / "drift.json").write_text(
+        json.dumps(
+            {
+                "method": (
+                    "orthogonal Procrustes on consecutive-season shared "
+                    "players (>=30); rotation = mean principal angle of Q "
+                    "vs identity; residual = normalized Frobenius after "
+                    "alignment; no scaling (z-spaces pre-normalized); "
+                    "chained transforms map any season into the 1996-97 "
+                    "root frame; axisDrift = 1-|Q_ii|; statInsights compare "
+                    "league per-100 rates in the arrival season vs mean of "
+                    "all prior charted seasons (minutes-weighted from cache)"
+                ),
+                "pairs": pairs,
+                "biggestShifts": top,
+                "chainedToRoot": chain_out,
+                "leagueRates": league_rates,
+            },
+            separators=(",", ":"),
+        ),
+        encoding="utf-8",
+    )
     print(f"{len(pairs)} season-pairs aligned")
     print("biggest geometric shifts:")
     for p in top:
         feats = ", ".join(f"{m['feature']}({m['axisDrift']})" for m in p["mostRotated"])
-        print(f"  {p['from']}->{p['to']}: {p['rotationDeg']}° "
-              f"resid={p['residual']} shared={p['sharedPlayers']} [{feats}]")
+        print(
+            f"  {p['from']}->{p['to']}: {p['rotationDeg']}° "
+            f"resid={p['residual']} shared={p['sharedPlayers']} [{feats}]"
+        )
 
 
 if __name__ == "__main__":

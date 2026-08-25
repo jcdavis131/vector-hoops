@@ -1,0 +1,55 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Offline — Vector Hoops</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20100%20100%22%3E%3Ctext%20y%3D%22.9em%22%20font-size%3D%2290%22%3E%26%23127936%3B%3C%2Ftext%3E%3C%2Fsvg%3E"><meta name="theme-color" content="#1A150F"><meta name="description" content="Offline — Past→Modern still works cached."><link rel="manifest" href="/manifest.json"><link href="https://fonts.googleapis.com/css2?family=Architects+Daughter&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/shell.css"/>
+<link rel="stylesheet" href="assets/responsive.css"/>
+<link rel="stylesheet" href="assets/final-qa.css"/>
+<link rel="stylesheet" href="assets/unified.css"/>
+<link rel="stylesheet" href="assets/motion.css"/>
+<style>
+:root{--paper:#FFFEF7;--ink:#1A150F;--yellow:#F0E442;--blue:#0072B2;--verm:#D55E00;--green:#009E73;--radius:14px;--shadow:4px 4px 0 var(--ink);--mono:ui-monospace,monospace;--hd:"Architects Daughter",monospace;}
+*{box-sizing:border-box}html,body{margin:0;background:var(--paper);color:var(--ink);font:18px/1.65 ui-sans-serif,system-ui;min-height:100vh;display:flex;flex-direction:column}
+.nav{position:sticky;top:0;padding:12px 14px;border-bottom:2px solid var(--ink);background:var(--paper);display:flex;justify-content:space-between;align-items:center}
+.page{max-width:980px;margin:0 auto;padding:16px;display:flex;flex-direction:column;gap:12px;width:100%}
+.card{background:#fff;border:2.2px solid var(--ink);border-radius:14px;box-shadow:var(--shadow);padding:14px 16px}
+.btn{appearance:none;border:2px solid var(--ink);border-radius:10px;padding:8px 12px;background:#fff;font-family:var(--mono);font-weight:800;text-transform:uppercase;box-shadow:2px 2px 0 var(--ink);cursor:pointer;text-decoration:none;color:var(--ink);display:inline-flex;align-items:center}
+.btn--primary{background:var(--ink);color:#fff}.btn--accent{background:var(--yellow)}
+.mono{font-family:var(--mono);font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase}
+.chip{border:1.5px solid var(--ink);border-radius:999px;padding:4px 8px;font-size:11px;font-family:var(--mono);background:#fff}
+.hd{font-family:var(--hd);line-height:.98}
+.badge{background:var(--yellow);border:2px solid var(--ink);border-radius:999px;padding:4px 10px;font-family:var(--mono);font-size:11px;font-weight:800}
+</style><meta property="og:type" content="website">
+<meta property="og:url" content="https://hoops.dumbmodel.com/offline">
+<meta property="og:title" content="Offline — Vector Hoops">
+<meta property="og:description" content="Offline — Past→Modern still works cached.">
+<meta property="og:image" content="/assets/og-embed.png">
+</head><body>
+<noscript><div role="alert" style="padding:16px;text-align:center">Enable JS — Vector Hoops needs JavaScript for Daily Court + Map</div></noscript>
+
+<nav class="site-nav" data-active="/offline" aria-label="Vector Hoops site"></nav>
+<nav class="nav"><a class="brand" href="/" style="font-weight:900;text-decoration:none;color:var(--ink)">VECTOR HOOPS · 12,966</a><span class="mono">OFFLINE</span></nav>
+<main class="page">
+<div><span class="badge">OFFLINE CACHED</span></div>
+<div class="card"><h1 class="hd" style="font-size:clamp(26px,6vw,38px);line-height:.95">You're offline — Past→Modern still works</h1>
+<p style="color:#333;font-size:14px;line-height:1.5;margin:8px 0 0">12,966 seasons cached locally. Play the daily puzzle, browse players, and trends — all cached. Your streak and guesses are saved locally.</p>
+</div>
+<div class="card" id="last-card"><div class="mono">Last cached puzzle</div><h2 class="hd" style="font-size:18px;margin:6px 0 4px" id="last-title">Checking cache…</h2><div id="last-body" style="font-size:13px;color:#333">Reading saved game…</div><div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px"><span class="chip" id="streak-chip">streak —</span><span class="chip" id="guesses-chip">guesses —</span></div><div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px"><a class="btn btn--primary" href="/play">Play →</a><a class="btn btn--accent" href="/players">Players →</a></div></div>
+<div class="card" style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:space-between"><div><div class="mono">Connection</div><div style="font-size:13px"><span id="online-status">Checking…</span></div></div><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn btn--primary" onclick="location.reload()">Retry</button><a class="btn" href="/">Home</a></div></div>
+</main>
+<script>
+(function(){
+  function check(){ var el=document.getElementById('online-status'); if(!el) return; el.textContent = navigator.onLine ? 'Online — reload' : 'Offline — cached version'; }
+  window.addEventListener('online',check); window.addEventListener('offline',check); check();
+  try{
+    var streak = JSON.parse(localStorage.getItem('vh.streak')||'{}').streak||0;
+    document.getElementById('streak-chip').textContent='streak '+streak;
+    var raw = localStorage.getItem('vh.pastmodern.v10') || localStorage.getItem('vh.pastmodern.v1');
+    if(raw){ var o=JSON.parse(raw); var g=o.guesses||[]; document.getElementById('guesses-chip').textContent=g.length+' guesses'; document.getElementById('last-title').textContent='Cached puzzle '+ (o.day||''); document.getElementById('last-body').textContent=g.map(function(x){return x.name}).join(', ')||'No guesses yet'; }
+  }catch(e){}
+})();
+</script>
+<footer class="site-footer"><div class="site-footer__links"><a href="/play">Play</a><a href="/model">Lab</a><a href="/methods">Methods</a><a href="/players">Players</a><a href="https://github.com/jcdavis131/vector-hoops" target="_blank" rel="noopener">GitHub</a></div><div class="site-footer__attribution">Every number recomputable from stats.nba.com · dumbmodel.com</div></footer>
+<script src="assets/error-boundary.js"></script>
+<script src="assets/keyboard-a11y.js"></script>
+<script src="assets/pwa-install.js"></script>
+<script>if('serviceWorker' in navigator){window.addEventListener('load',()=>{navigator.serviceWorker.register('/sw.js').catch(()=>{})})}</script>
+</body></html>
