@@ -549,7 +549,9 @@ class MTNN(nn.Module):
         if self.training and self.token_dropout > 0:
             # Bernoulli keep ~ 1-p, ensure at least one token kept per sample
             B, T, D = parts.shape
-            keep = (torch.rand(B, T, 1, device=parts.device) > self.token_dropout).float()
+            keep = (
+                torch.rand(B, T, 1, device=parts.device) > self.token_dropout
+            ).float()
             # ensure at least one tower per row
             all_zero = keep.sum(dim=1, keepdim=True) == 0
             if all_zero.any():
@@ -727,7 +729,7 @@ def vicreg_loss(
     cov = (z_center.T @ z_center) / (B - 1 + eps)
     # off-diag mask
     off_diag = cov - torch.diag(torch.diag(cov))
-    cov_loss = (off_diag ** 2).sum() / max(D, 1)
+    cov_loss = (off_diag**2).sum() / max(D, 1)
     return lambda_var * var_loss + lambda_cov * cov_loss
 
 
@@ -1591,7 +1593,9 @@ def main() -> None:
     # measure). Computed unconditionally (cheap) but only used if the flag > 0.
     if injury_active:
         row_reliability = torch.where(
-            injury_row_m.bool(), torch.sigmoid(injury_z[:, 0]), torch.ones_like(injury_z[:, 0])
+            injury_row_m.bool(),
+            torch.sigmoid(injury_z[:, 0]),
+            torch.ones_like(injury_z[:, 0]),
         )
     else:
         row_reliability = None
@@ -2274,7 +2278,9 @@ def main() -> None:
                 zb, _ = model(xb, mb, seas_t[partner_t])
                 pair_w = None
                 if args.reliability_weight > 0 and row_reliability is not None:
-                    rel = torch.minimum(row_reliability[idx_t], row_reliability[partner_t])
+                    rel = torch.minimum(
+                        row_reliability[idx_t], row_reliability[partner_t]
+                    )
                     pair_w = 1.0 - args.reliability_weight * (1.0 - rel)
                 loss = contrastive_loss(
                     za,

@@ -48,7 +48,9 @@ def load(p: Path):
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--arm", default="long")
-    ap.add_argument("--seed-a", type=int, required=True, help="the seed under investigation")
+    ap.add_argument(
+        "--seed-a", type=int, required=True, help="the seed under investigation"
+    )
     ap.add_argument("--seed-b", type=int, required=True, help="reference/healthy seed")
     ap.add_argument("--y0", type=int, required=True, help="transition start year")
     ap.add_argument("--y1", type=int, required=True, help="transition end year")
@@ -80,16 +82,33 @@ def main() -> None:
     cb = np.array([r[3] for r in rows])
 
     print(f"transition {args.y0}->{args.y1}: n_players={len(rows)}")
-    print(f"seed{args.seed_a} mean={ca.mean():.4f}  seed{args.seed_b} mean={cb.mean():.4f}")
+    print(
+        f"seed{args.seed_a} mean={ca.mean():.4f}  seed{args.seed_b} mean={cb.mean():.4f}"
+    )
     print(f"\nWorst {args.top} — seed{args.seed_a} much worse than seed{args.seed_b}:")
     for pid, name, c_a, c_b, gap in rows[: args.top]:
-        print(f"  {name:28s} pid={pid:7d}  seed{args.seed_a}={c_a:.3f}  seed{args.seed_b}={c_b:.3f}  gap={gap:.3f}")
+        print(
+            f"  {name:28s} pid={pid:7d}  seed{args.seed_a}={c_a:.3f}  seed{args.seed_b}={c_b:.3f}  gap={gap:.3f}"
+        )
     print("\nBest 10 (least affected, for contrast):")
     for pid, name, c_a, c_b, gap in rows[-10:]:
-        print(f"  {name:28s} pid={pid:7d}  seed{args.seed_a}={c_a:.3f}  seed{args.seed_b}={c_b:.3f}  gap={gap:.3f}")
-    print(f"\nseed{args.seed_a} percentiles p1/p5/p25/p50:", np.percentile(ca, [1, 5, 25, 50]).round(3))
-    print(f"seed{args.seed_b} percentiles p1/p5/p25/p50:", np.percentile(cb, [1, 5, 25, 50]).round(3))
-    print(f"count cos<0.3 -> seed{args.seed_a}:", int((ca < 0.3).sum()), f" seed{args.seed_b}:", int((cb < 0.3).sum()))
+        print(
+            f"  {name:28s} pid={pid:7d}  seed{args.seed_a}={c_a:.3f}  seed{args.seed_b}={c_b:.3f}  gap={gap:.3f}"
+        )
+    print(
+        f"\nseed{args.seed_a} percentiles p1/p5/p25/p50:",
+        np.percentile(ca, [1, 5, 25, 50]).round(3),
+    )
+    print(
+        f"seed{args.seed_b} percentiles p1/p5/p25/p50:",
+        np.percentile(cb, [1, 5, 25, 50]).round(3),
+    )
+    print(
+        f"count cos<0.3 -> seed{args.seed_a}:",
+        int((ca < 0.3).sum()),
+        f" seed{args.seed_b}:",
+        int((cb < 0.3).sum()),
+    )
 
 
 if __name__ == "__main__":

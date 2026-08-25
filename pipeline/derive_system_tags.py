@@ -211,7 +211,10 @@ def main() -> None:
         )
         print(
             f"  cluster {c}: {cluster_label[c]:20s} n={int((cluster_ids == c).sum()):3d}  "
-            + " ".join(f"{f}={v:+.2f}" for f, v in zip(FEATURE_ORDER, centroids[c], strict=True))
+            + " ".join(
+                f"{f}={v:+.2f}"
+                for f, v in zip(FEATURE_ORDER, centroids[c], strict=True)
+            )
         )
 
     for i, (r, cid) in enumerate(zip(rows, cluster_ids, strict=True)):

@@ -503,7 +503,8 @@ def load_wide_skills_defense(season: str) -> dict[str, dict]:
             "HUSTLE_BOX_OUTS": v.get("box_outs"),
             "HUSTLE_SCREEN_AST": v.get("screen_ast"),
             "HUSTLE_CONTESTED_SHOTS": v.get("contested_shots"),
-            "HUSTLE_D_FG_PCT": v.get("d_fg_pct") or None,  # 0.0 means "no data" in the source, not a real 0%
+            "HUSTLE_D_FG_PCT": v.get("d_fg_pct")
+            or None,  # 0.0 means "no data" in the source, not a real 0%
         }
     return out
 

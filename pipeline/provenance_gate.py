@@ -107,7 +107,9 @@ def check(dims, rows, size, prose_hits):
     # 1. Every structured source must assert the SAME dimension.
     distinct = {d for d, _ in dims.values()}
     if len(distinct) > 1:
-        detail = ", ".join(f"{lab}={d} ({rel})" for lab, (d, rel) in sorted(dims.items()))
+        detail = ", ".join(
+            f"{lab}={d} ({rel})" for lab, (d, rel) in sorted(dims.items())
+        )
         problems.append(f"sources disagree on embedding dim: {detail}")
     agreed = None
     if dims:
@@ -202,7 +204,9 @@ def main() -> int:
     if problems:
         for p in problems:
             print(f"FAIL  {p}")
-        print("\nGATE FAILED — a published surface describes a model that is not shipped")
+        print(
+            "\nGATE FAILED — a published surface describes a model that is not shipped"
+        )
         return 1
     print("GATE PASSED — every surface agrees with the shipped artifact")
     return 0

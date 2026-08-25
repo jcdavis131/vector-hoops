@@ -26,14 +26,18 @@ Usage:
   python pipeline/train_mtnn_v6.py --help
     -> shows train_mtnn.py help
 """
+
 from __future__ import annotations
-import sys
+
 import subprocess
+import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 
 # v6 SOTA defaults from docs/MTNN_V6_SOTA.md §4 (translated to train_mtnn.py flags)
+# flag/value pairs are deliberately kept two-per-line for readability
+# fmt: off
 V6_DEFAULTS = [
     "--dim", "64",
     "--tower-width", "40",
@@ -64,6 +68,8 @@ V6_DEFAULTS = [
     "--batch", "512",
     "--epochs", "150",
 ]
+# fmt: on
+
 
 def main() -> None:
     argv = sys.argv[1:]
@@ -71,7 +77,9 @@ def main() -> None:
     if any(a in ("-h", "--help") for a in argv):
         print(__doc__)
         print("\nForwarding --help to train_mtnn.py:\n")
-        ret = subprocess.run([sys.executable, str(ROOT / "pipeline" / "train_mtnn.py"), "--help"])
+        ret = subprocess.run(
+            [sys.executable, str(ROOT / "pipeline" / "train_mtnn.py"), "--help"]
+        )
         sys.exit(ret.returncode)
 
     # Ensure era-align + robust-scaling present (v6 is era-honest + RealMLP)
@@ -96,22 +104,33 @@ def main() -> None:
         if flag.startswith("--"):
             if flag not in user_flags:
                 # flag takes value unless it's store_true (robust-scaling)
-                if i + 1 < len(V6_DEFAULTS) and not V6_DEFAULTS[i+1].startswith("--"):
-                    forward += [flag, V6_DEFAULTS[i+1]]
+                if i + 1 < len(V6_DEFAULTS) and not V6_DEFAULTS[i + 1].startswith("--"):
+                    forward += [flag, V6_DEFAULTS[i + 1]]
                     i += 2
                 else:
                     forward += [flag]
                     i += 1
             else:
-                i += 2 if i + 1 < len(V6_DEFAULTS) and not V6_DEFAULTS[i+1].startswith("--") else 1
+                i += (
+                    2
+                    if i + 1 < len(V6_DEFAULTS)
+                    and not V6_DEFAULTS[i + 1].startswith("--")
+                    else 1
+                )
         else:
             i += 1
 
     # User args win: they go after defaults (argparse last wins for most, but we ensure we didn't duplicate)
-    cmd = [sys.executable, str(ROOT / "pipeline" / "train_mtnn.py")] + forward + argv + extras
+    cmd = (
+        [sys.executable, str(ROOT / "pipeline" / "train_mtnn.py")]
+        + forward
+        + argv
+        + extras
+    )
     print(f"v6 shim → {' '.join(cmd)}")
     ret = subprocess.run(cmd)
     sys.exit(ret.returncode)
+
 
 if __name__ == "__main__":
     main()

@@ -309,8 +309,7 @@ def load_system_tags_index() -> dict[tuple[str, int], str]:
         return {}
     data = json.loads(SYSTEM_TAGS_JSON.read_text(encoding="utf-8"))
     return {
-        (r["season"], int(r["team_id"])): r["tag"]
-        for r in data.get("team_seasons", [])
+        (r["season"], int(r["team_id"])): r["tag"] for r in data.get("team_seasons", [])
     }
 
 
@@ -485,7 +484,9 @@ def build_row_values(
             team_index.get((str(season), int(r["teamId"]))) if r.get("teamId") else {}
         )
         system_tag = (
-            system_index.get((str(season), int(r["teamId"]))) if r.get("teamId") else None
+            system_index.get((str(season), int(r["teamId"])))
+            if r.get("teamId")
+            else None
         )
         system_vals = (
             {t: (1.0 if t == system_tag else 0.0) for t in SYSTEM_TAGS}
