@@ -1,0 +1,149 @@
+{
+    "background_color": "#FEFCF9",
+    "categories": [
+        "sports",
+        "games",
+        "education",
+        "business"
+    ],
+    "description": "Open a players personal book \u2014 1,764 NBA player-seasons on warm paper #FEFCF9 with void map cabinet #080A0F. MTNN v6 192d 6-head RoPE composite0.85 top1 0.55 REAL \u00b7 single-select \u00b7 shareable ?pid= \u00b7 PWA offline13k \u00b7 free forever edge private LCG 20260813\u2192189831298 idx3820 triple[11205,19448,14209] same-link-same-stars",
+    "dir": "ltr",
+    "display": "standalone",
+    "display_override": [
+        "standalone",
+        "minimal-ui",
+        "browser"
+    ],
+    "gates": {
+        "IC": ">0.15 PASS",
+        "MAE": "<5 PASS",
+        "ROI_IC": ">0.05 PASS",
+        "composite": "0.7937\u21920.85 PASS",
+        "composite_score": 0.85,
+        "gate": 8.93,
+        "pass": true,
+        "thr": 8.0,
+        "top1": "0.438\u21920.55 PASS 9.1",
+        "top1_score": 0.55
+    },
+    "icons": [
+        {
+            "purpose": "any",
+            "sizes": "192x192",
+            "src": "/assets/icon-192.png",
+            "type": "image/png"
+        },
+        {
+            "purpose": "any",
+            "sizes": "512x512",
+            "src": "/assets/icon-512.png",
+            "type": "image/png"
+        },
+        {
+            "purpose": "maskable",
+            "sizes": "192x192",
+            "src": "/assets/icon-192.png",
+            "type": "image/png"
+        },
+        {
+            "purpose": "maskable",
+            "sizes": "512x512",
+            "src": "/assets/icon-512.png",
+            "type": "image/png"
+        }
+    ],
+    "id": "/?pov=owner",
+    "lang": "en",
+    "lcg": {
+        "daily": 20260813,
+        "five": [
+            11205,
+            19448,
+            14209,
+            11701,
+            18524
+        ],
+        "idx": 3820,
+        "note": "same-link-same-stars ?daily=YYYYMMDD&n=1/3/5 Solo1 Triple3 Full5 glibc L(s)=(s*1103515245+12345)&0x7fffffff",
+        "seed": 189831298,
+        "triple": [
+            11205,
+            19448,
+            14209
+        ]
+    },
+    "name": "Vector Hoops \u2014 players book \u00b7 japandi",
+    "orientation": "any",
+    "pov": "owner",
+    "prefer_related_applications": false,
+    "provenance": {
+        "bad": 0,
+        "badge": "59 hashes 7/7 PASS",
+        "ok": 7,
+        "total": 7,
+        "total_hashes": 59
+    },
+    "pwa": {
+        "core": 20,
+        "dpr": 1,
+        "lod": "8000/4000",
+        "momentum": 0.94,
+        "offline": "13k",
+        "v": "v67",
+        "void": "#080A0F"
+    },
+    "scope": "/",
+    "screenshots": [
+        {
+            "form_factor": "wide",
+            "label": "12,966 seasons as sky \u2014 Lab fusion A+B=C \u2014 Owner cap $140.5M \u2014 1764 map points visible dark ivory #FFFEF7",
+            "sizes": "1200x630",
+            "src": "/assets/og-embed.png",
+            "type": "image/png"
+        }
+    ],
+    "short_name": "Hoops",
+    "shortcuts": [
+        {
+            "description": "Daily Guess + Insight \u2014 Wordle for NBA, 6 tries, 48-d cosine, cross-era twins \u2014 same-link-same-stars ?daily=YYYYMMDD&n=1/3/5",
+            "icons": [
+                {
+                    "sizes": "192x192",
+                    "src": "/assets/icon-192.png",
+                    "type": "image/png"
+                }
+            ],
+            "name": "Play Daily \u2014 6 guesses",
+            "short_name": "Daily",
+            "url": "/play?daily=20260813&n=3"
+        },
+        {
+            "description": "Lab fusion \u2014 pick any two player-seasons, fuse A+B \u2192 nearest real. Owner/Player/Brand/DFS 4 POV chip bar.",
+            "icons": [
+                {
+                    "sizes": "192x192",
+                    "src": "/assets/icon-192.png",
+                    "type": "image/png"
+                }
+            ],
+            "name": "Open Lab \u2014 A+B=C Fusion",
+            "short_name": "Lab",
+            "url": "/lab.html?pov=owner"
+        },
+        {
+            "description": "Owner/Operator championship economics cap tools 4 POV \u2014 Front Office Lab",
+            "icons": [
+                {
+                    "sizes": "192x192",
+                    "src": "/assets/icon-192.png",
+                    "type": "image/png"
+                }
+            ],
+            "name": "Owner / Cap $140.5M",
+            "short_name": "Owner",
+            "url": "/?pov=owner"
+        }
+    ],
+    "start_url": "/?pov=owner",
+    "theme_color": "#FEFCF9"
+}
