@@ -1,0 +1,501 @@
+/* Vector Hoops — assets/responsive.css v2
+ * Mobile-first fluid layout. Loads after hoops.css + shell.css.
+
+ * Uses --page-gutter / --layout-max / --layout-wide from hoops.css :root. */
+
+html,body{
+  overflow-x:hidden;
+  max-width:100%;
+}
+*,*::before,*::after{box-sizing:border-box;}
+html{ -webkit-text-size-adjust:100%; }
+img{ max-width:100%; height:auto; }
+svg,canvas{ max-width:100%; }
+
+/* ---------- global shells ---------- */
+.site-nav,
+.site-footer,
+.vh-challenge-banner,
+.landing-main,
+.play-main{
+  width:100%;
+  box-sizing:border-box;
+  min-width:0;
+}
+.landing-main,
+.play-main{
+  overflow-x:clip;
+}
+
+/* Touch + anti-zoom */
+button,
+.vh-input,
+input,
+select,
+textarea{
+  font-size:16px; /* prevent iOS zoom */
+}
+.vh-input,
+.vh-btn,
+.city-pill,
+.site-nav__link,
+.vh-subtab,
+.vh-pool-toggle .vh-subtab{
+  min-height:44px;
+}
+#mode-tabs button{
+  min-height:56px;
+}
+
+/* ---------- site nav ---------- */
+.site-nav{ padding-inline: var(--page-gutter); }
+.site-footer{ padding-inline: var(--page-gutter); }
+
+@media (max-width: 639px){
+  .site-nav{
+    flex-wrap: nowrap;
+    gap: 8px;
+    overflow-x:hidden;
+  }
+  .site-nav__brand{
+    flex: 0 0 auto;
+    max-width: 38%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space:nowrap;
+  }
+  .site-nav__links{
+    flex: 1 1 auto;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    min-width: 0;
+    -webkit-mask-image: linear-gradient(to right, transparent, black 8px, black calc(100% - 8px), transparent);
+    mask-image: linear-gradient(to right, transparent, black 8px, black calc(100% - 8px), transparent);
+  }
+  .site-nav__links::-webkit-scrollbar{ display: none; }
+  .site-nav__link{
+    flex: 0 0 auto;
+    white-space: nowrap;
+  }
+}
+
+/* ---------- page shells ---------- */
+.wiki-main,
+.skills-main,
+.methods-main,
+.leaderboard-main,
+.drift-main,
+.landing-main{
+  width: min(100%, var(--layout-wide));
+  max-width: var(--layout-wide);
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+.wiki-main,
+.skills-main,
+.methods-main,
+.leaderboard-main,
+.drift-main{
+  padding: clamp(16px, 3vw, 24px) var(--page-gutter) clamp(40px, 6vw, 56px);
+  margin-inline: auto;
+}
+
+.wiki-head h1,
+.methods-main h1,
+.lb-head h1,
+.drift-head h1,
+.skills-head h1{
+  font-size: var(--heading-page);
+  overflow-wrap:break-word;
+}
+
+.landing-section,
+.landing-hero{
+  padding-inline: var(--page-gutter);
+  width: min(100%, var(--layout-wide));
+  max-width: var(--layout-wide);
+  margin-inline: auto;
+  box-sizing: border-box;
+  min-width:0;
+}
+
+/* ---------- landing — mobile-first grids ---------- */
+.landing-hero{
+  min-width:0;
+}
+.landing-hero__copy,
+.landing-hero__visual{
+  min-width:0;
+  width:100%;
+}
+
+.mode-grid{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:14px;
+  width:100%;
+  min-width:0;
+}
+@media(min-width:480px){
+  .mode-grid{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+  }
+}
+@media(min-width:1024px){
+  .mode-grid{
+    grid-template-columns:repeat(4,minmax(0,1fr));
+  }
+}
+.mode-card{
+  min-width:0;
+  width:100%;
+  box-sizing:border-box;
+}
+
+@media (max-width: 479px){
+  .landing-equation{
+    flex-wrap: wrap;
+    justify-content: center;
+    row-gap: 8px;
+    padding:14px 10px !important;
+    min-height:auto !important;
+  }
+  .credibility-strip{
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 14px 16px;
+  }
+  .credibility-strip p{
+    font-size:13px;
+    line-height:1.4;
+  }
+  .landing-favorite__select{
+    min-width: 0;
+    width: 100%;
+  }
+  .how-steps{
+    grid-template-columns:1fr !important;
+  }
+}
+
+.landing-cta,
+.landing-cta-secondary{
+  width: 100%;
+  max-width: 320px;
+  text-align: center;
+  box-sizing: border-box;
+}
+@media (min-width: 480px){
+  .landing-cta,
+  .landing-cta-secondary{
+    width: auto;
+    max-width: none;
+  }
+}
+
+/* arena tour removed v25 — no city-intro styles */
+
+/* ---------- play header — no overflow ---------- */
+.vh-header,
+.vh-header--upgraded{
+  min-width:0;
+  max-width:100%;
+  box-sizing:border-box;
+  overflow-x:clip;
+}
+@media (max-width: 719px){
+  .vh-header{
+    row-gap: 8px;
+  }
+  .vh-header__brand{
+    flex: 1 1 100%;
+    min-width: 0;
+    overflow:hidden;
+  }
+  .vh-header--upgraded__toprow,
+  .vh-header__toprow{
+    flex-wrap:wrap;
+    min-width:0;
+    gap:8px;
+  }
+  .vh-header__metarow{
+    flex-wrap:wrap;
+    gap:6px 10px;
+    min-width:0;
+  }
+  .vh-pool-toggle{
+    flex: 1 1 100%;
+    width: 100%;
+    max-width:100%;
+  }
+  .vh-pool-toggle .vh-subtab{
+    flex: 1 1 50%;
+    text-align: center;
+    min-width:0;
+  }
+  .vh-stats{
+    margin-left: auto;
+    flex: 0 1 auto;
+    min-width:0;
+  }
+  .vh-identity-chip,
+  .vh-favorite-chip{
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    min-width:0;
+  }
+  /* tooltip ::after can overflow viewport on mobile — hide on tiny */
+  .vh-pool-toggle[data-tip]::after{
+    display:none !important;
+  }
+}
+
+@media (min-width: 720px){
+  .vh-tagline{
+    max-width: clamp(200px, 28vw, 320px);
+  }
+}
+
+/* mode tabs — inline scrollable, no fixed bottom (clutter fix v58) */
+#mode-tabs{
+  width:100%;
+  max-width:100%;
+  box-sizing:border-box;
+  min-width:0;
+}
+@media (max-width:719px){
+  #mode-tabs{
+    position:static;
+    overflow-x:auto;
+    -webkit-overflow-scrolling:touch;
+    scrollbar-width:none;
+    padding-bottom:4px;
+  }
+  #mode-tabs::-webkit-scrollbar{display:none;}
+  #mode-tabs button{
+    min-width:72px;
+    flex:0 0 auto;
+  }
+}
+
+/* ---------- clue charts (scoped — not global svg) ---------- */
+.vh-clue-zone__bars svg,
+.vh-breakdown svg,
+.vh-court,
+.vh-map,
+.vh-arc-linechart svg,
+.vh-arc-card__minibars svg{
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+  display: block;
+}
+.vh-clue-zone__bars svg{
+  max-height: clamp(140px, 38vw, 220px);
+}
+
+/* ---------- result card (narrow phones) ---------- */
+@media (max-width: 479px){
+  .vh-result__top{
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .vh-map-thumb-btn{
+    width: min(100%, 160px);
+    height: auto;
+    aspect-ratio: 1;
+    align-self: center;
+  }
+  .vh-warmth{
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+    padding: 10px 12px;
+  }
+  .vh-warmth__closest{
+    white-space: normal;
+    text-align: center;
+    overflow-wrap:break-word;
+  }
+  .vh-card,
+  .vh-clue-zone,
+  .vh-result{
+    min-width:0;
+    width:100%;
+    box-sizing:border-box;
+  }
+}
+
+/* ---------- modals ---------- */
+.vh-modal--dossier,
+.vh-modal--stats{
+  max-width: min(560px, calc(100vw - 2 * var(--page-gutter)));
+  box-sizing:border-box;
+  margin-inline:auto;
+}
+
+/* ---------- skills lens ---------- */
+@media (max-width: 360px){
+  .skillbar{
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-rows: auto auto;
+  }
+  .skillbar__label{
+    grid-column: 1 / -1;
+    white-space: normal;
+  }
+  .skillbar__track{ grid-column: 1; }
+  .skillbar__grade{ grid-column: 2; grid-row: 2; }
+}
+
+.skills-panel,
+.wiki-controls,
+.lb-controls,
+.drift-card{
+  padding: clamp(12px, 2.5vw, 16px);
+  min-width:0;
+  box-sizing:border-box;
+}
+
+/* ---------- wiki / leaderboard ---------- */
+@media (max-width: 479px){
+  .wiki-row{
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+  .wiki-row__meta{ white-space: normal; }
+  .lb-date-row{
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .lb-date-row .vh-link-btn{ align-self: flex-start; }
+}
+
+.lb-table-wrap,
+.drift-table-wrap,
+.methods-section{
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  max-width:100%;
+}
+
+/* ---------- inputs — always 16px + 44px ---------- */
+.vh-input,
+.vh-select,
+input[type="text"],
+input[type="search"]{
+  font-size:16px !important;
+  min-height:44px;
+  max-width:100%;
+  box-sizing:border-box;
+}
+
+/* ---------- footer safe-area ---------- */
+.site-footer{
+  padding-bottom:calc(24px + env(safe-area-inset-bottom));
+  min-width:0;
+  overflow-wrap:break-word;
+}
+
+/* ---------- sticky cta — landing ---------- */
+.sticky-cta{
+  width:100%;
+  max-width:100%;
+  box-sizing:border-box;
+}
+@media(max-width:720px){
+  .sticky-cta{
+    padding-bottom:calc(10px + env(safe-area-inset-bottom));
+  }
+}
+
+/* ---------- wide desktop ---------- */
+@media (min-width: 1280px){
+  :root{ --layout-max: 800px; }
+}
+
+@media (min-width: 1000px){
+  #panel-chimera{
+    grid-template-columns: minmax(0, 1fr) minmax(280px, min(380px, 34vw));
+    gap: clamp(14px, 2vw, 22px);
+  }
+}
+
+@media (min-width: 1440px){
+  :root{ --layout-wide: 1200px; }
+}
+
+/* reduced motion */
+@media (prefers-reduced-motion: reduce){
+  .site-nav__links{ -webkit-mask-image:none !important; mask-image:none !important; }
+}
+
+/* ---------- final QA additions ---------- */
+html,body{ overflow-x:clip; max-width:100vw; }
+input, .input, .vh-input, textarea, select{ font-size:16px !important; } /* iOS anti-zoom */
+.bottom-tabs{ z-index:60 !important; }
+.sheet{ z-index:60 !important; }
+.sheet-backdrop{ z-index:59 !important; }
+.sheet__handle{ height:56px; min-height:56px; touch-action:none; }
+.site-footer{ padding-bottom:calc(24px + env(safe-area-inset-bottom)); }
+@media(max-width:719px){
+  .main{ padding-bottom:calc(80px + env(safe-area-inset-bottom)) !important; }
+}
+
+/* ---------- vector-hoops home cards — stack on mobile for readability ---------- */
+@media (max-width: 820px){
+  #viral-row{
+    grid-template-columns:1fr !important;
+    gap:16px !important;
+  }
+  #viral-row .card,
+  #random-rush-card,
+  #streak-card{
+    width:100%;
+    min-width:0;
+  }
+  #random-rush-card > div,
+  #streak-card > div{
+    min-width:0;
+  }
+}
+@media (max-width: 760px){
+  .tri{
+    grid-template-columns:1fr !important;
+    gap:14px !important;
+  }
+  .tri .card{
+    width:100%;
+    min-width:0;
+  }
+  .hero{
+    grid-template-columns:1fr !important;
+    gap:20px !important;
+  }
+  .hero-copy{
+    gap:12px;
+  }
+  #map-wrap{
+    min-height:420px !important;
+  }
+}
+@media (max-width: 560px){
+  .pack-grid{
+    grid-template-columns:1fr !important;
+    gap:12px !important;
+  }
+  .guess-row{
+    padding:12px 12px !important;
+  }
+  .guess-row > div{
+    flex-wrap:wrap !important;
+  }
+}
