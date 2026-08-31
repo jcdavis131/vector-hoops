@@ -1,0 +1,90 @@
+/* Map — 58/42 desktop, story before map on mobile, void remains */
+.hv6-map-grid {
+  display: grid;
+  grid-template-columns: 58fr 42fr;
+  gap: 28px;
+  align-items: start;
+  max-width: var(--content-max);
+  margin: 0 auto;
+  padding: 0 clamp(14px,3.5vw,28px) 0;
+}
+@media (max-width: 980px) {
+  .hv6-map-grid {
+    grid-template-columns: 1fr;
+    gap: 0;
+    padding: 0;
+  }
+  .hv6-story-col { padding: 0 clamp(14px,3.5vw,28px); }
+}
+.hv6-map-shell {
+  background: var(--void);
+  border: 1px solid #1A1F2E;
+  border-radius: var(--radius-panel);
+  min-height: 620px;
+  position: relative;
+  overflow: hidden;
+}
+@media (max-width: 980px) {
+  .hv6-map-shell {
+    border-radius: 0;
+    border-left: 0;
+    border-right: 0;
+    min-height: 78vh;
+    min-height: 78dvh;
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+  }
+}
+.hv6-map-shell #sky-canvas,
+.hv6-map-shell #map-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  cursor: grab;
+}
+.hv6-map-shell #sky-canvas:active { cursor: grabbing; }
+.hv6-map-overlay {
+  position: absolute;
+  left: 12px; right: 12px; top: 14px;
+  display: flex; justify-content: space-between; gap: 8px;
+  z-index: 5; pointer-events: none; flex-wrap: wrap;
+}
+.hv6-map-chip {
+  background: rgba(255,254,251,0.92);
+  border: 1px solid var(--hairline);
+  border-radius: 999px;
+  padding: 6px 11px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  box-shadow: var(--shadow-soft);
+  pointer-events: auto;
+}
+.hv6-map-legend {
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  z-index: 6;
+  background: rgba(255,254,251,0.97);
+  border: 1px solid var(--hairline);
+  border-radius: 12px;
+  padding: 9px 11px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  line-height: 1.4;
+  min-width: 182px;
+  max-width: 220px;
+  box-shadow: var(--shadow-soft);
+}
+.hv6-map-legend__title {
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-weight: 800;
+  opacity: 0.6;
+  margin-bottom: 6px;
+  display: flex;
+  justify-content: space-between;
+}

@@ -1,0 +1,30 @@
+.hv6-evidence {
+  border-top: 1px solid var(--hairline);
+  margin-top: 28px;
+  padding-top: 18px;
+}
+.hv6-evidence__title {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 800;
+  opacity: 0.7;
+  margin-bottom: 12px;
+}
+.hv6-evidence__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+@media (max-width: 760px) { .hv6-evidence__grid { grid-template-columns: 1fr; } }
+.hv6-evidence__card {
+  background: var(--paper-raised);
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-card);
+  padding: 12px;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--ink-muted);
+}
+.hv6-evidence__card b { color: var(--ink); }

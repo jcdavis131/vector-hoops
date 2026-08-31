@@ -1,0 +1,30 @@
+.hv6-peers {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-top: 18px;
+}
+@media (max-width: 860px) { .hv6-peers { grid-template-columns: 1fr; } }
+.hv6-peer-card {
+  background: var(--paper-raised);
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-card);
+  padding: 12px 14px;
+  box-shadow: var(--shadow-soft);
+  transition: transform 0.12s, box-shadow 0.12s;
+}
+.hv6-peer-card:hover { transform: translateY(-1px); box-shadow: var(--shadow-raised); }
+.hv6-peer-card__name { font-weight: 800; font-size: 14px; }
+.hv6-peer-card__rel {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  opacity: 0.6;
+  margin-top: 2px;
+}
+.hv6-peer-card__why {
+  margin-top: 8px;
+  font-size: 13px;
+  line-height: 1.45;
+  color: var(--ink-muted);
+}
+.hv6-peer-card__why b { color: var(--ink); }

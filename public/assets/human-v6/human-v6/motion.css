@@ -1,0 +1,12 @@
+@media (prefers-reduced-motion: no-preference) {
+  .hv6-fade-in { animation: hv6-fade 0.22s ease; }
+  .hv6-slide-up { animation: hv6-slide 0.28s ease; }
+  .hv6-breathe { animation: hv6-breathe 1.2s ease 1; }
+}
+@keyframes hv6-fade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes hv6-slide { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes hv6-breathe { 0%,100% { transform: scale(1); } 50% { transform: scale(1.03); } }
+.hv6-focus:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}

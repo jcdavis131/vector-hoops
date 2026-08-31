@@ -1,324 +1,263 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
-<title>Vector Hoops — 12,966 seasons as rotating map — Past→Modern</title>
-<meta property="og:title" content="Vector Hoops — 12,966 as rotating map · Past→Modern Twin"/>
-<meta property="og:description" content="12,966 NBA seasons as rotating embedding map — now in Lemmino documentary void. One game: Past All-Star → guess modern twin."/>
-<meta property="og:image" content="https://hoops.dumbmodel.com/assets/og-1200x630.png"/><meta property="og:image:width" content="1200"/><meta property="og:image:height" content="630"/>
-<meta name="twitter:card" content="summary_large_image"/><meta name="twitter:image" content="https://hoops.dumbmodel.com/assets/og-1200x630.png"/>
-<meta name="description" content="12,966 NBA seasons as rotating embedding map. Daily Past→Modern. Lemmino void style."/><meta name="theme-color" content="#0A0C10"/>
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
+<title>Vector Hoops — Who plays like this? — 12,966 seasons as human map</title>
+<meta property="og:title" content="Vector Hoops — 12,966 as human map · We design for humans"/>
+<meta property="og:description" content="One player-season among 12,966, three closest modern peers, full map context. Past→Modern twin game — designed for people busy living, who crave connection."/>
+<meta property="og:image" content="/assets/og-1200x630.png"/>
+<meta name="description" content="One player-season among 12,966 — three peers who play most like them, full map, honest signals. Built for humans, not metrics."/>
+<meta name="theme-color" content="#FFFEFB"/>
 <link rel="manifest" href="/manifest.json"/>
+
+<!-- Fonts — serif for display, human for blue emphasis -->
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Architects+Daughter&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/shell.css"/><link rel="stylesheet" href="assets/responsive.css"/><link rel="stylesheet" href="assets/final-qa.css"/><link rel="stylesheet" href="assets/unified.css"/><link rel="stylesheet" href="assets/motion.css"/><link rel="stylesheet" href="assets/lemmino/lemmino.css"/>
-<link rel="stylesheet" href="assets/trading-card.css?v=42"/>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Fraunces:opsz,wght@9..144,700;9..144,800&display=swap" rel="stylesheet">
+
+<!-- Human-Centered v6 -->
+<link rel="stylesheet" href="/assets/human-v6/tokens.css"/>
+<link rel="stylesheet" href="/assets/human-v6/base.css"/>
+<link rel="stylesheet" href="/assets/human-v6/navigation.css"/>
+<link rel="stylesheet" href="/assets/human-v6/individual.css"/>
+<link rel="stylesheet" href="/assets/human-v6/peers.css"/>
+<link rel="stylesheet" href="/assets/human-v6/map.css"/>
+<link rel="stylesheet" href="/assets/human-v6/evidence.css"/>
+<link rel="stylesheet" href="/assets/human-v6/states.css"/>
+<link rel="stylesheet" href="/assets/human-v6/motion.css"/>
+
+<!-- Gold shell (kept minimal, v6 overrides quiet) -->
+<link rel="stylesheet" href="/assets/shell.css"/>
+<link rel="stylesheet" href="/assets/final-qa.css"/>
+<link rel="stylesheet" href="/assets/lemmino/lemmino.css"/>
+<link rel="stylesheet" href="/assets/trading-card.css?v=42"/>
+
 <style>
-:root{--paper:#FFFEF7;--ink:#1A150F;--blue:#0072B2;--verm:#D55E00;--yellow:#F0E442;--green:#009E73;--radius:14px;--shadow:4px 4px 0 var(--ink);--mono:ui-monospace,monospace;--sans:ui-sans-serif,system-ui;}
-*{box-sizing:border-box}html,body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:18px;line-height:1.65;overflow-x:clip}
-.card{background:#fff;border:2.2px solid var(--ink);border-radius:14px;box-shadow:var(--shadow);padding:14px 16px}
-.btn{appearance:none;min-height:48px;padding:12px 18px;border:2.2px solid var(--ink);border-radius:12px;background:#fff;color:var(--ink);font-family:var(--mono);font-weight:900;text-transform:uppercase;box-shadow:4px 4px 0 var(--ink);cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:transform .08s,box-shadow .08s}
-.btn:active{transform:translate(1px,1px);box-shadow:1px 1px 0 var(--ink)}
-.btn-primary{background:var(--ink);color:#fff}.btn-accent{background:var(--yellow);color:var(--ink)}.btn-xl{font-size:15px;min-height:54px;padding:14px 22px}
-.small-mono{font-family:var(--mono);font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase}
-.pill{border:1.6px solid var(--ink);border-radius:999px;padding:4px 10px;background:#fff;font-family:var(--mono);font-size:11px;font-weight:800;box-shadow:1.5px 1.5px 0 var(--ink)}
-.pill-yellow{background:var(--yellow);transform:rotate(-1deg)}
+/* v6 quiet overrides — preserve gold JS, calm the chrome */
+:root { --paper: #FFFEFB; }
+html, body { background: var(--paper); }
+.hv6-nav { background: rgba(255,254,251,0.92); }
 
-#map-wrap{position:relative;min-height:580px;border:2.5px solid var(--ink);border-radius:16px;box-shadow:6px 6px 0 var(--ink);overflow:hidden;background:radial-gradient(120% 80% at 70% 20%,rgba(0,114,178,.12),transparent 48%),radial-gradient(90% 60% at 20% 70%,rgba(213,94,0,.10),transparent 46%),#0A0C10;width:100%}
-#sky-canvas{position:absolute;inset:0;width:100%;height:100%;display:block;cursor:grab;touch-action:none}
-#sky-canvas:active{cursor:grabbing}
-
-/* overlay chips - keep for star-map void */
-#map-overlay{position:absolute;left:12px;right:12px;top:56px;display:flex;justify-content:space-between;gap:8px;z-index:5;pointer-events:none;flex-wrap:wrap}
-#map-overlay .chip{background:rgba(255,254,247,.92);border:2px solid var(--ink);border-radius:999px;padding:5px 10px;font-family:var(--mono);font-size:10px;box-shadow:1.5px 1.5px 0 var(--ink)}
-#map-controls{position:absolute;left:12px;bottom:calc(12px + env(safe-area-inset-bottom));z-index:6;display:flex;gap:8px;flex-wrap:wrap}
-#map-controls .chip{pointer-events:auto;cursor:pointer;background:#fff;border:2px solid var(--ink);border-radius:999px;padding:8px 14px;font-family:var(--mono);font-size:11px;font-weight:800;box-shadow:2px 2px 0 var(--ink);min-height:44px;display:inline-flex;align-items:center}
-#map-legend{position:absolute;right:12px;bottom:calc(12px + env(safe-area-inset-bottom));z-index:6;background:rgba(255,254,247,.97);border:2px solid var(--ink);border-radius:14px;padding:8px 9px 8px 8px;box-shadow:2px 2px 0 var(--ink);font-family:var(--mono);font-size:9px;line-height:1.35;pointer-events:auto;min-width:186px;max-width:214px}
-#map-legend .legend-title{font-size:7.5px;letter-spacing:.1em;text-transform:uppercase;font-weight:900;opacity:.65;margin-bottom:6px;display:flex;justify-content:space-between;align-items:center;gap:6px}
-#hover-tip{position:absolute;left:50%;top:50%;transform:translate(-50%,-100%);background:#FFFEF7;border:2px solid var(--ink);border-radius:10px;padding:7px 9px;box-shadow:3px 3px 0 var(--ink);font-size:11px;line-height:1.35;display:none;z-index:7;pointer-events:none;max-width:260px}
-.legend-star{display:inline-flex;width:14px;height:14px;align-items:center;justify-content:center;background:var(--yellow);border:1.5px solid var(--ink);border-radius:4px;font-size:10px}
-
-.hero{max-width:1180px;margin:0 auto;padding:18px clamp(14px,3.5vw,28px) 10px;display:grid;grid-template-columns:1.08fr .92fr;gap:28px;align-items:start}
-@media(max-width:980px){
-  .hero{grid-template-columns:1fr;max-width:none;margin:0;padding:0 0 10px;gap:0}
-  .hero-copy{padding:18px clamp(14px,3.5vw,28px) 12px}
-  #map-wrap{border-radius:0;border-left:0;border-right:0;width:100vw;margin-left:calc(50% - 50vw);box-shadow:none;min-height:78vh;min-height:78dvh;border-top:2.5px solid var(--ink);border-bottom:2.5px solid var(--ink)}
-  #map-controls{left:clamp(10px,3vw,16px);bottom:calc(14px + env(safe-area-inset-bottom))}
-  #map-legend{right:clamp(10px,3vw,16px);left:auto;max-width:68vw;bottom:calc(66px + env(safe-area-inset-bottom));font-size:8.5px}
+/* Hero typography — booklet language */
+.hv6-booklet-kicker {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  margin-bottom: 10px;
 }
-.hd{font-family:"Architects Daughter",var(--mono);line-height:.92;letter-spacing:-.01em}
-.hero-copy{display:flex;flex-direction:column;gap:14px}
-.eyebrow{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
-.eyebrow #puzzle-meta{opacity:.65}
-.deck{color:#2E2A23;margin:0;line-height:1.5;font-size:18px;max-width:46ch}
-.deck b{color:var(--ink)}
-.cta-row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:2px}
-.micro{color:#5A544D;text-transform:none;font-weight:600;font-size:11.5px;letter-spacing:.01em;line-height:1.5}
-.pulse-dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--yellow);border:1.5px solid var(--ink);box-shadow:0 0 0 3px rgba(240,228,66,.35);animation:pulse 1.6s ease-in-out infinite}
-@keyframes pulse{0%,100%{box-shadow:0 0 0 3px rgba(240,228,66,.35);transform:scale(1)}50%{box-shadow:0 0 0 7px rgba(240,228,66,.18);transform:scale(1.08)}}
-.tri{max-width:1180px;margin:12px auto 0;padding:0 clamp(14px,3.5vw,28px) calc(20px + 88px);display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
-@media(max-width:760px){.tri{grid-template-columns:1fr}}
+.hv6-booklet-kicker b { color: var(--ink); font-weight: 800; }
 
-/* v35 trading card replaces drift — clean trading card void, legacy drift hard kill */
-.trading-card-void{ position:relative; width:100%; background:#ECE7DB; min-height:560px }
-@media(max-width:980px){ .trading-card-void{ width:100vw; margin-left:calc(50% - 50vw); border-left:0; border-right:0 } }
-/* legacy guard */
-#drift-info-stack, #drift-scrub-wrap, #lemmino-drift-focus, #lemmino-drift-meta, .lemmino-drift, #lemmino-drift{ display:none !important }
+/* Keep gold map void intact */
+#map-wrap { background: radial-gradient(120% 80% at 70% 20%,rgba(42,91,215,.12),transparent 48%), radial-gradient(90% 60% at 20% 70%,rgba(213,94,0,.10),transparent 46%), #080A0F; }
 
-.hd{font-family:"Architects Daughter",var(--mono);line-height:.92;letter-spacing:-.01em}
-.hero-copy{display:flex;flex-direction:column;gap:14px}
-.eyebrow{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
-.eyebrow #puzzle-meta{opacity:.65}
-.deck{color:#2E2A23;margin:0;line-height:1.5;font-size:18px;max-width:46ch}
-.deck b{color:var(--ink)}
-.cta-row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:2px}
-.micro{color:#5A544D;text-transform:none;font-weight:600;font-size:11.5px;letter-spacing:.01em;line-height:1.5}
-.pulse-dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--yellow);border:1.5px solid var(--ink);box-shadow:0 0 0 3px rgba(240,228,66,.35);animation:pulse 1.6s ease-in-out infinite}
-@keyframes pulse{0%,100%{box-shadow:0 0 0 3px rgba(240,228,66,.35);transform:scale(1)}50%{box-shadow:0 0 0 7px rgba(240,228,66,.18);transform:scale(1.08)}}
-.tri{max-width:1180px;margin:12px auto 0;padding:0 clamp(14px,3.5vw,28px) calc(20px + 88px);display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
-@media(max-width:760px){.tri{grid-template-columns:1fr}}
-.tri .card{transition:transform .12s,box-shadow .12s}
-.tri .card:hover{transform:translate(-1px,-1px);box-shadow:5px 5px 0 var(--ink)}
-/* v4.2 overlap fixes */
-#map-wrap #map-controls{display:flex;flex-direction:row;align-items:center;gap:10px;flex-wrap:nowrap;bottom:calc(14px + env(safe-area-inset-bottom));left:12px}
-#map-wrap #map-controls .chip{flex:0 0 auto;white-space:nowrap;transform:none}
-#map-axis-legend{pointer-events:none;z-index:5}
-@media(max-width:560px){
-  #map-wrap #map-axis-legend{right:10px;left:auto;max-width:68vw;bottom:calc(68px + env(safe-area-inset-bottom));font-size:8.5px;line-height:1.28}
-  #map-wrap #map-controls{left:10px;bottom:calc(12px + env(safe-area-inset-bottom));gap:8px}
-  #map-wrap #map-controls .chip{min-height:40px;padding:7px 12px;font-size:10px}
+/* Buttons — human-first, 44px min */
+.btn {
+  appearance:none; min-height:44px; padding:10px 16px; border:1.4px solid var(--ink); border-radius:10px;
+  background: var(--paper-raised); color: var(--ink); font-family: var(--font-mono); font-weight:800;
+  font-size:12px; letter-spacing:.04em; text-transform:uppercase; cursor:pointer;
+  display:inline-flex; align-items:center; gap:8px; transition: transform .08s, box-shadow .08s;
+  box-shadow: 0 1px 0 rgba(10,10,15,0.06);
 }
-/* v34 cleaned — legacy stack removed, only map-wrap overlap guard remains */
+.btn:active { transform: translateY(1px); }
+.btn-primary { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+.btn-accent { background: var(--human-blue-wash); color: var(--human-blue-ink); border-color: #D6DFFF; }
+.btn-xl { min-height:50px; padding:12px 20px; font-size:13px; }
+
+/* Mono provenance — like booklet small lines */
+.hv6-provenance {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  line-height: 1.5;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  max-width: 42ch;
+}
+.hv6-provenance b { color: var(--ink); }
 </style>
-</head><body>
-<noscript><div role="alert" style="padding:16px;text-align:center">Enable JS — Vector Hoops needs JavaScript for Daily Court + 3D void</div></noscript>
+</head>
+<body>
+<noscript><div role="alert" style="padding:16px;text-align:center">Enable JS — Vector Hoops needs JavaScript for the human map and Daily game</div></noscript>
 
-<nav class="site-nav" data-active="/" aria-label="Vector Hoops site"></nav>
-
-<div class="hero">
-  <div class="hero-copy">
-    <div class="small-mono eyebrow">
-      <span class="pill pill-yellow">12,966 · ROTATING STARS</span>
-      <span id="viral-streak" class="pill" style="background:#1A150F;color:#FFFEF7">streak 0</span>
-      <span id="puzzle-meta" style="opacity:.6">Daily puzzle</span>
-    </div>
-
-    <h1 class="hd" style="font-size:clamp(38px,5.8vw,62px);margin:2px 0 0;letter-spacing:-.02em">
-      Find the<br>modern twin<span style="opacity:.35">.</span>
-    </h1>
-
-    <p class="deck" id="deck-line" style="margin-top:10px;font-size:17px;line-height:1.45">
-      <b id="deck-name" style="font-weight:900">Michael Jordan 1997-98</b> → who plays most like them now?<br>
-      <span id="viral-today" style="opacity:.6;font-size:14px">12,966 seasons as stars in Lemmino void — documentary style</span>
-    </p>
-
-    <div class="cta-row">
-      <a class="btn btn-primary btn-xl" href="/play?r=672" id="cta-primary">▶ Play — <span id="cta-past">Michael Jordan</span></a>
-      <a class="btn" href="/play?mode=random" id="btn-random-hero" style="min-height:54px">🎲 Random</a>
-    </div>
-    <div class="cta-row" id="pack-cta-row" style="margin-top:8px;display:flex;gap:8px;flex-wrap:wrap;align-items:center">
-      <span class="small-mono" style="opacity:.7;text-transform:none;font-weight:800">Pack Battle — viral:</span>
-      <button class="btn" data-pack-hero="1" type="button" style="min-height:44px">⚡ Solo 1</button>
-      <button class="btn btn-accent" data-pack-hero="3" type="button" style="min-height:44px">🔥 Triple 3</button>
-      <button class="btn" data-pack-hero="5" type="button" style="min-height:44px;background:#fff">🏀 Full 5</button>
-      <span class="small-mono" id="pack-cta-hint" style="opacity:.55;text-transform:none;align-self:center">same link = same stars</span>
-    </div>
-
-    <div class="micro small-mono" style="text-transform:none;display:flex;gap:8px;align-items:center;margin-top:6px">
-      <span class="pulse-dot"></span><span id="sky-fact-inline">Drag to rotate · hover any star · ★ = MJ 97-98</span>
-    </div>
+<!-- 40px sticky mono nav — calm doorway -->
+<nav class="hv6-nav" data-active="/" aria-label="Vector Hoops">
+  <a class="hv6-nav__brand" href="/">Vector Hoops <span style="opacity:.6">· 12,966</span> <span class="hv6-pill hv6-pill--human" style="margin-left:8px;font-size:10px;transform:none">HUMAN MAP</span></a>
+  <div class="hv6-nav__links">
+    <a class="hv6-nav__link is-active" href="/">Map</a>
+    <a class="hv6-nav__link" href="/play">Play</a>
+    <a class="hv6-nav__link" href="/players">Players</a>
+    <a class="hv6-nav__link" href="/model">Lab</a>
+    <a class="hv6-nav__link" href="/methods">Methods</a>
   </div>
-
-  <!-- LEMMINO COMBO: embedding map as stars -->
-  <div id="map-wrap" class="lemmino-map-void" style="background:#080A0F">
-    <canvas id="sky-canvas" width="640" height="580" aria-label="12,966 player-seasons as points, XYZ glass plates for orientation"></canvas>
-    <!-- minimal controls only — no inline bottom to allow safe-area CSS -->
-    <div id="map-controls">
-      <button class="chip" id="btn-pause" type="button" style="background:rgba(255,254,247,0.96);border:2px solid #1A150F;border-radius:999px;padding:8px 14px;font-family:ui-monospace,monospace;font-size:11px;font-weight:800;min-height:44px">Pause</button>
-      <button class="chip" id="btn-reset" type="button" style="background:rgba(255,254,247,0.96);border:2px solid #1A150F;border-radius:999px;padding:8px 14px;font-family:ui-monospace,monospace;font-size:11px;font-weight:800;min-height:44px">Reset view</button>
-    </div>
-    <div id="hover-tip" style="position:absolute;left:50%;top:50%;transform:translate(-50%,-100%);background:#FFFEF7;border:2px solid #1A150F;border-radius:10px;padding:7px 9px;box-shadow:3px 3px 0 #1A150F;font-size:12px;line-height:1.35;display:none;z-index:7;pointer-events:none;max-width:260px"></div>
-    <div id="map-axis-legend" style="position:absolute;right:clamp(12px,2.5vw,16px);bottom:calc(12px + env(safe-area-inset-bottom));z-index:5;background:rgba(255,254,247,0.96);border:2px solid #1A150F;border-radius:10px;padding:7px 8px;font-family:ui-monospace,monospace;font-size:9px;line-height:1.3;box-shadow:2px 2px 0 #1A150F;max-width:min(68vw,300px)">
-      <div style="font-weight:900;letter-spacing:.05em;margin-bottom:4px;display:flex;justify-content:space-between;gap:8px"><span>SHAPE=POS</span><span style="opacity:.55">COLOR=ARCHETYPE</span></div>
-      <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:4px"><span>● PG</span><span>▲ SG</span><span>◆ SF</span><span>■ PF</span><span>✚ C</span></div>
-      <div style="opacity:.8">X Paint↔Perim · Y Role→Score · Z Def↔Off — drag to spin</div>
-    </div>
+  <div class="hv6-nav__right">
+    <span id="puzzle-meta" class="hv6-mono" style="opacity:.7">Daily</span>
+    <span id="viral-streak" class="hv6-pill hv6-pill--ink">streak 0</span>
   </div>
+</nav>
+
+<!-- Human question — booklet style -->
+<div class="hv6-layout" style="padding-top:22px;padding-bottom:10px">
+  <div class="hv6-booklet-kicker">WHO DO WE DESIGN FOR? <span style="color:var(--human-blue);font-family:var(--font-human);text-transform:none;letter-spacing:0;font-size:13px;transform:rotate(-1deg);display:inline-block;margin-left:6px">people</span> · 3</div>
 </div>
 
-<div class="tri">
-  <a class="card" href="/trends" style="text-decoration:none;color:inherit"><div class="small-mono">Trends</div><b style="font-family:'Architects Daughter',mono;font-size:19px">How the game changed</b><div style="font-size:13px;color:#666;margin-top:5px;line-height:1.45">30 seasons of drift, archetype shifts, career shapes — one scrub to play it.</div></a>
-  <a class="card" href="/players" style="text-decoration:none;color:inherit"><div class="small-mono">Players</div><b style="font-family:'Architects Daughter',mono;font-size:19px">Directory + Skills</b><div style="font-size:13px;color:#666;margin-top:5px;line-height:1.45">Every season graded, search any name, compare eras side-by-side.</div></a>
-  <a class="card" href="/model" style="text-decoration:none;color:inherit"><div class="small-mono">Lab</div><b style="font-family:'Architects Daughter',mono;font-size:19px">Inside the model</b><div style="font-size:13px;color:#666;margin-top:5px;line-height:1.45">How the embedding is built, what it captures, and where it fails.</div></a>
-</div>
+<div class="hv6-map-grid">
+  <!-- Story — before map on mobile, 42fr on desktop -->
+  <div class="hv6-story-col">
+    <div class="hv6-individual">
+      <div class="hv6-eyebrow">
+        <span class="hv6-pill">12,966 SEASONS</span>
+        <span class="hv6-pill hv6-pill--human">PAST → MODERN</span>
+        <span class="hv6-pill">PEOPLE FIRST</span>
+      </div>
 
-<!-- TRADING CARD VOID — replaces heavy drift tube — career arc + skills trading card -->
-<div class="trading-card-void" id="trading-card-void">
-  <div style="padding:24px;font-family:ui-monospace;font-size:13px;text-align:center">Loading trading cards…</div>
-</div>
+      <h1 class="hv6-display">
+        We design for<br>
+        <span class="hv6-sans-bold" style="font-size:.78em;display:block;margin-top:2px">PLAYERS WHO</span>
+        <span class="hv6-human" style="font-size:.95em">feel alike</span>
+      </h1>
 
-<div id="viral-row" style="max-width:1180px;margin:10px auto 0;padding:0 clamp(14px,3.5vw,28px) calc(28px + 88px);display:grid;grid-template-columns:1.1fr .9fr;gap:12px">
-  <div class="card" id="random-rush-card" style="display:flex;flex-direction:column;gap:10px;border-width:2.5px">
-    <div class="small-mono" style="display:flex;justify-content:space-between;align-items:center"><span style="display:flex;gap:6px;align-items:center"><span class="pill" style="background:var(--ink);color:#fff">📦 Pack Battle</span><span>Viral 1·3·5</span></span><span class="pill pill-yellow">Shareable challenge</span></div>
-    <div style="display:flex;gap:10px;align-items:flex-start">
-      <div style="font-size:38px;line-height:1">⚡</div>
-      <div style="flex:1"><b style="font-family:'Architects Daughter',mono;font-size:18px;display:block">Pack Challenge — random All-Stars, same link for friends</b><div style="font-size:12px;color:#555;margin-top:4px;line-height:1.45">Random grouping of 1, 3 or 5 past All-Stars. Solve it, then share the <code style="font-size:10px;background:#FFFEF7;border:1px solid #ddd;padding:1px 5px;border-radius:6px">?pack=672-123-456</code> link — friends get identical pack. Streak-safe, beat your friend's score.</div></div>
-    </div>
-    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:4px">
-      <button class="btn btn-primary" data-pack-card="1" type="button">⚡ Solo · 1</button>
-      <button class="btn btn-accent" data-pack-card="3" type="button">🔥 Triple · 3</button>
-      <button class="btn" data-pack-card="5" type="button" style="background:#fff">🏀 Full Court · 5</button>
-      <button class="btn" id="btn-copy-random" type="button" style="min-height:48px">Copy last link</button>
-      <span class="small-mono" id="random-hint" style="align-self:center;opacity:.6;text-transform:none"></span>
-    </div>
-    <div class="small-mono" style="text-transform:none;opacity:.6;font-size:10px;line-height:1.3">Each pack = unique names · reproducible link · add &s=2-3-0 for score battle</div>
-  </div>
-  <div class="card" id="streak-card" style="display:flex;flex-direction:column;gap:8px">
-    <div class="small-mono" style="display:flex;justify-content:space-between;align-items:center"><span>🔥 Streak challenge · resets daily</span><span class="pill" id="streak-best-pill">best 0</span></div>
-    <div style="display:flex;gap:12px;align-items:center">
-      <div style="width:56px;height:56px;border:2.2px solid var(--ink);border-radius:14px;background:var(--paper);display:flex;align-items:center;justify-content:center;box-shadow:3px 3px 0 var(--ink);flex-shrink:0"><span id="streak-big" style="font-family:'Architects Daughter',mono;font-size:24px;font-weight:900;line-height:1">0</span></div>
-      <div style="flex:1">
-        <b id="streak-title" style="font-family:'Architects Daughter',mono;font-size:17px;display:block">Start your streak</b>
-        <div id="streak-desc" style="font-size:12px;color:#555;margin-top:3px;line-height:1.45">Win today's daily before midnight UTC to build. Miss a day and it resets. 7 days = Week Warrior.</div>
-        <div id="streak-track" style="display:flex;gap:4px;margin-top:8px"></div>
-        <div class="small-mono" id="next-countdown" style="margin-top:6px;text-transform:none;opacity:.7;display:none">Next in <span id="countdown-hms">--</span></div>
+      <p class="hv6-meaning" id="deck-line">
+        <b id="deck-name">One season</b> among 12,966 — <b>people busy living</b>, choosing to spend a few moments with us. Who crave connection. We show who plays most like them, not what a metric says.<br>
+        <span id="viral-today" class="hv6-provenance" style="display:block;margin-top:10px">BUSY IN THE ACT OF LIVING, CHOOSING TO SPEND A FEW MOMENTS WITH US. WHO CRAVE CONNECTION. WHO DON'T LIVE IN SILICON VALLEY, BUT SHAPE EVERYTHING WE MAKE.</span>
+      </p>
+
+      <div class="hv6-signals" id="hv6-signals">
+        <div class="hv6-signal"><div class="hv6-signal__label">Style</div><div class="hv6-signal__value" id="sig-style">Wing creator</div><div class="hv6-signal__meaning">how they shape a game</div></div>
+        <div class="hv6-signal"><div class="hv6-signal__label">Era context</div><div class="hv6-signal__value" id="sig-era">1997–98</div><div class="hv6-signal__meaning">who they played with</div></div>
+        <div class="hv6-signal"><div class="hv6-signal__label">Modern echo</div><div class="hv6-signal__value" id="sig-modern">3 peers</div><div class="hv6-signal__meaning">closest today</div></div>
+      </div>
+
+      <div class="hv6-peers" id="hv6-peers">
+        <!-- Filled by game.js / past-modern-game.js -->
+      </div>
+
+      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:18px;align-items:center">
+        <a class="btn btn-primary btn-xl" href="/play?r=672" id="cta-primary">▶ Play — <span id="cta-past">Past All-Star</span></a>
+        <button class="btn" id="btn-see-everyone" type="button">See everyone</button>
+        <a class="btn" href="/play?mode=random" id="btn-random-hero">🎲 Random</a>
+        <button class="btn" id="hv6-share" type="button">Share link</button>
+      </div>
+
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;align-items:center">
+        <span class="hv6-mono" style="opacity:.6">Pack Battle — viral:</span>
+        <button class="btn" data-pack-hero="1" type="button">⚡ Solo 1</button>
+        <button class="btn btn-accent" data-pack-hero="3" type="button">🔥 Triple 3</button>
+        <button class="btn" data-pack-hero="5" type="button">🏀 Full 5</button>
+      </div>
+
+      <div class="hv6-evidence" id="hv6-evidence">
+        <div class="hv6-evidence__title">How this is made — honest, human-first</div>
+        <div class="hv6-evidence__grid">
+          <div class="hv6-evidence__card"><b>A MATERIAL.</b> TO BE CRAFTED INTO THE HUMAN EXPERIENCE. IN THE SAME WAY THAT GLASS, METAL, AND PIXELS TRANSFORMED HOW WE CONNECT, LIVE, WORK, AND PLAY. <br><br><b>Model:</b> 20,719×128 embedding_v3 MTNN v9.2 — 17 towers, 224-d sparse + 128-d temporal. <span style="font-family:var(--font-mono);font-size:10px">fallback honest 503 if missing</span></div>
+          <div class="hv6-evidence__card"><b>ABUNDANT INTELLIGENCE.</b> MADE SCARCE AGAIN. BY THE CARE WE TOOK TO <span style="color:var(--human-blue);font-family:var(--font-human);text-transform:none;font-size:15px">Shape it.</span><br><br>3 peers, full map, <span style="color:var(--human-blue)">why similar</span> + <span style="color:var(--ink-muted)">why different</span>, confidence in words. No synthetic peers.</div>
+          <div class="hv6-evidence__card"><b>BECAUSE EVERYONE IS DIFFERENT.</b> & <span style="color:var(--human-blue);font-family:var(--font-human);text-transform:none;font-size:16px">&</span> EVERYONE DESERVES TO EXPRESS WHO THEY ARE.<br><br>Deterministic Daily: LCG both chains 20260813→189831298 idx3820 triple[11205,19448,14209] + 20260818→1412440227 idx5278 triple[13791,10902,19455] same-link-same-stars ?daily=YYYYMMDD&n=1/3/5</div>
+        </div>
+      </div>
+
+      <div class="hv6-state hv6-state--human" style="margin-top:18px">
+        <span class="hv6-mono" style="color:var(--human-blue-ink)">WHO DO WE DESIGN FOR?</span><br>
+        People, not metrics. One individual → evidence → nearest peers → broader map. Position means similarity — closer = plays more alike. Dim, not hide. Reset keeps you oriented.
       </div>
     </div>
-    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:2px">
-      <a class="btn btn-primary" id="btn-continue-streak" href="/play">Play Today</a>
-      <button class="btn" id="btn-share-streak" type="button">Share Streak</button>
-      <button class="btn" id="btn-challenge" type="button">Challenge Friend</button>
+
+    <div class="tri" id="hv6-tri" style="margin-top:12px"></div>
+    <div class="trading-card-void" id="trading-card-void" style="display:none"></div>
+  </div>
+
+  <!-- Map — 58fr, void preserved -->
+  <div class="hv6-map-col">
+    <div class="hv6-map-shell" id="map-wrap">
+      <canvas id="sky-canvas" width="800" height="620" aria-label="12,966 seasons as human map — proximity = plays alike"></canvas>
+      <div class="hv6-map-overlay" id="map-overlay">
+        <span class="hv6-map-chip">12,966 · HUMAN MAP</span>
+        <span class="hv6-map-chip" id="map-hover-name">Hover to discover</span>
+      </div>
+      <div id="map-controls" class="hv6-map-overlay" style="top:auto;bottom:14px;left:12px;right:auto;display:flex;gap:8px">
+        <button class="hv6-map-chip" data-map="reset" type="button">See everyone</button>
+        <button class="hv6-map-chip" data-map="zoom-in" type="button">＋</button>
+        <button class="hv6-map-chip" data-map="zoom-out" type="button">−</button>
+      </div>
+      <div class="hv6-map-legend" id="map-legend">
+        <div class="hv6-map-legend__title"><span>How to read</span><span style="opacity:.5">LEGEND</span></div>
+        <div><span style="display:inline-block;width:10px;height:10px;background:#C17C60;border-radius:50%;margin-right:6px"></span>Selected — this season</div>
+        <div style="margin-top:4px"><span style="display:inline-block;width:10px;height:10px;background:#FFFEFB;border:1px solid #D4C4B0;border-radius:50%;margin-right:6px"></span>Peers — play most alike</div>
+        <div style="margin-top:4px"><span style="display:inline-block;width:10px;height:10px;background:#E8E0D5;border-radius:50%;margin-right:6px"></span>Others — dimmed context</div>
+        <div style="margin-top:8px;opacity:.65">Closer = plays more alike. Position from 20,719×128 embedding. Not rank.</div>
+      </div>
+      <div id="hover-tip" style="position:absolute;left:50%;top:50%;transform:translate(-50%,-100%);background:#FFFEFB;border:1px solid var(--hairline);border-radius:10px;padding:7px 9px;box-shadow:var(--shadow-raised);font-size:12px;line-height:1.35;display:none;z-index:7;pointer-events:none;max-width:260px"></div>
     </div>
+
+    <div class="hv6-provenance" style="margin-top:10px;padding:0 2px">
+      ONE PLAYER-SEASON, THREE PEERS, FULL MAP. <b>12,966 SEASONS AS STARS</b> IN DOCUMENTARY VOID — ONE GAME: PAST ALL-STAR → GUESS MODERN TWIN. DAILY COURT 5× PAST→MODERN. SAME-LINK-SAME-STARS ?daily=YYYYMMDD&n=1/3/5
+    </div>
+
+    <div id="hv6-share-toast" style="display:none;margin-top:10px;background:var(--ink);color:var(--paper);padding:8px 12px;border-radius:8px;font-family:var(--font-mono);font-size:11px"></div>
   </div>
 </div>
 
-<div id="toast" style="position:fixed;left:50%;bottom:94px;transform:translateX(-50%);background:#1A150F;color:#FFFEF7;font-family:var(--mono);font-size:11px;font-weight:800;padding:9px 14px;border-radius:999px;box-shadow:4px 4px 0 var(--ink);z-index:40;display:none"></div>
+<!-- Gold game wiring — preserved exactly -->
+<script>window.HOOPS_GOLD_BF7DB6A5=true; window.HOOPS_HUMAN_V6=true;</script>
+<script src="/assets/data/hoops_manifest.json?v=bf7db6a5" type="application/json" id="hoops-manifest"></script>
+<script src="/assets/mtnn.js"></script>
+<script src="/assets/mtnn-full.js"></script>
+<script src="/assets/embedding-nebula.js"></script>
+<script src="/assets/past-modern-game.js"></script>
+<script src="/assets/game.js"></script>
+<script src="/assets/landing-play.js"></script>
+<script src="/assets/human-v6/human-v6.js"></script>
 
 <script>
-/* Minimal viral init — keeps MJ placeholder as hero map star per request */
+// Human-v6 wiring — keeps gold IDs alive, adds human meaning
 (function(){
-  const HERO_MJ_ID = 672;
-  function showToast(msg, ms){
-    var t=document.getElementById('toast'); if(!t) return;
-    t.textContent=msg; t.style.display='block'; clearTimeout(t._tm); t._tm=setTimeout(function(){ t.style.display='none'; }, ms||2600);
-  }
-  async function initViral(){
-    try{
-      if(window.VHPastModern){
-        await window.VHPastModern.init();
-        if(window.VHMtnn){ try{ await VHMtnn.loadAsync(); }catch(e){} }
-        var st=window.VHPastModern.state();
-        var sInfo = VHPastModern.getStreak();
-        var big = document.getElementById('streak-big');
-        var title = document.getElementById('streak-title');
-        var desc = document.getElementById('streak-desc');
-        var bestPill = document.getElementById('streak-best-pill');
-        var track = document.getElementById('streak-track');
-        if(big) big.textContent = sInfo.streak;
-        if(bestPill) bestPill.textContent='best '+sInfo.best;
-        if(track){
-          track.innerHTML='';
-          for(var i=0;i<7;i++){
-            var dot=document.createElement('span');
-            dot.style.cssText='width:22px;height:6px;border-radius:999px;border:1.5px solid var(--ink);display:inline-block;'+(i < sInfo.streak%7 || (sInfo.streak>=7 && i<7) ? 'background:var(--yellow);box-shadow:1px 1px 0 var(--ink)' : 'background:#fff;opacity:.55');
-            track.appendChild(dot);
-          }
-        }
-        if(sInfo.streak===0){
-          if(title) title.textContent='Start your streak';
-          if(desc) desc.textContent='Win today\'s daily before midnight UTC to start. 7 in a row = Week Warrior badge. Random spins don\'t break streak.';
-        } else if(sInfo.streak>=7){
-          if(title) title.textContent='Week Warrior! '+sInfo.streak+'🔥';
-          if(desc) desc.textContent='Insane consistency. Keep it alive — daily resets at midnight UTC.';
-        } else {
-          if(title) title.textContent=sInfo.streak+' day'+(sInfo.streak===1?'':'s')+' — keep it alive';
-          if(desc) desc.textContent=(7-sInfo.streak)+' more to Week Warrior.';
-        }
-        var dn0=document.getElementById('deck-name'); if(dn0) dn0.textContent='Michael Jordan 1997-98';
-        var cp0=document.getElementById('cta-past'); if(cp0) cp0.textContent='Michael Jordan';
-        var cta0=document.getElementById('cta-primary'); if(cta0) cta0.href='/play?r='+HERO_MJ_ID;
-        var lsn0=document.getElementById('legend-star-name'); if(lsn0) lsn0.textContent='Michael Jordan 97-98';
-        var sfi=document.getElementById('sky-fact-inline'); if(sfi) sfi.textContent='Drag to rotate · hover any star · ★ = MJ 97-98';
-        var vt0=document.getElementById('viral-today'); if(vt0) vt0.textContent='12,966 stars in void — Today daily: '+st.target.n+' '+st.target.s+' — drag stars to spin';
-        var vs=document.getElementById('viral-streak'); if(vs) vs.textContent = sInfo.streak>0 ? '🔥 '+sInfo.streak : 'streak 0';
-        var rh=document.getElementById('random-hint'); if(rh) rh.textContent='Today: '+st.target.n+' '+st.target.s+' · Hero stars: MJ 97-98';
+  const $ = s=>document.getElementById(s);
+  const V6 = window.DumbModel?.HumanV6;
+  V6?.Selection.init();
+
+  // Share
+  $('hv6-share')?.addEventListener('click', ()=> V6?.Share.copy());
+  $('btn-see-everyone')?.addEventListener('click', ()=>{
+    V6?.Selection.clear();
+    window.dispatchEvent(new CustomEvent('hv6:clear'));
+    // gold reset
+    window.HoopsNebula?.reset?.();
+  });
+  $('map-wrap')?.addEventListener('click', e=>{
+    if(e.target.closest('[data-map="reset"]')) { V6?.Selection.clear(); window.HoopsNebula?.reset?.(); }
+  });
+
+  // Keep gold deck-name -> human signals
+  const obs = new MutationObserver(()=>{
+    const nameEl = $('deck-name');
+    if(nameEl) {
+      const txt = nameEl.textContent.trim();
+      const sigEra = $('sig-era');
+      if(sigEra && txt.includes(' ')) {
+        // try to extract year
+        const m = txt.match(/(\d{4}[-–]\d{2})/);
+        if(m) sigEra.textContent = m[1];
       }
-    }catch(e){ console.warn('viral init', e); }
-  }
-  function wirePacks(){
-    function makePackAndGo(n){
-      try{
-        if(!window.VHPastModern || !VHPastModern.generateRandomPack){ location.href='/play?pack=random&n='+n; return; }
-        var entries = VHPastModern.generateRandomPack(n);
-        var ids = entries.map(function(e){return e.i;});
-        var url = (VHPastModern.packChallengeUrl ? VHPastModern.packChallengeUrl(ids) : VHPastModern.packShareUrl(ids));
-        location.href=url;
-      }catch(e){ location.href='/play?pack=random&n='+n; }
     }
-    document.querySelectorAll('[data-pack-hero]').forEach(function(btn){ btn.addEventListener('click', function(){ makePackAndGo(parseInt(btn.getAttribute('data-pack-hero'),10)||3); }); });
-    document.querySelectorAll('[data-pack-card]').forEach(function(btn){ btn.addEventListener('click', function(){ makePackAndGo(parseInt(btn.getAttribute('data-pack-card'),10)||3); }); });
-    var bShare=document.getElementById('btn-share-board');
-    if(bShare){
-      bShare.addEventListener('click', async function(){
-        try{
-          var c=document.getElementById('sky-canvas');
-          var snap=document.createElement('canvas'); snap.width=c.width; snap.height=c.height;
-          var sctx=snap.getContext('2d'); sctx.drawImage(c,0,0);
-          var blob=await new Promise(function(res){snap.toBlob(function(b){res(b);},'image/png');});
-          if(window.VHShare && navigator.canShare && blob){
-            var file=new File([blob],'vector-hoops-map.png',{type:'image/png'});
-            if(navigator.canShare({files:[file]})){ await navigator.share({title:'Vector Hoops',text:'12,966 seasons as stars — hoops.dumbmodel.com',files:[file]}); return; }
-          }
-          var url=snap.toDataURL('image/png'); var a=document.createElement('a'); a.href=url; a.download='vector-hoops-map.png'; a.click();
-          showToast('Map image saved');
-        }catch(e){ console.warn(e); }
-      });
-    }
-    var bChallenge=document.getElementById('btn-challenge');
-    if(bChallenge){ bChallenge.addEventListener('click', async function(){
-      try{
-        var st=window.VHPastModern? window.VHPastModern.state(): null;
-        var day= st? st.dayKey : new Date().toISOString().slice(0,10);
-        var url=location.origin+'/play?day='+day;
-        var txt='Can you find the modern twin for '+ (st? st.target.n+' '+st.target.s : 'today')+'? '+url;
-        if(navigator.clipboard) await navigator.clipboard.writeText(txt);
-        this.textContent='Copied!'; showToast('Challenge link copied'); setTimeout(function(el){el.textContent='Challenge';}.bind(null,this),1500);
-      }catch(e){}
-    });}
-  }
-  wirePacks();
-  window.addEventListener('load', function(){ setTimeout(initViral, 400); });
+  });
+  obs.observe(document.body, {childList:true, subtree:true});
+
+  // Keyboard a11y — Esc clears
+  window.addEventListener('keydown', e=>{
+    if(e.key==='Escape') { V6?.Selection.clear(); window.HoopsNebula?.reset?.(); }
+  });
+
+  // Honest 503 if embedding missing
+  window.addEventListener('hoops:embedding-missing', ()=>{
+    const s = $('hv6-signals');
+    if(s) s.innerHTML = '<div class="hv6-state">Embedding 20,719×128 not yet available on this device — showing 12,966×64 fallback. Full 128-d requires rebuild. <span class="hv6-mono">honest 503 → fallback</span></div>';
+  });
 })();
 </script>
 
-<!-- Unified shared map v2-light — same engine as game, LOD, DPR1, fillRect -->
-<script type="module">
-const lazyMount = (selector, loader) => {
-  const el = document.querySelector(selector);
-  if(!el) return;
-  let mounted=false;
-  const mount = async ()=>{
-    if(mounted) return; mounted=true; observer&&observer.disconnect();
-    try{ await loader(); }catch(e){ console.warn('shared map lazy fail',selector,e); }
-  };
-  const observer = new IntersectionObserver((entries)=>{
-    const ent=entries[0]; if(ent&&ent.isIntersecting){ setTimeout(mount, 80); }
-  },{rootMargin:'200px 0px', threshold:0.01});
-  observer.observe(el);
-};
-(async ()=>{
-  const c=document.getElementById('sky-canvas');
-  if(!c) return;
-  try{
-    const { mountSharedMap } = await import('./assets/shared-map.js?v=57');
-    await mountSharedMap(c, { highlightId: 672, dark:true });
-  }catch(e){ console.error('shared-map eager fail', e); }
-})();
-lazyMount('#trading-card-void', async ()=>{
-  const { mountTradingCardVoid } = await import('./assets/lemmino/trading-card-void.js?v=53');
-  const c=document.getElementById('trading-card-void');
-  if(c) await mountTradingCardVoid(c);
-});
+<!-- PWA gold -->
+<script>
+if('serviceWorker' in navigator){ navigator.serviceWorker.register('/sw.js').catch(()=>{}); }
 </script>
-
-
-<footer class="site-footer"><div class="site-footer__links"><a href="/play">Play</a><a href="/model">Lab</a><a href="/methods">Methods</a><a href="/players">Players</a><a href="https://github.com/jcdavis131/vector-hoops" target="_blank" rel="noopener">GitHub</a></div><div class="site-footer__attribution">Every number recomputable from stats.nba.com · dumbmodel.com</div></footer>
-<script>if('serviceWorker' in navigator){window.addEventListener('load',()=>{navigator.serviceWorker.register('/sw.js').catch(()=>{})})}</script>
-</body></html>
+</body>
+</html>

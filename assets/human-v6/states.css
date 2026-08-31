@@ -1,0 +1,26 @@
+.hv6-state {
+  border: 1px dashed var(--hairline);
+  border-radius: var(--radius-card);
+  padding: 18px 16px;
+  background: var(--paper-raised);
+  color: var(--ink-muted);
+  font-size: 14px;
+  line-height: 1.5;
+}
+.hv6-state--human {
+  border-style: solid;
+  background: var(--human-blue-wash);
+  border-color: #D6DFFF;
+  color: var(--human-blue-ink);
+}
+.hv6-empty {
+  text-align: center;
+  padding: 32px 18px;
+  color: var(--ink-muted);
+}
+.hv6-empty__title {
+  font-family: var(--font-serif);
+  font-size: 1.5rem;
+  color: var(--ink);
+  margin-bottom: 8px;
+}
