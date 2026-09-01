@@ -493,6 +493,20 @@ input[type=range]{touch-action:manipulation}
     <p class="caption">Root frame 1996 + Procrustes RᵀR=I, ≥30 shared players / pair. <a href="/methods#drift">Full write-up →</a></p>
   </section>
 
+  <section class="card" id="forecast-trends" style="border-style:dashed">
+    <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:flex-start">
+      <div>
+        <h2>Where it's headed — experimental forecast <span class="pill" style="background:#F0E442">Past → Modern → Headed</span></h2>
+        <p class="sub">Same 12,966 map, same 64-d embedding. <b>Where you stood → how you grew → where you're headed</b> — now projected one season forward from 3-season windows. Stone dashed = uncertainty, terracotta dashed = drift direction. Not a rank.</p>
+      </div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap"><span class="pill">8 of 64 dims</span><span class="pill">503 honest if missing</span></div>
+    </div>
+    <canvas id="forecast-canvas" width="800" height="220" style="width:100%;height:auto;display:block;border:1.8px solid var(--ink);border-radius:12px;background:#FFFEF7;margin-top:10px"></canvas>
+    <div id="forecast-legend" class="caption" style="margin-top:8px">Loading forecasts…</div>
+    <div id="forecast-trends-slot" style="margin-top:12px"></div>
+    <p class="caption" style="margin-top:8px">Experimental — torch-lite 2-layer (7,096 windows, 5 epochs, no chrono split). Uses same embedding_v3 12,966×64 that powers the map. Shows as stone ghost rings on the map, same family as orange guesses / yellow target.</p>
+  </section>
+
 </main>
 <footer class="site-footer"><div class="site-footer__links"><a href="/play">Play</a><a href="/model">Lab</a><a href="/methods">Methods</a><a href="/players">Players</a><a href="https://github.com/jcdavis131/vector-hoops" target="_blank" rel="noopener">GitHub</a></div><div class="site-footer__attribution">Every number recomputable from stats.nba.com · dumbmodel.com</div></footer>
 
@@ -502,6 +516,7 @@ input[type=range]{touch-action:manipulation}
 <script src="assets/pwa-install.js"></script>
 <script src="assets/trends-viz.js?v=27" defer></script>
 <script src="assets/drift.js?v=27"></script>
+<script src="assets/timesfm-forecast.js?v=2"></script>
 <script>
 (function(){
   var seasons=[], playing=false, timer=null, idx=0;
@@ -575,6 +590,21 @@ input[type=range]{touch-action:manipulation}
       if(e.code==='ArrowRight'){ e.preventDefault(); stop(); goTo(Math.min(seasons.length-1, idx+1)); }
       if(e.code==='ArrowLeft'){ e.preventDefault(); stop(); goTo(Math.max(0, idx-1)); }
     });
+
+    // cohesive forecast init
+    setTimeout(function(){
+      if(window.HoopsForecast){
+        window.HoopsForecast.renderForecastCanvas('forecast-canvas', {n: 48, legendId: 'forecast-legend'});
+        // render a sample player forecast card for cohesion demo
+        window.HoopsForecast.load().then(function(d){
+          const slot = document.getElementById('forecast-trends-slot');
+          if(slot && d && d.forecasts && d.forecasts[0]){
+            const f = d.forecasts[0];
+            slot.innerHTML = window.HoopsForecast.forecastCardHTML(f.name, f);
+          }
+        });
+      }
+    }, 500);
   }
 
   function init(){

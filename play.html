@@ -206,6 +206,7 @@ button,.input{min-height:44px}
     <div class="suggest"><input id="guess-input" class="input" placeholder="Type modern — e.g., Wembanyama, SGA, Ant" autocomplete="off" spellcheck="false"/><ul id="guess-suggest" style="display:none"></ul></div>
     <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap"><button id="guess-btn" class="btn btn-primary" type="button">Guess</button><button id="share-btn" class="btn" type="button">Share</button><button id="share-text-btn" class="btn" type="button">Copy Grid</button><button id="btn-challenge" class="btn" type="button">Challenge</button></div>
     <div id="guesses" style="margin-top:8px"></div><div id="result" style="margin-top:12px"></div>
+    <div id="play-forecast-slot" style="margin-top:12px"></div>
   </div>
 </div>
 
@@ -226,7 +227,7 @@ button,.input{min-height:44px}
 <script src="assets/error-boundary.js"></script>
 <script src="assets/keyboard-a11y.js"></script>
 <script src="assets/site-nav.js" defer></script>
-<script src="assets/pwa-install.js"></script><script src="assets/pixel-avatar.js?v=49"></script><script src="assets/team-logo.js?v=55"></script><script src="assets/viral-share.js"></script><script src="assets/past-modern-game.js?v=56"></script>
+<script src="assets/pwa-install.js"></script><script src="assets/timesfm-forecast.js?v=2"></script><script src="assets/pixel-avatar.js?v=49"></script><script src="assets/team-logo.js?v=55"></script><script src="assets/viral-share.js"></script><script src="assets/past-modern-game.js?v=56"></script>
 <script>
 (function(){
   const $=s=>document.querySelector(s);
@@ -1325,6 +1326,31 @@ button,.input{min-height:44px}
     }
 
     renderPast(); renderGuesses(); finish(); renderDailyCourt(); renderPackProgress(); renderPackSummary();
+
+    // cohesive forecast wiring for play — where you're headed
+    function wirePlayForecast(){
+      if(!window.HoopsForecast) return;
+      const slot = document.getElementById('play-forecast-slot');
+      if(!slot) return;
+      try{
+        const st = VHPastModern.state();
+        const name = st && st.target && st.target.n || '';
+        if(!name){ slot.innerHTML=''; return; }
+        window.HoopsForecast.load().then(()=>{
+          const f = window.HoopsForecast.getForName(name);
+          if(f){
+            slot.innerHTML = window.HoopsForecast.forecastCardHTML(name, f);
+            // ghost on map
+            if(window._sharedMapApi) window.HoopsForecast.attachToMap(window._sharedMapApi, name);
+            if(window.HoopsNebula) window.HoopsForecast.attachToMap(window.HoopsNebula, name);
+          } else {
+            slot.innerHTML = '';
+          }
+        });
+      }catch{}
+    }
+    setTimeout(wirePlayForecast, 900);
+    window.addEventListener('vh:game-state-changed', wirePlayForecast);
 
     const onboardSeen=localStorage.getItem('vh.onboardSeenV3');
     const backdrop=$('#onboarding-backdrop');
