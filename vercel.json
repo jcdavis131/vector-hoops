@@ -17,12 +17,12 @@
     }
   ],
   "rewrites": [
-    {"source": "/play", "destination": "/index.html"},
-    {"source": "/players", "destination": "/index.html"},
-    {"source": "/model", "destination": "/index.html"},
-    {"source": "/trends", "destination": "/index.html"},
-    {"source": "/lab", "destination": "/index.html"},
-    {"source": "/dfs", "destination": "/index.html"},
-    {"source": "/(.*)", "destination": "/index.html"}
+    {"source": "/play", "destination": "/play.html"},
+    {"source": "/players", "destination": "/players.html"},
+    {"source": "/model", "destination": "/model.html"},
+    {"source": "/trends", "destination": "/trends.html"},
+    {"source": "/lab", "destination": "/model.html"},
+    {"source": "/methods", "destination": "/methods.html"},
+    {"source": "/dfs", "destination": "/index.html"}
   ]
 }

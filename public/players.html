@@ -100,6 +100,7 @@
 
           <div id="pp-wide-wrap"></div>
           <div id="skills-next-profile" hidden></div>
+          <div id="pp-forecast-slot" style="margin-top:12px"></div>
           <div id="skills-mtnn" hidden></div>
           <div id="skills-playoffs" hidden></div>
 
@@ -152,10 +153,38 @@
 <script src="assets/keyboard-a11y.js"></script>
 <script src="assets/site-nav.js" defer></script>
 <script src="assets/pwa-install.js"></script>
+<script src="assets/timesfm-forecast.js?v=2"></script>
 <script src="assets/dossier.js?v=28"></script>
 <script src="assets/player-roster.js?v=28"></script>
 <script src="assets/players-directory.js?v=28"></script>
 <script src="assets/players-skills.js?v=32"></script>
 <script src="assets/players-page.js?v=28"></script>
+<script>
+// cohesive forecast wiring for players skill profile
+(function(){
+  function wire(){
+    const search = document.getElementById('skills-search');
+    const slot = document.getElementById('pp-forecast-slot');
+    if(!slot || !window.HoopsForecast) return;
+    function updateFromInput(){
+      const name = (search && search.value || document.getElementById('pp-name')?.textContent || '').trim();
+      if(!name || name.length<2) { slot.innerHTML=''; return; }
+      window.HoopsForecast.load().then(()=>{
+        const f = window.HoopsForecast.getForName(name);
+        if(f || window.HoopsForecast.getForName(name.split(' ').pop())) {
+          slot.innerHTML = window.HoopsForecast.forecastCardHTML(name, f);
+        }
+      });
+    }
+    // hook into existing players-skills render
+    const obs = new MutationObserver(updateFromInput);
+    const profile = document.getElementById('skills-profile');
+    if(profile) obs.observe(profile, {childList:true, subtree:true});
+    if(search) search.addEventListener('change', updateFromInput);
+    setTimeout(updateFromInput, 1200);
+  }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', wire); else setTimeout(wire, 800);
+})();
+</script>
 <script>if('serviceWorker' in navigator){window.addEventListener('load',()=>{navigator.serviceWorker.register('/sw.js').catch(()=>{})})}</script>
 </body></html>

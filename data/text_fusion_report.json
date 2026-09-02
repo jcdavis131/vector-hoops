@@ -1,0 +1,122 @@
+{
+  "built": "2026-09-01T05:51:14Z",
+  "domain": "vector-hoops",
+  "entity_count": 12966,
+  "dims": {
+    "native_64": 64,
+    "text_384": 384,
+    "fused": 416,
+    "final_map_64": 64
+  },
+  "model": "RandomForestClassifier n_est=10 + TextEmbedder all-MiniLM-L6-v2 (384-d) + StandardScaler + OneHotEncoder",
+  "mtnn_v9_2": {
+    "tca_7_heads_224d": "volume,playmaking,defense,shotmix,teammates_same_team,same_draft_class,same_era_archetype 7 subsets sparse softmax per type 0.7",
+    "taa_shared_128d_k8": "fixed-degree sample k=8 shared tower cat([x,m])->96h->24d 0.3",
+    "fusion": "0.7/0.3 L2 64-d ONNX RoPE 32-d/h RMSNorm SwiGLU VICReg SupCon"
+  },
+  "text_branch": {
+    "model": "sentence-transformers/all-MiniLM-L6-v2",
+    "backend": "sentence_transformers preferred, transformers AutoModel mean-pool fallback (as in embed_cultural_text.py)",
+    "dim": 384,
+    "l2_normalized": true,
+    "source": "missing",
+    "status": "503_missing_bios"
+  },
+  "tabular": {
+    "n": 12966,
+    "n_numeric": 11,
+    "n_categorical": 3,
+    "provenance_7_7_0": {
+      "assets/vectors.json": true,
+      "assets/mtnn_embeddings.f32": true,
+      "assets/mtnn_arch.json": true,
+      "assets/eval_scoreboard.json": true,
+      "assets/vectors_map_lite.json": true,
+      "assets/vectors_search_lite.json": true,
+      "assets/players_lite.json": true
+    },
+    "all_present": true,
+    "source": "mtnn_inputs.f32 + archetype_assignments.json",
+    "tca_taa_note": "TCA 7 heads 224-d (volume,playmaking,defense,shotmix,teammates_same_team,same_draft_class,same_era_archetype) + TAA shared 128-d k=8 fixed-degree 0.7/0.3 fusion per MTNN v9.2 spec - tabular proxy via 11 base feats, full 224+128 reconstructed in training loop"
+  },
+  "column_transformer": {
+    "transformers": [
+      [
+        "text",
+        "TextEmbedder",
+        [
+          "bio_text"
+        ]
+      ],
+      [
+        "num",
+        "StandardScaler",
+        [
+          "num_0",
+          "num_1",
+          "num_2",
+          "num_3",
+          "num_4",
+          "num_5",
+          "num_6",
+          "num_7",
+          "num_8",
+          "num_9",
+          "num_10"
+        ]
+      ],
+      [
+        "cat",
+        "OneHotEncoder(handle_unknown=ignore)",
+        [
+          "gameCluster",
+          "mtnnGlobal",
+          "era"
+        ]
+      ]
+    ],
+    "remainder": "drop",
+    "article_pattern": true
+  },
+  "cv": {
+    "folds": 2,
+    "accuracy_mean": 0.9989973777572112,
+    "accuracy_std": 0.0006941230911615137,
+    "scores": [
+      0.9996915008483727,
+      0.9983032546660496
+    ],
+    "mae_proxy": 0.00010006545207375423,
+    "r2_proxy": 0.9999997406486038
+  },
+  "training": {
+    "smoke": true,
+    "epochs": 2,
+    "train_time_s": 1.0019471645355225,
+    "batch": 32,
+    "zero_deps_honest_503": true,
+    "no_synthetic": true
+  },
+  "outputs": {
+    "npz": "embedding_v3_with_text.npz",
+    "report": "text_fusion_report.json",
+    "z_shape": [
+      12966,
+      64
+    ]
+  },
+  "provenance_7_7_0": {
+    "assets/vectors.json": true,
+    "assets/mtnn_embeddings.f32": true,
+    "assets/mtnn_arch.json": true,
+    "assets/eval_scoreboard.json": true,
+    "assets/vectors_map_lite.json": true,
+    "assets/vectors_search_lite.json": true,
+    "assets/players_lite.json": true
+  },
+  "verification": "vectors.json + mtnn_embeddings.f32 + mtnn_arch.json + eval_scoreboard.json + vectors_map_lite.json + vectors_search_lite.json + players_lite.json",
+  "dailySeed": "YYYYMMDD UTC LCG glibc 1103515245*seed+12345 & 0x7fffffff deterministic same-link-same-stars",
+  "pwa": "v66 CORE14 immutable SWR shell-only JSON never cached",
+  "article_ref": "https://machinelearningmastery.com/combining-llm-embeddings-with-tabular-features-in-a-unified-scikit-learn-pipeline/",
+  "elapsed_s": 19.300288200378418
+}

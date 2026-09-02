@@ -81,7 +81,7 @@ html, body { background: var(--paper); }
 <body>
 <noscript><div role="alert" style="padding:16px;text-align:center">Enable JS — Vector Hoops needs JavaScript for the human map and Daily game</div></noscript>
 
-<!-- 40px sticky mono nav — calm doorway -->
+<!-- 40px sticky mono nav — calm doorway — cohesive with site-nav (Map, Play, Players, Lab, Trends, Methods) -->
 <nav class="hv6-nav" data-active="/" aria-label="Vector Hoops">
   <a class="hv6-nav__brand" href="/">Vector Hoops <span style="opacity:.6">· 12,966</span> <span class="hv6-pill hv6-pill--human" style="margin-left:8px;font-size:10px;transform:none">HUMAN MAP</span></a>
   <div class="hv6-nav__links">
@@ -89,6 +89,7 @@ html, body { background: var(--paper); }
     <a class="hv6-nav__link" href="/play">Play</a>
     <a class="hv6-nav__link" href="/players">Players</a>
     <a class="hv6-nav__link" href="/model">Lab</a>
+    <a class="hv6-nav__link" href="/trends">Trends</a>
     <a class="hv6-nav__link" href="/methods">Methods</a>
   </div>
   <div class="hv6-nav__right">
@@ -132,6 +133,8 @@ html, body { background: var(--paper); }
       <div class="hv6-peers" id="hv6-peers">
         <!-- Filled by game.js / past-modern-game.js -->
       </div>
+
+      <div id="hv6-forecast-slot" style="margin-top:12px"></div>
 
       <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:18px;align-items:center">
         <a class="btn btn-primary btn-xl" href="/play?r=672" id="cta-primary">▶ Play — <span id="cta-past">Past All-Star</span></a>
@@ -203,6 +206,7 @@ html, body { background: var(--paper); }
 <script src="/assets/mtnn.js"></script>
 <script src="/assets/mtnn-full.js"></script>
 <script src="/assets/embedding-nebula.js"></script>
+<script src="/assets/timesfm-forecast.js?v=2"></script>
 <script src="/assets/past-modern-game.js"></script>
 <script src="/assets/game.js"></script>
 <script src="/assets/landing-play.js"></script>
@@ -214,6 +218,34 @@ html, body { background: var(--paper); }
   const $ = s=>document.getElementById(s);
   const V6 = window.DumbModel?.HumanV6;
   V6?.Selection.init();
+
+  // Forecast wiring — same narrative arc, no new game mode
+  function wireForecast(){
+    const slot = $('hv6-forecast-slot');
+    if(!slot || !window.HoopsForecast) return;
+    function renderForCurrent(){
+      try{
+        const deck = $('deck-name')?.textContent?.trim() || '';
+        // deck is like "1997-98 Michael Jordan" — extract name after year
+        const name = deck.replace(/^\d{4}[-–]\d{2}\s+/, '').trim() || $('deck-name')?.dataset?.player || '';
+        if(!name) { slot.innerHTML=''; return; }
+        window.HoopsForecast.load().then(()=>{
+          const f = window.HoopsForecast.getForName(name);
+          slot.innerHTML = window.HoopsForecast.forecastCardHTML(name, f);
+          // also attach ghost to map if available
+          if(window.HoopsNebula && f) window.HoopsForecast.attachToMap(window.HoopsNebula, name);
+          if(window._sharedMapApi && f) window.HoopsForecast.attachToMap(window._sharedMapApi, name);
+        });
+      }catch{}
+    }
+    // initial + on selection change
+    setTimeout(renderForCurrent, 600);
+    const obs2 = new MutationObserver(renderForCurrent);
+    const deckEl = $('deck-name');
+    if(deckEl) obs2.observe(deckEl, {childList:true, characterData:true, subtree:true});
+    window.addEventListener('hv6:selection', renderForCurrent);
+  }
+  setTimeout(wireForecast, 700);
 
   // Share
   $('hv6-share')?.addEventListener('click', ()=> V6?.Share.copy());

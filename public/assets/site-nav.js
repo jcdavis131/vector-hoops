@@ -3,10 +3,11 @@
   'use strict';
 
   var LINKS = [
-    { href: '/play', label: 'Play', title: '8 era-honest games — Chimera daily + 7 more' },
-    { href: '/model', label: 'Lab', title: 'MTNN Training Cockpit + Architecture + Glass-box Explorer' },
-    { href: '/trends', label: 'Trends', title: 'Trend Research — 30 seasons measured geometry' },
-    { href: '/players', label: 'Players', title: 'Player References — directory + dossiers + skill grades' },
+    { href: '/', label: 'Map', title: 'Human map — 12,966 player-seasons, where you stood' },
+    { href: '/play', label: 'Play', title: 'Daily Court 5× Past→Modern + Pack Battle' },
+    { href: '/players', label: 'Players', title: 'Player dossiers — where you stood, how you grew' },
+    { href: '/model', label: 'Lab', title: 'MTNN Training Cockpit + Architecture + where you\'re headed forecast' },
+    { href: '/trends', label: 'Trends', title: 'Trend Research — 30 seasons drift + forecast' },
     { href: '/methods', label: 'Methods', title: 'Every number recomputable — sources + math' },
   ];
 

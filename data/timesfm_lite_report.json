@@ -1,0 +1,23 @@
+{
+  "timestamp": "2026-09-02T00:41:10Z",
+  "model": "numpy-timesfm-lite-deterministic",
+  "N": 7096,
+  "eligible": 1308,
+  "forecasts": 300,
+  "mae_train": 0.13352353870868683,
+  "rmse_train": 0.1731298267841339,
+  "cosine_train": 0.8024246096611023,
+  "baselines": {
+    "naive_last": 0.14439116418361664,
+    "seasonal_avg": 0.14657136797904968,
+    "drift": 0.1880514770746231
+  },
+  "beats_baselines": {
+    "naive": true,
+    "avg": true,
+    "drift": true
+  },
+  "seed": 7,
+  "provenance": "7/7/0 hoops real data",
+  "training": "patch3 recent bias 0.2/0.3/0.5 cross-var lstsq deterministic seed7 no torch"
+}
