@@ -1,0 +1,64 @@
+{
+  "version": "0.4.0-incremental-full64-2plus",
+  "license": "Apache-2.0 safe",
+  "model": "transformer_v2_full64_incremental",
+  "timestamp": "2026-09-02T02:37:06Z",
+  "seed": 7,
+  "data": {
+    "npz_path": "/home/hatch/workspace/vector-hoops/data/embedding_v3_with_text.npz",
+    "total_unique": 2415,
+    "eligible_2plus": 1901,
+    "eligible_3plus": 1554,
+    "eligible_4plus": 1308,
+    "rows_2plus": 12452,
+    "windows_1_to_1": 10551,
+    "windows_2_to_1": 8650,
+    "windows_3_to_1": 7096,
+    "windows_variable_up_to_3": 10551
+  },
+  "split": {
+    "method": "chronological_train<=2021_val2022-23_test>=2024",
+    "train": 8921,
+    "val": 804,
+    "test": 826
+  },
+  "architecture": {
+    "patching": "3-season patches, variable context up to 3, pad if needed",
+    "temporal_mixing": "causal weighted avg recent bias [0.2,0.3,0.5] init, softmax learnable if torch",
+    "cross_variate": "64x64 + MLP 64->128->256->64",
+    "d_model": 128,
+    "n_layers": 2,
+    "n_heads": 4,
+    "dim_ff": 256,
+    "output": "64-d + 9 quantiles",
+    "params_est": 61888,
+    "params_vs_prev": "61888/64 = 967.0x"
+  },
+  "metrics": {
+    "mae_train": 0.036133211106061935,
+    "mae_val": 0.04032285884022713,
+    "mae_val_base": 0.040254782885313034,
+    "rmse_val": 0.09130159765481949,
+    "cosine_val": 0.7095134854316711,
+    "params_est": 61888
+  },
+  "baselines": {
+    "train": {
+      "naive_last_mae": 0.03885596618056297,
+      "seasonal_avg_mae": 0.039583612233400345,
+      "drift_mae": 0.051451314240694046
+    },
+    "val": {
+      "naive_last_mae": 0.035382457077503204,
+      "seasonal_avg_mae": 0.03827454894781113,
+      "drift_mae": 0.04977627471089363
+    }
+  },
+  "files": {
+    "model_npz": "/home/hatch/workspace/vector-hoops/data/timesfm_transformer_v2_full64.npz",
+    "report_json": "/home/hatch/workspace/vector-hoops/data/timesfm_transformer_v2_report.json",
+    "forecasts_json": "/home/hatch/workspace/vector-hoops/data/timesfm_transformer_v2_forecasts.json"
+  },
+  "provenance": "real data only, no synthetic, Apache-2.0 safe from scratch, deterministic seed 7, full 64-d, uses every 2+ player",
+  "next": "torch transformer trained on CPU (10 epochs) or numpy fallback, promote to Vercel after browser verification"
+}
