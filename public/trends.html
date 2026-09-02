@@ -497,14 +497,14 @@ input[type=range]{touch-action:manipulation}
     <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:flex-start">
       <div>
         <h2>Where it's headed — experimental forecast <span class="pill" style="background:#F0E442">Past → Modern → Headed</span></h2>
-        <p class="sub">Same 12,966 map, same 64-d embedding. <b>Where you stood → how you grew → where you're headed</b> — now projected one season forward from 3-season windows. Stone dashed = uncertainty, terracotta dashed = drift direction. Not a rank.</p>
+        <p class="sub">Same 12,452 map, same 128-d embedding. <b>Where you stood → how you grew → where you're headed</b> — now projected one season forward from 3-season windows. Stone dashed = uncertainty, terracotta dashed = drift direction. Not a rank.</p>
       </div>
       <div style="display:flex;gap:6px;flex-wrap:wrap"><span class="pill">8 of 64 dims</span><span class="pill">503 honest if missing</span></div>
     </div>
     <canvas id="forecast-canvas" width="800" height="220" style="width:100%;height:auto;display:block;border:1.8px solid var(--ink);border-radius:12px;background:#FFFEF7;margin-top:10px"></canvas>
     <div id="forecast-legend" class="caption" style="margin-top:8px">Loading forecasts…</div>
     <div id="forecast-trends-slot" style="margin-top:12px"></div>
-    <p class="caption" style="margin-top:8px">Experimental — torch-lite 2-layer (7,096 windows, 5 epochs, no chrono split). Uses same embedding_v3 12,966×64 that powers the map. Shows as stone ghost rings on the map, same family as orange guesses / yellow target.</p>
+    <p class="caption" style="margin-top:8px">Experimental — torch-lite 2-layer (10,551 windows, 5 epochs, no chrono split). Uses same embedding_v3 12,452×128 that powers the map. Shows as stone ghost rings on the map, same family as orange guesses / yellow target.</p>
   </section>
 
 </main>
