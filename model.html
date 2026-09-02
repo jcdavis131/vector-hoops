@@ -8,11 +8,11 @@
 <title>How the vector knows — MTNN Training Cockpit — Vector Hoops</title>
 <link rel="canonical" href="https://hoops.dumbmodel.com/model">
 <meta property="og:url" content="https://hoops.dumbmodel.com/model">
-<meta name="description" content="From 12,452 player-seasons to a 128-d fingerprint MTNN v6 champion: training cockpit, architecture, truthful flow, and Model explorer for MTNN v4→v6.">
+<meta name="description" content="From 12,966 player-seasons to a 128-d fingerprint MTNN v6 champion: training cockpit, architecture, truthful flow, and Model explorer for MTNN v4→v6.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Ctext y=%22.9em%22 font-size=%2290%22%3E🏀%3C/text%3E%3C/svg%3E">
 <meta property="og:type" content="website">
 <meta property="og:title" content="How the vector knows — MTNN Training Cockpit">
-<meta property="og:description" content="12,452 seasons → 120 feats → 17 towers b3 h256 t64 → 128-d MTNN v6 best → 8 archetypes. Model training cockpit, flow, and explorer.">
+<meta property="og:description" content="12,966 seasons → 120 feats → 17 towers b3 h256 t64 → 64-d MTNN v5 champion → 8 archetypes. Model training cockpit, flow, and explorer.">
 <meta property="og:image" content="/assets/og-1200x630.png">
 <meta name="twitter:card" content="summary_large_image"/>
 <link rel="stylesheet" href="assets/shell.css">
@@ -309,16 +309,16 @@ a{color:inherit}
 
 <div class="research-head network-head">
 <h1>How the vector knows</h1>
-<p class="network-hero">Every player-season is a fingerprint: <b>120 raw stats → 17 families with masking → 17 residual towers ×3 → fusion 512 → 128-d unit sphere where cosine = similarity</b>. MTNN v6 champion — 12,452 rows × 128-d, 1901 players 2+ seasons, b3 h256 t64 d128 mlp256 fus512, torch est 7.8M params / sklearn fallback 233K L2 normalized. Training cockpit, architecture, and glass-box debugger — same source of truth for v6 champion now, forecast research-only.</p>
+<p class="network-hero">Every player-season is a fingerprint: <b>130 raw stats → 17 families with masking → 17 residual towers ×3 → fusion 512 → 128-d unit sphere where cosine = similarity</b>. MTNN v6 champion — 12,452 rows × 128-d, 1901 players 2+ seasons, b3 h256 t64 d128 mlp256 fus512, torch est 7.8M params / sklearn fallback 233K L2 normalized. Training cockpit, architecture, and glass-box debugger — same source of truth for v6 champion now, forecast research-only.</p>
 
 <div class="stats-strip" aria-label="MTNN stats">
-<span class="stats-chip">12,452 seasons MTNN v6 best</span>
+<span class="stats-chip">12,966 seasons MTNN v5 champion</span>
 <span class="stats-chip">1996–2026</span>
 <span class="stats-chip">120 feats × 17 towers</span>
 <span class="stats-chip">cat([x·m,m]) masked 17</span>
-<span class="stats-chip">17× 256→64 ×3 =1088+17 mask</span>
-<span class="stats-chip">1105→512→128 L2 champion</span>
-<span class="stats-chip">~7.8M torch est / 233K sklearn fallback</span>
+<span class="stats-chip">17× 160→32 ×3 =1088+17 mask</span>
+<span class="stats-chip">556→128→64 L2 champion</span>
+<span class="stats-chip">~224K / 233K sklearn fallback</span>
 <span class="stats-chip">heads 8/5/14/18</span>
 </div>
 
@@ -330,7 +330,7 @@ a{color:inherit}
 <div class="cqs-badge"><b>0.119</b><span>continuity spread (guard)</span></div>
 <div class="cqs-badge"><b>6</b><span>seeds averaged</span></div>
 </div>
-<p class="mono" style="font-size:12px; color:#5A5248; margin:8px 0 2px;">Promoted 2026-07-25: <code>mtnn_v6_concat_b3_h256_t64_d128_mlp256_fus512_12452rows_best</code>, replacing the 2026-07-14 build. On the identical held-out protocol it more than doubles top-5 retrieval on never-trained 2024+ pairs — <b>0.363 → 0.757</b> (top-1 0.163 → 0.438). The previous model predated the position-label, career-feature and durability-leak fixes.</p>
+<p class="mono" style="font-size:12px; color:#5A5248; margin:8px 0 2px;">Promoted 2026-07-25: <code>mtnn_v5_concat_b2_h160_t32_d64_mlp128_fus256</code>, replacing the 2026-07-14 build. On the identical held-out protocol it more than doubles top-5 retrieval on never-trained 2024+ pairs — <b>0.363 → 0.757</b> (top-1 0.163 → 0.438). The previous model predated the position-label, career-feature and durability-leak fixes.</p>
 
 <div class="cqs-strip" id="eval-scoreboard-strip" aria-label="Held-out retrieval scoreboard">
 <div class="cqs-badge is-primary"><b id="evsb-top5">…</b><span>held-out top-5 retrieval</span></div>
@@ -356,7 +356,7 @@ a{color:inherit}
 
 <div class="cockpit-grid">
 <div class="cockpit-panel">
-<h3>Current deployed — mtnn_v6_concat_b3_h256_t64_d128_mlp256_fus512_12452rows_best</h3>
+<h3>Current deployed — mtnn_v5_concat_b2_h160_t32_d64_mlp128_fus256</h3>
 <div id="arch-current-meta" class="mono" style="font-size:12px; line-height:1.6;">Loading mtnn_arch.json…</div>
 <div class="weights-grid" id="weights-grid"></div>
 <p style="font-size:13px; line-height:1.6; margin-top:12px; color:#333;">CQS weights from <code>pipeline/composite_score.py</code>: recall 0.18, purity 0.16, margin_14d 0.08, archetype 0.08, position 0.05, skills_r2 0.14, skill_nn 0.05, next_r2 0.12, next_mae 0.06, aux_r2 0.08. <b>Gate re-anchored 2026-07-25</b> to a leak-free baseline (CQS 75.62 / recall 0.742 / purity 0.7822, 6 seeds, 120-feature matrix). Thresholds are now 2× the standard error of the seed mean rather than a flat 0.02 — measured seed sd is 0.128 on test recall alone, so the old slack was adjudicating sampling noise. A candidate must also hold same-player continuity spread under its bar, which is what catches a model that memorizes the training window instead of generalizing.</p>
@@ -366,12 +366,12 @@ a{color:inherit}
 <div class="pipe">
 <div class="pipe-step is-done"><span class="step-num">01</span><b>Gather</b><i>stats.nba 12,452</i></div><div class="pipe-arrow">→</div>
 <div class="pipe-step is-done"><span class="step-num">02</span><b>Vectors</b><i>per-season z ±4 + mask</i></div><div class="pipe-arrow">→</div>
-<div class="pipe-step is-done"><span class="step-num">03</span><b>Towers</b><i>17×256→64×3 1088</i></div><div class="pipe-arrow">→</div>
-<div class="pipe-step is-done"><span class="step-num">04</span><b>Fusion</b><i>1105→512→128 L2 7.8M</i></div><div class="pipe-arrow">→</div>
+<div class="pipe-step is-done"><span class="step-num">03</span><b>Towers</b><i>17×160→32×3 1088</i></div><div class="pipe-arrow">→</div>
+<div class="pipe-step is-done"><span class="step-num">04</span><b>Fusion</b><i>556→128→64 L2 7.8M</i></div><div class="pipe-arrow">→</div>
 <div class="pipe-step is-done"><span class="step-num">05</span><b>Deploy</b><i>ONNX + WASM + Procrustes</i></div>
 </div>
-<p style="font-size:13px; margin-top:12px; line-height:1.6;">v6 champion is not shallow: 17 towers × 3 residual blocks 256 hidden → 64 out LN GELU + skip =1088, +17 mask dims =1105 concat → 512 fusion → 128 L2 unit sphere. ~7.8M torch est / 233K sklearn fallback. Shared 128-d for 8 archetype +5 position +14 next +18 skill heads. Capacity holds 12,452 player-seasons, 1901 players 2+ seasons, MIN≥800 filter, Procrustes-chained drift.json maps any season into 1996-97 root frame.</p>
-<p style="font-size:13px; margin-top:8px; line-height:1.6;"><b>v6 champion deployed:</b> 120 feats → robust median/IQR clip[-3,3] → 17 families cat([x·m,m]) 1105-d → towers b3 h256 t64 d128 mlp256 fus512 → 17×64 tokens =1088 → CLS + season 12→128 + 17 tokens =19 tokens → concat fusion 1105→512→128 L2. ~7.8M torch est, 233K sklearn fallback. CQS gate, purity, continuity guard, position + skills + next + aux. <b>Production serves ONE champion only — MTNN v6 is champion. Forecast Transformer v2 is research-only.</b></p>
+<p style="font-size:13px; margin-top:12px; line-height:1.6;">v6 champion is not shallow: 17 towers × 3 residual blocks 256 hidden → 64 out LN GELU + skip =1088, +17 mask dims =1105 concat → 512 fusion → 128 L2 unit sphere. ~224K / 233K sklearn fallback. Shared 128-d for 8 archetype +5 position +14 next +18 skill heads. Capacity holds 12,966 player-seasons, 1901 players 2+ seasons, MIN≥800 filter, Procrustes-chained drift.json maps any season into 1996-97 root frame.</p>
+<p style="font-size:13px; margin-top:8px; line-height:1.6;"><b>v6 champion deployed:</b> 120 feats → robust median/IQR clip[-3,3] → 17 families cat([x·m,m]) 1105-d → towers b3 h256 t64 d128 mlp256 fus512 → 17×64 tokens =1088 → CLS + season 12→128 + 17 tokens =19 tokens → concat fusion 556→128→64 L2. ~224K, 233K sklearn fallback. CQS gate, purity, continuity guard, position + skills + next + aux. <b>Production serves ONE champion only — MTNN v6 is champion. Forecast Transformer v2 is research-only.</b></p>
 </div>
 </div>
 
@@ -384,7 +384,7 @@ a{color:inherit}
 
 <div class="cockpit-panel" style="margin-top:12px;border:2.2px dashed var(--ink);border-radius:12px;background:#fff;">
 <h3>Forecast — same family, one season forward <span style="font-family:var(--mono);font-size:10px;background:#F0E442;border:1.5px solid var(--ink);border-radius:999px;padding:2px 8px;margin-left:6px">Where you're headed</span></h3>
-<p style="font-size:13px;line-height:1.6;margin:8px 0">Same 12,452×128 MTNN v6 champion embedding that powers the map. <b>3-season context → next-season embedding</b> (first 8 of 128 dims). Forecast Transformer v2 0.4.0-incremental-full64-2plus, 10551 windows chronological train 8921/val 804/test 826, val MAE 0.0403 vs naive-last 0.0354 and seasonal-avg 0.0383 — loses to baselines so <b>research-only per policy</b>, not served as map. Uses same tokens: stone dashed = uncertainty, terracotta dashed = headed direction. Shared contract <code>/data/timesfm_forecasts.json</code> (10551 windows) used by Map, Trends, Players for ghost rings. ONE champion served.</p>
+<p style="font-size:13px;line-height:1.6;margin:8px 0">Same 12,966×64 MTNN v6 champion embedding that powers the map. <b>3-season context → next-season embedding</b> (first 8 of 128 dims). Forecast Transformer v2 0.4.0-incremental-full64-2plus, 10551 windows chronological train 8921/val 804/test 826, val MAE 0.0403 vs naive-last 0.0354 and seasonal-avg 0.0383 — loses to baselines so <b>research-only per policy</b>, not served as map. Uses same tokens: stone dashed = uncertainty, terracotta dashed = headed direction. Shared contract <code>/data/timesfm_forecasts.json</code> (10551 windows) used by Map, Trends, Players for ghost rings. ONE champion served.</p>
 <div style="display:flex;gap:6px;flex-wrap:wrap;margin:8px 0"><span class="stats-chip">8 of 128 dims</span><span class="stats-chip">10551 windows</span><span class="stats-chip">503 honest if missing</span><span class="stats-chip">Past → Modern → Headed</span></div>
 <canvas id="forecast-lab-canvas" width="800" height="180" style="width:100%;border:1.5px solid var(--ink);border-radius:10px;background:#FFFEF7"></canvas>
 <div id="forecast-lab-legend" style="font-family:var(--mono);font-size:11px;margin-top:6px;color:#5A5248">Loading forecast…</div>
@@ -399,7 +399,7 @@ a{color:inherit}
 <div class="manim-grid">
 <div class="manim-card">
 <video autoplay loop muted playsinline controls preload="metadata" src="assets/manim/MTNNFlow.mp4" aria-label="MTNNFlow"></video>
-<div class="manim-caption"><b>MTNNFlow — glass box</b><br>17 towers, 120 feats cat([x·m,m]) → 17× 256→64 LN+GELU×3 → 1088 +17 mask → 1105→512→128 L2 → heads 8/5/14/18. Every box is real dimension. <em style="display:block;margin-top:6px;background:#FFFEF7;border:1.2px dashed #1A150F;border-radius:8px;padding:6px 8px">Video render is conceptual v4/v5 glass-box (48-d). Current deployed is MTNN v6 champion: same 17 families, 3 blocks 256→64, 1105→512→128, ~7.8M torch est. 120 feats, 131 with readout families (injury is durability read-out, not input tower).</em></div>
+<div class="manim-caption"><b>MTNNFlow — glass box</b><br>17 towers, 120 feats cat([x·m,m]) → 17× 160→32 LN+GELU×3 → 1088 +17 mask → 556→128→64 L2 → heads 8/5/14/18. Every box is real dimension. <em style="display:block;margin-top:6px;background:#FFFEF7;border:1.2px dashed #1A150F;border-radius:8px;padding:6px 8px">Video render is conceptual v4/v5 glass-box (48-d). Current deployed is MTNN v6 champion: same 17 families, 3 blocks 256→64, 1105→512→128, ~224K. 120 feats, 131 with readout families (injury is durability read-out, not input tower).</em></div>
 </div>
 <div class="manim-card">
 <video autoplay loop muted playsinline controls preload="metadata" src="assets/manim/ChimeraEquation.mp4" aria-label="ChimeraEquation"></video>
@@ -411,7 +411,7 @@ a{color:inherit}
 </div>
 <div class="manim-card">
 <video autoplay loop muted playsinline controls preload="metadata" src="assets/manim/EmbeddingL2.mp4" aria-label="EmbeddingL2"></video>
-<div class="manim-caption"><b>EmbeddingL2 — 128-d → L2 → unit sphere</b><br>v̂ = v/||v||₂, ||v̂||=1, cos = v̂·ŵ. 12,452 points on sphere powers Chimera + Era Twin.</div>
+<div class="manim-caption"><b>EmbeddingL2 — 128-d → L2 → unit sphere</b><br>v̂ = v/||v||₂, ||v̂||=1, cos = v̂·ŵ. 12,966 points on sphere powers Chimera + Era Twin.</div>
 </div>
 </div>
 </section>
@@ -419,7 +419,7 @@ a{color:inherit}
 <!-- 3. FLOW -->
 <section class="drift-card" id="network-flow" aria-label="Network data flow">
 <div class="network-section__head">
-<div><p class="viz-panel__label" style="margin:0;">Data flow — truthful boxes measured</p><p class="network-flow-subhead">Input mask m∈{0,1} • cat([x·m,m]) 1105-d → 17 towers b3 h256 → t64 ×3 residual LN GELU + skip → 1088 +17 mask =1105 concat → 512 fusion → L2 embed 128-d → MLP heads 8/5/14/18. Tap any node. MTNN v6 champion 12,452×128.</p></div>
+<div><p class="viz-panel__label" style="margin:0;">Data flow — truthful boxes measured</p><p class="network-flow-subhead">Input mask m∈{0,1} • cat([x·m,m]) 1105-d → 17 towers b3 h256 → t64 ×3 residual LN GELU + skip → 1088 +17 mask =1105 concat → 512 fusion → L2 embed 128-d → MLP heads 8/5/14/18. Tap any node. MTNN v6 champion 12,966×64.</p></div>
 <div class="network-flow-tools"><span id="network-trace-status" class="network-trace-status">Tap a node to see what fed it.</span><button type="button" id="network-trace-clear" class="network-trace-clear" hidden>✕ Clear</button></div>
 </div>
 <div class="network-flow-layout">
@@ -448,7 +448,7 @@ a{color:inherit}
 <div class="network-controls" style="padding:14px 16px;">
 <div class="search-row">
 <label class="viz-panel__label" for="network-search">Player</label>
-<input type="search" id="network-search" class="wiki-search network-search" placeholder="Search 12,452 — e.g. LeBron 2013, Curry 2016… MTNN v6 best" autocomplete="off" autocorrect="off" spellcheck="false">
+<input type="search" id="network-search" class="wiki-search network-search" placeholder="Search 12,452 — e.g. LeBron 2013, Curry 2016… MTNN v5 champion" autocomplete="off" autocorrect="off" spellcheck="false">
 <ul class="network-suggest" id="network-suggest" hidden></ul>
 <span id="network-player-tag" class="network-player-tag">Loading index…</span>
 </div>
@@ -478,7 +478,7 @@ a{color:inherit}
 <div id="network-timebar-range" class="network-timebar__range"></div>
 </div>
 
-<p id="network-step-caption" class="network-step-caption">Loading architecture… MTNN v6: 17×256→64 LN GELU ×3, 12-d season emb, 1088+17=1105→512→128 L2 ~7.8M torch est / 233K sklearn fallback. Era-honest sigma per-season, masked, Procrustes-chained drift.json root 1996-97 Q^T Q=I.</p>
+<p id="network-step-caption" class="network-step-caption">Loading architecture… MTNN v6: 17×160→32 LN GELU ×3, 12-d season emb, 1088+17=556→128→64 L2 ~224K / 233K sklearn fallback. Era-honest sigma per-season, masked, Procrustes-chained drift.json root 1996-97 Q^T Q=I.</p>
 
 <div id="network-story" class="network-story"><p class="drift-loading">Loading story…</p></div>
 <div id="network-compare-summary" class="network-insights" style="margin-top:12px;"><p class="drift-loading">Compare off — toggle to diff two seasons.</p></div>
@@ -492,7 +492,7 @@ a{color:inherit}
 </section>
 
 <section class="drift-card network-map-card" aria-label="128-d MTNN v6 embedding map">
-<div class="network-section__head"><div><p class="viz-panel__label" style="margin:0;">Embedding map — 128-d MTNN v6 rendered in 3D</p><p style="font-size:12px; color:#666; margin-top:6px;">Slow auto-rotate • drag to orbit • scroll to zoom • orange=selected — 12,452 points L2-normalized.</p></div></div>
+<div class="network-section__head"><div><p class="viz-panel__label" style="margin:0;">Embedding map — 128-d MTNN v6 rendered in 3D</p><p style="font-size:12px; color:#666; margin-top:6px;">Slow auto-rotate • drag to orbit • scroll to zoom • orange=selected — 12,966 points L2-normalized.</p></div></div>
 <div class="network-map-layout">
 <div class="network-map-stage">
 <canvas id="network-map-canvas" class="network-map-canvas" aria-label="3D MTNN embedding map"></canvas>
@@ -508,7 +508,7 @@ a{color:inherit}
 <div class="cockpit-grid">
 <div class="cockpit-panel">
 <h3>01 Gather → 02 Vectors</h3>
-<p style="font-size:14px; line-height:1.6;">Pull every per-100 split from stats.nba.com 1996-2026. 12,452 player-seasons after MIN≥800 filter. Per-season z-score so 1999 and 2026 are both 0 = average of their era. Mask m creates cat([x·m,m]) so model knows never-measured vs zero.</p>
+<p style="font-size:14px; line-height:1.6;">Pull every per-100 split from stats.nba.com 1996-2026. 12,966 player-seasons after MIN≥800 filter. Per-season z-score so 1999 and 2026 are both 0 = average of their era. Mask m creates cat([x·m,m]) so model knows never-measured vs zero.</p>
 <ul style="font-size:12px; line-height:1.6; margin:8px 0 0 18px;">
 <li>volume, playmaking, rebounding, defense, efficiency, shotmix</li>
 <li>bio age/height/weight/draft, tracking 2013+ masked, form 2015+ masked</li>
@@ -517,7 +517,7 @@ a{color:inherit}
 </div>
 <div class="cockpit-panel">
 <h3>03 Train → 04 Export → 05 Deploy</h3>
-<p style="font-size:14px; line-height:1.6;">Residual towers 17×256→64 ×3 LN GELU + skip =1088, +17 mask =1105 concat fusion 1105→512→128 L2 ~7.8M torch est / 233K sklearn fallback. 17 families, cat([x·m,m]) masked, Procrustes chained RᵀR=I root 1996-97 so Era Twin compares directly. Heads MLP decode 8/5/14/18. Forecast v2 research-only. ONNX WASM 2MB, ExecuTorch mobile. Drift uses Procrustes chained RᵀR=I root frame 1996-97 so Era Twin compares directly.</p>
+<p style="font-size:14px; line-height:1.6;">Residual towers 17×160→32 ×3 LN GELU + skip =1088, +17 mask =1105 concat fusion 556→128→64 L2 ~224K / 233K sklearn fallback. 17 families, cat([x·m,m]) masked, Procrustes chained RᵀR=I root 1996-97 so Era Twin compares directly. Heads MLP decode 8/5/14/18. Forecast v2 research-only. ONNX WASM 2MB, ExecuTorch mobile. Drift uses Procrustes chained RᵀR=I root frame 1996-97 so Era Twin compares directly.</p>
 </div>
 </div>
 </section>
