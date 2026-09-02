@@ -1,17 +1,17 @@
 {
-  "built": "2026-09-02T02:44:00Z",
-  "model": "mtnn_v6_concat_b3_h256_t32_d64_mlp256_fus512_12452rows_best",
-  "model_tag": "mtnn_v6_b3_h256_t64_d128_mlp256_fus512",
+  "built": "2026-07-25",
+  "model": "mtnn_v5_concat_b2_h160_t32_d64_mlp128_fus256",
+  "model_tag": "mtnn_v5_concat_b2_h160_t32_d64_mlp128_fus256",
   "fusion": "concat",
-  "dTower": 64,
-  "dEmb": 128,
+  "dTower": 32,
+  "dEmb": 64,
   "dIn": 130,
   "checkpoint": {
     "mtime": 1784061762,
     "bytes": 1563083
   },
-  "towerBlocks": 3,
-  "towerHidden": 256,
+  "towerBlocks": 2,
+  "towerHidden": 160,
   "mlpHeads": true,
   "nArchetypes": 8,
   "nPositions": 5,
@@ -55,9 +55,7 @@
     "tracking",
     "volume"
   ],
-  "readoutFamilies": [
-    "injury"
-  ],
+  "readoutFamilies": ["injury"],
   "skillKeys": [
     "scoring",
     "shooting",
@@ -108,17 +106,17 @@
     {
       "id": "input",
       "label": "Masked inputs",
-      "detail": "130 feats in 17 families + mask \u2192 2x per family, cat([x\u00b7m,m])"
+      "detail": "130 feats in 17 families + mask → 2x per family, cat([x·m,m])"
     },
     {
       "id": "towers",
       "label": "Residual towers",
-      "detail": "17 \u00d7 2 blocks (160 \u2192 32) LN+GELU+skip = 544-d"
+      "detail": "17 × 2 blocks (160 → 32) LN+GELU+skip = 544-d"
     },
     {
       "id": "fusion",
       "label": "Concat fusion",
-      "detail": "544 + 12-d season_emb = 556 \u2192 128 \u2192 64-d L2-norm, ~224K params"
+      "detail": "544 + 12-d season_emb = 556 → 128 → 64-d L2-norm, ~224K params"
     },
     {
       "id": "embedding",
@@ -128,7 +126,7 @@
     {
       "id": "heads",
       "label": "Decode heads",
-      "detail": "8 archetype + 5 position + 14 next-profile + 18 skills (64\u219216\u21921)"
+      "detail": "8 archetype + 5 position + 14 next-profile + 18 skills (64→16→1)"
     }
   ],
   "training": {
@@ -152,12 +150,5 @@
     "robust_scaling": true,
     "phase": "auto",
     "era_align": "procrustes"
-  },
-  "prev": "mtnn_v5_concat_b2_h160_t32_d64_mlp128_fus256",
-  "fusionDim": 512,
-  "rows": 12452,
-  "players": 1901,
-  "filter": "2+ seasons, name grouping stable ID",
-  "params_torch_est": 7806856,
-  "incremental_scaling": "b2->b3 h160->h256 t32->t64 d64->d128 mlp128->mlp256 fus256->fus512"
+  }
 }
