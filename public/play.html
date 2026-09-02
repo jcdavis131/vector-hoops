@@ -781,7 +781,7 @@ button,.input{min-height:44px}
   }
 
   function updateStatusBar(){
-    const st=VHPastModern.state();
+    const st=VHPastModern.state(); if(!st||!st.target){ const turnText=$('#turn-text'); if(turnText) turnText.textContent='Loading court…'; return; }
     const triesPill=$('#tries-pill'), phase=$('#game-phase-label'), dots=$('#guess-dots'), turnCount=$('#turn-count'), slotWrap=$('#slot-label-wrap');
     const count=G.guesses.length;
     if(triesPill) triesPill.textContent=count+'/6';
@@ -823,11 +823,11 @@ button,.input{min-height:44px}
         const ps=VHPastModern.getPackState();
         if(ps.complete) turnText.textContent=`Pack ${ps.solved}/${ps.size} • Final summary below`;
         else if(over) turnText.textContent=won? `Won in ${count} — Next pack slot` : `Failed — answer was ${st.closestModern?st.closestModern.entry.n:'?'}`;
-        else if(count===0) turnText.textContent=`Pack ${ps.index+1}/${ps.size} • ${st.target.n} • model lens shows teammates`;
+        else if(count===0) turnText.textContent=`Pack ${ps.index+1}/${ps.size} • ${st.target?st.target.n:'…'} • model lens shows teammates`;
         else turnText.textContent=`Guess ${count}/6 used — ${6-count} left — Pack ${ps.index+1}/${ps.size}`;
       } else {
         if(over) turnText.textContent=won? `Won in ${count} — switch slot for next` : `Failed — answer was ${st.closestModern?st.closestModern.entry.n:'?'}`;
-        else if(count===0) turnText.textContent=`Model lens: ${st.target.n} archetype • team logo shows ${(()=>(getTeamAbbr(st.target.n,st.target.s)||'team'))()} • picks left`;
+        else if(count===0) turnText.textContent=`Model lens: ${st.target?st.target.n:'…'} archetype • team logo shows ${(()=>{try{return st.target? (getTeamAbbr(st.target.n,st.target.s)||'team'):'team'}catch{return 'team'}})()} • picks left`;
         else turnText.textContent=`Guess ${count}/6 used — ${6-count} left`;
       }
     }
