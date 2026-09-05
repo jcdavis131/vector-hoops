@@ -81,10 +81,6 @@ def test_manifest_and_service_worker() -> None:
 
 
 def test_vectors_have_coordinates() -> None:
-    rows = json.loads((ROOT / "assets" / "vectors.json").read_text(encoding="utf-8"))
-    rows = (
-        rows
-        if isinstance(rows, list)
-        else rows.get("rows") or rows.get("vectors") or []
-    )
-    assert len(rows) > 1000, "vectors.json should carry the player-season embedding"
+    doc = json.loads((ROOT / "assets" / "vectors.json").read_text(encoding="utf-8"))
+    players = doc["players"] if isinstance(doc, dict) else doc
+    assert len(players) == 12966, "vectors.json should carry all 12,966 player-seasons"
