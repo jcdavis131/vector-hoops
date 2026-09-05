@@ -1,0 +1,20 @@
+name: CI
+on:
+  push:
+    branches: [master, main]
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  site:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install pytest==8.3.4 ruff==0.8.6
+      - name: Ruff (pipeline + tests)
+        run: ruff check pipeline tests && ruff format --check pipeline tests
+      - name: Site smoke tests (JSON assets, pages, asset refs, manifest, vectors)
+        run: python -m pytest tests -q
