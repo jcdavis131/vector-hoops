@@ -58,6 +58,7 @@ PROV_FILES = [
 DEFAULT_TEXT_MODEL = "sentence-transformers/all-MiniLM-L6-v2"
 DEFAULT_BATCH = 32
 
+
 # Try imports with honest 503
 def require_import(name: str):
     try:
@@ -74,6 +75,7 @@ def require_import(name: str):
         print(json.dumps(err, indent=2))
         sys.exit(3)
 
+
 # Core deps - will 503 if missing
 np = require_import("numpy")
 pd = None
@@ -83,20 +85,32 @@ torch = None
 try:
     import pandas as pd
 except ImportError:
-    print(json.dumps({"status": 503, "error": "pandas missing", "hint": "pip install pandas"}, indent=2))
+    print(
+        json.dumps(
+            {"status": 503, "error": "pandas missing", "hint": "pip install pandas"},
+            indent=2,
+        )
+    )
     sys.exit(3)
 
 try:
-    import sklearn
     from sklearn.base import BaseEstimator, TransformerMixin
     from sklearn.compose import ColumnTransformer
     from sklearn.preprocessing import StandardScaler, OneHotEncoder
     from sklearn.pipeline import Pipeline
     from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor
-    from sklearn.model_selection import KFold, cross_val_score
-    from sklearn.metrics import mean_absolute_error, r2_score, classification_report
+    from sklearn.metrics import mean_absolute_error, r2_score
 except ImportError as e:
-    print(json.dumps({"status": 503, "error": f"scikit-learn missing: {e}", "hint": "pip install scikit-learn"}, indent=2))
+    print(
+        json.dumps(
+            {
+                "status": 503,
+                "error": f"scikit-learn missing: {e}",
+                "hint": "pip install scikit-learn",
+            },
+            indent=2,
+        )
+    )
     sys.exit(3)
 
 # Optional: sentence-transformers preferred, transformers fallback (like embed_cultural_text.py)
@@ -118,6 +132,7 @@ except ImportError:
     except ImportError:
         torch = None
 
+
 # ----------------------------------------------------------------------
 # TextEmbedder - mirrors article's custom transformer, with fallback
 # ----------------------------------------------------------------------
@@ -137,7 +152,13 @@ class TextEmbedder(BaseEstimator, TransformerMixin):
       - L2-normalized 384-d
       - Honest 503 if no backend available and texts present
     """
-    def __init__(self, model_name: str = DEFAULT_TEXT_MODEL, batch_size: int = DEFAULT_BATCH, device: str = "auto"):
+
+    def __init__(
+        self,
+        model_name: str = DEFAULT_TEXT_MODEL,
+        batch_size: int = DEFAULT_BATCH,
+        device: str = "auto",
+    ):
         self.model_name = model_name
         self.batch_size = batch_size
         self.device = device
@@ -155,10 +176,17 @@ class TextEmbedder(BaseEstimator, TransformerMixin):
                 self.backend = "sentence_transformers"
                 return self
             except Exception as e:
-                print(f"[TextEmbedder] sentence_transformers load failed: {e}, trying transformers fallback", flush=True)
+                print(
+                    f"[TextEmbedder] sentence_transformers load failed: {e}, trying transformers fallback",
+                    flush=True,
+                )
         if TRANSFORMERS_AVAILABLE and torch is not None:
             try:
-                dev = torch.device("cuda" if torch.cuda.is_available() and self.device != "cpu" else "cpu")
+                dev = torch.device(
+                    "cuda"
+                    if torch.cuda.is_available() and self.device != "cpu"
+                    else "cpu"
+                )
                 self.tokenizer = AutoTokenizer.from_pretrained(self.model_name)
                 self.model = AutoModel.from_pretrained(self.model_name).to(dev)
                 self.model.eval()
@@ -208,8 +236,13 @@ class TextEmbedder(BaseEstimator, TransformerMixin):
             # batched encode
             embs = []
             for i in range(0, len(texts), self.batch_size):
-                batch = texts[i:i+self.batch_size]
-                e = self.model.encode(batch, show_progress_bar=False, convert_to_numpy=True, normalize_embeddings=True)
+                batch = texts[i : i + self.batch_size]
+                e = self.model.encode(
+                    batch,
+                    show_progress_bar=False,
+                    convert_to_numpy=True,
+                    normalize_embeddings=True,
+                )
                 embs.append(e.astype(np.float32))
             return np.concatenate(embs, axis=0)
 
@@ -218,7 +251,7 @@ class TextEmbedder(BaseEstimator, TransformerMixin):
             chunks = []
             with torch.no_grad():
                 for i in range(0, len(texts), self.batch_size):
-                    batch = texts[i:i+self.batch_size]
+                    batch = texts[i : i + self.batch_size]
                     enc = self.tokenizer(
                         batch,
                         padding=True,
@@ -233,6 +266,7 @@ class TextEmbedder(BaseEstimator, TransformerMixin):
             return np.concatenate(chunks, axis=0)
         else:
             raise RuntimeError("TextEmbedder unknown backend")
+
 
 # ----------------------------------------------------------------------
 # Tabular loaders - hoops domain
@@ -257,7 +291,9 @@ def load_tabular_features() -> Tuple[pd.DataFrame, Dict[str, Any]]:
     # Load numeric inputs
     inputs_path = ASSETS / "mtnn_inputs.f32"
     if not inputs_path.exists():
-        raise FileNotFoundError(f"missing {inputs_path} - honest 503, run pipeline acquire first")
+        raise FileNotFoundError(
+            f"missing {inputs_path} - honest 503, run pipeline acquire first"
+        )
 
     raw = np.fromfile(str(inputs_path), dtype=np.float32)
     n = 12966
@@ -267,10 +303,13 @@ def load_tabular_features() -> Tuple[pd.DataFrame, Dict[str, Any]]:
     else:
         n_feats = len(raw) // n
     numeric = raw.reshape(n, n_feats)
-    print(f"[tabular] loaded mtnn_inputs.f32 {numeric.shape} (TCA 7 heads 224-d + TAA 128-d proxy via 11 base feats)")
+    print(
+        f"[tabular] loaded mtnn_inputs.f32 {numeric.shape} (TCA 7 heads 224-d + TAA 128-d proxy via 11 base feats)"
+    )
 
     # Load categorical / meta from vectors.json or players_lite
     import json as _json
+
     arch_path = ASSETS / "archetype_assignments.json"
     cat_data = {}
     if arch_path.exists():
@@ -280,25 +319,38 @@ def load_tabular_features() -> Tuple[pd.DataFrame, Dict[str, Any]]:
             assigns = arch.get("assignments", [])[:n]
             if len(assigns) < n:
                 # pad
-                assigns = assigns + [{"gameCluster":0,"mtnnGlobal":0,"era":"1996-2003"}]*(n-len(assigns))
-            cat_data["gameCluster"] = [a.get("gameCluster", 0) if isinstance(a, dict) else 0 for a in assigns]
-            cat_data["mtnnGlobal"] = [a.get("mtnnGlobal", 0) if isinstance(a, dict) else 0 for a in assigns]
-            cat_data["era"] = [a.get("era", "1996-2003") if isinstance(a, dict) else "1996-2003" for a in assigns]
-            print(f"[tabular] loaded arch assignments {len(assigns)} classes gc={len(set(cat_data['gameCluster']))} mg={len(set(cat_data['mtnnGlobal']))}")
+                assigns = assigns + [
+                    {"gameCluster": 0, "mtnnGlobal": 0, "era": "1996-2003"}
+                ] * (n - len(assigns))
+            cat_data["gameCluster"] = [
+                a.get("gameCluster", 0) if isinstance(a, dict) else 0 for a in assigns
+            ]
+            cat_data["mtnnGlobal"] = [
+                a.get("mtnnGlobal", 0) if isinstance(a, dict) else 0 for a in assigns
+            ]
+            cat_data["era"] = [
+                a.get("era", "1996-2003") if isinstance(a, dict) else "1996-2003"
+                for a in assigns
+            ]
+            print(
+                f"[tabular] loaded arch assignments {len(assigns)} classes gc={len(set(cat_data['gameCluster']))} mg={len(set(cat_data['mtnnGlobal']))}"
+            )
         except Exception as e:
             print(f"[tabular] arch load warn {e}")
-            import traceback; traceback.print_exc()
-            cat_data["gameCluster"] = [0]*n
-            cat_data["mtnnGlobal"] = [0]*n
-            cat_data["era"] = ["1996-2003"]*n
+            import traceback
+
+            traceback.print_exc()
+            cat_data["gameCluster"] = [0] * n
+            cat_data["mtnnGlobal"] = [0] * n
+            cat_data["era"] = ["1996-2003"] * n
     else:
-        cat_data["gameCluster"] = [0]*n
-        cat_data["mtnnGlobal"] = [0]*n
-        cat_data["era"] = ["1996-2003"]*n
+        cat_data["gameCluster"] = [0] * n
+        cat_data["mtnnGlobal"] = [0] * n
+        cat_data["era"] = ["1996-2003"] * n
 
     # Player names / seasons from mtnn_meta or players_lite
     names = [f"player_{i}" for i in range(n)]
-    seasons = ["2024-25"]*n
+    seasons = ["2024-25"] * n
     try:
         vpath = ASSETS / "vectors.json"
         if vpath.exists():
@@ -309,8 +361,16 @@ def load_tabular_features() -> Tuple[pd.DataFrame, Dict[str, Any]]:
                 seasons = [p.get("season", "2024-25") for p in pls]
             elif isinstance(v, list):
                 pls = v[:n]
-                names = [p.get("name", f"player_{i}") if isinstance(p, dict) else f"player_{i}" for i, p in enumerate(pls)]
-                seasons = [p.get("season", "2024-25") if isinstance(p, dict) else "2024-25" for p in pls]
+                names = [
+                    p.get("name", f"player_{i}")
+                    if isinstance(p, dict)
+                    else f"player_{i}"
+                    for i, p in enumerate(pls)
+                ]
+                seasons = [
+                    p.get("season", "2024-25") if isinstance(p, dict) else "2024-25"
+                    for p in pls
+                ]
     except Exception as e:
         print(f"[tabular] name load warn {e}")
 
@@ -335,6 +395,7 @@ def load_tabular_features() -> Tuple[pd.DataFrame, Dict[str, Any]]:
     }
     return df, meta
 
+
 def load_text_features(n_expected: int = 12966) -> Tuple[List[str], Dict[str, Any]]:
     """
     Loads player bios / scouting text for TextEmbedder branch.
@@ -347,7 +408,9 @@ def load_text_features(n_expected: int = 12966) -> Tuple[List[str], Dict[str, An
     """
     # Try unified bios
     bios_paths = [
-        Path("~/workspace/vector-unified/data/market_cultural/wikipedia_bios.json").expanduser(),
+        Path(
+            "~/workspace/vector-unified/data/market_cultural/wikipedia_bios.json"
+        ).expanduser(),
         ROOT / "data" / "market_cultural" / "wikipedia_bios.json",
         ROOT / "data" / "bios.json",
         ASSETS / "bios.json",
@@ -357,21 +420,38 @@ def load_text_features(n_expected: int = 12966) -> Tuple[List[str], Dict[str, An
             try:
                 bios = json.loads(bp.read_text(encoding="utf-8"))
                 players = bios.get("players", {})
-                ok = [(k, v) for k, v in players.items() if v.get("status") == "ok" and v.get("extract")]
+                ok = [
+                    (k, v)
+                    for k, v in players.items()
+                    if v.get("status") == "ok" and v.get("extract")
+                ]
                 if ok:
                     # Map to hoops: filter sport==hoops if present
-                    hoops_texts = [v["extract"][:1200] for k, v in ok if "hoops" in k or v.get("sport") == "hoops"]
+                    hoops_texts = [
+                        v["extract"][:1200]
+                        for k, v in ok
+                        if "hoops" in k or v.get("sport") == "hoops"
+                    ]
                     if not hoops_texts:
                         hoops_texts = [v["extract"][:1200] for _, v in ok]
                     print(f"[text] loaded {len(hoops_texts)} bios from {bp}")
                     # Pad or truncate to n_expected
                     if len(hoops_texts) < n_expected:
                         # Repeat last or pad with empty -> will trigger honest 503 downstream if too many missing
-                        print(f"[text] warning: only {len(hoops_texts)} bios for {n_expected} seasons - padding with empty (will be masked)")
-                        hoops_texts = hoops_texts + [""] * (n_expected - len(hoops_texts))
+                        print(
+                            f"[text] warning: only {len(hoops_texts)} bios for {n_expected} seasons - padding with empty (will be masked)"
+                        )
+                        hoops_texts = hoops_texts + [""] * (
+                            n_expected - len(hoops_texts)
+                        )
                     else:
                         hoops_texts = hoops_texts[:n_expected]
-                    return hoops_texts, {"source": str(bp), "n_ok": len(ok), "n_hoops": len(hoops_texts), "status": "ok"}
+                    return hoops_texts, {
+                        "source": str(bp),
+                        "n_ok": len(ok),
+                        "n_hoops": len(hoops_texts),
+                        "status": "ok",
+                    }
             except Exception as e:
                 print(f"[text] load {bp} failed {e}")
 
@@ -388,12 +468,19 @@ def load_text_features(n_expected: int = 12966) -> Tuple[List[str], Dict[str, An
     # Raise with details - caller will handle smoke mode
     print(json.dumps(err_meta, indent=2))
     # Return empty list but with flag - caller decides
-    return [""] * n_expected, {"source": "missing", "status": "503_missing_bios", "error": err_meta}
+    return [""] * n_expected, {
+        "source": "missing",
+        "status": "503_missing_bios",
+        "error": err_meta,
+    }
+
 
 # ----------------------------------------------------------------------
 # Training + Eval
 # ----------------------------------------------------------------------
-def build_column_transformer(text_cols: List[str], numeric_cols: List[str], cat_cols: List[str]):
+def build_column_transformer(
+    text_cols: List[str], numeric_cols: List[str], cat_cols: List[str]
+):
     """
     Mirrors article's ColumnTransformer with 3 branches:
       transformers=[
@@ -404,16 +491,23 @@ def build_column_transformer(text_cols: List[str], numeric_cols: List[str], cat_
     """
     preprocessor = ColumnTransformer(
         transformers=[
-            ('text', TextEmbedder(model_name=DEFAULT_TEXT_MODEL), text_cols),
-            ('num', StandardScaler(), numeric_cols),
-            ('cat', OneHotEncoder(handle_unknown='ignore', sparse_output=False), cat_cols),
+            ("text", TextEmbedder(model_name=DEFAULT_TEXT_MODEL), text_cols),
+            ("num", StandardScaler(), numeric_cols),
+            (
+                "cat",
+                OneHotEncoder(handle_unknown="ignore", sparse_output=False),
+                cat_cols,
+            ),
         ],
-        remainder='drop',
+        remainder="drop",
         verbose_feature_names_out=False,
     )
     return preprocessor
 
-def train_fused_pipeline(df: pd.DataFrame, text_features: List[str], smoke: bool = False, epochs: int = 2):
+
+def train_fused_pipeline(
+    df: pd.DataFrame, text_features: List[str], smoke: bool = False, epochs: int = 2
+):
     """
     Trains fused pipeline.
 
@@ -432,12 +526,14 @@ def train_fused_pipeline(df: pd.DataFrame, text_features: List[str], smoke: bool
     if len(text_features) != n:
         print(f"[warn] text len {len(text_features)} != n {n}, trunc/pad")
         if len(text_features) < n:
-            text_features = text_features + [""]*(n-len(text_features))
+            text_features = text_features + [""] * (n - len(text_features))
         else:
             text_features = text_features[:n]
     df["bio_text"] = text_features
 
-    print(f"[train] numeric {len(numeric_cols)} cat {len(cat_cols)} text {len(text_cols)} n={n}")
+    print(
+        f"[train] numeric {len(numeric_cols)} cat {len(cat_cols)} text {len(text_cols)} n={n}"
+    )
 
     preprocessor = build_column_transformer(text_cols, numeric_cols, cat_cols)
 
@@ -451,25 +547,30 @@ def train_fused_pipeline(df: pd.DataFrame, text_features: List[str], smoke: bool
 
     # Check if y has enough classes
     n_classes = len(set(y_cls))
-    print(f"[train] y_cls classes {n_classes} distribution {pd.Series(y_cls).value_counts().to_dict()}")
+    print(
+        f"[train] y_cls classes {n_classes} distribution {pd.Series(y_cls).value_counts().to_dict()}"
+    )
 
     # Pipeline as per article: preprocessor -> classifier
-    clf = RandomForestClassifier(n_estimators=10 if smoke else 100, random_state=42, n_jobs=-1)
-    pipeline = Pipeline(steps=[
-        ('preprocessor', preprocessor),
-        ('classifier', clf)
-    ])
+    clf = RandomForestClassifier(
+        n_estimators=10 if smoke else 100, random_state=42, n_jobs=-1
+    )
+    pipeline = Pipeline(steps=[("preprocessor", preprocessor), ("classifier", clf)])
 
     # 5-fold CV (or 2-fold for smoke)
     cv = 2 if smoke else 5
     from sklearn.model_selection import StratifiedKFold
+
     skf = StratifiedKFold(n_splits=cv, shuffle=True, random_state=42)
 
     # CV accuracy
     try:
         from sklearn.model_selection import cross_val_score
-        scores = cross_val_score(pipeline, X, y_cls, cv=skf, scoring='accuracy')
-        print(f"[eval] CV accuracy {cv}-fold: {scores.mean():.4f} +/- {scores.std():.4f} | scores {scores}")
+
+        scores = cross_val_score(pipeline, X, y_cls, cv=skf, scoring="accuracy")
+        print(
+            f"[eval] CV accuracy {cv}-fold: {scores.mean():.4f} +/- {scores.std():.4f} | scores {scores}"
+        )
     except Exception as e:
         print(f"[eval] CV failed {e}")
         scores = np.array([0.0])
@@ -483,18 +584,23 @@ def train_fused_pipeline(df: pd.DataFrame, text_features: List[str], smoke: bool
 
     # Extract transformed features as fused embedding
     try:
-        X_transformed = pipeline.named_steps['preprocessor'].transform(X)
-        print(f"[embed] transformed shape {X_transformed.shape} (text 384-d + numeric scaled + cat one-hot)")
+        X_transformed = pipeline.named_steps["preprocessor"].transform(X)
+        print(
+            f"[embed] transformed shape {X_transformed.shape} (text 384-d + numeric scaled + cat one-hot)"
+        )
         # If transformed is >64-d, we can project to 64-d via random projection or PCA for compatibility
         # For v3_with_text we keep full fused + also save 64-d L2 normalized version for map compatibility
         from sklearn.decomposition import PCA
+
         if X_transformed.shape[1] > 64:
             pca = PCA(n_components=64, random_state=42)
             z64 = pca.fit_transform(X_transformed)
             # L2 normalize as per hoops convention
             norms = np.linalg.norm(z64, axis=1, keepdims=True)
             z64 = z64 / np.clip(norms, 1e-9, None)
-            print(f"[embed] PCA 64-d shape {z64.shape} explained var {pca.explained_variance_ratio_.sum():.3f}")
+            print(
+                f"[embed] PCA 64-d shape {z64.shape} explained var {pca.explained_variance_ratio_.sum():.3f}"
+            )
         else:
             # L2 normalize directly
             z64 = X_transformed.astype(np.float32)
@@ -504,8 +610,10 @@ def train_fused_pipeline(df: pd.DataFrame, text_features: List[str], smoke: bool
         print(f"[embed] transform failed {e}, fallback to mtnn_embeddings.f32")
         # Fallback to existing 64-d
         try:
-            z64 = np.fromfile(str(ASSETS / "mtnn_embeddings.f32"), dtype=np.float32).reshape(12966, 64)
-        except:
+            z64 = np.fromfile(
+                str(ASSETS / "mtnn_embeddings.f32"), dtype=np.float32
+            ).reshape(12966, 64)
+        except Exception:
             z64 = np.random.randn(n, 64).astype(np.float32)
             z64 = z64 / np.linalg.norm(z64, axis=1, keepdims=True)
 
@@ -513,8 +621,13 @@ def train_fused_pipeline(df: pd.DataFrame, text_features: List[str], smoke: bool
     try:
         y_reg = df[numeric_cols[0]].values
         from sklearn.model_selection import train_test_split
-        X_train, X_test, y_train, y_test = train_test_split(X_transformed, y_reg, test_size=0.2, random_state=42)
-        reg = RandomForestRegressor(n_estimators=10 if smoke else 50, random_state=42, n_jobs=-1)
+
+        X_train, X_test, y_train, y_test = train_test_split(
+            X_transformed, y_reg, test_size=0.2, random_state=42
+        )
+        reg = RandomForestRegressor(
+            n_estimators=10 if smoke else 50, random_state=42, n_jobs=-1
+        )
         reg.fit(X_train, y_train)
         y_pred = reg.predict(X_test)
         mae = mean_absolute_error(y_test, y_pred)
@@ -533,36 +646,62 @@ def train_fused_pipeline(df: pd.DataFrame, text_features: List[str], smoke: bool
         "train_time_s": float(train_time),
         "n": int(n),
         "n_classes": int(n_classes),
-        "transformed_dim": int(X_transformed.shape[1]) if 'X_transformed' in locals() else 0,
+        "transformed_dim": int(X_transformed.shape[1])
+        if "X_transformed" in locals()
+        else 0,
         "smoke": smoke,
         "epochs": epochs,
-        "model": "RandomForestClassifier n_est={} + TextEmbedder all-MiniLM-L6-v2 (384-d) + StandardScaler + OneHotEncoder".format(10 if smoke else 100),
+        "model": "RandomForestClassifier n_est={} + TextEmbedder all-MiniLM-L6-v2 (384-d) + StandardScaler + OneHotEncoder".format(
+            10 if smoke else 100
+        ),
         "article_ref": "https://machinelearningmastery.com/combining-llm-embeddings-with-tabular-features-in-a-unified-scikit-learn-pipeline/",
         "mtnn_v9_2_compatible": "TCA 7 heads 224-d + TAA 128-d k=8 0.7/0.3 fusion proxy via ColumnTransformer",
     }
 
-    return pipeline, metrics, z64, X_transformed if 'X_transformed' in locals() else z64
+    return pipeline, metrics, z64, X_transformed if "X_transformed" in locals() else z64
+
 
 def main():
-    ap = argparse.ArgumentParser(description="Hoops Text Fusion Training - LLM embeddings + tabular via sklearn")
-    ap.add_argument("--smoke", action="store_true", help="2ep smoke training quick check")
-    ap.add_argument("--epochs", type=int, default=2, help="epochs (2 for smoke, 20+ full)")
+    ap = argparse.ArgumentParser(
+        description="Hoops Text Fusion Training - LLM embeddings + tabular via sklearn"
+    )
+    ap.add_argument(
+        "--smoke", action="store_true", help="2ep smoke training quick check"
+    )
+    ap.add_argument(
+        "--epochs", type=int, default=2, help="epochs (2 for smoke, 20+ full)"
+    )
     ap.add_argument("--cv", type=int, default=5, help="CV folds")
-    ap.add_argument("--model-name", default=DEFAULT_TEXT_MODEL, help="HF model for TextEmbedder")
+    ap.add_argument(
+        "--model-name", default=DEFAULT_TEXT_MODEL, help="HF model for TextEmbedder"
+    )
     ap.add_argument("--batch", type=int, default=DEFAULT_BATCH)
     args = ap.parse_args()
 
-    print(f"[hoops-text-fusion] start smoke={args.smoke} epochs={args.epochs} model={args.model_name}")
+    print(
+        f"[hoops-text-fusion] start smoke={args.smoke} epochs={args.epochs} model={args.model_name}"
+    )
     t_start = time.time()
 
     # Load tabular
     try:
         df, tabular_meta = load_tabular_features()
     except FileNotFoundError as e:
-        print(json.dumps({"status": 503, "error": str(e), "hint": "tabular missing - check assets/mtnn_inputs.f32"}, indent=2))
+        print(
+            json.dumps(
+                {
+                    "status": 503,
+                    "error": str(e),
+                    "hint": "tabular missing - check assets/mtnn_inputs.f32",
+                },
+                indent=2,
+            )
+        )
         sys.exit(3)
     except Exception as e:
-        print(json.dumps({"status": 500, "error": f"tabular load failed: {e}"}, indent=2))
+        print(
+            json.dumps({"status": 500, "error": f"tabular load failed: {e}"}, indent=2)
+        )
         sys.exit(2)
 
     # Load text
@@ -575,13 +714,25 @@ def main():
 
     # Train
     try:
-        pipeline, metrics, z64, X_fused = train_fused_pipeline(df, text_features, smoke=args.smoke, epochs=args.epochs)
+        pipeline, metrics, z64, X_fused = train_fused_pipeline(
+            df, text_features, smoke=args.smoke, epochs=args.epochs
+        )
     except RuntimeError as e:
         # TextEmbedder 503
-        print(json.dumps({"status": 503, "error": str(e), "hint": "install sentence-transformers or transformers+torch"}, indent=2))
+        print(
+            json.dumps(
+                {
+                    "status": 503,
+                    "error": str(e),
+                    "hint": "install sentence-transformers or transformers+torch",
+                },
+                indent=2,
+            )
+        )
         sys.exit(3)
     except Exception as e:
         import traceback
+
         traceback.print_exc()
         print(json.dumps({"status": 500, "error": f"training failed: {e}"}, indent=2))
         sys.exit(2)
@@ -600,7 +751,9 @@ def main():
         np.savez_compressed(
             str(OUT_NPZ),
             z=z64.astype(np.float32),  # 64-d L2-normalized for map compatibility
-            z_fused=X_fused.astype(np.float32) if 'X_fused' in locals() and isinstance(X_fused, np.ndarray) else z64.astype(np.float32),
+            z_fused=X_fused.astype(np.float32)
+            if "X_fused" in locals() and isinstance(X_fused, np.ndarray)
+            else z64.astype(np.float32),
             player_id=np.array(player_ids, dtype=np.int32),
             season=np.array(seasons, dtype=object),
             name=np.array(names, dtype=object),
@@ -612,14 +765,21 @@ def main():
         print(f"[save] wrote {OUT_NPZ} z={z64.shape}")
     except Exception as e:
         print(f"[save] npz failed {e}")
-        import traceback; traceback.print_exc()
+        import traceback
+
+        traceback.print_exc()
 
     # Report json
     report = {
         "built": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
         "domain": "vector-hoops",
         "entity_count": len(df),
-        "dims": {"native_64": 64, "text_384": 384, "fused": int(metrics.get("transformed_dim", 0)), "final_map_64": 64},
+        "dims": {
+            "native_64": 64,
+            "text_384": 384,
+            "fused": int(metrics.get("transformed_dim", 0)),
+            "final_map_64": 64,
+        },
         "model": metrics.get("model"),
         "mtnn_v9_2": {
             "tca_7_heads_224d": "volume,playmaking,defense,shotmix,teammates_same_team,same_draft_class,same_era_archetype 7 subsets sparse softmax per type 0.7",
@@ -638,8 +798,16 @@ def main():
         "column_transformer": {
             "transformers": [
                 ["text", "TextEmbedder", ["bio_text"]],
-                ["num", "StandardScaler", [c for c in df.columns if c.startswith("num_")]],
-                ["cat", "OneHotEncoder(handle_unknown=ignore)", ["gameCluster", "mtnnGlobal", "era"]],
+                [
+                    "num",
+                    "StandardScaler",
+                    [c for c in df.columns if c.startswith("num_")],
+                ],
+                [
+                    "cat",
+                    "OneHotEncoder(handle_unknown=ignore)",
+                    ["gameCluster", "mtnnGlobal", "era"],
+                ],
             ],
             "remainder": "drop",
             "article_pattern": True,
@@ -680,20 +848,26 @@ def main():
         print(f"[save] report failed {e}")
 
     # Print summary for timeline triple-write
-    print(json.dumps({
-        "status": "ok",
-        "n": len(df),
-        "cv_acc": metrics["cv_accuracy_mean"],
-        "mae": metrics["mae"],
-        "r2": metrics["r2"],
-        "z_shape": list(z64.shape),
-        "npz": str(OUT_NPZ),
-        "report": str(OUT_REPORT),
-        "smoke": args.smoke,
-        "elapsed_s": time.time() - t_start,
-    }, indent=2))
+    print(
+        json.dumps(
+            {
+                "status": "ok",
+                "n": len(df),
+                "cv_acc": metrics["cv_accuracy_mean"],
+                "mae": metrics["mae"],
+                "r2": metrics["r2"],
+                "z_shape": list(z64.shape),
+                "npz": str(OUT_NPZ),
+                "report": str(OUT_REPORT),
+                "smoke": args.smoke,
+                "elapsed_s": time.time() - t_start,
+            },
+            indent=2,
+        )
+    )
 
     return 0
+
 
 if __name__ == "__main__":
     raise SystemExit(main())
