@@ -6,7 +6,7 @@
         "education",
         "business"
     ],
-    "description": "Open a players personal book \u2014 1,764 NBA player-seasons on warm paper #FEFCF9 with void map cabinet #080A0F. \u00b7 single-select \u00b7 shareable ?pid= \u00b7 PWA offline13k \u00b7 free forever edge private LCG 20260813\u2192189831298 idx3820 triple[11205,19448,14209] same-link-same-stars",
+    "description": "One player-season among 12,966 \u2014 three peers who play most like them, full map, honest signals. Built for humans, not metrics.",
     "dir": "ltr",
     "display": "standalone",
     "display_override": [
@@ -60,7 +60,7 @@
             14209
         ]
     },
-    "name": "Vector Hoops \u2014 players book \u00b7 japandi",
+    "name": "Vector Hoops \u2014 Who plays like this?",
     "orientation": "any",
     "pov": "owner",
     "prefer_related_applications": false,
@@ -84,7 +84,7 @@
     "screenshots": [
         {
             "form_factor": "wide",
-            "label": "12,966 seasons as sky \u2014 Lab fusion A+B=C \u2014 Owner cap $140.5M \u2014 1764 map points visible dark ivory #FFFEF7",
+            "label": "12,966 player-seasons as a human map \u2014 one season, three peers, full map",
             "sizes": "1200x630",
             "src": "/assets/og-embed.png",
             "type": "image/png"
@@ -104,32 +104,6 @@
             "name": "Play Daily \u2014 6 guesses",
             "short_name": "Daily",
             "url": "/play?daily=20260813&n=3"
-        },
-        {
-            "description": "Lab fusion \u2014 pick any two player-seasons, fuse A+B \u2192 nearest real. Owner/Player/Brand/DFS 4 POV chip bar.",
-            "icons": [
-                {
-                    "sizes": "192x192",
-                    "src": "/assets/icon-192.png",
-                    "type": "image/png"
-                }
-            ],
-            "name": "Open Lab \u2014 A+B=C Fusion",
-            "short_name": "Lab",
-            "url": "/lab.html?pov=owner"
-        },
-        {
-            "description": "Owner/Operator championship economics cap tools 4 POV \u2014 Front Office Lab",
-            "icons": [
-                {
-                    "sizes": "192x192",
-                    "src": "/assets/icon-192.png",
-                    "type": "image/png"
-                }
-            ],
-            "name": "Owner / Cap $140.5M",
-            "short_name": "Owner",
-            "url": "/?pov=owner"
         }
     ],
     "start_url": "/?pov=owner",
