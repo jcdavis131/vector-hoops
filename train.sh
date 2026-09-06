@@ -134,7 +134,8 @@ if [[ $V6 -eq 1 ]]; then
     --era-align procrustes \
     --robust-scaling \
     --batch $BATCH \
-    --seed 7
+    --seed 7 \
+    --write-artifacts
 else
   # v5 stable winner: hb128_d48 = 2 blocks, 160 hidden, 32 tower, 48 emb, head 128, concat, era-align + robust scaling
   $PY pipeline/train_mtnn.py \
@@ -162,7 +163,8 @@ else
     --era-align procrustes \
     --robust-scaling \
     --batch $BATCH \
-    --seed 7
+    --seed 7 \
+    --write-artifacts
 fi
 
 # 8. export assets

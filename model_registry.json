@@ -42,7 +42,7 @@
       "version": "v2.1"
     },
     "hoops": {
-      "composite_score": 0.85,
+      "composite_score_projected": 0.85,
       "dims": 64,
       "entity_count": 1764,
       "file_path": "assets/data/hoops.json",
@@ -54,13 +54,15 @@
       "model_id": "hoops-mtnn-v6-192d-6head-rope-rmsnorm",
       "npz_path": "vector-hoops pipeline not in hub, see vector-hoops/assets/mtnn_meta.json",
       "okabe": "0-7 POS QB5 WR1 RB2 TE3 etc, void #080A0F bg #FFFEF7 replace black",
+      "projected": true,
+      "projection_note": "composite_score_projected and top1_790_projected are NOT measured. They are copied from assets/eval_scoreboard_v6.json's projected_v6_metrics (composite 0.85, recall_at_10_test.projected 0.55), whose own honesty_note says 'Metrics marked projected are expected, not measured' and whose status is candidate_not_fully_trained_150ep. The measured v6 report on disk (pipeline/data/mtnn_report.json, trained 2026-08-14) shows CQS 66.23 / test recall 0.742 / purity 0.7325, well below these projections; see SHIP_BRIDGE_HOOPS.md section 2.",
       "provenance": {
         "sha16": "b8d2e4a71627d105",
         "size": 336518
       },
       "rollback": "v6.1",
       "swap_status": "active",
-      "top1_790": 0.55,
+      "top1_790_projected": 0.55,
       "trained_at": "2026-08-16T01:53:09Z",
       "version": "v6.2"
     },

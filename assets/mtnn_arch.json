@@ -130,7 +130,7 @@
     }
   ],
   "training": {
-    "epochs": 150,
+    "epochs": 40,
     "dim": 64,
     "tower_width": 32,
     "tower_hidden": 160,
@@ -138,17 +138,21 @@
     "mlp_heads": true,
     "d_head_hidden": 128,
     "fusion": "concat",
-    "lr": 0.001,
+    "fusion_hidden": 256,
+    "lr": 0.0015,
     "lr_schedule": "onecycle",
     "warmup_pct": 0.1,
-    "weight_decay": 0.0002,
+    "weight_decay": 0.0001,
     "nce_loss": "hybrid",
-    "nce_player_weight": 0.65,
-    "nce_arch_weight": 0.35,
-    "hard_neg_boost": 0.4,
-    "drop_p": 0.15,
-    "robust_scaling": true,
-    "phase": "auto",
-    "era_align": "procrustes"
+    "nce_player_weight": 0.7,
+    "nce_arch_weight": 0.3,
+    "hard_neg_boost": 0.3,
+    "drop_p": 0.12,
+    "robust_scaling": false,
+    "phase": "select",
+    "era_align": "none",
+    "batch": 512,
+    "seed": 7,
+    "_source": "Corrected 2026-09-06 to match the 53d35adb promote commit's own record (commit message + `git show 53d35adb:pipeline/train_mtnn.py`), which is what produced the served assets/mtnn_embeddings.f32 blob. The prior values (epochs 150, lr 0.001, weight_decay 0.0002, nce 0.65/0.35, hard_neg_boost 0.4, drop_p 0.15, robust_scaling true, phase auto, era_align procrustes) were hand-added in 6a2d9e6a (2026-08-06) and contradicted the promote commit; no pipeline script ever wrote a 'training' key here. --token-dropout and --w-vicreg did not exist as flags at 53d35adb. See SHIP_BRIDGE_HOOPS.md sections 1a-1b for the full citation trail."
   }
 }

@@ -533,7 +533,7 @@ span.pill.mono.ink,.pill.ink{color:#C9C6C0}
   var flowEl=document.getElementById('flow'), flowDet=document.getElementById('flowDetail'),
       flowLead=document.getElementById('flowLead'), flowProv=document.getElementById('flowProv');
   function esc2(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
-  fetch('assets/mtnn_arch.json?v=758a3d56',{cache:'force-cache'}).then(function(r){
+  fetch('assets/mtnn_arch.json?v=3d87e9cd',{cache:'force-cache'}).then(function(r){
     if(!r.ok) throw new Error('HTTP '+r.status);
     return r.json();
   }).then(function(a){

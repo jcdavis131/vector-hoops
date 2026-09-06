@@ -354,7 +354,7 @@ span.proj{color:var(--orange-ink)}
     if(lab && lab.parentNode) lab.parentNode.insertBefore(host, lab.nextSibling);
   }
   host.innerHTML='<div class="mono" style="font-size:10.5px;color:#C9C6C0">Colour = archetype · loading names…</div>';
-  fetch('assets/mtnn_arch.json?v=758a3d56',{cache:'force-cache'})
+  fetch('assets/mtnn_arch.json?v=3d87e9cd',{cache:'force-cache'})
     .then(function(r){ if(!r.ok) throw new Error('HTTP '+r.status); return r.json(); })
     .then(function(j){
       var names=j.gameArchetypes||[];

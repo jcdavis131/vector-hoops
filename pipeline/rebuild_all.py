@@ -138,6 +138,7 @@ def main():
                 str(args.batch),
                 "--seed",
                 "7",
+                "--write-artifacts",
             ]
         else:
             run(
@@ -221,6 +222,7 @@ def main():
                 str(args.batch),
                 "--seed",
                 "7",
+                "--write-artifacts",
             ]
         run(train_cmd, check="hard")
 

@@ -874,7 +874,7 @@ $('twinInput').addEventListener('change',lookup);
   Promise.all([
     fetch('assets/vectors_map_lite.json?v=ad8fed2b',{cache:'force-cache'})
       .then(function(r){ if(!r.ok) throw new Error('HTTP '+r.status); return r.json(); }),
-    fetch('assets/mtnn_arch.json?v=758a3d56',{cache:'force-cache'})
+    fetch('assets/mtnn_arch.json?v=3d87e9cd',{cache:'force-cache'})
       .then(function(r){ return r.ok?r.json():null; }).catch(function(){ return null; })
   ]).then(function(both){
     var v=both[0], a=both[1];
@@ -1138,7 +1138,7 @@ $('twinInput').addEventListener('change',lookup);
           if (cam && cam.fit) cam.fit(0.92, fitAll);
         } catch (e) {}
         say(j.seasons.length + ' seasons loaded. Use the season slider, or the map itself.');
-        return fetch('assets/mtnn_arch.json?v=758a3d56');
+        return fetch('assets/mtnn_arch.json?v=3d87e9cd');
       })
       .then(function(r){ return r && r.ok ? r.json() : null; })
       .then(function(a){

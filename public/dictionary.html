@@ -416,7 +416,7 @@ q.disabled=false;
 q.addEventListener('input',applyFilter);
 q.addEventListener('search',applyFilter);
 
-fetch('assets/mtnn_arch.json?v=758a3d56',{cache:'force-cache'}).then(function(r){return r.ok?r.json():null;})
+fetch('assets/mtnn_arch.json?v=3d87e9cd',{cache:'force-cache'}).then(function(r){return r.ok?r.json():null;})
  .then(function(j){
    if(!j||!j.gameArchetypes) return;
    $('archList').innerHTML=j.gameArchetypes.map(function(a){return '<li>'+esc(a)+'</li>';}).join('');
