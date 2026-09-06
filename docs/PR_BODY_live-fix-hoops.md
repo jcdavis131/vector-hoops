@@ -44,20 +44,41 @@ chip.
   `90ef66a4` before, during, and after this lane's work; hoops's own GPU job (j0012 at the
   time) was running against the home checkout's venv throughout — zero writes to that repo.
 
+**Update — a second commit (`9f361d5d`, "close residual L1 hoops defects") landed on this
+branch after the above, closing 3 of the items originally listed as NOT done:**
+- Homepage hero signals: added a one-line caption ("Example signals shown until you pick a
+  season") above the static signal block, per L1's own proposed fix — no values changed, no
+  data wired (copy-honesty fix, not a feature build).
+- `window.HoopsForecast`: `assets/timesfm-forecast.js` is an ES module (top-level `export`)
+  loaded as a classic `<script>` on 5 pages, throwing a `SyntaxError` on every page load
+  (the module only exports `FORECAST_VERSION`/`FORECAST_META`/`loadForecast`/
+  `renderForecast` — none of the `.getForName`/`.forecastCardHTML`/`.attachToMap`/
+  `.renderForecastCanvas` the call sites need, confirming the bridge really was deleted in
+  `6e44b783`, not just missing a rebuild). Added `type="module"` to all 5 script tags so
+  the file parses without error; deliberately did NOT add a partial `window.HoopsForecast`
+  shim (would defeat the existing `if(!window.HoopsForecast) return` guards). Still
+  undefined — full wiring remains a ~150-200 line feature rebuild, out of scope.
+- `manifest.json`: replaced the remaining pre-redesign name/description ("players book",
+  "1,764 NBA player-seasons") with the real strings already served in the same commit's
+  `<title>`/`<meta name=description>`; removed both dead shortcuts (`/lab.html?pov=owner` —
+  `git cat-file -e 6798650f:public/lab.html` fails, the file never existed at the deployed
+  commit; `/?pov=owner` Owner/Cap-tools — 0 `pov` hits in any served JS); corrected the
+  screenshot label to the real 12,966-count/one-season/three-peers framing.
+- Verified: served on `127.0.0.1:8971`, curled `/`, `/model.html`, `/play.html`,
+  `/players.html`, `/trends.html` (all 200); grep confirmed one `type="module"` per page
+  and the caption present; `manifest.json` re-parsed valid with `python json.load`. Port
+  closed and confirmed via `Get-NetTCPConnection` (PID 17668). No pipeline script run — GPU
+  job j0018 was running against the home checkout the whole time (guard 11).
+
 **Explicitly NOT done** (see `docs/LIVE_FIX_FINDINGS_hoops_2026-09-06.md` on this branch for
-full evidence — product/feature decisions, not minimal fixes):
-- Homepage hero signals (`#sig-style`/`#sig-era`/`#sig-modern`/`#deck-name`) are static copy
-  with no wiring anywhere in the codebase.
-- `window.HoopsForecast`: the bridge (`getForName`/`forecastCardHTML`/`attachToMap`/
-  `renderForecastCanvas`) was deleted in commit `6e44b783` and never restored —
-  reconstructing it is a ~150–200 line feature rebuild, not a repoint.
-- `manifest.json`'s remaining stale branding ("players book" name, "$140.5M Owner cap"
-  copy, `/lab.html` shortcuts that don't exist at this commit).
+full evidence — product/feature decisions, still out of scope after both commits):
+- `window.HoopsForecast` remains undefined (module now parses; the bridge itself is still
+  a ~150-200 line feature rebuild).
 - `sw.js`'s 6 stale precache entries genuinely retired in a prior redesign, no confirmed
   1:1 replacement.
 - `assets/data/hoops_manifest.json` still 404s correctly (it never existed on any ref).
 
-**Merge target and blocker.** Base: `origin/master` (`6798650f`), 1 commit ahead, clean —
-no conflicts expected on merge. No blocker; this is the most straightforwardly mergeable
-hoops branch (contrast `weekend/artifact-claims-hoops`, which has no common ancestor with
-`origin/master`).
+**Merge target and blocker.** Base: `origin/master` (`6798650f`), now 2 commits ahead,
+clean — no conflicts expected on merge. No blocker; this is the most straightforwardly
+mergeable hoops branch (contrast `weekend/artifact-claims-hoops`, which has no common
+ancestor with `origin/master`).
