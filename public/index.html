@@ -153,7 +153,7 @@ html, body { background: var(--paper); }
       <div class="hv6-evidence" id="hv6-evidence">
         <div class="hv6-evidence__title">How this is made — honest, human-first</div>
         <div class="hv6-evidence__grid">
-          <div class="hv6-evidence__card"><b>A MATERIAL.</b> TO BE CRAFTED INTO THE HUMAN EXPERIENCE. IN THE SAME WAY THAT GLASS, METAL, AND PIXELS TRANSFORMED HOW WE CONNECT, LIVE, WORK, AND PLAY. <br><br><b>Model:</b> 12,966×64 embedding_v3 MTNN v5 champion — 17 towers, 224-d sparse + 128-d temporal. <span style="font-family:var(--font-mono);font-size:10px">fallback honest 503 if missing</span></div>
+          <div class="hv6-evidence__card"><b>A MATERIAL.</b> TO BE CRAFTED INTO THE HUMAN EXPERIENCE. IN THE SAME WAY THAT GLASS, METAL, AND PIXELS TRANSFORMED HOW WE CONNECT, LIVE, WORK, AND PLAY. <br><br><b>Model:</b> 12,966×64 embedding_v3 MTNN v5 champion — 17 towers, 130-d input. <span style="font-family:var(--font-mono);font-size:10px">fallback honest 503 if missing</span></div>
           <div class="hv6-evidence__card"><b>ABUNDANT INTELLIGENCE.</b> MADE SCARCE AGAIN. BY THE CARE WE TOOK TO <span style="color:var(--human-blue);font-family:var(--font-human);text-transform:none;font-size:15px">Shape it.</span><br><br>3 peers, full map, <span style="color:var(--human-blue)">why similar</span> + <span style="color:var(--ink-muted)">why different</span>, confidence in words. No synthetic peers.</div>
           <div class="hv6-evidence__card"><b>BECAUSE EVERYONE IS DIFFERENT.</b> & <span style="color:var(--human-blue);font-family:var(--font-human);text-transform:none;font-size:16px">&</span> EVERYONE DESERVES TO EXPRESS WHO THEY ARE.<br><br>Deterministic Daily: LCG both chains 20260813→189831298 idx3820 triple[11205,19448,14209] + 20260818→1412440227 idx5278 triple[13791,10902,19455] same-link-same-stars ?daily=YYYYMMDD&n=1/3/5</div>
         </div>
@@ -174,7 +174,7 @@ html, body { background: var(--paper); }
     <div class="hv6-map-shell" id="map-wrap">
       <canvas id="sky-canvas" width="800" height="620" aria-label="12,966 seasons as human map — proximity = plays alike"></canvas>
       <div class="hv6-map-overlay" id="map-overlay">
-        <span class="hv6-map-chip">12,452 · HUMAN MAP</span>
+        <span class="hv6-map-chip">12,966 · HUMAN MAP</span>
         <span class="hv6-map-chip" id="map-hover-name">Hover to discover</span>
       </div>
       <div id="map-controls" class="hv6-map-overlay" style="top:auto;bottom:14px;left:12px;right:auto;display:flex;gap:8px">
@@ -202,7 +202,6 @@ html, body { background: var(--paper); }
 
 <!-- Gold game wiring — preserved exactly -->
 <script>window.HOOPS_GOLD_BF7DB6A5=true; window.HOOPS_HUMAN_V6=true;</script>
-<script src="/assets/data/hoops_manifest.json?v=bf7db6a5" type="application/json" id="hoops-manifest"></script>
 <script src="/assets/mtnn.js"></script>
 <script src="/assets/mtnn-full.js"></script>
 <script src="/assets/embedding-nebula.js"></script>
@@ -279,8 +278,8 @@ html, body { background: var(--paper); }
     if(e.key==='Escape') { V6?.Selection.clear(); window.HoopsNebula?.reset?.(); }
   });
 
-  // Honest 503 if embedding missing
-  window.addEventListener('hoops:embedding-missing', ()=>{
+  // Honest 503 if embedding missing (mtnn.js dispatches 'vh:mtnn-failed' on load failure)
+  window.addEventListener('vh:mtnn-failed', ()=>{
     const s = $('hv6-signals');
     if(s) s.innerHTML = '<div class="hv6-state">Embedding 12,966×64 not yet available on this device — showing 12,966×64 fallback. Full 128-d requires rebuild. <span class="hv6-mono">honest 503 → fallback</span></div>';
   });

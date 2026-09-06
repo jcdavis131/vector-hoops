@@ -6,7 +6,7 @@
         "education",
         "business"
     ],
-    "description": "Open a players personal book \u2014 1,764 NBA player-seasons on warm paper #FEFCF9 with void map cabinet #080A0F. MTNN v6 192d 6-head RoPE composite0.85 top1 0.55 REAL \u00b7 single-select \u00b7 shareable ?pid= \u00b7 PWA offline13k \u00b7 free forever edge private LCG 20260813\u2192189831298 idx3820 triple[11205,19448,14209] same-link-same-stars",
+    "description": "Open a players personal book \u2014 1,764 NBA player-seasons on warm paper #FEFCF9 with void map cabinet #080A0F. \u00b7 single-select \u00b7 shareable ?pid= \u00b7 PWA offline13k \u00b7 free forever edge private LCG 20260813\u2192189831298 idx3820 triple[11205,19448,14209] same-link-same-stars",
     "dir": "ltr",
     "display": "standalone",
     "display_override": [
@@ -14,18 +14,6 @@
         "minimal-ui",
         "browser"
     ],
-    "gates": {
-        "IC": ">0.15 PASS",
-        "MAE": "<5 PASS",
-        "ROI_IC": ">0.05 PASS",
-        "composite": "0.7937\u21920.85 PASS",
-        "composite_score": 0.85,
-        "gate": 8.93,
-        "pass": true,
-        "thr": 8.0,
-        "top1": "0.438\u21920.55 PASS 9.1",
-        "top1_score": 0.55
-    },
     "icons": [
         {
             "purpose": "any",
