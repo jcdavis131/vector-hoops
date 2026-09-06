@@ -17,10 +17,17 @@ the measurement in `docs/MTNN_V6_SOTA.md` next to the recommendation it contradi
   existing text, rather than silently overwriting it.
 
 **Verified, and how.** This is a GPU-queue-measured result (herdmux's own runner, not a
-script this lane re-ran) — the numbers above are quoted verbatim from the job's own commit
-message and the queue's `results.tsv`/journal, not independently re-executed by this
-PR-body pass. No test suite was run by this lane on this branch (guard 11: `vector-hoops`
-had a running GPU job, j0018 itself, throughout the branch's own creation).
+script this lane re-ran) — the headline numbers are the branch's own commit message; this
+lane did not read `results.tsv` or the journal directly (out of scope: those live under
+`herdmux/gpu/weekend/`, off-limits per this lane's guards). What this lane DID cross-check:
+`qctl.py status` (read-only) was polled while j0018 was still running, and its live event
+log recorded all 6 variant-seed lines directly:
+`seed 5 78.1100, seed 7 77.7600, seed 13 78.2600, seed 21 77.2200, seed 42 76.5500, seed 99
+77.2400` — mean of those six = **77.5233**, matching the branch's claimed `77.5233 ±
+0.6423` exactly. This is an independent (if partial) confirmation of the headline number,
+not a re-run of the training itself. No test suite was run by this lane on this branch
+(guard 11: `vector-hoops` had a running GPU job, j0018 itself, throughout the branch's own
+creation).
 
 **Explicitly NOT done.** Not deployed, not merged. The result is a single flag-default
 change plus a docs annotation — no artifact was rebuilt/shipped from this branch.
