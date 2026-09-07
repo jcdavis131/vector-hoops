@@ -2649,6 +2649,17 @@ function buildFlowSvg(host) {
       list.hidden = false;
     }
 
+    // weekend/instrument: emits pair_compared once a compare partner is set, from either path
+    // below — see INSTRUMENTATION.md. cluster ids are the ~8 archetype buckets, not a player id.
+    function trackPairCompared(method) {
+      try {
+        if (!window.va || state.compareIdx < 0 || state.playerIdx < 0) return;
+        var pA = state.players[state.playerIdx], pB = state.players[state.compareIdx];
+        var sameCluster = (pA && pB && pA.c != null && pB.c != null) ? (pA.c === pB.c) : null;
+        window.va('event', { name: 'pair_compared', data: { method: method, same_cluster: sameCluster } });
+      } catch (e) {}
+    }
+
     toggle.addEventListener('change', function () {
       state.compareOn = !!toggle.checked;
       input.disabled = !state.compareOn;
@@ -2658,6 +2669,7 @@ function buildFlowSvg(host) {
       } else if (state.playerIdx >= 0) {
         var nbs = embeddingNeighbors(state.playerIdx, 1);
         state.compareIdx = nbs.length ? nbs[0].idx : -1;
+        trackPairCompared('auto_nearest');
       }
       renderCompareSummary();
       renderMapInsights();
@@ -2672,6 +2684,7 @@ function buildFlowSvg(host) {
       state.compareIdx = parseInt(btn.getAttribute('data-idx'), 10);
       list.hidden = true;
       input.value = '';
+      trackPairCompared('search');
       renderCompareSummary();
       renderMapInsights();
       renderNodeInspector();
@@ -2801,7 +2814,22 @@ function buildFlowSvg(host) {
         var btn = ev.target.closest('[data-neighbor-idx]');
         if (!btn) return;
         var ni = parseInt(btn.getAttribute('data-neighbor-idx'), 10);
-        if (Number.isFinite(ni)) setPlayer(ni, { keepCompare: true });
+        if (!Number.isFinite(ni)) return;
+        // weekend/instrument: which returned neighbour a user engages with — see INSTRUMENTATION.md.
+        // Payload is rank/similarity/cluster-agreement only; no player id or name leaves the browser.
+        try {
+          if (window.va) {
+            var nbs2 = embeddingNeighbors(state.playerIdx, 5);
+            var hit = null;
+            for (var qi = 0; qi < nbs2.length; qi++) { if (nbs2[qi].idx === ni) { hit = { rank: qi, sim: nbs2[qi].sim }; break; } }
+            var sim = hit ? hit.sim : null;
+            var simBucket = sim == null ? 'unknown' : sim >= 0.9 ? '90+' : sim >= 0.8 ? '80-89' : sim >= 0.7 ? '70-79' : '<70';
+            var pA = state.players[state.playerIdx], pB = state.players[ni];
+            var sameCluster = (pA && pB && pA.c != null && pB.c != null) ? (pA.c === pB.c) : null;
+            window.va('event', { name: 'neighbor_engage', data: { rank: hit ? hit.rank : -1, sim_bucket: simBucket, same_cluster: sameCluster } });
+          }
+        } catch (e) {}
+        setPlayer(ni, { keepCompare: true });
       });
     }
   }

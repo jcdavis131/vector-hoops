@@ -118,7 +118,7 @@ button,.input{min-height:44px}
 <meta property="og:description" content="Daily Court: 5 past All-Stars → 5 modern twins. 6 tries each, build your modern starting 5. Pack Battle — share same link, battle friends.">
 <meta property="og:image" content="/assets/og-1200x630.png">
 <meta property="og:image:width" content="1200"/><meta property="og:image:height" content="630"/>
-</head><body>
+<script>window.va=window.va||function(){(window.vaq=window.vaq||[]).push(arguments)};</script><script defer src="/_vercel/insights/script.js"></script></head><body>
 <noscript><div role="alert" style="padding:16px;text-align:center">Enable JS — Vector Hoops needs JavaScript for Daily Court + Map</div></noscript>
 
 <nav class="site-nav" data-active="/play" aria-label="Vector Hoops site"></nav>
@@ -1196,6 +1196,15 @@ button,.input{min-height:44px}
       if(G.guesses.some(g=>{ try{return g.idx===r.guess.idx|| (g.name||'').toLowerCase().trim()===r.guess.name.toLowerCase().trim();}catch{return false;}})){ crumbClear(); setGuessStatus('Already guessed','warn'); if(fromInput&&input) input.value=''; return; }
       setGuessStatus('');
       G.guesses.push(r.guess); try{ VHPastModern.state().guesses=G.guesses.slice(); }catch{} saveGuesses(); if(fromInput&&input) input.value='';
+      // weekend/instrument: neighbour-retrieval usage signal — see INSTRUMENTATION.md.
+      // No player identity leaves the browser: rank/turn are the only fields, both small bounded enums.
+      try{
+        const gst=VHPastModern.state();
+        const mode = gst.isPack ? 'pack' : gst.isChallenge ? 'challenge' : gst.isRandom ? 'random' : 'daily';
+        const rk = typeof r.guess.rank==='number' ? r.guess.rank : 999;
+        const rankBucket = rk===0 ? '0' : rk<=2 ? '1-2' : rk<=5 ? '3-5' : rk<=10 ? '6-10' : rk<=20 ? '11-20' : '21+';
+        if(window.va) window.va('event', { name:'guess_submitted', data:{ mode, turn:Math.min(G.guesses.length,6), rank_bucket:rankBucket, is_win: rk===0 } });
+      }catch{}
       const warmEl=$('#warm-label'); let wc=null; try{ wc=VHPastModern.warmCold(); }catch{}
       if(wc&&G.guesses.length>1){ if(warmEl){ warmEl.style.display='inline-flex'; warmEl.textContent=wc; }} else { if(warmEl) warmEl.style.display='none'; }
       // Each step is stamped before it runs; whichever stamp survives a crash
