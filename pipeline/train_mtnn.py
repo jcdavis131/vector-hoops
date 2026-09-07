@@ -1201,8 +1201,13 @@ def main() -> None:
     ap.add_argument(
         "--token-dropout",
         type=float,
-        default=0.1,
-        help="v6: drop whole family tokens during train (0=off, 0.1 SOTA)",
+        default=0.0,
+        # 0.1 -> 0.0 (KEEP 2026-09-06, herdmux weekend queue j0018, protocol 1cdf63f8c825):
+        # 77.5233 +/- 0.6423 vs 76.6283 +/- 0.8264, delta +0.8950, paired t=4.04, 6/6 seeds
+        # improved. purity@20 0.7710 -> 0.8067; recall@10 0.8123 -> 0.8080 (-0.53%, inside the
+        # 2% floor guard). Family-token dropout stacked on the token encoder's own element
+        # dropout (0.12); the second layer of it was costing the model.
+        help="v6: drop whole family tokens during train (0=off, measured best) — was 0.1",
     )
     ap.add_argument(
         "--w-vicreg",

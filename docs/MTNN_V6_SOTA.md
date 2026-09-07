@@ -256,3 +256,28 @@ Size budget: <200KB HTML (gz ~22KB) + 395KB videos + 2MB WASM.
 
 **Solo personal project, no connection to employer, built with public/free-tier only — Cam's Lab • hoops.dumbmodel.com • Sunni SCAD gate AAA Okabe-Ito triple-encoded shape+color+text+pattern, 18px/1.65 readability, 56px bottom tabs safe-area, neobrutalism 2px ink + 4px shadow, paper #FFFEF7 #E8E0C8 dots**
 
+
+## Correction 2026-09-06 — token dropout 0.1 is not SOTA here; 0.0 is
+
+Measured on this tree (local master `90ef66a4`) by the herdmux weekend queue, host protocol
+`1cdf63f8c825` (`--epochs 40 --device cuda --dim 64 --val-every 0 --no-best-checkpoint`,
+seeds 5/7/13/21/42/99), job **j0018**:
+
+| | CQS mean | sd | recall@10 | purity@20 |
+|---|---|---|---|---|
+| `--token-dropout 0.1` (the value this doc recommended) | 76.6283 | 0.8264 | 0.8123 | 0.7710 |
+| `--token-dropout 0` (now the default) | **77.5233** | 0.6423 | 0.8080 | **0.8067** |
+
+Delta +0.8950, paired t = 4.04, **6/6 seeds improved** (per seed: +0.77 +1.72 +0.77 +0.05
++1.11 +0.95). The purity floor rose 4.6%; the recall floor fell 0.53%, inside the protocol's
+2% guard.
+
+Why the earlier reasoning (§6 above: "Model can memorize `tracking` tower presence vs absence.
+Needs token dropout") did not survive measurement: family-token dropout stacks on the token
+encoder's own element dropout (0.12, `train_mtnn.py`), so the model was carrying two
+independent regularizers over the same 11,027 rows. The 07-24 sweep had already found more
+regularization hurt; this is the same finding at the family level. The memorization concern
+§6 raises is real but is evidently already handled by the element dropout and the mask channel.
+
+Nothing here is deployed. The site still serves the 07-25 v5 promote (see
+`herdmux/gpu/weekend/SHIP_BRIDGE_HOOPS.md`).
