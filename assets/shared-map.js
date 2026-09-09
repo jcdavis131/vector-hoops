@@ -21,6 +21,20 @@ export async function mountSharedMap(canvas, opts={}){
   let projected=[], projById=null, maxId=0;
   let W=0,H=0, rotY=Math.PI*0.18, rotX=0.22, auto=!reduceMotion, lastT=0, isDragging=false, lastX=0,lastY=0, idleMs=0;
   let embedPaused=false, lastRender=0;
+  // guess juice — pulse ring + camera ease toward the guessed dot.
+  // pulse: {idx (internal row), t0, dur}; camTween: {fromY,fromX,toY,toX,t0,dur}
+  let pulse=null, camTween=null;
+  function pulseActive(now){ return !!(pulse && (now-pulse.t0) < pulse.dur); }
+  function tweenActive(now){ return !!(camTween && (now-camTween.t0) < camTween.dur); }
+  function easeInOut(k){ return k<0.5 ? 2*k*k : 1-Math.pow(-2*k+2,2)/2; }
+  function applyCamTween(now){
+    if(!camTween) return;
+    const k=Math.min(1,(now-camTween.t0)/camTween.dur), e=easeInOut(k);
+    rotY=camTween.fromY+(camTween.toY-camTween.fromY)*e;
+    rotX=camTween.fromX+(camTween.toX-camTween.fromX)*e;
+    rotX=Math.max(-0.92, Math.min(0.92, rotX));
+    if(k>=1) camTween=null;
+  }
   // guesses are stored as {idx, sim, rank} — idx is the external player id
   // (same id space as targetId, translated through projById below), sim is
   // 0..1 similarity, rank is 0-based (0 = exact match). A plain array of
@@ -308,6 +322,27 @@ export async function mountSharedMap(canvas, opts={}){
       }
     }
 
+    // guess pulse — expanding ring on the just-guessed dot, ~900ms. Skipped
+    // under reduced motion (the ring is drawn once, static, in that case).
+    if(pulse && projById && pulse.idx>=0){
+      const pIdx=pulse.idx, pr=pIdx>=0&&projected[pIdx]?projected[pIdx]:null;
+      if(pr && pr.sx>=-30 && pr.sx<=W+30 && pr.sy>=-30 && pr.sy<=H+30){
+        const x=pr.sx|0, y=pr.sy|0;
+        if(reduceMotion){
+          ctx.strokeStyle='#D55E00'; ctx.lineWidth=3;
+          ctx.strokeRect(x-9, y-9, 18, 18);
+        } else {
+          const nowT=performance.now(), k=Math.min(1,(nowT-pulse.t0)/pulse.dur);
+          const r=8+k*26, alpha=0.9*(1-k);
+          ctx.save();
+          ctx.globalAlpha=Math.max(0,alpha);
+          ctx.strokeStyle='#D55E00'; ctx.lineWidth=2.5;
+          ctx.beginPath(); ctx.arc(x,y,r,0,Math.PI*2); ctx.stroke();
+          ctx.restore();
+        }
+      }
+    }
+
     // target: bullseye + crosshair — a plain yellow dot vanishes inside the yellow
     // archetype cluster, so shape+outline carries the signal, not color.
     // (arc() is fine here: one marker per frame, unlike the 4-8k dots above)
@@ -365,10 +400,20 @@ export async function mountSharedMap(canvas, opts={}){
     if(!lastT) lastT=now;
     const dt=Math.min(50, now-lastT); lastT=now;
     if(!isDragging && auto){
-      rotY+=dt*0.00022;
+      if(tweenActive(now)){ applyCamTween(now); }
+      else { rotY+=dt*0.00022; }
       idleMs+=dt;
       if(idleMs>8000){ auto=false; embedPaused=true; console.log('map idle pause'); return; }
     } else if(!isDragging && !auto){
+      const nowA=now;
+      if(pulseActive(nowA)||tweenActive(nowA)){
+        // guess juice in flight: keep animating until it lands
+        applyCamTween(nowA);
+        projectFrame();
+        try{ draw(); }catch(e){ console.warn('draw fail',e); }
+        if(!pulseActive(nowA)&&!tweenActive(nowA)) pulse=null;
+        scheduleLoop(); return;
+      }
       // static scene: render once and stop burning frames
       projectFrame();
       try{ draw(); }catch(e){ console.warn('draw fail',e); }
@@ -511,6 +556,29 @@ export async function mountSharedMap(canvas, opts={}){
       const ry=-Math.atan2(ox,oz); const r=Math.sqrt(ox*ox+oz*oz)||1; const rx=-Math.atan2(oy,r)*0.85;
       if(isFinite(ry)&&isFinite(rx)){ rotY=ry; rotX=rx; }
       projectFrame(); draw();
+    },
+    // guess juice: expanding ring on the guessed dot + gentle camera ease
+    // toward it. focus:false skips the camera move. Under reduced motion the
+    // ring renders once, static, and the camera never moves.
+    pulseGuess(id, opts){
+      try{
+        if(id==null||!projById||id<0||id>maxId) return false;
+        const idx=projById[id]; if(idx==null||idx<0) return false;
+        const focus = !opts || opts.focus!==false;
+        pulse={idx, t0:performance.now(), dur:900};
+        if(focus && !reduceMotion && baseOx){
+          const ox=baseOx[idx], oy=baseOy[idx], oz=baseOz[idx];
+          const ry=-Math.atan2(ox,oz), r=Math.sqrt(ox*ox+oz*oz)||1, rx=-Math.atan2(oy,r)*0.85;
+          if(isFinite(ry)&&isFinite(rx)){
+            // shortest-path rotation: normalize the delta to [-PI, PI]
+            let dY=ry-rotY; while(dY>Math.PI) dY-=2*Math.PI; while(dY<-Math.PI) dY+=2*Math.PI;
+            camTween={fromY:rotY, fromX:rotX, toY:rotY+dY, toX:rx, t0:performance.now(), dur:650};
+          }
+        }
+        embedPaused=false; lastT=0; idleMs=0;
+        scheduleLoop();
+        return true;
+      }catch(e){ console.warn('pulseGuess fail',e); return false; }
     },
     hasPoint(id){ return !!(projById && id!=null && id>=0 && id<=maxId && projById[id]>=0); },
     // append one row (e.g. a daily target outside the sampled lite map) so the bullseye always exists
