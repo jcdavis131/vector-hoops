@@ -1,6 +1,19 @@
 """
-EmbeddingL2 — Cam authentic style, light paper, neobrutalist
-Truthful v4 invariants: 544+12=556→128→48 L2, 12,392 pts on sphere, cos=v̂·ŵ
+EmbeddingL2 — Cam authentic style + 3b1b cloud→proj (v5 truthful)
+
+Verified v5 invariants (champion 2026-07-25 mtnn_v5_concat_b2_h160_t32_d64_mlp128_fus256):
+- 130 inputs / 17 families → towers 17×32=544 +12 season =556 →128→64 L2, 12,966 pts (2,415 players), cos=v̂·ŵ
+- Source: mtnn_arch.json (dIn 130, towerFamilies 17, dTower 32, layers 544+12=556→128→64), mtnn_meta.json (rows 12,966, dim 64)
+- 64-d unit sphere verified; per-family counts not published
+- 3b1b patterns integrated:
+  * Embedding matrix row highlight → DotCloud on sphere → 2D projection clustering + Circumscribe neighbors (embedding.py)
+  * Matrix pattern: grid of squares where fill_opacity = value, yellow flash Indicate
+  * DotCloud on sphere: Circle + Dot + Arrow flow, ValueTracker continuous shrink (v raw → v̂)
+  * Similarity: Q·K dot as overlap area + heatmap opacity=weight (attention.py, softmax.py)
+  * MLP bottleneck: funnel wide→narrow→GELU wiggle→wide + residual + LayerNorm to sphere (mlp.py)
+  * Idioms: VGroup, SurroundingRectangle, Matrix, DotCloud, Arrow flow dots, ValueTracker+always_redraw, Flash
+- Cam style: light paper #FFFEF7, neobrutalist cards, Okabe-Ito, AAA contrast
+
 Solo personal project, no connection to employer, built with public/free-tier only
 """
 
@@ -46,7 +59,7 @@ class EmbeddingL2(Scene):
         title_card = cam_card(width=5.9, height=1.15, accent_color=OKABE["blue"])
         title_card.to_edge(UP, buff=0.32)
         t1 = Text(
-            "48-d → L2 → unit sphere",
+            "64-d → L2 → unit sphere (v5 champion)",
             font_size=26,
             color=INK,
             font=SANS_STACK[0],
@@ -54,7 +67,7 @@ class EmbeddingL2(Scene):
         )
         t1.move_to(title_card).shift(UP * 0.20)
         t2 = Text(
-            "544+12=556 → 128 → 48  L2 • 12,392 careers",
+            "556 → 128 → 64  L2 • 12,966 player-seasons • 2,415 players",
             font_size=14,
             color=SUBTLE_AAA,
             font=MONO_STACK[0],
@@ -104,7 +117,7 @@ class EmbeddingL2(Scene):
 
         origin_dot = Dot(sphere_center, color=INK, radius=0.055)
         slice_chip = cam_label(
-            "2D slice of 48-d  •  ||v̂||=1",
+            "2D slice of 64-d  •  ||v̂||=1  •  3b1b dot cloud",
             font_size=12,
             color=INK,
             mono=True,
@@ -222,18 +235,18 @@ class EmbeddingL2(Scene):
             return chip
 
         v_raw_chip = make_vec_chip(
-            "⬣", "v in R48 128→48", OKABE["verm"], v_raw_end + RIGHT * 1.1 + UP * 0.05
+            "⬣", "v in R64  556→128→64", OKABE["verm"], v_raw_end + RIGHT * 1.1 + UP * 0.05
         )
         v_hat_chip = make_vec_chip(
-            "⬣", "v̂  ||v̂||=1", OKABE["blue"], v_norm_end + RIGHT * 0.78 + UP * 0.12
+            "⬣", "v̂  ||v̂||=1  64-d", OKABE["blue"], v_norm_end + RIGHT * 0.78 + UP * 0.12
         )
         w_hat_chip = make_vec_chip(
-            "●", "ŵ on sphere", OKABE["sky"], w_end + RIGHT * 0.78 + DOWN * 0.12
+            "●", "ŵ on sphere 64-d", OKABE["sky"], w_end + RIGHT * 0.78 + DOWN * 0.12
         )
 
-        # v_sub mono small inside raw label
+        # v_sub mono small inside raw label — 3b1b ValueTracker pattern: continuous param
         v_sub = Text(
-            "fusion 556→128→48", font_size=11, color=SUBTLE_AAA, font=MONO_STACK[0]
+            "fusion 556→128→64  b2 h160 t32 d64", font_size=11, color=SUBTLE_AAA, font=MONO_STACK[0]
         )
         v_sub.next_to(v_raw_chip, DOWN, buff=0.06).align_to(v_raw_chip, LEFT)
 
@@ -317,12 +330,12 @@ class EmbeddingL2(Scene):
         sim_group = VGroup(sim_row_bg, sim_row)
         sim_group.set_opacity(0)
 
-        # Footer — 12,392 pts
+        # Footer — 12,966 pts on sphere
         footer_card = cam_card(width=2.55, height=0.48, accent_color=OKABE["purple"])
         footer_card.to_edge(DOWN, buff=0.1)
         footer_card.set_x(0)
         footer_txt = Text(
-            "⬢ 12,392 pts on sphere",
+            "⬢ 12,966 pts on sphere (2,415 players) • 64-d L2",
             font_size=12,
             color=INK,
             font=MONO_STACK[0],

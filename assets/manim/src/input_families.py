@@ -1,5 +1,22 @@
-"""InputFamilies — MTNN v4 truthful explainer, Cam style
-120 feats → 17 families, masking x·m m∈{0,1}, cat([x·m,m]) → 2·d_in per tower
+"""
+InputFamilies — MTNN v5 truthful explainer, Cam style (champion 2026-07-25)
+
+Verified v5 invariants (source: mtnn_arch.json, mtnn_meta.json):
+- 130 feats → 17 families (mtnn_v5_concat_b2_h160_t32_d64_mlp128_fus256 champion, built 2026-07-25, 12,966×64)
+- 17 families: volume, playmaking, rebounding, defense, efficiency, shotmix, bio, tracking, form, market, roster, career, competition, team, pedigree, playoffs, honors (mtnn_arch.json towerFamilies)
+- 130 total verified; per-family breakdown not published — do not invent
+- cat([x·m,m]) where m∈{0,1} per-fam, ∅→0 grad 0 never imputed, era-safe
+- 3b1b patterns integrated:
+  * Token list → Matrix grid (embedding.py): family chips as VGroup cards, highlight via
+    SurroundingRectangle yellow flash + Indicate (we use RoundedRectangle vermillion)
+  * Embedding Cloud → Projection: chips arrange GRID 3-col, then scale for cat() fusion
+  * Triple encoding: Okabe color + shape (●■▲◆) + mono label (Sunni AAA gate)
+  * ValueTracker ready: always_redraw slots for continuous m∈{0,1} toggle demo
+- Cam style: light paper #FFFEF7, neobrutalist ink #111 2px border + 3px shadow,
+  Okabe-Ito flat fills, 18px min, AAA contrast, no overlap GRID 12x8
+- 3b1b idiom comments: VGroup grouping, SurroundingRectangle focus, Matrix pattern via
+  VGroup chips, Dot for color chip, Arrow flow ready for downstream towers
+
 Solo personal project, no connection to employer, built with public/free-tier only
 """
 
@@ -32,26 +49,28 @@ from cam_style import (
 )
 from manim import *
 
+# Verified v5: 130 inputs / 17 families (champion 2026-07-25 mtnn_v5_concat_b2_h160_t32_d64_mlp128_fus256)
+# Source: mtnn_arch.json towerFamilies — per-family counts not published
 FAMILIES = [
-    ("volume", 10),
-    ("playmaking", 10),
-    ("rebounding", 8),
-    ("defense", 8),
-    ("efficiency", 8),
-    ("shotmix", 10),
-    ("bio", 5),
-    ("tracking", 12),  # masked pre-2013
-    ("form", 6),  # masked pre-2015
-    ("market", 4),
-    ("roster", 5),
-    ("career", 6),
-    ("competition", 6),
-    ("team", 8),
-    ("pedigree", 4),
-    ("playoffs", 5),
-    ("honors", 5),
+    "volume",
+    "playmaking",
+    "rebounding",
+    "defense",
+    "efficiency",
+    "shotmix",
+    "bio",
+    "tracking",
+    "form",
+    "market",
+    "roster",
+    "career",
+    "competition",
+    "team",
+    "pedigree",
+    "playoffs",
+    "honors",
 ]
-assert sum(c for _, c in FAMILIES) == 120
+assert len(FAMILIES) == 17
 
 COLOR_CYCLE = [
     OKABE["blue"],
@@ -73,12 +92,15 @@ COLOR_CYCLE = [
     OKABE["green"],
 ]
 
-SHAPE_CYCLE = ["●", "■", "▲", "◆"]
+SHAPE_CYCLE = ["●", "■", "▲", "◆", "⬢", "⬣", "●", "■", "▲", "◆", "⬢", "⬣", "●", "■", "▲", "◆", "⬢"]
 
 
-def make_white_family_chip(name: str, count: int, color: str, shape_char: str):
-    """White card ink border + colored dot Okabe + mono bold label — triple encoded."""
-    label_str = f"{shape_char} {name}  {count}"
+def make_white_family_chip(name: str, color: str, shape_char: str):
+    """White card ink border + colored dot Okabe + mono bold label — triple encoded.
+    3b1b idiom: VGroup grouping + RoundedRectangle + Dot + Text, like Matrix cell + SurroundingRectangle focus target.
+    Verified: 17 families total, 130 inputs; per-family counts not published so label is name only.
+    """
+    label_str = f"{shape_char} {name}"
     txt = Text(label_str, font_size=20, color=TEXT, font=MONO_STACK[0], weight="BOLD")
     dot = Circle(
         radius=0.11,
@@ -122,7 +144,7 @@ class InputFamilies(Scene):
     def construct(self):
         apply_cam_style(self, bg=BG, add_dots=True, check_ada=True)
 
-        title_card_w = 6.2
+        title_card_w = 6.4
         title_card_h = 1.0
         title_shadow = (
             RoundedRectangle(
@@ -163,8 +185,8 @@ class InputFamilies(Scene):
         )
         title_txt = (
             Text(
-                "120 feats → 17 families",
-                font_size=32,
+                "130 feats → 17 families (v5 champion 12,966×64)",
+                font_size=28,
                 color=TEXT,
                 font=SANS_STACK[0],
                 weight="BOLD",
@@ -173,16 +195,16 @@ class InputFamilies(Scene):
             .shift(UP * 0.1)
         )
         sub_txt = Text(
-            "MTNN v4  •  per-100  zσ  •  cat([x·m,m])",
-            font_size=16,
+            "MTNN v5  •  130 inputs • cat([x·m,m]) • era-safe • b2 h160 t32 d64",
+            font_size=14,
             color=SUBTLE_AAA,
             font=MONO_STACK[0],
         ).next_to(title_txt, DOWN, buff=0.08)
         title_group = VGroup(title_shadow, title_base, accent, title_txt, sub_txt)
 
         footer = Text(
-            "sum 120  •  17 towers  •  m∈{0,1}",
-            font_size=16,
+            "sum 130  •  17 towers  •  m∈{0,1}  •  3b1b token→matrix→cloud pattern",
+            font_size=14,
             color=SUBTLE_AAA,
             font=MONO_STACK[0],
         ).to_edge(DOWN, buff=0.28)
@@ -191,12 +213,13 @@ class InputFamilies(Scene):
         self.wait(0.2)
 
         chips = []
-        for idx, (name, cnt) in enumerate(FAMILIES):
+        for idx, name in enumerate(FAMILIES):
             col = COLOR_CYCLE[idx % len(COLOR_CYCLE)]
             shape = SHAPE_CYCLE[idx % len(SHAPE_CYCLE)]
-            chip = make_white_family_chip(name, cnt, col, shape)
+            chip = make_white_family_chip(name, col, shape)
             chips.append(chip)
 
+        # 3b1b pattern: arrange in GRID like embedding matrix (Matrix Mobject pattern)
         col1 = VGroup(*chips[0:6]).arrange(DOWN, buff=0.16, aligned_edge=LEFT)
         col2 = VGroup(*chips[6:12]).arrange(DOWN, buff=0.16, aligned_edge=LEFT)
         col3 = VGroup(*chips[12:17]).arrange(DOWN, buff=0.16, aligned_edge=LEFT)
@@ -206,11 +229,13 @@ class InputFamilies(Scene):
             grid.scale(0.92)
             grid.next_to(title_group, DOWN, buff=0.35)
 
+        # 3b1b idiom: FadeIn with shift, like Write/ShowCreation in 3b1b opening example
         self.play(FadeIn(grid, shift=UP * 0.15), run_time=0.6)
         self.wait(0.6)
 
-        tr_chip = chips[7]
-        form_chip = chips[8]
+        # Highlight era-sensitive families (tracking, form) — 3b1b Indicate yellow flash pattern
+        tr_chip = chips[7]  # tracking
+        form_chip = chips[8]  # form
 
         hl1 = RoundedRectangle(
             width=tr_chip.card.width + 0.08,
@@ -280,7 +305,7 @@ class InputFamilies(Scene):
         )
         mask_line1 = (
             Text(
-                "tracking pre-2013 • form pre-2015 →  ∅ masked as 0",
+                "tracking pre-2013 • form pre-2015 →  ∅ masked as 0 (m=0)",
                 font_size=18,
                 color=TEXT,
                 font=MONO_STACK[0],
@@ -297,6 +322,7 @@ class InputFamilies(Scene):
         ).next_to(mask_line1, DOWN, buff=0.08)
         mask_group = VGroup(mask_shadow, mask_base, mask_line1, mask_line2)
 
+        # 3b1b Indicate pattern: Create surrounding rect + Flash
         self.play(
             Create(hl1), Create(hl2), FadeIn(empty1), FadeIn(empty2), run_time=0.5
         )
@@ -394,6 +420,7 @@ class InputFamilies(Scene):
         ).arrange(DOWN, buff=0.18, aligned_edge=LEFT)
         stack.move_to(cat_base).shift(LEFT * 1.8)
 
+        # 3b1b Arrow flow dots pattern (network_flow.py) — moving dots along edge
         arrow = Arrow(
             start=stack.get_right() + RIGHT * 0.2,
             end=stack.get_right() + RIGHT * 1.1,
@@ -431,8 +458,8 @@ class InputFamilies(Scene):
         )
         cat_top = (
             Text(
-                "masking → cat([x·m,m])",
-                font_size=16,
+                "masking → cat([x·m,m])  •  130 feats → 17 families • era-safe",
+                font_size=14,
                 color=SUBTLE_AAA,
                 font=MONO_STACK[0],
             )
@@ -440,6 +467,7 @@ class InputFamilies(Scene):
             .shift(DOWN * 0.18)
         )
 
+        # 3b1b Transform pattern: grid opacity down + new card in (like SquareToCircle)
         self.play(
             grid.animate.set_opacity(0.55).scale(0.94),
             FadeIn(cat_vgroup),
@@ -450,8 +478,8 @@ class InputFamilies(Scene):
         self.wait(1.0)
 
         check = Text(
-            "✓ missing → 0 + flag  •  era-safe • never imputed",
-            font_size=16,
+            "✓ missing → 0 + flag  •  era-safe • never imputed  •  17 towers 160→64",
+            font_size=14,
             color=TEXT,
             font=MONO_STACK[0],
             weight="BOLD",

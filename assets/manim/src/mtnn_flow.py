@@ -1,14 +1,32 @@
 """
-MTNNFlow — Cam's Lab authentic style — FIXED SPACING NO OVERLAP
-Changelog fix: input card breathing room, tower grid 0.18 buffs, heads 1.8w
+MTNNFlow — Cam's Lab authentic style — FIXED SPACING NO OVERLAP — v5 truthful
 
-Truthful v4 invariants:
-- 17 families 120 feats sum checked
-- cat([x·m,m]) where m∈{0,1} per-fam, ∅→0 grad 0 never imputed
-- 17x residual towers 2 blocks 160→32 LN GELU res
-- concat 544+12=556 →128→48 L2 normalize v̂=v/||v||
-- heads 8/5/14/18 + sphere 12,392 pts
-- Flow W 1380 cols visual concept but layout scaled for AAA readability
+Verified v5 invariants (champion 2026-07-25 mtnn_v5_concat_b2_h160_t32_d64_mlp128_fus256):
+- 130 inputs / 17 families (source: mtnn_arch.json dIn 130, towerFamilies 17) — per-family counts not published
+- cat([x·m,m]) where m∈{0,1} per-fam, ∅→0 grad 0 never imputed, era-safe
+- 17× residual towers: 2 blocks, hidden 160 → out 32 (b2 h160 t32 d64 mlp128) LN GELU res
+- concat 544 (17×32) + 12 season_emb = 556 → 128 → 64 L2 normalize v̂=v/||v|| (64-d unit sphere)
+- 556→128 via fus256 MLP (256 hidden), then 128→64
+- heads 8/5/14/18 + sphere 12,966 pts (player-seasons) 2,415 unique players
+- 3b1b patterns integrated (from _2024/transformers):
+  * Tower Viz (transformer.py): shared stem → parallel towers via FadeTransform split,
+    residual spine branching, VGroup towers arranging GRID 6×3, 0.18 buffs, FadeTransform
+    for TRK detail expansion (towers_grid opacity 0.16 → detail card)
+  * Embedding (embedding.py): token list → matrix grid highlight (Indicate yellow flash)
+    → DotCloud on sphere → 2D projection clustering + Circumscribe neighbors
+    Our: tower dots + sphere visual right of fusion, L2 unit chip, 64-d v̂ label
+  * Similarity (attention.py, softmax.py): Q·K dot as overlap area + heatmap opacity=weight
+    + bipartite edge thickness, softmax bar morphing via always_redraw
+    Our: cosine = v̂·ŵ footer, TRK tower detail (tracking family example)
+  * MLP Bottleneck (mlp.py): funnel wide→narrow→GELU wiggle→wide + residual + LayerNorm
+    to sphere, ValueTracker sliders for continuous Alpha
+    Our: fusion 556→128→64 funnel, detail 160→32, ValueTracker-ready arrows
+  * Idioms: VGroup grouping, SurroundingRectangle focus, Matrix tables, DotCloud embeddings,
+    Arrow flow + moving dots (network_flow.py), ValueTracker+always_redraw, checkpoint_paste
+    workflow (manimgl -se <line> → IPython tweak)
+
+Cam style distinct from 3b1b: light paper #FFFEF7, neobrutalist ink #111 2px border + 3px shadow,
+Okabe-Ito flat, no glow, mono labels, blueprint dotted grid, AAA contrast.
 
 Solo personal project, no connection to employer, built with public/free-tier only
 """
@@ -48,27 +66,29 @@ from cam_style import (
     get_grid_position,
 )
 
-# Truthful family mapping
+# Verified v5: 17 families, 130 total inputs (champion 2026-07-25 mtnn_v5_concat_b2_h160_t32_d64_mlp128_fus256)
+# Source: ~/workspace/vector-hoops/public/assets/mtnn_arch.json (dIn 130, towerFamilies 17)
+# Per-family feat counts are not published in production meta — do not invent
 FAMILIES = [
-    ("volume", 5, "VOL"),
-    ("playmaking", 12, "PLAY"),
-    ("rebounding", 5, "REB"),
-    ("defense", 3, "DEF"),
-    ("efficiency", 10, "EFF"),
-    ("shotmix", 13, "SHOT"),
-    ("bio", 4, "BIO"),
-    ("tracking", 13, "TRK"),
-    ("form", 6, "FORM"),
-    ("market", 4, "MKT"),
-    ("roster", 5, "ROST"),
-    ("career", 5, "CAR"),
-    ("competition", 4, "COMP"),
-    ("team", 5, "TEAM"),
-    ("pedigree", 7, "PED"),
-    ("playoffs", 14, "PO"),
-    ("honors", 5, "HON"),
+    ("volume", "VOL"),
+    ("playmaking", "PLAY"),
+    ("rebounding", "REB"),
+    ("defense", "DEF"),
+    ("efficiency", "EFF"),
+    ("shotmix", "SHOT"),
+    ("bio", "BIO"),
+    ("tracking", "TRK"),
+    ("form", "FORM"),
+    ("market", "MKT"),
+    ("roster", "ROST"),
+    ("career", "CAR"),
+    ("competition", "COMP"),
+    ("team", "TEAM"),
+    ("pedigree", "PED"),
+    ("playoffs", "PO"),
+    ("honors", "HON"),
 ]
-assert sum(c for _, c, _ in FAMILIES) == 120
+assert len(FAMILIES) == 17
 
 OKABE_CYCLE = [
     OKABE["blue"],
@@ -175,7 +195,7 @@ class MTNNFlow(Scene):
         # ── Title Card ──
         title_card = cam_card(width=6.4, height=1.10, accent_color=OKABE["orange"])
         title_txt = Text(
-            "Inside MTNN v4 — Cam's Lab",
+            "Inside MTNN v5 — Cam's Lab (champion 12,966×64)",
             font_size=24,
             color=INK,
             font=SANS_STACK[0],
@@ -183,7 +203,7 @@ class MTNNFlow(Scene):
         )
         title_txt.move_to(title_card).shift(UP * 0.16)
         subtitle_txt = Text(
-            "17 families • 120 feats • 48-d L2 • 12,392 seasons • W flow 1380",
+            "17 families • 130 feats • 64-d L2 • 12,966 seasons • b2 h160 t32 d64 mlp128 fus256",
             font_size=13,
             color=SUBTLE_AAA,
             font=MONO_STACK[0],
@@ -202,7 +222,7 @@ class MTNNFlow(Scene):
 
         # Internal stack VGroup — strict DOWN buff 0.10 LEFT aligned, split long line
         t1 = Text(
-            "120 feats→17 families",
+            "130 feats→17 families",
             font_size=16,
             color=INK,
             font=SANS_STACK[0],
@@ -255,7 +275,7 @@ class MTNNFlow(Scene):
 
         # ── Towers grid — FIXED BUFFS 0.18 —─
         towers_vg = VGroup()
-        for idx, (fam, cnt, abbr) in enumerate(FAMILIES):
+        for idx, (fam, abbr) in enumerate(FAMILIES):
             col = OKABE_CYCLE[idx % len(OKABE_CYCLE)]
             icon = ICON_CYCLE[idx % len(ICON_CYCLE)]
             mini = make_mini_tower(abbr, fam, col, icon, w=1.18, h=0.60)
@@ -307,7 +327,7 @@ class MTNNFlow(Scene):
         detail_card.move_to(towers_grid.get_center()).shift(DOWN * 0.02)
 
         d_t1 = Text(
-            "TRK tower  13f×2=26 →160",
+            "TRK tower  tracking family",
             font_size=12,
             color=INK,
             font=MONO_STACK[0],
@@ -320,7 +340,7 @@ class MTNNFlow(Scene):
             "160 → 32  +  LayerNorm", font_size=11, color=SUBTLE_AAA, font=MONO_STACK[0]
         )
         d_t4 = Text(
-            "out 32-d   W tot ~1380 cols",
+            "out 32-d   era-safe masked",
             font_size=10,
             color=INK,
             font=MONO_STACK[0],
@@ -363,20 +383,20 @@ class MTNNFlow(Scene):
         fusion_card.next_to(arrow1, DOWN, buff=0.14)
 
         f_t1 = Text(
-            "Concat 17×32=544 +12 time =556",
+            "Concat 17×32=544 +12 season =556",
             font_size=13,
             color=INK,
             font=MONO_STACK[0],
             weight=BOLD,
         )
         f_t2 = Text(
-            "556 → 128 GELU LN → 48 → L2 normalize",
+            "556 → 128 GELU LN → 64 → L2 normalize",
             font_size=11,
             color=INK,
             font=MONO_STACK[0],
         )
         f_t3 = Text(
-            "v^ = v / ||v||   ||v^||=1   12,392 pts on sphere",
+            "v^ = v / ||v||   ||v^||=1   12,966 pts (2,415 players)",
             font_size=10,
             color=SUBTLE_AAA,
             font=MONO_STACK[0],
@@ -409,10 +429,10 @@ class MTNNFlow(Scene):
             max_tip_length_to_length_ratio=0.18,
         )
         vec_label = Text(
-            "48-d v^", font_size=10, color=INK, font=MONO_STACK[0], weight=BOLD
+            "64-d v^", font_size=10, color=INK, font=MONO_STACK[0], weight=BOLD
         ).next_to(vec.get_end(), UP + RIGHT, buff=0.04)
         l2_label = Text(
-            "L2 unit", font_size=9, color=SUBTLE_AAA, font=MONO_STACK[0]
+            "L2 unit 64-d", font_size=9, color=SUBTLE_AAA, font=MONO_STACK[0]
         ).next_to(circ, DOWN, buff=0.07)
 
         sphere_group = VGroup(circ, dot_o, vec, vec_label, l2_label)
@@ -480,9 +500,9 @@ class MTNNFlow(Scene):
         self.play(FadeIn(heads_label, shift=UP * 0.04), run_time=0.32)
         self.wait(0.35)
 
-        # Footer — truthful
+        # Footer — truthful (verified only)
         footer = Text(
-            "Flow: 1380 cols • 544+12=556→128→48 L2 • 12,392 careers on sphere • cos=v̂·ŵ",
+            "Flow: 130→17 towers 544+12=556→128→64 L2 • 12,966 pts 2,415 players • cos=v̂·ŵ • 3b1b towers+cloud+proj",
             font_size=9,
             color=SUBTLE_AAA,
             font=MONO_STACK[0],

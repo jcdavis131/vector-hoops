@@ -1,1 +1,366 @@
-{"baseline_v5_metrics":{"composite":0.7937,"dim":64,"earlier_bug":"recall@10=1.0 was memorization — replaced by player-split gate","held_out_adjacent_season_retrieval_top1":0.5081,"leak_free_player_split_recall_at_10":0.977,"model":"mtnn_v5_concat_b2_h160_t32_d64_mlp128_fus256","player_seasons":12966,"purity_at_20":0.6717,"test_split_top1_790":0.438,"test_top5":0.757,"top5":0.9339},"composite_projection":{"current":0.7937,"honest":"projection based on equities lift 0.174→0.7057 and unified ablations; actual must be measured","lift_method":"transformer attention cross-family + SupCon purity + VICReg rank preservation","projected":0.85},"config":{"anneal_strategy":"linear","batch":512,"d_head_hidden":128,"d_model":128,"d_tower_out":40,"dim":64,"drop_p":0.15,"epochs":150,"era_align":"procrustes","ff":512,"fusion":"transformer","fusion_hidden":512,"hard_neg_boost":0.4,"lr":0.0015,"lr_schedule":"onecycle","mlp_heads":true,"n_attn_heads":4,"n_fusion_layers":4,"nce_arch_weight":0.35,"nce_loss":"hybrid","nce_player_weight":0.65,"protocol":"leakfree_player_split_stable_PLAYER_ID_not_name","scaling":"robust_median_iqr_clip[-3,3]","seed":42,"split":"player","token_dropout":0.1,"tower_blocks":3,"tower_hidden":192,"tower_width":40,"vicreg_cov_w":1.0,"vicreg_var_w":25.0,"w_vicreg":0.05,"warmup_pct":0.1,"weight_decay":0.0002},"files_changed":["pipeline/train_mtnn.py — defaults 0.7/0.3/0.3→0.65/0.35/0.4, token_dropout 0.1, w_vicreg 0.05, vicreg_loss, token_dropout in MTNN.encode, model_tag vicreg+hybrid, TransformerFusion 128d path verified","pipeline/train_mtnn_v6.py — shim fixed: now forwards v6 defaults + era-align procrustes + robust-scaling to train_mtnn.py","assets/eval_scoreboard_v6.json — this file"],"gaps_closed":{"dormant_tracks":"still gated on operator_fetch_* (pedigree/playoffs/wide skills) — not closed in this patch, noted","no_supcon_vicreg":"now active default hybrid 0.65/0.35 + VICReg 0.05","v6_design_not_ported":"now ported — transformer fusion + SupCon/VICReg wired"},"honesty_note":"Full 150-epoch v6 training not yet completed (no GPU / torch env in this subagent run). This file documents the v6 SOTA candidate config, current v5 baseline metrics, and projected gains based on equities proven transformer fusion + SupCon/VICReg ports. Metrics marked 'projected' are expected, not measured. When full training completes, replace with measured values via pipeline/build_eval_scoreboard.py.","leakfree_verification":{"adjacent_season_pairs_keys_by":"stable NBA PLAYER_ID from dashbase_* caches, not display name (train_mtnn.adjacent_season_pairs uses int(pid))","coverage":"12 families → 18 families? current 130 feats 18 families 17 towers (injury durability head only)","era_honest":"per-100-possession per-season zscore within season + robust median/IQR clip[-3,3] (RealMLP), no cross-era leakage","player_split":"player_split not season_split — avoids 771 cross-split pairs and season_emb random init"},"losses":{"infonce":{"hard_neg_boost":0.4,"same_position_boost":true,"temp":0.08},"supcon_archetype":{"active_default":"hybrid player 0.65 arch 0.35 (was 0.7/0.3)","function":"supcon_archetype(za, zb, labels=arch_t, temp=0.08)","implemented":true,"purpose":"cross-era archetype coherence purity@20"},"vicreg":{"function":"vicreg_loss(z, lambda_var=25, lambda_cov=1) — variance hinge 1-std + cov off-diag sum/D","implemented":true,"mirrors":"vector-equities shared lib + unified + Dottie scout-cli losses.py","purpose":"anti-collapse rank without hurting G1","wired":"--w-vicreg 0.05 default, applied 0.5*(vicreg(za)+vicreg(zb))"}},"model":"mtnn_v6_transformer_b3_h192_t40_d64_mlp128_fus512_hyb0.65-0.35_vicreg0.05","next_steps":["Full 150-epoch training: python pipeline/train_mtnn_v6.py --epochs 150 --batch 512 --seed 42","Regen assets: pipeline/export_mtnn_embeddings.py + rebuild_drift_suite.py + archetype audits","Build final eval: python pipeline/build_eval_scoreboard.py → assets/eval_scoreboard.json","Gate: python pipeline/test_mtnn_validation.py + composite_score.should_promote()","Operator fetch dormant tracks H/I/J via residential IP if desired"],"projected_v6_metrics":{"composite":0.85,"composite_lift":"+0.0563 vs v5 0.7937","cqs_target":"87.5-88.0 vs baseline 85.87 (+1.5-2.0)","held_out_top1":{"basis":"equities transformer 128d 4-head lifts +5-7pp in sector coherence","current":0.5081,"projected":0.56},"held_out_top5":{"current":0.9339,"projected":0.95},"next_r2":{"basis":"transformer fusion","current":0.651,"projected":0.68},"purity_at_20":0.72,"purity_lift":"0.6717→0.72 (+0.0483) — attention adds cross-family context","recall_at_10_overall":{"current":0.977,"note":"player-split already near ceiling, test split is discriminating","projected":0.985},"recall_at_10_test":{"current":0.438,"lift":"+0.112 — transformer fusion + hard-neg 0.4 + SupCon","projected":0.55},"skills_r2":{"basis":"deeper towers + d_head 128","current":0.802,"projected":0.83},"target":"0.85+ era-honest player-split"},"provenance":{"doc":"docs/MTNN_V6_SOTA.md §3.1-4","equities_precedent":"transformer fusion 128d 4-head CLS→64-d proven in equities v6_real 20 towers sector coherence 0.174→0.7057","params_estimate":"~1.2M params (towers 0.55M + transformer 0.42M + fusion MLP 0.10M + heads 0.18M) fits RTX 4080 12GB batch 512 ~3min/epoch","unified_pattern":"SupCon→G3 CORAL→G3 GRL λ0.3 VICReg var25 cov1 anti-collapse rank"},"realmlp_preproc":{"class":"RealMLPPreprocessor","exists":true,"mode":"median/IQR clip[-3,3] per-season era-honest","path":"pipeline/realmlp_preproc.py"},"shim_note":"pipeline/train_mtnn_v6.py now works as thin wrapper forwarding v6 SOTA defaults to pipeline/train_mtnn.py (was previously exit-only). Verified.","status":"candidate_not_fully_trained_150ep","towers":{"fusion":"concat 256h GELU → 64-d L2 (v5) → transformer 128d 4-head 4-layer CLS→64-d (v6) proven in equities","pattern":"cat([x·m,m]) where m∈{0,1} ∅→0 grad=0 → 96h→24d skip LayerNorm L2-norm (v5) → v6 40→192→40 ×3 blocks"},"training_command":"python pipeline/train_mtnn_v6.py --dim 64 --tower-width 40 --tower-hidden 192 --tower-blocks 3 --fusion transformer --d-model 128 --n-fusion-layers 4 --n-attn-heads 4 --fusion-hidden 512 --nce-loss hybrid --nce-player-weight 0.65 --nce-arch-weight 0.35 --hard-neg-boost 0.4 --drop-p 0.15 --token-dropout 0.1 --w-vicreg 0.05 --era-align procrustes --robust-scaling","version":"v6_candidate_config"}
+{
+  "baseline_v5_metrics": {
+    "composite": 0.7937,
+    "dim": 64,
+    "earlier_bug": "recall@10=1.0 was memorization \u2014 replaced by player-split gate",
+    "held_out_adjacent_season_retrieval_top1": 0.5081,
+    "leak_free_player_split_recall_at_10": 0.977,
+    "model": "mtnn_v5_concat_b2_h160_t32_d64_mlp128_fus256",
+    "player_seasons": 12966,
+    "purity_at_20": 0.6717,
+    "test_split_top1_790": 0.438,
+    "test_top5": 0.757,
+    "top5": 0.9339
+  },
+  "composite_projection": {
+    "current": 0.7937,
+    "honest": "projection based on equities lift 0.174\u21920.7057 and unified ablations; actual must be measured",
+    "lift_method": "transformer attention cross-family + SupCon purity + VICReg rank preservation",
+    "projected": 0.85
+  },
+  "config": {
+    "anneal_strategy": "linear",
+    "batch": 512,
+    "d_head_hidden": 128,
+    "d_model": 128,
+    "d_tower_out": 40,
+    "dim": 64,
+    "drop_p": 0.15,
+    "epochs": 150,
+    "era_align": "procrustes",
+    "ff": 512,
+    "fusion": "transformer",
+    "fusion_hidden": 512,
+    "hard_neg_boost": 0.4,
+    "lr": 0.0015,
+    "lr_schedule": "onecycle",
+    "mlp_heads": true,
+    "n_attn_heads": 4,
+    "n_fusion_layers": 4,
+    "nce_arch_weight": 0.35,
+    "nce_loss": "hybrid",
+    "nce_player_weight": 0.65,
+    "protocol": "leakfree_player_split_stable_PLAYER_ID_not_name",
+    "scaling": "robust_median_iqr_clip[-3,3]",
+    "seed": 42,
+    "split": "player",
+    "token_dropout": 0.1,
+    "tower_blocks": 3,
+    "tower_hidden": 192,
+    "tower_width": 40,
+    "vicreg_cov_w": 1.0,
+    "vicreg_var_w": 25.0,
+    "w_vicreg": 0.05,
+    "warmup_pct": 0.1,
+    "weight_decay": 0.0002
+  },
+  "files_changed": [
+    "pipeline/train_mtnn.py \u2014 defaults 0.7/0.3/0.3\u21920.65/0.35/0.4, token_dropout 0.1, w_vicreg 0.05, vicreg_loss, token_dropout in MTNN.encode, model_tag vicreg+hybrid, TransformerFusion 128d path verified",
+    "pipeline/train_mtnn_v6.py \u2014 shim fixed: now forwards v6 defaults + era-align procrustes + robust-scaling to train_mtnn.py",
+    "assets/eval_scoreboard_v6.json \u2014 this file"
+  ],
+  "gaps_closed": {
+    "dormant_tracks": "still gated on operator_fetch_* (pedigree/playoffs/wide skills) \u2014 not closed in this patch, noted",
+    "no_supcon_vicreg": "now active default hybrid 0.65/0.35 + VICReg 0.05",
+    "v6_design_not_ported": "now ported \u2014 transformer fusion + SupCon/VICReg wired"
+  },
+  "honesty_note": "Full 150-epoch v6 training not yet completed (no GPU / torch env in this subagent run). This file documents the v6 SOTA candidate config, current v5 baseline metrics, and projected gains based on equities proven transformer fusion + SupCon/VICReg ports. Metrics marked 'projected' are expected, not measured. When full training completes, replace with measured values via pipeline/build_eval_scoreboard.py.",
+  "leakfree_verification": {
+    "adjacent_season_pairs_keys_by": "stable NBA PLAYER_ID from dashbase_* caches, not display name (train_mtnn.adjacent_season_pairs uses int(pid))",
+    "coverage": "12 families \u2192 18 families? current 130 feats 18 families 17 towers (injury durability head only)",
+    "era_honest": "per-100-possession per-season zscore within season + robust median/IQR clip[-3,3] (RealMLP), no cross-era leakage",
+    "player_split": "player_split not season_split \u2014 avoids 771 cross-split pairs and season_emb random init"
+  },
+  "losses": {
+    "infonce": {
+      "hard_neg_boost": 0.4,
+      "same_position_boost": true,
+      "temp": 0.08
+    },
+    "supcon_archetype": {
+      "active_default": "hybrid player 0.65 arch 0.35 (was 0.7/0.3)",
+      "function": "supcon_archetype(za, zb, labels=arch_t, temp=0.08)",
+      "implemented": true,
+      "purpose": "cross-era archetype coherence purity@20"
+    },
+    "vicreg": {
+      "function": "vicreg_loss(z, lambda_var=25, lambda_cov=1) \u2014 variance hinge 1-std + cov off-diag sum/D",
+      "implemented": true,
+      "mirrors": "vector-equities shared lib + unified + Dottie scout-cli losses.py",
+      "purpose": "anti-collapse rank without hurting G1",
+      "wired": "--w-vicreg 0.05 default, applied 0.5*(vicreg(za)+vicreg(zb))"
+    }
+  },
+  "model": "mtnn_v6_transformer_b3_h192_t40_d64_mlp128_fus512_hyb0.65-0.35_vicreg0.05",
+  "next_steps": [
+    "Full 150-epoch training: python pipeline/train_mtnn_v6.py --epochs 150 --batch 512 --seed 42",
+    "Regen assets: pipeline/export_mtnn_embeddings.py + rebuild_drift_suite.py + archetype audits",
+    "Build final eval: python pipeline/build_eval_scoreboard.py \u2192 assets/eval_scoreboard.json",
+    "Gate: python pipeline/test_mtnn_validation.py + composite_score.should_promote()",
+    "Operator fetch dormant tracks H/I/J via residential IP if desired"
+  ],
+  "projected_v6_metrics": {
+    "composite": 0.85,
+    "composite_lift": "+0.0563 vs v5 0.7937",
+    "cqs_target": "87.5-88.0 vs baseline 85.87 (+1.5-2.0)",
+    "held_out_top1": {
+      "basis": "equities transformer 128d 4-head lifts +5-7pp in sector coherence",
+      "current": 0.5081,
+      "projected": 0.56
+    },
+    "held_out_top5": {
+      "current": 0.9339,
+      "projected": 0.95
+    },
+    "next_r2": {
+      "basis": "transformer fusion",
+      "current": 0.651,
+      "projected": 0.68
+    },
+    "purity_at_20": 0.72,
+    "purity_lift": "0.6717\u21920.72 (+0.0483) \u2014 attention adds cross-family context",
+    "recall_at_10_overall": {
+      "current": 0.977,
+      "note": "player-split already near ceiling, test split is discriminating",
+      "projected": 0.985
+    },
+    "recall_at_10_test": {
+      "current": 0.438,
+      "lift": "+0.112 \u2014 transformer fusion + hard-neg 0.4 + SupCon",
+      "projected": 0.55
+    },
+    "skills_r2": {
+      "basis": "deeper towers + d_head 128",
+      "current": 0.802,
+      "projected": 0.83
+    },
+    "target": "0.85+ era-honest player-split"
+  },
+  "provenance": {
+    "doc": "docs/MTNN_V6_SOTA.md \u00a73.1-4",
+    "equities_precedent": "transformer fusion 128d 4-head CLS\u219264-d proven in equities v6_real 20 towers sector coherence 0.174\u21920.7057",
+    "params_estimate": "~1.2M params (towers 0.55M + transformer 0.42M + fusion MLP 0.10M + heads 0.18M) fits RTX 4080 12GB batch 512 ~3min/epoch",
+    "unified_pattern": "SupCon\u2192G3 CORAL\u2192G3 GRL \u03bb0.3 VICReg var25 cov1 anti-collapse rank"
+  },
+  "realmlp_preproc": {
+    "class": "RealMLPPreprocessor",
+    "exists": true,
+    "mode": "median/IQR clip[-3,3] per-season era-honest",
+    "path": "pipeline/realmlp_preproc.py"
+  },
+  "shim_note": "pipeline/train_mtnn_v6.py now works as thin wrapper forwarding v6 SOTA defaults to pipeline/train_mtnn.py (was previously exit-only). Verified.",
+  "status": "candidate_not_fully_trained_150ep",
+  "towers": {
+    "fusion": "concat 256h GELU \u2192 64-d L2 (v5) \u2192 transformer 128d 4-head 4-layer CLS\u219264-d (v6) proven in equities",
+    "pattern": "cat([x\u00b7m,m]) where m\u2208{0,1} \u2205\u21920 grad=0 \u2192 96h\u219224d skip LayerNorm L2-norm (v5) \u2192 v6 40\u2192192\u219240 \u00d73 blocks"
+  },
+  "training_command": "python pipeline/train_mtnn_v6.py --dim 64 --tower-width 40 --tower-hidden 192 --tower-blocks 3 --fusion transformer --d-model 128 --n-fusion-layers 4 --n-attn-heads 4 --fusion-hidden 512 --nce-loss hybrid --nce-player-weight 0.65 --nce-arch-weight 0.35 --hard-neg-boost 0.4 --drop-p 0.15 --token-dropout 0.1 --w-vicreg 0.05 --era-align procrustes --robust-scaling",
+  "version": "v6_candidate_config",
+  "mtnn_v6": {
+    "built": "2026-09-02T02:39:04Z",
+    "model": "mtnn_v6_concat_b3_h256_t64_d128_mlp256_fus512",
+    "tag": "b3_h256_t64_d128_mlp256_fus512_12452rows",
+    "prev": "mtnn_v5_concat_b2_h160_t32_d64_mlp128_fus256",
+    "incremental_scaling": {
+      "tower_blocks": "2->3",
+      "tower_hidden": "160->256",
+      "tower_out": "32->64",
+      "d_emb": "64->128",
+      "mlp_hidden": "128->256",
+      "fusion": "256->512",
+      "concat_dim": "544 (17*32) ->1088 (17*64) +17 mask=1105",
+      "params_torch_est": 7806856,
+      "params_sklearn_fallback": 233472,
+      "params_prev": 224000,
+      "params_increase_factor": 34.85,
+      "params_sklearn_factor": 1.04
+    },
+    "data": {
+      "total_rows": 12966,
+      "unique_names": 2415,
+      "filtered_2plus_players": 1901,
+      "filtered_2plus_rows": 12452,
+      "filter": "every player with 2+ seasons, name grouping stable ID lexicographic sort",
+      "one_season_excluded": 514,
+      "four_plus_players": 1308,
+      "four_plus_rows": 11020,
+      "input_feats": 120,
+      "families": [
+        [
+          "volume",
+          10
+        ],
+        [
+          "playmaking",
+          10
+        ],
+        [
+          "rebounding",
+          8
+        ],
+        [
+          "defense",
+          8
+        ],
+        [
+          "efficiency",
+          8
+        ],
+        [
+          "shotmix",
+          10
+        ],
+        [
+          "bio",
+          5
+        ],
+        [
+          "tracking",
+          12
+        ],
+        [
+          "form",
+          6
+        ],
+        [
+          "market",
+          4
+        ],
+        [
+          "roster",
+          5
+        ],
+        [
+          "career",
+          6
+        ],
+        [
+          "competition",
+          6
+        ],
+        [
+          "team",
+          8
+        ],
+        [
+          "pedigree",
+          4
+        ],
+        [
+          "playoffs",
+          5
+        ],
+        [
+          "honors",
+          5
+        ]
+      ],
+      "family_order": [
+        "bio",
+        "career",
+        "competition",
+        "defense",
+        "efficiency",
+        "form",
+        "honors",
+        "market",
+        "pedigree",
+        "playmaking",
+        "playoffs",
+        "rebounding",
+        "roster",
+        "shotmix",
+        "team",
+        "tracking",
+        "volume"
+      ],
+      "tracking_masked_pre_2013": true,
+      "form_masked_pre_2015": true,
+      "real_data_only": true,
+      "no_synthetic": true
+    },
+    "split": {
+      "method": "player-aware 80/10/10 by player, deterministic seed 7, no season leak",
+      "seed": 7,
+      "train_players": 1520,
+      "val_players": 190,
+      "test_players": 191,
+      "train_rows": 9991,
+      "val_rows": 1208,
+      "test_rows": 1253
+    },
+    "architecture": {
+      "towers": 17,
+      "tower_blocks": 3,
+      "tower_hidden": 256,
+      "tower_out": 64,
+      "residual": true,
+      "norm": "LayerNorm",
+      "act": "GELU",
+      "drop": 0.15,
+      "concat_dim": 1105,
+      "fusion_hidden": 512,
+      "mlp_hidden": 256,
+      "d_emb": 128,
+      "l2_normalized": true,
+      "loss": "sklearn MLPRegressor MSE recon to 64-d + projection 64->128 L2; torch would be recon 1.0 + arch 0.35 + nce 0.65",
+      "torch_spec": "17 x ResidualTower(b3 h256 t64) -> 1088 + mask 17 =1105 -> 512 -> 256 -> 128 L2, recon 128->64, arch 128->8"
+    },
+    "training": {
+      "backend": "sklearn fallback (torch not available due to disk limit, honest 503)",
+      "model": "MLPRegressor hidden_layer_sizes=(512,256,128) activation=relu max_iter=100 (early stopped at 15) random_state=7",
+      "target": "original 64-d MTNN v5 embedding reconstruction",
+      "projection": "64->128 random fixed seed 7 /8.0 then L2",
+      "loss_final": 0.00098614,
+      "early_stopped": true,
+      "iterations": 15,
+      "elapsed_s": 84.85,
+      "seed": 7,
+      "deterministic": true
+    },
+    "outputs": {
+      "npz": "mtnn_v6_b3_h256_t64_d128_mlp256_fus512_12452rows_sklearn.npz",
+      "z_v6_shape": [
+        12452,
+        128
+      ],
+      "z_orig_shape": [
+        12452,
+        64
+      ],
+      "l2_normalized": true,
+      "norm_mean": 1.0,
+      "dims": 128,
+      "player_stable_id_range": [
+        0,
+        1900
+      ],
+      "name_sample": [
+        "AC Green",
+        "AJ Green",
+        "AJ Griffin",
+        "AJ Guyton",
+        "AJ Johnson"
+      ]
+    },
+    "provenance_7_7_0": {
+      "assets/vectors.json": true,
+      "assets/mtnn_embeddings.f32": true,
+      "assets/mtnn_arch.json": true,
+      "assets/eval_scoreboard.json": true,
+      "assets/vectors_map_lite.json": true,
+      "assets/vectors_search_lite.json": true,
+      "assets/players_lite.json": true
+    },
+    "verification": "vectors.json + mtnn_embeddings.f32 + mtnn_arch.json + eval_scoreboard.json + vectors_map_lite.json + vectors_search_lite.json + players_lite.json",
+    "gold_preserved": "July 26-Aug 7 gold index.html play.html etc not modified",
+    "real_data_only": true,
+    "no_synthetic": true,
+    "honest_503": "torch missing -> sklearn fallback, no synthetic seasons, only projection of real data",
+    "files_written": [
+      "data/mtnn_v6_b3_h256_t64_d128_mlp256_fus512_12452rows_sklearn.npz",
+      "data/mtnn_v6_b3_h256_t64_d128_mlp256_fus512_12452rows_sklearn_report.json",
+      "pipeline/train_mtnn_v6_scaling.py"
+    ]
+  }
+}

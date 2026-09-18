@@ -1,5 +1,5 @@
 """
-cam_style.py — Cam Authentic Style Guide for Manim
+cam_style.py — Cam Authentic Style Guide for Manim (Community Edition)
 
 Identity: Cameron Davis, systems builder + workforce strategy + storytelling.
 Vibe: kitty scout • concise • best-app-ever polish • playful but systems diagram.
@@ -11,11 +11,84 @@ Design System: hoops.dumbmodel.com — light warm paper, ink borders, mono label
 
 Distinct from 3Blue1Brown:
   3b1b = dark #111114 bg, glowing neon lines, smooth morphing, centered glowing formulas,
-         blur/shadow glow effects, ethereal.
+         blur/shadow glow effects, ethereal, manimgl (from manimlib import *).
   Cam  = light warm paper #FFFEF7 // #FFFEFA bg + faint dotted blueprint grid (#E8E0C8),
          neobrutalist cards white #FFFFFF with 2px ink #111 border + 3px hard shadow offset,
          Okabe-Ito flat fills (no gradients), no glow, hard edges, typewriter mono labels,
-         sketch arrow style but clean vectors, systems diagram + post-it playfulness.
+         sketch arrow style but clean vectors, systems diagram + post-it playfulness,
+         manim-community (from manim import *).
+
+--------------------------------------------------------------------------
+MANIM COMMUNITY vs 3b1b/manimgl COMPATIBILITY SHIM
+--------------------------------------------------------------------------
+Our pipeline uses manim-community (pip install manim):
+    from manim import Scene, VGroup, Circle, Arrow, Text, ...
+
+3b1b/videos repo uses Grant's fork manimgl (pip install manimgl):
+    from manimlib import Scene, VGroup, ...
+
+Differences:
+- Import path: manim vs manimlib — we wrap with try/except MANIM_AVAILABLE flag
+- Camera: community uses Cairo/OpenGL pluggable, manimgl is OpenGL-only real-time
+- Config: community uses manim.cfg / config.frame_width, manimgl uses custom_config.yml
+- Shader: manimgl has quadratic_bezier shaders; community has OpenGL shader wrapper
+- Interactive: manimgl supports `manimgl file.py Scene -se <line>` + checkpoint_paste() IPython
+           community uses `-p -ql` preview, no checkpoint_paste
+
+Compatibility shim in this file:
+- Try import from manim (community). If missing, set MANIM_AVAILABLE=False and define stubs.
+  CI/lint can import without rendering. Render requires manim installed (Alienware GPU).
+- For manimgl port: replace `from manim import` with `from manimlib import` and drop ManimColor
+  wrapper (manimgl uses hex strings directly). All VGroup/RoundedRectangle/Arrow APIs are
+  compatible for our usage (basic geometry + text). No glow effects used.
+
+We intentionally stay on manim-community because:
+- Vercel / CI pip install works (no OpenGL preview required for lint)
+- Wider community docs, stable cairo fallback for Hatch CPU
+- Cam style is light paper + hard ink, not 3b1b dark glow (manimgl optimized for that)
+
+If you need manimgl for _2024/transformers parity:
+    pip install manimgl   # package name manimgl, import manimlib
+    manimgl src/mtnn_flow.py MTNNFlow --hd --fps 60
+
+--------------------------------------------------------------------------
+3b1b PATTERNS INTEGRATED (from _2024/transformers)
+--------------------------------------------------------------------------
+We borrow idioms from 3b1b/videos, but in Cam style:
+
+1. Tower Viz (transformer.py, attention.py):
+   - Shared residual spine as central VGroup of vectors (Line + Dot spine)
+   - Q/K/V or family towers as side-by-side rectangles branching off, merging back
+   - Implemented via FadeTransform split: one Rectangle → N towers, dots splitting
+   - Our: mtnn_flow.py towers_grid uses VGroup towers + VGroup dots flow via Arrow
+
+2. Embedding (embedding.py TokenEmbedding):
+   - Left: list of Text tokens (family names)
+   - Middle: embedding matrix as grid of squares, Indicate + yellow flash on lookup
+   - Right: high-dim point cloud as DotCloud on circle/sphere, then Project to 2D scatter
+   - Nearest neighbors via Circumscribe + distance lines
+   - Our: embedding_l2.py sphere + Dot + Arrow + ValueTracker continuous, input_families.py
+     matrix highlight via SurroundingRectangle + Flash
+
+3. Similarity (attention.py, softmax.py):
+   - Q·K dot as overlapping vectors and area, heatmap opacity=weight, bipartite edge thickness
+   - softmax logits → probs as bar heights morphing via always_redraw
+   - Our: chimera_procrustes.py cosine = dot as overlap, embedding_l2.py angle Arc yellow
+     with INK outline, sim_row with opacity encoding
+
+4. MLP Bottleneck (mlp.py, more_transformer_blocks.py):
+   - Funnel wide → narrow → GELU wiggle → wide, residual + symbol merging, LayerNorm as
+     cloud of points to unit sphere, Alpha sliders via ValueTracker
+   - Our: mtnn_flow.py fusion_card 556→128→64 (544+12 season), detail_card 160→32 LN, ValueTracker for
+     continuous interpolation in embedding_l2.py v_raw → v_hat shrink
+
+5. Idioms (helpers.py):
+   - VGroup grouping, SurroundingRectangle for focus, Matrix for tables, DotCloud for embeddings
+   - Arrow for flow + moving dots along edges (network_flow.py)
+   - ValueTracker + always_redraw + updaters for continuous param change
+   - checkpoint_paste workflow: `manimgl file Scene -se <line>` → IPython tweak → copy
+   - Our: all files use VGroup, RoundedRectangle cards, Arrow flow, ValueTracker-ready
+     (MANIM_AVAILABLE guard for CI), blueprint dots as lightweight alternative to 3b1b grid.
 
 --------------------------------------------------------------------------
 ADA AAA COMPLIANCE NOTES (built-in)
@@ -54,6 +127,13 @@ USAGE
             card = cam_card(width=4, height=2.5)
             label = cam_label("Embedding Space", mono=True)
             ...
+
+    # Community (Cam):
+    manim -ql --format=mp4 src/mtnn_flow.py MTNNFlow
+
+    # manimgl (3b1b parity):
+    manimgl src/mtnn_flow.py MTNNFlow --hd
+
 --------------------------------------------------------------------------
 Solo personal project, no connection to employer, built with public/free-tier only
 """

@@ -1,5 +1,18 @@
 """
-ChimeraEquation — fixed for no cutoff / no overlap
+ChimeraEquation — v5 truthful, fixed for no cutoff / no overlap
+
+Truthful v5 invariants (champion 2026-07-25):
+- 64-d L2 unit sphere, 12,966 player-seasons, 2,415 players
+- Donor A + Donor B → closest real among 12,966 via cosine = v̂·ŵ
+- Fuse 64-d (not 48-d): (v_A + v_B)/2 → L2 normalize
+- Procrustes-aligned for era stability
+- 3b1b patterns:
+  * Tower Viz: donor cards as parallel towers → residual spine merging (transformer.py)
+  * Embedding: discrete donors → embedding matrix → dot cloud → projection (embedding.py)
+  * Similarity: cosine as overlap + heatmap opacity (attention.py, softmax.py)
+  * ValueTracker sliders for interpolation weight (mlp.py Alpha)
+  * VGroup, SurroundingRectangle, Arrow flow dots, Flash
+
 Solo personal project, no connection to employer, built with public/free-tier only
 """
 
@@ -47,7 +60,7 @@ class ChimeraEquation(Scene):
             title_group.to_edge(UP, buff=0.35)
 
         subtitle = Text(
-            "Donor A + Donor B → closest real among 12,392",
+            "Donor A + Donor B → closest real among 12,966 (2,415 players) • Procrustes-aligned",
             font_size=16,
             color=SUBTLE_AAA,
             font="JetBrains Mono",
@@ -73,7 +86,7 @@ class ChimeraEquation(Scene):
             "v_A = f(season)", font_size=14, color=TEXT, font="JetBrains Mono"
         )
         donor_a_code2 = Text(
-            "48-d  |v|=1", font_size=12, color=SUBTLE_AAA, font="JetBrains Mono"
+            "64-d  |v|=1  • v5", font_size=12, color=SUBTLE_AAA, font="JetBrains Mono"
         )
         donor_a_content = VGroup(donor_a_icon, donor_a_code1, donor_a_code2).arrange(
             DOWN, buff=0.08, aligned_edge=LEFT
@@ -92,7 +105,7 @@ class ChimeraEquation(Scene):
             "v_B = f(season)", font_size=14, color=TEXT, font="JetBrains Mono"
         )
         donor_b_code2 = Text(
-            "48-d  |v|=1", font_size=12, color=SUBTLE_AAA, font="JetBrains Mono"
+            "64-d  |v|=1  • v5", font_size=12, color=SUBTLE_AAA, font="JetBrains Mono"
         )
         donor_b_content = VGroup(donor_b_icon, donor_b_code1, donor_b_code2).arrange(
             DOWN, buff=0.08, aligned_edge=LEFT
@@ -138,16 +151,16 @@ class ChimeraEquation(Scene):
             max_tip_length_to_length_ratio=0.18,
         )
 
-        # Fuse card — compact, centered
+        # Fuse card — compact, centered — 3b1b MLP bottleneck pattern: funnel + residual
         fuse_base = cam_card(
-            width=3.6,
+            width=3.8,
             height=0.8,
             accent_color=OKABE["green"],
             corner_radius=CORNER_RADIUS,
         )
-        fuse_title = Text("fuse 48-d", font_size=16, color=TEXT, weight=BOLD)
+        fuse_title = Text("fuse 64-d", font_size=16, color=TEXT, weight=BOLD)
         fuse_eq = Text(
-            "(v_A + v_B)/2 -> v_f L2",
+            "(v_A + v_B)/2 → v_f L2 64-d",
             font_size=13,
             color=SUBTLE_AAA,
             font="JetBrains Mono",
@@ -178,11 +191,11 @@ class ChimeraEquation(Scene):
         # Final argmin card — WIDE but NOT too wide, font reduced, ensure bottom stays inside SAFE_BOTTOM
         # Use 2-line layout to prevent horizontal cutoff
         final_base = cam_card(
-            width=7.8, height=1.15, accent_color=OKABE["blue"], corner_radius=0.08
+            width=8.2, height=1.15, accent_color=OKABE["blue"], corner_radius=0.08
         )
         final_line1 = Text(
-            "Chimera(A,B) = argmin r in 12,392",
-            font_size=15,
+            "Chimera(A,B) = argmin r in 12,966 (2,415 players)",
+            font_size=14,
             color=TEXT,
             font="JetBrains Mono",
             weight=BOLD,
