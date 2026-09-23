@@ -1,39 +1,28 @@
-/* hoops PWA v67.2 — CORE21 offline13k LOD4000/8000 DPR1 fillRect #080A0F
-   - CORE21 shell only immutable SWR, DENY9 network-only, offline 13k void #080A0F
-   - HIT ~74k gz shell — tokens.css ~5k shared-map 28k inertial-map 13.8k shell ~2k site-nav ~1k icons ~10k offline 13k
-   - LOD mobile 4000 desktop 8000 DPR1 only canvas.width=W fillRect #080A0F void dark true
-   - momentum 0.94 quaternion arcball inertial-map.js 13.8k RAF spring k=120 b=0.18
-   - single-select clears prev pill + lastActiveDot same across domains — void #080A0F True
-   - canvas min-height 320 mobile safe-area-inset-top nav-h 40px sticky top env(safe-area-inset-top)
-   - LCG 20260813→189831298 idx3820 triple[11205,19448,14209] same-link-same-stars ?daily=YYYYMMDD&n=1/3/5 Solo1 Triple3 Full5
-   - provenance 7/7/0 59 hashes — zero-deps true stdlib only — business-ready masterclass 10.0
-   - viewport-fit=cover theme-color #080A0F no white flash — no dev pills — loader <2s resolves tap-to-retry overlay
-   - OKABE dots 2.4px border 1px void visible dark ivory #FFFEF7 19.1:1
-*/
-const CACHE_NAME = 'vector-hoops-v67-japandi-book-20';
+/* Vector Hoops service worker.
+   - HTML: network first, falling back to the cached copy, then /offline.html.
+   - CORE shell (styles, nav, icons, offline page): stale-while-revalidate.
+   - Large data files (DENY): network only, never cached.
+   Bump CACHE_NAME whenever shipped assets change so clients drop the old shell. */
+const CACHE_NAME = 'vector-hoops-atlas-v1';
 const CORE = [
-'/', 
+'/',
 '/index.html',
-'/manifest.json',
 '/offline.html',
-'/assets/tokens.css',
-'/assets/fonts.css',
-'/assets/shared-map.js',
-'/assets/inertial-map.js',
+'/404.html',
+'/manifest.json',
+'/assets/atlas.css',
 '/assets/site-nav.js',
-'/assets/shell.css',
-'/assets/responsive.css',
-'/assets/hoops.css',
-'/assets/error-boundary.js',
-'/assets/keyboard-a11y.js',
+'/assets/atlas-map.js',
+'/assets/favicon.svg',
+'/assets/apple-touch-icon.png',
 '/assets/icon-192.png',
 '/assets/icon-512.png',
-'/assets/viral-share.js',
-'/assets/delight.js',
+'/assets/shell.css',
+'/assets/responsive.css',
+'/assets/unified.css',
 '/assets/motion.css',
-'/assets/play-core.css',
-'/assets/data/boards_2026_08_17.json',
-'/feed_flags.json'
+'/assets/error-boundary.js',
+'/assets/keyboard-a11y.js'
 ];
 const DENY = [
 '/assets/vectors.json',
@@ -56,9 +45,8 @@ self.addEventListener('install', e=>{
   self.skipWaiting();
   e.waitUntil((async()=>{
     const cache=await caches.open(CACHE_NAME);
-    const results=await Promise.allSettled(CORE.map(u=> cache.add(new Request(u,{cache:'reload'})).catch(err=>{ console.warn('[sw v67 13k hoops] miss',u,err&&err.message); return null; })));
+    const results=await Promise.allSettled(CORE.map(u=> cache.add(new Request(u,{cache:'reload'})).catch(err=>{ return null; })));
     const ok=results.filter(r=>r.status==='fulfilled'&&r.value!==null).length;
-    console.log(`[sw v67 hoops] CORE ${ok}/`+CORE.length+` — 21×shell ≈117k shell 74k gz 13k offline dark card void #080A0F — LOD4000/8000 DPR1 fillRect #080A0F — LCG 20260813→189831298 idx3820 triple[11205,19448,14209] five[11205,19448,14209,11701,18524] same-link-same-stars ?daily=YYYYMMDD&n=1/3/5 — momentum 0.94 k120 b0.18`);
     return ok;
   })());
 });
@@ -67,7 +55,6 @@ self.addEventListener('activate', e=>{
     const keys=await caches.keys();
     await Promise.all(keys.filter(k=>k!==CACHE_NAME).map(k=>caches.delete(k)));
     await self.clients.claim();
-    console.log('[sw v67 hoops] activate '+CACHE_NAME+' — 74k HIT offline13k CORE21 LOD4000/8000 DPR1 momentum0.94 k120 b0.18 quaternion arcball void #080A0F');
   })());
 });
 self.addEventListener('fetch', e=>{
@@ -80,7 +67,7 @@ self.addEventListener('fetch', e=>{
         const net=await fetch(req);
         return net;
       }catch{
-        return new Response(JSON.stringify({error:'offline — data needs connection — PWA v67 CORE21 offline13k void #080A0F'}), {status:503, headers:{'Content-Type':'application/json'}});
+        return new Response(JSON.stringify({error:'offline: this data file needs a connection'}), {status:503, headers:{'Content-Type':'application/json'}});
       }
     })());
     return;
@@ -98,7 +85,7 @@ self.addEventListener('fetch', e=>{
       }catch{
         const cached=await caches.match(req); if(cached) return cached;
         const off=await caches.match('/offline.html'); if(off) return off;
-        return caches.match('/index.html')||caches.match('/')||new Response('Offline — PWA v67 CORE21 13k void #080A0F OFFLINE CACHED 13k — data needs connection',{status:503});
+        return caches.match('/index.html')||caches.match('/')||new Response('Offline',{status:503});
       }
     })());
     return;
@@ -123,14 +110,14 @@ self.addEventListener('fetch', e=>{
         return net;
       }catch{
         const cached=await cache.match(req); if(cached) return cached;
-        return new Response('',{status:504,statusText:'Asset offline — PWA v67 CORE21 13k'});
+        return new Response('',{status:504,statusText:'Asset offline'});
       }
     })());
     return;
   }
   e.respondWith((async()=>{
     const cached=await caches.match(req); if(cached) return cached;
-    try{ return await fetch(req);}catch{ return new Response('',{status:504,statusText:'Offline — v67 13k'}); }
+    try{ return await fetch(req);}catch{ return new Response('',{status:504,statusText:'Offline'}); }
   })());
 });
 self.addEventListener('message', e=>{ if(e.data&&e.data.type==='SKIP_WAITING') self.skipWaiting(); });

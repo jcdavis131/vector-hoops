@@ -33,14 +33,14 @@
   function mountCourtFor(name) {
     var root = document.getElementById('pp-court-skill-root');
     if (!root) return;
-    root.innerHTML = '<div style="padding:18px;border:3px dashed #1A150F;border-radius:16px;font-family:ui-monospace,monospace;font-size:12px">Loading career floor + skills evolution for '+esc(name)+'...</div>';
+    root.innerHTML = '<div style="padding:18px;border:1px dashed var(--line-2);border-radius:16px;font-family:ui-monospace,monospace;font-size:12px">Loading career floor + skills evolution for '+esc(name)+'...</div>';
     ensureCourtModule().then(function(mod){
       return mod.mountPlayerCourtStory(root, name, { skillDefs: SKILLS ? SKILLS.skills : null });
     }).then(function(inst){
       courtMounted = inst;
     }).catch(function(e){
       console.warn('court story mount fail', e);
-      root.innerHTML = '<div style="padding:12px;font-family:ui-monospace,monospace;font-size:12px;color:#666">Court story unavailable</div>';
+      root.innerHTML = '<div style="padding:12px;font-family:ui-monospace,monospace;font-size:12px;color:var(--fg-3)">Court story unavailable</div>';
     });
   }
 
@@ -219,7 +219,7 @@
     if (eraNative) metaHtml += '<span class="pp-meta-pill" title="Era-native MTNN cluster">'+esc(eraNative)+'</span>';
     eraTags.forEach(function(t){
       var label = (ARCH_ASSIGN.tagLabels && ARCH_ASSIGN.tagLabels[t]) || t;
-      metaHtml += '<span class="pp-meta-pill" style="background:#FFFEF7">'+esc(label)+'</span>';
+      metaHtml += '<span class="pp-meta-pill" style="background:var(--surface)">'+esc(label)+'</span>';
     });
     els.meta.innerHTML = metaHtml;
 
@@ -270,7 +270,7 @@
     }
     badges.sort(function(a,b){ return b.grade - a.grade; });
     if (!badges.length) {
-      els.badges.innerHTML = '<div class="pp-badge pp-badge--muted"><div class="pp-badge__top"><span class="pp-badge__name">No 90+ badges this season</span><span class="pp-badge__grade" style="background:#EEE8D9">—</span></div><div class="pp-badge__bar" style="opacity:.4"><div class="pp-badge__fill" style="width:12%;background:#ccc"></div></div></div>';
+      els.badges.innerHTML = '<div class="pp-badge pp-badge--muted"><div class="pp-badge__top"><span class="pp-badge__name">No 90+ badges this season</span><span class="pp-badge__grade" style="background:#EEE8D9">—</span></div><div class="pp-badge__bar" style="opacity:.4"><div class="pp-badge__fill" style="width:12%;background:var(--surface-2)"></div></div></div>';
     } else {
       els.badges.innerHTML = badges.map(function(b){
         var fillW = Math.max(b.grade, 8);
@@ -398,7 +398,7 @@
     var labels = NEXT_EVAL.featureLabels || {};
     var allKeys = NEXT_EVAL.features || [];
     var pending = row.status === 'pending';
-    var tag = pending ? '<span class="po-tag po-tag--steady" style="border:1.5px solid #1A150F;border-radius:999px;padding:1px 6px;font-size:10px;background:#fff">Prediction only</span>' : '<span class="po-tag po-tag--riser" style="border:1.5px solid #1A150F;border-radius:999px;padding:1px 6px;background:#F0E442">Predicted vs actual</span>';
+    var tag = pending ? '<span class="po-tag po-tag--steady" style="border:1px solid var(--line-2);border-radius:999px;padding:1px 6px;font-size:10px;background:var(--surface)">Prediction only</span>' : '<span class="po-tag po-tag--riser" style="border:1px solid var(--line-2);border-radius:999px;padding:1px 6px;background:var(--accent-wash);color:var(--accent)">Predicted vs actual</span>';
     var hint = pending ? (esc(row.to) + ' not charted yet. Showing MTNN next-profile prediction only.') : ('From ' + esc(season) + ' → predicted ' + esc(row.to) + ' profile.');
     var head = pending ? '<li class="np-split np-split--head"><span>Stat</span><span>Pred</span></li>' : '<li class="np-split np-split--head"><span>Stat</span><span>Pred</span><span>Actual</span><span>Δ</span></li>';
     var lines = features.map(function (key) {
@@ -409,7 +409,7 @@
       return '<li class="np-split"><span>'+esc(label)+'</span><span>'+fmtStat(pred, row.to, key)+'</span><span>'+fmtStat(actual, row.to, key)+'</span><span>'+fmtStatDelta(pred, actual, row.to, key)+'</span></li>';
     }).join('');
     box.hidden = false;
-    box.innerHTML = '<div class="vh-section-label">Next-season stats '+tag+'</div><p class="skills-hint" style="font-family:ui-monospace,monospace;font-size:11px;color:#666;margin:6px 0">'+hint+'</p><ul class="np-splits">'+head+lines+'</ul>';
+    box.innerHTML = '<div class="vh-section-label">Next-season stats '+tag+'</div><p class="skills-hint" style="font-family:ui-monospace,monospace;font-size:11px;color:var(--fg-3);margin:6px 0">'+hint+'</p><ul class="np-splits">'+head+lines+'</ul>';
   }
 
   function renderPlayoffSeries(series, champion) {
@@ -419,25 +419,25 @@
       var bg = won ? '#F0E442' : '#fff';
       if (sr.finals || sr.label === 'NBA Finals') bg = champion ? '#1A150F' : '#D6EFFF';
       var mark = won ? 'W' : 'L';
-      return '<li style="border:1.6px solid #1A150F;border-radius:10px;padding:6px 9px;background:'+bg+';display:flex;justify-content:space-between;gap:8px;font-family:ui-monospace,monospace;font-size:11px"><span>'+esc(sr.label)+' vs '+esc(sr.opp)+'</span><span>'+esc(sr.result)+' '+mark+'</span></li>';
+      return '<li style="border:1px solid var(--line-2);border-radius:10px;padding:6px 9px;background:'+bg+';display:flex;justify-content:space-between;gap:8px;font-family:ui-monospace,monospace;font-size:11px"><span>'+esc(sr.label)+' vs '+esc(sr.opp)+'</span><span>'+esc(sr.result)+' '+mark+'</span></li>';
     }).join('') + '</ol>';
   }
   function renderPlayoffGames(games) {
     if (!games || !games.length) return '';
-    return '<details style="margin-top:8px"><summary style="font-family:ui-monospace,monospace;font-size:11px;cursor:pointer">Game log ('+games.length+')</summary><ul style="list-style:none;padding:0;margin:6px 0;display:flex;flex-direction:column;gap:2px;font-family:ui-monospace,monospace;font-size:10px">'+games.map(function(g){return '<li style="display:flex;gap:8px;justify-content:space-between;border-bottom:1px dashed #ddd;padding:2px 0"><span>'+esc((g.d||'').slice(5))+' '+esc(g.m||'')+'</span><span>'+esc(g.wl||'')+' '+num2(g.pts)+'/'+num2(g.reb)+'/'+num2(g.ast)+'</span></li>';}).join('')+'</ul></details>';
+    return '<details style="margin-top:8px"><summary style="font-family:ui-monospace,monospace;font-size:11px;cursor:pointer">Game log ('+games.length+')</summary><ul style="list-style:none;padding:0;margin:6px 0;display:flex;flex-direction:column;gap:2px;font-family:ui-monospace,monospace;font-size:10px">'+games.map(function(g){return '<li style="display:flex;gap:8px;justify-content:space-between;border-bottom:1px dashed var(--line);padding:2px 0"><span>'+esc((g.d||'').slice(5))+' '+esc(g.m||'')+'</span><span>'+esc(g.wl||'')+' '+num2(g.pts)+'/'+num2(g.reb)+'/'+num2(g.ast)+'</span></li>';}).join('')+'</ul></details>';
   }
   function playoffOutcomeLabel(s) {
     var r = s.rounds; if (typeof r !== 'number') return '';
-    if (r === 4 || s.champion) return '<span style="border:1.5px solid #1A150F;border-radius:999px;background:#1A150F;color:#fff;padding:1px 6px;font-size:10px">NBA Champion</span>';
+    if (r === 4 || s.champion) return '<span style="border:1px solid var(--line-2);border-radius:999px;background:#1A150F;color:#fff;padding:1px 6px;font-size:10px">NBA Champion</span>';
     var labels = ['exited R1','exited R2','exited Conf. finals','NBA Finals'];
-    return '<span style="border:1.5px solid #1A150F;border-radius:999px;padding:1px 6px;background:#fff;font-size:10px">'+(labels[r]||('round '+r))+'</span>';
+    return '<span style="border:1px solid var(--line-2);border-radius:999px;padding:1px 6px;background:var(--surface);font-size:10px">'+(labels[r]||('round '+r))+'</span>';
   }
   function renderHonorsBadges(name, season) {
     if (!HONORS || !HONORS.bySeason) return '';
     var h = HONORS.bySeason[name + '|' + season]; if (!h) return '';
     var bits = [];
-    if (h.finalsMvp) bits.push('<span style="border:1.5px solid #1A150F;border-radius:999px;background:#F0E442;padding:1px 6px">Finals MVP</span>');
-    if (h.allNbaTeam === 3) bits.push('<span style="border-radius:999px;background:#F0E442;padding:1px 6px">All-NBA 1st</span>');
+    if (h.finalsMvp) bits.push('<span style="border:1px solid var(--line-2);border-radius:999px;background:var(--accent-wash);color:var(--accent);padding:1px 6px">Finals MVP</span>');
+    if (h.allNbaTeam === 3) bits.push('<span style="border-radius:999px;background:var(--accent-wash);color:var(--accent);padding:1px 6px">All-NBA 1st</span>');
     else if (h.allNbaTeam === 2) bits.push('<span style="border-radius:999px;background:#D6EFFF;padding:1px 6px">All-NBA 2nd</span>');
     else if (h.allNbaTeam === 1) bits.push('<span>All-NBA 3rd</span>');
     if (h.asg) bits.push('<span>All-Star</span>');
@@ -447,7 +447,7 @@
     var box = els.playoffs; if (!box) return;
     if (!PLAYOFFS) { box.hidden = true; return; }
     var s = PLAYOFFS.splits[name + '|' + season];
-    if (!s) { box.hidden = false; box.innerHTML = '<div class="vh-section-label">Playoffs</div><p style="font-size:11px;color:#666">No postseason games this season.</p>'; return; }
+    if (!s) { box.hidden = false; box.innerHTML = '<div class="vh-section-label">Playoffs</div><p style="font-size:11px;color:var(--fg-3)">No postseason games this season.</p>'; return; }
     var champion = !!(s.champion || s.rounds === 4);
     var outcome = playoffOutcomeLabel(s);
     var honors = renderHonorsBadges(name, season);
@@ -466,7 +466,7 @@
       var p = DATA.players[h.id]; var slug = window.VHDossier.playerSlug(p.name); var pct = fmtPredPct(h.sim * 100);
       return '<li><a href="/players?p='+encodeURIComponent(slug)+'&s='+encodeURIComponent(p.season)+'">'+esc(p.name)+'</a> <span class="skills-mtnn__meta">'+esc(p.season)+' · '+pct+'% craft match</span></li>';
     }).join('');
-    box.innerHTML = '<div class="vh-section-label">Similar craft profiles (MTNN) — who plays like this?</div><p class="skills-hint" style="font-family:ui-monospace,monospace;font-size:11px;color:#666">Click to flip their card.</p><ol class="skills-mtnn__list">'+items+'</ol>';
+    box.innerHTML = '<div class="vh-section-label">Similar craft profiles (MTNN) — who plays like this?</div><p class="skills-hint" style="font-family:ui-monospace,monospace;font-size:11px;color:var(--fg-3)">Click to flip their card.</p><ol class="skills-mtnn__list">'+items+'</ol>';
   }
 
   function pickPlayer(slug, season) {

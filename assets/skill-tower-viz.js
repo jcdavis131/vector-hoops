@@ -69,19 +69,19 @@
   function renderSkillBar(skillName, grade, wRow, features, color, tooltipExtra){
     const pct = Math.max(0, Math.min(100, grade));
     const row = createEl('div','st-skill');
-    row.style.cssText='display:flex;flex-direction:column;gap:4px;padding:8px 9px;border:1.6px solid var(--ink,#1A150F);border-radius:10px;background:#fff;box-shadow:1.8px 1.8px 0 var(--ink,#1A150F);min-height:88px;';
+    row.style.cssText='display:flex;flex-direction:column;gap:4px;padding:8px 9px;border:1px solid var(--line-2);border-radius:10px;background:var(--surface);box-shadow:none;min-height:88px;';
     const group = SKILL_GROUPS[skillName] || 'efficiency';
     const tColor = TOWER_COLOR[group] || color;
     row.innerHTML=`
       <div style="display:flex;justify-content:space-between;align-items:center;gap:6px;">
-        <span style="font-family:ui-monospace,monospace;font-size:10.5px;font-weight:900;letter-spacing:.04em;text-transform:uppercase;color:${tColor};border:1.5px solid ${tColor};border-radius:999px;padding:2px 6px;background:#fff">${group}</span>
+        <span style="font-family:ui-monospace,monospace;font-size:10.5px;font-weight:900;letter-spacing:.04em;text-transform:uppercase;color:${tColor};border:1.5px solid ${tColor};border-radius:999px;padding:2px 6px;background:var(--surface)">${group}</span>
         <span style="font-family:ui-monospace,monospace;font-size:10px;font-weight:800;opacity:.7">${skillName}</span>
       </div>
       <div style="display:flex;justify-content:space-between;align-items:baseline;">
         <b style="font-family:ui-monospace,monospace;font-size:18px;letter-spacing:-.02em;line-height:1">${pct}</b>
         <span style="font-size:10px;font-family:ui-monospace,monospace;opacity:.6">${tooltipExtra||''}</span>
       </div>
-      <div style="height:8px;border:1.6px solid #1A150F;border-radius:999px;overflow:hidden;background:#FFFEF7"><i style="display:block;height:100%;width:${pct}%;background:${color};transition:width .6s cubic-bezier(.2,.8,.2,1)"></i></div>
+      <div style="height:8px;border:1px solid var(--line-2);border-radius:999px;overflow:hidden;background:var(--surface)"><i style="display:block;height:100%;width:${pct}%;background:${color};transition:width .6s cubic-bezier(.2,.8,.2,1)"></i></div>
       <div class="st-spark" style="margin-top:2px">${wRow? sparklineSVG(wRow, color): ''}</div>
       <div style="font-size:9px;line-height:1.25;font-family:ui-monospace,monospace;opacity:.65;white-space:nowrap;overflow:hidden;text-overflow:ellipsis" title="${wRow && features? features.map((f,i)=> f+':'+wRow[i].toFixed(2)).join(' · ') : ''}">${wRow&&features? 'W driver: '+features.reduce((best,_,i)=> Math.abs(wRow[i])>Math.abs(wRow[best])?i:best,0) + ' '+features[features.reduce((b,_,i)=> Math.abs(wRow[i])>Math.abs(wRow[b])?i:b,0)] : ''}</div>
     `;
@@ -137,9 +137,9 @@
       const color = TOWER_COLOR[fam] || OK.blue;
       const row = createEl('div','',`
         <div style="display:flex;justify-content:space-between;font-family:ui-monospace,monospace;font-size:11px;font-weight:800"><span style="color:${color}">${fam}</span><span>${(v).toFixed(3)} · ${pct}%</span></div>
-        <div style="height:7px;border:1.6px solid #1A150F;border-radius:999px;background:#FFFEF7;overflow:hidden"><i style="display:block;height:100%;width:${pct}%;background:${color}"></i></div>
+        <div style="height:7px;border:1px solid var(--line-2);border-radius:999px;background:var(--surface);overflow:hidden"><i style="display:block;height:100%;width:${pct}%;background:${color}"></i></div>
       `);
-      row.style.cssText='padding:6px 8px;border:1.5px solid #1A150F;border-radius:8px;background:#fff;box-shadow:1.5px 1.5px 0 #1A150F';
+      row.style.cssText='padding:6px 8px;border:1px solid var(--line-2);border-radius:8px;background:var(--surface);box-shadow:none';
       containerEl.appendChild(row);
     });
     const foot = createEl('div','',`<span style="font-family:ui-monospace,monospace;font-size:10px;opacity:.7">Frobenius ||d(${tgt})/d(tower)|| per row mean. ${jac.method? jac.method.slice(0,160):''} — full MTNN towers 11×2 blocks 160→32.</span>`);
@@ -239,8 +239,8 @@
       var grade=gradeFromRaw(raw);
       var color=PAL[i%PAL.length];
       var div=document.createElement('div');
-      div.style.cssText='display:flex;flex-direction:column;gap:4px;padding:8px 9px;border:1.6px solid #1A150F;border-radius:10px;background:#fff;box-shadow:1.8px 1.8px 0 #1A150F;min-height:88px;';
-      div.innerHTML='<div style="display:flex;justify-content:space-between;align-items:center;gap:6px;"><span style="font-family:ui-monospace,monospace;font-size:10px;font-weight:900;letter-spacing:.04em;text-transform:uppercase;border:1.5px solid '+color+';border-radius:999px;padding:2px 6px;background:#fff;color:'+color+'">'+k+'</span><span style="font-family:ui-monospace,monospace;font-size:10px;opacity:.6">'+(raw>=0?'+':'')+raw.toFixed(2)+'</span></div><div style="display:flex;justify-content:space-between;align-items:baseline;"><b style="font-family:ui-monospace,monospace;font-size:18px;line-height:1">'+grade+'</b><span style="font-size:10px;opacity:.7">raw</span></div><div style="height:8px;border:1.6px solid #1A150F;border-radius:999px;overflow:hidden;background:#FFFEF7"><i style="display:block;height:100%;width:'+grade+'%;background:'+color+'"></i></div>';
+      div.style.cssText='display:flex;flex-direction:column;gap:4px;padding:8px 9px;border:1px solid var(--line-2);border-radius:10px;background:var(--surface);box-shadow:none;min-height:88px;';
+      div.innerHTML='<div style="display:flex;justify-content:space-between;align-items:center;gap:6px;"><span style="font-family:ui-monospace,monospace;font-size:10px;font-weight:900;letter-spacing:.04em;text-transform:uppercase;border:1.5px solid '+color+';border-radius:999px;padding:2px 6px;background:var(--surface);color:'+color+'">'+k+'</span><span style="font-family:ui-monospace,monospace;font-size:10px;opacity:.6">'+(raw>=0?'+':'')+raw.toFixed(2)+'</span></div><div style="display:flex;justify-content:space-between;align-items:baseline;"><b style="font-family:ui-monospace,monospace;font-size:18px;line-height:1">'+grade+'</b><span style="font-size:10px;opacity:.7">raw</span></div><div style="height:8px;border:1px solid var(--line-2);border-radius:999px;overflow:hidden;background:var(--surface)"><i style="display:block;height:100%;width:'+grade+'%;background:'+color+'"></i></div>';
       container.appendChild(div);
     });
     var foot=document.createElement('div');

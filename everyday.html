@@ -3,10 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Everyday Streak — Wordle for Hoops Heads • dumbmodel</title>
-<meta name="description" content="3 past→modern twins a day. Same puzzle for everyone. Build your streak, no account.">
-<meta name="theme-color" content="#080A0F">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23111111'/%3E%3Ccircle cx='11' cy='12' r='3' fill='%23eb6834'/%3E%3Ccircle cx='21' cy='19' r='3' fill='%232a78d6'/%3E%3C/svg%3E">
+<title>Everyday — Vector Hoops</title>
+<meta name="description" content="Three past-to-modern twins a day, the same for everyone. Keep the streak alive; no account needed."/>
 <link rel="manifest" href="/manifest.json">
 <style>
 :root{--paper:#fafaf8;--surface:#fff;--ink:#111;--ink-soft:#52514e;--ink-mut:#6b6760;--hair:#e1e0d9;--orange:#eb6834;--blue:#2a78d6;--yellow:#f0e442;--green:#009e73;--void:#080A0F;--void-2:#0A0C10;--mono:ui-monospace,"IBM Plex Mono",Menlo,monospace;--sans:ui-sans-system,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;--shadow:4px 4px 0 var(--ink);--r:14px}
@@ -14,49 +12,42 @@
 a{color:inherit;text-decoration:none}
 :focus-visible{outline:3px solid var(--blue);outline-offset:2px}
 /* NAV — 40px sticky per masterclass */
-.site-nav{position:sticky;top:0;z-index:50;height:40px;min-height:40px;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:0 14px;padding-top:env(safe-area-inset-top,0);background:var(--surface);border-bottom:2px solid var(--ink)}
-.site-nav__brand{font-family:var(--mono);font-weight:800;font-size:13.5px;letter-spacing:.04em;text-transform:uppercase;white-space:nowrap}
-.site-nav__brand span{color:var(--orange)}
-.site-nav__links{display:flex;gap:4px;align-items:center}
-.site-nav__link{font-family:var(--mono);font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.04em;padding:6px 9px;border-radius:8px;border:2px solid transparent}
-.site-nav__link:hover{background:var(--paper);border-color:var(--ink)}
-.site-nav__cta{font-family:var(--mono);font-size:11px;font-weight:800;text-transform:uppercase;background:var(--ink);color:var(--paper);border:2px solid var(--ink);border-radius:8px;padding:5px 10px;min-height:28px;display:inline-flex;align-items:center;box-shadow:2px 2px 0 var(--ink)}
 /* POV — 44px sticky top40 per masterclass, bottom border, no white-on-light */
-.pov-strip{position:sticky;top:40px;z-index:40;min-height:44px;height:44px;display:flex;align-items:center;gap:8px;padding:0 12px;overflow-x:auto;overscroll-behavior-x:contain;background:rgba(250,250,248,.92);backdrop-filter:blur(10px);border-bottom:2px solid var(--ink)}
-.pov-pill{min-height:36px;padding:0 13px;border:2px solid var(--ink);border-radius:999px;background:#fff;font-family:var(--mono);font-weight:800;font-size:11px;text-transform:uppercase;letter-spacing:.03em;white-space:nowrap;box-shadow:1.8px 1.8px 0 var(--ink);cursor:pointer;scroll-snap-align:start;flex:0 0 auto}
-.pov-pill.on{background:var(--yellow);transform:rotate(-.6deg)}
+.pov-strip{position:sticky;top:40px;z-index:40;min-height:44px;height:44px;display:flex;align-items:center;gap:8px;padding:0 12px;overflow-x:auto;overscroll-behavior-x:contain;background:rgba(250,250,248,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line-2)}
+.pov-pill{min-height:36px;padding:0 13px;border:1px solid var(--line-2);border-radius:999px;background:var(--surface);font-family:var(--mono);font-weight:800;font-size:11px;text-transform:uppercase;letter-spacing:.03em;white-space:nowrap;box-shadow:none;cursor:pointer;scroll-snap-align:start;flex:0 0 auto}
+.pov-pill.on{background:var(--accent-wash);color:var(--accent);transform:rotate(-.6deg)}
 .mono{font-family:var(--mono);font-size:11px;letter-spacing:.03em;text-transform:uppercase}
 .mono-sm{font-family:var(--mono);font-size:10.8px;color:var(--ink-mut);text-transform:uppercase;letter-spacing:.05em}
-.hero-void{background:radial-gradient(1100px 600px at 18% -10%,#1A233A 0%,#121A2D 32%,var(--void) 72%);color:#fafaf8;border-bottom:2px solid var(--ink);position:relative;overflow:hidden}
+.hero-void{background:radial-gradient(1100px 600px at 18% -10%,#1A233A 0%,#121A2D 32%,var(--void) 72%);color:#fafaf8;border-bottom:1px solid var(--line-2);position:relative;overflow:hidden}
 .wrap{max-width:1080px;margin:0 auto;padding:0 14px}
 .hero-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:14px;padding:14px 0}
 @media(max-width:860px){.hero-grid{grid-template-columns:1fr}}
 .kicker{font-family:var(--mono);font-size:10.8px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#9ab;margin:0 0 6px}
 .title{font-size:clamp(26px,5vw,38px);line-height:.95;font-weight:900;letter-spacing:-.02em;margin:4px 0 8px;text-transform:uppercase}
-.title b{background:var(--yellow);color:var(--ink);padding:2px 6px;border:1.5px solid var(--ink);box-shadow:2px 2px 0 #000;display:inline-block;transform:rotate(-.9deg)}
+.title b{background:var(--accent-wash);color:var(--accent);padding:2px 6px;border:1px solid var(--line-2);box-shadow:none;display:inline-block;transform:rotate(-.9deg)}
 .tag{font-size:13.8px;line-height:1.55;max-width:48ch;color:#c9d4e5}
-.card{background:var(--surface);border:2px solid var(--ink);border-radius:14px;box-shadow:var(--shadow);overflow:hidden}
+.card{background:var(--surface);border:1px solid var(--line-2);border-radius:14px;box-shadow:var(--shadow);overflow:hidden}
 .grid{max-width:1080px;margin:0 auto;padding:12px;display:grid;grid-template-columns:1.05fr .95fr;gap:12px;align-items:start}
 @media(max-width:900px){.grid{grid-template-columns:1fr}}
-.map-head{display:flex;justify-content:space-between;align-items:center;padding:9px 12px;border-bottom:2px solid var(--ink);background:linear-gradient(90deg,var(--paper),#FFF6C8)}
+.map-head{display:flex;justify-content:space-between;align-items:center;padding:9px 12px;border-bottom:1px solid var(--line-2);background:linear-gradient(90deg,var(--paper),#FFF6C8)}
 .canvas-box{position:relative;background:var(--void-2)}
 canvas{display:block;width:100%;height:380px}
 @media(max-width:600px){canvas{height:320px}}
-.pill{display:inline-flex;align-items:center;gap:6px;padding:6px 11px;border-radius:999px;border:2px solid var(--ink);background:#fff;font-family:var(--mono);font-size:11px;font-weight:800;text-transform:uppercase;box-shadow:1.8px 1.8px 0 var(--ink)}
-.pill-y{background:var(--yellow)}
-.btn{appearance:none;border:2px solid var(--ink);border-radius:11px;padding:9px 13px;font:800 12px var(--mono);text-transform:uppercase;cursor:pointer;background:#fff;box-shadow:2.4px 2.4px 0 var(--ink);min-height:36px;display:inline-flex;align-items:center;justify-content:center;gap:6px}
-.btn:hover{transform:translate(-1px,-1px);box-shadow:3.4px 3.4px 0 var(--ink)}
-.btn:active{transform:translate(1px,1px);box-shadow:1px 1px 0 var(--ink)}
-.btn-p{background:var(--ink);color:#fff}
-.btn-y{background:var(--yellow);color:var(--ink)}
+.pill{display:inline-flex;align-items:center;gap:6px;padding:6px 11px;border-radius:999px;border:1px solid var(--line-2);background:var(--surface);font-family:var(--mono);font-size:11px;font-weight:800;text-transform:uppercase;box-shadow:none}
+.pill-y{background:var(--accent-wash);color:var(--accent)}
+.btn{appearance:none;border:1px solid var(--line-2);border-radius:11px;padding:9px 13px;font:800 12px var(--mono);text-transform:uppercase;cursor:pointer;background:var(--surface);box-shadow:none;min-height:36px;display:inline-flex;align-items:center;justify-content:center;gap:6px}
+.btn:hover{transform:translate(-1px,-1px);box-shadow:none}
+.btn:active{transform:translate(1px,1px);box-shadow:none}
+.btn-p{background:var(--accent);color:var(--on-accent)}
+.btn-y{background:var(--accent-wash);color:var(--accent)}
 .btn:disabled{opacity:.55;cursor:not-allowed}
-.chip{display:inline-flex;align-items:center;min-height:28px;padding:4px 10px;border-radius:999px;border:1.6px solid var(--ink);background:#fff;font-family:var(--mono);font-size:11px;font-weight:800;box-shadow:1.6px 1.6px 0 var(--ink);margin:2px;cursor:pointer;transition:.15s}
-.chip.on{background:var(--yellow);transform:rotate(-1deg) scale(1.05)}
-.chip.active{background:var(--orange);color:#111}
-.log{font-family:var(--mono);font-size:11.2px;line-height:1.5;background:var(--paper);border:1.6px dashed #E8E2DA;border-radius:10px;padding:8px;min-height:54px;max-height:150px;overflow:auto}
+.chip{display:inline-flex;align-items:center;min-height:28px;padding:4px 10px;border-radius:999px;border:1px solid var(--line-2);background:var(--surface);font-family:var(--mono);font-size:11px;font-weight:800;box-shadow:none;margin:2px;cursor:pointer;transition:.15s}
+.chip.on{background:var(--accent-wash);color:var(--accent);transform:rotate(-1deg) scale(1.05)}
+.chip.active{background:var(--orange);color:var(--fg)}
+.log{font-family:var(--mono);font-size:11.2px;line-height:1.5;background:var(--paper);border:1px dashed var(--line);border-radius:10px;padding:8px;min-height:54px;max-height:150px;overflow:auto}
 #log:empty::before{content:'Your 3 guesses land here — closest first.';color:#8A857E}
-.dotw{width:12px;height:12px;border-radius:50%;border:1.6px solid var(--ink);display:inline-block;margin:1px 2px;background:#fff}
-.dotw.on{background:var(--yellow)}.dotw.fire{background:var(--orange);box-shadow:0 0 8px var(--orange)}
+.dotw{width:12px;height:12px;border-radius:50%;border:1px solid var(--line-2);display:inline-block;margin:1px 2px;background:var(--surface)}
+.dotw.on{background:var(--accent-wash);color:var(--accent)}.dotw.fire{background:var(--orange);box-shadow:0 0 8px var(--orange)}
 .sparkle{position:absolute;pointer-events:none;font-weight:900;font-size:18px;transform:translate(-50%,-50%) scale(0);animation:spark 800ms ease forwards}
 @keyframes spark{0%{transform:translate(-50%,-50%) scale(.2) rotate(0deg);opacity:0}30%{transform:translate(-50%,-70%) scale(1.25) rotate(12deg);opacity:1}100%{transform:translate(-50%,-160%) scale(.8) rotate(-10deg);opacity:0}}
 #confetti{position:absolute;inset:0;pointer-events:none;overflow:hidden}
@@ -65,36 +56,40 @@ canvas{display:block;width:100%;height:380px}
 /* share overlay */
 .share-pop{position:fixed;inset:0;background:rgba(8,10,15,.74);backdrop-filter:blur(10px);z-index:80;display:none;place-items:center;padding:14px}
 .share-pop.on{display:grid}
-.share-card{width:min(720px,96vw);background:#080A0F;border:2px solid #FAFAF8;border-radius:16px;overflow:hidden;box-shadow:8px 8px 0 #111}
+.share-card{width:min(720px,96vw);background:#080A0F;border:2px solid #FAFAF8;border-radius:16px;overflow:hidden;box-shadow:none}
 </style>
+<meta name="color-scheme" content="dark light"/>
+<meta name="theme-color" content="#07090C" media="(prefers-color-scheme: dark)"/>
+<meta name="theme-color" content="#F3F1EC" media="(prefers-color-scheme: light)"/>
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml"/>
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png"/>
+<link rel="canonical" href="https://hoops.dumbmodel.com/everyday"/>
+<meta property="og:type" content="website"/>
+<meta property="og:site_name" content="Vector Hoops"/>
+<meta property="og:url" content="https://hoops.dumbmodel.com/everyday"/>
+<meta property="og:title" content="Everyday — Vector Hoops"/>
+<meta property="og:description" content="Three past-to-modern twins a day, the same for everyone. Keep the streak alive; no account needed."/>
+<meta property="og:image" content="https://hoops.dumbmodel.com/assets/og-1200x630.png"/>
+<meta property="og:image:width" content="1200"/><meta property="og:image:height" content="630"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="Everyday — Vector Hoops"/>
+<meta name="twitter:description" content="Three past-to-modern twins a day, the same for everyone. Keep the streak alive; no account needed."/>
+<meta name="twitter:image" content="https://hoops.dumbmodel.com/assets/og-1200x630.png"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=Inter:opsz,wght@14..32,400..700&display=swap"/>
+<link rel="stylesheet" href="/assets/atlas.css?v=2"/>
 </head>
 <body>
-<nav class="site-nav" aria-label="Primary">
-  <a class="site-nav__brand" href="/">DUMB<span>MODEL</span> — Hoops</a>
-  <div class="site-nav__links">
-    <a class="site-nav__link" href="/play">Play</a>
-    <a class="site-nav__link" href="/everyday" aria-current="page">Everyday</a>
-    <a class="site-nav__link" href="/players">Explorer</a>
-    <a class="site-nav__link" href="/leaderboard">Board</a>
-    <a class="site-nav__cta" href="/play">Play today's →</a>
-  </div>
-</nav>
-<div class="pov-strip" role="tablist" aria-label="POV">
-  <button class="pov-pill" data-pov="all">All</button>
-  <button class="pov-pill on" data-pov="everyday" aria-selected="true">Everyday 3</button>
-  <button class="pov-pill" data-pov="owner">Owner</button>
-  <button class="pov-pill" data-pov="player">Player</button>
-  <button class="pov-pill" data-pov="dfs">DFS</button>
-  <span class="mono-sm" style="margin-left:auto">🔒 same-link-same-stars • LCG ↻</span>
-</div>
+<a class="skip-link" href="#top">Skip to content</a>
+<nav class="site-nav" data-active="/everyday" aria-label="Primary"></nav>
 
-<div class="hero-void">
+<div class="hero-void" id="top">
   <div class="wrap">
     <div class="hero-grid">
       <div>
-        <p class="kicker">Wordle for Hoops Heads • 3 daily • same for everyone • no account</p>
+        <p class="kicker">Everyday · three a day · same for everyone · no account</p>
         <h1 class="title">Build a streak. <b>Skip a day, start over.</b></h1>
-        <p class="tag">Every 00:00 CT the LCG rolls one seed: <code style="background:#0e1730;border:1px solid #203060;padding:2px 6px;border-radius:6px">L(s)=(s*1103515245+12345)&0x7fffffff</code>. That seed picks 3 past player–seasons from the 968 All-Star/NBA pool. Same link → same triple → same stars. Type or tap a modern name to guess the twin. 14-d cosine scores it — map narrows, name box wins.</p>
+        <p class="tag">At midnight Central a seeded generator picks three past player-seasons from the 968-season All-Star and All-NBA pool — the same three for everyone, from the same link. Type or tap a modern name to guess each one’s twin; 14-d cosine similarity scores every guess.</p>
         <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap">
           <span class="pill pill-y" id="dailyMeta">loading LCG…</span>
           <span class="pill" id="streakPill">streak 0 • 0/7 dots</span>
@@ -107,11 +102,11 @@ canvas{display:block;width:100%;height:380px}
           <span id="calMini" class="mono-sm" style="align-self:center"></span>
         </div>
       </div>
-      <div class="card" style="background:#fafaf8;color:#111">
+      <div class="card" style="background:#fafaf8;color:var(--fg)">
         <div style="padding:12px">
           <div class="mono" style="font-weight:900;font-size:13px">How Everyday Works</div>
           <div class="mono-sm" style="margin-top:4px;text-transform:none;line-height:1.5;color:#3a3732">One past player appears. Guess which modern player plays most like them. Score >68% locks it, shows orange career path. Finish 3 → streak ticks. Miss a calendar day → streak resets to 0. Built free · Open-source · No paywall — no login, PWA offline.</div>
-          <div style="margin-top:10px;display:flex;flex-wrap:wrap"><span class="chip" style="background:var(--yellow)">10 past × 1305 modern pool</span><span class="chip">14-d MTNN cosine</span><span class="chip">OKABE dots visible on void #080A0F</span><span class="chip">single-select clears prev</span></div>
+          <div style="margin-top:10px;display:flex;flex-wrap:wrap"><span class="chip" style="background:var(--accent-wash);color:var(--accent)">10 past × 1305 modern pool</span><span class="chip">14-d MTNN cosine</span><span class="chip">OKABE dots visible on void #080A0F</span><span class="chip">single-select clears prev</span></div>
           <div id="streakDots" style="margin-top:10px"></div>
           <div id="wwDetail" class="mono-sm" style="margin-top:4px"></div>
         </div>
@@ -126,7 +121,7 @@ canvas{display:block;width:100%;height:380px}
       <div class="map-head"><span class="mono" style="font-weight:800">1 of 3 • past → modern twin</span><span class="pill pill-y" id="pos1">tap map or type to guess</span></div>
       <div id="q1" style="font-weight:900;font-size:16px;padding:9px 12px;min-height:26px">—</div>
       <div style="display:flex;gap:8px;padding:0 12px 10px">
-        <input id="guess1" list="guessList" autocomplete="off" placeholder="Modern twin — Curry, Wemby, Joker…" style="flex:1;font-family:var(--mono);font-size:12.5px;padding:9px 11px;border:1.8px solid var(--ink);border-radius:10px">
+        <input id="guess1" list="guessList" autocomplete="off" placeholder="Modern twin — Curry, Wemby, Joker…" style="flex:1;font-family:var(--mono);font-size:12.5px;padding:9px 11px;border:1px solid var(--line-2);border-radius:10px">
         <datalist id="guessList"></datalist>
         <button class="btn btn-p" id="go1">Guess ◎</button>
       </div>
@@ -136,9 +131,9 @@ canvas{display:block;width:100%;height:380px}
     </div>
     <div class="card" id="card2" style="opacity:.86">
       <div class="map-head"><span class="mono" style="font-weight:800">2 of 3 • locked to play</span><span class="pill" id="pos2">finish #1 first</span></div>
-      <div id="q2" style="font-weight:900;font-size:16px;padding:9px 12px;min-height:26px;color:#6b6760">Locked — beat #1</div>
+      <div id="q2" style="font-weight:900;font-size:16px;padding:9px 12px;min-height:26px;color:var(--fg-3)">Locked — beat #1</div>
       <div style="display:flex;gap:8px;padding:0 12px 10px">
-        <input id="guess2" list="guessList" disabled placeholder="Beat #1 to unlock…" style="flex:1;font-family:var(--mono);font-size:12.5px;padding:9px 11px;border:1.6px solid #ccc;border-radius:10px">
+        <input id="guess2" list="guessList" disabled placeholder="Beat #1 to unlock…" style="flex:1;font-family:var(--mono);font-size:12.5px;padding:9px 11px;border:1px solid var(--line);border-radius:10px">
         <button class="btn" id="go2" disabled>Guess ◎</button>
       </div>
       <div id="log2" class="log" style="margin:0 12px 8px"></div>
@@ -146,9 +141,9 @@ canvas{display:block;width:100%;height:380px}
     </div>
     <div class="card" id="card3" style="opacity:.84">
       <div class="map-head"><span class="mono" style="font-weight:800">3 of 3 • streak on line</span><span class="pill" id="pos3">last one wins streak dot</span></div>
-      <div id="q3" style="font-weight:900;font-size:16px;padding:9px 12px;min-height:26px;color:#6b6760">Locked — beat #2</div>
+      <div id="q3" style="font-weight:900;font-size:16px;padding:9px 12px;min-height:26px;color:var(--fg-3)">Locked — beat #2</div>
       <div style="display:flex;gap:8px;padding:0 12px 10px">
-        <input id="guess3" list="guessList" disabled placeholder="Beat #2 to unlock…" style="flex:1;font-family:var(--mono);font-size:12.5px;padding:9px 11px;border:1.6px solid #ccc;border-radius:10px">
+        <input id="guess3" list="guessList" disabled placeholder="Beat #2 to unlock…" style="flex:1;font-family:var(--mono);font-size:12.5px;padding:9px 11px;border:1px solid var(--line);border-radius:10px">
         <button class="btn" id="go3" disabled>Guess ◎</button>
       </div>
       <div id="log3" class="log" style="margin:0 12px 8px"></div>
@@ -159,7 +154,7 @@ canvas{display:block;width:100%;height:380px}
 
   <div style="display:flex;flex-direction:column;gap:12px">
     <div class="card" style="overflow:hidden;padding:0">
-      <div style="display:flex;justify-content:space-between;padding:9px 12px;border-bottom:2px solid var(--ink);background:#fff"><span class="mono" style="font-weight:800">Map — 15-d proj + 1305 modern pool</span><span class="mono-sm">Past ★ Modern ○ • OKABE visible on void</span></div>
+      <div style="display:flex;justify-content:space-between;padding:9px 12px;border-bottom:1px solid var(--line-2);background:var(--surface)"><span class="mono" style="font-weight:800">Map — 15-d proj + 1305 modern pool</span><span class="mono-sm">Past ★ Modern ○ • OKABE visible on void</span></div>
       <div style="position:relative" class="canvas-box">
         <canvas id="c" width="640" height="380" aria-label="Everyday map. Modern pool 1305 points positioned by model, coloured by archetype, crosshair target past. Tap any dot to fill guess box — all also in suggestions."></canvas>
         <canvas id="trajOver" width="640" height="380" style="position:absolute;inset:0;pointer-events:none;background:transparent"></canvas>
@@ -167,7 +162,7 @@ canvas{display:block;width:100%;height:380px}
         <div id="ring" style="position:absolute;left:50%;top:50%;width:58px;height:58px;border-radius:50%;border:3px solid #eb6834;display:none;place-items:center;color:#eb6834;background:radial-gradient(circle,rgba(235,104,52,.28),rgba(235,104,52,.08) 62%,transparent 72%);font-weight:900;transform:translate(-50%,-50%) scale(.6)">◎</div>
         <div id="confetti"></div>
       </div>
-      <div style="padding:8px 12px;background:var(--paper);border-top:2px solid var(--ink)" class="mono-sm">Tap a modern dot to guess • orange pulse = lock • grey dots hidden until select • trajectory orange shows change</div>
+      <div style="padding:8px 12px;background:var(--paper);border-top:1px solid var(--line-2)" class="mono-sm">Tap a modern dot to guess • orange pulse = lock • grey dots hidden until select • trajectory orange shows change</div>
     </div>
     <div class="card" style="padding:12px">
       <div class="mono" style="font-weight:900">Why viral?</div>
@@ -190,7 +185,10 @@ canvas{display:block;width:100%;height:380px}
     <div style="display:flex;gap:6px"><button class="btn" id="dlShare">Download</button><button class="btn btn-y" id="closeShare">Close ◎</button></div>
   </div></div></div>
 
-<footer style="max-width:1080px;margin:0 auto;padding:10px 14px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;border-top:1.6px dashed #E8E2DA;color:#6b6760" class="mono-sm"><span>Everyday Streak • LCG daily chain glibc • open→drag-map→Jordan→copy-link equal stars</span><span><span id="todayFoot">—</span> • PWA v67 offline • DAU<span id="dau">3</span> WAU<span id="wau">3</span></span></footer>
+<footer class="site-footer">
+  <div class="site-footer__links"><a href="/play">Play</a><a href="/players">Players</a><a href="/trends">Trends</a><a href="/model">Lab</a><a href="/methods">Methods</a><a href="https://github.com/jcdavis131/vector-hoops" rel="noopener">Source</a></div>
+  <p class="site-footer__attribution">Every number recomputable from stats.nba.com · A <a href="https://dumbmodel.com">dumbmodel</a> project</p>
+</footer>
 
 <script>
 // --- zero-deps, no pip ---
@@ -324,9 +322,9 @@ async function loadGameVectors(){
     gameData={past:j.past||[], modern:j.modern||[]};
     return gameData;
   }catch(e){
-    // fallback PLACEHOLDER if offline first visit still works via PWA cache later
-    gameData={past:[{i:672,n:'Michael Jordan 97-98',s:'1997-98',v:[0.92,0.11,0.18,0,0,0,0,0,0,0,0,0,0,0],x:0.31,y:0.16}],modern:[{n:'Jimmy Butler 22-23',v:[0.89,0.14,0.21,0,0,0,0,0,0,0,0,0,0,0],x:0.32,y:0.18}]};
-    return gameData;
+    // no invented fallback: say plainly that today's pool is unavailable
+    gameData=null;
+    return null;
   }
 }
 function dateStrFromParam(){
@@ -475,10 +473,17 @@ function renderCalendar(){
     c.appendChild(b);
   });
 }
+function everydayUnavailable(){
+  let h=document.querySelector('.hero-void .wrap'); if(!h) return;
+  h.innerHTML='<header class="title-card" role="status"><div class="title-card__eyebrow">Everyday · unavailable</div><h1 class="title-card__title">Today’s three aren’t available right now</h1><p class="title-card__lede">The season pool for this mode didn’t load, and we would rather show nothing than invent a puzzle. The Daily Court runs on the full data set.</p><div class="title-card__actions"><a class="btn btn-primary btn-xl" href="/play">Play the Daily Court</a><a class="btn btn-xl" href="/">Explore the atlas</a></div></header>';
+  var hv=document.querySelector('.hero-void'); if(hv){ hv.style.background='var(--bg)'; hv.style.minHeight='calc(100vh - 260px)'; hv.style.display='grid'; hv.style.placeItems='center'; hv.style.borderBottom='0'; }
+  document.querySelectorAll('.hero-void ~ *:not(footer):not(script)').forEach(function(el){ if(el.tagName!=='FOOTER') el.hidden=true; });
+}
 async function boot(dailyOverride){
   let dstr=dailyOverride||dateStrFromParam();
   let meta=tripleFromSeed(seedFromDate(dstr));
   await loadGameVectors();
+  if(!gameData||!gameData.past||!gameData.past.length){ everydayUnavailable(); return; }
   fillGuessList();
   resizeCanvas();
   window.addEventListener('resize', resizeCanvas);
@@ -573,5 +578,6 @@ if('serviceWorker' in navigator){
 }
 </script>
 <script src="/assets/delight.js?v=5"></script>
+<script src="/assets/site-nav.js"></script>
 </body>
 </html>

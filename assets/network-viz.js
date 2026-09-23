@@ -2,18 +2,20 @@
  * MTNN network explorer (/model): 3D embedding map + animated layer flow.
  */
 (function () {
+  function __tok(n,f){try{var v=getComputedStyle(document.documentElement).getPropertyValue(n).trim();return v||f;}catch(e){return f;}}
+
   'use strict';
 
   var SVG_NS = 'http://www.w3.org/2000/svg';
   // Cam's Lab authentic styling — ADA AAA, distinct from 3b1b dark
-  var BG = '#FFFEF7';
-  var PAPER_DOT = '#E8E0C8';
-  var CARD = '#FFFFFF';
-  var INK = '#111111';
-  var SHADOW = '#111111';
-  var SUBTLE_AAA = '#585858';
-  var MUTED = '#666666';
-  var HAIR = '#B8AFA0'; // axis / hairline ink
+  var BG = __tok('--surface','#FFFEF7');
+  var PAPER_DOT = __tok('--line','#E8E0C8');
+  var CARD = __tok('--surface-2','#FFFFFF');
+  var INK = __tok('--fg','#111111');
+  var SHADOW = __tok('--bg','#111111');
+  var SUBTLE_AAA = __tok('--fg-2','#585858');
+  var MUTED = __tok('--fg-3','#666666');
+  var HAIR = __tok('--line-2','#B8AFA0'); // axis / hairline ink
   var OKABE = { orange:'#E69F00', sky:'#56B4E9', green:'#009E73', yellow:'#F0E442', blue:'#0072B2', verm:'#D55E00', purple:'#CC79A7' };
   // 8 archetypes Okabe triple-encoded (color+shape+text) — AAA 7:1 min on white for blue, others with ink border
   var PALETTE = [OKABE.blue, OKABE.orange, OKABE.green, OKABE.verm, OKABE.purple, OKABE.sky, OKABE.yellow, OKABE.green];
@@ -26,8 +28,8 @@
     return idx < PALETTE.length ? PALETTE[idx] : PALETTE_OTHER;
   }
   // Axes chrome — light paper style, high contrast ink
-  var AXIS_LINE = '#B8AFA0';
-  var AXIS_TEXT = '#585858';
+  var AXIS_LINE = __tok('--line-2','#B8AFA0');
+  var AXIS_TEXT = __tok('--fg-3','#585858');
   var MAX_INPUT_NODES = 17; // truthful: 17 families, not top-10 truncated
   var SKILL_LABELS = {
     ft: 'Free Throw Shooting',

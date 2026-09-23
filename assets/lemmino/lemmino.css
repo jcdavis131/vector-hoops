@@ -20,11 +20,11 @@
   position:relative;
   width:100%;
   height:520px;
-  border:2.5px solid #1A150F;
+  border:1px solid var(--line-2);
   border-radius:16px;
   overflow:hidden;
   background:radial-gradient(120% 80% at 30% 20%, rgba(240,228,66,0.06), transparent 55%), radial-gradient(90% 60% at 80% 80%, rgba(0,114,178,0.10), transparent 50%), var(--lemmino-bg);
-  box-shadow:6px 6px 0 #1A150F;
+  box-shadow:none;
   isolation:isolate;
 }
 @media(max-width:720px){ .lemmino-hero-void{ height:460px; } }
@@ -39,11 +39,11 @@
   position:relative;
   width:100%;
   min-height:560px;
-  border:2.5px solid #1A150F;
+  border:1px solid var(--line-2);
   border-radius:16px;
   overflow:hidden;
   background:radial-gradient(120% 80% at 30% 20%, rgba(240,228,66,0.06), transparent 55%), radial-gradient(90% 60% at 80% 80%, rgba(0,114,178,0.10), transparent 50%), var(--lemmino-bg);
-  box-shadow:6px 6px 0 #1A150F;
+  box-shadow:none;
   isolation:isolate;
 }
 @media(max-width:720px){ .lemmino-map-void{ min-height:500px; } }
@@ -51,11 +51,11 @@
   position:relative;
   width:100%;
   height:560px;
-  border:2.5px solid #1A150F;
+  border:1px solid var(--line-2);
   border-radius:16px;
   overflow:hidden;
   background:radial-gradient(130% 90% at 50% 12%, rgba(86,180,233,0.10), transparent 60%), radial-gradient(90% 70% at 80% 90%, rgba(0,114,178,0.12), transparent 50%), var(--lemmino-bg);
-  box-shadow:6px 6px 0 #1A150F;
+  box-shadow:none;
   isolation:isolate;
 }
 @media(max-width:720px){ .lemmino-drift{ height:520px; } }
@@ -82,16 +82,16 @@
 .lemmino-ui .lemmino-caption{
   pointer-events:auto;
   background:rgba(255,254,247,0.92);
-  border:2px solid #1A150F;
+  border:1px solid var(--line-2);
   border-radius:999px;
   padding:6px 10px;
   font-family:ui-monospace,monospace;
   font-size:10px; font-weight:900; letter-spacing:0.06em; text-transform:uppercase;
-  box-shadow:2px 2px 0 #1A150F;
+  box-shadow:none;
   backdrop-filter:blur(6px);
 }
 .lemmino-ui .lemmino-caption--dark{
-  background:#1A150F; color:#FFFEF7; border-color:#1A150F;
+  background:#1A150F; color:#FFFEF7; border-color:var(--line-2);
 }
 .lemmino-chapter{
   position:absolute; left:14px; top:14px; z-index:4; pointer-events:none;
@@ -106,7 +106,7 @@
   width:28px; height:1px; background:rgba(234,230,222,0.42); display:inline-block;
 }
 .lemmino-chapter h2{
-  margin:0; font-family:"Architects Daughter",ui-monospace,monospace;
+  margin:0; font-family:ui-monospace,monospace;
   font-size:clamp(20px, 2.6vw, 32px); line-height:0.95; letter-spacing:-0.02em; color:#FFFEF7;
   text-shadow:0 2px 22px rgba(0,0,0,0.8);
 }
@@ -120,11 +120,11 @@
   position:relative;
   width:100%;
   height:560px;
-  border:2.5px solid #1A150F;
+  border:1px solid var(--line-2);
   border-radius:16px;
   overflow:hidden;
   background:radial-gradient(130% 90% at 50% 12%, rgba(213,94,0,0.10), transparent 60%), radial-gradient(90% 70% at 80% 90%, rgba(0,114,178,0.12), transparent 50%), var(--lemmino-bg);
-  box-shadow:6px 6px 0 #1A150F;
+  box-shadow:none;
   isolation:isolate;
 }
 @media(max-width:720px){ .lemmino-monoliths{ height:520px; } }

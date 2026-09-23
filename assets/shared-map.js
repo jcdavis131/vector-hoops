@@ -243,7 +243,7 @@ export async function mountSharedMap(canvas, opts={}){
     if(!ctx||!W||!H) return;
     ctx.clearRect(0,0,W,H);
     if(dark){
-      ctx.fillStyle='#080A0F';
+      ctx.fillStyle='#05070A';
       ctx.fillRect(0,0,W,H);
       // subtle vignette via rects not gradient to save
     } else {
@@ -257,7 +257,8 @@ export async function mountSharedMap(canvas, opts={}){
     // group by color batches: we will iterate colors and inside iterate sampled indices
     const dotSize = W<600?2:2;
     for(let c=0;c<8;c++){
-      ctx.fillStyle=OKABE[c];
+      // dark (atlas) field: one quiet ivory for every season, so the accent is reserved for guesses
+      ctx.fillStyle=dark?'rgba(214,222,232,0.42)':OKABE[c];
       // batched draw
       for(let i=0;i<N;i+=step){
         if(baseC[i]!==c) continue;
@@ -297,15 +298,15 @@ export async function mountSharedMap(canvas, opts={}){
         if(targetPr){
           ctx.save();
           ctx.globalAlpha=isLatest?0.85:0.28;
-          ctx.strokeStyle=dark?'#F0E442':'#1A150F';
+          ctx.strokeStyle=dark?'#FF7A33':'#1A150F';
           ctx.lineWidth=isLatest?1.6:1;
           if(!isLatest) ctx.setLineDash([3,3]);
           ctx.beginPath(); ctx.moveTo(gx,gy); ctx.lineTo(targetPr.sx|0, targetPr.sy|0); ctx.stroke();
           ctx.restore();
         }
         // orange ring
-        ctx.strokeStyle='#FFFFFF'; ctx.lineWidth=4; ctx.strokeRect(gx-5, gy-5, 10,10);
-        ctx.strokeStyle='#D55E00'; ctx.lineWidth=2; ctx.strokeRect(gx-5, gy-5, 10,10);
+        ctx.strokeStyle=dark?'#05070A':'#FFFFFF'; ctx.lineWidth=4; ctx.strokeRect(gx-5, gy-5, 10,10);
+        ctx.strokeStyle=dark?'#FF7A33':'#D55E00'; ctx.lineWidth=2; ctx.strokeRect(gx-5, gy-5, 10,10);
         // numbered badge — tiny black pill with white 1..6 so you can match list ↔ map
         const num=(gi+1).toString();
         ctx.font='800 9px ui-monospace,monospace';
@@ -314,9 +315,9 @@ export async function mountSharedMap(canvas, opts={}){
         // keep badge inside canvas
         if(bx+tw>W-2) bx=gx-tw-7;
         if(by<2) by=gy+7;
-        ctx.fillStyle='#1A150F';
+        ctx.fillStyle=dark?'#FF7A33':'#1A150F';
         ctx.fillRect(bx, by, tw, 11);
-        ctx.fillStyle='#FFFEF7';
+        ctx.fillStyle=dark?'#0A0B0D':'#FFFEF7';
         ctx.fillText(num, bx+3, by+8);
         if(isLatest){ latestGuessPr={x:gx,y:gy}; latestGuessMeta=gm; }
       }
@@ -354,13 +355,13 @@ export async function mountSharedMap(canvas, opts={}){
           const x=pr.sx|0, y=pr.sy|0;
           ctx.lineWidth=3; ctx.strokeStyle='#FFFFFF';
           ctx.beginPath(); ctx.arc(x,y,11,0,Math.PI*2); ctx.stroke();
-          ctx.lineWidth=2.4; ctx.strokeStyle='#1A150F';
+          ctx.lineWidth=2.4; ctx.strokeStyle=dark?'#05070A':'#1A150F';
           ctx.beginPath(); ctx.arc(x,y,7.5,0,Math.PI*2); ctx.stroke();
-          ctx.fillStyle='#F0E442';
+          ctx.fillStyle=dark?'#FFFFFF':'#F0E442';
           ctx.beginPath(); ctx.arc(x,y,3.4,0,Math.PI*2); ctx.fill();
           ctx.lineWidth=1.2; ctx.strokeStyle='#1A150F';
           ctx.beginPath(); ctx.arc(x,y,3.4,0,Math.PI*2); ctx.stroke();
-          ctx.lineWidth=2; ctx.strokeStyle='#1A150F';
+          ctx.lineWidth=2; ctx.strokeStyle=dark?'#FFFFFF':'#1A150F';
           ctx.beginPath();
           ctx.moveTo(x-17,y); ctx.lineTo(x-11,y); ctx.moveTo(x+11,y); ctx.lineTo(x+17,y);
           ctx.moveTo(x,y-17); ctx.lineTo(x,y-11); ctx.moveTo(x,y+11); ctx.lineTo(x,y+17);
@@ -382,8 +383,8 @@ export async function mountSharedMap(canvas, opts={}){
       ly=Math.max(4, ly);
       ctx.fillStyle=dark?'rgba(8,10,15,.88)':'rgba(255,254,247,.92)';
       ctx.fillRect(lx, ly, tw, 16);
-      ctx.strokeStyle=dark?'#F0E442':'#1A150F'; ctx.lineWidth=1; ctx.strokeRect(lx,ly,tw,16);
-      ctx.fillStyle=dark?'#F0E442':'#1A150F';
+      ctx.strokeStyle=dark?'#FF7A33':'#1A150F'; ctx.lineWidth=1; ctx.strokeRect(lx,ly,tw,16);
+      ctx.fillStyle=dark?'#FF7A33':'#1A150F';
       ctx.fillText(label, lx+5, ly+11);
     }
   }

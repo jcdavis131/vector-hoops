@@ -1,155 +1,226 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
-<title>Play — Daily Court 5× — Vector Hoops</title>
-<meta name="description" content="Daily Court: 5 past All-Stars → 5 modern twins. 6 tries each, build your modern starting 5. Pack Battle — share same link, battle friends."/>
-<meta property="og:title" content="Play Vector Hoops — Daily Court 5× + Pack Battle"/>
-<meta name="theme-color" content="#1A150F"/><link rel="manifest" href="/manifest.json"/>
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Architects+Daughter&display=swap" rel="stylesheet">
+<title>Play — Daily Court — Vector Hoops</title>
+<meta name="description" content="Daily Court: five past All-Stars a day, the same five for everyone. Find each one’s closest modern twin in six guesses, or battle friends with a shared pack."/>
+<link rel="manifest" href="/manifest.json"/>
 <link rel="stylesheet" href="assets/shell.css"/><link rel="stylesheet" href="assets/responsive.css"/><link rel="stylesheet" href="assets/final-qa.css"/><link rel="stylesheet" href="assets/unified.css"/><link rel="stylesheet" href="assets/motion.css"/>
 <style>
 :root{--paper:#FFFEF7;--ink:#1A150F;--blue:#0072B2;--verm:#D55E00;--yellow:#F0E442;--green:#009E73;--radius:14px;--shadow:4px 4px 0 var(--ink);--mono:ui-monospace,monospace;--sans:ui-sans-serif,system-ui;}
 *{box-sizing:border-box}html,body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:18px;line-height:1.65;overflow-x:clip}
 button,.input{min-height:44px}
-.card{background:#fff;border:2.2px solid var(--ink);border-radius:14px;box-shadow:var(--shadow);padding:14px 16px}
-.btn{appearance:none;border:2.2px solid var(--ink);border-radius:12px;min-height:48px;padding:10px 14px;font-weight:900;font-family:var(--mono);text-transform:uppercase;letter-spacing:.04em;cursor:pointer;box-shadow:3px 3px 0 var(--ink);background:#fff;color:var(--ink);display:inline-flex;align-items:center;gap:8px;justify-content:center}
-.btn:active{transform:translate(1px,1px);box-shadow:1px 1px 0 var(--ink)}
-.btn-primary{background:var(--ink);color:#fff}.btn-accent{background:var(--yellow);color:var(--ink)}
-.input{width:100%;border:2.2px solid var(--ink);border-radius:12px;padding:0 12px;font-size:16px;font-weight:600;box-shadow:2px 2px 0 var(--ink)}
+.card{background:var(--surface);border:1px solid var(--line-2);border-radius:14px;box-shadow:var(--shadow);padding:14px 16px}
+.btn{appearance:none;border:1px solid var(--line-2);border-radius:12px;min-height:48px;padding:10px 14px;font-weight:900;font-family:var(--mono);text-transform:uppercase;letter-spacing:.04em;cursor:pointer;box-shadow:none;background:var(--surface);color:var(--ink);display:inline-flex;align-items:center;gap:8px;justify-content:center}
+.btn:active{transform:translate(1px,1px);box-shadow:none}
+.btn-primary{background:var(--accent);color:var(--on-accent)}.btn-accent{background:var(--accent-wash);color:var(--accent)}
+.input{width:100%;border:1px solid var(--line-2);border-radius:12px;padding:0 12px;font-size:16px;font-weight:600;box-shadow:none}
 .small-mono{font-family:var(--mono);font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase}
-.pill{border:1.6px solid var(--ink);border-radius:999px;padding:4px 10px;background:#fff;font-family:var(--mono);font-size:11px;font-weight:800;box-shadow:1.5px 1.5px 0 var(--ink);display:inline-flex;align-items:center;gap:6px}
-.pill-yellow{background:var(--yellow)}.pill-green{background:var(--green);color:#fff}.pill-blue{background:var(--blue);color:#fff}
+.pill{border:1px solid var(--line-2);border-radius:999px;padding:4px 10px;background:var(--surface);font-family:var(--mono);font-size:11px;font-weight:800;box-shadow:none;display:inline-flex;align-items:center;gap:6px}
+.pill-yellow{background:var(--accent-wash);color:var(--accent)}.pill-green{background:var(--green);color:#fff}.pill-blue{background:var(--blue);color:#fff}
 .main{max-width:980px;margin:0 auto;padding:12px clamp(12px,3vw,20px) calc(92px + env(safe-area-inset-bottom));display:flex;flex-direction:column;gap:14px}
-#map-wrap{position:relative;min-height:380px;border:2.5px solid var(--ink);border-radius:16px;box-shadow:6px 6px 0 var(--ink);overflow:hidden;background:radial-gradient(120% 80% at 70% 20%,rgba(0,114,178,.12),transparent 48%),radial-gradient(90% 60% at 20% 70%,rgba(213,94,0,.10),transparent 46%),var(--paper)}
+#map-wrap{position:relative;min-height:380px;border:1px solid var(--line-2);border-radius:16px;box-shadow:none;overflow:hidden;background:radial-gradient(120% 80% at 70% 20%,rgba(0,114,178,.12),transparent 48%),radial-gradient(90% 60% at 20% 70%,rgba(213,94,0,.10),transparent 46%),var(--paper)}
 #sky-canvas{position:absolute;inset:0;width:100%;height:100%;display:block;cursor:grab}
 #map-overlay{position:absolute;left:10px;right:10px;top:10px;display:flex;justify-content:space-between;gap:8px;z-index:2;pointer-events:none;flex-wrap:wrap}
-#map-overlay .chip{background:rgba(255,254,247,.92);border:2px solid var(--ink);border-radius:999px;padding:4px 8px;font-family:var(--mono);font-size:10px;box-shadow:1px 1px 0 var(--ink)}
+#map-overlay .chip{background:rgba(255,254,247,.92);border:1px solid var(--line-2);border-radius:999px;padding:4px 8px;font-family:var(--mono);font-size:10px;box-shadow:none}
 #map-controls{position:absolute;left:10px;bottom:10px;z-index:3;display:flex;gap:6px;flex-wrap:wrap}
-#map-legend{position:absolute;right:10px;bottom:10px;z-index:3;background:rgba(255,254,247,.94);border:2px solid var(--ink);border-radius:12px;padding:7px 9px;box-shadow:2px 2px 0 var(--ink);font-family:var(--mono);font-size:9px;line-height:1.35;pointer-events:none;min-width:128px}
-#hover-tip{position:absolute;left:50%;top:50%;transform:translate(-50%,-100%);background:#FFFEF7;border:2px solid var(--ink);border-radius:10px;padding:6px 8px;box-shadow:3px 3px 0 var(--ink);font-size:11px;display:none;z-index:3;pointer-events:none;max-width:220px}
-.guess-row{border:1.8px solid var(--ink);border-radius:12px;padding:10px 12px;background:#fff;margin-top:8px;box-shadow:2px 2px 0 var(--ink)}
+#map-legend{position:absolute;right:10px;bottom:10px;z-index:3;background:rgba(255,254,247,.94);border:1px solid var(--line-2);border-radius:12px;padding:7px 9px;box-shadow:none;font-family:var(--mono);font-size:9px;line-height:1.35;pointer-events:none;min-width:128px}
+#hover-tip{position:absolute;left:50%;top:50%;transform:translate(-50%,-100%);background:var(--surface);border:1px solid var(--line-2);border-radius:10px;padding:6px 8px;box-shadow:none;font-size:11px;display:none;z-index:3;pointer-events:none;max-width:220px}
+.guess-row{border:1px solid var(--line-2);border-radius:12px;padding:10px 12px;background:var(--surface);margin-top:8px;box-shadow:none}
 .guess-row.win{border-color:var(--green);background:#e8f5e9}
-.bar{height:8px;border-radius:999px;background:#eee;overflow:hidden;margin-top:6px;border:1px solid #ddd}.bar>i{display:block;height:100%}
-.suggest{position:relative}.suggest ul{position:absolute;z-index:20;left:0;right:0;top:52px;background:#fff;border:2px solid var(--ink);border-radius:12px;box-shadow:4px 4px 0 var(--ink);list-style:none;margin:0;padding:6px;max-height:300px;overflow:auto}
-.suggest li{padding:8px 10px;border-radius:8px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;min-height:44px}.suggest li:hover,.suggest li.is-active{background:var(--yellow)}
-.hd{font-family:"Architects Daughter",var(--mono);line-height:1.05}
+.bar{height:8px;border-radius:999px;background:var(--surface-2);overflow:hidden;margin-top:6px;border:1px solid var(--line)}.bar>i{display:block;height:100%}
+.suggest{position:relative}.suggest ul{position:absolute;z-index:20;left:0;right:0;top:52px;background:var(--surface);border:1px solid var(--line-2);border-radius:12px;box-shadow:none;list-style:none;margin:0;padding:6px;max-height:300px;overflow:auto}
+.suggest li{padding:8px 10px;border-radius:8px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;min-height:44px}.suggest li:hover,.suggest li.is-active{background:var(--accent-wash);color:var(--accent)}
+.hd{font-family:var(--mono);line-height:1.05}
 .confetti{position:fixed;inset:0;pointer-events:none;z-index:98}
 #game-header{padding:16px 16px 12px;border-width:2.5px}
 .game-title{margin:0;font-size:clamp(22px,5vw,32px);line-height:.95;letter-spacing:-.01em}
-.game-subtitle{margin:6px 0 0;font-size:14px;line-height:1.5;color:#444;max-width:62ch}
-.game-status-bar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:10px;padding-top:10px;border-top:1.5px dashed #E5E2D8;}
+.game-subtitle{margin:6px 0 0;font-size:14px;line-height:1.5;color:var(--fg-2);max-width:62ch}
+.game-status-bar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:10px;padding-top:10px;border-top:1px dashed var(--line);}
 .mode-tabs{display:flex;gap:8px;overflow-x:auto;flex-wrap:nowrap;padding:4px 0 8px;scrollbar-width:none}.mode-tabs::-webkit-scrollbar{display:none}
-.mode-tab{flex:0 0 auto;appearance:none;border:2px solid var(--ink);border-radius:999px;padding:8px 14px;background:#fff;font-family:var(--mono);font-size:11px;font-weight:900;text-transform:uppercase;box-shadow:2px 2px 0 var(--ink);cursor:pointer;min-height:40px;display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
-.mode-tab.is-active{background:var(--ink);color:#fff}
+.mode-tab{flex:0 0 auto;appearance:none;border:1px solid var(--line-2);border-radius:999px;padding:8px 14px;background:var(--surface);font-family:var(--mono);font-size:11px;font-weight:900;text-transform:uppercase;box-shadow:none;cursor:pointer;min-height:40px;display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
+.mode-tab.is-active{background:var(--accent);color:var(--on-accent)}
 .mode-tab.is-active.daily-active{background:var(--blue)}
-.mode-desc{font-size:12px;line-height:1.5;color:#5A5248;background:#FFFEF7;border:1.5px solid #E5E2D8;border-radius:10px;padding:8px 10px;margin-top:8px}
-.ready-banner{border:2px dashed var(--ink);background:var(--yellow);border-radius:12px;padding:12px 14px;display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap;box-sizing:border-box}
+.mode-desc{font-size:12px;line-height:1.5;color:var(--fg-2);background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:8px 10px;margin-top:8px}
+.ready-banner{border:1px dashed var(--line-2);background:var(--accent-wash);color:var(--accent);border-radius:12px;padding:12px 14px;display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap;box-sizing:border-box}
 .turn-indicator{display:flex;gap:8px;align-items:center;margin-top:6px;font-family:var(--mono);font-size:11px;font-weight:800}
 .turn-dot{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 0 3px rgba(0,158,115,.18);animation:pulse 1.6s infinite}
 .guess-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:4px 0 2px}
-.guess-tile{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;min-height:60px;padding:9px 6px;border:2px solid var(--ink,#1A150F);border-radius:12px;background:#fff;font-family:inherit;font-size:13px;font-weight:800;line-height:1.15;color:var(--ink,#1A150F);text-align:center;cursor:pointer;box-shadow:2px 2px 0 var(--ink,#1A150F);transition:transform .07s,box-shadow .07s}
-.guess-tile:hover:not([disabled]){background:#FFFEF0}
-.guess-tile:active:not([disabled]){transform:translate(1px,1px);box-shadow:1px 1px 0 var(--ink,#1A150F)}
-.guess-tile .tile-dot{width:15px;height:15px;border-radius:50%;border:1.5px solid var(--ink,#1A150F);flex:0 0 auto}
+.guess-tile{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;min-height:60px;padding:9px 6px;border:1px solid var(--line-2);border-radius:12px;background:var(--surface);font-family:inherit;font-size:13px;font-weight:800;line-height:1.15;color:var(--ink,#1A150F);text-align:center;cursor:pointer;box-shadow:none;transition:transform .07s,box-shadow .07s}
+.guess-tile:hover:not([disabled]){background:var(--surface)}
+.guess-tile:active:not([disabled]){transform:translate(1px,1px);box-shadow:none}
+.guess-tile .tile-dot{width:15px;height:15px;border-radius:50%;border:1px solid var(--line-2);flex:0 0 auto}
 .guess-tile .tile-name{word-break:break-word}
 .guess-tile .tile-rank{font-size:10px;font-weight:700;opacity:.85;text-transform:uppercase;letter-spacing:.03em}
-.guess-tile.is-picked{opacity:.55;cursor:default;box-shadow:none;background:#F1EFE8}
-.guess-tile.is-twin{opacity:1;background:var(--green,#009E73);color:#fff;border-color:var(--ink,#1A150F);box-shadow:2px 2px 0 var(--ink,#1A150F)}
+.guess-tile.is-picked{opacity:.55;cursor:default;box-shadow:none;background:var(--surface)}
+.guess-tile.is-twin{opacity:1;background:var(--green,#009E73);color:#fff;border-color:var(--ink,#1A150F);box-shadow:none}
 .guess-tile.is-twin .tile-dot{border-color:#fff}
 .guess-tile[disabled]{cursor:default}
-.grid-loading{grid-column:1/-1;text-align:center;padding:22px 8px;font-family:var(--mono);font-size:12px;color:#6B665E}
+.grid-loading{grid-column:1/-1;text-align:center;padding:22px 8px;font-family:var(--mono);font-size:12px;color:var(--fg-3)}
 @keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.18)}}
 .progress-dots{display:flex;gap:6px;align-items:center}
-.progress-dot{width:26px;height:26px;border-radius:50%;border:2px solid var(--ink);display:inline-flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:11px;font-weight:900;background:#fff;box-shadow:1.5px 1.5px 0 var(--ink)}
-.progress-dot.is-done{background:var(--ink);color:#fff}.progress-dot.is-current{background:var(--yellow)}
+.progress-dot{width:26px;height:26px;border-radius:50%;border:1px solid var(--line-2);display:inline-flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:11px;font-weight:900;background:var(--surface);box-shadow:none}
+.progress-dot.is-done{background:var(--accent);color:var(--on-accent)}.progress-dot.is-current{background:var(--accent-wash);color:var(--accent)}
 
 /* PACK PRODUCTION */
 .pack-header{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:10px}
 .pack-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:8px}
 @media(max-width:640px){.pack-grid{grid-template-columns:1fr}}
-.pack-card{border:2px solid var(--ink);border-radius:12px;padding:10px;background:#fff;box-shadow:2px 2px 0 var(--ink);position:relative;min-height:92px;display:flex;flex-direction:column;justify-content:space-between}
+.pack-card{border:1px solid var(--line-2);border-radius:12px;padding:10px;background:var(--surface);box-shadow:none;position:relative;min-height:92px;display:flex;flex-direction:column;justify-content:space-between}
 .pack-card.is-active{border-color:var(--blue);background:#f0f8ff;outline:3px solid var(--yellow)}
 .pack-card.is-won{border-color:var(--green);background:#e8f5e9}
 .pack-card.is-lost{border-color:var(--verm);background:#fef2e8}
 .pack-top{font-family:var(--mono);font-size:9px;letter-spacing:.08em;text-transform:uppercase;opacity:.6;display:flex;justify-content:space-between;gap:6px}
 .pack-name{font-weight:900;font-size:13px;line-height:1.2;margin:4px 0}
-.pack-meta{font-family:var(--mono);font-size:10px;color:#444}
+.pack-meta{font-family:var(--mono);font-size:10px;color:var(--fg-2)}
 .pack-badge{position:absolute;top:8px;right:8px;font-size:10px}
-.battle-banner{border:2.5px solid var(--ink);border-radius:12px;padding:10px 12px;background:var(--yellow);box-shadow:3px 3px 0 var(--ink);display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:center;margin-top:10px}
+.battle-banner{border:1px solid var(--line-2);border-radius:12px;padding:10px 12px;background:var(--accent-wash);color:var(--accent);box-shadow:none;display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:center;margin-top:10px}
 .battle-win{background:var(--green);color:#fff}
-.battle-lose{background:#fff}
-.battle-tie{background:#fff}
+.battle-lose{background:var(--surface)}
+.battle-tie{background:var(--surface)}
 
 /* DAILY COURT */
 #daily-court{border-width:2.5px;background:linear-gradient(180deg,#fff 0%, #FFFEF7 100%)}
 .court-top{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:center}
 .court-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-top:12px}
 @media(max-width:720px){.court-grid{grid-template-columns:1fr;}}
-.court-card{border:2px solid var(--ink);border-radius:12px;padding:10px;background:#fff;box-shadow:2px 2px 0 var(--ink);cursor:pointer;position:relative;min-height:92px;display:flex;flex-direction:column;justify-content:space-between;transition:transform .08s}
+.court-card{border:1px solid var(--line-2);border-radius:12px;padding:10px;background:var(--surface);box-shadow:none;cursor:pointer;position:relative;min-height:92px;display:flex;flex-direction:column;justify-content:space-between;transition:transform .08s}
 .court-card:hover{transform:translateY(-1px)}
-.court-card.is-active{border-color:var(--blue);box-shadow:3px 3px 0 var(--ink);background:#f0f8ff;outline:3px solid var(--yellow)}
+.court-card.is-active{border-color:var(--blue);box-shadow:none;background:#f0f8ff;outline:3px solid var(--yellow)}
 .court-card.is-solved{border-color:var(--green);background:#e8f5e9}
 .court-card.is-failed{border-color:var(--verm);background:#fef2e8;opacity:.9}
 .court-slot{font-family:var(--mono);font-size:9px;letter-spacing:.08em;text-transform:uppercase;opacity:.6}
 .court-name{font-weight:900;font-size:13px;line-height:1.2;margin:4px 0}
-.court-meta{font-family:var(--mono);font-size:10px;color:#666}
+.court-meta{font-family:var(--mono);font-size:10px;color:var(--fg-3)}
 .court-badge{position:absolute;top:8px;right:8px}
 .lineup-bar{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
-.lineup-chip{border:1.6px solid var(--ink);border-radius:999px;padding:3px 8px;background:#fff;font-family:var(--mono);font-size:10px;font-weight:800;box-shadow:1px 1px 0 var(--ink)}
+.lineup-chip{border:1px solid var(--line-2);border-radius:999px;padding:3px 8px;background:var(--surface);font-family:var(--mono);font-size:10px;font-weight:800;box-shadow:none}
 .rewards-row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:10px}
-.reward{border:2px solid var(--ink);border-radius:999px;padding:6px 10px;background:#fff;font-family:var(--mono);font-size:11px;font-weight:900;box-shadow:2px 2px 0 var(--ink);display:inline-flex;gap:6px;align-items:center}
-.reward.is-unlocked{background:var(--ink);color:#fff}
-.reward.is-unlocked.gold{background:var(--yellow);color:var(--ink)}
+.reward{border:1px solid var(--line-2);border-radius:999px;padding:6px 10px;background:var(--surface);font-family:var(--mono);font-size:11px;font-weight:900;box-shadow:none;display:inline-flex;gap:6px;align-items:center}
+.reward.is-unlocked{background:var(--accent);color:var(--on-accent)}
+.reward.is-unlocked.gold{background:var(--accent-wash);color:var(--accent)}
 
 /* onboarding sheet */
 .vh-sheet-backdrop{position:fixed;inset:0;background:rgba(26,21,15,.55);display:flex;align-items:flex-end;justify-content:center;z-index:110;padding:0}
-.vh-sheet{background:#fff;width:100%;max-width:680px;max-height:min(88dvh, calc(100dvh - 16px));overflow:auto;border:2.5px solid var(--ink);border-bottom:none;border-radius:16px 16px 0 0;box-shadow:0 -6px 0 var(--ink);padding:16px 16px calc(16px + env(safe-area-inset-bottom));animation:sheetUp .22s ease-out}
+.vh-sheet{background:var(--surface);width:100%;max-width:680px;max-height:min(88dvh, calc(100dvh - 16px));overflow:auto;border:1px solid var(--line-2);border-bottom:none;border-radius:16px 16px 0 0;box-shadow:none;padding:16px 16px calc(16px + env(safe-area-inset-bottom));animation:sheetUp .22s ease-out}
 @keyframes sheetUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
-@media(min-width:600px){.vh-sheet-backdrop{align-items:center;padding:20px}.vh-sheet{border-bottom:2.5px solid var(--ink);border-radius:16px;box-shadow:6px 6px 0 var(--ink);animation:sheetFade .16s ease-out}@keyframes sheetFade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}}
-.vh-sheet__handle{width:36px;height:4px;background:#E5E2D8;border-radius:2px;margin:2px auto 12px}
+@media(min-width:600px){.vh-sheet-backdrop{align-items:center;padding:20px}.vh-sheet{border-bottom:1px solid var(--line-2);border-radius:16px;box-shadow:none;animation:sheetFade .16s ease-out}@keyframes sheetFade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}}
+.vh-sheet__handle{width:36px;height:4px;background:var(--surface-2);border-radius:2px;margin:2px auto 12px}
 .vh-sheet__head{display:flex;justify-content:space-between;gap:10px;align-items:flex-start;margin-bottom:10px}
-.vh-sheet__title{margin:0;font-family:"Architects Daughter",var(--mono);font-size:22px;line-height:1.05}
-.vh-sheet__close{flex:0 0 auto;border:2px solid var(--ink);background:#fff;border-radius:50%;width:36px;height:36px;font-weight:900;cursor:pointer;box-shadow:2px 2px 0 var(--ink)}
+.vh-sheet__title{margin:0;font-family:var(--mono);font-size:22px;line-height:1.05}
+.vh-sheet__close{flex:0 0 auto;border:1px solid var(--line-2);background:var(--surface);border-radius:50%;width:36px;height:36px;font-weight:900;cursor:pointer;box-shadow:none}
 .onboard-steps{display:flex;flex-direction:column;gap:10px;margin:12px 0}
-.onboard-step{display:flex;gap:10px;align-items:flex-start;border:1.8px solid var(--ink);border-radius:12px;padding:10px 12px;background:#FFFEF7;box-shadow:2px 2px 0 var(--ink)}
-.onboard-step__num{flex:0 0 28px;width:28px;height:28px;border-radius:50%;background:var(--ink);color:#fff;display:inline-flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:13px;font-weight:900}
+.onboard-step{display:flex;gap:10px;align-items:flex-start;border:1px solid var(--line-2);border-radius:12px;padding:10px 12px;background:var(--surface);box-shadow:none}
+.onboard-step__num{flex:0 0 28px;width:28px;height:28px;border-radius:50%;background:var(--accent);color:var(--on-accent);display:inline-flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:13px;font-weight:900}
 </style>
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://hoops.dumbmodel.com/play">
-<meta property="og:description" content="Daily Court: 5 past All-Stars → 5 modern twins. 6 tries each, build your modern starting 5. Pack Battle — share same link, battle friends.">
-<meta property="og:image" content="/assets/og-1200x630.png">
+<meta name="color-scheme" content="dark light"/>
+<meta name="theme-color" content="#07090C" media="(prefers-color-scheme: dark)"/>
+<meta name="theme-color" content="#F3F1EC" media="(prefers-color-scheme: light)"/>
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml"/>
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png"/>
+<link rel="canonical" href="https://hoops.dumbmodel.com/play"/>
+<meta property="og:type" content="website"/>
+<meta property="og:site_name" content="Vector Hoops"/>
+<meta property="og:url" content="https://hoops.dumbmodel.com/play"/>
+<meta property="og:title" content="Play — Daily Court — Vector Hoops"/>
+<meta property="og:description" content="Daily Court: five past All-Stars a day, the same five for everyone. Find each one’s closest modern twin in six guesses, or battle friends with a shared pack."/>
+<meta property="og:image" content="https://hoops.dumbmodel.com/assets/og-1200x630.png"/>
 <meta property="og:image:width" content="1200"/><meta property="og:image:height" content="630"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="Play — Daily Court — Vector Hoops"/>
+<meta name="twitter:description" content="Daily Court: five past All-Stars a day, the same five for everyone. Find each one’s closest modern twin in six guesses, or battle friends with a shared pack."/>
+<meta name="twitter:image" content="https://hoops.dumbmodel.com/assets/og-1200x630.png"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=Inter:opsz,wght@14..32,400..700&display=swap"/>
+<link rel="stylesheet" href="/assets/atlas.css?v=2"/>
+<style>
+/* ---- Play: atlas refinement layer ---- */
+.game-head{ padding-top: clamp(40px, 7vw, 88px); padding-bottom: 8px; max-width: 1000px; }
+.game-head .title-card__title{ font-size: clamp(34px, 5.4vw, 64px); }
+.game-head__bar{ width: 100%; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 16px; margin-top: 18px; padding-top: 18px; border-top: 1px solid var(--line); }
+.game-head__side{ display: flex; gap: 6px; flex-wrap: wrap; }
+.game-head__side--end{ justify-content: flex-end; }
+.game-status-bar{ display: flex; flex-direction: column; align-items: center; gap: 10px; margin: 0; padding: 0; border: 0; }
+.progress-dot{ width: 24px; height: 24px; font-family: var(--font-display); font-size: 10px; font-weight: 700; color: var(--fg-3); background: transparent; border: 1px solid var(--line-2); }
+.progress-dot.is-done{ background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
+.progress-dot.is-current{ background: var(--accent-wash); border-color: var(--accent-line); color: var(--accent); }
+@media (max-width: 720px){
+  #map-legend{ display: none; }
+  .game-head__bar{ grid-template-columns: 1fr 1fr; }
+  .game-status-bar{ grid-column: 1 / -1; grid-row: 1; }
+}
+#mode-selector{ display: flex; flex-direction: column; align-items: center; gap: 12px; background: transparent; border: 0; padding: 8px 0; }
+#mode-selector .mode-tabs{ width: auto; max-width: 100%; }
+.game-head__side{ align-items: center; }
+.mode-head{ display: flex; gap: 12px; align-items: baseline; justify-content: center; flex-wrap: wrap; }
+.mode-head__note{ font-size: 12.5px; color: var(--fg-3); }
+.mode-desc{ max-width: 70ch; text-align: center; font-size: 13px; line-height: 1.6; color: var(--fg-2); background: none; border: 0; padding: 0; margin: 0; }
+#daily-court{ background: var(--surface); border-width: 1px; }
+.court-card, .pack-card{ background: var(--surface-2); border: 1px solid var(--line); border-radius: var(--radius-lg); transition: border-color var(--dur-1) var(--ease), transform var(--dur-2) var(--ease); }
+.court-card:hover{ border-color: var(--line-2); transform: none; }
+.court-card.is-active, .pack-card.is-active{ background: var(--surface-2); border-color: var(--accent); outline: 0; box-shadow: inset 0 0 0 1px var(--accent); }
+.court-card.is-solved, .pack-card.is-won{ background: color-mix(in srgb, var(--ok) 10%, var(--surface-2)); border-color: color-mix(in srgb, var(--ok) 55%, transparent); }
+.court-card.is-failed, .pack-card.is-lost{ background: color-mix(in srgb, var(--bad) 8%, var(--surface-2)); border-color: color-mix(in srgb, var(--bad) 45%, transparent); opacity: 1; }
+.court-slot, .pack-top{ font-family: var(--font-display); font-stretch: 112%; letter-spacing: .14em; font-weight: 600; color: var(--fg-3); opacity: 1; }
+.court-name, .pack-name{ font-family: var(--font-text); font-weight: 650; font-size: 14px; color: var(--fg); font-variant-numeric: tabular-nums; }
+.court-meta, .pack-meta{ font-family: var(--font-text); font-size: 12px; color: var(--fg-3); }
+.lineup-chip, .reward{ font-family: var(--font-display); font-stretch: 112%; letter-spacing: .1em; font-weight: 600; font-size: 10px; text-transform: uppercase; color: var(--fg-2); background: none; border: 1px solid var(--line-2); }
+.reward.is-unlocked{ background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
+.reward.is-unlocked.gold{ background: var(--accent-wash); border-color: var(--accent-line); color: var(--accent); }
+#map-wrap{ min-height: 420px; background: #05070A; border: 1px solid var(--line); border-radius: var(--radius-lg); }
+#map-overlay .chip{ background: rgba(7,9,12,.72); color: rgba(236,238,241,.82); border: 1px solid rgba(255,255,255,.14); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); }
+#map-controls .chip{ background: rgba(7,9,12,.72); color: rgba(236,238,241,.85); border-color: rgba(255,255,255,.16); }
+#map-legend{ background: rgba(7,9,12,.78); color: rgba(236,238,241,.8); border: 1px solid rgba(255,255,255,.14); box-shadow: none; }
+#hover-tip{ background: rgba(13,16,21,.94); color: #ECEEF1; border: 1px solid rgba(255,255,255,.14); box-shadow: none; }
+#target-badge{ background: #FFFFFF !important; color: #05070A !important; border-color: #FFFFFF !important; }
+#past-avatar{ background: var(--surface-2) !important; border-color: var(--line) !important; }
+.guess-row{ background: var(--surface-2); border: 1px solid var(--line); box-shadow: none; }
+.guess-row.win{ border-color: var(--ok); background: color-mix(in srgb, var(--ok) 10%, var(--surface-2)); }
+.bar{ background: var(--surface-2); border: 0; height: 4px; }
+.suggest ul{ background: var(--surface); border: 1px solid var(--line-2); box-shadow: 0 20px 50px rgba(0,0,0,.35); }
+.suggest li:hover, .suggest li.is-active{ background: var(--surface-2); box-shadow: inset 2px 0 0 var(--accent); }
+.guess-tile{ background: var(--surface-2); border: 1px solid var(--line); box-shadow: none; color: var(--fg); font-family: var(--font-text); font-weight: 600; }
+.guess-tile:hover:not([disabled]){ background: var(--surface); border-color: var(--line-2); }
+.guess-tile.is-picked{ background: transparent; opacity: .5; }
+.guess-tile.is-twin{ background: var(--ok); color: #05070A; border-color: var(--ok); }
+.ready-banner{ background: var(--accent-wash); color: var(--fg); border: 1px solid var(--accent-line); border-radius: var(--radius-lg); }
+.turn-dot{ background: var(--accent); box-shadow: 0 0 0 3px var(--accent-wash); }
+.vh-sheet-backdrop{ background: var(--scrim); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); }
+.vh-sheet{ background: var(--surface); border: 1px solid var(--line-2); box-shadow: 0 30px 80px rgba(0,0,0,.5); }
+.vh-sheet__title{ font-family: var(--font-display); font-weight: 700; letter-spacing: -.01em; }
+.vh-sheet__close{ background: transparent; color: var(--fg); }
+.onboard-step{ background: var(--surface-2); border-color: var(--line); }
+.onboard-step__num{ font-family: var(--font-display); }
+@media (prefers-reduced-motion: reduce){ .turn-dot{ animation: none; } }
+.guess-row .bar>i{ background: var(--accent) !important; }
+.guess-row.win .bar>i{ background: var(--ok) !important; }
+</style>
 </head><body>
+<a class="skip-link" href="#main">Skip to content</a>
 <noscript><div role="alert" style="padding:16px;text-align:center">Enable JS — Vector Hoops needs JavaScript for Daily Court + Map</div></noscript>
 
 <nav class="site-nav" data-active="/play" aria-label="Vector Hoops site"></nav>
-<div class="main">
+<div id="main" class="main" role="main" style="padding-top:0">
 
-  <div class="card" id="game-header">
-    <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:flex-start">
-      <div style="flex:1 1 300px;min-width:0">
-        <div class="small-mono" style="display:flex;gap:6px;align-items:center;margin-bottom:6px"><span style="width:6px;height:6px;border-radius:50%;background:var(--verm);display:inline-block"></span> <span id="header-mode-label">DAILY COURT • 5×</span> <span id="mode-badge" class="pill" style="background:var(--blue);color:#fff">DAILY 5</span></div>
-        <h1 class="game-title hd" id="game-title">Find the <span style="background:var(--ink);color:#fff;padding:0 .18em;border-radius:6px">modern twin</span></h1>
-        <p class="game-subtitle" id="game-subtitle">Same 5 for everyone today. 6 tries each. Solve 1 to save streak.</p>
+  <header class="title-card game-head" id="game-header">
+    <div class="title-card__eyebrow"><span id="header-mode-label">DAILY COURT • 5× PAST → MODERN</span><span id="mode-badge" class="visually-hidden">DAILY 5</span></div>
+    <h1 class="title-card__title" id="game-title">Find the <em>modern twin</em></h1>
+    <p class="title-card__lede" id="game-subtitle">Same 5 for everyone today. 6 tries each. Solve 1 to save streak.</p>
+    <div class="game-head__bar">
+      <div class="game-head__side"><span class="pill" id="puzzle-pill">P#—</span><span class="pill" id="streak-pill">streak 0</span></div>
+      <div class="game-status-bar" id="game-status-bar">
+        <div class="label" style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;justify-content:center"><span id="puzzle-day-label">Today</span><span aria-hidden="true" style="opacity:.4">·</span><span id="game-phase-label">Loading court…</span></div>
+        <div class="progress-dots" id="guess-dots"></div>
       </div>
-      <div style="flex:0 0 auto;display:flex;flex-direction:column;gap:8px;align-items:flex-end">
-        <div style="display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end"><span class="pill" id="puzzle-pill">P#—</span><span class="pill" id="streak-pill">streak 0</span><button class="pill" id="btn-sound" type="button" title="Toggle sound" aria-label="Toggle sound" style="cursor:pointer">🔊</button></div>
-        <button class="pill" id="btn-howto" type="button">❓ How to play</button>
-      </div>
+      <div class="game-head__side game-head__side--end"><button class="pill" id="btn-howto" type="button">How to play</button><button class="pill" id="btn-sound" type="button" title="Toggle sound" aria-label="Toggle sound">🔊</button></div>
     </div>
-    <div class="game-status-bar" id="game-status-bar">
-      <div class="small-mono" style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"><span id="puzzle-day-label">Today</span><span style="opacity:.4">•</span><span id="game-phase-label">Loading court…</span></div>
-      <div class="progress-dots" id="guess-dots"></div>
-    </div>
-  </div>
+  </header>
 
   <div class="card" id="mode-selector">
-    <div class="small-mono" style="display:flex;justify-content:space-between;gap:8px;margin-bottom:8px"><span>Mode — daily court is default</span><span style="text-transform:none;opacity:.6">Random & Pack don't affect streak</span></div>
+    <div class="mode-head"><span class="label">Mode</span><span class="mode-head__note">Random and Pack games don’t affect your streak</span></div>
     <div class="mode-tabs" id="mode-tabs">
-      <button class="mode-tab is-active daily-active" data-mode="daily" type="button">🏀 Daily Court 5×</button>
-      <button class="mode-tab" data-mode="random" type="button">🎲 Random</button>
-      <button class="mode-tab" data-mode="pack1" data-pack-n="1" type="button">⚡ Solo 1</button>
-      <button class="mode-tab" data-mode="pack3" data-pack-n="3" type="button">🔥 Triple 3</button>
-      <button class="mode-tab" data-mode="pack5" data-pack-n="5" type="button">🏆 Full 5</button>
+      <button class="mode-tab is-active daily-active" data-mode="daily" type="button">Daily Court</button>
+      <button class="mode-tab" data-mode="random" type="button">Random</button>
+      <button class="mode-tab" data-mode="pack1" data-pack-n="1" type="button">Solo · 1</button>
+      <button class="mode-tab" data-mode="pack3" data-pack-n="3" type="button">Triple · 3</button>
+      <button class="mode-tab" data-mode="pack5" data-pack-n="5" type="button">Full · 5</button>
     </div>
     <div class="mode-desc" id="mode-desc">Daily Court: 5 fixed puzzles per day, same for all IPs. Refresh can't reroll. Play any order, progress saves per slot. Solve 3+ to keep bonus streak.</div>
   </div>
@@ -169,7 +240,7 @@ button,.input{min-height:44px}
     <div class="small-mono" style="margin-top:8px;opacity:.6;text-transform:none">Each slot is fixed for the day — same for everyone. No reroll on refresh. Solve 3 to stay incentivized, 5 to dominate leaderboard.</div>
   </div>
 
-  <div id="map-wrap"><canvas id="sky-canvas" width="640" height="380" aria-label="12,966 player-seasons as points in a rotatable 3D embedding map — your guesses draw as orange rings connected by a line to the past target's bullseye, showing how close each guess landed"></canvas><div id="target-badge" style="position:absolute;left:0;top:0;transform:translate(-50%,-140%);background:#F0E442;border:2.2px solid #1A150F;border-radius:999px;padding:5px 10px;font-family:ui-monospace,monospace;font-size:10px;font-weight:900;box-shadow:2px 2px 0 #1A150F;z-index:4;display:none;pointer-events:none;white-space:nowrap">★ TARGET</div><div id="map-overlay"><span class="chip" id="map-fact">12,966 seasons • ★ target past</span><span class="chip">orange rings = your guesses • line = distance • ◎ bullseye = target</span></div><div id="map-controls"><button class="chip pill" id="btn-pause" type="button">Pause</button><button class="chip pill" id="btn-reset" type="button">Reset</button></div><div id="map-legend"><div style="font-family:var(--mono);font-size:7.5px;letter-spacing:.1em;text-transform:uppercase;font-weight:900;opacity:.55;margin-bottom:4px">Map</div><div style="font-family:var(--mono);font-size:9px">Drag to orbit • ◎ bullseye = past target (auto-centered)</div></div><div id="hover-tip"></div></div>
+  <div id="map-wrap"><canvas id="sky-canvas" width="640" height="380" aria-label="12,966 player-seasons as points in a rotatable 3D embedding map — your guesses draw as orange rings connected by a line to the past target's bullseye, showing how close each guess landed"></canvas><div id="target-badge" style="position:absolute;left:0;top:0;transform:translate(-50%,-140%);background:var(--accent-wash);color:var(--accent);border:1px solid var(--line-2);border-radius:999px;padding:5px 10px;font-family:ui-monospace,monospace;font-size:10px;font-weight:900;box-shadow:none;z-index:4;display:none;pointer-events:none;white-space:nowrap">★ TARGET</div><div id="map-overlay"><span class="chip" id="map-fact">12,966 seasons • ★ target past</span><span class="chip">orange rings = your guesses • line = distance • ◎ bullseye = target</span></div><div id="map-controls"><button class="chip pill" id="btn-pause" type="button">Pause</button><button class="chip pill" id="btn-reset" type="button">Reset</button></div><div id="map-legend"><div style="font-family:var(--mono);font-size:7.5px;letter-spacing:.1em;text-transform:uppercase;font-weight:900;opacity:.55;margin-bottom:4px">Map</div><div style="font-family:var(--mono);font-size:9px">Drag to orbit • ◎ bullseye = past target (auto-centered)</div></div><div id="hover-tip"></div></div>
 
   <!-- PACK BATTLE v2 Production UI -->
   <div class="card" id="pack-progress" style="display:none;"></div>
@@ -179,16 +250,16 @@ button,.input{min-height:44px}
   <div class="card" id="past-card" style="border-width:2.5px">
     <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:flex-start">
       <div style="display:flex;gap:12px;align-items:flex-start;flex:1 1 280px;min-width:0">
-        <div id="past-avatar" style="width:64px;height:64px;flex:0 0 64px;background:#FFF6D5;border:2px solid #1A150F;border-radius:12px;box-shadow:2px 2px 0 #1A150F;image-rendering:pixelated;overflow:hidden;display:flex;align-items:center;justify-content:center"></div>
+        <div id="past-avatar" style="width:64px;height:64px;flex:0 0 64px;background:#FFF6D5;border:1px solid var(--line-2);border-radius:12px;box-shadow:none;image-rendering:pixelated;overflow:hidden;display:flex;align-items:center;justify-content:center"></div>
         <div style="flex:1;min-width:0">
           <div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin-bottom:8px">
             <span class="pill pill-yellow">TARGET • PAST ALL-STAR</span>
-            <span class="pill" id="past-arch-pill" style="background:#fff">—</span>
+            <span class="pill" id="past-arch-pill" style="background:var(--surface)">—</span>
             <span class="pill" id="past-slot-pill">Slot 1/5</span>
             <span id="past-xyz" class="small-mono" style="display:none"></span>
           </div>
           <h2 id="past-name" class="hd" style="margin:0 0 6px;font-size:clamp(24px,5vw,32px);line-height:1">Loading…</h2>
-          <div id="past-meta" class="small-mono" style="text-transform:none;color:#444;line-height:1.45"></div>
+          <div id="past-meta" class="small-mono" style="text-transform:none;color:var(--fg-2);line-height:1.45"></div>
           <div class="turn-indicator" style="margin-top:10px"><span class="turn-dot"></span><span id="turn-text">Game starts now — 6 guesses to find modern twin</span></div>
           <div id="past-closest-hint" class="small-mono" style="margin-top:10px;text-transform:none;display:none"></div>
         </div>
@@ -213,7 +284,7 @@ button,.input{min-height:44px}
 <div id="onboarding-backdrop" class="vh-sheet-backdrop" hidden>
   <div class="vh-sheet" role="dialog" aria-modal="true"><div class="vh-sheet__handle"></div>
     <div class="vh-sheet__head"><h2 class="vh-sheet__title">Daily Court — 5× + Pack Battle</h2><button class="vh-sheet__close" id="btn-onboard-close" type="button">✕</button></div>
-    <div class="small-mono" style="margin-bottom:8px;color:#5A5248">5 puzzles daily + viral packs</div>
+    <div class="small-mono" style="margin-bottom:8px;color:var(--fg-2)">5 puzzles daily + viral packs</div>
     <div class="onboard-steps">
       <div class="onboard-step"><span class="onboard-step__num">1</span><div><b>Daily Court: 5 fixed past All-Stars per day, same for everyone</b><p>Deterministic from date: hash(date+slot). Refresh gives same 5. Guesses saved per slot in localStorage. Can't be rerolled.</p></div></div>
       <div class="onboard-step"><span class="onboard-step__num">2</span><div><b>Pack Battle: 1, 3 or 5 random All-Stars — same link for friends</b><p><code>?pack=672-123-456</code> = identical pack for everyone. Share link, friends get same stars. Add <code>&s=2-3-0</code> to include your scores (0=fail). Battle: who solves more in fewer guesses? Streak-safe, persists through refresh.</p></div></div>
@@ -227,7 +298,7 @@ button,.input{min-height:44px}
 <script src="assets/error-boundary.js"></script>
 <script src="assets/keyboard-a11y.js"></script>
 <script src="assets/site-nav.js" defer></script>
-<script src="assets/pwa-install.js"></script><script src="assets/audio.js"></script><script src="assets/timesfm-forecast.js?v=2"></script><script src="assets/pixel-avatar.js?v=49"></script><script src="assets/team-logo.js?v=55"></script><script src="assets/viral-share.js"></script><script src="assets/past-modern-game.js?v=56"></script>
+<script src="assets/pwa-install.js"></script><script src="assets/audio.js"></script><script type="module" src="assets/timesfm-forecast.js?v=3"></script><script src="assets/pixel-avatar.js?v=49"></script><script src="assets/team-logo.js?v=55"></script><script src="assets/viral-share.js"></script><script src="assets/past-modern-game.js?v=56"></script>
 <script>
 (function(){
   const $=s=>document.querySelector(s);
@@ -302,7 +373,7 @@ button,.input{min-height:44px}
   }
   async function mountGameMap(){
     try{
-      const mod = await import('./assets/shared-map.js?v=58');
+      const mod = await import('./assets/shared-map.js?v=59');
       const canvasEl = document.querySelector('#sky-canvas');
       if(!canvasEl) return;
       const st = (window.VHPastModern && VHPastModern.state) ? VHPastModern.state() : null;
@@ -310,7 +381,7 @@ button,.input{min-height:44px}
       if(st && st.target && typeof st.target.i==='number'){ tid = st.target.i; _targetIdCached = tid; }
       // pass full guess objects (idx/sim/rank), not just ids, so a resumed
       // in-progress slot still shows the distance line + label immediately
-      sharedMapApi = await mod.mountSharedMap(canvasEl, { highlightId: tid>=0?tid:null, guessIds: (G.guesses||[]).slice(), dark:false });
+      sharedMapApi = await mod.mountSharedMap(canvasEl, { highlightId: tid>=0?tid:null, guessIds: (G.guesses||[]).slice(), dark:true });
       console.log('shared-map mounted play', sharedMapApi?sharedMapApi.getCount():0);
       window._sharedMapApi = sharedMapApi;
     }catch(e){ console.warn('mountGameMap fail',e); }
@@ -635,7 +706,7 @@ button,.input{min-height:44px}
     const hasChallenger = chall.length>0;
 
     // header
-    let header = `<div class="pack-header"><div><div class="small-mono" style="display:flex;gap:6px;align-items:center"><span class="pill" style="background:var(--ink);color:#fff">📦 PACK BATTLE</span><span class="pill pill-yellow">${size} PACK</span><span class="pill">${solved}/${size} solved • ${idx+1}/${size}</span>${hasChallenger?`<span class="pill pill-blue">vs Friend ${chall.filter(s=>s>0).length}/${size}</span>`:''}</div><h3 class="hd" style="margin:6px 0 0;font-size:20px">Pack ${size===1?'Solo ⚡':size===3?'Triple 🔥':'Full Court 🏀'} — ${progress}/${size} played</h3><div style="font-size:12px;color:#555">Code <code>${ps.code.slice(0,42)}</code> • Same link = same All-Stars for friends • Refresh-proof</div></div><div style="display:flex;gap:6px;flex-wrap:wrap"><button class="pill" id="btn-pack-copy-link" type="button">📋 Copy pack link</button><button class="pill" id="btn-pack-abandon" type="button">✕ Exit pack</button></div></div>`;
+    let header = `<div class="pack-header"><div><div class="small-mono" style="display:flex;gap:6px;align-items:center"><span class="pill" style="background:var(--accent);color:var(--on-accent)">📦 PACK BATTLE</span><span class="pill pill-yellow">${size} PACK</span><span class="pill">${solved}/${size} solved • ${idx+1}/${size}</span>${hasChallenger?`<span class="pill pill-blue">vs Friend ${chall.filter(s=>s>0).length}/${size}</span>`:''}</div><h3 class="hd" style="margin:6px 0 0;font-size:20px">Pack ${size===1?'Solo ⚡':size===3?'Triple 🔥':'Full Court 🏀'} — ${progress}/${size} played</h3><div style="font-size:12px;color:var(--fg-2)">Code <code>${ps.code.slice(0,42)}</code> • Same link = same All-Stars for friends • Refresh-proof</div></div><div style="display:flex;gap:6px;flex-wrap:wrap"><button class="pill" id="btn-pack-copy-link" type="button">📋 Copy pack link</button><button class="pill" id="btn-pack-abandon" type="button">✕ Exit pack</button></div></div>`;
 
     // dots
     let dotsHtml = `<div class="progress-dots" style="margin:8px 0 10px">`;
@@ -773,10 +844,10 @@ button,.input{min-height:44px}
       const challScore = (ps.challengerScores||[])[i];
       const you = r ? (r.won ? `✅ ${r.count}/6 — ${r.guesses.find(g=>g.rank===0)?.name || ''}` : `❌ ${r.count}/6`) : '—';
       const friend = (hasChall && typeof challScore==='number') ? (challScore>0?`✅ ${challScore}/6`:`❌`) : '—';
-      return `<div style="display:flex;justify-content:space-between;gap:8px;border-bottom:1px dashed #eee;padding:6px 0"><span><b>${i+1}. ${e.n} ${e.s}</b></span><span style="font-family:var(--mono);font-size:11px">${you} ${hasChall?`| Friend: ${friend}`:''}</span></div>`;
+      return `<div style="display:flex;justify-content:space-between;gap:8px;border-bottom:1px dashed var(--line);padding:6px 0"><span><b>${i+1}. ${e.n} ${e.s}</b></span><span style="font-family:var(--mono);font-size:11px">${you} ${hasChall?`| Friend: ${friend}`:''}</span></div>`;
     }).join('');
 
-    el.innerHTML=`<div><div class="small-mono" style="display:flex;gap:6px;align-items:center"><span class="pill" style="background:var(--ink);color:#fff">PACK FINAL</span><span class="pill pill-yellow">${solved}/${total} solved</span><span class="pill">${totalGuesses} guesses • avg ${avg}</span></div><h3 class="hd" style="margin:8px 0 6px;font-size:24px">${title}</h3><div style="font-size:13px;line-height:1.5">Total ${totalGuesses} guesses • Avg ${avg} overall • Avg win ${avgWin} • Code ${ps.code.slice(0,48)}</div>${battleBlock}<div style="margin-top:10px">${rows}</div><div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px"><button class="btn btn-primary" id="btn-pack-share-img">📸 Share Pack Image</button><button class="btn" id="btn-pack-copy-battle">📋 Copy Battle Link (with scores)</button><button class="btn" id="btn-pack-replay">🔁 Replay Same Pack</button><button class="btn" id="btn-pack-new" type="button">🎲 New ${total} Pack</button><button class="btn" id="btn-pack-daily">🏀 Daily Court</button></div></div>`;
+    el.innerHTML=`<div><div class="small-mono" style="display:flex;gap:6px;align-items:center"><span class="pill" style="background:var(--accent);color:var(--on-accent)">PACK FINAL</span><span class="pill pill-yellow">${solved}/${total} solved</span><span class="pill">${totalGuesses} guesses • avg ${avg}</span></div><h3 class="hd" style="margin:8px 0 6px;font-size:24px">${title}</h3><div style="font-size:13px;line-height:1.5">Total ${totalGuesses} guesses • Avg ${avg} overall • Avg win ${avgWin} • Code ${ps.code.slice(0,48)}</div>${battleBlock}<div style="margin-top:10px">${rows}</div><div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px"><button class="btn btn-primary" id="btn-pack-share-img">📸 Share Pack Image</button><button class="btn" id="btn-pack-copy-battle">📋 Copy Battle Link (with scores)</button><button class="btn" id="btn-pack-replay">🔁 Replay Same Pack</button><button class="btn" id="btn-pack-new" type="button">🎲 New ${total} Pack</button><button class="btn" id="btn-pack-daily">🏀 Daily Court</button></div></div>`;
 
     el.querySelector('#btn-pack-share-img')?.addEventListener('click', async()=>{
       const ps2=VHPastModern.getPackState();
@@ -863,7 +934,7 @@ button,.input{min-height:44px}
     const hon=st.honors[past.n+'|'+past.s]||{}; const allNba=hon.allNbaTeam? 'All-NBA '+hon.allNbaTeam : '';
     let teamAbbr=null; try{ teamAbbr=getTeamAbbr(past.n, past.s); }catch{}
     if(teamAbbr){
-      $('#past-meta').innerHTML=(hon.asg?'All-Star ':'')+(allNba? allNba+' • ' : '')+archLabel+` • ${past.s} • `+modeLabel+` • <span style="display:inline-flex;align-items:center;gap:6px"><span class="pill" style="background:var(--ink);color:#fff">${teamAbbr}</span> finished with</span>`;
+      $('#past-meta').innerHTML=(hon.asg?'All-Star ':'')+(allNba? allNba+' • ' : '')+archLabel+` • ${past.s} • `+modeLabel+` • <span style="display:inline-flex;align-items:center;gap:6px"><span class="pill" style="background:var(--accent);color:var(--on-accent)">${teamAbbr}</span> finished with</span>`;
     } else {
       $('#past-meta').innerHTML=(hon.asg?'All-Star ':'')+(allNba? allNba+' • ' : '')+archLabel+' • '+past.s+' • '+modeLabel;
     }
@@ -890,9 +961,9 @@ button,.input{min-height:44px}
       const ps=VHPastModern.getPackState();
       $('#puzzle-pill').textContent=`PACK ${ps.index+1}/${ps.size}`;
       $('#mode-badge').textContent=`PACK ${ps.size}`;
-      $('#mode-badge').style.background='var(--ink)';
+      
       $('#header-mode-label').textContent=`PACK BATTLE • ${ps.size} × PAST → MODERN`;
-      $('#game-title').innerHTML=`Pack Battle <span style="background:var(--ink);color:#fff;padding:0 .18em;border-radius:6px">${ps.size} cards</span>`;
+      $('#game-title').innerHTML=`Pack Battle — <em>${ps.size} cards</em>`;
       $('#game-subtitle').textContent=`${ps.size} past All-Stars, same link for friends. Solve 1/6 each. Share with scores to battle. Refresh-proof save.`;
       $('#mode-desc').textContent=`Pack Battle: ${ps.size} fixed past All-Stars from link ${ps.code.slice(0,36)}... — same for everyone with link. Progress saves locally, streak-safe. Share with &s= scores to challenge friends.`;
     } else {
@@ -928,7 +999,7 @@ button,.input{min-height:44px}
         const div=document.createElement('div'); div.className='guess-row'+(isWin?' win':'');
         // pixel avatar for each guess resembling player
         const avatarId = `guess-av-${idx}-${Date.now()}`;
-        div.innerHTML=`<div style="display:flex;gap:10px;align-items:center"><div id="${avatarId}" style="width:36px;height:36px;flex:0 0 36px;background:#FFF6D5;border:1.5px solid #1A150F;border-radius:8px;overflow:hidden;image-rendering:pixelated"></div><div style="flex:1;min-width:0"><div style="display:flex;justify-content:space-between;gap:8px;align-items:center"><b>${idx+1}. ${safeName} ${safeSeason}</b><span class="pill" style="${isWin?'background:var(--green);color:#fff':''}">${simPct}% • ${rankLabel}</span></div><div class="small-mono" style="text-transform:none;margin-top:4px;color:#444">${warm} • ${archName}</div><div class="bar" style="margin-top:6px"><i style="width:${Math.max(4,Math.min(100,parseFloat(simPct)||0))}%;background:${isWin?'#009E73':'#0072B2'}"></i></div></div></div>`;
+        div.innerHTML=`<div style="display:flex;gap:10px;align-items:center"><div id="${avatarId}" style="width:36px;height:36px;flex:0 0 36px;background:#FFF6D5;border:1px solid var(--line-2);border-radius:8px;overflow:hidden;image-rendering:pixelated"></div><div style="flex:1;min-width:0"><div style="display:flex;justify-content:space-between;gap:8px;align-items:center"><b>${idx+1}. ${safeName} ${safeSeason}</b><span class="pill" style="${isWin?'background:var(--green);color:#fff':''}">${simPct}% • ${rankLabel}</span></div><div class="small-mono" style="text-transform:none;margin-top:4px;color:var(--fg-2)">${warm} • ${archName}</div><div class="bar" style="margin-top:6px"><i style="width:${Math.max(4,Math.min(100,parseFloat(simPct)||0))}%;background:${isWin?'#009E73':'#0072B2'}"></i></div></div></div>`;
         cont.appendChild(div);
         // mount avatar after append
         try{
@@ -1455,6 +1526,9 @@ button,.input{min-height:44px}
   main().catch(e=>{ console.error(e); const inv=$('#pack-invalid'); if(inv){ inv.style.display='block'; inv.innerHTML=`<div class="small-mono" style="color:var(--verm)">Error</div><h3>${e.message}</h3><pre style="white-space:pre-wrap;font-size:11px">${e.stack||''}</pre>`; } });
 })();
 </script>
-<footer class="site-footer"><div class="site-footer__links"><a href="/play">Play</a><a href="/model">Lab</a><a href="/methods">Methods</a><a href="/players">Players</a><a href="https://github.com/jcdavis131/vector-hoops" target="_blank" rel="noopener">GitHub</a></div><div class="site-footer__attribution">Every number recomputable from stats.nba.com · dumbmodel.com — free, no account, no trackers</div></footer>
+<footer class="site-footer">
+  <div class="site-footer__links"><a href="/play">Play</a><a href="/players">Players</a><a href="/trends">Trends</a><a href="/model">Lab</a><a href="/methods">Methods</a><a href="https://github.com/jcdavis131/vector-hoops" rel="noopener">Source</a></div>
+  <p class="site-footer__attribution">Every number recomputable from stats.nba.com · A <a href="https://dumbmodel.com">dumbmodel</a> project</p>
+</footer>
 <script>if('serviceWorker' in navigator){window.addEventListener('load',()=>{navigator.serviceWorker.register('/sw.js').catch(()=>{})})}</script>
 </body></html>

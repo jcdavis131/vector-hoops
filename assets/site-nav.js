@@ -1,37 +1,50 @@
-/* Shared top navigation — mount on <nav class="site-nav" data-active="/path"> */
+/* Shared top navigation — mount on <nav class="site-nav" data-active="/path">
+ * Three columns on one axis: brand · sections · call to action.
+ */
 (function (global) {
   'use strict';
 
   var LINKS = [
-    { href: '/', label: 'Map', title: 'Human map — 12,966 player-seasons, where you stood' },
-    { href: '/play', label: 'Play', title: 'Daily Court 5× Past→Modern + Pack Battle' },
-    { href: '/players', label: 'Players', title: 'Player dossiers — where you stood, how you grew' },
-    { href: '/model', label: 'Lab', title: 'MTNN Training Cockpit + Architecture + where you\'re headed forecast' },
-    { href: '/trends', label: 'Trends', title: 'Trend Research — 30 seasons drift + forecast' },
-    { href: '/methods', label: 'Methods', title: 'Every number recomputable — sources + math' },
+    { href: '/', label: 'Atlas', title: 'The map of 12,966 player-seasons' },
+    { href: '/play', label: 'Play', title: 'Daily Court: five past All-Stars, find each modern twin' },
+    { href: '/players', label: 'Players', title: 'Directory, skill profiles and leaderboards' },
+    { href: '/model', label: 'Lab', title: 'How the embedding model is trained and evaluated' },
+    { href: '/trends', label: 'Trends', title: 'Thirty seasons of league drift' },
+    { href: '/methods', label: 'Methods', title: 'Sources, features and the maths behind every number' }
   ];
+
+  // Centre circle of a court, seen from above: the site's mark.
+  var MARK = '<svg class="site-nav__mark" viewBox="0 0 24 24" aria-hidden="true" focusable="false">' +
+    '<circle cx="12" cy="12" r="10.25" fill="none" stroke="currentColor" stroke-width="1.5"/>' +
+    '<line x1="1.75" y1="12" x2="22.25" y2="12" stroke="currentColor" stroke-width="1.5"/>' +
+    '<circle cx="12" cy="12" r="3.25" fill="currentColor"/></svg>';
+
+  function isActive(active, href) {
+    if (active === href) return true;
+    if (active === '/leaderboard' && href === '/play') return true;
+    if (active === '/everyday' && href === '/play') return true;
+    if (active === '/teams' && href === '/players') return true;
+    return false;
+  }
 
   function mount() {
     var nav = document.querySelector('.site-nav');
-    if (!nav) return;
+    if (!nav || nav.getAttribute('data-mounted') === '1') return;
     var active = nav.getAttribute('data-active') || '';
     var linksHtml = LINKS.map(function (l) {
-      var isActive = active === l.href ||
-        (active === '/players' && l.href === '/players') ||
-        (active === '/trends' && l.href === '/trends') ||
-        (active === '/model' && l.href === '/model') ||
-        (active === '/methods' && l.href === '/methods') ||
-        (active === '/leaderboard' && l.href === '/play') ||
-        (active === '/teams' && l.href === '/players');
-      return '<a class="site-nav__link' + (isActive ? ' is-active' : '') + '"' +
-        ' href="' + l.href + '"' +
-        (l.title ? ' title="' + l.title + '"' : '') +
-        (isActive ? ' aria-current="page"' : '') +
-        '>' + l.label + '</a>';
+      var on = isActive(active, l.href);
+      return '<a class="site-nav__link' + (on ? ' is-active' : '') + '" href="' + l.href + '" title="' + l.title + '"' +
+        (on ? ' aria-current="page"' : '') + '>' + l.label + '</a>';
     }).join('');
+    var end = active === '/play'
+      ? '<span class="site-nav__meta">1996–97 → 2025–26</span>'
+      : '<span class="site-nav__meta">12,966 seasons</span><a class="site-nav__cta" href="/play">Play today</a>';
+    if (!nav.getAttribute('aria-label')) nav.setAttribute('aria-label', 'Primary');
     nav.innerHTML =
-      '<a class="site-nav__brand" href="/">VECTOR<span class="site-nav__accent">HOOPS</span></a>' +
-      '<div class="site-nav__links">' + linksHtml + '</div>';
+      '<a class="site-nav__brand" href="/" aria-label="Vector Hoops, home">' + MARK + '<span>Vector<span class="site-nav__accent"> Hoops</span></span></a>' +
+      '<div class="site-nav__links">' + linksHtml + '</div>' +
+      '<div class="site-nav__end">' + end + '</div>';
+    nav.setAttribute('data-mounted', '1');
   }
 
   if (document.readyState === 'loading') {

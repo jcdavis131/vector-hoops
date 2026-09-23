@@ -1,111 +1,79 @@
 {
-    "background_color": "#FEFCF9",
-    "categories": [
-        "sports",
-        "games",
-        "education",
-        "business"
-    ],
-    "description": "One player-season among 12,966 \u2014 three peers who play most like them, full map, honest signals. Built for humans, not metrics.",
-    "dir": "ltr",
-    "display": "standalone",
-    "display_override": [
-        "standalone",
-        "minimal-ui",
-        "browser"
-    ],
-    "icons": [
-        {
-            "purpose": "any",
-            "sizes": "192x192",
-            "src": "/assets/icon-192.png",
-            "type": "image/png"
-        },
-        {
-            "purpose": "any",
-            "sizes": "512x512",
-            "src": "/assets/icon-512.png",
-            "type": "image/png"
-        },
-        {
-            "purpose": "maskable",
-            "sizes": "192x192",
-            "src": "/assets/icon-192.png",
-            "type": "image/png"
-        },
-        {
-            "purpose": "maskable",
-            "sizes": "512x512",
-            "src": "/assets/icon-512.png",
-            "type": "image/png"
-        }
-    ],
-    "id": "/?pov=owner",
-    "lang": "en",
-    "lcg": {
-        "daily": 20260813,
-        "five": [
-            11205,
-            19448,
-            14209,
-            11701,
-            18524
-        ],
-        "idx": 3820,
-        "note": "same-link-same-stars ?daily=YYYYMMDD&n=1/3/5 Solo1 Triple3 Full5 glibc L(s)=(s*1103515245+12345)&0x7fffffff",
-        "seed": 189831298,
-        "triple": [
-            11205,
-            19448,
-            14209
-        ]
+  "id": "/?pov=owner",
+  "name": "Vector Hoops — An atlas of NBA player-seasons",
+  "short_name": "Hoops",
+  "description": "12,966 NBA player-seasons placed by how they played. Pick one and see the three that play most alike, or play the Daily Court.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "display_override": [
+    "standalone",
+    "minimal-ui",
+    "browser"
+  ],
+  "orientation": "any",
+  "background_color": "#07090C",
+  "theme_color": "#07090C",
+  "lang": "en",
+  "dir": "ltr",
+  "categories": [
+    "sports",
+    "games",
+    "education"
+  ],
+  "prefer_related_applications": false,
+  "icons": [
+    {
+      "src": "/assets/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
     },
-    "name": "Vector Hoops \u2014 Who plays like this?",
-    "orientation": "any",
-    "pov": "owner",
-    "prefer_related_applications": false,
-    "provenance": {
-        "bad": 0,
-        "badge": "59 hashes 7/7 PASS",
-        "ok": 7,
-        "total": 7,
-        "total_hashes": 59
+    {
+      "src": "/assets/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
     },
-    "pwa": {
-        "core": 20,
-        "dpr": 1,
-        "lod": "8000/4000",
-        "momentum": 0.94,
-        "offline": "13k",
-        "v": "v67",
-        "void": "#080A0F"
+    {
+      "src": "/assets/icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
     },
-    "scope": "/",
-    "screenshots": [
+    {
+      "src": "/assets/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Daily Court",
+      "short_name": "Play",
+      "description": "Five past All-Stars, find each modern twin",
+      "url": "/play",
+      "icons": [
         {
-            "form_factor": "wide",
-            "label": "12,966 player-seasons as a human map \u2014 one season, three peers, full map",
-            "sizes": "1200x630",
-            "src": "/assets/og-embed.png",
-            "type": "image/png"
+          "src": "/assets/icon-192.png",
+          "sizes": "192x192",
+          "type": "image/png"
         }
-    ],
-    "short_name": "Hoops",
-    "shortcuts": [
+      ]
+    },
+    {
+      "name": "Players",
+      "short_name": "Players",
+      "description": "Directory, skill profiles and leaderboards",
+      "url": "/players",
+      "icons": [
         {
-            "description": "Daily Guess + Insight \u2014 Wordle for NBA, 6 tries, 48-d cosine, cross-era twins \u2014 same-link-same-stars ?daily=YYYYMMDD&n=1/3/5",
-            "icons": [
-                {
-                    "sizes": "192x192",
-                    "src": "/assets/icon-192.png",
-                    "type": "image/png"
-                }
-            ],
-            "name": "Play Daily \u2014 6 guesses",
-            "short_name": "Daily",
-            "url": "/play?daily=20260813&n=3"
+          "src": "/assets/icon-192.png",
+          "sizes": "192x192",
+          "type": "image/png"
         }
-    ],
-    "start_url": "/?pov=owner",
-    "theme_color": "#FEFCF9"
+      ]
+    }
+  ]
 }

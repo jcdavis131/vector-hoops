@@ -7,6 +7,8 @@
  * here since this page never loads game.js.
  */
 (function () {
+  function __tok(n,f){try{var v=getComputedStyle(document.documentElement).getPropertyValue(n).trim();return v||f;}catch(e){return f;}}
+
   'use strict';
 
   var DRIFT_URL = 'assets/drift.json';
@@ -15,12 +17,12 @@
   var EMERGENCE_URL = 'assets/archetype_emergence.json';
   var SVG_NS = 'http://www.w3.org/2000/svg';
 
-  var ORANGE_HEX = '#eb6834';
+  var ORANGE_HEX = __tok('--accent','#eb6834');
   var BLUE_HEX = '#2a78d6';
-  var INK = '#111111';
-  var INK_MUTED = '#898781';
-  var HAIRLINE = '#e1e0d9';
-  var SURFACE_HEX = '#ffffff';
+  var INK = __tok('--fg','#111111');
+  var INK_MUTED = __tok('--fg-3','#898781');
+  var HAIRLINE = __tok('--line-2','#e1e0d9');
+  var SURFACE_HEX = __tok('--surface','#ffffff');
   var HOT_HEX = '#006300';
   var COLD_HEX = '#d03b3b';
 
@@ -1137,10 +1139,10 @@
     var no = claims.filter(function(c){return !c.supported;});
     var sent = yes.map(function(c){ return escapeHtml(c.detail); }).slice(0,4).join(' · ');
     var noSent = no.map(function(c){ return escapeHtml(c.detail); }).join(' ');
-    host.innerHTML = '<div class="season-story" style="box-shadow:1.5px 1.5px 0 var(--ink);padding:12px 14px">' +
+    host.innerHTML = '<div class="season-story" style="box-shadow:none;padding:12px 14px">' +
       '<p class="story-para"><strong>Why we think it emerged:</strong> ' + sent + '.</p>' +
-      (noSent ? '<p class="story-para" style="color:#6B665E"><strong>The holdout:</strong> ' + noSent + '</p>' : '') +
-      '<p class="story-para" style="margin-top:8px;font-size:11px;color:#6B665E">6 of 7 checks passed — not a clean monotonic shrink, but spacing roles (3-and-D + stretch big) grew from 6% → 11% while traditional glass-big fell 30%→25%.</p>' +
+      (noSent ? '<p class="story-para" style="color:var(--fg-3)"><strong>The holdout:</strong> ' + noSent + '</p>' : '') +
+      '<p class="story-para" style="margin-top:8px;font-size:11px;color:var(--fg-3)">6 of 7 checks passed — not a clean monotonic shrink, but spacing roles (3-and-D + stretch big) grew from 6% → 11% while traditional glass-big fell 30%→25%.</p>' +
       '</div>';
   }
 
@@ -1153,7 +1155,7 @@
       var tops = t.novelArchetypes.slice(0,2).map(function(a){return escapeHtml(truncateName(a.name,28))+' '+Math.round(a.share*100)+'%';}).join(', ');
       return '<p class="story-para" style="font-size:12px"><span class="arch-era-kicker">' + escapeHtml(t.era) + '</span><span style="margin-left:6px">' + tops + (t.novelArchetypes.length>2 ? ' +'+(t.novelArchetypes.length-2)+' more novel types' : '') + ' — new cluster geometry appeared.</span></p>';
     }).join('');
-    host.innerHTML = '<div class="season-story" style="margin-top:8px;box-shadow:1.5px 1.5px 0 var(--ink)"><div style="font-family:var(--mono);font-size:10px;font-weight:800;text-transform:uppercase;margin-bottom:4px">Mid/post-2000s novel geometry</div>' + html + '</div>';
+    host.innerHTML = '<div class="season-story" style="margin-top:8px;box-shadow:none"><div style="font-family:var(--mono);font-size:10px;font-weight:800;text-transform:uppercase;margin-bottom:4px">Mid/post-2000s novel geometry</div>' + html + '</div>';
   }
 
   function showEmergenceError(verdictHost, roleHost, rollHost, claimsHost, badgesHost) {
