@@ -92,7 +92,7 @@
     const topF = fusedProbs? fusedProbs.map((p,i)=>({i,p,name:names[i]})).sort((x,y)=>y.p-x.p).slice(0,3): [];
 
     containerEl.innerHTML='';
-    containerEl.style.cssText='display:flex;flex-direction:column;gap:10px;padding:12px;border:2.2px solid #1A150F;border-radius:12px;background:#FFFEF7;box-shadow:3px 3px 0 #1A150F';
+    containerEl.style.cssText='display:flex;flex-direction:column;gap:10px;padding:12px;border:1px solid var(--line-2);border-radius:12px;background:var(--surface);box-shadow:none';
 
     const aLine = aAss? `${aAss.mtnnGlobalName} (${aAss.gameClusterName}) · era ${aAss.era}: ${aAss.eraNativeName}` : '—';
     const bLine = bAss? `${bAss.mtnnGlobalName} (${bAss.gameClusterName}) · era ${bAss.era}: ${bAss.eraNativeName}` : '—';
@@ -100,13 +100,13 @@
     let html=`
       <div style="font-family:ui-monospace,monospace;font-size:10px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;opacity:.7">Archetype Bridge — full MTNN v5 8-way head</div>
       <div style="display:grid;grid-template-columns:1fr auto 1fr;gap:8px;align-items:start">
-        <div style="padding:8px;border:1.6px solid #1A150F;border-radius:10px;background:#fff"><b style="font-size:13px">${topA?topA.name:'A'}</b><div style="font-size:11px;margin-top:4px">${aLine}</div><div style="margin-top:6px;font-size:10px">${topA? (topA.p*100).toFixed(0)+'% '+topA.name : ''}</div></div>
+        <div style="padding:8px;border:1px solid var(--line-2);border-radius:10px;background:var(--surface)"><b style="font-size:13px">${topA?topA.name:'A'}</b><div style="font-size:11px;margin-top:4px">${aLine}</div><div style="margin-top:6px;font-size:10px">${topA? (topA.p*100).toFixed(0)+'% '+topA.name : ''}</div></div>
         <div style="font-size:22px;font-weight:900;padding-top:18px">+</div>
-        <div style="padding:8px;border:1.6px solid #D55E00;border-radius:10px;background:#fff;color:#D55E00"><b style="font-size:13px">${topB?topB.name:'B'}</b><div style="font-size:11px;margin-top:4px">${bLine}</div><div style="margin-top:6px;font-size:10px">${topB? (topB.p*100).toFixed(0)+'% '+topB.name : ''}</div></div>
+        <div style="padding:8px;border:1.6px solid #D55E00;border-radius:10px;background:var(--surface);color:#D55E00"><b style="font-size:13px">${topB?topB.name:'B'}</b><div style="font-size:11px;margin-top:4px">${bLine}</div><div style="margin-top:6px;font-size:10px">${topB? (topB.p*100).toFixed(0)+'% '+topB.name : ''}</div></div>
       </div>
     `;
     if(topF.length){
-      html+=`<div style="margin-top:2px;padding:10px;border:2.2px dashed #1A150F;border-radius:10px;background:#fff"><div style="font-family:ui-monospace,monospace;font-size:11px;font-weight:900">= Fused predicts: ${topF.map(f=> `${(f.p*100).toFixed(0)}% ${f.name}`).join(' + ')}</div>
+      html+=`<div style="margin-top:2px;padding:10px;border:1px dashed var(--line-2);border-radius:10px;background:var(--surface)"><div style="font-family:ui-monospace,monospace;font-size:11px;font-weight:900">= Fused predicts: ${topF.map(f=> `${(f.p*100).toFixed(0)}% ${f.name}`).join(' + ')}</div>
       <div style="display:flex;gap:4px;margin-top:6px">${topF.map(f=> `<span style="flex:${f.p};height:8px;border-radius:999px;background:${PAL[f.i%PAL.length]}" title="${f.name} ${(f.p*100).toFixed(0)}%"></span>`).join('')}</div>
       <div style="font-size:11px;line-height:1.45;margin-top:8px">Why bridge matters: <b>Archetype centroids 8×48</b> in mtnn_meta.json are L2 means of real seasons. Fusion <i>(embA+embB)/2 normalized</i> lives between A and B centroids — nearest real season reveals latent type that pure box score misses. Example: 68% Playmaking+Steals +22% Shot Volume = crafty volume shooter (Haliburton-type).</div></div>`;
     }
@@ -131,7 +131,7 @@
     ].forEach(ch=>{
       const el=document.createElement('span');
       el.textContent=ch.label;
-      el.style.cssText=`min-height:32px;display:inline-flex;align-items:center;padding:4px 10px;border:1.6px solid ${ch.color};border-radius:999px;background:#fff;font-family:ui-monospace,monospace;font-size:10.5px;font-weight:800;box-shadow:1.5px 1.5px 0 #1A150F`;
+      el.style.cssText=`min-height:32px;display:inline-flex;align-items:center;padding:4px 10px;border:1.6px solid ${ch.color};border-radius:999px;background:var(--surface);font-family:ui-monospace,monospace;font-size:10.5px;font-weight:800;box-shadow:none`;
       el.title=ch.title||ch.label;
       containerEl.appendChild(el);
     });

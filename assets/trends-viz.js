@@ -2,6 +2,8 @@
  * Rotation gauge + ranked stat bars + 2D compass tilt. No 3D.
  */
 (function () {
+  function __tok(n,f){try{var v=getComputedStyle(document.documentElement).getPropertyValue(n).trim();return v||f;}catch(e){return f;}}
+
   'use strict';
 
   var SVG_NS = 'http://www.w3.org/2000/svg';
@@ -36,13 +38,13 @@
     { label: 'Latest', to: '2025-26' }
   ];
 
-  var ORANGE = '#eb6834';
+  var ORANGE = __tok('--accent','#eb6834');
   var BLUE = '#2a78d6';
   var GREEN = '#199e70';
   var RED = '#d03b3b';
-  var INK = '#111111';
-  var MUTED = '#898781';
-  var HAIR = '#e1e0d9';
+  var INK = __tok('--fg','#111111');
+  var MUTED = __tok('--fg-3','#898781');
+  var HAIR = __tok('--line-2','#e1e0d9');
 
   var QUALITY_LABEL = {
     favorable: 'Good for the league',
@@ -378,7 +380,7 @@
     }, host);
 
     svgEl('circle', {
-      cx: cx, cy: cy, r: r, fill: 'rgba(250,249,245,0.9)', stroke: HAIR, 'stroke-width': 1.5
+      cx: cx, cy: cy, r: r, fill: __tok('--surface-2','rgba(250,249,245,0.9)'), stroke: HAIR, 'stroke-width': 1.5
     }, svg);
 
     // cross axes
@@ -403,7 +405,7 @@
       var pt = compassPoint(tiltVector(axisDriftsForPair(p)), r, cx, cy);
       if (!pt.visible) return;
       svgEl('circle', {
-        cx: pt.x, cy: pt.y, r: 3.2, fill: 'rgba(20,24,38,0.22)'
+        cx: pt.x, cy: pt.y, r: 3.2, fill: __tok('--line-2','rgba(20,24,38,0.22)')
       }, svg);
     });
 

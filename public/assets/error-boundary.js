@@ -61,7 +61,7 @@
     t.id='vh-offline-toast';
     t.setAttribute('role','status');
     t.setAttribute('aria-live','polite');
-    t.style.cssText='position:fixed; top:calc(12px + env(safe-area-inset-top)); left:50%; transform:translateX(-50%); background:#1A150F; color:#FFFEF7; border:2.2px solid #F0E442; border-radius:999px; padding:8px 14px; font-family:ui-monospace,monospace; font-size:11px; z-index:90; box-shadow:4px 4px 0 #1A150F; max-width:90vw; text-align:center;';
+    t.style.cssText='position:fixed; top:calc(12px + env(safe-area-inset-top)); left:50%; transform:translateX(-50%); background:#1A150F; color:#FFFEF7; border:2.2px solid #F0E442; border-radius:999px; padding:8px 14px; font-family:ui-monospace,monospace; font-size:11px; z-index:90; box-shadow:none; max-width:90vw; text-align:center;';
     t.textContent='Offline — cached 12,966 seasons still playable. Daily + Lab work offline.';
     document.body.appendChild(t);
     setTimeout(function(){ try{ t.style.opacity='0'; t.style.transition='opacity .4s'; }catch(e){} setTimeout(function(){ try{t.remove();}catch(e){} }, 400); }, 4000);
@@ -79,8 +79,8 @@
     var div = document.createElement('div');
     div.id='vh-fallback-'+containerId;
     div.setAttribute('role','alert');
-    div.style.cssText='margin:10px 0; background:#FFFEF7; color:#1A150F; border:2.2px solid #1A150F; border-radius:14px; box-shadow:4px 4px 0 #1A150F; padding:14px 16px; font-family:ui-monospace,monospace; font-size:12px; line-height:1.5;';
-    div.innerHTML='<div style="font-weight:900; font-size:13px; margin-bottom:4px;">'+title+'</div><div style="opacity:.9; margin-bottom:8px;">'+msg+'</div><div style="display:flex; gap:8px; flex-wrap:wrap"><button id="vh-retry-'+containerId+'" style="min-height:44px; border:2.2px solid #1A150F; background:#F0E442; border-radius:999px; font-weight:900; padding:0 14px; cursor:pointer; box-shadow:2px 2px 0 #1A150F;">Retry (1s/2s/4s)</button><a href="/offline.html" style="min-height:44px; display:inline-flex; align-items:center; border:2.2px solid #1A150F; background:#fff; color:#1A150F; border-radius:999px; padding:0 14px; font-weight:900; text-decoration:none; box-shadow:2px 2px 0 #1A150F;">Offline mode →</a></div>';
+    div.style.cssText='margin:10px 0; background:var(--surface); color:var(--fg); border:1px solid var(--line-2); border-radius:14px; box-shadow:none; padding:14px 16px; font-family:ui-monospace,monospace; font-size:12px; line-height:1.5;';
+    div.innerHTML='<div style="font-weight:900; font-size:13px; margin-bottom:4px;">'+title+'</div><div style="opacity:.9; margin-bottom:8px;">'+msg+'</div><div style="display:flex; gap:8px; flex-wrap:wrap"><button id="vh-retry-'+containerId+'" style="min-height:44px; border:1px solid var(--line-2); background:#F0E442; border-radius:999px; font-weight:900; padding:0 14px; cursor:pointer; box-shadow:none;">Retry (1s/2s/4s)</button><a href="/offline.html" style="min-height:44px; display:inline-flex; align-items:center; border:1px solid var(--line-2); background:var(--surface); color:var(--fg); border-radius:999px; padding:0 14px; font-weight:900; text-decoration:none; box-shadow:none;">Offline mode →</a></div>';
     if(container.firstChild) container.insertBefore(div, container.firstChild);
     else container.appendChild(div);
     var btn = document.getElementById('vh-retry-'+containerId);

@@ -1,12 +1,9 @@
 <!doctype html>
 <html lang="en"><head>
 <meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
-<meta name="theme-color" content="#1A150F">
 <link rel="manifest" href="/manifest.json">
-<title>Players — Directory + Skills — Vector Hoops</title>
-<meta name="description" content="Every player-season graded, searchable directory + skills lens."/>
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Architects+Daughter&display=swap" rel="stylesheet">
+<title>Players — Vector Hoops</title>
+<meta name="description" content="Every charted NBA player since 1996–97: a searchable directory, 0–99 skill grades normalised within each season, and leaderboards by skill."/>
 <link rel="stylesheet" href="assets/shell.css"/>
 <link rel="stylesheet" href="assets/responsive.css"/>
 <link rel="stylesheet" href="assets/final-qa.css"/>
@@ -14,25 +11,41 @@
 <link rel="stylesheet" href="assets/motion.css"/>
 <link rel="stylesheet" href="assets/player-profile-v28.css?v=28"/>
 
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://hoops.dumbmodel.com/players">
-<meta property="og:title" content="Players — Directory + Skills — Vector Hoops">
-<meta property="og:description" content="Every player-season graded, searchable directory + skills lens.">
-<meta property="og:image" content="/assets/og-1200x630.png">
+<meta name="color-scheme" content="dark light"/>
+<meta name="theme-color" content="#07090C" media="(prefers-color-scheme: dark)"/>
+<meta name="theme-color" content="#F3F1EC" media="(prefers-color-scheme: light)"/>
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml"/>
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png"/>
+<link rel="canonical" href="https://hoops.dumbmodel.com/players"/>
+<meta property="og:type" content="website"/>
+<meta property="og:site_name" content="Vector Hoops"/>
+<meta property="og:url" content="https://hoops.dumbmodel.com/players"/>
+<meta property="og:title" content="Players — Vector Hoops"/>
+<meta property="og:description" content="Every charted NBA player since 1996–97: a searchable directory, 0–99 skill grades normalised within each season, and leaderboards by skill."/>
+<meta property="og:image" content="https://hoops.dumbmodel.com/assets/og-1200x630.png"/>
+<meta property="og:image:width" content="1200"/><meta property="og:image:height" content="630"/>
 <meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="Players — Vector Hoops"/>
+<meta name="twitter:description" content="Every charted NBA player since 1996–97: a searchable directory, 0–99 skill grades normalised within each season, and leaderboards by skill."/>
+<meta name="twitter:image" content="https://hoops.dumbmodel.com/assets/og-1200x630.png"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=Inter:opsz,wght@14..32,400..700&display=swap"/>
+<link rel="stylesheet" href="/assets/atlas.css?v=2"/>
+<style>.players-tabs{display:flex;justify-content:center;margin-bottom:var(--s-2)}</style>
 </head><body>
+<a class="skip-link" href="#main">Skip to content</a>
 <noscript><div role="alert" style="padding:16px;text-align:center">Enable JS — Vector Hoops needs JavaScript for Daily Court + Map</div></noscript>
 
 <nav class="site-nav" data-active="/players" aria-label="Vector Hoops site"></nav>
-<div class="main">
-  <div class="card">
-    <div class="kicker"><span class="kdot"></span> Players · 12,966 seasons · 64-d MTNN v5 champion · 1901 players 2+ · search any name</div>
-    <h1 class="hd" style="font-size:clamp(28px,4vw,38px);margin:8px 0 6px">Player Directory <span style="background:var(--ink);color:#fff;padding:0 .18em;border-radius:8px">+ Skills Lens</span></h1>
-    <p style="margin:0;font-size:14px;line-height:1.5;color:#3A332A">Directory of charted players — 12,966 player-seasons, 128-d MTNN v6 champion (b3 h256 t64 d128 mlp256 fus512, 7.8M torch est), 1901 players 2+ seasons, MIN≥800. Auto-generated scouting dossiers, and 0–99 grades era-normalized, Procrustes-chained drift.json for Era Twin (Q^T Q=I, root 1996-97). Pick a name for grades, open a row for full dossier. ONE champion served, forecast research-only.</p>
-    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px"><a class="pill" href="/play">Play →</a><a class="pill" href="/trends">Trends →</a><a class="pill" href="/model">Lab →</a></div>
-  </div>
+<div id="main" class="main" role="main" style="padding-top:0">
+  <header class="title-card">
+    <div class="title-card__eyebrow reveal">Players</div>
+    <h1 class="title-card__title reveal reveal-1">Every charted player, graded <em>within their own season</em></h1>
+    <p class="title-card__lede reveal reveal-2">Search the directory, open a skill profile, or rank seasons by skill. Grades run 0–99 as percentiles inside each season, so a 90 in 1997 means what a 90 means in 2026.</p>
+    <div class="title-card__meta reveal reveal-3"><span><b>12,966</b>Player-seasons</span><span><b>1996–97</b>to 2025–26</span><span><b>0–99</b>Era-normalised grades</span></div>
+  </header>
 
-  <div class="card">
+  <div class="players-tabs">
     <div class="tab-pills" role="tablist" aria-label="Player reference views">
       <button type="button" role="tab" data-tab="directory" class="is-active" aria-selected="true">Directory</button>
       <button type="button" role="tab" data-tab="profile" aria-selected="false">Skill profile</button>
@@ -119,7 +132,7 @@
       </div>
 
       <div id="pp-empty" style="margin-top:10px">
-        <p style="font-size:13px;color:#666;margin:0" id="skills-empty">Pick a player to see skill profile, season by season — including next-season predicted vs actual when following year is charted. Try “Curry”, “Smart”, or “Jokic”.</p>
+        <p style="font-size:13px;color:var(--fg-3);margin:0" id="skills-empty">Pick a player to see skill profile, season by season — including next-season predicted vs actual when following year is charted. Try “Curry”, “Smart”, or “Jokic”.</p>
         <div class="pp-featured" id="pp-featured"></div>
       </div>
     </div>
@@ -127,13 +140,13 @@
 
   <section class="card" id="players-panel-leaderboard" role="tabpanel" hidden>
     <h2 class="hd" style="font-size:20px;margin:0 0 6px">Leaderboard</h2>
-    <p style="font-size:13px;color:#555;margin:0 0 12px">0–99 skill grades, era-normalized. Pick a skill, see top seasons. Tracking boards cover 2015-16+ only. Draft Steals/Busts rank career mean vs draft slot.</p>
+    <p style="font-size:13px;color:var(--fg-2);margin:0 0 12px">0–99 skill grades, era-normalized. Pick a skill, see top seasons. Tracking boards cover 2015-16+ only. Draft Steals/Busts rank career mean vs draft slot.</p>
     <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px">
       <select id="board-skill" class="input" style="flex:1 1 180px;min-width:160px;min-height:44px" disabled><option>Loading skills…</option></select>
       <select id="board-season" class="input" style="flex:0 0 160px;min-height:44px" disabled><option value="">All seasons</option></select>
     </div>
     <ol class="wiki-list" id="skills-board" style="margin-top:6px"></ol>
-    <p class="small-mono" style="margin-top:10px;color:#666;text-transform:none">Grades are era-normalized percentiles. Details on <a href="/methods#skills">methods</a>.</p>
+    <p class="small-mono" style="margin-top:10px;color:var(--fg-3);text-transform:none">Grades are era-normalized percentiles. Details on <a href="/methods#skills">methods</a>.</p>
   </section>
 
   <div id="dossier-backdrop" class="vh-modal-backdrop" hidden>
@@ -148,12 +161,15 @@
   </div>
 </div>
 
-<footer class="site-footer"><div class="site-footer__links"><a href="/play">Play</a><a href="/model">Lab</a><a href="/methods">Methods</a><a href="/players">Players</a><a href="https://github.com/jcdavis131/vector-hoops" target="_blank" rel="noopener">GitHub</a></div><div class="site-footer__attribution">Every number recomputable from stats.nba.com · dumbmodel.com</div></footer>
+<footer class="site-footer">
+  <div class="site-footer__links"><a href="/play">Play</a><a href="/players">Players</a><a href="/trends">Trends</a><a href="/model">Lab</a><a href="/methods">Methods</a><a href="https://github.com/jcdavis131/vector-hoops" rel="noopener">Source</a></div>
+  <p class="site-footer__attribution">Every number recomputable from stats.nba.com · A <a href="https://dumbmodel.com">dumbmodel</a> project</p>
+</footer>
 <script src="assets/error-boundary.js"></script>
 <script src="assets/keyboard-a11y.js"></script>
 <script src="assets/site-nav.js" defer></script>
 <script src="assets/pwa-install.js"></script>
-<script type="module" src="assets/timesfm-forecast.js?v=2"></script>
+<script type="module" src="assets/timesfm-forecast.js?v=3"></script>
 <script src="assets/dossier.js?v=28"></script>
 <script src="assets/player-roster.js?v=28"></script>
 <script src="assets/players-directory.js?v=28"></script>
