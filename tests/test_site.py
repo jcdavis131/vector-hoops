@@ -84,3 +84,48 @@ def test_vectors_have_coordinates() -> None:
     doc = json.loads((ROOT / "assets" / "vectors.json").read_text(encoding="utf-8"))
     players = doc["players"] if isinstance(doc, dict) else doc
     assert len(players) == 12966, "vectors.json should carry all 12,966 player-seasons"
+
+
+PUBLIC = ROOT / "public"
+# Vercel serves public/ at the site root and it shadows the repo root, so the
+# served copy and the root copy of a page or asset must not drift apart.
+SERVED_ONLY = {"assets/timesfm-forecasts.json"}
+
+
+def _served_files() -> list[Path]:
+    return sorted(p for p in PUBLIC.rglob("*") if p.is_file())
+
+
+@pytest.mark.parametrize(
+    "path", _served_files(), ids=lambda p: str(p.relative_to(PUBLIC))
+)
+def test_public_matches_root_copy(path: Path) -> None:
+    rel = path.relative_to(PUBLIC).as_posix()
+    if rel in SERVED_ONLY:
+        return
+    twin = ROOT / rel
+    assert twin.is_file(), f"public/{rel} has no root copy"
+    assert twin.read_bytes() == path.read_bytes(), f"public/{rel} differs from {rel}"
+
+
+SERVED_PAGES = [p for p in PAGES if (PUBLIC / p).is_file()]
+
+
+@pytest.mark.parametrize("page", SERVED_PAGES)
+def test_served_asset_references_resolve(page: str) -> None:
+    parser = _Srcs()
+    parser.feed((PUBLIC / page).read_text(encoding="utf-8"))
+    missing = [s for s in parser.srcs if not (PUBLIC / s.lstrip("/")).is_file()]
+    assert not missing, f"public/{page} references missing assets: {missing}"
+
+
+def test_service_worker_core_is_served() -> None:
+    sw = (PUBLIC / "sw.js").read_text(encoding="utf-8")
+    core = re.search(r"const CORE = \[(.*?)\];", sw, re.S)
+    assert core, "sw.js has no CORE list"
+    for url in re.findall(r"'([^']+)'", core.group(1)):
+        if url == "/":
+            continue
+        assert (
+            PUBLIC / url.lstrip("/")
+        ).is_file(), f"sw.js precaches {url}, which is not served"
