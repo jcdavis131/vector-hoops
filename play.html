@@ -14,6 +14,13 @@ button,.input{min-height:44px}
 .input{width:100%;border:1px solid var(--line-2);border-radius:12px;padding:0 12px;font-size:16px;font-weight:600;box-shadow:none}
 .small-mono{font-family:var(--mono);font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase}
 .pill{border:1px solid var(--line-2);border-radius:999px;padding:4px 10px;background:var(--surface);font-family:var(--mono);font-size:11px;font-weight:800;box-shadow:none;display:inline-flex;align-items:center;gap:6px}
+.twin-why{margin-top:16px;padding-top:14px;border-top:1px solid rgba(255,255,255,.12)}
+.twin-why__label{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--fg-2);margin-bottom:8px}
+.twin-why__chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px}
+.twin-why__chips .pill{font-size:13px;padding:7px 13px}
+.twin-why__differ{font-size:14px}
+.twin-why__thin{margin-top:8px;font-size:13px;font-style:italic;color:var(--fg-2)}
+.twin-why__method{margin-top:8px;font-size:11.5px;color:rgba(167,176,188,.75);font-style:italic}
 .pill-yellow{background:var(--accent-wash);color:var(--accent)}.pill-green{background:var(--green);color:#fff}.pill-blue{background:var(--blue);color:#fff}
 .main{max-width:980px;margin:0 auto;padding:12px clamp(12px,3vw,20px) calc(92px + env(safe-area-inset-bottom));display:flex;flex-direction:column;gap:14px}
 #map-wrap{position:relative;min-height:380px;border:1px solid var(--line-2);border-radius:16px;box-shadow:none;overflow:hidden;background:radial-gradient(120% 80% at 70% 20%,rgba(0,114,178,.12),transparent 48%),radial-gradient(90% 60% at 20% 70%,rgba(213,94,0,.10),transparent 46%),var(--paper)}
@@ -298,7 +305,7 @@ button,.input{min-height:44px}
 <script src="assets/error-boundary.js"></script>
 <script src="assets/keyboard-a11y.js"></script>
 <script src="assets/site-nav.js" defer></script>
-<script src="assets/pwa-install.js"></script><script src="assets/audio.js"></script><script type="module" src="assets/timesfm-forecast.js?v=3"></script><script src="assets/pixel-avatar.js?v=49"></script><script src="assets/team-logo.js?v=55"></script><script src="assets/viral-share.js"></script><script src="assets/past-modern-game.js?v=56"></script>
+<script src="assets/pwa-install.js"></script><script src="assets/audio.js"></script><script type="module" src="assets/timesfm-forecast.js?v=3"></script><script src="assets/pixel-avatar.js?v=49"></script><script src="assets/team-logo.js?v=55"></script><script src="assets/viral-share.js"></script><script src="assets/past-modern-game.js?v=56"></script><script src="/assets/twin-explainer.js?v=1"></script>
 <script>
 (function(){
   const $=s=>document.querySelector(s);
@@ -1137,6 +1144,7 @@ button,.input{min-height:44px}
     }
     const hintEl=$('#past-closest-hint'); if(hintEl&&closest){ hintEl.style.display='block'; hintEl.textContent=`Answer: ${closest.entry.n} ${(closest.sim*100).toFixed(0)}% — ${won?'won':'over'}`; hintEl.style.background='#fff'; hintEl.style.border='1.4px dashed var(--ink)'; hintEl.style.borderRadius='8px'; hintEl.style.padding='6px 8px'; }
     projectFrame(); draw(); updateStatusBar(); renderDailyCourt();
+    try{ if(window.VHTwinExplainer && VHTwinExplainer.onReveal) VHTwinExplainer.onReveal(); }catch(e){}
   }
 
   // inline, non-blocking guess feedback — alert() on mobile reads as "the game broke"

@@ -3,7 +3,7 @@
    - CORE shell (styles, nav, icons, offline page): stale-while-revalidate.
    - Large data files (DENY): network only, never cached.
    Bump CACHE_NAME whenever shipped assets change so clients drop the old shell. */
-const CACHE_NAME = 'vector-hoops-atlas-v1';
+const CACHE_NAME = 'vector-hoops-atlas-v2';
 const CORE = [
 '/',
 '/index.html',
@@ -13,6 +13,8 @@ const CORE = [
 '/assets/atlas.css',
 '/assets/site-nav.js',
 '/assets/atlas-map.js',
+'/assets/career-trails.js',
+'/assets/twin-explainer.js',
 '/assets/favicon.svg',
 '/assets/apple-touch-icon.png',
 '/assets/icon-192.png',

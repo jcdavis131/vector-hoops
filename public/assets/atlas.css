@@ -662,3 +662,37 @@ table{ border-collapse: collapse; width: 100%; }
 }
 
 .empty-note{ font-family: var(--font-text) !important; font-size: 13px !important; color: var(--fg-3) !important; padding: 16px; border: 1px dashed var(--line-2); border-radius: var(--radius-lg); text-align: center; }
+
+/* ---------- Career Trails (additive) ---------- */
+.trail-btn{
+  display:inline-flex; align-items:center; justify-content:center;
+  margin-top:14px; min-height:48px; padding:0 22px;
+  font-family:var(--font-display); font-size:12px; font-weight:800;
+  letter-spacing:.12em; text-transform:uppercase;
+  color:#0B0E12; background:linear-gradient(135deg,#8A9A8B,#C17C60);
+  border:0; border-radius:8px; cursor:pointer;
+}
+.trail-btn:hover{ filter:brightness(1.08); }
+.trail-btn:disabled{ opacity:.6; cursor:wait; }
+.trail-btn:focus-visible{ outline:2px solid var(--focus); outline-offset:2px; }
+
+#trail-bar{
+  position:absolute; z-index:3; left:12px; right:12px; bottom:64px;
+  background:rgba(13,16,21,.94); border:1px solid rgba(255,255,255,.14);
+  border-radius:12px; padding:10px 14px 12px; color:#ECEEF1;
+}
+@media (max-width:900px){
+  /* the map's own buttons move to the top on small screens */
+  #trail-bar{ bottom:12px; }
+}
+#trail-bar .trail-row{ display:flex; align-items:center; gap:12px; }
+#trail-close{
+  width:48px; height:48px; flex:0 0 auto; border-radius:8px;
+  background:rgba(255,255,255,.08); color:#ECEEF1; border:1px solid rgba(255,255,255,.16);
+  font-size:22px; line-height:1; cursor:pointer;
+}
+#trail-close:hover{ background:rgba(255,255,255,.16); }
+#trail-season{ font-weight:700; min-width:76px; font-variant-numeric:tabular-nums; }
+#trail-scrub{ flex:1; min-height:48px; accent-color:#C17C60; cursor:pointer; }
+#trail-changed{ font-size:12.5px; color:#A7B0BC; margin-top:4px; min-height:18px; }
+#trail-honest{ font-size:11.5px; color:rgba(214,222,232,.62); margin-top:6px; font-style:italic; }
