@@ -261,6 +261,7 @@
     computePeers();
     renderReadout();
     draw();
+    try { (window.__vhAtlasSelect || []).forEach(function (cb) { cb(selected >= 0 ? P[selected] : null); }); } catch (e) {}
     var live = $('atlas-live');
     if (live && selected >= 0) live.textContent = P[selected].n + ', ' + fmtSeason(P[selected].s) + ' selected.';
     if (!opts.noUrl) {
@@ -423,4 +424,12 @@
       if ('requestIdleCallback' in window) requestIdleCallback(ensureEmbedding, { timeout: 1500 }); else setTimeout(ensureEmbedding, 400);
     })
     .catch(function (err) { fail('The season file did not arrive (' + err.message + '). Check your connection and try again.'); });
+
+  // ---- Career Trails integration (additive): selection + projection API ----
+  window.VHAtlas = {
+    project: function (x, y) { return { x: sx(x), y: sy(y) }; },
+    dims: function () { return { W: W, H: H, DPR: DPR }; },
+    selectedPlayer: function () { return selected >= 0 ? P[selected] : null; },
+    onSelect: function (cb) { (window.__vhAtlasSelect = window.__vhAtlasSelect || []).push(cb); }
+  };
 })();
