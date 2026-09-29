@@ -101,7 +101,7 @@
           var codes = Object.keys(labels);
           var live = explainPair(va, vb, codes, labels);
           rec = { shared: live.shared, differ: live.differ, sim: sim,
-                  thin: !!(meta.thin_threshold && sim < meta.thin_threshold) };
+                  thin: !!(meta.threshold && sim < meta.threshold) };
         }
         render(rec);
       });

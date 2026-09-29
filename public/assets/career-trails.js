@@ -175,7 +175,7 @@
     var t0 = performance.now();
     function step(t) {
       if (!active || active.scrubbing) return;
-      var k = Math.min(1, (t - t0) / total);
+      var k = Math.max(0, Math.min(1, (t - t0) / total));
       var prog = k * (active.n - 1);
       setFrame(prog);
       if (k < 1) active.raf = requestAnimationFrame(step);
