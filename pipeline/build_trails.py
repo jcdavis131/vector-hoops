@@ -14,6 +14,7 @@ Output: assets/trails.json keyed by normalized name, only players with 2+ season
 
 Stdlib only. Real data only. Any QA failure is a hard failure (non-zero exit).
 """
+
 import json
 import math
 import os
@@ -39,8 +40,8 @@ def main():
     with open(VEC_PATH, "r", encoding="utf-8") as f:
         vec = json.load(f)
     players = vec["players"]
-    labels = vec["featureLabels"]          # code -> plain-language name
-    dim_codes = list(labels.keys())        # order matches v[14]
+    labels = vec["featureLabels"]  # code -> plain-language name
+    dim_codes = list(labels.keys())  # order matches v[14]
     assert len(dim_codes) == 14, f"expected 14 dims, got {len(dim_codes)}"
 
     by_name = {}
@@ -53,13 +54,16 @@ def main():
             continue
         recs.sort(key=lambda r: season_year(r["season"]))
         years = [season_year(r["season"]) for r in recs]
-        assert all(b > a for a, b in zip(years, years[1:])), f"season order broken: {name}"
+        assert all(
+            b > a for a, b in zip(years, years[1:])
+        ), f"season order broken: {name}"
 
         seasons = [r["season"] for r in recs]
         pts = [[r["x"], r["y"], r["z"]] for r in recs]
         for pt in pts:
-            assert all(isinstance(v, (int, float)) and math.isfinite(v) for v in pt), \
-                f"non-finite point: {name}"
+            assert all(
+                isinstance(v, (int, float)) and math.isfinite(v) for v in pt
+            ), f"non-finite point: {name}"
 
         deltas = []
         for i, r in enumerate(recs):
@@ -88,18 +92,28 @@ def main():
     # ---- QA (hard-block) ----
     n_multi = sum(1 for recs in by_name.values() if len(recs) >= 2)
     assert n_multi == 1901, f"multi-season career count changed: {n_multi} != 1901"
-    assert len(trails) == n_multi, f"trail count {len(trails)} != multi-season names {n_multi}"
-    assert not any(len(recs) < 2 for recs in
-                   (v for k, v in by_name.items() if k in trails)), "short trail leaked in"
+    assert (
+        len(trails) == n_multi
+    ), f"trail count {len(trails)} != multi-season names {n_multi}"
+    assert not any(
+        len(recs) < 2 for recs in (v for k, v in by_name.items() if k in trails)
+    ), "short trail leaked in"
 
     # every trail point must equal the map's x/y/z exactly (no drift, no transform)
-    src = {(norm_name(p["name"]), p["season"]): (p["x"], p["y"], p["z"]) for p in players}
+    src = {
+        (norm_name(p["name"]), p["season"]): (p["x"], p["y"], p["z"]) for p in players
+    }
     for name, t in trails.items():
-        assert len(t["seasons"]) == len(t["pts"]) == len(t["deltas"]), f"length mismatch: {name}"
+        assert (
+            len(t["seasons"]) == len(t["pts"]) == len(t["deltas"])
+        ), f"length mismatch: {name}"
         for s, pt in zip(t["seasons"], t["pts"]):
             sx, sy, sz = src[(name, s)]
-            assert pt == [round(sx, 4), round(sy, 4), round(sz, 4)], \
-                f"point drift: {name} {s}"
+            assert pt == [
+                round(sx, 4),
+                round(sy, 4),
+                round(sz, 4),
+            ], f"point drift: {name} {s}"
         assert t["deltas"][0] == [], f"rookie delta not empty: {name}"
         for d in t["deltas"][1:]:
             assert 1 <= len(d) <= 2, f"bad delta chips: {name} {d}"
@@ -116,9 +130,13 @@ def main():
     assert two_season, "no 2-season stub found"
     print(f"  2-season stub example: {two_season[0]}")
 
-    trails["_meta"] = {"labels": labels, "seasons_range": [min(
-        season_year(r["season"]) for recs in by_name.values() for r in recs),
-        max(season_year(r["season"]) for recs in by_name.values() for r in recs)]}
+    trails["_meta"] = {
+        "labels": labels,
+        "seasons_range": [
+            min(season_year(r["season"]) for recs in by_name.values() for r in recs),
+            max(season_year(r["season"]) for recs in by_name.values() for r in recs),
+        ],
+    }
 
     with open(OUT_PATH, "w", encoding="utf-8") as f:
         json.dump(trails, f, separators=(",", ":"))
@@ -135,14 +153,18 @@ def main():
     with open(index_path, "w", encoding="utf-8") as f:
         json.dump(index, f, separators=(",", ":"))
     assert len(index) == n_multi, "index count mismatch"
-    print(f"OK: {index_path}: {len(index)} entries, "
-          f"{os.path.getsize(index_path)//1024} KB")
+    print(
+        f"OK: {index_path}: {len(index)} entries, "
+        f"{os.path.getsize(index_path)//1024} KB"
+    )
 
     size_kb = os.path.getsize(OUT_PATH) / 1024
     print(f"OK: {OUT_PATH}: {len(trails)} trails, {size_kb:.0f} KB")
     if size_kb > 1024:
-        print("WARNING: >1MB — sw.js will not cache it for offline; consider rounding harder",
-              file=sys.stderr)
+        print(
+            "WARNING: >1MB — sw.js will not cache it for offline; consider rounding harder",
+            file=sys.stderr,
+        )
 
 
 if __name__ == "__main__":

@@ -21,6 +21,7 @@ method); the explainer only decomposes observable style overlap in 14-d.
 
 Stdlib only. Real data only. Any QA failure is a hard failure (non-zero exit).
 """
+
 import json
 import math
 import os
@@ -101,8 +102,10 @@ def main():
     sims = sorted(p["twin"]["similarity"] for p in twins)
     p10 = sims[len(sims) // 10]
     threshold = round(p10, 2)
-    print(f"  sim: min {sims[0]:.3f} p10 {p10:.3f} median {sims[len(sims)//2]:.3f} "
-          f"max {sims[-1]:.3f} -> thin threshold {threshold}")
+    print(
+        f"  sim: min {sims[0]:.3f} p10 {p10:.3f} median {sims[len(sims)//2]:.3f} "
+        f"max {sims[-1]:.3f} -> thin threshold {threshold}"
+    )
 
     def pair_key(a_key, b_key):
         # canonical pair key: twin seasons repeat across pairs (e.g. AC Green
@@ -123,15 +126,31 @@ def main():
         shared, differ = explain(va, vb, labels, dim_codes)
         sim = t["similarity"]
         assert 0 < sim <= 1, f"bad sim {sim}"
-        rec = {"a": a_key, "b": b_key,
-               "shared": shared, "differ": differ, "sim": round(sim, 3),
-               "thin": bool(sim < threshold)}
+        rec = {
+            "a": a_key,
+            "b": b_key,
+            "shared": shared,
+            "differ": differ,
+            "sim": round(sim, 3),
+            "thin": bool(sim < threshold),
+        }
         out[pair_key(a_key, b_key)] = rec
     assert not missing, f"{len(missing)} pairs missing vectors, e.g. {missing[:3]}"
     # 127 unordered pairs repeat (mutual twins / duplicated rows); QA above proved
     # their sims are identical, so first-wins dedup is lossless.
-    n_unique = len({tuple(sorted((f"{p['name']}|{p['season']}",
-                                  f"{p['twin']['name']}|{p['twin']['season']}"))) for p in twins})
+    n_unique = len(
+        {
+            tuple(
+                sorted(
+                    (
+                        f"{p['name']}|{p['season']}",
+                        f"{p['twin']['name']}|{p['twin']['season']}",
+                    )
+                )
+            )
+            for p in twins
+        }
+    )
     assert len(out) == n_unique, f"expected {n_unique} unique pairs, got {len(out)}"
 
     out["_meta"] = {
@@ -148,42 +167,58 @@ def main():
     # "shared" usually means shared absences (both similarly low). The checks
     # below use concrete, hand-verified pairs instead.
     def key_of(p):
-        return pair_key(f"{p['name']}|{p['season']}",
-                        f"{p['twin']['name']}|{p['twin']['season']}")
+        return pair_key(
+            f"{p['name']}|{p['season']}", f"{p['twin']['name']}|{p['twin']['season']}"
+        )
 
-    ah = next(p for p in twins if p["name"] == "Allan Houston" and p["season"] == "2002-03")
-    assert "both let it fly from three" in out[key_of(ah)]["shared"], "shooter pair chips wrong"
+    ah = next(
+        p for p in twins if p["name"] == "Allan Houston" and p["season"] == "2002-03"
+    )
+    assert (
+        "both let it fly from three" in out[key_of(ah)]["shared"]
+    ), "shooter pair chips wrong"
     print(f"  sharpshooter: Allan Houston <-> JJ Redick: {out[key_of(ah)]['shared']}")
 
     ag = next(p for p in twins if p["name"] == "AC Green" and p["season"] == "1999-00")
     ag_rec = out[key_of(ag)]
     assert "both rarely shoot threes" in ag_rec["shared"], "AC Green pair chips wrong"
     assert ag_rec["differ"] == "rim protection", "AC Green differ wrong"
-    print(f"  bigs: AC Green <-> Horace Grant: {ag_rec['shared']} | differ: {ag_rec['differ']}")
+    print(
+        f"  bigs: AC Green <-> Horace Grant: {ag_rec['shared']} | differ: {ag_rec['differ']}"
+    )
 
-    pm = next(p for p in twins if p["name"] == "Grant Hill" and p["season"] == "1996-97")
+    pm = next(
+        p for p in twins if p["name"] == "Grant Hill" and p["season"] == "1996-97"
+    )
     assert pm["twin"]["name"] == "LeBron James", "Grant Hill twin changed?"
-    assert "both run the offense" in out[key_of(pm)]["shared"], "playmaker pair chips wrong"
+    assert (
+        "both run the offense" in out[key_of(pm)]["shared"]
+    ), "playmaker pair chips wrong"
     print(f"  playmaker: Grant Hill <-> LeBron James: {out[key_of(pm)]['shared']}")
 
     thin_pair = min(twins, key=lambda p: p["twin"]["similarity"])
     ta = f"{thin_pair['name']}|{thin_pair['season']}"
     tb = f"{thin_pair['twin']['name']}|{thin_pair['twin']['season']}"
     assert out[pair_key(ta, tb)]["thin"], "thinnest pair not flagged"
-    print(f"  thin: {thin_pair['name']} <-> {thin_pair['twin']['name']} "
-          f"sim {thin_pair['twin']['similarity']:.3f} -> flagged")
+    print(
+        f"  thin: {thin_pair['name']} <-> {thin_pair['twin']['name']} "
+        f"sim {thin_pair['twin']['similarity']:.3f} -> flagged"
+    )
 
     def decade_gap(p):
         da = int(p["decade"][:4])
         db = int(p["twin"]["decade"][:4])
         return abs(da - db)
+
     odd = max(twins, key=decade_gap)
     oa = f"{odd['name']}|{odd['season']}"
     ob = f"{odd['twin']['name']}|{odd['twin']['season']}"
     ok = out.get(pair_key(oa, ob))
     assert ok and ok["differ"] in labels.values(), "cross-era oddity broken"
-    print(f"  cross-era: {odd['name']} ({odd['decade']}) <-> {odd['twin']['name']} "
-          f"({odd['twin']['decade']}): differ = {ok['differ']}")
+    print(
+        f"  cross-era: {odd['name']} ({odd['decade']}) <-> {odd['twin']['name']} "
+        f"({odd['twin']['decade']}): differ = {ok['differ']}"
+    )
 
     # QA: live-compute path (client algorithm) must agree with precomputed on every pair
     for p in twins:
@@ -206,12 +241,18 @@ def main():
     past_ids, modern_rows = set(), {}
     for p in lite:
         yr = season_year(p["s"])
-        if 1996 <= yr <= 2023 and (honors.get(f"{p['n']}|{p['s']}", {}) or {}).get("asg") == 1:
+        if (
+            1996 <= yr <= 2023
+            and (honors.get(f"{p['n']}|{p['s']}", {}) or {}).get("asg") == 1
+        ):
             past_ids.add(p["i"])
         if yr >= 2025:
             ex = modern_rows.get(p["n"])
-            if ex is None or season_year(ex["s"]) < yr or \
-                    (season_year(ex["s"]) == yr and p["s"] > ex["s"]):
+            if (
+                ex is None
+                or season_year(ex["s"]) < yr
+                or (season_year(ex["s"]) == yr and p["s"] > ex["s"])
+            ):
                 modern_rows[p["n"]] = p
     pool_ids = past_ids | {p["i"] for p in modern_rows.values()}
     v_by_id = {(p["name"], p["season"]): p["v"] for p in players}
@@ -227,9 +268,11 @@ def main():
     assert not missing_ids, f"{len(missing_ids)} pool ids missing vectors"
     with open(OUT_VEC, "w", encoding="utf-8") as f:
         json.dump(vec_out, f, separators=(",", ":"))
-    print(f"OK: {OUT_VEC}: {len(vec_out)} rows "
-          f"(past {len(past_ids)}, modern {len(modern_rows)}), "
-          f"{os.path.getsize(OUT_VEC)//1024} KB")
+    print(
+        f"OK: {OUT_VEC}: {len(vec_out)} rows "
+        f"(past {len(past_ids)}, modern {len(modern_rows)}), "
+        f"{os.path.getsize(OUT_VEC)//1024} KB"
+    )
 
 
 if __name__ == "__main__":
