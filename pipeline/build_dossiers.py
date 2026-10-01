@@ -29,7 +29,6 @@ import json
 import math
 import os
 import unicodedata
-from collections import Counter
 
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 ASSETS = os.path.join(REPO, "assets")
