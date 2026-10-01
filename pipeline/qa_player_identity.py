@@ -63,7 +63,9 @@ def main():
         pid_to_names.setdefault(p["person_id"], set()).add(p["name"])
     for pid, names in pid_to_names.items():
         if len(names) > 1:
-            fail(f"person_id {pid} maps to {len(names)} display names: {sorted(names)[:4]}")
+            fail(
+                f"person_id {pid} maps to {len(names)} display names: {sorted(names)[:4]}"
+            )
 
     # ---- 3. registry coverage ----
     split_map = {}
@@ -76,8 +78,10 @@ def main():
         if got is None:
             fail(f"registry season missing from vectors: {ds_name}|{season}")
         elif got["name"] != person["display_name"]:
-            fail(f"name mismatch {ds_name}|{season}: vectors={got['name']!r} "
-                 f"registry={person['display_name']!r}")
+            fail(
+                f"name mismatch {ds_name}|{season}: vectors={got['name']!r} "
+                f"registry={person['display_name']!r}"
+            )
 
     # ---- 4. suffix-stripped collisions must all be registered ----
     registered_pids = {p["person_id"] for p in reg["persons"]}
@@ -86,8 +90,10 @@ def main():
         stripped.setdefault(norm(strip_suffix(p["name"])), set()).add(p["person_id"])
     for sname, pids in stripped.items():
         if len(pids) > 1 and not pids <= registered_pids:
-            fail(f"unregistered collision on stripped name {sname!r}: "
-                 f"{sorted(pids - registered_pids)}")
+            fail(
+                f"unregistered collision on stripped name {sname!r}: "
+                f"{sorted(pids - registered_pids)}"
+            )
 
     # ---- 5. no unexplained >=4y gaps ----
     allow = {norm(strip_suffix(n)) for n in reg["comeback_allowlist"]}
@@ -121,17 +127,28 @@ def main():
     # ---- 8. no stale old names (b-pairs exempt: display == dataset name) ----
     fix_map = {k: v for k, v in reg["display_fixes"].items() if not k.startswith("_")}
     split_names = {p["dataset_name"] for p in reg["persons"]}
-    bpair_names = {p["dataset_name"] for p in reg["persons"]
-                   if p["dataset_name"] == p["display_name"]}
+    bpair_names = {
+        p["dataset_name"]
+        for p in reg["persons"]
+        if p["dataset_name"] == p["display_name"]
+    }
     stale_names = (split_names | set(fix_map)) - bpair_names
     check_files = [
-        "assets/vectors.json", "assets/playoffs.json", "assets/honors.json",
-        "assets/next_profile_eval.json", "assets/player_meta.json",
-        "assets/player_team_season.json", "assets/playoff_paths.json",
-        "assets/skills_wide.json", "assets/players_lite.json",
-        "assets/vectors_search_lite.json", "assets/vectors_search_lite_pos.json",
-        "assets/eratwins.json", "assets/current_rosters.json",
-        "assets/pedigree.json", "assets/career_surplus.json",
+        "assets/vectors.json",
+        "assets/playoffs.json",
+        "assets/honors.json",
+        "assets/next_profile_eval.json",
+        "assets/player_meta.json",
+        "assets/player_team_season.json",
+        "assets/playoff_paths.json",
+        "assets/skills_wide.json",
+        "assets/players_lite.json",
+        "assets/vectors_search_lite.json",
+        "assets/vectors_search_lite_pos.json",
+        "assets/eratwins.json",
+        "assets/current_rosters.json",
+        "assets/pedigree.json",
+        "assets/career_surplus.json",
         "assets/projections.json",
     ]
     for rel in check_files:
@@ -145,10 +162,16 @@ def main():
                 break
 
     # ---- 9. public/ mirror parity ----
-    for rel in check_files + ["assets/player-identity.json", "assets/pid_ambiguous.json",
-                              "assets/trajectories.json", "assets/timesfm_forecasts.json",
-                              "assets/trails.json", "assets/trails_index.json",
-                              "assets/insights.json", "assets/twin_explainer.json"]:
+    for rel in check_files + [
+        "assets/player-identity.json",
+        "assets/pid_ambiguous.json",
+        "assets/trajectories.json",
+        "assets/timesfm_forecasts.json",
+        "assets/trails.json",
+        "assets/trails_index.json",
+        "assets/insights.json",
+        "assets/twin_explainer.json",
+    ]:
         src, dst = A(rel), A("public", rel)
         if not os.path.exists(src):
             continue
@@ -160,8 +183,10 @@ def main():
     if FAILURES:
         print(f"\nQA FAILED: {len(FAILURES)} failures")
         return 1
-    print(f"QA OK: {len(players)} rows, {len(pid_to_names)} person_ids, "
-          f"{len(split_map)} registered split seasons, mirrors parity")
+    print(
+        f"QA OK: {len(players)} rows, {len(pid_to_names)} person_ids, "
+        f"{len(split_map)} registered split seasons, mirrors parity"
+    )
     return 0
 
 

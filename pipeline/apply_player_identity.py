@@ -55,7 +55,7 @@ def strip_suffix(name):
 
 def load_registry():
     reg = json.load(open(REG_PATH, encoding="utf-8"))
-    split_map = {}   # (dataset_name, season) -> (person_id, display_name)
+    split_map = {}  # (dataset_name, season) -> (person_id, display_name)
     for person in reg["persons"]:
         for season in person["seasons"]:
             key = (person["dataset_name"], season)
@@ -108,7 +108,9 @@ def patch_keyed_asset(rel, section, split_map, fix_map):
     n_changed = 0
     for key, val in target.items():
         new_key, changed = remap_name_season_key(key, split_map, fix_map)
-        assert new_key not in new_target, f"key collision after remap: {new_key} in {rel}"
+        assert (
+            new_key not in new_target
+        ), f"key collision after remap: {new_key} in {rel}"
         new_target[new_key] = val
         n_changed += changed
     if section is None:
@@ -144,8 +146,10 @@ def main():
     report["vectors_rows"] = len(players)
     report["vectors_person_ids"] = len({p["person_id"] for p in players})
     report["vectors_names_fixed"] = n_name_fix
-    print(f"vectors.json: {len(players)} rows, "
-          f"{report['vectors_person_ids']} person_ids, {n_name_fix} names fixed")
+    print(
+        f"vectors.json: {len(players)} rows, "
+        f"{report['vectors_person_ids']} person_ids, {n_name_fix} names fixed"
+    )
 
     # ---- 2. "Name|season"-keyed assets ----
     keyed = [
@@ -177,10 +181,15 @@ def main():
     print(f"assets/players_lite.json: {n} names remapped")
 
     # ---- 4. vectors_search_lite.json + _pos (additive pid) ----
-    for rel in ("assets/vectors_search_lite.json", "assets/vectors_search_lite_pos.json"):
+    for rel in (
+        "assets/vectors_search_lite.json",
+        "assets/vectors_search_lite_pos.json",
+    ):
         path = A(rel)
         lite = json.load(open(path, encoding="utf-8"))
-        entries = lite["players"] if isinstance(lite, dict) and "players" in lite else lite
+        entries = (
+            lite["players"] if isinstance(lite, dict) and "players" in lite else lite
+        )
         n = 0
         for e in entries:
             old_n = e.get("n", e.get("name"))
@@ -203,8 +212,10 @@ def main():
         ml = json.load(open(ml_path, encoding="utf-8"))
         entries = ml["players"] if isinstance(ml, dict) and "players" in ml else ml
         n = sum(
-            1 for e in entries
-            if isinstance(e, dict) and "n" in e
+            1
+            for e in entries
+            if isinstance(e, dict)
+            and "n" in e
             and disp_for(e["n"], e.get("s", ""), split_map, fix_map) != e["n"]
         )
         for e in entries:
@@ -278,7 +289,11 @@ def main():
 
     # ---- 7b. player_meta.json: roster (done above) + popularity/puzzleWeight/honors ----
     n_pop = n_pw = n_hon = 0
-    pop = pm_obj["popularity"] if (pm_obj := json.load(open(A("assets/player_meta.json"), encoding="utf-8"))) else None
+    pop = (
+        pm_obj["popularity"]
+        if (pm_obj := json.load(open(A("assets/player_meta.json"), encoding="utf-8")))
+        else None
+    )
     # popularity: pure-name keys -> elder display name for splits (documented
     # assumption: the fame signal belongs to the elder star), fixed name for labels
     for old in list(pop.keys()):
@@ -297,7 +312,9 @@ def main():
         c = 0
         for key, val in target.items():
             new_key, changed = remap_name_season_key(key, split_map, fix_map)
-            assert new_key not in new_target, f"collision in player_meta.{sec}: {new_key}"
+            assert (
+                new_key not in new_target
+            ), f"collision in player_meta.{sec}: {new_key}"
             new_target[new_key] = val
             c += changed
         pm_obj[sec] = new_target
@@ -308,7 +325,9 @@ def main():
     write_json(A("assets/player_meta.json"), pm_obj)
     # NOTE: player_meta.json was already written by patch_keyed_asset (roster);
     # this rewrite is idempotent.
-    print(f"assets/player_meta.json: popularity {n_pop}, puzzleWeight {n_pw}, honors {n_hon}")
+    print(
+        f"assets/player_meta.json: popularity {n_pop}, puzzleWeight {n_pw}, honors {n_hon}"
+    )
 
     # ---- 7c. career_surplus.json ----
     cs_path = A("assets", "career_surplus.json")
@@ -360,12 +379,14 @@ def main():
                 "2026-10-01 player-identity fix: forecasts for "
                 + ", ".join(sorted(set(merged)))
                 + " were computed on merged multi-person careers; the label now "
-                  "reflects the last_season owner. Values predate the identity fix."
+                "reflects the last_season owner. Values predate the identity fix."
             )
         if n or merged:
             write_json(tf_path, tf)
-        print(f"{rel}: {n} names remapped"
-              + (f" ({len(set(merged))} merged-career caveats)" if merged else ""))
+        print(
+            f"{rel}: {n} names remapped"
+            + (f" ({len(set(merged))} merged-career caveats)" if merged else "")
+        )
 
     # ---- 8. pedigree.json: pure-name keys -> elder person ----
     ped_path = A("assets", "pedigree.json")
@@ -413,7 +434,10 @@ def main():
             n_rename += 1
     if n_drop or n_rename:
         write_json(tr_path, tr)
-    report["remapped"]["assets/trajectories.json"] = {"dropped": n_drop, "renamed": n_rename}
+    report["remapped"]["assets/trajectories.json"] = {
+        "dropped": n_drop,
+        "renamed": n_rename,
+    }
     print(f"assets/trajectories.json: {n_drop} merged keys dropped, {n_rename} renamed")
 
     # ---- 10. pid_ambiguous.json ----

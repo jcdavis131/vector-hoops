@@ -59,7 +59,9 @@ def main():
         # person_id is the identity key (identity fix 2026-10-01). A missing
         # person_id means the identity applier was not run — hard fail.
         pid = p.get("person_id")
-        assert pid, f"row id={p.get('id')} missing person_id; run apply_player_identity.py"
+        assert (
+            pid
+        ), f"row id={p.get('id')} missing person_id; run apply_player_identity.py"
         by_pid.setdefault(pid, []).append(p)
 
     trails = {}
@@ -117,9 +119,7 @@ def main():
     ), "short trail leaked in"
 
     # every trail point must equal the map's x/y/z exactly (no drift, no transform)
-    src = {
-        (p["person_id"], p["season"]): (p["x"], p["y"], p["z"]) for p in players
-    }
+    src = {(p["person_id"], p["season"]): (p["x"], p["y"], p["z"]) for p in players}
     for pid, t in trails.items():
         assert (
             len(t["seasons"]) == len(t["pts"]) == len(t["deltas"])

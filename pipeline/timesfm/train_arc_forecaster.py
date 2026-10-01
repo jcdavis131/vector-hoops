@@ -16,6 +16,7 @@ tunes ridge alpha on validation -> retrains -> evaluates vs baselines on the
 held-out test split -> writes the versioned forecast artifact (or hard-fails
 the win gate).
 """
+
 from __future__ import annotations
 import argparse
 import hashlib
@@ -25,12 +26,27 @@ import time
 from pathlib import Path
 import numpy as np
 
-FEATURES = ['PTS', 'AST', 'OREB', 'DREB', 'STL', 'BLK', 'TOV', 'FG3A',
-            'FGA', 'FTA', 'FG3_PCT', 'FG_PCT', 'FT_PCT', 'PLUS_MINUS']
+FEATURES = [
+    "PTS",
+    "AST",
+    "OREB",
+    "DREB",
+    "STL",
+    "BLK",
+    "TOV",
+    "FG3A",
+    "FGA",
+    "FTA",
+    "FG3_PCT",
+    "FG_PCT",
+    "FT_PCT",
+    "PLUS_MINUS",
+]
 N_F = len(FEATURES)  # 14
 # Props-weighted MAE: scoring/playmaking/rebounding/defense emphasis
-W_PROPS = np.array([3.0, 2.0, 1.0, 1.0, 1.5, 1.5, 1.0, 1.5,
-                    1.0, 1.0, 1.0, 1.0, 1.0, 1.0])
+W_PROPS = np.array(
+    [3.0, 2.0, 1.0, 1.0, 1.5, 1.5, 1.0, 1.5, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
+)
 W_PROPS = W_PROPS / W_PROPS.sum()
 
 ALPHAS = [0.01, 0.1, 1.0, 10.0, 100.0, 1000.0]
@@ -38,23 +54,30 @@ CTX_MAX = 6  # cap context at 6 most recent seasons
 
 
 def season_year(s: str) -> int:
-    return int(s.split('-')[0])
+    return int(s.split("-")[0])
 
 
 def load_players(vectors_path: Path):
     d = json.loads(vectors_path.read_text())
-    players = d['players']
-    assert d['features'] == FEATURES, "feature order changed — refusing to train"
+    players = d["players"]
+    assert d["features"] == FEATURES, "feature order changed — refusing to train"
     rows = []
     for p in players:
-        pid = p.get('person_id')
+        pid = p.get("person_id")
         assert pid, f"row {p.get('id')} missing person_id — identity gate failed"
-        v = p.get('v')
+        v = p.get("v")
         assert v is not None and len(v) == N_F, f"row {p.get('id')} bad vector"
-        rows.append((pid, p['season'], season_year(p['season']),
-                     np.array(v, dtype=np.float64),
-                     float(p.get('mpg', 0.0)), float(p.get('gp', 0.0)),
-                     p.get('name', '')))
+        rows.append(
+            (
+                pid,
+                p["season"],
+                season_year(p["season"]),
+                np.array(v, dtype=np.float64),
+                float(p.get("mpg", 0.0)),
+                float(p.get("gp", 0.0)),
+                p.get("name", ""),
+            )
+        )
     return rows
 
 
@@ -82,19 +105,30 @@ def featurize(ctx):
     has2 = 1.0 if len(vecs) >= 2 else 0.0
     has3 = 1.0 if len(vecs) >= 3 else 0.0
     # recency-weighted 3yr mean over available seasons
-    w = np.array([0.5, 0.3, 0.2][:len(vecs)][::-1] if len(vecs) <= 3
-                 else [0.5, 0.3, 0.2])
+    w = np.array(
+        [0.5, 0.3, 0.2][: len(vecs)][::-1] if len(vecs) <= 3 else [0.5, 0.3, 0.2]
+    )
     take = vecs[-3:]
-    w = w[-len(take):]
+    w = w[-len(take) :]
     w = w / w.sum()
     wavg = sum(wi * v for wi, v in zip(w, take))
     career_year = float(len(ctx))
     momentum = last1 - last2  # zeros when no last2 (has2 flag covers it)
     mpg_last = float(ctx[-1][1])
     gp_last = float(ctx[-1][2])
-    return np.concatenate([last1, last2, [has2], last3, [has3], wavg,
-                           [career_year, career_year ** 2], momentum,
-                           [mpg_last, gp_last]])
+    return np.concatenate(
+        [
+            last1,
+            last2,
+            [has2],
+            last3,
+            [has3],
+            wavg,
+            [career_year, career_year**2],
+            momentum,
+            [mpg_last, gp_last],
+        ]
+    )
 
 
 def build_pairs(arcs):
@@ -102,7 +136,7 @@ def build_pairs(arcs):
     pairs = []
     for pid, traj in arcs.items():
         for i in range(1, len(traj)):
-            ctx = [(t[2], t[3], t[4]) for t in traj[max(0, i - CTX_MAX):i]]
+            ctx = [(t[2], t[3], t[4]) for t in traj[max(0, i - CTX_MAX) : i]]
             x = featurize(ctx)
             tgt = traj[i]
             y = np.concatenate([tgt[2], [tgt[3], tgt[4]]])
@@ -122,15 +156,15 @@ def mae(a, b):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument('--vectors', default=None)
-    ap.add_argument('--identity', default=None)
-    ap.add_argument('--out', default=None)
+    ap.add_argument("--vectors", default=None)
+    ap.add_argument("--identity", default=None)
+    ap.add_argument("--out", default=None)
     args = ap.parse_args()
 
     root = Path(__file__).resolve().parents[2]
-    vectors_path = Path(args.vectors or root / 'assets' / 'vectors.json')
-    identity_path = Path(args.identity or root / 'assets' / 'player-identity.json')
-    out_path = Path(args.out or root / 'assets' / 'arc_forecasts_v1.json')
+    vectors_path = Path(args.vectors or root / "assets" / "vectors.json")
+    identity_path = Path(args.identity or root / "assets" / "player-identity.json")
+    out_path = Path(args.out or root / "assets" / "arc_forecasts_v1.json")
 
     t0 = time.time()
     rows = load_players(vectors_path)
@@ -178,15 +212,20 @@ def main():
     pred_te = predict(W, X[te])
     Y_te = Y[te]
     test_macro = mae(pred_te[:, :N_F], Y_te[:, :N_F])
-    test_props = float((np.abs(pred_te[:, :N_F] - Y_te[:, :N_F]) * W_PROPS).sum(axis=1).mean())
-    print(f"[arc] TEST challenger macro_mae={test_macro:.4f} props_mae={test_props:.4f}", flush=True)
+    test_props = float(
+        (np.abs(pred_te[:, :N_F] - Y_te[:, :N_F]) * W_PROPS).sum(axis=1).mean()
+    )
+    print(
+        f"[arc] TEST challenger macro_mae={test_macro:.4f} props_mae={test_props:.4f}",
+        flush=True,
+    )
 
     # --- baselines on the same clean test split ---
     # naive_last: repeat most recent season's features
     # avg3: recency-weighted 3yr mean
     # lite_clean: incumbent TimesFM-lite idea (fixed temporal weights + LS
     #             cross-variate mix), reimplemented on clean person_id arcs
-    bl = {'naive_last': [], 'avg3': [], 'lite_clean': []}
+    bl = {"naive_last": [], "avg3": [], "lite_clean": []}
     w_temp = np.array([0.2, 0.3, 0.5])
     # fit lite_clean's mixing matrix on train pairs with >=3 ctx seasons
     Xl, Yl = [], []
@@ -195,7 +234,7 @@ def main():
         yrs = [t[0] for t in traj]
         for i in range(3, len(vecs)):
             if yrs[i] <= 2021:  # train-only fit
-                Xl.append(vecs[i - 3:i].T)  # (14,3)
+                Xl.append(vecs[i - 3 : i].T)  # (14,3)
                 Yl.append(vecs[i])
     Xl = np.array(Xl)
     Yl = np.array(Yl)
@@ -206,35 +245,41 @@ def main():
         x, y, yr, pid = pairs[idx]
         traj = arcs[pid]
         # find target position in traj
-        ti = next(i for i, t in enumerate(traj) if t[0] == yr
-                  and np.allclose(t[2], y[:N_F]))
+        ti = next(
+            i for i, t in enumerate(traj) if t[0] == yr and np.allclose(t[2], y[:N_F])
+        )
         prev = [t[2] for t in traj[:ti]]
-        bl['naive_last'].append(prev[-1])
+        bl["naive_last"].append(prev[-1])
         k = min(3, len(prev))
         w = np.array([0.5, 0.3, 0.2][-k:])
         w = w / w.sum()
-        bl['avg3'].append(sum(wi * v for wi, v in zip(w, prev[-k:])))
+        bl["avg3"].append(sum(wi * v for wi, v in zip(w, prev[-k:])))
         if len(prev) >= 3:
             ctx = np.stack(prev[-3:]).T
-            bl['lite_clean'].append(ctx @ w_temp @ W_var)
+            bl["lite_clean"].append(ctx @ w_temp @ W_var)
         else:
-            bl['lite_clean'].append(prev[-1])  # fallback for short arcs
+            bl["lite_clean"].append(prev[-1])  # fallback for short arcs
 
-    results = {'challenger': {'macro_mae': test_macro, 'props_mae': test_props}}
+    results = {"challenger": {"macro_mae": test_macro, "props_mae": test_props}}
     win = True
     for name, preds in bl.items():
         P = np.stack(preds)
         m_macro = mae(P, Y_te[:, :N_F])
         m_props = float((np.abs(P - Y_te[:, :N_F]) * W_PROPS).sum(axis=1).mean())
-        results[name] = {'macro_mae': m_macro, 'props_mae': m_props}
-        print(f"[arc] TEST baseline {name:<10} macro_mae={m_macro:.4f} props_mae={m_props:.4f}", flush=True)
+        results[name] = {"macro_mae": m_macro, "props_mae": m_props}
+        print(
+            f"[arc] TEST baseline {name:<10} macro_mae={m_macro:.4f} props_mae={m_props:.4f}",
+            flush=True,
+        )
         if not (test_macro < m_macro and test_props < m_props):
             win = False
 
     print(f"[arc] WIN GATE: {'PASS' if win else 'FAIL'}", flush=True)
     if not win:
-        print("[arc] challenger did not beat all baselines — no artifact written.",
-              flush=True)
+        print(
+            "[arc] challenger did not beat all baselines — no artifact written.",
+            flush=True,
+        )
         sys.exit(2)
 
     # --- prod artifact: 2026-27 forecasts for every person with >=1 season ---
@@ -245,37 +290,41 @@ def main():
         yhat = predict(W, x.reshape(1, -1))[0]
         yhat = np.where(np.isnan(yhat), 0.0, yhat)  # QA: no NaNs escape
         forecasts[pid] = {
-            'per100': [round(float(v), 4) for v in yhat[:N_F]],
-            'mpg': round(float(yhat[N_F]), 2),
-            'gp_est': round(float(np.clip(yhat[N_F + 1], 0, 82)), 1),
-            'n_seasons': len(traj),
-            'last_season': traj[-1][1],
+            "per100": [round(float(v), 4) for v in yhat[:N_F]],
+            "mpg": round(float(yhat[N_F]), 2),
+            "gp_est": round(float(np.clip(yhat[N_F + 1], 0, 82)), 1),
+            "n_seasons": len(traj),
+            "last_season": traj[-1][1],
         }
 
     def sha(p):
         return hashlib.sha256(Path(p).read_bytes()).hexdigest()[:12]
 
     artifact = {
-        'version': 'arc-ridge-v1',
-        'model': 'ridge(alpha=%s) on 76-d career-arc features, numpy closed-form' % alpha_star,
-        'season': '2026-27',
-        'trained_on': {
-            'vectors.json': sha(vectors_path),
-            'player-identity.json': sha(identity_path),
-            'n_persons': n_persons,
-            'n_pairs': len(pairs),
+        "version": "arc-ridge-v1",
+        "model": "ridge(alpha=%s) on 76-d career-arc features, numpy closed-form"
+        % alpha_star,
+        "season": "2026-27",
+        "trained_on": {
+            "vectors.json": sha(vectors_path),
+            "player-identity.json": sha(identity_path),
+            "n_persons": n_persons,
+            "n_pairs": len(pairs),
         },
-        'split': 'train target<=2021 / val 2022-2023 / test >=2024 (chronological)',
-        'features': FEATURES,
-        'metrics': results,
-        'win': True,
-        'elapsed_s': round(time.time() - t0, 1),
-        'forecasts': forecasts,
+        "split": "train target<=2021 / val 2022-2023 / test >=2024 (chronological)",
+        "features": FEATURES,
+        "metrics": results,
+        "win": True,
+        "elapsed_s": round(time.time() - t0, 1),
+        "forecasts": forecasts,
     }
     out_path.write_text(json.dumps(artifact))
-    print(f"[arc] wrote {out_path} ({len(forecasts)} forecasts, "
-          f"{out_path.stat().st_size / 1e6:.1f} MB)", flush=True)
+    print(
+        f"[arc] wrote {out_path} ({len(forecasts)} forecasts, "
+        f"{out_path.stat().st_size / 1e6:.1f} MB)",
+        flush=True,
+    )
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
