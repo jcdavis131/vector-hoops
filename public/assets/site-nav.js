@@ -11,6 +11,7 @@
     { href: '/model', label: 'Lab', title: 'How the embedding model is trained and evaluated' },
     { href: '/trends', label: 'Trends', title: 'Thirty seasons of league drift' },
     { href: '/insights', label: 'Insights', title: 'What the model learned: shareable findings from 12,966 player-seasons' },
+    { href: '/playoff-runs', label: 'Playoff Runs', title: 'The 42 greatest postseason runs ever: players, duos, trios, teams' },
     { href: '/methods', label: 'Methods', title: 'Sources, features and the maths behind every number' }
   ];
 

@@ -17,6 +17,13 @@
     return r.champion ? '<span class="vh-runs__champ">🏆 Champions</span>' : '';
   }
 
+  // Deep link into the Players directory, pre-filled search (?q= support
+  // in assets/players-directory.js) so every run connects to the atlas.
+  function plink(name) {
+    return '<a class="vh-runs__plink" href="/players?q=' +
+      encodeURIComponent(name) + '">' + esc(name) + '</a>';
+  }
+
   function barRow(rank, names, meta, pts, maxPts, badge) {
     var w = maxPts > 0 ? Math.max(4, Math.round(100 * pts / maxPts)) : 4;
     return '<article class="vh-runs__row">' +
@@ -35,17 +42,17 @@
     html += rows.map(function (r, i) {
       var rank = i + 1;
       if (key === 'individuals') {
-        return barRow(rank, esc(r.player),
+        return barRow(rank, plink(r.player),
           '<b>' + esc(r.season) + '</b> · ' + esc(r.wl) + ' in ' + r.gp + ' games',
           r.pts100, maxPts, champBadge(r));
       }
       if (key === 'teams') {
         return barRow(rank, esc(r.team),
           '<b>' + esc(r.season) + '</b> · ' + esc(r.wl) + ' · path ' + esc(r.path) +
-          ' · led by ' + esc(r.top_scorer),
+          ' · led by ' + plink(r.top_scorer),
           r.top_pts100, maxPts, champBadge(r));
       }
-      return barRow(rank, r.players.map(esc).join(' <span aria-hidden="true">·</span> '),
+      return barRow(rank, r.players.map(plink).join(' <span aria-hidden="true">·</span> '),
         '<b>' + esc(r.team) + '</b> · ' + esc(r.season) + ' · ' + esc(r.wl),
         r.pts100, maxPts, champBadge(r));
     }).join('');
