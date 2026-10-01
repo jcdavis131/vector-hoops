@@ -56,6 +56,157 @@ def load(name):
         return json.load(f)
 
 
+# ---- 10. playoff risers & fallers -----------------------------------------------
+# Research: /tmp/playoff-runs-analysis.py (2026-10-01).
+# Method: per-player regular-season vs playoff scoring rate (pts/100) from
+# assets/playoffs.json (stats.nba.com splits). Established-scorer gate:
+# RS pts/100 >= 28 over >= 40 RS games, PO GP >= 8, PO usage >= 18.
+# 334 player-seasons qualify, 1996-97 -> 2025-26. Delta = PO - RS pts/100.
+# Values below are exact to the computed deltas (rounded to 1 decimal).
+
+
+def insight_playoff_swings():
+    rows = [
+        {"label": "Donovan Mitchell '24-25", "value": 8.6,
+         "tag": "35.7 → 44.3 pts/100 · 9 games"},
+        {"label": "Donovan Mitchell '20-21", "value": 8.3,
+         "tag": "38.0 → 46.3 pts/100 · 10 games"},
+        {"label": "Tim Duncan '05-06", "value": 8.2,
+         "tag": "28.6 → 36.8 pts/100 · 13 games"},
+        {"label": "LeBron James '08-09", "value": 7.2,
+         "tag": "39.9 → 47.1 pts/100 · 14 games"},
+        {"label": "Kevin Durant '18-19", "value": 7.2,
+         "tag": "34.9 → 42.1 pts/100 · 12 games — tied 4th"},
+        {"label": "Joel Embiid '22-23", "value": -14.6,
+         "tag": "47.1 → 32.5 pts/100 · 9 games"},
+        {"label": "Kristaps Porzingis '24-25", "value": -13.6,
+         "tag": "32.4 → 18.8 pts/100 · 11 games"},
+        {"label": "Jermaine O'Neal '04-05", "value": -13.2,
+         "tag": "37.3 → 24.1 pts/100 · 13 games"},
+        {"label": "Joel Embiid '21-22", "value": -12.6,
+         "tag": "44.8 → 32.2 pts/100 · 10 games"},
+        {"label": "Jordan Clarkson '17-18", "value": -12.0,
+         "tag": "28.1 → 16.1 pts/100 · 19 games"},
+    ]
+    return {
+        "slug": "playoff-swings",
+        "tldr": "Among established scorers, Donovan Mitchell owns the two biggest "
+        "playoff scoring leaps of the last 30 years — and Joel Embiid owns the "
+        "single biggest collapse (-14.6). May doesn't just test talent; it tests "
+        "whose game translates.",
+        "kicker": "Playoff risers & fallers",
+        "title": "May makes some stars bigger — and shrinks others",
+        "lede": "Scoring-rate change from regular season to playoffs (pts/100) for "
+        "established scorers: 28+ pts/100 across 40+ regular-season games, 8+ "
+        "playoff games, and a real playoff role. 334 player-seasons qualified, "
+        "1996-97 → 2025-26. The risers: Mitchell's 2025 encore (+8.6) and his "
+        "2021 surge (+8.3), Duncan's 2006 throwback (+8.2), and a +7.2 tie for "
+        "fourth between LeBron's 2009 rampage and Durant's pre-injury 2019 tear. "
+        "The fallers: Embiid's 2023 collapse (-14.6, the largest in the sample) "
+        "and his 2022 fade (-12.6), Porzingis's hollowed-out 2025 (-13.6), "
+        "Jermaine O'Neal's 2005 fade (-13.2), and Jordan Clarkson's 2018 dip "
+        "(-12.0).",
+        "stat": "+8.6",
+        "stat_label": "Mitchell's 2025 scoring jump (pts/100) — the biggest rise "
+        "among established scorers",
+        "viz": "bars",
+        "viz_label": "Scoring change, regular season → playoffs (pts/100)",
+        "rows": rows,
+        "foot": "334 established-scorer seasons (28+ RS pts/100, 40+ RS games, 8+ "
+        "playoff games, playoff usage ≥ 18); regular-season vs playoff splits via "
+        "stats.nba.com. This is the biggest swing in scoring rate — not the "
+        "greatest postseason run; see the playoff-runs rankings for that.",
+        "og_title": "Playoff risers & fallers",
+        "og_desc": "Mitchell owns the two biggest May scoring leaps in 30 years. "
+        "Embiid owns the biggest collapse.",
+    }
+
+
+# ---- 11. contenders & pretenders (2026-27 preview) -----------------------------
+# Research: recomputed 2026-10-01 (gp>=20 filter; suffix-tolerant name matching).
+# Method: the contender-chemistry metric (mean pairwise 14-d style distance
+# across the rotation) applied to projected 2026-27 rotations. Rotation =
+# rostered players with >= 20 GP in 2025-26; stars who missed the season
+# (Irving, Haliburton, Lillard) use their latest season's style vector.
+# Values centered on the historical playoff-team mean (5.06) from the
+# contender-chemistry card: positive = playoff-shaped, negative =
+# lottery-shaped. Engine = top scorer by latest regular-season pts/100
+# (stats.nba.com splits; 2025-26 for 2026 playoff teams, 2024-25 otherwise).
+# Contender = clears BOTH bars: spread >= 5.06 AND top-10 engine.
+# Roster source: 2026-27 projected rosters as of 2026-10-01; the summer's big
+# moves (Giannis->MIA, Brown->PHI, LeBron->PHI, Kawhi->TOR, Morant->POR)
+# verified against Reuters/USA Today 2026-09-28.
+# Honesty: shape predicts MAKING the playoffs, not winning — the 2026
+# finalists (Knicks 4.80, Spurs 4.84) both sit below the line.
+
+
+def insight_contenders_pretenders():
+    rows = [
+        {"label": "Portland", "value": 0.61,
+         "tag": "5.67 spread · Morant 34.6 pts/100 — shape, no engine"},
+        {"label": "LA Lakers", "value": 0.50,
+         "tag": "5.56 spread · Dončić 38.1 pts/100"},
+        {"label": "Oklahoma City", "value": 0.25,
+         "tag": "5.31 spread · Gilgeous-Alexander 44.1 pts/100"},
+        {"label": "Denver", "value": 0.14,
+         "tag": "5.20 spread · Jokić 37.1 pts/100"},
+        {"label": "Philadelphia", "value": 0.08,
+         "tag": "5.14 spread · Brown 41.0 pts/100 — plus LeBron"},
+        {"label": "Miami", "value": 0.06,
+         "tag": "5.12 spread · Antetokounmpo 42.7 pts/100"},
+        {"label": "San Antonio", "value": -0.22,
+         "tag": "4.84 spread · Wembanyama 40.2 — lost Finals"},
+        {"label": "New York", "value": -0.26,
+         "tag": "4.80 spread · Brunson 36.3 — defending champs"},
+    ]
+    return {
+        "slug": "contenders-pretenders",
+        "tldr": "Five teams clear both bars — a playoff-shaped rotation and a "
+        "top-10 engine: the Lakers, Oklahoma City, Denver, Philadelphia and "
+        "Miami. Portland has the most playoff-shaped rotation in the league "
+        "and no engine to match; the champs and runners-up win on talent, "
+        "not shape.",
+        "kicker": "2026-27 preview",
+        "title": "Who looks like a contender — and who looks lottery-shaped",
+        "lede": "Each projected 2026-27 rotation measured with the "
+        "contender-chemistry metric (mean pairwise style distance in the 14-d "
+        "embedding space), centered on the historical playoff-team mean of "
+        "5.06 — right of the line is playoff-shaped, left is lottery-shaped. "
+        "Five teams clear both bars, shape and engine: the Lakers pair the "
+        "second-most playoff-shaped rotation (5.56) with Dončić (38.1 "
+        "pts/100); Oklahoma City (5.31, Gilgeous-Alexander 44.1); Denver "
+        "(5.20, Jokić 37.1); Philadelphia (5.14, Brown 41.0 — plus LeBron, "
+        "plus Embiid); and Miami (5.12, Antetokounmpo 42.7). The twist: last "
+        "June's finalists both sit BELOW the line — the champion Knicks "
+        "(4.80) and the Spurs (4.84) win on talent, not shape, exactly what "
+        "the chemistry card predicted: variety gets you in, matchups decide "
+        "the rest. The cautionary tale is Portland: the most playoff-shaped "
+        "rotation in the league (5.67) with no top-10 engine — Sacramento "
+        "(5.45), Utah (5.44) and Detroit (5.41) fit the same profile. At the "
+        "bottom, Atlanta (4.06) has the most homogeneous rotation in the "
+        "league. One asterisk from the risers & fallers card: Philadelphia's "
+        "ceiling runs through Embiid, owner of the largest playoff scoring "
+        "collapse of the last 30 years — and he has played 39% of possible "
+        "games across the last three seasons.",
+        "stat": "+0.61",
+        "stat_label": "Portland's spread above the playoff-team line — most "
+        "playoff-shaped rotation, without a top-10 engine",
+        "viz": "bars",
+        "viz_label": "2026-27 rotation spread vs the playoff-team mean (5.06)",
+        "rows": rows,
+        "foot": "30 projected 2026-27 rotations as of 2026-10-01 (rostered "
+        "players with ≥20 GP in 2025-26; stars who missed the season use "
+        "their latest season's style; camp cuts pending). Spread = mean "
+        "pairwise 14-d style distance, centered on the 1996-97 → 2024-25 "
+        "playoff-team mean (5.06). Engine = latest regular-season pts/100 "
+        "(2025-26 for 2026 playoff teams, 2024-25 otherwise). Shape predicts "
+        "making the playoffs, not winning the title.",
+        "og_title": "Contenders & pretenders, 2026-27",
+        "og_desc": "Five teams clear both bars: the Lakers, OKC, Denver, "
+        "Philly and Miami. The champs break the mold.",
+    }
+
+
 def main():
     vec = load("vectors.json")
     players = vec["players"]
@@ -85,6 +236,8 @@ def main():
     insights.append(insight_careful_era(drift))
     insights.append(insight_contender_chemistry())
     insights.append(insight_matchup_nightmares())
+    insights.append(insight_playoff_swings())
+    insights.append(insight_contenders_pretenders())
 
     out = {
         "built": "build_insights.py",
@@ -501,7 +654,7 @@ def insight_contender_chemistry():
 # (Knicks d. Spurs 4-1, 5 games). The first version used full-playoff-run
 # numbers (22g/18g/23g) and wrongly implied the Knicks "solved" Wembanyama --
 # he averaged 26.0 ppg in the Finals. Sources: StatMuse series splits
-# (Wembanyama 26.0/11.2/3.6blk; Harper 18.0 ppg vs 11.8 RS; Barnes 2.3 ppg
+# Harper 18.0 ppg vs 11.8 RS; Barnes faded out of the rotation in the Finals
 # postseason vs 9.9 RS), SI (Alvarado +18.9 Finals on/off), NBC Sports
 # (Alvarado 8 4th-quarter pts in the 29-pt Game 4 comeback), Fadeaway World
 # (Brunson 32.6 ppg Finals MVP, 45 in the closeout).
@@ -570,8 +723,8 @@ def insight_matchup_nightmares():
         "fourth-quarter points. Spurs rookie creator Dylan Harper's role grew all "
         "series, up to 18.0 points per game off the bench from 11.8 in the regular "
         "season. At the other end, veteran shooter Harrison Barnes was squeezed out "
-        "of the rotation, down to 2.3 points a night in the postseason after 9.9 per "
-        "game in the regular season. Even Victor Wembanyama's brilliant 26-a-night "
+        "of the rotation in the Finals after 9.9 per game in the regular "
+        "season. Even Victor Wembanyama's brilliant 26-a-night "
         "couldn't scheme-proof San Antonio alone.",
         "stat": "-2.3",
         "stat_label": "playoff pts/100 drop for pure 3-point specialists "
