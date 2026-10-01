@@ -158,6 +158,13 @@ Heads: 8 arch / 5 pos / 14 next / 18 skills (64→16→1)
       <p class="doc-note">The twin itself is found in the full 64-dimensional embedding; the explanation is a simpler breakdown using the 14 serving traits behind the map. It describes the match rather than re-deriving it.</p>
     </section>
 
+    <section id="insights">
+      <div class="doc-n">04&middot;d</div>
+      <h2>Insights — shareable findings</h2>
+      <p>The <a href="/insights">Insights</a> page curates the most striking things the embedding model has measured: the strangest and most average seasons, the biggest career reinventions, era twins decades apart, dying archetypes, and the three-point takeover. Each card is generated from the same served vectors — nothing hand-written, nothing invented.</p>
+      <p class="doc-note">Uniqueness is Euclidean distance from the centroid of all 12,966 player-seasons in the 14-d style space (minimum 1,500 minutes). Career transformation is first-to-last season distance (minimum 4 seasons at 800+ minutes). Era-twin gaps use the full 64-d cosine similarity. Every card deep-links (<code>/insights.html#&lt;slug&gt;</code>), exports a 1080&times;1350 PNG rendered in the browser, and has a crawler page at <code>/insights/&lt;slug&gt;</code> with a pre-rendered unfurl image.</p>
+    </section>
+
     <section id="drift">
       <div class="doc-n">05</div>
       <h2>League drift — Procrustes</h2>

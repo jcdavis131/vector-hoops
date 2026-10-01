@@ -10,6 +10,7 @@
     { href: '/players', label: 'Players', title: 'Directory, skill profiles and leaderboards' },
     { href: '/model', label: 'Lab', title: 'How the embedding model is trained and evaluated' },
     { href: '/trends', label: 'Trends', title: 'Thirty seasons of league drift' },
+    { href: '/insights', label: 'Insights', title: 'What the model learned: shareable findings from 12,966 player-seasons' },
     { href: '/methods', label: 'Methods', title: 'Sources, features and the maths behind every number' }
   ];
 
