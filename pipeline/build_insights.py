@@ -497,6 +497,14 @@ def insight_contender_chemistry():
 # Honesty: "game-planning" is the best-fit mechanism (usage AND efficiency fall
 # together for shooters), not proven causation. Cluster [2]'s +0.30 (n=125) is
 # not significant -- tagged as noise, not claimed.
+# 2026 Finals color (corrected 2026-10-01): Finals-SERIES-only numbers
+# (Knicks d. Spurs 4-1, 5 games). The first version used full-playoff-run
+# numbers (22g/18g/23g) and wrongly implied the Knicks "solved" Wembanyama --
+# he averaged 26.0 ppg in the Finals. Sources: StatMuse series splits
+# (Wembanyama 26.0/11.2/3.6blk; Harper 18.0 ppg vs 11.8 RS; Barnes 2.3 ppg
+# postseason vs 9.9 RS), SI (Alvarado +18.9 Finals on/off), NBC Sports
+# (Alvarado 8 4th-quarter pts in the 29-pt Game 4 comeback), Fadeaway World
+# (Brunson 32.6 ppg Finals MVP, 45 in the closeout).
 
 
 def insight_matchup_nightmares():
@@ -555,11 +563,16 @@ def insight_matchup_nightmares():
         "from 1 in 250 in the regular season. The pattern fits a game-planning story — a "
         "best-of-7 gives defenses time to scheme a jumper, not a creator — but that's the "
         "best-fit mechanism, not proven causation. Loudest single-postseason swings are "
-        "small-sample color, but the 2026 Finals lived the pattern: the Knicks solved "
-        "even Victor Wembanyama (-6.0 pts/100 over 22 games) while their title run rode "
-        "playmaker Jose Alvarado (+4.1 across 18 games); Spurs rookie Dylan Harper's "
-        "role grew (+0.8) all the way to the Finals as shooters Harrison Barnes (-5.7) "
-        "and Devin Vassell (-3.7) faded.",
+        "small-sample color, but the 2026 Finals lived the pattern. The Knicks' "
+        "title run rode its playmakers: Finals MVP Jalen Brunson averaged 32.6 "
+        "points (45 in the closeout), and Jose Alvarado — just 4.2 points a night "
+        "but a +18.9 on/off — sparked the 29-point Game 4 comeback with 8 "
+        "fourth-quarter points. Spurs rookie creator Dylan Harper's role grew all "
+        "series, up to 18.0 points per game off the bench from 11.8 in the regular "
+        "season. At the other end, veteran shooter Harrison Barnes was squeezed out "
+        "of the rotation, down to 2.3 points a night in the postseason after 9.9 per "
+        "game in the regular season. Even Victor Wembanyama's brilliant 26-a-night "
+        "couldn't scheme-proof San Antonio alone.",
         "stat": "-2.3",
         "stat_label": "playoff pts/100 drop for pure 3-point specialists "
         "(usage and efficiency fall too)",
