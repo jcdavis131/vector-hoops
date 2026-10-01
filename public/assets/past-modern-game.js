@@ -180,9 +180,11 @@
   function generateRandomPack(n){
     const size=Math.max(1,Math.min(PACK_MAX,n||3));
     if(!state.pastPool || !state.pastPool.length) return [];
-    const byName=new Map();
-    for(const p of state.pastPool){ if(!byName.has(p.n)) byName.set(p.n,p); }
-    let unique=Array.from(byName.values());
+    // one entry per PERSON (identity fix 2026-10-01): two persons can share a
+    // display name, so dedupe on pid, never on the name alone.
+    const byPid=new Map();
+    for(const p of state.pastPool){ const k=p.pid||p.n; if(!byPid.has(k)) byPid.set(k,p); }
+    let unique=Array.from(byPid.values());
     if(unique.length<size) unique=state.pastPool.slice();
     const shuffled=shuffleArray(unique);
     return shuffled.slice(0,size);
@@ -493,13 +495,16 @@
     state.pastPool=past;
 
     const modernCandidates=lite.players.filter(p=>parseYear(p.s)>=2025);
-    const byName=new Map();
+    // latest season per PERSON (identity fix 2026-10-01): key on pid, not the
+    // display name — two persons can share one (e.g. Reggie Williams).
+    const byPid=new Map();
     for(const p of modernCandidates){
-      const yr=parseYear(p.s); const ex=byName.get(p.n);
-      if(!ex || parseYear(ex.s)<yr || (parseYear(ex.s)===yr && p.s>ex.s)) byName.set(p.n,p);
+      const k=p.pid||p.n;
+      const yr=parseYear(p.s); const ex=byPid.get(k);
+      if(!ex || parseYear(ex.s)<yr || (parseYear(ex.s)===yr && p.s>ex.s)) byPid.set(k,p);
     }
-    const modern=Array.from(byName.values()).sort((a,b)=>a.n.localeCompare(b.n));
-    state.modernPool=modern; state.modernByName=byName; state.modernByLower=new Map(modern.map(m=>[m.n.toLowerCase(),m]));
+    const modern=Array.from(byPid.values()).sort((a,b)=>a.n.localeCompare(b.n));
+    state.modernPool=modern; state.modernByName=byPid; state.modernByLower=new Map(modern.map(m=>[m.n.toLowerCase(),m]));
 
     let urlDay=null,urlRandomId=null,modeParam=null,packParam=null,packSizeParam=null,scoresParam=null,slotParam=null;
     try{

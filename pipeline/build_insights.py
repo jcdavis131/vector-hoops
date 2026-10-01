@@ -183,18 +183,21 @@ def insight_transformed(players):
     by = defaultdict(list)
     for p in players:
         if p["total_min"] >= 800:
-            by[p["name"]].append(p)
+            # person_id, never the display name: Sr./Jr. sharing a name must
+            # not merge into one career (identity fix 2026-10-01)
+            by[p["person_id"]].append(p)
 
     def euc(a, b):
         return math.sqrt(sum((a[i] - b[i]) ** 2 for i in range(14)))
 
     scored = []
-    for name, ps in by.items():
+    for pid, ps in by.items():
         if len(ps) < 4:
             continue
         ps.sort(key=lambda p: p["season"])
         d = euc(ps[0]["v"], ps[-1]["v"])
-        scored.append((d, name, ps[0]["season"], ps[-1]["season"], len(ps)))
+        # display name is 1:1 with person_id (qa_player_identity.py check 2)
+        scored.append((d, ps[0]["name"], ps[0]["season"], ps[-1]["season"], len(ps)))
     scored.sort(reverse=True)
     most = scored[0]
     steady = [s for s in scored if s[4] >= 11]

@@ -14,6 +14,7 @@
 
   var INDEX_URL = '/assets/trails_index.json';
   var TRAILS_URL = '/assets/trails.json';
+  var AMBIG_URL = '/assets/pid_ambiguous.json';
   var MOSS = '#8A9A8B', TERRA = '#C17C60', VOID = '#07090C';
   var HONEST_KEY = 'vh:trail-honest-seen';
 
@@ -24,10 +25,23 @@
   var readout = document.getElementById('atlas-selected');
   if (!wrap || !sky || !window.VHAtlas) return;
 
-  var indexP = null, trailsP = null, labels = null;
+  var indexP = null, trailsP = null, ambigP = null, labels = null;
   var active = null; // {trail, pts:[{x,y}], years:[], n, idx, overlay, octx, bar, ...}
 
   function normName(n) { return String(n || '').trim().toLowerCase().replace(/\s+/g, ' '); }
+  function personSlug(n) {
+    return String(n || '').toLowerCase().replace(/\./g, '').replace(/'/g, '')
+      .replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+  }
+  // Identity fix 2026-10-01: trails are keyed by person_id, never display
+  // names. The selected player carries pid from vectors_search_lite.json;
+  // pid_ambiguous.json resolves (name, season) for stale caches.
+  function resolvePid(player, ambig) {
+    if (player.pid) return player.pid;
+    var key = normName(player.n);
+    if (ambig && ambig[key] && ambig[key][player.s]) return ambig[key][player.s];
+    return personSlug(player.n);
+  }
   function fmtSeason(s) { return String(s || '').replace('-', '–'); }
   function shortYear(s) { return '’' + String(s || '').slice(2, 4); }
   function esc(s) { return String(s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
@@ -50,16 +64,26 @@
     return trailsP;
   }
 
+  function loadAmbig() {
+    if (!ambigP) {
+      ambigP = fetch(AMBIG_URL, { cache: 'force-cache' })
+        .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+        .catch(function () { return {}; });
+    }
+    return ambigP;
+  }
+
   // ---------- selection hook ----------
   window.VHAtlas.onSelect(function (player) {
     exitTrail();
     removeButton();
     if (!player) return;
-    loadIndex().then(function (idx) {
+    Promise.all([loadIndex(), loadAmbig()]).then(function (res) {
+      var idx = res[0], ambig = res[1];
       // the player may have moved on while the index loaded
       var cur = window.VHAtlas.selectedPlayer();
       if (!cur || cur.n !== player.n || cur.s !== player.s) return;
-      if (idx[normName(player.n)]) injectButton(player);
+      if (idx[resolvePid(player, ambig)]) injectButton(player, ambig);
     });
   });
 
@@ -67,7 +91,7 @@
     var b = document.getElementById('trail-btn');
     if (b && b.parentNode) b.parentNode.removeChild(b);
   }
-  function injectButton(player) {
+  function injectButton(player, ambig) {
     if (!readout || document.getElementById('trail-btn')) return;
     var b = document.createElement('button');
     b.type = 'button'; b.id = 'trail-btn'; b.className = 'trail-btn';
@@ -78,7 +102,7 @@
       loadTrails().then(function (t) {
         b.disabled = false; b.innerHTML = '&#9654; Trail';
         if (!t) return;
-        var trail = t[normName(player.n)];
+        var trail = t[resolvePid(player, ambig)];
         if (trail) enterTrail(trail);
       });
     });
