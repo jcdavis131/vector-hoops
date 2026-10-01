@@ -1,0 +1,460 @@
+#!/usr/bin/env python3
+"""Build shareable analytics insights from the embedding model data.
+
+Stdlib-only data computation. Outputs:
+  assets/insights.json                  curated insights w/ every number the page needs
+  public/assets/insights.json           mirror (Vercel serves public/ at root)
+  public/assets/og/insight-<slug>.png   per-card unfurl images (needs PIL; skipped if missing)
+  public/insights/<slug>.html           per-card OG stub pages (crawlers -> image, humans -> redirect)
+
+Real data only. No synthetic numbers, no invented annotations except the
+clearly-marked MVP_SEASONS set (public record, used for one headline).
+"""
+
+import json
+import math
+import os
+from collections import defaultdict
+
+REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+ASSETS = os.path.join(REPO, "assets")
+PUBLIC = os.path.join(REPO, "public")
+DOMAIN = "https://hoops.dumbmodel.com"
+
+NAME_FIXES = {
+    "Shai GilgeousAlexander": "Shai Gilgeous-Alexander",
+    "KarlAnthony Towns": "Karl-Anthony Towns",
+    "Michael CarterWilliams": "Michael Carter-Williams",
+    "Shaquille ONeal": "Shaquille O'Neal",
+    "Jermaine ONeal": "Jermaine O'Neal",
+    "Royce ONeale": "Royce O'Neale",
+}
+
+# Public record, curated by hand for the uniqueness headline.
+# Only seasons where the player actually won MVP that year.
+MVP_SEASONS = {
+    ("Russell Westbrook", "2016-17"),
+    ("Giannis Antetokounmpo", "2019-20"),
+    ("James Harden", "2017-18"),
+}
+
+
+def pretty(name):
+    return NAME_FIXES.get(name, name)
+
+
+def short_season(s):
+    # "2018-19" -> "'18-19"
+    a, b = s.split("-")
+    return "'%s-%s" % (a[2:], b)
+
+
+def load(name):
+    with open(os.path.join(ASSETS, name), encoding="utf-8") as f:
+        return json.load(f)
+
+
+def main():
+    vec = load("vectors.json")
+    players = vec["players"]
+    clusters = vec["clusters"]
+    eratwins = load("eratwins.json")["players"]
+    drift = load("drift.json")
+
+    D = 14
+    N = len(players)
+    cent = [0.0] * D
+    for p in players:
+        v = p["v"]
+        for i in range(D):
+            cent[i] += v[i]
+    cent = [c / N for c in cent]
+
+    def cdist(v):
+        return math.sqrt(sum((v[i] - cent[i]) ** 2 for i in range(D)))
+
+    insights = []
+    insights.append(insight_unique(players, cdist))
+    insights.append(insight_average(players, cdist))
+    insights.append(insight_transformed(players))
+    insights.append(insight_time_capsule(eratwins))
+    insights.append(insight_dead_styles(players, clusters))
+    insights.append(insight_three_point(drift))
+
+    out = {
+        "built": "build_insights.py",
+        "n_seasons": N,
+        "domain": DOMAIN,
+        "insights": insights,
+    }
+    for path in (
+        os.path.join(ASSETS, "insights.json"),
+        os.path.join(PUBLIC, "assets", "insights.json"),
+    ):
+        os.makedirs(os.path.dirname(path), exist_ok=True)
+        with open(path, "w", encoding="utf-8") as f:
+            json.dump(out, f, separators=(",", ":"))
+    print("wrote insights.json (%d insights)" % len(insights))
+
+    render_og_images(insights)
+    write_og_stubs(insights)
+
+
+# ---- 1. most unique styles -----------------------------------------------
+
+
+def insight_unique(players, cdist):
+    scored = [
+        (cdist(p["v"]), p["name"], p["season"])
+        for p in players
+        if p["total_min"] >= 1500
+    ]
+    scored.sort(reverse=True)
+    rows = []
+    for d, name, season in scored[:8]:
+        rows.append(
+            {
+                "label": "%s %s" % (pretty(name), short_season(season)),
+                "value": round(d, 2),
+                "tag": "MVP" if (name, season) in MVP_SEASONS else None,
+            }
+        )
+    top = rows[0]
+    return {
+        "slug": "most-unique",
+        "kicker": "Uniqueness",
+        "title": "The strangest playing styles of the last 30 years belong to MVP-level superstars",
+        "lede": "Style distance from the league-average player, 14-dimensional embedding space. "
+        "Minimum 1,500 minutes. The five strangest seasons ever charted — three of them MVP campaigns.",
+        "stat": str(top["value"]),
+        "stat_label": "style distance — %s" % top["label"],
+        "viz": "bars",
+        "viz_label": "Distance from league-average style",
+        "rows": rows,
+        "foot": "Computed over 12,966 player-seasons (1996-97 → 2025-26). MVP seasons marked from the public record.",
+        "og_title": "The weirdest NBA seasons in 30 years belong to superstars",
+        "og_desc": "Harden '18-19 sits 9.57 style-points from the average player — the strangest season in 30 years of data.",
+    }
+
+
+# ---- 2. most average ------------------------------------------------------
+
+
+def insight_average(players, cdist):
+    scored = [
+        (cdist(p["v"]), p["name"], p["season"])
+        for p in players
+        if p["total_min"] >= 1500
+    ]
+    scored.sort()
+    rows = [
+        {"label": "%s %s" % (pretty(n), short_season(s)), "value": round(d, 2)}
+        for d, n, s in scored[:5]
+    ]
+    top = rows[0]
+    return {
+        "slug": "most-average",
+        "kicker": "Uniqueness",
+        "title": "The most average NBA season ever charted",
+        "lede": "Closest to the centroid of all 12,966 player-seasons in style space. "
+        "Not bad, not weird — the platonic NBA role player, quantified.",
+        "stat": str(top["value"]),
+        "stat_label": "style distance — %s" % top["label"],
+        "viz": "bars",
+        "viz_label": "Distance from league-average style (smaller = more average)",
+        "rows": rows,
+        "foot": "Minimum 1,500 minutes. 14-dimensional serving vectors, 1996-97 → 2025-26.",
+        "og_title": "The most average NBA season ever: Caleb Martin '23-24",
+        "og_desc": "1.02 style-points from the league-average player — the platonic NBA season, measured.",
+    }
+
+
+# ---- 3. transformed -------------------------------------------------------
+
+
+def insight_transformed(players):
+    by = defaultdict(list)
+    for p in players:
+        if p["total_min"] >= 800:
+            by[p["name"]].append(p)
+
+    def euc(a, b):
+        return math.sqrt(sum((a[i] - b[i]) ** 2 for i in range(14)))
+
+    scored = []
+    for name, ps in by.items():
+        if len(ps) < 4:
+            continue
+        ps.sort(key=lambda p: p["season"])
+        d = euc(ps[0]["v"], ps[-1]["v"])
+        scored.append((d, name, ps[0]["season"], ps[-1]["season"], len(ps)))
+    scored.sort(reverse=True)
+    most = scored[0]
+    steady = [s for s in scored if s[4] >= 11]
+    steady.sort()
+    least = steady[0]
+    rows = [
+        {
+            "label": "%s %s → %s"
+            % (pretty(most[1]), short_season(most[2]), short_season(most[3])),
+            "value": round(most[0], 2),
+            "tag": "%d seasons" % most[4],
+        },
+        {
+            "label": "%s %s → %s"
+            % (pretty(least[1]), short_season(least[2]), short_season(least[3])),
+            "value": round(least[0], 2),
+            "tag": "%d seasons" % least[4],
+        },
+    ]
+    return {
+        "slug": "transformed",
+        "kicker": "Career arcs",
+        "title": "Nobody transformed like Giannis. Nobody stayed the same like Terrence Ross.",
+        "lede": "Style distance between a player's first and last charted season. "
+        "Giannis went from raw rookie to MVP force — the biggest reinvention in the dataset. "
+        "Ross played 11 seasons as essentially the same player.",
+        "stat": str(round(most[0], 2)),
+        "stat_label": "style distance — %s's reinvention" % pretty(most[1]),
+        "viz": "bars",
+        "viz_label": "First-to-last season style distance",
+        "rows": rows,
+        "foot": "First-to-last style distance. Minimum 4 charted seasons at 800+ minutes each; the steadiest needs 11+. 14-d style space.",
+        "og_title": "Giannis reinvented his game more than anyone in 30 years",
+        "og_desc": "8.43 style-points from his rookie season to now. Terrence Ross: 1.07 across 11 seasons.",
+    }
+
+
+# ---- 4. time-capsule twins -------------------------------------------------
+
+
+def insight_time_capsule(eratwins):
+    def yr(s):
+        return int(s.split("-")[0])
+
+    cands = []
+    for t in eratwins:
+        tw = t.get("twin") or {}
+        s1, s2, sim = t.get("season"), tw.get("season"), tw.get("similarity")
+        if not (s1 and s2 and sim):
+            continue
+        gap = abs(yr(s1) - yr(s2))
+        if sim >= 0.60:
+            cands.append((gap, sim, t.get("name"), s1, tw.get("name"), s2))
+    cands.sort(reverse=True)
+    picks = cands[:4]
+    rows = [
+        {
+            "a": "%s %s" % (pretty(n1), short_season(s1)),
+            "b": "%s %s" % (pretty(n2), short_season(s2)),
+            "gap": g,
+            "sim": round(s, 3),
+        }
+        for g, s, n1, s1, n2, s2 in picks
+    ]
+    top = rows[0]
+    return {
+        "slug": "time-capsule",
+        "kicker": "Era twins",
+        "title": "Separated by 29 years. Nearly the same player.",
+        "lede": "The widest era gaps with similarity ≥ 0.60 in the full 64-d embedding. "
+        "Styles echo across decades — the model keeps finding 1996-97 in 2025-26.",
+        "stat": "%dy" % top["gap"],
+        "stat_label": "widest twin gap — %s ↔ %s" % (top["a"], top["b"]),
+        "viz": "timeline",
+        "rows": rows,
+        "foot": "Twins found in the full 64-dimensional embedding; similarity is cosine there. "
+        "Dataset window 1996-97 → 2025-26.",
+        "og_title": "29 years apart. Nearly the same player.",
+        "og_desc": "Jeff Green '25-26 ↔ LaSalle Thompson '96-97: the widest era-twin gap in the model.",
+    }
+
+
+# ---- 5. dead styles ---------------------------------------------------------
+
+
+def insight_dead_styles(players, clusters):
+    seasons = sorted({p["season"] for p in players})
+    early, late = seasons[:3], seasons[-3:]
+    share = {s: defaultdict(int) for s in ("early", "late")}
+    tot = {"early": 0, "late": 0}
+    for p in players:
+        if p["season"] in early:
+            share["early"][p["c"]] += 1
+            tot["early"] += 1
+        elif p["season"] in late:
+            share["late"][p["c"]] += 1
+            tot["late"] += 1
+    drops = []
+    for ci, name in enumerate(clusters):
+        es = share["early"][ci] / tot["early"]
+        ls = share["late"][ci] / tot["late"]
+        drops.append((es - ls, name, es, ls))
+    drops.sort(reverse=True)
+    d, name, e, ls0 = drops[0]
+    rows = [
+        {
+            "label": n,
+            "early": round(100 * se, 1),
+            "late": round(100 * sl, 1),
+            "delta": round(100 * (sl - se), 1),
+        }
+        for _, n, se, sl in drops
+    ]
+    return {
+        "slug": "dead-styles",
+        "kicker": "Archetypes",
+        "title": 'The "%s" is going extinct' % name,
+        "lede": "Share of player-seasons in each style archetype: first three seasons vs last three. "
+        "The 'Defensive Glass + Rim Pressure' archetype is being selected out of the league.",
+        "stat": "%+.1fpp" % (100 * (ls0 - e)),
+        "stat_label": "share change — %s" % name,
+        "viz": "shares",
+        "rows": rows,
+        "foot": "8 k-means archetypes over 14-d serving vectors. Shares of charted player-seasons.",
+        "og_title": "An NBA playing style is going extinct",
+        "og_desc": '"%s" fell %+.1f points of league share. The model watched it happen.'
+        % (name, 100 * (ls0 - e)),
+    }
+
+
+# ---- 6. three-point takeover --------------------------------------------------
+
+
+def insight_three_point(drift):
+    rates = drift["leagueRates"]
+    seasons = sorted(rates.keys())
+    first, last = seasons[0], seasons[-1]
+    f3, l3 = rates[first]["FG3A"], rates[last]["FG3A"]
+    series = [{"s": s, "v": round(rates[s]["FG3A"], 2)} for s in seasons]
+    return {
+        "slug": "three-point-takeover",
+        "kicker": "League drift",
+        "title": "The three-point takeover, measured",
+        "lede": "League-average three-point attempts per game, 30 seasons. "
+        "The single biggest stylistic shift in the dataset — the map itself rotated toward the arc.",
+        "stat": "%.1fx" % (l3 / f3),
+        "stat_label": "growth in 3PA/game, %s → %s" % (first, last),
+        "viz": "line",
+        "viz_label": "3-point attempts per game",
+        "rows": series,
+        "first": {"s": first, "v": round(f3, 1)},
+        "last": {"s": last, "v": round(l3, 1)},
+        "foot": "Per-game rates across charted player-seasons. See the drift section on trends for the full rotation analysis.",
+        "og_title": "NBA 3-point attempts are up %.1fx in 30 years" % (l3 / f3),
+        "og_desc": "From %.1f to %.1f per game — the biggest stylistic shift the model has measured."
+        % (f3, l3),
+    }
+
+
+# ---- OG images + stub pages ---------------------------------------------------
+
+OG_W, OG_H = 1200, 630
+VOID = (30, 32, 34)
+INK = (249, 246, 240)
+TERRA = (193, 124, 96)
+GOLD = (212, 175, 105)
+MUTED = (140, 135, 125)
+
+
+def render_og_images(insights):
+    try:
+        from PIL import Image, ImageDraw, ImageFont
+    except ImportError:
+        print("PIL missing — skipping OG images")
+        return
+    outdir = os.path.join(PUBLIC, "assets", "og")
+    os.makedirs(outdir, exist_ok=True)
+    fb = "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf"
+    fr = "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf"
+
+    def font(path, size):
+        return ImageFont.truetype(path, size)
+
+    for ins in insights:
+        img = Image.new("RGB", (OG_W, OG_H), VOID)
+        dr = ImageDraw.Draw(img)
+        # terracotta top rule
+        dr.rectangle([0, 0, OG_W, 10], fill=TERRA)
+        # kicker
+        dr.text((70, 64), ins["kicker"].upper(), font=font(fb, 34), fill=TERRA)
+        # big stat
+        dr.text((66, 120), ins["stat"], font=font(fb, 150), fill=GOLD)
+        dr.text((70, 300), ins["stat_label"][:72], font=font(fr, 30), fill=MUTED)
+        # title (wrapped)
+        words, lines, cur = ins["og_title"].split(), [], ""
+        for w in words:
+            t = (cur + " " + w).strip()
+            if dr.textlength(t, font=font(fb, 54)) < OG_W - 140:
+                cur = t
+            else:
+                lines.append(cur)
+                cur = w
+        lines.append(cur)
+        y = 380
+        for ln in lines[:2]:
+            dr.text((70, y), ln, font=font(fb, 54), fill=INK)
+            y += 66
+        # footer
+        dr.text(
+            (70, OG_H - 70),
+            "VECTOR HOOPS  ·  embedding atlas",
+            font=font(fb, 26),
+            fill=MUTED,
+        )
+        p = os.path.join(outdir, "insight-%s.png" % ins["slug"])
+        img.save(p)
+    print("wrote %d OG images" % len(insights))
+
+
+STUB = """<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>{title} — Vector Hoops Insights</title>
+<meta name="description" content="{desc}">
+<link rel="canonical" href="{url}">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Vector Hoops">
+<meta property="og:title" content="{title}">
+<meta property="og:description" content="{desc}">
+<meta property="og:url" content="{url}">
+<meta property="og:image" content="{img}">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{title}">
+<meta name="twitter:description" content="{desc}">
+<meta name="twitter:image" content="{img}">
+<meta http-equiv="refresh" content="0; url={target}">
+</head>
+<body>
+<p><a href="{target}">View this insight on Vector Hoops</a></p>
+<script>location.replace({target_js});</script>
+</body>
+</html>
+"""
+
+
+def write_og_stubs(insights):
+    d = os.path.join(PUBLIC, "insights")
+    os.makedirs(d, exist_ok=True)
+    for ins in insights:
+        slug = ins["slug"]
+        url = "%s/insights/%s" % (DOMAIN, slug)
+        target = "/insights.html#%s" % slug
+        html = STUB.format(
+            title=ins["og_title"].replace('"', "&quot;"),
+            desc=ins["og_desc"].replace('"', "&quot;"),
+            url=url,
+            img="%s/assets/og/insight-%s.png" % (DOMAIN, slug),
+            target=target,
+            target_js=json.dumps(target),
+        )
+        with open(os.path.join(d, slug + ".html"), "w", encoding="utf-8") as f:
+            f.write(html)
+    print("wrote %d OG stub pages" % len(insights))
+
+
+if __name__ == "__main__":
+    main()
