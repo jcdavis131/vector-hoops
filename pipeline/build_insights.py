@@ -401,18 +401,18 @@ def insight_careful_era(drift):
         "perimeter — more catch-and-shoot, fewer post-ups — the riskiest plays faded and "
         "ball-handling tightened league-wide: assist-to-turnover ratio is up %d%% over the "
         "same span." % round(ratio_gain),
-        "stat": "%+.1f%%" % (100 * (l - f) / f),
-        "stat_label": "turnovers/game, %s → %s (%.2f → %.2f)" % (first, last, f, l),
+        "stat": "%+.1f%%" % (100 * (tov_last - tov_first) / tov_first),
+        "stat_label": "turnovers/game, %s → %s (%.2f → %.2f)" % (first, last, tov_first, tov_last),
         "viz": "line",
         "viz_label": "Turnovers per game",
         "rows": series,
-        "first": {"s": first, "v": round(f, 2)},
-        "last": {"s": last, "v": round(l, 2)},
+        "first": {"s": first, "v": round(tov_first, 2)},
+        "last": {"s": last, "v": round(tov_last, 2)},
         "foot": "Per-game rates across charted player-seasons, 1996-97 → 2025-26. "
         "Scoring rose 9.6% over the same span — this is not a minutes artifact.",
         "og_title": "NBA turnovers are down 18% in 30 years",
         "og_desc": "From %.2f to %.2f per game — assist-to-turnover ratio up %d%%. "
-        "The careful era, measured." % (f, l, round(ratio_gain)),
+        "The careful era, measured." % (tov_first, tov_last, round(ratio_gain)),
     }
 
 
