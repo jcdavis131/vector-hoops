@@ -4,8 +4,10 @@
 Stdlib-only data computation. Outputs:
   assets/insights.json                  curated insights w/ every number the page needs
   public/assets/insights.json           mirror (Vercel serves public/ at root)
-  public/assets/og/insight-<slug>.png   per-card unfurl images (needs PIL; skipped if missing)
-  public/insights/<slug>.html           per-card OG stub pages (crawlers -> image, humans -> redirect)
+  assets/og/insight-<slug>.png          per-card unfurl images (needs PIL; skipped if missing)
+  public/assets/og/insight-<slug>.png   mirror (root/public mirror rule)
+  insights/<slug>.html                  per-card OG stub pages (crawlers -> image, humans -> redirect)
+  public/insights/<slug>.html           mirror (root/public mirror rule)
 
 Real data only. No synthetic numbers, no invented annotations except the
 clearly-marked MVP_SEASONS set (public record, used for one headline).
@@ -363,8 +365,14 @@ def render_og_images(insights):
     except ImportError:
         print("PIL missing — skipping OG images")
         return
-    outdir = os.path.join(PUBLIC, "assets", "og")
-    os.makedirs(outdir, exist_ok=True)
+    import io
+
+    outdirs = [
+        os.path.join(PUBLIC, "assets", "og"),
+        os.path.join(REPO, "assets", "og"),
+    ]
+    for d in outdirs:
+        os.makedirs(d, exist_ok=True)
     fb = "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf"
     fr = "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf"
 
@@ -402,9 +410,13 @@ def render_og_images(insights):
             font=font(fb, 26),
             fill=MUTED,
         )
-        p = os.path.join(outdir, "insight-%s.png" % ins["slug"])
-        img.save(p)
-    print("wrote %d OG images" % len(insights))
+        buf = io.BytesIO()
+        img.save(buf, format="PNG")
+        data = buf.getvalue()
+        for d in outdirs:
+            with open(os.path.join(d, "insight-%s.png" % ins["slug"]), "wb") as f:
+                f.write(data)
+    print("wrote %d OG images (+ root twins)" % len(insights))
 
 
 STUB = """<!DOCTYPE html>
@@ -437,8 +449,9 @@ STUB = """<!DOCTYPE html>
 
 
 def write_og_stubs(insights):
-    d = os.path.join(PUBLIC, "insights")
-    os.makedirs(d, exist_ok=True)
+    dirs = [os.path.join(PUBLIC, "insights"), os.path.join(REPO, "insights")]
+    for d in dirs:
+        os.makedirs(d, exist_ok=True)
     for ins in insights:
         slug = ins["slug"]
         url = "%s/insights/%s" % (DOMAIN, slug)
@@ -451,9 +464,10 @@ def write_og_stubs(insights):
             target=target,
             target_js=json.dumps(target),
         )
-        with open(os.path.join(d, slug + ".html"), "w", encoding="utf-8") as f:
-            f.write(html)
-    print("wrote %d OG stub pages" % len(insights))
+        for d in dirs:
+            with open(os.path.join(d, slug + ".html"), "w", encoding="utf-8") as f:
+                f.write(html)
+    print("wrote %d OG stub pages (+ root twins)" % len(insights))
 
 
 if __name__ == "__main__":
