@@ -25,11 +25,8 @@ members from the same team-season, mirrored root/public outputs, valid JSON.
 """
 
 import json
-import math
 import os
-import sys
 from collections import defaultdict, Counter
-from itertools import combinations
 
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PUBLIC = os.path.join(REPO, "public")
@@ -58,8 +55,8 @@ def load(name):
 
 def wl_str(series):
     w = sum(r["wins"] for r in series)
-    l = sum(r["losses"] for r in series)
-    return "%d-%d" % (w, l), w + l
+    losses = sum(r["losses"] for r in series)
+    return "%d-%d" % (w, losses), w + losses
 
 
 def compute():
@@ -257,8 +254,8 @@ def render_og():
         print("PIL missing — skipping runs OG image")
         return
     W, H = 1200, 630
-    VOID, TERRA, GOLD, INK, PAPER, MUTED = (
-        "#1E2022", "#C17C60", "#D4AF69", "#2A2A2A", "#F9F6F0", "#8a8272")
+    VOID, TERRA, GOLD, INK, MUTED = (
+        "#1E2022", "#C17C60", "#D4AF69", "#2A2A2A", "#8a8272")
     fb = "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf"
     fr = "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf"
     img = Image.new("RGB", (W, H), VOID)
