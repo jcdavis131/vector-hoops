@@ -100,6 +100,7 @@
     return '<article class="vh-ins__card' + (featured ? ' vh-ins__card--featured' : '') + '" id="ins-' + ins.slug + '" data-slug="' + ins.slug + '">' +
       '<div class="vh-ins__kicker">' + esc(ins.kicker) + '</div>' +
       '<h2 class="vh-ins__title">' + esc(ins.title) + '</h2>' +
+      (ins.tldr ? '<p class="vh-ins__tldr"><span>tl;dr</span>' + esc(ins.tldr) + '</p>' : '') +
       '<p class="vh-ins__lede">' + esc(ins.lede) + '</p>' +
       '<div class="vh-ins__stat"><span class="vh-ins__statnum">' + esc(ins.stat) + '</span>' +
       '<span class="vh-ins__statlabel">' + esc(ins.stat_label) + '</span></div>' +

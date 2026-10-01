@@ -125,6 +125,7 @@ def insight_unique(players, cdist):
     top = rows[0]
     return {
         "slug": "most-unique",
+        "tldr": "The weirdest ways anyone has ever played basketball mostly belong to MVPs — greatness looks strange.",
         "kicker": "Uniqueness",
         "title": "The strangest playing styles of the last 30 years belong to MVP-level superstars",
         "lede": "Style distance from the league-average player, 14-dimensional embedding space. "
@@ -157,6 +158,7 @@ def insight_average(players, cdist):
     top = rows[0]
     return {
         "slug": "most-average",
+        "tldr": "We found the single most ordinary NBA season ever recorded — the perfectly average player, scientifically.",
         "kicker": "Uniqueness",
         "title": "The most average NBA season ever charted",
         "lede": "Closest to the centroid of all 12,966 player-seasons in style space. "
@@ -212,6 +214,7 @@ def insight_transformed(players):
     ]
     return {
         "slug": "transformed",
+        "tldr": "Giannis reinvented his game more than any player in 30 years; Terrence Ross played 11 seasons as basically the same guy.",
         "kicker": "Career arcs",
         "title": "Nobody transformed like Giannis. Nobody stayed the same like Terrence Ross.",
         "lede": "Style distance between a player's first and last charted season. "
@@ -268,6 +271,7 @@ def insight_time_capsule(eratwins):
     top = rows[0]
     return {
         "slug": "time-capsule",
+        "tldr": "Players 29 years apart can play almost identically — basketball styles echo across generations.",
         "kicker": "Era twins",
         "title": "Separated by 29 years. Nearly the same player.",
         "lede": "The widest era gaps with similarity ≥ 0.60 in the full 64-d embedding — "
@@ -335,6 +339,7 @@ def insight_dead_styles(players, clusters):
     ]
     return {
         "slug": "dead-styles",
+        "tldr": "The old-school bruising rebounder who lives at the rim is dying out — only a few are left.",
         "kicker": "Archetypes",
         "title": 'The "%s" is going extinct' % name,
         "lede": "Share of player-seasons in each style archetype: first three seasons vs last three. "
@@ -364,6 +369,7 @@ def insight_three_point(drift):
     series = [{"s": s, "v": round(rates[s]["FG3A"], 2)} for s in seasons]
     return {
         "slug": "three-point-takeover",
+        "tldr": "NBA teams shoot way, way more threes than they used to — the biggest style shift in 30 years.",
         "kicker": "League drift",
         "title": "The three-point takeover, measured",
         "lede": "League-average three-point attempts per game, 30 seasons. "
@@ -395,6 +401,7 @@ def insight_careful_era(drift):
     series = [{"s": s, "v": round(rates[s]["TOV"], 2)} for s in seasons]
     return {
         "slug": "careful-era",
+        "tldr": "NBA players turn the ball over way less than they used to — the game got cleaner even as scoring went up.",
         "kicker": "League drift",
         "title": "The league stopped turning it over",
         "lede": "League-average turnovers per game, 30 seasons. As the game moved to the "
@@ -508,6 +515,7 @@ STUB = """<!DOCTYPE html>
 <meta http-equiv="refresh" content="0; url={target}">
 </head>
 <body>
+<p>{tldr}</p>
 <p><a href="{target}">View this insight on Vector Hoops</a></p>
 <script>location.replace({target_js});</script>
 </body>
@@ -525,7 +533,8 @@ def write_og_stubs(insights):
         target = "/insights.html#%s" % slug
         html = STUB.format(
             title=ins["og_title"].replace('"', "&quot;"),
-            desc=ins["og_desc"].replace('"', "&quot;"),
+            desc=ins["tldr"].replace('"', "&quot;"),
+            tldr=ins["tldr"].replace("<", "&lt;").replace(">", "&gt;"),
             url=url,
             img="%s/assets/og/insight-%s.png" % (DOMAIN, slug),
             target=target,
