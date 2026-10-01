@@ -559,7 +559,7 @@ def insight_matchup_nightmares():
         "player-seasons, 1996-97 → 2024-25. Pure 3-point specialists lose 2.3 pts/100 in "
         "May, with usage (-1.00) and true shooting (-0.039) falling too — worst of all "
         "eight archetypes. Playmakers are the only group whose role grows (usage +0.19), "
-        "and 1 in 16 playoff offenses runs through a playmaker as its usage leader, up "
+        "and 1 in 16 playoff teams is led in usage by a playmaker, up "
         "from 1 in 250 in the regular season. The pattern fits a game-planning story — a "
         "best-of-7 gives defenses time to scheme a jumper, not a creator — but that's the "
         "best-fit mechanism, not proven causation. Loudest single-postseason swings are "
