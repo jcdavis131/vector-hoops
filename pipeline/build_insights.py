@@ -551,9 +551,12 @@ def insight_matchup_nightmares():
         "and 1 in 16 playoff offenses runs through a playmaker as its usage leader, up "
         "from 1 in 250 in the regular season. The pattern fits a game-planning story — a "
         "best-of-7 gives defenses time to scheme a jumper, not a creator — but that's the "
-        "best-fit mechanism, not proven causation. Loudest single-season swings are "
-        "small-sample color: Donovan Mitchell '19-20 (+16.0) and DeMarcus Cousins '20-21 "
-        "(+18.1) up; Joel Embiid '22-23 (-14.6) and Troy Daniels '16-17 (-16.3) down.",
+        "best-fit mechanism, not proven causation. Loudest single-postseason swings are "
+        "small-sample color, but the 2026 Finals lived the pattern: the Knicks solved "
+        "even Victor Wembanyama (-6.0 pts/100 over 22 games) while their title run rode "
+        "playmaker Jose Alvarado (+4.1 across 18 games); Spurs rookie Dylan Harper's "
+        "role grew (+0.8) all the way to the Finals as shooters Harrison Barnes (-5.7) "
+        "and Devin Vassell (-3.7) faded.",
         "stat": "-2.3",
         "stat_label": "playoff pts/100 drop for pure 3-point specialists "
         "(usage and efficiency fall too)",
