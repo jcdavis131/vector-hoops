@@ -389,9 +389,9 @@ def insight_careful_era(drift):
     rates = drift["leagueRates"]
     seasons = sorted(rates.keys())
     first, last = seasons[0], seasons[-1]
-    f, l = rates[first]["TOV"], rates[last]["TOV"]
+    tov_first, tov_last = rates[first]["TOV"], rates[last]["TOV"]
     f_ast, l_ast = rates[first]["AST"], rates[last]["AST"]
-    ratio_gain = 100 * ((l_ast / l) / (f_ast / f) - 1)
+    ratio_gain = 100 * ((l_ast / tov_last) / (f_ast / tov_first) - 1)
     series = [{"s": s, "v": round(rates[s]["TOV"], 2)} for s in seasons]
     return {
         "slug": "careful-era",
