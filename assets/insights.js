@@ -104,6 +104,8 @@
       '<div class="vh-ins__stat"><span class="vh-ins__statnum">' + esc(ins.stat) + '</span>' +
       '<span class="vh-ins__statlabel">' + esc(ins.stat_label) + '</span></div>' +
       '<div class="vh-ins__vizwrap">' + viz + '</div>' +
+      (ins.examples ? '<p class="vh-ins__examples"><span>Last of the breed</span>' +
+        ins.examples.map(function (e) { return esc(e.label); }).join(' · ') + '</p>' : '') +
       '<p class="vh-ins__foot">' + esc(ins.foot) + '</p>' +
       '<div class="vh-ins__share">' +
       '<button class="btn vh-ins__copy" data-slug="' + ins.slug + '" type="button">Copy link</button>' +
@@ -120,13 +122,15 @@
     var host = document.getElementById('insights-list');
     if (!host) return;
     var pick = list[dayOfYear(new Date()) % list.length];
+    // The spotlight never duplicates a grid card: the grid shows everything else.
+    var rest = list.filter(function (ins) { return ins.slug !== pick.slug; });
     var spot = document.getElementById('insights-spotlight');
     if (spot) {
       spot.innerHTML = '<div class="vh-ins__spotlabel">Insight of the day — ' +
         new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric' }) + '</div>' +
         cardHTML(pick, true);
     }
-    host.innerHTML = list.map(function (ins) { return cardHTML(ins, false); }).join('');
+    host.innerHTML = rest.map(function (ins) { return cardHTML(ins, false); }).join('');
     bindShare(data);
     var hash = (location.hash || '').replace('#', '');
     if (hash) highlight(hash);

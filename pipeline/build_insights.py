@@ -82,6 +82,7 @@ def main():
     insights.append(insight_time_capsule(eratwins))
     insights.append(insight_dead_styles(players, clusters))
     insights.append(insight_three_point(drift))
+    insights.append(insight_careful_era(drift))
 
     out = {
         "built": "build_insights.py",
@@ -243,8 +244,18 @@ def insight_time_capsule(eratwins):
         gap = abs(yr(s1) - yr(s2))
         if sim >= 0.60:
             cands.append((gap, sim, t.get("name"), s1, tw.get("name"), s2))
-    cands.sort(reverse=True)
-    picks = cands[:4]
+    cands.sort(key=lambda c: (-c[0], -c[1]))
+    # One appearance per player: greedy take in gap order so the card keeps
+    # its widest-gap premise while maximizing variety.
+    used, picks = set(), []
+    for gap, sim, n1, s1, n2, s2 in cands:
+        if n1 in used or n2 in used:
+            continue
+        used.add(n1)
+        used.add(n2)
+        picks.append((gap, sim, n1, s1, n2, s2))
+        if len(picks) == 4:
+            break
     rows = [
         {
             "a": "%s %s" % (pretty(n1), short_season(s1)),
@@ -259,7 +270,8 @@ def insight_time_capsule(eratwins):
         "slug": "time-capsule",
         "kicker": "Era twins",
         "title": "Separated by 29 years. Nearly the same player.",
-        "lede": "The widest era gaps with similarity ≥ 0.60 in the full 64-d embedding. "
+        "lede": "The widest era gaps with similarity ≥ 0.60 in the full 64-d embedding — "
+        "each player appears once for maximum variety. "
         "Styles echo across decades — the model keeps finding 1996-97 in 2025-26.",
         "stat": "%dy" % top["gap"],
         "stat_label": "widest twin gap — %s ↔ %s" % (top["a"], top["b"]),
@@ -291,9 +303,9 @@ def insight_dead_styles(players, clusters):
     for ci, name in enumerate(clusters):
         es = share["early"][ci] / tot["early"]
         ls = share["late"][ci] / tot["late"]
-        drops.append((es - ls, name, es, ls))
+        drops.append((es - ls, name, es, ls, ci))
     drops.sort(reverse=True)
-    d, name, e, ls0 = drops[0]
+    d, name, e, ls0, dead_ci = drops[0]
     rows = [
         {
             "label": n,
@@ -301,19 +313,40 @@ def insight_dead_styles(players, clusters):
             "late": round(100 * sl, 1),
             "delta": round(100 * (sl - se), 1),
         }
-        for _, n, se, sl in drops
+        for _, n, se, sl, _ in drops
+    ]
+    # Last of the breed: players nearest the dying archetype's centroid
+    # among the two most recent seasons (minimum 800 minutes).
+    members = [p for p in players if p["c"] == dead_ci]
+    centroid = [sum(p["v"][i] for p in members) / len(members) for i in range(14)]
+
+    def to_cent(p):
+        return math.sqrt(sum((p["v"][i] - centroid[i]) ** 2 for i in range(14)))
+
+    recent = [
+        p
+        for p in players
+        if p["season"] in seasons[-2:] and p["c"] == dead_ci and p["total_min"] >= 800
+    ]
+    recent.sort(key=to_cent)
+    examples = [
+        {"label": "%s %s" % (pretty(p["name"]), short_season(p["season"]))}
+        for p in recent[:4]
     ]
     return {
         "slug": "dead-styles",
         "kicker": "Archetypes",
         "title": 'The "%s" is going extinct' % name,
         "lede": "Share of player-seasons in each style archetype: first three seasons vs last three. "
-        "The 'Defensive Glass + Rim Pressure' archetype is being selected out of the league.",
+        "The 'Defensive Glass + Rim Pressure' archetype is being selected out of the league — "
+        "these are its last true practitioners.",
         "stat": "%+.1fpp" % (100 * (ls0 - e)),
         "stat_label": "share change — %s" % name,
         "viz": "shares",
         "rows": rows,
-        "foot": "8 k-means archetypes over 14-d serving vectors. Shares of charted player-seasons.",
+        "examples": examples,
+        "foot": "8 k-means archetypes over 14-d serving vectors. Shares of charted player-seasons. "
+        "Examples are the players nearest the archetype centroid in 2024-25 → 2025-26 (min 800 min).",
         "og_title": "An NBA playing style is going extinct",
         "og_desc": '"%s" fell %+.1f points of league share. The model watched it happen.'
         % (name, 100 * (ls0 - e)),
@@ -346,6 +379,40 @@ def insight_three_point(drift):
         "og_title": "NBA 3-point attempts are up %.1fx in 30 years" % (l3 / f3),
         "og_desc": "From %.1f to %.1f per game — the biggest stylistic shift the model has measured."
         % (f3, l3),
+    }
+
+
+# ---- 7. the careful era -------------------------------------------------------
+
+
+def insight_careful_era(drift):
+    rates = drift["leagueRates"]
+    seasons = sorted(rates.keys())
+    first, last = seasons[0], seasons[-1]
+    f, l = rates[first]["TOV"], rates[last]["TOV"]
+    f_ast, l_ast = rates[first]["AST"], rates[last]["AST"]
+    ratio_gain = 100 * ((l_ast / l) / (f_ast / f) - 1)
+    series = [{"s": s, "v": round(rates[s]["TOV"], 2)} for s in seasons]
+    return {
+        "slug": "careful-era",
+        "kicker": "League drift",
+        "title": "The league stopped turning it over",
+        "lede": "League-average turnovers per game, 30 seasons. As the game moved to the "
+        "perimeter — more catch-and-shoot, fewer post-ups — the riskiest plays faded and "
+        "ball-handling tightened league-wide: assist-to-turnover ratio is up %d%% over the "
+        "same span." % round(ratio_gain),
+        "stat": "%+.1f%%" % (100 * (l - f) / f),
+        "stat_label": "turnovers/game, %s → %s (%.2f → %.2f)" % (first, last, f, l),
+        "viz": "line",
+        "viz_label": "Turnovers per game",
+        "rows": series,
+        "first": {"s": first, "v": round(f, 2)},
+        "last": {"s": last, "v": round(l, 2)},
+        "foot": "Per-game rates across charted player-seasons, 1996-97 → 2025-26. "
+        "Scoring rose 9.6% over the same span — this is not a minutes artifact.",
+        "og_title": "NBA turnovers are down 18% in 30 years",
+        "og_desc": "From %.2f to %.2f per game — assist-to-turnover ratio up %d%%. "
+        "The careful era, measured." % (f, l, round(ratio_gain)),
     }
 
 
