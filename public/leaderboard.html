@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="manifest" href="/manifest.json">
+<title>Leaderboard — Vector Hoops</title>
+<meta name="description" content="Daily leaderboards with anonymous session names and no accounts."/>
+<link rel="stylesheet" href="assets/hoops.css">
+<link rel="stylesheet" href="assets/nux.css">
+<link rel="stylesheet" href="assets/shell.css"/>
+<link rel="stylesheet" href="assets/responsive.css"/>
+<link rel="stylesheet" href="assets/final-qa.css"/>
+<link rel="stylesheet" href="assets/unified.css"/>
+<link rel="stylesheet" href="assets/motion.css"/>
+
+<meta name="color-scheme" content="dark light"/>
+<meta name="theme-color" content="#07090C" media="(prefers-color-scheme: dark)"/>
+<meta name="theme-color" content="#F3F1EC" media="(prefers-color-scheme: light)"/>
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml"/>
+<link rel="apple-touch-icon" href="/assets/icon-192.png"/>
+<link rel="canonical" href="https://hoops.dumbmodel.com/leaderboard"/>
+<meta property="og:type" content="website"/>
+<meta property="og:site_name" content="Vector Hoops"/>
+<meta property="og:url" content="https://hoops.dumbmodel.com/leaderboard"/>
+<meta property="og:title" content="Leaderboard — Vector Hoops"/>
+<meta property="og:description" content="Daily leaderboards with anonymous session names and no accounts."/>
+<meta property="og:image" content="https://hoops.dumbmodel.com/assets/og-1200x630.png"/>
+<meta property="og:image:width" content="1200"/><meta property="og:image:height" content="630"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="Leaderboard — Vector Hoops"/>
+<meta name="twitter:description" content="Daily leaderboards with anonymous session names and no accounts."/>
+<meta name="twitter:image" content="https://hoops.dumbmodel.com/assets/og-1200x630.png"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=Inter:opsz,wght@14..32,400..700&display=swap"/>
+<link rel="stylesheet" href="/assets/atlas.css?v=1"/>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<noscript><div role="alert" style="padding:16px;text-align:center">Enable JS — Vector Hoops needs JavaScript for Daily Court + Map</div></noscript>
+
+
+<nav class="site-nav" data-active="/leaderboard" aria-label="Vector Hoops site"></nav>
+
+<main id="main" class="leaderboard-main">
+
+  <div class="lb-head">
+    <h1>Leaderboard</h1>
+    <p>Public daily boards for all four modes &mdash; anonymous session names, no accounts.
+      <span class="vh-identity-chip" id="identity-chip" title="your anonymous session name — no account, tracked only on this device + this board">You play as <b id="identity-name">&mdash;</b></span>
+    </p>
+  </div>
+
+  <div class="lb-controls">
+    <div class="lb-chips" id="lb-game-chips" role="tablist" aria-label="Game"></div>
+    <div class="lb-date-row">
+      <button type="button" class="vh-link-btn" id="lb-date-prev">&larr; Prev day</button>
+      <span class="lb-date-label" id="lb-date-label">Today</span>
+      <button type="button" class="vh-link-btn" id="lb-date-next">Next day &rarr;</button>
+    </div>
+  </div>
+
+  <div class="lb-board-card" id="lb-board">
+    <div class="lb-board-meta">
+      <span class="lb-players" id="lb-players"></span>
+      <span class="lb-note" id="lb-note"></span>
+    </div>
+    <p class="lb-chimera-note" id="lb-chimera-note" hidden>Chimera board: finished dailies only &mdash; points (0&ndash;2,400) reflect both donor multipliers and the mashup finale; leaving mid-round doesn't submit a score.</p>
+
+    <div class="lb-table-wrap">
+      <table class="lb-table" id="lb-table" hidden>
+        <thead>
+          <tr><th class="lb-th-rank">Rank</th><th>Name</th><th id="lb-score-head">Score</th></tr>
+        </thead>
+        <tbody id="lb-tbody"></tbody>
+      </table>
+    </div>
+    <div class="lb-empty" id="lb-empty" hidden></div>
+    <p class="lb-you-line" id="lb-you-line" hidden></p>
+  </div>
+
+</main>
+
+<footer class="site-footer">
+  <div class="site-footer__links"><a href="/play">Play</a><a href="/players">Players</a><a href="/trends">Trends</a><a href="/model">Lab</a><a href="/methods">Methods</a><a href="https://github.com/jcdavis131/vector-hoops" rel="noopener">Source</a></div>
+  <p class="site-footer__attribution">Every number recomputable from stats.nba.com · A <a href="https://dumbmodel.com">dumbmodel</a> project</p>
+</footer>
+
+<script src="assets/error-boundary.js"></script>
+<script src="assets/keyboard-a11y.js"></script>
+<script src="assets/site-nav.js" defer></script>
+<script src="assets/pwa-install.js"></script>
+<script src="assets/leaderboard.js" defer></script>
+<script src="assets/nux.js" defer></script>
+<script>if('serviceWorker' in navigator){window.addEventListener('load',()=>{navigator.serviceWorker.register('/sw.js').catch(()=>{})})}</script>
+</body>
+</html>
