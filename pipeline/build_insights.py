@@ -409,7 +409,8 @@ def insight_careful_era(drift):
         "ball-handling tightened league-wide: assist-to-turnover ratio is up %d%% over the "
         "same span." % round(ratio_gain),
         "stat": "%+.1f%%" % (100 * (tov_last - tov_first) / tov_first),
-        "stat_label": "turnovers/game, %s → %s (%.2f → %.2f)" % (first, last, tov_first, tov_last),
+        "stat_label": "turnovers/game, %s → %s (%.2f → %.2f)"
+        % (first, last, tov_first, tov_last),
         "viz": "line",
         "viz_label": "Turnovers per game",
         "rows": series,
