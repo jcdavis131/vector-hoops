@@ -67,26 +67,56 @@ def load(name):
 
 def insight_playoff_swings():
     rows = [
-        {"label": "Donovan Mitchell '24-25", "value": 8.6,
-         "tag": "35.7 → 44.3 pts/100 · 9 games"},
-        {"label": "Donovan Mitchell '20-21", "value": 8.3,
-         "tag": "38.0 → 46.3 pts/100 · 10 games"},
-        {"label": "Tim Duncan '05-06", "value": 8.2,
-         "tag": "28.6 → 36.8 pts/100 · 13 games"},
-        {"label": "LeBron James '08-09", "value": 7.2,
-         "tag": "39.9 → 47.1 pts/100 · 14 games"},
-        {"label": "Kevin Durant '18-19", "value": 7.2,
-         "tag": "34.9 → 42.1 pts/100 · 12 games — tied 4th"},
-        {"label": "Joel Embiid '22-23", "value": -14.6,
-         "tag": "47.1 → 32.5 pts/100 · 9 games"},
-        {"label": "Kristaps Porzingis '24-25", "value": -13.6,
-         "tag": "32.4 → 18.8 pts/100 · 11 games"},
-        {"label": "Jermaine O'Neal '04-05", "value": -13.2,
-         "tag": "37.3 → 24.1 pts/100 · 13 games"},
-        {"label": "Joel Embiid '21-22", "value": -12.6,
-         "tag": "44.8 → 32.2 pts/100 · 10 games"},
-        {"label": "Jordan Clarkson '17-18", "value": -12.0,
-         "tag": "28.1 → 16.1 pts/100 · 19 games"},
+        {
+            "label": "Donovan Mitchell '24-25",
+            "value": 8.6,
+            "tag": "35.7 → 44.3 pts/100 · 9 games",
+        },
+        {
+            "label": "Donovan Mitchell '20-21",
+            "value": 8.3,
+            "tag": "38.0 → 46.3 pts/100 · 10 games",
+        },
+        {
+            "label": "Tim Duncan '05-06",
+            "value": 8.2,
+            "tag": "28.6 → 36.8 pts/100 · 13 games",
+        },
+        {
+            "label": "LeBron James '08-09",
+            "value": 7.2,
+            "tag": "39.9 → 47.1 pts/100 · 14 games",
+        },
+        {
+            "label": "Kevin Durant '18-19",
+            "value": 7.2,
+            "tag": "34.9 → 42.1 pts/100 · 12 games — tied 4th",
+        },
+        {
+            "label": "Joel Embiid '22-23",
+            "value": -14.6,
+            "tag": "47.1 → 32.5 pts/100 · 9 games",
+        },
+        {
+            "label": "Kristaps Porzingis '24-25",
+            "value": -13.6,
+            "tag": "32.4 → 18.8 pts/100 · 11 games",
+        },
+        {
+            "label": "Jermaine O'Neal '04-05",
+            "value": -13.2,
+            "tag": "37.3 → 24.1 pts/100 · 13 games",
+        },
+        {
+            "label": "Joel Embiid '21-22",
+            "value": -12.6,
+            "tag": "44.8 → 32.2 pts/100 · 10 games",
+        },
+        {
+            "label": "Jordan Clarkson '17-18",
+            "value": -12.0,
+            "tag": "28.1 → 16.1 pts/100 · 19 games",
+        },
     ]
     return {
         "slug": "playoff-swings",
@@ -142,22 +172,42 @@ def insight_playoff_swings():
 
 def insight_contenders_pretenders():
     rows = [
-        {"label": "Portland", "value": 0.61,
-         "tag": "5.67 spread · Morant 34.6 pts/100 — shape, no engine"},
-        {"label": "LA Lakers", "value": 0.50,
-         "tag": "5.56 spread · Dončić 38.1 pts/100"},
-        {"label": "Oklahoma City", "value": 0.25,
-         "tag": "5.31 spread · Gilgeous-Alexander 44.1 pts/100"},
-        {"label": "Denver", "value": 0.14,
-         "tag": "5.20 spread · Jokić 37.1 pts/100"},
-        {"label": "Philadelphia", "value": 0.08,
-         "tag": "5.14 spread · Brown 41.0 pts/100 — plus LeBron"},
-        {"label": "Miami", "value": 0.06,
-         "tag": "5.12 spread · Antetokounmpo 42.7 pts/100"},
-        {"label": "San Antonio", "value": -0.22,
-         "tag": "4.84 spread · Wembanyama 40.2 — lost Finals"},
-        {"label": "New York", "value": -0.26,
-         "tag": "4.80 spread · Brunson 36.3 — defending champs"},
+        {
+            "label": "Portland",
+            "value": 0.61,
+            "tag": "5.67 spread · Morant 34.6 pts/100 — shape, no engine",
+        },
+        {
+            "label": "LA Lakers",
+            "value": 0.50,
+            "tag": "5.56 spread · Dončić 38.1 pts/100",
+        },
+        {
+            "label": "Oklahoma City",
+            "value": 0.25,
+            "tag": "5.31 spread · Gilgeous-Alexander 44.1 pts/100",
+        },
+        {"label": "Denver", "value": 0.14, "tag": "5.20 spread · Jokić 37.1 pts/100"},
+        {
+            "label": "Philadelphia",
+            "value": 0.08,
+            "tag": "5.14 spread · Brown 41.0 pts/100 — plus LeBron",
+        },
+        {
+            "label": "Miami",
+            "value": 0.06,
+            "tag": "5.12 spread · Antetokounmpo 42.7 pts/100",
+        },
+        {
+            "label": "San Antonio",
+            "value": -0.22,
+            "tag": "4.84 spread · Wembanyama 40.2 — lost Finals",
+        },
+        {
+            "label": "New York",
+            "value": -0.26,
+            "tag": "4.80 spread · Brunson 36.3 — defending champs",
+        },
     ]
     return {
         "slug": "contenders-pretenders",

@@ -72,16 +72,26 @@ def compute():
             continue
         # Per-possession dominance first; each round won and the title add
         # flat bonuses — winning matters, but never swamps the scoring signal.
-        score = (po["PTS100"] + 10 * (po["TS"] - 0.55)
-                 + 2 * s["rounds"] + (4 if s.get("champion") else 0))
+        score = (
+            po["PTS100"]
+            + 10 * (po["TS"] - 0.55)
+            + 2 * s["rounds"]
+            + (4 if s.get("champion") else 0)
+        )
         wls, _ = wl_str(s["series"])
-        indiv.append({
-            "player": pretty(name), "season": season,
-            "pts100": round(po["PTS100"], 1), "ts": round(po["TS"], 3),
-            "gp": po["GP"], "wl": wls, "rounds": s["rounds"],
-            "champion": bool(s.get("champion")),
-            "score": round(score, 2),
-        })
+        indiv.append(
+            {
+                "player": pretty(name),
+                "season": season,
+                "pts100": round(po["PTS100"], 1),
+                "ts": round(po["TS"], 3),
+                "gp": po["GP"],
+                "wl": wls,
+                "rounds": s["rounds"],
+                "champion": bool(s.get("champion")),
+                "score": round(score, 2),
+            }
+        )
     indiv.sort(key=lambda r: -r["score"])
 
     # ---- units ----
@@ -119,9 +129,13 @@ def compute():
         def row(ms):
             sc, pts = unit_score(ms, champ, rounds)
             return {
-                "players": [pretty(m[0]) for m in ms], "season": season,
-                "path": "-".join(path), "wl": wls, "gp": gp,
-                "pts100": round(pts, 1), "champion": champ,
+                "players": [pretty(m[0]) for m in ms],
+                "season": season,
+                "path": "-".join(path),
+                "wl": wls,
+                "gp": gp,
+                "pts100": round(pts, 1),
+                "champion": champ,
                 "score": round(sc, 2),
             }
 
@@ -149,13 +163,20 @@ def compute():
     for (season, path), t in teams.items():
         n = cnt[(season, path)]
         W, L = round(t["W"] / n), round(t["L"] / n)
-        team_rows.append({
-            "season": season, "path": "-".join(path),
-            "wl": "%d-%d" % (W, L), "winpct": round(W / (W + L), 3),
-            "champion": t["champ"],
-            "top_scorer": t["top"][1], "top_pts100": t["top"][0],
-        })
-    team_rows.sort(key=lambda r: (-r["winpct"], -int(r["wl"].split("-")[0]), -r["top_pts100"]))
+        team_rows.append(
+            {
+                "season": season,
+                "path": "-".join(path),
+                "wl": "%d-%d" % (W, L),
+                "winpct": round(W / (W + L), 3),
+                "champion": t["champ"],
+                "top_scorer": t["top"][1],
+                "top_pts100": t["top"][0],
+            }
+        )
+    team_rows.sort(
+        key=lambda r: (-r["winpct"], -int(r["wl"].split("-")[0]), -r["top_pts100"])
+    )
     return {
         "individuals": indiv[:10],
         "duos": duos[:10],
@@ -180,15 +201,33 @@ TEAM_NAMES = {
     ("2024-25", ("Jalen Williams", "Shai Gilgeous-Alexander")): "Oklahoma City Thunder",
     ("2021-22", ("Jalen Brunson", "Luka Dončić")): "Dallas Mavericks",
     # trios
-    ("2018-19", ("Kevin Durant", "Klay Thompson", "Stephen Curry")): "Golden State Warriors",
-    ("2017-18", ("Kevin Durant", "Klay Thompson", "Stephen Curry")): "Golden State Warriors",
+    (
+        "2018-19",
+        ("Kevin Durant", "Klay Thompson", "Stephen Curry"),
+    ): "Golden State Warriors",
+    (
+        "2017-18",
+        ("Kevin Durant", "Klay Thompson", "Stephen Curry"),
+    ): "Golden State Warriors",
     ("2015-16", ("Kevin Love", "Kyrie Irving", "LeBron James")): "Cleveland Cavaliers",
-    ("2021-22", ("Jonathan Kuminga", "Jordan Poole", "Stephen Curry")): "Golden State Warriors",
-    ("2016-17", ("Kevin Durant", "Klay Thompson", "Stephen Curry")): "Golden State Warriors",
+    (
+        "2021-22",
+        ("Jonathan Kuminga", "Jordan Poole", "Stephen Curry"),
+    ): "Golden State Warriors",
+    (
+        "2016-17",
+        ("Kevin Durant", "Klay Thompson", "Stephen Curry"),
+    ): "Golden State Warriors",
     ("2019-20", ("Anthony Davis", "Kyle Kuzma", "LeBron James")): "Los Angeles Lakers",
     ("2016-17", ("Kevin Love", "Kyrie Irving", "LeBron James")): "Cleveland Cavaliers",
-    ("2015-16", ("Klay Thompson", "Marreese Speights", "Stephen Curry")): "Golden State Warriors",
-    ("2021-22", ("Jalen Brunson", "Luka Dončić", "Spencer Dinwiddie")): "Dallas Mavericks",
+    (
+        "2015-16",
+        ("Klay Thompson", "Marreese Speights", "Stephen Curry"),
+    ): "Golden State Warriors",
+    (
+        "2021-22",
+        ("Jalen Brunson", "Luka Dončić", "Spencer Dinwiddie"),
+    ): "Dallas Mavericks",
     ("2011-12", ("Chris Bosh", "Dwyane Wade", "LeBron James")): "Miami Heat",
     # teams: (season, ordered opponent path)
     ("2016-17", "POR-UTA-SAS-CLE"): "Golden State Warriors",
@@ -231,10 +270,10 @@ def write_outputs(data):
         "method": {
             "individuals": "PO GP>=10; score = pts/100 + 10*(TS-0.55) + 2 per round won + 4 if champion",
             "units": "rotation players (RS GP>=40, PO GP>=12 so every unit won a series, PO usage>=15) "
-                     "ordered by RS scoring rate; "
-                     "score = (sum pts/100 + sum TS) + 2 per round won + 4 if champion; "
-                     "labeled highest-scoring duo/trio — scoring cores, not lineups "
-                     "(the dataset's MIN field is not conventional MPG)",
+            "ordered by RS scoring rate; "
+            "score = (sum pts/100 + sum TS) + 2 per round won + 4 if champion; "
+            "labeled highest-scoring duo/trio — scoring cores, not lineups "
+            "(the dataset's MIN field is not conventional MPG)",
             "teams": "grouped by (season, ordered playoff-opponent path); ranked by win%, then wins, then top-scorer pts/100",
         },
         "rankings": data,
@@ -255,20 +294,35 @@ def render_og():
         return
     W, H = 1200, 630
     VOID, TERRA, GOLD, INK, MUTED = (
-        "#1E2022", "#C17C60", "#D4AF69", "#2A2A2A", "#8a8272")
+        "#1E2022",
+        "#C17C60",
+        "#D4AF69",
+        "#2A2A2A",
+        "#8a8272",
+    )
     fb = "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf"
     fr = "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf"
     img = Image.new("RGB", (W, H), VOID)
     dr = ImageDraw.Draw(img)
     dr.rectangle([0, 0, W, 10], fill=TERRA)
-    dr.text((70, 64), "GREATEST PLAYOFF RUNS", font=ImageFont.truetype(fb, 34), fill=TERRA)
+    dr.text(
+        (70, 64), "GREATEST PLAYOFF RUNS", font=ImageFont.truetype(fb, 34), fill=TERRA
+    )
     dr.text((66, 120), "Top 10", font=ImageFont.truetype(fb, 150), fill=GOLD)
-    dr.text((70, 300), "individuals · duos · trios · teams".ljust(72),
-            font=ImageFont.truetype(fr, 30), fill=MUTED)
+    dr.text(
+        (70, 300),
+        "individuals · duos · trios · teams".ljust(72),
+        font=ImageFont.truetype(fr, 30),
+        fill=MUTED,
+    )
     for i, ln in enumerate(["Every great May, ranked."]):
         dr.text((70, 380 + i * 66), ln, font=ImageFont.truetype(fb, 54), fill=INK)
-    dr.text((70, H - 70), "VECTOR HOOPS  ·  embedding atlas",
-            font=ImageFont.truetype(fb, 26), fill=MUTED)
+    dr.text(
+        (70, H - 70),
+        "VECTOR HOOPS  ·  embedding atlas",
+        font=ImageFont.truetype(fb, 26),
+        fill=MUTED,
+    )
     for d in (os.path.join(PUBLIC, "assets", "og"), os.path.join(REPO, "assets", "og")):
         os.makedirs(d, exist_ok=True)
         img.save(os.path.join(d, "playoff-runs.png"), format="PNG")
@@ -328,8 +382,17 @@ def main():
     write_outputs(data)
     render_og()
     write_stub()
-    print("top individual:", data["individuals"][0]["player"], data["individuals"][0]["season"])
-    print("top team:", data["teams"][0]["team"], data["teams"][0]["season"], data["teams"][0]["wl"])
+    print(
+        "top individual:",
+        data["individuals"][0]["player"],
+        data["individuals"][0]["season"],
+    )
+    print(
+        "top team:",
+        data["teams"][0]["team"],
+        data["teams"][0]["season"],
+        data["teams"][0]["wl"],
+    )
 
 
 if __name__ == "__main__":
