@@ -84,6 +84,7 @@ def main():
     insights.append(insight_three_point(drift))
     insights.append(insight_careful_era(drift))
     insights.append(insight_contender_chemistry())
+    insights.append(insight_matchup_nightmares())
 
     out = {
         "built": "build_insights.py",
@@ -480,6 +481,91 @@ def insight_contender_chemistry():
         "og_title": "Winners don't look alike",
         "og_desc": "Playoff rotations span 5% more style space — but Finals teams are "
         "no more diverse than first-round exits. Matchups decide.",
+    }
+
+
+# ---- 9. matchup nightmares ----------------------------------------------------
+# Research: /tmp/matchup-nightmares-report.md (2026-10-01).
+# Method: per-player regular-season vs playoff splits from assets/playoffs.json
+# (stats.nba.com: GP, MIN, USG, PTS100, TS, PLUS_MINUS), joined to 14-d
+# embeddings + 8 style clusters; 4,739 rotation player-seasons (made playoffs,
+# PO GP>=4, RS >=25 scaled min/g), 1996-97 -> 2024-25. League mean PO-RS
+# pts/100 is -1.50 (defenses tighten), so flat is genuinely good.
+# Honesty: "game-planning" is the best-fit mechanism (usage AND efficiency fall
+# together for shooters), not proven causation. Cluster [2]'s +0.30 (n=125) is
+# not significant -- tagged as noise, not claimed.
+
+
+def insight_matchup_nightmares():
+    # Exact values from the research pass; kept as constants with the
+    # citation above (recomputing needs playoffs.json split joins).
+    rows = [
+        {
+            "label": "Pure shooters",
+            "value": -2.28,
+            "tag": "3PT accuracy + volume · n=1,010",
+        },
+        {"label": "Volume scorers", "value": -2.09, "tag": "shot volume + 3PT volume"},
+        {
+            "label": "Glass + rim pressure",
+            "value": -1.92,
+            "tag": "defensive glass + rim pressure",
+        },
+        {
+            "label": "Glass + rim protection",
+            "value": -1.69,
+            "tag": "offensive glass + rim protection",
+        },
+        {
+            "label": "Scoring volume",
+            "value": -1.41,
+            "tag": "scoring volume + shot volume",
+        },
+        {
+            "label": "Low-volume glass",
+            "value": -0.74,
+            "tag": "offensive glass, low shot volume",
+        },
+        {
+            "label": "3PT volume, low impact",
+            "value": 0.30,
+            "tag": "n=125 · not significant",
+        },
+        {
+            "label": "Playmakers",
+            "value": -0.18,
+            "tag": "playmaking + steals · n=588 · role grows",
+        },
+    ]
+    return {
+        "slug": "matchup-nightmares",
+        "tldr": "Playoff game plans erase pure shooters — scoring, usage and efficiency "
+        "all crater — while playmakers are the only ones whose role grows. You can "
+        "scheme a jumper in two days; not a creator.",
+        "kicker": "Matchup nightmares",
+        "title": "May solves shooters. It can't solve playmakers.",
+        "lede": "Playoff minus regular-season pts/100 by style archetype — 4,739 rotation "
+        "player-seasons, 1996-97 → 2024-25. Pure 3-point specialists lose 2.3 pts/100 in "
+        "May, with usage (-1.00) and true shooting (-0.039) falling too — worst of all "
+        "eight archetypes. Playmakers are the only group whose role grows (usage +0.19), "
+        "and 1 in 16 playoff offenses runs through a playmaker as its usage leader, up "
+        "from 1 in 250 in the regular season. The pattern fits a game-planning story — a "
+        "best-of-7 gives defenses time to scheme a jumper, not a creator — but that's the "
+        "best-fit mechanism, not proven causation. Loudest single-season swings are "
+        "small-sample color: Donovan Mitchell '19-20 (+16.0) and DeMarcus Cousins '20-21 "
+        "(+18.1) up; Joel Embiid '22-23 (-14.6) and Troy Daniels '16-17 (-16.3) down.",
+        "stat": "-2.3",
+        "stat_label": "playoff pts/100 drop for pure 3-point specialists "
+        "(usage and efficiency fall too)",
+        "viz": "bars",
+        "viz_label": "Playoff scoring change (pts/100) by style archetype",
+        "rows": rows,
+        "foot": "4,739 rotation player-seasons (playoff GP ≥ 4, regular season ≥ 25 scaled "
+        "min/g); regular-season vs playoff splits via stats.nba.com; 2025-26 excluded "
+        "(season in progress).",
+        "og_title": "The playoffs eat shooters",
+        "og_desc": "Pure 3-point specialists lose 2.3 pts/100 in May — playmakers are the "
+        "only ones whose role grows.",
     }
 
 
