@@ -89,11 +89,17 @@ def main():
         assert abs(m) < 0.05, f"dim {dim_codes[k]} mean {m:.3f} — not standardized?"
 
     v_by_key = {}
+    pid_by_key = {}
     for p in players:
         key = f"{p['name']}|{p['season']}"
         assert "|" not in p["name"], f"pipe in name: {p['name']}"
         assert all(math.isfinite(v) for v in p["v"]) and len(p["v"]) == 14
+        # identity fix 2026-10-01: name|season must resolve to exactly one person
+        pid = p.get("person_id")
+        assert pid, f"row missing person_id: {key}"
+        assert key not in v_by_key, f"duplicate name|season: {key}"
         v_by_key[key] = p["v"]
+        pid_by_key[key] = pid
 
     twins = json.load(open(ERATWINS, encoding="utf-8"))["players"]
     assert len(twins) == 1308, f"expected 1308 pairs, got {len(twins)}"
@@ -129,6 +135,8 @@ def main():
         rec = {
             "a": a_key,
             "b": b_key,
+            "a_pid": pid_by_key[a_key],
+            "b_pid": pid_by_key[b_key],
             "shared": shared,
             "differ": differ,
             "sim": round(sim, 3),
@@ -229,8 +237,16 @@ def main():
         assert s2 == rec["shared"] and d2 == rec["differ"], f"algo drift: {a_key}"
     print(f"  live-compute agreement: {len(twins)}/{len(twins)} pairs")
 
-    with open(OUT_PAIRS, "w", encoding="utf-8") as f:
-        json.dump(out, f, separators=(",", ":"))
+    def emit(path, obj):
+        # mirror to public/ (Vercel serves public/ at the site root)
+        with open(path, "w", encoding="utf-8") as f:
+            json.dump(obj, f, separators=(",", ":"))
+        pub = path.replace(A("assets"), A("public", "assets"), 1)
+        os.makedirs(os.path.dirname(pub), exist_ok=True)
+        with open(pub, "w", encoding="utf-8") as f:
+            json.dump(obj, f, separators=(",", ":"))
+
+    emit(OUT_PAIRS, out)
     json.load(open(OUT_PAIRS, encoding="utf-8"))  # round-trip
     print(f"OK: {OUT_PAIRS}: {len(out)} pairs, {os.path.getsize(OUT_PAIRS)//1024} KB")
 
@@ -247,13 +263,15 @@ def main():
         ):
             past_ids.add(p["i"])
         if yr >= 2025:
-            ex = modern_rows.get(p["n"])
+            # keyed by person_id, never display name (identity fix 2026-10-01):
+            # two persons can share a display name (e.g. Reggie Williams).
+            ex = modern_rows.get(p["pid"])
             if (
                 ex is None
                 or season_year(ex["s"]) < yr
                 or (season_year(ex["s"]) == yr and p["s"] > ex["s"])
             ):
-                modern_rows[p["n"]] = p
+                modern_rows[p["pid"]] = p
     pool_ids = past_ids | {p["i"] for p in modern_rows.values()}
     v_by_id = {(p["name"], p["season"]): p["v"] for p in players}
     id_to_ns = {p["i"]: (p["n"], p["s"]) for p in lite}
@@ -266,8 +284,7 @@ def main():
         else:
             vec_out[str(i)] = [round(x, 4) for x in v]
     assert not missing_ids, f"{len(missing_ids)} pool ids missing vectors"
-    with open(OUT_VEC, "w", encoding="utf-8") as f:
-        json.dump(vec_out, f, separators=(",", ":"))
+    emit(OUT_VEC, vec_out)
     print(
         f"OK: {OUT_VEC}: {len(vec_out)} rows "
         f"(past {len(past_ids)}, modern {len(modern_rows)}), "
