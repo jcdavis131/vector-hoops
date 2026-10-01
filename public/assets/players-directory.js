@@ -184,11 +184,27 @@
     document.body.classList.add('vh-modal-open');
     els.dossierClose.focus();
 
-    global.VHDossier.fetchDossierMarkdown(slug)
-      .then(function (md) {
-        els.dossierBody.innerHTML = global.VHDossier.renderDossierMarkdown(md) +
-          swingsSection(name);
-      })
+    function showMarkdown() {
+      return global.VHDossier.fetchDossierMarkdown(slug)
+        .then(function (md) {
+          els.dossierBody.innerHTML = global.VHDossier.renderDossierMarkdown(md);
+        });
+    }
+
+    function showDataDossier() {
+      // Data dossier first (works for every player); markdown wiki as fallback.
+      if (global.VHPlayerDossier) {
+        return global.VHPlayerDossier.renderInto(els.dossierBody, name)
+          .then(function (ok) {
+            if (!ok) throw new Error('no data dossier');
+            els.dossierSourceLink.href = 'methods.html#dossier';
+          });
+      }
+      return Promise.reject(new Error('no renderer'));
+    }
+
+    showDataDossier()
+      .catch(showMarkdown)
       .catch(function () {
         els.dossierBody.innerHTML =
           '<p class="vh-dossier__p">Could not load this dossier right now. Use "View source" below.</p>';
