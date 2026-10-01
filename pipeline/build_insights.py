@@ -83,6 +83,7 @@ def main():
     insights.append(insight_dead_styles(players, clusters))
     insights.append(insight_three_point(drift))
     insights.append(insight_careful_era(drift))
+    insights.append(insight_contender_chemistry())
 
     out = {
         "built": "build_insights.py",
@@ -421,6 +422,64 @@ def insight_careful_era(drift):
         "og_title": "NBA turnovers are down 18% in 30 years",
         "og_desc": "From %.2f to %.2f per game — assist-to-turnover ratio up %d%%. "
         "The careful era, measured." % (tov_first, tov_last, round(ratio_gain)),
+    }
+
+
+# ---- 8. contender chemistry --------------------------------------------------
+# Research: /tmp/champ-chem-v2-report.md (2026-10-01).
+# Method: mean pairwise 14-d embedding distance among rotation players
+# (>=1,000 min), 862 team-seasons, 1996-97 -> 2024-25 (2025-26 excluded,
+# season in progress). Honest null: no style-spread gradient across playoff
+# rounds — the cliff is binary (playoffs vs not). "Spread gets you in,
+# matchups decide the rest."
+
+
+def insight_contender_chemistry():
+    # Exact values from the research pass; kept as constants with the
+    # citation above (recomputing needs player_team_season.json joins).
+    playoff_spread, missed_spread = 5.06, 4.82
+    rows = [
+        {"label": "Champions", "value": 5.14, "tag": "29 title teams"},
+        {"label": "Lost Finals", "value": 4.96, "tag": "29 Finals losers"},
+        {
+            "label": "Lost conf. finals",
+            "value": 5.06,
+            "tag": "58 teams",
+        },
+        {
+            "label": "Rest of playoff field",
+            "value": 5.02,
+            "tag": "348 team-seasons",
+        },
+        {
+            "label": "Missed playoffs",
+            "value": 4.73,
+            "tag": "398 team-seasons",
+        },
+    ]
+    return {
+        "slug": "contender-chemistry",
+        "tldr": "Playoff rotations are way more stylistically diverse than lottery teams' "
+        "— winners collect different weapons, not copies — but the spread doesn't "
+        "predict how deep a run goes.",
+        "kicker": "Contender chemistry",
+        "title": "Making the playoffs takes variety — surviving them takes matchups",
+        "lede": "Mean pairwise style distance among rotation players (≥1,000 min), "
+        "14-d embedding space, 1996-97 → 2024-25. Every tier of the playoffs draws "
+        "from the same diverse pool — once you're in, style spread doesn't predict "
+        "how far you go. Most-diverse champs: the 2014-15 Warriors (5.78), 2019-20 "
+        "Lakers (5.62), 2010-11 Mavericks (5.62); tightest: the 1999-00 Lakers (4.10).",
+        "stat": "+5.0%",
+        "stat_label": "wider rotation style spread — playoff teams vs non-playoff "
+        "(%.2f vs %.2f)" % (playoff_spread, missed_spread),
+        "viz": "bars",
+        "viz_label": "Mean rotation style spread by furthest round reached",
+        "rows": rows,
+        "foot": "862 team-seasons; furthest round from playoff series records; "
+        "2025-26 excluded (season in progress).",
+        "og_title": "Winners don't look alike",
+        "og_desc": "Playoff rotations span 5% more style space — but Finals teams are "
+        "no more diverse than first-round exits. Matchups decide.",
     }
 
 
