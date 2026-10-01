@@ -23,17 +23,35 @@
 
   function barsSVG(ins) {
     var rows = ins.rows.slice(0, 8);
-    var max = Math.max.apply(null, rows.map(function (r) { return r.value; }));
+    var vals = rows.map(function (r) { return r.value; });
+    var max = Math.max.apply(null, vals), min = Math.min.apply(null, vals);
     var W = 620, rowH = 34, padL = 200, padR = 130;
     var H = rows.length * rowH + 8;
     var s = '<svg viewBox="0 0 ' + W + ' ' + H + '" class="vh-ins__viz" role="img" aria-label="' + esc(ins.viz_label || 'bar chart') + '">';
-    rows.forEach(function (r, i) {
-      var y = i * rowH + 8, w = Math.max(3, (r.value / max) * (W - padL - padR));
-      var gold = i === 0;
-      s += '<text x="0" y="' + (y + 17) + '" class="vh-ins__svglabel">' + esc(r.label) + '</text>';
-      s += '<rect x="' + padL + '" y="' + y + '" width="' + w.toFixed(1) + '" height="20" rx="4" fill="' + (gold ? GOLD : TERRA) + '" opacity="' + (gold ? 1 : 0.55 + 0.4 * (1 - i / rows.length)) + '"/>';
-      s += '<text x="' + (padL + w + 8) + '" y="' + (y + 16) + '" class="vh-ins__svgval">' + r.value + (r.tag ? ' · ' + esc(r.tag) : '') + '</text>';
-    });
+    if (min >= 0) {
+      rows.forEach(function (r, i) {
+        var y = i * rowH + 8, w = Math.max(3, (r.value / max) * (W - padL - padR));
+        var gold = i === 0;
+        s += '<text x="0" y="' + (y + 17) + '" class="vh-ins__svglabel">' + esc(r.label) + '</text>';
+        s += '<rect x="' + padL + '" y="' + y + '" width="' + w.toFixed(1) + '" height="20" rx="4" fill="' + (gold ? GOLD : TERRA) + '" opacity="' + (gold ? 1 : 0.55 + 0.4 * (1 - i / rows.length)) + '"/>';
+        s += '<text x="' + (padL + w + 8) + '" y="' + (y + 16) + '" class="vh-ins__svgval">' + r.value + (r.tag ? ' · ' + esc(r.tag) : '') + '</text>';
+      });
+    } else {
+      // Diverging bars around a zero axis (e.g. playoff deltas that go negative).
+      var span = max - min, plotW = W - padL - padR;
+      var zeroX = padL + ((0 - min) / span) * plotW;
+      s += '<line x1="' + zeroX.toFixed(1) + '" y1="4" x2="' + zeroX.toFixed(1) + '" y2="' + (H - 4) + '" stroke="' + MUTED + '" stroke-width="1"/>';
+      rows.forEach(function (r, i) {
+        var y = i * rowH + 8;
+        var bw = Math.max(3, (Math.abs(r.value) / span) * plotW);
+        var bx = r.value < 0 ? zeroX - bw : zeroX;
+        var fill = r.value < 0 ? TERRA : GOLD;
+        var lx = r.value < 0 ? zeroX + 8 : bx + bw + 8;
+        s += '<text x="0" y="' + (y + 17) + '" class="vh-ins__svglabel">' + esc(r.label) + '</text>';
+        s += '<rect x="' + bx.toFixed(1) + '" y="' + y + '" width="' + bw.toFixed(1) + '" height="20" rx="4" fill="' + fill + '"/>';
+        s += '<text x="' + lx.toFixed(1) + '" y="' + (y + 16) + '" class="vh-ins__svgval">' + r.value + (r.tag ? ' · ' + esc(r.tag) : '') + '</text>';
+      });
+    }
     return s + '</svg>';
   }
 
@@ -255,22 +273,45 @@
     c.save();
     if (ins.viz === 'bars') {
       var rows = ins.rows.slice(0, 5);
-      var max = Math.max.apply(null, rows.map(function (r) { return r.value; }));
+      var bvals = rows.map(function (r) { return r.value; });
+      var bmax = Math.max.apply(null, bvals), bmin = Math.min.apply(null, bvals);
       var rh = h / rows.length;
-      rows.forEach(function (r, i) {
-        var ry = y + i * rh;
-        var bw = Math.max(4, (r.value / max) * (w - 260));
-        c.font = '400 26px ' + F; c.fillStyle = '#F9F6F0';
-        var label = r.label.length > 26 ? r.label.slice(0, 25) + '…' : r.label;
-        c.fillText(label, x, ry + rh / 2 + 8);
-        c.fillStyle = i === 0 ? GOLD : TERRA;
-        var bx = x + 260;
-        c.beginPath();
-        c.roundRect(bx, ry + rh / 2 - 13, bw, 26, 6);
-        c.fill();
-        c.fillStyle = MUTED; c.font = '400 24px ' + F;
-        c.fillText(String(r.value), bx + bw + 12, ry + rh / 2 + 8);
-      });
+      if (bmin >= 0) {
+        rows.forEach(function (r, i) {
+          var ry = y + i * rh;
+          var bw = Math.max(4, (r.value / bmax) * (w - 260));
+          c.font = '400 26px ' + F; c.fillStyle = '#F9F6F0';
+          var label = r.label.length > 26 ? r.label.slice(0, 25) + '…' : r.label;
+          c.fillText(label, x, ry + rh / 2 + 8);
+          c.fillStyle = i === 0 ? GOLD : TERRA;
+          var bx = x + 260;
+          c.beginPath();
+          c.roundRect(bx, ry + rh / 2 - 13, bw, 26, 6);
+          c.fill();
+          c.fillStyle = MUTED; c.font = '400 24px ' + F;
+          c.fillText(String(r.value), bx + bw + 12, ry + rh / 2 + 8);
+        });
+      } else {
+        // Diverging bars around a zero axis (e.g. playoff deltas that go negative).
+        var dspan = bmax - bmin, dplot = w - 260 - 60;
+        var dzero = x + 260 + ((0 - bmin) / dspan) * dplot;
+        c.strokeStyle = MUTED; c.lineWidth = 1;
+        c.beginPath(); c.moveTo(dzero, y); c.lineTo(dzero, y + h); c.stroke();
+        rows.forEach(function (r, i) {
+          var dry = y + i * rh;
+          var dbw = Math.max(4, (Math.abs(r.value) / dspan) * dplot);
+          var dbx = r.value < 0 ? dzero - dbw : dzero;
+          c.font = '400 26px ' + F; c.fillStyle = '#F9F6F0';
+          var dlabel = r.label.length > 26 ? r.label.slice(0, 25) + '…' : r.label;
+          c.fillText(dlabel, x, dry + rh / 2 + 8);
+          c.fillStyle = r.value < 0 ? TERRA : GOLD;
+          c.beginPath();
+          c.roundRect(dbx, dry + rh / 2 - 13, dbw, 26, 6);
+          c.fill();
+          c.fillStyle = MUTED; c.font = '400 24px ' + F;
+          c.fillText(String(r.value), (r.value < 0 ? dzero : dbx + dbw) + 12, dry + rh / 2 + 8);
+        });
+      }
     } else if (ins.viz === 'shares') {
       var rows2 = ins.rows;
       var rh2 = h / rows2.length;
