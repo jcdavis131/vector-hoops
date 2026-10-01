@@ -48,6 +48,18 @@ a{color:inherit}
 .wiki-row__grades{flex:0 0 auto;border:1.5px solid var(--ink);border-radius:999px;padding:4px 8px;background:#fff;font-family:var(--mono);font-size:10px;font-weight:800;cursor:pointer;box-shadow:1px 1px 0 var(--ink)}
 .wiki-empty{font-size:13px;color:#666;padding:8px}
 
+/* playoff swing badges (Insights #10, assets/playoff-swings.json) */
+.swing-badge{display:inline-block;font-family:var(--mono);font-size:10px;font-weight:800;border:1.5px solid var(--ink);border-radius:999px;padding:1px 7px;margin-left:6px;white-space:nowrap;vertical-align:1px}
+.swing-badge.swing-up{background:#DFE8DC;color:#2F5233}
+.swing-badge.swing-down{background:#F3DDD3;color:#8C3B22}
+.vh-dossier__swings{margin:4px 0 8px}
+.vh-dossier__swings .vh-dossier__row{display:flex;gap:8px;align-items:baseline;flex-wrap:wrap}
+.vh-dossier__swings .swing-delta{font-family:var(--mono);font-weight:800;font-size:12px}
+.vh-dossier__swings .swing-delta.up{color:#2F5233}
+.vh-dossier__swings .swing-delta.down{color:#8C3B22}
+.vh-dossier__swings .swing-note{font-family:var(--mono);font-size:10px;color:#6B665E}
+.vh-dossier__swings .swing-more{margin-top:6px;font-size:12px}
+
 /* skills */
 .skills-panel{display:flex;flex-direction:column;gap:12px}
 .skills-suggest{list-style:none;margin:6px 0 0;padding:0;display:flex;flex-direction:column;gap:6px;max-height:280px;overflow:auto}

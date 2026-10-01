@@ -163,6 +163,14 @@
 .door:hover .door__go{ color: var(--accent); letter-spacing: .2em; }
 
 /* ---------- ledger ---------- */
+.findings{ margin-top: var(--s-8); }
+.chem{ display: flex; flex-direction: column; gap: 6px; margin: 2px 0 4px; }
+.chem__row{ display: flex; align-items: center; gap: 10px; font-family: var(--font-display); font-size: 11px; font-weight: 700; }
+.chem__row > span{ width: 34px; color: var(--fg-3); letter-spacing: .08em; }
+.chem__row > i{ display: block; height: 14px; background: var(--surface-2); border-radius: 999px; position: relative; font-style: normal; }
+.chem__row > i > b{ position: absolute; right: 8px; top: 50%; transform: translateY(-50%); font-size: 10px; color: var(--fg-2); font-variant-numeric: tabular-nums; }
+.chem__row:first-child > i{ background: var(--accent); }
+.chem__row:first-child > i > b{ color: #fff; }
 .ledger{ display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); margin-top: var(--s-8); text-align: center; }
 .ledger > div{ padding: 0 16px; }
 .ledger > div + div{ border-left: 1px solid var(--line); }
@@ -277,6 +285,37 @@
       <span class="door__go">See the drift →</span>
     </a>
   </nav>
+
+  <section class="findings" aria-label="Fresh from the lab">
+    <h2 class="label fig-label" style="margin:0 0 4px">Fresh from the lab <b>· new findings</b></h2>
+    <nav class="doors" aria-label="New findings" style="margin-top:var(--s-4)">
+      <a class="door" href="/insights#playoff-swings">
+        <span class="door__n">Insight №10 — Risers &amp; fallers</span>
+        <span class="door__title">May makes some stars bigger</span>
+        <p class="door__text">Mitchell owns the two biggest playoff scoring leaps in 30 years (<b>+8.6</b>, <b>+8.3</b>); Embiid owns the biggest collapse (<b>−14.6</b>). 334 established-scorer seasons, charted.</p>
+        <span class="door__go">See the swings →</span>
+      </a>
+      <a class="door" href="/insights#contenders-pretenders">
+        <span class="door__n">Insight №11 — 2026–27 preview</span>
+        <span class="door__title">Contender chemistry</span>
+        <div class="chem" aria-label="Teams clearing both contender bars">
+          <div class="chem__row"><span>LAL</span><i style="width:98%"><b>5.56</b></i></div>
+          <div class="chem__row"><span>OKC</span><i style="width:94%"><b>5.31</b></i></div>
+          <div class="chem__row"><span>DEN</span><i style="width:92%"><b>5.20</b></i></div>
+          <div class="chem__row"><span>PHI</span><i style="width:91%"><b>5.14</b></i></div>
+          <div class="chem__row"><span>MIA</span><i style="width:90%"><b>5.12</b></i></div>
+        </div>
+        <p class="door__text">Five teams clear both bars — shape and engine. Portland is the most playoff-shaped team alive (5.67) with no engine to drive it.</p>
+        <span class="door__go">See the preview →</span>
+      </a>
+      <a class="door" href="/playoff-runs">
+        <span class="door__n">New page — 42 ranked runs</span>
+        <span class="door__title">Greatest playoff runs</span>
+        <p class="door__text">Jordan '98 over LeBron '09. Curry + Durant '17, the greatest duo ever. The 16–1 Warriors over the 15–1 Lakers. Individuals, duos, trios, teams.</p>
+        <span class="door__go">Rank the runs →</span>
+      </a>
+    </nav>
+  </section>
 
   <section class="ledger" aria-label="The numbers">
     <div><b>12,966</b><span>Player-seasons</span></div>
