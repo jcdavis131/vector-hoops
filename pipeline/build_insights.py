@@ -257,6 +257,106 @@ def insight_contenders_pretenders():
     }
 
 
+# ---- 12. know your role ------------------------------------------------------
+# Research: research/know-your-role.md (2026-10-01).
+# Method: ordered season pairs (S_old, S_new), <= 8 years apart, different
+# teams, both in assets/playoffs.json. Old = was the man (50+ RS GP,
+# 21.5+ USG RS or playoffs, team won <= 1 round). New = 3rd option or lower
+# (RS-USG rank >= 3 among 50+ GP teammates), 8+ playoff games at 14+ USG and
+# .520+ TS, efficiency held vs the old role, team won >= 2 more rounds.
+# Sacrifice = max(RS USG drop, PO USG drop) >= 4. Score = sacrifice x rounds
+# leap; best pair kept per player. 33 qualifying transitions, 1996-97 ->
+# 2025-26. Rows below are exact to the computed output (v3 run).
+def insight_know_your_role():
+    rows = [
+        {
+            "label": "Dwight Howard '19-20",
+            "value": -14.0,
+            "tag": "28.2 → 14.2 playoff USG · HOU '13-14 → LAL champs '19-20",
+        },
+        {
+            "label": "Mikal Bridges '25-26",
+            "value": -13.9,
+            "tag": "29.3 → 15.4 playoff USG · BKN '22-23 → NYK champs '25-26",
+        },
+        {
+            "label": "David West '16-17",
+            "value": -13.7,
+            "tag": "28.5 → 14.8 playoff USG · NOH '08-09 → GSW champs '16-17",
+        },
+        {
+            "label": "Pau Gasol '08-09",
+            "value": -12.5,
+            "tag": "31.2 → 18.7 playoff USG · MEM '04-05 → LAL champs '08-09",
+        },
+        {
+            "label": "Brook Lopez '20-21",
+            "value": -11.6,
+            "tag": "28.2 → 16.6 USG · BKN '12-13 → MIL champs '20-21",
+        },
+        {
+            "label": "JR Smith '14-15",
+            "value": -14.6,
+            "tag": "32.8 → 18.2 playoff USG · DEN '10-11 → CLE Finals '14-15",
+        },
+        {
+            "label": "Andre Iguodala '14-15",
+            "value": -10.8,
+            "tag": "25.7 → 14.9 playoff USG · PHI '08-09 → GSW champs '14-15",
+        },
+        {
+            "label": "Jrue Holiday '23-24",
+            "value": -11.4,
+            "tag": "26.0 → 14.6 playoff USG · MIL '21-22 → BOS champs '23-24",
+        },
+        {
+            "label": "Ray Allen '12-13",
+            "value": -10.9,
+            "tag": "28.5 → 17.6 playoff USG · SEA '04-05 → MIA champs '12-13",
+        },
+        {
+            "label": "Aaron Gordon '22-23",
+            "value": -7.6,
+            "tag": "22.8 → 15.2 playoff USG · ORL '18-19 → DEN champs '22-23",
+        },
+    ]
+    return {
+        "slug": "know-your-role",
+        "tldr": "33 times since 1997, a high-usage star changed teams, took a "
+        "much smaller piece of the offense — and won much bigger. Iguodala "
+        "gave up 10.8 points of playoff usage and won Finals MVP as a sixth "
+        "man; Gordon went from Orlando's playoff go-to guy to Denver's fourth "
+        "option and a championship, more efficient on less.",
+        "kicker": "Know your role",
+        "title": "The fastest way to win more is to need the ball less",
+        "lede": "Usage sacrificed (regular-season or playoff USG, whichever "
+        "shows the role change) against playoff rounds gained, for players who "
+        "went from a team's hub (21.5+ USG) to its third option or lower on a "
+        "different, much better team. Dwight Howard's −14.0 is the biggest "
+        "sacrifice on a title team: Houston's hub to the Lakers' rim-runner at "
+        ".677 true shooting. Rows are ranked by sacrifice × rounds gained, so "
+        "JR Smith's record −14.6 sits sixth — his leap was three rounds, not "
+        "four, and it came in a five-game 2011 cameo.",
+        "stat": "-14.0",
+        "stat_label": "Dwight Howard's playoff-usage drop, Houston hub to "
+        "Lakers rim-runner — the biggest sacrifice on a title team",
+        "viz": "bars",
+        "viz_label": "Usage given up (USG points) × playoff rounds gained",
+        "rows": rows,
+        "foot": "33 qualifying transitions, 1996-97 → 2025-26. Old season: "
+        "50+ RS games, 21.5+ USG (RS or playoffs), team won ≤ 1 round. New "
+        "season: different team, 3rd option or lower, 8+ playoff games at "
+        "14+ USG and .520+ TS, efficiency held vs the old role, team won ≥ 2 "
+        "more rounds. Pre-move stardom on lottery teams is invisible to this "
+        "dataset (it only covers playoff players) — see Kevin Love. Same-team "
+        "sacrifices (Wade, Manu, Klay) need a different lens.",
+        "og_title": "Know your role",
+        "og_desc": "Iguodala gave up 10.8 points of usage and won Finals MVP. "
+        "Gordon went from Orlando's go-to guy to Denver's fourth option and "
+        "a ring. 33 stars who won bigger by needing the ball less.",
+    }
+
+
 def main():
     vec = load("vectors.json")
     players = vec["players"]
@@ -288,6 +388,7 @@ def main():
     insights.append(insight_matchup_nightmares())
     insights.append(insight_playoff_swings())
     insights.append(insight_contenders_pretenders())
+    insights.append(insight_know_your_role())
 
     out = {
         "built": "build_insights.py",
