@@ -73,7 +73,9 @@ def pretty(n):
 
 def norm(n):
     n = unicodedata.normalize("NFKD", n).encode("ascii", "ignore").decode("ascii")
-    return " ".join(n.lower().replace("'", "").replace(".", "").replace("-", "").split())
+    return " ".join(
+        n.lower().replace("'", "").replace(".", "").replace("-", "").split()
+    )
 
 
 def poyr_of(season):
@@ -86,7 +88,9 @@ def load(name):
 
 
 def load_defense():
-    with open(os.path.join(REPO, "data", "playoff_defense_bref.json"), encoding="utf-8") as f:
+    with open(
+        os.path.join(REPO, "data", "playoff_defense_bref.json"), encoding="utf-8"
+    ) as f:
         return json.load(f)
 
 
@@ -98,16 +102,44 @@ def wl_str(series):
 
 # BRef playoff "tm" abbrev -> franchise nickname (suffix of BRef full names)
 ABBR_TO_NICK = {
-    "CHI": "Bulls", "CLE": "Cavaliers", "BOS": "Celtics", "BRK": "Nets",
-    "NJN": "Nets", "NYK": "Knicks", "PHI": "76ers", "TOR": "Raptors",
-    "ATL": "Hawks", "CHH": "Hornets", "CHO": "Hornets", "CHA": "Bobcats",
-    "NOH": "Hornets", "NOK": "Hornets", "NOP": "Pelicans", "MIA": "Heat",
-    "ORL": "Magic", "WAS": "Wizards", "WSB": "Wizards", "DET": "Pistons",
-    "IND": "Pacers", "MIL": "Bucks", "DAL": "Mavericks", "DEN": "Nuggets",
-    "HOU": "Rockets", "MEM": "Grizzlies", "VAN": "Grizzlies",
-    "MIN": "Timberwolves", "OKC": "Thunder", "SEA": "SuperSonics",
-    "POR": "Trail Blazers", "SAC": "Kings", "SAS": "Spurs", "UTA": "Jazz",
-    "GSW": "Warriors", "LAC": "Clippers", "LAL": "Lakers", "PHX": "Suns",
+    "CHI": "Bulls",
+    "CLE": "Cavaliers",
+    "BOS": "Celtics",
+    "BRK": "Nets",
+    "NJN": "Nets",
+    "NYK": "Knicks",
+    "PHI": "76ers",
+    "TOR": "Raptors",
+    "ATL": "Hawks",
+    "CHH": "Hornets",
+    "CHO": "Hornets",
+    "CHA": "Bobcats",
+    "NOH": "Hornets",
+    "NOK": "Hornets",
+    "NOP": "Pelicans",
+    "MIA": "Heat",
+    "ORL": "Magic",
+    "WAS": "Wizards",
+    "WSB": "Wizards",
+    "DET": "Pistons",
+    "IND": "Pacers",
+    "MIL": "Bucks",
+    "DAL": "Mavericks",
+    "DEN": "Nuggets",
+    "HOU": "Rockets",
+    "MEM": "Grizzlies",
+    "VAN": "Grizzlies",
+    "MIN": "Timberwolves",
+    "OKC": "Thunder",
+    "SEA": "SuperSonics",
+    "POR": "Trail Blazers",
+    "SAC": "Kings",
+    "SAS": "Spurs",
+    "UTA": "Jazz",
+    "GSW": "Warriors",
+    "LAC": "Clippers",
+    "LAL": "Lakers",
+    "PHX": "Suns",
 }
 
 # Documented exclusion: real DBPM could not be sourced (never synthesized).
@@ -142,7 +174,12 @@ class Defense:
 
 
 def old_indiv_score(po, s):
-    return po["PTS100"] + 10 * (po["TS"] - 0.55) + 2 * s["rounds"] + (4 if s.get("champion") else 0)
+    return (
+        po["PTS100"]
+        + 10 * (po["TS"] - 0.55)
+        + 2 * s["rounds"]
+        + (4 if s.get("champion") else 0)
+    )
 
 
 def compute():
@@ -206,7 +243,9 @@ def compute():
             if old_indiv_score(po, s) + 6 + 0.25 * 16 >= cut:
                 viol.append((name, season))
         assert not viol, "bound check failed, players could reach top 10: %s" % viol
-    print("individuals: %d ranked, %d skipped (no defensive data)" % (len(indiv), skipped))
+    print(
+        "individuals: %d ranked, %d skipped (no defensive data)" % (len(indiv), skipped)
+    )
 
     # ---- units ----
     byts = defaultdict(list)
@@ -260,7 +299,9 @@ def compute():
                 "wl": wls,
                 "gp": gp,
                 "pts100": round(sum(m[1]["po"]["PTS100"] for m in ms), 1),
-                "dbpm_sum": round(sum(defense.row(season, m[0])["dbpm"] for m in ms), 1),
+                "dbpm_sum": round(
+                    sum(defense.row(season, m[0])["dbpm"] for m in ms), 1
+                ),
                 "team_netrtg": round(netrtg, 1),
                 "champion": champ,
                 "score": round(sc, 2),
@@ -302,20 +343,38 @@ def compute():
                 b += 0.25 * 16
             if b >= cut:
                 threats.append(
-                    {"bucket": "duo" if n == 2 else "trio",
-                     "season": season, "players": [m[0] for m in ms],
-                     "upper_bound": round(b, 2),
-                     "missing": [m[0] for m in ms if defense.row(season, m[0]) is None]})
+                    {
+                        "bucket": "duo" if n == 2 else "trio",
+                        "season": season,
+                        "players": [m[0] for m in ms],
+                        "upper_bound": round(b, 2),
+                        "missing": [
+                            m[0] for m in ms if defense.row(season, m[0]) is None
+                        ],
+                    }
+                )
     if threats:
-        print("NOTE: %d skipped units could reach the top 10 (verified-bound upper shown); "
-              "excluded per documented rule, not estimated:" % len(threats))
+        print(
+            "NOTE: %d skipped units could reach the top 10 (verified-bound upper shown); "
+            "excluded per documented rule, not estimated:" % len(threats)
+        )
         for t in sorted(threats, key=lambda x: -x["upper_bound"])[:25]:
-            print("   %s %s %s upper=%.1f missing=%s" % (
-                t["bucket"], t["season"], t["players"], t["upper_bound"], t["missing"]))
+            print(
+                "   %s %s %s upper=%.1f missing=%s"
+                % (
+                    t["bucket"],
+                    t["season"],
+                    t["players"],
+                    t["upper_bound"],
+                    t["missing"],
+                )
+            )
     with open("/tmp/unit_threats.json", "w") as f:
         json.dump(threats, f, indent=1)
-    print("units: %d duos, %d trios ranked; %d skipped (incomplete defensive data)" % (
-        len(duos), len(trios), skipped_units))
+    print(
+        "units: %d duos, %d trios ranked; %d skipped (incomplete defensive data)"
+        % (len(duos), len(trios), skipped_units)
+    )
 
     # ---- teams ----
     teams = {}
@@ -323,8 +382,9 @@ def compute():
         name, season = key.rsplit("|", 1)
         path = tuple(r["opp"] for r in s["series"])
         gkey = (season, path)
-        t = teams.setdefault(gkey, {"W": 0, "L": 0, "champ": False,
-                                    "top": (0, ""), "members": []})
+        t = teams.setdefault(
+            gkey, {"W": 0, "L": 0, "champ": False, "top": (0, ""), "members": []}
+        )
         for r in s["series"]:
             t["W"] += r["wins"]
             t["L"] += r["losses"]
@@ -352,10 +412,18 @@ def compute():
             if ovr:
                 fran = ovr
             else:
-                cands = [tm for tm, rr in defense.teams[poyr].items()
-                         if rr["w"] == W and rr["l"] == L]
+                cands = [
+                    tm
+                    for tm, rr in defense.teams[poyr].items()
+                    if rr["w"] == W and rr["l"] == L
+                ]
                 assert len(cands) == 1, "ambiguous team for %s %s %d-%d: %s" % (
-                    season, path, W, L, cands)
+                    season,
+                    path,
+                    W,
+                    L,
+                    cands,
+                )
                 fran = cands[0]
         rr = defense.teams[poyr][fran]
         assert (rr["w"], rr["l"]) == (W, L), "record mismatch %s %s" % (season, path)
@@ -410,18 +478,39 @@ TEAM_NAMES = {
     ("2025-26", ("Jalen Brunson", "Karl-Anthony Towns")): "New York Knicks",
     ("2004-05", ("Manu Ginobili", "Tim Duncan")): "San Antonio Spurs",
     # trios
-    ("2025-26", ("Jalen Brunson", "Karl-Anthony Towns", "OG Anunoby")): "New York Knicks",
+    (
+        "2025-26",
+        ("Jalen Brunson", "Karl-Anthony Towns", "OG Anunoby"),
+    ): "New York Knicks",
     ("2019-20", ("Anthony Davis", "Kyle Kuzma", "LeBron James")): "Los Angeles Lakers",
     ("2015-16", ("Kevin Love", "Kyrie Irving", "LeBron James")): "Cleveland Cavaliers",
-    ("2016-17", ("Kevin Durant", "Klay Thompson", "Stephen Curry")): "Golden State Warriors",
-    ("2017-18", ("Kevin Durant", "Klay Thompson", "Stephen Curry")): "Golden State Warriors",
-    ("2018-19", ("Kevin Durant", "Klay Thompson", "Stephen Curry")): "Golden State Warriors",
-    ("2021-22", ("Jonathan Kuminga", "Jordan Poole", "Stephen Curry")): "Golden State Warriors",
+    (
+        "2016-17",
+        ("Kevin Durant", "Klay Thompson", "Stephen Curry"),
+    ): "Golden State Warriors",
+    (
+        "2017-18",
+        ("Kevin Durant", "Klay Thompson", "Stephen Curry"),
+    ): "Golden State Warriors",
+    (
+        "2018-19",
+        ("Kevin Durant", "Klay Thompson", "Stephen Curry"),
+    ): "Golden State Warriors",
+    (
+        "2021-22",
+        ("Jonathan Kuminga", "Jordan Poole", "Stephen Curry"),
+    ): "Golden State Warriors",
     ("2011-12", ("Chris Bosh", "Dwyane Wade", "LeBron James")): "Miami Heat",
     ("2016-17", ("Kevin Love", "Kyrie Irving", "LeBron James")): "Cleveland Cavaliers",
     ("1997-98", ("Michael Jordan", "Scottie Pippen", "Toni Kukoc")): "Chicago Bulls",
-    ("2022-23", ("Jamal Murray", "Michael Porter Jr.", "Nikola Jokić")): "Denver Nuggets",
-    ("2020-21", ("Bobby Portis", "Giannis Antetokounmpo", "Khris Middleton")): "Milwaukee Bucks",
+    (
+        "2022-23",
+        ("Jamal Murray", "Michael Porter Jr.", "Nikola Jokić"),
+    ): "Denver Nuggets",
+    (
+        "2020-21",
+        ("Bobby Portis", "Giannis Antetokounmpo", "Khris Middleton"),
+    ): "Milwaukee Bucks",
     # teams: (season, ordered opponent path) — net-rating era top runs
     ("2025-26", "ATL-PHI-CLE-SAS"): "New York Knicks",
     ("2000-01", "POR-SAC-SAS-PHI"): "Los Angeles Lakers",
@@ -460,29 +549,29 @@ def write_outputs(data):
     payload = {
         "generated": "2026-10-02",
         "source": "assets/playoffs.json (stats.nba.com RS vs playoff splits, 1996-97 → 2025-26) "
-                  "for offense/series data; data/playoff_defense_bref.json (Basketball-Reference, "
-                  "fetched 2026-10-02) for playoff OBPM/DBPM/BPM and official playoff team ORtg/DRtg/NRtg",
+        "for offense/series data; data/playoff_defense_bref.json (Basketball-Reference, "
+        "fetched 2026-10-02) for playoff OBPM/DBPM/BPM and official playoff team ORtg/DRtg/NRtg",
         "method": {
             "individuals": "Two-way, all-around ranking (Cameron's verdict: greatest ALL-AROUND, not offense-only). "
-                "PO GP>=10 across 185 player-seasons with sourced playoff defensive data "
-                "(plus a runtime bound check proving no unsourced player-season can reach the top 10). "
-                "score = pts/100 + 10*(TS-0.55) + DBPM + 0.25*(team playoff net rating) + 2 per round won + 4 if champion. "
-                "Defense counts one-for-one: a point of DBPM (points prevented per 100 possessions) moves the score "
-                "exactly as much as a point of per-100 scoring — symmetric, no thumb on the scale; DBPM is zero-centered "
-                "by construction so no era adjustment is needed. Team playoff net rating enters at quarter weight because "
-                "it is shared across the whole roster — full weight would let team context swamp the individual signal. "
-                "Documented exclusion: Shaquille O'Neal's 1998 run (its DBPM could not be sourced; not estimated).",
+            "PO GP>=10 across 185 player-seasons with sourced playoff defensive data "
+            "(plus a runtime bound check proving no unsourced player-season can reach the top 10). "
+            "score = pts/100 + 10*(TS-0.55) + DBPM + 0.25*(team playoff net rating) + 2 per round won + 4 if champion. "
+            "Defense counts one-for-one: a point of DBPM (points prevented per 100 possessions) moves the score "
+            "exactly as much as a point of per-100 scoring — symmetric, no thumb on the scale; DBPM is zero-centered "
+            "by construction so no era adjustment is needed. Team playoff net rating enters at quarter weight because "
+            "it is shared across the whole roster — full weight would let team context swamp the individual signal. "
+            "Documented exclusion: Shaquille O'Neal's 1998 run (its DBPM could not be sourced; not estimated).",
             "units": "Two-way cores (not 'scoring cores'). Rotation players (RS GP>=40, PO GP>=12 so every unit won a series, "
-                "PO usage>=15) ordered by RS scoring rate; score = sum over members of (pts/100 + 10*(TS-0.55) + DBPM) "
-                "+ 0.25*(team playoff net rating) + 2 per round won + 4 if champion. "
-                "Not lineups or starters: the dataset's MIN field is not conventional MPG. "
-                "Ranked only where every member has sourced playoff DBPM — 72 missing values were "
-                "collected exactly from BRef Playoffs Advanced tables on 2026-10-02, so the board is complete; "
-                "no iconic core is excluded (see research/two-way-playoff-runs.md for how the former threats ranked).",
+            "PO usage>=15) ordered by RS scoring rate; score = sum over members of (pts/100 + 10*(TS-0.55) + DBPM) "
+            "+ 0.25*(team playoff net rating) + 2 per round won + 4 if champion. "
+            "Not lineups or starters: the dataset's MIN field is not conventional MPG. "
+            "Ranked only where every member has sourced playoff DBPM — 72 missing values were "
+            "collected exactly from BRef Playoffs Advanced tables on 2026-10-02, so the board is complete; "
+            "no iconic core is excluded (see research/two-way-playoff-runs.md for how the former threats ranked).",
             "teams": "Grouped by (season, ordered playoff-opponent path); ranked by official Basketball-Reference playoff "
-                "net rating first, then wins. Only teams that won at least two series (>=8 wins) qualify — a run has to go "
-                "somewhere. Net rating first means some dominant non-champions outrank champions; that is the formula working "
-                "as designed.",
+            "net rating first, then wins. Only teams that won at least two series (>=8 wins) qualify — a run has to go "
+            "somewhere. Net rating first means some dominant non-champions outrank champions; that is the formula working "
+            "as designed.",
         },
         "rankings": data,
     }
@@ -511,12 +600,31 @@ def main():
         assert sc == sorted(sc, reverse=True), "not sorted desc: %s" % bucket
     data = attach_teams(data)
     write_outputs(data)
-    print("top individual:", data["individuals"][0]["player"], data["individuals"][0]["season"],
-          data["individuals"][0]["score"])
-    print("top duo:", data["duos"][0]["players"], data["duos"][0]["season"], data["duos"][0]["score"])
-    print("top trio:", data["trios"][0]["players"], data["trios"][0]["season"], data["trios"][0]["score"])
-    print("top team:", data["teams"][0]["team"], data["teams"][0]["season"], data["teams"][0]["wl"],
-          data["teams"][0]["netrtg"])
+    print(
+        "top individual:",
+        data["individuals"][0]["player"],
+        data["individuals"][0]["season"],
+        data["individuals"][0]["score"],
+    )
+    print(
+        "top duo:",
+        data["duos"][0]["players"],
+        data["duos"][0]["season"],
+        data["duos"][0]["score"],
+    )
+    print(
+        "top trio:",
+        data["trios"][0]["players"],
+        data["trios"][0]["season"],
+        data["trios"][0]["score"],
+    )
+    print(
+        "top team:",
+        data["teams"][0]["team"],
+        data["teams"][0]["season"],
+        data["teams"][0]["wl"],
+        data["teams"][0]["netrtg"],
+    )
 
 
 if __name__ == "__main__":
