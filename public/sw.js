@@ -15,7 +15,6 @@ const CORE = [
 '/assets/site-nav.js',
 '/assets/atlas-map.js',
 '/assets/career-trails.js',
-'/assets/team-rosters.json',
 '/assets/twin-explainer.js',
 '/assets/insights.js',
 '/assets/insights.json',
