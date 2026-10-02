@@ -62,7 +62,7 @@
   <header class="title-card">
     <div class="title-card__eyebrow reveal">Rankings</div>
     <h1 class="title-card__title reveal reveal-1">Greatest Playoff Runs</h1>
-    <p class="title-card__lede reveal reveal-2">Every great May, ranked — from regular-season vs playoff per-100 splits across 30 postseasons. Per-possession dominance first, winning second.</p>
+    <p class="title-card__lede reveal reveal-2">Every great May, ranked — all-around, two-way: offense, defense, and net rating across 30 postseasons. Per-possession dominance first, winning second.</p>
     <div class="title-card__meta reveal reveal-3"><span><b>42</b>Ranked runs</span><span><b>30</b>Postseasons</span><span><b>4</b>Leaderboards</span></div>
   </header>
 
@@ -77,7 +77,7 @@
     <section id="board-duos" class="vh-runs__board" role="tabpanel"></section>
     <section id="board-trios" class="vh-runs__board" role="tabpanel"></section>
     <section id="board-teams" class="vh-runs__board" role="tabpanel"></section>
-    <p class="vh-runs__foot">How it's scored: per-100 playoff scoring plus shooting efficiency, then +2 per round won and +4 for the title — winning matters, but it never swamps the per-possession signal. Duos and trios are the highest-scoring units whose members each played real rotation roles (40+ regular-season games, 12+ playoff games — every unit here won a series). Fives and starters aren't ranked: the source minutes field can't identify them, so we don't fake them. Every figure recomputes from <a href="/methods.html">stats.nba.com splits, 1996-97 → 2025-26</a>.</p>
+    <p class="vh-runs__foot">How it's scored: an all-around, two-way score — per-100 playoff scoring plus shooting efficiency, plus defensive impact (DBPM, points prevented per 100 possessions, counting one-for-one with scoring), plus a quarter-share of the team's playoff net rating. Then +2 per round won and +4 for the title — winning matters, but it never swamps the per-possession signal. Duos and trios are the best two-way units whose members each played real rotation roles (40+ regular-season games, 12+ playoff games — every unit here won a series). Fives and starters aren't ranked: the source minutes field can't identify them, so we don't fake them. Team runs are ranked by official playoff net rating (Basketball-Reference), minimum two series won. Every figure recomputes from <a href="/methods.html">stats.nba.com splits, 1996-97 → 2025-26</a> and Basketball-Reference advanced stats.</p>
     <p class="vh-runs__foot" style="text-align:center">The single-season version: <a href="/insights/playoff-swings.html">playoff risers &amp; fallers</a> — whose scoring leapt or collapsed in May.</p>
   </div>
 </div>
@@ -87,6 +87,6 @@
   <p class="site-footer__attribution">Every number recomputable from stats.nba.com · A <a href="https://dumbmodel.com">dumbmodel</a> project</p>
 </footer>
 <script src="/assets/site-nav.js?v=1"></script>
-<script src="assets/playoff-runs.js?v=1"></script>
+<script src="assets/playoff-runs.js?v=2"></script>
 <script>if('serviceWorker' in navigator){window.addEventListener('load',()=>{navigator.serviceWorker.register('/sw.js').catch(()=>{})})}</script>
 </body></html>

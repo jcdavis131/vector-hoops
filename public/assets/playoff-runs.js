@@ -1,16 +1,23 @@
-/* Greatest Playoff Runs — renders the four leaderboards from assets/playoff-runs.json */
+/* Greatest Playoff Runs — renders the four leaderboards from assets/playoff-runs.json
+   Two-way edition: the headline number is the all-around score
+   (offense + defense + net rating), not raw per-100 scoring. */
 (function (global) {
   'use strict';
 
   var HEADS = {
-    individuals: { title: 'Individual runs', sub: 'Ten-plus playoff games. Per-100 scoring plus efficiency, with a bonus for each round won and the title.' },
-    duos: { title: 'Duos', sub: 'The two highest-scoring teammates of each run — both real rotation players (40+ regular-season games, 12+ playoff games).' },
-    trios: { title: 'Trios', sub: 'The three highest-scoring teammates of each run. Scoring cores, not lineups.' },
-    teams: { title: 'Team runs', sub: 'The most dominant postseasons of the last 30 years, ranked by win percentage, then wins, then leading-scorer firepower.' }
+    individuals: { title: 'Individual runs', sub: 'Ten-plus playoff games. All-around score: per-100 scoring and shooting efficiency, plus defensive impact (DBPM) and a share of team net rating — with a bonus for each round won and the title.' },
+    duos: { title: 'Duos', sub: 'The two best two-way teammates of each run — both real rotation players (40+ regular-season games, 12+ playoff games).' },
+    trios: { title: 'Trios', sub: 'The three best two-way teammates of each run. Two-way cores, not lineups.' },
+    teams: { title: 'Team runs', sub: 'The most dominant postseasons of the last 30 years, ranked by playoff net rating, then wins. Minimum two series won.' }
   };
 
   function esc(s) {
     return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  }
+
+  function signed(x, digits) {
+    var v = Number(x);
+    return (v >= 0 ? '+' : '') + v.toFixed(digits == null ? 1 : digits);
   }
 
   function champBadge(r) {
@@ -24,37 +31,39 @@
       encodeURIComponent(name) + '">' + esc(name) + '</a>';
   }
 
-  function barRow(rank, names, meta, pts, maxPts, badge) {
-    var w = maxPts > 0 ? Math.max(4, Math.round(100 * pts / maxPts)) : 4;
+  function barRow(rank, names, meta, score, maxScore, badge) {
+    var w = maxScore > 0 ? Math.max(4, Math.round(100 * score / maxScore)) : 4;
     return '<article class="vh-runs__row">' +
       '<div class="vh-runs__rank">' + rank + '</div>' +
       '<div><h3 class="vh-runs__names">' + names + badge + '</h3>' +
       '<p class="vh-runs__meta">' + meta + '</p>' +
       '<div class="vh-runs__bar" aria-hidden="true"><i style="width:' + w + '%"></i></div>' +
-      '<p class="vh-runs__pts"><b>' + pts.toFixed(1) + '</b> pts per 100 possessions</p></div>' +
+      '<p class="vh-runs__pts"><b>' + score.toFixed(1) + '</b> all-around score</p></div>' +
       '</article>';
   }
 
   function renderBoard(el, key, rows) {
     var head = HEADS[key];
-    var maxPts = rows.reduce(function (m, r) { return Math.max(m, r.pts100 || r.top_pts100 || 0); }, 0);
+    var maxScore = rows.reduce(function (m, r) { return Math.max(m, r.score || 0); }, 0);
     var html = '<div class="vh-runs__boardhead"><h2>' + esc(head.title) + '</h2><p>' + esc(head.sub) + '</p></div>';
     html += rows.map(function (r, i) {
       var rank = i + 1;
       if (key === 'individuals') {
         return barRow(rank, plink(r.player),
-          '<b>' + esc(r.season) + '</b> · ' + esc(r.wl) + ' in ' + r.gp + ' games',
-          r.pts100, maxPts, champBadge(r));
+          '<b>' + esc(r.season) + '</b> · ' + esc(r.team) + ' · ' + esc(r.wl) + ' in ' + r.gp + ' games' +
+          ' · ' + r.pts100.toFixed(1) + ' pts/100 · ' + signed(r.dbpm) + ' DBPM · team ' + signed(r.team_netrtg),
+          r.score, maxScore, champBadge(r));
       }
       if (key === 'teams') {
         return barRow(rank, esc(r.team),
           '<b>' + esc(r.season) + '</b> · ' + esc(r.wl) + ' · path ' + esc(r.path) +
-          ' · led by ' + plink(r.top_scorer),
-          r.top_pts100, maxPts, champBadge(r));
+          ' · ' + signed(r.netrtg) + ' net rating · led by ' + plink(r.top_scorer),
+          r.score, maxScore, champBadge(r));
       }
       return barRow(rank, r.players.map(plink).join(' <span aria-hidden="true">·</span> '),
-        '<b>' + esc(r.team) + '</b> · ' + esc(r.season) + ' · ' + esc(r.wl),
-        r.pts100, maxPts, champBadge(r));
+        '<b>' + esc(r.team) + '</b> · ' + esc(r.season) + ' · ' + esc(r.wl) +
+        ' · ' + signed(r.dbpm_sum) + ' DBPM · team ' + signed(r.team_netrtg),
+        r.score, maxScore, champBadge(r));
     }).join('');
     el.innerHTML = html;
   }
