@@ -8,6 +8,7 @@
     { href: '/', label: 'Atlas', title: 'The map of 12,966 player-seasons' },
     { href: '/play', label: 'Play', title: 'Daily Court: five past All-Stars, find each modern twin' },
     { href: '/players', label: 'Players', title: 'Directory, skill profiles and leaderboards' },
+    { href: '/taxonomy', label: 'Taxonomy', title: '22 play-style archetypes across 5 families, from 2,426 careers' },
     { href: '/model', label: 'Lab', title: 'How the embedding model is trained and evaluated' },
     { href: '/trends', label: 'Trends', title: 'Thirty seasons of league drift' },
     { href: '/insights', label: 'Insights', title: 'What the model learned: shareable findings from 12,966 player-seasons' },
