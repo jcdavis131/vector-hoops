@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
+<link rel="manifest" href="/manifest.json">
+<title>Taxonomy of Play Styles — Vector Hoops</title>
+<meta name="description" content="Every NBA play style, organized: 2,426 players clustered into 22 stat-backed archetypes across 5 families — from 3&D wings to rim runners."/>
+<link rel="stylesheet" href="assets/shell.css"/>
+<link rel="stylesheet" href="assets/responsive.css"/>
+<link rel="stylesheet" href="assets/final-qa.css"/>
+<link rel="stylesheet" href="assets/unified.css"/>
+<link rel="stylesheet" href="assets/motion.css"/>
+<link rel="stylesheet" href="/assets/atlas.css?v=2"/>
+<meta name="color-scheme" content="dark light"/>
+<meta name="theme-color" content="#07090C" media="(prefers-color-scheme: dark)"/>
+<meta name="theme-color" content="#F3F1EC" media="(prefers-color-scheme: light)"/>
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml"/>
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png"/>
+<link rel="canonical" href="https://hoops.dumbmodel.com/taxonomy"/>
+<meta property="og:type" content="article"/>
+<meta property="og:site_name" content="Vector Hoops"/>
+<meta property="og:url" content="https://hoops.dumbmodel.com/taxonomy"/>
+<meta property="og:title" content="Taxonomy of Play Styles — Vector Hoops"/>
+<meta property="og:description" content="2,426 players, 22 archetypes, 5 families. Find where every NBA play style lives."/>
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Taxonomy of Play Styles — Vector Hoops"/>
+<meta name="twitter:description" content="2,426 players, 22 archetypes, 5 families. Find where every NBA play style lives."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=Inter:opsz,wght@14..32,400..700&display=swap"/>
+<style>
+.vh-tax__wrap{max-width:960px;margin:0 auto;padding:0 var(--s-3) var(--s-6)}
+.vh-tax__hero{margin:var(--s-5) 0 var(--s-4);text-align:center}
+.vh-tax__hero h1{font:800 clamp(30px,5.4vw,46px)/1.05 var(--font-display);letter-spacing:-.02em;margin:0 0 10px}
+.vh-tax__hero h1 .vh-tax__accent{color:var(--accent)}
+.vh-tax__hero p{font:400 15px/1.6 var(--font-sans);color:var(--fg-2);margin:0 auto;max-width:64ch}
+.vh-tax__meta{display:inline-block;margin-top:12px;font:600 12px/1 var(--font-sans);letter-spacing:.08em;text-transform:uppercase;color:var(--gold,#D4AF69);border:1px solid var(--line);border-radius:999px;padding:8px 14px;background:var(--surface)}
+.vh-tax__search{display:flex;gap:10px;align-items:center;max-width:520px;margin:0 auto var(--s-4)}
+.vh-tax__search input{flex:1;font:400 15px/1.4 var(--font-sans);color:var(--fg);background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 16px}
+.vh-tax__search input:focus{outline:2px solid var(--accent);outline-offset:1px}
+.vh-tax__search-note{font:600 12.5px/1 var(--font-sans);color:var(--fg-2);white-space:nowrap}
+.vh-tax__fam{margin:0 0 var(--s-5)}
+.vh-tax__famhead{background:var(--void,#1E2022);color:#F9F6F0;border-radius:16px;padding:22px 24px;margin:0 0 12px;box-shadow:var(--shadow-soft)}
+.vh-tax__famhead h2{font:800 clamp(20px,3.4vw,27px)/1.2 var(--font-display);margin:0 0 6px;letter-spacing:-.01em}
+.vh-tax__famhead h2::before{content:"";display:inline-block;width:10px;height:10px;border-radius:50%;background:var(--accent);margin-right:10px;vertical-align:2px}
+.vh-tax__famhead p{font:400 14px/1.6 var(--font-sans);color:#cfc9bd;margin:0 0 8px;max-width:62ch}
+.vh-tax__fammeta{font:600 11.5px/1 var(--font-sans);letter-spacing:.1em;text-transform:uppercase;color:var(--gold,#D4AF69)}
+.vh-tax__arch{background:var(--surface);border:1px solid var(--line);border-radius:14px;margin:0 0 10px;box-shadow:var(--shadow-soft);overflow:hidden}
+.vh-tax__archsum{display:flex;align-items:center;gap:14px;padding:16px 20px;cursor:pointer;list-style:none}
+.vh-tax__archsum::-webkit-details-marker{display:none}
+.vh-tax__archsum:hover .vh-tax__archname{color:var(--accent)}
+.vh-tax__archname{font:700 clamp(16px,2.6vw,20px)/1.3 var(--font-display);letter-spacing:-.01em;flex:0 1 auto}
+.vh-tax__archmeta{font:400 12.5px/1.5 var(--font-sans);color:var(--fg-2);flex:1 1 auto}
+.vh-tax__chev{font-size:18px;color:var(--accent);transition:transform .18s ease;flex:0 0 auto}
+.vh-tax__arch[open] .vh-tax__chev{transform:rotate(180deg)}
+.vh-tax__archbody{padding:0 20px 20px;border-top:1px solid var(--line)}
+.vh-tax__archdesc{font:400 14.5px/1.65 var(--font-sans);color:var(--fg);margin:14px 0;max-width:66ch}
+.vh-tax__sig{margin:0 0 6px}
+.vh-tax__sigrow{display:grid;grid-template-columns:110px 1fr 52px;gap:10px;align-items:center;margin:0 0 7px}
+.vh-tax__signame{font:600 11.5px/1.2 var(--font-sans);letter-spacing:.04em;color:var(--fg-2);text-align:right}
+.vh-tax__sigbar{position:relative;height:10px;border-radius:99px;background:color-mix(in srgb,var(--line) 55%,transparent)}
+.vh-tax__sigbar i{position:absolute;top:0;bottom:0;border-radius:99px}
+.vh-tax__sigbar i.is-pos{background:linear-gradient(90deg,var(--accent),var(--gold,#D4AF69))}
+.vh-tax__sigbar i.is-neg{background:color-mix(in srgb,#7a8699 80%,transparent)}
+.vh-tax__sigbar b{position:absolute;top:-2px;bottom:-2px;width:2px;background:var(--fg-3);opacity:.7}
+.vh-tax__sigpct{font:700 12.5px/1 var(--font-sans);color:var(--fg)}
+.vh-tax__sigpct small{font-weight:400;color:var(--fg-2)}
+.vh-tax__sigcap{font:400 12px/1.5 var(--font-sans);color:var(--fg-3);margin:0 0 14px}
+.vh-tax__members{display:flex;flex-wrap:wrap;gap:8px}
+.vh-tax__chip{font:600 13px/1.4 var(--font-sans);color:var(--fg);background:color-mix(in srgb,var(--surface) 60%,var(--bg));border:1px solid var(--line);border-radius:999px;padding:7px 13px;text-decoration:none}
+.vh-tax__chip span{font:400 11px/1 var(--font-sans);color:var(--fg-2);margin-left:7px;letter-spacing:.06em}
+.vh-tax__chip:hover{border-color:var(--accent);color:var(--accent)}
+.vh-tax__more{font:400 12.5px/1.5 var(--font-sans);color:var(--fg-2);flex-basis:100%}
+.vh-tax__foot{font:400 12.5px/1.7 var(--font-sans);color:var(--fg-3);margin:var(--s-5) 0 0;max-width:68ch}
+.vh-tax__foot a{color:var(--accent)}
+.vh-tax__err{padding:24px;text-align:center;color:var(--fg-2)}
+@media(max-width:560px){.vh-tax__sigrow{grid-template-columns:86px 1fr 46px}.vh-tax__archsum{flex-wrap:wrap}.vh-tax__archmeta{flex-basis:100%}}
+</style>
+</head><body>
+<nav class="site-nav" data-active="/taxonomy" aria-label="Vector Hoops site"></nav>
+
+<div class="vh-tax__wrap">
+  <div class="vh-tax__hero">
+    <h1>Taxonomy of <span class="vh-tax__accent">Play Styles</span></h1>
+    <p>Every NBA player-season since 1996, distilled to 2,426 career play styles and organized into 22 archetypes across 5 families — clustered from stat profiles, named from the numbers. Find your favorite player. See who they really play like.</p>
+    <span class="vh-tax__meta" id="tax-meta">loading…</span>
+  </div>
+
+  <div class="vh-tax__search">
+    <input id="tax-search" type="search" placeholder="Search 2,426 players — try “Curry”, “Rodman”, “Jokić”…" aria-label="Search players"/>
+    <span class="vh-tax__search-note" id="tax-search-note" aria-live="polite"></span>
+  </div>
+
+  <div id="taxonomy-tree"></div>
+  <p class="vh-tax__err" id="taxonomy-err" hidden></p>
+
+  <p class="vh-tax__foot">How it's built: each player's 14-feature stat profile (per-100 possessions, z-scored within season so eras compare honestly) is collapsed to a career-typical vector — the median season, robust to late-career decline. Ward agglomerative clustering on all 2,426 players yields one dendrogram; 5 families and 22 archetypes are cut from it. Archetype names come from each cluster's stat signature (percentiles vs all players), never vibes — 20 sanity anchors verified, including Curry/Lillard (sharpshooting stars), Gobert/Mutombo (rim runners), Rodman/Wallace (rebound specialists) and Nash/Stockton (elite point guards). Magic Johnson is absent: his career predates the 1996–97 dataset. Full method and QA: <a href="/methods.html">methods</a>.</p>
+</div>
+
+<footer class="site-footer">
+  <div class="site-footer__links"><a href="/play">Play</a><a href="/players">Players</a><a href="/trends">Trends</a><a href="/model">Lab</a><a href="/methods">Methods</a><a href="https://github.com/jcdavis131/vector-hoops" rel="noopener">Source</a></div>
+  <p class="site-footer__attribution">Every number recomputable from stats.nba.com · A <a href="https://dumbmodel.com">dumbmodel</a> project</p>
+</footer>
+<script src="/assets/site-nav.js?v=1"></script>
+<script src="assets/taxonomy.js?v=1"></script>
+<script>if('serviceWorker' in navigator){window.addEventListener('load',()=>{navigator.serviceWorker.register('/sw.js').catch(()=>{})})}</script>
+</body></html>

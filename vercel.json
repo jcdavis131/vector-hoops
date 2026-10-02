@@ -22,6 +22,7 @@
     {"source": "/everyday", "destination": "/everyday.html"},
     {"source": "/leaderboard", "destination": "/leaderboard.html"},
     {"source": "/offline", "destination": "/offline.html"},
+    {"source": "/taxonomy", "destination": "/taxonomy.html"},
     {"source": "/dfs", "destination": "/index.html"}
   ]
 }
