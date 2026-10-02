@@ -1,0 +1,6210 @@
+{
+ "provenance": "Basketball-Reference playoff advanced tables (players: OBPM/DBPM/BPM) and official playoff Team Advanced Stats tables (teams: ORtg/DRtg/NRtg/W/L), fetched 2026-10-02. Pool = player-seasons with old offense-only score >= 46 or unit members.",
+ "exclusions": [
+  "('1998','shaquille oneal'): 1998 playoff DBPM/OBPM/BPM not recoverable from BRef (playoffs-advanced URL pattern 404; series-stat outlinks unstable; web search surfaced no DBPM figure). Documented exclusion per no-synthesis rule; his other pool seasons are included."
+ ],
+ "players": [
+  {
+   "poyr": 1997,
+   "name": "Michael Jordan",
+   "tm": "CHI",
+   "g": 19,
+   "obpm": 8.1,
+   "dbpm": 1.7,
+   "bpm": 9.9,
+   "src": "A"
+  },
+  {
+   "poyr": 1997,
+   "name": "Scottie Pippen",
+   "tm": "CHI",
+   "g": 19,
+   "obpm": 3.8,
+   "dbpm": 1.3,
+   "bpm": 5.1,
+   "src": "A"
+  },
+  {
+   "poyr": 1997,
+   "name": "Toni Kukoc",
+   "tm": "CHI",
+   "g": 19,
+   "obpm": 2.6,
+   "dbpm": 0.9,
+   "bpm": 3.4,
+   "src": "A"
+  },
+  {
+   "poyr": 1998,
+   "name": "Michael Jordan",
+   "tm": "CHI",
+   "g": 21,
+   "obpm": 8.0,
+   "dbpm": 1.0,
+   "bpm": 9.0,
+   "src": "A"
+  },
+  {
+   "poyr": 1998,
+   "name": "Scottie Pippen",
+   "tm": "CHI",
+   "g": 21,
+   "obpm": 3.1,
+   "dbpm": 2.5,
+   "bpm": 5.6,
+   "src": "A"
+  },
+  {
+   "poyr": 1998,
+   "name": "Toni Kukoc",
+   "tm": "CHI",
+   "g": 21,
+   "obpm": 3.2,
+   "dbpm": 1.9,
+   "bpm": 5.1,
+   "src": "A"
+  },
+  {
+   "poyr": 2000,
+   "name": "Glen Rice",
+   "tm": "LAL",
+   "g": 23,
+   "obpm": -0.1,
+   "dbpm": -0.7,
+   "bpm": -0.8,
+   "src": "A"
+  },
+  {
+   "poyr": 2000,
+   "name": "Kobe Bryant",
+   "tm": "LAL",
+   "g": 22,
+   "obpm": 3.2,
+   "dbpm": 1.1,
+   "bpm": 4.2,
+   "src": "A"
+  },
+  {
+   "poyr": 2000,
+   "name": "Shaquille O'Neal",
+   "tm": "LAL",
+   "g": 23,
+   "obpm": 8.0,
+   "dbpm": 0.2,
+   "bpm": 8.1,
+   "src": "A"
+  },
+  {
+   "poyr": 2001,
+   "name": "Kobe Bryant",
+   "tm": "LAL",
+   "g": 16,
+   "obpm": 6.0,
+   "dbpm": 0.6,
+   "bpm": 6.5,
+   "src": "A"
+  },
+  {
+   "poyr": 2001,
+   "name": "Shaquille O'Neal",
+   "tm": "LAL",
+   "g": 16,
+   "obpm": 6.9,
+   "dbpm": -0.5,
+   "bpm": 6.5,
+   "src": "A"
+  },
+  {
+   "poyr": 2002,
+   "name": "Shaquille O'Neal",
+   "tm": "LAL",
+   "g": 19,
+   "obpm": 6.3,
+   "dbpm": 1.2,
+   "bpm": 7.5,
+   "src": "A"
+  },
+  {
+   "poyr": 2005,
+   "name": "Manu Ginobili",
+   "tm": "SAS",
+   "g": 23,
+   "obpm": 6.1,
+   "dbpm": 3.1,
+   "bpm": 9.2,
+   "src": "A"
+  },
+  {
+   "poyr": 2005,
+   "name": "Tim Duncan",
+   "tm": "SAS",
+   "g": 23,
+   "obpm": 4.0,
+   "dbpm": 1.5,
+   "bpm": 5.5,
+   "src": "A"
+  },
+  {
+   "poyr": 2005,
+   "name": "Tony Parker",
+   "tm": "SAS",
+   "g": 23,
+   "obpm": -1.5,
+   "dbpm": -1.3,
+   "bpm": -2.7,
+   "src": "A"
+  },
+  {
+   "poyr": 2006,
+   "name": "Antoine Walker",
+   "tm": "MIA",
+   "g": 23,
+   "obpm": 0.5,
+   "dbpm": 0.2,
+   "bpm": 0.7,
+   "src": "A"
+  },
+  {
+   "poyr": 2006,
+   "name": "Dwyane Wade",
+   "tm": "MIA",
+   "g": 23,
+   "obpm": 6.5,
+   "dbpm": 2.8,
+   "bpm": 9.3,
+   "src": "A"
+  },
+  {
+   "poyr": 2006,
+   "name": "Manu Ginobili",
+   "tm": "SAS",
+   "g": 13,
+   "obpm": 2.4,
+   "dbpm": 1.3,
+   "bpm": 3.7,
+   "src": "A"
+  },
+  {
+   "poyr": 2006,
+   "name": "Shaquille O'Neal",
+   "tm": "MIA",
+   "g": 23,
+   "obpm": 1.0,
+   "dbpm": -0.1,
+   "bpm": 1.0,
+   "src": "A"
+  },
+  {
+   "poyr": 2006,
+   "name": "Tim Duncan",
+   "tm": "SAS",
+   "g": 13,
+   "obpm": 5.8,
+   "dbpm": 2.8,
+   "bpm": 8.6,
+   "src": "A"
+  },
+  {
+   "poyr": 2006,
+   "name": "Tony Parker",
+   "tm": "SAS",
+   "g": 13,
+   "obpm": 0.4,
+   "dbpm": -2.0,
+   "bpm": -1.6,
+   "src": "A"
+  },
+  {
+   "poyr": 2007,
+   "name": "Manu Ginobili",
+   "tm": "SAS",
+   "g": 20,
+   "obpm": 3.3,
+   "dbpm": 2.6,
+   "bpm": 6.0,
+   "src": null
+  },
+  {
+   "poyr": 2007,
+   "name": "Tim Duncan",
+   "tm": "SAS",
+   "g": 20,
+   "obpm": 3.8,
+   "dbpm": 3.0,
+   "bpm": 6.9,
+   "src": null
+  },
+  {
+   "poyr": 2007,
+   "name": "Tony Parker",
+   "tm": "SAS",
+   "g": 20,
+   "obpm": 1.8,
+   "dbpm": -0.5,
+   "bpm": 1.3,
+   "src": null
+  },
+  {
+   "poyr": 2009,
+   "name": "Carmelo Anthony",
+   "tm": "DEN",
+   "g": 16,
+   "obpm": 4.5,
+   "dbpm": 0.5,
+   "bpm": 5.0,
+   "src": "B"
+  },
+  {
+   "poyr": 2009,
+   "name": "Chauncey Billups",
+   "tm": "DEN",
+   "g": 16,
+   "obpm": 5.8,
+   "dbpm": 0.4,
+   "bpm": 6.1,
+   "src": "B"
+  },
+  {
+   "poyr": 2009,
+   "name": "JR Smith",
+   "tm": "DEN",
+   "g": 16,
+   "obpm": 2.3,
+   "dbpm": -0.4,
+   "bpm": 1.9,
+   "src": "B"
+  },
+  {
+   "poyr": 2009,
+   "name": "Kobe Bryant",
+   "tm": "LAL",
+   "g": 23,
+   "obpm": 7.4,
+   "dbpm": 1.7,
+   "bpm": 9.1,
+   "src": "B"
+  },
+  {
+   "poyr": 2009,
+   "name": "LeBron James",
+   "tm": "CLE",
+   "g": 14,
+   "obpm": 12.8,
+   "dbpm": 4.8,
+   "bpm": 17.5,
+   "src": "B"
+  },
+  {
+   "poyr": 2010,
+   "name": "Kobe Bryant",
+   "tm": "LAL",
+   "g": 23,
+   "obpm": 6.1,
+   "dbpm": 0.9,
+   "bpm": 7.0,
+   "src": "B"
+  },
+  {
+   "poyr": 2011,
+   "name": "Chris Bosh",
+   "tm": "MIA",
+   "g": 21,
+   "obpm": 1.5,
+   "dbpm": -0.4,
+   "bpm": 1.1,
+   "src": "B"
+  },
+  {
+   "poyr": 2011,
+   "name": "Dirk Nowitzki",
+   "tm": "DAL",
+   "g": 21,
+   "obpm": 4.7,
+   "dbpm": 0.8,
+   "bpm": 5.5,
+   "src": "B"
+  },
+  {
+   "poyr": 2011,
+   "name": "Dwyane Wade",
+   "tm": "MIA",
+   "g": 21,
+   "obpm": 6.5,
+   "dbpm": 1.9,
+   "bpm": 8.4,
+   "src": "B"
+  },
+  {
+   "poyr": 2011,
+   "name": "JJ Barea",
+   "tm": "DAL",
+   "g": 21,
+   "obpm": 1.4,
+   "dbpm": -1.1,
+   "bpm": 0.3,
+   "src": "B"
+  },
+  {
+   "poyr": 2011,
+   "name": "Jason Terry",
+   "tm": "DAL",
+   "g": 21,
+   "obpm": 3.4,
+   "dbpm": 1.2,
+   "bpm": 4.6,
+   "src": "B"
+  },
+  {
+   "poyr": 2011,
+   "name": "LeBron James",
+   "tm": "MIA",
+   "g": 21,
+   "obpm": 5.2,
+   "dbpm": 1.9,
+   "bpm": 7.1,
+   "src": "B"
+  },
+  {
+   "poyr": 2012,
+   "name": "Chris Bosh",
+   "tm": "MIA",
+   "g": 14,
+   "obpm": 2.9,
+   "dbpm": -0.4,
+   "bpm": 2.5,
+   "src": "B"
+  },
+  {
+   "poyr": 2012,
+   "name": "Dwyane Wade",
+   "tm": "MIA",
+   "g": 23,
+   "obpm": 3.9,
+   "dbpm": 1.4,
+   "bpm": 5.3,
+   "src": "B"
+  },
+  {
+   "poyr": 2012,
+   "name": "James Harden",
+   "tm": "OKC",
+   "g": 20,
+   "obpm": 2.9,
+   "dbpm": 0.6,
+   "bpm": 3.5,
+   "src": "B"
+  },
+  {
+   "poyr": 2012,
+   "name": "Kevin Durant",
+   "tm": "OKC",
+   "g": 20,
+   "obpm": 7.3,
+   "dbpm": 0.8,
+   "bpm": 8.1,
+   "src": "B"
+  },
+  {
+   "poyr": 2012,
+   "name": "LeBron James",
+   "tm": "MIA",
+   "g": 23,
+   "obpm": 8.1,
+   "dbpm": 2.5,
+   "bpm": 10.5,
+   "src": "B"
+  },
+  {
+   "poyr": 2012,
+   "name": "Russell Westbrook",
+   "tm": "OKC",
+   "g": 20,
+   "obpm": 3.9,
+   "dbpm": -0.5,
+   "bpm": 3.4,
+   "src": "B"
+  },
+  {
+   "poyr": 2013,
+   "name": "LeBron James",
+   "tm": "MIA",
+   "g": 23,
+   "obpm": 8.4,
+   "dbpm": 2.0,
+   "bpm": 10.4,
+   "src": "B"
+  },
+  {
+   "poyr": 2014,
+   "name": "Chris Bosh",
+   "tm": "MIA",
+   "g": 20,
+   "obpm": 2.9,
+   "dbpm": -0.8,
+   "bpm": 2.1,
+   "src": "B"
+  },
+  {
+   "poyr": 2014,
+   "name": "Dwyane Wade",
+   "tm": "MIA",
+   "g": 20,
+   "obpm": 1.6,
+   "dbpm": -0.7,
+   "bpm": 0.9,
+   "src": "B"
+  },
+  {
+   "poyr": 2014,
+   "name": "LeBron James",
+   "tm": "MIA",
+   "g": 20,
+   "obpm": 8.5,
+   "dbpm": 1.8,
+   "bpm": 10.3,
+   "src": "B"
+  },
+  {
+   "poyr": 2015,
+   "name": "Klay Thompson",
+   "tm": "GSW",
+   "g": 21,
+   "obpm": 2.0,
+   "dbpm": 0.0,
+   "bpm": 1.9,
+   "src": "B"
+  },
+  {
+   "poyr": 2015,
+   "name": "Leandro Barbosa",
+   "tm": "GSW",
+   "g": 21,
+   "obpm": -0.8,
+   "dbpm": -0.1,
+   "bpm": -0.9,
+   "src": null
+  },
+  {
+   "poyr": 2015,
+   "name": "Stephen Curry",
+   "tm": "GSW",
+   "g": 21,
+   "obpm": 7.7,
+   "dbpm": 1.1,
+   "bpm": 8.8,
+   "src": null
+  },
+  {
+   "poyr": 2016,
+   "name": "Enes Freedom",
+   "tm": "OKC",
+   "g": 18,
+   "obpm": 2.9,
+   "dbpm": -1.0,
+   "bpm": 1.9,
+   "src": null
+  },
+  {
+   "poyr": 2016,
+   "name": "Kevin Durant",
+   "tm": "OKC",
+   "g": 18,
+   "obpm": 4.3,
+   "dbpm": -0.3,
+   "bpm": 4.0,
+   "src": null
+  },
+  {
+   "poyr": 2016,
+   "name": "Kevin Love",
+   "tm": "CLE",
+   "g": 20,
+   "obpm": 3.1,
+   "dbpm": -0.8,
+   "bpm": 2.4,
+   "src": "B"
+  },
+  {
+   "poyr": 2016,
+   "name": "Klay Thompson",
+   "tm": "GSW",
+   "g": 24,
+   "obpm": 4.6,
+   "dbpm": -0.4,
+   "bpm": 4.2,
+   "src": "B"
+  },
+  {
+   "poyr": 2016,
+   "name": "Kyrie Irving",
+   "tm": "CLE",
+   "g": 21,
+   "obpm": 5.4,
+   "dbpm": 0.6,
+   "bpm": 6.0,
+   "src": "B"
+  },
+  {
+   "poyr": 2016,
+   "name": "LeBron James",
+   "tm": "CLE",
+   "g": 21,
+   "obpm": 7.4,
+   "dbpm": 3.6,
+   "bpm": 11.0,
+   "src": "B"
+  },
+  {
+   "poyr": 2016,
+   "name": "Marreese Speights",
+   "tm": "GSW",
+   "g": 24,
+   "obpm": -2.7,
+   "dbpm": -1.0,
+   "bpm": -3.7,
+   "src": "B"
+  },
+  {
+   "poyr": 2016,
+   "name": "Russell Westbrook",
+   "tm": "OKC",
+   "g": 18,
+   "obpm": 7.4,
+   "dbpm": 1.7,
+   "bpm": 9.1,
+   "src": "B"
+  },
+  {
+   "poyr": 2016,
+   "name": "Stephen Curry",
+   "tm": "GSW",
+   "g": 18,
+   "obpm": 6.6,
+   "dbpm": 0.4,
+   "bpm": 7.0,
+   "src": null
+  },
+  {
+   "poyr": 2017,
+   "name": "Kawhi Leonard",
+   "tm": "SAS",
+   "g": 12,
+   "obpm": 10.5,
+   "dbpm": 3.7,
+   "bpm": 14.2,
+   "src": "C"
+  },
+  {
+   "poyr": 2017,
+   "name": "Kevin Durant",
+   "tm": "GSW",
+   "g": 15,
+   "obpm": 8.2,
+   "dbpm": 1.7,
+   "bpm": 9.9,
+   "src": "C"
+  },
+  {
+   "poyr": 2017,
+   "name": "Kevin Love",
+   "tm": "CLE",
+   "g": 18,
+   "obpm": 3.5,
+   "dbpm": -0.3,
+   "bpm": 3.2,
+   "src": "C"
+  },
+  {
+   "poyr": 2017,
+   "name": "Klay Thompson",
+   "tm": "GSW",
+   "g": 17,
+   "obpm": -1.4,
+   "dbpm": -1.8,
+   "bpm": -3.3,
+   "src": "C"
+  },
+  {
+   "poyr": 2017,
+   "name": "Kyrie Irving",
+   "tm": "CLE",
+   "g": 18,
+   "obpm": 4.0,
+   "dbpm": -1.8,
+   "bpm": 2.2,
+   "src": "C"
+  },
+  {
+   "poyr": 2017,
+   "name": "LeBron James",
+   "tm": "CLE",
+   "g": 18,
+   "obpm": 7.7,
+   "dbpm": 2.1,
+   "bpm": 9.8,
+   "src": "C"
+  },
+  {
+   "poyr": 2017,
+   "name": "Stephen Curry",
+   "tm": "GSW",
+   "g": 17,
+   "obpm": 8.3,
+   "dbpm": 1.4,
+   "bpm": 9.7,
+   "src": "C"
+  },
+  {
+   "poyr": 2018,
+   "name": "Chris Paul",
+   "tm": "HOU",
+   "g": 15,
+   "obpm": 4.2,
+   "dbpm": 2.5,
+   "bpm": 6.6,
+   "src": "C"
+  },
+  {
+   "poyr": 2018,
+   "name": "Eric Gordon",
+   "tm": "HOU",
+   "g": 17,
+   "obpm": 0.8,
+   "dbpm": -1.3,
+   "bpm": -0.5,
+   "src": "C"
+  },
+  {
+   "poyr": 2018,
+   "name": "James Harden",
+   "tm": "HOU",
+   "g": 17,
+   "obpm": 6.3,
+   "dbpm": 1.8,
+   "bpm": 8.1,
+   "src": "C"
+  },
+  {
+   "poyr": 2018,
+   "name": "Kevin Durant",
+   "tm": "GSW",
+   "g": 21,
+   "obpm": 6.7,
+   "dbpm": 0.9,
+   "bpm": 7.6,
+   "src": "C"
+  },
+  {
+   "poyr": 2018,
+   "name": "Klay Thompson",
+   "tm": "GSW",
+   "g": 21,
+   "obpm": 1.1,
+   "dbpm": -1.0,
+   "bpm": 0.1,
+   "src": "C"
+  },
+  {
+   "poyr": 2018,
+   "name": "LeBron James",
+   "tm": "CLE",
+   "g": 22,
+   "obpm": 10.1,
+   "dbpm": 2.6,
+   "bpm": 12.7,
+   "src": "C"
+  },
+  {
+   "poyr": 2018,
+   "name": "Stephen Curry",
+   "tm": "GSW",
+   "g": 15,
+   "obpm": 5.8,
+   "dbpm": 1.2,
+   "bpm": 7.1,
+   "src": "C"
+  },
+  {
+   "poyr": 2019,
+   "name": "Kawhi Leonard",
+   "tm": "TOR",
+   "g": 24,
+   "obpm": 7.6,
+   "dbpm": 2.4,
+   "bpm": 10.1,
+   "src": "C"
+  },
+  {
+   "poyr": 2019,
+   "name": "Kevin Durant",
+   "tm": "GSW",
+   "g": 12,
+   "obpm": 6.8,
+   "dbpm": 0.8,
+   "bpm": 7.6,
+   "src": "C"
+  },
+  {
+   "poyr": 2019,
+   "name": "Klay Thompson",
+   "tm": "GSW",
+   "g": 21,
+   "obpm": 0.6,
+   "dbpm": -0.4,
+   "bpm": 0.2,
+   "src": "C"
+  },
+  {
+   "poyr": 2019,
+   "name": "Pascal Siakam",
+   "tm": "TOR",
+   "g": 24,
+   "obpm": 1.8,
+   "dbpm": 0.8,
+   "bpm": 2.6,
+   "src": "C"
+  },
+  {
+   "poyr": 2019,
+   "name": "Serge Ibaka",
+   "tm": "TOR",
+   "g": 24,
+   "obpm": -1.6,
+   "dbpm": 1.2,
+   "bpm": -0.4,
+   "src": "C"
+  },
+  {
+   "poyr": 2019,
+   "name": "Stephen Curry",
+   "tm": "GSW",
+   "g": 22,
+   "obpm": 5.6,
+   "dbpm": -0.5,
+   "bpm": 5.2,
+   "src": "C"
+  },
+  {
+   "poyr": 2020,
+   "name": "Anthony Davis",
+   "tm": "LAL",
+   "g": 21,
+   "obpm": 6.5,
+   "dbpm": 2.1,
+   "bpm": 8.7,
+   "src": "C"
+  },
+  {
+   "poyr": 2020,
+   "name": "Jamal Murray",
+   "tm": "DEN",
+   "g": 19,
+   "obpm": 6.1,
+   "dbpm": -0.2,
+   "bpm": 5.9,
+   "src": "C"
+  },
+  {
+   "poyr": 2020,
+   "name": "Kyle Kuzma",
+   "tm": "LAL",
+   "g": 21,
+   "obpm": -2.2,
+   "dbpm": -1.5,
+   "bpm": -3.6,
+   "src": "C"
+  },
+  {
+   "poyr": 2020,
+   "name": "LeBron James",
+   "tm": "LAL",
+   "g": 21,
+   "obpm": 7.6,
+   "dbpm": 3.1,
+   "bpm": 10.7,
+   "src": "C"
+  },
+  {
+   "poyr": 2020,
+   "name": "Michael Porter Jr.",
+   "tm": "DEN",
+   "g": 19,
+   "obpm": 1.8,
+   "dbpm": -0.8,
+   "bpm": 1.0,
+   "src": "C"
+  },
+  {
+   "poyr": 2020,
+   "name": "Nikola Jokic",
+   "tm": "DEN",
+   "g": 19,
+   "obpm": 6.1,
+   "dbpm": 1.3,
+   "bpm": 7.4,
+   "src": "C"
+  },
+  {
+   "poyr": 2021,
+   "name": "Bobby Portis",
+   "tm": "MIL",
+   "g": 20,
+   "obpm": 0.9,
+   "dbpm": 0.0,
+   "bpm": 1.0,
+   "src": "C"
+  },
+  {
+   "poyr": 2021,
+   "name": "Donovan Mitchell",
+   "tm": "UTA",
+   "g": 10,
+   "obpm": 8.2,
+   "dbpm": -0.4,
+   "bpm": 7.8,
+   "src": "C"
+  },
+  {
+   "poyr": 2021,
+   "name": "Giannis Antetokounmpo",
+   "tm": "MIL",
+   "g": 21,
+   "obpm": 6.7,
+   "dbpm": 3.2,
+   "bpm": 9.9,
+   "src": "C"
+  },
+  {
+   "poyr": 2021,
+   "name": "Khris Middleton",
+   "tm": "MIL",
+   "g": 23,
+   "obpm": 1.5,
+   "dbpm": 1.1,
+   "bpm": 2.6,
+   "src": "C"
+  },
+  {
+   "poyr": 2022,
+   "name": "Jalen Brunson",
+   "tm": "DAL",
+   "g": 18,
+   "obpm": 2.0,
+   "dbpm": -0.5,
+   "bpm": 1.5,
+   "src": "C"
+  },
+  {
+   "poyr": 2022,
+   "name": "Jonathan Kuminga",
+   "tm": "GSW",
+   "g": 16,
+   "obpm": -1.3,
+   "dbpm": -0.7,
+   "bpm": -2.0,
+   "src": "C"
+  },
+  {
+   "poyr": 2022,
+   "name": "Jordan Poole",
+   "tm": "GSW",
+   "g": 22,
+   "obpm": 2.4,
+   "dbpm": 0.4,
+   "bpm": 2.8,
+   "src": "C"
+  },
+  {
+   "poyr": 2022,
+   "name": "Luka Doncic",
+   "tm": "DAL",
+   "g": 15,
+   "obpm": 6.8,
+   "dbpm": 2.5,
+   "bpm": 9.3,
+   "src": "C"
+  },
+  {
+   "poyr": 2022,
+   "name": "Spencer Dinwiddie",
+   "tm": "DAL",
+   "g": 18,
+   "obpm": 1.8,
+   "dbpm": -0.5,
+   "bpm": 1.3,
+   "src": "C"
+  },
+  {
+   "poyr": 2022,
+   "name": "Stephen Curry",
+   "tm": "GSW",
+   "g": 22,
+   "obpm": 6.7,
+   "dbpm": 1.1,
+   "bpm": 7.7,
+   "src": "C"
+  },
+  {
+   "poyr": 2023,
+   "name": "Jamal Murray",
+   "tm": "DEN",
+   "g": 20,
+   "obpm": 4.1,
+   "dbpm": 0.7,
+   "bpm": 4.8,
+   "src": "C"
+  },
+  {
+   "poyr": 2023,
+   "name": "Michael Porter Jr.",
+   "tm": "DEN",
+   "g": 20,
+   "obpm": 0.3,
+   "dbpm": -0.6,
+   "bpm": -0.3,
+   "src": "C"
+  },
+  {
+   "poyr": 2023,
+   "name": "Nikola Jokic",
+   "tm": "DEN",
+   "g": 20,
+   "obpm": 9.1,
+   "dbpm": 3.7,
+   "bpm": 12.8,
+   "src": "C"
+  },
+  {
+   "poyr": 2024,
+   "name": "Derrick White",
+   "tm": "BOS",
+   "g": 19,
+   "obpm": 3.6,
+   "dbpm": 1.7,
+   "bpm": 5.3,
+   "src": "C"
+  },
+  {
+   "poyr": 2024,
+   "name": "Jaylen Brown",
+   "tm": "BOS",
+   "g": 19,
+   "obpm": 1.0,
+   "dbpm": 0.8,
+   "bpm": 1.8,
+   "src": "C"
+  },
+  {
+   "poyr": 2024,
+   "name": "Jayson Tatum",
+   "tm": "BOS",
+   "g": 19,
+   "obpm": 2.3,
+   "dbpm": 1.4,
+   "bpm": 3.7,
+   "src": "C"
+  },
+  {
+   "poyr": 2025,
+   "name": "Aaron Wiggins",
+   "tm": "OKC",
+   "g": 22,
+   "obpm": -0.5,
+   "dbpm": 0.6,
+   "bpm": 0.1,
+   "src": "D"
+  },
+  {
+   "poyr": 2025,
+   "name": "Jalen Williams",
+   "tm": "OKC",
+   "g": 23,
+   "obpm": 2.5,
+   "dbpm": 1.7,
+   "bpm": 4.2,
+   "src": "D"
+  },
+  {
+   "poyr": 2025,
+   "name": "Shai Gilgeous-Alexander",
+   "tm": "OKC",
+   "g": 23,
+   "obpm": 5.7,
+   "dbpm": 2.6,
+   "bpm": 8.3,
+   "src": "D"
+  },
+  {
+   "poyr": 2026,
+   "name": "Jalen Brunson",
+   "tm": "NYK",
+   "g": 19,
+   "obpm": 4.5,
+   "dbpm": 0.1,
+   "bpm": 4.6,
+   "src": "D"
+  },
+  {
+   "poyr": 2026,
+   "name": "Karl-Anthony Towns",
+   "tm": "NYK",
+   "g": 19,
+   "obpm": 3.9,
+   "dbpm": 5.5,
+   "bpm": 9.4,
+   "src": "D"
+  },
+  {
+   "poyr": 2026,
+   "name": "OG Anunoby",
+   "tm": "NYK",
+   "g": 17,
+   "obpm": 5.4,
+   "dbpm": 4.0,
+   "bpm": 9.4,
+   "src": "D"
+  }
+ ],
+ "teams": {
+  "1997": {
+   "Seattle SuperSonics": {
+    "g": 12,
+    "fga": 82.8,
+    "orb": 13.9,
+    "tov": 13.6,
+    "fta": 28.5,
+    "pts": 105.1,
+    "opp_fga": 81.1,
+    "opp_orb": 12.8,
+    "opp_tov": 16.5,
+    "opp_fta": 27.7,
+    "opp_pts": 100.6,
+    "ortg": 113.2,
+    "drtg": 108.4,
+    "netrtg": 4.8,
+    "w": 6,
+    "l": 6
+   },
+   "Houston Rockets": {
+    "g": 16,
+    "fga": 77.1,
+    "orb": 12.3,
+    "tov": 15.2,
+    "fta": 28.4,
+    "pts": 101.3,
+    "opp_fga": 81.5,
+    "opp_orb": 13.3,
+    "opp_tov": 12.4,
+    "opp_fta": 25.6,
+    "opp_pts": 99.5,
+    "ortg": 113.3,
+    "drtg": 111.3,
+    "netrtg": 2.0,
+    "w": 9,
+    "l": 7
+   },
+   "Phoenix Suns": {
+    "g": 5,
+    "fga": 82.6,
+    "orb": 10.0,
+    "tov": 16.2,
+    "fta": 27.8,
+    "pts": 100.2,
+    "opp_fga": 86.8,
+    "opp_orb": 14.0,
+    "opp_tov": 14.0,
+    "opp_fta": 28.4,
+    "opp_pts": 112.8,
+    "ortg": 103.3,
+    "drtg": 116.3,
+    "netrtg": -13.0,
+    "w": 2,
+    "l": 3
+   },
+   "Minnesota Timberwolves": {
+    "g": 3,
+    "fga": 88.7,
+    "orb": 14.0,
+    "tov": 9.3,
+    "fta": 18.0,
+    "pts": 99.7,
+    "opp_fga": 77.0,
+    "opp_orb": 11.0,
+    "opp_tov": 14.3,
+    "opp_fta": 30.0,
+    "opp_pts": 111.0,
+    "ortg": 110.5,
+    "drtg": 123.1,
+    "netrtg": -12.6,
+    "w": 0,
+    "l": 3
+   },
+   "Utah Jazz": {
+    "g": 20,
+    "fga": 74.5,
+    "orb": 11.4,
+    "tov": 13.3,
+    "fta": 30.4,
+    "pts": 96.1,
+    "opp_fga": 74.4,
+    "opp_orb": 10.6,
+    "opp_tov": 12.9,
+    "opp_fta": 28.0,
+    "opp_pts": 92.8,
+    "ortg": 110.5,
+    "drtg": 106.7,
+    "netrtg": 3.8,
+    "w": 13,
+    "l": 7
+   },
+   "Charlotte Hornets": {
+    "g": 3,
+    "fga": 80.3,
+    "orb": 12.7,
+    "tov": 13.3,
+    "fta": 20.7,
+    "pts": 95.7,
+    "opp_fga": 73.7,
+    "opp_orb": 8.0,
+    "opp_tov": 14.7,
+    "opp_fta": 17.3,
+    "opp_pts": 104.3,
+    "ortg": 109.9,
+    "drtg": 119.9,
+    "netrtg": -10.0,
+    "w": 0,
+    "l": 3
+   },
+   "Los Angeles Lakers": {
+    "g": 9,
+    "fga": 72.1,
+    "orb": 11.2,
+    "tov": 13.3,
+    "fta": 35.0,
+    "pts": 95.2,
+    "opp_fga": 73.7,
+    "opp_orb": 12.1,
+    "opp_tov": 14.6,
+    "opp_fta": 32.8,
+    "opp_pts": 94.1,
+    "ortg": 108.9,
+    "drtg": 107.6,
+    "netrtg": 1.3,
+    "w": 4,
+    "l": 5
+   },
+   "Washington Bullets": {
+    "g": 3,
+    "fga": 71.7,
+    "orb": 11.3,
+    "tov": 18.7,
+    "fta": 29.0,
+    "pts": 95.0,
+    "opp_fga": 83.0,
+    "opp_orb": 15.7,
+    "opp_tov": 13.0,
+    "opp_fta": 23.7,
+    "opp_pts": 101.0,
+    "ortg": 108.1,
+    "drtg": 114.9,
+    "netrtg": -6.8,
+    "w": 0,
+    "l": 3
+   },
+   "Chicago Bulls": {
+    "g": 19,
+    "fga": 80.2,
+    "orb": 14.9,
+    "tov": 12.4,
+    "fta": 23.2,
+    "pts": 92.5,
+    "opp_fga": 70.9,
+    "opp_orb": 10.8,
+    "opp_tov": 16.2,
+    "opp_fta": 27.6,
+    "opp_pts": 87.0,
+    "ortg": 108.2,
+    "drtg": 101.7,
+    "netrtg": 6.5,
+    "w": 15,
+    "l": 4
+   },
+   "Los Angeles Clippers": {
+    "g": 3,
+    "fga": 75.0,
+    "orb": 10.3,
+    "tov": 12.0,
+    "fta": 28.7,
+    "pts": 92.3,
+    "opp_fga": 70.3,
+    "opp_orb": 11.0,
+    "opp_tov": 13.7,
+    "opp_fta": 35.3,
+    "opp_pts": 105.0,
+    "ortg": 106.1,
+    "drtg": 120.6,
+    "netrtg": -14.5,
+    "w": 0,
+    "l": 3
+   },
+   "New York Knicks": {
+    "g": 10,
+    "fga": 73.5,
+    "orb": 9.7,
+    "tov": 15.7,
+    "fta": 22.2,
+    "pts": 91.2,
+    "opp_fga": 74.0,
+    "opp_orb": 10.7,
+    "opp_tov": 15.5,
+    "opp_fta": 27.4,
+    "opp_pts": 89.5,
+    "ortg": 103.7,
+    "drtg": 101.8,
+    "netrtg": 1.9,
+    "w": 6,
+    "l": 4
+   },
+   "Portland Trail Blazers": {
+    "g": 4,
+    "fga": 73.0,
+    "orb": 11.8,
+    "tov": 15.5,
+    "fta": 27.3,
+    "pts": 89.8,
+    "opp_fga": 69.5,
+    "opp_orb": 11.3,
+    "opp_tov": 12.8,
+    "opp_fta": 38.5,
+    "opp_pts": 96.8,
+    "ortg": 104.2,
+    "drtg": 112.4,
+    "netrtg": -8.2,
+    "w": 1,
+    "l": 3
+   },
+   "Atlanta Hawks": {
+    "g": 10,
+    "fga": 70.8,
+    "orb": 11.0,
+    "tov": 16.1,
+    "fta": 26.1,
+    "pts": 89.0,
+    "opp_fga": 80.0,
+    "opp_orb": 12.9,
+    "opp_tov": 10.9,
+    "opp_fta": 20.1,
+    "opp_pts": 91.9,
+    "ortg": 105.5,
+    "drtg": 108.9,
+    "netrtg": -3.4,
+    "w": 4,
+    "l": 6
+   },
+   "Miami Heat": {
+    "g": 17,
+    "fga": 72.1,
+    "orb": 11.1,
+    "tov": 16.2,
+    "fta": 26.8,
+    "pts": 85.9,
+    "opp_fga": 75.2,
+    "opp_orb": 12.2,
+    "opp_tov": 14.2,
+    "opp_fta": 24.9,
+    "opp_pts": 85.7,
+    "ortg": 99.7,
+    "drtg": 99.4,
+    "netrtg": 0.3,
+    "w": 8,
+    "l": 9
+   },
+   "Detroit Pistons": {
+    "g": 5,
+    "fga": 74.8,
+    "orb": 8.6,
+    "tov": 9.6,
+    "fta": 19.8,
+    "pts": 85.6,
+    "opp_fga": 69.2,
+    "opp_orb": 10.2,
+    "opp_tov": 16.0,
+    "opp_fta": 23.4,
+    "opp_pts": 87.6,
+    "ortg": 103.9,
+    "drtg": 106.3,
+    "netrtg": -2.4,
+    "w": 2,
+    "l": 3
+   },
+   "Orlando Magic": {
+    "g": 5,
+    "fga": 73.0,
+    "orb": 9.6,
+    "tov": 12.4,
+    "fta": 25.2,
+    "pts": 84.2,
+    "opp_fga": 77.2,
+    "opp_orb": 13.4,
+    "opp_tov": 13.8,
+    "opp_fta": 22.2,
+    "opp_pts": 92.0,
+    "ortg": 99.3,
+    "drtg": 108.5,
+    "netrtg": -9.2,
+    "w": 2,
+    "l": 3
+   }
+  },
+  "1998": {
+   "Los Angeles Lakers": {
+    "g": 13,
+    "fga": 75.1,
+    "fta": 35.4,
+    "orb": 13.4,
+    "tov": 12.9,
+    "pts": 100.2,
+    "opp_fga": 77.4,
+    "opp_fta": 27.8,
+    "opp_orb": 12.4,
+    "opp_tov": 14.2,
+    "opp_pts": 99.0,
+    "ortg": 113.3,
+    "drtg": 111.9,
+    "netrtg": 1.4,
+    "w": 7,
+    "l": 6
+   },
+   "Portland Trail Blazers": {
+    "g": 4,
+    "fga": 79.5,
+    "fta": 28.5,
+    "orb": 14.0,
+    "tov": 16.3,
+    "pts": 99.8,
+    "opp_fga": 73.0,
+    "opp_fta": 40.5,
+    "opp_orb": 9.8,
+    "opp_tov": 11.8,
+    "opp_pts": 104.0,
+    "ortg": 109.4,
+    "drtg": 114.1,
+    "netrtg": -4.7,
+    "w": 1,
+    "l": 3
+   },
+   "Seattle SuperSonics": {
+    "g": 10,
+    "fga": 78.3,
+    "fta": 23.1,
+    "orb": 12.7,
+    "tov": 12.7,
+    "pts": 95.2,
+    "opp_fga": 77.2,
+    "opp_fta": 24.9,
+    "opp_orb": 14.5,
+    "opp_tov": 14.0,
+    "opp_pts": 97.6,
+    "ortg": 111.4,
+    "drtg": 114.3,
+    "netrtg": -2.9,
+    "w": 4,
+    "l": 6
+   },
+   "New Jersey Nets": {
+    "g": 3,
+    "fga": 78.7,
+    "fta": 24.7,
+    "orb": 12.3,
+    "tov": 13.3,
+    "pts": 95.0,
+    "opp_fga": 78.7,
+    "opp_fta": 31.7,
+    "opp_orb": 15.0,
+    "opp_tov": 14.3,
+    "opp_pts": 102.7,
+    "ortg": 107.3,
+    "drtg": 116.0,
+    "netrtg": -8.7,
+    "w": 0,
+    "l": 3
+   },
+   "Chicago Bulls": {
+    "g": 21,
+    "fga": 76.7,
+    "fta": 28.1,
+    "orb": 14.0,
+    "tov": 12.6,
+    "pts": 93.1,
+    "opp_fga": 72.1,
+    "opp_fta": 23.2,
+    "opp_orb": 10.3,
+    "opp_tov": 15.2,
+    "opp_pts": 86.1,
+    "ortg": 109.7,
+    "drtg": 101.4,
+    "netrtg": 8.3,
+    "w": 15,
+    "l": 6
+   },
+   "Phoenix Suns": {
+    "g": 4,
+    "fga": 85.3,
+    "fta": 21.3,
+    "orb": 12.0,
+    "tov": 11.0,
+    "pts": 93.0,
+    "opp_fga": 74.5,
+    "opp_fta": 33.0,
+    "opp_orb": 10.3,
+    "opp_tov": 14.5,
+    "opp_pts": 100.5,
+    "ortg": 101.8,
+    "drtg": 110.0,
+    "netrtg": -8.2,
+    "w": 1,
+    "l": 3
+   },
+   "Indiana Pacers": {
+    "g": 16,
+    "fga": 69.6,
+    "fta": 29.4,
+    "orb": 9.3,
+    "tov": 14.6,
+    "pts": 91.8,
+    "opp_fga": 72.8,
+    "opp_fta": 29.6,
+    "opp_orb": 12.6,
+    "opp_tov": 15.5,
+    "opp_pts": 89.5,
+    "ortg": 107.0,
+    "drtg": 104.4,
+    "netrtg": 2.6,
+    "w": 10,
+    "l": 6
+   },
+   "San Antonio Spurs": {
+    "g": 9,
+    "fga": 72.1,
+    "fta": 30.8,
+    "orb": 11.0,
+    "tov": 14.4,
+    "pts": 91.8,
+    "opp_fga": 80.1,
+    "opp_fta": 22.4,
+    "opp_orb": 10.9,
+    "opp_tov": 10.8,
+    "opp_pts": 88.6,
+    "ortg": 105.1,
+    "drtg": 101.4,
+    "netrtg": 3.7,
+    "w": 4,
+    "l": 5
+   },
+   "Minnesota Timberwolves": {
+    "g": 5,
+    "fga": 79.8,
+    "fta": 20.4,
+    "orb": 13.6,
+    "tov": 14.0,
+    "pts": 90.2,
+    "opp_fga": 76.6,
+    "opp_fta": 22.6,
+    "opp_orb": 11.4,
+    "opp_tov": 13.8,
+    "opp_pts": 96.0,
+    "ortg": 104.6,
+    "drtg": 111.4,
+    "netrtg": -6.8,
+    "w": 2,
+    "l": 3
+   },
+   "Utah Jazz": {
+    "g": 20,
+    "fga": 73.4,
+    "fta": 25.5,
+    "orb": 9.7,
+    "tov": 14.4,
+    "pts": 89.0,
+    "opp_fga": 74.6,
+    "opp_fta": 29.7,
+    "opp_orb": 12.3,
+    "opp_tov": 13.2,
+    "opp_pts": 86.9,
+    "ortg": 102.8,
+    "drtg": 100.4,
+    "netrtg": 2.4,
+    "w": 13,
+    "l": 7
+   },
+   "New York Knicks": {
+    "g": 10,
+    "fga": 73.8,
+    "fta": 24.7,
+    "orb": 10.5,
+    "tov": 16.1,
+    "pts": 88.6,
+    "opp_fga": 70.9,
+    "opp_fta": 30.7,
+    "opp_orb": 8.7,
+    "opp_tov": 14.0,
+    "opp_pts": 90.8,
+    "ortg": 101.1,
+    "drtg": 103.6,
+    "netrtg": -2.5,
+    "w": 4,
+    "l": 6
+   },
+   "Atlanta Hawks": {
+    "g": 4,
+    "fga": 73.0,
+    "fta": 22.3,
+    "orb": 11.0,
+    "tov": 12.8,
+    "pts": 87.5,
+    "opp_fga": 71.0,
+    "opp_fta": 22.3,
+    "opp_orb": 8.0,
+    "opp_tov": 13.5,
+    "opp_pts": 86.0,
+    "ortg": 104.7,
+    "drtg": 102.9,
+    "netrtg": 1.8,
+    "w": 1,
+    "l": 3
+   },
+   "Miami Heat": {
+    "g": 5,
+    "fga": 69.6,
+    "fta": 29.6,
+    "orb": 8.2,
+    "tov": 13.6,
+    "pts": 87.4,
+    "opp_fga": 71.6,
+    "opp_fta": 29.2,
+    "opp_orb": 11.2,
+    "opp_tov": 14.6,
+    "opp_pts": 89.6,
+    "ortg": 101.8,
+    "drtg": 104.3,
+    "netrtg": -2.5,
+    "w": 2,
+    "l": 3
+   },
+   "Houston Rockets": {
+    "g": 5,
+    "fga": 75.4,
+    "fta": 29.8,
+    "orb": 11.2,
+    "tov": 13.0,
+    "pts": 84.6,
+    "opp_fga": 73.6,
+    "opp_fta": 30.0,
+    "opp_orb": 9.6,
+    "opp_tov": 13.6,
+    "opp_pts": 91.4,
+    "ortg": 95.5,
+    "drtg": 103.2,
+    "netrtg": -7.7,
+    "w": 2,
+    "l": 3
+   },
+   "Charlotte Hornets": {
+    "g": 9,
+    "fga": 72.9,
+    "fta": 19.0,
+    "orb": 9.1,
+    "tov": 14.1,
+    "pts": 82.8,
+    "opp_fga": 75.1,
+    "opp_fta": 22.8,
+    "opp_orb": 12.0,
+    "opp_tov": 12.2,
+    "opp_pts": 88.8,
+    "ortg": 99.0,
+    "drtg": 106.2,
+    "netrtg": -7.2,
+    "w": 4,
+    "l": 5
+   },
+   "Cleveland Cavaliers": {
+    "g": 4,
+    "fga": 61.5,
+    "fta": 35.3,
+    "orb": 10.0,
+    "tov": 18.3,
+    "pts": 80.8,
+    "opp_fga": 69.0,
+    "opp_fta": 22.8,
+    "opp_orb": 8.5,
+    "opp_tov": 14.8,
+    "opp_pts": 88.8,
+    "ortg": 97.6,
+    "drtg": 107.3,
+    "netrtg": -9.7,
+    "w": 1,
+    "l": 3
+   }
+  },
+  "1999": {
+   "Houston Rockets": {
+    "g": 4,
+    "fga": 81.3,
+    "fta": 28.5,
+    "orb": 13.3,
+    "tov": 12.8,
+    "pts": 97.0,
+    "opp_fga": 80.5,
+    "opp_fta": 27.5,
+    "opp_orb": 11.0,
+    "opp_tov": 12.0,
+    "opp_pts": 99.3,
+    "ortg": 106.8,
+    "drtg": 109.3,
+    "netrtg": -2.5,
+    "w": 1,
+    "l": 3
+   },
+   "Milwaukee Bucks": {
+    "g": 3,
+    "fga": 75.0,
+    "fta": 29.3,
+    "orb": 11.0,
+    "tov": 16.3,
+    "pts": 95.3,
+    "opp_fga": 79.7,
+    "opp_fta": 30.0,
+    "opp_orb": 14.3,
+    "opp_tov": 16.3,
+    "opp_pts": 105.7,
+    "ortg": 104.4,
+    "drtg": 115.7,
+    "netrtg": -11.3,
+    "w": 0,
+    "l": 3
+   },
+   "Los Angeles Lakers": {
+    "g": 8,
+    "fga": 79.6,
+    "fta": 29.3,
+    "orb": 12.1,
+    "tov": 13.1,
+    "pts": 94.0,
+    "opp_fga": 75.8,
+    "opp_fta": 31.6,
+    "opp_orb": 11.1,
+    "opp_tov": 14.6,
+    "opp_pts": 96.9,
+    "ortg": 103.4,
+    "drtg": 106.6,
+    "netrtg": -3.2,
+    "w": 3,
+    "l": 5
+   },
+   "Indiana Pacers": {
+    "g": 13,
+    "fga": 74.2,
+    "fta": 28.2,
+    "orb": 11.6,
+    "tov": 15.3,
+    "pts": 93.6,
+    "opp_fga": 77.3,
+    "opp_fta": 26.8,
+    "opp_orb": 11.8,
+    "opp_tov": 12.8,
+    "opp_pts": 90.0,
+    "ortg": 107.1,
+    "drtg": 103.0,
+    "netrtg": 4.1,
+    "w": 9,
+    "l": 4
+   },
+   "Phoenix Suns": {
+    "g": 3,
+    "fga": 80.7,
+    "fta": 21.7,
+    "orb": 10.3,
+    "tov": 13.7,
+    "pts": 92.3,
+    "opp_fga": 66.3,
+    "opp_fta": 38.0,
+    "opp_orb": 7.7,
+    "opp_tov": 17.3,
+    "opp_pts": 102.7,
+    "ortg": 101.7,
+    "drtg": 113.1,
+    "netrtg": -11.4,
+    "w": 0,
+    "l": 3
+   },
+   "Sacramento Kings": {
+    "g": 5,
+    "fga": 79.6,
+    "fta": 26.4,
+    "orb": 12.8,
+    "tov": 17.6,
+    "pts": 90.6,
+    "opp_fga": 81.6,
+    "opp_fta": 25.0,
+    "opp_orb": 13.2,
+    "opp_tov": 16.0,
+    "opp_pts": 95.4,
+    "ortg": 97.8,
+    "drtg": 103.0,
+    "netrtg": -5.2,
+    "w": 2,
+    "l": 3
+   },
+   "Philadelphia 76ers": {
+    "g": 8,
+    "fga": 82.1,
+    "fta": 24.5,
+    "orb": 16.9,
+    "tov": 12.9,
+    "pts": 89.3,
+    "opp_fga": 73.9,
+    "opp_fta": 29.6,
+    "opp_orb": 14.0,
+    "opp_tov": 16.3,
+    "opp_pts": 88.8,
+    "ortg": 103.9,
+    "drtg": 103.3,
+    "netrtg": 0.6,
+    "w": 3,
+    "l": 5
+   },
+   "Utah Jazz": {
+    "g": 11,
+    "fga": 75.0,
+    "fta": 28.3,
+    "orb": 11.2,
+    "tov": 14.5,
+    "pts": 89.2,
+    "opp_fga": 73.9,
+    "opp_fta": 31.0,
+    "opp_orb": 11.4,
+    "opp_tov": 14.1,
+    "opp_pts": 87.4,
+    "ortg": 101.4,
+    "drtg": 99.3,
+    "netrtg": 2.1,
+    "w": 5,
+    "l": 6
+   },
+   "San Antonio Spurs": {
+    "g": 17,
+    "fga": 70.1,
+    "fta": 28.5,
+    "orb": 9.8,
+    "tov": 14.2,
+    "pts": 88.4,
+    "opp_fga": 77.6,
+    "opp_fta": 22.8,
+    "opp_orb": 11.9,
+    "opp_tov": 13.1,
+    "opp_pts": 81.2,
+    "ortg": 103.6,
+    "drtg": 95.1,
+    "netrtg": 8.5,
+    "w": 15,
+    "l": 2
+   },
+   "Orlando Magic": {
+    "g": 4,
+    "fga": 73.8,
+    "fta": 32.3,
+    "orb": 14.5,
+    "tov": 18.3,
+    "pts": 86.3,
+    "opp_fga": 80.5,
+    "opp_fta": 27.0,
+    "opp_orb": 18.0,
+    "opp_tov": 15.5,
+    "opp_pts": 92.5,
+    "ortg": 98.8,
+    "drtg": 105.9,
+    "netrtg": -7.1,
+    "w": 1,
+    "l": 3
+   },
+   "Portland Trail Blazers": {
+    "g": 13,
+    "fga": 69.4,
+    "fta": 31.4,
+    "orb": 9.8,
+    "tov": 13.2,
+    "pts": 86.2,
+    "opp_fga": 72.5,
+    "opp_fta": 26.6,
+    "opp_orb": 10.2,
+    "opp_tov": 13.2,
+    "opp_pts": 86.6,
+    "ortg": 102.1,
+    "drtg": 102.6,
+    "netrtg": -0.5,
+    "w": 7,
+    "l": 6
+   },
+   "New York Knicks": {
+    "g": 20,
+    "fga": 74.3,
+    "fta": 23.9,
+    "orb": 10.2,
+    "tov": 12.6,
+    "pts": 85.0,
+    "opp_fga": 71.4,
+    "opp_fta": 27.8,
+    "opp_orb": 9.8,
+    "opp_tov": 14.0,
+    "opp_pts": 83.0,
+    "ortg": 100.1,
+    "drtg": 97.8,
+    "netrtg": 2.3,
+    "w": 12,
+    "l": 8
+   },
+   "Minnesota Timberwolves": {
+    "g": 4,
+    "fga": 80.8,
+    "fta": 18.3,
+    "orb": 14.3,
+    "tov": 13.8,
+    "pts": 80.5,
+    "opp_fga": 72.8,
+    "opp_fta": 27.3,
+    "opp_orb": 10.8,
+    "opp_tov": 12.3,
+    "opp_pts": 86.8,
+    "ortg": 95.2,
+    "drtg": 102.6,
+    "netrtg": -7.4,
+    "w": 1,
+    "l": 3
+   },
+   "Atlanta Hawks": {
+    "g": 9,
+    "fga": 74.6,
+    "fta": 23.1,
+    "orb": 12.0,
+    "tov": 13.3,
+    "pts": 79.7,
+    "opp_fga": 74.0,
+    "opp_fta": 18.6,
+    "opp_orb": 10.7,
+    "opp_tov": 12.7,
+    "opp_pts": 82.4,
+    "ortg": 97.2,
+    "drtg": 100.6,
+    "netrtg": -3.4,
+    "w": 3,
+    "l": 6
+   },
+   "Detroit Pistons": {
+    "g": 5,
+    "fga": 75.0,
+    "fta": 14.4,
+    "orb": 11.2,
+    "tov": 11.6,
+    "pts": 79.2,
+    "opp_fga": 70.2,
+    "opp_fta": 19.4,
+    "opp_orb": 10.0,
+    "opp_tov": 13.8,
+    "opp_pts": 82.2,
+    "ortg": 100.2,
+    "drtg": 104.0,
+    "netrtg": -3.8,
+    "w": 2,
+    "l": 3
+   },
+   "Miami Heat": {
+    "g": 5,
+    "fga": 68.0,
+    "fta": 27.0,
+    "orb": 8.2,
+    "tov": 11.8,
+    "pts": 79.0,
+    "opp_fga": 71.2,
+    "opp_fta": 21.0,
+    "opp_orb": 11.2,
+    "opp_tov": 12.4,
+    "opp_pts": 83.0,
+    "ortg": 98.4,
+    "drtg": 103.4,
+    "netrtg": -5.0,
+    "w": 2,
+    "l": 3
+   }
+  },
+  "2000": {
+   "Los Angeles Lakers": {
+    "g": 23,
+    "fga": 80.4,
+    "fta": 31.6,
+    "orb": 13.2,
+    "tov": 12.2,
+    "pts": 99.8,
+    "opp_fga": 78.4,
+    "opp_fta": 29.0,
+    "opp_orb": 10.7,
+    "opp_tov": 12.6,
+    "opp_pts": 97.4,
+    "ortg": 110.1,
+    "drtg": 107.5,
+    "netrtg": 2.6,
+    "w": 15,
+    "l": 8
+   },
+   "Indiana Pacers": {
+    "g": 23,
+    "fga": 78.9,
+    "fta": 25.4,
+    "orb": 10.1,
+    "tov": 11.6,
+    "pts": 98.1,
+    "opp_fga": 80.7,
+    "opp_fta": 25.8,
+    "opp_orb": 11.3,
+    "opp_tov": 11.6,
+    "opp_pts": 95.4,
+    "ortg": 109.7,
+    "drtg": 106.8,
+    "netrtg": 2.9,
+    "w": 13,
+    "l": 10
+   },
+   "Sacramento Kings": {
+    "g": 5,
+    "fga": 81.0,
+    "fta": 30.0,
+    "orb": 11.8,
+    "tov": 12.0,
+    "pts": 96.4,
+    "opp_fga": 89.2,
+    "opp_fta": 27.2,
+    "opp_orb": 18.0,
+    "opp_tov": 11.2,
+    "opp_pts": 104.4,
+    "ortg": 105.0,
+    "drtg": 113.7,
+    "netrtg": -8.7,
+    "w": 2,
+    "l": 3
+   },
+   "Milwaukee Bucks": {
+    "g": 5,
+    "fga": 82.6,
+    "fta": 22.0,
+    "orb": 11.4,
+    "tov": 11.8,
+    "pts": 96.0,
+    "opp_fga": 81.6,
+    "opp_fta": 27.4,
+    "opp_orb": 13.2,
+    "opp_tov": 11.6,
+    "opp_pts": 94.2,
+    "ortg": 107.5,
+    "drtg": 105.5,
+    "netrtg": 2.0,
+    "w": 2,
+    "l": 3
+   },
+   "Philadelphia 76ers": {
+    "g": 10,
+    "fga": 80.0,
+    "fta": 29.5,
+    "orb": 13.5,
+    "tov": 12.7,
+    "pts": 94.2,
+    "opp_fga": 77.3,
+    "opp_fta": 24.0,
+    "opp_orb": 11.0,
+    "opp_tov": 13.3,
+    "opp_pts": 95.5,
+    "ortg": 106.5,
+    "drtg": 108.0,
+    "netrtg": -1.5,
+    "w": 5,
+    "l": 5
+   },
+   "Seattle SuperSonics": {
+    "g": 5,
+    "fga": 79.6,
+    "fta": 23.2,
+    "orb": 12.4,
+    "tov": 14.6,
+    "pts": 93.2,
+    "opp_fga": 76.8,
+    "opp_fta": 21.0,
+    "opp_orb": 11.2,
+    "opp_tov": 15.8,
+    "opp_pts": 94.4,
+    "ortg": 104.5,
+    "drtg": 105.8,
+    "netrtg": -1.3,
+    "w": 2,
+    "l": 3
+   },
+   "Portland Trail Blazers": {
+    "g": 16,
+    "fga": 73.1,
+    "fta": 28.3,
+    "orb": 9.8,
+    "tov": 12.7,
+    "pts": 92.5,
+    "opp_fga": 72.9,
+    "opp_fta": 26.7,
+    "opp_orb": 9.5,
+    "opp_tov": 13.1,
+    "opp_pts": 87.8,
+    "ortg": 107.7,
+    "drtg": 102.2,
+    "netrtg": 5.5,
+    "w": 10,
+    "l": 6
+   },
+   "Charlotte Hornets": {
+    "g": 4,
+    "fga": 75.0,
+    "fta": 27.0,
+    "orb": 13.5,
+    "tov": 15.5,
+    "pts": 91.3,
+    "opp_fga": 80.0,
+    "opp_fta": 25.3,
+    "opp_orb": 13.0,
+    "opp_tov": 12.8,
+    "opp_pts": 94.0,
+    "ortg": 104.6,
+    "drtg": 107.8,
+    "netrtg": -3.2,
+    "w": 1,
+    "l": 3
+   },
+   "Utah Jazz": {
+    "g": 10,
+    "fga": 74.6,
+    "fta": 23.7,
+    "orb": 10.3,
+    "tov": 14.9,
+    "pts": 88.3,
+    "opp_fga": 75.8,
+    "opp_fta": 27.3,
+    "opp_orb": 11.6,
+    "opp_tov": 14.2,
+    "opp_pts": 93.2,
+    "ortg": 100.6,
+    "drtg": 106.2,
+    "netrtg": -5.6,
+    "w": 4,
+    "l": 6
+   },
+   "Phoenix Suns": {
+    "g": 9,
+    "fga": 82.2,
+    "fta": 22.6,
+    "orb": 13.9,
+    "tov": 15.3,
+    "pts": 87.3,
+    "opp_fga": 77.3,
+    "opp_fta": 34.3,
+    "opp_orb": 14.0,
+    "opp_tov": 14.2,
+    "opp_pts": 91.0,
+    "ortg": 96.6,
+    "drtg": 100.6,
+    "netrtg": -4.0,
+    "w": 4,
+    "l": 5
+   },
+   "Minnesota Timberwolves": {
+    "g": 4,
+    "fga": 76.5,
+    "fta": 17.5,
+    "orb": 10.3,
+    "tov": 11.8,
+    "pts": 85.3,
+    "opp_fga": 71.8,
+    "opp_fta": 22.8,
+    "opp_orb": 8.8,
+    "opp_tov": 12.8,
+    "opp_pts": 87.3,
+    "ortg": 103.4,
+    "drtg": 105.8,
+    "netrtg": -2.4,
+    "w": 1,
+    "l": 3
+   },
+   "New York Knicks": {
+    "g": 16,
+    "fga": 72.4,
+    "fta": 23.0,
+    "orb": 8.1,
+    "tov": 11.8,
+    "pts": 84.4,
+    "opp_fga": 75.4,
+    "opp_fta": 24.8,
+    "opp_orb": 11.1,
+    "opp_tov": 12.4,
+    "opp_pts": 85.5,
+    "ortg": 99.8,
+    "drtg": 101.1,
+    "netrtg": -1.3,
+    "w": 9,
+    "l": 7
+   },
+   "Toronto Raptors": {
+    "g": 3,
+    "fga": 74.0,
+    "fta": 31.0,
+    "orb": 13.0,
+    "tov": 14.3,
+    "pts": 83.7,
+    "opp_fga": 67.0,
+    "opp_fta": 29.0,
+    "opp_orb": 7.7,
+    "opp_tov": 16.0,
+    "opp_pts": 87.7,
+    "ortg": 97.3,
+    "drtg": 101.9,
+    "netrtg": -4.6,
+    "w": 0,
+    "l": 3
+   },
+   "Miami Heat": {
+    "g": 10,
+    "fga": 73.7,
+    "fta": 24.2,
+    "orb": 10.5,
+    "tov": 13.9,
+    "pts": 83.2,
+    "opp_fga": 71.3,
+    "opp_fta": 25.1,
+    "opp_orb": 7.8,
+    "opp_tov": 12.8,
+    "opp_pts": 80.7,
+    "ortg": 97.4,
+    "drtg": 94.4,
+    "netrtg": 3.0,
+    "w": 6,
+    "l": 4
+   },
+   "San Antonio Spurs": {
+    "g": 4,
+    "fga": 76.0,
+    "fta": 30.5,
+    "orb": 12.3,
+    "tov": 16.3,
+    "pts": 81.8,
+    "opp_fga": 83.8,
+    "opp_fta": 18.0,
+    "opp_orb": 14.0,
+    "opp_tov": 15.5,
+    "opp_pts": 83.0,
+    "ortg": 90.0,
+    "drtg": 91.4,
+    "netrtg": -1.4,
+    "w": 1,
+    "l": 3
+   },
+   "Detroit Pistons": {
+    "g": 3,
+    "fga": 69.3,
+    "fta": 27.0,
+    "orb": 6.0,
+    "tov": 17.0,
+    "pts": 79.7,
+    "opp_fga": 71.7,
+    "opp_fta": 24.3,
+    "opp_orb": 8.3,
+    "opp_tov": 17.0,
+    "opp_pts": 90.0,
+    "ortg": 88.7,
+    "drtg": 100.2,
+    "netrtg": -11.5,
+    "w": 0,
+    "l": 3
+   }
+  },
+  "2001": {
+   "Los Angeles Lakers": {
+    "g": 16,
+    "fga": 81.8,
+    "fta": 30.7,
+    "orb": 14.3,
+    "tov": 14.0,
+    "pts": 103.4,
+    "opp_fga": 81.3,
+    "opp_fta": 26.4,
+    "opp_orb": 11.8,
+    "opp_tov": 14.0,
+    "opp_pts": 90.6,
+    "ortg": 111.6,
+    "drtg": 97.9,
+    "netrtg": 13.7,
+    "w": 15,
+    "l": 1
+   },
+   "Orlando Magic": {
+    "g": 4,
+    "fga": 89.8,
+    "fta": 24.5,
+    "orb": 13.5,
+    "tov": 11.3,
+    "pts": 102.8,
+    "opp_fga": 87.5,
+    "opp_fta": 37.5,
+    "opp_orb": 17.5,
+    "opp_tov": 12.0,
+    "opp_pts": 108.5,
+    "ortg": 107.9,
+    "drtg": 113.9,
+    "netrtg": -6.0,
+    "w": 1,
+    "l": 3
+   },
+   "Sacramento Kings": {
+    "g": 8,
+    "fga": 86.0,
+    "fta": 28.6,
+    "orb": 15.1,
+    "tov": 16.6,
+    "pts": 97.6,
+    "opp_fga": 84.6,
+    "opp_fta": 30.9,
+    "opp_orb": 14.0,
+    "opp_tov": 14.6,
+    "opp_pts": 97.5,
+    "ortg": 101.5,
+    "drtg": 101.3,
+    "netrtg": 0.2,
+    "w": 3,
+    "l": 5
+   },
+   "Charlotte Hornets": {
+    "g": 10,
+    "fga": 78.1,
+    "fta": 31.4,
+    "orb": 13.2,
+    "tov": 12.1,
+    "pts": 95.7,
+    "opp_fga": 77.7,
+    "opp_fta": 21.4,
+    "opp_orb": 10.6,
+    "opp_tov": 15.0,
+    "opp_pts": 89.4,
+    "ortg": 108.0,
+    "drtg": 100.9,
+    "netrtg": 7.1,
+    "w": 6,
+    "l": 4
+   },
+   "Milwaukee Bucks": {
+    "g": 18,
+    "fga": 80.6,
+    "fta": 23.7,
+    "orb": 12.8,
+    "tov": 13.0,
+    "pts": 95.7,
+    "opp_fga": 82.9,
+    "opp_fta": 27.6,
+    "opp_orb": 14.5,
+    "opp_tov": 11.5,
+    "opp_pts": 94.3,
+    "ortg": 107.8,
+    "drtg": 106.2,
+    "netrtg": 1.6,
+    "w": 10,
+    "l": 8
+   },
+   "Philadelphia 76ers": {
+    "g": 23,
+    "fga": 80.8,
+    "fta": 26.9,
+    "orb": 14.1,
+    "tov": 12.4,
+    "pts": 92.3,
+    "opp_fga": 78.8,
+    "opp_fta": 20.6,
+    "opp_orb": 11.9,
+    "opp_tov": 13.5,
+    "opp_pts": 92.4,
+    "ortg": 105.7,
+    "drtg": 105.8,
+    "netrtg": -0.1,
+    "w": 12,
+    "l": 11
+   },
+   "Dallas Mavericks": {
+    "g": 10,
+    "fga": 80.8,
+    "fta": 25.6,
+    "orb": 12.2,
+    "tov": 11.6,
+    "pts": 92.2,
+    "opp_fga": 77.5,
+    "opp_fta": 27.4,
+    "opp_orb": 12.5,
+    "opp_tov": 13.5,
+    "opp_pts": 95.9,
+    "ortg": 104.2,
+    "drtg": 108.4,
+    "netrtg": -4.2,
+    "w": 4,
+    "l": 6
+   },
+   "Toronto Raptors": {
+    "g": 12,
+    "fga": 79.5,
+    "fta": 20.8,
+    "orb": 11.9,
+    "tov": 13.6,
+    "pts": 92.2,
+    "opp_fga": 75.2,
+    "opp_fta": 24.9,
+    "opp_orb": 10.8,
+    "opp_tov": 13.8,
+    "opp_pts": 91.3,
+    "ortg": 106.0,
+    "drtg": 105.0,
+    "netrtg": 1.0,
+    "w": 6,
+    "l": 6
+   },
+   "San Antonio Spurs": {
+    "g": 13,
+    "fga": 76.1,
+    "fta": 26.8,
+    "orb": 10.7,
+    "tov": 13.9,
+    "pts": 91.5,
+    "opp_fga": 84.6,
+    "opp_fta": 22.5,
+    "opp_orb": 13.6,
+    "opp_tov": 11.8,
+    "opp_pts": 91.9,
+    "ortg": 102.2,
+    "drtg": 102.6,
+    "netrtg": -0.4,
+    "w": 7,
+    "l": 6
+   },
+   "Utah Jazz": {
+    "g": 5,
+    "fga": 77.8,
+    "fta": 25.8,
+    "orb": 12.6,
+    "tov": 12.2,
+    "pts": 89.6,
+    "opp_fga": 74.0,
+    "opp_fta": 28.6,
+    "opp_orb": 9.8,
+    "opp_tov": 13.0,
+    "opp_pts": 93.8,
+    "ortg": 103.8,
+    "drtg": 108.6,
+    "netrtg": -4.8,
+    "w": 2,
+    "l": 3
+   },
+   "New York Knicks": {
+    "g": 5,
+    "fga": 71.4,
+    "fta": 23.4,
+    "orb": 7.8,
+    "tov": 14.6,
+    "pts": 89.0,
+    "opp_fga": 79.8,
+    "opp_fta": 25.2,
+    "opp_orb": 12.2,
+    "opp_tov": 14.0,
+    "opp_pts": 92.2,
+    "ortg": 101.3,
+    "drtg": 105.0,
+    "netrtg": -3.7,
+    "w": 2,
+    "l": 3
+   },
+   "Portland Trail Blazers": {
+    "g": 3,
+    "fga": 76.3,
+    "fta": 26.0,
+    "orb": 9.7,
+    "tov": 15.0,
+    "pts": 89.0,
+    "opp_fga": 85.7,
+    "opp_fta": 28.7,
+    "opp_orb": 14.7,
+    "opp_tov": 11.7,
+    "opp_pts": 103.7,
+    "ortg": 97.3,
+    "drtg": 113.4,
+    "netrtg": -16.1,
+    "w": 0,
+    "l": 3
+   },
+   "Phoenix Suns": {
+    "g": 4,
+    "fga": 89.5,
+    "fta": 22.8,
+    "orb": 13.5,
+    "tov": 13.8,
+    "pts": 88.5,
+    "opp_fga": 85.3,
+    "opp_fta": 30.0,
+    "opp_orb": 16.0,
+    "opp_tov": 17.5,
+    "opp_pts": 98.0,
+    "ortg": 92.2,
+    "drtg": 102.1,
+    "netrtg": -9.9,
+    "w": 1,
+    "l": 3
+   },
+   "Indiana Pacers": {
+    "g": 4,
+    "fga": 82.3,
+    "fta": 18.8,
+    "orb": 11.8,
+    "tov": 12.5,
+    "pts": 87.3,
+    "opp_fga": 80.3,
+    "opp_fta": 28.3,
+    "opp_orb": 14.5,
+    "opp_tov": 11.0,
+    "opp_pts": 93.5,
+    "ortg": 100.3,
+    "drtg": 107.5,
+    "netrtg": -7.2,
+    "w": 1,
+    "l": 3
+   },
+   "Minnesota Timberwolves": {
+    "g": 4,
+    "fga": 79.5,
+    "fta": 21.5,
+    "orb": 11.0,
+    "tov": 12.8,
+    "pts": 82.0,
+    "opp_fga": 74.0,
+    "opp_fta": 26.3,
+    "opp_orb": 10.0,
+    "opp_tov": 14.0,
+    "opp_pts": 88.5,
+    "ortg": 93.5,
+    "drtg": 100.9,
+    "netrtg": -7.4,
+    "w": 1,
+    "l": 3
+   },
+   "Miami Heat": {
+    "g": 3,
+    "fga": 72.3,
+    "fta": 19.3,
+    "orb": 7.3,
+    "tov": 18.7,
+    "pts": 78.3,
+    "opp_fga": 74.3,
+    "opp_fta": 34.0,
+    "opp_orb": 12.0,
+    "opp_tov": 14.0,
+    "opp_pts": 100.7,
+    "ortg": 87.5,
+    "drtg": 112.4,
+    "netrtg": -24.9,
+    "w": 0,
+    "l": 3
+   }
+  },
+  "2002": {
+   "Dallas Mavericks": {
+    "g": 8,
+    "fga": 88.0,
+    "fta": 25.3,
+    "orb": 10.9,
+    "tov": 12.5,
+    "pts": 109.0,
+    "opp_fga": 85.4,
+    "opp_fta": 32.4,
+    "opp_orb": 14.9,
+    "opp_tov": 14.8,
+    "opp_pts": 108.8,
+    "ortg": 111.7,
+    "drtg": 111.4,
+    "netrtg": 0.3,
+    "w": 4,
+    "l": 4
+   },
+   "Minnesota Timberwolves": {
+    "g": 3,
+    "fga": 81.0,
+    "fta": 34.7,
+    "orb": 14.3,
+    "tov": 15.7,
+    "pts": 102.0,
+    "opp_fga": 85.3,
+    "opp_fta": 27.0,
+    "opp_orb": 8.3,
+    "opp_tov": 10.7,
+    "opp_pts": 112.7,
+    "ortg": 105.5,
+    "drtg": 116.6,
+    "netrtg": -11.1,
+    "w": 0,
+    "l": 3
+   },
+   "Sacramento Kings": {
+    "g": 16,
+    "fga": 82.4,
+    "fta": 29.9,
+    "orb": 12.9,
+    "tov": 14.8,
+    "pts": 101.1,
+    "opp_fga": 86.6,
+    "opp_fta": 25.9,
+    "opp_orb": 14.3,
+    "opp_tov": 14.6,
+    "opp_pts": 98.8,
+    "ortg": 106.3,
+    "drtg": 103.9,
+    "netrtg": 2.4,
+    "w": 10,
+    "l": 6
+   },
+   "Los Angeles Lakers": {
+    "g": 19,
+    "fga": 80.5,
+    "fta": 28.1,
+    "orb": 12.3,
+    "tov": 13.7,
+    "pts": 97.8,
+    "opp_fga": 82.5,
+    "opp_fta": 26.7,
+    "opp_orb": 12.3,
+    "opp_tov": 13.0,
+    "opp_pts": 94.1,
+    "ortg": 106.4,
+    "drtg": 102.3,
+    "netrtg": 4.1,
+    "w": 15,
+    "l": 4
+   },
+   "Charlotte Hornets": {
+    "g": 9,
+    "fga": 81.0,
+    "fta": 32.3,
+    "orb": 14.7,
+    "tov": 14.8,
+    "pts": 96.1,
+    "opp_fga": 80.2,
+    "opp_fta": 31.0,
+    "opp_orb": 11.4,
+    "opp_tov": 13.3,
+    "opp_pts": 96.1,
+    "ortg": 103.9,
+    "drtg": 103.9,
+    "netrtg": 0.0,
+    "w": 4,
+    "l": 5
+   },
+   "New Jersey Nets": {
+    "g": 20,
+    "fga": 82.9,
+    "fta": 26.9,
+    "orb": 12.4,
+    "tov": 14.2,
+    "pts": 95.4,
+    "opp_fga": 78.1,
+    "opp_fta": 29.9,
+    "opp_orb": 11.6,
+    "opp_tov": 15.5,
+    "opp_pts": 95.4,
+    "ortg": 102.3,
+    "drtg": 102.3,
+    "netrtg": 0.0,
+    "w": 11,
+    "l": 9
+   },
+   "Orlando Magic": {
+    "g": 4,
+    "fga": 78.5,
+    "fta": 31.0,
+    "orb": 9.0,
+    "tov": 12.0,
+    "pts": 93.8,
+    "opp_fga": 82.3,
+    "opp_fta": 33.5,
+    "opp_orb": 15.8,
+    "opp_tov": 14.3,
+    "opp_pts": 98.8,
+    "ortg": 101.2,
+    "drtg": 106.6,
+    "netrtg": -5.4,
+    "w": 1,
+    "l": 3
+   },
+   "Indiana Pacers": {
+    "g": 5,
+    "fga": 76.0,
+    "fta": 22.6,
+    "orb": 8.4,
+    "tov": 18.2,
+    "pts": 91.6,
+    "opp_fga": 83.0,
+    "opp_fta": 23.6,
+    "opp_orb": 10.8,
+    "opp_tov": 14.8,
+    "opp_pts": 91.4,
+    "ortg": 97.1,
+    "drtg": 96.9,
+    "netrtg": 0.2,
+    "w": 2,
+    "l": 3
+   },
+   "Boston Celtics": {
+    "g": 16,
+    "fga": 78.4,
+    "fta": 22.9,
+    "orb": 10.6,
+    "tov": 14.1,
+    "pts": 91.3,
+    "opp_fga": 76.8,
+    "opp_fta": 26.9,
+    "opp_orb": 10.8,
+    "opp_tov": 14.8,
+    "opp_pts": 88.4,
+    "ortg": 101.5,
+    "drtg": 98.4,
+    "netrtg": 3.1,
+    "w": 9,
+    "l": 7
+   },
+   "Portland Trail Blazers": {
+    "g": 3,
+    "fga": 82.0,
+    "fta": 27.7,
+    "orb": 12.0,
+    "tov": 14.7,
+    "pts": 91.3,
+    "opp_fga": 74.3,
+    "opp_fta": 33.0,
+    "opp_orb": 9.3,
+    "opp_tov": 13.3,
+    "opp_pts": 96.7,
+    "ortg": 99.3,
+    "drtg": 105.1,
+    "netrtg": -5.8,
+    "w": 0,
+    "l": 3
+   },
+   "San Antonio Spurs": {
+    "g": 10,
+    "fga": 76.2,
+    "fta": 26.6,
+    "orb": 11.1,
+    "tov": 11.1,
+    "pts": 91.1,
+    "opp_fga": 79.6,
+    "opp_fta": 20.4,
+    "opp_orb": 11.4,
+    "opp_tov": 11.4,
+    "opp_pts": 88.1,
+    "ortg": 106.2,
+    "drtg": 102.7,
+    "netrtg": 3.5,
+    "w": 4,
+    "l": 6
+   },
+   "Philadelphia 76ers": {
+    "g": 5,
+    "fga": 73.6,
+    "fta": 32.0,
+    "orb": 12.6,
+    "tov": 14.4,
+    "pts": 89.0,
+    "opp_fga": 77.2,
+    "opp_fta": 17.2,
+    "opp_orb": 8.8,
+    "opp_tov": 13.6,
+    "opp_pts": 97.8,
+    "ortg": 102.1,
+    "drtg": 112.2,
+    "netrtg": -10.1,
+    "w": 2,
+    "l": 3
+   },
+   "Utah Jazz": {
+    "g": 4,
+    "fga": 79.5,
+    "fta": 27.0,
+    "orb": 15.3,
+    "tov": 16.5,
+    "pts": 88.0,
+    "opp_fga": 73.8,
+    "opp_fta": 30.0,
+    "opp_orb": 12.5,
+    "opp_tov": 17.3,
+    "opp_pts": 89.0,
+    "ortg": 98.6,
+    "drtg": 99.8,
+    "netrtg": -1.2,
+    "w": 1,
+    "l": 3
+   },
+   "Seattle SuperSonics": {
+    "g": 5,
+    "fga": 79.6,
+    "fta": 19.0,
+    "orb": 11.4,
+    "tov": 10.6,
+    "pts": 86.2,
+    "opp_fga": 76.0,
+    "opp_fta": 26.8,
+    "opp_orb": 10.8,
+    "opp_tov": 9.8,
+    "opp_pts": 96.4,
+    "ortg": 101.7,
+    "drtg": 113.8,
+    "netrtg": -12.1,
+    "w": 2,
+    "l": 3
+   },
+   "Toronto Raptors": {
+    "g": 5,
+    "fga": 77.2,
+    "fta": 20.6,
+    "orb": 12.4,
+    "tov": 16.0,
+    "pts": 83.8,
+    "opp_fga": 71.2,
+    "opp_fta": 26.0,
+    "opp_orb": 10.4,
+    "opp_tov": 15.0,
+    "opp_pts": 86.6,
+    "ortg": 97.8,
+    "drtg": 101.1,
+    "netrtg": -3.3,
+    "w": 2,
+    "l": 3
+   },
+   "Detroit Pistons": {
+    "g": 10,
+    "fga": 73.6,
+    "fta": 22.4,
+    "orb": 9.6,
+    "tov": 14.6,
+    "pts": 83.0,
+    "opp_fga": 76.3,
+    "opp_fta": 19.7,
+    "opp_orb": 10.9,
+    "opp_tov": 15.6,
+    "opp_pts": 83.4,
+    "ortg": 96.1,
+    "drtg": 96.5,
+    "netrtg": -0.4,
+    "w": 4,
+    "l": 6
+   }
+  },
+  "2003": {
+   "Sacramento Kings": {
+    "g": 12,
+    "fga": 85.5,
+    "fta": 29.2,
+    "orb": 12.8,
+    "tov": 13.4,
+    "pts": 107.9,
+    "opp_fga": 87.5,
+    "opp_fta": 24.6,
+    "opp_orb": 13.1,
+    "opp_tov": 14.3,
+    "opp_pts": 105.6,
+    "ortg": 112.0,
+    "drtg": 109.6,
+    "netrtg": 2.4,
+    "w": 7,
+    "l": 5
+   },
+   "Dallas Mavericks": {
+    "g": 20,
+    "fga": 86.1,
+    "fta": 21.1,
+    "orb": 11.2,
+    "tov": 12.5,
+    "pts": 104.1,
+    "opp_fga": 82.2,
+    "opp_fta": 31.2,
+    "opp_orb": 13.0,
+    "opp_tov": 13.7,
+    "opp_pts": 104.7,
+    "ortg": 110.5,
+    "drtg": 111.1,
+    "netrtg": -0.6,
+    "w": 10,
+    "l": 10
+   },
+   "Portland Trail Blazers": {
+    "g": 7,
+    "fga": 79.0,
+    "fta": 29.4,
+    "orb": 15.0,
+    "tov": 13.7,
+    "pts": 101.3,
+    "opp_fga": 80.7,
+    "opp_fta": 21.7,
+    "opp_orb": 11.1,
+    "opp_tov": 11.3,
+    "opp_pts": 100.3,
+    "ortg": 115.2,
+    "drtg": 114.1,
+    "netrtg": 1.1,
+    "w": 3,
+    "l": 4
+   },
+   "Minnesota Timberwolves": {
+    "g": 6,
+    "fga": 81.0,
+    "fta": 25.8,
+    "orb": 8.8,
+    "tov": 15.8,
+    "pts": 100.5,
+    "opp_fga": 88.5,
+    "opp_fta": 27.0,
+    "opp_orb": 13.7,
+    "opp_tov": 12.0,
+    "opp_pts": 106.8,
+    "ortg": 104.2,
+    "drtg": 110.8,
+    "netrtg": -6.6,
+    "w": 2,
+    "l": 4
+   },
+   "Los Angeles Lakers": {
+    "g": 12,
+    "fga": 83.3,
+    "fta": 26.1,
+    "orb": 12.3,
+    "tov": 13.8,
+    "pts": 100.3,
+    "opp_fga": 79.9,
+    "opp_fta": 26.3,
+    "opp_orb": 9.7,
+    "opp_tov": 13.8,
+    "opp_pts": 100.0,
+    "ortg": 107.1,
+    "drtg": 106.9,
+    "netrtg": 0.2,
+    "w": 6,
+    "l": 6
+   },
+   "Milwaukee Bucks": {
+    "g": 6,
+    "fga": 79.5,
+    "fta": 24.8,
+    "orb": 8.3,
+    "tov": 13.3,
+    "pts": 97.8,
+    "opp_fga": 79.0,
+    "opp_fta": 31.3,
+    "opp_orb": 14.3,
+    "opp_tov": 16.0,
+    "opp_pts": 102.2,
+    "ortg": 105.8,
+    "drtg": 110.5,
+    "netrtg": -4.7,
+    "w": 2,
+    "l": 4
+   },
+   "San Antonio Spurs": {
+    "g": 24,
+    "fga": 76.8,
+    "fta": 30.6,
+    "orb": 12.1,
+    "tov": 15.2,
+    "pts": 94.8,
+    "opp_fga": 81.6,
+    "opp_fta": 22.6,
+    "opp_orb": 12.1,
+    "opp_tov": 14.9,
+    "opp_pts": 89.3,
+    "ortg": 103.7,
+    "drtg": 97.7,
+    "netrtg": 6.0,
+    "w": 16,
+    "l": 8
+   },
+   "Boston Celtics": {
+    "g": 10,
+    "fga": 79.1,
+    "fta": 24.0,
+    "orb": 8.8,
+    "tov": 14.8,
+    "pts": 94.6,
+    "opp_fga": 78.8,
+    "opp_fta": 31.8,
+    "opp_orb": 11.8,
+    "opp_tov": 15.1,
+    "opp_pts": 95.2,
+    "ortg": 101.4,
+    "drtg": 102.1,
+    "netrtg": -0.7,
+    "w": 4,
+    "l": 6
+   },
+   "New Jersey Nets": {
+    "g": 20,
+    "fga": 80.6,
+    "fta": 27.1,
+    "orb": 13.6,
+    "tov": 15.2,
+    "pts": 93.7,
+    "opp_fga": 76.5,
+    "opp_fta": 26.2,
+    "opp_orb": 9.6,
+    "opp_tov": 15.3,
+    "opp_pts": 90.3,
+    "ortg": 102.6,
+    "drtg": 98.9,
+    "netrtg": 3.7,
+    "w": 14,
+    "l": 6
+   },
+   "Utah Jazz": {
+    "g": 5,
+    "fga": 77.8,
+    "fta": 30.0,
+    "orb": 14.0,
+    "tov": 16.4,
+    "pts": 93.0,
+    "opp_fga": 79.4,
+    "opp_fta": 28.2,
+    "opp_orb": 13.4,
+    "opp_tov": 13.6,
+    "opp_pts": 103.6,
+    "ortg": 104.2,
+    "drtg": 116.1,
+    "netrtg": -11.9,
+    "w": 1,
+    "l": 4
+   },
+   "New Orleans Hornets": {
+    "g": 6,
+    "fga": 77.2,
+    "fta": 25.3,
+    "orb": 12.3,
+    "tov": 14.7,
+    "pts": 92.8,
+    "opp_fga": 75.7,
+    "opp_fta": 28.3,
+    "opp_orb": 12.3,
+    "opp_tov": 14.3,
+    "opp_pts": 94.5,
+    "ortg": 106.4,
+    "drtg": 108.3,
+    "netrtg": -1.9,
+    "w": 2,
+    "l": 4
+   },
+   "Philadelphia 76ers": {
+    "g": 12,
+    "fga": 75.9,
+    "fta": 26.2,
+    "orb": 12.1,
+    "tov": 14.8,
+    "pts": 92.1,
+    "opp_fga": 75.2,
+    "opp_fta": 26.9,
+    "opp_orb": 11.4,
+    "opp_tov": 13.9,
+    "opp_pts": 91.3,
+    "ortg": 105.8,
+    "drtg": 104.8,
+    "netrtg": 1.0,
+    "w": 6,
+    "l": 6
+   },
+   "Indiana Pacers": {
+    "g": 6,
+    "fga": 77.7,
+    "fta": 32.5,
+    "orb": 13.2,
+    "tov": 14.2,
+    "pts": 91.2,
+    "opp_fga": 78.5,
+    "opp_fta": 24.5,
+    "opp_orb": 8.8,
+    "opp_tov": 12.5,
+    "opp_pts": 96.8,
+    "ortg": 100.9,
+    "drtg": 107.1,
+    "netrtg": -6.2,
+    "w": 2,
+    "l": 4
+   },
+   "Detroit Pistons": {
+    "g": 17,
+    "fga": 73.8,
+    "fta": 30.7,
+    "orb": 10.8,
+    "tov": 13.4,
+    "pts": 89.9,
+    "opp_fga": 76.0,
+    "opp_fta": 24.9,
+    "opp_orb": 11.8,
+    "opp_tov": 15.1,
+    "opp_pts": 89.1,
+    "ortg": 102.7,
+    "drtg": 101.7,
+    "netrtg": 1.0,
+    "w": 8,
+    "l": 9
+   },
+   "Orlando Magic": {
+    "g": 7,
+    "fga": 73.1,
+    "fta": 26.1,
+    "orb": 9.9,
+    "tov": 15.3,
+    "pts": 87.6,
+    "opp_fga": 75.7,
+    "opp_fta": 33.6,
+    "opp_orb": 12.6,
+    "opp_tov": 13.6,
+    "opp_pts": 94.9,
+    "ortg": 99.5,
+    "drtg": 107.8,
+    "netrtg": -8.3,
+    "w": 3,
+    "l": 4
+   },
+   "Phoenix Suns": {
+    "g": 6,
+    "fga": 83.7,
+    "fta": 22.2,
+    "orb": 13.3,
+    "tov": 16.2,
+    "pts": 85.2,
+    "opp_fga": 76.8,
+    "opp_fta": 33.2,
+    "opp_orb": 14.3,
+    "opp_tov": 18.5,
+    "opp_pts": 90.5,
+    "ortg": 91.5,
+    "drtg": 97.3,
+    "netrtg": -5.8,
+    "w": 2,
+    "l": 4
+   }
+  },
+  "1998_lg": {
+   "ortg": 105.6,
+   "drtg": 105.6
+  },
+  "1997_lg": {
+   "ortg": 107.4,
+   "drtg": 107.4
+  },
+  "2003_lg": {
+   "ortg": 105.1,
+   "drtg": 105.1
+  },
+  "1999_lg": {
+   "ortg": 101.8,
+   "drtg": 101.8
+  },
+  "2000_lg": {
+   "ortg": 104.2,
+   "drtg": 104.2
+  },
+  "2001_lg": {
+   "ortg": 104.5,
+   "drtg": 104.5
+  },
+  "2002_lg": {
+   "ortg": 103.3,
+   "drtg": 103.3
+  },
+  "2004": {
+   "Detroit Pistons": {
+    "g": 23,
+    "w": 16,
+    "l": 7,
+    "ortg": 99.3,
+    "drtg": 92.0,
+    "netrtg": 7.3
+   },
+   "Indiana Pacers": {
+    "g": 16,
+    "w": 10,
+    "l": 6,
+    "ortg": 98.9,
+    "drtg": 93.7,
+    "netrtg": 5.2
+   },
+   "San Antonio Spurs": {
+    "g": 10,
+    "w": 6,
+    "l": 4,
+    "ortg": 102.4,
+    "drtg": 98.8,
+    "netrtg": 3.6
+   },
+   "New Jersey Nets": {
+    "g": 11,
+    "w": 7,
+    "l": 4,
+    "ortg": 96.4,
+    "drtg": 93.7,
+    "netrtg": 2.7
+   },
+   "Dallas Mavericks": {
+    "g": 5,
+    "w": 1,
+    "l": 4,
+    "ortg": 103.4,
+    "drtg": 102.0,
+    "netrtg": 1.4
+   },
+   "Los Angeles Lakers": {
+    "g": 22,
+    "w": 13,
+    "l": 9,
+    "ortg": 100.8,
+    "drtg": 99.8,
+    "netrtg": 1.0
+   },
+   "Miami Heat": {
+    "g": 13,
+    "w": 6,
+    "l": 7,
+    "ortg": 97.3,
+    "drtg": 97.1,
+    "netrtg": 0.2
+   },
+   "Sacramento Kings": {
+    "g": 12,
+    "w": 7,
+    "l": 5,
+    "ortg": 101.0,
+    "drtg": 100.9,
+    "netrtg": 0.1
+   },
+   "Minnesota Timberwolves": {
+    "g": 18,
+    "w": 10,
+    "l": 8,
+    "ortg": 101.9,
+    "drtg": 101.9,
+    "netrtg": 0.0
+   },
+   "New Orleans Hornets": {
+    "g": 7,
+    "w": 3,
+    "l": 4,
+    "ortg": 92.5,
+    "drtg": 95.9,
+    "netrtg": -3.4
+   },
+   "Denver Nuggets": {
+    "g": 5,
+    "w": 1,
+    "l": 4,
+    "ortg": 99.2,
+    "drtg": 103.6,
+    "netrtg": -4.4
+   },
+   "Houston Rockets": {
+    "g": 5,
+    "w": 1,
+    "l": 4,
+    "ortg": 94.5,
+    "drtg": 100.5,
+    "netrtg": -6.0
+   },
+   "New York Knicks": {
+    "g": 4,
+    "w": 0,
+    "l": 4,
+    "ortg": 90.4,
+    "drtg": 104.1,
+    "netrtg": -13.7
+   },
+   "Milwaukee Bucks": {
+    "g": 5,
+    "w": 1,
+    "l": 4,
+    "ortg": 95.3,
+    "drtg": 109.3,
+    "netrtg": -14.0
+   },
+   "Memphis Grizzlies": {
+    "g": 4,
+    "w": 0,
+    "l": 4,
+    "ortg": 97.1,
+    "drtg": 113.4,
+    "netrtg": -16.3
+   },
+   "Boston Celtics": {
+    "g": 4,
+    "w": 0,
+    "l": 4,
+    "ortg": 92.1,
+    "drtg": 110.4,
+    "netrtg": -18.3
+   }
+  },
+  "2004_lg": {
+   "ortg": 98.8,
+   "drtg": 98.8
+  },
+  "2005": {
+   "Detroit Pistons": {
+    "g": 25,
+    "w": 15,
+    "l": 10,
+    "ortg": 105.0,
+    "drtg": 99.5,
+    "netrtg": 5.5
+   },
+   "San Antonio Spurs": {
+    "g": 23,
+    "w": 16,
+    "l": 7,
+    "ortg": 110.0,
+    "drtg": 105.1,
+    "netrtg": 4.9
+   },
+   "Miami Heat": {
+    "g": 15,
+    "w": 11,
+    "l": 4,
+    "ortg": 107.2,
+    "drtg": 102.5,
+    "netrtg": 4.7
+   },
+   "Phoenix Suns": {
+    "g": 15,
+    "w": 9,
+    "l": 6,
+    "ortg": 118.2,
+    "drtg": 113.8,
+    "netrtg": 4.4
+   },
+   "Boston Celtics": {
+    "g": 7,
+    "w": 3,
+    "l": 4,
+    "ortg": 100.6,
+    "drtg": 101.3,
+    "netrtg": -0.7
+   },
+   "Dallas Mavericks": {
+    "g": 13,
+    "w": 6,
+    "l": 7,
+    "ortg": 113.3,
+    "drtg": 115.0,
+    "netrtg": -1.7
+   },
+   "Chicago Bulls": {
+    "g": 6,
+    "w": 2,
+    "l": 4,
+    "ortg": 106.3,
+    "drtg": 108.2,
+    "netrtg": -1.9
+   },
+   "Seattle SuperSonics": {
+    "g": 11,
+    "w": 6,
+    "l": 5,
+    "ortg": 111.1,
+    "drtg": 113.0,
+    "netrtg": -1.9
+   },
+   "Washington Wizards": {
+    "g": 10,
+    "w": 4,
+    "l": 6,
+    "ortg": 105.6,
+    "drtg": 108.2,
+    "netrtg": -2.6
+   },
+   "Houston Rockets": {
+    "g": 7,
+    "w": 3,
+    "l": 4,
+    "ortg": 111.7,
+    "drtg": 114.9,
+    "netrtg": -3.2
+   },
+   "Indiana Pacers": {
+    "g": 13,
+    "w": 6,
+    "l": 7,
+    "ortg": 97.7,
+    "drtg": 101.1,
+    "netrtg": -3.4
+   },
+   "Sacramento Kings": {
+    "g": 5,
+    "w": 1,
+    "l": 4,
+    "ortg": 113.0,
+    "drtg": 117.9,
+    "netrtg": -4.9
+   },
+   "Philadelphia 76ers": {
+    "g": 5,
+    "w": 1,
+    "l": 4,
+    "ortg": 101.2,
+    "drtg": 110.1,
+    "netrtg": -8.9
+   },
+   "Denver Nuggets": {
+    "g": 5,
+    "w": 1,
+    "l": 4,
+    "ortg": 97.4,
+    "drtg": 108.5,
+    "netrtg": -11.1
+   },
+   "Memphis Grizzlies": {
+    "g": 4,
+    "w": 0,
+    "l": 4,
+    "ortg": 112.0,
+    "drtg": 124.0,
+    "netrtg": -12.0
+   },
+   "New Jersey Nets": {
+    "g": 4,
+    "w": 0,
+    "l": 4,
+    "ortg": 100.6,
+    "drtg": 113.9,
+    "netrtg": -13.3
+   }
+  },
+  "2005_lg": {
+   "ortg": 107.8,
+   "drtg": 107.8
+  },
+  "2006": {
+   "Dallas Mavericks": {
+    "g": 23,
+    "w": 14,
+    "l": 9,
+    "ortg": 110.2,
+    "drtg": 105.7,
+    "netrtg": 4.5
+   },
+   "Miami Heat": {
+    "g": 23,
+    "w": 16,
+    "l": 7,
+    "ortg": 106.2,
+    "drtg": 102.0,
+    "netrtg": 4.2
+   },
+   "Los Angeles Clippers": {
+    "g": 12,
+    "w": 7,
+    "l": 5,
+    "ortg": 111.6,
+    "drtg": 107.7,
+    "netrtg": 3.9
+   },
+   "Detroit Pistons": {
+    "g": 18,
+    "w": 10,
+    "l": 8,
+    "ortg": 107.9,
+    "drtg": 104.2,
+    "netrtg": 3.7
+   },
+   "San Antonio Spurs": {
+    "g": 13,
+    "w": 7,
+    "l": 6,
+    "ortg": 114.0,
+    "drtg": 111.6,
+    "netrtg": 2.4
+   },
+   "Phoenix Suns": {
+    "g": 20,
+    "w": 10,
+    "l": 10,
+    "ortg": 113.7,
+    "drtg": 112.5,
+    "netrtg": 1.2
+   },
+   "Washington Wizards": {
+    "g": 6,
+    "w": 2,
+    "l": 4,
+    "ortg": 109.4,
+    "drtg": 109.2,
+    "netrtg": 0.2
+   },
+   "New Jersey Nets": {
+    "g": 11,
+    "w": 5,
+    "l": 6,
+    "ortg": 106.5,
+    "drtg": 107.6,
+    "netrtg": -1.1
+   },
+   "Chicago Bulls": {
+    "g": 6,
+    "w": 2,
+    "l": 4,
+    "ortg": 104.2,
+    "drtg": 107.4,
+    "netrtg": -3.2
+   },
+   "Cleveland Cavaliers": {
+    "g": 13,
+    "w": 7,
+    "l": 6,
+    "ortg": 103.7,
+    "drtg": 107.4,
+    "netrtg": -3.7
+   },
+   "Indiana Pacers": {
+    "g": 6,
+    "w": 2,
+    "l": 4,
+    "ortg": 103.2,
+    "drtg": 107.5,
+    "netrtg": -4.3
+   },
+   "Los Angeles Lakers": {
+    "g": 7,
+    "w": 3,
+    "l": 4,
+    "ortg": 106.5,
+    "drtg": 113.6,
+    "netrtg": -7.1
+   },
+   "Denver Nuggets": {
+    "g": 5,
+    "w": 1,
+    "l": 4,
+    "ortg": 95.0,
+    "drtg": 103.2,
+    "netrtg": -8.2
+   },
+   "Sacramento Kings": {
+    "g": 6,
+    "w": 2,
+    "l": 4,
+    "ortg": 108.8,
+    "drtg": 119.5,
+    "netrtg": -10.7
+   },
+   "Milwaukee Bucks": {
+    "g": 5,
+    "w": 1,
+    "l": 4,
+    "ortg": 110.2,
+    "drtg": 121.1,
+    "netrtg": -10.9
+   },
+   "Memphis Grizzlies": {
+    "g": 4,
+    "w": 0,
+    "l": 4,
+    "ortg": 99.0,
+    "drtg": 115.5,
+    "netrtg": -16.5
+   }
+  },
+  "2006_lg": {
+   "ortg": 108.2,
+   "drtg": 108.2
+  },
+  "2007": {
+   "Phoenix Suns": {
+    "g": 11,
+    "w": 6,
+    "l": 5,
+    "ortg": 110.6,
+    "drtg": 105.3,
+    "netrtg": 5.3
+   },
+   "San Antonio Spurs": {
+    "g": 20,
+    "w": 16,
+    "l": 4,
+    "ortg": 107.6,
+    "drtg": 103.1,
+    "netrtg": 4.5
+   },
+   "Detroit Pistons": {
+    "g": 16,
+    "w": 10,
+    "l": 6,
+    "ortg": 105.2,
+    "drtg": 101.8,
+    "netrtg": 3.4
+   },
+   "Cleveland Cavaliers": {
+    "g": 20,
+    "w": 12,
+    "l": 8,
+    "ortg": 102.5,
+    "drtg": 100.0,
+    "netrtg": 2.5
+   },
+   "New Jersey Nets": {
+    "g": 12,
+    "w": 6,
+    "l": 6,
+    "ortg": 101.7,
+    "drtg": 99.6,
+    "netrtg": 2.1
+   },
+   "Golden State Warriors": {
+    "g": 11,
+    "w": 5,
+    "l": 6,
+    "ortg": 110.9,
+    "drtg": 109.1,
+    "netrtg": 1.8
+   },
+   "Chicago Bulls": {
+    "g": 10,
+    "w": 6,
+    "l": 4,
+    "ortg": 103.4,
+    "drtg": 102.1,
+    "netrtg": 1.3
+   },
+   "Utah Jazz": {
+    "g": 17,
+    "w": 9,
+    "l": 8,
+    "ortg": 106.9,
+    "drtg": 105.9,
+    "netrtg": 1.0
+   },
+   "Houston Rockets": {
+    "g": 7,
+    "w": 3,
+    "l": 4,
+    "ortg": 99.6,
+    "drtg": 103.2,
+    "netrtg": -3.6
+   },
+   "Toronto Raptors": {
+    "g": 6,
+    "w": 2,
+    "l": 4,
+    "ortg": 101.0,
+    "drtg": 106.9,
+    "netrtg": -5.9
+   },
+   "Denver Nuggets": {
+    "g": 5,
+    "w": 1,
+    "l": 4,
+    "ortg": 100.7,
+    "drtg": 107.5,
+    "netrtg": -6.8
+   },
+   "Dallas Mavericks": {
+    "g": 6,
+    "w": 2,
+    "l": 4,
+    "ortg": 105.7,
+    "drtg": 112.8,
+    "netrtg": -7.1
+   },
+   "Washington Wizards": {
+    "g": 4,
+    "w": 0,
+    "l": 4,
+    "ortg": 103.5,
+    "drtg": 113.4,
+    "netrtg": -9.9
+   },
+   "Orlando Magic": {
+    "g": 4,
+    "w": 0,
+    "l": 4,
+    "ortg": 102.9,
+    "drtg": 113.5,
+    "netrtg": -10.6
+   },
+   "Los Angeles Lakers": {
+    "g": 5,
+    "w": 1,
+    "l": 4,
+    "ortg": 103.8,
+    "drtg": 114.8,
+    "netrtg": -11.0
+   },
+   "Miami Heat": {
+    "g": 4,
+    "w": 0,
+    "l": 4,
+    "ortg": 96.9,
+    "drtg": 108.9,
+    "netrtg": -12.0
+   }
+  },
+  "2007_lg": {
+   "ortg": 104.9,
+   "drtg": 104.9
+  },
+  "2008": {
+   "Boston Celtics": {
+    "g": 26,
+    "w": 16,
+    "l": 10,
+    "ortg": 109.4,
+    "drtg": 103.3,
+    "netrtg": 6.1
+   },
+   "New Orleans Hornets": {
+    "g": 12,
+    "w": 7,
+    "l": 5,
+    "ortg": 111.5,
+    "drtg": 107.3,
+    "netrtg": 4.2
+   },
+   "Detroit Pistons": {
+    "g": 17,
+    "w": 10,
+    "l": 7,
+    "ortg": 108.0,
+    "drtg": 105.2,
+    "netrtg": 2.8
+   },
+   "Cleveland Cavaliers": {
+    "g": 13,
+    "w": 7,
+    "l": 6,
+    "ortg": 104.6,
+    "drtg": 102.1,
+    "netrtg": 2.5
+   },
+   "Los Angeles Lakers": {
+    "g": 21,
+    "w": 14,
+    "l": 7,
+    "ortg": 110.0,
+    "drtg": 107.6,
+    "netrtg": 2.4
+   },
+   "Orlando Magic": {
+    "g": 10,
+    "w": 5,
+    "l": 5,
+    "ortg": 111.0,
+    "drtg": 109.2,
+    "netrtg": 1.8
+   },
+   "Utah Jazz": {
+    "g": 12,
+    "w": 6,
+    "l": 6,
+    "ortg": 110.1,
+    "drtg": 110.4,
+    "netrtg": -0.3
+   },
+   "San Antonio Spurs": {
+    "g": 17,
+    "w": 9,
+    "l": 8,
+    "ortg": 103.9,
+    "drtg": 104.8,
+    "netrtg": -0.9
+   },
+   "Phoenix Suns": {
+    "g": 5,
+    "w": 1,
+    "l": 4,
+    "ortg": 104.1,
+    "drtg": 106.1,
+    "netrtg": -2.0
+   },
+   "Houston Rockets": {
+    "g": 6,
+    "w": 2,
+    "l": 4,
+    "ortg": 103.8,
+    "drtg": 106.7,
+    "netrtg": -2.9
+   },
+   "Washington Wizards": {
+    "g": 6,
+    "w": 2,
+    "l": 4,
+    "ortg": 104.9,
+    "drtg": 108.7,
+    "netrtg": -3.8
+   },
+   "Toronto Raptors": {
+    "g": 5,
+    "w": 1,
+    "l": 4,
+    "ortg": 110.1,
+    "drtg": 115.2,
+    "netrtg": -5.1
+   },
+   "Philadelphia 76ers": {
+    "g": 6,
+    "w": 2,
+    "l": 4,
+    "ortg": 99.8,
+    "drtg": 107.9,
+    "netrtg": -8.1
+   },
+   "Dallas Mavericks": {
+    "g": 5,
+    "w": 1,
+    "l": 4,
+    "ortg": 108.0,
+    "drtg": 118.2,
+    "netrtg": -10.2
+   },
+   "Denver Nuggets": {
+    "g": 4,
+    "w": 0,
+    "l": 4,
+    "ortg": 104.3,
+    "drtg": 117.9,
+    "netrtg": -13.6
+   },
+   "Atlanta Hawks": {
+    "g": 7,
+    "w": 3,
+    "l": 4,
+    "ortg": 101.6,
+    "drtg": 115.6,
+    "netrtg": -14.0
+   }
+  },
+  "2008_lg": {
+   "ortg": 107.4,
+   "drtg": 107.4
+  },
+  "2009": {
+   "Cleveland Cavaliers": {
+    "g": 14,
+    "w": 10,
+    "l": 4,
+    "ortg": 112.6,
+    "drtg": 102.7,
+    "netrtg": 9.9
+   },
+   "Denver Nuggets": {
+    "g": 16,
+    "w": 10,
+    "l": 6,
+    "ortg": 116.8,
+    "drtg": 107.5,
+    "netrtg": 9.3
+   },
+   "Los Angeles Lakers": {
+    "g": 23,
+    "w": 16,
+    "l": 7,
+    "ortg": 111.4,
+    "drtg": 103.5,
+    "netrtg": 7.9
+   },
+   "Orlando Magic": {
+    "g": 24,
+    "w": 13,
+    "l": 11,
+    "ortg": 107.3,
+    "drtg": 105.3,
+    "netrtg": 2.0
+   },
+   "Miami Heat": {
+    "g": 7,
+    "w": 3,
+    "l": 4,
+    "ortg": 106.7,
+    "drtg": 105.6,
+    "netrtg": 1.1
+   },
+   "Boston Celtics": {
+    "g": 14,
+    "w": 7,
+    "l": 7,
+    "ortg": 106.3,
+    "drtg": 106.3,
+    "netrtg": 0.0
+   },
+   "Dallas Mavericks": {
+    "g": 10,
+    "w": 5,
+    "l": 5,
+    "ortg": 113.0,
+    "drtg": 114.0,
+    "netrtg": -1.0
+   },
+   "Houston Rockets": {
+    "g": 13,
+    "w": 7,
+    "l": 6,
+    "ortg": 104.7,
+    "drtg": 106.4,
+    "netrtg": -1.7
+   },
+   "Chicago Bulls": {
+    "g": 7,
+    "w": 3,
+    "l": 4,
+    "ortg": 105.9,
+    "drtg": 110.1,
+    "netrtg": -4.2
+   },
+   "Portland Trail Blazers": {
+    "g": 6,
+    "w": 2,
+    "l": 4,
+    "ortg": 103.9,
+    "drtg": 110.2,
+    "netrtg": -6.3
+   },
+   "San Antonio Spurs": {
+    "g": 5,
+    "w": 1,
+    "l": 4,
+    "ortg": 105.4,
+    "drtg": 112.4,
+    "netrtg": -7.0
+   },
+   "Atlanta Hawks": {
+    "g": 11,
+    "w": 4,
+    "l": 7,
+    "ortg": 102.0,
+    "drtg": 110.6,
+    "netrtg": -8.6
+   },
+   "Philadelphia 76ers": {
+    "g": 6,
+    "w": 2,
+    "l": 4,
+    "ortg": 100.5,
+    "drtg": 109.2,
+    "netrtg": -8.7
+   },
+   "Utah Jazz": {
+    "g": 5,
+    "w": 1,
+    "l": 4,
+    "ortg": 104.2,
+    "drtg": 114.1,
+    "netrtg": -9.9
+   },
+   "Detroit Pistons": {
+    "g": 4,
+    "w": 0,
+    "l": 4,
+    "ortg": 93.6,
+    "drtg": 112.2,
+    "netrtg": -18.6
+   },
+   "New Orleans Hornets": {
+    "g": 5,
+    "w": 1,
+    "l": 4,
+    "ortg": 93.7,
+    "drtg": 120.7,
+    "netrtg": -27.0
+   }
+  },
+  "2009_lg": {
+   "ortg": 107.7,
+   "drtg": 107.7
+  },
+  "2010": {
+   "Orlando Magic": {
+    "g": 14,
+    "w": 10,
+    "l": 4,
+    "ortg": 110.8,
+    "drtg": 100.9,
+    "netrtg": 9.9
+   },
+   "Phoenix Suns": {
+    "g": 16,
+    "w": 10,
+    "l": 6,
+    "ortg": 117.8,
+    "drtg": 112.7,
+    "netrtg": 5.1
+   },
+   "Los Angeles Lakers": {
+    "g": 23,
+    "w": 16,
+    "l": 7,
+    "ortg": 112.8,
+    "drtg": 108.6,
+    "netrtg": 4.2
+   },
+   "Boston Celtics": {
+    "g": 24,
+    "w": 15,
+    "l": 9,
+    "ortg": 104.8,
+    "drtg": 101.7,
+    "netrtg": 3.1
+   },
+   "Cleveland Cavaliers": {
+    "g": 11,
+    "w": 6,
+    "l": 5,
+    "ortg": 108.2,
+    "drtg": 106.8,
+    "netrtg": 1.4
+   },
+   "Dallas Mavericks": {
+    "g": 6,
+    "w": 2,
+    "l": 4,
+    "ortg": 105.1,
+    "drtg": 105.6,
+    "netrtg": -0.5
+   },
+   "Denver Nuggets": {
+    "g": 6,
+    "w": 2,
+    "l": 4,
+    "ortg": 113.9,
+    "drtg": 115.1,
+    "netrtg": -1.2
+   },
+   "Oklahoma City Thunder": {
+    "g": 6,
+    "w": 2,
+    "l": 4,
+    "ortg": 103.6,
+    "drtg": 105.4,
+    "netrtg": -1.8
+   },
+   "Utah Jazz": {
+    "g": 10,
+    "w": 4,
+    "l": 6,
+    "ortg": 114.0,
+    "drtg": 116.4,
+    "netrtg": -2.4
+   },
+   "San Antonio Spurs": {
+    "g": 10,
+    "w": 4,
+    "l": 6,
+    "ortg": 105.7,
+    "drtg": 109.4,
+    "netrtg": -3.7
+   },
+   "Milwaukee Bucks": {
+    "g": 7,
+    "w": 3,
+    "l": 4,
+    "ortg": 105.0,
+    "drtg": 109.3,
+    "netrtg": -4.3
+   },
+   "Atlanta Hawks": {
+    "g": 11,
+    "w": 4,
+    "l": 7,
+    "ortg": 104.3,
+    "drtg": 112.2,
+    "netrtg": -7.9
+   },
+   "Miami Heat": {
+    "g": 5,
+    "w": 1,
+    "l": 4,
+    "ortg": 96.2,
+    "drtg": 105.2,
+    "netrtg": -9.0
+   },
+   "Chicago Bulls": {
+    "g": 5,
+    "w": 1,
+    "l": 4,
+    "ortg": 105.0,
+    "drtg": 115.0,
+    "netrtg": -10.0
+   },
+   "Charlotte Bobcats": {
+    "g": 4,
+    "w": 0,
+    "l": 4,
+    "ortg": 100.2,
+    "drtg": 111.0,
+    "netrtg": -10.8
+   },
+   "Portland Trail Blazers": {
+    "g": 6,
+    "w": 2,
+    "l": 4,
+    "ortg": 106.5,
+    "drtg": 118.3,
+    "netrtg": -11.8
+   }
+  },
+  "2010_lg": {
+   "ortg": 108.6,
+   "drtg": 108.6
+  },
+  "2011": {
+   "Dallas Mavericks": {
+    "g": 21,
+    "w": 16,
+    "l": 5,
+    "ortg": 112.9,
+    "drtg": 106.3,
+    "netrtg": 6.6
+   },
+   "Chicago Bulls": {
+    "g": 16,
+    "w": 9,
+    "l": 7,
+    "ortg": 105.8,
+    "drtg": 100.9,
+    "netrtg": 4.9
+   },
+   "Miami Heat": {
+    "g": 21,
+    "w": 14,
+    "l": 7,
+    "ortg": 106.4,
+    "drtg": 103.4,
+    "netrtg": 3.0
+   },
+   "Orlando Magic": {
+    "g": 6,
+    "w": 2,
+    "l": 4,
+    "ortg": 102.4,
+    "drtg": 100.3,
+    "netrtg": 2.1
+   },
+   "Oklahoma City Thunder": {
+    "g": 17,
+    "w": 9,
+    "l": 8,
+    "ortg": 109.5,
+    "drtg": 107.5,
+    "netrtg": 2.0
+   },
+   "Boston Celtics": {
+    "g": 9,
+    "w": 5,
+    "l": 4,
+    "ortg": 105.1,
+    "drtg": 103.6,
+    "netrtg": 1.5
+   },
+   "Memphis Grizzlies": {
+    "g": 13,
+    "w": 7,
+    "l": 6,
+    "ortg": 105.4,
+    "drtg": 106.1,
+    "netrtg": -0.7
+   },
+   "Los Angeles Lakers": {
+    "g": 10,
+    "w": 4,
+    "l": 6,
+    "ortg": 107.8,
+    "drtg": 109.3,
+    "netrtg": -1.5
+   },
+   "San Antonio Spurs": {
+    "g": 6,
+    "w": 2,
+    "l": 4,
+    "ortg": 102.2,
+    "drtg": 105.6,
+    "netrtg": -3.4
+   },
+   "Atlanta Hawks": {
+    "g": 12,
+    "w": 6,
+    "l": 6,
+    "ortg": 100.4,
+    "drtg": 105.5,
+    "netrtg": -5.1
+   },
+   "Denver Nuggets": {
+    "g": 5,
+    "w": 1,
+    "l": 4,
+    "ortg": 103.4,
+    "drtg": 108.5,
+    "netrtg": -5.1
+   },
+   "Portland Trail Blazers": {
+    "g": 6,
+    "w": 2,
+    "l": 4,
+    "ortg": 106.3,
+    "drtg": 112.5,
+    "netrtg": -6.2
+   },
+   "Indiana Pacers": {
+    "g": 5,
+    "w": 1,
+    "l": 4,
+    "ortg": 100.2,
+    "drtg": 108.5,
+    "netrtg": -8.3
+   },
+   "New Orleans Hornets": {
+    "g": 6,
+    "w": 2,
+    "l": 4,
+    "ortg": 104.7,
+    "drtg": 113.1,
+    "netrtg": -8.4
+   },
+   "Philadelphia 76ers": {
+    "g": 5,
+    "w": 1,
+    "l": 4,
+    "ortg": 100.7,
+    "drtg": 109.3,
+    "netrtg": -8.6
+   },
+   "New York Knicks": {
+    "g": 4,
+    "w": 0,
+    "l": 4,
+    "ortg": 99.0,
+    "drtg": 108.2,
+    "netrtg": -9.2
+   }
+  },
+  "2011_lg": {
+   "ortg": 106.0,
+   "drtg": 106.0
+  },
+  "2012": {
+   "Miami Heat": {
+    "g": 23,
+    "w": 16,
+    "l": 7,
+    "ortg": 109.6,
+    "drtg": 101.6,
+    "netrtg": 8.0
+   },
+   "San Antonio Spurs": {
+    "g": 14,
+    "w": 10,
+    "l": 4,
+    "ortg": 110.3,
+    "drtg": 103.9,
+    "netrtg": 6.4
+   },
+   "Oklahoma City Thunder": {
+    "g": 20,
+    "w": 13,
+    "l": 7,
+    "ortg": 111.8,
+    "drtg": 107.4,
+    "netrtg": 4.4
+   },
+   "Indiana Pacers": {
+    "g": 11,
+    "w": 6,
+    "l": 5,
+    "ortg": 102.4,
+    "drtg": 100.9,
+    "netrtg": 1.5
+   },
+   "Boston Celtics": {
+    "g": 20,
+    "w": 11,
+    "l": 9,
+    "ortg": 100.4,
+    "drtg": 99.2,
+    "netrtg": 1.2
+   },
+   "Memphis Grizzlies": {
+    "g": 7,
+    "w": 3,
+    "l": 4,
+    "ortg": 102.8,
+    "drtg": 102.0,
+    "netrtg": 0.8
+   },
+   "Denver Nuggets": {
+    "g": 7,
+    "w": 3,
+    "l": 4,
+    "ortg": 107.1,
+    "drtg": 106.6,
+    "netrtg": 0.5
+   },
+   "Philadelphia 76ers": {
+    "g": 13,
+    "w": 7,
+    "l": 6,
+    "ortg": 96.9,
+    "drtg": 98.3,
+    "netrtg": -1.4
+   },
+   "Chicago Bulls": {
+    "g": 6,
+    "w": 2,
+    "l": 4,
+    "ortg": 95.7,
+    "drtg": 97.6,
+    "netrtg": -1.9
+   },
+   "Los Angeles Lakers": {
+    "g": 12,
+    "w": 5,
+    "l": 7,
+    "ortg": 105.4,
+    "drtg": 110.0,
+    "netrtg": -4.6
+   },
+   "Los Angeles Clippers": {
+    "g": 11,
+    "w": 4,
+    "l": 7,
+    "ortg": 101.3,
+    "drtg": 106.5,
+    "netrtg": -5.2
+   },
+   "Atlanta Hawks": {
+    "g": 6,
+    "w": 2,
+    "l": 4,
+    "ortg": 91.8,
+    "drtg": 97.1,
+    "netrtg": -5.3
+   },
+   "Dallas Mavericks": {
+    "g": 4,
+    "w": 0,
+    "l": 4,
+    "ortg": 102.9,
+    "drtg": 110.1,
+    "netrtg": -7.2
+   },
+   "Orlando Magic": {
+    "g": 5,
+    "w": 1,
+    "l": 4,
+    "ortg": 94.8,
+    "drtg": 107.0,
+    "netrtg": -12.2
+   },
+   "New York Knicks": {
+    "g": 5,
+    "w": 1,
+    "l": 4,
+    "ortg": 95.2,
+    "drtg": 111.3,
+    "netrtg": -16.1
+   },
+   "Utah Jazz": {
+    "g": 4,
+    "w": 0,
+    "l": 4,
+    "ortg": 93.9,
+    "drtg": 111.3,
+    "netrtg": -17.4
+   }
+  },
+  "2012_lg": {
+   "ortg": 103.6,
+   "drtg": 103.6
+  },
+  "2013": {
+   "San Antonio Spurs": {
+    "g": 21,
+    "w": 15,
+    "l": 6,
+    "ortg": 108.7,
+    "drtg": 101.1,
+    "netrtg": 7.6
+   },
+   "Miami Heat": {
+    "g": 23,
+    "w": 16,
+    "l": 7,
+    "ortg": 110.2,
+    "drtg": 102.9,
+    "netrtg": 7.3
+   },
+   "New York Knicks": {
+    "g": 12,
+    "w": 6,
+    "l": 6,
+    "ortg": 101.4,
+    "drtg": 98.3,
+    "netrtg": 3.1
+   },
+   "Brooklyn Nets": {
+    "g": 7,
+    "w": 3,
+    "l": 4,
+    "ortg": 107.8,
+    "drtg": 105.6,
+    "netrtg": 2.2
+   },
+   "Oklahoma City Thunder": {
+    "g": 11,
+    "w": 5,
+    "l": 6,
+    "ortg": 105.1,
+    "drtg": 103.7,
+    "netrtg": 1.4
+   },
+   "Memphis Grizzlies": {
+    "g": 15,
+    "w": 8,
+    "l": 7,
+    "ortg": 105.0,
+    "drtg": 104.3,
+    "netrtg": 0.7
+   },
+   "Golden State Warriors": {
+    "g": 12,
+    "w": 6,
+    "l": 6,
+    "ortg": 106.4,
+    "drtg": 106.2,
+    "netrtg": 0.2
+   },
+   "Indiana Pacers": {
+    "g": 19,
+    "w": 11,
+    "l": 8,
+    "ortg": 104.5,
+    "drtg": 104.4,
+    "netrtg": 0.1
+   },
+   "Denver Nuggets": {
+    "g": 6,
+    "w": 2,
+    "l": 4,
+    "ortg": 105.9,
+    "drtg": 110.2,
+    "netrtg": -4.3
+   },
+   "Atlanta Hawks": {
+    "g": 6,
+    "w": 2,
+    "l": 4,
+    "ortg": 98.0,
+    "drtg": 103.6,
+    "netrtg": -5.6
+   },
+   "Boston Celtics": {
+    "g": 6,
+    "w": 2,
+    "l": 4,
+    "ortg": 92.9,
+    "drtg": 98.9,
+    "netrtg": -6.0
+   },
+   "Houston Rockets": {
+    "g": 6,
+    "w": 2,
+    "l": 4,
+    "ortg": 105.3,
+    "drtg": 111.4,
+    "netrtg": -6.1
+   },
+   "Los Angeles Clippers": {
+    "g": 6,
+    "w": 2,
+    "l": 4,
+    "ortg": 107.5,
+    "drtg": 113.8,
+    "netrtg": -6.3
+   },
+   "Chicago Bulls": {
+    "g": 12,
+    "w": 5,
+    "l": 7,
+    "ortg": 102.5,
+    "drtg": 110.0,
+    "netrtg": -7.5
+   },
+   "Milwaukee Bucks": {
+    "g": 4,
+    "w": 0,
+    "l": 4,
+    "ortg": 94.0,
+    "drtg": 110.3,
+    "netrtg": -16.3
+   },
+   "Los Angeles Lakers": {
+    "g": 4,
+    "w": 0,
+    "l": 4,
+    "ortg": 92.5,
+    "drtg": 112.9,
+    "netrtg": -20.4
+   }
+  },
+  "2013_lg": {
+   "ortg": 104.8,
+   "drtg": 104.8
+  },
+  "2014": {
+   "San Antonio Spurs": {
+    "g": 23,
+    "w": 16,
+    "l": 7,
+    "ortg": 114.2,
+    "drtg": 104.2,
+    "netrtg": 10.0
+   },
+   "Los Angeles Clippers": {
+    "g": 13,
+    "w": 6,
+    "l": 7,
+    "ortg": 113.3,
+    "drtg": 111.3,
+    "netrtg": 2.0
+   },
+   "Miami Heat": {
+    "g": 20,
+    "w": 13,
+    "l": 7,
+    "ortg": 112.8,
+    "drtg": 110.8,
+    "netrtg": 2.0
+   },
+   "Washington Wizards": {
+    "g": 11,
+    "w": 6,
+    "l": 5,
+    "ortg": 102.0,
+    "drtg": 100.9,
+    "netrtg": 1.1
+   },
+   "Houston Rockets": {
+    "g": 6,
+    "w": 2,
+    "l": 4,
+    "ortg": 114.8,
+    "drtg": 114.4,
+    "netrtg": 0.4
+   },
+   "Atlanta Hawks": {
+    "g": 7,
+    "w": 3,
+    "l": 4,
+    "ortg": 101.9,
+    "drtg": 103.0,
+    "netrtg": -1.1
+   },
+   "Indiana Pacers": {
+    "g": 19,
+    "w": 10,
+    "l": 9,
+    "ortg": 103.7,
+    "drtg": 104.8,
+    "netrtg": -1.1
+   },
+   "Oklahoma City Thunder": {
+    "g": 19,
+    "w": 10,
+    "l": 9,
+    "ortg": 108.1,
+    "drtg": 109.2,
+    "netrtg": -1.1
+   },
+   "Brooklyn Nets": {
+    "g": 12,
+    "w": 5,
+    "l": 7,
+    "ortg": 110.5,
+    "drtg": 112.0,
+    "netrtg": -1.5
+   },
+   "Toronto Raptors": {
+    "g": 7,
+    "w": 3,
+    "l": 4,
+    "ortg": 108.2,
+    "drtg": 110.0,
+    "netrtg": -1.8
+   },
+   "Dallas Mavericks": {
+    "g": 7,
+    "w": 3,
+    "l": 4,
+    "ortg": 110.0,
+    "drtg": 112.1,
+    "netrtg": -2.1
+   },
+   "Golden State Warriors": {
+    "g": 7,
+    "w": 3,
+    "l": 4,
+    "ortg": 110.2,
+    "drtg": 114.8,
+    "netrtg": -4.6
+   },
+   "Chicago Bulls": {
+    "g": 5,
+    "w": 1,
+    "l": 4,
+    "ortg": 103.0,
+    "drtg": 108.3,
+    "netrtg": -5.3
+   },
+   "Memphis Grizzlies": {
+    "g": 7,
+    "w": 3,
+    "l": 4,
+    "ortg": 102.8,
+    "drtg": 108.5,
+    "netrtg": -5.7
+   },
+   "Portland Trail Blazers": {
+    "g": 11,
+    "w": 5,
+    "l": 6,
+    "ortg": 107.2,
+    "drtg": 113.6,
+    "netrtg": -6.4
+   },
+   "Charlotte Bobcats": {
+    "g": 4,
+    "w": 0,
+    "l": 4,
+    "ortg": 101.5,
+    "drtg": 112.3,
+    "netrtg": -10.8
+   }
+  },
+  "2014_lg": {
+   "ortg": 108.7,
+   "drtg": 108.7
+  },
+  "2015": {
+   "Golden State Warriors": {
+    "g": 21,
+    "w": 16,
+    "l": 5,
+    "ortg": 108.7,
+    "drtg": 100.5,
+    "netrtg": 8.2
+   },
+   "Cleveland Cavaliers": {
+    "g": 20,
+    "w": 14,
+    "l": 6,
+    "ortg": 107.4,
+    "drtg": 103.1,
+    "netrtg": 4.3
+   },
+   "Washington Wizards": {
+    "g": 10,
+    "w": 6,
+    "l": 4,
+    "ortg": 105.8,
+    "drtg": 101.7,
+    "netrtg": 4.1
+   },
+   "Chicago Bulls": {
+    "g": 12,
+    "w": 6,
+    "l": 6,
+    "ortg": 104.4,
+    "drtg": 100.7,
+    "netrtg": 3.7
+   },
+   "Los Angeles Clippers": {
+    "g": 14,
+    "w": 7,
+    "l": 7,
+    "ortg": 108.4,
+    "drtg": 107.1,
+    "netrtg": 1.3
+   },
+   "San Antonio Spurs": {
+    "g": 7,
+    "w": 3,
+    "l": 4,
+    "ortg": 107.8,
+    "drtg": 107.3,
+    "netrtg": 0.5
+   },
+   "Atlanta Hawks": {
+    "g": 16,
+    "w": 8,
+    "l": 8,
+    "ortg": 103.4,
+    "drtg": 103.6,
+    "netrtg": -0.2
+   },
+   "Memphis Grizzlies": {
+    "g": 11,
+    "w": 6,
+    "l": 5,
+    "ortg": 103.0,
+    "drtg": 104.4,
+    "netrtg": -1.4
+   },
+   "Houston Rockets": {
+    "g": 17,
+    "w": 9,
+    "l": 8,
+    "ortg": 106.6,
+    "drtg": 109.0,
+    "netrtg": -2.4
+   },
+   "Dallas Mavericks": {
+    "g": 5,
+    "w": 1,
+    "l": 4,
+    "ortg": 107.9,
+    "drtg": 112.0,
+    "netrtg": -4.1
+   },
+   "Brooklyn Nets": {
+    "g": 6,
+    "w": 2,
+    "l": 4,
+    "ortg": 100.8,
+    "drtg": 106.5,
+    "netrtg": -5.7
+   },
+   "Portland Trail Blazers": {
+    "g": 5,
+    "w": 1,
+    "l": 4,
+    "ortg": 101.9,
+    "drtg": 109.3,
+    "netrtg": -7.4
+   },
+   "New Orleans Pelicans": {
+    "g": 4,
+    "w": 0,
+    "l": 4,
+    "ortg": 106.8,
+    "drtg": 115.2,
+    "netrtg": -8.4
+   },
+   "Boston Celtics": {
+    "g": 4,
+    "w": 0,
+    "l": 4,
+    "ortg": 101.5,
+    "drtg": 111.5,
+    "netrtg": -10.0
+   },
+   "Milwaukee Bucks": {
+    "g": 6,
+    "w": 2,
+    "l": 4,
+    "ortg": 91.8,
+    "drtg": 104.6,
+    "netrtg": -12.8
+   },
+   "Toronto Raptors": {
+    "g": 4,
+    "w": 0,
+    "l": 4,
+    "ortg": 99.3,
+    "drtg": 113.7,
+    "netrtg": -14.4
+   }
+  },
+  "2015_lg": {
+   "ortg": 105.3,
+   "drtg": 105.3
+  },
+  "2016": {
+   "San Antonio Spurs": {
+    "g": 10,
+    "w": 6,
+    "l": 4,
+    "ortg": 111.0,
+    "drtg": 101.1,
+    "netrtg": 9.9
+   },
+   "Cleveland Cavaliers": {
+    "g": 21,
+    "w": 16,
+    "l": 5,
+    "ortg": 115.5,
+    "drtg": 106.0,
+    "netrtg": 9.5
+   },
+   "Oklahoma City Thunder": {
+    "g": 18,
+    "w": 11,
+    "l": 7,
+    "ortg": 111.8,
+    "drtg": 106.2,
+    "netrtg": 5.6
+   },
+   "Golden State Warriors": {
+    "g": 24,
+    "w": 15,
+    "l": 9,
+    "ortg": 110.5,
+    "drtg": 106.1,
+    "netrtg": 4.4
+   },
+   "Miami Heat": {
+    "g": 14,
+    "w": 7,
+    "l": 7,
+    "ortg": 105.1,
+    "drtg": 101.7,
+    "netrtg": 3.4
+   },
+   "Indiana Pacers": {
+    "g": 7,
+    "w": 3,
+    "l": 4,
+    "ortg": 105.5,
+    "drtg": 103.9,
+    "netrtg": 1.6
+   },
+   "Los Angeles Clippers": {
+    "g": 6,
+    "w": 2,
+    "l": 4,
+    "ortg": 104.9,
+    "drtg": 103.9,
+    "netrtg": 1.0
+   },
+   "Atlanta Hawks": {
+    "g": 10,
+    "w": 4,
+    "l": 6,
+    "ortg": 103.5,
+    "drtg": 104.5,
+    "netrtg": -1.0
+   },
+   "Portland Trail Blazers": {
+    "g": 11,
+    "w": 5,
+    "l": 6,
+    "ortg": 108.1,
+    "drtg": 110.7,
+    "netrtg": -2.6
+   },
+   "Toronto Raptors": {
+    "g": 20,
+    "w": 10,
+    "l": 10,
+    "ortg": 102.8,
+    "drtg": 107.5,
+    "netrtg": -4.7
+   },
+   "Boston Celtics": {
+    "g": 6,
+    "w": 2,
+    "l": 4,
+    "ortg": 93.8,
+    "drtg": 100.5,
+    "netrtg": -6.7
+   },
+   "Charlotte Hornets": {
+    "g": 7,
+    "w": 3,
+    "l": 4,
+    "ortg": 99.2,
+    "drtg": 109.0,
+    "netrtg": -9.8
+   },
+   "Detroit Pistons": {
+    "g": 4,
+    "w": 0,
+    "l": 4,
+    "ortg": 109.4,
+    "drtg": 119.2,
+    "netrtg": -9.8
+   },
+   "Houston Rockets": {
+    "g": 5,
+    "w": 1,
+    "l": 4,
+    "ortg": 92.7,
+    "drtg": 111.8,
+    "netrtg": -19.1
+   },
+   "Dallas Mavericks": {
+    "g": 5,
+    "w": 1,
+    "l": 4,
+    "ortg": 102.1,
+    "drtg": 122.0,
+    "netrtg": -19.9
+   },
+   "Memphis Grizzlies": {
+    "g": 4,
+    "w": 0,
+    "l": 4,
+    "ortg": 90.9,
+    "drtg": 115.6,
+    "netrtg": -24.7
+   }
+  },
+  "2016_lg": {
+   "ortg": 106.7,
+   "drtg": 106.7
+  },
+  "2017": {
+   "Golden State Warriors": {
+    "g": 17,
+    "w": 16,
+    "l": 1,
+    "ortg": 119.0,
+    "drtg": 105.5,
+    "netrtg": 13.5
+   },
+   "Cleveland Cavaliers": {
+    "g": 18,
+    "w": 13,
+    "l": 5,
+    "ortg": 120.3,
+    "drtg": 112.1,
+    "netrtg": 8.2
+   },
+   "Houston Rockets": {
+    "g": 11,
+    "w": 6,
+    "l": 5,
+    "ortg": 110.7,
+    "drtg": 109.5,
+    "netrtg": 1.2
+   },
+   "San Antonio Spurs": {
+    "g": 16,
+    "w": 8,
+    "l": 8,
+    "ortg": 113.4,
+    "drtg": 112.3,
+    "netrtg": 1.1
+   },
+   "Washington Wizards": {
+    "g": 13,
+    "w": 7,
+    "l": 6,
+    "ortg": 110.9,
+    "drtg": 110.9,
+    "netrtg": 0.0
+   },
+   "Milwaukee Bucks": {
+    "g": 6,
+    "w": 2,
+    "l": 4,
+    "ortg": 103.0,
+    "drtg": 103.7,
+    "netrtg": -0.7
+   },
+   "Atlanta Hawks": {
+    "g": 6,
+    "w": 2,
+    "l": 4,
+    "ortg": 107.3,
+    "drtg": 108.5,
+    "netrtg": -1.2
+   },
+   "Los Angeles Clippers": {
+    "g": 7,
+    "w": 3,
+    "l": 4,
+    "ortg": 108.8,
+    "drtg": 110.0,
+    "netrtg": -1.2
+   },
+   "Boston Celtics": {
+    "g": 18,
+    "w": 9,
+    "l": 9,
+    "ortg": 111.4,
+    "drtg": 114.5,
+    "netrtg": -3.1
+   },
+   "Indiana Pacers": {
+    "g": 4,
+    "w": 0,
+    "l": 4,
+    "ortg": 114.7,
+    "drtg": 118.9,
+    "netrtg": -4.2
+   },
+   "Utah Jazz": {
+    "g": 11,
+    "w": 4,
+    "l": 7,
+    "ortg": 106.2,
+    "drtg": 111.3,
+    "netrtg": -5.1
+   },
+   "Toronto Raptors": {
+    "g": 10,
+    "w": 4,
+    "l": 6,
+    "ortg": 103.8,
+    "drtg": 109.9,
+    "netrtg": -6.1
+   },
+   "Chicago Bulls": {
+    "g": 6,
+    "w": 2,
+    "l": 4,
+    "ortg": 104.8,
+    "drtg": 112.2,
+    "netrtg": -7.4
+   },
+   "Oklahoma City Thunder": {
+    "g": 5,
+    "w": 1,
+    "l": 4,
+    "ortg": 105.7,
+    "drtg": 114.4,
+    "netrtg": -8.7
+   },
+   "Memphis Grizzlies": {
+    "g": 6,
+    "w": 2,
+    "l": 4,
+    "ortg": 110.3,
+    "drtg": 119.8,
+    "netrtg": -9.5
+   },
+   "Portland Trail Blazers": {
+    "g": 4,
+    "w": 0,
+    "l": 4,
+    "ortg": 99.3,
+    "drtg": 116.9,
+    "netrtg": -17.6
+   }
+  },
+  "2017_lg": {
+   "ortg": 111.3,
+   "drtg": 111.3
+  },
+  "2018": {
+   "Golden State Warriors": {
+    "g": 21,
+    "w": 16,
+    "l": 5,
+    "ortg": 113.9,
+    "drtg": 103.6,
+    "netrtg": 10.3
+   },
+   "Indiana Pacers": {
+    "g": 7,
+    "w": 3,
+    "l": 4,
+    "ortg": 110.9,
+    "drtg": 104.6,
+    "netrtg": 6.3
+   },
+   "Philadelphia 76ers": {
+    "g": 10,
+    "w": 5,
+    "l": 5,
+    "ortg": 110.4,
+    "drtg": 106.5,
+    "netrtg": 3.9
+   },
+   "Houston Rockets": {
+    "g": 17,
+    "w": 11,
+    "l": 6,
+    "ortg": 109.6,
+    "drtg": 107.7,
+    "netrtg": 1.9
+   },
+   "Boston Celtics": {
+    "g": 19,
+    "w": 11,
+    "l": 8,
+    "ortg": 107.7,
+    "drtg": 107.0,
+    "netrtg": 0.7
+   },
+   "Milwaukee Bucks": {
+    "g": 7,
+    "w": 3,
+    "l": 4,
+    "ortg": 108.8,
+    "drtg": 109.4,
+    "netrtg": -0.6
+   },
+   "New Orleans Pelicans": {
+    "g": 9,
+    "w": 5,
+    "l": 4,
+    "ortg": 107.1,
+    "drtg": 107.8,
+    "netrtg": -0.7
+   },
+   "Cleveland Cavaliers": {
+    "g": 22,
+    "w": 12,
+    "l": 10,
+    "ortg": 109.4,
+    "drtg": 111.2,
+    "netrtg": -1.8
+   },
+   "Washington Wizards": {
+    "g": 6,
+    "w": 2,
+    "l": 4,
+    "ortg": 110.3,
+    "drtg": 112.3,
+    "netrtg": -2.0
+   },
+   "Utah Jazz": {
+    "g": 11,
+    "w": 5,
+    "l": 6,
+    "ortg": 104.7,
+    "drtg": 106.9,
+    "netrtg": -2.2
+   },
+   "Oklahoma City Thunder": {
+    "g": 6,
+    "w": 2,
+    "l": 4,
+    "ortg": 103.5,
+    "drtg": 107.9,
+    "netrtg": -4.4
+   },
+   "Toronto Raptors": {
+    "g": 10,
+    "w": 4,
+    "l": 6,
+    "ortg": 112.0,
+    "drtg": 116.6,
+    "netrtg": -4.6
+   },
+   "Portland Trail Blazers": {
+    "g": 4,
+    "w": 0,
+    "l": 4,
+    "ortg": 106.9,
+    "drtg": 116.0,
+    "netrtg": -9.1
+   },
+   "Minnesota Timberwolves": {
+    "g": 5,
+    "w": 1,
+    "l": 4,
+    "ortg": 107.0,
+    "drtg": 116.2,
+    "netrtg": -9.2
+   },
+   "San Antonio Spurs": {
+    "g": 5,
+    "w": 1,
+    "l": 4,
+    "ortg": 103.7,
+    "drtg": 113.1,
+    "netrtg": -9.4
+   },
+   "Miami Heat": {
+    "g": 5,
+    "w": 1,
+    "l": 4,
+    "ortg": 103.0,
+    "drtg": 113.7,
+    "netrtg": -10.7
+   }
+  },
+  "2018_lg": {
+   "ortg": 108.9,
+   "drtg": 108.9
+  },
+  "2019": {
+   "Milwaukee Bucks": {
+    "g": 15,
+    "w": 10,
+    "l": 5,
+    "ortg": 111.8,
+    "drtg": 103.1,
+    "netrtg": 8.7
+   },
+   "Toronto Raptors": {
+    "g": 24,
+    "w": 16,
+    "l": 8,
+    "ortg": 110.7,
+    "drtg": 105.1,
+    "netrtg": 5.6
+   },
+   "Golden State Warriors": {
+    "g": 22,
+    "w": 14,
+    "l": 8,
+    "ortg": 116.2,
+    "drtg": 112.7,
+    "netrtg": 3.5
+   },
+   "Houston Rockets": {
+    "g": 11,
+    "w": 6,
+    "l": 5,
+    "ortg": 111.8,
+    "drtg": 108.5,
+    "netrtg": 3.3
+   },
+   "Philadelphia 76ers": {
+    "g": 12,
+    "w": 7,
+    "l": 5,
+    "ortg": 110.7,
+    "drtg": 107.6,
+    "netrtg": 3.1
+   },
+   "Denver Nuggets": {
+    "g": 14,
+    "w": 7,
+    "l": 7,
+    "ortg": 115.0,
+    "drtg": 113.0,
+    "netrtg": 2.0
+   },
+   "Boston Celtics": {
+    "g": 9,
+    "w": 5,
+    "l": 4,
+    "ortg": 103.0,
+    "drtg": 104.4,
+    "netrtg": -1.4
+   },
+   "Portland Trail Blazers": {
+    "g": 16,
+    "w": 8,
+    "l": 8,
+    "ortg": 111.0,
+    "drtg": 112.4,
+    "netrtg": -1.4
+   },
+   "San Antonio Spurs": {
+    "g": 7,
+    "w": 3,
+    "l": 4,
+    "ortg": 113.0,
+    "drtg": 115.0,
+    "netrtg": -2.0
+   },
+   "Oklahoma City Thunder": {
+    "g": 5,
+    "w": 1,
+    "l": 4,
+    "ortg": 105.7,
+    "drtg": 111.5,
+    "netrtg": -5.8
+   },
+   "Indiana Pacers": {
+    "g": 4,
+    "w": 0,
+    "l": 4,
+    "ortg": 97.2,
+    "drtg": 105.1,
+    "netrtg": -7.9
+   },
+   "Utah Jazz": {
+    "g": 5,
+    "w": 1,
+    "l": 4,
+    "ortg": 99.8,
+    "drtg": 109.2,
+    "netrtg": -9.4
+   },
+   "Los Angeles Clippers": {
+    "g": 6,
+    "w": 2,
+    "l": 4,
+    "ortg": 112.3,
+    "drtg": 121.9,
+    "netrtg": -9.6
+   },
+   "Brooklyn Nets": {
+    "g": 5,
+    "w": 1,
+    "l": 4,
+    "ortg": 107.1,
+    "drtg": 117.7,
+    "netrtg": -10.6
+   },
+   "Orlando Magic": {
+    "g": 5,
+    "w": 1,
+    "l": 4,
+    "ortg": 96.4,
+    "drtg": 111.4,
+    "netrtg": -15.0
+   },
+   "Detroit Pistons": {
+    "g": 4,
+    "w": 0,
+    "l": 4,
+    "ortg": 97.5,
+    "drtg": 121.1,
+    "netrtg": -23.6
+   }
+  },
+  "2019_lg": {
+   "ortg": 110.0,
+   "drtg": 110.0
+  },
+  "2020": {
+   "Los Angeles Lakers": {
+    "g": 21,
+    "w": 16,
+    "l": 5,
+    "ortg": 115.9,
+    "drtg": 108.9,
+    "netrtg": 7.0
+   },
+   "Boston Celtics": {
+    "g": 17,
+    "w": 10,
+    "l": 7,
+    "ortg": 111.3,
+    "drtg": 106.3,
+    "netrtg": 5.0
+   },
+   "Los Angeles Clippers": {
+    "g": 13,
+    "w": 7,
+    "l": 6,
+    "ortg": 115.4,
+    "drtg": 111.1,
+    "netrtg": 4.3
+   },
+   "Toronto Raptors": {
+    "g": 11,
+    "w": 7,
+    "l": 4,
+    "ortg": 108.3,
+    "drtg": 104.2,
+    "netrtg": 4.1
+   },
+   "Utah Jazz": {
+    "g": 7,
+    "w": 3,
+    "l": 4,
+    "ortg": 122.2,
+    "drtg": 118.5,
+    "netrtg": 3.7
+   },
+   "Miami Heat": {
+    "g": 21,
+    "w": 14,
+    "l": 7,
+    "ortg": 113.5,
+    "drtg": 111.5,
+    "netrtg": 2.0
+   },
+   "Milwaukee Bucks": {
+    "g": 10,
+    "w": 5,
+    "l": 5,
+    "ortg": 109.7,
+    "drtg": 108.5,
+    "netrtg": 1.2
+   },
+   "Houston Rockets": {
+    "g": 12,
+    "w": 5,
+    "l": 7,
+    "ortg": 108.3,
+    "drtg": 107.5,
+    "netrtg": 0.8
+   },
+   "Denver Nuggets": {
+    "g": 19,
+    "w": 9,
+    "l": 10,
+    "ortg": 113.6,
+    "drtg": 116.0,
+    "netrtg": -2.4
+   },
+   "Oklahoma City Thunder": {
+    "g": 7,
+    "w": 3,
+    "l": 4,
+    "ortg": 102.4,
+    "drtg": 108.7,
+    "netrtg": -6.3
+   },
+   "Orlando Magic": {
+    "g": 5,
+    "w": 1,
+    "l": 4,
+    "ortg": 102.5,
+    "drtg": 111.3,
+    "netrtg": -8.8
+   },
+   "Dallas Mavericks": {
+    "g": 6,
+    "w": 2,
+    "l": 4,
+    "ortg": 112.7,
+    "drtg": 122.0,
+    "netrtg": -9.3
+   },
+   "Portland Trail Blazers": {
+    "g": 5,
+    "w": 1,
+    "l": 4,
+    "ortg": 104.6,
+    "drtg": 115.0,
+    "netrtg": -10.4
+   },
+   "Indiana Pacers": {
+    "g": 4,
+    "w": 0,
+    "l": 4,
+    "ortg": 104.2,
+    "drtg": 115.1,
+    "netrtg": -10.9
+   },
+   "Philadelphia 76ers": {
+    "g": 4,
+    "w": 0,
+    "l": 4,
+    "ortg": 105.5,
+    "drtg": 117.9,
+    "netrtg": -12.4
+   },
+   "Brooklyn Nets": {
+    "g": 4,
+    "w": 0,
+    "l": 4,
+    "ortg": 102.2,
+    "drtg": 122.0,
+    "netrtg": -19.8
+   }
+  },
+  "2020_lg": {
+   "ortg": 111.3,
+   "drtg": 111.3
+  },
+  "2021": {
+   "Philadelphia 76ers": {
+    "g": 12,
+    "w": 7,
+    "l": 5,
+    "ortg": 116.0,
+    "drtg": 108.5,
+    "netrtg": 7.5
+   },
+   "Brooklyn Nets": {
+    "g": 12,
+    "w": 7,
+    "l": 5,
+    "ortg": 116.1,
+    "drtg": 109.6,
+    "netrtg": 6.5
+   },
+   "Milwaukee Bucks": {
+    "g": 23,
+    "w": 16,
+    "l": 7,
+    "ortg": 112.9,
+    "drtg": 107.6,
+    "netrtg": 5.3
+   },
+   "Phoenix Suns": {
+    "g": 22,
+    "w": 14,
+    "l": 8,
+    "ortg": 114.7,
+    "drtg": 110.0,
+    "netrtg": 4.7
+   },
+   "Los Angeles Clippers": {
+    "g": 19,
+    "w": 10,
+    "l": 9,
+    "ortg": 120.2,
+    "drtg": 115.9,
+    "netrtg": 4.3
+   },
+   "Utah Jazz": {
+    "g": 11,
+    "w": 6,
+    "l": 5,
+    "ortg": 121.4,
+    "drtg": 122.3,
+    "netrtg": -0.9
+   },
+   "Portland Trail Blazers": {
+    "g": 6,
+    "w": 2,
+    "l": 4,
+    "ortg": 121.6,
+    "drtg": 122.9,
+    "netrtg": -1.3
+   },
+   "Atlanta Hawks": {
+    "g": 18,
+    "w": 10,
+    "l": 8,
+    "ortg": 109.8,
+    "drtg": 111.3,
+    "netrtg": -1.5
+   },
+   "Dallas Mavericks": {
+    "g": 7,
+    "w": 3,
+    "l": 4,
+    "ortg": 115.5,
+    "drtg": 121.1,
+    "netrtg": -5.6
+   },
+   "Denver Nuggets": {
+    "g": 10,
+    "w": 4,
+    "l": 6,
+    "ortg": 116.8,
+    "drtg": 122.4,
+    "netrtg": -5.6
+   },
+   "Los Angeles Lakers": {
+    "g": 6,
+    "w": 2,
+    "l": 4,
+    "ortg": 104.0,
+    "drtg": 110.9,
+    "netrtg": -6.9
+   },
+   "New York Knicks": {
+    "g": 5,
+    "w": 1,
+    "l": 4,
+    "ortg": 103.5,
+    "drtg": 111.0,
+    "netrtg": -7.5
+   },
+   "Memphis Grizzlies": {
+    "g": 5,
+    "w": 1,
+    "l": 4,
+    "ortg": 115.6,
+    "drtg": 124.0,
+    "netrtg": -8.4
+   },
+   "Boston Celtics": {
+    "g": 5,
+    "w": 1,
+    "l": 4,
+    "ortg": 117.1,
+    "drtg": 128.7,
+    "netrtg": -11.6
+   },
+   "Washington Wizards": {
+    "g": 5,
+    "w": 1,
+    "l": 4,
+    "ortg": 107.6,
+    "drtg": 121.3,
+    "netrtg": -13.7
+   },
+   "Miami Heat": {
+    "g": 4,
+    "w": 0,
+    "l": 4,
+    "ortg": 96.6,
+    "drtg": 116.8,
+    "netrtg": -20.2
+   }
+  },
+  "2021_lg": {
+   "ortg": 114.3,
+   "drtg": 114.3
+  },
+  "2022": {
+   "Golden State Warriors": {
+    "g": 22,
+    "w": 16,
+    "l": 6,
+    "ortg": 115.2,
+    "drtg": 110.0,
+    "netrtg": 5.2
+   },
+   "Miami Heat": {
+    "g": 18,
+    "w": 11,
+    "l": 7,
+    "ortg": 110.6,
+    "drtg": 106.6,
+    "netrtg": 4.0
+   },
+   "Boston Celtics": {
+    "g": 24,
+    "w": 14,
+    "l": 10,
+    "ortg": 110.7,
+    "drtg": 107.0,
+    "netrtg": 3.7
+   },
+   "Memphis Grizzlies": {
+    "g": 12,
+    "w": 6,
+    "l": 6,
+    "ortg": 110.2,
+    "drtg": 107.8,
+    "netrtg": 2.4
+   },
+   "Milwaukee Bucks": {
+    "g": 12,
+    "w": 7,
+    "l": 5,
+    "ortg": 104.4,
+    "drtg": 102.8,
+    "netrtg": 1.6
+   },
+   "Dallas Mavericks": {
+    "g": 18,
+    "w": 9,
+    "l": 9,
+    "ortg": 114.9,
+    "drtg": 114.1,
+    "netrtg": 0.8
+   },
+   "Philadelphia 76ers": {
+    "g": 12,
+    "w": 6,
+    "l": 6,
+    "ortg": 112.3,
+    "drtg": 112.0,
+    "netrtg": 0.3
+   },
+   "Phoenix Suns": {
+    "g": 13,
+    "w": 7,
+    "l": 6,
+    "ortg": 115.6,
+    "drtg": 116.7,
+    "netrtg": -1.1
+   },
+   "New Orleans Pelicans": {
+    "g": 6,
+    "w": 2,
+    "l": 4,
+    "ortg": 117.6,
+    "drtg": 119.2,
+    "netrtg": -1.6
+   },
+   "Brooklyn Nets": {
+    "g": 4,
+    "w": 0,
+    "l": 4,
+    "ortg": 116.3,
+    "drtg": 121.1,
+    "netrtg": -4.8
+   },
+   "Minnesota Timberwolves": {
+    "g": 6,
+    "w": 2,
+    "l": 4,
+    "ortg": 106.4,
+    "drtg": 111.8,
+    "netrtg": -5.4
+   },
+   "Utah Jazz": {
+    "g": 6,
+    "w": 2,
+    "l": 4,
+    "ortg": 108.8,
+    "drtg": 115.0,
+    "netrtg": -6.2
+   },
+   "Denver Nuggets": {
+    "g": 5,
+    "w": 1,
+    "l": 4,
+    "ortg": 113.6,
+    "drtg": 121.8,
+    "netrtg": -8.2
+   },
+   "Toronto Raptors": {
+    "g": 6,
+    "w": 2,
+    "l": 4,
+    "ortg": 111.2,
+    "drtg": 120.2,
+    "netrtg": -9.0
+   },
+   "Atlanta Hawks": {
+    "g": 5,
+    "w": 1,
+    "l": 4,
+    "ortg": 102.3,
+    "drtg": 114.9,
+    "netrtg": -12.6
+   },
+   "Chicago Bulls": {
+    "g": 5,
+    "w": 1,
+    "l": 4,
+    "ortg": 94.9,
+    "drtg": 109.4,
+    "netrtg": -14.5
+   }
+  },
+  "2022_lg": {
+   "ortg": 111.2,
+   "drtg": 111.2
+  },
+  "2023": {
+   "Denver Nuggets": {
+    "g": 20,
+    "w": 16,
+    "l": 4,
+    "ortg": 119.5,
+    "drtg": 110.8,
+    "netrtg": 8.7
+   },
+   "Boston Celtics": {
+    "g": 20,
+    "w": 11,
+    "l": 9,
+    "ortg": 117.2,
+    "drtg": 113.7,
+    "netrtg": 3.5
+   },
+   "Los Angeles Lakers": {
+    "g": 16,
+    "w": 8,
+    "l": 8,
+    "ortg": 113.7,
+    "drtg": 111.3,
+    "netrtg": 2.4
+   },
+   "Miami Heat": {
+    "g": 23,
+    "w": 13,
+    "l": 10,
+    "ortg": 114.1,
+    "drtg": 112.5,
+    "netrtg": 1.6
+   },
+   "New York Knicks": {
+    "g": 11,
+    "w": 6,
+    "l": 5,
+    "ortg": 108.9,
+    "drtg": 108.5,
+    "netrtg": 0.4
+   },
+   "Golden State Warriors": {
+    "g": 13,
+    "w": 6,
+    "l": 7,
+    "ortg": 111.9,
+    "drtg": 112.1,
+    "netrtg": -0.2
+   },
+   "Philadelphia 76ers": {
+    "g": 11,
+    "w": 7,
+    "l": 4,
+    "ortg": 111.2,
+    "drtg": 112.8,
+    "netrtg": -1.6
+   },
+   "Sacramento Kings": {
+    "g": 7,
+    "w": 3,
+    "l": 4,
+    "ortg": 110.7,
+    "drtg": 112.8,
+    "netrtg": -2.1
+   },
+   "Phoenix Suns": {
+    "g": 11,
+    "w": 6,
+    "l": 5,
+    "ortg": 117.0,
+    "drtg": 119.4,
+    "netrtg": -2.4
+   },
+   "Milwaukee Bucks": {
+    "g": 5,
+    "w": 1,
+    "l": 4,
+    "ortg": 114.0,
+    "drtg": 118.9,
+    "netrtg": -4.9
+   },
+   "Atlanta Hawks": {
+    "g": 6,
+    "w": 2,
+    "l": 4,
+    "ortg": 115.0,
+    "drtg": 120.3,
+    "netrtg": -5.3
+   },
+   "Cleveland Cavaliers": {
+    "g": 5,
+    "w": 1,
+    "l": 4,
+    "ortg": 103.4,
+    "drtg": 109.3,
+    "netrtg": -5.9
+   },
+   "Los Angeles Clippers": {
+    "g": 5,
+    "w": 1,
+    "l": 4,
+    "ortg": 117.1,
+    "drtg": 123.6,
+    "netrtg": -6.5
+   },
+   "Memphis Grizzlies": {
+    "g": 6,
+    "w": 2,
+    "l": 4,
+    "ortg": 104.0,
+    "drtg": 111.4,
+    "netrtg": -7.4
+   },
+   "Minnesota Timberwolves": {
+    "g": 5,
+    "w": 1,
+    "l": 4,
+    "ortg": 109.7,
+    "drtg": 118.9,
+    "netrtg": -9.2
+   },
+   "Brooklyn Nets": {
+    "g": 4,
+    "w": 0,
+    "l": 4,
+    "ortg": 103.1,
+    "drtg": 115.6,
+    "netrtg": -12.5
+   }
+  },
+  "2023_lg": {
+   "ortg": 113.5,
+   "drtg": 113.5
+  },
+  "2024": {
+   "Boston Celtics": {
+    "g": 19,
+    "w": 16,
+    "l": 3,
+    "ortg": 117.7,
+    "drtg": 109.0,
+    "netrtg": 8.7
+   },
+   "Oklahoma City Thunder": {
+    "g": 10,
+    "w": 6,
+    "l": 4,
+    "ortg": 112.0,
+    "drtg": 105.4,
+    "netrtg": 6.6
+   },
+   "Orlando Magic": {
+    "g": 7,
+    "w": 3,
+    "l": 4,
+    "ortg": 106.0,
+    "drtg": 101.3,
+    "netrtg": 4.7
+   },
+   "Minnesota Timberwolves": {
+    "g": 16,
+    "w": 9,
+    "l": 7,
+    "ortg": 117.0,
+    "drtg": 112.5,
+    "netrtg": 4.5
+   },
+   "Dallas Mavericks": {
+    "g": 22,
+    "w": 13,
+    "l": 9,
+    "ortg": 114.7,
+    "drtg": 111.9,
+    "netrtg": 2.8
+   },
+   "Indiana Pacers": {
+    "g": 17,
+    "w": 8,
+    "l": 9,
+    "ortg": 120.1,
+    "drtg": 119.0,
+    "netrtg": 1.1
+   },
+   "Philadelphia 76ers": {
+    "g": 6,
+    "w": 2,
+    "l": 4,
+    "ortg": 116.9,
+    "drtg": 117.1,
+    "netrtg": -0.2
+   },
+   "Denver Nuggets": {
+    "g": 12,
+    "w": 7,
+    "l": 5,
+    "ortg": 110.6,
+    "drtg": 112.8,
+    "netrtg": -2.2
+   },
+   "New York Knicks": {
+    "g": 13,
+    "w": 7,
+    "l": 6,
+    "ortg": 118.7,
+    "drtg": 120.9,
+    "netrtg": -2.2
+   },
+   "Los Angeles Lakers": {
+    "g": 5,
+    "w": 1,
+    "l": 4,
+    "ortg": 111.7,
+    "drtg": 114.0,
+    "netrtg": -2.3
+   },
+   "Milwaukee Bucks": {
+    "g": 6,
+    "w": 2,
+    "l": 4,
+    "ortg": 116.0,
+    "drtg": 119.0,
+    "netrtg": -3.0
+   },
+   "Cleveland Cavaliers": {
+    "g": 12,
+    "w": 5,
+    "l": 7,
+    "ortg": 105.8,
+    "drtg": 111.8,
+    "netrtg": -6.0
+   },
+   "Los Angeles Clippers": {
+    "g": 6,
+    "w": 2,
+    "l": 4,
+    "ortg": 110.3,
+    "drtg": 117.7,
+    "netrtg": -7.4
+   },
+   "Phoenix Suns": {
+    "g": 4,
+    "w": 0,
+    "l": 4,
+    "ortg": 110.4,
+    "drtg": 126.4,
+    "netrtg": -16.0
+   },
+   "New Orleans Pelicans": {
+    "g": 4,
+    "w": 0,
+    "l": 4,
+    "ortg": 94.9,
+    "drtg": 111.7,
+    "netrtg": -16.8
+   },
+   "Miami Heat": {
+    "g": 5,
+    "w": 1,
+    "l": 4,
+    "ortg": 101.6,
+    "drtg": 118.8,
+    "netrtg": -17.2
+   }
+  },
+  "2024_lg": {
+   "ortg": 113.6,
+   "drtg": 113.6
+  },
+  "2025": {
+   "Cleveland Cavaliers": {
+    "g": 9,
+    "w": 5,
+    "l": 4,
+    "ortg": 123.5,
+    "drtg": 111.4,
+    "netrtg": 12.1
+   },
+   "Oklahoma City Thunder": {
+    "g": 23,
+    "w": 16,
+    "l": 7,
+    "ortg": 115.4,
+    "drtg": 107.0,
+    "netrtg": 8.4
+   },
+   "Boston Celtics": {
+    "g": 11,
+    "w": 6,
+    "l": 5,
+    "ortg": 114.4,
+    "drtg": 108.4,
+    "netrtg": 6.0
+   },
+   "Minnesota Timberwolves": {
+    "g": 15,
+    "w": 9,
+    "l": 6,
+    "ortg": 114.6,
+    "drtg": 111.8,
+    "netrtg": 2.8
+   },
+   "Indiana Pacers": {
+    "g": 23,
+    "w": 15,
+    "l": 8,
+    "ortg": 115.3,
+    "drtg": 113.3,
+    "netrtg": 2.0
+   },
+   "Los Angeles Clippers": {
+    "g": 7,
+    "w": 3,
+    "l": 4,
+    "ortg": 115.6,
+    "drtg": 115.0,
+    "netrtg": 0.6
+   },
+   "Houston Rockets": {
+    "g": 7,
+    "w": 3,
+    "l": 4,
+    "ortg": 112.1,
+    "drtg": 112.1,
+    "netrtg": 0.0
+   },
+   "New York Knicks": {
+    "g": 18,
+    "w": 10,
+    "l": 8,
+    "ortg": 113.3,
+    "drtg": 113.3,
+    "netrtg": 0.0
+   },
+   "Detroit Pistons": {
+    "g": 6,
+    "w": 2,
+    "l": 4,
+    "ortg": 109.7,
+    "drtg": 111.0,
+    "netrtg": -1.3
+   },
+   "Golden State Warriors": {
+    "g": 12,
+    "w": 5,
+    "l": 7,
+    "ortg": 109.7,
+    "drtg": 112.9,
+    "netrtg": -3.2
+   },
+   "Denver Nuggets": {
+    "g": 14,
+    "w": 7,
+    "l": 7,
+    "ortg": 110.1,
+    "drtg": 115.1,
+    "netrtg": -5.0
+   },
+   "Los Angeles Lakers": {
+    "g": 5,
+    "w": 1,
+    "l": 4,
+    "ortg": 109.9,
+    "drtg": 117.6,
+    "netrtg": -7.7
+   },
+   "Milwaukee Bucks": {
+    "g": 5,
+    "w": 1,
+    "l": 4,
+    "ortg": 112.2,
+    "drtg": 119.9,
+    "netrtg": -7.7
+   },
+   "Orlando Magic": {
+    "g": 5,
+    "w": 1,
+    "l": 4,
+    "ortg": 103.0,
+    "drtg": 117.1,
+    "netrtg": -14.1
+   },
+   "Memphis Grizzlies": {
+    "g": 4,
+    "w": 0,
+    "l": 4,
+    "ortg": 99.4,
+    "drtg": 118.7,
+    "netrtg": -19.3
+   },
+   "Miami Heat": {
+    "g": 4,
+    "w": 0,
+    "l": 4,
+    "ortg": 104.2,
+    "drtg": 137.4,
+    "netrtg": -33.2
+   }
+  },
+  "2025_lg": {
+   "ortg": 113.1,
+   "drtg": 113.1
+  },
+  "2026": {
+   "New York Knicks": {
+    "g": 19,
+    "w": 16,
+    "l": 3,
+    "ortg": 120.4,
+    "drtg": 104.9,
+    "netrtg": 15.5
+   },
+   "San Antonio Spurs": {
+    "g": 23,
+    "w": 13,
+    "l": 10,
+    "ortg": 114.3,
+    "drtg": 106.7,
+    "netrtg": 7.6
+   },
+   "Oklahoma City Thunder": {
+    "g": 15,
+    "w": 11,
+    "l": 4,
+    "ortg": 119.3,
+    "drtg": 112.0,
+    "netrtg": 7.3
+   },
+   "Boston Celtics": {
+    "g": 7,
+    "w": 3,
+    "l": 4,
+    "ortg": 113.7,
+    "drtg": 110.7,
+    "netrtg": 3.0
+   },
+   "Detroit Pistons": {
+    "g": 14,
+    "w": 7,
+    "l": 7,
+    "ortg": 110.7,
+    "drtg": 109.0,
+    "netrtg": 1.7
+   },
+   "Toronto Raptors": {
+    "g": 7,
+    "w": 3,
+    "l": 4,
+    "ortg": 111.7,
+    "drtg": 113.4,
+    "netrtg": -1.7
+   },
+   "Houston Rockets": {
+    "g": 6,
+    "w": 2,
+    "l": 4,
+    "ortg": 105.8,
+    "drtg": 108.5,
+    "netrtg": -2.7
+   },
+   "Cleveland Cavaliers": {
+    "g": 18,
+    "w": 8,
+    "l": 10,
+    "ortg": 111.5,
+    "drtg": 114.7,
+    "netrtg": -3.2
+   },
+   "Denver Nuggets": {
+    "g": 6,
+    "w": 2,
+    "l": 4,
+    "ortg": 109.1,
+    "drtg": 113.7,
+    "netrtg": -4.6
+   },
+   "Orlando Magic": {
+    "g": 7,
+    "w": 3,
+    "l": 4,
+    "ortg": 102.4,
+    "drtg": 107.4,
+    "netrtg": -5.0
+   },
+   "Los Angeles Lakers": {
+    "g": 10,
+    "w": 4,
+    "l": 6,
+    "ortg": 109.0,
+    "drtg": 114.2,
+    "netrtg": -5.2
+   },
+   "Minnesota Timberwolves": {
+    "g": 12,
+    "w": 6,
+    "l": 6,
+    "ortg": 108.3,
+    "drtg": 114.1,
+    "netrtg": -5.8
+   },
+   "Philadelphia 76ers": {
+    "g": 11,
+    "w": 4,
+    "l": 7,
+    "ortg": 109.9,
+    "drtg": 120.5,
+    "netrtg": -10.6
+   },
+   "Portland Trail Blazers": {
+    "g": 5,
+    "w": 1,
+    "l": 4,
+    "ortg": 104.3,
+    "drtg": 117.3,
+    "netrtg": -13.0
+   },
+   "Atlanta Hawks": {
+    "g": 6,
+    "w": 2,
+    "l": 4,
+    "ortg": 103.9,
+    "drtg": 122.0,
+    "netrtg": -18.1
+   },
+   "Phoenix Suns": {
+    "g": 4,
+    "w": 0,
+    "l": 4,
+    "ortg": 110.8,
+    "drtg": 129.0,
+    "netrtg": -18.2
+   }
+  },
+  "2026_lg": {
+   "ortg": 112.0,
+   "drtg": 112.0
+  }
+ }
+}
