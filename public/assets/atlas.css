@@ -24,6 +24,7 @@
   --fg-3:      #7F8995;   /*  5.6:1 */
   --accent:    #FF7A33;   /*  7.7:1 — the one signature colour */
   --accent-2:  #FF9A62;
+  --gold:      #D4AF69;   /* insight-card gold — "Know your role" standard */
   --on-accent: #0A0B0D;
   --accent-wash: rgba(255,122,51,.12);
   --accent-line: rgba(255,122,51,.45);
@@ -108,6 +109,7 @@
     --fg-3:      #5B6370;   /*  5.4:1 */
     --accent:    #B03A0A;   /*  5.4:1 */
     --accent-2:  #C2410C;
+    --gold:      #8A6D1F;   /* deepened for contrast on paper */
     --on-accent: #FFFFFF;
     --accent-wash: rgba(176,58,10,.08);
     --accent-line: rgba(176,58,10,.40);
@@ -121,7 +123,7 @@
 :root[data-theme="light"]{
   color-scheme: light;
   --bg:#F3F1EC; --surface:#FFFFFF; --surface-2:#E9E6DF; --line:#DCD8CF; --line-2:#C8C3B8;
-  --fg:#0E1116; --fg-2:#454C57; --fg-3:#5B6370; --accent:#B03A0A; --accent-2:#C2410C; --on-accent:#FFFFFF;
+  --fg:#0E1116; --fg-2:#454C57; --fg-3:#5B6370; --accent:#B03A0A; --accent-2:#C2410C; --gold:#8A6D1F; --on-accent:#FFFFFF;
   --accent-wash:rgba(176,58,10,.08); --accent-line:rgba(176,58,10,.40);
   --ok:#0F7A55; --warn:#8A6400; --bad:#B42318; --scrim:rgba(14,17,22,.45); --blue:#2F5E99;
 }
