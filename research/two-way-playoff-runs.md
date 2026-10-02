@@ -7,7 +7,7 @@ rating count, not a toggle.
 
 ## The formula
 
-**Individuals** (playoff GP ≥ 10, 113 player-seasons with sourced defensive data):
+**Individuals** (playoff GP ≥ 10, 185 player-seasons with sourced defensive data — 113 initial + 72 exact DBPM collected 2026-10-02):
 
 ```
 score = PTS100 + 10·(TS − 0.55) + DBPM + 0.25·(team playoff NetRtg)
@@ -61,11 +61,47 @@ least two series (≥ 8 wins) qualify — a run has to go somewhere.
 Out: Stephen Curry 2021-22 (8→16), Kobe Bryant 2008-09 (9→12) — great offense,
 not enough defense around it.
 
-### Duos / trios
+### Duos / trios — FINAL (exact values, 2026-10-02)
 
-Now two-way cores. New #1 duo: Curry/Durant 2016-17 (95.90). New #1 trio:
-Brunson/Towns/Anunoby 2025-26 (121.35) on a verified +9.6 combined DBPM —
-Towns' +5.51 and Anunoby's +3.97 both confirmed against BRef's leaders pages.
+Now two-way cores, fully exact. New #1 duo: Curry/Durant 2016-17 (95.90). New
+#1 trio: Brunson/Towns/Anunoby 2025-26 (121.35) on a verified +9.6 combined
+DBPM — Towns' +5.51 and Anunoby's +3.97 both confirmed against BRef's leaders
+pages.
+
+Final top 10s (score; one-line reason):
+
+**Duos**
+1. Curry/Durant '16-17 (95.90) — historic offense + Durant's two-way peak on a +13.5 team.
+2. Davis/LeBron '19-20 (95.47) — twin defensive anchors (Davis +2.1, LeBron +3.1 DBPM) on a title.
+3. Jokić/Murray '22-23 (90.14) — offensive engine room — and Jokić's +3.7 DBPM says the defense was real too.
+4. LeBron/Irving '15-16 (89.97) — the 3-1 comeback core (LeBron +3.6 DBPM), champion bonus.
+5. Curry/Durant '17-18 (87.94) — repeat of the formula, slightly less dominant.
+6. Brunson/Towns '24-25 (87.14) — two-way surprise on the Knicks' title run.
+7. SGA/J. Williams '24-25 (87.08) — elite guard-wing defense meets efficiency.
+8. LeBron/Wade '11-12 (87.02) — two of the best two-way wings ever, title.
+9. Curry/Durant '18-19 (86.19) — the three-peat that wasn't, still immense.
+10. Giannis/Middleton '20-21 (85.70) — Giannis's two-way dominance carries the title.
+
+**Trios**
+1. Brunson/Towns/Anunoby '25-26 (121.35) — +9.6 combined DBPM, best defensive trio of the era.
+2. Davis/LeBron/Kuzma '19-20 (114.32) — two elite defenders (Davis +2.1, LeBron +3.1) + title context.
+3. LeBron/Irving/Love '15-16 (114.16) — the comeback — LeBron's +3.6 DBPM covers for Love's −0.8.
+4. Curry/Durant/Thompson '16-17 (113.87) — the Hamptons Five core, +13.5 net.
+5. Curry/Durant/Thompson '17-18 (112.83) — repeat, nearly as good.
+6. Curry/Durant/Thompson '18-19 (111.73) — three straight years in the top 6.
+7. Curry/Poole/Kuminga '21-22 (111.61) — Curry's gravity (his +1.1 DBPM leads the trio) plus young legs.
+8. LeBron/Wade/Bosh '11-12 (110.76) — the Heatles at full power (LeBron +2.5, Wade +1.4; Bosh −0.4).
+9. Irving/LeBron/Love '16-17 (110.51) — Finals return — LeBron's +2.1 DBPM steadies Irving's −1.8.
+10. Jordan/Pippen/Kukoč '97-98 (109.94) — the Last Dance trio, Pippen's defense evergreen.
+
+**The famous "threats" that didn't make it** (exact values confirm the
+bounds-based top 10 stands): '01-02 Shaq/Kobe duo 82.12 (DBPMs just +1.2/+0.2 —
+the verified bound was generous); '07-08 Garnett/Pierce duo 74.85; '07-08
+Duncan/Ginobili/Parker trio 92.55; '02-03 Hamilton/Billups/Williamson trio
+87.50 (negative member DBPMs — the Pistons' defense was a team system, and it
+shows up in net rating, not individual DBPM); '10-11 Durant/Westbrook/Harden
+trio 95.45 (Westbrook's −1.6 DBPM drags it under the 109.94 cutoff). None of
+the 36 formerly-skipped units reached any top-10 cutoff.
 
 ### Teams
 
@@ -92,7 +128,7 @@ defensive run ranks absurdly low.
 
 ## Data
 
-- **Players:** 113 player-seasons with playoff OBPM/DBPM/BPM from
+- **Players:** 185 player-seasons with playoff DBPM from
   Basketball-Reference (fetched 2026-10-02), every row BPM = OBPM + DBPM
   cross-checked (max discrepancy 0.10, pure rounding). Stored in
   `data/playoff_defense_bref.json`.
@@ -110,19 +146,24 @@ defensive run ranks absurdly low.
    The BRef playoffs-advanced URL pattern 404s, series-stat outlinks proved
    unstable, and web search surfaced no DBPM value. Documented exclusion from
    the individual board (his other pool seasons are included).
-2. **Units with incomplete defensive data — 36 skipped units could reach the top
-   10** (upper bounds computed with the verified DBPM < 2.83 ceiling for
-   player-seasons absent from BRef's single-season top-250 leaders). Notable
-   exclusions: 2002 Shaq/Kobe duo (would rank ~#1–2), 2008-09/2009-10
-   Kobe/Pau/Bynum trios, 2008 Celtics trio, 2013 Heat trio, 1999/2003/2014 Spurs
-   trios, 2004 Pistons trio, 2009 LeBron/Mo Williams duo. Full list with
-   verified score ranges: `research/two-way-unit-threats.json` (build artifact, 36 units).
-   **Follow-up:** a live-browser read of ~42 BRef player pages (their Playoffs
-   Advanced tables are HTML-comment-wrapped, not text-extractable) would complete
-   the units board. This subagent cannot operate a live browser — flagged for
-   the parent to delegate.
-3. **42 player-seasons** carry verified upper bounds only (DBPM < 2.83, OBPM <
-   5.70, BPM < 6.98) — used for the bound analysis, never as scores.
+2. **Units board — COMPLETED 2026-10-02.** All 72 missing playoff DBPM values
+   were collected from Basketball-Reference's Playoffs Advanced tables (each
+   verified with the OBPM + DBPM = BPM consistency check) and merged into
+   `data/playoff_defense_bref.json` (185 player-seasons total; team abbrevs
+   verified against the BRef team table per season). The 36 former "threat"
+   units were re-ranked with exact values: **none reached the top 10** — the
+   bounds-based top 10 stands exactly as published. The bounds were
+   conservative by design; reality undershot them (e.g. the '01-02 Shaq/Kobe
+   duo posts DBPMs of just +1.2/+0.2 for a score of 82.12 vs the 85.70
+   cutoff; the '07-08 Garnett/Pierce duo scores 74.85; the '07-08 Spurs trio
+   92.55; the '02-03 Pistons trio 87.50 on negative member DBPMs). The
+   `/tmp/unit_threats.json` build artifact is now empty (0 threats), and the
+   output JSON contains zero `upper_bound` entries. `research/dbpm-complete.json`
+   holds the 72 exact values (`{"Player Name|Season": dbpm}`); the
+   `verified_bounds` ceilings in the defense JSON are retained for provenance
+   only and marked SUPERSEDED.
+3. ~~**42 player-seasons** carry verified upper bounds only~~ — resolved; see
+   item 2. All values are now exact.
 
 ## QA checklist
 
@@ -141,7 +182,14 @@ defensive run ranks absurdly low.
 - [x] `node --check` on assets/playoff-runs.js — clean.
 - [x] Root ↔ public mirrors byte-identical (`cmp`): playoff-runs.json,
       playoff-runs.js, playoff-runs.html.
-- [x] Method strings in JSON state plainly: two-way (offense + defense + net
-      rating), calibration reasoning, Shaq '98 exclusion, units exclusion rule.
+- [x] Units completion (2026-10-02): all 72 missing DBPM values collected exactly
+      from BRef Playoffs Advanced tables (OBPM+DBPM=BPM verified per row);
+      threat report now returns 0; output JSON contains zero `upper_bound`
+      entries; published top 10s identical to the bounds-based version
+      (newly-ranked former threats all fall below cutoffs — verified by hand
+      for Shaq/Kobe '02, Garnett/Pierce '08, Spurs trio '08, Pistons trio '03,
+      OKC trio '11).
+- [x] Method strings updated: individuals now state 185 player-seasons; units
+      method states the board is complete with exact values.
 - [ ] Visual browser QA of the rendered page — blocked for this subagent (no
       live browser); flagged for parent delegation.

@@ -30,8 +30,9 @@ rating), per Cameron's verdict that the stat should be greatest all-around.
   is not conventional MPG (verified 2026-10-01) and rate stats alone admit
   garbage-time chuckers, so fives/starters are NOT ranked (we refuse to fake
   them). Units are ranked only where every member has sourced defensive
-  data; skipped units that could reach the top 10 under verified bounds are
-  reported (not estimated) — see the NOTE output and research/two-way-playoff-runs.md.
+  data; the 72 missing DBPM values were collected exactly from BRef on
+  2026-10-02, so the board is complete (the bound-based threat report now
+  returns zero).
 - Teams: grouped by (season, ordered playoff-opponent path); ranked by
   official BRef playoff net rating first, then wins. Only teams that won at
   least two series (>= 8 wins) qualify — a run has to go somewhere. Net
@@ -463,7 +464,7 @@ def write_outputs(data):
                   "fetched 2026-10-02) for playoff OBPM/DBPM/BPM and official playoff team ORtg/DRtg/NRtg",
         "method": {
             "individuals": "Two-way, all-around ranking (Cameron's verdict: greatest ALL-AROUND, not offense-only). "
-                "PO GP>=10 across 113 player-seasons with sourced playoff defensive data "
+                "PO GP>=10 across 185 player-seasons with sourced playoff defensive data "
                 "(plus a runtime bound check proving no unsourced player-season can reach the top 10). "
                 "score = pts/100 + 10*(TS-0.55) + DBPM + 0.25*(team playoff net rating) + 2 per round won + 4 if champion. "
                 "Defense counts one-for-one: a point of DBPM (points prevented per 100 possessions) moves the score "
@@ -475,10 +476,9 @@ def write_outputs(data):
                 "PO usage>=15) ordered by RS scoring rate; score = sum over members of (pts/100 + 10*(TS-0.55) + DBPM) "
                 "+ 0.25*(team playoff net rating) + 2 per round won + 4 if champion. "
                 "Not lineups or starters: the dataset's MIN field is not conventional MPG. "
-                "Ranked only where every member has sourced playoff DBPM — units with unsourced members are excluded, not estimated "
-                "(this omits some iconic cores: 2002 Shaq/Kobe, 2008-09/2009-10 Kobe/Pau/Bynum, 2008 Celtics, 2013 Heat, "
-                "1999/2003/2014 Spurs, 2004 Pistons — see research/two-way-playoff-runs.md for their verified score ranges; "
-                "a live-browser read of BRef player pages would complete them).",
+                "Ranked only where every member has sourced playoff DBPM — 72 missing values were "
+                "collected exactly from BRef Playoffs Advanced tables on 2026-10-02, so the board is complete; "
+                "no iconic core is excluded (see research/two-way-playoff-runs.md for how the former threats ranked).",
             "teams": "Grouped by (season, ordered playoff-opponent path); ranked by official Basketball-Reference playoff "
                 "net rating first, then wins. Only teams that won at least two series (>=8 wins) qualify — a run has to go "
                 "somewhere. Net rating first means some dominant non-champions outrank champions; that is the formula working "

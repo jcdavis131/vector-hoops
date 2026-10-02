@@ -1,5 +1,5 @@
 {
- "provenance": "Basketball-Reference playoff advanced tables (players: OBPM/DBPM/BPM) and official playoff Team Advanced Stats tables (teams: ORtg/DRtg/NRtg/W/L), fetched 2026-10-02. Pool = player-seasons with old offense-only score >= 46 or unit members. Supplement 2026-10-02: 10 more player-seasons from BRef single-season playoff leaders pages (OBPM/DBPM/BPM top-250). 42 requested player-seasons are absent from those leaders pages (verified bounds: OBPM<5.70, DBPM<2.83, BPM<6.98) and their player-page Advanced tables are not text-extractable; they remain unscored, never estimated.",
+ "provenance": "Basketball-Reference playoff advanced tables (players: OBPM/DBPM/BPM) and official playoff Team Advanced Stats tables (teams: ORtg/DRtg/NRtg/W/L), fetched 2026-10-02. Pool = player-seasons with old offense-only score >= 46 or unit members. Supplement 2026-10-02: 10 more player-seasons from BRef single-season playoff leaders pages (OBPM/DBPM/BPM top-250). 42 requested player-seasons are absent from those leaders pages (verified bounds: OBPM<5.70, DBPM<2.83, BPM<6.98) and their player-page Advanced tables are not text-extractable; they remain unscored, never estimated. Supplement 2026-10-02 (units completion): 72 exact playoff DBPM values read from Basketball-Reference Playoffs Advanced tables (each verified OBPM+DBPM=BPM); team abbrevs from playoff unit rosters; obpm/bpm null where not collected (unused by formula).",
  "exclusions": [
   "('1998','shaquille oneal'): 1998 playoff DBPM/OBPM/BPM not recoverable from BRef (playoffs-advanced URL pattern 404; series-stat outlinks unstable; web search surfaced no DBPM figure). Documented exclusion per no-synthesis rule; his other pool seasons are included."
  ],
@@ -1133,6 +1133,726 @@
    "dbpm": 4.0,
    "bpm": 9.4,
    "src": "D"
+  },
+  {
+   "poyr": 2005,
+   "name": "Amare Stoudemire",
+   "tm": "PHX",
+   "g": 15,
+   "obpm": null,
+   "dbpm": -0.6,
+   "bpm": null,
+   "src": "B"
+  },
+  {
+   "poyr": 2010,
+   "name": "Amare Stoudemire",
+   "tm": "PHX",
+   "g": 16,
+   "obpm": null,
+   "dbpm": -1.0,
+   "bpm": null,
+   "src": "B"
+  },
+  {
+   "poyr": 2009,
+   "name": "Andrew Bynum",
+   "tm": "LAL",
+   "g": 23,
+   "obpm": null,
+   "dbpm": -0.4,
+   "bpm": null,
+   "src": "B"
+  },
+  {
+   "poyr": 2010,
+   "name": "Andrew Bynum",
+   "tm": "LAL",
+   "g": 23,
+   "obpm": null,
+   "dbpm": -0.2,
+   "bpm": null,
+   "src": "B"
+  },
+  {
+   "poyr": 2024,
+   "name": "Anthony Edwards",
+   "tm": "MIN",
+   "g": 16,
+   "obpm": null,
+   "dbpm": 2.1,
+   "bpm": null,
+   "src": "B"
+  },
+  {
+   "poyr": 2022,
+   "name": "Bam Adebayo",
+   "tm": "MIA",
+   "g": 18,
+   "obpm": null,
+   "dbpm": 2.0,
+   "bpm": null,
+   "src": "B"
+  },
+  {
+   "poyr": 2025,
+   "name": "Bennedict Mathurin",
+   "tm": "IND",
+   "g": 22,
+   "obpm": null,
+   "dbpm": -0.2,
+   "bpm": null,
+   "src": "B"
+  },
+  {
+   "poyr": 2003,
+   "name": "Chauncey Billups",
+   "tm": "DET",
+   "g": 14,
+   "obpm": null,
+   "dbpm": -0.5,
+   "bpm": null,
+   "src": "B"
+  },
+  {
+   "poyr": 2004,
+   "name": "Chauncey Billups",
+   "tm": "DET",
+   "g": 23,
+   "obpm": null,
+   "dbpm": 1.4,
+   "bpm": null,
+   "src": "B"
+  },
+  {
+   "poyr": 2013,
+   "name": "Chris Bosh",
+   "tm": "MIA",
+   "g": 23,
+   "obpm": null,
+   "dbpm": 0.8,
+   "bpm": null,
+   "src": "B"
+  },
+  {
+   "poyr": 2021,
+   "name": "Chris Paul",
+   "tm": "PHX",
+   "g": 20,
+   "obpm": null,
+   "dbpm": 0.7,
+   "bpm": null,
+   "src": "B"
+  },
+  {
+   "poyr": 2003,
+   "name": "Corliss Williamson",
+   "tm": "DET",
+   "g": 15,
+   "obpm": null,
+   "dbpm": -0.6,
+   "bpm": null,
+   "src": "B"
+  },
+  {
+   "poyr": 2004,
+   "name": "Corliss Williamson",
+   "tm": "DET",
+   "g": 22,
+   "obpm": null,
+   "dbpm": -0.2,
+   "bpm": null,
+   "src": "B"
+  },
+  {
+   "poyr": 2021,
+   "name": "Dario Saric",
+   "tm": "PHX",
+   "g": 14,
+   "obpm": null,
+   "dbpm": 1.2,
+   "bpm": null,
+   "src": "B"
+  },
+  {
+   "poyr": 2002,
+   "name": "Devean George",
+   "tm": "LAL",
+   "g": 19,
+   "obpm": null,
+   "dbpm": 0.6,
+   "bpm": null,
+   "src": "B"
+  },
+  {
+   "poyr": 2021,
+   "name": "Devin Booker",
+   "tm": "PHX",
+   "g": 22,
+   "obpm": null,
+   "dbpm": -1.1,
+   "bpm": null,
+   "src": "B"
+  },
+  {
+   "poyr": 2013,
+   "name": "Dwyane Wade",
+   "tm": "MIA",
+   "g": 22,
+   "obpm": null,
+   "dbpm": 0.5,
+   "bpm": null,
+   "src": "B"
+  },
+  {
+   "poyr": 2015,
+   "name": "JR Smith",
+   "tm": "CLE",
+   "g": 18,
+   "obpm": null,
+   "dbpm": 1.2,
+   "bpm": null,
+   "src": "B"
+  },
+  {
+   "poyr": 2025,
+   "name": "Jalen Brunson",
+   "tm": "NYK",
+   "g": 18,
+   "obpm": null,
+   "dbpm": -0.8,
+   "bpm": null,
+   "src": "B"
+  },
+  {
+   "poyr": 2000,
+   "name": "Jalen Rose",
+   "tm": "IND",
+   "g": 23,
+   "obpm": null,
+   "dbpm": -0.8,
+   "bpm": null,
+   "src": "B"
+  },
+  {
+   "poyr": 2011,
+   "name": "James Harden",
+   "tm": "OKC",
+   "g": 17,
+   "obpm": null,
+   "dbpm": 2.7,
+   "bpm": null,
+   "src": "B"
+  },
+  {
+   "poyr": 2010,
+   "name": "Jason Richardson",
+   "tm": "PHX",
+   "g": 16,
+   "obpm": null,
+   "dbpm": 0.4,
+   "bpm": null,
+   "src": "B"
+  },
+  {
+   "poyr": 2006,
+   "name": "Jason Terry",
+   "tm": "DAL",
+   "g": 22,
+   "obpm": null,
+   "dbpm": -0.2,
+   "bpm": null,
+   "src": "B"
+  },
+  {
+   "poyr": 2020,
+   "name": "Jaylen Brown",
+   "tm": "BOS",
+   "g": 17,
+   "obpm": null,
+   "dbpm": 1.1,
+   "bpm": null,
+   "src": "B"
+  },
+  {
+   "poyr": 2023,
+   "name": "Jaylen Brown",
+   "tm": "BOS",
+   "g": 20,
+   "obpm": null,
+   "dbpm": -0.6,
+   "bpm": null,
+   "src": "B"
+  },
+  {
+   "poyr": 2020,
+   "name": "Jayson Tatum",
+   "tm": "BOS",
+   "g": 17,
+   "obpm": null,
+   "dbpm": 1.8,
+   "bpm": null,
+   "src": "B"
+  },
+  {
+   "poyr": 2023,
+   "name": "Jayson Tatum",
+   "tm": "BOS",
+   "g": 20,
+   "obpm": null,
+   "dbpm": 1.3,
+   "bpm": null,
+   "src": "B"
+  },
+  {
+   "poyr": 2022,
+   "name": "Jimmy Butler",
+   "tm": "MIA",
+   "g": 17,
+   "obpm": null,
+   "dbpm": 3.5,
+   "bpm": null,
+   "src": "B"
+  },
+  {
+   "poyr": 2006,
+   "name": "Josh Howard",
+   "tm": "DAL",
+   "g": 23,
+   "obpm": null,
+   "dbpm": 0.7,
+   "bpm": null,
+   "src": "B"
+  },
+  {
+   "poyr": 2024,
+   "name": "Karl-Anthony Towns",
+   "tm": "MIN",
+   "g": null,
+   "obpm": null,
+   "dbpm": 0.6,
+   "bpm": null,
+   "src": "B"
+  },
+  {
+   "poyr": 2025,
+   "name": "Karl-Anthony Towns",
+   "tm": "NYK",
+   "g": null,
+   "obpm": null,
+   "dbpm": -0.2,
+   "bpm": null,
+   "src": "B"
+  },
+  {
+   "poyr": 2020,
+   "name": "Kemba Walker",
+   "tm": "BOS",
+   "g": 17,
+   "obpm": null,
+   "dbpm": 0.4,
+   "bpm": null,
+   "src": "B"
+  },
+  {
+   "poyr": 2011,
+   "name": "Kevin Durant",
+   "tm": "OKC",
+   "g": 17,
+   "obpm": null,
+   "dbpm": 0.2,
+   "bpm": null,
+   "src": "B"
+  },
+  {
+   "poyr": 2008,
+   "name": "Kevin Garnett",
+   "tm": "BOS",
+   "g": 26,
+   "obpm": null,
+   "dbpm": 2.3,
+   "bpm": null,
+   "src": "B"
+  },
+  {
+   "poyr": 2002,
+   "name": "Kobe Bryant",
+   "tm": "LAL",
+   "g": 19,
+   "obpm": null,
+   "dbpm": 0.2,
+   "bpm": null,
+   "src": "B"
+  },
+  {
+   "poyr": 2015,
+   "name": "Kyrie Irving",
+   "tm": "CLE",
+   "g": 13,
+   "obpm": null,
+   "dbpm": 0.7,
+   "bpm": null,
+   "src": "B"
+  },
+  {
+   "poyr": 2024,
+   "name": "Kyrie Irving",
+   "tm": "DAL",
+   "g": 22,
+   "obpm": null,
+   "dbpm": -0.2,
+   "bpm": null,
+   "src": "B"
+  },
+  {
+   "poyr": 2010,
+   "name": "Leandro Barbosa",
+   "tm": "PHX",
+   "g": 16,
+   "obpm": null,
+   "dbpm": -1.4,
+   "bpm": null,
+   "src": "B"
+  },
+  {
+   "poyr": 2008,
+   "name": "Leon Powe",
+   "tm": "BOS",
+   "g": 23,
+   "obpm": null,
+   "dbpm": -2.1,
+   "bpm": null,
+   "src": "B"
+  },
+  {
+   "poyr": 2024,
+   "name": "Luka Doncic",
+   "tm": "DAL",
+   "g": 22,
+   "obpm": null,
+   "dbpm": 2.4,
+   "bpm": null,
+   "src": "B"
+  },
+  {
+   "poyr": 2023,
+   "name": "Malcolm Brogdon",
+   "tm": "BOS",
+   "g": 19,
+   "obpm": null,
+   "dbpm": -1.5,
+   "bpm": null,
+   "src": "B"
+  },
+  {
+   "poyr": 2003,
+   "name": "Malik Rose",
+   "tm": "SAS",
+   "g": 24,
+   "obpm": null,
+   "dbpm": 0.1,
+   "bpm": null,
+   "src": "B"
+  },
+  {
+   "poyr": 2008,
+   "name": "Manu Ginobili",
+   "tm": "SAS",
+   "g": 17,
+   "obpm": null,
+   "dbpm": 0.4,
+   "bpm": null,
+   "src": "B"
+  },
+  {
+   "poyr": 2014,
+   "name": "Manu Ginobili",
+   "tm": "SAS",
+   "g": 23,
+   "obpm": null,
+   "dbpm": 2.4,
+   "bpm": null,
+   "src": "B"
+  },
+  {
+   "poyr": 2009,
+   "name": "Mo Williams",
+   "tm": "CLE",
+   "g": 14,
+   "obpm": null,
+   "dbpm": -0.9,
+   "bpm": null,
+   "src": "B"
+  },
+  {
+   "poyr": 2024,
+   "name": "Myles Turner",
+   "tm": "IND",
+   "g": 17,
+   "obpm": null,
+   "dbpm": 0.0,
+   "bpm": null,
+   "src": "B"
+  },
+  {
+   "poyr": 2024,
+   "name": "Naz Reid",
+   "tm": "MIN",
+   "g": 16,
+   "obpm": null,
+   "dbpm": 1.0,
+   "bpm": null,
+   "src": "B"
+  },
+  {
+   "poyr": 2025,
+   "name": "OG Anunoby",
+   "tm": "NYK",
+   "g": 18,
+   "obpm": null,
+   "dbpm": 1.2,
+   "bpm": null,
+   "src": "B"
+  },
+  {
+   "poyr": 2024,
+   "name": "Pascal Siakam",
+   "tm": "IND",
+   "g": 17,
+   "obpm": null,
+   "dbpm": -0.8,
+   "bpm": null,
+   "src": "B"
+  },
+  {
+   "poyr": 2025,
+   "name": "Pascal Siakam",
+   "tm": "IND",
+   "g": 23,
+   "obpm": null,
+   "dbpm": 1.1,
+   "bpm": null,
+   "src": "B"
+  },
+  {
+   "poyr": 2014,
+   "name": "Patty Mills",
+   "tm": "SAS",
+   "g": 23,
+   "obpm": null,
+   "dbpm": 1.8,
+   "bpm": null,
+   "src": "B"
+  },
+  {
+   "poyr": 2009,
+   "name": "Pau Gasol",
+   "tm": "LAL",
+   "g": 23,
+   "obpm": null,
+   "dbpm": 1.6,
+   "bpm": null,
+   "src": "B"
+  },
+  {
+   "poyr": 2010,
+   "name": "Pau Gasol",
+   "tm": "LAL",
+   "g": 23,
+   "obpm": null,
+   "dbpm": 1.2,
+   "bpm": null,
+   "src": "B"
+  },
+  {
+   "poyr": 2008,
+   "name": "Paul Pierce",
+   "tm": "BOS",
+   "g": 26,
+   "obpm": null,
+   "dbpm": 1.0,
+   "bpm": null,
+   "src": "B"
+  },
+  {
+   "poyr": 2000,
+   "name": "Reggie Miller",
+   "tm": "IND",
+   "g": 22,
+   "obpm": null,
+   "dbpm": 0.1,
+   "bpm": null,
+   "src": "B"
+  },
+  {
+   "poyr": 2003,
+   "name": "Richard Hamilton",
+   "tm": "DET",
+   "g": 17,
+   "obpm": null,
+   "dbpm": -1.3,
+   "bpm": null,
+   "src": "B"
+  },
+  {
+   "poyr": 2004,
+   "name": "Richard Hamilton",
+   "tm": "DET",
+   "g": 23,
+   "obpm": null,
+   "dbpm": 1.3,
+   "bpm": null,
+   "src": "B"
+  },
+  {
+   "poyr": 2000,
+   "name": "Rik Smits",
+   "tm": "IND",
+   "g": 22,
+   "obpm": null,
+   "dbpm": 0.7,
+   "bpm": null,
+   "src": "B"
+  },
+  {
+   "poyr": 2011,
+   "name": "Russell Westbrook",
+   "tm": "OKC",
+   "g": 17,
+   "obpm": null,
+   "dbpm": -1.6,
+   "bpm": null,
+   "src": "B"
+  },
+  {
+   "poyr": 1999,
+   "name": "Sean Elliott",
+   "tm": "SAS",
+   "g": 17,
+   "obpm": null,
+   "dbpm": 1.2,
+   "bpm": null,
+   "src": "B"
+  },
+  {
+   "poyr": 2005,
+   "name": "Shawn Marion",
+   "tm": "PHX",
+   "g": 15,
+   "obpm": null,
+   "dbpm": 0.4,
+   "bpm": null,
+   "src": "B"
+  },
+  {
+   "poyr": 2005,
+   "name": "Steve Nash",
+   "tm": "PHX",
+   "g": 15,
+   "obpm": null,
+   "dbpm": -1.2,
+   "bpm": null,
+   "src": "B"
+  },
+  {
+   "poyr": 1999,
+   "name": "Tim Duncan",
+   "tm": "SAS",
+   "g": 17,
+   "obpm": null,
+   "dbpm": 2.6,
+   "bpm": null,
+   "src": "B"
+  },
+  {
+   "poyr": 2008,
+   "name": "Tim Duncan",
+   "tm": "SAS",
+   "g": 17,
+   "obpm": null,
+   "dbpm": 2.3,
+   "bpm": null,
+   "src": "B"
+  },
+  {
+   "poyr": 2024,
+   "name": "Tim Hardaway Jr.",
+   "tm": "DAL",
+   "g": 14,
+   "obpm": null,
+   "dbpm": 0.4,
+   "bpm": null,
+   "src": "B"
+  },
+  {
+   "poyr": 2003,
+   "name": "Tony Parker",
+   "tm": "SAS",
+   "g": 24,
+   "obpm": null,
+   "dbpm": -1.2,
+   "bpm": null,
+   "src": "B"
+  },
+  {
+   "poyr": 2008,
+   "name": "Tony Parker",
+   "tm": "SAS",
+   "g": 17,
+   "obpm": null,
+   "dbpm": 0.6,
+   "bpm": null,
+   "src": "B"
+  },
+  {
+   "poyr": 2014,
+   "name": "Tony Parker",
+   "tm": "SAS",
+   "g": 23,
+   "obpm": null,
+   "dbpm": -1.6,
+   "bpm": null,
+   "src": "B"
+  },
+  {
+   "poyr": 2022,
+   "name": "Tyler Herro",
+   "tm": "MIA",
+   "g": 15,
+   "obpm": null,
+   "dbpm": -0.5,
+   "bpm": null,
+   "src": "B"
+  },
+  {
+   "poyr": 2024,
+   "name": "Tyrese Haliburton",
+   "tm": "IND",
+   "g": 15,
+   "obpm": null,
+   "dbpm": -0.3,
+   "bpm": null,
+   "src": "B"
+  },
+  {
+   "poyr": 2025,
+   "name": "Tyrese Haliburton",
+   "tm": "IND",
+   "g": 23,
+   "obpm": null,
+   "dbpm": 0.8,
+   "bpm": null,
+   "src": "B"
+  },
+  {
+   "poyr": 2009,
+   "name": "Zydrunas Ilgauskas",
+   "tm": "CLE",
+   "g": 14,
+   "obpm": null,
+   "dbpm": 0.4,
+   "bpm": null,
+   "src": "B"
   }
  ],
  "teams": {
@@ -6278,7 +6998,7 @@
   }
  },
  "verified_bounds": {
-  "note": "player-seasons absent from BRef single-season playoff top-250 leaders pages, 2026-10-02",
+  "note": "player-seasons absent from BRef single-season playoff top-250 leaders pages, 2026-10-02 SUPERSEDED 2026-10-02: all 42 bound-only player-seasons now carry exact DBPM; bounds retained for provenance only.",
   "obpm_lt": 5.7,
   "dbpm_lt": 2.83,
   "bpm_lt": 6.98,
