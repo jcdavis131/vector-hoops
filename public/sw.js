@@ -3,7 +3,7 @@
    - CORE shell (styles, nav, icons, offline page): stale-while-revalidate.
    - Large data files (DENY): network only, never cached.
    Bump CACHE_NAME whenever shipped assets change so clients drop the old shell. */
-const CACHE_NAME = 'vector-hoops-atlas-v8';
+const CACHE_NAME = 'vector-hoops-atlas-v9';
 const CORE = [
 '/',
 '/index.html',
@@ -26,7 +26,8 @@ const CORE = [
 '/assets/unified.css',
 '/assets/motion.css',
 '/assets/error-boundary.js',
-'/assets/keyboard-a11y.js'
+'/assets/keyboard-a11y.js',
+'/assets/arc-projections.js'
 ];
 const DENY = [
 '/assets/vectors.json',
@@ -37,7 +38,8 @@ const DENY = [
 '/assets/vectors_search_lite_pos.json',
 '/assets/vectors_lite.json',
 '/assets/data/pitch.json',
-'/assets/data/gridiron.json'
+'/assets/data/gridiron.json',
+'/assets/arc_priors_2026-27.json'
 ];
 function isDenied(p){ return DENY.some(x=> p.includes(x) || p.endsWith(x.split('/').pop())); }
 function isCore(p){ return CORE.includes(p) || CORE.includes(p.replace('/index.html','/')) || CORE.some(c=>p.endsWith(c)); }
