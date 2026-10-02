@@ -13,7 +13,8 @@
     { href: '/trends', label: 'Trends', title: 'Thirty seasons of league drift' },
     { href: '/insights', label: 'Insights', title: 'What the model learned: shareable findings from 12,966 player-seasons' },
     { href: '/playoff-runs', label: 'Playoff Runs', title: 'The 42 greatest postseason runs ever: players, duos, trios, teams' },
-    { href: '/methods', label: 'Methods', title: 'Sources, features and the maths behind every number' }
+    { href: '/methods', label: 'Methods', title: 'Sources, features and the maths behind every number' },
+    { href: '/research', label: 'Research', title: 'The lab: rankings, taxonomy and the frontier ML program' }
   ];
 
   // Centre circle of a court, seen from above: the site's mark.

@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
+<link rel="manifest" href="/manifest.json">
+<title>Research — Vector Hoops</title>
+<meta name="description" content="How we rank the greatest playoff runs, map every NBA play style, and push the frontier of basketball machine learning. Real data, held-out evals, receipts not hype."/>
+<link rel="stylesheet" href="assets/shell.css"/>
+<link rel="stylesheet" href="assets/responsive.css"/>
+<link rel="stylesheet" href="assets/final-qa.css"/>
+<link rel="stylesheet" href="assets/unified.css"/>
+<link rel="stylesheet" href="assets/motion.css"/>
+<link rel="stylesheet" href="/assets/atlas.css?v=2"/>
+<meta name="color-scheme" content="dark light"/>
+<meta name="theme-color" content="#07090C" media="(prefers-color-scheme: dark)"/>
+<meta name="theme-color" content="#F3F1EC" media="(prefers-color-scheme: light)"/>
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml"/>
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png"/>
+<link rel="canonical" href="https://hoops.dumbmodel.com/research"/>
+<meta property="og:type" content="article"/>
+<meta property="og:site_name" content="Vector Hoops"/>
+<meta property="og:url" content="https://hoops.dumbmodel.com/research"/>
+<meta property="og:title" content="Research — Vector Hoops"/>
+<meta property="og:description" content="Two-way playoff rankings. A taxonomy of every play style. A frontier ML program. Real data, held-out evals, receipts not hype."/>
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Research — Vector Hoops"/>
+<meta name="twitter:description" content="Two-way playoff rankings. A taxonomy of every play style. A frontier ML program. Real data, held-out evals, receipts not hype."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=Inter:opsz,wght@14..32,400..700&display=swap"/>
+<style>
+.vh-res__wrap{max-width:960px;margin:0 auto;padding:0 var(--s-3) var(--s-6)}
+.vh-res__hero{margin:var(--s-5) 0 var(--s-4);text-align:center}
+.vh-res__hero h1{font:800 clamp(32px,5.6vw,48px)/1.05 var(--font-display);letter-spacing:-.02em;margin:0 0 10px}
+.vh-res__hero h1 .vh-res__accent{color:var(--accent)}
+.vh-res__hero p{font:400 15px/1.65 var(--font-sans);color:var(--fg-2);margin:0 auto;max-width:64ch}
+.vh-res__meta{display:inline-block;margin-top:12px;font:600 12px/1 var(--font-sans);letter-spacing:.08em;text-transform:uppercase;color:var(--gold,#D4AF69);border:1px solid var(--line);border-radius:999px;padding:8px 14px;background:var(--surface)}
+.vh-res__stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:0 0 var(--s-5)}
+.vh-res__stat{background:var(--void,#1E2022);color:#F9F6F0;border-radius:14px;padding:18px 16px;text-align:center;box-shadow:var(--shadow-soft)}
+.vh-res__stat b{display:block;font:800 clamp(22px,3.6vw,30px)/1.1 var(--font-display);color:var(--accent);letter-spacing:-.01em}
+.vh-res__stat span{display:block;margin-top:6px;font:400 12px/1.5 var(--font-sans);color:#cfc9bd}
+.vh-res__sec{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:26px 26px 24px;margin:0 0 var(--s-4);box-shadow:var(--shadow-soft);scroll-margin-top:76px}
+.vh-res__sechead{display:flex;align-items:baseline;gap:12px;margin:0 0 4px;flex-wrap:wrap}
+.vh-res__kicker{font:700 11.5px/1 var(--font-sans);letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}
+.vh-res__sechead h2{font:800 clamp(20px,3.4vw,27px)/1.2 var(--font-display);letter-spacing:-.01em;margin:0;flex:1 1 auto}
+.vh-res__copy{font:600 12px/1 var(--font-sans);color:var(--fg-2);background:transparent;border:1px solid var(--line);border-radius:999px;padding:8px 13px;cursor:pointer;white-space:nowrap}
+.vh-res__copy:hover{border-color:var(--accent);color:var(--accent)}
+.vh-res__copy.is-done{color:var(--accent);border-color:var(--accent)}
+.vh-res__sec p{font:400 14.5px/1.7 var(--font-sans);color:var(--fg);margin:12px 0;max-width:68ch}
+.vh-res__formula{font:600 13.5px/1.7 var(--font-sans);color:var(--fg);background:color-mix(in srgb,var(--void,#1E2022) 6%,transparent);border:1px solid var(--line);border-radius:12px;padding:14px 18px;margin:14px 0;overflow-x:auto;white-space:nowrap}
+.vh-res__quote{border-left:3px solid var(--accent);margin:16px 0;padding:4px 0 4px 18px;font:600 clamp(16px,2.6vw,20px)/1.5 var(--font-display);letter-spacing:-.01em;color:var(--fg)}
+.vh-res__quote small{display:block;margin-top:6px;font:400 12.5px/1.5 var(--font-sans);color:var(--fg-2);letter-spacing:0}
+.vh-res__cta{display:inline-block;margin-top:8px;font:700 14px/1 var(--font-sans);color:#F9F6F0;background:var(--accent);border-radius:999px;padding:13px 22px;text-decoration:none}
+.vh-res__cta:hover{filter:brightness(1.08)}
+.vh-res__bet{border-top:1px solid var(--line);padding:16px 0 4px;margin-top:6px}
+.vh-res__bet:first-of-type{border-top:0}
+.vh-res__bet h3{font:700 16px/1.35 var(--font-display);margin:0 0 6px;letter-spacing:-.01em}
+.vh-res__bet h3 .n{color:var(--accent);margin-right:8px}
+.vh-res__bet p{margin:8px 0}
+.vh-res__honest{list-style:none;margin:12px 0 0;padding:0}
+.vh-res__honest li{font:400 14px/1.65 var(--font-sans);color:var(--fg);padding:9px 0 9px 26px;position:relative;max-width:68ch}
+.vh-res__honest li::before{content:"✓";position:absolute;left:2px;color:var(--accent);font-weight:700}
+.vh-res__foot{font:400 12.5px/1.7 var(--font-sans);color:var(--fg-3);margin:var(--s-5) 0 0;max-width:68ch}
+.vh-res__foot a{color:var(--accent)}
+@media(max-width:640px){.vh-res__stats{grid-template-columns:repeat(2,1fr)}.vh-res__sec{padding:20px 18px}}
+</style>
+</head><body>
+<nav class="site-nav" data-active="/research" aria-label="Vector Hoops site"></nav>
+
+<div class="vh-res__wrap">
+  <header class="vh-res__hero">
+    <h1>The <span class="vh-res__accent">Research</span> Lab</h1>
+    <p>Everything we claim about basketball on this site comes from somewhere — a dataset, a formula, a held-out test. This is where we show our work: the rankings, the taxonomy, and the frontier program we're building next.</p>
+    <span class="vh-res__meta">Receipts, not hype</span>
+  </header>
+
+  <div class="vh-res__stats" aria-label="Headline numbers">
+    <div class="vh-res__stat"><b>59.05</b><span>LeBron '09 — the top two-way playoff score ever recorded</span></div>
+    <div class="vh-res__stat"><b>22</b><span>stat-backed play-style archetypes across 5 families</span></div>
+    <div class="vh-res__stat"><b>+15.5</b><span>'26 Knicks playoff net rating — best team run ever</span></div>
+    <div class="vh-res__stat"><b>3,236</b><span>projections in our published honest null result</span></div>
+  </div>
+
+  <section class="vh-res__sec" id="playoff-runs">
+    <div class="vh-res__sechead">
+      <span class="vh-res__kicker">Ranking</span>
+      <h2>Greatest Playoff Runs, Two-Way</h2>
+      <button class="vh-res__copy" data-copy="playoff-runs" type="button">Copy link</button>
+    </div>
+    <p>Most "greatest ever" lists count points. Ours counts both ends of the floor. Every player-season with 10+ playoff games is scored on per-100-possession scoring, true-shooting efficiency, <strong>defensive impact counted one-for-one with offense</strong> — a prevented point is a scored point — plus a quarter-share of the team's playoff net rating, with bonuses for rounds won and the title.</p>
+    <div class="vh-res__formula">score = PTS₁₀₀ + 10·(TS − .55) + DBPM + ¼·(team NetRtg) + 2/round + 4·title</div>
+    <p>All 185 defensive numbers are exact Basketball-Reference playoff DBPM values, each cross-checked — never estimated, never synthesized. (One documented gap: Shaq's '98 run is excluded because his DBPM couldn't be sourced anywhere.)</p>
+    <div class="vh-res__quote">"Defense finally counts. LeBron '09 over Jordan '98 — and the '04 Pistons read as an all-time run instead of a footnote."<small>The formula, applied to 30 postseasons</small></div>
+    <a class="vh-res__cta" href="/playoff-runs">Explore the rankings</a>
+  </section>
+
+  <section class="vh-res__sec" id="taxonomy">
+    <div class="vh-res__sechead">
+      <span class="vh-res__kicker">Discovery</span>
+      <h2>A Taxonomy of Play Styles</h2>
+      <button class="vh-res__copy" data-copy="taxonomy" type="button">Copy link</button>
+    </div>
+    <p>We clustered 2,426 NBA careers by their statistical fingerprints and let the archetypes name themselves — every label comes from percentile stat signatures, never vibes. Five families, 22 archetypes, one browsable tree.</p>
+    <div class="vh-res__quote">"The algorithm independently classified Draymond Green as a point guard — 93rd percentile assists, 92nd percentile steals. Nobody told it that."<small>Clustering result, verified by 19/20 anchor checks</small></div>
+    <p>Rim Runners &amp; Protectors unites Mutombo → Chandler → Dwight → Gobert across four decades. 3&amp;D Wings is canonical: Battier, Bowen, Iguodala, Danny Green. And the misses are informative — Dwight Howard lands with superstar bigs while DeAndre Jordan sits with rim runners, because stardom tier splits the style.</p>
+    <a class="vh-res__cta" href="/taxonomy">Browse the tree</a>
+  </section>
+
+  <section class="vh-res__sec" id="frontier">
+    <div class="vh-res__sechead">
+      <span class="vh-res__kicker">In progress</span>
+      <h2>The Frontier Program</h2>
+      <button class="vh-res__copy" data-copy="frontier" type="button">Copy link</button>
+    </div>
+    <p>Four bets, each with a held-out eval gate. Nothing ships without beating the baseline that matters.</p>
+    <div class="vh-res__bet">
+      <h3><span class="n">01</span>Mixed-curvature embeddings</h3>
+      <p>Player similarity isn't one geometry. Archetype hierarchies are tree-like, era drift is flat, matchup cycles are spherical — so we're learning a product space (hyperbolic × spherical × Euclidean) with curvatures the data chooses, not ones we guess. Challenger to our v5 embeddings, gated on a δ-hyperbolicity diagnostic and twin-retrieval evals.</p>
+    </div>
+    <div class="vh-res__bet">
+      <h3><span class="n">02</span>DARKO-style game forecasting</h3>
+      <p>Per-player Bayesian state estimation — exponential decay plus Kalman filtering over every box score — with who-guards-whom matchup tensors and a minute-projection engine conditioned on blowout probability. The literature's verdict is blunt: minutes move the needle more than model cleverness. Evaluated against the betting line, never a naive baseline.</p>
+    </div>
+    <div class="vh-res__bet">
+      <h3><span class="n">03</span>Live in-game updating</h3>
+      <p>Bayesian second-half projections from live play-by-play: current stat plus remaining minutes at current usage, pace, and foul state, shrunk toward the pre-game prior — because a hot first half predicts a cooler second half, not a continuation. Zero published baselines exist. We're establishing the first one.</p>
+    </div>
+    <div class="vh-res__bet">
+      <h3><span class="n">04</span>Hyperbolic representation learning</h3>
+      <p>The GGBall paper's hyperbolic VQ-VAE, repurposed as an encoder for the archetype taxonomy — the one job hyperbolic geometry was born for. Pursued only if the δ diagnostic says the data wants curvature. (We checked the hype first: the paper's "18%" claim appears in neither its abstract nor its full text.)</p>
+    </div>
+  </section>
+
+  <section class="vh-res__sec" id="methods">
+    <div class="vh-res__sechead">
+      <span class="vh-res__kicker">Principles</span>
+      <h2>Methods &amp; Honesty</h2>
+      <button class="vh-res__copy" data-copy="methods" type="button">Copy link</button>
+    </div>
+    <ul class="vh-res__honest">
+      <li><strong>Real data only.</strong> Every number traces to a box score, a play-by-play feed, or a published table. Nothing synthetic, ever.</li>
+      <li><strong>Held-out evals.</strong> Walk-forward backtests; the test window is never touched during development. A challenger that can't win held-out doesn't ship.</li>
+      <li><strong>Null results are results.</strong> Our 3,236-projection props experiment: model MAE 3.1993 vs the morning line's 3.1775 — zero edge plays. We published the failure and made it the baseline to beat.</li>
+      <li><strong>The line is the baseline.</strong> For forecasting, beating a naive average means nothing; the market line is the claim that needs evidence, and no tested model has managed it yet.</li>
+    </ul>
+    <p style="margin-top:14px"><a class="vh-res__cta" href="/methods">Read the full methods</a></p>
+  </section>
+
+  <p class="vh-res__foot">Vector Hoops is a basketball research site: 12,966 player-seasons embedded, ranked, and clustered in the open. Built with stdlib Python, honest statistics, and no synthetic data. Questions or corrections: the numbers are all on the table.</p>
+</div>
+
+<script src="/assets/site-nav.js?v=1"></script>
+<script>
+(function(){
+  'use strict';
+  function base(){ return 'https://hoops.dumbmodel.com/research'; }
+  document.querySelectorAll('.vh-res__copy').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var url = base() + '#' + btn.getAttribute('data-copy');
+      function done(){ btn.textContent = 'Copied'; btn.classList.add('is-done'); setTimeout(function(){ btn.textContent = 'Copy link'; btn.classList.remove('is-done'); }, 1600); }
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(url).then(done, done);
+      } else {
+        var ta = document.createElement('textarea');
+        ta.value = url; document.body.appendChild(ta); ta.select();
+        try { document.execCommand('copy'); } catch (e) {}
+        document.body.removeChild(ta); done();
+      }
+    });
+  });
+})();
+</script>
+<script>if('serviceWorker' in navigator){window.addEventListener('load',()=>{navigator.serviceWorker.register('/sw.js').catch(()=>{})})}</script>
+</body></html>

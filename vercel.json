@@ -23,6 +23,8 @@
     {"source": "/leaderboard", "destination": "/leaderboard.html"},
     {"source": "/offline", "destination": "/offline.html"},
     {"source": "/taxonomy", "destination": "/taxonomy.html"},
+    {"source": "/research", "destination": "/research.html"},
+    {"source": "/playoff-runs", "destination": "/playoff-runs.html"},
     {"source": "/dfs", "destination": "/index.html"}
   ]
 }
