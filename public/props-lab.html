@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
+<link rel="manifest" href="/manifest.json">
+<title>Props Lab — Vector Hoops</title>
+<meta name="description" content="Paper-trading a game-log form model against PrizePicks NBA lines. Last season's walk-forward backtest, and live paper picks once the regular season starts."/>
+<link rel="stylesheet" href="assets/shell.css"/>
+<link rel="stylesheet" href="assets/responsive.css"/>
+<link rel="stylesheet" href="assets/final-qa.css"/>
+<link rel="stylesheet" href="assets/unified.css"/>
+<link rel="stylesheet" href="assets/motion.css"/>
+<meta name="color-scheme" content="dark light"/>
+<meta name="theme-color" content="#07090C" media="(prefers-color-scheme: dark)"/>
+<meta name="theme-color" content="#F3F1EC" media="(prefers-color-scheme: light)"/>
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml"/>
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png"/>
+<link rel="canonical" href="https://hoops.dumbmodel.com/props-lab"/>
+<meta property="og:type" content="website"/>
+<meta property="og:site_name" content="Vector Hoops"/>
+<meta property="og:url" content="https://hoops.dumbmodel.com/props-lab"/>
+<meta property="og:title" content="Props Lab — Vector Hoops"/>
+<meta property="og:description" content="A game-log model paper-traded against PrizePicks lines: last season's honest backtest, live paper picks from opening night."/>
+<meta name="twitter:card" content="summary"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=Inter:opsz,wght@14..32,400..700&display=swap"/>
+<link rel="stylesheet" href="/assets/atlas.css?v=2"/>
+<style>
+.vh-pl__wrap{max-width:920px;margin:0 auto;padding:0 var(--s-3) var(--s-6)}
+.vh-pl__kicker{font:700 12px/1.4 var(--font-sans);letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin:0 0 8px}
+.vh-pl__title{font:700 clamp(26px,5vw,40px)/1.12 var(--font-display);margin:0 0 10px;letter-spacing:-.01em}
+.vh-pl__lede{font:400 15px/1.65 var(--font-sans);color:var(--fg-2);margin:0 0 20px;max-width:64ch}
+.vh-pl__card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:clamp(20px,4vw,32px);margin:0 0 var(--s-4);box-shadow:var(--shadow-soft)}
+.vh-pl__banner{border-radius:12px;padding:14px 18px;margin:0 0 var(--s-4);font:500 14px/1.55 var(--font-sans)}
+.vh-pl__banner--wait{background:rgba(193,124,96,.12);border:1px solid rgba(193,124,96,.45);color:var(--fg)}
+.vh-pl__banner--live{background:rgba(138,154,139,.14);border:1px solid rgba(138,154,139,.5);color:var(--fg)}
+.vh-pl__banner strong{font-weight:700}
+.vh-pl__grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:0 0 18px}
+.vh-pl__stat{background:var(--void,#1E2022);border-radius:12px;padding:14px 16px}
+.vh-pl__stat b{display:block;font:800 clamp(22px,4vw,32px)/1.1 var(--font-display);color:#F9F6F0;letter-spacing:-.01em}
+.vh-pl__stat b.neg{color:#e08a7e}.vh-pl__stat b.pos{color:#9fc49a}
+.vh-pl__stat span{font:400 12px/1.4 var(--font-sans);color:#b9b2a4}
+.vh-pl__h{font:700 18px/1.3 var(--font-display);margin:0 0 12px}
+.vh-pl__sub{font:700 11px/1.4 var(--font-sans);letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin:22px 0 8px}
+.vh-pl__table{width:100%;border-collapse:collapse;font:400 13.5px/1.5 var(--font-sans);margin:0 0 8px}
+.vh-pl__table th{font:700 11px/1.4 var(--font-sans);letter-spacing:.08em;text-transform:uppercase;color:var(--fg-3);text-align:left;padding:8px 10px;border-bottom:1px solid var(--line)}
+.vh-pl__table td{padding:8px 10px;border-bottom:1px solid var(--line);color:var(--fg-2)}
+.vh-pl__table td.num,.vh-pl__table th.num{text-align:right;font-variant-numeric:tabular-nums}
+.vh-pl__table tr.win td:first-child{color:var(--fg);font-weight:600}
+.vh-pl__foot{font:400 12.5px/1.6 var(--font-sans);color:var(--fg-3);margin:12px 0 0}
+.vh-pl__foot b{color:var(--fg-2)}
+.vh-pl__eq{width:100%;height:auto;display:block;background:var(--void,#1E2022);border-radius:12px}
+.vh-pl__pill{display:inline-block;font:700 11px/1 var(--font-sans);letter-spacing:.1em;text-transform:uppercase;border-radius:999px;padding:5px 10px;margin-right:6px}
+.vh-pl__pill--under{background:rgba(138,154,139,.2);color:#9fc49a}
+.vh-pl__pill--over{background:rgba(193,124,96,.2);color:#d8a583}
+.vh-pl__pill--win{background:rgba(138,154,139,.2);color:#9fc49a}
+.vh-pl__pill--loss{background:rgba(224,138,126,.18);color:#e08a7e}
+.vh-pl__pill--push{background:rgba(185,178,164,.18);color:#b9b2a4}
+.vh-pl__empty{font:400 14px/1.6 var(--font-sans);color:var(--fg-3);padding:12px 0}
+.vh-pl__err{padding:24px;text-align:center;color:var(--fg-2);font:400 14px/1.6 var(--font-sans)}
+@media(max-width:560px){.vh-pl__table{font-size:12.5px}.vh-pl__table th:nth-child(n+4),.vh-pl__table td:nth-child(n+4){display:none}}
+</style>
+</head><body>
+<nav class="site-nav" data-active="/props-lab" aria-label="Vector Hoops site"></nav>
+<main class="vh-pl__wrap">
+  <p class="vh-pl__kicker">Paper trading · game-log form model</p>
+  <h1 class="vh-pl__title">Props Lab</h1>
+  <p class="vh-pl__lede">A model built only from trailing game logs — recent form, rest, home court — paper-traded against PrizePicks morning lines. No real wagers, ever. Below: last season's full walk-forward backtest, then the live paper ledger once the regular season starts.</p>
+
+  <div id="pl-banner" class="vh-pl__banner vh-pl__banner--wait" role="status">Loading status…</div>
+
+  <section class="vh-pl__card" aria-label="Backtest">
+    <p class="vh-pl__kicker">2025–26 regular season · frozen</p>
+    <h2 class="vh-pl__h">Walk-forward backtest</h2>
+    <p class="vh-pl__lede" id="pl-method"></p>
+    <div class="vh-pl__grid" id="pl-backtest-stats"></div>
+    <p class="vh-pl__sub">Edge-rule equity curve (locked rule, eval half)</p>
+    <canvas class="vh-pl__eq" id="pl-equity" width="860" height="300"></canvas>
+    <p class="vh-pl__sub">Edge rule by month</p>
+    <div style="overflow-x:auto"><table class="vh-pl__table" id="pl-monthly">
+      <thead><tr><th>Month</th><th class="num">Plays</th><th class="num">W</th><th class="num">ROI</th><th class="num">Cum. profit</th></tr></thead>
+      <tbody></tbody>
+    </table></div>
+    <p class="vh-pl__sub">Model vs line, mean absolute error by stat</p>
+    <div style="overflow-x:auto"><table class="vh-pl__table" id="pl-perstat">
+      <thead><tr><th>Stat</th><th class="num">Lines</th><th class="num">Model MAE</th><th class="num">Line MAE</th></tr></thead>
+      <tbody></tbody>
+    </table></div>
+    <p class="vh-pl__foot" id="pl-backtest-foot"></p>
+  </section>
+
+  <section class="vh-pl__card" aria-label="Paper trades">
+    <p class="vh-pl__kicker">2026–27 · live ledger</p>
+    <h2 class="vh-pl__h">Paper trades</h2>
+    <div class="vh-pl__grid" id="pl-season-stats"></div>
+    <p class="vh-pl__sub">Open picks</p>
+    <div id="pl-open"><p class="vh-pl__empty">No open picks.</p></div>
+    <p class="vh-pl__sub">Recently graded</p>
+    <div id="pl-recent"><p class="vh-pl__empty">Nothing graded yet.</p></div>
+    <p class="vh-pl__foot" id="pl-ledger-foot"></p>
+  </section>
+</main>
+<script src="/assets/site-nav.js?v=1"></script>
+<script>
+(function(){
+  var $ = function(id){ return document.getElementById(id); };
+  function fmt(n, d){ return Number(n).toFixed(d == null ? 2 : d); }
+  function statCell(label, val, good){
+    return '<div class="vh-pl__stat"><b class="' + (good === true ? 'pos' : good === false ? 'neg' : '') + '">' + val + '</b><span>' + label + '</span></div>';
+  }
+
+  fetch('assets/backtest_summary.json').then(function(r){ return r.json(); }).then(function(bt){
+    $('pl-method').textContent = bt.method + '. Lines: Dec 2025 – Apr 2026 (' + bt.overall.n_eval.toLocaleString() + ' evaluated over ' + bt.overall.eval_days + ' board days).';
+    var e = bt.edge_rule.eval;
+    var html = '';
+    html += statCell('Eval lines', bt.overall.n_eval.toLocaleString());
+    html += statCell('Model MAE', fmt(bt.overall.proj_mae, 3));
+    html += statCell('Line MAE', fmt(bt.overall.line_mae, 3));
+    html += statCell('Edge plays', e.n);
+    html += statCell('Edge W–L', e.w + '–' + (e.n - e.w), true);
+    html += statCell('Edge ROI @ -110', (e.roi >= 0 ? '+' : '') + fmt(e.roi * 100, 1) + '%', e.roi > 0);
+    html += statCell('Under share', fmt(bt.edge_rule.under_lean_eval * 100, 0) + '%');
+    html += statCell('68% / 95% cover', fmt(bt.coverage_68 * 100, 1) + ' / ' + fmt(bt.coverage_95 * 100, 1));
+    $('pl-backtest-stats').innerHTML = html;
+
+    // equity curve
+    var cv = $('pl-equity'), ctx = cv.getContext('2d');
+    var W = cv.width, H = cv.height, pad = 34;
+    var pts = bt.equity_curve;
+    var maxP = Math.max.apply(null, pts.map(function(p){ return p.cum_profit; }).concat([5]));
+    var minP = Math.min.apply(null, pts.map(function(p){ return p.cum_profit; }).concat([0]));
+    function X(i){ return pad + i * (W - 2 * pad) / Math.max(pts.length - 1, 1); }
+    function Y(v){ return H - pad - (v - minP) * (H - 2 * pad) / (maxP - minP || 1); }
+    ctx.strokeStyle = '#3a3d40'; ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(pad, Y(0)); ctx.lineTo(W - pad, Y(0)); ctx.stroke();
+    ctx.beginPath();
+    pts.forEach(function(p, i){ i ? ctx.lineTo(X(i), Y(p.cum_profit)) : ctx.moveTo(X(i), Y(p.cum_profit)); });
+    ctx.strokeStyle = '#D4AF69'; ctx.lineWidth = 2; ctx.stroke();
+    ctx.fillStyle = '#b9b2a4'; ctx.font = '11px Inter, sans-serif';
+    ctx.fillText('+' + fmt(maxP, 0) + 'u', 6, Y(maxP) + 4);
+    ctx.fillText(fmt(minP, 0) + 'u', 6, Y(minP) + 4);
+    ctx.fillText(pts[0].board, pad, H - 12);
+    ctx.fillText(pts[pts.length - 1].board, W - pad - 64, H - 12);
+
+    var mb = '';
+    bt.monthly.forEach(function(m){
+      mb += '<tr><td>' + m.month + '</td><td class="num">' + m.n + '</td><td class="num">' + m.w + '</td><td class="num">' + (m.roi >= 0 ? '+' : '') + fmt(m.roi * 100, 1) + '%</td><td class="num">' + (m.cum_profit >= 0 ? '+' : '') + fmt(m.cum_profit, 1) + 'u</td></tr>';
+    });
+    $('pl-monthly').querySelector('tbody').innerHTML = mb;
+
+    var rows = Object.keys(bt.per_stat).sort();
+    var pb = '';
+    rows.forEach(function(s){
+      var m = bt.per_stat[s];
+      var win = m.proj_mae < m.line_mae;
+      pb += '<tr class="' + (win ? 'win' : '') + '"><td>' + s + '</td><td class="num">' + m.n.toLocaleString() + '</td><td class="num">' + fmt(m.proj_mae, 3) + '</td><td class="num">' + fmt(m.line_mae, 3) + '</td></tr>';
+    });
+    $('pl-perstat').querySelector('tbody').innerHTML = pb;
+    $('pl-backtest-foot').innerHTML = '<b>Honest read:</b> the gate failed as defined — lines beat the model on average (' + fmt(bt.overall.proj_mae, 2) + ' vs ' + fmt(bt.overall.line_mae, 2) + ' MAE). The edge rule above was tuned on the first half of board days and locked before the second half; it is a thin, under-leaning tail signal, not a green light. Dunks, Fantasy Score and Double/Triple-Double lines were excluded (no game-log target).';
+  }).catch(function(){ $('pl-backtest-stats').innerHTML = '<div class="vh-pl__err">Backtest data failed to load.</div>'; });
+
+  fetch('assets/paper_trades.json', { cache: 'no-store' }).then(function(r){ return r.json(); }).then(function(st){
+    var b = $('pl-banner');
+    if (st.mode === 'live') {
+      b.className = 'vh-pl__banner vh-pl__banner--live';
+      b.innerHTML = '<strong>● Live paper trading.</strong> ' + (st.note || '');
+    } else if (st.mode === 'done') {
+      b.className = 'vh-pl__banner vh-pl__banner--wait';
+      b.innerHTML = '<strong>Season complete.</strong> ' + (st.note || '');
+    } else {
+      b.className = 'vh-pl__banner vh-pl__banner--wait';
+      b.innerHTML = '<strong>Preseason — paper trading starts Oct 20.</strong> Regular-season games only; preseason lines are never traded. ' + (st.note || '');
+    }
+    var s = st.season, html = '';
+    html += statCell('Paper plays', s.n);
+    html += statCell('W–L', s.w + '–' + s.l, s.n ? s.w > s.l : null);
+    html += statCell('Profit', (s.profit >= 0 ? '+' : '') + fmt(s.profit, 2) + 'u', s.n ? s.profit > 0 : null);
+    html += statCell('ROI @ -110', (s.roi >= 0 ? '+' : '') + fmt(s.roi * 100, 1) + '%', s.n ? s.roi > 0 : null);
+    html += statCell('Push / void', s.push + ' / ' + s.void);
+    $('pl-season-stats').innerHTML = html;
+
+    function pickRow(p, graded){
+      var pill = '<span class="vh-pl__pill vh-pl__pill--' + p.side + '">' + p.side + '</span>';
+      var res = '';
+      if (graded) {
+        var cls = p.result === 'win' ? 'win' : p.result === 'loss' ? 'loss' : 'push';
+        res = '<td><span class="vh-pl__pill vh-pl__pill--' + cls + '">' + p.result + '</span></td><td class="num">' + p.actual + '</td><td class="num">' + (Number(p.profit) >= 0 ? '+' : '') + fmt(Number(p.profit), 2) + '</td>';
+      }
+      return '<tr><td>' + p.game_date.slice(5) + '</td><td>' + p.player + '</td><td>' + p.stat + ' ' + pill + '</td><td class="num">' + p.line + '</td><td class="num">' + p.proj + '</td>' + res + '</tr>';
+    }
+    if (st.open_picks && st.open_picks.length) {
+      var oh = '<div style="overflow-x:auto"><table class="vh-pl__table"><thead><tr><th>Date</th><th>Player</th><th>Market</th><th class="num">Line</th><th class="num">Model</th></tr></thead><tbody>';
+      st.open_picks.forEach(function(p){ oh += pickRow(p, false); });
+      $('pl-open').innerHTML = oh + '</tbody></table></div>';
+    }
+    if (st.recent_graded && st.recent_graded.length) {
+      var rh = '<div style="overflow-x:auto"><table class="vh-pl__table"><thead><tr><th>Date</th><th>Player</th><th>Market</th><th class="num">Line</th><th class="num">Model</th><th>Result</th><th class="num">Actual</th><th class="num">P/L</th></tr></thead><tbody>';
+      st.recent_graded.slice().reverse().forEach(function(p){ rh += pickRow(p, true); });
+      $('pl-recent').innerHTML = rh + '</tbody></table></div>';
+    }
+    $('pl-ledger-foot').innerHTML = 'Paper only — 1 unit per pick at −110, graded against official game logs. Board: <b>' + (st.board.file || '—') + '</b> · updated <b>' + st.as_of + '</b>.';
+  }).catch(function(){ $('pl-banner').textContent = 'Paper-trade ledger failed to load.'; });
+})();
+</script>
+<script src="/assets/error-boundary.js"></script>
+</body></html>
