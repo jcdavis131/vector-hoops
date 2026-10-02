@@ -8,13 +8,12 @@
     { href: '/', label: 'Atlas', title: 'The map of 12,966 player-seasons' },
     { href: '/play', label: 'Play', title: 'Daily Court: five past All-Stars, find each modern twin' },
     { href: '/players', label: 'Players', title: 'Directory, skill profiles and leaderboards' },
-    { href: '/taxonomy', label: 'Taxonomy', title: '22 play-style archetypes across 5 families, from 2,426 careers' },
+    { href: '/teams', label: 'Teams', title: 'Thirty seamless team intro loops over the embedding atlas' },
     { href: '/model', label: 'Lab', title: 'How the embedding model is trained and evaluated' },
     { href: '/trends', label: 'Trends', title: 'Thirty seasons of league drift' },
     { href: '/insights', label: 'Insights', title: 'What the model learned: shareable findings from 12,966 player-seasons' },
-    { href: '/playoff-runs', label: 'Playoff Runs', title: 'The 42 greatest postseason runs ever: players, duos, trios, teams' },
-    { href: '/methods', label: 'Methods', title: 'Sources, features and the maths behind every number' },
-    { href: '/research', label: 'Research', title: 'The lab: rankings, taxonomy and the frontier ML program' }
+    { href: '/props-lab', label: 'Props Lab', title: 'Paper-trading a game-log model against PrizePicks lines' },
+    { href: '/methods', label: 'Methods', title: 'Sources, features and the maths behind every number' }
   ];
 
   // Centre circle of a court, seen from above: the site's mark.
@@ -27,7 +26,6 @@
     if (active === href) return true;
     if (active === '/leaderboard' && href === '/play') return true;
     if (active === '/everyday' && href === '/play') return true;
-    if (active === '/teams' && href === '/players') return true;
     return false;
   }
 

@@ -1,0 +1,690 @@
+{
+ "generated": "2026-10-02",
+ "season": "2025-26 regular season (lines Dec 2025 - Apr 2026)",
+ "method": "per-stat ridge on trailing game-log form; line NOT a feature; monthly expanding refits; edge rule |proj-line|>=1.0*sd tuned on first half of board days, locked, evaluated on second half",
+ "overall": {
+  "proj_mae": 2.8533,
+  "line_mae": 2.7843,
+  "n_eval": 17275,
+  "eval_days": 57,
+  "gate": false,
+  "note": "Gate FAILED as defined (proj_mae > line_mae). Tail edge rule below is the honest forward-tested signal."
+ },
+ "edge_rule": {
+  "k": 1.0,
+  "tune": {
+   "n": 53,
+   "w": 32,
+   "roi": 0.1527
+  },
+  "eval": {
+   "n": 111,
+   "w": 71,
+   "roi": 0.2211,
+   "cum_profit_units": 24.55
+  },
+  "under_lean_eval": 0.856
+ },
+ "per_stat": {
+  "3-PT Attempted": {
+   "n": 541,
+   "proj_mae": 1.8306,
+   "line_mae": 1.8309
+  },
+  "3-PT Made": {
+   "n": 748,
+   "proj_mae": 1.1512,
+   "line_mae": 1.1497
+  },
+  "Assists": {
+   "n": 1659,
+   "proj_mae": 1.8619,
+   "line_mae": 1.8225
+  },
+  "Blocked Shots": {
+   "n": 378,
+   "proj_mae": 0.7857,
+   "line_mae": 0.7884
+  },
+  "FG Attempted": {
+   "n": 1031,
+   "proj_mae": 3.2704,
+   "line_mae": 3.1935
+  },
+  "FG Made": {
+   "n": 701,
+   "proj_mae": 2.1631,
+   "line_mae": 2.0934
+  },
+  "Free Throws Attempted": {
+   "n": 694,
+   "proj_mae": 2.1781,
+   "line_mae": 2.129
+  },
+  "Free Throws Made": {
+   "n": 585,
+   "proj_mae": 1.9265,
+   "line_mae": 1.8863
+  },
+  "Personal Fouls": {
+   "n": 414,
+   "proj_mae": 1.1236,
+   "line_mae": 1.1329
+  },
+  "Points": {
+   "n": 4926,
+   "proj_mae": 5.2619,
+   "line_mae": 5.1055
+  },
+  "Rebounds": {
+   "n": 2817,
+   "proj_mae": 2.1396,
+   "line_mae": 2.0928
+  },
+  "Steals": {
+   "n": 668,
+   "proj_mae": 0.7742,
+   "line_mae": 0.7665
+  },
+  "Turnovers": {
+   "n": 893,
+   "proj_mae": 1.0543,
+   "line_mae": 1.0543
+  },
+  "Two Pointers Attempted": {
+   "n": 722,
+   "proj_mae": 2.4891,
+   "line_mae": 2.4557
+  },
+  "Two Pointers Made": {
+   "n": 498,
+   "proj_mae": 1.7243,
+   "line_mae": 1.6968
+  }
+ },
+ "monthly": [
+  {
+   "month": "2026-02",
+   "n": 20,
+   "w": 13,
+   "roi": 0.2409,
+   "cum_profit": 4.82,
+   "cum_n": 20
+  },
+  {
+   "month": "2026-03",
+   "n": 31,
+   "w": 21,
+   "roi": 0.2933,
+   "cum_profit": 13.91,
+   "cum_n": 51
+  },
+  {
+   "month": "2026-04",
+   "n": 60,
+   "w": 37,
+   "roi": 0.1773,
+   "cum_profit": 24.55,
+   "cum_n": 111
+  }
+ ],
+ "equity_curve": [
+  {
+   "board": "2026-02-09",
+   "cum_profit": 0.91,
+   "cum_n": 1
+  },
+  {
+   "board": "2026-02-09",
+   "cum_profit": 1.82,
+   "cum_n": 2
+  },
+  {
+   "board": "2026-02-09",
+   "cum_profit": 2.73,
+   "cum_n": 3
+  },
+  {
+   "board": "2026-02-09",
+   "cum_profit": 3.64,
+   "cum_n": 4
+  },
+  {
+   "board": "2026-02-09",
+   "cum_profit": 2.64,
+   "cum_n": 5
+  },
+  {
+   "board": "2026-02-09",
+   "cum_profit": 1.64,
+   "cum_n": 6
+  },
+  {
+   "board": "2026-02-10",
+   "cum_profit": 0.64,
+   "cum_n": 7
+  },
+  {
+   "board": "2026-02-11",
+   "cum_profit": 1.55,
+   "cum_n": 8
+  },
+  {
+   "board": "2026-02-11",
+   "cum_profit": 0.55,
+   "cum_n": 9
+  },
+  {
+   "board": "2026-02-11",
+   "cum_profit": -0.45,
+   "cum_n": 10
+  },
+  {
+   "board": "2026-02-12",
+   "cum_profit": 0.45,
+   "cum_n": 11
+  },
+  {
+   "board": "2026-02-19",
+   "cum_profit": 1.36,
+   "cum_n": 12
+  },
+  {
+   "board": "2026-02-20",
+   "cum_profit": 2.27,
+   "cum_n": 13
+  },
+  {
+   "board": "2026-02-20",
+   "cum_profit": 1.27,
+   "cum_n": 14
+  },
+  {
+   "board": "2026-02-20",
+   "cum_profit": 2.18,
+   "cum_n": 15
+  },
+  {
+   "board": "2026-02-20",
+   "cum_profit": 1.18,
+   "cum_n": 16
+  },
+  {
+   "board": "2026-02-22",
+   "cum_profit": 2.09,
+   "cum_n": 17
+  },
+  {
+   "board": "2026-02-22",
+   "cum_profit": 3.0,
+   "cum_n": 18
+  },
+  {
+   "board": "2026-02-22",
+   "cum_profit": 3.91,
+   "cum_n": 19
+  },
+  {
+   "board": "2026-02-24",
+   "cum_profit": 4.82,
+   "cum_n": 20
+  },
+  {
+   "board": "2026-03-04",
+   "cum_profit": 5.73,
+   "cum_n": 21
+  },
+  {
+   "board": "2026-03-09",
+   "cum_profit": 6.64,
+   "cum_n": 22
+  },
+  {
+   "board": "2026-03-10",
+   "cum_profit": 7.55,
+   "cum_n": 23
+  },
+  {
+   "board": "2026-03-10",
+   "cum_profit": 6.55,
+   "cum_n": 24
+  },
+  {
+   "board": "2026-03-10",
+   "cum_profit": 7.45,
+   "cum_n": 25
+  },
+  {
+   "board": "2026-03-12",
+   "cum_profit": 6.45,
+   "cum_n": 26
+  },
+  {
+   "board": "2026-03-14",
+   "cum_profit": 7.36,
+   "cum_n": 27
+  },
+  {
+   "board": "2026-03-15",
+   "cum_profit": 6.36,
+   "cum_n": 28
+  },
+  {
+   "board": "2026-03-15",
+   "cum_profit": 7.27,
+   "cum_n": 29
+  },
+  {
+   "board": "2026-03-15",
+   "cum_profit": 8.18,
+   "cum_n": 30
+  },
+  {
+   "board": "2026-03-15",
+   "cum_profit": 9.09,
+   "cum_n": 31
+  },
+  {
+   "board": "2026-03-20",
+   "cum_profit": 8.09,
+   "cum_n": 32
+  },
+  {
+   "board": "2026-03-21",
+   "cum_profit": 9.0,
+   "cum_n": 33
+  },
+  {
+   "board": "2026-03-22",
+   "cum_profit": 9.91,
+   "cum_n": 34
+  },
+  {
+   "board": "2026-03-25",
+   "cum_profit": 10.82,
+   "cum_n": 35
+  },
+  {
+   "board": "2026-03-25",
+   "cum_profit": 11.73,
+   "cum_n": 36
+  },
+  {
+   "board": "2026-03-25",
+   "cum_profit": 10.73,
+   "cum_n": 37
+  },
+  {
+   "board": "2026-03-25",
+   "cum_profit": 11.64,
+   "cum_n": 38
+  },
+  {
+   "board": "2026-03-25",
+   "cum_profit": 12.55,
+   "cum_n": 39
+  },
+  {
+   "board": "2026-03-25",
+   "cum_profit": 13.45,
+   "cum_n": 40
+  },
+  {
+   "board": "2026-03-25",
+   "cum_profit": 14.36,
+   "cum_n": 41
+  },
+  {
+   "board": "2026-03-26",
+   "cum_profit": 13.36,
+   "cum_n": 42
+  },
+  {
+   "board": "2026-03-27",
+   "cum_profit": 12.36,
+   "cum_n": 43
+  },
+  {
+   "board": "2026-03-27",
+   "cum_profit": 13.27,
+   "cum_n": 44
+  },
+  {
+   "board": "2026-03-28",
+   "cum_profit": 14.18,
+   "cum_n": 45
+  },
+  {
+   "board": "2026-03-29",
+   "cum_profit": 15.09,
+   "cum_n": 46
+  },
+  {
+   "board": "2026-03-30",
+   "cum_profit": 16.0,
+   "cum_n": 47
+  },
+  {
+   "board": "2026-03-30",
+   "cum_profit": 15.0,
+   "cum_n": 48
+  },
+  {
+   "board": "2026-03-30",
+   "cum_profit": 14.0,
+   "cum_n": 49
+  },
+  {
+   "board": "2026-03-30",
+   "cum_profit": 14.91,
+   "cum_n": 50
+  },
+  {
+   "board": "2026-03-31",
+   "cum_profit": 13.91,
+   "cum_n": 51
+  },
+  {
+   "board": "2026-04-01",
+   "cum_profit": 14.82,
+   "cum_n": 52
+  },
+  {
+   "board": "2026-04-05",
+   "cum_profit": 15.73,
+   "cum_n": 53
+  },
+  {
+   "board": "2026-04-05",
+   "cum_profit": 16.64,
+   "cum_n": 54
+  },
+  {
+   "board": "2026-04-05",
+   "cum_profit": 15.64,
+   "cum_n": 55
+  },
+  {
+   "board": "2026-04-05",
+   "cum_profit": 14.64,
+   "cum_n": 56
+  },
+  {
+   "board": "2026-04-05",
+   "cum_profit": 13.64,
+   "cum_n": 57
+  },
+  {
+   "board": "2026-04-05",
+   "cum_profit": 12.64,
+   "cum_n": 58
+  },
+  {
+   "board": "2026-04-05",
+   "cum_profit": 11.64,
+   "cum_n": 59
+  },
+  {
+   "board": "2026-04-05",
+   "cum_profit": 12.55,
+   "cum_n": 60
+  },
+  {
+   "board": "2026-04-05",
+   "cum_profit": 13.45,
+   "cum_n": 61
+  },
+  {
+   "board": "2026-04-05",
+   "cum_profit": 12.45,
+   "cum_n": 62
+  },
+  {
+   "board": "2026-04-07",
+   "cum_profit": 13.36,
+   "cum_n": 63
+  },
+  {
+   "board": "2026-04-07",
+   "cum_profit": 14.27,
+   "cum_n": 64
+  },
+  {
+   "board": "2026-04-07",
+   "cum_profit": 13.27,
+   "cum_n": 65
+  },
+  {
+   "board": "2026-04-07",
+   "cum_profit": 14.18,
+   "cum_n": 66
+  },
+  {
+   "board": "2026-04-07",
+   "cum_profit": 15.09,
+   "cum_n": 67
+  },
+  {
+   "board": "2026-04-07",
+   "cum_profit": 16.0,
+   "cum_n": 68
+  },
+  {
+   "board": "2026-04-07",
+   "cum_profit": 15.0,
+   "cum_n": 69
+  },
+  {
+   "board": "2026-04-08",
+   "cum_profit": 15.91,
+   "cum_n": 70
+  },
+  {
+   "board": "2026-04-09",
+   "cum_profit": 14.91,
+   "cum_n": 71
+  },
+  {
+   "board": "2026-04-09",
+   "cum_profit": 13.91,
+   "cum_n": 72
+  },
+  {
+   "board": "2026-04-09",
+   "cum_profit": 14.82,
+   "cum_n": 73
+  },
+  {
+   "board": "2026-04-09",
+   "cum_profit": 13.82,
+   "cum_n": 74
+  },
+  {
+   "board": "2026-04-09",
+   "cum_profit": 14.73,
+   "cum_n": 75
+  },
+  {
+   "board": "2026-04-10",
+   "cum_profit": 13.73,
+   "cum_n": 76
+  },
+  {
+   "board": "2026-04-10",
+   "cum_profit": 14.64,
+   "cum_n": 77
+  },
+  {
+   "board": "2026-04-10",
+   "cum_profit": 15.55,
+   "cum_n": 78
+  },
+  {
+   "board": "2026-04-10",
+   "cum_profit": 16.45,
+   "cum_n": 79
+  },
+  {
+   "board": "2026-04-10",
+   "cum_profit": 17.36,
+   "cum_n": 80
+  },
+  {
+   "board": "2026-04-10",
+   "cum_profit": 18.27,
+   "cum_n": 81
+  },
+  {
+   "board": "2026-04-10",
+   "cum_profit": 19.18,
+   "cum_n": 82
+  },
+  {
+   "board": "2026-04-10",
+   "cum_profit": 20.09,
+   "cum_n": 83
+  },
+  {
+   "board": "2026-04-10",
+   "cum_profit": 21.0,
+   "cum_n": 84
+  },
+  {
+   "board": "2026-04-10",
+   "cum_profit": 20.0,
+   "cum_n": 85
+  },
+  {
+   "board": "2026-04-10",
+   "cum_profit": 19.0,
+   "cum_n": 86
+  },
+  {
+   "board": "2026-04-10",
+   "cum_profit": 19.91,
+   "cum_n": 87
+  },
+  {
+   "board": "2026-04-10",
+   "cum_profit": 20.82,
+   "cum_n": 88
+  },
+  {
+   "board": "2026-04-10",
+   "cum_profit": 19.82,
+   "cum_n": 89
+  },
+  {
+   "board": "2026-04-10",
+   "cum_profit": 20.73,
+   "cum_n": 90
+  },
+  {
+   "board": "2026-04-10",
+   "cum_profit": 19.73,
+   "cum_n": 91
+  },
+  {
+   "board": "2026-04-10",
+   "cum_profit": 20.64,
+   "cum_n": 92
+  },
+  {
+   "board": "2026-04-10",
+   "cum_profit": 21.55,
+   "cum_n": 93
+  },
+  {
+   "board": "2026-04-10",
+   "cum_profit": 22.45,
+   "cum_n": 94
+  },
+  {
+   "board": "2026-04-10",
+   "cum_profit": 23.36,
+   "cum_n": 95
+  },
+  {
+   "board": "2026-04-10",
+   "cum_profit": 24.27,
+   "cum_n": 96
+  },
+  {
+   "board": "2026-04-10",
+   "cum_profit": 23.27,
+   "cum_n": 97
+  },
+  {
+   "board": "2026-04-12",
+   "cum_profit": 22.27,
+   "cum_n": 98
+  },
+  {
+   "board": "2026-04-12",
+   "cum_profit": 21.27,
+   "cum_n": 99
+  },
+  {
+   "board": "2026-04-12",
+   "cum_profit": 20.27,
+   "cum_n": 100
+  },
+  {
+   "board": "2026-04-12",
+   "cum_profit": 19.27,
+   "cum_n": 101
+  },
+  {
+   "board": "2026-04-12",
+   "cum_profit": 18.27,
+   "cum_n": 102
+  },
+  {
+   "board": "2026-04-12",
+   "cum_profit": 19.18,
+   "cum_n": 103
+  },
+  {
+   "board": "2026-04-12",
+   "cum_profit": 20.09,
+   "cum_n": 104
+  },
+  {
+   "board": "2026-04-12",
+   "cum_profit": 21.0,
+   "cum_n": 105
+  },
+  {
+   "board": "2026-04-12",
+   "cum_profit": 21.91,
+   "cum_n": 106
+  },
+  {
+   "board": "2026-04-12",
+   "cum_profit": 22.82,
+   "cum_n": 107
+  },
+  {
+   "board": "2026-04-12",
+   "cum_profit": 21.82,
+   "cum_n": 108
+  },
+  {
+   "board": "2026-04-12",
+   "cum_profit": 22.73,
+   "cum_n": 109
+  },
+  {
+   "board": "2026-04-12",
+   "cum_profit": 23.64,
+   "cum_n": 110
+  },
+  {
+   "board": "2026-04-12",
+   "cum_profit": 24.55,
+   "cum_n": 111
+  }
+ ],
+ "coverage_68": 0.6675,
+ "coverage_95": 0.93
+}
