@@ -1,0 +1,25 @@
+{
+ "mode": "preseason",
+ "season_start": "2026-10-20",
+ "season_end": "2027-04-11",
+ "as_of": "2026-10-02 12:37 UTC",
+ "board": {
+  "file": "2026-10-02_1204.json",
+  "player_props": 0,
+  "regular_season_props": 0
+ },
+ "season": {
+  "n": 0,
+  "w": 0,
+  "l": 0,
+  "push": 0,
+  "void": 0,
+  "profit": 0.0,
+  "roi": 0.0,
+  "win_rate": 0.0
+ },
+ "open_picks": [],
+ "recent_graded": [],
+ "note": "No regular-season player props on the latest board (preseason).",
+ "backtest": "data/papertrade/backtest_summary.json"
+}
