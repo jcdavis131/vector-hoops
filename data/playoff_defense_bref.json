@@ -1,5 +1,5 @@
 {
- "provenance": "Basketball-Reference playoff advanced tables (players: OBPM/DBPM/BPM) and official playoff Team Advanced Stats tables (teams: ORtg/DRtg/NRtg/W/L), fetched 2026-10-02. Pool = player-seasons with old offense-only score >= 46 or unit members.",
+ "provenance": "Basketball-Reference playoff advanced tables (players: OBPM/DBPM/BPM) and official playoff Team Advanced Stats tables (teams: ORtg/DRtg/NRtg/W/L), fetched 2026-10-02. Pool = player-seasons with old offense-only score >= 46 or unit members. Supplement 2026-10-02: 10 more player-seasons from BRef single-season playoff leaders pages (OBPM/DBPM/BPM top-250). 42 requested player-seasons are absent from those leaders pages (verified bounds: OBPM<5.70, DBPM<2.83, BPM<6.98) and their player-page Advanced tables are not text-extractable; they remain unscored, never estimated.",
  "exclusions": [
   "('1998','shaquille oneal'): 1998 playoff DBPM/OBPM/BPM not recoverable from BRef (playoffs-advanced URL pattern 404; series-stat outlinks unstable; web search surfaced no DBPM figure). Documented exclusion per no-synthesis rule; his other pool seasons are included."
  ],
@@ -65,6 +65,16 @@
    "src": "A"
   },
   {
+   "poyr": 1999,
+   "name": "David Robinson",
+   "tm": "SAS",
+   "g": 17,
+   "obpm": 2.59,
+   "dbpm": 4.47,
+   "bpm": 7.06,
+   "src": "F2"
+  },
+  {
    "poyr": 2000,
    "name": "Glen Rice",
    "tm": "LAL",
@@ -125,6 +135,16 @@
    "src": "A"
   },
   {
+   "poyr": 2003,
+   "name": "Tim Duncan",
+   "tm": "SAS",
+   "g": 24,
+   "obpm": 6.21,
+   "dbpm": 3.95,
+   "bpm": 10.16,
+   "src": "F2"
+  },
+  {
    "poyr": 2005,
    "name": "Manu Ginobili",
    "tm": "SAS",
@@ -163,6 +183,16 @@
    "dbpm": 0.2,
    "bpm": 0.7,
    "src": "A"
+  },
+  {
+   "poyr": 2006,
+   "name": "Dirk Nowitzki",
+   "tm": "DAL",
+   "g": 23,
+   "obpm": 7.78,
+   "dbpm": 1.46,
+   "bpm": 9.24,
+   "src": "F2"
   },
   {
    "poyr": 2006,
@@ -245,6 +275,16 @@
    "src": null
   },
   {
+   "poyr": 2008,
+   "name": "LeBron James",
+   "tm": "CLE",
+   "g": 13,
+   "obpm": 6.69,
+   "dbpm": 3.36,
+   "bpm": 10.06,
+   "src": "F2"
+  },
+  {
    "poyr": 2009,
    "name": "Carmelo Anthony",
    "tm": "DEN",
@@ -303,6 +343,16 @@
    "dbpm": 0.9,
    "bpm": 7.0,
    "src": "B"
+  },
+  {
+   "poyr": 2010,
+   "name": "LeBron James",
+   "tm": "CLE",
+   "g": 11,
+   "obpm": 8.52,
+   "dbpm": 2.96,
+   "bpm": 11.48,
+   "src": "F2"
   },
   {
    "poyr": 2011,
@@ -465,6 +515,16 @@
    "src": "B"
   },
   {
+   "poyr": 2014,
+   "name": "Russell Westbrook",
+   "tm": "OKC",
+   "g": 19,
+   "obpm": 6.3,
+   "dbpm": 1.32,
+   "bpm": 7.62,
+   "src": "F2"
+  },
+  {
    "poyr": 2015,
    "name": "Klay Thompson",
    "tm": "GSW",
@@ -473,6 +533,16 @@
    "dbpm": 0.0,
    "bpm": 1.9,
    "src": "B"
+  },
+  {
+   "poyr": 2015,
+   "name": "LeBron James",
+   "tm": "CLE",
+   "g": 20,
+   "obpm": 5.88,
+   "dbpm": 2.0,
+   "bpm": 7.88,
+   "src": "F2"
   },
   {
    "poyr": 2015,
@@ -6206,5 +6276,12 @@
    "ortg": 112.0,
    "drtg": 112.0
   }
+ },
+ "verified_bounds": {
+  "note": "player-seasons absent from BRef single-season playoff top-250 leaders pages, 2026-10-02",
+  "obpm_lt": 5.7,
+  "dbpm_lt": 2.83,
+  "bpm_lt": 6.98,
+  "count": 42
  }
 }

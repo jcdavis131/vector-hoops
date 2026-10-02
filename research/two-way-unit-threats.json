@@ -1,0 +1,510 @@
+[
+ {
+  "bucket": "duo",
+  "season": "2001-02",
+  "players": [
+   "Shaquille ONeal",
+   "Kobe Bryant"
+  ],
+  "upper_bound": 96.75,
+  "missing": [
+   "Kobe Bryant"
+  ]
+ },
+ {
+  "bucket": "duo",
+  "season": "2007-08",
+  "players": [
+   "Kevin Garnett",
+   "Paul Pierce"
+  ],
+  "upper_bound": 91.68,
+  "missing": [
+   "Kevin Garnett",
+   "Paul Pierce"
+  ]
+ },
+ {
+  "bucket": "duo",
+  "season": "2008-09",
+  "players": [
+   "Kobe Bryant",
+   "Pau Gasol"
+  ],
+  "upper_bound": 93.56,
+  "missing": [
+   "Pau Gasol"
+  ]
+ },
+ {
+  "bucket": "duo",
+  "season": "2008-09",
+  "players": [
+   "LeBron James",
+   "Mo Williams"
+  ],
+  "upper_bound": 89.38,
+  "missing": [
+   "Mo Williams"
+  ]
+ },
+ {
+  "bucket": "duo",
+  "season": "2009-10",
+  "players": [
+   "Kobe Bryant",
+   "Andrew Bynum"
+  ],
+  "upper_bound": 86.25,
+  "missing": [
+   "Andrew Bynum"
+  ]
+ },
+ {
+  "bucket": "duo",
+  "season": "2012-13",
+  "players": [
+   "LeBron James",
+   "Dwyane Wade"
+  ],
+  "upper_bound": 88.19,
+  "missing": [
+   "Dwyane Wade"
+  ]
+ },
+ {
+  "bucket": "duo",
+  "season": "2013-14",
+  "players": [
+   "Tony Parker",
+   "Patty Mills"
+  ],
+  "upper_bound": 85.9,
+  "missing": [
+   "Tony Parker",
+   "Patty Mills"
+  ]
+ },
+ {
+  "bucket": "duo",
+  "season": "2023-24",
+  "players": [
+   "Luka Doncic",
+   "Kyrie Irving"
+  ],
+  "upper_bound": 86.38,
+  "missing": [
+   "Luka Doncic",
+   "Kyrie Irving"
+  ]
+ },
+ {
+  "bucket": "duo",
+  "season": "2024-25",
+  "players": [
+   "Jalen Brunson",
+   "KarlAnthony Towns"
+  ],
+  "upper_bound": 86.57,
+  "missing": [
+   "Jalen Brunson",
+   "KarlAnthony Towns"
+  ]
+ },
+ {
+  "bucket": "trio",
+  "season": "1998-99",
+  "players": [
+   "Tim Duncan",
+   "David Robinson",
+   "Sean Elliott"
+  ],
+  "upper_bound": 119.76,
+  "missing": [
+   "Tim Duncan",
+   "Sean Elliott"
+  ]
+ },
+ {
+  "bucket": "trio",
+  "season": "1999-00",
+  "players": [
+   "Rik Smits",
+   "Jalen Rose",
+   "Reggie Miller"
+  ],
+  "upper_bound": 117.15,
+  "missing": [
+   "Rik Smits",
+   "Jalen Rose",
+   "Reggie Miller"
+  ]
+ },
+ {
+  "bucket": "trio",
+  "season": "2001-02",
+  "players": [
+   "Shaquille ONeal",
+   "Kobe Bryant",
+   "Devean George"
+  ],
+  "upper_bound": 124.98,
+  "missing": [
+   "Kobe Bryant",
+   "Devean George"
+  ]
+ },
+ {
+  "bucket": "trio",
+  "season": "2002-03",
+  "players": [
+   "Richard Hamilton",
+   "Chauncey Billups",
+   "Corliss Williamson"
+  ],
+  "upper_bound": 110.14,
+  "missing": [
+   "Richard Hamilton",
+   "Chauncey Billups",
+   "Corliss Williamson"
+  ]
+ },
+ {
+  "bucket": "trio",
+  "season": "2002-03",
+  "players": [
+   "Tim Duncan",
+   "Tony Parker",
+   "Malik Rose"
+  ],
+  "upper_bound": 118.8,
+  "missing": [
+   "Tony Parker",
+   "Malik Rose"
+  ]
+ },
+ {
+  "bucket": "trio",
+  "season": "2003-04",
+  "players": [
+   "Richard Hamilton",
+   "Corliss Williamson",
+   "Chauncey Billups"
+  ],
+  "upper_bound": 119.6,
+  "missing": [
+   "Richard Hamilton",
+   "Corliss Williamson",
+   "Chauncey Billups"
+  ]
+ },
+ {
+  "bucket": "trio",
+  "season": "2004-05",
+  "players": [
+   "Amare Stoudemire",
+   "Shawn Marion",
+   "Steve Nash"
+  ],
+  "upper_bound": 112.79,
+  "missing": [
+   "Amare Stoudemire",
+   "Shawn Marion",
+   "Steve Nash"
+  ]
+ },
+ {
+  "bucket": "trio",
+  "season": "2005-06",
+  "players": [
+   "Dirk Nowitzki",
+   "Jason Terry",
+   "Josh Howard"
+  ],
+  "upper_bound": 110.95,
+  "missing": [
+   "Jason Terry",
+   "Josh Howard"
+  ]
+ },
+ {
+  "bucket": "trio",
+  "season": "2007-08",
+  "players": [
+   "Kevin Garnett",
+   "Paul Pierce",
+   "Leon Powe"
+  ],
+  "upper_bound": 130.19,
+  "missing": [
+   "Kevin Garnett",
+   "Paul Pierce",
+   "Leon Powe"
+  ]
+ },
+ {
+  "bucket": "trio",
+  "season": "2007-08",
+  "players": [
+   "Manu Ginobili",
+   "Tim Duncan",
+   "Tony Parker"
+  ],
+  "upper_bound": 109.96,
+  "missing": [
+   "Manu Ginobili",
+   "Tim Duncan",
+   "Tony Parker"
+  ]
+ },
+ {
+  "bucket": "trio",
+  "season": "2008-09",
+  "players": [
+   "Kobe Bryant",
+   "Pau Gasol",
+   "Andrew Bynum"
+  ],
+  "upper_bound": 126.62,
+  "missing": [
+   "Pau Gasol",
+   "Andrew Bynum"
+  ]
+ },
+ {
+  "bucket": "trio",
+  "season": "2008-09",
+  "players": [
+   "LeBron James",
+   "Mo Williams",
+   "Zydrunas Ilgauskas"
+  ],
+  "upper_bound": 115.33,
+  "missing": [
+   "Mo Williams",
+   "Zydrunas Ilgauskas"
+  ]
+ },
+ {
+  "bucket": "trio",
+  "season": "2009-10",
+  "players": [
+   "Amare Stoudemire",
+   "Leandro Barbosa",
+   "Jason Richardson"
+  ],
+  "upper_bound": 111.7,
+  "missing": [
+   "Amare Stoudemire",
+   "Leandro Barbosa",
+   "Jason Richardson"
+  ]
+ },
+ {
+  "bucket": "trio",
+  "season": "2009-10",
+  "players": [
+   "Kobe Bryant",
+   "Andrew Bynum",
+   "Pau Gasol"
+  ],
+  "upper_bound": 127.27,
+  "missing": [
+   "Andrew Bynum",
+   "Pau Gasol"
+  ]
+ },
+ {
+  "bucket": "trio",
+  "season": "2010-11",
+  "players": [
+   "Kevin Durant",
+   "Russell Westbrook",
+   "James Harden"
+  ],
+  "upper_bound": 114.14,
+  "missing": [
+   "Kevin Durant",
+   "Russell Westbrook",
+   "James Harden"
+  ]
+ },
+ {
+  "bucket": "trio",
+  "season": "2012-13",
+  "players": [
+   "LeBron James",
+   "Dwyane Wade",
+   "Chris Bosh"
+  ],
+  "upper_bound": 122.66,
+  "missing": [
+   "Dwyane Wade",
+   "Chris Bosh"
+  ]
+ },
+ {
+  "bucket": "trio",
+  "season": "2013-14",
+  "players": [
+   "Tony Parker",
+   "Patty Mills",
+   "Manu Ginobili"
+  ],
+  "upper_bound": 129.26,
+  "missing": [
+   "Tony Parker",
+   "Patty Mills",
+   "Manu Ginobili"
+  ]
+ },
+ {
+  "bucket": "trio",
+  "season": "2014-15",
+  "players": [
+   "LeBron James",
+   "Kyrie Irving",
+   "JR Smith"
+  ],
+  "upper_bound": 112.52,
+  "missing": [
+   "Kyrie Irving",
+   "JR Smith"
+  ]
+ },
+ {
+  "bucket": "trio",
+  "season": "2019-20",
+  "players": [
+   "Jayson Tatum",
+   "Kemba Walker",
+   "Jaylen Brown"
+  ],
+  "upper_bound": 110.31,
+  "missing": [
+   "Jayson Tatum",
+   "Kemba Walker",
+   "Jaylen Brown"
+  ]
+ },
+ {
+  "bucket": "trio",
+  "season": "2020-21",
+  "players": [
+   "Devin Booker",
+   "Chris Paul",
+   "Dario Saric"
+  ],
+  "upper_bound": 114.37,
+  "missing": [
+   "Devin Booker",
+   "Chris Paul",
+   "Dario Saric"
+  ]
+ },
+ {
+  "bucket": "trio",
+  "season": "2021-22",
+  "players": [
+   "Jimmy Butler",
+   "Tyler Herro",
+   "Bam Adebayo"
+  ],
+  "upper_bound": 110.11,
+  "missing": [
+   "Jimmy Butler",
+   "Tyler Herro",
+   "Bam Adebayo"
+  ]
+ },
+ {
+  "bucket": "trio",
+  "season": "2022-23",
+  "players": [
+   "Jayson Tatum",
+   "Jaylen Brown",
+   "Malcolm Brogdon"
+  ],
+  "upper_bound": 112.39,
+  "missing": [
+   "Jayson Tatum",
+   "Jaylen Brown",
+   "Malcolm Brogdon"
+  ]
+ },
+ {
+  "bucket": "trio",
+  "season": "2023-24",
+  "players": [
+   "Pascal Siakam",
+   "Myles Turner",
+   "Tyrese Haliburton"
+  ],
+  "upper_bound": 111.5,
+  "missing": [
+   "Pascal Siakam",
+   "Myles Turner",
+   "Tyrese Haliburton"
+  ]
+ },
+ {
+  "bucket": "trio",
+  "season": "2023-24",
+  "players": [
+   "Anthony Edwards",
+   "KarlAnthony Towns",
+   "Naz Reid"
+  ],
+  "upper_bound": 114.57,
+  "missing": [
+   "Anthony Edwards",
+   "KarlAnthony Towns",
+   "Naz Reid"
+  ]
+ },
+ {
+  "bucket": "trio",
+  "season": "2023-24",
+  "players": [
+   "Luka Doncic",
+   "Kyrie Irving",
+   "Tim Hardaway Jr."
+  ],
+  "upper_bound": 111.57,
+  "missing": [
+   "Luka Doncic",
+   "Kyrie Irving",
+   "Tim Hardaway Jr."
+  ]
+ },
+ {
+  "bucket": "trio",
+  "season": "2024-25",
+  "players": [
+   "Pascal Siakam",
+   "Tyrese Haliburton",
+   "Bennedict Mathurin"
+  ],
+  "upper_bound": 116.16,
+  "missing": [
+   "Pascal Siakam",
+   "Tyrese Haliburton",
+   "Bennedict Mathurin"
+  ]
+ },
+ {
+  "bucket": "trio",
+  "season": "2024-25",
+  "players": [
+   "Jalen Brunson",
+   "KarlAnthony Towns",
+   "OG Anunoby"
+  ],
+  "upper_bound": 113.89,
+  "missing": [
+   "Jalen Brunson",
+   "KarlAnthony Towns",
+   "OG Anunoby"
+  ]
+ }
+]

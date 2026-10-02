@@ -1,122 +1,152 @@
 {
- "generated": "2026-10-01",
- "source": "assets/playoffs.json (stats.nba.com RS vs playoff splits, 1996-97 → 2025-26)",
+ "generated": "2026-10-02",
+ "source": "assets/playoffs.json (stats.nba.com RS vs playoff splits, 1996-97 → 2025-26) for offense/series data; data/playoff_defense_bref.json (Basketball-Reference, fetched 2026-10-02) for playoff OBPM/DBPM/BPM and official playoff team ORtg/DRtg/NRtg",
  "method": {
-  "individuals": "PO GP>=10; score = pts/100 + 10*(TS-0.55) + 2 per round won + 4 if champion",
-  "units": "rotation players (RS GP>=40, PO GP>=12 so every unit won a series, PO usage>=15) ordered by RS scoring rate; score = (sum pts/100 + sum TS) + 2 per round won + 4 if champion; labeled highest-scoring duo/trio — scoring cores, not lineups (the dataset's MIN field is not conventional MPG)",
-  "teams": "grouped by (season, ordered playoff-opponent path); ranked by win%, then wins, then top-scorer pts/100"
+  "individuals": "Two-way, all-around ranking (Cameron's verdict: greatest ALL-AROUND, not offense-only). PO GP>=10 across 113 player-seasons with sourced playoff defensive data (plus a runtime bound check proving no unsourced player-season can reach the top 10). score = pts/100 + 10*(TS-0.55) + DBPM + 0.25*(team playoff net rating) + 2 per round won + 4 if champion. Defense counts one-for-one: a point of DBPM (points prevented per 100 possessions) moves the score exactly as much as a point of per-100 scoring — symmetric, no thumb on the scale; DBPM is zero-centered by construction so no era adjustment is needed. Team playoff net rating enters at quarter weight because it is shared across the whole roster — full weight would let team context swamp the individual signal. Documented exclusion: Shaquille O'Neal's 1998 run (its DBPM could not be sourced; not estimated).",
+  "units": "Two-way cores (not 'scoring cores'). Rotation players (RS GP>=40, PO GP>=12 so every unit won a series, PO usage>=15) ordered by RS scoring rate; score = sum over members of (pts/100 + 10*(TS-0.55) + DBPM) + 0.25*(team playoff net rating) + 2 per round won + 4 if champion. Not lineups or starters: the dataset's MIN field is not conventional MPG. Ranked only where every member has sourced playoff DBPM — units with unsourced members are excluded, not estimated (this omits some iconic cores: 2002 Shaq/Kobe, 2008-09/2009-10 Kobe/Pau/Bynum, 2008 Celtics, 2013 Heat, 1999/2003/2014 Spurs, 2004 Pistons — see research/two-way-playoff-runs.md for their verified score ranges; a live-browser read of BRef player pages would complete them).",
+  "teams": "Grouped by (season, ordered playoff-opponent path); ranked by official Basketball-Reference playoff net rating first, then wins. Only teams that won at least two series (>=8 wins) qualify — a run has to go somewhere. Net rating first means some dominant non-champions outrank champions; that is the formula working as designed."
  },
  "rankings": {
   "individuals": [
    {
-    "player": "Michael Jordan",
-    "season": "1997-98",
-    "pts100": 43.6,
-    "ts": 0.545,
-    "gp": 21,
-    "wl": "15-6",
-    "rounds": 4,
-    "champion": true,
-    "score": 55.55
-   },
-   {
-    "player": "Michael Jordan",
-    "season": "1996-97",
-    "pts100": 40.4,
-    "ts": 0.524,
-    "gp": 19,
-    "wl": "15-4",
-    "rounds": 4,
-    "champion": true,
-    "score": 52.14
-   },
-   {
     "player": "LeBron James",
     "season": "2008-09",
+    "team": "Cleveland Cavaliers",
     "pts100": 47.1,
     "ts": 0.618,
+    "dbpm": 4.8,
+    "team_netrtg": 9.9,
     "gp": 14,
     "wl": "10-4",
     "rounds": 2,
     "champion": false,
-    "score": 51.78
+    "score": 59.05
    },
    {
-    "player": "Kawhi Leonard",
-    "season": "2018-19",
-    "pts100": 38.8,
-    "ts": 0.619,
-    "gp": 24,
-    "wl": "16-8",
-    "rounds": 4,
-    "champion": true,
-    "score": 51.49
-   },
-   {
-    "player": "Kevin Durant",
-    "season": "2016-17",
-    "pts100": 38.0,
-    "ts": 0.683,
-    "gp": 15,
-    "wl": "16-1",
-    "rounds": 4,
-    "champion": true,
-    "score": 51.33
-   },
-   {
-    "player": "Giannis Antetokounmpo",
-    "season": "2020-21",
-    "pts100": 38.8,
-    "ts": 0.599,
+    "player": "Michael Jordan",
+    "season": "1997-98",
+    "team": "Chicago Bulls",
+    "pts100": 43.6,
+    "ts": 0.545,
+    "dbpm": 1.0,
+    "team_netrtg": 8.3,
     "gp": 21,
-    "wl": "16-7",
+    "wl": "15-6",
     "rounds": 4,
     "champion": true,
-    "score": 51.29
-   },
-   {
-    "player": "Shai Gilgeous-Alexander",
-    "season": "2024-25",
-    "pts100": 39.0,
-    "ts": 0.574,
-    "gp": 23,
-    "wl": "16-7",
-    "rounds": 4,
-    "champion": true,
-    "score": 51.24
-   },
-   {
-    "player": "Stephen Curry",
-    "season": "2021-22",
-    "pts100": 38.2,
-    "ts": 0.606,
-    "gp": 22,
-    "wl": "16-6",
-    "rounds": 4,
-    "champion": true,
-    "score": 50.76
-   },
-   {
-    "player": "Kobe Bryant",
-    "season": "2008-09",
-    "pts100": 38.6,
-    "ts": 0.564,
-    "gp": 23,
-    "wl": "16-7",
-    "rounds": 4,
-    "champion": true,
-    "score": 50.74
+    "score": 58.63
    },
    {
     "player": "Nikola Jokić",
     "season": "2022-23",
+    "team": "Denver Nuggets",
     "pts100": 37.9,
     "ts": 0.631,
+    "dbpm": 3.7,
+    "team_netrtg": 8.7,
     "gp": 20,
     "wl": "16-4",
     "rounds": 4,
     "champion": true,
-    "score": 50.71
+    "score": 56.59
+   },
+   {
+    "player": "Kevin Durant",
+    "season": "2016-17",
+    "team": "Golden State Warriors",
+    "pts100": 38.0,
+    "ts": 0.683,
+    "dbpm": 1.7,
+    "team_netrtg": 13.5,
+    "gp": 15,
+    "wl": "16-1",
+    "rounds": 4,
+    "champion": true,
+    "score": 56.41
+   },
+   {
+    "player": "Shai Gilgeous-Alexander",
+    "season": "2024-25",
+    "team": "Oklahoma City Thunder",
+    "pts100": 39.0,
+    "ts": 0.574,
+    "dbpm": 2.6,
+    "team_netrtg": 8.4,
+    "gp": 23,
+    "wl": "16-7",
+    "rounds": 4,
+    "champion": true,
+    "score": 55.94
+   },
+   {
+    "player": "Giannis Antetokounmpo",
+    "season": "2020-21",
+    "team": "Milwaukee Bucks",
+    "pts100": 38.8,
+    "ts": 0.599,
+    "dbpm": 3.2,
+    "team_netrtg": 5.3,
+    "gp": 21,
+    "wl": "16-7",
+    "rounds": 4,
+    "champion": true,
+    "score": 55.82
+   },
+   {
+    "player": "Michael Jordan",
+    "season": "1996-97",
+    "team": "Chicago Bulls",
+    "pts100": 40.4,
+    "ts": 0.524,
+    "dbpm": 1.7,
+    "team_netrtg": 6.5,
+    "gp": 19,
+    "wl": "15-4",
+    "rounds": 4,
+    "champion": true,
+    "score": 55.47
+   },
+   {
+    "player": "Kawhi Leonard",
+    "season": "2018-19",
+    "team": "Toronto Raptors",
+    "pts100": 38.8,
+    "ts": 0.619,
+    "dbpm": 2.4,
+    "team_netrtg": 5.6,
+    "gp": 24,
+    "wl": "16-8",
+    "rounds": 4,
+    "champion": true,
+    "score": 55.29
+   },
+   {
+    "player": "LeBron James",
+    "season": "2019-20",
+    "team": "Los Angeles Lakers",
+    "pts100": 37.2,
+    "ts": 0.647,
+    "dbpm": 3.1,
+    "team_netrtg": 7.0,
+    "gp": 21,
+    "wl": "16-5",
+    "rounds": 4,
+    "champion": true,
+    "score": 55.02
+   },
+   {
+    "player": "Stephen Curry",
+    "season": "2016-17",
+    "team": "Golden State Warriors",
+    "pts100": 37.0,
+    "ts": 0.659,
+    "dbpm": 1.4,
+    "team_netrtg": 13.5,
+    "gp": 17,
+    "wl": "16-1",
+    "rounds": 4,
+    "champion": true,
+    "score": 54.87
    }
   ],
   "duos": [
@@ -126,13 +156,15 @@
      "Kevin Durant"
     ],
     "season": "2016-17",
+    "team": "Golden State Warriors",
     "path": "POR-UTA-SAS-CLE",
     "wl": "16-1",
     "gp": 17,
     "pts100": 75.0,
+    "dbpm_sum": 3.1,
+    "team_netrtg": 13.5,
     "champion": true,
-    "score": 88.34,
-    "team": "Golden State Warriors"
+    "score": 95.9
    },
    {
     "players": [
@@ -140,41 +172,15 @@
      "LeBron James"
     ],
     "season": "2019-20",
+    "team": "Los Angeles Lakers",
     "path": "POR-HOU-DEN-MIA",
     "wl": "16-5",
     "gp": 21,
     "pts100": 74.4,
+    "dbpm_sum": 5.2,
+    "team_netrtg": 7.0,
     "champion": true,
-    "score": 87.71,
-    "team": "Los Angeles Lakers"
-   },
-   {
-    "players": [
-     "Stephen Curry",
-     "Kevin Durant"
-    ],
-    "season": "2018-19",
-    "path": "LAC-HOU-POR-TOR",
-    "wl": "14-8",
-    "gp": 22,
-    "pts100": 77.2,
-    "champion": false,
-    "score": 84.48,
-    "team": "Golden State Warriors"
-   },
-   {
-    "players": [
-     "LeBron James",
-     "Kyrie Irving"
-    ],
-    "season": "2015-16",
-    "path": "DET-ATL-TOR-GSW",
-    "wl": "16-5",
-    "gp": 21,
-    "pts100": 70.8,
-    "champion": true,
-    "score": 83.96,
-    "team": "Cleveland Cavaliers"
+    "score": 95.47
    },
    {
     "players": [
@@ -182,13 +188,31 @@
      "Jamal Murray"
     ],
     "season": "2022-23",
+    "team": "Denver Nuggets",
     "path": "MIN-PHX-LAL-MIA",
     "wl": "16-4",
     "gp": 20,
     "pts100": 70.4,
+    "dbpm_sum": 4.4,
+    "team_netrtg": 8.7,
     "champion": true,
-    "score": 83.62,
-    "team": "Denver Nuggets"
+    "score": 90.14
+   },
+   {
+    "players": [
+     "LeBron James",
+     "Kyrie Irving"
+    ],
+    "season": "2015-16",
+    "team": "Cleveland Cavaliers",
+    "path": "DET-ATL-TOR-GSW",
+    "wl": "16-5",
+    "gp": 21,
+    "pts100": 70.8,
+    "dbpm_sum": 4.2,
+    "team_netrtg": 9.5,
+    "champion": true,
+    "score": 89.97
    },
    {
     "players": [
@@ -196,41 +220,31 @@
      "Kevin Durant"
     ],
     "season": "2017-18",
+    "team": "Golden State Warriors",
     "path": "SAS-NOP-HOU-CLE",
     "wl": "16-5",
     "gp": 21,
     "pts100": 70.3,
+    "dbpm_sum": 2.1,
+    "team_netrtg": 10.3,
     "champion": true,
-    "score": 83.5,
-    "team": "Golden State Warriors"
+    "score": 87.94
    },
    {
     "players": [
-     "LeBron James",
-     "Dwyane Wade"
+     "Jalen Brunson",
+     "Karl-Anthony Towns"
     ],
-    "season": "2011-12",
-    "path": "NYK-IND-BOS-OKC",
-    "wl": "16-7",
-    "gp": 23,
-    "pts100": 69.1,
+    "season": "2025-26",
+    "team": "New York Knicks",
+    "path": "ATL-PHI-CLE-SAS",
+    "wl": "16-3",
+    "gp": 19,
+    "pts100": 64.1,
+    "dbpm_sum": 5.6,
+    "team_netrtg": 15.5,
     "champion": true,
-    "score": 82.2,
-    "team": "Miami Heat"
-   },
-   {
-    "players": [
-     "Kyrie Irving",
-     "LeBron James"
-    ],
-    "season": "2016-17",
-    "path": "IND-TOR-BOS-GSW",
-    "wl": "13-5",
-    "gp": 18,
-    "pts100": 74.7,
-    "champion": false,
-    "score": 81.92,
-    "team": "Cleveland Cavaliers"
+    "score": 87.14
    },
    {
     "players": [
@@ -238,104 +252,82 @@
      "Jalen Williams"
     ],
     "season": "2024-25",
+    "team": "Oklahoma City Thunder",
     "path": "MEM-DEN-MIN-IND",
     "wl": "16-7",
     "gp": 23,
     "pts100": 68.5,
+    "dbpm_sum": 4.3,
+    "team_netrtg": 8.4,
     "champion": true,
-    "score": 81.62,
-    "team": "Oklahoma City Thunder"
+    "score": 87.08
    },
    {
     "players": [
-     "Luka Dončić",
-     "Jalen Brunson"
+     "LeBron James",
+     "Dwyane Wade"
     ],
-    "season": "2021-22",
-    "path": "UTA-PHX-GSW",
-    "wl": "9-9",
-    "gp": 18,
-    "pts100": 76.1,
+    "season": "2011-12",
+    "team": "Miami Heat",
+    "path": "NYK-IND-BOS-OKC",
+    "wl": "16-7",
+    "gp": 23,
+    "pts100": 69.1,
+    "dbpm_sum": 3.9,
+    "team_netrtg": 8.0,
+    "champion": true,
+    "score": 87.02
+   },
+   {
+    "players": [
+     "Stephen Curry",
+     "Kevin Durant"
+    ],
+    "season": "2018-19",
+    "team": "Golden State Warriors",
+    "path": "LAC-HOU-POR-TOR",
+    "wl": "14-8",
+    "gp": 22,
+    "pts100": 77.2,
+    "dbpm_sum": 0.3,
+    "team_netrtg": 3.5,
     "champion": false,
-    "score": 81.23,
-    "team": "Dallas Mavericks"
+    "score": 86.19
+   },
+   {
+    "players": [
+     "Giannis Antetokounmpo",
+     "Khris Middleton"
+    ],
+    "season": "2020-21",
+    "team": "Milwaukee Bucks",
+    "path": "MIA-BKN-ATL-PHX",
+    "wl": "16-7",
+    "gp": 23,
+    "pts100": 67.6,
+    "dbpm_sum": 4.3,
+    "team_netrtg": 5.3,
+    "champion": true,
+    "score": 85.7
    }
   ],
   "trios": [
    {
     "players": [
-     "Stephen Curry",
-     "Kevin Durant",
-     "Klay Thompson"
+     "Jalen Brunson",
+     "Karl-Anthony Towns",
+     "OG Anunoby"
     ],
-    "season": "2018-19",
-    "path": "LAC-HOU-POR-TOR",
-    "wl": "14-8",
-    "gp": 22,
-    "pts100": 102.9,
-    "champion": false,
-    "score": 110.76,
-    "team": "Golden State Warriors"
-   },
-   {
-    "players": [
-     "Stephen Curry",
-     "Kevin Durant",
-     "Klay Thompson"
-    ],
-    "season": "2017-18",
-    "path": "SAS-NOP-HOU-CLE",
-    "wl": "16-5",
-    "gp": 21,
-    "pts100": 95.9,
+    "season": "2025-26",
+    "team": "New York Knicks",
+    "path": "ATL-PHI-CLE-SAS",
+    "wl": "16-3",
+    "gp": 19,
+    "pts100": 92.6,
+    "dbpm_sum": 9.6,
+    "team_netrtg": 15.5,
     "champion": true,
-    "score": 109.68,
-    "team": "Golden State Warriors"
-   },
-   {
-    "players": [
-     "LeBron James",
-     "Kyrie Irving",
-     "Kevin Love"
-    ],
-    "season": "2015-16",
-    "path": "DET-ATL-TOR-GSW",
-    "wl": "16-5",
-    "gp": 21,
-    "pts100": 95.9,
-    "champion": true,
-    "score": 109.6,
-    "team": "Cleveland Cavaliers"
-   },
-   {
-    "players": [
-     "Stephen Curry",
-     "Jordan Poole",
-     "Jonathan Kuminga"
-    ],
-    "season": "2021-22",
-    "path": "DEN-MEM-DAL-BOS",
-    "wl": "16-6",
-    "gp": 22,
-    "pts100": 95.6,
-    "champion": true,
-    "score": 109.44,
-    "team": "Golden State Warriors"
-   },
-   {
-    "players": [
-     "Stephen Curry",
-     "Kevin Durant",
-     "Klay Thompson"
-    ],
-    "season": "2016-17",
-    "path": "POR-UTA-SAS-CLE",
-    "wl": "16-1",
-    "gp": 17,
-    "pts100": 95.2,
-    "champion": true,
-    "score": 109.05,
-    "team": "Golden State Warriors"
+    "score": 121.35
    },
    {
     "players": [
@@ -344,58 +336,100 @@
      "Kyle Kuzma"
     ],
     "season": "2019-20",
+    "team": "Los Angeles Lakers",
     "path": "POR-HOU-DEN-MIA",
     "wl": "16-5",
     "gp": 21,
     "pts100": 94.9,
+    "dbpm_sum": 3.7,
+    "team_netrtg": 7.0,
     "champion": true,
-    "score": 108.75,
-    "team": "Los Angeles Lakers"
+    "score": 114.32
    },
    {
     "players": [
-     "Kyrie Irving",
      "LeBron James",
+     "Kyrie Irving",
      "Kevin Love"
     ],
-    "season": "2016-17",
-    "path": "IND-TOR-BOS-GSW",
-    "wl": "13-5",
-    "gp": 18,
-    "pts100": 100.7,
-    "champion": false,
-    "score": 108.53,
-    "team": "Cleveland Cavaliers"
+    "season": "2015-16",
+    "team": "Cleveland Cavaliers",
+    "path": "DET-ATL-TOR-GSW",
+    "wl": "16-5",
+    "gp": 21,
+    "pts100": 95.9,
+    "dbpm_sum": 3.4,
+    "team_netrtg": 9.5,
+    "champion": true,
+    "score": 114.16
    },
    {
     "players": [
      "Stephen Curry",
-     "Klay Thompson",
-     "Marreese Speights"
+     "Kevin Durant",
+     "Klay Thompson"
     ],
-    "season": "2015-16",
-    "path": "HOU-POR-OKC-CLE",
-    "wl": "15-9",
-    "gp": 24,
-    "pts100": 100.3,
-    "champion": false,
-    "score": 108.0,
-    "team": "Golden State Warriors"
+    "season": "2016-17",
+    "team": "Golden State Warriors",
+    "path": "POR-UTA-SAS-CLE",
+    "wl": "16-1",
+    "gp": 17,
+    "pts100": 95.2,
+    "dbpm_sum": 1.3,
+    "team_netrtg": 13.5,
+    "champion": true,
+    "score": 113.87
    },
    {
     "players": [
-     "Luka Dončić",
-     "Jalen Brunson",
-     "Spencer Dinwiddie"
+     "Stephen Curry",
+     "Kevin Durant",
+     "Klay Thompson"
+    ],
+    "season": "2017-18",
+    "team": "Golden State Warriors",
+    "path": "SAS-NOP-HOU-CLE",
+    "wl": "16-5",
+    "gp": 21,
+    "pts100": 95.9,
+    "dbpm_sum": 1.1,
+    "team_netrtg": 10.3,
+    "champion": true,
+    "score": 112.83
+   },
+   {
+    "players": [
+     "Stephen Curry",
+     "Kevin Durant",
+     "Klay Thompson"
+    ],
+    "season": "2018-19",
+    "team": "Golden State Warriors",
+    "path": "LAC-HOU-POR-TOR",
+    "wl": "14-8",
+    "gp": 22,
+    "pts100": 102.9,
+    "dbpm_sum": -0.1,
+    "team_netrtg": 3.5,
+    "champion": false,
+    "score": 111.73
+   },
+   {
+    "players": [
+     "Stephen Curry",
+     "Jordan Poole",
+     "Jonathan Kuminga"
     ],
     "season": "2021-22",
-    "path": "UTA-PHX-GSW",
-    "wl": "9-9",
-    "gp": 18,
-    "pts100": 102.0,
-    "champion": false,
-    "score": 107.71,
-    "team": "Dallas Mavericks"
+    "team": "Golden State Warriors",
+    "path": "DEN-MEM-DAL-BOS",
+    "wl": "16-6",
+    "gp": 22,
+    "pts100": 95.6,
+    "dbpm_sum": 0.8,
+    "team_netrtg": 5.2,
+    "champion": true,
+    "score": 111.61
    },
    {
     "players": [
@@ -404,135 +438,195 @@
      "Chris Bosh"
     ],
     "season": "2011-12",
+    "team": "Miami Heat",
     "path": "NYK-IND-BOS-OKC",
     "wl": "16-7",
     "gp": 23,
     "pts100": 93.0,
+    "dbpm_sum": 3.5,
+    "team_netrtg": 8.0,
     "champion": true,
-    "score": 106.68,
-    "team": "Miami Heat"
+    "score": 110.76
+   },
+   {
+    "players": [
+     "Kyrie Irving",
+     "LeBron James",
+     "Kevin Love"
+    ],
+    "season": "2016-17",
+    "team": "Cleveland Cavaliers",
+    "path": "IND-TOR-BOS-GSW",
+    "wl": "13-5",
+    "gp": 18,
+    "pts100": 100.7,
+    "dbpm_sum": 0.0,
+    "team_netrtg": 8.2,
+    "champion": false,
+    "score": 110.51
+   },
+   {
+    "players": [
+     "Michael Jordan",
+     "Scottie Pippen",
+     "Toni Kukoc"
+    ],
+    "season": "1997-98",
+    "team": "Chicago Bulls",
+    "path": "NJN-CHH-IND-UTA",
+    "wl": "15-6",
+    "gp": 21,
+    "pts100": 90.9,
+    "dbpm_sum": 5.4,
+    "team_netrtg": 8.3,
+    "champion": true,
+    "score": 109.94
    }
   ],
   "teams": [
    {
-    "season": "2016-17",
-    "path": "POR-UTA-SAS-CLE",
-    "wl": "16-1",
-    "winpct": 0.941,
-    "champion": true,
-    "top_scorer": "Kevin Durant",
-    "top_pts100": 38.0,
-    "team": "Golden State Warriors"
-   },
-   {
-    "season": "2000-01",
-    "path": "POR-SAC-SAS-PHI",
-    "wl": "15-1",
-    "winpct": 0.938,
-    "champion": true,
-    "top_scorer": "Shaquille O'Neal",
-    "top_pts100": 37.1,
-    "team": "Los Angeles Lakers"
-   },
-   {
-    "season": "1998-99",
-    "path": "MIN-LAL-POR-NYK",
-    "wl": "15-2",
-    "winpct": 0.882,
-    "champion": true,
-    "top_scorer": "Tim Duncan",
-    "top_pts100": 29.4,
-    "team": "San Antonio Spurs"
-   },
-   {
     "season": "2025-26",
+    "team": "New York Knicks",
     "path": "ATL-PHI-CLE-SAS",
     "wl": "16-3",
     "winpct": 0.842,
+    "netrtg": 15.5,
+    "score": 15.5,
     "champion": true,
     "top_scorer": "Jalen Brunson",
-    "top_pts100": 38.0,
-    "team": "New York Knicks"
+    "top_pts100": 38.0
    },
    {
-    "season": "2023-24",
-    "path": "MIA-CLE-IND-DAL",
-    "wl": "16-3",
-    "winpct": 0.842,
-    "champion": true,
-    "top_scorer": "Jaylen Brown",
-    "top_pts100": 32.9,
-    "team": "Boston Celtics"
-   },
-   {
-    "season": "2022-23",
-    "path": "MIN-PHX-LAL-MIA",
-    "wl": "16-4",
-    "winpct": 0.8,
-    "champion": true,
-    "top_scorer": "Nikola Jokić",
-    "top_pts100": 37.9,
-    "team": "Denver Nuggets"
-   },
-   {
-    "season": "2006-07",
-    "path": "DEN-PHX-UTA-CLE",
-    "wl": "16-4",
-    "winpct": 0.8,
-    "champion": true,
-    "top_scorer": "Tim Duncan",
-    "top_pts100": 32.2,
-    "team": "San Antonio Spurs"
-   },
-   {
-    "season": "1996-97",
-    "path": "WAS-ATL-MIA-UTA",
-    "wl": "15-4",
-    "winpct": 0.789,
-    "champion": true,
-    "top_scorer": "Michael Jordan",
-    "top_pts100": 40.4,
-    "team": "Chicago Bulls"
-   },
-   {
-    "season": "2001-02",
-    "path": "POR-SAS-SAC-NJN",
-    "wl": "15-4",
-    "winpct": 0.789,
+    "season": "2000-01",
+    "team": "Los Angeles Lakers",
+    "path": "POR-SAC-SAS-PHI",
+    "wl": "15-1",
+    "winpct": 0.938,
+    "netrtg": 13.7,
+    "score": 13.7,
     "champion": true,
     "top_scorer": "Shaquille O'Neal",
-    "top_pts100": 36.5,
-    "team": "Los Angeles Lakers"
+    "top_pts100": 37.1
    },
    {
-    "season": "2010-11",
-    "path": "POR-LAL-OKC-MIA",
-    "wl": "16-5",
-    "winpct": 0.762,
+    "season": "2016-17",
+    "team": "Golden State Warriors",
+    "path": "POR-UTA-SAS-CLE",
+    "wl": "16-1",
+    "winpct": 0.941,
+    "netrtg": 13.5,
+    "score": 13.5,
     "champion": true,
-    "top_scorer": "Dirk Nowitzki",
-    "top_pts100": 37.9,
-    "team": "Dallas Mavericks"
-   },
-   {
-    "season": "2019-20",
-    "path": "POR-HOU-DEN-MIA",
-    "wl": "16-5",
-    "winpct": 0.762,
-    "champion": true,
-    "top_scorer": "Anthony Davis",
-    "top_pts100": 37.2,
-    "team": "Los Angeles Lakers"
+    "top_scorer": "Kevin Durant",
+    "top_pts100": 38.0
    },
    {
     "season": "2017-18",
+    "team": "Golden State Warriors",
     "path": "SAS-NOP-HOU-CLE",
     "wl": "16-5",
     "winpct": 0.762,
+    "netrtg": 10.3,
+    "score": 10.3,
     "champion": true,
     "top_scorer": "Kevin Durant",
-    "top_pts100": 36.8,
-    "team": "Golden State Warriors"
+    "top_pts100": 36.8
+   },
+   {
+    "season": "2013-14",
+    "team": "San Antonio Spurs",
+    "path": "DAL-POR-OKC-MIA",
+    "wl": "16-7",
+    "winpct": 0.696,
+    "netrtg": 10.0,
+    "score": 10.0,
+    "champion": true,
+    "top_scorer": "Tony Parker",
+    "top_pts100": 28.6
+   },
+   {
+    "season": "2008-09",
+    "team": "Cleveland Cavaliers",
+    "path": "DET-ATL-ORL",
+    "wl": "10-4",
+    "winpct": 0.714,
+    "netrtg": 9.9,
+    "score": 9.9,
+    "champion": false,
+    "top_scorer": "LeBron James",
+    "top_pts100": 47.1
+   },
+   {
+    "season": "2009-10",
+    "team": "Orlando Magic",
+    "path": "CHA-ATL-BOS",
+    "wl": "10-4",
+    "winpct": 0.714,
+    "netrtg": 9.9,
+    "score": 9.9,
+    "champion": false,
+    "top_scorer": "Jameer Nelson",
+    "top_pts100": 29.8
+   },
+   {
+    "season": "2015-16",
+    "team": "Cleveland Cavaliers",
+    "path": "DET-ATL-TOR-GSW",
+    "wl": "16-5",
+    "winpct": 0.762,
+    "netrtg": 9.5,
+    "score": 9.5,
+    "champion": true,
+    "top_scorer": "Kyrie Irving",
+    "top_pts100": 35.5
+   },
+   {
+    "season": "2008-09",
+    "team": "Denver Nuggets",
+    "path": "NOH-DAL-LAL",
+    "wl": "10-6",
+    "winpct": 0.625,
+    "netrtg": 9.3,
+    "score": 9.3,
+    "champion": false,
+    "top_scorer": "Carmelo Anthony",
+    "top_pts100": 36.5
+   },
+   {
+    "season": "2022-23",
+    "team": "Denver Nuggets",
+    "path": "MIN-PHX-LAL-MIA",
+    "wl": "16-4",
+    "winpct": 0.8,
+    "netrtg": 8.7,
+    "score": 8.7,
+    "champion": true,
+    "top_scorer": "Nikola Jokić",
+    "top_pts100": 37.9
+   },
+   {
+    "season": "2023-24",
+    "team": "Boston Celtics",
+    "path": "MIA-CLE-IND-DAL",
+    "wl": "16-3",
+    "winpct": 0.842,
+    "netrtg": 8.7,
+    "score": 8.7,
+    "champion": true,
+    "top_scorer": "Jaylen Brown",
+    "top_pts100": 32.9
+   },
+   {
+    "season": "2018-19",
+    "team": "Milwaukee Bucks",
+    "path": "DET-BOS-TOR",
+    "wl": "10-5",
+    "winpct": 0.667,
+    "netrtg": 8.7,
+    "score": 8.7,
+    "champion": false,
+    "top_scorer": "Giannis Antetokounmpo",
+    "top_pts100": 35.0
    }
   ]
  }
