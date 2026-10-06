@@ -8,6 +8,7 @@ const CORE = [
 '/',
 '/index.html',
 '/offline.html',
+'/props-lab.html',
 '/404.html',
 '/manifest.json',
 '/assets/atlas.css',
@@ -40,7 +41,8 @@ const DENY = [
 '/assets/vectors_lite.json',
 '/assets/data/pitch.json',
 '/assets/data/gridiron.json',
-'/assets/arc_priors_2026-27.json'
+'/assets/arc_priors_2026-27.json',
+'/assets/paper_trades.json'
 ];
 function isDenied(p){ return DENY.some(x=> p.includes(x) || p.endsWith(x.split('/').pop())); }
 function isCore(p){ return CORE.includes(p) || CORE.includes(p.replace('/index.html','/')) || CORE.some(c=>p.endsWith(c)); }
