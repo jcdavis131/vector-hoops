@@ -17,6 +17,7 @@ const CORE = [
 '/assets/twin-explainer.js',
 '/assets/insights.js',
 '/assets/insights.json',
+'/assets/player-dossier.js',
 '/assets/favicon.svg',
 '/assets/apple-touch-icon.png',
 '/assets/icon-192.png',

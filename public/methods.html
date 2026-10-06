@@ -163,6 +163,11 @@ Heads: 8 arch / 5 pos / 14 next / 18 skills (64→16→1)
       <h2>Insights — shareable findings</h2>
       <p>The <a href="/insights">Insights</a> page curates the most striking things the embedding model has measured: the strangest and most average seasons, the biggest career reinventions, era twins decades apart, dying archetypes, the three-point takeover, and the turnover decline. Each card is generated from the same served vectors — nothing hand-written, nothing invented.</p>
       <p class="doc-note">Uniqueness is Euclidean distance from the centroid of all 12,966 player-seasons in the 14-d style space (minimum 1,500 minutes). Career transformation is first-to-last season distance (minimum 4 seasons at 800+ minutes). Era-twin gaps use the full 64-d cosine similarity, similarity ≥ 0.60, one appearance per player. Every card deep-links (<code>/insights.html#&lt;slug&gt;</code>), exports a 1080&times;1350 PNG rendered in the browser, and has a crawler page at <code>/insights/&lt;slug&gt;</code> with a pre-rendered unfurl image. The daily spotlight never repeats a card shown in the grid below it.</p>
+    <section id="dossier">
+      <div class="doc-n">04&middot;e</div>
+      <h2>Player dossier — every player, from the model</h2>
+      <p>Open any player in the <a href="players.html">directory</a> and their dossier is built from the same model behind the map &mdash; no hand-written bios, nothing to go stale. Each dossier carries a minutes-weighted 14-trait style fingerprint, the player&rsquo;s archetype and how it moved across their career, their era twin (with the plain-words why), how their game changed from first to last charted season, the five nearest player-seasons in style space, and a plain-words read of where they live on the map.</p>
+      <p class="doc-note">All dossier numbers come from the promoted MTNN v5 14-d serving vectors and the derived research assets (era twins, career trails, archetype assignments, honors). Similarity is cosine in the 14-d style space. &ldquo;How his game changed&rdquo; compares first vs last charted season only; traits that moved less than half a standard deviation are left out.</p>
     </section>
 
     <section id="drift">
