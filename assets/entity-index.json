@@ -1,0 +1,1229 @@
+{
+ "entities": [
+  {
+   "name": "Aaron Gordon",
+   "type": "player",
+   "cards": [
+    "know-your-role"
+   ],
+   "dossier": true,
+   "dossier_key": "aaron-gordon"
+  },
+  {
+   "name": "Allen Crabbe",
+   "type": "player",
+   "cards": [
+    "the-summer-the-cap-broke"
+   ],
+   "dossier": true,
+   "dossier_key": "allen-crabbe"
+  },
+  {
+   "name": "Amare Stoudemire",
+   "type": "player",
+   "cards": [
+    "the-188-million-win-share"
+   ],
+   "dossier": true,
+   "dossier_key": "amare-stoudemire"
+  },
+  {
+   "name": "Andre Iguodala",
+   "type": "player",
+   "cards": [
+    "know-your-role"
+   ],
+   "dossier": true,
+   "dossier_key": "andre-iguodala"
+  },
+  {
+   "name": "Billy Owens",
+   "type": "player",
+   "cards": [
+    "most-average"
+   ],
+   "dossier": true,
+   "dossier_key": "billy-owens"
+  },
+  {
+   "name": "Bismack Biyombo",
+   "type": "player",
+   "cards": [
+    "the-summer-the-cap-broke"
+   ],
+   "dossier": true,
+   "dossier_key": "bismack-biyombo"
+  },
+  {
+   "name": "Boris Diaw",
+   "type": "player",
+   "cards": [
+    "hometown-discount"
+   ],
+   "dossier": true,
+   "dossier_key": "boris-diaw"
+  },
+  {
+   "name": "Bradley Beal",
+   "type": "player",
+   "cards": [
+    "invisible-stardom"
+   ],
+   "dossier": true,
+   "dossier_key": "bradley-beal"
+  },
+  {
+   "name": "Brook Lopez",
+   "type": "player",
+   "cards": [
+    "know-your-role"
+   ],
+   "dossier": true,
+   "dossier_key": "brook-lopez"
+  },
+  {
+   "name": "Caleb Martin",
+   "type": "player",
+   "cards": [
+    "most-average"
+   ],
+   "dossier": true,
+   "dossier_key": "caleb-martin"
+  },
+  {
+   "name": "Carmelo Anthony",
+   "type": "player",
+   "cards": [
+    "invisible-stardom"
+   ],
+   "dossier": true,
+   "dossier_key": "carmelo-anthony"
+  },
+  {
+   "name": "Chandler Parsons",
+   "type": "player",
+   "cards": [
+    "the-summer-the-cap-broke"
+   ],
+   "dossier": true,
+   "dossier_key": "chandler-parsons"
+  },
+  {
+   "name": "Chris Bosh",
+   "type": "player",
+   "cards": [
+    "invisible-stardom",
+    "love-vs-bosh"
+   ],
+   "dossier": true,
+   "dossier_key": "chris-bosh"
+  },
+  {
+   "name": "Damian Lillard",
+   "type": "player",
+   "cards": [
+    "invisible-stardom",
+    "paid-to-not-play"
+   ],
+   "dossier": true,
+   "dossier_key": "damian-lillard"
+  },
+  {
+   "name": "David West",
+   "type": "player",
+   "cards": [
+    "know-your-role"
+   ],
+   "dossier": true,
+   "dossier_key": "david-west"
+  },
+  {
+   "name": "Dirk Nowitzki",
+   "type": "player",
+   "cards": [
+    "hometown-discount",
+    "same-jersey-smaller-role",
+    "the-188-million-win-share"
+   ],
+   "dossier": true,
+   "dossier_key": "dirk-nowitzki"
+  },
+  {
+   "name": "Donovan Mitchell",
+   "type": "player",
+   "cards": [
+    "playoff-swings"
+   ],
+   "dossier": true,
+   "dossier_key": "donovan-mitchell"
+  },
+  {
+   "name": "Dwight Howard",
+   "type": "player",
+   "cards": [
+    "know-your-role",
+    "the-188-million-win-share"
+   ],
+   "dossier": true,
+   "dossier_key": "dwight-howard"
+  },
+  {
+   "name": "Dwyane Wade",
+   "type": "player",
+   "cards": [
+    "hometown-discount",
+    "know-your-role",
+    "same-jersey-smaller-role"
+   ],
+   "dossier": true,
+   "dossier_key": "dwyane-wade"
+  },
+  {
+   "name": "Dylan Harper",
+   "type": "player",
+   "cards": [
+    "matchup-nightmares"
+   ],
+   "dossier": true,
+   "dossier_key": "dylan-harper"
+  },
+  {
+   "name": "Elton Brand",
+   "type": "player",
+   "cards": [
+    "the-188-million-win-share"
+   ],
+   "dossier": true,
+   "dossier_key": "elton-brand"
+  },
+  {
+   "name": "Evan Turner",
+   "type": "player",
+   "cards": [
+    "the-summer-the-cap-broke"
+   ],
+   "dossier": true,
+   "dossier_key": "evan-turner"
+  },
+  {
+   "name": "Gary Forbes",
+   "type": "player",
+   "cards": [
+    "most-average"
+   ],
+   "dossier": true,
+   "dossier_key": "gary-forbes"
+  },
+  {
+   "name": "Gary Payton",
+   "type": "player",
+   "cards": [
+    "invisible-stardom"
+   ],
+   "dossier": true,
+   "dossier_key": "gary-payton"
+  },
+  {
+   "name": "Giannis Antetokounmpo",
+   "type": "player",
+   "cards": [
+    "contenders-pretenders",
+    "max-money-bargains",
+    "most-unique",
+    "paid-to-not-play",
+    "transformed"
+   ],
+   "dossier": true,
+   "dossier_key": "giannis-antetokounmpo"
+  },
+  {
+   "name": "Harrison Barnes",
+   "type": "player",
+   "cards": [
+    "matchup-nightmares",
+    "the-summer-the-cap-broke"
+   ],
+   "dossier": true,
+   "dossier_key": "harrison-barnes"
+  },
+  {
+   "name": "Ian Mahinmi",
+   "type": "player",
+   "cards": [
+    "the-summer-the-cap-broke"
+   ],
+   "dossier": true,
+   "dossier_key": "ian-mahinmi"
+  },
+  {
+   "name": "JR Smith",
+   "type": "player",
+   "cards": [
+    "know-your-role"
+   ],
+   "dossier": true,
+   "dossier_key": "jr-smith"
+  },
+  {
+   "name": "Jalen Brunson",
+   "type": "player",
+   "cards": [
+    "matchup-nightmares"
+   ],
+   "dossier": true,
+   "dossier_key": "jalen-brunson"
+  },
+  {
+   "name": "James Harden",
+   "type": "player",
+   "cards": [
+    "invisible-stardom",
+    "max-money-bargains",
+    "most-unique"
+   ],
+   "dossier": true,
+   "dossier_key": "james-harden"
+  },
+  {
+   "name": "Jermaine ONeal",
+   "type": "player",
+   "cards": [
+    "playoff-swings"
+   ],
+   "dossier": true,
+   "dossier_key": "jermaine-oneal"
+  },
+  {
+   "name": "Joakim Noah",
+   "type": "player",
+   "cards": [
+    "the-summer-the-cap-broke"
+   ],
+   "dossier": true,
+   "dossier_key": "joakim-noah"
+  },
+  {
+   "name": "Joel Embiid",
+   "type": "player",
+   "cards": [
+    "contenders-pretenders",
+    "most-unique",
+    "playoff-swings"
+   ],
+   "dossier": true,
+   "dossier_key": "joel-embiid"
+  },
+  {
+   "name": "John Wall",
+   "type": "player",
+   "cards": [
+    "paid-to-not-play"
+   ],
+   "dossier": true,
+   "dossier_key": "john-wall"
+  },
+  {
+   "name": "Jordan Clarkson",
+   "type": "player",
+   "cards": [
+    "playoff-swings"
+   ],
+   "dossier": true,
+   "dossier_key": "jordan-clarkson"
+  },
+  {
+   "name": "Jose Alvarado",
+   "type": "player",
+   "cards": [
+    "matchup-nightmares"
+   ],
+   "dossier": true,
+   "dossier_key": "jose-alvarado"
+  },
+  {
+   "name": "Jrue Holiday",
+   "type": "player",
+   "cards": [
+    "invisible-stardom",
+    "know-your-role"
+   ],
+   "dossier": true,
+   "dossier_key": "jrue-holiday"
+  },
+  {
+   "name": "Karl Malone",
+   "type": "player",
+   "cards": [
+    "invisible-stardom"
+   ],
+   "dossier": true,
+   "dossier_key": "karl-malone"
+  },
+  {
+   "name": "Kawhi Leonard",
+   "type": "player",
+   "cards": [
+    "paid-to-not-play"
+   ],
+   "dossier": true,
+   "dossier_key": "kawhi-leonard"
+  },
+  {
+   "name": "Kent Bazemore",
+   "type": "player",
+   "cards": [
+    "the-summer-the-cap-broke"
+   ],
+   "dossier": true,
+   "dossier_key": "kent-bazemore"
+  },
+  {
+   "name": "Kevin Durant",
+   "type": "player",
+   "cards": [
+    "max-money-bargains",
+    "paid-to-not-play",
+    "playoff-swings"
+   ],
+   "dossier": true,
+   "dossier_key": "kevin-durant"
+  },
+  {
+   "name": "Kevin Love",
+   "type": "player",
+   "cards": [
+    "invisible-stardom",
+    "know-your-role",
+    "love-vs-bosh"
+   ],
+   "dossier": true,
+   "dossier_key": "kevin-love"
+  },
+  {
+   "name": "Klay Thompson",
+   "type": "player",
+   "cards": [
+    "hometown-discount",
+    "know-your-role",
+    "same-jersey-smaller-role"
+   ],
+   "dossier": true,
+   "dossier_key": "klay-thompson"
+  },
+  {
+   "name": "Kobe Bryant",
+   "type": "player",
+   "cards": [
+    "max-money-bargains",
+    "the-188-million-win-share"
+   ],
+   "dossier": true,
+   "dossier_key": "kobe-bryant"
+  },
+  {
+   "name": "Kristaps Porzingis",
+   "type": "player",
+   "cards": [
+    "playoff-swings"
+   ],
+   "dossier": true,
+   "dossier_key": "kristaps-porzingis"
+  },
+  {
+   "name": "LeBron James",
+   "type": "player",
+   "cards": [
+    "contenders-pretenders",
+    "max-money-bargains",
+    "paid-to-not-play",
+    "playoff-swings"
+   ],
+   "dossier": true,
+   "dossier_key": "lebron-james"
+  },
+  {
+   "name": "Luka Doncic",
+   "type": "player",
+   "cards": [
+    "contenders-pretenders"
+   ],
+   "dossier": true,
+   "dossier_key": "luka-doncic"
+  },
+  {
+   "name": "Luol Deng",
+   "type": "player",
+   "cards": [
+    "the-summer-the-cap-broke"
+   ],
+   "dossier": true,
+   "dossier_key": "luol-deng"
+  },
+  {
+   "name": "Manu Ginobili",
+   "type": "player",
+   "cards": [
+    "hometown-discount",
+    "know-your-role",
+    "same-jersey-smaller-role"
+   ],
+   "dossier": true,
+   "dossier_key": "manu-ginobili"
+  },
+  {
+   "name": "Mikal Bridges",
+   "type": "player",
+   "cards": [
+    "know-your-role"
+   ],
+   "dossier": true,
+   "dossier_key": "mikal-bridges"
+  },
+  {
+   "name": "Mike Dunleavy",
+   "type": "player",
+   "cards": [
+    "most-average"
+   ],
+   "dossier": true,
+   "dossier_key": "mike-dunleavy"
+  },
+  {
+   "name": "Nicolas Batum",
+   "type": "player",
+   "cards": [
+    "the-summer-the-cap-broke"
+   ],
+   "dossier": true,
+   "dossier_key": "nicolas-batum"
+  },
+  {
+   "name": "Nikola Jokic",
+   "type": "player",
+   "cards": [
+    "contenders-pretenders",
+    "max-money-bargains"
+   ],
+   "dossier": true,
+   "dossier_key": "nikola-jokic"
+  },
+  {
+   "name": "Patty Mills",
+   "type": "player",
+   "cards": [
+    "hometown-discount"
+   ],
+   "dossier": true,
+   "dossier_key": "patty-mills"
+  },
+  {
+   "name": "Pau Gasol",
+   "type": "player",
+   "cards": [
+    "know-your-role",
+    "the-188-million-win-share"
+   ],
+   "dossier": true,
+   "dossier_key": "pau-gasol"
+  },
+  {
+   "name": "Paul George",
+   "type": "player",
+   "cards": [
+    "paid-to-not-play"
+   ],
+   "dossier": true,
+   "dossier_key": "paul-george"
+  },
+  {
+   "name": "Rashard Lewis",
+   "type": "player",
+   "cards": [
+    "the-188-million-win-share"
+   ],
+   "dossier": true,
+   "dossier_key": "rashard-lewis"
+  },
+  {
+   "name": "Ray Allen",
+   "type": "player",
+   "cards": [
+    "invisible-stardom",
+    "know-your-role"
+   ],
+   "dossier": true,
+   "dossier_key": "ray-allen"
+  },
+  {
+   "name": "Russell Westbrook",
+   "type": "player",
+   "cards": [
+    "max-money-bargains",
+    "most-unique",
+    "paid-to-not-play"
+   ],
+   "dossier": true,
+   "dossier_key": "russell-westbrook"
+  },
+  {
+   "name": "Ryan Anderson",
+   "type": "player",
+   "cards": [
+    "the-summer-the-cap-broke"
+   ],
+   "dossier": true,
+   "dossier_key": "ryan-anderson"
+  },
+  {
+   "name": "Shai Gilgeous-Alexander",
+   "type": "player",
+   "cards": [
+    "contenders-pretenders"
+   ],
+   "dossier": true,
+   "dossier_key": "shai-gilgeousalexander"
+  },
+  {
+   "name": "Shaquille ONeal",
+   "type": "player",
+   "cards": [
+    "most-unique"
+   ],
+   "dossier": true,
+   "dossier_key": "shaquille-oneal"
+  },
+  {
+   "name": "Stephen Curry",
+   "type": "player",
+   "cards": [
+    "hometown-discount",
+    "same-jersey-smaller-role"
+   ],
+   "dossier": true,
+   "dossier_key": "stephen-curry"
+  },
+  {
+   "name": "Terrence Ross",
+   "type": "player",
+   "cards": [
+    "transformed"
+   ],
+   "dossier": true,
+   "dossier_key": "terrence-ross"
+  },
+  {
+   "name": "Tim Duncan",
+   "type": "player",
+   "cards": [
+    "hometown-discount",
+    "max-money-bargains",
+    "playoff-swings",
+    "same-jersey-smaller-role",
+    "the-188-million-win-share"
+   ],
+   "dossier": true,
+   "dossier_key": "tim-duncan"
+  },
+  {
+   "name": "Timofey Mozgov",
+   "type": "player",
+   "cards": [
+    "the-summer-the-cap-broke"
+   ],
+   "dossier": true,
+   "dossier_key": "timofey-mozgov"
+  },
+  {
+   "name": "Tony Parker",
+   "type": "player",
+   "cards": [
+    "hometown-discount",
+    "same-jersey-smaller-role"
+   ],
+   "dossier": true,
+   "dossier_key": "tony-parker"
+  },
+  {
+   "name": "Tyson Chandler",
+   "type": "player",
+   "cards": [
+    "hometown-discount"
+   ],
+   "dossier": true,
+   "dossier_key": "tyson-chandler"
+  },
+  {
+   "name": "VJ Edgecombe",
+   "type": "player",
+   "cards": [
+    "most-average"
+   ],
+   "dossier": true,
+   "dossier_key": "vj-edgecombe"
+  },
+  {
+   "name": "Victor Wembanyama",
+   "type": "player",
+   "cards": [
+    "matchup-nightmares"
+   ],
+   "dossier": true,
+   "dossier_key": "victor-wembanyama"
+  }
+ ],
+ "teams": [
+  {
+   "name": "Atlanta Hawks",
+   "type": "team",
+   "cards": [
+    "contenders-pretenders"
+   ],
+   "dossier": false,
+   "dossier_key": null
+  },
+  {
+   "name": "Boston Celtics",
+   "type": "team",
+   "cards": [
+    "invisible-stardom"
+   ],
+   "dossier": false,
+   "dossier_key": null
+  },
+  {
+   "name": "Cleveland Cavaliers",
+   "type": "team",
+   "cards": [
+    "love-vs-bosh"
+   ],
+   "dossier": false,
+   "dossier_key": null
+  },
+  {
+   "name": "Dallas Mavericks",
+   "type": "team",
+   "cards": [
+    "contender-chemistry"
+   ],
+   "dossier": false,
+   "dossier_key": null
+  },
+  {
+   "name": "Denver Nuggets",
+   "type": "team",
+   "cards": [
+    "contenders-pretenders",
+    "know-your-role"
+   ],
+   "dossier": false,
+   "dossier_key": null
+  },
+  {
+   "name": "Detroit Pistons",
+   "type": "team",
+   "cards": [
+    "contenders-pretenders"
+   ],
+   "dossier": false,
+   "dossier_key": null
+  },
+  {
+   "name": "Golden State Warriors",
+   "type": "team",
+   "cards": [
+    "contender-chemistry"
+   ],
+   "dossier": false,
+   "dossier_key": null
+  },
+  {
+   "name": "Houston Rockets",
+   "type": "team",
+   "cards": [
+    "know-your-role"
+   ],
+   "dossier": false,
+   "dossier_key": null
+  },
+  {
+   "name": "Los Angeles Lakers",
+   "type": "team",
+   "cards": [
+    "contender-chemistry",
+    "contenders-pretenders",
+    "know-your-role"
+   ],
+   "dossier": false,
+   "dossier_key": null
+  },
+  {
+   "name": "Miami Heat",
+   "type": "team",
+   "cards": [
+    "contenders-pretenders",
+    "love-vs-bosh",
+    "same-jersey-smaller-role"
+   ],
+   "dossier": false,
+   "dossier_key": null
+  },
+  {
+   "name": "Milwaukee Bucks",
+   "type": "team",
+   "cards": [
+    "invisible-stardom"
+   ],
+   "dossier": false,
+   "dossier_key": null
+  },
+  {
+   "name": "Minnesota Timberwolves",
+   "type": "team",
+   "cards": [
+    "love-vs-bosh"
+   ],
+   "dossier": false,
+   "dossier_key": null
+  },
+  {
+   "name": "New York Knicks",
+   "type": "team",
+   "cards": [
+    "contenders-pretenders",
+    "matchup-nightmares"
+   ],
+   "dossier": false,
+   "dossier_key": null
+  },
+  {
+   "name": "Oklahoma City Thunder",
+   "type": "team",
+   "cards": [
+    "contenders-pretenders"
+   ],
+   "dossier": false,
+   "dossier_key": null
+  },
+  {
+   "name": "Orlando Magic",
+   "type": "team",
+   "cards": [
+    "know-your-role"
+   ],
+   "dossier": false,
+   "dossier_key": null
+  },
+  {
+   "name": "Philadelphia 76ers",
+   "type": "team",
+   "cards": [
+    "contenders-pretenders"
+   ],
+   "dossier": false,
+   "dossier_key": null
+  },
+  {
+   "name": "Portland Trail Blazers",
+   "type": "team",
+   "cards": [
+    "contenders-pretenders"
+   ],
+   "dossier": false,
+   "dossier_key": null
+  },
+  {
+   "name": "Sacramento Kings",
+   "type": "team",
+   "cards": [
+    "contenders-pretenders"
+   ],
+   "dossier": false,
+   "dossier_key": null
+  },
+  {
+   "name": "San Antonio Spurs",
+   "type": "team",
+   "cards": [
+    "contenders-pretenders",
+    "matchup-nightmares"
+   ],
+   "dossier": false,
+   "dossier_key": null
+  },
+  {
+   "name": "Toronto Raptors",
+   "type": "team",
+   "cards": [
+    "love-vs-bosh"
+   ],
+   "dossier": false,
+   "dossier_key": null
+  },
+  {
+   "name": "Utah Jazz",
+   "type": "team",
+   "cards": [
+    "contenders-pretenders"
+   ],
+   "dossier": false,
+   "dossier_key": null
+  }
+ ],
+ "seasons": [
+  {
+   "name": "1996-97",
+   "type": "season",
+   "cards": [
+    "careful-era",
+    "contender-chemistry",
+    "contenders-pretenders",
+    "know-your-role",
+    "matchup-nightmares",
+    "most-average",
+    "most-unique",
+    "playoff-swings",
+    "the-188-million-win-share",
+    "time-capsule"
+   ],
+   "dossier": false,
+   "dossier_key": null
+  },
+  {
+   "name": "1997-98",
+   "type": "season",
+   "cards": [
+    "most-unique"
+   ],
+   "dossier": false,
+   "dossier_key": null
+  },
+  {
+   "name": "1999-00",
+   "type": "season",
+   "cards": [
+    "contender-chemistry",
+    "invisible-stardom",
+    "most-unique"
+   ],
+   "dossier": false,
+   "dossier_key": null
+  },
+  {
+   "name": "2002-18",
+   "type": "season",
+   "cards": [
+    "same-jersey-smaller-role"
+   ],
+   "dossier": false,
+   "dossier_key": null
+  },
+  {
+   "name": "2003-04",
+   "type": "season",
+   "cards": [
+    "invisible-stardom"
+   ],
+   "dossier": false,
+   "dossier_key": null
+  },
+  {
+   "name": "2004-05",
+   "type": "season",
+   "cards": [
+    "most-unique",
+    "playoff-swings"
+   ],
+   "dossier": false,
+   "dossier_key": null
+  },
+  {
+   "name": "2005-06",
+   "type": "season",
+   "cards": [
+    "playoff-swings"
+   ],
+   "dossier": false,
+   "dossier_key": null
+  },
+  {
+   "name": "2006-07",
+   "type": "season",
+   "cards": [
+    "max-money-bargains",
+    "most-average"
+   ],
+   "dossier": false,
+   "dossier_key": null
+  },
+  {
+   "name": "2007-08",
+   "type": "season",
+   "cards": [
+    "invisible-stardom"
+   ],
+   "dossier": false,
+   "dossier_key": null
+  },
+  {
+   "name": "2008-09",
+   "type": "season",
+   "cards": [
+    "know-your-role",
+    "playoff-swings",
+    "same-jersey-smaller-role"
+   ],
+   "dossier": false,
+   "dossier_key": null
+  },
+  {
+   "name": "2009-10",
+   "type": "season",
+   "cards": [
+    "love-vs-bosh"
+   ],
+   "dossier": false,
+   "dossier_key": null
+  },
+  {
+   "name": "2010-11",
+   "type": "season",
+   "cards": [
+    "contender-chemistry",
+    "invisible-stardom",
+    "love-vs-bosh",
+    "most-average"
+   ],
+   "dossier": false,
+   "dossier_key": null
+  },
+  {
+   "name": "2010-14",
+   "type": "season",
+   "cards": [
+    "same-jersey-smaller-role"
+   ],
+   "dossier": false,
+   "dossier_key": null
+  },
+  {
+   "name": "2011-12",
+   "type": "season",
+   "cards": [
+    "the-188-million-win-share"
+   ],
+   "dossier": false,
+   "dossier_key": null
+  },
+  {
+   "name": "2012-13",
+   "type": "season",
+   "cards": [
+    "know-your-role",
+    "transformed"
+   ],
+   "dossier": false,
+   "dossier_key": null
+  },
+  {
+   "name": "2012-16",
+   "type": "season",
+   "cards": [
+    "same-jersey-smaller-role"
+   ],
+   "dossier": false,
+   "dossier_key": null
+  },
+  {
+   "name": "2013-14",
+   "type": "season",
+   "cards": [
+    "love-vs-bosh",
+    "transformed"
+   ],
+   "dossier": false,
+   "dossier_key": null
+  },
+  {
+   "name": "2013-16",
+   "type": "season",
+   "cards": [
+    "same-jersey-smaller-role"
+   ],
+   "dossier": false,
+   "dossier_key": null
+  },
+  {
+   "name": "2013-17",
+   "type": "season",
+   "cards": [
+    "same-jersey-smaller-role"
+   ],
+   "dossier": false,
+   "dossier_key": null
+  },
+  {
+   "name": "2014-15",
+   "type": "season",
+   "cards": [
+    "contender-chemistry",
+    "invisible-stardom",
+    "know-your-role",
+    "love-vs-bosh"
+   ],
+   "dossier": false,
+   "dossier_key": null
+  },
+  {
+   "name": "2016-17",
+   "type": "season",
+   "cards": [
+    "know-your-role",
+    "max-money-bargains",
+    "most-unique",
+    "the-summer-the-cap-broke"
+   ],
+   "dossier": false,
+   "dossier_key": null
+  },
+  {
+   "name": "2016-19",
+   "type": "season",
+   "cards": [
+    "same-jersey-smaller-role"
+   ],
+   "dossier": false,
+   "dossier_key": null
+  },
+  {
+   "name": "2017-18",
+   "type": "season",
+   "cards": [
+    "invisible-stardom",
+    "most-unique",
+    "playoff-swings"
+   ],
+   "dossier": false,
+   "dossier_key": null
+  },
+  {
+   "name": "2018-19",
+   "type": "season",
+   "cards": [
+    "most-unique",
+    "playoff-swings"
+   ],
+   "dossier": false,
+   "dossier_key": null
+  },
+  {
+   "name": "2019-20",
+   "type": "season",
+   "cards": [
+    "contender-chemistry",
+    "know-your-role",
+    "most-unique"
+   ],
+   "dossier": false,
+   "dossier_key": null
+  },
+  {
+   "name": "2020-21",
+   "type": "season",
+   "cards": [
+    "invisible-stardom",
+    "know-your-role",
+    "playoff-swings"
+   ],
+   "dossier": false,
+   "dossier_key": null
+  },
+  {
+   "name": "2021-22",
+   "type": "season",
+   "cards": [
+    "max-money-bargains",
+    "paid-to-not-play",
+    "playoff-swings"
+   ],
+   "dossier": false,
+   "dossier_key": null
+  },
+  {
+   "name": "2022-23",
+   "type": "season",
+   "cards": [
+    "know-your-role",
+    "playoff-swings",
+    "transformed"
+   ],
+   "dossier": false,
+   "dossier_key": null
+  },
+  {
+   "name": "2023-24",
+   "type": "season",
+   "cards": [
+    "invisible-stardom",
+    "know-your-role",
+    "most-average",
+    "most-unique"
+   ],
+   "dossier": false,
+   "dossier_key": null
+  },
+  {
+   "name": "2024-25",
+   "type": "season",
+   "cards": [
+    "contender-chemistry",
+    "contenders-pretenders",
+    "dead-styles",
+    "invisible-stardom",
+    "matchup-nightmares",
+    "playoff-swings"
+   ],
+   "dossier": false,
+   "dossier_key": null
+  },
+  {
+   "name": "2025-26",
+   "type": "season",
+   "cards": [
+    "careful-era",
+    "contender-chemistry",
+    "contenders-pretenders",
+    "dead-styles",
+    "know-your-role",
+    "matchup-nightmares",
+    "max-money-bargains",
+    "most-average",
+    "most-unique",
+    "playoff-swings",
+    "the-188-million-win-share",
+    "time-capsule",
+    "transformed"
+   ],
+   "dossier": false,
+   "dossier_key": null
+  },
+  {
+   "name": "2026-27",
+   "type": "season",
+   "cards": [
+    "contenders-pretenders"
+   ],
+   "dossier": false,
+   "dossier_key": null
+  }
+ ],
+ "meta": {
+  "card_count": 20,
+  "player_count": 70,
+  "team_count": 21,
+  "season_count": 32,
+  "dossier_hit_rate": 1.0,
+  "built": "2026-10-07",
+  "source": "assets/insights.json (origin/master), players linked to assets/dossiers.json",
+  "normalization": "see research/proper-noun-layer-FINDINGS.md"
+ }
+}
