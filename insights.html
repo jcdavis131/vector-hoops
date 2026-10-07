@@ -35,6 +35,17 @@
 .vh-ins__card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:clamp(20px,4vw,36px);margin:0 0 var(--s-4);box-shadow:var(--shadow-soft)}
 .vh-ins__card--featured{border-color:var(--accent-line);box-shadow:0 12px 40px rgba(0,0,0,.18)}
 .vh-ins__kicker{font:700 12px/1.4 var(--font-sans);letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin:0 0 8px}
+.vh-ins__kicker--money{color:var(--gold)}
+.vh-ins__kicker--entity{color:var(--moss,#8A9A8B)}
+.vh-ins__card[data-theme="money"]{border-top:3px solid var(--gold)}
+.vh-ins__card[data-theme="entity"]{border-top:3px solid var(--moss,#8A9A8B)}
+.vh-ins__skeleton{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:clamp(20px,4vw,36px);margin:0 0 var(--s-4);animation:vh-sk-pulse 1.4s ease-in-out infinite}
+.vh-ins__sk-line{height:14px;border-radius:7px;background:var(--line);margin:0 0 12px}
+.vh-ins__sk-kicker{width:32%;height:11px}
+.vh-ins__sk-title{width:78%;height:26px;border-radius:8px}
+.vh-ins__sk-short{width:46%}
+.vh-ins__sk-viz{height:120px;border-radius:12px;background:var(--line);margin-top:16px}
+@keyframes vh-sk-pulse{0%,100%{opacity:1}50%{opacity:.55}}
 .vh-ins__title{font:700 clamp(24px,4.6vw,36px)/1.15 var(--font-display);margin:0 0 10px;letter-spacing:-.01em}
 .vh-ins__tldr{font:500 clamp(16px,2.6vw,19px)/1.55 var(--font-sans);color:var(--fg);margin:0 0 16px;max-width:62ch}
 .vh-ins__tldr span{display:block;font:700 11px/1.4 var(--font-sans);letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin:0 0 4px}
@@ -67,12 +78,16 @@
     <div class="title-card__eyebrow reveal">Insights</div>
     <h1 class="title-card__title reveal reveal-1">What 12,966 player-seasons taught the model</h1>
     <p class="title-card__lede reveal reveal-2">Curated findings from the embedding atlas — every number recomputable, every card built to be screenshotted and shared.</p>
-    <div class="title-card__meta reveal reveal-3"><span><b>12</b>Findings</span><span><b>30</b>Seasons of data</span><span><b>1</b>New pick daily</span></div>
+    <div class="title-card__meta reveal reveal-3"><span><b id="insights-count">28</b>Findings</span><span><b>30</b>Seasons of data</span><span><b>1</b>New pick daily</span></div>
   </header>
 
   <div class="vh-ins__wrap">
     <section id="insights-spotlight" aria-label="Insight of the day"></section>
-    <section id="insights-list" aria-label="All insights"></section>
+    <section id="insights-list" aria-label="All insights">
+      <div class="vh-ins__skeleton" aria-hidden="true"><div class="vh-ins__sk-line vh-ins__sk-kicker"></div><div class="vh-ins__sk-line vh-ins__sk-title"></div><div class="vh-ins__sk-line"></div><div class="vh-ins__sk-line vh-ins__sk-short"></div><div class="vh-ins__sk-viz"></div></div>
+      <div class="vh-ins__skeleton" aria-hidden="true"><div class="vh-ins__sk-line vh-ins__sk-kicker"></div><div class="vh-ins__sk-line vh-ins__sk-title"></div><div class="vh-ins__sk-line"></div><div class="vh-ins__sk-line vh-ins__sk-short"></div><div class="vh-ins__sk-viz"></div></div>
+      <div class="vh-ins__skeleton" aria-hidden="true"><div class="vh-ins__sk-line vh-ins__sk-kicker"></div><div class="vh-ins__sk-line vh-ins__sk-title"></div><div class="vh-ins__sk-line"></div><div class="vh-ins__sk-line vh-ins__sk-short"></div><div class="vh-ins__sk-viz"></div></div>
+    </section>
     <p class="vh-ins__foot" style="text-align:center">The full leaderboard: <a href="/playoff-runs.html">greatest playoff runs</a> — 42 ranked runs across individuals, duos, trios and teams.</p>
     <p class="vh-ins__foot" style="text-align:center">Methods and provenance: <a href="/methods.html#insights">methods.html#insights</a> · Every figure is computed from the served vectors, never invented.</p>
   </div>

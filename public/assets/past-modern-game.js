@@ -456,15 +456,17 @@
     };
   }
   async function fetchIp(){
+    /* Privacy-first: no third-party IP lookup (removed api.ipify.org call).
+       Daily slot assignment uses a persistent random client ID stored locally
+       instead of the visitor's IP address. Same distribution, zero leakage. */
     try{
-      const r=await fetch('/api/ip', {cache:'no-store'});
-      if(r.ok){ const j=await r.json(); if(j.ip) return j.ip; }
-    }catch{}
-    try{
-      const r=await fetch('https://api.ipify.org?format=json', {cache:'no-store'});
-      if(r.ok){ const j=await r.json(); return j.ip||null; }
-    }catch{}
-    return null;
+      var k='vh.dailyCourt.clientId', id=localStorage.getItem(k);
+      if(!id){
+        id='c'+Math.random().toString(36).slice(2)+Date.now().toString(36);
+        try{ localStorage.setItem(k,id); }catch(e){}
+      }
+      return id;
+    }catch(e){ return null; }
   }
 
   let state={

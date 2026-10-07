@@ -6,6 +6,34 @@
   var VOID = '#1E2022', PAPER = '#F9F6F0', TERRA = '#C17C60',
       GOLD = '#D4AF69', MUTED = '#8b8578';
 
+  /* Theme-safe palette: read CSS custom properties at render time so SVG
+     charts follow the active theme (dark/light) instead of hardcoded colors. */
+  function palette() {
+    var cs = getComputedStyle(document.documentElement);
+    function v(name, fb) {
+      var s = cs.getPropertyValue(name).trim();
+      return s || fb;
+    }
+    return {
+      void: v('--void', VOID),
+      paper: v('--fg', PAPER),
+      terra: v('--accent', TERRA),
+      gold: v('--gold', GOLD),
+      muted: v('--fg-3', MUTED)
+    };
+  }
+
+  /* Kicker -> theme class for color-coded card grouping. */
+  var KICKER_THEMES = {
+    'Money layer': 'money', 'Money': 'money', 'Overpaid': 'money',
+    'Underpaid': 'money', 'Dead money': 'money', '2016 cap spike': 'money',
+    'Tax Burden': 'money', 'Repeater Tax': 'money', 'Second Apron': 'money',
+    'Entity grounding': 'entity'
+  };
+  function kickerTheme(kicker) {
+    return KICKER_THEMES[kicker] || 'default';
+  }
+
   function esc(s) {
     return String(s).replace(/[&<>"']/g, function (c) {
       return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
@@ -22,6 +50,7 @@
   /* ---------- SVG viz renderers (on-page) ---------- */
 
   function barsSVG(ins) {
+    var P = palette();
     var rows = ins.rows.slice(0, 8);
     var vals = rows.map(function (r) { return r.value; });
     var max = Math.max.apply(null, vals), min = Math.min.apply(null, vals);
@@ -33,14 +62,14 @@
         var y = i * rowH + 8, w = Math.max(3, (r.value / max) * (W - padL - padR));
         var gold = i === 0;
         s += '<text x="0" y="' + (y + 17) + '" class="vh-ins__svglabel">' + esc(r.label) + '</text>';
-        s += '<rect x="' + padL + '" y="' + y + '" width="' + w.toFixed(1) + '" height="20" rx="4" fill="' + (gold ? GOLD : TERRA) + '" opacity="' + (gold ? 1 : 0.55 + 0.4 * (1 - i / rows.length)) + '"/>';
+        s += '<rect x="' + padL + '" y="' + y + '" width="' + w.toFixed(1) + '" height="20" rx="4" fill="' + (gold ? P.gold : P.terra) + '" opacity="' + (gold ? 1 : 0.55 + 0.4 * (1 - i / rows.length)) + '"/>';
         s += '<text x="' + (padL + w + 8) + '" y="' + (y + 16) + '" class="vh-ins__svgval">' + r.value + (r.tag ? ' · ' + esc(r.tag) : '') + '</text>';
       });
     } else {
       // Diverging bars around a zero axis (e.g. playoff deltas that go negative).
       var span = max - min, plotW = W - padL - padR;
       var zeroX = padL + ((0 - min) / span) * plotW;
-      s += '<line x1="' + zeroX.toFixed(1) + '" y1="4" x2="' + zeroX.toFixed(1) + '" y2="' + (H - 4) + '" stroke="' + MUTED + '" stroke-width="1"/>';
+      s += '<line x1="' + zeroX.toFixed(1) + '" y1="4" x2="' + zeroX.toFixed(1) + '" y2="' + (H - 4) + '" stroke="' + P.muted + '" stroke-width="1"/>';
       rows.forEach(function (r, i) {
         var y = i * rowH + 8;
         var bw = Math.max(3, (Math.abs(r.value) / span) * plotW);
@@ -56,25 +85,27 @@
   }
 
   function sharesSVG(ins) {
+    var P = palette();
     var rows = ins.rows;
     var W = 620, rowH = 30, padL = 250, padR = 10;
     var H = rows.length * rowH + 30;
     var s = '<svg viewBox="0 0 ' + W + ' ' + H + '" class="vh-ins__viz" role="img" aria-label="archetype share then vs now">';
-    s += '<text x="' + padL + '" y="12" class="vh-ins__svgval" fill="' + MUTED + '">then</text>';
+    s += '<text x="' + padL + '" y="12" class="vh-ins__svgval" fill="' + P.muted + '">then</text>';
     s += '<text x="' + (padL + 130) + '" y="12" class="vh-ins__svgval">now</text>';
     rows.forEach(function (r, i) {
       var y = 20 + i * rowH;
       var w1 = Math.max(2, r.early * 9), w2 = Math.max(2, r.late * 9);
       var neg = r.delta < 0;
       s += '<text x="0" y="' + (y + 15) + '" class="vh-ins__svglabel">' + esc(r.label) + '</text>';
-      s += '<rect x="' + padL + '" y="' + y + '" width="' + w1.toFixed(1) + '" height="9" rx="3" fill="' + MUTED + '"/>';
-      s += '<rect x="' + padL + '" y="' + (y + 11) + '" width="' + w2.toFixed(1) + '" height="9" rx="3" fill="' + (neg ? '#b0523c' : TERRA) + '"/>';
+      s += '<rect x="' + padL + '" y="' + y + '" width="' + w1.toFixed(1) + '" height="9" rx="3" fill="' + P.muted + '"/>';
+      s += '<rect x="' + padL + '" y="' + (y + 11) + '" width="' + w2.toFixed(1) + '" height="9" rx="3" fill="' + (neg ? '#b0523c' : P.terra) + '"/>';
       s += '<text x="' + (padL + 250) + '" y="' + (y + 16) + '" class="vh-ins__svgval">' + (r.delta > 0 ? '+' : '') + r.delta + 'pp</text>';
     });
     return s + '</svg>';
   }
 
   function timelineSVG(ins) {
+    var P = palette();
     var rows = ins.rows;
     var W = 620, rowH = 64;
     var H = rows.length * rowH + 16;
@@ -83,15 +114,16 @@
       var y = i * rowH + 16, midY = y + 26;
       s += '<text x="0" y="' + (y + 12) + '" class="vh-ins__svglabel">' + esc(r.a) + '</text>';
       s += '<text x="0" y="' + (y + 44) + '" class="vh-ins__svglabel">' + esc(r.b) + '</text>';
-      s += '<line x1="300" y1="' + (y + 8) + '" x2="300" y2="' + (y + 48) + '" stroke="' + TERRA + '" stroke-width="2"/>';
-      s += '<circle cx="300" cy="' + (y + 8) + '" r="4" fill="' + GOLD + '"/>';
-      s += '<circle cx="300" cy="' + (y + 48) + '" r="4" fill="' + GOLD + '"/>';
+      s += '<line x1="300" y1="' + (y + 8) + '" x2="300" y2="' + (y + 48) + '" stroke="' + P.terra + '" stroke-width="2"/>';
+      s += '<circle cx="300" cy="' + (y + 8) + '" r="4" fill="' + P.gold + '"/>';
+      s += '<circle cx="300" cy="' + (y + 48) + '" r="4" fill="' + P.gold + '"/>';
       s += '<text x="320" y="' + (midY + 5) + '" class="vh-ins__svgval">' + r.gap + 'y apart · sim ' + r.sim + '</text>';
     });
     return s + '</svg>';
   }
 
   function lineSVG(ins) {
+    var P = palette();
     var rows = ins.rows;
     var W = 620, H = 240, padL = 44, padB = 30, padT = 16;
     var max = Math.max.apply(null, rows.map(function (r) { return r.v; })) * 1.08;
@@ -99,9 +131,9 @@
     function Y(v) { return padT + (1 - v / max) * (H - padT - padB); }
     var pts = rows.map(function (r, i) { return X(i).toFixed(1) + ',' + Y(r.v).toFixed(1); }).join(' ');
     var s = '<svg viewBox="0 0 ' + W + ' ' + H + '" class="vh-ins__viz" role="img" aria-label="' + esc(ins.viz_label || 'line chart') + '">';
-    s += '<polyline points="' + pts + '" fill="none" stroke="' + TERRA + '" stroke-width="3"/>';
-    s += '<circle cx="' + X(0) + '" cy="' + Y(rows[0].v) + '" r="5" fill="' + GOLD + '"/>';
-    s += '<circle cx="' + X(rows.length - 1) + '" cy="' + Y(rows[rows.length - 1].v) + '" r="5" fill="' + GOLD + '"/>';
+    s += '<polyline points="' + pts + '" fill="none" stroke="' + P.terra + '" stroke-width="3"/>';
+    s += '<circle cx="' + X(0) + '" cy="' + Y(rows[0].v) + '" r="5" fill="' + P.gold + '"/>';
+    s += '<circle cx="' + X(rows.length - 1) + '" cy="' + Y(rows[rows.length - 1].v) + '" r="5" fill="' + P.gold + '"/>';
     s += '<text x="' + (X(0) - 6) + '" y="' + (Y(rows[0].v) - 10) + '" class="vh-ins__svgval" text-anchor="end">' + rows[0].v + '</text>';
     s += '<text x="' + (X(rows.length - 1) + 8) + '" y="' + (Y(rows[rows.length - 1].v) - 10) + '" class="vh-ins__svgval">' + rows[rows.length - 1].v + '</text>';
     s += '<text x="' + padL + '" y="' + (H - 8) + '" class="vh-ins__svglabel">' + esc(rows[0].s) + '</text>';
@@ -115,8 +147,8 @@
 
   function cardHTML(ins, featured) {
     var viz = (VIZ[ins.viz] || barsSVG)(ins);
-    return '<article class="vh-ins__card' + (featured ? ' vh-ins__card--featured' : '') + '" id="ins-' + ins.slug + '" data-slug="' + ins.slug + '">' +
-      '<div class="vh-ins__kicker">' + esc(ins.kicker) + '</div>' +
+    return '<article class="vh-ins__card' + (featured ? ' vh-ins__card--featured' : '') + '" id="ins-' + ins.slug + '" data-slug="' + ins.slug + '" data-theme="' + kickerTheme(ins.kicker) + '">' +
+      '<div class="vh-ins__kicker vh-ins__kicker--' + kickerTheme(ins.kicker) + '">' + esc(ins.kicker) + '</div>' +
       '<h2 class="vh-ins__title">' + esc(ins.title) + '</h2>' +
       (ins.tldr ? '<p class="vh-ins__tldr"><span>tl;dr</span>' + esc(ins.tldr) + '</p>' : '') +
       '<p class="vh-ins__lede">' + esc(ins.lede) + '</p>' +
@@ -140,6 +172,9 @@
     var list = data.insights;
     var host = document.getElementById('insights-list');
     if (!host) return;
+    /* Live count: the header stat always matches the data, never hardcoded. */
+    var countEl = document.getElementById('insights-count');
+    if (countEl) countEl.textContent = list.length;
     var pick = list[dayOfYear(new Date()) % list.length];
     // The spotlight never duplicates a grid card: the grid shows everything else.
     var rest = list.filter(function (ins) { return ins.slug !== pick.slug; });
