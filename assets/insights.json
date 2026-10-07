@@ -1267,6 +1267,429 @@
    "tldr": "Dirk left ~$46M and Duncan ~$35M+ documented on the table — and both discounts are directly tied to championships.",
    "viz": "bars",
    "viz_label": "Documented $M left on the table (minimums)"
+  },
+  {
+   "foot": "Payrolls: Basketball Insiders 2024-25 season snapshot (total cap). Wins: 2024-25 regular season. Cross-checked against Spotrac cap tracker.",
+   "kicker": "Money layer",
+   "lede": "Revenue efficiency, team-level: 2024-25 total payroll (Basketball Insiders season snapshot) divided by regular-season wins. A 5.4x spread separates the most efficient checkbook from the least.",
+   "og_desc": "Oklahoma City spent $159M and won 68 games. Washington spent $228M and won 18. Payroll per win, 2024-25.",
+   "og_title": "The cheapest NBA wins cost $2.34M — the priciest $12.67M",
+   "rows": [
+    {
+     "label": "Oklahoma City",
+     "tag": "68 wins, best",
+     "value": 2.34
+    },
+    {
+     "label": "Detroit",
+     "tag": null,
+     "value": 2.98
+    },
+    {
+     "label": "Cleveland",
+     "tag": null,
+     "value": 2.99
+    },
+    {
+     "label": "Boston",
+     "tag": null,
+     "value": 3.36
+    },
+    {
+     "label": "Phoenix",
+     "tag": "$237M for 36 wins",
+     "value": 6.58
+    },
+    {
+     "label": "Philadelphia",
+     "tag": null,
+     "value": 7.43
+    },
+    {
+     "label": "Utah",
+     "tag": null,
+     "value": 8.73
+    },
+    {
+     "label": "New Orleans",
+     "tag": null,
+     "value": 8.84
+    },
+    {
+     "label": "Washington",
+     "tag": "18 wins, worst",
+     "value": 12.67
+    }
+   ],
+   "slug": "payroll-per-win",
+   "stat": "2.34",
+   "stat_label": "$M per win — Oklahoma City, best payroll efficiency",
+   "title": "The cheapest wins in the NBA cost $2.34M — the priciest cost $12.67M",
+   "tldr": "Team payroll divided by 2024-25 wins: Oklahoma City bought the league's best record for $2.34M per win, while Washington spent $12.67M per win on 18 wins.",
+   "viz": "bars",
+   "viz_label": "Payroll $M per regular-season win, 2024-25 (lower = cheaper wins)"
+  },
+  {
+   "foot": "Family-of-four cost: Action Network 2025 NBA Game-Day Cost Index (4 tickets, food & drinks, 4 hats + 4 jerseys, parking). Wins: 2024-25 regular season. Only the 10 teams with published per-team costs are shown.",
+   "kicker": "Money layer",
+   "lede": "Fan cost per win flips the affordability story. The cheapest arenas in the league (Action Network's 2025 family-of-four game-day index, tickets + food + merch + parking) paired with the fewest wins produce the priciest win of all.",
+   "og_desc": "The cheapest arenas hide the priciest wins. Houston fans paid $22.69 per win; Washington paid $61.11. Fan cost per win, 2024-25.",
+   "og_title": "Washington fans paid $61 per win — the NBA's worst fan deal",
+   "rows": [
+    {
+     "label": "Washington",
+     "tag": "worst value",
+     "value": 61.11
+    },
+    {
+     "label": "Utah",
+     "tag": null,
+     "value": 60.0
+    },
+    {
+     "label": "New Orleans",
+     "tag": null,
+     "value": 46.67
+    },
+    {
+     "label": "New York",
+     "tag": null,
+     "value": 41.78
+    },
+    {
+     "label": "Golden State",
+     "tag": null,
+     "value": 39.72
+    },
+    {
+     "label": "LA Lakers",
+     "tag": null,
+     "value": 38.75
+    },
+    {
+     "label": "Minnesota",
+     "tag": null,
+     "value": 36.44
+    },
+    {
+     "label": "Boston",
+     "tag": null,
+     "value": 28.9
+    },
+    {
+     "label": "Memphis",
+     "tag": null,
+     "value": 24.69
+    },
+    {
+     "label": "Houston",
+     "tag": "best value",
+     "value": 22.69
+    }
+   ],
+   "slug": "fan-cost-per-win",
+   "stat": "61.11",
+   "stat_label": "$ per win — Washington, worst fan value in the NBA",
+   "title": "The cheapest ticket in the NBA hides the worst deal: $61 per win",
+   "tldr": "Family-of-four game-day cost divided by 2024-25 wins: Washington fans paid $61.11 per win and Utah $60.00 — worse value than a night at Madison Square Garden.",
+   "viz": "bars",
+   "viz_label": "Fan cost per win, 2024-25 wins (higher = worse value)"
+  },
+  {
+   "foot": "Sportscasting, secondary-market data: average get-in price per team for the 2025-26 season (2024-25 prices: NYK $186.80, MEM $34.62). League average get-in: $52.86.",
+   "kicker": "Money layer",
+   "lede": "Secondary-market get-in prices for the 2025-26 season (Sportscasting). The Knicks' average gate is 46% above the next-priciest team — and the Oklahoma City Thunder, fresh off 68 wins, raised prices 92.7% year over year, the biggest jump in the league.",
+   "og_desc": "$213.43 average get-in at MSG vs. $22.00 in Memphis — the NBA's widest ticket-price gap, 2025-26 season.",
+   "og_title": "A Knicks ticket costs 9.7x a Grizzlies ticket",
+   "rows": [
+    {
+     "label": "New York",
+     "tag": "priciest gate",
+     "value": 213.43
+    },
+    {
+     "label": "LA Lakers",
+     "tag": null,
+     "value": 146.2
+    },
+    {
+     "label": "Golden State",
+     "tag": null,
+     "value": 127.73
+    },
+    {
+     "label": "Boston",
+     "tag": null,
+     "value": 114.18
+    },
+    {
+     "label": "Oklahoma City",
+     "tag": "+92.7% YoY",
+     "value": 52.08
+    },
+    {
+     "label": "New Orleans",
+     "tag": null,
+     "value": 22.58
+    },
+    {
+     "label": "Utah",
+     "tag": null,
+     "value": 22.28
+    },
+    {
+     "label": "Memphis",
+     "tag": "cheapest gate",
+     "value": 22.0
+    }
+   ],
+   "slug": "ticket-price-gap",
+   "stat": "9.7",
+   "stat_label": "x — Knicks get-in price vs. Grizzlies ($213.43 vs. $22.00)",
+   "title": "A Knicks ticket costs 9.7x a Grizzlies ticket — same hardwood",
+   "tldr": "Average get-in price for the 2025-26 season: the Knicks ($213.43) charge nearly ten times what Memphis ($22.00) charges, and MSG will host five of the ten priciest games of the season.",
+   "viz": "bars",
+   "viz_label": "Average get-in ticket price, 2025-26 season ($)"
+  },
+  {
+   "foot": "Final bills per Hoops Rumors, ESPN's Bobby Marks, and Spotrac estimates; 2022-23 figures are Eric Pincus near-final projections. Nominal dollars, not inflation-adjusted.",
+   "kicker": "Tax Burden",
+   "lede": "Total luxury tax paid, 2015-16 → 2024-25. The five biggest-spending franchises that never won a ring in the window — led by a team that never even reached the Finals.",
+   "og_desc": "Second-biggest tax bill of the decade — and not one Finals appearance. Who paid the most for rings?",
+   "og_title": "The Clippers paid $394.5M in luxury tax for zero Finals",
+   "rows": [
+    {
+     "label": "LA Clippers",
+     "tag": "0 Finals",
+     "value": 394.5
+    },
+    {
+     "label": "Phoenix Suns",
+     "tag": "0 rings",
+     "value": 273.9
+    },
+    {
+     "label": "Brooklyn Nets",
+     "tag": "0 rings",
+     "value": 171.7
+    },
+    {
+     "label": "Minnesota Timberwolves",
+     "tag": "0 rings",
+     "value": 91.7
+    },
+    {
+     "label": "Dallas Mavericks",
+     "tag": "0 rings",
+     "value": 61.3
+    }
+   ],
+   "slug": "clippers-nothing-to-show",
+   "stat": "394.5",
+   "stat_label": "$ millions in tax, Clippers 2015-25 — zero Finals",
+   "title": "The Clippers spent $394.5 million on the luxury tax and never made a Finals",
+   "tldr": "The second-biggest luxury-tax bill of the decade bought zero Finals appearances — spending buys contention, not certainty.",
+   "viz": "bars",
+   "viz_label": "Total luxury tax paid, 2015-16 → 2024-25 ($M), no championship"
+  },
+  {
+   "foot": "Window totals divided by rings won in-window. Lakers excluded (2020-21 bill unconfirmed). Champions per Basketball-Reference; bills per Hoops Rumors / Bobby Marks / Spotrac.",
+   "kicker": "Tax Burden",
+   "lede": "Luxury tax paid per championship won, 2015-16 → 2024-25. Four of the ten champions paid nothing the year they won; the 2025 Finals was the first in 20 years with two non-tax teams.",
+   "og_desc": "Golden State paid $232.9M per ring over the same span — more than 10x Toronto's one-title bill.",
+   "og_title": "Toronto's $21.4M title was the cheapest ring of the decade",
+   "rows": [
+    {
+     "label": "Toronto Raptors",
+     "tag": "1 ring",
+     "value": 21.4
+    },
+    {
+     "label": "Denver Nuggets",
+     "tag": "1 ring",
+     "value": 54.8
+    },
+    {
+     "label": "Oklahoma City Thunder",
+     "tag": "1 ring",
+     "value": 103.6
+    },
+    {
+     "label": "Cleveland Cavaliers",
+     "tag": "1 ring",
+     "value": 129.5
+    },
+    {
+     "label": "Boston Celtics",
+     "tag": "1 ring",
+     "value": 165.6
+    },
+    {
+     "label": "Milwaukee Bucks",
+     "tag": "1 ring",
+     "value": 221.1
+    },
+    {
+     "label": "Golden State Warriors",
+     "tag": "3 rings",
+     "value": 232.9
+    }
+   ],
+   "slug": "cheapest-ring",
+   "stat": "21.4",
+   "stat_label": "$ millions in tax per ring, Toronto '18-19 — cheapest",
+   "title": "Toronto won the cheapest championship of the decade: $21.4M in tax",
+   "tldr": "The Raptors' 2019 title cost one-eleventh of what the Warriors paid per ring — timing beats spending.",
+   "viz": "bars",
+   "viz_label": "Luxury tax paid per championship, 2015-2025 ($M)"
+  },
+  {
+   "foot": "Repeater = tax in 3 of previous 4 seasons (Hoops Rumors repeater tracker). Warriors' $176.9M in 2023-24 is the all-time single-season record; they missed the playoffs that year.",
+   "kicker": "Repeater Tax",
+   "lede": "Repeater-rate tax paid in the window, 2015-16 → 2024-25. Golden State's four repeater seasons alone exceed the decade totals of every other franchise — and their 2019-20 duck-under bought them only one non-repeater year.",
+   "og_desc": "The Warriors' repeater bills alone top every other franchise's decade total — including a record $176.9M for a season they missed the playoffs.",
+   "og_title": "$531.2M in repeater tax: the price of keeping a dynasty together",
+   "rows": [
+    {
+     "label": "Golden State Warriors",
+     "tag": "record",
+     "value": 531.2
+    },
+    {
+     "label": "LA Clippers",
+     "tag": "2023-24",
+     "value": 142.4
+    },
+    {
+     "label": "Milwaukee Bucks",
+     "tag": null,
+     "value": 81.9
+    },
+    {
+     "label": "Oklahoma City Thunder",
+     "tag": "2018-19",
+     "value": 61.6
+    },
+    {
+     "label": "LA Lakers",
+     "tag": null,
+     "value": 60.4
+    },
+    {
+     "label": "Cleveland Cavaliers",
+     "tag": "2017-18",
+     "value": 50.7
+    }
+   ],
+   "slug": "warriors-repeater-record",
+   "stat": "531.2",
+   "stat_label": "$ millions in repeater-rate tax, Warriors 2021-22 → 2024-25",
+   "title": "The Warriors paid $531.2M at repeater rates — including a record $176.9M for a season they missed the playoffs",
+   "tldr": "Repeater penalties (tax in 3 of 4 seasons) turned the Warriors' dynasty maintenance into the most expensive tax run in NBA history.",
+   "viz": "bars",
+   "viz_label": "Tax paid at repeater rates, 2015-2025 ($M)"
+  },
+  {
+   "foot": "Boston $180M = projected tax penalties saved (Bobby Marks, June 2025; Keith Smith estimated ~$196M in total savings). GSW/LAC rows = bill reduction from 2023-24 to 2024-25 after letting Thompson/George walk to duck the apron. KAT = tax saved per the Beacon Journal. Reported by The Ringer, Boston Herald.",
+   "kicker": "Second Apron",
+   "lede": "Approximate tax savings from apron-driven moves. The second apron doesn't just charge money — it bans the mid-level exception, salary aggregation, and future pick trades, so teams are shedding stars to get under it.",
+   "og_desc": "Klay walked, PG walked, KAT was dumped, Boston tore apart a title team. The new cap ends dynasties faster than money ever did.",
+   "og_title": "The second apron broke up contenders in two seasons",
+   "rows": [
+    {
+     "label": "Boston: Holiday + Porzingis out",
+     "tag": "Marks, June 2025",
+     "value": 180.0
+    },
+    {
+     "label": "Warriors: ducked 2nd apron",
+     "tag": "176.9M → 15.4M",
+     "value": 161.5
+    },
+    {
+     "label": "Clippers: ducked 2nd apron",
+     "tag": "142.4M → 0",
+     "value": 142.4
+    },
+    {
+     "label": "Wolves: Towns traded",
+     "tag": "Beacon Journal",
+     "value": 50.0
+    }
+   ],
+   "slug": "apron-casualties",
+   "stat": "2",
+   "stat_label": "seasons of the second apron before Boston dismantled a title core",
+   "title": "The second apron ended dynasties faster than the luxury tax ever did",
+   "tldr": "Klay Thompson and Paul George walked for nothing, KAT was salary-dumped, and Boston tore apart a title team one summer later — the new cap broke up contenders in two seasons.",
+   "viz": "bars",
+   "viz_label": "Approximate tax savings from apron-driven moves ($M)"
+  },
+  {
+   "foot": "Entity extraction over title, tldr, lede, row labels and foot of all 20 live cards (origin/master, 2026-10-07). Player names normalized to dossier keys; short forms (LeBron, Giannis, Melo, Manu, Klay…) resolved by hand-checked alias rules. Full machine-readable index: assets/entity-index.json. Counts are card-level (a player cited twice in one card counts once).",
+   "kicker": "Entity grounding",
+   "lede": "Every player, team and season named across the 20 live cards, counted. 70 players are cited in total; the top of the list is a tie. Giannis appears in most-unique, transformed, paid-to-not-play, max-money-bargains and contenders-pretenders — the uniqueness, reinvention and value stories. Duncan appears in playoff-swings, the-188-million-win-share, same-jersey-smaller-role, hometown-discount and max-money-bargains — the swings, money and sacrifice stories. LeBron James is next at 4; nine players sit at 3. All 70 cited players have dossiers — the noun layer is fully grounded.",
+   "og_desc": "Giannis Antetokounmpo and Tim Duncan are each cited in 5 of 20 Insights cards — more than any other player. The noun layer, counted.",
+   "og_title": "The two faces of our Insights: Giannis and Tim Duncan",
+   "rows": [
+    {
+     "label": "Giannis Antetokounmpo",
+     "tag": null,
+     "value": 5
+    },
+    {
+     "label": "Tim Duncan",
+     "tag": null,
+     "value": 5
+    },
+    {
+     "label": "LeBron James",
+     "tag": null,
+     "value": 4
+    },
+    {
+     "label": "Russell Westbrook",
+     "tag": null,
+     "value": 3
+    },
+    {
+     "label": "James Harden",
+     "tag": null,
+     "value": 3
+    },
+    {
+     "label": "Joel Embiid",
+     "tag": null,
+     "value": 3
+    },
+    {
+     "label": "Kevin Durant",
+     "tag": null,
+     "value": 3
+    },
+    {
+     "label": "Kevin Love",
+     "tag": null,
+     "value": 3
+    },
+    {
+     "label": "Dwyane Wade",
+     "tag": null,
+     "value": 3
+    },
+    {
+     "label": "Manu Ginobili",
+     "tag": null,
+     "value": 3
+    }
+   ],
+   "slug": "most-cited-players",
+   "stat": "5",
+   "stat_label": "cards citing Giannis Antetokounmpo and Tim Duncan each (of 20)",
+   "title": "Two players anchor all 20 Insights cards: Giannis and Tim Duncan",
+   "tldr": "Giannis Antetokounmpo and Tim Duncan are each cited in 5 of the 20 live cards — nobody else clears 4. The Insights section has a face: uniqueness and reinvention on one side, sacrifice and longevity on the other.",
+   "viz": "bars",
+   "viz_label": "Cards citing each player"
   }
  ]
 }
