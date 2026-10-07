@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Insight cards preview — ticket &amp; merch money</title>
+<style>
+  :root{--paper:#F9F6F0;--ink:#2A2A2A;--terra:#C17C60;--stone:#E8E0D5;--clay:#A67B5B;--moss:#8A9A8B;--void:#1E2022}
+  *{box-sizing:border-box}
+  body{font-family:Georgia,'Times New Roman',serif;background:var(--paper);color:var(--ink);margin:0;padding:32px 16px;line-height:1.5}
+  .wrap{max-width:760px;margin:0 auto}
+  h1{font-size:28px;margin:0 0 4px}
+  .sub{font-family:ui-monospace,Menlo,monospace;font-size:12px;color:var(--clay);margin-bottom:32px}
+  .card{background:#fff;border:1px solid var(--stone);border-radius:16px;padding:28px;margin-bottom:28px;box-shadow:0 6px 24px rgba(42,42,42,.06)}
+  .kicker{font-family:ui-monospace,Menlo,monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--terra);margin-bottom:8px}
+  .card h2{font-size:22px;margin:0 0 8px;line-height:1.25}
+  .tldr{color:#555;font-style:italic;margin:0 0 16px}
+  .stat{font-family:ui-monospace,Menlo,monospace;font-size:40px;color:var(--terra);line-height:1}
+  .stat-label{font-size:13px;color:#666;margin:4px 0 16px}
+  .viz-label{font-size:13px;font-weight:bold;margin:0 0 10px;color:#444}
+  .row{display:grid;grid-template-columns:130px 1fr 70px;gap:10px;align-items:center;margin:7px 0;font-size:13px}
+  .row .lbl{font-weight:bold;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .bar{height:16px;background:var(--stone);border-radius:8px;position:relative;overflow:hidden}
+  .bar i{display:block;height:100%;background:var(--terra);border-radius:8px}
+  .row .val{font-family:ui-monospace,Menlo,monospace;text-align:right}
+  .tag{display:inline-block;font-size:10px;font-family:ui-monospace,Menlo,monospace;background:var(--void);color:#fff;border-radius:6px;padding:1px 6px;margin-left:6px;vertical-align:1px}
+  .lede{font-size:14px;color:#444;margin:16px 0 6px}
+  .foot{font-size:11px;color:#999;font-family:ui-monospace,Menlo,monospace;margin:10px 0 0;border-top:1px dashed var(--stone);padding-top:10px}
+  .og{font-size:12px;color:#888;margin-top:12px}
+  .slug{font-family:ui-monospace,Menlo,monospace;font-size:11px;color:var(--moss);margin-bottom:12px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Ticket &amp; merch money — draft Insight cards</h1>
+  <div class="sub">branch scout/money-ticket-merch · assets/insights-ticket-merch.json · research-only preview, do not merge</div>
+  <div id="cards"></div>
+</div>
+<script>
+Promise.resolve([{"foot": "Payrolls: Basketball Insiders 2024-25 season snapshot (total cap). Wins: 2024-25 regular season. Cross-checked against Spotrac cap tracker.", "kicker": "Money layer", "lede": "Revenue efficiency, team-level: 2024-25 total payroll (Basketball Insiders season snapshot) divided by regular-season wins. A 5.4x spread separates the most efficient checkbook from the least.", "og_desc": "Oklahoma City spent $159M and won 68 games. Washington spent $228M and won 18. Payroll per win, 2024-25.", "og_title": "The cheapest NBA wins cost $2.34M — the priciest $12.67M", "rows": [{"label": "Oklahoma City", "tag": "68 wins, best", "value": 2.34}, {"label": "Detroit", "tag": null, "value": 2.98}, {"label": "Cleveland", "tag": null, "value": 2.99}, {"label": "Boston", "tag": null, "value": 3.36}, {"label": "Phoenix", "tag": "$237M for 36 wins", "value": 6.58}, {"label": "Philadelphia", "tag": null, "value": 7.43}, {"label": "Utah", "tag": null, "value": 8.73}, {"label": "New Orleans", "tag": null, "value": 8.84}, {"label": "Washington", "tag": "18 wins, worst", "value": 12.67}], "slug": "payroll-per-win", "stat": "2.34", "stat_label": "$M per win — Oklahoma City, best payroll efficiency", "title": "The cheapest wins in the NBA cost $2.34M — the priciest cost $12.67M", "tldr": "Team payroll divided by 2024-25 wins: Oklahoma City bought the league's best record for $2.34M per win, while Washington spent $12.67M per win on 18 wins.", "viz": "bars", "viz_label": "Payroll $M per regular-season win, 2024-25 (lower = cheaper wins)"}, {"foot": "Family-of-four cost: Action Network 2025 NBA Game-Day Cost Index (4 tickets, food & drinks, 4 hats + 4 jerseys, parking). Wins: 2024-25 regular season. Only the 10 teams with published per-team costs are shown.", "kicker": "Money layer", "lede": "Fan cost per win flips the affordability story. The cheapest arenas in the league (Action Network's 2025 family-of-four game-day index, tickets + food + merch + parking) paired with the fewest wins produce the priciest win of all.", "og_desc": "The cheapest arenas hide the priciest wins. Houston fans paid $22.69 per win; Washington paid $61.11. Fan cost per win, 2024-25.", "og_title": "Washington fans paid $61 per win — the NBA's worst fan deal", "rows": [{"label": "Washington", "tag": "worst value", "value": 61.11}, {"label": "Utah", "tag": null, "value": 60.0}, {"label": "New Orleans", "tag": null, "value": 46.67}, {"label": "New York", "tag": null, "value": 41.78}, {"label": "Golden State", "tag": null, "value": 39.72}, {"label": "LA Lakers", "tag": null, "value": 38.75}, {"label": "Minnesota", "tag": null, "value": 36.44}, {"label": "Boston", "tag": null, "value": 28.9}, {"label": "Memphis", "tag": null, "value": 24.69}, {"label": "Houston", "tag": "best value", "value": 22.69}], "slug": "fan-cost-per-win", "stat": "61.11", "stat_label": "$ per win — Washington, worst fan value in the NBA", "title": "The cheapest ticket in the NBA hides the worst deal: $61 per win", "tldr": "Family-of-four game-day cost divided by 2024-25 wins: Washington fans paid $61.11 per win and Utah $60.00 — worse value than a night at Madison Square Garden.", "viz": "bars", "viz_label": "Fan cost per win, 2024-25 wins (higher = worse value)"}, {"foot": "Sportscasting, secondary-market data: average get-in price per team for the 2025-26 season (2024-25 prices: NYK $186.80, MEM $34.62). League average get-in: $52.86.", "kicker": "Money layer", "lede": "Secondary-market get-in prices for the 2025-26 season (Sportscasting). The Knicks' average gate is 46% above the next-priciest team — and the Oklahoma City Thunder, fresh off 68 wins, raised prices 92.7% year over year, the biggest jump in the league.", "og_desc": "$213.43 average get-in at MSG vs. $22.00 in Memphis — the NBA's widest ticket-price gap, 2025-26 season.", "og_title": "A Knicks ticket costs 9.7x a Grizzlies ticket", "rows": [{"label": "New York", "tag": "priciest gate", "value": 213.43}, {"label": "LA Lakers", "tag": null, "value": 146.2}, {"label": "Golden State", "tag": null, "value": 127.73}, {"label": "Boston", "tag": null, "value": 114.18}, {"label": "Oklahoma City", "tag": "+92.7% YoY", "value": 52.08}, {"label": "New Orleans", "tag": null, "value": 22.58}, {"label": "Utah", "tag": null, "value": 22.28}, {"label": "Memphis", "tag": "cheapest gate", "value": 22.0}], "slug": "ticket-price-gap", "stat": "9.7", "stat_label": "x — Knicks get-in price vs. Grizzlies ($213.43 vs. $22.00)", "title": "A Knicks ticket costs 9.7x a Grizzlies ticket — same hardwood", "tldr": "Average get-in price for the 2025-26 season: the Knicks ($213.43) charge nearly ten times what Memphis ($22.00) charges, and MSG will host five of the ten priciest games of the season.", "viz": "bars", "viz_label": "Average get-in ticket price, 2025-26 season ($)"}]).then(cards => {
+    const el = document.getElementById('cards');
+    cards.forEach(c => {
+      const max = Math.max(...c.rows.map(r => r.value));
+      const rows = c.rows.map(r => `
+        <div class="row">
+          <div class="lbl">${r.label}${r.tag ? `<span class="tag">${r.tag}</span>` : ''}</div>
+          <div class="bar"><i style="width:${(r.value/max*100).toFixed(1)}%"></i></div>
+          <div class="val">${typeof r.value === 'number' && r.value < 20 ? r.value.toFixed(2) : r.value}</div>
+        </div>`).join('');
+      el.insertAdjacentHTML('beforeend', `
+        <article class="card">
+          <div class="slug">slug: ${c.slug}</div>
+          <div class="kicker">${c.kicker}</div>
+          <h2>${c.title}</h2>
+          <p class="tldr">${c.tldr}</p>
+          <div class="stat">${c.stat}</div>
+          <div class="stat-label">${c.stat_label}</div>
+          <div class="viz-label">${c.viz_label}</div>
+          ${rows}
+          <p class="lede">${c.lede}</p>
+          <p class="foot">${c.foot}</p>
+          <p class="og"><b>OG:</b> ${c.og_title} — ${c.og_desc}</p>
+        </article>`);
+    });
+  })
+
+</script>
+</body>
+</html>
