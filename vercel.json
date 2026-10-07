@@ -1,1 +1,137 @@
-{"cleanUrls":false,"framework":null,"headers":[{"headers":[{"key":"Cache-Control","value":"public, max-age=31536000, immutable"}],"source":"/assets/:path*.mp4"},{"headers":[{"key":"Cache-Control","value":"public, max-age=31536000, immutable"}],"source":"/assets/:path*.jpg"},{"headers":[{"key":"Cache-Control","value":"public, max-age=31536000, immutable"}],"source":"/assets/:path*.png"},{"headers":[{"key":"Cache-Control","value":"public, max-age=31536000, immutable"}],"source":"/assets/:path*.gif"},{"headers":[{"key":"Cache-Control","value":"public, max-age=31536000, immutable"}],"source":"/assets/:path*.webp"},{"headers":[{"key":"Cache-Control","value":"public, max-age=31536000, immutable"}],"source":"/assets/:path*.woff2"},{"headers":[{"key":"Cache-Control","value":"public, max-age=31536000, immutable"}],"source":"/assets/:path*.f32"},{"headers":[{"key":"Cache-Control","value":"no-cache"},{"key":"X-Content-Type-Options","value":"nosniff"},{"key":"X-Frame-Options","value":"SAMEORIGIN"},{"key":"Strict-Transport-Security","value":"max-age=31536000; includeSubDomains"},{"key":"Referrer-Policy","value":"strict-origin-when-cross-origin"},{"key":"Permissions-Policy","value":"camera=(), microphone=(), geolocation=()"},{"key":"Content-Security-Policy-Report-Only","value":"default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; media-src 'self'; connect-src 'self'; frame-ancestors 'self'"}],"source":"/(.*)"}],"rewrites":[{"destination":"/play.html","source":"/play"},{"destination":"/players.html","source":"/players"},{"destination":"/model.html","source":"/model"},{"destination":"/trends.html","source":"/trends"},{"destination":"/model.html","source":"/lab"},{"destination":"/methods.html","source":"/methods"},{"destination":"/teams.html","source":"/teams"},{"destination":"/index.html","source":"/dfs"}],"trailingSlash":false}
+{
+ "cleanUrls": false,
+ "framework": null,
+ "headers": [
+  {
+   "headers": [
+    {
+     "key": "Cache-Control",
+     "value": "no-cache"
+    },
+    {
+     "key": "X-Content-Type-Options",
+     "value": "nosniff"
+    },
+    {
+     "key": "X-Frame-Options",
+     "value": "SAMEORIGIN"
+    },
+    {
+     "key": "Strict-Transport-Security",
+     "value": "max-age=31536000; includeSubDomains"
+    },
+    {
+     "key": "Referrer-Policy",
+     "value": "strict-origin-when-cross-origin"
+    },
+    {
+     "key": "Permissions-Policy",
+     "value": "camera=(), microphone=(), geolocation=()"
+    },
+    {
+     "key": "Content-Security-Policy-Report-Only",
+     "value": "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; media-src 'self'; connect-src 'self'; frame-ancestors 'self'"
+    }
+   ],
+   "source": "/(.*)"
+  },
+  {
+   "headers": [
+    {
+     "key": "Cache-Control",
+     "value": "public, max-age=31536000, immutable"
+    }
+   ],
+   "source": "/assets/:path*.mp4"
+  },
+  {
+   "headers": [
+    {
+     "key": "Cache-Control",
+     "value": "public, max-age=31536000, immutable"
+    }
+   ],
+   "source": "/assets/:path*.jpg"
+  },
+  {
+   "headers": [
+    {
+     "key": "Cache-Control",
+     "value": "public, max-age=31536000, immutable"
+    }
+   ],
+   "source": "/assets/:path*.png"
+  },
+  {
+   "headers": [
+    {
+     "key": "Cache-Control",
+     "value": "public, max-age=31536000, immutable"
+    }
+   ],
+   "source": "/assets/:path*.gif"
+  },
+  {
+   "headers": [
+    {
+     "key": "Cache-Control",
+     "value": "public, max-age=31536000, immutable"
+    }
+   ],
+   "source": "/assets/:path*.webp"
+  },
+  {
+   "headers": [
+    {
+     "key": "Cache-Control",
+     "value": "public, max-age=31536000, immutable"
+    }
+   ],
+   "source": "/assets/:path*.woff2"
+  },
+  {
+   "headers": [
+    {
+     "key": "Cache-Control",
+     "value": "public, max-age=31536000, immutable"
+    }
+   ],
+   "source": "/assets/:path*.f32"
+  }
+ ],
+ "rewrites": [
+  {
+   "destination": "/play.html",
+   "source": "/play"
+  },
+  {
+   "destination": "/players.html",
+   "source": "/players"
+  },
+  {
+   "destination": "/model.html",
+   "source": "/model"
+  },
+  {
+   "destination": "/trends.html",
+   "source": "/trends"
+  },
+  {
+   "destination": "/model.html",
+   "source": "/lab"
+  },
+  {
+   "destination": "/methods.html",
+   "source": "/methods"
+  },
+  {
+   "destination": "/teams.html",
+   "source": "/teams"
+  },
+  {
+   "destination": "/index.html",
+   "source": "/dfs"
+  }
+ ],
+ "trailingSlash": false
+}
