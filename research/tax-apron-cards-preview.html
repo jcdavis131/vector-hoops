@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tax &amp; Apron — Insight cards preview</title>
+<style>
+:root{--paper:#F9F6F0;--ink:#2A2A2A;--terra:#C17C60;--stone:#E8E0D5;--moss:#8A9A8B;--clay:#A67B5B}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--paper);color:var(--ink);font-family:-apple-system,"Segoe UI",sans-serif;line-height:1.5;padding:32px 20px}
+.wrap{max-width:900px;margin:0 auto}
+h1{font-size:28px;margin-bottom:4px}
+.sub{color:var(--clay);margin-bottom:28px;font-size:14px}
+.card{background:#fff;border:1px solid var(--stone);border-radius:12px;padding:24px;margin-bottom:24px;box-shadow:0 2px 12px rgba(42,42,42,.06)}
+.kicker{font-family:ui-monospace,monospace;font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--terra);margin-bottom:8px}
+h2{font-size:22px;margin-bottom:8px}
+.tldr{font-style:italic;color:var(--clay);margin-bottom:12px}
+.lede{font-size:15px;margin-bottom:16px}
+.statbox{display:flex;align-items:baseline;gap:10px;margin-bottom:16px}
+.stat{font-size:44px;font-weight:700;font-family:ui-monospace,monospace;color:var(--terra)}
+.stat-label{font-size:13px;color:var(--clay)}
+.viz-label{font-size:13px;color:var(--clay);margin-bottom:10px;font-family:ui-monospace,monospace}
+.bar-row{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.bar-label{width:230px;font-size:13px;text-align:right;flex-shrink:0}
+.bar-track{flex:1;background:var(--stone);border-radius:6px;height:26px;position:relative}
+.bar-fill{background:var(--terra);height:100%;border-radius:6px;min-width:2px}
+.bar-val{position:absolute;right:8px;top:3px;font-size:12px;font-family:ui-monospace,monospace;color:#fff;font-weight:600}
+.bar-tag{font-size:11px;color:var(--clay);width:150px;flex-shrink:0}
+.foot{font-size:12px;color:var(--moss);margin-top:16px;border-top:1px solid var(--stone);padding-top:12px}
+.note{background:#fff;border:1px dashed var(--clay);border-radius:12px;padding:16px 20px;margin-bottom:24px;font-size:14px}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>Who paid the most for rings?</h1>
+<p class="sub">NBA luxury-tax &amp; apron research — 4 draft Insight cards · branch scout/money-tax-apron · 2026-10-07</p>
+<div class="note">Draft cards for review. Real numbers only — see <code>research/tax-apron-FINDINGS.md</code> for sources, coverage gaps, and the full tables. Not wired into the live site; no merge to master.</div>
+<div id="cards"></div>
+</div>
+<script>
+const cards = [{"foot": "Final bills per Hoops Rumors, ESPN's Bobby Marks, and Spotrac estimates; 2022-23 figures are Eric Pincus near-final projections. Nominal dollars, not inflation-adjusted.", "kicker": "Tax Burden", "lede": "Total luxury tax paid, 2015-16 \u2192 2024-25. The five biggest-spending franchises that never won a ring in the window \u2014 led by a team that never even reached the Finals.", "og_desc": "Second-biggest tax bill of the decade \u2014 and not one Finals appearance. Who paid the most for rings?", "og_title": "The Clippers paid $394.5M in luxury tax for zero Finals", "rows": [{"label": "LA Clippers", "tag": "0 Finals", "value": 394.5}, {"label": "Phoenix Suns", "tag": "0 rings", "value": 273.9}, {"label": "Brooklyn Nets", "tag": "0 rings", "value": 171.7}, {"label": "Minnesota Timberwolves", "tag": "0 rings", "value": 91.7}, {"label": "Dallas Mavericks", "tag": "0 rings", "value": 61.3}], "slug": "clippers-nothing-to-show", "stat": "394.5", "stat_label": "$ millions in tax, Clippers 2015-25 \u2014 zero Finals", "title": "The Clippers spent $394.5 million on the luxury tax and never made a Finals", "tldr": "The second-biggest luxury-tax bill of the decade bought zero Finals appearances \u2014 spending buys contention, not certainty.", "viz": "bars", "viz_label": "Total luxury tax paid, 2015-16 \u2192 2024-25 ($M), no championship"}, {"foot": "Window totals divided by rings won in-window. Lakers excluded (2020-21 bill unconfirmed). Champions per Basketball-Reference; bills per Hoops Rumors / Bobby Marks / Spotrac.", "kicker": "Tax Burden", "lede": "Luxury tax paid per championship won, 2015-16 \u2192 2024-25. Four of the ten champions paid nothing the year they won; the 2025 Finals was the first in 20 years with two non-tax teams.", "og_desc": "Golden State paid $232.9M per ring over the same span \u2014 more than 10x Toronto's one-title bill.", "og_title": "Toronto's $21.4M title was the cheapest ring of the decade", "rows": [{"label": "Toronto Raptors", "tag": "1 ring", "value": 21.4}, {"label": "Denver Nuggets", "tag": "1 ring", "value": 54.8}, {"label": "Oklahoma City Thunder", "tag": "1 ring", "value": 103.6}, {"label": "Cleveland Cavaliers", "tag": "1 ring", "value": 129.5}, {"label": "Boston Celtics", "tag": "1 ring", "value": 165.6}, {"label": "Milwaukee Bucks", "tag": "1 ring", "value": 221.1}, {"label": "Golden State Warriors", "tag": "3 rings", "value": 232.9}], "slug": "cheapest-ring", "stat": "21.4", "stat_label": "$ millions in tax per ring, Toronto '18-19 \u2014 cheapest", "title": "Toronto won the cheapest championship of the decade: $21.4M in tax", "tldr": "The Raptors' 2019 title cost one-eleventh of what the Warriors paid per ring \u2014 timing beats spending.", "viz": "bars", "viz_label": "Luxury tax paid per championship, 2015-2025 ($M)"}, {"foot": "Repeater = tax in 3 of previous 4 seasons (Hoops Rumors repeater tracker). Warriors' $176.9M in 2023-24 is the all-time single-season record; they missed the playoffs that year.", "kicker": "Repeater Tax", "lede": "Repeater-rate tax paid in the window, 2015-16 \u2192 2024-25. Golden State's four repeater seasons alone exceed the decade totals of every other franchise \u2014 and their 2019-20 duck-under bought them only one non-repeater year.", "og_desc": "The Warriors' repeater bills alone top every other franchise's decade total \u2014 including a record $176.9M for a season they missed the playoffs.", "og_title": "$531.2M in repeater tax: the price of keeping a dynasty together", "rows": [{"label": "Golden State Warriors", "tag": "record", "value": 531.2}, {"label": "LA Clippers", "tag": "2023-24", "value": 142.4}, {"label": "Milwaukee Bucks", "tag": null, "value": 81.9}, {"label": "Oklahoma City Thunder", "tag": "2018-19", "value": 61.6}, {"label": "LA Lakers", "tag": null, "value": 60.4}, {"label": "Cleveland Cavaliers", "tag": "2017-18", "value": 50.7}], "slug": "warriors-repeater-record", "stat": "531.2", "stat_label": "$ millions in repeater-rate tax, Warriors 2021-22 \u2192 2024-25", "title": "The Warriors paid $531.2M at repeater rates \u2014 including a record $176.9M for a season they missed the playoffs", "tldr": "Repeater penalties (tax in 3 of 4 seasons) turned the Warriors' dynasty maintenance into the most expensive tax run in NBA history.", "viz": "bars", "viz_label": "Tax paid at repeater rates, 2015-2025 ($M)"}, {"foot": "Boston $180M = projected tax penalties saved (Bobby Marks, June 2025; Keith Smith estimated ~$196M in total savings). GSW/LAC rows = bill reduction from 2023-24 to 2024-25 after letting Thompson/George walk to duck the apron. KAT = tax saved per the Beacon Journal. Reported by The Ringer, Boston Herald.", "kicker": "Second Apron", "lede": "Approximate tax savings from apron-driven moves. The second apron doesn't just charge money \u2014 it bans the mid-level exception, salary aggregation, and future pick trades, so teams are shedding stars to get under it.", "og_desc": "Klay walked, PG walked, KAT was dumped, Boston tore apart a title team. The new cap ends dynasties faster than money ever did.", "og_title": "The second apron broke up contenders in two seasons", "rows": [{"label": "Boston: Holiday + Porzingis out", "tag": "Marks, June 2025", "value": 180.0}, {"label": "Warriors: ducked 2nd apron", "tag": "176.9M \u2192 15.4M", "value": 161.5}, {"label": "Clippers: ducked 2nd apron", "tag": "142.4M \u2192 0", "value": 142.4}, {"label": "Wolves: Towns traded", "tag": "Beacon Journal", "value": 50.0}], "slug": "apron-casualties", "stat": "2", "stat_label": "seasons of the second apron before Boston dismantled a title core", "title": "The second apron ended dynasties faster than the luxury tax ever did", "tldr": "Klay Thompson and Paul George walked for nothing, KAT was salary-dumped, and Boston tore apart a title team one summer later \u2014 the new cap broke up contenders in two seasons.", "viz": "bars", "viz_label": "Approximate tax savings from apron-driven moves ($M)"}];
+const el = document.getElementById('cards');
+cards.forEach(c=>{
+  const max = Math.max(...c.rows.map(r=>r.value));
+  const bars = c.rows.map(r=>`
+    <div class="bar-row">
+      <div class="bar-label">${r.label}</div>
+      <div class="bar-track"><div class="bar-fill" style="width:${(r.value/max*100).toFixed(1)}%"></div><div class="bar-val">${r.value}</div></div>
+      <div class="bar-tag">${r.tag||''}</div>
+    </div>`).join('');
+  el.insertAdjacentHTML('beforeend', `
+  <div class="card" id="${c.slug}">
+    <div class="kicker">${c.kicker}</div>
+    <h2>${c.title}</h2>
+    <p class="tldr">${c.tldr}</p>
+    <p class="lede">${c.lede}</p>
+    <div class="statbox"><div class="stat">${c.stat}</div><div class="stat-label">${c.stat_label}</div></div>
+    <div class="viz-label">${c.viz_label}</div>
+    ${bars}
+    <p class="foot">${c.foot}</p>
+  </div>`);
+});
+</script>
+</body>
+</html>
