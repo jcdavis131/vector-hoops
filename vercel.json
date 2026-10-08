@@ -129,6 +129,38 @@
    "source": "/teams"
   },
   {
+   "destination": "/insights.html",
+   "source": "/insights"
+  },
+  {
+   "destination": "/insights/:slug.html",
+   "source": "/insights/:slug"
+  },
+  {
+   "destination": "/leaderboard.html",
+   "source": "/leaderboard"
+  },
+  {
+   "destination": "/props-lab.html",
+   "source": "/props-lab"
+  },
+  {
+   "destination": "/everyday.html",
+   "source": "/everyday"
+  },
+  {
+   "destination": "/offline.html",
+   "source": "/offline"
+  },
+  {
+   "destination": "/taxonomy.html",
+   "source": "/taxonomy"
+  },
+  {
+   "destination": "/research.html",
+   "source": "/research"
+  },
+  {
    "destination": "/index.html",
    "source": "/dfs"
   }
