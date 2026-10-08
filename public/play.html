@@ -198,6 +198,24 @@ button,.input{min-height:44px}
 @media (prefers-reduced-motion: reduce){ .turn-dot{ animation: none; } }
 .guess-row .bar>i{ background: var(--accent) !important; }
 .guess-row.win .bar>i{ background: var(--ok) !important; }
+/* ── game-feel polish: entrances, pops, ticks, shakes ── */
+@keyframes vhRowIn{from{opacity:0;transform:translateY(10px) scale(.985)}to{opacity:1;transform:none}}
+.guess-row.is-new{animation:vhRowIn .38s cubic-bezier(.2,.7,.3,1.15)}
+.bar>i{transition:width .7s cubic-bezier(.25,.8,.3,1)}
+@keyframes vhPop{0%{transform:scale(.8)}55%{transform:scale(1.1)}100%{transform:scale(1)}}
+#warm-label.pop{animation:vhPop .32s ease}
+@keyframes vhTick{0%{transform:scale(1)}40%{transform:scale(1.3)}100%{transform:scale(1)}}
+#streak-pill.tick{animation:vhTick .45s ease;display:inline-block}
+@keyframes vhCardIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+#result .card{animation:vhCardIn .4s ease}
+@keyframes vhShake{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+#guess-input.shake{animation:vhShake .25s ease}
+.btn[disabled]{opacity:.45;cursor:default}
+#guess-input[disabled]{opacity:.55}
+@media (prefers-reduced-motion: reduce){
+  .guess-row.is-new,#result .card,#warm-label.pop,#streak-pill.tick,#guess-input.shake{animation:none}
+  .bar>i{transition:none}
+}
 </style>
 </head><body>
 <a class="skip-link" href="#main">Skip to content</a>
@@ -604,6 +622,7 @@ button,.input{min-height:44px}
     }catch{}
   }
   function confettiBurst(){
+    try{ if(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return; }catch{}
     const cv=$('#confetti-canvas'); if(!cv) return; cv.style.display='block'; const ctx=cv.getContext('2d'); cv.width=innerWidth; cv.height=innerHeight; const parts=[]; for(let i=0;i<140;i++){ parts.push({x:Math.random()*cv.width, y:-20-Math.random()*100, vx:(Math.random()-0.5)*6, vy:Math.random()*4+2.5, r:Math.random()*6+3, c:OKABE[i%OKABE.length], a:1}); }
     const t0=performance.now(); function frame(t){ const dt=t-t0; ctx.clearRect(0,0,cv.width,cv.height); let alive=false; for(let i=0;i<parts.length;i++){ const p=parts[i]; p.x+=p.vx; p.y+=p.vy; p.vy+=0.09; p.vx*=0.99; p.a-=0.005; if(p.a>0){ alive=true; ctx.globalAlpha=p.a; ctx.fillStyle=p.c; ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2); ctx.fill(); } } ctx.globalAlpha=1; if(alive&&dt<4500) requestAnimationFrame(frame); else cv.style.display='none'; } requestAnimationFrame(frame);
   }
@@ -978,7 +997,7 @@ button,.input{min-height:44px}
       $('#mode-badge').textContent= st.isDaily? 'DAILY 5' : st.isRandom? 'RANDOM' : 'DAILY';
       $('#header-mode-label').textContent='DAILY COURT • 5× PAST → MODERN';
     }
-    $('#streak-pill').textContent='streak '+loadStreak();
+    $('#streak-pill').textContent='streak '+v2Streak();
     $('#puzzle-day-label').textContent= st.isPack ? `Pack ${st.packCode.slice(0,24)}…` : st.isDaily? `Daily Court ${st.dayKey} • 5 puzzles` : st.dayKey;
     updateStatusBar(); projectFrame(); draw();
   }
@@ -1003,11 +1022,19 @@ button,.input{min-height:44px}
         const archName = (typeof g.c==='number' && ARCH[g.c%ARCH.length]) ? ARCH[g.c%ARCH.length] : '—';
         const safeName = (g.name||'').replace(/</g,'&lt;');
         const safeSeason = (g.season||'').replace(/</g,'&lt;');
-        const div=document.createElement('div'); div.className='guess-row'+(isWin?' win':'');
+        // only the just-submitted row animates in — re-renders (load, slot
+        // switch) must not replay the entrance on every row
+        const isNew = !!G._animateNew && idx===(G.guesses.length-1);
+        const targetW = Math.max(4,Math.min(100,parseFloat(simPct)||0));
+        const div=document.createElement('div'); div.className='guess-row'+(isWin?' win':'')+(isNew?' is-new':'');
         // pixel avatar for each guess resembling player
         const avatarId = `guess-av-${idx}-${Date.now()}`;
-        div.innerHTML=`<div style="display:flex;gap:10px;align-items:center"><div id="${avatarId}" style="width:36px;height:36px;flex:0 0 36px;background:#FFF6D5;border:1px solid var(--line-2);border-radius:8px;overflow:hidden;image-rendering:pixelated"></div><div style="flex:1;min-width:0"><div style="display:flex;justify-content:space-between;gap:8px;align-items:center"><b>${idx+1}. ${safeName} ${safeSeason}</b><span class="pill" style="${isWin?'background:var(--green);color:#fff':''}">${simPct}% • ${rankLabel}</span></div><div class="small-mono" style="text-transform:none;margin-top:4px;color:var(--fg-2)">${warm} • ${archName}</div><div class="bar" style="margin-top:6px"><i style="width:${Math.max(4,Math.min(100,parseFloat(simPct)||0))}%;background:${isWin?'#009E73':'#0072B2'}"></i></div></div></div>`;
+        div.innerHTML=`<div style="display:flex;gap:10px;align-items:center"><div id="${avatarId}" style="width:36px;height:36px;flex:0 0 36px;background:#FFF6D5;border:1px solid var(--line-2);border-radius:8px;overflow:hidden;image-rendering:pixelated"></div><div style="flex:1;min-width:0"><div style="display:flex;justify-content:space-between;gap:8px;align-items:center"><b>${idx+1}. ${safeName} ${safeSeason}</b><span class="pill" style="${isWin?'background:var(--green);color:#fff':''}">${simPct}% • ${rankLabel}</span></div><div class="small-mono" style="text-transform:none;margin-top:4px;color:var(--fg-2)">${warm} • ${archName}</div><div class="bar" style="margin-top:6px"><i style="width:${isNew?0:targetW}%;background:${isWin?'#009E73':'#0072B2'}"></i></div></div></div>`;
         cont.appendChild(div);
+        if(isNew){
+          const bar=div.querySelector('.bar>i');
+          requestAnimationFrame(()=>requestAnimationFrame(()=>{ try{ if(bar) bar.style.width=targetW+'%'; }catch{} }));
+        }
         // mount avatar after append
         try{
           const avEl=document.getElementById(avatarId);
@@ -1017,10 +1044,15 @@ button,.input{min-height:44px}
         }catch(e){}
       }catch(e){ console.warn('renderGuesses item fail', e, g); }
     });
+    G._animateNew=false;
+    syncGuessInput();
     updateStatusBar();
   }
 
-  function finish(){
+  // opts.celebrate=true only for a genuinely new winning guess — a reload of an
+  // already-solved slot must not replay the fanfare or touch the streak
+  function finish(opts){
+    opts=opts||{}; const celebrateNew=opts.celebrate===true;
     const won=G.guesses.some(g=>g.rank===0); const over=won||G.guesses.length>=6; const resEl=$('#result'); let st=VHPastModern.state(); const isPack=!!st.isPack;
     if(!over){ resEl.innerHTML=''; resEl.style.display='none'; updateStatusBar(); renderDailyCourt(); renderPackProgress(); renderPackSummary(); return; }
     resEl.style.display='block';
@@ -1103,7 +1135,7 @@ button,.input{min-height:44px}
         });
       }
 
-      if(won) celebrateWin();
+      if(won && celebrateNew) celebrateWin();
       renderPackProgress();
       // if last was just completed, also render summary after small delay? Actually summary rendered on next click for final, but we want summary when complete via advance. For case where user refreshes and pack already complete, finish() will be called with over false? Need to handle complete case separately
       if(ps.complete){
@@ -1111,19 +1143,43 @@ button,.input{min-height:44px}
       }
     } else {
       if(won){
+        // Random and Challenge wins never touch the streak — Daily Court only,
+        // as the mode tabs promise
         if(st.isDaily){
           try{
             const dailyState=VHPastModern.getDailyState();
             if(dailyState.solved>=1 || G.guesses.some(g=>g.rank===0)) { VHPastModern.onDailyWin(st.dayKey); }
           }catch{}
-        } else { try{ VHPastModern.onDailyWin(st.dayKey); }catch{} }
-        const cur=loadStreak()+1; saveStreak(cur); $('#streak-pill').textContent='streak '+cur;
-        // streak chime lands after the win arpeggio — a cascade, not a pile
-        try{ if(window.VHAudio) setTimeout(()=>VHAudio.play('streak'), 950); }catch{}
+        }
+        // pill reads the honest v2 streak — the old loadStreak()+1 inflated it
+        // on every render, including plain reloads of already-solved slots
+        const sNow=v2Streak();
+        const pill=$('#streak-pill');
+        if(pill){
+          const prev=parseInt((pill.textContent||'').replace(/\D/g,''),10)||0;
+          pill.textContent='streak '+sNow;
+          if(sNow>prev){ pill.classList.remove('tick'); void pill.offsetWidth; pill.classList.add('tick'); }
+        }
+        if(celebrateNew){
+          // streak chime lands after the win arpeggio — a cascade, not a pile
+          try{ if(window.VHAudio) setTimeout(()=>VHAudio.play('streak'), 950); }catch{}
+        }
         resEl.innerHTML=`<div class="card" style="border-color:var(--green)"><h3 class="hd">✅ Solved in ${G.guesses.length}/6 — ${st.target.n} → ${closest.entry.n}</h3><div style="font-size:13px">Answer: ${closest.entry.n} ${closest.entry.s} ${(closest.sim*100).toFixed(1)}%<br>Top 5: ${sortedTop}</div><div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap"><button class="btn btn-primary" id="btn-next-slot">Next slot →</button><button class="btn" id="btn-view-court">View court</button></div></div>`;
-        celebrateWin();
+        if(celebrateNew) celebrateWin();
       } else {
         try{ if(window.VHAudio) VHAudio.play('reveal'); }catch{}
+        // "solve 1 to save streak": a fully-resolved day with zero solves breaks it
+        if(st.isDaily && st.dayKey===st.todayKey){
+          try{
+            const ds=VHPastModern.getDailyState();
+            const slots=ds.slotResults||[];
+            const allResolved=slots.length===5 && slots.every(sr=>sr&&(((sr.guesses||[]).some(g=>g.rank===0))||((sr.guesses||[]).length>=6)));
+            if(allResolved && (ds.solved||0)===0){
+              VHPastModern.onDailyLoss(st.dayKey);
+              const pill0=$('#streak-pill'); if(pill0) pill0.textContent='streak '+v2Streak();
+            }
+          }catch{}
+        }
         resEl.innerHTML=`<div class="card" style="border-color:var(--verm)"><h3 class="hd">❌ Revealed — ${st.target.n} → ${closest.entry.n}</h3><div style="font-size:13px">Closest: ${closest.entry.n} ${(closest.sim*100).toFixed(1)}%<br>Top 5: ${sortedTop}</div><div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap"><button class="btn btn-primary" id="btn-next-slot">Next slot →</button><button class="btn" id="btn-view-court">View court</button></div></div>`;
       }
       const nextSlotBtn=document.getElementById('btn-next-slot');
@@ -1223,6 +1279,31 @@ button,.input{min-height:44px}
       if(tone!=='sticky') el._t=setTimeout(()=>{ el.style.display='none'; }, 4000);
     }catch{}
   }
+  // tiny shake on the guess input for rejected guesses — felt, not read
+  function nudgeInput(){
+    try{
+      const input=$('#guess-input'); if(!input||input.disabled) return;
+      input.classList.remove('shake'); void input.offsetWidth; input.classList.add('shake');
+    }catch{}
+  }
+  // single source of truth for whether the guess box is live: locked once the
+  // slot is won or the 6 tries are spent; the ready banner hides after guess 1
+  function syncGuessInput(){
+    try{
+      const input=$('#guess-input'), btn=$('#guess-btn');
+      const st0=(window.VHPastModern && VHPastModern.state)?VHPastModern.state():null;
+      const packDone=!!(st0 && st0.isPack && st0.isPackComplete);
+      const won=(G.guesses||[]).some(g=>g.rank===0);
+      const over=won||(G.guesses||[]).length>=6||packDone;
+      if(input){
+        input.disabled=over;
+        input.placeholder=over?(won?'Solved — pick another slot':'Answer revealed below'):'Type modern — e.g., Wembanyama, SGA, Ant';
+      }
+      if(btn){ btn.disabled=over; }
+      const rb=$('#ready-banner'); if(rb) rb.style.display=(G.guesses||[]).length?'none':'';
+    }catch{}
+  }
+  function v2Streak(){ try{ return VHPastModern.getStreak().streak||0; }catch{ return 0; } }
   // --- multi-choice grid (replaces the typeahead; removes the RESULT_CODE_HUNG path) ---
   let _gridCandidates=null, _gridTargetKey=null;
   function _seededShuffle(arr, seed){
@@ -1278,11 +1359,20 @@ button,.input{min-height:44px}
   function doGuess(nameArg){
     try{
       const input=$('#guess-input');
+      const st0=(window.VHPastModern && VHPastModern.state)?VHPastModern.state():null;
+      const packDone=!!(st0 && st0.isPack && st0.isPackComplete);
+      // the slot is decided — no more guesses after a win, 6 tries, or pack completion
+      const _gWon=(G.guesses||[]).some(g=>g.rank===0);
+      if(_gWon || (G.guesses||[]).length>=6 || packDone){
+        setGuessStatus(packDone?'Pack complete — summary below':(_gWon?'Already solved — pick another slot':'No guesses left — answer revealed below'),'warn');
+        nudgeInput();
+        return;
+      }
       const fromInput = nameArg==null;
       const name=((fromInput ? (input&&input.value) : nameArg)||'').trim(); if(!name) return;
-      if(name.length<2){ setGuessStatus('Type at least 2 letters','warn'); return; }
+      if(name.length<2){ setGuessStatus('Type at least 2 letters','warn'); nudgeInput(); return; }
       const low=name.toLowerCase(); const mm=name.match(/^(.+?)\s+\d{4}-\d{2}$/); const low2=mm? mm[1].trim().toLowerCase(): low;
-      if(G.guesses.some(g=>{ try{return (g.name||'').toLowerCase().trim()===low2;}catch{return false;}})){ setGuessStatus('Already guessed','warn'); if(fromInput&&input) input.value=''; return; }
+      if(G.guesses.some(g=>{ try{return (g.name||'').toLowerCase().trim()===low2;}catch{return false;}})){ setGuessStatus('Already guessed','warn'); nudgeInput(); if(fromInput&&input) input.value=''; return; }
       // scoring runs against the whole pool, so it is stamped too
       crumb('score', name);
       const r=VHPastModern.guessModern(name);
@@ -1293,17 +1383,18 @@ button,.input{min-height:44px}
           setGuessStatus('Scoring "'+name+'" as soon as the model finishes loading…','sticky');
           return;
         }
-        setGuessStatus(r.reason||'Guess failed — try another','warn'); return;
+        setGuessStatus(r.reason||'Guess failed — try another','warn'); nudgeInput(); return;
       }
-      if(G.guesses.some(g=>{ try{return g.idx===r.guess.idx|| (g.name||'').toLowerCase().trim()===r.guess.name.toLowerCase().trim();}catch{return false;}})){ crumbClear(); setGuessStatus('Already guessed','warn'); if(fromInput&&input) input.value=''; return; }
+      if(G.guesses.some(g=>{ try{return g.idx===r.guess.idx|| (g.name||'').toLowerCase().trim()===r.guess.name.toLowerCase().trim();}catch{return false;}})){ crumbClear(); setGuessStatus('Already guessed','warn'); nudgeInput(); if(fromInput&&input) input.value=''; return; }
       setGuessStatus('');
       G.guesses.push(r.guess); try{ VHPastModern.state().guesses=G.guesses.slice(); }catch{} saveGuesses(); if(fromInput&&input) input.value='';
+      G._animateNew=true;
       const warmEl=$('#warm-label'); let wc=null; try{ wc=VHPastModern.warmCold(); }catch{}
-      if(wc&&G.guesses.length>1){ if(warmEl){ warmEl.style.display='inline-flex'; warmEl.textContent=wc; }} else { if(warmEl) warmEl.style.display='none'; }
+      if(wc&&G.guesses.length>1){ if(warmEl){ warmEl.style.display='inline-flex'; if(warmEl.textContent!==wc){ warmEl.textContent=wc; warmEl.classList.remove('pop'); void warmEl.offsetWidth; warmEl.classList.add('pop'); } }} else { if(warmEl) warmEl.style.display='none'; }
       // Each step is stamped before it runs; whichever stamp survives a crash
       // is the step that killed the renderer.
       crumb('renderGuesses');  renderGuesses();
-      crumb('finish');         finish();
+      crumb('finish');         finish({celebrate: !!r.isWin});
       crumb('draw');           projectFrame(); draw();
       // game feel: guess blip + pulse the guessed dot, ease the camera to it
       // (the win arpeggio is staged in finish() so the two never overlap)
@@ -1475,7 +1566,6 @@ button,.input{min-height:44px}
     $('#guess-input')?.addEventListener('keydown', e=>{ if(e.key==='Enter'){ e.preventDefault(); if(typeof doGuess==='function') doGuess(); } });
     // grid mode: tiles call doGuess(name) directly
     $('#btn-random').addEventListener('click', ()=>{ const p=VHPastModern.pickRandomPast(); location.href='/play?mode=random&r='+p.i; });
-    $('#btn-random').addEventListener('click', ()=>{ const p=VHPastModern.pickRandomPast(); location.href='/play?mode=random&r='+p.i; });
     $('#btn-new').addEventListener('click', ()=>{ if(st.isPack){ VHPastModern.abandonPack(); } location.href='/play'; });
     $('#btn-copy-court')?.addEventListener('click', async ()=>{
       const s=VHPastModern.state(); const url=location.origin+'/play?day='+s.dayKey; const court=s.dailyPool.map((p,i)=>`${i+1}. ${p.n} ${p.s}`).join('\n'); const text=`Daily Court ${s.dayKey} — 5 puzzles\n${court}\n${url}`; try{ await navigator.clipboard.writeText(text); const b=$('#btn-copy-court'); b.textContent='Copied!'; setTimeout(()=>b.textContent='📋 Copy court',1200); }catch{ prompt('Copy', text); }
@@ -1496,7 +1586,7 @@ button,.input{min-height:44px}
         if(window.VHShare&&VHShare.shareDailyCourt){ await VHShare.shareDailyCourt(opts); return; }
       }
       const won=G.guesses.some(g=>g.rank===0);
-      const opts={puzzleNum:s.puzzleNum, dayKey:s.dayKey, pastName:s.target.n, pastSeason:s.target.s, guesses:G.guesses, answerName:s.closestModern? s.closestModern.entry.n: '', answerSim:s.closestModern? s.closestModern.sim:0, won:won, streak:loadStreak(), url:location.origin+'/play?day='+s.dayKey+'&slot='+s.dailySlot};
+      const opts={puzzleNum:s.puzzleNum, dayKey:s.dayKey, pastName:s.target.n, pastSeason:s.target.s, guesses:G.guesses, answerName:s.closestModern? s.closestModern.entry.n: '', answerSim:s.closestModern? s.closestModern.sim:0, won:won, streak:v2Streak(), url:location.origin+'/play?day='+s.dayKey+'&slot='+s.dailySlot};
       if(window.VHShare&&window.VHShare.sharePastModern) await window.VHShare.sharePastModern(opts);
     });
     $('#share-text-btn').addEventListener('click', ()=>{

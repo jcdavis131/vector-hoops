@@ -540,7 +540,7 @@
         packHandled=packStartIds.length>0;
       } else {
         const ids=parseIdList(packParam);
-        if(ids.length){ packStartIds=ids; }
+        if(ids.length){ packStartIds=ids; packHandled=true; }
       }
     }
     if(!packHandled && modeParam && modeParam.toLowerCase()==='pack'){
