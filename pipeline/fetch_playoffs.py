@@ -8,20 +8,27 @@ source) plus team playoff records, and writes a self-contained cache:
 
 Run:  python pipeline/fetch_playoffs.py [--offline] [--season 2023-24]
 Requires curl_cffi on operator machines (see pipeline/nba_http.py).
+
+Exit codes (ingest.run_fetch): 0 when every season is cached, 2 when any
+season failed or, with --offline, has no cache. A failed season writes
+nothing; the others are still fetched [ingest#7]. A season whose playoffs
+are over is fetched once; one still being played is refetched after
+HOOPS_CACHE_TTL_HOURS, and before its playoffs start it is skipped rather
+than cached as an empty "complete" season [ingest#8].
 """
 
 from __future__ import annotations
 
 import argparse
-import json
 import sys
 import time
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
+from ingest import EmptyPayloadError, Failures, FetchError, cache_is_fresh, run_fetch, write_cache
 from name_utils import norm_name
 from nba_http import fetch_stats_json, legacy_result_set_rows
-from seasons import season_range
+from seasons import is_final, season_range
 
 ROOT = Path(__file__).resolve().parents[1]
 CACHE = ROOT / "pipeline" / "cache"
@@ -68,28 +75,25 @@ def dash_team_params(season: str, season_type: str, per_mode: str = "Totals") ->
     }
 
 
-def with_retries(fn, label: str):
-    last: Exception | None = None
-    for attempt in range(5):
-        try:
-            return fn()
-        except Exception as e:
-            last = e
-            wait = min(120, 5 * 2**attempt)
-            print(f"  {label}: attempt {attempt + 1} failed ({e}); backoff {wait}s")
-            time.sleep(wait)
-    raise SystemExit(f"{label} failed after retries: {last}")
+# Columns read below. Every one is non-zero for most players in all 30 cached
+# seasons (checked 2026-10-09), so a missing one is upstream drift and raises
+# instead of becoming `or 0.0` zeros [ingest#11].
+PLAYER_COLS = {
+    "Base": ["PLAYER_ID", "PLAYER_NAME", "TEAM_ID", "GP", "MIN", "PTS", "PLUS_MINUS"],
+    "Advanced": ["PLAYER_ID", "USG_PCT", "TS_PCT"],
+}
+TEAM_COLS = ["TEAM_ID", "W"]
 
 
 def dash_player_rows(season: str, season_type: str, measure: str) -> list[dict]:
-    def call():
-        payload = fetch_stats_json(
-            "leaguedashplayerstats",
-            dash_player_params(season, season_type, measure),
-        )
-        return legacy_result_set_rows(payload, "LeagueDashPlayerStats")
-
-    return with_retries(call, f"{season} {season_type} {measure}")
+    # fetch_stats_json retries and classifies on its own. This module used to
+    # wrap it in a second 5-try loop ending in SystemExit, so one endpoint
+    # could make 25 requests and a failure stopped every later season.
+    payload = fetch_stats_json(
+        "leaguedashplayerstats",
+        dash_player_params(season, season_type, measure),
+    )
+    return legacy_result_set_rows(payload, "LeagueDashPlayerStats", required=PLAYER_COLS[measure])
 
 
 def fetch_player_split(season: str, season_type: str) -> dict[str, dict]:
@@ -147,14 +151,11 @@ def rounds_from_playoff_wins(season: str, wins: int) -> int:
 
 
 def fetch_team_playoffs(season: str) -> dict[str, dict]:
-    def call():
-        payload = fetch_stats_json(
-            "leaguedashteamstats",
-            dash_team_params(season, "Playoffs"),
-        )
-        return legacy_result_set_rows(payload, "LeagueDashTeamStats")
-
-    rows = with_retries(call, f"{season} team Playoffs")
+    payload = fetch_stats_json(
+        "leaguedashteamstats",
+        dash_team_params(season, "Playoffs"),
+    )
+    rows = legacy_result_set_rows(payload, "LeagueDashTeamStats", required=TEAM_COLS)
     teams: dict[str, dict] = {}
     for r in rows:
         wins = int(r.get("W") or 0)
@@ -165,17 +166,18 @@ def fetch_team_playoffs(season: str) -> dict[str, dict]:
     return teams
 
 
-def build_season_cache(season: str) -> dict:
+def build_season_cache(season: str) -> dict | None:
+    """The season's cache doc, or None when its playoffs have not started yet.
+
+    An empty playoff split used to come back as {"complete": true,
+    "players": {}}, and main() then skipped the existing file forever, so a
+    fetch made before mid-April froze an empty season as complete [ingest#8].
+    """
     po = fetch_player_split(season, "Playoffs")
     if not po:
-        return {
-            "built": time.strftime("%Y-%m-%d"),
-            "season": season,
-            "complete": True,
-            "players": {},
-            "teams": {},
-            "source": "stats.nba.com leaguedashplayerstats via nba_http",
-        }
+        if is_final(season):
+            raise EmptyPayloadError(f"{season}: empty playoff split for a finished season")
+        return None
     rs = fetch_player_split(season, "Regular Season")
     teams = fetch_team_playoffs(season)
     players: dict[str, dict] = {}
@@ -207,18 +209,29 @@ def main() -> None:
     if args.offline:
         have = [s for s in seasons if cache_path(s).exists()]
         print(f"cached playoff seasons: {len(have)}/{len(seasons)}")
+        if len(have) < len(seasons):
+            raise FetchError(f"no playoff cache for {[s for s in seasons if s not in have]}")
         return
 
     CACHE.mkdir(parents=True, exist_ok=True)
+    failures = Failures("fetch_playoffs")
     for season in seasons:
         p = cache_path(season)
-        if p.exists():
+        if cache_is_fresh(p, season):
             print(f"{season}: cached, skipping")
             continue
-        doc = build_season_cache(season)
-        p.write_text(json.dumps(doc, separators=(",", ":")), encoding="utf-8")
+        try:
+            doc = build_season_cache(season)
+            if doc is None:
+                print(f"{season}: playoffs not started; nothing cached")
+                continue
+            write_cache(p, doc, source=doc["source"], n_rows=len(doc["players"]), season=season)
+        except FetchError as e:
+            failures.add(season, e)
+            continue
         print(f"{season}: {len(doc['players'])} playoff players, {len(doc['teams'])} teams -> {p.name}")
+    failures.raise_if_any()
 
 
 if __name__ == "__main__":
-    main()
+    run_fetch(main, name="fetch_playoffs")

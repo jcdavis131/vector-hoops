@@ -44,6 +44,7 @@ from collections import defaultdict
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
+from ingest import FetchError, run_fetch, write_cache
 from nba_http import fetch_stats_json, legacy_result_set_rows
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -63,9 +64,23 @@ def norm_name(name: str) -> str:
     return re.sub(r"\s+", " ", s)
 
 
+# Columns to_cache reads; all populated in the committed cache (7,662 picks,
+# checked 2026-10-09). A missing one raises instead of becoming 0 [ingest#11].
+DRAFT_COLS = [
+    "PLAYER_NAME",
+    "OVERALL_PICK",
+    "SEASON",
+    "ROUND_NUMBER",
+    "ROUND_PICK",
+    "TEAM_ID",
+    "TEAM_ABBREVIATION",
+    "PERSON_ID",
+]
+
+
 def fetch_all_drafts() -> list[dict]:
     payload = fetch_stats_json("drafthistory", {"LeagueID": "00"}, timeout=90)
-    return legacy_result_set_rows(payload, "DraftHistory")
+    return legacy_result_set_rows(payload, "DraftHistory", required=DRAFT_COLS)
 
 
 def to_cache(rows: list[dict]) -> dict:
@@ -111,7 +126,7 @@ def main() -> None:
 
     if args.offline:
         if not OUT.exists():
-            raise SystemExit("no draft_history.json cache and --offline set")
+            raise FetchError("no draft_history.json cache and --offline set")
         doc = json.loads(OUT.read_text(encoding="utf-8"))
         print(
             f"cache ok: {len(doc['players'])} drafted names, years {doc.get('years')}, complete={doc.get('complete')}"
@@ -120,11 +135,12 @@ def main() -> None:
 
     rows = fetch_all_drafts()
     doc = to_cache(rows)
-    CACHE.mkdir(parents=True, exist_ok=True)
-    OUT.write_text(json.dumps(doc, separators=(",", ":")), encoding="utf-8")
+    # Atomic, and an empty draft table raises instead of replacing the cache
+    # with {"players": {}, "complete": true} [ingest#8].
+    write_cache(OUT, doc, source=doc["source"], n_rows=len(doc["players"]))
     n_recs = sum(len(v) for v in doc["players"].values())
     print(f"wrote {OUT.name}: {n_recs} picks, {len(doc['players'])} names, years {doc['years']}")
 
 
 if __name__ == "__main__":
-    main()
+    run_fetch(main, name="fetch_draft_history")

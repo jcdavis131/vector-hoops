@@ -7,6 +7,11 @@ pipeline/data/team_season_manifest.json when done.
 Run:  python pipeline/fetch_team_season.py
       python pipeline/fetch_team_season.py --offline
       python pipeline/fetch_team_season.py --season 2024-25
+
+Exit codes (ingest.run_fetch): 0 when every season is built, 2 when any
+season's fetch failed or (offline) has no cache. Seasons that did build are
+still written, each one complete; the manifest lists the missing ones. This
+used to return 0 whenever at least one season built [ingest#7].
 """
 
 from __future__ import annotations
@@ -14,14 +19,14 @@ from __future__ import annotations
 import argparse
 import json
 import math
-import random
 import sys
 import time
 from pathlib import Path
 
-from nba_api.stats.endpoints import leaguedashteamstats
-
 sys.path.insert(0, str(Path(__file__).resolve().parent))
+from artifact_io import atomic_write_text
+from ingest import Failures, FetchError, cache_is_fresh, require_columns, run_fetch, write_cache
+from nba_http import retry_call
 from seasons import season_range
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -53,34 +58,25 @@ def cache_path(tag: str, season: str) -> Path:
     return CACHE / f"{tag}_{season}.json"
 
 
-def load_cached(tag: str, season: str):
+def cached_file(tag: str, season: str) -> Path | None:
     for t in (tag, _CACHE_ALIASES.get(tag)):
-        if not t:
-            continue
-        p = cache_path(t, season)
-        if p.exists():
-            try:
-                return json.loads(p.read_text(encoding="utf-8"))
-            except Exception:
-                return None
+        if t and cache_path(t, season).exists():
+            return cache_path(t, season)
     return None
 
 
-def save_cache(tag: str, season: str, rows) -> None:
-    CACHE.mkdir(parents=True, exist_ok=True)
-    cache_path(tag, season).write_text(json.dumps(rows, separators=(",", ":")), encoding="utf-8")
-
-
-def with_retries(fn, what: str, attempts: int = 5):
-    for attempt in range(attempts):
-        try:
-            return fn()
-        except Exception as e:
-            wait = min(120, (2**attempt) * 8) + random.uniform(0, 4)
-            print(f"  {what}: attempt {attempt + 1}/{attempts} failed ({type(e).__name__}); sleeping {wait:.0f}s")
-            time.sleep(wait)
-    print(f"  {what}: EXHAUSTED retries -- skipping (cached later runs resume)")
-    return None
+def load_cached(tag: str, season: str):
+    p = cached_file(tag, season)
+    if p is None:
+        return None
+    # `except Exception: return None` made a corrupt cache look like a missing
+    # season [health#8]. An empty one (the old save_cache wrote any response,
+    # [] included) is a miss.
+    try:
+        data = json.loads(p.read_text(encoding="utf-8"))
+    except (json.JSONDecodeError, UnicodeDecodeError) as e:
+        raise ValueError(f"{p}: cache does not decode ({e}); restore it from git, or delete it to refetch") from e
+    return data or None
 
 
 def df_to_team_rows(df, wanted: list[str]) -> tuple[list[dict], list[str]]:
@@ -101,12 +97,15 @@ def df_to_team_rows(df, wanted: list[str]) -> tuple[list[dict], list[str]]:
 
 
 def fetch_measure(season: str, measure: str, wanted: list[str], offline: bool):
+    """Rows for (season, measure); None offline with no cache. Raises FetchError online."""
     tag = f"team_{measure.lower()}"
     cached = load_cached(tag, season)
-    if cached is not None:
+    if cached is not None and (offline or cache_is_fresh(cached_file(tag, season), season)):
         return cached
     if offline:
         return None
+    # Imported here so --offline runs without nba_api installed.
+    from nba_api.stats.endpoints import leaguedashteamstats
 
     def call():
         r = leaguedashteamstats.LeagueDashTeamStats(
@@ -116,14 +115,23 @@ def fetch_measure(season: str, measure: str, wanted: list[str], offline: bool):
             timeout=75,
         )
         df = r.get_data_frames()[0]
+        # df_to_team_rows keeps whichever wanted columns exist; every one is
+        # in all 30 cached seasons (checked 2026-10-09) [ingest#11].
+        require_columns(df.columns, wanted, f"leaguedashteamstats {measure} {season}")
         extra = [c for c in SOS_CANDIDATES if c in df.columns]
         rows, _ = df_to_team_rows(df, wanted + extra)
         return rows
 
-    rows = with_retries(call, f"{season} team {measure}")
-    if rows is not None:
-        save_cache(tag, season, rows)
-        time.sleep(1.2)
+    # retry_call raises FetchError when it never succeeds. The old loop printed
+    # "EXHAUSTED retries -- skipping" and returned None.
+    rows = retry_call(call, f"{season} team {measure}")
+    write_cache(
+        cache_path(tag, season),
+        rows,
+        source=f"stats.nba.com leaguedashteamstats {measure} PerGame via nba_api",
+        season=season,
+    )
+    time.sleep(1.2)
     return rows
 
 
@@ -154,7 +162,7 @@ def merge_team_season(base: list[dict], advanced: list[dict]) -> tuple[list[dict
 def write_season_rows(season: str, rows: list[dict]) -> None:
     DATA_DIR.mkdir(parents=True, exist_ok=True)
     dest = DATA_DIR / f"team_season_{season}.json"
-    dest.write_text(json.dumps(rows, separators=(",", ":")), encoding="utf-8")
+    atomic_write_text(dest, json.dumps(rows, separators=(",", ":")), encoding="utf-8")
 
 
 def main() -> int:
@@ -169,12 +177,18 @@ def main() -> int:
     columns_present: set[str] = set()
     sos_present: set[str] = set()
 
+    failures = Failures("fetch_team_season")
     for season in seasons:
-        base = fetch_measure(season, "Base", BASE_WANTED, args.offline)
-        adv = fetch_measure(season, "Advanced", ADV_WANTED, args.offline)
+        try:
+            base = fetch_measure(season, "Base", BASE_WANTED, args.offline)
+            adv = fetch_measure(season, "Advanced", ADV_WANTED, args.offline)
+        except FetchError as e:
+            missing.append(season)
+            failures.add(season, e)
+            continue
         if not base or not adv:
             missing.append(season)
-            print(f"{season}: missing (base={bool(base)}, advanced={bool(adv)})")
+            failures.add(season, FetchError(f"no cache (base={bool(base)}, advanced={bool(adv)})"))
             continue
         merged, cols = merge_team_season(base, adv)
         write_season_rows(season, merged)
@@ -200,11 +214,12 @@ def main() -> int:
         ),
     }
     DATA_DIR.mkdir(parents=True, exist_ok=True)
-    (DATA_DIR / "team_season_manifest.json").write_text(json.dumps(manifest, indent=2), encoding="utf-8")
+    atomic_write_text(DATA_DIR / "team_season_manifest.json", json.dumps(manifest, indent=2), encoding="utf-8")
 
     print(f"DONE: {len(fetched)}/{len(seasons)} seasons fetched, {len(missing)} missing")
-    return 0 if fetched else 1
+    failures.raise_if_any()
+    return 0
 
 
 if __name__ == "__main__":
-    sys.exit(main())
+    run_fetch(main, name="fetch_team_season")

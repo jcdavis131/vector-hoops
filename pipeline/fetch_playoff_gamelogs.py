@@ -12,12 +12,15 @@ opponent). Used by ``build_playoffs.py`` for modeling features and by
 Run:  python pipeline/fetch_playoff_gamelogs.py
       python pipeline/fetch_playoff_gamelogs.py --season 1997-98
       python pipeline/fetch_playoff_gamelogs.py --offline
+
+Exit codes (ingest.run_fetch): 0 when every season is cached, 2 when any
+season failed or, with --offline, has no cache. A failed season writes
+nothing and the rest are still fetched [ingest#7].
 """
 
 from __future__ import annotations
 
 import argparse
-import json
 import re
 import sys
 import time
@@ -25,9 +28,10 @@ from collections import defaultdict
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
+from ingest import EmptyPayloadError, Failures, FetchError, cache_is_fresh, run_fetch, write_cache
 from name_utils import norm_name
 from nba_http import fetch_stats_json, legacy_result_set_rows
-from seasons import season_range
+from seasons import is_final, season_range
 
 ROOT = Path(__file__).resolve().parents[1]
 CACHE = ROOT / "pipeline" / "cache"
@@ -45,17 +49,33 @@ def cache_path(season: str) -> Path:
     return CACHE / f"playoff_games_{season}.json"
 
 
-def with_retries(fn, label: str):
-    last: Exception | None = None
-    for attempt in range(5):
-        try:
-            return fn()
-        except Exception as e:
-            last = e
-            wait = min(120, 5 * 2**attempt)
-            print(f"  {label}: attempt {attempt + 1} failed ({e}); backoff {wait}s")
-            time.sleep(wait)
-    raise SystemExit(f"{label} failed after retries: {last}")
+# Columns read below; all present in the 30 cached seasons (checked
+# 2026-10-09). A missing one raises instead of turning into `or 0` [ingest#11].
+TEAM_COLS = ["GAME_ID", "GAME_DATE", "TEAM_ID", "TEAM_ABBREVIATION", "MATCHUP", "WL", "PTS", "PLUS_MINUS"]
+PLAYER_COLS = [
+    "GAME_ID",
+    "GAME_DATE",
+    "PLAYER_ID",
+    "PLAYER_NAME",
+    "TEAM_ID",
+    "TEAM_ABBREVIATION",
+    "MATCHUP",
+    "WL",
+    "MIN",
+    "PTS",
+    "REB",
+    "AST",
+    "STL",
+    "BLK",
+    "TOV",
+    "FGM",
+    "FGA",
+    "FG3M",
+    "FG3A",
+    "FTM",
+    "FTA",
+    "PLUS_MINUS",
+]
 
 
 def gamelog_params(season: str, player_or_team: str) -> dict:
@@ -73,11 +93,10 @@ def gamelog_params(season: str, player_or_team: str) -> dict:
 
 
 def fetch_team_games(season: str) -> list[dict]:
-    def call():
-        payload = fetch_stats_json("leaguegamelog", gamelog_params(season, "T"))
-        return legacy_result_set_rows(payload)
-
-    rows = with_retries(call, f"{season} team playoff gamelog")
+    # fetch_stats_json retries on its own; the second 5-try loop that wrapped
+    # it here ended in SystemExit, which stopped every later season.
+    payload = fetch_stats_json("leaguegamelog", gamelog_params(season, "T"))
+    rows = legacy_result_set_rows(payload, required=TEAM_COLS)
     out = []
     for r in rows:
         out.append(
@@ -96,11 +115,8 @@ def fetch_team_games(season: str) -> list[dict]:
 
 
 def fetch_player_games(season: str) -> list[dict]:
-    def call():
-        payload = fetch_stats_json("leaguegamelog", gamelog_params(season, "P"))
-        return legacy_result_set_rows(payload)
-
-    rows = with_retries(call, f"{season} player playoff gamelog")
+    payload = fetch_stats_json("leaguegamelog", gamelog_params(season, "P"))
+    rows = legacy_result_set_rows(payload, required=PLAYER_COLS)
     out = []
     for r in rows:
         out.append(
@@ -221,8 +237,13 @@ def derive_series(team_games: list[dict]) -> dict[str, list[dict]]:
     return series_out
 
 
-def build_season_cache(season: str) -> dict:
+def build_season_cache(season: str) -> dict | None:
+    """The season's cache doc, or None when its playoffs have not started yet."""
     team_games = fetch_team_games(season)
+    if not team_games:
+        if is_final(season):
+            raise EmptyPayloadError(f"{season}: no playoff team games for a finished season")
+        return None
     player_games = fetch_player_games(season)
     series = derive_series(team_games)
     return {
@@ -247,22 +268,33 @@ def main() -> None:
     if args.offline:
         have = [s for s in seasons if cache_path(s).exists()]
         print(f"cached playoff game seasons: {len(have)}/{len(seasons)}")
+        if len(have) < len(seasons):
+            raise FetchError(f"no playoff game cache for {[s for s in seasons if s not in have]}")
         return
 
     CACHE.mkdir(parents=True, exist_ok=True)
+    failures = Failures("fetch_playoff_gamelogs")
     for season in seasons:
         p = cache_path(season)
-        if p.exists() and not args.force:
+        if not args.force and cache_is_fresh(p, season):
             print(f"{season}: cached, skipping")
             continue
-        doc = build_season_cache(season)
-        p.write_text(json.dumps(doc, separators=(",", ":")), encoding="utf-8")
+        try:
+            doc = build_season_cache(season)
+            if doc is None:
+                print(f"{season}: playoffs not started; nothing cached")
+                continue
+            write_cache(p, doc, source=doc["source"], n_rows=len(doc["teamGames"]), season=season)
+        except FetchError as e:
+            failures.add(season, e)
+            continue
         print(
             f"{season}: {len(doc['teamGames'])} team-games, "
             f"{len(doc['playerGames'])} player-games, "
             f"{len(doc['seriesByTeam'])} teams -> {p.name}"
         )
+    failures.raise_if_any()
 
 
 if __name__ == "__main__":
-    main()
+    run_fetch(main, name="fetch_playoff_gamelogs")

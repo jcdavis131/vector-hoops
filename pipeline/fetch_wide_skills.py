@@ -30,12 +30,15 @@ blocked). Install ``curl_cffi`` — Akamai blocks plain ``requests`` /
   python pipeline/fetch_wide_skills.py
 
 Synergy + hustle both start 2015-16.
+
+Exit codes (ingest.run_fetch): 0 when every season is cached, 2 when any
+season failed or, with --offline, has no cache. A failed season writes
+nothing and the rest are still fetched [ingest#7].
 """
 
 from __future__ import annotations
 
 import argparse
-import json
 import re
 import sys
 import time
@@ -43,8 +46,9 @@ import unicodedata
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
+from ingest import EmptyPayloadError, Failures, FetchError, cache_is_fresh, run_fetch, write_cache
 from nba_http import fetch_stats_json, legacy_result_set_rows
-from seasons import HUSTLE_FIRST_SEASON, season_range
+from seasons import HUSTLE_FIRST_SEASON, is_final, season_range
 
 ROOT = Path(__file__).resolve().parents[1]
 CACHE = ROOT / "pipeline" / "cache"
@@ -134,9 +138,30 @@ def ptstats_params(season: str, measure: str) -> dict:
     }
 
 
-def stats_rows(endpoint: str, params: dict, set_name: str) -> list[dict]:
+# Columns build_season_cache reads with `float(x.get(col) or 0.0)`, so an
+# absent one became a column of zeros in a cache marked complete [ingest#11].
+# Required only where the 2015-16..2025-26 caches show the column arrives:
+#   - D_FG_PCT (Defense): d_fg_pct is 0.0 for every player of every cached
+#     season, so the response does not carry it under that name. Requiring
+#     it would fail every season today; it is listed as an open data issue.
+#   - BOX_OUTS (hustle): all zero in 2015-16 and 2016-17, non-zero from
+#     2017-18, so it is required from 2017-18 only.
+SYNERGY_COLS = ["PLAYER_NAME", "POSS_PCT", "PPP"]
+HUSTLE_COLS = [
+    "PLAYER_NAME",
+    "SCREEN_ASSISTS",
+    "DEFLECTIONS",
+    "LOOSE_BALLS_RECOVERED",
+    "CHARGES_DRAWN",
+    "CONTESTED_SHOTS",
+]
+BOX_OUTS_FIRST_SEASON = "2017-18"
+PTSTATS_COLS = {"PullUpShot": ["PLAYER_NAME", "PULL_UP_FG3A"], "Defense": ["PLAYER_NAME"]}
+
+
+def stats_rows(endpoint: str, params: dict, set_name: str, required: list[str]) -> list[dict]:
     payload = fetch_stats_json(endpoint, params, timeout=90)
-    return legacy_result_set_rows(payload, set_name)
+    return legacy_result_set_rows(payload, set_name, required=required)
 
 
 def rows_by_name(rows: list[dict]) -> dict[str, dict]:
@@ -144,20 +169,21 @@ def rows_by_name(rows: list[dict]) -> dict[str, dict]:
 
 
 def fetch_synergy(season: str, play_type: str) -> dict[str, dict]:
-    rows = stats_rows("synergyplaytypes", synergy_params(season, play_type), "SynergyPlayType")
+    rows = stats_rows("synergyplaytypes", synergy_params(season, play_type), "SynergyPlayType", SYNERGY_COLS)
     time.sleep(_CALL_GAP_S)
     return rows_by_name(rows)
 
 
 def fetch_hustle(season: str) -> dict[str, dict]:
-    rows = stats_rows("leaguehustlestatsplayer", hustle_params(season), "HustleStatsPlayer")
+    required = HUSTLE_COLS + (["BOX_OUTS"] if season >= BOX_OUTS_FIRST_SEASON else [])
+    rows = stats_rows("leaguehustlestatsplayer", hustle_params(season), "HustleStatsPlayer", required)
     time.sleep(_CALL_GAP_S)
     return rows_by_name(rows)
 
 
 def fetch_ptstats(season: str, measure: str) -> dict[str, dict]:
     """Player tracking (leaguedashptstats) — PullUpShot / Defense measures."""
-    rows = stats_rows("leaguedashptstats", ptstats_params(season, measure), "LeagueDashPtStats")
+    rows = stats_rows("leaguedashptstats", ptstats_params(season, measure), "LeagueDashPtStats", PTSTATS_COLS[measure])
     time.sleep(_CALL_GAP_S)
     return rows_by_name(rows)
 
@@ -229,21 +255,35 @@ def main() -> None:
     if args.offline:
         have = [s for s in seasons if cache_path(s).exists()]
         print(f"cached wide-skill seasons: {len(have)}/{len(seasons)}")
+        if len(have) < len(seasons):
+            raise FetchError(f"no wide-skill cache for {[s for s in seasons if s not in have]}")
         return
 
     _require_curl_cffi()
     CACHE.mkdir(parents=True, exist_ok=True)
+    failures = Failures("fetch_wide_skills")
     for season in seasons:
         p = cache_path(season)
-        if p.exists():
+        if cache_is_fresh(p, season):
             print(f"{season}: cached, skipping")
             continue
         what = "synergy + hustle" + ("" if args.skip_tracking else " + tracking")
         print(f"{season}: fetching {what} …")
-        doc = build_season_cache(season, skip_tracking=args.skip_tracking)
-        p.write_text(json.dumps(doc, separators=(",", ":")), encoding="utf-8")
+        try:
+            doc = build_season_cache(season, skip_tracking=args.skip_tracking)
+            write_cache(p, doc, source=doc["source"], n_rows=len(doc["players"]), season=season)
+        except EmptyPayloadError as e:
+            if is_final(season):
+                failures.add(season, e)
+            else:
+                print(f"{season}: no rows yet; nothing cached")
+            continue
+        except FetchError as e:
+            failures.add(season, e)
+            continue
         print(f"{season}: {len(doc['players'])} players -> {p.name}")
+    failures.raise_if_any()
 
 
 if __name__ == "__main__":
-    main()
+    run_fetch(main, name="fetch_wide_skills")
