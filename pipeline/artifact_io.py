@@ -45,6 +45,16 @@ no mtnn_report.json key named a seed, device, commit or matrix hash
 env_versions and matrix_fingerprint are what a report or manifest calls when
 it starts recording that.
 
+Bundles. One training run writes a checkpoint, an embedding, the archetype
+centroids and a report. Until 2026-10-09 the four had fixed names in
+pipeline/data and nothing tied them to each other, so the copies there came
+from three runs: checkpoint and report from an 08-14 select-phase run,
+embedding_v3.npz from 08-07, mtnn_centroids.npz (8 x 48, next to a 64-d
+embedding) from 08-06 [orchestration#0, training#2]. BUNDLE_FILES names the
+four inside a run directory (train_mtnn --run-dir) and a promoted bundle
+(promote.py); atomic_copy and file_record are how a file gets into one and
+how the report says which bytes it holds.
+
 Stdlib and numpy only at import. torch is imported inside atomic_torch_save,
 so the CPU-only build steps never load it.
 """
@@ -56,6 +66,7 @@ import json
 import os
 import platform
 import secrets
+import shutil
 import subprocess
 import tempfile
 import time
@@ -84,6 +95,16 @@ _VERSION_DISTS = {
     "torch": "torch",
     "sklearn": "scikit-learn",
     "vector_core": "vector-core",
+}
+
+# The files one training run writes, by role. Same basenames in pipeline/data
+# (the last run's copies), in a run directory and in a promoted bundle, so a
+# file keeps its name wherever it is copied.
+BUNDLE_FILES = {
+    "checkpoint": "mtnn_best.pt",
+    "embedding": "embedding_v3.npz",
+    "centroids": "mtnn_centroids.npz",
+    "report": "mtnn_report.json",
 }
 
 
@@ -200,6 +221,21 @@ def atomic_torch_save(obj: Any, path: str | os.PathLike[str]) -> Path:
     return path
 
 
+def atomic_copy(src: str | os.PathLike[str], dst: str | os.PathLike[str]) -> Path:
+    """Copy src's bytes to dst, written atomically.
+
+    A byte copy, never a reload and re-save: re-saving a checkpoint under a
+    different name changes its bytes (see atomic_torch_save), and the copy has
+    to hash the same as the file the run recorded.
+    """
+
+    def write(f: IO[Any]) -> None:
+        with open(src, "rb") as s:
+            shutil.copyfileobj(s, f, 1 << 20)
+
+    return _atomic_write(Path(dst), write, text=False, encoding=None)
+
+
 # ---------------------------------------------------------------------------
 # hashes and run identity
 # ---------------------------------------------------------------------------
@@ -212,6 +248,21 @@ def sha256_file(path: str | os.PathLike[str], chunk: int = 1 << 20) -> str:
         while block := f.read(chunk):
             h.update(block)
     return h.hexdigest()
+
+
+def display_path(path: str | os.PathLike[str], root: str | os.PathLike[str]) -> str:
+    """path relative to root in forward slashes, or absolute when it is outside root."""
+    p = Path(path).resolve()
+    try:
+        return p.relative_to(Path(root).resolve()).as_posix()
+    except ValueError:
+        return p.as_posix()
+
+
+def file_record(path: str | os.PathLike[str], root: str | os.PathLike[str]) -> dict[str, Any]:
+    """{path, sha256, bytes} of a file as it is on disk now: what a lineage entry records."""
+    p = Path(path)
+    return {"path": display_path(p, root), "sha256": sha256_file(p), "bytes": p.stat().st_size}
 
 
 def _git(root: Path, *args: str) -> str | None:
@@ -350,3 +401,33 @@ def matrix_fingerprint(
             for fam, idx in sorted(idx_by_family.items())
         },
     }
+
+
+def load_matrix_fingerprint(matrix: str | os.PathLike[str], manifest: str | os.PathLike[str]) -> dict[str, Any]:
+    """matrix_fingerprint of a train_matrix.npz + feature_manifest.json pair on disk.
+
+    The same arrays and manifest fields train_mtnn.load_bundle reads, so a
+    fingerprint a run recorded at load time compares equal to this one for as
+    long as the files are unchanged.
+    """
+    man = json.loads(Path(manifest).read_text(encoding="utf-8"))
+    with np.load(matrix, allow_pickle=False) as z:
+        return matrix_fingerprint(z["Z"], z["mask"], z["player_id"], z["season"], man["features"], man["families"])
+
+
+# The fingerprint fields that identify a matrix. family_coverage is derived
+# from the mask, which values_sha256 already covers.
+MATRIX_IDENTITY = ("rows", "cols", "keys_sha256", "columns_sha256", "values_sha256")
+
+
+def fingerprint_differences(want: Mapping[str, Any], have: Mapping[str, Any]) -> list[str]:
+    """The identity fields on which two matrix fingerprints differ, as 'field: want != have'."""
+
+    def short(v: Any) -> Any:
+        return v[:12] if isinstance(v, str) else v
+
+    return [
+        f"{key}: {short(want.get(key))} != {short(have.get(key))}"
+        for key in MATRIX_IDENTITY
+        if want.get(key) != have.get(key)
+    ]

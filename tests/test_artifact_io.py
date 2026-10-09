@@ -334,6 +334,71 @@ def test_fingerprint_refuses_mismatched_shapes():
         fingerprint(b, COLUMNS[:3], FAMILIES)
 
 
+def test_fingerprint_from_files_equals_fingerprint_of_the_loaded_arrays(tmp_path):
+    """train_mtnn fingerprints the arrays it loaded; promote.py fingerprints the
+    files. The two have to agree, or every promotion is refused."""
+    b = small_bundle()
+    np.savez_compressed(tmp_path / "train_matrix.npz", **b)
+    (tmp_path / "feature_manifest.json").write_text(
+        json.dumps({"features": COLUMNS, "families": FAMILIES}), encoding="utf-8"
+    )
+    loaded = np.load(tmp_path / "train_matrix.npz")
+    from_arrays = aio.matrix_fingerprint(
+        loaded["Z"].astype(np.float32),
+        loaded["mask"].astype(np.float32),
+        loaded["player_id"],
+        loaded["season"],
+        COLUMNS,
+        FAMILIES,
+    )
+    from_files = aio.load_matrix_fingerprint(tmp_path / "train_matrix.npz", tmp_path / "feature_manifest.json")
+    assert from_files == from_arrays == fingerprint(b, COLUMNS, FAMILIES)
+    assert aio.fingerprint_differences(from_arrays, from_files) == []
+
+
+def test_fingerprint_differences_names_the_fields():
+    b = small_bundle()
+    a = fingerprint(b, COLUMNS, FAMILIES)
+    changed = dict(b, Z=b["Z"].copy())
+    changed["Z"][0, 0] += 1
+    diffs = aio.fingerprint_differences(a, fingerprint(changed, COLUMNS, FAMILIES))
+    assert len(diffs) == 1 and diffs[0].startswith("values_sha256: ")
+
+
+# --- copies and records ----------------------------------------------------------
+
+
+def test_atomic_copy_is_a_byte_copy_and_leaves_no_temp(tmp_path):
+    src = tmp_path / "src" / "mtnn_best.pt"
+    src.parent.mkdir()
+    src.write_bytes(bytes(range(256)) * 9000)  # > one copy chunk
+    dst_dir = tmp_path / "run"
+    dst_dir.mkdir()
+    (dst_dir / "mtnn_best.pt").write_bytes(b"older run")
+    aio.atomic_copy(src, dst_dir / "mtnn_best.pt")
+    assert sha(dst_dir / "mtnn_best.pt") == sha(src)
+    assert only_files(dst_dir) == {"mtnn_best.pt"}
+
+
+def test_atomic_copy_failure_keeps_the_old_file(tmp_path):
+    dst = tmp_path / "embedding_v3.npz"
+    dst.write_bytes(b"old")
+    with pytest.raises(FileNotFoundError):
+        aio.atomic_copy(tmp_path / "missing.npz", dst)
+    assert dst.read_bytes() == b"old"
+    assert only_files(tmp_path) == {"embedding_v3.npz"}
+
+
+def test_file_record_paths_are_relative_to_the_root_when_inside(tmp_path):
+    f = tmp_path / "pipeline" / "data" / "x.bin"
+    f.parent.mkdir(parents=True)
+    f.write_bytes(b"abc")
+    rec = aio.file_record(f, tmp_path)
+    assert rec == {"path": "pipeline/data/x.bin", "sha256": hashlib.sha256(b"abc").hexdigest(), "bytes": 3}
+    elsewhere = aio.file_record(f, tmp_path / "pipeline" / "other")
+    assert elsewhere["path"] == f.resolve().as_posix()
+
+
 # --- run identity --------------------------------------------------------------
 
 
