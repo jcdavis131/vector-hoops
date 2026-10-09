@@ -150,6 +150,10 @@ html{
 html, body{
   margin:0;
   background: var(--bg);
+  background-image:
+    linear-gradient(color-mix(in srgb, var(--grid) 42%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in srgb, var(--grid) 42%, transparent) 1px, transparent 1px);
+  background-size: 32px 32px;
   color: var(--fg);
   font-family: var(--font-text);
   font-size: var(--t-base);
