@@ -30,6 +30,8 @@
   // Axes chrome — light paper style, high contrast ink
   var AXIS_LINE = __tok('--line-2','#B8AFA0');
   var AXIS_TEXT = __tok('--fg-3','#585858');
+  var MARKER_BLUE = __tok('--marker-blue','#2B6CE5');
+  var TERRA = __tok('--data-terra','#C17C60');
   var MAX_INPUT_NODES = 17; // truthful: 17 families, not top-10 truncated
   var SKILL_LABELS = {
     ft: 'Free Throw Shooting',
@@ -626,20 +628,20 @@
     var panelW = Math.min(w - 24, 520);
     var lineH = 14;
     var panelH = 10 + Math.max(1, axes.length) * (lineH + 12);
-    ctx.fillStyle = '#FFFEF7';
-    ctx.strokeStyle = '#111111';
+    ctx.fillStyle = CARD;
+    ctx.strokeStyle = INK;
     ctx.lineWidth = 1.8;
     ctx.beginPath(); ctx.roundRect(panelX, panelY, panelW, panelH, 8); ctx.fill(); ctx.stroke();
-    ctx.fillStyle = '#111111';
+    ctx.fillStyle = INK;
     ctx.font = '700 10px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace';
     ctx.fillText('PCA Axes (MTNN 48-d) — Cam\'s Lab light paper', panelX + 8, panelY + 13);
     axes.forEach(function (ax, i) {
       var y = panelY + 30 + i * (lineH + 12);
-      ctx.fillStyle = '#111111';
+      ctx.fillStyle = INK;
       ctx.fillText((ax.axis || ['X', 'Y', 'Z'][i]) + ' / ' + (ax.pc || ('PC' + (i + 1))), panelX + 8, y);
-      ctx.fillStyle = '#111111';
+      ctx.fillStyle = INK;
       ctx.fillText((ax.hi || '').slice(0, 72), panelX + 90, y);
-      ctx.fillStyle = '#585858';
+      ctx.fillStyle = SUBTLE_AAA;
       ctx.fillText((ax.lo || '').slice(0, 72), panelX + 90, y + lineH);
     });
     ctx.restore();
@@ -1255,7 +1257,7 @@ function buildFlowSvg(host) {
       t.setAttribute('y', TOP_LABEL_Y);
       t.setAttribute('text-anchor', 'middle');
       t.setAttribute('class', 'network-flow-col-label');
-      t.setAttribute('style', 'font-size:12px;font-weight:800;fill:#111111;letter-spacing:0.04em;');
+      t.setAttribute('style', 'font-size:12px;font-weight:800;fill:'+INK+';letter-spacing:0.04em;');
       t.textContent = o.label;
       svg.appendChild(t);
     });
@@ -1273,7 +1275,7 @@ function buildFlowSvg(host) {
       t.setAttribute('y', su.y);
       t.setAttribute('text-anchor', 'middle');
       t.setAttribute('class', 'network-flow-col-label');
-      t.setAttribute('style', 'font-size:10px;fill:#585858;font-weight:700;');
+      t.setAttribute('style', 'font-size:10px;fill:'+SUBTLE_AAA+';font-weight:700;');
       t.textContent = su.txt;
       svg.appendChild(t);
     });
@@ -1319,7 +1321,7 @@ function buildFlowSvg(host) {
       ic.setAttribute('data-input', String(i));
       ic.setAttribute('data-family', fam);
       ic.setAttribute('data-tower-row', String(i));
-      ic.setAttribute('style', 'fill:#FFFFFF;stroke:#111111;stroke-width:2.5px;');
+      ic.setAttribute('style', 'fill:'+CARD+';stroke:'+INK+';stroke-width:2.5px;');
       var tt = document.createElementNS(SVG_NS, 'title');
       tt.textContent = fam.replace(/_/g,' ') + ' ('+d_in+' feats) → cat([x·m,m]) 2·d_in='+twoDin+' — m∈{0,1} ∅→0 grad=0 never imputed';
       ic.appendChild(tt);
@@ -1333,7 +1335,7 @@ function buildFlowSvg(host) {
       it.setAttribute('class', 'network-flow-col-label');
       it.setAttribute('text-anchor', 'start');
       it.setAttribute('data-input-label', String(i));
-      it.setAttribute('style', 'font-size:12.5px;font-weight:700;fill:#111111;letter-spacing:0.01em;');
+      it.setAttribute('style', 'font-size:12.5px;font-weight:700;fill:'+INK+';letter-spacing:0.01em;');
       it.textContent = fam.replace(/_/g,' ');
       inputG.appendChild(it);
 
@@ -1344,7 +1346,7 @@ function buildFlowSvg(host) {
       iv.setAttribute('class', 'network-flow-col-label');
       iv.setAttribute('text-anchor', 'end');
       iv.setAttribute('data-input-value', String(i));
-      iv.setAttribute('style', 'font-size:10.5px;fill:#585858;font-weight:600;');
+      iv.setAttribute('style', 'font-size:10.5px;fill:'+SUBTLE_AAA+';font-weight:600;');
       iv.textContent = '0%';
       inputG.appendChild(iv);
 
@@ -1355,11 +1357,11 @@ function buildFlowSvg(host) {
       catR.setAttribute('x','-16'); catR.setAttribute('y','-9'); catR.setAttribute('width','32'); catR.setAttribute('height','18'); catR.setAttribute('rx','4');
       catR.setAttribute('class','network-flow-node network-flow-node--cat');
       catR.setAttribute('data-tower-row', String(i));
-      catR.setAttribute('style','fill:#FFFFFF;stroke:#111111;stroke-width:2px;');
+      catR.setAttribute('style','fill:'+CARD+';stroke:'+INK+';stroke-width:2px;');
       cat.appendChild(catR);
       var catT = document.createElementNS(SVG_NS, 'text');
       catT.setAttribute('x','0'); catT.setAttribute('y','4'); catT.setAttribute('text-anchor','middle');
-      catT.setAttribute('style','font-size:9.5px;fill:#111111;font-family:ui-monospace;font-weight:800;');
+      catT.setAttribute('style','font-size:9.5px;fill:'+INK+';font-family:ui-monospace;font-weight:800;');
       catT.textContent = 'cat';
       cat.appendChild(catT);
       inputG.appendChild(cat);
@@ -1370,7 +1372,7 @@ function buildFlowSvg(host) {
       pIn.setAttribute('d', dIn);
       pIn.setAttribute('class','network-flow-edge');
       pIn.setAttribute('data-edge','in-'+i);
-      pIn.setAttribute('style','stroke:#111111;stroke-width:1.4;');
+      pIn.setAttribute('style','stroke:'+INK+';stroke-width:1.4;');
       edgeG.appendChild(pIn);
 
       // B1 hidden 160 — circle r=5 readable (was 3.5)
@@ -1379,7 +1381,7 @@ function buildFlowSvg(host) {
       b1h.setAttribute('class','network-flow-node network-flow-node--tower-sub network-flow-node--b1h');
       b1h.setAttribute('data-tower-sub', 'b1h-'+i);
       b1h.setAttribute('data-tower-row', String(i));
-      b1h.setAttribute('style','fill:#FFFFFF;stroke:#111111;stroke-width:2px;');
+      b1h.setAttribute('style','fill:'+CARD+';stroke:'+INK+';stroke-width:2px;');
       var b1hTitle = document.createElementNS(SVG_NS, 'title');
       b1hTitle.textContent = 'B1 hidden 160: Linear('+ twoDin +'→160) LN GELU';
       b1h.appendChild(b1hTitle);
@@ -1388,7 +1390,7 @@ function buildFlowSvg(host) {
       var pC1 = document.createElementNS(SVG_NS, 'path');
       pC1.setAttribute('d','M'+(COLS.cat+16)+','+y+' L'+(COLS.b1h-5)+','+y);
       pC1.setAttribute('class','network-flow-edge network-flow-edge--tower-internal');
-      pC1.setAttribute('style','stroke:#111111;opacity:0.7;');
+      pC1.setAttribute('style','stroke:'+INK+';opacity:0.7;');
       edgeG.appendChild(pC1);
 
       // B1 out 32 — r=6
@@ -1396,7 +1398,7 @@ function buildFlowSvg(host) {
       b1o.setAttribute('cx', String(COLS.b1o)); b1o.setAttribute('cy', String(y)); b1o.setAttribute('r','6');
       b1o.setAttribute('class','network-flow-node network-flow-node--tower-sub network-flow-node--b1o');
       b1o.setAttribute('data-tower-row', String(i));
-      b1o.setAttribute('style','fill:#FFFFFF;stroke:#111111;stroke-width:2px;');
+      b1o.setAttribute('style','fill:'+CARD+';stroke:'+INK+';stroke-width:2px;');
       var b1oTitle = document.createElementNS(SVG_NS, 'title');
       b1oTitle.textContent = 'B1 out 32: Linear(160→32) LN + skip Linear('+twoDin+'→32)';
       b1o.appendChild(b1oTitle);
@@ -1405,13 +1407,13 @@ function buildFlowSvg(host) {
       var skip1 = document.createElementNS(SVG_NS, 'path');
       skip1.setAttribute('d','M'+(COLS.cat+8)+','+(y-10)+' Q'+((COLS.cat+COLS.b1o)/2)+','+(y-18)+' '+COLS.b1o+','+(y-6));
       skip1.setAttribute('class','network-flow-edge network-flow-edge--skip');
-      skip1.setAttribute('style','fill:none;stroke:#111111;stroke-width:1;stroke-dasharray:4 3;opacity:0.55;');
+      skip1.setAttribute('style','fill:none;stroke:'+INK+';stroke-width:1;stroke-dasharray:4 3;opacity:0.55;');
       edgeG.appendChild(skip1);
 
       var pB1 = document.createElementNS(SVG_NS, 'path');
       pB1.setAttribute('d','M'+COLS.b1h+','+y+' L'+(COLS.b1o-6)+','+y);
       pB1.setAttribute('class','network-flow-edge network-flow-edge--tower-internal');
-      pB1.setAttribute('style','stroke:#111111;opacity:0.6;');
+      pB1.setAttribute('style','stroke:'+INK+';opacity:0.6;');
       edgeG.appendChild(pB1);
 
       // B2 hidden 160 — r=5
@@ -1419,7 +1421,7 @@ function buildFlowSvg(host) {
       b2h.setAttribute('cx', String(COLS.b2h)); b2h.setAttribute('cy', String(y)); b2h.setAttribute('r','5');
       b2h.setAttribute('class','network-flow-node network-flow-node--tower-sub network-flow-node--b2h');
       b2h.setAttribute('data-tower-row', String(i));
-      b2h.setAttribute('style','fill:#FFFFFF;stroke:#111111;stroke-width:2px;');
+      b2h.setAttribute('style','fill:'+CARD+';stroke:'+INK+';stroke-width:2px;');
       var b2hTitle = document.createElementNS(SVG_NS, 'title');
       b2hTitle.textContent = 'B2 hidden 160: Linear(32→160) LN GELU';
       b2h.appendChild(b2hTitle);
@@ -1428,7 +1430,7 @@ function buildFlowSvg(host) {
       var pB2a = document.createElementNS(SVG_NS, 'path');
       pB2a.setAttribute('d','M'+COLS.b1o+','+y+' L'+(COLS.b2h-5)+','+y);
       pB2a.setAttribute('class','network-flow-edge network-flow-edge--tower-internal');
-      pB2a.setAttribute('style','stroke:#111111;opacity:0.6;');
+      pB2a.setAttribute('style','stroke:'+INK+';opacity:0.6;');
       edgeG.appendChild(pB2a);
 
       // B2 final out 32 — r=8 bold, main tower node
@@ -1440,7 +1442,7 @@ function buildFlowSvg(host) {
       b2o.setAttribute('data-tower', String(i));
       b2o.setAttribute('data-family', fam);
       b2o.setAttribute('data-tower-row', String(i));
-      b2o.setAttribute('style','fill:#FFFFFF;stroke:#111111;stroke-width:2.5px;');
+      b2o.setAttribute('style','fill:'+CARD+';stroke:'+INK+';stroke-width:2.5px;');
       var b2oTitle = document.createElementNS(SVG_NS, 'title');
       b2oTitle.textContent = fam.replace(/_/g,' ')+' tower final 32-d (B2: 160→32 LN + residual). d_in='+d_in+' → 2·d_in='+twoDin+' →32';
       b2o.appendChild(b2oTitle);
@@ -1449,13 +1451,13 @@ function buildFlowSvg(host) {
       var skip2 = document.createElementNS(SVG_NS, 'path');
       skip2.setAttribute('d','M'+COLS.b1o+','+(y+8)+' Q'+((COLS.b1o+COLS.b2o)/2)+','+(y+16)+' '+COLS.b2o+','+(y+6));
       skip2.setAttribute('class','network-flow-edge network-flow-edge--skip');
-      skip2.setAttribute('style','fill:none;stroke:#111111;stroke-width:1;stroke-dasharray:4 3;opacity:0.55;');
+      skip2.setAttribute('style','fill:none;stroke:'+INK+';stroke-width:1;stroke-dasharray:4 3;opacity:0.55;');
       edgeG.appendChild(skip2);
 
       var pB2b = document.createElementNS(SVG_NS, 'path');
       pB2b.setAttribute('d','M'+COLS.b2h+','+y+' L'+(COLS.b2o-8)+','+y);
       pB2b.setAttribute('class','network-flow-edge network-flow-edge--tower-internal');
-      pB2b.setAttribute('style','stroke:#111111;opacity:0.6;');
+      pB2b.setAttribute('style','stroke:'+INK+';opacity:0.6;');
       edgeG.appendChild(pB2b);
 
       // Tower label — 11px AAA readable (was 6.5px)
@@ -1465,7 +1467,7 @@ function buildFlowSvg(host) {
       tl.setAttribute('class', 'network-flow-tower-label');
       tl.setAttribute('text-anchor', 'start');
       tl.setAttribute('data-tower-label', String(i));
-      tl.setAttribute('style','font-size:11px;font-weight:700;fill:#111111;font-family:ui-monospace;');
+      tl.setAttribute('style','font-size:11px;font-weight:700;fill:'+INK+';font-family:ui-monospace;');
       tl.textContent = fam.replace(/_/g,' ');
       towerG.appendChild(tl);
 
@@ -1477,7 +1479,7 @@ function buildFlowSvg(host) {
       pFuse.setAttribute('d', dFuse);
       pFuse.setAttribute('class', 'network-flow-edge');
       pFuse.setAttribute('data-edge', 'fuse-' + i);
-      pFuse.setAttribute('style','stroke:#111111;stroke-width:1.2;opacity:0.55;');
+      pFuse.setAttribute('style','stroke:'+INK+';stroke-width:1.2;opacity:0.55;');
       edgeG.appendChild(pFuse);
     }
 
@@ -1490,7 +1492,7 @@ function buildFlowSvg(host) {
     seasonC.setAttribute('cx','0'); seasonC.setAttribute('cy','0'); seasonC.setAttribute('r','12');
     seasonC.setAttribute('class','network-flow-node network-flow-node--season');
     seasonC.setAttribute('id','flow-season');
-    seasonC.setAttribute('style','fill:#FFFFFF;stroke:#111111;stroke-width:2.5px;');
+    seasonC.setAttribute('style','fill:'+CARD+';stroke:'+INK+';stroke-width:2.5px;');
     var seasonTitle = document.createElementNS(SVG_NS, 'title');
     seasonTitle.textContent = 'Season embedding 12-d learned (n_seasons lookup) — gives era context';
     seasonC.appendChild(seasonTitle);
@@ -1498,7 +1500,7 @@ function buildFlowSvg(host) {
     var seasonL = document.createElementNS(SVG_NS, 'text');
     seasonL.setAttribute('x','18'); seasonL.setAttribute('y','4');
     seasonL.setAttribute('class','network-flow-col-label');
-    seasonL.setAttribute('style','font-size:10px;font-weight:700;fill:#111111;');
+    seasonL.setAttribute('style','font-size:10px;font-weight:700;fill:'+INK+';');
     seasonL.textContent = 'season 12-d';
     seasonG.appendChild(seasonL);
     svg.appendChild(seasonG);
@@ -1506,7 +1508,7 @@ function buildFlowSvg(host) {
     var seasonEdge = document.createElementNS(SVG_NS, 'path');
     seasonEdge.setAttribute('d','M'+(COLS.fusion-14)+','+(towerTop-4)+' C'+(COLS.fusion-14)+','+(midY-80)+' '+(COLS.fusion-14)+','+(midY-40)+' '+(COLS.fusion)+','+(midY-18));
     seasonEdge.setAttribute('class','network-flow-edge network-flow-edge--season');
-    seasonEdge.setAttribute('style','stroke-dasharray:4 3;opacity:0.65;stroke:#111111;');
+    seasonEdge.setAttribute('style','stroke-dasharray:4 3;opacity:0.65;stroke:'+INK+';');
     edgeG.appendChild(seasonEdge);
 
     // Fusion concat node
@@ -1516,7 +1518,7 @@ function buildFlowSvg(host) {
     fusion.setAttribute('r', '20');
     fusion.setAttribute('class', 'network-flow-node network-flow-node--fusion');
     fusion.setAttribute('id', 'flow-fusion');
-    fusion.setAttribute('style','fill:#FFFFFF;stroke:#111111;stroke-width:2.5px;');
+    fusion.setAttribute('style','fill:'+CARD+';stroke:'+INK+';stroke-width:2.5px;');
     var fusionTitle = document.createElementNS(SVG_NS, 'title');
     fusionTitle.textContent = 'Concat fusion: flatten 17×32=544 + season 12 =556 → Linear 556→128 GELU LayerNorm';
     fusion.appendChild(fusionTitle);
@@ -1527,7 +1529,7 @@ function buildFlowSvg(host) {
     fusionLabel.setAttribute('y', String(midY+36));
     fusionLabel.setAttribute('text-anchor','middle');
     fusionLabel.setAttribute('class','network-flow-col-label');
-    fusionLabel.setAttribute('style','font-size:11px;fill:#585858;font-weight:700;');
+    fusionLabel.setAttribute('style','font-size:11px;fill:'+SUBTLE_AAA+';font-weight:700;');
     fusionLabel.textContent = '556→128';
     svg.appendChild(fusionLabel);
 
@@ -1538,7 +1540,7 @@ function buildFlowSvg(host) {
     fusionH.setAttribute('r', '12');
     fusionH.setAttribute('class','network-flow-node network-flow-node--fusion-hidden');
     fusionH.setAttribute('id','flow-fusion-hidden');
-    fusionH.setAttribute('style','fill:#FFFFFF;stroke:#111111;stroke-width:2.5px;');
+    fusionH.setAttribute('style','fill:'+CARD+';stroke:'+INK+';stroke-width:2.5px;');
     var fhTitle = document.createElementNS(SVG_NS, 'title');
     fhTitle.textContent = 'Fusion hidden 128-d: GELU + LayerNorm, then Linear 128→48';
     fusionH.appendChild(fhTitle);
@@ -1549,7 +1551,7 @@ function buildFlowSvg(host) {
     eFH.setAttribute('x2', String(COLS.fusionHidden-12)); eFH.setAttribute('y2', String(midY));
     eFH.setAttribute('class','network-flow-edge network-flow-edge--main');
     eFH.setAttribute('data-edge','fusion-hidden');
-    eFH.setAttribute('style','stroke:#111111;stroke-width:2;');
+    eFH.setAttribute('style','stroke:'+INK+';stroke-width:2;');
     edgeG.appendChild(eFH);
 
     // Embed node 48-d
@@ -1559,7 +1561,7 @@ function buildFlowSvg(host) {
     embed.setAttribute('r', '18');
     embed.setAttribute('class', 'network-flow-node network-flow-node--embed');
     embed.setAttribute('id', 'flow-embed');
-    embed.setAttribute('style','fill:#FFFFFF;stroke:#111111;stroke-width:2.5px;');
+    embed.setAttribute('style','fill:'+CARD+';stroke:'+INK+';stroke-width:2.5px;');
     var embedTitle = document.createElementNS(SVG_NS, 'title');
     embedTitle.textContent = 'Embedding 48-d L2-normalized: output of Linear 128→48 then F.normalize, cosine similarity';
     embed.appendChild(embedTitle);
@@ -1570,7 +1572,7 @@ function buildFlowSvg(host) {
     eF2E.setAttribute('x2', String(COLS.embed-18)); eF2E.setAttribute('y2', String(midY));
     eF2E.setAttribute('class','network-flow-edge network-flow-edge--main');
     eF2E.setAttribute('data-edge','emb-main');
-    eF2E.setAttribute('style','stroke:#111111;stroke-width:2;');
+    eF2E.setAttribute('style','stroke:'+INK+';stroke-width:2;');
     edgeG.appendChild(eF2E);
 
     var l2badge = document.createElementNS(SVG_NS, 'text');
@@ -1578,7 +1580,7 @@ function buildFlowSvg(host) {
     l2badge.setAttribute('y', String(midY-12));
     l2badge.setAttribute('text-anchor','middle');
     l2badge.setAttribute('class','network-flow-col-label');
-    l2badge.setAttribute('style','font-size:11px;fill:#111111;font-weight:800;');
+    l2badge.setAttribute('style','font-size:11px;fill:'+INK+';font-weight:800;');
     l2badge.textContent = 'L2 norm';
     svg.appendChild(l2badge);
 
@@ -1602,7 +1604,7 @@ function buildFlowSvg(host) {
         hidden64.setAttribute('cy', String(hy));
         hidden64.setAttribute('r', '5');
         hidden64.setAttribute('class','network-flow-node network-flow-node--head-hidden');
-        hidden64.setAttribute('style','fill:#FFFFFF;stroke:#111111;stroke-width:2px;');
+        hidden64.setAttribute('style','fill:'+CARD+';stroke:'+INK+';stroke-width:2px;');
         var hgTitle = document.createElementNS(SVG_NS, 'title');
         hgTitle.textContent = headDefs[h].key+': MLP hidden '+(headDefs[h].key==='skills'?'16':'64')+' GELU';
         hidden64.appendChild(hgTitle);
@@ -1613,7 +1615,7 @@ function buildFlowSvg(host) {
           ' C'+ (COLS.embed + 55) +','+ midY +' '+ (COLS.heads - 90) +','+ hy +' '+ (COLS.heads - 65) +','+ hy;
         e64.setAttribute('d', d64);
         e64.setAttribute('class','network-flow-edge network-flow-edge--head network-flow-edge--head-hidden');
-        e64.setAttribute('style','stroke:#111111;opacity:0.6;');
+        e64.setAttribute('style','stroke:'+INK+';opacity:0.6;');
         edgeG.appendChild(e64);
 
         var hc = document.createElementNS(SVG_NS, 'circle');
@@ -1623,7 +1625,7 @@ function buildFlowSvg(host) {
         hc.setAttribute('class', 'network-flow-node network-flow-node--head');
         hc.setAttribute('data-head', String(h));
         hc.setAttribute('data-head-key', headDefs[h].key);
-        hc.setAttribute('style','fill:#FFFFFF;stroke:#111111;stroke-width:2.5px;');
+        hc.setAttribute('style','fill:'+CARD+';stroke:'+INK+';stroke-width:2.5px;');
         var hTitle = document.createElementNS(SVG_NS, 'title');
         hTitle.textContent = headDefs[h].label + ' — final output layer';
         hc.appendChild(hTitle);
@@ -1634,7 +1636,7 @@ function buildFlowSvg(host) {
         eFinal.setAttribute('x2', String(COLS.heads-8)); eFinal.setAttribute('y2', String(hy));
         eFinal.setAttribute('class','network-flow-edge network-flow-edge--head');
         eFinal.setAttribute('data-edge','head-'+h);
-        eFinal.setAttribute('style','stroke:#111111;opacity:0.7;');
+        eFinal.setAttribute('style','stroke:'+INK+';opacity:0.7;');
         edgeG.appendChild(eFinal);
       } else {
         var hc2 = document.createElementNS(SVG_NS, 'circle');
@@ -1644,7 +1646,7 @@ function buildFlowSvg(host) {
         hc2.setAttribute('class', 'network-flow-node network-flow-node--head network-flow-node--aux');
         hc2.setAttribute('data-head', String(h));
         hc2.setAttribute('data-head-key', headDefs[h].key);
-        hc2.setAttribute('style','fill:#FFFFFF;stroke:#111111;stroke-width:2px;');
+        hc2.setAttribute('style','fill:'+CARD+';stroke:'+INK+';stroke-width:2px;');
         headG.appendChild(hc2);
         var eAux = document.createElementNS(SVG_NS, 'path');
         var dAux = 'M'+ (COLS.embed + 18) +','+ midY +
@@ -1652,7 +1654,7 @@ function buildFlowSvg(host) {
         eAux.setAttribute('d', dAux);
         eAux.setAttribute('class','network-flow-edge network-flow-edge--head');
         eAux.setAttribute('data-edge','head-'+h);
-        eAux.setAttribute('style','stroke:#111111;opacity:0.6;');
+        eAux.setAttribute('style','stroke:'+INK+';opacity:0.6;');
         edgeG.appendChild(eAux);
       }
 
@@ -1661,7 +1663,7 @@ function buildFlowSvg(host) {
       hl.setAttribute('y', String(hy + 5));
       hl.setAttribute('class', 'network-flow-col-label');
       hl.setAttribute('text-anchor', 'start');
-      hl.setAttribute('style','font-size:12px;font-weight:700;fill:#111111;letter-spacing:0.01em;');
+      hl.setAttribute('style','font-size:12px;font-weight:700;fill:'+INK+';letter-spacing:0.01em;');
       hl.textContent = headDefs[h].label;
       headG.appendChild(hl);
     }
@@ -2424,26 +2426,26 @@ function buildFlowSvg(host) {
         var cc = coords[state.compareIdx];
         var cp = project3D(cc[0], cc[1], cc[2], w, h, cam);
         ctx.globalAlpha = 0.55;
-        ctx.strokeStyle = '#67b5ff';
+        ctx.strokeStyle = MARKER_BLUE;
         ctx.lineWidth = 1.4;
         ctx.beginPath();
         ctx.moveTo(ap.sx, ap.sy);
         ctx.lineTo(cp.sx, cp.sy);
         ctx.stroke();
         ctx.globalAlpha = 1;
-        ctx.strokeStyle = '#67b5ff';
+        ctx.strokeStyle = MARKER_BLUE;
         ctx.lineWidth = 2;
         ctx.beginPath();
         ctx.arc(cp.sx, cp.sy, 7, 0, Math.PI * 2);
         ctx.stroke();
-        ctx.fillStyle = '#67b5ff';
+        ctx.fillStyle = MARKER_BLUE;
         ctx.beginPath();
         ctx.arc(cp.sx, cp.sy, 3.5, 0, Math.PI * 2);
         ctx.fill();
       }
       var neighbors = embeddingNeighbors(state.playerIdx, 3);
       ctx.globalAlpha = 0.38;
-      ctx.strokeStyle = '#f3a26f';
+      ctx.strokeStyle = TERRA;
       ctx.lineWidth = 1.15;
       neighbors.forEach(function (n) {
         var nc = coords[n.idx];
@@ -2483,7 +2485,7 @@ function buildFlowSvg(host) {
         ctx.fillStyle = 'rgba(0,0,0,0.55)';
         ctx.fillRect(lx - 6, ly - 13, tw + 12, 20);
         ctx.globalAlpha = 1;
-        ctx.fillStyle = '#f0eee6';
+        ctx.fillStyle = CARD;
         ctx.fillText(label, lx, ly);
       }
     }
@@ -2507,11 +2509,11 @@ function buildFlowSvg(host) {
         ctx.fillRect(hlx - 6, hly - 12, htw + 12, 18);
         ctx.beginPath();
         ctx.arc(hpr.sx, hpr.sy, 5, 0, Math.PI * 2);
-        ctx.strokeStyle = '#111111';
+        ctx.strokeStyle = INK;
         ctx.lineWidth = 1.5;
         ctx.stroke();
         ctx.globalAlpha = 1;
-        ctx.fillStyle = '#111111';
+        ctx.fillStyle = INK;
         ctx.fillText(hLabel, hlx, hly);
       }
     }
