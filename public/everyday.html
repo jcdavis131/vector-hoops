@@ -7,7 +7,7 @@
 <meta name="description" content="Three past-to-modern twins a day, the same for everyone. Keep the streak alive; no account needed."/>
 <link rel="manifest" href="/manifest.json">
 <style>
-:root{--paper:#fafaf8;--surface:#fff;--ink:#111;--ink-soft:#52514e;--ink-mut:#6b6760;--hair:#e1e0d9;--orange:#eb6834;--blue:#2a78d6;--yellow:#f0e442;--green:#009e73;--void:#080A0F;--void-2:#0A0C10;--mono:ui-monospace,"IBM Plex Mono",Menlo,monospace;--sans:ui-sans-system,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;--shadow:4px 4px 0 var(--ink);--r:14px}
+:root{--paper:#fafaf8;--surface:#fff;--ink:#111;--ink-soft:#52514e;--hair:#e1e0d9;--orange:#eb6834;--blue:#2a78d6;--yellow:#f0e442;--green:#009e73;--void:#080A0F;--mono:ui-monospace,"IBM Plex Mono",Menlo,monospace;--sans:ui-sans-system,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;--shadow:4px 4px 0 var(--ink);--r:14px}
 *{box-sizing:border-box}html,body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased}
 a{color:inherit;text-decoration:none}
 :focus-visible{outline:3px solid var(--blue);outline-offset:2px}
@@ -17,7 +17,7 @@ a{color:inherit;text-decoration:none}
 .pov-pill{min-height:36px;padding:0 13px;border:1px solid var(--line-2);border-radius:999px;background:var(--surface);font-family:var(--mono);font-weight:800;font-size:11px;text-transform:uppercase;letter-spacing:.03em;white-space:nowrap;box-shadow:none;cursor:pointer;scroll-snap-align:start;flex:0 0 auto}
 .pov-pill.on{background:var(--accent-wash);color:var(--accent);transform:rotate(-.6deg)}
 .mono{font-family:var(--mono);font-size:11px;letter-spacing:.03em;text-transform:uppercase}
-.mono-sm{font-family:var(--mono);font-size:10.8px;color:var(--ink-mut);text-transform:uppercase;letter-spacing:.05em}
+.mono-sm{font-family:var(--mono);font-size:10.8px;color:var(--ink-muted);text-transform:uppercase;letter-spacing:.05em}
 .hero-void{background:radial-gradient(1100px 600px at 18% -10%,#1A233A 0%,#121A2D 32%,var(--void) 72%);color:#fafaf8;border-bottom:1px solid var(--line-2);position:relative;overflow:hidden}
 .wrap{max-width:1080px;margin:0 auto;padding:0 14px}
 .hero-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:14px;padding:14px 0}
@@ -30,7 +30,7 @@ a{color:inherit;text-decoration:none}
 .grid{max-width:1080px;margin:0 auto;padding:12px;display:grid;grid-template-columns:1.05fr .95fr;gap:12px;align-items:start}
 @media(max-width:900px){.grid{grid-template-columns:1fr}}
 .map-head{display:flex;justify-content:space-between;align-items:center;padding:9px 12px;border-bottom:1px solid var(--line-2);background:linear-gradient(90deg,var(--paper),#FFF6C8)}
-.canvas-box{position:relative;background:var(--void-2)}
+.canvas-box{position:relative;background:var(--void)}
 canvas{display:block;width:100%;height:380px}
 @media(max-width:600px){canvas{height:320px}}
 .pill{display:inline-flex;align-items:center;gap:6px;padding:6px 11px;border-radius:999px;border:1px solid var(--line-2);background:var(--surface);font-family:var(--mono);font-size:11px;font-weight:800;text-transform:uppercase;box-shadow:none}
@@ -58,9 +58,9 @@ canvas{display:block;width:100%;height:380px}
 .share-pop.on{display:grid}
 .share-card{width:min(720px,96vw);background:#080A0F;border:2px solid #FAFAF8;border-radius:16px;overflow:hidden;box-shadow:none}
 </style>
-<meta name="color-scheme" content="dark light"/>
-<meta name="theme-color" content="#07090C" media="(prefers-color-scheme: dark)"/>
-<meta name="theme-color" content="#F3F1EC" media="(prefers-color-scheme: light)"/>
+<meta name="color-scheme" content="light dark"/>
+<meta name="theme-color" content="#0F1114" media="(prefers-color-scheme: dark)"/>
+<meta name="theme-color" content="#FCFBF7" media="(prefers-color-scheme: light)"/>
 <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml"/>
 <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png"/>
 <link rel="canonical" href="https://hoops.dumbmodel.com/everyday"/>

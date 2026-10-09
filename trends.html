@@ -279,10 +279,10 @@ input[type=range]{touch-action:manipulation}
 }
 .arch-shift-bar-center{ position:absolute; left:50%; top:0; bottom:0; width:2px; background:var(--ink); opacity:.16; transform:translateX(-50%); z-index:0; }
 .arch-shift-bar{ height:14px; border-radius:999px; position:relative; z-index:1; transition:width .2s; }
-.arch-shift-bar--up{ background:#0A7A2F; }
+.arch-shift-bar--up{ background:var(--data-moss); }
 .arch-shift-bar--down{ background:#C62828; }
 .arch-shift-delta{ font-family:var(--mono); font-size:12px; font-weight:900; text-align:right; line-height:1; }
-.arch-shift-delta--up{ color:#0A7A2F; } .arch-shift-delta--down{ color:#C62828; }
+.arch-shift-delta--up{ color:var(--data-moss); } .arch-shift-delta--down{ color:#C62828; }
 @media(max-width:520px){
   .arch-shift-row{ grid-template-columns:1fr 92px; grid-template-rows:auto auto; }
   .arch-shift-label{ grid-column:1 / -1; }
@@ -314,14 +314,14 @@ input[type=range]{touch-action:manipulation}
 }
 .court-heatmap__zone-name{ display:flex; gap:7px; align-items:center; font-weight:700; }
 .court-heatmap__zone-dot{ width:10px; height:10px; border-radius:50%; background:var(--orange); flex-shrink:0; border:1px solid var(--line-2); }
-.court-heatmap__zone.is-up .court-heatmap__zone-dot{ background:#0A7A2F; }
+.court-heatmap__zone.is-up .court-heatmap__zone-dot{ background:var(--data-moss); }
 .court-heatmap__zone.is-down .court-heatmap__zone-dot{ background:#C62828; }
 .court-heatmap__zone-val{ font-family:var(--mono); font-size:11px; font-weight:900; white-space:nowrap; }
 .court-heatmap__tags-label{ font-family:var(--mono); font-size:10px; font-weight:900; text-transform:uppercase; letter-spacing:.05em; margin:10px 0 6px; color:#3A3632; }
 .court-heatmap__tag-row{ display:flex; flex-wrap:wrap; gap:6px; }
 .court-heatmap__tag{ border:1px solid var(--line-2); border-radius:999px; padding:5px 11px; font-size:11px; font-weight:600; background:var(--surface); box-shadow:none; display:inline-flex; align-items:center; }
 .court-heatmap__tag em{ font-style:normal; font-weight:900; margin-left:5px; font-family:var(--mono); }
-.court-heatmap__tag.is-up{ background:#E8F5E9; border-color:#0A7A2F; }
+.court-heatmap__tag.is-up{ background:#E8F5E9; border-color:var(--data-moss); }
 .court-heatmap__tag.is-down{ background:#FDE8E6; border-color:#7A1F1A; }
 .court-heatmap__era{ font-family:var(--mono); font-size:11px; font-weight:800; padding:6px 12px; border-radius:999px; border:1px solid var(--line-2); background:var(--surface); cursor:pointer; box-shadow:none; }
 .court-heatmap__era.is-active{ background:var(--accent);color:var(--on-accent); }
@@ -331,9 +331,9 @@ input[type=range]{touch-action:manipulation}
 /* general legend tidy */
 .trends-viz-svg .legend{ font-family:var(--mono); font-size:10px; }
 </style>
-<meta name="color-scheme" content="dark light"/>
-<meta name="theme-color" content="#07090C" media="(prefers-color-scheme: dark)"/>
-<meta name="theme-color" content="#F3F1EC" media="(prefers-color-scheme: light)"/>
+<meta name="color-scheme" content="light dark"/>
+<meta name="theme-color" content="#0F1114" media="(prefers-color-scheme: dark)"/>
+<meta name="theme-color" content="#FCFBF7" media="(prefers-color-scheme: light)"/>
 <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml"/>
 <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png"/>
 <link rel="canonical" href="https://hoops.dumbmodel.com/trends"/>

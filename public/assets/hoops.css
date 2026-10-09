@@ -11,7 +11,7 @@
   --paper: #f7f5f0;
   --surface: #ffffff;
   --ink: #14181d;
-  --ink-soft: #52514e;
+  --ink-soft: var(--fg-2);
   --ink-muted: #898781;
   --hairline: #e1e0d9;
   --panel-dark: #131312;
@@ -19,8 +19,8 @@
   /* Fargekart. These three are the categorical set for this app — 43 uses in
      this file, and the only place they are defined. Sampled from a Norwegian
      design shop; see vector-hub/assets/hub.css for the full rationale. */
-  --data-orange: #d8452a;  /* korall — Chimera / offense */
-  --data-blue: #1b45a7;    /* fjord — your guess / defense */
+  --data-orange: var(--data-terra);  /* terracotta — data voice 1 */
+  --data-blue: var(--marker-blue);    /* marker blue — data voice 2 */
   --hot: #006300;
   --warm: #7a5b00;
   --cold: #d03b3b;
@@ -28,10 +28,10 @@
   --identified-bg: #fff8e0;
   --silver: #8f96a3;          /* Mashup "close enough" (>=92%) win state — a second, distinct WON color, never red */
   --silver-bg: #eef1f4;
-  --data-purple: #9b6bc4;     /* lavendel — Archetype slot accent, a third color alongside orange/blue, not a status color */
+  --data-purple: var(--data-moss);     /* moss — collapsed to two data voices */
 
-  --shadow-block: 4px 4px 0 var(--ink);
-  --shadow-block-sm: 3px 3px 0 var(--ink);
+  --shadow-block: none;    /* drafting board: hairline frames, no block shadows */
+  --shadow-block-sm: none;
   --mono: ui-monospace, "IBM Plex Mono", "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
   --sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   --radius: 10px;
