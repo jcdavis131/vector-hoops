@@ -7,14 +7,22 @@ number-for-number), internal consistency (bucket counts sum, top1<=top5),
 and honesty floors (the shipped space must beat both named baselines on
 the truly held-out test split — the same doctrine as the promotion gate).
 
-Run:  python pipeline/test_eval_scoreboard.py     (exit 0 = all gates pass)
+Tracked assets only, so these run in CI. Until this was a pytest module CI
+collected nothing from it, and the freshness and reproduction gates were
+already failing on the committed assets.
+
+Run:  python -m pytest pipeline/test_eval_scoreboard.py
+      python pipeline/test_eval_scoreboard.py     (same tests; exit 0 = all gates pass)
 """
 
 from __future__ import annotations
 
 import json
+import os
 import sys
 from pathlib import Path
+
+import pytest
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "pipeline"))
@@ -26,14 +34,26 @@ from build_eval_scoreboard import (  # noqa: E402
     sha256_file,
 )
 
-FAILURES: list[str] = []
+# Measured on 90ef66a4: the board's embedding sha (2574ef58) is the v5 blob
+# a4918f09; the committed f32 is the reverted v6 blob from 2dc6ad78. The board
+# also predates the current vectors.json (sha 21f33221 vs 14872103), so a fresh
+# recompute pairs 9,888 rows where the board says 10,104. Restoring v5 alone
+# fixes the first; the board then needs a rebuild for the rest.
+STALE_BOARD = (
+    "[eval#0] eval_scoreboard.json describes the v5 embedding and an older vectors.json, "
+    "not the committed v6 f32 (2dc6ad78) and current vectors.json"
+)
 
 
-def check(cond: bool, msg: str) -> None:
-    tag = "PASS" if cond else "FAIL"
-    print(f"  [{tag}] {msg}")
-    if not cond:
-        FAILURES.append(msg)
+@pytest.fixture(scope="module")
+def board() -> dict:
+    assert OUT.exists(), f"{OUT.name} missing"
+    return json.loads(OUT.read_text(encoding="utf-8"))
+
+
+@pytest.fixture(scope="module")
+def fresh() -> dict:
+    return compute_scoreboard()
 
 
 def rates_ok(block: dict) -> bool:
@@ -50,10 +70,7 @@ def rates_ok(block: dict) -> bool:
     return ok
 
 
-def main() -> None:
-    print("schema")
-    check(OUT.exists(), f"{OUT.name} exists")
-    board = json.loads(OUT.read_text(encoding="utf-8"))
+def test_schema(board):
     for key in (
         "metric",
         "computed_at",
@@ -63,72 +80,59 @@ def main() -> None:
         "pair_accounting",
         "results",
     ):
-        check(key in board, f"key present: {key}")
-    check(
-        board.get("metric") == "held_out_adjacent_season_retrieval",
-        "metric name matches",
-    )
-    res = board["results"]
+        assert key in board, f"key missing: {key}"
+    assert board.get("metric") == "held_out_adjacent_season_retrieval"
     for key in ("mtnn", "baseline_transparent_14d", "baseline_random"):
-        check(key in res, f"results block present: {key}")
+        assert key in board["results"], f"results block missing: {key}"
 
-    print("freshness (hashes match the committed assets)")
-    check(
-        board["embedding_asset"]["sha256"] == sha256_file(EMB),
-        "embedding sha256 matches assets/mtnn_embeddings.f32",
-    )
-    check(
-        board["vectors_asset"]["sha256"] == sha256_file(VECTORS),
-        "vectors sha256 matches assets/vectors.json",
-    )
 
-    print("deterministic reproduction (full recompute from committed assets)")
-    fresh = compute_scoreboard()
-    check(
-        fresh["eligible_pairs"] == board["eligible_pairs"],
-        f"eligible_pairs reproduces ({board['eligible_pairs']})",
-    )
-    check(fresh["results"] == res, "every hit rate reproduces exactly")
-    check(
-        fresh["pair_accounting"] == board["pair_accounting"],
-        "pair accounting reproduces",
-    )
+@pytest.mark.xfail(strict=True, reason=STALE_BOARD)
+def test_embedding_hash_matches_the_committed_f32(board):
+    assert board["embedding_asset"]["sha256"] == sha256_file(EMB)
 
-    print("internal consistency")
-    n_pairs = board["eligible_pairs"]
-    check(n_pairs >= 9000, f"eligible pairs >= 9000 ({n_pairs})")
+
+@pytest.mark.xfail(strict=True, reason=STALE_BOARD)
+def test_vectors_hash_matches_the_committed_vectors_json(board):
+    assert board["vectors_asset"]["sha256"] == sha256_file(VECTORS)
+
+
+@pytest.mark.xfail(strict=True, reason=STALE_BOARD)
+def test_eligible_pairs_and_accounting_reproduce(board, fresh):
+    assert fresh["eligible_pairs"] == board["eligible_pairs"], (
+        f"recomputed {fresh['eligible_pairs']} eligible pairs, board says {board['eligible_pairs']}"
+    )
+    assert fresh["pair_accounting"] == board["pair_accounting"]
+
+
+@pytest.mark.xfail(strict=True, reason=STALE_BOARD)
+def test_every_hit_rate_reproduces_exactly(board, fresh):
+    assert fresh["results"] == board["results"]
+
+
+def test_internal_consistency(board):
+    res, n_pairs = board["results"], board["eligible_pairs"]
+    assert n_pairs >= 9000, f"eligible pairs {n_pairs}"
     for name in ("mtnn", "baseline_transparent_14d"):
         block = res[name]
-        check(rates_ok(block), f"{name}: 0 <= top1 <= top5 <= 1 in every bucket")
-        check(
-            sum(b["n"] for b in block["by_split"].values()) == n_pairs,
-            f"{name}: split ns sum to eligible pairs",
-        )
-        check(
-            sum(b["n"] for b in block["by_decade"].values()) == n_pairs,
-            f"{name}: decade ns sum to eligible pairs",
-        )
+        assert rates_ok(block), f"{name}: 0 <= top1 <= top5 <= 1 broken in some bucket"
+        assert sum(b["n"] for b in block["by_split"].values()) == n_pairs, f"{name}: split ns do not sum"
+        assert sum(b["n"] for b in block["by_decade"].values()) == n_pairs, f"{name}: decade ns do not sum"
 
-    print("honesty floors (held-out test split)")
+
+def test_honesty_floors_on_the_held_out_test_split(board):
+    res = board["results"]
     m_test = res["mtnn"]["by_split"].get("test", {})
     b_test = res["baseline_transparent_14d"]["by_split"].get("test", {})
     rnd = res["baseline_random"]
-    check(m_test.get("n", 0) >= 300, f"test split has >=300 pairs ({m_test.get('n')})")
-    check(
-        (m_test.get("top5") or 0) >= (b_test.get("top5") or 1) + 0.05,
-        "mtnn test top5 beats transparent 14-d by >= 0.05 (promotion doctrine)",
+    assert m_test.get("n", 0) >= 300, f"test split has {m_test.get('n')} pairs"
+    assert (m_test.get("top5") or 0) >= (b_test.get("top5") or 1) + 0.05, (
+        "mtnn test top5 does not beat transparent 14-d by >= 0.05 (promotion doctrine)"
     )
-    check(
-        (m_test.get("top5") or 0) >= 100 * rnd["top5"],
-        "mtnn test top5 beats random expectation by >= 100x",
-    )
-
-    print()
-    if FAILURES:
-        print(f"{len(FAILURES)} gate(s) FAILED")
-        sys.exit(1)
-    print("all eval-scoreboard gates passed")
+    assert (m_test.get("top5") or 0) >= 100 * rnd["top5"], "mtnn test top5 does not beat random by >= 100x"
 
 
 if __name__ == "__main__":
-    main()
+    # Script form for update_dataset.py, which reads only the exit code.
+    # --runxfail: a known defect still fails here, as it did before this was pytest.
+    os.environ.setdefault("HOOPS_REQUIRE_LOCAL_DATA", "1")
+    sys.exit(pytest.main([__file__, "-p", "no:cacheprovider", "--runxfail"]))
