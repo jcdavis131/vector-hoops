@@ -124,7 +124,9 @@ AUX_TARGETS = {
 #                    queries serve and no v1 number measures [critic#2].
 #   next_r2    0.15  the one forward-looking prediction, credited beyond
 #   next_mae   0.10  persistence. R2 weighs large misses, MAE typical ones.
-#   position   0.15  a label the trainer does not compute from its inputs.
+#   position   0.15  a label from outside the matrix (the listed positions
+#                    enrich_vectors joins), though height and weight are
+#                    inputs and predict it in part.
 #   archetype  0.10  held out and train-only labels, but still a function of
 #                    the 14 game inputs (nearest train centroid gets 1.0),
 #                    so it is weighted below position.
