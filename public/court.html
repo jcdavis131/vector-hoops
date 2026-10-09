@@ -6,21 +6,13 @@
 <title>Court Lab — Vector Hoops</title>
 <meta name="description" content="Shot charts, hex efficiency maps, zone charts and embedding twins for every tracked NBA season — drawn like a coach's clipboard.">
 <link rel="stylesheet" href="assets/shell.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=Inter:opsz,wght@14..32,400..700&display=swap">
+<link rel="stylesheet" href="/assets/atlas.css?v=2">
 <style>
-/* Drafting Board (§1): the court's native aesthetic. */
+/* Court Lab components — tokens inherited from atlas.css (the authority). */
 :root{
-  --board:#FCFBF7;
-  --ink:#232323;
-  --marker-black:#1A1A1A;
-  --marker-red:#E0483B;
-  --marker-blue:#2B6CE5;
-  --pencil:#9A9A94;
-  --grid:#E7E4DA;
-  --data-terra:#C17C60;
-  --data-moss:#8A9A8B;
-  --hi:rgba(255,235,130,.55);
-  --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
-  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,Helvetica,Arial,sans-serif;
+  --mono:var(--font-code);
+  --sans:var(--font-text);
 }
 html{background:var(--board);}
 body{
@@ -113,7 +105,7 @@ body{
 
 .son-card{
   display:flex;align-items:center;gap:10px;
-  background:var(--hi);border:1px solid var(--pencil);border-radius:6px;
+  background:var(--highlight);border:1px solid var(--pencil);border-radius:6px;
   padding:10px 14px;margin-top:12px;
 }
 .son-card[hidden]{display:none;}
@@ -130,7 +122,7 @@ body{
 .zone-table td{padding:7px 10px;border-bottom:1px solid var(--grid);}
 .zone-table td.pos{color:var(--data-moss);font-weight:700;}
 .zone-table td.neg{color:var(--data-terra);font-weight:700;}
-.zone-table tr[data-zone]:hover td{background:var(--hi);cursor:default;}
+.zone-table tr[data-zone]:hover td{background:var(--highlight);cursor:default;}
 .fineprint{font-family:var(--mono);font-size:11.5px;color:var(--pencil);margin:10px 0 0;}
 
 .twin-card{

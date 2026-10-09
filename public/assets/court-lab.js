@@ -9,14 +9,25 @@
 
   var D = window.VHCourtDraw;
 
-  var INK = '#232323';
-  var BOARD = '#FCFBF7';
-  var PENCIL = '#9A9A94';
-  var BLUE = '#2B6CE5';
-  var RED = '#E0483B';
-  var TERRA = '#C17C60';
-  var MOSS = '#8A9A8B';
-  var GLOW = 'rgba(255,235,130,.55)';
+  // Palette follows atlas.css tokens (light board + night-board dark variant).
+  var INK, BOARD, PENCIL, BLUE, RED, TERRA, MOSS, GLOW;
+  function cssVar(name, fallback) {
+    try {
+      var v = getComputedStyle(document.documentElement)
+        .getPropertyValue(name).trim();
+      return v || fallback;
+    } catch (e) { return fallback; }
+  }
+  function refreshPalette() {
+    INK = cssVar('--ink', '#232323');
+    BOARD = cssVar('--board', '#FCFBF7');
+    PENCIL = cssVar('--pencil', '#9A9A94');
+    BLUE = cssVar('--marker-blue', '#2B6CE5');
+    RED = cssVar('--marker-red', '#E0483B');
+    TERRA = cssVar('--data-terra', '#C17C60');
+    MOSS = cssVar('--data-moss', '#8A9A8B');
+    GLOW = cssVar('--highlight', 'rgba(255,235,130,.55)');
+  }
 
   var STORE_KEY = 'vh-court-lab-player';
   var DATA_URL = 'assets/shots.v1.json';
@@ -129,6 +140,7 @@
   function init() {
     var svg = $('court');
     if (!svg || !D) return;
+    refreshPalette();
     S.court = D.drawCourt(svg, {});
 
     wireTabs();
