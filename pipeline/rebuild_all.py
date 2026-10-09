@@ -64,7 +64,7 @@ embedding_v3.npz under this run's report: on the box, an 08-07 embedding
 under an 08-14 report [orchestration#0, health#0]. Now the run's four files
 land together in its run directory with a lineage block naming their
 sha256s, and promote.py checks them before anything is exported. With one
-seed, composite_score's CQS bar is baseline + 1.2, so a single refit will
+seed, composite_score's CQS bar is baseline + 1.2, so a single run will
 often be refused; --promote-force "<reason>" passes the reason to
 promote.py --force, which records it. A refused promotion stops the run at
 the promote step; promote.py --run <that run dir> --force can still promote
@@ -82,12 +82,19 @@ numbers are held out, where a final refit's are in-sample [training#0].
 --seed only when given; otherwise the recipe's values (or train_mtnn's
 defaults, batch 512 and seed 7) stand.
 
-The cost today: promote.py ships only final-refit runs, and needs a
-checkpoint, which ship's --val-every 0 --no-best-checkpoint never writes. So
-a default run trains, writes its bundle, and stops at the promote step;
---promote-force cannot pass either refusal. `--recipe legacy-v5-refit` is
-the old default if a refit has to ship before promote.py changes, and its
-metrics are in-sample. The climb measured on cuda; pass --device cuda.
+Ship what you measure (2026-10-09). A default run trains ship.json, writes
+its bundle (with --val-every 0 --no-best-checkpoint, train_mtnn keeps its
+final weights as the bundle's checkpoint) and promote.py ships it on its own
+held-out numbers. Until then promote.py shipped only final-refit runs and
+required a checkpoint ship never wrote, so a default run always stopped at
+the promote step. A legacy refit recipe (--recipe legacy-v5-refit, --v6)
+fits every row, so its numbers are in-sample and promote.py refuses it,
+--promote-force included, unless it is promoted with --selection-run, the
+select run of the same recipe and seed that measured it. This script does
+not pass one: such a run stops at the promote step, and
+`promote.py --run <its run dir> --selection-run <the select run dir>`
+followed by `--stage export` ships it. The climb measured on cuda; pass
+--device cuda.
 
 Selection does not happen here. Recipes are chosen in the herdmux climb
 (gpu/climb.py: paired seed panels against a measured baseline); this script
@@ -105,9 +112,9 @@ Usage:
   python pipeline/rebuild_all.py --list
   python pipeline/rebuild_all.py --dry-run
   python pipeline/rebuild_all.py --stage matrix
-  python pipeline/rebuild_all.py --device cuda          # ship; stops at promote today
-  python pipeline/rebuild_all.py --recipe legacy-v5-refit --promote-force "single-seed refit, reviewed by hand"
-  python pipeline/rebuild_all.py --v6 --device cuda
+  python pipeline/rebuild_all.py --device cuda          # ship: train, promote, export, verify
+  python pipeline/rebuild_all.py --device cuda --promote-force "single-seed run, reviewed by hand"
+  python pipeline/rebuild_all.py --v6 --device cuda     # stops at promote: needs --selection-run
   python pipeline/rebuild_all.py --stage export        # re-export the promoted bundle
   python pipeline/rebuild_all.py --from train_mtnn --to build_scoring_lite
   python pipeline/rebuild_all.py --refresh-context --stage matrix

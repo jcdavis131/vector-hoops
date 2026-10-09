@@ -51,15 +51,22 @@ def make_run(
     data: Path,
     run_id: str,
     *,
-    phase: str = "final-refit",
+    phase: str = "select",
     composite: dict | None = None,
     dim: int = DIM,
     centroid_dim: int | None = None,
     checkpoint: bool = True,
     seed: int = 0,
     deploy_mode: str | None = None,
+    args: dict | None = None,
 ) -> Path:
-    """A run directory as train_mtnn --run-dir leaves it, next to data/."""
+    """A run directory as train_mtnn --run-dir leaves it, next to data/.
+
+    phase 'select' fits the train split (5 of the 6 rows), 'final-refit' every
+    row, and the report and lineage say so as train_mtnn writes them. args
+    overrides the lineage's recorded train_mtnn arguments.
+    """
+    fit_rows = "all" if phase == "final-refit" else "train"
     run = data.parent / "runs" / run_id
     run.mkdir(parents=True)
     rng = np.random.default_rng(seed)
@@ -103,13 +110,28 @@ def make_run(
         "skill_hidden": 16,
         "fusion": "concat",
         "promote": {"ok": True, "reason": "set by the test"},
-        "deploy": {"mode": deploy_mode or "selection_fit_rows_all"},
+        "metrics_source": "in_sample_refit" if fit_rows == "all" else "selection_holdout",
+        "selection": {"fit_rows": fit_rows, "n_fit": 6 if fit_rows == "all" else 5},
+        "deploy": {"mode": deploy_mode or f"selection_fit_rows_{fit_rows}"},
         "lineage": {
             "schema": 1,
             "run_id": run_id,
             "phase": phase,
+            "fit_rows": fit_rows,
             "seed": 7,
-            "args": {"tower_width": 32, "tower_hidden": 160, "tower_blocks": 2, "fusion": "concat", "mlp_heads": True},
+            "args": {
+                "tower_width": 32,
+                "tower_hidden": 160,
+                "tower_blocks": 2,
+                "fusion": "concat",
+                "mlp_heads": True,
+                "epochs": 40,
+                "seed": 7,
+                "phase": phase,
+                "fit_rows": None,
+                "run_dir": f"pipeline/data/runs/{run_id}",
+                **(args or {}),
+            },
             "git": {"sha": "b" * 40},
             "env_versions": {"python": "test"},
             "matrix_fingerprint": aio.load_matrix_fingerprint(

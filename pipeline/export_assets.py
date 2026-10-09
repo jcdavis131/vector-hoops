@@ -165,6 +165,23 @@ def promoted_bundle() -> tuple[promote.PromotedBundle | None, str | None]:
         raise SystemExit(f"export_assets: {e}") from None
 
 
+def eval_protocol_label(bundle: promote.PromotedBundle | None) -> str | None:
+    """What the published MTNN metrics are, from the promoted manifest's metrics_source."""
+    if bundle is None:
+        return None
+    src = bundle.metrics_source
+    if src.get("kind") == "this_run":
+        return "held out: the promoted model trained on train-split seasons only; recall scored on test-split pairs"
+    if src.get("kind") == "selection_run":
+        return (
+            f"held out, from select run {src.get('run_id')}: the promoted model is its refit on all rows, "
+            "which was not itself scored on held-out rows"
+        )
+    # Promoted before the manifest recorded where its metrics came from: those
+    # bundles were final refits, trained on every row.
+    return "transductive (atlas) — trained on all rows; NOT held-out"
+
+
 def mtnn_promotion_eligible(report: dict | None) -> bool:
     """export_mtnn_embeddings' floors, applied to the promoted run's report."""
     if not report:
@@ -226,7 +243,9 @@ def main() -> None:
         steps_ok[script] = run(script, [py, f"pipeline/{script}"], required=False)
 
     bundle, not_promoted = promoted_bundle()
-    mtnn = bundle.report if bundle else None
+    # The report the bundle's metrics come from: for a refit, the select run
+    # promote.py --selection-run recorded, not the refit's in-sample report.
+    mtnn = bundle.metrics_report if bundle else None
     if bundle is None:
         print(f"== MTNN exports: skipped, {not_promoted}\n")
     elif not mtnn_promotion_eligible(mtnn):
@@ -269,12 +288,13 @@ def main() -> None:
         ),
         "mtnn_run_id": bundle.run_id if bundle else None,
         "mtnn_model": bundle.manifest.get("model") if bundle else None,
-        # The production model is an ATLAS: it trains on every charted row by
-        # design, so the two figures below are TRANSDUCTIVE -- the pairs they
-        # score were also training positives. Calling them "test" or "held-out"
-        # is how recall@10 came to read a perfect 1.0. The honest, inductive
-        # numbers (held-out PLAYERS, leak-free protocol) live beside them.
-        "mtnn_eval_protocol": "transductive (atlas) — trained on all rows; NOT held-out",
+        # Was always "transductive (atlas) — trained on all rows; NOT held-out".
+        # That described the final-refit bundles that used to ship, whose
+        # numbers were in-sample; calling them "test" is how recall@10 once
+        # read a perfect 1.0. A select run ships now, and a refit only on its
+        # select run's held-out numbers (promote.py), so the label comes from
+        # the manifest [eval#7]. The key names below are kept for readers.
+        "mtnn_eval_protocol": eval_protocol_label(bundle),
         # Copied from the promoted manifest, which promote.py copied from the
         # promoted run's report. Never the last run's report.
         "mtnn_transductive_recall_at_10": metrics.get("test_recall_at_10"),

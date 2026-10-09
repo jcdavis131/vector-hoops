@@ -24,7 +24,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 import artifact_io as aio  # noqa: E402
 import promote as pm  # noqa: E402
-from bundle_fixtures import DIM, PIDS, SEASONS, make_run, write_matrix  # noqa: E402
+from bundle_fixtures import DIM, PASSING, PIDS, SEASONS, make_run, write_matrix  # noqa: E402
 
 
 @pytest.fixture
@@ -76,8 +76,13 @@ def test_a_coherent_run_promotes_and_flips_current(data):
         "transparent_14d_test_recall_at_10": 0.2,
         "continuity_spread": 0.1,
     }
-    assert (man["rows"], man["dim"], man["phase"]) == (6, DIM, "final-refit")
+    assert (man["rows"], man["dim"], man["phase"], man["fit_rows"]) == (6, DIM, "select", "train")
     assert man["verdict"]["at_promotion"]["ok"] is True
+    # Ship what you measure: a select run carries its own held-out numbers.
+    src = man["metrics_source"]
+    assert (src["kind"], src["run_id"], src["fit_rows"]) == ("this_run", "r1", "train")
+    assert src["report_sha256"] == aio.sha256_file(run / "mtnn_report.json")
+    assert "refit_in_sample_metrics" not in man
 
     # The legacy paths vector-unified reads now hold the promoted bytes.
     for role in ("embedding", "centroids"):
@@ -156,12 +161,6 @@ def test_a_torn_bundle_is_refused(data):
     assert nothing_promoted(data)
 
 
-def test_a_select_phase_run_is_a_measurement_and_is_refused(data):
-    why = refused(make_run(data, "r1", phase="select"), force="even forced")
-    assert "phase 'select' is a measuring run" in why
-    assert nothing_promoted(data)
-
-
 def test_an_auto_run_is_refused_since_the_phase_was_removed(data):
     run = make_run(data, "r1", phase="auto", deploy_mode="final_refit_all_rows")
     assert "phase 'auto' was removed" in refused(run, force="even forced")
@@ -237,13 +236,118 @@ def test_cli_dry_run_writes_nothing_and_a_refusal_exits_2(data, capsys):
     run = make_run(data, "r1")
     assert pm.main(["--run", str(run), "--dry-run"]) == 0
     assert nothing_promoted(data)
-    assert pm.main(["--run", str(make_run(data, "r2", phase="select")), "--dry-run"]) == pm.EXIT_REFUSED
-    assert pm.main(["--run", str(make_run(data, "r3", phase="select"))]) == pm.EXIT_REFUSED
+    refit = make_run(data, "r2", phase="final-refit", seed=2)
+    assert pm.main(["--run", str(refit), "--dry-run"]) == pm.EXIT_REFUSED
+    assert pm.main(["--run", str(make_run(data, "r3", phase="final-refit"))]) == pm.EXIT_REFUSED
     assert "REFUSED" in capsys.readouterr().out
+    assert nothing_promoted(data)
+    assert pm.main(["--run", str(refit), "--selection-run", str(run), "--dry-run"]) == 0
     assert nothing_promoted(data)
     assert pm.main(["--status"]) == 1
     assert pm.main(["--run", str(run)]) == 0
     assert pm.main(["--status"]) == 0
+    assert "from this_run r1" in capsys.readouterr().out
+
+
+# --- a run that fit every row ships only on a select run's numbers [training#0] ----
+
+
+def test_a_refit_without_a_selection_run_is_refused_even_forced(data):
+    why = refused(make_run(data, "refit", phase="final-refit"), force="even forced")
+    assert "fit every row" in why and "--selection-run" in why
+    assert nothing_promoted(data)
+
+
+def test_a_refit_ships_on_its_selection_runs_held_out_metrics(data):
+    sel = make_run(data, "sel")
+    refit = make_run(data, "refit", phase="final-refit", seed=1, composite={**PASSING, "cqs": 99.0})
+    cur = pm.promote(refit, selection_run=sel, now="2026-10-09T00:00:01Z")
+    assert cur["run_id"] == "refit" and cur["verdict"]["ok"] is True
+
+    bundle = data / "promoted" / "refit"
+    man = json.loads((bundle / "manifest.json").read_text(encoding="utf-8"))
+    # The refit's weights; the select run's numbers, labelled as its.
+    assert man["files"]["embedding"]["sha256"] == aio.sha256_file(refit / "embedding_v3.npz")
+    assert man["metrics"]["cqs"] == 90.0 and man["refit_in_sample_metrics"]["cqs"] == 99.0
+    src = man["metrics_source"]
+    assert (src["kind"], src["run_id"], src["fit_rows"], src["metrics_source"]) == (
+        "selection_run",
+        "sel",
+        "train",
+        "selection_holdout",
+    )
+    sel_sha = aio.sha256_file(sel / "mtnn_report.json")
+    assert src["report_sha256"] == sel_sha == aio.sha256_file(bundle / "selection" / "mtnn_report.json")
+    assert man["files"]["selection_report"] == {
+        "name": "selection/mtnn_report.json",
+        "sha256": sel_sha,
+        "bytes": (sel / "mtnn_report.json").stat().st_size,
+    }
+    assert man["verdict"]["at_promotion"]["on_run"] == "sel"
+    assert (man["phase"], man["fit_rows"]) == ("final-refit", "all")
+
+    b = pm.load_promoted(check_matrix=True)
+    assert b.metrics["cqs"] == 90.0 and b.metrics_source["kind"] == "selection_run"
+    assert b.metrics_report["lineage"]["run_id"] == "sel" and b.report["lineage"]["run_id"] == "refit"
+
+    # The copied selection report is held to its sha like every other file.
+    (bundle / "selection" / "mtnn_report.json").write_text("{}", encoding="utf-8")
+    with pytest.raises(pm.BundleError, match=r"mtnn_report\.json: sha256 differs"):
+        pm.load_promoted()
+
+
+def test_the_verdict_is_the_selection_runs_and_force_still_applies(data):
+    sel = make_run(data, "sel", composite={"cqs": 50.0, "test_recall_at_10": 0.9, "purity_at_20": 0.8})
+    refit = make_run(data, "refit", phase="final-refit", seed=1)
+    assert "should_promote: CQS 50.00 < promote bar" in refused(refit, selection_run=sel)
+    pm.promote(refit, selection_run=sel, force="operator accepts the 1-seed bar")
+    man = json.loads((data / "promoted" / "refit" / "manifest.json").read_text(encoding="utf-8"))
+    assert man["forced"] is True and man["metrics"]["cqs"] == 50.0
+
+
+@pytest.mark.parametrize(
+    ("make_sel", "message"),
+    [
+        (lambda d: make_run(d, "sel", phase="final-refit"), "Its metrics have to be held out"),
+        (lambda d: make_run(d, "sel", args={"seed": 8}), "trained another recipe than this run (seed 8 vs 7)"),
+        (lambda d: make_run(d, "sel", args={"epochs": 80}), "epochs 80 vs 40"),
+        (lambda d: d.parent / "empty", "no mtnn_report.json there"),
+    ],
+)
+def test_a_selection_run_that_does_not_vouch_for_the_refit_is_refused_even_forced(data, make_sel, message):
+    sel = make_sel(data)
+    refit = make_run(data, "refit", phase="final-refit", seed=1)
+    why = refused(refit, selection_run=sel, force="even forced")
+    assert message in why, why
+    assert nothing_promoted(data)
+
+
+def test_a_selection_run_may_differ_in_device_validation_and_checkpointing(data):
+    sel = make_run(data, "sel", args={"device": "cuda", "val_every": 0, "no_best_checkpoint": True})
+    refit = make_run(data, "refit", phase="final-refit", seed=1, args={"device": "cpu", "val_every": 10})
+    assert pm.promote(refit, selection_run=sel)["run_id"] == "refit"
+
+
+def test_a_selection_run_on_another_matrix_is_refused(data):
+    write_matrix(data, shift=0.5)
+    sel = make_run(data, "sel")
+    write_matrix(data)
+    why = refused(make_run(data, "refit", phase="final-refit", seed=1), selection_run=sel, force="even forced")
+    assert "trained on another matrix than this run" in why and "values_sha256" in why
+
+
+def test_a_select_run_takes_no_selection_run(data):
+    why = refused(make_run(data, "r1"), selection_run=make_run(data, "r0", seed=1), force="even forced")
+    assert "--selection-run is for a run that fit every row" in why
+
+
+def test_rolling_back_to_a_refit_bundle_uses_its_own_copy_of_the_selection_report(data):
+    pm.promote(make_run(data, "refit", phase="final-refit", seed=1), selection_run=make_run(data, "sel"))
+    pm.promote(make_run(data, "other", seed=2), now="2026-10-09T00:00:09Z")
+    bundle = data / "promoted" / "refit"
+    assert "--selection-run" in refused(bundle)
+    cur = pm.promote(bundle, selection_run=bundle / "selection", now="2026-10-09T00:00:10Z")
+    assert (cur["run_id"], cur["previous"]) == ("refit", "other")
 
 
 # --- the exporters' loader -------------------------------------------------------

@@ -198,6 +198,28 @@ def test_export_assets_skips_with_nothing_promoted_and_stops_on_a_broken_bundle(
         ea.promoted_bundle()
 
 
+def test_export_assets_labels_and_gates_on_the_metrics_the_manifest_carries(env):
+    """[eval#7] The label was hard-coded "transductive"; a select run is held out.
+    For a refit, the export floors read the select run's report, not the refit's."""
+    data, _ = env
+    assert ea.eval_protocol_label(None) is None
+    pm.promote(make_run(data, "sel"))
+    b = pm.load_promoted()
+    assert ea.eval_protocol_label(b).startswith("held out: ")
+    assert b.metrics_report is b.report
+
+    failing = {"test": {"recall_at_10_mtnn": 0.1, "recall_at_10_transparent_14d": 0.2}}
+    refit = make_run(data, "refit", phase="final-refit", seed=1)
+    rep = json.loads((refit / "mtnn_report.json").read_text(encoding="utf-8"))
+    rep["held_out_recall"] = failing  # in-sample numbers that would fail the floors
+    (refit / "mtnn_report.json").write_text(json.dumps(rep), encoding="utf-8")
+    pm.promote(refit, selection_run=data.parent / "runs" / "sel")
+    b = pm.load_promoted()
+    assert ea.eval_protocol_label(b).startswith("held out, from select run sel")
+    assert not ea.mtnn_promotion_eligible(b.report)
+    assert ea.mtnn_promotion_eligible(b.metrics_report)
+
+
 def test_metric_keys_are_the_ones_the_served_meta_carries():
     assert set(sm.METRIC_KEYS) <= set(sm.META_KEYS)
     assert set(pm.metrics_from_report({})) == set(sm.METRIC_KEYS)

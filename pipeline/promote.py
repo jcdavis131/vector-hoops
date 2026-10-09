@@ -38,21 +38,47 @@ What a promotion checks (`--run <run_dir>`, a directory train_mtnn.py
   - the matrix fingerprint the run recorded equals the fingerprint of the
     current pipeline/data/train_matrix.npz + feature_manifest.json. The viz
     and Jacobian exporters read the current matrix next to the model;
-  - the run is a shipping phase: final-refit. A select-phase run is a
-    measurement (loss on the train split only). --phase auto no longer
-    exists, and a run directory that recorded it is refused.
-Then composite_score.should_promote(report), re-run here rather than read
-from report["promote"], so the bar is the one in composite_score now. A run
-that fails it is refused unless --force "<reason>" is given, and the reason
-goes into the manifest and CURRENT.json. With one seed the CQS bar is the
-baseline + 2 x seed sd (77.74 + 1.2), so a single refit often needs --force;
-that is the operator's call, and it is recorded rather than silent
-[orchestration#0 verifier note].
+  - its metrics are held out, or come from a select run that held them out
+    (the policy below). --phase auto no longer exists, and a run directory
+    that recorded it is refused.
+Then composite_score.should_promote on the report whose metrics the bundle
+will carry, re-run here rather than read from report["promote"], so the bar
+is the one in composite_score now. A run that fails it is refused unless
+--force "<reason>" is given, and the reason goes into the manifest and
+CURRENT.json. With one seed the CQS bar is the baseline + 2 x seed sd
+(77.74 + 1.2), so a single run often needs --force; that is the operator's
+call, and it is recorded rather than silent [orchestration#0 verifier note].
+
+Which runs ship: ship what you measure (2026-10-09).
+  - A select run (lineage fit_rows 'train': the loss saw train-split rows
+    only, start year <= 2021) ships on its own held-out numbers.
+    pipeline/recipes/ship.json is such a run with the climb's measured flags,
+    so the model that ships is a model of the recipe the climb measured.
+    With --run-dir its final weights are its checkpoint when it kept no best
+    one (train_mtnn, 7d5ad1f8).
+  - A run whose loss saw every row (fit_rows 'all': --phase final-refit) has
+    no held-out numbers: 948 val and 991 test rows were training rows, its
+    report says metrics_source 'in_sample_refit', and should_promote refuses
+    it [training#0]. It ships only with --selection-run DIR, the select run
+    of the same recipe whose held-out metrics justify it. That run must have
+    fit train-split rows only, recorded the same matrix fingerprint, and been
+    trained with the same arguments except SELECTION_FREE_ARGS (seed and
+    epochs included: the refit repeats the measured run on every row).
+    should_promote runs on its report. The manifest's metrics are copied
+    from it, metrics_source names it (run id, report sha256), the refit's
+    own in-sample numbers are kept apart under refit_in_sample_metrics, and
+    its report is copied into the bundle as selection/mtnn_report.json so
+    the evidence stays with the model.
+  - Until 2026-10-09 it was the other way round: only final-refit (or auto)
+    runs shipped, a select run was refused as "a measurement", and the
+    refit's in-sample numbers were copied into the manifest as the model's.
 
 What it writes:
   pipeline/data/promoted/<run_id>/   the four files + manifest.json (shas,
-                                     matrix fingerprint, metrics copied from
-                                     the report, verdicts, force reason, git)
+                                     matrix fingerprint, metrics and where
+                                     they come from, verdicts, force reason,
+                                     git), + selection/mtnn_report.json for
+                                     a refit
   pipeline/data/promoted/CURRENT.json  which bundle is promoted; replaced
                                      atomically, after the bundle is complete
   pipeline/data/embedding_v3.npz, mtnn_centroids.npz
@@ -61,7 +87,9 @@ What it writes:
                                      load_encoders.py reads embedding_v3.npz)
 The newest KEEP bundles are kept, and the current one always. Re-promoting
 a bundle that is already in promoted/ (a rollback: --run
-pipeline/data/promoted/<run_id>) only flips CURRENT.json.
+pipeline/data/promoted/<run_id>, plus --selection-run
+pipeline/data/promoted/<run_id>/selection for a refit) only flips
+CURRENT.json.
 
 Readers. Every exporter loads the model through load_promoted(), which
 re-hashes every file in the current bundle and refuses a missing, edited or
@@ -71,6 +99,7 @@ Usage:
   python pipeline/promote.py --run pipeline/data/runs/<run_id>
   python pipeline/promote.py --run pipeline/data/runs/<run_id> --dry-run
   python pipeline/promote.py --run pipeline/data/runs/<run_id> --force "why"
+  python pipeline/promote.py --run pipeline/data/runs/<refit> --selection-run pipeline/data/runs/<select>
   python pipeline/promote.py --status
 """
 
@@ -110,8 +139,32 @@ from served_model import METRIC_KEYS  # noqa: E402
 DATA_DIR = ROOT / "pipeline" / "data"
 SCHEMA = 1
 KEEP = 5
-SHIPPING_PHASES = ("final-refit",)
 REQUIRED = ("checkpoint", "embedding", "centroids")
+# A refit's bundle keeps the report of the select run that vouched for it.
+SELECTION_ROLE = "selection_report"
+SELECTION_DIR = "selection"
+# train_mtnn arguments a --selection-run may differ in from the refit it
+# vouches for. phase and fit_rows are the point of the refit. run_dir,
+# write_artifacts and recipe say where files went and where the defaults
+# came from (the values themselves are compared). device changes reduction
+# order, not the recipe. val_every, no_best_checkpoint and checkpoint_metric
+# decide whether and how an epoch is restored, and a fit_rows 'all' run
+# never restores one (mtnn_loop.checkpoint_selection); under protocol v1,
+# val_every also shifts the global RNG, so the trajectory, not the recipe.
+# Everything else, seed and epochs included, has to match.
+SELECTION_FREE_ARGS = frozenset(
+    {
+        "phase",
+        "fit_rows",
+        "run_dir",
+        "write_artifacts",
+        "recipe",
+        "device",
+        "val_every",
+        "no_best_checkpoint",
+        "checkpoint_metric",
+    }
+)
 # Refreshed in pipeline/data from the promoted bundle, for readers outside
 # this repo. Not the checkpoint or the report: those are last-run files.
 LEGACY = ("embedding", "centroids")
@@ -174,19 +227,41 @@ def metrics_from_report(report: dict[str, Any]) -> dict[str, Any]:
 
 
 @dataclass
+class SelectionRun:
+    """The select run whose held-out metrics a fit_rows 'all' run ships on."""
+
+    dir: Path
+    report_path: Path
+    report: dict[str, Any]
+    report_sha256: str
+
+    @property
+    def run_id(self) -> str | None:
+        return (self.report.get("lineage") or {}).get("run_id")
+
+
+@dataclass
 class RunCheck:
     run_dir: Path
     report: dict[str, Any] | None = None
     # Integrity problems. Any one refuses the run; --force does not apply.
     problems: list[str] = field(default_factory=list)
-    # composite_score.should_promote at promotion time, when the report is readable.
+    # composite_score.should_promote at promotion time, on metrics_report.
     verdict: tuple[bool, str] | None = None
     rows: int | None = None
     dim: int | None = None
+    fit_rows: str | None = None
+    # Set for a fit_rows 'all' run promoted with --selection-run.
+    selection: SelectionRun | None = None
 
     @property
     def lineage(self) -> dict[str, Any]:
         return (self.report or {}).get("lineage") or {}
+
+    @property
+    def metrics_report(self) -> dict[str, Any] | None:
+        """The report whose numbers the bundle carries: the selection run's for a refit."""
+        return self.selection.report if self.selection is not None else self.report
 
 
 def _check_contents(chk: RunCheck, report: dict[str, Any], fp: dict[str, Any]) -> None:
@@ -220,7 +295,52 @@ def _check_contents(chk: RunCheck, report: dict[str, Any], fp: dict[str, Any]) -
         chk.problems.append(f"centroids have shape {c_shape}, not (k, {chk.dim})")
 
 
-def check_run(run_dir: str | os.PathLike[str], *, data_dir: Path | None = None) -> RunCheck:
+def _check_selection(chk: RunCheck, selection_run: str | os.PathLike[str]) -> None:
+    """The --selection-run for a fit_rows 'all' run: a held-out run of the same recipe on the same matrix."""
+    sel_dir = Path(selection_run).resolve()
+    path = sel_dir / BUNDLE_FILES["report"]
+    where = f"--selection-run {sel_dir}"
+    if not path.exists():
+        chk.problems.append(f"{where}: no {BUNDLE_FILES['report']} there")
+        return
+    try:
+        sel = _read_json(path)
+    except (OSError, ValueError) as e:
+        chk.problems.append(f"{where}: {path.name} unreadable ({e})")
+        return
+    sel_lin = sel.get("lineage")
+    if not isinstance(sel_lin, dict) or sel_lin.get("schema") != SCHEMA:
+        chk.problems.append(f"{where}: its report has no lineage block (schema {SCHEMA})")
+        return
+    bad = len(chk.problems)
+    if sel_lin.get("fit_rows") != "train" or cqs.in_sample_reason(sel) is not None:
+        chk.problems.append(
+            f"{where}: fit_rows {sel_lin.get('fit_rows')!r}, metrics_source {sel.get('metrics_source')!r}. "
+            "Its metrics have to be held out: a select run, loss on train-split rows only"
+        )
+    diffs = fingerprint_differences(
+        sel_lin.get("matrix_fingerprint") or {}, chk.lineage.get("matrix_fingerprint") or {}
+    )
+    if diffs:
+        chk.problems.append(f"{where} trained on another matrix than this run ({'; '.join(diffs)})")
+    a, b = sel_lin.get("args") or {}, chk.lineage.get("args") or {}
+    differ = sorted(k for k in set(a) | set(b) if k not in SELECTION_FREE_ARGS and a.get(k) != b.get(k))
+    if differ:
+        shown = ", ".join(f"{k} {a.get(k)!r} vs {b.get(k)!r}" for k in differ[:8])
+        chk.problems.append(
+            f"{where} trained another recipe than this run ({shown}{', ...' if len(differ) > 8 else ''}); "
+            "its held-out numbers do not describe this model"
+        )
+    if len(chk.problems) == bad:
+        chk.selection = SelectionRun(sel_dir, path, sel, sha256_file(path))
+
+
+def check_run(
+    run_dir: str | os.PathLike[str],
+    *,
+    selection_run: str | os.PathLike[str] | None = None,
+    data_dir: Path | None = None,
+) -> RunCheck:
     """Everything promote() refuses on, without writing anything."""
     data = _data(data_dir)
     run_dir = Path(run_dir).resolve()
@@ -253,17 +373,31 @@ def check_run(run_dir: str | os.PathLike[str], *, data_dir: Path | None = None) 
     if not isinstance(run_id, str) or not _RUN_ID.match(run_id):
         chk.problems.append(f"lineage.run_id {run_id!r} is not a usable directory name")
 
-    phase = lin.get("phase")
-    if phase == "auto":
+    # Ship what you measure (module docstring): a select run on its own
+    # held-out numbers, a fit_rows 'all' run only on a select run's.
+    chk.fit_rows = lin.get("fit_rows")
+    if lin.get("phase") == "auto":
         chk.problems.append(
             "phase 'auto' was removed from train_mtnn.py (2026-10-09): its refit could not finish and "
             "trained 7 of 18 loss terms [training#10]"
         )
-    elif phase not in SHIPPING_PHASES:
-        chk.problems.append(
-            f"phase {phase!r} is a measuring run (loss on the train split, scored on held-out rows), "
-            "not a model to ship; promote a --phase final-refit run"
-        )
+    elif chk.fit_rows == "train":
+        if selection_run is not None:
+            chk.problems.append(
+                "--selection-run is for a run that fit every row; this run fit train-split rows only, "
+                "so its own held-out numbers are the evidence"
+            )
+    elif chk.fit_rows == "all":
+        if selection_run is None:
+            chk.problems.append(
+                "this run fit every row (fit_rows 'all', --phase final-refit), val and test included, so every "
+                "metric in its report is in-sample [training#0]. Promote it with --selection-run <the select run "
+                "of the same recipe whose held-out metrics justify it>, or promote that select run itself"
+            )
+        else:
+            _check_selection(chk, selection_run)
+    else:
+        chk.problems.append(f"lineage.fit_rows {chk.fit_rows!r}: cannot tell whether the run's metrics are held out")
 
     artifacts = lin.get("artifacts") or {}
     for role in REQUIRED:
@@ -311,8 +445,10 @@ def check_run(run_dir: str | os.PathLike[str], *, data_dir: Path | None = None) 
                 "inputs the model never saw: train on this matrix, or rebuild the one the run used"
             )
 
+    # On the report whose numbers the bundle will carry: for a refit, the
+    # selection run's. The refit's own report is in-sample and always fails.
     try:
-        chk.verdict = cqs.should_promote(report)
+        chk.verdict = cqs.should_promote(chk.metrics_report or report)
     except (KeyError, TypeError, ValueError) as e:
         chk.verdict = (False, f"should_promote could not read the report ({type(e).__name__}: {e})")
     return chk
@@ -352,9 +488,37 @@ def prune(promoted: Path, *, keep: int, protect: set[str]) -> list[str]:
     return removed
 
 
+def metrics_source(chk: RunCheck, report_sha256: str) -> dict[str, Any]:
+    """Where the manifest's metrics come from, written next to them."""
+    sel = chk.selection
+    if sel is None:
+        return {
+            "kind": "this_run",
+            "run_id": chk.lineage.get("run_id"),
+            "report_sha256": report_sha256,
+            "fit_rows": chk.fit_rows,
+            "metrics_source": (chk.report or {}).get("metrics_source"),
+            "note": "held out: this run's loss saw train-split rows only, and its test recall is scored on "
+            "test-split pairs. See the report's composite.component_rows for the components scored on all rows.",
+        }
+    return {
+        "kind": "selection_run",
+        "run_id": sel.run_id,
+        "report_sha256": sel.report_sha256,
+        "report": f"{SELECTION_DIR}/{BUNDLE_FILES['report']}",
+        "source_run_dir": display_path(sel.dir, ROOT),
+        "fit_rows": (sel.report.get("lineage") or {}).get("fit_rows"),
+        "metrics_source": sel.report.get("metrics_source"),
+        "note": "held out, by the select run this model repeats on every row. The shipped weights also trained "
+        "on the val and test rows and were never scored on held-out rows; their in-sample numbers are "
+        "refit_in_sample_metrics.",
+    }
+
+
 def promote(
     run_dir: str | os.PathLike[str],
     *,
+    selection_run: str | os.PathLike[str] | None = None,
     force: str | None = None,
     keep: int = KEEP,
     data_dir: Path | None = None,
@@ -366,7 +530,7 @@ def promote(
         raise PromotionRefusedError(["--force needs a reason; it is recorded in the manifest"])
     if keep < 1:
         raise PromotionRefusedError([f"--keep {keep}: at least the promoted bundle has to stay"])
-    chk = check_run(run_dir, data_dir=data)
+    chk = check_run(run_dir, selection_run=selection_run, data_dir=data)
     problems = list(chk.problems)
     ok, why = chk.verdict if chk.verdict is not None else (False, "not evaluated")
     if chk.verdict is not None and not ok and force is None:
@@ -385,8 +549,14 @@ def promote(
     promoted = data / "promoted"
     promoted.mkdir(parents=True, exist_ok=True)
     dest = promoted / run_id
-    sources = {role: run_path / BUNDLE_FILES[role] for role in (*REQUIRED, "report")}
+    names = {role: BUNDLE_FILES[role] for role in (*REQUIRED, "report")}
+    sources = {role: run_path / name for role, name in names.items()}
+    if chk.selection is not None:
+        names[SELECTION_ROLE] = f"{SELECTION_DIR}/{BUNDLE_FILES['report']}"
+        sources[SELECTION_ROLE] = chk.selection.report_path
     shas = {role: sha256_file(p) for role, p in sources.items()}
+    if chk.selection is not None and shas[SELECTION_ROLE] != chk.selection.report_sha256:
+        raise PromotionRefusedError([f"{chk.selection.report_path} changed while it was being checked"])
 
     if dest.exists():
         try:
@@ -404,18 +574,30 @@ def promote(
             "promoted_at": stamp,
             "source_run_dir": display_path(run_path, ROOT),
             "files": {
-                role: {"name": BUNDLE_FILES[role], "sha256": shas[role], "bytes": p.stat().st_size}
+                role: {"name": names[role], "sha256": shas[role], "bytes": p.stat().st_size}
                 for role, p in sources.items()
             },
             "matrix_fingerprint": lin.get("matrix_fingerprint"),
-            "metrics": metrics_from_report(report),
+            # Held-out numbers only: this run's, or for a refit its selection
+            # run's (metrics_source says which).
+            "metrics": metrics_from_report(chk.metrics_report or report),
+            "metrics_source": metrics_source(chk, shas["report"]),
+            **({"refit_in_sample_metrics": metrics_from_report(report)} if chk.selection is not None else {}),
             "model": report.get("model"),
             "trained": report.get("trained"),
             "rows": chk.rows,
             "dim": chk.dim,
             "phase": lin.get("phase"),
+            "fit_rows": chk.fit_rows,
             "deploy_mode": (report.get("deploy") or {}).get("mode"),
-            "verdict": {"at_training": report.get("promote"), "at_promotion": {"ok": ok, "reason": why}},
+            "verdict": {
+                "at_training": report.get("promote"),
+                "at_promotion": {
+                    "ok": ok,
+                    "reason": why,
+                    "on_run": (chk.selection.run_id if chk.selection is not None else run_id),
+                },
+            },
             "forced": force is not None,
             "force_reason": force,
             "train_git": lin.get("git"),
@@ -427,7 +609,8 @@ def promote(
         tmp.mkdir()
         try:
             for role, src in sources.items():
-                dst = tmp / BUNDLE_FILES[role]
+                dst = tmp / names[role]
+                dst.parent.mkdir(parents=True, exist_ok=True)
                 shutil.copyfile(src, dst)
                 if sha256_file(dst) != shas[role]:
                     raise PromotionRefusedError([f"{src} changed while it was being copied"])
@@ -495,6 +678,20 @@ class PromotedBundle:
     @property
     def metrics(self) -> dict[str, Any]:
         return dict(self.manifest.get("metrics") or {})
+
+    @property
+    def metrics_source(self) -> dict[str, Any]:
+        """Where metrics came from (promote.metrics_source); empty for a bundle promoted before it was recorded."""
+        return dict(self.manifest.get("metrics_source") or {})
+
+    @property
+    def metrics_report(self) -> dict[str, Any]:
+        """The report the metrics were copied from: the selection run's for a refit, else the bundle's own.
+
+        Its sha256 was checked against the manifest by load_promoted.
+        """
+        rec = (self.manifest.get("files") or {}).get(SELECTION_ROLE)
+        return _read_json(self.dir / str(rec["name"])) if rec else self.report
 
     def stamp(self) -> dict[str, Any]:
         """What an exported file records about the bundle it came from."""
@@ -584,6 +781,12 @@ def main(argv: Sequence[str] | None = None) -> int:
     what = ap.add_mutually_exclusive_group(required=True)
     what.add_argument("--run", metavar="RUN_DIR", help="a directory train_mtnn.py --run-dir wrote")
     what.add_argument("--status", action="store_true", help="verify and describe the current promoted bundle")
+    ap.add_argument(
+        "--selection-run",
+        metavar="DIR",
+        help="for a run that fit every row (--phase final-refit): the select run of the same recipe whose "
+        "held-out metrics justify it; its report is checked, copied into the bundle and its metrics used",
+    )
     ap.add_argument("--force", metavar="REASON", help="promote although should_promote says no; REASON is recorded")
     ap.add_argument("--keep", type=int, default=KEEP, help=f"promoted bundles to keep (default {KEEP})")
     ap.add_argument("--dry-run", action="store_true", help="run every check, write nothing")
@@ -597,12 +800,15 @@ def main(argv: Sequence[str] | None = None) -> int:
             return 1
         print(f"promoted {b.run_id} ({b.manifest.get('model')}), {b.manifest.get('rows')} x {b.manifest.get('dim')}")
         print(f"  promoted_at {b.current.get('promoted_at')}, forced {b.current.get('forced')}")
-        print(f"  metrics {json.dumps(b.metrics)}")
+        print(
+            f"  metrics {json.dumps(b.metrics)} from {b.metrics_source.get('kind', 'this_run')} "
+            f"{b.metrics_source.get('run_id', b.run_id)}"
+        )
         print("  every file matches its manifest; the current train_matrix.npz is the one it trained on")
         return 0
 
     if args.dry_run:
-        chk = check_run(args.run)
+        chk = check_run(args.run, selection_run=args.selection_run)
         ok, why = chk.verdict if chk.verdict is not None else (False, "not evaluated")
         problems = list(chk.problems)
         if chk.verdict is not None and not ok and args.force is None:
@@ -614,7 +820,7 @@ def main(argv: Sequence[str] | None = None) -> int:
         return 0
 
     try:
-        current = promote(args.run, force=args.force, keep=args.keep)
+        current = promote(args.run, selection_run=args.selection_run, force=args.force, keep=args.keep)
     except PromotionRefusedError as e:
         _print_problems(e.problems)
         return EXIT_REFUSED
