@@ -86,3 +86,29 @@ jobs:
       # this site's pages: 25 stale here against 24 on any local run.
       - name: Asset cache tokens are current
         run: python scripts/stamp_assets.py --check
+
+  # Is the MTNN bundle the site serves one model that came through
+  # pipeline/promote.py and export_mtnn_embeddings.py? In assets/ and
+  # public/assets/: f32 bytes == rows*dim*4, meta keys are the exporter's,
+  # meta rows/dim/run_id/metrics equal assets/mtnn_lineage.json's, the f32's
+  # sha256 is the one the lineage names, vectors.json's (pid, season) rows
+  # hash to the keys it was exported against, and the sidecars carry the same
+  # run id. Nothing checked any of this: provenance_gate.py compares dims and
+  # the file size only.
+  #
+  # This job is RED on purpose, and stays red until the served bundle is
+  # re-promoted through pipeline/promote.py and re-exported by
+  # rebuild_all.py's export stage (then scripts/sync_public.py). The committed
+  # bundle is the 2dc6ad78 model, blob 09923d98 (test top-5 retrieval 0.035
+  # against 0.749 for the v5 blob it replaced), with hand-typed metrics
+  # (composite 0.85, top1_790 0.55) and no lineage [eval#0]. It is its own job,
+  # not a step above and not in `make ci`, so the offline build keeps meaning
+  # what it says while this one is red. Stdlib only, so no install step.
+  served-model:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.11'}
+      - name: Served model is one promoted, exported bundle
+        run: python scripts/check_served_model.py

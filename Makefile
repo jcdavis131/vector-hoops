@@ -63,6 +63,9 @@ lint:
 # green stops meaning anything -- which is the failure this whole file just had.
 # Same pytest selection as CI: local_data tests are deselected because a runner
 # has no pipeline/data. `make eval` is the one that runs them.
+# Not here, on purpose: ci.yml's served-model job (scripts/check_served_model.py).
+# It is red until the served bundle is re-promoted, and a target that is
+# always red stops telling you anything.
 ci: offline
 	$(PYTHON) -m pytest -m "not local_data"
 	$(PYTHON) scripts/stamp_assets.py --check
