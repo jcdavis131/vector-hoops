@@ -79,6 +79,11 @@
     <p class="lb-you-line" id="lb-you-line" hidden></p>
   </div>
 
+  <div class="lb-board-card" id="lb-twinsets-card" style="margin-top:16px">
+    <div class="lb-board-head"><span class="lb-title">Twin Sets</span><span class="lb-note">collect era-twins by solving Daily Court</span></div>
+    <div id="twin-sets" style="padding:12px 14px"></div>
+  </div>
+
 </main>
 
 <footer class="site-footer">
@@ -91,7 +96,9 @@
 <script src="assets/site-nav.js" defer></script>
 <script src="assets/pwa-install.js"></script>
 <script src="assets/leaderboard.js" defer></script>
+<script src="assets/game-mechanics.js?v=1" defer></script>
 <script src="assets/nux.js" defer></script>
+<script>window.addEventListener('DOMContentLoaded',function(){ try{ if(window.VHGameMechanics) VHGameMechanics.renderTwinSets('#twin-sets'); }catch(e){} });</script>
 <script>if('serviceWorker' in navigator){window.addEventListener('load',()=>{navigator.serviceWorker.register('/sw.js').catch(()=>{})})}</script>
 </body>
 </html>
