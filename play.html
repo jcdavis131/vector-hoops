@@ -148,18 +148,33 @@ button,.input{min-height:44px}
 /* ---- Play: atlas refinement layer ---- */
 .game-head{ padding-top: clamp(40px, 7vw, 88px); padding-bottom: 8px; max-width: 1000px; }
 .game-head .title-card__title{ font-size: clamp(34px, 5.4vw, 64px); }
-.game-head__bar{ width: 100%; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 16px; margin-top: 18px; padding-top: 18px; border-top: 1px solid var(--line); }
+.game-head__bar{ width: 100%; display: grid; grid-template-columns: 1fr; justify-items: center; row-gap: 10px; margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--line); }
+@media (min-width: 720px){
+  .game-head__bar{ grid-template-columns: 1fr auto 1fr; justify-items: stretch; align-items: center; gap: 16px; margin-top: 18px; padding-top: 18px; }
+}
 .game-head__side{ display: flex; gap: 6px; flex-wrap: wrap; }
 .game-head__side--end{ justify-content: flex-end; }
 .game-status-bar{ display: flex; flex-direction: column; align-items: center; gap: 10px; margin: 0; padding: 0; border: 0; }
 .progress-dot{ width: 28px; height: 28px; font-family: var(--font-display); font-size: 11px; font-weight: 700; color: var(--fg-3); background: transparent; border: 1px solid var(--line-2); }
 .progress-dot.is-done{ background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
 .progress-dot.is-current{ background: var(--accent-wash); border-color: var(--accent-line); color: var(--accent); }
-@media (max-width: 720px){
+@media (max-width: 719px){
   #map-legend{ display: none; }
-  .game-head__bar{ grid-template-columns: 1fr 1fr; }
-  .game-status-bar{ grid-column: 1 / -1; grid-row: 1; }
+  /* compact hero — the guess card starts within the first screenful */
+  #game-header{ padding: 8px 12px; }
+  .game-head .title-card__title{ font-size: clamp(28px, 8vw, 34px); }
+  .game-head__bar{ margin-top: 8px; padding-top: 10px; }
+  /* map yields screen space so the guess card stays in reach */
+  #map-wrap{ min-height: 320px; }
+  /* thumb-zone touch targets */
+  .progress-dot{ width: 32px; height: 32px; }
+  .tab-pills button, .mode-tab{ min-height: 44px; }
+  .vh-lensbar .pill{ min-height: 44px; }
+  #game-header button.pill{ min-height: 44px; }
+  .vh-sheet__close{ width: 44px; height: 44px; }
 }
+/* thumb zone: 16px kills iOS zoom-on-focus; 48px is a true thumb target */
+#guess-input{ font-size: 16px; min-height: 48px; }
 #mode-selector{ display: flex; flex-direction: column; align-items: center; gap: 12px; background: transparent; border: 0; padding: 8px 0; }
 #mode-selector .mode-tabs{ width: auto; max-width: 100%; }
 .game-head__side{ align-items: center; }
