@@ -1157,7 +1157,9 @@ def write_run_bundle(run_dir: Path, paths: dict[str, Path], records: dict[str, d
     """
     for role, src in paths.items():
         dst = run_dir / BUNDLE_FILES[role]
-        atomic_copy(src, dst)
+        # The final-weights checkpoint is saved straight into run_dir.
+        if Path(src).resolve() != dst.resolve():
+            atomic_copy(src, dst)
         got, want = sha256_file(dst), records[role]["sha256"]
         if got != want:
             raise SystemExit(
@@ -1428,9 +1430,10 @@ def build_parser() -> argparse.ArgumentParser:
     ap.add_argument(
         "--run-dir",
         default=None,
-        help="also copy this run's report, checkpoint (when one is written), embedding_v3.npz and "
-        "mtnn_centroids.npz into this directory, the bundle pipeline/promote.py --run checks and "
-        "promotes. Its name becomes the run id. rebuild_all.py passes pipeline/data/runs/<run_id>.",
+        help="also copy this run's report, checkpoint, embedding_v3.npz and mtnn_centroids.npz into this "
+        "directory, the bundle pipeline/promote.py --run checks and promotes. The checkpoint is the restored "
+        "best one, or the final weights when no best checkpoint was saved. Its name becomes the run id. "
+        "rebuild_all.py passes pipeline/data/runs/<run_id>.",
     )
     ap.add_argument(
         "--recipe",
@@ -2075,6 +2078,31 @@ def main(argv: list[str] | None = None) -> None:
     atomic_savez_compressed(ART_DIR / "mtnn_centroids.npz", centroids=centroids)
     record_written("centroids", ART_DIR / "mtnn_centroids.npz")
 
+    # A promoted model keeps its weights: promote.py refuses a bundle without
+    # a checkpoint. The measure and ship recipes pass --val-every 0
+    # --no-best-checkpoint, so they never write mtnn_best.pt, and promote.py
+    # refused every run of the recipe rebuild_all.py ships by default. Such a
+    # run's embedding and report come from its final weights, so with
+    # --run-dir those final weights are the bundle's checkpoint. They go
+    # straight into the run directory, never over pipeline/data/mtnn_best.pt
+    # (the last run's best checkpoint). torch.save draws from no RNG, and
+    # without --run-dir (the climb, the bit-identity probe) nothing here runs.
+    if run_dir is not None and "checkpoint" not in written:
+        final_ckpt = run_dir / BUNDLE_FILES["checkpoint"]
+        mtnn_loop.require_finite(finite_check_arrays(model), before=f"saving the final weights to {final_ckpt}")
+        atomic_torch_save(
+            {
+                "epoch": args.epochs - 1,
+                "model": model.state_dict(),
+                "selected_by": "final weights: no best checkpoint was saved or restored",
+                "checkpoint_metric": None,
+                "args": vars(args),
+                "weights": weights,
+            },
+            final_ckpt,
+        )
+        record_written("checkpoint", final_ckpt)
+
     recall = recall_at_k(E, pair_arr, k=10)
     arch_acc = classification_acc(arch_logits, clusters)
     pos_acc = classification_acc(pos_logits, positions, positions >= 0)
@@ -2359,7 +2387,7 @@ def main(argv: list[str] | None = None) -> None:
     print(report_text)
     print(f"CQS {report['composite']['cqs']} · {why}")
     # This used to say the report went to ART_DIR. It goes to DATA_DIR, as the checkpoint does.
-    ckpt_note = f"; mtnn_best.pt -> {BEST_CKPT}" if "checkpoint" in written else ""
+    ckpt_note = f"; mtnn_best.pt -> {written_paths['checkpoint']}" if "checkpoint" in written else ""
     print(f"wrote embedding_v3.npz, mtnn_centroids.npz -> {ART_DIR}; mtnn_report.json -> {DATA_DIR}{ckpt_note}")
     if run_dir is not None:
         print(f"run bundle {run_id} -> {run_dir}")
