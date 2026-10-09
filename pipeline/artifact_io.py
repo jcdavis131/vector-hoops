@@ -329,6 +329,20 @@ def _sha256_lines(lines: Sequence[str]) -> str:
     return h.hexdigest()
 
 
+def keys_sha256(player_id: Sequence[Any] | np.ndarray, season: Sequence[Any] | np.ndarray) -> str:
+    """sha256 of the "player_id|season" lines in row order: matrix_fingerprint's keys_sha256.
+
+    The row identity an embedding is bound to. An embedding_v3.npz carries the
+    player_id and season arrays of the matrix it was encoded from, so its keys
+    hash equals that matrix's.
+    """
+    pids = np.asarray(player_id).tolist()
+    seasons = np.asarray(season).tolist()
+    if len(pids) != len(seasons):
+        raise ValueError(f"{len(pids)} player_ids for {len(seasons)} seasons")
+    return _sha256_lines([f"{p}|{s}" for p, s in zip(pids, seasons, strict=True)])
+
+
 def matrix_fingerprint(
     Z: np.ndarray,
     mask: np.ndarray,
@@ -393,7 +407,7 @@ def matrix_fingerprint(
     return {
         "rows": int(Z.shape[0]),
         "cols": int(Z.shape[1]),
-        "keys_sha256": _sha256_lines([f"{p}|{s}" for p, s in zip(pids, seasons, strict=True)]),
+        "keys_sha256": keys_sha256(pids, seasons),
         "columns_sha256": _sha256_lines(cols),
         "values_sha256": values.hexdigest(),
         "family_coverage": {
