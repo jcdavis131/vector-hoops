@@ -35,7 +35,7 @@ EXPORT = [
     "archetype_time",
     "build_scoring_lite",
 ]
-DEFAULT_PLAN = [*PREPARE, "stage_contract", "train_mtnn", *EXPORT, "test_scoring_lite", "verify_accuracy"]
+DEFAULT_PLAN = [*PREPARE, "stage_contract", "train_mtnn", "promote", *EXPORT, "test_scoring_lite", "verify_accuracy"]
 
 
 def climb_py() -> Path | None:
@@ -171,6 +171,36 @@ def test_device_is_passed_only_when_given():
     assert "--device" not in train.argv
     train = next(s for s in ra.build_plan(device="cuda") if s.name == "train_mtnn")
     assert train.argv[-2:] == ("--device", "cuda")
+
+
+def test_train_writes_its_bundle_to_the_run_dir_and_promote_checks_it_before_any_export():
+    """The torn-triple fix [orchestration#0]: the train step names the run
+    directory, never --write-artifacts, and promote.py runs on that directory
+    before the first exporter."""
+    plan = ra.build_plan(run_dir="pipeline/data/runs/R")
+    names = [s.name for s in plan]
+    train = plan[names.index("train_mtnn")]
+    promote = plan[names.index("promote")]
+    assert "--write-artifacts" not in train.argv
+    i = train.argv.index("--run-dir")
+    assert train.argv[i + 1] == "pipeline/data/runs/R"
+    assert promote.argv == ("pipeline/promote.py", "--run", "pipeline/data/runs/R")
+    first_export = min(k for k, s in enumerate(plan) if s.stage == "export")
+    assert names.index("train_mtnn") < names.index("promote") < first_export
+    forced = next(s for s in ra.build_plan(promote_force="reviewed") if s.name == "promote")
+    assert forced.argv[-2:] == ("--force", "reviewed")
+
+
+def test_a_real_run_passes_its_own_run_dir_to_train_and_promote(runs, monkeypatch):
+    rec = Recorder()
+    monkeypatch.setattr(ra, "subprocess", rec)
+    assert ra.main(["--only", "train_mtnn", "--only", "promote", "--promote-force", "why"]) == 0
+    doc = only_record(runs)
+    train, promote = (next(s for s in doc["steps"] if s["name"] == n) for n in ("train_mtnn", "promote"))
+    run_dir = train["argv"][train["argv"].index("--run-dir") + 1]
+    assert Path(run_dir).name == doc["run_id"]
+    assert promote["argv"][-4:] == ["--run", run_dir, "--force", "why"]
+    assert doc["options"]["promote_force"] == "why"
 
 
 def test_epoch_presets_and_explicit_epochs(capsys, runs):

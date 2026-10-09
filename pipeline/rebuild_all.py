@@ -48,9 +48,26 @@ optional; what does not run is left out of the plan by a flag you passed.
            or synthetic cache stops the run before anything is written. Off
            by default, so the default matrix stage is the climb's prepare and
            nothing else.
-  train    train_mtnn.py with the shipping recipe: --v6, or the v5 default.
-  export   the exporters, then build_scoring_lite.py.
+  train    train_mtnn.py with the shipping recipe (--v6, or the v5 default)
+           and --run-dir pipeline/data/runs/<run_id>, then promote.py --run on
+           that directory. Without a passing promotion the export stage never
+           runs, so it can only publish a bundle promote.py checked.
+  export   the exporters, then build_scoring_lite.py. Each reads the model
+           through promote.load_promoted(): the current promoted bundle.
   verify   test_scoring_lite.py, verify_accuracy.py.
+
+Promotion (2026-10-09). The train step used to write its embedding to
+pipeline/data/_scratch while its report and checkpoint went to pipeline/data,
+and the export stage then published the PREVIOUS pipeline/data/
+embedding_v3.npz under this run's report: on the box, an 08-07 embedding
+under an 08-14 report [orchestration#0, health#0]. Now the run's four files
+land together in its run directory with a lineage block naming their
+sha256s, and promote.py checks them before anything is exported. With one
+seed, composite_score's CQS bar is baseline + 1.2, so a single refit will
+often be refused; --promote-force "<reason>" passes the reason to
+promote.py --force, which records it. A refused promotion stops the run at
+the promote step; promote.py --run <that run dir> --force can still promote
+it afterwards, then `--stage export`.
 
 Selection does not happen here. Recipes are chosen in the herdmux climb
 (gpu/climb.py: paired seed panels against a measured baseline); this script
@@ -59,13 +76,17 @@ refits the recipe it is given.
 Every real run writes pipeline/data/runs/<run_id>/rebuild.json (atomically,
 after every step): the options, each step's argv, exit code and duration,
 the git state and library versions, and the matrix's stats manifest next to
-it. A run that stops still records where. --list and --dry-run write nothing.
+it; the train step adds the run's bundle (mtnn_report.json, mtnn_best.pt,
+embedding_v3.npz, mtnn_centroids.npz). A run that stops still records where.
+--list and --dry-run write nothing.
 
 Usage:
   python pipeline/rebuild_all.py --list
   python pipeline/rebuild_all.py --dry-run
   python pipeline/rebuild_all.py --stage matrix
   python pipeline/rebuild_all.py --v6 --device cuda
+  python pipeline/rebuild_all.py --promote-force "single-seed refit, reviewed by hand"
+  python pipeline/rebuild_all.py --stage export        # re-export the promoted bundle
   python pipeline/rebuild_all.py --from train_mtnn --to build_scoring_lite
   python pipeline/rebuild_all.py --refresh-context --stage matrix
 """
@@ -84,7 +105,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "pipeline"))
 
 import real_caches  # noqa: E402
-from artifact_io import atomic_write_json, env_versions, git_state  # noqa: E402
+from artifact_io import BUNDLE_FILES, atomic_write_json, env_versions, git_state  # noqa: E402
 
 RUNS_DIR = ROOT / "pipeline" / "data" / "runs"
 STAGES = ("matrix", "train", "export", "verify")
@@ -95,12 +116,11 @@ STAGES = ("matrix", "train", "export", "verify")
 # necessarily what the site serves [orchestration#3]; moving them into
 # recipe files is a separate change.
 #
-# Neither passes --write-artifacts, as before. Without it train_mtnn writes
-# embedding_v3.npz and mtnn_centroids.npz to pipeline/data/_scratch, while
-# mtnn_report.json and mtnn_best.pt go to pipeline/data, so the export stage
-# publishes the PREVIOUS pipeline/data/embedding_v3.npz next to this run's
-# report and checkpoint [orchestration#0, health#2]. That is the torn-triple
-# fix's to change, not this one's.
+# Neither passes --write-artifacts, and neither needs it: the train step adds
+# --run-dir, which copies the run's report, checkpoint, embedding and
+# centroids into its run directory, and promote.py ships from there. With
+# --write-artifacts the run would also overwrite pipeline/data/
+# embedding_v3.npz directly, bypassing the promotion checks.
 SHIPPING_RECIPES: dict[str, tuple[str, ...]] = {
     "v5": (
         "--dim", "48",
@@ -212,6 +232,7 @@ def build_plan(
     seed: int = 7,
     device: str | None = None,
     refresh_context: bool = False,
+    promote_force: str | None = None,
     run_dir: str = "pipeline/data/runs/<run_id>",
 ) -> list[Step]:
     """Every step, in order, for these options (before --stage/--from/--to/--only)."""
@@ -243,17 +264,32 @@ def build_plan(
     ]
 
     train = ["pipeline/train_mtnn.py", "--epochs", str(epochs), *SHIPPING_RECIPES["v6" if v6 else "v5"]]
-    train += ["--batch", str(batch), "--seed", str(seed)]
+    train += ["--batch", str(batch), "--seed", str(seed), "--run-dir", run_dir]
     if device is not None:
         # Only when asked. train_mtnn's own default (cpu) is what this script
         # has always run with; the orchestrator does not change it.
         train += ["--device", device]
+    bundle = tuple(f"{run_dir}/{name}" for name in BUNDLE_FILES.values())
     plan.append(
         Step(
             "train_mtnn",
             tuple(train),
             "train",
-            (D + "mtnn_report.json", D + "mtnn_best.pt", D + "_scratch/embedding_v3.npz"),
+            # The last-run copies in pipeline/data, and the run's own bundle.
+            (D + "mtnn_report.json", D + "mtnn_best.pt", D + "_scratch/embedding_v3.npz", *bundle),
+        )
+    )
+    # Checks the bundle the train step just wrote and makes it the promoted
+    # model, or stops the run before any export.
+    promote = ["pipeline/promote.py", "--run", run_dir]
+    if promote_force is not None:
+        promote += ["--force", promote_force]
+    plan.append(
+        Step(
+            "promote",
+            tuple(promote),
+            "train",
+            (D + "promoted/CURRENT.json", D + "promoted/<run_id>/", D + "embedding_v3.npz", D + "mtnn_centroids.npz"),
         )
     )
 
@@ -410,6 +446,12 @@ def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
     ap.add_argument("--batch", type=int, default=512)
     ap.add_argument("--seed", type=int, default=7)
     ap.add_argument("--device", default=None, help="passed to train_mtnn only when given")
+    ap.add_argument(
+        "--promote-force",
+        metavar="REASON",
+        default=None,
+        help="passed to promote.py --force: promote although should_promote says no; REASON is recorded",
+    )
     return ap.parse_args(argv)
 
 
@@ -423,6 +465,7 @@ def main(argv: Sequence[str] | None = None) -> int:
         "seed": args.seed,
         "device": args.device,
         "refresh_context": args.refresh_context,
+        "promote_force": args.promote_force,
     }
     sel = {"stages": args.stage, "start": args.start, "stop": args.stop, "only": args.only}
 
