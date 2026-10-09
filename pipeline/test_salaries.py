@@ -1,63 +1,63 @@
 """Market / salary invariant gates — run after build_salary_market.py.
 
-Rebuilds salary_market.json, then checks cap %, team payroll share, and
-rank bounds plus a few hand-checked stars.
+Rebuilds salary_market.json into a tmp --out-root (never pipeline/data),
+then checks cap %, team payroll share, and rank bounds plus a few
+hand-checked stars.
 
-Run:  python pipeline/test_salaries.py
+local_data: build_salary_market reads pipeline/data/roster_context.json for
+the team of each player-season, and returns {} without it, so the team-payroll
+gates can only be checked where that gitignored file exists. The rebuild used
+to write pipeline/data/salary_market.json in place, a training input
+integrate_context reads.
+
+Run:  python -m pytest pipeline/test_salaries.py
+      python pipeline/test_salaries.py        (same tests; exit 0 = all gates pass)
 """
 
 from __future__ import annotations
 
 import json
+import os
 import subprocess
 import sys
 from pathlib import Path
 
+import pytest
+
 ROOT = Path(__file__).resolve().parents[1]
-MARKET = ROOT / "pipeline" / "data" / "salary_market.json"
+ROSTER = ROOT / "pipeline" / "data" / "roster_context.json"
+MARKET = Path("pipeline") / "data" / "salary_market.json"
 
-FAILURES: list[str] = []
-
-
-def check(cond: bool, msg: str) -> None:
-    safe = msg.encode(sys.stdout.encoding or "utf-8", errors="backslashreplace").decode(
-        sys.stdout.encoding or "utf-8", errors="backslashreplace"
-    )
-    print(f"  [{'PASS' if cond else 'FAIL'}] {safe}")
-    if not cond:
-        FAILURES.append(msg)
+pytestmark = pytest.mark.local_data
 
 
-def rebuild() -> None:
+@pytest.fixture(scope="module")
+def built(tmp_path_factory) -> dict:
+    if not ROSTER.exists():
+        pytest.skip(f"local data missing: {ROSTER.relative_to(ROOT)} (team-payroll gates need it)")
+    out = tmp_path_factory.mktemp("salaries")
     proc = subprocess.run(
-        [sys.executable, "pipeline/build_salary_market.py"],
+        [sys.executable, "pipeline/build_salary_market.py", "--out-root", str(out)],
         cwd=ROOT,
         capture_output=True,
         text=True,
+        errors="replace",
     )
-    if proc.returncode != 0:
-        print(proc.stdout + proc.stderr)
-        raise SystemExit("build_salary_market.py failed")
+    assert proc.returncode == 0, f"build_salary_market.py failed:\n{proc.stdout}{proc.stderr}"
+    doc = json.loads((out / MARKET).read_text(encoding="utf-8"))
+    return {"doc": doc, "rows": doc["players"], "by": {(r["name"], r["season"]): r for r in doc["players"]}}
 
 
-def main() -> None:
-    rebuild()
-    doc = json.loads(MARKET.read_text(encoding="utf-8"))
-    rows = doc["players"]
-    by = {(r["name"], r["season"]): r for r in rows}
-    cov = doc["coverage"]
+def test_coverage(built):
+    cov = built["doc"]["coverage"]
+    assert cov["labeled_rows"] > 5000, f"labeled rows {cov['labeled_rows']}"
+    assert cov["cap_pct_rows"] > 5000, f"cap% rows {cov['cap_pct_rows']}"
+    assert cov["team_pct_rows"] > 4000, f"team payroll % rows {cov['team_pct_rows']}"
 
-    print("coverage")
-    check(cov["labeled_rows"] > 5000, f"labeled rows > 5000 ({cov['labeled_rows']})")
-    check(cov["cap_pct_rows"] > 5000, f"cap% rows > 5000 ({cov['cap_pct_rows']})")
-    check(
-        cov["team_pct_rows"] > 4000,
-        f"team payroll % rows > 4000 ({cov['team_pct_rows']})",
-    )
 
-    print("bounds")
+def test_bounds(built):
     cap_ok, team_ok, rank_ok, log_ok = True, True, True, True
-    for r in rows:
+    for r in built["rows"]:
         cap = r.get("SALARY_CAP_PCT")
         if cap is not None and not (0 < cap <= 1.35):
             cap_ok = False
@@ -70,41 +70,29 @@ def main() -> None:
         slog = r.get("SALARY_LOG")
         if slog is not None and slog < 4.0:
             log_ok = False
-    check(cap_ok, "SALARY_CAP_PCT in (0, 1.35] for covered rows")
-    check(team_ok, "SALARY_TEAM_PCT in (0, 1.0] for covered rows")
-    check(rank_ok, "SALARY_RANK_POS in [0, 1]")
-    check(log_ok, "SALARY_LOG >= 4.0 for covered rows (min ~$10k)")
+    assert cap_ok, "SALARY_CAP_PCT outside (0, 1.35] on some covered row"
+    assert team_ok, "SALARY_TEAM_PCT outside (0, 1.0] on some covered row"
+    assert rank_ok, "SALARY_RANK_POS outside [0, 1]"
+    assert log_ok, "SALARY_LOG < 4.0 on some covered row (min ~$10k)"
 
-    print("spot checks")
 
-    def field(name, season, f):
-        r = by.get((name, season))
-        return None if r is None else r.get(f)
-
-    lebron = field("LeBron James", "2016-17", "SALARY_CAP_PCT")
-    check(
-        lebron is not None and lebron >= 0.2,
-        f"LeBron 2016-17 cap% >= 20% (got {lebron})",
-    )
-
-    jordan = field("Michael Jordan", "1996-97", "SALARY_TEAM_PCT")
-    check(
-        jordan is not None and jordan >= 0.4,
-        f"Jordan 1996-97 team payroll% >= 40% (got {jordan})",
-    )
-
-    garnett = field("Kevin Garnett", "2003-04", "SALARY_RANK_POS")
-    check(
-        garnett is not None and garnett >= 0.95,
-        f"Garnett 2003-04 top salary rank (got {garnett})",
-    )
-
-    print()
-    if FAILURES:
-        print(f"{len(FAILURES)} gate(s) FAILED")
-        sys.exit(1)
-    print("all salary market gates passed")
+@pytest.mark.parametrize(
+    ("name", "season", "field", "floor"),
+    [
+        ("LeBron James", "2016-17", "SALARY_CAP_PCT", 0.2),
+        ("Michael Jordan", "1996-97", "SALARY_TEAM_PCT", 0.4),
+        ("Kevin Garnett", "2003-04", "SALARY_RANK_POS", 0.95),
+    ],
+)
+def test_spot_checks(built, name, season, field, floor):
+    r = built["by"].get((name, season))
+    got = None if r is None else r.get(field)
+    assert got is not None and got >= floor, f"{name} {season} {field} >= {floor} (got {got})"
 
 
 if __name__ == "__main__":
-    main()
+    # Script form for export_assets.py, which reads only the exit code.
+    # HOOPS_REQUIRE_LOCAL_DATA=1: a missing roster_context.json is a failure
+    # here, as the old script's team-payroll gate was.
+    os.environ.setdefault("HOOPS_REQUIRE_LOCAL_DATA", "1")
+    sys.exit(pytest.main([__file__, "-p", "no:cacheprovider", "--runxfail"]))

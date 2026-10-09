@@ -6,17 +6,25 @@ and FORM_GP feeding the durability head its own target. None of them broke a
 build or moved a loss curve; they just quietly degraded the model. These gates
 turn that class of failure into an exit code.
 
-Run:  python pipeline/test_feature_hygiene.py    (exit 0 = all gates pass)
+local_data: the matrix and manifest live in gitignored pipeline/data, so CI
+deselects these and they run on the training box. There, set
+HOOPS_REQUIRE_LOCAL_DATA=1 (the script form does) and a missing matrix fails
+instead of skipping, as the old script's exit 1 did. Read-only.
+
+Run:  python -m pytest pipeline/test_feature_hygiene.py
+      python pipeline/test_feature_hygiene.py    (same tests; exit 0 = all gates pass)
 """
 
 from __future__ import annotations
 
 import json
+import os
 import sys
 from collections import defaultdict
 from pathlib import Path
 
 import numpy as np
+import pytest
 
 ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "pipeline" / "data"
@@ -25,6 +33,8 @@ MANIFEST = DATA / "feature_manifest.json"
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from integrate_context import RETIRED_FEATURES  # noqa: E402
+
+pytestmark = pytest.mark.local_data
 
 # A column the durability head predicts. An input tower carrying a near-copy
 # lets the head solve its task by reading its own label.
@@ -52,14 +62,6 @@ KNOWN_DUPLICATES = {
     "PCT_AST_3PM~PCT_UAST_3PM",
 }
 
-FAILURES: list[str] = []
-
-
-def check(ok: bool, label: str) -> None:
-    print(f"  {'PASS' if ok else 'FAIL'}  {label}")
-    if not ok:
-        FAILURES.append(label)
-
 
 def masked_corr(a, b, ma, mb) -> tuple[float, int]:
     both = (ma > 0) & (mb > 0)
@@ -73,43 +75,45 @@ def masked_corr(a, b, ma, mb) -> tuple[float, int]:
     return float(((x - x.mean()) * (y - y.mean())).mean() / (sx * sy)), n
 
 
-def main() -> None:
-    if not MATRIX.exists() or not MANIFEST.exists():
-        print("train_matrix.npz / feature_manifest.json missing — run integrate_context.py")
-        sys.exit(1)
-
+@pytest.fixture(scope="module")
+def matrix() -> dict:
+    missing = [p.relative_to(ROOT).as_posix() for p in (MATRIX, MANIFEST) if not p.exists()]
+    if missing:
+        pytest.skip(f"local data missing: {', '.join(missing)} (run integrate_context.py)")
     man = json.loads(MANIFEST.read_text(encoding="utf-8"))
     m = np.load(MATRIX, allow_pickle=True)
-    Z, M = m["Z"], m["mask"]
-    feats: list[str] = man["features"]
-    fam_of: dict[str, str] = man["families"]
+    return {"Z": m["Z"], "M": m["mask"], "feats": man["features"], "fam_of": man["families"]}
 
-    print("shape")
-    check(Z.shape[1] == len(feats), f"matrix width == manifest features ({len(feats)})")
-    check(Z.shape == M.shape, "values and mask same shape")
 
-    print("retired features stay retired")
-    for f in sorted(RETIRED_FEATURES):
-        check(f not in feats, f"{f} absent from the matrix")
+def test_shape(matrix):
+    Z, M, feats = matrix["Z"], matrix["M"], matrix["feats"]
+    assert Z.shape[1] == len(feats), f"matrix width {Z.shape[1]} vs manifest features {len(feats)}"
+    assert Z.shape == M.shape, "values and mask differ in shape"
 
-    print("no dead columns")
+
+def test_retired_features_stay_retired(matrix):
+    back = sorted(f for f in RETIRED_FEATURES if f in matrix["feats"])
+    assert not back, f"retired features are in the matrix: {back}"
+
+
+def test_no_dead_columns(matrix):
+    Z, M = matrix["Z"], matrix["M"]
     dead = []
-    for j, f in enumerate(feats):
+    for j, f in enumerate(matrix["feats"]):
         obs = M[:, j] > 0
         if obs.mean() < MIN_COVERAGE:
             dead.append(f"{f} (coverage {obs.mean():.4f})")
         elif obs.sum() >= MIN_OVERLAP and float(Z[obs, j].std()) < 0.01:
             dead.append(f"{f} (near-constant)")
-    check(
-        not dead,
-        f"every feature carries signal{'' if not dead else ': ' + ', '.join(dead[:5])}",
-    )
+    assert not dead, f"features carrying no signal: {', '.join(dead[:5])}"
 
-    print("no perfect duplicates among input features")
+
+def test_no_new_duplicate_input_pairs(matrix):
     # Only input columns matter here. Two injury targets being near-collinear
     # (INJ_GP_PCT ~ INJ_MISS_N at -0.9998) is a property of the label space, not
     # a duplicated input, and the durability head is a multi-target regressor by
     # design.
+    Z, M, feats, fam_of = matrix["Z"], matrix["M"], matrix["feats"], matrix["fam_of"]
     dups = []
     for j in range(len(feats)):
         if fam_of.get(feats[j]) in TARGET_FAMILIES:
@@ -121,12 +125,11 @@ def main() -> None:
             if abs(r) >= DUP_R:
                 dups.append(f"{feats[j]}~{feats[k]} r={r:+.4f}")
     unknown_dups = [d for d in dups if d.split(" r=")[0] not in KNOWN_DUPLICATES]
-    check(
-        not unknown_dups,
-        f"no new duplicate pairs |r|>={DUP_R}{'' if not unknown_dups else ': ' + ', '.join(unknown_dups[:5])}",
-    )
+    assert not unknown_dups, f"new duplicate pairs |r|>={DUP_R}: {', '.join(unknown_dups[:5])}"
 
-    print("no input leaks the durability target")
+
+def test_no_input_leaks_the_durability_target(matrix):
+    Z, M, feats, fam_of = matrix["Z"], matrix["M"], matrix["feats"], matrix["fam_of"]
     target_cols = [j for j, f in enumerate(feats) if fam_of.get(f) in TARGET_FAMILIES]
     leaks = []
     for j in target_cols:
@@ -136,24 +139,19 @@ def main() -> None:
             r, _ = masked_corr(Z[:, j], Z[:, k], M[:, j], M[:, k])
             if abs(r) >= LEAK_R:
                 leaks.append(f"{f} -> {feats[j]} r={r:+.4f}")
-    check(
-        not leaks,
-        f"no input within |r|>={LEAK_R} of an injury target{'' if not leaks else ': ' + ', '.join(leaks[:5])}",
-    )
+    assert not leaks, f"inputs within |r|>={LEAK_R} of an injury target: {', '.join(leaks[:5])}"
 
-    print("families intact")
+
+def test_families_intact(matrix):
     fam_cols: dict[str, list[int]] = defaultdict(list)
-    for j, f in enumerate(feats):
-        fam_cols[fam_of.get(f, "?")].append(j)
-    check("?" not in fam_cols, "every feature has a family")
-    check(len(fam_cols) >= 15, f"family count sane ({len(fam_cols)})")
-
-    print()
-    if FAILURES:
-        print(f"{len(FAILURES)} feature-hygiene gate(s) FAILED")
-        sys.exit(1)
-    print("all feature-hygiene gates passed")
+    for j, f in enumerate(matrix["feats"]):
+        fam_cols[matrix["fam_of"].get(f, "?")].append(j)
+    assert "?" not in fam_cols, f"features with no family: {[matrix['feats'][j] for j in fam_cols['?']][:5]}"
+    assert len(fam_cols) >= 15, f"only {len(fam_cols)} families"
 
 
 if __name__ == "__main__":
-    main()
+    # Script form for update_dataset.py, which reads only the exit code.
+    # HOOPS_REQUIRE_LOCAL_DATA=1: a missing matrix is a failure, as it was.
+    os.environ.setdefault("HOOPS_REQUIRE_LOCAL_DATA", "1")
+    sys.exit(pytest.main([__file__, "-p", "no:cacheprovider", "--runxfail"]))

@@ -1,109 +1,94 @@
 """Track J (honors) invariant gates — run after every build_honors.py.
 
 Uses real BBRef award caches when present, else the committed fixture.
-Rebuilds honors.json, then checks lag rules, vote-getter coverage, and
-known spot checks (Jokić, Edwards vote-getter without team slot).
+Rebuilds honors.json into a tmp --out-root (never pipeline/data or assets),
+then checks lag rules, vote-getter coverage, and known spot checks (Jokić,
+Edwards vote-getter without team slot).
 
-Run:  python pipeline/test_honors.py        (exit 0 = all gates pass)
+The rebuild used to write pipeline/data/honors.json and assets/honors.json in
+place, so running this gate rewrote a training input and a tracked site asset.
+
+Run:  python -m pytest pipeline/test_honors.py
+      python pipeline/test_honors.py        (same tests; exit 0 = all gates pass)
 """
 
 from __future__ import annotations
 
 import json
-import re
+import os
 import subprocess
 import sys
 from pathlib import Path
 
+import pytest
+
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "pipeline"))
-from build_honors import real_honor_cache_paths
-from name_utils import canonical_name
+from build_honors import real_honor_cache_paths  # noqa: E402
+from name_utils import canonical_name  # noqa: E402
 
 CACHE_DIR = ROOT / "pipeline" / "cache"
-HONORS = ROOT / "pipeline" / "data" / "honors.json"
-ASSET = ROOT / "assets" / "honors.json"
-
-FAILURES: list[str] = []
+HONORS = Path("pipeline") / "data" / "honors.json"
+ASSET = Path("assets") / "honors.json"
 
 
-def check(cond: bool, msg: str) -> None:
-    safe = msg.encode(sys.stdout.encoding or "utf-8", errors="backslashreplace").decode(
-        sys.stdout.encoding or "utf-8", errors="backslashreplace"
-    )
-    print(f"  [{'PASS' if cond else 'FAIL'}] {safe}")
-    if not cond:
-        FAILURES.append(msg)
-
-
-def rebuild() -> bool:
-    """Re-derive honors.json; returns True if REAL per-season caches were used."""
+@pytest.fixture(scope="module")
+def built(tmp_path_factory) -> dict:
+    """Re-derive honors.json under a tmp out-root, from REAL caches when present."""
+    out = tmp_path_factory.mktemp("honors")
     real = bool(real_honor_cache_paths(CACHE_DIR))
-    cmd = [sys.executable, "pipeline/build_honors.py"] + ([] if real else ["--fixture"])
-    proc = subprocess.run(cmd, cwd=ROOT, capture_output=True, text=True)
-    if proc.returncode != 0:
-        print(proc.stdout + proc.stderr)
-        raise SystemExit("build_honors.py failed")
-    print(f"  (derived from {'REAL caches' if real else 'example fixture'})")
-    return real
+    cmd = [sys.executable, "pipeline/build_honors.py", "--out-root", str(out)] + ([] if real else ["--fixture"])
+    proc = subprocess.run(cmd, cwd=ROOT, capture_output=True, text=True, errors="replace")
+    assert proc.returncode == 0, f"build_honors.py failed:\n{proc.stdout}{proc.stderr}"
+    doc = json.loads((out / HONORS).read_text(encoding="utf-8"))
+    return {
+        "real": real,
+        "doc": doc,
+        "rows": doc["players"],
+        "by": {(r["name"], r["season"]): r for r in doc["players"]},
+        "asset": out / ASSET,
+    }
 
 
-def main() -> None:
-    real = rebuild()
-    doc = json.loads(HONORS.read_text(encoding="utf-8"))
-    rows = doc["players"]
-    by = {(r["name"], r["season"]): r for r in rows}
-    contemp = doc.get("contemporaneous", {})
-
-    print("lag rule + vote-getter coverage")
-    # Award year 2023-24 -> lagged row on 2024-25 season
+def test_jokic_lag_row_from_prior_season_awards(built):
+    # Award year 2023-24 -> lagged row on 2024-25 season.
     # rows carry vectors.json display names (ASCII-folded), so fold the key
-    jok_lag = by.get((canonical_name("Nikola Jokić"), "2024-25"))
-    check(jok_lag is not None, "Jokić 2024-25 has lagged honors row (from 2023-24 awards)")
-    if jok_lag:
-        check(
-            jok_lag.get("HON_ALL_NBA_TEAM_LAG") == 3.0,
-            f"Jokić lag All-NBA first team == 3 ({jok_lag.get('HON_ALL_NBA_TEAM_LAG')})",
-        )
-        check(
-            jok_lag.get("HON_ASG_LAG") == 1.0,
-            f"Jokić lag ASG == 1 ({jok_lag.get('HON_ASG_LAG')})",
-        )
+    jok_lag = built["by"].get((canonical_name("Nikola Jokić"), "2024-25"))
+    assert jok_lag is not None, "Jokić 2024-25 has no lagged honors row (from 2023-24 awards)"
+    assert jok_lag.get("HON_ALL_NBA_TEAM_LAG") == 3.0, f"lag All-NBA first team {jok_lag.get('HON_ALL_NBA_TEAM_LAG')}"
+    assert jok_lag.get("HON_ASG_LAG") == 1.0, f"lag ASG {jok_lag.get('HON_ASG_LAG')}"
 
+
+def test_iverson_vote_points_without_a_top3_team_slot(built):
     # Vote-getter without a top-3 All-NBA slot (ORV tier)
-    iverson_cont = contemp.get("Allen Iverson|1996-97", {})
-    check(
-        iverson_cont.get("allNbaVotePts", 0) > 0 and iverson_cont.get("allNbaTeam", 1) == 0,
-        "Iverson 1996-97 contemporaneous: vote pts without top-3 team slot",
-    )
+    iverson_cont = built["doc"].get("contemporaneous", {}).get("Allen Iverson|1996-97", {})
+    assert iverson_cont.get("allNbaVotePts", 0) > 0
+    assert iverson_cont.get("allNbaTeam", 1) == 0
 
-    ed_lag = by.get(("Anthony Edwards", "2024-25"))
-    check(
-        ed_lag is not None and ed_lag.get("HON_VOTE_RECOG") == 1.0,
-        "Edwards 2024-25 lagged vote recognition from prior season",
-    )
 
-    lebron_lag = by.get(("LeBron James", "2018-19"))
-    check(
-        lebron_lag is not None and lebron_lag.get("HON_ALL_NBA_TEAM_LAG") == 3.0,
-        f"LeBron 2018-19 lag first team from 2017-18 awards "
-        f"(got {lebron_lag.get('HON_ALL_NBA_TEAM_LAG') if lebron_lag else None})",
-    )
+def test_edwards_lagged_vote_recognition(built):
+    ed_lag = built["by"].get(("Anthony Edwards", "2024-25"))
+    assert ed_lag is not None and ed_lag.get("HON_VOTE_RECOG") == 1.0
 
-    duncan_lag = by.get(("Tim Duncan", "2000-01"))
-    check(
-        duncan_lag is not None and duncan_lag.get("HON_ALL_NBA_TEAM_LAG") == 3.0,
-        f"Duncan 2000-01 lag first team from 1999-00 awards "
-        f"(got {duncan_lag.get('HON_ALL_NBA_TEAM_LAG') if duncan_lag else None})",
-    )
 
-    tier_lag_rows = sum(1 for r in rows if (r.get("HON_ALL_NBA_TEAM_LAG") or 0) > 0)
-    check(
-        tier_lag_rows > 400,
-        f"lagged All-NBA team tiers backfilled ({tier_lag_rows} rows)",
-    )
+@pytest.mark.parametrize(
+    ("name", "season", "awards"),
+    [("LeBron James", "2018-19", "2017-18"), ("Tim Duncan", "2000-01", "1999-00")],
+)
+def test_lag_first_team_from_prior_awards(built, name, season, awards):
+    row = built["by"].get((name, season))
+    got = row.get("HON_ALL_NBA_TEAM_LAG") if row else None
+    assert got == 3.0, f"{name} {season} lag first team from {awards} awards (got {got})"
+
+
+def test_lagged_all_nba_tiers_backfilled(built):
+    tier_lag_rows = sum(1 for r in built["rows"] if (r.get("HON_ALL_NBA_TEAM_LAG") or 0) > 0)
+    assert tier_lag_rows > 400, f"{tier_lag_rows} rows with a lagged All-NBA tier"
+
+
+def test_lag_field_bounds(built):
     team_ok, vote_ok, asg_ok = True, True, True
-    for r in rows:
+    for r in built["rows"]:
         tier = r.get("HON_ALL_NBA_TEAM_LAG")
         if tier is not None and not (0 <= tier <= 3):
             team_ok = False
@@ -113,35 +98,34 @@ def main() -> None:
         asg = r.get("HON_ASG_LAG")
         if asg is not None and asg not in (0.0, 1.0):
             asg_ok = False
-    check(team_ok, "HON_ALL_NBA_TEAM_LAG in [0, 3] for every lagged row")
-    check(vote_ok, "HON_ALL_NBA_VOTE_LAG >= 0 for every lagged row")
-    check(asg_ok, "HON_ASG_LAG is 0 or 1 for every lagged row")
+    assert team_ok, "HON_ALL_NBA_TEAM_LAG outside [0, 3] on some lagged row"
+    assert vote_ok, "HON_ALL_NBA_VOTE_LAG < 0 on some lagged row"
+    assert asg_ok, "HON_ASG_LAG not 0 or 1 on some lagged row"
 
-    vote_rows = sum(1 for r in rows if (r.get("HON_ALL_NBA_VOTE_LAG") or 0) > 0)
-    check(vote_rows >= 1, f"at least one lagged vote-getter row ({vote_rows})")
 
-    print("mask honesty")
-    if real:
+def test_at_least_one_lagged_vote_getter(built):
+    vote_rows = sum(1 for r in built["rows"] if (r.get("HON_ALL_NBA_VOTE_LAG") or 0) > 0)
+    assert vote_rows >= 1
+
+
+def test_mask_honesty(built):
+    doc = built["doc"]
+    if built["real"]:
         cov = doc["coverage"]["contemporaneous_keys"]
-        check(cov > 50, f"real caches cover many contemporaneous keys ({cov})")
-        check(ASSET.exists(), "complete cache wrote transparent assets/honors.json")
+        assert cov > 50, f"real caches cover only {cov} contemporaneous keys"
+        assert built["asset"].exists(), "complete cache did not write the transparent assets/honors.json"
     else:
-        check(doc["cache_complete"] is True, "fixture marked complete for gate run")
-        check(
-            doc["coverage"]["contemporaneous_keys"] >= 8,
-            f"fixture has contemporaneous keys ({doc['coverage']['contemporaneous_keys']})",
+        assert doc["cache_complete"] is True, "fixture not marked complete for gate run"
+        assert doc["coverage"]["contemporaneous_keys"] >= 8, (
+            f"fixture has {doc['coverage']['contemporaneous_keys']} contemporaneous keys"
         )
-        check(
-            not ASSET.exists() or doc["cache_complete"],
-            "partial cache must not ship game asset without complete flag",
+        assert not built["asset"].exists() or doc["cache_complete"], (
+            "partial cache must not ship game asset without complete flag"
         )
-
-    print()
-    if FAILURES:
-        print(f"{len(FAILURES)} gate(s) FAILED")
-        sys.exit(1)
-    print("all honors gates passed" + ("" if real else " (fixture mode — run fetch_honors.py for full coverage)"))
 
 
 if __name__ == "__main__":
-    main()
+    # Script form for export_assets.py, which reads only the exit code.
+    # --runxfail: a known defect still fails here, as it did before this was pytest.
+    os.environ.setdefault("HOOPS_REQUIRE_LOCAL_DATA", "1")
+    sys.exit(pytest.main([__file__, "-p", "no:cacheprovider", "--runxfail"]))
