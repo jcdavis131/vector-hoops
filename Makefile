@@ -31,12 +31,11 @@ build:
 train:
 	./train.sh --quick
 
-# test_provenance_gate.py calls sys.exit() at module scope -- it is a script,
-# not a pytest module, and it aborts collection for every other file. Same
-# split as ci.yml.
+# Bare pytest, same as ci.yml: testpaths covers pipeline + tests. The old
+# --ignore and separate provenance-gate step are gone because that file is a
+# pytest module now, not a script that exits at import.
 eval:
-	python3 -m pytest pipeline tests -q --ignore=pipeline/test_provenance_gate.py
-	python3 pipeline/test_provenance_gate.py
+	python3 -m pytest
 
 test: eval
 

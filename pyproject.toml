@@ -155,6 +155,21 @@ exclude = [
 ]
 
 [tool.pytest.ini_options]
-testpaths = ["pipeline"]
+# Both directories. With testpaths = ["pipeline"] a bare `pytest` never ran
+# tests/test_vector_core_parity.py, and crashed collecting the script-style
+# test_provenance_gate.py (SystemExit at import), so reproducing CI meant
+# knowing to type `pytest pipeline tests --ignore=...`.
+testpaths = ["pipeline", "tests"]
 python_files = ["test_*.py"]
-addopts = "-q"
+# -ra lists every non-pass in the summary, skips and xfails with their reason:
+# a gate that cannot see its input says so instead of sitting in a row of dots.
+# --strict-markers makes a misspelled marker an error rather than a test that
+# `-m "not local_data"` silently keeps or drops.
+addopts = "-q -ra --strict-markers"
+# A known defect is marked xfail(strict=True) with its finding id. Strict means
+# the test turns red the moment the defect is fixed and nobody removed the
+# marker, so an xfail cannot outlive the reason it was added.
+xfail_strict = true
+markers = [
+    "local_data: reads gitignored pipeline/data artifacts that exist only on the training box. CI deselects these (-m 'not local_data'); elsewhere they skip with the missing path, and HOOPS_REQUIRE_LOCAL_DATA=1 turns that skip into a failure (see conftest.py).",
+]

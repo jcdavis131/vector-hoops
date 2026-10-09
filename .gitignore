@@ -25,3 +25,7 @@ node_modules/
 # Live training cockpit scratch — regenerated per run, never a build artifact
 assets/mtnn_training/
 .audit-backups/
+
+# pytest's cache. The gate scripts now run through pytest, so the first
+# `python pipeline/test_X.py` on a fresh checkout would otherwise dirty the tree.
+.pytest_cache/

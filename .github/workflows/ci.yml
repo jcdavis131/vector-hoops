@@ -50,14 +50,12 @@ jobs:
       # swallowed the result with `|| true` — so the suite had never actually run
       # in CI. It is the whole suite now, and it fails the build.
       #
-      # test_provenance_gate.py is excluded because it calls sys.exit() at module
-      # scope: it is a script, not a pytest module, and it aborts collection for
-      # every other file. It gets its own step below, run the way it expects.
+      # Bare `pytest`: testpaths in pyproject.toml is pipeline + tests. It used
+      # to need `--ignore=pipeline/test_provenance_gate.py` and a separate script
+      # step, because that file called sys.exit() at import. It is a pytest
+      # module now, so the command here is the command anyone runs locally.
       - name: Pytest gates
-        run: pytest pipeline tests -q --ignore=pipeline/test_provenance_gate.py
-
-      - name: Provenance gate (script-style)
-        run: python pipeline/test_provenance_gate.py
+        run: pytest
 
       # scripts/stamp_assets.py has had a --check mode all along; nothing ever ran
       # it. vercel.json serves assets as `immutable, max-age=31536000`, so a stale
