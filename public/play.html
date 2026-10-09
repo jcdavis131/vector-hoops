@@ -28,6 +28,13 @@ button,.input{min-height:44px}
 #map-overlay{position:absolute;left:10px;right:10px;top:10px;display:flex;justify-content:space-between;gap:8px;z-index:2;pointer-events:none;flex-wrap:wrap}
 #map-overlay .chip{background:rgba(255,254,247,.92);border:1px solid var(--line-2);border-radius:999px;padding:4px 8px;font-family:var(--mono);font-size:10px;box-shadow:none}
 #map-controls{position:absolute;left:10px;bottom:10px;z-index:3;display:flex;gap:6px;flex-wrap:wrap}
+#lens-bar{margin:0 0 8px;min-height:0}
+#lens-bar:empty{display:none}
+.vh-lensbar{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.vh-lens-btn.on{background:#1A150F;color:#FFFEF7;border-color:#1A150F}
+.vh-lens-cap{font-family:ui-monospace,monospace;font-size:10px;opacity:.55}
+.vh-lens-count{font-family:ui-monospace,monospace;font-size:11px;font-weight:900}
+.vh-lens-iso[aria-pressed="true"]{background:#1A150F;color:#FFFEF7;border-color:#1A150F}
 #map-legend{position:absolute;right:10px;bottom:10px;z-index:3;background:rgba(255,254,247,.94);border:1px solid var(--line-2);border-radius:12px;padding:7px 9px;box-shadow:none;font-family:var(--mono);font-size:9px;line-height:1.35;pointer-events:none;min-width:128px}
 #hover-tip{position:absolute;left:50%;top:50%;transform:translate(-50%,-100%);background:var(--surface);border:1px solid var(--line-2);border-radius:10px;padding:6px 8px;box-shadow:none;font-size:11px;display:none;z-index:3;pointer-events:none;max-width:220px}
 .guess-row{border:1px solid var(--line-2);border-radius:12px;padding:10px 12px;background:var(--surface);margin-top:8px;box-shadow:none}
@@ -247,6 +254,7 @@ button,.input{min-height:44px}
     <div class="small-mono" style="margin-top:8px;opacity:.6;text-transform:none">Each slot is fixed for the day — same for everyone. No reroll on refresh. Solve 3 to stay incentivized, 5 to dominate leaderboard.</div>
   </div>
 
+  <div id="lens-bar"></div>
   <div id="map-wrap"><canvas id="sky-canvas" width="640" height="380" aria-label="12,966 player-seasons as points in a rotatable 3D embedding map — your guesses draw as orange rings connected by a line to the past target's bullseye, showing how close each guess landed"></canvas><div id="target-badge" style="position:absolute;left:0;top:0;transform:translate(-50%,-140%);background:var(--accent-wash);color:var(--accent);border:1px solid var(--line-2);border-radius:999px;padding:5px 10px;font-family:ui-monospace,monospace;font-size:10px;font-weight:900;box-shadow:none;z-index:4;display:none;pointer-events:none;white-space:nowrap">★ TARGET</div><div id="map-overlay"><span class="chip" id="map-fact">12,966 seasons • ★ target past</span><span class="chip">orange rings = your guesses • line = distance • ◎ bullseye = target</span></div><div id="map-controls"><button class="chip pill" id="btn-pause" type="button">Pause</button><button class="chip pill" id="btn-reset" type="button">Reset</button></div><div id="map-legend"><div style="font-family:var(--mono);font-size:7.5px;letter-spacing:.1em;text-transform:uppercase;font-weight:900;opacity:.55;margin-bottom:4px">Map</div><div style="font-family:var(--mono);font-size:9px">Drag to orbit • ◎ bullseye = past target (auto-centered)</div></div><div id="hover-tip"></div></div>
 
   <!-- PACK BATTLE v2 Production UI -->
@@ -305,7 +313,8 @@ button,.input{min-height:44px}
 <script src="assets/error-boundary.js"></script>
 <script src="assets/keyboard-a11y.js"></script>
 <script src="assets/site-nav.js" defer></script>
-<script src="assets/pwa-install.js"></script><script src="assets/audio.js"></script><script type="module" src="assets/timesfm-forecast.js?v=3"></script><script src="assets/pixel-avatar.js?v=49"></script><script src="assets/team-logo.js?v=55"></script><script src="assets/viral-share.js"></script><script src="assets/past-modern-game.js?v=56"></script><script src="/assets/twin-explainer.js?v=1"></script>
+<script src="assets/pwa-install.js"></script><script src="assets/audio.js"></script><script type="module" src="assets/timesfm-forecast.js?v=3"></script><script src="assets/pixel-avatar.js?v=49"></script><script src="assets/team-logo.js?v=55"></script><script src="assets/viral-share.js"></script><script src="assets/past-modern-game.js?v=56"></script><script src="/assets/twin-explainer.js?v=1"
+<script src="assets/map-lenses.js?v=1"></script>
 <script>
 (function(){
   const $=s=>document.querySelector(s);
@@ -391,7 +400,41 @@ button,.input{min-height:44px}
       sharedMapApi = await mod.mountSharedMap(canvasEl, { highlightId: tid>=0?tid:null, guessIds: (G.guesses||[]).slice(), dark:true });
       console.log('shared-map mounted play', sharedMapApi?sharedMapApi.getCount():0);
       window._sharedMapApi = sharedMapApi;
+      mountLensBar();
     }catch(e){ console.warn('mountGameMap fail',e); }
+  }
+  // Map lenses: layout switcher bar above the game map. Builds the
+  // external-id -> person_id join from the game's searchLite pool, then
+  // attaches VHMapLenses. Degrades gracefully (bar hidden) if data never arrives.
+  function mountLensBar(){
+    try{
+      if(!window.VHMapLenses || !window._sharedMapApi) return;
+      var mountEl = document.getElementById('lens-bar');
+      if(!mountEl || mountEl.dataset.done) return;
+      mountEl.dataset.done = '1';
+      var t0 = Date.now();
+      (function poll(){
+        var map = new Map();
+        try{
+          var st = (window.VHPastModern && VHPastModern.state) ? VHPastModern.state() : null;
+          var sl = st && st.searchLite;
+          var arr = sl && (sl.players || sl);
+          if(arr) for(var k=0;k<arr.length;k++){
+            var p=arr[k];
+            if(p && p.i!=null && p.pid) map.set(p.i|0, p.pid);
+          }
+        }catch(e){}
+        if(map.size || Date.now()-t0 > 8000){
+          try{
+            var h = window.VHMapLenses.attach(window._sharedMapApi, {mountEl: mountEl, idToPid: map});
+            window._mapLensHandle = h || null;
+            console.log('map-lenses attached, id->pid entries:', map.size);
+          }catch(e){ console.warn('lens attach fail', e); }
+          return;
+        }
+        setTimeout(poll, 250);
+      })();
+    }catch(e){}
   }
   setTimeout(mountGameMap, 80);
   let _mapAddFailedId=null;
