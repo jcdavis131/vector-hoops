@@ -14,7 +14,7 @@ Runs the refresh loop end to end and records what actually changed:
      counts, season coverage, badge counts and a grade checksum, so
      dataset growth is auditable run-over-run.
 
-Run:  python pipeline/update_dataset.py [--offline] [--season 2025-26]
+Run:  python pipeline/update_dataset.py [--offline] [--keep-vectors] [--season 2025-26]
 Cadence: weekly in season (see docs/SKILLS_LENS.md section 4).
 """
 
@@ -90,18 +90,29 @@ def main() -> None:
         default=None,
         help="hint for logs only; fetch always resumes from cache",
     )
+    # build_vectors alone writes a vectors.json with no per-player position `p`
+    # (only enrich_vectors.py sets it), and this script never runs enrich. That
+    # file is the training input and a deployed asset, so the CI refresh passes
+    # --keep-vectors and builds skills from the committed vectors.json, which
+    # the module docstring already treats as the source of truth.
+    ap.add_argument(
+        "--keep-vectors",
+        action="store_true",
+        help="never rebuild assets/vectors.json (skips both build_vectors steps)",
+    )
     args = ap.parse_args()
 
     steps = []
     if not args.offline:
         # Best-effort: resumes from cache, throttles per repo policy.
-        steps.append(
-            run_step(
-                "fetch+rebuild (stats.nba.com)",
-                [sys.executable, "pipeline/build_vectors.py"],
-                required=False,
+        if not args.keep_vectors:
+            steps.append(
+                run_step(
+                    "fetch+rebuild (stats.nba.com)",
+                    [sys.executable, "pipeline/build_vectors.py"],
+                    required=False,
+                )
             )
-        )
         steps.append(
             run_step(
                 "fetch draft history (Track H)",
@@ -129,13 +140,16 @@ def main() -> None:
     # Offline rebuild only when the fetch produced/kept a healthy wide cache;
     # on the compact legacy cache this fails harmlessly and we keep the
     # shipped vectors.json (still the source of truth for skills).
-    steps.append(
-        run_step(
-            "rebuild vectors (offline)",
-            [sys.executable, "pipeline/build_vectors.py", "--offline"],
-            required=False,
+    if args.keep_vectors:
+        print("== rebuild vectors: skipped (--keep-vectors)\n")
+    else:
+        steps.append(
+            run_step(
+                "rebuild vectors (offline)",
+                [sys.executable, "pipeline/build_vectors.py", "--offline"],
+                required=False,
+            )
         )
-    )
 
     steps.append(
         run_step(

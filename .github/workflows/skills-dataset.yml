@@ -1,20 +1,34 @@
-# Skills Lens dataset refresh — weekly, best-effort fetch, honest fallback.
+# Skills Lens dataset refresh — manual, best-effort fetch, honest fallback,
+# and a human reads the result before any of it reaches master.
 #
 # stats.nba.com blocks most datacenter IPs, so the fetch step is expected
 # to no-op on GitHub runners more often than not; the run still rebuilds
 # skills deterministically from the committed cache/vectors, runs the
-# invariant gates, appends the growth ledger, and commits only when the
-# artifacts actually changed. Fresh season pulls happen on an operator
-# machine per docs/DATA_SOURCES_DEEP.md rate-limit policy.
+# invariant gates and appends the growth ledger. Fresh season pulls happen
+# on an operator machine per docs/DATA_SOURCES_DEEP.md rate-limit policy.
+#
+# This used to run every Monday with `contents: write` and end in
+# `git commit` + `git push` to master, and pushing master deploys the site.
+# What it would have pushed included assets/vectors.json rebuilt by
+# build_vectors alone: update_dataset.py never runs enrich_vectors.py, the
+# only step that sets each player's position `p`, so the file would have
+# lost positions (12,925 / 12,966 rows carry `p` today) and the next matrix
+# rebuild would train the position head on nothing. Pushes made with
+# GITHUB_TOKEN also do not trigger ci.yml, so no gate would have run on the
+# bot's commit. All 8 scheduled runs (2026-07-13 to 08-31) failed at a
+# required gate before the push; that accident was the only safeguard.
+#
+# So now: workflow_dispatch only, read-only token, --keep-vectors (skills
+# come from the committed vectors.json), and the refreshed files are
+# uploaded as an artifact (a patch plus its diffstat) for someone to review
+# and apply by hand, through a PR that CI checks.
 name: skills-dataset-refresh
 
 on:
-  schedule:
-    - cron: "0 9 * * 1" # Mondays 09:00 UTC
   workflow_dispatch: {}
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
   refresh:
@@ -24,18 +38,18 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
-      - run: pip install numpy
-      - name: Update dataset (fetch best-effort, rebuild, gate, ledger)
-        run: python pipeline/update_dataset.py
-      - name: Commit refreshed artifacts if changed
+      # numpy + pytest: the gates update_dataset.py runs are pytest modules.
+      - run: pip install -r pipeline/requirements.txt
+      - name: Update dataset (fetch best-effort, rebuild skills, gate, ledger)
+        run: python pipeline/update_dataset.py --keep-vectors
+      - name: Collect the refreshed files for review
         run: |
-          git add assets/skills.json assets/skill_probe.json \
-                  assets/vectors.json pipeline/cache/
-          if git diff --cached --quiet; then
-            echo "no dataset growth this run"
-          else
-            git config user.name "vector-hoops-bot"
-            git config user.email "actions@users.noreply.github.com"
-            git commit -m "Skills dataset refresh (scheduled)"
-            git push
-          fi
+          mkdir -p refresh
+          git add assets/skills.json assets/skill_probe.json pipeline/cache/
+          git diff --cached --stat | tee refresh/diffstat.txt
+          git diff --cached --binary > refresh/skills-dataset-refresh.patch
+      - uses: actions/upload-artifact@v4
+        with:
+          name: skills-dataset-refresh
+          path: refresh/
+          if-no-files-found: error
