@@ -1434,6 +1434,39 @@ def build_parser() -> argparse.ArgumentParser:
         "best one, or the final weights when no best checkpoint was saved. Its name becomes the run id. "
         "rebuild_all.py passes pipeline/data/runs/<run_id>.",
     )
+    # --protocol-v2 changes three things the measured numbers depend on, so
+    # it is off by default and off means exactly the old run:
+    #   (a) the per-epoch permutations come from their own
+    #       np.random.default_rng(seed). In v1 they share the global numpy
+    #       RNG with recall_at_k's 500-pair subsample, so every --val-every
+    #       check shifts the rest of training [training#9];
+    #   (b) the step-mode LR schedule is sized from the batches actually
+    #       trained. v1 sizes OneCycle for all 12,966 rows (26 steps an
+    #       epoch, 1,040 over 40) while a select run trains 22 batches of the
+    #       11,027 fit rows (880), so every measured model stops mid-anneal
+    #       at 17% of peak LR [training#7]. v2 also checks at the end that
+    #       the scheduler took exactly the steps it was sized for;
+    #   (c) in a select run, no val row is a training signal: a fit row
+    #       whose InfoNCE partner is a val row is paired with itself (two
+    #       dropout views, as a row with no partner always was), and a
+    #       next-season target in the val split is not supervised. v1
+    #       trained 66 fit rows against a val partner and supervised 378 of
+    #       the 761 val next-season targets [training#8].
+    # Different numbers, so not comparable with v1 ones. The herdmux climb
+    # hashes its PINNED train flags (gpu/climb.py Protocol.hash), so adding
+    # --protocol-v2 to PROTOCOLS['vector-hoops'].train (and to
+    # pipeline/recipes/measure.json, which tests/test_recipes.py holds equal
+    # to it) gives v2 its own protocol id, and v2 numbers can never be judged
+    # against a v1 baseline. Passed as an experiment's extra train flag it
+    # is NOT hashed (extras are left out of the hash on purpose, and
+    # collides() only catches pinned flags), so it would be judged against
+    # the v1 baseline; don't. Re-baselining under v2 is the operator's call.
+    ap.add_argument(
+        "--protocol-v2",
+        action="store_true",
+        help="dedicated training RNG, LR schedule sized from the trained batches, no val rows in a select "
+        "run's pairs or next-season targets. Off: the v1 protocol every recorded number used",
+    )
     ap.add_argument(
         "--recipe",
         default=None,
@@ -1724,7 +1757,19 @@ def main(argv: list[str] | None = None) -> None:
         token_dropout=getattr(args, "token_dropout", 0.0),
     ).to(device)
     opt = torch.optim.AdamW(adamw_param_groups(model, args.weight_decay), lr=args.lr)
-    steps_per_epoch = optimizer_steps_per_epoch(n, args.batch, args.grad_accum)
+    if args.protocol_v2:
+        # (b): sized from the fit rows the loop iterates, counting only the
+        # batches it trains on [training#7].
+        loop_rows = len(fit_idx)
+        steps_per_epoch = mtnn_loop.scheduler_steps_per_epoch(loop_rows, args.batch, args.grad_accum)
+        if steps_per_epoch == 0:
+            raise SystemExit(f"--protocol-v2: {loop_rows} fit rows make no batch of {mtnn_loop.MIN_BATCH_ROWS}+ rows")
+    else:
+        # v1: sized for every row, while the loop below slices the fit rows
+        # only and skips the empty tail slices (1,040 scheduled, 880 taken
+        # over 40 epochs of a select run). Kept as it was measured.
+        loop_rows = n
+        steps_per_epoch = optimizer_steps_per_epoch(n, args.batch, args.grad_accum)
     total_steps = max(1, steps_per_epoch * args.epochs)
     sched, sched_mode = build_lr_scheduler(
         opt,
@@ -1751,7 +1796,19 @@ def main(argv: list[str] | None = None) -> None:
     lookup: dict[int, int] = {}
     if len(pair_arr):
         lookup = {int(a): int(b) for a, b in pair_arr}
+        # Overwrites lookup[a] for every row that has a previous season, so a
+        # row's one InfoNCE partner is its previous season, and its next
+        # season only when it has no previous one (a first season).
         lookup.update({int(b): int(a) for a, b in pair_arr})
+    if args.protocol_v2:
+        # (c) [training#8]: no partner and no next-season target outside the
+        # rows the loss fits. Both are no-ops when fit_rows is 'all'.
+        loop_lookup = {i: p for i, p in lookup.items() if fit_mask[p]}
+        loop_next_idx = np.where((next_idx_arr >= 0) & fit_mask[np.maximum(next_idx_arr, 0)], next_idx_arr, -1)
+        # (a) [training#9]: evaluation keeps the global RNG; training does not share it.
+        train_rng = np.random.default_rng(args.seed)
+    else:
+        loop_lookup, loop_next_idx, train_rng = lookup, next_idx_arr, None
 
     best_val_recall: float | None = None
     best_val_purity: float | None = None
@@ -1778,18 +1835,19 @@ def main(argv: list[str] | None = None) -> None:
         loss_terms[name] = value
         return value
 
+    optimizer_steps = 0
     for epoch in range(args.epochs):
         model.train()
-        perm = np.random.permutation(fit_idx)
+        perm = train_rng.permutation(fit_idx) if train_rng is not None else np.random.permutation(fit_idx)
         total, steps = 0.0, 0
         accum = 0
         opt.zero_grad(set_to_none=True)
-        for s in range(0, n, args.batch):
+        for s in range(0, loop_rows, args.batch):
             idx = perm[s : s + args.batch]
-            if len(idx) < 8:
+            if len(idx) < mtnn_loop.MIN_BATCH_ROWS:
                 continue
             idx_t = torch.tensor(idx, device=device)
-            partner = np.array([lookup.get(int(i), int(i)) for i in idx])
+            partner = np.array([loop_lookup.get(int(i), int(i)) for i in idx])
             partner_t = torch.tensor(partner, device=device)
 
             xa, ma = batch_views(xs, ms, idx_t, drop_p=args.drop_p)
@@ -1843,7 +1901,7 @@ def main(argv: list[str] | None = None) -> None:
                     "position", F.cross_entropy(out_a["position"][pos_mask[idx_t]], pos_t[idx_t][pos_mask[idx_t]])
                 )
             loss = loss + weights["profile"] * term("profile", F.mse_loss(out_a["profile"], game_z[idx_t]))
-            next_batch = next_idx_arr[idx]
+            next_batch = loop_next_idx[idx]
             next_valid = next_batch >= 0
             if next_valid.any():
                 next_t = torch.tensor(next_batch[next_valid], device=device)
@@ -1935,6 +1993,7 @@ def main(argv: list[str] | None = None) -> None:
             steps += 1
         if sched_mode == "epoch":
             sched.step()
+        optimizer_steps += steps
         avg = total / max(1, steps)
         history.append(avg)
 
@@ -2022,6 +2081,15 @@ def main(argv: list[str] | None = None) -> None:
                     record_written("checkpoint", BEST_CKPT)
         if epoch % 5 == 0 or epoch == args.epochs - 1:
             print(log_line)
+
+    # (b) [training#7]: a v2 step-mode schedule ends where it was sized to.
+    # Not checked under v1, which stops at 880 of 1,040 by construction.
+    # (total_steps is at least 1 for the scheduler's sake; --epochs 0 takes 0.)
+    if args.protocol_v2 and sched_mode == "step" and sched.last_epoch != steps_per_epoch * args.epochs:
+        raise SystemExit(
+            f"--protocol-v2: the LR scheduler took {sched.last_epoch} steps but was sized for "
+            f"{steps_per_epoch} an epoch x {args.epochs}; the step count and the loop disagree"
+        )
 
     if select_best and BEST_CKPT.exists() and best_epoch >= 0:
         ckpt = safe_torch_load(BEST_CKPT, map_location=device)
@@ -2272,6 +2340,10 @@ def main(argv: list[str] | None = None) -> None:
     report = {
         "trained": time.strftime("%Y-%m-%d %H:%M"),
         "model": model_tag(args),
+        # v1 and v2 numbers are not comparable (--protocol-v2's comment), and
+        # composite_score reads this to decide whether a missing component
+        # may fall back or leaves the CQS unscored [eval#10].
+        "protocol": "v2" if args.protocol_v2 else "v1",
         "epochs": args.epochs,
         "best_epoch": best_epoch if best_epoch >= 0 else None,
         "best_val_recall_at_10": best_val_recall,
@@ -2288,6 +2360,13 @@ def main(argv: list[str] | None = None) -> None:
         "fusion_hidden": args.fusion_hidden or None,
         "lr": args.lr,
         "lr_schedule": args.lr_schedule,
+        # The schedule's size against what the loop took [training#7]: under
+        # v1 a 40-epoch select run is sized for 1,040 steps and takes 880.
+        "lr_schedule_steps": {
+            "sized_for": total_steps,
+            "scheduler_steps": int(sched.last_epoch) if sched_mode == "step" else None,
+            "optimizer_steps": optimizer_steps,
+        },
         "warmup_pct": args.warmup_pct,
         "anneal_strategy": args.anneal_strategy,
         "weight_decay": args.weight_decay,

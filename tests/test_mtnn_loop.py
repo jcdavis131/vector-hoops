@@ -81,6 +81,42 @@ def test_checkpoint_selection(no_best, fit_rows, metric, want):
     assert mtnn_loop.checkpoint_selection(no_best_checkpoint=no_best, fit_rows=fit_rows, metric=metric) == want
 
 
+def loop_steps(n_rows: int, batch: int, grad_accum: int) -> int:
+    """train_mtnn's epoch loop with the model taken out: count the optimizer steps."""
+    steps = accum = 0
+    for s in range(0, n_rows, batch):
+        if min(batch, n_rows - s) < 8:
+            continue
+        accum += 1
+        if accum < grad_accum:
+            continue
+        steps += 1
+        accum = 0
+    if accum > 0:
+        steps += 1
+    return steps
+
+
+@pytest.mark.parametrize("n_rows", [0, 7, 8, 511, 512, 519, 520, 1023, 1031, 11027, 12966])
+@pytest.mark.parametrize("batch", [4, 8, 512])
+@pytest.mark.parametrize("grad_accum", [1, 2, 3])
+def test_scheduler_steps_per_epoch_is_what_the_loop_takes(n_rows, batch, grad_accum):
+    assert mtnn_loop.scheduler_steps_per_epoch(n_rows, batch, grad_accum) == loop_steps(n_rows, batch, grad_accum)
+
+
+def test_scheduler_sizing_on_the_real_split():
+    """[training#7]: 11,027 fit rows of 12,966 at batch 512. v1 sizes every
+    row: ceil(12966 / 512) = 26 an epoch, 1,040 over 40; the loop trains 21
+    full batches and a 275-row tail of the fit rows, 22 an epoch, 880."""
+    assert mtnn_loop.trained_batches(11027, 512) == 22
+    assert mtnn_loop.scheduler_steps_per_epoch(11027, 512, 1) * 40 == 880
+    assert -(-12966 // 512) * 40 == 1040
+    # A tail under 8 rows is skipped, and with grad accumulation the partial
+    # last accumulation still steps.
+    assert mtnn_loop.trained_batches(1031, 512) == 2
+    assert mtnn_loop.scheduler_steps_per_epoch(1536, 512, 2) == 2
+
+
 def test_finite_arrays_pass():
     assert mtnn_loop.require_finite({"E": np.ones((3, 2)), "w": np.zeros(4)}, before="writing x") is None
 

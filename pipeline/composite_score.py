@@ -231,12 +231,59 @@ def _aux_test_r2s(report: dict[str, Any]) -> list[float]:
     return out
 
 
+# A --protocol-v2 report (train_mtnn writes report["protocol"]) is scored
+# without v1's two silent substitutions [eval#10]. A missing held-out test
+# recall does not fall back to recall_at_10_same_player_next_season, which
+# recall_at_k computes over every pair, most of them training pairs. And a
+# missing component does not score 0.0 into a CQS that reads as a bad model:
+# on tests/test_composite_score.py's hand report (CQS 60.48), dropping
+# position_top1_acc gives 57.48, dropping the skills block 49.48, and a
+# missing test recall with a 0.95 all-pairs recall 67.18, with nothing in the
+# composite block saying why. With any of V2_REQUIRED missing the v2 CQS is None, which herdmux's
+# gpu/metrics.py read_result treats as a broken run, not a result. aux_r2 is
+# not required: masking the families its heads read removes it on purpose.
+# A v1 report is scored exactly as before; components_missing names what was
+# missing either way.
+V2_REQUIRED = tuple(k for k in WEIGHTS if k != "aux_r2")
+
+
+def _is_v2(report: dict[str, Any]) -> bool:
+    return report.get("protocol") == "v2"
+
+
+def _test_recall(report: dict[str, Any]) -> float | None:
+    """Held-out test recall@10; under v1, the all-pairs recall when it is missing."""
+    recall = _num(_held_out_test(report).get("recall_at_10_mtnn"))
+    if recall is None and not _is_v2(report):
+        recall = _num(report.get("recall_at_10_same_player_next_season"))
+    return recall
+
+
+def missing_components(report: dict[str, Any]) -> list[str]:
+    """The WEIGHTS components with no input in the report: component_scores scores each 0.0."""
+    test = _held_out_test(report)
+    recall = _test_recall(report)
+    nxt = _next_test(report)
+    aux = _aux_test_r2s(report)
+    have = {
+        "recall": recall,
+        "purity": _num(report.get("cross_era_archetype_neighbor_purity_at_20")),
+        "margin_14d": None if recall is None else _num(test.get("recall_at_10_transparent_14d")),
+        "archetype": _num(report.get("archetype_top1_acc")),
+        "position": _num(report.get("position_top1_acc")),
+        "skills_r2": _skills_test_r2(report),
+        "skill_nn": _num((report.get("skills") or {}).get("neighbor_consistency_pts_mtnn")),
+        "next_r2": _num(nxt.get("r2")),
+        "next_mae": _num(nxt.get("mae_z")),
+        "aux_r2": sum(aux) / len(aux) if aux else None,
+    }
+    return [k for k in WEIGHTS if have[k] is None]
+
+
 def component_scores(report: dict[str, Any]) -> dict[str, float]:
     """Map a mtnn_report-shaped dict to named 0–1 component scores."""
     test = _held_out_test(report)
-    recall = _num(test.get("recall_at_10_mtnn"))
-    if recall is None:
-        recall = _num(report.get("recall_at_10_same_player_next_season")) or 0.0
+    recall = _test_recall(report) or 0.0
     base14 = _num(test.get("recall_at_10_transparent_14d")) or 0.0
     margin = max(0.0, recall - base14)
 
@@ -273,13 +320,12 @@ def component_scores(report: dict[str, Any]) -> dict[str, float]:
 def composite_quality(report: dict[str, Any]) -> dict[str, Any]:
     comps = component_scores(report)
     cqs = 100.0 * sum(WEIGHTS[k] * comps[k] for k in WEIGHTS)
-    test = _held_out_test(report)
-    recall = _num(test.get("recall_at_10_mtnn"))
-    if recall is None:
-        recall = _num(report.get("recall_at_10_same_player_next_season"))
+    recall = _test_recall(report)
     purity = _num(report.get("cross_era_archetype_neighbor_purity_at_20"))
-    return {
-        "cqs": round(cqs, 2),
+    missing = missing_components(report)
+    unscored = [k for k in missing if k in V2_REQUIRED] if _is_v2(report) else []
+    block = {
+        "cqs": None if unscored else round(cqs, 2),
         "components": {k: round(v, 4) for k, v in comps.items()},
         "weights": dict(WEIGHTS),
         "promote_metric": "cqs",
@@ -304,7 +350,16 @@ def composite_quality(report: dict[str, Any]) -> dict[str, Any]:
         # weight scored over all rows, most of them training rows.
         "component_rows": dict(COMPONENT_ROWS),
         "all_rows_weight": round(sum(WEIGHTS[k] for k in ALL_ROW_COMPONENTS), 4),
+        # [eval#10] each scored 0.0 above; under protocol v2 a required one
+        # leaves the CQS unscored instead.
+        "components_missing": missing,
     }
+    if unscored:
+        block["cqs_unscored"] = (
+            f"protocol v2 scores no CQS without {', '.join(unscored)}: a missing component means a broken "
+            "run (no enrich_vectors, no skill labels, no held-out test pairs), not a score of 0.0"
+        )
+    return block
 
 
 def partial_cqs(recall: float | None, purity: float | None) -> float:
@@ -367,6 +422,8 @@ def should_promote(
     if in_sample is not None:
         return False, in_sample
     block = new_report.get("composite") or composite_quality(new_report)
+    if block.get("cqs") is None:
+        return False, f"CQS was not scored: {block.get('cqs_unscored') or 'the composite block has no cqs'}"
     new_cqs = float(block["cqs"])
     new_recall = _num(block.get("test_recall_at_10"))
     if new_recall is None:

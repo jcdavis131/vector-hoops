@@ -72,6 +72,28 @@ def check_loss(loss_value: float, terms: Mapping[str, Any], *, epoch: int, step:
     raise_non_finite(f"loss {loss_value} at epoch {epoch} step {step}; {which}")
 
 
+# train_mtnn's loop skips a slice of the epoch's permutation with fewer rows.
+MIN_BATCH_ROWS = 8
+
+
+def trained_batches(n_rows: int, batch: int, min_rows: int = MIN_BATCH_ROWS) -> int:
+    """How many slices of an n_rows permutation the loop trains on: those with at least min_rows rows."""
+    return sum(1 for start in range(0, n_rows, batch) if min(batch, n_rows - start) >= min_rows)
+
+
+def scheduler_steps_per_epoch(n_fit_rows: int, batch: int, grad_accum: int) -> int:
+    """Optimizer steps, so step-mode scheduler steps, one --protocol-v2 epoch takes over n_fit_rows.
+
+    The loop steps after every grad_accum trained batches and once more at
+    the end of the epoch for a partial accumulation, so ceil(batches /
+    grad_accum). v1's train_mtnn.optimizer_steps_per_epoch counts every
+    row, not the fit rows, includes slices too small to train on, and
+    floors the division; for a select run it says 26 where the loop takes
+    22 [training#7].
+    """
+    return -(-trained_batches(n_fit_rows, batch) // grad_accum)
+
+
 # --checkpoint-metric 'cqs' and 'composite' have always meant
 # train_mtnn.promotion_composite, i.e. composite_score.partial_cqs: smoothed val
 # recall and val purity, never the full CQS, whose other eight components are

@@ -8,6 +8,7 @@
     "--device is left out. The climb pins --device cuda and train_mtnn.py's default is cpu; a CPU run has a different reduction order and is not comparable with a CUDA-measured number.",
     "--val-every 0 --no-best-checkpoint: no validation pass while training and no checkpoint restored, so every seed trains all 40 epochs and the report scores the final weights. Such a run writes no mtnn_best.pt.",
     "No --phase, so select: the loss sees only train-split rows (start year <= 2021) and held-out recall and CQS come from val (2022-23, 2023-24) and test (2024-25 on) pairs.",
+    "No --protocol-v2 (2026-10-09): every recorded number is protocol v1. v2 (a dedicated training RNG, the LR schedule sized from the batches trained, no val rows in a select run's pairs or next-season targets) gives different numbers. Adding it here and to the climb's pinned flags gives it a new protocol id and needs a new baseline panel, which is the operator's decision; see the comment above --protocol-v2 in train_mtnn.py.",
     "The climb's one-seed screen, run before it pays for a panel, compares seed 5's CQS with the baseline panel's mean and discards an arm more than 1 sd below it; it does not use seed 5's own baseline value. On 1cdf63f8c825 seed 5 sits +0.59 above the mean (78.11 against 77.52, sd 0.64), so an arm up to about 1.2 CQS worse than the baseline at seed 5 still goes to a full panel [eval#12]. The fix belongs in herdmux (climb.py); it is recorded here because this recipe is what that screen measures."
   ],
   "flags": {

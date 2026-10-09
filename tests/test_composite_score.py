@@ -5,12 +5,13 @@ composite block is filled in already, so component_scores and
 composite_quality (the weights, the clipping, the fallbacks) had no test at
 all [tests#7]. The cases here build a report by hand and check the number.
 
-Two current behaviours are pinned as they are, not endorsed: a missing
+Two protocol-v1 behaviours are pinned as they are, not endorsed: a missing
 component scores 0.0, and a missing held-out test recall falls back to
 recall_at_10_same_player_next_season, which train_mtnn computes over all
 pairs, training pairs included. The tests#7 verifier asked that the CQS
 arithmetic stay unchanged so recorded baselines stay comparable; if it does
-change, these tests should fail and be updated in the same commit.
+change, these tests should fail and be updated in the same commit. A
+--protocol-v2 report does neither [eval#10]; its cases are below.
 
 should_promote is run against BASELINE and BASELINE_SD values set by each
 test, so re-anchoring the real baseline does not break these.
@@ -168,6 +169,55 @@ def test_only_the_seven_named_aux_heads_count():
     )
     # mean(.2, .4, .6, .6, .6, .6, .6) = 3.6 / 7
     assert cqs.component_scores(seven)["aux_r2"] == pytest.approx(3.6 / 7)
+
+
+def test_components_missing_names_what_scored_zero():
+    assert cqs.composite_quality(hand_report())["components_missing"] == []
+    rep = hand_report()
+    del rep["position_top1_acc"], rep["team_fit"], rep["roster_lift"]
+    assert cqs.composite_quality(rep)["components_missing"] == ["position", "aux_r2"]
+    assert cqs.composite_quality({})["components_missing"] == list(cqs.WEIGHTS)
+
+
+# --- protocol v2 [eval#10] ----------------------------------------------------------
+
+
+def test_v2_scores_a_complete_report_as_v1_does():
+    assert cqs.composite_quality(hand_report(protocol="v2"))["cqs"] == 60.48
+
+
+def test_v2_takes_no_all_pairs_recall_fallback_and_leaves_the_cqs_unscored():
+    rep = hand_report(
+        protocol="v2",
+        held_out_recall={"test": {"recall_at_10_transparent_14d": 0.75}},
+        recall_at_10_same_player_next_season=0.95,
+    )
+    block = cqs.composite_quality(rep)
+    assert block["components"]["recall"] == 0.0 and block["test_recall_at_10"] is None
+    assert block["cqs"] is None and block["components_missing"] == ["recall", "margin_14d"]
+    assert "without recall, margin_14d" in block["cqs_unscored"]
+    ok, why = cqs.should_promote({**rep, "composite": block, "population_validation": {"collapse_flags": {}}})
+    assert not ok and why.startswith("CQS was not scored: protocol v2")
+
+
+@pytest.mark.parametrize(
+    "drop", ["position_top1_acc", "skills", "next_profile", "cross_era_archetype_neighbor_purity_at_20"]
+)
+def test_v2_leaves_the_cqs_unscored_when_a_required_input_is_missing(drop):
+    rep = hand_report(protocol="v2")
+    del rep[drop]
+    assert cqs.composite_quality(rep)["cqs"] is None
+    # v1 still scores it, with the component at 0.0.
+    del rep["protocol"]
+    assert isinstance(cqs.composite_quality(rep)["cqs"], float)
+
+
+def test_v2_scores_without_aux_heads_which_masking_removes_on_purpose():
+    rep = hand_report(protocol="v2")
+    del rep["team_fit"], rep["roster_lift"]
+    block = cqs.composite_quality(rep)
+    assert block["components_missing"] == ["aux_r2"]
+    assert block["cqs"] == pytest.approx(60.48 - 100 * cqs.WEIGHTS["aux_r2"] * 0.3)
 
 
 # --- partial_cqs, the checkpoint proxy [eval#11] ---------------------------------
