@@ -414,10 +414,10 @@ def cmd_assemble():
     minutes = {}
     pvec = {}
     for p in vec["players"]:
-        if p["season"] < "2015-16" or p["season"] > "2025-26":
-            continue
         n = norm_name(p["name"])
-        minutes[n] = minutes.get(n, 0) + (p.get("total_min") or 0)
+        if "2015-16" <= p["season"] <= "2025-26":
+            minutes[n] = minutes.get(n, 0) + (p.get("total_min") or 0)
+        # pvec spans ALL seasons so legends (90s/00s) still get twin vectors
         w = p.get("total_min") or 0
         e = pvec.setdefault(n, [[0.0] * 14, 0.0])
         for k in range(14):
@@ -435,6 +435,7 @@ def cmd_assemble():
 
     def build_payload(feat_list, dots_cap):
         ids = sorted(by_player)
+        feat_set = set(feat_list)
         seasons_out, zones_out = [], []
         for pid in ids:
             ss = sorted(by_player[pid])
@@ -481,11 +482,12 @@ def cmd_assemble():
                     if best is None or key > best[0]:
                         best = (key, sh)
                 son_out.append([round(best[1]["x"] * 10), round(best[1]["y"] * 10)] if best else None)
-            # twins: top-3 by 14-d cosine (player level), with plain-words chips
+            # twins: top-3 by 14-d cosine (player level) among featured players
+            # with shot data, plus plain-words chips (mirrors twin-explainer.js)
             twins = []
             if pid in pvec:
                 sims = sorted(((cosine(pvec[pid][0], pvec[o][0]), o)
-                               for o in pvec if o != pid and o in by_player),
+                               for o in feat_set if o != pid and o in pvec),
                               reverse=True)[:3]
                 for sim, o in sims:
                     shared, differ = explain_pair(pvec[pid][0], pvec[o][0], codes, labels)
@@ -553,8 +555,8 @@ def cmd_assemble():
     for pid, f in payload["feat"].items():
         if not (len(f["s"]) == len(f["hex"]) == len(f["dots"]) == len(f["son"])):
             fail("featured parallel mismatch for %s" % pid)
-        if len(f["twins"]) != 3:
-            fail("expected 3 twins for %s" % pid)
+        if len(f["twins"]) > 3:
+            fail("too many twins for %s" % pid)
     blob2 = json.dumps(payload, separators=(",", ":"))
     if len(blob2.encode("utf-8")) > SIZE_BUDGET_BYTES:
         fail("budget exceeded after QA")
