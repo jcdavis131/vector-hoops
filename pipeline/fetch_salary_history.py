@@ -20,18 +20,26 @@ Run:
     python pipeline/fetch_salary_history.py                # fetch missing seasons
     python pipeline/fetch_salary_history.py --write-csv    # merge into salaries_history.csv
     python pipeline/fetch_salary_history.py --status
+
+Exit codes (ingest.run_fetch): 0 when every page is cached, 2 when any page
+failed. A page that parses to no rows is a failure and is not cached; it
+used to be written as [] and then served from cache on every later run.
 """
 
 from __future__ import annotations
 
 import argparse
 import csv
+import io
 import json
 import re
 import sys
 import time
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from artifact_io import atomic_write_bytes
+from ingest import BlockedError, EmptyPayloadError, Failures, FetchError, run_fetch, write_cache
 from name_utils import ascii_fold
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -144,7 +152,10 @@ def fetch_team_season(team: str, end_year: int, delay: float, force: bool = Fals
 
     url = f"https://www.basketball-reference.com/teams/{team}/{end_year}.html"
     for attempt in range(4):
-        r = requests.get(url, headers={"User-Agent": UA}, timeout=40)
+        try:
+            r = requests.get(url, headers={"User-Agent": UA}, timeout=40)
+        except requests.RequestException as e:
+            raise FetchError(f"{url}: {type(e).__name__}: {e}") from e
         if r.status_code == 429:  # rate limited — back off hard
             wait = 60 * (attempt + 1)
             print(f"  429 on {team} {end_year}; sleeping {wait}s", flush=True)
@@ -152,14 +163,17 @@ def fetch_team_season(team: str, end_year: int, delay: float, force: bool = Fals
             continue
         if r.status_code == 404:
             return []
-        r.raise_for_status()
+        if r.status_code >= 400:
+            raise (BlockedError if r.status_code == 403 else FetchError)(f"{url}: HTTP {r.status_code}")
         r.encoding = "utf-8"  # BBRef omits charset; don't let requests guess latin-1
         rows = parse_salaries(r.text)
-        path.parent.mkdir(parents=True, exist_ok=True)
-        path.write_text(json.dumps(rows), encoding="utf-8")
+        if not rows:
+            raise EmptyPayloadError(f"{url}: no salaries2 table rows parsed; not caching an empty page")
+        # Same layout as the json.dumps(rows) write it replaces, now atomic.
+        write_cache(path, rows, source=url, season=season_label(end_year), separators=(", ", ": "))
         time.sleep(delay)
         return rows
-    raise RuntimeError(f"repeated 429 for {team} {end_year}")
+    raise FetchError(f"repeated 429 for {team} {end_year}")
 
 
 def existing_seasons() -> set[str]:
@@ -215,15 +229,19 @@ def write_csv(end_years: list[int]) -> None:
         return
     backup = CSV_PATH.with_suffix(".csv.bak")
     if CSV_PATH.exists() and not backup.exists():
-        backup.write_text(CSV_PATH.read_text(encoding="utf-8"), encoding="utf-8")
+        atomic_write_bytes(backup, CSV_PATH.read_bytes())
         print(f"backup -> {backup.name}")
-    exists = CSV_PATH.exists()
-    with CSV_PATH.open("a", newline="", encoding="utf-8") as f:
-        w = csv.DictWriter(f, fieldnames=["name", "season", "salary", "team", "cap_pct"])
-        if not exists:
-            w.writeheader()
-        for r in sorted(new, key=lambda x: (x["season"], -x["salary"])):
-            w.writerow({**r, "salary": int(r["salary"]), "cap_pct": ""})
+    # The CSV used to be opened in append mode, so a crash mid-loop left it
+    # with half the new seasons. Build old bytes + new rows (csv's own \r\n
+    # line ends, exactly what the append wrote) and replace it in one go.
+    old = CSV_PATH.read_bytes() if CSV_PATH.exists() else b""
+    buf = io.StringIO(newline="")
+    w = csv.DictWriter(buf, fieldnames=["name", "season", "salary", "team", "cap_pct"])
+    if not old:
+        w.writeheader()
+    for r in sorted(new, key=lambda x: (x["season"], -x["salary"])):
+        w.writerow({**r, "salary": int(r["salary"]), "cap_pct": ""})
+    atomic_write_bytes(CSV_PATH, old + buf.getvalue().encode("utf-8"))
     seasons = sorted({r["season"] for r in new})
     print(f"appended {len(new)} rows for {len(seasons)} seasons: {seasons}")
 
@@ -258,15 +276,21 @@ def main() -> None:
     SAL_DIR.mkdir(parents=True, exist_ok=True)
     total = len(end_years) * len(BBREF_TEAMS)
     done = 0
+    failures = Failures("fetch_salary_history")
     for y in end_years:
         got = 0
         for team in BBREF_TEAMS:
-            rows = fetch_team_season(team, y, args.delay, force=args.force)
+            try:
+                rows = fetch_team_season(team, y, args.delay, force=args.force)
+            except FetchError as e:
+                failures.add(f"{team} {season_label(y)}", e)
+                rows = []
             got += len(rows)
             done += 1
         print(f"{season_label(y)}: {got} salary rows  [{done}/{total} pages]", flush=True)
+    failures.raise_if_any()
     print("done. now:  python pipeline/fetch_salary_history.py --write-csv")
 
 
 if __name__ == "__main__":
-    main()
+    run_fetch(main, name="fetch_salary_history")

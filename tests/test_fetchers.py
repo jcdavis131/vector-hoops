@@ -254,3 +254,149 @@ def test_draft_history_empty_table_is_not_cached(tmp_path, monkeypatch):
     monkeypatch.setattr(fdh, "fetch_all_drafts", lambda: [])
     assert run(fdh.main, ["fetch_draft_history.py"], monkeypatch) == 2
     assert out.read_text(encoding="utf-8") == '{"players": {"keep": []}}'
+
+
+# --- Basketball-Reference fetchers -------------------------------------------------------
+
+
+def test_bbref_advanced_offline_gate_can_fail_now(tmp_path, monkeypatch):
+    import fetch_bbref_advanced as fba
+
+    monkeypatch.setattr(fba, "CACHE", tmp_path)
+    # Before: 30 "no cache" lines and exit 0, so CI's gate could not fail.
+    assert run(fba.main, ["fetch_bbref_advanced.py", "--offline"], monkeypatch) == 2
+    rows = {f"p{i}": {"per": 15.0} for i in range(fba.MIN_ROWS)}
+    (tmp_path / "bbref_advanced_2003-04.json").write_text(json.dumps(rows), encoding="utf-8")
+    assert run(fba.main, ["fetch_bbref_advanced.py", "--offline", "--season", "2003-04"], monkeypatch) == 0
+    short = dict(list(rows.items())[:50])
+    (tmp_path / "bbref_advanced_2003-04.json").write_text(json.dumps(short), encoding="utf-8")
+    assert run(fba.main, ["fetch_bbref_advanced.py", "--offline", "--season", "2003-04"], monkeypatch) == 2
+
+
+def test_bbref_advanced_online_parse_is_a_failure_not_an_empty_success(tmp_path, monkeypatch):
+    import fetch_bbref_advanced as fba
+
+    monkeypatch.setattr(fba, "CACHE", tmp_path)
+    monkeypatch.setattr(fba, "retry_call", lambda fn, label: '<table id="advanced_stats"></table>')
+    assert run(fba.main, ["fetch_bbref_advanced.py", "--season", "2003-04"], monkeypatch) == 2
+    assert not list(tmp_path.glob("bbref_advanced_*.json"))
+
+
+def test_honors_all_star_fallback(monkeypatch):
+    import fetch_honors as fh
+    import nba_http
+
+    def missing(url):
+        raise ingest.FetchError("404") from nba_http.HTTPStatusError(404, url)
+
+    def broken(url):
+        raise ingest.FetchError("500 x5") from nba_http.HTTPStatusError(500, url)
+
+    monkeypatch.setattr(fh, "fetch_html", missing)
+    assert fh.parse_all_stars("<html></html>", 1999) == set()  # no All-Star Game that year
+    monkeypatch.setattr(fh, "fetch_html", broken)
+    # Before: `except Exception: pass`, i.e. asg=0 for every player in a complete cache.
+    with pytest.raises(ingest.FetchError):
+        fh.parse_all_stars("<html></html>", 2010)
+
+
+def test_honors_partial_run(tmp_path, monkeypatch):
+    import fetch_honors as fh
+
+    monkeypatch.setattr(fh, "CACHE", tmp_path)
+    monkeypatch.setattr(fh, "AWARD_YEARS", [2098, 2099])
+    monkeypatch.setattr(fh.time, "sleep", lambda s: None)
+
+    def build(year):
+        if year == 2098:
+            raise ingest.FetchError("HTTP 429 x5")
+        return {
+            "source": "fake",
+            "season": "2098-99",
+            "players": {"a": {}},
+            "vote_getters": 1,
+            "all_nba_selected": 0,
+            "all_stars": 0,
+        }
+
+    monkeypatch.setattr(fh, "build_year_cache", build)
+    assert run(fh.main, ["fetch_honors.py"], monkeypatch) == 2  # before: printed FAILED, exit 0
+    assert sorted(p.name for p in tmp_path.glob("honors_award_*.json")) == ["honors_award_2099.json"]
+
+
+def test_positions_short_parse_fails_and_is_not_cached(tmp_path, monkeypatch):
+    import fetch_positions as fpos
+
+    cache = tmp_path / "positions_bbref.json"
+    monkeypatch.setattr(fpos, "CACHE", cache)
+    monkeypatch.setattr(fpos.time, "sleep", lambda s: None)
+    vectors = tmp_path / "assets" / "vectors.json"
+    vectors.parent.mkdir()
+    vectors.write_text(json.dumps({"seasons": ["2002-03", "2003-04"]}), encoding="utf-8")
+    monkeypatch.setattr(fpos, "ROOT", tmp_path / "pipeline")
+    monkeypatch.setattr(fpos, "fetch_season", lambda s: {f"p{i}": "G" for i in range(60 if s == "2002-03" else 3)})
+    assert run(fpos.main, ["fetch_positions.py"], monkeypatch) == 2
+    assert list(json.loads(cache.read_text(encoding="utf-8"))) == ["2002-03"]
+
+
+class FakeRequests:
+    """Just enough of `requests` for fetch_salary_history / fetch_salaries."""
+
+    class RequestException(Exception):  # noqa: N818 -- the name fetch_salary_history catches
+        pass
+
+    def __init__(self, status=200, text=""):
+        self.status, self.text = status, text
+
+    def get(self, url, headers=None, timeout=None):
+        outer = self
+
+        class R:
+            status_code = outer.status
+            text = outer.text
+            encoding = None
+
+            def raise_for_status(self):
+                if outer.status >= 400:
+                    raise RuntimeError(f"HTTP {outer.status}")
+
+        return R()
+
+
+def test_salary_history_empty_page_is_not_cached(tmp_path, monkeypatch):
+    import fetch_salary_history as fsh
+
+    monkeypatch.setattr(fsh, "SAL_DIR", tmp_path)
+    monkeypatch.setitem(sys.modules, "requests", FakeRequests(200, "<html>no salaries2 table</html>"))
+    with pytest.raises(ingest.EmptyPayloadError):
+        fsh.fetch_team_season("ATL", 2020, delay=0)  # before: wrote [] and served it ever after
+    assert not (tmp_path / "2020" / "ATL.json").exists()
+    monkeypatch.setitem(sys.modules, "requests", FakeRequests(403))
+    with pytest.raises(ingest.BlockedError):
+        fsh.fetch_team_season("ATL", 2020, delay=0)
+
+
+def test_salary_history_csv_append_keeps_the_append_mode_bytes(tmp_path, monkeypatch):
+    import fetch_salary_history as fsh
+
+    csv_path = tmp_path / "salaries_history.csv"
+    old = b"name,season,salary,team,cap_pct\r\nA B,2017-18,1000000,ATL,\r\n"
+    csv_path.write_bytes(old)
+    monkeypatch.setattr(fsh, "CSV_PATH", csv_path)
+    new = {("C D", "2019-20"): {"name": "C D", "season": "2019-20", "salary": 2500000.0, "team": "BOS"}}
+    monkeypatch.setattr(fsh, "collect", lambda years: new)
+    fsh.write_csv([2020])
+    assert csv_path.read_bytes() == old + b"C D,2019-20,2500000,BOS,\r\n"
+    assert (tmp_path / "salaries_history.csv.bak").read_bytes() == old
+
+
+def test_salaries_empty_parse_keeps_the_cache(tmp_path, monkeypatch):
+    import fetch_salaries as fs
+
+    cache = tmp_path / "salary_bbref_current.json"
+    cache.write_text('{"a|2025-26": 1.0}', encoding="utf-8")
+    monkeypatch.setattr(fs, "BBREF_CACHE", cache)
+    monkeypatch.setattr(fs, "ROOT", tmp_path)
+    monkeypatch.setitem(sys.modules, "requests", FakeRequests(200, "<html>layout changed</html>"))
+    assert run(fs.main, ["fetch_salaries.py", "--fetch-bbref"], monkeypatch) == 2
+    assert cache.read_text(encoding="utf-8") == '{"a|2025-26": 1.0}'

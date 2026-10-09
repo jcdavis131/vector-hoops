@@ -5,7 +5,11 @@ Writes a compact cache: pipeline/cache/positions_bbref.json
 
 Parse-and-discard: the raw HTML is never stored (disk-frugal).
 Rate-limited to stay well under BBRef's 20 req/min policy.
-Resumable: seasons already in the cache are skipped.
+Resumable: seasons already in the cache are skipped (a season still being
+played only while the file's fetch record is younger than the TTL).
+
+Exit codes (ingest.run_fetch): 0 when every season is cached, 2 when any
+failed. The cache is rewritten atomically after each fetched season.
 """
 
 from __future__ import annotations
@@ -19,6 +23,8 @@ import urllib.request
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
+from ingest import EmptyPayloadError, Failures, FetchError, cache_is_fresh, run_fetch, write_cache
+from nba_http import retry_call
 from seasons import season_range
 
 ROOT = Path(__file__).resolve().parent
@@ -49,11 +55,19 @@ def norm_name(name: str) -> str:
     return re.sub(r"[^a-z0-9]", "", s)
 
 
+def season_url(season: str) -> str:
+    return f"https://www.basketball-reference.com/leagues/NBA_{int(season[:4]) + 1}_totals.html"
+
+
 def fetch_season(season: str) -> dict[str, str]:
-    end_year = int(season[:4]) + 1
-    url = f"https://www.basketball-reference.com/leagues/NBA_{end_year}_totals.html"
-    req = urllib.request.Request(url, headers={"User-Agent": UA})
-    html = urllib.request.urlopen(req, timeout=30).read().decode("utf-8", "replace")
+    url = season_url(season)
+
+    def get() -> str:
+        req = urllib.request.Request(url, headers={"User-Agent": UA})
+        with urllib.request.urlopen(req, timeout=30) as resp:
+            return resp.read().decode("utf-8", "replace")
+
+    html = retry_call(get, url)
     out: dict[str, str] = {}
     for name, pos in ROW_RE.findall(html):
         key = norm_name(name)
@@ -70,22 +84,24 @@ def main() -> None:
     if CACHE.exists():
         cache = json.loads(CACHE.read_text(encoding="utf-8"))
 
+    failures = Failures("fetch_positions")
     for season in seasons:
-        if season in cache and len(cache[season]) > 50:
+        if season in cache and len(cache[season]) > 50 and cache_is_fresh(CACHE, season):
             print(f"{season}: cached ({len(cache[season])})", flush=True)
             continue
         try:
             rows = fetch_season(season)
-        except Exception as exc:
-            print(f"{season}: FAIL {exc}", flush=True)
+            if len(rows) < 50:
+                raise EmptyPayloadError(f"only {len(rows)} rows parsed from {season_url(season)}; not cached")
+        except FetchError as exc:
+            # Used to be `except Exception: print(FAIL)`, with a "SUSPICIOUS"
+            # short parse also only printed; both now count toward exit 2.
+            failures.add(season, exc)
             time.sleep(DELAY_S)
             continue
-        if len(rows) < 50:
-            print(f"{season}: SUSPICIOUS ({len(rows)} rows) — not cached", flush=True)
-        else:
-            cache[season] = rows
-            CACHE.write_text(json.dumps(cache, separators=(",", ":")), encoding="utf-8")
-            print(f"{season}: {len(rows)} players", flush=True)
+        cache[season] = rows
+        write_cache(CACHE, cache, source="basketball-reference.com season totals pages")
+        print(f"{season}: {len(rows)} players", flush=True)
         time.sleep(DELAY_S)
 
     total = sum(len(v) for v in cache.values())
@@ -93,8 +109,8 @@ def main() -> None:
         f"done: {len(cache)}/{len(seasons)} seasons, {total} name-season positions",
         flush=True,
     )
-    sys.exit(0 if len(cache) == len(seasons) else 1)
+    failures.raise_if_any()
 
 
 if __name__ == "__main__":
-    main()
+    run_fetch(main, name="fetch_positions")

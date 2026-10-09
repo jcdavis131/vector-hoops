@@ -7,12 +7,16 @@ Writes per-award-year caches:
   pipeline/cache/honors_award_YYYY.json   (YYYY = end year of NBA season)
 
 Run:  python pipeline/fetch_honors.py [--offline] [--year 2024]
+
+Exit codes (ingest.run_fetch): 0 when every year is cached, 2 when any year
+failed or (offline) has no cache. A failed year used to print "FAILED" and
+the script exited 0 [ingest#7]; it writes nothing now, and the other years
+are still fetched.
 """
 
 from __future__ import annotations
 
 import argparse
-import json
 import re
 import sys
 import time
@@ -21,7 +25,9 @@ from html.parser import HTMLParser
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from seasons import season_end_year, season_range
+from ingest import EmptyPayloadError, Failures, FetchError, cache_is_fresh, run_fetch, write_cache
+from nba_http import retry_call, status_of
+from seasons import is_final, season_end_year, season_range
 
 ROOT = Path(__file__).resolve().parents[1]
 CACHE = ROOT / "pipeline" / "cache"
@@ -49,18 +55,28 @@ def cache_path(year: int) -> Path:
 
 
 def fetch_html(url: str) -> str:
-    try:
-        from curl_cffi import requests as cr
+    """GET url (curl_cffi when installed, else urllib). FetchError when it never succeeds.
 
-        r = cr.get(url, impersonate="chrome120", headers={"User-Agent": UA}, timeout=60)
-        r.raise_for_status()
-        return r.text
-    except ImportError:
+    nba_http.retry_call classifies the failure: a 403 is BlockedError after
+    two tries, a 404 is not retried, 429/5xx back off.
+    """
+
+    def get() -> str:
+        try:
+            from curl_cffi import requests as cr
+        except ImportError:
+            cr = None
+        if cr is not None:
+            r = cr.get(url, impersonate="chrome120", headers={"User-Agent": UA}, timeout=60)
+            r.raise_for_status()
+            return r.text
         import urllib.request
 
         req = urllib.request.Request(url, headers={"User-Agent": UA})
         with urllib.request.urlopen(req, timeout=60) as resp:
             return resp.read().decode("utf-8", errors="replace")
+
+    return retry_call(get, url)
 
 
 class _TableParser(HTMLParser):
@@ -202,12 +218,17 @@ def parse_all_stars(html: str, award_year: int) -> set[str]:
         stars.add(norm_name(m.group(1)))
     if stars:
         return stars
+    # This fallback fetch sat in `except Exception: pass`, so any failed GET
+    # left every player of the year at asg=0 in a cache marked complete
+    # [health#8]. A 404 is the one expected answer: 1999 had no All-Star Game.
     try:
         asg_html = fetch_html(f"https://www.basketball-reference.com/allstar/NBA_{award_year}.html")
-        for m in re.finditer(r'data-stat="player"[^>]*>\s*<a[^>]*>([^<]+)</a>', asg_html, re.IGNORECASE):
-            stars.add(norm_name(m.group(1)))
-    except Exception:
-        pass
+    except FetchError as e:
+        if status_of(e.__cause__) == 404:
+            return stars
+        raise
+    for m in re.finditer(r'data-stat="player"[^>]*>\s*<a[^>]*>([^<]+)</a>', asg_html, re.IGNORECASE):
+        stars.add(norm_name(m.group(1)))
     return stars
 
 
@@ -260,25 +281,37 @@ def main() -> None:
     if args.offline:
         have = [y for y in years if cache_path(y).exists()]
         print(f"cached honor years: {len(have)}/{len(years)}")
+        if len(have) < len(years):
+            raise FetchError(f"no honors cache for award years {[y for y in years if y not in have]}")
         return
 
     CACHE.mkdir(parents=True, exist_ok=True)
+    failures = Failures("fetch_honors")
     for year in years:
         p = cache_path(year)
-        if p.exists() and not args.refresh:
+        season = award_year_to_season(year)
+        if not args.refresh and cache_is_fresh(p, season):
             print(f"award {year}: cached, skipping")
             continue
         try:
             doc = build_year_cache(year)
-            p.write_text(json.dumps(doc, separators=(",", ":")), encoding="utf-8")
-            print(
-                f"award {year} ({doc['season']}): {doc['vote_getters']} vote-getters, "
-                f"{doc['all_nba_selected']} All-NBA, {doc['all_stars']} ASG"
-            )
-            time.sleep(3.5)  # polite BBRef throttle
-        except Exception as e:
-            print(f"award {year}: FAILED ({e})")
+            write_cache(p, doc, source=doc["source"], n_rows=len(doc["players"]), season=season)
+        except EmptyPayloadError as e:
+            if is_final(season):
+                failures.add(str(year), e)
+            else:
+                print(f"award {year}: no honors yet for {season}; nothing cached")
+            continue
+        except FetchError as e:
+            failures.add(str(year), e)
+            continue
+        print(
+            f"award {year} ({doc['season']}): {doc['vote_getters']} vote-getters, "
+            f"{doc['all_nba_selected']} All-NBA, {doc['all_stars']} ASG"
+        )
+        time.sleep(3.5)  # polite BBRef throttle
+    failures.raise_if_any()
 
 
 if __name__ == "__main__":
-    main()
+    run_fetch(main, name="fetch_honors")

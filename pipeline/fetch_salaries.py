@@ -37,16 +37,20 @@ Run::
 from __future__ import annotations
 
 import argparse
-import json
 import re
 import sys
 from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from ingest import run_fetch, write_cache
+from nba_http import retry_call
 
 ROOT = Path(__file__).resolve().parents[1]
 CACHE = ROOT / "pipeline" / "cache"
 CSV_PATH = CACHE / "salaries_history.csv"
 EXAMPLE_CSV = CACHE / "salaries_history.example.csv"
 BBREF_CACHE = CACHE / "salary_bbref_current.json"
+BBREF_CONTRACTS_URL = "https://www.basketball-reference.com/contracts/players.html"
 
 UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0 Safari/537.36"
 
@@ -64,13 +68,13 @@ def fetch_bbref_contracts() -> dict[str, float]:
     import requests
 
     out: dict[str, float] = {}
-    r = requests.get(
-        "https://www.basketball-reference.com/contracts/players.html",
-        headers={"User-Agent": UA},
-        timeout=40,
-    )
-    r.raise_for_status()
-    html = r.text
+
+    def get() -> str:
+        r = requests.get(BBREF_CONTRACTS_URL, headers={"User-Agent": UA}, timeout=40)
+        r.raise_for_status()
+        return r.text
+
+    html = retry_call(get, "basketball-reference contracts")
     head = re.search(r"<thead>.*?</thead>", html, re.S)
     seasons = re.findall(r">(\d{4}-\d{2})<", head.group(0)) if head else []
     for m in re.finditer(r'<tr[^>]*>.*?data-stat="player"[^>]*>.*?>([^<]+)</a>(.*?)</tr>', html, re.S):
@@ -86,8 +90,9 @@ def fetch_bbref_contracts() -> dict[str, float]:
 
 
 def write_bbref_cache(data: dict[str, float]) -> None:
-    CACHE.mkdir(parents=True, exist_ok=True)
-    BBREF_CACHE.write_text(json.dumps(data, separators=(",", ":")), encoding="utf-8")
+    # Atomic, and an empty parse raises EmptyPayloadError instead of
+    # replacing the committed cache with {}.
+    write_cache(BBREF_CACHE, data, source=BBREF_CONTRACTS_URL)
     print(f"bbref contracts: {len(data)} keys -> {BBREF_CACHE.relative_to(ROOT)}")
 
 
@@ -129,15 +134,9 @@ def main() -> None:
         return
 
     if args.fetch_bbref:
-        try:
-            data = fetch_bbref_contracts()
-        except Exception as exc:
-            print(f"bbref fetch failed: {exc}", file=sys.stderr)
-            sys.exit(1)
-        if not data:
-            print("bbref fetch returned 0 rows", file=sys.stderr)
-            sys.exit(1)
-        write_bbref_cache(data)
+        # A failed fetch or an empty parse raises FetchError; run_fetch exits 2
+        # with one line. Other exceptions are bugs and keep their traceback.
+        write_bbref_cache(fetch_bbref_contracts())
 
     if args.merge:
         if not CSV_PATH.exists():
@@ -150,4 +149,4 @@ def main() -> None:
 
 
 if __name__ == "__main__":
-    main()
+    run_fetch(main, name="fetch_salaries")

@@ -18,6 +18,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from fetch_honors import fetch_html, norm_name
+from ingest import FetchError, run_fetch, write_cache
 
 ROOT = Path(__file__).resolve().parents[1]
 CACHE = ROOT / "pipeline" / "cache"
@@ -61,7 +62,7 @@ def main() -> None:
 
     if args.offline:
         if not OUT.exists():
-            raise SystemExit(f"missing {OUT}")
+            raise FetchError(f"missing {OUT}")
         doc = json.loads(OUT.read_text(encoding="utf-8"))
         print(f"cached Finals MVP seasons: {len(doc.get('bySeason', {}))}")
         return
@@ -69,19 +70,18 @@ def main() -> None:
     html = fetch_html(URL)
     by = parse_finals_mvp(html)
     if len(by) < 50:
-        raise SystemExit(f"parsed only {len(by)} Finals MVP rows — page layout changed?")
-    CACHE.mkdir(parents=True, exist_ok=True)
-    OUT.write_text(
-        json.dumps(
-            {
-                "built": time.strftime("%Y-%m-%d"),
-                "source": URL,
-                "complete": True,
-                "bySeason": by,
-            },
-            separators=(",", ":"),
-        ),
-        encoding="utf-8",
+        raise FetchError(f"parsed only {len(by)} Finals MVP rows — page layout changed?")
+    # Atomic: an interrupted write used to truncate the only copy.
+    write_cache(
+        OUT,
+        {
+            "built": time.strftime("%Y-%m-%d"),
+            "source": URL,
+            "complete": True,
+            "bySeason": by,
+        },
+        source=URL,
+        n_rows=len(by),
     )
     # sanity: Jordan three-peat + second three-peat
     for s in ("1990-91", "1991-92", "1992-93", "1995-96", "1996-97", "1997-98"):
@@ -91,4 +91,4 @@ def main() -> None:
 
 
 if __name__ == "__main__":
-    main()
+    run_fetch(main, name="fetch_finals_mvp")
