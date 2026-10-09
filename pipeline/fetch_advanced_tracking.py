@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 """
-W1 — Advanced Tracking PlayerTracking since 2013 (offline-capable + residential flag)
-Zero-deps stdlib only, rate-limited 3-4s, resumable.
+W1 — Advanced Tracking PlayerTracking since 2013 (residential flag)
+Rate-limited, resumable.
 
 Outputs:
-  - pipeline/cache/tracking_2013-14.json ... tracking_2025-26.json
+  - pipeline/cache/advanced_tracking_2013-14.json ... advanced_tracking_<LAST_SEASON>.json
   - pipeline/cache/tracking_summary.json
 
 Metrics (per Task):
@@ -14,23 +14,36 @@ Residential block handling (must):
   - If 403/log blocked: log timeline.jsonl status=blocked errorClass=network
   - Create LOCAL-GPU request marker file ~/.cache/local_gpu_handoff_request.json {task: fetch_advanced_tracking, reason: residential, requested_at: ISO}
 
-Offline fallback:
-  - Keep existing pipeline/cache/tracking_*.json as is (2.7M total)
-  - Try balldontlie.io / data.nba.net public mirrors (best-effort, no API key)
+Why its own files (2026-10-09). This script used to merge every response
+column (`rec[k.lower()] = v`: player_name, team_abbreviation, gp, min, ...)
+into pipeline/cache/tracking_<season>.json, the file build_vectors reads
+key by key into the matrix's tracking family, and its skip check looked for
+hustle keys those files do not have, so one successful run would have
+rewritten all 13 of them [ingest#11]. It now writes
+advanced_tracking_<season>.json, which nothing in the build reads, and
+build_vectors holds tracking_*.json to its declared columns either way.
 
-Zero-deps: urllib, json, pathlib, time, datetime, os, sys, re
+Failures (2026-10-09). Requests go through nba_http.fetch_stats_json
+(retries, 403 -> BlockedError). An HTTP error used to come back as {}, a
+zero-row success, and main()'s (rows, blocked) return was ignored, so even a
+fully blocked run exited 0 [ingest#7]. A season with any failed endpoint now
+writes nothing; the run exits 2 (ingest.run_fetch) after trying the rest.
+The old "offline fallback" probed data.nba.net and wrote nothing from it; it
+is gone.
 """
 from __future__ import annotations
-import json, sys, re, time, os, datetime, pathlib, urllib.request, urllib.error, urllib.parse
+import json, sys, time, os, datetime
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from seasons import TRACKING_FIRST_SEASON, season_range
+from ingest import BlockedError, EmptyPayloadError, Failures, FetchError, cache_is_fresh, run_fetch, write_cache
+from nba_http import fetch_stats_json
+from artifact_io import atomic_write_text
+from seasons import TRACKING_FIRST_SEASON, is_final, season_range
 
 ROOT = Path(__file__).resolve().parents[1]
 PIPELINE = ROOT / "pipeline"
 CACHE = PIPELINE / "cache"
-CACHE.mkdir(parents=True, exist_ok=True)
 
 SEASONS = season_range(TRACKING_FIRST_SEASON)
 
@@ -42,16 +55,10 @@ HUSTLE_PARAMS = {
     "SeasonType": "Regular Season",
 }
 
-UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0 Safari/537.36"
-STATS_HEADERS = {
-    "Accept": "application/json, text/plain, */*",
-    "Accept-Language": "en-US,en;q=0.9",
-    "Origin": "https://www.nba.com",
-    "Referer": "https://www.nba.com/",
-    "User-Agent": UA,
-    "x-nba-stats-origin": "stats",
-    "x-nba-stats-token": "true",
-}
+
+def out_path(season: str) -> Path:
+    return CACHE / f"advanced_tracking_{season}.json"
+
 
 def _log_timeline(node_id, status, err_cls=None, latency=0, tokens=0, extra=None):
     msg = {"nodeId": node_id, "agentId": "executor", "attempt": 1, "latency": latency, "tokens": tokens, "status": status, "errorClass": err_cls}
@@ -81,37 +88,21 @@ def _create_gpu_handoff_marker(reason="residential"):
         "requested_at": datetime.datetime.utcnow().isoformat()+"Z",
         "seasons": SEASONS,
         "metrics": ["screen_ast","deflections","loose_balls","boxouts","contested_2s","contested_3s","drives","passes","secondary_ast","charges_drawn","dist_miles","avg_speed","potential_ast"],
-        "outputs": ["pipeline/cache/tracking_*.json","pipeline/cache/tracking_summary.json"],
-        "fallback": "balldontlie/data.nba.net offline",
+        "outputs": ["pipeline/cache/advanced_tracking_*.json","pipeline/cache/tracking_summary.json"],
         "residential_required": True,
         "priority": "high",
-        "requested_by": "fetch_advanced_tracking.py zero-deps"
+        "requested_by": "fetch_advanced_tracking.py"
     }
     try:
         marker_path.write_text(json.dumps(payload, separators=(",",":")))
         print(f"created GPU handoff marker {marker_path}")
-    except Exception as e:
+    except OSError as e:
         print(f"handoff marker write fail {e}")
 
-def fetch_stats_endpoint(endpoint: str, params: dict) -> dict | None:
-    query = urllib.parse.urlencode(params)
-    url = f"https://stats.nba.com/stats/{endpoint}?{query}"
-    req = urllib.request.Request(url, headers=STATS_HEADERS)
-    try:
-        time.sleep(3.5)
-        with urllib.request.urlopen(req, timeout=30) as resp:
-            txt = resp.read().decode("utf-8")
-            data = json.loads(txt)
-            return data
-    except urllib.error.HTTPError as e:
-        if e.code in (403, 429, 503):
-            print(f"{endpoint} {params.get('Season') or params.get('SeasonYear')} blocked HTTP {e.code}")
-            return None
-        print(f"{endpoint} HTTP {e.code} {e}")
-        return {}
-    except Exception as e:
-        print(f"{endpoint} err {e}")
-        return {}
+def fetch_stats_endpoint(endpoint: str, params: dict) -> dict:
+    """The parsed payload. FetchError (BlockedError on 403) when it never succeeds."""
+    time.sleep(3.5)
+    return fetch_stats_json(endpoint, params, timeout=30)
 
 def parse_resultset(data: dict, set_name: str=None) -> list[dict]:
     if not data:
@@ -168,11 +159,7 @@ def fetch_pt_measure(season: str, measure: str):
         "VsDivision": "",
         "Weight": "",
     }
-    data = fetch_stats_endpoint("leaguedashptstats", params)
-    if data is None:
-        return None
-    rows = parse_resultset(data)
-    return rows
+    return parse_resultset(fetch_stats_endpoint("leaguedashptstats", params))
 
 def fetch_hustle(season: str):
     params = dict(HUSTLE_PARAMS)
@@ -181,187 +168,131 @@ def fetch_hustle(season: str):
     for k in extra_empty:
         if k not in params:
             params[k] = "" if k!="LastNGames" else "0"
-    data = fetch_stats_endpoint(HUSTLE_ENDPOINT, params)
-    if data is None:
-        return None
-    rows = parse_resultset(data)
-    return rows
+    return parse_resultset(fetch_stats_endpoint(HUSTLE_ENDPOINT, params))
 
-def offline_fallback_data_nba_net(season: str):
-    urls = [
-        f"https://data.nba.net/data/10s/prod/v1/{season[:4]}/players.json",
-        f"https://cdn.nba.com/static/json/liveData/tracking/{season}/tracking.json",
-    ]
-    for url in urls:
-        try:
-            req = urllib.request.Request(url, headers={"User-Agent": UA})
-            time.sleep(1.5)
-            with urllib.request.urlopen(req, timeout=15) as resp:
-                txt = resp.read().decode("utf-8")[:20000]
-                print(f"offline fallback {season} {url} len {len(txt)}")
-                return True
-        except Exception:
+def build_season(season: str) -> dict[str, dict]:
+    """player id -> merged hustle + tracking record. Raises FetchError on any failed endpoint."""
+    season_data: dict[str, dict] = {}
+    hustle_rows = fetch_hustle(season)
+    print(f"tracking {season} hustle {len(hustle_rows)} rows")
+    for r in hustle_rows:
+        pid = r.get("PLAYER_ID") or r.get("player_id")
+        if not pid:
             continue
-    return False
+        rec = season_data.setdefault(str(pid), {})
+        for k,v in r.items():
+            rk = k.lower().replace(" ", "_")
+            if "screen" in rk and "assist" in rk:
+                rec["screen_ast"] = v
+            elif "deflect" in rk:
+                rec["deflections"] = v
+            elif "loose" in rk:
+                rec["loose_balls"] = v
+            elif "box" in rk:
+                rec["boxouts"] = v
+            elif "contested" in rk and "2" in rk:
+                rec["contested_2s"] = v
+            elif "contested" in rk and "3" in rk:
+                rec["contested_3s"] = v
+            elif "contested" in rk:
+                rec.setdefault("contested_shots", v)
+            elif "charge" in rk:
+                rec["charges_drawn"] = v
+            else:
+                rec[rk] = v
 
-def load_existing_tracking(season: str):
-    p = CACHE / f"tracking_{season}.json"
-    if p.exists():
-        try:
-            doc = json.loads(p.read_text(encoding="utf-8"))
-            if isinstance(doc, dict) and len(doc) > 20:
-                return doc
-        except:
-            pass
-    return {}
+    for mt in PT_MEASURE_TYPES:
+        pt_rows = fetch_pt_measure(season, mt)
+        print(f"tracking {season} PtMeasure {mt} {len(pt_rows)} rows")
+        for r in pt_rows:
+            pid = r.get("PLAYER_ID") or r.get("player_id")
+            if not pid:
+                continue
+            rec = season_data.setdefault(str(pid), {})
+            for k,v in r.items():
+                lk = k.lower()
+                if lk in ("drives","drive","drives_pg"):
+                    rec["drives"] = v
+                elif lk in ("passes","passes_made","passes_pg"):
+                    rec["passes"] = v
+                elif "secondary" in lk and "ast" in lk:
+                    rec["secondary_ast"] = v
+                elif "potential" in lk and "ast" in lk:
+                    rec["potential_ast"] = v
+                elif "dist" in lk:
+                    rec["dist_miles"] = v
+                elif "avg_speed" in lk:
+                    rec["avg_speed"] = v
+                elif lk in ("screen_ast","screen_assists","screen_ast_pg"):
+                    rec["screen_ast"] = v
+                if k not in rec:
+                    rec[k.lower()] = v
+    return season_data
 
 def main():
     import argparse
-    ap = argparse.ArgumentParser(description="fetch_advanced_tracking zero-deps")
-    ap.add_argument("--offline", action="store_true", help="skip live fetch, use cache only")
+    ap = argparse.ArgumentParser(description="fetch_advanced_tracking")
+    ap.add_argument("--offline", action="store_true", help="no network: report which seasons are cached")
     ap.add_argument("--refresh", action="store_true", help="force live even if cache exists")
     args = ap.parse_args()
 
+    if args.offline:
+        have = [s for s in SEASONS if out_path(s).exists()]
+        print(f"cached advanced-tracking seasons: {len(have)}/{len(SEASONS)}")
+        if len(have) < len(SEASONS):
+            raise FetchError(f"no advanced_tracking cache for {[s for s in SEASONS if s not in have]}")
+        return
+
     t0 = time.time()
     _log_timeline("L3-fetch_tracking-start", "running", extra={"seasons": SEASONS})
+    CACHE.mkdir(parents=True, exist_ok=True)
 
+    failures = Failures("fetch_advanced_tracking")
     blocked = []
     total_rows = 0
-    summary = {"built": datetime.datetime.utcnow().isoformat()+"Z", "seasons": {}, "metrics": ["screen_ast","deflections","loose_balls","boxouts","contested_2s","contested_3s","drives","passes","secondary_ast","charges_drawn","dist_miles","avg_speed","potential_ast"], "blocked": [], "offline_fallback": False}
+    summary = {"built": datetime.datetime.utcnow().isoformat()+"Z", "seasons": {}, "metrics": ["screen_ast","deflections","loose_balls","boxouts","contested_2s","contested_3s","drives","passes","secondary_ast","charges_drawn","dist_miles","avg_speed","potential_ast"], "blocked": []}
 
     for season in SEASONS:
-        existing = load_existing_tracking(season)
-        if existing and not args.refresh and not args.offline:
-            has_hustle = any("SCREEN_AST" in str(v) or "DEFLECTIONS" in str(v) or "screen_ast" in str(v).lower() for v in list(existing.values())[:5])
-            if len(existing) >= 50 and has_hustle:
-                print(f"tracking {season}: cache hit {len(existing)} rows (>=50 with hustle), skip")
-                summary["seasons"][season] = {"rows": len(existing), "cached": True}
-                total_rows += len(existing)
-                continue
-
-        if args.offline:
-            cn = len(existing) if existing else 0
-            print(f"tracking {season} offline cache {cn}")
-            summary["seasons"][season] = {"rows": cn, "cached": True, "offline": True}
-            total_rows += cn
+        p = out_path(season)
+        if not args.refresh and cache_is_fresh(p, season):
+            print(f"tracking {season}: cached, skip")
+            summary["seasons"][season] = {"cached": True}
             continue
-
-        season_data = {}
-        blocked_this_season = False
-
-        hustle_rows = fetch_hustle(season)
-        if hustle_rows is None:
-            blocked.append(season)
-            blocked_this_season = True
-            print(f"tracking {season} hustle blocked — residential required")
-            _log_timeline(f"L3-tracking-{season}-hustle", "blocked", err_cls="network", extra={"season": season, "endpoint": HUSTLE_ENDPOINT})
-        else:
-            print(f"tracking {season} hustle {len(hustle_rows)} rows")
-            for r in hustle_rows:
-                pid = r.get("PLAYER_ID") or r.get("player_id")
-                if not pid:
-                    continue
-                rec = season_data.setdefault(str(pid), {})
-                for k,v in r.items():
-                    rk = k.lower().replace(" ", "_")
-                    if "screen" in rk and "assist" in rk:
-                        rec["screen_ast"] = v
-                    elif "deflect" in rk:
-                        rec["deflections"] = v
-                    elif "loose" in rk:
-                        rec["loose_balls"] = v
-                    elif "box" in rk:
-                        rec["boxouts"] = v
-                    elif "contested" in rk and "2" in rk:
-                        rec["contested_2s"] = v
-                    elif "contested" in rk and "3" in rk:
-                        rec["contested_3s"] = v
-                    elif "contested" in rk:
-                        rec.setdefault("contested_shots", v)
-                    elif "charge" in rk:
-                        rec["charges_drawn"] = v
-                    else:
-                        rec[rk] = v
-
-        for mt in PT_MEASURE_TYPES:
-            pt_rows = fetch_pt_measure(season, mt)
-            if pt_rows is None:
-                blocked.append(season)
-                blocked_this_season = True
-                print(f"tracking {season} PtMeasure {mt} blocked")
-                _log_timeline(f"L3-tracking-{season}-{mt}", "blocked", err_cls="network", extra={"season": season, "measure": mt})
-                continue
-            print(f"tracking {season} PtMeasure {mt} {len(pt_rows)} rows")
-            for r in pt_rows:
-                pid = r.get("PLAYER_ID") or r.get("player_id") or r.get("PLAYER_ID")
-                if not pid:
-                    continue
-                rec = season_data.setdefault(str(pid), {})
-                for k,v in r.items():
-                    lk = k.lower()
-                    if lk in ("drives","drive","drives_pg"):
-                        rec["drives"] = v
-                    elif lk in ("passes","passes_made","passes_pg"):
-                        rec["passes"] = v
-                    elif "secondary" in lk and "ast" in lk:
-                        rec["secondary_ast"] = v
-                    elif "potential" in lk and "ast" in lk:
-                        rec["potential_ast"] = v
-                    elif "dist" in lk:
-                        rec["dist_miles"] = v
-                    elif "avg_speed" in lk:
-                        rec["avg_speed"] = v
-                    elif lk in ("screen_ast","screen_assists","screen_ast_pg"):
-                        rec["screen_ast"] = v
-                    if k not in rec:
-                        rec[k.lower()] = v
-
-        if blocked_this_season and not season_data:
-            print(f"tracking {season} all endpoints blocked — trying offline fallback data.nba.net")
-            ok = offline_fallback_data_nba_net(season)
-            summary["offline_fallback"] = summary["offline_fallback"] or ok
-            existing_fallback = load_existing_tracking(season)
-            if existing_fallback:
-                season_data = existing_fallback
-                print(f"tracking {season} using existing fallback {len(season_data)} rows")
+        try:
+            season_data = build_season(season)
+            write_cache(p, season_data, source="stats.nba.com leaguehustlestatsplayer + leaguedashptstats via nba_http", season=season)
+        except EmptyPayloadError as e:
+            if is_final(season):
+                failures.add(season, e)
+                summary["seasons"][season] = {"rows": 0, "error": str(e)}
             else:
-                print(f"tracking {season} no fallback, empty")
-
-        if existing and season_data and isinstance(existing, dict):
-            for k,v in existing.items():
-                if k not in season_data:
-                    season_data[k] = v
-                else:
-                    if isinstance(v, dict):
-                        for kk, vv in v.items():
-                            if kk not in season_data[k]:
-                                season_data[k][kk] = vv
-
-        out_path = CACHE / f"tracking_{season}.json"
-        if season_data:
-            out_path.write_text(json.dumps(season_data, separators=(",",":")))
-            print(f"tracking {season} wrote {len(season_data)} player-track rows -> {out_path.name}")
-            summary["seasons"][season] = {"rows": len(season_data), "blocked": blocked_this_season}
-            total_rows += len(season_data)
-        else:
-            summary["seasons"][season] = {"rows": 0, "blocked": blocked_this_season, "empty": True}
+                print(f"tracking {season}: no rows yet; nothing cached")
+            continue
+        except FetchError as e:
+            failures.add(season, e)
+            if isinstance(e, BlockedError):
+                blocked.append(season)
+                _log_timeline(f"L3-tracking-{season}", "blocked", err_cls="network", extra={"season": season})
+            summary["seasons"][season] = {"rows": 0, "blocked": isinstance(e, BlockedError), "error": str(e)}
+            continue
+        print(f"tracking {season} wrote {len(season_data)} player-track rows -> {p.name}")
+        summary["seasons"][season] = {"rows": len(season_data)}
+        total_rows += len(season_data)
 
     summary["total_rows"] = total_rows
     summary["blocked_seasons"] = sorted(set(blocked))
     summary["residential_required"] = len(blocked) > 0
     summary_path = CACHE / "tracking_summary.json"
-    summary_path.write_text(json.dumps(summary, separators=(",",":")))
+    atomic_write_text(summary_path, json.dumps(summary, separators=(",",":")))
     print(f"tracking summary {total_rows} total rows blocked={len(summary['blocked_seasons'])} -> {summary_path.name}")
 
     latency = int((time.time()-t0)*1000)
-
     if blocked:
         _log_timeline("L3-fetch_tracking-blocked", "blocked", err_cls="network", latency=latency, tokens=total_rows, extra={"blocked": summary["blocked_seasons"], "reason": "residential"})
         _create_gpu_handoff_marker(reason="residential Akamai 403 — stats.nba.com PlayerTracking requires non-datacenter IP")
     else:
         _log_timeline("L3-fetch_tracking-done", "done", latency=latency, tokens=total_rows, extra={"seasons": len(SEASONS), "rows": total_rows})
-
-    return total_rows, len(blocked)
+    failures.raise_if_any()
 
 if __name__ == "__main__":
-    main()
+    run_fetch(main, name="fetch_advanced_tracking")

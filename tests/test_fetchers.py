@@ -400,3 +400,54 @@ def test_salaries_empty_parse_keeps_the_cache(tmp_path, monkeypatch):
     monkeypatch.setitem(sys.modules, "requests", FakeRequests(200, "<html>layout changed</html>"))
     assert run(fs.main, ["fetch_salaries.py", "--fetch-bbref"], monkeypatch) == 2
     assert cache.read_text(encoding="utf-8") == '{"a|2025-26": 1.0}'
+
+
+# --- fetch_advanced_tracking -----------------------------------------------------------
+
+
+@pytest.fixture
+def fat(tmp_path, monkeypatch):
+    import fetch_advanced_tracking
+
+    monkeypatch.setattr(fetch_advanced_tracking, "CACHE", tmp_path)
+    monkeypatch.setattr(fetch_advanced_tracking, "SEASONS", ["2097-98", "2098-99"])
+    monkeypatch.setattr(fetch_advanced_tracking.time, "sleep", lambda s: None)
+    # Both write outside the repo (bundles/ mission log, ~/.cache marker).
+    monkeypatch.setattr(fetch_advanced_tracking, "_log_timeline", lambda *a, **k: None)
+    monkeypatch.setattr(fetch_advanced_tracking, "_create_gpu_handoff_marker", lambda *a, **k: None)
+    return fetch_advanced_tracking
+
+
+def payload(headers, row):
+    return {"resultSets": [{"name": "X", "headers": headers, "rowSet": [row]}]}
+
+
+def test_advanced_tracking_writes_its_own_files_not_tracking_json(fat, tmp_path, monkeypatch):
+    def fake(endpoint, params, timeout=None):
+        if endpoint == fat.HUSTLE_ENDPOINT:
+            return payload(["PLAYER_ID", "PLAYER_NAME", "DEFLECTIONS"], [1, "A", 2.0])
+        return payload(["PLAYER_ID", "PLAYER_NAME", "GP", "DRIVES"], [1, "A", 70, 5.0])
+
+    monkeypatch.setattr(fat, "fetch_stats_json", fake)
+    assert run(fat.main, ["fetch_advanced_tracking.py"], monkeypatch) == 0
+    assert sorted(p.name for p in tmp_path.glob("advanced_tracking_*.json")) == [
+        "advanced_tracking_2097-98.json",
+        "advanced_tracking_2098-99.json",
+    ]
+    assert not list(tmp_path.glob("tracking_*-*.json")), "tracking_<season>.json is build_vectors' input"
+    rec = json.loads((tmp_path / "advanced_tracking_2097-98.json").read_text(encoding="utf-8"))["1"]
+    assert rec["deflections"] == 2.0 and rec["drives"] == 5.0
+
+
+def test_advanced_tracking_http_error_is_a_failure_not_zero_rows(fat, tmp_path, monkeypatch):
+    def fake(endpoint, params, timeout=None):
+        if params.get("Season") == "2098-99":
+            raise ingest.BlockedError("HTTP 403 on 2 attempts")
+        raise ingest.FetchError("HTTP 500 after 5 attempts")
+
+    monkeypatch.setattr(fat, "fetch_stats_json", fake)
+    # Before: HTTP 500 -> {} (a zero-row success), 403 -> None, and exit 0 either way.
+    assert run(fat.main, ["fetch_advanced_tracking.py"], monkeypatch) == 2
+    assert not list(tmp_path.glob("advanced_tracking_*.json"))
+    summary = json.loads((tmp_path / "tracking_summary.json").read_text(encoding="utf-8"))
+    assert summary["blocked_seasons"] == ["2098-99"]
