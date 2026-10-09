@@ -3,3 +3,6 @@
 pipeline/.shots_raw/
 pipeline/.shots_collect_state.json
 pipeline/.shots_collect_state.json.tmp
+
+# bytecode
+__pycache__/

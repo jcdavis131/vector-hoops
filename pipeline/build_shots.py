@@ -500,7 +500,7 @@ def cmd_assemble():
                     shared, differ = explain_pair(pvec[pid][0], pvec[o][0], codes, labels)
                     disp = next((p["name"] for p in vec["players"]
                                  if norm_name(p["name"]) == o), o)
-                    twins.append({"n": disp, "c": shared, "d": differ,
+                    twins.append({"id": o, "n": disp, "c": shared, "d": differ,
                                   "sim": round(sim, 3)})
             feat[pid] = {"s": latest3, "hex": hex_out, "dots": dots_out,
                          "twins": twins, "son": son_out}
