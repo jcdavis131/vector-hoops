@@ -1371,19 +1371,29 @@ def build_parser() -> argparse.ArgumentParser:
         default="",
         help="comma-separated tower families to drop (ablation)",
     )
+    # There was a third phase, "auto": select, then refit on all rows when the
+    # promote gate passed. No script or recipe in any repo on the box passed
+    # it, and it could not finish: the refit kept stepping the select phase's
+    # OneCycle schedule, 880 of 1,040 steps already used, needed 260 more, and
+    # torch raised ValueError at refit step 161 (reproduced 2026-10-09 with
+    # the real 12,966-row matrix's step counts), after the select embedding
+    # and checkpoint were written and before the report. Its refit loop also
+    # trained 7 of the main loop's 18 loss terms, so it would have shipped
+    # 11 heads untrained against the moved embedding [training#10]. Removed
+    # rather than repaired, since nothing called it: the shipping recipe is a
+    # select run (pipeline/recipes/ship.json).
     ap.add_argument(
         "--phase",
-        choices=("select", "final-refit", "auto"),
+        choices=("select", "final-refit"),
         default="select",
         help="select=honest held-out metrics (train-split rows only for loss); "
-        "final-refit=fit all rows then ship; "
-        "auto=select then full-corpus refit if promote ok",
+        "final-refit=fit all rows, so every metric in its report is in-sample",
     )
     ap.add_argument(
         "--fit-rows",
         choices=("train", "all"),
         default=None,
-        help="override which rows enter the loss (default: train for select/auto-selection, all for final-refit)",
+        help="override which rows enter the loss (default: train for select, all for final-refit)",
     )
     ap.add_argument(
         "--era-align",
@@ -1659,7 +1669,7 @@ def main(argv: list[str] | None = None) -> None:
     split_of = np.array([eval_split(str(s)) for s in seasons])
     if args.fit_rows is not None:
         fit_rows_mode = args.fit_rows
-    elif args.phase in ("select", "auto"):
+    elif args.phase == "select":
         fit_rows_mode = "train"
     else:
         fit_rows_mode = "all"
@@ -2243,169 +2253,8 @@ def main(argv: list[str] | None = None) -> None:
     report["deploy"] = {
         "mode": "selection_fit_rows_" + fit_rows_mode,
         "metrics_source": "selection_holdout",
-        "note": (
-            "Held-out recall/CQS use val/test pairs; loss rows follow fit_rows. "
-            "Use --phase auto to full-corpus refit after promote."
-        ),
+        "note": "Held-out recall/CQS use val/test pairs; loss rows follow fit_rows.",
     }
-
-    do_refit = args.phase == "auto" and ok
-    if args.phase == "auto" and not ok:
-        print(f"auto: promote failed ({why}) — skipping full-corpus refit")
-
-    if do_refit and best_epoch > 0:
-        refit_epochs = max(int(best_epoch), 10)
-        print(f"\n-- final-refit on ALL rows ({refit_epochs} epochs) --")
-        fit_idx = np.arange(n)
-        if BEST_CKPT.exists() and not args.no_best_checkpoint:
-            ckpt = safe_torch_load(BEST_CKPT, map_location=device)
-            model.load_state_dict(ckpt["model"])
-        for epoch in range(refit_epochs):
-            model.train()
-            perm = np.random.permutation(fit_idx)
-            total, steps = 0.0, 0
-            accum = 0
-            opt.zero_grad(set_to_none=True)
-            for s in range(0, len(perm), args.batch):
-                idx = perm[s : s + args.batch]
-                if len(idx) < 8:
-                    continue
-                idx_t = torch.tensor(idx, device=device)
-                partner = np.array([lookup.get(int(i), int(i)) for i in idx])
-                partner_t = torch.tensor(partner, device=device)
-                xa, ma = batch_views(xs, ms, idx_t, drop_p=args.drop_p)
-                xb, mb = batch_views(xs, ms, partner_t, drop_p=args.drop_p)
-                za, out_a = model(xa, ma, seas_t[idx_t])
-                zb, _ = model(xb, mb, seas_t[partner_t])
-                pair_w = None
-                if args.reliability_weight > 0 and row_reliability is not None:
-                    rel = torch.minimum(row_reliability[idx_t], row_reliability[partner_t])
-                    pair_w = 1.0 - args.reliability_weight * (1.0 - rel)
-                loss = contrastive_loss(
-                    za,
-                    zb,
-                    mode=args.nce_loss,
-                    temp=args.nce_temp,
-                    pos_a=pos_t[idx_t],
-                    pos_b=pos_t[partner_t],
-                    hard_neg_boost=args.hard_neg_boost,
-                    arch_labels=arch_t[idx_t],
-                    player_weight=args.nce_player_weight,
-                    arch_weight=args.nce_arch_weight,
-                    pair_weight=pair_w,
-                )
-                if getattr(args, "w_vicreg", 0) and args.w_vicreg > 0:
-                    v_a = vicreg_loss(
-                        za,
-                        lambda_var=getattr(args, "vicreg_var_w", 25.0),
-                        lambda_cov=getattr(args, "vicreg_cov_w", 1.0),
-                    )
-                    v_b = vicreg_loss(
-                        zb,
-                        lambda_var=getattr(args, "vicreg_var_w", 25.0),
-                        lambda_cov=getattr(args, "vicreg_cov_w", 1.0),
-                    )
-                    loss = loss + args.w_vicreg * 0.5 * (v_a + v_b)
-                loss = loss + weights["archetype"] * F.cross_entropy(out_a["archetype"], arch_t[idx_t])
-                if pos_mask[idx_t].any():
-                    loss = loss + weights["position"] * F.cross_entropy(
-                        out_a["position"][pos_mask[idx_t]],
-                        pos_t[idx_t][pos_mask[idx_t]],
-                    )
-                loss = loss + weights["profile"] * F.mse_loss(out_a["profile"], game_z[idx_t])
-                next_batch = next_idx_arr[idx]
-                next_valid = next_batch >= 0
-                if next_valid.any():
-                    next_t = torch.tensor(next_batch[next_valid], device=device)
-                    next_valid_t = torch.tensor(next_valid, device=device, dtype=torch.bool)
-                    loss = loss + weights["next_profile"] * F.smooth_l1_loss(
-                        out_a["next_profile"][next_valid_t], game_z[next_t]
-                    )
-                if "skills" in out_a:
-                    wm = skillm_t[idx_t]
-                    if wm.sum() > 0:
-                        se = (out_a["skills"] - skill_t[idx_t]) ** 2
-                        loss = loss + weights["skills"] * (wm * se).sum() / wm.sum()
-                scaled = loss / args.grad_accum
-                scaled.backward()
-                accum += 1
-                total += float(loss)
-                if accum < args.grad_accum:
-                    continue
-                nn.utils.clip_grad_norm_(model.parameters(), 1.0)
-                opt.step()
-                if sched_mode == "step":
-                    sched.step()
-                opt.zero_grad(set_to_none=True)
-                accum = 0
-                steps += 1
-            if accum > 0:
-                nn.utils.clip_grad_norm_(model.parameters(), 1.0)
-                opt.step()
-                if sched_mode == "step":
-                    sched.step()
-                opt.zero_grad(set_to_none=True)
-                steps += 1
-            if (epoch + 1) % 10 == 0 or epoch + 1 == refit_epochs:
-                print(f"  refit epoch {epoch + 1}/{refit_epochs} loss={total / max(1, steps):.4f}")
-        report["deploy"] = {
-            "mode": "final_refit_all_rows",
-            "metrics_source": "selection_holdout",
-            "refit_epochs": refit_epochs,
-            "refit_n_fit": n,
-            "note": (
-                "Held-out recall/CQS are from the train-split selection run; shipped embeddings are full-corpus refit."
-            ),
-        }
-        model.eval()
-        with torch.no_grad():
-            emb = model.encode(xs, ms, seas_t)
-            _, heads = model(xs, ms, seas_t)
-        E = emb.cpu().numpy().astype(np.float32)
-        arch_logits = heads["archetype"].cpu().numpy().astype(np.float32)
-        pos_logits = heads["position"].cpu().numpy().astype(np.float32)
-        skill_pred = (
-            heads["skills"].cpu().numpy().astype(np.float32) if "skills" in heads else np.zeros((len(E), 0), np.float32)
-        )
-        next_profile_pred = heads["next_profile"].cpu().numpy().astype(np.float32)
-        atomic_savez_compressed(
-            ART_DIR / "embedding_v3.npz",
-            E=E,
-            player_id=pids,
-            season=seasons,
-            name=names,
-            cluster=clusters,
-            position=positions,
-            archetype_logits=arch_logits,
-            position_logits=pos_logits,
-            skill_pred=skill_pred,
-            skill_keys=np.array(skill_keys),
-            next_profile_pred=next_profile_pred,
-            game_feature_keys=game_feature_keys,
-        )
-        record_written("embedding", ART_DIR / "embedding_v3.npz")
-        centroids = np.zeros((N_ARCHETYPES, E.shape[1]), dtype=np.float32)
-        for k in range(N_ARCHETYPES):
-            mask_k = clusters == k
-            if mask_k.any():
-                c = E[mask_k].mean(0)
-                centroids[k] = c / (np.linalg.norm(c) + 1e-8)
-        atomic_savez_compressed(ART_DIR / "mtnn_centroids.npz", centroids=centroids)
-        record_written("centroids", ART_DIR / "mtnn_centroids.npz")
-        atomic_torch_save(
-            {
-                "epoch": best_epoch,
-                "model": model.state_dict(),
-                "checkpoint_metric": args.checkpoint_metric,
-                "args": vars(args),
-                "weights": weights,
-                "deploy": report["deploy"],
-            },
-            BEST_CKPT,
-        )
-        record_written("checkpoint", BEST_CKPT)
-        # The .pt goes to DATA_DIR, not ART_DIR; this line used to say all three went to ART_DIR.
-        print(f"rewrote embedding_v3.npz, mtnn_centroids.npz -> {ART_DIR} and mtnn_best.pt -> {BEST_CKPT} from refit")
 
     # Additive: nothing above reads it, and composite_score never looks here.
     report["lineage"] = {

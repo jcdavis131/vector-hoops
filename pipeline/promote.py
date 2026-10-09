@@ -38,8 +38,9 @@ What a promotion checks (`--run <run_dir>`, a directory train_mtnn.py
   - the matrix fingerprint the run recorded equals the fingerprint of the
     current pipeline/data/train_matrix.npz + feature_manifest.json. The viz
     and Jacobian exporters read the current matrix next to the model;
-  - the run is a shipping phase: final-refit, or auto with its refit done.
-    A select-phase run is a measurement (loss on the train split only).
+  - the run is a shipping phase: final-refit. A select-phase run is a
+    measurement (loss on the train split only). --phase auto no longer
+    exists, and a run directory that recorded it is refused.
 Then composite_score.should_promote(report), re-run here rather than read
 from report["promote"], so the bar is the one in composite_score now. A run
 that fails it is refused unless --force "<reason>" is given, and the reason
@@ -109,7 +110,7 @@ from served_model import METRIC_KEYS  # noqa: E402
 DATA_DIR = ROOT / "pipeline" / "data"
 SCHEMA = 1
 KEEP = 5
-SHIPPING_PHASES = ("final-refit", "auto")
+SHIPPING_PHASES = ("final-refit",)
 REQUIRED = ("checkpoint", "embedding", "centroids")
 # Refreshed in pipeline/data from the promoted bundle, for readers outside
 # this repo. Not the checkpoint or the report: those are last-run files.
@@ -253,16 +254,15 @@ def check_run(run_dir: str | os.PathLike[str], *, data_dir: Path | None = None) 
         chk.problems.append(f"lineage.run_id {run_id!r} is not a usable directory name")
 
     phase = lin.get("phase")
-    deploy_mode = (report.get("deploy") or {}).get("mode")
-    if phase not in SHIPPING_PHASES:
+    if phase == "auto":
+        chk.problems.append(
+            "phase 'auto' was removed from train_mtnn.py (2026-10-09): its refit could not finish and "
+            "trained 7 of 18 loss terms [training#10]"
+        )
+    elif phase not in SHIPPING_PHASES:
         chk.problems.append(
             f"phase {phase!r} is a measuring run (loss on the train split, scored on held-out rows), "
-            "not a model to ship; promote a --phase final-refit or auto run"
-        )
-    elif phase == "auto" and deploy_mode != "final_refit_all_rows":
-        chk.problems.append(
-            f"phase 'auto' but its full-corpus refit did not run (deploy.mode {deploy_mode!r}): "
-            "the embedding is the selection fit"
+            "not a model to ship; promote a --phase final-refit run"
         )
 
     artifacts = lin.get("artifacts") or {}

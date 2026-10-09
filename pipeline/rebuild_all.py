@@ -82,7 +82,7 @@ numbers are held out, where a final refit's are in-sample [training#0].
 --seed only when given; otherwise the recipe's values (or train_mtnn's
 defaults, batch 512 and seed 7) stand.
 
-The cost today: promote.py ships only final-refit or auto runs, and needs a
+The cost today: promote.py ships only final-refit runs, and needs a
 checkpoint, which ship's --val-every 0 --no-best-checkpoint never writes. So
 a default run trains, writes its bundle, and stops at the promote step;
 --promote-force cannot pass either refusal. `--recipe legacy-v5-refit` is

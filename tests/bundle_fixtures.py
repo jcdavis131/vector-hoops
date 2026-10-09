@@ -103,7 +103,7 @@ def make_run(
         "skill_hidden": 16,
         "fusion": "concat",
         "promote": {"ok": True, "reason": "set by the test"},
-        "deploy": {"mode": deploy_mode or ("final_refit_all_rows" if phase == "auto" else "selection_fit_rows_all")},
+        "deploy": {"mode": deploy_mode or "selection_fit_rows_all"},
         "lineage": {
             "schema": 1,
             "run_id": run_id,

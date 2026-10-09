@@ -162,9 +162,9 @@ def test_a_select_phase_run_is_a_measurement_and_is_refused(data):
     assert nothing_promoted(data)
 
 
-def test_an_auto_run_whose_refit_did_not_run_is_refused(data):
-    run = make_run(data, "r1", phase="auto", deploy_mode="selection_fit_rows_train")
-    assert "refit did not run" in refused(run, force="even forced")
+def test_an_auto_run_is_refused_since_the_phase_was_removed(data):
+    run = make_run(data, "r1", phase="auto", deploy_mode="final_refit_all_rows")
+    assert "phase 'auto' was removed" in refused(run, force="even forced")
 
 
 def test_should_promote_failure_refuses_without_force_and_records_the_force(data):
