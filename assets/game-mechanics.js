@@ -189,9 +189,15 @@
         +(idx<TUT_STEPS.length-1?'<button class="btn btn-primary" id="cm-next" type="button">Next →</button>':'<button class="btn btn-primary" id="cm-done" type="button">Play →</button>')
         +'</div></div>';
       var card=root.querySelector('.coachmark');
+      // position:fixed uses VIEWPORT coords — never add pageYOffset to a fixed card
       if(rect){
-        var top=window.pageYOffset+rect.bottom+8;
-        card.style.top=Math.min(top, window.pageYOffset+window.innerHeight-190)+'px';
+        var top=rect.bottom+8;
+        if(rect.top<0) top=12; // anchor scrolled above the viewport — pin to top
+        var cardH=card.offsetHeight||190;
+        top=Math.max(12, Math.min(top, window.innerHeight-cardH-16));
+        card.style.top=top+'px';
+      } else {
+        card.style.top='12px';
       }
       var nx=$('#cm-next'), dn=$('#cm-done'), sk=$('#cm-skip');
       if(nx) nx.addEventListener('click', function(){ idx++; show(); });
@@ -279,11 +285,11 @@
       '.suit-style{background:#e4ecf9;border-color:#2B6CE5}',
       '.suit-team{background:#e2f0e4;border-color:#4a8f5d}',
       '.suit-era{background:#efece4;border-color:#9A9A94}',
-      '.coachmark-backdrop{position:fixed;inset:0;background:rgba(20,18,14,.45);z-index:90}',
-      '.coachmark{position:fixed;left:50%;transform:translateX(-50%);max-width:min(92vw,380px);background:var(--surface,#fffdf8);border:1.5px solid var(--ink,#232323);border-radius:12px;padding:14px 16px;z-index:91;box-shadow:0 12px 40px rgba(0,0,0,.25)}',
-      '.coachmark-step{font-family:ui-monospace,monospace;font-size:10px;letter-spacing:.1em;opacity:.6}',
+      '.coachmark-backdrop{position:fixed;inset:0;background:rgba(20,18,14,.38);z-index:90}',
+      '.coachmark{position:fixed;left:50%;transform:translateX(-50%);max-width:min(92vw,380px);max-height:calc(100dvh - 32px);overflow:auto;background:var(--surface,#fffdf8);border:1.5px solid var(--ink,#232323);border-radius:12px;padding:14px 16px;z-index:91;box-shadow:0 12px 40px rgba(0,0,0,.25)}',
+      '.coachmark-step{font-family:ui-monospace,monospace;font-size:11px;letter-spacing:.1em;opacity:.8}',
       '.coachmark-title{font-size:17px;font-weight:800;margin:4px 0}',
-      '.coachmark-body{font-size:13px;line-height:1.5;opacity:.85}',
+      '.coachmark-body{font-size:13px;line-height:1.5;opacity:1}',
       '.coachmark-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:10px}',
       '.twinsets{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px}',
       '.twinset{border:1px solid var(--line,#e5e0d2);border-radius:10px;padding:10px 12px;background:var(--surface,#fffdf8)}',
