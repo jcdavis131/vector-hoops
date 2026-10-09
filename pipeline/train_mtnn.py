@@ -50,6 +50,7 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 from _torch_safe import safe_torch_load
+from artifact_io import atomic_savez_compressed, atomic_torch_save, atomic_write_text
 from mtnn_validation import build_validation_report, role_labels_from_context
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -1879,7 +1880,7 @@ def main() -> None:
                     best_val_purity = val_pu
                     best_val_composite = val_comp
                     best_epoch = epoch
-                    torch.save(
+                    atomic_torch_save(
                         {
                             "epoch": epoch,
                             "model": model.state_dict(),
@@ -1925,7 +1926,7 @@ def main() -> None:
     next_profile_pred = heads["next_profile"].cpu().numpy().astype(np.float32)
     game_feature_keys = np.array([manifest["features"][j] for j in game_cols])
 
-    np.savez_compressed(
+    atomic_savez_compressed(
         ART_DIR / "embedding_v3.npz",
         E=E,
         player_id=pids,
@@ -1947,7 +1948,7 @@ def main() -> None:
         if mask_k.any():
             c = E[mask_k].mean(0)
             centroids[k] = c / (np.linalg.norm(c) + 1e-8)
-    np.savez_compressed(ART_DIR / "mtnn_centroids.npz", centroids=centroids)
+    atomic_savez_compressed(ART_DIR / "mtnn_centroids.npz", centroids=centroids)
 
     recall = recall_at_k(E, pair_arr, k=10)
     arch_acc = classification_acc(arch_logits, clusters)
@@ -2309,7 +2310,7 @@ def main() -> None:
             heads["skills"].cpu().numpy().astype(np.float32) if "skills" in heads else np.zeros((len(E), 0), np.float32)
         )
         next_profile_pred = heads["next_profile"].cpu().numpy().astype(np.float32)
-        np.savez_compressed(
+        atomic_savez_compressed(
             ART_DIR / "embedding_v3.npz",
             E=E,
             player_id=pids,
@@ -2330,8 +2331,8 @@ def main() -> None:
             if mask_k.any():
                 c = E[mask_k].mean(0)
                 centroids[k] = c / (np.linalg.norm(c) + 1e-8)
-        np.savez_compressed(ART_DIR / "mtnn_centroids.npz", centroids=centroids)
-        torch.save(
+        atomic_savez_compressed(ART_DIR / "mtnn_centroids.npz", centroids=centroids)
+        atomic_torch_save(
             {
                 "epoch": best_epoch,
                 "model": model.state_dict(),
@@ -2344,7 +2345,7 @@ def main() -> None:
         )
         print(f"rewrote embedding_v3.npz, mtnn_centroids.npz, mtnn_best.pt from refit -> {ART_DIR}")
 
-    (DATA_DIR / "mtnn_report.json").write_text(json.dumps(report, indent=2), encoding="utf-8")
+    atomic_write_text(DATA_DIR / "mtnn_report.json", json.dumps(report, indent=2), encoding="utf-8")
     print(json.dumps(report, indent=2))
     print(f"CQS {report['composite']['cqs']} · {why}")
     print(f"wrote embedding_v3.npz, mtnn_centroids.npz, mtnn_report.json "
