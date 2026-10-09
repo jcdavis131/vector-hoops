@@ -768,12 +768,15 @@ button,.input{min-height:44px}
   }
 
   // --- PACK BATTLE PROD ---
+  // escHtml: packInvalidRaw comes straight from the ?pack= query string — never
+  // interpolate it into innerHTML raw (reflected XSS via a crafted share link)
+  function escHtml(s){ return String(s==null?'':s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
   function renderPackInvalid(){
     const el=$('#pack-invalid'); const st=VHPastModern.state();
     if(!st.packInvalid){ el.style.display='none'; return; }
     el.style.display='block';
     el.innerHTML=`<div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:flex-start">
-      <div><div class="small-mono" style="color:var(--verm)">⚠️ Invalid pack link</div><h3 class="hd" style="margin:6px 0">Couldn't load pack <code>${(st.packInvalidRaw||'').slice(0,64)}</code></h3><div style="font-size:13px;line-height:1.5">Pack must be past All-Star IDs (1996-2023, All-Star seasons). Example: <code>?pack=672-1234-456</code>. Generate a new one.</div></div>
+      <div><div class="small-mono" style="color:var(--verm)">⚠️ Invalid pack link</div><h3 class="hd" style="margin:6px 0">Couldn't load pack <code>${escHtml((st.packInvalidRaw||'').slice(0,64))}</code></h3><div style="font-size:13px;line-height:1.5">Pack must be past All-Star IDs (1996-2023, All-Star seasons). Example: <code>?pack=672-1234-456</code>. Generate a new one.</div></div>
       <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn btn-primary" id="btn-pack-fix-3">🔥 New Triple 3</button><button class="btn" id="btn-pack-fix-5">🏀 Full 5</button></div>
     </div>`;
     el.querySelector('#btn-pack-fix-3')?.addEventListener('click',()=>{ const entries=VHPastModern.generateRandomPack(3); location.href=VHPastModern.packShareUrl(entries.map(e=>e.i)); });
