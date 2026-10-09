@@ -22,6 +22,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "pipeline"))
 
 import rebuild_all as ra  # noqa: E402
+from artifact_io import sha256_file  # noqa: E402
 
 PREPARE = ["build_vectors", "enrich_vectors", "integrate_context"]
 EXPORT = [
@@ -113,10 +114,10 @@ def test_matrix_steps_equal_herdmux_climb_protocol():
     )
 
 
-@pytest.mark.parametrize("v6", [False, True])
+@pytest.mark.parametrize("recipe", ["ship", "legacy-v5-refit", "legacy-v6-refit"])
 @pytest.mark.parametrize("refresh", [False, True])
-def test_no_step_uses_a_fixture_or_the_retired_paths(v6, refresh):
-    for s in ra.build_plan(v6=v6, refresh_context=refresh):
+def test_no_step_uses_a_fixture_or_the_retired_paths(recipe, refresh):
+    for s in ra.build_plan(recipe=recipe, refresh_context=refresh):
         assert "--fixture" not in s.argv, s
         assert not any(x in s.argv[0] for x in ("bootstrap_train_matrix", "ablate_v5", "sweep_v5")), s
 
@@ -178,10 +179,54 @@ def test_a_real_run_passes_its_own_run_dir_to_train_and_promote(runs, monkeypatc
     assert doc["options"]["promote_force"] == "why"
 
 
-def test_epoch_presets_and_explicit_epochs(capsys, runs):
-    for argv, want in (([], "80"), (["--quick"], "40"), (["--full"], "150"), (["--quick", "--epochs", "20"], "20")):
+def test_epochs_are_passed_only_when_asked_for(capsys, runs):
+    """Without --epochs/--quick/--full the recipe's own count stands (ship:
+    40). --epochs 0 is a value, not a missing one."""
+    cases = (
+        ([], None),
+        (["--quick"], "40"),
+        (["--full"], "150"),
+        (["--quick", "--epochs", "20"], "20"),
+        (["--epochs", "0"], "0"),
+    )
+    for argv, want in cases:
         assert ra.main(["--dry-run", "--only", "train_mtnn", *argv]) == 0
-        assert f"--epochs {want} " in capsys.readouterr().out
+        out = capsys.readouterr().out
+        if want is None:
+            assert "--epochs" not in out
+        else:
+            assert f"--epochs {want} " in out
+
+
+def test_the_train_step_trains_a_recipe_and_spells_no_flags_of_its_own():
+    """The inline SHIPPING_RECIPES are gone [orchestration#3]; every training
+    flag comes from the recipe file."""
+    train = next(s for s in ra.build_plan() if s.name == "train_mtnn")
+    assert train.argv[:3] == ("pipeline/train_mtnn.py", "--recipe", "ship")
+    flags = {a for a in train.argv if a.startswith("--")}
+    assert flags == {"--recipe", "--batch", "--seed", "--run-dir"}
+    assert not hasattr(ra, "SHIPPING_RECIPES")
+
+
+def test_v6_is_the_legacy_v6_refit_and_excludes_recipe(capsys, runs):
+    assert ra.main(["--dry-run", "--only", "train_mtnn", "--v6"]) == 0
+    assert "--recipe legacy-v6-refit " in capsys.readouterr().out
+    with pytest.raises(SystemExit) as e:
+        ra.main(["--dry-run", "--v6", "--recipe", "ship"])
+    assert e.value.code == 2
+
+
+def test_a_recipe_path_is_passed_relative_to_the_repo_root(capsys, runs):
+    path = ROOT / "pipeline" / "recipes" / "measure.json"
+    assert ra.main(["--dry-run", "--only", "train_mtnn", "--recipe", str(path)]) == 0
+    assert "--recipe pipeline/recipes/measure.json " in capsys.readouterr().out
+
+
+def test_an_unknown_recipe_stops_the_run_before_any_step(runs, monkeypatch):
+    monkeypatch.setattr(ra, "subprocess", Forbidden())
+    with pytest.raises(SystemExit, match="--recipe nope: no recipe of that name"):
+        ra.main(["--recipe", "nope"])
+    assert not runs.exists()
 
 
 # --- selection -----------------------------------------------------------------
@@ -240,6 +285,9 @@ def test_a_full_pass_records_every_step(runs, monkeypatch):
     assert doc["status"] == "ok" and [s["name"] for s in doc["steps"]] == DEFAULT_PLAN
     contract = next(s for s in doc["steps"] if s["name"] == "stage_contract")
     assert contract["argv"][-1].endswith(f"{doc['run_id']}/train_matrix.stats.json")
+    ship = ROOT / "pipeline" / "recipes" / "ship.json"
+    assert doc["options"]["recipe"] == "ship"
+    assert doc["recipe"] == {"name": "ship", "path": "pipeline/recipes/ship.json", "sha256": sha256_file(ship)}
 
 
 def test_dry_run_and_list_run_and_write_nothing(runs, monkeypatch, capsys):

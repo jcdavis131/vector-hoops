@@ -48,10 +48,11 @@ optional; what does not run is left out of the plan by a flag you passed.
            or synthetic cache stops the run before anything is written. Off
            by default, so the default matrix stage is the climb's prepare and
            nothing else.
-  train    train_mtnn.py with the shipping recipe (--v6, or the v5 default)
-           and --run-dir pipeline/data/runs/<run_id>, then promote.py --run on
-           that directory. Without a passing promotion the export stage never
-           runs, so it can only publish a bundle promote.py checked.
+  train    train_mtnn.py --recipe ship (or --recipe NAME|PATH; --v6 is
+           --recipe legacy-v6-refit) with --run-dir pipeline/data/runs/
+           <run_id>, then promote.py --run on that directory. Without a
+           passing promotion the export stage never runs, so it can only
+           publish a bundle promote.py checked.
   export   the exporters, then build_scoring_lite.py. Each reads the model
            through promote.load_promoted(): the current promoted bundle.
   verify   test_scoring_lite.py, verify_accuracy.py.
@@ -69,9 +70,28 @@ promote.py --force, which records it. A refused promotion stops the run at
 the promote step; promote.py --run <that run dir> --force can still promote
 it afterwards, then `--stage export`.
 
+Recipes (2026-10-09). The train step used to pass flags hard-coded here
+(SHIPPING_RECIPES): a 48-d v5 final refit, or with --v6 the transformer
+refit. Neither was what the herdmux climb measures, and train.sh had passed
+a third spelling [orchestration#3, training#6]. Those two are
+pipeline/recipes/legacy-v5-refit.json and legacy-v6-refit.json now, flag
+for flag, plus the --epochs 80 this script passed by default. The default is
+ship.json, the climb's measured flags: --phase select, so the run's held-out
+numbers are held out, where a final refit's are in-sample [training#0].
+--epochs is passed only with --epochs, --quick or --full; otherwise the
+recipe's own count stands.
+
+The cost today: promote.py ships only final-refit or auto runs, and needs a
+checkpoint, which ship's --val-every 0 --no-best-checkpoint never writes. So
+a default run trains, writes its bundle, and stops at the promote step;
+--promote-force cannot pass either refusal. `--recipe legacy-v5-refit` is
+the old default if a refit has to ship before promote.py changes, and its
+metrics are in-sample. The climb measured on cuda; pass --device cuda.
+
 Selection does not happen here. Recipes are chosen in the herdmux climb
 (gpu/climb.py: paired seed panels against a measured baseline); this script
-refits the recipe it is given.
+trains the recipe it is given, and tests/test_recipes.py holds measure.json
+(and so ship.json) to the climb's pinned flags.
 
 Every real run writes pipeline/data/runs/<run_id>/rebuild.json (atomically,
 after every step): the options, each step's argv, exit code and duration,
@@ -84,8 +104,9 @@ Usage:
   python pipeline/rebuild_all.py --list
   python pipeline/rebuild_all.py --dry-run
   python pipeline/rebuild_all.py --stage matrix
+  python pipeline/rebuild_all.py --device cuda          # ship; stops at promote today
+  python pipeline/rebuild_all.py --recipe legacy-v5-refit --promote-force "single-seed refit, reviewed by hand"
   python pipeline/rebuild_all.py --v6 --device cuda
-  python pipeline/rebuild_all.py --promote-force "single-seed refit, reviewed by hand"
   python pipeline/rebuild_all.py --stage export        # re-export the promoted bundle
   python pipeline/rebuild_all.py --from train_mtnn --to build_scoring_lite
   python pipeline/rebuild_all.py --refresh-context --stage matrix
@@ -104,74 +125,24 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "pipeline"))
 
+import mtnn_recipe  # noqa: E402
 import real_caches  # noqa: E402
-from artifact_io import BUNDLE_FILES, atomic_write_json, env_versions, git_state  # noqa: E402
+from artifact_io import BUNDLE_FILES, atomic_write_json, display_path, env_versions, git_state  # noqa: E402
 
 RUNS_DIR = ROOT / "pipeline" / "data" / "runs"
 STAGES = ("matrix", "train", "export", "verify")
 
-# The shipping recipes, spelled once. These are the flags this script passed
-# before 2026-10-09, unchanged; --epochs, --batch, --seed and --device are
-# added around them from the CLI. They are not the climb's protocol and not
-# necessarily what the site serves [orchestration#3]; moving them into
-# recipe files is a separate change.
-#
-# Neither passes --write-artifacts, and neither needs it: the train step adds
-# --run-dir, which copies the run's report, checkpoint, embedding and
-# centroids into its run directory, and promote.py ships from there. With
-# --write-artifacts the run would also overwrite pipeline/data/
-# embedding_v3.npz directly, bypassing the promotion checks.
-SHIPPING_RECIPES: dict[str, tuple[str, ...]] = {
-    "v5": (
-        "--dim", "48",
-        "--tower-width", "32",
-        "--tower-hidden", "160",
-        "--tower-blocks", "2",
-        "--mlp-heads",
-        "--d-head-hidden", "128",
-        "--fusion", "concat",
-        "--fusion-hidden", "256",
-        "--nce-loss", "hybrid",
-        "--nce-player-weight", "0.7",
-        "--nce-arch-weight", "0.3",
-        "--drop-p", "0.12",
-        "--weight-decay", "0.0001",
-        "--lr-schedule", "onecycle",
-        "--warmup-pct", "0.1",
-        "--anneal-strategy", "linear",
-        "--checkpoint-metric", "cqs",
-        "--phase", "final-refit",
-        "--era-align", "procrustes",
-        "--robust-scaling",
-    ),
-    "v6": (
-        "--dim", "64",
-        "--tower-width", "40",
-        "--tower-hidden", "192",
-        "--tower-blocks", "3",
-        "--mlp-heads",
-        "--d-head-hidden", "128",
-        "--fusion", "transformer",
-        "--d-model", "128",
-        "--n-fusion-layers", "4",
-        "--n-attn-heads", "4",
-        "--fusion-hidden", "512",
-        "--nce-loss", "hybrid",
-        "--nce-player-weight", "0.65",
-        "--nce-arch-weight", "0.35",
-        "--drop-p", "0.15",
-        "--weight-decay", "0.0002",
-        "--lr-schedule", "onecycle",
-        "--warmup-pct", "0.1",
-        "--anneal-strategy", "linear",
-        "--checkpoint-metric", "cqs",
-        "--phase", "final-refit",
-        "--era-align", "procrustes",
-        "--robust-scaling",
-    ),
-}  # fmt: skip
+# The train step's flags come from a recipe file (pipeline/recipes/, read by
+# train_mtnn.py --recipe). The two refits this script used to hard-code are
+# legacy-v5-refit.json and legacy-v6-refit.json now, flag for flag; ship is
+# the default [orchestration#3, training#6].
+DEFAULT_RECIPE = "ship"
+V6_RECIPE = "legacy-v6-refit"
 
-EPOCHS_DEFAULT, EPOCHS_QUICK, EPOCHS_FULL = 80, 40, 150
+# Passed as --epochs only when asked for; otherwise the recipe's own epochs
+# (ship: 40) stand. EPOCHS_DEFAULT = 80 used to be passed on every run, which
+# would override ship's 40; the legacy refits carry their 80 themselves.
+EPOCHS_QUICK, EPOCHS_FULL = 40, 150
 
 
 @dataclass(frozen=True)
@@ -226,8 +197,8 @@ def _context_steps() -> list[Step]:
 
 def build_plan(
     *,
-    v6: bool = False,
-    epochs: int = EPOCHS_DEFAULT,
+    recipe: str = DEFAULT_RECIPE,
+    epochs: int | None = None,
     batch: int = 512,
     seed: int = 7,
     device: str | None = None,
@@ -263,7 +234,13 @@ def build_plan(
         ),
     ]
 
-    train = ["pipeline/train_mtnn.py", "--epochs", str(epochs), *SHIPPING_RECIPES["v6" if v6 else "v5"]]
+    # No --write-artifacts, and none is needed: --run-dir copies the run's
+    # report, checkpoint, embedding and centroids into its run directory, and
+    # promote.py ships from there. --write-artifacts would also overwrite
+    # pipeline/data/embedding_v3.npz directly, past the promotion checks.
+    train = ["pipeline/train_mtnn.py", "--recipe", recipe]
+    if epochs is not None:
+        train += ["--epochs", str(epochs)]
     train += ["--batch", str(batch), "--seed", str(seed), "--run-dir", run_dir]
     if device is not None:
         # Only when asked. train_mtnn's own default (cpu) is what this script
@@ -438,11 +415,21 @@ def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
         action="store_true",
         help="also rebuild the side inputs integrate_context and train_mtnn read, from real caches",
     )
-    ap.add_argument("--v6", action="store_true", help="v6 transformer recipe (default: v5)")
+    which = ap.add_mutually_exclusive_group()
+    which.add_argument(
+        "--recipe",
+        default=None,
+        metavar="NAME|PATH",
+        help=f"train_mtnn.py recipe: a name in pipeline/recipes/ or a path (default {DEFAULT_RECIPE}, "
+        "the climb's measure flags)",
+    )
+    which.add_argument("--v6", action="store_true", help=f"the legacy v6 transformer refit: --recipe {V6_RECIPE}")
     preset = ap.add_mutually_exclusive_group()
     preset.add_argument("--quick", action="store_true", help=f"{EPOCHS_QUICK} epochs")
     preset.add_argument("--full", action="store_true", help=f"{EPOCHS_FULL} epochs")
-    ap.add_argument("--epochs", type=int, default=None, help=f"default {EPOCHS_DEFAULT}; wins over --quick/--full")
+    ap.add_argument(
+        "--epochs", type=int, default=None, help="default: the recipe's (ship: 40); wins over --quick/--full"
+    )
     ap.add_argument("--batch", type=int, default=512)
     ap.add_argument("--seed", type=int, default=7)
     ap.add_argument("--device", default=None, help="passed to train_mtnn only when given")
@@ -455,11 +442,31 @@ def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
     return ap.parse_args(argv)
 
 
+def recipe_arg(spec: str) -> tuple[str, mtnn_recipe.Recipe]:
+    """The --recipe value to hand train_mtnn, and the recipe it names.
+
+    Loaded here so that an unknown or malformed recipe stops the run before
+    the matrix is rebuilt. Its flags are checked against train_mtnn's parser
+    by train_mtnn itself, at the start of the train step (the parser lives in
+    a module that imports torch). A path is passed on relative to the repo
+    root, because every step runs from there.
+    """
+    recipe = mtnn_recipe.load(spec)
+    if recipe.path.parent == mtnn_recipe.RECIPES_DIR and recipe.path.stem == spec:
+        return spec, recipe
+    return display_path(recipe.path, ROOT), recipe
+
+
 def main(argv: Sequence[str] | None = None) -> int:
     args = parse_args(argv)
-    epochs = args.epochs or (EPOCHS_QUICK if args.quick else EPOCHS_FULL if args.full else EPOCHS_DEFAULT)
+    # `is not None`: --epochs 0 is a value, and `args.epochs or ...` replaced it.
+    if args.epochs is not None:
+        epochs = args.epochs
+    else:
+        epochs = EPOCHS_QUICK if args.quick else EPOCHS_FULL if args.full else None
+    recipe_spec, recipe = recipe_arg(V6_RECIPE if args.v6 else (args.recipe or DEFAULT_RECIPE))
     opts = {
-        "v6": args.v6,
+        "recipe": recipe_spec,
         "epochs": epochs,
         "batch": args.batch,
         "seed": args.seed,
@@ -502,6 +509,7 @@ def main(argv: Sequence[str] | None = None) -> int:
         "started": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
         "argv": ["pipeline/rebuild_all.py", *(sys.argv[1:] if argv is None else argv)],
         "options": {**opts, **sel},
+        "recipe": {"name": recipe.name, "path": display_path(recipe.path, ROOT), "sha256": recipe.sha256},
         "python": sys.executable,
         "git": git_state(ROOT),
         "env_versions": env_versions(),

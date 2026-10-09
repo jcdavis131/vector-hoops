@@ -6,17 +6,17 @@
 # its old flags onto that script and execs it with the pipeline's interpreter.
 #
 # Usage:
-#   ./train.sh                       # v5 recipe, 80 epochs
+#   ./train.sh                       # recipe ship (the climb's flags), its 40 epochs
 #   ./train.sh --quick               # 40 epochs
 #   ./train.sh --full                # 150 epochs
-#   ./train.sh --v6                  # v6 transformer recipe (64-d)
+#   ./train.sh --v6                  # recipe legacy-v6-refit (the old v6 refit, 64-d)
 #   ./train.sh --quick --epochs=20   # an explicit --epochs wins over --quick/--full
 #   ./train.sh --device=cuda --batch=512 --seeds=7
 #   ./train.sh --dry-run             # anything else goes to rebuild_all.py as is
 #   ./train.sh --list                # (--stage, --from, --to, --only, --refresh-context, ...)
 #
 # Flag mapping:
-#   --quick --full --v6                passed through
+#   --quick --full --v6                passed through, as is --recipe NAME|PATH
 #   --epochs=N --batch=N --device=D    -> --epochs N --batch N --device D
 #   --seeds=N                          -> --seed N. One seed: the refit trains one
 #                                         model. Seed panels are the herdmux climb's job.
