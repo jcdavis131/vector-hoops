@@ -22,6 +22,7 @@ Run:  python -m pytest pipeline/test_source_contracts.py -q
 from __future__ import annotations
 
 import json
+import re
 import sys
 from pathlib import Path
 
@@ -35,6 +36,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from build_vectors import (  # noqa: E402
     BIO_COLS,
     SOURCE_CONTRACTS,
+    TRACKING_SPECS,
     source_columns,
 )
 
@@ -116,6 +118,59 @@ def test_the_guard_is_guarding_something_live():
     assert undeclared, "bio cache no longer carries undeclared keys -- re-check this gate"
     assert undeclared & SYNTHETIC_BIO_KEYS, f"unexpected undeclared bio keys: {sorted(undeclared)}"
     assert not (set(source_columns("bio", record)) - set(BIO_COLS))
+
+
+def test_tracking_contract_is_tracking_specs():
+    """[ingest#11] the tracking merge is held to the columns build_vectors itself fetches."""
+    assert SOURCE_CONTRACTS["tracking"] == frozenset(c for _, cols in TRACKING_SPECS for c in cols)
+    kept = source_columns("tracking", {"DRIVES": 5.0, "player_name": "x", "gp": 70.0, "screen_ast": 3.0})
+    assert kept == {"DRIVES": 5.0}, "fetch_advanced_tracking-style raw keys must not join the tracking family"
+
+
+def test_every_tracking_cache_key_is_in_the_contract():
+    """The 13 tracking caches hold only contract keys, so the filter changes no column today."""
+    paths = sorted(p for p in CACHE.glob("tracking_*.json") if re.fullmatch(r"tracking_\d{4}-\d{2}\.json", p.name))
+    assert len(paths) >= 13, f"expected the 2013-14.. tracking caches, found {len(paths)}"
+    for p in paths:
+        doc = json.loads(p.read_text(encoding="utf-8"))
+        keys = {k for rec in doc.values() for k in rec}
+        assert keys <= SOURCE_CONTRACTS["tracking"], (
+            f"{p.name}: keys outside the contract {sorted(keys - SOURCE_CONTRACTS['tracking'])}"
+        )
+
+
+# What fetch_wide_skills.build_season_cache writes per player. The proxy
+# 2013-14/2014-15 docs (complete: false, `_proxy`/`_source` keys) are the
+# [ingest#5] xfail in test_wide_skills.py, so only complete docs are held here.
+WIDE_SKILL_KEYS = {
+    "post_freq",
+    "post_ppp",
+    "trans_freq",
+    "trans_ppp",
+    "screen_ast",
+    "deflections",
+    "loose_balls",
+    "charges",
+    "box_outs",
+    "contested_shots",
+    "pull_up_fg3a",
+    "d_fg_pct",
+}
+
+
+def test_every_complete_wide_skills_cache_key_is_declared():
+    paths = sorted(
+        p for p in CACHE.glob("wide_skills_*.json") if re.fullmatch(r"wide_skills_\d{4}-\d{2}\.json", p.name)
+    )
+    complete = 0
+    for p in paths:
+        doc = json.loads(p.read_text(encoding="utf-8"))
+        if not doc.get("complete"):
+            continue
+        complete += 1
+        keys = {k for rec in doc["players"].values() for k in rec}
+        assert keys <= WIDE_SKILL_KEYS, f"{p.name}: undeclared keys {sorted(keys - WIDE_SKILL_KEYS)}"
+    assert complete >= 11, f"expected the 2015-16.. complete wide-skill caches, found {complete}"
 
 
 @pytest.mark.local_data

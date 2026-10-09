@@ -49,7 +49,6 @@ import argparse
 import csv
 import json
 import math
-import random
 import re
 import sys
 import time
@@ -67,8 +66,9 @@ from eligibility import (
 from eligibility import (
     season_eligible as check_eligible,
 )
+from ingest import FetchError, cache_is_fresh, require_columns, run_fetch, write_cache
 from name_utils import canonical_name, norm_name
-from nba_http import fetch_stats_json, legacy_result_set_rows, patch_nba_api_session
+from nba_http import fetch_stats_json, legacy_result_set_rows, patch_nba_api_session, retry_call
 from seasons import HUSTLE_FIRST_SEASON, TRACKING_FIRST_SEASON, season_range
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -202,6 +202,15 @@ TRACKING_SPECS = [  # (pt_measure_type, wanted columns)
     ("Passing", ["PASSES_MADE", "POTENTIAL_AST", "SECONDARY_AST"]),
 ]
 
+# tracking_*.json rows used to be copied into the matrix row key by key, so
+# the TRACKING_SPECS lists were enforced only when this script fetched. A
+# file written by anything else joined the tracking family whole:
+# fetch_advanced_tracking.py wrote every response column (`rec[k.lower()] =
+# v`: player_name, team_abbreviation, gp, min, ...) into the same files
+# [ingest#11]. The 13 caches hold exactly these 20 keys today (checked
+# 2026-10-09), so the filter changes nothing in the current matrix.
+SOURCE_CONTRACTS["tracking"] = frozenset(c for _, cols in TRACKING_SPECS for c in cols)
+
 # Tower families for train_towers.py (feature name -> family).
 FAMILY_OF = {}
 for f in ["PTS", "FGA", "FTA", "FG3A", "USG_PCT"]:
@@ -319,40 +328,59 @@ _CACHE_ALIASES = {
 }
 
 
-def load_cached(tag: str, season: str):
+def _cached_file(tag: str, season: str) -> Path | None:
+    """The file load_cached reads for (tag, season): the current name, else its legacy alias."""
     for t in (tag, _CACHE_ALIASES.get(tag)):
-        if not t:
-            continue
-        p = cache_path(t, season)
-        if p.exists():
-            try:
-                data = json.loads(p.read_text(encoding="utf-8"))
-            except Exception:
-                return None
-            # Legacy base_*.json caches are name-keyed dicts without MIN/GP;
-            # treat as a miss so online runs refetch dashbase_* rows.
-            if tag.startswith("dash") and isinstance(data, dict):
-                return None
-            return data
+        if t and cache_path(t, season).exists():
+            return cache_path(t, season)
     return None
 
 
-def save_cache(tag: str, season: str, rows) -> None:
-    CACHE.mkdir(parents=True, exist_ok=True)
-    cache_path(tag, season).write_text(json.dumps(rows, separators=(",", ":")), encoding="utf-8")
+def load_cached(tag: str, season: str):
+    p = _cached_file(tag, season)
+    if p is None:
+        return None
+    # A file that did not decode used to `return None` here, so a corrupt
+    # dashbase cache made its season "missing" and a corrupt advanced,
+    # scoring, bio or tracking cache masked that family with no message at
+    # all [health#8]. pipeline/cache is git-tracked, so the fix is a restore.
+    try:
+        data = json.loads(p.read_text(encoding="utf-8"))
+    except (json.JSONDecodeError, UnicodeDecodeError) as e:
+        raise ValueError(f"{p}: cache does not decode ({e}); restore it from git, or delete it to refetch") from e
+    # Legacy base_*.json caches are name-keyed dicts without MIN/GP;
+    # treat as a miss so online runs refetch dashbase_* rows.
+    if tag.startswith("dash") and isinstance(data, dict):
+        return None
+    # The old fetch_dash cached an empty response as '[]', and later runs read
+    # it as a season with no players [ingest#8]. Empty is a miss.
+    if not data:
+        print(f"  {p.name}: empty cache, treated as missing")
+        return None
+    return data
+
+
+def _keep_cached(tag: str, season: str, offline: bool) -> bool:
+    """Read the cache rather than fetch: always offline; online only while it is fresh.
+
+    A season whose playoffs are over keeps its cache as before. A season
+    still being played is refetched once its fetch record is older than
+    HOOPS_CACHE_TTL_HOURS (ingest.cache_is_fresh) [ingest#8].
+    """
+    if offline:
+        return True
+    p = _cached_file(tag, season)
+    return p is not None and cache_is_fresh(p, season)
 
 
 def with_retries(fn, what: str, attempts: int = 5):
-    """stats.nba.com drops connections when throttled; back off hard."""
-    for attempt in range(attempts):
-        try:
-            return fn()
-        except Exception as e:
-            wait = min(120, (2**attempt) * 8) + random.uniform(0, 4)
-            print(f"  {what}: attempt {attempt + 1}/{attempts} failed ({type(e).__name__}); sleeping {wait:.0f}s")
-            time.sleep(wait)
-    print(f"  {what}: EXHAUSTED retries -- skipping (cached later runs resume)")
-    return None
+    """Call fn under nba_http.retry_call's backoff; raise FetchError when it never succeeds.
+
+    This used to print "EXHAUSTED retries -- skipping" and return None, and
+    the build went on to write vectors.json and the matrix without the
+    season [ingest#7]. A probe with 3 failing attempts returned None.
+    """
+    return retry_call(fn, what, attempts=attempts)
 
 
 def canonicalize_player_rows(rows: list[dict] | None) -> list[dict] | None:
@@ -380,13 +408,16 @@ def df_to_rows(df, id_col: str, wanted: list[str]) -> tuple[list[dict], list[str
 
 
 def fetch_dash(season: str, measure: str, wanted: list[str], offline: bool):
+    """Rows for (season, measure); None when offline with no cache. Raises FetchError online."""
     tag = f"dash{measure.lower()}"
     cached = load_cached(tag, season)
-    if cached is not None:
+    if cached is not None and _keep_cached(tag, season, offline):
         return canonicalize_player_rows(cached)
     if offline:
         return None
     from nba_api.stats.endpoints import leaguedashplayerstats
+
+    extra = ["MIN", "GP"] if measure == "Base" else []
 
     def call():
         r = leaguedashplayerstats.LeagueDashPlayerStats(
@@ -396,26 +427,37 @@ def fetch_dash(season: str, measure: str, wanted: list[str], offline: bool):
             timeout=75,
         )
         df = r.get_data_frames()[0]
-        extra = ["MIN", "GP"] if measure == "Base" else []
+        # df_to_rows keeps whichever wanted columns exist, so a dropped column
+        # became an absent feature for the season with no error [ingest#11].
+        # Every one is in all 30 cached seasons (checked 2026-10-09), so a
+        # missing one now is upstream drift, not history.
+        require_columns(df.columns, ["PLAYER_ID", "PLAYER_NAME", *wanted, *extra], f"{season} {measure}")
         rows, _ = df_to_rows(df, "PLAYER_ID", wanted + extra)
         return rows
 
     rows = with_retries(call, f"{season} {measure}")
-    if rows is not None:
-        canonicalize_player_rows(rows)
-        save_cache(tag, season, rows)
-        time.sleep(1.2)
+    canonicalize_player_rows(rows)
+    write_cache(
+        cache_path(tag, season),
+        rows,
+        source=f"stats.nba.com leaguedashplayerstats {measure} Per100Possessions via nba_api",
+        season=season,
+    )
+    time.sleep(1.2)
     return rows
 
 
 def fetch_bio(season: str, offline: bool):
+    """Bio rows for a season; None when offline with no cache. Raises FetchError online."""
     cached = load_cached("bio", season)
-    if cached is not None:
+    if cached is not None and _keep_cached("bio", season, offline):
         return canonicalize_player_rows(cached)
     if offline:
         return None
 
     def call():
+        # fetch_stats_json retries on its own; wrapping it in with_retries as
+        # well made up to 25 attempts per season [ingest#10].
         payload = fetch_stats_json(
             "leaguedashplayerbiostats",
             {
@@ -425,7 +467,7 @@ def fetch_bio(season: str, offline: bool):
             },
             timeout=90,
         )
-        raw = legacy_result_set_rows(payload)
+        raw = legacy_result_set_rows(payload, required=["PLAYER_ID", "PLAYER_NAME", *BIO_COLS])
         rows = []
         for raw_row in raw:
             row = {
@@ -449,25 +491,29 @@ def fetch_bio(season: str, offline: bool):
             rows.append(row)
         return rows
 
-    rows = with_retries(call, f"{season} bio")
-    if rows is not None:
-        save_cache("bio", season, rows)
-        time.sleep(1.2)
+    rows = call()
+    write_cache(
+        cache_path("bio", season),
+        rows,
+        source="stats.nba.com leaguedashplayerbiostats via nba_http",
+        season=season,
+    )
+    time.sleep(1.2)
     return rows
 
 
 def fetch_tracking(season: str, offline: bool):
+    """Tracking by player id; {} before 2013-14, None offline with no cache. Raises FetchError online."""
     if season < TRACKING_FIRST_SEASON:
         return {}
     merged_cached = load_cached("tracking", season)
-    if merged_cached is not None:
+    if merged_cached is not None and _keep_cached("tracking", season, offline):
         return merged_cached
     if offline:
         return None
     from nba_api.stats.endpoints import leaguedashptstats
 
     merged: dict[str, dict] = {}
-    ok = True
     for measure, wanted in TRACKING_SPECS:
 
         def call(measure=measure, wanted=wanted):
@@ -479,13 +525,14 @@ def fetch_tracking(season: str, offline: bool):
                 timeout=75,
             )
             df = r.get_data_frames()[0]
+            require_columns(df.columns, ["PLAYER_ID", *wanted], f"{season} tracking/{measure}")
             rows, _ = df_to_rows(df, "PLAYER_ID", wanted)
             return rows
 
+        # A measure that never succeeds raises here. It used to leave a
+        # partial merge that was not cached but was still built into the
+        # matrix with that measure's columns masked [ingest#7].
         rows = with_retries(call, f"{season} tracking/{measure}")
-        if rows is None:
-            ok = False
-            continue
         for row in rows:
             pid = str(row["PLAYER_ID"])
             merged.setdefault(pid, {})
@@ -493,8 +540,12 @@ def fetch_tracking(season: str, offline: bool):
                 if k not in ("PLAYER_ID", "PLAYER_NAME"):
                     merged[pid][k] = v
         time.sleep(1.2)
-    if ok:
-        save_cache("tracking", season, merged)
+    write_cache(
+        cache_path("tracking", season),
+        merged,
+        source="stats.nba.com leaguedashptstats PerGame via nba_api",
+        season=season,
+    )
     return merged
 
 
@@ -520,10 +571,12 @@ def load_wide_skills_defense(season: str) -> dict[str, dict]:
     p = CACHE / f"wide_skills_{season}.json"
     if not p.exists():
         return {}
+    # `except Exception: return {}` turned a corrupt cache into a season with
+    # no hustle data and no message [health#8].
     try:
         d = json.loads(p.read_text(encoding="utf-8"))
-    except Exception:
-        return {}
+    except (json.JSONDecodeError, UnicodeDecodeError) as e:
+        raise ValueError(f"{p}: cache does not decode ({e}); restore it from git") from e
     if not d.get("complete"):
         return {}
     out = {}
@@ -702,6 +755,10 @@ def load_salary_history() -> dict[tuple[str, str], float]:
     """
     merged_p = CACHE / "salaries_merged.json"
     if merged_p.exists():
+        # One bad record used to send the whole merged file down an
+        # `except Exception` into the CSV fallback with a single printed line,
+        # so the salary family silently changed source [health#8]. A merged
+        # file that cannot be read is now an error naming the file.
         try:
             data = json.loads(merged_p.read_text(encoding="utf-8"))
             salaries = data.get("salaries", data)
@@ -717,22 +774,26 @@ def load_salary_history() -> dict[tuple[str, str], float]:
                     parts = key.split("|", 1)
                     if len(parts) == 2:
                         out[(parts[0], parts[1])] = float(val)
-            print(f"salary merged JSON: {len(out)} rows")
-            return out
-        except Exception as e:
-            print(f"salary merged JSON unreadable ({type(e).__name__}) — falling back to CSV")
+        except (json.JSONDecodeError, UnicodeDecodeError, AttributeError, KeyError, TypeError, ValueError) as e:
+            raise ValueError(f"{merged_p}: unreadable ({type(e).__name__}: {e}); fix or rerun merge_salaries.py") from e
+        print(f"salary merged JSON: {len(out)} rows")
+        return out
 
     p = CACHE / "salaries_history.csv"
     out = {}
     if not p.exists():
         return out
+    skipped = 0
     with p.open(encoding="utf-8", newline="") as f:
         for row in csv.DictReader(f):
+            # A missing name/season/salary column is a KeyError on every row:
+            # let it raise. A salary that is not a number skips that row only,
+            # and the count is printed instead of vanishing.
             try:
                 out[(norm_name(row["name"]), row["season"])] = float(re.sub(r"[^0-9.]", "", row["salary"]) or 0)
-            except Exception:
-                continue
-    print(f"salary history CSV: {len(out)} rows")
+            except ValueError:
+                skipped += 1
+    print(f"salary history CSV: {len(out)} rows" + (f", {skipped} unparseable salaries skipped" if skipped else ""))
     return out
 
 
@@ -746,30 +807,32 @@ def fetch_bbref_contracts(offline: bool) -> dict[tuple[str, str], float]:
         return {}
     import requests
 
-    out: dict[tuple[str, str], float] = {}
-    try:
-        r = requests.get(
-            "https://www.basketball-reference.com/contracts/players.html",
-            headers={"User-Agent": UA},
-            timeout=40,
-        )
+    url = "https://www.basketball-reference.com/contracts/players.html"
+
+    def get() -> str:
+        r = requests.get(url, headers={"User-Agent": UA}, timeout=40)
         r.raise_for_status()
-        html = r.text
-        # header: season columns like >2025-26<
-        head = re.search(r"<thead>.*?</thead>", html, re.S)
-        seasons = re.findall(r">(\d{4}-\d{2})<", head.group(0)) if head else []
-        for m in re.finditer(r'<tr[^>]*>.*?data-stat="player"[^>]*>.*?>([^<]+)</a>(.*?)</tr>', html, re.S):
-            name, rest = m.group(1), m.group(2)
-            sals = re.findall(r'data-stat="y\d+"[^>]*>\$?([\d,]+)', rest)
-            for i, s in enumerate(sals[: len(seasons)]):
-                try:
-                    out[(norm_name(name), seasons[i])] = float(s.replace(",", ""))
-                except ValueError:
-                    continue
-        save_cache("salary_bbref", "current", {f"{k[0]}|{k[1]}": v for k, v in out.items()})
-        print(f"bbref contracts: {len(out)} (name,season) salaries")
-    except Exception as e:
-        print(f"bbref contracts fetch failed ({type(e).__name__}) -- salary will rely on salaries_history.csv / cache")
+        return r.text
+
+    # A failed fetch used to print one line and return {}, and the build went
+    # on [ingest#7]. Now it raises FetchError; main() decides (--allow-partial).
+    html = retry_call(get, "basketball-reference contracts")
+    out: dict[tuple[str, str], float] = {}
+    # header: season columns like >2025-26<
+    head = re.search(r"<thead>.*?</thead>", html, re.S)
+    seasons = re.findall(r">(\d{4}-\d{2})<", head.group(0)) if head else []
+    for m in re.finditer(r'<tr[^>]*>.*?data-stat="player"[^>]*>.*?>([^<]+)</a>(.*?)</tr>', html, re.S):
+        name, rest = m.group(1), m.group(2)
+        sals = re.findall(r'data-stat="y\d+"[^>]*>\$?([\d,]+)', rest)
+        for i, s in enumerate(sals[: len(seasons)]):
+            try:
+                out[(norm_name(name), seasons[i])] = float(s.replace(",", ""))
+            except ValueError:
+                continue
+    # Zero parsed rows (a changed layout, a block page served as 200) raises
+    # EmptyPayloadError here instead of caching {} as the current contracts.
+    write_cache(cache_path("salary_bbref", "current"), {f"{k[0]}|{k[1]}": v for k, v in out.items()}, source=url)
+    print(f"bbref contracts: {len(out)} (name,season) salaries")
     return out
 
 
@@ -840,16 +903,35 @@ def main() -> None:
         help="emit the SHAPE_* within-season trajectory family (off by default: "
         "measured at -0.81 CQS over 6 seeds, see docs/MTNN_STABILITY_2026-08-13_shape.md)",
     )
+    ap.add_argument(
+        "--allow-partial",
+        action="store_true",
+        help="write vectors.json and the matrix even when a season or source is missing or failed to fetch "
+        "(seasons without Base rows are left out, other missing sources are masked). Without it, any gap "
+        "exits 2 before anything is written",
+    )
     args = ap.parse_args()
     schedule_aware = not args.fixed_gates
 
-    if patch_nba_api_session():
-        print("nba_http: nba_api routed through curl_cffi")
-    else:
-        print("WARNING: curl_cffi not installed — pip install curl_cffi (stats.nba.com often times out without it)")
+    # Offline needs no session. Patching warms one with a GET to www.nba.com
+    # whenever curl_cffi is installed, so --offline used to touch the network.
+    if not args.offline:
+        if patch_nba_api_session():
+            print("nba_http: nba_api routed through curl_cffi")
+        else:
+            print("WARNING: curl_cffi not installed — pip install curl_cffi (stats.nba.com often times out without it)")
+
+    # Seasons and sources that are missing or failed, with the reason. Every
+    # season is still attempted; the build stops before writing anything if
+    # this is non-empty and --allow-partial is not set [ingest#7].
+    problems: dict[str, str] = {}
 
     salary_hist = load_salary_history()
-    salary_bbref = fetch_bbref_contracts(args.offline)
+    try:
+        salary_bbref = fetch_bbref_contracts(args.offline)
+    except FetchError as e:
+        problems["salary_bbref"] = f"fetch failed: {e}"
+        salary_bbref = {}
 
     all_rows: list[dict] = []
     extra_presence: dict[str, set] = {
@@ -864,14 +946,39 @@ def main() -> None:
     fetched, missing = [], []
 
     for season in SEASONS:
-        base = fetch_dash(season, "Base", GAME_FEATURES, args.offline)
-        if not base:
+        try:
+            base = fetch_dash(season, "Base", GAME_FEATURES, args.offline)
+            adv_rows = fetch_dash(season, "Advanced", ADVANCED_COLS, args.offline)
+            sco_rows = fetch_dash(season, "Scoring", SCORING_COLS, args.offline)
+            bio_rows = fetch_bio(season, args.offline)
+            trk_rows = fetch_tracking(season, args.offline)
+        except FetchError as e:
+            problems[season] = f"fetch failed: {e}"
             missing.append(season)
+            print(f"{season}: FETCH FAILED ({e})", file=sys.stderr)
             continue
-        adv = {str(r["PLAYER_ID"]): r for r in (fetch_dash(season, "Advanced", ADVANCED_COLS, args.offline) or [])}
-        sco = {str(r["PLAYER_ID"]): r for r in (fetch_dash(season, "Scoring", SCORING_COLS, args.offline) or [])}
-        bio = {str(r["PLAYER_ID"]): r for r in (fetch_bio(season, args.offline) or [])}
-        trk = fetch_tracking(season, args.offline) or {}
+        # A None is a source with no cache (offline). Advanced, Scoring, bio and
+        # tracking used to be masked for the season by `or []` without a word.
+        absent = [
+            name
+            for name, rows in (
+                ("Base", base),
+                ("Advanced", adv_rows),
+                ("Scoring", sco_rows),
+                ("bio", bio_rows),
+                ("tracking", trk_rows),
+            )
+            if rows is None
+        ]
+        if absent:
+            problems[season] = "no cache for " + ", ".join(absent)
+            if base is None or not args.allow_partial:
+                missing.append(season)
+                continue
+        adv = {str(r["PLAYER_ID"]): r for r in (adv_rows or [])}
+        sco = {str(r["PLAYER_ID"]): r for r in (sco_rows or [])}
+        bio = {str(r["PLAYER_ID"]): r for r in (bio_rows or [])}
+        trk = trk_rows or {}
         form = compute_form_features(season)
         shape = compute_shape_features(season) if args.with_shape else {}
         hustle = load_wide_skills_defense(season)
@@ -908,7 +1015,7 @@ def main() -> None:
                 for k, v in source_columns(name, extra).items():
                     row[k] = v
                     extra_presence[name].add(k)
-            for k, v in (trk.get(pid) or {}).items():
+            for k, v in source_columns("tracking", trk.get(pid) or {}).items():
                 row[k] = v
                 extra_presence["tracking"].add(k)
             for k, v in (form.get(pid) or {}).items():
@@ -930,13 +1037,25 @@ def main() -> None:
         fetched.append(season)
         print(f"{season}: {n_kept} qualified (gp>={min_gp}, min>={min_minutes})")
 
-    if not all_rows:
-        raise SystemExit(
-            "no data available (network throttled and no cache) -- aborting honestly; re-run later, cache resumes"
+    # The old message blamed throttling for every gap, --offline included. It
+    # now says which source was missing or failed, per season.
+    if problems and not args.allow_partial:
+        hint = (
+            "restore the missing caches (pipeline/cache is git-tracked) or run without --offline"
+            if args.offline
+            else "rerun later; every season that did fetch is cached and is not fetched again"
         )
+        raise FetchError(
+            f"{len(problems)} season(s)/source(s) incomplete, so vectors.json and the matrix were not written: "
+            + "; ".join(f"{k}: {why}" for k, why in problems.items())
+            + f". {hint}, or pass --allow-partial to build without them"
+        )
+    if not all_rows:
+        raise SystemExit("no data available (no cache, nothing fetched) -- nothing to build")
+    for key, why in problems.items():
+        print(f"WARNING (--allow-partial): {key}: {why}")
     if missing:
-        print(f"WARNING: seasons missing this run (throttled): {missing}")
-        print("re-run when stats.nba.com cools down; cached seasons persist")
+        print(f"WARNING (--allow-partial): seasons left out of this build: {missing}")
 
     all_rows = dedupe_rows(all_rows)
 
@@ -1014,27 +1133,30 @@ def main() -> None:
     sal_col = wide_features.index("SALARY_LOG")
     # build pid -> birthYear map from bio caches for name+dob uniqueness
     pid_birth = {}
-    try:
-        import glob
-        import json as _j
+    # This was two nested `except Exception: pass` around open(bf).read()
+    # with no encoding (cp1252 on Windows), so an unreadable bio cache quietly
+    # cost its players their birth year [health#8]. All 30 caches decode
+    # under both encodings and only PLAYER_ID / AGE are read, so the map is
+    # unchanged; a cache that does not decode now raises with its path.
+    import glob
 
-        for bf in glob.glob(str((ROOT / "pipeline" / "cache" / "bio_*.json").resolve())):
-            try:
-                rows = _j.loads(open(bf).read())
-                # file may be list of dicts
-                season = bf.split("bio_")[-1].split(".json")[0]
-                sy = int(season.split("-")[0])
-                for r in rows if isinstance(rows, list) else []:
-                    pid = str(r.get("PLAYER_ID") or r.get("id") or "")
-                    age = r.get("AGE")
-                    if pid and isinstance(age, int | float):
-                        by = int(sy - float(age))
-                        if pid not in pid_birth:
-                            pid_birth[pid] = by
-            except Exception:
-                pass
-    except Exception:
-        pass
+    for bf in glob.glob(str((ROOT / "pipeline" / "cache" / "bio_*.json").resolve())):
+        # file may be list of dicts
+        season = bf.split("bio_")[-1].split(".json")[0]
+        if not re.fullmatch(r"\d{4}-\d{2}", season):
+            continue  # not a per-season cache (e.g. an example file)
+        try:
+            rows = json.loads(Path(bf).read_text(encoding="utf-8"))
+        except (json.JSONDecodeError, UnicodeDecodeError) as e:
+            raise ValueError(f"{bf}: bio cache does not decode ({e}); restore it from git") from e
+        sy = int(season.split("-")[0])
+        for r in rows if isinstance(rows, list) else []:
+            pid = str(r.get("PLAYER_ID") or r.get("id") or "")
+            age = r.get("AGE")
+            if pid and isinstance(age, int | float):
+                by = int(sy - float(age))
+                if pid not in pid_birth:
+                    pid_birth[pid] = by
 
     players = []
     for i, r in enumerate(all_rows):
@@ -1136,5 +1258,6 @@ def main() -> None:
         print(f"  cluster {k}: {nm} ({int((lab == k).sum())} players)")
 
 
+# run_fetch: a FetchError (a failed or incomplete fetch) exits 2 with one line on stderr.
 if __name__ == "__main__":
-    sys.exit(main())
+    run_fetch(main, name="build_vectors")
