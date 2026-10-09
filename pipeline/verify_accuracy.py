@@ -14,6 +14,7 @@ Checks:
 
 from __future__ import annotations
 
+import functools
 import json
 import math
 import sys
@@ -356,13 +357,33 @@ def v10_honors_playoffs(data: dict) -> None:
             print(f"  spot check OK: {key} (pts_delta={splits[key].get('pts_delta')})")
 
 
+@functools.cache
+def _promoted():
+    """The promoted bundle, or None when nothing is promoted. A bundle that does
+    not verify is a failure, not an absence. Verified once per run."""
+    sys.path.insert(0, str(HERE))
+    import promote
+
+    try:
+        return promote.load_promoted(HERE / "data")
+    except promote.NoPromotedBundleError:
+        return None
+    except promote.BundleError as e:
+        fail(f"promoted MTNN bundle: {e}")
+        return None
+
+
 def v11_mtnn_report_warn() -> None:
+    # The PROMOTED run's report. pipeline/data/mtnn_report.json is whichever
+    # run finished last (a climb trial, a smoke test) and describes nothing
+    # that ships [health#0].
     print("V11 MTNN report gates (warn-only until promotion)…")
-    report_path = HERE / "data" / "mtnn_report.json"
-    if not report_path.exists():
-        print("  no mtnn_report.json — training not finished")
+    bundle = _promoted()
+    if bundle is None:
+        print("  no promoted MTNN bundle (pipeline/data/promoted/CURRENT.json)")
         return
-    rep = json.loads(report_path.read_text(encoding="utf-8"))
+    rep = bundle.report
+    print(f"  promoted run {bundle.run_id}")
     test = rep.get("held_out_recall", {}).get("test", {}).get("recall_at_10_mtnn")
     purity = rep.get("cross_era_archetype_neighbor_purity_at_20")
     print(f"  test recall@10={test}  purity@20={purity}")
@@ -416,11 +437,15 @@ def local_checkpoint_stamp() -> dict | None:
     without a word. Anchoring on the checkpoint itself keeps the guard live
     wherever a promote actually happens (pipeline/data is gitignored, so this
     returns None in CI and the arch comparison carries it there).
+
+    The checkpoint is the promoted bundle's, which is what export_mtnn_viz and
+    export_mtnn_jacobian stamp. It was pipeline/data/mtnn_best.pt, the last
+    run's, which any training run replaces.
     """
-    ckpt = HERE / "data" / "mtnn_best.pt"
-    if not ckpt.exists():
+    bundle = _promoted()
+    if bundle is None:
         return None
-    st = ckpt.stat()
+    st = bundle.checkpoint.stat()
     return {"mtime": int(st.st_mtime), "bytes": int(st.st_size)}
 
 
@@ -432,7 +457,7 @@ def check_stamp(name: str, stamp: dict | None, arch: dict | None) -> None:
     local = local_checkpoint_stamp()
     if local and (stamp.get("mtime") != local["mtime"] or stamp.get("bytes") != local["bytes"]):
         fail(
-            f"{name} checkpoint stamp stale vs pipeline/data/mtnn_best.pt — "
+            f"{name} checkpoint stamp stale vs the promoted bundle's mtnn_best.pt — "
             f"re-run export_mtnn_jacobian.py after retraining"
         )
         return

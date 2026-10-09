@@ -37,11 +37,36 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 
 # (label, path, json-pointer-ish accessor) for the dimension each source asserts.
+#
+# The report is the PROMOTED run's (pipeline/promote.py), not
+# pipeline/data/mtnn_report.json: that file is the last run's, and on
+# 2026-10-09 it was an 08-14 select-phase transformer the trainer itself had
+# rejected, which this gate compared against the served files as if it
+# described them [artifacts#1]. "<promoted>" is resolved through
+# pipeline/data/promoted/CURRENT.json; with nothing promoted (CI, a fresh
+# checkout) the source is absent, as the report always was there.
+PROMOTED_REPORT = "<promoted>"
 DIM_SOURCES = [
     ("meta", "assets/mtnn_meta.json", ("dim",)),
     ("arch", "assets/mtnn_arch.json", ("dEmb",)),
-    ("report", "pipeline/data/mtnn_report.json", ("dim",)),
+    ("report", PROMOTED_REPORT, ("dim",)),
 ]
+
+
+def _promoted_report_rel() -> str | None:
+    """pipeline/data/promoted/<run_id>/mtnn_report.json, or None when nothing is promoted.
+
+    Read straight from CURRENT.json so this gate stays stdlib-only; promote.py's
+    loader is what verifies the bundle's hashes."""
+    cur = ROOT / "pipeline" / "data" / "promoted" / "CURRENT.json"
+    try:
+        run_id = json.loads(cur.read_text(encoding="utf-8")).get("run_id")
+    except (OSError, ValueError):
+        return None
+    if not isinstance(run_id, str) or not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9._-]*", run_id):
+        return None
+    return f"pipeline/data/promoted/{run_id}/mtnn_report.json"
+
 
 # Prose/code surfaces that quote a dimension at readers. A mismatch here is a
 # published claim about a model that is not the one shipped.
@@ -78,6 +103,11 @@ def collect():
     findings, notes = [], []
     dims = {}
     for label, rel, path in DIM_SOURCES:
+        if rel == PROMOTED_REPORT:
+            rel = _promoted_report_rel()
+            if rel is None:
+                notes.append("no promoted run (pipeline/data/promoted/CURRENT.json): report source absent")
+                continue
         obj, err = _load_json(rel)
         if err:
             notes.append(err)

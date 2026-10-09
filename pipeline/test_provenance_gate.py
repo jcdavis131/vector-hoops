@@ -13,6 +13,7 @@ checks, now as pytest functions, so a bare `pytest` collects the whole suite.
 from __future__ import annotations
 
 import importlib.util
+import json
 import os
 import sys
 from pathlib import Path
@@ -132,10 +133,25 @@ def test_no_sources_at_all_gives_no_fabricated_verdict_on_prose():
 # --------------------------------------------------------------------------
 def test_collect_finds_at_least_two_dim_sources_and_the_real_artifact():
     # meta and arch are tracked assets, so two sources hold on a clean checkout;
-    # the third (pipeline/data/mtnn_report.json) exists only on the training box.
+    # the third (the promoted run's report, via pipeline/data/promoted/CURRENT.json)
+    # exists only on the training box once a run is promoted.
     dims, _rows, size, _f, _n = pg.collect()
     assert len(dims) >= 2, dims
     assert size == REAL_BYTES, f"got {size}"
+
+
+# --------------------------------------------------------------------------
+# The report source is the promoted run's, never the last run's
+# --------------------------------------------------------------------------
+def test_provenance_gate_reads_the_promoted_report_not_the_last_run(tmp_path, monkeypatch):
+    monkeypatch.setattr(pg, "ROOT", tmp_path)
+    assert pg._promoted_report_rel() is None
+    cur = tmp_path / "pipeline" / "data" / "promoted" / "CURRENT.json"
+    cur.parent.mkdir(parents=True)
+    cur.write_text(json.dumps({"run_id": "r1"}), encoding="utf-8")
+    assert pg._promoted_report_rel() == "pipeline/data/promoted/r1/mtnn_report.json"
+    cur.write_text(json.dumps({"run_id": "../../elsewhere"}), encoding="utf-8")
+    assert pg._promoted_report_rel() is None
 
 
 if __name__ == "__main__":
