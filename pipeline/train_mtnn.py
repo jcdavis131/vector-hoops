@@ -40,6 +40,8 @@ from __future__ import annotations
 import argparse
 import itertools
 import json
+import os
+import sys
 import time
 from collections import defaultdict
 from pathlib import Path
@@ -50,7 +52,19 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 from _torch_safe import safe_torch_load
-from artifact_io import atomic_savez_compressed, atomic_torch_save, atomic_write_text
+from artifact_io import (
+    BUNDLE_FILES,
+    atomic_copy,
+    atomic_savez_compressed,
+    atomic_torch_save,
+    atomic_write_text,
+    display_path,
+    env_versions,
+    file_record,
+    git_state,
+    matrix_fingerprint,
+    sha256_file,
+)
 from mtnn_validation import build_validation_report, role_labels_from_context
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -74,9 +88,35 @@ DATA_DIR = ROOT / "pipeline" / "data"
 # So it defaults to scratch and only points at DATA_DIR when --write-artifacts
 # is passed. It fails closed: a code path that forgets to consult the flag
 # writes somewhere harmless rather than over the shipped model.
+#
+# That covered two of the four outputs. BEST_CKPT and mtnn_report.json are
+# written to DATA_DIR by every run, with or without --write-artifacts, and on
+# this box they ended up from an 08-14 select-phase run next to an 08-07
+# embedding and 08-06 centroids [health#0, training#2]. They stay where they
+# are, because the herdmux climb and the sweeps read
+# pipeline/data/mtnn_report.json after each run. What changed is what they
+# mean: both are the LAST RUN's outputs, never the shipped model. The shipped
+# model is the bundle pipeline/promote.py copies into pipeline/data/promoted/
+# from a --run-dir, after checking that every file in it is the one the
+# report's lineage block names.
 ART_DIR = DATA_DIR / "_scratch"
 VECTORS = ROOT / "assets" / "vectors.json"
 BEST_CKPT = DATA_DIR / "mtnn_best.pt"
+
+# Files the run reads besides train_matrix.npz, hashed into the report's
+# lineage block when the run starts. A re-enriched vectors.json (position
+# labels) or a rebuilt label file changes what the run trained on under the
+# same matrix, and the report recorded no input identity at all
+# [orchestration#9, training#11]. drift.json is read only with --era-align.
+LINEAGE_INPUTS = (
+    DATA_DIR / "train_matrix.npz",
+    DATA_DIR / "feature_manifest.json",
+    VECTORS,
+    DATA_DIR / "skill_labels.npz",
+    DATA_DIR / "wide_skill_labels.npz",
+    DATA_DIR / "role_context.json",
+    ROOT / "assets" / "drift.json",
+)
 POSITIONS = ["PG", "SG", "SF", "PF", "C"]
 N_ARCHETYPES = 8
 
@@ -1166,6 +1206,51 @@ def emit_training_snapshot(args, weights, fams, history, val_trace, status) -> N
         pass
 
 
+# ---- lineage -----------------------------------------------------------------
+# Nothing here draws from an RNG: run ids come from the clock, the commit, the
+# seed and the pid, and everything else is a hash or a byte copy of a file the
+# run already wrote. The trained numbers are the same with or without it.
+
+
+def new_run_id(seed: int, git_short: str | None) -> str:
+    stamp = time.strftime("%Y%m%dT%H%M%SZ", time.gmtime())
+    return f"{stamp}-{git_short or 'nogit'}-s{seed}-p{os.getpid()}"
+
+
+def prepare_run_dir(arg: str | None) -> Path | None:
+    """The --run-dir to copy this run's bundle into, checked before training starts."""
+    if not arg:
+        return None
+    run_dir = Path(arg).resolve()
+    if (run_dir / BUNDLE_FILES["report"]).exists():
+        raise SystemExit(
+            f"--run-dir {run_dir} already holds a {BUNDLE_FILES['report']}; one run directory records one run"
+        )
+    run_dir.mkdir(parents=True, exist_ok=True)
+    return run_dir
+
+
+def write_run_bundle(run_dir: Path, paths: dict[str, Path], records: dict[str, dict], report_text: str) -> None:
+    """Copy what this run wrote into run_dir, by byte, and the report last.
+
+    Each copy is hashed and compared with the sha recorded when the run wrote
+    the file. pipeline/data/mtnn_best.pt is shared by every run on the box, so
+    another trainer can replace it between this run's save and this copy; a
+    bundle built from that would be torn. The run then stops before writing
+    the bundle's report, and promote.py refuses a directory without one.
+    """
+    for role, src in paths.items():
+        dst = run_dir / BUNDLE_FILES[role]
+        atomic_copy(src, dst)
+        got, want = sha256_file(dst), records[role]["sha256"]
+        if got != want:
+            raise SystemExit(
+                f"{src} changed after this run wrote it (sha256 {want[:12]} when written, {got[:12]} now; "
+                f"another run writing {src.parent}?). {run_dir} is left without a report, so it cannot be promoted."
+            )
+    atomic_write_text(run_dir / BUNDLE_FILES["report"], report_text, encoding="utf-8")
+
+
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--epochs", type=int, default=40)
@@ -1408,6 +1493,13 @@ def main() -> None:
         help="ship embedding_v3.npz and mtnn_centroids.npz into pipeline/data. "
              "OFF by default: a measuring run must never be a shipping run.",
     )
+    ap.add_argument(
+        "--run-dir",
+        default=None,
+        help="also copy this run's report, checkpoint (when one is written), embedding_v3.npz and "
+        "mtnn_centroids.npz into this directory, the bundle pipeline/promote.py --run checks and "
+        "promotes. Its name becomes the run id. rebuild_all.py passes pipeline/data/runs/<run_id>.",
+    )
     args = ap.parse_args()
 
     global ART_DIR
@@ -1415,6 +1507,12 @@ def main() -> None:
     ART_DIR.mkdir(parents=True, exist_ok=True)
     print(f"[artifacts] {'SHIPPING into' if args.write_artifacts else 'scratch only,'} "
           f"{ART_DIR}", flush=True)
+
+    run_started = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
+    run_git = git_state(ROOT)
+    run_dir = prepare_run_dir(args.run_dir)
+    run_id = run_dir.name if run_dir is not None else new_run_id(args.seed, run_git["short"])
+    print(f"[lineage] run {run_id}" + (f", bundle -> {run_dir}" if run_dir is not None else ""), flush=True)
 
     weights = dict(DEFAULT_LOSS_WEIGHTS)
     for key in DEFAULT_LOSS_WEIGHTS:
@@ -1427,6 +1525,17 @@ def main() -> None:
     device = args.device or ("cuda" if torch.cuda.is_available() else "cpu")  # auto: GPU on personal local (CUDA avail), CPU in Hatch VM
 
     (Z, M, names, seasons, pids, clusters, positions, season_ids, manifest) = load_bundle()
+    # Before --era-align / --robust-scaling rewrite Z: this is the identity of
+    # the matrix on disk, which promote.py compares with the current one.
+    lineage_matrix = matrix_fingerprint(Z, M, pids, seasons, manifest["features"], manifest["families"])
+    lineage_inputs = {display_path(p, ROOT): (sha256_file(p) if p.exists() else None) for p in LINEAGE_INPUTS}
+    # Every artifact file this run writes, recorded as it is written.
+    written_paths: dict[str, Path] = {}
+    written: dict[str, dict] = {}
+
+    def record_written(role: str, path: Path) -> None:
+        written_paths[role] = path
+        written[role] = file_record(path, ROOT)
 
     if args.era_align == "procrustes":
         from vector_core import align_batch, load_alignment
@@ -1893,6 +2002,7 @@ def main() -> None:
                         },
                         BEST_CKPT,
                     )
+                    record_written("checkpoint", BEST_CKPT)
         if epoch % 5 == 0 or epoch == args.epochs - 1:
             print(log_line)
 
@@ -1941,6 +2051,7 @@ def main() -> None:
         next_profile_pred=next_profile_pred,
         game_feature_keys=game_feature_keys,
     )
+    record_written("embedding", ART_DIR / "embedding_v3.npz")
 
     centroids = np.zeros((N_ARCHETYPES, E.shape[1]), dtype=np.float32)
     for k in range(N_ARCHETYPES):
@@ -1949,6 +2060,7 @@ def main() -> None:
             c = E[mask_k].mean(0)
             centroids[k] = c / (np.linalg.norm(c) + 1e-8)
     atomic_savez_compressed(ART_DIR / "mtnn_centroids.npz", centroids=centroids)
+    record_written("centroids", ART_DIR / "mtnn_centroids.npz")
 
     recall = recall_at_k(E, pair_arr, k=10)
     arch_acc = classification_acc(arch_logits, clusters)
@@ -2325,6 +2437,7 @@ def main() -> None:
             next_profile_pred=next_profile_pred,
             game_feature_keys=game_feature_keys,
         )
+        record_written("embedding", ART_DIR / "embedding_v3.npz")
         centroids = np.zeros((N_ARCHETYPES, E.shape[1]), dtype=np.float32)
         for k in range(N_ARCHETYPES):
             mask_k = clusters == k
@@ -2332,6 +2445,7 @@ def main() -> None:
                 c = E[mask_k].mean(0)
                 centroids[k] = c / (np.linalg.norm(c) + 1e-8)
         atomic_savez_compressed(ART_DIR / "mtnn_centroids.npz", centroids=centroids)
+        record_written("centroids", ART_DIR / "mtnn_centroids.npz")
         atomic_torch_save(
             {
                 "epoch": best_epoch,
@@ -2343,13 +2457,46 @@ def main() -> None:
             },
             BEST_CKPT,
         )
-        print(f"rewrote embedding_v3.npz, mtnn_centroids.npz, mtnn_best.pt from refit -> {ART_DIR}")
+        record_written("checkpoint", BEST_CKPT)
+        # The .pt goes to DATA_DIR, not ART_DIR; this line used to say all three went to ART_DIR.
+        print(f"rewrote embedding_v3.npz, mtnn_centroids.npz -> {ART_DIR} and mtnn_best.pt -> {BEST_CKPT} from refit")
 
-    atomic_write_text(DATA_DIR / "mtnn_report.json", json.dumps(report, indent=2), encoding="utf-8")
-    print(json.dumps(report, indent=2))
+    # Additive: nothing above reads it, and composite_score never looks here.
+    report["lineage"] = {
+        "schema": 1,
+        "run_id": run_id,
+        "started": run_started,
+        "argv": list(sys.argv),
+        "args": dict(vars(args)),
+        "seed": args.seed,
+        "device": str(device),
+        "phase": args.phase,
+        "fit_rows": fit_rows_mode,
+        "write_artifacts": bool(args.write_artifacts),
+        "git": run_git,
+        "env_versions": env_versions(),
+        "matrix_fingerprint": lineage_matrix,
+        "inputs": lineage_inputs,
+        # sha256 of each file as this run wrote it. No checkpoint entry means
+        # this run wrote none, whatever pipeline/data/mtnn_best.pt holds.
+        "artifacts": written,
+        "run_dir": display_path(run_dir, ROOT) if run_dir is not None else None,
+    }
+
+    report_text = json.dumps(report, indent=2)
+    # pipeline/data/mtnn_report.json is the LAST run's report. The climb and the
+    # sweeps read it here; the exporters read the promoted bundle's copy.
+    atomic_write_text(DATA_DIR / "mtnn_report.json", report_text, encoding="utf-8")
+    if run_dir is not None:
+        write_run_bundle(run_dir, written_paths, written, report_text)
+    print(report_text)
     print(f"CQS {report['composite']['cqs']} · {why}")
-    print(f"wrote embedding_v3.npz, mtnn_centroids.npz, mtnn_report.json "
-          f"-> {ART_DIR}")
+    # This used to say the report went to ART_DIR. It goes to DATA_DIR, as the checkpoint does.
+    ckpt_note = f"; mtnn_best.pt -> {BEST_CKPT}" if "checkpoint" in written else ""
+    print(f"wrote embedding_v3.npz, mtnn_centroids.npz -> {ART_DIR}; mtnn_report.json -> {DATA_DIR}{ckpt_note}")
+    if run_dir is not None:
+        print(f"run bundle {run_id} -> {run_dir}")
+        print(f"promote it: python pipeline/promote.py --run {display_path(run_dir, ROOT)}")
 
 
 if __name__ == "__main__":
