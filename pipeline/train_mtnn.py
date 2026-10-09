@@ -47,6 +47,7 @@ from collections import defaultdict
 from pathlib import Path
 
 import composite_score as cqs
+import mtnn_loop
 import mtnn_recipe
 import numpy as np
 import torch
@@ -935,6 +936,13 @@ def build_lr_scheduler(
     raise ValueError(f"unknown lr schedule: {schedule}")
 
 
+def finite_check_arrays(model: nn.Module) -> dict[str, np.ndarray]:
+    """The model's floating-point weights and buffers by name, for mtnn_loop.require_finite before a save."""
+    return {
+        f"weight {name}": t.detach().cpu().numpy() for name, t in model.state_dict().items() if t.is_floating_point()
+    }
+
+
 @torch.no_grad()
 def embed_all(model: MTNN, xs, ms, seas_t) -> np.ndarray:
     model.eval()
@@ -1746,6 +1754,15 @@ def main(argv: list[str] | None = None) -> None:
     VAL_RECALL_SMOOTH_N = 3
     val_recall_hist: list[float] = []
 
+    # Each loss term of the current batch, unweighted, by name. Read only when
+    # the batch's total loss is not finite, to say which term it was
+    # [training#12]. The dict holds the tensors the loss is built from anyway.
+    loss_terms: dict[str, torch.Tensor] = {}
+
+    def term(name: str, value: torch.Tensor) -> torch.Tensor:
+        loss_terms[name] = value
+        return value
+
     for epoch in range(args.epochs):
         model.train()
         perm = np.random.permutation(fit_idx)
@@ -1773,18 +1790,24 @@ def main(argv: list[str] | None = None) -> None:
                 r_b = row_reliability[partner_t]
                 rel = torch.minimum(r_a, r_b)
                 pair_w = 1.0 - args.reliability_weight * (1.0 - rel)
-            loss = contrastive_loss(
-                za,
-                zb,
-                mode=args.nce_loss,
-                temp=args.nce_temp,
-                pos_a=pos_batch,
-                pos_b=pos_partner,
-                hard_neg_boost=args.hard_neg_boost,
-                arch_labels=arch_t[idx_t],
-                player_weight=args.nce_player_weight,
-                arch_weight=args.nce_arch_weight,
-                pair_weight=pair_w,
+            # term() records each loss term for the non-finite check below and
+            # returns it unchanged, so every line computes what it always did.
+            loss_terms.clear()
+            loss = term(
+                "contrastive",
+                contrastive_loss(
+                    za,
+                    zb,
+                    mode=args.nce_loss,
+                    temp=args.nce_temp,
+                    pos_a=pos_batch,
+                    pos_b=pos_partner,
+                    hard_neg_boost=args.hard_neg_boost,
+                    arch_labels=arch_t[idx_t],
+                    player_weight=args.nce_player_weight,
+                    arch_weight=args.nce_arch_weight,
+                    pair_weight=pair_w,
+                ),
             )
             # v6 VICReg anti-collapse — variance hinge 1-std + cov off-diag sum/D
             if getattr(args, "w_vicreg", 0) and args.w_vicreg > 0:
@@ -1798,13 +1821,13 @@ def main(argv: list[str] | None = None) -> None:
                     lambda_var=getattr(args, "vicreg_var_w", 25.0),
                     lambda_cov=getattr(args, "vicreg_cov_w", 1.0),
                 )
-                loss = loss + args.w_vicreg * 0.5 * (v_a + v_b)
-            loss = loss + weights["archetype"] * F.cross_entropy(out_a["archetype"], arch_t[idx_t])
+                loss = loss + args.w_vicreg * 0.5 * term("vicreg", v_a + v_b)
+            loss = loss + weights["archetype"] * term("archetype", F.cross_entropy(out_a["archetype"], arch_t[idx_t]))
             if pos_mask[idx_t].any():
-                loss = loss + weights["position"] * F.cross_entropy(
-                    out_a["position"][pos_mask[idx_t]], pos_t[idx_t][pos_mask[idx_t]]
+                loss = loss + weights["position"] * term(
+                    "position", F.cross_entropy(out_a["position"][pos_mask[idx_t]], pos_t[idx_t][pos_mask[idx_t]])
                 )
-            loss = loss + weights["profile"] * F.mse_loss(out_a["profile"], game_z[idx_t])
+            loss = loss + weights["profile"] * term("profile", F.mse_loss(out_a["profile"], game_z[idx_t]))
             next_batch = next_idx_arr[idx]
             next_valid = next_batch >= 0
             if next_valid.any():
@@ -1812,54 +1835,73 @@ def main(argv: list[str] | None = None) -> None:
                 next_valid_t = torch.tensor(next_valid, device=device, dtype=torch.bool)
                 pred_next = out_a["next_profile"][next_valid_t]
                 # Target is next-season z-scored game profile (same 14-d contract).
-                loss = loss + weights["next_profile"] * F.smooth_l1_loss(pred_next, game_z[next_t])
+                loss = loss + weights["next_profile"] * term("next_profile", F.smooth_l1_loss(pred_next, game_z[next_t]))
             if "skills" in out_a:
                 wm = skillm_t[idx_t]
                 if wm.sum() > 0:
                     se = (out_a["skills"] - skill_t[idx_t]) ** 2
-                    loss = loss + weights["skills"] * (wm * se).sum() / wm.sum()
+                    # Recorded before the division: w * sum / count, as always.
+                    loss = loss + weights["skills"] * term("skills", (wm * se).sum()) / wm.sum()
             if sal_z is not None and sal_m is not None:
-                loss = loss + weights["salary"] * masked_scalar_mse(out_a["salary"], sal_z[idx_t], sal_m[idx_t])
+                loss = loss + weights["salary"] * term(
+                    "salary", masked_scalar_mse(out_a["salary"], sal_z[idx_t], sal_m[idx_t])
+                )
             if team_z is not None and team_m is not None:
-                loss = loss + weights["team_fit"] * masked_scalar_mse(out_a["team_fit"], team_z[idx_t], team_m[idx_t])
+                loss = loss + weights["team_fit"] * term(
+                    "team_fit", masked_scalar_mse(out_a["team_fit"], team_z[idx_t], team_m[idx_t])
+                )
             if roster_z is not None and roster_m is not None:
-                loss = loss + weights["roster_lift"] * masked_scalar_mse(
-                    out_a["roster_lift"], roster_z[idx_t], roster_m[idx_t]
+                loss = loss + weights["roster_lift"] * term(
+                    "roster_lift", masked_scalar_mse(out_a["roster_lift"], roster_z[idx_t], roster_m[idx_t])
                 )
             if form_z is not None and form_m is not None:
-                loss = loss + weights["form_recon"] * masked_vector_mse(
-                    out_a["form_recon"], form_z[idx_t], form_m[idx_t], form_row_m[idx_t]
+                loss = loss + weights["form_recon"] * term(
+                    "form_recon",
+                    masked_vector_mse(out_a["form_recon"], form_z[idx_t], form_m[idx_t], form_row_m[idx_t]),
                 )
             if injury_z is not None and injury_m is not None and "durability" in out_a:
-                loss = loss + weights["durability"] * masked_vector_mse(
-                    out_a["durability"],
-                    injury_z[idx_t],
-                    injury_m[idx_t],
-                    injury_row_m[idx_t],
+                loss = loss + weights["durability"] * term(
+                    "durability",
+                    masked_vector_mse(
+                        out_a["durability"],
+                        injury_z[idx_t],
+                        injury_m[idx_t],
+                        injury_row_m[idx_t],
+                    ),
                 )
             if career_z is not None and career_m is not None:
-                loss = loss + weights["career_slope"] * masked_scalar_mse(
-                    out_a["career_slope"], career_z[idx_t], career_m[idx_t]
+                loss = loss + weights["career_slope"] * term(
+                    "career_slope", masked_scalar_mse(out_a["career_slope"], career_z[idx_t], career_m[idx_t])
                 )
             if comp_z is not None and comp_m is not None:
-                loss = loss + weights["competition"] * masked_scalar_mse(
-                    out_a["competition"], comp_z[idx_t], comp_m[idx_t]
+                loss = loss + weights["competition"] * term(
+                    "competition", masked_scalar_mse(out_a["competition"], comp_z[idx_t], comp_m[idx_t])
                 )
             if bbref_z is not None and bbref_m is not None and "bbref" in out_a:
-                loss = loss + weights["bbref"] * masked_vector_mse(
-                    out_a["bbref"], bbref_z[idx_t], bbref_m[idx_t], bbref_row_m[idx_t]
+                loss = loss + weights["bbref"] * term(
+                    "bbref", masked_vector_mse(out_a["bbref"], bbref_z[idx_t], bbref_m[idx_t], bbref_row_m[idx_t])
                 )
             if ped_z is not None and ped_m is not None:
-                loss = loss + weights["pedigree"] * masked_scalar_mse(out_a["pedigree"], ped_z[idx_t], ped_m[idx_t])
+                loss = loss + weights["pedigree"] * term(
+                    "pedigree", masked_scalar_mse(out_a["pedigree"], ped_z[idx_t], ped_m[idx_t])
+                )
             if po_z is not None and po_m is not None:
-                loss = loss + weights["playoff"] * masked_scalar_mse(out_a["playoff"], po_z[idx_t], po_m[idx_t])
+                loss = loss + weights["playoff"] * term(
+                    "playoff", masked_scalar_mse(out_a["playoff"], po_z[idx_t], po_m[idx_t])
+                )
             if hon_z is not None and hon_m is not None:
-                loss = loss + weights["honors"] * masked_scalar_mse(out_a["honors"], hon_z[idx_t], hon_m[idx_t])
+                loss = loss + weights["honors"] * term(
+                    "honors", masked_scalar_mse(out_a["honors"], hon_z[idx_t], hon_m[idx_t])
+                )
 
             scaled = loss / args.grad_accum
             scaled.backward()
             accum += 1
-            total += float(loss)
+            # The float the loop always took for the epoch average, checked
+            # before the optimizer steps on gradients from a non-finite loss.
+            loss_value = float(loss)
+            mtnn_loop.check_loss(loss_value, loss_terms, epoch=epoch, step=s // args.batch)
+            total += loss_value
             if accum < args.grad_accum:
                 continue
             nn.utils.clip_grad_norm_(model.parameters(), 1.0)
@@ -1945,6 +1987,10 @@ def main(argv: list[str] | None = None) -> None:
                     best_val_purity = val_pu
                     best_val_composite = val_comp
                     best_epoch = epoch
+                    mtnn_loop.require_finite(
+                        {"embeddings": E_val, **finite_check_arrays(model)},
+                        before=f"saving the epoch {epoch} checkpoint {BEST_CKPT.name}",
+                    )
                     atomic_torch_save(
                         {
                             "epoch": epoch,
@@ -1992,6 +2038,17 @@ def main(argv: list[str] | None = None) -> None:
     next_profile_pred = heads["next_profile"].cpu().numpy().astype(np.float32)
     game_feature_keys = np.array([manifest["features"][j] for j in game_cols])
 
+    # Nothing is written from a model that went non-finite [training#12].
+    mtnn_loop.require_finite(
+        {
+            "E": E,
+            "archetype_logits": arch_logits,
+            "position_logits": pos_logits,
+            "skill_pred": skill_pred,
+            "next_profile_pred": next_profile_pred,
+        },
+        before="writing embedding_v3.npz",
+    )
     atomic_savez_compressed(
         ART_DIR / "embedding_v3.npz",
         E=E,
