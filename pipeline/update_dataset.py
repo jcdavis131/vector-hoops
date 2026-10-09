@@ -42,11 +42,14 @@ def run_step(name: str, cmd: list[str], required: bool) -> dict:
     ok = proc.returncode == 0
     tail = "\n".join((proc.stdout + proc.stderr).strip().splitlines()[-6:])
     print(tail)
-    status = "ok" if ok else ("failed" if required else "skipped (best-effort)")
+    # A failed best-effort fetch was labelled "skipped (best-effort)", which
+    # read like a step that chose not to run [ingest#7]. The fetchers now exit
+    # 2 on a failed or blocked fetch (ingest.run_fetch); say so, with the code.
+    status = "ok" if ok else ("failed" if required else f"FAILED, exit {proc.returncode} (best-effort, run continues)")
     print(f"== {name}: {status} ({time.time() - t0:.0f}s)\n")
     if not ok and required:
         raise SystemExit(f"required step failed: {name}")
-    return {"step": name, "ok": ok, "seconds": round(time.time() - t0, 1)}
+    return {"step": name, "ok": ok, "rc": proc.returncode, "seconds": round(time.time() - t0, 1)}
 
 
 def snapshot() -> dict:
