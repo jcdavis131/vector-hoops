@@ -608,7 +608,11 @@ def skills_diagnostic(skills, Z, game_cols, game_features, season, split_of, rep
 
 
 def aux_diagnostic(report, features, families, M, run_args) -> dict:
-    """Each aux head's held-out R2 beside its identity ceiling: 1.0 when the target column is also an input."""
+    """Each aux head's held-out R2 beside its identity ceiling: 1.0 when the target column is also an input.
+
+    M is the mask as the model read it: train_mtnn picks the career_slope
+    target from it, and a --mask-features column has no observations left.
+    """
     exclude = {f.strip() for f in str(run_args.get("exclude_families") or "").split(",") if f.strip()}
     drop = {f.strip() for f in str(run_args.get("drop_features") or "").split(",") if f.strip()}
     heads = {}
@@ -685,15 +689,26 @@ def failed_block(reason: str) -> dict:
 def composite_v2(inputs: dict[str, Any]) -> dict:
     """Score a run. inputs, all indexed by the matrix's rows in order:
 
-    required  E [n, d] embeddings; Z, M [n, F] the matrix as the model read it
-              (after any --mask-*); features, families (manifest); game_features;
-              player_id, season.
-    optional  cluster (stored archetype ids, the head's classes), position
+    required  E [n, d] embeddings; Z, M [n, F] the matrix as build_vectors and
+              integrate_context wrote it; features, families (manifest);
+              game_features; player_id, season.
+    optional  Z_model, M_model: the matrix as the model read it, after the
+              run's --era-align / --robust-scaling / --mask-* (default Z, M);
+              cluster (stored archetype ids, the head's classes), position
               (-1 unknown), archetype_logits, position_logits,
               next_profile_pred [n, 14], regime {"rows", "E"},
               skills {"pred", "target", "mask", "keys", "n_core"},
               report (the v1 report, for the diagnostics), run_args (the
               trainer's args, for which columns were inputs).
+
+    Which matrix where. The lookup baselines, the regime rule, the archetype
+    labels and the skills formula read Z: they describe the data, and the
+    stored labels and skill grades were built from it. The next-season head
+    predicts the run's own Z_model columns, so its targets and persistence
+    baselines read Z_model, as v1's next_profile does. On the 08-14 run
+    (--era-align procrustes --robust-scaling), train-only k-means on
+    Z_model agreed with the stored ids on 0.61 of train rows and the skills
+    formula scored R2 -0.31: the wrong space for both.
 
     Returns {version, cqs_v2, cqs_v2_val, components, components_val,
     weights, measures, baselines, diagnostics, components_missing,
@@ -706,11 +721,13 @@ def composite_v2(inputs: dict[str, Any]) -> dict:
     E = np.asarray(inputs["E"], dtype=np.float32)
     Z = np.asarray(inputs["Z"], dtype=np.float32)
     M = np.asarray(inputs["M"], dtype=np.float32)
+    Zm = Z if inputs.get("Z_model") is None else np.asarray(inputs["Z_model"], dtype=np.float32)
+    Mm = M if inputs.get("M_model") is None else np.asarray(inputs["M_model"], dtype=np.float32)
     features = list(inputs["features"])
     families = dict(inputs["families"])
     game_features = list(inputs["game_features"])
     season = np.asarray(inputs["season"])
-    if not (len(E) == len(Z) == len(M) == len(season) == len(inputs["player_id"])):
+    if not (len(E) == len(Z) == len(M) == len(Zm) == len(Mm) == len(season) == len(inputs["player_id"])):
         raise ValueError("composite_v2 inputs disagree on the row count")
     report = inputs.get("report")
     run_args = inputs.get("run_args") or {}
@@ -728,7 +745,7 @@ def composite_v2(inputs: dict[str, Any]) -> dict:
         E, Z, game_cols, identity_cols, pairs_by_split, inputs.get("regime"), mask_cols
     )
     nxt = next_head_component(
-        inputs.get("next_profile_pred"), Z, game_cols, pairs_by_split, [features[j] for j in game_cols]
+        inputs.get("next_profile_pred"), Zm, game_cols, pairs_by_split, [features[j] for j in game_cols]
     )
 
     stored = inputs.get("cluster")
@@ -785,7 +802,7 @@ def composite_v2(inputs: dict[str, Any]) -> dict:
             else {"scored": False, "missing": "no archetype labels"}
         ),
         "skills_r2": skills_diagnostic(inputs.get("skills"), Z, game_cols, game_features, season, split_of, report),
-        "aux_r2": aux_diagnostic(report, features, families, M, run_args),
+        "aux_r2": aux_diagnostic(report, features, families, Mm, run_args),
         "margin_14d": margin_14d_diagnostic(report),
         "archetype_labels": {
             "fit": f"k-means K={N_ARCHETYPES} on train-split rows only, rng({KMEANS_SEED}), {KMEANS_ITERS} iterations",

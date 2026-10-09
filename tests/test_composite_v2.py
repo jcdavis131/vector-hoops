@@ -469,6 +469,20 @@ def test_a_missing_input_leaves_the_cqs_unscored_and_says_why(drop, missing):
     assert all(out["components"][k] is not None for k in cv.WEIGHTS if k not in missing)
 
 
+def test_the_next_head_reads_the_models_matrix_and_the_rest_the_built_one():
+    inp = with_regime(synthetic())
+    built = cv.composite_v2(inp)
+    # A run whose inputs were rescaled (as --robust-scaling would): Z_model = 2 Z.
+    scaled = cv.composite_v2({**inp, "Z_model": 2.0 * inp["Z"], "M_model": inp["M"]})
+    p1 = built["baselines"]["next_head"]["test"]["persistence"]
+    p2 = scaled["baselines"]["next_head"]["test"]["persistence"]
+    assert p2["r2"] == p1["r2"] and p2["mae_z"] == pytest.approx(2 * p1["mae_z"], abs=2e-4)
+    for key in ("recall", "regime", "archetype", "position"):
+        assert scaled["baselines"][key] == built["baselines"][key]
+    assert scaled["diagnostics"]["archetype_labels"] == built["diagnostics"]["archetype_labels"]
+    assert scaled["diagnostics"]["purity"] == built["diagnostics"]["purity"]
+
+
 def test_a_missing_required_input_is_an_error():
     inp = synthetic()
     del inp["Z"]
@@ -574,13 +588,16 @@ def test_encode_masked_rows_zeroes_the_columns_in_eval_mode_and_restores_train_m
 
 
 def hook_inputs(tm, inp, model, fams, seas_t) -> dict:
+    """What main() passes: the matrix as built (Z, M) and as the model read it (here with TM_NET_RTG masked)."""
     import torch
 
-    xs, ms = tm.split_by_family(inp["Z"], inp["M"], fams, "cpu")
+    Zm, Mm = inp["Z"].copy(), inp["M"].copy()
+    Zm[:, -1] = 0.0
+    Mm[:, -1] = 0.0
+    xs, ms = tm.split_by_family(Zm, Mm, fams, "cpu")
     with torch.no_grad():
         E = tm.embed_all(model, xs, ms, seas_t)
-    out = {k: v for k, v in inp.items() if k not in ("Z", "M")}
-    return {**out, "E": E}
+    return {**inp, "E": E, "Z_model": Zm, "M_model": Mm}
 
 
 def test_composite_v2_block_scores_the_regime_slice_from_the_model(tm):
@@ -588,13 +605,14 @@ def test_composite_v2_block_scores_the_regime_slice_from_the_model(tm):
 
     inp = synthetic()
     model, fams, seas_t = tiny_model(tm, inp)
-    block = tm.composite_v2_block(
-        model, fams, inp["Z"], inp["M"], seas_t, "cpu", hook_inputs(tm, inp, model, fams, seas_t), logging
-    )
+    block = tm.composite_v2_block(model, fams, seas_t, "cpu", hook_inputs(tm, inp, model, fams, seas_t), logging)
     assert "error" not in block
     assert block["components"]["regime"] is not None
     assert block["components_missing"] == [] and block["cqs_v2"] is not None
+    # The rule reads the built matrix: TM_NET_RTG, masked only in the model's copy, is not in it.
     assert block["diagnostics"]["regime_masked_features"] == ["TOUCHES"]
+    # The model's copy has no TM_NET_RTG observations, so the team_fit head has no target.
+    assert block["diagnostics"]["aux_r2"]["heads"]["team_fit"] == {"target": None}
 
 
 def test_composite_v2_block_writes_a_failure_into_the_block_instead_of_raising(tm, monkeypatch, caplog):
@@ -602,7 +620,7 @@ def test_composite_v2_block_writes_a_failure_into_the_block_instead_of_raising(t
 
     inp = synthetic()
     model, fams, seas_t = tiny_model(tm, inp)
-    args = (model, fams, inp["Z"], inp["M"], seas_t, "cpu", hook_inputs(tm, inp, model, fams, seas_t))
+    args = (model, fams, seas_t, "cpu", hook_inputs(tm, inp, model, fams, seas_t))
 
     def boom(_inputs):
         raise RuntimeError("bad input")

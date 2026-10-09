@@ -1143,8 +1143,12 @@ def _same_rng(a: tuple, b: tuple) -> bool:
     return same_np and torch.equal(ta, tb) and len(ca) == len(cb) and all(torch.equal(x, y) for x, y in zip(ca, cb))
 
 
-def composite_v2_block(model: MTNN, fams, Z, M, seas_t, device, inputs: dict, log) -> dict:
+def composite_v2_block(model: MTNN, fams, seas_t, device, inputs: dict, log) -> dict:
     """report["composite_v2"], computed once training and the v1 report are done.
+
+    inputs is composite_v2's: Z, M the matrix as built, Z_model, M_model what
+    the model read. The regime columns come from the built matrix; the
+    masked anchors are re-encoded from what the model read.
 
     It cannot move a v1 number: everything v1 reports is computed before
     this, and this draws from no RNG. The global numpy and torch RNG states
@@ -1157,11 +1161,12 @@ def composite_v2_block(model: MTNN, fams, Z, M, seas_t, device, inputs: dict, lo
     try:
         pairs_by_split = composite_v2.split_pairs(inputs["player_id"], inputs["season"])
         rows = composite_v2.regime_anchor_rows(pairs_by_split)
-        cols = composite_v2.regime_mask_columns(M, inputs["season"])
+        cols = composite_v2.regime_mask_columns(inputs["M"], inputs["season"])
         regime = None
         if len(rows) and cols:
-            regime = {"rows": rows, "E": encode_masked_rows(model, Z, M, rows, cols, fams, seas_t, device)}
-        block = composite_v2.composite_v2({**inputs, "Z": Z, "M": M, "regime": regime})
+            Zm, Mm = inputs["Z_model"], inputs["M_model"]
+            regime = {"rows": rows, "E": encode_masked_rows(model, Zm, Mm, rows, cols, fams, seas_t, device)}
+        block = composite_v2.composite_v2({**inputs, "regime": regime})
     except Exception as exc:
         log.exception("composite_v2 failed; the v1 report is unaffected")
         block = composite_v2.failed_block(f"{type(exc).__name__}: {exc}")
@@ -1633,6 +1638,10 @@ def main(argv: list[str] | None = None) -> None:
     # Before --era-align / --robust-scaling rewrite Z: this is the identity of
     # the matrix on disk, which promote.py compares with the current one.
     lineage_matrix = matrix_fingerprint(Z, M, pids, seasons, manifest["features"], manifest["families"])
+    # The matrix as built, for composite_v2's archetype labels, lookup
+    # baselines and skills formula after training. Copies, so the in-place
+    # --mask-* zeroing below cannot reach them; only composite_v2_block reads them.
+    Z_built, M_built = Z.copy(), M.copy()
     lineage_inputs = {display_path(p, ROOT): (sha256_file(p) if p.exists() else None) for p in LINEAGE_INPUTS}
     # Every artifact file this run writes, recorded as it is written.
     written_paths: dict[str, Path] = {}
@@ -2574,12 +2583,14 @@ def main(argv: list[str] | None = None) -> None:
     report["composite_v2"] = composite_v2_block(
         model,
         fams,
-        Z,
-        M,
         seas_t,
         device,
         {
             "E": E,
+            "Z": Z_built,
+            "M": M_built,
+            "Z_model": Z,
+            "M_model": M,
             "features": manifest["features"],
             "families": manifest["families"],
             "game_features": manifest["game_features"],
