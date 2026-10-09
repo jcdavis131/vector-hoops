@@ -1,0 +1,60 @@
+{
+ "built": "2026-10-09",
+ "version": 1,
+ "n_players": 2426,
+ "aggregation": "total_min-weighted mean of v[] per person_id (equal weights when total_min sums to 0)",
+ "format": "ids+arrays (compact); coords are INTEGER THOUSANDTHS \u2014 divide by 1000 client-side; index i of each layout array corresponds to ids[i]",
+ "pca": {
+  "random_state": 42,
+  "axes": [
+   {
+    "pc": "PC1",
+    "explained_variance_ratio": 0.3345,
+    "top_features": [
+     "offensive glass",
+     "three-point volume"
+    ]
+   },
+   {
+    "pc": "PC2",
+    "explained_variance_ratio": 0.171,
+    "top_features": [
+     "scoring volume",
+     "rim pressure (FTs)"
+    ]
+   }
+  ]
+ },
+ "tsne": {
+  "perplexity": 30,
+  "random_state": 42,
+  "init": "pca",
+  "learning_rate": "auto",
+  "kl_divergence": 1.737,
+  "n_iter": 999
+ },
+ "svd": {
+  "random_state": 42,
+  "explained_variance_ratio": [
+   0.3344,
+   0.1705
+  ],
+  "gate": "CUT (r>=0.95 vs PCA)",
+  "pearson_r_vs_pca": 0.9984
+ },
+ "qa": {
+  "counts_consistent": true,
+  "finite": true,
+  "in_range": true,
+  "size_bytes": 92253,
+  "size_budget_bytes": 122880,
+  "size_ok": true
+ },
+ "distinctness": {
+  "sample": 500,
+  "pca_vs_tsne_r": 0.6583,
+  "pca_vs_tsne_ok": true,
+  "pca_vs_svd_r": 0.9984,
+  "svd_gate": "CUT"
+ }
+}

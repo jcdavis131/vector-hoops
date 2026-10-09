@@ -91,6 +91,9 @@ export async function mountSharedMap(canvas, opts={}){
     }catch(e){ console.warn('_injectPoint fail',e); return false; }
   }
   let targetId=highlightInit, guessIds=normalizeGuesses(opts.guessIds);
+  // map-lenses dimming: Set of INTERNAL row indices to recede (8% opacity).
+  // null/empty = no dimming. Managed via api.setDimmed(); preserved across layouts.
+  let dimSet=null;
   let hoverEl=null; try{hoverEl=document.getElementById('hover-tip');}catch{}
   let ctx=null;
   try{ ctx=canvas.getContext('2d',{alpha:false}); }catch{ ctx=canvas.getContext('2d'); }
@@ -256,20 +259,35 @@ export async function mountSharedMap(canvas, opts={}){
     const step=Math.max(1, Math.ceil(N / maxRender));
     // group by color batches: we will iterate colors and inside iterate sampled indices
     const dotSize = W<600?2:2;
-    for(let c=0;c<8;c++){
-      // dark (atlas) field: one quiet ivory for every season, so the accent is reserved for guesses
-      ctx.fillStyle=dark?'rgba(214,222,232,0.42)':OKABE[c];
-      // batched draw
-      for(let i=0;i<N;i+=step){
-        if(baseC[i]!==c) continue;
-        const pr=projected[i];
-        if(!pr) continue;
-        if(pr.sx< -20 || pr.sx> W+20 || pr.sy< -20 || pr.sy> H+20) continue;
-        // alpha via globalAlpha cheap but we batch: use opacity 0.75 for all except depth fade approximated
-        const x = pr.sx|0, y=pr.sy|0;
-        ctx.fillRect(x, y, dotSize, dotSize);
+    // map-lenses dimming: when active, two passes — candidates first (bright),
+    // eliminated second at ~8% opacity. Preserved across layout switches.
+    const dimActive = !!(dimSet && dimSet.size);
+    for(let pass=0; pass < (dimActive?2:1); pass++){
+      const dimPass = dimActive && pass===1;
+      for(let c=0;c<8;c++){
+        // dark (atlas) field: one quiet ivory for every season, so the accent is reserved for guesses
+        if(dark){
+          ctx.fillStyle = dimActive
+            ? (dimPass ? 'rgba(214,222,232,0.42)' : 'rgba(226,232,240,0.48)')
+            : 'rgba(214,222,232,0.42)';
+        } else {
+          ctx.fillStyle = OKABE[c];
+        }
+        ctx.globalAlpha = dimPass ? (dark ? 0.19 : 0.08) : 1;
+        // batched draw
+        for(let i=0;i<N;i+=step){
+          if(baseC[i]!==c) continue;
+          if(dimActive && dimSet.has(i)!==dimPass) continue;
+          const pr=projected[i];
+          if(!pr) continue;
+          if(pr.sx< -20 || pr.sx> W+20 || pr.sy< -20 || pr.sy> H+20) continue;
+          // alpha via globalAlpha cheap but we batch: use opacity 0.75 for all except depth fade approximated
+          const x = pr.sx|0, y=pr.sy|0;
+          ctx.fillRect(x, y, dotSize, dotSize);
+        }
       }
     }
+    ctx.globalAlpha = 1;
 
     // target screen position, computed early so guess lines can reach it —
     // the bullseye itself still draws later/on top, in its original spot
@@ -525,6 +543,41 @@ export async function mountSharedMap(canvas, opts={}){
   if(ok){ projectFrame(); draw(); scheduleLoop(); loadNamesLazy().then(()=>{ projectFrame(); draw(); }); }
   else { ctx.fillStyle='#FFFEF7'; ctx.fillText('Map failed to load',14,22); }
 
+  // --- map-lenses hooks (layout switcher) ---
+  // external ids per internal row (Int32Array copy)
+  function getRowIds(){ return baseI ? Int32Array.from(baseI) : new Int32Array(0); }
+  // snapshot of current base positions (copies)
+  function getBasePositions(){
+    if(!baseOx) return null;
+    return { ox: Float32Array.from(baseOx), oy: Float32Array.from(baseOy), oz: Float32Array.from(baseOz) };
+  }
+  // fn(internalIdx) -> [ox,oy,oz] | null (null keeps current); reprojects + draws
+  function setBasePositions(fn){
+    if(!baseOx || typeof fn!=='function') return false;
+    for(let i=0;i<N;i++){
+      let p=null;
+      try{ p=fn(i); }catch(e){ p=null; }
+      if(!p) continue;
+      baseOx[i]=p[0]; baseOy[i]=p[1]; baseOz[i]=p[2];
+    }
+    projectFrame(); draw(); return true;
+  }
+  function refresh(){ projectFrame(); draw(); }
+  // dim the given EXTERNAL player ids (translated to internal rows); null clears.
+  // eliminated -> ~8% opacity, others brighten; preserved across layouts.
+  function setDimmed(idArray){
+    dimSet=null;
+    if(Array.isArray(idArray) && idArray.length && projById){
+      const s=new Set();
+      for(const id of idArray){
+        const ii=(id|0);
+        if(ii>=0 && ii<=maxId && projById[ii]>=0) s.add(projById[ii]);
+      }
+      if(s.size) dimSet=s;
+    }
+    draw();
+  }
+
   return {
     setTarget(id){ targetId=id==null?null:id|0; draw(); },
     setGuesses(ids){
@@ -585,6 +638,7 @@ export async function mountSharedMap(canvas, opts={}){
     // append one row (e.g. a daily target outside the sampled lite map) so the bullseye always exists
     addPoint(p){ const ok=_injectPoint(p); if(ok){ draw(); } return ok; },
     resize, getCount(){return N;},
+    getRowIds, getBasePositions, setBasePositions, setDimmed, refresh,
     dispose(){ try{ro&&ro.disconnect();}catch{} }
   };
 }
