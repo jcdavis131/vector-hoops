@@ -567,10 +567,18 @@ def main() -> None:
     if proc.returncode != 0:
         raise SystemExit("build_salary_market.py failed")
 
-    subprocess.run(
+    # Checked the same way as build_salary_market above. Its exit code used to
+    # be dropped, so a crash here left whatever game_ratings.json the last run
+    # wrote and the merge carried on with exit 0 [critic#5]. Today it exits 0:
+    # pipeline/cache has no real game_ratings_*.json, so the builder falls back
+    # to the 2-row example fixture and the family is coverage-gated below. The
+    # check changes nothing while the builder succeeds.
+    proc = subprocess.run(
         [sys.executable, str(ROOT / "pipeline" / "build_game_ratings.py")],
         cwd=ROOT,
     )
+    if proc.returncode != 0:
+        raise SystemExit("build_game_ratings.py failed")
 
     Z, M, manifest, pids, seasons, names, clusters = load_train_bundle()
     roster = load_roster_by_player_season()
