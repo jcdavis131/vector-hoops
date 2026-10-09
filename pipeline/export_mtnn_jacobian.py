@@ -73,6 +73,7 @@ import time
 from pathlib import Path
 
 import numpy as np
+import promote
 import torch
 import train_mtnn as T
 from _torch_safe import safe_torch_load
@@ -80,7 +81,14 @@ from _torch_safe import safe_torch_load
 HERE = Path(__file__).resolve().parent
 DATA = HERE / "data"
 ASSETS = HERE.parent / "assets"
-CKPT = DATA / "mtnn_best.pt"
+# The promoted bundle's checkpoint, set in main() from promote.load_promoted().
+# This was pipeline/data/mtnn_best.pt, which every training run rewrites: on
+# 2026-10-09 an 08-14 select-phase transformer that never produced the
+# embedding beside it, so the attributions would have described another model
+# [health#0, training#2]. STAMP is the bundle's run id and shas, written into
+# both JSON outputs so they can be tied to the served embedding [artifacts#3].
+CKPT: Path = DATA / "promoted" / "<run_id>" / "mtnn_best.pt"
+STAMP: dict = {}
 OUT_JSON = ASSETS / "mtnn_jacobian.json"
 OUT_F32 = ASSETS / "mtnn_jacobian.f32"
 OUT_ATTR_JSON = ASSETS / "mtnn_attr_pop.json"
@@ -342,8 +350,9 @@ def write_feature_assets(
     st = CKPT.stat()
     doc = {
         "built": time.strftime("%Y-%m-%d"),
+        "lineage": STAMP,
         # Same fail-closed provenance as the tower export (V13).
-        "checkpoint": {"mtime": int(st.st_mtime), "bytes": int(st.st_size)},
+        "checkpoint": {"mtime": int(st.st_mtime), "bytes": int(st.st_size), "sha256": STAMP["checkpoint_sha256"]},
         "matrix": matrix_name,
         "rows": int(n_rows),
         "method": (
@@ -412,8 +421,13 @@ def main() -> None:
     ap.add_argument("--topk", type=int, default=TOPK)
     args = ap.parse_args()
     device = "cuda" if (args.device in ("auto", "cuda") and torch.cuda.is_available()) else "cpu"
-    if not CKPT.exists():
-        raise SystemExit(f"missing {CKPT} — train first")
+    global CKPT, STAMP
+    try:
+        bundle = promote.load_promoted(DATA, check_matrix=True)
+    except promote.BundleError as e:
+        raise SystemExit(f"export_mtnn_jacobian: {e}") from None
+    CKPT, STAMP = bundle.checkpoint, bundle.stamp()
+    print(f"promoted run {bundle.run_id}")
 
     print(f"device: {device}")
     ckpt = safe_torch_load(CKPT, map_location=device)
@@ -493,7 +507,8 @@ def main() -> None:
         # Provenance so the client can fail closed when this file is stale
         # relative to the shipped mtnn_arch.json (e.g. after a promote/retrain).
         "dEmb": int(ckpt.get("args", {}).get("dim", 48)),
-        "checkpoint": {"mtime": int(st.st_mtime), "bytes": int(st.st_size)},
+        "lineage": STAMP,
+        "checkpoint": {"mtime": int(st.st_mtime), "bytes": int(st.st_size), "sha256": STAMP["checkpoint_sha256"]},
         "matrix": matrix_name,
         "method": (
             "Frobenius norm of d(target)/d(tower_output), per row; "

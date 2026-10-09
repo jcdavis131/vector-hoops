@@ -9,8 +9,10 @@ For every charted player-season with an MTNN ``next_profile_pred``:
 * Otherwise (career ended / uncharted next year) → status ``no_next``
   (prediction kept for audit; UI usually hides these).
 
-Does **not** touch promoted checkpoints. Reads ``embedding_v3.npz`` +
-``vectors.json`` only.
+Reads the promoted bundle's ``embedding_v3.npz`` through
+promote.load_promoted() (it used to read pipeline/data/embedding_v3.npz,
+which nothing tied to a run [eval#6]) and ``vectors.json``. Writes the run id
+under "lineage".
 
 Run:  python pipeline/export_next_profile_eval.py
 Also invoked at the end of ``project_next_season.py``.
@@ -24,11 +26,11 @@ from collections import defaultdict
 from pathlib import Path
 
 import numpy as np
+import promote
 
 HERE = Path(__file__).resolve().parent
 DATA = HERE / "data"
 ASSETS = HERE.parent / "assets"
-EMB = DATA / "embedding_v3.npz"
 VECTORS = ASSETS / "vectors.json"
 OUT = ASSETS / "next_profile_eval.json"
 
@@ -56,12 +58,14 @@ def round_z(v: float) -> float:
 
 
 def main() -> None:
-    if not EMB.exists():
-        raise SystemExit(f"missing {EMB} — run pipeline/train_mtnn.py first")
+    try:
+        bundle = promote.load_promoted(DATA)
+    except promote.BundleError as e:
+        raise SystemExit(f"export_next_profile_eval: {e}") from None
     if not VECTORS.exists():
         raise SystemExit(f"missing {VECTORS}")
 
-    emb = np.load(EMB, allow_pickle=True)
+    emb = np.load(bundle.embedding, allow_pickle=False)
     if "next_profile_pred" not in emb.files:
         raise SystemExit("embedding_v3.npz has no next_profile_pred — retrain/export MTNN")
 
@@ -130,6 +134,7 @@ def main() -> None:
 
     payload = {
         "built": time.strftime("%Y-%m-%d"),
+        "lineage": bundle.stamp(),
         "latestSeason": latest,
         "features": feature_keys,
         "featureLabels": {k: labels.get(k, k) for k in feature_keys},

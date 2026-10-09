@@ -1,8 +1,20 @@
 """Promote client-safe pipeline outputs into assets/ for the static site.
 
-The game contract stays transparent 14-d vectors.json; MTNN embeddings
-(pipeline/data/embedding_v3.npz) are NOT exported until promotion gates pass.
-This script refreshes everything the UI actually fetches.
+The game contract stays transparent 14-d vectors.json; MTNN embeddings are
+exported only from a promoted bundle (pipeline/promote.py), read through
+promote.load_promoted(). This script refreshes everything the UI actually
+fetches.
+
+MTNN steps (2026-10-09). The gate here used to read the LAST run's
+pipeline/data/mtnn_report.json and pass it on three floors without reading
+the trainer's own verdict: on this box an 08-14 select-phase report with
+promote ok=False passed it, and the manifest would have recorded
+mtnn_promoted=true for an export of an 08-07 embedding [artifacts#2]. Now:
+no promoted bundle -> the MTNN steps are skipped and the manifest says
+mtnn_promoted false; a promoted bundle that fails verification (an edited,
+missing or mixed file) -> this script stops; a verified one -> the MTNN
+exports run and must succeed, and the manifest's model and metrics are
+copied from the promoted manifest, never from the last-run report.
 
 Run after integrate_context.py + train (or in parallel with training):
 
@@ -25,13 +37,13 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "pipeline"))
 
+import promote
 import real_caches
 
 ASSETS = ROOT / "assets"
 CACHE_DIR = ROOT / "pipeline" / "cache"
 MANIFEST = ASSETS / "manifest.json"
 LEDGER = ROOT / "pipeline" / "cache" / "dataset_ledger.json"
-REPORT = ROOT / "pipeline" / "data" / "mtnn_report.json"
 SWEEP = ROOT / "pipeline" / "data" / "mtnn_hp_sweep.json"
 
 CLIENT_ASSETS = [
@@ -139,8 +151,22 @@ def leakfree_evidence() -> dict | None:
     }
 
 
+def promoted_bundle() -> tuple[promote.PromotedBundle | None, str | None]:
+    """(bundle, None) when a verified bundle is promoted, (None, why) when nothing is.
+
+    A bundle that is promoted but does not verify stops the export: that is a
+    broken model, not a missing one.
+    """
+    try:
+        return promote.load_promoted(), None
+    except promote.NoPromotedBundleError as e:
+        return None, str(e)
+    except promote.BundleError as e:
+        raise SystemExit(f"export_assets: {e}") from None
+
+
 def mtnn_promotion_eligible(report: dict | None) -> bool:
-    """Match train_mtnn.py promotion_gate + verify_accuracy v11."""
+    """export_mtnn_embeddings' floors, applied to the promoted run's report."""
     if not report:
         return False
     ho = report.get("held_out_recall", {})
@@ -199,26 +225,19 @@ def main() -> None:
     ):
         steps_ok[script] = run(script, [py, f"pipeline/{script}"], required=False)
 
-    if mtnn_promotion_eligible(json.loads(REPORT.read_text(encoding="utf-8")) if REPORT.exists() else None):
-        steps_ok["mtnn_export"] = run(
-            "export_mtnn_embeddings",
-            [py, "pipeline/export_mtnn_embeddings.py"],
-            required=False,
-        )
+    bundle, not_promoted = promoted_bundle()
+    mtnn = bundle.report if bundle else None
+    if bundle is None:
+        print(f"== MTNN exports: skipped, {not_promoted}\n")
+    elif not mtnn_promotion_eligible(mtnn):
+        print(f"== MTNN exports: skipped, promoted run {bundle.run_id} misses the export floors\n")
+    else:
+        steps_ok["mtnn_export"] = run("export_mtnn_embeddings", [py, "pipeline/export_mtnn_embeddings.py"])
         steps_ok["mtnn_export_gates"] = run("test_mtnn_export", [py, "pipeline/test_mtnn_export.py"], required=False)
-
-    emb_npz = ROOT / "pipeline" / "data" / "embedding_v3.npz"
-    if emb_npz.exists():
-        steps_ok["projections"] = run(
-            "project_next_season",
-            [py, "pipeline/project_next_season.py"],
-            required=False,
-        )
-        steps_ok["mtnn_viz"] = run("export_mtnn_viz", [py, "pipeline/export_mtnn_viz.py"], required=False)
-
-    mtnn = None
-    if REPORT.exists():
-        mtnn = json.loads(REPORT.read_text(encoding="utf-8"))
+        steps_ok["projections"] = run("project_next_season", [py, "pipeline/project_next_season.py"])
+        steps_ok["mtnn_viz"] = run("export_mtnn_viz", [py, "pipeline/export_mtnn_viz.py"])
+    promoted_ok = bool(steps_ok.get("mtnn_export"))
+    metrics = bundle.metrics if bundle else {}
 
     sweep_best = None
     if SWEEP.exists():
@@ -244,29 +263,26 @@ def main() -> None:
         "built": time.strftime("%Y-%m-%d %H:%M UTC", time.gmtime()),
         "contract": "transparent_14d",
         "wide_skills": wide_meta,
-        "mtnn_promoted": mtnn_promotion_eligible(mtnn),
+        "mtnn_promoted": promoted_ok,
         "mtnn_promotion_note": (
-            "embeddings promoted to assets/ and consumed by /model + neighbor UI"
-            if mtnn_promotion_eligible(mtnn)
-            else None
+            "embeddings promoted to assets/ and consumed by /model + neighbor UI" if promoted_ok else None
         ),
-        "mtnn_model": mtnn.get("model") if mtnn else None,
+        "mtnn_run_id": bundle.run_id if bundle else None,
+        "mtnn_model": bundle.manifest.get("model") if bundle else None,
         # The production model is an ATLAS: it trains on every charted row by
         # design, so the two figures below are TRANSDUCTIVE -- the pairs they
         # score were also training positives. Calling them "test" or "held-out"
         # is how recall@10 came to read a perfect 1.0. The honest, inductive
         # numbers (held-out PLAYERS, leak-free protocol) live beside them.
         "mtnn_eval_protocol": "transductive (atlas) — trained on all rows; NOT held-out",
-        "mtnn_transductive_recall_at_10": (
-            mtnn.get("held_out_recall", {}).get("test", {}).get("recall_at_10_mtnn") if mtnn else None
-        ),
-        "mtnn_transductive_purity_at_20": (mtnn.get("cross_era_archetype_neighbor_purity_at_20") if mtnn else None),
+        # Copied from the promoted manifest, which promote.py copied from the
+        # promoted run's report. Never the last run's report.
+        "mtnn_transductive_recall_at_10": metrics.get("test_recall_at_10"),
+        "mtnn_transductive_purity_at_20": metrics.get("purity_at_20"),
         "mtnn_leakfree": leakfree_evidence(),
         # Back-compat keys (same values, honest names above).
-        "mtnn_test_recall_at_10": (
-            mtnn.get("held_out_recall", {}).get("test", {}).get("recall_at_10_mtnn") if mtnn else None
-        ),
-        "mtnn_purity_at_20": mtnn.get("cross_era_archetype_neighbor_purity_at_20") if mtnn else None,
+        "mtnn_test_recall_at_10": metrics.get("test_recall_at_10"),
+        "mtnn_purity_at_20": metrics.get("purity_at_20"),
         "hp_sweep_best": sweep_best,
         "dataset_ledger": ledger_tail,
         "steps": steps_ok,

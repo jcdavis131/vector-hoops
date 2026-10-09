@@ -104,6 +104,7 @@ from artifact_io import (  # noqa: E402
     load_matrix_fingerprint,
     sha256_file,
 )
+from served_model import METRIC_KEYS  # noqa: E402
 
 DATA_DIR = ROOT / "pipeline" / "data"
 SCHEMA = 1
@@ -117,18 +118,9 @@ MANIFEST = "manifest.json"
 CURRENT = "CURRENT.json"
 EXIT_REFUSED = 2
 
-# Metrics a manifest carries, copied from the report. Exporters copy these
-# from the manifest and never compute or type one (served_model.META_KEYS
-# lists the same names for the served meta).
-METRIC_KEYS = (
-    "cqs",
-    "test_recall_at_10",
-    "purity_at_20",
-    "archetype_top1_acc",
-    "position_top1_acc",
-    "transparent_14d_test_recall_at_10",
-    "continuity_spread",
-)
+# The manifest's metrics are served_model.METRIC_KEYS, copied from the report
+# (metrics_from_report). Exporters copy them from the manifest and never
+# compute or type one.
 
 _RUN_ID = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._-]*$")
 

@@ -5,7 +5,19 @@ Writes:
   assets/mtnn_map.json      — PCA(3) coords of 48-d embeddings + axis labels
   assets/mtnn_heads.f32     — row-aligned [arch | skills | position | next-profile]
 
-Requires pipeline/data/embedding_v3.npz and assets/vectors.json alignment.
+Reads the promoted bundle (promote.load_promoted, every file re-hashed, and
+the current train_matrix.npz checked to be the one the model trained on),
+and checks every matrix row against assets/vectors.json by (player_id,
+season). It used to read pipeline/data/embedding_v3.npz beside the last
+run's mtnn_best.pt: on 2026-10-09 an 08-07 embedding with an 08-14 select-
+phase checkpoint, so arch.json would have described one model and the map
+another. Its architecture came from that checkpoint's args with hand-typed
+defaults (tower 24/96/1) on any error, and its model label from
+args["model"], which train_mtnn never sets, so it always read
+"mtnn_v4_phase_b" [artifacts#2]. Both now come from the promoted run's
+report: the model tag and lineage.args (the same vars(args) the checkpoint
+holds). arch.json and map.json carry the run id under "lineage"
+[artifacts#3, fork#13].
 
 Run: python pipeline/export_mtnn_viz.py
 """
@@ -17,11 +29,12 @@ import time
 from pathlib import Path
 
 import numpy as np
+import promote
+import served_model as sm
 
 HERE = Path(__file__).resolve().parent
 DATA = HERE / "data"
 ASSETS = HERE.parent / "assets"
-EMB = DATA / "embedding_v3.npz"
 VECTORS = ASSETS / "vectors.json"
 TRAIN = DATA / "train_matrix.npz"
 MANIFEST = DATA / "feature_manifest.json"
@@ -149,14 +162,16 @@ def infer_axes(
 
 
 def main() -> None:
-    if not EMB.exists():
-        raise SystemExit(f"missing {EMB} — run pipeline/train_mtnn.py first")
+    try:
+        bundle = promote.load_promoted(DATA, check_matrix=True)
+    except promote.BundleError as e:
+        raise SystemExit(f"export_mtnn_viz: {e}") from None
     if not VECTORS.exists():
         raise SystemExit(f"missing {VECTORS}")
     if not TRAIN.exists() or not MANIFEST.exists():
         raise SystemExit("missing train_matrix.npz or feature_manifest.json")
 
-    data = np.load(EMB, allow_pickle=True)
+    data = np.load(bundle.embedding, allow_pickle=False)
     E = np.asarray(data["E"], dtype=np.float32)
     arch = np.asarray(data["archetype_logits"], dtype=np.float32)
     skills = np.asarray(data["skill_pred"], dtype=np.float32)
@@ -183,12 +198,13 @@ def main() -> None:
     t_seasons = train["season"]
     if Z.shape[0] != n:
         raise SystemExit(f"train row mismatch: Z {Z.shape[0]} vs vectors {n}")
-    for idx in (0, n // 2, n - 1):
-        p = players[idx]
-        if str(t_names[idx]) != p["name"] or str(t_seasons[idx]) != p["season"]:
-            raise SystemExit(
-                f"train alignment fail row {idx}: {t_names[idx]!r}|{t_seasons[idx]!r} vs {p['name']!r}|{p['season']!r}"
-            )
+    # Every row, by (player_id, season). This was 3 rows by name.
+    t_keys = [sm.row_key(p, s) for p, s in zip(train["player_id"].tolist(), t_seasons.tolist(), strict=True)]
+    v_keys = sm.vector_keys(players)
+    bad = [i for i in range(n) if t_keys[i] != v_keys[i]]
+    if bad:
+        shown = "; ".join(f"row {i}: {t_keys[i]} ({t_names[i]}) vs {v_keys[i]}" for i in bad[:10])
+        raise SystemExit(f"{len(bad)} matrix rows are not the vectors.json row at the same index: {shown}")
 
     manifest = json.loads(MANIFEST.read_text(encoding="utf-8"))
     feats = manifest["features"]
@@ -224,43 +240,38 @@ def main() -> None:
     coords, raw_coords = pca_coords(E)
     axis_meta = infer_axes(raw_coords, arch, skills, skill_keys, cluster_names)
 
-    # Read the shipped net's real shape from the checkpoint when present, so the
-    # diagram never advertises an architecture that was not trained.
-    ckpt_args: dict = {}
-    ckpt_path = DATA / "mtnn_best.pt"
-    if ckpt_path.exists():
-        try:
-            import torch  # noqa: F401  local import: viz export must work without torch
-            from _torch_safe import safe_torch_load
-
-            ckpt_args = safe_torch_load(ckpt_path, map_location="cpu").get("args", {})
-        except Exception as exc:
-            print(f"  warn: could not read checkpoint args ({exc}); using defaults")
-
+    # The trained net's real shape, from the promoted run's own args (the same
+    # vars(args) its checkpoint holds), so the diagram never advertises an
+    # architecture that was not trained. No defaults: a missing key is an error.
+    run_args = (bundle.report.get("lineage") or {}).get("args") or {}
+    try:
+        d_tower = int(run_args["tower_width"])
+        d_hidden = int(run_args["tower_hidden"])
+        n_blocks = int(run_args["tower_blocks"])
+        fusion = str(run_args["fusion"])
+        mlp_heads = bool(run_args["mlp_heads"])
+    except KeyError as e:
+        raise SystemExit(f"export_mtnn_viz: promoted run {bundle.run_id} records no {e} in lineage.args") from None
     fams_used = tower_families(family_order)
-    d_tower = int(ckpt_args.get("tower_width", 24))
-    d_hidden = int(ckpt_args.get("tower_hidden", 96))
     d_emb = int(E.shape[1])
-    n_blocks = int(ckpt_args.get("tower_blocks", 1))
-    fusion = str(ckpt_args.get("fusion", "concat"))
-    mlp_heads = bool(ckpt_args.get("mlp_heads", False))
+    ckpt_path = bundle.checkpoint
 
     arch_doc = {
         "built": time.strftime("%Y-%m-%d"),
-        "model": str(ckpt_args.get("model", "mtnn_v4_phase_b")),
+        "model": bundle.manifest.get("model"),
+        "lineage": bundle.stamp(),
         "fusion": fusion,
         "dTower": d_tower,
         "dEmb": d_emb,
         # Provenance stamp; the Jacobian export carries the same fingerprint so
-        # the client can reject a stale attribution file (see network-viz.js).
-        "checkpoint": (
-            {
-                "mtime": int(ckpt_path.stat().st_mtime),
-                "bytes": int(ckpt_path.stat().st_size),
-            }
-            if ckpt_path.exists()
-            else None
-        ),
+        # the client can reject a stale attribution file (see network-viz.js,
+        # which compares mtime and bytes). Both exporters stamp the promoted
+        # bundle's checkpoint; sha256 is the part that cannot collide.
+        "checkpoint": {
+            "mtime": int(ckpt_path.stat().st_mtime),
+            "bytes": int(ckpt_path.stat().st_size),
+            "sha256": bundle.stamp()["checkpoint_sha256"],
+        },
         "towerBlocks": n_blocks,
         "mlpHeads": mlp_heads,
         "nArchetypes": int(arch.shape[1]),
@@ -312,6 +323,7 @@ def main() -> None:
 
     map_doc = {
         "built": time.strftime("%Y-%m-%d"),
+        "lineage": bundle.stamp(),
         "dim": 3,
         "rows": n,
         "method": (f"PCA(3) on {d_emb}-d MTNN embeddings; axes min-max scaled for the explorer map."),

@@ -7,11 +7,20 @@ Filters mirror past-modern-game.js init() exactly. update_dataset.py runs this
 automatically at the end of its rebuild flow (test_scoring_lite.py gates it);
 rerun by hand only when mtnn_embeddings.f32 / honors.json /
 vectors_search_lite.json change outside that flow.
+
+It slices the served f32, so it first checks those bytes are the ones
+assets/mtnn_lineage.json names (served_model.verify_f32) and refuses
+otherwise, and it stamps the run id into scoring_lite_index.json. It used to
+key freshness on meta's "built" date only, and on 2026-10-09 the committed
+index (built 2026-07-25) sat beside a meta with no "built" at all
+[artifacts#3, artifacts#12].
 """
 
 import json
 from array import array
 from pathlib import Path
+
+import served_model as sm
 
 ROOT = Path(__file__).resolve().parents[1]
 ASSETS = ROOT / "assets"
@@ -27,8 +36,16 @@ def parse_year(season):
 
 
 def main():
+    try:
+        lineage = sm.verify_f32(ASSETS)
+    except sm.ServedModelError as e:
+        raise SystemExit(f"build_scoring_lite: {e}") from None
     meta = json.loads((ASSETS / "mtnn_meta.json").read_text(encoding="utf-8"))
     dim, rows = meta["dim"], meta["rows"]
+    if (rows, dim) != (lineage.get("rows"), lineage.get("dim")):
+        raise SystemExit(
+            f"build_scoring_lite: mtnn_meta.json says {rows}x{dim}, {sm.LINEAGE} {lineage.get('rows')}x{lineage.get('dim')}"
+        )
     lite = json.loads((ASSETS / "vectors_search_lite.json").read_text(encoding="utf-8"))
     players = lite["players"] if isinstance(lite, dict) else lite
     honors = json.loads((ASSETS / "honors.json").read_text(encoding="utf-8"))
@@ -60,6 +77,7 @@ def main():
         "dim": dim,
         "rows": len(ids),
         "source": "mtnn_embeddings.f32",
+        "lineage": {"run_id": lineage.get("run_id"), "embedding_f32_sha256": lineage.get("embedding_f32_sha256")},
         "note": "L2-normalized rows for past all-stars 1996-2023 + all 2024+ seasons; dot=cosine; ids[k] = global row id of lite row k",
         "ids": ids,
     }

@@ -20,35 +20,11 @@ import pytest
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "pipeline"))
+sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 import artifact_io as aio  # noqa: E402
 import promote as pm  # noqa: E402
-
-COLUMNS = ["PTS", "AST", "TRK_DRIVES"]
-FAMILIES = {"PTS": "volume", "AST": "playmaking", "TRK_DRIVES": "tracking"}
-PIDS = np.array([11, 11, 12, 13, 13, 14], dtype=np.int64)
-SEASONS = np.array(["2019-20", "2020-21", "2020-21", "1997-98", "1998-99", "2025-26"])
-DIM = 4
-
-# Clears composite_score.should_promote at n_seeds=1 against its BASELINE
-# (cqs 77.74 + 1.2, recall 0.835 - 0.062, purity 0.782 - 0.015, spread bar
-# 0.1436 + 0.2024). should_promote takes `composite` as given.
-PASSING = {"cqs": 90.0, "test_recall_at_10": 0.9, "purity_at_20": 0.8}
-
-
-def write_matrix(data: Path, shift: float = 0.0) -> None:
-    rng = np.random.default_rng(3)
-    Z = rng.standard_normal((len(PIDS), len(COLUMNS))).astype(np.float32) + shift
-    np.savez_compressed(
-        data / "train_matrix.npz",
-        Z=Z,
-        mask=np.ones_like(Z),
-        player_id=PIDS,
-        season=SEASONS,
-        name=np.array([f"P{p}" for p in PIDS]),
-        cluster=np.zeros(len(PIDS), dtype=np.int64),
-    )
-    (data / "feature_manifest.json").write_text(json.dumps({"features": COLUMNS, "families": FAMILIES}))
+from bundle_fixtures import DIM, PIDS, SEASONS, make_run, write_matrix  # noqa: E402
 
 
 @pytest.fixture
@@ -59,58 +35,6 @@ def data(tmp_path, monkeypatch) -> Path:
     monkeypatch.setattr(pm, "DATA_DIR", d)
     monkeypatch.setattr(pm, "git_state", lambda root: {"sha": "a" * 40, "short": "aaaaaaaa", "dirty": False})
     return d
-
-
-def make_run(
-    data: Path,
-    run_id: str,
-    *,
-    phase: str = "final-refit",
-    composite: dict | None = None,
-    dim: int = DIM,
-    centroid_dim: int | None = None,
-    checkpoint: bool = True,
-    seed: int = 0,
-    deploy_mode: str | None = None,
-) -> Path:
-    """A run directory as train_mtnn --run-dir leaves it."""
-    run = data.parent / "runs" / run_id
-    run.mkdir(parents=True)
-    E = np.random.default_rng(seed).standard_normal((len(PIDS), dim)).astype(np.float32)
-    np.savez_compressed(run / "embedding_v3.npz", E=E, player_id=PIDS, season=SEASONS)
-    np.savez_compressed(run / "mtnn_centroids.npz", centroids=np.ones((8, centroid_dim or dim), np.float32))
-    roles = ["embedding", "centroids"]
-    if checkpoint:
-        (run / "mtnn_best.pt").write_bytes(f"weights of {run_id}".encode())
-        roles.insert(0, "checkpoint")
-    artifacts = {r: aio.file_record(run / aio.BUNDLE_FILES[r], data.parent) for r in roles}
-    report = {
-        "trained": "2026-10-09 12:00",
-        "model": f"test_model_{run_id}",
-        "dim": dim,
-        "composite": dict(composite or PASSING),
-        "population_validation": {"collapse_flags": {}},
-        "continuity_spread": 0.1,
-        "archetype_top1_acc": 0.91,
-        "position_top1_acc": 0.72,
-        "held_out_recall": {"test": {"recall_at_10_mtnn": 0.9, "recall_at_10_transparent_14d": 0.2}},
-        "promote": {"ok": True, "reason": "set by the test"},
-        "deploy": {"mode": deploy_mode or ("final_refit_all_rows" if phase == "auto" else "selection_fit_rows_all")},
-        "lineage": {
-            "schema": 1,
-            "run_id": run_id,
-            "phase": phase,
-            "seed": 7,
-            "git": {"sha": "b" * 40},
-            "env_versions": {"python": "test"},
-            "matrix_fingerprint": aio.load_matrix_fingerprint(
-                data / "train_matrix.npz", data / "feature_manifest.json"
-            ),
-            "artifacts": artifacts,
-        },
-    }
-    (run / "mtnn_report.json").write_text(json.dumps(report, indent=2), encoding="utf-8")
-    return run
 
 
 def refused(run: Path, **kw) -> str:

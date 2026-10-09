@@ -4,9 +4,12 @@ v1 uses the current-season MTNN embedding auxiliary heads (skill + archetype
 logits) as a *style-implied* forward view. This is not a pace/minutes
 extrapolation; eval against held-out next seasons belongs in test_projections.py.
 
-Requires: pipeline/data/embedding_v3.npz (after train_mtnn.py),
-          assets/current_rosters.json, assets/skills.json,
-          assets/archetype_assignments.json, assets/vectors.json
+Requires: a promoted bundle (pipeline/promote.py), read through
+          promote.load_promoted(), plus assets/current_rosters.json,
+          assets/skills.json, assets/archetype_assignments.json,
+          assets/vectors.json. It used to read pipeline/data/embedding_v3.npz,
+          which nothing tied to a run [eval#6]. The run id goes into
+          projections.json under "lineage".
 
 Run: python pipeline/project_next_season.py
 """
@@ -18,11 +21,11 @@ import time
 from pathlib import Path
 
 import numpy as np
+import promote
 
 HERE = Path(__file__).resolve().parent
 DATA = HERE / "data"
 ASSETS = HERE.parent / "assets"
-EMB = DATA / "embedding_v3.npz"
 ROSTERS = ASSETS / "current_rosters.json"
 SKILLS = ASSETS / "skills.json"
 ASSIGN = ASSETS / "archetype_assignments.json"
@@ -43,12 +46,14 @@ def adaptive_round(v: float) -> float:
 
 
 def main() -> None:
-    if not EMB.exists():
-        raise SystemExit(f"missing {EMB} — run pipeline/train_mtnn.py first")
+    try:
+        bundle = promote.load_promoted(DATA)
+    except promote.BundleError as e:
+        raise SystemExit(f"project_next_season: {e}") from None
     if not ROSTERS.exists():
         raise SystemExit(f"missing {ROSTERS} — run pipeline/build_current_rosters.py")
 
-    emb = np.load(EMB, allow_pickle=True)
+    emb = np.load(bundle.embedding, allow_pickle=False)
     names = [str(x) for x in emb["name"]]
     seasons = [str(x) for x in emb["season"]]
     skill_pred = emb["skill_pred"].astype(np.float32)
@@ -143,6 +148,7 @@ def main() -> None:
 
     payload = {
         "built": time.strftime("%Y-%m-%d"),
+        "lineage": bundle.stamp(),
         "fromSeason": from_season,
         "toSeason": to_season,
         "method": (
