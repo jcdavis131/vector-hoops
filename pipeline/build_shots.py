@@ -183,6 +183,48 @@ def save_state(state):
     os.replace(tmp, STATE_FILE)
 
 
+def pick_col(headers, *names):
+    """Index of the first present header, else None (API headers drift)."""
+    for n in names:
+        if n in headers:
+            return headers.index(n)
+    return None
+
+
+def parse_roster(data, season):
+    """Return [(person_id, display_name)] for a season's roster payload.
+
+    Resolves columns defensively; raises RuntimeError with the actual
+    headers when nothing matches (fail honest, with diagnostics).
+    """
+    rss = data.get("resultSets") or []
+    rs = None
+    for cand in rss:
+        h = cand.get("headers") or []
+        if any("PERSON_ID" in x or "PLAYER_ID" in x for x in h):
+            rs = cand
+            break
+    if rs is None:
+        avail = [(c.get("name"), c.get("headers")) for c in rss]
+        raise RuntimeError("no player resultSet; got %s" % json.dumps(avail)[:400])
+    headers = rs["headers"]
+    i_id = pick_col(headers, "PERSON_ID", "PLAYER_ID")
+    i_first = pick_col(headers, "DISPLAY_FIRST_NAME", "FIRST_NAME")
+    i_last = pick_col(headers, "DISPLAY_LAST_NAME", "LAST_NAME")
+    i_single = pick_col(headers, "PLAYER_NAME", "PLAYER")
+    if i_id is None or ((i_first is None or i_last is None) and i_single is None):
+        raise RuntimeError("unrecognized headers: %s" % json.dumps(headers)[:400])
+    out = []
+    for row in rs.get("rowSet") or []:
+        if i_single is not None and (i_first is None or i_last is None):
+            name = str(row[i_single]).strip()
+        else:
+            name = (str(row[i_first]) + " " + str(row[i_last])).strip()
+        if name:
+            out.append((row[i_id], name))
+    return out
+
+
 def cmd_collect():
     """Fetch raw shot data per player-season. Resume-safe, polite."""
     state = load_state()
@@ -198,15 +240,12 @@ def cmd_collect():
         params = {"LeagueID": "00", "Season": season, "IsOnlyCurrentSeason": "0"}
         try:
             data = api_get(ROSTER_BASE, params)
+            roster = parse_roster(data, season)
         except RuntimeError as e:
             print("COLLECT: roster fetch failed for %s: %s (honest skip)" % (season, e),
                   file=sys.stderr, flush=True)
             continue
-        rs = data["resultSets"][0]
-        hi = {h: i for i, h in enumerate(rs["headers"])}
-        for row in rs["rowSet"]:
-            pid = row[hi["PERSON_ID"]]
-            name = (row[hi["DISPLAY_FIRST_NAME"]] + " " + row[hi["DISPLAY_LAST_NAME"]]).strip()
+        for pid, name in roster:
             fetch_list.append((season, pid, name))
         time.sleep(RATE_LIMIT_S)
 
@@ -246,15 +285,23 @@ def cmd_collect():
         params["Season"] = season
         try:
             data = api_get(API_BASE, params)
-            rs = data["resultSets"][0]
-            hi = {h: i2 for i2, h in enumerate(rs["headers"])}
+            rss = data.get("resultSets") or []
+            rs = rss[0] if rss else None
+            headers = (rs.get("headers") or []) if rs else []
+            i_x = pick_col(headers, "LOC_X")
+            i_y = pick_col(headers, "LOC_Y")
+            i_made = pick_col(headers, "SHOT_MADE_FLAG")
+            i_type = pick_col(headers, "SHOT_TYPE")
+            if None in (i_x, i_y, i_made, i_type):
+                raise RuntimeError("unrecognized shot headers: %s"
+                                   % json.dumps(headers)[:300])
             shots = []
-            for row in rs["rowSet"]:
+            for row in rs.get("rowSet") or []:
                 shots.append({
-                    "x": row[hi["LOC_X"]] / 10.0,
-                    "y": row[hi["LOC_Y"]] / 10.0,
-                    "made": 1 if row[hi["SHOT_MADE_FLAG"]] == 1 else 0,
-                    "is3": 1 if str(row[hi["SHOT_TYPE"]]).startswith("3PT") else 0,
+                    "x": row[i_x] / 10.0,
+                    "y": row[i_y] / 10.0,
+                    "made": 1 if row[i_made] == 1 else 0,
+                    "is3": 1 if str(row[i_type]).startswith("3PT") else 0,
                 })
             os.makedirs(os.path.dirname(out_path), exist_ok=True)
             tmp = out_path + ".tmp"
