@@ -2,10 +2,16 @@
 
 The hand cases set K_RECALL / K_PURITY to 1 or 2 so a six-row space can be
 ranked in the head; the real values (10, 20) only change how far down the
-list a hit may sit. Nothing reads pipeline/data and nothing imports torch.
-The last group builds a synthetic season-by-season dataset in memory to
-check what the parts cannot: missing components leave cqs_v2 None, the
-block is JSON, two calls agree, and the global numpy RNG is not touched.
+list a hit may sit. Nothing reads pipeline/data. A synthetic
+season-by-season dataset built in memory checks what the parts cannot:
+missing components leave cqs_v2 None, the block is JSON, two calls agree,
+and the global numpy RNG is not touched.
+
+The last group tests train_mtnn's hook on a tiny MTNN over that dataset and
+imports torch for it, as tests/test_recipes.py does: the masked re-encode
+runs in eval mode and restores the model's mode, nothing draws from either
+RNG, and a failure inside composite_v2 is written into the block rather
+than raised.
 
 Run:  python -m pytest tests/test_composite_v2.py
 """
@@ -484,3 +490,134 @@ def test_it_never_touches_the_global_numpy_rng():
 def test_two_calls_agree():
     inp = with_regime(synthetic())
     assert json.dumps(cv.composite_v2(inp)) == json.dumps(cv.composite_v2(inp))
+
+
+# --- the train_mtnn hook (imports torch, as tests/test_recipes.py does) -----------------
+
+
+@pytest.fixture(scope="module")
+def tm():
+    import importlib
+
+    return importlib.import_module("train_mtnn")
+
+
+def tiny_model(tm, inp: dict, token_dropout: float = 0.5):
+    """A small MTNN over the synthetic dataset's families, built under a forked torch RNG."""
+    import torch
+
+    feats, fams_of = inp["features"], inp["families"]
+    fams: dict[str, list[int]] = {}
+    for j, f in enumerate(feats):
+        fams.setdefault(fams_of[f], []).append(j)
+    seasons = sorted(set(inp["season"].tolist()))
+    season_ids = np.array([seasons.index(s) for s in inp["season"]])
+    args = vars(tm.build_parser().parse_args(["--dim", "8", "--tower-width", "4", "--tower-hidden", "8"]))
+    args["token_dropout"] = token_dropout
+    with torch.random.fork_rng():
+        torch.manual_seed(0)
+        model = tm.MTNN(
+            {f: len(c) for f, c in fams.items()},
+            len(seasons),
+            n_game=len(GAME),
+            **tm.mtnn_arch_kwargs(args),
+        )
+    return model, fams, torch.tensor(season_ids)
+
+
+def test_mtnn_arch_kwargs_reads_exactly_arch_args_and_matches_mains_old_spelling(tm):
+    args = vars(tm.build_parser().parse_args([]))
+    kw = tm.mtnn_arch_kwargs(args)
+    # The keyword arguments main() spelled out before mtnn_arch_kwargs existed.
+    assert kw == {
+        "d_tower": args["tower_width"],
+        "d_tower_hidden": args["tower_hidden"],
+        "d_emb": args["dim"],
+        "d_skill_hidden": args["skill_hidden"],
+        "fusion_mode": args["fusion"],
+        "n_tower_blocks": args["tower_blocks"],
+        "mlp_heads": args["mlp_heads"],
+        "d_head_hidden": args["d_head_hidden"],
+        "d_model": args["d_model"],
+        "n_fusion_layers": args["n_fusion_layers"],
+        "n_attn_heads": args["n_attn_heads"],
+        "d_fusion_hidden": (args["fusion_hidden"] or None),
+        "token_dropout": args["token_dropout"],
+    }
+    for key in tm.ARCH_ARGS:
+        with pytest.raises(KeyError):
+            tm.mtnn_arch_kwargs({k: v for k, v in args.items() if k != key})
+    assert tm.mtnn_arch_kwargs({k: v for k, v in args.items() if k != "token_dropout"})["token_dropout"] == 0.0
+
+
+def test_encode_masked_rows_zeroes_the_columns_in_eval_mode_and_restores_train_mode(tm):
+    import torch
+
+    inp = synthetic()
+    model, fams, seas_t = tiny_model(tm, inp)
+    Z, M = inp["Z"], inp["M"]
+    rows, cols = np.array([3, 40, 41]), [len(GAME), len(GAME) + 1]
+    model.train()
+    np_before, t_before = np.random.get_state(), torch.get_rng_state()
+    got = tm.encode_masked_rows(model, Z, M, rows, cols, fams, seas_t, "cpu", chunk=2)
+    assert model.training  # restored
+    np.testing.assert_array_equal(np.random.get_state()[1], np_before[1])
+    assert torch.equal(torch.get_rng_state(), t_before)  # token dropout (0.5 here) drew nothing
+    Zr, Mr = Z[rows].copy(), M[rows].copy()
+    Zr[:, cols] = 0.0
+    Mr[:, cols] = 0.0
+    model.eval()
+    with torch.no_grad():
+        xs, ms = tm.split_by_family(Zr, Mr, fams, "cpu")
+        want = model.encode(xs, ms, seas_t[torch.tensor(rows)]).numpy()
+    np.testing.assert_allclose(got, want, rtol=0, atol=1e-6)
+
+
+def hook_inputs(tm, inp, model, fams, seas_t) -> dict:
+    import torch
+
+    xs, ms = tm.split_by_family(inp["Z"], inp["M"], fams, "cpu")
+    with torch.no_grad():
+        E = tm.embed_all(model, xs, ms, seas_t)
+    out = {k: v for k, v in inp.items() if k not in ("Z", "M")}
+    return {**out, "E": E}
+
+
+def test_composite_v2_block_scores_the_regime_slice_from_the_model(tm):
+    import logging
+
+    inp = synthetic()
+    model, fams, seas_t = tiny_model(tm, inp)
+    block = tm.composite_v2_block(
+        model, fams, inp["Z"], inp["M"], seas_t, "cpu", hook_inputs(tm, inp, model, fams, seas_t), logging
+    )
+    assert "error" not in block
+    assert block["components"]["regime"] is not None
+    assert block["components_missing"] == [] and block["cqs_v2"] is not None
+    assert block["diagnostics"]["regime_masked_features"] == ["TOUCHES"]
+
+
+def test_composite_v2_block_writes_a_failure_into_the_block_instead_of_raising(tm, monkeypatch, caplog):
+    import logging
+
+    inp = synthetic()
+    model, fams, seas_t = tiny_model(tm, inp)
+    args = (model, fams, inp["Z"], inp["M"], seas_t, "cpu", hook_inputs(tm, inp, model, fams, seas_t))
+
+    def boom(_inputs):
+        raise RuntimeError("bad input")
+
+    monkeypatch.setattr(tm.composite_v2, "composite_v2", boom)
+    block = tm.composite_v2_block(*args, logging.getLogger("t"))
+    assert block["cqs_v2"] is None and block["error"] == "RuntimeError: bad input"
+    assert block["components_missing"] == list(cv.WEIGHTS)
+
+    def draws(_inputs):
+        np.random.random()
+        return {"cqs_v2": 1.0}
+
+    monkeypatch.setattr(tm.composite_v2, "composite_v2", draws)
+    with caplog.at_level(logging.ERROR):
+        block = tm.composite_v2_block(*args, logging.getLogger("t"))
+    assert block["cqs_v2"] is None and "RNG" in block["error"]
+    assert "RNG" in caplog.text

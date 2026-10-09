@@ -47,6 +47,7 @@ from collections import defaultdict
 from pathlib import Path
 
 import composite_score as cqs
+import composite_v2
 import mtnn_loop
 import mtnn_recipe
 import numpy as np
@@ -621,6 +622,47 @@ class MTNN(nn.Module):
         return emb, out
 
 
+# The run args that set the network's shape, as main() reads them. eval_v2.py
+# rebuilds a checkpoint's model from its saved args through mtnn_arch_kwargs,
+# so the two cannot drift apart: export_mtnn_jacobian.py's own copy of this
+# mapping defaulted d_head_hidden to 64 while the promoted recipe trained at
+# 128, which loads a different network under strict=False.
+ARCH_ARGS = (
+    "tower_width",
+    "tower_hidden",
+    "dim",
+    "skill_hidden",
+    "fusion",
+    "tower_blocks",
+    "mlp_heads",
+    "d_head_hidden",
+    "d_model",
+    "n_fusion_layers",
+    "n_attn_heads",
+    "fusion_hidden",
+)
+
+
+def mtnn_arch_kwargs(a: dict) -> dict:
+    """MTNN keyword arguments from a run's args (vars(args), or a checkpoint's saved 'args')."""
+    return {
+        "d_tower": a["tower_width"],
+        "d_tower_hidden": a["tower_hidden"],
+        "d_emb": a["dim"],
+        "d_skill_hidden": a["skill_hidden"],
+        "fusion_mode": a["fusion"],
+        "n_tower_blocks": a["tower_blocks"],
+        "mlp_heads": a["mlp_heads"],
+        "d_head_hidden": a["d_head_hidden"],
+        "d_model": a["d_model"],
+        "n_fusion_layers": a["n_fusion_layers"],
+        "n_attn_heads": a["n_attn_heads"],
+        "d_fusion_hidden": (a["fusion_hidden"] or None),
+        # Changes no weight shape and only acts in train mode.
+        "token_dropout": a.get("token_dropout", 0.0),
+    }
+
+
 # ---------------------------------------------------------------------------
 # Training helpers
 # ---------------------------------------------------------------------------
@@ -1063,6 +1105,70 @@ def next_profile_holdout_metrics(
             "worst_features_mae_z": [{"feature": feature_names[j], "mae_z": round(float(per_mae[j]), 4)} for j in top],
         }
     return out
+
+
+def encode_masked_rows(model: MTNN, Z, M, rows, cols, fams, seas_t, device, chunk: int = 2048) -> np.ndarray:
+    """Embeddings of Z[rows] with columns `cols` zeroed in values and mask, as a row missing them would read.
+
+    For composite_v2's regime slice [critic#2]. Eval mode and no_grad, so no
+    dropout and no RNG draw (token dropout acts only in train mode); the
+    model's mode is restored on the way out.
+    """
+    rows = np.asarray(rows, dtype=np.int64)
+    Zr, Mr = np.array(Z[rows], dtype=np.float32), np.array(M[rows], dtype=np.float32)
+    Zr[:, cols] = 0.0
+    Mr[:, cols] = 0.0
+    was_training = model.training
+    model.eval()
+    try:
+        parts = []
+        with torch.no_grad():
+            for lo in range(0, len(rows), chunk):
+                xs_r, ms_r = split_by_family(Zr[lo : lo + chunk], Mr[lo : lo + chunk], fams, device)
+                seas_r = seas_t[torch.tensor(rows[lo : lo + chunk], device=seas_t.device)]
+                parts.append(model.encode(xs_r, ms_r, seas_r).cpu().numpy().astype(np.float32))
+    finally:
+        model.train(was_training)
+    return np.concatenate(parts) if parts else np.zeros((0, 0), np.float32)
+
+
+def _rng_states(device) -> tuple:
+    cuda = torch.cuda.get_rng_state_all() if str(device).startswith("cuda") else []
+    return np.random.get_state(), torch.get_rng_state(), cuda
+
+
+def _same_rng(a: tuple, b: tuple) -> bool:
+    (na, ta, ca), (nb, tb, cb) = a, b
+    same_np = na[0] == nb[0] and np.array_equal(na[1], nb[1]) and tuple(na[2:]) == tuple(nb[2:])
+    return same_np and torch.equal(ta, tb) and len(ca) == len(cb) and all(torch.equal(x, y) for x, y in zip(ca, cb))
+
+
+def composite_v2_block(model: MTNN, fams, Z, M, seas_t, device, inputs: dict, log) -> dict:
+    """report["composite_v2"], computed once training and the v1 report are done.
+
+    It cannot move a v1 number: everything v1 reports is computed before
+    this, and this draws from no RNG. The global numpy and torch RNG states
+    are compared before and after anyway, and a change marks the block
+    failed. A failure here is written into the block (cqs_v2 None, every
+    component missing, the error) and logged rather than raised, so a bug in
+    an unratified metric never costs the run the v1 report the climb reads.
+    """
+    before = _rng_states(device)
+    try:
+        pairs_by_split = composite_v2.split_pairs(inputs["player_id"], inputs["season"])
+        rows = composite_v2.regime_anchor_rows(pairs_by_split)
+        cols = composite_v2.regime_mask_columns(M, inputs["season"])
+        regime = None
+        if len(rows) and cols:
+            regime = {"rows": rows, "E": encode_masked_rows(model, Z, M, rows, cols, fams, seas_t, device)}
+        block = composite_v2.composite_v2({**inputs, "Z": Z, "M": M, "regime": regime})
+    except Exception as exc:
+        log.exception("composite_v2 failed; the v1 report is unaffected")
+        block = composite_v2.failed_block(f"{type(exc).__name__}: {exc}")
+    if not _same_rng(before, _rng_states(device)):
+        log.error("composite_v2 changed the global numpy or torch RNG state; its block is marked failed")
+        block = composite_v2.failed_block("composite_v2 changed the global numpy or torch RNG state")
+    return block
 
 
 # ---------------------------------------------------------------------------
@@ -1737,24 +1843,12 @@ def main(argv: list[str] | None = None) -> None:
     model = MTNN(
         {f: len(c) for f, c in fams.items()},
         n_seasons,
-        d_tower=args.tower_width,
-        d_tower_hidden=args.tower_hidden,
-        d_emb=args.dim,
         n_game=len(game_cols),
         n_skills=len(skill_keys),
-        d_skill_hidden=args.skill_hidden,
         n_form=len(form_cols) if form_cols else 0,
         n_injury=len(injury_cols) if injury_active else 0,
         n_bbref=len(bbref_cols) if bbref_cols else 0,
-        fusion_mode=args.fusion,
-        n_tower_blocks=args.tower_blocks,
-        mlp_heads=args.mlp_heads,
-        d_head_hidden=args.d_head_hidden,
-        d_model=args.d_model,
-        n_fusion_layers=args.n_fusion_layers,
-        n_attn_heads=args.n_attn_heads,
-        d_fusion_hidden=(args.fusion_hidden or None),
-        token_dropout=getattr(args, "token_dropout", 0.0),
+        **mtnn_arch_kwargs(vars(args)),
     ).to(device)
     opt = torch.optim.AdamW(adamw_param_groups(model, args.weight_decay), lr=args.lr)
     if args.protocol_v2:
@@ -2471,6 +2565,43 @@ def main(argv: list[str] | None = None) -> None:
         "artifacts": written,
         "run_dir": display_path(run_dir, ROOT) if run_dir is not None else None,
     }
+
+    # CQS v2, beside v1 and changing none of it: held-out rows only, every
+    # pair, each component against a free baseline, provisional weights
+    # (composite_v2.py says why, finding by finding). Last, so every number
+    # above is already fixed; composite_v2_block draws from no RNG and the
+    # extra encode of the masked held-out anchors runs under no_grad.
+    report["composite_v2"] = composite_v2_block(
+        model,
+        fams,
+        Z,
+        M,
+        seas_t,
+        device,
+        {
+            "E": E,
+            "features": manifest["features"],
+            "families": manifest["families"],
+            "game_features": manifest["game_features"],
+            "player_id": pids,
+            "season": seasons,
+            "cluster": clusters,
+            "position": positions,
+            "archetype_logits": arch_logits,
+            "position_logits": pos_logits,
+            "next_profile_pred": next_profile_pred,
+            "skills": (
+                {"pred": skill_pred, "target": skill_g, "mask": skill_m, "keys": skill_keys, "n_core": n_core}
+                if skill_keys
+                else None
+            ),
+            "report": report,
+            "run_args": vars(args),
+        },
+        log,
+    )
+    v2 = report["composite_v2"]
+    log.info("CQS v2 %s (provisional; missing: %s)", v2["cqs_v2"], ", ".join(v2["components_missing"]) or "none")
 
     report_text = json.dumps(report, indent=2)
     # pipeline/data/mtnn_report.json is the LAST run's report. The climb and the
