@@ -24,6 +24,8 @@ import numpy as np
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "pipeline"))
 
+from artifact_io import atomic_savez_compressed, atomic_write_text  # noqa: E402
+
 DATA_DIR = ROOT / "pipeline" / "data"
 CACHE_DIR = ROOT / "pipeline" / "cache"
 
@@ -537,7 +539,10 @@ def build_row_values(
 
 def write_bundle(Z, M, manifest, *, player_id, season, name, cluster) -> None:
     DATA_DIR.mkdir(parents=True, exist_ok=True)
-    np.savez_compressed(
+    # Atomic, same bytes as np.savez_compressed / write_text (artifact_io).
+    # This rewrites the matrix every climb trains on; a kill mid-write used to
+    # leave a truncated train_matrix.npz as the only copy [health#7].
+    atomic_savez_compressed(
         DATA_DIR / "train_matrix.npz",
         Z=Z,
         mask=M,
@@ -547,7 +552,7 @@ def write_bundle(Z, M, manifest, *, player_id, season, name, cluster) -> None:
         cluster=cluster,
     )
     manifest["source"] = "integrate_context.py (v4 context merge)"
-    (DATA_DIR / "feature_manifest.json").write_text(json.dumps(manifest, indent=2), encoding="utf-8")
+    atomic_write_text(DATA_DIR / "feature_manifest.json", json.dumps(manifest, indent=2), encoding="utf-8")
 
 
 def main() -> None:
