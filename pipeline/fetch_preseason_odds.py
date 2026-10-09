@@ -10,6 +10,12 @@ Parse: table id=NBA_preseason_odds rows: Team, Odds, W-L O/U (data-stat wins_ou)
 Rate-limited, resumable, zero-deps (urllib + curl fallback).
 
 Run: python pipeline/fetch_preseason_odds.py [--season 2023-24] [--offline]
+
+Exit codes (ingest.run_fetch): 0, or 2 when a season that was fetched came
+back with fewer than 10 teams (it is not written; the others still are).
+That used to print "SUSPICIOUS" and exit 0 [ingest#7]. Both files are
+written atomically, and an unreadable raw cache is an error: it used to be
+replaced by {} and the next write threw away every cached season [health#8].
 """
 
 from __future__ import annotations
@@ -23,6 +29,8 @@ import time
 import urllib.request
 
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
+from artifact_io import atomic_write_text
+from ingest import EmptyPayloadError, Failures, run_fetch
 from seasons import PRESEASON_ODDS_FIRST_SEASON, season_range
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
@@ -67,10 +75,7 @@ def parse_wins_ou(html: str) -> dict:
         clean,
         re.S,
     ):
-        try:
-            out[abbr] = float(ou)
-        except Exception:
-            pass
+        out[abbr] = float(ou)  # the regex only matches NN.0 / NN.5
     if len(out) >= 8:
         return out
     # Fallback second pattern: header season older may use <tr> with team and float second column
@@ -82,10 +87,7 @@ def parse_wins_ou(html: str) -> dict:
         snippet = clean[m.start() : m.start() + 800]
         fld = re.search(r'data-stat="(?:wins_ou|over_under|wins_ou_over|ou)"[^>]*>([0-9]{2,3}\.[05])</td>', snippet)
         if fld:
-            try:
-                out[abbr] = float(fld.group(1))
-            except Exception:
-                pass
+            out[abbr] = float(fld.group(1))
     return out
 
 
@@ -106,8 +108,9 @@ def main():
     if CACHE.exists():
         try:
             cache = json.loads(CACHE.read_text())
-        except Exception:
-            cache = {}
+        except json.JSONDecodeError as e:
+            raise ValueError(f"{CACHE}: unreadable ({e}); restore it from git before fetching more") from e
+    failures = Failures("fetch_preseason_odds")
     for season in seasons:
         end_year = int(season[:4]) + 1
         # Skip if dest already >=20 and not forced
@@ -135,16 +138,18 @@ def main():
         out = fetch_season(end_year)
         if len(out) >= 10:
             cache[str(end_year)] = out
-            CACHE.write_text(json.dumps(cache, indent=2))
+            atomic_write_text(CACHE, json.dumps(cache, indent=2))
             data.setdefault("seasons", {})[season] = out
             # preserve top-level meta
             data["built"] = __import__("datetime").datetime.utcnow().isoformat() + "Z"
-            DEST.write_text(json.dumps(data, indent=2))
+            atomic_write_text(DEST, json.dumps(data, indent=2))
         else:
             print(f"{season}: SUSPICIOUS ({len(out)} rows) — not caching", flush=True)
+            failures.add(season, EmptyPayloadError(f"only {len(out)} team totals parsed"))
         time.sleep(3.5)
     print(f"done: {len(cache)}/{len(seasons)} seasons in raw cache", flush=True)
+    failures.raise_if_any()
 
 
 if __name__ == "__main__":
-    main()
+    run_fetch(main, name="fetch_preseason_odds")

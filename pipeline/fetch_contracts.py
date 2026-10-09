@@ -28,6 +28,10 @@ from __future__ import annotations
 import json, sys, re, time, os, math, datetime, pathlib, urllib.request, urllib.error
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from artifact_io import atomic_write_text
+from ingest import BlockedError, FetchError, run_fetch
+
 ROOT = Path(__file__).resolve().parents[1]
 PIPELINE = ROOT / "pipeline"
 CACHE = PIPELINE / "cache"
@@ -80,43 +84,46 @@ def load_bbref_salaries_static():
     count_files = 0
     if not BBREF_SAL_DIR.exists():
         return out, count_files
+    skipped = 0
     for year_dir in sorted(BBREF_SAL_DIR.iterdir()):
-        if not year_dir.is_dir():
-            continue
-        try:
-            y = int(year_dir.name)
-        except:
-            continue
+        if not year_dir.is_dir() or not year_dir.name.isdigit():
+            continue  # only <year>/ directories hold team pages
+        y = int(year_dir.name)
         season = f"{y}-{str(y+1)[-2:]}"
         for team_file in year_dir.glob("*.json"):
+            # This was `except Exception as e: print(warn); continue` around the
+            # whole file: an unreadable team page dropped its roster from the
+            # payroll totals with one warning line [health#8].
             try:
                 rows = json.loads(team_file.read_text(encoding="utf-8"))
-                if not isinstance(rows, list):
-                    continue
-                team_abbr = team_file.stem.upper()
-                for r in rows:
-                    if isinstance(r, dict):
-                        name = r.get("name") or r.get("player") or ""
-                        sal = r.get("salary") or r.get("Salary") or 0
-                    else:
-                        continue
-                    if not name:
-                        continue
-                    try:
-                        sal_f = float(str(sal).replace(",","").replace("$",""))
-                    except:
-                        continue
-                    if sal_f < 50000:
-                        # allow vet min ~1M but skip zero entries
-                        if sal_f == 0:
-                            continue
-                    key = f"{norm_name(name)}|{season}"
-                    out[key] = {"name": name, "norm_name": norm_name(name), "salary": sal_f, "season": season, "team": team_abbr, "source": "bbref_salaries_static"}
-                    count_files += 0  # count per row
-                count_files += 1
-            except Exception as e:
-                print(f"warn bbref_salaries {year_dir.name}/{team_file.name}: {e}")
+            except json.JSONDecodeError as e:
+                raise ValueError(f"{team_file}: unreadable ({e})") from e
+            if not isinstance(rows, list):
                 continue
+            team_abbr = team_file.stem.upper()
+            for r in rows:
+                if isinstance(r, dict):
+                    name = r.get("name") or r.get("player") or ""
+                    sal = r.get("salary") or r.get("Salary") or 0
+                else:
+                    continue
+                if not name:
+                    continue
+                try:
+                    sal_f = float(str(sal).replace(",","").replace("$",""))
+                except ValueError:
+                    skipped += 1
+                    continue
+                if sal_f < 50000:
+                    # allow vet min ~1M but skip zero entries
+                    if sal_f == 0:
+                        continue
+                key = f"{norm_name(name)}|{season}"
+                out[key] = {"name": name, "norm_name": norm_name(name), "salary": sal_f, "season": season, "team": team_abbr, "source": "bbref_salaries_static"}
+                count_files += 0  # count per row
+            count_files += 1
+    if skipped:
+        print(f"bbref_salaries: {skipped} rows with an unparseable salary skipped")
     return out, count_files
 
 def load_merged():
@@ -136,9 +143,10 @@ def load_merged():
                 # handle case where doc is key-> float? from bbref_current style
                 continue
         return out
-    except Exception as e:
-        print(f"merged load err {e}")
-        return {}
+    except (json.JSONDecodeError, AttributeError, TypeError, ValueError) as e:
+        # Was print + return {}: the deepest salary source silently vanished
+        # from contracts_full.json [health#8].
+        raise ValueError(f"{MERGED}: unreadable ({type(e).__name__}: {e})") from e
 
 def load_bbref_current():
     if not BBREF_CURRENT.exists():
@@ -151,15 +159,14 @@ def load_bbref_current():
                 continue
             try:
                 sal = float(v)
-            except:
-                continue
+            except (TypeError, ValueError):
+                continue  # a non-numeric cell: no salary for that key
             norm, season = k.split("|",1)
             # name is norm title -> keep norm as name fallback
             out[k] = {"name": norm, "norm_name": norm, "salary": sal, "season": season, "team": "", "source": "bbref_current_future"}
         return out
-    except Exception as e:
-        print(f"bbref_current load err {e}")
-        return {}
+    except (json.JSONDecodeError, AttributeError) as e:
+        raise ValueError(f"{BBREF_CURRENT}: unreadable ({type(e).__name__}: {e})") from e
 
 def fetch_spotrac_live():
     """Attempt Spotrac team salary pages — cloudflare likely 403 ; return {} on block"""
@@ -199,9 +206,9 @@ def build_cap_detailed():
         if p.exists() and p.suffix == ".json":
             try:
                 base = json.loads(p.read_text())
-                break
-            except:
-                continue
+            except json.JSONDecodeError as e:
+                raise ValueError(f"{p}: unreadable ({e})") from e
+            break
     # if we didn't get json, try importing nba_salary_cap dicts
     cap_by = {}
     tax_by = {}
@@ -222,7 +229,7 @@ def build_cap_detailed():
             # synthesize base from python dict
             for season, cap in cap_by.items():
                 base[season] = {"season": season, "cap": cap, "tax": tax_by.get(season), "apron1": apron1_by.get(season), "apron2": apron2_by.get(season), "cba": cba_by.get(season), "tv_deal": tv_by.get(season)}
-    except Exception as e:
+    except ImportError as e:
         print(f"cap python import fallback {e}")
         if not base:
             # emergency minimal
@@ -279,8 +286,8 @@ def build_cap_detailed():
     def season_key(s):
         try:
             return int(s.split("-")[0])
-        except:
-            return 0
+        except ValueError:
+            return 0  # "_meta" and other non-season keys sort first
     for season in sorted(all_seasons, key=season_key):
         # base entry may be dict or raw
         entry = base.get(season)
@@ -363,20 +370,22 @@ def main():
     args = ap.parse_args()
 
     if OUT_CONTRACTS.exists() and not args.refresh:
-        try:
-            age_h = (time.time() - OUT_CONTRACTS.stat().st_mtime)/3600
-            if age_h < 12:
+        age_h = (time.time() - OUT_CONTRACTS.stat().st_mtime)/3600
+        if age_h < 12:
+            try:
                 doc = json.loads(OUT_CONTRACTS.read_text())
+            except json.JSONDecodeError:
+                doc = None
+                print(f"{OUT_CONTRACTS.name} unreadable — rebuilding it")
+            if doc is not None:
                 cnt = len(doc.get("contracts", doc)) if isinstance(doc, dict) else 0
                 print(f"contracts_full cached {cnt} entries {age_h:.1f}h old — skip (use --refresh)")
                 # still ensure cap detailed exists
                 if not OUT_CAP_DETAILED.exists():
                     detailed = build_cap_detailed()
-                    OUT_CAP_DETAILED.write_text(json.dumps(detailed, separators=(",",":")))
+                    atomic_write_text(OUT_CAP_DETAILED, json.dumps(detailed, separators=(",",":")))
                     print(f"cap_rules_detailed {len(detailed)} seasons -> {OUT_CAP_DETAILED}")
                 return
-        except Exception:
-            pass
 
     t0 = time.time()
     _log_timeline("L3-fetch_contracts-start", "running", extra={"phase":"fetch"})
@@ -434,18 +443,6 @@ def main():
     payroll_counts = {}
     # legacy payroll file if exists use as fallback for missing early years
     legacy_payroll_path = ROOT / "assets" / "data" / "payroll_by_season.json"
-    if legacy_payroll_path.exists():
-        try:
-            legacy = json.loads(legacy_payroll_path.read_text())
-            # legacy is {season: {team: payroll_m}}
-            for season, teams in legacy.items():
-                if isinstance(teams, dict):
-                    for tm, val in teams.items():
-                        # val is payroll in M? original shows 73.3 etc M
-                        # We'll keep but recompute; keep for fallback early years 1990-2008 not in merged
-                        pass
-        except:
-            pass
 
     for key, rec in combined.items():
         season = rec.get("season")
@@ -482,38 +479,31 @@ def main():
 
     # For backwards compat, support old format where top-level is flat dict of contracts? Keep "contracts" dict plus wrapper
     # Write full flat for gate >100KB — we store wrapper (ensures >100KB when > ~500 contracts)
-    OUT_CONTRACTS.write_text(json.dumps(out_doc, separators=(",",":")))
+    atomic_write_text(OUT_CONTRACTS, json.dumps(out_doc, separators=(",",":")))
     size_kb = OUT_CONTRACTS.stat().st_size/1024
     print(f"wrote {OUT_CONTRACTS.name} {len(combined)} contracts {size_kb:.1f}KB -> {OUT_CONTRACTS}")
 
     # cap_rules_detailed.json
     detailed = build_cap_detailed()
-    OUT_CAP_DETAILED.write_text(json.dumps(detailed, separators=(",",":")))
+    atomic_write_text(OUT_CAP_DETAILED, json.dumps(detailed, separators=(",",":")))
     print(f"wrote {OUT_CAP_DETAILED.name} {len(detailed)-1} seasons -> {OUT_CAP_DETAILED}")
 
     # payroll_by_season (enriched, keep legacy early years)
-    try:
-        existing = {}
-        if legacy_payroll_path.exists() and legacy_payroll_path != OUT_PAYROLL:
-            existing = json.loads(legacy_payroll_path.read_text())
-        # Merge: new overrides where we have data, but preserve early years
-        for season in set(list(existing.keys()) + list(payroll_m.keys())):
-            if season in payroll_m:
-                existing[season] = payroll_m[season]
-            # else keep existing
-        OUT_PAYROLL.write_text(json.dumps(existing if existing else payroll_m, separators=(",",":")))
-        print(f"wrote payroll_by_season {len(existing) if existing else len(payroll_m)} seasons")
-    except Exception as e:
-        # fallback write just new
-        OUT_PAYROLL.write_text(json.dumps(payroll_m, separators=(",",":")))
-        print(f"wrote payroll_by_season fallback {len(payroll_m)} seasons (exc {e})")
+    # Was wrapped in `except Exception` with a fallback that wrote only this
+    # run's seasons, dropping the preserved early years without saying why.
+    existing = {}
+    if legacy_payroll_path.exists() and legacy_payroll_path != OUT_PAYROLL:
+        existing = json.loads(legacy_payroll_path.read_text())
+    # Merge: new overrides where we have data, but preserve early years
+    for season in set(list(existing.keys()) + list(payroll_m.keys())):
+        if season in payroll_m:
+            existing[season] = payroll_m[season]
+        # else keep existing
+    atomic_write_text(OUT_PAYROLL, json.dumps(existing if existing else payroll_m, separators=(",",":")))
+    print(f"wrote payroll_by_season {len(existing) if existing else len(payroll_m)} seasons")
 
     # Also copy payroll to pipeline/cache for builder compatibility?
-    try:
-        cache_payroll = CACHE / "payroll_enriched.json"
-        cache_payroll.write_text(json.dumps(payroll_m, separators=(",",":")))
-    except Exception:
-        pass
+    atomic_write_text(CACHE / "payroll_enriched.json", json.dumps(payroll_m, separators=(",",":")))
 
     latency = int((time.time()-t0)*1000)
     _log_timeline("L3-fetch_contracts-done", "done", latency=latency, tokens=len(combined), extra={"size_kb": round(size_kb,1), "contracts": len(combined), "seasons": out_doc["_meta"]["seasons"], "live_block": live_block})
@@ -530,7 +520,11 @@ def main():
     cov = len(payroll_m)
     print(f"payroll coverage {cov} seasons (target >=30 includes legacy 1990+) — contracts {len(combined)}")
 
-    return len(combined)
+    # The outputs above come from local caches only, so they are written either
+    # way; a blocked live probe still ends the run with exit 2 so a cron sees it.
+    if live_block not in (None, "ok"):
+        cls = BlockedError if live_block in ("cloudflare", "http403") else FetchError
+        raise cls(f"live contracts probe failed ({live_block}); outputs were built from local caches only")
 
 if __name__ == "__main__":
-    main()
+    run_fetch(main, name="fetch_contracts")

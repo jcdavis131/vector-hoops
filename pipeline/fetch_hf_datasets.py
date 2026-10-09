@@ -38,7 +38,12 @@ from __future__ import annotations
 
 import argparse
 import json
+import sys
 from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from artifact_io import atomic_write_text
+from ingest import Failures, FetchError, run_fetch
 
 HERE = Path(__file__).resolve().parent
 DATA = HERE / "data"
@@ -115,7 +120,8 @@ def inspect(name: str) -> None:
 
     DATA.mkdir(parents=True, exist_ok=True)
     report = DATA / f"hf_{name}_schema.json"
-    report.write_text(
+    atomic_write_text(
+        report,
         json.dumps(
             {
                 "repo_id": repo_id,
@@ -142,12 +148,17 @@ def main() -> None:
     )
     args = ap.parse_args()
 
+    # Each dataset is still tried when another fails, but a failure now ends
+    # the run with exit 2 (ingest.run_fetch) instead of a printed ERR and 0.
+    failures = Failures("fetch_hf_datasets")
     if args.list:
         for name, (repo_id, _) in DATASETS.items():
             try:
                 print(f"{name} ({repo_id}):", list_files(repo_id)[:30])
             except Exception as exc:
                 print(f"{name} ({repo_id}): ERR {exc}")
+                failures.add(name, FetchError(f"{type(exc).__name__}: {exc}"))
+        failures.raise_if_any()
         return
 
     targets = list(DATASETS) if args.inspect == "all" else [args.inspect]
@@ -158,7 +169,9 @@ def main() -> None:
             inspect(name)
         except Exception as exc:
             print(f"{name}: ERR {type(exc).__name__}: {exc}")
+            failures.add(name, FetchError(f"{type(exc).__name__}: {exc}"))
+    failures.raise_if_any()
 
 
 if __name__ == "__main__":
-    main()
+    run_fetch(main, name="fetch_hf_datasets")

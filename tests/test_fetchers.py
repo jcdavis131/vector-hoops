@@ -451,3 +451,64 @@ def test_advanced_tracking_http_error_is_a_failure_not_zero_rows(fat, tmp_path, 
     assert not list(tmp_path.glob("advanced_tracking_*.json"))
     summary = json.loads((tmp_path / "tracking_summary.json").read_text(encoding="utf-8"))
     assert summary["blocked_seasons"] == ["2098-99"]
+
+
+# --- operator scripts ----------------------------------------------------------------------
+
+
+def test_2k_ratings_missing_fixture_writes_no_placeholder(tmp_path, monkeypatch):
+    import fetch_2k_ratings as f2k
+
+    monkeypatch.setattr(f2k, "CACHE", tmp_path)
+    monkeypatch.setattr(f2k, "FIXTURE", tmp_path / "game_ratings.example.json")
+    # Before: '{"players": {}}' written as game_ratings_2k25.json, exit 0.
+    assert run(f2k.main, ["fetch_2k_ratings.py", "--offline"], monkeypatch) == 2
+    assert not list(tmp_path.iterdir())
+
+
+def test_hf_datasets_failed_inspect_exits_2(monkeypatch):
+    import fetch_hf_datasets as fhf
+
+    def boom(name):
+        raise OSError("hf://datasets unreachable")
+
+    monkeypatch.setattr(fhf, "inspect", boom)
+    assert run(fhf.main, ["fetch_hf_datasets.py", "--inspect", "all"], monkeypatch) == 2  # before: ERR lines, 0
+
+
+def test_preseason_odds_failures(tmp_path, monkeypatch):
+    import fetch_preseason_odds as fpo
+
+    monkeypatch.setattr(fpo, "CACHE", tmp_path / "preseason_odds_raw.json")
+    monkeypatch.setattr(fpo, "DEST", tmp_path / "preseason_win_totals.json")
+    monkeypatch.setattr(fpo, "season_range", lambda first: ["2003-04"])
+    monkeypatch.setattr(fpo.time, "sleep", lambda s: None)
+    monkeypatch.setattr(fpo, "fetch_season", lambda end_year: {"BOS": 50.5})
+    # A short parse is a failure now, not a printed SUSPICIOUS and exit 0.
+    assert run(fpo.main, ["fetch_preseason_odds.py"], monkeypatch) == 2
+    assert not (tmp_path / "preseason_win_totals.json").exists()
+    # An unreadable raw cache used to become {} and be overwritten.
+    (tmp_path / "preseason_odds_raw.json").write_text("{bad", encoding="utf-8")
+    monkeypatch.setattr(sys, "argv", ["fetch_preseason_odds.py"])
+    with pytest.raises(ValueError, match="preseason_odds_raw"):
+        fpo.main()
+    assert (tmp_path / "preseason_odds_raw.json").read_text(encoding="utf-8") == "{bad"
+
+
+def test_honors_extended_unreadable_award_cache_raises(tmp_path, monkeypatch):
+    import fetch_honors_extended as fhe
+
+    monkeypatch.setattr(fhe, "CACHE", tmp_path)
+    (tmp_path / "honors_award_1999.json").write_text("{", encoding="utf-8")
+    with pytest.raises(ValueError, match="honors_award_1999"):
+        fhe.load_existing_award_caches()  # before: the year was skipped without a word
+
+
+def test_contracts_unreadable_merged_salaries_raises(tmp_path, monkeypatch):
+    import fetch_contracts as fc
+
+    merged = tmp_path / "salaries_merged.json"
+    merged.write_text("{", encoding="utf-8")
+    monkeypatch.setattr(fc, "MERGED", merged)
+    with pytest.raises(ValueError, match="salaries_merged"):
+        fc.load_merged()  # before: printed "merged load err" and returned {}

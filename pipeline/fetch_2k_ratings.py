@@ -18,8 +18,12 @@ Run:  python pipeline/fetch_2k_ratings.py --offline
 from __future__ import annotations
 
 import argparse
-import shutil
+import sys
 from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from artifact_io import atomic_copy
+from ingest import FetchError, run_fetch
 
 ROOT = Path(__file__).resolve().parents[1]
 CACHE = ROOT / "pipeline" / "cache"
@@ -62,16 +66,13 @@ def main() -> None:
 
     if args.offline or True:  # default offline for top-tier MLOps: never fail CI on external site
         if not FIXTURE.exists():
-            # Graceful empty for fresh clone
-            print(f"[warn] fixture missing {FIXTURE}, writing empty stub {out.name}")
-            out.write_text(
-                f'{{"_meta": {{"release": "{args.release}", "source": "fixture-missing", "complete": false}}, "players": {{}}}}'
-            )
-            return
-        shutil.copy(FIXTURE, out)
+            # This used to write a placeholder {"players": {}} under the real
+            # cache name and exit 0. A missing fixture is an error.
+            raise FetchError(f"fixture missing: {FIXTURE}; not writing a placeholder {out.name}")
+        atomic_copy(FIXTURE, out)
         print(f"offline: wrote {out.name} from fixture (complete=False) — ready for train_towers masked family")
         return
 
 
 if __name__ == "__main__":
-    main()
+    run_fetch(main, name="fetch_2k_ratings")

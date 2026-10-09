@@ -15,6 +15,8 @@ Rate-limited 3-4 sec, resumable, merges into assets/data/preseason_win_totals.js
 import json, re, sys, time, random, pathlib, urllib.request, urllib.error, subprocess, datetime
 
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
+from artifact_io import atomic_write_text
+from ingest import EmptyPayloadError, Failures, run_fetch
 from seasons import PRESEASON_ODDS_FIRST_SEASON, season_range
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
@@ -77,8 +79,7 @@ def parse_bbr(html: str) -> dict:
     clean = re.sub(r'<!--|-->', '', html)
     out = {}
     for abbr, ou in re.findall(r'/teams/([A-Z]{3})/\d+\.html.*?</a>.*?<td[^>]*data-stat="(?:wins_ou|over_under)"[^>]*>([0-9]{2,3}\.[05])</td>', clean, re.S):
-        try: out[abbr.upper()] = float(ou)
-        except: pass
+        out[abbr.upper()] = float(ou)  # regex matches NN.0 / NN.5 only
     if len(out) >= 8: return out
     for m in re.finditer(r'/teams/([A-Z]{3})/', clean):
         abbr = m.group(1).upper()
@@ -86,8 +87,7 @@ def parse_bbr(html: str) -> dict:
         snippet = clean[m.start(): m.start()+900]
         f = re.search(r'data-stat="(?:wins_ou|over_under|ou)"[^>]*>([0-9]{2,3}\.[05])</td>', snippet)
         if f:
-            try: out[abbr]=float(f.group(1))
-            except: pass
+            out[abbr]=float(f.group(1))
     return out
 
 def try_soh_parse(html: str) -> dict:
@@ -121,10 +121,8 @@ def try_soh_parse(html: str) -> dict:
         if not ab: continue
         m2=re.search(r'(\d{2,3}\.[05])', tr)
         if not m2: continue
-        try:
-            v=float(m2.group(1))
-            if 15 <= v <= 75: out[ab]=v
-        except: pass
+        v=float(m2.group(1))
+        if 15 <= v <= 75: out[ab]=v
     return out if len(out)>=8 else {}
 
 def try_season_bbr(end_year: int) -> dict:
@@ -207,14 +205,16 @@ def main():
     offline="--offline" in sys.argv
 
     attempted=0; got=0; improved=0
-    cache={}
-    if CACHE.exists():
-        try: cache=json.loads(CACHE.read_text())
-        except: cache={}
-    br_cache={}
-    if BR_CACH.exists():
-        try: br_cache=json.loads(BR_CACH.read_text())
-        except: br_cache={}
+    # An unreadable cache used to become {} here, and the next write below
+    # replaced the file with only this run's seasons [health#8].
+    def _load(path):
+        try:
+            return json.loads(path.read_text())
+        except json.JSONDecodeError as e:
+            raise ValueError(f"{path}: unreadable ({e}); restore it from git before fetching more") from e
+    cache = _load(CACHE) if CACHE.exists() else {}
+    br_cache = _load(BR_CACH) if BR_CACH.exists() else {}
+    failures = Failures("fetch_odds_sportsoddshistory")
 
     for season in sorted(seasons_dict.keys()):
         if single and season != single: continue
@@ -248,7 +248,7 @@ def main():
             if soh and len(soh)>=len(parsed or {}):
                 parsed = soh
                 cache[str(end_year)]=soh
-                CACHE.write_text(json.dumps(cache, indent=2))
+                atomic_write_text(CACHE, json.dumps(cache, indent=2))
         elif not allow_gambling:
             print(f"  SOH SKIPPED (gambling gate) - pass --allow-gambling after user confirmation to enable", flush=True)
 
@@ -261,7 +261,7 @@ def main():
             parsed=norm
             if end_year<=2026:
                 br_cache[str(end_year)]=parsed
-                BR_CACH.write_text(json.dumps(br_cache, indent=2))
+                atomic_write_text(BR_CACH, json.dumps(br_cache, indent=2))
             if len(parsed)>=10 and len(parsed)>=len(cur):
                 seasons_dict[season]=parsed
                 improved+=1
@@ -272,9 +272,11 @@ def main():
             doc["source"]="BetMGM Apr/Aug 2026 + BBR preseason_odds + Wayback fallbacks (SOH gated)"
             total_f=sum(1 for v in seasons_dict.values() if isinstance(v,dict) and len(v)>=20)
             doc["coverage"]=f"{total_f}/{len(seasons_dict)} >=20"
-            DEST.write_text(json.dumps(doc, indent=2))
+            atomic_write_text(DEST, json.dumps(doc, indent=2))
         else:
+            # Printed and exited 0 before; now the run ends with exit 2 [ingest#7].
             print(f"  EMPTY after all allowed sources", flush=True)
+            failures.add(season, EmptyPayloadError(f"{len(parsed or {})} team totals from every allowed source"))
 
         sleep=3.5 + random.uniform(0,1.2)
         print(f"  sleep {sleep:.1f}s", flush=True)
@@ -289,6 +291,7 @@ def main():
     print(f"total {total}, >=20 {full}, 8-19 {partial}, empty {empty}")
     for s in sorted(seasons_dict.keys()):
         print(f" {s}: {len(seasons_dict[s]) if isinstance(seasons_dict[s],dict) else 0}")
+    failures.raise_if_any()
 
 if __name__=="__main__":
-    main()
+    run_fetch(main, name="fetch_odds_sportsoddshistory")

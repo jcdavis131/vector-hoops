@@ -23,6 +23,8 @@ import json, sys, re, time, os, datetime, pathlib, urllib.request, urllib.error
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
+from artifact_io import atomic_write_text
+from ingest import Failures, FetchError, run_fetch
 from seasons import season_end_year, season_range
 
 # BBRef awards pages are named by the season's end year (awards_1997 .. awards_2026).
@@ -111,18 +113,12 @@ def parse_award_table(html: str, anchor: str) -> list[dict]:
         rank_m = re.search(r'data-stat="ranker"[^>]*>([^<]*)</', row, re.I)
         rank = 0
         if rank_m:
-            try:
-                rank = int(re.sub(r"\D","", rank_m.group(1)) or 0)
-            except:
-                rank = 0
+            rank = int(re.sub(r"\D","", rank_m.group(1)) or 0)  # digits only: cannot fail
         # points won
         pts_m = re.search(r'data-stat="points_won"[^>]*>([^<]*)</t', row, re.I)
         pts = 0
         if pts_m:
-            try:
-                pts = int(re.sub(r"\D","", pts_m.group(1)) or 0)
-            except:
-                pts = 0
+            pts = int(re.sub(r"\D","", pts_m.group(1)) or 0)
         # pct or share
         pct_m = re.search(r'data-stat="pct_max"[^>]*>([^<]*)</t', row, re.I)
         pct = None
@@ -130,8 +126,8 @@ def parse_award_table(html: str, anchor: str) -> list[dict]:
             raw = pct_m.group(1).strip()
             try:
                 pct = float(raw.replace("%",""))
-            except:
-                pct = None
+            except ValueError:
+                pct = None  # an empty or non-numeric cell: no share recorded
         # team id for context
         team_m = re.search(r'data-stat="team_id"[^>]*>([^<]*)</t', row, re.I)
         team = team_m.group(1).strip() if team_m else ""
@@ -149,15 +145,18 @@ def load_existing_award_caches():
     """Load all pipeline/cache/honors_award_*.json into dict year -> doc"""
     out = {}
     for p in sorted(CACHE.glob("honors_award_*.json")):
+        # Was `except Exception: continue`: an unreadable year silently became
+        # a year with no honours in the output [health#8].
+        stem = p.stem.split("_")[-1]
+        if not stem.isdigit():
+            continue  # not a per-year cache
         try:
-            year = int(p.stem.split("_")[-1])
-            doc = json.loads(p.read_text(encoding="utf-8"))
-            out[year] = doc
-        except Exception:
-            continue
+            out[int(stem)] = json.loads(p.read_text(encoding="utf-8"))
+        except json.JSONDecodeError as e:
+            raise ValueError(f"{p}: unreadable ({e}); restore it from git") from e
     return out
 
-def build_extended(refresh_live=False):
+def build_extended(refresh_live=False, failures=None):
     existing = load_existing_award_caches()
     print(f"existing award caches {len(existing)} years")
 
@@ -166,9 +165,9 @@ def build_extended(refresh_live=False):
     legacy = {}
     if HONORS_LEGACY.exists():
         try:
-            legacy = json.loads(HONORS_LEGACY.read_text())
-        except Exception:
-            legacy = {}
+            legacy = json.loads(HONORS_LEGACY.read_text(encoding="utf-8"))
+        except json.JSONDecodeError as e:
+            raise ValueError(f"{HONORS_LEGACY}: unreadable ({e})") from e
 
     # Process each year 1997..2026
     for award_year in AWARD_YEARS:
@@ -255,7 +254,10 @@ def build_extended(refresh_live=False):
                     rec["all_def_team"] = max(rec.get("all_def_team",0), tier)
                 print(f"award {award_year} live parsed mvp:{len(mvp_rows)} dpoy:{len(dpoy_rows)} roy:{len(roy_rows)} def:{len(def_rows)} clutch:{len(clutch_rows)}")
             else:
+                # Used to fall back to the cache with this print and exit 0.
                 print(f"award {award_year} live blocked — fallback to cache only")
+                if failures is not None:
+                    failures.add(str(award_year), FetchError("BBRef awards page blocked, short or unreachable"))
 
         # Ensure dict includes all players even if no awards (will be empty but we already have those with cache)
         # Also merge legacy honors bySeason for seasons lacking cache
@@ -311,11 +313,13 @@ def main():
     if OUT.exists() and not args.refresh:
         try:
             doc = json.loads(OUT.read_text())
+        except json.JSONDecodeError:
+            doc = None
+            print(f"{OUT.name} unreadable — rebuilding it")
+        if doc is not None:
             total = sum(len(seas.get("players",{})) for seas in doc.get("seasons",{}).values()) if isinstance(doc.get("seasons"), dict) else len(doc.get("players",{}))
             print(f"honors_extended cached total {total} — skip (use --refresh to live parse)")
-            return total
-        except Exception:
-            pass
+            return
 
     t0 = time.time()
     _log("L3-fetch_honors_extended-start", "running", extra={"years":"1997-2026"})
@@ -324,7 +328,11 @@ def main():
     if refresh_live:
         print("live refresh enabled — BBRef rate-limited 3.5s per year (~30y => ~105s)")
 
-    by_season = build_extended(refresh_live=refresh_live)
+    failures = Failures("fetch_honors_extended")
+    by_season = build_extended(refresh_live=refresh_live, failures=failures)
+    # A live refresh with a failed year writes nothing: the file would mix
+    # live-parsed years with cache-only ones and say nothing about which.
+    failures.raise_if_any()
 
     # Build flat file for modeling validity
     flat_players = {}
@@ -348,14 +356,13 @@ def main():
         "players": flat_players,  # flat keyed for join in build_vectors
     }
 
-    OUT.write_text(json.dumps(out_doc, separators=(",",":")))
+    atomic_write_text(OUT, json.dumps(out_doc, separators=(",",":")))
     size_kb = OUT.stat().st_size/1024
     print(f"wrote {OUT.name} {len(flat_players)} player-seasons {size_kb:.1f}KB -> {OUT}")
 
     latency = int((time.time()-t0)*1000)
     _log("L3-fetch_honors_extended-done", "done", extra={"players": len(flat_players), "seasons": len(by_season), "size_kb": round(size_kb,1)})
 
-    return len(flat_players)
 
 if __name__ == "__main__":
-    main()
+    run_fetch(main, name="fetch_honors_extended")
