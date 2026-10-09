@@ -21,11 +21,12 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from name_utils import norm_name
 from nba_http import fetch_stats_json, legacy_result_set_rows
+from seasons import season_range
 
 ROOT = Path(__file__).resolve().parents[1]
 CACHE = ROOT / "pipeline" / "cache"
 
-SEASONS = [f"{y}-{str(y + 1)[-2:]}" for y in range(1996, 2026)]
+SEASONS = season_range()
 
 
 def cache_path(season: str) -> Path:

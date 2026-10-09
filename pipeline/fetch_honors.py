@@ -21,10 +21,12 @@ from html.parser import HTMLParser
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
+from seasons import season_end_year, season_range
 
 ROOT = Path(__file__).resolve().parents[1]
 CACHE = ROOT / "pipeline" / "cache"
-AWARD_YEARS = list(range(1997, 2027))  # awards_1997 .. awards_2026
+# BBRef names an awards page after the season's end year: awards_1997 .. awards_2026.
+AWARD_YEARS = [season_end_year(s) for s in season_range()]
 BBREF_AWARDS = "https://www.basketball-reference.com/awards/awards_{year}.html"
 UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
 

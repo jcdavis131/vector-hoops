@@ -22,6 +22,9 @@ import sys
 import time
 import urllib.request
 
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
+from seasons import PRESEASON_ODDS_FIRST_SEASON, season_range
+
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 CACHE = ROOT / "pipeline" / "cache" / "preseason_odds_raw.json"
 DEST = ROOT / "assets" / "data" / "preseason_win_totals.json"
@@ -97,7 +100,7 @@ def fetch_season(end_year: int) -> dict:
 
 
 def main():
-    seasons = [f"{y}-{str(y + 1)[-2:]}" for y in range(2003, 2026)]
+    seasons = season_range(PRESEASON_ODDS_FIRST_SEASON)
     data = json.loads(DEST.read_text()) if DEST.exists() else {"built": "", "source": "", "seasons": {}}
     cache = {}
     if CACHE.exists():

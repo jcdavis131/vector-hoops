@@ -28,6 +28,9 @@ import unicodedata
 import urllib.request
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from seasons import season_range
+
 ROOT = Path(__file__).resolve().parent
 CACHE = ROOT / "cache"
 UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) Scout/1.0 (research; MLOps)"
@@ -139,7 +142,7 @@ def main() -> None:
     ap.add_argument("--offline", action="store_true", help="Use cache only, no network")
     args = ap.parse_args()
 
-    seasons = [args.season] if args.season else [f"{y}-{str(y + 1)[-2:]}" for y in range(1996, 2026)]
+    seasons = [args.season] if args.season else season_range()
     CACHE.mkdir(parents=True, exist_ok=True)
     for s in seasons:
         fetch_season(s, offline=args.offline)

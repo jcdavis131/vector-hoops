@@ -18,6 +18,9 @@ import unicodedata
 import urllib.request
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from seasons import season_range
+
 ROOT = Path(__file__).resolve().parent
 CACHE = ROOT / "cache" / "positions_bbref.json"
 UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"
@@ -61,9 +64,7 @@ def fetch_season(season: str) -> dict[str, str]:
 
 def main() -> None:
     vectors = json.loads((ROOT.parent / "assets" / "vectors.json").read_text(encoding="utf-8"))
-    first = int(vectors["seasons"][0][:4])
-    last = int(vectors["seasons"][-1][:4])
-    seasons = [f"{y}-{str(y + 1)[-2:]}" for y in range(first, last + 1)]
+    seasons = season_range(vectors["seasons"][0], vectors["seasons"][-1])
 
     cache: dict[str, dict[str, str]] = {}
     if CACHE.exists():

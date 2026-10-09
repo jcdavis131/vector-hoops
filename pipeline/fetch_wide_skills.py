@@ -44,12 +44,13 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from nba_http import fetch_stats_json, legacy_result_set_rows
+from seasons import HUSTLE_FIRST_SEASON, season_range
 
 ROOT = Path(__file__).resolve().parents[1]
 CACHE = ROOT / "pipeline" / "cache"
 
 # Synergy + hustle coverage begins 2015-16.
-SEASONS = [f"{y}-{str(y + 1)[-2:]}" for y in range(2015, 2026)]
+SEASONS = season_range(HUSTLE_FIRST_SEASON)
 
 # Pause between endpoint calls — stats.nba.com throttles burst traffic.
 _CALL_GAP_S = 2.5

@@ -22,6 +22,9 @@ import time
 import sys
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from seasons import HUSTLE_FIRST_SEASON, TRACKING_FIRST_SEASON, season_range
+
 ROOT = Path(__file__).resolve().parents[1]
 CACHE = ROOT / "pipeline" / "cache"
 TRACKING_GLOB = "tracking_*.json"
@@ -74,7 +77,7 @@ def main():
         except Exception as e:
             print(f"  {wf.name} err {e}")
 
-    expected_tracking_seasons = [f"{y}-{str(y+1)[-2:]}" for y in range(2013, 2026)]
+    expected_tracking_seasons = season_range(TRACKING_FIRST_SEASON)
     have_tracking_seasons = set()
     for tf in tracking_files:
         name=tf.stem.replace("tracking_","")
@@ -82,7 +85,7 @@ def main():
     missing_tracking = [s for s in expected_tracking_seasons if s not in have_tracking_seasons]
     print(f"[tracking] expected 13 seasons 2013-14..2025-26, have {len(have_tracking_seasons)}, missing {missing_tracking}")
 
-    expected_wide_seasons = [f"{y}-{str(y+1)[-2:]}" for y in range(2015, 2026)]
+    expected_wide_seasons = season_range(HUSTLE_FIRST_SEASON)
     have_wide = set()
     for wf in wide_files:
         if wf.name.startswith("wide_skills_") and wf.name.endswith(".json"):
@@ -115,7 +118,7 @@ def main():
             "built": time.strftime("%Y-%m-%d"),
             "earliest_tracking_season": "2013-14",
             "reason": "SportVU camera system installed league-wide beginning 2013-14 season. No player tracking (DIST, SPEED, TOUCHES, DRIVES) before then.",
-            "seasons_unavailable": [f"{y}-{str(y+1)[-2:]}" for y in range(1996, 2013)],
+            "seasons_unavailable": [s for s in season_range() if s < TRACKING_FIRST_SEASON],
             "policy": "Return empty scaffold for those seasons; downstream models must mask or use box-score proxies.",
             "scaffold": {},
         }, indent=2), encoding="utf-8")

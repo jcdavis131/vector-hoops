@@ -30,6 +30,8 @@ import pathlib
 import re
 from datetime import datetime
 
+from seasons import season_range
+
 # era-aware cap rules — source of truth is cap_history.json (26K 31 seasons) + nba_salary_cap.py mirror
 try:
     from nba_salary_cap import (
@@ -1016,8 +1018,8 @@ def main():
     contract_timelines_by_norm, contract_lookup = build_contract_timelines(by_norm_season)
     print(f"contract timelines {len(contract_timelines_by_norm)} players, lookup {len(contract_lookup)} season entries")
 
-    all_seasons = sorted(set([s for _, s in payroll.keys()] + [f"{y}-{str(y + 1)[-2:]}" for y in range(1996, 2026)]))
-    recent_seasons = [f"{y}-{str(y + 1)[-2:]}" for y in range(2015, 2026)]
+    all_seasons = sorted(set([s for _, s in payroll.keys()] + season_range()))
+    recent_seasons = season_range("2015-16")
     wins = load_team_wins(recent_seasons)
     print(f"wins entries {len(wins)}")
 

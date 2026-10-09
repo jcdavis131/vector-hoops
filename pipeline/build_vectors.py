@@ -69,14 +69,14 @@ from eligibility import (
 )
 from name_utils import canonical_name, norm_name
 from nba_http import fetch_stats_json, legacy_result_set_rows, patch_nba_api_session
+from seasons import HUSTLE_FIRST_SEASON, TRACKING_FIRST_SEASON, season_range
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / "assets" / "vectors.json"
 CACHE = ROOT / "pipeline" / "cache"
 DATA_DIR = ROOT / "pipeline" / "data"
 
-SEASONS = [f"{y}-{str(y + 1)[-2:]}" for y in range(1996, 2026)]
-TRACKING_FIRST_SEASON = "2013-14"
+SEASONS = season_range()  # FIRST_SEASON..LAST_SEASON, pipeline/seasons.py
 # Eligibility gates live in pipeline/eligibility.py (schedule-aware GP + minutes).
 
 # ---------------------------------------------------------------------------
@@ -511,7 +511,7 @@ def fetch_tracking(season: str, offline: bool):
 # empty dict (masked downstream), same discipline as fetch_tracking above.
 # ---------------------------------------------------------------------------
 
-WIDE_SKILLS_FIRST_SEASON = "2015-16"
+WIDE_SKILLS_FIRST_SEASON = HUSTLE_FIRST_SEASON
 
 
 def load_wide_skills_defense(season: str) -> dict[str, dict]:

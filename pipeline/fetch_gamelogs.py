@@ -9,13 +9,17 @@ Run: pipeline/.venv/Scripts/python.exe pipeline/fetch_gamelogs.py
 from __future__ import annotations
 
 import json
+import sys
 import time
 from pathlib import Path
 
 from nba_api.stats.endpoints import playergamelogs
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from seasons import GAMELOG_FIRST_SEASON, season_range
+
 OUT = Path(__file__).resolve().parent / "data"
-SEASONS = [f"{y}-{str(y + 1)[-2:]}" for y in range(2015, 2026)]
+SEASONS = season_range(GAMELOG_FIRST_SEASON)
 KEEP = [
     "PLAYER_ID",
     "PLAYER_NAME",

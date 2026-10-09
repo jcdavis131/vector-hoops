@@ -22,6 +22,12 @@ from __future__ import annotations
 import json, sys, re, time, os, datetime, pathlib, urllib.request, urllib.error
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from seasons import season_end_year, season_range
+
+# BBRef awards pages are named by the season's end year (awards_1997 .. awards_2026).
+AWARD_YEARS = [season_end_year(s) for s in season_range()]
+
 ROOT = Path(__file__).resolve().parents[1]
 PIPELINE = ROOT / "pipeline"
 CACHE = PIPELINE / "cache"
@@ -165,7 +171,7 @@ def build_extended(refresh_live=False):
             legacy = {}
 
     # Process each year 1997..2026
-    for award_year in range(1997, 2027):
+    for award_year in AWARD_YEARS:
         season = f"{award_year-1}-{str(award_year)[-2:]}"
         cache_doc = existing.get(award_year, {})
         players = {}
@@ -330,7 +336,7 @@ def main():
     out_doc = {
         "_meta": {
             "built": datetime.datetime.utcnow().isoformat()+"Z",
-            "years": [f"{y-1}-{str(y)[-2:]}" for y in range(1997,2027)],
+            "years": season_range(),
             "seasons": len(by_season),
             "players_total": len(flat_players),
             "counts_by_season": {s: d.get("counts",{}) for s,d in by_season.items()},

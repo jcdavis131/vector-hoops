@@ -24,12 +24,14 @@ import json
 from collections import defaultdict
 from pathlib import Path
 
+from seasons import season_range
+
 HERE = Path(__file__).resolve().parent
 DATA = HERE / "data"
 OUT = DATA / "availability.json"
 
 SEASON_LENGTH = {"1998-99": 50, "2011-12": 66}  # lockouts; default 82
-SEASONS = [f"{y}-{str(y + 1)[-2:]}" for y in range(1996, 2026)]
+SEASONS = season_range()
 
 
 def season_games(season: str) -> int:

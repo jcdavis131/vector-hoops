@@ -32,6 +32,9 @@ from __future__ import annotations
 import json, sys, re, time, os, datetime, pathlib, urllib.request, urllib.error, urllib.parse, math
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from seasons import season_range
+
 ROOT = Path(__file__).resolve().parents[1]
 PIPELINE = ROOT / "pipeline"
 CACHE = PIPELINE / "cache"
@@ -77,7 +80,7 @@ def _gpu_marker(task="fetch_pbp", reason="residential"):
         "task": task,
         "reason": reason,
         "requested_at": datetime.datetime.utcnow().isoformat()+"Z",
-        "seasons": [f"{y}-{str(y+1)[-2:]}" for y in range(1996,2026)],
+        "seasons": season_range(),
         "outputs": ["assets/chemistry.json","assets/faderfinisher.json","pipeline/cache/pbp_summary.json"],
         "fallback": "BigDataBall pbp csv + existing chemistry.json",
         "residential_required": True,

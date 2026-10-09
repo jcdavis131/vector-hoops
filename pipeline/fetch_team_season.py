@@ -21,11 +21,14 @@ from pathlib import Path
 
 from nba_api.stats.endpoints import leaguedashteamstats
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from seasons import season_range
+
 ROOT = Path(__file__).resolve().parents[1]
 CACHE = ROOT / "pipeline" / "cache"
 DATA_DIR = ROOT / "pipeline" / "data"
 
-SEASONS = [f"{y}-{str(y + 1)[-2:]}" for y in range(1996, 2026)]
+SEASONS = season_range()
 
 BASE_WANTED = ["TEAM_ID", "TEAM_NAME", "W", "L", "W_PCT"]
 ADV_WANTED = ["TEAM_ID", "PACE", "OFF_RATING", "DEF_RATING", "NET_RATING"]

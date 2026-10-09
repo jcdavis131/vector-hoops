@@ -24,12 +24,15 @@ from __future__ import annotations
 import json, sys, re, time, os, datetime, pathlib, urllib.request, urllib.error, urllib.parse
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from seasons import TRACKING_FIRST_SEASON, season_range
+
 ROOT = Path(__file__).resolve().parents[1]
 PIPELINE = ROOT / "pipeline"
 CACHE = PIPELINE / "cache"
 CACHE.mkdir(parents=True, exist_ok=True)
 
-SEASONS = [f"{y}-{str(y+1)[-2:]}" for y in range(2013, 2026)]
+SEASONS = season_range(TRACKING_FIRST_SEASON)
 
 PT_MEASURE_TYPES = ["Drives", "Passing", "Defense", "Rebounding", "SpeedDistance", "CatchShoot", "Possessions"]
 HUSTLE_ENDPOINT = "leaguehustlestatsplayer"

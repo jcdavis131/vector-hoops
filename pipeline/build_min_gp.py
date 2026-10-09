@@ -25,12 +25,14 @@ import time
 from collections import defaultdict
 from pathlib import Path
 
+from seasons import season_range
+
 HERE = Path(__file__).resolve().parent
 DATA = HERE / "data"
 CACHE = HERE / "cache"
 OUT = DATA / "min_gp.json"
 
-SEASONS = [f"{y}-{str(y + 1)[-2:]}" for y in range(1996, 2026)]
+SEASONS = season_range()
 
 
 def from_gamelogs(path: Path, season: str) -> list[dict]:

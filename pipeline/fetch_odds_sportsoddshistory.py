@@ -14,6 +14,9 @@ Rate-limited 3-4 sec, resumable, merges into assets/data/preseason_win_totals.js
 
 import json, re, sys, time, random, pathlib, urllib.request, urllib.error, subprocess, datetime
 
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
+from seasons import PRESEASON_ODDS_FIRST_SEASON, season_range
+
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 DEST = ROOT/"assets"/"data"/"preseason_win_totals.json"
 CACHE = ROOT/"pipeline"/"cache"/"preseason_odds_soh_raw.json"
@@ -185,7 +188,7 @@ def try_soh_season(end_year:int) -> dict:
     return {}
 
 def main():
-    seasons = [f"{y}-{str(y+1)[-2:]}" for y in range(2003,2026)]  # 2003-04 .. 2025-26
+    seasons = season_range(PRESEASON_ODDS_FIRST_SEASON)  # 2003-04 .. LAST_SEASON
     doc = json.loads(DEST.read_text()) if DEST.exists() else {"built":"","source":"","seasons":{}}
     if "seasons" not in doc:
         flat={k:v for k,v in doc.items() if isinstance(v, dict)}
