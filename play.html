@@ -152,7 +152,7 @@ button,.input{min-height:44px}
 .game-head__side{ display: flex; gap: 6px; flex-wrap: wrap; }
 .game-head__side--end{ justify-content: flex-end; }
 .game-status-bar{ display: flex; flex-direction: column; align-items: center; gap: 10px; margin: 0; padding: 0; border: 0; }
-.progress-dot{ width: 24px; height: 24px; font-family: var(--font-display); font-size: 10px; font-weight: 700; color: var(--fg-3); background: transparent; border: 1px solid var(--line-2); }
+.progress-dot{ width: 28px; height: 28px; font-family: var(--font-display); font-size: 11px; font-weight: 700; color: var(--fg-3); background: transparent; border: 1px solid var(--line-2); }
 .progress-dot.is-done{ background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
 .progress-dot.is-current{ background: var(--accent-wash); border-color: var(--accent-line); color: var(--accent); }
 @media (max-width: 720px){
@@ -164,7 +164,7 @@ button,.input{min-height:44px}
 #mode-selector .mode-tabs{ width: auto; max-width: 100%; }
 .game-head__side{ align-items: center; }
 .mode-head{ display: flex; gap: 12px; align-items: baseline; justify-content: center; flex-wrap: wrap; }
-.mode-head__note{ font-size: 12.5px; color: var(--fg-3); }
+.mode-head__note{ font-size: 12.5px; color: var(--fg-2); }
 .mode-desc{ max-width: 70ch; text-align: center; font-size: 13px; line-height: 1.6; color: var(--fg-2); background: none; border: 0; padding: 0; margin: 0; }
 #daily-court{ background: var(--surface); border-width: 1px; }
 .court-card, .pack-card{ background: var(--surface-2); border: 1px solid var(--line); border-radius: var(--radius-lg); transition: border-color var(--dur-1) var(--ease), transform var(--dur-2) var(--ease); }
@@ -172,9 +172,9 @@ button,.input{min-height:44px}
 .court-card.is-active, .pack-card.is-active{ background: var(--surface-2); border-color: var(--accent); outline: 0; box-shadow: inset 0 0 0 1px var(--accent); }
 .court-card.is-solved, .pack-card.is-won{ background: color-mix(in srgb, var(--ok) 10%, var(--surface-2)); border-color: color-mix(in srgb, var(--ok) 55%, transparent); }
 .court-card.is-failed, .pack-card.is-lost{ background: color-mix(in srgb, var(--bad) 8%, var(--surface-2)); border-color: color-mix(in srgb, var(--bad) 45%, transparent); opacity: 1; }
-.court-slot, .pack-top{ font-family: var(--font-display); font-stretch: 112%; letter-spacing: .14em; font-weight: 600; color: var(--fg-3); opacity: 1; }
+.court-slot, .pack-top{ font-family: var(--font-display); font-stretch: 112%; letter-spacing: .14em; font-weight: 600; font-size: 11px; color: var(--fg-3); opacity: 1; }
 .court-name, .pack-name{ font-family: var(--font-text); font-weight: 650; font-size: 14px; color: var(--fg); font-variant-numeric: tabular-nums; }
-.court-meta, .pack-meta{ font-family: var(--font-text); font-size: 12px; color: var(--fg-3); }
+.court-meta, .pack-meta{ font-family: var(--font-text); font-size: 12px; color: var(--fg-2); }
 .lineup-chip, .reward{ font-family: var(--font-display); font-stretch: 112%; letter-spacing: .1em; font-weight: 600; font-size: 10px; text-transform: uppercase; color: var(--fg-2); background: none; border: 1px solid var(--line-2); }
 .reward.is-unlocked{ background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
 .reward.is-unlocked.gold{ background: var(--accent-wash); border-color: var(--accent-line); color: var(--accent); }
