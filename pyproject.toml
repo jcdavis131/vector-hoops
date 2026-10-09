@@ -22,7 +22,10 @@ dependencies = [
 
 [project.optional-dependencies]
 dev = [
-    "ruff>=0.8.2",
+    # Exact, and the same version as lint.yml and .pre-commit-config.yaml. A
+    # floor let three ruff versions coexist, and a newer rule (RUF059) failed CI
+    # on code every local hook had passed.
+    "ruff==0.15.22",
     "pre-commit>=3.6",
     "pytest>=7.0",
 ]

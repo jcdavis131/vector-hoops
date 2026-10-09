@@ -288,7 +288,7 @@ def shap_linear(X, coeffs, feature_names, add_bias=True):
 def build_dataset():
     id2abbr=load_teams_map()
     cap_map=load_cap_rules()
-    payroll, counts=load_payroll()
+    payroll, _counts=load_payroll()
     wins_data=load_wins(id2abbr)
     # pt season map
     pt_map={}
@@ -433,9 +433,9 @@ def train_wins_models(dataset):
             overall=metrics_mae_rmse_r2(y_true, preds_all)
             return fold_metrics, overall, preds_all
 
-        fm1, overall1, pa1 = eval_model_for_splits(X)
+        fm1, overall1, _pa1 = eval_model_for_splits(X)
         X_payroll=[[d["payroll_m"]] for d in dataset]
-        fm2, overall2, pa2 = eval_model_for_splits(X_payroll)
+        fm2, overall2, _pa2 = eval_model_for_splits(X_payroll)
 
         coeffs_full=train_linreg(X, y, add_bias=True)
         perm1=perm_importance(X, y, coeffs_full, seed=SEED, add_bias=True)

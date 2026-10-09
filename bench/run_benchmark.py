@@ -109,7 +109,7 @@ def train_mtnn(X_all, Y, M, train_idx, val_idx, seed):
     torch.manual_seed(seed)
     rng = np.random.default_rng(seed)
 
-    n, d = X_all.shape
+    _n, d = X_all.shape
     trunk_dims = MTNN_CFG["trunk"]
     d_emb = MTNN_CFG["d_emb"]
 
@@ -195,7 +195,7 @@ def main() -> None:
     X_raw = z["X"].astype(np.float64)
     feature_names = [str(s) for s in z["feature_names"]]
     entity_id, target_year = z["entity_id"], z["target_year"]
-    n, d = X_raw.shape
+    _n, _d = X_raw.shape
 
     train_rows = np.where(target_year <= TRAIN_MAX_TY)[0]
     val_rows = np.where((target_year >= VAL_TYS[0]) & (target_year <= VAL_TYS[-1]))[0]

@@ -558,7 +558,7 @@ class MTNN(nn.Module):
         # v6 token dropout: drop whole family tokens during train
         if self.training and self.token_dropout > 0:
             # Bernoulli keep ~ 1-p, ensure at least one token kept per sample
-            B, T, D = parts.shape
+            B, T, _D = parts.shape
             keep = (torch.rand(B, T, 1, device=parts.device) > self.token_dropout).float()
             # ensure at least one tower per row
             all_zero = keep.sum(dim=1, keepdim=True) == 0

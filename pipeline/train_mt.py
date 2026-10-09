@@ -511,7 +511,7 @@ if TORCH:
             d = self.towerD(td)
 
             if self.use_attn and self.attn is not None:
-                _, pooled, flat = self.attn([a, b, c, d])
+                _, _pooled, flat = self.attn([a, b, c, d])
                 x = flat  # [B,128]
             else:
                 x = torch.cat([a, b, c, d], dim=1)  # [B,128]
@@ -784,8 +784,8 @@ def train_mt_long(args):
 
     StdScaler = sklearn.preprocessing.StandardScaler
 
-    draft_data, expected = load_draft_dataset()
-    fore_data, med_sal, med_perf = load_foresight_dataset()
+    draft_data, _expected = load_draft_dataset()
+    fore_data, _med_sal, _med_perf = load_foresight_dataset()
     cap_data = load_cap_dataset()
     print(f"[mt_long] draft {len(draft_data)} fore {len(fore_data)} cap {len(cap_data)}")
 
@@ -1085,7 +1085,7 @@ def train_mt_long(args):
 # Original zoo runner (kept)
 # ---------------------------------------------------------------------------
 def run_zoo():
-    draft_data, expected = load_draft_dataset()
+    draft_data, _expected = load_draft_dataset()
     fore_data, med_sal, med_perf = load_foresight_dataset()
     cap_data = load_cap_dataset()
 

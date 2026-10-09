@@ -1,8 +1,13 @@
 # Pre-commit hooks - Ruff SOTA 2026-07-20
 # Single binary replaces black/flake8/isort, 10-100x faster
+#
+# rev must equal the ruff pin in .github/workflows/lint.yml and pyproject's dev
+# extra. It was v0.8.2 while lint.yml installed 0.15.22: RUF059 does not exist
+# in 0.8.x, so the hook passed every commit locally while Ruff Lint failed on
+# master with 13 RUF059 errors. Bump all three together.
 repos:
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.8.2
+    rev: v0.15.22
     hooks:
       - id: ruff
         args: [--fix]

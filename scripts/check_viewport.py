@@ -170,7 +170,7 @@ class WS:
         return self._id
 
     def frame(self) -> dict:
-        b0, b1 = self._recv(2)
+        _b0, b1 = self._recv(2)
         n = b1 & 0x7F
         if n == 126:
             n = struct.unpack(">H", self._recv(2))[0]
