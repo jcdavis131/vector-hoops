@@ -38,7 +38,6 @@ Requires: torch, numpy; pipeline/data/train_matrix.npz from build_vectors.py
 from __future__ import annotations
 
 import argparse
-import itertools
 import json
 import os
 import sys
@@ -64,6 +63,16 @@ from artifact_io import (
     git_state,
     matrix_fingerprint,
     sha256_file,
+)
+from mtnn_metrics import (
+    adjacent_season_pairs,
+    cross_era_archetype_purity,
+    eval_split,
+    filter_pairs_by_split,
+    next_season_index,
+    recall_at_k,
+    season_start_year,
+    transparent_baseline_embeddings,
 )
 from mtnn_validation import build_validation_report, role_labels_from_context
 
@@ -243,37 +252,6 @@ def family_slices(manifest, drop: set[str] | None = None) -> dict[str, list[int]
             continue
         fams[manifest["families"][f]].append(j)
     return {k: v for k, v in fams.items() if v}
-
-
-def adjacent_season_pairs(pids, seasons, names=None) -> list[tuple[int, int]]:
-    """Same-player adjacent calendar years keyed by stable NBA PLAYER_ID.
-
-    ``names`` is accepted for call-site compatibility but ignored — display
-    names collide across distinct careers and break continuity.
-    """
-    del names  # explicit: do not key careers by display name
-
-    def season_start(s: str) -> int:
-        return int(s[:4])
-
-    by_key: dict[int, list[tuple[int, int]]] = defaultdict(list)
-    for i, (pid, s) in enumerate(zip(pids, seasons, strict=False)):
-        by_key[int(pid)].append((season_start(str(s)), i))
-    pairs = []
-    for rows in by_key.values():
-        rows.sort()
-        for (y1, i1), (y2, i2) in itertools.pairwise(rows):
-            if y2 - y1 == 1:
-                pairs.append((i1, i2))
-    return pairs
-
-
-def next_season_index(n_rows: int, pairs: np.ndarray) -> np.ndarray:
-    """Row -> next-season row index (or -1 when unavailable)."""
-    nxt = np.full(n_rows, -1, dtype=np.int64)
-    for i1, i2 in pairs:
-        nxt[int(i1)] = int(i2)
-    return nxt
 
 
 def game_feature_cols(manifest) -> list[int]:
@@ -964,56 +942,9 @@ def embed_all(model: MTNN, xs, ms, seas_t) -> np.ndarray:
 # ---------------------------------------------------------------------------
 # Evaluation
 # ---------------------------------------------------------------------------
-
-
-def season_start_year(season: str) -> int:
-    return int(str(season)[:4])
-
-
-def eval_split(season: str) -> str:
-    """Held-out split for adjacent-season pairs (target = next season)."""
-    y = season_start_year(season)
-    if y <= 2021:
-        return "train"
-    if y <= 2023:
-        return "val"
-    return "test"
-
-
-def filter_pairs_by_split(
-    pairs: np.ndarray,
-    seasons: np.ndarray,
-    split: str,
-) -> np.ndarray:
-    """Keep pairs whose target row (index b) falls in split."""
-    if len(pairs) == 0:
-        return pairs
-    keep = []
-    for a, b in pairs:
-        if eval_split(str(seasons[b])) == split:
-            keep.append((int(a), int(b)))
-    return np.array(keep, dtype=int) if keep else np.zeros((0, 2), int)
-
-
-def recall_at_k(E: np.ndarray, pairs: np.ndarray, k: int = 10) -> float | None:
-    if len(pairs) == 0:
-        return None
-    sample = pairs[np.random.choice(len(pairs), min(500, len(pairs)), replace=False)]
-    hits = 0
-    for a, b in sample:
-        sims = E @ E[a]
-        sims[a] = -np.inf
-        top = np.argpartition(-sims, k)[:k]
-        hits += int(b in top)
-    return hits / len(sample)
-
-
-def transparent_baseline_embeddings(Z: np.ndarray, game_cols: list[int]) -> np.ndarray:
-    """L2-normalized 14-d game profile vectors for held-out baseline."""
-    G = Z[:, game_cols].astype(np.float64)
-    norms = np.linalg.norm(G, axis=1, keepdims=True)
-    G = G / np.maximum(norms, 1e-8)
-    return G.astype(np.float32)
+# The split, pair, recall, purity and 14-d baseline code lives in
+# mtnn_metrics.py (imported above under the same names) so it can be tested
+# without torch [tests#7].
 
 
 def classification_acc(logits: np.ndarray, labels: np.ndarray, valid_mask: np.ndarray | None = None) -> float | None:
@@ -1024,32 +955,6 @@ def classification_acc(logits: np.ndarray, labels: np.ndarray, valid_mask: np.nd
         return None
     pred = logits[idx].argmax(1)
     return float((pred == labels[idx]).mean())
-
-
-def cross_era_archetype_purity(
-    E: np.ndarray,
-    clusters: np.ndarray,
-    seasons: np.ndarray,
-    k: int = 20,
-    n_sample: int = 400,
-) -> float | None:
-    """Among cross-era neighbors, fraction sharing the same archetype."""
-    season_year = np.array([int(str(s)[:4]) for s in seasons])
-    rng = np.random.default_rng(7)
-    candidates = np.where(clusters >= 0)[0]
-    if len(candidates) < n_sample:
-        return None
-    sample = rng.choice(candidates, min(n_sample, len(candidates)), replace=False)
-    purities = []
-    for i in sample:
-        sims = E @ E[i]
-        sims[i] = -np.inf
-        top = np.argpartition(-sims, k)[:k]
-        cross = top[season_year[top] != season_year[i]]
-        if len(cross) == 0:
-            continue
-        purities.append(float((clusters[cross] == clusters[i]).mean()))
-    return float(np.mean(purities)) if purities else None
 
 
 def skill_holdout_metrics(
