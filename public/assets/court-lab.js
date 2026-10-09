@@ -327,6 +327,9 @@
     if (!S.data || !S.pid) return;
     clearLayers();
     $('twins-panel').hidden = true;
+    $('zone-panel').hidden = true;
+    $('zone-sum').textContent = '';
+    $('son-card').hidden = true;
     var seasons = playerSeasons(S.pid);
     $('season-label').textContent = S.season || '';
     $('season-name').textContent = displayName(S.pid);
