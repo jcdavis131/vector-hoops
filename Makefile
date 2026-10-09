@@ -9,16 +9,22 @@
 # So the target that existed to tell you the repo was fine had never run the
 # build and had never run a test. Flags fixed, `|| true` gone.
 
-.PHONY: sync offline build train eval test ci
+.PHONY: sync offline build train eval test lint ci
+
+# `python`, not `python3`. On Windows `python3` resolves to the Microsoft Store
+# alias (WindowsApps\python3.exe), not the venv, so every target here ran a
+# different interpreter from the one the pipeline uses. Point it at a venv with
+# `make PYTHON=pipeline/.venv/Scripts/python.exe ci`.
+PYTHON ?= python
 
 sync:
-	python3 -m pip install -e .[dev]
+	$(PYTHON) -m pip install -e .[dev]
 
 # What .github/workflows/ci.yml runs offline. Both read pipeline/cache and
 # write nothing under assets/, which is why the stamp check can follow them.
 offline:
-	python3 pipeline/fetch_bbref_advanced.py --offline
-	python3 pipeline/fetch_2k_ratings.py --offline
+	$(PYTHON) pipeline/fetch_bbref_advanced.py --offline
+	$(PYTHON) pipeline/fetch_2k_ratings.py --offline
 
 # Split out of `offline`, because this one REWRITES assets/vectors.json,
 # assets/*.npz and pipeline/data/feature_manifest.json. CI does not run it and
@@ -26,21 +32,29 @@ offline:
 # a way to modify it. Verified exit 0 on a scratch copy of the tree:
 # 12,966 player-seasons, 8 archetypes, 72 wide features.
 build:
-	python3 pipeline/build_vectors.py --offline
+	$(PYTHON) pipeline/build_vectors.py --offline
 
 train:
 	./train.sh --quick
 
-# Bare pytest, same as ci.yml: testpaths covers pipeline + tests. The old
-# --ignore and separate provenance-gate step are gone because that file is a
-# pytest module now, not a script that exits at import.
+# The whole suite, local_data tests included (testpaths covers pipeline +
+# tests). On the training box run it with HOOPS_REQUIRE_LOCAL_DATA=1, so a
+# missing pipeline/data artifact fails instead of skipping.
 eval:
-	python3 -m pytest
+	$(PYTHON) -m pytest
 
 test: eval
 
+# Mirrors .github/workflows/lint.yml (same ruff version as the pre-commit hook).
+lint:
+	$(PYTHON) -m ruff check . --statistics
+	$(PYTHON) -m ruff format --check .
+
 # Mirrors .github/workflows/ci.yml step for step. If the two drift, a local
 # green stops meaning anything -- which is the failure this whole file just had.
-ci: offline test
-	python3 scripts/stamp_assets.py --check
+# Same pytest selection as CI: local_data tests are deselected because a runner
+# has no pipeline/data. `make eval` is the one that runs them.
+ci: offline
+	$(PYTHON) -m pytest -m "not local_data"
+	$(PYTHON) scripts/stamp_assets.py --check
 	@echo "CI green - offline fixtures, no external network"

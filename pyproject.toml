@@ -17,7 +17,12 @@ dependencies = [
     "torch>=2.0",
     "requests>=2.28",
     "nba_api>=1.2.0",
-    "vector-core @ git+https://github.com/jcdavis131/vector-hub.git#subdirectory=packages/vector-core",
+    # Pinned to the same vector-hub commit as .github/workflows/ci.yml. Without
+    # a rev this resolved to whatever vector-hub's default branch held at
+    # install time, and vector_core supplies the --era-align / --robust-scaling
+    # code paths, so a fresh install could train different code with nothing
+    # recorded. Bump both pins together.
+    "vector-core @ git+https://github.com/jcdavis131/vector-hub.git@d6a0f5df6233e7ae7c7e5af5a6f8021461d32544#subdirectory=packages/vector-core",
 ]
 
 [project.optional-dependencies]

@@ -23,11 +23,19 @@ jobs:
 
       # vector_core is imported by tests/test_vector_core_parity.py and by
       # train_mtnn.py's --era-align / --robust-scaling paths. It is not on PyPI.
+      #
+      # Pinned to a commit, the same one pyproject.toml's vector-core URL names.
+      # `ref: main` made the parity test's bit-exact verdict depend on whatever
+      # another repo's default branch held when CI ran, so re-running CI on an
+      # unchanged hoops commit could flip. d6a0f5df was vector-hub main on
+      # 2026-10-09; its packages/vector-core Python is the same as the
+      # e1a46d7f checkout the training venv was installed from (the only
+      # vector-core files that differ are .js/.css). Bump both pins together.
       - name: Check out vector-hub (for vector-core)
         uses: actions/checkout@v4
         with:
           repository: jcdavis131/vector-hub
-          ref: main
+          ref: d6a0f5df6233e7ae7c7e5af5a6f8021461d32544
           path: .vector-hub
 
       - name: Install deps
@@ -54,8 +62,14 @@ jobs:
       # to need `--ignore=pipeline/test_provenance_gate.py` and a separate script
       # step, because that file called sys.exit() at import. It is a pytest
       # module now, so the command here is the command anyone runs locally.
+      #
+      # -m "not local_data" deselects the tests that read gitignored
+      # pipeline/data (the matrix, mtnn_report.json, roster_context.json). On a
+      # runner they could only skip, and a skip in a row of dots reads as
+      # coverage. They run on the training box, where HOOPS_REQUIRE_LOCAL_DATA=1
+      # makes a missing artifact fail.
       - name: Pytest gates
-        run: pytest
+        run: pytest -m "not local_data"
 
       # scripts/stamp_assets.py has had a --check mode all along; nothing ever ran
       # it. vercel.json serves assets as `immutable, max-age=31536000`, so a stale
@@ -66,5 +80,9 @@ jobs:
       # The token is a hash of the file, so if a Windows checkout converts an
       # asset to CRLF the stamp describes bytes the server never serves, and this
       # check passes locally while failing here. It caught exactly that.
+      #
+      # It also skips dot directories now. The .vector-hub checkout above sits
+      # inside the workspace, and its index.html was being audited as one of
+      # this site's pages: 25 stale here against 24 on any local run.
       - name: Asset cache tokens are current
         run: python scripts/stamp_assets.py --check

@@ -74,7 +74,10 @@ def digest(path: Path) -> str:
 def pages() -> list[Path]:
     found = list(ROOT.glob("*.html"))
     for sub in sorted(ROOT.glob("*/index.html")):
-        if sub.parent.name != "public":
+        # A dot directory is never this site's content. CI checks vector-hub out
+        # into .vector-hub/, and this glob audited that repo's index.html, so the
+        # CI stamp step reported 25 stale pages where a local run reported 24.
+        if sub.parent.name != "public" and not sub.parent.name.startswith("."):
             found.append(sub)
     return sorted(found)
 
