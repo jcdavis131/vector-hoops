@@ -78,8 +78,9 @@ pipeline/recipes/legacy-v5-refit.json and legacy-v6-refit.json now, flag
 for flag, plus the --epochs 80 this script passed by default. The default is
 ship.json, the climb's measured flags: --phase select, so the run's held-out
 numbers are held out, where a final refit's are in-sample [training#0].
---epochs is passed only with --epochs, --quick or --full; otherwise the
-recipe's own count stands.
+--epochs is passed only with --epochs, --quick or --full, and --batch and
+--seed only when given; otherwise the recipe's values (or train_mtnn's
+defaults, batch 512 and seed 7) stand.
 
 The cost today: promote.py ships only final-refit or auto runs, and needs a
 checkpoint, which ship's --val-every 0 --no-best-checkpoint never writes. So
@@ -199,8 +200,8 @@ def build_plan(
     *,
     recipe: str = DEFAULT_RECIPE,
     epochs: int | None = None,
-    batch: int = 512,
-    seed: int = 7,
+    batch: int | None = None,
+    seed: int | None = None,
     device: str | None = None,
     refresh_context: bool = False,
     promote_force: str | None = None,
@@ -238,10 +239,15 @@ def build_plan(
     # report, checkpoint, embedding and centroids into its run directory, and
     # promote.py ships from there. --write-artifacts would also overwrite
     # pipeline/data/embedding_v3.npz directly, past the promotion checks.
+    # --epochs, --batch and --seed only when asked for: a flag passed here
+    # beats the recipe's value, so passing this script's defaults on every
+    # run would quietly override a recipe that sets them. 512 and 7 were also
+    # train_mtnn's defaults, so a run that asks for neither trains the same.
     train = ["pipeline/train_mtnn.py", "--recipe", recipe]
-    if epochs is not None:
-        train += ["--epochs", str(epochs)]
-    train += ["--batch", str(batch), "--seed", str(seed), "--run-dir", run_dir]
+    for flag, value in (("--epochs", epochs), ("--batch", batch), ("--seed", seed)):
+        if value is not None:
+            train += [flag, str(value)]
+    train += ["--run-dir", run_dir]
     if device is not None:
         # Only when asked. train_mtnn's own default (cpu) is what this script
         # has always run with; the orchestrator does not change it.
@@ -430,8 +436,8 @@ def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
     ap.add_argument(
         "--epochs", type=int, default=None, help="default: the recipe's (ship: 40); wins over --quick/--full"
     )
-    ap.add_argument("--batch", type=int, default=512)
-    ap.add_argument("--seed", type=int, default=7)
+    ap.add_argument("--batch", type=int, default=None, help="passed to train_mtnn only when given (its default: 512)")
+    ap.add_argument("--seed", type=int, default=None, help="passed to train_mtnn only when given (its default: 7)")
     ap.add_argument("--device", default=None, help="passed to train_mtnn only when given")
     ap.add_argument(
         "--promote-force",

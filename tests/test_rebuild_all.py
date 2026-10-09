@@ -204,8 +204,18 @@ def test_the_train_step_trains_a_recipe_and_spells_no_flags_of_its_own():
     train = next(s for s in ra.build_plan() if s.name == "train_mtnn")
     assert train.argv[:3] == ("pipeline/train_mtnn.py", "--recipe", "ship")
     flags = {a for a in train.argv if a.startswith("--")}
-    assert flags == {"--recipe", "--batch", "--seed", "--run-dir"}
+    assert flags == {"--recipe", "--run-dir"}
     assert not hasattr(ra, "SHIPPING_RECIPES")
+
+
+def test_batch_and_seed_are_passed_only_when_given(capsys, runs):
+    """A flag on train_mtnn's command line beats the recipe's value, so this
+    script's own defaults must not be passed on every run."""
+    train = next(s for s in ra.build_plan(batch=256, seed=5) if s.name == "train_mtnn")
+    assert train.argv[3:7] == ("--batch", "256", "--seed", "5")
+    assert ra.main(["--dry-run", "--only", "train_mtnn", "--seed", "13"]) == 0
+    out = capsys.readouterr().out
+    assert "--seed 13 " in out and "--batch" not in out
 
 
 def test_v6_is_the_legacy_v6_refit_and_excludes_recipe(capsys, runs):
