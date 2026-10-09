@@ -25,6 +25,8 @@ import json
 import sys
 from pathlib import Path
 
+import pytest
+
 ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "pipeline" / "data"
 CACHE = ROOT / "pipeline" / "cache"
@@ -107,17 +109,22 @@ def test_the_guard_is_guarding_something_live():
     """
     record = _a_bio_record()
     if record is None:
-        return  # no cache in this checkout; nothing to assert
+        # bio_*.json is tracked, so this should never happen; if it does, say so
+        # rather than pass with nothing asserted.
+        pytest.skip("no pipeline/cache/bio_*.json record in this checkout")
     undeclared = set(record) - set(BIO_COLS) - {"PLAYER_ID", "PLAYER_NAME"}
     assert undeclared, "bio cache no longer carries undeclared keys -- re-check this gate"
     assert undeclared & SYNTHETIC_BIO_KEYS, f"unexpected undeclared bio keys: {sorted(undeclared)}"
     assert not (set(source_columns("bio", record)) - set(BIO_COLS))
 
 
+@pytest.mark.local_data
 def test_no_synthetic_key_reached_the_shipped_manifest():
+    # feature_manifest.json is gitignored. This used to `return` when it was
+    # absent, so on every CI runner it reported PASS having checked nothing.
     man = DATA / "feature_manifest.json"
     if not man.exists():
-        return
+        pytest.skip(f"local data missing: {man.relative_to(ROOT).as_posix()}")
     features = set(json.loads(man.read_text(encoding="utf-8"))["features"])
     leaked = features & SYNTHETIC_BIO_KEYS
     assert not leaked, f"synthetic combine columns are in the matrix: {sorted(leaked)}"

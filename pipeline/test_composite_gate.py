@@ -18,6 +18,8 @@ import sys
 import unittest
 from pathlib import Path
 
+import pytest
+
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import composite_score as cqs  # noqa: E402
 from composite_score import (  # noqa: E402
@@ -81,6 +83,7 @@ class BaselineProvenanceTests(unittest.TestCase):
         self.assertGreaterEqual(len(prov["seeds"]), 2)
 
 
+@pytest.mark.local_data
 class ReportContractTests(unittest.TestCase):
     """The gate can only guard on fields train_mtnn actually emits.
 
@@ -88,6 +91,11 @@ class ReportContractTests(unittest.TestCase):
     nothing of the sort, so the guard silently never fired -- the same shape as
     the position head that trained with no labels. If a real report is on disk,
     hold train_mtnn to the contract the gate depends on.
+
+    local_data: mtnn_report.json is gitignored, so on a CI runner this skipped
+    every time (the third "s" in the CI log) and looked like coverage. CI now
+    deselects it, and HOOPS_REQUIRE_LOCAL_DATA=1 on the training box turns a
+    missing report into a failure.
     """
 
     REPORT = Path(__file__).resolve().parent / "data" / "mtnn_report.json"
