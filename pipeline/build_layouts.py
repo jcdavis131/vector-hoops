@@ -88,8 +88,9 @@ def main():
     agg = {}
     for e in data["players"]:
         pid = e["person_id"]
-        a = agg.setdefault(pid, {"num": None, "den": 0.0, "name": e["name"],
-                                 "best_min": -1.0})
+        a = agg.setdefault(
+            pid, {"num": None, "den": 0.0, "name": e["name"], "best_min": -1.0}
+        )
         v = e["v"]
         w = float(e.get("total_min") or 0.0)
         if a["num"] is None:
@@ -111,7 +112,9 @@ def main():
         names.append(a["name"])
         X.append(mean)
     n_players = len(pids)
-    print(f"players aggregated: {n_players} (from {len(data['players'])} player-seasons)")
+    print(
+        f"players aggregated: {n_players} (from {len(data['players'])} player-seasons)"
+    )
 
     # --- PCA 2D ---
     Xa = np.asarray(X, dtype=float)
@@ -120,28 +123,46 @@ def main():
     # axis captions from top-loading features
     axes = []
     for comp in range(2):
-        loadings = sorted(enumerate(pca.components_[comp]),
-                          key=lambda t: -abs(t[1]))[:2]
+        loadings = sorted(enumerate(pca.components_[comp]), key=lambda t: -abs(t[1]))[
+            :2
+        ]
         feats = data.get("features", [])
-        words = [feature_labels.get(feats[i], feats[i]) for i, _ in loadings
-                 if i < len(feats)]
-        axes.append({"pc": f"PC{comp + 1}",
-                     "explained_variance_ratio": round(float(pca.explained_variance_ratio_[comp]), 4),
-                     "top_features": words})
+        words = [
+            feature_labels.get(feats[i], feats[i])
+            for i, _ in loadings
+            if i < len(feats)
+        ]
+        axes.append(
+            {
+                "pc": f"PC{comp + 1}",
+                "explained_variance_ratio": round(
+                    float(pca.explained_variance_ratio_[comp]), 4
+                ),
+                "top_features": words,
+            }
+        )
     print("PCA axes:", json.dumps(axes))
 
     # --- t-SNE 2D (one canonical run) ---
-    tsne = TSNE(n_components=2, perplexity=TSNE_PERPLEXITY,
-                random_state=RANDOM_STATE, init="pca", learning_rate="auto")
+    tsne = TSNE(
+        n_components=2,
+        perplexity=TSNE_PERPLEXITY,
+        random_state=RANDOM_STATE,
+        init="pca",
+        learning_rate="auto",
+    )
     Xt = tsne.fit_transform(Xa)
-    print(f"t-SNE done: kl_divergence={tsne.kl_divergence_:.4f} "
-          f"n_iter={tsne.n_iter_}")
+    print(
+        f"t-SNE done: kl_divergence={tsne.kl_divergence_:.4f} " f"n_iter={tsne.n_iter_}"
+    )
 
     # --- truncated SVD 2D (lens CANDIDATE — must pass the distinctness gate) ---
     svd = TruncatedSVD(n_components=2, random_state=RANDOM_STATE)
     Xs = svd.fit_transform(Xa)
-    print("SVD done: explained_variance_ratio=",
-          [round(float(v), 4) for v in svd.explained_variance_ratio_])
+    print(
+        "SVD done: explained_variance_ratio=",
+        [round(float(v), 4) for v in svd.explained_variance_ratio_],
+    )
 
     # --- normalize each layout to [-1, 1] per axis ---
     def norm2d(M):
@@ -150,8 +171,7 @@ def main():
         for col in cols:
             lo, hi = min(col), max(col)
             span = hi - lo
-            out.append([2 * (v - lo) / span - 1 if span > 0 else 0.0
-                        for v in col])
+            out.append([2 * (v - lo) / span - 1 if span > 0 else 0.0 for v in col])
         return [list(r) for r in zip(*out)]
 
     Np, Nt, Ns = norm2d(Xp), norm2d(Xt), norm2d(Xs)
@@ -187,8 +207,10 @@ def main():
     sample_idx = rng.sample(range(n_players), min(500, n_players))
     r_tsne = pairwise_corr(Np, Nt, sample_idx)
     r_svd = pairwise_corr(Np, Ns, sample_idx)
-    print(f"lens-distinctness: PCA vs t-SNE r = {r_tsne:.3f}; "
-          f"PCA vs SVD r = {r_svd:.3f} (n={len(sample_idx)} players)")
+    print(
+        f"lens-distinctness: PCA vs t-SNE r = {r_tsne:.3f}; "
+        f"PCA vs SVD r = {r_svd:.3f} (n={len(sample_idx)} players)"
+    )
     distinct_ok = r_tsne <= 0.90
     if not distinct_ok:
         print("WARNING: PCA/t-SNE suspiciously similar (r > 0.90) — flag for review")
@@ -198,8 +220,10 @@ def main():
     if svd_survives:
         print("SVD gate: PASS — SVD reveals distinct structure, kept as a lens")
     else:
-        print(f"SVD gate: CUT — SVD duplicates PCA (r = {r_svd:.3f} >= 0.95); "
-              f"dropping 'svd' key from output")
+        print(
+            f"SVD gate: CUT — SVD duplicates PCA (r = {r_svd:.3f} >= 0.95); "
+            f"dropping 'svd' key from output"
+        )
 
     # --- compact output: ids + integer-thousandths coord arrays ---
     def to_millis(M):
@@ -217,23 +241,29 @@ def main():
             "version": 1,
             "built": date.today().isoformat(),
             "format": "ids+arrays (compact); coords are INTEGER THOUSANDTHS — "
-                      "divide by 1000 client-side; index i of each layout "
-                      "array corresponds to ids[i]",
+            "divide by 1000 client-side; index i of each layout "
+            "array corresponds to ids[i]",
             "n_players": n_players,
             "n_player_seasons": len(data["players"]),
             "aggregation": "total_min-weighted mean of v[] per person_id "
-                           "(equal weights when total_min sums to 0)",
+            "(equal weights when total_min sums to 0)",
             "pca": {"random_state": RANDOM_STATE, "axes": axes},
-            "tsne": {"perplexity": TSNE_PERPLEXITY, "random_state": RANDOM_STATE,
-                     "init": "pca", "learning_rate": "auto",
-                     "kl_divergence": round(float(tsne.kl_divergence_), 4),
-                     "n_iter": int(tsne.n_iter_)},
-            "svd": {"random_state": RANDOM_STATE,
-                    "explained_variance_ratio":
-                        [round(float(v), 4) for v in
-                         svd.explained_variance_ratio_],
-                    "gate": "kept" if svd_survives else "CUT (r>=0.95 vs PCA)",
-                    "pearson_r_vs_pca": round(r_svd, 4)},
+            "tsne": {
+                "perplexity": TSNE_PERPLEXITY,
+                "random_state": RANDOM_STATE,
+                "init": "pca",
+                "learning_rate": "auto",
+                "kl_divergence": round(float(tsne.kl_divergence_), 4),
+                "n_iter": int(tsne.n_iter_),
+            },
+            "svd": {
+                "random_state": RANDOM_STATE,
+                "explained_variance_ratio": [
+                    round(float(v), 4) for v in svd.explained_variance_ratio_
+                ],
+                "gate": "kept" if svd_survives else "CUT (r>=0.95 vs PCA)",
+                "pearson_r_vs_pca": round(r_svd, 4),
+            },
         },
     }
     payload.update(layouts)
@@ -256,14 +286,21 @@ def main():
         "pca": payload["meta"]["pca"],
         "tsne": payload["meta"]["tsne"],
         "svd": payload["meta"]["svd"],
-        "qa": {"counts_consistent": True, "finite": True, "in_range": True,
-               "size_bytes": size, "size_budget_bytes": SIZE_BUDGET_BYTES,
-               "size_ok": True},
-        "distinctness": {"sample": len(sample_idx),
-                         "pca_vs_tsne_r": round(r_tsne, 4),
-                         "pca_vs_tsne_ok": distinct_ok,
-                         "pca_vs_svd_r": round(r_svd, 4),
-                         "svd_gate": "kept" if svd_survives else "CUT"},
+        "qa": {
+            "counts_consistent": True,
+            "finite": True,
+            "in_range": True,
+            "size_bytes": size,
+            "size_budget_bytes": SIZE_BUDGET_BYTES,
+            "size_ok": True,
+        },
+        "distinctness": {
+            "sample": len(sample_idx),
+            "pca_vs_tsne_r": round(r_tsne, 4),
+            "pca_vs_tsne_ok": distinct_ok,
+            "pca_vs_svd_r": round(r_svd, 4),
+            "svd_gate": "kept" if svd_survives else "CUT",
+        },
     }
     with open(MANIFEST, "w", encoding="utf-8") as f:
         json.dump(manifest, f, indent=1)
