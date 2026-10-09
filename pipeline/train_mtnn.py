@@ -2297,20 +2297,33 @@ def main(argv: list[str] | None = None) -> None:
             "and purity@20 stay within 0.02 of baseline (not auto-promoted to assets/)."
         ),
     }
-    report["composite"] = cqs.composite_quality(report)
-    ok, why = cqs.should_promote(report)
-    report["promote"] = {"ok": ok, "reason": why}
-    report["metrics_source"] = "selection_holdout"
+    # Which rows the loss saw decides what the numbers above are. With
+    # fit_rows 'all' (--phase final-refit, or --fit-rows all) the loss trained
+    # on all 12,966 rows, the 948 val and 991 test rows included, so
+    # held_out_recall and composite are in-sample. The report used to say
+    # "selection_holdout" for every run, and should_promote ran before
+    # report["selection"] existed, so it could not tell [training#0, eval#7].
+    # Both are set first now, and should_promote refuses an in-sample report.
+    metrics_source = "in_sample_refit" if fit_rows_mode == "all" else "selection_holdout"
+    report["metrics_source"] = metrics_source
     report["selection"] = {
         "fit_rows": fit_rows_mode,
         "n_fit": int(fit_mask.sum()),
         "split": "train y<=2021 / val y<=2023 / test y>=2024",
         "best_epoch": best_epoch,
     }
+    report["composite"] = cqs.composite_quality(report)
+    ok, why = cqs.should_promote(report)
+    report["promote"] = {"ok": ok, "reason": why}
     report["deploy"] = {
         "mode": "selection_fit_rows_" + fit_rows_mode,
-        "metrics_source": "selection_holdout",
-        "note": "Held-out recall/CQS use val/test pairs; loss rows follow fit_rows.",
+        "metrics_source": metrics_source,
+        "note": (
+            "Loss rows were every row, val and test included, so held_out_recall, composite and promote "
+            "are IN-SAMPLE. Its held-out evidence has to come from a select run of the same recipe."
+            if fit_rows_mode == "all"
+            else "Held-out recall/CQS use val/test pairs; the loss saw train-split rows only."
+        ),
     }
 
     # Additive: nothing above reads it, and composite_score never looks here.

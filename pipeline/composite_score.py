@@ -36,6 +36,30 @@ WEIGHTS = {
     "aux_r2": 0.08,
 }
 
+# The rows each component is scored on, as train_mtnn.py computes it. Four
+# components, 0.34 of the weight, are scored over every row, and in a select
+# run 11,027 of the 12,966 rows (85%) are train-split rows the loss saw. On the
+# box's 2026-08-07 pipeline/data/embedding_v3.npz, archetype top-1 is 0.9745 on
+# train rows against 0.8779 on test, and exact purity@20 over every anchor
+# 0.7539 against 0.7103 (measured 2026-10-09), so these reward
+# fitting the training clusters as well as generalizing [training#3]. Scoring
+# them on test rows changes what CQS means and needs one re-baseline with the
+# other protocol changes (--protocol-v2 in train_mtnn.py). Until then
+# composite_quality says which rows each one used, and changes no number.
+COMPONENT_ROWS = {
+    "recall": "test-split pairs",
+    "purity": "all rows (400 anchors drawn from every row)",
+    "margin_14d": "test-split pairs",
+    "archetype": "all rows",
+    "position": "all rows with a position label",
+    "skills_r2": "test-split rows",
+    "skill_nn": "all rows with skill grades (400 anchors)",
+    "next_r2": "rows whose next season is in the test split",
+    "next_mae": "rows whose next season is in the test split",
+    "aux_r2": "test-split rows",
+}
+ALL_ROW_COMPONENTS = ("purity", "archetype", "position", "skill_nn")
+
 # Minimum floors used by should_promote. These are *floors*, not the whole
 # story: the effective threshold widens with measured seed noise (see
 # _threshold), so a decision made from one seed has to clear a taller bar than
@@ -276,6 +300,10 @@ def composite_quality(report: dict[str, Any]) -> dict[str, Any]:
         "baseline_purity": BASELINE.get("purity"),
         "test_recall_at_10": recall,
         "purity_at_20": purity,
+        # Labels only [training#3]: which rows each component used, and the
+        # weight scored over all rows, most of them training rows.
+        "component_rows": dict(COMPONENT_ROWS),
+        "all_rows_weight": round(sum(WEIGHTS[k] for k in ALL_ROW_COMPONENTS), 4),
     }
 
 
@@ -300,6 +328,28 @@ def partial_cqs(recall: float | None, purity: float | None) -> float:
     return float(blended)
 
 
+def in_sample_reason(report: dict[str, Any]) -> str | None:
+    """Why a report's held-out numbers are not held out, or None when it does not say they are not.
+
+    train_mtnn marks a run whose loss saw every row (fit_rows 'all': --phase
+    final-refit, or --fit-rows all) with metrics_source 'in_sample_refit'.
+    Reports written before that mark existed said 'selection_holdout' for
+    every run, so selection.fit_rows is checked as well [training#0]. A report
+    with neither key (a hand-built one, or one older than both) is not judged
+    here.
+    """
+    sel = report.get("selection") or {}
+    if report.get("metrics_source") != "in_sample_refit" and sel.get("fit_rows") != "all":
+        return None
+    n_fit = sel.get("n_fit")
+    rows = f" ({n_fit} rows)" if n_fit else ""
+    return (
+        f"metrics are in-sample: the loss trained on every row{rows}, val and test included "
+        "(fit_rows 'all'), so its test recall, purity and CQS are not held out. Promote on the "
+        "held-out numbers of a select-phase run of the same recipe"
+    )
+
+
 def should_promote(
     new_report: dict[str, Any],
     *,
@@ -311,6 +361,10 @@ def should_promote(
     purity_slack: float = PURITY_SLACK,
     n_seeds: int = 1,
 ) -> tuple[bool, str]:
+    # Before anything else: no bar below means anything on in-sample numbers.
+    in_sample = in_sample_reason(new_report)
+    if in_sample is not None:
+        return False, in_sample
     block = new_report.get("composite") or composite_quality(new_report)
     new_cqs = float(block["cqs"])
     new_recall = _num(block.get("test_recall_at_10"))

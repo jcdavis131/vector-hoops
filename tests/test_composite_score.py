@@ -283,3 +283,40 @@ def test_without_a_composite_block_the_report_is_scored_first(anchored):
 def test_no_baseline_cqs_refuses(monkeypatch):
     monkeypatch.setattr(cqs, "BASELINE", {"recall": 0.8, "purity": 0.75})
     assert cqs.should_promote(scored()) == (False, "no baseline_cqs yet — record current CQS as baseline first")
+
+
+# --- in-sample reports [training#0] ------------------------------------------------
+
+
+@pytest.mark.parametrize(
+    "mark",
+    [
+        {"metrics_source": "in_sample_refit", "selection": {"fit_rows": "all", "n_fit": 12966}},
+        # Written before the mark existed: every report said selection_holdout.
+        {"metrics_source": "selection_holdout", "selection": {"fit_rows": "all", "n_fit": 12966}},
+        {"metrics_source": "in_sample_refit"},
+    ],
+)
+def test_an_in_sample_report_is_refused_whatever_its_numbers(anchored, mark):
+    rep = scored(cqs_value=99.0, recall=1.0, purity=1.0)
+    rep.update(mark)
+    ok, why = cqs.should_promote(rep)
+    assert not ok and why.startswith("metrics are in-sample"), why
+    assert ("12966 rows" in why) == ("selection" in mark)
+    # It comes before every other check, population validation included.
+    del rep["population_validation"]
+    assert cqs.should_promote(rep)[1].startswith("metrics are in-sample")
+
+
+def test_a_held_out_report_is_judged_on_its_numbers(anchored):
+    rep = scored()
+    rep.update({"metrics_source": "selection_holdout", "selection": {"fit_rows": "train", "n_fit": 11027}})
+    assert cqs.in_sample_reason(rep) is None
+    assert cqs.should_promote(rep) == cqs.should_promote(scored())
+
+
+def test_the_composite_block_says_which_rows_each_component_used():
+    block = cqs.composite_quality(hand_report())
+    assert set(block["component_rows"]) == COMPONENTS
+    assert block["all_rows_weight"] == 0.34  # purity .16 + archetype .08 + position .05 + skill_nn .05
+    assert all(block["component_rows"][k].startswith("all rows") for k in cqs.ALL_ROW_COMPONENTS)
