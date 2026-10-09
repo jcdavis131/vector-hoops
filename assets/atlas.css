@@ -61,6 +61,8 @@
   --t-xl: clamp(24px, 2.6vw, 30px);
   --t-2xl: clamp(30px, 4.2vw, 48px);
   --t-hero: clamp(44px, 8.4vw, 112px);
+  --track-label: .16em;
+  --track-display: -.02em;
 
   /* ---- grid & space (8px base) ---- */
   --s-2: 8px; --s-3: 12px; --s-4: 16px; --s-5: 24px;
