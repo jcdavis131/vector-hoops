@@ -49,6 +49,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import itertools
 
+from _out_root import add_out_root, rerooted, shown
 from name_utils import norm_name
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -120,6 +121,7 @@ def pick_record(recs: list[dict], first_year: int) -> dict | None:
 
 
 def main() -> None:
+    global OUT, ASSET_OUT
     ap = argparse.ArgumentParser()
     ap.add_argument(
         "--cache",
@@ -131,7 +133,10 @@ def main() -> None:
         action="store_true",
         help="use the committed example fixture (tests)",
     )
+    add_out_root(ap)
     args = ap.parse_args()
+    OUT = rerooted(OUT, args.out_root)
+    ASSET_OUT = rerooted(ASSET_OUT, args.out_root)
 
     cache_path = Path(args.cache) if args.cache else (DRAFT_FIXTURE if args.fixture else DRAFT_CACHE)
     if not cache_path.exists():
@@ -255,6 +260,7 @@ def main() -> None:
                     "draft_year": rec["year"],
                     "team": rec.get("team_abbr") or None,
                 }
+        ASSET_OUT.parent.mkdir(parents=True, exist_ok=True)
         ASSET_OUT.write_text(
             json.dumps(
                 {
@@ -270,7 +276,7 @@ def main() -> None:
             ),
             encoding="utf-8",
         )
-        asset_msg = f"wrote {ASSET_OUT.relative_to(ROOT)} ({len(asset_players)} players)"
+        asset_msg = f"wrote {shown(ASSET_OUT)} ({len(asset_players)} players)"
     else:
         asset_msg = "assets/pedigree.json NOT written (partial cache — Steals of the Draft surface stays dormant)"
 
@@ -280,7 +286,7 @@ def main() -> None:
         f"{covered_rows}/{len(entries)} rows covered "
         f"(cache complete={complete})"
     )
-    print(f"wrote {OUT.relative_to(ROOT)}; {asset_msg}")
+    print(f"wrote {shown(OUT)}; {asset_msg}")
 
 
 if __name__ == "__main__":

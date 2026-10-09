@@ -9,11 +9,12 @@ Features (raw; era-z within season pool when merged):
   SALARY_TEAM_PCT    salary / summed team payroll (same team+season)
   SALARY_RANK_POS    within-season percentile rank by salary [0, 1]
 
-Run:  python pipeline/build_salary_market.py
+Run:  python pipeline/build_salary_market.py [--out-root DIR]
 """
 
 from __future__ import annotations
 
+import argparse
 import json
 import math
 import re
@@ -25,6 +26,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "pipeline"))
 
+from _out_root import add_out_root, rerooted, shown
 from nba_salary_cap import cap_for_season
 
 DATA = ROOT / "pipeline" / "data"
@@ -128,6 +130,12 @@ def season_salary_ranks(
 
 
 def main() -> None:
+    global OUT
+    ap = argparse.ArgumentParser()
+    add_out_root(ap)
+    args = ap.parse_args()
+    OUT = rerooted(OUT, args.out_root)
+
     salaries = load_salaries()
     if not salaries:
         raise SystemExit(f"no salaries at {SALARIES} — run merge_salaries.py first")
@@ -205,7 +213,7 @@ def main() -> None:
         f"({team_pct_rows} team%, {cap_pct_rows} cap%), "
         f"{len(team_totals)} team-season payrolls"
     )
-    print(f"wrote {OUT.relative_to(ROOT)}")
+    print(f"wrote {shown(OUT)}")
 
 
 if __name__ == "__main__":

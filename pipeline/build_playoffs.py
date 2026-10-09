@@ -50,6 +50,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "pipeline"))
 from name_utils import norm_name
+from _out_root import add_out_root, rerooted, shown
 from nba_http import real_playoff_cache_paths
 
 VECTORS = ROOT / "assets" / "vectors.json"
@@ -191,13 +192,18 @@ def delta(a, b):
 
 
 def main() -> None:
+    global OUT, ASSET_OUT, PATHS_OUT
     ap = argparse.ArgumentParser()
     ap.add_argument(
         "--fixture",
         action="store_true",
         help="force the committed example fixture (tests)",
     )
+    add_out_root(ap)
     args = ap.parse_args()
+    OUT = rerooted(OUT, args.out_root)
+    ASSET_OUT = rerooted(ASSET_OUT, args.out_root)
+    PATHS_OUT = rerooted(PATHS_OUT, args.out_root)
 
     players_idx, teams_idx, complete = load_caches(args.fixture)
     game_docs = {} if args.fixture else load_game_caches()
@@ -300,6 +306,7 @@ def main() -> None:
     )
 
     if complete and appearances:
+        ASSET_OUT.parent.mkdir(parents=True, exist_ok=True)
         ASSET_OUT.write_text(
             json.dumps(
                 {
@@ -327,10 +334,7 @@ def main() -> None:
             ),
             encoding="utf-8",
         )
-        asset_msg = (
-            f"wrote {ASSET_OUT.relative_to(ROOT)} ({len(splits)} splits); "
-            f"{PATHS_OUT.relative_to(ROOT)} ({len(paths)} paths)"
-        )
+        asset_msg = f"wrote {shown(ASSET_OUT)} ({len(splits)} splits); {shown(PATHS_OUT)} ({len(paths)} paths)"
     else:
         asset_msg = "assets/playoffs.json NOT written (partial cache — game Playoff Lens stays dormant)"
 
@@ -339,7 +343,7 @@ def main() -> None:
         f"of {len(vec['players'])} player-seasons (cache complete={complete}; "
         f"game-log seasons={len(game_docs)}; with series={with_path})"
     )
-    print(f"wrote {OUT.relative_to(ROOT)}; {asset_msg}")
+    print(f"wrote {shown(OUT)}; {asset_msg}")
 
 
 if __name__ == "__main__":

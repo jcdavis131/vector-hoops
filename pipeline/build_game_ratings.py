@@ -19,6 +19,8 @@ import time
 import unicodedata
 from pathlib import Path
 
+from _out_root import add_out_root, rerooted
+
 ROOT = Path(__file__).resolve().parents[1]
 VECTORS = ROOT / "assets" / "vectors.json"
 CACHE_DIR = ROOT / "pipeline" / "cache"
@@ -68,9 +70,13 @@ def load_cache(use_fixture: bool) -> tuple[dict, str, bool]:
 
 
 def main() -> None:
+    global OUT, ASSET_OUT
     ap = argparse.ArgumentParser()
     ap.add_argument("--fixture", action="store_true")
+    add_out_root(ap)
     args = ap.parse_args()
+    OUT = rerooted(OUT, args.out_root)
+    ASSET_OUT = rerooted(ASSET_OUT, args.out_root)
 
     ratings, cache_season, complete = load_cache(args.fixture)
     vec = json.loads(VECTORS.read_text(encoding="utf-8"))
@@ -107,6 +113,7 @@ def main() -> None:
 
     asset_msg = ""
     if complete and rows:
+        ASSET_OUT.parent.mkdir(parents=True, exist_ok=True)
         ASSET_OUT.write_text(
             json.dumps(
                 {"built": built, "season": cache_season, "players": rows},

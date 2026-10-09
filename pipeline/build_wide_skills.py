@@ -45,6 +45,8 @@ from pathlib import Path
 
 import numpy as np
 
+from _out_root import add_out_root, rerooted, shown
+
 ROOT = Path(__file__).resolve().parents[1]
 VECTORS = ROOT / "assets" / "vectors.json"
 CACHE_DIR = ROOT / "pipeline" / "cache"
@@ -128,10 +130,14 @@ def percentile_grade(scores: np.ndarray, tiebreak: np.ndarray | None = None) -> 
 
 
 def main() -> None:
+    global ASSET_OUT, LABELS_OUT
     _configure_stdio()
     ap = argparse.ArgumentParser()
     ap.add_argument("--fixture", action="store_true")
+    add_out_root(ap)
     args = ap.parse_args()
+    ASSET_OUT = rerooted(ASSET_OUT, args.out_root)
+    LABELS_OUT = rerooted(LABELS_OUT, args.out_root)
 
     cache, complete = load_caches(args.fixture)
     vec = json.loads(VECTORS.read_text(encoding="utf-8"))
@@ -206,6 +212,7 @@ def main() -> None:
 
     # assets/skills_wide.json ships only from a complete cache.
     if complete:
+        ASSET_OUT.parent.mkdir(parents=True, exist_ok=True)
         ASSET_OUT.write_text(
             json.dumps(
                 {
@@ -223,7 +230,7 @@ def main() -> None:
             ),
             encoding="utf-8",
         )
-        asset_msg = f"wrote {ASSET_OUT.relative_to(ROOT)} ({len(splits)} rows)"
+        asset_msg = f"wrote {shown(ASSET_OUT)} ({len(splits)} rows)"
     else:
         asset_msg = "assets/skills_wide.json NOT written (partial cache — wide skills stay dormant in the game)"
 
@@ -243,7 +250,7 @@ def main() -> None:
     for sk in WIDE_SKILLS:
         top = [str(n) for n in names[np.argsort(-grades[sk["key"]])[:3]]]
         print(f"  {sk['key']:<11} top: {_safe_console(', '.join(top))}")
-    print(f"wrote {LABELS_OUT.relative_to(ROOT)}; {asset_msg}")
+    print(f"wrote {shown(LABELS_OUT)}; {asset_msg}")
 
 
 if __name__ == "__main__":

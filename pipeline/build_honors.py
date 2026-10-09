@@ -27,6 +27,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "pipeline"))
+from _out_root import add_out_root, rerooted, shown
 
 VECTORS = ROOT / "assets" / "vectors.json"
 CACHE_DIR = ROOT / "pipeline" / "cache"
@@ -84,9 +85,13 @@ def load_award_index(use_fixture: bool) -> tuple[dict[str, dict], bool]:
 
 
 def main() -> None:
+    global OUT, ASSET_OUT
     ap = argparse.ArgumentParser()
     ap.add_argument("--fixture", action="store_true")
+    add_out_root(ap)
     args = ap.parse_args()
+    OUT = rerooted(OUT, args.out_root)
+    ASSET_OUT = rerooted(ASSET_OUT, args.out_root)
 
     award_idx, complete = load_award_index(args.fixture)
     fmvp_by_season: dict[str, str] = {}
@@ -170,6 +175,7 @@ def main() -> None:
     )
 
     if complete and contemporaneous:
+        ASSET_OUT.parent.mkdir(parents=True, exist_ok=True)
         ASSET_OUT.write_text(
             json.dumps(
                 {
@@ -185,7 +191,7 @@ def main() -> None:
             ),
             encoding="utf-8",
         )
-        asset_msg = f"wrote {ASSET_OUT.relative_to(ROOT)} ({len(contemporaneous)} keys)"
+        asset_msg = f"wrote {shown(ASSET_OUT)} ({len(contemporaneous)} keys)"
     else:
         asset_msg = "assets/honors.json NOT written (partial cache)"
 
@@ -194,7 +200,7 @@ def main() -> None:
         f"{len(contemporaneous)} contemporaneous keys ({fmvp_rows} Finals MVP), "
         f"{len(award_idx)} award seasons (complete={complete})"
     )
-    print(f"wrote {OUT.relative_to(ROOT)}; {asset_msg}")
+    print(f"wrote {shown(OUT)}; {asset_msg}")
 
 
 if __name__ == "__main__":
