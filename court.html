@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Court Lab — Vector Hoops</title>
+<meta name="description" content="Shot charts, hex efficiency maps, zone charts and embedding twins for every tracked NBA season — drawn like a coach's clipboard.">
+<link rel="stylesheet" href="assets/shell.css">
+<style>
+/* Drafting Board (§1): the court's native aesthetic. */
+:root{
+  --board:#FCFBF7;
+  --ink:#232323;
+  --marker-black:#1A1A1A;
+  --marker-red:#E0483B;
+  --marker-blue:#2B6CE5;
+  --pencil:#9A9A94;
+  --grid:#E7E4DA;
+  --data-terra:#C17C60;
+  --data-moss:#8A9A8B;
+  --hi:rgba(255,235,130,.55);
+  --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,Helvetica,Arial,sans-serif;
+}
+html{background:var(--board);}
+body{
+  background:var(--board);
+  background-image:
+    linear-gradient(var(--grid) 1px,transparent 1px),
+    linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:28px 28px;
+  color:var(--ink);
+  font-family:var(--sans);
+  margin:0;
+}
+.board-main{max-width:880px;margin:0 auto;padding:28px 20px 64px;}
+.eyebrow{
+  font-family:var(--mono);font-size:12px;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--pencil);margin:0 0 10px;
+}
+.board-head h1{
+  font-size:clamp(30px,5vw,44px);line-height:1.05;margin:0 0 10px;
+  font-weight:650;letter-spacing:-.01em;
+}
+.board-head h1 em{font-style:normal;color:var(--marker-red);}
+.lede{font-size:16px;line-height:1.55;color:var(--ink);max-width:60ch;margin:0 0 26px;opacity:.85;}
+
+.board-card{
+  background:var(--board);
+  border:1px solid var(--pencil);
+  border-radius:10px;
+  padding:18px;
+  margin-bottom:18px;
+}
+.controls .control-row{display:flex;flex-wrap:wrap;gap:16px;margin-bottom:14px;}
+.field{display:flex;flex-direction:column;gap:6px;flex:1 1 220px;}
+.field label{
+  font-family:var(--mono);font-size:11px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--pencil);
+}
+.field input[type="text"],.field input:not([type]){
+  font-family:var(--mono);font-size:15px;color:var(--ink);
+  background:var(--board);border:1px solid var(--pencil);border-radius:6px;
+  padding:10px 12px;min-height:24px;
+}
+.scrub-row{display:flex;align-items:center;gap:12px;}
+.scrub-row input[type="range"]{flex:1;accent-color:var(--marker-red);min-height:32px;}
+.scrub-row output{font-family:var(--mono);font-size:14px;min-width:74px;text-align:right;}
+
+.tabs{display:flex;gap:8px;border-top:1px solid var(--grid);padding-top:14px;}
+.tabs [role="tab"]{
+  appearance:none;border:1px solid var(--pencil);border-radius:6px;
+  background:var(--board);color:var(--ink);
+  font-family:var(--mono);font-size:13px;letter-spacing:.08em;text-transform:uppercase;
+  min-height:48px;padding:0 20px;cursor:pointer;flex:1;
+}
+.tabs [role="tab"].is-active{
+  background:var(--marker-black);color:var(--board);border-color:var(--marker-black);
+}
+.tabs [role="tab"]:focus-visible{outline:2px solid var(--marker-blue);outline-offset:2px;}
+
+.court-head{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:8px;margin-bottom:6px;}
+.court-head h2{font-size:20px;margin:0;font-weight:650;}
+.vintage{
+  font-family:var(--mono);font-size:11.5px;letter-spacing:.06em;color:var(--pencil);
+}
+.court-wrap{position:relative;}
+.court-svg{width:100%;height:auto;display:block;}
+.court-empty{
+  position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  background:color-mix(in srgb,var(--board) 82%,transparent);
+  border:1px dashed var(--pencil);border-radius:10px;text-align:center;padding:24px;
+}
+.court-empty p{font-family:var(--mono);font-size:14px;color:var(--ink);max-width:44ch;margin:0;}
+.court-note{
+  font-family:var(--mono);font-size:13px;color:var(--ink);
+  border:1px dashed var(--pencil);border-radius:6px;padding:12px;margin-top:8px;
+}
+
+/* court linework (drawn by court-draw.js) */
+.court-line{fill:none;stroke:var(--pencil);}
+.court-dash{stroke-dasharray:.55 .4;}
+.court-dim{
+  font-family:var(--mono);font-size:1.12px;letter-spacing:.08em;fill:var(--pencil);
+}
+.court-callout{
+  font-family:var(--mono);font-size:1.05px;letter-spacing:.06em;fill:var(--marker-red);
+}
+.court-zonelabel{font-family:var(--mono);font-size:1.02px;fill:var(--ink);font-weight:700;}
+.court-zonepct{font-family:var(--mono);font-size:.92px;fill:var(--pencil);}
+.dot{pointer-events:none;}
+.son-glow{pointer-events:none;}
+
+.son-card{
+  display:flex;align-items:center;gap:10px;
+  background:var(--hi);border:1px solid var(--pencil);border-radius:6px;
+  padding:10px 14px;margin-top:12px;
+}
+.son-card[hidden]{display:none;}
+.son-dot{width:14px;height:14px;border-radius:50%;background:var(--marker-red);flex:none;}
+.son-card p{font-family:var(--mono);font-size:13px;margin:0;}
+.zone-sum{font-family:var(--mono);font-size:13px;margin-top:12px;color:var(--ink);}
+.zone-sum:empty{display:none;}
+
+.zone-table{width:100%;border-collapse:collapse;margin-top:10px;font-family:var(--mono);font-size:13px;}
+.zone-table th{
+  text-align:left;font-size:11px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--pencil);font-weight:400;padding:8px 10px;border-bottom:1px solid var(--pencil);
+}
+.zone-table td{padding:7px 10px;border-bottom:1px solid var(--grid);}
+.zone-table td.pos{color:var(--data-moss);font-weight:700;}
+.zone-table td.neg{color:var(--data-terra);font-weight:700;}
+.zone-table tr[data-zone]:hover td{background:var(--hi);cursor:default;}
+.fineprint{font-family:var(--mono);font-size:11.5px;color:var(--pencil);margin:10px 0 0;}
+
+.twin-card{
+  border:1px solid var(--pencil);border-radius:6px;padding:12px 14px;margin-top:10px;
+}
+.twin-head{display:flex;align-items:center;gap:10px;margin-bottom:8px;}
+.twin-head strong{font-size:15px;}
+.twin-sim{font-family:var(--mono);font-size:12px;color:var(--marker-blue);margin-left:auto;}
+.twin-swatch{width:26px;height:0;border-top:3px solid var(--marker-blue);flex:none;}
+.twin-swatch.twin-1{border-top-style:dashed;}
+.twin-swatch.twin-2{border-top-style:dotted;}
+.twin-chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:6px;}
+.chip{
+  font-family:var(--mono);font-size:12px;border:1px solid var(--ink);
+  border-radius:14px;padding:4px 10px;background:var(--board);
+}
+.twin-diff{font-size:13px;color:var(--ink);opacity:.8;}
+
+.board-foot{margin-top:8px;}
+.board-foot p{font-family:var(--mono);font-size:12px;line-height:1.6;color:var(--pencil);max-width:70ch;}
+
+.skip-link{
+  position:absolute;left:-9999px;top:0;background:var(--marker-black);
+  color:var(--board);padding:10px 16px;z-index:99;font-family:var(--mono);
+}
+.skip-link:focus{left:8px;top:8px;}
+@media (max-width:640px){
+  .board-main{padding:20px 14px 48px;}
+  .tabs{flex-wrap:wrap;}
+  .tabs [role="tab"]{flex:1 1 40%;}
+}
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<nav class="site-nav" data-active="/court" aria-label="Vector Hoops site"></nav>
+
+<main id="main" class="board-main">
+  <header class="board-head">
+    <p class="eyebrow">Court Lab · Shot intelligence</p>
+    <h1>Every shot, <em>diagrammed</em>.</h1>
+    <p class="lede">A coach&rsquo;s clipboard for the tracking era: real shot locations,
+    hex efficiency maps, fourteen-zone charts, and the embedding twins who shoot
+    like your guy. Scrub the seasons — the court never moves, only the data does.</p>
+  </header>
+
+  <section class="board-card controls" aria-label="Player and view controls">
+    <div class="control-row">
+      <div class="field">
+        <label for="player-search">Player</label>
+        <input id="player-search" type="text" list="player-list" autocomplete="off"
+               spellcheck="false" placeholder="Start typing a name…">
+        <datalist id="player-list"></datalist>
+      </div>
+      <div class="field">
+        <label for="season-scrub">Season</label>
+        <div class="scrub-row">
+          <input type="range" id="season-scrub" min="0" max="0" step="1" value="0">
+          <output id="season-label" for="season-scrub">—</output>
+        </div>
+      </div>
+    </div>
+    <div class="tabs" role="tablist" aria-label="Chart type">
+      <button role="tab" data-tab="shots" aria-selected="true" class="tab is-active">Shots</button>
+      <button role="tab" data-tab="hex" aria-selected="false" class="tab">Hex</button>
+      <button role="tab" data-tab="zones" aria-selected="false" class="tab">Zones</button>
+      <button role="tab" data-tab="twins" aria-selected="false" class="tab">Twins</button>
+    </div>
+  </section>
+
+  <section class="board-card court-card" aria-label="Shot chart">
+    <div class="court-head">
+      <h2 id="season-name">Court Lab</h2>
+      <div id="vintage" class="vintage"></div>
+    </div>
+    <div class="court-wrap">
+      <svg id="court" class="court-svg" xmlns="http://www.w3.org/2000/svg"></svg>
+      <div id="court-empty" class="court-empty" hidden>
+        <p id="court-empty-msg"></p>
+      </div>
+      <div id="court-note" class="court-note" hidden></div>
+    </div>
+    <div id="son-card" class="son-card" hidden>
+      <span class="son-dot" aria-hidden="true"></span>
+      <p id="son-text"></p>
+    </div>
+    <div id="zone-sum" class="zone-sum"></div>
+    <div id="zone-panel" hidden></div>
+    <div id="twins-panel" hidden></div>
+  </section>
+
+  <footer class="board-foot">
+    <p>Shot locations: NBA Stats API, 2015-16 to present. No shot-location data
+    before 1996-97 — the league didn&rsquo;t track it. Hex: field-goal % vs league
+    average in each 1.5-ft hexagon. Twins: nearest neighbors by 14-d embedding
+    cosine similarity, described in plain words by the Twin Explainer.</p>
+  </footer>
+</main>
+
+<script src="assets/site-nav.js"></script>
+<script src="assets/court-draw.js"></script>
+<script src="assets/court-lab.js"></script>
+</body>
+</html>

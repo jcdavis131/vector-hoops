@@ -13,6 +13,7 @@
     { href: '/trends', label: 'Trends', title: 'Thirty seasons of league drift' },
     { href: '/insights', label: 'Insights', title: 'What the model learned: shareable findings from 12,966 player-seasons' },
     { href: '/props-lab', label: 'Props Lab', title: 'Paper-trading a game-log model against PrizePicks lines' },
+    { href: '/court', label: 'Court Lab', title: 'Shot charts, hex maps, zone charts and embedding twins' },
     { href: '/methods', label: 'Methods', title: 'Sources, features and the maths behind every number' }
   ];
 
