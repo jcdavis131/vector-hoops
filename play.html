@@ -291,6 +291,7 @@ button,.input{min-height:44px}
     <div style="display:flex;justify-content:space-between;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:8px"><label class="small-mono" for="guess-input" style="margin:0">Guess modern — turn <span id="turn-count">1</span>/6 • <span id="slot-label-wrap">slot <span id="slot-label">1</span>/5</span></label><span class="pill" id="warm-label" style="display:none"></span></div>
     <div class="suggest"><input id="guess-input" class="input" placeholder="Type modern — e.g., Wembanyama, SGA, Ant" autocomplete="off" spellcheck="false"/><ul id="guess-suggest" style="display:none"></ul></div>
     <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap"><button id="guess-btn" class="btn btn-primary" type="button">Guess</button><button id="share-btn" class="btn" type="button">Share</button><button id="share-text-btn" class="btn" type="button">Copy Grid</button><button id="btn-challenge" class="btn" type="button">Challenge</button></div>
+    <div id="lifelines-bar" style="margin-top:4px"></div>
     <div id="guesses" style="margin-top:8px"></div><div id="result" style="margin-top:12px"></div>
     <div id="play-forecast-slot" style="margin-top:12px"></div>
   </div>
@@ -315,6 +316,7 @@ button,.input{min-height:44px}
 <script src="assets/site-nav.js" defer></script>
 <script src="assets/pwa-install.js"></script><script src="assets/audio.js"></script><script type="module" src="assets/timesfm-forecast.js?v=3"></script><script src="assets/pixel-avatar.js?v=49"></script><script src="assets/team-logo.js?v=55"></script><script src="assets/viral-share.js"></script><script src="assets/past-modern-game.js?v=56"></script><script src="/assets/twin-explainer.js?v=1"
 <script src="assets/map-lenses.js?v=1"></script>
+<script src="assets/game-mechanics.js?v=1"></script>
 <script>
 (function(){
   const $=s=>document.querySelector(s);
@@ -694,7 +696,7 @@ button,.input{min-height:44px}
         const cls = `court-card ${isActive?'is-active':''} ${isSolved?'is-solved':''} ${isFailed?'is-failed':''}`;
         const badge = isSolved? '✅': isFailed? '❌' : sd? `${sd.cnt}/6` : '▶';
         const arch = ARCH[p.c%ARCH.length];
-        return `<div class="${cls}" data-slot="${i}"><div class="court-slot">Slot ${i+1} • ${arch} ${isActive? '• NOW':''}</div><div class="court-name">${p.n} ${p.s}</div><div class="court-meta">${sd? (isSolved? `Won in ${sd.cnt}/6` : `${sd.cnt}/6 tries`): 'Not started'}</div><span class="court-badge pill ${isSolved?'pill-green':''}">${badge}</span></div>`;
+        return `<div class="${cls}" data-slot="${i}"><div class="court-slot">Slot ${i+1} • ${arch}${window.VHGameMechanics?VHGameMechanics.suitTagHTML(p.n,p.s,p.i):''} ${isActive? '• NOW':''}</div><div class="court-name">${p.n} ${p.s}</div><div class="court-meta">${sd? (isSolved? `Won in ${sd.cnt}/6` : `${sd.cnt}/6 tries`): 'Not started'}</div><span class="court-badge pill ${isSolved?'pill-green':''}">${badge}</span></div>`;
       }).join('');
       grid.querySelectorAll('.court-card').forEach(el=>{
         el.addEventListener('click',()=>{
@@ -925,8 +927,9 @@ button,.input{min-height:44px}
     const st=VHPastModern.state(); if(!st||!st.target){ const turnText=$('#turn-text'); if(turnText) turnText.textContent='Loading court…'; return; }
     const triesPill=$('#tries-pill'), phase=$('#game-phase-label'), dots=$('#guess-dots'), turnCount=$('#turn-count'), slotWrap=$('#slot-label-wrap');
     const count=G.guesses.length;
-    if(triesPill) triesPill.textContent=count+'/6';
-    if(turnCount) turnCount.textContent=(count+1<=6?count+1:6);
+    const locks=(window.VHGameMechanics&&VHGameMechanics.eraLocksUsed)?VHGameMechanics.eraLocksUsed():0;
+    if(triesPill) triesPill.textContent=(count+locks)+'/6';
+    if(turnCount) turnCount.textContent=(count+locks+1<=6?count+locks+1:6);
     // was: also wrote slotLabel.textContent here first, then immediately
     // overwrote the same node via slotWrap.innerHTML below — every call threw
     // away that write and rebuilt a brand-new #slot-label node from scratch,
@@ -1064,7 +1067,7 @@ button,.input{min-height:44px}
   }
 
   function finish(){
-    const won=G.guesses.some(g=>g.rank===0); const over=won||G.guesses.length>=6; const resEl=$('#result'); let st=VHPastModern.state(); const isPack=!!st.isPack;
+    const won=G.guesses.some(g=>g.rank===0); const locksUsed=(window.VHGameMechanics&&VHGameMechanics.eraLocksUsed)?VHGameMechanics.eraLocksUsed():0; const over=won||G.guesses.length>=(6-locksUsed); const resEl=$('#result'); let st=VHPastModern.state(); const isPack=!!st.isPack;
     if(!over){ resEl.innerHTML=''; resEl.style.display='none'; updateStatusBar(); renderDailyCourt(); renderPackProgress(); renderPackSummary(); return; }
     resEl.style.display='block';
     // harden: embeddings may still be loading → closest null would crash (repro for "breaks when i guess")
@@ -1101,7 +1104,7 @@ button,.input{min-height:44px}
       const nextLabel = isLast ? 'View Pack Summary' : `Next — ${ps.index+2}/${ps.size} →`;
 
       if(won){
-        resEl.innerHTML=`<div class="card" style="border-color:var(--green)"><h3 class="hd">✅ Solved in ${G.guesses.length}/6 — ${st.target.n} → ${closest.entry.n}</h3><div style="font-size:13px;line-height:1.5">Answer: ${closest.entry.n} ${(closest.sim*100).toFixed(1)}%<br>Top 5: ${sortedTop}</div><div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap"><button class="btn btn-primary" id="btn-next-pack">${nextLabel}</button><button class="btn" id="btn-pack-share-mid">Share</button></div></div>`;
+        resEl.innerHTML=`<div class="card" style="border-color:var(--green)"><h3 class="hd">✅ Solved in ${G.guesses.length}/6 — ${st.target.n} → ${closest.entry.n}</h3>${window.VHGameMechanics?`<div class="result-stars" aria-label="${VHGameMechanics.starsFor(G.guesses.length,6)} of 3 stars">${VHGameMechanics.starsHTML(VHGameMechanics.starsFor(G.guesses.length,6))}</div>`:''}<div style="font-size:13px;line-height:1.5">Answer: ${closest.entry.n} ${(closest.sim*100).toFixed(1)}%<br>Top 5: ${sortedTop}</div><div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap"><button class="btn btn-primary" id="btn-next-pack">${nextLabel}</button><button class="btn" id="btn-pack-share-mid">Share</button></div></div>`;
       } else {
         resEl.innerHTML=`<div class="card" style="border-color:var(--verm)"><h3 class="hd">❌ ${st.target.n} → ${closest.entry.n}</h3><div style="font-size:13px;line-height:1.5">Closest: ${closest.entry.n} ${(closest.sim*100).toFixed(1)}%<br>Top 5: ${sortedTop}<br><span style="opacity:.7">You can still continue — pack counts failed as 0 in battle.</span></div><div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap"><button class="btn btn-primary" id="btn-next-pack">${nextLabel}</button><button class="btn" id="btn-pack-share-mid">Share</button></div></div>`;
       }
@@ -1159,11 +1162,12 @@ button,.input{min-height:44px}
             const dailyState=VHPastModern.getDailyState();
             if(dailyState.solved>=1 || G.guesses.some(g=>g.rank===0)) { VHPastModern.onDailyWin(st.dayKey); }
           }catch{}
+          try{ if(window.VHGameMechanics&&VHGameMechanics.collectTwin&&st.target) VHGameMechanics.collectTwin(st.target.n, st.target.s); }catch{}
         } else { try{ VHPastModern.onDailyWin(st.dayKey); }catch{} }
         const cur=loadStreak()+1; saveStreak(cur); $('#streak-pill').textContent='streak '+cur;
         // streak chime lands after the win arpeggio — a cascade, not a pile
         try{ if(window.VHAudio) setTimeout(()=>VHAudio.play('streak'), 950); }catch{}
-        resEl.innerHTML=`<div class="card" style="border-color:var(--green)"><h3 class="hd">✅ Solved in ${G.guesses.length}/6 — ${st.target.n} → ${closest.entry.n}</h3><div style="font-size:13px">Answer: ${closest.entry.n} ${closest.entry.s} ${(closest.sim*100).toFixed(1)}%<br>Top 5: ${sortedTop}</div><div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap"><button class="btn btn-primary" id="btn-next-slot">Next slot →</button><button class="btn" id="btn-view-court">View court</button></div></div>`;
+        resEl.innerHTML=`<div class="card" style="border-color:var(--green)"><h3 class="hd">✅ Solved in ${G.guesses.length}/6 — ${st.target.n} → ${closest.entry.n}</h3>${window.VHGameMechanics?`<div class="result-stars" aria-label="${VHGameMechanics.starsFor(G.guesses.length,6)} of 3 stars">${VHGameMechanics.starsHTML(VHGameMechanics.starsFor(G.guesses.length,6))}</div>`:''}<div style="font-size:13px">Answer: ${closest.entry.n} ${closest.entry.s} ${(closest.sim*100).toFixed(1)}%<br>Top 5: ${sortedTop}</div><div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap"><button class="btn btn-primary" id="btn-next-slot">Next slot →</button><button class="btn" id="btn-view-court">View court</button></div></div>`;
         celebrateWin();
       } else {
         try{ if(window.VHAudio) VHAudio.play('reveal'); }catch{}
