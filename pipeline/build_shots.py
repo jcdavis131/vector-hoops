@@ -360,8 +360,10 @@ def cmd_assemble():
     if not os.path.isdir(RAW_DIR):
         fail("no raw data at %s — run collect first" % RAW_DIR)
 
-    # Load raw: (norm_name, season) -> shots
+    # Load raw: (norm_name, season) -> shots; keep display names + league zones
     raw = {}
+    disp = {}
+    lg_zones = [[0, 0] for _ in range(14)]
     n_files = 0
     for season in sorted(os.listdir(RAW_DIR)):
         sdir = os.path.join(RAW_DIR, season)
@@ -374,6 +376,11 @@ def cmd_assemble():
                 rec = json.load(f)
             key = (norm_name(rec["name"]), rec["season"])
             raw[key] = rec["shots"]
+            disp.setdefault(key[0], rec["name"])
+            for s in rec["shots"]:
+                zi = classify_zone(s["x"], s["y"])
+                lg_zones[zi][0] += 1
+                lg_zones[zi][1] += s["made"]
             n_files += 1
     if not raw:
         fail("no raw shot files found")
@@ -504,8 +511,10 @@ def cmd_assemble():
             "vintage": "%s REGULAR SEASON · UPDATED %s" % (
                 max_season, date.today().strftime("%b %-d %Y").upper()),
             "ids": ids,
+            "names": [disp.get(pid, pid) for pid in ids],
             "seasons": seasons_out,
             "zones": zones_out,
+            "zones_lg": lg_zones,
             "feat": feat,
             "meta": {
                 "n_player_seasons": n_files,
@@ -581,8 +590,10 @@ def cmd_verify(path):
     if payload.get("v") != 1:
         fail("bad version")
     ids, seasons, zones = payload["ids"], payload["seasons"], payload["zones"]
-    if not (len(ids) == len(seasons) == len(zones)):
+    if not (len(ids) == len(seasons) == len(zones) == len(payload.get("names", []))):
         fail("parallel array length mismatch")
+    if len(payload.get("zones_lg", [])) != 14:
+        fail("zones_lg must have 14 rows")
     for pid, ss, zs in zip(ids, seasons, zones):
         if len(ss) != len(zs):
             fail("season/zone mismatch for %s" % pid)
