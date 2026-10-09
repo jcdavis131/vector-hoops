@@ -44,6 +44,7 @@ import numpy as np
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "pipeline"))
 from name_utils import canonical_name  # noqa: E402
+from seasons import TRAIN_LAST_START_YEAR, VAL_LAST_START_YEAR  # noqa: E402
 
 ASSETS = ROOT / "assets"
 CACHE = ROOT / "pipeline" / "cache"
@@ -63,9 +64,9 @@ def season_start_year(season: str) -> int:
 def eval_split(season: str) -> str:
     """Same doctrine as train_mtnn.eval_split (keyed on the target row)."""
     y = season_start_year(season)
-    if y <= 2021:
+    if y <= TRAIN_LAST_START_YEAR:
         return "train"
-    if y <= 2023:
+    if y <= VAL_LAST_START_YEAR:
         return "val"
     return "test"
 

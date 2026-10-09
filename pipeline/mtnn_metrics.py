@@ -33,6 +33,7 @@ import itertools
 from collections import defaultdict
 
 import numpy as np
+from seasons import TRAIN_LAST_START_YEAR, VAL_LAST_START_YEAR
 
 
 def adjacent_season_pairs(pids, seasons, names=None) -> list[tuple[int, int]]:
@@ -71,11 +72,15 @@ def season_start_year(season: str) -> int:
 
 
 def eval_split(season: str) -> str:
-    """Held-out split for adjacent-season pairs (target = next season)."""
+    """Held-out split for adjacent-season pairs (target = next season).
+
+    The boundaries (2021 / 2023) are pipeline/seasons.py's, shared with
+    build_eval_scoreboard and audit_features.
+    """
     y = season_start_year(season)
-    if y <= 2021:
+    if y <= TRAIN_LAST_START_YEAR:
         return "train"
-    if y <= 2023:
+    if y <= VAL_LAST_START_YEAR:
         return "val"
     return "test"
 

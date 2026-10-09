@@ -23,6 +23,7 @@ from collections import defaultdict
 from pathlib import Path
 
 import numpy as np
+from seasons import TRAIN_LAST_START_YEAR, VAL_LAST_START_YEAR
 
 ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "pipeline" / "data"
@@ -145,10 +146,12 @@ def main() -> None:
     report["leak_candidates"] = leaks
 
     # 4. coverage across the split boundary the game depends on
+    # The keys name today's boundaries (pipeline/seasons.py); they are report
+    # field names, so they stay as written if the split ever moves.
     eras = {
-        "le_2021": yr <= 2021,
-        "2022_23": (yr >= 2022) & (yr <= 2023),
-        "2024_plus": yr >= 2024,
+        "le_2021": yr <= TRAIN_LAST_START_YEAR,
+        "2022_23": (yr > TRAIN_LAST_START_YEAR) & (yr <= VAL_LAST_START_YEAR),
+        "2024_plus": yr > VAL_LAST_START_YEAR,
     }
     fam_cov = {}
     cliffs = []
