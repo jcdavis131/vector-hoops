@@ -196,3 +196,17 @@ def test_offline_with_a_missing_cache_fails_instead_of_masking(tmp_path, tmp_cac
     with pytest.raises(ingest.FetchError, match=re.escape(f"{FINAL}: no cache for Advanced, Scoring, bio.")):
         bv.main()
     assert not (tmp_path / "vectors.json").exists()
+
+
+def test_a_truncated_gamelog_line_raises(tmp_path, monkeypatch):
+    monkeypatch.setattr(bv, "DATA_DIR", tmp_path)
+    game = {"PLAYER_ID": 1, "MIN": 30, "PTS": 20, "AST": 5, "OREB": 1, "DREB": 4, "STL": 1, "BLK": 0}
+    lines = [json.dumps(game) + "\n"] * 12
+    (tmp_path / "gamelogs_2016-17.jsonl").write_text("".join(lines) + "\n", encoding="utf-8")
+    assert bv.compute_form_features("2016-17")["1"]["FORM_GP"] == 12.0  # a blank line is not an error
+    # What a crash mid-write left behind with the old streaming writer: before, skipped silently.
+    (tmp_path / "gamelogs_2016-17.jsonl").write_text("".join(lines) + '{"PLAYER_ID": 1, "MI', encoding="utf-8")
+    with pytest.raises(ValueError, match=re.escape("gamelogs_2016-17.jsonl:13")):
+        bv.compute_form_features("2016-17")
+    with pytest.raises(ValueError):
+        bv.compute_shape_features("2016-17")

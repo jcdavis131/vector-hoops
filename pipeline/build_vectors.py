@@ -601,23 +601,36 @@ def load_wide_skills_defense(season: str) -> dict[str, dict]:
 # ---------------------------------------------------------------------------
 
 
+def _gamelog_rows(p: Path):
+    """Each row of a gamelogs_*.jsonl file; a line that is not JSON raises with its line number.
+
+    Both readers below used to `continue` past such a line, so a season cut
+    off mid-write by the old streaming fetch_gamelogs silently lost its last
+    games [health#8]. All 11 local files decode line by line (checked
+    2026-10-09).
+    """
+    with p.open(encoding="utf-8") as f:
+        for n, line in enumerate(f, 1):
+            if not line.strip():
+                continue
+            try:
+                yield json.loads(line)
+            except json.JSONDecodeError as e:
+                raise ValueError(f"{p}:{n}: not JSON ({e}); refetch the season with fetch_gamelogs.py") from e
+
+
 def compute_form_features(season: str) -> dict[str, dict]:
     p = DATA_DIR / f"gamelogs_{season}.jsonl"
     if not p.exists():
         return {}
     games: dict[int, list[dict]] = {}
-    with p.open(encoding="utf-8") as f:
-        for line in f:
-            try:
-                g = json.loads(line)
-            except json.JSONDecodeError:
-                continue
-            if (g.get("MIN") or 0) <= 0:
-                continue
-            pid = g.get("PLAYER_ID")
-            if pid is None:
-                continue
-            games.setdefault(int(pid), []).append(g)
+    for g in _gamelog_rows(p):
+        if (g.get("MIN") or 0) <= 0:
+            continue
+        pid = g.get("PLAYER_ID")
+        if pid is None:
+            continue
+        games.setdefault(int(pid), []).append(g)
 
     out: dict[str, dict] = {}
     for pid, rows in games.items():
@@ -679,18 +692,13 @@ def compute_shape_features(season: str) -> dict[str, dict]:
     if not p.exists():
         return {}
     games: dict[int, list[dict]] = {}
-    with p.open(encoding="utf-8") as f:
-        for line in f:
-            try:
-                g = json.loads(line)
-            except json.JSONDecodeError:
-                continue
-            if (g.get("MIN") or 0) <= 0:
-                continue
-            pid = g.get("PLAYER_ID")
-            if pid is None:
-                continue
-            games.setdefault(int(pid), []).append(g)
+    for g in _gamelog_rows(p):
+        if (g.get("MIN") or 0) <= 0:
+            continue
+        pid = g.get("PLAYER_ID")
+        if pid is None:
+            continue
+        games.setdefault(int(pid), []).append(g)
 
     out: dict[str, dict] = {}
     for pid, rows in games.items():
