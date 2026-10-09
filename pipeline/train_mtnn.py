@@ -818,11 +818,8 @@ def contrastive_loss(
     raise ValueError(f"unknown contrastive loss: {mode}")
 
 
-RECALL_RANK_FLOOR = 0.85
-
-
 def promotion_composite(test_recall: float | None, purity: float | None) -> float:
-    """Mid-epoch checkpoint proxy — delegates to composite_score.partial_cqs."""
+    """Mid-epoch checkpoint proxy — delegates to composite_score.partial_cqs (recall and purity only)."""
     return cqs.partial_cqs(test_recall, purity)
 
 
@@ -1346,9 +1343,11 @@ def build_parser() -> argparse.ArgumentParser:
     )
     ap.add_argument(
         "--checkpoint-metric",
-        choices=("recall", "composite", "purity", "cqs"),
+        choices=("recall", "recall-purity", "purity", "composite", "cqs"),
         default="cqs",
-        help="save best checkpoint by val recall, purity@20, composite/cqs proxy",
+        help="save the best checkpoint by smoothed val recall, purity@20, or recall-purity: both blended "
+        "with their CQS weights (composite_score.partial_cqs). 'cqs' and 'composite' are older names for "
+        "recall-purity, not the full CQS. No best checkpoint is kept when the loss sees every row",
     )
     ap.add_argument(
         "--val-every",
@@ -1688,6 +1687,19 @@ def main(argv: list[str] | None = None) -> None:
     fit_idx = np.where(fit_mask)[0]
     print(f"phase={args.phase} fit_rows={fit_rows_mode} n_fit={len(fit_idx)}/{n}")
 
+    # Whether a best checkpoint is kept, and by what (mtnn_loop explains both
+    # [eval#11]). A select run selects exactly as before.
+    select_best, checkpoint_metric = mtnn_loop.checkpoint_selection(
+        no_best_checkpoint=args.no_best_checkpoint, fit_rows=fit_rows_mode, metric=args.checkpoint_metric
+    )
+    if not args.no_best_checkpoint and not select_best:
+        log.info("fit_rows 'all': val rows are training rows, so no best checkpoint is selected; final weights kept")
+    elif select_best and args.val_every > 0 and checkpoint_metric != args.checkpoint_metric:
+        log.info(
+            "--checkpoint-metric %s is the recall-purity proxy (composite_score.partial_cqs), not the full CQS",
+            args.checkpoint_metric,
+        )
+
     xs, ms = split_by_family(Z, M, fams, device)
     model = MTNN(
         {f: len(c) for f, c in fams.items()},
@@ -1969,12 +1981,12 @@ def main(argv: list[str] | None = None) -> None:
                 val_trace,
                 "done" if epoch == args.epochs - 1 else "training",
             )
-            if not args.no_best_checkpoint:
+            if select_best:
                 metric_val = None
-                if args.checkpoint_metric == "recall":
+                if checkpoint_metric == "recall":
                     metric_val = val_r_smooth
                     is_better = metric_val is not None and (best_val_recall is None or metric_val > best_val_recall)
-                elif args.checkpoint_metric == "purity":
+                elif checkpoint_metric == "purity":
                     metric_val = val_pu
                     is_better = metric_val is not None and (best_val_purity is None or metric_val > best_val_purity)
                 else:
@@ -2011,7 +2023,7 @@ def main(argv: list[str] | None = None) -> None:
         if epoch % 5 == 0 or epoch == args.epochs - 1:
             print(log_line)
 
-    if not args.no_best_checkpoint and BEST_CKPT.exists() and best_epoch >= 0:
+    if select_best and BEST_CKPT.exists() and best_epoch >= 0:
         ckpt = safe_torch_load(BEST_CKPT, map_location=device)
         model.load_state_dict(ckpt["model"])
         pu_s = f"{best_val_purity:.3f}" if best_val_purity is not None else "n/a"
@@ -2285,6 +2297,9 @@ def main(argv: list[str] | None = None) -> None:
         "nce_player_weight": args.nce_player_weight,
         "nce_arch_weight": args.nce_arch_weight,
         "checkpoint_metric": args.checkpoint_metric,
+        # What chose the restored epoch: "none" when no best checkpoint was
+        # selected (--no-best-checkpoint, --val-every 0, or fit_rows 'all').
+        "checkpoint_selection": checkpoint_metric if select_best and args.val_every > 0 else "none",
         "best_val_purity_at_20": best_val_purity,
         "best_val_composite": best_val_composite,
         "nce_temp": args.nce_temp,

@@ -170,6 +170,23 @@ def test_only_the_seven_named_aux_heads_count():
     assert cqs.component_scores(seven)["aux_r2"] == pytest.approx(3.6 / 7)
 
 
+# --- partial_cqs, the checkpoint proxy [eval#11] ---------------------------------
+
+
+def test_partial_cqs_is_recall_and_purity_at_their_cqs_weights():
+    # (.18 * .8 + .16 * .7) / .34 = .256 / .34
+    assert cqs.partial_cqs(0.8, 0.7) == pytest.approx(0.256 / 0.34)
+    assert cqs.partial_cqs(None, None) == 0.0
+    assert cqs.partial_cqs(1.5, -0.2) == pytest.approx(0.18 / 0.34)  # clipped to [0, 1]
+
+
+def test_partial_cqs_has_no_step_at_recall_085():
+    """The old proxy scored (0.851, 0.60) = 0.7166 above (0.849, 0.80) = 0.6603."""
+    assert cqs.partial_cqs(0.849, 0.80) > cqs.partial_cqs(0.851, 0.60)
+    below, above = cqs.partial_cqs(0.8499, 0.7), cqs.partial_cqs(0.8501, 0.7)
+    assert above - below == pytest.approx(0.18 * 0.0002 / 0.34)
+
+
 # --- should_promote --------------------------------------------------------------
 
 

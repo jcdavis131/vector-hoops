@@ -62,6 +62,25 @@ def test_an_overflowed_sum_of_finite_terms_says_so():
     assert e.value.code == 3
 
 
+@pytest.mark.parametrize(
+    ("no_best", "fit_rows", "metric", "want"),
+    [
+        # A select run keeps what --no-best-checkpoint says, as before.
+        (False, "train", "recall", (True, "recall")),
+        (True, "train", "purity", (False, "purity")),
+        # 'cqs' and 'composite' are the recall-purity proxy, not the full CQS.
+        (False, "train", "cqs", (True, "recall-purity")),
+        (False, "train", "composite", (True, "recall-purity")),
+        (False, "train", "recall-purity", (True, "recall-purity")),
+        # Every row in the loss: val rows are training rows, nothing is selected.
+        (False, "all", "cqs", (False, "recall-purity")),
+        (True, "all", "recall", (False, "recall")),
+    ],
+)
+def test_checkpoint_selection(no_best, fit_rows, metric, want):
+    assert mtnn_loop.checkpoint_selection(no_best_checkpoint=no_best, fit_rows=fit_rows, metric=metric) == want
+
+
 def test_finite_arrays_pass():
     assert mtnn_loop.require_finite({"E": np.ones((3, 2)), "w": np.zeros(4)}, before="writing x") is None
 

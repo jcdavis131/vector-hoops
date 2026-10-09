@@ -161,7 +161,7 @@ def purity_of(m: dict) -> float:
 def composite_of(m: dict) -> float:
     """The repo's canonical promotion objective (train_mtnn.promotion_composite).
 
-    0.4*recall + 0.6*purity. Note next-profile RMSE appears in NO promotion
+    composite_score.partial_cqs: (0.18*recall + 0.16*purity) / 0.34. Note next-profile RMSE appears in NO promotion
     gate -- ranking a sweep by RMSE optimizes something the pipeline ignores.
     """
     return T.promotion_composite(m.get("test_recall_at_10"), purity_of(m))
@@ -324,7 +324,7 @@ def main() -> None:
     ]
     (OUT / "sweep_report.json").write_text(json.dumps(report, indent=2), encoding="utf-8")
 
-    print("\n=== SWEEP RANKING (repo composite = 0.4*recall + 0.6*purity) ===")
+    print("\n=== SWEEP RANKING (composite = partial_cqs, recall and purity at their CQS weights) ===")
     print("    next-RMSE is shown but is in NO promotion gate; it is a tie-break only.")
     print(f"{'rank':<5}{'config':<18}{'params':>10}{'recall':>8}{'purity':>9}{'composite':>11}{'next_rmse':>11}")
     for i, r in enumerate(report["ranking"], 1):

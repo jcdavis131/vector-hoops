@@ -72,6 +72,29 @@ def check_loss(loss_value: float, terms: Mapping[str, Any], *, epoch: int, step:
     raise_non_finite(f"loss {loss_value} at epoch {epoch} step {step}; {which}")
 
 
+# --checkpoint-metric 'cqs' and 'composite' have always meant
+# train_mtnn.promotion_composite, i.e. composite_score.partial_cqs: smoothed val
+# recall and val purity, never the full CQS, whose other eight components are
+# scored only after training [eval#11]. 'recall-purity' says what it is. The
+# two old names still parse and mean the same proxy, so the recipes and sweep
+# configs that pass them (legacy-v5-refit, legacy-v6-refit, apply_hp_sweep's
+# 'composite') keep working.
+CHECKPOINT_METRIC_ALIASES = {"cqs": "recall-purity", "composite": "recall-purity"}
+
+
+def checkpoint_selection(*, no_best_checkpoint: bool, fit_rows: str, metric: str) -> tuple[bool, str]:
+    """(keep a best checkpoint?, the metric that picks it), for train_mtnn's validation checks.
+
+    Best-checkpoint selection scores each check on the val split. When the
+    loss sees every row (fit_rows 'all'), val rows are training rows: the
+    legacy refit recipes (--val-every 10 --checkpoint-metric cqs --phase
+    final-refit) restored the epoch that fit them best [eval#11]. Then no
+    best checkpoint is kept and the run keeps its final weights. Otherwise
+    it is what --no-best-checkpoint says, as it always was.
+    """
+    return (not no_best_checkpoint and fit_rows != "all", CHECKPOINT_METRIC_ALIASES.get(metric, metric))
+
+
 def require_finite(arrays: Mapping[str, Any], *, before: str) -> None:
     """Stop the run before writing `before` when any of the named arrays holds a NaN or inf."""
     bad = []

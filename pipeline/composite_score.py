@@ -308,24 +308,25 @@ def composite_quality(report: dict[str, Any]) -> dict[str, Any]:
 
 
 def partial_cqs(recall: float | None, purity: float | None) -> float:
-    """Cheap mid-epoch proxy (0–1) when full heads aren't scored yet.
+    """Mid-epoch checkpoint proxy on [0, 1]: recall and purity, weighted as CQS weights them.
 
-    Keeps the old recall/purity ranking shape so checkpoint restore stays
-    stable, but lives next to the full CQS definition.
+    (WEIGHTS["recall"] * recall + WEIGHTS["purity"] * purity) / (the two
+    weights), each clipped to [0, 1]: (0.18 r + 0.16 p) / 0.34 today. It is
+    not the full CQS; the other eight components are not scored while
+    training, which is why train_mtnn calls this checkpoint metric
+    'recall-purity'.
+
+    It used to average that with a "legacy" blend that jumped from
+    0.3 r + 0.3 p to 0.4 r + 0.6 p at recall 0.85 [eval#11]. Measured with
+    that code on 2026-10-09: partial_cqs(0.849, 0.80) = 0.6603,
+    (0.851, 0.70) = 0.7702, (0.851, 0.60) = 0.7166. A 0.002 recall gain
+    outweighed a 0.20 purity loss, so which epoch train_mtnn restored hinged
+    on whether smoothed val recall happened to cross 0.85.
     """
     tr = recall or 0.0
     pu = purity or 0.0
-    # Mirror legacy promotion_composite, then scale toward CQS weights.
-    if tr < 0.85:
-        legacy = 0.3 * tr + 0.3 * pu
-    else:
-        legacy = 0.4 * tr + 0.6 * pu
-    # Blend toward the CQS recall/purity share so the proxy isn't alien.
-    cqs_share = WEIGHTS["recall"] * _clip01(tr) + WEIGHTS["purity"] * _clip01(pu)
-    # Normalize by the two-component weight mass so proxy stays ~[0,1].
     mass = WEIGHTS["recall"] + WEIGHTS["purity"]
-    blended = 0.5 * legacy + 0.5 * (cqs_share / mass)
-    return float(blended)
+    return float((WEIGHTS["recall"] * _clip01(tr) + WEIGHTS["purity"] * _clip01(pu)) / mass)
 
 
 def in_sample_reason(report: dict[str, Any]) -> str | None:

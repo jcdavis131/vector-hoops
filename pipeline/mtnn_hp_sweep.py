@@ -640,7 +640,7 @@ def main() -> None:
         "prior_sweep": (
             "discovery v1: concat-fusion-onecycle best (composite 0.745, recall 0.998, purity 0.576 @ 40ep)"
         ),
-        "ranking": (f"0.4*test_recall + 0.6*purity (promotion-aware); recall<{RECALL_RANK_FLOOR} demoted"),
+        "ranking": (f"partial_cqs (0.18*test_recall + 0.16*purity)/0.34; recall<{RECALL_RANK_FLOOR} demoted"),
         "promotion_purity_floor": PROMOTION_PURITY_FLOOR,
         "epochs_per_run": args.epochs,
         "seeds": seeds,
