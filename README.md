@@ -39,7 +39,7 @@ Three data tracks are built but dormant, each cache-ready and gated on a committ
 
 ## Training
 
-`train.sh` drives MTNN training (`pipeline/train_mtnn.py`, torch). Promotion of a new embedding into the game is a deliberate, separate step behind the leak-free gate above — the transparent 14-dim contract stays until a candidate beats it there. Research notes live in `docs/` (`MTNN_V5_DEEP_ARCHITECTURE.md`, `MTNN_V6_SOTA.md`, `RESEARCH.md`).
+`pipeline/rebuild_all.py` is the one rebuild: the matrix (`build_vectors --offline` → `enrich_vectors` → `integrate_context`, the same chain the climb measures on, then a data contract), MTNN training (`pipeline/train_mtnn.py`, torch), export and verify, stopping at the first step that fails. `train.sh` is a thin wrapper over it; `--list` prints the plan. Promotion of a new embedding into the game is a deliberate, separate step behind the leak-free gate above — the transparent 14-dim contract stays until a candidate beats it there. Research notes live in `docs/` (`MTNN_V5_DEEP_ARCHITECTURE.md`, `MTNN_V6_SOTA.md`, `RESEARCH.md`).
 
 ### v6 transformer fusion candidate (not shipped, 2026-08-05)
 

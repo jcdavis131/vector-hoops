@@ -26,16 +26,25 @@ offline:
 	$(PYTHON) pipeline/fetch_bbref_advanced.py --offline
 	$(PYTHON) pipeline/fetch_2k_ratings.py --offline
 
-# Split out of `offline`, because this one REWRITES assets/vectors.json,
-# assets/*.npz and pipeline/data/feature_manifest.json. CI does not run it and
-# a check should not either -- `make ci` used to, which made verifying the repo
-# a way to modify it. Verified exit 0 on a scratch copy of the tree:
-# 12,966 player-seasons, 8 archetypes, 72 wide features.
+# The matrix stage of pipeline/rebuild_all.py: build_vectors --offline,
+# enrich_vectors, integrate_context (the herdmux climb's prepare chain), then
+# the stage contract against pipeline/contracts/train_matrix.contract.json.
+# This target used to be build_vectors alone, which leaves vectors.json with
+# no positions and the matrix with none of integrate_context's families
+# [orchestration#2]. It REWRITES assets/vectors.json and
+# pipeline/data/train_matrix.npz + feature_manifest.json, which is why it is
+# split out of `offline`: CI does not run it and a check should not either --
+# `make ci` used to, which made verifying the repo a way to modify it.
+# Verified 2026-10-09: exit 0 in ~8 s, 12,966 rows x 142 columns, contract
+# passes, matrix byte-identical to the climb's prepare output.
 build:
-	$(PYTHON) pipeline/build_vectors.py --offline
+	$(PYTHON) pipeline/rebuild_all.py --to stage_contract
 
+# The whole rebuild at 40 epochs: matrix, train, export, verify, stopping at
+# the first failing step. It used to be `./train.sh --quick`, which swallowed
+# 26 failures; train.sh is now a wrapper over the same script.
 train:
-	./train.sh --quick
+	$(PYTHON) pipeline/rebuild_all.py --quick
 
 # The whole suite, local_data tests included (testpaths covers pipeline +
 # tests). On the training box run it with HOOPS_REQUIRE_LOCAL_DATA=1, so a

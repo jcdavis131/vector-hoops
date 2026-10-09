@@ -146,6 +146,26 @@ def test_no_step_uses_a_fixture_or_the_retired_paths(v6, refresh):
         assert not any(x in s.argv[0] for x in ("bootstrap_train_matrix", "ablate_v5", "sweep_v5")), s
 
 
+def test_train_sh_is_a_wrapper_with_no_fixture_and_nothing_swallowed():
+    code = [
+        ln for ln in (ROOT / "train.sh").read_text(encoding="utf-8").splitlines() if not ln.lstrip().startswith("#")
+    ]
+    for bad in ("--fixture", "|| true", "|| echo", "train_mtnn.py", "bootstrap_train_matrix"):
+        assert not [ln for ln in code if bad in ln], f"train.sh runs {bad!r} itself"
+    assert [ln for ln in code if ln.startswith("exec ") and "pipeline/rebuild_all.py" in ln]
+
+
+def test_makefile_build_and_train_go_through_rebuild_all():
+    lines = (ROOT / "Makefile").read_text(encoding="utf-8").splitlines()
+    recipe = {
+        lines[i].split(":")[0]: lines[i + 1].strip() for i in range(len(lines) - 1) if lines[i] in ("build:", "train:")
+    }
+    assert recipe == {
+        "build": "$(PYTHON) pipeline/rebuild_all.py --to stage_contract",
+        "train": "$(PYTHON) pipeline/rebuild_all.py --quick",
+    }
+
+
 def test_device_is_passed_only_when_given():
     train = next(s for s in ra.build_plan() if s.name == "train_mtnn")
     assert "--device" not in train.argv
