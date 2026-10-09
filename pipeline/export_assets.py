@@ -23,6 +23,10 @@ import time
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "pipeline"))
+
+import real_caches
+
 ASSETS = ROOT / "assets"
 CACHE_DIR = ROOT / "pipeline" / "cache"
 MANIFEST = ASSETS / "manifest.json"
@@ -83,11 +87,21 @@ def has_real_wide_caches() -> bool:
     return any(CACHE_DIR.glob("wide_skills_*.json"))
 
 
-def wide_skills_build_cmd(py: str) -> list[str]:
-    cmd = [py, "pipeline/build_wide_skills.py"]
-    if not has_real_wide_caches():
-        cmd.append("--fixture")
-    return cmd
+# No fixture builds in the export path [artifacts#12, orchestration#1]. This
+# used to pass --fixture to build_wide_skills when no real cache existed and
+# to build_game_ratings always, so a production export rewrote
+# pipeline/data/wide_skill_labels.npz (train_mtnn's skill targets) or
+# game_ratings.json (an integrate_context input) from the committed example
+# fixtures. Dropping the flag alone is not enough: both builders fall back
+# to the fixture by themselves when they find no real cache. So each step
+# runs only when real_caches says its input is real, and otherwise is
+# skipped with the reason. For wide skills that includes the two proxy
+# season docs [ingest#5], which today keeps this step from running at all.
+def run_if_real(name: str, cmd: list[str], why_not: str | None) -> bool:
+    if why_not:
+        print(f"== {name}: skipped, {why_not}\n")
+        return False
+    return run(name, cmd, required=False)
 
 
 PROMOTION_PURITY_FLOOR = 0.63
@@ -150,7 +164,9 @@ def main() -> None:
 
     steps_ok["skills"] = run("build_skills", [py, "pipeline/build_skills.py"])
     steps_ok["skill_gates"] = run("test_skills", [py, "pipeline/test_skills.py"])
-    steps_ok["wide_skills"] = run("build_wide_skills", wide_skills_build_cmd(py), required=False)
+    steps_ok["wide_skills"] = run_if_real(
+        "build_wide_skills", [py, "pipeline/build_wide_skills.py"], real_caches.wide_skills()
+    )
     steps_ok["wide_skill_gates"] = run("test_wide_skills", [py, "pipeline/test_wide_skills.py"], required=False)
     steps_ok["pedigree"] = run("build_pedigree", [py, "pipeline/build_pedigree.py"], required=False)
     steps_ok["pedigree_gates"] = run("test_pedigree", [py, "pipeline/test_pedigree.py"], required=False)
@@ -160,10 +176,8 @@ def main() -> None:
     steps_ok["honors_gates"] = run("test_honors", [py, "pipeline/test_honors.py"], required=False)
     steps_ok["salary_market"] = run("build_salary_market", [py, "pipeline/build_salary_market.py"], required=False)
     steps_ok["salary_gates"] = run("test_salaries", [py, "pipeline/test_salaries.py"], required=False)
-    steps_ok["game_ratings"] = run(
-        "build_game_ratings",
-        [py, "pipeline/build_game_ratings.py", "--fixture"],
-        required=False,
+    steps_ok["game_ratings"] = run_if_real(
+        "build_game_ratings", [py, "pipeline/build_game_ratings.py"], real_caches.game_ratings()
     )
     steps_ok["game_ratings_gates"] = run("test_game_ratings", [py, "pipeline/test_game_ratings.py"], required=False)
     steps_ok["player_meta"] = run("build_player_meta", [py, "pipeline/build_player_meta.py"], required=False)
@@ -223,7 +237,7 @@ def main() -> None:
         wide_meta = {
             "skill_count": len(wide_doc.get("skills", [])),
             "grade_rows": len(wide_doc.get("grades", {})),
-            "source": "real_caches" if has_real_wide_caches() else "fixture",
+            "source": "real_caches" if has_real_wide_caches() else "not rebuilt (no real caches)",
         }
 
     manifest = {
