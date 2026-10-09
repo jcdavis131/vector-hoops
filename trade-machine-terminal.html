@@ -254,7 +254,7 @@ function ensureState(n){
 async function loadData(){
   // try fetch current_rosters.json teams
   try{
-    let r=await fetch('assets/current_rosters.json?v=102'); let j=await r.json();
+    let r=await fetch('assets/current_rosters.json?v=e4a15c6d'); let j=await r.json();
     rostersCache=j;
     // activePlayers mapping
     if(j.teams){
@@ -269,12 +269,12 @@ async function loadData(){
     }
   }catch(e){}
   try{
-    let r=await fetch('assets/career_surplus.json?v=5'); let j=await r.json();
+    let r=await fetch('assets/career_surplus.json?v=c369c711'); let j=await r.json();
     let all=(j.buy_low_top||[]).concat(j.sell_high_top||[]);
     all.forEach(o=>{ surplusMap[o.name]=o.surplus; });
   }catch(e){}
   try{
-    let r=await fetch('assets/cap_rules.json?v=4'); let j=await r.json(); capRulesCache=j;
+    let r=await fetch('assets/cap_rules.json?v=3cee03d3'); let j=await r.json(); capRulesCache=j;
     let capMeta=$('capMeta'); if(capMeta && j['2025-26']) capMeta.textContent='cap $'+(j['2025-26'].cap/1e6).toFixed(1)+'M • tax $'+(j['2025-26'].tax/1e6).toFixed(1)+'M • apron1 $'+(j['2025-26'].apron1/1e6).toFixed(1)+'M';
   }catch(e){}
 }

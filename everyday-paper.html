@@ -340,7 +340,7 @@ function fillGuessList(){
 }
 async function loadGameVectors(){
   try{
-    let r=await fetch('assets/game_vectors.json?v=101'); let j=await r.json();
+    let r=await fetch('assets/game_vectors.json?v=b98e3a0b'); let j=await r.json();
     gameData={past:j.past||[], modern:j.modern||[]};
     return gameData;
   }catch(e){
@@ -791,7 +791,7 @@ if('serviceWorker' in navigator){
   window.addEventListener('load', ()=>{ navigator.serviceWorker.register('/sw.js?v=67').catch(()=>{}); });
 }
 </script>
-<script src="/assets/delight.js?v=5"></script>
+<script src="/assets/delight.js?v=9a8c2404"></script>
 <!-- paper variant 2 -->
 
 <script>

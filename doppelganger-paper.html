@@ -487,15 +487,15 @@ function fillAutocomplete(){
 async function loadData(){
   // load points
   try{
-    let r=await fetch('assets/embedding_map_points_limited.json?v=67'); let j=await r.json();
+    let r=await fetch('assets/embedding_map_points_limited.json?v=407d2cbc'); let j=await r.json();
     allPoints=(j.points||j).map(p=>({pid:p.pid, season:p.season||p.s||'—', x:p.x, y:p.y, z:p.z||0, c:p.c||0, display_name:p.display_name||p.n||'Unknown', n:p.display_name||p.n, is_current:!!p.is_current}));
     $('ptsCount').textContent=allPoints.length+' pts';
   }catch(e){ allPoints=MOCK_30.map((n,i)=>({pid:100000+i, season:'2025-26', x:0.2+0.6*Math.random(), y:0.2+0.6*Math.random(), z:0, c:i%8, display_name:n, n:n, is_current:true})); $('ptsCount').textContent='mock '+allPoints.length; }
   try{
-    let r=await fetch('assets/archetype_lite.json?v=67'); let j=await r.json(); archetypes=j.assignments||[]; 
+    let r=await fetch('assets/archetype_lite.json?v=7edbddbd'); let j=await r.json(); archetypes=j.assignments||[]; 
   }catch(e){ archetypes=[]; }
   try{
-    let r=await fetch('assets/current_rosters.json?v=67'); let j=await r.json(); let names=[]; Object.values(j.teams||{}).forEach(arr=>arr.forEach(p=>names.push(p.name))); activePlayers=[...new Set(names)].sort(); 
+    let r=await fetch('assets/current_rosters.json?v=e4a15c6d'); let j=await r.json(); let names=[]; Object.values(j.teams||{}).forEach(arr=>arr.forEach(p=>names.push(p.name))); activePlayers=[...new Set(names)].sort(); 
   }catch(e){ activePlayers=[]; }
   if(!activePlayers.length) activePlayers=MOCK_30.slice().sort();
   fillAutocomplete();

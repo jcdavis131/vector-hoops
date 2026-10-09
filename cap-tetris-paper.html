@@ -608,7 +608,7 @@ function solve(){
 }
 async function loadCaps(){
   try{
-    let r=await fetch('assets/cap_rules.json?v=67');
+    let r=await fetch('assets/cap_rules.json?v=3cee03d3');
     if(r.ok){
       let j=await r.json();
       // j is object map year -> {cap}
@@ -636,7 +636,7 @@ async function loadCaps(){
 async function improvePoolFromFrontOffice(){
   // Try front_office.json or current_rosters activePlayers for approximate salaries — optional
   try{
-    let r=await fetch('assets/front_office.json?v=7');
+    let r=await fetch('assets/front_office.json?v=1e6f04e5');
     if(r.ok){
       let j=await r.json();
       // front_office structure varies — we attempt to extract 3 plausible sal from its teams[0] etc.
@@ -651,7 +651,7 @@ async function improvePoolFromFrontOffice(){
     }
   }catch(_){}
   try{
-    let r2=await fetch('assets/current_rosters.json?v=7');
+    let r2=await fetch('assets/current_rosters.json?v=e4a15c6d');
     if(r2.ok){
       let j=await r2.json();
       let len=j.activePlayers?.length||0;
@@ -707,7 +707,7 @@ function init(){
 }
 if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',init); else init();
 </script>
-<script src="assets/delight.js" defer></script>
+<script src="assets/delight.js?v=9a8c2404" defer></script>
 <!-- paper variant 2 -->
 
 <script>

@@ -571,11 +571,11 @@ function initPOV(){
 
 async function loadRostersCap(){
   try{
-    let r=await fetch('assets/current_rosters.json?v=12');
+    let r=await fetch('assets/current_rosters.json?v=e4a15c6d');
     if(r.ok){ let j=await r.json(); rostersCtx=j; let rm=$('rostersMeta'); if(rm) rm.textContent='Season '+j.season+' next '+j.nextSeason+' • '+Object.keys(j.teams||{}).length+' teams • '+(j.activePlayers?.length||j.summary?.total_active||649)+' active • built '+j.built; }
   }catch(e){}
   try{
-    let r2=await fetch('assets/cap_rules.json?v=12');
+    let r2=await fetch('assets/cap_rules.json?v=3cee03d3');
     if(r2.ok){ let cj=await r2.json(); capCtx=cj; let yr=cj['2025-26']||cj['2025-26']; if(yr){ let cm=$('capMeta'); if(cm) cm.textContent='cap $'+(yr.cap/1e6).toFixed(3)+'M / tax $'+(yr.tax/1e6).toFixed(3)+'M / apron1 $'+(yr.apron1/1e6).toFixed(3)+'M ap2 $'+(yr.apron2/1e6).toFixed(3)+'M'; let cc=$('capContext'); if(cc) cc.textContent='cap 2025-26 $'+(yr.cap/1e6).toFixed(3)+'M / tax $'+(yr.tax/1e6).toFixed(3)+'M / apron1 $'+(yr.apron1/1e6).toFixed(3)+'M ap2 $'+(yr.apron2/1e6).toFixed(3)+'M — '+yr.cba+' — TV '+yr.tv_deal+' — smoothing mandatory '+yr.max_growth_rule+' • cap_growth '+(yr.cap_growth_vs_prior!=null?((yr.cap_growth_vs_prior*100).toFixed(1)+'%'):'—'); let ce=$('capExplain'); if(ce) ce.textContent='cap_rules.json 2025-26 $'+(yr.cap/1e6).toFixed(3)+'M base — '+yr.cba+' — 10% max growth prevents 2016 spike — smoothing mandatory — '+yr.notes[0]; } } }
   }catch(e){}
 }
@@ -612,7 +612,7 @@ if('serviceWorker' in navigator){
   window.addEventListener('load', ()=>{ navigator.serviceWorker.register('/sw.js?v=67').catch(()=>{}); });
 }
 </script>
-<script src="/assets/delight.js?v=5"></script>
+<script src="/assets/delight.js?v=9a8c2404"></script>
 <!-- terminal variant 4 -->
 
 <script>
