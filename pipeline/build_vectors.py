@@ -58,6 +58,7 @@ from pathlib import Path
 import numpy as np
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
+from artifact_io import atomic_savez_compressed, atomic_write_text
 from eligibility import (
     DEFAULT_MIN_GP,
     DEFAULT_MIN_TOTAL_MINUTES,
@@ -1062,7 +1063,10 @@ def main() -> None:
         players.append(p)
 
     OUT.parent.mkdir(parents=True, exist_ok=True)
-    OUT.write_text(
+    # This file and the two below are written atomically, same bytes as the
+    # in-place write_text / np.savez_compressed they replace (artifact_io).
+    atomic_write_text(
+        OUT,
         json.dumps(
             {
                 "built": time.strftime("%Y-%m-%d"),
@@ -1089,7 +1093,7 @@ def main() -> None:
 
     # ---- wide training bundle for train_towers.py ----
     DATA_DIR.mkdir(parents=True, exist_ok=True)
-    np.savez_compressed(
+    atomic_savez_compressed(
         DATA_DIR / "train_matrix.npz",
         Z=Z.astype(np.float32),
         mask=mask,
@@ -1116,7 +1120,7 @@ def main() -> None:
         "salary_coverage": int(mask[:, sal_col].sum()),
         "notes": "Z is era z-scored (NaN->season mean, clip 4); mask marks measured values",
     }
-    (DATA_DIR / "feature_manifest.json").write_text(json.dumps(manifest, indent=2), encoding="utf-8")
+    atomic_write_text(DATA_DIR / "feature_manifest.json", json.dumps(manifest, indent=2), encoding="utf-8")
 
     # ---- audit assertions: never ship a dirty file ----
     assert len({(p["name"], p["season"]) for p in players}) == len(players), "dupes"

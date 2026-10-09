@@ -23,6 +23,7 @@ import unicodedata
 from pathlib import Path
 
 import numpy as np
+from artifact_io import atomic_write_text
 
 ROOT = Path(__file__).resolve().parent
 VECTORS = ROOT.parent / "assets" / "vectors.json"
@@ -183,7 +184,9 @@ def main() -> None:
     else:
         print("positions cache missing — run fetch_positions.py first; skipping")
 
-    VECTORS.write_text(json.dumps(data, separators=(",", ":")), encoding="utf-8")
+    # Rewrites the file it read. Atomic (artifact_io), same bytes as write_text:
+    # a kill mid-write used to leave a truncated vectors.json [health#7].
+    atomic_write_text(VECTORS, json.dumps(data, separators=(",", ":")), encoding="utf-8")
     print(f"wrote {VECTORS} ({VECTORS.stat().st_size / 1e6:.2f} MB)")
 
 
