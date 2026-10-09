@@ -1,0 +1,19 @@
+{
+  "name": "measure",
+  "description": "The herdmux climb's pinned train flags for vector-hoops (gpu/climb.py, PROTOCOLS['vector-hoops'].train) without --device and --seed, which the climb sets per run.",
+  "measured": true,
+  "notes": [
+    "tests/test_recipes.py reads PROTOCOLS['vector-hoops'].train out of herdmux gpu/climb.py when that file is on the box, and fails if these flags and the climb's differ (other than --device and --seed). herdmux does not read this file: the climb still spells its own flags, so a change to either side has to be made on both.",
+    "Every option not listed is train_mtnn.py's argparse default on the commit being trained. herdmux gpu/baselines.json anchors protocol 1cdf63f8c825 (mean CQS 77.52, sd 0.64, seeds 5/7/13/21/42/99) at 995b8679, the --token-dropout 0.1 -> 0.0 KEEP, which is not an ancestor of this branch; here the default is still 0.1. Both trees get the same protocol hash because the hash does not cover trainer defaults [orchestration#4].",
+    "--device is left out. The climb pins --device cuda and train_mtnn.py's default is cpu; a CPU run has a different reduction order and is not comparable with a CUDA-measured number.",
+    "--val-every 0 --no-best-checkpoint: no validation pass while training and no checkpoint restored, so every seed trains all 40 epochs and the report scores the final weights. Such a run writes no mtnn_best.pt.",
+    "No --phase, so select: the loss sees only train-split rows (start year <= 2021) and held-out recall and CQS come from val (2022-23, 2023-24) and test (2024-25 on) pairs.",
+    "The climb's one-seed screen, run before it pays for a panel, compares seed 5's CQS with the baseline panel's mean and discards an arm more than 1 sd below it; it does not use seed 5's own baseline value. On 1cdf63f8c825 seed 5 sits +0.59 above the mean (78.11 against 77.52, sd 0.64), so an arm up to about 1.2 CQS worse than the baseline at seed 5 still goes to a full panel [eval#12]. The fix belongs in herdmux (climb.py); it is recorded here because this recipe is what that screen measures."
+  ],
+  "flags": {
+    "--epochs": 40,
+    "--dim": 64,
+    "--val-every": 0,
+    "--no-best-checkpoint": true
+  }
+}

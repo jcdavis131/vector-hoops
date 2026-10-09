@@ -9,15 +9,14 @@ Run:  python -m pytest tests/test_rebuild_all.py
 
 from __future__ import annotations
 
-import ast
 import json
-import os
 import shlex
 import sys
 import types
 from pathlib import Path
 
 import pytest
+from climb_protocol import climb_py, hoops_protocol
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "pipeline"))
@@ -36,30 +35,6 @@ EXPORT = [
     "build_scoring_lite",
 ]
 DEFAULT_PLAN = [*PREPARE, "stage_contract", "train_mtnn", "promote", *EXPORT, "test_scoring_lite", "verify_accuracy"]
-
-
-def climb_py() -> Path | None:
-    """herdmux's climb.py, read-only, when it is on this box (never in CI)."""
-    roots = [os.environ.get("HERDMUX_ROOT"), ROOT.parent / "herdmux", Path.home() / "herdmux"]
-    for r in roots:
-        if r and (Path(r) / "gpu" / "climb.py").is_file():
-            return Path(r) / "gpu" / "climb.py"
-    return None
-
-
-def climb_prepare(path: Path) -> list[str]:
-    """PROTOCOLS['vector-hoops'].prepare, by parsing the file. Importing it
-    would run herdmux module code and write bytecode into another repo."""
-    tree = ast.parse(path.read_text(encoding="utf-8"))
-    for node in ast.walk(tree):
-        if not (isinstance(node, ast.Dict)):
-            continue
-        for key, value in zip(node.keys, node.values, strict=True):
-            if isinstance(key, ast.Constant) and key.value == "vector-hoops" and isinstance(value, ast.Call):
-                for kw in value.keywords:
-                    if kw.arg == "prepare":
-                        return ast.literal_eval(kw.value)
-    raise AssertionError(f"no PROTOCOLS['vector-hoops'].prepare in {path}")
 
 
 class Recorder:
@@ -131,7 +106,7 @@ def test_matrix_steps_equal_herdmux_climb_protocol():
     path = climb_py()
     if path is None:
         pytest.skip("herdmux gpu/climb.py not on this machine (set HERDMUX_ROOT to point at it)")
-    prepare = [shlex.split(cmd) for cmd in climb_prepare(path)]
+    prepare = [shlex.split(cmd) for cmd in hoops_protocol(path, "prepare")]
     matrix = [s for s in ra.build_plan() if s.stage == "matrix" and s.name != "stage_contract"]
     assert [p[1:] for p in prepare] == [s.command()[1:] for s in matrix], (
         f"rebuild_all's matrix stage drifted from the climb's prepare in {path}"

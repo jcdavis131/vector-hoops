@@ -29,6 +29,7 @@ Builds on train_towers.py with:
         best-checkpoint restore
 
 Run:  python pipeline/train_mtnn.py [--epochs 40] [--dim 48]
+       python pipeline/train_mtnn.py --recipe measure --device cuda --seed 5   # the climb's flags
        python pipeline/train_mtnn.py --lr-schedule onecycle --anneal-strategy linear
        python pipeline/mtnn_hp_sweep.py --profile novel [--quick]
        python pipeline/tower_ablation.py
@@ -46,6 +47,7 @@ from collections import defaultdict
 from pathlib import Path
 
 import composite_score as cqs
+import mtnn_recipe
 import numpy as np
 import torch
 import torch.nn as nn
@@ -75,6 +77,7 @@ from mtnn_metrics import (
     transparent_baseline_embeddings,
 )
 from mtnn_validation import build_validation_report, role_labels_from_context
+from runlog import get_logger
 
 ROOT = Path(__file__).resolve().parents[1]
 DATA_DIR = ROOT / "pipeline" / "data"
@@ -1156,7 +1159,13 @@ def write_run_bundle(run_dir: Path, paths: dict[str, Path], records: dict[str, d
     atomic_write_text(run_dir / BUNDLE_FILES["report"], report_text, encoding="utf-8")
 
 
-def main() -> None:
+def build_parser() -> argparse.ArgumentParser:
+    """train_mtnn.py's command line, built without training anything.
+
+    A function so that tests and mtnn_recipe can check recipe files against
+    the real options. main() parses with it; the options and their defaults
+    are the ones main() always had.
+    """
     ap = argparse.ArgumentParser()
     ap.add_argument("--epochs", type=int, default=40)
     ap.add_argument(
@@ -1405,7 +1414,39 @@ def main() -> None:
         "mtnn_centroids.npz into this directory, the bundle pipeline/promote.py --run checks and "
         "promotes. Its name becomes the run id. rebuild_all.py passes pipeline/data/runs/<run_id>.",
     )
-    args = ap.parse_args()
+    ap.add_argument(
+        "--recipe",
+        default=None,
+        metavar="NAME|PATH",
+        help="take defaults from a recipe file: a name in pipeline/recipes/ (measure, ship, legacy-v5-refit, "
+        "legacy-v6-refit) or a path to one. Flags given on the command line still win. Recorded in the "
+        "report's lineage block. See pipeline/mtnn_recipe.py.",
+    )
+    return ap
+
+
+def parse_args(argv: list[str] | None = None) -> mtnn_recipe.Parsed:
+    """build_parser().parse_args(argv), with --recipe applied as defaults when given."""
+    return mtnn_recipe.parse_with_recipe(build_parser(), argv)
+
+
+def main(argv: list[str] | None = None) -> None:
+    parser = build_parser()
+    parsed = mtnn_recipe.parse_with_recipe(parser, argv)
+    args = parsed.args
+
+    # What this run actually trains with, before anything else. Every host
+    # climb panel under protocol 397e16a79ddc, its 2026-08-15 baseline
+    # included, ran on cpu with the 4080 idle because --device fell back to
+    # this script's cpu default, and it was noticed on 2026-09-05 from
+    # device=cpu in a train.log (herdmux gpu/climb.py, PROTOCOLS comment).
+    # Stderr, through runlog, so the report and stdout are unchanged.
+    log = get_logger("train_mtnn")
+    if parsed.recipe is not None:
+        r = parsed.recipe
+        log.info("recipe %s: %s (sha256 %s)", r.name, display_path(r.path, ROOT), r.sha256[:12])
+    changed = mtnn_recipe.non_default_flags(parser, parsed)
+    log.info("options that differ from train_mtnn.py's defaults: %s", ", ".join(changed) or "none")
 
     global ART_DIR
     ART_DIR = DATA_DIR if args.write_artifacts else (DATA_DIR / "_scratch")
@@ -2373,6 +2414,8 @@ def main() -> None:
         "started": run_started,
         "argv": list(sys.argv),
         "args": dict(vars(args)),
+        # {name, path, sha256, flags, overridden} with --recipe, else None.
+        "recipe": mtnn_recipe.lineage(parsed, ROOT),
         "seed": args.seed,
         "device": str(device),
         "phase": args.phase,

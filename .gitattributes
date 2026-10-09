@@ -40,3 +40,9 @@ public/assets/posecode-embed-0.1.0.js  -text
 
 assets/**            -text
 public/assets/**     -text
+
+# train_mtnn.py --recipe records the recipe file's sha256 in the report's
+# lineage block. With core.autocrlf true a Windows checkout would hand it CRLF
+# bytes, so one recipe would carry one hash here and another on CI.
+
+pipeline/recipes/*.json  -text
