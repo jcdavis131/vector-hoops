@@ -1,0 +1,5 @@
+
+# Court Lab shot collection (local only, never committed)
+pipeline/.shots_raw/
+pipeline/.shots_collect_state.json
+pipeline/.shots_collect_state.json.tmp
