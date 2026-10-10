@@ -41,6 +41,7 @@ CACHE = ROOT / "pipeline" / "cache"
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from build_vectors import (  # noqa: E402
     BIO_COLS,
+    BIO_UNDRAFTED,
     SOURCE_CONTRACTS,
     TRACKING_SPECS,
     source_columns,
@@ -62,7 +63,8 @@ SYNTHETIC_BIO_KEYS = {
 
 
 def test_bio_contract_is_exactly_bio_cols():
-    assert SOURCE_CONTRACTS["bio"] == frozenset(BIO_COLS)
+    # Plus the undrafted indicator that replaced the 61.0 pick sentinel.
+    assert SOURCE_CONTRACTS["bio"] == frozenset([*BIO_COLS, BIO_UNDRAFTED])
 
 
 def test_undeclared_keys_are_dropped():
@@ -96,7 +98,7 @@ def test_uncontracted_sources_pass_through():
 
 
 def test_bio_caches_carry_no_combine_scaffold():
-    """No bio_*.json record carries a scaffold key; this replaced a test that the cache still did.
+    """No bio_*.json record carries a key outside the bio contract; this replaced a test that the cache still did.
 
     fetch_missing_combine.py wrote the ten keys into every bio cache in place;
     they were stripped on 2026-10-09. A record that has one again means an
@@ -107,7 +109,7 @@ def test_bio_caches_carry_no_combine_scaffold():
         pytest.skip("no pipeline/cache/bio_*.json in this checkout")
     for p in paths:
         for rec in json.loads(p.read_text(encoding="utf-8")):
-            extra = set(rec) - set(BIO_COLS) - {"PLAYER_ID", "PLAYER_NAME"}
+            extra = set(rec) - SOURCE_CONTRACTS["bio"] - {"PLAYER_ID", "PLAYER_NAME"}
             assert not extra, (
                 f"{p.name}: undeclared keys {sorted(extra)} (synthetic: {sorted(extra & SYNTHETIC_BIO_KEYS)})"
             )

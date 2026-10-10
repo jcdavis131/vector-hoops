@@ -162,6 +162,28 @@ def test_proxy_wide_skills_doc_is_refused(tmp_cache, doc):
         bv.load_wide_skills_defense("2016-17")
 
 
+def test_bio_undrafted_is_a_flag_not_pick_61(tmp_cache, monkeypatch):
+    headers = ["PLAYER_ID", "PLAYER_NAME", *bv.BIO_COLS]
+    rows = [
+        [1, "A Pick", 80.0, 230.0, 24.0, "7"],
+        [2, "B Nobody", 76.0, 190.0, 23.0, "Undrafted"],
+        [3, "C Unknown", 75.0, 185.0, 22.0, None],
+    ]
+    monkeypatch.setattr(
+        bv, "fetch_stats_json", lambda *a, **k: {"resultSets": [{"name": "x", "headers": headers, "rowSet": rows}]}
+    )
+    got = {r["PLAYER_ID"]: (r["DRAFT_NUMBER"], r[bv.BIO_UNDRAFTED]) for r in bv.fetch_bio(LIVE, offline=False)}
+    # Before: 61.0 for both B and C, a pick one past the last real one.
+    assert got == {1: (7.0, 0.0), 2: (None, 1.0), 3: (None, None)}
+
+
+def test_committed_bio_caches_carry_no_pick_61_sentinel():
+    for path in sorted((ROOT / "pipeline" / "cache").glob("bio_*.json")):
+        for r in json.loads(path.read_text(encoding="utf-8")):
+            assert r.get("DRAFT_NUMBER") != 61.0, (path.name, r["PLAYER_NAME"])
+            assert (r.get("DRAFT_UNDRAFTED") == 1.0) == (r.get("DRAFT_NUMBER") is None), (path.name, r["PLAYER_NAME"])
+
+
 def test_a_partial_run_writes_nothing_and_exits_2(tmp_path, tmp_cache, monkeypatch, capsys):
     """Season 2 fails; seasons 1 and 3 are still fetched; no artifact is touched."""
     out = tmp_path / "vectors.json"

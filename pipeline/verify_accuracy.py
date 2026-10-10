@@ -661,10 +661,11 @@ def v16_draft_board(data: dict) -> None:
          out of the steal pool the moment pctRank sees an undefined);
       2. undrafted players carry NO pick number (the board keys "undrafted" off
          a null overall, and prints "#null" if one leaks through);
-      3. no drafted player sits at overall == 61 -- the bio cache uses 61 as its
-         "undrafted" sentinel (see career_arc.py), and real historical drafts
-         ran to pick 170, so a genuine #61 would be indistinguishable from a
-         player nobody picked.
+      3. no drafted player sits at overall == 61 -- the bio cache used 61 as its
+         "undrafted" sentinel until 2026-10-09 (now DRAFT_NUMBER null +
+         DRAFT_UNDRAFTED 1), and real historical drafts ran to pick 170, so a
+         genuine #61 would have been indistinguishable from a player nobody
+         picked in any copy built before that.
     """
     print("\n[V16] draft board contract (steals include undrafted; busts include short careers)")
     path = ASSETS / "pedigree.json"

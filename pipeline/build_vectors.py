@@ -152,6 +152,15 @@ SCORING_COLS = [
     "PCT_UAST_FGM",
 ]
 BIO_COLS = ["PLAYER_HEIGHT_INCHES", "PLAYER_WEIGHT", "AGE", "DRAFT_NUMBER"]
+# Undrafted as its own observed fact. fetch_bio wrote DRAFT_NUMBER 61.0 for any
+# value that was not a number ("Undrafted"), so 2,850 cached player-seasons
+# carried an invented pick one past the last real one: z-scored as a pick, it
+# ranked undrafted players above the 27 real late-round picks still in the
+# data (63 to 165: Kevin Gamble 63, Mario Elie 160, Charles Jones 165). All
+# 2,850 are absent from the complete draft history (person_id), and no
+# drafted player sat at 61. Now the pick is missing for them and
+# DRAFT_UNDRAFTED is 1; a drafted player has his pick and 0.
+BIO_UNDRAFTED = "DRAFT_UNDRAFTED"
 
 # Which columns each wide source may contribute to a player-season row.
 #
@@ -172,7 +181,7 @@ BIO_COLS = ["PLAYER_HEIGHT_INCHES", "PLAYER_WEIGHT", "AGE", "DRAFT_NUMBER"]
 # next rebuild widens the bio tower from 4 columns to 11 with fabricated
 # measurements, and audit_features.py's whole rationale is that a family's width
 # is its fusion share. A source is entitled to its contract, not to its cache.
-SOURCE_CONTRACTS: dict[str, frozenset[str]] = {"bio": frozenset(BIO_COLS)}
+SOURCE_CONTRACTS: dict[str, frozenset[str]] = {"bio": frozenset([*BIO_COLS, BIO_UNDRAFTED])}
 
 # Identity columns, never features.
 _NEVER_FEATURES = ("PLAYER_ID", "PLAYER_NAME")
@@ -282,7 +291,7 @@ for f in [
     "ELBOW_TOUCHES",
 ]:
     FAMILY_OF[f] = "tracking"
-for f in BIO_COLS:
+for f in [*BIO_COLS, BIO_UNDRAFTED]:
     FAMILY_OF[f] = "bio"
 FAMILY_OF["SALARY_LOG"] = "market"
 # Form features derived from local per-game logs (pipeline/data/gamelogs_*.jsonl)
@@ -481,7 +490,12 @@ def fetch_bio(season: str, offline: bool):
                     continue
                 v = raw_row[c]
                 if c == "DRAFT_NUMBER":
-                    row[c] = float(v) if str(v).isdigit() else 61.0
+                    # A pick, or nothing: "Undrafted" is BIO_UNDRAFTED, a null is unknown.
+                    # This used to write 61.0 for both.
+                    picked = str(v).strip().isdigit()
+                    row[c] = float(v) if picked else None
+                    undrafted = str(v).strip().lower() == "undrafted"
+                    row[BIO_UNDRAFTED] = 0.0 if picked else (1.0 if undrafted else None)
                 elif v is None:
                     row[c] = None
                 else:
@@ -1102,9 +1116,14 @@ def main() -> None:
     # today's matrix with the new tail removed.
     for name in ("advanced", "scoring", "bio", "tracking", "form", "hustle", "shape"):
         for c in sorted(extra_presence[name]):
-            if c not in wide_features:
+            if c not in wide_features and c != BIO_UNDRAFTED:
                 wide_features.append(c)
     wide_features.append("SALARY_LOG")
+    # After SALARY_LOG, so every column this script already wrote keeps its
+    # index (sorted into the bio group it would move the 34 columns after
+    # DRAFT_NUMBER); integrate_context's 65 columns, appended after these, move by one.
+    if BIO_UNDRAFTED in extra_presence["bio"]:
+        wide_features.append(BIO_UNDRAFTED)
 
     n, d = len(all_rows), len(wide_features)
     X = np.full((n, d), np.nan)
