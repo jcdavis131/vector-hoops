@@ -42,10 +42,11 @@ jobs:
         run: |
           pip install -r pipeline/requirements.txt
           pip install ./.vector-hub/packages/vector-core
-          # CPU wheel only, and only because tests/test_vector_core_parity.py
-          # execs a historical pipeline/realmlp_preproc.py that imports torch.
-          # The CUDA build is never wanted here: CI does not train, and the cpu
-          # index keeps this a ~200 MB install instead of ~2 GB.
+          # CPU wheel only: tests/test_vector_core_parity.py execs a historical
+          # pipeline/realmlp_preproc.py that imports torch, and
+          # tests/test_e2e_smoke.py trains one CPU epoch on a 100-player
+          # slice. The CUDA build is never wanted here, and the cpu index
+          # keeps this a ~200 MB install instead of ~2 GB.
           pip install torch --index-url https://download.pytorch.org/whl/cpu
 
       # Previously `|| true`. Verified passing, so it now gates.

@@ -1,13 +1,14 @@
 # Runtime deps for the offline pipeline gates in .github/workflows/ci.yml.
 #
 # Deliberately NOT the training stack. train_mtnn.py is GPU-box work (see
-# LOCAL_GPU_HANDOFF.md) and CI never runs it, so keeping this list small is what
+# LOCAL_GPU_HANDOFF.md). CI trains it only in tests/test_e2e_smoke.py (1 epoch,
+# CPU, a 100-player slice), so keeping this list small is what
 # lets the gate finish in seconds instead of pulling a multi-GB wheel.
 #
 # Two things ci.yml installs that are not listed here, because they are CI's
 # problem rather than a dependency of this directory:
 #   - vector-core, which is not on PyPI (jcdavis131/vector-hub packages/vector-core)
-#   - torch, CPU wheel, needed only because tests/test_vector_core_parity.py execs
-#     a historical realmlp_preproc.py that imports it
+#   - torch, CPU wheel, for tests/test_vector_core_parity.py (it execs a
+#     historical realmlp_preproc.py that imports torch) and for the e2e smoke
 numpy>=1.24
 pytest>=7.0

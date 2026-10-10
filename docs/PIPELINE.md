@@ -131,6 +131,10 @@ The matrix is not the one the climb's baseline trained on. Two packages changed 
 - `b0f37e50` (P10): honors observed 0.087 -> 0.937 (a measured zero is observed now), `DRAFT_UNDRAFTED` added (142 -> 143 columns; undrafted is no longer pick 61), regular-season-only form and competition, unmeasured hustle masked instead of zero, 70 mojibake salary keys repaired.
 - `b7063daf` (P11): game-log and context joins by `PLAYER_ID` instead of display name (form, injury and competition observed 0.347 -> 0.398), pedigree matched by id, left-censored career counts masked (career observed 0.728 -> 0.693), partial All-Star lists no longer read as complete.
 
+- `25b3c10f` + `f5a60a3c`: P10 had treated 2015-16 hustle as untracked and nulled 386 measured non-zero values (147 players). 2015-16 is now a partial season: a non-zero value stays, only its zeros are missing. Defense observed 0.5720 -> 0.5753 (382 cells, all 2015-16); 268 wide-skill grades come back.
+
+These fixes live in two places. `build_vectors.py` changes (hustle, form, `DRAFT_UNDRAFTED`, salaries) reach anything that runs the climb's 3-step prepare chain. The honors, career, pedigree, form/competition context and wide-skill fixes live in the side builders, whose outputs sit in gitignored `pipeline/data/` and are not rebuilt by those three steps. On the training box run `python pipeline/rebuild_all.py --refresh-context --stage matrix` once after merging; until then the climb trains on the old side files and `stage_contract.py` fails there, which is how you will notice.
+
 Rows are unchanged at 12,966, keyed the same. **The climb's 77.52 baseline (protocol 1cdf63f8c825, measured at 995b8679) is not comparable with anything trained on this branch until it is re-baselined** on the merged commit; neither is the 77.74 in `composite_score.BASELINE`.
 
 ## Rolling to a new season
@@ -147,6 +151,8 @@ These still spell 2025-26 (or 2026-27) themselves and need a look on the roll:
 - `pipeline/fetch_contracts.py`, `pipeline/nba_salary_cap.py`: per-season tables, one entry per new season
 - `pipeline/archetype_era_audit.py`, `pipeline/trend_mtnn.py`: the "2021-2026" era bucket
 - `scripts/smoke_attr.py`, `scripts/smoke_fit.py`: test players named by 2025-26 season
+- `scripts/smoke_season.py`: compares the archetype mix against a literal 2025-26 (lines 291, 293)
+- `pipeline/deadline_analysis.py`: writes "2015-16..2025-26" into its output text
 
 ## Operator runbook
 
