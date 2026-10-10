@@ -4,7 +4,30 @@ Reads pipeline outputs from parallel data-expansion tracks:
   roster_context.json, career_arc.json, competition_context.json,
   salaries_merged.json, team_season_{season}.json
 
-Run:  python pipeline/integrate_context.py [--dry-run]
+The data contract, on the climb path [final#5]. The herdmux climb prepares
+vector-hoops with build_vectors --offline, enrich_vectors and this script,
+nothing else, so it reads whatever side files (honors, career, pedigree,
+form, ...) pipeline/data holds. On a box whose side files predate a builder
+fix, every step exited 0 and the climb trained a matrix no contract commit
+recorded; stage_contract.py ran only from rebuild_all.py. So after writing
+train_matrix.npz + feature_manifest.json this script runs the same check
+stage_contract.py runs against pipeline/contracts/train_matrix.contract.json
+and exits 2 with its violation list and the remedy (rebuild the side files
+with rebuild_all.py --refresh-context --stage matrix; if the change is
+intended, stage_contract.py --accept-drift and commit). A matrix that
+matches is written byte for byte as before and the exit is 0.
+
+Opting out: --no-contract, or HOOPS_NO_CONTRACT=1 in the environment, which
+reaches a herdmux prepare step unchanged (train_host passes os.environ
+through; its extra build flags reach build_vectors only). Either prints that
+the matrix was not checked. For scratch builds and for a climb arm that
+changes the layout on purpose through build_vectors flags (--with-shape adds
+columns; --minutes-source real and --fixed-gates change the rows), which
+the contract would otherwise refuse. rebuild_all.py runs this script with no
+flag (its argv is the climb's, a test holds them equal) and still runs
+stage_contract.py after it, for --stats-out.
+
+Run:  python pipeline/integrate_context.py [--dry-run] [--no-contract]
 Requires: pipeline/data/train_matrix.npz + feature_manifest.json
 See: pipeline/mtnn_v4_plan.md, docs/DATA_EXPANSION_WORKFLOW.md
 """
@@ -14,6 +37,7 @@ from __future__ import annotations
 import argparse
 import json
 import math
+import os
 import subprocess
 import sys
 from collections import defaultdict
@@ -24,10 +48,17 @@ import numpy as np
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "pipeline"))
 
+import stage_contract  # noqa: E402
 from artifact_io import atomic_savez_compressed, atomic_write_text  # noqa: E402
 
 DATA_DIR = ROOT / "pipeline" / "data"
 CACHE_DIR = ROOT / "pipeline" / "cache"
+CONTRACT = ROOT / "pipeline" / "contracts" / "train_matrix.contract.json"
+NO_CONTRACT_ENV = "HOOPS_NO_CONTRACT"
+CONTRACT_REMEDY = (
+    "run python pipeline/rebuild_all.py --refresh-context --stage matrix on this box; "
+    "if the change is intended, stage_contract.py --accept-drift and commit"
+)
 
 ROSTER_JSON = DATA_DIR / "roster_context.json"
 FORM_JSON = DATA_DIR / "form_context.json"
@@ -596,9 +627,23 @@ def write_bundle(Z, M, manifest, *, player_id, season, name, cluster) -> None:
     atomic_write_text(DATA_DIR / "feature_manifest.json", json.dumps(manifest, indent=2), encoding="utf-8")
 
 
+def contract_gate(matrix: Path, manifest: Path, contract: Path) -> int:
+    """stage_contract's check of the matrix just written: 0, or its exit code (2) after the remedy."""
+    rc = stage_contract.main(["--matrix", str(matrix), "--manifest", str(manifest), "--contract", str(contract)])
+    if rc != 0:
+        print(f"integrate_context: the matrix it wrote breaks the data contract. To fix: {CONTRACT_REMEDY}")
+    return rc
+
+
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--dry-run", action="store_true")
+    ap.add_argument(
+        "--no-contract",
+        action="store_true",
+        help="do not check the written matrix against pipeline/contracts/train_matrix.contract.json "
+        f"(scratch builds; {NO_CONTRACT_ENV}=1 in the environment does the same)",
+    )
     args = ap.parse_args()
 
     proc = subprocess.run(
@@ -678,6 +723,16 @@ def main() -> None:
 
     write_bundle(Z2, M2, man2, player_id=pids, season=seasons, name=names, cluster=clusters)
     print("wrote train_matrix.npz + feature_manifest.json (v4 context)")
+
+    off = "--no-contract" if args.no_contract else None
+    if off is None and os.environ.get(NO_CONTRACT_ENV) == "1":
+        off = f"{NO_CONTRACT_ENV}=1"
+    if off is not None:
+        print(f"integrate_context: {off}: the matrix was NOT checked against the data contract")
+        return
+    rc = contract_gate(DATA_DIR / "train_matrix.npz", DATA_DIR / "feature_manifest.json", CONTRACT)
+    if rc != 0:
+        raise SystemExit(rc)
 
 
 if __name__ == "__main__":

@@ -38,8 +38,11 @@ optional; what does not run is left out of the plan by a flag you passed.
   matrix   build_vectors.py --offline, enrich_vectors.py, integrate_context.py:
            exactly the herdmux climb's prepare for vector-hoops
            (tests/test_rebuild_all.py compares the two when climb.py is on
-           the box). Then stage_contract.py, which fails the run when the
-           matrix drifted from pipeline/contracts/train_matrix.contract.json.
+           the box). integrate_context.py ends with the contract check
+           against pipeline/contracts/train_matrix.contract.json and exits 2
+           on drift, so the run stops there, as the climb's prepare does.
+           Then stage_contract.py, which checks the same matrix again and
+           writes its stats manifest into the run directory (--stats-out).
   context  only with --refresh-context, between enrich_vectors and
            integrate_context: the side builders whose outputs
            integrate_context and train_mtnn read, from real caches only and
