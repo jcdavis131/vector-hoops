@@ -138,6 +138,69 @@ def test_key_change_fails_unless_allowed():
     assert sc.compare(contract_of(base), stats_of(new), allow_key_change=True) == []
 
 
+# --- hygiene: per-season constants, proxy warnings [features#9] -----------------
+
+
+def two_seasons(n: int = N) -> dict[str, np.ndarray]:
+    b = bundle(n)
+    b["season"] = np.array(["2015-16"] * (n // 2) + ["2016-17"] * (n - n // 2))
+    return b
+
+
+def test_a_column_constant_within_one_season_fails():
+    base = two_seasons()
+    b = two_seasons()
+    b["Z"][: N // 2, COLUMNS.index("B1")] = 0.0  # the box-outs pattern: one value, observed
+    v = sc.compare(contract_of(base), stats_of(b))
+    assert [x for x in v if x.startswith("constant:")] == [
+        f"constant: column 'B1' is one value over its {N // 2} observed rows in 2015-16"
+    ]
+
+
+def test_a_masked_block_is_not_a_constant():
+    b = two_seasons()
+    j = COLUMNS.index("B1")
+    b["Z"][: N // 2, j] = 0.0
+    b["mask"][: N // 2, j] = 0.0  # missing, not a measured constant
+    assert stats_of(b)["season_constants"] == []
+
+
+def test_an_allowed_constant_passes_only_at_its_pinned_count(monkeypatch):
+    b = two_seasons()
+    b["Z"][: N // 2, COLUMNS.index("B1")] = 1.0
+    monkeypatch.setattr(sc, "CONSTANT_ALLOWED", {("B1", "2015-16"): (N // 2, "test: structural")})
+    assert sc.constant_violations(stats_of(b)) == []
+    monkeypatch.setattr(sc, "CONSTANT_ALLOWED", {("B1", "2015-16"): (N // 2 - 1, "test: structural")})
+    assert len(sc.constant_violations(stats_of(b))) == 1
+
+
+def test_accept_drift_refuses_a_constant(tmp_path, capsys):
+    contract = tmp_path / "c.json"
+    b = two_seasons()
+    b["Z"][: N // 2, COLUMNS.index("A1")] = 2.0
+    m, man = write_matrix(tmp_path / "a", b)
+    assert cli(m, man, contract, "--accept-drift") == sc.EXIT_VIOLATION
+    assert not contract.exists()
+    assert "refuses 1 per-season constant" in capsys.readouterr().out
+
+
+def test_an_availability_proxy_is_a_warning_not_a_failure(tmp_path, capsys):
+    n = sc.MIN_PROXY_OVERLAP + 100
+    b = bundle(n)
+    j_in, j_target = COLUMNS.index("A1"), COLUMNS.index("B1")
+    b["Z"][:, j_in] = b["Z"][:, j_target] * 2 + 0.01 * np.arange(n) / n
+    families = {"A1": "career", "A2": "career", "B1": "injury"}
+    stats = stats_of(b, families=families)
+    assert [(w["column"], w["target"]) for w in stats["proxy_warnings"]] == [("A1", "B1")]
+    m, man = write_matrix(tmp_path / "p", b)
+    man.write_text(json.dumps({"features": COLUMNS, "families": families, "source": "test"}), encoding="utf-8")
+    contract = tmp_path / "c.json"
+    assert cli(m, man, contract, "--accept-drift") == 0
+    capsys.readouterr()
+    assert cli(m, man, contract) == 0
+    assert "warning: A1 reads like the durability target B1" in capsys.readouterr().out
+
+
 # --- CLI -----------------------------------------------------------------------
 
 

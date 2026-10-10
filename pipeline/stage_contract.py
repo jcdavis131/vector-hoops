@@ -24,6 +24,24 @@ the exit code is 2 when:
   zeros     any column's zero fraction rose by more than 10 points
   keys      the ordered player_id|season keys changed (--allow-key-change
             lets this one through, for a deliberate identity fix)
+  constant  an observed column (mask 1) holds one value over the
+            MIN_CONSTANT_OBSERVED or more observed rows of a season, unless
+            CONSTANT_ALLOWED (here, in code) names that column and season
+            with the reason. Era z-scoring turns such a block into zeros
+            marked observed. The whole-column gate in test_feature_hygiene
+            passed 3,181 of these cells on the 90ef66a4 matrix: HUSTLE_BOX_OUTS
+            2015-16/2016-17 (an untracked stat written as 0), the career
+            counts in 1996-97 (left-censored), HON_ASG_LAG 1999-00 (no game)
+            [features#9]. --accept-drift cannot accept one: it is a defect in
+            the matrix, not drift from the contract.
+
+Warnings (printed, exit code unchanged): an input column whose masked
+correlation with a durability target (injury family) reaches PROXY_WARN_R.
+REST_AVG and GP_RATIO measure availability partly (missed games stretch
+the rest between games played; GP over the team's mean GP is nearly the
+target's GP over team games): |r| 0.79 with INJ_GP_PCT on the 90ef66a4
+matrix [features#9]. No ablation has ruled on them; the warning keeps them
+in view until one does.
 
 Definitions. They are not the same as integrate_context's, so they are spelled
 out here and in the contract file:
@@ -84,6 +102,25 @@ MAX_ZERO_RISE_POINTS = 10.0
 EXIT_VIOLATION = 2
 DIGITS = 6
 
+MIN_CONSTANT_OBSERVED = 5
+TARGET_FAMILIES = ("injury",)
+PROXY_WARN_R = 0.7
+MIN_PROXY_OVERLAP = 400
+
+# (column, season) -> (observed rows, why one value over them is the truth,
+# not a defect). The count is pinned: the same column and season with more
+# rows is a different block (the 1996-97 career counts were one value over
+# all 398 rows while they were left-censored) and fails until someone writes
+# down why. Measured on the P11 matrix; anything else fails.
+CONSTANT_ALLOWED = {
+    ("YEAR_IN_LEAGUE", "1996-97"): (38, "every career the caches see from its start is in its first season"),
+    ("CAREER_EXP_YEARS", "1996-97"): (38, "every career the caches see from its start is in its first season"),
+    ("CAREER_ACTIVE_FRAC", "1996-97"): (38, "every career the caches see from its start is in its first season"),
+    ("CAREER_ACTIVE_FRAC", "1997-98"): (92, "a career seen from its start has played every season since its debut"),
+    ("CAREER_GAP_YEARS", "1997-98"): (319, "the only earlier charted season is 1996-97, so every observed gap is 0"),
+    ("HON_ASG_CUM", "1997-98"): (92, "no 1996-or-later draftee was a 1997 All-Star: the count through 1996-97 is 0"),
+}
+
 
 def _r(x: float) -> float:
     return round(float(x), DIGITS)
@@ -108,6 +145,30 @@ def compute_stats(
             "observed": _r(observed[:, j].mean()) if n else 0.0,
             "zero": _r((Z[:, j] == 0).mean()) if n else 0.0,
         }
+    seasons = np.asarray([str(s) for s in season])
+    constants = []
+    for s in sorted(set(seasons.tolist())):
+        in_season = seasons == s
+        for j, col in enumerate(columns):
+            obs = in_season & observed[:, j]
+            k = int(obs.sum())
+            if k >= MIN_CONSTANT_OBSERVED and float(np.ptp(Z[obs, j])) == 0.0:
+                constants.append({"column": str(col), "season": s, "observed": k})
+    proxies = []
+    targets = [j for j, c in enumerate(columns) if families.get(c) in TARGET_FAMILIES]
+    for k, col in enumerate(columns):
+        if families.get(col) in TARGET_FAMILIES:
+            continue
+        for j in targets:
+            both = observed[:, j] & observed[:, k]
+            if int(both.sum()) < MIN_PROXY_OVERLAP:
+                continue
+            x, y = Z[both, k].astype(np.float64), Z[both, j].astype(np.float64)
+            if x.std() < 1e-9 or y.std() < 1e-9:
+                continue
+            r = float(np.corrcoef(x, y)[0, 1])
+            if abs(r) >= PROXY_WARN_R:
+                proxies.append({"column": str(col), "target": str(columns[j]), "r": _r(r), "n": int(both.sum())})
     return {
         "rows": fp["rows"],
         "cols": fp["cols"],
@@ -118,6 +179,9 @@ def compute_stats(
         "families": {str(c): str(families[c]) for c in columns},
         "family_coverage": fp["family_coverage"],
         "column_stats": column_stats,
+        # Not part of the contract (CONTRACT_KEYS): checked against code.
+        "season_constants": constants,
+        "proxy_warnings": proxies,
     }
 
 
@@ -195,6 +259,8 @@ def compare(contract: Mapping[str, Any], stats: Mapping[str, Any], *, allow_key_
                 f"observed {float(old['observed']):.4f} -> {float(new_cs[col]['observed']):.4f}"
             )
 
+    out.extend(constant_violations(stats))
+
     if contract["keys_sha256"] != stats["keys_sha256"] and not allow_key_change:
         out.append(
             f"keys: ordered player_id|season keys changed "
@@ -202,6 +268,15 @@ def compare(contract: Mapping[str, Any], stats: Mapping[str, Any], *, allow_key_
             "pass --allow-key-change if that is the point of the change"
         )
     return out
+
+
+def constant_violations(stats: Mapping[str, Any]) -> list[str]:
+    """Per-season constants CONSTANT_ALLOWED does not explain, one line each."""
+    return [
+        f"constant: column '{c['column']}' is one value over its {c['observed']} observed rows in {c['season']}"
+        for c in stats.get("season_constants", [])
+        if CONSTANT_ALLOWED.get((c["column"], c["season"]), (None,))[0] != c["observed"]
+    ]
 
 
 CONTRACT_KEYS = (
@@ -221,6 +296,10 @@ DEFINITIONS = {
     "zero": "share of all rows where Z == 0.0 in the column, masked rows included (masked cells are stored as 0)",
     "observed": "share of rows where mask > 0 in the column",
     "values_sha256": "recorded for audit, never compared",
+    "constant": (
+        f"an observed column with one value over >= {MIN_CONSTANT_OBSERVED} observed rows of a season fails, "
+        "unless stage_contract.CONSTANT_ALLOWED names it (checked against code, not this file)"
+    ),
     "limits": (
         f"rows +-{MAX_ROW_CHANGE:.0%}; columns and their families exact, in order; family coverage drop <= "
         f"{MAX_COVERAGE_DROP_POINTS:g} points; column zero rise <= {MAX_ZERO_RISE_POINTS:g} points; "
@@ -277,8 +356,19 @@ def main(argv: Sequence[str] | None = None) -> int:
         else [f"no contract at {args.contract}"]
     )
     summary = f"{stats['rows']} rows, {stats['cols']} columns, {len(stats['family_coverage'])} families"
+    for w in stats.get("proxy_warnings", []):
+        print(
+            f"warning: {w['column']} reads like the durability target {w['target']} (r={w['r']:+.4f}, n={w['n']}); "
+            "an availability proxy in an input tower [features#9]"
+        )
 
     if args.accept_drift:
+        hygiene = constant_violations(stats)
+        if hygiene:
+            print(f"stage contract: --accept-drift refuses {len(hygiene)} per-season constant(s); fix the matrix:")
+            for v in hygiene:
+                print(f"  - {v}")
+            return EXIT_VIOLATION
         for v in violations:
             print(f"  accepting: {v}")
         gs = git_state(ROOT)
