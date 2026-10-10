@@ -7,7 +7,8 @@ Runs the refresh loop end to end and records what actually changed:
      fetch failure is EXPECTED off an operator machine — the run degrades
      to offline rebuild instead of dying.
   2. REBUILD: build_vectors.py --offline when the wide cache is healthy
-     (skipped gracefully on the compact legacy cache), then
+     (skipped gracefully on the compact legacy cache), then enrich_vectors.py
+     whenever a build_vectors step rewrote vectors.json, then
      build_skills.py — deterministic from assets/vectors.json.
   3. GATE: pipeline/test_skills.py must pass or the run reports failure.
   4. LEDGER: append a row to pipeline/data/dataset_ledger.json with row
@@ -94,10 +95,10 @@ def main() -> None:
         help="hint for logs only; fetch always resumes from cache",
     )
     # build_vectors alone writes a vectors.json with no per-player position `p`
-    # (only enrich_vectors.py sets it), and this script never runs enrich. That
-    # file is the training input and a deployed asset, so the CI refresh passes
-    # --keep-vectors and builds skills from the committed vectors.json, which
-    # the module docstring already treats as the source of truth.
+    # (only enrich_vectors.py sets it). That file is the training input and a
+    # deployed asset, so a run that rebuilds it now runs enrich_vectors.py
+    # right after. The CI refresh still passes --keep-vectors and builds skills
+    # from the committed vectors.json.
     ap.add_argument(
         "--keep-vectors",
         action="store_true",
@@ -106,16 +107,20 @@ def main() -> None:
     args = ap.parse_args()
 
     steps = []
+    # Every step that may rewrite assets/vectors.json (build_vectors writes
+    # only after a complete build, 3dc60d75; a failed one leaves the file).
+    vector_builds: list[dict] = []
     if not args.offline:
         # Best-effort: resumes from cache, throttles per repo policy.
         if not args.keep_vectors:
-            steps.append(
+            vector_builds.append(
                 run_step(
                     "fetch+rebuild (stats.nba.com)",
                     [sys.executable, "pipeline/build_vectors.py"],
                     required=False,
                 )
             )
+            steps.append(vector_builds[-1])
         steps.append(
             run_step(
                 "fetch draft history (Track H)",
@@ -146,11 +151,24 @@ def main() -> None:
     if args.keep_vectors:
         print("== rebuild vectors: skipped (--keep-vectors)\n")
     else:
-        steps.append(
+        vector_builds.append(
             run_step(
                 "rebuild vectors (offline)",
                 [sys.executable, "pipeline/build_vectors.py", "--offline"],
                 required=False,
+            )
+        )
+        steps.append(vector_builds[-1])
+    # The default run (no --offline, no --keep-vectors) rebuilt vectors.json
+    # with build_vectors and stopped there, so the training input and the
+    # deployed asset lost every player's position `p`: enrich_vectors.py is its
+    # only writer. rebuild_all.py's matrix stage runs the same pair in this order.
+    if any(s["ok"] for s in vector_builds):
+        steps.append(
+            run_step(
+                "enrich vectors (positions, projection, axes)",
+                [sys.executable, "pipeline/enrich_vectors.py"],
+                required=True,
             )
         )
 
