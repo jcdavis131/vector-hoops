@@ -239,16 +239,44 @@ def _aux_test_r2s(report: dict[str, Any]) -> list[float]:
 # on tests/test_composite_score.py's hand report (CQS 60.48), dropping
 # position_top1_acc gives 57.48, dropping the skills block 49.48, and a
 # missing test recall with a 0.95 all-pairs recall 67.18, with nothing in the
-# composite block saying why. With any of V2_REQUIRED missing the v2 CQS is None, which herdmux's
-# gpu/metrics.py read_result treats as a broken run, not a result. aux_r2 is
-# not required: masking the families its heads read removes it on purpose.
-# A v1 report is scored exactly as before; components_missing names what was
-# missing either way.
-V2_REQUIRED = tuple(k for k in WEIGHTS if k != "aux_r2")
+# composite block saying why. With an expected component missing the v2 CQS
+# is None, which herdmux's gpu/metrics.py read_result treats as a broken run,
+# not a result. A v1 report is scored exactly as before; components_missing
+# names what was missing either way.
+#
+# Expected, per protocol (2026-10-10). Requiring all of WEIGHTS but aux_r2
+# also refused runs whose skills components are absent on purpose: a run with
+# no skill labels writes "skills": None and trains no skill tower, as masking
+# the families an aux head reads removes aux_r2 [eval#10 verifier note]. So
+# the skills components are expected only from a run that trained skill
+# towers (a skills block in the report); a block with nothing to score on
+# test is still a broken run. A component outside the expected set scores
+# 0.0, as aux_r2 always has, so such a CQS compares only with runs missing
+# the same components (components_missing says which). v1 expects nothing:
+# every recorded v1 number was scored that way.
+EXPECTED_COMPONENTS: dict[str, tuple[str, ...]] = {
+    "v1": (),
+    "v2": tuple(k for k in WEIGHTS if k != "aux_r2"),
+}
+# Expected only when the report shows the run trained what they score.
+SKILL_COMPONENTS = ("skills_r2", "skill_nn")
+V2_REQUIRED = EXPECTED_COMPONENTS["v2"]  # every v2 component a full run produces
+
+
+def _protocol(report: dict[str, Any]) -> str:
+    """The report's protocol: v2 for a --protocol-v2 report, else v1 (older reports included)."""
+    return "v2" if report.get("protocol") == "v2" else "v1"
 
 
 def _is_v2(report: dict[str, Any]) -> bool:
-    return report.get("protocol") == "v2"
+    return _protocol(report) == "v2"
+
+
+def expected_components(report: dict[str, Any]) -> list[str]:
+    """The components a report of its protocol has to carry for its CQS to be scored."""
+    expected = EXPECTED_COMPONENTS[_protocol(report)]
+    trained_skills = isinstance(report.get("skills"), dict)
+    return [k for k in expected if trained_skills or k not in SKILL_COMPONENTS]
 
 
 def _test_recall(report: dict[str, Any]) -> float | None:
@@ -323,7 +351,8 @@ def composite_quality(report: dict[str, Any]) -> dict[str, Any]:
     recall = _test_recall(report)
     purity = _num(report.get("cross_era_archetype_neighbor_purity_at_20"))
     missing = missing_components(report)
-    unscored = [k for k in missing if k in V2_REQUIRED] if _is_v2(report) else []
+    expected = expected_components(report)
+    unscored = [k for k in missing if k in expected]
     block = {
         "cqs": None if unscored else round(cqs, 2),
         "components": {k: round(v, 4) for k, v in comps.items()},
@@ -350,14 +379,16 @@ def composite_quality(report: dict[str, Any]) -> dict[str, Any]:
         # weight scored over all rows, most of them training rows.
         "component_rows": dict(COMPONENT_ROWS),
         "all_rows_weight": round(sum(WEIGHTS[k] for k in ALL_ROW_COMPONENTS), 4),
-        # [eval#10] each scored 0.0 above; under protocol v2 a required one
-        # leaves the CQS unscored instead.
+        # [eval#10] each scored 0.0 above; one in components_expected leaves
+        # the CQS unscored instead (none under v1).
         "components_missing": missing,
+        "components_expected": expected,
     }
     if unscored:
         block["cqs_unscored"] = (
-            f"protocol v2 scores no CQS without {', '.join(unscored)}: a missing component means a broken "
-            "run (no enrich_vectors, no skill labels, no held-out test pairs), not a score of 0.0"
+            f"protocol {_protocol(report)} scores no CQS without {', '.join(unscored)}: a missing component "
+            "means a broken run (no enrich_vectors, skill towers with no test rows, no held-out test pairs), "
+            "not a score of 0.0"
         )
     return block
 
@@ -494,12 +525,17 @@ def should_promote(
 
 
 def seed_baseline_from_report(report: dict[str, Any]) -> dict[str, float]:
-    """Compute and return the baseline dict for the current shipped report."""
+    """Compute and return the baseline dict for the current shipped report.
+
+    Raises ValueError for a report whose CQS is unscored (a v2 report missing
+    an expected component). It did float(block["cqs"]), a TypeError on None,
+    and it took the all-pairs recall fallback under v2 as well; the recall is
+    _test_recall's now, the same one the CQS used.
+    """
     block = composite_quality(report)
-    test = _held_out_test(report)
-    recall = _num(test.get("recall_at_10_mtnn"))
-    if recall is None:
-        recall = _num(report.get("recall_at_10_same_player_next_season")) or 0.0
+    if block["cqs"] is None:
+        raise ValueError(f"no baseline from an unscored report: {block.get('cqs_unscored')}")
+    recall = _test_recall(report) or 0.0
     purity = _num(report.get("cross_era_archetype_neighbor_purity_at_20")) or 0.0
     return {
         "cqs": float(block["cqs"]),

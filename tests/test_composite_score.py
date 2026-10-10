@@ -200,9 +200,7 @@ def test_v2_takes_no_all_pairs_recall_fallback_and_leaves_the_cqs_unscored():
     assert not ok and why.startswith("CQS was not scored: protocol v2")
 
 
-@pytest.mark.parametrize(
-    "drop", ["position_top1_acc", "skills", "next_profile", "cross_era_archetype_neighbor_purity_at_20"]
-)
+@pytest.mark.parametrize("drop", ["position_top1_acc", "next_profile", "cross_era_archetype_neighbor_purity_at_20"])
 def test_v2_leaves_the_cqs_unscored_when_a_required_input_is_missing(drop):
     rep = hand_report(protocol="v2")
     del rep[drop]
@@ -210,6 +208,42 @@ def test_v2_leaves_the_cqs_unscored_when_a_required_input_is_missing(drop):
     # v1 still scores it, with the component at 0.0.
     del rep["protocol"]
     assert isinstance(cqs.composite_quality(rep)["cqs"], float)
+
+
+def test_v2_expects_skills_only_from_a_run_that_trained_skill_towers():
+    """A run with no skill labels writes "skills": None and trains no skill tower:
+    its skills components are legitimately absent, like masked aux heads. A run
+    that trained the towers but has nothing to score on test is broken."""
+    rep = hand_report(protocol="v2", skills=None)
+    block = cqs.composite_quality(rep)
+    assert block["components_missing"] == ["skills_r2", "skill_nn"]
+    assert "skills_r2" not in block["components_expected"] and "position" in block["components_expected"]
+    assert block["cqs"] == pytest.approx(60.48 - 100 * (0.14 * 0.5 + 0.05 * 0.8))
+
+    rep = hand_report(protocol="v2", skills={"holdout": {"test": {}}, "neighbor_consistency_pts_mtnn": 5.0})
+    block = cqs.composite_quality(rep)
+    assert block["cqs"] is None and "without skills_r2" in block["cqs_unscored"]
+
+
+def test_v1_expects_nothing_so_every_recorded_number_stands():
+    rep = hand_report()
+    del rep["position_top1_acc"]
+    block = cqs.composite_quality(rep)
+    assert block["components_expected"] == [] and block["cqs"] == pytest.approx(60.48 - 100 * 0.05 * 0.6)
+
+
+def test_a_baseline_is_never_seeded_from_an_unscored_report():
+    """seed_baseline_from_report did float(block['cqs']), a TypeError on an unscored v2 report."""
+    rep = hand_report(protocol="v2")
+    del rep["position_top1_acc"]
+    with pytest.raises(ValueError, match=r"unscored report.*without position"):
+        cqs.seed_baseline_from_report(rep)
+    base = cqs.seed_baseline_from_report(hand_report(protocol="v2"))
+    assert base == {"cqs": 60.48, "recall": 0.8, "purity": 0.78}
+    # v2 takes no all-pairs recall fallback here either.
+    rep = hand_report(protocol="v2", held_out_recall={"test": {}}, recall_at_10_same_player_next_season=0.95)
+    with pytest.raises(ValueError, match="without recall"):
+        cqs.seed_baseline_from_report(rep)
 
 
 def test_v2_scores_without_aux_heads_which_masking_removes_on_purpose():
