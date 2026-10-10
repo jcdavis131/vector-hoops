@@ -10,12 +10,14 @@ Live at https://hoops.dumbmodel.com — plain HTML/JS, no framework.
 > Solo personal project, no connection to employer, built with public/free-tier only (free data pipeline, ONNX optional, static Vercel).
 
 > **Picking up in-progress work?** Start at [`docs/HANDOFF.md`](docs/HANDOFF.md) — current state, dormant data tracks and how to activate them, verification commands, and open follow-ups.
+>
+> **Building, training or shipping the model?** [`docs/PIPELINE.md`](docs/PIPELINE.md): the stages, recipes, the data contract, lineage and promotion, the served-model check, CQS v1 and v2, and the operator runbook.
 
 ## The embedding
 
 12,966 player-seasons (1996–2026), per-100-possession stats z-scored within season so eras compare honestly. A multi-tower neural net (MTNN v5: 130 features in 18 families, 17 of them towers (injury feeds a durability head, not an input tower), fused to a 64-dim L2-normalized embedding with archetype / position / next-profile / skills heads) produces the space the game scores in. On the player-split leak-free eval: 0.977 recall@10, 0.6717 purity@20, composite 0.7937 from eval_scoreboard.json (0.4*recall + 0.6*purity, see assets/manifest.json mtnn_leakfree.composite 0.7937, assets/eval_scoreboard.json adjacent-season test n=790 top1 0.438 top5 0.757, overall top1 0.5081 top5 0.9339; see `docs/DATA_MODEL_2026-07-16.md`, `docs/MTNN_V5_PROMOTE_GATE.md`, and `assets/eval_scoreboard.json` for how the gate is defined — an earlier season-split eval that scored recall@10 = 1.0 was memorization and was replaced).
 
-The shipped artifacts (`assets/mtnn_meta.json`, `assets/mtnn.onnx`, `assets/vectors.json`, `assets/skills.json`) are committed, so the site runs from a static host with client-side inference (ONNX optional).
+The shipped artifacts (`assets/mtnn_meta.json`, `assets/mtnn.onnx`, `assets/vectors.json`, `assets/skills.json`) are committed, so the site runs from a static host with client-side inference (ONNX optional). On the `forge/backend-hardening` branch the committed MTNN bundle is not a promoted export and `scripts/check_served_model.py` fails on it by design until a real run is promoted and exported; see [`docs/PIPELINE.md`](docs/PIPELINE.md).
 
 ## The site
 
@@ -39,21 +41,21 @@ Three data tracks are built but dormant, each cache-ready and gated on a committ
 
 ## Training
 
-`pipeline/rebuild_all.py` is the one rebuild: the matrix (`build_vectors --offline` → `enrich_vectors` → `integrate_context`, the same chain the climb measures on, then a data contract), MTNN training (`pipeline/train_mtnn.py`, torch), export and verify, stopping at the first step that fails. `train.sh` is a thin wrapper over it; `--list` prints the plan. Promotion of a new embedding into the game is a deliberate, separate step behind the leak-free gate above — the transparent 14-dim contract stays until a candidate beats it there. Research notes live in `docs/` (`MTNN_V5_DEEP_ARCHITECTURE.md`, `MTNN_V6_SOTA.md`, `RESEARCH.md`).
+`pipeline/rebuild_all.py` is the one rebuild: the matrix (`build_vectors --offline` → `enrich_vectors` → `integrate_context`, the same chain the climb measures on, then a data contract), MTNN training (`pipeline/train_mtnn.py --recipe ship`, torch), promotion (`pipeline/promote.py`, the only way a model ships), export and verify, stopping at the first step that fails. `train.sh` and the Makefile are thin wrappers over it; `--list` prints the plan. [`docs/PIPELINE.md`](docs/PIPELINE.md) has the details and the runbook. Research notes live in `docs/` (`MTNN_V5_DEEP_ARCHITECTURE.md`, `MTNN_V6_SOTA.md`, `RESEARCH.md`).
 
 ### v6 transformer fusion candidate (not shipped, 2026-08-05)
 
 - **Arch:** 17 towers `cat([x·m,m])→96h→24d` LayerNorm skip L2 `d_in×2→40→192→40 ×3 blocks`, tokens 17×40→proj 128, fusion `CLS + season 12-d→128 + 17 tokens = 19 tokens` transformer `d_model128 n_layers4 n_heads4 ff512 pre-LN dropout0.15` → `CLS 128→512→64 L2` (shared lib `towers.py` ResidualTower + `TransformerFusion` 128d 4-head CLS→64-d)
 - **Losses:** InfoNCE hybrid player 0.65 arch 0.35 hard_neg_boost 0.4 SupCon + CORAL/GRL λ0.3 VICReg var25 cov1 w0.05, mask fix (B,1) expand (B,D)
 - **Shipped eval (v5, player-split leak-free, season-split 1.0 replaced):** recall@10 0.977, purity@20 0.6717, composite 0.7937, adjacent-season retrieval test `n=790` top1 0.438 top5 0.757 (overall top1 0.5081 top5 0.9339), val `n=761` top1 0.2668 — see `assets/eval_scoreboard.json` computed 2026-07-25
-- **Target v6:** composite 0.7937→0.85, test top1 0.438→0.55, CQS 85.87→87.5-88.0, purity@20 0.8726→0.89-0.91 — requires `train_mtnn_v6.py --epochs 150` on local GPU (Hatch OOM, torch wheel). Candidate gates `candidate.json` first, promote only if beats shipped on leak-free player-split (no season leak).
-- **Status:** Code scaffolded (`pipeline/train_mtnn_v6.py` forwards to `train_mtnn.py` with v6 defaults, `pipeline/towers.py` shared lib), local training claimed by LOCAL-GPU lane `local/hoops-v6-gpu`, no push to main until eval passes.
+- **Status (2026-10-10):** not trained to a measured result. The v6-192d trainers that claimed one ("CQS 87.8, 5/5 PASS") trained on `torch.randn` batches or for two CPU steps and wrote those numbers as literals; they and `candidate.json` were deleted [eval#0]. The legacy v6 refit's flags are `pipeline/recipes/legacy-v6-refit.json` (`rebuild_all.py --v6`); it fits every row, so it ships only with a select run's held-out numbers (`docs/PIPELINE.md`).
 
 ## Running locally
 
 ```bash
 python -m http.server 8000   # static site, open http://localhost:8000
-python -m pytest pipeline/ -q   # pipeline gates (needs the dev extras in pyproject.toml)
+python -m pytest                # pipeline/ and tests/ (needs the dev extras in pyproject.toml)
+python -m pytest -m "not local_data"   # what CI runs, without the gitignored pipeline/data
 ```
 
 ## License
