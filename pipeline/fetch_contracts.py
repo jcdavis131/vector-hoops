@@ -73,7 +73,17 @@ def _log_timeline(node_id, status, err_cls=None, latency=0, tokens=0, extra=None
         print(f"[{node_id}] {status} {err_cls or ''} {extra or ''}")
 
 def load_bbref_salaries_static():
-    """bbref_salaries/<year>/TEAM.json lists [{name, salary}, ...] ; year dir = start year of season 2019->2019-20"""
+    """bbref_salaries/<year>/TEAM.json lists [{name, salary}, ...]; the year dir is the season's END year.
+
+    fetch_salary_history writes cache_path(team, end_year) = <end_year>/TEAM.json
+    (2020/ holds 2019-20). This read the dir as the START year, so every
+    static salary sat one season late: LeBron James' 2019-20 $37,436,858 was
+    filed under 2020-21, and his 2018-19 $35,654,150 under 2019-20. Of the
+    3,755 static rows, 170 matched salaries_merged read that way and 3,604
+    read as end years; the static overlay then overwrote 2,933 merged
+    salaries in contracts_full.json and added 700 player-seasons that were
+    the previous season's.
+    """
     out = {}
     count_files = 0
     if not BBREF_SAL_DIR.exists():
@@ -83,7 +93,7 @@ def load_bbref_salaries_static():
         if not year_dir.is_dir() or not year_dir.name.isdigit():
             continue  # only <year>/ directories hold team pages
         y = int(year_dir.name)
-        season = f"{y}-{str(y+1)[-2:]}"
+        season = f"{y - 1}-{str(y)[-2:]}"
         for team_file in year_dir.glob("*.json"):
             # This was `except Exception as e: print(warn); continue` around the
             # whole file: an unreadable team page dropped its roster from the
