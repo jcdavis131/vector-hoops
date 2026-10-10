@@ -332,6 +332,46 @@ def test_skills_formula_reproduces_build_skills_grades():
     assert out["scored"] is False
 
 
+def test_skills_formula_ranks_among_measured_rows_like_the_labels():
+    """[final#8] build_skills ranks a skill read from an unmeasured input among the measured rows only.
+
+    Given the matrix mask, the formula does the same, so it still reproduces
+    the labels; ranking every row, it did not (shooting R2 0.970 on the FA2
+    train split).
+    """
+    import build_skills
+
+    game = ["PTS", "AST", "OREB", "DREB", "STL", "BLK", "TOV", "FG3A", "FGA", "FTA"]
+    game += ["FG3_PCT", "FG_PCT", "FT_PCT", "PLUS_MINUS"]
+    rng = np.random.default_rng(5)
+    n = 60
+    Z = rng.normal(size=(n, len(game))).astype(np.float32)
+    seasons = np.array(["2024-25"] * 30 + ["2025-26"] * 30)
+    M = np.ones_like(Z)
+    M[::4, game.index("FG3_PCT")] = 0.0  # no attempt behind it: missing, as build_vectors writes it
+    Z[M == 0] = 0.0
+    W = build_skills.weight_matrix(game)
+    unmeasured = ((W != 0)[None] & (M == 0)[:, None, :]).any(axis=2)
+    scores = Z.astype(np.float64) @ W.T
+    volume = Z[:, [game.index(f) for f in ("FGA", "FTA", "AST")]].sum(axis=1)
+    season_idx = {s: np.where(seasons == s)[0] for s in sorted(set(seasons))}
+    grades = build_skills.season_percentiles(scores, volume, season_idx)
+    labels = build_skills.label_grades(scores, volume, season_idx, grades, unmeasured) / 100.0
+    keys = [s["key"] for s in build_skills.SKILLS]
+    assert unmeasured.any(axis=0).sum() >= 1  # at least one skill reads FG3_PCT
+    split = np.array(["test"] * n)
+    skills = {"pred": labels, "target": labels, "mask": (~unmeasured).astype(np.float32), "keys": keys}
+    skills["n_core"] = len(keys)
+    cols = list(range(len(game)))
+    with_mask = cv.skills_diagnostic(skills, Z, cols, game, seasons, split, None, M)
+    assert with_mask["test"]["formula_mean_r2"] == 1.0
+    every_row = cv.skills_diagnostic(skills, Z, cols, game, seasons, split, None)
+    assert every_row["test"]["formula_mean_r2"] < 1.0
+    # A mask with nothing unmeasured ranks exactly as before.
+    plain, _ = cv.skill_formula_grades(Z, game, seasons)
+    assert np.array_equal(plain, cv.skill_formula_grades(Z, game, seasons, np.ones_like(M))[0])
+
+
 def test_aux_diagnostic_marks_targets_that_are_inputs():
     features = ["TM_NET_RTG", "CAREER_SLOPE_3Y", "DELTA_NORM", "PED_PICK_QUALITY", "SOS_NET_RTG"]
     families = {"TM_NET_RTG": "team", "CAREER_SLOPE_3Y": "career", "DELTA_NORM": "career"}

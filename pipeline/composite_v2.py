@@ -564,8 +564,17 @@ def purity_diagnostic(E, Z, game_cols, labels, years, split_of) -> dict:
     return out
 
 
-def skill_formula_grades(Zg: np.ndarray, game_features: list[str], season) -> tuple[np.ndarray, list[str]]:
-    """build_skills' grades/100, recomputed from the game columns the model reads.
+def skill_formula_grades(
+    Zg: np.ndarray, game_features: list[str], season, Mg: np.ndarray | None = None
+) -> tuple[np.ndarray, list[str]]:
+    """build_skills' training labels/100, recomputed from the game columns the model reads.
+
+    With `Mg` (the matrix mask over the same game columns), a skill whose
+    composite reads an unmeasured column is 0 on that row and the rest of its
+    season is ranked among the measured rows, as build_skills.label_grades
+    ranks the labels since [final#8]. On the FA2 matrix this mask equals the
+    core label file's (3,236 zero cells each). Without it every row is ranked,
+    as before.
 
     Imported here, not at module scope: build_skills is numpy-only, but only
     the skills diagnostic needs it.
@@ -575,9 +584,13 @@ def skill_formula_grades(Zg: np.ndarray, game_features: list[str], season) -> tu
     W = build_skills.weight_matrix(list(game_features))
     scores = np.asarray(Zg, dtype=np.float64) @ W.T
     vol_cols = [list(game_features).index(f) for f in ("FGA", "FTA", "AST") if f in game_features]
+    volume = Zg[:, vol_cols].sum(axis=1)
     season = np.asarray(season).astype(str)
     season_idx = {s: np.where(season == s)[0] for s in sorted(set(season.tolist()))}
-    grades = build_skills.season_percentiles(scores, Zg[:, vol_cols].sum(axis=1), season_idx)
+    grades = build_skills.season_percentiles(scores, volume, season_idx)
+    if Mg is not None:
+        unmeasured = ((W != 0)[None, :, :] & (np.asarray(Mg) == 0)[:, None, :]).any(axis=2)
+        grades = build_skills.label_grades(scores, volume, season_idx, grades, unmeasured)
     return grades / 100.0, [sk["key"] for sk in build_skills.SKILLS]
 
 
@@ -585,8 +598,12 @@ def _r2(y: np.ndarray, p: np.ndarray) -> float:
     return 1.0 - float(((y - p) ** 2).sum()) / max(float(((y - y.mean()) ** 2).sum()), 1e-9)
 
 
-def skills_diagnostic(skills, Z, game_cols, game_features, season, split_of, report) -> dict:
-    """Model R2 on the core skill grades beside the formula's R2 from the same inputs [critic#1]."""
+def skills_diagnostic(skills, Z, game_cols, game_features, season, split_of, report, M=None) -> dict:
+    """Model R2 on the core skill grades beside the formula's R2 from the same inputs [critic#1].
+
+    M, the matrix mask, makes the formula rank a skill among the rows that
+    measured its inputs, as the labels do; without it every row is ranked.
+    """
     out: dict = {
         "scored": False,
         "why_not_scored": (
@@ -601,7 +618,8 @@ def skills_diagnostic(skills, Z, game_cols, game_features, season, split_of, rep
         return out
     n_core = int(skills["n_core"])
     keys = list(skills["keys"])[:n_core]
-    formula, formula_keys = skill_formula_grades(np.asarray(Z)[:, game_cols], game_features, season)
+    Mg = None if M is None else np.asarray(M)[:, game_cols]
+    formula, formula_keys = skill_formula_grades(np.asarray(Z)[:, game_cols], game_features, season, Mg)
     if keys != formula_keys:
         out["missing"] = f"core skill keys {keys} do not match build_skills' {formula_keys}"
         return out
@@ -862,7 +880,7 @@ def composite_v2(inputs: dict[str, Any]) -> dict:
             if labels is not None
             else {"scored": False, "missing": "no archetype labels"}
         ),
-        "skills_r2": skills_diagnostic(inputs.get("skills"), Z, game_cols, game_features, season, split_of, report),
+        "skills_r2": skills_diagnostic(inputs.get("skills"), Z, game_cols, game_features, season, split_of, report, M),
         "aux_r2": aux_diagnostic(report, features, families, Mm, run_args),
         "margin_14d": margin_14d_diagnostic(report),
         "archetype_labels": {
