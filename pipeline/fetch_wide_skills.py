@@ -26,8 +26,8 @@ to be `float(x.get(col) or 0.0)` over names unioned across five endpoints,
 so a player one endpoint did not list, and a column one did not track that
 season, became measured zeros in a cache stamped complete [ingest#2,
 features#3]. Now an absent player or key is None, hustle_coverage's season
-rules null what the endpoint did not track (all hustle before 2016-17,
-box_outs before 2017-18), and the doc records "field_coverage" (measured
+rules null what the endpoint did not track (box_outs before 2017-18, and
+every hustle 0.0 in the partly covered 2015-16), and the doc records "field_coverage" (measured
 values per field) and "untracked_fields". d_fg_pct is not fetched: the
 Defense measure never returned D_FG_PCT (0.0 for every player of all 11
 cached seasons), so it is written as null rather than requested under a

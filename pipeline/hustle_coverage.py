@@ -20,9 +20,20 @@ A real zero stays a zero: charges drawn is 0 for 208-334 players a season
 In an existing cache an absent player and a measured zero cannot be told
 apart (the union erased it), so the repair is season-level plus one row
 rule:
-  season rules   every hustle field before HUSTLE_TRACKED_FROM, box_outs
-                 before BOX_OUTS_TRACKED_FROM, d_fg_pct always -> None
+  season rules   box_outs before BOX_OUTS_TRACKED_FROM, d_fg_pct always
+                 -> None; in a PARTIAL_SEASONS season every hustle 0.0
+                 -> None, while a non-zero value stays
   absent rows    every field the season tracks is exactly 0 -> all None
+
+Why 2015-16 is partial rather than untracked (corrected 2026-10-10): the
+first repair nulled every 2015-16 hustle value, and with it 386 non-zero
+values for 147 players (contested 143, deflections 97, loose balls 71,
+screen assists 67, charges 8). A non-zero number can only have come from
+the endpoint, so those were measurements. What 2015-16 cannot say is
+whether a 0.0 is a measured zero or a player the endpoint skipped, and with
+329 of 476 players at 0 on every field it skips a lot; so the zeros go and
+the non-zeros stay. The observed 2015-16 values are therefore the non-zero
+ones only, which the mask records.
 fetch_wide_skills applies the season rules when it writes (it already
 writes None for an absent player). Docs written that way, and the repaired
 caches, carry "field_coverage"; readers apply the absent-row rule only to a
@@ -35,8 +46,11 @@ from __future__ import annotations
 
 HUSTLE_FIELDS = ("screen_ast", "deflections", "loose_balls", "charges", "box_outs", "contested_shots")
 NEVER_MEASURED = ("d_fg_pct",)
-HUSTLE_TRACKED_FROM = "2016-17"
+HUSTLE_TRACKED_FROM = "2015-16"
 BOX_OUTS_TRACKED_FROM = "2017-18"
+# The endpoint covered these seasons only in part: a 0.0 may be a player it
+# skipped, a non-zero value was measured.
+PARTIAL_SEASONS = ("2015-16",)
 
 
 def untracked_fields(season: str) -> tuple[str, ...]:
@@ -54,6 +68,10 @@ def apply_season_rules(season: str, rec: dict) -> dict:
     for f in (*NEVER_MEASURED, *untracked_fields(season)):
         if f in out:
             out[f] = None
+    if season in PARTIAL_SEASONS:
+        for f in HUSTLE_FIELDS:
+            if out.get(f) is not None and float(out[f]) == 0.0:
+                out[f] = None
     return out
 
 
@@ -87,10 +105,12 @@ def field_coverage(players: dict[str, dict]) -> dict[str, int]:
 
 
 REPAIR_NOTE = (
-    "2026-10-09: unmeasured hustle values set to null [ingest#2, features#3]. Season rules: every hustle field "
-    "before 2016-17, box_outs before 2017-18, d_fg_pct always. Absent rows: every tracked hustle field was 0.0. "
-    "field_coverage counts the repaired fields only. post_*/trans_*/pull_up_fg3a are as fetched: a 0.0 there "
-    "can be a player the endpoint did not list, and cannot be told apart from a measured zero."
+    "2026-10-09: unmeasured hustle values set to null [ingest#2, features#3]. Season rules: box_outs before "
+    "2017-18 and d_fg_pct always; in 2015-16, which the endpoint covered only in part, every hustle 0.0 (a "
+    "non-zero value was measured and stays; corrected 2026-10-10, the first repair had nulled all of 2015-16). "
+    "Absent rows: every tracked hustle field was 0.0. field_coverage counts the repaired fields only. "
+    "post_*/trans_*/pull_up_fg3a are as fetched: a 0.0 there can be a player the endpoint did not list, and "
+    "cannot be told apart from a measured zero."
 )
 
 

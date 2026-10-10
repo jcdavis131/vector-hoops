@@ -604,7 +604,8 @@ def load_wide_skills_defense(season: str) -> dict[str, dict]:
         return {}
     out = {}
     # honest_players nulls what the endpoint never measured: every hustle
-    # field in 2015-16, box_outs before 2017-18, d_fg_pct always, and (in a
+    # 0.0 in 2015-16 (partly covered; its non-zero values were measured and
+    # stay), box_outs before 2017-18, d_fg_pct always, and (in a
     # cache without field_coverage) a row whose tracked fields are all 0.0,
     # i.e. a player missing from the hustle response. fetch_wide_skills wrote
     # those as 0.0 and they reached the matrix as observed: HUSTLE_BOX_OUTS
