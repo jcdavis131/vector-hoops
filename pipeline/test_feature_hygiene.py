@@ -54,6 +54,17 @@ KNOWN_DUPLICATES = {
     # build_vectors.BIO_COLS, which rebuilds the live vectors.json for zero
     # gain. See docs/MTNN_STABILITY_2026-07-24.md §6-§7.
     "DRAFT_NUMBER~DRAFT_SLOT_Z",
+    # The same draft fact in the pedigree tower, from draft history joined by
+    # PLAYER_ID == person_id. Joined by display name (before 841ccd8d) 93 rows
+    # of namesakes carried another man's record, which is all that kept these
+    # below DUP_R: DRAFT_NUMBER~PED_PICK_QUALITY -0.9721 (90ef66a4 matrix),
+    # -0.9925 (after P10), -1.0000 by id; DRAFT_UNDRAFTED~PED_UNDRAFTED +0.9820
+    # -> +0.9963 (13 rows of 6 players where the bio and the draft history
+    # disagree, e.g. Jonathon Simmons, Willie Reed). Not ablated: which copy a
+    # tower keeps is an owner decision, so they are listed rather than retired.
+    "DRAFT_NUMBER~PED_PICK_QUALITY",
+    "DRAFT_SLOT_Z~PED_PICK_QUALITY",
+    "DRAFT_UNDRAFTED~PED_UNDRAFTED",
     # Structural complements: assisted% + unassisted% = 100 by construction, so
     # r=-0.9986 is arithmetic, not duplicated sourcing. Both are kept because
     # the pair is how the shotmix tower expresses shot creation.
