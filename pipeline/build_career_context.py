@@ -286,6 +286,23 @@ def main() -> None:
     # 1, CAREER_EXP_YEARS 1.0, CAREER_ACTIVE_FRAC 1.0 in his seventh season,
     # and those columns were one constant over all 398 1996-97 rows. Such a
     # career gets no value for the three (masked), every season of it.
+    #
+    # What that does to the z the model sees [final#11]: integrate_context
+    # z-scores these counts per season over the observed rows (era-z, on
+    # purpose), and until about 2007-08 the observed rows are only the careers
+    # the caches see from their start, i.e. young ones (YEAR_IN_LEAGUE observed
+    # on 92 of 393 rows in 1997-98, 240 of 402 in 2001-02, 382 of 412 in
+    # 2007-08). So one raw count maps to very different z by season: on the
+    # FA2 matrix YEAR_IN_LEAGUE 2 is z +1.34 in 1997-98, -0.17 in 1999-00,
+    # -0.52 in 2001-02, -0.81 in 2003-04 and about -0.95 from 2007-08 on. The
+    # counts are measured (no fabricated value at mask 1), but the z of
+    # YEAR_IN_LEAGUE, CAREER_EXP_YEARS and CAREER_ACTIVE_FRAC (and
+    # build_honors' HON_ASG_CUM, censored the same way) is not comparable
+    # across seasons before about 2008. Before P11 the pool held lower-bound
+    # counts instead and the drift was already there (raw 2: +0.48 in
+    # 1997-98, -1.02 in 1999-00). Not changed: one mu/sd over all seasons, or
+    # over 2008 on, would move every season of these columns and is the
+    # owner's call (docs/PIPELINE.md, "What this branch changed in the data").
     draft_year = draft_years_by_pid(CACHE / "draft_history.json")
     first_season = first_seasons_by_pid(CACHE)
     censored_careers = censored_rows = 0
