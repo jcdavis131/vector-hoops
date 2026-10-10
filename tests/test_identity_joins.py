@@ -204,6 +204,62 @@ def test_position_labels_join_on_player_id(tmp_path, monkeypatch):
     assert train_mtnn.load_positions(names, seasons).tolist() == [-1, 2, 4]  # by name the suffix row is lost
 
 
+def _skill_npz(path: Path, names, seasons, grades, pids=None, mask=None) -> Path:
+    arrays = {"name": np.array(names), "season": np.array(seasons), "keys": np.array(["a", "b"])}
+    arrays["grades"] = np.array(grades, dtype=np.float32)
+    if pids is not None:
+        arrays["player_id"] = np.array(pids, dtype=np.int64)
+    if mask is not None:
+        arrays["mask"] = np.array(mask, dtype=np.float32)
+    np.savez_compressed(path, **arrays)
+    return path
+
+
+def test_skill_labels_join_on_player_id(tmp_path, capsys):
+    """[final#23] Labels built against the committed vectors.json lost its 275 suffix rows by name."""
+    import pytest
+
+    pytest.importorskip("torch")
+    import train_mtnn
+
+    names = np.array(["Andre Jackson", "LeBron James"])
+    seasons = np.array(["2023-24", "2023-24"])
+    pids = np.array([1641748, 2544])
+    label_names, grades = ["Andre Jackson Jr.", "LeBron James"], [[0.1, 0.2], [0.9, 0.8]]
+    with_ids = _skill_npz(
+        tmp_path / "ids.npz", label_names, ["2023-24"] * 2, grades, pids=[1641748, 2544], mask=[[1, 0], [1, 1]]
+    )
+    G, M, keys = train_mtnn._join_skill_npz(with_ids, names, seasons, pids)
+    assert keys == ["a", "b"] and np.allclose(G, grades)
+    assert M.tolist() == [[1, 0], [1, 1]]  # the file's per-skill mask
+    # A file without ids (every file before the fix) still joins by name: the suffix row is lost, and said.
+    legacy = _skill_npz(tmp_path / "legacy.npz", label_names, ["2023-24"] * 2, grades)
+    G, M, _ = train_mtnn._join_skill_npz(legacy, names, seasons, pids)
+    assert M.tolist() == [[0, 0], [1, 1]]
+    assert "1 of its 2 rows join the matrix by (name, season)" in capsys.readouterr().out
+
+
+def test_an_id_keyed_label_file_that_misses_rows_stops_the_run(tmp_path):
+    import pytest
+
+    pytest.importorskip("torch")
+    import train_mtnn
+
+    n = 200
+    names = np.array([f"P{i}" for i in range(n)])
+    seasons = np.array(["2023-24"] * n)
+    pids = np.arange(n)
+    grades = [[0.5, 0.5]] * n
+    # 2 of 200 rows keyed to another vectors.json (1%): trained on, with a line.
+    near = _skill_npz(tmp_path / "near.npz", names, seasons, grades, pids=[*range(198), 900, 901])
+    _, M, _ = train_mtnn._join_skill_npz(near, names, seasons, pids)
+    assert int(M[:, 0].sum()) == 198
+    # 3 of 200 (1.5%): stale or mis-keyed, the run stops before training.
+    far = _skill_npz(tmp_path / "far.npz", names, seasons, grades, pids=[*range(197), 900, 901, 902])
+    with pytest.raises(SystemExit, match=r"197 of its 200 rows join the matrix by \(player_id, season\)"):
+        train_mtnn._join_skill_npz(far, names, seasons, pids)
+
+
 def test_position_labels_under_half_stop_the_run_unless_allowed(tmp_path, monkeypatch, capsys):
     """[eval#10] A vectors.json without enrich_vectors' `p` used to print a WARNING and train on.
 

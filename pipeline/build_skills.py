@@ -155,6 +155,11 @@ def season_percentiles(scores: np.ndarray, volume: np.ndarray, season_idx: dict[
     return grades
 
 
+def player_ids(players: list[dict]) -> np.ndarray:
+    """vectors.json rows' PLAYER_ID ('pid'), -1 where a row has none."""
+    return np.array([int(p["pid"]) if str(p.get("pid", "")).isdigit() else -1 for p in players], dtype=np.int64)
+
+
 def unmeasured_skills(players: list[dict], features: list[str]) -> np.ndarray:
     """[n, n_skills] True where a skill's composite reads a game dim the row's `vm` lists as unmeasured.
 
@@ -283,6 +288,8 @@ def main() -> None:
         grades=(labels / 100.0).astype(np.float32),
         name=names,
         season=seasons,
+        # train_mtnn joins on (player_id, season) [final#23]; -1 where a row has no pid.
+        player_id=player_ids(players),
         keys=np.array(keys),
         # Per skill: 1 where every input of its composite was measured.
         # train_mtnn._join_skill_npz gives a 0 cell no weight in the loss.

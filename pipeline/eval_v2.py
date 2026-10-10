@@ -122,19 +122,17 @@ def replay_input_transforms(Z, M, season, manifest, a: dict) -> tuple[np.ndarray
     return Z, M, applied
 
 
-def join_core_skills(skill_path: Path, names, seasons):
-    """skill_labels.npz joined by (name, season), as train_mtnn._join_skill_npz does: (grades, mask, keys)."""
-    npz = np.load(skill_path, allow_pickle=False)
-    keys = [str(k) for k in npz["keys"]]
-    lookup = {(str(n), str(s)): g for n, s, g in zip(npz["name"], npz["season"], npz["grades"], strict=False)}
-    G = np.zeros((len(names), len(keys)), dtype=np.float32)
-    Mk = np.zeros_like(G)
-    for i, (n, s) in enumerate(zip(names, seasons, strict=False)):
-        g = lookup.get((str(n), str(s)))
-        if g is not None:
-            G[i] = g
-            Mk[i] = 1.0
-    return G, Mk, keys
+def join_core_skills(skill_path: Path, names, seasons, pids=None):
+    """skill_labels.npz joined exactly as training joins it: (grades, mask, keys).
+
+    train_mtnn._join_skill_npz itself: by (player_id, season) when the file
+    carries ids, honouring its per-skill mask; by (name, season) for an older
+    file [final#23]. This used to be a name-only copy that ignored any mask.
+    Only called with a model's skill predictions, so torch is there.
+    """
+    import train_mtnn as T
+
+    return T._join_skill_npz(skill_path, names, seasons, pids)
 
 
 class Model:
@@ -397,7 +395,7 @@ def evaluate(args: argparse.Namespace) -> dict:
 
     skills = None
     if src.get("skill_pred") is not None and args.skill_labels.exists():
-        G, Mk, keys = join_core_skills(args.skill_labels, mat["name"], mat["season"])
+        G, Mk, keys = join_core_skills(args.skill_labels, mat["name"], mat["season"], mat["player_id"])
         pred = np.asarray(src["skill_pred"])
         if pred.shape[1] >= len(keys):
             skills = {"pred": pred, "target": G, "mask": Mk, "keys": keys, "n_core": len(keys)}

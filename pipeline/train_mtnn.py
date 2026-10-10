@@ -304,31 +304,79 @@ def game_feature_cols(manifest) -> list[int]:
     return [manifest["features"].index(f) for f in game]
 
 
-def _join_skill_npz(path, names, seasons) -> tuple[np.ndarray, np.ndarray, list[str]]:
-    """Join one skill-label npz by (name, season) -> (G, per-skill mask, keys)."""
+# A label file keyed by player_id may lose at most this share of its rows in
+# the join (the contract's row tolerance, stage_contract.MAX_ROW_CHANGE). Labels
+# built from the prepare chain's own vectors.json join every row; built from
+# the committed, hand-restored vectors.json they lose 3 (the (pid, season) keys
+# it does not share with the matrix). More than that is a stale or mis-keyed
+# file, and the run stops instead of training the skill towers on a silent mask.
+SKILL_JOIN_TOLERANCE = 0.01
+
+
+def _join_skill_npz(path, names, seasons, pids=None) -> tuple[np.ndarray, np.ndarray, list[str]]:
+    """Join one skill-label npz -> (G, per-skill mask, keys).
+
+    By (player_id, season) when the file carries `player_id` (build_skills and
+    build_wide_skills write it since [final#23]) and the matrix's ids are
+    passed; else by (name, season), as every file before it. By name, labels
+    built against the committed vectors.json (275 suffix names restored by
+    d2a16d37: 'Andre Jackson Jr.' against the matrix's 'Andre Jackson')
+    silently lost 275 of 12,966 core rows and 248 of 5,154 wide rows.
+
+    An id-keyed file that joins fewer than its rows minus SKILL_JOIN_TOLERANCE
+    stops the run (SystemExit). A name-keyed file prints the shortfall and
+    trains on, as before (the pre-fix inputs the train-path check replays are
+    name-keyed).
+    """
     npz = np.load(path, allow_pickle=False)
     keys = [str(k) for k in npz["keys"]]
-    # An optional per-skill `mask` (build_wide_skills writes one): a skill
-    # whose inputs were not measured for a row is 0 there, not a graded 0.
-    # Without it every cell of a joined row counts, as before.
+    # An optional per-skill `mask` (build_wide_skills and build_skills write
+    # one): a skill whose inputs were not measured for a row is 0 there, not a
+    # graded 0. Without it every cell of a joined row counts, as before.
     masks = npz["mask"] if "mask" in npz.files else None
-    lookup = {(str(n), str(s)): k for k, (n, s) in enumerate(zip(npz["name"], npz["season"], strict=False))}
+    by_id = pids is not None and "player_id" in npz.files
+    if by_id:
+        lookup = {
+            (int(p), str(s)): k for k, (p, s) in enumerate(zip(npz["player_id"], npz["season"], strict=True)) if p >= 0
+        }
+        row_keys = [(int(p), str(s)) for p, s in zip(pids, seasons, strict=True)]
+    else:
+        lookup = {(str(n), str(s)): k for k, (n, s) in enumerate(zip(npz["name"], npz["season"], strict=False))}
+        row_keys = [(str(n), str(s)) for n, s in zip(names, seasons, strict=False)]
     grades = npz["grades"]
     G = np.zeros((len(names), len(keys)), dtype=np.float32)
     M = np.zeros((len(names), len(keys)), dtype=np.float32)
-    for i, (n, s) in enumerate(zip(names, seasons, strict=False)):
-        k = lookup.get((str(n), str(s)))
+    joined = 0
+    for i, key in enumerate(row_keys):
+        k = lookup.get(key)
         if k is not None:
             G[i] = grades[k]
             M[i] = 1.0 if masks is None else masks[k]
+            joined += 1
+    n_file = len(grades)
+    lost = n_file - joined
+    if lost > 0:
+        cells = int(masks.sum()) if masks is not None else n_file * len(keys)
+        msg = (
+            f"{Path(path).name}: {joined} of its {n_file} rows join the matrix by "
+            f"{'(player_id, season)' if by_id else '(name, season)'}; {lost} rows are not trained on "
+            f"({int(M.sum())} of its {cells} measured cells reach the skill loss)"
+        )
+        if by_id and lost > SKILL_JOIN_TOLERANCE * n_file:
+            raise SystemExit(
+                f"{msg} (more than {SKILL_JOIN_TOLERANCE:.0%}). The label file is stale or keyed to another "
+                "vectors.json: rebuild it after the matrix (rebuild_all.py --refresh-context --stage matrix)."
+            )
+        print(f"  {msg}")
     return G, M, keys
 
 
-def load_skill_labels(names, seasons) -> tuple[np.ndarray, np.ndarray, list[str], int]:
+def load_skill_labels(names, seasons, pids=None) -> tuple[np.ndarray, np.ndarray, list[str], int]:
     """Skill-tower targets with a PER-SKILL mask matrix.
 
     Core skills (build_skills.py) cover every row; optional wide skills
-    (build_wide_skills.py) are masked per row where tracking exists.
+    (build_wide_skills.py) are masked per row where tracking exists. Joined
+    by (player_id, season) when `pids` is given and the file carries ids.
     Returns (grades[n,K], mask[n,K], keys, n_core).
     """
     core = DATA_DIR / "skill_labels.npz"
@@ -339,11 +387,11 @@ def load_skill_labels(names, seasons) -> tuple[np.ndarray, np.ndarray, list[str]
             [],
             0,
         )
-    G, M, keys = _join_skill_npz(core, names, seasons)
+    G, M, keys = _join_skill_npz(core, names, seasons, pids)
     n_core = len(keys)
     wide = DATA_DIR / "wide_skill_labels.npz"
     if wide.exists():
-        Gw, Mw, kw = _join_skill_npz(wide, names, seasons)
+        Gw, Mw, kw = _join_skill_npz(wide, names, seasons, pids)
         G = np.concatenate([G, Gw], axis=1)
         M = np.concatenate([M, Mw], axis=1)
         keys = keys + kw
@@ -1336,10 +1384,10 @@ def build_parser() -> argparse.ArgumentParser:
         "--drop-features",
         default="",
         help="comma-separated feature names to exclude, for running the ablation "
-             "audit_features.py asks for. Example: --drop-features INJ_MISS_N "
-             "(r=-0.9998 with INJ_GP_PCT; games missed is the algebraic inverse of "
-             "games played, so the injury tower gets two votes for one signal). "
-             "A family that loses all its columns is dropped, not left empty.",
+        "audit_features.py asks for. Example: --drop-features INJ_MISS_N "
+        "(r=-0.9998 with INJ_GP_PCT; games missed is the algebraic inverse of "
+        "games played, so the injury tower gets two votes for one signal). "
+        "A family that loses all its columns is dropped, not left empty.",
     )
     ap.add_argument("--device", type=str, default="cpu", help="cpu or cuda — forced cpu per 2026-08-10 user request")
     ap.add_argument("--dim", type=int, default=48)
@@ -1581,7 +1629,7 @@ def build_parser() -> argparse.ArgumentParser:
         action=argparse.BooleanOptionalAction,
         default=False,
         help="ship embedding_v3.npz and mtnn_centroids.npz into pipeline/data. "
-             "OFF by default: a measuring run must never be a shipping run.",
+        "OFF by default: a measuring run must never be a shipping run.",
     )
     ap.add_argument(
         "--run-dir",
@@ -1668,8 +1716,7 @@ def main(argv: list[str] | None = None) -> None:
     global ART_DIR
     ART_DIR = DATA_DIR if args.write_artifacts else (DATA_DIR / "_scratch")
     ART_DIR.mkdir(parents=True, exist_ok=True)
-    print(f"[artifacts] {'SHIPPING into' if args.write_artifacts else 'scratch only,'} "
-          f"{ART_DIR}", flush=True)
+    print(f"[artifacts] {'SHIPPING into' if args.write_artifacts else 'scratch only,'} {ART_DIR}", flush=True)
 
     run_started = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
     run_git = git_state(ROOT)
@@ -1685,7 +1732,9 @@ def main(argv: list[str] | None = None) -> None:
 
     torch.manual_seed(args.seed)
     np.random.seed(args.seed)
-    device = args.device or ("cuda" if torch.cuda.is_available() else "cpu")  # auto: GPU on personal local (CUDA avail), CPU in Hatch VM
+    device = args.device or (
+        "cuda" if torch.cuda.is_available() else "cpu"
+    )  # auto: GPU on personal local (CUDA avail), CPU in Hatch VM
 
     (Z, M, names, seasons, pids, clusters, positions, season_ids, manifest) = load_bundle(
         allow_missing_positions=args.allow_missing_positions
@@ -1872,7 +1921,7 @@ def main(argv: list[str] | None = None) -> None:
     pos_mask = pos_t >= 0
     seas_t = torch.tensor(season_ids, device=device)
 
-    skill_g, skill_m, skill_keys, n_core = load_skill_labels(names, seasons)
+    skill_g, skill_m, skill_keys, n_core = load_skill_labels(names, seasons, pids)
     skill_t = torch.tensor(skill_g, device=device)
     skillm_t = torch.tensor(skill_m, device=device)
     skill_row_mask = skill_m.any(axis=1) if skill_m.ndim == 2 else skill_m > 0
@@ -2066,7 +2115,9 @@ def main(argv: list[str] | None = None) -> None:
                 next_valid_t = torch.tensor(next_valid, device=device, dtype=torch.bool)
                 pred_next = out_a["next_profile"][next_valid_t]
                 # Target is next-season z-scored game profile (same 14-d contract).
-                loss = loss + weights["next_profile"] * term("next_profile", F.smooth_l1_loss(pred_next, game_z[next_t]))
+                loss = loss + weights["next_profile"] * term(
+                    "next_profile", F.smooth_l1_loss(pred_next, game_z[next_t])
+                )
             if "skills" in out_a:
                 wm = skillm_t[idx_t]
                 if wm.sum() > 0:
@@ -2164,7 +2215,7 @@ def main(argv: list[str] | None = None) -> None:
             val_pu = cross_era_archetype_purity(E_val, clusters, seasons)
             val_recall_hist.append(val_r if val_r is not None else 0.0)
             try:
-                _hist = [float(x) for x in val_recall_hist[-int(VAL_RECALL_SMOOTH_N):] if x is not None]
+                _hist = [float(x) for x in val_recall_hist[-int(VAL_RECALL_SMOOTH_N) :] if x is not None]
                 val_r_smooth = (sum(_hist) / len(_hist)) if _hist else 0.0
             except Exception:
                 val_r_smooth = float(val_r) if val_r is not None else 0.0

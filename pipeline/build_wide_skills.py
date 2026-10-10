@@ -209,6 +209,10 @@ def main() -> None:
 
     seasons = np.array([vec["players"][i]["season"] for i in covered_idx])
     names = np.array([vec["players"][i]["name"] for i in covered_idx])
+    pids = np.array(
+        [int(p["pid"]) if str(p.get("pid", "")).isdigit() else -1 for p in (vec["players"][i] for i in covered_idx)],
+        dtype=np.int64,
+    )
 
     # Contract (era-z) features for covered rows — the two gravity skills
     # combine the box-score contract (3PA, 3P%, BLK) with tracking.
@@ -309,6 +313,8 @@ def main() -> None:
         LABELS_OUT,
         name=names,
         season=seasons,
+        # train_mtnn joins on (player_id, season) [final#23]; -1 where a row has no pid.
+        player_id=pids,
         keys=np.array([s["key"] for s in WIDE_SKILLS]),
         grades=np.stack([grades[s["key"]] for s in WIDE_SKILLS], axis=1).astype(np.float32) / 100.0,
         # Per-skill: 1 where the skill was graded from measured inputs. A
