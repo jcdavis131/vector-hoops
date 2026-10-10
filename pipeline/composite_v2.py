@@ -97,6 +97,9 @@ IDENTITY_FEATURES = (
 # playoff columns are no rarer in the test era (0.445).
 REGIME_LAST_YEAR = 2012
 REGIME_UNOBSERVED_RATE = 0.01
+# regime_component's reason when everything is there but the masked
+# re-encode: eval_v2 replaces it with why it had no model.
+NO_REENCODE = "no masked re-encode of the held-out anchors (needs the model)"
 
 # The archetype head's classes are build_vectors' K=8 k-means ids.
 N_ARCHETYPES = 8
@@ -321,12 +324,17 @@ def regime_component(E, Z, game_cols, identity_cols, pairs_by_split, regime, mas
     the baselines equal recall's, and the slice measures how much of the
     embedding's recall depends on the 58 columns the old era lacks.
     """
-    if regime is None:
-        return {"missing": "no masked re-encode of the held-out anchors (needs the model)"}
+    # Causes in the data first, the missing re-encode last: train_mtnn and
+    # eval_v2 pass regime None when there is nothing to mask or no anchor to
+    # re-encode, and the reason said "needs the model" for both (P12).
     if not mask_cols:
         return {"missing": f"no column is unobserved in the <={REGIME_LAST_YEAR} rows, so there is no regime to mask"}
     if not identity_cols:
         return {"missing": "no identity-lookup columns in this matrix, so the regime baseline is incomplete"}
+    if not any(len(pairs_by_split[s]) for s in SPLITS):
+        return {"missing": "no val- or test-split adjacent-season pairs, so no held-out anchor to re-encode"}
+    if regime is None:
+        return {"missing": NO_REENCODE}
     rows = np.asarray(regime["rows"], dtype=np.int64)
     Er = np.asarray(regime["E"], dtype=np.float32)
     where = {int(r): i for i, r in enumerate(rows)}
@@ -647,19 +655,64 @@ def aux_diagnostic(report, features, families, M, run_args) -> dict:
 
 
 def margin_14d_diagnostic(report) -> dict:
+    """v1's margin_14d for this run, and whether it is pinned at 1.0.
+
+    The note was one fixed sentence ("1.0 on every report") whatever the run
+    said; a one-epoch run on a 100-player slice scores 0.72 against 0.65, a
+    component of 0.7. It is computed from the run's own numbers now.
+    """
     comp = (report or {}).get("composite") or {}
     ho = (((report or {}).get("held_out_recall") or {}).get("test")) or {}
+    component = _r((comp.get("components") or {}).get("margin_14d"))
+    recall, base = _r(ho.get("recall_at_10_mtnn")), _r(ho.get("recall_at_10_transparent_14d"))
+    margin = _r(recall - base) if recall is not None and base is not None else None
+    saturated = None if component is None else bool(component >= 1.0)
+    if margin is None or component is None:
+        note = "v1 scores clip01((test recall - 14-d recall) / 0.10); this report lacks the inputs."
+    else:
+        note = (
+            f"v1 scores clip01((test recall - 14-d recall) / 0.10) = clip01(({recall} - {base}) / 0.10) "
+            f"= {component}. "
+            + (
+                "It is saturated: any margin over 0.10 scores 1.0, so it moves no decision [eval#9]."
+                if saturated
+                else "It is not saturated: the margin is under 0.10, so the component moves with it."
+            )
+        )
     return {
         "scored": False,
-        "v1_component": _r((comp.get("components") or {}).get("margin_14d")),
-        "v1_test_recall_at_10": _r(ho.get("recall_at_10_mtnn")),
-        "v1_transparent_14d": _r(ho.get("recall_at_10_transparent_14d")),
-        "note": (
-            "v1 scores clip01((test recall - 14-d recall) / 0.10). The 14-d recall is 0.23-0.25 and every model "
-            "on record is at 0.74-0.83, so it is 1.0 on every report and moves no decision [eval#9]. "
-            "v1's two recalls are also two different 500-pair draws from the global RNG [eval#8]."
-        ),
+        "v1_component": component,
+        "v1_test_recall_at_10": recall,
+        "v1_transparent_14d": base,
+        "v1_margin": margin,
+        "saturated": saturated,
+        "note": note + " The two recalls are two different 500-pair draws from the global RNG [eval#8].",
     }
+
+
+def metrics_source(report) -> dict:
+    """Whether the run's loss saw the held-out rows, labelled as v1 labels it.
+
+    composite_v2 scores held-out rows, but on a fit_rows 'all' run (--phase
+    final-refit) the loss trained on the val and test rows too, so cqs_v2 is
+    as in-sample as v1's CQS; v1 says so with metrics_source
+    'in_sample_refit' (composite_score.in_sample_reason), and v2 said nothing
+    (P12). selection.fit_rows covers reports from before metrics_source.
+    """
+    if not report:
+        return {"metrics_source": None, "in_sample": None}
+    fit_rows = (report.get("selection") or {}).get("fit_rows")
+    in_sample = report.get("metrics_source") == "in_sample_refit" or fit_rows == "all"
+    out: dict[str, Any] = {
+        "metrics_source": "in_sample_refit" if in_sample else report.get("metrics_source"),
+        "in_sample": in_sample,
+    }
+    if in_sample:
+        out["metrics_note"] = (
+            "in-sample: the loss trained on every row (fit_rows 'all'), val and test included, so cqs_v2 and "
+            "cqs_v2_val are not held out. A refit's held-out evidence is the select run of its recipe [training#0]."
+        )
+    return out
 
 
 # ---------------------------------------------------------------------------
@@ -827,6 +880,7 @@ def composite_v2(inputs: dict[str, Any]) -> dict:
         "version": VERSION,
         "cqs_v2": cqs_from(components),
         "cqs_v2_val": cqs_from(components_val),
+        **metrics_source(report),
         "scored_split": SCORED_SPLIT,
         "components": {k: components.get(k) for k in WEIGHTS},
         "components_val": {k: components_val.get(k) for k in WEIGHTS},

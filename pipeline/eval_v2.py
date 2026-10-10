@@ -411,7 +411,9 @@ def evaluate(args: argparse.Namespace) -> dict:
             "run_args": run_args,
         }
     )
-    if regime_reason and "regime" in block["missing_reasons"]:
+    # Only the "needs the model" reason is replaced by why there was no model:
+    # a regime missing for a cause in the data keeps that cause.
+    if regime_reason and block["missing_reasons"].get("regime") == composite_v2.NO_REENCODE:
         block["missing_reasons"]["regime"] = regime_reason
 
     comp = report.get("composite") or {}

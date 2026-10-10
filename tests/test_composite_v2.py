@@ -207,6 +207,16 @@ def test_regime_component_missing_cases():
     assert "not re-encoded" in cv.regime_component(E6, Z6, [0], [1], pairs, regime, [2])["missing"]
 
 
+def test_regime_missing_reason_names_the_cause_not_the_model():
+    """train_mtnn passes regime None when no column is unobserved (nothing to mask) or
+    there are no held-out anchors; the reason said "needs the model" in both cases."""
+    pairs = cv.split_pairs(PIDS, SEASONS)
+    assert "no column is unobserved" in cv.regime_component(E6, Z6, [0], [1], pairs, None, [])["missing"]
+    no_pairs = {s: np.zeros((0, 2), np.int64) for s in pairs}
+    assert "no val- or test-split" in cv.regime_component(E6, Z6, [0], [1], no_pairs, None, [2])["missing"]
+    assert "no identity-lookup" in cv.regime_component(E6, Z6, [0], [], pairs, None, [2])["missing"]
+
+
 def test_regime_anchor_rows_are_val_and_test_anchors():
     pids = np.array([1, 1, 1, 2, 2])
     seasons = np.array(["2021-22", "2022-23", "2024-25", "2023-24", "2024-25"])
@@ -354,6 +364,43 @@ def test_margin_14d_diagnostic_reads_v1():
     out = cv.margin_14d_diagnostic(report)
     assert (out["v1_component"], out["v1_test_recall_at_10"], out["v1_transparent_14d"]) == (1.0, 0.742, 0.234)
     assert out["scored"] is False
+
+
+def test_margin_14d_diagnostic_describes_this_run_not_a_fixed_text():
+    sat = cv.margin_14d_diagnostic(
+        {
+            "composite": {"components": {"margin_14d": 1.0}},
+            "held_out_recall": {"test": {"recall_at_10_mtnn": 0.742, "recall_at_10_transparent_14d": 0.234}},
+        }
+    )
+    assert sat["saturated"] is True and sat["v1_margin"] == pytest.approx(0.508)
+    assert "0.742 - 0.234" in sat["note"] and "saturated" in sat["note"]
+    # A one-epoch run on a small slice: 0.72 against 0.65 is a margin of 0.07, component 0.7.
+    low = cv.margin_14d_diagnostic(
+        {
+            "composite": {"components": {"margin_14d": 0.7}},
+            "held_out_recall": {"test": {"recall_at_10_mtnn": 0.72, "recall_at_10_transparent_14d": 0.65}},
+        }
+    )
+    assert low["saturated"] is False and "not saturated" in low["note"] and "0.72 - 0.65" in low["note"]
+    assert cv.margin_14d_diagnostic({})["saturated"] is None
+
+
+@pytest.mark.parametrize(
+    ("report", "source", "in_sample"),
+    [
+        ({"metrics_source": "selection_holdout", "selection": {"fit_rows": "train"}}, "selection_holdout", False),
+        ({"metrics_source": "in_sample_refit", "selection": {"fit_rows": "all"}}, "in_sample_refit", True),
+        # A report from before metrics_source: fit_rows alone says the loss saw every row.
+        ({"selection": {"fit_rows": "all"}}, "in_sample_refit", True),
+        (None, None, None),
+    ],
+)
+def test_a_final_refit_labels_cqs_v2_in_sample_as_v1_does(report, source, in_sample):
+    out = cv.composite_v2({**with_regime(synthetic()), "report": report})
+    assert out["metrics_source"] == source and out["in_sample"] is in_sample
+    assert ("in-sample" in out.get("metrics_note", "")) is bool(in_sample)
+    assert out["cqs_v2"] is not None  # labelled, not withheld: v1 is labelled the same way
 
 
 # --- aggregation ------------------------------------------------------------------------
