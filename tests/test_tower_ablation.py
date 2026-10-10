@@ -97,6 +97,17 @@ def test_an_occupied_run_dir_is_refused_before_training(stubbed, monkeypatch):
     assert calls == []
 
 
+def test_an_identical_nonzero_delta_on_every_seed_is_not_noise():
+    # sd 0 leaves t None (no Infinity in the JSON); herdmux paired_t calls an
+    # identical nonzero difference infinitely significant, and so does verdict.
+    same_drop = ta.paired([75.0, 76.0, 75.5], [77.0, 78.0, 77.5])
+    assert same_drop["sd"] == 0 and same_drop["t"] is None
+    assert ta.verdict(same_drop) == "family helps"
+    assert ta.verdict(ta.paired([79.0, 80.0, 79.5], [77.0, 78.0, 77.5])) == "family hurts"
+    assert ta.verdict(ta.paired([77.0, 78.0], [77.0, 78.0])) == "inside paired noise"
+    assert ta.verdict({"n": 1, "mean": -2.0, "sd": float("nan"), "t": None}) == "inside paired noise"
+
+
 def test_feature_stress_gives_no_verdict_for_a_single_seed_file(tmp_path, monkeypatch):
     old = {"baseline_test": 0.80, "runs": {"full": {"test_recall": 0.80}, "drop_x": {"test_recall": 0.75}}}
     path = tmp_path / "tower_ablation.json"

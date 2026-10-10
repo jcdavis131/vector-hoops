@@ -110,6 +110,12 @@ def paired(arm: list[float], base: list[float]) -> dict:
 
 def verdict(cqs: dict) -> str:
     t = cqs["t"]
+    if t is None and cqs["n"] > 1 and cqs["mean"] != 0:
+        # Every seed moved CQS by the same nonzero amount (sd 0, so paired()
+        # leaves t None rather than write Infinity into the JSON). herdmux
+        # gpu/climb.py paired_t calls that infinitely significant; this used
+        # to fall through to "inside paired noise".
+        t = math.copysign(math.inf, cqs["mean"])
     if t is not None and t <= -PAIRED_T:
         return "family helps"  # masking it lowers CQS beyond paired seed noise
     if t is not None and t >= PAIRED_T:
