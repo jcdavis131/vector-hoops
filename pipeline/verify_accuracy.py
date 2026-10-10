@@ -776,26 +776,75 @@ def v14_stated_limitations(data: dict) -> None:
         print(f"  {len(names)} archetype names, one per statistical centroid")
 
 
-if __name__ == "__main__":
+# Checks that read the served MTNN files (mtnn_embeddings.f32 and the files
+# exported beside it). On this branch the served bundle is the 2dc6ad78
+# smoke model with a hand-assembled meta and no lineage [eval#0], and
+# V13/V13b fail on it today (measured 2026-10-10: jacobian towerFamilies !=
+# arch, jacobian dEmb 48 != arch dEmb 64, and two stale checkpoint stamps).
+# Those failures are real and stay failures; attribute_failures says whose
+# they are, so the verify stage does not read as a broken rebuild.
+SERVED_BUNDLE_CHECKS = ("v4_determinism", "v12_mtnn_client_assets", "v13_mtnn_jacobian", "v13b_mtnn_attribution")
+
+
+def attribute_failures(by_check: dict[str, list[str]], served_problems: list[str]) -> list[str]:
+    """Lines naming the failures that belong to an unpromoted served bundle; none when it is a promoted export.
+
+    served_problems is served_model.problems(assets/): empty when the served
+    files are one promoted, exported bundle (what scripts/check_served_model.py
+    checks). Nothing here changes a verdict: the harness still exits 1.
+    """
+    served = [f for name in SERVED_BUNDLE_CHECKS for f in by_check.get(name, [])]
+    if not served or not served_problems:
+        return []
+    return [
+        f"{len(served)} of these failures are in the served MTNN bundle, which is not a promoted export "
+        f"(served_model.problems on assets/, the check scripts/check_served_model.py runs: "
+        f"{len(served_problems)} problem(s), first: {served_problems[0]}). "
+        "They belong to that bundle [eval#0] and clear when a run is promoted (pipeline/promote.py) and "
+        "re-exported (rebuild_all.py --stage export, then scripts/sync_public.py), not by editing assets/:",
+        *(f"  [served bundle, unpromoted] {f}" for f in served),
+    ]
+
+
+def main() -> int:
     data = json.loads((ASSETS / "vectors.json").read_text(encoding="utf-8"))
-    v1_vectors(data)
-    v2_clusters(data)
-    v3_deadline()
-    v4_determinism(data)
-    v5_procrustes(data)
-    v6_teams()
-    v7_skills_alignment(data)
-    v8_pedigree_asset(data)
-    v9_wide_skills(data)
-    v10_honors_playoffs(data)
-    v11_mtnn_report_warn()
-    v12_mtnn_client_assets()
-    v13_mtnn_jacobian(data)
-    v13b_mtnn_attribution(data)
-    v14_stated_limitations(data)
-    v15_season_norms(data)
-    v16_draft_board(data)
+    checks = (
+        (v1_vectors, (data,)),
+        (v2_clusters, (data,)),
+        (v3_deadline, ()),
+        (v4_determinism, (data,)),
+        (v5_procrustes, (data,)),
+        (v6_teams, ()),
+        (v7_skills_alignment, (data,)),
+        (v8_pedigree_asset, (data,)),
+        (v9_wide_skills, (data,)),
+        (v10_honors_playoffs, (data,)),
+        (v11_mtnn_report_warn, ()),
+        (v12_mtnn_client_assets, ()),
+        (v13_mtnn_jacobian, (data,)),
+        (v13b_mtnn_attribution, (data,)),
+        (v14_stated_limitations, (data,)),
+        (v15_season_norms, (data,)),
+        (v16_draft_board, (data,)),
+    )
+    by_check: dict[str, list[str]] = {}
+    for check, args in checks:
+        before = len(FAILS)
+        check(*args)
+        by_check[check.__name__] = FAILS[before:]
     if FAILS:
+        sys.path.insert(0, str(HERE))
+        import served_model
+
+        lines = attribute_failures(by_check, served_model.problems(ASSETS))
+        if lines:
+            print()
+            print("\n".join(lines))
         print(f"\nACCURACY HARNESS: {len(FAILS)} FAILURES — do not ship")
-        sys.exit(1)
+        return 1
     print("\nACCURACY HARNESS: all checks pass")
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())
