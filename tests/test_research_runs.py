@@ -78,6 +78,22 @@ def test_cache_key_changes_with_commit_or_matrix(climb, monkeypatch):
     assert hc.cache_key("full", hc.BASE_ARCH, [], 7, 20) != k1
 
 
+def test_two_different_dirty_trees_on_one_head_do_not_share_a_key(monkeypatch):
+    # The key used to carry only dirty=True, so a second uncommitted edit on
+    # the same HEAD reused the first edit's run directory as "the same trial".
+    monkeypatch.setattr(hc, "sha256_file", lambda p: "m")
+    states = {}
+    for label, dirty, diff in [("edit1", True, "d1"), ("edit2", True, "d2"), ("clean", False, "unused")]:
+        monkeypatch.setattr(hc, "git_state", lambda root, dirty=dirty: {"sha": "abc", "dirty": dirty})
+        monkeypatch.setattr(hc, "_tracked_py_diff_sha256", lambda diff=diff: diff)
+        hc._code_and_matrix.cache_clear()
+        states[label] = json.loads(hc._code_and_matrix())
+    hc._code_and_matrix.cache_clear()
+    assert states["edit1"]["py_diff_sha256"] == "d1" and states["edit2"]["py_diff_sha256"] == "d2"
+    assert states["edit1"] != states["edit2"]
+    assert "py_diff_sha256" not in states["clean"]  # a clean tree keeps its old key
+
+
 def test_a_trial_is_scored_on_its_own_run_directory(climb, monkeypatch):
     calls: list[list[str]] = []
     monkeypatch.setattr(hc.subprocess, "run", _fake_train(calls, 0.5))

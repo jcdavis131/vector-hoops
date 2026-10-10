@@ -171,13 +171,34 @@ def train_argv(arch: list[str], masked: list[str], seed: int, epochs: int) -> li
     return argv
 
 
+def _tracked_py_diff_sha256() -> str | None:
+    """sha256 of `git diff HEAD` over tracked *.py files; None if git cannot say.
+
+    Only .py: a pipeline run rewrites tracked data such as assets/vectors.json,
+    whose diff is large and does not reach a trial except through
+    train_matrix.npz, which the key already hashes.
+    """
+    try:
+        proc = subprocess.run(
+            ["git", "-C", str(ROOT), "diff", "HEAD", "--no-ext-diff", "--no-color", "--", "*.py"],
+            capture_output=True,
+            timeout=60,
+            check=False,
+        )
+    except (OSError, subprocess.SubprocessError):
+        return None
+    return hashlib.sha256(proc.stdout).hexdigest() if proc.returncode == 0 else None
+
+
 @functools.lru_cache(maxsize=1)
 def _code_and_matrix() -> str:
     g = git_state(ROOT)
-    return json.dumps(
-        {"git": g["sha"], "dirty": g["dirty"], "matrix_sha256": sha256_file(DATA / "train_matrix.npz")},
-        sort_keys=True,
-    )
+    state = {"git": g["sha"], "dirty": g["dirty"], "matrix_sha256": sha256_file(DATA / "train_matrix.npz")}
+    if g["dirty"]:
+        # dirty is a boolean: two different uncommitted edits on the same HEAD
+        # gave the same key, and the second reused the first's run directory.
+        state["py_diff_sha256"] = _tracked_py_diff_sha256()
+    return json.dumps(state, sort_keys=True)
 
 
 def cache_key(tag: str, arch: list[str], masked: list[str], seed: int, epochs: int) -> str:
@@ -186,9 +207,10 @@ def cache_key(tag: str, arch: list[str], masked: list[str], seed: int, epochs: i
     The key was f"{tag}|s{seed}|e{epochs}". --arch-dim rewrites BASE_ARCH's --dim
     without changing the tag, so a 64-d search was answered from cached 48-d
     rows, and a new commit or a rebuilt matrix reused rows measured on the old
-    one [orchestration#7]. The hash covers the full train argv, the git HEAD
-    (and whether tracked files were dirty, which a sha cannot describe) and the
-    matrix's sha256.
+    one [orchestration#7]. The hash covers the full train argv, the git HEAD,
+    on a dirty tree the content of the uncommitted changes to tracked .py
+    files (git diff HEAD), and the matrix's sha256. Untracked files and edits
+    to tracked non-.py files are not covered.
     """
     blob = json.dumps(train_argv(arch, masked, seed, epochs)) + _code_and_matrix()
     return f"{tag}|s{seed}|e{epochs}|{hashlib.sha256(blob.encode()).hexdigest()[:12]}"
