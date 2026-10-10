@@ -17,6 +17,11 @@ fusion share -- so bio would gain pull on the strength of noise.
 The shipped 142-feature matrix predates those cache keys, so no shipped model
 ever saw them. This gate is what keeps that true through the next rebuild.
 
+2026-10-09: the ten keys are stripped from all 30 bio caches (14,498 rows, all
+combine_method "estimated", none measured) and the scripts that wrote them are
+gone [health#5]. The contract stays as defense in depth, and
+test_bio_caches_carry_no_combine_scaffold keeps the caches clean.
+
 Run:  python -m pytest pipeline/test_source_contracts.py -q
 """
 
@@ -56,19 +61,6 @@ SYNTHETIC_BIO_KEYS = {
 }
 
 
-def _a_bio_record() -> dict | None:
-    """One real cached bio record, or None if the cache isn't present."""
-    for p in sorted(CACHE.glob("bio_*.json")):
-        try:
-            doc = json.loads(p.read_text(encoding="utf-8"))
-        except (json.JSONDecodeError, OSError):
-            continue
-        rows = doc if isinstance(doc, list) else list(doc.values())
-        if rows and isinstance(rows[0], dict):
-            return rows[0]
-    return None
-
-
 def test_bio_contract_is_exactly_bio_cols():
     assert SOURCE_CONTRACTS["bio"] == frozenset(BIO_COLS)
 
@@ -103,22 +95,22 @@ def test_uncontracted_sources_pass_through():
     assert set(kept) == {"NET_RATING", "TS_PCT"}
 
 
-def test_the_guard_is_guarding_something_live():
-    """If the cache stops carrying undeclared keys, this test should be revisited.
+def test_bio_caches_carry_no_combine_scaffold():
+    """No bio_*.json record carries a scaffold key; this replaced a test that the cache still did.
 
-    A green suite proves nothing when the hazard has silently disappeared -- this
-    asserts the bio cache really does still contain the keys being filtered, so
-    the gate above is protecting a live path rather than a historical one.
+    fetch_missing_combine.py wrote the ten keys into every bio cache in place;
+    they were stripped on 2026-10-09. A record that has one again means an
+    estimate writer is back.
     """
-    record = _a_bio_record()
-    if record is None:
-        # bio_*.json is tracked, so this should never happen; if it does, say so
-        # rather than pass with nothing asserted.
-        pytest.skip("no pipeline/cache/bio_*.json record in this checkout")
-    undeclared = set(record) - set(BIO_COLS) - {"PLAYER_ID", "PLAYER_NAME"}
-    assert undeclared, "bio cache no longer carries undeclared keys -- re-check this gate"
-    assert undeclared & SYNTHETIC_BIO_KEYS, f"unexpected undeclared bio keys: {sorted(undeclared)}"
-    assert not (set(source_columns("bio", record)) - set(BIO_COLS))
+    paths = sorted(CACHE.glob("bio_*.json"))
+    if not paths:
+        pytest.skip("no pipeline/cache/bio_*.json in this checkout")
+    for p in paths:
+        for rec in json.loads(p.read_text(encoding="utf-8")):
+            extra = set(rec) - set(BIO_COLS) - {"PLAYER_ID", "PLAYER_NAME"}
+            assert not extra, (
+                f"{p.name}: undeclared keys {sorted(extra)} (synthetic: {sorted(extra & SYNTHETIC_BIO_KEYS)})"
+            )
 
 
 def test_tracking_contract_is_tracking_specs():
