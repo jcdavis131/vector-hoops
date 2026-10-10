@@ -28,6 +28,14 @@ writes None for an absent player). Docs written that way, and the repaired
 caches, carry "field_coverage"; readers apply the absent-row rule only to a
 doc without it.
 
+Why all of 2015-16 is None, its 386 non-zero values (147 players)
+included: those values are per-game averages over 1-2 tracked games, from
+15 teams. They were measured, but they are not the quantity these columns
+hold (full-season per-game rates), and keeping only the non-zero ones
+would make the mask 1 exactly where the value is above zero. So the season
+stays off the training path. 25b3c10f restored them and was reverted
+[final#10].
+
 Stdlib only.
 """
 
