@@ -168,20 +168,45 @@ def test_bio_undrafted_is_a_flag_not_pick_61(tmp_cache, monkeypatch):
         [1, "A Pick", 80.0, 230.0, 24.0, "7"],
         [2, "B Nobody", 76.0, 190.0, 23.0, "Undrafted"],
         [3, "C Unknown", 75.0, 185.0, 22.0, None],
+        [4, "D Zero", 77.0, 200.0, 25.0, "0"],
     ]
     monkeypatch.setattr(
         bv, "fetch_stats_json", lambda *a, **k: {"resultSets": [{"name": "x", "headers": headers, "rowSet": rows}]}
     )
     got = {r["PLAYER_ID"]: (r["DRAFT_NUMBER"], r[bv.BIO_UNDRAFTED]) for r in bv.fetch_bio(LIVE, offline=False)}
-    # Before: 61.0 for both B and C, a pick one past the last real one.
-    assert got == {1: (7.0, 0.0), 2: (None, 1.0), 3: (None, None)}
+    # Before: 61.0 for both B and C, a pick one past the last real one; and (0.0, 0.0) for D,
+    # a pick ranked above No. 1 [final#9].
+    assert got == {1: (7.0, 0.0), 2: (None, 1.0), 3: (None, None), 4: (None, 1.0)}
 
 
 def test_committed_bio_caches_carry_no_pick_61_sentinel():
     for path in sorted((ROOT / "pipeline" / "cache").glob("bio_*.json")):
         for r in json.loads(path.read_text(encoding="utf-8")):
             assert r.get("DRAFT_NUMBER") != 61.0, (path.name, r["PLAYER_NAME"])
+            # No pick 0 either: the 20 records that carried one were undrafted players [final#9].
+            assert r.get("DRAFT_NUMBER") is None or r["DRAFT_NUMBER"] >= 1, (path.name, r["PLAYER_NAME"])
             assert (r.get("DRAFT_UNDRAFTED") == 1.0) == (r.get("DRAFT_NUMBER") is None), (path.name, r["PLAYER_NAME"])
+
+
+def test_committed_undrafted_bio_records_have_no_draft_history_record():
+    """DRAFT_UNDRAFTED 1 only for a player the complete draft history has no person_id record of.
+
+    One direction only. Three bio records carry a pick for a player the draft history lacks by
+    person_id (Negele Knight 1998-99, 31; Jerry Smith 2011-12, 12; Walker Russell 2011-12, 78):
+    Knight really was the 31st pick in 1990, so that points to a gap in the draft history's ids,
+    not a bad bio value, and none of the three is nulled without a measured reason.
+    """
+    cache = ROOT / "pipeline" / "cache"
+    hist_path = cache / "draft_history.json"
+    if not hist_path.exists():
+        pytest.skip("no pipeline/cache/draft_history.json in this checkout")
+    hist = json.loads(hist_path.read_text(encoding="utf-8"))
+    assert hist["complete"] is True
+    drafted = {e.get("person_id") for lst in hist["players"].values() for e in lst}
+    for path in sorted(cache.glob("bio_*.json")):
+        for r in json.loads(path.read_text(encoding="utf-8")):
+            if r.get("DRAFT_UNDRAFTED") == 1.0:
+                assert r["PLAYER_ID"] not in drafted, (path.name, r["PLAYER_NAME"])
 
 
 def test_a_partial_run_writes_nothing_and_exits_2(tmp_path, tmp_cache, monkeypatch, capsys):

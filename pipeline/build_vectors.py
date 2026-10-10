@@ -492,10 +492,13 @@ def fetch_bio(season: str, offline: bool):
                 v = raw_row[c]
                 if c == "DRAFT_NUMBER":
                     # A pick, or nothing: "Undrafted" is BIO_UNDRAFTED, a null is unknown.
-                    # This used to write 61.0 for both.
-                    picked = str(v).strip().isdigit()
-                    row[c] = float(v) if picked else None
-                    undrafted = str(v).strip().lower() == "undrafted"
+                    # This used to write 61.0 for both. "0" is undrafted too, not a pick
+                    # ranked above No. 1: the 8 players the endpoint gave 0 (20 cached
+                    # records) are all absent from the complete draft history [final#9].
+                    s = str(v).strip()
+                    picked = s.isdigit() and int(s) >= 1
+                    row[c] = float(s) if picked else None
+                    undrafted = s.lower() == "undrafted" or (s.isdigit() and int(s) == 0)
                     row[BIO_UNDRAFTED] = 0.0 if picked else (1.0 if undrafted else None)
                 elif v is None:
                     row[c] = None
