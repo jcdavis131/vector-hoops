@@ -33,12 +33,11 @@ from __future__ import annotations
 
 import argparse
 import json
-import re
-import unicodedata
 from collections import defaultdict
 from pathlib import Path
 
 import numpy as np
+from name_utils import bbref_key
 
 HERE = Path(__file__).resolve().parent
 DATA = HERE / "data"
@@ -51,11 +50,6 @@ MIN_GP = 65
 POOL_EACH = 40
 ALPHA = 1.0
 POSITIONS = ["PG", "SG", "SF", "PF", "C"]
-
-
-def norm_name(name: str) -> str:
-    s = unicodedata.normalize("NFKD", name)
-    return re.sub(r"[^a-z0-9]", "", "".join(c for c in s if not unicodedata.combining(c)).lower())
 
 
 def season_start(season: str) -> int:
@@ -128,11 +122,11 @@ def main() -> None:
 
     by_name: dict[str, list[dict]] = defaultdict(list)
     for p in players:
-        by_name[norm_name(p["name"])].append(p)
+        by_name[bbref_key(p["name"], keep_suffix=True)].append(p)
 
     records: list[dict] = []
     for p in players:
-        history = sorted(by_name[norm_name(p["name"])], key=lambda x: season_start(x["season"]))
+        history = sorted(by_name[bbref_key(p["name"], keep_suffix=True)], key=lambda x: season_start(x["season"]))
         lag1 = next(
             (
                 np.array(x["v"], dtype=np.float64)

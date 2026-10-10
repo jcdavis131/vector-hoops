@@ -21,6 +21,8 @@ import unicodedata
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(ROOT / "pipeline"))
+from name_utils import bbref_key  # noqa: E402
 WIKI = ROOT / "knowledge" / "players"
 OUT = ROOT / "assets" / "wiki_index.json"
 VECTORS = ROOT / "assets" / "vectors.json"
@@ -57,20 +59,6 @@ def parse_frontmatter(text: str) -> dict:
     return out
 
 
-def norm_name(name: str) -> str:
-    """Join key for names that two files spell differently.
-
-    The wiki writes "A.C. Green"; vectors.json writes "AC Green". Matching on
-    the raw string dropped 111 of 2,293 players. Stripping punctuation recovered
-    79 of them and left 32 — Schröder, Bogdanović, Pasečņiks — because isalnum()
-    keeps an accented letter as itself. NFKD decomposes the accent into a
-    combining mark, which the isalnum filter then drops, so "schröder" and
-    "schroder" land on the same key.
-    """
-    decomposed = unicodedata.normalize("NFKD", name.lower())
-    return "".join(ch for ch in decomposed if ch.isalnum() and not unicodedata.combining(ch))
-
-
 def load_peak_skills() -> tuple[list[dict], dict[str, dict]]:
     """Best-graded season per player from assets/skills.json.
 
@@ -101,7 +89,7 @@ def load_peak_skills() -> tuple[list[dict], dict[str, dict]]:
         name = r.get("name")
         if not name or not g:
             continue
-        key = norm_name(name)
+        key = bbref_key(name, keep_suffix=True)
         score = sum(g)
         prev = best.get(key)
         if prev is None or score > prev["_score"]:
@@ -130,7 +118,7 @@ def build() -> dict:
             "positions": fm.get("positions", []),
             "archetypes": fm.get("archetypes", []),
         }
-        pk = peak.get(norm_name(name))
+        pk = peak.get(bbref_key(name, keep_suffix=True))
         if pk:
             entry["sk"] = pk["g"]     # 12 grades, 0-99, index-aligned with skills[]
             entry["skS"] = pk["s"]    # the season those grades come from

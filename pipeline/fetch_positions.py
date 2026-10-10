@@ -18,12 +18,12 @@ import json
 import re
 import sys
 import time
-import unicodedata
 import urllib.request
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from ingest import EmptyPayloadError, Failures, FetchError, cache_is_fresh, run_fetch, write_cache
+from name_utils import bbref_key
 from nba_http import retry_call
 from seasons import season_range
 
@@ -42,19 +42,6 @@ ROW_RE = re.compile(
 )
 
 
-def norm_name(name: str) -> str:
-    """Accent-strip, lowercase, drop everything but letters/digits."""
-    s = unicodedata.normalize("NFKD", name)
-    s = "".join(ch for ch in s if not unicodedata.combining(ch))
-    s = s.lower()
-    for suffix in (" jr", " sr", " ii", " iii", " iv", " v"):
-        if s.replace(".", "").rstrip().endswith(suffix):
-            s = s.replace(".", "").rstrip()
-            s = s[: -len(suffix)]
-            break
-    return re.sub(r"[^a-z0-9]", "", s)
-
-
 def season_url(season: str) -> str:
     return f"https://www.basketball-reference.com/leagues/NBA_{int(season[:4]) + 1}_totals.html"
 
@@ -70,7 +57,7 @@ def fetch_season(season: str) -> dict[str, str]:
     html = retry_call(get, url)
     out: dict[str, str] = {}
     for name, pos in ROW_RE.findall(html):
-        key = norm_name(name)
+        key = bbref_key(name)
         if key and key not in out:  # first row wins (TOT row precedes team rows)
             out[key] = pos.upper()
     return out

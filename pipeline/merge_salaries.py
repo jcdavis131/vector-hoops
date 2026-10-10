@@ -23,6 +23,8 @@ import re
 import sys
 from pathlib import Path
 
+from name_utils import norm_name
+
 ROOT = Path(__file__).resolve().parents[1]
 CACHE = ROOT / "pipeline" / "cache"
 DEFAULT_CSV = CACHE / "salaries_history.csv"
@@ -32,14 +34,6 @@ SCHEMA_PATH = CACHE / "salaries_history.schema.json"
 SEASON_RE = re.compile(r"^[0-9]{4}-[0-9]{2}$")
 REQUIRED_COLS = ("name", "season", "salary")
 OPTIONAL_COLS = ("team", "cap_pct")
-
-
-def norm_name(name: str) -> str:
-    """Match build_vectors.norm_name — keep in sync when that helper changes."""
-    s = name.lower()
-    s = re.sub(r"[.'’-]", "", s)
-    s = re.sub(r"\s+(jr|sr|ii|iii|iv|v)$", "", s.strip())
-    return re.sub(r"\s+", " ", s)
 
 
 def parse_salary(raw: str | float | int) -> float:

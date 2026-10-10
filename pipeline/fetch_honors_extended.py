@@ -25,6 +25,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from artifact_io import atomic_write_text
 from ingest import Failures, FetchError, run_fetch
+from name_utils import norm_name
 from seasons import season_end_year, season_range
 
 # BBRef awards pages are named by the season's end year (awards_1997 .. awards_2026).
@@ -52,14 +53,6 @@ def _log(node_id, status, err_cls=None, extra=None):
         ml_log(mid, msg)
     except Exception:
         print(f"[{node_id}] {status} {extra or ''}")
-
-def norm_name(name: str) -> str:
-    import unicodedata
-    s = unicodedata.normalize("NFD", name)
-    s = "".join(c for c in s if not unicodedata.combining(c))
-    s = re.sub(r"[.'’`]", "", s.lower())
-    s = re.sub(r"\s+(jr|sr|ii|iii|iv|v)$", "", s.strip())
-    return re.sub(r"\s+", " ", s)
 
 def fetch_bbref_awards(year: int) -> str | None:
     url = f"https://www.basketball-reference.com/awards/awards_{year}.html"

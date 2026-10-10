@@ -32,6 +32,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "pipeline"))
 from _out_root import add_out_root, rerooted, shown
+from name_utils import norm_name
 
 VECTORS = ROOT / "assets" / "vectors.json"
 HONORS = ROOT / "assets" / "data" / "honors_extended.json"
@@ -41,10 +42,6 @@ POINTS_OUT = ROOT / "assets" / "embedding_map_points_limited.json"
 TRAJ_OUT = ROOT / "assets" / "embedding_map_trajectories.json"
 
 RECENT = {"2023-24", "2024-25", "2025-26"}
-
-
-def norm_name(s: str) -> str:
-    return s.lower().strip()
 
 
 def _score(e: dict) -> float:
@@ -59,11 +56,11 @@ def build_manifest(vec: dict, honors: dict, cur_bio: list[dict]) -> tuple[list[d
     by_pid: dict = defaultdict(list)
     for p in vec["players"]:
         by_pid[p["pid"]].append(p)
-    allstar_norms = {k.split("|")[0].strip().lower() for k in honors.get("players", {})}
+    allstar_norms = {norm_name(k.split("|")[0], keep_suffix=True) for k in honors.get("players", {})}
     current_pids = {r.get("PLAYER_ID") for r in cur_bio if r.get("PLAYER_ID") is not None}
 
     pid_to_display = {pid: lst[0]["name"] for pid, lst in by_pid.items()}
-    pid_to_norm = {pid: norm_name(d) for pid, d in pid_to_display.items()}
+    pid_to_norm = {pid: norm_name(d, keep_suffix=True) for pid, d in pid_to_display.items()}
     three_plus = {pid for pid, lst in by_pid.items() if len(lst) >= 3}
     allstar_pids = {pid for pid, n in pid_to_norm.items() if n in allstar_norms}
     recent_pids = {pid for pid, lst in by_pid.items() if min(x["season"] for x in lst) in RECENT}
@@ -98,13 +95,13 @@ def build_manifest(vec: dict, honors: dict, cur_bio: list[dict]) -> tuple[list[d
         rows.append(
             {
                 "player_id": pid,
-                "norm": norm_name(name) if name else None,
+                "norm": norm_name(name, keep_suffix=True) if name else None,
                 "display_name": name,
                 "seasons": [],
                 "seasons_count": 0,
                 "is_current": True,
                 # No bio name means no name to look up: unknown, not False.
-                "is_allstar": norm_name(name) in allstar_norms if name else None,
+                "is_allstar": norm_name(name, keep_suffix=True) in allstar_norms if name else None,
                 "is_recent_rookie": None,
                 "is_3plus": None,
                 "best_season": None,

@@ -36,32 +36,19 @@ from __future__ import annotations
 
 import argparse
 import json
-import re
 import sys
 import time
-import unicodedata
 from collections import defaultdict
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from ingest import FetchError, run_fetch, write_cache
+from name_utils import norm_name
 from nba_http import fetch_stats_json, legacy_result_set_rows
 
 ROOT = Path(__file__).resolve().parents[1]
 CACHE = ROOT / "pipeline" / "cache"
 OUT = CACHE / "draft_history.json"
-
-
-def norm_name(name: str) -> str:
-    """Documented join convention (DATA_SOURCES_DEEP.md): accent-strip +
-    lowercase + drop punctuation + trim suffixes. Accent folding matters
-    here because stats.nba.com draft names are unaccented ("Nikola Jokic")
-    while vectors.json carries accents ("Nikola Jokić")."""
-    s = unicodedata.normalize("NFD", name)
-    s = "".join(c for c in s if not unicodedata.combining(c))
-    s = re.sub(r"[.'’-]", "", s.lower())
-    s = re.sub(r"\s+(jr|sr|ii|iii|iv|v)$", "", s.strip())
-    return re.sub(r"\s+", " ", s)
 
 
 # Columns to_cache reads; all populated in the committed cache (7,662 picks,

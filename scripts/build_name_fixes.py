@@ -38,6 +38,8 @@ import unicodedata
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(ROOT / "pipeline"))
+from name_utils import bbref_key  # noqa: E402
 WIKI = ROOT / "knowledge" / "players"
 VECTORS = ROOT / "assets" / "vectors.json"
 OUT = ROOT / "assets" / "name_fixes.json"
@@ -47,14 +49,6 @@ RE_NAME = re.compile(r"^name:\s*\"?([^\"\n\r]+?)\"?\s*$", re.M)
 # A map far larger than the ~30 hyphenated names in the wiki means the join has
 # gone wrong — refuse rather than ship a mass rename.
 SANITY_MAX = 80
-
-
-def norm_name(name: str) -> str:
-    """Punctuation-insensitive join key. Identical to build_wiki_index.norm_name:
-    NFKD so an accent decomposes into a combining mark that isalnum() then drops,
-    which is what makes "Schröder" and "Schroder" the same key."""
-    decomposed = unicodedata.normalize("NFKD", name.lower())
-    return "".join(ch for ch in decomposed if ch.isalnum() and not unicodedata.combining(ch))
 
 
 def build() -> dict:
@@ -69,7 +63,7 @@ def build() -> dict:
         head = path.read_text(encoding="utf-8", errors="replace")[:600]
         m = RE_NAME.search(head)
         if m:
-            wiki[norm_name(m.group(1))] = m.group(1).strip()
+            wiki[bbref_key(m.group(1), keep_suffix=True)] = m.group(1).strip()
 
     rows = json.loads(VECTORS.read_text(encoding="utf-8")).get("players") or []
     seen = {r.get("name") for r in rows if r.get("name")}
@@ -78,10 +72,10 @@ def build() -> dict:
     for glued in sorted(n for n in seen if n):
         if "-" in glued:
             continue                       # already fine, leave it alone
-        correct = wiki.get(norm_name(glued))
+        correct = wiki.get(bbref_key(glued, keep_suffix=True))
         if not correct or "-" not in correct:
             continue                       # no committed hyphenated spelling
-        if norm_name(correct) != norm_name(glued):
+        if bbref_key(correct, keep_suffix=True) != bbref_key(glued, keep_suffix=True):
             continue                       # different player, not a spelling
         fixes[glued] = correct
 

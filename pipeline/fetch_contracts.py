@@ -25,12 +25,13 @@ Behavior:
 Stdlib only: urllib, json, pathlib, time, re, math, datetime, os, sys
 """
 from __future__ import annotations
-import json, sys, re, time, os, math, datetime, pathlib, urllib.request, urllib.error
+import json, sys, time, os, math, datetime, pathlib, urllib.request, urllib.error
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from artifact_io import atomic_write_text
 from ingest import BlockedError, FetchError, run_fetch
+from name_utils import norm_name
 
 ROOT = Path(__file__).resolve().parents[1]
 PIPELINE = ROOT / "pipeline"
@@ -70,13 +71,6 @@ def _log_timeline(node_id, status, err_cls=None, latency=0, tokens=0, extra=None
         except Exception:
             pass
         print(f"[{node_id}] {status} {err_cls or ''} {extra or ''}")
-
-def norm_name(n: str) -> str:
-    s = n.lower()
-    s = re.sub(r"[.'’`´]", "", s)
-    s = re.sub(r"\s+(jr|sr|ii|iii|iv|v)$", "", s.strip())
-    s = re.sub(r"\s+", " ", s).strip()
-    return s
 
 def load_bbref_salaries_static():
     """bbref_salaries/<year>/TEAM.json lists [{name, salary}, ...] ; year dir = start year of season 2019->2019-20"""
@@ -138,7 +132,7 @@ def load_merged():
             if k.startswith("_"):
                 continue
             if isinstance(v, dict) and "salary" in v:
-                out[k] = {"name": v.get("name"), "norm_name": v.get("norm_name") or norm_name(v.get("name","")), "salary": float(v.get("salary")), "season": v.get("season"), "team": v.get("team"), "source": "salaries_merged"}
+                out[k] = {"name": v.get("name"), "norm_name": norm_name(v.get("norm_name") or v.get("name", "")), "salary": float(v.get("salary")), "season": v.get("season"), "team": v.get("team"), "source": "salaries_merged"}
             elif k.count("|") == 1:
                 # handle case where doc is key-> float? from bbref_current style
                 continue

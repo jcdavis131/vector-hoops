@@ -32,13 +32,11 @@ import json
 import pathlib
 import re
 
+from name_utils import bbref_key
+
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 CACHE = ROOT / "pipeline" / "cache"
 OUT = ROOT / "assets" / "data" / "player_season_props.json"
-
-
-def norm_name(s: str) -> str:
-    return re.sub(r"[^a-z0-9]", "", s.lower())
 
 
 def round_half(x):
@@ -73,7 +71,7 @@ for seas in seasons:
     for name, st in doc.items():
         if not isinstance(st, dict):
             continue
-        n = norm_name(name)
+        n = bbref_key(name, keep_suffix=True)
         pts = st.get("PTS")
         ast = st.get("AST")
         oreb = st.get("OREB", 0)
@@ -120,7 +118,7 @@ for seas in seasons:
                 continue
             n = pl.get("norm")
             if not n:
-                n = norm_name(pl.get("name", ""))
+                n = bbref_key(pl.get("name", ""), keep_suffix=True)
             gp = pl.get("gp")
             if n and gp is not None:
                 gp_map.setdefault(seas, {})[n] = gp

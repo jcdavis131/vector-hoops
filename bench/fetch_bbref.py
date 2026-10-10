@@ -37,11 +37,13 @@ import json
 import re
 import sys
 import time
-import unicodedata
 import urllib.request
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "pipeline"))
+from name_utils import bbref_key  # noqa: E402
+
 CACHE = ROOT / "pipeline" / "cache"
 UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) Scout/1.0 (research; MLOps)"
 DELAY_S = 3.5
@@ -56,23 +58,6 @@ TABLES = {
 
 _CELL_RE = re.compile(r'<t[dh][^>]*data-stat="([a-z_0-9]+)"[^>]*>(.*?)</t[dh]>', flags=re.S)
 _TAG_RE = re.compile(r"<[^>]+>")
-
-
-def norm_name(name: str) -> str:
-    """Accent-strip, lowercase, drop suffixes and non-alphanumerics.
-
-    Identical to pipeline/fetch_bbref_advanced.py::norm_name so both cache
-    families join the same way.
-    """
-    s = unicodedata.normalize("NFKD", name)
-    s = "".join(ch for ch in s if not unicodedata.combining(ch))
-    s = s.lower()
-    for suffix in (" jr", " sr", " ii", " iii", " iv", " v"):
-        if s.replace(".", "").rstrip().endswith(suffix):
-            s = s.replace(".", "").rstrip()
-            s = s[: -len(suffix)]
-            break
-    return re.sub(r"[^a-z0-9]", "", s)
 
 
 def season_url(season: str, page: str) -> str:
@@ -100,7 +85,7 @@ def parse_table(html: str, table_id: str, keys: tuple[str, ...]) -> dict[str, di
         name = cells.get("name_display") or cells.get("player") or ""
         if not name or name == "Player":
             continue
-        key = norm_name(name)
+        key = bbref_key(name)
         if key in out:
             # First occurrence is the combined 2TM/3TM/TOT row for traded
             # players; later per-team partials for the SAME player are the

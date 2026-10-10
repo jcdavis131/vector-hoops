@@ -23,10 +23,8 @@ from __future__ import annotations
 
 import argparse
 import json
-import re
 import sys
 import time
-import unicodedata
 import urllib.request
 from pathlib import Path
 
@@ -54,19 +52,6 @@ STAT_KEYS = (
     "vorp",
     "usg_pct",
 )
-
-
-def norm_name(name: str) -> str:
-    """Accent-strip, lowercase, drop everything but letters/digits."""
-    s = unicodedata.normalize("NFKD", name)
-    s = "".join(ch for ch in s if not unicodedata.combining(ch))
-    s = s.lower()
-    for suffix in (" jr", " sr", " ii", " iii", " iv", " v"):
-        if s.replace(".", "").rstrip().endswith(suffix):
-            s = s.replace(".", "").rstrip()
-            s = s[: -len(suffix)]
-            break
-    return re.sub(r"[^a-z0-9]", "", s)
 
 
 def season_url(season: str) -> str:

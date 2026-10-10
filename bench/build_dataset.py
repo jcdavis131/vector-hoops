@@ -42,16 +42,17 @@ Writes bench/data/hoops_nextseason.npz + bench/data/datasheet.json.
 from __future__ import annotations
 
 import json
-import re
 import sys
 import time
-import unicodedata
 from collections import Counter
 from pathlib import Path
 
 import numpy as np
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "pipeline"))
+from name_utils import bbref_key  # noqa: E402
+
 CACHE = ROOT / "pipeline" / "cache"
 OUT_DIR = ROOT / "bench" / "data"
 
@@ -89,19 +90,6 @@ VAL_TARGET_YEARS = (2024, 2025)  # val: 2024..2025
 TEST_TARGET_YEAR = 2026  # test: 2026 (features from 2024-25, labels 2025-26)
 
 
-def norm_name(name: str) -> str:
-    """Same normalization as bench/fetch_bbref.py / pipeline/fetch_bbref_advanced.py."""
-    s = unicodedata.normalize("NFKD", name)
-    s = "".join(ch for ch in s if not unicodedata.combining(ch))
-    s = s.lower()
-    for suffix in (" jr", " sr", " ii", " iii", " iv", " v"):
-        if s.replace(".", "").rstrip().endswith(suffix):
-            s = s.replace(".", "").rstrip()
-            s = s[: -len(suffix)]
-            break
-    return re.sub(r"[^a-z0-9]", "", s)
-
-
 def season_end_year(season: str) -> int:
     return int(season[:4]) + 1
 
@@ -129,9 +117,9 @@ def main() -> None:
     # --- per-season NBA-side name ambiguity (two pids -> one norm name) ------
     per_season_names: dict[int, Counter] = {}
     for p in players:
-        per_season_names.setdefault(season_end_year(p["season"]), Counter())[norm_name(p["name"])] += 1
+        per_season_names.setdefault(season_end_year(p["season"]), Counter())[bbref_key(p["name"])] += 1
     ambiguous: dict[int, set[str]] = {yr: {n for n, c in cnt.items() if c > 1} for yr, cnt in per_season_names.items()}
-    n_ambiguous_rows = sum(1 for p in players if norm_name(p["name"]) in ambiguous[season_end_year(p["season"])])
+    n_ambiguous_rows = sum(1 for p in players if bbref_key(p["name"]) in ambiguous[season_end_year(p["season"])])
 
     # --- rows sorted (player, season) for reproducibility --------------------
     players = sorted(players, key=lambda p: (int(p["pid"]), p["season"]))
@@ -166,7 +154,7 @@ def main() -> None:
         entity_id[i] = pid
         time_id[i] = t_year
         target_year[i] = t_year + 1
-        key = norm_name(p["name"])
+        key = bbref_key(p["name"])
         is_amb = key in ambiguous[t_year]
 
         # 14 era-z game features (season-t only, z-scored within season cohort)

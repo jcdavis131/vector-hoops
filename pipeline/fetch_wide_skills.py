@@ -51,16 +51,15 @@ nothing and the rest are still fetched [ingest#7].
 from __future__ import annotations
 
 import argparse
-import re
 import sys
 import time
-import unicodedata
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from ingest import EmptyPayloadError, Failures, FetchError, cache_is_fresh, run_fetch, write_cache
 from hustle_coverage import BOX_OUTS_TRACKED_FROM, apply_season_rules, field_coverage, untracked_fields
 from nba_http import fetch_stats_json, legacy_result_set_rows
+from name_utils import norm_name
 from seasons import HUSTLE_FIRST_SEASON, is_final, season_range
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -71,14 +70,6 @@ SEASONS = season_range(HUSTLE_FIRST_SEASON)
 
 # Pause between endpoint calls — stats.nba.com throttles burst traffic.
 _CALL_GAP_S = 2.5
-
-
-def norm_name(name: str) -> str:
-    s = unicodedata.normalize("NFD", name)
-    s = "".join(c for c in s if not unicodedata.combining(c))
-    s = re.sub(r"[.'’-]", "", s.lower())
-    s = re.sub(r"\s+(jr|sr|ii|iii|iv|v)$", "", s.strip())
-    return re.sub(r"\s+", " ", s)
 
 
 def cache_path(season: str) -> Path:

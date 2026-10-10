@@ -11,19 +11,12 @@ Zero-deps, stdlib only. Uses:
  - assets/data/model_zoo_eval.json existence for validity logging
  - assets/data/front_office.json for champ map
 """
-import json, pathlib, math, collections, re
+import json, pathlib, math, collections
 from datetime import datetime
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 CACHE = ROOT / "pipeline" / "cache"
 ASSETS_DATA = ROOT / "assets" / "data"
-
-def norm_name(n:str):
-    s=n.lower()
-    s=re.sub(r"[.'’`]", "", s)
-    s=re.sub(r"\s+(jr|sr|ii|iii|iv|v)$","",s.strip())
-    s=re.sub(r"\s+"," ",s).strip()
-    return s
 
 def load_json(p):
     return json.loads(pathlib.Path(p).read_text(encoding="utf-8"))

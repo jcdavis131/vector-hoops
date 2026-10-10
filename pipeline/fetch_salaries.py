@@ -43,7 +43,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from ingest import run_fetch, write_cache
-from name_utils import ascii_fold
+from name_utils import norm_name
 from nba_http import retry_call
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -54,19 +54,6 @@ BBREF_CACHE = CACHE / "salary_bbref_current.json"
 BBREF_CONTRACTS_URL = "https://www.basketball-reference.com/contracts/players.html"
 
 UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0 Safari/537.36"
-
-
-def norm_name(name: str) -> str:
-    """Lowercase, strip . ' ’ - and Jr/Sr/II..V, collapse whitespace, after ascii_fold.
-
-    ascii_fold first so 'Jokić' keys as 'nikola jokic', the form the charted
-    (ASCII-folded) names join on; without it a correctly decoded BBRef name
-    would still miss [ingest#3].
-    """
-    s = ascii_fold(name).lower()
-    s = re.sub(r"[.'’-]", "", s)
-    s = re.sub(r"\s+(jr|sr|ii|iii|iv|v)$", "", s.strip())
-    return re.sub(r"\s+", " ", s)
 
 
 def fetch_bbref_contracts() -> dict[str, float]:

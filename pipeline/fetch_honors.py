@@ -20,12 +20,12 @@ import argparse
 import re
 import sys
 import time
-import unicodedata
 from html.parser import HTMLParser
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from ingest import EmptyPayloadError, Failures, FetchError, cache_is_fresh, run_fetch, write_cache
+from name_utils import norm_name
 from nba_http import retry_call, status_of
 from seasons import is_final, season_end_year, season_range
 
@@ -35,14 +35,6 @@ CACHE = ROOT / "pipeline" / "cache"
 AWARD_YEARS = [season_end_year(s) for s in season_range()]
 BBREF_AWARDS = "https://www.basketball-reference.com/awards/awards_{year}.html"
 UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
-
-
-def norm_name(name: str) -> str:
-    s = unicodedata.normalize("NFD", name)
-    s = "".join(c for c in s if not unicodedata.combining(c))
-    s = re.sub(r"[.'’-]", "", s.lower())
-    s = re.sub(r"\s+(jr|sr|ii|iii|iv|v)$", "", s.strip())
-    return re.sub(r"\s+", " ", s)
 
 
 def award_year_to_season(year: int) -> str:

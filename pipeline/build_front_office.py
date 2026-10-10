@@ -27,10 +27,10 @@ import collections
 import json
 import math
 import pathlib
-import re
 from datetime import datetime
 
 from seasons import season_range
+from name_utils import norm_name
 
 # era-aware cap rules — source of truth is cap_history.json (26K 31 seasons) + nba_salary_cap.py mirror
 try:
@@ -304,14 +304,6 @@ def linear_shap_contributions(X, coeffs, feature_names, add_bias=True):
     }
 
 
-def norm_name(n: str) -> str:
-    s = n.lower()
-    s = re.sub(r"[.'’`]", "", s)
-    s = re.sub(r"\s+(jr|sr|ii|iii|iv|v)$", "", s.strip())
-    s = re.sub(r"\s+", " ", s).strip()
-    return s
-
-
 def _quality_multiplier(v_list):
     """q = 1.0 + 0.12*PLUS_MINUS (v[13]) + 0.05*PTS (v[0]), clamp 0.65-1.65."""
     try:
@@ -542,7 +534,7 @@ def load_salaries():
             continue
         season = v.get("season")
         team = (v.get("team") or "").strip().upper()
-        nm = v.get("norm_name") or norm_name(v.get("name", ""))
+        nm = norm_name(v.get("norm_name") or v.get("name", ""))
         if not season:
             continue
         by_norm_season[(nm, season)] = {"salary": amount, "team": team, "name": v.get("name"), "season": season}
@@ -2684,7 +2676,7 @@ def main():
             continue
         if v.get("season") != season_next:
             continue
-        nm = v.get("norm_name") or norm_name(v.get("name", ""))
+        nm = norm_name(v.get("norm_name") or v.get("name", ""))
         amt = float(v.get("salary") or 0)
         if amt < 10000:
             continue

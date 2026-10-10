@@ -11,21 +11,15 @@ from __future__ import annotations
 
 import csv
 import json
-import re
 import urllib.request
 from pathlib import Path
+
+from name_utils import norm_name
 
 ROOT = Path(__file__).resolve().parents[1]
 CACHE = ROOT / "pipeline" / "cache"
 OUT = CACHE / "salaries_history.csv"
 HIST_URL = "https://raw.githubusercontent.com/jerrytigerxu/NBA-Salary-Prediction/master/data/1990_to_2018.csv"
-
-
-def norm_name(name: str) -> str:
-    s = name.lower()
-    s = re.sub(r"[.'’-]", "", s)
-    s = re.sub(r"\s+(jr|sr|ii|iii|iv|v)$", "", s.strip())
-    return re.sub(r"\s+", " ", s)
 
 
 def season_label(start: str | int, end: str | int) -> str:
