@@ -14,6 +14,7 @@ import sys
 from pathlib import Path
 
 import numpy as np
+import pytest
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "pipeline"))
@@ -215,10 +216,8 @@ def _skill_npz(path: Path, names, seasons, grades, pids=None, mask=None) -> Path
     return path
 
 
-def test_skill_labels_join_on_player_id(tmp_path, capsys):
+def test_skill_labels_join_on_player_id(tmp_path):
     """[final#23] Labels built against the committed vectors.json lost its 275 suffix rows by name."""
-    import pytest
-
     pytest.importorskip("torch")
     import train_mtnn
 
@@ -232,16 +231,17 @@ def test_skill_labels_join_on_player_id(tmp_path, capsys):
     G, M, keys = train_mtnn._join_skill_npz(with_ids, names, seasons, pids)
     assert keys == ["a", "b"] and np.allclose(G, grades)
     assert M.tolist() == [[1, 0], [1, 1]]  # the file's per-skill mask
-    # A file without ids (every file before the fix) still joins by name: the suffix row is lost, and said.
+    # A file without ids (every file before the fix) still joins by name. Here
+    # that loses the suffix row, half the file: the run stops instead of
+    # training the skill towers on a silent mask.
     legacy = _skill_npz(tmp_path / "legacy.npz", label_names, ["2023-24"] * 2, grades)
-    G, M, _ = train_mtnn._join_skill_npz(legacy, names, seasons, pids)
-    assert M.tolist() == [[0, 0], [1, 1]]
-    assert "1 of its 2 rows join the matrix by (name, season)" in capsys.readouterr().out
+    with pytest.raises(SystemExit, match=r"1 of its 2 rows join the matrix by \(name, season\)"):
+        train_mtnn._join_skill_npz(legacy, names, seasons, pids)
 
 
-def test_an_id_keyed_label_file_that_misses_rows_stops_the_run(tmp_path):
-    import pytest
-
+@pytest.mark.parametrize("keyed_by", ["player_id", "name"])
+def test_a_label_file_that_misses_rows_stops_the_run(tmp_path, capsys, keyed_by):
+    """The 1% stop holds for both join kinds: a name-keyed file is not let through."""
     pytest.importorskip("torch")
     import train_mtnn
 
@@ -250,14 +250,21 @@ def test_an_id_keyed_label_file_that_misses_rows_stops_the_run(tmp_path):
     seasons = np.array(["2023-24"] * n)
     pids = np.arange(n)
     grades = [[0.5, 0.5]] * n
+
+    def label_file(path: Path, n_lost: int) -> Path:
+        stray = [900 + k for k in range(n_lost)]
+        if keyed_by == "player_id":
+            return _skill_npz(path, names, seasons, grades, pids=[*range(n - n_lost), *stray])
+        return _skill_npz(path, [*names[: n - n_lost], *(f"X{k}" for k in stray)], seasons, grades)
+
+    key = r"\(player_id, season\)" if keyed_by == "player_id" else r"\(name, season\)"
     # 2 of 200 rows keyed to another vectors.json (1%): trained on, with a line.
-    near = _skill_npz(tmp_path / "near.npz", names, seasons, grades, pids=[*range(198), 900, 901])
-    _, M, _ = train_mtnn._join_skill_npz(near, names, seasons, pids)
+    _, M, _ = train_mtnn._join_skill_npz(label_file(tmp_path / "near.npz", 2), names, seasons, pids)
     assert int(M[:, 0].sum()) == 198
+    assert "198 of its 200 rows join the matrix by" in capsys.readouterr().out
     # 3 of 200 (1.5%): stale or mis-keyed, the run stops before training.
-    far = _skill_npz(tmp_path / "far.npz", names, seasons, grades, pids=[*range(197), 900, 901, 902])
-    with pytest.raises(SystemExit, match=r"197 of its 200 rows join the matrix by \(player_id, season\)"):
-        train_mtnn._join_skill_npz(far, names, seasons, pids)
+    with pytest.raises(SystemExit, match=rf"197 of its 200 rows join the matrix by {key}"):
+        train_mtnn._join_skill_npz(label_file(tmp_path / "far.npz", 3), names, seasons, pids)
 
 
 def test_position_labels_under_half_stop_the_run_unless_allowed(tmp_path, monkeypatch, capsys):

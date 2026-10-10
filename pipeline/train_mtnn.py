@@ -304,12 +304,15 @@ def game_feature_cols(manifest) -> list[int]:
     return [manifest["features"].index(f) for f in game]
 
 
-# A label file keyed by player_id may lose at most this share of its rows in
-# the join (the contract's row tolerance, stage_contract.MAX_ROW_CHANGE). Labels
-# built from the prepare chain's own vectors.json join every row; built from
-# the committed, hand-restored vectors.json they lose 3 (the (pid, season) keys
-# it does not share with the matrix). More than that is a stale or mis-keyed
-# file, and the run stops instead of training the skill towers on a silent mask.
+# A skill label file, keyed by player_id or by name, may lose at most this
+# share of its rows in the join (the contract's row tolerance,
+# stage_contract.MAX_ROW_CHANGE). Labels built from the prepare chain's own
+# vectors.json join every row, by id and by name; so do the name-keyed files
+# of every earlier snapshot and the e2e fixture. Built from the committed,
+# hand-restored vectors.json they lose 3 rows by id (the (pid, season) keys it
+# does not share with the matrix) and 275 by name. More than the tolerance is
+# a stale or mis-keyed file, and the run stops instead of training the skill
+# towers on a silent mask.
 SKILL_JOIN_TOLERANCE = 0.01
 
 
@@ -323,10 +326,13 @@ def _join_skill_npz(path, names, seasons, pids=None) -> tuple[np.ndarray, np.nda
     d2a16d37: 'Andre Jackson Jr.' against the matrix's 'Andre Jackson')
     silently lost 275 of 12,966 core rows and 248 of 5,154 wide rows.
 
-    An id-keyed file that joins fewer than its rows minus SKILL_JOIN_TOLERANCE
-    stops the run (SystemExit). A name-keyed file prints the shortfall and
-    trains on, as before (the pre-fix inputs the train-path check replays are
-    name-keyed).
+    A file that joins fewer than its rows minus SKILL_JOIN_TOLERANCE stops the
+    run (SystemExit), whichever key it joins on; a smaller shortfall prints a
+    line and trains on. The name-keyed files the train-path check replays
+    (hoops-matrix-before: 12,966 of 12,966 core, 5,154 of 5,154 wide) and the
+    e2e fixture's (671 of 671, 289 of 289) join every row, so the stop does not
+    fire on them; it fires on a file that really lost rows, such as name-keyed
+    labels built from the committed vectors.json.
     """
     npz = np.load(path, allow_pickle=False)
     keys = [str(k) for k in npz["keys"]]
@@ -362,7 +368,7 @@ def _join_skill_npz(path, names, seasons, pids=None) -> tuple[np.ndarray, np.nda
             f"{'(player_id, season)' if by_id else '(name, season)'}; {lost} rows are not trained on "
             f"({int(M.sum())} of its {cells} measured cells reach the skill loss)"
         )
-        if by_id and lost > SKILL_JOIN_TOLERANCE * n_file:
+        if lost > SKILL_JOIN_TOLERANCE * n_file:
             raise SystemExit(
                 f"{msg} (more than {SKILL_JOIN_TOLERANCE:.0%}). The label file is stale or keyed to another "
                 "vectors.json: rebuild it after the matrix (rebuild_all.py --refresh-context --stage matrix)."

@@ -152,7 +152,7 @@ def train_one(
     lookup = {int(a): int(b) for a, b in train_pairs}
     lookup.update({int(b): int(a) for a, b in train_pairs})
 
-    skill_g, skill_m, skill_keys, _ = T.load_skill_labels(names, seasons)
+    skill_g, skill_m, skill_keys, _ = T.load_skill_labels(names, seasons, pids)
     skill_t = torch.tensor(skill_g, device=device)
     skillm_t = torch.tensor(skill_m, device=device)
     arch_t = torch.tensor(clusters, device=device)
