@@ -225,6 +225,21 @@ def test_v2_expects_skills_only_from_a_run_that_trained_skill_towers():
     assert block["cqs"] is None and "without skills_r2" in block["cqs_unscored"]
 
 
+def test_v2_a_run_that_lost_its_skill_labels_is_broken_not_skill_free():
+    """No skills block because pipeline/data/skill_labels.npz was missing (lineage sha None) is a broken
+    prepare, so the v2 CQS is unscored instead of scoring both skills components 0.0 (about -19)."""
+    rep = hand_report(protocol="v2", skills=None, lineage={"inputs": {"pipeline/data/skill_labels.npz": None}})
+    block = cqs.composite_quality(rep)
+    assert "skills_r2" in block["components_expected"]
+    assert block["cqs"] is None and "without skills_r2, skill_nn" in block["cqs_unscored"]
+    # With the file recorded present, the old rule stands (and v1 never expects anything).
+    rep["lineage"]["inputs"]["pipeline/data/skill_labels.npz"] = "ab" * 32
+    assert cqs.composite_quality(rep)["cqs"] == pytest.approx(60.48 - 100 * (0.14 * 0.5 + 0.05 * 0.8))
+    rep["lineage"]["inputs"]["pipeline/data/skill_labels.npz"] = None
+    del rep["protocol"]
+    assert isinstance(cqs.composite_quality(rep)["cqs"], float)
+
+
 def test_v1_expects_nothing_so_every_recorded_number_stands():
     rep = hand_report()
     del rep["position_top1_acc"]

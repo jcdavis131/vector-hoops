@@ -272,10 +272,24 @@ def _is_v2(report: dict[str, Any]) -> bool:
     return _protocol(report) == "v2"
 
 
+def _skill_labels_missing(report: dict[str, Any]) -> bool:
+    """The run's lineage records pipeline/data/skill_labels.npz as absent (sha None).
+
+    train_mtnn trains no skill tower only when that file is missing
+    (load_skill_labels), and it is one of the seven lineage inputs a prepare
+    chain must provide. A run that lost it is a broken run, so its skills
+    components stay expected and its v2 CQS is unscored, instead of scoring
+    them 0.0 (about -19 CQS) as if they had been left out on purpose.
+    """
+    inputs = (report.get("lineage") or {}).get("inputs") or {}
+    key = "pipeline/data/skill_labels.npz"
+    return key in inputs and inputs[key] is None
+
+
 def expected_components(report: dict[str, Any]) -> list[str]:
     """The components a report of its protocol has to carry for its CQS to be scored."""
     expected = EXPECTED_COMPONENTS[_protocol(report)]
-    trained_skills = isinstance(report.get("skills"), dict)
+    trained_skills = isinstance(report.get("skills"), dict) or _skill_labels_missing(report)
     return [k for k in expected if trained_skills or k not in SKILL_COMPONENTS]
 
 
