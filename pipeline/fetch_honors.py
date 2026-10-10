@@ -249,6 +249,14 @@ def build_year_cache(year: int) -> dict:
     for nn in stars:
         rec = players.setdefault(nn, {"name": nn, "vote_pts": 0, "all_nba_team": 0, "asg": 0})
         rec["asg"] = 1
+    # A held game names 22-26 All-Stars (1997-2024 caches); 2025 and 2026 came
+    # back with 15 after the game changed format, missing named All-Stars
+    # (Giannis Antetokounmpo, LeBron James 2025). build_honors reads a list
+    # under 20 as partial (1 for a listed player, unknown otherwise); the doc
+    # says so too, so a refetch does not pass for a full list.
+    asg_partial = 0 < len(stars) < 20
+    if asg_partial:
+        print(f"WARNING {year}: only {len(stars)} All-Stars parsed; marked asg_partial")
     return {
         "built": time.strftime("%Y-%m-%d"),
         "source": "basketball-reference.com/awards",
@@ -259,6 +267,7 @@ def build_year_cache(year: int) -> dict:
         "vote_getters": len([p for p in players.values() if p["vote_pts"] > 0]),
         "all_nba_selected": sum(1 for p in players.values() if p["all_nba_team"]),
         "all_stars": len(stars),
+        "asg_partial": asg_partial,
     }
 
 

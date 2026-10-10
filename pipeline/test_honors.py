@@ -157,14 +157,29 @@ def test_asg_count_is_per_player_and_masked_when_the_career_predates_the_caches(
     assert built["by"][("Tim Hardaway Jr.", "2014-15")]["HON_ASG_CUM"] == 0.0
 
 
-def test_an_unmatched_honoree_gets_no_zero_row(built):
+def test_steve_smith_is_steven_smith(built):
     if not built["real"]:
         pytest.skip("fixture mode")
-    # BBRef 'Steve Smith' (62 vote pts, All-Star in 1997-98) is charted as 'Steven Smith'.
+    # BBRef 'Steve Smith' (62 vote pts, All-Star in 1997-98) is charted as
+    # 'Steven Smith' (pid 120). Unmatched, his row was held back (no zero
+    # row) and so were 12 other Smiths' (eff24dc1); aliased, it is his.
     cov = built["doc"]["coverage"]
-    assert "steve smith|1997-98" in cov["unmatched_honorees"]
-    row = built["by"].get(("Steven Smith", "1998-99"))
-    assert row is None or row["HON_ALL_NBA_VOTE_LAG"] is None
+    assert cov["unmatched_honorees"] == []
+    row = built["by"][("Steven Smith", "1998-99")]
+    assert row["HON_ALL_NBA_VOTE_LAG"] == 62.0 and row["HON_ASG_LAG"] == 1.0
+
+
+def test_a_partial_all_star_list_is_one_or_unknown(built):
+    if not built["real"]:
+        pytest.skip("fixture mode")
+    # honors_award_2025 lists 15 All-Stars (every 1997-2024 list has 22-26):
+    # a listed one is 1, an omitted one who played is unknown, not 0.
+    assert built["doc"]["coverage"]["asg_partial"] == ["2024-25", "2025-26"]
+    sga = built["by"][("Shai GilgeousAlexander", "2025-26")]
+    assert sga["HON_ASG_LAG"] == 1.0
+    giannis = built["by"][("Giannis Antetokounmpo", "2025-26")]
+    assert giannis["HON_ASG_LAG"] is None and giannis["HON_ASG_CUM"] is None
+    assert giannis["HON_ALL_NBA_VOTE_LAG"] is not None  # the vote list is not partial
 
 
 def _fixture_is_partial_and_ships_no_asset(built) -> None:

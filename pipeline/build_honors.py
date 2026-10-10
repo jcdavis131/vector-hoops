@@ -89,6 +89,15 @@ def real_honor_cache_paths(cache_dir: Path) -> list[Path]:
     return sorted(p for p in cache_dir.glob("honors_award_*.json") if pat.match(p.name))
 
 
+# BBRef prints a name stats.nba.com spells differently, and no key folds one
+# into the other. 'Steve Smith' (1996-97 to 1999-00 awards: 11, 62, 63 and 1
+# All-NBA vote points, All-Star 1998) is the charted 'Steven Smith', PLAYER_ID
+# 120 (ATL/POR/SAS, 72-82 GP a season; the only other dashbase name near it is
+# 'Stevin Smith', pid 1478, 8 GP in 1996-97). Unmatched, his honors were lost
+# and the next-season rows of 13 Smiths were held back (eff24dc1).
+AWARD_NAME_ALIASES = {"steve smith": "steven smith"}
+
+
 def _rekey(players: dict[str, dict]) -> dict[str, dict]:
     """Award entries keyed by norm_name of their stored display name.
 
@@ -96,7 +105,20 @@ def _rekey(players: dict[str, dict]) -> dict[str, dict]:
     is what the source printed. Keying both sides with today's norm_name is
     what lets 'Ömer Aşık' meet 'Omer Asik'.
     """
-    return {norm_name(rec.get("name") or nn): rec for nn, rec in players.items()}
+    out = {}
+    for nn, rec in players.items():
+        key = norm_name(rec.get("name") or nn)
+        out[AWARD_NAME_ALIASES.get(key, key)] = rec
+    return out
+
+
+# Every All-Star list from 1997 to 2024 names 22-26 players (1999: no game).
+# honors_award_2025 and _2026 name 15 each, after the game moved to a
+# four-team tournament (2025) and a USA-vs-World format (2026): Giannis
+# Antetokounmpo, LeBron James, Jalen Brunson and Anthony Edwards were 2025
+# All-Stars and are not in the list. A list this short is partial: a player
+# it names was an All-Star (1), one it omits is unknown, not 0.
+ASG_MIN_LISTED = 20
 
 
 def load_award_index(use_fixture: bool) -> tuple[dict[str, dict], bool, dict[str, dict]]:
@@ -127,8 +149,12 @@ def load_award_index(use_fixture: bool) -> tuple[dict[str, dict], bool, dict[str
             ok = bool(doc.get("complete"))
             complete = complete and ok
             by_season[season] = _rekey(doc.get("players", {}))
-            asg_listed = any(r.get("asg") for r in by_season[season].values())
-            coverage[season] = {"complete": ok, "asg_held": ok and asg_listed}
+            n_asg = sum(1 for r in by_season[season].values() if r.get("asg"))
+            coverage[season] = {
+                "complete": ok,
+                "asg_held": ok and n_asg > 0,
+                "asg_partial": ok and n_asg > 0 and (bool(doc.get("asg_partial")) or n_asg < ASG_MIN_LISTED),
+            }
         return by_season, complete, coverage
 
     if not FIXTURE.exists():
@@ -139,7 +165,7 @@ def load_award_index(use_fixture: bool) -> tuple[dict[str, dict], bool, dict[str
         by_season[season] = _rekey(recs)
         # The fixture is a hand-picked handful of honorees, never a complete
         # season: nothing it omits is a measured zero.
-        coverage[season] = {"complete": False, "asg_held": False}
+        coverage[season] = {"complete": False, "asg_held": False, "asg_partial": False}
     return by_season, complete, coverage
 
 
@@ -190,12 +216,14 @@ def main() -> None:
         fmvp_doc = json.loads(FMVP_CACHE.read_text(encoding="utf-8"))
         for season, rec in (fmvp_doc.get("bySeason") or {}).items():
             if rec.get("norm"):
-                fmvp_by_season[season] = rec["norm"]
+                fmvp_by_season[season] = norm_name(rec["norm"])  # stored key, keyed again (name_utils)
     vec = json.loads(VECTORS.read_text(encoding="utf-8"))
 
     draft_year = draft_years_by_pid(DRAFT_HISTORY)
     first_season = first_seasons_by_pid(CACHE_DIR)
     played = dashbase_pids(CACHE_DIR)
+    played_pids = {s: {q for pids in names.values() for q in pids} for s, names in played.items()}
+    partial_asg = sorted(s for s, c in coverage.items() if c.get("asg_partial"))
 
     charted: dict[str, set[str]] = defaultdict(set)
     for p in vec["players"]:
@@ -264,7 +292,7 @@ def main() -> None:
         if not prev_s:
             continue
         prev = award_idx.get(prev_s, {}).get(nn, {})
-        cov = coverage.get(prev_s, {"complete": False, "asg_held": False})
+        cov = coverage.get(prev_s, {"complete": False, "asg_held": False, "asg_partial": False})
         vote_pts = int(prev.get("vote_pts") or 0)
         team_tier = int(prev.get("all_nba_team") or 0)
         asg = int(prev.get("asg") or 0)
@@ -288,13 +316,22 @@ def main() -> None:
             vals = {
                 "HON_ALL_NBA_TEAM_LAG": float(team_tier),
                 "HON_ALL_NBA_VOTE_LAG": float(vote_pts),
-                "HON_ASG_LAG": float(asg) if cov["asg_held"] else None,
+                "HON_ASG_LAG": float(asg) if cov["asg_held"] and (asg or not cov["asg_partial"]) else None,
                 "HON_VOTE_RECOG": 1.0 if vote_pts > 0 else 0.0,
             }
 
         cum = None
         s_cum = suspect_cum.get(pid) if pid is not None else None
-        if career_fully_observed(pid, draft_year, first_season) and not (s_cum is not None and s_cum <= prev_s):
+        # A partial All-Star season he played in and is not listed for could
+        # hold a selection the list lost: the count is a lower bound.
+        unseen = any(
+            s <= prev_s and s not in asg_seasons.get(pid, ()) and pid in played_pids.get(s, ()) for s in partial_asg
+        )
+        if (
+            career_fully_observed(pid, draft_year, first_season)
+            and not (s_cum is not None and s_cum <= prev_s)
+            and not unseen
+        ):
             cum = float(sum(1 for s in asg_seasons.get(pid, ()) if s <= prev_s))
         vals["HON_ASG_CUM"] = cum
 
@@ -328,6 +365,7 @@ def main() -> None:
                     "award_seasons": len(award_idx),
                     "covered_award_seasons": sorted(s for s, c in coverage.items() if c["complete"]),
                     "asg_not_held": sorted(s for s, c in coverage.items() if c["complete"] and not c["asg_held"]),
+                    "asg_partial": partial_asg,
                     "rows_total": len(vec["players"]),
                     "masked_per_feature": masked,
                     "unmatched_honorees": [f"{nn}|{s}" for s, nn, _ in lost],
