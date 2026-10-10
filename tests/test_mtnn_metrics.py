@@ -285,3 +285,44 @@ def test_transparent_baseline_is_the_l2_normalised_game_columns():
     G = mm.transparent_baseline_embeddings(Z, [1, 3])
     assert G.dtype == np.float32
     assert G.tolist() == [[pytest.approx(0.6), pytest.approx(0.8)], [0.0, 0.0]]
+
+
+# --- game targets nobody measured [final#8 follow-up] ----------------------------
+
+
+def test_game_target_mask_is_none_when_every_game_cell_was_measured():
+    # Column 0 is not a game column, so its 0 does not count.
+    M = np.array([[0, 1, 1], [1, 1, 1]], dtype=np.float32)
+    assert mm.game_target_mask(M, [1, 2]) is None
+    M[1, 2] = 0
+    assert mm.game_target_mask(M, [1, 2]).tolist() == [[True, True], [True, False]]
+
+
+def test_masked_residual_stats_count_only_measured_cells():
+    """Two features, three rows; feature b's middle cell is unmeasured (target 0.0, which a
+    fit would chase). Measured cells: a [1, 2, 3] vs p [1, 1, 1]; b [4, 6] vs p [5, 5].
+      residuals a [0, 1, 2], b [-1, 1]: SS_res 7, |res| sum 5 over 5 cells
+      means a 2, b 5 (the unmeasured 0.0 left out): SS_tot 2 + 2 = 4
+      R2 1 - 7/4 = -0.75, MAE 1.0, MSE 1.4, per-feature MAE a 1.0, b 1.0."""
+    y = np.array([[1.0, 4.0], [2.0, 0.0], [3.0, 6.0]])
+    p = np.array([[1.0, 5.0], [1.0, 5.0], [1.0, 5.0]])
+    measured = np.array([[True, True], [True, False], [True, True]])
+    st = mm.masked_residual_stats(y, p, measured)
+    assert st["r2"] == pytest.approx(-0.75)
+    assert st["mae"] == pytest.approx(1.0)
+    assert st["mse"] == pytest.approx(1.4)
+    assert st["per_feature_mae"].tolist() == [pytest.approx(1.0), pytest.approx(1.0)]
+    assert (st["cells"], st["cells_unmeasured"]) == (5, 1)
+    # The unmeasured cell's value does not matter.
+    y[1, 1] = 99.0
+    assert mm.masked_residual_stats(y, p, measured)["r2"] == pytest.approx(-0.75)
+
+
+def test_masked_residual_stats_with_every_cell_measured_is_the_pooled_formula():
+    rng = np.random.default_rng(3)
+    y, p = rng.normal(size=(20, 4)), rng.normal(size=(20, 4))
+    resid = y - p
+    r2 = 1.0 - (resid**2).sum() / ((y - y.mean(axis=0)) ** 2).sum()
+    st = mm.masked_residual_stats(y, p, np.ones_like(y, dtype=bool))
+    assert st["r2"] == pytest.approx(r2, abs=1e-12)
+    assert st["mae"] == pytest.approx(np.abs(resid).mean(), abs=1e-12)

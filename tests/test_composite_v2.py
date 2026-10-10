@@ -255,6 +255,49 @@ def test_next_head_against_raw_and_shrunk_persistence_by_hand():
     assert out["scores"]["next_mae"]["test"] == pytest.approx(0.4)
 
 
+def test_next_head_leaves_out_target_cells_nobody_measured():
+    """The by-hand case above plus a second game column, measured everywhere but on one
+    test target (row 5) and one train target (row 3), both stored as z 0.0 [final#8].
+    Column 0 must score exactly as before, and column 1's two unmeasured cells must
+    count neither as a target nor in the shrink factor or the train mean."""
+    pids = np.array([1, 1, 2, 2, 3, 3, 4, 4])
+    seasons = np.array(["2019-20", "2020-21"] * 2 + ["2023-24", "2024-25"] * 2)
+    Z = np.array([[1, 1], [0.5, 1.0], [2, 1], [1.0, 0.0], [2, 1], [1.5, 0.0], [-2, -1], [-1.0, -2.0]], dtype=np.float32)
+    M = np.ones_like(Z)
+    M[3, 1] = M[5, 1] = 0
+    pred = np.zeros((8, 2), np.float32)
+    pred[4], pred[6] = (0.8, 0.7), (-0.8, -1.5)
+    pairs = cv.split_pairs(pids, seasons)
+    out = cv.next_head_component(pred, Z, [0, 1], pairs, ["PTS", "FG3_PCT"], M)
+    # Column 1: train pairs x [1, 1] -> y [1.0, (unmeasured)], so beta = 1 / 1 = 1 and the
+    # train mean is 1.0 (the unmeasured 0.0 would give beta 0.5 and mean 0.5).
+    assert out["baselines"]["shrink_factors"] == {"PTS": pytest.approx(0.5), "FG3_PCT": pytest.approx(1.0)}
+    # Test targets: column 0 [1.5, -1.0] as before, column 1 only row 7's -2.0.
+    # Model residuals: col 0 [0.7, -0.2], col 1 [-0.5]. Means col 0 0.25, col 1 -2.0:
+    # SS_tot 3.125 + 0, SS_res 0.53 + 0.25 -> R2 1 - 0.78/3.125 = 0.7504, MAE 1.4 / 3.
+    m = out["measures"]["test"]
+    assert m["r2"] == pytest.approx(0.7504)
+    assert m["mae_z"] == pytest.approx(1.4 / 3, abs=1e-4)
+    assert m["target_cells_unmeasured"] == 1
+    # Raw persistence: col 0 residuals [-0.5, 1.0], col 1 row 7: -2 - (-1) = -1 -> MAE 2.5 / 3.
+    assert out["baselines"]["test"]["persistence"]["mae_z"] == pytest.approx(2.5 / 3, abs=1e-4)
+    # Train mean forecast (0.75, 1.0): |0.75| + |-1.75| + |-3.0| -> MAE 5.5 / 3.
+    assert out["baselines"]["test"]["train_mean"]["mae_z"] == pytest.approx(5.5 / 3, abs=1e-4)
+
+
+def test_next_head_with_every_game_cell_measured_is_unchanged_bit_for_bit():
+    rng = np.random.default_rng(11)
+    pids = np.repeat(np.arange(30), 2)
+    seasons = np.array(["2019-20", "2020-21"] * 10 + ["2022-23", "2023-24"] * 10 + ["2023-24", "2024-25"] * 10)
+    Z = rng.normal(size=(60, 3)).astype(np.float32)
+    pred = rng.normal(size=(60, 2)).astype(np.float32)
+    pairs = cv.split_pairs(pids, seasons)
+    M = np.ones_like(Z)
+    M[:, 2] = 0  # not a game column here
+    without = cv.next_head_component(pred, Z, [0, 1], pairs, ["A", "B"])
+    assert cv.next_head_component(pred, Z, [0, 1], pairs, ["A", "B"], M) == without
+
+
 def test_next_head_without_predictions_is_missing():
     assert "missing" in cv.next_head_component(None, Z6, [0], cv.split_pairs(PIDS, SEASONS), ["PTS"])
 

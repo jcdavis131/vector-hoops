@@ -153,3 +153,53 @@ def cross_era_archetype_purity(
             continue
         purities.append(float((clusters[cross] == clusters[i]).mean()))
     return float(np.mean(purities)) if purities else None
+
+
+# ---------------------------------------------------------------------------
+# Game-profile targets nobody measured [final#8 follow-up]
+# ---------------------------------------------------------------------------
+#
+# Until 078b75df every one of the 14 game columns was measured on every row.
+# Since then a percentage with no attempt behind it is mask 0, with z 0.0 in
+# the matrix: FG3_PCT on 1,565 rows and FT_PCT on 56. The profile and
+# next_profile heads, CQS v1's next_r2 / next_mae, CQS v2's next head and the
+# population-validation next-year flag all read those columns as targets, so
+# they would score (and train toward) a season mean nobody observed.
+#
+# The masked formulas run only when some game cell is unmeasured. When every
+# cell is measured (every snapshot before 078b75df) game_target_mask returns
+# None and the callers keep their original float32 code, so those runs
+# reproduce bit for bit.
+
+
+def game_target_mask(M: np.ndarray, game_cols: list[int]) -> np.ndarray | None:
+    """Boolean [rows, len(game_cols)], True where the game cell was measured; None when all are."""
+    measured = np.asarray(M)[:, game_cols] > 0
+    return None if bool(measured.all()) else measured
+
+
+def masked_residual_stats(y: np.ndarray, p: np.ndarray, measured: np.ndarray) -> dict:
+    """Pooled R2, MAE and MSE and the per-feature MAE over the measured target cells only.
+
+    The pooled formulas the unmasked callers use, restricted to the cells
+    where `measured` is True: residuals and the R2 total sum of squares are
+    summed over those cells, each feature's mean is the mean of its measured
+    cells, and a feature with no measured cell has MAE 0.0. Float64.
+    """
+    w = np.asarray(measured, dtype=np.float64)
+    y = np.asarray(y, dtype=np.float64)
+    resid = y - np.asarray(p, dtype=np.float64)
+    n_feat = w.sum(axis=0)
+    n = float(w.sum())
+    mean = (w * y).sum(axis=0) / np.maximum(n_feat, 1.0)
+    ss_tot = float((w * (y - mean) ** 2).sum())
+    ss_res = float((w * resid**2).sum())
+    abs_res = w * np.abs(resid)
+    return {
+        "r2": 1.0 - ss_res / max(ss_tot, 1e-9),
+        "mae": float(abs_res.sum()) / max(n, 1.0),
+        "mse": ss_res / max(n, 1.0),
+        "per_feature_mae": abs_res.sum(axis=0) / np.maximum(n_feat, 1.0),
+        "cells": int(n),
+        "cells_unmeasured": int(w.size - n),
+    }

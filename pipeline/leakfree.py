@@ -104,8 +104,14 @@ def next_profile_metrics(
     next_idx: np.ndarray,
     split: np.ndarray,
     feature_names: list[str],
+    target_mask: np.ndarray | None = None,
 ) -> dict:
-    """Held-out next-season regression, scored by the TARGET row's split."""
+    """Held-out next-season regression, scored by the TARGET row's split.
+
+    target_mask (mtnn_metrics.game_target_mask) restricts every number to
+    the measured target cells; None, every game cell measured, is the
+    original all-cell formula.
+    """
     out: dict = {}
     valid = next_idx >= 0
     for s in ("val", "test"):
@@ -116,6 +122,15 @@ def next_profile_metrics(
             continue
         y = target[next_idx[rows]]
         p = pred[rows]
+        if target_mask is not None:
+            st = T.masked_residual_stats(y, p, target_mask[next_idx[rows]])
+            out[s] = {
+                "rows": len(rows),
+                "mae_z": round(st["mae"], 4),
+                "rmse_z": round(float(np.sqrt(st["mse"])), 4),
+                "r2": round(st["r2"], 4),
+            }
+            continue
         resid = y - p
         ss_tot = float(((y - y.mean(axis=0, keepdims=True)) ** 2).sum())
         out[s] = {

@@ -223,8 +223,14 @@ def report_checks(report: dict, src: dict, season) -> dict:
     test = ((report.get("next_profile") or {}).get("test")) or {}
     if nxt is not None:
         pairs = composite_v2.split_pairs(src["player_id"], season)["test"]
-        Zg = src["Z_model"][:, composite_v2.feature_index(src["features"], src["game_features"])].astype(np.float64)
-        r2, mae = composite_v2._r2_mae(Zg[pairs[:, 1]], nxt[pairs[:, 0]].astype(np.float64))
+        game_cols = composite_v2.feature_index(src["features"], src["game_features"])
+        Zg = src["Z_model"][:, game_cols].astype(np.float64)
+        # The report counts only measured target cells when any game cell is
+        # unmeasured (train_mtnn.next_profile_holdout_metrics); so does this.
+        measured = composite_v2.game_target_mask(src["M"], game_cols)
+        r2, mae = composite_v2._r2_mae(
+            Zg[pairs[:, 1]], nxt[pairs[:, 0]].astype(np.float64), None if measured is None else measured[pairs[:, 1]]
+        )
         compare("next_profile.test.r2", r2, test.get("r2"))
         compare("next_profile.test.mae_z", mae, test.get("mae_z"))
     agree = [v["agree"] for v in out.values() if v["agree"] is not None]

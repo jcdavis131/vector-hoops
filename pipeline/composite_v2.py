@@ -64,7 +64,14 @@ import math
 from typing import Any
 
 import numpy as np
-from mtnn_metrics import adjacent_season_pairs, eval_split, filter_pairs_by_split, season_start_year
+from mtnn_metrics import (
+    adjacent_season_pairs,
+    eval_split,
+    filter_pairs_by_split,
+    game_target_mask,
+    masked_residual_stats,
+    season_start_year,
+)
 
 VERSION = "2.0-provisional"
 
@@ -386,21 +393,47 @@ def regime_component(E, Z, game_cols, identity_cols, pairs_by_split, regime, mas
 # ---------------------------------------------------------------------------
 
 
-def _r2_mae(y: np.ndarray, p: np.ndarray) -> tuple[float, float]:
-    """Pooled R2 and MAE exactly as train_mtnn.next_profile_holdout_metrics computes them."""
+def _r2_mae(y: np.ndarray, p: np.ndarray, measured: np.ndarray | None = None) -> tuple[float, float]:
+    """Pooled R2 and MAE as train_mtnn.next_profile_holdout_metrics computes them.
+
+    measured (a boolean array shaped like y) restricts both to the measured
+    target cells, through the same mtnn_metrics.masked_residual_stats the
+    v1 metric uses; None is the original all-cell formula.
+    """
+    if measured is not None:
+        st = masked_residual_stats(y, p, measured)
+        return st["r2"], st["mae"]
     resid = y - p
     ss_tot = float(((y - y.mean(axis=0, keepdims=True)) ** 2).sum())
     return 1.0 - float((resid**2).sum()) / max(ss_tot, 1e-9), float(np.abs(resid).mean())
 
 
-def shrunk_persistence_factors(Zg: np.ndarray, train_pairs: np.ndarray) -> np.ndarray:
-    """beta_j = sum(x y) / sum(x x) over train-split pairs: next = beta * this season, per feature [critic#0]."""
+def shrunk_persistence_factors(
+    Zg: np.ndarray, train_pairs: np.ndarray, measured: np.ndarray | None = None
+) -> np.ndarray:
+    """beta_j = sum(x y) / sum(x x) over train-split pairs: next = beta * this season, per feature [critic#0].
+
+    measured (rows x game features, True where the cell was measured) fits
+    beta only on the pairs whose target cell was measured; None fits on all.
+    """
     x, y = Zg[train_pairs[:, 0]], Zg[train_pairs[:, 1]]
+    if measured is not None:
+        w = measured[train_pairs[:, 1]].astype(np.float64)
+        return (w * x * y).sum(axis=0) / np.maximum((w * x * x).sum(axis=0), 1e-12)
     return (x * y).sum(axis=0) / np.maximum((x * x).sum(axis=0), 1e-12)
 
 
-def next_head_component(next_pred, Z, game_cols, pairs_by_split, game_names) -> dict:
-    """Model R2/MAE on held-out next seasons against raw and train-fit shrunk persistence."""
+def next_head_component(next_pred, Z, game_cols, pairs_by_split, game_names, M=None) -> dict:
+    """Model R2/MAE on held-out next seasons against raw and train-fit shrunk persistence.
+
+    M is the matrix's mask as built. When some game cell is unmeasured
+    (mtnn_metrics.game_target_mask), every R2 and MAE here, the model's and
+    each baseline's, counts only the measured target cells, and the shrink
+    factors and the train mean are fit on measured targets only. A cell
+    nobody measured is still read as 0.0 where it is an input (this
+    season's profile in the persistence baselines). Without M, or with every
+    game cell measured, the numbers are the original ones.
+    """
     if next_pred is None:
         return {"missing": "no next-season head predictions"}
     train = pairs_by_split["train"]
@@ -408,8 +441,13 @@ def next_head_component(next_pred, Z, game_cols, pairs_by_split, game_names) -> 
         return {"missing": "no train-split pairs to fit the shrunk persistence baseline on"}
     Zg = np.asarray(Z, dtype=np.float64)[:, game_cols]
     pred = np.asarray(next_pred, dtype=np.float64)
-    beta = shrunk_persistence_factors(Zg, train)
-    mean_next = Zg[train[:, 1]].mean(axis=0)
+    measured = None if M is None else game_target_mask(M, game_cols)
+    beta = shrunk_persistence_factors(Zg, train, measured)
+    if measured is None:
+        mean_next = Zg[train[:, 1]].mean(axis=0)
+    else:
+        w = measured[train[:, 1]].astype(np.float64)
+        mean_next = (w * Zg[train[:, 1]]).sum(axis=0) / np.maximum(w.sum(axis=0), 1.0)
     out: dict = {"measures": {}, "baselines": {}, "scores": {"next_r2": {}, "next_mae": {}}}
     for s in SPLITS:
         p = pairs_by_split[s]
@@ -417,13 +455,16 @@ def next_head_component(next_pred, Z, game_cols, pairs_by_split, game_names) -> 
             out["scores"]["next_r2"][s] = out["scores"]["next_mae"][s] = None
             continue
         x, y = Zg[p[:, 0]], Zg[p[:, 1]]
-        r2_m, mae_m = _r2_mae(y, pred[p[:, 0]])
-        r2_raw, mae_raw = _r2_mae(y, x)
-        r2_shr, mae_shr = _r2_mae(y, x * beta)
+        m = None if measured is None else measured[p[:, 1]]
+        r2_m, mae_m = _r2_mae(y, pred[p[:, 0]], m)
+        r2_raw, mae_raw = _r2_mae(y, x, m)
+        r2_shr, mae_shr = _r2_mae(y, x * beta, m)
         # No-skill forecast: every row gets the train pairs' mean next season.
-        _, mae_mean = _r2_mae(y, np.broadcast_to(mean_next, y.shape))
+        _, mae_mean = _r2_mae(y, np.broadcast_to(mean_next, y.shape), m)
         best_r2, best_mae = max(r2_raw, r2_shr), min(mae_raw, mae_shr)
         out["measures"][s] = {"r2": _r(r2_m), "mae_z": _r(mae_m), "pairs": len(p)}
+        if m is not None:
+            out["measures"][s]["target_cells_unmeasured"] = int((~m).sum())
         out["baselines"][s] = {
             "persistence": {"r2": _r(r2_raw), "mae_z": _r(mae_raw)},
             "shrunk_persistence": {"r2": _r(r2_shr), "mae_z": _r(mae_shr)},
@@ -784,7 +825,8 @@ def composite_v2(inputs: dict[str, Any]) -> dict:
     labels and the skills formula read Z: they describe the data, and the
     stored labels and skill grades were built from it. The next-season head
     predicts the run's own Z_model columns, so its targets and persistence
-    baselines read Z_model, as v1's next_profile does. On the 08-14 run
+    baselines read Z_model, as v1's next_profile does; which of its target
+    cells count comes from M, the measurement mask as built. On the 08-14 run
     (--era-align procrustes --robust-scaling), train-only k-means on
     Z_model agreed with the stored ids on 0.61 of train rows and the skills
     formula scored R2 -0.31: the wrong space for both.
@@ -824,7 +866,7 @@ def composite_v2(inputs: dict[str, Any]) -> dict:
         E, Z, game_cols, identity_cols, pairs_by_split, inputs.get("regime"), mask_cols
     )
     nxt = next_head_component(
-        inputs.get("next_profile_pred"), Zm, game_cols, pairs_by_split, [features[j] for j in game_cols]
+        inputs.get("next_profile_pred"), Zm, game_cols, pairs_by_split, [features[j] for j in game_cols], M
     )
 
     stored = inputs.get("cluster")

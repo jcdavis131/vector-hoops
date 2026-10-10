@@ -74,6 +74,8 @@ from mtnn_metrics import (
     cross_era_archetype_purity,
     eval_split,
     filter_pairs_by_split,
+    game_target_mask,
+    masked_residual_stats,
     next_season_index,
     recall_at_k,
     season_start_year,
@@ -1174,8 +1176,16 @@ def next_profile_holdout_metrics(
     next_idx: np.ndarray,
     seasons: np.ndarray,
     feature_names: list[str],
+    target_mask: np.ndarray | None = None,
 ) -> dict:
-    """Held-out next-season stats quality on z-scored game features."""
+    """Held-out next-season stats quality on z-scored game features.
+
+    target_mask (mtnn_metrics.game_target_mask of the matrix as built) is
+    None when every game cell was measured, and then the numbers are the
+    original float32 ones. Otherwise R2, MAE, RMSE and the per-feature MAE
+    are taken over the measured target cells only, and each split also
+    reports how many target cells it left out [final#8 follow-up].
+    """
     out: dict = {}
     target_split = np.full(len(next_idx), "", dtype=object)
     valid = next_idx >= 0
@@ -1188,13 +1198,18 @@ def next_profile_holdout_metrics(
             continue
         y = target[next_idx[rows]]
         p = pred[rows]
-        resid = y - p
-        mse = float((resid**2).mean())
-        rmse = float(np.sqrt(mse))
-        mae = float(np.abs(resid).mean())
-        ss_tot = float(((y - y.mean(axis=0, keepdims=True)) ** 2).sum())
-        r2 = 1.0 - float((resid**2).sum()) / max(ss_tot, 1e-9)
-        per_mae = np.abs(resid).mean(axis=0)
+        if target_mask is None:
+            resid = y - p
+            mse = float((resid**2).mean())
+            rmse = float(np.sqrt(mse))
+            mae = float(np.abs(resid).mean())
+            ss_tot = float(((y - y.mean(axis=0, keepdims=True)) ** 2).sum())
+            r2 = 1.0 - float((resid**2).sum()) / max(ss_tot, 1e-9)
+            per_mae = np.abs(resid).mean(axis=0)
+        else:
+            st = masked_residual_stats(y, p, target_mask[next_idx[rows]])
+            mse, mae, r2, per_mae = st["mse"], st["mae"], st["r2"], st["per_feature_mae"]
+            rmse = float(np.sqrt(mse))
         top = np.argsort(-per_mae)[:5]
         out[split] = {
             "rows": len(rows),
@@ -1203,6 +1218,8 @@ def next_profile_holdout_metrics(
             "r2": round(r2, 4),
             "worst_features_mae_z": [{"feature": feature_names[j], "mae_z": round(float(per_mae[j]), 4)} for j in top],
         }
+        if target_mask is not None:
+            out[split]["target_cells_unmeasured"] = st["cells_unmeasured"]
     return out
 
 
@@ -1832,6 +1849,17 @@ def main(argv: list[str] | None = None) -> None:
         print(f"excluded families: {sorted(exclude)} -> {len(fams)} towers")
     game_cols = game_feature_cols(manifest)
     game_z = torch.tensor(Z[:, game_cols], device=device)
+    # The game cells nobody measured (a percentage with no attempt, mask 0 and
+    # z 0.0 since 078b75df) are left out of the next-season metrics. Taken
+    # from the matrix as built: a --mask-* ablation hides an input, it does
+    # not make a measured target unmeasured. None when every game cell was
+    # measured, and then the metrics are the original ones, bit for bit.
+    game_measured = game_target_mask(M_built, game_cols)
+    if game_measured is not None:
+        print(
+            f"profile targets: {int((~game_measured).sum())} unmeasured game cells on "
+            f"{int((~game_measured).any(axis=1).sum())} rows left out of the next-season metrics"
+        )
     n_seasons = int(season_ids.max()) + 1
 
     print(f"{len(Z)} rows, {Z.shape[1]} features, {len(fams)} towers, {n_seasons} seasons, device={device}")
@@ -2522,6 +2550,7 @@ def main(argv: list[str] | None = None) -> None:
         next_idx_arr,
         seasons,
         [manifest["features"][j] for j in game_cols],
+        target_mask=game_measured,
     )
     population_validation = build_validation_report(
         embeddings=E,
@@ -2540,6 +2569,7 @@ def main(argv: list[str] | None = None) -> None:
         next_index=next_idx_arr,
         pairs=pair_arr,
         held_out_pairs=filter_pairs_by_split(pair_arr, seasons, "test"),
+        game_profile_mask=game_measured,
     )
     held_out = {}
     for split in ("train", "val", "test", "all"):

@@ -130,6 +130,9 @@ def train_one(
     fams = T.family_slices(manifest)
     game_cols = T.game_feature_cols(manifest)
     game_z = torch.tensor(Z[:, game_cols], device=device)
+    # As in train_mtnn: game targets nobody measured stay out of the
+    # next-profile metrics; None (all measured) is the old path.
+    game_measured = T.game_target_mask(M, game_cols)
     n_seasons = int(season_ids.max()) + 1
 
     pairs = T.adjacent_season_pairs(pids, seasons, names)
@@ -262,6 +265,7 @@ def train_one(
         next_idx,
         split,
         [manifest["features"][j] for j in game_cols],
+        target_mask=game_measured,
     )
     test_rows = np.where(split == "test")[0]
     is_test = split == "test"

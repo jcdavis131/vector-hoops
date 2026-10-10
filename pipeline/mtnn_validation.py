@@ -10,6 +10,7 @@ import json
 from typing import TYPE_CHECKING, Any
 
 import numpy as np
+from mtnn_metrics import masked_residual_stats
 
 if TYPE_CHECKING:
     from pathlib import Path
@@ -99,11 +100,16 @@ def _next_profile_metrics(
     target: np.ndarray,
     next_index: np.ndarray,
     rows: np.ndarray,
+    target_mask: np.ndarray | None = None,
 ) -> dict[str, float | int | None]:
     valid_rows = rows[next_index[rows] >= 0]
     if len(valid_rows) == 0:
         return {"rows": 0, "r2": None, "mae_z": None}
     y = target[next_index[valid_rows]]
+    if target_mask is not None:
+        # Only the measured target cells count (mtnn_metrics.game_target_mask).
+        st = masked_residual_stats(y, prediction[valid_rows], target_mask[next_index[valid_rows]])
+        return {"rows": len(valid_rows), "r2": _round(st["r2"]), "mae_z": _round(st["mae"])}
     residual = y - prediction[valid_rows]
     ss_total = float(((y - y.mean(axis=0, keepdims=True)) ** 2).sum())
     return {
@@ -127,8 +133,9 @@ def _summary(
     calibration_rows: np.ndarray,
     next_rows: np.ndarray,
     retrieval_pairs: np.ndarray,
+    target_mask: np.ndarray | None = None,
 ) -> dict[str, Any]:
-    next_report = _next_profile_metrics(prediction, target, next_index, next_rows)
+    next_report = _next_profile_metrics(prediction, target, next_index, next_rows, target_mask)
     return {
         "rows": len(distribution_rows),
         "tower_spread": {
@@ -227,8 +234,15 @@ def build_validation_report(
     next_index: np.ndarray,
     pairs: np.ndarray,
     held_out_pairs: np.ndarray | None = None,
+    game_profile_mask: np.ndarray | None = None,
 ) -> dict[str, Any]:
-    """Build diagnostics across all relevant player-season cohorts."""
+    """Build diagnostics across all relevant player-season cohorts.
+
+    game_profile_mask is mtnn_metrics.game_target_mask of the matrix as
+    built: None when every game cell was measured (the original numbers),
+    else the next-profile R2 and MAE, and so the weak-next-year flag, count
+    only the measured target cells.
+    """
     if len(embeddings) != len(tower_stack):
         raise ValueError("embeddings and tower_stack must have matching row counts")
     if tower_stack.ndim != 3:
@@ -248,6 +262,7 @@ def build_validation_report(
         "prediction": next_profile_pred,
         "target": game_profile_target,
         "next_index": next_index,
+        "target_mask": game_profile_mask,
     }
     evaluation_pairs = held_out_pairs if held_out_pairs is not None else pairs
     eval_targets = np.unique(evaluation_pairs[:, 1]) if len(evaluation_pairs) else rows
