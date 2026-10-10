@@ -382,7 +382,8 @@ def v11_mtnn_report_warn() -> None:
     if bundle is None:
         print("  no promoted MTNN bundle (pipeline/data/promoted/CURRENT.json)")
         return
-    rep = bundle.report
+    # The numbers the bundle carries: a refit's come from its select run.
+    rep = bundle.metrics_report
     print(f"  promoted run {bundle.run_id}")
     test = rep.get("held_out_recall", {}).get("test", {}).get("recall_at_10_mtnn")
     purity = rep.get("cross_era_archetype_neighbor_purity_at_20")
@@ -399,6 +400,12 @@ def v11_mtnn_report_warn() -> None:
     )
     if eligible:
         print("  MTNN promotion gates PASS — client embeddings exported when present")
+    elif bundle.manifest.get("forced"):
+        # export_mtnn_embeddings exports a forced bundle below the floors and
+        # records the waiver in mtnn_lineage.json (export_floors).
+        print(
+            f"  WARN: below the export floors; exported anyway, promotion forced: {bundle.manifest.get('force_reason')}"
+        )
     else:
         if purity is not None and purity < 0.63:
             print("  WARN: purity below 0.63 promotion gate — MTNN stays in pipeline/data/")

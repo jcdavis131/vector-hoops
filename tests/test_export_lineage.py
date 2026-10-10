@@ -220,6 +220,52 @@ def test_export_assets_labels_and_gates_on_the_metrics_the_manifest_carries(env)
     assert ea.mtnn_promotion_eligible(b.metrics_report)
 
 
+def _below_floors(run: Path) -> None:
+    """Archetype top-1 0.115, purity 0.56: the P12 one-epoch slice run's numbers."""
+    rep = json.loads((run / "mtnn_report.json").read_text(encoding="utf-8"))
+    rep["archetype_top1_acc"], rep["cross_era_archetype_neighbor_purity_at_20"] = 0.115, 0.56
+    (run / "mtnn_report.json").write_text(json.dumps(rep), encoding="utf-8")
+
+
+def test_the_embedding_export_reads_a_refits_floors_from_its_select_run(env):
+    """export_assets gated a refit on the select run's report and then ran
+    export_mtnn_embeddings, which gated on the refit's in-sample one."""
+    data, assets = env
+    make_run(data, "sel")
+    refit = make_run(data, "refit", phase="final-refit", seed=1)
+    _below_floors(refit)  # in-sample numbers only; the select run's pass
+    pm.promote(refit, selection_run=data.parent / "runs" / "sel")
+    eme.main(data_dir=data, assets=assets)
+    lineage = json.loads((assets / sm.LINEAGE).read_text(encoding="utf-8"))
+    assert lineage["run_id"] == "refit" and lineage["export_floors"] == {
+        "ok": True,
+        "failed": [],
+        "waived_by_force": None,
+    }
+
+
+def test_a_forced_promotion_waives_the_export_floors_and_the_lineage_says_so(env):
+    data, assets = env
+    run = make_run(data, "r1")
+    _below_floors(run)
+    pm.promote(run)  # should_promote reads the composite block, which passes; the floors do not
+    with pytest.raises(SystemExit, match=r"misses the export floors.*archetype top-1 0\.115 < 0\.55"):
+        eme.main(data_dir=data, assets=assets)
+    assert served_files(assets) == set()
+    assert not ea.mtnn_promotion_eligible(pm.load_promoted().metrics_report)
+
+    run2 = make_run(data, "r2", seed=1)
+    _below_floors(run2)
+    pm.promote(run2, force="e2e smoke: 1 epoch on a 100-player slice")
+    eme.main(data_dir=data, assets=assets)
+    floors = json.loads((assets / sm.LINEAGE).read_text(encoding="utf-8"))["export_floors"]
+    assert floors["ok"] is False and floors["waived_by_force"] == "e2e smoke: 1 epoch on a 100-player slice"
+    assert any("archetype top-1 0.115" in f for f in floors["failed"]) and any("purity" in f for f in floors["failed"])
+    assert ea.mtnn_exports_allowed(pm.load_promoted())[0] is True
+    stamp_sidecars(assets, "r2")
+    assert sm.problems(assets) == []  # a waiver is consistent; quality is the floors' job, not this check's
+
+
 def test_metric_keys_are_the_ones_the_served_meta_carries():
     assert set(sm.METRIC_KEYS) <= set(sm.META_KEYS)
     assert set(pm.metrics_from_report({})) == set(sm.METRIC_KEYS)

@@ -22,6 +22,12 @@ name spelling alone [critic#6]. Metrics in the meta now come from the
 promoted manifest, which promote.py copied from the report, and are never
 typed here; the method text no longer calls every model "v4".
 
+Export floors (export_floors): test recall beats the 14-d baseline by 0.05,
+archetype top-1 >= 0.55, purity@20 >= 0.63, on the numbers the bundle
+carries. A bundle that misses them is not exported unless its promotion was
+forced (promote.py --force "<reason>"); then it is, and mtnn_lineage.json
+records the misses and the reason under export_floors.
+
 Run:  python pipeline/export_mtnn_embeddings.py
 Needs: a promoted bundle (python pipeline/promote.py --run <run_dir>).
 """
@@ -43,21 +49,61 @@ ASSETS = ROOT / "assets"
 SHOW_MISMATCHES = 20
 
 
-def promotion_eligible(report: dict | None) -> bool:
-    """Floors the served model must clear on top of promote.py's verdict: it beats
-    the transparent 14-d baseline by 0.05 test recall, and archetype top-1 and
-    purity@20 are above the levels the client was built for."""
+RECALL_MARGIN, ARCHETYPE_TOP1, PURITY_FLOOR = 0.05, 0.55, 0.63
+
+
+def floor_failures(report: dict | None) -> list[str]:
+    """Each export floor the report misses, with its numbers; empty when it clears all three.
+
+    The floors sit on top of promote.py's verdict: the served model beats the
+    transparent 14-d baseline by 0.05 test recall, and archetype top-1 and
+    purity@20 are above the levels the client was built for.
+    """
     if not report:
-        return False
-    ho = report.get("held_out_recall", {})
-    test = ho.get("test", {})
-    mtnn_r = test.get("recall_at_10_mtnn")
-    base_r = test.get("recall_at_10_transparent_14d")
+        return ["no report"]
+    test = (report.get("held_out_recall") or {}).get("test") or {}
+    mtnn_r, base_r = test.get("recall_at_10_mtnn"), test.get("recall_at_10_transparent_14d")
     purity = report.get("cross_era_archetype_neighbor_purity_at_20")
     arch = report.get("archetype_top1_acc")
-    if mtnn_r is None or base_r is None or purity is None or arch is None:
-        return False
-    return mtnn_r >= base_r + 0.05 and arch >= 0.55 and purity >= 0.63
+    out = []
+    if mtnn_r is None or base_r is None:
+        out.append("test recall or the 14-d baseline recall is missing")
+    elif mtnn_r < base_r + RECALL_MARGIN:
+        out.append(f"test recall {mtnn_r:.4g} < 14-d baseline {base_r:.4g} + {RECALL_MARGIN}")
+    if arch is None:
+        out.append("archetype top-1 is missing")
+    elif arch < ARCHETYPE_TOP1:
+        out.append(f"archetype top-1 {arch:.4g} < {ARCHETYPE_TOP1}")
+    if purity is None:
+        out.append("purity@20 is missing")
+    elif purity < PURITY_FLOOR:
+        out.append(f"purity@20 {purity:.4g} < {PURITY_FLOOR}")
+    return out
+
+
+def promotion_eligible(report: dict | None) -> bool:
+    """True when the report clears every export floor (floor_failures is empty)."""
+    return not floor_failures(report)
+
+
+def export_floors(bundle: promote.PromotedBundle) -> dict:
+    """The floors on the numbers the bundle carries, and whether a forced promotion waived them.
+
+    The report is bundle.metrics_report: for a refit, the select run's, as
+    export_assets has read it since 2026-10-09. This read bundle.report, the
+    refit's in-sample one, so export_assets could pass a refit and then run
+    this exporter, which refused it.
+
+    Waived only by promote.py --force (2026-10-10). A forced promotion is
+    the operator overriding should_promote, the stronger gate these floors
+    were the pre-promote version of, with a reason recorded in the manifest.
+    The floors still run and their misses are written into
+    mtnn_lineage.json with that reason, so a served below-floor model says
+    so. An unforced bundle that misses them is not exported, as before.
+    """
+    failed = floor_failures(bundle.metrics_report)
+    waived = bundle.manifest.get("force_reason") if failed and bundle.manifest.get("forced") else None
+    return {"ok": not failed, "failed": failed, "waived_by_force": waived}
 
 
 def row_mismatches(emb_keys: list[str], emb_names: list[str], players: list[dict]) -> list[str]:
@@ -80,10 +126,16 @@ def main(data_dir: Path | None = None, assets: Path | None = None) -> None:
     if not vectors.exists():
         raise SystemExit(f"missing {vectors}")
     report = bundle.report
-    if not promotion_eligible(report):
+    floors = export_floors(bundle)
+    if not floors["ok"] and floors["waived_by_force"] is None:
         raise SystemExit(
-            f"promoted run {bundle.run_id} misses the export floors (test recall vs the 14-d baseline + 0.05, "
-            "archetype top-1 0.55, purity@20 0.63); not exported"
+            f"promoted run {bundle.run_id} misses the export floors ({'; '.join(floors['failed'])}); not exported. "
+            'A promotion forced with promote.py --force "<reason>" waives them, recorded in mtnn_lineage.json'
+        )
+    if not floors["ok"]:
+        print(
+            f"WARNING: promoted run {bundle.run_id} misses the export floors ({'; '.join(floors['failed'])}); "
+            f"exported because its promotion was forced: {floors['waived_by_force']}"
         )
 
     with np.load(bundle.embedding, allow_pickle=False) as data:
@@ -159,6 +211,7 @@ def main(data_dir: Path | None = None, assets: Path | None = None) -> None:
         "promoted_at": bundle.current.get("promoted_at"),
         "forced": bool(bundle.manifest.get("forced")),
         "force_reason": bundle.manifest.get("force_reason"),
+        "export_floors": floors,
         "train_git_sha": (bundle.manifest.get("train_git") or {}).get("sha"),
     }
 

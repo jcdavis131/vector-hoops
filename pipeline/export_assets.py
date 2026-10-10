@@ -191,6 +191,21 @@ def eval_protocol_label(bundle: promote.PromotedBundle | None) -> str | None:
     return "transductive (atlas) — trained on all rows; NOT held-out"
 
 
+def mtnn_exports_allowed(bundle: promote.PromotedBundle) -> tuple[bool, str | None]:
+    """(run the MTNN exports?, the forced-promotion reason that waived the floors, if one did).
+
+    The floors are read on the numbers the bundle carries (metrics_report).
+    A forced promotion waives them, as export_mtnn_embeddings.export_floors
+    does and records (2026-10-10); an unforced bundle that misses them is
+    skipped, as before.
+    """
+    if mtnn_promotion_eligible(bundle.metrics_report):
+        return True, None
+    if bundle.manifest.get("forced"):
+        return True, bundle.manifest.get("force_reason")
+    return False, None
+
+
 def mtnn_promotion_eligible(report: dict | None) -> bool:
     """export_mtnn_embeddings' floors, applied to the promoted run's report."""
     if not report:
@@ -252,14 +267,19 @@ def main() -> None:
         steps_ok[script] = run(script, [py, f"pipeline/{script}"], required=False)
 
     bundle, not_promoted = promoted_bundle()
-    # The report the bundle's metrics come from: for a refit, the select run
-    # promote.py --selection-run recorded, not the refit's in-sample report.
-    mtnn = bundle.metrics_report if bundle else None
+    # The floors read the report the bundle's metrics come from: for a refit,
+    # the select run promote.py --selection-run recorded, not the refit's
+    # in-sample report. A forced promotion waives them (mtnn_exports_allowed).
+    allowed, waived = mtnn_exports_allowed(bundle) if bundle else (False, None)
     if bundle is None:
         print(f"== MTNN exports: skipped, {not_promoted}\n")
-    elif not mtnn_promotion_eligible(mtnn):
+    elif not allowed:
         print(f"== MTNN exports: skipped, promoted run {bundle.run_id} misses the export floors\n")
     else:
+        if waived is not None:
+            print(
+                f"== MTNN exports: run {bundle.run_id} misses the export floors; its promotion was forced: {waived}\n"
+            )
         steps_ok["mtnn_export"] = run("export_mtnn_embeddings", [py, "pipeline/export_mtnn_embeddings.py"])
         steps_ok["mtnn_export_gates"] = run("test_mtnn_export", [py, "pipeline/test_mtnn_export.py"], required=False)
         steps_ok["projections"] = run("project_next_season", [py, "pipeline/project_next_season.py"])
