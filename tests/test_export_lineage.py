@@ -230,3 +230,16 @@ def test_served_keys_hash_is_the_matrix_fingerprints(env):
     fp = aio.load_matrix_fingerprint(data / "train_matrix.npz", data / "feature_manifest.json")
     players = json.loads((assets / "vectors.json").read_text(encoding="utf-8"))["players"]
     assert sm.keys_sha256(sm.vector_keys(players)) == fp["keys_sha256"]
+
+
+# --- wide skills provenance [ingest#5] -------------------------------------------
+
+
+def test_wide_skills_source_says_what_this_export_did():
+    doc = {"built": "2026-07-30"}
+    # Before: "real_caches" whenever any wide_skills_*.json existed, proxies included,
+    # whether or not this export rebuilt the file.
+    assert ea.wide_skills_source(True, None, doc).startswith("rebuilt by this export")
+    skipped = ea.wide_skills_source(False, "wide_skills_2013-14.json is a proxy doc", doc)
+    assert "not rebuilt" in skipped and "proxy" in skipped and "2026-07-30" in skipped
+    assert "build_wide_skills failed" in ea.wide_skills_source(False, None, {})

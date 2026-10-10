@@ -94,9 +94,19 @@ def sha1(path: Path) -> str | None:
     return hashlib.sha1(path.read_bytes()).hexdigest()[:12]
 
 
-def has_real_wide_caches() -> bool:
-    """True when operator season caches exist (not just the example fixture)."""
-    return any(CACHE_DIR.glob("wide_skills_*.json"))
+def wide_skills_source(rebuilt: bool, why_not: str | None, asset_doc: dict) -> str:
+    """Where this export's assets/skills_wide.json came from, as a sentence that is true.
+
+    This used to be "real_caches" whenever any wide_skills_*.json existed,
+    which counted the two proxy docs of constants (2013-14/2014-15) as real
+    and said "real_caches" even when this export had skipped the rebuild and
+    shipped whatever file an earlier build left [ingest#5].
+    """
+    built = asset_doc.get("built") or "unknown date"
+    if rebuilt:
+        return f"rebuilt by this export from the real wide_skills caches (built {built})"
+    reason = why_not or "build_wide_skills failed"
+    return f"not rebuilt by this export ({reason}); file on disk built {built}"
 
 
 # No fixture builds in the export path [artifacts#12, orchestration#1]. This
@@ -274,7 +284,7 @@ def main() -> None:
         wide_meta = {
             "skill_count": len(wide_doc.get("skills", [])),
             "grade_rows": len(wide_doc.get("grades", {})),
-            "source": "real_caches" if has_real_wide_caches() else "not rebuilt (no real caches)",
+            "source": wide_skills_source(bool(steps_ok.get("wide_skills")), real_caches.wide_skills(), wide_doc),
         }
 
     manifest = {
