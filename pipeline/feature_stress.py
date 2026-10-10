@@ -2,7 +2,7 @@
 
   python pipeline/feature_stress.py           # report from existing artifacts
   python pipeline/feature_stress.py --quick   # smoke train 5 epochs
-  python pipeline/feature_stress.py --ablate  # run tower_ablation (slow)
+  python pipeline/feature_stress.py --ablate [--device cuda]  # run tower_ablation (slow)
 
 Writes pipeline/data/feature_stress.json
 """
@@ -145,11 +145,19 @@ def run_quick_train(epochs: int = 5) -> dict:
     return json.loads(MTNN_REPORT.read_text(encoding="utf-8"))
 
 
-def run_ablation() -> None:
+def ablation_cmd(device: str | None) -> list[str]:
     # tower_ablation trains the climb's recipe (40 epochs) over its default
     # seeds; this used to pass --epochs 25, a schedule nothing else measures.
+    # --device is forwarded only when given: tower_ablation's own default is
+    # None, which leaves train_mtnn on cpu, and the climb measures on cuda.
     cmd = [sys.executable, str(ROOT / "pipeline" / "tower_ablation.py")]
-    subprocess.run(cmd, cwd=ROOT, check=True)
+    if device is not None:
+        cmd += ["--device", device]
+    return cmd
+
+
+def run_ablation(device: str | None = None) -> None:
+    subprocess.run(ablation_cmd(device), cwd=ROOT, check=True)
 
 
 def main() -> None:
@@ -157,10 +165,15 @@ def main() -> None:
     ap.add_argument("--quick", action="store_true", help="5-epoch smoke train")
     ap.add_argument("--ablate", action="store_true", help="run tower_ablation.py")
     ap.add_argument("--epochs", type=int, default=5)
+    ap.add_argument(
+        "--device",
+        default=None,
+        help="with --ablate: passed to tower_ablation (e.g. cuda); unset keeps its default (train_mtnn on cpu)",
+    )
     args = ap.parse_args()
 
     if args.ablate:
-        run_ablation()
+        run_ablation(args.device)
     if args.quick:
         run_quick_train(args.epochs)
 
