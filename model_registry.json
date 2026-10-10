@@ -42,27 +42,28 @@
       "version": "v2.1"
     },
     "hoops": {
-      "composite_score": 0.85,
+      "composite_score": null,
       "dims": 64,
       "entity_count": 1764,
       "file_path": "assets/data/hoops.json",
       "full_entity_count": 12966,
-      "git_sha": "50331f3",
-      "ic": 0.2007,
+      "git_sha": null,
+      "ic": null,
       "lod": "LOD 8000 desktop 4000 mobile p95",
-      "method": "MTNN v6 192d 6-head RoPE RMSNorm 6L ff768 CLS64 17 towers CORAL0.5 VICReg0.05 SupCon0.07 w0.05 15feats/6families honest_partial 130feats pending",
-      "model_id": "hoops-mtnn-v6-192d-6head-rope-rmsnorm",
+      "method": null,
+      "model_id": null,
       "npz_path": "vector-hoops pipeline not in hub, see vector-hoops/assets/mtnn_meta.json",
       "okabe": "0-7 POS QB5 WR1 RB2 TE3 etc, void #080A0F bg #FFFEF7 replace black",
       "provenance": {
-        "sha16": "b8d2e4a71627d105",
-        "size": 336518
+        "note": "Nulled 2026-10-09 [artifacts#7]: none of these values was measured. composite_score 0.85 and top1_790 0.55 were literals written by pipeline/train_mtnn_v6_192d.py, which trained on torch.randn inputs (deleted). No script computes ic 0.2007. sha16 b8d2e4a71627d105 / size 336518 match no version of assets/data/hoops.json (463,527 bytes). git_sha 50331f3 is a vector-hub commit, not a vector-hoops one. The method string (192d 6-head, 15 feats / 6 families) contradicts the trainer defaults and the 142-column matrix, and rollback 'v6.1' names nothing. A measured entry comes from a promoted run: pipeline/promote.py writes its metrics and file sha256s to pipeline/data/promoted/<run_id>/manifest.json, and the exporters copy them to assets/mtnn_lineage.json.",
+        "sha16": null,
+        "size": null
       },
-      "rollback": "v6.1",
+      "rollback": null,
       "swap_status": "active",
-      "top1_790": 0.55,
-      "trained_at": "2026-08-16T01:53:09Z",
-      "version": "v6.2"
+      "top1_790": null,
+      "trained_at": null,
+      "version": null
     },
     "pitch": {
       "composite": 0.7785,
