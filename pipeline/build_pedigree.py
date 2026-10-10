@@ -57,6 +57,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 import itertools
 
 from _out_root import add_out_root, rerooted, shown
+from career_window import career_fully_observed, first_seasons_by_pid
 
 ROOT = Path(__file__).resolve().parents[1]
 VECTORS = ROOT / "assets" / "vectors.json"
@@ -195,6 +196,10 @@ def main() -> None:
         else:
             unmatched += 1  # partial cache -> masked, never mislabeled
     no_pid_rows = sum(1 for p in players if pid_of(p) is None)
+    # Undrafted careers the caches see from their start (career_window); the
+    # draft-year half of the rule does not apply to a player with no record.
+    first_dash = first_seasons_by_pid(CACHE_DIR)
+    entry_seen = {pid: career_fully_observed(pid, {}, first_dash) for pid, rec in resolved.items() if rec is None}
 
     entries = []
     for p in players:
@@ -220,7 +225,11 @@ def main() -> None:
                     }
                 )
             else:
-                years = max(0, sy - first_year[pid])
+                # Years since entry, for an undrafted player, counts from his
+                # first charted season; when his career may have begun before
+                # 1996-97 that count is a lower bound, so it is missing
+                # [features#4]. The other fields do not depend on it.
+                years = max(0, sy - first_year[pid]) if entry_seen[pid] else None
                 row.update(
                     {
                         "PED_PICK_QUALITY": None,
@@ -228,7 +237,7 @@ def main() -> None:
                         "PED_UNDRAFTED": 1.0,
                         "PED_EXPECT_SLOT": EXPECT_UNDRAFTED,
                         "PED_TEAM_WINPCT": None,
-                        "PED_YEARS_SINCE": float(years),
+                        "PED_YEARS_SINCE": float(years) if years is not None else None,
                         "PED_PICK_DECAY": 0.0,
                     }
                 )
@@ -250,6 +259,7 @@ def main() -> None:
                     "players_unmatched_masked": unmatched,
                     "rows_without_player_id": no_pid_rows,
                     "records_without_person_id": no_person_id,
+                    "players_undrafted_entry_censored": sum(1 for seen in entry_seen.values() if not seen),
                     "rows_covered": covered_rows,
                     "rows_total": len(entries),
                 },

@@ -16,13 +16,18 @@ from __future__ import annotations
 
 import json
 import math
+import sys
 from collections import defaultdict
 from pathlib import Path
 
 import numpy as np
 
 HERE = Path(__file__).resolve().parent
+sys.path.insert(0, str(HERE))
+from career_window import career_fully_observed, draft_years_by_pid, first_seasons_by_pid  # noqa: E402
+
 DATA = HERE / "data"
+CACHE = HERE / "cache"
 ASSETS = HERE.parent / "assets"
 OUT_JSON = DATA / "career_arc.json"
 OUT_NPZ = DATA / "career_sequences.npz"
@@ -261,22 +266,36 @@ def main() -> None:
         for i, pid, season in zip(m_idx, m_pids, m_seasons, strict=False):
             row_index[(int(pid), str(season))] = int(i)
 
+    # Counts from the first visible season are lower bounds for a career that
+    # began before 1996-97 [features#4]: Gary Payton 1996-97 was YEAR_IN_LEAGUE
+    # 1, CAREER_EXP_YEARS 1.0, CAREER_ACTIVE_FRAC 1.0 in his seventh season,
+    # and those columns were one constant over all 398 1996-97 rows. Such a
+    # career gets no value for the three (masked), every season of it.
+    draft_year = draft_years_by_pid(CACHE / "draft_history.json")
+    first_season = first_seasons_by_pid(CACHE)
+    censored_careers = censored_rows = 0
+
     for pid, seq in by_pid.items():
         debut = seq[0]["year"]
         deltas: list[float] = []
         matrix_idxs: list[int] = []
         years: list[int] = []
+        observed = career_fully_observed(int(pid), draft_year, first_season)
+        if not observed:
+            censored_careers += 1
+            censored_rows += len(seq)
 
         for i, cur in enumerate(seq):
             feat: dict = {
                 "name": cur["name"],
                 "season": cur["season"],
                 "player_id": int(pid),
-                "YEAR_IN_LEAGUE": i + 1,
-                "CAREER_EXP_YEARS": float(cur["year"] - debut + 1),
             }
-            calendar_span = max(1, cur["year"] - debut + 1)
-            feat["CAREER_ACTIVE_FRAC"] = round((i + 1) / calendar_span, 4)
+            if observed:
+                feat["YEAR_IN_LEAGUE"] = i + 1
+                feat["CAREER_EXP_YEARS"] = float(cur["year"] - debut + 1)
+                calendar_span = max(1, cur["year"] - debut + 1)
+                feat["CAREER_ACTIVE_FRAC"] = round((i + 1) / calendar_span, 4)
 
             if i:
                 prev = seq[i - 1]
@@ -344,15 +363,21 @@ def main() -> None:
             "Career-continuous features on NBA PLAYER_ID sequences: lag "
             "cosine/norm, 3y mean delta, calendar gap, team-change, "
             "experience years, MPG/GP slopes, active fraction. "
+            "YEAR_IN_LEAGUE/CAREER_EXP_YEARS/CAREER_ACTIVE_FRAC are absent for "
+            "careers that began before 1996-97 (career_window). "
             "Joins integrate_context as career family."
         ),
+        "left_censored": {"careers": censored_careers, "rows": censored_rows},
         "features": list(FEATURE_KEYS),
         "n_players": len(by_pid),
         "n_rows": len(out_rows),
         "players": out_rows,
     }
     OUT_JSON.write_text(json.dumps(payload, separators=(",", ":")), encoding="utf-8")
-    print(f"wrote {OUT_JSON} rows={len(out_rows)} careers={len(by_pid)}")
+    print(
+        f"wrote {OUT_JSON} rows={len(out_rows)} careers={len(by_pid)}; "
+        f"left-censored (experience counts masked): {censored_careers} careers, {censored_rows} rows"
+    )
 
     # Sequence NPZ — pad ragged lists
     if seq_pids and TRAIN_NPZ.exists():

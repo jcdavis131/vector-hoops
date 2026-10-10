@@ -159,9 +159,22 @@ def test_years_since_non_decreasing_over_a_career(built):
     bad = [
         name
         for name, prs in built["per_player"].items()
-        if any(b < a for a, b in itertools.pairwise(r["PED_YEARS_SINCE"] for r in prs))
+        if any(
+            b < a for a, b in itertools.pairwise(r["PED_YEARS_SINCE"] for r in prs if r["PED_YEARS_SINCE"] is not None)
+        )
     ]
     assert not bad, f"PED_YEARS_SINCE decreases for {bad[:5]}"
+
+
+def test_years_since_is_missing_for_a_whole_left_censored_career(built):
+    """An undrafted career the caches may not see from its start has no years-since, in any season [features#4]."""
+    partial = [pid for pid, prs in built["per_player"].items() if len({r["PED_YEARS_SINCE"] is None for r in prs}) > 1]
+    assert not partial, f"PED_YEARS_SINCE missing in only some seasons of {partial[:5]}"
+    missing = [prs[0] for prs in built["per_player"].values() if prs[0]["PED_YEARS_SINCE"] is None]
+    assert all(r["PED_UNDRAFTED"] == 1.0 for r in missing), "a drafted player lost his years-since"
+    if built["real"]:
+        assert missing, "no undrafted career is left-censored, yet the caches start in 1996-97"
+        assert all(r["season"] >= "1996-97" for r in missing)
 
 
 def test_expectation_curve():

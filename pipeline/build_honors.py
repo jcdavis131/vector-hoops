@@ -23,7 +23,8 @@ missing (no field, mask 0) only where the source does not cover it:
     selections the caches cannot see. A career counts as fully covered when
     draft_history.json (person_id) puts the draft in 1996 or later, or, for
     a player it has no pick for, when his first dashbase season is after
-    1996-97;
+    1996-97 (career_window.career_fully_observed, shared with the career
+    and pedigree builders);
   - a zero row that could belong to an honoree whose cache name matches no
     charted name that season (see unmatched_honorees).
 This builder used to emit a row only when the prior season had an honor, so
@@ -53,8 +54,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "pipeline"))
 from _out_root import add_out_root, rerooted, shown
+from career_window import career_fully_observed, draft_years_by_pid, first_seasons_by_pid
 from name_utils import ascii_fold
-from seasons import FIRST_SEASON
 
 VECTORS = ROOT / "assets" / "vectors.json"
 CACHE_DIR = ROOT / "pipeline" / "cache"
@@ -153,18 +154,6 @@ def load_award_index(use_fixture: bool) -> tuple[dict[str, dict], bool, dict[str
     return by_season, complete, coverage
 
 
-def first_seasons_by_pid(cache_dir: Path) -> dict[int, str]:
-    """PLAYER_ID -> first season with a dashbase row (every player who played, 1996-97 on)."""
-    first: dict[int, str] = {}
-    for path in sorted(cache_dir.glob("dashbase_*.json")):
-        season = path.stem.split("_", 1)[1]
-        for r in json.loads(path.read_text(encoding="utf-8")):
-            pid = int(r["PLAYER_ID"])
-            if pid not in first or season < first[pid]:
-                first[pid] = season
-    return first
-
-
 def dashbase_pids(cache_dir: Path) -> dict[str, dict[str, set[int]]]:
     """season -> norm_name -> PLAYER_IDs, from every player who played that season."""
     out: dict[str, dict[str, set[int]]] = defaultdict(lambda: defaultdict(set))
@@ -173,31 +162,6 @@ def dashbase_pids(cache_dir: Path) -> dict[str, dict[str, set[int]]]:
         for r in json.loads(path.read_text(encoding="utf-8")):
             out[season][norm_name(str(r.get("PLAYER_NAME") or ""))].add(int(r["PLAYER_ID"]))
     return out
-
-
-def draft_years_by_pid(path: Path) -> dict[int, int]:
-    """person_id -> earliest draft year, from the complete stats.nba.com draft history."""
-    if not path.exists():
-        return {}
-    doc = json.loads(path.read_text(encoding="utf-8"))
-    years: dict[int, int] = {}
-    for recs in (doc.get("players") or {}).values():
-        for rec in recs if isinstance(recs, list) else []:
-            pid, year = rec.get("person_id"), rec.get("year")
-            if pid is None or year is None:
-                continue
-            years[int(pid)] = min(int(year), years.get(int(pid), int(year)))
-    return years
-
-
-def asg_history_covered(pid: int | None, draft_year: dict[int, int], first_season: dict[int, str]) -> bool:
-    """Can the award caches (1996-97 on) see every All-Star selection of this career?"""
-    if pid is None:
-        return False
-    if pid in draft_year:
-        return draft_year[pid] >= season_start(FIRST_SEASON)
-    first = first_season.get(pid)
-    return first is not None and first > FIRST_SEASON
 
 
 def surname(nn: str) -> str:
@@ -341,7 +305,7 @@ def main() -> None:
 
         cum = None
         s_cum = suspect_cum.get(pid) if pid is not None else None
-        if asg_history_covered(pid, draft_year, first_season) and not (s_cum is not None and s_cum <= prev_s):
+        if career_fully_observed(pid, draft_year, first_season) and not (s_cum is not None and s_cum <= prev_s):
             cum = float(sum(1 for s in asg_seasons.get(pid, ()) if s <= prev_s))
         vals["HON_ASG_CUM"] = cum
 
