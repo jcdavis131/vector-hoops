@@ -11,6 +11,7 @@ import pickle
 import sys
 from pathlib import Path
 
+import numpy as np
 import pytest
 
 torch = pytest.importorskip("torch")
@@ -52,6 +53,40 @@ def test_unsafe_pickle_is_the_explicit_opt_in(tmp_path):
     torch.save({"args": argparse.Namespace(dim=64)}, p)
     ck = safe_torch_load(p, map_location="cpu", unsafe_pickle=True)
     assert ck["args"].dim == 64
+
+
+def _career_stats():
+    # train_career_mtnn's mu/sd: per-column mean/std of float32 residuals.
+    y = np.array([[1.5, -2.0], [0.5, 3.0], [-1.0, 1.0]], dtype=np.float32)
+    sd = y.std(axis=0)
+    return y.mean(axis=0), np.where(sd < 1e-6, 1.0, sd).astype(np.float32)
+
+
+def test_train_career_mtnn_reloads_its_own_checkpoint(tmp_path):
+    # train_career_mtnn reloads OUT_PT through safe_torch_load after training.
+    # Its checkpoint used to carry numpy mu/sd, which weights_only refuses, so
+    # every run died there; this builds the payload with the script's own
+    # function so the test cannot drift from what it saves.
+    import train_career_mtnn as tcm
+
+    mu, sd = _career_stats()
+    model = tcm.CareerGRU(5, d_hid=8, d_out=2)
+    p = tmp_path / "career_mtnn_best.pt"
+    torch.save(tcm.checkpoint_payload(model, mu, sd, 8, 7), p)
+    ck = safe_torch_load(p, map_location="cpu")
+    tcm.CareerGRU(5, d_hid=8, d_out=2).load_state_dict(ck["model"])
+    np.testing.assert_array_equal(ck["mu"].numpy(), mu)
+    np.testing.assert_array_equal(ck["sd"].numpy(), sd)
+    assert (ck["hid"], ck["seed"], ck["mode"]) == (8, 7, "residual")
+
+
+def test_the_old_career_checkpoint_with_numpy_stats_is_refused(tmp_path):
+    # Why checkpoint_payload stores tensors: the ndarray form fails here.
+    mu, sd = _career_stats()
+    p = tmp_path / "old.pt"
+    torch.save({"model": torch.nn.Linear(3, 2).state_dict(), "mu": mu, "sd": sd, "hid": 8}, p)
+    with pytest.raises(pickle.UnpicklingError):
+        safe_torch_load(p, map_location="cpu")
 
 
 def test_a_truncated_file_fails_once_without_an_unsafe_retry(tmp_path, monkeypatch):

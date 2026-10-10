@@ -179,6 +179,27 @@ def r2_score(pred: np.ndarray, target: np.ndarray) -> float:
     return 1.0 - ss_res / ss_tot
 
 
+def checkpoint_payload(model: nn.Module, mu: np.ndarray, sd: np.ndarray, hid: int, seed: int) -> dict:
+    """What OUT_PT holds: weights, the residual z-score stats, and the run's shape.
+
+    mu and sd are stored as tensors, not numpy arrays. main() reloads OUT_PT
+    through safe_torch_load (weights_only=True), which refuses a pickled
+    ndarray: with ndarray mu/sd every run trained, then died with
+    UnpicklingError "Weights only load failed" before it wrote the report or
+    career_surplus.json (reproduced on torch 2.11.0+cu128, numpy 2.4.6)
+    [health#9]. Nothing reads mu/sd back from the file today; predict_abs uses
+    the in-process arrays.
+    """
+    return {
+        "model": model.state_dict(),
+        "mu": torch.as_tensor(mu),
+        "sd": torch.as_tensor(sd),
+        "hid": hid,
+        "seed": seed,
+        "mode": "residual",
+    }
+
+
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--epochs", type=int, default=30)
@@ -249,17 +270,7 @@ def main() -> None:
         if va < best_val - 1e-4:
             best_val = va
             bad = 0
-            torch.save(
-                {
-                    "model": model.state_dict(),
-                    "mu": mu,
-                    "sd": sd,
-                    "hid": args.hid,
-                    "seed": args.seed,
-                    "mode": "residual",
-                },
-                OUT_PT,
-            )
+            torch.save(checkpoint_payload(model, mu, sd, args.hid, args.seed), OUT_PT)
         else:
             bad += 1
         if ep % 5 == 0 or ep == 1:
