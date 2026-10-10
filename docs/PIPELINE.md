@@ -151,7 +151,7 @@ These still spell 2025-26 (or 2026-27) themselves and need a look on the roll:
 ## Operator runbook
 
 1. **Rebuild the matrix.** `python pipeline/rebuild_all.py --stage matrix` (add `--refresh-context` after new caches land). If the contract fails, see "The data contract".
-2. **Train and promote.** `python pipeline/rebuild_all.py` trains `ship` on the resolved device and promotes it. If `should_promote` refuses a single seed you have reviewed, `python pipeline/promote.py --run <the run dir> --force "<reason>"`, then continue with `--stage export`.
+2. **Train and promote.** `python pipeline/rebuild_all.py` trains `ship` on the resolved device and promotes it, and when the promotion passes goes on to export and verify. If `should_promote` refuses a single seed you have reviewed, `python pipeline/promote.py --run <the run dir> --force "<reason>"`, then continue with `--stage export`.
 3. **Export.** `python pipeline/rebuild_all.py --stage export`, then `--stage verify`. Review `git status` and `git diff --stat assets/`.
 4. **Mirror and check.** `python scripts/sync_public.py --check`, then `python scripts/sync_public.py`, `python scripts/stamp_assets.py`, and `python scripts/check_served_model.py`, which must exit 0 before anything is committed.
 5. **Re-baseline.** Before any climb arm on a new matrix or protocol: `climb.py vector-hoops --baseline` in herdmux, on cuda, six seeds, on the commit being measured.
