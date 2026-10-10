@@ -16,9 +16,12 @@ emitted ONLY for player-seasons with tracking coverage (2015-16+).
                                   shooters like Curry top it, not spot-up
                                   specialists. NOT Second Spectrum gravity)
   rim_gravity       Rim Warden    0.50*BLK-z + 0.30*contested-z
-                                  − 0.20*opp-FG%-z (Track K — interior
-                                  deterrence PROXY; rim protectors like
-                                  Wembanyama top it)
+                                  (Track K — interior deterrence PROXY;
+                                  rim protectors like Wembanyama top it).
+                                  The − 0.20*opp-FG%-z term is gone:
+                                  d_fg_pct was 0.0 for every player of
+                                  every season (never measured), so it
+                                  z-scored to 0 and never moved a grade.
   disruption_gravity  Disruptor   0.45*STL-z + 0.35*deflections-z
                                   + 0.20*charges-z (perimeter warp —
                                   steals + hustle disruption; NOT
@@ -31,6 +34,14 @@ Outputs:
 Run:  python pipeline/build_wide_skills.py [--fixture]
 Everything pre-2015-16 (or any uncovered row) is masked — the Skills Lens
 shows "not tracked this era", never a fabricated grade.
+
+A skill is graded only where its inputs were measured, and
+wide_skill_labels.npz carries a per-skill `mask` (train_mtnn reads it when
+present). The caches turned unmeasured hustle into 0.0 [ingest#2,
+features#3]; hustle_coverage nulls it (every hustle field in 2015-16,
+box-outs before 2017-18, rows absent from the hustle response), so motor,
+rim_gravity and disruption_gravity are masked there instead of being graded
+from zeros, and are ranked among the rows that were measured.
 """
 
 from __future__ import annotations
@@ -46,6 +57,7 @@ from pathlib import Path
 import numpy as np
 
 from _out_root import add_out_root, rerooted, shown
+from hustle_coverage import honest_players
 
 ROOT = Path(__file__).resolve().parents[1]
 VECTORS = ROOT / "assets" / "vectors.json"
@@ -113,7 +125,7 @@ def load_caches(use_fixture: bool) -> tuple[dict, bool]:
         complete = True
         for _, doc in docs:
             complete = complete and bool(doc.get("complete"))
-            for nn, rec in doc.get("players", {}).items():
+            for nn, rec in honest_players(doc).items():
                 out[(doc["season"], nn)] = rec
         return out, complete
     if not FIXTURE.exists():
@@ -126,8 +138,19 @@ def load_caches(use_fixture: bool) -> tuple[dict, bool]:
 
 
 def zscore(col: np.ndarray) -> np.ndarray:
-    mu, sd = float(np.nanmean(col)), float(np.nanstd(col)) or 1.0
+    """Era-z over the measured (finite) values; unmeasured stays NaN."""
+    ok = np.isfinite(col)
+    if not ok.any():
+        return np.full(col.shape, np.nan)
+    mu, sd = float(np.mean(col[ok])), float(np.std(col[ok])) or 1.0
     return np.clip((col - mu) / sd, -4, 4)
+
+
+def mean_measured(zs: np.ndarray) -> np.ndarray:
+    """Row-wise mean of the finite entries of a [k, n] stack; NaN where none is finite."""
+    n_ok = np.isfinite(zs).sum(axis=0)
+    total = np.where(np.isfinite(zs), zs, 0.0).sum(axis=0)
+    return np.where(n_ok > 0, total / np.maximum(n_ok, 1), np.nan)
 
 
 def _configure_stdio() -> None:
@@ -154,6 +177,15 @@ def percentile_grade(scores: np.ndarray, tiebreak: np.ndarray | None = None) -> 
     ranks = np.empty(len(scores), dtype=int)
     ranks[order] = np.arange(len(scores))
     return np.clip(((ranks + 0.5) / len(scores) * 100).astype(int), 0, 99)
+
+
+def grade_measured(scores: np.ndarray, tiebreak: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
+    """(grades, measured) — percentile among the rows with a finite score; the rest ungraded."""
+    ok = np.isfinite(scores)
+    g = np.zeros(len(scores), int)
+    if ok.any():
+        g[ok] = percentile_grade(scores[ok], np.nan_to_num(tiebreak[ok]))
+    return g, ok
 
 
 def main() -> None:
@@ -189,13 +221,15 @@ def main() -> None:
     Vcov = np.array([vec["players"][i]["v"] for i in covered_idx], dtype=np.float64)
 
     def col(key):
-        return np.array([float(r.get(key) or 0.0) for r in raw])
+        # None (not measured) is NaN, never 0.0.
+        return np.array([np.nan if r.get(key) is None else float(r[key]) for r in raw])
 
     def cfeat(name):
         return Vcov[:, fidx[name]]
 
     # Composites (era-z within the covered pool, per season).
     grades = {sk["key"]: np.zeros(len(covered_idx), int) for sk in WIDE_SKILLS}
+    graded = {sk["key"]: np.zeros(len(covered_idx), bool) for sk in WIDE_SKILLS}
     for s in sorted(set(seasons.tolist())):
         m = seasons == s
         if m.sum() < 3:  # too few tracked players to rank meaningfully
@@ -203,7 +237,10 @@ def main() -> None:
         post = 0.6 * zscore(col("post_freq")[m]) + 0.4 * zscore(col("post_ppp")[m])
         trans = 0.6 * zscore(col("trans_freq")[m]) + 0.4 * zscore(col("trans_ppp")[m])
         motor_cols = np.stack([col(c)[m] for c in MOTOR_COLS])
-        motor = np.mean([zscore(c) for c in motor_cols], axis=0)
+        # Mean over the hustle columns measured for the row. In 2016-17
+        # box-outs is null for everyone (was a constant 0, z 0), so the mean
+        # of the other four ranks rows exactly as the old mean of five did.
+        motor = mean_measured(np.stack([zscore(c) for c in motor_cols]))
         # Shooting gravity = the pull a perimeter threat exerts. Pull-up 3s
         # (self-created, off-dribble) weighted heaviest so movement shooters
         # like Curry outrank stationary spot-up specialists; plus 3PA volume
@@ -212,30 +249,34 @@ def main() -> None:
             0.40 * zscore(col("pull_up_fg3a")[m]) + 0.35 * zscore(cfeat("FG3A")[m]) + 0.25 * zscore(cfeat("FG3_PCT")[m])
         )
         # Rim gravity = interior deterrence that warps offenses: shot-blocking
-        # + contested shots, minus opponent FG% allowed. Rim protectors like
-        # Wembanyama top it. A proxy, not Second Spectrum rim gravity.
-        rim_g = (
-            0.50 * zscore(cfeat("BLK")[m])
-            + 0.30 * zscore(col("contested_shots")[m])
-            - 0.20 * zscore(col("d_fg_pct")[m])
-        )
+        # + contested shots. Rim protectors like Wembanyama top it. A proxy,
+        # not Second Spectrum rim gravity. Opponent FG% allowed was meant to
+        # be a third term, but d_fg_pct was never measured (see docstring).
+        rim_g = 0.50 * zscore(cfeat("BLK")[m]) + 0.30 * zscore(col("contested_shots")[m])
         # Perimeter disruption gravity — on-ball pressure + event creation
         # that shrinks opponent scoring chances (STL + deflections + charges).
         disrupt_g = (
             0.45 * zscore(cfeat("STL")[m]) + 0.35 * zscore(col("deflections")[m]) + 0.20 * zscore(col("charges")[m])
         )
-        # Tie-break each skill by its own volume.
-        grades["post"][m] = percentile_grade(post, col("post_freq")[m])
-        grades["transition"][m] = percentile_grade(trans, col("trans_freq")[m])
-        grades["motor"][m] = percentile_grade(motor, motor_cols.sum(axis=0))
-        grades["shooting_gravity"][m] = percentile_grade(shoot_g, col("pull_up_fg3a")[m])
-        grades["rim_gravity"][m] = percentile_grade(rim_g, cfeat("BLK")[m])
-        grades["disruption_gravity"][m] = percentile_grade(disrupt_g, col("deflections")[m] + cfeat("STL")[m])
+        # Tie-break each skill by its own volume. A NaN score (an input not
+        # measured for that row) leaves the skill ungraded and masked.
+        scored = {
+            "post": (post, col("post_freq")[m]),
+            "transition": (trans, col("trans_freq")[m]),
+            "motor": (motor, np.nansum(motor_cols, axis=0)),
+            "shooting_gravity": (shoot_g, col("pull_up_fg3a")[m]),
+            "rim_gravity": (rim_g, cfeat("BLK")[m]),
+            "disruption_gravity": (disrupt_g, col("deflections")[m] + cfeat("STL")[m]),
+        }
+        for key, (score, tiebreak) in scored.items():
+            grades[key][m], graded[key][m] = grade_measured(score, tiebreak)
 
     built = time.strftime("%Y-%m-%d")
     splits = {}
     for k, i in enumerate(covered_idx):
-        splits[f"{names[k]}|{seasons[k]}"] = {sk["key"]: int(grades[sk["key"]][k]) for sk in WIDE_SKILLS}
+        splits[f"{names[k]}|{seasons[k]}"] = {
+            sk["key"]: int(grades[sk["key"]][k]) for sk in WIDE_SKILLS if graded[sk["key"]][k]
+        }
 
     # assets/skills_wide.json ships only from a complete cache.
     if complete:
@@ -268,6 +309,9 @@ def main() -> None:
         season=seasons,
         keys=np.array([s["key"] for s in WIDE_SKILLS]),
         grades=np.stack([grades[s["key"]] for s in WIDE_SKILLS], axis=1).astype(np.float32) / 100.0,
+        # Per-skill: 1 where the skill was graded from measured inputs. A
+        # masked cell's grade is 0.0 and carries no weight in the skill loss.
+        mask=np.stack([graded[s["key"]] for s in WIDE_SKILLS], axis=1).astype(np.float32),
     )
 
     print(
@@ -276,7 +320,8 @@ def main() -> None:
     )
     for sk in WIDE_SKILLS:
         top = [str(n) for n in names[np.argsort(-grades[sk["key"]])[:3]]]
-        print(f"  {sk['key']:<11} top: {_safe_console(', '.join(top))}")
+        n_graded = int(graded[sk["key"]].sum())
+        print(f"  {sk['key']:<11} graded {n_graded}/{len(covered_idx)}  top: {_safe_console(', '.join(top))}")
     print(f"wrote {shown(LABELS_OUT)}; {asset_msg}")
 
 

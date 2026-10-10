@@ -48,13 +48,16 @@ def built(tmp_path_factory) -> dict:
     seasons = [str(s) for s in npz["season"]]
     keys = [str(k) for k in npz["keys"]]
     grades = (npz["grades"] * 100).round().astype(int)  # back to 0-99
+    mask = npz["mask"] > 0.5
     return {
         "real": real,
         "names": names,
         "seasons": seasons,
         "keys": keys,
         "grades": grades,
+        "mask": mask,
         "by": {(names[i], seasons[i]): grades[i] for i in range(len(names))},
+        "mask_by": {(names[i], seasons[i]): mask[i] for i in range(len(names))},
         "asset": out / ASSET,
     }
 
@@ -78,6 +81,27 @@ def test_every_covered_row_is_2015_16_or_later(built):
 def test_grades_in_bounds(built):
     g = built["grades"]
     assert g.min() >= 0 and g.max() <= 99, f"grades span [{g.min()}, {g.max()}]"
+    assert not built["grades"][~built["mask"]].any(), "a masked cell carries a grade"
+
+
+# 2015-16 hustle was only partly tracked: box-outs 0 for 476/476 players, 329
+# players 0 on all six fields, all written as measured zeros [ingest#2,
+# features#3]. The three hustle skills are masked there now, and the 2015-16
+# spot checks below moved to 2016-17.
+HUSTLE_SKILLS = ("motor", "rim_gravity", "disruption_gravity")
+
+
+def test_hustle_skills_are_masked_where_hustle_was_not_measured(built):
+    if not built["real"]:
+        pytest.skip("fixture mode")
+    seasons = np.array(built["seasons"])
+    for skill in HUSTLE_SKILLS:
+        j = built["keys"].index(skill)
+        assert not built["mask"][seasons == "2015-16", j].any(), f"{skill} graded in 2015-16"
+        assert built["mask"][seasons == "2016-17", j].mean() > 0.99, f"{skill} mostly masked in 2016-17"
+    # Synergy and pull-up skills keep 2015-16.
+    for skill in ("post", "transition", "shooting_gravity"):
+        assert built["mask"][seasons == "2015-16", built["keys"].index(skill)].all()
 
 
 SPOTS_HIGH = [
@@ -85,7 +109,7 @@ SPOTS_HIGH = [
     ("Nikola Jokić", "2022-23", "post", 60),
     ("Giannis Antetokounmpo", "2022-23", "transition", 80),
     ("Draymond Green", "2022-23", "motor", 80),
-    ("Draymond Green", "2015-16", "motor", 80),
+    ("Draymond Green", "2016-17", "motor", 80),
     # Track K — the two gravities, checked against the canonical examples:
     # Curry tops SHOOTING gravity (movement/pull-up 3s), Wembanyama tops
     # RIM gravity (interior deterrence); each is low on the other axis.
@@ -94,15 +118,15 @@ SPOTS_HIGH = [
     ("Victor Wembanyama", "2023-24", "rim_gravity", 85),
     ("Rudy Gobert", "2023-24", "rim_gravity", 60),
     # Perimeter disruption gravity — steals + deflections + charges.
-    ("Marcus Smart", "2015-16", "disruption_gravity", 85),
+    ("Marcus Smart", "2016-17", "disruption_gravity", 85),
     ("Draymond Green", "2022-23", "disruption_gravity", 75),
 ]
 
 SPOTS_LOW = [
-    ("Stephen Curry", "2015-16", "rim_gravity", 50),
+    ("Stephen Curry", "2016-17", "rim_gravity", 50),
     ("DeAndre Jordan", "2015-16", "shooting_gravity", 30),  # never shoots
     ("Anthony Edwards", "2023-24", "rim_gravity", 50),  # not a rim protector
-    ("DeAndre Jordan", "2015-16", "disruption_gravity", 40),
+    ("DeAndre Jordan", "2016-17", "disruption_gravity", 40),
     ("Rudy Gobert", "2023-24", "disruption_gravity", 45),
 ]
 
@@ -111,7 +135,9 @@ def _grade(built, name, season, skill) -> int:
     # rows carry vectors.json display names (ASCII-folded)
     row = built["by"].get((canonical_name(name), season))
     assert row is not None, f"{canonical_name(name)} {season} not covered"
-    return int(row[built["keys"].index(skill)])
+    j = built["keys"].index(skill)
+    assert built["mask_by"][(canonical_name(name), season)][j], f"{name} {season} {skill} is masked"
+    return int(row[j])
 
 
 @pytest.mark.parametrize(("name", "season", "skill", "floor"), SPOTS_HIGH)

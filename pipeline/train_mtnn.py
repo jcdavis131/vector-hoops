@@ -269,14 +269,19 @@ def _join_skill_npz(path, names, seasons) -> tuple[np.ndarray, np.ndarray, list[
     """Join one skill-label npz by (name, season) -> (G, per-skill mask, keys)."""
     npz = np.load(path, allow_pickle=False)
     keys = [str(k) for k in npz["keys"]]
-    lookup = {(str(n), str(s)): g for n, s, g in zip(npz["name"], npz["season"], npz["grades"], strict=False)}
+    # An optional per-skill `mask` (build_wide_skills writes one): a skill
+    # whose inputs were not measured for a row is 0 there, not a graded 0.
+    # Without it every cell of a joined row counts, as before.
+    masks = npz["mask"] if "mask" in npz.files else None
+    lookup = {(str(n), str(s)): k for k, (n, s) in enumerate(zip(npz["name"], npz["season"], strict=False))}
+    grades = npz["grades"]
     G = np.zeros((len(names), len(keys)), dtype=np.float32)
     M = np.zeros((len(names), len(keys)), dtype=np.float32)
     for i, (n, s) in enumerate(zip(names, seasons, strict=False)):
-        g = lookup.get((str(n), str(s)))
-        if g is not None:
-            G[i] = g
-            M[i] = 1.0
+        k = lookup.get((str(n), str(s)))
+        if k is not None:
+            G[i] = grades[k]
+            M[i] = 1.0 if masks is None else masks[k]
     return G, M, keys
 
 

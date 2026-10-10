@@ -21,6 +21,18 @@ build_wide_skills.py reads these; the committed fixture
 (wide_skills.example.json) has "complete": false so absence masks a
 skill instead of fabricating a zero.
 
+A value the endpoints did not return is null, never 0.0. Each record used
+to be `float(x.get(col) or 0.0)` over names unioned across five endpoints,
+so a player one endpoint did not list, and a column one did not track that
+season, became measured zeros in a cache stamped complete [ingest#2,
+features#3]. Now an absent player or key is None, hustle_coverage's season
+rules null what the endpoint did not track (all hustle before 2016-17,
+box_outs before 2017-18), and the doc records "field_coverage" (measured
+values per field) and "untracked_fields". d_fg_pct is not fetched: the
+Defense measure never returned D_FG_PCT (0.0 for every player of all 11
+cached seasons), so it is written as null rather than requested under a
+name the response does not have.
+
 Run:  python pipeline/fetch_wide_skills.py [--offline] [--season 2023-24]
 Requires network to stats.nba.com (operator machine — datacenter IPs
 blocked). Install ``curl_cffi`` — Akamai blocks plain ``requests`` /
@@ -47,6 +59,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from ingest import EmptyPayloadError, Failures, FetchError, cache_is_fresh, run_fetch, write_cache
+from hustle_coverage import BOX_OUTS_TRACKED_FROM, apply_season_rules, field_coverage, untracked_fields
 from nba_http import fetch_stats_json, legacy_result_set_rows
 from seasons import HUSTLE_FIRST_SEASON, is_final, season_range
 
@@ -138,14 +151,13 @@ def ptstats_params(season: str, measure: str) -> dict:
     }
 
 
-# Columns build_season_cache reads with `float(x.get(col) or 0.0)`, so an
-# absent one became a column of zeros in a cache marked complete [ingest#11].
-# Required only where the 2015-16..2025-26 caches show the column arrives:
-#   - D_FG_PCT (Defense): d_fg_pct is 0.0 for every player of every cached
-#     season, so the response does not carry it under that name. Requiring
-#     it would fail every season today; it is listed as an open data issue.
+# Columns build_season_cache reads. An absent one used to become a column of
+# zeros in a cache marked complete [ingest#11]; a required one now raises.
+#   - D_FG_PCT (Defense) is not read at all: d_fg_pct is 0.0 for every player
+#     of every cached season, so the response does not carry it under that
+#     name, and requiring it would fail every season [ingest#2].
 #   - BOX_OUTS (hustle): all zero in 2015-16 and 2016-17, non-zero from
-#     2017-18, so it is required from 2017-18 only.
+#     2017-18, so it is required (and kept) from 2017-18 only.
 SYNERGY_COLS = ["PLAYER_NAME", "POSS_PCT", "PPP"]
 HUSTLE_COLS = [
     "PLAYER_NAME",
@@ -155,8 +167,8 @@ HUSTLE_COLS = [
     "CHARGES_DRAWN",
     "CONTESTED_SHOTS",
 ]
-BOX_OUTS_FIRST_SEASON = "2017-18"
-PTSTATS_COLS = {"PullUpShot": ["PLAYER_NAME", "PULL_UP_FG3A"], "Defense": ["PLAYER_NAME"]}
+BOX_OUTS_FIRST_SEASON = BOX_OUTS_TRACKED_FROM
+PTSTATS_COLS = {"PullUpShot": ["PLAYER_NAME", "PULL_UP_FG3A"]}
 
 
 def stats_rows(endpoint: str, params: dict, set_name: str, required: list[str]) -> list[dict]:
@@ -182,48 +194,55 @@ def fetch_hustle(season: str) -> dict[str, dict]:
 
 
 def fetch_ptstats(season: str, measure: str) -> dict[str, dict]:
-    """Player tracking (leaguedashptstats) — PullUpShot / Defense measures."""
+    """Player tracking (leaguedashptstats) — the PullUpShot measure."""
     rows = stats_rows("leaguedashptstats", ptstats_params(season, measure), "LeagueDashPtStats", PTSTATS_COLS[measure])
     time.sleep(_CALL_GAP_S)
     return rows_by_name(rows)
 
 
+def num(row: dict, col: str, scale: float = 1.0) -> float | None:
+    """row[col] as a float, or None when the player or the value is absent (never 0.0 for absent)."""
+    v = row.get(col)
+    if v is None:
+        return None
+    return float(v) * scale
+
+
 def build_season_cache(season: str, *, skip_tracking: bool = False) -> dict:
     # Tracking first — synergy/hustle burst traffic can poison a reused session.
     pullup: dict[str, dict] = {}
-    defense: dict[str, dict] = {}
     if not skip_tracking:
         pullup = fetch_ptstats(season, "PullUpShot")
-        defense = fetch_ptstats(season, "Defense")
     post = fetch_synergy(season, "Postup")
     trans = fetch_synergy(season, "Transition")
     hustle = fetch_hustle(season)
-    names = set(post) | set(trans) | set(hustle) | set(pullup) | set(defense)
+    names = set(post) | set(trans) | set(hustle) | set(pullup)
     players: dict[str, dict] = {}
     for nn in names:
-        p, t, h = post.get(nn, {}), trans.get(nn, {}), hustle.get(nn, {})
-        u, d = pullup.get(nn, {}), defense.get(nn, {})
-        players[nn] = {
-            "post_freq": float(p.get("POSS_PCT") or 0.0) * 100.0,
-            "post_ppp": float(p.get("PPP") or 0.0),
-            "trans_freq": float(t.get("POSS_PCT") or 0.0) * 100.0,
-            "trans_ppp": float(t.get("PPP") or 0.0),
-            "screen_ast": float(h.get("SCREEN_ASSISTS") or 0.0),
-            "deflections": float(h.get("DEFLECTIONS") or 0.0),
-            "loose_balls": float(h.get("LOOSE_BALLS_RECOVERED") or 0.0),
-            "charges": float(h.get("CHARGES_DRAWN") or 0.0),
-            "box_outs": float(h.get("BOX_OUTS") or 0.0),
-            "contested_shots": float(h.get("CONTESTED_SHOTS") or 0.0),
-            "pull_up_fg3a": float(u.get("PULL_UP_FG3A") or 0.0),
-            "d_fg_pct": float(d.get("D_FG_PCT") or 0.0),
+        p, t, h, u = post.get(nn, {}), trans.get(nn, {}), hustle.get(nn, {}), pullup.get(nn, {})
+        rec = {
+            "post_freq": num(p, "POSS_PCT", 100.0),
+            "post_ppp": num(p, "PPP"),
+            "trans_freq": num(t, "POSS_PCT", 100.0),
+            "trans_ppp": num(t, "PPP"),
+            "screen_ast": num(h, "SCREEN_ASSISTS"),
+            "deflections": num(h, "DEFLECTIONS"),
+            "loose_balls": num(h, "LOOSE_BALLS_RECOVERED"),
+            "charges": num(h, "CHARGES_DRAWN"),
+            "box_outs": num(h, "BOX_OUTS"),
+            "contested_shots": num(h, "CONTESTED_SHOTS"),
+            "pull_up_fg3a": num(u, "PULL_UP_FG3A"),
+            "d_fg_pct": None,
         }
+        players[nn] = apply_season_rules(season, rec)
     return {
         "built": time.strftime("%Y-%m-%d"),
-        "source": (
-            "stats.nba.com synergyplaytypes + leaguehustlestatsplayer + leaguedashptstats via nba_http (curl_cffi)"
-        ),
+        "source": "stats.nba.com synergyplaytypes + leaguehustlestatsplayer + leaguedashptstats via nba_http (curl_cffi)",
+        # Every endpoint answered for this season; what each field measured is field_coverage.
         "complete": True,
         "season": season,
+        "untracked_fields": [*untracked_fields(season), "d_fg_pct"],
+        "field_coverage": field_coverage(players),
         "players": players,
     }
 
@@ -246,8 +265,7 @@ def main() -> None:
     ap.add_argument(
         "--skip-tracking",
         action="store_true",
-        help="synergy+hustle only (post/transition/motor/disruption); "
-        "omit pull-up + defense pulls for shooting/rim gravity",
+        help="synergy+hustle only (post/transition/motor/disruption); omit the pull-up pull for shooting gravity",
     )
     args = ap.parse_args()
     seasons = [args.season] if args.season else SEASONS

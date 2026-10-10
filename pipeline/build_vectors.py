@@ -58,6 +58,7 @@ import numpy as np
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from artifact_io import atomic_savez_compressed, atomic_write_text
+from hustle_coverage import honest_players
 from eligibility import (
     DEFAULT_MIN_GP,
     DEFAULT_MIN_TOTAL_MINUTES,
@@ -587,7 +588,15 @@ def load_wide_skills_defense(season: str) -> dict[str, dict]:
     if not d.get("complete"):
         return {}
     out = {}
-    for nn, v in d.get("players", {}).items():
+    # honest_players nulls what the endpoint never measured: every hustle
+    # field in 2015-16, box_outs before 2017-18, d_fg_pct always, and (in a
+    # cache without field_coverage) a row whose tracked fields are all 0.0,
+    # i.e. a player missing from the hustle response. fetch_wide_skills wrote
+    # those as 0.0 and they reached the matrix as observed: HUSTLE_BOX_OUTS
+    # was one constant over 437 rows (2015-16) and 441 (2016-17), and 292 of
+    # 437 2015-16 rows sat at zero on all six columns [ingest#2, features#3].
+    # The old `or None` guard on d_fg_pct alone is subsumed.
+    for nn, v in honest_players(d).items():
         out[nn] = {
             "HUSTLE_DEFLECTIONS": v.get("deflections"),
             "HUSTLE_LOOSE_BALLS": v.get("loose_balls"),
@@ -595,7 +604,7 @@ def load_wide_skills_defense(season: str) -> dict[str, dict]:
             "HUSTLE_BOX_OUTS": v.get("box_outs"),
             "HUSTLE_SCREEN_AST": v.get("screen_ast"),
             "HUSTLE_CONTESTED_SHOTS": v.get("contested_shots"),
-            "HUSTLE_D_FG_PCT": v.get("d_fg_pct") or None,  # 0.0 means "no data" in the source, not a real 0%
+            "HUSTLE_D_FG_PCT": v.get("d_fg_pct"),
         }
     return out
 

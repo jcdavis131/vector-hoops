@@ -150,6 +150,43 @@ def test_wide_skills_required_columns(monkeypatch):
         fws.fetch_hustle("2018-19")
 
 
+@pytest.mark.parametrize(("season", "box_outs"), [("2016-17", None), ("2018-19", 2.5)])
+def test_wide_skills_absent_is_null_not_zero(monkeypatch, season, box_outs):
+    import fetch_wide_skills as fws
+
+    hustle = {
+        "a": {
+            "SCREEN_ASSISTS": 1.0,
+            "DEFLECTIONS": 2.0,
+            "LOOSE_BALLS_RECOVERED": 0.5,
+            "CHARGES_DRAWN": 0.0,
+            "CONTESTED_SHOTS": 4.0,
+            "BOX_OUTS": 2.5,
+        }
+    }
+    calls = []
+
+    def ptstats(season, measure):
+        calls.append(measure)
+        return {"a": {"PULL_UP_FG3A": 1.2}, "b": {"PULL_UP_FG3A": 0.4}}
+
+    monkeypatch.setattr(fws, "fetch_ptstats", ptstats)
+    monkeypatch.setattr(
+        fws, "fetch_synergy", lambda s, t: {"a": {"POSS_PCT": 0.1, "PPP": 0.9}} if t == "Postup" else {}
+    )
+    monkeypatch.setattr(fws, "fetch_hustle", lambda s: hustle)
+    doc = fws.build_season_cache(season)
+    a, b = doc["players"]["a"], doc["players"]["b"]
+    # Before: b (absent from synergy and hustle) got 0.0 for all ten, and d_fg_pct was 0.0 for everyone.
+    assert a["charges"] == 0.0  # a measured zero stays a zero
+    assert a["box_outs"] == box_outs  # box_outs is not tracked before 2017-18
+    assert a["post_freq"] == pytest.approx(10.0) and a["trans_freq"] is None and a["d_fg_pct"] is None
+    assert all(b[k] is None for k in b if k != "pull_up_fg3a") and b["pull_up_fg3a"] == 0.4
+    assert calls == ["PullUpShot"]  # no Defense call: it never returned D_FG_PCT
+    assert doc["field_coverage"]["deflections"] == 1 and doc["field_coverage"]["d_fg_pct"] == 0
+    assert "d_fg_pct" in doc["untracked_fields"]
+
+
 def test_wide_skills_live_season_with_no_rows_is_skipped(tmp_path, monkeypatch, capsys):
     import fetch_wide_skills as fws
 
