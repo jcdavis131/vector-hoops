@@ -120,6 +120,7 @@ Usage:
 from __future__ import annotations
 
 import argparse
+import functools
 import hashlib
 import io
 import json
@@ -328,6 +329,40 @@ def _check_contents(chk: RunCheck, report: dict[str, Any], fp: dict[str, Any]) -
         chk.problems.append(f"centroids have shape {c_shape}, not (k, {chk.dim})")
 
 
+@functools.cache
+def _train_arg_defaults() -> dict[str, Any]:
+    """train_mtnn.py's argparse defaults, {dest: default}; empty when it cannot be imported.
+
+    Imported here, not at the top: train_mtnn imports torch at module load and
+    this module is torch-free (the exporters and CI's served-model tooling
+    import it). Only _with_defaults calls this, and only when two runs'
+    lineage.args name different options.
+    """
+    try:
+        import train_mtnn
+    except ImportError:
+        return {}
+    return {a.dest: a.default for a in train_mtnn.build_parser()._actions if a.dest != "help"}
+
+
+def _with_defaults(a: dict[str, Any], b: dict[str, Any]) -> tuple[dict[str, Any], dict[str, Any]]:
+    """Both runs' lineage.args, each key one of them lacks filled with train_mtnn's default.
+
+    An option added after a run was trained is missing from its recorded args,
+    and train_mtnn adds options off by default so that off is the old run
+    (--protocol-v2). Compared as None, a select run
+    from before --protocol-v2 existed "trained another recipe" (protocol_v2
+    None vs False) than a refit that recorded False (P12 carry-forward). A key
+    the parser does not know is left missing and compares as None, as before.
+    """
+    if set(a) == set(b):
+        return a, b
+    defaults = _train_arg_defaults()
+    fill_a = {k: defaults[k] for k in set(b) - set(a) if k in defaults}
+    fill_b = {k: defaults[k] for k in set(a) - set(b) if k in defaults}
+    return {**fill_a, **a}, {**fill_b, **b}
+
+
 def _check_selection(chk: RunCheck, selection_run: str | os.PathLike[str]) -> None:
     """The --selection-run for a fit_rows 'all' run: a held-out run of the same recipe on the same matrix."""
     sel_dir = Path(selection_run).resolve()
@@ -357,7 +392,7 @@ def _check_selection(chk: RunCheck, selection_run: str | os.PathLike[str]) -> No
     )
     if diffs:
         chk.problems.append(f"{where} trained on another matrix than this run ({'; '.join(diffs)})")
-    a, b = sel_lin.get("args") or {}, chk.lineage.get("args") or {}
+    a, b = _with_defaults(sel_lin.get("args") or {}, chk.lineage.get("args") or {})
     differ = sorted(k for k in set(a) | set(b) if k not in SELECTION_FREE_ARGS and a.get(k) != b.get(k))
     if differ:
         shown = ", ".join(f"{k} {a.get(k)!r} vs {b.get(k)!r}" for k in differ[:8])

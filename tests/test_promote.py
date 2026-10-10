@@ -391,6 +391,22 @@ def test_a_selection_run_that_scored_its_final_weights_vouches(data):
     assert pm.promote(refit, selection_run=sel)["run_id"] == "refit"
 
 
+def test_an_option_a_select_run_predates_compares_as_its_default(data):
+    """An older select run's lineage.args has no protocol_v2 key; the refit records False.
+
+    Missing reads as train_mtnn's parser default (False), not None, so the two
+    are one recipe. A real difference (True) is still refused.
+    """
+    sel = make_run(data, "sel")
+    assert "protocol_v2" not in json.loads((sel / "mtnn_report.json").read_text(encoding="utf-8"))["lineage"]["args"]
+    refit = make_run(data, "refit", phase="final-refit", seed=1, args={"protocol_v2": False})
+    assert pm.promote(refit, selection_run=sel)["run_id"] == "refit"
+
+    other = make_run(data, "refit-v2", phase="final-refit", seed=2, args={"protocol_v2": True})
+    why = refused(other, selection_run=sel, force="even forced")
+    assert "protocol_v2 False vs True" in why, why
+
+
 def test_a_selection_run_on_another_matrix_is_refused(data):
     write_matrix(data, shift=0.5)
     sel = make_run(data, "sel")
