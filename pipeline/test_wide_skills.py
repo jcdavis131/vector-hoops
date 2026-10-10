@@ -19,7 +19,6 @@ Run:  python -m pytest pipeline/test_wide_skills.py
 
 from __future__ import annotations
 
-import json
 import os
 import subprocess
 import sys
@@ -30,7 +29,6 @@ import pytest
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "pipeline"))
-from hustle_coverage import HUSTLE_FIELDS  # noqa: E402
 from name_utils import canonical_name  # noqa: E402
 
 CACHE_DIR = ROOT / "pipeline" / "cache"
@@ -88,9 +86,7 @@ def test_grades_in_bounds(built):
 
 # 2015-16 hustle was only partly tracked: box-outs 0 for 476/476 players, 329
 # players 0 on all six fields, all written as measured zeros [ingest#2,
-# features#3]. Since 25b3c10f a 2015-16 hustle 0.0 is missing and a non-zero
-# value stays (it was measured), so a hustle skill there is graded only on
-# the rows whose inputs the endpoint returned, never from zeros. The 2015-16
+# features#3]. The three hustle skills are masked there now, and the 2015-16
 # spot checks below moved to 2016-17.
 HUSTLE_SKILLS = ("motor", "rim_gravity", "disruption_gravity")
 
@@ -98,15 +94,10 @@ HUSTLE_SKILLS = ("motor", "rim_gravity", "disruption_gravity")
 def test_hustle_skills_are_masked_where_hustle_was_not_measured(built):
     if not built["real"]:
         pytest.skip("fixture mode")
-    cache = json.loads((CACHE_DIR / "wide_skills_2015-16.json").read_text(encoding="utf-8"))
-    measured_2015 = sum(1 for rec in cache["players"].values() if any(rec.get(f) is not None for f in HUSTLE_FIELDS))
     seasons = np.array(built["seasons"])
     for skill in HUSTLE_SKILLS:
         j = built["keys"].index(skill)
-        graded_2015 = int(built["mask"][seasons == "2015-16", j].sum())
-        assert 0 < graded_2015 <= measured_2015, (
-            f"{skill}: {graded_2015} rows graded in 2015-16, but only {measured_2015} players have a measured hustle value"
-        )
+        assert not built["mask"][seasons == "2015-16", j].any(), f"{skill} graded in 2015-16"
         assert built["mask"][seasons == "2016-17", j].mean() > 0.99, f"{skill} mostly masked in 2016-17"
     # Synergy and pull-up skills keep 2015-16.
     for skill in ("post", "transition", "shooting_gravity"):
