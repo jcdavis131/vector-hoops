@@ -236,7 +236,18 @@ def test_offline_with_a_missing_cache_fails_instead_of_masking(tmp_path, tmp_cac
 
 def test_a_truncated_gamelog_line_raises(tmp_path, monkeypatch):
     monkeypatch.setattr(bv, "DATA_DIR", tmp_path)
-    game = {"PLAYER_ID": 1, "MIN": 30, "PTS": 20, "AST": 5, "OREB": 1, "DREB": 4, "STL": 1, "BLK": 0}
+    # A regular-season GAME_ID: form reads only those [ingest#0].
+    game = {
+        "PLAYER_ID": 1,
+        "GAME_ID": "0021600001",
+        "MIN": 30,
+        "PTS": 20,
+        "AST": 5,
+        "OREB": 1,
+        "DREB": 4,
+        "STL": 1,
+        "BLK": 0,
+    }
     lines = [json.dumps(game) + "\n"] * 12
     (tmp_path / "gamelogs_2016-17.jsonl").write_text("".join(lines) + "\n", encoding="utf-8")
     assert bv.compute_form_features("2016-17")["1"]["FORM_GP"] == 12.0  # a blank line is not an error
