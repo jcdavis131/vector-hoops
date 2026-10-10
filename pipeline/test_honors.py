@@ -32,11 +32,7 @@ HONORS = Path("pipeline") / "data" / "honors.json"
 ASSET = Path("assets") / "honors.json"
 
 
-@pytest.fixture(scope="module")
-def built(tmp_path_factory) -> dict:
-    """Re-derive honors.json under a tmp out-root, from REAL caches when present."""
-    out = tmp_path_factory.mktemp("honors")
-    real = bool(real_honor_cache_paths(CACHE_DIR))
+def _build(out: Path, real: bool) -> dict:
     cmd = [sys.executable, "pipeline/build_honors.py", "--out-root", str(out)] + ([] if real else ["--fixture"])
     proc = subprocess.run(cmd, cwd=ROOT, capture_output=True, text=True, errors="replace")
     assert proc.returncode == 0, f"build_honors.py failed:\n{proc.stdout}{proc.stderr}"
@@ -48,6 +44,18 @@ def built(tmp_path_factory) -> dict:
         "by": {(r["name"], r["season"]): r for r in doc["players"]},
         "asset": out / ASSET,
     }
+
+
+@pytest.fixture(scope="module")
+def built(tmp_path_factory) -> dict:
+    """Re-derive honors.json under a tmp out-root, from REAL caches when present."""
+    return _build(tmp_path_factory.mktemp("honors"), bool(real_honor_cache_paths(CACHE_DIR)))
+
+
+@pytest.fixture(scope="module")
+def built_from_fixture(tmp_path_factory) -> dict:
+    """The --fixture path. The real award caches are committed, so `built` never takes it."""
+    return _build(tmp_path_factory.mktemp("honors_fixture"), real=False)
 
 
 def test_jokic_lag_row_from_prior_season_awards(built):
@@ -108,6 +116,19 @@ def test_at_least_one_lagged_vote_getter(built):
     assert vote_rows >= 1
 
 
+def _fixture_is_partial_and_ships_no_asset(built) -> None:
+    # The fixture is two award seasons (13 players), not a complete award index.
+    # It said "complete": true, so a fixture run wrote the game asset, and the
+    # check below it -- `not asset.exists() or doc["cache_complete"]` -- could
+    # not fail once the line above had asserted cache_complete is True.
+    doc = built["doc"]
+    assert doc["cache_complete"] is False, "fixture not marked incomplete"
+    assert doc["coverage"]["contemporaneous_keys"] >= 8, (
+        f"fixture has {doc['coverage']['contemporaneous_keys']} contemporaneous keys"
+    )
+    assert not built["asset"].exists(), "partial (fixture) cache wrote assets/honors.json"
+
+
 def test_mask_honesty(built):
     doc = built["doc"]
     if built["real"]:
@@ -115,13 +136,11 @@ def test_mask_honesty(built):
         assert cov > 50, f"real caches cover only {cov} contemporaneous keys"
         assert built["asset"].exists(), "complete cache did not write the transparent assets/honors.json"
     else:
-        assert doc["cache_complete"] is True, "fixture not marked complete for gate run"
-        assert doc["coverage"]["contemporaneous_keys"] >= 8, (
-            f"fixture has {doc['coverage']['contemporaneous_keys']} contemporaneous keys"
-        )
-        assert not built["asset"].exists() or doc["cache_complete"], (
-            "partial cache must not ship game asset without complete flag"
-        )
+        _fixture_is_partial_and_ships_no_asset(built)
+
+
+def test_fixture_mask_honesty(built_from_fixture):
+    _fixture_is_partial_and_ships_no_asset(built_from_fixture)
 
 
 if __name__ == "__main__":

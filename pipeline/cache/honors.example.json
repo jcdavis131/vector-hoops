@@ -1,6 +1,6 @@
 {
   "built": "2026-07-06",
-  "complete": true,
+  "complete": false,
   "players": {
     "2023-24": {
       "nikola jokic": {"name": "Nikola Jokić", "vote_pts": 500, "all_nba_team": 3, "asg": 1},

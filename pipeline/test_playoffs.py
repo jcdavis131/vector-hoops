@@ -101,9 +101,12 @@ def test_jordan_pre_2003_champion_and_series_path(built):
         pytest.skip("needs the real playoff caches covering Jordan 1997-98")
     assert field(built, "Michael Jordan", "1997-98", "PO_TEAM_WINS") == 15.0
     assert field(built, "Michael Jordan", "1997-98", "PO_ROUNDS") == 4.0, "best-of-5 R1 era champion: rounds 4"
-    # Series path from game logs when present
-    if not built["asset"].exists():
-        return
+    # Series path. A bare `return` here passed the test whenever the asset was
+    # missing, so the series, Finals MVP and game-log checks below could be
+    # skipped silently. The asset is written only from a complete cache.
+    if not built["doc"]["cache_complete"]:
+        pytest.skip("real playoff caches are partial (cache_complete false), so no series asset is written")
+    assert built["asset"].exists(), "complete real caches cover Jordan 1997-98 but assets/playoffs.json was not written"
     asset = json.loads(built["asset"].read_text(encoding="utf-8"))
     mj = asset["splits"].get("Michael Jordan|1997-98") or {}
     series = mj.get("series") or []
