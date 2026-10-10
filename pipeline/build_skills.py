@@ -14,16 +14,19 @@ Method (docs/SKILLS_LENS.md): each skill is a fixed linear composite of
 era-z features; the composite is converted to a percentile grade 0-99
 WITHIN its season pool, so every era carries the same grade distribution.
 
-Run:  python pipeline/build_skills.py
+Run:  python pipeline/build_skills.py [--out-root DIR]
 """
 
 from __future__ import annotations
 
+import argparse
 import json
 import time
 from pathlib import Path
 
 import numpy as np
+
+from _out_root import add_out_root, rerooted, shown
 
 ROOT = Path(__file__).resolve().parents[1]
 VECTORS = ROOT / "assets" / "vectors.json"
@@ -160,6 +163,16 @@ def pooled_quantiles(scores: np.ndarray) -> list[list[float]]:
 
 
 def main() -> None:
+    global SKILLS_OUT, PROBE_OUT, LABELS_OUT
+    ap = argparse.ArgumentParser()
+    # The one side builder that had no --out-root [final#25]: rebuilding the
+    # training labels rewrote two tracked assets (skills.json, skill_probe.json).
+    add_out_root(ap)
+    args = ap.parse_args()
+    SKILLS_OUT = rerooted(SKILLS_OUT, args.out_root)
+    PROBE_OUT = rerooted(PROBE_OUT, args.out_root)
+    LABELS_OUT = rerooted(LABELS_OUT, args.out_root)
+
     vec = json.loads(VECTORS.read_text(encoding="utf-8"))
     features: list[str] = vec["features"]
     players = vec["players"]
@@ -194,6 +207,7 @@ def main() -> None:
         "skills": [{"key": sk["key"], "label": sk["label"], "badge": sk["badge"], "w": sk["w"]} for sk in SKILLS],
         "grades": grades.tolist(),
     }
+    SKILLS_OUT.parent.mkdir(parents=True, exist_ok=True)
     SKILLS_OUT.write_text(json.dumps(skills_doc, separators=(",", ":")), encoding="utf-8")
 
     probe_doc = {
@@ -216,7 +230,7 @@ def main() -> None:
     }
     PROBE_OUT.write_text(json.dumps(probe_doc, separators=(",", ":")), encoding="utf-8")
 
-    DATA_DIR.mkdir(parents=True, exist_ok=True)
+    LABELS_OUT.parent.mkdir(parents=True, exist_ok=True)
     np.savez_compressed(
         LABELS_OUT,
         grades=(grades / 100.0).astype(np.float32),
@@ -231,7 +245,7 @@ def main() -> None:
     for sk, col in zip(SKILLS, grades.T, strict=False):
         top = names[np.argsort(-scores[:, keys.index(sk["key"])])[:3]]
         print(f"  {sk['key']:<11} mean {col.mean():5.1f}  top: {', '.join(t for t in top)}")
-    print(f"wrote {SKILLS_OUT.name}, {PROBE_OUT.name}, {LABELS_OUT.name}")
+    print(f"wrote {shown(SKILLS_OUT)}, {shown(PROBE_OUT)}, {shown(LABELS_OUT)}")
 
 
 if __name__ == "__main__":
