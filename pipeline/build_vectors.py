@@ -50,6 +50,7 @@ import csv
 import json
 import math
 import re
+import statistics
 import sys
 import time
 from pathlib import Path
@@ -68,7 +69,7 @@ from eligibility import (
     season_eligible as check_eligible,
 )
 from ingest import FetchError, cache_is_fresh, require_columns, run_fetch, write_cache
-from name_utils import canonical_name, norm_name
+from name_utils import bbref_key, bbref_lookup_key, canonical_name, norm_name
 from nba_http import fetch_stats_json, legacy_result_set_rows, patch_nba_api_session, retry_call
 from seasons import HUSTLE_FIRST_SEASON, TRACKING_FIRST_SEASON, is_regular_season, season_range
 
@@ -794,6 +795,44 @@ def compute_shape_features(season: str) -> dict[str, dict]:
 
 
 # ---------------------------------------------------------------------------
+# Real minutes (--minutes-source real)
+# ---------------------------------------------------------------------------
+
+
+def load_real_minutes(season: str) -> tuple[dict[int, tuple[float, int]], dict[str, tuple[float, int]], str]:
+    """Per-game minutes and games, regular season: (by PLAYER_ID, by bbref_key, source).
+
+    The Base dashboard is fetched Per100Possessions, so its MIN is minutes per
+    100 possessions (~42-57 for everyone) and eligibility's 450-minute gate
+    (GP x MIN) never bound: about one row in five has under 450 real minutes
+    [ingest#1, features#0, fork#1]. Real minutes:
+      - 2015-16 on: the season's game logs by PLAYER_ID, through
+        build_min_gp.from_gamelogs (the rows pipeline/data/min_gp.json holds,
+        computed here so the build does not read a side artifact);
+      - before: pipeline/cache/bbref_per_game_<season>.json, mp_per_g x games
+        (BBRef's combined line for a traded player), keyed by name.
+    """
+    logs = DATA_DIR / f"gamelogs_{season}.jsonl"
+    if logs.exists():
+        from build_min_gp import from_gamelogs
+
+        return (
+            {int(r["player_id"]): (float(r["MPG"]), int(r["GP"])) for r in from_gamelogs(logs, season)},
+            {},
+            "gamelogs",
+        )
+    p = CACHE / f"bbref_per_game_{season}.json"
+    if p.exists():
+        doc = json.loads(p.read_text(encoding="utf-8"))
+        by_key: dict[str, tuple[float, int]] = {}
+        for k, v in doc.items():
+            if v.get("mp_per_g") is not None and v.get("games"):
+                by_key.setdefault(bbref_key(k), (float(v["mp_per_g"]), int(v["games"])))
+        return {}, by_key, "bbref_per_game"
+    return {}, {}, "none"
+
+
+# ---------------------------------------------------------------------------
 # Salary sources
 # ---------------------------------------------------------------------------
 
@@ -905,9 +944,22 @@ def fetch_bbref_contracts(offline: bool) -> dict[tuple[str, str], float]:
 # ---------------------------------------------------------------------------
 
 
-def shrink_percentages(rows: list[dict]) -> None:
-    """Empirical-Bayes: shrink noisy percentages toward the season mean,
-    weighted by per-100 attempts. m = prior strength in attempts."""
+def shrink_percentages(rows: list[dict], *, by_count: bool = False) -> None:
+    """Empirical-Bayes: shrink noisy percentages toward the season mean.
+
+    Default (--minutes-source per100): weighted by per-100 attempts, m = 6
+    attempts per 100 possessions. That weight is an attempt RATE, so sample
+    size never enters it: Stephen Curry 2015-16 (FTA/100 6.9, ~400 real FTA)
+    got 0.535 and Anthony Bennett (FTA/100 5.5, ~10 FTA in 84 minutes) 0.478
+    [features#0].
+
+    by_count (--minutes-source real): weighted by attempt COUNTS, rate x
+    possessions / 100 with possessions = real total minutes x PACE / 48. The
+    prior in counts is m x the season's median possessions / 100, so a player
+    with the median number of possessions keeps today's weight, a 100-minute
+    sample is pulled hard and a full season barely. A row with no real
+    minutes keeps the per-100 weight.
+    """
     for pct, att, m in (
         ("FG3_PCT", "FG3A", 6.0),
         ("FT_PCT", "FTA", 6.0),
@@ -915,11 +967,23 @@ def shrink_percentages(rows: list[dict]) -> None:
     ):
         vals = [r[pct] for r in rows if r.get(pct) is not None]
         mu = sum(vals) / max(1, len(vals))
-        for r in rows:
+        poss: dict[int, float] = {}
+        if by_count:
+            poss = {
+                i: r["_total_min"] * r["PACE"] / 48.0
+                for i, r in enumerate(rows)
+                if r.get("_total_min") and r.get("PACE")
+            }
+        m_count = m * statistics.median(poss.values()) / 100.0 if poss else None
+        for i, r in enumerate(rows):
             p, a = r.get(pct), r.get(att)
             if p is None or a is None:
                 continue
-            r[pct] = (p * a + mu * m) / (a + m)
+            if i in poss and m_count:
+                a_n = a * poss[i] / 100.0
+                r[pct] = (p * a_n + mu * m_count) / (a_n + m_count)
+            else:
+                r[pct] = (p * a + mu * m) / (a + m)
 
 
 def dedupe_rows(rows: list[dict]) -> list[dict]:
@@ -968,6 +1032,15 @@ def main() -> None:
         "measured at -0.81 CQS over 6 seeds, see docs/MTNN_STABILITY_2026-08-13_shape.md)",
     )
     ap.add_argument(
+        "--minutes-source",
+        choices=("per100", "real"),
+        default="per100",
+        help="per100 (default, unchanged): eligibility, mpg and total_min use the Per100Possessions MIN, so the "
+        "450-minute gate never binds. real: real per-game minutes (game logs 2015-16 on, BBRef per-game before) "
+        "gate eligibility and fill mpg/total_min (min_per100 keeps the old value), and shrinkage weights by "
+        "attempt counts. real changes the universe and every baseline: re-baseline before comparing",
+    )
+    ap.add_argument(
         "--allow-partial",
         action="store_true",
         help="write vectors.json and the matrix even when a season or source is missing or failed to fetch "
@@ -1008,6 +1081,8 @@ def main() -> None:
         "shape": set(),
     }
     fetched, missing = [], []
+    minutes_stats = {"gamelogs": 0, "bbref_per_game": 0, "no_source": 0, "dropped": 0}
+    dropped_by_season: dict[str, int] = {}
 
     for season in SEASONS:
         try:
@@ -1063,26 +1138,56 @@ def main() -> None:
             min_gp = args.min_gp if args.min_gp is not None else DEFAULT_MIN_GP
             min_minutes = args.min_minutes if args.min_minutes is not None else DEFAULT_MIN_TOTAL_MINUTES
 
+        real_minutes = args.minutes_source == "real"
+        if real_minutes:
+            real_by_pid, real_by_key, real_src = load_real_minutes(season)
+            bbref_pids: dict[str, set] = {}
+            for r in base:
+                bbref_pids.setdefault(bbref_key(str(r.get("PLAYER_NAME") or "")), set()).add(r["PLAYER_ID"])
+            shared_bbref = {k for k, v in bbref_pids.items() if len(v) > 1}
+
         n_kept = 0
         for r in base:
             gp = r.get("GP") or 0
             mpg = r.get("MIN") or 0
-            if not check_eligible(
-                gp,
-                mpg,
-                season=season,
-                min_gp=min_gp,
-                min_total_minutes=min_minutes,
-                schedule_aware=False,
-            ):
+            real = None
+            if real_minutes:
+                if real_src == "gamelogs":
+                    real = real_by_pid.get(int(r["PLAYER_ID"]))
+                else:
+                    nm = str(r.get("PLAYER_NAME") or "")
+                    real = None if bbref_key(nm) in shared_bbref else real_by_key.get(bbref_lookup_key(nm))
+                real_total = real[0] * real[1] if real else None
+                # No real-minutes source (a BBRef name that does not meet the
+                # charted one, or one two players share): the GP gate alone,
+                # and mpg/total_min stay missing; never the per-100 value.
+                eligible = gp >= min_gp and (real_total is None or real_total >= min_minutes)
+                minutes_stats["no_source" if real is None else real_src] += int(gp >= min_gp)
+                if gp >= min_gp and not eligible:
+                    minutes_stats["dropped"] += 1
+                    dropped_by_season[season] = dropped_by_season.get(season, 0) + 1
+            else:
+                eligible = check_eligible(
+                    gp,
+                    mpg,
+                    season=season,
+                    min_gp=min_gp,
+                    min_total_minutes=min_minutes,
+                    schedule_aware=False,
+                )
+            if not eligible:
                 continue
-            total_min = float(gp) * float(mpg)
             pid = str(r["PLAYER_ID"])
             row = dict(r)
             row["season"] = season
             row["_gp"] = int(gp)
-            row["_mpg"] = float(mpg)
-            row["_total_min"] = total_min
+            if real_minutes:
+                row["_mpg"] = real[0] if real else None
+                row["_total_min"] = real_total
+                row["_min_per100"] = float(mpg)
+            else:
+                row["_mpg"] = float(mpg)
+                row["_total_min"] = float(gp) * float(mpg)
             for src, name in ((adv, "advanced"), (sco, "scoring"), (bio, "bio")):
                 extra = src.get(pid, {})
                 for k, v in source_columns(name, extra).items():
@@ -1132,6 +1237,19 @@ def main() -> None:
     if missing:
         print(f"WARNING (--allow-partial): seasons left out of this build: {missing}")
 
+    if args.minutes_source == "real":
+        # The gate now sees real minutes; a median near 48 would mean the
+        # per-100 MIN came back through some path (its median is ~49).
+        real_mpg = [r["_mpg"] for r in all_rows if r.get("_mpg") is not None]
+        med = statistics.median(real_mpg) if real_mpg else None
+        if med is None or med >= 40:
+            raise SystemExit(f"--minutes-source real: median mpg fed to the gate is {med}; expected well under 40")
+        print(
+            f"minutes source real: rows with a source {minutes_stats['gamelogs']} (game logs) + "
+            f"{minutes_stats['bbref_per_game']} (BBRef per-game), {minutes_stats['no_source']} past the GP gate "
+            f"with no real minutes (GP gate only); {minutes_stats['dropped']} past the GP gate dropped for "
+            f"< the minutes gate: {dict(sorted(dropped_by_season.items()))}; median mpg {med:.1f}"
+        )
     all_rows = dedupe_rows(all_rows)
 
     # per-season percentage shrinkage
@@ -1139,7 +1257,7 @@ def main() -> None:
     for r in all_rows:
         by_season.setdefault(r["season"], []).append(r)
     for rows in by_season.values():
-        shrink_percentages(rows)
+        shrink_percentages(rows, by_count=args.minutes_source == "real")
 
     # ---- wide feature list: game contract first (frozen order) ----
     wide_features = list(GAME_FEATURES)
@@ -1247,8 +1365,8 @@ def main() -> None:
             "name": r["PLAYER_NAME"],
             "season": r["season"],
             "gp": r["_gp"],
-            "mpg": round(r["_mpg"], 1),
-            "total_min": round(r["_total_min"]),
+            "mpg": round(r["_mpg"], 1) if r["_mpg"] is not None else None,
+            "total_min": round(r["_total_min"]) if r["_total_min"] is not None else None,
             "v": [round(float(z), 3) for z in Zg[i]],
             "x": round(float(P[i, 0]), 4),
             "y": round(float(P[i, 1]), 4),
@@ -1262,6 +1380,8 @@ def main() -> None:
             p["dob"] = f"{birthYear}-01-01"
         if mask[i, sal_col]:
             p["sal"] = round(float(Z[i, sal_col]), 3)  # salary z (era-honest)
+        if "_min_per100" in r:
+            p["min_per100"] = round(r["_min_per100"], 1)
         players.append(p)
 
     OUT.parent.mkdir(parents=True, exist_ok=True)
@@ -1282,6 +1402,12 @@ def main() -> None:
                     "sample_gates": {
                         s: gates_for_season(s, schedule_aware=schedule_aware) for s in ("1998-99", "2011-12", "2023-24")
                     },
+                    # Only under --minutes-source real, so the default file is unchanged.
+                    **(
+                        {"minutes_source": "real", "minutes_stats": minutes_stats}
+                        if args.minutes_source == "real"
+                        else {}
+                    ),
                 },
                 "features": GAME_FEATURES,
                 "featureLabels": LABELS,
@@ -1312,6 +1438,7 @@ def main() -> None:
             "sample_gates": {
                 s: gates_for_season(s, schedule_aware=schedule_aware) for s in ("1998-99", "2011-12", "2023-24")
             },
+            **({"minutes_source": "real", "minutes_stats": minutes_stats} if args.minutes_source == "real" else {}),
         },
         "features": wide_features,
         "families": {f: FAMILY_OF.get(f, "efficiency") for f in wide_features},

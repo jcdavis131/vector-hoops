@@ -65,7 +65,10 @@ def season_eligible(
         mt = derive_min_total_minutes(season) if min_total_minutes is None else min_total_minutes
     else:
         mg = min_gp if min_gp is not None else DEFAULT_MIN_GP
-        mt = min_total_minutes if min_total_minutes is None else min_total_minutes
+        # Was `min_total_minutes if min_total_minutes is None else ...`: None
+        # whenever it was not passed, and `total >= None` raised TypeError
+        # [features#0 verifier note]. build_vectors always passes both.
+        mt = min_total_minutes if min_total_minutes is not None else DEFAULT_MIN_TOTAL_MINUTES
     return g >= mg and total >= mt
 
 
