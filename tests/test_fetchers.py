@@ -453,6 +453,67 @@ def test_advanced_tracking_http_error_is_a_failure_not_zero_rows(fat, tmp_path, 
     assert summary["blocked_seasons"] == ["2098-99"]
 
 
+# --- fetch_combine [health#5] -------------------------------------------------------------
+
+
+def _combine_payload(rows: list[list]) -> dict:
+    import fetch_combine as fc
+
+    return {"resultSets": [{"name": "DraftCombineStats", "headers": fc.REQUIRED, "rowSet": rows}]}
+
+
+@pytest.fixture
+def fc(tmp_path, monkeypatch):
+    import fetch_combine
+
+    monkeypatch.setattr(fetch_combine, "CACHE", tmp_path)
+    monkeypatch.setattr(fetch_combine, "OUT", tmp_path / "combine_measurements.json")
+    monkeypatch.setattr(fetch_combine.time, "sleep", lambda s: None)
+    return fetch_combine
+
+
+def test_combine_keeps_measured_values_only(fc, tmp_path, monkeypatch):
+    n = len(fc.FIELDS)
+    measured = [1630000, "A Measured", 77.5, 78.75, 205.0, 83.25] + [None] * (n - 4)
+    skipped_all = [1630001, "B Nothing"] + [None] * n
+    calls = []
+
+    def fake(endpoint, params, timeout=None):
+        calls.append(params["SeasonYear"])
+        return _combine_payload([measured, skipped_all]) if params["SeasonYear"] == "2019-20" else _combine_payload([])
+
+    monkeypatch.setattr(fc, "fetch_stats_json", fake)
+    # Before: every bio name got hash()-jittered wingspan/vertical/agility and a 78 in default height.
+    assert run(fc.main, ["fetch_combine.py", "--first-year", "2019"], monkeypatch) == 2  # 2020+ came back empty
+    doc = json.loads((tmp_path / "combine_measurements.json").read_text(encoding="utf-8"))
+    assert doc["years"] == [2019] and calls[0] == "2019-20"
+    a, b = doc["players"]["1630000"], doc["players"]["1630001"]
+    assert a == {
+        "name": "A Measured",
+        "combine_year": 2019,
+        "height_wo_shoes_in": 77.5,
+        "height_w_shoes_in": 78.75,
+        "weight_lbs": 205.0,
+        "wingspan_in": 83.25,
+    }
+    assert b == {"name": "B Nothing", "combine_year": 2019}  # no field it did not measure
+
+
+def test_combine_missing_column_fails_instead_of_reading_nulls(fc, monkeypatch):
+    def fake(endpoint, params, timeout=None):
+        payload = _combine_payload([])
+        payload["resultSets"][0]["headers"] = [h for h in payload["resultSets"][0]["headers"] if h != "WINGSPAN"]
+        return payload
+
+    monkeypatch.setattr(fc, "fetch_stats_json", fake)
+    assert run(fc.main, ["fetch_combine.py", "--first-year", "2025"], monkeypatch) == 2
+    assert not fc.OUT.exists()
+
+
+def test_combine_offline_without_a_cache_exits_2(fc, monkeypatch):
+    assert run(fc.main, ["fetch_combine.py", "--offline"], monkeypatch) == 2
+
+
 # --- operator scripts ----------------------------------------------------------------------
 
 

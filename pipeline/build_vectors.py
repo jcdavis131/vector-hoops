@@ -165,8 +165,9 @@ BIO_COLS = ["PLAYER_HEIGHT_INCHES", "PLAYER_WEIGHT", "AGE", "DRAFT_NUMBER"]
 # Two of those are strings and abort the float cast in the matrix build, which
 # is the visible half of the problem. The other eight are the dangerous half,
 # precisely because they do NOT abort: they are synthetic. fetch_combine.py:154
-# builds wingspan from "inches + 4.5 + deterministic jitter"; fetch_missing_
-# combine.py:9 uses "height*1.07 + pos_adj + bounded_noise". Unfiltered, the
+# built wingspan from "inches + 4.5 + deterministic jitter"; fetch_missing_
+# combine.py:9 used "height*1.07 + pos_adj + bounded_noise" (both paths deleted
+# 2026-10-09 [health#5]; the contract stays as defense in depth). Unfiltered, the
 # next rebuild widens the bio tower from 4 columns to 11 with fabricated
 # measurements, and audit_features.py's whole rationale is that a family's width
 # is its fusion share. A source is entitled to its contract, not to its cache.

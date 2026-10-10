@@ -36,3 +36,18 @@ or random-init models (git history keeps them): `train_mtnn_v6_192d.py`,
 `train_mtnn_v6_192d_cpu.py`, `train_mtnn_v6_192d_gated.py`,
 `run_local_192d.sh`, `run_local_gpu.sh`, `scripts/export_onnx.py`,
 `scripts/export_executorch.py` [health#4, artifacts#7, artifacts#8].
+
+Also deleted outright, on 2026-10-09, four fetch-named scripts whose only
+writes were estimates or proxies presented as data. None had a caller.
+Removing their fabrication paths would have left nothing that fetches
+[ingest#5, health#5]:
+
+| file | what it wrote |
+|---|---|
+| `pipeline/fetch_missing_combine.py` | wingspan/reach/vertical "scaffold" (`height*1.07 + pos_adj + bounded noise`, positional vertical averages) written in place into all 30 `pipeline/cache/bio_*.json` (14,498 of 14,569 rows `combine_method: estimated`), plus `combine_enriched.json` and `draft_combine_scaffold.json`. Its scrape attempt only overlaid three fields on the estimate. |
+| `pipeline/fetch_missing_injury.py` | `assets/data/injury_history.json` inferred from `82 - gp` (wrong for the 50/66/72-game seasons and for traded players) with an age default of 27 for the load-management flag. Measured games missed come from `build_availability.py` (game logs, 2015-16 on). |
+| `pipeline/fetch_pbp.py` | `assets/chemistry.json` / `assets/faderfinisher.json` "proxies" from vectors.json minutes (`source: vectors_proxy`), a three-game play-by-play probe whose rows it discarded, and a "BigDataBall fallback" that fetched a statsbomb README as a connectivity test. |
+| `pipeline/fetch_missing_payroll.py` | Rewrote `assets/data/payroll_by_season.json` from itself and copied it into `pipeline/cache`. Its CSV path reads a `payroll` column `salaries_history.csv` does not have, and its fallback summed whatever player salaries `salaries_merged.json` held per team and divided by 1e6 on a guess of the unit. |
+
+The served files they wrote are listed for the frontend follow-up; this pass
+does not touch `assets/` or `public/`.
