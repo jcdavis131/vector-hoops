@@ -4,18 +4,20 @@
   "notes": [
     "Generated 2026-10-09 from the matrix the HEAD prepare chain builds (build_vectors.py --offline; enrich_vectors.py; integrate_context.py, the herdmux climb's prepare for vector-hoops): train_matrix.npz sha256 0f8e5b87d9e809de, feature_manifest.json e9769268da5a5691.",
     "The promoted matrix on the training box is NOT this one (pipeline/data/train_matrix.npz dated 2026-08-04, sha256 231b07f1df283205). Checked against this contract it fails on column order: 36 columns (the PED_, PO_, HON_, INJ_ and SYSTEM_ blocks) sit at different indices.",
-    "Its honors family is also 0.969 observed against 0.087 here [features#2]. The contract only flags drops, so that difference is not a violation in this direction, but a rebuild from HEAD gives the honors tower about a tenth of the observed cells the promoted matrix has. Decide the honors semantics before re-anchoring on a rebuilt matrix."
+    "Its honors family is also 0.969 observed against 0.087 here [features#2]. The contract only flags drops, so that difference is not a violation in this direction, but a rebuild from HEAD gives the honors tower about a tenth of the observed cells the promoted matrix has. Decide the honors semantics before re-anchoring on a rebuilt matrix.",
+    "Re-recorded 2026-10-10 (P11, identity and joins) from the prepare chain plus every side builder on the built vectors.json (build_honors, build_wide_skills, build_min_gp --offline, build_availability, roster_context, build_career_context, form_context, competition_context, build_pedigree, build_playoffs, then integrate_context): train_matrix.npz sha256 68a0415ffa8a5a1d, feature_manifest.json f1c90cdca75df174. The 3-step climb prepare alone reads whatever side files pipeline/data holds, so it builds this matrix only after those builders have run (rebuild_all --refresh-context)."
   ],
   "definitions": {
     "family_coverage": "mean of mask over the family's columns (a share of cells, not of rows)",
     "zero": "share of all rows where Z == 0.0 in the column, masked rows included (masked cells are stored as 0)",
     "observed": "share of rows where mask > 0 in the column",
     "values_sha256": "recorded for audit, never compared",
+    "constant": "an observed column with one value over >= 5 observed rows of a season fails, unless stage_contract.CONSTANT_ALLOWED names it (checked against code, not this file)",
     "limits": "rows +-1%; columns and their families exact, in order; family coverage drop <= 5 points; column zero rise <= 10 points; keys exact unless --allow-key-change"
   },
   "generated": {
     "by": "pipeline/stage_contract.py --accept-drift",
-    "git": "1733bdbf",
+    "git": "9f056a79",
     "git_dirty": false,
     "manifest_source": "integrate_context.py (v4 context merge)"
   },
@@ -23,7 +25,7 @@
   "cols": 143,
   "keys_sha256": "d1b3d5cb7e37afcf726532d592c5cf4125221a4c811b859175b79f9a998da72e",
   "columns_sha256": "3c44edb7053e7a5449cd7505de475d02e39522b54b6a7c2033d9fbccc8560950",
-  "values_sha256": "6e6323d98508d99f9c047658123bbb4ee546552911abce20933562cef6f9e25f",
+  "values_sha256": "51ecc8ca01967c7e67e50b952f035feecea1c7218c6770a50ab47bb1c3a23005",
   "columns": [
     "PTS",
     "AST",
@@ -316,15 +318,15 @@
   },
   "family_coverage": {
     "bio": 0.966435,
-    "career": 0.727505,
-    "competition": 0.346753,
+    "career": 0.692748,
+    "competition": 0.397501,
     "defense": 0.572035,
     "efficiency": 1.0,
-    "form": 0.346753,
-    "honors": 0.936742,
-    "injury": 0.346753,
-    "market": 0.877738,
-    "pedigree": 0.929607,
+    "form": 0.397501,
+    "honors": 0.923754,
+    "injury": 0.397501,
+    "market": 0.884101,
+    "pedigree": 0.926886,
     "playmaking": 0.688313,
     "playoffs": 0.458859,
     "rebounding": 1.0,
@@ -597,24 +599,24 @@
       "zero": 0.534321
     },
     "FORM_CEIL": {
-      "observed": 0.346753,
-      "zero": 0.653247
+      "observed": 0.397501,
+      "zero": 0.602499
     },
     "FORM_DD_RATE": {
-      "observed": 0.346753,
-      "zero": 0.653247
+      "observed": 0.397501,
+      "zero": 0.602499
     },
     "FORM_MIN_AVG": {
-      "observed": 0.346753,
-      "zero": 0.653247
+      "observed": 0.397501,
+      "zero": 0.602499
     },
     "FORM_TD_RATE": {
-      "observed": 0.346753,
-      "zero": 0.653247
+      "observed": 0.397501,
+      "zero": 0.602499
     },
     "FORM_VOL": {
-      "observed": 0.346753,
-      "zero": 0.653247
+      "observed": 0.397501,
+      "zero": 0.602499
     },
     "HUSTLE_BOX_OUTS": {
       "observed": 0.329708,
@@ -641,8 +643,8 @@
       "zero": 0.63628
     },
     "SALARY_LOG": {
-      "observed": 0.881305,
-      "zero": 0.118695
+      "observed": 0.886781,
+      "zero": 0.113219
     },
     "DRAFT_UNDRAFTED": {
       "observed": 1.0,
@@ -669,8 +671,8 @@
       "zero": 0.738933
     },
     "YEAR_IN_LEAGUE": {
-      "observed": 1.0,
-      "zero": 0.030696
+      "observed": 0.844054,
+      "zero": 0.158877
     },
     "LAG1_COSINE": {
       "observed": 0.812818,
@@ -681,8 +683,8 @@
       "zero": 0.187182
     },
     "GP_RATIO": {
-      "observed": 0.346753,
-      "zero": 0.653247
+      "observed": 0.397501,
+      "zero": 0.602499
     },
     "DRAFT_SLOT_Z": {
       "observed": 0.838269,
@@ -701,8 +703,8 @@
       "zero": 0.8176
     },
     "CAREER_EXP_YEARS": {
-      "observed": 1.0,
-      "zero": 0.030696
+      "observed": 0.844054,
+      "zero": 0.158877
     },
     "CAREER_MPG_SLOPE": {
       "observed": 0.29855,
@@ -713,36 +715,36 @@
       "zero": 0.187182
     },
     "CAREER_ACTIVE_FRAC": {
-      "observed": 1.0,
-      "zero": 0.061006
+      "observed": 0.844054,
+      "zero": 0.165973
     },
     "SOS_NET_RTG": {
-      "observed": 0.346753,
-      "zero": 0.653247
+      "observed": 0.397501,
+      "zero": 0.602499
     },
     "B2B_RATE": {
-      "observed": 0.346753,
-      "zero": 0.653247
+      "observed": 0.397501,
+      "zero": 0.602499
     },
     "REST_AVG": {
-      "observed": 0.346753,
-      "zero": 0.653247
+      "observed": 0.397501,
+      "zero": 0.602499
     },
     "CONF_STRENGTH": {
-      "observed": 0.346753,
-      "zero": 0.653247
+      "observed": 0.397501,
+      "zero": 0.602499
     },
     "SALARY_CAP_PCT": {
-      "observed": 0.881305,
-      "zero": 0.118695
+      "observed": 0.886781,
+      "zero": 0.113219
     },
     "SALARY_TEAM_PCT": {
-      "observed": 0.867037,
-      "zero": 0.132963
+      "observed": 0.87606,
+      "zero": 0.12394
     },
     "SALARY_RANK_POS": {
-      "observed": 0.881305,
-      "zero": 0.118695
+      "observed": 0.886781,
+      "zero": 0.113219
     },
     "TM_PACE": {
       "observed": 0.261067,
@@ -789,8 +791,8 @@
       "zero": 0.738933
     },
     "PED_PICK_QUALITY": {
-      "observed": 0.84012,
-      "zero": 0.15988
+      "observed": 0.837267,
+      "zero": 0.162733
     },
     "PED_ROUND_ONE": {
       "observed": 1.0,
@@ -805,12 +807,12 @@
       "zero": 0.0
     },
     "PED_TEAM_WINPCT": {
-      "observed": 0.667129,
-      "zero": 0.332871
+      "observed": 0.670369,
+      "zero": 0.329631
     },
     "PED_YEARS_SINCE": {
-      "observed": 1.0,
-      "zero": 0.002391
+      "observed": 0.980565,
+      "zero": 0.019435
     },
     "PED_PICK_DECAY": {
       "observed": 1.0,
@@ -873,40 +875,40 @@
       "zero": 0.541108
     },
     "HON_ALL_NBA_TEAM_LAG": {
-      "observed": 0.968302,
-      "zero": 0.031698
+      "observed": 0.969304,
+      "zero": 0.030696
     },
     "HON_ALL_NBA_VOTE_LAG": {
-      "observed": 0.968302,
-      "zero": 0.031698
+      "observed": 0.969304,
+      "zero": 0.030696
     },
     "HON_ASG_LAG": {
-      "observed": 0.937915,
-      "zero": 0.062085
+      "observed": 0.900818,
+      "zero": 0.099182
     },
     "HON_ASG_CUM": {
-      "observed": 0.840892,
-      "zero": 0.166204
+      "observed": 0.810042,
+      "zero": 0.197054
     },
     "HON_VOTE_RECOG": {
-      "observed": 0.968302,
-      "zero": 0.031698
+      "observed": 0.969304,
+      "zero": 0.030696
     },
     "INJ_GP_PCT": {
-      "observed": 0.346753,
-      "zero": 0.653247
+      "observed": 0.397501,
+      "zero": 0.602499
     },
     "INJ_MISS_N": {
-      "observed": 0.346753,
-      "zero": 0.653247
+      "observed": 0.397501,
+      "zero": 0.602499
     },
     "INJ_MAX_MISS_STREAK": {
-      "observed": 0.346753,
-      "zero": 0.653247
+      "observed": 0.397501,
+      "zero": 0.602499
     },
     "INJ_MISS_SPELLS": {
-      "observed": 0.346753,
-      "zero": 0.653247
+      "observed": 0.397501,
+      "zero": 0.602499
     }
   }
 }
