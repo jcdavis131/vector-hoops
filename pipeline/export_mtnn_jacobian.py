@@ -119,8 +119,25 @@ def families_from_ckpt(state: dict) -> dict[str, int]:
     return dict(sorted(fams.items()))
 
 
-def load_matrix_for(ckpt_fams: dict[str, int]):
-    """Pick the train matrix whose families match the checkpoint."""
+def tower_slices(manifest: dict, ckpt_args: dict) -> dict[str, list[int]]:
+    """The matrix columns per tower, as train_mtnn.main built them for the checkpoint's run.
+
+    The injury family is never a tower (train_mtnn drops it unconditionally:
+    it is only the durability head's target), and --drop-features /
+    --exclude-families shape the rest; eval_v2.Model applies the same rule.
+    This compared every family in the manifest with the checkpoint's towers,
+    so any model trained on a matrix with the injury family (every one since
+    it was added) failed with "no train matrix matches the checkpoint's
+    families" (found by tests/test_e2e_smoke.py: ckpt 18 towers, matrix 19
+    families, injury (None, 4)).
+    """
+    split = lambda v: {s.strip() for s in str(v or "").split(",") if s.strip()}  # noqa: E731
+    drop, exclude = split(ckpt_args.get("drop_features")), split(ckpt_args.get("exclude_families"))
+    return {k: v for k, v in T.family_slices(manifest, drop).items() if k not in exclude and k != "injury"}
+
+
+def load_matrix_for(ckpt_fams: dict[str, int], ckpt_args: dict | None = None):
+    """Pick the train matrix whose tower families match the checkpoint."""
     candidates = [
         (DATA / "train_matrix.npz", DATA / "feature_manifest.json"),
         (
@@ -133,7 +150,7 @@ def load_matrix_for(ckpt_fams: dict[str, int]):
             continue
         manifest = json.loads(fpath.read_text(encoding="utf-8"))
         npz = np.load(mpath, allow_pickle=False)
-        fams = T.family_slices(manifest)
+        fams = tower_slices(manifest, ckpt_args or {})
         dims = {f: len(c) for f, c in fams.items()}
         if dims == ckpt_fams:
             print(f"  matrix: {mpath.name} ({len(fams)} families) — matches checkpoint")
@@ -433,7 +450,7 @@ def main() -> None:
     ckpt = safe_torch_load(CKPT, map_location=device)
     ckpt_fams = families_from_ckpt(ckpt["model"])
     print(f"checkpoint families: {len(ckpt_fams)}")
-    npz, manifest, fams, matrix_name = load_matrix_for(ckpt_fams)
+    npz, manifest, fams, matrix_name = load_matrix_for(ckpt_fams, ckpt.get("args") or {})
 
     Z = npz["Z"].astype(np.float32)
     M = npz["mask"].astype(np.float32)
