@@ -434,6 +434,25 @@ def load_matrix_fingerprint(matrix: str | os.PathLike[str], manifest: str | os.P
 MATRIX_IDENTITY = ("rows", "cols", "keys_sha256", "columns_sha256", "values_sha256")
 
 
+def short_matrix_fingerprint(fp: Mapping[str, Any]) -> str:
+    """'keys <sha8> cols <sha8> cov <sha8>' for one printed line.
+
+    Two climb arms whose CQS lines differ only by the number used to read as
+    a result. They can be trained on different matrices: on 2026-10-09 the
+    promoted matrix and HEAD's prepare output differed only in the honors
+    family (observed 0.969 vs 0.087) under identical rows and columns
+    [features#2]. keys and cols are the first 8 hex digits of keys_sha256 and
+    columns_sha256; cov is the first 8 of the sha256 of family_coverage as
+    sorted, compact JSON, so a family that gained or lost observed cells moves
+    it while rows and columns stay put.
+    """
+    cov = json.dumps(fp.get("family_coverage") or {}, sort_keys=True, separators=(",", ":"))
+    cov_sha = hashlib.sha256(cov.encode("utf-8")).hexdigest()
+    return (
+        f"keys {str(fp.get('keys_sha256') or '')[:8]} cols {str(fp.get('columns_sha256') or '')[:8]} cov {cov_sha[:8]}"
+    )
+
+
 def fingerprint_differences(want: Mapping[str, Any], have: Mapping[str, Any]) -> list[str]:
     """The identity fields on which two matrix fingerprints differ, as 'field: want != have'."""
 

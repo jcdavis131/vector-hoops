@@ -356,6 +356,25 @@ def test_fingerprint_from_files_equals_fingerprint_of_the_loaded_arrays(tmp_path
     assert aio.fingerprint_differences(from_arrays, from_files) == []
 
 
+def test_short_fingerprint_prints_keys_cols_and_coverage():
+    b = small_bundle()
+    fp = fingerprint(b, COLUMNS, FAMILIES)
+    cov = json.dumps(fp["family_coverage"], sort_keys=True, separators=(",", ":"))
+    want = f"keys {fp['keys_sha256'][:8]} cols {fp['columns_sha256'][:8]} cov {hashlib.sha256(cov.encode()).hexdigest()[:8]}"
+    assert aio.short_matrix_fingerprint(fp) == want
+
+
+def test_short_fingerprint_moves_with_coverage_under_the_same_rows_and_columns():
+    # The [features#2] case: same keys and columns, one family masked differently.
+    b = small_bundle()
+    masked = dict(b, mask=b["mask"].copy())
+    masked["mask"][:, 3] = 0
+    a = aio.short_matrix_fingerprint(fingerprint(b, COLUMNS, FAMILIES))
+    m = aio.short_matrix_fingerprint(fingerprint(masked, COLUMNS, FAMILIES))
+    assert a.split(" cov ")[0] == m.split(" cov ")[0]
+    assert a != m
+
+
 def test_fingerprint_differences_names_the_fields():
     b = small_bundle()
     a = fingerprint(b, COLUMNS, FAMILIES)

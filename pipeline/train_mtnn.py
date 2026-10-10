@@ -67,6 +67,7 @@ from artifact_io import (
     git_state,
     matrix_fingerprint,
     sha256_file,
+    short_matrix_fingerprint,
 )
 from mtnn_metrics import (
     adjacent_season_pairs,
@@ -2621,7 +2622,11 @@ def main(argv: list[str] | None = None) -> None:
     if run_dir is not None:
         write_run_bundle(run_dir, written_paths, written, report_text)
     print(report_text)
-    print(f"CQS {report['composite']['cqs']} · {why}")
+    # The fingerprint goes after the existing text so the line still starts
+    # "CQS <value> · ": nothing parses it (herdmux reads composite.cqs from
+    # mtnn_report.json, metrics.py:104), but two CQS lines are only comparable
+    # when these match [features#2].
+    print(f"CQS {report['composite']['cqs']} · {why} · matrix {short_matrix_fingerprint(lineage_matrix)}")
     # This used to say the report went to ART_DIR. It goes to DATA_DIR, as the checkpoint does.
     ckpt_note = f"; mtnn_best.pt -> {written_paths['checkpoint']}" if "checkpoint" in written else ""
     print(f"wrote embedding_v3.npz, mtnn_centroids.npz -> {ART_DIR}; mtnn_report.json -> {DATA_DIR}{ckpt_note}")
