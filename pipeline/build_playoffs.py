@@ -85,7 +85,8 @@ def load_caches(use_fixture: bool) -> tuple[dict, dict, bool]:
             season = doc["season"]
             complete = complete and bool(doc.get("complete"))
             for nn, rec in doc.get("players", {}).items():
-                players[(season, nn)] = rec
+                # stored key keyed again with today's norm_name (name_utils)
+                players.setdefault((season, norm_name(nn)), rec)
             for tid, rec in doc.get("teams", {}).items():
                 teams[(season, str(tid))] = rec
         return players, teams, complete
@@ -96,7 +97,7 @@ def load_caches(use_fixture: bool) -> tuple[dict, dict, bool]:
     complete = bool(doc.get("complete"))
     for season, recs in doc.get("players", {}).items():
         for nn, rec in recs.items():
-            players[(season, nn)] = rec
+            players.setdefault((season, norm_name(nn)), rec)
     for season, recs in doc.get("teams", {}).items():
         for tid, rec in recs.items():
             teams[(season, str(tid))] = rec
@@ -215,13 +216,15 @@ def main() -> None:
     game_docs = {} if args.fixture else load_game_caches()
     vec = json.loads(VECTORS.read_text(encoding="utf-8"))
 
-    # Index player games: (season, nn) -> list
-    player_games_idx: dict[tuple[str, str], list] = defaultdict(list)
+    # Index player games by (season, PLAYER_ID): the playoff game logs carry
+    # playerId, so the game features join on it, not on the name key.
+    player_games_idx: dict[tuple[str, int], list] = defaultdict(list)
     team_pts_idx: dict[str, dict[str, dict[int, int]]] = {}
     for season, doc in game_docs.items():
         team_pts_idx[season] = team_pts_by_game(doc.get("teamGames") or [])
         for g in doc.get("playerGames") or []:
-            player_games_idx[(season, g["nn"])].append(g)
+            if g.get("playerId") is not None:
+                player_games_idx[(season, int(g["playerId"]))].append(g)
 
     entries = []
     splits = {}
@@ -241,13 +244,14 @@ def main() -> None:
         team = teams_idx.get((season, tid), {})
         gdoc = game_docs.get(season)
         series = (gdoc or {}).get("seriesByTeam", {}).get(tid) if gdoc else None
-        pgames = player_games_idx.get((season, nn), [])
+        pid = int(p["pid"]) if str(p.get("pid", "")).isdigit() else None
+        pgames = player_games_idx.get((season, pid), [])
         gfeat = player_game_features(pgames, team_pts_idx.get(season, {})) if pgames else {}
 
         row = {
             "name": name,
             # integrate_context joins on (player_id, season) when the row has one.
-            "player_id": int(p["pid"]) if str(p.get("pid", "")).isdigit() else None,
+            "player_id": pid,
             "season": season,
             "PO_GP": float(po["GP"]),
             "PO_MIN": float(po["MIN"]),

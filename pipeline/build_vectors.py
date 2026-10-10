@@ -611,7 +611,12 @@ def load_wide_skills_defense(season: str) -> dict[str, dict]:
     # 437 2015-16 rows sat at zero on all six columns [ingest#2, features#3].
     # The old `or None` guard on d_fg_pct alone is subsumed.
     for nn, v in honest_players(d).items():
-        out[nn] = {
+        # Keyed again with today's norm_name: the stored key is the
+        # suffix-stripping copy fetch_wide_skills had (name_utils).
+        key = norm_name(nn)
+        if key in out:
+            continue
+        out[key] = {
             "HUSTLE_DEFLECTIONS": v.get("deflections"),
             "HUSTLE_LOOSE_BALLS": v.get("loose_balls"),
             "HUSTLE_CHARGES": v.get("charges"),
@@ -814,14 +819,17 @@ def load_salary_history() -> dict[tuple[str, str], float]:
             for key, val in salaries.items():
                 if key.startswith("_"):
                     continue
+                # The stored key is whatever norm_name was when merge_salaries
+                # ran; keyed again with today's, it meets norm_name(PLAYER_NAME)
+                # below whichever copy wrote it (name_utils).
                 if isinstance(val, dict):
                     nn = val.get("norm_name") or key.split("|", 1)[0]
                     season = val.get("season") or key.split("|", 1)[-1]
-                    out[(nn, season)] = float(val["salary"])
+                    out.setdefault((norm_name(nn), season), float(val["salary"]))
                 else:
                     parts = key.split("|", 1)
                     if len(parts) == 2:
-                        out[(parts[0], parts[1])] = float(val)
+                        out.setdefault((norm_name(parts[0]), parts[1]), float(val))
         except (json.JSONDecodeError, UnicodeDecodeError, AttributeError, KeyError, TypeError, ValueError) as e:
             raise ValueError(f"{merged_p}: unreadable ({type(e).__name__}: {e}); fix or rerun merge_salaries.py") from e
         print(f"salary merged JSON: {len(out)} rows")
@@ -850,7 +858,10 @@ def fetch_bbref_contracts(offline: bool) -> dict[tuple[str, str], float]:
     Yields (name, season) -> salary for the seasons the table covers."""
     cached = load_cached("salary_bbref", "current")
     if cached is not None:
-        return {(k.split("|")[0], k.split("|")[1]): v for k, v in cached.items()}
+        out: dict[tuple[str, str], float] = {}
+        for k, v in cached.items():
+            out.setdefault((norm_name(k.split("|")[0]), k.split("|")[1]), v)
+        return out
     if offline:
         return {}
     import requests

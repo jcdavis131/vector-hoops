@@ -47,7 +47,6 @@ import json
 import re
 import sys
 import time
-import unicodedata
 from collections import defaultdict
 from pathlib import Path
 
@@ -55,7 +54,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "pipeline"))
 from _out_root import add_out_root, rerooted, shown
 from career_window import career_fully_observed, draft_years_by_pid, first_seasons_by_pid
-from name_utils import ascii_fold
+from name_utils import norm_name
 
 VECTORS = ROOT / "assets" / "vectors.json"
 CACHE_DIR = ROOT / "pipeline" / "cache"
@@ -72,16 +71,6 @@ HON_FEATURES = (
     "HON_ASG_CUM",
     "HON_VOTE_RECOG",
 )
-
-
-def norm_name(name: str) -> str:
-    # ascii_fold before the NFD strip: 'ı' has no combining mark, so 'Ömer
-    # Aşık' keyed as 'omer asık' and never met the charted 'Omer Asik'.
-    s = unicodedata.normalize("NFD", ascii_fold(name))
-    s = "".join(c for c in s if not unicodedata.combining(c))
-    s = re.sub(r"[.'’-]", "", s.lower())
-    s = re.sub(r"\s+(jr|sr|ii|iii|iv|v)$", "", s.strip())
-    return re.sub(r"\s+", " ", s)
 
 
 def season_start(season: str) -> int:

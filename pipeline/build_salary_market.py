@@ -17,7 +17,6 @@ from __future__ import annotations
 import argparse
 import json
 import math
-import re
 import sys
 import time
 from collections import defaultdict
@@ -27,6 +26,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "pipeline"))
 
 from _out_root import add_out_root, rerooted, shown
+from name_utils import norm_name
 from nba_salary_cap import cap_for_season
 
 DATA = ROOT / "pipeline" / "data"
@@ -39,21 +39,27 @@ MIN_TEAM_SALARY_ROWS = 8
 MIN_SALARY_USD = 10_000
 
 
-def norm_name(name: str) -> str:
-    s = name.lower()
-    s = re.sub(r"[.'’-]", "", s)
-    s = re.sub(r"\s+(jr|sr|ii|iii|iv|v)$", "", s.strip())
-    return re.sub(r"\s+", " ", s)
-
-
 def load_salaries() -> dict[str, dict]:
+    """'<norm_name>|<season>' -> salary record.
+
+    The stored key is whatever norm_name was when merge_salaries ran; keyed
+    again with today's (name_utils), it meets norm_name of a charted name.
+    """
     if not SALARIES.exists():
         return {}
     doc = json.loads(SALARIES.read_text(encoding="utf-8"))
-    return doc.get("salaries", {})
+    out: dict[str, dict] = {}
+    for key, sal in doc.get("salaries", {}).items():
+        if key.startswith("_"):
+            continue
+        nn = sal.get("norm_name") or key.split("|", 1)[0]
+        season = sal.get("season") or key.split("|", 1)[-1]
+        out.setdefault(f"{norm_name(nn)}|{season}", sal)
+    return out
 
 
 def load_roster_teams() -> dict[tuple[str, str], str]:
+    """(norm_name, season) -> team abbreviation from roster_context.json."""
     if not ROSTER.exists():
         return {}
     doc = json.loads(ROSTER.read_text(encoding="utf-8"))
@@ -61,7 +67,7 @@ def load_roster_teams() -> dict[tuple[str, str], str]:
     for row in doc.get("entries", []):
         team = row.get("team")
         if team:
-            out[(row["name"], row["season"])] = str(team).upper()
+            out[(norm_name(row["name"]), row["season"])] = str(team).upper()
     return out
 
 
@@ -75,7 +81,7 @@ def resolve_team(
     team = (sal.get("team") or "").strip().upper()
     if team:
         return team
-    return roster_teams.get((name, season)) or roster_teams.get((sal.get("name", name), season))
+    return roster_teams.get((nn, season)) or roster_teams.get((norm_name(sal.get("name") or name), season))
 
 
 def build_team_payrolls(
@@ -88,8 +94,7 @@ def build_team_payrolls(
     for key, sal in salaries.items():
         if key.startswith("_"):
             continue
-        nn = sal.get("norm_name") or key.split("|", 1)[0]
-        season = sal.get("season") or key.split("|", 1)[-1]
+        nn, season = key.split("|", 1)
         amount = float(sal.get("salary") or 0)
         if amount < MIN_SALARY_USD:
             continue
@@ -110,8 +115,7 @@ def season_salary_ranks(
     for key, sal in salaries.items():
         if key.startswith("_"):
             continue
-        nn = sal.get("norm_name") or key.split("|", 1)[0]
-        season = sal.get("season") or key.split("|", 1)[-1]
+        nn, season = key.split("|", 1)
         amount = float(sal.get("salary") or 0)
         if amount < MIN_SALARY_USD:
             continue
@@ -154,7 +158,7 @@ def main() -> None:
         name, season = p["name"], p["season"]
         nn = norm_name(name)
         nkey = f"{nn}|{season}"
-        sal = salaries.get(nkey) or salaries.get(f"{name}|{season}")
+        sal = salaries.get(nkey)
         if not sal:
             continue
         amount = float(sal.get("salary") or 0)

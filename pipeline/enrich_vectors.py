@@ -17,13 +17,12 @@ Run:  python pipeline/enrich_vectors.py
 from __future__ import annotations
 
 import json
-import re
 import sys
-import unicodedata
 from pathlib import Path
 
 import numpy as np
 from artifact_io import atomic_write_text
+from name_utils import bbref_key
 
 ROOT = Path(__file__).resolve().parent
 VECTORS = ROOT.parent / "assets" / "vectors.json"
@@ -39,6 +38,12 @@ ALIASES = {
     "clarweatherspoon": "clarenceweatherspoon",
     "danschayes": "dannyschayes",
     "ikeaustin": "isaacaustin",
+    # fetch_positions' alnum key dropped a letter NFKD cannot decompose
+    # (Aşık's dotless i, Pleiß's sharp s, Dёmin's Cyrillic yo), so these
+    # cache keys are short a letter and 10 rows had no position.
+    "omerasik": "omerask",
+    "tiborpleiss": "tiborplei",
+    "egordemin": "egordmin",
 }
 
 # Curated axis names, verified against the printed correlations:
@@ -66,18 +71,6 @@ AXIS_NAMES = [
         "hi": "handlers (AST, STL, TOV)",
     },
 ]
-
-
-def norm_name(name: str) -> str:
-    s = unicodedata.normalize("NFKD", name)
-    s = "".join(ch for ch in s if not unicodedata.combining(ch))
-    s = s.lower()
-    for suffix in (" jr", " sr", " ii", " iii", " iv", " v"):
-        if s.replace(".", "").rstrip().endswith(suffix):
-            s = s.replace(".", "").rstrip()
-            s = s[: -len(suffix)]
-            break
-    return re.sub(r"[^a-z0-9]", "", s)
 
 
 def season_start(season: str) -> int:
@@ -111,17 +104,19 @@ def join_positions(players: list[dict]) -> tuple[list[int], dict]:
     lookup: dict[str, dict[str, int]] = {}
     for season, rows in cache.items():
         m = {}
+        # positions_bbref.json is keyed by fetch_positions' alnum key; keyed
+        # again with name_utils.bbref_key, which is that key (name_utils).
         for name, pos in rows.items():
             tok = pos.split("-")[0]
             tok = GENERIC.get(pos, GENERIC.get(tok, tok if tok in POS_IDX else None))
             if tok in POS_IDX:
-                m[name] = POS_IDX[tok]
+                m.setdefault(bbref_key(name), POS_IDX[tok])
         lookup[season] = m
 
     out = []
     misses: dict[str, list[int]] = {}
     for i, p in enumerate(players):
-        key = norm_name(p["name"])
+        key = bbref_key(p["name"])
         key = ALIASES.get(key, key)
         idx = lookup.get(p["season"], {}).get(key, -1)
         out.append(idx)

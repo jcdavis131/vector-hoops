@@ -18,12 +18,11 @@ from __future__ import annotations
 
 import argparse
 import json
-import re
 import time
-import unicodedata
 from pathlib import Path
 
 from _out_root import add_out_root, rerooted
+from name_utils import norm_name
 
 ROOT = Path(__file__).resolve().parents[1]
 VECTORS = ROOT / "assets" / "vectors.json"
@@ -49,14 +48,6 @@ ATTR_KEYS = (
     "strength",
 )
 GAME_PREFIX = "GK_"
-
-
-def norm_name(name: str) -> str:
-    s = unicodedata.normalize("NFD", name)
-    s = "".join(c for c in s if not unicodedata.combining(c))
-    s = re.sub(r"[.'’-]", "", s.lower())
-    s = re.sub(r"\s+(jr|sr|ii|iii|iv|v)$", "", s.strip())
-    return re.sub(r"\s+", " ", s)
 
 
 def real_release_caches() -> list[Path]:
@@ -92,7 +83,9 @@ def load_cache(use_fixture: bool) -> tuple[dict, str, bool] | None:
             return None
         path = paths[-1]
     doc = json.loads(path.read_text(encoding="utf-8"))
-    by_name = {p["norm_name"]: p for p in doc.get("players", [])}
+    by_name: dict[str, dict] = {}
+    for p in doc.get("players", []):
+        by_name.setdefault(norm_name(p["norm_name"]), p)  # stored key, keyed again (name_utils)
     return by_name, str(doc.get("nba_season", "")), bool(doc.get("complete"))
 
 

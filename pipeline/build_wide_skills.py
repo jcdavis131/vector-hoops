@@ -48,16 +48,15 @@ from __future__ import annotations
 
 import argparse
 import json
-import re
 import sys
 import time
-import unicodedata
 from pathlib import Path
 
 import numpy as np
 
 from _out_root import add_out_root, rerooted, shown
 from hustle_coverage import honest_players
+from name_utils import norm_name
 
 ROOT = Path(__file__).resolve().parents[1]
 VECTORS = ROOT / "assets" / "vectors.json"
@@ -79,14 +78,6 @@ WIDE_SKILLS = [
 BADGE_GRADE = 90
 GOLD_GRADE = 97
 MOTOR_COLS = ["screen_ast", "deflections", "loose_balls", "charges", "box_outs"]
-
-
-def norm_name(name: str) -> str:
-    s = unicodedata.normalize("NFD", name)
-    s = "".join(c for c in s if not unicodedata.combining(c))
-    s = re.sub(r"[.'’-]", "", s.lower())
-    s = re.sub(r"\s+(jr|sr|ii|iii|iv|v)$", "", s.strip())
-    return re.sub(r"\s+", " ", s)
 
 
 def load_caches(use_fixture: bool) -> tuple[dict, bool]:
@@ -126,14 +117,15 @@ def load_caches(use_fixture: bool) -> tuple[dict, bool]:
         for _, doc in docs:
             complete = complete and bool(doc.get("complete"))
             for nn, rec in honest_players(doc).items():
-                out[(doc["season"], nn)] = rec
+                # stored key keyed again with today's norm_name (name_utils)
+                out.setdefault((doc["season"], norm_name(nn)), rec)
         return out, complete
     if not FIXTURE.exists():
         raise SystemExit(f"--fixture: no fixture at {FIXTURE}")
     doc = json.loads(FIXTURE.read_text(encoding="utf-8"))
     for season, recs in doc.get("players", {}).items():
         for nn, rec in recs.items():
-            out[(season, nn)] = rec
+            out.setdefault((season, norm_name(nn)), rec)
     return out, bool(doc.get("complete"))
 
 
