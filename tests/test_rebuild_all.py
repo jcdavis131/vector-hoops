@@ -61,6 +61,9 @@ def runs(tmp_path, monkeypatch):
     monkeypatch.setattr(ra, "RUNS_DIR", tmp_path / "runs")
     monkeypatch.setattr(ra, "git_state", lambda root: {"sha": "f" * 40, "short": "ffffffff", "dirty": False})
     monkeypatch.setattr(ra, "env_versions", lambda: {"python": "test"})
+    # No CUDA probe here: it would start an interpreter that imports torch,
+    # and its answer depends on the box. Its own tests are below.
+    monkeypatch.setattr(ra, "resolve_device", lambda spec, python=sys.executable: "cpu" if spec == "auto" else spec)
     return tmp_path / "runs"
 
 
@@ -149,6 +152,44 @@ def test_device_is_passed_only_when_given():
     assert "--device" not in train.argv
     train = next(s for s in ra.build_plan(device="cuda") if s.name == "train_mtnn")
     assert train.argv[-2:] == ("--device", "cuda")
+
+
+def test_main_resolves_auto_and_always_passes_the_device(runs, monkeypatch, capsys):
+    """A default rebuild trained on train_mtnn's cpu default with the GPU idle (P12)."""
+    asked = []
+
+    def fake(spec, python=sys.executable):
+        asked.append(spec)
+        return "cuda" if spec == "auto" else spec
+
+    monkeypatch.setattr(ra, "resolve_device", fake)
+    assert ra.main(["--dry-run", "--only", "train_mtnn"]) == 0
+    assert "--device cuda" in capsys.readouterr().out and asked == ["auto"]
+    assert ra.main(["--dry-run", "--only", "train_mtnn", "--device", "cpu"]) == 0
+    assert "--device cpu" in capsys.readouterr().out
+    # No train step, no probe.
+    asked.clear()
+    assert ra.main(["--dry-run", "--stage", "matrix"]) == 0
+    assert asked == []
+
+
+def test_resolve_device(monkeypatch):
+    assert ra.resolve_device("cpu") == "cpu" and ra.resolve_device("cuda") == "cuda"  # no probe
+    assert ra.resolve_device("auto", python=str(ROOT / "no-such-python.exe")) == "cpu"
+
+    class Probe:
+        SubprocessError = RuntimeError
+
+        def __init__(self, out, rc=0):
+            self.out, self.rc = out, rc
+
+        def run(self, cmd, **kw):
+            assert cmd[1] == "-c" and "torch.cuda.is_available()" in cmd[2] and kw["timeout"]
+            return types.SimpleNamespace(returncode=self.rc, stdout=self.out)
+
+    for out, rc, want in (("cuda", 0, "cuda"), ("cpu", 0, "cpu"), ("", 1, "cpu")):
+        monkeypatch.setattr(ra, "subprocess", Probe(out, rc))
+        assert ra.resolve_device("auto") == want
 
 
 def test_train_writes_its_bundle_to_the_run_dir_and_promote_checks_it_before_any_export():
@@ -318,4 +359,15 @@ def test_missing_real_cache_stops_the_run_before_any_step(runs, monkeypatch, cap
     out = capsys.readouterr().out
     assert "cannot run build_wide_skills: wide_skills_2013-14.json is a proxy doc" in out
     assert "nothing was run" in out
+    assert not runs.exists()
+
+
+def test_a_dry_run_runs_the_read_only_preflights_too(runs, monkeypatch, capsys):
+    """--dry-run printed the plan and exited 0 past a missing cache (P12)."""
+    monkeypatch.setattr(ra, "subprocess", Forbidden())
+    monkeypatch.setattr(ra.real_caches, "wide_skills", lambda: "wide_skills_2013-14.json is a proxy doc")
+    assert ra.main(["--dry-run", "--refresh-context", "--stage", "matrix"]) == 1
+    out = capsys.readouterr().out
+    assert "dry run:" in out and "cannot run build_wide_skills: wide_skills_2013-14.json is a proxy doc" in out
+    assert "a real run would stop here" in out
     assert not runs.exists()

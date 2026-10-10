@@ -93,8 +93,22 @@ fits every row, so its numbers are in-sample and promote.py refuses it,
 select run of the same recipe and seed that measured it. This script does
 not pass one: such a run stops at the promote step, and
 `promote.py --run <its run dir> --selection-run <the select run dir>`
-followed by `--stage export` ships it. The climb measured on cuda; pass
---device cuda.
+followed by `--stage export` ships it.
+
+Device (2026-10-10). --device auto (the default) resolves to cuda when the
+interpreter that runs the steps sees a GPU, else cpu, and the train step is
+always passed the resolved value; --device cpu|cuda forces one. Until then
+--device was passed only when given, so a default rebuild trained on
+train_mtnn's own default, cpu, with the 4080 idle, while the climb measured
+on cuda. train_mtnn's default is still cpu: only this script resolves.
+The probe is a one-line subprocess (`import torch;
+torch.cuda.is_available()`), so the orchestrator never holds torch in memory
+next to the train step, and it runs only when the train step is selected.
+
+--dry-run runs the same read-only preflights as a real run (real_caches:
+is each selected step's real input there and not synthetic?) and exits 1
+when one would block, as the real run would; it used to print the plan and
+exit 0 past a missing cache.
 
 Selection does not happen here. Recipes are chosen in the herdmux climb
 (gpu/climb.py: paired seed panels against a measured baseline); this script
@@ -112,8 +126,8 @@ Usage:
   python pipeline/rebuild_all.py --list
   python pipeline/rebuild_all.py --dry-run
   python pipeline/rebuild_all.py --stage matrix
-  python pipeline/rebuild_all.py --device cuda          # ship: train, promote, export, verify
-  python pipeline/rebuild_all.py --device cuda --promote-force "single-seed run, reviewed by hand"
+  python pipeline/rebuild_all.py                        # ship: train (auto device), promote, export, verify
+  python pipeline/rebuild_all.py --promote-force "single-seed run, reviewed by hand"
   python pipeline/rebuild_all.py --v6 --device cuda     # stops at promote: needs --selection-run
   python pipeline/rebuild_all.py --stage export        # re-export the promoted bundle
   python pipeline/rebuild_all.py --from train_mtnn --to build_scoring_lite
@@ -151,6 +165,24 @@ V6_RECIPE = "legacy-v6-refit"
 # (ship: 40) stand. EPOCHS_DEFAULT = 80 used to be passed on every run, which
 # would override ship's 40; the legacy refits carry their 80 themselves.
 EPOCHS_QUICK, EPOCHS_FULL = 40, 150
+
+DEVICES = ("auto", "cpu", "cuda")
+_CUDA_PROBE = "import torch, sys; sys.stdout.write('cuda' if torch.cuda.is_available() else 'cpu')"
+
+
+def resolve_device(spec: str, python: str = sys.executable) -> str:
+    """cpu or cuda for --device spec: auto asks the interpreter that runs the steps whether it sees a GPU.
+
+    A probe that fails (no torch, a broken CUDA install, a hang past 120 s)
+    resolves to cpu, the device train_mtnn would have used anyway.
+    """
+    if spec != "auto":
+        return spec
+    try:
+        out = subprocess.run([python, "-c", _CUDA_PROBE], capture_output=True, text=True, timeout=120)
+    except (OSError, subprocess.SubprocessError):
+        return "cpu"
+    return "cuda" if out.returncode == 0 and out.stdout.strip() == "cuda" else "cpu"
 
 
 @dataclass(frozen=True)
@@ -262,8 +294,8 @@ def build_plan(
             train += [flag, str(value)]
     train += ["--run-dir", run_dir]
     if device is not None:
-        # Only when asked. train_mtnn's own default (cpu) is what this script
-        # has always run with; the orchestrator does not change it.
+        # main() always passes the device resolve_device() picked; a plan
+        # built without one leaves train_mtnn on its own default (cpu).
         train += ["--device", device]
     bundle = tuple(f"{run_dir}/{name}" for name in BUNDLE_FILES.values())
     plan.append(
@@ -457,7 +489,12 @@ def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
     )
     ap.add_argument("--batch", type=int, default=None, help="passed to train_mtnn only when given (its default: 512)")
     ap.add_argument("--seed", type=int, default=None, help="passed to train_mtnn only when given (its default: 7)")
-    ap.add_argument("--device", default=None, help="passed to train_mtnn only when given")
+    ap.add_argument(
+        "--device",
+        choices=DEVICES,
+        default="auto",
+        help="train_mtnn's device: auto (default) = cuda when this interpreter sees a GPU, else cpu",
+    )
     ap.add_argument(
         "--promote-force",
         metavar="REASON",
@@ -495,27 +532,43 @@ def main(argv: Sequence[str] | None = None) -> int:
         "epochs": epochs,
         "batch": args.batch,
         "seed": args.seed,
-        "device": args.device,
+        # --list shows the spec; the others resolve it below.
+        "device": args.device if args.device != "auto" else "<auto: cuda if available, else cpu>",
         "refresh_context": args.refresh_context,
         "promote_force": args.promote_force,
     }
     sel = {"stages": args.stage, "start": args.start, "stop": args.stop, "only": args.only}
 
-    if args.list or args.dry_run:
+    if args.list:
         plan = build_plan(**opts)
-        steps = select(plan, **sel, all_steps=build_plan(**{**opts, "refresh_context": True}))
-        if args.list:
-            print_list(plan, steps, args.refresh_context)
-        else:
-            print(f"dry run: {len(steps)} step(s), nothing will be run or written")
-            for s in steps:
-                print(f"  {s.stage}/{s.name}: {' '.join(s.command())}")
+        print_list(
+            plan, select(plan, **sel, all_steps=build_plan(**{**opts, "refresh_context": True})), args.refresh_context
+        )
         return 0
 
-    # Refuse before anything runs, so a missing or synthetic cache cannot
-    # leave half the context block rebuilt.
+    # The device the train step gets, probed only when it will run.
     probe = select(build_plan(**opts), **sel, all_steps=build_plan(**{**opts, "refresh_context": True}))
+    if any(s.name == "train_mtnn" for s in probe):
+        opts["device"] = resolve_device(args.device)
+    else:
+        opts["device"] = None if args.device == "auto" else args.device
+    probe = select(build_plan(**opts), **sel, all_steps=build_plan(**{**opts, "refresh_context": True}))
+
+    # Refuse before anything runs, so a missing or synthetic cache cannot
+    # leave half the context block rebuilt. Read-only, so a dry run checks too.
     blocked = [(s.name, why) for s in probe if s.preflight and (why := s.preflight())]
+
+    if args.dry_run:
+        print(f"dry run: {len(probe)} step(s), nothing will be run or written")
+        for s in probe:
+            print(f"  {s.stage}/{s.name}: {' '.join(s.command())}")
+        for name, why in blocked:
+            print(f"cannot run {name}: {why}")
+        if blocked:
+            print(f"\na real run would stop here: {len(blocked)} step(s) lack a real input")
+            return 1
+        return 0
+
     if blocked:
         for name, why in blocked:
             print(f"cannot run {name}: {why}")
@@ -533,7 +586,7 @@ def main(argv: Sequence[str] | None = None) -> int:
         "run_id": run_id,
         "started": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
         "argv": ["pipeline/rebuild_all.py", *(sys.argv[1:] if argv is None else argv)],
-        "options": {**opts, **sel},
+        "options": {**opts, **sel, "device_requested": args.device},
         "recipe": {"name": recipe.name, "path": display_path(recipe.path, ROOT), "sha256": recipe.sha256},
         "python": sys.executable,
         "git": git_state(ROOT),
