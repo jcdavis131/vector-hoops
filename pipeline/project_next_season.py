@@ -73,8 +73,18 @@ def main() -> None:
     skill_names = [sk["key"] for sk in skills_doc.get("skills", [])]
     grade_rows = skills_doc.get("grades") or []
 
+    # archetype_assignments.json is optional (the archetype names then come
+    # from the head's argmax). Without it this indexed an empty list by row
+    # id and died with IndexError on the first charted player (found by
+    # tests/test_e2e_smoke.py, whose slice carries no assignments file). With
+    # it, its rows are bound by index, so it has to have one per vectors row.
     assign_doc = json.loads(ASSIGN.read_text(encoding="utf-8")) if ASSIGN.exists() else {}
     assign_rows = assign_doc.get("assignments") or []
+    if ASSIGN.exists() and len(assign_rows) != len(vec["players"]):
+        raise SystemExit(
+            f"{ASSIGN.name} has {len(assign_rows)} assignments for {len(vec['players'])} vectors.json rows; "
+            "rebuild it (pipeline/archetype_time.py) before projecting"
+        )
     id_by_key: dict[str, int] = {}
     for p in vec["players"]:
         id_by_key[f"{p['name']}|{p['season']}"] = int(p["id"])
@@ -98,7 +108,7 @@ def main() -> None:
         arch_idx = int(np.argmax(arch_logits[i]))
         game_arch = cluster_names[arch_idx] if arch_idx < len(cluster_names) else str(arch_idx)
         obs_key = f"{name}|{from_season}"
-        assign = assign_rows[id_by_key[obs_key]] if obs_key in id_by_key else {}
+        assign = assign_rows[id_by_key[obs_key]] if assign_rows and obs_key in id_by_key else {}
         mtnn_arch = assign.get("mtnnGlobalName") or assign.get("eraNativeName") or game_arch
 
         obs = {}
