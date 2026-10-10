@@ -33,6 +33,9 @@ Cleaning applied (all guaranteed, audited by end-of-build assertions):
     pipeline/eligibility.py) — drops small-sample per-100 outliers
   - dedupe on (PLAYER_ID, season) keeping the row with most minutes
   - NaN/None -> season mean (z = 0) with per-feature missing masks
+  - a percentage with no attempt behind it (0/0) is missing, not 0.0 or the
+    prior; so are assisted/unassisted shares with no make
+    (undefined_percentages)
   - empirical-Bayes shrinkage of FG3_PCT / FT_PCT / FG_PCT toward the
     season mean, weighted by attempts (kills 1-attempt 100% noise)
   - z-clip at +/-4 sigma
@@ -947,6 +950,118 @@ def fetch_bbref_contracts(offline: bool) -> dict[tuple[str, str], float]:
 # ---------------------------------------------------------------------------
 
 
+# (percentage, its per-100 attempt rate). A percentage of no attempts is 0/0.
+PCT_ATTEMPTS = (("FG3_PCT", "FG3A"), ("FT_PCT", "FTA"), ("FG_PCT", "FGA"))
+# Shares of a player's makes that were assisted / unassisted. They sum to 1
+# when he made one; the source writes 0.0 for both when he made none.
+SHARE_PAIRS = (("PCT_AST_3PM", "PCT_UAST_3PM"), ("PCT_AST_2PM", "PCT_UAST_2PM"), ("PCT_AST_FGM", "PCT_UAST_FGM"))
+
+
+def gamelog_attempts(season: str) -> dict[int, dict[str, float]]:
+    """Regular-season attempt counts and minutes by PLAYER_ID from the season's game logs ({} without them)."""
+    p = DATA_DIR / f"gamelogs_{season}.jsonl"
+    if not p.exists():
+        return {}
+    out: dict[int, dict[str, float]] = {}
+    for g in _gamelog_rows(p):
+        if not is_regular_season(g.get("GAME_ID")) or g.get("PLAYER_ID") is None:
+            continue
+        c = out.setdefault(int(g["PLAYER_ID"]), {"FGA": 0, "FG3A": 0, "FTA": 0, "MIN": 0.0})
+        for k in ("FGA", "FG3A", "FTA"):
+            c[k] += g.get(k) or 0
+        c["MIN"] += max(0.0, g.get("MIN") or 0.0)
+    return out
+
+
+def fewest_attempts(p: float) -> int:
+    """The fewest attempts a percentage rounded to 3 decimals allows: 1.0 -> 1, 0.5 -> 2, 0.333 -> 3."""
+    for n in range(1, 1001):
+        if round(max(1, round(p * n)) / n, 3) == round(p, 3):
+            return n
+    return 1000
+
+
+def undefined_percentages(rows: list[dict]) -> dict[str, dict[str, int]]:
+    """Set a percentage with no attempt behind it to None (mask 0), before shrinkage [final#8].
+
+    The per-100 attempt rate (dashbase, Per100Possessions) is rounded half-up
+    to 0.1, so a rate of 0.0 means fewer than possessions / 2000 attempts, not
+    none: on the FA1 rows, 50 of 252 game-log-era rows with FG3A/100 0.0 and
+    FG3_PCT 0.0 had a real 0-for-1 or 0-for-2 (smallest possession count with
+    a recorded attempt 2,050), and 34 rows at FG3A/100 0.0 carry a non-zero
+    FG3_PCT (1.0 x24, 0.5 x9, 0.333 x1). It used to stay mask 1 at its 0.0, and
+    the a = 0 shrinkage below turned it into the season prior: 1,649 FG3_PCT
+    and 56 FT_PCT values nobody measured. A percentage is measured when the
+    source proves an attempt:
+
+      rate > 0        a measured percentage (0.0 is 0 of n), weighted by the rate
+      percentage > 0  attempts proven; the shrinkage weight comes from the game
+                      logs' real count, else the fewest attempts the percentage
+                      allows (fewest_attempts), over real possessions (`_poss`)
+      game-log count  n > 0: a measured 0 of n, weighted by n; n == 0: no
+                      attempt, undefined
+      otherwise       undecided (rate 0.0, percentage 0.0, no count): None. The
+                      value would be 0 of at most 2 (possessions < 5,600) shrunk
+                      to within 1% of the prior, i.e. the prior, which nobody
+                      measured.
+
+    A proven-attempt row with no real possessions to weight it is also None
+    (its rounded rate would weight it 0, the prior). The two assisted/unassisted
+    shares of a pair are None when both are 0 (no make), and
+    CATCH_SHOOT_FG3_PCT 0.0 is None where FG3_PCT has no attempt behind it
+    (the tracking cache carries no catch-and-shoot 3PA, so a 0.0 for a player
+    who did take threes stays as sourced). Every row with attempts keeps its
+    value; `_att_n` records the count a rate-0.0 row is weighted by.
+
+    bbref_per_game_* and bbref_advanced_* hold no attempt counts (pts, trb,
+    ast, mp, games; per, usg, ws, bpm), so before 2015-16 only the rate and
+    the percentage decide. Returns the counts, per column and reason.
+    """
+    tally: dict[str, dict[str, int]] = {}
+    no_three: set[int] = set()
+    for pct, att in PCT_ATTEMPTS:
+        t = tally.setdefault(pct, {})
+        for i, r in enumerate(rows):
+            p, a = r.get(pct), r.get(att)
+            if p is None or a is None or a > 0:
+                continue
+            counts = r.get("_gl_att") or {}
+            n = counts.get(att)
+            if p > 0:
+                n = n if n else fewest_attempts(p)
+                why = "proven by the percentage"
+            elif n:
+                why = "proven by the game logs"
+            else:
+                why = "no attempt (game logs)" if n == 0 else "undecided (rate 0.0, no count)"
+                n = None
+                if pct == "FG3_PCT":
+                    no_three.add(i)
+            if n is not None and not r.get("_poss"):
+                why, n = "attempts but no possessions to weight them", None
+            if n is None:
+                r[pct] = None
+            else:
+                r.setdefault("_att_n", {})[att] = n
+            t[why] = t.get(why, 0) + 1
+    for pair in SHARE_PAIRS:
+        n_null = 0
+        for r in rows:
+            vals = [r.get(c) for c in pair]
+            if all(v is not None and v == 0 for v in vals):
+                for c in pair:
+                    r[c] = None
+                n_null += 1
+        tally["/".join(pair)] = {"no make": n_null}
+    n_cs = 0
+    for i in no_three:
+        if rows[i].get("CATCH_SHOOT_FG3_PCT") == 0:
+            rows[i]["CATCH_SHOOT_FG3_PCT"] = None
+            n_cs += 1
+    tally["CATCH_SHOOT_FG3_PCT"] = {"no three-point attempt": n_cs}
+    return tally
+
+
 def shrink_percentages(rows: list[dict], *, by_count: bool = False) -> None:
     """Empirical-Bayes: shrink noisy percentages toward the season mean.
 
@@ -962,12 +1077,14 @@ def shrink_percentages(rows: list[dict], *, by_count: bool = False) -> None:
     with the median number of possessions keeps today's weight, a 100-minute
     sample is pulled hard and a full season barely. A row with no real
     minutes keeps the per-100 weight.
+
+    Run undefined_percentages first: the prior mu is the mean over rows with
+    attempts only (the 0.0 placeholders of 0/0 used to pull it down for every
+    row of the season), and a row whose rate was rounded to 0.0 is weighted by
+    its proven count `_att_n` (per-100: 100 x count / `_poss`), not by 0.
     """
-    for pct, att, m in (
-        ("FG3_PCT", "FG3A", 6.0),
-        ("FT_PCT", "FTA", 6.0),
-        ("FG_PCT", "FGA", 6.0),
-    ):
+    for pct, att in PCT_ATTEMPTS:
+        m = 6.0
         vals = [r[pct] for r in rows if r.get(pct) is not None]
         mu = sum(vals) / max(1, len(vals))
         poss: dict[int, float] = {}
@@ -982,11 +1099,13 @@ def shrink_percentages(rows: list[dict], *, by_count: bool = False) -> None:
             p, a = r.get(pct), r.get(att)
             if p is None or a is None:
                 continue
+            n = (r.get("_att_n") or {}).get(att) if a == 0 else None
             if i in poss and m_count:
-                a_n = a * poss[i] / 100.0
+                a_n = n if n is not None else a * poss[i] / 100.0
                 r[pct] = (p * a_n + mu * m_count) / (a_n + m_count)
             else:
-                r[pct] = (p * a + mu * m) / (a + m)
+                a_w = 100.0 * n / r["_poss"] if n is not None else a
+                r[pct] = (p * a_w + mu * m) / (a_w + m)
 
 
 def dedupe_rows(rows: list[dict]) -> list[dict]:
@@ -1149,6 +1268,20 @@ def main() -> None:
                 bbref_pids.setdefault(bbref_key(str(r.get("PLAYER_NAME") or "")), set()).add(r["PLAYER_ID"])
             shared_bbref = {k for k, v in bbref_pids.items() if len(v) > 1}
 
+        # Attempt evidence for undefined_percentages [final#8]: real counts from
+        # the game logs (2015-16 on), and real minutes (game logs, else BBRef
+        # per-game by name, as load_real_minutes) for the possessions that
+        # weight a percentage whose per-100 rate the source rounded to 0.0.
+        gl_att = gamelog_attempts(season)
+        bb_min: dict[str, tuple[float, int]] = {}
+        shared_bb: set[str] = set()
+        if not gl_att:
+            _, bb_min, _ = load_real_minutes(season)
+            bb_pids: dict[str, set] = {}
+            for r in base:
+                bb_pids.setdefault(bbref_key(str(r.get("PLAYER_NAME") or "")), set()).add(r["PLAYER_ID"])
+            shared_bb = {k for k, v in bb_pids.items() if len(v) > 1}
+
         n_kept = 0
         for r in base:
             gp = r.get("GP") or 0
@@ -1215,6 +1348,16 @@ def main() -> None:
             key = (nkey, season)
             sal = None if ambiguous else salary_hist.get(key, salary_bbref.get(key))
             row["SALARY_LOG"] = math.log10(sal) if sal and sal > 0 else None
+            counts = gl_att.get(int(r["PLAYER_ID"]))
+            if counts is not None:
+                row["_gl_att"] = counts
+                real_min = counts["MIN"]
+            else:
+                nm = str(r.get("PLAYER_NAME") or "")
+                mb = None if bbref_key(nm) in shared_bb else bb_min.get(bbref_lookup_key(nm))
+                real_min = mb[0] * mb[1] if mb else None
+            if real_min and row.get("PACE"):
+                row["_poss"] = real_min * row["PACE"] / 48.0
             all_rows.append(row)
             n_kept += 1
         fetched.append(season)
@@ -1255,7 +1398,12 @@ def main() -> None:
         )
     all_rows = dedupe_rows(all_rows)
 
-    # per-season percentage shrinkage
+    # per-season percentage shrinkage, after the percentages with no attempt
+    # behind them are set to None (mask 0) [final#8]
+    undefined = undefined_percentages(all_rows)
+    print("percentages with no attempt behind them are missing (rate 0.0 rows; shares and C&S 3P% with no make):")
+    for col, why in undefined.items():
+        print(f"  {col}: " + ", ".join(f"{k} {v}" for k, v in sorted(why.items())))
     by_season: dict[str, list[dict]] = {}
     for r in all_rows:
         by_season.setdefault(r["season"], []).append(r)
@@ -1381,6 +1529,13 @@ def main() -> None:
         if birthYear:
             p["birthYear"] = birthYear
             p["dob"] = f"{birthYear}-01-01"
+        # The game dims nobody measured for this row (v holds 0, the season
+        # mean, there): today FG3_PCT / FT_PCT with no attempt behind them
+        # [final#8]. Only on rows that have one; build_skills masks the skills
+        # that read them.
+        vm = [j for j, c in enumerate(game_cols) if not mask[i, c]]
+        if vm:
+            p["vm"] = vm
         if mask[i, sal_col]:
             p["sal"] = round(float(Z[i, sal_col]), 3)  # salary z (era-honest)
         if "_min_per100" in r:

@@ -8,7 +8,11 @@ contract in assets/vectors.json and emits
   assets/skill_probe.json       12x14 composite weights + per-skill pooled
                                 quantile knots so the client can tag ANY
                                 14-dim era-z vector (e.g. the fused chimera)
-  pipeline/data/skill_labels.npz  training targets for train_mtnn.py skill towers
+  pipeline/data/skill_labels.npz  training targets for train_mtnn.py skill towers,
+                                with a per-skill `mask`: 0 where the composite
+                                reads a game dim vectors.json marks unmeasured
+                                (`vm`), and those skills ranked among the
+                                measured rows only
 
 Method (docs/SKILLS_LENS.md): each skill is a fixed linear composite of
 era-z features; the composite is converted to a percentile grade 0-99
@@ -151,6 +155,43 @@ def season_percentiles(scores: np.ndarray, volume: np.ndarray, season_idx: dict[
     return grades
 
 
+def unmeasured_skills(players: list[dict], features: list[str]) -> np.ndarray:
+    """[n, n_skills] True where a skill's composite reads a game dim the row's `vm` lists as unmeasured.
+
+    build_vectors writes `vm` (the indices of the game dims nobody measured,
+    whose v is the season mean 0) on rows that have one: today FG3_PCT or
+    FT_PCT with no attempt behind it [final#8]. A file without `vm` masks
+    nothing, as before.
+    """
+    W = weight_matrix(features)
+    out = np.zeros((len(players), len(SKILLS)), dtype=bool)
+    for i, p in enumerate(players):
+        vm = p.get("vm")
+        if vm:
+            out[i] = (W[:, vm] != 0).any(axis=1)
+    return out
+
+
+def label_grades(
+    scores: np.ndarray,
+    volume: np.ndarray,
+    season_idx: dict[str, np.ndarray],
+    grades: np.ndarray,
+    unmeasured: np.ndarray,
+) -> np.ndarray:
+    """The training targets: a skill read from an unmeasured input is 0 (mask 0), and the
+    rest of that skill's season is ranked among the measured rows only, as
+    build_wide_skills grades its skills. A skill with no unmeasured row keeps `grades`."""
+    out = grades.copy()
+    for j in np.flatnonzero(unmeasured.any(axis=0)):
+        out[:, j] = 0
+        for rows in season_idx.values():
+            r = rows[~unmeasured[rows, j]]
+            if len(r):
+                out[r, j] = season_percentiles(scores[r][:, [j]], volume[r], {"": np.arange(len(r))})[:, 0]
+    return out
+
+
 def pooled_quantiles(scores: np.ndarray) -> list[list[float]]:
     """Per-skill quantile knots over all pooled rows (inputs are era-z,
     so pooling across seasons is legitimate); client interpolates a grade
@@ -230,17 +271,33 @@ def main() -> None:
     }
     PROBE_OUT.write_text(json.dumps(probe_doc, separators=(",", ":")), encoding="utf-8")
 
+    # skills.json above keeps one int grade per cell (the front end sums
+    # grades[12]), so a skill read from an unmeasured input is still ranked
+    # there with that input at the season mean, as before. The training
+    # targets follow the matrix's mask instead.
+    unmeasured = unmeasured_skills(players, features)
+    labels = label_grades(scores, volume, season_idx, grades, unmeasured)
     LABELS_OUT.parent.mkdir(parents=True, exist_ok=True)
     np.savez_compressed(
         LABELS_OUT,
-        grades=(grades / 100.0).astype(np.float32),
+        grades=(labels / 100.0).astype(np.float32),
         name=names,
         season=seasons,
         keys=np.array(keys),
+        # Per skill: 1 where every input of its composite was measured.
+        # train_mtnn._join_skill_npz gives a 0 cell no weight in the loss.
+        mask=(~unmeasured).astype(np.float32),
     )
 
     n_badges = int((grades >= BADGE_GRADE).sum())
     print(f"{n} player-seasons x {len(SKILLS)} skills")
+    for j in np.flatnonzero(unmeasured.any(axis=0)):
+        meas = ~unmeasured[:, j]
+        moved = int((labels[meas, j] != grades[meas, j]).sum())
+        print(
+            f"  {keys[j]}: {int(unmeasured[:, j].sum())} rows read an unmeasured input (label mask 0); "
+            f"{moved} of {int(meas.sum())} measured labels re-ranked among the measured rows"
+        )
     print(f"badges at >= {BADGE_GRADE}: {n_badges} ({n_badges / n:.2f} per player-season)")
     for sk, col in zip(SKILLS, grades.T, strict=False):
         top = names[np.argsort(-scores[:, keys.index(sk["key"])])[:3]]

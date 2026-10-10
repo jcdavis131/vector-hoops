@@ -214,6 +214,13 @@ def main() -> None:
     # combine the box-score contract (3PA, 3P%, BLK) with tracking.
     fidx = {f: k for k, f in enumerate(vec["features"])}
     Vcov = np.array([vec["players"][i]["v"] for i in covered_idx], dtype=np.float64)
+    # A game dim build_vectors marks unmeasured (`vm`: FG3_PCT with no
+    # three-point attempt behind it [final#8]) holds the season mean 0 in v;
+    # here it is NaN, so the skill that reads it is ungraded, not graded at
+    # an invented average.
+    for k, i in enumerate(covered_idx):
+        for j in vec["players"][i].get("vm") or ():
+            Vcov[k, j] = np.nan
 
     def col(key):
         # None (not measured) is NaN, never 0.0.
