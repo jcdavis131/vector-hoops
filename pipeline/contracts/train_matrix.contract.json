@@ -5,7 +5,8 @@
     "Generated 2026-10-09 from the matrix the HEAD prepare chain builds (build_vectors.py --offline; enrich_vectors.py; integrate_context.py, the herdmux climb's prepare for vector-hoops): train_matrix.npz sha256 0f8e5b87d9e809de, feature_manifest.json e9769268da5a5691.",
     "The promoted matrix on the training box is NOT this one (pipeline/data/train_matrix.npz dated 2026-08-04, sha256 231b07f1df283205). Checked against this contract it fails on column order: 36 columns (the PED_, PO_, HON_, INJ_ and SYSTEM_ blocks) sit at different indices.",
     "Its honors family is also 0.969 observed against 0.087 here [features#2]. The contract only flags drops, so that difference is not a violation in this direction, but a rebuild from HEAD gives the honors tower about a tenth of the observed cells the promoted matrix has. Decide the honors semantics before re-anchoring on a rebuilt matrix.",
-    "Re-recorded 2026-10-10 (P11, identity and joins) from the prepare chain plus every side builder on the built vectors.json (build_honors, build_wide_skills, build_min_gp --offline, build_availability, roster_context, build_career_context, form_context, competition_context, build_pedigree, build_playoffs, then integrate_context): train_matrix.npz sha256 68a0415ffa8a5a1d, feature_manifest.json f1c90cdca75df174. The 3-step climb prepare alone reads whatever side files pipeline/data holds, so it builds this matrix only after those builders have run (rebuild_all --refresh-context)."
+    "Re-recorded 2026-10-10 (P11, identity and joins) from the prepare chain plus every side builder on the built vectors.json (build_honors, build_wide_skills, build_min_gp --offline, build_availability, roster_context, build_career_context, form_context, competition_context, build_pedigree, build_playoffs, then integrate_context): train_matrix.npz sha256 68a0415ffa8a5a1d, feature_manifest.json f1c90cdca75df174. The 3-step climb prepare alone reads whatever side files pipeline/data holds, so it builds this matrix only after those builders have run (rebuild_all --refresh-context).",
+    "Re-recorded 2026-10-10 (FA1: 2015-16 hustle restoration reverted, pick 0 is undrafted, b6806210) from the prepare chain plus build_career_context on the P11 side files: train_matrix.npz sha256 b0bc7e749c7dcbca, feature_manifest.json f1c90cdca75df174. Against the P11 matrix only DRAFT_NUMBER, DRAFT_UNDRAFTED and DRAFT_SLOT_Z moved (12 rows lose a pick of 0)."
   ],
   "definitions": {
     "family_coverage": "mean of mask over the family's columns (a share of cells, not of rows)",
@@ -17,7 +18,7 @@
   },
   "generated": {
     "by": "pipeline/stage_contract.py --accept-drift",
-    "git": "9f056a79",
+    "git": "b6806210",
     "git_dirty": false,
     "manifest_source": "integrate_context.py (v4 context merge)"
   },
@@ -25,7 +26,7 @@
   "cols": 143,
   "keys_sha256": "d1b3d5cb7e37afcf726532d592c5cf4125221a4c811b859175b79f9a998da72e",
   "columns_sha256": "3c44edb7053e7a5449cd7505de475d02e39522b54b6a7c2033d9fbccc8560950",
-  "values_sha256": "51ecc8ca01967c7e67e50b952f035feecea1c7218c6770a50ab47bb1c3a23005",
+  "values_sha256": "145575ae74729ac773d652c892c46daf7140e188befa4958dee0ce93776b584b",
   "columns": [
     "PTS",
     "AST",
@@ -317,8 +318,8 @@
     "INJ_MISS_SPELLS": "injury"
   },
   "family_coverage": {
-    "bio": 0.966435,
-    "career": 0.692748,
+    "bio": 0.96625,
+    "career": 0.692671,
     "competition": 0.397501,
     "defense": 0.572035,
     "efficiency": 1.0,
@@ -507,8 +508,8 @@
       "zero": 0.0
     },
     "DRAFT_NUMBER": {
-      "observed": 0.838269,
-      "zero": 0.161731
+      "observed": 0.837344,
+      "zero": 0.162656
     },
     "PLAYER_HEIGHT_INCHES": {
       "observed": 0.997146,
@@ -687,8 +688,8 @@
       "zero": 0.602499
     },
     "DRAFT_SLOT_Z": {
-      "observed": 0.838269,
-      "zero": 0.161731
+      "observed": 0.837344,
+      "zero": 0.162656
     },
     "CAREER_SLOPE_3Y": {
       "observed": 0.812818,
