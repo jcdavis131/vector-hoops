@@ -30,6 +30,13 @@ if ! "$PY" -c "import nba_api" 2>/dev/null; then
 else
   echo "   nba_api present"
 fi
+if ! "$PY" -c "import pytest" 2>/dev/null; then
+  # The gate scripts below (pipeline/test_*.py) run through pytest now.
+  echo "   pytest not found — installing (the gate scripts run through it)"
+  "$PY" -m pip install --quiet pytest
+else
+  echo "   pytest present"
+fi
 
 echo "== 2/4  fetch full draft history (one stats.nba.com call)"
 # On a 429/block the fetcher backs off and retries; if it ultimately fails
@@ -56,11 +63,12 @@ To ship it (review the cache first, then run):
 That lands on PR #1 and lights up the pedigree family for ~all players.
 The weekly refresh (update_dataset.py) will keep it current from here.
 
-Optional — regenerate MTNN metrics with real pedigree coverage:
+Optional — rebuild the matrix with real pedigree coverage and measure it
+(docs/PIPELINE.md; bootstrap_train_matrix.py builds a different, 14-column
+matrix and is not the path the model is measured on):
 
-    python pipeline/bootstrap_train_matrix.py
-    python pipeline/build_pedigree.py
-    python pipeline/integrate_context.py
-    python pipeline/train_mtnn.py --epochs 40
+    python pipeline/rebuild_all.py --refresh-context --stage matrix
+    python pipeline/stage_contract.py --accept-drift   # review the drift first
+    python pipeline/train_mtnn.py --recipe measure --device cuda --seed 5
     # -> pipeline/data/mtnn_report.json  (pedigree_expectation R2/MAE, full coverage)
 NEXT

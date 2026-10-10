@@ -26,6 +26,13 @@ if ! "$PY" -c "import nba_api" 2>/dev/null; then
 else
   echo "   nba_api present"
 fi
+if ! "$PY" -c "import pytest" 2>/dev/null; then
+  # The gate scripts below (pipeline/test_*.py) run through pytest now.
+  echo "   pytest not found — installing (the gate scripts run through it)"
+  "$PY" -m pip install --quiet pytest
+else
+  echo "   pytest present"
+fi
 
 echo "== 2/5  fetch playoff + regular-season splits (resumes from cache)"
 # Two GETs/season + one team pull; on a 429 the fetcher backs off and

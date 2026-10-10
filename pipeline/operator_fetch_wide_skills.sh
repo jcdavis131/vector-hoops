@@ -23,6 +23,13 @@ if ! "$PY" -c "import curl_cffi" 2>/dev/null; then
 else
   echo "   curl_cffi present"
 fi
+if ! "$PY" -c "import pytest" 2>/dev/null; then
+  # The gate scripts below (pipeline/test_*.py) run through pytest now.
+  echo "   pytest not found — installing (the gate scripts run through it)"
+  "$PY" -m pip install --quiet pytest
+else
+  echo "   pytest present"
+fi
 
 echo "== 2/4  fetch synergy + hustle + tracking (2015-16+, resumes from cache)"
 "$PY" pipeline/fetch_wide_skills.py
