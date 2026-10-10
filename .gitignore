@@ -29,3 +29,9 @@ assets/mtnn_training/
 # pytest's cache. The gate scripts now run through pytest, so the first
 # `python pipeline/test_X.py` on a fresh checkout would otherwise dirty the tree.
 .pytest_cache/
+
+# Fetch records (pipeline/ingest.py) are provenance: commit each one with the
+# cache file it describes. Nothing above matches them; this keeps a broader
+# pattern added later from hiding them.
+!pipeline/cache/_fetch_meta/
+!pipeline/cache/_fetch_meta/*.json

@@ -72,6 +72,24 @@ def test_fetch_record_sits_where_no_reader_glob_finds_it(tmp_path):
     assert sorted(x.name for x in tmp_path.glob("*.json")) == ["bio_2026-27.json"]
 
 
+@pytest.mark.parametrize("raw", [b'{"fetched_at": "\xff\xfe"}', b"\xef\xbb\xbf{", b"not json", b"[1, 2]"])
+def test_an_unreadable_fetch_record_is_no_record(tmp_path, raw):
+    """A record that is not UTF-8 raised UnicodeDecodeError out of read_fetch_record (P12);
+    every unreadable record reads as none, which makes a live season stale."""
+    p = ingest.write_cache(tmp_path / "bio_2026-27.json", [{"PLAYER_ID": 1}], source="x", season="2026-27")
+    ingest.meta_path(p).write_bytes(raw)
+    assert ingest.read_fetch_record(p) is None
+    assert ingest.cache_age_hours(p) is None
+    assert not ingest.cache_is_fresh(p, "2026-27", today=DURING)
+
+
+def test_a_fetch_record_that_is_a_directory_is_no_record(tmp_path):
+    p = tmp_path / "bio_2026-27.json"
+    p.write_text("[1]", encoding="utf-8")
+    ingest.meta_path(p).mkdir(parents=True)  # OSError on read, not a crash
+    assert ingest.read_fetch_record(p) is None
+
+
 def test_require_columns_names_every_missing_column():
     ingest.require_columns(["A", "B"], ["A"], "x")
     with pytest.raises(ingest.MissingColumnsError, match=r"\['D_FG_PCT', 'Z'\]"):

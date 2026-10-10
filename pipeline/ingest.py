@@ -38,6 +38,16 @@ their own prefixes (bio_*.json, tracking_*.json, honors_award_*.json), and a
 sibling like bio_2025-26.json.meta.json would match bio_*.json. The cache file
 itself keeps exactly the format its readers expect; no key is added to it.
 
+Fetch records are committed with their caches (decided 2026-10-10).
+pipeline/cache/ is tracked: it is the input the offline climb and every
+--offline build read, so where and when each file was fetched is part of the
+data's provenance, and a cache committed without its record reads as
+unrecorded (stale, if its season is still being played). Commit
+pipeline/cache/_fetch_meta/<file>.json in the same commit as the cache file
+it describes. .gitignore says so and ignores nothing under it. None exist
+yet: no cache on this branch has been refetched since write_cache started
+writing them.
+
 Stdlib plus artifact_io (numpy at import), so every fetcher can use it.
 """
 
@@ -179,8 +189,12 @@ def read_fetch_record(path: str | os.PathLike[str]) -> dict[str, Any] | None:
         return None
     try:
         rec = json.loads(m.read_text(encoding="utf-8"))
-    except json.JSONDecodeError:
-        return None  # treated as "no record", which makes a non-final season stale
+    except (OSError, UnicodeDecodeError, json.JSONDecodeError):
+        # Treated as "no record", which makes a non-final season stale. Bytes
+        # that are not UTF-8 (UnicodeDecodeError) and a path that cannot be
+        # read (OSError: a directory, a lock) used to escape and crash the
+        # fetcher's freshness check instead (P12).
+        return None
     return rec if isinstance(rec, dict) else None
 
 
