@@ -23,7 +23,6 @@ OUT = DATA_DIR / "feature_stress.json"
 MTNN_REPORT = DATA_DIR / "mtnn_report.json"
 TOWER_ABLATION = DATA_DIR / "tower_ablation.json"
 
-GATE_RECALL_DROP = 0.01
 GATE_MISSINGNESS_DROP = 0.03
 GATE_PURITY = 0.63
 GATE_MTTN_VS_RAW = 0.05
@@ -119,12 +118,17 @@ def ablation_summary() -> dict | None:
         if name == "full" or baseline is None:
             continue
         dt = r["test_recall"] - baseline
+        # tower_ablation decides on CQS paired by seed (its "verdict"). A file
+        # without one is a single-seed run from before 2026-10-09, where a
+        # 0.01 test-recall drop is a third of the seed sd (0.031): no verdict.
+        verdict = r.get("verdict")
         drops.append(
             {
                 "config": name,
                 "exclude": r.get("exclude"),
                 "delta_test_recall": round(dt, 4),
-                "family_helps": dt < -GATE_RECALL_DROP,
+                "family_helps": None if verdict is None else verdict == "family helps",
+                "verdict": verdict,
             }
         )
     return {"baseline_test": baseline, "drop_one": drops}
@@ -141,13 +145,10 @@ def run_quick_train(epochs: int = 5) -> dict:
     return json.loads(MTNN_REPORT.read_text(encoding="utf-8"))
 
 
-def run_ablation(epochs: int = 25) -> None:
-    cmd = [
-        sys.executable,
-        str(ROOT / "pipeline" / "tower_ablation.py"),
-        "--epochs",
-        str(epochs),
-    ]
+def run_ablation() -> None:
+    # tower_ablation trains the climb's recipe (40 epochs) over its default
+    # seeds; this used to pass --epochs 25, a schedule nothing else measures.
+    cmd = [sys.executable, str(ROOT / "pipeline" / "tower_ablation.py")]
     subprocess.run(cmd, cwd=ROOT, check=True)
 
 

@@ -1,23 +1,44 @@
-"""Drop-one-family MTNN ablation — held-out test recall@10.
+"""Mask-one-family MTNN ablation, paired by seed.
 
-Covers the full 13-tower v4 stack (game + context + form + pedigree +
-playoffs). Skills Lens aux heads train whenever skill_labels exist.
+Every arm trains the climb's measured recipe (pipeline/recipes/measure.json,
+held equal to herdmux gpu/climb.py by tests/test_recipes.py) with one family's
+values and mask bits zeroed, over the same seed list as the full model, and
+is scored on CQS deltas paired by seed with the climb's rule: a family's
+effect counts only when the paired t of (arm CQS - full CQS) clears 3.5
+(herdmux gpu/climb.py PAIRED_T).
 
-Run:  python pipeline/tower_ablation.py [--epochs 25]
+Until 2026-10-09 this ran one seed (7) for 25 epochs on a hardcoded recipe
+that no longer shipped (--dim 48, NCE 0.7/0.3, hard-neg 0.3, against the
+climb's dim 64 and the trainer's 0.65/0.35/0.4), labelled each family KEEP
+when its test recall fell by less than 0.01 -- one subsample sd and a third
+of the seed sd (0.031) -- and read pipeline/data/mtnn_report.json, the shared
+last-run report, after each arm [eval#13].
+
+Each run trains into its own train_mtnn --run-dir under
+pipeline/data/tower_ablation/ and is read from there.
+
+Run:  python pipeline/tower_ablation.py --device cuda [--seeds 5,7,13,21] [--families context]
 """
 
 from __future__ import annotations
 
 import argparse
 import json
+import math
+import statistics
 import subprocess
 import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-REPORT = ROOT / "pipeline" / "data" / "mtnn_report.json"
-
-MANIFEST = ROOT / "pipeline" / "data" / "feature_manifest.json"
+DATA = ROOT / "pipeline" / "data"
+MANIFEST = DATA / "feature_manifest.json"
+OUT = DATA / "tower_ablation"
+SUMMARY = DATA / "tower_ablation.json"
+RECIPE = "measure"
+REPORT_NAME = "mtnn_report.json"
+# herdmux gpu/climb.py PAIRED_T: |t| >= 3.5 on per-seed differences.
+PAIRED_T = 3.5
 
 # All context / extension families in integrate_context.py (2026-07).
 CONTEXT_FAMS = (
@@ -35,66 +56,76 @@ CONTEXT_FAMS = (
 # the durability head's target, so ablating it as a tower is meaningless.
 NON_TOWER_FAMS = {"injury"}
 
-# The shipping recipe (train.sh v5 winner). Ablation must measure families
-# against the architecture we actually deploy, not argparse defaults.
-# Keep flag/value pairs on one line each; ruff format would give one token per
-# line and make the recipe unreadable.
-# fmt: off
-ARCH = [
-    "--dim", "48",
-    "--tower-width", "32",
-    "--tower-hidden", "160",
-    "--tower-blocks", "2",
-    "--mlp-heads",
-    "--d-head-hidden", "128",
-    "--fusion", "concat",
-    "--fusion-hidden", "256",
-    "--nce-loss", "hybrid",
-    "--nce-player-weight", "0.7",
-    "--nce-arch-weight", "0.3",
-    "--hard-neg-boost", "0.3",
-    "--drop-p", "0.12",
-    "--weight-decay", "0.0001",
-    "--lr-schedule", "onecycle",
-    "--warmup-pct", "0.1",
-    "--anneal-strategy", "linear",
-    "--batch", "512",
-]
-# fmt: on
-
 
 def manifest_families() -> list[str]:
     """Every family that actually becomes a tower, read from the manifest."""
     man = json.loads(MANIFEST.read_text(encoding="utf-8"))
-    fams = sorted(set(man.get("families", {}).values()) - NON_TOWER_FAMS)
-    return fams
+    return sorted(set(man.get("families", {}).values()) - NON_TOWER_FAMS)
 
 
-def run_train(exclude: list[str], epochs: int, seed: int) -> dict:
-    cmd = [
-        sys.executable,
-        str(ROOT / "pipeline" / "train_mtnn.py"),
-        "--epochs",
-        str(epochs),
-        "--seed",
-        str(seed),
-        "--val-every",
-        "0",
-        "--no-best-checkpoint",
-        *ARCH,
-    ]
+def run_dir(name: str, seed: int) -> Path:
+    return OUT / f"{name}_s{seed}"
+
+
+def train_cmd(exclude: list[str], seed: int, epochs: int | None, device: str | None) -> list[str]:
+    cmd = [sys.executable, str(ROOT / "pipeline" / "train_mtnn.py"), "--recipe", RECIPE, "--seed", str(seed)]
+    if epochs is not None:
+        cmd += ["--epochs", str(epochs)]
+    if device is not None:
+        cmd += ["--device", device]
     if exclude:
         # mask, don't delete: keeps fusion width constant across arms so the
         # delta measures information content, not a re-shaped architecture
         cmd += ["--mask-families", ",".join(exclude)]
-    subprocess.run(cmd, cwd=ROOT, check=True)
-    return json.loads(REPORT.read_text(encoding="utf-8"))
+    return cmd
+
+
+def run_train(name: str, exclude: list[str], seed: int, epochs: int | None, device: str | None) -> dict:
+    out = run_dir(name, seed)
+    subprocess.run([*train_cmd(exclude, seed, epochs, device), "--run-dir", str(out)], cwd=ROOT, check=True)
+    return json.loads((out / REPORT_NAME).read_text(encoding="utf-8"))
+
+
+def row(rep: dict) -> dict:
+    h = rep["held_out_recall"]
+    return {
+        "cqs": rep["composite"]["cqs"],
+        "test_recall": h["test"]["recall_at_10_mtnn"],
+        "val_recall": h["val"]["recall_at_10_mtnn"],
+        # test is ~790 pairs; the all-pairs figure is ~10k pairs, so its
+        # sampling noise is ~3.5x smaller.
+        "all_recall": h.get("all", {}).get("recall_at_10_mtnn"),
+        "purity": rep.get("cross_era_archetype_neighbor_purity_at_20"),
+    }
+
+
+def paired(arm: list[float], base: list[float]) -> dict:
+    """Mean and paired t of arm - base over seeds (same order)."""
+    d = [a - b for a, b in zip(arm, base, strict=True)]
+    mean = statistics.fmean(d)
+    sd = statistics.stdev(d) if len(d) > 1 else float("nan")
+    t = mean / (sd / math.sqrt(len(d))) if len(d) > 1 and sd > 0 else None
+    return {"n": len(d), "mean": round(mean, 4), "sd": round(sd, 4), "t": None if t is None else round(t, 2)}
+
+
+def verdict(cqs: dict) -> str:
+    t = cqs["t"]
+    if t is not None and t <= -PAIRED_T:
+        return "family helps"  # masking it lowers CQS beyond paired seed noise
+    if t is not None and t >= PAIRED_T:
+        return "family hurts"
+    return "inside paired noise"
 
 
 def main() -> None:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--epochs", type=int, default=25)
-    ap.add_argument("--seed", type=int, default=7)
+    ap.add_argument("--seeds", default="5,7,13,21", help="comma-separated; at least 2, the same for every arm")
+    ap.add_argument("--epochs", type=int, default=None, help="override the recipe's --epochs (40)")
+    ap.add_argument(
+        "--device",
+        default=None,
+        help="passed to train_mtnn (its default is cpu). The climb measures on cuda; a cpu run is not comparable",
+    )
     ap.add_argument(
         "--families",
         choices=("all", "context"),
@@ -104,63 +135,70 @@ def main() -> None:
     )
     args = ap.parse_args()
 
+    seeds = [int(s) for s in args.seeds.split(",") if s.strip()]
+    if len(seeds) < 2:
+        raise SystemExit(f"--seeds {args.seeds!r}: a paired comparison needs at least 2 seeds")
     fams = manifest_families() if args.families == "all" else list(CONTEXT_FAMS)
-    print(f"ablating {len(fams)} families: {fams}")
-
     configs: list[tuple[str, list[str]]] = [("full", [])]
-    for fam in fams:
-        configs.append((f"drop_{fam}", [fam]))
+    configs += [(f"drop_{fam}", [fam]) for fam in fams]
     configs.append(("drop_form_pedigree", ["form", "pedigree"]))
 
-    results = {}
-    baseline_test = None
+    # train_mtnn refuses a --run-dir that already holds a report; say so before
+    # training anything.
+    taken = [run_dir(n, s) for n, _ in configs for s in seeds if (run_dir(n, s) / REPORT_NAME).exists()]
+    if taken:
+        raise SystemExit(
+            "these run directories already hold a run; move or delete them first: "
+            + ", ".join(str(p.relative_to(ROOT)) for p in taken)
+        )
+    print(f"ablating {len(fams)} families over seeds {seeds}: {fams}")
+
+    per: dict[str, list[dict]] = {}
     for name, excl in configs:
-        print(f"\n=== {name} exclude={excl or 'none'} ===")
-        rep = run_train(excl, args.epochs, args.seed)
-        test = rep["held_out_recall"]["test"]["recall_at_10_mtnn"]
-        val = rep["held_out_recall"]["val"]["recall_at_10_mtnn"]
-        # test is only ~790 pairs and swings ~0.2 between seeds; the all-pairs
-        # figure is ~10k pairs, so its sampling noise is ~3.5x smaller. Record it
-        # so context families (which purity structurally cannot judge -- the
-        # archetype labels are k-means over the box-score features themselves)
-        # can be settled on retrieval instead.
-        all_recall = rep["held_out_recall"].get("all", {}).get("recall_at_10_mtnn")
-        purity = rep.get("cross_era_archetype_neighbor_purity_at_20")
-        results[name] = {
+        per[name] = []
+        for seed in seeds:
+            print(f"\n=== {name} seed {seed} exclude={excl or 'none'} ===", flush=True)
+            per[name].append(row(run_train(name, excl, seed, args.epochs, args.device)))
+
+    def col(name: str, k: str) -> list[float]:
+        return [r[k] for r in per[name]]
+
+    base_test = statistics.fmean(col("full", "test_recall"))
+    results = {}
+    print(f"\n=== ABLATION SUMMARY (vs full, paired over {len(seeds)} seeds; |t| >= {PAIRED_T} to count) ===")
+    for name, excl in configs:
+        res = {
             "exclude": excl,
-            "test_recall": test,
-            "val_recall": val,
-            "all_recall": all_recall,
-            "purity": purity,
-            "towers": rep.get("towers"),
-            "loss_weights": rep.get("loss_weights"),
+            "seeds": seeds,
+            "per_seed": per[name],
+            # Means over seeds, under the keys feature_stress.py reads.
+            "test_recall": round(statistics.fmean(col(name, "test_recall")), 4),
+            "val_recall": round(statistics.fmean(col(name, "val_recall")), 4),
+            "cqs": round(statistics.fmean(col(name, "cqs")), 4),
         }
-        if name == "full":
-            baseline_test = test
-        print(f"  test={test:.3f} val={val:.3f} purity={purity:.3f}")
+        if name != "full":
+            res["paired"] = {k: paired(col(name, k), col("full", k)) for k in ("cqs", "val_recall", "test_recall")}
+            res["verdict"] = verdict(res["paired"]["cqs"])
+            p = res["paired"]["cqs"]
+            print(f"  {name:22s} dCQS {p['mean']:+.2f} (sd {p['sd']:.2f}, t {p['t']}) -> {res['verdict']}")
+        results[name] = res
 
-    print("\n=== ABLATION SUMMARY (vs full) ===")
-    for name, r in results.items():
-        if name == "full":
-            continue
-        dt = (r["test_recall"] or 0) - (baseline_test or 0)
-        gate = "KEEP" if dt >= -0.01 else "REVIEW"
-        print(f"  {name:22s} dtest={dt:+.3f}  -> {gate}")
-
-    out = ROOT / "pipeline" / "data" / "tower_ablation.json"
-    out.write_text(
+    SUMMARY.write_text(
         json.dumps(
             {
-                "baseline_test": baseline_test,
+                "recipe": RECIPE,
                 "epochs": args.epochs,
-                "seed": args.seed,
+                "device": args.device,
+                "seeds": seeds,
+                "paired_t": PAIRED_T,
+                "baseline_test": round(base_test, 4),
                 "runs": results,
             },
             indent=2,
         ),
         encoding="utf-8",
     )
-    print(f"\nwrote {out}")
+    print(f"\nwrote {SUMMARY}")
 
 
 if __name__ == "__main__":
