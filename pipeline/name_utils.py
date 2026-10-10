@@ -106,6 +106,34 @@ def bbref_key(name: str, *, keep_suffix: bool = False) -> str:
     return norm_name(name, keep_suffix=keep_suffix).replace(" ", "")
 
 
+def shared_name_keys(cache_dir, *, key=None) -> dict[str, set[str]]:
+    """season -> name keys that two or more PLAYER_IDs share in that season's dashbase cache.
+
+    dashbase lists every player who played, so a key in here is two people
+    in the same season, and a name-only source cannot say which one a value
+    belongs to: Marcus Williams 2007-08 (pids 200766, 53 GP, and 201173, 11
+    GP), Chris Johnson 2012-13, Tony Mitchell 2013-14 (and Marcus Williams
+    2008-09, neither charted). A name-keyed join skips the charted row on
+    such a key (masked) rather than hand it the other man's value; the
+    salaries cache's 'marcus williams|2007-08' ($12,890, SAS) is 201173's,
+    and it sat on the NJN guard's row.
+    """
+    import json
+    from pathlib import Path
+
+    fn = key or norm_name
+    out: dict[str, set[str]] = {}
+    for path in sorted(Path(cache_dir).glob("dashbase_*.json")):
+        season = path.stem.split("_", 1)[1]
+        pids: dict[str, set] = {}
+        for r in json.loads(path.read_text(encoding="utf-8")):
+            pids.setdefault(fn(str(r.get("PLAYER_NAME") or "")), set()).add(r.get("PLAYER_ID"))
+        shared = {k for k, v in pids.items() if len(v) > 1}
+        if shared:
+            out[season] = shared
+    return out
+
+
 def rekey(mapping: dict, *, key=None) -> dict:
     """A name-keyed cache dict re-keyed with norm_name (or `key`) applied to each stored key.
 

@@ -98,6 +98,51 @@ def test_the_key_itself():
     assert norm_name("") == "" and norm_name(None) == ""
 
 
+def test_shared_name_keys_are_two_ids_under_one_name_in_one_season(tmp_path):
+    import json
+
+    from name_utils import shared_name_keys
+
+    (tmp_path / "dashbase_2007-08.json").write_text(
+        json.dumps(
+            [
+                {"PLAYER_ID": 200766, "PLAYER_NAME": "Marcus Williams"},
+                {"PLAYER_ID": 201173, "PLAYER_NAME": "Marcus Williams"},
+                {"PLAYER_ID": 2544, "PLAYER_NAME": "LeBron James"},
+            ]
+        ),
+        encoding="utf-8",
+    )
+    (tmp_path / "dashbase_2017-18.json").write_text(
+        json.dumps([{"PLAYER_ID": 1627780, "PLAYER_NAME": "Gary Payton"}]), encoding="utf-8"
+    )
+    assert shared_name_keys(tmp_path) == {"2007-08": {"marcus williams"}}
+    assert shared_name_keys(tmp_path, key=bbref_key) == {"2007-08": {"marcuswilliams"}}
+
+
+def test_positions_skip_a_shared_name(tmp_path, monkeypatch):
+    import json
+
+    import enrich_vectors as ev
+
+    (tmp_path / "dashbase_2007-08.json").write_text(
+        json.dumps(
+            [{"PLAYER_ID": 1, "PLAYER_NAME": "Marcus Williams"}, {"PLAYER_ID": 2, "PLAYER_NAME": "Marcus Williams"}]
+        ),
+        encoding="utf-8",
+    )
+    pos = {"2006-07": {"marcuswilliams": "PG"}, "2007-08": {"marcuswilliams": "PG", "lebronjames": "SF"}}
+    (tmp_path / "positions_bbref.json").write_text(json.dumps(pos), encoding="utf-8")
+    monkeypatch.setattr(ev, "POS_CACHE", tmp_path / "positions_bbref.json")
+    monkeypatch.setattr(ev, "ROOT", tmp_path.parent)
+    monkeypatch.setattr(ev, "shared_name_keys", lambda _dir, key: {"2007-08": {"marcuswilliams"}})
+    players = [{"name": "Marcus Williams", "season": "2007-08"}, {"name": "LeBron James", "season": "2007-08"}]
+    out, stats = ev.join_positions(players)
+    # No direct label and no back-fill from 2006-07: that row could be either man's.
+    assert out == [-1, ev.POS_IDX["SF"]]
+    assert stats["ambiguous_name"] == 1 and stats["backfilled"] == 0
+
+
 def test_rekey_keeps_the_first_of_two_stored_keys_that_meet():
     assert rekey({"jaren jackson jr": 1, "jaren jackson": 2, "kat": 3}) == {"jaren jackson": 1, "kat": 3}
     assert rekey({"JarenJackson": 1}, key=bbref_key) == {"jarenjackson": 1}

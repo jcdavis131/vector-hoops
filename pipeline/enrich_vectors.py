@@ -22,7 +22,7 @@ from pathlib import Path
 
 import numpy as np
 from artifact_io import atomic_write_text
-from name_utils import bbref_key
+from name_utils import bbref_key, shared_name_keys
 
 ROOT = Path(__file__).resolve().parent
 VECTORS = ROOT.parent / "assets" / "vectors.json"
@@ -113,11 +113,21 @@ def join_positions(players: list[dict]) -> tuple[list[int], dict]:
                 m.setdefault(bbref_key(name), POS_IDX[tok])
         lookup[season] = m
 
+    # A name two PLAYER_IDs share in a season (name_utils.shared_name_keys)
+    # cannot pick between the namesakes' BBRef rows; that row gets no
+    # position, direct or back-filled (another season's row under the name
+    # can be the other man's).
+    shared = shared_name_keys(ROOT / "cache", key=bbref_key)
     out = []
     misses: dict[str, list[int]] = {}
+    ambiguous = 0
     for i, p in enumerate(players):
         key = bbref_key(p["name"])
         key = ALIASES.get(key, key)
+        if key in shared.get(p["season"], ()):
+            out.append(-1)
+            ambiguous += 1
+            continue
         idx = lookup.get(p["season"], {}).get(key, -1)
         out.append(idx)
         if idx < 0:
@@ -141,7 +151,8 @@ def join_positions(players: list[dict]) -> tuple[list[int], dict]:
     n = len(players)
     known = sum(1 for v in out if v >= 0)
     stats = {
-        "direct": n - len([i for idxs in misses.values() for i in idxs]),
+        "direct": n - ambiguous - len([i for idxs in misses.values() for i in idxs]),
+        "ambiguous_name": ambiguous,
         "backfilled": filled,
         "unknown": n - known,
         "coverage": round(known / n, 4),

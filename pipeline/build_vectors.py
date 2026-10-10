@@ -1046,6 +1046,15 @@ def main() -> None:
         form = compute_form_features(season)
         shape = compute_shape_features(season) if args.with_shape else {}
         hustle = load_wide_skills_defense(season)
+        # A name two PLAYER_IDs share this season (base lists everyone who
+        # played) cannot be told apart by the name-keyed hustle and salary
+        # caches; the charted one gets neither rather than the other man's
+        # (name_utils.shared_name_keys: Marcus Williams 2007-08 carried the
+        # $12,890 SAS salary of pid 201173).
+        name_pids: dict[str, set] = {}
+        for r in base:
+            name_pids.setdefault(norm_name(str(r.get("PLAYER_NAME") or "")), set()).add(r["PLAYER_ID"])
+        shared_names = {k for k, v in name_pids.items() if len(v) > 1}
         gate = gates_for_season(season, schedule_aware=schedule_aware)
         if schedule_aware:
             min_gp = gate["min_gp"]
@@ -1088,13 +1097,15 @@ def main() -> None:
             for k, v in (shape.get(pid) or {}).items():
                 row[k] = v
                 extra_presence["shape"].add(k)
-            for k, v in (hustle.get(norm_name(row["PLAYER_NAME"])) or {}).items():
+            nkey = norm_name(row["PLAYER_NAME"])
+            ambiguous = nkey in shared_names
+            for k, v in ({} if ambiguous else hustle.get(nkey) or {}).items():
                 if v is not None:
                     row[k] = v
                     extra_presence["hustle"].add(k)
             # salary
-            key = (norm_name(row["PLAYER_NAME"]), season)
-            sal = salary_hist.get(key, salary_bbref.get(key))
+            key = (nkey, season)
+            sal = None if ambiguous else salary_hist.get(key, salary_bbref.get(key))
             row["SALARY_LOG"] = math.log10(sal) if sal and sal > 0 else None
             all_rows.append(row)
             n_kept += 1

@@ -22,7 +22,7 @@ import time
 from pathlib import Path
 
 from _out_root import add_out_root, rerooted
-from name_utils import norm_name
+from name_utils import norm_name, shared_name_keys
 
 ROOT = Path(__file__).resolve().parents[1]
 VECTORS = ROOT / "assets" / "vectors.json"
@@ -117,6 +117,7 @@ def main() -> None:
         return
     ratings, cache_season, complete = loaded
     vec = json.loads(VECTORS.read_text(encoding="utf-8"))
+    shared = shared_name_keys(CACHE_DIR)
 
     rows = []
     covered = 0
@@ -124,7 +125,7 @@ def main() -> None:
         name, season = p["name"], p["season"]
         if season != cache_season:
             continue
-        rec = ratings.get(norm_name(name))
+        rec = None if norm_name(name) in shared.get(season, ()) else ratings.get(norm_name(name))
         if not rec:
             continue
         covered += 1

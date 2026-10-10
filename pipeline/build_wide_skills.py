@@ -56,7 +56,7 @@ import numpy as np
 
 from _out_root import add_out_root, rerooted, shown
 from hustle_coverage import honest_players
-from name_utils import norm_name
+from name_utils import norm_name, shared_name_keys
 
 ROOT = Path(__file__).resolve().parents[1]
 VECTORS = ROOT / "assets" / "vectors.json"
@@ -192,11 +192,14 @@ def main() -> None:
 
     cache, complete = load_caches(args.fixture)
     vec = json.loads(VECTORS.read_text(encoding="utf-8"))
+    shared = shared_name_keys(CACHE_DIR)
 
     # Gather covered rows aligned to vectors.json order.
     covered_idx, raw = [], []
     for i, p in enumerate(vec["players"]):
-        rec = cache.get((p["season"], norm_name(p["name"])))
+        # A name two PLAYER_IDs share this season is not attributable (name_utils.shared_name_keys).
+        nn = norm_name(p["name"])
+        rec = None if nn in shared.get(p["season"], ()) else cache.get((p["season"], nn))
         if rec is None:
             continue
         covered_idx.append(i)

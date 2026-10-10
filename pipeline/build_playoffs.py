@@ -49,7 +49,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "pipeline"))
-from name_utils import norm_name
+from name_utils import norm_name, shared_name_keys
 from _out_root import add_out_root, rerooted, shown
 from nba_http import real_playoff_cache_paths
 
@@ -215,6 +215,7 @@ def main() -> None:
     players_idx, teams_idx, complete = load_caches(args.fixture)
     game_docs = {} if args.fixture else load_game_caches()
     vec = json.loads(VECTORS.read_text(encoding="utf-8"))
+    shared = shared_name_keys(CACHE_DIR)
 
     # Index player games by (season, PLAYER_ID): the playoff game logs carry
     # playerId, so the game features join on it, not on the name key.
@@ -236,7 +237,8 @@ def main() -> None:
     for p in vec["players"]:
         name, season = p["name"], p["season"]
         nn = norm_name(name)
-        rec = players_idx.get((season, nn))
+        # A name two PLAYER_IDs share this season is not attributable (name_utils.shared_name_keys).
+        rec = None if nn in shared.get(season, ()) else players_idx.get((season, nn))
         if not rec or (rec.get("po", {}).get("GP") or 0) <= 0:
             continue
         po, rs = rec["po"], rec.get("rs", {})

@@ -26,7 +26,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "pipeline"))
 
 from _out_root import add_out_root, rerooted, shown
-from name_utils import norm_name
+from name_utils import norm_name, shared_name_keys
 from nba_salary_cap import cap_for_season
 
 DATA = ROOT / "pipeline" / "data"
@@ -149,6 +149,7 @@ def main() -> None:
     rank_by_nkey = season_salary_ranks(salaries)
 
     vec = json.loads(VECTORS.read_text(encoding="utf-8"))
+    shared = shared_name_keys(CACHE)
     entries = []
     labeled = 0
     team_pct_rows = 0
@@ -158,7 +159,9 @@ def main() -> None:
         name, season = p["name"], p["season"]
         nn = norm_name(name)
         nkey = f"{nn}|{season}"
-        sal = salaries.get(nkey)
+        # A name two PLAYER_IDs share this season: the salary is not
+        # attributable (name_utils.shared_name_keys).
+        sal = None if nn in shared.get(season, ()) else salaries.get(nkey)
         if not sal:
             continue
         amount = float(sal.get("salary") or 0)
