@@ -15,7 +15,10 @@ export_assets.py run them, and those runs used to exit 1 on a missing input.
 Second hook: a test_*.py that pytest collects nothing from is an error. Eleven
 gate scripts named test_*.py defined no test functions, so `pytest` collected
 0 items from each and CI reported green over gates that were already failing.
-The name promised coverage the file did not give.
+The name promised coverage the file did not give. Under `pytest --lf` with a
+recorded failure, pytest skips every file outside the failed paths without
+importing it and reports it as collected-empty; those are not counted, or
+`--lf` exits 4 naming files that hold tests.
 """
 
 from __future__ import annotations
@@ -26,6 +29,27 @@ from pathlib import Path
 import pytest
 
 _EMPTY_TEST_FILES: list[str] = []
+_CONFIG: pytest.Config | None = None
+
+
+def pytest_configure(config):
+    global _CONFIG
+    _CONFIG = config
+
+
+def _skipped_by_last_failed(nodeid: str) -> bool:
+    """True when --lf answered this file without collecting it.
+
+    With recorded failures, pytest's cacheprovider registers "lfplugin-collskip",
+    which returns CollectReport(nodeid, "passed", result=[]) for every file not
+    on a failed test's path. That report is identical to a file with no tests.
+    """
+    if _CONFIG is None or not _CONFIG.pluginmanager.has_plugin("lfplugin-collskip"):
+        return False
+    failed_paths = getattr(_CONFIG.pluginmanager.get_plugin("lfplugin"), "_last_failed_paths", None)
+    if failed_paths is None:
+        return True
+    return _CONFIG.rootpath / nodeid not in failed_paths
 
 
 def pytest_collectreport(report):
@@ -34,6 +58,7 @@ def pytest_collectreport(report):
         and report.nodeid.endswith(".py")
         and Path(report.nodeid).name.startswith("test_")
         and not report.result
+        and not _skipped_by_last_failed(report.nodeid)
     ):
         _EMPTY_TEST_FILES.append(report.nodeid)
 
