@@ -20,11 +20,25 @@ name and metrics, with Jacobian and arch files computed from the 08-14
 checkpoint [orchestration#0, artifacts#1, artifacts#2, eval#6, health#0,
 training#2].
 
-LAST-RUN files. pipeline/data/mtnn_best.pt and pipeline/data/mtnn_report.json
-are the outputs of whichever training run finished last. The herdmux climb
-(gpu/metrics.py) and hill_climb / sweep_stability / tower_ablation read the
-report there after each run, so it stays there. Neither is the promoted
-model, and no exporter reads either any more.
+Legacy paths = promoted model (2026-10-10). pipeline/data/embedding_v3.npz,
+mtnn_centroids.npz and mtnn_best.pt are what readers outside this repo load:
+vector-unified's load_encoders.py reads embedding_v3.npz, and its
+load_live_encoders, _hoops_args and check_artifact_freshness read
+mtnn_best.pt. promote() refreshes all three from the bundle, each an atomic
+byte copy, after CURRENT.json flips, so they are one model: the promoted one.
+Until 2026-10-10 the checkpoint was left out, and vector-unified paired the
+promoted embedding with whichever run had last saved a best checkpoint. One
+caveat: train_mtnn still saves its best-checkpoint candidates to
+pipeline/data/mtnn_best.pt (a select run with --val-every > 0 and no
+--no-best-checkpoint), so such a run replaces the legacy checkpoint until the
+next promote. The measure and ship recipes and the herdmux climb pass
+--no-best-checkpoint and never write it.
+
+LAST-RUN file. pipeline/data/mtnn_report.json is the report of whichever
+training run finished last. The herdmux climb (gpu/metrics.py) and
+hill_climb / sweep_stability / tower_ablation read it there after each run,
+so it stays there. It is not the promoted model's report, and no exporter
+reads it, or any of the legacy paths: they read the bundle.
 
 What a promotion checks (`--run <run_dir>`, a directory train_mtnn.py
 --run-dir wrote). Each of these refuses, and none can be overridden:
@@ -81,19 +95,19 @@ What it writes:
                                      a refit
   pipeline/data/promoted/CURRENT.json  which bundle is promoted; replaced
                                      atomically, after the bundle is complete
-  pipeline/data/embedding_v3.npz, mtnn_centroids.npz
+  pipeline/data/embedding_v3.npz, mtnn_centroids.npz, mtnn_best.pt
                                      refreshed from the bundle for readers
-                                     outside this repo (vector-unified's
-                                     load_encoders.py reads embedding_v3.npz)
+                                     outside this repo (the legacy paths
+                                     above)
 The newest KEEP bundles are kept, and the current one always. Re-promoting
 a bundle that is already in promoted/ (a rollback: --run
 pipeline/data/promoted/<run_id>, plus --selection-run
-pipeline/data/promoted/<run_id>/selection for a refit) only flips
-CURRENT.json.
+pipeline/data/promoted/<run_id>/selection for a refit) copies nothing into
+promoted/: it flips CURRENT.json and refreshes the legacy paths.
 
 Readers. Every exporter loads the model through load_promoted(), which
 re-hashes every file in the current bundle and refuses a missing, edited or
-mixed one. Nothing exports from the last-run paths.
+mixed one. Nothing exports from the legacy or last-run paths.
 
 Usage:
   python pipeline/promote.py --run pipeline/data/runs/<run_id>
@@ -168,8 +182,9 @@ SELECTION_FREE_ARGS = frozenset(
     }
 )
 # Refreshed in pipeline/data from the promoted bundle, for readers outside
-# this repo. Not the checkpoint or the report: those are last-run files.
-LEGACY = ("embedding", "centroids")
+# this repo (the module docstring's legacy paths). Not the report: that is
+# the last run's.
+LEGACY = ("embedding", "centroids", "checkpoint")
 MANIFEST = "manifest.json"
 CURRENT = "CURRENT.json"
 EXIT_REFUSED = 2

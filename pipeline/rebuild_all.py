@@ -285,7 +285,13 @@ def build_plan(
             "promote",
             tuple(promote),
             "train",
-            (D + "promoted/CURRENT.json", D + "promoted/<run_id>/", D + "embedding_v3.npz", D + "mtnn_centroids.npz"),
+            (
+                D + "promoted/CURRENT.json",
+                D + "promoted/<run_id>/",
+                D + "embedding_v3.npz",
+                D + "mtnn_centroids.npz",
+                D + "mtnn_best.pt",
+            ),
         )
     )
 

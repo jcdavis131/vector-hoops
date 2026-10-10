@@ -110,10 +110,14 @@ DATA_DIR = ROOT / "pipeline" / "data"
 # embedding and 08-06 centroids [health#0, training#2]. They stay where they
 # are, because the herdmux climb and the sweeps read
 # pipeline/data/mtnn_report.json after each run. What changed is what they
-# mean: both are the LAST RUN's outputs, never the shipped model. The shipped
-# model is the bundle pipeline/promote.py copies into pipeline/data/promoted/
-# from a --run-dir, after checking that every file in it is the one the
-# report's lineage block names.
+# mean: mtnn_report.json is the LAST RUN's report, never the shipped model's.
+# BEST_CKPT is written only by a run that keeps a best checkpoint (the climb
+# and the measure/ship recipes pass --no-best-checkpoint), and promote.py
+# overwrites it with the promoted checkpoint, for vector-unified, which reads
+# it (promote.py, "legacy paths"). The shipped model is the bundle
+# pipeline/promote.py copies into pipeline/data/promoted/ from a --run-dir,
+# after checking that every file in it is the one the report's lineage block
+# names; no exporter reads either path.
 ART_DIR = DATA_DIR / "_scratch"
 VECTORS = ROOT / "assets" / "vectors.json"
 BEST_CKPT = DATA_DIR / "mtnn_best.pt"
@@ -1275,9 +1279,10 @@ def write_run_bundle(run_dir: Path, paths: dict[str, Path], records: dict[str, d
     """Copy what this run wrote into run_dir, by byte, and the report last.
 
     Each copy is hashed and compared with the sha recorded when the run wrote
-    the file. pipeline/data/mtnn_best.pt is shared by every run on the box, so
-    another trainer can replace it between this run's save and this copy; a
-    bundle built from that would be torn. The run then stops before writing
+    the file. pipeline/data/mtnn_best.pt is shared by every run on the box (and
+    promote.py refreshes it), so another trainer or a promote can replace it
+    between this run's save and this copy; a bundle built from that would be
+    torn. The run then stops before writing
     the bundle's report, and promote.py refuses a directory without one.
     """
     for role, src in paths.items():
@@ -2285,7 +2290,8 @@ def main(argv: list[str] | None = None) -> None:
     # run's embedding and report come from its final weights, so with
     # --run-dir those final weights are the bundle's checkpoint. They go
     # straight into the run directory, never over pipeline/data/mtnn_best.pt
-    # (the last run's best checkpoint). torch.save draws from no RNG, and
+    # (best-checkpoint candidates, and the promoted checkpoint after a
+    # promote). torch.save draws from no RNG, and
     # without --run-dir (the climb, the bit-identity probe) nothing here runs.
     if run_dir is not None and "checkpoint" not in written:
         final_ckpt = run_dir / BUNDLE_FILES["checkpoint"]

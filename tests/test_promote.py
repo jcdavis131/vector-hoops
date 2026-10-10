@@ -84,11 +84,12 @@ def test_a_coherent_run_promotes_and_flips_current(data):
     assert src["report_sha256"] == aio.sha256_file(run / "mtnn_report.json")
     assert "refit_in_sample_metrics" not in man
 
-    # The legacy paths vector-unified reads now hold the promoted bytes.
-    for role in ("embedding", "centroids"):
+    # The legacy paths vector-unified reads now hold the promoted bytes, the
+    # checkpoint included (load_live_encoders, check_artifact_freshness).
+    for role in ("embedding", "centroids", "checkpoint"):
         assert aio.sha256_file(data / aio.BUNDLE_FILES[role]) == aio.sha256_file(bundle / aio.BUNDLE_FILES[role])
-    # The last-run paths are not touched.
-    assert not (data / "mtnn_best.pt").exists() and not (data / "mtnn_report.json").exists()
+    # The last-run report is not touched.
+    assert not (data / "mtnn_report.json").exists()
     # No temp directory or file left behind.
     assert sorted(p.name for p in (data / "promoted").iterdir()) == ["CURRENT.json", "r1"]
 
@@ -135,7 +136,8 @@ def test_rollback_re_promotes_an_existing_bundle_without_copying(data):
     cur = pm.promote(data / "promoted" / "a", now="2026-10-09T00:00:03Z")
     assert (cur["run_id"], cur["previous"]) == ("a", "b")
     assert (data / "promoted" / "a" / "manifest.json").read_bytes() == man_a
-    assert aio.sha256_file(data / "embedding_v3.npz") == aio.sha256_file(data / "promoted" / "a" / "embedding_v3.npz")
+    for name in ("embedding_v3.npz", "mtnn_best.pt"):
+        assert aio.sha256_file(data / name) == aio.sha256_file(data / "promoted" / "a" / name)
 
 
 # --- refusals --------------------------------------------------------------------
