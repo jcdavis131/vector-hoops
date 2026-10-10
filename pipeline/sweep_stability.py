@@ -12,8 +12,8 @@ Adds two axes the existing harnesses miss:
   that memorizes the training window peaks inside it and falls off a cliff at
   the split boundary.
 
-Each arm snapshots its own report + embedding so a run is never lost to the
-next arm overwriting pipeline/data/.
+Each arm trains with train_mtnn --run-dir pipeline/data/sweep_stability/<arm>_s<seed>,
+so its report and embedding are its own and are never lost to the next arm.
 
 Run:  python pipeline/sweep_stability.py --arms base,wide,deep --seeds 7
 """
@@ -22,7 +22,6 @@ from __future__ import annotations
 
 import argparse
 import json
-import shutil
 import subprocess
 import sys
 from collections import defaultdict
@@ -31,10 +30,13 @@ from pathlib import Path
 import numpy as np
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "pipeline"))
+from artifact_io import BUNDLE_FILES  # noqa: E402
+
 DATA = ROOT / "pipeline" / "data"
-REPORT = DATA / "mtnn_report.json"
-EMB = DATA / "embedding_v3.npz"
 OUT = DATA / "sweep_stability"
+REPORT_NAME = BUNDLE_FILES["report"]
+EMB_NAME = BUNDLE_FILES["embedding"]
 
 # Shared recipe pieces. Arms below override only what they name, so every
 # delta is attributable to the flags in that arm.
@@ -138,7 +140,19 @@ def continuity(emb_path: Path) -> dict:
     }
 
 
+def arm_dir(name: str, seed: int) -> Path:
+    return OUT / f"{name}_s{seed}"
+
+
 def run_arm(name: str, flags: list[str], seed: int) -> dict:
+    # The arm trains into its own --run-dir and is scored from there. This used
+    # to copy pipeline/data/mtnn_report.json (the arm's) and
+    # pipeline/data/embedding_v3.npz into the arm's directory and measure
+    # continuity on the copy. Since bf194108 (2026-08-11) trials write their
+    # embedding to pipeline/data/_scratch, so the copied file was the promoted
+    # embedding and every arm's continuity columns were the same number
+    # [orchestration#7].
+    dest = arm_dir(name, seed)
     cmd = [
         sys.executable,
         str(ROOT / "pipeline" / "train_mtnn.py"),
@@ -146,14 +160,11 @@ def run_arm(name: str, flags: list[str], seed: int) -> dict:
         str(seed),
         *COMMON,
         *flags,
+        "--run-dir",
+        str(dest),
     ]
     subprocess.run(cmd, cwd=ROOT, check=True, capture_output=True)
-    rep = json.loads(REPORT.read_text(encoding="utf-8"))
-    tag = f"{name}_s{seed}"
-    dest = OUT / tag
-    dest.mkdir(parents=True, exist_ok=True)
-    shutil.copy(REPORT, dest / "mtnn_report.json")
-    shutil.copy(EMB, dest / "embedding_v3.npz")
+    rep = json.loads((dest / REPORT_NAME).read_text(encoding="utf-8"))
     h = rep["held_out_recall"]
     row = {
         "arm": name,
@@ -166,7 +177,7 @@ def run_arm(name: str, flags: list[str], seed: int) -> dict:
         "position_acc": rep.get("position_top1_acc"),
         "cqs": rep["composite"]["cqs"],
     }
-    row.update(continuity(dest / "embedding_v3.npz"))
+    row.update(continuity(dest / EMB_NAME))
     return row
 
 
@@ -182,6 +193,15 @@ def main() -> None:
     unknown = [a for a in arms if a not in ARMS]
     if unknown:
         raise SystemExit(f"unknown arms: {unknown}")
+    # train_mtnn refuses a --run-dir that already holds a report (one directory
+    # records one run). Say so before training anything rather than after the
+    # first arms have run.
+    done = [arm_dir(a, s) for a in arms for s in seeds if (arm_dir(a, s) / REPORT_NAME).exists()]
+    if done:
+        raise SystemExit(
+            "these arm directories already hold a run; move or delete them first: "
+            + ", ".join(str(d.relative_to(ROOT)) for d in done)
+        )
 
     OUT.mkdir(parents=True, exist_ok=True)
     results = []

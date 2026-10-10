@@ -15,8 +15,10 @@ measured run-to-run drift for an identical config on an identical seed is about
 0.02 CQS and 0.024 recall, so cross-session rows are only loosely comparable.
 
 This adds seeds 5 and 21 to both configurations. `evaluate` caches by
-(tag, seed, epochs), so 7 and 13 are reused and only the new work runs. Four
-seeds is `composite_score.PROMOTE_SEEDS_TARGET`.
+hill_climb.cache_key (tag, seed, epochs, plus a hash of the train argv, git
+HEAD and matrix sha256), so seeds already run on this commit and matrix are
+reused and only the new work runs. Four seeds is
+`composite_score.PROMOTE_SEEDS_TARGET`.
 
 It reports **paired** differences, not means. Seed variance is largely shared —
 a seed that draws badly draws badly for both configurations — and pairing
@@ -56,8 +58,13 @@ def main() -> int:
     arch_c = hc.override(hc.BASE_ARCH, hc.FUSION_GRID["concat_256_d64"])
     arch_w = hc.override(hc.BASE_ARCH, hc.FUSION_GRID["concat_384_d64"])
 
-    have = [s for s in seeds if f"{CONTROL}|s{s}|e{args.epochs}" in cache
-            and f"{WIDER}|s{s}|e{args.epochs}" in cache]
+    def key_c(s: int) -> str:
+        return hc.cache_key(CONTROL, arch_c, [], s, args.epochs)
+
+    def key_w(s: int) -> str:
+        return hc.cache_key(WIDER, arch_w, [], s, args.epochs)
+
+    have = [s for s in seeds if key_c(s) in cache and key_w(s) in cache]
     print(f"seeds {seeds}, {len(have)} already cached for both: {have}", flush=True)
 
     # Seed outer, configuration inner. Running every seed of the control first
@@ -71,8 +78,8 @@ def main() -> int:
     print("\n  seed   cqs 256 -> 384        purity 256 -> 384         recall 256 -> 384")
     rows = []
     for s in seeds:
-        a = cache.get(f"{CONTROL}|s{s}|e{args.epochs}")
-        b = cache.get(f"{WIDER}|s{s}|e{args.epochs}")
+        a = cache.get(key_c(s))
+        b = cache.get(key_w(s))
         if not a or not b:
             continue
         rows.append((s, b["cqs"] - a["cqs"], b["purity"] - a["purity"],

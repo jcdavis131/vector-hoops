@@ -26,8 +26,9 @@ Run:
 from __future__ import annotations
 
 import argparse
+import functools
+import hashlib
 import json
-import shutil
 import subprocess
 import sys
 from collections import defaultdict
@@ -36,12 +37,23 @@ from pathlib import Path
 import numpy as np
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "pipeline"))
+from artifact_io import BUNDLE_FILES, display_path, git_state, sha256_file  # noqa: E402
+
 DATA = ROOT / "pipeline" / "data"
-REPORT = DATA / "mtnn_report.json"
-EMB = DATA / "embedding_v3.npz"
 MANIFEST = DATA / "feature_manifest.json"
 OUT = DATA / "hill_climb"
 CACHE = OUT / "eval_cache.json"
+# One train_mtnn --run-dir per trial. Each trial's report AND embedding are
+# read from its own directory. Until 2026-10-09 the report came from
+# pipeline/data/mtnn_report.json (the trial's, since train_mtnn always writes
+# it there) but continuity was measured on pipeline/data/embedding_v3.npz,
+# which since bf194108 (2026-08-11) is the promoted embedding: trials write
+# theirs to pipeline/data/_scratch. So continuity_min / continuity_spread were
+# the same number for every arm while reading as per-arm [orchestration#7].
+# Cost: each trial directory keeps its final weights, embedding, centroids and
+# report, roughly 10 MB.
+RUNS = OUT / "runs"
 
 # injury is a durability read-out head, never an input tower (see cf45fdb):
 # as an input it measured -0.088 test recall.
@@ -151,18 +163,48 @@ def save_cache(c: dict) -> None:
     CACHE.write_text(json.dumps(c, indent=1), encoding="utf-8")
 
 
-def run_one(tag: str, arch: list[str], masked: list[str], seed: int, epochs: int) -> dict:
+def train_argv(arch: list[str], masked: list[str], seed: int, epochs: int) -> list[str]:
+    """train_mtnn.py's arguments for one trial, without --run-dir."""
+    argv = ["--seed", str(seed), "--epochs", str(epochs), *arch]
+    if masked:
+        argv += ["--mask-families", ",".join(sorted(masked))]
+    return argv
+
+
+@functools.lru_cache(maxsize=1)
+def _code_and_matrix() -> str:
+    g = git_state(ROOT)
+    return json.dumps(
+        {"git": g["sha"], "dirty": g["dirty"], "matrix_sha256": sha256_file(DATA / "train_matrix.npz")},
+        sort_keys=True,
+    )
+
+
+def cache_key(tag: str, arch: list[str], masked: list[str], seed: int, epochs: int) -> str:
+    """eval_cache.json key: the tag for reading, plus a hash of what decides the result.
+
+    The key was f"{tag}|s{seed}|e{epochs}". --arch-dim rewrites BASE_ARCH's --dim
+    without changing the tag, so a 64-d search was answered from cached 48-d
+    rows, and a new commit or a rebuilt matrix reused rows measured on the old
+    one [orchestration#7]. The hash covers the full train argv, the git HEAD
+    (and whether tracked files were dirty, which a sha cannot describe) and the
+    matrix's sha256.
+    """
+    blob = json.dumps(train_argv(arch, masked, seed, epochs)) + _code_and_matrix()
+    return f"{tag}|s{seed}|e{epochs}|{hashlib.sha256(blob.encode()).hexdigest()[:12]}"
+
+
+def run_one(tag: str, arch: list[str], masked: list[str], seed: int, epochs: int, key: str | None = None) -> dict:
+    key = key or cache_key(tag, arch, masked, seed, epochs)
+    run_dir = RUNS / key.replace("|", "_")
+    report = run_dir / BUNDLE_FILES["report"]
     cmd = [
         sys.executable,
         str(ROOT / "pipeline" / "train_mtnn.py"),
-        "--seed",
-        str(seed),
-        "--epochs",
-        str(epochs),
-        *arch,
+        *train_argv(arch, masked, seed, epochs),
+        "--run-dir",
+        str(run_dir),
     ]
-    if masked:
-        cmd += ["--mask-families", ",".join(sorted(masked))]
     # capture_output=True gives the child a pipe. Run under Start-Process
     # -WindowStyle Hidden — the only way to run a multi-hour climb on this box,
     # since harness background jobs get killed — the child then blocks forever:
@@ -192,13 +234,15 @@ def run_one(tag: str, arch: list[str], masked: list[str], seed: int, epochs: int
     # Not diagnosed further. Run the climb in the foreground; eval_cache.json
     # makes it resumable, so repeated bounded runs converge on the same result.
     flags = getattr(subprocess, "CREATE_NO_WINDOW", 0)
-    with open(log, "wb") as fh:
-        subprocess.run(cmd, cwd=ROOT, check=True, stdout=fh, stderr=subprocess.STDOUT,
-                       stdin=subprocess.DEVNULL, creationflags=flags)
-    rep = json.loads(REPORT.read_text(encoding="utf-8"))
-    dest = OUT / f"{tag}_s{seed}"
-    dest.mkdir(parents=True, exist_ok=True)
-    shutil.copy(REPORT, dest / "mtnn_report.json")
+    # A finished run directory with this key is this trial: same argv, commit
+    # and matrix. Reuse it (eval_cache.json lost the row, or a run was killed
+    # after the report but before the cache write) instead of retraining;
+    # train_mtnn refuses a --run-dir that already holds a report.
+    if not report.exists():
+        with open(log, "wb") as fh:
+            subprocess.run(cmd, cwd=ROOT, check=True, stdout=fh, stderr=subprocess.STDOUT,
+                           stdin=subprocess.DEVNULL, creationflags=flags)
+    rep = json.loads(report.read_text(encoding="utf-8"))
     h = rep["held_out_recall"]
     row = {
         "cqs": rep["composite"]["cqs"],
@@ -206,8 +250,9 @@ def run_one(tag: str, arch: list[str], masked: list[str], seed: int, epochs: int
         "all_recall": h["all"]["recall_at_10_mtnn"],
         "purity": rep.get("cross_era_archetype_neighbor_purity_at_20"),
         "position_acc": rep.get("position_top1_acc"),
+        "run_dir": display_path(run_dir, ROOT),
     }
-    row.update(continuity(EMB))
+    row.update(continuity(run_dir / BUNDLE_FILES["embedding"]))
     return row
 
 
@@ -219,12 +264,12 @@ def evaluate(
     epochs: int,
     cache: dict,
 ) -> dict:
-    """Mean over seeds, cached by (tag, seed, epochs)."""
+    """Mean over seeds, cached by cache_key (tag, seed, epochs and a hash of argv, HEAD, matrix)."""
     rows = []
     for seed in seeds:
-        key = f"{tag}|s{seed}|e{epochs}"
+        key = cache_key(tag, arch, masked, seed, epochs)
         if key not in cache:
-            cache[key] = run_one(tag, arch, masked, seed, epochs)
+            cache[key] = run_one(tag, arch, masked, seed, epochs, key)
             save_cache(cache)
         rows.append(cache[key])
     agg = {"tag": tag, "masked": sorted(masked), "seeds": seeds, "n": len(rows)}
