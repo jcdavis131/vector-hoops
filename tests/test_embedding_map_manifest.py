@@ -49,8 +49,10 @@ def test_missing_vector_rows_carry_no_invented_labels():
         assert r["seasons"] == [] and r["seasons_count"] == 0
     # is_allstar is the same name lookup the vector rows use, so it is measured.
     assert missing[3]["is_allstar"] is True and missing[4]["is_allstar"] is False
-    # No bio name: no invented "PID 5" display name.
+    # No bio name: no invented "PID 5" display name, and no name to look up,
+    # so is_allstar is unknown rather than False.
     assert missing[5]["display_name"] is None and missing[5]["norm"] is None
+    assert missing[5]["is_allstar"] is None
 
 
 def test_rows_with_vectors_are_unchanged_in_meaning():

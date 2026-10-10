@@ -7,7 +7,8 @@ embedding_map_trajectories.json.
 
 A current player (in the 2025-26 bio) with no vectors.json row is listed with
 missing_vector true and only what was measured: player_id, the bio name, is_current,
-and is_allstar from the same name lookup the other rows use. Until 2026-10-09 these
+and is_allstar from the same name lookup the other rows use (null when the bio has no
+name, since there is nothing to look up). Until 2026-10-09 these
 rows were filled in as is_recent_rookie True, is_allstar False and seasons/best/latest
 "2025-26" for every one of them -- 50 rows in the shipped asset, veterans such as
 Mac McClung (27) and Trevon Scott (29) among them -- and "built" was the literal
@@ -102,7 +103,8 @@ def build_manifest(vec: dict, honors: dict, cur_bio: list[dict]) -> tuple[list[d
                 "seasons": [],
                 "seasons_count": 0,
                 "is_current": True,
-                "is_allstar": bool(name) and norm_name(name) in allstar_norms,
+                # No bio name means no name to look up: unknown, not False.
+                "is_allstar": norm_name(name) in allstar_norms if name else None,
                 "is_recent_rookie": None,
                 "is_3plus": None,
                 "best_season": None,
