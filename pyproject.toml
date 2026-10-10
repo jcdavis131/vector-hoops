@@ -137,7 +137,6 @@ exclude = [
     # Active ML pipeline/training files under parallel development (LOCAL-GPU
     # v6 GPU lane etc.); left unformatted here to avoid unrelated whitespace
     # churn colliding with in-flight branches. Formatting predates the gate.
-    "pipeline/build_embedding_map_manifest.py",
     "pipeline/hill_climb.py",
     "pipeline/resolve_fusion.py",
     "pipeline/train_career_mtnn.py",

@@ -1,141 +1,221 @@
-import json, os, glob
+"""Embedding-map manifest: which players the map shows, one point and one trajectory each.
+
+Reads assets/vectors.json (per player-season x/y/z/c), assets/data/honors_extended.json
+(all-star names) and pipeline/cache/bio_2025-26.json (current players), and writes
+assets/embedding_map_manifest.json, embedding_map_points_limited.json and
+embedding_map_trajectories.json.
+
+A current player (in the 2025-26 bio) with no vectors.json row is listed with
+missing_vector true and only what was measured: player_id, the bio name, is_current,
+and is_allstar from the same name lookup the other rows use. Until 2026-10-09 these
+rows were filled in as is_recent_rookie True, is_allstar False and seasons/best/latest
+"2025-26" for every one of them -- 50 rows in the shipped asset, veterans such as
+Mac McClung (27) and Trevon Scott (29) among them -- and "built" was the literal
+"2026-08-10 embed v7.1.5" on every run [artifacts#10]. Now is_recent_rookie, is_3plus,
+best_season and latest_season are null, seasons is [] (seasons with a vector row),
+and built is the run's UTC time with the vectors.json sha256.
+
+Run:  python pipeline/build_embedding_map_manifest.py [--out-root DIR]
+"""
+
+from __future__ import annotations
+
+import argparse
+import hashlib
+import json
+import sys
+import time
 from collections import defaultdict
+from pathlib import Path
 
-base="."
-vec=json.load(open(os.path.join(base,"assets/vectors.json")))
-by_pid=defaultdict(list)
-for p in vec['players']:
-    by_pid[p['pid']].append(p)
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "pipeline"))
+from _out_root import add_out_root, rerooted, shown
 
-# honors
-honors=json.load(open(os.path.join(base,"assets/data/honors_extended.json")))
-allstar_norms=set(k.split('|')[0].strip().lower() for k in honors.get('players',{}).keys())
+VECTORS = ROOT / "assets" / "vectors.json"
+HONORS = ROOT / "assets" / "data" / "honors_extended.json"
+BIO = ROOT / "pipeline" / "cache" / "bio_2025-26.json"
+MANIFEST_OUT = ROOT / "assets" / "embedding_map_manifest.json"
+POINTS_OUT = ROOT / "assets" / "embedding_map_points_limited.json"
+TRAJ_OUT = ROOT / "assets" / "embedding_map_trajectories.json"
 
-def norm_name(s): return s.lower().strip()
+RECENT = {"2023-24", "2024-25", "2025-26"}
 
-# current pids from bio 2025-26
-cur_bio=json.load(open("pipeline/cache/bio_2025-26.json"))
-current_pids=set(r.get('PLAYER_ID') for r in cur_bio if r.get('PLAYER_ID') is not None)
 
-recent_set={"2023-24","2024-25","2025-26"}
-pid_to_names=defaultdict(list)
-for pid,lst in by_pid.items():
-    for rec in lst:
-        pid_to_names[pid].append(rec['name'])
+def norm_name(s: str) -> str:
+    return s.lower().strip()
 
-pid_to_display={}
-pid_to_norm={}
-for pid, names in pid_to_names.items():
-    disp=names[0]
-    pid_to_display[pid]=disp
-    pid_to_norm[pid]=norm_name(disp)
 
-three_plus=set(pid for pid,lst in by_pid.items() if len(lst)>=3)
-allstar_pids=set(pid for pid,norm in pid_to_norm.items() if norm in allstar_norms)
-recent_pids=set(pid for pid,lst in by_pid.items() if min(x['season'] for x in lst) in recent_set)
+def _score(e: dict) -> float:
+    tm = e.get("total_min") or 0
+    if tm:
+        return tm
+    return e.get("gp", 0) * (e.get("mpg", 0) or 0)
 
-# qualifying union, but limited to pids that exist in vectors for coords availability, plus keep missing currents separately logged
-qualifying=set()
-qualifying|= (current_pids & set(by_pid.keys()))  # intersection to avoid missing
-qualifying|= allstar_pids
-qualifying|= three_plus
-qualifying|= recent_pids
 
-print(f"total pids {len(by_pid)} 3+ {len(three_plus)} current intersection {len(current_pids & set(by_pid.keys()))} raw current {len(current_pids)} allstar {len(allstar_pids)} recent {len(recent_pids)} qualifying {len(qualifying)}")
+def build_manifest(vec: dict, honors: dict, cur_bio: list[dict]) -> tuple[list[dict], dict]:
+    """(rows, filter counts). Rows with a vector come first, then missing-vector current players."""
+    by_pid: dict = defaultdict(list)
+    for p in vec["players"]:
+        by_pid[p["pid"]].append(p)
+    allstar_norms = {k.split("|")[0].strip().lower() for k in honors.get("players", {})}
+    current_pids = {r.get("PLAYER_ID") for r in cur_bio if r.get("PLAYER_ID") is not None}
 
-manifest=[]
-for pid in qualifying:
-    lst=by_pid.get(pid)
-    if not lst:
-        continue
-    seasons_sorted=sorted(lst, key=lambda x: x['season'])
-    seasons_list=[x['season'] for x in seasons_sorted]
-    if not seasons_list:
-        continue
-    latest=seasons_list[-1]
-    def score(e):
-        tm=e.get('total_min') or 0
-        if tm: return tm
-        return e.get('gp',0)*(e.get('mpg',0) or 0)
-    best_entry=max(seasons_sorted, key=score)
-    best=best_entry['season']
-    manifest.append({
-        "player_id": pid,
-        "norm": pid_to_norm.get(pid,""),
-        "display_name": pid_to_display.get(pid,""),
-        "seasons": seasons_list,
-        "seasons_count": len(seasons_list),
-        "is_current": pid in current_pids,
-        "is_allstar": pid in allstar_pids,
-        "is_recent_rookie": pid in recent_pids,
-        "is_3plus": pid in three_plus,
-        "best_season": best,
-        "latest_season": latest,
-        "best_score": score(best_entry)
-    })
+    pid_to_display = {pid: lst[0]["name"] for pid, lst in by_pid.items()}
+    pid_to_norm = {pid: norm_name(d) for pid, d in pid_to_display.items()}
+    three_plus = {pid for pid, lst in by_pid.items() if len(lst) >= 3}
+    allstar_pids = {pid for pid, n in pid_to_norm.items() if n in allstar_norms}
+    recent_pids = {pid for pid, lst in by_pid.items() if min(x["season"] for x in lst) in RECENT}
+    qualifying = (current_pids & set(by_pid)) | allstar_pids | three_plus | recent_pids
 
-manifest_sorted=sorted(manifest, key=lambda x: (not x['is_current'], -x['seasons_count'], x['display_name']))
+    rows = []
+    for pid in qualifying:
+        seasons_sorted = sorted(by_pid[pid], key=lambda x: x["season"])
+        best_entry = max(seasons_sorted, key=_score)
+        rows.append(
+            {
+                "player_id": pid,
+                "norm": pid_to_norm.get(pid, ""),
+                "display_name": pid_to_display.get(pid, ""),
+                "seasons": [x["season"] for x in seasons_sorted],
+                "seasons_count": len(seasons_sorted),
+                "is_current": pid in current_pids,
+                "is_allstar": pid in allstar_pids,
+                "is_recent_rookie": pid in recent_pids,
+                "is_3plus": pid in three_plus,
+                "best_season": best_entry["season"],
+                "latest_season": seasons_sorted[-1]["season"],
+                "best_score": _score(best_entry),
+            }
+        )
+    rows.sort(key=lambda x: (not x["is_current"], -x["seasons_count"], x["display_name"]))
 
-# Additional: include current players missing from vectors as entries with no coords, flagged missing_vector true, to satisfy "all current players" spec
-missing_current = current_pids - set(by_pid.keys())
-print(f"missing current vectors {len(missing_current)}")
-# Try synthesize placeholder entries from bio for them (for manifest completeness)
-# Load names for missing
-bio_id_to_name={r['PLAYER_ID']: r.get('PLAYER_NAME') for r in cur_bio}
-for pid in missing_current:
-    name=bio_id_to_name.get(pid,f"PID {pid}")
-    manifest_sorted.append({
-        "player_id": pid,
-        "norm": norm_name(name),
-        "display_name": name,
-        "seasons": ["2025-26"],
-        "seasons_count":1,
-        "is_current": True,
-        "is_allstar": False,
-        "is_recent_rookie": True,
-        "is_3plus": False,
-        "best_season":"2025-26",
-        "latest_season":"2025-26",
-        "missing_vector": True
-    })
+    bio_name = {r["PLAYER_ID"]: r.get("PLAYER_NAME") for r in cur_bio if r.get("PLAYER_ID") is not None}
+    missing = sorted(current_pids - set(by_pid))
+    for pid in missing:
+        name = bio_name.get(pid)
+        rows.append(
+            {
+                "player_id": pid,
+                "norm": norm_name(name) if name else None,
+                "display_name": name,
+                "seasons": [],
+                "seasons_count": 0,
+                "is_current": True,
+                "is_allstar": bool(name) and norm_name(name) in allstar_norms,
+                "is_recent_rookie": None,
+                "is_3plus": None,
+                "best_season": None,
+                "latest_season": None,
+                "missing_vector": True,
+            }
+        )
+    filters = {
+        "current": len(current_pids),
+        "allstar": len(allstar_pids),
+        "three_plus": len(three_plus),
+        "recent": len(recent_pids),
+        "qualifying_vectors": len(qualifying),
+        "missing_vector": len(missing),
+    }
+    return rows, filters
 
-out_dir="assets"
-with open(os.path.join(out_dir,"embedding_map_manifest.json"),"w") as f:
-    json.dump({"built":"2026-08-10 embed v7.1.5","total_players":len(manifest_sorted),"filters":{"current":len(current_pids),"allstar":len(allstar_pids),"three_plus":len(three_plus),"recent":len(recent_pids),"qualifying_vectors":len(qualifying)},"players":manifest_sorted}, f, indent=2)
-print("wrote manifest", len(manifest_sorted))
 
-points=[]
-for entry in manifest_sorted:
-    pid=entry['player_id']
-    if entry.get('missing_vector'):
-        continue
-    lst=by_pid.get(pid)
-    if not lst: continue
-    target = entry['latest_season'] if entry['is_current'] else entry['best_season']
-    rec=next((r for r in lst if r['season']==target), lst[-1])
-    points.append({
-        "pid": pid,
-        "season": rec['season'],
-        "x": rec['x'],
-        "y": rec['y'],
-        "z": rec.get('z',0),
-        "c": rec.get('c',0),
-        "display_name": entry['display_name'],
-        "is_current": entry['is_current'],
-        "is_allstar": entry['is_allstar'],
-    })
+def build_points(rows: list[dict], by_pid: dict) -> list[dict]:
+    points = []
+    for entry in rows:
+        if entry.get("missing_vector"):
+            continue
+        lst = by_pid[entry["player_id"]]
+        target = entry["latest_season"] if entry["is_current"] else entry["best_season"]
+        rec = next((r for r in lst if r["season"] == target), lst[-1])
+        points.append(
+            {
+                "pid": entry["player_id"],
+                "season": rec["season"],
+                "x": rec["x"],
+                "y": rec["y"],
+                "z": rec.get("z", 0),
+                "c": rec.get("c", 0),
+                "display_name": entry["display_name"],
+                "is_current": entry["is_current"],
+                "is_allstar": entry["is_allstar"],
+            }
+        )
+    return points
 
-with open(os.path.join(out_dir,"embedding_map_points_limited.json"),"w") as out:
-    json.dump({"built":"limited 1 per player","count":len(points),"points":points}, out)
-print("wrote points", len(points))
 
-trajectories={}
-for entry in manifest_sorted:
-    pid=entry['player_id']
-    if entry.get('missing_vector'): continue
-    lst=sorted(by_pid[pid], key=lambda x: x['season'])
-    trajectories[str(pid)]=[{"season":r['season'],"x":r['x'],"y":r['y'],"z":r.get('z',0),"c":r.get('c',0),"gp":r.get('gp'),"mpg":r.get('mpg')} for r in lst]
+def build_trajectories(rows: list[dict], by_pid: dict) -> dict:
+    out = {}
+    for entry in rows:
+        if entry.get("missing_vector"):
+            continue
+        lst = sorted(by_pid[entry["player_id"]], key=lambda x: x["season"])
+        out[str(entry["player_id"])] = [
+            {
+                "season": r["season"],
+                "x": r["x"],
+                "y": r["y"],
+                "z": r.get("z", 0),
+                "c": r.get("c", 0),
+                "gp": r.get("gp"),
+                "mpg": r.get("mpg"),
+            }
+            for r in lst
+        ]
+    return out
 
-with open(os.path.join(out_dir,"embedding_map_trajectories.json"),"w") as f:
-    json.dump({"built":"trajectories","count":len(trajectories),"trajectories":trajectories}, f)
-print("wrote trajectories", len(trajectories))
+
+def main() -> None:
+    ap = argparse.ArgumentParser()
+    add_out_root(ap)
+    args = ap.parse_args()
+
+    raw = VECTORS.read_bytes()
+    vec = json.loads(raw)
+    honors = json.loads(HONORS.read_text(encoding="utf-8"))
+    cur_bio = json.loads(BIO.read_text(encoding="utf-8"))
+    rows, filters = build_manifest(vec, honors, cur_bio)
+    by_pid: dict = defaultdict(list)
+    for p in vec["players"]:
+        by_pid[p["pid"]].append(p)
+    built = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
+    print(
+        f"qualifying {filters['qualifying_vectors']} with vectors; {filters['missing_vector']} current players "
+        f"have no vectors.json row and are listed with measured fields only (missing_vector true)"
+    )
+
+    manifest_out = rerooted(MANIFEST_OUT, args.out_root)
+    manifest_out.parent.mkdir(parents=True, exist_ok=True)
+    manifest_out.write_text(
+        json.dumps(
+            {
+                "built": built,
+                "vectors_sha256": hashlib.sha256(raw).hexdigest(),
+                "total_players": len(rows),
+                "filters": filters,
+                "players": rows,
+            },
+            indent=2,
+        ),
+        encoding="utf-8",
+    )
+    print(f"wrote {shown(manifest_out)} ({len(rows)} players)")
+
+    points = build_points(rows, by_pid)
+    points_out = rerooted(POINTS_OUT, args.out_root)
+    points_out.write_text(
+        json.dumps({"built": "limited 1 per player", "count": len(points), "points": points}), encoding="utf-8"
+    )
+    print(f"wrote {shown(points_out)} ({len(points)} points)")
+
+    traj = build_trajectories(rows, by_pid)
+    traj_out = rerooted(TRAJ_OUT, args.out_root)
+    traj_out.write_text(
+        json.dumps({"built": "trajectories", "count": len(traj), "trajectories": traj}), encoding="utf-8"
+    )
+    print(f"wrote {shown(traj_out)} ({len(traj)} trajectories)")
+
+
+if __name__ == "__main__":
+    main()

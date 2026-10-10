@@ -9,7 +9,8 @@ which meant running a "test" rewrote training inputs and tracked assets in place
 Measured on 90ef66a4, running the six gate scripts once changed 6 pipeline/data
 files (honors, pedigree, playoffs, salary_market, game_ratings,
 wide_skill_labels.npz) and 4 tracked assets (honors, pedigree, playoffs,
-playoff_paths).
+playoff_paths). build_embedding_map_manifest (three assets/embedding_map_*.json,
+no pipeline/data output) takes the same flag so its test can run it.
 
 `--out-root DIR` keeps each output's repo-relative path but roots it at DIR:
 DIR/pipeline/data/honors.json, DIR/assets/honors.json. Inputs are still read
