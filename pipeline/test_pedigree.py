@@ -34,13 +34,6 @@ from name_utils import canonical_name  # noqa: E402
 CACHE = ROOT / "pipeline" / "cache" / "draft_history.json"
 PEDIGREE = Path("pipeline") / "data" / "pedigree.json"
 
-# Measured on 90ef66a4 with the real cache: the row 'Tim Hardaway Jr.' 2013-14
-# comes out PED_UNDRAFTED=1.0, PED_PICK_QUALITY=None, though he was the #24 pick
-# in 2013. fetch_draft_history keys the cache with a suffix-stripping norm_name,
-# build_pedigree looks it up with name_utils.norm_name, which keeps "jr", so
-# suffix-bearing draftees miss and are written as confidently undrafted.
-SUFFIX_JOIN = "[health#3] draft cache keys strip Jr/II/III, the pedigree lookup keeps them: Hardaway Jr. 'undrafted'"
-
 
 @pytest.fixture(scope="module")
 def built(tmp_path_factory) -> dict:
@@ -52,9 +45,11 @@ def built(tmp_path_factory) -> dict:
     assert proc.returncode == 0, f"build_pedigree.py failed:\n{proc.stdout}{proc.stderr}"
     doc = json.loads((out / PEDIGREE).read_text(encoding="utf-8"))
     covered = [r for r in doc["players"] if "PED_UNDRAFTED" in r]
-    per_player: dict[str, list[dict]] = {}
+    # One career per PLAYER_ID. Grouped by display name, Gary Payton and Gary
+    # Payton II (and four unrelated pairs of namesakes) were one "career".
+    per_player: dict[int, list[dict]] = {}
     for r in covered:
-        per_player.setdefault(r["name"], []).append(r)
+        per_player.setdefault(r["player_id"], []).append(r)
     for prs in per_player.values():
         prs.sort(key=lambda r: r["season"])
     return {
@@ -79,22 +74,25 @@ SPOTS = [
     ("Nikola Jokić", "2015-16", "PED_TEAM_WINPCT", 0.439),
     ("Kobe Bryant", "1996-97", "PED_PICK_QUALITY", 48),
     ("Kobe Bryant", "1996-97", "PED_TEAM_WINPCT", None),  # 1996 draft: pre-cache, masked
-    # name-collision disambiguation: two "tim hardaway" draft records
+    # name-collision disambiguation: two "tim hardaway" draft records, joined by
+    # PLAYER_ID == person_id. These two were strict xfails [health#3]: the
+    # suffix-stripped cache key missed 'tim hardaway jr' and he came out
+    # confidently undrafted.
     ("Tim Hardaway", "1996-97", "PED_PICK_QUALITY", 47),  # Sr, #14 1989
-    pytest.param(
-        "Tim Hardaway Jr.",
-        "2013-14",
-        "PED_PICK_QUALITY",
-        37,  # Jr, #24 2013
-        marks=pytest.mark.xfail(strict=True, reason=SUFFIX_JOIN),
-    ),
-    pytest.param(
-        "Tim Hardaway Jr.",
-        "2013-14",
-        "PED_TEAM_WINPCT",
-        0.659,
-        marks=pytest.mark.xfail(strict=True, reason=SUFFIX_JOIN),
-    ),
+    ("Tim Hardaway Jr.", "2013-14", "PED_PICK_QUALITY", 37),  # Jr, #24 2013
+    ("Tim Hardaway Jr.", "2013-14", "PED_TEAM_WINPCT", 0.659),
+]
+
+# Real-cache identity spots [features#5, health#3]: a son keeps his own draft,
+# a suffix-bearing pick is not "undrafted", an undrafted son does not inherit
+# his father's pick, and the father keeps his.
+IDENTITY_SPOTS = [
+    ("Jaren Jackson Jr.", "2018-19", "PED_PICK_QUALITY", 57),  # #4 2018
+    ("Jaren Jackson Jr.", "2018-19", "PED_UNDRAFTED", 0.0),
+    ("Marvin Bagley III", "2018-19", "PED_PICK_QUALITY", 59),  # #2 2018
+    ("Gary Payton II", "2017-18", "PED_UNDRAFTED", 1.0),
+    ("Gary Payton II", "2017-18", "PED_PICK_QUALITY", None),
+    ("Gary Payton", "1996-97", "PED_PICK_QUALITY", 59),  # #2 1990
 ]
 
 
@@ -105,6 +103,29 @@ def test_known_pick_joins(built, name, season, field, want):
     got = r.get(field)
     ok = (got is None and want is None) or (got is not None and want is not None and abs(got - want) <= 1e-6)
     assert ok, f"{name} {season} {field} == {want} (got {got})"
+
+
+@pytest.mark.parametrize(("name", "season", "field", "want"), IDENTITY_SPOTS)
+def test_identity_spots(built, name, season, field, want):
+    if not built["real"]:
+        pytest.skip("needs the full draft history (the fixture has none of these players)")
+    test_known_pick_joins(built, name, season, field, want)
+
+
+def test_no_two_players_share_a_draft_pick(built):
+    """A (draft year, overall pick) belongs to one person [features#5].
+
+    Joined by display name, Gary Payton II carried his father's 1990 #2 pick
+    and Glenn Robinson III his father's 1994 #1: 64 rows of 12 names.
+    """
+    owners: dict[tuple[int, float], set[int]] = {}
+    for r in built["doc"]["players"]:
+        if r.get("PED_UNDRAFTED") != 0.0 or r.get("PED_PICK_QUALITY") is None:
+            continue
+        draft_year = int(r["season"][:4]) - int(r["PED_YEARS_SINCE"])
+        owners.setdefault((draft_year, r["PED_PICK_QUALITY"]), set()).add(r["player_id"])
+    shared = {k: v for k, v in owners.items() if len(v) > 1}
+    assert not shared, f"{len(shared)} draft picks attached to more than one PLAYER_ID, e.g. {list(shared.items())[:3]}"
 
 
 STATIC_FIELDS = [

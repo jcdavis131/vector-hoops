@@ -23,13 +23,20 @@ Features (raw, interpretable — integrate_context.py era-z's at merge):
                     expectations fade as on-court evidence accumulates
 
 Mask honesty: a player with no draft record gets PED_UNDRAFTED=1 ONLY when
-the cache is marked complete and spans his entry window; against a partial
-cache (e.g. the committed example fixture) unmatched players are fully
-masked instead of being mislabeled undrafted.
+the cache is marked complete, spans his entry window and carries a person_id
+on every record; against a partial cache (e.g. the committed example fixture)
+unmatched players are fully masked instead of being mislabeled undrafted.
 
-Name collisions: the cache stores a LIST per norm_name (e.g. both Tim
-Hardaways); the record whose draft year is the latest one <= the player's
-first charted season year wins.
+Identity: a charted row is matched to draft records by PLAYER_ID ==
+person_id (vectors.json 'pid'), and first_year is that PLAYER_ID's first
+charted season. Among one person's records (119 people were drafted twice)
+the latest draft <= first_year wins. This used to be keyed by display name
+[features#5, health#3]: first_year[name] was the earliest season of anyone
+with that name, so a son was matched against his father's debut (Jaren
+Jackson Jr. 'undrafted', Gary Payton II with his father's 1990 #2 pick), and
+a suffix-bearing name missed the suffix-stripped cache key and was labelled
+confidently undrafted (227 rows of 38 drafted players on the committed
+vectors.json, Hardaway Jr., Bagley, Porter Jr. among them).
 
 Run:  python pipeline/build_pedigree.py [--cache PATH] [--fixture]
 Output: pipeline/data/pedigree.json (consumed by integrate_context.py);
@@ -50,7 +57,6 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 import itertools
 
 from _out_root import add_out_root, rerooted, shown
-from name_utils import norm_name
 
 ROOT = Path(__file__).resolve().parents[1]
 VECTORS = ROOT / "assets" / "vectors.json"
@@ -152,33 +158,50 @@ def main() -> None:
     vec = json.loads(VECTORS.read_text(encoding="utf-8"))
     players = vec["players"]
 
-    first_year: dict[str, int] = {}
+    by_person: dict[int, list[dict]] = {}
+    no_person_id = 0
+    for recs in draft["players"].values():
+        for rec in recs:
+            if rec.get("person_id") is None:
+                no_person_id += 1
+                continue
+            by_person.setdefault(int(rec["person_id"]), []).append(rec)
+    # "Not in the draft history" means undrafted only when every record can be
+    # found by person_id; a record without one could be this player.
+    can_say_undrafted = complete and no_person_id == 0 and dmin is not None
+
+    def pid_of(p: dict) -> int | None:
+        return int(p["pid"]) if str(p.get("pid", "")).isdigit() else None
+
+    first_year: dict[int, int] = {}
     for p in players:
-        y = season_start(p["season"])
-        first_year[p["name"]] = min(first_year.get(p["name"], 9999), y)
+        pid = pid_of(p)
+        if pid is not None:
+            first_year[pid] = min(first_year.get(pid, 9999), season_start(p["season"]))
 
     teams = team_winpct_index()
 
-    resolved: dict[str, dict | None] = {}  # name -> draft record | None(=undrafted)
+    resolved: dict[int, dict | None] = {}  # PLAYER_ID -> draft record | None(=undrafted)
     unmatched = 0
-    for name, fy in first_year.items():
-        recs = draft["players"].get(norm_name(name))
+    for pid, fy in first_year.items():
+        recs = by_person.get(pid)
         if recs:
             rec = pick_record(recs, fy)
             if rec is not None:
-                resolved[name] = rec
+                resolved[pid] = rec
                 continue
-        if complete and dmin is not None and dmin <= fy <= (dmax or fy) + 1:
-            resolved[name] = None  # confidently undrafted
+        if can_say_undrafted and dmin <= fy <= (dmax or fy) + 1:
+            resolved[pid] = None  # confidently undrafted
         else:
             unmatched += 1  # partial cache -> masked, never mislabeled
+    no_pid_rows = sum(1 for p in players if pid_of(p) is None)
 
     entries = []
     for p in players:
-        name, season = p["name"], p["season"]
-        row: dict = {"name": name, "season": season}
-        if name in resolved:
-            rec = resolved[name]
+        name, season, pid = p["name"], p["season"], pid_of(p)
+        row: dict = {"name": name, "season": season, "player_id": pid}
+        if pid in resolved:
+            rec = resolved[pid]
             sy = season_start(season)
             if rec is not None:
                 overall = rec["overall"]
@@ -197,7 +220,7 @@ def main() -> None:
                     }
                 )
             else:
-                years = max(0, sy - first_year[name])
+                years = max(0, sy - first_year[pid])
                 row.update(
                     {
                         "PED_PICK_QUALITY": None,
@@ -225,6 +248,8 @@ def main() -> None:
                     "players_drafted": n_drafted,
                     "players_undrafted": n_undrafted,
                     "players_unmatched_masked": unmatched,
+                    "rows_without_player_id": no_pid_rows,
+                    "records_without_person_id": no_person_id,
                     "rows_covered": covered_rows,
                     "rows_total": len(entries),
                 },
@@ -238,8 +263,20 @@ def main() -> None:
     # Transparent per-player draft facts for game surfaces (Steals of the
     # Draft) — ONLY from a complete cache, never the partial fixture.
     if complete and n_drafted:
+        # The served surface is keyed by display name. A name two PLAYER_IDs
+        # share (12 such names: Gary Payton / Payton II, both Tim Hardaways,
+        # ...) shows the earliest-debut player under the name, as it did when
+        # this was resolved by name; players_by_pid carries every player for a
+        # pid-aware front end.
+        name_of: dict[int, str] = {}
+        for p in sorted(players, key=lambda p: season_start(p["season"])):
+            pid = pid_of(p)
+            if pid is not None:
+                name_of.setdefault(pid, p["name"])
         asset_players = {}
-        for name, rec in resolved.items():
+        asset_by_pid = {}
+        for pid, rec in sorted(resolved.items(), key=lambda kv: (first_year[kv[0]], kv[0]), reverse=True):
+            name = name_of[pid]
             if rec is None:
                 asset_players[name] = {
                     "undrafted": True,
@@ -260,6 +297,7 @@ def main() -> None:
                     "draft_year": rec["year"],
                     "team": rec.get("team_abbr") or None,
                 }
+            asset_by_pid[str(pid)] = {"name": name, **asset_players[name]}
         ASSET_OUT.parent.mkdir(parents=True, exist_ok=True)
         ASSET_OUT.write_text(
             json.dumps(
@@ -271,6 +309,7 @@ def main() -> None:
                         "Steals of the Draft surface. Source: stats.nba.com."
                     ),
                     "players": asset_players,
+                    "players_by_pid": dict(sorted(asset_by_pid.items(), key=lambda kv: int(kv[0]))),
                 },
                 separators=(",", ":"),
             ),
