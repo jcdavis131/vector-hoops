@@ -130,9 +130,10 @@ def train_one(
     fams = T.family_slices(manifest)
     game_cols = T.game_feature_cols(manifest)
     game_z = torch.tensor(Z[:, game_cols], device=device)
-    # As in train_mtnn: game targets nobody measured stay out of the
-    # next-profile metrics; None (all measured) is the old path.
+    # As in train_mtnn: game targets nobody measured stay out of the profile
+    # losses and the next-profile metrics; None (all measured) is the old path.
     game_measured = T.game_target_mask(M, game_cols)
+    game_m = None if game_measured is None else torch.tensor(game_measured, dtype=torch.float32, device=device)
     n_seasons = int(season_ids.max()) + 1
 
     pairs = T.adjacent_season_pairs(pids, seasons, names)
@@ -220,13 +221,21 @@ def train_one(
                 loss = loss + W["position"] * F.cross_entropy(
                     out["position"][pos_mask[idx_t]], pos_t[idx_t][pos_mask[idx_t]]
                 )
-            loss = loss + W["profile"] * F.mse_loss(out["profile"], game_z[idx_t])
+            if game_m is None:
+                loss = loss + W["profile"] * F.mse_loss(out["profile"], game_z[idx_t])
+            else:
+                se = (out["profile"] - game_z[idx_t]) ** 2
+                loss = loss + W["profile"] * T.masked_cell_mean(se, game_m[idx_t])
             nb = next_idx_train[idx]
             nv = nb >= 0
             if nv.any():
                 nt = torch.tensor(nb[nv], device=device)
                 nvt = torch.tensor(nv, device=device, dtype=torch.bool)
-                loss = loss + W["next_profile"] * F.smooth_l1_loss(out["next_profile"][nvt], game_z[nt])
+                if game_m is None:
+                    loss = loss + W["next_profile"] * F.smooth_l1_loss(out["next_profile"][nvt], game_z[nt])
+                else:
+                    l1 = F.smooth_l1_loss(out["next_profile"][nvt], game_z[nt], reduction="none")
+                    loss = loss + W["next_profile"] * T.masked_cell_mean(l1, game_m[nt])
             if "skills" in out:
                 wm = skillm_t[idx_t]
                 if wm.sum() > 0:

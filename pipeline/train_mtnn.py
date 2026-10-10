@@ -822,6 +822,13 @@ def masked_vector_mse(pred, target, feat_mask, row_mask) -> torch.Tensor:
     return (w * (pred - target) ** 2).sum() / w.sum()
 
 
+def masked_cell_mean(values, cell_mask) -> torch.Tensor:
+    """Mean of an elementwise loss over the cells whose mask is 1 (a graph-keeping 0.0 when none is)."""
+    if cell_mask.sum() <= 0:
+        return values.sum() * 0.0
+    return (cell_mask * values).sum() / cell_mask.sum()
+
+
 def info_nce(
     za,
     zb,
@@ -1850,15 +1857,18 @@ def main(argv: list[str] | None = None) -> None:
     game_cols = game_feature_cols(manifest)
     game_z = torch.tensor(Z[:, game_cols], device=device)
     # The game cells nobody measured (a percentage with no attempt, mask 0 and
-    # z 0.0 since 078b75df) are left out of the next-season metrics. Taken
-    # from the matrix as built: a --mask-* ablation hides an input, it does
-    # not make a measured target unmeasured. None when every game cell was
-    # measured, and then the metrics are the original ones, bit for bit.
+    # z 0.0 since 078b75df) are left out of the profile and next_profile
+    # losses, as every other head leaves out its unmeasured targets, and out
+    # of the next-season metrics. Taken from the matrix as built: a --mask-*
+    # ablation hides an input, it does not make a measured target
+    # unmeasured. None when every game cell was measured, and then the two
+    # losses and the metrics are the original ones, bit for bit.
     game_measured = game_target_mask(M_built, game_cols)
+    game_m = None if game_measured is None else torch.tensor(game_measured, dtype=torch.float32, device=device)
     if game_measured is not None:
         print(
             f"profile targets: {int((~game_measured).sum())} unmeasured game cells on "
-            f"{int((~game_measured).any(axis=1).sum())} rows left out of the next-season metrics"
+            f"{int((~game_measured).any(axis=1).sum())} rows left out of the profile and next_profile losses and metrics"
         )
     n_seasons = int(season_ids.max()) + 1
 
@@ -2140,7 +2150,11 @@ def main(argv: list[str] | None = None) -> None:
                 loss = loss + weights["position"] * term(
                     "position", F.cross_entropy(out_a["position"][pos_mask[idx_t]], pos_t[idx_t][pos_mask[idx_t]])
                 )
-            loss = loss + weights["profile"] * term("profile", F.mse_loss(out_a["profile"], game_z[idx_t]))
+            if game_m is None:
+                loss = loss + weights["profile"] * term("profile", F.mse_loss(out_a["profile"], game_z[idx_t]))
+            else:
+                profile_se = (out_a["profile"] - game_z[idx_t]) ** 2
+                loss = loss + weights["profile"] * term("profile", masked_cell_mean(profile_se, game_m[idx_t]))
             next_batch = loop_next_idx[idx]
             next_valid = next_batch >= 0
             if next_valid.any():
@@ -2148,7 +2162,11 @@ def main(argv: list[str] | None = None) -> None:
                 next_valid_t = torch.tensor(next_valid, device=device, dtype=torch.bool)
                 pred_next = out_a["next_profile"][next_valid_t]
                 # Target is next-season z-scored game profile (same 14-d contract).
-                loss = loss + weights["next_profile"] * term("next_profile", F.smooth_l1_loss(pred_next, game_z[next_t]))
+                if game_m is None:
+                    loss = loss + weights["next_profile"] * term("next_profile", F.smooth_l1_loss(pred_next, game_z[next_t]))
+                else:
+                    next_l1 = F.smooth_l1_loss(pred_next, game_z[next_t], reduction="none")
+                    loss = loss + weights["next_profile"] * term("next_profile", masked_cell_mean(next_l1, game_m[next_t]))
             if "skills" in out_a:
                 wm = skillm_t[idx_t]
                 if wm.sum() > 0:
