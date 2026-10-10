@@ -836,6 +836,11 @@ def fetch_bbref_contracts(offline: bool) -> dict[tuple[str, str], float]:
     def get() -> str:
         r = requests.get(url, headers={"User-Agent": UA}, timeout=40)
         r.raise_for_status()
+        # BBRef sends no charset, so requests decoded the page as latin-1 and
+        # every accented name came out as mojibake ('Jokić' -> 'JokiÄ\x87'):
+        # 71 keys, 20 of them 2025-26 players with 10+ games who lost all four
+        # salary columns [ingest#3]. fetch_salary_history.py had this line.
+        r.encoding = "utf-8"
         return r.text
 
     # A failed fetch used to print one line and return {}, and the build went

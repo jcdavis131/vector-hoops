@@ -43,6 +43,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from ingest import run_fetch, write_cache
+from name_utils import ascii_fold
 from nba_http import retry_call
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -56,8 +57,13 @@ UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like 
 
 
 def norm_name(name: str) -> str:
-    """Match build_vectors.norm_name."""
-    s = name.lower()
+    """Lowercase, strip . ' ’ - and Jr/Sr/II..V, collapse whitespace, after ascii_fold.
+
+    ascii_fold first so 'Jokić' keys as 'nikola jokic', the form the charted
+    (ASCII-folded) names join on; without it a correctly decoded BBRef name
+    would still miss [ingest#3].
+    """
+    s = ascii_fold(name).lower()
     s = re.sub(r"[.'’-]", "", s)
     s = re.sub(r"\s+(jr|sr|ii|iii|iv|v)$", "", s.strip())
     return re.sub(r"\s+", " ", s)
@@ -72,6 +78,9 @@ def fetch_bbref_contracts() -> dict[str, float]:
     def get() -> str:
         r = requests.get(BBREF_CONTRACTS_URL, headers={"User-Agent": UA}, timeout=40)
         r.raise_for_status()
+        # BBRef sends no charset; without this requests decodes UTF-8 as
+        # latin-1 and the keys become mojibake ('nikola jokiä\x87') [ingest#3].
+        r.encoding = "utf-8"
         return r.text
 
     html = retry_call(get, "basketball-reference contracts")

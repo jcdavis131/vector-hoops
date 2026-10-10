@@ -3200,33 +3200,33 @@
       "season": "2024-25",
       "team": "HOU"
     },
-    "alperen \u00e5\u009eeng\u00e3\u00bcn|2025-26": {
-      "name": "Alperen \u00c5\u009eeng\u00e3\u00bcn",
-      "norm_name": "alperen \u00e5\u009eeng\u00e3\u00bcn",
+    "alperen sengun|2025-26": {
+      "name": "Alperen Sengun",
+      "norm_name": "alperen sengun",
       "salary": 33944954.0,
       "season": "2025-26"
     },
-    "alperen \u00e5\u009eeng\u00e3\u00bcn|2026-27": {
-      "name": "Alperen \u00c5\u009eeng\u00e3\u00bcn",
-      "norm_name": "alperen \u00e5\u009eeng\u00e3\u00bcn",
+    "alperen sengun|2026-27": {
+      "name": "Alperen Sengun",
+      "norm_name": "alperen sengun",
       "salary": 35642202.0,
       "season": "2026-27"
     },
-    "alperen \u00e5\u009eeng\u00e3\u00bcn|2027-28": {
-      "name": "Alperen \u00c5\u009eeng\u00e3\u00bcn",
-      "norm_name": "alperen \u00e5\u009eeng\u00e3\u00bcn",
+    "alperen sengun|2027-28": {
+      "name": "Alperen Sengun",
+      "norm_name": "alperen sengun",
       "salary": 37339450.0,
       "season": "2027-28"
     },
-    "alperen \u00e5\u009eeng\u00e3\u00bcn|2028-29": {
-      "name": "Alperen \u00c5\u009eeng\u00e3\u00bcn",
-      "norm_name": "alperen \u00e5\u009eeng\u00e3\u00bcn",
+    "alperen sengun|2028-29": {
+      "name": "Alperen Sengun",
+      "norm_name": "alperen sengun",
       "salary": 39036697.0,
       "season": "2028-29"
     },
-    "alperen \u00e5\u009eeng\u00e3\u00bcn|2029-30": {
-      "name": "Alperen \u00c5\u009eeng\u00e3\u00bcn",
-      "norm_name": "alperen \u00e5\u009eeng\u00e3\u00bcn",
+    "alperen sengun|2029-30": {
+      "name": "Alperen Sengun",
+      "norm_name": "alperen sengun",
       "salary": 39036697.0,
       "season": "2029-30"
     },
@@ -10774,15 +10774,15 @@
       "season": "2024-25",
       "team": "LAC"
     },
-    "bogdan bogdanovi\u00e4\u0087|2025-26": {
-      "name": "Bogdan Bogdanovi\u00e4\u0087",
-      "norm_name": "bogdan bogdanovi\u00e4\u0087",
+    "bogdan bogdanovic|2025-26": {
+      "name": "Bogdan Bogdanovic",
+      "norm_name": "bogdan bogdanovic",
       "salary": 16020000.0,
       "season": "2025-26"
     },
-    "bogdan bogdanovi\u00e4\u0087|2026-27": {
-      "name": "Bogdan Bogdanovi\u00e4\u0087",
-      "norm_name": "bogdan bogdanovi\u00e4\u0087",
+    "bogdan bogdanovic|2026-27": {
+      "name": "Bogdan Bogdanovic",
+      "norm_name": "bogdan bogdanovic",
       "salary": 16020000.0,
       "season": "2026-27"
     },
@@ -24570,9 +24570,9 @@
       "season": "2024-25",
       "team": "DAL"
     },
-    "dant\u00e3\u00a9 exum|2025-26": {
-      "name": "Dant\u00e3\u00a9 Exum",
-      "norm_name": "dant\u00e3\u00a9 exum",
+    "dante exum|2025-26": {
+      "name": "Dante Exum",
+      "norm_name": "dante exum",
       "salary": 2296274.0,
       "season": "2025-26"
     },
@@ -28286,30 +28286,30 @@
       "season": "2024-25",
       "team": "DET"
     },
+    "dennis schroder|2025-26": {
+      "name": "Dennis Schroder",
+      "norm_name": "dennis schroder",
+      "salary": 14104000.0,
+      "season": "2025-26"
+    },
+    "dennis schroder|2026-27": {
+      "name": "Dennis Schroder",
+      "norm_name": "dennis schroder",
+      "salary": 14809200.0,
+      "season": "2026-27"
+    },
+    "dennis schroder|2027-28": {
+      "name": "Dennis Schroder",
+      "norm_name": "dennis schroder",
+      "salary": 15514400.0,
+      "season": "2027-28"
+    },
     "dennis schroeder|2013-14": {
       "name": "Dennis Schroeder",
       "norm_name": "dennis schroeder",
       "salary": 1348200.0,
       "season": "2013-14",
       "team": "ATL"
-    },
-    "dennis schr\u00e3\u00b6der|2025-26": {
-      "name": "Dennis Schr\u00e3\u00b6der",
-      "norm_name": "dennis schr\u00e3\u00b6der",
-      "salary": 14104000.0,
-      "season": "2025-26"
-    },
-    "dennis schr\u00e3\u00b6der|2026-27": {
-      "name": "Dennis Schr\u00e3\u00b6der",
-      "norm_name": "dennis schr\u00e3\u00b6der",
-      "salary": 14809200.0,
-      "season": "2026-27"
-    },
-    "dennis schr\u00e3\u00b6der|2027-28": {
-      "name": "Dennis Schr\u00e3\u00b6der",
-      "norm_name": "dennis schr\u00e3\u00b6der",
-      "salary": 15514400.0,
-      "season": "2027-28"
     },
     "dennis scott|1990-91": {
       "name": "Dennis Scott",
@@ -35219,27 +35219,27 @@
       "season": "2016-17",
       "team": "NJN"
     },
-    "egor d\u00f1\u0091min|2025-26": {
-      "name": "Egor D\u00f1\u0091min",
-      "norm_name": "egor d\u00f1\u0091min",
+    "egor d\u0435min|2025-26": {
+      "name": "Egor D\u0435min",
+      "norm_name": "egor d\u0435min",
       "salary": 6889200.0,
       "season": "2025-26"
     },
-    "egor d\u00f1\u0091min|2026-27": {
-      "name": "Egor D\u00f1\u0091min",
-      "norm_name": "egor d\u00f1\u0091min",
+    "egor d\u0435min|2026-27": {
+      "name": "Egor D\u0435min",
+      "norm_name": "egor d\u0435min",
       "salary": 7233720.0,
       "season": "2026-27"
     },
-    "egor d\u00f1\u0091min|2027-28": {
-      "name": "Egor D\u00f1\u0091min",
-      "norm_name": "egor d\u00f1\u0091min",
+    "egor d\u0435min|2027-28": {
+      "name": "Egor D\u0435min",
+      "norm_name": "egor d\u0435min",
       "salary": 7578240.0,
       "season": "2027-28"
     },
-    "egor d\u00f1\u0091min|2028-29": {
-      "name": "Egor D\u00f1\u0091min",
-      "norm_name": "egor d\u00f1\u0091min",
+    "egor d\u0435min|2028-29": {
+      "name": "Egor D\u0435min",
+      "norm_name": "egor d\u0435min",
       "salary": 9639522.0,
       "season": "2028-29"
     },
@@ -43981,27 +43981,27 @@
       "season": "2003-04",
       "team": "DET"
     },
-    "hugo gonz\u00e3\u00a1lez|2025-26": {
-      "name": "Hugo Gonz\u00e3\u00a1lez",
-      "norm_name": "hugo gonz\u00e3\u00a1lez",
+    "hugo gonzalez|2025-26": {
+      "name": "Hugo Gonzalez",
+      "norm_name": "hugo gonzalez",
       "salary": 2783880.0,
       "season": "2025-26"
     },
-    "hugo gonz\u00e3\u00a1lez|2026-27": {
-      "name": "Hugo Gonz\u00e3\u00a1lez",
-      "norm_name": "hugo gonz\u00e3\u00a1lez",
+    "hugo gonzalez|2026-27": {
+      "name": "Hugo Gonzalez",
+      "norm_name": "hugo gonzalez",
       "salary": 2923560.0,
       "season": "2026-27"
     },
-    "hugo gonz\u00e3\u00a1lez|2027-28": {
-      "name": "Hugo Gonz\u00e3\u00a1lez",
-      "norm_name": "hugo gonz\u00e3\u00a1lez",
+    "hugo gonzalez|2027-28": {
+      "name": "Hugo Gonzalez",
+      "norm_name": "hugo gonzalez",
       "salary": 3062640.0,
       "season": "2027-28"
     },
-    "hugo gonz\u00e3\u00a1lez|2028-29": {
-      "name": "Hugo Gonz\u00e3\u00a1lez",
-      "norm_name": "hugo gonz\u00e3\u00a1lez",
+    "hugo gonzalez|2028-29": {
+      "name": "Hugo Gonzalez",
+      "norm_name": "hugo gonzalez",
       "salary": 5528065.0,
       "season": "2028-29"
     },
@@ -57792,15 +57792,15 @@
       "season": "2024-25",
       "team": "SAC"
     },
-    "jonas valan\u00e4\u008di\u00e5\u00abnas|2025-26": {
-      "name": "Jonas Valan\u00e4\u008di\u00e5\u00abnas",
-      "norm_name": "jonas valan\u00e4\u008di\u00e5\u00abnas",
+    "jonas valanciunas|2025-26": {
+      "name": "Jonas Valanciunas",
+      "norm_name": "jonas valanciunas",
       "salary": 10395000.0,
       "season": "2025-26"
     },
-    "jonas valan\u00e4\u008di\u00e5\u00abnas|2026-27": {
-      "name": "Jonas Valan\u00e4\u008di\u00e5\u00abnas",
-      "norm_name": "jonas valan\u00e4\u008di\u00e5\u00abnas",
+    "jonas valanciunas|2026-27": {
+      "name": "Jonas Valanciunas",
+      "norm_name": "jonas valanciunas",
       "salary": 10000000.0,
       "season": "2026-27"
     },
@@ -61477,9 +61477,9 @@
       "season": "2024-25",
       "team": "CHA"
     },
-    "jusuf nurki\u00e4\u0087|2025-26": {
-      "name": "Jusuf Nurki\u00e4\u0087",
-      "norm_name": "jusuf nurki\u00e4\u0087",
+    "jusuf nurkic|2025-26": {
+      "name": "Jusuf Nurkic",
+      "norm_name": "jusuf nurkic",
       "salary": 19375000.0,
       "season": "2025-26"
     },
@@ -61961,39 +61961,39 @@
       "season": "2024-25",
       "team": "NOP"
     },
-    "karlo matkovi\u00e4\u0087|2025-26": {
-      "name": "Karlo Matkovi\u00e4\u0087",
-      "norm_name": "karlo matkovi\u00e4\u0087",
+    "karlo matkovic|2025-26": {
+      "name": "Karlo Matkovic",
+      "norm_name": "karlo matkovic",
       "salary": 1955377.0,
       "season": "2025-26"
     },
-    "karlo matkovi\u00e4\u0087|2026-27": {
-      "name": "Karlo Matkovi\u00e4\u0087",
-      "norm_name": "karlo matkovi\u00e4\u0087",
+    "karlo matkovic|2026-27": {
+      "name": "Karlo Matkovic",
+      "norm_name": "karlo matkovic",
       "salary": 2296271.0,
       "season": "2026-27"
     },
-    "kasparas jaku\u00e4\u008dionis|2025-26": {
-      "name": "Kasparas Jaku\u00e4\u008dionis",
-      "norm_name": "kasparas jaku\u00e4\u008dionis",
+    "kasparas jakucionis|2025-26": {
+      "name": "Kasparas Jakucionis",
+      "norm_name": "kasparas jakucionis",
       "salary": 3658800.0,
       "season": "2025-26"
     },
-    "kasparas jaku\u00e4\u008dionis|2026-27": {
-      "name": "Kasparas Jaku\u00e4\u008dionis",
-      "norm_name": "kasparas jaku\u00e4\u008dionis",
+    "kasparas jakucionis|2026-27": {
+      "name": "Kasparas Jakucionis",
+      "norm_name": "kasparas jakucionis",
       "salary": 3841680.0,
       "season": "2026-27"
     },
-    "kasparas jaku\u00e4\u008dionis|2027-28": {
-      "name": "Kasparas Jaku\u00e4\u008dionis",
-      "norm_name": "kasparas jaku\u00e4\u008dionis",
+    "kasparas jakucionis|2027-28": {
+      "name": "Kasparas Jakucionis",
+      "norm_name": "kasparas jakucionis",
       "salary": 4024440.0,
       "season": "2027-28"
     },
-    "kasparas jaku\u00e4\u008dionis|2028-29": {
-      "name": "Kasparas Jaku\u00e4\u008dionis",
-      "norm_name": "kasparas jaku\u00e4\u008dionis",
+    "kasparas jakucionis|2028-29": {
+      "name": "Kasparas Jakucionis",
+      "norm_name": "kasparas jakucionis",
       "salary": 6205687.0,
       "season": "2028-29"
     },
@@ -67099,21 +67099,21 @@
       "season": "2024-25",
       "team": "BOS"
     },
-    "kristaps porzi\u00e5\u0086\u00e4\u00a3is|2025-26": {
-      "name": "Kristaps Porzi\u00e5\u0086\u00e4\u00a3is",
-      "norm_name": "kristaps porzi\u00e5\u0086\u00e4\u00a3is",
+    "kristaps porzingis|2025-26": {
+      "name": "Kristaps Porzingis",
+      "norm_name": "kristaps porzingis",
       "salary": 30731707.0,
       "season": "2025-26"
     },
-    "kristaps porzi\u00e5\u0086\u00e4\u00a3is|2026-27": {
-      "name": "Kristaps Porzi\u00e5\u0086\u00e4\u00a3is",
-      "norm_name": "kristaps porzi\u00e5\u0086\u00e4\u00a3is",
+    "kristaps porzingis|2026-27": {
+      "name": "Kristaps Porzingis",
+      "norm_name": "kristaps porzingis",
       "salary": 19512195.0,
       "season": "2026-27"
     },
-    "kristaps porzi\u00e5\u0086\u00e4\u00a3is|2027-28": {
-      "name": "Kristaps Porzi\u00e5\u0086\u00e4\u00a3is",
-      "norm_name": "kristaps porzi\u00e5\u0086\u00e4\u00a3is",
+    "kristaps porzingis|2027-28": {
+      "name": "Kristaps Porzingis",
+      "norm_name": "kristaps porzingis",
       "salary": 20487805.0,
       "season": "2027-28"
     },
@@ -71918,27 +71918,27 @@
       "season": "2024-25",
       "team": "LAL"
     },
-    "luka don\u00e4\u008di\u00e4\u0087|2025-26": {
-      "name": "Luka Don\u00e4\u008di\u00e4\u0087",
-      "norm_name": "luka don\u00e4\u008di\u00e4\u0087",
+    "luka doncic|2025-26": {
+      "name": "Luka Doncic",
+      "norm_name": "luka doncic",
       "salary": 45999660.0,
       "season": "2025-26"
     },
-    "luka don\u00e4\u008di\u00e4\u0087|2026-27": {
-      "name": "Luka Don\u00e4\u008di\u00e4\u0087",
-      "norm_name": "luka don\u00e4\u008di\u00e4\u0087",
+    "luka doncic|2026-27": {
+      "name": "Luka Doncic",
+      "norm_name": "luka doncic",
       "salary": 49800000.0,
       "season": "2026-27"
     },
-    "luka don\u00e4\u008di\u00e4\u0087|2027-28": {
-      "name": "Luka Don\u00e4\u008di\u00e4\u0087",
-      "norm_name": "luka don\u00e4\u008di\u00e4\u0087",
+    "luka doncic|2027-28": {
+      "name": "Luka Doncic",
+      "norm_name": "luka doncic",
       "salary": 53784000.0,
       "season": "2027-28"
     },
-    "luka don\u00e4\u008di\u00e4\u0087|2028-29": {
-      "name": "Luka Don\u00e4\u008di\u00e4\u0087",
-      "norm_name": "luka don\u00e4\u008di\u00e4\u0087",
+    "luka doncic|2028-29": {
+      "name": "Luka Doncic",
+      "norm_name": "luka doncic",
       "salary": 57768000.0,
       "season": "2028-29"
     },
@@ -82017,15 +82017,15 @@
       "season": "2024-25",
       "team": "CHA"
     },
-    "moussa diabat\u00e3\u00a9|2025-26": {
-      "name": "Moussa Diabat\u00e3\u00a9",
-      "norm_name": "moussa diabat\u00e3\u00a9",
+    "moussa diabate|2025-26": {
+      "name": "Moussa Diabate",
+      "norm_name": "moussa diabate",
       "salary": 2270735.0,
       "season": "2025-26"
     },
-    "moussa diabat\u00e3\u00a9|2026-27": {
-      "name": "Moussa Diabat\u00e3\u00a9",
-      "norm_name": "moussa diabat\u00e3\u00a9",
+    "moussa diabate|2026-27": {
+      "name": "Moussa Diabate",
+      "norm_name": "moussa diabate",
       "salary": 2461462.0,
       "season": "2026-27"
     },
@@ -84149,21 +84149,21 @@
       "season": "2024-25",
       "team": "DEN"
     },
-    "nikola joki\u00e4\u0087|2025-26": {
-      "name": "Nikola Joki\u00e4\u0087",
-      "norm_name": "nikola joki\u00e4\u0087",
+    "nikola jokic|2025-26": {
+      "name": "Nikola Jokic",
+      "norm_name": "nikola jokic",
       "salary": 55224526.0,
       "season": "2025-26"
     },
-    "nikola joki\u00e4\u0087|2026-27": {
-      "name": "Nikola Joki\u00e4\u0087",
-      "norm_name": "nikola joki\u00e4\u0087",
+    "nikola jokic|2026-27": {
+      "name": "Nikola Jokic",
+      "norm_name": "nikola jokic",
       "salary": 59033114.0,
       "season": "2026-27"
     },
-    "nikola joki\u00e4\u0087|2027-28": {
-      "name": "Nikola Joki\u00e4\u0087",
-      "norm_name": "nikola joki\u00e4\u0087",
+    "nikola jokic|2027-28": {
+      "name": "Nikola Jokic",
+      "norm_name": "nikola jokic",
       "salary": 62841702.0,
       "season": "2027-28"
     },
@@ -84195,33 +84195,33 @@
       "season": "2024-25",
       "team": "MIA"
     },
-    "nikola jovi\u00e4\u0087|2025-26": {
-      "name": "Nikola Jovi\u00e4\u0087",
-      "norm_name": "nikola jovi\u00e4\u0087",
+    "nikola jovic|2025-26": {
+      "name": "Nikola Jovic",
+      "norm_name": "nikola jovic",
       "salary": 4445417.0,
       "season": "2025-26"
     },
-    "nikola jovi\u00e4\u0087|2026-27": {
-      "name": "Nikola Jovi\u00e4\u0087",
-      "norm_name": "nikola jovi\u00e4\u0087",
+    "nikola jovic|2026-27": {
+      "name": "Nikola Jovic",
+      "norm_name": "nikola jovic",
       "salary": 16200000.0,
       "season": "2026-27"
     },
-    "nikola jovi\u00e4\u0087|2027-28": {
-      "name": "Nikola Jovi\u00e4\u0087",
-      "norm_name": "nikola jovi\u00e4\u0087",
+    "nikola jovic|2027-28": {
+      "name": "Nikola Jovic",
+      "norm_name": "nikola jovic",
       "salary": 14904000.0,
       "season": "2027-28"
     },
-    "nikola jovi\u00e4\u0087|2028-29": {
-      "name": "Nikola Jovi\u00e4\u0087",
-      "norm_name": "nikola jovi\u00e4\u0087",
+    "nikola jovic|2028-29": {
+      "name": "Nikola Jovic",
+      "norm_name": "nikola jovic",
       "salary": 15096000.0,
       "season": "2028-29"
     },
-    "nikola jovi\u00e4\u0087|2029-30": {
-      "name": "Nikola Jovi\u00e4\u0087",
-      "norm_name": "nikola jovi\u00e4\u0087",
+    "nikola jovic|2029-30": {
+      "name": "Nikola Jovic",
+      "norm_name": "nikola jovic",
       "salary": 16200000.0,
       "season": "2029-30"
     },
@@ -84316,21 +84316,21 @@
       "season": "2024-25",
       "team": "OKC"
     },
-    "nikola topi\u00e4\u0087|2025-26": {
-      "name": "Nikola Topi\u00e4\u0087",
-      "norm_name": "nikola topi\u00e4\u0087",
+    "nikola topic|2025-26": {
+      "name": "Nikola Topic",
+      "norm_name": "nikola topic",
       "salary": 5182920.0,
       "season": "2025-26"
     },
-    "nikola topi\u00e4\u0087|2026-27": {
-      "name": "Nikola Topi\u00e4\u0087",
-      "norm_name": "nikola topi\u00e4\u0087",
+    "nikola topic|2026-27": {
+      "name": "Nikola Topic",
+      "norm_name": "nikola topic",
       "salary": 5429760.0,
       "season": "2026-27"
     },
-    "nikola topi\u00e4\u0087|2027-28": {
-      "name": "Nikola Topi\u00e4\u0087",
-      "norm_name": "nikola topi\u00e4\u0087",
+    "nikola topic|2027-28": {
+      "name": "Nikola Topic",
+      "norm_name": "nikola topic",
       "salary": 7482210.0,
       "season": "2027-28"
     },
@@ -84432,9 +84432,9 @@
       "season": "2024-25",
       "team": "CHI"
     },
-    "nikola vu\u00e4\u008devi\u00e4\u0087|2025-26": {
-      "name": "Nikola Vu\u00e4\u008devi\u00e4\u0087",
-      "norm_name": "nikola vu\u00e4\u008devi\u00e4\u0087",
+    "nikola vucevic|2025-26": {
+      "name": "Nikola Vucevic",
+      "norm_name": "nikola vucevic",
       "salary": 21481481.0,
       "season": "2025-26"
     },
@@ -84620,27 +84620,27 @@
       "season": "2012-13",
       "team": "POR"
     },
-    "nolan traor\u00e3\u00a9|2025-26": {
-      "name": "Nolan Traor\u00e3\u00a9",
-      "norm_name": "nolan traor\u00e3\u00a9",
+    "nolan traore|2025-26": {
+      "name": "Nolan Traore",
+      "norm_name": "nolan traore",
       "salary": 3811560.0,
       "season": "2025-26"
     },
-    "nolan traor\u00e3\u00a9|2026-27": {
-      "name": "Nolan Traor\u00e3\u00a9",
-      "norm_name": "nolan traor\u00e3\u00a9",
+    "nolan traore|2026-27": {
+      "name": "Nolan Traore",
+      "norm_name": "nolan traore",
       "salary": 4002000.0,
       "season": "2026-27"
     },
-    "nolan traor\u00e3\u00a9|2027-28": {
-      "name": "Nolan Traor\u00e3\u00a9",
-      "norm_name": "nolan traor\u00e3\u00a9",
+    "nolan traore|2027-28": {
+      "name": "Nolan Traore",
+      "norm_name": "nolan traore",
       "salary": 4193040.0,
       "season": "2027-28"
     },
-    "nolan traor\u00e3\u00a9|2028-29": {
-      "name": "Nolan Traor\u00e3\u00a9",
-      "norm_name": "nolan traor\u00e3\u00a9",
+    "nolan traore|2028-29": {
+      "name": "Nolan Traore",
+      "norm_name": "nolan traore",
       "salary": 6457282.0,
       "season": "2028-29"
     },
@@ -85961,21 +85961,21 @@
       "season": "2024-25",
       "team": "NYK"
     },
-    "pac\u00e3\u00b4me dadiet|2025-26": {
-      "name": "Pac\u00e3\u00b4me Dadiet",
-      "norm_name": "pac\u00e3\u00b4me dadiet",
+    "pacome dadiet|2025-26": {
+      "name": "Pacome Dadiet",
+      "norm_name": "pacome dadiet",
       "salary": 2847600.0,
       "season": "2025-26"
     },
-    "pac\u00e3\u00b4me dadiet|2026-27": {
-      "name": "Pac\u00e3\u00b4me Dadiet",
-      "norm_name": "pac\u00e3\u00b4me dadiet",
+    "pacome dadiet|2026-27": {
+      "name": "Pacome Dadiet",
+      "norm_name": "pacome dadiet",
       "salary": 2983680.0,
       "season": "2026-27"
     },
-    "pac\u00e3\u00b4me dadiet|2027-28": {
-      "name": "Pac\u00e3\u00b4me Dadiet",
-      "norm_name": "pac\u00e3\u00b4me dadiet",
+    "pacome dadiet|2027-28": {
+      "name": "Pacome Dadiet",
+      "norm_name": "pacome dadiet",
       "salary": 5373608.0,
       "season": "2027-28"
     },
@@ -100365,9 +100365,9 @@
       "season": "2024-25",
       "team": "SAC"
     },
-    "skal labissi\u00e3\u00a8re|2025-26": {
-      "name": "Skal Labissi\u00e3\u00a8re",
-      "norm_name": "skal labissi\u00e3\u00a8re",
+    "skal labissiere|2025-26": {
+      "name": "Skal Labissiere",
+      "norm_name": "skal labissiere",
       "salary": 131970.0,
       "season": "2025-26"
     },
@@ -104862,21 +104862,21 @@
       "season": "2024-25",
       "team": "CHA"
     },
-    "tidjane sala\u00e3\u00bcn|2025-26": {
-      "name": "Tidjane Sala\u00e3\u00bcn",
-      "norm_name": "tidjane sala\u00e3\u00bcn",
+    "tidjane salaun|2025-26": {
+      "name": "Tidjane Salaun",
+      "norm_name": "tidjane salaun",
       "salary": 7863240.0,
       "season": "2025-26"
     },
-    "tidjane sala\u00e3\u00bcn|2026-27": {
-      "name": "Tidjane Sala\u00e3\u00bcn",
-      "norm_name": "tidjane sala\u00e3\u00bcn",
+    "tidjane salaun|2026-27": {
+      "name": "Tidjane Salaun",
+      "norm_name": "tidjane salaun",
       "salary": 8237880.0,
       "season": "2026-27"
     },
-    "tidjane sala\u00e3\u00bcn|2027-28": {
-      "name": "Tidjane Sala\u00e3\u00bcn",
-      "norm_name": "tidjane sala\u00e3\u00bcn",
+    "tidjane salaun|2027-28": {
+      "name": "Tidjane Salaun",
+      "norm_name": "tidjane salaun",
       "salary": 10445633.0,
       "season": "2027-28"
     },
@@ -110976,21 +110976,21 @@
       "season": "2024-25",
       "team": "PHX"
     },
-    "vasilije mici\u00e4\u0087|2025-26": {
-      "name": "Vasilije Mici\u00e4\u0087",
-      "norm_name": "vasilije mici\u00e4\u0087",
+    "vasilije micic|2025-26": {
+      "name": "Vasilije Micic",
+      "norm_name": "vasilije micic",
       "salary": 666667.0,
       "season": "2025-26"
     },
-    "vasilije mici\u00e4\u0087|2026-27": {
-      "name": "Vasilije Mici\u00e4\u0087",
-      "norm_name": "vasilije mici\u00e4\u0087",
+    "vasilije micic|2026-27": {
+      "name": "Vasilije Micic",
+      "norm_name": "vasilije micic",
       "salary": 666667.0,
       "season": "2026-27"
     },
-    "vasilije mici\u00e4\u0087|2027-28": {
-      "name": "Vasilije Mici\u00e4\u0087",
-      "norm_name": "vasilije mici\u00e4\u0087",
+    "vasilije micic|2027-28": {
+      "name": "Vasilije Micic",
+      "norm_name": "vasilije micic",
       "salary": 666667.0,
       "season": "2027-28"
     },
@@ -111796,6 +111796,24 @@
       "season": "2024-25",
       "team": "ATL"
     },
+    "vit krejci|2025-26": {
+      "name": "Vit Krejci",
+      "norm_name": "vit krejci",
+      "salary": 2349578.0,
+      "season": "2025-26"
+    },
+    "vit krejci|2026-27": {
+      "name": "Vit Krejci",
+      "norm_name": "vit krejci",
+      "salary": 2667944.0,
+      "season": "2026-27"
+    },
+    "vit krejci|2027-28": {
+      "name": "Vit Krejci",
+      "norm_name": "vit krejci",
+      "salary": 3005085.0,
+      "season": "2027-28"
+    },
     "vitaly potapenko|1996-97": {
       "name": "Vitaly Potapenko",
       "norm_name": "vitaly potapenko",
@@ -112288,24 +112306,6 @@
       "salary": 3520000.0,
       "season": "2005-06",
       "team": "DEN"
-    },
-    "v\u00e3\u00adt krej\u00e4\u008d\u00e3\u00ad|2025-26": {
-      "name": "V\u00e3\u00adt Krej\u00e4\u008d\u00e3\u00ad",
-      "norm_name": "v\u00e3\u00adt krej\u00e4\u008d\u00e3\u00ad",
-      "salary": 2349578.0,
-      "season": "2025-26"
-    },
-    "v\u00e3\u00adt krej\u00e4\u008d\u00e3\u00ad|2026-27": {
-      "name": "V\u00e3\u00adt Krej\u00e4\u008d\u00e3\u00ad",
-      "norm_name": "v\u00e3\u00adt krej\u00e4\u008d\u00e3\u00ad",
-      "salary": 2667944.0,
-      "season": "2026-27"
-    },
-    "v\u00e3\u00adt krej\u00e4\u008d\u00e3\u00ad|2027-28": {
-      "name": "V\u00e3\u00adt Krej\u00e4\u008d\u00e3\u00ad",
-      "norm_name": "v\u00e3\u00adt krej\u00e4\u008d\u00e3\u00ad",
-      "salary": 3005085.0,
-      "season": "2027-28"
     },
     "wade baldwin|2016-17": {
       "name": "Wade Baldwin",
@@ -114266,27 +114266,27 @@
       "salary": 7462788.0,
       "season": "2028-29"
     },
-    "yanic konan niederh\u00e3\u00a4user|2025-26": {
-      "name": "Yanic Konan Niederh\u00e3\u00a4user",
-      "norm_name": "yanic konan niederh\u00e3\u00a4user",
+    "yanic konan niederhauser|2025-26": {
+      "name": "Yanic Konan Niederhauser",
+      "norm_name": "yanic konan niederhauser",
       "salary": 2743800.0,
       "season": "2025-26"
     },
-    "yanic konan niederh\u00e3\u00a4user|2026-27": {
-      "name": "Yanic Konan Niederh\u00e3\u00a4user",
-      "norm_name": "yanic konan niederh\u00e3\u00a4user",
+    "yanic konan niederhauser|2026-27": {
+      "name": "Yanic Konan Niederhauser",
+      "norm_name": "yanic konan niederhauser",
       "salary": 2880960.0,
       "season": "2026-27"
     },
-    "yanic konan niederh\u00e3\u00a4user|2027-28": {
-      "name": "Yanic Konan Niederh\u00e3\u00a4user",
-      "norm_name": "yanic konan niederh\u00e3\u00a4user",
+    "yanic konan niederhauser|2027-28": {
+      "name": "Yanic Konan Niederhauser",
+      "norm_name": "yanic konan niederhauser",
       "salary": 3018480.0,
       "season": "2027-28"
     },
-    "yanic konan niederh\u00e3\u00a4user|2028-29": {
-      "name": "Yanic Konan Niederh\u00e3\u00a4user",
-      "norm_name": "yanic konan niederh\u00e3\u00a4user",
+    "yanic konan niederhauser|2028-29": {
+      "name": "Yanic Konan Niederhauser",
+      "norm_name": "yanic konan niederhauser",
       "salary": 5448356.0,
       "season": "2028-29"
     },
