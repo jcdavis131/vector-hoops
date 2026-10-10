@@ -64,6 +64,11 @@ jobs:
         run: |
           pip install -r pipeline/requirements.txt
           pip install ./.vector-hub/packages/vector-core
+          # pip copied vector-core into site-packages; nothing reads the
+          # checkout after this. Left in the workspace, tests/test_site.py
+          # parses every JSON under the repo root, vector-hub's included, and
+          # fails on five of its data files (PR #61's first run).
+          rm -rf .vector-hub
           # CPU wheel only: tests/test_vector_core_parity.py execs a historical
           # pipeline/realmlp_preproc.py that imports torch, and
           # tests/test_e2e_smoke.py trains one CPU epoch on a 100-player
