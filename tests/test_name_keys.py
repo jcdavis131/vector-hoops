@@ -146,3 +146,13 @@ def test_positions_skip_a_shared_name(tmp_path, monkeypatch):
 def test_rekey_keeps_the_first_of_two_stored_keys_that_meet():
     assert rekey({"jaren jackson jr": 1, "jaren jackson": 2, "kat": 3}) == {"jaren jackson": 1, "kat": 3}
     assert rekey({"JarenJackson": 1}, key=bbref_key) == {"jarenjackson": 1}
+
+
+def test_bbref_aliases_reach_the_bbref_spelling():
+    from name_utils import BBREF_ALIASES, bbref_lookup_key
+
+    assert bbref_lookup_key("Steven Smith") == "stevesmith"  # BBRef prints 'Steve Smith'
+    assert bbref_lookup_key("Flip Murray") == "ronaldmurray"
+    assert bbref_lookup_key("LeBron James") == "lebronjames"
+    # Every alias maps a charted key to a different BBRef key, never onto another alias.
+    assert all(k != v and v not in BBREF_ALIASES for k, v in BBREF_ALIASES.items())

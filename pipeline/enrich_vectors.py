@@ -22,7 +22,7 @@ from pathlib import Path
 
 import numpy as np
 from artifact_io import atomic_write_text
-from name_utils import bbref_key, shared_name_keys
+from name_utils import BBREF_ALIASES, bbref_key, shared_name_keys
 
 ROOT = Path(__file__).resolve().parent
 VECTORS = ROOT.parent / "assets" / "vectors.json"
@@ -33,18 +33,9 @@ POS_IDX = {p: i for i, p in enumerate(POSITIONS)}
 # rare generic tags on older BBRef pages -> nearest canonical bucket
 GENERIC = {"G": "SG", "F": "SF", "C-F": "C", "F-C": "PF", "G-F": "SF", "F-G": "SF"}
 
-# stats.nba.com abbreviations -> BBRef full names (normalized keys)
-ALIASES = {
-    "clarweatherspoon": "clarenceweatherspoon",
-    "danschayes": "dannyschayes",
-    "ikeaustin": "isaacaustin",
-    # fetch_positions' alnum key dropped a letter NFKD cannot decompose
-    # (Aşık's dotless i, Pleiß's sharp s, Dёmin's Cyrillic yo), so these
-    # cache keys are short a letter and 10 rows had no position.
-    "omerasik": "omerask",
-    "tiborpleiss": "tiborplei",
-    "egordemin": "egordmin",
-}
+# stats.nba.com names -> BBRef keys (name_utils.BBREF_ALIASES, shared with
+# build_vectors' BBRef per-game minutes).
+ALIASES = BBREF_ALIASES
 
 # Curated axis names, verified against the printed correlations:
 #   PC1: OREB -0.86, FG3A +0.79, BLK -0.73, DREB -0.71, FG3_PCT +0.70
@@ -123,11 +114,11 @@ def join_positions(players: list[dict]) -> tuple[list[int], dict]:
     ambiguous = 0
     for i, p in enumerate(players):
         key = bbref_key(p["name"])
-        key = ALIASES.get(key, key)
         if key in shared.get(p["season"], ()):
             out.append(-1)
             ambiguous += 1
             continue
+        key = ALIASES.get(key, key)
         idx = lookup.get(p["season"], {}).get(key, -1)
         out.append(idx)
         if idx < 0:

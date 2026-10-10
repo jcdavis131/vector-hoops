@@ -106,6 +106,36 @@ def bbref_key(name: str, *, keep_suffix: bool = False) -> str:
     return norm_name(name, keep_suffix=keep_suffix).replace(" ", "")
 
 
+# Charted name (bbref_key) -> the key Basketball-Reference prints for the same
+# player, where no key folds one into the other. Each pair is one player:
+# the BBRef key is the only candidate under that surname in the seasons he
+# was charted (pipeline/cache/positions_bbref.json, bbref_per_game_*.json).
+# The last three short a letter: the alnum fetchers dropped one NFKD cannot
+# decompose (Aşık's dotless i, Pleiß's sharp s, Dёmin's Cyrillic yo).
+BBREF_ALIASES = {
+    "clarweatherspoon": "clarenceweatherspoon",
+    "danschayes": "dannyschayes",
+    "ikeaustin": "isaacaustin",
+    "flipmurray": "ronaldmurray",
+    "haha": "haseungjin",
+    "kiwanegarris": "kiwanelemorrisgarris",
+    "poohjeter": "eugenejeter",
+    "richardmanning": "richmanning",
+    "slavamedvedenko": "stanislavmedvedenko",
+    "stevensmith": "stevesmith",
+    "vitorfaverani": "vitorluizfaverani",
+    "omerasik": "omerask",
+    "tiborpleiss": "tiborplei",
+    "egordemin": "egordmin",
+}
+
+
+def bbref_lookup_key(name: str) -> str:
+    """bbref_key of a charted name, through BBREF_ALIASES: the key to look it up by in a BBRef cache."""
+    k = bbref_key(name)
+    return BBREF_ALIASES.get(k, k)
+
+
 def shared_name_keys(cache_dir, *, key=None) -> dict[str, set[str]]:
     """season -> name keys that two or more PLAYER_IDs share in that season's dashbase cache.
 
