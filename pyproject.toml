@@ -58,6 +58,9 @@ exclude = [
     "pipeline/fetch_*.py",
     "pipeline/build_front_office.py",
     "pipeline/build_front_office_by_season.py",
+    # Retired scripts, kept as files for the docs that name them; not maintained
+    # (pipeline/attic/README.md says why each was retired).
+    "pipeline/attic",
     # public/assets/manim/src/*.py is a byte-identical copy of assets/manim/src/*.py,
     # committed only as part of the Vercel `public/` static-site mirror (frontend
     # deploy fix 28e5fc47). Not source of truth; excluded to avoid double-linting it.
@@ -102,17 +105,12 @@ convention = "google"
 "pipeline/*test*.py" = ["S101", "S603", "S607", "F401", "E402"]
 "scripts/smoke_wiki.py" = ["N802"]
 "pipeline/build_*.py" = ["E402", "S603", "S607", "E722", "F401", "I001", "E401", "E701", "E702", "F841", "B023", "C414", "RUF013", "RUF057", "PTH118"]
-"pipeline/train_mt.py" = ["E402", "E701", "E702"]
-"pipeline/train_mt_v53.py" = ["E701", "E702", "N816"]
 "operator/mlops_cli.py" = ["E702"]
 "pipeline/train_mtnn.py" = ["E402", "S603"]
 "pipeline/export_*.py" = ["E402"]
 "scripts/*.py" = ["E402", "S603", "F401", "E401", "E701", "E702", "F541", "B023", "W605", "F841", "I001"]
 # Pre-existing style debt, byte-identical on master (not touched by this branch):
-"pipeline/train_factory.py" = ["E401", "F401", "F541", "I001"]
-"pipeline/train_quick_wins.py" = ["E401", "E701", "E702", "E722", "F401", "F841", "I001"]
 "tmp/gen_valuations.py" = ["E401", "E402", "F401", "F601", "I001", "PTH103", "PTH111"]
-"pipeline/train_mtnn_v6_cpu.py" = ["E401", "E402", "I001"]
 
 [tool.ruff.lint.isort]
 known-first-party = ["pipeline"]
@@ -132,8 +130,6 @@ exclude = [
     "assets/manim/src/v04_embedding_l2.py",
     "assets/manim/src/v05_chimera.py",
     "assets/manim/src/v06_archetypes_skills_drift.py",
-    "pipeline/train_factory.py",
-    "pipeline/train_quick_wins.py",
     "tmp/gen_valuations.py",
     # One-off browser QA/smoke scripts, terse one-liner style by convention,
     # not reformatted to avoid unrelated diff noise on scripts owned by other lanes.
@@ -145,10 +141,8 @@ exclude = [
     "pipeline/hill_climb.py",
     "pipeline/resolve_fusion.py",
     "pipeline/train_career_mtnn.py",
-    "pipeline/train_mt.py",
     "pipeline/train_mtnn.py",
     "pipeline/train_towers.py",
-    "pipeline/train_mtnn_v6_cpu.py",
 ]
 
 [tool.pytest.ini_options]

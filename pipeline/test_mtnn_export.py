@@ -82,7 +82,7 @@ def test_purity_at_20_floor(meta):
 
 
 if __name__ == "__main__":
-    # Script form for export_assets.py / retrain_universe.py, which read only the
-    # exit code. --runxfail: a known defect still fails here.
+    # Script form for export_assets.py, which reads only the exit code.
+    # --runxfail: a known defect still fails here.
     os.environ.setdefault("HOOPS_REQUIRE_LOCAL_DATA", "1")
     sys.exit(pytest.main([__file__, "-p", "no:cacheprovider", "--runxfail"]))
