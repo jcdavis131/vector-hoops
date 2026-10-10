@@ -39,10 +39,11 @@ from build_eval_scoreboard import (  # noqa: E402
 # also predates the current vectors.json (sha 21f33221 vs 14872103), so a fresh
 # recompute pairs 9,888 rows where the board says 10,104. Restoring v5 alone
 # fixes the first; the board then needs a rebuild for the rest.
-STALE_BOARD = (
-    "[eval#0] eval_scoreboard.json describes the v5 embedding and an older vectors.json, "
-    "not the committed v6 f32 (2dc6ad78) and current vectors.json"
-)
+#
+# This line serves v5, so the embedding check passes and gates here. The board
+# still predates the committed vectors.json, so the other three stay strict
+# xfails.
+STALE_BOARD = "[eval#0] eval_scoreboard.json predates the committed vectors.json"
 
 
 @pytest.fixture(scope="module")
@@ -86,7 +87,6 @@ def test_schema(board):
         assert key in board["results"], f"results block missing: {key}"
 
 
-@pytest.mark.xfail(strict=True, reason=STALE_BOARD)
 def test_embedding_hash_matches_the_committed_f32(board):
     assert board["embedding_asset"]["sha256"] == sha256_file(EMB)
 

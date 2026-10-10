@@ -31,11 +31,11 @@ INDEX = ASSETS / "scoring_lite_index.json"
 F32 = ASSETS / "scoring_lite.f32"
 EMB = ASSETS / "mtnn_embeddings.f32"
 
-# The committed mtnn_embeddings.f32 + mtnn_meta.json are the v6 pair from
-# 2dc6ad78 that origin reverted (c094f988). The lite subset was built on
-# 2026-07-25 from the v5 embedding, and its rows equal v5 (blob a4918f09) at
-# `ids` exactly, so these fail on the served pair, not on the lite build.
-SERVED_V6 = "[eval#0] served mtnn_embeddings.f32/mtnn_meta.json are the reverted v6 pair from 2dc6ad78"
+# The lite subset was built on 2026-07-25 from the v5 embedding, and its rows
+# equal v5 (blob a4918f09) at `ids` exactly. On the local line the served pair
+# is the v6 one from 2dc6ad78 that origin reverted (c094f988), and the two
+# served-pair checks below are strict xfails [eval#0]. On this line the served
+# pair is v5, so they gate.
 
 
 @pytest.fixture(scope="module")
@@ -48,7 +48,6 @@ def idx() -> dict:
     return json.loads(INDEX.read_text(encoding="utf-8"))
 
 
-@pytest.mark.xfail(strict=True, reason=f"{SERVED_V6}; its meta has no 'built' stamp")
 def test_index_built_matches_mtnn_meta_built(meta, idx):
     assert idx.get("built") == meta.get("built"), (
         f"index built {idx.get('built')} vs mtnn_meta built {meta.get('built')}"
@@ -66,7 +65,6 @@ def test_shape(meta, idx):
     assert F32.stat().st_size == expect, f"scoring_lite.f32 is {F32.stat().st_size} bytes, rows*dim*4 = {expect}"
 
 
-@pytest.mark.xfail(strict=True, reason=f"{SERVED_V6}; the lite rows equal v5 at ids, not the served f32")
 def test_lite_rows_are_the_served_embedding_rows(meta, idx):
     # The check the build stamp only stands in for: the play page must score in
     # the same space the rest of the site serves.
@@ -81,6 +79,5 @@ def test_lite_rows_are_the_served_embedding_rows(meta, idx):
 
 if __name__ == "__main__":
     # Script form for update_dataset.py, which reads only the exit code.
-    # --runxfail: a known defect still fails here, as it did before this was pytest.
     os.environ.setdefault("HOOPS_REQUIRE_LOCAL_DATA", "1")
-    sys.exit(pytest.main([__file__, "-p", "no:cacheprovider", "--runxfail"]))
+    sys.exit(pytest.main([__file__, "-p", "no:cacheprovider"]))
