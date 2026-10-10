@@ -15,15 +15,15 @@
   },
   "generated": {
     "by": "pipeline/stage_contract.py --accept-drift",
-    "git": "3e90b1d9",
+    "git": "1733bdbf",
     "git_dirty": false,
     "manifest_source": "integrate_context.py (v4 context merge)"
   },
   "rows": 12966,
-  "cols": 142,
+  "cols": 143,
   "keys_sha256": "d1b3d5cb7e37afcf726532d592c5cf4125221a4c811b859175b79f9a998da72e",
-  "columns_sha256": "fb4ce2be6b99bd00e23f75a44c7ac597b4c7aaec6be5245c0cdb732f80950bf2",
-  "values_sha256": "828924440e1d04910b59652343c40c9cbaa8f3947a10a83705cfdfc7d238b0c1",
+  "columns_sha256": "3c44edb7053e7a5449cd7505de475d02e39522b54b6a7c2033d9fbccc8560950",
+  "values_sha256": "6e6323d98508d99f9c047658123bbb4ee546552911abce20933562cef6f9e25f",
   "columns": [
     "PTS",
     "AST",
@@ -102,6 +102,7 @@
     "HUSTLE_LOOSE_BALLS",
     "HUSTLE_SCREEN_AST",
     "SALARY_LOG",
+    "DRAFT_UNDRAFTED",
     "ROSTER_MIN_RANK",
     "ROSTER_USAGE_CROWD",
     "ROSTER_COMPLEMENT",
@@ -246,6 +247,7 @@
     "HUSTLE_LOOSE_BALLS": "defense",
     "HUSTLE_SCREEN_AST": "defense",
     "SALARY_LOG": "market",
+    "DRAFT_UNDRAFTED": "bio",
     "ROSTER_MIN_RANK": "roster",
     "ROSTER_USAGE_CROWD": "roster",
     "ROSTER_COMPLEMENT": "roster",
@@ -313,15 +315,15 @@
     "INJ_MISS_SPELLS": "injury"
   },
   "family_coverage": {
-    "bio": 0.998477,
-    "career": 0.740983,
+    "bio": 0.966435,
+    "career": 0.727505,
     "competition": 0.346753,
-    "defense": 0.598334,
+    "defense": 0.572035,
     "efficiency": 1.0,
     "form": 0.346753,
-    "honors": 0.087305,
+    "honors": 0.936742,
     "injury": 0.346753,
-    "market": 0.87608,
+    "market": 0.877738,
     "pedigree": 0.929607,
     "playmaking": 0.688313,
     "playoffs": 0.458859,
@@ -503,8 +505,8 @@
       "zero": 0.0
     },
     "DRAFT_NUMBER": {
-      "observed": 1.0,
-      "zero": 0.0
+      "observed": 0.838269,
+      "zero": 0.161731
     },
     "PLAYER_HEIGHT_INCHES": {
       "observed": 0.997146,
@@ -615,32 +617,36 @@
       "zero": 0.653247
     },
     "HUSTLE_BOX_OUTS": {
-      "observed": 0.397501,
-      "zero": 0.670214
+      "observed": 0.329708,
+      "zero": 0.670292
     },
     "HUSTLE_CHARGES": {
-      "observed": 0.397501,
-      "zero": 0.602499
+      "observed": 0.36372,
+      "zero": 0.63628
     },
     "HUSTLE_CONTESTED_SHOTS": {
-      "observed": 0.397501,
-      "zero": 0.602499
+      "observed": 0.36372,
+      "zero": 0.63628
     },
     "HUSTLE_DEFLECTIONS": {
-      "observed": 0.397501,
-      "zero": 0.602499
+      "observed": 0.36372,
+      "zero": 0.63628
     },
     "HUSTLE_LOOSE_BALLS": {
-      "observed": 0.397501,
-      "zero": 0.602499
+      "observed": 0.36372,
+      "zero": 0.63628
     },
     "HUSTLE_SCREEN_AST": {
-      "observed": 0.397501,
-      "zero": 0.602499
+      "observed": 0.36372,
+      "zero": 0.63628
     },
     "SALARY_LOG": {
-      "observed": 0.87984,
-      "zero": 0.12016
+      "observed": 0.881305,
+      "zero": 0.118695
+    },
+    "DRAFT_UNDRAFTED": {
+      "observed": 1.0,
+      "zero": 0.0
     },
     "ROSTER_MIN_RANK": {
       "observed": 0.261067,
@@ -679,8 +685,8 @@
       "zero": 0.653247
     },
     "DRAFT_SLOT_Z": {
-      "observed": 1.0,
-      "zero": 0.0
+      "observed": 0.838269,
+      "zero": 0.161731
     },
     "CAREER_SLOPE_3Y": {
       "observed": 0.812818,
@@ -727,16 +733,16 @@
       "zero": 0.653247
     },
     "SALARY_CAP_PCT": {
-      "observed": 0.87984,
-      "zero": 0.12016
+      "observed": 0.881305,
+      "zero": 0.118695
     },
     "SALARY_TEAM_PCT": {
-      "observed": 0.8648,
-      "zero": 0.1352
+      "observed": 0.867037,
+      "zero": 0.132963
     },
     "SALARY_RANK_POS": {
-      "observed": 0.87984,
-      "zero": 0.12016
+      "observed": 0.881305,
+      "zero": 0.118695
     },
     "TM_PACE": {
       "observed": 0.261067,
@@ -867,24 +873,24 @@
       "zero": 0.541108
     },
     "HON_ALL_NBA_TEAM_LAG": {
-      "observed": 0.087305,
-      "zero": 0.91362
+      "observed": 0.968302,
+      "zero": 0.031698
     },
     "HON_ALL_NBA_VOTE_LAG": {
-      "observed": 0.087305,
-      "zero": 0.912695
+      "observed": 0.968302,
+      "zero": 0.031698
     },
     "HON_ASG_LAG": {
-      "observed": 0.087305,
-      "zero": 0.916165
+      "observed": 0.937915,
+      "zero": 0.062085
     },
     "HON_ASG_CUM": {
-      "observed": 0.087305,
-      "zero": 0.912695
+      "observed": 0.840892,
+      "zero": 0.166204
     },
     "HON_VOTE_RECOG": {
-      "observed": 0.087305,
-      "zero": 0.935369
+      "observed": 0.968302,
+      "zero": 0.031698
     },
     "INJ_GP_PCT": {
       "observed": 0.346753,
