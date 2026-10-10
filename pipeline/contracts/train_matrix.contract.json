@@ -6,7 +6,8 @@
     "The promoted matrix on the training box is NOT this one (pipeline/data/train_matrix.npz dated 2026-08-04, sha256 231b07f1df283205). Checked against this contract it fails on column order: 36 columns (the PED_, PO_, HON_, INJ_ and SYSTEM_ blocks) sit at different indices.",
     "Its honors family is also 0.969 observed against 0.087 here [features#2]. The contract only flags drops, so that difference is not a violation in this direction, but a rebuild from HEAD gives the honors tower about a tenth of the observed cells the promoted matrix has. Decide the honors semantics before re-anchoring on a rebuilt matrix.",
     "Re-recorded 2026-10-10 (P11, identity and joins) from the prepare chain plus every side builder on the built vectors.json (build_honors, build_wide_skills, build_min_gp --offline, build_availability, roster_context, build_career_context, form_context, competition_context, build_pedigree, build_playoffs, then integrate_context): train_matrix.npz sha256 68a0415ffa8a5a1d, feature_manifest.json f1c90cdca75df174. The 3-step climb prepare alone reads whatever side files pipeline/data holds, so it builds this matrix only after those builders have run (rebuild_all --refresh-context).",
-    "Re-recorded 2026-10-10 (FA1: 2015-16 hustle restoration reverted, pick 0 is undrafted, b6806210) from the prepare chain plus build_career_context on the P11 side files: train_matrix.npz sha256 b0bc7e749c7dcbca, feature_manifest.json f1c90cdca75df174. Against the P11 matrix only DRAFT_NUMBER, DRAFT_UNDRAFTED and DRAFT_SLOT_Z moved (12 rows lose a pick of 0)."
+    "Re-recorded 2026-10-10 (FA1: 2015-16 hustle restoration reverted, pick 0 is undrafted, b6806210) from the prepare chain plus build_career_context on the P11 side files: train_matrix.npz sha256 b0bc7e749c7dcbca, feature_manifest.json f1c90cdca75df174. Against the P11 matrix only DRAFT_NUMBER, DRAFT_UNDRAFTED and DRAFT_SLOT_Z moved (12 rows lose a pick of 0).",
+    "Re-recorded 2026-10-10 (FA2: GP_RATIO regular season only, 15e94146; percentages with no attempt behind them missing, 078b75df) from the prepare chain plus build_skills, build_wide_skills, roster_context, build_career_context and derive_system_tags on the built vectors.json, then integrate_context, run twice byte-identical: train_matrix.npz sha256 60dba1cbeabd6e03, feature_manifest.json f1c90cdca75df174. FG3_PCT and FT_PCT are two of the frozen 14 game columns, so the 14-d baseline changed too. Accepted: the zero fractions of FG3_PCT (+12.1 points, 1,565 rows with no three-point attempt now masked) and PCT_AST_3PM / PCT_UAST_3PM (+21.1, 2,736 rows with no made three)."
   ],
   "definitions": {
     "family_coverage": "mean of mask over the family's columns (a share of cells, not of rows)",
@@ -18,7 +19,7 @@
   },
   "generated": {
     "by": "pipeline/stage_contract.py --accept-drift",
-    "git": "b6806210",
+    "git": "541cbdf5",
     "git_dirty": false,
     "manifest_source": "integrate_context.py (v4 context merge)"
   },
@@ -26,7 +27,7 @@
   "cols": 143,
   "keys_sha256": "d1b3d5cb7e37afcf726532d592c5cf4125221a4c811b859175b79f9a998da72e",
   "columns_sha256": "3c44edb7053e7a5449cd7505de475d02e39522b54b6a7c2033d9fbccc8560950",
-  "values_sha256": "145575ae74729ac773d652c892c46daf7140e188befa4958dee0ce93776b584b",
+  "values_sha256": "3adfa2b725ce55cf6188910227d91e2e061a9e8f1634661ef3b6534b205f64fb",
   "columns": [
     "PTS",
     "AST",
@@ -322,7 +323,7 @@
     "career": 0.692671,
     "competition": 0.397501,
     "defense": 0.572035,
-    "efficiency": 1.0,
+    "efficiency": 0.987498,
     "form": 0.397501,
     "honors": 0.923754,
     "injury": 0.397501,
@@ -332,10 +333,10 @@
     "playoffs": 0.458859,
     "rebounding": 1.0,
     "roster": 0.261067,
-    "shotmix": 1.0,
+    "shotmix": 0.967441,
     "system": 0.261067,
     "team": 0.261067,
-    "tracking": 0.463591,
+    "tracking": 0.463473,
     "volume": 1.0
   },
   "column_stats": {
@@ -380,16 +381,16 @@
       "zero": 0.0
     },
     "FG3_PCT": {
-      "observed": 1.0,
-      "zero": 0.0
+      "observed": 0.8793,
+      "zero": 0.1207
     },
     "FG_PCT": {
       "observed": 1.0,
       "zero": 0.0
     },
     "FT_PCT": {
-      "observed": 1.0,
-      "zero": 0.0
+      "observed": 0.995681,
+      "zero": 0.004319
     },
     "PLUS_MINUS": {
       "observed": 1.0,
@@ -452,16 +453,16 @@
       "zero": 0.0
     },
     "PCT_AST_2PM": {
-      "observed": 1.0,
-      "zero": 0.0
+      "observed": 0.99946,
+      "zero": 0.00054
     },
     "PCT_AST_3PM": {
-      "observed": 1.0,
-      "zero": 0.0
+      "observed": 0.788987,
+      "zero": 0.211013
     },
     "PCT_AST_FGM": {
-      "observed": 1.0,
-      "zero": 0.0
+      "observed": 0.999923,
+      "zero": 7.7e-05
     },
     "PCT_PTS_2PT": {
       "observed": 1.0,
@@ -492,16 +493,16 @@
       "zero": 0.0
     },
     "PCT_UAST_2PM": {
-      "observed": 1.0,
-      "zero": 0.0
+      "observed": 0.99946,
+      "zero": 0.00054
     },
     "PCT_UAST_3PM": {
-      "observed": 1.0,
-      "zero": 0.0
+      "observed": 0.788987,
+      "zero": 0.211013
     },
     "PCT_UAST_FGM": {
-      "observed": 1.0,
-      "zero": 0.0
+      "observed": 0.999923,
+      "zero": 7.7e-05
     },
     "AGE": {
       "observed": 1.0,
@@ -528,8 +529,8 @@
       "zero": 0.534321
     },
     "CATCH_SHOOT_FG3_PCT": {
-      "observed": 0.438532,
-      "zero": 0.561468
+      "observed": 0.436989,
+      "zero": 0.563011
     },
     "CATCH_SHOOT_FGA": {
       "observed": 0.465679,
