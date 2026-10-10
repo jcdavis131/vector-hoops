@@ -11,11 +11,15 @@
 
 .PHONY: sync offline build train eval test lint ci
 
-# `python`, not `python3`. On Windows `python3` resolves to the Microsoft Store
-# alias (WindowsApps\python3.exe), not the venv, so every target here ran a
-# different interpreter from the one the pipeline uses. Point it at a venv with
-# `make PYTHON=pipeline/.venv/Scripts/python.exe ci`.
-PYTHON ?= python
+# The repo's pipeline venv when there is one, the same rule as train.sh:
+# pipeline/.venv/Scripts/python.exe (Windows), else pipeline/.venv/bin/python
+# (POSIX), else `python`. Not `python3`: on Windows that resolves to the
+# Microsoft Store alias (WindowsApps\python3.exe). It was `python` alone,
+# which on the training box is a different, CPU-only venv from the one the
+# pipeline uses (the CUDA torch lives in pipeline/.venv), so `make train`
+# would have trained on the wrong interpreter (P12). `make PYTHON=... ci`
+# still overrides it.
+PYTHON ?= $(firstword $(wildcard pipeline/.venv/Scripts/python.exe pipeline/.venv/bin/python) python)
 
 sync:
 	$(PYTHON) -m pip install -e .[dev]

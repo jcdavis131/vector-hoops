@@ -136,6 +136,16 @@ def test_train_sh_is_a_wrapper_with_no_fixture_and_nothing_swallowed():
     assert [ln for ln in code if ln.startswith("exec ") and "pipeline/rebuild_all.py" in ln]
 
 
+def test_makefile_picks_the_pipeline_venv_like_train_sh():
+    """PYTHON ?= python picked a different, CPU-only venv on the training box (P12)."""
+    (line,) = [ln for ln in (ROOT / "Makefile").read_text(encoding="utf-8").splitlines() if ln.startswith("PYTHON ?=")]
+    assert (
+        line == "PYTHON ?= $(firstword $(wildcard pipeline/.venv/Scripts/python.exe pipeline/.venv/bin/python) python)"
+    )
+    sh = (ROOT / "train.sh").read_text(encoding="utf-8")
+    assert sh.index("pipeline/.venv/Scripts/python.exe") < sh.index("pipeline/.venv/bin/python")
+
+
 def test_makefile_build_and_train_go_through_rebuild_all():
     lines = (ROOT / "Makefile").read_text(encoding="utf-8").splitlines()
     recipe = {
