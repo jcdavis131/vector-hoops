@@ -80,12 +80,18 @@ K_PURITY = 20
 IDENTITY_FEATURES = (
     "DRAFT_NUMBER",
     "DRAFT_SLOT_Z",
+    "DRAFT_UNDRAFTED",
     "PED_PICK_QUALITY",
     "PED_EXPECT_SLOT",
     "PED_TEAM_WINPCT",
     "PLAYER_HEIGHT_INCHES",
     "PLAYER_WEIGHT",
 )
+# DRAFT_UNDRAFTED joined on 2026-10-10 (d1a93955): undrafted used to be an
+# observed pick 61 in DRAFT_NUMBER and is now a masked pick plus this flag, so
+# without it the lookup would lose the drafted/undrafted split it had. The
+# 0.9025 above was measured on the 2026-08-04 matrix with the first 7 columns;
+# feature_index skips any name a matrix does not have.
 
 # The regime slice re-encodes held-out anchors as a <=2012 row would look.
 # On the 2026-08-04 matrix the per-column observed rate over the 6,928

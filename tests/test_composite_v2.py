@@ -448,7 +448,7 @@ def synthetic(n_players: int = 30, first: int = 2008, last: int = 2025) -> dict:
     M = np.ones_like(Z)
     for i, (_p, y, g, ident, touches, tm) in enumerate(rows):
         Z[i, : len(GAME)] = g
-        Z[i, len(GAME) : len(GAME) + 7] = ident
+        Z[i, len(GAME) : len(GAME) + len(cv.IDENTITY_FEATURES)] = ident
         if y <= 2012:
             M[i, -2] = 0.0  # TOUCHES: not recorded before 2013
         else:
