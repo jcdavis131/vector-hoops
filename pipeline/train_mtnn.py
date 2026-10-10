@@ -194,13 +194,20 @@ def load_bundle():
     seasons = npz["season"]
     pids = npz["player_id"]
     clusters = npz["cluster"].astype(np.int64)
-    positions = load_positions(names, seasons)
+    positions = load_positions(names, seasons, pids)
     season_ids = season_index(seasons)
     return Z, mask, names, seasons, pids, clusters, positions, season_ids, manifest
 
 
-def load_positions(names, seasons) -> np.ndarray:
+def load_positions(names, seasons, pids=None) -> np.ndarray:
     """Join position index from vectors.json; -1 = unknown.
+
+    Joined on (PLAYER_ID, season) when the matrix's ids are passed and the
+    vectors.json row carries 'pid', else on (name, season). By name, the
+    committed vectors.json (275 suffix names restored by d2a16d37: 'Andre
+    Jackson Jr.' against the matrix's 'Andre Jackson') labelled 12,652 of
+    12,966 matrix rows [features#7]; the prepare chain's own vectors.json
+    labels the same rows either way.
 
     `p` is written by enrich_vectors.py, which runs *after* build_vectors.py.
     A vectors.json rebuilt without re-running enrich carries no `p` at all, and
@@ -215,8 +222,12 @@ def load_positions(names, seasons) -> np.ndarray:
         return pos
     vec = json.loads(VECTORS.read_text(encoding="utf-8"))
     lookup = {(p["name"], p["season"]): int(p.get("p", -1)) for p in vec["players"]}
+    by_pid = {
+        (int(p["pid"]), p["season"]): int(p.get("p", -1)) for p in vec["players"] if str(p.get("pid", "")).isdigit()
+    }
     for i, (n, s) in enumerate(zip(names, seasons, strict=False)):
-        pidx = lookup.get((str(n), str(s)), -1)
+        key = (int(pids[i]), str(s)) if pids is not None else None
+        pidx = by_pid[key] if key in by_pid else lookup.get((str(n), str(s)), -1)
         if 0 <= pidx < len(POSITIONS):
             pos[i] = pidx
     coverage = float((pos >= 0).mean()) if len(pos) else 0.0

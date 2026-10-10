@@ -317,7 +317,9 @@ def evaluate(args: argparse.Namespace) -> dict:
         checks["run_args"] = "the checkpoint's saved args"
         Z, M, applied = replay(run_args)
         model_in = (Z, M)
-        src = heads_src(model.heads(Z, M)) | {"position": model.T.load_positions(mat["name"], mat["season"])}
+        src = heads_src(model.heads(Z, M)) | {
+            "position": model.T.load_positions(mat["name"], mat["season"], mat["player_id"])
+        }
         src["cluster"] = mat["cluster"]
         checks["source"] = f"re-encoded from {args.checkpoint}"
     else:

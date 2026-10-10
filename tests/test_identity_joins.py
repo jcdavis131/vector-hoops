@@ -143,3 +143,26 @@ def test_build_row_values_reads_every_artifact_by_player_id():
         av,
     )
     assert vals[0]["INJ_GP_PCT"] == 0.85
+
+
+def test_position_labels_join_on_player_id(tmp_path, monkeypatch):
+    """The committed vectors.json spells 275 suffix names the matrix does not [features#7]."""
+    import pytest
+
+    pytest.importorskip("torch")
+    import train_mtnn
+
+    vec = {
+        "players": [
+            {"name": "Andre Jackson Jr.", "season": "2023-24", "pid": 1641748, "p": 2},
+            {"name": "LeBron James", "season": "2023-24", "pid": 2544, "p": 2},
+            {"name": "No Pid", "season": "2023-24", "p": 4},
+        ]
+    }
+    (tmp_path / "vectors.json").write_text(json.dumps(vec), encoding="utf-8")
+    monkeypatch.setattr(train_mtnn, "VECTORS", tmp_path / "vectors.json")
+    names = np.array(["Andre Jackson", "LeBron James", "No Pid"])
+    seasons = np.array(["2023-24"] * 3)
+    pids = np.array([1641748, 2544, 99])
+    assert train_mtnn.load_positions(names, seasons, pids).tolist() == [2, 2, 4]  # by id, then by name
+    assert train_mtnn.load_positions(names, seasons).tolist() == [-1, 2, 4]  # by name the suffix row is lost
