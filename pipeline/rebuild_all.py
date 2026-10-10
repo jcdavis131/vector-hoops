@@ -189,6 +189,12 @@ def _context_steps() -> list[Step]:
         ("build_playoffs", (), (D + "playoffs.json", A + "playoffs.json", A + "playoff_paths.json"), rc.playoffs),
         ("build_honors", (), (D + "honors.json", A + "honors.json"), rc.honors),
         ("roster_context", (), (D + "roster_context.json",), rc.gamelogs),
+        # min_gp.json feeds build_availability (pre-game-log GP) and
+        # build_career_context (honest MPG/GP); it was left out, so both read
+        # whatever min_gp.json the last manual run wrote (P10/P11 carry-forward).
+        # --offline: pre-2015 seasons have no pergame cache, and this block
+        # must not reach the network.
+        ("build_min_gp", ("--offline",), (D + "min_gp.json",), rc.gamelogs),
         ("build_availability", (), (D + "availability.json",), rc.gamelogs),
         ("build_career_context", (), (D + "career_arc.json", D + "career_sequences.npz"), rc.gamelogs),
         ("form_context", (), (D + "form_context.json",), rc.gamelogs),

@@ -89,6 +89,8 @@ def test_context_block_sits_between_enrich_and_integrate():
         ("roster_context", "build_career_context"),
         ("roster_context", "derive_system_tags"),
         ("build_availability", "build_career_context"),
+        ("build_min_gp", "build_availability"),
+        ("build_min_gp", "build_career_context"),
         ("build_honors", "build_player_meta"),
     ):
         assert names.index(before) < names.index(after)
