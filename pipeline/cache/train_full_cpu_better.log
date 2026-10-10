@@ -1,0 +1,25 @@
+12966 rows, 79 features, 11 towers, 30 seasons, device=cpu
+tower widths: {'volume': 5, 'playmaking': 12, 'rebounding': 5, 'defense': 3, 'efficiency': 10, 'shotmix': 13, 'bio': 4, 'tracking': 13, 'market': 4, 'honors': 5, 'career': 5}
+loss weights: {'archetype': 0.25, 'position': 0.18, 'profile': 0.12, 'next_profile': 0.05, 'skills': 0.18, 'salary': 0.12, 'team_fit': 0.08, 'roster_lift': 0.08, 'form_recon': 0.1, 'career_slope': 0.05, 'competition': 0.05, 'pedigree': 0.08, 'playoff': 0.08, 'honors': 0.05, 'bbref': 0.1}
+10108 same-player adjacent-season pairs
+honors_recognition head (HON_ALL_NBA_VOTE_LAG): 1132 labeled rows
+  wide skills joined: ['post', 'transition', 'motor', 'shooting_gravity', 'rim_gravity', 'disruption_gravity'] (5154 covered rows)
+18 skill towers (12 core + 6 wide), per-skill masked
+phase=select fit_rows=train n_fit=11027/12966
+lr schedule: onecycle (step-level), steps/epoch=26, total_steps=3900, fusion=concat, nce_loss=hybrid, tower=32/160, skill_hidden=16
+next-season stats labels: 10108/12966 rows
+/home/hatch/workspace/vector-hoops/pipeline/train_mtnn.py:1238: UserWarning: Converting a tensor with requires_grad=True to a scalar may lead to unexpected behavior.
+Consider using tensor.detach() first. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/autograd/generated/python_variable_methods.cpp:822.)
+  total += float(loss)
+epoch   0  loss 2.6583  lr 1.41e-04  val_recall@10=0.470 test_recall@10=0.446 purity@20=0.718 composite=0.472
+epoch   5  loss 1.9411  lr 5.49e-04  val_recall@10=0.582 test_recall@10=0.482 purity@20=0.812 composite=0.554
+epoch  10  loss 1.4875  lr 9.56e-04  val_recall@10=0.584 test_recall@10=0.420 purity@20=0.852 composite=0.571
+epoch  15  loss 1.3420  lr 1.36e-03  val_recall@10=0.576 test_recall@10=0.394 purity@20=0.882 composite=0.579
+epoch  20  loss 1.2734  lr 1.47e-03  val_recall@10=0.564 test_recall@10=0.414 purity@20=0.896 composite=0.579
+epoch  25  loss 1.2079  lr 1.42e-03  val_recall@10=0.628 test_recall@10=0.466 purity@20=0.896 composite=0.606
+epoch  30  loss 1.1734  lr 1.37e-03  val_recall@10=0.606 test_recall@10=0.450 purity@20=0.913 composite=0.603
+epoch  35  loss 1.1249  lr 1.33e-03  val_recall@10=0.604 test_recall@10=0.456 purity@20=0.911 composite=0.601
+epoch  40  loss 1.1085  lr 1.28e-03  val_recall@10=0.584 test_recall@10=0.488 purity@20=0.925 composite=0.599
+epoch  45  loss 1.0771  lr 1.23e-03  val_recall@10=0.568 test_recall@10=0.432 purity@20=0.933 composite=0.595
+epoch  50  loss 1.0602  lr 1.19e-03  val_recall@10=0.572 test_recall@10=0.490 purity@20=0.926 composite=0.594
+epoch  55  loss 1.0361  lr 1.14e-03  val_recall@10=0.572 test_recall@10=0.452 purity@20=0.929 composite=0.595

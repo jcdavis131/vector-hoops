@@ -1,0 +1,90 @@
+{
+  "built": "2026-08-09T23:42:15",
+  "rows": 12966,
+  "entities": 2428,
+  "time_range": {
+    "feature_seasons": [
+      "1996-97",
+      "2025-26"
+    ],
+    "feature_year_min": 1997,
+    "feature_year_max": 2026
+  },
+  "features": {
+    "count": 28,
+    "names": [
+      "eraz_PTS",
+      "eraz_AST",
+      "eraz_OREB",
+      "eraz_DREB",
+      "eraz_STL",
+      "eraz_BLK",
+      "eraz_TOV",
+      "eraz_FG3A",
+      "eraz_FGA",
+      "eraz_FTA",
+      "eraz_FG3_PCT",
+      "eraz_FG_PCT",
+      "eraz_FT_PCT",
+      "eraz_PLUS_MINUS",
+      "gp",
+      "mpg",
+      "salary_log",
+      "has_salary",
+      "age",
+      "has_age",
+      "cur_per",
+      "cur_ws",
+      "cur_bpm",
+      "cur_pts",
+      "cur_reb",
+      "cur_ast",
+      "has_bbref_adv",
+      "has_bbref_pg"
+    ],
+    "description": "Per row (player, season t): 14 per-100-possession game features z-scored within season cohort (assets/vectors.json 'v'; uses only season-t data), gp, mpg, log-salary (+indicator), age (+indicator), and raw season-t Basketball-Reference PER/WS/BPM/PTSpg/TRBpg/ASTpg (+join indicators) kept in original units for the persistence baseline. Missing values are NaN; consumers must impute from TRAIN rows only."
+  },
+  "labels": {
+    "next_season_per": {
+      "construction": "y = player's per (advanced table, Basketball-Reference) in season t+1; defined only when the player has a season-t+1 row in the eligibility-gated assets/vectors.json matrix AND joins the season-t+1 bbref table by normalized name; else masked.",
+      "observed": 10057
+    },
+    "next_season_win_shares": {
+      "construction": "y = player's ws (advanced table, Basketball-Reference) in season t+1; defined only when the player has a season-t+1 row in the eligibility-gated assets/vectors.json matrix AND joins the season-t+1 bbref table by normalized name; else masked.",
+      "observed": 10057
+    },
+    "next_season_bpm": {
+      "construction": "y = player's bpm (advanced table, Basketball-Reference) in season t+1; defined only when the player has a season-t+1 row in the eligibility-gated assets/vectors.json matrix AND joins the season-t+1 bbref table by normalized name; else masked.",
+      "observed": 10057
+    },
+    "next_season_pts": {
+      "construction": "y = player's pts_per_g (per_game table, Basketball-Reference) in season t+1; defined only when the player has a season-t+1 row in the eligibility-gated assets/vectors.json matrix AND joins the season-t+1 bbref table by normalized name; else masked.",
+      "observed": 10057
+    },
+    "next_season_reb": {
+      "construction": "y = player's trb_per_g (per_game table, Basketball-Reference) in season t+1; defined only when the player has a season-t+1 row in the eligibility-gated assets/vectors.json matrix AND joins the season-t+1 bbref table by normalized name; else masked.",
+      "observed": 10057
+    },
+    "next_season_ast": {
+      "construction": "y = player's ast_per_g (per_game table, Basketball-Reference) in season t+1; defined only when the player has a season-t+1 row in the eligibility-gated assets/vectors.json matrix AND joins the season-t+1 bbref table by normalized name; else masked.",
+      "observed": 10057
+    }
+  },
+  "split": {
+    "key": "target_year (= feature season end-year + 1)",
+    "train": "target_year <= 2023 (11027 rows)",
+    "val": "target_year in [2024, 2025] (948 rows)",
+    "test": "target_year == 2026 (500 rows)",
+    "note": "Strictly temporal: every train row's label season precedes every val label season, which precedes the test label season (2025-26)."
+  },
+  "join": {
+    "method": "normalized name (accent-strip, suffix-strip, alnum only)",
+    "bbref_advanced_rows_joined": 12897,
+    "bbref_per_game_rows_joined": 12897,
+    "nba_rows_with_ambiguous_name_dropped_from_join": 0
+  },
+  "sources": {
+    "features": "assets/vectors.json (committed; built by pipeline/build_vectors.py from stats.nba.com caches)",
+    "bbref": "basketball-reference.com season tables fetched by bench/fetch_bbref.py into pipeline/cache/"
+  }
+}

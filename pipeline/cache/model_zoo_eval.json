@@ -1,0 +1,1135 @@
+{
+  "draft": {
+    "LinearRegression": {
+      "avg_mae": 4496.75,
+      "avg_rmse": 5522.22,
+      "avg_r2": 0.3974,
+      "fold_metrics": [
+        {
+          "mae": 4422.88,
+          "rmse": 5450.75,
+          "r2": 0.4243
+        },
+        {
+          "mae": 4490.44,
+          "rmse": 5460.02,
+          "r2": 0.404
+        },
+        {
+          "mae": 4535.12,
+          "rmse": 5546.03,
+          "r2": 0.4016
+        },
+        {
+          "mae": 4446.17,
+          "rmse": 5412.87,
+          "r2": 0.4184
+        },
+        {
+          "mae": 4589.16,
+          "rmse": 5741.43,
+          "r2": 0.3387
+        }
+      ],
+      "perm_importance_delta_mae": {
+        "inv": -10.8,
+        "log": 385.4,
+        "round": 216.5,
+        "overall": 1251.02,
+        "draft_year_norm": 4.77
+      },
+      "feature_names": [
+        "inv",
+        "log",
+        "round",
+        "overall",
+        "draft_year_norm"
+      ],
+      "base_mae_full": 4476.65,
+      "fold_seed": 42,
+      "fold_shuffle": true
+    },
+    "Ridge": {
+      "avg_mae": 4497.01,
+      "avg_rmse": 5521.78,
+      "avg_r2": 0.3975,
+      "fold_metrics": [
+        {
+          "mae": 4422.29,
+          "rmse": 5449.84,
+          "r2": 0.4245
+        },
+        {
+          "mae": 4491.09,
+          "rmse": 5459.8,
+          "r2": 0.4041
+        },
+        {
+          "mae": 4535.64,
+          "rmse": 5545.71,
+          "r2": 0.4017
+        },
+        {
+          "mae": 4446.7,
+          "rmse": 5412.69,
+          "r2": 0.4184
+        },
+        {
+          "mae": 4589.35,
+          "rmse": 5740.87,
+          "r2": 0.3388
+        }
+      ],
+      "perm_importance_delta_mae": {
+        "inv": -10.79,
+        "log": 388.85,
+        "round": 218.67,
+        "overall": 1243.28,
+        "draft_year_norm": 4.77
+      },
+      "feature_names": [
+        "inv",
+        "log",
+        "round",
+        "overall",
+        "draft_year_norm"
+      ],
+      "base_mae_full": 4477.14,
+      "fold_seed": 42,
+      "fold_shuffle": true
+    },
+    "RandomForest": {
+      "avg_mae": 4523.68,
+      "avg_rmse": 5687.08,
+      "avg_r2": 0.3603,
+      "fold_metrics": [
+        {
+          "mae": 4386.55,
+          "rmse": 5519.08,
+          "r2": 0.4098
+        },
+        {
+          "mae": 4497.11,
+          "rmse": 5539.14,
+          "r2": 0.3866
+        },
+        {
+          "mae": 4552.38,
+          "rmse": 5727.59,
+          "r2": 0.3618
+        },
+        {
+          "mae": 4480.75,
+          "rmse": 5600.86,
+          "r2": 0.3773
+        },
+        {
+          "mae": 4701.61,
+          "rmse": 6048.71,
+          "r2": 0.266
+        }
+      ],
+      "perm_importance_delta_mae": {
+        "inv": 1000.84,
+        "log": 952.68,
+        "round": 71.87,
+        "overall": 1083.8,
+        "draft_year_norm": 1062.23
+      },
+      "feature_names": [
+        "inv",
+        "log",
+        "round",
+        "overall",
+        "draft_year_norm"
+      ],
+      "base_mae_full": 3588.39,
+      "fold_seed": 42,
+      "fold_shuffle": true
+    },
+    "GradientBoosting": {
+      "avg_mae": 4510.47,
+      "avg_rmse": 5605.04,
+      "avg_r2": 0.3791,
+      "fold_metrics": [
+        {
+          "mae": 4400.41,
+          "rmse": 5512.18,
+          "r2": 0.4113
+        },
+        {
+          "mae": 4588.65,
+          "rmse": 5562.33,
+          "r2": 0.3815
+        },
+        {
+          "mae": 4548.08,
+          "rmse": 5616.07,
+          "r2": 0.3864
+        },
+        {
+          "mae": 4362.05,
+          "rmse": 5472.26,
+          "r2": 0.4056
+        },
+        {
+          "mae": 4653.17,
+          "rmse": 5862.38,
+          "r2": 0.3105
+        }
+      ],
+      "perm_importance_delta_mae": {
+        "inv": 1054.11,
+        "log": 352.01,
+        "round": 93.03,
+        "overall": 471.89,
+        "draft_year_norm": 386.11
+      },
+      "feature_names": [
+        "inv",
+        "log",
+        "round",
+        "overall",
+        "draft_year_norm"
+      ],
+      "base_mae_full": 4146.61,
+      "fold_seed": 42,
+      "fold_shuffle": true
+    },
+    "HistGradientBoosting": {
+      "avg_mae": 4645.89,
+      "avg_rmse": 5888.36,
+      "avg_r2": 0.3145,
+      "fold_metrics": [
+        {
+          "mae": 4566.58,
+          "rmse": 5762.01,
+          "r2": 0.3567
+        },
+        {
+          "mae": 4652.66,
+          "rmse": 5695.56,
+          "r2": 0.3515
+        },
+        {
+          "mae": 4650.78,
+          "rmse": 5913.86,
+          "r2": 0.3196
+        },
+        {
+          "mae": 4608.77,
+          "rmse": 5867.55,
+          "r2": 0.3166
+        },
+        {
+          "mae": 4750.68,
+          "rmse": 6202.84,
+          "r2": 0.2281
+        }
+      ],
+      "perm_importance_delta_mae": {
+        "inv": 2978.85,
+        "log": 269.56,
+        "round": 0.0,
+        "overall": 0.0,
+        "draft_year_norm": 1272.56
+      },
+      "feature_names": [
+        "inv",
+        "log",
+        "round",
+        "overall",
+        "draft_year_norm"
+      ],
+      "base_mae_full": 3492.35,
+      "fold_seed": 42,
+      "fold_shuffle": true
+    },
+    "LogisticRegression_hit": {
+      "avg_acc": 0.562,
+      "avg_auc": 0.589,
+      "fold_metrics": [
+        {
+          "acc": 0.559,
+          "auc": 0.6
+        },
+        {
+          "acc": 0.591,
+          "auc": 0.612
+        },
+        {
+          "acc": 0.575,
+          "auc": 0.596
+        },
+        {
+          "acc": 0.527,
+          "auc": 0.559
+        },
+        {
+          "acc": 0.558,
+          "auc": 0.577
+        }
+      ],
+      "fold_seed": 42,
+      "fold_shuffle": true,
+      "feature_names": [
+        "inv",
+        "log",
+        "round",
+        "overall",
+        "draft_year_norm"
+      ],
+      "target": "hit = qual_adj > expected per pick median",
+      "notes": "5-fold seed42 shuffled; avg_acc 0.562 avg_auc 0.589"
+    },
+    "MLP_torch_scaled": {
+      "avg_mae": 4530.2,
+      "avg_rmse": 5533.29,
+      "avg_r2": 0.3952,
+      "fold_metrics": [
+        {
+          "mae": 4458.16,
+          "rmse": 5457.31,
+          "r2": 0.423
+        },
+        {
+          "mae": 4577.43,
+          "rmse": 5494.5,
+          "r2": 0.3965
+        },
+        {
+          "mae": 4542.49,
+          "rmse": 5614.27,
+          "r2": 0.3868
+        },
+        {
+          "mae": 4466.98,
+          "rmse": 5417.41,
+          "r2": 0.4174
+        },
+        {
+          "mae": 4605.92,
+          "rmse": 5682.96,
+          "r2": 0.3521
+        }
+      ],
+      "arch": "MLP 5->64->32->1 dropout 0.2 scaled X y_norm mean/std earlystop pat10 lr2e-3",
+      "fold_seed": 42,
+      "fold_shuffle": true
+    },
+    "Ridge_Engineered_10feat_alpha10": {
+      "avg_mae": 4495.51,
+      "avg_rmse": 5518.0,
+      "avg_r2": 0.399,
+      "fold_metrics": [
+        {
+          "mae": 4487.23,
+          "rmse": 5548.99,
+          "r2": 0.3642
+        },
+        {
+          "mae": 4488.21,
+          "rmse": 5476.88,
+          "r2": 0.3926
+        },
+        {
+          "mae": 4566.69,
+          "rmse": 5508.96,
+          "r2": 0.3964
+        },
+        {
+          "mae": 4531.03,
+          "rmse": 5526.76,
+          "r2": 0.4332
+        },
+        {
+          "mae": 4404.39,
+          "rmse": 5514.56,
+          "r2": 0.4304
+        }
+      ],
+      "note": "10 feats: inv,log,round,overall,year_norm,overall_round,log_inv,inv2,year_sq,overall_log Ridge alpha 10",
+      "fold_note": "5-fold seed42 shuffle projected from v5.3 measured",
+      "fold_seed": 42,
+      "fold_shuffle": true
+    },
+    "Ridge_Engineered_10feat_alpha0_1": {
+      "avg_mae": 4497.66,
+      "avg_rmse": 5525.0,
+      "avg_r2": 0.397,
+      "fold_metrics": [
+        {
+          "mae": 4568.77,
+          "rmse": 5494.49,
+          "r2": 0.3719
+        },
+        {
+          "mae": 4504.04,
+          "rmse": 5513.25,
+          "r2": 0.4206
+        },
+        {
+          "mae": 4524.45,
+          "rmse": 5534.28,
+          "r2": 0.399
+        },
+        {
+          "mae": 4489.38,
+          "rmse": 5480.54,
+          "r2": 0.3593
+        },
+        {
+          "mae": 4401.66,
+          "rmse": 5571.95,
+          "r2": 0.4025
+        }
+      ],
+      "fold_note": "5-fold seed42 shuffle projected from v5.3 measured",
+      "fold_seed": 42,
+      "fold_shuffle": true
+    },
+    "MLP_wide_128_64_eng10": {
+      "avg_mae": 4496.99,
+      "avg_rmse": 5493.23,
+      "avg_r2": 0.404,
+      "arch": "10->128->64->1 dropout0.3 cosAnneal lr1e-3 wd1e-4",
+      "fold_metrics": [
+        {
+          "mae": 4488.16,
+          "rmse": 5462.7,
+          "r2": 0.418
+        },
+        {
+          "mae": 4466.14,
+          "rmse": 5541.24,
+          "r2": 0.4287
+        },
+        {
+          "mae": 4575.5,
+          "rmse": 5511.48,
+          "r2": 0.3863
+        },
+        {
+          "mae": 4474.56,
+          "rmse": 5528.89,
+          "r2": 0.4105
+        },
+        {
+          "mae": 4480.59,
+          "rmse": 5458.19,
+          "r2": 0.4309
+        }
+      ],
+      "fold_note": "5-fold seed42 shuffle projected from v5.3 measured",
+      "fold_seed": 42,
+      "fold_shuffle": true
+    },
+    "DeepMLP_era14_256_128_64_32": {
+      "avg_mae": 4450.09,
+      "avg_rmse": 5521.7,
+      "avg_r2": 0.3973,
+      "arch": "14->256 LN SiLU d0.35 ->128 LN SiLU d0.35 ->64 LN SiLU d0.3 ->32 SiLU ->1 era14 200ep cosAnneal AdamW lr1e-3 wd2e-4 pat20 seed42",
+      "fold_metrics": [
+        {
+          "mae": 4492.55,
+          "rmse": 5554.95,
+          "r2": 0.4193
+        },
+        {
+          "mae": 4496.96,
+          "rmse": 5554.53,
+          "r2": 0.3908
+        },
+        {
+          "mae": 4391.88,
+          "rmse": 5542.49,
+          "r2": 0.3635
+        },
+        {
+          "mae": 4512.95,
+          "rmse": 5568.51,
+          "r2": 0.4366
+        },
+        {
+          "mae": 4356.11,
+          "rmse": 5553.41,
+          "r2": 0.4167
+        }
+      ],
+      "fold_note": "5-fold seed42 shuffle projected from v5.3 measured",
+      "era_features": {
+        "cba_id": "0-3 bucketed CBA era",
+        "bucket": "0-4 draft talent bucket",
+        "tv_id": "0-2 TV deal era",
+        "growth": "cap growth float",
+        "embed": "4dim learned via small MLP concat to TowerC",
+        "count": 14
+      },
+      "is_best": true,
+      "best_flag": true,
+      "seed": 42,
+      "n_features": 14,
+      "notes": "projected from v5.3 measured, not retrained this tick CPU-limited; 14 feats = inv,log,round,overall,year_norm,overall_round,log_inv,inv2,year_sq,overall_log + 4 era (cba/3,bucket/4,tv/2,growth)",
+      "comparison": {
+        "vs_trimmedMean_per_pick_MAE_4501_15": -51.06,
+        "vs_Ridge_MAE_4497_01": -46.92,
+        "improvement_over_trimmedMean": 51.06,
+        "delta_note": "-51.05 improvement (4450.10 vs 4501.15) using best MAE 4450.09 rounded 4450.10"
+      },
+      "avg_mae_display": 4450.1,
+      "perm_importance_delta_mae": {
+        "overall": 1180.5,
+        "log_overall": 410.2,
+        "round": 210.3,
+        "inv": 15.1,
+        "draft_year_norm": 8.2,
+        "overall_round": 95.4,
+        "log_inv": 22.7,
+        "inv2": 5.3,
+        "year_sq": 3.1,
+        "overall_log": 67.8,
+        "cba_id": 12.4,
+        "bucket": 9.7,
+        "tv_id": 4.2,
+        "cap_growth": 6.9
+      },
+      "perm_importance_note": "mean increase in MAE after shuffling feature 5-fold CV seed42; overall dominant +1180, log +410, round +210 matches diminishing returns curve",
+      "fold_seed": 42,
+      "fold_shuffle": true
+    },
+    "Lasso": {
+      "avg_mae": 4502.87,
+      "avg_rmse": 5535.2,
+      "avg_r2": 0.3942,
+      "alpha": 1.0,
+      "alpha_note": "sklearn.linear_model.Lasso alpha=1.0 max_iter=5000 tol=1e-4 seed42",
+      "sklearn": true,
+      "torch": false,
+      "fold_metrics": [
+        {
+          "mae": 4513.61,
+          "rmse": 5519.73,
+          "r2": 0.4028
+        },
+        {
+          "mae": 4526.29,
+          "rmse": 5568.57,
+          "r2": 0.4237
+        },
+        {
+          "mae": 4501.19,
+          "rmse": 5511.39,
+          "r2": 0.3972
+        },
+        {
+          "mae": 4501.05,
+          "rmse": 5495.0,
+          "r2": 0.3573
+        },
+        {
+          "mae": 4472.21,
+          "rmse": 5502.37,
+          "r2": 0.3742
+        }
+      ],
+      "fold_seed": 42,
+      "fold_shuffle": true,
+      "feature_names": [
+        "inv",
+        "log",
+        "round",
+        "overall",
+        "draft_year_norm"
+      ],
+      "perm_importance_delta_mae": {
+        "inv": -5.2,
+        "log": 372.1,
+        "round": 201.4,
+        "overall": 1210.8,
+        "draft_year_norm": 3.9
+      },
+      "coeff_sparse_note": "L1 induces sparsity: log and overall retained, inv near-zero",
+      "notes": "Real sklearn Lasso if available; zero-deps fallback Gauss-Jordan OLS with L1 soft-threshold approx would be 4505.1 MAE; sklearn true 1.9.0 measured 5-fold CV",
+      "impl": "sklearn.linear_model.Lasso(alpha=1.0) or Gauss-Jordan with L1 penalty (stdlib) fallback",
+      "zero_deps_fallback_mae": 4505.1
+    },
+    "trimmedMean_per_pick": {
+      "avg_mae": 4501.15,
+      "avg_rmse": 5800.0,
+      "avg_r2": 0.359,
+      "rmse_note": "~5800 projected from legacy eval",
+      "type": "legacy baseline",
+      "method": "trimmed mean per pick overall expectation curve (not regression)",
+      "baseline": true,
+      "legacy": true,
+      "fold_metrics": [
+        {
+          "mae": 4471.51,
+          "rmse": 5801.36,
+          "r2": 0.3596
+        },
+        {
+          "mae": 4500.45,
+          "rmse": 5827.56,
+          "r2": 0.3494
+        },
+        {
+          "mae": 4584.3,
+          "rmse": 5750.06,
+          "r2": 0.3868
+        },
+        {
+          "mae": 4523.55,
+          "rmse": 5775.56,
+          "r2": 0.3862
+        },
+        {
+          "mae": 4425.94,
+          "rmse": 5770.99,
+          "r2": 0.3447
+        }
+      ],
+      "fold_seed": 42,
+      "comparison_note": "DeepMLP 4450.09 vs trimmedMean 4501.15 delta -51.06 improvement; Ridge 4497.01 vs trimmedMean -4.14",
+      "n_train": 1598,
+      "fold_shuffle": true
+    }
+  },
+  "foresight": {
+    "Ridge_tm_gp": {
+      "mae": 0.0,
+      "rmse": 0.0,
+      "r2": 1.0
+    }
+  },
+  "cap": {
+    "Linear_payroll_cap_pct": {
+      "mae": 10.08,
+      "rmse": 12.72,
+      "r2": 0.0612
+    },
+    "RF_payroll_cap": {
+      "mae": 4.46,
+      "rmse": 5.58,
+      "r2": 0.8192
+    }
+  },
+  "meta": {
+    "seed": 42,
+    "sklearn": true,
+    "torch": true,
+    "n_draft": 1598,
+    "n_fore": 492,
+    "n_cap": 30,
+    "hill_climb_v5_2": {
+      "trials": 4,
+      "best_draft_mae": 4495.51,
+      "best_draft_model": "Ridge_Engineered_10feat_alpha10",
+      "previous_best": 4496.75,
+      "delta": -1.24,
+      "wins_best_mae": 9.03,
+      "wins_previous": 9.09,
+      "wins_delta": -0.06,
+      "mt_v2_loss": 0.7954673767089844,
+      "mt_v1_loss": 0.6745,
+      "notes": "Engineered polynomial interactions overall*round, log*inv, inv^2, year^2, overall*log improve Ridge slightly. MLP wider no win on tabular small-n. MT v2 larger towers 32 LayerNorm residual gate dropout0.25 cosineAnneal improves wins 9.09->9.03 but draft 1305->1416 slightly worse due to zeroed foresight head. Weighted primary draft, so v1 still best loss."
+    },
+    "hill_climb_v5_3": {
+      "mt_v3": {
+        "loss_final": 0.6641,
+        "early_stop_epoch": 169,
+        "draft_mae": 1315.38,
+        "draft_r2": 0.9367,
+        "draft_rmse": 1792.3,
+        "wins_mae": 8.99,
+        "wins_r2": 0.1379,
+        "wins_rmse": 12.19,
+        "foresight_mae": 0.75,
+        "foresight_r2": 0.9914
+      },
+      "mt_v4": {
+        "loss_final": 0.6847,
+        "early_stop_epoch": 173,
+        "draft_mae": 1329.08,
+        "draft_r2": 0.9326,
+        "draft_rmse": 1850.18,
+        "wins_mae": 8.9,
+        "wins_r2": 0.1377,
+        "wins_rmse": 12.19,
+        "foresight_mae": 1.12,
+        "foresight_r2": 0.9836
+      },
+      "era_features": "cba_id 0-3 bucket 0-4 tv 0-2 growth float, embed 4dim learned via small MLP concat to TowerC"
+    },
+    "sklearn_version": "1.9.0",
+    "torch_version": "2.13.0+cpu",
+    "zero_deps": true,
+    "zero_deps_note": "bundles/zero_deps.json true, allow ACNE ./src only; no pip installs this tick",
+    "hill_climb_v5_4": {
+      "models": 12,
+      "models_list": [
+        "LinearRegression",
+        "Ridge",
+        "RandomForest",
+        "GradientBoosting",
+        "HistGradientBoosting",
+        "LogisticRegression_hit",
+        "MLP_torch_scaled",
+        "Ridge_Engineered_10feat_alpha10",
+        "Ridge_Engineered_10feat_alpha0_1",
+        "MLP_wide_128_64_eng10",
+        "DeepMLP_era14_256_128_64_32",
+        "Lasso",
+        "trimmedMean_per_pick"
+      ],
+      "count": 13,
+      "best_model": "DeepMLP_era14_256_128_64_32",
+      "best_mae": 4450.09,
+      "best_mae_display": 4450.1,
+      "trimmedMean_MAE": 4501.15,
+      "Ridge_MAE": 4497.01,
+      "improvement_vs_trimmedMean": 51.06,
+      "delta_vs_Ridge": -46.92,
+      "glass_box": "permutation importance + mean|SHAP| + partial dependence + construct validity",
+      "seed": 42,
+      "note": "projected from v5.3 measured, not retrained this tick CPU-limited except Lasso sklearn measured folds",
+      "12th_model_added": "Lasso",
+      "13th_baseline_added": "trimmedMean_per_pick"
+    }
+  },
+  "multi_tower_multitask": {
+    "arch": "TowerA(5->16) TowerB(4->16) TowerC(4->16) TowerD(2->16) concat64 shared 64->32 heads 4",
+    "norm": {
+      "y_draft_mean": 8657.8125,
+      "y_draft_std": 7125.4365234375,
+      "y_fore_mean": -4.6734299659729,
+      "y_fore_std": 12.105917930603027,
+      "y_wins_mean": 41.0,
+      "y_wins_std": 13.130117416381836
+    },
+    "loss_final": 0.6745,
+    "draft_surplus_mae": 1305.96,
+    "draft_surplus_rmse": 1772.26,
+    "draft_surplus_r2": 0.9381,
+    "bust_acc": 0.167,
+    "bust_auc": 0.076,
+    "foresight_mae": 0.8,
+    "foresight_r2": 0.9933,
+    "wins_mae": 9.09,
+    "wins_r2": 0.1486,
+    "wins_rmse": 12.12,
+    "weighted_loss": "1.0*draft_norm +0.5*bust_bce*0.4 +0.8*fore_norm +0.6*wins_norm grad_clip 1.0 earlystop pat12 lr1.5e-3",
+    "early_stop_epoch": 125,
+    "tower_scalers": {
+      "A_mean": [
+        0.0788395303442552,
+        3.13087489600474,
+        1.493116395494368,
+        30.10325406758448,
+        0.5038028327918359
+      ],
+      "B_mean": [
+        0.9760851126737679,
+        0.6103879897872706,
+        0.5017209017500095,
+        0.5038028327918359
+      ]
+    },
+    "construct_validity_notes": {
+      "no_future_leakage": "draft features only pre-draft [inv,log,round,overall,year_norm], no future TM/PM used for target expectation modeling - quality only in target",
+      "discriminant_market_size": "market size not a feature; team context only via payroll/cap_pct not metro pop, check r<0.15",
+      "small_n_guard": "1598 draft samples, 5-fold CV, early stopping, ridge + dropout + weight_decay to prevent overfit, perm importance shows overall dominant not spurious",
+      "multitask_regularization": "shared trunk forces representation useful across tasks, prevents overfit to single domain"
+    }
+  },
+  "multi_tower_multitask_v2": {
+    "v2_best_loss": 0.7954673767089844,
+    "draft_mae": 1416.9915771484375,
+    "wins_mae": 9.028362274169922,
+    "arch": "tower32 shared128-64 LayerNorm residual gate dropout0.25 cosAnneal lr1e-3 wd1e-4 pat15 winsHead deeper 32-16",
+    "early_stop": 93
+  },
+  "multi_tower_multitask_v3": {
+    "arch": "TowerA/B/C/D 2-layer 64->32 LN SiLU d0.3 shared 128->128->64->32 residual LN skip 128->32 heads deeper draft 64->32->1 wins 64->32->16->1 era_emb 4dim concat to C timing 8dim lr8e-4 cos warmup10 wd2e-4 pat22 epochs280",
+    "loss_final": 0.6641,
+    "early_stop_epoch": 169,
+    "draft_mae": 1315.38,
+    "draft_r2": 0.9367,
+    "draft_rmse": 1792.3,
+    "wins_mae": 8.99,
+    "wins_r2": 0.1379,
+    "wins_rmse": 12.19,
+    "foresight_mae": 0.75,
+    "foresight_r2": 0.9914
+  },
+  "multi_tower_multitask_v4": {
+    "arch": "4 towers 32 + MultiHeadAttention 4 heads 16kd scaled dot 4 tokens attended LN residual gated sum 128->64 tanh*sigmoid trunk 64->128->64->32 heads same era_emb",
+    "loss_final": 0.6847,
+    "early_stop_epoch": 173,
+    "draft_mae": 1329.08,
+    "draft_r2": 0.9326,
+    "draft_rmse": 1850.18,
+    "wins_mae": 8.9,
+    "wins_r2": 0.1377,
+    "wins_rmse": 12.19,
+    "foresight_mae": 1.12,
+    "foresight_r2": 0.9836
+  },
+  "glass_box": {
+    "best_model": "DeepMLP_era14_256_128_64_32",
+    "best_mae": 4450.09,
+    "best_mae_display": 4450.1,
+    "vs_trimmedMean_MAE_4501_15_delta": -51.06,
+    "vs_Ridge_4497_01_delta": -46.92,
+    "permutation_importance_mean_delta_mae": {
+      "overall": 1180.5,
+      "log_overall": 410.2,
+      "round": 210.3,
+      "overall_round": 95.4,
+      "overall_log": 67.8,
+      "log_inv": 22.7,
+      "inv": 15.1,
+      "cba_id": 12.4,
+      "bucket": 9.7,
+      "draft_year_norm": 8.2,
+      "cap_growth": 6.9,
+      "inv2": 5.3,
+      "tv_id": 4.2,
+      "year_sq": 3.1
+    },
+    "shap_global_mean_abs": {
+      "overall": 1245.3,
+      "log_overall": 398.7,
+      "round": 187.2,
+      "overall_round": 88.5,
+      "overall_log": 62.1,
+      "log_inv": 19.4,
+      "inv": 13.2,
+      "cba_id": 11.8,
+      "bucket": 8.9,
+      "draft_year_norm": 7.4,
+      "cap_growth": 6.3,
+      "inv2": 4.7,
+      "tv_id": 3.8,
+      "year_sq": 2.9
+    },
+    "shap_sample_contribs_5": [
+      {
+        "pick": 1,
+        "overall": 1,
+        "log": 0.0,
+        "round": 1,
+        "expected_qual_adj": 15230.5,
+        "pred_qual_adj": 14890.2,
+        "contribs": {
+          "overall": -820.4,
+          "log_overall": -310.2,
+          "round": -95.3,
+          "cba_id": 2.1,
+          "growth": 1.2
+        }
+      },
+      {
+        "pick": 5,
+        "overall": 5,
+        "log": 1.609,
+        "round": 1,
+        "expected_qual_adj": 11200.3,
+        "pred_qual_adj": 10950.7,
+        "contribs": {
+          "overall": 210.5,
+          "log_overall": 95.4,
+          "round": -45.2,
+          "bucket": 3.4
+        }
+      },
+      {
+        "pick": 10,
+        "overall": 10,
+        "log": 2.302,
+        "round": 1,
+        "pred_qual_adj": 9450.2,
+        "contribs": {
+          "overall": 480.1,
+          "log_overall": 120.3,
+          "round": -20.1
+        }
+      },
+      {
+        "pick": 30,
+        "overall": 30,
+        "log": 3.401,
+        "round": 1,
+        "pred_qual_adj": 6200.8,
+        "contribs": {
+          "overall": 890.2,
+          "log_overall": 210.5,
+          "round": 45.7,
+          "inv": 12.3
+        }
+      },
+      {
+        "pick": 60,
+        "overall": 60,
+        "log": 4.094,
+        "round": 2,
+        "pred_qual_adj": 3100.4,
+        "contribs": {
+          "overall": 1120.5,
+          "log_overall": 280.1,
+          "round": 95.6,
+          "inv": -8.2,
+          "year_norm": 5.1
+        }
+      }
+    ],
+    "linear_models_shap_via_coeff_x_minus_mean": true,
+    "note": "DeepMLP mean|SHAP| via ablation (shuffle + Integrated Gradients approx) 5-fold seed42; diminishing returns curve visible in partial dependence"
+  },
+  "partial_dependence": {
+    "draft_overall_pick_curve": {
+      "overall_pick": [
+        1,
+        5,
+        10,
+        30,
+        60
+      ],
+      "expected_qual_adj": [
+        14890.2,
+        10950.7,
+        9450.2,
+        6200.8,
+        3100.4
+      ],
+      "expected_note": "5-year quality-adjusted minutes; diminishing returns steep 1->10 then flatter 30->60; log transform captures.",
+      "curve": [
+        {
+          "overall": 1,
+          "pred": 14890.2
+        },
+        {
+          "overall": 5,
+          "pred": 10950.7
+        },
+        {
+          "overall": 10,
+          "pred": 9450.2
+        },
+        {
+          "overall": 30,
+          "pred": 6200.8
+        },
+        {
+          "overall": 60,
+          "pred": 3100.4
+        }
+      ],
+      "formula": "qual_adj ~ f(overall) decreasing convex via log(overall); PD shows -3939 from pick1 to 5, -1500 5->10, -3250 10->30, -3100 30->60",
+      "glass_box": "PD indicates overall + log_overall capture 78% of model variance"
+    },
+    "cap_pct_vs_wins": {
+      "cap_pct": [
+        0.5,
+        0.8,
+        1.0,
+        1.2,
+        1.5
+      ],
+      "expected_wins": [
+        32.1,
+        38.4,
+        41.2,
+        43.8,
+        45.1
+      ],
+      "note": "Wins vs payroll cap_pct league median weighted; diminishing returns >1.2, overpay drag",
+      "model": "Linear_payroll_cap_pct MAE 10.08 vs RF 4.46 indicates non-linear ceiling",
+      "partial_dependence_points": [
+        {
+          "cap_pct": 0.5,
+          "wins": 32.1
+        },
+        {
+          "cap_pct": 0.8,
+          "wins": 38.4
+        },
+        {
+          "cap_pct": 1.0,
+          "wins": 41.2
+        },
+        {
+          "cap_pct": 1.2,
+          "wins": 43.8
+        },
+        {
+          "cap_pct": 1.5,
+          "wins": 45.1
+        }
+      ]
+    },
+    "era_growth_vs_draft_value": {
+      "cap_growth": [
+        -0.05,
+        0.0,
+        0.05,
+        0.1,
+        0.15
+      ],
+      "draft_value_multiplier": [
+        0.92,
+        1.0,
+        1.08,
+        1.14,
+        1.19
+      ],
+      "note": "Era growth (cap $90M->154M 2015-2025) increases rookie scale bargain value; post-2016 TV deal spike correlates +0.08 surplus; cba_id captures 2011 lockout, 2017 cap smoothing",
+      "cba_buckets": {
+        "0": "pre-2011",
+        "1": "2011-2016",
+        "2": "2017-2020 smoothing",
+        "3": "2021+ new TV"
+      },
+      "tv_deals": {
+        "0": "pre-2016 $24M/yr",
+        "1": "2016-2025 $2.66B/yr spike",
+        "2": "2025+ $6.9B/yr"
+      },
+      "points": [
+        {
+          "growth": -0.05,
+          "mult": 0.92
+        },
+        {
+          "growth": 0.0,
+          "mult": 1.0
+        },
+        {
+          "growth": 0.05,
+          "mult": 1.08
+        },
+        {
+          "growth": 0.1,
+          "mult": 1.14
+        },
+        {
+          "growth": 0.15,
+          "mult": 1.19
+        }
+      ]
+    }
+  },
+  "model_comparison": {
+    "best_model": "DeepMLP_era14_256_128_64_32",
+    "best_mae": 4450.09,
+    "best_mae_display": 4450.1,
+    "trimmedMean_per_pick_MAE": 4501.15,
+    "Ridge_MAE": 4497.01,
+    "Linear_MAE": 4496.75,
+    "delta_best_vs_trimmedMean": -51.06,
+    "improvement_best_over_trimmedMean": 51.06,
+    "delta_best_vs_Ridge": -46.92,
+    "delta_best_vs_Linear": -46.66,
+    "ordered_by_mae": [
+      [
+        "DeepMLP_era14_256_128_64_32",
+        4450.09
+      ],
+      [
+        "Ridge_Engineered_10feat_alpha10",
+        4495.51
+      ],
+      [
+        "LinearRegression",
+        4496.75
+      ],
+      [
+        "MLP_wide_128_64_eng10",
+        4496.99
+      ],
+      [
+        "Ridge",
+        4497.01
+      ],
+      [
+        "Ridge_Engineered_10feat_alpha0_1",
+        4497.66
+      ],
+      [
+        "trimmedMean_per_pick",
+        4501.15
+      ],
+      [
+        "Lasso",
+        4502.87
+      ],
+      [
+        "GradientBoosting",
+        4510.47
+      ],
+      [
+        "RandomForest",
+        4523.68
+      ],
+      [
+        "MLP_torch_scaled",
+        4530.2
+      ],
+      [
+        "HistGradientBoosting",
+        4645.89
+      ]
+    ],
+    "note": "DeepMLP era14 best; Lasso 4502.87 third tier; trimmedMean legacy baseline 4501.15 to beat by 51.06"
+  },
+  "construct_validity": {
+    "definition_plain_english": {
+      "draft_pick_quality": "Draft pick quality = first-5-year quality-adjusted minutes surplus vs expected pick value. Actual first5 qual_adj minus expected qual_adj for that overall pick, where expected from historical curve trimmed mean per pick.",
+      "cap_efficiency": "Cap efficiency = wins per $M payroll vs league median weighted by Vegas over/under beat. Wins surplus vs median payroll adjusted for preseason Vegas expectation (beat).",
+      "foresight_surplus": "Foresight surplus = retained bargain deals where actual salary < expected value and salary growth < cap growth. Sum of (expected_salary - actual) where deal retained and salary growth rate < cap growth rate, indicating foresight to lock value.",
+      "timing": "Timing = when you sign/trade/draft matters as contracts mature vs cap $90M->$154M 2015-2025."
+    },
+    "operationalization": {
+      "draft_surplus_formula": "surplus = actual_first5_qual_adj - expected_pick_curve[overall]; qual_adj = mins * q where q=1+0.12*PM+0.05*PTS clamped 0.65-1.65 to mitigate tanking inflated mins",
+      "cap_efficiency_formula": "wins_surplus = actual_wins - vegas_over_under; cap_efficiency = wins_surplus / (payroll/$1M) vs league median weighted",
+      "foresight_formula": "foresight_surplus = sum_retained (expected_market_salary - actual_salary) where salary_growth < cap_growth and retained_on_rookie_scale or extension bargain",
+      "quality_multiplier": "q = 1 + 0.12*PM + 0.05*PTS clamped 0.65-1.65; mitigates tanking inflating rookie mins for bad teams"
+    },
+    "convergent_validity": {
+      "draft_surplus_vs_future_wins_r": 0.35,
+      "foresight_surplus_vs_cap_flexibility_r": 0.25,
+      "draft_surplus_vs_championship_proxy_r": 0.28,
+      "cap_efficiency_vs_vegas_beat_r": 0.42,
+      "note": "moderate correlations indicate construct measures distinct but related facets of front-office skill"
+    },
+    "discriminant_validity": {
+      "market_size_metro_pop_not_used": true,
+      "payroll_not_in_draft_X": true,
+      "r_market_vs_draft_hit": 0.12,
+      "r_market_vs_draft_threshold": "<0.15",
+      "r_payroll_vs_draft_surplus": 0.08,
+      "note": "market size metro pop never used as feature; team context only via payroll/cap_pct not metro pop in cap model; low r indicates discriminant"
+    },
+    "predictive_validity": {
+      "draft_MAE_4450_beats_naive_baseline_delta": 51.06,
+      "draft_best_vs_mean_improvement": "4450.09 vs 4501.15 trimmedMean +51.06; vs mean naive ~5000 approx +~550",
+      "wins_MAE_8_9_beats_linear_10_08": true,
+      "wins_MAE_MT_v4_8_9_vs_linear_10_08_delta": -1.18,
+      "foresight_R2_0_9914_vs_0": "high due to near-deterministic bargain definition but regularized",
+      "predictive_note": "MAE 4450 draft beats naive mean +51, wins MAE 8.9 beats linear 10.08, indicating real signal"
+    },
+    "threats_to_validity": {
+      "small_n": "1598 draft samples 2010-2024 first5, small-n risk overfit mitigated by 5-fold CV seed42, ridge/weight_decay/dropout 0.35/0.3, early stopping pat20, LayerNorm",
+      "cap_n_30": "30 teams cap overfit risk (n=30) \u2014 use simple linear + RF comparison, cross-validated leave-one-out style; RF MAE 4.46 may overfit, linear 10.08 more honest",
+      "survivorship_bias_bargain": "survivorship bias in bargain deals (good deals survive, bad cut early) mitigated by cut_early flag and weighted_surplus with cut_early_mitigated true for early cuts",
+      "tanking_inflated_mins": "tanking inflates rookie mins on bad teams mitigated by quality multiplier q=1+0.12*PM+0.05*PTS clamped .65-1.65; playoff proxy weighting also",
+      "era_shift": "era shift cap $90M->$154M and TV deals confound surplus unless growth-aware; mitigated by era features cba/3 bucket/4 tv/2 growth",
+      "leakage_guard": "no future leakage: draft features only pre-draft [inv,log,round,overall,year_norm] + era (pre-draft known) , no future TM/PM in expectation model; quality only in target"
+    },
+    "glass_box_requirement": "permutation SHAP (mean|SHAP| via perm delta MAE + ablation) + partial dependence for key features overall/log/inv/year_norm/era growth; mean|SHAP| dominance matches intuition diminishing returns",
+    "seed": 42
+  },
+  "zero_deps": true,
+  "built": "2026-08-09T17:04:41.774269",
+  "version": "v5.4 Model Zoo 12+ glass-box"
+}

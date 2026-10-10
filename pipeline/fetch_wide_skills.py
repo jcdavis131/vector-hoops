@@ -1,0 +1,298 @@
+"""Track J fetcher — synergy play-types + hustle stats (post/transition/motor).
+
+For each tracked season (2015-16+), pulls the raw inputs the three
+masked wide skills need and writes a self-contained cache:
+
+  pipeline/cache/wide_skills_{season}.json
+  {
+    "built": "YYYY-MM-DD", "season": "2023-24", "complete": true,
+    "source": "stats.nba.com synergyplaytypes + leaguehustlestatsplayer",
+    "players": {
+      "<norm_name>": {
+        "post_freq": 18.2, "post_ppp": 0.98,
+        "trans_freq": 14.1, "trans_ppp": 1.21,
+        "screen_ast": 4.1, "deflections": 2.3, "loose_balls": 0.8,
+        "charges": 0.2, "box_outs": 3.1
+      }, ...
+    }
+  }
+
+build_wide_skills.py reads these; the committed fixture
+(wide_skills.example.json) has "complete": false so absence masks a
+skill instead of fabricating a zero.
+
+A value the endpoints did not return is null, never 0.0. Each record used
+to be `float(x.get(col) or 0.0)` over names unioned across five endpoints,
+so a player one endpoint did not list, and a column one did not track that
+season, became measured zeros in a cache stamped complete [ingest#2,
+features#3]. Now an absent player or key is None, hustle_coverage's season
+rules null what the endpoint did not track (all hustle before 2016-17,
+box_outs before 2017-18), and the doc records "field_coverage" (measured
+values per field) and "untracked_fields". d_fg_pct is not fetched: the
+Defense measure never returned D_FG_PCT (0.0 for every player of all 11
+cached seasons), so it is written as null rather than requested under a
+name the response does not have.
+
+Run:  python pipeline/fetch_wide_skills.py [--offline] [--season 2023-24]
+Requires network to stats.nba.com (operator machine — datacenter IPs
+blocked). Install ``curl_cffi`` — Akamai blocks plain ``requests`` /
+``nba_api`` TLS fingerprints:
+
+  pip install curl_cffi
+  python pipeline/fetch_wide_skills.py
+
+Synergy + hustle both start 2015-16.
+
+Exit codes (ingest.run_fetch): 0 when every season is cached, 2 when any
+season failed or, with --offline, has no cache. A failed season writes
+nothing and the rest are still fetched [ingest#7].
+"""
+
+from __future__ import annotations
+
+import argparse
+import sys
+import time
+from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from ingest import EmptyPayloadError, Failures, FetchError, cache_is_fresh, run_fetch, write_cache
+from hustle_coverage import BOX_OUTS_TRACKED_FROM, apply_season_rules, field_coverage, untracked_fields
+from nba_http import fetch_stats_json, legacy_result_set_rows
+from name_utils import norm_name
+from seasons import HUSTLE_FIRST_SEASON, is_final, season_range
+
+ROOT = Path(__file__).resolve().parents[1]
+CACHE = ROOT / "pipeline" / "cache"
+
+# Synergy + hustle coverage begins 2015-16.
+SEASONS = season_range(HUSTLE_FIRST_SEASON)
+
+# Pause between endpoint calls — stats.nba.com throttles burst traffic.
+_CALL_GAP_S = 2.5
+
+
+def cache_path(season: str) -> Path:
+    return CACHE / f"wide_skills_{season}.json"
+
+
+def _empty_filter_params() -> dict[str, str]:
+    """stats.nba.com expects the full filter param set (minimal → HTTP 500)."""
+    return {
+        "College": "",
+        "Conference": "",
+        "Country": "",
+        "DateFrom": "",
+        "DateTo": "",
+        "Division": "",
+        "DraftPick": "",
+        "DraftYear": "",
+        "Height": "",
+        "Location": "",
+        "Month": "",
+        "OpponentTeamID": "",
+        "Outcome": "",
+        "PORound": "",
+        "PlayerExperience": "",
+        "PlayerPosition": "",
+        "SeasonSegment": "",
+        "TeamID": "",
+        "VsConference": "",
+        "VsDivision": "",
+        "Weight": "",
+    }
+
+
+def synergy_params(season: str, play_type: str) -> dict:
+    return {
+        "LeagueID": "00",
+        "PerMode": "PerGame",
+        "PlayerOrTeam": "P",
+        "SeasonType": "Regular Season",
+        "SeasonYear": season,
+        "PlayType": play_type,
+        "TypeGrouping": "offensive",
+    }
+
+
+def hustle_params(season: str) -> dict:
+    return {
+        "PerMode": "PerGame",
+        "Season": season,
+        "SeasonType": "Regular Season",
+        "LeagueID": "00",
+        **_empty_filter_params(),
+    }
+
+
+def ptstats_params(season: str, measure: str) -> dict:
+    return {
+        **_empty_filter_params(),
+        "LastNGames": 0,
+        "Month": 0,
+        "OpponentTeamID": 0,
+        "PerMode": "PerGame",
+        "PlayerOrTeam": "Player",
+        "PtMeasureType": measure,
+        "Season": season,
+        "SeasonType": "Regular Season",
+        "LeagueID": "00",
+        "GameScope": "",
+        "StarterBench": "",
+    }
+
+
+# Columns build_season_cache reads. An absent one used to become a column of
+# zeros in a cache marked complete [ingest#11]; a required one now raises.
+#   - D_FG_PCT (Defense) is not read at all: d_fg_pct is 0.0 for every player
+#     of every cached season, so the response does not carry it under that
+#     name, and requiring it would fail every season [ingest#2].
+#   - BOX_OUTS (hustle): all zero in 2015-16 and 2016-17, non-zero from
+#     2017-18, so it is required (and kept) from 2017-18 only.
+SYNERGY_COLS = ["PLAYER_NAME", "POSS_PCT", "PPP"]
+HUSTLE_COLS = [
+    "PLAYER_NAME",
+    "SCREEN_ASSISTS",
+    "DEFLECTIONS",
+    "LOOSE_BALLS_RECOVERED",
+    "CHARGES_DRAWN",
+    "CONTESTED_SHOTS",
+]
+BOX_OUTS_FIRST_SEASON = BOX_OUTS_TRACKED_FROM
+PTSTATS_COLS = {"PullUpShot": ["PLAYER_NAME", "PULL_UP_FG3A"]}
+
+
+def stats_rows(endpoint: str, params: dict, set_name: str, required: list[str]) -> list[dict]:
+    payload = fetch_stats_json(endpoint, params, timeout=90)
+    return legacy_result_set_rows(payload, set_name, required=required)
+
+
+def rows_by_name(rows: list[dict]) -> dict[str, dict]:
+    return {norm_name(str(r["PLAYER_NAME"])): r for r in rows}
+
+
+def fetch_synergy(season: str, play_type: str) -> dict[str, dict]:
+    rows = stats_rows("synergyplaytypes", synergy_params(season, play_type), "SynergyPlayType", SYNERGY_COLS)
+    time.sleep(_CALL_GAP_S)
+    return rows_by_name(rows)
+
+
+def fetch_hustle(season: str) -> dict[str, dict]:
+    required = HUSTLE_COLS + (["BOX_OUTS"] if season >= BOX_OUTS_FIRST_SEASON else [])
+    rows = stats_rows("leaguehustlestatsplayer", hustle_params(season), "HustleStatsPlayer", required)
+    time.sleep(_CALL_GAP_S)
+    return rows_by_name(rows)
+
+
+def fetch_ptstats(season: str, measure: str) -> dict[str, dict]:
+    """Player tracking (leaguedashptstats) — the PullUpShot measure."""
+    rows = stats_rows("leaguedashptstats", ptstats_params(season, measure), "LeagueDashPtStats", PTSTATS_COLS[measure])
+    time.sleep(_CALL_GAP_S)
+    return rows_by_name(rows)
+
+
+def num(row: dict, col: str, scale: float = 1.0) -> float | None:
+    """row[col] as a float, or None when the player or the value is absent (never 0.0 for absent)."""
+    v = row.get(col)
+    if v is None:
+        return None
+    return float(v) * scale
+
+
+def build_season_cache(season: str, *, skip_tracking: bool = False) -> dict:
+    # Tracking first — synergy/hustle burst traffic can poison a reused session.
+    pullup: dict[str, dict] = {}
+    if not skip_tracking:
+        pullup = fetch_ptstats(season, "PullUpShot")
+    post = fetch_synergy(season, "Postup")
+    trans = fetch_synergy(season, "Transition")
+    hustle = fetch_hustle(season)
+    names = set(post) | set(trans) | set(hustle) | set(pullup)
+    players: dict[str, dict] = {}
+    for nn in names:
+        p, t, h, u = post.get(nn, {}), trans.get(nn, {}), hustle.get(nn, {}), pullup.get(nn, {})
+        rec = {
+            "post_freq": num(p, "POSS_PCT", 100.0),
+            "post_ppp": num(p, "PPP"),
+            "trans_freq": num(t, "POSS_PCT", 100.0),
+            "trans_ppp": num(t, "PPP"),
+            "screen_ast": num(h, "SCREEN_ASSISTS"),
+            "deflections": num(h, "DEFLECTIONS"),
+            "loose_balls": num(h, "LOOSE_BALLS_RECOVERED"),
+            "charges": num(h, "CHARGES_DRAWN"),
+            "box_outs": num(h, "BOX_OUTS"),
+            "contested_shots": num(h, "CONTESTED_SHOTS"),
+            "pull_up_fg3a": num(u, "PULL_UP_FG3A"),
+            "d_fg_pct": None,
+        }
+        players[nn] = apply_season_rules(season, rec)
+    return {
+        "built": time.strftime("%Y-%m-%d"),
+        "source": "stats.nba.com synergyplaytypes + leaguehustlestatsplayer + leaguedashptstats via nba_http (curl_cffi)",
+        # Every endpoint answered for this season; what each field measured is field_coverage.
+        "complete": True,
+        "season": season,
+        "untracked_fields": [*untracked_fields(season), "d_fg_pct"],
+        "field_coverage": field_coverage(players),
+        "players": players,
+    }
+
+
+def _require_curl_cffi() -> None:
+    try:
+        import curl_cffi  # noqa: F401
+    except ImportError as err:
+        raise SystemExit(
+            "curl_cffi is required for stats.nba.com fetches.\n"
+            "  pip install curl_cffi\n"
+            "Plain nba_api/requests TLS is blocked by Akamai (RemoteDisconnected)."
+        ) from err
+
+
+def main() -> None:
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--offline", action="store_true")
+    ap.add_argument("--season", default=None)
+    ap.add_argument(
+        "--skip-tracking",
+        action="store_true",
+        help="synergy+hustle only (post/transition/motor/disruption); omit the pull-up pull for shooting gravity",
+    )
+    args = ap.parse_args()
+    seasons = [args.season] if args.season else SEASONS
+
+    if args.offline:
+        have = [s for s in seasons if cache_path(s).exists()]
+        print(f"cached wide-skill seasons: {len(have)}/{len(seasons)}")
+        if len(have) < len(seasons):
+            raise FetchError(f"no wide-skill cache for {[s for s in seasons if s not in have]}")
+        return
+
+    _require_curl_cffi()
+    CACHE.mkdir(parents=True, exist_ok=True)
+    failures = Failures("fetch_wide_skills")
+    for season in seasons:
+        p = cache_path(season)
+        if cache_is_fresh(p, season):
+            print(f"{season}: cached, skipping")
+            continue
+        what = "synergy + hustle" + ("" if args.skip_tracking else " + tracking")
+        print(f"{season}: fetching {what} …")
+        try:
+            doc = build_season_cache(season, skip_tracking=args.skip_tracking)
+            write_cache(p, doc, source=doc["source"], n_rows=len(doc["players"]), season=season)
+        except EmptyPayloadError as e:
+            if is_final(season):
+                failures.add(season, e)
+            else:
+                print(f"{season}: no rows yet; nothing cached")
+            continue
+        except FetchError as e:
+            failures.add(season, e)
+            continue
+        print(f"{season}: {len(doc['players'])} players -> {p.name}")
+    failures.raise_if_any()
+
+
+if __name__ == "__main__":
+    run_fetch(main, name="fetch_wide_skills")

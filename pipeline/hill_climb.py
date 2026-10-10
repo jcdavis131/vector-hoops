@@ -1,0 +1,434 @@
+"""Greedy hill-climb over MTNN feature inputs (per family) and the fusion that
+brings them together.
+
+Why multi-seed is not optional here: measured seed spread on the shipping recipe
+is test recall sd 0.088-0.122, CQS sd 1.61-2.30, purity sd 0.0046-0.0143
+(docs/MTNN_STABILITY_2026-07-24.md §3b). Single-family effects in the 2026-07-24
+masked ablation were ~0.06 test recall -- smaller than that noise. A single-seed
+climb therefore chases sampling noise and will happily "improve" a model into a
+worse one. Every candidate here is scored as a mean over >=2 seeds, and a step is
+only accepted when the gain clears the noise floor AND every seed agrees on the
+sign.
+
+Objective: mean CQS (the project's promote metric, and the most stable of the
+headline numbers). Guards mirror composite_score's promote slack -- a step that
+wins on CQS but drops purity or test recall past the slack is rejected.
+
+Families are *masked*, not excluded: values and mask bits are zeroed while the
+tower stays, so fusion width is constant across arms and the delta measures
+information content rather than a reshaped architecture.
+
+Run:
+  python pipeline/hill_climb.py --mode families --seeds 7,13 --rounds 2
+  python pipeline/hill_climb.py --mode fusion  --seeds 7,13
+"""
+
+from __future__ import annotations
+
+import argparse
+import functools
+import hashlib
+import json
+import subprocess
+import sys
+from collections import defaultdict
+from pathlib import Path
+
+import numpy as np
+
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "pipeline"))
+from artifact_io import BUNDLE_FILES, display_path, git_state, sha256_file  # noqa: E402
+
+DATA = ROOT / "pipeline" / "data"
+MANIFEST = DATA / "feature_manifest.json"
+OUT = DATA / "hill_climb"
+CACHE = OUT / "eval_cache.json"
+# One train_mtnn --run-dir per trial. Each trial's report AND embedding are
+# read from its own directory. Until 2026-10-09 the report came from
+# pipeline/data/mtnn_report.json (the trial's, since train_mtnn always writes
+# it there) but continuity was measured on pipeline/data/embedding_v3.npz,
+# which since bf194108 (2026-08-11) is the promoted embedding: trials write
+# theirs to pipeline/data/_scratch. So continuity_min / continuity_spread were
+# the same number for every arm while reading as per-arm [orchestration#7].
+# Cost: each trial directory keeps its final weights, embedding, centroids and
+# report, roughly 10 MB.
+RUNS = OUT / "runs"
+
+# injury is a durability read-out head, never an input tower (see cf45fdb):
+# as an input it measured -0.088 test recall.
+NON_TOWER = {"injury"}
+
+# Winner of the 2026-07-24 stability sweep: concat 32/160/2 @40ep, CQS mean
+# 75.87 over 4 seeds. Climb starts from here.
+# fmt: off
+BASE_ARCH = [
+    "--dim", "48",
+    "--tower-width", "32",
+    "--tower-hidden", "160",
+    "--tower-blocks", "2",
+    "--mlp-heads",
+    "--d-head-hidden", "128",
+    "--fusion", "concat",
+    "--fusion-hidden", "256",
+    "--nce-loss", "hybrid",
+    "--nce-player-weight", "0.7",
+    "--nce-arch-weight", "0.3",
+    "--hard-neg-boost", "0.3",
+    "--drop-p", "0.12",
+    "--weight-decay", "0.0001",
+    "--lr-schedule", "onecycle",
+    "--warmup-pct", "0.1",
+    "--anneal-strategy", "linear",
+    "--batch", "512",
+    "--val-every", "0",
+    "--no-best-checkpoint",
+]
+# fmt: on
+
+# Fusion / capacity candidates for the "universal MTNN" stage. Each entry
+# overrides BASE_ARCH flags by name.
+FUSION_GRID: dict[str, dict[str, str]] = {
+    "concat_256_d48": {},
+    "concat_384_d48": {"--fusion-hidden": "384"},
+    "concat_512_d48": {"--fusion-hidden": "512"},
+    "concat_256_d64": {"--dim": "64"},
+    "concat_384_d64": {"--fusion-hidden": "384", "--dim": "64"},
+    "concat_256_d32": {"--dim": "32"},
+    # valid --fusion choices are gated|concat|transformer
+    "transformer_256_d48": {"--fusion": "transformer"},
+    "gated_256_d48": {"--fusion": "gated"},
+}
+
+# Accept a step only if mean CQS gains more than this. Noise on a 2-seed mean is
+# ~1.61/sqrt(2) ~= 1.14, so 1.2 keeps steps above the floor.
+MIN_GAIN = 1.2
+PURITY_SLACK = 0.02
+RECALL_SLACK = 0.02
+
+
+def override(base: list[str], ov: dict[str, str]) -> list[str]:
+    """Replace flag values in a flag list by name; append if absent."""
+    out = list(base)
+    for flag, val in ov.items():
+        if flag in out:
+            out[out.index(flag) + 1] = val
+        else:
+            out += [flag, val]
+    return out
+
+
+def families() -> list[str]:
+    man = json.loads(MANIFEST.read_text(encoding="utf-8"))
+    fams = sorted(set(man["families"].values()) - NON_TOWER)
+    return fams
+
+
+def continuity(emb_path: Path) -> dict:
+    """Same-player consecutive-season cosine; flat across eras = generalizing."""
+    d = np.load(emb_path, allow_pickle=False)
+    E = d["E"].astype(np.float32)
+    pid = np.array(d["player_id"])
+    yr = np.array([int(str(s)[:4]) for s in d["season"]])
+    by_player: dict[int, dict[int, int]] = defaultdict(dict)
+    for i, (p, y) in enumerate(zip(pid, yr, strict=False)):
+        by_player[int(p)][int(y)] = i
+    per_year: dict[int, list[tuple[int, int]]] = defaultdict(list)
+    for mm in by_player.values():
+        for y, i in mm.items():
+            j = mm.get(y + 1)
+            if j is not None:
+                per_year[y].append((i, j))
+    vals = {}
+    for y, prs in per_year.items():
+        if len(prs) < 30:
+            continue
+        P = np.array(prs)
+        vals[y] = float((E[P[:, 0]] * E[P[:, 1]]).sum(1).mean())
+    modern = [v for y, v in vals.items() if y >= 2016]
+    return {
+        "continuity_min": round(min(modern), 4) if modern else None,
+        "continuity_spread": round(max(modern) - min(modern), 4) if modern else None,
+    }
+
+
+def load_cache() -> dict:
+    if CACHE.exists():
+        return json.loads(CACHE.read_text(encoding="utf-8"))
+    return {}
+
+
+def save_cache(c: dict) -> None:
+    OUT.mkdir(parents=True, exist_ok=True)
+    CACHE.write_text(json.dumps(c, indent=1), encoding="utf-8")
+
+
+def train_argv(arch: list[str], masked: list[str], seed: int, epochs: int) -> list[str]:
+    """train_mtnn.py's arguments for one trial, without --run-dir."""
+    argv = ["--seed", str(seed), "--epochs", str(epochs), *arch]
+    if masked:
+        argv += ["--mask-families", ",".join(sorted(masked))]
+    return argv
+
+
+def _tracked_py_diff_sha256() -> str | None:
+    """sha256 of `git diff HEAD` over tracked *.py files; None if git cannot say.
+
+    Only .py: a pipeline run rewrites tracked data such as assets/vectors.json,
+    whose diff is large and does not reach a trial except through
+    train_matrix.npz, which the key already hashes.
+    """
+    try:
+        proc = subprocess.run(
+            ["git", "-C", str(ROOT), "diff", "HEAD", "--no-ext-diff", "--no-color", "--", "*.py"],
+            capture_output=True,
+            timeout=60,
+            check=False,
+        )
+    except (OSError, subprocess.SubprocessError):
+        return None
+    return hashlib.sha256(proc.stdout).hexdigest() if proc.returncode == 0 else None
+
+
+@functools.lru_cache(maxsize=1)
+def _code_and_matrix() -> str:
+    g = git_state(ROOT)
+    state = {"git": g["sha"], "dirty": g["dirty"], "matrix_sha256": sha256_file(DATA / "train_matrix.npz")}
+    if g["dirty"]:
+        # dirty is a boolean: two different uncommitted edits on the same HEAD
+        # gave the same key, and the second reused the first's run directory.
+        state["py_diff_sha256"] = _tracked_py_diff_sha256()
+    return json.dumps(state, sort_keys=True)
+
+
+def cache_key(tag: str, arch: list[str], masked: list[str], seed: int, epochs: int) -> str:
+    """eval_cache.json key: the tag for reading, plus a hash of what decides the result.
+
+    The key was f"{tag}|s{seed}|e{epochs}". --arch-dim rewrites BASE_ARCH's --dim
+    without changing the tag, so a 64-d search was answered from cached 48-d
+    rows, and a new commit or a rebuilt matrix reused rows measured on the old
+    one [orchestration#7]. The hash covers the full train argv, the git HEAD,
+    on a dirty tree the content of the uncommitted changes to tracked .py
+    files (git diff HEAD), and the matrix's sha256. Untracked files and edits
+    to tracked non-.py files are not covered.
+    """
+    blob = json.dumps(train_argv(arch, masked, seed, epochs)) + _code_and_matrix()
+    return f"{tag}|s{seed}|e{epochs}|{hashlib.sha256(blob.encode()).hexdigest()[:12]}"
+
+
+def run_one(tag: str, arch: list[str], masked: list[str], seed: int, epochs: int, key: str | None = None) -> dict:
+    key = key or cache_key(tag, arch, masked, seed, epochs)
+    run_dir = RUNS / key.replace("|", "_")
+    report = run_dir / BUNDLE_FILES["report"]
+    cmd = [
+        sys.executable,
+        str(ROOT / "pipeline" / "train_mtnn.py"),
+        *train_argv(arch, masked, seed, epochs),
+        "--run-dir",
+        str(run_dir),
+    ]
+    # capture_output=True gives the child a pipe. Run under Start-Process
+    # -WindowStyle Hidden — the only way to run a multi-hour climb on this box,
+    # since harness background jobs get killed — the child then blocks forever:
+    # measured at 0.06s CPU and 0% GPU across 35 seconds, while the identical
+    # spawn in the foreground finished in 10.3s with 35,879 bytes of stdout.
+    # Same family as the 2026-08-07 hidden-shell deadlock, one level down: the
+    # parent had real file handles and its child did not.
+    #
+    # Real files per trial. They are also worth having when a trial goes wrong.
+    logs = OUT / "trial_logs"
+    logs.mkdir(parents=True, exist_ok=True)
+    log = logs / f"{tag}_s{seed}.log"
+    # These two settings are good hygiene and they do NOT fix the real problem.
+    # I claimed they did and was wrong; here is what four configurations
+    # actually measured, each watched until CPU and log size stopped moving:
+    #
+    #   detached hidden,   pipes        first child completes, second blocks
+    #   detached hidden,   files + flag first child completes, second blocks
+    #   detached minimised (real console) one more trial, then blocks
+    #   foreground                       runs normally until killed externally
+    #
+    # So a detached parent gets roughly one child through and then stalls at
+    # 0.03s CPU with 0% GPU and a 0-byte log, regardless of pipes vs files,
+    # console vs none. The growth I first read as "the flag worked" was simply
+    # the next trial's seed-7 run finishing, which happened without the flag too.
+    #
+    # Not diagnosed further. Run the climb in the foreground; eval_cache.json
+    # makes it resumable, so repeated bounded runs converge on the same result.
+    flags = getattr(subprocess, "CREATE_NO_WINDOW", 0)
+    # A finished run directory with this key is this trial: same argv, commit
+    # and matrix. Reuse it (eval_cache.json lost the row, or a run was killed
+    # after the report but before the cache write) instead of retraining;
+    # train_mtnn refuses a --run-dir that already holds a report.
+    if not report.exists():
+        with open(log, "wb") as fh:
+            subprocess.run(cmd, cwd=ROOT, check=True, stdout=fh, stderr=subprocess.STDOUT,
+                           stdin=subprocess.DEVNULL, creationflags=flags)
+    rep = json.loads(report.read_text(encoding="utf-8"))
+    h = rep["held_out_recall"]
+    row = {
+        "cqs": rep["composite"]["cqs"],
+        "test_recall": h["test"]["recall_at_10_mtnn"],
+        "all_recall": h["all"]["recall_at_10_mtnn"],
+        "purity": rep.get("cross_era_archetype_neighbor_purity_at_20"),
+        "position_acc": rep.get("position_top1_acc"),
+        "run_dir": display_path(run_dir, ROOT),
+    }
+    row.update(continuity(run_dir / BUNDLE_FILES["embedding"]))
+    return row
+
+
+def evaluate(
+    tag: str,
+    arch: list[str],
+    masked: list[str],
+    seeds: list[int],
+    epochs: int,
+    cache: dict,
+) -> dict:
+    """Mean over seeds, cached by cache_key (tag, seed, epochs and a hash of argv, HEAD, matrix)."""
+    rows = []
+    for seed in seeds:
+        key = cache_key(tag, arch, masked, seed, epochs)
+        if key not in cache:
+            cache[key] = run_one(tag, arch, masked, seed, epochs, key)
+            save_cache(cache)
+        rows.append(cache[key])
+    agg = {"tag": tag, "masked": sorted(masked), "seeds": seeds, "n": len(rows)}
+    for k in ("cqs", "test_recall", "all_recall", "purity", "continuity_spread"):
+        vals = [r[k] for r in rows if r.get(k) is not None]
+        agg[k] = round(float(np.mean(vals)), 4) if vals else None
+        agg[f"{k}_per_seed"] = vals
+    return agg
+
+
+def passes_guards(cand: dict, incumbent: dict) -> tuple[bool, str]:
+    if cand["purity"] < incumbent["purity"] - PURITY_SLACK:
+        return False, f"purity {cand['purity']:.4f} < {incumbent['purity']:.4f}-slack"
+    if cand["test_recall"] < incumbent["test_recall"] - RECALL_SLACK:
+        return (
+            False,
+            f"test {cand['test_recall']:.3f} < {incumbent['test_recall']:.3f}-slack",
+        )
+    return True, ""
+
+
+def same_sign(cand: dict, incumbent: dict) -> bool:
+    """Every seed must agree the candidate is better -- kills noise-driven steps."""
+    a, b = cand.get("cqs_per_seed") or [], incumbent.get("cqs_per_seed") or []
+    if len(a) != len(b) or not a:
+        return False
+    return all(x > y for x, y in zip(a, b, strict=False))
+
+
+def climb_families(seeds: list[int], epochs: int, rounds: int) -> dict:
+    cache = load_cache()
+    fams = families()
+    masked: list[str] = []
+    incumbent = evaluate("full", BASE_ARCH, [], seeds, epochs, cache)
+    print(
+        f"start: cqs={incumbent['cqs']:.2f} test={incumbent['test_recall']:.3f} purity={incumbent['purity']:.4f}",
+        flush=True,
+    )
+    history = [incumbent]
+    for rnd in range(1, rounds + 1):
+        best, best_fam, best_reason = None, None, ""
+        for fam in fams:
+            if fam in masked:
+                continue
+            trial = sorted([*masked, fam])
+            tag = "drop_" + "_".join(trial)
+            cand = evaluate(tag, BASE_ARCH, trial, seeds, epochs, cache)
+            ok, why = passes_guards(cand, incumbent)
+            gain = cand["cqs"] - incumbent["cqs"]
+            flag = "" if ok else f"  [guard: {why}]"
+            print(
+                f"  r{rnd} mask {fam:12s} cqs={cand['cqs']:7.2f} "
+                f"({gain:+.2f}) test={cand['test_recall']:.3f} "
+                f"purity={cand['purity']:.4f}{flag}",
+                flush=True,
+            )
+            if not ok:
+                continue
+            if best is None or cand["cqs"] > best["cqs"]:
+                best, best_fam, best_reason = cand, fam, ""
+        if best is None:
+            print(f"  r{rnd}: no candidate passed guards — stop", flush=True)
+            break
+        gain = best["cqs"] - incumbent["cqs"]
+        if gain <= MIN_GAIN:
+            print(
+                f"  r{rnd}: best gain {gain:+.2f} <= MIN_GAIN {MIN_GAIN} — stop",
+                flush=True,
+            )
+            break
+        if not same_sign(best, incumbent):
+            print(
+                f"  r{rnd}: best ({best_fam}) gain {gain:+.2f} but seeds disagree — stop",
+                flush=True,
+            )
+            break
+        masked.append(best_fam)
+        incumbent = best
+        history.append(best)
+        print(
+            f"  r{rnd}: ACCEPT mask {best_fam} -> cqs={best['cqs']:.2f} {best_reason}",
+            flush=True,
+        )
+    return {
+        "mode": "families",
+        "masked": masked,
+        "incumbent": incumbent,
+        "history": history,
+    }
+
+
+def climb_fusion(seeds: list[int], epochs: int) -> dict:
+    cache = load_cache()
+    rows = []
+    for name, ov in FUSION_GRID.items():
+        arch = override(BASE_ARCH, ov)
+        cand = evaluate(f"fusion_{name}", arch, [], seeds, epochs, cache)
+        cand["override"] = ov
+        rows.append(cand)
+        print(
+            f"  {name:16s} cqs={cand['cqs']:7.2f} test={cand['test_recall']:.3f} "
+            f"purity={cand['purity']:.4f} spread={cand['continuity_spread']}",
+            flush=True,
+        )
+    rows.sort(key=lambda r: -r["cqs"])
+    return {"mode": "fusion", "ranked": rows, "winner": rows[0]}
+
+
+def main() -> None:
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--mode", choices=["families", "fusion"], default="families")
+    ap.add_argument("--seeds", default="7,13")
+    ap.add_argument("--epochs", type=int, default=20)
+    ap.add_argument("--rounds", type=int, default=2)
+    ap.add_argument("--out", default=None)
+    # BASE_ARCH carries --dim 48 while the shipped embedding_v3.npz is (12966, 64).
+    # Climbing at 48 searches a space the deployed model is not in, so its winner
+    # would not transfer. Default keeps the old behaviour; pass --arch-dim 64 to
+    # search the architecture actually in production.
+    ap.add_argument("--arch-dim", type=int, default=None,
+                    help="override BASE_ARCH's --dim (shipped model is 64)")
+    args = ap.parse_args()
+
+    seeds = [int(s) for s in args.seeds.split(",") if s]
+    if args.arch_dim:
+        i = BASE_ARCH.index("--dim")
+        BASE_ARCH[i + 1] = str(args.arch_dim)
+        print(f"searching at --dim {args.arch_dim} (shipped embedding is 64-d)", flush=True)
+    OUT.mkdir(parents=True, exist_ok=True)
+    if args.mode == "families":
+        res = climb_families(seeds, args.epochs, args.rounds)
+    else:
+        res = climb_fusion(seeds, args.epochs)
+    out = OUT / (args.out or f"{args.mode}_result.json")
+    out.write_text(json.dumps(res, indent=1), encoding="utf-8")
+    print(f"\nwrote {out}")
+
+
+if __name__ == "__main__":
+    main()
