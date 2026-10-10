@@ -202,6 +202,13 @@ def main() -> None:
     ap.add_argument("--protocol", choices=("legacy", "leakfree"), default="leakfree")
     ap.add_argument("--split", choices=("player", "temporal"), default="player")
     args = ap.parse_args()
+    # Before the device, the output directory or any training: an unknown
+    # --only name used to be dropped by the filter, so a typo trained nothing
+    # and exited 0 (ablate_v5.select_only).
+    only = set(AB.select_only(args.only, GRID)) if args.only.strip() else set()
+    if args.set:
+        only |= set(SWEEP_SETS[args.set])
+    names = [n for n in GRID if not only or n in only]
     try:
         import sys
 
@@ -218,10 +225,6 @@ def main() -> None:
     )
     OUT.mkdir(parents=True, exist_ok=True)
 
-    only = {s.strip() for s in args.only.split(",") if s.strip()}
-    if args.set:
-        only |= set(SWEEP_SETS[args.set])
-    names = [n for n in GRID if not only or n in only]
     multi = len(seeds) > 1
 
     per_seed: dict = {n: {} for n in names}

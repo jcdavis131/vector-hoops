@@ -86,6 +86,21 @@ W = {
 }
 
 
+def select_only(only: str, known) -> list[str]:
+    """The names --only picks from `known`, in known's order; every name when --only is empty.
+
+    The filter used to be `if not only or k in only`, which drops a name it does
+    not know: `--only typo` trained nothing and exited 0, and a list with one
+    misspelt name trained the rest without saying so.
+    """
+    known = list(known)
+    picked = {s.strip() for s in only.split(",") if s.strip()}
+    unknown = sorted(picked - set(known))
+    if unknown:
+        raise SystemExit(f"--only: unknown name(s) {', '.join(unknown)}; choose from {', '.join(known)}")
+    return [k for k in known if not picked or k in picked]
+
+
 def resolve_device(pref: str = "auto") -> str:
     if pref == "cpu":
         return "cpu"
@@ -428,6 +443,8 @@ def main() -> None:
         help="override the next_profile loss weight (default 0.08); tags output files so A/B runs do not collide",
     )
     args = ap.parse_args()
+    # Before the device, the output directory or any training.
+    names = select_only(args.only, CONFIGS)
     if args.w_next_profile is not None:
         W["next_profile"] = args.w_next_profile
     try:
@@ -447,8 +464,7 @@ def main() -> None:
     )
     OUT.mkdir(parents=True, exist_ok=True)
 
-    only = {s.strip() for s in args.only.split(",") if s.strip()}
-    configs = {k: v for k, v in CONFIGS.items() if not only or k in only}
+    configs = {k: CONFIGS[k] for k in names}
 
     per_seed: dict = {name: {} for name in configs}
     for name, cfg in configs.items():
