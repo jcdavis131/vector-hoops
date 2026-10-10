@@ -169,14 +169,14 @@ def test_steve_smith_is_steven_smith(built):
     assert row["HON_ALL_NBA_VOTE_LAG"] == 62.0 and row["HON_ASG_LAG"] == 1.0
 
 
-def test_a_partial_all_star_list_is_one_or_unknown(built):
+def test_a_partial_all_star_list_is_not_a_zero(built):
     if not built["real"]:
         pytest.skip("fixture mode")
     # honors_award_2025 lists 15 All-Stars (every 1997-2024 list has 22-26):
-    # a listed one is 1, an omitted one who played is unknown, not 0.
+    # the lag is missing for the whole next season, the count keeps a listed one.
     assert built["doc"]["coverage"]["asg_partial"] == ["2024-25", "2025-26"]
     sga = built["by"][("Shai GilgeousAlexander", "2025-26")]
-    assert sga["HON_ASG_LAG"] == 1.0
+    assert sga["HON_ASG_LAG"] is None and sga["HON_ASG_CUM"] >= 3.0
     giannis = built["by"][("Giannis Antetokounmpo", "2025-26")]
     assert giannis["HON_ASG_LAG"] is None and giannis["HON_ASG_CUM"] is None
     assert giannis["HON_ALL_NBA_VOTE_LAG"] is not None  # the vote list is not partial

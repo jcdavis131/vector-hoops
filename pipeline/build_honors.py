@@ -116,8 +116,13 @@ def _rekey(players: dict[str, dict]) -> dict[str, dict]:
 # honors_award_2025 and _2026 name 15 each, after the game moved to a
 # four-team tournament (2025) and a USA-vs-World format (2026): Giannis
 # Antetokounmpo, LeBron James, Jalen Brunson and Anthony Edwards were 2025
-# All-Stars and are not in the list. A list this short is partial: a player
-# it names was an All-Star (1), one it omits is unknown, not 0.
+# All-Stars and are not in the list. A list this short is partial, and the
+# next season's HON_ASG_LAG is missing for every row: an omitted player is
+# unknown, not 0, and the listed ones alone are a constant 1, which the
+# per-season z-score in integrate_context turns into 0 (the season mean),
+# indistinguishable from "not an All-Star" (stage_contract's per-season
+# constant gate flagged exactly that: 13 observed 1s in 2025-26). HON_ASG_CUM
+# still counts a listed selection.
 ASG_MIN_LISTED = 20
 
 
@@ -316,7 +321,7 @@ def main() -> None:
             vals = {
                 "HON_ALL_NBA_TEAM_LAG": float(team_tier),
                 "HON_ALL_NBA_VOTE_LAG": float(vote_pts),
-                "HON_ASG_LAG": float(asg) if cov["asg_held"] and (asg or not cov["asg_partial"]) else None,
+                "HON_ASG_LAG": float(asg) if cov["asg_held"] and not cov["asg_partial"] else None,
                 "HON_VOTE_RECOG": 1.0 if vote_pts > 0 else 0.0,
             }
 
