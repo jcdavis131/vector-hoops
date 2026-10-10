@@ -66,6 +66,22 @@ TRAIN_LAST_START_YEAR = 2021
 VAL_LAST_START_YEAR = 2023
 
 
+# stats.nba.com GAME_ID: "00" + game type + season start (2 digits) + game
+# number, e.g. "0022300001". Game types: 1 preseason, 2 regular season,
+# 3 All-Star, 4 playoffs, 5 play-in, 6 NBA Cup final. fetch_gamelogs keeps
+# every type (other readers want them), so a regular-season feature filters
+# when it reads [ingest#0].
+REGULAR_SEASON_GAME_PREFIX = "002"
+
+
+def is_regular_season(game_id: object) -> bool:
+    """True for a regular-season GAME_ID. An int id (leading zeros lost) is re-padded to 10 digits."""
+    s = str(game_id or "").strip()
+    if s.isdigit() and len(s) < 10:
+        s = s.zfill(10)
+    return s.startswith(REGULAR_SEASON_GAME_PREFIX)
+
+
 def season_label(start: int) -> str:
     """1999 -> "1999-00"."""
     return f"{start}-{str(start + 1)[-2:]}"

@@ -70,7 +70,7 @@ from eligibility import (
 from ingest import FetchError, cache_is_fresh, require_columns, run_fetch, write_cache
 from name_utils import canonical_name, norm_name
 from nba_http import fetch_stats_json, legacy_result_set_rows, patch_nba_api_session, retry_call
-from seasons import HUSTLE_FIRST_SEASON, TRACKING_FIRST_SEASON, season_range
+from seasons import HUSTLE_FIRST_SEASON, TRACKING_FIRST_SEASON, is_regular_season, season_range
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / "assets" / "vectors.json"
@@ -655,6 +655,14 @@ def compute_form_features(season: str) -> dict[str, dict]:
         return {}
     games: dict[int, list[dict]] = {}
     for g in _gamelog_rows(p):
+        # Regular season only. The logs hold every game type, and form used to
+        # take them all: in 2023-24 the file has 2,078 preseason, 24 All-Star,
+        # 1,685 playoff, 120 play-in and 26 Cup-final rows beside 26,401
+        # regular-season ones, so FORM_CEIL and the DD/TD rates absorbed
+        # playoff and All-Star games and 18 2015-16 players reached the
+        # 10-game floor only through them [ingest#0].
+        if not is_regular_season(g.get("GAME_ID")):
+            continue
         if (g.get("MIN") or 0) <= 0:
             continue
         pid = g.get("PLAYER_ID")
@@ -723,6 +731,8 @@ def compute_shape_features(season: str) -> dict[str, dict]:
         return {}
     games: dict[int, list[dict]] = {}
     for g in _gamelog_rows(p):
+        if not is_regular_season(g.get("GAME_ID")):  # as compute_form_features [ingest#0]
+            continue
         if (g.get("MIN") or 0) <= 0:
             continue
         pid = g.get("PLAYER_ID")

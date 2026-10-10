@@ -24,7 +24,7 @@ import json
 from collections import defaultdict
 from pathlib import Path
 
-from seasons import season_range
+from seasons import is_regular_season, season_range
 
 HERE = Path(__file__).resolve().parent
 DATA = HERE / "data"
@@ -51,7 +51,7 @@ def from_gamelogs(path: Path, season: str) -> list[dict]:
                 continue
             g = json.loads(line)
             gid = str(g.get("GAME_ID") or "")
-            if not gid.startswith("002"):
+            if not is_regular_season(gid):
                 continue
             tid = g.get("TEAM_ID")
             pid = g.get("PLAYER_ID")

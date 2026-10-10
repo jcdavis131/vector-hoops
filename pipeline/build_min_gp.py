@@ -25,7 +25,7 @@ import time
 from collections import defaultdict
 from pathlib import Path
 
-from seasons import season_range
+from seasons import is_regular_season, season_range
 
 HERE = Path(__file__).resolve().parent
 DATA = HERE / "data"
@@ -44,9 +44,8 @@ def from_gamelogs(path: Path, season: str) -> list[dict]:
             if not line.strip():
                 continue
             g = json.loads(line)
-            # Regular season only: GAME_ID prefix 002 (001=preseason,
-            # 003=all-star, 004=playoffs, 005=play-in, 006=cup final)
-            if not str(g.get("GAME_ID") or "").startswith("002"):
+            # Regular season only (seasons.is_regular_season: GAME_ID prefix 002).
+            if not is_regular_season(g.get("GAME_ID")):
                 continue
             pid = g.get("PLAYER_ID")
             m = g.get("MIN")

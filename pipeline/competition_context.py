@@ -10,11 +10,15 @@ from __future__ import annotations
 
 import argparse
 import json
+import sys
 from collections import defaultdict
 from datetime import datetime
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
+sys.path.insert(0, str(HERE))
+from seasons import is_regular_season  # noqa: E402
+
 OUT = HERE / "data" / "competition.json"
 EAST = {
     1610612737,
@@ -64,7 +68,10 @@ def from_logs() -> dict[tuple[str, str], dict]:
         by_name: dict[str, list[dict]] = defaultdict(list)
         for line in path.read_text(encoding="utf-8").splitlines():
             g = json.loads(line)
-            if not g.get("MIN"):
+            # Regular season only: schedule strength, rest and back-to-backs
+            # describe the 82-game schedule, and the logs also hold preseason,
+            # All-Star, playoff, play-in and Cup-final games [ingest#0].
+            if not g.get("MIN") or not is_regular_season(g.get("GAME_ID")):
                 continue
             game_teams[str(g["GAME_ID"])].add(int(g["TEAM_ID"]))
             by_name[g["PLAYER_NAME"]].append(g)
