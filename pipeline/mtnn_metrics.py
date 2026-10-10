@@ -11,9 +11,10 @@ would have changed every recorded number with no failing test.
 The function bodies are moved here unchanged (recall_at_k gained a
 docstring). train_mtnn imports them back under the same names, so
 `train_mtnn.recall_at_k` and the other
-`T.<name>` uses in ablate_v5, leakfree, sweep_v5 and score_mtnn_validation
-keep working. tests/test_mtnn_metrics.py pins each one on hand-computed
-inputs.
+`T.<name>` uses in ablate_v5, leakfree and sweep_v5 keep working
+(score_mtnn_validation, the fourth such user, is retired to
+pipeline/attic/). tests/test_mtnn_metrics.py pins each one on
+hand-computed inputs.
 
 recall_at_k draws its 500-pair subsample from the GLOBAL numpy RNG. That is
 deliberate here, not an oversight: it is the protocol every recorded number

@@ -10,8 +10,9 @@
 # This used to run every Monday with `contents: write` and end in
 # `git commit` + `git push` to master, and pushing master deploys the site.
 # What it would have pushed included assets/vectors.json rebuilt by
-# build_vectors alone: update_dataset.py never runs enrich_vectors.py, the
-# only step that sets each player's position `p`, so the file would have
+# build_vectors alone: update_dataset.py did not run enrich_vectors.py (it
+# does since 2026-10-09), the only step that sets each player's position
+# `p`, so the file would have
 # lost positions (12,925 / 12,966 rows carry `p` today) and the next matrix
 # rebuild would train the position head on nothing. Pushes made with
 # GITHUB_TOKEN also do not trigger ci.yml, so no gate would have run on the

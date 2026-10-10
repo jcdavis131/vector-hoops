@@ -55,8 +55,8 @@ def test_module_does_not_import_torch():
 
 
 def test_train_mtnn_imports_these_instead_of_defining_its_own():
-    """ablate_v5, leakfree, sweep_v5 and score_mtnn_validation reach these as
-    train_mtnn.<name>; a second copy in train_mtnn would let the two drift."""
+    """ablate_v5, leakfree and sweep_v5 reach these as train_mtnn.<name>; a
+    second copy in train_mtnn would let the two drift."""
     tree = ast.parse((ROOT / "pipeline" / "train_mtnn.py").read_text(encoding="utf-8"))
     defined = {n.name for n in tree.body if isinstance(n, ast.FunctionDef)}
     imported = {

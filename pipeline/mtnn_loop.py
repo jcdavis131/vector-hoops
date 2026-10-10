@@ -99,8 +99,9 @@ def scheduler_steps_per_epoch(n_fit_rows: int, batch: int, grad_accum: int) -> i
 # recall and val purity, never the full CQS, whose other eight components are
 # scored only after training [eval#11]. 'recall-purity' says what it is. The
 # two old names still parse and mean the same proxy, so the recipes and sweep
-# configs that pass them (legacy-v5-refit, legacy-v6-refit, apply_hp_sweep's
-# 'composite') keep working.
+# configs that pass them (legacy-v5-refit, legacy-v6-refit, the 'composite'
+# configs in pipeline/data/mtnn_hp_sweep.json that mtnn_hp_sweep replays) keep
+# working.
 CHECKPOINT_METRIC_ALIASES = {"cqs": "recall-purity", "composite": "recall-purity"}
 
 
