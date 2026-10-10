@@ -1,0 +1,12 @@
+draft 1598 fore 492 cap 30
+Ridge era14 alpha 0.1 mae 4500.10 r2 0.3959
+Ridge era14 alpha 1.0 mae 4501.56 r2 0.3964
+Ridge era14 alpha 10.0 mae 4499.00 r2 0.3976
+Ridge era14 alpha 100.0 mae 4509.54 r2 0.3989
+DeepMLP era14 mae 4450.09 r2 0.3973
+MTv3 earlystop epoch 191 best 0.6641
+MTv3 loss 0.6641 draft 1315.38 r2 0.9367 wins 8.99 r2 0.1379 ep 169
+MTv4_attn earlystop epoch 198 best 0.6847
+MTv4_attn loss 0.6847 draft 1329.08 r2 0.9326 wins 8.9 r2 0.1377 ep 173
+wrote /home/hatch/workspace/vector-hoops/assets/data/model_zoo_eval.json
+updated front_office

@@ -1,0 +1,20 @@
+# The site is the static files at the repo root. The training pipeline, its
+# tests and tooling live here too, and none of it is served. Without this file
+# Vercel uploads every path, so pipeline/cache (salaries, bios, game logs) would
+# be public at hoops.dumbmodel.com/pipeline/...
+#
+# Root-anchored on purpose. A bare `data/` also matches public/data/ and strips
+# files the pages fetch.
+/pipeline/
+/tests/
+/scripts/
+/bench/
+/docs/PIPELINE.md
+/conftest.py
+/pyproject.toml
+/Makefile
+/.pre-commit-config.yaml
+/train.sh
+/model_registry.json
+__pycache__/
+*.pyc

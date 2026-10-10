@@ -1,0 +1,26 @@
+{
+  "built": "2026-08-09",
+  "earliest_tracking_season": "2013-14",
+  "reason": "SportVU camera system installed league-wide beginning 2013-14 season. No player tracking (DIST, SPEED, TOUCHES, DRIVES) before then.",
+  "seasons_unavailable": [
+    "1996-97",
+    "1997-98",
+    "1998-99",
+    "1999-00",
+    "2000-01",
+    "2001-02",
+    "2002-03",
+    "2003-04",
+    "2004-05",
+    "2005-06",
+    "2006-07",
+    "2007-08",
+    "2008-09",
+    "2009-10",
+    "2010-11",
+    "2011-12",
+    "2012-13"
+  ],
+  "policy": "Return empty scaffold for those seasons; downstream models must mask or use box-score proxies.",
+  "scaffold": {}
+}

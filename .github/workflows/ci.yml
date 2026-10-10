@@ -3,9 +3,17 @@ on:
   push:
     branches: [master, main]
   pull_request:
+    branches: [master, main]
 permissions:
   contents: read
 jobs:
+  # origin/master's CI job, kept under its own name so a required check called
+  # `site` still exists. It linted `pipeline tests` with ruff 0.8.6 defaults and
+  # ran `pytest tests`. Both directories now hold the training pipeline, which
+  # this job has no deps for, so it lints the site's own files by name, with the
+  # same version and config as before (--isolated ignores pyproject.toml, where
+  # lint.yml's config lives), and runs the site smoke tests by file. The
+  # offline-build job runs tests/test_site.py again as part of the full suite.
   site:
     runs-on: ubuntu-latest
     steps:
@@ -14,7 +22,119 @@ jobs:
         with:
           python-version: "3.11"
       - run: pip install pytest==8.3.4 ruff==0.8.6
-      - name: Ruff (pipeline + tests)
-        run: ruff check pipeline tests && ruff format --check pipeline tests
+      - name: Ruff (the site's Python, as before)
+        run: |
+          SITE_PY="pipeline/apply_player_identity.py pipeline/build_dossiers.py pipeline/build_insights.py pipeline/build_layouts.py pipeline/build_playoff_runs.py pipeline/build_playoff_swings.py pipeline/build_trails.py pipeline/build_twin_explainer.py pipeline/qa_player_identity.py pipeline/timesfm pipeline/train_with_text_fusion.py tests/test_site.py"
+          ruff check --isolated $SITE_PY && ruff format --isolated --check $SITE_PY
       - name: Site smoke tests (JSON assets, pages, asset refs, manifest, vectors)
-        run: python -m pytest tests -q
+        run: python -m pytest tests/test_site.py -q
+
+  offline-build:
+    runs-on: ubuntu-latest
+    steps:
+      # fetch-depth: 0 is required, not tidiness. tests/test_vector_core_parity.py
+      # asserts parity against a historical blob via `git show 1b0570bc:<file>`,
+      # and checkout's default depth-1 clone does not contain that commit — the
+      # test fails on the runner while passing on any full local clone.
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.11'}
+
+      # vector_core is imported by tests/test_vector_core_parity.py and by
+      # train_mtnn.py's --era-align / --robust-scaling paths. It is not on PyPI.
+      #
+      # Pinned to a commit, the same one pyproject.toml's vector-core URL names.
+      # `ref: main` made the parity test's bit-exact verdict depend on whatever
+      # another repo's default branch held when CI ran, so re-running CI on an
+      # unchanged hoops commit could flip. d6a0f5df was vector-hub main on
+      # 2026-10-09; its packages/vector-core Python is the same as the
+      # e1a46d7f checkout the training venv was installed from (the only
+      # vector-core files that differ are .js/.css). Bump both pins together.
+      - name: Check out vector-hub (for vector-core)
+        uses: actions/checkout@v4
+        with:
+          repository: jcdavis131/vector-hub
+          ref: d6a0f5df6233e7ae7c7e5af5a6f8021461d32544
+          path: .vector-hub
+
+      - name: Install deps
+        run: |
+          pip install -r pipeline/requirements.txt
+          pip install ./.vector-hub/packages/vector-core
+          # CPU wheel only: tests/test_vector_core_parity.py execs a historical
+          # pipeline/realmlp_preproc.py that imports torch, and
+          # tests/test_e2e_smoke.py trains one CPU epoch on a 100-player
+          # slice. The CUDA build is never wanted here, and the cpu index
+          # keeps this a ~200 MB install instead of ~2 GB.
+          pip install torch --index-url https://download.pytorch.org/whl/cpu
+
+      # Previously `|| true`. Verified passing, so it now gates.
+      # fetch_2k_ratings.py --offline used to run here too. It copied the 2K
+      # example fixture to pipeline/cache/game_ratings_2k25.json, which
+      # build_game_ratings then read as a real release [ingest#5]. It no longer
+      # copies anything and exits 2 with no release cache, so it is not a CI step.
+      - name: Offline fetch (no external network)
+        run: |
+          python pipeline/fetch_bbref_advanced.py --offline
+
+      # Previously this named pipeline/test_arena.py, which does not exist, and
+      # swallowed the result with `|| true` — so the suite had never actually run
+      # in CI. It is the whole suite now, and it fails the build.
+      #
+      # Bare `pytest`: testpaths in pyproject.toml is pipeline + tests. It used
+      # to need `--ignore=pipeline/test_provenance_gate.py` and a separate script
+      # step, because that file called sys.exit() at import. It is a pytest
+      # module now, so the command here is the command anyone runs locally.
+      #
+      # -m "not local_data" deselects the tests that read gitignored
+      # pipeline/data (the matrix, mtnn_report.json, roster_context.json). On a
+      # runner they could only skip, and a skip in a row of dots reads as
+      # coverage. They run on the training box, where HOOPS_REQUIRE_LOCAL_DATA=1
+      # makes a missing artifact fail.
+      - name: Pytest gates
+        run: pytest -m "not local_data"
+
+      # scripts/stamp_assets.py has had a --check mode all along; nothing ever ran
+      # it. vercel.json serves assets as `immutable, max-age=31536000`, so a stale
+      # ?v= token means a returning visitor never gets the new file — not on the
+      # next deploy, not ever.
+      #
+      # This step is also the reason .gitattributes now marks assets/** as -text.
+      # The token is a hash of the file, so if a Windows checkout converts an
+      # asset to CRLF the stamp describes bytes the server never serves, and this
+      # check passes locally while failing here. It caught exactly that.
+      #
+      # It also skips dot directories now. The .vector-hub checkout above sits
+      # inside the workspace, and its index.html was being audited as one of
+      # this site's pages: 25 stale here against 24 on any local run.
+      - name: Asset cache tokens are current
+        run: python scripts/stamp_assets.py --check
+
+  # Is the MTNN bundle the site serves one model that came through
+  # pipeline/promote.py and export_mtnn_embeddings.py? In assets/ and
+  # public/assets/: f32 bytes == rows*dim*4, meta keys are the exporter's,
+  # meta rows/dim/run_id/metrics equal assets/mtnn_lineage.json's, the f32's
+  # sha256 is the one the lineage names, vectors.json's (pid, season) rows
+  # hash to the keys it was exported against, and the sidecars carry the same
+  # run id. Nothing checked any of this: provenance_gate.py compares dims and
+  # the file size only.
+  #
+  # This job is RED on purpose, and stays red until the served bundle is
+  # re-promoted through pipeline/promote.py and re-exported by
+  # rebuild_all.py's export stage (then scripts/sync_public.py). The committed
+  # bundle is the 2dc6ad78 model, blob 09923d98 (test top-5 retrieval 0.035
+  # against 0.749 for the v5 blob it replaced), with hand-typed metrics
+  # (composite 0.85, top1_790 0.55) and no lineage [eval#0]. It is its own job,
+  # not a step above and not in `make ci`, so the offline build keeps meaning
+  # what it says while this one is red. Stdlib only, so no install step.
+  served-model:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.11'}
+      - name: Served model is one promoted, exported bundle
+        run: python scripts/check_served_model.py

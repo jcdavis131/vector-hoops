@@ -1,0 +1,182 @@
+[project]
+name = "vector-hoops"
+version = "5.0.0"
+description = "NBA chimera search over MTNN embeddings - 12,966 player-seasons, leakfree MTNN v5"
+readme = "README.md"
+requires-python = ">=3.11"
+license = {text = "MIT"}
+# scipy and tqdm were declared and never imported -- 0 `import scipy` and
+# 0 `import tqdm` across every .py in this repo. scikit-learn STAYS: it is
+# imported by 8 files, and by derive_system_tags.py at module scope
+# (`from sklearn.cluster import KMeans`), so dropping it breaks that script on
+# a clean `pip install -e .`.
+dependencies = [
+    "numpy>=1.24",
+    "pandas>=2.0",
+    "scikit-learn>=1.3",
+    "torch>=2.0",
+    "requests>=2.28",
+    "nba_api>=1.2.0",
+    # Pinned to the same vector-hub commit as .github/workflows/ci.yml. Without
+    # a rev this resolved to whatever vector-hub's default branch held at
+    # install time, and vector_core supplies the --era-align / --robust-scaling
+    # code paths, so a fresh install could train different code with nothing
+    # recorded. Bump both pins together.
+    "vector-core @ git+https://github.com/jcdavis131/vector-hub.git@d6a0f5df6233e7ae7c7e5af5a6f8021461d32544#subdirectory=packages/vector-core",
+]
+
+[project.optional-dependencies]
+dev = [
+    # Exact, and the same version as lint.yml and .pre-commit-config.yaml. A
+    # floor let three ruff versions coexist, and a newer rule (RUF059) failed CI
+    # on code every local hook had passed.
+    "ruff==0.15.22",
+    "pre-commit>=3.6",
+    "pytest>=7.0",
+]
+manim = [
+    "manim>=0.17",
+]
+
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.ruff]
+target-version = "py311"
+line-length = 120
+exclude = [
+    "__pycache__",
+    ".git",
+    ".venv",
+    "venv",
+    ".mypy_cache",
+    "pipeline/cache",
+    "pipeline/data",
+    "node_modules",
+    "assets/manim/media",
+    "pipeline/fetch_*.py",
+    "pipeline/build_front_office.py",
+    "pipeline/build_front_office_by_season.py",
+    # Retired scripts, kept as files for the docs that name them; not maintained
+    # (pipeline/attic/README.md says why each was retired).
+    "pipeline/attic",
+    # public/assets/manim/src/*.py is a byte-identical copy of assets/manim/src/*.py,
+    # committed only as part of the Vercel `public/` static-site mirror (frontend
+    # deploy fix 28e5fc47). Not source of truth; excluded to avoid double-linting it.
+    "public/assets/manim",
+    # The site's own Python, as origin/master carries it. ci.yml's `site` job
+    # lints these exactly as before, ruff 0.8.6 with its default config
+    # (--isolated), so this config does not reformat files the site side owns.
+    "assets",
+    "research",
+    "tests/test_site.py",
+    "pipeline/apply_player_identity.py",
+    "pipeline/build_dossiers.py",
+    "pipeline/build_insights.py",
+    "pipeline/build_layouts.py",
+    "pipeline/build_playoff_runs.py",
+    "pipeline/build_playoff_swings.py",
+    "pipeline/build_trails.py",
+    "pipeline/build_twin_explainer.py",
+    "pipeline/qa_player_identity.py",
+    "pipeline/timesfm",
+    "pipeline/train_with_text_fusion.py",
+]
+
+[tool.ruff.lint]
+select = ["E", "W", "F", "I", "B", "C4", "UP", "N", "S", "PTH", "TCH", "RUF"]
+ignore = [
+    "S101",
+    "S603",
+    "S607",
+    "E501",
+    "N806",
+    "N803",
+    "N812",
+    "N802",
+    "RUF001",
+    "RUF002",
+    "RUF003",
+    "B905",
+    "RUF007",
+    "UP035",
+    "UP006",
+    "W293",
+    "C408", "C420", "C401", "C416",
+    "RUF005", "RUF046", "RUF010", "RUF100", "RUF019", "RUF021", "RUF022", "RUF034",
+    "S110", "S112",
+    "S310", "S311", "S324",
+    "B007",
+    "PTH120", "PTH123", "PTH119", "PTH207",
+    "S113",
+    "TC003",
+    "UP012", "UP031",
+]
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
+
+[tool.ruff.lint.per-file-ignores]
+"assets/manim/src/*.py" = ["F405", "F403", "F401", "E402", "E741", "F841", "W293", "E501", "E401", "E701", "E702", "I001"]
+"pipeline/*test*.py" = ["S101", "S603", "S607", "F401", "E402"]
+"scripts/smoke_wiki.py" = ["N802"]
+"pipeline/build_*.py" = ["E402", "S603", "S607", "E722", "F401", "I001", "E401", "E701", "E702", "F841", "B023", "C414", "RUF013", "RUF057", "PTH118"]
+"operator/mlops_cli.py" = ["E702"]
+"pipeline/train_mtnn.py" = ["E402", "S603"]
+"pipeline/export_*.py" = ["E402"]
+"scripts/*.py" = ["E402", "S603", "F401", "E401", "E701", "E702", "F541", "B023", "W605", "F841", "I001"]
+# Pre-existing style debt, byte-identical on master (not touched by this branch):
+"tmp/gen_valuations.py" = ["E401", "E402", "F401", "F601", "I001", "PTH103", "PTH111"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["pipeline"]
+known-third-party = ["numpy", "pandas", "torch", "sklearn", "requests", "nba_api", "manim"]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+line-ending = "auto"
+docstring-code-format = true
+# Pre-existing files whose formatting predates the formatter gate, byte-identical
+# on master; excluded from `ruff format --check` so they are not reformatted.
+exclude = [
+    "assets/manim/src/v01_vector_space.py",
+    "assets/manim/src/v02_input_families.py",
+    "assets/manim/src/v03_mtnn_towers.py",
+    "assets/manim/src/v04_embedding_l2.py",
+    "assets/manim/src/v05_chimera.py",
+    "assets/manim/src/v06_archetypes_skills_drift.py",
+    "tmp/gen_valuations.py",
+    # One-off browser QA/smoke scripts, terse one-liner style by convention,
+    # not reformatted to avoid unrelated diff noise on scripts owned by other lanes.
+    "scripts/*.py",
+    # Active ML pipeline/training files under parallel development (LOCAL-GPU
+    # v6 GPU lane etc.); left unformatted here to avoid unrelated whitespace
+    # churn colliding with in-flight branches. Formatting predates the gate.
+    "pipeline/hill_climb.py",
+    "pipeline/resolve_fusion.py",
+    "pipeline/train_career_mtnn.py",
+    "pipeline/train_mtnn.py",
+    "pipeline/train_towers.py",
+]
+
+[tool.pytest.ini_options]
+# Both directories. With testpaths = ["pipeline"] a bare `pytest` never ran
+# tests/test_vector_core_parity.py, and crashed collecting the script-style
+# test_provenance_gate.py (SystemExit at import), so reproducing CI meant
+# knowing to type `pytest pipeline tests --ignore=...`.
+testpaths = ["pipeline", "tests"]
+python_files = ["test_*.py"]
+# -ra lists every non-pass in the summary, skips and xfails with their reason:
+# a gate that cannot see its input says so instead of sitting in a row of dots.
+# --strict-markers makes a misspelled marker an error rather than a test that
+# `-m "not local_data"` silently keeps or drops.
+addopts = "-q -ra --strict-markers"
+# A known defect is marked xfail(strict=True) with its finding id. Strict means
+# the test turns red the moment the defect is fixed and nobody removed the
+# marker, so an xfail cannot outlive the reason it was added.
+xfail_strict = true
+markers = [
+    "local_data: reads gitignored pipeline/data artifacts that exist only on the training box. CI deselects these (-m 'not local_data'); elsewhere they skip with the missing path, and HOOPS_REQUIRE_LOCAL_DATA=1 turns that skip into a failure (see conftest.py).",
+]
