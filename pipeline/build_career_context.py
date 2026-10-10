@@ -25,6 +25,7 @@ import numpy as np
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 from career_window import career_fully_observed, draft_years_by_pid, first_seasons_by_pid  # noqa: E402
+from seasons import is_regular_season  # noqa: E402
 
 DATA = HERE / "data"
 CACHE = HERE / "cache"
@@ -83,6 +84,17 @@ def load_gp_ratios() -> dict[tuple[int, str], float]:
     met the charted name only when both were spelled alike (658 gamelog-era
     rows with 10+ games had no GP_RATIO [features#6]), and a traded player
     kept the ratio of whichever team the loop reached last.
+
+    Regular-season games only (seasons.is_regular_season), as form and
+    competition [ingest#0]. The logs hold every game type, and the All-Star
+    Game's pseudo-teams (TEAM_ID 1610616833/834, roster mean about 1 game)
+    counted as a second team: once the ratio summed a player's teams, every
+    All-Star row came out about twice what it was without that one game
+    (median 3.58 against 1.52 for the other charted rows), a same-season
+    All-Star flag inside the career tower [final#7]. Preseason, play-in and
+    playoff games inflated the rest: with the filter every one of the 5,154
+    charted ratios moves, All-Star rows by a median 0.448x, the others by
+    0.883x (Jalen Brunson 2022-23 1.6922 -> 1.4098).
     """
     ratios: dict[tuple[int, str], float] = {}
     for path in sorted(DATA.glob("gamelogs_*.jsonl")):
@@ -95,6 +107,9 @@ def load_gp_ratios() -> dict[tuple[int, str], float]:
                     continue
                 g = json.loads(line)
                 if not g.get("MIN") or g.get("PLAYER_ID") is None:
+                    continue
+                # Regular season only, as form and competition [ingest#0].
+                if not is_regular_season(g.get("GAME_ID")):
                     continue
                 pid = int(g["PLAYER_ID"])
                 gp[(g["TEAM_ID"], pid)] += 1

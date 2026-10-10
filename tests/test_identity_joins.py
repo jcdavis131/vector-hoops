@@ -87,6 +87,42 @@ def test_gp_ratio_is_keyed_by_player_id_and_sums_a_traded_players_teams(tmp_path
     assert ratios[(8, "2023-24")] == round(8 / 6, 4)  # one team: unchanged
 
 
+def test_gp_ratio_counts_regular_season_games_only(tmp_path, monkeypatch):
+    """[final#7] The All-Star Game's pseudo-team was a second team for every All-Star.
+
+    Its roster mean is 1 game, so (gp + 1) / ((team mean + 1) / 2) roughly
+    doubled the ratio of all 269 All-Star rows (median 3.58, against 1.52 for
+    everyone else): a same-season All-Star flag inside the career tower.
+    """
+    import build_career_context as bcc
+
+    def season(extra: list[dict]) -> dict:
+        games = []
+        for i in range(70):  # the star: 70 regular-season games
+            games.append(_game(f"00223{i:05d}", "2023-11-01", pid=1, name="Star", team=1))
+        for i in range(50):  # a teammate: 50
+            games.append(_game(f"00223{i:05d}", "2023-11-01", pid=2, name="Mate", team=1))
+        _write_logs(tmp_path / "gamelogs_2023-24.jsonl", games + extra)
+        monkeypatch.setattr(bcc, "DATA", tmp_path)
+        return bcc.load_gp_ratios()
+
+    plain = season([])
+    assert plain[(1, "2023-24")] == round(70 / 60, 4)
+    # One All-Star Game (prefix 003, TEAM_ID 1610616833, roster mean 1), plus a
+    # preseason (001) and a playoff (004) game for the team: none of them counts.
+    extra = [
+        _game("0032300001", "2024-02-18", pid=1, name="Star", team=1610616833),
+        _game("0032300001", "2024-02-18", pid=3, name="Other Star", team=1610616833),
+        _game("0012300001", "2023-10-10", pid=1, name="Star", team=1),
+        _game("0042300101", "2024-04-21", pid=1, name="Star", team=1),
+        _game("0042300101", "2024-04-21", pid=2, name="Mate", team=1),
+    ]
+    with_extra = season(extra)
+    assert with_extra[(1, "2023-24")] == plain[(1, "2023-24")]
+    assert with_extra[(2, "2023-24")] == plain[(2, "2023-24")]
+    assert (3, "2023-24") not in with_extra  # only an All-Star Game: no regular-season ratio
+
+
 def test_roster_context_matches_charted_rows_by_player_id(tmp_path, monkeypatch):
     import roster_context as rc
 
