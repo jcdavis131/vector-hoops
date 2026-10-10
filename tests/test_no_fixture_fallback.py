@@ -34,8 +34,9 @@ def test_honors_without_a_real_cache_refuses(tmp_path, monkeypatch):
     monkeypatch.setattr(build_honors, "CACHE_DIR", _only_fixture(tmp_path, "honors.example.json"))
     with pytest.raises(SystemExit, match=r"honors_award_<year>.json"):
         build_honors.load_award_index(use_fixture=False)
-    by_season, complete = build_honors.load_award_index(use_fixture=True)
+    by_season, complete, coverage = build_honors.load_award_index(use_fixture=True)
     assert by_season and complete is False
+    assert not any(c["complete"] for c in coverage.values())  # nothing the fixture omits is a measured zero
 
 
 def test_playoffs_without_a_real_cache_refuses(tmp_path, monkeypatch):

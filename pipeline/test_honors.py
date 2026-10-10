@@ -116,6 +116,57 @@ def test_at_least_one_lagged_vote_getter(built):
     assert vote_rows >= 1
 
 
+# --- observed zeros vs missing [features#2] -------------------------------------
+# A complete award cache lists everyone honored that season, so a charted
+# player it omits got 0: that row is emitted with zeros (mask 1 after
+# integrate_context). Only seasons and careers the caches cannot see are missing.
+
+
+def test_unhonored_rows_in_covered_seasons_are_observed_zeros(built):
+    if not built["real"]:
+        pytest.skip("fixture mode: the fixture covers no complete season")
+    # Before: 1,132 rows, one per honored player-season, so 91% of the family was masked.
+    assert len(built["rows"]) > 10_000, f"only {len(built['rows'])} lagged rows"
+    zero = built["by"].get(("Tim Hardaway Jr.", "2014-15"))
+    assert zero is not None, "an unhonored 2014-15 row is missing instead of zero"
+    assert zero["HON_ALL_NBA_VOTE_LAG"] == 0.0 and zero["HON_VOTE_RECOG"] == 0.0 and zero["HON_ASG_LAG"] == 0.0
+
+
+def test_first_season_has_no_lagged_row(built):
+    # The caches start with 1996-97 awards, so 1996-97 rows have no prior season to lag.
+    assert not [r for r in built["rows"] if r["season"] == "1996-97"]
+
+
+def test_no_all_star_game_in_1999_is_missing_not_zero(built):
+    if not built["real"]:
+        pytest.skip("fixture mode")
+    rows = [r for r in built["rows"] if r["season"] == "1999-00"]
+    assert rows and all(r["HON_ASG_LAG"] is None for r in rows)
+    duncan = built["by"][("Tim Duncan", "1999-00")]
+    assert duncan["HON_ALL_NBA_TEAM_LAG"] == 3.0  # the 1998-99 vote itself was measured
+
+
+def test_asg_count_is_per_player_and_masked_when_the_career_predates_the_caches(built):
+    if not built["real"]:
+        pytest.skip("fixture mode")
+    # Drafted 1984: selections before 1997 are invisible to the caches.
+    assert built["by"][("Michael Jordan", "1997-98")]["HON_ASG_CUM"] is None
+    # Drafted 1997: 1998 and 2000 games (none in 1999).
+    assert built["by"][("Tim Duncan", "2000-01")]["HON_ASG_CUM"] == 2.0
+    # The old name-keyed count gave the son his father's selections [features#5].
+    assert built["by"][("Tim Hardaway Jr.", "2014-15")]["HON_ASG_CUM"] == 0.0
+
+
+def test_an_unmatched_honoree_gets_no_zero_row(built):
+    if not built["real"]:
+        pytest.skip("fixture mode")
+    # BBRef 'Steve Smith' (62 vote pts, All-Star in 1997-98) is charted as 'Steven Smith'.
+    cov = built["doc"]["coverage"]
+    assert "steve smith|1997-98" in cov["unmatched_honorees"]
+    row = built["by"].get(("Steven Smith", "1998-99"))
+    assert row is None or row["HON_ALL_NBA_VOTE_LAG"] is None
+
+
 def _fixture_is_partial_and_ships_no_asset(built) -> None:
     # The fixture is two award seasons (13 players), not a complete award index.
     # It said "complete": true, so a fixture run wrote the game asset, and the
