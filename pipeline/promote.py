@@ -167,7 +167,11 @@ SELECTION_DIR = "selection"
 # decide whether and how an epoch is restored, and a fit_rows 'all' run
 # never restores one (mtnn_loop.checkpoint_selection); under protocol v1,
 # val_every also shifts the global RNG, so the trajectory, not the recipe.
-# Everything else, seed and epochs included, has to match.
+# That last freedom holds only when the select run did not restore one
+# either: its held-out numbers then describe its final weights, as the
+# refit ships its final weights. A select run that restored a best epoch is
+# refused (_check_selection, 2026-10-10). Everything else, seed and epochs
+# included, has to match.
 SELECTION_FREE_ARGS = frozenset(
     {
         "phase",
@@ -256,7 +260,9 @@ class SelectionRun:
     report: dict[str, Any]
     report_sha256: str
     # The bytes report and report_sha256 were read from; promote() copies these.
-    report_bytes: bytes = b""
+    # Required: an empty default would let a caller build one whose bundle copy
+    # is zero bytes under a sha that names the real report.
+    report_bytes: bytes
 
     @property
     def run_id(self) -> str | None:
@@ -358,6 +364,21 @@ def _check_selection(chk: RunCheck, selection_run: str | os.PathLike[str]) -> No
         chk.problems.append(
             f"{where} trained another recipe than this run ({shown}{', ...' if len(differ) > 8 else ''}); "
             "its held-out numbers do not describe this model"
+        )
+    # SELECTION_FREE_ARGS lets the two differ in val_every / no_best_checkpoint
+    # / checkpoint_metric because a fit_rows 'all' run never restores a best
+    # epoch and ships its final weights. A select run that restored one (say
+    # epoch 30 of 40, picked on val) scored those weights, not the final epoch
+    # the refit repeats, so it cannot vouch for it. report["best_epoch"] is
+    # the restored epoch or None; selection.best_epoch (-1 for none) covers
+    # reports that predate the top-level key.
+    restored = sel.get("best_epoch") if "best_epoch" in sel else (sel.get("selection") or {}).get("best_epoch")
+    if isinstance(restored, int) and not isinstance(restored, bool) and restored >= 0:
+        chk.problems.append(
+            f"{where} restored its best epoch ({restored}, chosen by {sel.get('checkpoint_selection')!r}), so its "
+            "held-out numbers describe those weights. A refit fits every row, restores no epoch and ships its final "
+            "weights: vouch for it with a select run that scored its final weights (--no-best-checkpoint or "
+            "--val-every 0, as the measure and ship recipes do)"
         )
     if len(chk.problems) == bad:
         chk.selection = SelectionRun(sel_dir, path, sel, _sha256(raw), raw)

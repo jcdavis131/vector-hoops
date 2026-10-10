@@ -359,6 +359,38 @@ def test_a_selection_run_may_differ_in_device_validation_and_checkpointing(data)
     assert pm.promote(refit, selection_run=sel)["run_id"] == "refit"
 
 
+def _edit_report(run: Path, **fields) -> None:
+    rep = json.loads((run / "mtnn_report.json").read_text(encoding="utf-8"))
+    rep.update(fields)
+    (run / "mtnn_report.json").write_text(json.dumps(rep), encoding="utf-8")
+
+
+@pytest.mark.parametrize(
+    "fields",
+    [
+        {"best_epoch": 30, "checkpoint_selection": "val_recall"},
+        # A report from before the top-level key: selection.best_epoch.
+        {"selection": {"fit_rows": "train", "n_fit": 5, "best_epoch": 30}},
+    ],
+)
+def test_a_selection_run_that_restored_a_best_epoch_cannot_vouch_for_a_refit(data, fields):
+    """The refit ships its final epoch; a select run that restored epoch 30 scored other weights."""
+    sel = make_run(data, "sel", args={"val_every": 5})
+    _edit_report(sel, **fields)
+    refit = make_run(data, "refit", phase="final-refit", seed=1, args={"val_every": 5})
+    why = refused(refit, selection_run=sel, force="even forced")
+    assert "restored its best epoch (30" in why, why
+    assert nothing_promoted(data)
+
+
+def test_a_selection_run_that_scored_its_final_weights_vouches(data):
+    # best_epoch None (no epoch restored) and -1 in the selection block: final weights.
+    sel = make_run(data, "sel")
+    _edit_report(sel, best_epoch=None, selection={"fit_rows": "train", "n_fit": 5, "best_epoch": -1})
+    refit = make_run(data, "refit", phase="final-refit", seed=1)
+    assert pm.promote(refit, selection_run=sel)["run_id"] == "refit"
+
+
 def test_a_selection_run_on_another_matrix_is_refused(data):
     write_matrix(data, shift=0.5)
     sel = make_run(data, "sel")
