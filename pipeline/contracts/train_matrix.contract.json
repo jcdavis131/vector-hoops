@@ -17,7 +17,7 @@
   },
   "generated": {
     "by": "pipeline/stage_contract.py --accept-drift",
-    "git": "25b3c10f",
+    "git": "9f056a79",
     "git_dirty": false,
     "manifest_source": "integrate_context.py (v4 context merge)"
   },
@@ -25,7 +25,7 @@
   "cols": 143,
   "keys_sha256": "d1b3d5cb7e37afcf726532d592c5cf4125221a4c811b859175b79f9a998da72e",
   "columns_sha256": "3c44edb7053e7a5449cd7505de475d02e39522b54b6a7c2033d9fbccc8560950",
-  "values_sha256": "7dff7b8eebe4ff46c12410c58b96bf4e0d087e7dc3f178e308c0289af0fb9038",
+  "values_sha256": "51ecc8ca01967c7e67e50b952f035feecea1c7218c6770a50ab47bb1c3a23005",
   "columns": [
     "PTS",
     "AST",
@@ -320,7 +320,7 @@
     "bio": 0.966435,
     "career": 0.692748,
     "competition": 0.397501,
-    "defense": 0.575308,
+    "defense": 0.572035,
     "efficiency": 1.0,
     "form": 0.397501,
     "honors": 0.923754,
@@ -623,24 +623,24 @@
       "zero": 0.670292
     },
     "HUSTLE_CHARGES": {
-      "observed": 0.364337,
-      "zero": 0.636048
+      "observed": 0.36372,
+      "zero": 0.63628
     },
     "HUSTLE_CONTESTED_SHOTS": {
-      "observed": 0.374595,
-      "zero": 0.625405
+      "observed": 0.36372,
+      "zero": 0.63628
     },
     "HUSTLE_DEFLECTIONS": {
-      "observed": 0.371124,
-      "zero": 0.628876
+      "observed": 0.36372,
+      "zero": 0.63628
     },
     "HUSTLE_LOOSE_BALLS": {
-      "observed": 0.369196,
-      "zero": 0.630804
+      "observed": 0.36372,
+      "zero": 0.63628
     },
     "HUSTLE_SCREEN_AST": {
-      "observed": 0.368811,
-      "zero": 0.631189
+      "observed": 0.36372,
+      "zero": 0.63628
     },
     "SALARY_LOG": {
       "observed": 0.886781,
