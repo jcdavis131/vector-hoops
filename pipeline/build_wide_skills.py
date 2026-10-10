@@ -38,9 +38,8 @@ shows "not tracked this era", never a fabricated grade.
 A skill is graded only where its inputs were measured, and
 wide_skill_labels.npz carries a per-skill `mask` (train_mtnn reads it when
 present). The caches turned unmeasured hustle into 0.0 [ingest#2,
-features#3]; hustle_coverage nulls it (every hustle 0.0 in the partly
-covered 2015-16, box-outs before 2017-18, rows absent from the hustle
-response), so motor,
+features#3]; hustle_coverage nulls it (every hustle field in 2015-16,
+box-outs before 2017-18, rows absent from the hustle response), so motor,
 rim_gravity and disruption_gravity are masked there instead of being graded
 from zeros, and are ranked among the rows that were measured.
 """

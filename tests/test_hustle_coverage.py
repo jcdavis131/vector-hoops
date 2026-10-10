@@ -27,25 +27,8 @@ FULL = {
 }
 
 
-def test_partial_season_keeps_measured_values_and_drops_ambiguous_zeros():
-    # 2015-16 was covered only in part: a non-zero value came from the endpoint, a 0.0 may be a skipped player.
-    rec = hc.apply_season_rules("2015-16", FULL)
-    assert rec["screen_ast"] == 1.0 and rec["deflections"] == 2.0 and rec["contested_shots"] == 4.0
-    assert rec["charges"] is None  # 0.0 in a partial season: cannot tell measured zero from absent
-    assert rec["box_outs"] is None  # not tracked before 2017-18 at all
-    assert rec["post_freq"] == 0.0  # synergy is not this module's to judge
-
-
-def test_committed_2015_16_cache_keeps_its_386_measured_hustle_values():
-    doc = json.loads((CACHE / "wide_skills_2015-16.json").read_text(encoding="utf-8"))
-    values = [r[f] for r in doc["players"].values() for f in hc.HUSTLE_FIELDS if r.get(f) is not None]
-    assert len(values) == 386 and all(v != 0.0 for v in values)
-    assert doc["field_coverage"]["contested_shots"] == 143 and doc["field_coverage"]["box_outs"] == 0
-
-
 def test_season_rules():
-    assert hc.untracked_fields("2014-15") == hc.HUSTLE_FIELDS
-    assert hc.untracked_fields("2015-16") == ("box_outs",)
+    assert hc.untracked_fields("2015-16") == hc.HUSTLE_FIELDS
     assert hc.untracked_fields("2016-17") == ("box_outs",)
     assert hc.untracked_fields("2017-18") == ()
     rec = hc.apply_season_rules("2016-17", FULL)
