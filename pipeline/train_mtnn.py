@@ -2593,6 +2593,13 @@ def main(argv: list[str] | None = None) -> None:
         "split": "train y<=2021 / val y<=2023 / test y>=2024",
         "best_epoch": best_epoch,
     }
+    # composite_score reads lineage.inputs: under --protocol-v2 a run whose
+    # pipeline/data/skill_labels.npz was missing (sha None) is unscored, not
+    # scored as if it had left the skill towers out (d106598c). The lineage
+    # block used to be attached only after scoring, so that rule never fired
+    # on a report this script wrote [final#6]. The inputs go in first; the
+    # full block replaces this below.
+    report["lineage"] = {"inputs": lineage_inputs}
     report["composite"] = cqs.composite_quality(report)
     ok, why = cqs.should_promote(report)
     report["promote"] = {"ok": ok, "reason": why}
@@ -2607,7 +2614,10 @@ def main(argv: list[str] | None = None) -> None:
         ),
     }
 
-    # Additive: nothing above reads it, and composite_score never looks here.
+    # The full block, replacing the inputs-only one the scoring above read
+    # (the same lineage_inputs dict). Popped first so the key keeps its place
+    # at the end of the report.
+    report.pop("lineage")
     report["lineage"] = {
         "schema": 1,
         "run_id": run_id,

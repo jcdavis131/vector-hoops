@@ -33,7 +33,9 @@ CURRENT.json, the legacy paths, assets/mtnn_lineage.json, the meta and
 every sidecar.
 
 8 to 16 s on the training box's CPU (measured 8.4 s and 15.4 s); nothing is
-written outside tmp_path.
+written outside tmp_path. One more test trains a second skeleton the same
+way under --protocol-v2 with skill_labels.npz removed, to check the CQS
+rule that reads the report's lineage on a report the trainer wrote.
 
 Run:  python -m pytest tests/test_e2e_smoke.py
 """
@@ -234,6 +236,44 @@ def test_the_served_files_name_the_promoted_bundle(chain):
     # sync_public mirrored the bundle into the tree Vercel serves.
     for name in (sm.F32, sm.META, sm.LINEAGE, *sm.SIDECARS):
         assert (root / "public" / "assets" / name).read_bytes() == (assets / name).read_bytes(), name
+
+
+def test_a_protocol_v2_run_that_lost_its_skill_labels_is_unscored(chain, tmp_path):
+    """composite_score's rule (d106598c), on a report train_mtnn itself wrote [final#6].
+
+    A --protocol-v2 run whose pipeline/data/skill_labels.npz is missing trains no skill tower,
+    and its lineage records the file with sha None: a broken prepare, so the CQS is unscored.
+    The trainer used to score before it attached the lineage block, so the rule never saw the
+    inputs and the run was scored as if it had left the skill towers out. A hand-built report
+    with the lineage already in it cannot catch that; this runs the trainer in its real order.
+    Takes the `chain` fixture only so that test_nothing_outside_the_skeleton_was_written,
+    which runs after it, also covers this run.
+    """
+    root = tmp_path / "repo"
+    build_skeleton(root)
+    (root / "pipeline" / "data" / "skill_labels.npz").unlink()
+    env = {k: v for k, v in os.environ.items() if k != "PYTHONPATH"}
+    env.update(PYTHONDONTWRITEBYTECODE="1", PYTHONIOENCODING="utf-8", GIT_CEILING_DIRECTORIES=str(root.parent))
+    argv = ("pipeline/train_mtnn.py", "--recipe", "measure", "--epochs", "1", "--device", "cpu", "--seed", "5")
+    proc = subprocess.run(
+        [sys.executable, "-u", *argv, "--protocol-v2"],
+        cwd=root,
+        env=env,
+        capture_output=True,
+        text=True,
+        encoding="utf-8",
+        errors="replace",
+        timeout=STEP_TIMEOUT,
+    )
+    assert proc.returncode == 0, (proc.stdout + proc.stderr)[-3000:]
+    report = load(root / "pipeline" / "data" / "mtnn_report.json")
+    assert report["protocol"] == "v2" and report["skills"] is None
+    # The full lineage block replaced the inputs-only one the scoring read.
+    assert report["lineage"]["schema"] == 1 and report["lineage"]["inputs"]["pipeline/data/skill_labels.npz"] is None
+    block = report["composite"]
+    assert {"skills_r2", "skill_nn"} <= set(block["components_expected"])
+    assert block["cqs"] is None and "skills_r2, skill_nn" in block["cqs_unscored"]
+    assert report["promote"]["ok"] is False and "CQS was not scored" in report["promote"]["reason"]
 
 
 def test_nothing_outside_the_skeleton_was_written(chain):
