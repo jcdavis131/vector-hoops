@@ -32,7 +32,8 @@ names the same bytes: the report's lineage, the promoted manifest and
 CURRENT.json, the legacy paths, assets/mtnn_lineage.json, the meta and
 every sidecar.
 
-About 20 s on the training box's CPU; nothing is written outside tmp_path.
+8 to 16 s on the training box's CPU (measured 8.4 s and 15.4 s); nothing is
+written outside tmp_path.
 
 Run:  python -m pytest tests/test_e2e_smoke.py
 """
@@ -40,6 +41,7 @@ Run:  python -m pytest tests/test_e2e_smoke.py
 from __future__ import annotations
 
 import hashlib
+import importlib.util
 import json
 import os
 import shutil
@@ -49,7 +51,10 @@ from pathlib import Path
 
 import pytest
 
-pytest.importorskip("torch")
+# Only the subprocesses need torch. Checked, not imported: importing it here
+# would hold several hundred MB in the pytest process beside each step's own.
+if importlib.util.find_spec("torch") is None:
+    pytest.skip("torch is not installed", allow_module_level=True)
 
 ROOT = Path(__file__).resolve().parents[1]
 SLICE = ROOT / "tests" / "fixtures" / "e2e_slice"
@@ -120,9 +125,11 @@ def chain(tmp_path_factory):
     build_skeleton(root)
     run = root / "pipeline" / "data" / "runs" / RUN_ID
     env = {k: v for k, v in os.environ.items() if k != "PYTHONPATH"}
-    # No git checkout above the skeleton is its git state; lineage.git is
-    # then all None, as in the herdmux scratch copy.
-    env.update(PYTHONDONTWRITEBYTECODE="1", GIT_CEILING_DIRECTORIES=str(root.parent))
+    # git must not find a checkout above the skeleton and report it as the
+    # run's git state; lineage.git is then all None, as in the herdmux scratch
+    # copy. UTF-8 stdout: on Windows a piped child otherwise writes the ANSI
+    # code page, and a step printing a character outside it would crash.
+    env.update(PYTHONDONTWRITEBYTECODE="1", PYTHONIOENCODING="utf-8", GIT_CEILING_DIRECTORIES=str(root.parent))
     steps = [
         (
             "train_mtnn",
