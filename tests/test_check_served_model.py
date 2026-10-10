@@ -101,6 +101,30 @@ def test_a_reordered_vectors_json_fails(site):
     assert "vectors.json rows (pid|season, in order) are not the rows the f32 was exported against" in problems(site)
 
 
+def test_a_forced_bundle_passes_but_says_so(site, capsys):
+    """A forced promotion is a recorded decision, not a broken bundle: exit 0, with a warning annotation."""
+    for rel in csm.SERVED_DIRS:
+        path = site / rel / sm.LINEAGE
+        lin = json.loads(path.read_text(encoding="utf-8"))
+        lin.update(
+            forced=True,
+            force_reason="e2e smoke",
+            export_floors={"ok": False, "failed": ["archetype_top1"], "waived_by_force": "e2e smoke"},
+        )
+        path.write_text(json.dumps(lin), encoding="utf-8")
+    assert csm.check(site) == []
+    assert csm.main(["--root", str(site)]) == 0
+    out = capsys.readouterr().out
+    assert out.count("::warning title=served model override::") == 4
+    assert "promoted with --force: e2e smoke" in out and "failed: ['archetype_top1']" in out
+
+
+def test_an_unforced_bundle_prints_no_override_warning(site, capsys):
+    assert csm.overrides(site) == []
+    csm.main(["--root", str(site)])
+    assert "::warning" not in capsys.readouterr().out
+
+
 def test_a_sidecar_from_another_run_fails(site):
     (site / "assets" / "mtnn_map.json").write_text(json.dumps({"built": "2026-07-14"}), encoding="utf-8")
     assert "assets/mtnn_map.json is from run None, the served embedding from 'r1'" in problems(site)

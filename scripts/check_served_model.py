@@ -71,10 +71,35 @@ def check(root: Path) -> list[str]:
     return out
 
 
+def overrides(root: Path) -> list[str]:
+    """Deliberate overrides a served bundle carries: a forced promotion, or export floors it waived.
+
+    Not problems - promote.py --force records a written reason and a7f260cb
+    lets such a bundle export - but a served model below its own floors should
+    not pass a check without saying so. Printed as GitHub warning annotations.
+    """
+    out: list[str] = []
+    for rel in SERVED_DIRS:
+        try:
+            lin = json.loads((root / rel / sm.LINEAGE).read_text(encoding="utf-8"))
+        except (OSError, ValueError):
+            continue
+        if not isinstance(lin, dict):
+            continue
+        floors = lin.get("export_floors") or {}
+        if lin.get("forced"):
+            out.append(f"{rel}: run {lin.get('run_id')} was promoted with --force: {lin.get('force_reason')}")
+        if floors.get("waived_by_force"):
+            out.append(f"{rel}: export floors waived by that force, failed: {floors.get('failed')}")
+    return out
+
+
 def main(argv: Sequence[str] | None = None) -> int:
     ap = argparse.ArgumentParser(description="Check the served MTNN bundle in assets/ and public/assets/.")
     ap.add_argument("--root", type=Path, default=ROOT, help="repo checkout to check (default: this one)")
     args = ap.parse_args(argv)
+    for w in overrides(args.root):
+        print(f"::warning title=served model override::{w}")
     problems = check(args.root)
     if problems:
         print(f"served model: {len(problems)} problem(s)")
