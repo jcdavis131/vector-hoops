@@ -11,10 +11,13 @@ or which rows they are:
   - provenance_gate.py passes it: it compares only dim across sources and
     rows*dim*4 against the file size [artifacts#5].
   - export_mtnn_embeddings checked 3 of 12,966 rows (0, n//2, n-1), by name.
-    Names differ on 275 rows for spelling alone, and on 2026-10-09 the trained
-    embedding and the committed vectors.json disagree on player_id for 3 rows
-    the spot check never looks at (4673 Marcus Williams 2007-08, 6564 Chris
-    Johnson 2012-13, 7329 Tony Mitchell 2013-14) [critic#6].
+    The committed vectors.json is a hand-restored file that build_vectors
+    cannot reproduce: d2a16d37 put back 275 suffix names ('Tim Hardaway Jr.')
+    that every rebuild writes without the suffix, so names differ on those
+    275 rows [final#24]. And on 2026-10-09 the trained embedding and the
+    committed vectors.json disagree on player_id for 3 rows the spot check
+    never looks at (4673 Marcus Williams 2007-08, 6564 Chris Johnson 2012-13,
+    7329 Tony Mitchell 2013-14) [critic#6].
   - The served map, heads and Jacobian are from the 07-14 48-d model beside
     the 07-25 64-d embedding, and no file says so [artifacts#3, fork#13].
 

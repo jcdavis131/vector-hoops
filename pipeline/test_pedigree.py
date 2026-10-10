@@ -29,7 +29,6 @@ import pytest
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "pipeline"))
 from build_pedigree import expect_slot  # noqa: E402
-from name_utils import canonical_name  # noqa: E402
 
 CACHE = ROOT / "pipeline" / "cache" / "draft_history.json"
 PEDIGREE = Path("pipeline") / "data" / "pedigree.json"
@@ -55,13 +54,28 @@ def built(tmp_path_factory) -> dict:
     return {
         "real": real,
         "doc": doc,
-        # Rows carry vectors.json display names, which keep suffix punctuation
-        # since d2a16d37 ('Tim Hardaway Jr.'), while canonical_name drops it
-        # ('Tim Hardaway Jr'). Fold both sides so a spot check finds its row.
-        "by": {(canonical_name(r["name"]), r["season"]): r for r in covered},
+        # Spot checks find their row by PLAYER_ID [final#24]. The committed
+        # assets/vectors.json is a hand-restored file (d2a16d37 put back 275
+        # suffix names, 'Tim Hardaway Jr.'); build_vectors cannot reproduce it,
+        # because it writes the names the dashbase caches were saved under
+        # ('Tim Hardaway'). By display name, any matrix rebuild turned 7 of
+        # these checks red; every row carries its player_id either way.
+        "by": {(r["player_id"], r["season"]): r for r in covered},
         "per_player": per_player,
     }
 
+
+PID = {
+    "LeBron James": 2544,
+    "Nikola Jokić": 203999,
+    "Kobe Bryant": 977,
+    "Tim Hardaway": 896,
+    "Tim Hardaway Jr.": 203501,
+    "Jaren Jackson Jr.": 1628991,
+    "Marvin Bagley III": 1628963,
+    "Gary Payton II": 1627780,
+    "Gary Payton": 56,
+}
 
 SPOTS = [
     ("LeBron James", "2003-04", "PED_PICK_QUALITY", 60),
@@ -98,7 +112,7 @@ IDENTITY_SPOTS = [
 
 @pytest.mark.parametrize(("name", "season", "field", "want"), SPOTS)
 def test_known_pick_joins(built, name, season, field, want):
-    r = built["by"].get((canonical_name(name), season))
+    r = built["by"].get((PID[name], season))
     assert r is not None, f"{name} {season} not covered"
     got = r.get(field)
     ok = (got is None and want is None) or (got is not None and want is not None and abs(got - want) <= 1e-6)

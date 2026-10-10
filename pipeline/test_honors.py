@@ -25,11 +25,33 @@ import pytest
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "pipeline"))
 from build_honors import real_honor_cache_paths  # noqa: E402
-from name_utils import canonical_name  # noqa: E402
 
 CACHE_DIR = ROOT / "pipeline" / "cache"
 HONORS = Path("pipeline") / "data" / "honors.json"
 ASSET = Path("assets") / "honors.json"
+
+
+# Spot checks find their row by PLAYER_ID [final#24]. The committed
+# assets/vectors.json is a hand-restored file (d2a16d37 put back 275 suffix
+# names, 'Tim Hardaway Jr.'); build_vectors cannot reproduce it, because it
+# writes the names the dashbase caches were saved under ('Tim Hardaway'). By
+# display name, any matrix rebuild turned the Hardaway Jr. checks red; every
+# row carries its pid either way.
+PID = {
+    "Nikola Jokić": 203999,
+    "Anthony Edwards": 1630162,
+    "LeBron James": 2544,
+    "Tim Duncan": 1495,
+    "Tim Hardaway Jr.": 203501,
+    "Michael Jordan": 893,
+    "Steven Smith": 120,
+    "Shai Gilgeous-Alexander": 1628983,
+    "Giannis Antetokounmpo": 203507,
+}
+
+
+def row_of(built: dict, name: str, season: str) -> dict | None:
+    return built["by"].get((PID[name], season))
 
 
 def _build(out: Path, real: bool) -> dict:
@@ -41,7 +63,7 @@ def _build(out: Path, real: bool) -> dict:
         "real": real,
         "doc": doc,
         "rows": doc["players"],
-        "by": {(r["name"], r["season"]): r for r in doc["players"]},
+        "by": {(r["pid"], r["season"]): r for r in doc["players"] if r.get("pid") is not None},
         "asset": out / ASSET,
     }
 
@@ -60,8 +82,7 @@ def built_from_fixture(tmp_path_factory) -> dict:
 
 def test_jokic_lag_row_from_prior_season_awards(built):
     # Award year 2023-24 -> lagged row on 2024-25 season.
-    # rows carry vectors.json display names (ASCII-folded), so fold the key
-    jok_lag = built["by"].get((canonical_name("Nikola Jokić"), "2024-25"))
+    jok_lag = row_of(built, "Nikola Jokić", "2024-25")
     assert jok_lag is not None, "Jokić 2024-25 has no lagged honors row (from 2023-24 awards)"
     assert jok_lag.get("HON_ALL_NBA_TEAM_LAG") == 3.0, f"lag All-NBA first team {jok_lag.get('HON_ALL_NBA_TEAM_LAG')}"
     assert jok_lag.get("HON_ASG_LAG") == 1.0, f"lag ASG {jok_lag.get('HON_ASG_LAG')}"
@@ -75,7 +96,7 @@ def test_iverson_vote_points_without_a_top3_team_slot(built):
 
 
 def test_edwards_lagged_vote_recognition(built):
-    ed_lag = built["by"].get(("Anthony Edwards", "2024-25"))
+    ed_lag = row_of(built, "Anthony Edwards", "2024-25")
     assert ed_lag is not None and ed_lag.get("HON_VOTE_RECOG") == 1.0
 
 
@@ -84,7 +105,7 @@ def test_edwards_lagged_vote_recognition(built):
     [("LeBron James", "2018-19", "2017-18"), ("Tim Duncan", "2000-01", "1999-00")],
 )
 def test_lag_first_team_from_prior_awards(built, name, season, awards):
-    row = built["by"].get((name, season))
+    row = row_of(built, name, season)
     got = row.get("HON_ALL_NBA_TEAM_LAG") if row else None
     assert got == 3.0, f"{name} {season} lag first team from {awards} awards (got {got})"
 
@@ -127,7 +148,7 @@ def test_unhonored_rows_in_covered_seasons_are_observed_zeros(built):
         pytest.skip("fixture mode: the fixture covers no complete season")
     # Before: 1,132 rows, one per honored player-season, so 91% of the family was masked.
     assert len(built["rows"]) > 10_000, f"only {len(built['rows'])} lagged rows"
-    zero = built["by"].get(("Tim Hardaway Jr.", "2014-15"))
+    zero = row_of(built, "Tim Hardaway Jr.", "2014-15")
     assert zero is not None, "an unhonored 2014-15 row is missing instead of zero"
     assert zero["HON_ALL_NBA_VOTE_LAG"] == 0.0 and zero["HON_VOTE_RECOG"] == 0.0 and zero["HON_ASG_LAG"] == 0.0
 
@@ -142,7 +163,7 @@ def test_no_all_star_game_in_1999_is_missing_not_zero(built):
         pytest.skip("fixture mode")
     rows = [r for r in built["rows"] if r["season"] == "1999-00"]
     assert rows and all(r["HON_ASG_LAG"] is None for r in rows)
-    duncan = built["by"][("Tim Duncan", "1999-00")]
+    duncan = row_of(built, "Tim Duncan", "1999-00")
     assert duncan["HON_ALL_NBA_TEAM_LAG"] == 3.0  # the 1998-99 vote itself was measured
 
 
@@ -150,11 +171,11 @@ def test_asg_count_is_per_player_and_masked_when_the_career_predates_the_caches(
     if not built["real"]:
         pytest.skip("fixture mode")
     # Drafted 1984: selections before 1997 are invisible to the caches.
-    assert built["by"][("Michael Jordan", "1997-98")]["HON_ASG_CUM"] is None
+    assert row_of(built, "Michael Jordan", "1997-98")["HON_ASG_CUM"] is None
     # Drafted 1997: 1998 and 2000 games (none in 1999).
-    assert built["by"][("Tim Duncan", "2000-01")]["HON_ASG_CUM"] == 2.0
+    assert row_of(built, "Tim Duncan", "2000-01")["HON_ASG_CUM"] == 2.0
     # The old name-keyed count gave the son his father's selections [features#5].
-    assert built["by"][("Tim Hardaway Jr.", "2014-15")]["HON_ASG_CUM"] == 0.0
+    assert row_of(built, "Tim Hardaway Jr.", "2014-15")["HON_ASG_CUM"] == 0.0
 
 
 def test_steve_smith_is_steven_smith(built):
@@ -165,7 +186,7 @@ def test_steve_smith_is_steven_smith(built):
     # row) and so were 12 other Smiths' (eff24dc1); aliased, it is his.
     cov = built["doc"]["coverage"]
     assert cov["unmatched_honorees"] == []
-    row = built["by"][("Steven Smith", "1998-99")]
+    row = row_of(built, "Steven Smith", "1998-99")
     assert row["HON_ALL_NBA_VOTE_LAG"] == 62.0 and row["HON_ASG_LAG"] == 1.0
 
 
@@ -175,9 +196,9 @@ def test_a_partial_all_star_list_is_not_a_zero(built):
     # honors_award_2025 lists 15 All-Stars (every 1997-2024 list has 22-26):
     # the lag is missing for the whole next season, the count keeps a listed one.
     assert built["doc"]["coverage"]["asg_partial"] == ["2024-25", "2025-26"]
-    sga = built["by"][("Shai GilgeousAlexander", "2025-26")]
+    sga = row_of(built, "Shai Gilgeous-Alexander", "2025-26")
     assert sga["HON_ASG_LAG"] is None and sga["HON_ASG_CUM"] >= 3.0
-    giannis = built["by"][("Giannis Antetokounmpo", "2025-26")]
+    giannis = row_of(built, "Giannis Antetokounmpo", "2025-26")
     assert giannis["HON_ASG_LAG"] is None and giannis["HON_ASG_CUM"] is None
     assert giannis["HON_ALL_NBA_VOTE_LAG"] is not None  # the vote list is not partial
 
