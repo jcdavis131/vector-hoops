@@ -1390,10 +1390,10 @@ def build_parser() -> argparse.ArgumentParser:
         "--drop-features",
         default="",
         help="comma-separated feature names to exclude, for running the ablation "
-        "audit_features.py asks for. Example: --drop-features INJ_MISS_N "
-        "(r=-0.9998 with INJ_GP_PCT; games missed is the algebraic inverse of "
-        "games played, so the injury tower gets two votes for one signal). "
-        "A family that loses all its columns is dropped, not left empty.",
+             "audit_features.py asks for. Example: --drop-features INJ_MISS_N "
+             "(r=-0.9998 with INJ_GP_PCT; games missed is the algebraic inverse of "
+             "games played, so the injury tower gets two votes for one signal). "
+             "A family that loses all its columns is dropped, not left empty.",
     )
     ap.add_argument("--device", type=str, default="cpu", help="cpu or cuda — forced cpu per 2026-08-10 user request")
     ap.add_argument("--dim", type=int, default=48)
@@ -1635,7 +1635,7 @@ def build_parser() -> argparse.ArgumentParser:
         action=argparse.BooleanOptionalAction,
         default=False,
         help="ship embedding_v3.npz and mtnn_centroids.npz into pipeline/data. "
-        "OFF by default: a measuring run must never be a shipping run.",
+             "OFF by default: a measuring run must never be a shipping run.",
     )
     ap.add_argument(
         "--run-dir",
@@ -1722,7 +1722,8 @@ def main(argv: list[str] | None = None) -> None:
     global ART_DIR
     ART_DIR = DATA_DIR if args.write_artifacts else (DATA_DIR / "_scratch")
     ART_DIR.mkdir(parents=True, exist_ok=True)
-    print(f"[artifacts] {'SHIPPING into' if args.write_artifacts else 'scratch only,'} {ART_DIR}", flush=True)
+    print(f"[artifacts] {'SHIPPING into' if args.write_artifacts else 'scratch only,'} "
+          f"{ART_DIR}", flush=True)
 
     run_started = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
     run_git = git_state(ROOT)
@@ -1738,9 +1739,7 @@ def main(argv: list[str] | None = None) -> None:
 
     torch.manual_seed(args.seed)
     np.random.seed(args.seed)
-    device = args.device or (
-        "cuda" if torch.cuda.is_available() else "cpu"
-    )  # auto: GPU on personal local (CUDA avail), CPU in Hatch VM
+    device = args.device or ("cuda" if torch.cuda.is_available() else "cpu")  # auto: GPU on personal local (CUDA avail), CPU in Hatch VM
 
     (Z, M, names, seasons, pids, clusters, positions, season_ids, manifest) = load_bundle(
         allow_missing_positions=args.allow_missing_positions
@@ -2121,9 +2120,7 @@ def main(argv: list[str] | None = None) -> None:
                 next_valid_t = torch.tensor(next_valid, device=device, dtype=torch.bool)
                 pred_next = out_a["next_profile"][next_valid_t]
                 # Target is next-season z-scored game profile (same 14-d contract).
-                loss = loss + weights["next_profile"] * term(
-                    "next_profile", F.smooth_l1_loss(pred_next, game_z[next_t])
-                )
+                loss = loss + weights["next_profile"] * term("next_profile", F.smooth_l1_loss(pred_next, game_z[next_t]))
             if "skills" in out_a:
                 wm = skillm_t[idx_t]
                 if wm.sum() > 0:
@@ -2221,7 +2218,7 @@ def main(argv: list[str] | None = None) -> None:
             val_pu = cross_era_archetype_purity(E_val, clusters, seasons)
             val_recall_hist.append(val_r if val_r is not None else 0.0)
             try:
-                _hist = [float(x) for x in val_recall_hist[-int(VAL_RECALL_SMOOTH_N) :] if x is not None]
+                _hist = [float(x) for x in val_recall_hist[-int(VAL_RECALL_SMOOTH_N):] if x is not None]
                 val_r_smooth = (sum(_hist) / len(_hist)) if _hist else 0.0
             except Exception:
                 val_r_smooth = float(val_r) if val_r is not None else 0.0
