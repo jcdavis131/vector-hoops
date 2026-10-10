@@ -81,7 +81,7 @@ def matrix() -> dict:
     if missing:
         pytest.skip(f"local data missing: {', '.join(missing)} (run integrate_context.py)")
     man = json.loads(MANIFEST.read_text(encoding="utf-8"))
-    m = np.load(MATRIX, allow_pickle=True)
+    m = np.load(MATRIX, allow_pickle=False)
     return {"Z": m["Z"], "M": m["mask"], "feats": man["features"], "fam_of": man["families"]}
 
 

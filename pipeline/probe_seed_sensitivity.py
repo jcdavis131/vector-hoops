@@ -34,7 +34,7 @@ SNAP = ROOT / "pipeline" / "data" / "sweep_stability"
 
 
 def load(p: Path):
-    d = np.load(p, allow_pickle=True)
+    d = np.load(p, allow_pickle=False)
     E = d["E"].astype(np.float32)
     pid = np.array(d["player_id"])
     yr = np.array([int(str(s)[:4]) for s in d["season"]])

@@ -59,7 +59,7 @@ def masked_corr(a, b, ma, mb) -> tuple[float, int]:
 
 
 def main() -> None:
-    m = np.load(MATRIX, allow_pickle=True)
+    m = np.load(MATRIX, allow_pickle=False)
     man = json.loads(MANIFEST.read_text(encoding="utf-8"))
     Z, M = m["Z"], m["mask"]
     feats: list[str] = man["features"]

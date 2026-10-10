@@ -110,7 +110,7 @@ ARMS: dict[str, list[str]] = {
 
 def continuity(emb_path: Path) -> dict:
     """Same-player consecutive-season cosine, per transition."""
-    d = np.load(emb_path, allow_pickle=True)
+    d = np.load(emb_path, allow_pickle=False)
     E = d["E"].astype(np.float32)
     pid = np.array(d["player_id"])
     yr = np.array([int(str(s)[:4]) for s in d["season"]])

@@ -88,7 +88,7 @@ def load_team_season_pace() -> dict[tuple[str, int], float]:
 
 def main() -> None:
     man = json.loads(MANIFEST.read_text(encoding="utf-8"))
-    m = np.load(MATRIX, allow_pickle=True)
+    m = np.load(MATRIX, allow_pickle=False)
     Z, M = m["Z"], m["mask"]
     names, seasons = m["name"], m["season"]
     feats: list[str] = man["features"]
