@@ -189,7 +189,7 @@ DEFAULT_LOSS_WEIGHTS: dict[str, float] = {
 # ---------------------------------------------------------------------------
 
 
-def load_bundle():
+def load_bundle(allow_missing_positions: bool = False):
     npz = np.load(DATA_DIR / "train_matrix.npz", allow_pickle=False)
     manifest = json.loads((DATA_DIR / "feature_manifest.json").read_text(encoding="utf-8"))
     Z = npz["Z"].astype(np.float32)
@@ -198,12 +198,20 @@ def load_bundle():
     seasons = npz["season"]
     pids = npz["player_id"]
     clusters = npz["cluster"].astype(np.int64)
-    positions = load_positions(names, seasons, pids)
+    positions = load_positions(names, seasons, pids, allow_missing=allow_missing_positions)
     season_ids = season_index(seasons)
     return Z, mask, names, seasons, pids, clusters, positions, season_ids, manifest
 
 
-def load_positions(names, seasons, pids=None) -> np.ndarray:
+# Below this share of matrix rows with a position label the run stops
+# (--allow-missing-positions to train anyway). The prepare chain's own
+# vectors.json labels 12,951 of 12,966 rows (99.9%, measured 2026-10-10 on
+# the P11 prepare output); 0% is a vectors.json rebuilt without
+# enrich_vectors.
+POSITION_COVERAGE_FLOOR = 0.5
+
+
+def load_positions(names, seasons, pids=None, *, allow_missing: bool = False) -> np.ndarray:
     """Join position index from vectors.json; -1 = unknown.
 
     Joined on (PLAYER_ID, season) when the matrix's ids are passed and the
@@ -219,10 +227,23 @@ def load_positions(names, seasons, pids=None) -> np.ndarray:
     0.15) trains on nothing and position_top1_acc goes None -> 0.0 in the
     composite, silently docking CQS. That shipped undetected until 2026-07-24,
     so a zero/near-zero join is now loud rather than silent.
+
+    Loud was a WARNING line until 2026-10-10, and the run trained on: a
+    broken prepare step then read as a worse model, about -4 CQS, and the
+    climb would discard the arm instead of calling the run broken [eval#10].
+    Under POSITION_COVERAGE_FLOOR the run now stops (SystemExit, before
+    anything is trained); allow_missing (--allow-missing-positions) keeps the
+    old warn-and-train behaviour for a run that means to.
     """
     pos = np.full(len(names), -1, dtype=np.int64)
     if not VECTORS.exists():
-        print(f"WARNING: {VECTORS.name} missing — position head has no labels")
+        msg = f"{VECTORS} missing, so the position head has no labels."
+        if not allow_missing:
+            raise SystemExit(
+                f"{msg} Run `python pipeline/enrich_vectors.py` after build_vectors, or pass "
+                "--allow-missing-positions to train without them."
+            )
+        print(f"WARNING: {msg}")
         return pos
     vec = json.loads(VECTORS.read_text(encoding="utf-8"))
     lookup = {(p["name"], p["season"]): int(p.get("p", -1)) for p in vec["players"]}
@@ -235,15 +256,18 @@ def load_positions(names, seasons, pids=None) -> np.ndarray:
         if 0 <= pidx < len(POSITIONS):
             pos[i] = pidx
     coverage = float((pos >= 0).mean()) if len(pos) else 0.0
-    if coverage < 0.5:
-        print(
-            f"WARNING: position labels cover only {coverage:.1%} of "
+    if coverage < POSITION_COVERAGE_FLOOR:
+        msg = (
+            f"position labels cover only {coverage:.1%} of "
             f"{len(pos)} rows. The position head (weight "
             f"{DEFAULT_LOSS_WEIGHTS['position']}) will train on little or nothing and "
             f"the CQS position component will read ~0. Run "
             f"`python pipeline/enrich_vectors.py` to rejoin `p` into "
             f"{VECTORS.name}."
         )
+        if not allow_missing:
+            raise SystemExit(f"{msg} Or pass --allow-missing-positions to train without them.")
+        print(f"WARNING: {msg}")
     return pos
 
 
@@ -1601,6 +1625,13 @@ def build_parser() -> argparse.ArgumentParser:
         "run's pairs or next-season targets. Off: the v1 protocol every recorded number used",
     )
     ap.add_argument(
+        "--allow-missing-positions",
+        action="store_true",
+        help="train even when vectors.json labels under half of the matrix rows with a position (the position "
+        "head then learns from little or nothing). Off: the run stops, because that is a vectors.json built "
+        "without enrich_vectors [eval#10]",
+    )
+    ap.add_argument(
         "--recipe",
         default=None,
         metavar="NAME|PATH",
@@ -1656,7 +1687,9 @@ def main(argv: list[str] | None = None) -> None:
     np.random.seed(args.seed)
     device = args.device or ("cuda" if torch.cuda.is_available() else "cpu")  # auto: GPU on personal local (CUDA avail), CPU in Hatch VM
 
-    (Z, M, names, seasons, pids, clusters, positions, season_ids, manifest) = load_bundle()
+    (Z, M, names, seasons, pids, clusters, positions, season_ids, manifest) = load_bundle(
+        allow_missing_positions=args.allow_missing_positions
+    )
     # Before --era-align / --robust-scaling rewrite Z: this is the identity of
     # the matrix on disk, which promote.py compares with the current one.
     lineage_matrix = matrix_fingerprint(Z, M, pids, seasons, manifest["features"], manifest["families"])

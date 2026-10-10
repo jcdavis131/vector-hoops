@@ -350,7 +350,7 @@ def _with_defaults(a: dict[str, Any], b: dict[str, Any]) -> tuple[dict[str, Any]
 
     An option added after a run was trained is missing from its recorded args,
     and train_mtnn adds options off by default so that off is the old run
-    (--protocol-v2). Compared as None, a select run
+    (--protocol-v2, --allow-missing-positions). Compared as None, a select run
     from before --protocol-v2 existed "trained another recipe" (protocol_v2
     None vs False) than a refit that recorded False (P12 carry-forward). A key
     the parser does not know is left missing and compares as None, as before.

@@ -166,3 +166,34 @@ def test_position_labels_join_on_player_id(tmp_path, monkeypatch):
     pids = np.array([1641748, 2544, 99])
     assert train_mtnn.load_positions(names, seasons, pids).tolist() == [2, 2, 4]  # by id, then by name
     assert train_mtnn.load_positions(names, seasons).tolist() == [-1, 2, 4]  # by name the suffix row is lost
+
+
+def test_position_labels_under_half_stop_the_run_unless_allowed(tmp_path, monkeypatch, capsys):
+    """[eval#10] A vectors.json without enrich_vectors' `p` used to print a WARNING and train on.
+
+    The position head then learned from nothing and the CQS position
+    component read 0.0: a broken prepare step scored as a worse model.
+    """
+    import pytest
+
+    pytest.importorskip("torch")
+    import train_mtnn
+
+    vec = {"players": [{"name": n, "season": "2023-24", "pid": i} for i, n in enumerate("ABC")]}
+    vec["players"][0]["p"] = 1  # 1 of 3 labelled: 33%
+    (tmp_path / "vectors.json").write_text(json.dumps(vec), encoding="utf-8")
+    monkeypatch.setattr(train_mtnn, "VECTORS", tmp_path / "vectors.json")
+    names, seasons, pids = np.array(list("ABC")), np.array(["2023-24"] * 3), np.array([0, 1, 2])
+    with pytest.raises(SystemExit, match=r"cover only 33\.3%.*enrich_vectors.*--allow-missing-positions"):
+        train_mtnn.load_positions(names, seasons, pids)
+    assert train_mtnn.load_positions(names, seasons, pids, allow_missing=True).tolist() == [1, -1, -1]
+    assert "WARNING: position labels cover only 33.3%" in capsys.readouterr().out
+
+    # No vectors.json at all is 0% coverage, the same stop.
+    monkeypatch.setattr(train_mtnn, "VECTORS", tmp_path / "absent.json")
+    with pytest.raises(SystemExit, match=r"absent\.json missing"):
+        train_mtnn.load_positions(names, seasons, pids)
+    assert train_mtnn.load_positions(names, seasons, pids, allow_missing=True).tolist() == [-1, -1, -1]
+
+    # The option exists, off by default (so the herdmux climb's runs are unchanged).
+    assert train_mtnn.build_parser().parse_args([]).allow_missing_positions is False
