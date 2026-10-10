@@ -115,6 +115,7 @@ def main() -> None:
     args = ap.parse_args()
     players = json.loads((HERE.parent / "assets" / "vectors.json").read_text(encoding="utf-8"))["players"]
     comp = from_logs()
+
     def pid_of(p: dict) -> int | None:
         return int(p["pid"]) if str(p.get("pid", "")).isdigit() else None
 

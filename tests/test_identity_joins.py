@@ -49,8 +49,7 @@ def test_form_context_joins_a_respelled_name_by_player_id(tmp_path, monkeypatch)
     data.mkdir()
     assets.mkdir()
     games = [
-        _game(f"00223000{i:02d}", f"2023-11-{i + 1:02d}", pid=202329, name="Al-Farouq Aminu", team=1)
-        for i in range(12)
+        _game(f"00223000{i:02d}", f"2023-11-{i + 1:02d}", pid=202329, name="Al-Farouq Aminu", team=1) for i in range(12)
     ]
     _write_logs(data / "gamelogs_2023-24.jsonl", games)
     vec = {"players": [{"id": 0, "name": "AlFarouq Aminu", "season": "2023-24", "pid": 202329}]}
