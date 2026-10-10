@@ -197,69 +197,101 @@ def load_train_bundle():
     )
 
 
-def load_roster_by_player_season() -> dict[tuple[str, str], dict]:
+def _row_pid(row: dict) -> int | None:
+    v = row.get("player_id", row.get("pid"))
+    return int(v) if str(v).isdigit() else None
+
+
+def _key(row: dict) -> tuple:
+    """(PLAYER_ID, season) when the artifact row carries an id, else (name, season).
+
+    Every artifact was joined on (display name, season), and its name had to
+    be spelled the way the matrix spells it. Rows built from the game logs
+    used the logs' spelling, so 658 gamelog-era rows lost the form,
+    competition, career GP_RATIO and injury families [features#6], and
+    availability.json carried player_id all along. The name key stays for an
+    artifact written before its builder emitted ids; the two key types never
+    collide (int vs str first element).
+    """
+    pid = _row_pid(row)
+    return (pid, row["season"]) if pid is not None else (row["name"], row["season"])
+
+
+def _index(rows, label: str) -> dict[tuple, dict]:
+    out = {_key(r): r for r in rows}
+    by_name = sum(1 for k in out if isinstance(k[0], str))
+    if by_name:
+        print(f"  {label}: {by_name} of {len(out)} rows have no player_id; joined by (name, season)")
+    return out
+
+
+def lookup(index: dict[tuple, dict], pid: int, name: str, season: str) -> dict:
+    return index.get((pid, season)) or index.get((name, season)) or {}
+
+
+def load_roster_by_player_season() -> dict[tuple, dict]:
     if not ROSTER_JSON.exists():
         return {}
     data = json.loads(ROSTER_JSON.read_text(encoding="utf-8"))
-    best: dict[tuple[str, str], dict] = {}
+    best: dict[tuple, dict] = {}
     for row in data.get("entries", []):
-        key = (row["name"], row["season"])
+        key = _key(row)
         prev = best.get(key)
         if prev is None or (row.get("minutes") or 0) > (prev.get("minutes") or 0):
             best[key] = row
-    return best
+    return _index(best.values(), "roster")
 
 
-def load_form_by_player_season() -> dict[tuple[str, str], dict]:
+def load_form_by_player_season() -> dict[tuple, dict]:
     if not FORM_JSON.exists():
         return {}
     data = json.loads(FORM_JSON.read_text(encoding="utf-8"))
-    return {(r["name"], r["season"]): r for r in data.get("entries", [])}
+    return _index(data.get("entries", []), "form")
 
 
-def load_career_by_player_season() -> dict[tuple[str, str], dict]:
+def load_career_by_player_season() -> dict[tuple, dict]:
     if not CAREER_JSON.exists():
         return {}
     data = json.loads(CAREER_JSON.read_text(encoding="utf-8"))
-    return {(r["name"], r["season"]): r for r in data.get("players", [])}
+    return _index(data.get("players", []), "career")
 
 
-def load_competition_by_player_season() -> dict[tuple[str, str], dict]:
+def load_competition_by_player_season() -> dict[tuple, dict]:
     path = COMPETITION_JSON if COMPETITION_JSON.exists() else COMPETITION_JSON_LEGACY
     if not path.exists():
         return {}
     data = json.loads(path.read_text(encoding="utf-8"))
-    return {(r["name"], r["season"]): r for r in data.get("players", [])}
+    return _index(data.get("players", []), "competition")
 
 
-def load_pedigree_by_player_season() -> dict[tuple[str, str], dict]:
-    """(name, season) -> PED_* row from build_pedigree.py; rows without
+def load_pedigree_by_player_season() -> dict[tuple, dict]:
+    """PED_* row from build_pedigree.py; rows without
     coverage were omitted upstream, so absence here == masked family."""
     if not PEDIGREE_JSON.exists():
         return {}
     data = json.loads(PEDIGREE_JSON.read_text(encoding="utf-8"))
-    return {(r["name"], r["season"]): r for r in data.get("players", []) if "PED_UNDRAFTED" in r}
+    return _index([r for r in data.get("players", []) if "PED_UNDRAFTED" in r], "pedigree")
 
 
-def load_playoffs_by_player_season() -> dict[tuple[str, str], dict]:
-    """(name, season) -> PO_* row from build_playoffs.py; only postseason
+def load_playoffs_by_player_season() -> dict[tuple, dict]:
+    """PO_* row from build_playoffs.py; only postseason
     appearances are present, so absence here == masked playoffs family."""
     if not PLAYOFFS_JSON.exists():
         return {}
     data = json.loads(PLAYOFFS_JSON.read_text(encoding="utf-8"))
-    return {(r["name"], r["season"]): r for r in data.get("players", [])}
+    return _index(data.get("players", []), "playoffs")
 
 
-def load_honors_by_player_season() -> dict[tuple[str, str], dict]:
-    """(name, season) -> HON_* lagged row from build_honors.py."""
+def load_honors_by_player_season() -> dict[tuple, dict]:
+    """HON_* lagged row from build_honors.py."""
     if not HONORS_JSON.exists():
         return {}
     data = json.loads(HONORS_JSON.read_text(encoding="utf-8"))
-    return {(r["name"], r["season"]): r for r in data.get("players", [])}
+    return _index(data.get("players", []), "honors")
 
 
-def load_game_ratings_by_player_season() -> dict[tuple[str, str], dict]:
-    """(name, season) -> GK_* row from build_game_ratings.py.
+def load_game_ratings_by_player_season() -> dict[tuple, dict]:
+    """GK_* row from build_game_ratings.py.
 
     A "source_unavailable" doc (no real release cache) is an honestly missing
     family: no rows, so every GK_* cell is masked and the family is gated.
@@ -271,24 +303,24 @@ def load_game_ratings_by_player_season() -> dict[tuple[str, str], dict]:
         print(f"  game_ratings: source unavailable ({data['source_unavailable']}); family missing")
         return {}
     rows = data.get("players", data.get("rows", []))
-    return {(r["name"], r["season"]): r for r in rows}
+    return _index(rows, "game_ratings")
 
 
-def load_availability_by_player_season() -> dict[tuple[str, str], dict]:
-    """(name, season) -> availability row from build_availability.py; only
+def load_availability_by_player_season() -> dict[tuple, dict]:
+    """Availability row from build_availability.py; only
     gamelog-era rows carry streak/spells (pre-2015 rows absent == masked)."""
     if not AVAILABILITY_JSON.exists():
         return {}
     data = json.loads(AVAILABILITY_JSON.read_text(encoding="utf-8"))
-    return {(r["name"], r["season"]): r for r in data.get("players", [])}
+    return _index(data.get("players", []), "availability")
 
 
-def load_salary_market_by_player_season() -> dict[tuple[str, str], dict]:
-    """(name, season) -> SALARY_* row from build_salary_market.py."""
+def load_salary_market_by_player_season() -> dict[tuple, dict]:
+    """SALARY_* row from build_salary_market.py."""
     if not SALARY_MARKET_JSON.exists():
         return {}
     data = json.loads(SALARY_MARKET_JSON.read_text(encoding="utf-8"))
-    return {(r["name"], r["season"]): r for r in data.get("players", [])}
+    return _index(data.get("players", []), "salary_market")
 
 
 def load_team_season_index() -> dict[tuple[str, int], dict]:
@@ -445,6 +477,7 @@ def v4_column_indices(manifest: dict) -> list[int]:
 
 
 def build_row_values(
+    pids: np.ndarray,
     names: np.ndarray,
     seasons: np.ndarray,
     roster: dict,
@@ -461,18 +494,18 @@ def build_row_values(
     availability: dict,
 ) -> list[dict[str, float | None]]:
     rows: list[dict[str, float | None]] = []
-    for name, season in zip(names, seasons, strict=False):
-        key = (str(name), str(season))
-        r = roster.get(key, {})
-        c = career.get(key, {})
-        comp = competition.get(key, {})
-        form_row = form.get(key, {})
-        ped = pedigree.get(key, {})
-        po = playoffs.get(key, {})
-        hon = honors.get(key, {})
-        gk = game_ratings.get(key, {})
-        av = availability.get(key, {})
-        mkt = salary_market.get(key, {})
+    for pid, name, season in zip(pids, names, seasons, strict=True):
+        ident = (int(pid), str(name), str(season))
+        r = lookup(roster, *ident)
+        c = lookup(career, *ident)
+        comp = lookup(competition, *ident)
+        form_row = lookup(form, *ident)
+        ped = lookup(pedigree, *ident)
+        po = lookup(playoffs, *ident)
+        hon = lookup(honors, *ident)
+        gk = lookup(game_ratings, *ident)
+        av = lookup(availability, *ident)
+        mkt = lookup(salary_market, *ident)
         team_row = team_index.get((str(season), int(r["teamId"]))) if r.get("teamId") else {}
         system_tag = system_index.get((str(season), int(r["teamId"]))) if r.get("teamId") else None
         system_vals = (
@@ -612,6 +645,7 @@ def main() -> None:
     )
 
     row_vals = build_row_values(
+        pids,
         names,
         seasons,
         roster,

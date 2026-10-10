@@ -16,7 +16,6 @@ from __future__ import annotations
 
 import json
 import math
-import re
 from collections import defaultdict
 from pathlib import Path
 
@@ -48,12 +47,6 @@ FEATURE_KEYS = (
 )
 
 
-def norm_name(name: str) -> str:
-    s = re.sub(r"[.'’-]", "", name.lower())
-    s = re.sub(r"\s+(jr|sr|ii|iii|iv|v)$", "", s.strip())
-    return re.sub(r"\s+", " ", s)
-
-
 def vec_cos(a: list[float], b: list[float]) -> float:
     num = sum(x * y for x, y in zip(a, b, strict=False))
     na = math.sqrt(sum(x * x for x in a)) or 1.0
@@ -76,41 +69,61 @@ def linear_slope(ys: list[float]) -> float | None:
     return sum((x - mx) * (y - my) for x, y in zip(xs, ys, strict=False)) / den
 
 
-def load_gp_ratios() -> dict[tuple[str, str], float]:
-    ratios: dict[tuple[str, str], float] = {}
+def load_gp_ratios() -> dict[tuple[int, str], float]:
+    """(PLAYER_ID, season) -> games played / the mean games of his teams' rosters.
+
+    Keyed by the log's PLAYER_ID, and a traded player's games are summed over
+    his teams and divided by the mean of those teams' roster means (a player
+    with one team is unchanged). It was keyed by the raw PLAYER_NAME, which
+    met the charted name only when both were spelled alike (658 gamelog-era
+    rows with 10+ games had no GP_RATIO [features#6]), and a traded player
+    kept the ratio of whichever team the loop reached last.
+    """
+    ratios: dict[tuple[int, str], float] = {}
     for path in sorted(DATA.glob("gamelogs_*.jsonl")):
         season = path.stem.split("_", 1)[1]
-        gp: dict[tuple[int, str], int] = defaultdict(int)
-        roster: dict[int, set[str]] = defaultdict(set)
+        gp: dict[tuple[int, int], int] = defaultdict(int)
+        roster: dict[int, set[int]] = defaultdict(set)
         with path.open(encoding="utf-8") as fh:
             for line in fh:
                 if not line.strip():
                     continue
                 g = json.loads(line)
-                if not g.get("MIN"):
+                if not g.get("MIN") or g.get("PLAYER_ID") is None:
                     continue
-                gp[(g["TEAM_ID"], g["PLAYER_NAME"])] += 1
-                roster[g["TEAM_ID"]].add(g["PLAYER_NAME"])
-        for tid, names in roster.items():
-            mean = sum(gp[(tid, n)] for n in names) / max(1, len(names))
+                pid = int(g["PLAYER_ID"])
+                gp[(g["TEAM_ID"], pid)] += 1
+                roster[g["TEAM_ID"]].add(pid)
+        team_mean = {tid: sum(gp[(tid, p)] for p in pids) / max(1, len(pids)) for tid, pids in roster.items()}
+        teams_of: dict[int, list[int]] = defaultdict(list)
+        for tid, pids in roster.items():
+            for p in pids:
+                teams_of[p].append(tid)
+        for p, tids in teams_of.items():
+            mean = sum(team_mean[t] for t in tids) / len(tids)
             if mean <= 0:
                 continue
-            for n in names:
-                ratios[(n, season)] = round(gp[(tid, n)] / mean, 4)
+            ratios[(p, season)] = round(sum(gp[(t, p)] for t in tids) / mean, 4)
     return ratios
 
 
-def load_draft_z() -> dict[tuple[str, str], float]:
-    raw: dict[tuple[str, str], float] = {}
+def load_draft_z() -> dict[tuple[int, str], float]:
+    """(PLAYER_ID, season) -> the pick z-scored within the season's bio rows.
+
+    Keyed by the bio row's PLAYER_ID. Keyed by name, the second of two
+    same-season namesakes overwrote the first: Marcus Williams 2007-08
+    (pid 200766, #22) carried the #33 pick of the other Marcus Williams.
+    """
+    raw: dict[tuple[int, str], float] = {}
     pools: dict[str, list[float]] = defaultdict(list)
     cache = HERE / "cache"
     for path in sorted(cache.glob("bio_*.json")):
         season = path.stem.split("_", 1)[1]
         for row in json.loads(path.read_text(encoding="utf-8")):
-            if row.get("DRAFT_NUMBER") is None or not row.get("PLAYER_NAME"):
+            if row.get("DRAFT_NUMBER") is None or row.get("PLAYER_ID") is None:
                 continue
             pick = float(row["DRAFT_NUMBER"])
-            key = (norm_name(row["PLAYER_NAME"]), season)
+            key = (int(row["PLAYER_ID"]), season)
             raw[key] = pick
             pools[season].append(pick)
     out: dict[tuple[str, str], float] = {}
@@ -143,17 +156,26 @@ def load_availability() -> dict[tuple[int, str], dict]:
     return {(int(r["player_id"]), str(r["season"])): r for r in doc.get("players", [])}
 
 
-def load_team_by_name_season() -> dict[tuple[str, str], int]:
+def load_team_by_pid_season() -> dict[tuple[int, str], int]:
+    """(PLAYER_ID, season) -> teamId from roster_context.json (player_id since P11)."""
     path = DATA / "roster_context.json"
     if not path.exists():
         return {}
     doc = json.loads(path.read_text(encoding="utf-8"))
-    out: dict[tuple[str, str], int] = {}
-    for e in doc.get("entries") or []:
+    entries = doc.get("entries") or []
+    if entries and "player_id" not in entries[0]:
+        raise SystemExit("roster_context.json has no player_id: rebuild it (pipeline/roster_context.py)")
+    # A player with two rotation stints has two entries: the one with more
+    # minutes is his team, as in integrate_context's roster join (the last
+    # entry in file order used to win).
+    best: dict[tuple[int, str], dict] = {}
+    for e in entries:
         if e.get("teamId") is None:
             continue
-        out[(str(e["name"]), str(e["season"]))] = int(e["teamId"])
-    return out
+        key = (int(e["player_id"]), str(e["season"]))
+        if key not in best or (e.get("minutes") or 0) > (best[key].get("minutes") or 0):
+            best[key] = e
+    return {k: int(e["teamId"]) for k, e in best.items()}
 
 
 def load_matrix_identity() -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
@@ -171,7 +193,8 @@ def load_matrix_identity() -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarr
 def main() -> None:
     vec = json.loads((ASSETS / "vectors.json").read_text(encoding="utf-8"))
     players = vec["players"]
-    # Prefer matrix PLAYER_ID when available; fall back to name grouping.
+    # vectors.json carries each row's PLAYER_ID ('pid'); the matrix's
+    # (name, season) -> PLAYER_ID is the fallback for a file without one.
     pid_by_ns: dict[tuple[str, str], int] = {}
     if TRAIN_NPZ.exists():
         m_pids, m_names, m_seasons, _ = load_matrix_identity()
@@ -180,7 +203,7 @@ def main() -> None:
 
     gp_ratios = load_gp_ratios()
     draft_z = load_draft_z()
-    teams = load_team_by_name_season()
+    teams = load_team_by_pid_season()
     min_gp = load_min_gp()
     if not min_gp:
         print(
@@ -191,12 +214,16 @@ def main() -> None:
 
     # Attach pid + build by career
     rows_in: list[dict] = []
+    no_pid = 0
     for p in players:
         name, season = str(p["name"]), str(p["season"])
-        pid = pid_by_ns.get((name, season))
+        pid = int(p["pid"]) if str(p.get("pid", "")).isdigit() else pid_by_ns.get((name, season))
         if pid is None:
-            # synthetic: hash name (rare for rows outside matrix)
-            pid = abs(hash(norm_name(name))) % (10**9)
+            # No PLAYER_ID anywhere: no career for this row. It used to get
+            # abs(hash(name)) % 1e9, an invented id that str hashing also
+            # randomizes per process.
+            no_pid += 1
+            continue
         honest = min_gp.get((pid, season))
         rows_in.append(
             {
@@ -212,9 +239,11 @@ def main() -> None:
                 # measured". Track availability so the slope stays masked.
                 "has_mpg": honest is not None,
                 "year": season_start(season),
-                "teamId": teams.get((name, season)),
+                "teamId": teams.get((pid, season)),
             }
         )
+    if no_pid:
+        print(f"WARN: {no_pid} vectors.json rows have no PLAYER_ID; they get no career row")
 
     by_pid: dict[int, list[dict]] = defaultdict(list)
     for r in rows_in:
@@ -226,11 +255,11 @@ def main() -> None:
     seq_pids: list[int] = []
     seq_row_idx: list[list[int]] = []
     seq_years: list[list[int]] = []
-    row_index_by_ns: dict[tuple[str, str], int] = {}
+    row_index: dict[tuple[int, str], int] = {}  # (PLAYER_ID, season) -> matrix row
     if TRAIN_NPZ.exists():
-        _, m_names, m_seasons, m_idx = load_matrix_identity()
-        for i, name, season in zip(m_idx, m_names, m_seasons, strict=False):
-            row_index_by_ns[(str(name), str(season))] = int(i)
+        m_pids, _, m_seasons, m_idx = load_matrix_identity()
+        for i, pid, season in zip(m_idx, m_pids, m_seasons, strict=False):
+            row_index[(int(pid), str(season))] = int(i)
 
     for pid, seq in by_pid.items():
         debut = seq[0]["year"]
@@ -275,9 +304,9 @@ def main() -> None:
             if gp_s is not None:
                 feat["CAREER_GP_SLOPE"] = round(float(gp_s), 4)
 
-            if (cur["name"], cur["season"]) in gp_ratios:
-                feat["GP_RATIO"] = gp_ratios[(cur["name"], cur["season"])]
-            dz = draft_z.get((norm_name(cur["name"]), cur["season"]))
+            if (int(pid), cur["season"]) in gp_ratios:
+                feat["GP_RATIO"] = gp_ratios[(int(pid), cur["season"])]
+            dz = draft_z.get((int(pid), cur["season"]))
             if dz is not None:
                 feat["DRAFT_SLOT_Z"] = dz
 
@@ -297,7 +326,7 @@ def main() -> None:
 
             out_rows.append(feat)
 
-            mi = row_index_by_ns.get((cur["name"], cur["season"]))
+            mi = row_index.get((int(pid), cur["season"]))
             if mi is not None:
                 matrix_idxs.append(mi)
                 years.append(cur["year"])
@@ -348,7 +377,7 @@ def main() -> None:
         aux_streak_known = np.zeros(n_rows, dtype=np.float32)
         for pid, seq in by_pid.items():
             for i, cur in enumerate(seq):
-                mi = row_index_by_ns.get((cur["name"], cur["season"]))
+                mi = row_index.get((int(pid), cur["season"]))
                 if mi is None:
                     continue
                 aux_mpg[mi] = float(cur["mpg"])

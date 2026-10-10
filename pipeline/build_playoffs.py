@@ -246,6 +246,8 @@ def main() -> None:
 
         row = {
             "name": name,
+            # integrate_context joins on (player_id, season) when the row has one.
+            "player_id": int(p["pid"]) if str(p.get("pid", "")).isdigit() else None,
             "season": season,
             "PO_GP": float(po["GP"]),
             "PO_MIN": float(po["MIN"]),

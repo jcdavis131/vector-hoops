@@ -57,15 +57,21 @@ def conf_avg(tid: int, nets: dict[int, float]) -> float | None:
     return round(sum(vals) / len(vals), 4) if vals else None
 
 
-def from_logs() -> dict[tuple[str, str], dict]:
-    out: dict[tuple[str, str], dict] = {}
+def from_logs() -> dict[tuple[int, str], dict]:
+    """(PLAYER_ID, season) -> schedule features.
+
+    Keyed by the log's PLAYER_ID. It was keyed by the raw PLAYER_NAME and met
+    the charted display name only when the two were spelled alike, so 658
+    gamelog-era rows with 10+ games had no competition row [features#6].
+    """
+    out: dict[tuple[int, str], dict] = {}
     for path in sorted(HERE.glob("data/gamelogs_*.jsonl")):
         season = path.stem.split("_", 1)[1]
         nets = team_net(season)
         if not nets:
             continue
         game_teams: dict[str, set[int]] = defaultdict(set)
-        by_name: dict[str, list[dict]] = defaultdict(list)
+        by_pid: dict[int, list[dict]] = defaultdict(list)
         for line in path.read_text(encoding="utf-8").splitlines():
             g = json.loads(line)
             # Regular season only: schedule strength, rest and back-to-backs
@@ -74,8 +80,9 @@ def from_logs() -> dict[tuple[str, str], dict]:
             if not g.get("MIN") or not is_regular_season(g.get("GAME_ID")):
                 continue
             game_teams[str(g["GAME_ID"])].add(int(g["TEAM_ID"]))
-            by_name[g["PLAYER_NAME"]].append(g)
-        for name, games in by_name.items():
+            if g.get("PLAYER_ID") is not None:
+                by_pid[int(g["PLAYER_ID"])].append(g)
+        for pid, games in by_pid.items():
             opp, dates, tgp = [], [], defaultdict(int)
             for g in games:
                 tid = int(g["TEAM_ID"])
@@ -98,7 +105,7 @@ def from_logs() -> dict[tuple[str, str], dict]:
                 if ca is not None:
                     feats["CONF_STRENGTH"] = ca
             if feats:
-                out[(name, season)] = feats
+                out[(pid, season)] = feats
     return out
 
 
@@ -108,13 +115,17 @@ def main() -> None:
     args = ap.parse_args()
     players = json.loads((HERE.parent / "assets" / "vectors.json").read_text(encoding="utf-8"))["players"]
     comp = from_logs()
+    def pid_of(p: dict) -> int | None:
+        return int(p["pid"]) if str(p.get("pid", "")).isdigit() else None
+
     rows = sorted(
         [
             {
                 "id": p["id"],
                 "name": p["name"],
+                "player_id": pid_of(p),
                 "season": p["season"],
-                **comp.get((p["name"], p["season"]), {}),
+                **comp.get((pid_of(p), p["season"]), {}),
             }
             for p in players
         ],

@@ -175,6 +175,8 @@ def main() -> None:
 
         row = {
             "name": name,
+            # integrate_context joins on (player_id, season) when the row has one.
+            "player_id": int(p["pid"]) if str(p.get("pid", "")).isdigit() else None,
             "season": season,
             "SALARY_LOG": round(salary_log, 6),
             "SALARY_CAP_PCT": round(cap_pct, 6) if cap_pct is not None else None,

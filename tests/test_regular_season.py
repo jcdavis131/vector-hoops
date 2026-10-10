@@ -84,5 +84,5 @@ def test_competition_ignores_non_regular_season_games(tmp_path, monkeypatch):
     games += [_game("0012300009", 10, "2023-10-31"), _game("0012300009", 10, "2023-10-31", team=2, pid=8)]
     (tmp_path / "data" / "gamelogs_2023-24.jsonl").write_text("\n".join(json.dumps(g) for g in games), encoding="utf-8")
     monkeypatch.setattr(cc, "HERE", tmp_path)
-    feats = cc.from_logs()[("A Player", "2023-24")]
+    feats = cc.from_logs()[(7, "2023-24")]  # keyed by PLAYER_ID [features#6]
     assert feats["B2B_RATE"] == 0.0 and feats["REST_AVG"] == 2.0
