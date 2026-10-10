@@ -92,9 +92,26 @@ def load_caches(use_fixture: bool) -> tuple[dict, bool]:
                 f"no {CACHE_DIR.name}/wide_skills_<season>.json: run pipeline/fetch_wide_skills.py on an operator "
                 "machine (stats.nba.com blocks datacenter IPs); --fixture builds from the test fixture"
             )
+        docs = [(path, json.loads(path.read_text(encoding="utf-8"))) for path in per_season]
+        # A proxy doc is constants and formula stand-ins, not measurements.
+        # fetch_missing_tracking.py wrote two (2013-14, 2014-15: post_ppp 0.9,
+        # trans_ppp 1.15, d_fg_pct 0.45 for every player, contested_shots =
+        # DIST_MILES*2), and this loop read them like any season, so the next
+        # build would have labelled their 973 player records as skill-tower
+        # targets [ingest#5]. Refused, never skipped: one in the canonical
+        # namespace is an error to fix, not a season to build around.
+        proxies = [
+            path.name
+            for path, doc in docs
+            if doc.get("proxy") or any(isinstance(r, dict) and r.get("_proxy") for r in doc.get("players", {}).values())
+        ]
+        if proxies:
+            raise SystemExit(
+                f"refusing proxy wide-skill docs {proxies}: constants and formula stand-ins are not measurements; "
+                "delete them (git history keeps them) or quarantine them outside pipeline/cache"
+            )
         complete = True
-        for path in per_season:
-            doc = json.loads(path.read_text(encoding="utf-8"))
+        for _, doc in docs:
             complete = complete and bool(doc.get("complete"))
             for nn, rec in doc.get("players", {}).items():
                 out[(doc["season"], nn)] = rec

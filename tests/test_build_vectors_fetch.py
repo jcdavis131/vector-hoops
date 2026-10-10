@@ -148,6 +148,20 @@ def test_corrupt_and_empty_caches(tmp_cache):
         bv.load_wide_skills_defense("2016-17")  # before: {}
 
 
+@pytest.mark.parametrize(
+    "doc",
+    [
+        {"season": "2016-17", "complete": True, "proxy": True, "players": {"a b": {"deflections": 1.0}}},
+        {"season": "2016-17", "complete": True, "players": {"a b": {"deflections": 1.0, "_proxy": True}}},
+    ],
+)
+def test_proxy_wide_skills_doc_is_refused(tmp_cache, doc):
+    # fetch_missing_tracking wrote proxy docs of constants into this namespace [ingest#5].
+    (tmp_cache / "wide_skills_2016-17.json").write_text(json.dumps(doc), encoding="utf-8")
+    with pytest.raises(ValueError, match="proxy"):
+        bv.load_wide_skills_defense("2016-17")
+
+
 def test_a_partial_run_writes_nothing_and_exits_2(tmp_path, tmp_cache, monkeypatch, capsys):
     """Season 2 fails; seasons 1 and 3 are still fetched; no artifact is touched."""
     out = tmp_path / "vectors.json"

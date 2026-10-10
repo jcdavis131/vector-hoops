@@ -140,8 +140,8 @@ def test_every_tracking_cache_key_is_in_the_contract():
 
 
 # What fetch_wide_skills.build_season_cache writes per player. The proxy
-# 2013-14/2014-15 docs (complete: false, `_proxy`/`_source` keys) are the
-# [ingest#5] xfail in test_wide_skills.py, so only complete docs are held here.
+# 2013-14/2014-15 docs (complete: false, `_proxy`/`_source` keys) were deleted
+# and both readers refuse proxy docs [ingest#5]; only complete docs are held here.
 WIDE_SKILL_KEYS = {
     "post_freq",
     "post_ppp",

@@ -100,3 +100,26 @@ def test_integrate_context_reads_source_unavailable_as_a_missing_family(tmp_path
     )
     monkeypatch.setattr(ic, "GAME_RATINGS_JSON", p)
     assert ic.load_game_ratings_by_player_season() == {}
+
+
+def test_wide_skills_refuses_a_proxy_doc(tmp_path, monkeypatch):
+    # The two deleted 2013-14/2014-15 docs were proxy: true, constants for every player [ingest#5].
+    import build_wide_skills
+
+    real = {"season": "2016-17", "complete": True, "players": {"a b": {"deflections": 1.0}}}
+    proxy = {"season": "2014-15", "complete": False, "proxy": True, "players": {"a b": {"post_ppp": 0.9}}}
+    (tmp_path / "wide_skills_2016-17.json").write_text(json.dumps(real), encoding="utf-8")
+    (tmp_path / "wide_skills_2014-15.json").write_text(json.dumps(proxy), encoding="utf-8")
+    monkeypatch.setattr(build_wide_skills, "CACHE_DIR", tmp_path)
+    with pytest.raises(SystemExit, match=r"wide_skills_2014-15.json"):
+        build_wide_skills.load_caches(use_fixture=False)
+    (tmp_path / "wide_skills_2014-15.json").unlink()
+    rows, complete = build_wide_skills.load_caches(use_fixture=False)
+    assert list(rows) == [("2016-17", "a b")] and complete is True
+
+
+def test_no_proxy_wide_skills_doc_is_committed():
+    for path in sorted(CACHE.glob("wide_skills_*.json")):
+        doc = json.loads(path.read_text(encoding="utf-8"))
+        assert not doc.get("proxy"), f"{path.name} is a proxy doc"
+        assert not any(r.get("_proxy") for r in doc.get("players", {}).values()), f"{path.name} has proxy records"

@@ -9,7 +9,9 @@ cache writes no game asset).
 The rebuild used to write pipeline/data/wide_skill_labels.npz in place.
 Measured on 90ef66a4, one run of this gate replaced the Jul 30 labels (train_mtnn
 reads them as skill-tower targets) with a build that includes the 2013-14 and
-2014-15 proxy caches.
+2014-15 proxy caches. Those two docs are deleted and build_wide_skills refuses
+any proxy doc [ingest#5], so the two strict xfails that pinned the defect are
+plain tests again.
 
 Run:  python -m pytest pipeline/test_wide_skills.py
       python pipeline/test_wide_skills.py       (same tests; exit 0 = all gates pass)
@@ -32,13 +34,6 @@ from name_utils import canonical_name  # noqa: E402
 CACHE_DIR = ROOT / "pipeline" / "cache"
 LABELS = Path("pipeline") / "data" / "wide_skill_labels.npz"
 ASSET = Path("assets") / "skills_wide.json"
-
-# pipeline/cache/wide_skills_2013-14.json and _2014-15.json were written by
-# fetch_missing_tracking.py with constants (post_ppp 0.9, trans_ppp 1.15,
-# d_fg_pct 0.45) and complete=False, proxy=True. build_wide_skills globs every
-# wide_skills_*.json, so a fresh build labels 2013-14/2014-15 rows from them
-# and, the merged cache no longer being complete, stops writing the asset.
-PROXY_CACHES = "[ingest#5] proxy wide_skills_2013-14/2014-15 caches (constants, complete=False) enter the build"
 
 
 @pytest.fixture(scope="module")
@@ -75,7 +70,6 @@ def test_six_wide_skills(built):
     ], built["keys"]
 
 
-@pytest.mark.xfail(strict=True, reason=PROXY_CACHES)
 def test_every_covered_row_is_2015_16_or_later(built):
     early = sorted({s for s in built["seasons"] if int(s[:4]) < 2015})
     assert not early, f"rows before 2015-16 are covered (should be masked): seasons {early}"
@@ -140,9 +134,8 @@ def test_mask_honesty_coverage(built):
         assert not built["asset"].exists(), "partial cache wrote assets/skills_wide.json"
 
 
-@pytest.mark.xfail(strict=True, reason=PROXY_CACHES)
 def test_real_caches_write_the_game_asset(built):
-    # Only the two proxy docs carry complete=False; every 2015-16+ cache is complete.
+    # The two proxy docs were the only ones with complete=False; every 2015-16+ cache is complete.
     if not built["real"]:
         pytest.skip("fixture mode: the partial fixture must not write the asset (checked above)")
     assert built["asset"].exists(), "real caches did not write assets/skills_wide.json (merged cache not complete)"

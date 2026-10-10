@@ -46,13 +46,12 @@ def _matching(directory: Path, glob: str, pattern: str) -> list[Path]:
 def wide_skills() -> str | None:
     """build_wide_skills: per-season synergy/hustle caches, none of them proxies.
 
-    wide_skills_2013-14.json and wide_skills_2014-15.json are `proxy: true`
+    wide_skills_2013-14.json and wide_skills_2014-15.json were `proxy: true`
     docs written by fetch_missing_tracking.py with constants (post_ppp 0.9,
     trans_ppp 1.15, d_fg_pct 0.45) and formula stand-ins, not measurements
-    [ingest#5]. build_wide_skills.load_caches reads every wide_skills_*.json
-    with no per-doc check, so building now would put those two docs' 973
-    player records into wide_skill_labels.npz, which train_mtnn uses as
-    skill targets.
+    [ingest#5]. Both are deleted and build_wide_skills now refuses a proxy
+    doc itself; this check reports one before a rebuild starts, so the step is
+    skipped with the reason instead of failing.
     """
     docs = _matching(CACHE, "wide_skills_*.json", r"wide_skills_\d{4}-\d{2}\.json")
     if not docs:

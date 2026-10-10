@@ -577,6 +577,12 @@ def load_wide_skills_defense(season: str) -> dict[str, dict]:
         d = json.loads(p.read_text(encoding="utf-8"))
     except (json.JSONDecodeError, UnicodeDecodeError) as e:
         raise ValueError(f"{p}: cache does not decode ({e}); restore it from git") from e
+    # A proxy doc (constants, formula stand-ins) is refused outright, the way
+    # build_wide_skills refuses it [ingest#5]. fetch_missing_tracking wrote two
+    # for 2013-14/2014-15, which this loader never opened (they predate
+    # WIDE_SKILLS_FIRST_SEASON); one for a hustle season must not become data.
+    if d.get("proxy") or any(isinstance(r, dict) and r.get("_proxy") for r in d.get("players", {}).values()):
+        raise ValueError(f"{p}: proxy doc (constants, not measurements); delete it or restore the real cache from git")
     if not d.get("complete"):
         return {}
     out = {}
