@@ -106,6 +106,8 @@ Usage:
 from __future__ import annotations
 
 import argparse
+import hashlib
+import io
 import json
 import os
 import re
@@ -205,6 +207,10 @@ def _read_json(path: Path) -> Any:
     return json.loads(path.read_text(encoding="utf-8"))
 
 
+def _sha256(data: bytes) -> str:
+    return hashlib.sha256(data).hexdigest()
+
+
 def metrics_from_report(report: dict[str, Any]) -> dict[str, Any]:
     """The manifest's metrics: values the trainer measured, copied, never recomputed."""
     comp = report.get("composite") or {}
@@ -234,6 +240,8 @@ class SelectionRun:
     report_path: Path
     report: dict[str, Any]
     report_sha256: str
+    # The bytes report and report_sha256 were read from; promote() copies these.
+    report_bytes: bytes = b""
 
     @property
     def run_id(self) -> str | None:
@@ -253,6 +261,10 @@ class RunCheck:
     fit_rows: str | None = None
     # Set for a fit_rows 'all' run promoted with --selection-run.
     selection: SelectionRun | None = None
+    # role -> the bytes that were read once, hashed and checked. promote() writes
+    # these into the bundle; it never reopens the run directory.
+    blobs: dict[str, bytes] = field(default_factory=dict)
+    shas: dict[str, str] = field(default_factory=dict)
 
     @property
     def lineage(self) -> dict[str, Any]:
@@ -270,10 +282,10 @@ def _check_contents(chk: RunCheck, report: dict[str, Any], fp: dict[str, Any]) -
     The on-box case this catches: 8 x 48 centroids beside a 64-d embedding.
     """
     try:
-        with np.load(chk.run_dir / BUNDLE_FILES["embedding"], allow_pickle=False) as z:
+        with np.load(io.BytesIO(chk.blobs["embedding"]), allow_pickle=False) as z:
             e_shape = tuple(z["E"].shape)
             emb_keys = keys_sha256(z["player_id"], z["season"])
-        with np.load(chk.run_dir / BUNDLE_FILES["centroids"], allow_pickle=False) as z:
+        with np.load(io.BytesIO(chk.blobs["centroids"]), allow_pickle=False) as z:
             c_shape = tuple(z["centroids"].shape)
     except (OSError, ValueError, KeyError) as e:
         chk.problems.append(f"embedding or centroids npz unreadable ({type(e).__name__}: {e})")
@@ -304,7 +316,8 @@ def _check_selection(chk: RunCheck, selection_run: str | os.PathLike[str]) -> No
         chk.problems.append(f"{where}: no {BUNDLE_FILES['report']} there")
         return
     try:
-        sel = _read_json(path)
+        raw = path.read_bytes()
+        sel = json.loads(raw.decode("utf-8"))
     except (OSError, ValueError) as e:
         chk.problems.append(f"{where}: {path.name} unreadable ({e})")
         return
@@ -332,7 +345,7 @@ def _check_selection(chk: RunCheck, selection_run: str | os.PathLike[str]) -> No
             "its held-out numbers do not describe this model"
         )
     if len(chk.problems) == bad:
-        chk.selection = SelectionRun(sel_dir, path, sel, sha256_file(path))
+        chk.selection = SelectionRun(sel_dir, path, sel, _sha256(raw), raw)
 
 
 def check_run(
@@ -355,12 +368,16 @@ def check_run(
             "stopped early, or found pipeline/data/mtnn_best.pt replaced under it, has none"
         )
         return chk
+    # Read once: the report checked here, the sha the manifest records and the
+    # bytes the bundle gets are the same bytes.
     try:
-        report = _read_json(report_path)
+        report_bytes = report_path.read_bytes()
+        report = json.loads(report_bytes.decode("utf-8"))
     except (OSError, ValueError) as e:
         chk.problems.append(f"{report_path}: unreadable ({e})")
         return chk
     chk.report = report
+    chk.blobs["report"], chk.shas["report"] = report_bytes, _sha256(report_bytes)
     lin = report.get("lineage")
     if not isinstance(lin, dict) or lin.get("schema") != SCHEMA:
         chk.problems.append(
@@ -420,7 +437,8 @@ def check_run(
             chk.problems.append(f"{name}: missing from {run_dir}")
             continue
         want = str((rec or {}).get("sha256"))
-        got = sha256_file(path)
+        blob = path.read_bytes()
+        got = _sha256(blob)
         if got != want:
             chk.problems.append(
                 f"{name}: sha256 {got[:12]} but the lineage recorded {want[:12]} "
@@ -428,6 +446,7 @@ def check_run(
             )
             continue
         verified.add(role)
+        chk.blobs[role], chk.shas[role] = blob, got
 
     fp = lin.get("matrix_fingerprint") or {}
     if {"embedding", "centroids"} <= verified:
@@ -549,14 +568,19 @@ def promote(
     promoted = data / "promoted"
     promoted.mkdir(parents=True, exist_ok=True)
     dest = promoted / run_id
+    # The bundle is the bytes check_run read, hashed and verified, not a second
+    # read of the run directory. This used to hash and copy the source files
+    # again after check_run had verified them, so a file replaced in between
+    # (another run writing the same --run-dir, an editor, a sync client) was
+    # shipped under a manifest that recorded the new file's sha as if it had
+    # been checked.
     names = {role: BUNDLE_FILES[role] for role in (*REQUIRED, "report")}
-    sources = {role: run_path / name for role, name in names.items()}
+    blobs = {role: chk.blobs[role] for role in names}
+    shas = {role: chk.shas[role] for role in names}
     if chk.selection is not None:
         names[SELECTION_ROLE] = f"{SELECTION_DIR}/{BUNDLE_FILES['report']}"
-        sources[SELECTION_ROLE] = chk.selection.report_path
-    shas = {role: sha256_file(p) for role, p in sources.items()}
-    if chk.selection is not None and shas[SELECTION_ROLE] != chk.selection.report_sha256:
-        raise PromotionRefusedError([f"{chk.selection.report_path} changed while it was being checked"])
+        blobs[SELECTION_ROLE] = chk.selection.report_bytes
+        shas[SELECTION_ROLE] = chk.selection.report_sha256
 
     if dest.exists():
         try:
@@ -574,8 +598,7 @@ def promote(
             "promoted_at": stamp,
             "source_run_dir": display_path(run_path, ROOT),
             "files": {
-                role: {"name": names[role], "sha256": shas[role], "bytes": p.stat().st_size}
-                for role, p in sources.items()
+                role: {"name": names[role], "sha256": shas[role], "bytes": len(blob)} for role, blob in blobs.items()
             },
             "matrix_fingerprint": lin.get("matrix_fingerprint"),
             # Held-out numbers only: this run's, or for a refit its selection
@@ -608,12 +631,12 @@ def promote(
         shutil.rmtree(tmp, ignore_errors=True)
         tmp.mkdir()
         try:
-            for role, src in sources.items():
+            for role, blob in blobs.items():
                 dst = tmp / names[role]
                 dst.parent.mkdir(parents=True, exist_ok=True)
-                shutil.copyfile(src, dst)
+                dst.write_bytes(blob)
                 if sha256_file(dst) != shas[role]:
-                    raise PromotionRefusedError([f"{src} changed while it was being copied"])
+                    raise PromotionRefusedError([f"{dst} does not read back as the bytes written"])
             atomic_write_json(tmp / MANIFEST, manifest, indent=2)
             # A directory rename: the bundle appears whole or not at all.
             tmp.rename(dest)

@@ -161,6 +161,35 @@ def test_a_torn_bundle_is_refused(data):
     assert nothing_promoted(data)
 
 
+def test_a_file_replaced_after_its_check_is_not_what_ships(data, monkeypatch):
+    """promote() used to hash and copy the run's files again after check_run verified them.
+
+    A file replaced in between shipped under a manifest that recorded the new
+    sha as if it had been checked. The bundle is now the bytes check_run read.
+    """
+    run = make_run(data, "r1")
+    other = make_run(data, "r2", seed=1)
+    verified = {n: aio.sha256_file(run / n) for n in ("embedding_v3.npz", "mtnn_best.pt", "mtnn_report.json")}
+    real = pm._check_contents
+
+    def replace_files_after_the_check(chk, report, fp):
+        real(chk, report, fp)
+        shutil.copyfile(other / "embedding_v3.npz", run / "embedding_v3.npz")
+        shutil.copyfile(other / "mtnn_best.pt", run / "mtnn_best.pt")
+        (run / "mtnn_report.json").write_text("{}", encoding="utf-8")
+
+    monkeypatch.setattr(pm, "_check_contents", replace_files_after_the_check)
+    pm.promote(run, now="2026-10-09T00:00:01Z")
+    bundle = data / "promoted" / "r1"
+    man = json.loads((bundle / "manifest.json").read_text(encoding="utf-8"))
+    for name, sha in verified.items():
+        assert aio.sha256_file(run / name) != sha  # the replacement happened
+        assert aio.sha256_file(bundle / name) == sha
+    assert man["files"]["embedding"]["sha256"] == verified["embedding_v3.npz"]
+    assert man["files"]["report"]["bytes"] == (bundle / "mtnn_report.json").stat().st_size
+    pm.load_promoted(check_matrix=True)
+
+
 def test_an_auto_run_is_refused_since_the_phase_was_removed(data):
     run = make_run(data, "r1", phase="auto", deploy_mode="final_refit_all_rows")
     assert "phase 'auto' was removed" in refused(run, force="even forced")
