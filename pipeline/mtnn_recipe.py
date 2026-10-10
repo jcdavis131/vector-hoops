@@ -35,6 +35,18 @@ NAME is a file in pipeline/recipes/ (measure, ship, legacy-v5-refit,
 legacy-v6-refit); anything ending in .json or containing a path separator is
 read as a path.
 
+One limit, documented rather than worked around (2026-10-10). A store_true
+switch a recipe sets true cannot be turned off on the command line:
+argparse's store_true has no "off" spelling, so `--recipe measure` always
+trains with --no-best-checkpoint, and the legacy refits always with
+--robust-scaling. (A BooleanOptionalAction such as --mlp-heads has a
+--no-mlp-heads form, and the command line wins as usual.) To train a recipe
+without one of its switches, copy the file, drop the key and pass --recipe
+<path>; the lineage block records the copy's path and sha256. Adding --no-
+forms to train_mtnn was not done: each would add an option every recipe and
+the herdmux climb's flag parity would have to know about, to save one file
+copy.
+
 This module imports no torch, so tests and rebuild_all.py can load and check
 recipes without it.
 """
