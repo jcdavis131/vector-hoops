@@ -294,7 +294,8 @@ def main() -> None:
     # on 92 of 393 rows in 1997-98, 240 of 402 in 2001-02, 382 of 412 in
     # 2007-08). So one raw count maps to very different z by season: on the
     # FA2 matrix YEAR_IN_LEAGUE 2 is z +1.34 in 1997-98, -0.17 in 1999-00,
-    # -0.52 in 2001-02, -0.81 in 2003-04 and about -0.95 from 2007-08 on. The
+    # -0.52 in 2001-02, -0.81 in 2003-04, then -0.89 to -0.98 from 2007-08
+    # through 2015-16 and -0.77 to -0.88 from 2016-17. The
     # counts are measured (no fabricated value at mask 1), but the z of
     # YEAR_IN_LEAGUE, CAREER_EXP_YEARS and CAREER_ACTIVE_FRAC (and
     # build_honors' HON_ASG_CUM, censored the same way) is not comparable
