@@ -10,12 +10,14 @@ integrate_context's 1% gate, so the 7 pedigree columns are deleted), the
 playoffs fixture 8 appearances against 5,950 real, and the wide-skills
 fixture 18 labelled rows against 5,154 real.
 
-Dropping --fixture is not enough on its own. build_wide_skills,
-build_playoffs, build_honors and build_game_ratings each fall back to their
-fixture by themselves when they find no real cache, and exit 0. Changing
-those builders is a separate fix (and build_game_ratings' fallback runs
-inside integrate_context, i.e. inside the herdmux climb's prepare chain), so
-the orchestrators ask here first and refuse, or skip, instead.
+Dropping --fixture was not enough on its own: build_wide_skills,
+build_playoffs, build_honors and build_game_ratings each fell back to their
+fixture by themselves when they found no real cache, and exited 0. They no
+longer do [ingest#5]: the first three exit non-zero without a real cache,
+and build_game_ratings (which runs inside integrate_context, i.e. inside the
+herdmux climb's prepare chain) writes a "source_unavailable" doc with no rows.
+The orchestrators still ask here first, so a missing input is a step skipped
+with its reason rather than a crash halfway through a rebuild.
 
 Each function returns None when the real input is present, or a message
 saying what is missing and how to get it. Cheap: globs, plus reading the
@@ -107,8 +109,9 @@ def game_ratings() -> str | None:
     """build_game_ratings: a release cache that is not the example fixture.
 
     Not a name check: `fetch_2k_ratings.py --offline`, which CI and
-    `make offline` run, copies game_ratings.example.json to
-    game_ratings_2k25.json byte for byte.
+    `make offline` ran until 2026-10-09, copied game_ratings.example.json to
+    game_ratings_2k25.json byte for byte, and such a copy may still sit in an
+    older checkout's pipeline/cache (untracked, not ignored).
     """
     fixture = CACHE / "game_ratings.example.json"
     fixture_bytes = fixture.read_bytes() if fixture.exists() else None

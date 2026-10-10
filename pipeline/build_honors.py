@@ -66,8 +66,17 @@ def load_award_index(use_fixture: bool) -> tuple[dict[str, dict], bool]:
     by_season: dict[str, dict[str, dict]] = {}
     complete = True
 
-    caches = [] if use_fixture else real_honor_cache_paths(CACHE_DIR)
-    if caches:
+    if not use_fixture:
+        caches = real_honor_cache_paths(CACHE_DIR)
+        # No real cache used to mean "read honors.example.json" without being
+        # asked, writing its two hand-made award seasons into
+        # pipeline/data/honors.json, a training input [ingest#5]. The fixture
+        # is for tests and runs only under --fixture.
+        if not caches:
+            raise SystemExit(
+                f"no {CACHE_DIR.name}/honors_award_<year>.json: run pipeline/fetch_honors.py on an operator "
+                "machine (stats.nba.com/BBRef block datacenter IPs); --fixture builds from the test fixture"
+            )
         for path in caches:
             doc = json.loads(path.read_text(encoding="utf-8"))
             season = doc["season"]
@@ -76,7 +85,7 @@ def load_award_index(use_fixture: bool) -> tuple[dict[str, dict], bool]:
         return by_season, complete
 
     if not FIXTURE.exists():
-        raise SystemExit(f"no honor caches and no fixture at {FIXTURE} — run pipeline/fetch_honors.py (or --fixture)")
+        raise SystemExit(f"--fixture: no fixture at {FIXTURE}")
     doc = json.loads(FIXTURE.read_text(encoding="utf-8"))
     complete = bool(doc.get("complete"))
     for season, recs in doc.get("players", {}).items():

@@ -259,10 +259,17 @@ def load_honors_by_player_season() -> dict[tuple[str, str], dict]:
 
 
 def load_game_ratings_by_player_season() -> dict[tuple[str, str], dict]:
-    """(name, season) -> GK_* row from build_game_ratings.py."""
+    """(name, season) -> GK_* row from build_game_ratings.py.
+
+    A "source_unavailable" doc (no real release cache) is an honestly missing
+    family: no rows, so every GK_* cell is masked and the family is gated.
+    """
     if not GAME_RATINGS_JSON.exists():
         return {}
     data = json.loads(GAME_RATINGS_JSON.read_text(encoding="utf-8"))
+    if data.get("source_unavailable"):
+        print(f"  game_ratings: source unavailable ({data['source_unavailable']}); family missing")
+        return {}
     rows = data.get("players", data.get("rows", []))
     return {(r["name"], r["season"]): r for r in rows}
 
@@ -308,7 +315,8 @@ def load_system_tags_index() -> dict[tuple[str, int], str]:
 
 
 # A family below this row-coverage never earns a tower — merging it would
-# hand the MTNN 14 always-masked columns (see game_ratings, a 2-row fixture).
+# hand the MTNN 14 always-masked columns (game_ratings: 2 fixture rows until
+# 2026-10-09, no rows since the fixture fallback was removed).
 MIN_FAMILY_COVERAGE = 0.01
 
 
@@ -569,10 +577,10 @@ def main() -> None:
 
     # Checked the same way as build_salary_market above. Its exit code used to
     # be dropped, so a crash here left whatever game_ratings.json the last run
-    # wrote and the merge carried on with exit 0 [critic#5]. Today it exits 0:
-    # pipeline/cache has no real game_ratings_*.json, so the builder falls back
-    # to the 2-row example fixture and the family is coverage-gated below. The
-    # check changes nothing while the builder succeeds.
+    # wrote and the merge carried on with exit 0 [critic#5]. pipeline/cache has
+    # no real game_ratings_*.json, so the builder writes a "source_unavailable"
+    # doc with no rows (it used to write the 2-row example fixture [ingest#5])
+    # and the family is coverage-gated below, as it was with the fixture.
     proc = subprocess.run(
         [sys.executable, str(ROOT / "pipeline" / "build_game_ratings.py")],
         cwd=ROOT,

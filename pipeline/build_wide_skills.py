@@ -80,8 +80,18 @@ def norm_name(name: str) -> str:
 def load_caches(use_fixture: bool) -> tuple[dict, bool]:
     """(season, norm_name) -> raw dict, plus a `complete` flag."""
     out: dict[tuple[str, str], dict] = {}
-    per_season = sorted(CACHE_DIR.glob("wide_skills_*.json"))
-    if per_season and not use_fixture:
+    if not use_fixture:
+        per_season = sorted(CACHE_DIR.glob("wide_skills_*.json"))
+        # No real cache used to mean "read wide_skills.example.json" without
+        # being asked: its 18 labelled rows (against 5,154 real, measured
+        # 2026-10-09) became pipeline/data/wide_skill_labels.npz, the six
+        # wide skill towers' targets [ingest#5]. The fixture is for tests and
+        # runs only under --fixture.
+        if not per_season:
+            raise SystemExit(
+                f"no {CACHE_DIR.name}/wide_skills_<season>.json: run pipeline/fetch_wide_skills.py on an operator "
+                "machine (stats.nba.com blocks datacenter IPs); --fixture builds from the test fixture"
+            )
         complete = True
         for path in per_season:
             doc = json.loads(path.read_text(encoding="utf-8"))
@@ -90,7 +100,7 @@ def load_caches(use_fixture: bool) -> tuple[dict, bool]:
                 out[(doc["season"], nn)] = rec
         return out, complete
     if not FIXTURE.exists():
-        raise SystemExit(f"no wide-skill caches and no fixture at {FIXTURE}")
+        raise SystemExit(f"--fixture: no fixture at {FIXTURE}")
     doc = json.loads(FIXTURE.read_text(encoding="utf-8"))
     for season, recs in doc.get("players", {}).items():
         for nn, rec in recs.items():

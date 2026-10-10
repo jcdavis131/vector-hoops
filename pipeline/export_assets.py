@@ -104,11 +104,10 @@ def has_real_wide_caches() -> bool:
 # to build_game_ratings always, so a production export rewrote
 # pipeline/data/wide_skill_labels.npz (train_mtnn's skill targets) or
 # game_ratings.json (an integrate_context input) from the committed example
-# fixtures. Dropping the flag alone is not enough: both builders fall back
-# to the fixture by themselves when they find no real cache. So each step
-# runs only when real_caches says its input is real, and otherwise is
-# skipped with the reason. For wide skills that includes the two proxy
-# season docs [ingest#5], which today keeps this step from running at all.
+# fixtures. Dropping the flag alone was not enough while both builders fell
+# back to the fixture by themselves; they no longer do [ingest#5]. Each step
+# still runs only when real_caches says its input is real, and otherwise is
+# skipped with the reason instead of failing the export.
 def run_if_real(name: str, cmd: list[str], why_not: str | None) -> bool:
     if why_not:
         print(f"== {name}: skipped, {why_not}\n")

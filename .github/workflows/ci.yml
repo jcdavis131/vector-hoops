@@ -48,11 +48,14 @@ jobs:
           # index keeps this a ~200 MB install instead of ~2 GB.
           pip install torch --index-url https://download.pytorch.org/whl/cpu
 
-      # These two were previously `|| true`. Verified passing, so they now gate.
+      # Previously `|| true`. Verified passing, so it now gates.
+      # fetch_2k_ratings.py --offline used to run here too. It copied the 2K
+      # example fixture to pipeline/cache/game_ratings_2k25.json, which
+      # build_game_ratings then read as a real release [ingest#5]. It no longer
+      # copies anything and exits 2 with no release cache, so it is not a CI step.
       - name: Offline fetch (no external network)
         run: |
           python pipeline/fetch_bbref_advanced.py --offline
-          python pipeline/fetch_2k_ratings.py --offline
 
       # Previously this named pipeline/test_arena.py, which does not exist, and
       # swallowed the result with `|| true` — so the suite had never actually run

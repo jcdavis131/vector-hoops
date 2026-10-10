@@ -3,16 +3,23 @@
 NOT official 2K Sports data. Third-party fan site snapshots per game
 release; use as an orthogonal masked tower family, never as ground truth.
 
-MLOps hygiene:
-- CI/offline: copies committed fixture pipeline/cache/game_ratings.example.json
-- Live operator scrape requires residential IP (datacenter blocked), documented in docs/DATA_SOURCES_DEEP.md
-- Never crashes CI — offline path is default for tests
+There is no automated scrape. A live snapshot needs a residential IP and a
+manual step (docs/DATA_SOURCES_DEEP.md) that writes
+pipeline/cache/game_ratings_{release}.json (e.g. game_ratings_2k25.json).
 
-Writes:
-  pipeline/cache/game_ratings_{release}.json   (e.g. game_ratings_2k25.json)
+This script used to copy the committed fixture game_ratings.example.json to
+that real cache name on every run (`if args.offline or True:`), and CI's
+offline step and `make offline` ran it, so the next build_game_ratings read
+two hand-entered rows as a release [ingest#5]. It never writes the fixture
+anywhere now:
 
-Run:  python pipeline/fetch_2k_ratings.py --offline
-      python pipeline/fetch_2k_ratings.py --release 2k25   (operator scrape — requires manual step)
+  --offline   reports which release caches exist; exit 2 when there is none
+  (default)   exit 2: the scrape is an operator step, not code here
+
+A byte copy of the fixture under a release name is reported as not real
+(build_game_ratings.real_release_caches skips it too).
+
+Run:  python pipeline/fetch_2k_ratings.py --offline [--release 2k25]
 """
 
 from __future__ import annotations
@@ -22,29 +29,11 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from artifact_io import atomic_copy
 from ingest import FetchError, run_fetch
 
 ROOT = Path(__file__).resolve().parents[1]
 CACHE = ROOT / "pipeline" / "cache"
 FIXTURE = CACHE / "game_ratings.example.json"
-
-ATTR_KEYS = (
-    "overall",
-    "three_pt",
-    "mid_range",
-    "close_shot",
-    "ball_handle",
-    "pass_accuracy",
-    "perimeter_def",
-    "interior_def",
-    "steal",
-    "block",
-    "off_rebound",
-    "def_rebound",
-    "speed",
-    "strength",
-)
 
 
 def cache_path(release: str) -> Path:
@@ -52,26 +41,23 @@ def cache_path(release: str) -> Path:
 
 
 def main() -> None:
-    ap = argparse.ArgumentParser(description="Fetch 2K ratings proxy (offline-fixture first, MLOps-safe)")
-    ap.add_argument(
-        "--offline",
-        action="store_true",
-        help="copy committed fixture only (no network) — CI default",
-    )
+    ap = argparse.ArgumentParser(description="Report 2K ratings release caches (the scrape is an operator step)")
+    ap.add_argument("--offline", action="store_true", help="report cached releases only (no network)")
     ap.add_argument("--release", default="2k25")
     args = ap.parse_args()
 
     out = cache_path(args.release)
-    CACHE.mkdir(parents=True, exist_ok=True)
-
-    if args.offline or True:  # default offline for top-tier MLOps: never fail CI on external site
-        if not FIXTURE.exists():
-            # This used to write a placeholder {"players": {}} under the real
-            # cache name and exit 0. A missing fixture is an error.
-            raise FetchError(f"fixture missing: {FIXTURE}; not writing a placeholder {out.name}")
-        atomic_copy(FIXTURE, out)
-        print(f"offline: wrote {out.name} from fixture (complete=False) — ready for train_towers masked family")
-        return
+    if not args.offline:
+        raise FetchError(
+            f"no automated 2kratings.com scrape: an operator writes {out.name} from a residential IP "
+            "(docs/DATA_SOURCES_DEEP.md); nothing written"
+        )
+    fixture_bytes = FIXTURE.read_bytes() if FIXTURE.exists() else None
+    if not out.exists():
+        raise FetchError(f"no {out.name} cached; the scrape is an operator step. Nothing written")
+    if out.read_bytes() == fixture_bytes:
+        raise FetchError(f"{out.name} is a byte copy of {FIXTURE.name}, not a release; delete it")
+    print(f"offline: {out.name} cached")
 
 
 if __name__ == "__main__":

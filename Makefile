@@ -20,11 +20,13 @@ PYTHON ?= python
 sync:
 	$(PYTHON) -m pip install -e .[dev]
 
-# What .github/workflows/ci.yml runs offline. Both read pipeline/cache and
-# write nothing under assets/, which is why the stamp check can follow them.
+# What .github/workflows/ci.yml runs offline. It reads pipeline/cache and
+# writes nothing under assets/, which is why the stamp check can follow it.
+# fetch_2k_ratings.py --offline is gone from here: it copied the 2K example
+# fixture into pipeline/cache/game_ratings_2k25.json, an untracked file
+# build_game_ratings then read as a real release [ingest#5].
 offline:
 	$(PYTHON) pipeline/fetch_bbref_advanced.py --offline
-	$(PYTHON) pipeline/fetch_2k_ratings.py --offline
 
 # The matrix stage of pipeline/rebuild_all.py: build_vectors --offline,
 # enrich_vectors, integrate_context (the herdmux climb's prepare chain), then

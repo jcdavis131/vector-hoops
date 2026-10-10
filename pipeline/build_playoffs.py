@@ -69,8 +69,17 @@ def load_caches(use_fixture: bool) -> tuple[dict, dict, bool]:
     teams: dict[tuple[str, str], dict] = {}
     complete = True
 
-    per_season = real_playoff_cache_paths(CACHE_DIR)
-    if per_season and not use_fixture:
+    if not use_fixture:
+        per_season = real_playoff_cache_paths(CACHE_DIR)
+        # No real cache used to mean "read playoffs.example.json" without being
+        # asked: its 8 appearances (against 5,950 real, measured 2026-10-09)
+        # became pipeline/data/playoffs.json, a training input [ingest#5]. The
+        # fixture is for tests and runs only under --fixture.
+        if not per_season:
+            raise SystemExit(
+                f"no {CACHE_DIR.name}/playoffs_<season>.json: run pipeline/fetch_playoffs.py on an operator "
+                "machine (stats.nba.com blocks datacenter IPs); --fixture builds from the test fixture"
+            )
         for path in per_season:
             doc = json.loads(path.read_text(encoding="utf-8"))
             season = doc["season"]
@@ -82,10 +91,7 @@ def load_caches(use_fixture: bool) -> tuple[dict, dict, bool]:
         return players, teams, complete
 
     if not FIXTURE.exists():
-        raise SystemExit(
-            f"no playoff caches and no fixture at {FIXTURE} — run "
-            "pipeline/fetch_playoffs.py on an operator machine (or --fixture)"
-        )
+        raise SystemExit(f"--fixture: no fixture at {FIXTURE}")
     doc = json.loads(FIXTURE.read_text(encoding="utf-8"))
     complete = bool(doc.get("complete"))
     for season, recs in doc.get("players", {}).items():

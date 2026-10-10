@@ -466,6 +466,33 @@ def test_2k_ratings_missing_fixture_writes_no_placeholder(tmp_path, monkeypatch)
     assert not list(tmp_path.iterdir())
 
 
+@pytest.mark.parametrize("argv", [["--offline"], []])
+def test_2k_ratings_never_copies_the_fixture_into_a_release_cache(tmp_path, monkeypatch, argv):
+    import fetch_2k_ratings as f2k
+
+    fixture = tmp_path / "game_ratings.example.json"
+    fixture.write_text('{"complete": false, "players": [{"norm_name": "x"}]}', encoding="utf-8")
+    monkeypatch.setattr(f2k, "CACHE", tmp_path)
+    monkeypatch.setattr(f2k, "FIXTURE", fixture)
+    # Before: `if args.offline or True:` copied the fixture to
+    # game_ratings_2k25.json and exited 0, with or without --offline [ingest#5].
+    assert run(f2k.main, ["fetch_2k_ratings.py", *argv], monkeypatch) == 2
+    assert sorted(p.name for p in tmp_path.iterdir()) == ["game_ratings.example.json"]
+
+
+def test_2k_ratings_offline_reports_a_byte_copy_of_the_fixture_as_not_real(tmp_path, monkeypatch):
+    import fetch_2k_ratings as f2k
+
+    fixture = tmp_path / "game_ratings.example.json"
+    fixture.write_text('{"complete": false, "players": []}', encoding="utf-8")
+    (tmp_path / "game_ratings_2k25.json").write_bytes(fixture.read_bytes())
+    monkeypatch.setattr(f2k, "CACHE", tmp_path)
+    monkeypatch.setattr(f2k, "FIXTURE", fixture)
+    assert run(f2k.main, ["fetch_2k_ratings.py", "--offline"], monkeypatch) == 2
+    (tmp_path / "game_ratings_2k25.json").write_text('{"complete": true, "players": []}', encoding="utf-8")
+    assert run(f2k.main, ["fetch_2k_ratings.py", "--offline"], monkeypatch) == 0
+
+
 def test_hf_datasets_failed_inspect_exits_2(monkeypatch):
     import fetch_hf_datasets as fhf
 

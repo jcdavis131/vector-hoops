@@ -7,6 +7,10 @@ Outputs:
   pipeline/data/game_ratings.json
   assets/game_ratings.json (only when cache complete)
 
+With no real release cache (and no --fixture) the output is an explicit
+"source unavailable" doc with no rows, which integrate_context reads as a
+missing family. It used to be the 2-row example fixture [ingest#5].
+
 Run:  python pipeline/build_game_ratings.py [--fixture]
 """
 
@@ -55,16 +59,39 @@ def norm_name(name: str) -> str:
     return re.sub(r"\s+", " ", s)
 
 
-def load_cache(use_fixture: bool) -> tuple[dict, str, bool]:
-    paths = sorted(CACHE_DIR.glob("game_ratings_*.json"))
-    paths = [p for p in paths if p.name != "game_ratings.example.json"]
-    if paths and not use_fixture:
-        doc = json.loads(paths[-1].read_text(encoding="utf-8"))
-        by_name = {p["norm_name"]: p for p in doc.get("players", [])}
-        return by_name, str(doc.get("nba_season", "")), bool(doc.get("complete"))
-    if not FIXTURE.exists():
-        raise SystemExit(f"no game_ratings cache and no fixture at {FIXTURE}")
-    doc = json.loads(FIXTURE.read_text(encoding="utf-8"))
+def real_release_caches() -> list[Path]:
+    """Release caches that are not the example fixture or a byte copy of it.
+
+    `fetch_2k_ratings.py --offline` used to copy the fixture to
+    game_ratings_2k25.json byte for byte, so a name check alone would read that
+    copy as a real release.
+    """
+    fixture_bytes = FIXTURE.read_bytes() if FIXTURE.exists() else None
+    return [
+        p
+        for p in sorted(CACHE_DIR.glob("game_ratings_*.json"))
+        if p.name != FIXTURE.name and p.read_bytes() != fixture_bytes
+    ]
+
+
+def load_cache(use_fixture: bool) -> tuple[dict, str, bool] | None:
+    """(norm_name -> record, nba_season, complete), or None when no real release cache exists.
+
+    None is the "source unavailable" outcome. This used to fall back to
+    game_ratings.example.json, and since integrate_context runs this builder
+    on every prepare (the herdmux climb's included), its two hand-entered rows
+    were rewritten into pipeline/data/game_ratings.json each time [ingest#5].
+    """
+    if use_fixture:
+        if not FIXTURE.exists():
+            raise SystemExit(f"--fixture: no fixture at {FIXTURE}")
+        path = FIXTURE
+    else:
+        paths = real_release_caches()
+        if not paths:
+            return None
+        path = paths[-1]
+    doc = json.loads(path.read_text(encoding="utf-8"))
     by_name = {p["norm_name"]: p for p in doc.get("players", [])}
     return by_name, str(doc.get("nba_season", "")), bool(doc.get("complete"))
 
@@ -78,9 +105,25 @@ def main() -> None:
     OUT = rerooted(OUT, args.out_root)
     ASSET_OUT = rerooted(ASSET_OUT, args.out_root)
 
-    ratings, cache_season, complete = load_cache(args.fixture)
-    vec = json.loads(VECTORS.read_text(encoding="utf-8"))
+    loaded = load_cache(args.fixture)
     built = time.strftime("%Y-%m-%d %H:%M")
+    if loaded is None:
+        why = (
+            f"no real {CACHE_DIR.name}/game_ratings_<release>.json (only the example fixture or a byte copy of it); "
+            "an operator scrape is the only source"
+        )
+        OUT.parent.mkdir(parents=True, exist_ok=True)
+        OUT.write_text(
+            json.dumps(
+                {"built": built, "season": None, "complete": False, "source_unavailable": why, "players": []},
+                indent=2,
+            ),
+            encoding="utf-8",
+        )
+        print(f"game_ratings: source unavailable, 0 rows ({why}); {ASSET_OUT.name} NOT written")
+        return
+    ratings, cache_season, complete = loaded
+    vec = json.loads(VECTORS.read_text(encoding="utf-8"))
 
     rows = []
     covered = 0
@@ -94,7 +137,9 @@ def main() -> None:
         covered += 1
         row = {"name": name, "season": season}
         for k in ATTR_KEYS:
-            row[f"{GAME_PREFIX}{k.upper()}"] = float(rec.get(k, 0))
+            # An attribute the release does not list is missing, not a 0 rating.
+            v = rec.get(k)
+            row[f"{GAME_PREFIX}{k.upper()}"] = float(v) if v is not None else None
         rows.append(row)
 
     OUT.parent.mkdir(parents=True, exist_ok=True)
