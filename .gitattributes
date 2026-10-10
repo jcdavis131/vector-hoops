@@ -46,3 +46,8 @@ public/assets/**     -text
 # bytes, so one recipe would carry one hash here and another on CI.
 
 pipeline/recipes/*.json  -text
+
+# tests/test_e2e_smoke.py trains on this slice and its report's lineage records
+# the sha256 of every input; its README lists them. Same bytes on every checkout.
+
+tests/fixtures/e2e_slice/**  -text
