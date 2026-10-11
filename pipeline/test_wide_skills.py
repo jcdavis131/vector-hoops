@@ -109,7 +109,9 @@ def test_hustle_skills_are_masked_where_hustle_was_not_measured(built):
     j = built["keys"].index("shooting_gravity")
     for i in np.flatnonzero(seasons == "2015-16"):
         measured = (built["names"][i], built["seasons"][i]) not in no_fg3
-        assert built["mask"][i, j] == measured, f"{built['names'][i]} 2015-16 shooting_gravity graded={built['mask'][i, j]}"
+        assert built["mask"][i, j] == measured, (
+            f"{built['names'][i]} 2015-16 shooting_gravity graded={built['mask'][i, j]}"
+        )
 
 
 def _rows_without_fg3_pct() -> set[tuple[str, str]]:
