@@ -1,17 +1,18 @@
 {
-  "built": "2026-07-14 20:43 UTC",
+  "built": "2026-10-11 23:47 UTC",
   "contract": "transparent_14d",
   "wide_skills": {
     "skill_count": 6,
     "grade_rows": 5154,
-    "source": "real_caches"
+    "source": "rebuilt by this export from the real wide_skills caches (built 2026-10-11)"
   },
-  "mtnn_promoted": true,
-  "mtnn_promotion_note": "embeddings promoted to assets/ and consumed by /model + neighbor UI",
-  "mtnn_model": "mtnn_v5_concat_b2_h160_t32_d48_mlp128",
-  "mtnn_eval_protocol": "transductive (atlas) \u2014 trained on all rows; NOT held-out",
-  "mtnn_transductive_recall_at_10": 0.47,
-  "mtnn_transductive_purity_at_20": 0.9126192426532017,
+  "mtnn_promoted": false,
+  "mtnn_promotion_note": null,
+  "mtnn_run_id": null,
+  "mtnn_model": null,
+  "mtnn_eval_protocol": null,
+  "mtnn_transductive_recall_at_10": null,
+  "mtnn_transductive_purity_at_20": null,
   "mtnn_leakfree": {
     "protocol": "leak-free (pipeline/leakfree.py), player-level split, 3 seeds",
     "objective": "train_mtnn.promotion_composite = 0.4*recall + 0.6*purity (the repo's own gate; next-profile RMSE is in NO gate)",
@@ -22,8 +23,8 @@
     "gain_vs_previous": 0.009,
     "separates_from_previous": true
   },
-  "mtnn_test_recall_at_10": 0.47,
-  "mtnn_purity_at_20": 0.9126192426532017,
+  "mtnn_test_recall_at_10": null,
+  "mtnn_purity_at_20": null,
   "hp_sweep_best": null,
   "dataset_ledger": {
     "run": "2026-07-07 18:47 UTC",
@@ -80,16 +81,16 @@
       "players_drafted": 1755,
       "players_undrafted": 538,
       "players_unmatched_masked": 0,
-      "rows_covered": 12966,
-      "rows_total": 12966
+      "rows_covered": 12392,
+      "rows_total": 12392
     },
     "playoffs": {
       "cache_complete": true,
       "appearances": 5834,
       "seasons_covered": 30,
-      "rows_total": 12966
+      "rows_total": 12392
     },
-    "player_seasons": 12966,
+    "player_seasons": 12392,
     "seasons": [
       "1996-97",
       "2025-26"
@@ -105,73 +106,69 @@
     "wide_skills": true,
     "wide_skill_gates": false,
     "pedigree": true,
-    "pedigree_gates": false,
+    "pedigree_gates": true,
     "playoffs": true,
     "playoffs_gates": true,
     "honors": true,
-    "honors_gates": false,
+    "honors_gates": true,
     "salary_market": true,
-    "salary_gates": true,
-    "game_ratings": true,
+    "salary_gates": false,
+    "game_ratings": false,
     "game_ratings_gates": true,
     "player_meta": true,
     "current_rosters": false,
     "season_norms": true,
     "procrustes_drift.py": true,
     "archetype_time.py": true,
-    "career_trajectories.py": true,
-    "mtnn_export": true,
-    "mtnn_export_gates": true,
-    "projections": true,
-    "mtnn_viz": true
+    "career_trajectories.py": true
   },
   "assets": {
     "season_norms.json": {
-      "sha1": "9b8013e452f7",
+      "sha1": "c19e7dabbd4e",
       "present": true
     },
     "vectors.json": {
-      "sha1": "f03d43b5c533",
+      "sha1": "c04a77822aae",
       "present": true
     },
     "skills.json": {
-      "sha1": "49a348769472",
+      "sha1": "f918155c6aea",
       "present": true
     },
     "skills_wide.json": {
-      "sha1": "93c0a0fd8c46",
+      "sha1": "a43aefee88e3",
       "present": true
     },
     "skill_probe.json": {
-      "sha1": "ebbe4d72ae44",
+      "sha1": "22fd51630442",
       "present": true
     },
     "player_meta.json": {
-      "sha1": "4e104bf2d4cd",
+      "sha1": "6bd86a7b4b5f",
       "present": true
     },
     "teams.json": {
-      "sha1": "48b8438f7f97",
+      "sha1": "ca69e20cffac",
       "present": true
     },
     "pedigree.json": {
-      "sha1": "e0e0a54898d4",
+      "sha1": "9f63141a9a5a",
       "present": true
     },
     "playoffs.json": {
-      "sha1": "a6c6e27dc089",
+      "sha1": "8338b138eee2",
       "present": true
     },
     "honors.json": {
-      "sha1": "0fe4772b7497",
+      "sha1": "2963993e8af7",
       "present": true
     },
     "archetypes_time.json": {
-      "sha1": "b3be07324755",
+      "sha1": "89a0be2bf1a8",
       "present": true
     },
     "archetype_assignments.json": {
-      "sha1": "3fc6095b70bd",
+      "sha1": "94a6728b53f5",
       "present": true
     },
     "archetype_emergence.json": {
@@ -179,11 +176,11 @@
       "present": true
     },
     "trajectories.json": {
-      "sha1": "4aad11622e2e",
+      "sha1": "5ba1cd423892",
       "present": true
     },
     "drift.json": {
-      "sha1": "7a269bec789e",
+      "sha1": "a5aea119f570",
       "present": true
     },
     "deadline.json": {
@@ -199,15 +196,15 @@
       "present": true
     },
     "current_rosters.json": {
-      "sha1": "a3137426034a",
+      "sha1": "18e2561831f4",
       "present": true
     },
     "projections.json": {
-      "sha1": "19c63f22e0a3",
+      "sha1": "36238b99b5be",
       "present": true
     },
     "mtnn_arch.json": {
-      "sha1": "19fa0472df58",
+      "sha1": "bb87ef32ef6b",
       "present": true
     },
     "mtnn_map.json": {
@@ -223,7 +220,7 @@
       "present": true
     },
     "eratwins.json": {
-      "sha1": "c743d4e17fdf",
+      "sha1": "b0f30cdea81d",
       "present": true
     },
     "faderfinisher.json": {
@@ -235,13 +232,13 @@
       "present": true
     },
     "mtnn_meta.json": {
-      "sha1": "eafbb0fe6ace",
+      "sha1": "594ab149073f",
       "present": true
     }
   },
   "mtnn_embeddings_f32": {
-    "sha1": "d31a33a4fac9",
+    "sha1": "4ef850f60436",
     "present": true,
-    "bytes": 2489472
+    "bytes": 3319296
   }
 }

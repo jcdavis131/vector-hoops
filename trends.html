@@ -552,7 +552,7 @@ input[type=range]{touch-action:manipulation}
 <script src="assets/keyboard-a11y.js?v=514722c8"></script>
 <script src="assets/site-nav.js?v=ed574b0b" defer></script>
 <script src="assets/pwa-install.js?v=bd4f258e"></script>
-<script src="assets/trends-viz.js?v=04215aec" defer></script>
+<script src="assets/trends-viz.js?v=75df7dad" defer></script>
 <script src="assets/drift.js?v=caada0bf"></script>
 <script type="module" src="assets/timesfm-forecast.js?v=3f69b28a"></script>
 <script>
@@ -646,7 +646,7 @@ input[type=range]{touch-action:manipulation}
   }
 
   function init(){
-    fetch('assets/drift.json?v=a420f8c8').then(function(r){return r.json();}).then(function(data){
+    fetch('assets/drift.json?v=e14508bf').then(function(r){return r.json();}).then(function(data){
       seasons=(data.pairs||[]).map(function(p){return p.to;});
       var s=qs('global-year-slider'); if(s){ s.max=String(Math.max(0,seasons.length-1)); s.value=String(seasons.length-1); idx=seasons.length-1; var cur=qs('current-year'); var curTop=qs('current-year-top'); if(cur) cur.textContent=seasons[idx]; if(curTop) curTop.textContent=seasons[idx]; }
       bind();

@@ -3349,7 +3349,7 @@ function buildFlowSvg(host) {
   /* Optional: per-season league mean/SD. Absent -> the panel keeps its
      "vs league average" phrasing rather than inventing real numbers. */
   function loadSeasonNorms() {
-    return fetch('assets/season_norms.json?v=b2910fba').then(function (r) {
+    return fetch('assets/season_norms.json?v=bcd38ecb').then(function (r) {
       if (!r.ok) throw new Error('no season norms');
       return r.json();
     }).then(function (doc) {
@@ -3394,7 +3394,7 @@ function buildFlowSvg(host) {
       else if (mq.addListener) mq.addListener(onMotion);
     }
     Promise.all([
-      fetch('assets/vectors.json?v=1227fb31').then(function (r) { return r.json(); }),
+      fetch('assets/vectors.json?v=edaf4d2b').then(function (r) { return r.json(); }),
       fetch('assets/mtnn_arch.json?v=758a3d56').then(function (r) { return r.json(); }),
       fetch('assets/mtnn_map.json?v=008efe2f').then(function (r) { return r.json(); }),
       fetch('assets/mtnn_heads.f32?v=9b3f7454').then(function (r) {
