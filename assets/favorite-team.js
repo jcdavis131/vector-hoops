@@ -33,7 +33,7 @@
 
   function loadTeams() {
     if (teamsCache) return Promise.resolve(teamsCache);
-    return fetch('assets/teams.json', { cache: 'no-cache' })
+    return fetch('assets/teams.json?v=a219199d', { cache: 'no-cache' })
       .then(function (r) { return r.json(); })
       .then(function (data) {
         teamsCache = data.teams || [];

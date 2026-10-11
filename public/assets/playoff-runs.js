@@ -111,7 +111,7 @@
 
   function init() {
     initTabs();
-    fetch('assets/playoff-runs.json', { cache: 'no-store' })
+    fetch('assets/playoff-runs.json?v=ac8f47f4', { cache: 'no-store' })
       .then(function (r) {
         if (!r.ok) throw new Error('http ' + r.status);
         return r.json();

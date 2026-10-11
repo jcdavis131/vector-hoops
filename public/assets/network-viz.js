@@ -3248,11 +3248,11 @@ function buildFlowSvg(host) {
      diagram silently keeps its legacy input-magnitude weights. */
   function loadJacobian() {
     return Promise.all([
-      fetch('assets/mtnn_jacobian.json').then(function (r) {
+      fetch('assets/mtnn_jacobian.json?v=229c6b3d').then(function (r) {
         if (!r.ok) throw new Error('no jacobian meta');
         return r.json();
       }),
-      fetch('assets/mtnn_jacobian.f32').then(function (r) {
+      fetch('assets/mtnn_jacobian.f32?v=03e64594').then(function (r) {
         if (!r.ok) throw new Error('no jacobian data');
         return r.arrayBuffer();
       })
@@ -3308,11 +3308,11 @@ function buildFlowSvg(host) {
      archetype up" is a claim about the SHIPPED net. */
   function loadAttribution() {
     return Promise.all([
-      fetch('assets/mtnn_attr_pop.json').then(function (r) {
+      fetch('assets/mtnn_attr_pop.json?v=ee83d0db').then(function (r) {
         if (!r.ok) throw new Error('no attribution meta');
         return r.json();
       }),
-      fetch('assets/mtnn_attr_topk.bin').then(function (r) {
+      fetch('assets/mtnn_attr_topk.bin?v=7a35a256').then(function (r) {
         if (!r.ok) throw new Error('no attribution data');
         return r.arrayBuffer();
       })
@@ -3349,7 +3349,7 @@ function buildFlowSvg(host) {
   /* Optional: per-season league mean/SD. Absent -> the panel keeps its
      "vs league average" phrasing rather than inventing real numbers. */
   function loadSeasonNorms() {
-    return fetch('assets/season_norms.json').then(function (r) {
+    return fetch('assets/season_norms.json?v=b2910fba').then(function (r) {
       if (!r.ok) throw new Error('no season norms');
       return r.json();
     }).then(function (doc) {
@@ -3394,14 +3394,14 @@ function buildFlowSvg(host) {
       else if (mq.addListener) mq.addListener(onMotion);
     }
     Promise.all([
-      fetch('assets/vectors.json').then(function (r) { return r.json(); }),
-      fetch('assets/mtnn_arch.json').then(function (r) { return r.json(); }),
-      fetch('assets/mtnn_map.json').then(function (r) { return r.json(); }),
-      fetch('assets/mtnn_heads.f32').then(function (r) {
+      fetch('assets/vectors.json?v=1227fb31').then(function (r) { return r.json(); }),
+      fetch('assets/mtnn_arch.json?v=758a3d56').then(function (r) { return r.json(); }),
+      fetch('assets/mtnn_map.json?v=008efe2f').then(function (r) { return r.json(); }),
+      fetch('assets/mtnn_heads.f32?v=9b3f7454').then(function (r) {
         if (!r.ok) throw new Error('heads');
         return r.arrayBuffer();
       }),
-      fetch('assets/mtnn_inputs.f32').then(function (r) {
+      fetch('assets/mtnn_inputs.f32?v=cf5edf6a').then(function (r) {
         if (!r.ok) throw new Error('inputs');
         return r.arrayBuffer();
       })
