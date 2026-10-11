@@ -19,6 +19,7 @@ Run:  python -m pytest pipeline/test_wide_skills.py
 
 from __future__ import annotations
 
+import json
 import os
 import subprocess
 import sys
@@ -99,9 +100,34 @@ def test_hustle_skills_are_masked_where_hustle_was_not_measured(built):
         j = built["keys"].index(skill)
         assert not built["mask"][seasons == "2015-16", j].any(), f"{skill} graded in 2015-16"
         assert built["mask"][seasons == "2016-17", j].mean() > 0.99, f"{skill} mostly masked in 2016-17"
-    # Synergy and pull-up skills keep 2015-16.
-    for skill in ("post", "transition", "shooting_gravity"):
+    # Synergy and pull-up skills keep 2015-16, except that shooting_gravity reads
+    # FG3_PCT and is ungraded on a row whose FG3_PCT build_vectors marks
+    # unmeasured (`vm`: no three-point attempt behind it [final#8], 078b75df).
+    for skill in ("post", "transition"):
         assert built["mask"][seasons == "2015-16", built["keys"].index(skill)].all()
+    no_fg3 = _rows_without_fg3_pct()
+    j = built["keys"].index("shooting_gravity")
+    for i in np.flatnonzero(seasons == "2015-16"):
+        measured = (built["names"][i], built["seasons"][i]) not in no_fg3
+        assert built["mask"][i, j] == measured, f"{built['names'][i]} 2015-16 shooting_gravity graded={built['mask'][i, j]}"
+
+
+def _rows_without_fg3_pct() -> set[tuple[str, str]]:
+    """(display name, season) of the vectors.json rows whose FG3_PCT is unmeasured."""
+    vec = json.loads((ROOT / "assets" / "vectors.json").read_text(encoding="utf-8"))
+    j = vec["features"].index("FG3_PCT")
+    return {(p["name"], p["season"]) for p in vec["players"] if j in (p.get("vm") or ())}
+
+
+def test_shooting_gravity_is_ungraded_without_a_three_point_attempt(built):
+    # DeAndre Jordan took no threes in 2015-16, so FG3_PCT is missing, not 0.0,
+    # and the skill that reads it is ungraded rather than graded at an invented
+    # average. Until 078b75df this was a low face-validity spot (<= 30).
+    if not built["real"]:
+        pytest.skip("fixture mode")
+    key = (canonical_name("DeAndre Jordan"), "2015-16")
+    assert key in built["mask_by"], "DeAndre Jordan 2015-16 not covered"
+    assert not built["mask_by"][key][built["keys"].index("shooting_gravity")]
 
 
 SPOTS_HIGH = [
@@ -124,7 +150,6 @@ SPOTS_HIGH = [
 
 SPOTS_LOW = [
     ("Stephen Curry", "2016-17", "rim_gravity", 50),
-    ("DeAndre Jordan", "2015-16", "shooting_gravity", 30),  # never shoots
     ("Anthony Edwards", "2023-24", "rim_gravity", 50),  # not a rim protector
     ("DeAndre Jordan", "2016-17", "disruption_gravity", 40),
     ("Rudy Gobert", "2023-24", "disruption_gravity", 45),
