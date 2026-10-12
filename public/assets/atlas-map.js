@@ -419,7 +419,7 @@
   function initTeams() {
     var sel = $('team-select'), btn = $('team-cycle');
     if (!sel || !btn) return;
-    fetch('/assets/team-rosters.json', { cache: 'force-cache' })
+    fetch('/assets/team-rosters.json?v=6bb25898', { cache: 'force-cache' })
       .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
       .then(function (j) {
         teams = j.teams || [];
