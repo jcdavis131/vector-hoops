@@ -219,9 +219,13 @@
   }
 
   function setupControls() {
+    var searchTimer = null;
     els.search.addEventListener('input', function () {
       state.q = els.search.value.trim().toLowerCase();
-      render();
+      /* Debounce: re-rendering 400 rows on every keystroke blocks the main
+         thread and can hang the renderer. Wait for a pause in typing. */
+      if (searchTimer) clearTimeout(searchTimer);
+      searchTimer = setTimeout(render, 180);
     });
     els.filterPos.addEventListener('change', function () {
       state.pos = els.filterPos.value;
