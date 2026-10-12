@@ -989,6 +989,36 @@ def contrastive_loss(
     raise ValueError(f"unknown contrastive loss: {mode}")
 
 
+def parse_mrl_dims(spec: str, dim: int) -> list[int]:
+    """Parse --mrl-dims into validated nested levels (full dim appended).
+
+    Empty spec -> [] (MRL off; caller keeps the exact v5 code path).
+    Raises ValueError on anything malformed.
+    """
+    spec = (spec or "").strip()
+    if not spec:
+        return []
+    try:
+        dims = [int(x) for x in spec.split(",") if x.strip()]
+    except ValueError:
+        raise ValueError(f"--mrl-dims must be comma-separated ints, got {spec!r}")
+    if not dims:
+        return []
+    if any(d <= 1 for d in dims):
+        raise ValueError(f"--mrl-dims levels must be > 1, got {dims}")
+    if any(d >= dim for d in dims):
+        raise ValueError(f"--mrl-dims levels must be < embedding dim {dim}, got {dims}")
+    if sorted(set(dims)) != dims:
+        raise ValueError(f"--mrl-dims must be strictly increasing unique, got {dims}")
+    return dims + [dim]
+
+
+def mrl_prefix(z: torch.Tensor, m: int) -> torch.Tensor:
+    """Re-normalized embedding prefix. The prefix of a unit vector is not
+    unit — InfoNCE's cosine logits need the re-normalization (MRL paper)."""
+    return F.normalize(z[:, :m], dim=-1)
+
+
 def promotion_composite(test_recall: float | None, purity: float | None) -> float:
     """Mid-epoch checkpoint proxy — delegates to composite_score.partial_cqs (recall and purity only)."""
     return cqs.partial_cqs(test_recall, purity)
@@ -1034,6 +1064,10 @@ def model_tag(args) -> str:
     # VICReg tag — era-honest anti-collapse
     if getattr(args, "w_vicreg", 0) and args.w_vicreg > 0:
         bits.append(f"vicreg{args.w_vicreg}")
+    # Matryoshka tag — nested-dim training for viz-faithful prefixes
+    _mrl = getattr(args, "mrl_dims", "") or ""
+    if _mrl.strip():
+        bits.append("mrl" + _mrl.strip().replace(",", "-").replace(" ", ""))
     # SupCon hybrid tag — archetype coherence
     if getattr(args, "nce_loss", "hybrid") == "hybrid":
         bits.append(f"hyb{args.nce_player_weight}-{args.nce_arch_weight}")
@@ -1585,6 +1619,15 @@ def build_parser() -> argparse.ArgumentParser:
         "is ~57%% of all params and was previously unswept.",
     )
     ap.add_argument(
+        "--mrl-dims",
+        type=str,
+        default="",
+        help="Matryoshka nested dims, e.g. '2,4,8,16,32': the contrastive + "
+        "VICReg losses are applied at each prefix (re-normalized) and "
+        "averaged, so embedding prefixes are independently good "
+        "representations. Empty = off (v5 behavior, unchanged).",
+    )
+    ap.add_argument(
         "--nce-loss",
         choices=("infonce", "supcon-arch", "hybrid"),
         default="hybrid",
@@ -2031,6 +2074,10 @@ def main(argv: list[str] | None = None) -> None:
         )
 
     xs, ms = split_by_family(Z, M, fams, device)
+    # Matryoshka nested levels, parsed once: [] = off, v5 path untouched.
+    mrl_levels = parse_mrl_dims(getattr(args, "mrl_dims", ""), args.dim)
+    if mrl_levels:
+        log.info("MRL on: nested contrastive+VICReg at dims %s", mrl_levels)
     model = MTNN(
         {f: len(c) for f, c in fams.items()},
         n_seasons,
@@ -2151,35 +2198,52 @@ def main(argv: list[str] | None = None) -> None:
             # term() records each loss term for the non-finite check below and
             # returns it unchanged, so every line computes what it always did.
             loss_terms.clear()
-            loss = term(
-                "contrastive",
-                contrastive_loss(
-                    za,
-                    zb,
-                    mode=args.nce_loss,
-                    temp=args.nce_temp,
-                    pos_a=pos_batch,
-                    pos_b=pos_partner,
-                    hard_neg_boost=args.hard_neg_boost,
-                    arch_labels=arch_t[idx_t],
-                    player_weight=args.nce_player_weight,
-                    arch_weight=args.nce_arch_weight,
-                    pair_weight=pair_w,
-                ),
+            nce_kwargs = dict(
+                mode=args.nce_loss,
+                temp=args.nce_temp,
+                pos_a=pos_batch,
+                pos_b=pos_partner,
+                hard_neg_boost=args.hard_neg_boost,
+                arch_labels=arch_t[idx_t],
+                player_weight=args.nce_player_weight,
+                arch_weight=args.nce_arch_weight,
+                pair_weight=pair_w,
             )
-            # v6 VICReg anti-collapse — variance hinge 1-std + cov off-diag sum/D
-            if getattr(args, "w_vicreg", 0) and args.w_vicreg > 0:
-                v_a = vicreg_loss(
-                    za,
-                    lambda_var=getattr(args, "vicreg_var_w", 25.0),
-                    lambda_cov=getattr(args, "vicreg_cov_w", 1.0),
-                )
-                v_b = vicreg_loss(
-                    zb,
-                    lambda_var=getattr(args, "vicreg_var_w", 25.0),
-                    lambda_cov=getattr(args, "vicreg_cov_w", 1.0),
-                )
-                loss = loss + args.w_vicreg * 0.5 * term("vicreg", v_a + v_b)
+            vicreg_on = getattr(args, "w_vicreg", 0) and args.w_vicreg > 0
+            if mrl_levels:
+                # Matryoshka: contrastive + VICReg at each nested prefix
+                # (re-normalized), averaged across levels. Supervised heads
+                # below stay full-dim by design.
+                c_terms = [contrastive_loss(mrl_prefix(za, m), mrl_prefix(zb, m), **nce_kwargs)
+                           for m in mrl_levels]
+                loss = term("contrastive", torch.stack(c_terms).mean())
+                if vicreg_on:
+                    v_terms = []
+                    for m in mrl_levels:
+                        v_terms.append(vicreg_loss(
+                            mrl_prefix(za, m),
+                            lambda_var=getattr(args, "vicreg_var_w", 25.0),
+                            lambda_cov=getattr(args, "vicreg_cov_w", 1.0)))
+                        v_terms.append(vicreg_loss(
+                            mrl_prefix(zb, m),
+                            lambda_var=getattr(args, "vicreg_var_w", 25.0),
+                            lambda_cov=getattr(args, "vicreg_cov_w", 1.0)))
+                    loss = loss + args.w_vicreg * 0.5 * term("vicreg", torch.stack(v_terms).mean())
+            else:
+                loss = term("contrastive", contrastive_loss(za, zb, **nce_kwargs))
+                # v6 VICReg anti-collapse — variance hinge 1-std + cov off-diag sum/D
+                if vicreg_on:
+                    v_a = vicreg_loss(
+                        za,
+                        lambda_var=getattr(args, "vicreg_var_w", 25.0),
+                        lambda_cov=getattr(args, "vicreg_cov_w", 1.0),
+                    )
+                    v_b = vicreg_loss(
+                        zb,
+                        lambda_var=getattr(args, "vicreg_var_w", 25.0),
+                        lambda_cov=getattr(args, "vicreg_cov_w", 1.0),
+                    )
+                    loss = loss + args.w_vicreg * 0.5 * term("vicreg", v_a + v_b)
             loss = loss + weights["archetype"] * term("archetype", F.cross_entropy(out_a["archetype"], arch_t[idx_t]))
             if pos_mask[idx_t].any():
                 loss = loss + weights["position"] * term(
@@ -2296,6 +2360,15 @@ def main(argv: list[str] | None = None) -> None:
             val_r = recall_at_k(E_val, val_pairs, k=10)
             test_pairs = filter_pairs_by_split(pair_arr, seasons, "test")
             test_r = recall_at_k(E_val, test_pairs, k=10)
+            # Matryoshka: held-out recall at nested prefixes — the numbers that
+            # say whether the map slice (dims 0-2) is faithful. Diagnostic only;
+            # promotion still uses the full-dim numbers.
+            mrl_recalls: dict[int, float | None] = {}
+            if mrl_levels:
+                for m in mrl_levels:
+                    Em = E_val[:, :m].astype(np.float64)
+                    Em = Em / np.maximum(np.linalg.norm(Em, axis=1, keepdims=True), 1e-8)
+                    mrl_recalls[m] = recall_at_k(Em.astype(np.float32), test_pairs, k=10)
             val_pu = cross_era_archetype_purity(E_val, clusters, seasons)
             val_recall_hist.append(val_r if val_r is not None else 0.0)
             try:
@@ -2317,6 +2390,12 @@ def main(argv: list[str] | None = None) -> None:
                 f" test_recall@10={test_r_f:.3f}"
                 f"{pu_s} composite={val_comp_f:.3f}"
             )
+            if mrl_recalls:
+                mrl_s = " ".join(
+                    f"d{m}={v:.3f}" if v is not None else f"d{m}=n/a"
+                    for m, v in mrl_recalls.items()
+                )
+                log_line += f"  mrl[{mrl_s}]"
             trace_row = {
                 "epoch": epoch,
                 "val_recall_at_10": val_r,
@@ -2324,6 +2403,8 @@ def main(argv: list[str] | None = None) -> None:
                 "val_purity_at_20": val_pu,
                 "val_composite": val_comp,
             }
+            if mrl_recalls:
+                trace_row["mrl_test_recall_at_10"] = {f"d{m}": v for m, v in mrl_recalls.items()}
             val_trace.append(trace_row)
             emit_training_snapshot(
                 args,
@@ -2668,6 +2749,7 @@ def main(argv: list[str] | None = None) -> None:
         "weight_decay": args.weight_decay,
         "grad_accum": args.grad_accum,
         "fusion": args.fusion,
+        "mrl_dims": mrl_levels,
         "nce_loss": args.nce_loss,
         "nce_player_weight": args.nce_player_weight,
         "nce_arch_weight": args.nce_arch_weight,
