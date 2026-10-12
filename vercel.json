@@ -101,6 +101,10 @@
  ],
  "rewrites": [
   {
+   "destination": "/live.html",
+   "source": "/live"
+  },
+  {
    "destination": "/play.html",
    "source": "/play"
   },

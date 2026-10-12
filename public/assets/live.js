@@ -3,6 +3,15 @@ const SB='https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboar
 const SUM=id=>`https://site.api.espn.com/apis/site/v2/sports/basketball/nba/summary?event=${id}`;
 let games=[], cur=null, timer=null, lastUpd=null;
 
+// ---- Day navigation (ESPN days run on America/New_York) ----
+let sbDay=null, sbExplicit=false; // sbDay: 'YYYYMMDD' being viewed; null = today
+function etToday(){return new Intl.DateTimeFormat('en-CA',{timeZone:'America/New_York',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date()).replace(/-/g,'');}
+function shiftDay(yyyymmdd,n){const t=new Date(Date.UTC(+yyyymmdd.slice(0,4),+yyyymmdd.slice(4,6)-1,+yyyymmdd.slice(6,8))+n*864e5);return String(t.getUTCFullYear())+String(t.getUTCMonth()+1).padStart(2,'0')+String(t.getUTCDate()).padStart(2,'0');}
+function dayLabel(yyyymmdd){const t=new Date(Date.UTC(+yyyymmdd.slice(0,4),+yyyymmdd.slice(4,6)-1,+yyyymmdd.slice(6,8)));const s=t.toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric',timeZone:'UTC'});return (yyyymmdd===etToday()?'Today — ':'')+s;}
+function renderDayNav(){const cur2=sbDay||etToday();const lbl=$('dayLbl');if(lbl)lbl.textContent=dayLabel(cur2);const b=$('dayToday');if(b)b.hidden=cur2===etToday();}
+function resetView(){cur=null;clearInterval(timer);const m=$('main');if(m)m.style.display='none';}
+function gotoDay(n){sbExplicit=true;resetView();loadGames(shiftDay(sbDay||etToday(),n));}
+
 const $=id=>document.getElementById(id);
 const LROOT=()=>document.querySelector('.live-root');
 function showErr(m){const e=$('err');e.style.display='block';e.textContent=m;}
@@ -10,9 +19,11 @@ function hideErr(){$('err').style.display='none';}
 
 async function jget(u){const r=await fetch(u);if(!r.ok)throw new Error('HTTP '+r.status);return r.json();}
 
-async function loadGames(){
+async function loadGames(day){
+  sbDay=day||null;
+  renderDayNav();
   try{
-    const d=await jget(SB);
+    const d=await jget(sbDay?SB+'?dates='+sbDay:SB);
     games=(d.events||[]).map(e=>{
       const c=e.competitions[0],ts=c.competitors;
       const h=ts.find(t=>t.homeAway==='home'),a=ts.find(t=>t.homeAway==='away');
@@ -25,7 +36,7 @@ async function loadGames(){
     const live=games.find(g=>g.state==='in');
     if(live) selectGame(live.id);
     else if(games.length) selectGame(games[0].id);
-    else setMode('arcade');
+    else if(!sbExplicit) setMode('arcade');
   }catch(e){showErr('Could not load scoreboard: '+e.message);}
 }
 
@@ -35,11 +46,12 @@ function renderGames(){
     const b=document.createElement('button');
     b.className='gbtn'+(g.state==='in'?' live':'')+(cur===g.id?' sel':'');
     b.innerHTML=`<div class="ms">${g.a.abbr} @ ${g.h.abbr}</div>
+      ${g.state!=='pre'?`<div class="sc">${g.a.score} – ${g.h.score}</div>`:''}
       <div class="st">${g.state==='in'?'● LIVE — '+g.detail:g.state==='post'?'Final':g.detail}</div>`;
     b.onclick=()=>selectGame(g.id);
     el.appendChild(b);
   });
-  if(!games.length)el.innerHTML='<span style="font-size:13px">No NBA games today.</span>';
+  if(!games.length)el.innerHTML='<span style="font-size:13px">No NBA games — '+dayLabel(sbDay||etToday())+'.</span>';
 }
 
 // ---- Timeline scrubber state ----
@@ -668,6 +680,10 @@ function renderMoments(d,g,idx){
 }
 
 $('refreshBtn').onclick=loadGame;
+$('dayPrev').onclick=()=>gotoDay(-1);
+$('dayNext').onclick=()=>gotoDay(1);
+$('dayToday').onclick=()=>{sbExplicit=true;resetView();loadGames(null);};
+renderDayNav();
 loadGames();
 fetch('assets/ghost_db.json?v=77efab63').then(r=>r.json()).then(d=>{GHOST_DB=d;GV=null;if(window._lastD)renderGhosts(window._lastD);}).catch(()=>{});
 fetch('assets/player_form.json?v=25a671f3').then(r=>r.json()).then(d=>{FORM_DB=d;if(window._lastD)renderMiles(window._lastD);}).catch(()=>{});
