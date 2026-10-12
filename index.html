@@ -126,6 +126,34 @@
 .legend-chip[aria-pressed="true"]{ color: var(--fg); box-shadow: inset 0 -2px 0 var(--accent); }
 .legend-chip[aria-pressed="true"] .num{ color: var(--accent); }
 
+/* ---------- team highlight ---------- */
+.team-highlight{ display: flex; gap: 8px; align-items: center; }
+.team-select{
+  height: 44px; padding: 0 10px; max-width: 210px;
+  border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface);
+  color: var(--fg); font-family: var(--font-display); font-size: 12.5px; font-weight: 600; cursor: pointer;
+}
+.team-cycle{
+  display: inline-flex; align-items: center; gap: 7px; height: 44px; padding: 0 14px;
+  border: 1px solid var(--line); border-radius: var(--radius); background: none; cursor: pointer;
+  color: var(--fg-3); font-family: var(--font-display); font-size: 10px; font-weight: 600;
+  letter-spacing: .14em; text-transform: uppercase;
+  transition: color var(--dur-1) var(--ease), border-color var(--dur-1) var(--ease), background var(--dur-1) var(--ease);
+}
+.team-cycle:hover{ color: var(--fg); border-color: var(--fg-3); }
+.team-cycle[aria-pressed="true"]{ color: #14100a; background: #e8b500; border-color: #e8b500; }
+.team-cycle__icon{ font-size: 9px; }
+.team-caption{
+  position: absolute; top: 12px; left: 12px; z-index: 4;
+  display: flex; align-items: center; gap: 8px; padding: 8px 13px;
+  background: rgba(7,9,12,.8); border: 1px solid rgba(255,255,255,.14); border-radius: 999px;
+  color: #ECEEF1; font-size: 12.5px; pointer-events: none;
+  -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+}
+.team-caption .dot{ width: 8px; height: 8px; border-radius: 50%; background: #e8b500; flex: 0 0 auto; }
+.team-caption b{ color: #fff; }
+.team-caption .num{ color: #A7B0BC; }
+
 /* ---------- readout ---------- */
 .readout{ display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 0; margin-top: var(--s-6); border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--surface); }
 .readout > *{ padding: clamp(20px, 2.6vw, 32px); min-width: 0; }
@@ -182,6 +210,8 @@
 @media (max-width: 900px){
   .instrument__bar{ grid-template-columns: 1fr 1fr; }
   .atlas-search{ grid-column: 1 / -1; grid-row: 1; }
+  .team-highlight{ grid-column: 1 / -1; }
+  .team-select{ flex: 1; max-width: none; }
   .field{ aspect-ratio: 4 / 5; min-height: 0; }
   .legend{ grid-template-columns: 1fr 1fr; }
   .legend-chip:nth-child(n){ padding-left: 0; border-left: 0; }
@@ -230,6 +260,13 @@
         <ul id="atlas-results" class="atlas-results" role="listbox" aria-label="Matching seasons" hidden></ul>
       </div>
       <div class="label"><span id="atlas-count" class="num">12,966</span> plotted</div>
+      <div class="team-highlight">
+        <label class="visually-hidden" for="team-select">Highlight a team’s current roster on the atlas</label>
+        <select id="team-select" class="team-select">
+          <option value="">Highlight team…</option>
+        </select>
+        <button type="button" id="team-cycle" class="team-cycle" aria-pressed="false"><span class="team-cycle__icon" aria-hidden="true">▶</span><span>Cycle</span></button>
+      </div>
     </div>
 
     <div class="field" id="map-wrap">
@@ -239,6 +276,7 @@
       <span class="axis axis--l">Paint</span>
       <span class="axis axis--r">Perimeter</span>
       <div class="hover-tip" id="hover-tip" hidden></div>
+      <div class="team-caption" id="team-caption" hidden></div>
       <div class="field__controls" id="map-controls">
         <button type="button" data-map="share"><span>Copy link</span></button>
         <button type="button" data-map="reset">Clear</button>
@@ -283,6 +321,12 @@
       <span class="door__title">League drift</span>
       <p class="door__text">How much the shape of the game rotated from one season to the next, measured across thirty years.</p>
       <span class="door__go">See the drift →</span>
+    </a>
+    <a class="door" href="/teams">
+      <span class="door__n">04 — Teams</span>
+      <span class="door__title">Team intros</span>
+      <p class="door__text">Thirty seamless loops: every 2026-27 roster glowing inside the 2,415-player atlas, franchise legends as ghost stars.</p>
+      <span class="door__go">Watch the loops →</span>
     </a>
   </nav>
 
@@ -333,7 +377,7 @@
 
 <script src="/assets/site-nav.js?v=2a10730a"></script>
 <script src="/assets/mtnn.js?v=f72a913c"></script>
-<script src="/assets/atlas-map.js?v=41e019ba"></script>
+<script src="/assets/atlas-map.js?v=7a260b23"></script>
 <script src="/assets/career-trails.js?v=a0e9e836"></script>
 <script>
 if('serviceWorker' in navigator){ window.addEventListener('load', function(){ navigator.serviceWorker.register('/sw.js').catch(function(){}); }); }
