@@ -456,17 +456,25 @@ def local_checkpoint_stamp() -> dict | None:
     return {"mtime": int(st.st_mtime), "bytes": int(st.st_size)}
 
 
+# How each stamped export is rewritten from the promoted bundle. A plain
+# `export_mtnn_jacobian.py` writes only the tower Jacobian (--granularity
+# defaults to tower), so it never cleared a stale mtnn_attr_pop.json; the
+# export stage passes --granularity both [final#0].
+REEXPORT = {
+    "mtnn_jacobian.json": "re-run `export_mtnn_jacobian.py --granularity both` (rebuild_all.py --stage export)",
+    "mtnn_attr_pop.json": "re-run `export_mtnn_jacobian.py --granularity both` (rebuild_all.py --stage export); "
+    "the default --granularity tower does not rewrite it",
+}
+
+
 def check_stamp(name: str, stamp: dict | None, arch: dict | None) -> None:
     """Fail closed when an export describes a checkpoint that is not shipped."""
     if not stamp:
-        fail(f"{name} carries no checkpoint stamp — re-run its export")
+        fail(f"{name} carries no checkpoint stamp — {REEXPORT.get(name, 're-run its export')}")
         return
     local = local_checkpoint_stamp()
     if local and (stamp.get("mtime") != local["mtime"] or stamp.get("bytes") != local["bytes"]):
-        fail(
-            f"{name} checkpoint stamp stale vs the promoted bundle's mtnn_best.pt — "
-            f"re-run export_mtnn_jacobian.py after retraining"
-        )
+        fail(f"{name} checkpoint stamp stale vs the promoted bundle's mtnn_best.pt — {REEXPORT.get(name, '')}")
         return
     if arch is None:
         return
@@ -477,7 +485,7 @@ def check_stamp(name: str, stamp: dict | None, arch: dict | None) -> None:
             "provenance guard is INACTIVE until export_mtnn_viz.py is re-run"
         )
     elif ac.get("mtime") != stamp.get("mtime") or ac.get("bytes") != stamp.get("bytes"):
-        fail(f"{name} checkpoint stamp stale vs arch — re-run its export")
+        fail(f"{name} checkpoint stamp stale vs arch — {REEXPORT.get(name, 're-run its export')}")
 
 
 def v13_mtnn_jacobian(data: dict) -> None:
@@ -782,7 +790,11 @@ def v14_stated_limitations(data: dict) -> None:
 # V13/V13b fail on it today (measured 2026-10-10: jacobian towerFamilies !=
 # arch, jacobian dEmb 48 != arch dEmb 64, and two stale checkpoint stamps).
 # Those failures are real and stay failures; attribute_failures says whose
-# they are, so the verify stage does not read as a broken rebuild.
+# they are, so the verify stage does not read as a broken rebuild. Two of
+# them did not clear on a promotion until the exporters were fixed: the
+# towerFamilies mismatch (export_mtnn_viz listed injury as a tower,
+# [final#1]) and mtnn_attr_pop.json's stamp (the export stage ran
+# export_mtnn_jacobian without --granularity both, [final#0]).
 SERVED_BUNDLE_CHECKS = ("v4_determinism", "v12_mtnn_client_assets", "v13_mtnn_jacobian", "v13b_mtnn_attribution")
 
 
@@ -801,7 +813,9 @@ def attribute_failures(by_check: dict[str, list[str]], served_problems: list[str
         f"(served_model.problems on assets/, the check scripts/check_served_model.py runs: "
         f"{len(served_problems)} problem(s), first: {served_problems[0]}). "
         "They belong to that bundle [eval#0] and clear when a run is promoted (pipeline/promote.py) and "
-        "re-exported (rebuild_all.py --stage export, then scripts/sync_public.py), not by editing assets/:",
+        "re-exported by `rebuild_all.py --stage export` (which runs export_mtnn_jacobian.py --granularity both; "
+        "a bare export_mtnn_jacobian.py writes only the tower Jacobian and leaves mtnn_attr_pop.json stale), "
+        "then scripts/sync_public.py, not by editing assets/:",
         *(f"  [served bundle, unpromoted] {f}" for f in served),
     ]
 

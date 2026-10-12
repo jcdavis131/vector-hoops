@@ -88,6 +88,9 @@ SIDECARS = (
     "mtnn_arch.json",  # export_mtnn_viz
     "mtnn_map.json",  # export_mtnn_viz
     "mtnn_jacobian.json",  # export_mtnn_jacobian
+    # export_mtnn_jacobian --granularity both, which the export stage runs
+    # since [final#0]; before, nothing rewrote it from the promoted bundle.
+    "mtnn_attr_pop.json",
     "projections.json",  # project_next_season, run by export_assets
     "scoring_lite_index.json",  # build_scoring_lite
 )

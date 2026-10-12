@@ -99,6 +99,17 @@ def test_context_block_sits_between_enrich_and_integrate():
         assert names.index(before) < names.index(after)
 
 
+def test_the_jacobian_step_writes_the_feature_attribution_it_declares():
+    """[final#0] It ran with no arguments (--granularity tower), so mtnn_attr_pop.json
+    and mtnn_attr_topk.bin were never rewritten while --list said they were."""
+    (jac,) = [s for s in ra.build_plan() if s.name == "export_mtnn_jacobian"]
+    assert jac.argv == ("pipeline/export_mtnn_jacobian.py", "--granularity", "both")
+    assert {"assets/mtnn_attr_pop.json", "assets/mtnn_attr_topk.bin"} <= set(jac.produces)
+    import served_model
+
+    assert "mtnn_attr_pop.json" in served_model.SIDECARS
+
+
 def test_default_matrix_steps_are_the_climb_prepare_chain():
     matrix = [s for s in ra.build_plan() if s.stage == "matrix" and s.name != "stage_contract"]
     assert [s.command(python="python")[1:] for s in matrix] == [

@@ -334,17 +334,31 @@ def build_plan(
     # subset nothing rebuilt. export_assets also runs several of the steps
     # after it (softly) when its gates allow; they are idempotent, and here
     # each one has to succeed.
+    # Each exporter with its own arguments. export_mtnn_jacobian ran with
+    # none, and its --granularity defaults to tower, so mtnn_attr_pop.json and
+    # mtnn_attr_topk.bin were never rewritten from the promoted bundle while
+    # --list said they were, and verify_accuracy V13b failed on their stale
+    # checkpoint stamp after every real promote [final#0]. --granularity both
+    # writes the tower Jacobian and the feature attribution in one pass.
     exporters = [
-        ("export_assets", (A + "manifest.json",)),
-        ("export_mtnn_embeddings", (A + "mtnn_embeddings.f32", A + "mtnn_meta.json")),
-        ("export_mtnn_jacobian", (A + "mtnn_jacobian.json", A + "mtnn_jacobian.f32", A + "mtnn_attr_pop.json")),
-        ("export_mtnn_viz", (A + "mtnn_arch.json", A + "mtnn_map.json", A + "mtnn_heads.f32", A + "mtnn_inputs.f32")),
-        ("export_season_norms", (A + "season_norms.json",)),
-        ("procrustes_drift", (A + "drift.json",)),
-        ("archetype_time", (A + "archetypes_time.json", A + "archetype_assignments.json")),
-        ("build_scoring_lite", (A + "scoring_lite.f32", A + "scoring_lite_index.json")),
+        ("export_assets", (), (A + "manifest.json",)),
+        ("export_mtnn_embeddings", (), (A + "mtnn_embeddings.f32", A + "mtnn_meta.json", A + "mtnn_lineage.json")),
+        (
+            "export_mtnn_jacobian",
+            ("--granularity", "both"),
+            (A + "mtnn_jacobian.json", A + "mtnn_jacobian.f32", A + "mtnn_attr_pop.json", A + "mtnn_attr_topk.bin"),
+        ),
+        (
+            "export_mtnn_viz",
+            (),
+            (A + "mtnn_arch.json", A + "mtnn_map.json", A + "mtnn_heads.f32", A + "mtnn_inputs.f32"),
+        ),
+        ("export_season_norms", (), (A + "season_norms.json",)),
+        ("procrustes_drift", (), (A + "drift.json",)),
+        ("archetype_time", (), (A + "archetypes_time.json", A + "archetype_assignments.json")),
+        ("build_scoring_lite", (), (A + "scoring_lite.f32", A + "scoring_lite_index.json")),
     ]
-    plan += [Step(name, (f"pipeline/{name}.py",), "export", produces) for name, produces in exporters]
+    plan += [Step(name, (f"pipeline/{name}.py", *args), "export", produces) for name, args, produces in exporters]
 
     # composite_score.py used to be a step here. It has no __main__: running
     # it imported a module and exited 0. CQS is computed by train_mtnn into

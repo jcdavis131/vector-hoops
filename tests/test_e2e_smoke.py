@@ -19,9 +19,10 @@ steps are subprocesses. Then, from the skeleton's root:
   train_mtnn.py --recipe measure --epochs 1 --device cpu --seed 5 --run-dir <run>
   promote.py --run <run> --force "e2e smoke: 1 epoch on a 100-player slice"
   export_mtnn_embeddings, project_next_season, export_mtnn_viz,
-    export_mtnn_jacobian --device cpu, build_scoring_lite
+    export_mtnn_jacobian --device cpu --granularity both, build_scoring_lite
   scripts/sync_public.py
   scripts/check_served_model.py            -> exit 0
+  verify_accuracy V13 + V13b on the exported files -> exit 0
 
 --force because one epoch on 100 players clears neither should_promote nor
 the export floors (archetype top-1 0.115, purity 0.56 on this box); a
@@ -81,10 +82,16 @@ EXPORTERS = (
     ("pipeline/export_mtnn_embeddings.py",),
     ("pipeline/project_next_season.py",),
     ("pipeline/export_mtnn_viz.py",),
-    ("pipeline/export_mtnn_jacobian.py", "--device", "cpu"),
+    # --granularity both, as rebuild_all's export stage runs it [final#0].
+    ("pipeline/export_mtnn_jacobian.py", "--device", "cpu", "--granularity", "both"),
     ("pipeline/build_scoring_lite.py",),
 )
 STEP_TIMEOUT = 600
+VERIFY_SERVED = (
+    "import json, sys; sys.path.insert(0, 'pipeline'); import verify_accuracy as V; "
+    "data = json.loads((V.ASSETS / 'vectors.json').read_text(encoding='utf-8')); "
+    "V.v13_mtnn_jacobian(data); V.v13b_mtnn_attribution(data); sys.exit(1 if V.FAILS else 0)"
+)
 
 
 def sha(path: Path) -> str:
@@ -142,6 +149,10 @@ def chain(tmp_path_factory):
         *((Path(argv[0]).stem, argv) for argv in EXPORTERS),
         ("sync_public", ("scripts/sync_public.py",)),
         ("check_served_model", ("scripts/check_served_model.py",)),
+        # verify_accuracy's checks of the files this chain exported: the
+        # whole harness also checks the slice's vectors.json, skills and
+        # norms, which a 100-player cut does not pass.
+        ("verify_served", ("-c", VERIFY_SERVED)),
     ]
     before = outside_snapshot()
     results = {}
@@ -160,7 +171,7 @@ def chain(tmp_path_factory):
         )
         (logs / f"{name}.log").write_text(proc.stdout + "\n--- stderr ---\n" + proc.stderr, encoding="utf-8")
         results[name] = proc
-        if name != "check_served_model" and proc.returncode != 0:
+        if name not in ("check_served_model", "verify_served") and proc.returncode != 0:
             tail = (proc.stdout + proc.stderr)[-3000:]
             pytest.fail(f"{name} exited {proc.returncode} (logs in {logs}):\n{tail}")
     return {"root": root, "run": run, "results": results, "outside_before": before}
@@ -170,6 +181,22 @@ def test_the_served_model_check_passes_on_what_the_chain_exported(chain):
     check = chain["results"]["check_served_model"]
     assert check.returncode == 0, check.stdout + check.stderr
     assert "served model: OK" in check.stdout
+
+
+def test_verify_accuracy_v13_and_v13b_pass_on_a_fresh_export(chain):
+    """[final#0, final#1] V13 failed on every fresh export (arch listed injury as a
+    tower, the Jacobian did not) and V13b after every promote (nothing rewrote
+    mtnn_attr_pop.json from the promoted bundle)."""
+    proc = chain["results"]["verify_served"]
+    assert proc.returncode == 0, proc.stdout + proc.stderr
+    assets = chain["root"] / "assets"
+    arch, jac = load(assets / "mtnn_arch.json"), load(assets / "mtnn_jacobian.json")
+    attr = load(assets / "mtnn_attr_pop.json")
+    assert set(arch["towerFamilies"]) == set(jac["towerFamilies"])
+    assert "injury" in arch["familyOrder"] and "injury" not in arch["towerFamilies"]
+    assert attr["lineage"] == jac["lineage"] and attr["lineage"]["run_id"] == RUN_ID
+    assert attr["checkpoint"] == jac["checkpoint"] == arch["checkpoint"]
+    assert (assets / "mtnn_attr_topk.bin").exists()
 
 
 def test_the_run_bundle_holds_the_bytes_its_lineage_names(chain):
