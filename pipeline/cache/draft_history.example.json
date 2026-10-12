@@ -1,0 +1,46 @@
+{
+  "built": "2026-07-06",
+  "source": "hand-checked fixture for test_pedigree.py — NOT full history",
+  "complete": false,
+  "years": [1984, 2018],
+  "players": {
+    "lebron james": [
+      {"year": 2003, "round": 1, "pick": 1, "overall": 1,
+       "team_id": 1610612739, "team_abbr": "CLE", "person_id": 2544}
+    ],
+    "darko milicic": [
+      {"year": 2003, "round": 1, "pick": 2, "overall": 2,
+       "team_id": 1610612765, "team_abbr": "DET", "person_id": 2545}
+    ],
+    "kobe bryant": [
+      {"year": 1996, "round": 1, "pick": 13, "overall": 13,
+       "team_id": 1610612766, "team_abbr": "CHH", "person_id": 977}
+    ],
+    "nikola jokic": [
+      {"year": 2014, "round": 2, "pick": 11, "overall": 41,
+       "team_id": 1610612743, "team_abbr": "DEN", "person_id": 203999}
+    ],
+    "stephen curry": [
+      {"year": 2009, "round": 1, "pick": 7, "overall": 7,
+       "team_id": 1610612744, "team_abbr": "GSW", "person_id": 201939}
+    ],
+    "giannis antetokounmpo": [
+      {"year": 2013, "round": 1, "pick": 15, "overall": 15,
+       "team_id": 1610612749, "team_abbr": "MIL", "person_id": 203507}
+    ],
+    "jalen brunson": [
+      {"year": 2018, "round": 2, "pick": 3, "overall": 33,
+       "team_id": 1610612742, "team_abbr": "DAL", "person_id": 1628973}
+    ],
+    "john stockton": [
+      {"year": 1984, "round": 1, "pick": 16, "overall": 16,
+       "team_id": 1610612762, "team_abbr": "UTA", "person_id": 304}
+    ],
+    "tim hardaway": [
+      {"year": 1989, "round": 1, "pick": 14, "overall": 14,
+       "team_id": 1610612744, "team_abbr": "GSW", "person_id": 896},
+      {"year": 2013, "round": 1, "pick": 24, "overall": 24,
+       "team_id": 1610612752, "team_abbr": "NYK", "person_id": 203501}
+    ]
+  }
+}

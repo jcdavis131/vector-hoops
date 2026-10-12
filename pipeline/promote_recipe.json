@@ -1,0 +1,41 @@
+{
+  "_frozen": "2026-07-09",
+  "_name": "hb128_d48",
+  "_basis": "Apples-to-apples final sweep: 7 configs x 3 seeds x 40 epochs, leak-free protocol (pipeline/leakfree.py), player-level split, rebuilt matrix (120 features / 17 towers). The deployed v4 recipe was measured INSIDE the same sweep as a_v4_ctrl.",
+  "_evidence": {
+    "objective": "train_mtnn.promotion_composite = 0.4*recall + 0.6*purity (the repo's own gate; next-profile RMSE is in NO gate)",
+    "a_v4_ctrl": { "params": 211699, "recall": 0.971, "purity_test": 0.6602, "composite": 0.7846, "half_spread": 0.0014 },
+    "hb128_d48": { "params": 528315, "recall": 0.977, "purity_test": 0.6717, "composite": 0.7937, "half_spread": 0.0038 },
+    "gain_vs_v4": 0.0090,
+    "combined_half_spread": 0.0052,
+    "separates": true,
+    "note_top4_tied": "fh384_d48 (0.7949), hb128_d48 (0.7937), b3_h224_t48_d64 (0.7930), b2_h160_t32_d96 (0.7908) span 0.0041 against half-spreads of 0.0029-0.0063 -- statistically indistinguishable. hb128_d48 chosen as the cheapest of the tied leaders: best recall of the group, d_emb 48 (zero migration), and no new architectural knob. fh384_d48 is hb128_d48 + fusion_hidden 384; that edge was 0.0045 at one seed and 0.0012 across three.",
+    "note_transformer": "tx_b2_h160_t32_d64: recall 0.991 (highest ever measured) but purity 0.6308 (lowest). Composite 0.7750, i.e. 0.0096 BELOW v4 against +/-0.0063 noise -- significantly worse, not a tie. Cross-tower attention individuates (nails player identity) at the cost of typifying (cross-era archetype structure). SHIP_C rejected on valid evidence.",
+    "note_scaling": "b3_h224_t48_d64 at 1,290,027 params ties hb128_d48 at 528,315. Parameter scaling buys nothing on this data."
+  },
+  "config": {
+    "dim": 48,
+    "tower_width": 32,
+    "tower_hidden": 160,
+    "tower_blocks": 2,
+    "mlp_heads": true,
+    "d_head_hidden": 128,
+    "skill_hidden": 16,
+    "fusion": "concat",
+
+    "lr": 0.0015,
+    "lr_schedule": "onecycle",
+    "anneal_strategy": "linear",
+    "warmup_pct": 0.1,
+    "weight_decay": 0.0001,
+    "grad_accum": 1,
+    "nce_loss": "hybrid",
+    "nce_temp": 0.08,
+    "nce_player_weight": 0.8,
+    "nce_arch_weight": 0.2,
+    "hard_neg_boost": 0.3,
+    "drop_p": 0.12,
+    "checkpoint_metric": "composite",
+    "w_next_profile": 0.05
+  }
+}

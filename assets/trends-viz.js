@@ -508,7 +508,7 @@
 
   document.addEventListener('DOMContentLoaded', function () {
     if (!$('trends-rotation-gauge')) return;
-    fetch('assets/drift.json')
+    fetch('assets/drift.json?v=e14508bf')
       .then(function (r) { if (!r.ok) throw 0; return r.json(); })
       .then(init)
       .catch(function () {

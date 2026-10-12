@@ -159,8 +159,8 @@
     if (!document.getElementById('teams-select')) return;
     initDom();
     Promise.all([
-      fetch('assets/vectors.json').then(function (r) { return r.json(); }),
-      fetch('assets/skills.json').then(function (r) { return r.json(); }),
+      fetch('assets/vectors.json?v=edaf4d2b').then(function (r) { return r.json(); }),
+      fetch('assets/skills.json?v=e7655730').then(function (r) { return r.json(); }),
       global.VHPlayerRoster.load(),
       global.VHFavoriteTeam.loadTeams()
     ]).then(function (loaded) {

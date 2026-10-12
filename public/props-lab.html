@@ -4,11 +4,11 @@
 <link rel="manifest" href="/manifest.json">
 <title>Props Lab — Vector Hoops</title>
 <meta name="description" content="Paper-trading a game-log form model against PrizePicks NBA lines. Last season's walk-forward backtest, and live paper picks once the regular season starts."/>
-<link rel="stylesheet" href="assets/shell.css"/>
-<link rel="stylesheet" href="assets/responsive.css"/>
-<link rel="stylesheet" href="assets/final-qa.css"/>
-<link rel="stylesheet" href="assets/unified.css"/>
-<link rel="stylesheet" href="assets/motion.css"/>
+<link rel="stylesheet" href="assets/shell.css?v=d7e111c8"/>
+<link rel="stylesheet" href="assets/responsive.css?v=cd95e82c"/>
+<link rel="stylesheet" href="assets/final-qa.css?v=b285e8b8"/>
+<link rel="stylesheet" href="assets/unified.css?v=ac218dce"/>
+<link rel="stylesheet" href="assets/motion.css?v=cf251ced"/>
 <meta name="color-scheme" content="light dark"/>
 <meta name="theme-color" content="#0F1114" media="(prefers-color-scheme: dark)"/>
 <meta name="theme-color" content="#FCFBF7" media="(prefers-color-scheme: light)"/>
@@ -23,7 +23,7 @@
 <meta name="twitter:card" content="summary"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=Inter:opsz,wght@14..32,400..700&display=swap"/>
-<link rel="stylesheet" href="/assets/atlas.css?v=2"/>
+<link rel="stylesheet" href="/assets/atlas.css?v=3a61798f"/>
 <style>
 .vh-pl__wrap{max-width:920px;margin:0 auto;padding:0 var(--s-3) var(--s-6)}
 .vh-pl__kicker{font:700 12px/1.4 var(--font-sans);letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin:0 0 8px}
@@ -99,7 +99,7 @@
     <p class="vh-pl__foot" id="pl-ledger-foot"></p>
   </section>
 </main>
-<script src="/assets/site-nav.js?v=1"></script>
+<script src="/assets/site-nav.js?v=ed574b0b"></script>
 <script>
 (function(){
   var $ = function(id){ return document.getElementById(id); };
@@ -108,7 +108,7 @@
     return '<div class="vh-pl__stat"><b class="' + (good === true ? 'pos' : good === false ? 'neg' : '') + '">' + val + '</b><span>' + label + '</span></div>';
   }
 
-  fetch('assets/backtest_summary.json').then(function(r){ return r.json(); }).then(function(bt){
+  fetch('assets/backtest_summary.json?v=3e25e44d').then(function(r){ return r.json(); }).then(function(bt){
     $('pl-method').textContent = bt.method + '. Lines: Dec 2025 – Apr 2026 (' + bt.overall.n_eval.toLocaleString() + ' evaluated over ' + bt.overall.eval_days + ' board days).';
     var e = bt.edge_rule.eval;
     var html = '';
@@ -158,7 +158,7 @@
     $('pl-backtest-foot').innerHTML = '<b>Honest read:</b> the gate failed as defined — lines beat the model on average (' + fmt(bt.overall.proj_mae, 2) + ' vs ' + fmt(bt.overall.line_mae, 2) + ' MAE). The edge rule above was tuned on the first half of board days and locked before the second half; it is a thin, under-leaning tail signal, not a green light. Dunks, Fantasy Score and Double/Triple-Double lines were excluded (no game-log target).';
   }).catch(function(){ $('pl-backtest-stats').innerHTML = '<div class="vh-pl__err">Backtest data failed to load.</div>'; });
 
-  fetch('assets/paper_trades.json', { cache: 'no-store' }).then(function(r){ return r.json(); }).then(function(st){
+  fetch('assets/paper_trades.json?v=d3d9ac1d', { cache: 'no-store' }).then(function(r){ return r.json(); }).then(function(st){
     var b = $('pl-banner');
     if (st.mode === 'live') {
       b.className = 'vh-pl__banner vh-pl__banner--live';
@@ -201,5 +201,5 @@
   }).catch(function(){ $('pl-banner').textContent = 'Paper-trade ledger failed to load.'; });
 })();
 </script>
-<script src="/assets/error-boundary.js"></script>
+<script src="/assets/error-boundary.js?v=7ce53191"></script>
 </body></html>

@@ -1,0 +1,229 @@
+"""Track market deriver — salary cap %, team payroll share, season rank.
+
+Reads pipeline/cache/salaries_merged.json + roster_context for team
+fallback. Writes per charted player-season rows for integrate_context.
+
+Features (raw; era-z within season pool when merged):
+  SALARY_LOG         log10(USD annual salary)
+  SALARY_CAP_PCT     salary / league soft cap that season
+  SALARY_TEAM_PCT    salary / summed team payroll (same team+season)
+  SALARY_RANK_POS    within-season percentile rank by salary [0, 1]
+
+Run:  python pipeline/build_salary_market.py [--out-root DIR]
+"""
+
+from __future__ import annotations
+
+import argparse
+import json
+import math
+import sys
+import time
+from collections import defaultdict
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "pipeline"))
+
+from _out_root import add_out_root, rerooted, shown
+from name_utils import norm_name, shared_name_keys
+from nba_salary_cap import cap_for_season
+
+DATA = ROOT / "pipeline" / "data"
+CACHE = ROOT / "pipeline" / "cache"
+VECTORS = ROOT / "assets" / "vectors.json"
+SALARIES = CACHE / "salaries_merged.json"
+ROSTER = DATA / "roster_context.json"
+OUT = DATA / "salary_market.json"
+MIN_TEAM_SALARY_ROWS = 8
+MIN_SALARY_USD = 10_000
+
+
+def load_salaries() -> dict[str, dict]:
+    """'<norm_name>|<season>' -> salary record.
+
+    The stored key is whatever norm_name was when merge_salaries ran; keyed
+    again with today's (name_utils), it meets norm_name of a charted name.
+    """
+    if not SALARIES.exists():
+        return {}
+    doc = json.loads(SALARIES.read_text(encoding="utf-8"))
+    out: dict[str, dict] = {}
+    for key, sal in doc.get("salaries", {}).items():
+        if key.startswith("_"):
+            continue
+        nn = sal.get("norm_name") or key.split("|", 1)[0]
+        season = sal.get("season") or key.split("|", 1)[-1]
+        out.setdefault(f"{norm_name(nn)}|{season}", sal)
+    return out
+
+
+def load_roster_teams() -> dict[tuple[str, str], str]:
+    """(norm_name, season) -> team abbreviation from roster_context.json."""
+    if not ROSTER.exists():
+        return {}
+    doc = json.loads(ROSTER.read_text(encoding="utf-8"))
+    out: dict[tuple[str, str], str] = {}
+    for row in doc.get("entries", []):
+        team = row.get("team")
+        if team:
+            out[(norm_name(row["name"]), row["season"])] = str(team).upper()
+    return out
+
+
+def resolve_team(
+    name: str,
+    season: str,
+    nn: str,
+    sal: dict,
+    roster_teams: dict[tuple[str, str], str],
+) -> str | None:
+    team = (sal.get("team") or "").strip().upper()
+    if team:
+        return team
+    return roster_teams.get((nn, season)) or roster_teams.get((norm_name(sal.get("name") or name), season))
+
+
+def build_team_payrolls(
+    salaries: dict[str, dict],
+    roster_teams: dict[tuple[str, str], str],
+) -> tuple[dict[tuple[str, str], float], dict[tuple[str, str], int]]:
+    """(team_abbr, season) -> total USD and contributing row count."""
+    totals: dict[tuple[str, str], float] = defaultdict(float)
+    counts: dict[tuple[str, str], int] = defaultdict(int)
+    for key, sal in salaries.items():
+        if key.startswith("_"):
+            continue
+        nn, season = key.split("|", 1)
+        amount = float(sal.get("salary") or 0)
+        if amount < MIN_SALARY_USD:
+            continue
+        name = sal.get("name") or nn
+        team = resolve_team(name, season, nn, sal, roster_teams)
+        if not team:
+            continue
+        totals[(team, season)] += amount
+        counts[(team, season)] += 1
+    return dict(totals), dict(counts)
+
+
+def season_salary_ranks(
+    salaries: dict[str, dict],
+) -> dict[tuple[str, str], float]:
+    """(norm_name, season) -> percentile rank in [0, 1] among salaried rows."""
+    by_season: dict[str, list[tuple[tuple[str, str], float]]] = defaultdict(list)
+    for key, sal in salaries.items():
+        if key.startswith("_"):
+            continue
+        nn, season = key.split("|", 1)
+        amount = float(sal.get("salary") or 0)
+        if amount < MIN_SALARY_USD:
+            continue
+        by_season[season].append(((nn, season), amount))
+
+    out: dict[tuple[str, str], float] = {}
+    for season, items in by_season.items():
+        items.sort(key=lambda x: x[1])
+        n = len(items)
+        if n == 1:
+            out[items[0][0]] = 1.0
+            continue
+        for i, (nkey, _) in enumerate(items):
+            out[nkey] = i / (n - 1)
+    return out
+
+
+def main() -> None:
+    global OUT
+    ap = argparse.ArgumentParser()
+    add_out_root(ap)
+    args = ap.parse_args()
+    OUT = rerooted(OUT, args.out_root)
+
+    salaries = load_salaries()
+    if not salaries:
+        raise SystemExit(f"no salaries at {SALARIES} — run merge_salaries.py first")
+
+    roster_teams = load_roster_teams()
+    team_totals, team_counts = build_team_payrolls(salaries, roster_teams)
+    rank_by_nkey = season_salary_ranks(salaries)
+
+    vec = json.loads(VECTORS.read_text(encoding="utf-8"))
+    shared = shared_name_keys(CACHE)
+    entries = []
+    labeled = 0
+    team_pct_rows = 0
+    cap_pct_rows = 0
+
+    for p in vec["players"]:
+        name, season = p["name"], p["season"]
+        nn = norm_name(name)
+        nkey = f"{nn}|{season}"
+        # A name two PLAYER_IDs share this season: the salary is not
+        # attributable (name_utils.shared_name_keys).
+        sal = None if nn in shared.get(season, ()) else salaries.get(nkey)
+        if not sal:
+            continue
+        amount = float(sal.get("salary") or 0)
+        if amount < MIN_SALARY_USD:
+            continue
+
+        team = resolve_team(name, season, nn, sal, roster_teams)
+        cap = cap_for_season(season)
+        team_total = team_totals.get((team, season)) if team else None
+        team_n = team_counts.get((team, season), 0) if team else 0
+
+        salary_log = math.log10(amount)
+        cap_pct = (amount / cap) if cap and cap > 0 else None
+        team_pct = None
+        if team_total and team_total > 0 and team_n >= MIN_TEAM_SALARY_ROWS:
+            team_pct = min(amount / team_total, 1.0)
+        rank_pos = rank_by_nkey.get((nn, season))
+
+        row = {
+            "name": name,
+            # integrate_context joins on (player_id, season) when the row has one.
+            "player_id": int(p["pid"]) if str(p.get("pid", "")).isdigit() else None,
+            "season": season,
+            "SALARY_LOG": round(salary_log, 6),
+            "SALARY_CAP_PCT": round(cap_pct, 6) if cap_pct is not None else None,
+            "SALARY_TEAM_PCT": round(team_pct, 6) if team_pct is not None else None,
+            "SALARY_RANK_POS": round(rank_pos, 6) if rank_pos is not None else None,
+        }
+        entries.append(row)
+        labeled += 1
+        if team_pct is not None:
+            team_pct_rows += 1
+        if cap_pct is not None:
+            cap_pct_rows += 1
+
+    OUT.parent.mkdir(parents=True, exist_ok=True)
+    OUT.write_text(
+        json.dumps(
+            {
+                "built": time.strftime("%Y-%m-%d"),
+                "coverage": {
+                    "charted_rows": len(vec["players"]),
+                    "labeled_rows": labeled,
+                    "team_pct_rows": team_pct_rows,
+                    "cap_pct_rows": cap_pct_rows,
+                    "team_payroll_buckets": len(team_totals),
+                    "salary_source_rows": len(salaries),
+                },
+                "players": entries,
+            },
+            separators=(",", ":"),
+        ),
+        encoding="utf-8",
+    )
+
+    print(
+        f"salary market: {labeled} labeled rows "
+        f"({team_pct_rows} team%, {cap_pct_rows} cap%), "
+        f"{len(team_totals)} team-season payrolls"
+    )
+    print(f"wrote {shown(OUT)}")
+
+
+if __name__ == "__main__":
+    main()

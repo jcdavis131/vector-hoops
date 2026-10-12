@@ -1,0 +1,20 @@
+{
+  "name": "ship",
+  "description": "Ship what you measure: the measure recipe's flags, nothing added. rebuild_all.py trains this unless told otherwise.",
+  "measured": true,
+  "notes": [
+    "Why not a final refit. --phase final-refit fits all 12,966 rows, the 948 val and 991 test rows included, so its held-out recall, CQS and promote verdict are in-sample. Until 2026-10-09 the report still said metrics_source 'selection_holdout' [training#0]; it now says 'in_sample_refit', and composite_score.should_promote refuses it. A select-phase run's held-out numbers are the honest ones, and they are what the climb measures.",
+    "The deployed 64-d model of 53d35adb (2026-07-25) was a select-phase run, as far as git can show. Its commit message promotes concat d64 seed 7 from a 4-arm x 4-seed head-to-head. pipeline/sweep_stability.py at that commit defines that arm (sel_concat_d64) as COMMON + --dim 64 --epochs 40 and passes no --phase, and train_mtnn.py's --phase default there was 'select'. COMMON was --val-every 0 --no-best-checkpoint, NCE 0.7/0.3, --hard-neg-boost 0.3, onecycle/linear, batch 512. The run's own report is not in git (pipeline/data is gitignored), so this rests on the arm definition and the default, not on a recorded report; assets/mtnn_meta.json at 53d35adb records test recall 0.846 and purity 0.7834, the seed-7 numbers in the commit message.",
+    "This recipe follows the climb, not 53d35adb: NCE 0.65/0.35 and --hard-neg-boost 0.4 (today's defaults) where that run had 0.7/0.3 and 0.3. 53d35adb is also only one candidate for the deployed model: composite_score.BASELINE_PROVENANCE (recorded 2026-07-31) says a later seed-7 select-phase run of the dfbdd54 defaults with --dim 64 was deployed 2026-07-30/31, and assets/mtnn_embeddings.f32 was replaced again at 2dc6ad78 (2026-08-13), the bundle scripts/check_served_model.py flags [eval#0]. Which one is served is not settled here.",
+    "promote.py ships a run of this recipe on its own held-out numbers (2026-10-09). Before that it refused one for two reasons: it accepted only --phase final-refit as a shipping phase, and it required a checkpoint, which --val-every 0 --no-best-checkpoint never writes; train_mtnn --run-dir now keeps the final weights as the bundle's checkpoint. Adding validation or checkpointing here would change what is trained (which epoch is restored, and recall_at_k's draws from the global RNG between epochs), so it is not done.",
+    "Device: the climb measured on cuda. train_mtnn.py defaults to cpu; rebuild_all.py --device auto (its default since 2026-10-10) passes cuda when the training interpreter sees a GPU, else cpu. A cpu run has a different reduction order and is not comparable with a CUDA-measured number.",
+    "Pending, not in any recipe: the --token-dropout 0.0 KEEP (995b8679: +0.895 CQS, paired t 4.04, 6/6 seeds) is not merged into this branch, and adopting it is the operator's decision. Until then this recipe trains with token-dropout 0.1.",
+    "pipeline/promote_recipe.json is not a train_mtnn recipe: it is the frozen 2026-07-09 hb128_d48 selection evidence that export_assets.py reads."
+  ],
+  "flags": {
+    "--epochs": 40,
+    "--dim": 64,
+    "--val-every": 0,
+    "--no-best-checkpoint": true
+  }
+}

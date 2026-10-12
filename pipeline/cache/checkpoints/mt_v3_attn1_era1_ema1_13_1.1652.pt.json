@@ -1,0 +1,16 @@
+{
+  "version": "v3_attn1_era1_ema1",
+  "epoch": 13,
+  "loss": 1.1651537418365479,
+  "mae": {
+    "draft_mae": 6183.90380859375,
+    "wins_mae": 10.662373542785645
+  },
+  "seed": 42,
+  "git_commit": "69d8d0d",
+  "nodeId": "mt_train",
+  "agentId": "mt-6ebaadea",
+  "timestamp": 1786214561.3039289,
+  "attempt": 13,
+  "ckpt_file": "mt_v3_attn1_era1_ema1_13_1.1652.pt"
+}

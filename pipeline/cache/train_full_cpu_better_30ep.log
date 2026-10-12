@@ -1,0 +1,935 @@
+12966 rows, 79 features, 11 towers, 30 seasons, device=cpu
+tower widths: {'volume': 5, 'playmaking': 12, 'rebounding': 5, 'defense': 3, 'efficiency': 10, 'shotmix': 13, 'bio': 4, 'tracking': 13, 'market': 4, 'honors': 5, 'career': 5}
+loss weights: {'archetype': 0.25, 'position': 0.18, 'profile': 0.12, 'next_profile': 0.05, 'skills': 0.18, 'salary': 0.12, 'team_fit': 0.08, 'roster_lift': 0.08, 'form_recon': 0.1, 'career_slope': 0.05, 'competition': 0.05, 'pedigree': 0.08, 'playoff': 0.08, 'honors': 0.05, 'bbref': 0.1}
+10108 same-player adjacent-season pairs
+honors_recognition head (HON_ALL_NBA_VOTE_LAG): 1132 labeled rows
+  wide skills joined: ['post', 'transition', 'motor', 'shooting_gravity', 'rim_gravity', 'disruption_gravity'] (5154 covered rows)
+18 skill towers (12 core + 6 wide), per-skill masked
+phase=select fit_rows=train n_fit=11027/12966
+lr schedule: onecycle (step-level), steps/epoch=26, total_steps=780, fusion=concat, nce_loss=hybrid, tower=32/160, skill_hidden=16
+next-season stats labels: 10108/12966 rows
+/home/hatch/workspace/vector-hoops/pipeline/train_mtnn.py:1238: UserWarning: Converting a tensor with requires_grad=True to a scalar may lead to unexpected behavior.
+Consider using tensor.detach() first. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/autograd/generated/python_variable_methods.cpp:822.)
+  total += float(loss)
+epoch   0  loss 2.5694  lr 4.71e-04  val_recall@10=0.504 test_recall@10=0.458 purity@20=0.750 composite=0.498
+epoch   5  loss 1.5051  lr 1.38e-03  val_recall@10=0.576 test_recall@10=0.418 purity@20=0.844 composite=0.564
+epoch  10  loss 1.3192  lr 1.15e-03  val_recall@10=0.570 test_recall@10=0.422 purity@20=0.870 composite=0.572
+epoch  15  loss 1.2521  lr 9.12e-04  val_recall@10=0.594 test_recall@10=0.430 purity@20=0.888 composite=0.588
+epoch  20  loss 1.2006  lr 6.77e-04  val_recall@10=0.574 test_recall@10=0.424 purity@20=0.898 composite=0.584
+epoch  25  loss 1.1541  lr 4.42e-04  val_recall@10=0.620 test_recall@10=0.456 purity@20=0.904 composite=0.605
+epoch  29  loss 1.1373  lr 2.54e-04  val_recall@10=0.590 test_recall@10=0.472 purity@20=0.909 composite=0.595
+restored best checkpoint epoch 25 (metric=cqs recall=0.620 purity=0.904 composite=0.605)
+{
+  "trained": "2026-07-14 20:42",
+  "model": "mtnn_v5_concat_b2_h160_t32_d48_mlp128",
+  "epochs": 30,
+  "best_epoch": 25,
+  "best_val_recall_at_10": 0.62,
+  "dim": 48,
+  "tower_width": 32,
+  "tower_hidden": 160,
+  "skill_hidden": 16,
+  "tower_blocks": 2,
+  "mlp_heads": true,
+  "d_head_hidden": 128,
+  "fusion_hidden": null,
+  "lr": 0.0015,
+  "lr_schedule": "onecycle",
+  "warmup_pct": 0.1,
+  "anneal_strategy": "linear",
+  "weight_decay": 0.0005,
+  "grad_accum": 1,
+  "fusion": "concat",
+  "nce_loss": "hybrid",
+  "nce_player_weight": 0.2,
+  "nce_arch_weight": 0.8,
+  "checkpoint_metric": "cqs",
+  "best_val_purity_at_20": 0.9039993012555899,
+  "best_val_composite": 0.6054232601896538,
+  "nce_temp": 0.08,
+  "drop_p": 0.18,
+  "hard_neg_boost": 0.3,
+  "loss_weights": {
+    "archetype": 0.25,
+    "position": 0.18,
+    "profile": 0.12,
+    "next_profile": 0.05,
+    "skills": 0.18,
+    "salary": 0.12,
+    "team_fit": 0.08,
+    "roster_lift": 0.08,
+    "form_recon": 0.1,
+    "career_slope": 0.05,
+    "competition": 0.05,
+    "pedigree": 0.08,
+    "playoff": 0.08,
+    "honors": 0.05,
+    "bbref": 0.1
+  },
+  "val_trace": [
+    {
+      "epoch": 0,
+      "val_recall_at_10": 0.504,
+      "test_recall_at_10": 0.458,
+      "val_purity_at_20": 0.7502698256765593,
+      "val_composite": 0.49808631518714497
+    },
+    {
+      "epoch": 5,
+      "val_recall_at_10": 0.576,
+      "test_recall_at_10": 0.418,
+      "val_purity_at_20": 0.8439176273180723,
+      "val_composite": 0.5640270858196101
+    },
+    {
+      "epoch": 10,
+      "val_recall_at_10": 0.57,
+      "test_recall_at_10": 0.422,
+      "val_purity_at_20": 0.8699693786927728,
+      "val_composite": 0.5715764370845684
+    },
+    {
+      "epoch": 15,
+      "val_recall_at_10": 0.594,
+      "test_recall_at_10": 0.43,
+      "val_purity_at_20": 0.8878175834098821,
+      "val_composite": 0.5884061865491017
+    },
+    {
+      "epoch": 20,
+      "val_recall_at_10": 0.574,
+      "test_recall_at_10": 0.424,
+      "val_purity_at_20": 0.8980743721685092,
+      "val_composite": 0.5840639492766904
+    },
+    {
+      "epoch": 25,
+      "val_recall_at_10": 0.62,
+      "test_recall_at_10": 0.456,
+      "val_purity_at_20": 0.9039993012555899,
+      "val_composite": 0.6054232601896538
+    },
+    {
+      "epoch": 29,
+      "val_recall_at_10": 0.59,
+      "test_recall_at_10": 0.472,
+      "val_purity_at_20": 0.9085630970336854,
+      "val_composite": 0.5947404873865083
+    }
+  ],
+  "towers": {
+    "volume": 5,
+    "playmaking": 12,
+    "rebounding": 5,
+    "defense": 3,
+    "efficiency": 10,
+    "shotmix": 13,
+    "bio": 4,
+    "tracking": 13,
+    "market": 4,
+    "honors": 5,
+    "career": 5
+  },
+  "positive_pairs": 10108,
+  "position_labeled": 0,
+  "final_loss": 1.1372573429887944,
+  "recall_at_10_same_player_next_season": 0.622,
+  "held_out_recall": {
+    "train": {
+      "pairs": 8557,
+      "recall_at_10_mtnn": 0.612,
+      "recall_at_10_transparent_14d": 0.264
+    },
+    "val": {
+      "pairs": 761,
+      "recall_at_10_mtnn": 0.6,
+      "recall_at_10_transparent_14d": 0.274
+    },
+    "test": {
+      "pairs": 790,
+      "recall_at_10_mtnn": 0.44,
+      "recall_at_10_transparent_14d": 0.252
+    },
+    "all": {
+      "pairs": 10108,
+      "recall_at_10_mtnn": 0.624,
+      "recall_at_10_transparent_14d": 0.268
+    }
+  },
+  "archetype_top1_acc": 0.9633657257442542,
+  "position_top1_acc": null,
+  "cross_era_archetype_neighbor_purity_at_20": 0.9039993012555899,
+  "skills": {
+    "holdout": {
+      "val": {
+        "mean_r2": 0.6552,
+        "per_skill": {
+          "scoring": {
+            "r2": 0.8815,
+            "mae_pts": 7.92,
+            "rows": 948
+          },
+          "shooting": {
+            "r2": 0.8118,
+            "mae_pts": 9.65,
+            "rows": 948
+          },
+          "finishing": {
+            "r2": 0.8239,
+            "mae_pts": 9.54,
+            "rows": 948
+          },
+          "ft": {
+            "r2": 0.5644,
+            "mae_pts": 14.96,
+            "rows": 948
+          },
+          "playmaking": {
+            "r2": 0.7662,
+            "mae_pts": 11.34,
+            "rows": 948
+          },
+          "security": {
+            "r2": 0.6195,
+            "mae_pts": 13.95,
+            "rows": 948
+          },
+          "oreb": {
+            "r2": 0.748,
+            "mae_pts": 11.4,
+            "rows": 948
+          },
+          "dreb": {
+            "r2": 0.7621,
+            "mae_pts": 11.17,
+            "rows": 948
+          },
+          "hands": {
+            "r2": 0.6899,
+            "mae_pts": 13.01,
+            "rows": 948
+          },
+          "rim": {
+            "r2": 0.678,
+            "mae_pts": 13.03,
+            "rows": 948
+          },
+          "efficiency": {
+            "r2": 0.6474,
+            "mae_pts": 13.65,
+            "rows": 948
+          },
+          "impact": {
+            "r2": 0.6743,
+            "mae_pts": 13.05,
+            "rows": 948
+          },
+          "post": {
+            "r2": 0.2909,
+            "mae_pts": 20.62,
+            "rows": 948
+          },
+          "transition": {
+            "r2": 0.2708,
+            "mae_pts": 19.55,
+            "rows": 948
+          },
+          "motor": {
+            "r2": 0.5377,
+            "mae_pts": 15.91,
+            "rows": 948
+          },
+          "shooting_gravity": {
+            "r2": 0.8354,
+            "mae_pts": 8.85,
+            "rows": 948
+          },
+          "rim_gravity": {
+            "r2": 0.5978,
+            "mae_pts": 14.65,
+            "rows": 948
+          },
+          "disruption_gravity": {
+            "r2": 0.5939,
+            "mae_pts": 14.81,
+            "rows": 948
+          }
+        }
+      },
+      "test": {
+        "mean_r2": 0.6683,
+        "per_skill": {
+          "scoring": {
+            "r2": 0.8813,
+            "mae_pts": 7.72,
+            "rows": 991
+          },
+          "shooting": {
+            "r2": 0.8089,
+            "mae_pts": 9.89,
+            "rows": 991
+          },
+          "finishing": {
+            "r2": 0.8332,
+            "mae_pts": 9.23,
+            "rows": 991
+          },
+          "ft": {
+            "r2": 0.5576,
+            "mae_pts": 15.06,
+            "rows": 991
+          },
+          "playmaking": {
+            "r2": 0.7576,
+            "mae_pts": 11.33,
+            "rows": 991
+          },
+          "security": {
+            "r2": 0.6409,
+            "mae_pts": 13.8,
+            "rows": 991
+          },
+          "oreb": {
+            "r2": 0.7443,
+            "mae_pts": 11.37,
+            "rows": 991
+          },
+          "dreb": {
+            "r2": 0.8028,
+            "mae_pts": 10.27,
+            "rows": 991
+          },
+          "hands": {
+            "r2": 0.7106,
+            "mae_pts": 12.3,
+            "rows": 991
+          },
+          "rim": {
+            "r2": 0.7028,
+            "mae_pts": 12.55,
+            "rows": 991
+          },
+          "efficiency": {
+            "r2": 0.6193,
+            "mae_pts": 14.08,
+            "rows": 991
+          },
+          "impact": {
+            "r2": 0.6826,
+            "mae_pts": 12.96,
+            "rows": 991
+          },
+          "post": {
+            "r2": 0.3156,
+            "mae_pts": 19.87,
+            "rows": 991
+          },
+          "transition": {
+            "r2": 0.3768,
+            "mae_pts": 17.91,
+            "rows": 991
+          },
+          "motor": {
+            "r2": 0.5235,
+            "mae_pts": 16.25,
+            "rows": 991
+          },
+          "shooting_gravity": {
+            "r2": 0.8448,
+            "mae_pts": 8.89,
+            "rows": 991
+          },
+          "rim_gravity": {
+            "r2": 0.6417,
+            "mae_pts": 13.68,
+            "rows": 991
+          },
+          "disruption_gravity": {
+            "r2": 0.5847,
+            "mae_pts": 15.21,
+            "rows": 991
+          }
+        }
+      }
+    },
+    "neighbor_consistency_pts_mtnn": 11.43,
+    "neighbor_consistency_pts_transparent_14d": 11.23
+  },
+  "next_profile": {
+    "val": {
+      "rows": 761,
+      "mae_z": 0.4705,
+      "rmse_z": 0.6363,
+      "r2": 0.575,
+      "worst_features_mae_z": [
+        {
+          "feature": "PLUS_MINUS",
+          "mae_z": 0.6158
+        },
+        {
+          "feature": "FG3_PCT",
+          "mae_z": 0.6084
+        },
+        {
+          "feature": "STL",
+          "mae_z": 0.5647
+        },
+        {
+          "feature": "FT_PCT",
+          "mae_z": 0.5074
+        },
+        {
+          "feature": "TOV",
+          "mae_z": 0.501
+        }
+      ]
+    },
+    "test": {
+      "rows": 790,
+      "mae_z": 0.4908,
+      "rmse_z": 0.6584,
+      "r2": 0.5511,
+      "worst_features_mae_z": [
+        {
+          "feature": "PLUS_MINUS",
+          "mae_z": 0.6735
+        },
+        {
+          "feature": "FG3_PCT",
+          "mae_z": 0.6071
+        },
+        {
+          "feature": "STL",
+          "mae_z": 0.584
+        },
+        {
+          "feature": "FT_PCT",
+          "mae_z": 0.5477
+        },
+        {
+          "feature": "TOV",
+          "mae_z": 0.5407
+        }
+      ]
+    }
+  },
+  "population_validation": {
+    "version": 1,
+    "evaluation_scope": "Tower/confidence distributions use all player-seasons; retrieval, purity, calibration, and next-profile metrics use held-out target seasons.",
+    "overall": {
+      "rows": 12966,
+      "tower_spread": {
+        "mean": 0.8863,
+        "p05": 0.8585,
+        "p95": 0.915
+      },
+      "confidence": {
+        "mean": 0.9263,
+        "p95": 0.9995,
+        "fraction_ge_0_99": 0.4711
+      },
+      "retrieval_recall_at_10": 0.426,
+      "archetype_purity_at_20": 0.8282,
+      "next_profile": {
+        "rows": 790,
+        "r2": 0.5511,
+        "mae_z": 0.4908
+      },
+      "calibration": {
+        "rows": 790,
+        "ece_10": 0.0272,
+        "brier": 0.146,
+        "mean_confidence": 0.8959
+      }
+    },
+    "slices": {
+      "archetype": {
+        "archetype_0": {
+          "rows": 1731,
+          "tower_spread": {
+            "mean": 0.8857,
+            "p05": 0.8605,
+            "p95": 0.9107
+          },
+          "confidence": {
+            "mean": 0.9449,
+            "p95": 0.9994,
+            "fraction_ge_0_99": 0.5436
+          },
+          "retrieval_recall_at_10": 0.618,
+          "archetype_purity_at_20": 0.9592,
+          "next_profile": {
+            "rows": 89,
+            "r2": 0.1529,
+            "mae_z": 0.5615
+          },
+          "calibration": {
+            "rows": 89,
+            "ece_10": 0.0229,
+            "brier": 0.0499,
+            "mean_confidence": 0.9549
+          },
+          "scorable": true
+        },
+        "archetype_1": {
+          "rows": 1916,
+          "tower_spread": {
+            "mean": 0.8873,
+            "p05": 0.8608,
+            "p95": 0.9132
+          },
+          "confidence": {
+            "mean": 0.8924,
+            "p95": 0.9988,
+            "fraction_ge_0_99": 0.321
+          },
+          "retrieval_recall_at_10": 0.456,
+          "archetype_purity_at_20": 0.8137,
+          "next_profile": {
+            "rows": 125,
+            "r2": 0.1672,
+            "mae_z": 0.4597
+          },
+          "calibration": {
+            "rows": 125,
+            "ece_10": 0.0383,
+            "brier": 0.2125,
+            "mean_confidence": 0.866
+          },
+          "scorable": true
+        },
+        "archetype_2": {
+          "rows": 1246,
+          "tower_spread": {
+            "mean": 0.8965,
+            "p05": 0.8683,
+            "p95": 0.9225
+          },
+          "confidence": {
+            "mean": 0.9205,
+            "p95": 0.9994,
+            "fraction_ge_0_99": 0.4053
+          },
+          "retrieval_recall_at_10": 0.197,
+          "archetype_purity_at_20": 0.824,
+          "next_profile": {
+            "rows": 66,
+            "r2": -0.1851,
+            "mae_z": 0.5889
+          },
+          "calibration": {
+            "rows": 66,
+            "ece_10": 0.0378,
+            "brier": 0.1524,
+            "mean_confidence": 0.8965
+          },
+          "scorable": true
+        },
+        "archetype_3": {
+          "rows": 1562,
+          "tower_spread": {
+            "mean": 0.8824,
+            "p05": 0.856,
+            "p95": 0.9105
+          },
+          "confidence": {
+            "mean": 0.943,
+            "p95": 0.9996,
+            "fraction_ge_0_99": 0.5499
+          },
+          "retrieval_recall_at_10": 0.5065,
+          "archetype_purity_at_20": 0.7702,
+          "next_profile": {
+            "rows": 77,
+            "r2": 0.2019,
+            "mae_z": 0.5407
+          },
+          "calibration": {
+            "rows": 77,
+            "ece_10": 0.0767,
+            "brier": 0.1806,
+            "mean_confidence": 0.8698
+          },
+          "scorable": true
+        },
+        "archetype_4": {
+          "rows": 1799,
+          "tower_spread": {
+            "mean": 0.8814,
+            "p05": 0.8558,
+            "p95": 0.9078
+          },
+          "confidence": {
+            "mean": 0.9172,
+            "p95": 0.9993,
+            "fraction_ge_0_99": 0.4419
+          },
+          "retrieval_recall_at_10": 0.3365,
+          "archetype_purity_at_20": 0.7635,
+          "next_profile": {
+            "rows": 104,
+            "r2": -0.0552,
+            "mae_z": 0.4696
+          },
+          "calibration": {
+            "rows": 104,
+            "ece_10": 0.0686,
+            "brier": 0.2382,
+            "mean_confidence": 0.8491
+          },
+          "scorable": true
+        },
+        "archetype_5": {
+          "rows": 2201,
+          "tower_spread": {
+            "mean": 0.8818,
+            "p05": 0.8536,
+            "p95": 0.9099
+          },
+          "confidence": {
+            "mean": 0.9242,
+            "p95": 0.9995,
+            "fraction_ge_0_99": 0.4839
+          },
+          "retrieval_recall_at_10": 0.5063,
+          "archetype_purity_at_20": 0.8635,
+          "next_profile": {
+            "rows": 158,
+            "r2": 0.1491,
+            "mae_z": 0.4003
+          },
+          "calibration": {
+            "rows": 158,
+            "ece_10": 0.0398,
+            "brier": 0.0988,
+            "mean_confidence": 0.9132
+          },
+          "scorable": true
+        },
+        "archetype_6": {
+          "rows": 1679,
+          "tower_spread": {
+            "mean": 0.8856,
+            "p05": 0.8592,
+            "p95": 0.9131
+          },
+          "confidence": {
+            "mean": 0.9384,
+            "p95": 0.9997,
+            "fraction_ge_0_99": 0.5253
+          },
+          "retrieval_recall_at_10": 0.407,
+          "archetype_purity_at_20": 0.8142,
+          "next_profile": {
+            "rows": 86,
+            "r2": 0.1516,
+            "mae_z": 0.4936
+          },
+          "calibration": {
+            "rows": 86,
+            "ece_10": 0.0546,
+            "brier": 0.1652,
+            "mean_confidence": 0.8903
+          },
+          "scorable": true
+        },
+        "archetype_7": {
+          "rows": 832,
+          "tower_spread": {
+            "mean": 0.9013,
+            "p05": 0.8756,
+            "p95": 0.9257
+          },
+          "confidence": {
+            "mean": 0.9434,
+            "p95": 0.9989,
+            "fraction_ge_0_99": 0.5361
+          },
+          "retrieval_recall_at_10": 0.4941,
+          "archetype_purity_at_20": 0.9083,
+          "next_profile": {
+            "rows": 85,
+            "r2": 0.2203,
+            "mae_z": 0.5325
+          },
+          "calibration": {
+            "rows": 85,
+            "ece_10": 0.0338,
+            "brier": 0.0684,
+            "mean_confidence": 0.932
+          },
+          "scorable": true
+        }
+      },
+      "position": {
+        "unknown": {
+          "rows": 12966,
+          "tower_spread": {
+            "mean": 0.8863,
+            "p05": 0.8585,
+            "p95": 0.915
+          },
+          "confidence": {
+            "mean": 0.9263,
+            "p95": 0.9995,
+            "fraction_ge_0_99": 0.4711
+          },
+          "retrieval_recall_at_10": 0.426,
+          "archetype_purity_at_20": 0.8282,
+          "next_profile": {
+            "rows": 790,
+            "r2": 0.5511,
+            "mae_z": 0.4908
+          },
+          "calibration": {
+            "rows": 790,
+            "ece_10": 0.0272,
+            "brier": 0.146,
+            "mean_confidence": 0.8959
+          },
+          "scorable": true
+        }
+      },
+      "era": {
+        "2000s": {
+          "rows": 4078,
+          "tower_spread": {
+            "mean": 0.8799,
+            "p05": 0.8549,
+            "p95": 0.9065
+          },
+          "confidence": {
+            "mean": 0.9303,
+            "p95": 0.9995,
+            "fraction_ge_0_99": 0.4806
+          },
+          "retrieval_recall_at_10": null,
+          "archetype_purity_at_20": null,
+          "next_profile": {
+            "rows": 0,
+            "r2": null,
+            "mae_z": null
+          },
+          "calibration": {
+            "rows": 0,
+            "ece_10": null,
+            "brier": null,
+            "mean_confidence": null
+          },
+          "scorable": true
+        },
+        "2010s": {
+          "rows": 4412,
+          "tower_spread": {
+            "mean": 0.8895,
+            "p05": 0.862,
+            "p95": 0.9176
+          },
+          "confidence": {
+            "mean": 0.9298,
+            "p95": 0.9995,
+            "fraction_ge_0_99": 0.468
+          },
+          "retrieval_recall_at_10": null,
+          "archetype_purity_at_20": null,
+          "next_profile": {
+            "rows": 0,
+            "r2": null,
+            "mae_z": null
+          },
+          "calibration": {
+            "rows": 0,
+            "ece_10": null,
+            "brier": null,
+            "mean_confidence": null
+          },
+          "scorable": true
+        },
+        "2020s": {
+          "rows": 2911,
+          "tower_spread": {
+            "mean": 0.8945,
+            "p05": 0.8694,
+            "p95": 0.9202
+          },
+          "confidence": {
+            "mean": 0.9111,
+            "p95": 0.9994,
+            "fraction_ge_0_99": 0.4363
+          },
+          "retrieval_recall_at_10": 0.426,
+          "archetype_purity_at_20": 0.8282,
+          "next_profile": {
+            "rows": 790,
+            "r2": 0.5511,
+            "mae_z": 0.4908
+          },
+          "calibration": {
+            "rows": 790,
+            "ece_10": 0.0272,
+            "brier": 0.146,
+            "mean_confidence": 0.8959
+          },
+          "scorable": true
+        },
+        "pre_2000": {
+          "rows": 1565,
+          "tower_spread": {
+            "mean": 0.8791,
+            "p05": 0.8551,
+            "p95": 0.9053
+          },
+          "confidence": {
+            "mean": 0.934,
+            "p95": 0.9996,
+            "fraction_ge_0_99": 0.5195
+          },
+          "retrieval_recall_at_10": null,
+          "archetype_purity_at_20": null,
+          "next_profile": {
+            "rows": 0,
+            "r2": null,
+            "mae_z": null
+          },
+          "calibration": {
+            "rows": 0,
+            "ece_10": null,
+            "brier": null,
+            "mean_confidence": null
+          },
+          "scorable": true
+        }
+      },
+      "player_role": {
+        "unknown": {
+          "rows": 12966,
+          "tower_spread": {
+            "mean": 0.8863,
+            "p05": 0.8585,
+            "p95": 0.915
+          },
+          "confidence": {
+            "mean": 0.9263,
+            "p95": 0.9995,
+            "fraction_ge_0_99": 0.4711
+          },
+          "retrieval_recall_at_10": 0.426,
+          "archetype_purity_at_20": 0.8282,
+          "next_profile": {
+            "rows": 790,
+            "r2": 0.5511,
+            "mae_z": 0.4908
+          },
+          "calibration": {
+            "rows": 790,
+            "ece_10": 0.0272,
+            "brier": 0.146,
+            "mean_confidence": 0.8959
+          },
+          "scorable": true
+        }
+      }
+    },
+    "collapse_flags": {
+      "near_zero_tower_spread": {
+        "flagged": false,
+        "threshold": 1e-06,
+        "observed_mean": 0.8863
+      },
+      "universally_extreme_confidence": {
+        "flagged": false,
+        "threshold_fraction_ge_0_99": 0.95,
+        "observed_fraction_ge_0_99": 0.4711
+      },
+      "systematically_weak_next_year_signal": {
+        "flagged": false,
+        "overall_held_out_r2": 0.5511,
+        "groups_evaluated": 11,
+        "groups_r2_le_0": 2
+      }
+    }
+  },
+  "next_profile_labeled_rows": 10108,
+  "team_fit": null,
+  "roster_lift": null,
+  "career_slope": {
+    "val": {
+      "rows": 804,
+      "mae_z": 0.3978,
+      "r2": 0.6613
+    },
+    "test": {
+      "rows": 826,
+      "mae_z": 0.4074,
+      "r2": 0.6519
+    }
+  },
+  "competition": null,
+  "pedigree_expectation": null,
+  "playoff_riser": null,
+  "honors_recognition": {
+    "val": {
+      "rows": 68,
+      "mae_z": 0.2458,
+      "r2": 0.9058
+    },
+    "test": {
+      "rows": 56,
+      "mae_z": 0.2649,
+      "r2": 0.8934
+    }
+  },
+  "promotion_gate": "Promote only if multi-task CQS >= baseline + 0.5 AND test recall@10 and purity@20 stay within 0.02 of baseline (not auto-promoted to assets/).",
+  "composite": {
+    "cqs": 66.01,
+    "components": {
+      "recall": 0.44,
+      "purity": 0.904,
+      "margin_14d": 1.0,
+      "archetype": 0.9634,
+      "position": 0.0,
+      "skills_r2": 0.6683,
+      "skill_nn": 0.5428,
+      "next_r2": 0.5511,
+      "next_mae": 0.5092,
+      "aux_r2": 0.7727
+    },
+    "weights": {
+      "recall": 0.18,
+      "purity": 0.16,
+      "margin_14d": 0.08,
+      "archetype": 0.08,
+      "position": 0.05,
+      "skills_r2": 0.14,
+      "skill_nn": 0.05,
+      "next_r2": 0.12,
+      "next_mae": 0.06,
+      "aux_r2": 0.08
+    },
+    "promote_metric": "cqs",
+    "promote_rule": "promote if CQS >= baseline_cqs + 0.5 and test recall@10 >= baseline_recall - 0.02 and purity@20 >= baseline_purity - 0.02",
+    "baseline_cqs": 85.87,
+    "baseline_recall": 1.0,
+    "baseline_purity": 0.8726,
+    "test_recall_at_10": 0.44,
+    "purity_at_20": 0.9039993012555899
+  },
+  "promote": {
+    "ok": false,
+    "reason": "recall 0.440 < floor 0.980"
+  },
+  "metrics_source": "selection_holdout",
+  "selection": {
+    "fit_rows": "train",
+    "n_fit": 11027,
+    "split": "train y<=2021 / val y<=2023 / test y>=2024",
+    "best_epoch": 25
+  },
+  "deploy": {
+    "mode": "selection_fit_rows_train",
+    "metrics_source": "selection_holdout",
+    "note": "Held-out recall/CQS use val/test pairs; loss rows follow fit_rows. Use --phase auto to full-corpus refit after promote."
+  }
+}
+CQS 66.01 · recall 0.440 < floor 0.980
+wrote embedding_v3.npz, mtnn_centroids.npz, mtnn_report.json

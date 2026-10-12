@@ -6,11 +6,11 @@
 <link rel="manifest" href="/manifest.json">
 <title>Trends — Vector Hoops</title>
 <meta name="description" content="Thirty seasons of NBA play as geometry: how far the league rotated each summer, which archetypes rose and fell, and where the biggest shifts happened."/>
-<link rel="stylesheet" href="assets/shell.css">
-<link rel="stylesheet" href="assets/responsive.css">
-<link rel="stylesheet" href="assets/final-qa.css">
-<link rel="stylesheet" href="assets/unified.css">
-<link rel="stylesheet" href="assets/motion.css">
+<link rel="stylesheet" href="assets/shell.css?v=d7e111c8">
+<link rel="stylesheet" href="assets/responsive.css?v=cd95e82c">
+<link rel="stylesheet" href="assets/final-qa.css?v=b285e8b8">
+<link rel="stylesheet" href="assets/unified.css?v=ac218dce">
+<link rel="stylesheet" href="assets/motion.css?v=cf251ced">
 <style>
 :root{
   --paper:#FFFEF7;--ink:#1A150F;--orange:#D55E00;--blue:#0072B2;--yellow:#F0E442;
@@ -350,7 +350,7 @@ input[type=range]{touch-action:manipulation}
 <meta name="twitter:image" content="https://hoops.dumbmodel.com/assets/og-1200x630.png"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=Inter:opsz,wght@14..32,400..700&display=swap"/>
-<link rel="stylesheet" href="/assets/atlas.css?v=2"/>
+<link rel="stylesheet" href="/assets/atlas.css?v=3a61798f"/>
 <style>
 #trends-app{ width:100%; max-width:calc(var(--content) + var(--gutter)*2); padding:0 var(--gutter) var(--s-9); gap:var(--s-5); }
 .maths{ margin-top:var(--s-2); max-width:62ch; text-align:left; border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
@@ -548,13 +548,13 @@ input[type=range]{touch-action:manipulation}
   <p class="site-footer__attribution">Every number recomputable from stats.nba.com · A <a href="https://dumbmodel.com">dumbmodel</a> project</p>
 </footer>
 
-<script src="assets/error-boundary.js"></script>
-<script src="assets/keyboard-a11y.js"></script>
-<script src="assets/site-nav.js?v=27" defer></script>
-<script src="assets/pwa-install.js"></script>
-<script src="assets/trends-viz.js?v=27" defer></script>
-<script src="assets/drift.js?v=27"></script>
-<script type="module" src="assets/timesfm-forecast.js?v=3"></script>
+<script src="assets/error-boundary.js?v=7ce53191"></script>
+<script src="assets/keyboard-a11y.js?v=514722c8"></script>
+<script src="assets/site-nav.js?v=ed574b0b" defer></script>
+<script src="assets/pwa-install.js?v=bd4f258e"></script>
+<script src="assets/trends-viz.js?v=75df7dad" defer></script>
+<script src="assets/drift.js?v=caada0bf"></script>
+<script type="module" src="assets/timesfm-forecast.js?v=3f69b28a"></script>
 <script>
 (function(){
   var seasons=[], playing=false, timer=null, idx=0;
@@ -646,7 +646,7 @@ input[type=range]{touch-action:manipulation}
   }
 
   function init(){
-    fetch('assets/drift.json').then(function(r){return r.json();}).then(function(data){
+    fetch('assets/drift.json?v=e14508bf').then(function(r){return r.json();}).then(function(data){
       seasons=(data.pairs||[]).map(function(p){return p.to;});
       var s=qs('global-year-slider'); if(s){ s.max=String(Math.max(0,seasons.length-1)); s.value=String(seasons.length-1); idx=seasons.length-1; var cur=qs('current-year'); var curTop=qs('current-year-top'); if(cur) cur.textContent=seasons[idx]; if(curTop) curTop.textContent=seasons[idx]; }
       bind();

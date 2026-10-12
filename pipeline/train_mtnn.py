@@ -1,0 +1,2806 @@
+"""Vector Hoops MTNN v5 — multi-tower, multi-task player embedding.
+
+Builds on train_towers.py with:
+  - Residual MLP towers + per-family missing masks
+  - Gated attention fusion across tower outputs (not naive concat)
+  - Learned season context for cross-era comparison
+  - Multi-task heads tying embeddings to interpretable game labels:
+      * InfoNCE (career continuity + feature-dropout views)
+      * archetype classification (k-means clusters from build_vectors)
+      * position classification (PG/SG/SF/PF/C from enrich_vectors)
+      * 14-dim game-profile reconstruction (transparent stats bridge)
+      * salary regression (masked MSE on SALARY_LOG z)
+      * v4: skill-tower bank — one mini-tower per Skills Lens skill
+        (embedding -> grade/100, targets from build_skills.py), so the
+        embedding is skill-aware; per-skill held-out R2/MAE + a
+        skill-neighbor consistency metric land in mtnn_report.json
+      * v4: pedigree_expectation head — predict PED_PICK_QUALITY z from
+        the embedding (masked MSE; active only when the pedigree family
+        is merged in the matrix): measures how much of a player-season's
+        measured identity his draft slot explained
+      * v4: playoff_riser head — predict PO_PTS_DELTA z (postseason minus
+        regular-season scoring) from the embedding (masked MSE; active
+        when the playoffs family is merged)
+      * v4: honors_recognition head — predict HON_ALL_NBA_VOTE_LAG z from
+        the embedding (masked MSE; active when the honors family is merged)
+      * Phase B: team_fit, roster_lift, form_recon, career_slope,
+        competition (+ bbref_bridge when cache exists); rebalanced loss
+        weights; same-position hard-negative InfoNCE; val recall trace +
+        best-checkpoint restore
+
+Run:  python pipeline/train_mtnn.py [--epochs 40] [--dim 48]
+       python pipeline/train_mtnn.py --recipe measure --device cuda --seed 5   # the climb's flags
+       python pipeline/train_mtnn.py --lr-schedule onecycle --anneal-strategy linear
+       python pipeline/mtnn_hp_sweep.py --profile novel [--quick]
+       python pipeline/tower_ablation.py
+Requires: torch, numpy; pipeline/data/train_matrix.npz from build_vectors.py
+"""
+
+from __future__ import annotations
+
+import argparse
+import json
+import os
+import sys
+import time
+from collections import defaultdict
+from pathlib import Path
+
+import composite_score as cqs
+import composite_v2
+import mtnn_loop
+import mtnn_recipe
+import numpy as np
+import torch
+import torch.nn as nn
+import torch.nn.functional as F
+from _torch_safe import safe_torch_load
+from artifact_io import (
+    BUNDLE_FILES,
+    atomic_copy,
+    atomic_savez_compressed,
+    atomic_torch_save,
+    atomic_write_text,
+    display_path,
+    env_versions,
+    file_record,
+    git_state,
+    matrix_fingerprint,
+    sha256_file,
+    short_matrix_fingerprint,
+)
+from mtnn_metrics import (
+    adjacent_season_pairs,
+    cross_era_archetype_purity,
+    eval_split,
+    filter_pairs_by_split,
+    game_target_mask,
+    masked_residual_stats,
+    next_season_index,
+    recall_at_k,
+    season_start_year,
+    transparent_baseline_embeddings,
+)
+from mtnn_validation import build_validation_report, role_labels_from_context
+from runlog import get_logger
+
+ROOT = Path(__file__).resolve().parents[1]
+DATA_DIR = ROOT / "pipeline" / "data"
+
+# Where embedding_v3.npz and mtnn_centroids.npz go.
+#
+# This used to be DATA_DIR unconditionally, so *every* run shipped. On
+# 2026-08-06 a `--epochs 1` smoke test — run only to check the trainer started —
+# overwrote the shipped 64-d embedding_v3.npz with a 48-d one-epoch model, CQS
+# 44.49, population validation FAILED. pipeline/data is gitignored, so git could
+# not restore it; recovery needed dated .npz backups plus a cosine
+# identification against a sibling repo.
+#
+# pipeline/hill_climb.py runs this script once per trial with cwd=ROOT. A
+# two-seed, two-round families climb is dozens of trials, and under the old
+# behaviour every one of them overwrote the deploy artifact, last write winning.
+# The search tool could not be used at all without destroying what it was
+# searching to improve.
+#
+# So it defaults to scratch and only points at DATA_DIR when --write-artifacts
+# is passed. It fails closed: a code path that forgets to consult the flag
+# writes somewhere harmless rather than over the shipped model.
+#
+# That covered two of the four outputs. BEST_CKPT and mtnn_report.json are
+# written to DATA_DIR by every run, with or without --write-artifacts, and on
+# this box they ended up from an 08-14 select-phase run next to an 08-07
+# embedding and 08-06 centroids [health#0, training#2]. They stay where they
+# are, because the herdmux climb and the sweeps read
+# pipeline/data/mtnn_report.json after each run. What changed is what they
+# mean: mtnn_report.json is the LAST RUN's report, never the shipped model's.
+# BEST_CKPT is written only by a run that keeps a best checkpoint (the climb
+# and the measure/ship recipes pass --no-best-checkpoint), and promote.py
+# overwrites it with the promoted checkpoint, for vector-unified, which reads
+# it (promote.py, "legacy paths"). The shipped model is the bundle
+# pipeline/promote.py copies into pipeline/data/promoted/ from a --run-dir,
+# after checking that every file in it is the one the report's lineage block
+# names; no exporter reads either path.
+ART_DIR = DATA_DIR / "_scratch"
+VECTORS = ROOT / "assets" / "vectors.json"
+BEST_CKPT = DATA_DIR / "mtnn_best.pt"
+
+# Files the run reads besides train_matrix.npz, hashed into the report's
+# lineage block when the run starts. A re-enriched vectors.json (position
+# labels) or a rebuilt label file changes what the run trained on under the
+# same matrix, and the report recorded no input identity at all
+# [orchestration#9, training#11]. drift.json is read only with --era-align.
+LINEAGE_INPUTS = (
+    DATA_DIR / "train_matrix.npz",
+    DATA_DIR / "feature_manifest.json",
+    VECTORS,
+    DATA_DIR / "skill_labels.npz",
+    DATA_DIR / "wide_skill_labels.npz",
+    DATA_DIR / "role_context.json",
+    ROOT / "assets" / "drift.json",
+)
+POSITIONS = ["PG", "SG", "SF", "PF", "C"]
+N_ARCHETYPES = 8
+
+# v4 auxiliary targets (must exist in feature_manifest.json when active)
+FORM_FEATURES = [
+    "FORM_VOL",
+    "FORM_CEIL",
+    "FORM_DD_RATE",
+    "FORM_TD_RATE",
+    "FORM_GP",
+    "FORM_MIN_AVG",
+]
+# Durability head targets — availability read off the embedding, never fed in as
+# an input tower (the A/B proved injury-as-input regresses style retrieval).
+INJURY_FEATURES = [
+    "INJ_GP_PCT",
+    "INJ_MISS_N",
+    "INJ_MAX_MISS_STREAK",
+    "INJ_MISS_SPELLS",
+]
+TEAM_FIT_FEATURE = "TM_NET_RTG"
+ROSTER_LIFT_FEATURE = "ROSTER_COMPLEMENT"  # proxy until ROSTER_TOP2_VORP lands
+CAREER_SLOPE_FEATURE = "CAREER_SLOPE_3Y"  # real 3y mean |Δ|; falls back below
+COMPETITION_FEATURE = "SOS_NET_RTG"
+BBREF_FEATURES = ["WS48", "BPM"]
+HONORS_PRIMARY = "HON_ALL_NBA_VOTE_LAG"
+
+# Phase B rebalanced weights (mtnn_v4_plan.md + Skills Lens)
+DEFAULT_LOSS_WEIGHTS: dict[str, float] = {
+    "archetype": 0.25,
+    "position": 0.15,
+    "profile": 0.12,
+    "next_profile": 0.08,
+    "skills": 0.18,
+    "salary": 0.12,
+    "team_fit": 0.08,
+    "roster_lift": 0.08,
+    "form_recon": 0.10,
+    "durability": 0.10,
+    "career_slope": 0.05,
+    "competition": 0.05,
+    "pedigree": 0.08,
+    "playoff": 0.08,
+    "honors": 0.05,
+    "bbref": 0.10,
+}
+
+
+# ---------------------------------------------------------------------------
+# Data
+# ---------------------------------------------------------------------------
+
+
+def load_bundle(allow_missing_positions: bool = False):
+    npz = np.load(DATA_DIR / "train_matrix.npz", allow_pickle=False)
+    manifest = json.loads((DATA_DIR / "feature_manifest.json").read_text(encoding="utf-8"))
+    Z = npz["Z"].astype(np.float32)
+    mask = npz["mask"].astype(np.float32)
+    names = npz["name"]
+    seasons = npz["season"]
+    pids = npz["player_id"]
+    clusters = npz["cluster"].astype(np.int64)
+    positions = load_positions(names, seasons, pids, allow_missing=allow_missing_positions)
+    season_ids = season_index(seasons)
+    return Z, mask, names, seasons, pids, clusters, positions, season_ids, manifest
+
+
+# Below this share of matrix rows with a position label the run stops
+# (--allow-missing-positions to train anyway). The prepare chain's own
+# vectors.json labels 12,951 of 12,966 rows (99.9%, measured 2026-10-10 on
+# the P11 prepare output); 0% is a vectors.json rebuilt without
+# enrich_vectors.
+POSITION_COVERAGE_FLOOR = 0.5
+
+
+def load_positions(names, seasons, pids=None, *, allow_missing: bool = False) -> np.ndarray:
+    """Join position index from vectors.json; -1 = unknown.
+
+    Joined on (PLAYER_ID, season) when the matrix's ids are passed and the
+    vectors.json row carries 'pid', else on (name, season). By name, the
+    committed vectors.json (275 suffix names restored by d2a16d37: 'Andre
+    Jackson Jr.' against the matrix's 'Andre Jackson') labelled 12,652 of
+    12,966 matrix rows [features#7]; the prepare chain's own vectors.json
+    labels the same rows either way.
+
+    `p` is written by enrich_vectors.py, which runs *after* build_vectors.py.
+    A vectors.json rebuilt without re-running enrich carries no `p` at all, and
+    this join then returns -1 for every row -- the position head (loss weight
+    0.15) trains on nothing and position_top1_acc goes None -> 0.0 in the
+    composite, silently docking CQS. That shipped undetected until 2026-07-24,
+    so a zero/near-zero join is now loud rather than silent.
+
+    Loud was a WARNING line until 2026-10-10, and the run trained on: a
+    broken prepare step then read as a worse model, about -4 CQS, and the
+    climb would discard the arm instead of calling the run broken [eval#10].
+    Under POSITION_COVERAGE_FLOOR the run now stops (SystemExit, before
+    anything is trained); allow_missing (--allow-missing-positions) keeps the
+    old warn-and-train behaviour for a run that means to.
+    """
+    pos = np.full(len(names), -1, dtype=np.int64)
+    if not VECTORS.exists():
+        msg = f"{VECTORS} missing, so the position head has no labels."
+        if not allow_missing:
+            raise SystemExit(
+                f"{msg} Run `python pipeline/enrich_vectors.py` after build_vectors, or pass "
+                "--allow-missing-positions to train without them."
+            )
+        print(f"WARNING: {msg}")
+        return pos
+    vec = json.loads(VECTORS.read_text(encoding="utf-8"))
+    lookup = {(p["name"], p["season"]): int(p.get("p", -1)) for p in vec["players"]}
+    by_pid = {
+        (int(p["pid"]), p["season"]): int(p.get("p", -1)) for p in vec["players"] if str(p.get("pid", "")).isdigit()
+    }
+    for i, (n, s) in enumerate(zip(names, seasons, strict=False)):
+        key = (int(pids[i]), str(s)) if pids is not None else None
+        pidx = by_pid[key] if key in by_pid else lookup.get((str(n), str(s)), -1)
+        if 0 <= pidx < len(POSITIONS):
+            pos[i] = pidx
+    coverage = float((pos >= 0).mean()) if len(pos) else 0.0
+    if coverage < POSITION_COVERAGE_FLOOR:
+        msg = (
+            f"position labels cover only {coverage:.1%} of "
+            f"{len(pos)} rows. The position head (weight "
+            f"{DEFAULT_LOSS_WEIGHTS['position']}) will train on little or nothing and "
+            f"the CQS position component will read ~0. Run "
+            f"`python pipeline/enrich_vectors.py` to rejoin `p` into "
+            f"{VECTORS.name}."
+        )
+        if not allow_missing:
+            raise SystemExit(f"{msg} Or pass --allow-missing-positions to train without them.")
+        print(f"WARNING: {msg}")
+    return pos
+
+
+def season_index(seasons) -> np.ndarray:
+    uniq = sorted({str(s) for s in seasons})
+    m = {s: i for i, s in enumerate(uniq)}
+    return np.array([m[str(s)] for s in seasons], dtype=np.int64)
+
+
+def family_slices(manifest, drop: set[str] | None = None) -> dict[str, list[int]]:
+    """Column indices per family, minus any feature named in ``drop``.
+
+    audit_features.py flags redundant pairs and clock candidates and ends with a
+    standing instruction: "any claim built on this matrix should survive an
+    ablation that removes these columns". Until now there was no way to run that
+    ablation -- ablate_v5.py ablates ARCHITECTURE, and nothing here could drop a
+    feature -- so the recommendation could be read but not acted on.
+
+    A family that loses every one of its columns is removed entirely rather than
+    left as an empty tower, which would otherwise reach the model as a zero-width
+    matmul.
+    """
+    drop = drop or set()
+    fams: dict[str, list[int]] = defaultdict(list)
+    for j, f in enumerate(manifest["features"]):
+        if f in drop:
+            continue
+        fams[manifest["families"][f]].append(j)
+    return {k: v for k, v in fams.items() if v}
+
+
+def game_feature_cols(manifest) -> list[int]:
+    game = manifest["game_features"]
+    return [manifest["features"].index(f) for f in game]
+
+
+# A skill label file, keyed by player_id or by name, may lose at most this
+# share of its rows in the join (the contract's row tolerance,
+# stage_contract.MAX_ROW_CHANGE). Labels built from the prepare chain's own
+# vectors.json join every row, by id and by name; so do the name-keyed files
+# of every earlier snapshot and the e2e fixture. Built from the committed,
+# hand-restored vectors.json they lose 3 rows by id (the (pid, season) keys it
+# does not share with the matrix) and 275 by name. More than the tolerance is
+# a stale or mis-keyed file, and the run stops instead of training the skill
+# towers on a silent mask.
+SKILL_JOIN_TOLERANCE = 0.01
+
+
+def _join_skill_npz(path, names, seasons, pids=None) -> tuple[np.ndarray, np.ndarray, list[str]]:
+    """Join one skill-label npz -> (G, per-skill mask, keys).
+
+    By (player_id, season) when the file carries `player_id` (build_skills and
+    build_wide_skills write it since [final#23]) and the matrix's ids are
+    passed; else by (name, season), as every file before it. By name, labels
+    built against the committed vectors.json (275 suffix names restored by
+    d2a16d37: 'Andre Jackson Jr.' against the matrix's 'Andre Jackson')
+    silently lost 275 of 12,966 core rows and 248 of 5,154 wide rows.
+
+    A file that joins fewer than its rows minus SKILL_JOIN_TOLERANCE stops the
+    run (SystemExit), whichever key it joins on; a smaller shortfall prints a
+    line and trains on. The name-keyed files the train-path check replays
+    (hoops-matrix-before: 12,966 of 12,966 core, 5,154 of 5,154 wide) and the
+    e2e fixture's (671 of 671, 289 of 289) join every row, so the stop does not
+    fire on them; it fires on a file that really lost rows, such as name-keyed
+    labels built from the committed vectors.json.
+    """
+    npz = np.load(path, allow_pickle=False)
+    keys = [str(k) for k in npz["keys"]]
+    # An optional per-skill `mask` (build_wide_skills and build_skills write
+    # one): a skill whose inputs were not measured for a row is 0 there, not a
+    # graded 0. Without it every cell of a joined row counts, as before.
+    masks = npz["mask"] if "mask" in npz.files else None
+    by_id = pids is not None and "player_id" in npz.files
+    if by_id:
+        lookup = {
+            (int(p), str(s)): k for k, (p, s) in enumerate(zip(npz["player_id"], npz["season"], strict=True)) if p >= 0
+        }
+        row_keys = [(int(p), str(s)) for p, s in zip(pids, seasons, strict=True)]
+    else:
+        lookup = {(str(n), str(s)): k for k, (n, s) in enumerate(zip(npz["name"], npz["season"], strict=False))}
+        row_keys = [(str(n), str(s)) for n, s in zip(names, seasons, strict=False)]
+    grades = npz["grades"]
+    G = np.zeros((len(names), len(keys)), dtype=np.float32)
+    M = np.zeros((len(names), len(keys)), dtype=np.float32)
+    joined = 0
+    for i, key in enumerate(row_keys):
+        k = lookup.get(key)
+        if k is not None:
+            G[i] = grades[k]
+            M[i] = 1.0 if masks is None else masks[k]
+            joined += 1
+    n_file = len(grades)
+    lost = n_file - joined
+    if lost > 0:
+        cells = int(masks.sum()) if masks is not None else n_file * len(keys)
+        msg = (
+            f"{Path(path).name}: {joined} of its {n_file} rows join the matrix by "
+            f"{'(player_id, season)' if by_id else '(name, season)'}; {lost} rows are not trained on "
+            f"({int(M.sum())} of its {cells} measured cells reach the skill loss)"
+        )
+        if lost > SKILL_JOIN_TOLERANCE * n_file:
+            raise SystemExit(
+                f"{msg} (more than {SKILL_JOIN_TOLERANCE:.0%}). The label file is stale or keyed to another "
+                "vectors.json: rebuild it after the matrix (rebuild_all.py --refresh-context --stage matrix)."
+            )
+        print(f"  {msg}")
+    return G, M, keys
+
+
+def load_skill_labels(names, seasons, pids=None) -> tuple[np.ndarray, np.ndarray, list[str], int]:
+    """Skill-tower targets with a PER-SKILL mask matrix.
+
+    Core skills (build_skills.py) cover every row; optional wide skills
+    (build_wide_skills.py) are masked per row where tracking exists. Joined
+    by (player_id, season) when `pids` is given and the file carries ids.
+    Returns (grades[n,K], mask[n,K], keys, n_core).
+    """
+    core = DATA_DIR / "skill_labels.npz"
+    if not core.exists():
+        return (
+            np.zeros((len(names), 0), np.float32),
+            np.zeros((len(names), 0), np.float32),
+            [],
+            0,
+        )
+    G, M, keys = _join_skill_npz(core, names, seasons, pids)
+    n_core = len(keys)
+    wide = DATA_DIR / "wide_skill_labels.npz"
+    if wide.exists():
+        Gw, Mw, kw = _join_skill_npz(wide, names, seasons, pids)
+        G = np.concatenate([G, Gw], axis=1)
+        M = np.concatenate([M, Mw], axis=1)
+        keys = keys + kw
+        print(f"  wide skills joined: {kw} ({int(Mw.any(axis=1).sum())} covered rows)")
+    return G, M, keys, n_core
+
+
+# ---------------------------------------------------------------------------
+# Model
+# ---------------------------------------------------------------------------
+
+
+class _ResBlock(nn.Module):
+    """Same-width residual MLP block (d -> hidden -> d) for stacking depth."""
+
+    def __init__(self, d: int, d_hidden: int):
+        super().__init__()
+        self.fc1 = nn.Linear(d, d_hidden)
+        self.ln1 = nn.LayerNorm(d_hidden)
+        self.fc2 = nn.Linear(d_hidden, d)
+        self.ln2 = nn.LayerNorm(d)
+
+    def forward(self, y: torch.Tensor) -> torch.Tensor:
+        return self.ln2(self.fc2(F.gelu(self.ln1(self.fc1(y)))) + y)
+
+
+class ResidualTower(nn.Module):
+    def __init__(self, d_in: int, d_out: int = 24, d_hidden: int = 96, n_blocks: int = 1):
+        super().__init__()
+        d_cat = d_in * 2
+        self.fc1 = nn.Linear(d_cat, d_hidden)
+        self.ln1 = nn.LayerNorm(d_hidden)
+        self.fc2 = nn.Linear(d_hidden, d_out)
+        self.ln2 = nn.LayerNorm(d_out)
+        self.skip = nn.Linear(d_cat, d_out) if d_cat != d_out else nn.Identity()
+        # v5: optional extra same-width residual blocks for tower depth.
+        self.blocks = nn.ModuleList([_ResBlock(d_out, d_hidden) for _ in range(max(0, n_blocks - 1))])
+
+    def forward(self, x: torch.Tensor, m: torch.Tensor) -> torch.Tensor:
+        h = torch.cat([x * m, m], dim=-1)
+        y = self.ln2(self.fc2(F.gelu(self.ln1(self.fc1(h)))) + self.skip(h))
+        for blk in self.blocks:
+            y = blk(y)
+        return y
+
+
+class GatedFusion(nn.Module):
+    """Attention-weighted tower mix + season context."""
+
+    def __init__(
+        self,
+        n_towers: int,
+        d_tower: int,
+        n_seasons: int,
+        d_season: int = 12,
+        d_emb: int = 48,
+        d_hidden: int = 192,
+    ):
+        super().__init__()
+        self.season_emb = nn.Embedding(n_seasons, d_season)
+        d_in = d_tower + d_season
+        self.gate = nn.Linear(d_tower, 1)
+        self.attn = nn.Sequential(
+            nn.Linear(d_tower, d_tower),
+            nn.Tanh(),
+            nn.Linear(d_tower, 1),
+        )
+        self.fuse = nn.Sequential(
+            nn.Linear(d_in, d_hidden),
+            nn.GELU(),
+            nn.LayerNorm(d_hidden),
+            nn.Linear(d_hidden, d_emb),
+        )
+
+    def forward(self, tower_stack: torch.Tensor, season_ids: torch.Tensor) -> torch.Tensor:
+        # tower_stack: [B, T, D]
+        scores = self.attn(tower_stack).squeeze(-1)
+        weights = torch.softmax(scores, dim=-1)
+        gates = torch.sigmoid(self.gate(tower_stack).squeeze(-1))
+        mixed = (tower_stack * weights.unsqueeze(-1) * gates.unsqueeze(-1)).sum(1)
+        s = self.season_emb(season_ids)
+        emb = self.fuse(torch.cat([mixed, s], dim=-1))
+        return F.normalize(emb, dim=-1)
+
+
+class ConcatFusion(nn.Module):
+    """Flatten tower stack + season embedding (Brain2Qwerty conv ablation analogue).
+
+    `d_hidden` is the widest layer in the whole net -- at the v4 default of 256
+    it is ~57% of all parameters, and until now it had no CLI knob and was never
+    swept.
+    """
+
+    def __init__(
+        self,
+        n_towers: int,
+        d_tower: int,
+        n_seasons: int,
+        d_season: int = 12,
+        d_emb: int = 48,
+        d_hidden: int = 256,
+    ):
+        super().__init__()
+        self.season_emb = nn.Embedding(n_seasons, d_season)
+        d_in = n_towers * d_tower + d_season
+        self.fuse = nn.Sequential(
+            nn.Linear(d_in, d_hidden),
+            nn.GELU(),
+            nn.LayerNorm(d_hidden),
+            nn.Linear(d_hidden, d_emb),
+        )
+
+    def forward(self, tower_stack: torch.Tensor, season_ids: torch.Tensor) -> torch.Tensor:
+        flat = tower_stack.reshape(tower_stack.size(0), -1)
+        s = self.season_emb(season_ids)
+        return F.normalize(self.fuse(torch.cat([flat, s], dim=-1)), dim=-1)
+
+
+class TransformerFusion(nn.Module):
+    """v5: self-attention across tower tokens so families interact.
+
+    Each tower output is a token; a season token and a learned [CLS] token
+    are prepended. A pre-LN Transformer encoder lets towers attend to one
+    another (unlike concat, which only mixes them in one linear layer). The
+    [CLS] state becomes the embedding.
+    """
+
+    def __init__(
+        self,
+        n_towers: int,
+        d_tower: int,
+        n_seasons: int,
+        d_season: int = 12,
+        d_emb: int = 48,
+        d_model: int = 96,
+        n_layers: int = 4,
+        n_heads: int = 4,
+        ff: int = 256,
+        dropout: float = 0.1,
+    ):
+        super().__init__()
+        self.tower_proj = nn.Linear(d_tower, d_model)
+        self.season_emb = nn.Embedding(n_seasons, d_season)
+        self.season_proj = nn.Linear(d_season, d_model)
+        self.cls = nn.Parameter(torch.randn(1, 1, d_model) * 0.02)
+        layer = nn.TransformerEncoderLayer(
+            d_model=d_model,
+            nhead=n_heads,
+            dim_feedforward=ff,
+            dropout=dropout,
+            activation="gelu",
+            batch_first=True,
+            norm_first=True,
+        )
+        self.encoder = nn.TransformerEncoder(layer, num_layers=n_layers)
+        self.out = nn.Linear(d_model, d_emb)
+
+    def forward(self, tower_stack: torch.Tensor, season_ids: torch.Tensor) -> torch.Tensor:
+        b = tower_stack.size(0)
+        tok = self.tower_proj(tower_stack)  # [B, T, d_model]
+        s = self.season_proj(self.season_emb(season_ids)).unsqueeze(1)  # [B, 1, d_model]
+        cls = self.cls.expand(b, -1, -1)  # [B, 1, d_model]
+        x = self.encoder(torch.cat([cls, s, tok], dim=1))
+        return F.normalize(self.out(x[:, 0]), dim=-1)
+
+
+class SkillTowers(nn.Module):
+    """Players→skills tower bank: one mini-tower per Skills Lens skill.
+
+    Each tower maps the fused embedding to that skill's grade/100, keeping
+    per-skill capacity separate so one skill cannot cannibalize another's
+    gradient (unlike a single shared linear head).
+    """
+
+    def __init__(self, d_emb: int, n_skills: int, d_hidden: int = 16):
+        super().__init__()
+        self.towers = nn.ModuleList(
+            [nn.Sequential(nn.Linear(d_emb, d_hidden), nn.GELU(), nn.Linear(d_hidden, 1)) for _ in range(n_skills)]
+        )
+
+    def forward(self, emb: torch.Tensor) -> torch.Tensor:
+        return torch.cat([t(emb) for t in self.towers], dim=-1)
+
+
+class MTNN(nn.Module):
+    def __init__(
+        self,
+        fam_dims: dict[str, int],
+        n_seasons: int,
+        d_tower: int = 24,
+        d_tower_hidden: int = 96,
+        d_emb: int = 48,
+        n_game: int = 14,
+        n_skills: int = 0,
+        d_skill_hidden: int = 16,
+        n_form: int = 0,
+        n_injury: int = 0,
+        n_bbref: int = 0,
+        fusion_mode: str = "gated",
+        n_tower_blocks: int = 1,
+        mlp_heads: bool = False,
+        d_head_hidden: int = 64,
+        d_model: int = 96,
+        n_fusion_layers: int = 4,
+        n_attn_heads: int = 4,
+        d_fusion_hidden: int | None = None,
+        token_dropout: float = 0.0,
+    ):
+        super().__init__()
+        self.families = sorted(fam_dims)
+        self.fusion_mode = fusion_mode
+        self.towers = nn.ModuleDict(
+            {
+                fam: ResidualTower(
+                    fam_dims[fam],
+                    d_out=d_tower,
+                    d_hidden=d_tower_hidden,
+                    n_blocks=n_tower_blocks,
+                )
+                for fam in self.families
+            }
+        )
+        # d_fusion_hidden=None keeps each fusion's historical default exactly.
+        if fusion_mode == "concat":
+            self.fusion = ConcatFusion(
+                len(self.families),
+                d_tower,
+                n_seasons,
+                d_emb=d_emb,
+                **({} if d_fusion_hidden is None else {"d_hidden": d_fusion_hidden}),
+            )
+        elif fusion_mode == "transformer":
+            self.fusion = TransformerFusion(
+                len(self.families),
+                d_tower,
+                n_seasons,
+                d_emb=d_emb,
+                d_model=d_model,
+                n_layers=n_fusion_layers,
+                n_heads=n_attn_heads,
+                **({} if d_fusion_hidden is None else {"ff": d_fusion_hidden}),
+            )
+        else:
+            self.fusion = GatedFusion(
+                len(self.families),
+                d_tower,
+                n_seasons,
+                d_emb=d_emb,
+                **({} if d_fusion_hidden is None else {"d_hidden": d_fusion_hidden}),
+            )
+
+        def head(k: int) -> nn.Module:
+            if mlp_heads:
+                return nn.Sequential(
+                    nn.Linear(d_emb, d_head_hidden),
+                    nn.GELU(),
+                    nn.Linear(d_head_hidden, k),
+                )
+            return nn.Linear(d_emb, k)
+
+        self.archetype_head = head(N_ARCHETYPES)
+        self.position_head = head(len(POSITIONS))
+        self.profile_head = head(n_game)
+        self.next_profile_head = head(n_game)
+        self.salary_head = nn.Linear(d_emb, 1)
+        self.team_fit_head = nn.Linear(d_emb, 1)
+        self.roster_lift_head = nn.Linear(d_emb, 1)
+        self.form_recon_head = nn.Linear(d_emb, n_form) if n_form else None
+        self.durability_head = nn.Linear(d_emb, n_injury) if n_injury else None
+        self.career_slope_head = nn.Linear(d_emb, 1)
+        self.competition_head = nn.Linear(d_emb, 1)
+        self.bbref_bridge_head = nn.Linear(d_emb, n_bbref) if n_bbref else None
+        self.pedigree_head = nn.Linear(d_emb, 1)
+        self.playoff_head = nn.Linear(d_emb, 1)
+        self.honors_head = nn.Linear(d_emb, 1)
+        self.skill_towers = SkillTowers(d_emb, n_skills, d_hidden=d_skill_hidden) if n_skills else None
+        self.token_dropout = token_dropout
+
+    def encode(self, xs, ms, season_ids):
+        parts = torch.stack([self.towers[fam](xs[fam], ms[fam]) for fam in self.families], dim=1)
+        # v6 token dropout: drop whole family tokens during train
+        if self.training and self.token_dropout > 0:
+            # Bernoulli keep ~ 1-p, ensure at least one token kept per sample
+            B, T, _D = parts.shape
+            keep = (torch.rand(B, T, 1, device=parts.device) > self.token_dropout).float()
+            # ensure at least one tower per row
+            all_zero = keep.sum(dim=1, keepdim=True) == 0
+            if all_zero.any():
+                # force first tower to stay
+                keep = keep.clone()
+                keep[all_zero.squeeze(-1), 0] = 1.0
+            parts = parts * keep
+            # rescale to keep expectation (inverted dropout)
+            parts = parts / (1.0 - self.token_dropout + 1e-8)
+        return self.fusion(parts, season_ids)
+
+    def forward(self, xs, ms, season_ids):
+        emb = self.encode(xs, ms, season_ids)
+        out = {
+            "archetype": self.archetype_head(emb),
+            "position": self.position_head(emb),
+            "profile": self.profile_head(emb),
+            "next_profile": self.next_profile_head(emb),
+            "salary": self.salary_head(emb).squeeze(-1),
+            "team_fit": self.team_fit_head(emb).squeeze(-1),
+            "roster_lift": self.roster_lift_head(emb).squeeze(-1),
+            "career_slope": self.career_slope_head(emb).squeeze(-1),
+            "competition": self.competition_head(emb).squeeze(-1),
+            "pedigree": self.pedigree_head(emb).squeeze(-1),
+            "playoff": self.playoff_head(emb).squeeze(-1),
+            "honors": self.honors_head(emb).squeeze(-1),
+        }
+        if self.form_recon_head is not None:
+            out["form_recon"] = self.form_recon_head(emb)
+        if self.durability_head is not None:
+            out["durability"] = self.durability_head(emb)
+        if self.bbref_bridge_head is not None:
+            out["bbref"] = self.bbref_bridge_head(emb)
+        if self.skill_towers is not None:
+            out["skills"] = self.skill_towers(emb)
+        return emb, out
+
+
+# The run args that set the network's shape, as main() reads them. eval_v2.py
+# rebuilds a checkpoint's model from its saved args through mtnn_arch_kwargs,
+# so the two cannot drift apart: export_mtnn_jacobian.py's own copy of this
+# mapping defaulted d_head_hidden to 64 while the promoted recipe trained at
+# 128, which loads a different network under strict=False.
+ARCH_ARGS = (
+    "tower_width",
+    "tower_hidden",
+    "dim",
+    "skill_hidden",
+    "fusion",
+    "tower_blocks",
+    "mlp_heads",
+    "d_head_hidden",
+    "d_model",
+    "n_fusion_layers",
+    "n_attn_heads",
+    "fusion_hidden",
+)
+
+
+def mtnn_arch_kwargs(a: dict) -> dict:
+    """MTNN keyword arguments from a run's args (vars(args), or a checkpoint's saved 'args')."""
+    return {
+        "d_tower": a["tower_width"],
+        "d_tower_hidden": a["tower_hidden"],
+        "d_emb": a["dim"],
+        "d_skill_hidden": a["skill_hidden"],
+        "fusion_mode": a["fusion"],
+        "n_tower_blocks": a["tower_blocks"],
+        "mlp_heads": a["mlp_heads"],
+        "d_head_hidden": a["d_head_hidden"],
+        "d_model": a["d_model"],
+        "n_fusion_layers": a["n_fusion_layers"],
+        "n_attn_heads": a["n_attn_heads"],
+        "d_fusion_hidden": (a["fusion_hidden"] or None),
+        # Changes no weight shape and only acts in train mode.
+        "token_dropout": a.get("token_dropout", 0.0),
+    }
+
+
+# ---------------------------------------------------------------------------
+# Training helpers
+# ---------------------------------------------------------------------------
+
+
+def split_by_family(Z, M, fams, device):
+    xs, ms = {}, {}
+    for fam, cols in fams.items():
+        xs[fam] = torch.tensor(Z[:, cols], device=device)
+        ms[fam] = torch.tensor(M[:, cols], device=device)
+    return xs, ms
+
+
+def batch_views(xs, ms, idx, drop_p=0.12):
+    out_x, out_m = {}, {}
+    for fam in xs:
+        x = xs[fam][idx]
+        m = ms[fam][idx]
+        keep = (torch.rand_like(m) > drop_p).float()
+        out_x[fam] = x * keep
+        out_m[fam] = m * keep
+    return out_x, out_m
+
+
+def feature_cols(manifest: dict, names: list[str]) -> list[int] | None:
+    feats = manifest["features"]
+    cols = [feats.index(n) for n in names if n in feats]
+    return cols if len(cols) == len(names) else None
+
+
+def tensor_col(Z: np.ndarray, M: np.ndarray, j: int, device: str) -> tuple:
+    return (
+        torch.tensor(Z[:, j], device=device),
+        torch.tensor(M[:, j], device=device),
+    )
+
+
+def tensor_cols(Z: np.ndarray, M: np.ndarray, cols: list[int], device: str) -> tuple:
+    z = torch.tensor(Z[:, cols], device=device)
+    m = torch.tensor(M[:, cols], device=device)
+    row_m = (m.sum(dim=-1) > 0).float()
+    return z, m, row_m
+
+
+def masked_scalar_mse(pred, target, row_mask) -> torch.Tensor:
+    w = row_mask
+    if w.sum() <= 0:
+        return pred.sum() * 0.0
+    return (w * (pred - target) ** 2).sum() / w.sum()
+
+
+def masked_vector_mse(pred, target, feat_mask, row_mask) -> torch.Tensor:
+    w = row_mask.unsqueeze(-1) * feat_mask
+    if w.sum() <= 0:
+        return pred.sum() * 0.0
+    return (w * (pred - target) ** 2).sum() / w.sum()
+
+
+def masked_cell_mean(values, cell_mask) -> torch.Tensor:
+    """Mean of an elementwise loss over the cells whose mask is 1 (a graph-keeping 0.0 when none is)."""
+    if cell_mask.sum() <= 0:
+        return values.sum() * 0.0
+    return (cell_mask * values).sum() / cell_mask.sum()
+
+
+def info_nce(
+    za,
+    zb,
+    temp: float = 0.08,
+    pos_a: torch.Tensor | None = None,
+    pos_b: torch.Tensor | None = None,
+    hard_neg_boost: float = 0.0,
+    pair_weight: torch.Tensor | None = None,
+):
+    """Symmetric InfoNCE with optional same-position hard-negative boost.
+
+    pair_weight (batch,), when given, down-weights low-signal adjacent-season
+    pairs (e.g. low-GP bench rows) instead of letting every pair count equally
+    -- see --reliability-weight. Weight is per anchor row and reused for the
+    transposed (zb-as-anchor) direction since it is the same underlying pair.
+    """
+    logits = za @ zb.T / temp
+    if hard_neg_boost > 0 and pos_a is not None and pos_b is not None:
+        b = logits.shape[0]
+        idx = torch.arange(b, device=logits.device)
+        hard = (pos_a.unsqueeze(1) == pos_b.unsqueeze(0)) & (idx.unsqueeze(0) != idx.unsqueeze(1))
+        logits = logits + hard.float() * hard_neg_boost
+    target = torch.arange(len(za), device=za.device)
+    if pair_weight is not None:
+        w = pair_weight
+        denom = w.sum().clamp_min(1e-6)
+        ce_a = F.cross_entropy(logits, target, reduction="none")
+        ce_b = F.cross_entropy(logits.T, target, reduction="none")
+        return 0.5 * ((ce_a * w).sum() / denom + (ce_b * w).sum() / denom)
+    return 0.5 * (F.cross_entropy(logits, target) + F.cross_entropy(logits.T, target))
+
+
+def supcon_archetype(
+    za,
+    zb,
+    *,
+    labels: torch.Tensor,
+    temp: float,
+) -> torch.Tensor:
+    """Archetype-supervised multi-positive contrastive (all same-cluster in-batch)."""
+    logits = za @ zb.T / temp
+    pos = labels.unsqueeze(0) == labels.unsqueeze(1)
+    eye = torch.eye(len(za), device=za.device, dtype=torch.bool)
+    pos = pos & ~eye
+    log_denom = torch.logsumexp(logits, dim=1)
+    pos_logits = logits.masked_fill(~pos, -1e4)
+    log_num = torch.logsumexp(pos_logits, dim=1)
+    has_pos = pos.any(dim=1)
+    if not bool(has_pos.any()):
+        return za.sum() * 0.0
+    loss = -(log_num - log_denom)
+    return loss[has_pos].mean()
+
+
+def vicreg_loss(
+    z: torch.Tensor,
+    lambda_var: float = 25.0,
+    lambda_cov: float = 1.0,
+    eps: float = 1e-4,
+) -> torch.Tensor:
+    """VICReg variance hinge 1-std + cov off-diag sum/D λ_var 25 λ_cov 1.
+
+    Mirrors vector-equities / vector-unified shared lib + Dottie scout-cli.
+
+    z: [B, D] embeddings (not necessarily L2-normalized for variance).
+    Variance term: hinge on std > 1, mean over dims.
+    Covariance term: off-diagonal squared Frobenius / D.
+    """
+    if z.size(0) < 2:
+        return z.sum() * 0.0
+    # variance hinge
+    std = torch.sqrt(z.var(dim=0, unbiased=False) + eps)
+    var_loss = torch.mean(F.relu(1.0 - std))
+    # covariance off-diag
+    B, D = z.shape
+    z_center = z - z.mean(dim=0, keepdim=True)
+    cov = (z_center.T @ z_center) / (B - 1 + eps)
+    # off-diag mask
+    off_diag = cov - torch.diag(torch.diag(cov))
+    cov_loss = (off_diag**2).sum() / max(D, 1)
+    return lambda_var * var_loss + lambda_cov * cov_loss
+
+
+def contrastive_loss(
+    za,
+    zb,
+    *,
+    mode: str,
+    temp: float,
+    pos_a: torch.Tensor | None = None,
+    pos_b: torch.Tensor | None = None,
+    hard_neg_boost: float = 0.0,
+    arch_labels: torch.Tensor | None = None,
+    player_weight: float = 0.75,
+    arch_weight: float = 0.25,
+    pair_weight: torch.Tensor | None = None,
+) -> torch.Tensor:
+    """InfoNCE (player continuity), supcon-arch, or weighted hybrid."""
+    if mode == "infonce":
+        return info_nce(
+            za,
+            zb,
+            temp=temp,
+            pos_a=pos_a,
+            pos_b=pos_b,
+            hard_neg_boost=hard_neg_boost,
+            pair_weight=pair_weight,
+        )
+    if mode == "supcon-arch":
+        if arch_labels is None:
+            return info_nce(
+                za,
+                zb,
+                temp=temp,
+                pos_a=pos_a,
+                pos_b=pos_b,
+                hard_neg_boost=hard_neg_boost,
+                pair_weight=pair_weight,
+            )
+        return supcon_archetype(za, zb, labels=arch_labels, temp=temp)
+    if mode == "hybrid":
+        l_player = info_nce(
+            za,
+            zb,
+            temp=temp,
+            pos_a=pos_a,
+            pos_b=pos_b,
+            hard_neg_boost=hard_neg_boost,
+            pair_weight=pair_weight,
+        )
+        if arch_labels is None or arch_weight <= 0:
+            return l_player
+        l_arch = supcon_archetype(za, zb, labels=arch_labels, temp=temp)
+        pw, aw = player_weight, arch_weight
+        norm = pw + aw
+        return (pw * l_player + aw * l_arch) / norm
+    raise ValueError(f"unknown contrastive loss: {mode}")
+
+
+def promotion_composite(test_recall: float | None, purity: float | None) -> float:
+    """Mid-epoch checkpoint proxy — delegates to composite_score.partial_cqs (recall and purity only)."""
+    return cqs.partial_cqs(test_recall, purity)
+
+
+def model_tag(args) -> str:
+    """Name the net that was actually trained.
+
+    The tag was hardcoded to "mtnn_v4_phase_b", so a promoted v5 recipe
+    (stacked tower blocks / MLP decode heads / transformer fusion) shipped
+    describing itself as v4 in mtnn_report.json and, downstream, in the public
+    manifest.json. A label is a claim; derive it from the knobs.
+
+    v6 adds transformer fusion 128d 4-head 4-layer CLS→64-d + tower_blocks 3
+    width 40 hidden 192 out 40 fusion_hidden 512 + VICReg.
+    """
+    is_v6 = (
+        args.fusion == "transformer"
+        and getattr(args, "dim", 48) == 64
+        and getattr(args, "tower_blocks", 2) == 3
+        and getattr(args, "tower_width", 32) == 40
+        and getattr(args, "tower_hidden", 160) == 192
+        and getattr(args, "d_model", 96) == 128
+    )
+    v5 = (
+        getattr(args, "tower_blocks", 1) > 1
+        or getattr(args, "mlp_heads", False)
+        or args.fusion == "transformer"
+        or getattr(args, "fusion_hidden", 0)
+    )
+    if not v5 and not is_v6:
+        return "mtnn_v4_phase_b"
+    bits = [
+        f"b{args.tower_blocks}",
+        f"h{args.tower_hidden}",
+        f"t{args.tower_width}",
+        f"d{args.dim}",
+    ]
+    if args.mlp_heads:
+        bits.append(f"mlp{args.d_head_hidden}")
+    if getattr(args, "fusion_hidden", 0):
+        bits.append(f"fus{args.fusion_hidden}")
+    # VICReg tag — era-honest anti-collapse
+    if getattr(args, "w_vicreg", 0) and args.w_vicreg > 0:
+        bits.append(f"vicreg{args.w_vicreg}")
+    # SupCon hybrid tag — archetype coherence
+    if getattr(args, "nce_loss", "hybrid") == "hybrid":
+        bits.append(f"hyb{args.nce_player_weight}-{args.nce_arch_weight}")
+    prefix = "mtnn_v6" if is_v6 else "mtnn_v5"
+    return f"{prefix}_{args.fusion}_" + "_".join(bits)
+
+
+def adamw_param_groups(model: nn.Module, weight_decay: float) -> list[dict]:
+    """AdamW with no decay on biases and LayerNorm (LLM/embed convention)."""
+    decay, no_decay = [], []
+    for name, param in model.named_parameters():
+        if not param.requires_grad:
+            continue
+        if param.ndim == 1 or name.endswith(".bias"):
+            no_decay.append(param)
+        else:
+            decay.append(param)
+    return [
+        {"params": decay, "weight_decay": weight_decay},
+        {"params": no_decay, "weight_decay": 0.0},
+    ]
+
+
+def optimizer_steps_per_epoch(n_rows: int, batch: int, grad_accum: int) -> int:
+    batches = max(1, (n_rows + batch - 1) // batch)
+    return max(1, batches // grad_accum)
+
+
+def build_lr_scheduler(
+    opt: torch.optim.Optimizer,
+    *,
+    schedule: str,
+    total_steps: int,
+    epochs: int,
+    warmup_pct: float,
+    max_lr: float,
+    anneal_strategy: str,
+) -> tuple[torch.optim.lr_scheduler.LRScheduler, str]:
+    """Return (scheduler, step_mode) where step_mode is 'step' or 'epoch'."""
+    if schedule == "legacy-epoch-cosine":
+        return torch.optim.lr_scheduler.CosineAnnealingLR(opt, T_max=epochs), "epoch"
+
+    warmup_steps = max(1, int(warmup_pct * total_steps))
+    if schedule == "onecycle":
+        return (
+            torch.optim.lr_scheduler.OneCycleLR(
+                opt,
+                max_lr=max_lr,
+                total_steps=total_steps,
+                pct_start=warmup_pct,
+                anneal_strategy=anneal_strategy,
+                div_factor=25.0,
+                final_div_factor=1e4,
+            ),
+            "step",
+        )
+    if schedule == "warmup-cosine":
+        main_steps = max(1, total_steps - warmup_steps)
+        sched = torch.optim.lr_scheduler.SequentialLR(
+            opt,
+            schedulers=[
+                torch.optim.lr_scheduler.LinearLR(opt, start_factor=0.01, total_iters=warmup_steps),
+                torch.optim.lr_scheduler.CosineAnnealingLR(opt, T_max=main_steps),
+            ],
+            milestones=[warmup_steps],
+        )
+        return sched, "step"
+    raise ValueError(f"unknown lr schedule: {schedule}")
+
+
+def finite_check_arrays(model: nn.Module) -> dict[str, np.ndarray]:
+    """The model's floating-point weights and buffers by name, for mtnn_loop.require_finite before a save."""
+    return {
+        f"weight {name}": t.detach().cpu().numpy() for name, t in model.state_dict().items() if t.is_floating_point()
+    }
+
+
+@torch.no_grad()
+def embed_all(model: MTNN, xs, ms, seas_t) -> np.ndarray:
+    model.eval()
+    emb = model.encode(xs, ms, seas_t)
+    return emb.cpu().numpy().astype(np.float32)
+
+
+# ---------------------------------------------------------------------------
+# Evaluation
+# ---------------------------------------------------------------------------
+# The split, pair, recall, purity and 14-d baseline code lives in
+# mtnn_metrics.py (imported above under the same names) so it can be tested
+# without torch [tests#7].
+
+
+def classification_acc(logits: np.ndarray, labels: np.ndarray, valid_mask: np.ndarray | None = None) -> float | None:
+    if valid_mask is None:
+        valid_mask = np.ones(len(labels), dtype=bool)
+    idx = np.where(valid_mask)[0]
+    if len(idx) == 0:
+        return None
+    pred = logits[idx].argmax(1)
+    return float((pred == labels[idx]).mean())
+
+
+def skill_holdout_metrics(
+    pred: np.ndarray,
+    target: np.ndarray,
+    mask: np.ndarray,
+    seasons: np.ndarray,
+    keys: list[str],
+) -> dict:
+    """Per-skill R2 + MAE (grade points, 0-100) on held-out season splits.
+
+    `mask` is the per-skill [n, K] coverage matrix — each skill scores only
+    over rows where that skill is present (wide skills are 2015-16+).
+    """
+    out: dict = {}
+    split_of = np.array([eval_split(str(s)) for s in seasons])
+    for split in ("val", "test"):
+        in_split = split_of == split
+        per = {}
+        for j, key in enumerate(keys):
+            rows = np.where((mask[:, j] > 0) & in_split)[0]
+            if len(rows) < 5:
+                per[key] = {"r2": None, "mae_pts": None, "rows": len(rows)}
+                continue
+            resid = target[rows, j] - pred[rows, j]
+            ss_tot = float(((target[rows, j] - target[rows, j].mean()) ** 2).sum())
+            per[key] = {
+                "r2": round(1.0 - float((resid**2).sum()) / max(ss_tot, 1e-9), 4),
+                "mae_pts": round(float(np.abs(resid).mean()) * 100.0, 2),
+                "rows": len(rows),
+            }
+        scored = [v["r2"] for v in per.values() if v["r2"] is not None]
+        out[split] = {
+            "mean_r2": round(float(np.mean(scored)), 4) if scored else None,
+            "per_skill": per,
+        }
+    return out
+
+
+def skill_neighbor_consistency(
+    E: np.ndarray,
+    grades: np.ndarray,
+    valid: np.ndarray,
+    k: int = 10,
+    n_sample: int = 400,
+) -> float | None:
+    """Mean |grade(self) − mean grade(top-k NN)| across skills, in grade
+    points — lower means neighbors in this space share craft."""
+    rows = np.where(valid > 0)[0]
+    if len(rows) < n_sample + k:
+        return None
+    rng = np.random.default_rng(7)
+    sample = rng.choice(rows, n_sample, replace=False)
+    valid_mask = valid > 0
+    gaps = []
+    for i in sample:
+        sims = E @ E[i]
+        sims[i] = -np.inf
+        sims[~valid_mask] = -np.inf
+        top = np.argpartition(-sims, k)[:k]
+        gaps.append(float(np.abs(grades[top].mean(0) - grades[i]).mean()) * 100.0)
+    return round(float(np.mean(gaps)), 2)
+
+
+def next_profile_holdout_metrics(
+    pred: np.ndarray,
+    target: np.ndarray,
+    next_idx: np.ndarray,
+    seasons: np.ndarray,
+    feature_names: list[str],
+    target_mask: np.ndarray | None = None,
+) -> dict:
+    """Held-out next-season stats quality on z-scored game features.
+
+    target_mask (mtnn_metrics.game_target_mask of the matrix as built) is
+    None when every game cell was measured, and then the numbers are the
+    original float32 ones. Otherwise R2, MAE, RMSE and the per-feature MAE
+    are taken over the measured target cells only, and each split also
+    reports how many target cells it left out [final#8 follow-up].
+    """
+    out: dict = {}
+    target_split = np.full(len(next_idx), "", dtype=object)
+    valid = next_idx >= 0
+    if valid.any():
+        target_split[valid] = np.array([eval_split(str(s)) for s in seasons[next_idx[valid]]])
+    for split in ("val", "test"):
+        rows = np.where(valid & (target_split == split))[0]
+        if len(rows) == 0:
+            out[split] = None
+            continue
+        y = target[next_idx[rows]]
+        p = pred[rows]
+        if target_mask is None:
+            resid = y - p
+            mse = float((resid**2).mean())
+            rmse = float(np.sqrt(mse))
+            mae = float(np.abs(resid).mean())
+            ss_tot = float(((y - y.mean(axis=0, keepdims=True)) ** 2).sum())
+            r2 = 1.0 - float((resid**2).sum()) / max(ss_tot, 1e-9)
+            per_mae = np.abs(resid).mean(axis=0)
+        else:
+            st = masked_residual_stats(y, p, target_mask[next_idx[rows]])
+            mse, mae, r2, per_mae = st["mse"], st["mae"], st["r2"], st["per_feature_mae"]
+            rmse = float(np.sqrt(mse))
+        top = np.argsort(-per_mae)[:5]
+        out[split] = {
+            "rows": len(rows),
+            "mae_z": round(mae, 4),
+            "rmse_z": round(rmse, 4),
+            "r2": round(r2, 4),
+            "worst_features_mae_z": [{"feature": feature_names[j], "mae_z": round(float(per_mae[j]), 4)} for j in top],
+        }
+        if target_mask is not None:
+            out[split]["target_cells_unmeasured"] = st["cells_unmeasured"]
+    return out
+
+
+def encode_masked_rows(model: MTNN, Z, M, rows, cols, fams, seas_t, device, chunk: int = 2048) -> np.ndarray:
+    """Embeddings of Z[rows] with columns `cols` zeroed in values and mask, as a row missing them would read.
+
+    For composite_v2's regime slice [critic#2]. Eval mode and no_grad, so no
+    dropout and no RNG draw (token dropout acts only in train mode); the
+    model's mode is restored on the way out.
+    """
+    rows = np.asarray(rows, dtype=np.int64)
+    Zr, Mr = np.array(Z[rows], dtype=np.float32), np.array(M[rows], dtype=np.float32)
+    Zr[:, cols] = 0.0
+    Mr[:, cols] = 0.0
+    was_training = model.training
+    model.eval()
+    try:
+        parts = []
+        with torch.no_grad():
+            for lo in range(0, len(rows), chunk):
+                xs_r, ms_r = split_by_family(Zr[lo : lo + chunk], Mr[lo : lo + chunk], fams, device)
+                seas_r = seas_t[torch.tensor(rows[lo : lo + chunk], device=seas_t.device)]
+                parts.append(model.encode(xs_r, ms_r, seas_r).cpu().numpy().astype(np.float32))
+    finally:
+        model.train(was_training)
+    return np.concatenate(parts) if parts else np.zeros((0, 0), np.float32)
+
+
+def _rng_states(device) -> tuple:
+    cuda = torch.cuda.get_rng_state_all() if str(device).startswith("cuda") else []
+    return np.random.get_state(), torch.get_rng_state(), cuda
+
+
+def _same_rng(a: tuple, b: tuple) -> bool:
+    (na, ta, ca), (nb, tb, cb) = a, b
+    same_np = na[0] == nb[0] and np.array_equal(na[1], nb[1]) and tuple(na[2:]) == tuple(nb[2:])
+    return same_np and torch.equal(ta, tb) and len(ca) == len(cb) and all(torch.equal(x, y) for x, y in zip(ca, cb))
+
+
+def composite_v2_block(model: MTNN, fams, seas_t, device, inputs: dict, log) -> dict:
+    """report["composite_v2"], computed once training and the v1 report are done.
+
+    inputs is composite_v2's: Z, M the matrix as built, Z_model, M_model what
+    the model read. The regime columns come from the built matrix; the
+    masked anchors are re-encoded from what the model read.
+
+    It cannot move a v1 number: everything v1 reports is computed before
+    this, and this draws from no RNG. The global numpy and torch RNG states
+    are compared before and after anyway, and a change marks the block
+    failed. A failure here is written into the block (cqs_v2 None, every
+    component missing, the error) and logged rather than raised, so a bug in
+    an unratified metric never costs the run the v1 report the climb reads.
+    """
+    before = _rng_states(device)
+    try:
+        pairs_by_split = composite_v2.split_pairs(inputs["player_id"], inputs["season"])
+        rows = composite_v2.regime_anchor_rows(pairs_by_split)
+        cols = composite_v2.regime_mask_columns(inputs["M"], inputs["season"])
+        regime = None
+        if len(rows) and cols:
+            Zm, Mm = inputs["Z_model"], inputs["M_model"]
+            regime = {"rows": rows, "E": encode_masked_rows(model, Zm, Mm, rows, cols, fams, seas_t, device)}
+        block = composite_v2.composite_v2({**inputs, "regime": regime})
+    except Exception as exc:
+        log.exception("composite_v2 failed; the v1 report is unaffected")
+        block = composite_v2.failed_block(f"{type(exc).__name__}: {exc}")
+    if not _same_rng(before, _rng_states(device)):
+        log.error("composite_v2 changed the global numpy or torch RNG state; its block is marked failed")
+        block = composite_v2.failed_block("composite_v2 changed the global numpy or torch RNG state")
+    return block
+
+
+# ---------------------------------------------------------------------------
+# Main
+# ---------------------------------------------------------------------------
+
+
+_TRAIN_RUN_ID = None
+
+
+def emit_training_snapshot(args, weights, fams, history, val_trace, status) -> None:
+    """Live per-epoch telemetry for the /model training cockpit.
+
+    Writes assets/mtnn_training/live.json each val_every epoch (status
+    'training', or 'done' on the final epoch). Wrapped so telemetry can never
+    break a training run.
+    """
+    global _TRAIN_RUN_ID
+    try:
+        excl = {s.strip() for s in args.exclude_families.split(",") if s.strip()}
+        out_dir = ROOT / "assets" / "mtnn_training"
+        out_dir.mkdir(parents=True, exist_ok=True)
+        if _TRAIN_RUN_ID is None:
+            _TRAIN_RUN_ID = time.strftime("%Y%m%d-%H%M%S")
+        doc = {
+            "run_id": _TRAIN_RUN_ID,
+            "status": status,
+            "updated": time.strftime("%Y-%m-%dT%H:%M:%S"),
+            "arch": {
+                "dim": args.dim,
+                "tower_width": args.tower_width,
+                "tower_hidden": args.tower_hidden,
+                "tower_blocks": args.tower_blocks,
+                "fusion": args.fusion,
+                "n_towers": len(fams),
+                "families": sorted(fams),
+                "epochs_target": args.epochs,
+                "durability_w": (weights.get("durability") if "injury" not in excl else None),
+            },
+            "loss": [round(float(x), 4) for x in history],
+            "val": [
+                {
+                    "epoch": r.get("epoch"),
+                    "val_recall_at_10": r.get("val_recall_at_10"),
+                    "test_recall_at_10": r.get("test_recall_at_10"),
+                    "purity_at_20": r.get("val_purity_at_20"),
+                    "cqs": r.get("val_composite"),
+                }
+                for r in val_trace
+            ],
+        }
+        (out_dir / "live.json").write_text(json.dumps(doc, separators=(",", ":")), encoding="utf-8")
+    except Exception:
+        pass
+
+
+# ---- lineage -----------------------------------------------------------------
+# Nothing here draws from an RNG: run ids come from the clock, the commit, the
+# seed and the pid, and everything else is a hash or a byte copy of a file the
+# run already wrote. The trained numbers are the same with or without it.
+
+
+def new_run_id(seed: int, git_short: str | None) -> str:
+    stamp = time.strftime("%Y%m%dT%H%M%SZ", time.gmtime())
+    return f"{stamp}-{git_short or 'nogit'}-s{seed}-p{os.getpid()}"
+
+
+def prepare_run_dir(arg: str | None) -> Path | None:
+    """The --run-dir to copy this run's bundle into, checked before training starts."""
+    if not arg:
+        return None
+    run_dir = Path(arg).resolve()
+    if (run_dir / BUNDLE_FILES["report"]).exists():
+        raise SystemExit(
+            f"--run-dir {run_dir} already holds a {BUNDLE_FILES['report']}; one run directory records one run"
+        )
+    run_dir.mkdir(parents=True, exist_ok=True)
+    return run_dir
+
+
+def write_run_bundle(run_dir: Path, paths: dict[str, Path], records: dict[str, dict], report_text: str) -> None:
+    """Copy what this run wrote into run_dir, by byte, and the report last.
+
+    Each copy is hashed and compared with the sha recorded when the run wrote
+    the file. pipeline/data/mtnn_best.pt is shared by every run on the box (and
+    promote.py refreshes it), so another trainer or a promote can replace it
+    between this run's save and this copy; a bundle built from that would be
+    torn. The run then stops before writing
+    the bundle's report, and promote.py refuses a directory without one.
+    """
+    for role, src in paths.items():
+        dst = run_dir / BUNDLE_FILES[role]
+        # The final-weights checkpoint is saved straight into run_dir.
+        if Path(src).resolve() != dst.resolve():
+            atomic_copy(src, dst)
+        got, want = sha256_file(dst), records[role]["sha256"]
+        if got != want:
+            raise SystemExit(
+                f"{src} changed after this run wrote it (sha256 {want[:12]} when written, {got[:12]} now; "
+                f"another run writing {src.parent}?). {run_dir} is left without a report, so it cannot be promoted."
+            )
+    atomic_write_text(run_dir / BUNDLE_FILES["report"], report_text, encoding="utf-8")
+
+
+def build_parser() -> argparse.ArgumentParser:
+    """train_mtnn.py's command line, built without training anything.
+
+    A function so that tests and mtnn_recipe can check recipe files against
+    the real options. main() parses with it; the options and their defaults
+    are the ones main() always had.
+    """
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--epochs", type=int, default=40)
+    ap.add_argument(
+        "--drop-features",
+        default="",
+        help="comma-separated feature names to exclude, for running the ablation "
+             "audit_features.py asks for. Example: --drop-features INJ_MISS_N "
+             "(r=-0.9998 with INJ_GP_PCT; games missed is the algebraic inverse of "
+             "games played, so the injury tower gets two votes for one signal). "
+             "A family that loses all its columns is dropped, not left empty.",
+    )
+    ap.add_argument("--device", type=str, default="cpu", help="cpu or cuda — forced cpu per 2026-08-10 user request")
+    ap.add_argument("--dim", type=int, default=48)
+    ap.add_argument(
+        "--tower-width",
+        type=int,
+        default=32,
+        help="per-family tower output width before fusion",
+    )
+    ap.add_argument("--tower-hidden", type=int, default=160, help="per-family tower hidden width")
+    ap.add_argument("--skill-hidden", type=int, default=16, help="per-skill mini-tower hidden width")
+    ap.add_argument("--batch", type=int, default=512)
+    ap.add_argument("--lr", type=float, default=1.5e-3)
+    ap.add_argument("--seed", type=int, default=7)
+    ap.add_argument("--nce-temp", type=float, default=0.08)
+    ap.add_argument("--drop-p", type=float, default=0.12)
+    ap.add_argument(
+        "--hard-neg-boost",
+        type=float,
+        default=0.4,
+        help="same-position in-batch negative boost (0=off) — v6 SOTA 0.4",
+    )
+    ap.add_argument(
+        "--token-dropout",
+        type=float,
+        default=0.1,
+        help="v6: drop whole family tokens during train (0=off, 0.1 SOTA)",
+    )
+    ap.add_argument(
+        "--w-vicreg",
+        type=float,
+        default=0.05,
+        help="v6: VICReg variance+cov anti-collapse weight (0=off, 0.05 SOTA)",
+    )
+    ap.add_argument(
+        "--vicreg-var-w",
+        type=float,
+        default=25.0,
+        help="VICReg λ_var hinge 1-std (default 25)",
+    )
+    ap.add_argument(
+        "--vicreg-cov-w",
+        type=float,
+        default=1.0,
+        help="VICReg λ_cov off-diag sum/D (default 1)",
+    )
+    ap.add_argument(
+        "--reliability-weight",
+        type=float,
+        default=0.0,
+        help="0=off (default, unchanged behavior). >0 down-weights the player "
+        "InfoNCE loss for adjacent-season pairs where either row is low-GP "
+        "(sigmoid of z-scored INJ_GP_PCT; rows with no injury coverage keep "
+        "weight 1.0). 1.0 = full down-weight by that signal. Tests the "
+        "hypothesis from probe_seed_sensitivity.py that some seeds' bad "
+        "basins are bench/low-signal-player fragility, not generic noise. "
+        "2026-07-30 check, seed42/seed7, alpha 1.0 vs 0.4 (2 seeds only, "
+        "no full 4-seed sweep): "
+        "alpha=1.0 seed42 CQS 70.77->72.51, recall 0.47->0.536, 2024-25 "
+        "continuity 0.5556->0.6397 (closes ~39%% of the gap to a healthy "
+        "seed) but seed7 CQS 78.11->76.96, recall 0.846->0.76 (real cost). "
+        "alpha=0.4 seed42 CQS 70.77->71.87, recall 0.47->0.522, continuity "
+        "0.5556->0.5953 (~18%% of the gap -- roughly half of alpha=1.0's "
+        "gain) but seed7 CQS 78.11->77.78, recall 0.846->0.82 (~3.5x "
+        "cheaper than alpha=1.0's cost). "
+        "FULL 4-seed sweep at alpha=0.4 (seeds 7/13/21/42, matching the "
+        "recorded-baseline protocol): CQS 75.96+/-2.38 (baseline 75.82"
+        "+/-3.4), recall 0.730+/-0.121 (baseline 0.732+/-0.176), purity "
+        "0.7862+/-0.0028 (baseline 0.7813+/-0.0038). VERDICT: means are "
+        "statistically flat vs baseline (does NOT clear the CQS>=+0.5 "
+        "promote bar) but seed-to-seed spread drops ~30%% on both CQS and "
+        "recall, and purity ticks up slightly. This is a variance-"
+        "reduction lever, not a mean-improvement one: same expected "
+        "quality, meaningfully less seed-lottery risk. Worth defaulting "
+        "to for future retrains where avoiding a seed-42-style draw "
+        "matters more than squeezing peak CQS -- not a promotion case by "
+        "itself.",
+    )
+    ap.add_argument(
+        "--lr-schedule",
+        choices=("legacy-epoch-cosine", "onecycle", "warmup-cosine"),
+        default="onecycle",
+        help="onecycle mirrors Brain2Qwerty (arXiv:2502.17480); warmup-cosine is embed SOTA",
+    )
+    ap.add_argument(
+        "--warmup-pct",
+        type=float,
+        default=0.1,
+        help="warmup fraction of optimizer steps (Brain2Qwerty uses 0.1)",
+    )
+    ap.add_argument(
+        "--anneal-strategy",
+        choices=("cos", "linear"),
+        default="linear",
+        help="OneCycleLR anneal; paper uses linear decay after warmup",
+    )
+    ap.add_argument("--weight-decay", type=float, default=1e-4)
+    ap.add_argument(
+        "--grad-accum",
+        type=int,
+        default=1,
+        help="gradient accumulation steps (effective batch = batch * accum)",
+    )
+    ap.add_argument(
+        "--fusion",
+        choices=("gated", "concat", "transformer"),
+        default="concat",
+        help="tower fusion: concat MLP (default), gated attention, or v5 transformer. "
+        "gated measured 0.530 test recall against concat's 0.838 at the same "
+        "geometry (docs/MTNN_STABILITY_2026-07-24.md §3)",
+    )
+    ap.add_argument(
+        "--tower-blocks",
+        type=int,
+        default=2,
+        help="v5: residual blocks per family tower (depth)",
+    )
+    ap.add_argument(
+        "--mlp-heads",
+        action=argparse.BooleanOptionalAction,
+        default=True,
+        help="v5: 2-layer MLP decode heads instead of linear (--no-mlp-heads to disable)",
+    )
+    ap.add_argument(
+        "--d-head-hidden",
+        type=int,
+        default=128,
+        help="v5: hidden width for MLP decode heads",
+    )
+    ap.add_argument("--d-model", type=int, default=96, help="v5: transformer fusion token width")
+    ap.add_argument("--n-fusion-layers", type=int, default=4, help="v5: transformer encoder layers")
+    ap.add_argument("--n-attn-heads", type=int, default=4, help="v5: transformer attention heads")
+    ap.add_argument(
+        "--fusion-hidden",
+        type=int,
+        default=0,
+        help="fusion hidden width (0 = per-fusion default: concat 256, "
+        "gated 192, transformer ff 256). At the default this layer "
+        "is ~57%% of all params and was previously unswept.",
+    )
+    ap.add_argument(
+        "--nce-loss",
+        choices=("infonce", "supcon-arch", "hybrid"),
+        default="hybrid",
+        help="contrastive: player InfoNCE, archetype SupCon, or hybrid",
+    )
+    ap.add_argument(
+        "--nce-player-weight",
+        type=float,
+        default=0.65,
+        help="hybrid: weight on adjacent-season player InfoNCE — v6 SOTA 0.65",
+    )
+    ap.add_argument(
+        "--nce-arch-weight",
+        type=float,
+        default=0.35,
+        help="hybrid: weight on archetype SupCon (purity pressure) — v6 SOTA 0.35",
+    )
+    ap.add_argument(
+        "--checkpoint-metric",
+        choices=("recall", "recall-purity", "purity", "composite", "cqs"),
+        default="cqs",
+        help="save the best checkpoint by smoothed val recall, purity@20, or recall-purity: both blended "
+        "with their CQS weights (composite_score.partial_cqs). 'cqs' and 'composite' are older names for "
+        "recall-purity, not the full CQS. No best checkpoint is kept when the loss sees every row",
+    )
+    ap.add_argument(
+        "--val-every",
+        type=int,
+        default=10,
+        help="log held-out val recall every N epochs; 0=off",
+    )
+    ap.add_argument(
+        "--no-best-checkpoint",
+        action="store_true",
+        help="skip saving/restoring best-val checkpoint",
+    )
+    ap.add_argument(
+        "--mask-families",
+        type=str,
+        default="",
+        help="comma-separated families to zero out (values + mask) while "
+        "keeping their towers, so ablation arms share one architecture",
+    )
+    ap.add_argument(
+        "--mask-features",
+        type=str,
+        default="",
+        help="comma-separated individual features to zero out (values + mask), "
+        "for testing a single column without rebuilding train_matrix.npz",
+    )
+    ap.add_argument(
+        "--exclude-families",
+        type=str,
+        default="",
+        help="comma-separated tower families to drop (ablation)",
+    )
+    # There was a third phase, "auto": select, then refit on all rows when the
+    # promote gate passed. No script or recipe in any repo on the box passed
+    # it, and it could not finish: the refit kept stepping the select phase's
+    # OneCycle schedule, 880 of 1,040 steps already used, needed 260 more, and
+    # torch raised ValueError at refit step 161 (reproduced 2026-10-09 with
+    # the real 12,966-row matrix's step counts), after the select embedding
+    # and checkpoint were written and before the report. Its refit loop also
+    # trained 7 of the main loop's 18 loss terms, so it would have shipped
+    # 11 heads untrained against the moved embedding [training#10]. Removed
+    # rather than repaired, since nothing called it: the shipping recipe is a
+    # select run (pipeline/recipes/ship.json).
+    ap.add_argument(
+        "--phase",
+        choices=("select", "final-refit"),
+        default="select",
+        help="select=honest held-out metrics (train-split rows only for loss); "
+        "final-refit=fit all rows, so every metric in its report is in-sample",
+    )
+    ap.add_argument(
+        "--fit-rows",
+        choices=("train", "all"),
+        default=None,
+        help="override which rows enter the loss (default: train for select, all for final-refit)",
+    )
+    ap.add_argument(
+        "--era-align",
+        choices=("none", "procrustes"),
+        default="none",
+        help="v6: rotate the 14 game-feature dims into the 1996-97 root "
+        "frame via assets/drift.json chainedToRoot before training",
+    )
+    ap.add_argument(
+        "--robust-scaling",
+        action="store_true",
+        help="v6: replace the season z-scores with per-season median/IQR "
+        "scaling (RealMLP-style, clip [-3,3]) before training",
+    )
+    for key in DEFAULT_LOSS_WEIGHTS:
+        ap.add_argument(f"--w-{key.replace('_', '-')}", type=float, default=None, dest=f"w_{key}")
+    ap.add_argument(
+        "--write-artifacts",
+        action=argparse.BooleanOptionalAction,
+        default=False,
+        help="ship embedding_v3.npz and mtnn_centroids.npz into pipeline/data. "
+             "OFF by default: a measuring run must never be a shipping run.",
+    )
+    ap.add_argument(
+        "--run-dir",
+        default=None,
+        help="also copy this run's report, checkpoint, embedding_v3.npz and mtnn_centroids.npz into this "
+        "directory, the bundle pipeline/promote.py --run checks and promotes. The checkpoint is the restored "
+        "best one, or the final weights when no best checkpoint was saved. Its name becomes the run id. "
+        "rebuild_all.py passes pipeline/data/runs/<run_id>.",
+    )
+    # --protocol-v2 changes three things the measured numbers depend on, so
+    # it is off by default and off means exactly the old run:
+    #   (a) the per-epoch permutations come from their own
+    #       np.random.default_rng(seed). In v1 they share the global numpy
+    #       RNG with recall_at_k's 500-pair subsample, so every --val-every
+    #       check shifts the rest of training [training#9];
+    #   (b) the step-mode LR schedule is sized from the batches actually
+    #       trained. v1 sizes OneCycle for all 12,966 rows (26 steps an
+    #       epoch, 1,040 over 40) while a select run trains 22 batches of the
+    #       11,027 fit rows (880), so every measured model stops mid-anneal
+    #       at 17% of peak LR [training#7]. v2 also checks at the end that
+    #       the scheduler took exactly the steps it was sized for;
+    #   (c) in a select run, no val row is a training signal: a fit row
+    #       whose InfoNCE partner is a val row is paired with itself (two
+    #       dropout views, as a row with no partner always was), and a
+    #       next-season target in the val split is not supervised. v1
+    #       trained 66 fit rows against a val partner and supervised 378 of
+    #       the 761 val next-season targets [training#8].
+    # Different numbers, so not comparable with v1 ones. The herdmux climb
+    # hashes its PINNED train flags (gpu/climb.py Protocol.hash), so adding
+    # --protocol-v2 to PROTOCOLS['vector-hoops'].train (and to
+    # pipeline/recipes/measure.json, which tests/test_recipes.py holds equal
+    # to it) gives v2 its own protocol id, and v2 numbers can never be judged
+    # against a v1 baseline. Passed as an experiment's extra train flag it
+    # is NOT hashed (extras are left out of the hash on purpose, and
+    # collides() only catches pinned flags), so it would be judged against
+    # the v1 baseline; don't. Re-baselining under v2 is the operator's call.
+    ap.add_argument(
+        "--protocol-v2",
+        action="store_true",
+        help="dedicated training RNG, LR schedule sized from the trained batches, no val rows in a select "
+        "run's pairs or next-season targets. Off: the v1 protocol every recorded number used",
+    )
+    ap.add_argument(
+        "--allow-missing-positions",
+        action="store_true",
+        help="train even when vectors.json labels under half of the matrix rows with a position (the position "
+        "head then learns from little or nothing). Off: the run stops, because that is a vectors.json built "
+        "without enrich_vectors [eval#10]",
+    )
+    ap.add_argument(
+        "--recipe",
+        default=None,
+        metavar="NAME|PATH",
+        help="take defaults from a recipe file: a name in pipeline/recipes/ (measure, ship, legacy-v5-refit, "
+        "legacy-v6-refit) or a path to one. Flags given on the command line still win. Recorded in the "
+        "report's lineage block. See pipeline/mtnn_recipe.py.",
+    )
+    return ap
+
+
+def parse_args(argv: list[str] | None = None) -> mtnn_recipe.Parsed:
+    """build_parser().parse_args(argv), with --recipe applied as defaults when given."""
+    return mtnn_recipe.parse_with_recipe(build_parser(), argv)
+
+
+def main(argv: list[str] | None = None) -> None:
+    parser = build_parser()
+    parsed = mtnn_recipe.parse_with_recipe(parser, argv)
+    args = parsed.args
+
+    # What this run actually trains with, before anything else. Every host
+    # climb panel under protocol 397e16a79ddc, its 2026-08-15 baseline
+    # included, ran on cpu with the 4080 idle because --device fell back to
+    # this script's cpu default, and it was noticed on 2026-09-05 from
+    # device=cpu in a train.log (herdmux gpu/climb.py, PROTOCOLS comment).
+    # Stderr, through runlog, so the report and stdout are unchanged.
+    log = get_logger("train_mtnn")
+    if parsed.recipe is not None:
+        r = parsed.recipe
+        log.info("recipe %s: %s (sha256 %s)", r.name, display_path(r.path, ROOT), r.sha256[:12])
+    changed = mtnn_recipe.non_default_flags(parser, parsed)
+    log.info("options that differ from train_mtnn.py's defaults: %s", ", ".join(changed) or "none")
+
+    global ART_DIR
+    ART_DIR = DATA_DIR if args.write_artifacts else (DATA_DIR / "_scratch")
+    ART_DIR.mkdir(parents=True, exist_ok=True)
+    print(f"[artifacts] {'SHIPPING into' if args.write_artifacts else 'scratch only,'} "
+          f"{ART_DIR}", flush=True)
+
+    run_started = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
+    run_git = git_state(ROOT)
+    run_dir = prepare_run_dir(args.run_dir)
+    run_id = run_dir.name if run_dir is not None else new_run_id(args.seed, run_git["short"])
+    print(f"[lineage] run {run_id}" + (f", bundle -> {run_dir}" if run_dir is not None else ""), flush=True)
+
+    weights = dict(DEFAULT_LOSS_WEIGHTS)
+    for key in DEFAULT_LOSS_WEIGHTS:
+        val = getattr(args, f"w_{key}")
+        if val is not None:
+            weights[key] = val
+
+    torch.manual_seed(args.seed)
+    np.random.seed(args.seed)
+    device = args.device or ("cuda" if torch.cuda.is_available() else "cpu")  # auto: GPU on personal local (CUDA avail), CPU in Hatch VM
+
+    (Z, M, names, seasons, pids, clusters, positions, season_ids, manifest) = load_bundle(
+        allow_missing_positions=args.allow_missing_positions
+    )
+    # Before --era-align / --robust-scaling rewrite Z: this is the identity of
+    # the matrix on disk, which promote.py compares with the current one.
+    lineage_matrix = matrix_fingerprint(Z, M, pids, seasons, manifest["features"], manifest["families"])
+    # The matrix as built, for composite_v2's archetype labels, lookup
+    # baselines and skills formula after training. Copies, so the in-place
+    # --mask-* zeroing below cannot reach them; only composite_v2_block reads them.
+    Z_built, M_built = Z.copy(), M.copy()
+    lineage_inputs = {display_path(p, ROOT): (sha256_file(p) if p.exists() else None) for p in LINEAGE_INPUTS}
+    # Every artifact file this run writes, recorded as it is written.
+    written_paths: dict[str, Path] = {}
+    written: dict[str, dict] = {}
+
+    def record_written(role: str, path: Path) -> None:
+        written_paths[role] = path
+        written[role] = file_record(path, ROOT)
+
+    if args.era_align == "procrustes":
+        from vector_core import align_batch, load_alignment
+
+        chains = load_alignment(ROOT / "assets" / "drift.json")["chains"]
+        Z = align_batch(Z, [str(s) for s in seasons], chains)
+        print(f"era-align procrustes: rotated {len(Z)} rows into 1996-97 root frame ({len(chains)} season chains)")
+
+    if args.robust_scaling:
+        from vector_core import RealMLPPreprocessor
+
+        preproc = RealMLPPreprocessor(manifest["features"])
+        preproc.fit(Z, [str(s) for s in seasons], M, by_season=True)
+        Z = preproc.transform(Z, [str(s) for s in seasons])
+        print("robust-scaling: replaced season z-scores with median/IQR clip[-3,3]")
+
+    # Feature-level ablation, one rung finer than --mask-families/--exclude-families.
+    # A redundant PAIR (audit_features.py: INJ_GP_PCT ~ INJ_MISS_N, r=-0.9998)
+    # cannot be tested by removing a whole family -- that removes the signal along
+    # with the duplication. Dropping one column narrows that family's tower input
+    # but leaves the TOWER COUNT unchanged, so fusion stays 17 tokens wide and the
+    # delta does not confound "column was redundant" with "fusion was re-sized" --
+    # the same confound --mask-families was written to avoid.
+    drop_feats = {s.strip() for s in args.drop_features.split(",") if s.strip()}
+    if drop_feats:
+        known = set(manifest["features"])
+        unknown = sorted(drop_feats - known)
+        if unknown:
+            raise SystemExit(f"--drop-features names features not in the manifest: {unknown}")
+        print(f"dropped features: {sorted(drop_feats)} ({len(drop_feats)} columns removed before tower construction)")
+
+    fams = family_slices(manifest, drop_feats)
+    mask_fams = {s.strip() for s in args.mask_families.split(",") if s.strip()}
+    if mask_fams:
+        # Ablate by zeroing a family's values AND its mask bits while keeping the
+        # tower. --exclude-families deletes the tower, which also re-shapes the
+        # fusion input (17x32 -> 16x32), so every arm becomes a different
+        # architecture and the delta confounds "family carries signal" with
+        # "fusion was re-sized". Masking holds the architecture fixed.
+        all_slices = family_slices(manifest, drop_feats)
+        zeroed = 0
+        for fam in sorted(mask_fams):
+            for c in all_slices.get(fam) or []:
+                Z[:, c] = 0.0
+                M[:, c] = 0.0
+                zeroed += 1
+        print(f"masked families: {sorted(mask_fams)} -> {zeroed} columns zeroed, towers kept (fusion width unchanged)")
+    mask_feats = {s.strip() for s in args.mask_features.split(",") if s.strip()}
+    if mask_feats:
+        # Same trick one level down: zero individual columns so a single feature
+        # can be tested without rebuilding train_matrix.npz. Rebuilding would
+        # change the matrix the promote baseline was measured on, and
+        # BASELINE_PROVENANCE exists precisely to stop cross-matrix comparison.
+        by_name = {f: j for j, f in enumerate(manifest["features"])}
+        unknown = sorted(mask_feats - set(by_name))
+        if unknown:
+            raise SystemExit(f"--mask-features: unknown feature(s) {unknown}")
+        for f in sorted(mask_feats):
+            Z[:, by_name[f]] = 0.0
+            M[:, by_name[f]] = 0.0
+        print(
+            f"masked features: {sorted(mask_feats)} -> {len(mask_feats)} columns "
+            f"zeroed (towers and fusion width unchanged)"
+        )
+    exclude = {s.strip() for s in args.exclude_families.split(",") if s.strip()}
+    # Injury never feeds an input tower — the A/B proved it regresses retrieval.
+    # It survives only as the durability head's target (predicted FROM the
+    # embedding), so drop it from the tower set unconditionally.
+    fams = {k: v for k, v in fams.items() if k not in exclude and k != "injury"}
+    if exclude:
+        print(f"excluded families: {sorted(exclude)} -> {len(fams)} towers")
+    game_cols = game_feature_cols(manifest)
+    game_z = torch.tensor(Z[:, game_cols], device=device)
+    # The game cells nobody measured (a percentage with no attempt, mask 0 and
+    # z 0.0 since 078b75df) are left out of the profile and next_profile
+    # losses, as every other head leaves out its unmeasured targets, and out
+    # of the next-season metrics. Taken from the matrix as built: a --mask-*
+    # ablation hides an input, it does not make a measured target
+    # unmeasured. None when every game cell was measured, and then the two
+    # losses and the metrics are the original ones, bit for bit.
+    game_measured = game_target_mask(M_built, game_cols)
+    game_m = None if game_measured is None else torch.tensor(game_measured, dtype=torch.float32, device=device)
+    if game_measured is not None:
+        print(
+            f"profile targets: {int((~game_measured).sum())} unmeasured game cells on "
+            f"{int((~game_measured).any(axis=1).sum())} rows left out of the profile and next_profile losses and metrics"
+        )
+    n_seasons = int(season_ids.max()) + 1
+
+    print(f"{len(Z)} rows, {Z.shape[1]} features, {len(fams)} towers, {n_seasons} seasons, device={device}")
+    print(f"tower widths: { {k: len(v) for k, v in fams.items()} }")
+    print(f"loss weights: {weights}")
+
+    pairs = adjacent_season_pairs(pids, seasons, names)
+    print(f"{len(pairs)} same-player adjacent-season pairs")
+
+    feats = manifest["features"]
+
+    def col_idx(name: str) -> int | None:
+        return feats.index(name) if name in feats else None
+
+    sal_j = col_idx("SALARY_LOG")
+    sal_z, sal_m = tensor_col(Z, M, sal_j, device) if sal_j is not None else (None, None)
+
+    ped_j = col_idx("PED_PICK_QUALITY")
+    ped_z, ped_m = tensor_col(Z, M, ped_j, device) if ped_j is not None else (None, None)
+    if ped_j is not None:
+        print(f"pedigree_expectation head: {int(M[:, ped_j].sum())} labeled rows")
+
+    po_j = col_idx("PO_PTS_DELTA")
+    po_z, po_m = tensor_col(Z, M, po_j, device) if po_j is not None else (None, None)
+    if po_j is not None:
+        print(f"playoff_riser head: {int(M[:, po_j].sum())} labeled rows")
+
+    hon_j = col_idx(HONORS_PRIMARY)
+    hon_z, hon_m = tensor_col(Z, M, hon_j, device) if hon_j is not None else (None, None)
+    if hon_j is not None:
+        print(f"honors_recognition head ({HONORS_PRIMARY}): {int(M[:, hon_j].sum())} labeled rows")
+
+    team_j = col_idx(TEAM_FIT_FEATURE)
+    team_z, team_m = tensor_col(Z, M, team_j, device) if team_j is not None else (None, None)
+    if team_j is not None:
+        print(f"team_fit head: {int(M[:, team_j].sum())} labeled rows")
+
+    roster_j = col_idx(ROSTER_LIFT_FEATURE)
+    roster_z, roster_m = tensor_col(Z, M, roster_j, device) if roster_j is not None else (None, None)
+    if roster_j is not None:
+        print(f"roster_lift head ({ROSTER_LIFT_FEATURE}): {int(M[:, roster_j].sum())} labeled rows")
+
+    career_j = col_idx(CAREER_SLOPE_FEATURE)
+    # Existence is not enough: integrate_context materializes a column for every
+    # declared feature, so a feature with no source lands as an all-masked
+    # column. Testing `is None` let that pass and the head silently trained
+    # against zero labels. Fall back when the column carries no observations.
+    if career_j is None or float(M[:, career_j].sum()) == 0.0:
+        career_j = col_idx("DELTA_NORM")  # legacy matrices pre-enrichment
+    career_z, career_m = tensor_col(Z, M, career_j, device) if career_j is not None else (None, None)
+    if career_j is not None:
+        print(f"career_slope head ({manifest['features'][career_j]}): {int(M[:, career_j].sum())} labeled rows")
+
+    comp_j = col_idx(COMPETITION_FEATURE)
+    comp_z, comp_m = tensor_col(Z, M, comp_j, device) if comp_j is not None else (None, None)
+
+    form_cols = feature_cols(manifest, FORM_FEATURES)
+    form_z, form_m, form_row_m = tensor_cols(Z, M, form_cols, device) if form_cols else (None, None, None)
+    if form_cols:
+        print(f"form_recon head: {int(form_row_m.sum())} labeled rows")
+
+    injury_cols = feature_cols(manifest, INJURY_FEATURES)
+    injury_active = bool(injury_cols) and "injury" not in exclude
+    injury_z, injury_m, injury_row_m = tensor_cols(Z, M, injury_cols, device) if injury_active else (None, None, None)
+    if injury_active:
+        print(f"durability head: {int(injury_row_m.sum())} labeled rows")
+
+    # Per-row reliability weight for --reliability-weight: sigmoid of z-scored
+    # INJ_GP_PCT (index 0 of INJURY_FEATURES), squashed to (0,1) so below-average
+    # games-played rows get down-weighted and above-average rows stay near 1.
+    # Rows with no injury coverage default to 1.0 (don't penalize what we can't
+    # measure). Computed unconditionally (cheap) but only used if the flag > 0.
+    if injury_active:
+        row_reliability = torch.where(
+            injury_row_m.bool(), torch.sigmoid(injury_z[:, 0]), torch.ones_like(injury_z[:, 0])
+        )
+    else:
+        row_reliability = None
+    if args.reliability_weight > 0 and row_reliability is not None:
+        print(
+            f"reliability weighting ON (alpha={args.reliability_weight}): "
+            f"mean={float(row_reliability.mean()):.3f} p10={float(row_reliability.quantile(0.1)):.3f}"
+        )
+
+    bbref_cols = feature_cols(manifest, BBREF_FEATURES)
+    bbref_z, bbref_m, bbref_row_m = tensor_cols(Z, M, bbref_cols, device) if bbref_cols else (None, None, None)
+    if bbref_cols:
+        print(f"bbref_bridge head: {int(bbref_row_m.sum())} labeled rows")
+
+    arch_t = torch.tensor(clusters, device=device)
+    pos_t = torch.tensor(positions, device=device)
+    pos_mask = pos_t >= 0
+    seas_t = torch.tensor(season_ids, device=device)
+
+    skill_g, skill_m, skill_keys, n_core = load_skill_labels(names, seasons, pids)
+    skill_t = torch.tensor(skill_g, device=device)
+    skillm_t = torch.tensor(skill_m, device=device)
+    skill_row_mask = skill_m.any(axis=1) if skill_m.ndim == 2 else skill_m > 0
+    print(f"{len(skill_keys)} skill towers ({n_core} core + {len(skill_keys) - n_core} wide), per-skill masked")
+
+    n = len(Z)
+    split_of = np.array([eval_split(str(s)) for s in seasons])
+    if args.fit_rows is not None:
+        fit_rows_mode = args.fit_rows
+    elif args.phase == "select":
+        fit_rows_mode = "train"
+    else:
+        fit_rows_mode = "all"
+    fit_mask = (split_of == "train") if fit_rows_mode == "train" else np.ones(n, dtype=bool)
+    fit_idx = np.where(fit_mask)[0]
+    print(f"phase={args.phase} fit_rows={fit_rows_mode} n_fit={len(fit_idx)}/{n}")
+
+    # Whether a best checkpoint is kept, and by what (mtnn_loop explains both
+    # [eval#11]). A select run selects exactly as before.
+    select_best, checkpoint_metric = mtnn_loop.checkpoint_selection(
+        no_best_checkpoint=args.no_best_checkpoint, fit_rows=fit_rows_mode, metric=args.checkpoint_metric
+    )
+    if not args.no_best_checkpoint and not select_best:
+        log.info("fit_rows 'all': val rows are training rows, so no best checkpoint is selected; final weights kept")
+    elif select_best and args.val_every > 0 and checkpoint_metric != args.checkpoint_metric:
+        log.info(
+            "--checkpoint-metric %s is the recall-purity proxy (composite_score.partial_cqs), not the full CQS",
+            args.checkpoint_metric,
+        )
+
+    xs, ms = split_by_family(Z, M, fams, device)
+    model = MTNN(
+        {f: len(c) for f, c in fams.items()},
+        n_seasons,
+        n_game=len(game_cols),
+        n_skills=len(skill_keys),
+        n_form=len(form_cols) if form_cols else 0,
+        n_injury=len(injury_cols) if injury_active else 0,
+        n_bbref=len(bbref_cols) if bbref_cols else 0,
+        **mtnn_arch_kwargs(vars(args)),
+    ).to(device)
+    opt = torch.optim.AdamW(adamw_param_groups(model, args.weight_decay), lr=args.lr)
+    if args.protocol_v2:
+        # (b): sized from the fit rows the loop iterates, counting only the
+        # batches it trains on [training#7].
+        loop_rows = len(fit_idx)
+        steps_per_epoch = mtnn_loop.scheduler_steps_per_epoch(loop_rows, args.batch, args.grad_accum)
+        if steps_per_epoch == 0:
+            raise SystemExit(f"--protocol-v2: {loop_rows} fit rows make no batch of {mtnn_loop.MIN_BATCH_ROWS}+ rows")
+    else:
+        # v1: sized for every row, while the loop below slices the fit rows
+        # only and skips the empty tail slices (1,040 scheduled, 880 taken
+        # over 40 epochs of a select run). Kept as it was measured.
+        loop_rows = n
+        steps_per_epoch = optimizer_steps_per_epoch(n, args.batch, args.grad_accum)
+    total_steps = max(1, steps_per_epoch * args.epochs)
+    sched, sched_mode = build_lr_scheduler(
+        opt,
+        schedule=args.lr_schedule,
+        total_steps=total_steps,
+        epochs=args.epochs,
+        warmup_pct=args.warmup_pct,
+        max_lr=args.lr,
+        anneal_strategy=args.anneal_strategy,
+    )
+    print(
+        f"lr schedule: {args.lr_schedule} ({sched_mode}-level), "
+        f"steps/epoch={steps_per_epoch}, total_steps={total_steps}, "
+        f"fusion={args.fusion}, nce_loss={args.nce_loss}, "
+        f"tower={args.tower_width}/{args.tower_hidden}, "
+        f"skill_hidden={args.skill_hidden}"
+    )
+
+    pair_arr = np.array(pairs) if pairs else np.zeros((0, 2), int)
+    val_pairs = filter_pairs_by_split(pair_arr, seasons, "val")
+    next_idx_arr = next_season_index(n, pair_arr)
+    next_row_count = int((next_idx_arr >= 0).sum())
+    print(f"next-season stats labels: {next_row_count}/{n} rows")
+    lookup: dict[int, int] = {}
+    if len(pair_arr):
+        lookup = {int(a): int(b) for a, b in pair_arr}
+        # Overwrites lookup[a] for every row that has a previous season, so a
+        # row's one InfoNCE partner is its previous season, and its next
+        # season only when it has no previous one (a first season).
+        lookup.update({int(b): int(a) for a, b in pair_arr})
+    if args.protocol_v2:
+        # (c) [training#8]: no partner and no next-season target outside the
+        # rows the loss fits. Both are no-ops when fit_rows is 'all'.
+        loop_lookup = {i: p for i, p in lookup.items() if fit_mask[p]}
+        loop_next_idx = np.where((next_idx_arr >= 0) & fit_mask[np.maximum(next_idx_arr, 0)], next_idx_arr, -1)
+        # (a) [training#9]: evaluation keeps the global RNG; training does not share it.
+        train_rng = np.random.default_rng(args.seed)
+    else:
+        loop_lookup, loop_next_idx, train_rng = lookup, next_idx_arr, None
+
+    best_val_recall: float | None = None
+    best_val_purity: float | None = None
+    best_val_composite: float | None = None
+    best_epoch = -1
+    history: list[float] = []
+    val_trace: list[dict] = []
+    # val_recall is measured on a small split and swings check-to-check (seen
+    # directly: 0.702/0.794/0.770/0.744/0.722 across 5 checks on one run,
+    # while the SAME run's test_recall stayed ~0.83 throughout and val_purity
+    # climbed monotonically). Feeding raw val_recall into the checkpoint-
+    # selection proxy lets one noisy high check outvote a real, later purity
+    # gain. Smooth over the last 3 checks for selection only -- val_r itself
+    # stays unsmoothed in the log line and val_trace for honest diagnostics.
+    VAL_RECALL_SMOOTH_N = 3
+    val_recall_hist: list[float] = []
+
+    # Each loss term of the current batch, unweighted, by name. Read only when
+    # the batch's total loss is not finite, to say which term it was
+    # [training#12]. The dict holds the tensors the loss is built from anyway.
+    loss_terms: dict[str, torch.Tensor] = {}
+
+    def term(name: str, value: torch.Tensor) -> torch.Tensor:
+        loss_terms[name] = value
+        return value
+
+    optimizer_steps = 0
+    for epoch in range(args.epochs):
+        model.train()
+        perm = train_rng.permutation(fit_idx) if train_rng is not None else np.random.permutation(fit_idx)
+        total, steps = 0.0, 0
+        accum = 0
+        opt.zero_grad(set_to_none=True)
+        for s in range(0, loop_rows, args.batch):
+            idx = perm[s : s + args.batch]
+            if len(idx) < mtnn_loop.MIN_BATCH_ROWS:
+                continue
+            idx_t = torch.tensor(idx, device=device)
+            partner = np.array([loop_lookup.get(int(i), int(i)) for i in idx])
+            partner_t = torch.tensor(partner, device=device)
+
+            xa, ma = batch_views(xs, ms, idx_t, drop_p=args.drop_p)
+            xb, mb = batch_views(xs, ms, partner_t, drop_p=args.drop_p)
+            za, out_a = model(xa, ma, seas_t[idx_t])
+            zb, _ = model(xb, mb, seas_t[partner_t])
+
+            pos_batch = pos_t[idx_t]
+            pos_partner = pos_t[partner_t]
+            pair_w = None
+            if args.reliability_weight > 0 and row_reliability is not None:
+                r_a = row_reliability[idx_t]
+                r_b = row_reliability[partner_t]
+                rel = torch.minimum(r_a, r_b)
+                pair_w = 1.0 - args.reliability_weight * (1.0 - rel)
+            # term() records each loss term for the non-finite check below and
+            # returns it unchanged, so every line computes what it always did.
+            loss_terms.clear()
+            loss = term(
+                "contrastive",
+                contrastive_loss(
+                    za,
+                    zb,
+                    mode=args.nce_loss,
+                    temp=args.nce_temp,
+                    pos_a=pos_batch,
+                    pos_b=pos_partner,
+                    hard_neg_boost=args.hard_neg_boost,
+                    arch_labels=arch_t[idx_t],
+                    player_weight=args.nce_player_weight,
+                    arch_weight=args.nce_arch_weight,
+                    pair_weight=pair_w,
+                ),
+            )
+            # v6 VICReg anti-collapse — variance hinge 1-std + cov off-diag sum/D
+            if getattr(args, "w_vicreg", 0) and args.w_vicreg > 0:
+                v_a = vicreg_loss(
+                    za,
+                    lambda_var=getattr(args, "vicreg_var_w", 25.0),
+                    lambda_cov=getattr(args, "vicreg_cov_w", 1.0),
+                )
+                v_b = vicreg_loss(
+                    zb,
+                    lambda_var=getattr(args, "vicreg_var_w", 25.0),
+                    lambda_cov=getattr(args, "vicreg_cov_w", 1.0),
+                )
+                loss = loss + args.w_vicreg * 0.5 * term("vicreg", v_a + v_b)
+            loss = loss + weights["archetype"] * term("archetype", F.cross_entropy(out_a["archetype"], arch_t[idx_t]))
+            if pos_mask[idx_t].any():
+                loss = loss + weights["position"] * term(
+                    "position", F.cross_entropy(out_a["position"][pos_mask[idx_t]], pos_t[idx_t][pos_mask[idx_t]])
+                )
+            if game_m is None:
+                loss = loss + weights["profile"] * term("profile", F.mse_loss(out_a["profile"], game_z[idx_t]))
+            else:
+                profile_se = (out_a["profile"] - game_z[idx_t]) ** 2
+                loss = loss + weights["profile"] * term("profile", masked_cell_mean(profile_se, game_m[idx_t]))
+            next_batch = loop_next_idx[idx]
+            next_valid = next_batch >= 0
+            if next_valid.any():
+                next_t = torch.tensor(next_batch[next_valid], device=device)
+                next_valid_t = torch.tensor(next_valid, device=device, dtype=torch.bool)
+                pred_next = out_a["next_profile"][next_valid_t]
+                # Target is next-season z-scored game profile (same 14-d contract).
+                if game_m is None:
+                    loss = loss + weights["next_profile"] * term("next_profile", F.smooth_l1_loss(pred_next, game_z[next_t]))
+                else:
+                    next_l1 = F.smooth_l1_loss(pred_next, game_z[next_t], reduction="none")
+                    loss = loss + weights["next_profile"] * term("next_profile", masked_cell_mean(next_l1, game_m[next_t]))
+            if "skills" in out_a:
+                wm = skillm_t[idx_t]
+                if wm.sum() > 0:
+                    se = (out_a["skills"] - skill_t[idx_t]) ** 2
+                    # Recorded before the division: w * sum / count, as always.
+                    loss = loss + weights["skills"] * term("skills", (wm * se).sum()) / wm.sum()
+            if sal_z is not None and sal_m is not None:
+                loss = loss + weights["salary"] * term(
+                    "salary", masked_scalar_mse(out_a["salary"], sal_z[idx_t], sal_m[idx_t])
+                )
+            if team_z is not None and team_m is not None:
+                loss = loss + weights["team_fit"] * term(
+                    "team_fit", masked_scalar_mse(out_a["team_fit"], team_z[idx_t], team_m[idx_t])
+                )
+            if roster_z is not None and roster_m is not None:
+                loss = loss + weights["roster_lift"] * term(
+                    "roster_lift", masked_scalar_mse(out_a["roster_lift"], roster_z[idx_t], roster_m[idx_t])
+                )
+            if form_z is not None and form_m is not None:
+                loss = loss + weights["form_recon"] * term(
+                    "form_recon",
+                    masked_vector_mse(out_a["form_recon"], form_z[idx_t], form_m[idx_t], form_row_m[idx_t]),
+                )
+            if injury_z is not None and injury_m is not None and "durability" in out_a:
+                loss = loss + weights["durability"] * term(
+                    "durability",
+                    masked_vector_mse(
+                        out_a["durability"],
+                        injury_z[idx_t],
+                        injury_m[idx_t],
+                        injury_row_m[idx_t],
+                    ),
+                )
+            if career_z is not None and career_m is not None:
+                loss = loss + weights["career_slope"] * term(
+                    "career_slope", masked_scalar_mse(out_a["career_slope"], career_z[idx_t], career_m[idx_t])
+                )
+            if comp_z is not None and comp_m is not None:
+                loss = loss + weights["competition"] * term(
+                    "competition", masked_scalar_mse(out_a["competition"], comp_z[idx_t], comp_m[idx_t])
+                )
+            if bbref_z is not None and bbref_m is not None and "bbref" in out_a:
+                loss = loss + weights["bbref"] * term(
+                    "bbref", masked_vector_mse(out_a["bbref"], bbref_z[idx_t], bbref_m[idx_t], bbref_row_m[idx_t])
+                )
+            if ped_z is not None and ped_m is not None:
+                loss = loss + weights["pedigree"] * term(
+                    "pedigree", masked_scalar_mse(out_a["pedigree"], ped_z[idx_t], ped_m[idx_t])
+                )
+            if po_z is not None and po_m is not None:
+                loss = loss + weights["playoff"] * term(
+                    "playoff", masked_scalar_mse(out_a["playoff"], po_z[idx_t], po_m[idx_t])
+                )
+            if hon_z is not None and hon_m is not None:
+                loss = loss + weights["honors"] * term(
+                    "honors", masked_scalar_mse(out_a["honors"], hon_z[idx_t], hon_m[idx_t])
+                )
+
+            scaled = loss / args.grad_accum
+            scaled.backward()
+            accum += 1
+            # The float the loop always took for the epoch average, checked
+            # before the optimizer steps on gradients from a non-finite loss.
+            loss_value = float(loss)
+            mtnn_loop.check_loss(loss_value, loss_terms, epoch=epoch, step=s // args.batch)
+            total += loss_value
+            if accum < args.grad_accum:
+                continue
+            nn.utils.clip_grad_norm_(model.parameters(), 1.0)
+            opt.step()
+            if sched_mode == "step":
+                sched.step()
+            opt.zero_grad(set_to_none=True)
+            accum = 0
+            steps += 1
+        if accum > 0:
+            nn.utils.clip_grad_norm_(model.parameters(), 1.0)
+            opt.step()
+            if sched_mode == "step":
+                sched.step()
+            opt.zero_grad(set_to_none=True)
+            steps += 1
+        if sched_mode == "epoch":
+            sched.step()
+        optimizer_steps += steps
+        avg = total / max(1, steps)
+        history.append(avg)
+
+        log_line = f"epoch {epoch:3d}  loss {avg:.4f}  lr {sched.get_last_lr()[0]:.2e}"
+        if args.val_every > 0 and (epoch % args.val_every == 0 or epoch == args.epochs - 1):
+            E_val = embed_all(model, xs, ms, seas_t)
+            val_r = recall_at_k(E_val, val_pairs, k=10)
+            test_pairs = filter_pairs_by_split(pair_arr, seasons, "test")
+            test_r = recall_at_k(E_val, test_pairs, k=10)
+            val_pu = cross_era_archetype_purity(E_val, clusters, seasons)
+            val_recall_hist.append(val_r if val_r is not None else 0.0)
+            try:
+                _hist = [float(x) for x in val_recall_hist[-int(VAL_RECALL_SMOOTH_N):] if x is not None]
+                val_r_smooth = (sum(_hist) / len(_hist)) if _hist else 0.0
+            except Exception:
+                val_r_smooth = float(val_r) if val_r is not None else 0.0
+            try:
+                val_comp = promotion_composite(val_r_smooth, val_pu)
+            except Exception:
+                val_comp = 0.0
+            pu_s = f" purity@20={val_pu:.3f}" if val_pu is not None else ""
+            val_r_f = float(val_r) if val_r is not None else 0.0
+            test_r_f = float(test_r) if test_r is not None else 0.0
+            val_rs_f = float(val_r_smooth) if val_r_smooth is not None else 0.0
+            val_comp_f = float(val_comp) if val_comp is not None else 0.0
+            log_line += (
+                f"  val_recall@10={val_r_f:.3f} (smooth {val_rs_f:.3f})"
+                f" test_recall@10={test_r_f:.3f}"
+                f"{pu_s} composite={val_comp_f:.3f}"
+            )
+            trace_row = {
+                "epoch": epoch,
+                "val_recall_at_10": val_r,
+                "test_recall_at_10": test_r,
+                "val_purity_at_20": val_pu,
+                "val_composite": val_comp,
+            }
+            val_trace.append(trace_row)
+            emit_training_snapshot(
+                args,
+                weights,
+                fams,
+                history,
+                val_trace,
+                "done" if epoch == args.epochs - 1 else "training",
+            )
+            if select_best:
+                metric_val = None
+                if checkpoint_metric == "recall":
+                    metric_val = val_r_smooth
+                    is_better = metric_val is not None and (best_val_recall is None or metric_val > best_val_recall)
+                elif checkpoint_metric == "purity":
+                    metric_val = val_pu
+                    is_better = metric_val is not None and (best_val_purity is None or metric_val > best_val_purity)
+                else:
+                    metric_val = val_comp
+                    is_better = metric_val is not None and (
+                        best_val_composite is None or metric_val > best_val_composite
+                    )
+                if is_better:
+                    # Store the smoothed recall alongside the metric it was
+                    # actually compared against, so a later smoothed value
+                    # is never judged against an earlier raw (noisier) one.
+                    best_val_recall = val_r_smooth
+                    best_val_purity = val_pu
+                    best_val_composite = val_comp
+                    best_epoch = epoch
+                    mtnn_loop.require_finite(
+                        {"embeddings": E_val, **finite_check_arrays(model)},
+                        before=f"saving the epoch {epoch} checkpoint {BEST_CKPT.name}",
+                    )
+                    atomic_torch_save(
+                        {
+                            "epoch": epoch,
+                            "model": model.state_dict(),
+                            "val_recall_at_10": val_r,
+                            "val_purity_at_20": val_pu,
+                            "val_composite": val_comp,
+                            "checkpoint_metric": args.checkpoint_metric,
+                            "args": vars(args),
+                            "weights": weights,
+                        },
+                        BEST_CKPT,
+                    )
+                    record_written("checkpoint", BEST_CKPT)
+        if epoch % 5 == 0 or epoch == args.epochs - 1:
+            print(log_line)
+
+    # (b) [training#7]: a v2 step-mode schedule ends where it was sized to.
+    # Not checked under v1, which stops at 880 of 1,040 by construction.
+    # (total_steps is at least 1 for the scheduler's sake; --epochs 0 takes 0.)
+    if args.protocol_v2 and sched_mode == "step" and sched.last_epoch != steps_per_epoch * args.epochs:
+        raise SystemExit(
+            f"--protocol-v2: the LR scheduler took {sched.last_epoch} steps but was sized for "
+            f"{steps_per_epoch} an epoch x {args.epochs}; the step count and the loop disagree"
+        )
+
+    if select_best and BEST_CKPT.exists() and best_epoch >= 0:
+        ckpt = safe_torch_load(BEST_CKPT, map_location=device)
+        model.load_state_dict(ckpt["model"])
+        pu_s = f"{best_val_purity:.3f}" if best_val_purity is not None else "n/a"
+        co_s = f"{best_val_composite:.3f}" if best_val_composite is not None else "n/a"
+        print(
+            f"restored best checkpoint epoch {best_epoch} "
+            f"(metric={args.checkpoint_metric} "
+            f"recall={best_val_recall:.3f} purity={pu_s} composite={co_s})"
+        )
+
+    # ---- export ----
+    model.eval()
+    with torch.no_grad():
+        emb = model.encode(xs, ms, seas_t)
+        _, heads = model(xs, ms, seas_t)
+        tower_stack = torch.stack(
+            [model.towers[family](xs[family], ms[family]) for family in fams],
+            dim=1,
+        )
+    E = emb.cpu().numpy().astype(np.float32)
+    tower_values = tower_stack.cpu().numpy().astype(np.float32)
+    arch_logits = heads["archetype"].cpu().numpy().astype(np.float32)
+    pos_logits = heads["position"].cpu().numpy().astype(np.float32)
+    skill_pred = (
+        heads["skills"].cpu().numpy().astype(np.float32) if "skills" in heads else np.zeros((len(E), 0), np.float32)
+    )
+    next_profile_pred = heads["next_profile"].cpu().numpy().astype(np.float32)
+    game_feature_keys = np.array([manifest["features"][j] for j in game_cols])
+
+    # Nothing is written from a model that went non-finite [training#12].
+    mtnn_loop.require_finite(
+        {
+            "E": E,
+            "archetype_logits": arch_logits,
+            "position_logits": pos_logits,
+            "skill_pred": skill_pred,
+            "next_profile_pred": next_profile_pred,
+        },
+        before="writing embedding_v3.npz",
+    )
+    atomic_savez_compressed(
+        ART_DIR / "embedding_v3.npz",
+        E=E,
+        player_id=pids,
+        season=seasons,
+        name=names,
+        cluster=clusters,
+        position=positions,
+        archetype_logits=arch_logits,
+        position_logits=pos_logits,
+        skill_pred=skill_pred,
+        skill_keys=np.array(skill_keys),
+        next_profile_pred=next_profile_pred,
+        game_feature_keys=game_feature_keys,
+    )
+    record_written("embedding", ART_DIR / "embedding_v3.npz")
+
+    centroids = np.zeros((N_ARCHETYPES, E.shape[1]), dtype=np.float32)
+    for k in range(N_ARCHETYPES):
+        mask_k = clusters == k
+        if mask_k.any():
+            c = E[mask_k].mean(0)
+            centroids[k] = c / (np.linalg.norm(c) + 1e-8)
+    atomic_savez_compressed(ART_DIR / "mtnn_centroids.npz", centroids=centroids)
+    record_written("centroids", ART_DIR / "mtnn_centroids.npz")
+
+    # A promoted model keeps its weights: promote.py refuses a bundle without
+    # a checkpoint. The measure and ship recipes pass --val-every 0
+    # --no-best-checkpoint, so they never write mtnn_best.pt, and promote.py
+    # refused every run of the recipe rebuild_all.py ships by default. Such a
+    # run's embedding and report come from its final weights, so with
+    # --run-dir those final weights are the bundle's checkpoint. They go
+    # straight into the run directory, never over pipeline/data/mtnn_best.pt
+    # (best-checkpoint candidates, and the promoted checkpoint after a
+    # promote). torch.save draws from no RNG, and
+    # without --run-dir (the climb, the bit-identity probe) nothing here runs.
+    if run_dir is not None and "checkpoint" not in written:
+        final_ckpt = run_dir / BUNDLE_FILES["checkpoint"]
+        mtnn_loop.require_finite(finite_check_arrays(model), before=f"saving the final weights to {final_ckpt}")
+        atomic_torch_save(
+            {
+                "epoch": args.epochs - 1,
+                "model": model.state_dict(),
+                "selected_by": "final weights: no best checkpoint was saved or restored",
+                "checkpoint_metric": None,
+                "args": vars(args),
+                "weights": weights,
+            },
+            final_ckpt,
+        )
+        record_written("checkpoint", final_ckpt)
+
+    recall = recall_at_k(E, pair_arr, k=10)
+    arch_acc = classification_acc(arch_logits, clusters)
+    pos_acc = classification_acc(pos_logits, positions, positions >= 0)
+    purity = cross_era_archetype_purity(E, clusters, seasons)
+
+    G_base = transparent_baseline_embeddings(Z, game_cols)
+
+    split_of = np.array([eval_split(str(s)) for s in seasons])
+
+    def regression_head_report(head_key: str, col_j: int | None) -> dict | None:
+        """Held-out val/test R2 + MAE(z) for a masked single-target aux head."""
+        if col_j is None:
+            return None
+        pred = heads[head_key].cpu().numpy().astype(np.float32)
+        true, valid = Z[:, col_j], M[:, col_j]
+        out: dict = {}
+        for split in ("val", "test"):
+            rows = np.where((valid > 0) & (split_of == split))[0]
+            if len(rows) == 0:
+                out[split] = None
+                continue
+            resid = true[rows] - pred[rows]
+            ss_tot = float(((true[rows] - true[rows].mean()) ** 2).sum())
+            out[split] = {
+                "rows": len(rows),
+                "mae_z": round(float(np.abs(resid).mean()), 4),
+                "r2": round(1.0 - float((resid**2).sum()) / max(ss_tot, 1e-9), 4),
+            }
+        return out
+
+    def continuity_report() -> dict:
+        """Same-player consecutive-season cosine, per season boundary.
+
+        A model that generalizes holds this roughly flat across eras; one that
+        memorizes the training window peaks inside it and falls off a cliff at
+        the split boundary. The 2026-07-24 collapse read 0.182 at 2023->2024
+        against the shipping recipe's 0.785 while val recall still looked fine,
+        so this localized the failure where retrieval recall alone hid it (test
+        is only ~790 pairs, sd ~0.13 between seeds).
+
+        composite_score.should_promote guards on `continuity_spread`; before
+        this existed the field was never emitted, so that guard silently never
+        fired.
+        """
+        by_player: dict[int, dict[int, int]] = defaultdict(dict)
+        for i, (p, s) in enumerate(zip(pids, seasons, strict=False)):
+            by_player[int(p)][season_start_year(str(s))] = i
+        per_year: dict[int, list[tuple[int, int]]] = defaultdict(list)
+        for mm in by_player.values():
+            for y, i in mm.items():
+                j = mm.get(y + 1)
+                if j is not None:
+                    per_year[y].append((i, j))
+        vals: dict[int, float] = {}
+        for y, prs in per_year.items():
+            if len(prs) < 30:
+                continue
+            P = np.array(prs)
+            vals[y] = float((E[P[:, 0]] * E[P[:, 1]]).sum(1).mean())
+        modern = [v for y, v in vals.items() if y >= 2016]
+        return {
+            "by_transition": {str(k): round(v, 4) for k, v in sorted(vals.items())},
+            "modern_min": round(min(modern), 4) if modern else None,
+            "modern_max": round(max(modern), 4) if modern else None,
+            "spread": round(max(modern) - min(modern), 4) if modern else None,
+        }
+
+    continuity = continuity_report()
+
+    def vector_head_report(head_key: str, cols: list[int] | None) -> dict | None:
+        """Held-out val/test R2 per column + mean, for a masked multi-target head.
+
+        The durability head predicts 4 injury columns, so regression_head_report
+        (single col_j) cannot score it. Until 2026-07-24 nothing scored it at
+        all: it carried loss weight 0.10 and was absent from every metric, which
+        is why the FORM_GP leak (r=+0.9676 with INJ_GP_PCT) was invisible.
+        """
+        if not cols or head_key not in heads:
+            return None
+        pred = heads[head_key].cpu().numpy().astype(np.float32)
+        if pred.ndim != 2 or pred.shape[1] != len(cols):
+            return None
+        out: dict = {}
+        for split in ("val", "test"):
+            per_col = {}
+            r2s = []
+            for i, col_j in enumerate(cols):
+                rows = np.where((M[:, col_j] > 0) & (split_of == split))[0]
+                if len(rows) == 0:
+                    continue
+                true = Z[rows, col_j]
+                resid = true - pred[rows, i]
+                ss_tot = float(((true - true.mean()) ** 2).sum())
+                r2 = 1.0 - float((resid**2).sum()) / max(ss_tot, 1e-9)
+                per_col[manifest["features"][col_j]] = {
+                    "rows": len(rows),
+                    "mae_z": round(float(np.abs(resid).mean()), 4),
+                    "r2": round(float(r2), 4),
+                }
+                r2s.append(r2)
+            out[split] = {"per_column": per_col, "r2": round(float(np.mean(r2s)), 4)} if r2s else None
+        return out
+
+    durability_report = vector_head_report("durability", injury_cols)
+
+    pedigree_report = regression_head_report("pedigree", ped_j)
+    playoff_report = regression_head_report("playoff", po_j)
+    honors_report = regression_head_report("honors", hon_j)
+    team_fit_report = regression_head_report("team_fit", team_j)
+    roster_lift_report = regression_head_report("roster_lift", roster_j)
+    career_slope_report = regression_head_report("career_slope", career_j)
+    competition_report = regression_head_report("competition", comp_j)
+
+    skills_report = None
+    if skill_keys:
+        skills_report = {
+            "holdout": skill_holdout_metrics(skill_pred, skill_g, skill_m, seasons, skill_keys),
+            "neighbor_consistency_pts_mtnn": skill_neighbor_consistency(E, skill_g, skill_row_mask),
+            "neighbor_consistency_pts_transparent_14d": skill_neighbor_consistency(G_base, skill_g, skill_row_mask),
+        }
+    next_profile_report = next_profile_holdout_metrics(
+        next_profile_pred,
+        Z[:, game_cols],
+        next_idx_arr,
+        seasons,
+        [manifest["features"][j] for j in game_cols],
+        target_mask=game_measured,
+    )
+    population_validation = build_validation_report(
+        embeddings=E,
+        tower_stack=tower_values,
+        archetype_logits=arch_logits,
+        clusters=clusters,
+        positions=positions,
+        seasons=seasons,
+        role_labels=role_labels_from_context(
+            names,
+            seasons,
+            DATA_DIR / "role_context.json",
+        ),
+        next_profile_pred=next_profile_pred,
+        game_profile_target=Z[:, game_cols],
+        next_index=next_idx_arr,
+        pairs=pair_arr,
+        held_out_pairs=filter_pairs_by_split(pair_arr, seasons, "test"),
+        game_profile_mask=game_measured,
+    )
+    held_out = {}
+    for split in ("train", "val", "test", "all"):
+        sub = pair_arr if split == "all" else filter_pairs_by_split(pair_arr, seasons, split)
+        held_out[split] = {
+            "pairs": len(sub),
+            "recall_at_10_mtnn": recall_at_k(E, sub, k=10),
+            "recall_at_10_transparent_14d": recall_at_k(G_base, sub, k=10),
+        }
+
+    report = {
+        "trained": time.strftime("%Y-%m-%d %H:%M"),
+        "model": model_tag(args),
+        # v1 and v2 numbers are not comparable (--protocol-v2's comment), and
+        # composite_score reads this to decide whether a missing component
+        # may fall back or leaves the CQS unscored [eval#10].
+        "protocol": "v2" if args.protocol_v2 else "v1",
+        "epochs": args.epochs,
+        "best_epoch": best_epoch if best_epoch >= 0 else None,
+        "best_val_recall_at_10": best_val_recall,
+        "dim": args.dim,
+        "tower_width": args.tower_width,
+        "tower_hidden": args.tower_hidden,
+        "skill_hidden": args.skill_hidden,
+        # v5 architecture knobs. Without these the report cannot tell you which
+        # recipe produced it -- only the checkpoint could, which made
+        # mtnn_report.json useless as provenance for a promote.
+        "tower_blocks": args.tower_blocks,
+        "mlp_heads": args.mlp_heads,
+        "d_head_hidden": args.d_head_hidden if args.mlp_heads else None,
+        "fusion_hidden": args.fusion_hidden or None,
+        "lr": args.lr,
+        "lr_schedule": args.lr_schedule,
+        # The schedule's size against what the loop took [training#7]: under
+        # v1 a 40-epoch select run is sized for 1,040 steps and takes 880.
+        "lr_schedule_steps": {
+            "sized_for": total_steps,
+            "scheduler_steps": int(sched.last_epoch) if sched_mode == "step" else None,
+            "optimizer_steps": optimizer_steps,
+        },
+        "warmup_pct": args.warmup_pct,
+        "anneal_strategy": args.anneal_strategy,
+        "weight_decay": args.weight_decay,
+        "grad_accum": args.grad_accum,
+        "fusion": args.fusion,
+        "nce_loss": args.nce_loss,
+        "nce_player_weight": args.nce_player_weight,
+        "nce_arch_weight": args.nce_arch_weight,
+        "checkpoint_metric": args.checkpoint_metric,
+        # What chose the restored epoch: "none" when no best checkpoint was
+        # selected (--no-best-checkpoint, --val-every 0, or fit_rows 'all').
+        "checkpoint_selection": checkpoint_metric if select_best and args.val_every > 0 else "none",
+        "best_val_purity_at_20": best_val_purity,
+        "best_val_composite": best_val_composite,
+        "nce_temp": args.nce_temp,
+        "drop_p": args.drop_p,
+        "hard_neg_boost": args.hard_neg_boost,
+        "loss_weights": weights,
+        "val_trace": val_trace,
+        "towers": {k: len(v) for k, v in fams.items()},
+        "positive_pairs": len(pairs),
+        "position_labeled": int((positions >= 0).sum()),
+        "final_loss": history[-1] if history else None,
+        "recall_at_10_same_player_next_season": recall,
+        "held_out_recall": held_out,
+        "archetype_top1_acc": arch_acc,
+        "position_top1_acc": pos_acc,
+        "cross_era_archetype_neighbor_purity_at_20": purity,
+        "skills": skills_report,
+        "next_profile": next_profile_report,
+        "population_validation": population_validation,
+        "next_profile_labeled_rows": next_row_count,
+        "team_fit": team_fit_report,
+        "roster_lift": roster_lift_report,
+        "career_slope": career_slope_report,
+        "competition": competition_report,
+        # Reported but deliberately NOT in composite_score._aux_test_r2s: adding
+        # it would change what CQS means and invalidate the promote baseline.
+        # Scoring policy is an operator decision; measurement is not.
+        "durability": durability_report,
+        # Flat across eras = generalizing; a cliff at the split boundary = memorizing.
+        # composite_score.should_promote guards on continuity_spread.
+        "continuity": continuity,
+        "continuity_spread": continuity.get("spread"),
+        "pedigree_expectation": pedigree_report,
+        "playoff_riser": playoff_report,
+        "honors_recognition": honors_report,
+        "promotion_gate": (
+            "Promote only if multi-task CQS >= baseline + 0.5 AND test recall@10 "
+            "and purity@20 stay within 0.02 of baseline (not auto-promoted to assets/)."
+        ),
+    }
+    # Which rows the loss saw decides what the numbers above are. With
+    # fit_rows 'all' (--phase final-refit, or --fit-rows all) the loss trained
+    # on all 12,966 rows, the 948 val and 991 test rows included, so
+    # held_out_recall and composite are in-sample. The report used to say
+    # "selection_holdout" for every run, and should_promote ran before
+    # report["selection"] existed, so it could not tell [training#0, eval#7].
+    # Both are set first now, and should_promote refuses an in-sample report.
+    metrics_source = "in_sample_refit" if fit_rows_mode == "all" else "selection_holdout"
+    report["metrics_source"] = metrics_source
+    report["selection"] = {
+        "fit_rows": fit_rows_mode,
+        "n_fit": int(fit_mask.sum()),
+        "split": "train y<=2021 / val y<=2023 / test y>=2024",
+        "best_epoch": best_epoch,
+    }
+    # composite_score reads lineage.inputs: under --protocol-v2 a run whose
+    # pipeline/data/skill_labels.npz was missing (sha None) is unscored, not
+    # scored as if it had left the skill towers out (d106598c). The lineage
+    # block used to be attached only after scoring, so that rule never fired
+    # on a report this script wrote [final#6]. The inputs go in first; the
+    # full block replaces this below.
+    report["lineage"] = {"inputs": lineage_inputs}
+    report["composite"] = cqs.composite_quality(report)
+    ok, why = cqs.should_promote(report)
+    report["promote"] = {"ok": ok, "reason": why}
+    report["deploy"] = {
+        "mode": "selection_fit_rows_" + fit_rows_mode,
+        "metrics_source": metrics_source,
+        "note": (
+            "Loss rows were every row, val and test included, so held_out_recall, composite and promote "
+            "are IN-SAMPLE. Its held-out evidence has to come from a select run of the same recipe."
+            if fit_rows_mode == "all"
+            else "Held-out recall/CQS use val/test pairs; the loss saw train-split rows only."
+        ),
+    }
+
+    # The full block, replacing the inputs-only one the scoring above read
+    # (the same lineage_inputs dict). Popped first so the key keeps its place
+    # at the end of the report.
+    report.pop("lineage")
+    report["lineage"] = {
+        "schema": 1,
+        "run_id": run_id,
+        "started": run_started,
+        "argv": list(sys.argv),
+        "args": dict(vars(args)),
+        # {name, path, sha256, flags, overridden} with --recipe, else None.
+        "recipe": mtnn_recipe.lineage(parsed, ROOT),
+        "seed": args.seed,
+        "device": str(device),
+        "phase": args.phase,
+        "fit_rows": fit_rows_mode,
+        "write_artifacts": bool(args.write_artifacts),
+        "git": run_git,
+        "env_versions": env_versions(),
+        "matrix_fingerprint": lineage_matrix,
+        "inputs": lineage_inputs,
+        # sha256 of each file as this run wrote it. No checkpoint entry means
+        # this run wrote none, whatever pipeline/data/mtnn_best.pt holds.
+        "artifacts": written,
+        "run_dir": display_path(run_dir, ROOT) if run_dir is not None else None,
+    }
+
+    # CQS v2, beside v1 and changing none of it: held-out rows only, every
+    # pair, each component against a free baseline, provisional weights
+    # (composite_v2.py says why, finding by finding). Last, so every number
+    # above is already fixed; composite_v2_block draws from no RNG and the
+    # extra encode of the masked held-out anchors runs under no_grad.
+    report["composite_v2"] = composite_v2_block(
+        model,
+        fams,
+        seas_t,
+        device,
+        {
+            "E": E,
+            "Z": Z_built,
+            "M": M_built,
+            "Z_model": Z,
+            "M_model": M,
+            "features": manifest["features"],
+            "families": manifest["families"],
+            "game_features": manifest["game_features"],
+            "player_id": pids,
+            "season": seasons,
+            "cluster": clusters,
+            "position": positions,
+            "archetype_logits": arch_logits,
+            "position_logits": pos_logits,
+            "next_profile_pred": next_profile_pred,
+            "skills": (
+                {"pred": skill_pred, "target": skill_g, "mask": skill_m, "keys": skill_keys, "n_core": n_core}
+                if skill_keys
+                else None
+            ),
+            "report": report,
+            "run_args": vars(args),
+        },
+        log,
+    )
+    v2 = report["composite_v2"]
+    log.info("CQS v2 %s (provisional; missing: %s)", v2["cqs_v2"], ", ".join(v2["components_missing"]) or "none")
+
+    report_text = json.dumps(report, indent=2)
+    # pipeline/data/mtnn_report.json is the LAST run's report. The climb and the
+    # sweeps read it here; the exporters read the promoted bundle's copy.
+    atomic_write_text(DATA_DIR / "mtnn_report.json", report_text, encoding="utf-8")
+    if run_dir is not None:
+        write_run_bundle(run_dir, written_paths, written, report_text)
+    print(report_text)
+    # The fingerprint goes after the existing text so the line still starts
+    # "CQS <value> · ": nothing parses it (herdmux reads composite.cqs from
+    # mtnn_report.json, metrics.py:104), but two CQS lines are only comparable
+    # when these match [features#2].
+    print(f"CQS {report['composite']['cqs']} · {why} · matrix {short_matrix_fingerprint(lineage_matrix)}")
+    # This used to say the report went to ART_DIR. It goes to DATA_DIR, as the checkpoint does.
+    ckpt_note = f"; mtnn_best.pt -> {written_paths['checkpoint']}" if "checkpoint" in written else ""
+    print(f"wrote embedding_v3.npz, mtnn_centroids.npz -> {ART_DIR}; mtnn_report.json -> {DATA_DIR}{ckpt_note}")
+    if run_dir is not None:
+        print(f"run bundle {run_id} -> {run_dir}")
+        print(f"promote it: python pipeline/promote.py --run {display_path(run_dir, ROOT)}")
+
+
+if __name__ == "__main__":
+    main()

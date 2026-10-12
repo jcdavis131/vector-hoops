@@ -1,0 +1,2998 @@
+{
+ "aaronmckie": {
+  "ast_per_g": 3.5,
+  "games": 80.0,
+  "mp_per_g": 29.7,
+  "pts_per_g": 9.0,
+  "trb_per_g": 4.4
+ },
+ "aaronwilliams": {
+  "ast_per_g": 1.1,
+  "games": 81.0,
+  "mp_per_g": 19.7,
+  "pts_per_g": 6.2,
+  "trb_per_g": 4.1
+ },
+ "adamharrington": {
+  "ast_per_g": 0.6,
+  "games": 19.0,
+  "mp_per_g": 5.8,
+  "pts_per_g": 1.6,
+  "trb_per_g": 0.4
+ },
+ "adonalfoyle": {
+  "ast_per_g": 0.5,
+  "games": 82.0,
+  "mp_per_g": 21.8,
+  "pts_per_g": 5.4,
+  "trb_per_g": 6.0
+ },
+ "adriangriffin": {
+  "ast_per_g": 1.4,
+  "games": 74.0,
+  "mp_per_g": 18.6,
+  "pts_per_g": 4.4,
+  "trb_per_g": 3.6
+ },
+ "ajguyton": {
+  "ast_per_g": 1.0,
+  "games": 2.0,
+  "mp_per_g": 4.5,
+  "pts_per_g": 0.0,
+  "trb_per_g": 0.0
+ },
+ "alanhenderson": {
+  "ast_per_g": 0.5,
+  "games": 82.0,
+  "mp_per_g": 18.2,
+  "pts_per_g": 4.8,
+  "trb_per_g": 4.9
+ },
+ "alharrington": {
+  "ast_per_g": 1.5,
+  "games": 82.0,
+  "mp_per_g": 30.1,
+  "pts_per_g": 12.2,
+  "trb_per_g": 6.2
+ },
+ "allanhouston": {
+  "ast_per_g": 2.7,
+  "games": 82.0,
+  "mp_per_g": 37.9,
+  "pts_per_g": 22.5,
+  "trb_per_g": 2.8
+ },
+ "alleniverson": {
+  "ast_per_g": 5.5,
+  "games": 82.0,
+  "mp_per_g": 42.5,
+  "pts_per_g": 27.6,
+  "trb_per_g": 4.2
+ },
+ "altonford": {
+  "ast_per_g": 0.1,
+  "games": 11.0,
+  "mp_per_g": 2.8,
+  "pts_per_g": 0.6,
+  "trb_per_g": 0.5
+ },
+ "alvinwilliams": {
+  "ast_per_g": 5.3,
+  "games": 78.0,
+  "mp_per_g": 33.8,
+  "pts_per_g": 13.2,
+  "trb_per_g": 3.1
+ },
+ "amalmccaskill": {
+  "ast_per_g": 0.5,
+  "games": 11.0,
+  "mp_per_g": 6.4,
+  "pts_per_g": 1.0,
+  "trb_per_g": 2.0
+ },
+ "amarestoudemire": {
+  "ast_per_g": 1.0,
+  "games": 82.0,
+  "mp_per_g": 31.3,
+  "pts_per_g": 13.5,
+  "trb_per_g": 8.8
+ },
+ "andreikirilenko": {
+  "ast_per_g": 1.7,
+  "games": 80.0,
+  "mp_per_g": 27.7,
+  "pts_per_g": 12.0,
+  "trb_per_g": 5.3
+ },
+ "andremiller": {
+  "ast_per_g": 6.7,
+  "games": 80.0,
+  "mp_per_g": 36.4,
+  "pts_per_g": 13.6,
+  "trb_per_g": 4.0
+ },
+ "andrewdeclercq": {
+  "ast_per_g": 0.7,
+  "games": 77.0,
+  "mp_per_g": 17.2,
+  "pts_per_g": 4.7,
+  "trb_per_g": 4.4
+ },
+ "anferneehardaway": {
+  "ast_per_g": 4.1,
+  "games": 58.0,
+  "mp_per_g": 30.6,
+  "pts_per_g": 10.6,
+  "trb_per_g": 4.4
+ },
+ "ansusesay": {
+  "ast_per_g": 0.5,
+  "games": 45.0,
+  "mp_per_g": 10.0,
+  "pts_per_g": 2.1,
+  "trb_per_g": 1.6
+ },
+ "antawnjamison": {
+  "ast_per_g": 1.9,
+  "games": 82.0,
+  "mp_per_g": 39.3,
+  "pts_per_g": 22.2,
+  "trb_per_g": 7.0
+ },
+ "anthonycarter": {
+  "ast_per_g": 4.1,
+  "games": 49.0,
+  "mp_per_g": 18.6,
+  "pts_per_g": 4.1,
+  "trb_per_g": 1.7
+ },
+ "anthonygoldwire": {
+  "ast_per_g": 0.3,
+  "games": 15.0,
+  "mp_per_g": 5.7,
+  "pts_per_g": 1.7,
+  "trb_per_g": 0.4
+ },
+ "anthonyjohnson": {
+  "ast_per_g": 1.3,
+  "games": 66.0,
+  "mp_per_g": 12.8,
+  "pts_per_g": 4.1,
+  "trb_per_g": 1.2
+ },
+ "anthonymason": {
+  "ast_per_g": 3.2,
+  "games": 65.0,
+  "mp_per_g": 32.6,
+  "pts_per_g": 7.2,
+  "trb_per_g": 6.4
+ },
+ "anthonypeeler": {
+  "ast_per_g": 3.0,
+  "games": 82.0,
+  "mp_per_g": 27.4,
+  "pts_per_g": 7.7,
+  "trb_per_g": 2.9
+ },
+ "antoinerigaudeau": {
+  "ast_per_g": 0.5,
+  "games": 11.0,
+  "mp_per_g": 8.3,
+  "pts_per_g": 1.5,
+  "trb_per_g": 0.7
+ },
+ "antoinewalker": {
+  "ast_per_g": 4.8,
+  "games": 78.0,
+  "mp_per_g": 41.5,
+  "pts_per_g": 20.1,
+  "trb_per_g": 7.2
+ },
+ "antoniodaniels": {
+  "ast_per_g": 1.3,
+  "games": 67.0,
+  "mp_per_g": 13.0,
+  "pts_per_g": 3.7,
+  "trb_per_g": 1.1
+ },
+ "antoniodavis": {
+  "ast_per_g": 2.5,
+  "games": 53.0,
+  "mp_per_g": 35.7,
+  "pts_per_g": 13.9,
+  "trb_per_g": 8.2
+ },
+ "antonioharvey": {
+  "ast_per_g": 0.0,
+  "games": 4.0,
+  "mp_per_g": 8.0,
+  "pts_per_g": 1.0,
+  "trb_per_g": 1.5
+ },
+ "artlong": {
+  "ast_per_g": 0.2,
+  "games": 26.0,
+  "mp_per_g": 8.1,
+  "pts_per_g": 2.3,
+  "trb_per_g": 2.3
+ },
+ "arvydassabonis": {
+  "ast_per_g": 1.8,
+  "games": 78.0,
+  "mp_per_g": 15.5,
+  "pts_per_g": 6.1,
+  "trb_per_g": 4.3
+ },
+ "austincroshere": {
+  "ast_per_g": 1.1,
+  "games": 49.0,
+  "mp_per_g": 12.9,
+  "pts_per_g": 5.1,
+  "trb_per_g": 3.2
+ },
+ "averyjohnson": {
+  "ast_per_g": 1.3,
+  "games": 48.0,
+  "mp_per_g": 9.0,
+  "pts_per_g": 3.3,
+  "trb_per_g": 0.6
+ },
+ "barondavis": {
+  "ast_per_g": 6.4,
+  "games": 50.0,
+  "mp_per_g": 37.8,
+  "pts_per_g": 17.1,
+  "trb_per_g": 3.7
+ },
+ "benwallace": {
+  "ast_per_g": 1.6,
+  "games": 73.0,
+  "mp_per_g": 39.4,
+  "pts_per_g": 6.9,
+  "trb_per_g": 15.4
+ },
+ "bimbocoles": {
+  "ast_per_g": 2.1,
+  "games": 35.0,
+  "mp_per_g": 19.7,
+  "pts_per_g": 4.4,
+  "trb_per_g": 1.7
+ },
+ "bobbyjackson": {
+  "ast_per_g": 3.1,
+  "games": 59.0,
+  "mp_per_g": 28.4,
+  "pts_per_g": 15.2,
+  "trb_per_g": 3.7
+ },
+ "bobbysimmons": {
+  "ast_per_g": 0.6,
+  "games": 36.0,
+  "mp_per_g": 10.5,
+  "pts_per_g": 3.3,
+  "trb_per_g": 2.1
+ },
+ "bobsura": {
+  "ast_per_g": 3.2,
+  "games": 55.0,
+  "mp_per_g": 20.5,
+  "pts_per_g": 7.3,
+  "trb_per_g": 3.0
+ },
+ "bonziwells": {
+  "ast_per_g": 3.3,
+  "games": 75.0,
+  "mp_per_g": 31.9,
+  "pts_per_g": 15.2,
+  "trb_per_g": 5.3
+ },
+ "booutlaw": {
+  "ast_per_g": 1.4,
+  "games": 80.0,
+  "mp_per_g": 22.5,
+  "pts_per_g": 4.7,
+  "trb_per_g": 4.6
+ },
+ "bostjannachbar": {
+  "ast_per_g": 0.2,
+  "games": 14.0,
+  "mp_per_g": 5.5,
+  "pts_per_g": 2.1,
+  "trb_per_g": 0.8
+ },
+ "bradmiller": {
+  "ast_per_g": 2.6,
+  "games": 73.0,
+  "mp_per_g": 31.1,
+  "pts_per_g": 13.1,
+  "trb_per_g": 8.3
+ },
+ "brandonarmstrong": {
+  "ast_per_g": 0.1,
+  "games": 17.0,
+  "mp_per_g": 4.1,
+  "pts_per_g": 1.4,
+  "trb_per_g": 0.2
+ },
+ "brandonwilliams": {
+  "ast_per_g": 0.0,
+  "games": 6.0,
+  "mp_per_g": 3.2,
+  "pts_per_g": 0.3,
+  "trb_per_g": 0.3
+ },
+ "brendanhaywood": {
+  "ast_per_g": 0.4,
+  "games": 81.0,
+  "mp_per_g": 23.8,
+  "pts_per_g": 6.2,
+  "trb_per_g": 5.0
+ },
+ "brentbarry": {
+  "ast_per_g": 5.1,
+  "games": 75.0,
+  "mp_per_g": 33.1,
+  "pts_per_g": 10.3,
+  "trb_per_g": 4.0
+ },
+ "brevinknight": {
+  "ast_per_g": 4.2,
+  "games": 55.0,
+  "mp_per_g": 16.9,
+  "pts_per_g": 3.9,
+  "trb_per_g": 1.5
+ },
+ "briancardinal": {
+  "ast_per_g": 0.2,
+  "games": 5.0,
+  "mp_per_g": 3.0,
+  "pts_per_g": 0.8,
+  "trb_per_g": 1.0
+ },
+ "briangrant": {
+  "ast_per_g": 1.3,
+  "games": 82.0,
+  "mp_per_g": 32.2,
+  "pts_per_g": 10.3,
+  "trb_per_g": 10.2
+ },
+ "brianscalabrine": {
+  "ast_per_g": 0.8,
+  "games": 59.0,
+  "mp_per_g": 12.3,
+  "pts_per_g": 3.1,
+  "trb_per_g": 2.4
+ },
+ "brianshaw": {
+  "ast_per_g": 1.4,
+  "games": 72.0,
+  "mp_per_g": 12.5,
+  "pts_per_g": 3.5,
+  "trb_per_g": 1.7
+ },
+ "brianskinner": {
+  "ast_per_g": 0.2,
+  "games": 77.0,
+  "mp_per_g": 17.9,
+  "pts_per_g": 6.0,
+  "trb_per_g": 4.8
+ },
+ "brucebowen": {
+  "ast_per_g": 1.4,
+  "games": 82.0,
+  "mp_per_g": 31.3,
+  "pts_per_g": 7.1,
+  "trb_per_g": 2.9
+ },
+ "brunosundov": {
+  "ast_per_g": 0.3,
+  "games": 26.0,
+  "mp_per_g": 5.3,
+  "pts_per_g": 1.2,
+  "trb_per_g": 1.1
+ },
+ "brycedrew": {
+  "ast_per_g": 0.8,
+  "games": 13.0,
+  "mp_per_g": 6.1,
+  "pts_per_g": 1.5,
+  "trb_per_g": 1.0
+ },
+ "bryonrussell": {
+  "ast_per_g": 1.0,
+  "games": 70.0,
+  "mp_per_g": 19.8,
+  "pts_per_g": 4.5,
+  "trb_per_g": 3.0
+ },
+ "calbertcheaney": {
+  "ast_per_g": 2.0,
+  "games": 81.0,
+  "mp_per_g": 29.0,
+  "pts_per_g": 8.6,
+  "trb_per_g": 3.5
+ },
+ "calvinbooth": {
+  "ast_per_g": 0.3,
+  "games": 47.0,
+  "mp_per_g": 12.2,
+  "pts_per_g": 2.9,
+  "trb_per_g": 2.3
+ },
+ "carlosarroyo": {
+  "ast_per_g": 1.2,
+  "games": 44.0,
+  "mp_per_g": 6.5,
+  "pts_per_g": 2.8,
+  "trb_per_g": 0.6
+ },
+ "carlosboozer": {
+  "ast_per_g": 1.3,
+  "games": 81.0,
+  "mp_per_g": 25.3,
+  "pts_per_g": 10.0,
+  "trb_per_g": 7.5
+ },
+ "caronbutler": {
+  "ast_per_g": 2.7,
+  "games": 78.0,
+  "mp_per_g": 36.6,
+  "pts_per_g": 15.4,
+  "trb_per_g": 5.1
+ },
+ "caseyjacobsen": {
+  "ast_per_g": 1.0,
+  "games": 72.0,
+  "mp_per_g": 15.9,
+  "pts_per_g": 5.1,
+  "trb_per_g": 1.2
+ },
+ "cezarytrybanski": {
+  "ast_per_g": 0.1,
+  "games": 15.0,
+  "mp_per_g": 5.7,
+  "pts_per_g": 0.9,
+  "trb_per_g": 0.9
+ },
+ "charlesoakley": {
+  "ast_per_g": 1.0,
+  "games": 42.0,
+  "mp_per_g": 12.2,
+  "pts_per_g": 1.8,
+  "trb_per_g": 2.5
+ },
+ "charlessmith": {
+  "ast_per_g": 0.3,
+  "games": 3.0,
+  "mp_per_g": 4.3,
+  "pts_per_g": 1.7,
+  "trb_per_g": 0.0
+ },
+ "charlieward": {
+  "ast_per_g": 4.6,
+  "games": 66.0,
+  "mp_per_g": 22.2,
+  "pts_per_g": 7.2,
+  "trb_per_g": 2.7
+ },
+ "chaunceybillups": {
+  "ast_per_g": 3.9,
+  "games": 74.0,
+  "mp_per_g": 31.4,
+  "pts_per_g": 16.2,
+  "trb_per_g": 3.7
+ },
+ "cherokeeparks": {
+  "ast_per_g": 0.7,
+  "games": 30.0,
+  "mp_per_g": 21.6,
+  "pts_per_g": 6.3,
+  "trb_per_g": 4.4
+ },
+ "chrisandersen": {
+  "ast_per_g": 0.5,
+  "games": 59.0,
+  "mp_per_g": 15.4,
+  "pts_per_g": 5.2,
+  "trb_per_g": 4.6
+ },
+ "chrischilds": {
+  "ast_per_g": 1.3,
+  "games": 12.0,
+  "mp_per_g": 8.8,
+  "pts_per_g": 1.3,
+  "trb_per_g": 0.4
+ },
+ "chriscrawford": {
+  "ast_per_g": 0.2,
+  "games": 5.0,
+  "mp_per_g": 7.6,
+  "pts_per_g": 4.8,
+  "trb_per_g": 1.4
+ },
+ "chrisdudley": {
+  "ast_per_g": 0.0,
+  "games": 3.0,
+  "mp_per_g": 3.7,
+  "pts_per_g": 0.0,
+  "trb_per_g": 0.7
+ },
+ "chrisjefferies": {
+  "ast_per_g": 0.4,
+  "games": 51.0,
+  "mp_per_g": 13.1,
+  "pts_per_g": 3.9,
+  "trb_per_g": 1.2
+ },
+ "chrismihm": {
+  "ast_per_g": 0.5,
+  "games": 52.0,
+  "mp_per_g": 15.6,
+  "pts_per_g": 5.9,
+  "trb_per_g": 4.4
+ },
+ "chrismills": {
+  "ast_per_g": 1.0,
+  "games": 21.0,
+  "mp_per_g": 12.5,
+  "pts_per_g": 4.8,
+  "trb_per_g": 2.4
+ },
+ "chrisowens": {
+  "ast_per_g": 0.0,
+  "games": 1.0,
+  "mp_per_g": 6.0,
+  "pts_per_g": 4.0,
+  "trb_per_g": 1.0
+ },
+ "christianlaettner": {
+  "ast_per_g": 3.1,
+  "games": 76.0,
+  "mp_per_g": 29.1,
+  "pts_per_g": 8.3,
+  "trb_per_g": 6.6
+ },
+ "chriswebber": {
+  "ast_per_g": 5.4,
+  "games": 67.0,
+  "mp_per_g": 39.1,
+  "pts_per_g": 23.0,
+  "trb_per_g": 10.5
+ },
+ "chriswhitney": {
+  "ast_per_g": 2.8,
+  "games": 51.0,
+  "mp_per_g": 20.6,
+  "pts_per_g": 7.0,
+  "trb_per_g": 1.3
+ },
+ "chriswilcox": {
+  "ast_per_g": 0.5,
+  "games": 46.0,
+  "mp_per_g": 10.4,
+  "pts_per_g": 3.7,
+  "trb_per_g": 2.3
+ },
+ "chuckyatkins": {
+  "ast_per_g": 2.7,
+  "games": 65.0,
+  "mp_per_g": 21.5,
+  "pts_per_g": 7.1,
+  "trb_per_g": 1.5
+ },
+ "clarenceweatherspoon": {
+  "ast_per_g": 0.9,
+  "games": 79.0,
+  "mp_per_g": 25.6,
+  "pts_per_g": 6.6,
+  "trb_per_g": 7.6
+ },
+ "cliffordrobinson": {
+  "ast_per_g": 3.3,
+  "games": 81.0,
+  "mp_per_g": 34.9,
+  "pts_per_g": 12.2,
+  "trb_per_g": 3.9
+ },
+ "coreybenjamin": {
+  "ast_per_g": 1.1,
+  "games": 9.0,
+  "mp_per_g": 16.9,
+  "pts_per_g": 4.4,
+  "trb_per_g": 3.4
+ },
+ "coreymaggette": {
+  "ast_per_g": 1.9,
+  "games": 64.0,
+  "mp_per_g": 31.3,
+  "pts_per_g": 16.8,
+  "trb_per_g": 5.0
+ },
+ "corieblount": {
+  "ast_per_g": 1.0,
+  "games": 50.0,
+  "mp_per_g": 16.7,
+  "pts_per_g": 3.0,
+  "trb_per_g": 4.1
+ },
+ "corlisswilliamson": {
+  "ast_per_g": 1.3,
+  "games": 82.0,
+  "mp_per_g": 25.1,
+  "pts_per_g": 12.0,
+  "trb_per_g": 4.4
+ },
+ "courtneyalexander": {
+  "ast_per_g": 1.2,
+  "games": 66.0,
+  "mp_per_g": 20.6,
+  "pts_per_g": 7.9,
+  "trb_per_g": 1.8
+ },
+ "cuttinomobley": {
+  "ast_per_g": 2.8,
+  "games": 73.0,
+  "mp_per_g": 41.7,
+  "pts_per_g": 17.5,
+  "trb_per_g": 4.2
+ },
+ "dajuanwagner": {
+  "ast_per_g": 2.8,
+  "games": 47.0,
+  "mp_per_g": 29.5,
+  "pts_per_g": 13.4,
+  "trb_per_g": 1.7
+ },
+ "daledavis": {
+  "ast_per_g": 1.2,
+  "games": 78.0,
+  "mp_per_g": 29.3,
+  "pts_per_g": 7.4,
+  "trb_per_g": 7.2
+ },
+ "daliborbagaric": {
+  "ast_per_g": 0.4,
+  "games": 10.0,
+  "mp_per_g": 7.6,
+  "pts_per_g": 1.9,
+  "trb_per_g": 2.0
+ },
+ "damonebrown": {
+  "ast_per_g": 0.6,
+  "games": 5.0,
+  "mp_per_g": 23.0,
+  "pts_per_g": 5.6,
+  "trb_per_g": 3.0
+ },
+ "damonjones": {
+  "ast_per_g": 1.6,
+  "games": 49.0,
+  "mp_per_g": 14.5,
+  "pts_per_g": 4.6,
+  "trb_per_g": 1.4
+ },
+ "damonstoudamire": {
+  "ast_per_g": 3.5,
+  "games": 59.0,
+  "mp_per_g": 22.3,
+  "pts_per_g": 6.9,
+  "trb_per_g": 2.6
+ },
+ "dandickau": {
+  "ast_per_g": 1.7,
+  "games": 50.0,
+  "mp_per_g": 10.3,
+  "pts_per_g": 3.7,
+  "trb_per_g": 0.9
+ },
+ "dangadzuric": {
+  "ast_per_g": 0.2,
+  "games": 49.0,
+  "mp_per_g": 15.5,
+  "pts_per_g": 3.4,
+  "trb_per_g": 4.0
+ },
+ "danlanghi": {
+  "ast_per_g": 0.4,
+  "games": 60.0,
+  "mp_per_g": 9.0,
+  "pts_per_g": 3.1,
+  "trb_per_g": 1.5
+ },
+ "dannyferry": {
+  "ast_per_g": 0.3,
+  "games": 64.0,
+  "mp_per_g": 9.4,
+  "pts_per_g": 1.9,
+  "trb_per_g": 1.2
+ },
+ "dannyfortson": {
+  "ast_per_g": 0.7,
+  "games": 17.0,
+  "mp_per_g": 13.1,
+  "pts_per_g": 3.5,
+  "trb_per_g": 4.3
+ },
+ "dannymanning": {
+  "ast_per_g": 0.5,
+  "games": 13.0,
+  "mp_per_g": 6.8,
+  "pts_per_g": 2.6,
+  "trb_per_g": 1.4
+ },
+ "dariusmiles": {
+  "ast_per_g": 2.6,
+  "games": 67.0,
+  "mp_per_g": 30.0,
+  "pts_per_g": 9.2,
+  "trb_per_g": 5.4
+ },
+ "darrellarmstrong": {
+  "ast_per_g": 3.9,
+  "games": 82.0,
+  "mp_per_g": 28.7,
+  "pts_per_g": 9.4,
+  "trb_per_g": 3.6
+ },
+ "darvinham": {
+  "ast_per_g": 0.5,
+  "games": 75.0,
+  "mp_per_g": 12.3,
+  "pts_per_g": 2.4,
+  "trb_per_g": 2.0
+ },
+ "davidrobinson": {
+  "ast_per_g": 1.0,
+  "games": 64.0,
+  "mp_per_g": 26.2,
+  "pts_per_g": 8.5,
+  "trb_per_g": 7.9
+ },
+ "davidwesley": {
+  "ast_per_g": 3.4,
+  "games": 73.0,
+  "mp_per_g": 37.1,
+  "pts_per_g": 16.7,
+  "trb_per_g": 2.4
+ },
+ "deanoliver": {
+  "ast_per_g": 1.5,
+  "games": 15.0,
+  "mp_per_g": 6.2,
+  "pts_per_g": 1.5,
+  "trb_per_g": 1.1
+ },
+ "derekanderson": {
+  "ast_per_g": 4.3,
+  "games": 76.0,
+  "mp_per_g": 33.6,
+  "pts_per_g": 13.9,
+  "trb_per_g": 3.5
+ },
+ "derekfisher": {
+  "ast_per_g": 3.6,
+  "games": 82.0,
+  "mp_per_g": 34.5,
+  "pts_per_g": 10.5,
+  "trb_per_g": 2.9
+ },
+ "derrickcoleman": {
+  "ast_per_g": 1.4,
+  "games": 64.0,
+  "mp_per_g": 27.2,
+  "pts_per_g": 9.4,
+  "trb_per_g": 7.0
+ },
+ "desaganadiop": {
+  "ast_per_g": 0.5,
+  "games": 80.0,
+  "mp_per_g": 11.8,
+  "pts_per_g": 1.5,
+  "trb_per_g": 2.7
+ },
+ "deshawnstevenson": {
+  "ast_per_g": 0.7,
+  "games": 61.0,
+  "mp_per_g": 12.5,
+  "pts_per_g": 4.6,
+  "trb_per_g": 1.4
+ },
+ "desmondmason": {
+  "ast_per_g": 2.0,
+  "games": 80.0,
+  "mp_per_g": 34.5,
+  "pts_per_g": 14.3,
+  "trb_per_g": 6.5
+ },
+ "deveangeorge": {
+  "ast_per_g": 1.3,
+  "games": 71.0,
+  "mp_per_g": 22.7,
+  "pts_per_g": 6.9,
+  "trb_per_g": 4.0
+ },
+ "devinbrown": {
+  "ast_per_g": 0.7,
+  "games": 10.0,
+  "mp_per_g": 9.3,
+  "pts_per_g": 3.0,
+  "trb_per_g": 1.8
+ },
+ "dikembemutombo": {
+  "ast_per_g": 0.8,
+  "games": 24.0,
+  "mp_per_g": 21.4,
+  "pts_per_g": 5.8,
+  "trb_per_g": 6.4
+ },
+ "dionglover": {
+  "ast_per_g": 1.9,
+  "games": 76.0,
+  "mp_per_g": 24.9,
+  "pts_per_g": 9.7,
+  "trb_per_g": 3.7
+ },
+ "dirknowitzki": {
+  "ast_per_g": 3.0,
+  "games": 80.0,
+  "mp_per_g": 39.0,
+  "pts_per_g": 25.1,
+  "trb_per_g": 9.9
+ },
+ "donnellharvey": {
+  "ast_per_g": 1.3,
+  "games": 77.0,
+  "mp_per_g": 20.9,
+  "pts_per_g": 7.9,
+  "trb_per_g": 5.3
+ },
+ "donnymarshall": {
+  "ast_per_g": 0.0,
+  "games": 3.0,
+  "mp_per_g": 2.0,
+  "pts_per_g": 0.0,
+  "trb_per_g": 1.0
+ },
+ "donreid": {
+  "ast_per_g": 0.0,
+  "games": 1.0,
+  "mp_per_g": 10.0,
+  "pts_per_g": 1.0,
+  "trb_per_g": 0.0
+ },
+ "donyellmarshall": {
+  "ast_per_g": 1.8,
+  "games": 78.0,
+  "mp_per_g": 30.5,
+  "pts_per_g": 13.4,
+  "trb_per_g": 9.0
+ },
+ "dougchristie": {
+  "ast_per_g": 4.7,
+  "games": 80.0,
+  "mp_per_g": 33.9,
+  "pts_per_g": 9.4,
+  "trb_per_g": 4.3
+ },
+ "drewgooden": {
+  "ast_per_g": 1.2,
+  "games": 70.0,
+  "mp_per_g": 26.8,
+  "pts_per_g": 12.5,
+  "trb_per_g": 6.5
+ },
+ "earlboykins": {
+  "ast_per_g": 3.3,
+  "games": 68.0,
+  "mp_per_g": 19.4,
+  "pts_per_g": 8.8,
+  "trb_per_g": 1.3
+ },
+ "earlwatson": {
+  "ast_per_g": 2.8,
+  "games": 79.0,
+  "mp_per_g": 17.3,
+  "pts_per_g": 5.5,
+  "trb_per_g": 2.1
+ },
+ "eddiegriffin": {
+  "ast_per_g": 1.1,
+  "games": 77.0,
+  "mp_per_g": 24.5,
+  "pts_per_g": 8.6,
+  "trb_per_g": 6.0
+ },
+ "eddiehouse": {
+  "ast_per_g": 1.6,
+  "games": 55.0,
+  "mp_per_g": 18.6,
+  "pts_per_g": 7.5,
+  "trb_per_g": 1.8
+ },
+ "eddiejones": {
+  "ast_per_g": 3.7,
+  "games": 47.0,
+  "mp_per_g": 38.1,
+  "pts_per_g": 18.5,
+  "trb_per_g": 4.8
+ },
+ "eddierobinson": {
+  "ast_per_g": 1.0,
+  "games": 64.0,
+  "mp_per_g": 21.2,
+  "pts_per_g": 5.7,
+  "trb_per_g": 3.1
+ },
+ "eddycurry": {
+  "ast_per_g": 0.5,
+  "games": 81.0,
+  "mp_per_g": 19.4,
+  "pts_per_g": 10.5,
+  "trb_per_g": 4.4
+ },
+ "eduardonajera": {
+  "ast_per_g": 1.0,
+  "games": 48.0,
+  "mp_per_g": 23.0,
+  "pts_per_g": 6.7,
+  "trb_per_g": 4.6
+ },
+ "efthimiosrentzias": {
+  "ast_per_g": 0.2,
+  "games": 35.0,
+  "mp_per_g": 4.1,
+  "pts_per_g": 1.5,
+  "trb_per_g": 0.7
+ },
+ "eldencampbell": {
+  "ast_per_g": 0.9,
+  "games": 56.0,
+  "mp_per_g": 15.5,
+  "pts_per_g": 6.1,
+  "trb_per_g": 3.2
+ },
+ "eltonbrand": {
+  "ast_per_g": 2.5,
+  "games": 62.0,
+  "mp_per_g": 39.6,
+  "pts_per_g": 18.5,
+  "trb_per_g": 11.3
+ },
+ "emanualdavis": {
+  "ast_per_g": 1.5,
+  "games": 24.0,
+  "mp_per_g": 14.2,
+  "pts_per_g": 3.7,
+  "trb_per_g": 1.8
+ },
+ "erickdampier": {
+  "ast_per_g": 0.7,
+  "games": 82.0,
+  "mp_per_g": 24.1,
+  "pts_per_g": 8.2,
+  "trb_per_g": 6.6
+ },
+ "erickstrickland": {
+  "ast_per_g": 2.9,
+  "games": 71.0,
+  "mp_per_g": 18.0,
+  "pts_per_g": 6.5,
+  "trb_per_g": 2.0
+ },
+ "ericpiatkowski": {
+  "ast_per_g": 1.1,
+  "games": 62.0,
+  "mp_per_g": 21.9,
+  "pts_per_g": 9.7,
+  "trb_per_g": 2.5
+ },
+ "ericsnow": {
+  "ast_per_g": 6.6,
+  "games": 82.0,
+  "mp_per_g": 37.9,
+  "pts_per_g": 12.9,
+  "trb_per_g": 3.7
+ },
+ "ericwilliams": {
+  "ast_per_g": 1.7,
+  "games": 82.0,
+  "mp_per_g": 28.7,
+  "pts_per_g": 9.1,
+  "trb_per_g": 4.7
+ },
+ "ervinjohnson": {
+  "ast_per_g": 0.3,
+  "games": 69.0,
+  "mp_per_g": 17.0,
+  "pts_per_g": 2.2,
+  "trb_per_g": 4.3
+ },
+ "etanthomas": {
+  "ast_per_g": 0.1,
+  "games": 38.0,
+  "mp_per_g": 13.5,
+  "pts_per_g": 4.8,
+  "trb_per_g": 4.3
+ },
+ "evaneschmeyer": {
+  "ast_per_g": 0.4,
+  "games": 17.0,
+  "mp_per_g": 7.9,
+  "pts_per_g": 1.0,
+  "trb_per_g": 1.7
+ },
+ "frankwilliams": {
+  "ast_per_g": 1.6,
+  "games": 21.0,
+  "mp_per_g": 8.0,
+  "pts_per_g": 1.3,
+  "trb_per_g": 0.9
+ },
+ "fredhoiberg": {
+  "ast_per_g": 1.1,
+  "games": 63.0,
+  "mp_per_g": 12.4,
+  "pts_per_g": 2.3,
+  "trb_per_g": 2.2
+ },
+ "fredjones": {
+  "ast_per_g": 0.3,
+  "games": 19.0,
+  "mp_per_g": 6.1,
+  "pts_per_g": 1.2,
+  "trb_per_g": 0.5
+ },
+ "garypayton": {
+  "ast_per_g": 8.3,
+  "games": 80.0,
+  "mp_per_g": 40.1,
+  "pts_per_g": 20.4,
+  "trb_per_g": 4.2
+ },
+ "garytrent": {
+  "ast_per_g": 1.0,
+  "games": 80.0,
+  "mp_per_g": 15.3,
+  "pts_per_g": 6.0,
+  "trb_per_g": 3.6
+ },
+ "georgelynch": {
+  "ast_per_g": 1.3,
+  "games": 81.0,
+  "mp_per_g": 18.5,
+  "pts_per_g": 4.5,
+  "trb_per_g": 4.4
+ },
+ "geraldwallace": {
+  "ast_per_g": 0.5,
+  "games": 47.0,
+  "mp_per_g": 12.1,
+  "pts_per_g": 4.7,
+  "trb_per_g": 2.7
+ },
+ "gilbertarenas": {
+  "ast_per_g": 6.3,
+  "games": 82.0,
+  "mp_per_g": 35.0,
+  "pts_per_g": 18.3,
+  "trb_per_g": 4.7
+ },
+ "glennrobinson": {
+  "ast_per_g": 3.0,
+  "games": 69.0,
+  "mp_per_g": 37.6,
+  "pts_per_g": 20.8,
+  "trb_per_g": 6.6
+ },
+ "glenrice": {
+  "ast_per_g": 1.0,
+  "games": 62.0,
+  "mp_per_g": 24.7,
+  "pts_per_g": 9.0,
+  "trb_per_g": 2.5
+ },
+ "gordangiricek": {
+  "ast_per_g": 1.8,
+  "games": 76.0,
+  "mp_per_g": 28.3,
+  "pts_per_g": 12.3,
+  "trb_per_g": 3.1
+ },
+ "granthill": {
+  "ast_per_g": 4.2,
+  "games": 29.0,
+  "mp_per_g": 29.1,
+  "pts_per_g": 14.5,
+  "trb_per_g": 7.1
+ },
+ "grantlong": {
+  "ast_per_g": 0.6,
+  "games": 41.0,
+  "mp_per_g": 11.9,
+  "pts_per_g": 1.8,
+  "trb_per_g": 2.0
+ },
+ "gregbuckner": {
+  "ast_per_g": 1.3,
+  "games": 75.0,
+  "mp_per_g": 20.2,
+  "pts_per_g": 6.0,
+  "trb_per_g": 2.9
+ },
+ "gregfoster": {
+  "ast_per_g": 0.4,
+  "games": 29.0,
+  "mp_per_g": 18.6,
+  "pts_per_g": 4.2,
+  "trb_per_g": 3.5
+ },
+ "gregostertag": {
+  "ast_per_g": 0.7,
+  "games": 81.0,
+  "mp_per_g": 23.8,
+  "pts_per_g": 5.4,
+  "trb_per_g": 6.2
+ },
+ "guyrucker": {
+  "ast_per_g": 0.3,
+  "games": 3.0,
+  "mp_per_g": 1.3,
+  "pts_per_g": 0.0,
+  "trb_per_g": 0.3
+ },
+ "hedoturkoglu": {
+  "ast_per_g": 1.3,
+  "games": 67.0,
+  "mp_per_g": 17.5,
+  "pts_per_g": 6.7,
+  "trb_per_g": 2.8
+ },
+ "horacegrant": {
+  "ast_per_g": 1.4,
+  "games": 5.0,
+  "mp_per_g": 17.0,
+  "pts_per_g": 5.2,
+  "trb_per_g": 1.6
+ },
+ "howardeisley": {
+  "ast_per_g": 5.4,
+  "games": 82.0,
+  "mp_per_g": 27.4,
+  "pts_per_g": 9.1,
+  "trb_per_g": 2.3
+ },
+ "hubertdavis": {
+  "ast_per_g": 0.7,
+  "games": 43.0,
+  "mp_per_g": 7.6,
+  "pts_per_g": 1.8,
+  "trb_per_g": 0.8
+ },
+ "igorrakocevic": {
+  "ast_per_g": 0.8,
+  "games": 42.0,
+  "mp_per_g": 5.8,
+  "pts_per_g": 1.9,
+  "trb_per_g": 0.4
+ },
+ "iranewble": {
+  "ast_per_g": 1.4,
+  "games": 73.0,
+  "mp_per_g": 26.5,
+  "pts_per_g": 7.7,
+  "trb_per_g": 3.7
+ },
+ "jacquevaughn": {
+  "ast_per_g": 2.9,
+  "games": 80.0,
+  "mp_per_g": 21.1,
+  "pts_per_g": 5.9,
+  "trb_per_g": 1.5
+ },
+ "jahidiwhite": {
+  "ast_per_g": 0.1,
+  "games": 16.0,
+  "mp_per_g": 14.4,
+  "pts_per_g": 4.2,
+  "trb_per_g": 4.6
+ },
+ "jaketsakalidis": {
+  "ast_per_g": 0.4,
+  "games": 33.0,
+  "mp_per_g": 16.5,
+  "pts_per_g": 4.9,
+  "trb_per_g": 3.7
+ },
+ "jakevoskuhl": {
+  "ast_per_g": 0.6,
+  "games": 65.0,
+  "mp_per_g": 14.6,
+  "pts_per_g": 3.8,
+  "trb_per_g": 3.5
+ },
+ "jalenrose": {
+  "ast_per_g": 4.8,
+  "games": 82.0,
+  "mp_per_g": 40.9,
+  "pts_per_g": 22.1,
+  "trb_per_g": 4.3
+ },
+ "jamaalmagloire": {
+  "ast_per_g": 1.1,
+  "games": 82.0,
+  "mp_per_g": 29.8,
+  "pts_per_g": 10.3,
+  "trb_per_g": 8.8
+ },
+ "jamaaltinsley": {
+  "ast_per_g": 7.5,
+  "games": 73.0,
+  "mp_per_g": 30.6,
+  "pts_per_g": 7.8,
+  "trb_per_g": 3.6
+ },
+ "jamalcrawford": {
+  "ast_per_g": 4.2,
+  "games": 80.0,
+  "mp_per_g": 24.9,
+  "pts_per_g": 10.7,
+  "trb_per_g": 2.3
+ },
+ "jamalmashburn": {
+  "ast_per_g": 5.6,
+  "games": 82.0,
+  "mp_per_g": 40.5,
+  "pts_per_g": 21.6,
+  "trb_per_g": 6.1
+ },
+ "jamalsampson": {
+  "ast_per_g": 0.2,
+  "games": 5.0,
+  "mp_per_g": 1.6,
+  "pts_per_g": 0.0,
+  "trb_per_g": 0.4
+ },
+ "jamesposey": {
+  "ast_per_g": 2.2,
+  "games": 83.0,
+  "mp_per_g": 30.3,
+  "pts_per_g": 10.8,
+  "trb_per_g": 5.1
+ },
+ "jamisonbrewer": {
+  "ast_per_g": 1.8,
+  "games": 10.0,
+  "mp_per_g": 8.0,
+  "pts_per_g": 2.2,
+  "trb_per_g": 0.9
+ },
+ "janneropargo": {
+  "ast_per_g": 1.1,
+  "games": 34.0,
+  "mp_per_g": 10.1,
+  "pts_per_g": 2.5,
+  "trb_per_g": 1.1
+ },
+ "jaredjeffries": {
+  "ast_per_g": 0.8,
+  "games": 20.0,
+  "mp_per_g": 14.6,
+  "pts_per_g": 4.0,
+  "trb_per_g": 2.9
+ },
+ "jarroncollins": {
+  "ast_per_g": 0.6,
+  "games": 22.0,
+  "mp_per_g": 19.1,
+  "pts_per_g": 5.5,
+  "trb_per_g": 2.7
+ },
+ "jasoncaffey": {
+  "ast_per_g": 0.7,
+  "games": 51.0,
+  "mp_per_g": 17.5,
+  "pts_per_g": 5.8,
+  "trb_per_g": 3.5
+ },
+ "jasoncollier": {
+  "ast_per_g": 0.1,
+  "games": 13.0,
+  "mp_per_g": 8.0,
+  "pts_per_g": 2.8,
+  "trb_per_g": 2.2
+ },
+ "jasoncollins": {
+  "ast_per_g": 1.1,
+  "games": 81.0,
+  "mp_per_g": 23.5,
+  "pts_per_g": 5.7,
+  "trb_per_g": 4.5
+ },
+ "jasonkidd": {
+  "ast_per_g": 8.9,
+  "games": 80.0,
+  "mp_per_g": 37.4,
+  "pts_per_g": 18.7,
+  "trb_per_g": 6.3
+ },
+ "jasonrichardson": {
+  "ast_per_g": 3.0,
+  "games": 82.0,
+  "mp_per_g": 32.9,
+  "pts_per_g": 15.6,
+  "trb_per_g": 4.6
+ },
+ "jasonterry": {
+  "ast_per_g": 7.4,
+  "games": 81.0,
+  "mp_per_g": 38.0,
+  "pts_per_g": 17.2,
+  "trb_per_g": 3.4
+ },
+ "jasonwilliams": {
+  "ast_per_g": 8.3,
+  "games": 76.0,
+  "mp_per_g": 31.7,
+  "pts_per_g": 12.1,
+  "trb_per_g": 2.8
+ },
+ "jaywilliams": {
+  "ast_per_g": 4.7,
+  "games": 75.0,
+  "mp_per_g": 26.1,
+  "pts_per_g": 9.5,
+  "trb_per_g": 2.6
+ },
+ "jefffoster": {
+  "ast_per_g": 0.7,
+  "games": 77.0,
+  "mp_per_g": 10.4,
+  "pts_per_g": 2.1,
+  "trb_per_g": 3.6
+ },
+ "jeffmcinnis": {
+  "ast_per_g": 2.3,
+  "games": 75.0,
+  "mp_per_g": 17.5,
+  "pts_per_g": 5.8,
+  "trb_per_g": 1.3
+ },
+ "jefftrepagnier": {
+  "ast_per_g": 0.8,
+  "games": 8.0,
+  "mp_per_g": 12.1,
+  "pts_per_g": 5.6,
+  "trb_per_g": 2.0
+ },
+ "jelanimccoy": {
+  "ast_per_g": 0.6,
+  "games": 67.0,
+  "mp_per_g": 20.4,
+  "pts_per_g": 6.8,
+  "trb_per_g": 5.3
+ },
+ "jermainejackson": {
+  "ast_per_g": 1.4,
+  "games": 53.0,
+  "mp_per_g": 10.5,
+  "pts_per_g": 2.3,
+  "trb_per_g": 1.1
+ },
+ "jermaineoneal": {
+  "ast_per_g": 2.0,
+  "games": 77.0,
+  "mp_per_g": 37.2,
+  "pts_per_g": 20.8,
+  "trb_per_g": 10.3
+ },
+ "jeromejames": {
+  "ast_per_g": 0.5,
+  "games": 51.0,
+  "mp_per_g": 15.0,
+  "pts_per_g": 5.4,
+  "trb_per_g": 4.2
+ },
+ "jeromemoiso": {
+  "ast_per_g": 0.4,
+  "games": 51.0,
+  "mp_per_g": 12.6,
+  "pts_per_g": 4.0,
+  "trb_per_g": 3.5
+ },
+ "jeromewilliams": {
+  "ast_per_g": 1.3,
+  "games": 71.0,
+  "mp_per_g": 33.0,
+  "pts_per_g": 9.7,
+  "trb_per_g": 9.2
+ },
+ "jerrystackhouse": {
+  "ast_per_g": 4.5,
+  "games": 70.0,
+  "mp_per_g": 39.2,
+  "pts_per_g": 21.5,
+  "trb_per_g": 3.7
+ },
+ "jerylsasser": {
+  "ast_per_g": 0.9,
+  "games": 75.0,
+  "mp_per_g": 13.7,
+  "pts_per_g": 2.6,
+  "trb_per_g": 2.5
+ },
+ "jimjackson": {
+  "ast_per_g": 1.9,
+  "games": 63.0,
+  "mp_per_g": 20.8,
+  "pts_per_g": 7.7,
+  "trb_per_g": 4.2
+ },
+ "jiriwelsch": {
+  "ast_per_g": 0.7,
+  "games": 37.0,
+  "mp_per_g": 6.3,
+  "pts_per_g": 1.6,
+  "trb_per_g": 0.8
+ },
+ "joejohnson": {
+  "ast_per_g": 2.6,
+  "games": 82.0,
+  "mp_per_g": 27.5,
+  "pts_per_g": 9.8,
+  "trb_per_g": 3.2
+ },
+ "joelprzybilla": {
+  "ast_per_g": 0.4,
+  "games": 32.0,
+  "mp_per_g": 17.1,
+  "pts_per_g": 1.5,
+  "trb_per_g": 4.5
+ },
+ "joesmith": {
+  "ast_per_g": 0.7,
+  "games": 54.0,
+  "mp_per_g": 20.7,
+  "pts_per_g": 7.5,
+  "trb_per_g": 5.0
+ },
+ "johnamaechi": {
+  "ast_per_g": 0.4,
+  "games": 50.0,
+  "mp_per_g": 9.5,
+  "pts_per_g": 2.0,
+  "trb_per_g": 1.5
+ },
+ "johncrotty": {
+  "ast_per_g": 2.4,
+  "games": 12.0,
+  "mp_per_g": 15.0,
+  "pts_per_g": 3.4,
+  "trb_per_g": 1.3
+ },
+ "johnsalmons": {
+  "ast_per_g": 0.7,
+  "games": 64.0,
+  "mp_per_g": 7.9,
+  "pts_per_g": 2.1,
+  "trb_per_g": 0.9
+ },
+ "johnstockton": {
+  "ast_per_g": 7.7,
+  "games": 82.0,
+  "mp_per_g": 27.7,
+  "pts_per_g": 10.8,
+  "trb_per_g": 2.5
+ },
+ "jonathanbender": {
+  "ast_per_g": 0.9,
+  "games": 46.0,
+  "mp_per_g": 17.8,
+  "pts_per_g": 6.6,
+  "trb_per_g": 2.9
+ },
+ "jonbarry": {
+  "ast_per_g": 2.6,
+  "games": 80.0,
+  "mp_per_g": 18.4,
+  "pts_per_g": 6.9,
+  "trb_per_g": 2.3
+ },
+ "josephforte": {
+  "ast_per_g": 0.6,
+  "games": 17.0,
+  "mp_per_g": 5.1,
+  "pts_per_g": 1.4,
+  "trb_per_g": 0.6
+ },
+ "jrbremer": {
+  "ast_per_g": 2.6,
+  "games": 64.0,
+  "mp_per_g": 23.5,
+  "pts_per_g": 8.3,
+  "trb_per_g": 2.3
+ },
+ "juandixon": {
+  "ast_per_g": 1.0,
+  "games": 42.0,
+  "mp_per_g": 15.4,
+  "pts_per_g": 6.4,
+  "trb_per_g": 1.7
+ },
+ "juaquinhawkins": {
+  "ast_per_g": 0.8,
+  "games": 58.0,
+  "mp_per_g": 11.8,
+  "pts_per_g": 2.3,
+  "trb_per_g": 1.3
+ },
+ "jumainejones": {
+  "ast_per_g": 1.4,
+  "games": 80.0,
+  "mp_per_g": 27.6,
+  "pts_per_g": 9.8,
+  "trb_per_g": 5.1
+ },
+ "juniorharrington": {
+  "ast_per_g": 3.4,
+  "games": 82.0,
+  "mp_per_g": 24.4,
+  "pts_per_g": 5.1,
+  "trb_per_g": 3.0
+ },
+ "juwanhoward": {
+  "ast_per_g": 3.0,
+  "games": 77.0,
+  "mp_per_g": 35.5,
+  "pts_per_g": 18.4,
+  "trb_per_g": 7.6
+ },
+ "kareemrush": {
+  "ast_per_g": 0.9,
+  "games": 76.0,
+  "mp_per_g": 11.5,
+  "pts_per_g": 3.0,
+  "trb_per_g": 1.2
+ },
+ "karlmalone": {
+  "ast_per_g": 4.7,
+  "games": 81.0,
+  "mp_per_g": 36.2,
+  "pts_per_g": 20.6,
+  "trb_per_g": 7.8
+ },
+ "kedrickbrown": {
+  "ast_per_g": 0.4,
+  "games": 51.0,
+  "mp_per_g": 13.1,
+  "pts_per_g": 2.8,
+  "trb_per_g": 2.7
+ },
+ "keithvanhorn": {
+  "ast_per_g": 1.3,
+  "games": 74.0,
+  "mp_per_g": 31.6,
+  "pts_per_g": 15.9,
+  "trb_per_g": 7.1
+ },
+ "kelvincato": {
+  "ast_per_g": 0.3,
+  "games": 73.0,
+  "mp_per_g": 17.1,
+  "pts_per_g": 4.5,
+  "trb_per_g": 5.9
+ },
+ "kendallgill": {
+  "ast_per_g": 1.9,
+  "games": 82.0,
+  "mp_per_g": 25.2,
+  "pts_per_g": 8.7,
+  "trb_per_g": 3.0
+ },
+ "kenjohnson": {
+  "ast_per_g": 0.0,
+  "games": 16.0,
+  "mp_per_g": 9.8,
+  "pts_per_g": 2.0,
+  "trb_per_g": 2.0
+ },
+ "kennyanderson": {
+  "ast_per_g": 3.2,
+  "games": 61.0,
+  "mp_per_g": 18.6,
+  "pts_per_g": 6.1,
+  "trb_per_g": 2.2
+ },
+ "kennysatterfield": {
+  "ast_per_g": 1.7,
+  "games": 39.0,
+  "mp_per_g": 12.9,
+  "pts_per_g": 3.4,
+  "trb_per_g": 1.1
+ },
+ "kennythomas": {
+  "ast_per_g": 1.7,
+  "games": 66.0,
+  "mp_per_g": 30.0,
+  "pts_per_g": 10.1,
+  "trb_per_g": 8.0
+ },
+ "kenyonmartin": {
+  "ast_per_g": 2.4,
+  "games": 77.0,
+  "mp_per_g": 34.1,
+  "pts_per_g": 16.7,
+  "trb_per_g": 8.3
+ },
+ "keonclark": {
+  "ast_per_g": 1.0,
+  "games": 80.0,
+  "mp_per_g": 22.3,
+  "pts_per_g": 6.7,
+  "trb_per_g": 5.6
+ },
+ "kerrykittles": {
+  "ast_per_g": 2.6,
+  "games": 65.0,
+  "mp_per_g": 30.0,
+  "pts_per_g": 13.0,
+  "trb_per_g": 3.9
+ },
+ "kevingarnett": {
+  "ast_per_g": 6.0,
+  "games": 82.0,
+  "mp_per_g": 40.5,
+  "pts_per_g": 23.0,
+  "trb_per_g": 13.4
+ },
+ "kevinollie": {
+  "ast_per_g": 3.5,
+  "games": 82.0,
+  "mp_per_g": 23.1,
+  "pts_per_g": 6.5,
+  "trb_per_g": 2.2
+ },
+ "kevinwillis": {
+  "ast_per_g": 0.3,
+  "games": 71.0,
+  "mp_per_g": 11.8,
+  "pts_per_g": 4.2,
+  "trb_per_g": 3.2
+ },
+ "keyondooling": {
+  "ast_per_g": 1.6,
+  "games": 55.0,
+  "mp_per_g": 17.6,
+  "pts_per_g": 6.4,
+  "trb_per_g": 1.3
+ },
+ "kirkhaston": {
+  "ast_per_g": 0.3,
+  "games": 12.0,
+  "mp_per_g": 4.8,
+  "pts_per_g": 0.5,
+  "trb_per_g": 0.6
+ },
+ "kobebryant": {
+  "ast_per_g": 5.9,
+  "games": 82.0,
+  "mp_per_g": 41.5,
+  "pts_per_g": 30.0,
+  "trb_per_g": 6.9
+ },
+ "kurtthomas": {
+  "ast_per_g": 2.0,
+  "games": 81.0,
+  "mp_per_g": 31.8,
+  "pts_per_g": 14.0,
+  "trb_per_g": 7.9
+ },
+ "kwamebrown": {
+  "ast_per_g": 0.7,
+  "games": 80.0,
+  "mp_per_g": 22.2,
+  "pts_per_g": 7.4,
+  "trb_per_g": 5.3
+ },
+ "lamarodom": {
+  "ast_per_g": 3.6,
+  "games": 49.0,
+  "mp_per_g": 34.3,
+  "pts_per_g": 14.6,
+  "trb_per_g": 6.7
+ },
+ "laphonsoellis": {
+  "ast_per_g": 0.3,
+  "games": 55.0,
+  "mp_per_g": 14.3,
+  "pts_per_g": 5.0,
+  "trb_per_g": 2.9
+ },
+ "larryhughes": {
+  "ast_per_g": 3.1,
+  "games": 67.0,
+  "mp_per_g": 31.9,
+  "pts_per_g": 12.8,
+  "trb_per_g": 4.6
+ },
+ "latrellsprewell": {
+  "ast_per_g": 4.5,
+  "games": 74.0,
+  "mp_per_g": 38.6,
+  "pts_per_g": 16.4,
+  "trb_per_g": 3.9
+ },
+ "lavorpostell": {
+  "ast_per_g": 0.3,
+  "games": 12.0,
+  "mp_per_g": 8.2,
+  "pts_per_g": 3.6,
+  "trb_per_g": 0.3
+ },
+ "lawrencefunderburke": {
+  "ast_per_g": 0.3,
+  "games": 27.0,
+  "mp_per_g": 8.5,
+  "pts_per_g": 2.7,
+  "trb_per_g": 2.0
+ },
+ "leenailon": {
+  "ast_per_g": 0.7,
+  "games": 38.0,
+  "mp_per_g": 10.7,
+  "pts_per_g": 5.5,
+  "trb_per_g": 1.8
+ },
+ "lindseyhunter": {
+  "ast_per_g": 2.4,
+  "games": 29.0,
+  "mp_per_g": 23.2,
+  "pts_per_g": 9.7,
+  "trb_per_g": 2.0
+ },
+ "lonnybaxter": {
+  "ast_per_g": 0.3,
+  "games": 55.0,
+  "mp_per_g": 12.4,
+  "pts_per_g": 4.8,
+  "trb_per_g": 3.0
+ },
+ "lorenwoods": {
+  "ast_per_g": 0.5,
+  "games": 38.0,
+  "mp_per_g": 9.3,
+  "pts_per_g": 2.1,
+  "trb_per_g": 2.5
+ },
+ "lorenzenwright": {
+  "ast_per_g": 1.1,
+  "games": 70.0,
+  "mp_per_g": 28.3,
+  "pts_per_g": 11.4,
+  "trb_per_g": 7.5
+ },
+ "luciousharris": {
+  "ast_per_g": 2.0,
+  "games": 77.0,
+  "mp_per_g": 25.6,
+  "pts_per_g": 10.3,
+  "trb_per_g": 3.0
+ },
+ "maceobaston": {
+  "ast_per_g": 0.0,
+  "games": 16.0,
+  "mp_per_g": 6.6,
+  "pts_per_g": 2.5,
+  "trb_per_g": 1.4
+ },
+ "malikallen": {
+  "ast_per_g": 0.7,
+  "games": 80.0,
+  "mp_per_g": 29.0,
+  "pts_per_g": 9.6,
+  "trb_per_g": 5.3
+ },
+ "malikrose": {
+  "ast_per_g": 1.6,
+  "games": 79.0,
+  "mp_per_g": 24.5,
+  "pts_per_g": 10.4,
+  "trb_per_g": 6.4
+ },
+ "mamadoundiaye": {
+  "ast_per_g": 0.3,
+  "games": 22.0,
+  "mp_per_g": 16.5,
+  "pts_per_g": 5.5,
+  "trb_per_g": 3.7
+ },
+ "manuginobili": {
+  "ast_per_g": 2.0,
+  "games": 69.0,
+  "mp_per_g": 20.7,
+  "pts_per_g": 7.6,
+  "trb_per_g": 2.3
+ },
+ "marcjackson": {
+  "ast_per_g": 0.5,
+  "games": 77.0,
+  "mp_per_g": 13.5,
+  "pts_per_g": 5.5,
+  "trb_per_g": 2.9
+ },
+ "marcuscamby": {
+  "ast_per_g": 1.6,
+  "games": 29.0,
+  "mp_per_g": 21.2,
+  "pts_per_g": 7.6,
+  "trb_per_g": 7.2
+ },
+ "marcusfizer": {
+  "ast_per_g": 1.3,
+  "games": 38.0,
+  "mp_per_g": 21.3,
+  "pts_per_g": 11.7,
+  "trb_per_g": 5.7
+ },
+ "marcushaislip": {
+  "ast_per_g": 0.2,
+  "games": 39.0,
+  "mp_per_g": 11.3,
+  "pts_per_g": 4.1,
+  "trb_per_g": 1.4
+ },
+ "markblount": {
+  "ast_per_g": 0.7,
+  "games": 81.0,
+  "mp_per_g": 17.3,
+  "pts_per_g": 5.0,
+  "trb_per_g": 3.8
+ },
+ "markbryant": {
+  "ast_per_g": 0.3,
+  "games": 16.0,
+  "mp_per_g": 6.3,
+  "pts_per_g": 0.8,
+  "trb_per_g": 1.3
+ },
+ "markjackson": {
+  "ast_per_g": 4.6,
+  "games": 82.0,
+  "mp_per_g": 17.9,
+  "pts_per_g": 4.7,
+  "trb_per_g": 2.1
+ },
+ "markmadsen": {
+  "ast_per_g": 0.7,
+  "games": 54.0,
+  "mp_per_g": 14.5,
+  "pts_per_g": 3.2,
+  "trb_per_g": 2.9
+ },
+ "markojaric": {
+  "ast_per_g": 2.9,
+  "games": 66.0,
+  "mp_per_g": 20.9,
+  "pts_per_g": 7.4,
+  "trb_per_g": 2.4
+ },
+ "markstrickland": {
+  "ast_per_g": 0.0,
+  "games": 4.0,
+  "mp_per_g": 3.3,
+  "pts_per_g": 1.0,
+  "trb_per_g": 1.8
+ },
+ "mateencleaves": {
+  "ast_per_g": 0.8,
+  "games": 12.0,
+  "mp_per_g": 4.6,
+  "pts_per_g": 1.3,
+  "trb_per_g": 0.7
+ },
+ "mattharpring": {
+  "ast_per_g": 1.7,
+  "games": 78.0,
+  "mp_per_g": 32.8,
+  "pts_per_g": 17.6,
+  "trb_per_g": 6.6
+ },
+ "mattmaloney": {
+  "ast_per_g": 1.2,
+  "games": 14.0,
+  "mp_per_g": 7.4,
+  "pts_per_g": 1.7,
+  "trb_per_g": 0.5
+ },
+ "mauricetaylor": {
+  "ast_per_g": 1.0,
+  "games": 67.0,
+  "mp_per_g": 20.6,
+  "pts_per_g": 8.4,
+  "trb_per_g": 3.6
+ },
+ "mehmetokur": {
+  "ast_per_g": 1.0,
+  "games": 72.0,
+  "mp_per_g": 19.0,
+  "pts_per_g": 6.9,
+  "trb_per_g": 4.7
+ },
+ "melvinely": {
+  "ast_per_g": 0.3,
+  "games": 52.0,
+  "mp_per_g": 15.4,
+  "pts_per_g": 4.5,
+  "trb_per_g": 3.3
+ },
+ "mengkebateer": {
+  "ast_per_g": 0.3,
+  "games": 12.0,
+  "mp_per_g": 3.8,
+  "pts_per_g": 0.8,
+  "trb_per_g": 0.8
+ },
+ "mettaworldpeace": {
+  "ast_per_g": 2.9,
+  "games": 69.0,
+  "mp_per_g": 33.6,
+  "pts_per_g": 15.5,
+  "trb_per_g": 5.2
+ },
+ "michaelbradley": {
+  "ast_per_g": 1.0,
+  "games": 67.0,
+  "mp_per_g": 19.6,
+  "pts_per_g": 5.0,
+  "trb_per_g": 6.1
+ },
+ "michaelcurry": {
+  "ast_per_g": 1.3,
+  "games": 78.0,
+  "mp_per_g": 19.9,
+  "pts_per_g": 3.0,
+  "trb_per_g": 1.6
+ },
+ "michaeldickerson": {
+  "ast_per_g": 1.3,
+  "games": 6.0,
+  "mp_per_g": 14.5,
+  "pts_per_g": 4.8,
+  "trb_per_g": 1.0
+ },
+ "michaeldoleac": {
+  "ast_per_g": 0.6,
+  "games": 75.0,
+  "mp_per_g": 13.9,
+  "pts_per_g": 4.4,
+  "trb_per_g": 2.9
+ },
+ "michaelfinley": {
+  "ast_per_g": 3.0,
+  "games": 69.0,
+  "mp_per_g": 38.3,
+  "pts_per_g": 19.3,
+  "trb_per_g": 5.8
+ },
+ "michaeljordan": {
+  "ast_per_g": 3.8,
+  "games": 82.0,
+  "mp_per_g": 37.0,
+  "pts_per_g": 20.0,
+  "trb_per_g": 6.1
+ },
+ "michaelolowokandi": {
+  "ast_per_g": 1.3,
+  "games": 36.0,
+  "mp_per_g": 38.0,
+  "pts_per_g": 12.3,
+  "trb_per_g": 9.1
+ },
+ "michaelredd": {
+  "ast_per_g": 1.4,
+  "games": 82.0,
+  "mp_per_g": 28.2,
+  "pts_per_g": 15.1,
+  "trb_per_g": 4.5
+ },
+ "michaelstewart": {
+  "ast_per_g": 0.1,
+  "games": 47.0,
+  "mp_per_g": 5.3,
+  "pts_per_g": 0.8,
+  "trb_per_g": 1.2
+ },
+ "mikebatiste": {
+  "ast_per_g": 0.7,
+  "games": 75.0,
+  "mp_per_g": 16.6,
+  "pts_per_g": 6.4,
+  "trb_per_g": 3.4
+ },
+ "mikebibby": {
+  "ast_per_g": 5.2,
+  "games": 55.0,
+  "mp_per_g": 33.4,
+  "pts_per_g": 15.9,
+  "trb_per_g": 2.7
+ },
+ "mikedunleavy": {
+  "ast_per_g": 1.3,
+  "games": 82.0,
+  "mp_per_g": 15.9,
+  "pts_per_g": 5.7,
+  "trb_per_g": 2.6
+ },
+ "mikejames": {
+  "ast_per_g": 3.2,
+  "games": 78.0,
+  "mp_per_g": 22.1,
+  "pts_per_g": 7.8,
+  "trb_per_g": 1.9
+ },
+ "mikemiller": {
+  "ast_per_g": 2.6,
+  "games": 65.0,
+  "mp_per_g": 33.6,
+  "pts_per_g": 15.6,
+  "trb_per_g": 5.2
+ },
+ "mikewilks": {
+  "ast_per_g": 2.0,
+  "games": 46.0,
+  "mp_per_g": 15.0,
+  "pts_per_g": 3.2,
+  "trb_per_g": 1.5
+ },
+ "mikkimoore": {
+  "ast_per_g": 0.4,
+  "games": 8.0,
+  "mp_per_g": 5.4,
+  "pts_per_g": 2.3,
+  "trb_per_g": 1.0
+ },
+ "miltpalacio": {
+  "ast_per_g": 3.2,
+  "games": 80.0,
+  "mp_per_g": 24.7,
+  "pts_per_g": 5.0,
+  "trb_per_g": 2.9
+ },
+ "montywilliams": {
+  "ast_per_g": 1.2,
+  "games": 21.0,
+  "mp_per_g": 13.1,
+  "pts_per_g": 4.4,
+  "trb_per_g": 2.1
+ },
+ "moochienorris": {
+  "ast_per_g": 2.4,
+  "games": 82.0,
+  "mp_per_g": 16.8,
+  "pts_per_g": 4.4,
+  "trb_per_g": 1.9
+ },
+ "morrispeterson": {
+  "ast_per_g": 2.3,
+  "games": 82.0,
+  "mp_per_g": 36.0,
+  "pts_per_g": 14.1,
+  "trb_per_g": 4.4
+ },
+ "natehuffman": {
+  "ast_per_g": 0.7,
+  "games": 7.0,
+  "mp_per_g": 10.9,
+  "pts_per_g": 3.3,
+  "trb_per_g": 3.3
+ },
+ "nazrmohammed": {
+  "ast_per_g": 0.2,
+  "games": 35.0,
+  "mp_per_g": 12.7,
+  "pts_per_g": 4.6,
+  "trb_per_g": 3.7
+ },
+ "nene": {
+  "ast_per_g": 1.9,
+  "games": 80.0,
+  "mp_per_g": 28.2,
+  "pts_per_g": 10.5,
+  "trb_per_g": 6.1
+ },
+ "nickvanexel": {
+  "ast_per_g": 4.3,
+  "games": 73.0,
+  "mp_per_g": 27.8,
+  "pts_per_g": 12.5,
+  "trb_per_g": 2.8
+ },
+ "nikoloztskitishvili": {
+  "ast_per_g": 1.1,
+  "games": 81.0,
+  "mp_per_g": 16.3,
+  "pts_per_g": 3.9,
+  "trb_per_g": 2.2
+ },
+ "olumideoyedeji": {
+  "ast_per_g": 0.2,
+  "games": 27.0,
+  "mp_per_g": 5.4,
+  "pts_per_g": 1.0,
+  "trb_per_g": 1.9
+ },
+ "oscartorres": {
+  "ast_per_g": 0.2,
+  "games": 17.0,
+  "mp_per_g": 6.4,
+  "pts_per_g": 3.1,
+  "trb_per_g": 0.7
+ },
+ "othellaharrington": {
+  "ast_per_g": 0.8,
+  "games": 74.0,
+  "mp_per_g": 25.0,
+  "pts_per_g": 7.7,
+  "trb_per_g": 6.4
+ },
+ "patburke": {
+  "ast_per_g": 0.4,
+  "games": 62.0,
+  "mp_per_g": 12.6,
+  "pts_per_g": 4.3,
+  "trb_per_g": 2.4
+ },
+ "patgarrity": {
+  "ast_per_g": 1.5,
+  "games": 81.0,
+  "mp_per_g": 31.9,
+  "pts_per_g": 10.7,
+  "trb_per_g": 3.8
+ },
+ "paugasol": {
+  "ast_per_g": 2.8,
+  "games": 82.0,
+  "mp_per_g": 36.0,
+  "pts_per_g": 19.0,
+  "trb_per_g": 8.8
+ },
+ "paulpierce": {
+  "ast_per_g": 4.4,
+  "games": 79.0,
+  "mp_per_g": 39.2,
+  "pts_per_g": 25.9,
+  "trb_per_g": 7.3
+ },
+ "paulshirley": {
+  "ast_per_g": 0.0,
+  "games": 2.0,
+  "mp_per_g": 2.5,
+  "pts_per_g": 0.0,
+  "trb_per_g": 0.5
+ },
+ "pejastojakovic": {
+  "ast_per_g": 2.0,
+  "games": 72.0,
+  "mp_per_g": 34.0,
+  "pts_per_g": 19.2,
+  "trb_per_g": 5.5
+ },
+ "pepesanchez": {
+  "ast_per_g": 0.9,
+  "games": 9.0,
+  "mp_per_g": 4.1,
+  "pts_per_g": 0.0,
+  "trb_per_g": 0.7
+ },
+ "pjbrown": {
+  "ast_per_g": 1.9,
+  "games": 78.0,
+  "mp_per_g": 33.4,
+  "pts_per_g": 10.7,
+  "trb_per_g": 9.0
+ },
+ "popeyejones": {
+  "ast_per_g": 0.3,
+  "games": 26.0,
+  "mp_per_g": 8.5,
+  "pts_per_g": 2.0,
+  "trb_per_g": 2.3
+ },
+ "predragdrobnjak": {
+  "ast_per_g": 1.0,
+  "games": 82.0,
+  "mp_per_g": 24.2,
+  "pts_per_g": 9.4,
+  "trb_per_g": 3.9
+ },
+ "predragsavovic": {
+  "ast_per_g": 0.8,
+  "games": 27.0,
+  "mp_per_g": 9.5,
+  "pts_per_g": 3.1,
+  "trb_per_g": 0.9
+ },
+ "primozbrezec": {
+  "ast_per_g": 0.2,
+  "games": 22.0,
+  "mp_per_g": 5.0,
+  "pts_per_g": 1.9,
+  "trb_per_g": 1.0
+ },
+ "quentinrichardson": {
+  "ast_per_g": 0.9,
+  "games": 59.0,
+  "mp_per_g": 23.2,
+  "pts_per_g": 9.4,
+  "trb_per_g": 4.8
+ },
+ "qyntelwoods": {
+  "ast_per_g": 0.2,
+  "games": 53.0,
+  "mp_per_g": 6.3,
+  "pts_per_g": 2.4,
+  "trb_per_g": 1.0
+ },
+ "raeflafrentz": {
+  "ast_per_g": 0.8,
+  "games": 69.0,
+  "mp_per_g": 23.3,
+  "pts_per_g": 9.3,
+  "trb_per_g": 4.8
+ },
+ "raferalston": {
+  "ast_per_g": 4.1,
+  "games": 47.0,
+  "mp_per_g": 20.9,
+  "pts_per_g": 7.8,
+  "trb_per_g": 2.3
+ },
+ "rajabell": {
+  "ast_per_g": 0.8,
+  "games": 75.0,
+  "mp_per_g": 15.6,
+  "pts_per_g": 3.1,
+  "trb_per_g": 1.9
+ },
+ "randybrown": {
+  "ast_per_g": 1.1,
+  "games": 32.0,
+  "mp_per_g": 8.2,
+  "pts_per_g": 1.3,
+  "trb_per_g": 0.8
+ },
+ "randylivingston": {
+  "ast_per_g": 0.5,
+  "games": 2.0,
+  "mp_per_g": 6.0,
+  "pts_per_g": 3.0,
+  "trb_per_g": 0.0
+ },
+ "rashardlewis": {
+  "ast_per_g": 1.7,
+  "games": 77.0,
+  "mp_per_g": 39.5,
+  "pts_per_g": 18.1,
+  "trb_per_g": 6.5
+ },
+ "rasheedwallace": {
+  "ast_per_g": 2.1,
+  "games": 74.0,
+  "mp_per_g": 36.3,
+  "pts_per_g": 18.1,
+  "trb_per_g": 7.4
+ },
+ "rashonesterovic": {
+  "ast_per_g": 1.5,
+  "games": 77.0,
+  "mp_per_g": 30.4,
+  "pts_per_g": 11.2,
+  "trb_per_g": 6.5
+ },
+ "rasualbutler": {
+  "ast_per_g": 1.3,
+  "games": 72.0,
+  "mp_per_g": 21.0,
+  "pts_per_g": 7.5,
+  "trb_per_g": 2.6
+ },
+ "rayallen": {
+  "ast_per_g": 4.4,
+  "games": 76.0,
+  "mp_per_g": 37.9,
+  "pts_per_g": 22.5,
+  "trb_per_g": 5.0
+ },
+ "reggieevans": {
+  "ast_per_g": 0.5,
+  "games": 67.0,
+  "mp_per_g": 20.4,
+  "pts_per_g": 3.2,
+  "trb_per_g": 6.6
+ },
+ "reggiemiller": {
+  "ast_per_g": 2.4,
+  "games": 70.0,
+  "mp_per_g": 30.2,
+  "pts_per_g": 12.6,
+  "trb_per_g": 2.5
+ },
+ "reggieslater": {
+  "ast_per_g": 0.2,
+  "games": 26.0,
+  "mp_per_g": 5.4,
+  "pts_per_g": 3.1,
+  "trb_per_g": 1.2
+ },
+ "richardhamilton": {
+  "ast_per_g": 2.5,
+  "games": 82.0,
+  "mp_per_g": 32.2,
+  "pts_per_g": 19.7,
+  "trb_per_g": 3.9
+ },
+ "richardjefferson": {
+  "ast_per_g": 2.5,
+  "games": 80.0,
+  "mp_per_g": 36.0,
+  "pts_per_g": 15.5,
+  "trb_per_g": 6.4
+ },
+ "rickbrunson": {
+  "ast_per_g": 2.1,
+  "games": 17.0,
+  "mp_per_g": 11.5,
+  "pts_per_g": 3.5,
+  "trb_per_g": 1.1
+ },
+ "rickfox": {
+  "ast_per_g": 3.3,
+  "games": 76.0,
+  "mp_per_g": 28.7,
+  "pts_per_g": 9.0,
+  "trb_per_g": 4.3
+ },
+ "rickydavis": {
+  "ast_per_g": 5.5,
+  "games": 79.0,
+  "mp_per_g": 39.6,
+  "pts_per_g": 20.6,
+  "trb_per_g": 4.9
+ },
+ "robertarchibald": {
+  "ast_per_g": 0.3,
+  "games": 12.0,
+  "mp_per_g": 6.0,
+  "pts_per_g": 1.6,
+  "trb_per_g": 1.4
+ },
+ "roberthorry": {
+  "ast_per_g": 2.9,
+  "games": 80.0,
+  "mp_per_g": 29.3,
+  "pts_per_g": 6.5,
+  "trb_per_g": 6.4
+ },
+ "robertpack": {
+  "ast_per_g": 2.9,
+  "games": 28.0,
+  "mp_per_g": 15.7,
+  "pts_per_g": 5.2,
+  "trb_per_g": 1.8
+ },
+ "roberttraylor": {
+  "ast_per_g": 0.7,
+  "games": 69.0,
+  "mp_per_g": 12.3,
+  "pts_per_g": 3.9,
+  "trb_per_g": 3.8
+ },
+ "rodneyrogers": {
+  "ast_per_g": 1.6,
+  "games": 68.0,
+  "mp_per_g": 19.2,
+  "pts_per_g": 7.0,
+  "trb_per_g": 3.9
+ },
+ "rodneywhite": {
+  "ast_per_g": 1.7,
+  "games": 72.0,
+  "mp_per_g": 21.7,
+  "pts_per_g": 9.0,
+  "trb_per_g": 3.0
+ },
+ "rodstrickland": {
+  "ast_per_g": 4.6,
+  "games": 47.0,
+  "mp_per_g": 20.3,
+  "pts_per_g": 6.8,
+  "trb_per_g": 2.0
+ },
+ "rogermason": {
+  "ast_per_g": 0.7,
+  "games": 17.0,
+  "mp_per_g": 6.6,
+  "pts_per_g": 1.8,
+  "trb_per_g": 0.7
+ },
+ "ronaldmurray": {
+  "ast_per_g": 0.4,
+  "games": 14.0,
+  "mp_per_g": 4.4,
+  "pts_per_g": 1.9,
+  "trb_per_g": 0.3
+ },
+ "ronmercer": {
+  "ast_per_g": 1.6,
+  "games": 72.0,
+  "mp_per_g": 23.2,
+  "pts_per_g": 7.7,
+  "trb_per_g": 2.1
+ },
+ "rubenboumtjeboumtje": {
+  "ast_per_g": 0.5,
+  "games": 2.0,
+  "mp_per_g": 2.5,
+  "pts_per_g": 0.0,
+  "trb_per_g": 0.5
+ },
+ "rubenpatterson": {
+  "ast_per_g": 1.3,
+  "games": 78.0,
+  "mp_per_g": 21.2,
+  "pts_per_g": 8.3,
+  "trb_per_g": 3.4
+ },
+ "rubenwolkowyski": {
+  "ast_per_g": 0.1,
+  "games": 7.0,
+  "mp_per_g": 3.4,
+  "pts_per_g": 0.7,
+  "trb_per_g": 0.1
+ },
+ "ryanbowen": {
+  "ast_per_g": 0.9,
+  "games": 62.0,
+  "mp_per_g": 16.1,
+  "pts_per_g": 3.6,
+  "trb_per_g": 2.5
+ },
+ "ryanhumphrey": {
+  "ast_per_g": 0.2,
+  "games": 48.0,
+  "mp_per_g": 9.3,
+  "pts_per_g": 1.9,
+  "trb_per_g": 2.1
+ },
+ "samakiwalker": {
+  "ast_per_g": 1.0,
+  "games": 67.0,
+  "mp_per_g": 18.6,
+  "pts_per_g": 4.4,
+  "trb_per_g": 5.5
+ },
+ "samcassell": {
+  "ast_per_g": 5.8,
+  "games": 78.0,
+  "mp_per_g": 34.6,
+  "pts_per_g": 19.7,
+  "trb_per_g": 4.4
+ },
+ "scotpollard": {
+  "ast_per_g": 0.3,
+  "games": 23.0,
+  "mp_per_g": 14.1,
+  "pts_per_g": 4.5,
+  "trb_per_g": 4.6
+ },
+ "scottiepippen": {
+  "ast_per_g": 4.5,
+  "games": 64.0,
+  "mp_per_g": 29.9,
+  "pts_per_g": 10.8,
+  "trb_per_g": 4.3
+ },
+ "scottpadgett": {
+  "ast_per_g": 1.0,
+  "games": 82.0,
+  "mp_per_g": 16.1,
+  "pts_per_g": 5.7,
+  "trb_per_g": 3.3
+ },
+ "scottwilliams": {
+  "ast_per_g": 0.3,
+  "games": 69.0,
+  "mp_per_g": 12.6,
+  "pts_per_g": 4.0,
+  "trb_per_g": 2.8
+ },
+ "seanlampley": {
+  "ast_per_g": 0.9,
+  "games": 35.0,
+  "mp_per_g": 13.9,
+  "pts_per_g": 4.8,
+  "trb_per_g": 2.4
+ },
+ "seanmarks": {
+  "ast_per_g": 0.1,
+  "games": 23.0,
+  "mp_per_g": 9.7,
+  "pts_per_g": 2.3,
+  "trb_per_g": 1.5
+ },
+ "seanrooks": {
+  "ast_per_g": 1.0,
+  "games": 70.0,
+  "mp_per_g": 19.2,
+  "pts_per_g": 4.2,
+  "trb_per_g": 3.1
+ },
+ "shammondwilliams": {
+  "ast_per_g": 3.4,
+  "games": 78.0,
+  "mp_per_g": 24.1,
+  "pts_per_g": 8.0,
+  "trb_per_g": 2.2
+ },
+ "shandonanderson": {
+  "ast_per_g": 1.1,
+  "games": 82.0,
+  "mp_per_g": 21.1,
+  "pts_per_g": 8.4,
+  "trb_per_g": 3.1
+ },
+ "shanebattier": {
+  "ast_per_g": 1.3,
+  "games": 78.0,
+  "mp_per_g": 30.6,
+  "pts_per_g": 9.7,
+  "trb_per_g": 4.4
+ },
+ "shaquilleoneal": {
+  "ast_per_g": 3.1,
+  "games": 67.0,
+  "mp_per_g": 37.8,
+  "pts_per_g": 27.5,
+  "trb_per_g": 11.1
+ },
+ "shareefabdurrahim": {
+  "ast_per_g": 3.0,
+  "games": 81.0,
+  "mp_per_g": 38.1,
+  "pts_per_g": 19.9,
+  "trb_per_g": 8.4
+ },
+ "shawnbradley": {
+  "ast_per_g": 0.7,
+  "games": 81.0,
+  "mp_per_g": 21.4,
+  "pts_per_g": 6.7,
+  "trb_per_g": 5.9
+ },
+ "shawnkemp": {
+  "ast_per_g": 0.7,
+  "games": 79.0,
+  "mp_per_g": 20.7,
+  "pts_per_g": 6.8,
+  "trb_per_g": 5.7
+ },
+ "shawnmarion": {
+  "ast_per_g": 2.4,
+  "games": 81.0,
+  "mp_per_g": 41.6,
+  "pts_per_g": 21.2,
+  "trb_per_g": 9.5
+ },
+ "smushparker": {
+  "ast_per_g": 2.5,
+  "games": 66.0,
+  "mp_per_g": 16.7,
+  "pts_per_g": 6.2,
+  "trb_per_g": 1.8
+ },
+ "soumailasamake": {
+  "ast_per_g": 0.3,
+  "games": 13.0,
+  "mp_per_g": 5.9,
+  "pts_per_g": 1.7,
+  "trb_per_g": 1.8
+ },
+ "speedyclaxton": {
+  "ast_per_g": 2.5,
+  "games": 30.0,
+  "mp_per_g": 15.7,
+  "pts_per_g": 5.8,
+  "trb_per_g": 1.9
+ },
+ "staceyaugmon": {
+  "ast_per_g": 1.0,
+  "games": 70.0,
+  "mp_per_g": 12.3,
+  "pts_per_g": 3.0,
+  "trb_per_g": 1.7
+ },
+ "stanislavmedvedenko": {
+  "ast_per_g": 0.3,
+  "games": 58.0,
+  "mp_per_g": 10.7,
+  "pts_per_g": 4.4,
+  "trb_per_g": 2.4
+ },
+ "stephenjackson": {
+  "ast_per_g": 2.3,
+  "games": 80.0,
+  "mp_per_g": 28.2,
+  "pts_per_g": 11.8,
+  "trb_per_g": 3.6
+ },
+ "stephonmarbury": {
+  "ast_per_g": 8.1,
+  "games": 81.0,
+  "mp_per_g": 40.0,
+  "pts_per_g": 22.3,
+  "trb_per_g": 3.2
+ },
+ "stevefrancis": {
+  "ast_per_g": 6.2,
+  "games": 81.0,
+  "mp_per_g": 41.0,
+  "pts_per_g": 21.0,
+  "trb_per_g": 6.2
+ },
+ "stevekerr": {
+  "ast_per_g": 0.9,
+  "games": 75.0,
+  "mp_per_g": 12.7,
+  "pts_per_g": 4.0,
+  "trb_per_g": 0.8
+ },
+ "stevenash": {
+  "ast_per_g": 7.3,
+  "games": 82.0,
+  "mp_per_g": 33.1,
+  "pts_per_g": 17.7,
+  "trb_per_g": 2.9
+ },
+ "stevenhunter": {
+  "ast_per_g": 0.2,
+  "games": 33.0,
+  "mp_per_g": 13.5,
+  "pts_per_g": 3.9,
+  "trb_per_g": 2.8
+ },
+ "stevesmith": {
+  "ast_per_g": 1.3,
+  "games": 53.0,
+  "mp_per_g": 19.5,
+  "pts_per_g": 6.8,
+  "trb_per_g": 1.9
+ },
+ "stromileswift": {
+  "ast_per_g": 0.7,
+  "games": 67.0,
+  "mp_per_g": 22.1,
+  "pts_per_g": 9.7,
+  "trb_per_g": 5.7
+ },
+ "tamarslay": {
+  "ast_per_g": 0.4,
+  "games": 36.0,
+  "mp_per_g": 7.6,
+  "pts_per_g": 2.6,
+  "trb_per_g": 0.9
+ },
+ "tariqabdulwahad": {
+  "ast_per_g": 1.5,
+  "games": 14.0,
+  "mp_per_g": 14.6,
+  "pts_per_g": 4.1,
+  "trb_per_g": 2.9
+ },
+ "tayshaunprince": {
+  "ast_per_g": 0.6,
+  "games": 42.0,
+  "mp_per_g": 10.4,
+  "pts_per_g": 3.3,
+  "trb_per_g": 1.1
+ },
+ "terencemorris": {
+  "ast_per_g": 0.5,
+  "games": 49.0,
+  "mp_per_g": 12.9,
+  "pts_per_g": 3.7,
+  "trb_per_g": 2.6
+ },
+ "theoratliff": {
+  "ast_per_g": 0.9,
+  "games": 81.0,
+  "mp_per_g": 31.1,
+  "pts_per_g": 8.7,
+  "trb_per_g": 7.5
+ },
+ "tierrebrown": {
+  "ast_per_g": 2.6,
+  "games": 15.0,
+  "mp_per_g": 11.2,
+  "pts_per_g": 4.3,
+  "trb_per_g": 2.0
+ },
+ "timduncan": {
+  "ast_per_g": 3.9,
+  "games": 81.0,
+  "mp_per_g": 39.3,
+  "pts_per_g": 23.3,
+  "trb_per_g": 12.9
+ },
+ "timhardaway": {
+  "ast_per_g": 2.4,
+  "games": 10.0,
+  "mp_per_g": 12.7,
+  "pts_per_g": 4.9,
+  "trb_per_g": 1.5
+ },
+ "timthomas": {
+  "ast_per_g": 1.3,
+  "games": 80.0,
+  "mp_per_g": 29.5,
+  "pts_per_g": 13.3,
+  "trb_per_g": 4.9
+ },
+ "titomaddox": {
+  "ast_per_g": 0.6,
+  "games": 9.0,
+  "mp_per_g": 3.9,
+  "pts_per_g": 1.2,
+  "trb_per_g": 0.8
+ },
+ "toddmacculloch": {
+  "ast_per_g": 0.5,
+  "games": 42.0,
+  "mp_per_g": 19.3,
+  "pts_per_g": 7.1,
+  "trb_per_g": 4.7
+ },
+ "tomgugliotta": {
+  "ast_per_g": 1.1,
+  "games": 27.0,
+  "mp_per_g": 16.6,
+  "pts_per_g": 4.8,
+  "trb_per_g": 3.7
+ },
+ "tonikukoc": {
+  "ast_per_g": 3.7,
+  "games": 63.0,
+  "mp_per_g": 27.0,
+  "pts_per_g": 11.6,
+  "trb_per_g": 4.2
+ },
+ "tonybattie": {
+  "ast_per_g": 0.7,
+  "games": 67.0,
+  "mp_per_g": 25.1,
+  "pts_per_g": 7.3,
+  "trb_per_g": 6.5
+ },
+ "tonydelk": {
+  "ast_per_g": 2.2,
+  "games": 67.0,
+  "mp_per_g": 28.0,
+  "pts_per_g": 9.8,
+  "trb_per_g": 3.5
+ },
+ "tonymassenburg": {
+  "ast_per_g": 0.3,
+  "games": 58.0,
+  "mp_per_g": 13.7,
+  "pts_per_g": 4.7,
+  "trb_per_g": 2.7
+ },
+ "tonyparker": {
+  "ast_per_g": 5.3,
+  "games": 82.0,
+  "mp_per_g": 33.8,
+  "pts_per_g": 15.5,
+  "trb_per_g": 2.6
+ },
+ "tracymcgrady": {
+  "ast_per_g": 5.5,
+  "games": 75.0,
+  "mp_per_g": 39.4,
+  "pts_per_g": 32.1,
+  "trb_per_g": 6.5
+ },
+ "tracymurray": {
+  "ast_per_g": 0.4,
+  "games": 31.0,
+  "mp_per_g": 6.2,
+  "pts_per_g": 2.0,
+  "trb_per_g": 0.7
+ },
+ "travisbest": {
+  "ast_per_g": 3.5,
+  "games": 72.0,
+  "mp_per_g": 25.1,
+  "pts_per_g": 8.4,
+  "trb_per_g": 2.0
+ },
+ "travisknight": {
+  "ast_per_g": 0.4,
+  "games": 32.0,
+  "mp_per_g": 9.0,
+  "pts_per_g": 1.9,
+  "trb_per_g": 1.9
+ },
+ "tremainefowlkes": {
+  "ast_per_g": 0.6,
+  "games": 37.0,
+  "mp_per_g": 15.5,
+  "pts_per_g": 4.4,
+  "trb_per_g": 2.8
+ },
+ "trentonhassell": {
+  "ast_per_g": 1.8,
+  "games": 82.0,
+  "mp_per_g": 24.4,
+  "pts_per_g": 4.2,
+  "trb_per_g": 3.1
+ },
+ "troyhudson": {
+  "ast_per_g": 5.7,
+  "games": 79.0,
+  "mp_per_g": 32.9,
+  "pts_per_g": 14.2,
+  "trb_per_g": 2.3
+ },
+ "troymurphy": {
+  "ast_per_g": 1.3,
+  "games": 79.0,
+  "mp_per_g": 31.8,
+  "pts_per_g": 11.7,
+  "trb_per_g": 10.2
+ },
+ "tyronehill": {
+  "ast_per_g": 0.7,
+  "games": 56.0,
+  "mp_per_g": 24.1,
+  "pts_per_g": 5.6,
+  "trb_per_g": 7.0
+ },
+ "tyronnlue": {
+  "ast_per_g": 3.5,
+  "games": 75.0,
+  "mp_per_g": 26.5,
+  "pts_per_g": 8.6,
+  "trb_per_g": 2.0
+ },
+ "tysonchandler": {
+  "ast_per_g": 1.0,
+  "games": 75.0,
+  "mp_per_g": 24.4,
+  "pts_per_g": 9.2,
+  "trb_per_g": 6.9
+ },
+ "vinbaker": {
+  "ast_per_g": 0.6,
+  "games": 52.0,
+  "mp_per_g": 18.1,
+  "pts_per_g": 5.2,
+  "trb_per_g": 3.8
+ },
+ "vincecarter": {
+  "ast_per_g": 3.3,
+  "games": 43.0,
+  "mp_per_g": 34.2,
+  "pts_per_g": 20.6,
+  "trb_per_g": 4.4
+ },
+ "vincentyarbrough": {
+  "ast_per_g": 2.2,
+  "games": 59.0,
+  "mp_per_g": 23.4,
+  "pts_per_g": 6.9,
+  "trb_per_g": 2.7
+ },
+ "vitalypotapenko": {
+  "ast_per_g": 0.2,
+  "games": 26.0,
+  "mp_per_g": 15.5,
+  "pts_per_g": 4.0,
+  "trb_per_g": 3.4
+ },
+ "vladedivac": {
+  "ast_per_g": 3.4,
+  "games": 80.0,
+  "mp_per_g": 29.8,
+  "pts_per_g": 9.9,
+  "trb_per_g": 7.2
+ },
+ "vladimirradmanovic": {
+  "ast_per_g": 1.3,
+  "games": 72.0,
+  "mp_per_g": 26.5,
+  "pts_per_g": 10.1,
+  "trb_per_g": 4.5
+ },
+ "vladimirstepania": {
+  "ast_per_g": 0.3,
+  "games": 79.0,
+  "mp_per_g": 20.2,
+  "pts_per_g": 5.6,
+  "trb_per_g": 7.0
+ },
+ "voshonlenard": {
+  "ast_per_g": 2.3,
+  "games": 63.0,
+  "mp_per_g": 30.6,
+  "pts_per_g": 14.3,
+  "trb_per_g": 3.4
+ },
+ "wallyszczerbiak": {
+  "ast_per_g": 2.6,
+  "games": 52.0,
+  "mp_per_g": 35.3,
+  "pts_per_g": 17.6,
+  "trb_per_g": 4.6
+ },
+ "waltermccarty": {
+  "ast_per_g": 1.3,
+  "games": 82.0,
+  "mp_per_g": 23.8,
+  "pts_per_g": 6.1,
+  "trb_per_g": 3.5
+ },
+ "waltwilliams": {
+  "ast_per_g": 0.9,
+  "games": 66.0,
+  "mp_per_g": 17.6,
+  "pts_per_g": 5.5,
+  "trb_per_g": 3.1
+ },
+ "wangzhizhi": {
+  "ast_per_g": 0.2,
+  "games": 41.0,
+  "mp_per_g": 10.0,
+  "pts_per_g": 4.4,
+  "trb_per_g": 1.9
+ },
+ "wesleyperson": {
+  "ast_per_g": 1.7,
+  "games": 66.0,
+  "mp_per_g": 29.4,
+  "pts_per_g": 11.0,
+  "trb_per_g": 2.9
+ },
+ "yaoming": {
+  "ast_per_g": 1.7,
+  "games": 82.0,
+  "mp_per_g": 29.0,
+  "pts_per_g": 13.5,
+  "trb_per_g": 8.2
+ },
+ "zachrandolph": {
+  "ast_per_g": 0.5,
+  "games": 77.0,
+  "mp_per_g": 16.9,
+  "pts_per_g": 8.4,
+  "trb_per_g": 4.5
+ },
+ "zeljkorebraca": {
+  "ast_per_g": 0.3,
+  "games": 30.0,
+  "mp_per_g": 16.3,
+  "pts_per_g": 6.6,
+  "trb_per_g": 3.1
+ },
+ "zendonhamilton": {
+  "ast_per_g": 0.0,
+  "games": 3.0,
+  "mp_per_g": 4.0,
+  "pts_per_g": 2.0,
+  "trb_per_g": 1.3
+ },
+ "zydrunasilgauskas": {
+  "ast_per_g": 1.6,
+  "games": 81.0,
+  "mp_per_g": 30.0,
+  "pts_per_g": 17.2,
+  "trb_per_g": 7.5
+ }
+}
