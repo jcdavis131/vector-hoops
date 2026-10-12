@@ -1124,11 +1124,13 @@ button,.input{min-height:44px}
     if(!over){ resEl.innerHTML=''; resEl.style.display='none'; updateStatusBar(); renderDailyCourt(); renderPackProgress(); renderPackSummary(); return; }
     resEl.style.display='block';
     // harden: embeddings may still be loading → closest null would crash (repro for "breaks when i guess")
+    // If ranking isn't ready, the fallback (alphabetical, 0% sim) is NOT valid — wait for real data.
     let closest=st.closestModern;
     let list=st.modernListSorted||[];
-    if(!closest || !closest.entry || !list.length){
+    if(!st.rankingReady){
       try{ if(window.VHMtnn && VHMtnn.isReady && VHMtnn.isReady()){ VHPastModern.computeClosest(); st=VHPastModern.state(); closest=st.closestModern; list=st.modernListSorted||[]; } }catch(e){ console.warn('computeClosest retry fail', e); }
     }
+    if(!st.rankingReady || !closest || !closest.entry){
     if(!closest || !closest.entry){
       resEl.innerHTML=`<div class="card"><h3 class="hd">⏳ Loading twin…</h3><div style="font-size:13px;line-height:1.5">Embeddings still loading (2.5MB). Your guess is saved (${G.guesses.length}/6).<br>Top: ${(list||[]).slice(0,3).map(o=>o.m && o.m.n || '').join(' • ')||'warming up'}<br><div style="margin-top:8px;display:flex;gap:8px"><button class="btn btn-primary" onclick="try{VHPastModern.computeClosest();}catch(e){} location.reload()">Retry</button><button class="btn" onclick="document.getElementById('result').style.display='none'">Keep playing</button></div></div></div>`;
       return;
@@ -1483,6 +1485,8 @@ button,.input{min-height:44px}
   window.addEventListener('vh:ranking-ready', ()=>{
     try{
       renderGuessGrid();
+      // If a completed slot's reveal is showing the loading state, re-render with real data
+      try{ if(typeof finish==='function') finish(); }catch(e){}
       if(pendingGuess){ const n=pendingGuess; pendingGuess=null; setGuessStatus(''); doGuess(n); }
       else { projectFrame(); draw(); }
     }catch(e){ console.warn('ranking-ready flush fail', e); }

@@ -318,7 +318,7 @@ function fillGuessList(){
 }
 async function loadGameVectors(){
   try{
-    let r=await fetch('assets/game_vectors.json?v=101'); let j=await r.json();
+    let r=await fetch('assets/game_vectors.json?v=5d063858'); let j=await r.json();
     gameData={past:j.past||[], modern:j.modern||[]};
     return gameData;
   }catch(e){
