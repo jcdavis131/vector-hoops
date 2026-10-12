@@ -17,13 +17,20 @@
 .live-root .proto {font:700 9px var(--mono);letter-spacing:.1em;color:var(--accent);
   border:1px solid var(--accent);border-radius:3px;padding:2px 6px;}
 .live-root .tagline {margin:6px 0 0;font-size:12px;color:var(--ink2);}
-.live-root #games {display:flex;gap:8px;overflow-x:auto;padding:12px 16px 4px;scrollbar-width:none;}
+.live-root .daynav {display:flex;align-items:center;gap:8px;padding:12px 16px 0;}
+.live-root .daybtn {border:2px solid var(--ink);background:var(--card);border-radius:6px;cursor:pointer;
+  font-size:16px;line-height:1;padding:5px 11px 7px;min-height:32px;transition:transform .15s ease,background .15s ease;}
+.live-root .daybtn:active {transform:scale(.94);}
+.live-root .daybtn.today {font-size:11px;font-weight:700;letter-spacing:.04em;padding:6px 10px;}
+.live-root .daylbl {font-family:var(--mono);font-size:12px;font-weight:700;letter-spacing:.05em;}
+.live-root #games {display:flex;gap:8px;overflow-x:auto;padding:8px 16px 4px;scrollbar-width:none;}
 .live-root #games::-webkit-scrollbar {display:none;}
 .live-root .gbtn {flex:0 0 auto;border:2px solid var(--ink);background:var(--card);border-radius:6px;
   padding:8px 12px;font-size:13px;cursor:pointer;text-align:left;min-width:136px;
   transition:transform .15s ease,background .15s ease;}
 .live-root .gbtn:active {transform:scale(.96);}
 .live-root .gbtn .ms {font-weight:800;letter-spacing:.03em;}
+.live-root .gbtn .sc {font-family:var(--mono);font-size:12px;font-weight:700;margin-top:2px;}
 .live-root .gbtn .st {font-family:var(--mono);font-size:10px;color:var(--ink2);margin-top:3px;}
 .live-root .gbtn.live {border-color:var(--accent);}
 .live-root .gbtn.live .st {color:var(--accent);font-weight:700;}
