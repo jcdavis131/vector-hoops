@@ -35,7 +35,8 @@
   var W = 0, H = 0, DPR = 1;
   var PAD = 28;
   var grid = null, GX = 64, GY = 40;
-  var selected = -1, peers = [], hover = -1, filterArch = -1;
+  var selected = -1, peers = [], hover = -1, filterArch = -1, legendHover = -1;
+  var drawQueued = false;
   var teams = [], hlTeam = -1, hlRoster = [], hlRosterSet = null;
   var cycleTimer = null, cycleOn = false, nameToLatest = {};
   var GOLD = '#e8b500', CYCLE_MS = 6000;
@@ -114,6 +115,16 @@
     draw();
   }
 
+  // rAF-coalesced redraw: pointermove can fire far faster than the display,
+  // and a full 12,966-point pass per event is what the 2026-10-11 perf fix
+  // was protecting. Hover redraws go through here; structural redraws
+  // (resize/select/filter) keep calling draw() directly.
+  function requestDraw() {
+    if (drawQueued) return;
+    drawQueued = true;
+    requestAnimationFrame(function () { drawQueued = false; draw(); });
+  }
+
   function draw() {
     if (!ctx) return;
     ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
@@ -153,6 +164,7 @@
       var a;
       if (filterArch >= 0) a = p.c === filterArch ? 0.85 : 0.07;
       else if (inRoster) a = inRoster[i] ? 0.9 : 0.06;
+      else if (legendHover >= 0) a = p.c === legendHover ? 0.9 : 0.12;
       else a = dim ? 0.26 : 0.5;
       ctx.fillStyle = COL.dot + a + ')';
       ctx.fillRect(x - rad, y - rad, rad * 2, rad * 2);
@@ -203,10 +215,20 @@
       ctx.beginPath(); ctx.arc(ssx, ssy, 11, 0, Math.PI * 2); ctx.stroke();
     }
 
+    // patent-motion hover: the hovered dot lifts toward the cursor along the
+    // vertical axis with a hairline back to its base — the grammar's lift
+    // channel, drawn in the canvas layer so no DOM is touched per dot.
     if (hover >= 0 && hover !== selected) {
-      var h = P[hover];
+      var h = P[hover], hx = sx(h.x), hy = sy(h.y);
+      var lift = reduceMotion ? 0 : 8, hy2 = hy - lift;
+      if (lift > 0) {
+        ctx.strokeStyle = 'rgba(244,246,248,0.25)'; ctx.lineWidth = 1;
+        ctx.beginPath(); ctx.moveTo(hx, hy); ctx.lineTo(hx, hy2); ctx.stroke();
+      }
+      ctx.fillStyle = COL.peer;
+      ctx.beginPath(); ctx.arc(hx, hy2, 3, 0, Math.PI * 2); ctx.fill();
       ctx.strokeStyle = COL.peer; ctx.lineWidth = 1;
-      ctx.beginPath(); ctx.arc(sx(h.x), sy(h.y), 6, 0, Math.PI * 2); ctx.stroke();
+      ctx.beginPath(); ctx.arc(hx, hy2, 6, 0, Math.PI * 2); ctx.stroke();
     }
   }
 
@@ -352,7 +374,10 @@
     var counts = new Array(8).fill(0);
     P.forEach(function (p) { if (p.c >= 0 && p.c < 8) counts[p.c]++; });
     host.innerHTML = ARCHETYPES.map(function (a, k) {
-      return '<button type="button" class="legend-chip" data-arch="' + k + '" aria-pressed="false"><span>' + esc(a) + '</span><span class="num">' + counts[k].toLocaleString('en-US') + '</span></button>';
+      var num = ('0' + (k + 1)).slice(-2);
+      return '<button type="button" class="legend-chip" data-arch="' + k + '" aria-pressed="false">' +
+        '<span class="legend-num">' + num + '</span>' +
+        '<span>' + esc(a) + '</span><span class="num">' + counts[k].toLocaleString('en-US') + '</span></button>';
     }).join('');
     host.addEventListener('click', function (e) {
       var b = e.target.closest('[data-arch]'); if (!b) return;
@@ -361,6 +386,13 @@
       host.querySelectorAll('[data-arch]').forEach(function (el) { el.setAttribute('aria-pressed', String(+el.getAttribute('data-arch') === filterArch)); });
       draw();
     });
+    // patent-motion: hovering a legend row inverts it (CSS) and brightens
+    // that archetype's dots on the canvas — the reverse linked channel.
+    host.addEventListener('pointerover', function (e) {
+      var b = e.target.closest('[data-arch]'); if (!b) return;
+      setLegendHover(+b.getAttribute('data-arch'));
+    });
+    host.addEventListener('pointerleave', function () { setLegendHover(-1); });
   }
 
   // ---------- team highlight ----------
@@ -451,23 +483,54 @@
     var r = canvas.getBoundingClientRect();
     return { x: e.clientX - r.left, y: e.clientY - r.top };
   }
-  function showTip(i, x, y) {
-    if (!tip) return;
-    if (i < 0) { tip.hidden = true; return; }
+  function eraOf(s) {
+    var y = parseInt(String(s || '').slice(0, 4), 10);
+    if (!y) return '';
+    return String(Math.floor(y / 10) * 10) + 's';
+  }
+  function captionFor(i) {
     var p = P[i];
-    tip.innerHTML = '<b>' + esc(p.n) + '</b><span class="num">' + esc(fmtSeason(p.s)) + '</span>';
-    tip.hidden = false;
-    var tx = Math.min(W - 12, Math.max(12, x)), ty = Math.max(40, y);
-    tip.style.left = tx + 'px'; tip.style.top = ty + 'px';
+    return '<b>' + esc(p.n) + '</b><span> · ' + esc(fmtSeason(p.s)) + ' · ' +
+      esc(ARCHETYPES[p.c] || '—') + ' · ' + esc(eraOf(p.s)) + '</span>';
+  }
+  function setLegendHover(k) {
+    if (k === legendHover) return;
+    legendHover = k;
+    var host = $('atlas-legend');
+    if (host) {
+      var chips = host.querySelectorAll('[data-arch]');
+      for (var j = 0; j < chips.length; j++) {
+        chips[j].classList.toggle('is-hover', +chips[j].getAttribute('data-arch') === k);
+      }
+    }
+    requestDraw();
+  }
+  function showTip(i) {
+    // patent-motion: a single fact-caption channel in the frame's
+    // bottom-right corner, swapped instantly on hover. The old
+    // cursor-following tip is retired — one caption, not two.
+    var cap = $('atlas-caption');
+    if (cap) {
+      if (i < 0) { cap.hidden = true; }
+      else { cap.innerHTML = captionFor(i); cap.hidden = false; }
+    }
+    if (tip) tip.hidden = true;
+    // linked legend channel: hovering a dot inverts its archetype row
+    setLegendHover(i >= 0 ? P[i].c : -1);
+  }
+  function hideTip() {
+    if (tip) tip.hidden = true;
+    var cap = $('atlas-caption');
+    if (cap) cap.hidden = true;
+    setLegendHover(-1);
   }
   canvas.addEventListener('pointermove', function (e) {
     if (!P.length) return;
     var m = pointer(e), i = nearestAt(m.x, m.y, 14);
-    if (i !== hover) { hover = i; draw(); }
+    if (i !== hover) { hover = i; requestDraw(); showTip(i); }
     canvas.style.cursor = i >= 0 ? 'pointer' : 'crosshair';
-    showTip(i, m.x, m.y);
   });
-  canvas.addEventListener('pointerleave', function () { hover = -1; showTip(-1); draw(); });
+  canvas.addEventListener('pointerleave', function () { hover = -1; hideTip(); requestDraw(); });
   canvas.addEventListener('click', function (e) {
     var m = pointer(e), i = nearestAt(m.x, m.y, 18);
     if (i >= 0) select(i);

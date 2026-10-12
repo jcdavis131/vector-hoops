@@ -30,6 +30,15 @@ a{color:inherit}
 /* team intro cards */
 .teams-grid{display:grid;grid-template-columns:1fr;gap:14px;padding:4px 0}
 @media(min-width:700px){.teams-grid{grid-template-columns:1fr 1fr}}
+/* patent-motion: cards drift in on load — rise + fade over the slow curve,
+ * in six gentle bands so thirty cards never strobe. (article-qualified: the
+ * fig-frame foot element is the grid's first child.) */
+.teams-grid > article{ animation: patent-drift-in var(--patent-drift) var(--patent-ease) both; }
+.teams-grid > article:nth-child(n+7){ animation-delay: 140ms; }
+.teams-grid > article:nth-child(n+12){ animation-delay: 280ms; }
+.teams-grid > article:nth-child(n+17){ animation-delay: 420ms; }
+.teams-grid > article:nth-child(n+22){ animation-delay: 560ms; }
+.teams-grid > article:nth-child(n+27){ animation-delay: 700ms; }
 .team-card{
   border:1px solid var(--line-2);border-radius:14px;overflow:hidden;
   background:var(--surface);display:flex;flex-direction:column;
@@ -74,7 +83,8 @@ a{color:inherit}
 <p class="teams-note">Videos load as you scroll and pause when off-screen. Legends reflect the 1996-97 → 2025-26 embedding window; pre-1996 greats aren’t in the dataset.</p>
 </div>
 
-<div class="teams-grid">
+<div class="teams-grid fig-frame" data-fig="1" data-fig-subject="Thirty franchises" data-fig-maker="Vector Hoops">
+  <i class="fig-frame__foot" aria-hidden="true"></i>
   <article class="team-card">
     <header class="team-card__head">
       <h2>Atlanta Hawks</h2>

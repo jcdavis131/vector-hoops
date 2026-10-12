@@ -39,6 +39,27 @@
   --vx-stagger: 50ms;  /* 6 steps = 300ms, inside the 500ms budget */
   --vx-rise:    12px;  /* entrance travel */
   --vx-lift:     2px;  /* hover displacement */
+
+  /* Patent-motion grammar (2026-10-12): ink-on-cream technical-drawing motion.
+   * Structural drifts are slow and deliberate; hover feedback stays quick.
+   * These tokens are the ONLY curve/duration for structural motion — the old
+   * fast tokens above remain, but for press/click feedback only. */
+  --patent-ease:   cubic-bezier(.45, 0, .15, 1);  /* soft ease-in-out */
+  --patent-drift:  2200ms;                        /* structural drifts */
+  --patent-hover:  240ms;                         /* hover feedback */
+  --patent-bob:    6000ms;                        /* gentle rest bob loop */
+  --patent-lift:   8px;                           /* hover lift travel */
+  --patent-ink:    #1b1712;                       /* warm near-black ink */
+  --patent-paper:  #f5efe3;                       /* warm cream paper */
+  --patent-accent: #c0392b;                       /* single functional red */
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    /* Night board: cream linework on ink ground. No new hues. */
+    --patent-ink:    #f5efe3;
+    --patent-paper:  #1b1712;
+    --patent-accent: #ff6f61;
+  }
 }
 
 /* ---------- primary: entrance ----------
@@ -94,6 +115,68 @@
 /* Focus rings must not ease in — a keyboard user needs the ring immediately. */
 a:focus-visible,
 button:focus-visible{ transition: none; }
+
+/* ---------- patent-motion: structural drift entrance ----------
+ * Rise + fade over the slow patent curve. Position carries the change;
+ * opacity is never the only channel. */
+@keyframes patent-drift-in{
+  from{ opacity:0; transform:translateY(26px); }
+  to  { opacity:1; transform:none; }
+}
+.patent-drift-in{
+  animation: patent-drift-in var(--patent-drift) var(--patent-ease) both;
+}
+
+/* ---------- patent-motion: FIG. corner-label frame ----------
+ * Usage: <section class="fig-frame" data-fig="1" data-fig-subject="THE ATLAS"
+ *          data-fig-maker="VECTOR HOOPS">
+ *   <i class="fig-frame__foot" aria-hidden="true"></i>
+ *   …content…
+ * </section>
+ * Corner labels: FIG. N top-left, subject top-right, maker bottom-left.
+ * Bottom-right is reserved for the live fact caption (patent-caption). */
+.fig-frame{ position:relative; }
+.fig-frame::before,
+.fig-frame::after{
+  position:absolute; z-index:3; pointer-events:none;
+  font-family:var(--mono, monospace); font-size:10px; font-weight:700;
+  letter-spacing:.18em; text-transform:uppercase; color:var(--patent-ink);
+  opacity:.75; white-space:nowrap;
+}
+.fig-frame::before{ content:"FIG. " attr(data-fig); top:8px; left:12px; }
+.fig-frame::after{ content:attr(data-fig-subject); top:8px; right:12px; }
+.fig-frame__foot{ position:absolute; inset:0; pointer-events:none; }
+.fig-frame__foot::before{
+  content:attr(data-fig-maker);
+  position:absolute; bottom:8px; left:12px;
+  font-family:var(--mono, monospace); font-size:10px; font-weight:700;
+  letter-spacing:.18em; text-transform:uppercase; color:var(--patent-ink);
+  opacity:.75; white-space:nowrap;
+}
+/* Opt-in thin ink frame (data-fig-frame="ink"). Off by default so it never
+ * doubles a frame the host already draws. */
+.fig-frame[data-fig-frame="ink"] .fig-frame__foot::after{
+  content:""; position:absolute; inset:0;
+  border:1px solid var(--patent-ink); opacity:.35; pointer-events:none;
+}
+
+/* ---------- patent-motion: live fact caption chip ----------
+ * Bottom-right corner of a fig-frame. Swaps instantly on hover (the grammar's
+ * third feedback channel). Hidden until the first hover. */
+.patent-caption{
+  position:absolute; z-index:4; right:12px; bottom:8px; max-width:70%;
+  font-family:var(--mono, monospace); font-size:10px; font-weight:700;
+  letter-spacing:.14em; text-transform:uppercase; color:var(--patent-paper);
+  background:var(--patent-ink); border-radius:999px; padding:6px 12px;
+  pointer-events:none; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+}
+.patent-caption .patent-caption__accent{ color:var(--patent-accent); }
+
+/* Collision guards for framed views whose hosts already use the corners. */
+.fig-frame .patent-caption{ right:12px; bottom:52px; }
+@media (max-width: 720px){
+  .fig-frame::after{ top:48px; } /* host controls move to top-right on narrow */
+}
 
 /* ---------- reduced motion ----------
  * This shell previously had no gate at any level. It covers the rules above
