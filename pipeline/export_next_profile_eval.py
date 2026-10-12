@@ -3,7 +3,8 @@
 For every charted player-season with an MTNN ``next_profile_pred``:
 
 * If the *next* season exists in ``vectors.json`` → status ``scored`` with
-  predicted z and actual z (era-normalized game features).
+  predicted z and actual z (era-normalized game features). An actual that
+  row's ``vm`` lists as unmeasured is null, not z 0.0, and mae skips it.
 * If the row is the dataset's latest season → status ``pending`` (prediction
   only; next-season stats are not available yet).
 * Otherwise (career ended / uncharted next year) → status ``no_next``
@@ -85,9 +86,14 @@ def main() -> None:
         feature_keys = vec_features
 
     labels = vec.get("featureLabels") or {}
-    by_name_season: dict[str, dict[str, list[float]]] = defaultdict(dict)
+    # `vm` lists the game dims nobody measured on that row (FG3_PCT / FT_PCT
+    # with no attempt behind them [final#8]); `v` holds z 0.0, the season
+    # mean, there. Such an actual is unmeasured, so it is written as null
+    # and left out of the error, never scored as a measured 0.0.
+    by_name_season: dict[str, dict[str, list[float | None]]] = defaultdict(dict)
     for p in vec["players"]:
-        by_name_season[p["name"]][p["season"]] = [float(x) for x in p["v"]]
+        unmeasured = set(p.get("vm") or ())
+        by_name_season[p["name"]][p["season"]] = [None if j in unmeasured else float(x) for j, x in enumerate(p["v"])]
 
     latest = sorted({p["season"] for p in vec["players"]})[-1]
     primary_idx = [feature_keys.index(k) for k in PRIMARY_FEATURES if k in feature_keys]
@@ -104,9 +110,9 @@ def main() -> None:
         actual_v = by_name_season.get(name, {}).get(to_season)
 
         if actual_v is not None:
-            actual_row = [round_z(actual_v[j]) for j in range(len(feature_keys))]
-            errs = [abs(pred_row[j] - actual_row[j]) for j in primary_idx]
-            mae = round(float(sum(errs) / max(len(errs), 1)), 3)
+            actual_row = [None if actual_v[j] is None else round_z(actual_v[j]) for j in range(len(feature_keys))]
+            errs = [abs(pred_row[j] - actual_row[j]) for j in primary_idx if actual_row[j] is not None]
+            mae = round(float(sum(errs) / len(errs)), 3) if errs else None
             rows[key] = {
                 "to": to_season,
                 "status": "scored",
@@ -115,8 +121,9 @@ def main() -> None:
                 "mae": mae,
             }
             n_scored += 1
-            mae_sum += mae
-            mae_n += 1
+            if mae is not None:
+                mae_sum += mae
+                mae_n += 1
         elif season == latest:
             rows[key] = {
                 "to": to_season,
@@ -142,7 +149,9 @@ def main() -> None:
         "method": (
             "MTNN next_profile head: predicted next-season era-z game features from "
             "the current-season embedding. Actuals are the charted next-season vector "
-            f"from vectors.json when it exists. For {latest}, next-season stats are not "
+            "from vectors.json when it exists; a game dim that row never measured "
+            "(vectors.json vm) is null and left out of mae. "
+            f"For {latest}, next-season stats are not "
             "available yet — UI shows prediction only (status=pending)."
         ),
         "rows": rows,

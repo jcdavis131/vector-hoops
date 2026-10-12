@@ -32,7 +32,7 @@ import export_next_profile_eval as npe  # noqa: E402
 import project_next_season as pns  # noqa: E402
 import promote as pm  # noqa: E402
 import served_model as sm  # noqa: E402
-from bundle_fixtures import PIDS, make_run, write_matrix, write_vectors  # noqa: E402
+from bundle_fixtures import COLUMNS, PIDS, make_run, write_matrix, write_vectors  # noqa: E402
 
 
 @pytest.fixture
@@ -289,3 +289,36 @@ def test_wide_skills_source_says_what_this_export_did():
     skipped = ea.wide_skills_source(False, "wide_skills_2013-14.json is a proxy doc", doc)
     assert "not rebuilt" in skipped and "proxy" in skipped and "2026-07-30" in skipped
     assert "build_wide_skills failed" in ea.wide_skills_source(False, None, {})
+
+
+def test_next_profile_eval_never_scores_an_unmeasured_actual(env, monkeypatch):
+    """vectors.json `vm` lists the game dims a row never measured (FA2: FG3_PCT / FT_PCT
+    with no attempt; `v` holds z 0.0 there). Such an actual is null and left out of mae,
+    not compared with the prediction as if 0.0 had been measured."""
+    data, assets = env
+    for name, value in {"DATA": data, "ASSETS": assets, "VECTORS": assets / "vectors.json"}.items():
+        monkeypatch.setattr(npe, name, value)
+    monkeypatch.setattr(npe, "OUT", assets / "next_profile_eval.json")
+    doc = json.loads((assets / "vectors.json").read_text(encoding="utf-8"))
+    doc["features"] = list(COLUMNS)
+    rng = np.random.default_rng(1)
+    for p in doc["players"]:
+        p["v"] = [round(float(x), 3) for x in rng.standard_normal(len(COLUMNS))]
+    unmeasured = {("Player 11", "2020-21"): [1], ("Player 13", "1998-99"): [0, 1]}
+    for p in doc["players"]:
+        if (p["name"], p["season"]) in unmeasured:
+            p["vm"] = unmeasured[(p["name"], p["season"])]
+            for j in p["vm"]:
+                p["v"][j] = 0.0  # what build_vectors stores there: the season mean
+    (assets / "vectors.json").write_text(json.dumps(doc), encoding="utf-8")
+    pm.promote(make_run(data, "r1"))
+    npe.main()
+    out = json.loads((assets / "next_profile_eval.json").read_text(encoding="utf-8"))
+    assert out["primaryFeatures"] == ["PTS", "AST"]
+    one = out["rows"]["Player 11|2019-20"]
+    assert one["status"] == "scored" and one["actual"][1] is None and one["actual"][0] is not None
+    assert one["mae"] == round(abs(one["pred"][0] - one["actual"][0]), 3)  # PTS only
+    none_measured = out["rows"]["Player 13|1997-98"]
+    assert none_measured["status"] == "scored" and none_measured["actual"][:2] == [None, None]
+    assert none_measured["mae"] is None
+    assert out["summary"]["meanAbsErrPrimary"] == one["mae"]  # the only measured mae
