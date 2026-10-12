@@ -1,0 +1,3109 @@
+{
+ "built": "2026-09-30",
+ "season": "2026-27",
+ "as_of": "2026-09-29",
+ "note": "Preseason camp rosters as of 2026-09-29, subject to change before opening night. Source lists are the active roster as reported by ESPN; not trimmed to 15.",
+ "method": "ESPN site API (site.api.espn.com, no key), /teams/{abbr}/roster, retrieved 2026-09-30 via curl with retries. Cross-checked SAS + NYK vs basketball-reference.",
+ "teams": {
+  "ATL": [
+   {
+    "name": "Nickeil Alexander-Walker",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Cameron Corhen",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Dyson Daniels",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "RayJ Dennis",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Luguentz Dort",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Zuby Ejiofor",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Dorian Finney-Smith",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Kingston Flemings",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Keshon Gilbert",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Mouhamed Gueye",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Jalen Johnson",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Kobe Johnson",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Corey Kispert",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Jock Landale",
+    "position": "C",
+    "status": "active"
+   },
+   {
+    "name": "CJ McCollum",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Asa Newell",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Onyeka Okongwu",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Henri Veesaar",
+    "position": "C",
+    "status": "active"
+   },
+   {
+    "name": "Aaron Wiggins",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Jalen Wilson",
+    "position": "F",
+    "status": "active"
+   }
+  ],
+  "BOS": [
+   {
+    "name": "Devin Carter",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Chris Cenac Jr.",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Mike Conley",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Tucker DeVries",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Luka Garza",
+    "position": "C",
+    "status": "active"
+   },
+   {
+    "name": "Paul George",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Hugo Gonzalez",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Hayden Gray",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Ron Harper Jr.",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Sam Hauser",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Gabe McGlothan",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Dillon Mitchell",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Payton Pritchard",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Neemias Queta",
+    "position": "C",
+    "status": "active"
+   },
+   {
+    "name": "Mitchell Robinson",
+    "position": "C",
+    "status": "active"
+   },
+   {
+    "name": "Baylor Scheierman",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Jayson Tatum",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Milos Uzan",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Jordan Walsh",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Derrick White",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Amari Williams",
+    "position": "F",
+    "status": "active"
+   }
+  ],
+  "BKN": [
+   {
+    "name": "Tyler Bilodeau",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Mikel Brown Jr.",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Noah Clowney",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Dain Dainja",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Egor Demin",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Keon Ellis",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Joshua Jefferson",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Chaney Johnson",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Terance Mann",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Josh Minott",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Grant Nelson",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Michael Porter Jr.",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Drake Powell",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Julius Randle",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Ben Saraf",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Day'Ron Sharpe",
+    "position": "C",
+    "status": "active"
+   },
+   {
+    "name": "Nolan Traore",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Moritz Wagner",
+    "position": "C",
+    "status": "active"
+   },
+   {
+    "name": "Danny Wolf",
+    "position": "F",
+    "status": "active"
+   }
+  ],
+  "CHA": [
+   {
+    "name": "Grayson Allen",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Christian Anderson",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Pat Connaughton",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Moussa Diabate",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Wyatt Fricks",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "PJ Hall",
+    "position": "C",
+    "status": "active"
+   },
+   {
+    "name": "Sion James",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Jarkel Joiner",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Ryan Kalkbrenner",
+    "position": "C",
+    "status": "active"
+   },
+   {
+    "name": "Kon Knueppel",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Liam McNeeley",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Brandon Miller",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Royce O'Neale",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Naz Reid",
+    "position": "C",
+    "status": "active"
+   },
+   {
+    "name": "Tidjane Salaun",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Dennis Schroder",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Hannes Steinbach",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Coby White",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Grant Williams",
+    "position": "F",
+    "status": "active"
+   }
+  ],
+  "CHI": [
+   {
+    "name": "Tobe Awaka",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Brandon Boston Jr.",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Matas Buzelis",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Nic Claxton",
+    "position": "C",
+    "status": "active"
+   },
+   {
+    "name": "Zach Collins",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Noa Essengue",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Josh Giddey",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Buddy Hield",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Tre Jones",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Leonard Miller",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Isaac Okoro",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Drew Peterson",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Norman Powell",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Orlando Robinson",
+    "position": "C",
+    "status": "active"
+   },
+   {
+    "name": "Jaylin Sellers",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Jalen Smith",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Peter Suder",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Marquel Sutton",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Dailyn Swain",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Patrick Williams",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Caleb Wilson",
+    "position": "F",
+    "status": "active"
+   }
+  ],
+  "CLE": [
+   {
+    "name": "Rashaun Agee",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Jarrett Allen",
+    "position": "C",
+    "status": "active"
+   },
+   {
+    "name": "Zack Austin",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Thomas Bryant",
+    "position": "C",
+    "status": "active"
+   },
+   {
+    "name": "Khalifa Diop",
+    "position": "C",
+    "status": "active"
+   },
+   {
+    "name": "Tristan Enaruna",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "James Harden",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Mario Hezonja",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Curtis Jones",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Sam Merrill",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Riley Minix",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Donovan Mitchell",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Evan Mobley",
+    "position": "C",
+    "status": "active"
+   },
+   {
+    "name": "Craig Porter Jr.",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Tyrese Proctor",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Kadary Richmond",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Meleek Thomas",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Nae'Qwan Tomlin",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Jaylon Tyson",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Ernest Udeh Jr.",
+    "position": "C",
+    "status": "active"
+   },
+   {
+    "name": "Peyton Watson",
+    "position": "G",
+    "status": "active"
+   }
+  ],
+  "DAL": [
+   {
+    "name": "Santi Aldama",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Tarik Biberovic",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Max Christie",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Moussa Cisse",
+    "position": "C",
+    "status": "active"
+   },
+   {
+    "name": "Sergio de Larrea",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Cooper Flagg",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Daniel Gafford",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Jett Howard",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Kyrie Irving",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Morez Johnson Jr.",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Tobi Lawal",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Dereck Lively II",
+    "position": "C",
+    "status": "active"
+   },
+   {
+    "name": "Seth Lundy",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Naji Marshall",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Caleb Martin",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "John Poulakidas",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Dwight Powell",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Zaccharie Risacher",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Marcus Sasser",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "P.J. Washington",
+    "position": "F",
+    "status": "active"
+   }
+  ],
+  "DEN": [
+   {
+    "name": "Marvin Bagley III",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Christian Braun",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Trevon Brazile",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "DeMar DeRozan",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Alpha Diallo",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Dane Goodwin",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Aaron Gordon",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Coleman Hawkins",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "DaRon Holmes II",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Bryce Hopkins",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Cameron Johnson",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Nikola Jokic",
+    "position": "C",
+    "status": "active"
+   },
+   {
+    "name": "Spencer Jones",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Tyus Jones",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Emanuel Miller",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Jamal Murray",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Zeke Nnaji",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "KJ Simpson",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Julian Strawther",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Lonnie Walker IV",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Cam Whitmore",
+    "position": "F",
+    "status": "active"
+   }
+  ],
+  "DET": [
+   {
+    "name": "John Collins",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Cade Cunningham",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Jalen Duren",
+    "position": "C",
+    "status": "active"
+   },
+   {
+    "name": "Javonte Green",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Elijah Harkless",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Ronald Holland II",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Kevin Huerter",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Daniss Jenkins",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Isaiah Joe",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Isaac Jones",
+    "position": "C",
+    "status": "active"
+   },
+   {
+    "name": "Chaz Lanier",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Ebuka Okorie",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Ugonna Onyenso",
+    "position": "C",
+    "status": "active"
+   },
+   {
+    "name": "Taurean Prince",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Paul Reed",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Duncan Robinson",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Tolu Smith",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Ausar Thompson",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Brice Williams",
+    "position": "F",
+    "status": "active"
+   }
+  ],
+  "GSW": [
+   {
+    "name": "Charles Bassey",
+    "position": "C",
+    "status": "active"
+   },
+   {
+    "name": "Jimmy Butler III",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "LJ Cryer",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Stephen Curry",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Draymond Green",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Al Horford",
+    "position": "C",
+    "status": "active"
+   },
+   {
+    "name": "Graham Ike",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Miles Kelly",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Yaxel Lendeborg",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Malevy Leons",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "De'Anthony Melton",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Moses Moody",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Georges Niang",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Gary Payton II",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Brandin Podziemski",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Kristaps Porzingis",
+    "position": "C",
+    "status": "active"
+   },
+   {
+    "name": "Will Richard",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Gui Santos",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Dalen Terry",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Alex Toohey",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Brandon Williams",
+    "position": "G",
+    "status": "active"
+   }
+  ],
+  "HOU": [
+   {
+    "name": "Steven Adams",
+    "position": "C",
+    "status": "active"
+   },
+   {
+    "name": "Bogdan Bogdanovic",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Clint Capela",
+    "position": "C",
+    "status": "active"
+   },
+   {
+    "name": "Rafael Castro",
+    "position": "C",
+    "status": "active"
+   },
+   {
+    "name": "Quadir Copeland",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Isaiah Crawford",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Kevin Durant",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Tari Eason",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Sean Pedulla",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Julian Phillips",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Alperen Sengun",
+    "position": "C",
+    "status": "active"
+   },
+   {
+    "name": "Reed Sheppard",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Marcus Smart",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Jabari Smith Jr.",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Jae'Sean Tate",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Amen Thompson",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Bruce Thornton",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Oscar Tshiebwe",
+    "position": "C",
+    "status": "active"
+   },
+   {
+    "name": "Fred VanVleet",
+    "position": "G",
+    "status": "active"
+   }
+  ],
+  "IND": [
+   {
+    "name": "Kobe Brown",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Johnny Furphy",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Tyrese Haliburton",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Jay Huff",
+    "position": "C",
+    "status": "active"
+   },
+   {
+    "name": "Quenton Jackson",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "James Johnson",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "T.J. McConnell",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Larry Nance Jr.",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Andrew Nembhard",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Aaron Nesmith",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Kelly Oubre Jr.",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Ben Sheppard",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Pascal Siakam",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Jalen Slawson",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Braden Smith",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Obi Toppin",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Jarace Walker",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Ivica Zubac",
+    "position": "C",
+    "status": "active"
+   }
+  ],
+  "LAC": [
+   {
+    "name": "Bradley Beal",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Cam Christie",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Gradey Dick",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Kris Dunn",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Darius Garland",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Rui Hachimura",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Brandon Ingram",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Isaiah Jackson",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Derrick Jones Jr.",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Yuki Kawamura",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Brook Lopez",
+    "position": "C",
+    "status": "active"
+   },
+   {
+    "name": "Fletcher Loyer",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Nick Martinelli",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Baba Miller",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Jordan Miller",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Yanic Konan Niederhauser",
+    "position": "C",
+    "status": "active"
+   },
+   {
+    "name": "Jalen Pickett",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Kobe Sanders",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Max Strus",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Keaton Wagler",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Blake Wesley",
+    "position": "G",
+    "status": "active"
+   }
+  ],
+  "LAL": [
+   {
+    "name": "Cameron Carr",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Luka Doncic",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Quentin Grimes",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Jaden Hardy",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Bronny James",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Arthur Kaluma",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Walker Kessler",
+    "position": "C",
+    "status": "active"
+   },
+   {
+    "name": "Dalton Knecht",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "William Kyle III",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Jake LaRavia",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Kevon Looney",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Sandro Mamukelashvili",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Chris Manon",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "AK Okereke",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Austin Reaves",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Collin Sexton",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Cole Swider",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Adou Thiero",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Matisse Thybulle",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Jarred Vanderbilt",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Ziaire Williams",
+    "position": "F",
+    "status": "active"
+   }
+  ],
+  "MEM": [
+   {
+    "name": "Cameron Boozer",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Walter Clayton Jr.",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Carson Cooper",
+    "position": "C",
+    "status": "active"
+   },
+   {
+    "name": "Cedric Coward",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Zach Edey",
+    "position": "C",
+    "status": "active"
+   },
+   {
+    "name": "Jerami Grant",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Jordan Hawkins",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Taylor Hendricks",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "GG Jackson",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Ty Jerome",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Karim Lopez",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Jahmai Mashack",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Kris Murray",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Micah Peavy",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Scotty Pippen Jr.",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Quinten Post",
+    "position": "C",
+    "status": "active"
+   },
+   {
+    "name": "Olivier-Maxence Prosper",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Javon Small",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Cam Spencer",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Isaiah Stewart",
+    "position": "C",
+    "status": "active"
+   },
+   {
+    "name": "Jaylen Wells",
+    "position": "F",
+    "status": "active"
+   }
+  ],
+  "MIA": [
+   {
+    "name": "Bam Adebayo",
+    "position": "C",
+    "status": "active"
+   },
+   {
+    "name": "Giannis Antetokounmpo",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Ryan Conwell",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Tre Donaldson",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Simone Fontecchio",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Myron Gardner",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Vladislav Goldin",
+    "position": "C",
+    "status": "active"
+   },
+   {
+    "name": "J'Vonne Hadley",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Tim Hardaway Jr.",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Keshad Johnson",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Nikola Jovic",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Pelle Larsson",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Bez Mbeng",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Davion Mitchell",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Bobby Portis",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Lester Quinones",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Nick Richards",
+    "position": "C",
+    "status": "active"
+   },
+   {
+    "name": "Dru Smith",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Klay Thompson",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Andrew Wiggins",
+    "position": "F",
+    "status": "active"
+   }
+  ],
+  "MIL": [
+   {
+    "name": "Nate Ament",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Brayden Burries",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "John Butler Jr.",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Ousmane Dieng",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "AJ Green",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Tyler Herro",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Kasparas Jakucionis",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Jaime Jaquez Jr.",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Kam Jones",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Kyle Kuzma",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Caris LeVert",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Bogoljub Markovic",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Pete Nance",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Kevin Porter Jr.",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Ryan Rollins",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Cormac Ryan",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Jericho Sims",
+    "position": "C",
+    "status": "active"
+   },
+   {
+    "name": "Jake Stephens",
+    "position": "C",
+    "status": "active"
+   },
+   {
+    "name": "Gary Trent Jr.",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Myles Turner",
+    "position": "C",
+    "status": "active"
+   },
+   {
+    "name": "Kel'el Ware",
+    "position": "C",
+    "status": "active"
+   }
+  ],
+  "MIN": [
+   {
+    "name": "LaMelo Ball",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Joan Beringer",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Jaylen Clark",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Donte DiVincenzo",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Ayo Dosunmu",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Anthony Edwards",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Isaiah Evans",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Enrique Freeman",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Rudy Gobert",
+    "position": "C",
+    "status": "active"
+   },
+   {
+    "name": "Bones Hyland",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Jonathan Kuminga",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Trey Lyles",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "KJ Martin",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Jaden McDaniels",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Norchad Omier",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Zyon Pullin",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Antonio Reeves",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Terrence Shannon Jr.",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Drew Timme",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Cody Williams",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Rocco Zikarsky",
+    "position": "C",
+    "status": "active"
+   }
+  ],
+  "NOP": [
+   {
+    "name": "Saddiq Bey",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Kobe Bufkin",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Malik Dia",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Jeremiah Fears",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Caleb Houstan",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "AJ Johnson",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Herbert Jones",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "DeAndre Jordan",
+    "position": "C",
+    "status": "active"
+   },
+   {
+    "name": "Christian Koloko",
+    "position": "C",
+    "status": "active"
+   },
+   {
+    "name": "Bennedict Mathurin",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Karlo Matkovic",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Bryce McGowens",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Yves Missi",
+    "position": "C",
+    "status": "active"
+   },
+   {
+    "name": "Trey Murphy III",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Dejounte Murray",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Jaron Pierre Jr.",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Jordan Poole",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Derik Queen",
+    "position": "C",
+    "status": "active"
+   },
+   {
+    "name": "Julian Reese",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Trendon Watford",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Zion Williamson",
+    "position": "F",
+    "status": "active"
+   }
+  ],
+  "NYK": [
+   {
+    "name": "Ochai Agbaji",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Jose Alvarado",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "OG Anunoby",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Mikal Bridges",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Bruce Brown",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Jalen Brunson",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Jordan Clarkson",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Pacome Dadiet",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "N'Faly Dante",
+    "position": "C",
+    "status": "active"
+   },
+   {
+    "name": "Mohamed Diawara",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Andre Drummond",
+    "position": "C",
+    "status": "active"
+   },
+   {
+    "name": "Drew Eubanks",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Josh Hart",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Tyler Kolek",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "John Konchar",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Miles McBride",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Kevin McCullar Jr.",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Tyler Nickel",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Landry Shamet",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Karl-Anthony Towns",
+    "position": "C",
+    "status": "active"
+   },
+   {
+    "name": "James Wiseman",
+    "position": "C",
+    "status": "active"
+   }
+  ],
+  "OKC": [
+   {
+    "name": "Brooks Barnhizer",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Alex Caruso",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Josh Dix",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Shai Gilgeous-Alexander",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Isaiah Hartenstein",
+    "position": "C",
+    "status": "active"
+   },
+   {
+    "name": "Andrew Holifield",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Chet Holmgren",
+    "position": "C",
+    "status": "active"
+   },
+   {
+    "name": "Aday Mara",
+    "position": "C",
+    "status": "active"
+   },
+   {
+    "name": "Jared McCain",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Robert McCray V",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Ajay Mitchell",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Otega Oweh",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Zhaire Smith",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Thomas Sorber",
+    "position": "C",
+    "status": "active"
+   },
+   {
+    "name": "Bennett Stirtz",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Christoph Tilly",
+    "position": "C",
+    "status": "active"
+   },
+   {
+    "name": "Nikola Topic",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Cason Wallace",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Jalen Williams",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Jaylin Williams",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Kenrich Williams",
+    "position": "G",
+    "status": "active"
+   }
+  ],
+  "ORL": [
+   {
+    "name": "Paolo Banchero",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Desmond Bane",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Goga Bitadze",
+    "position": "C",
+    "status": "active"
+   },
+   {
+    "name": "Anthony Black",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Malaki Branham",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Jamal Cain",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Jevon Carter",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Wendell Carter Jr.",
+    "position": "C",
+    "status": "active"
+   },
+   {
+    "name": "Colin Castleton",
+    "position": "C",
+    "status": "active"
+   },
+   {
+    "name": "Tristan da Silva",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "JD Davison",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Jonathan Isaac",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Kevin Knox II",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Alex Morales",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Izaiyah Nelson",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Noah Penda",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Jase Richardson",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Jalen Suggs",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Nikola Vucevic",
+    "position": "C",
+    "status": "active"
+   },
+   {
+    "name": "Franz Wagner",
+    "position": "F",
+    "status": "active"
+   }
+  ],
+  "PHI": [
+   {
+    "name": "Dominick Barlow",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Adem Bona",
+    "position": "C",
+    "status": "active"
+   },
+   {
+    "name": "Jaylen Brown",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Kentavious Caldwell-Pope",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "VJ Edgecombe",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Justin Edwards",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Joel Embiid",
+    "position": "C",
+    "status": "active"
+   },
+   {
+    "name": "Tacko Fall",
+    "position": "C",
+    "status": "active"
+   },
+   {
+    "name": "Ariel Hukporti",
+    "position": "C",
+    "status": "active"
+   },
+   {
+    "name": "LeBron James",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Dillon Jones",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Caleb Love",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Tyrese Maxey",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Duke Miles",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Jameer Nelson Jr.",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Labaron Philon Jr.",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Rayan Rupert",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Anfernee Simons",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Saint Thomas",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Dean Wade",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Jabari Walker",
+    "position": "F",
+    "status": "active"
+   }
+  ],
+  "PHX": [
+   {
+    "name": "Devin Booker",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Jamaree Bouyea",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Koby Brea",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Miles Bridges",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Dillon Brooks",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Kennedy Chandler",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Ryan Dunn",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Rasheer Fleming",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Collin Gillespie",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Jordan Goodwin",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Jalen Green",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Haywood Highsmith",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "CJ Huntley",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Oso Ighodaro",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Luke Kennard",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Khaman Maluach",
+    "position": "C",
+    "status": "active"
+   },
+   {
+    "name": "Koa Peat",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Duop Reath",
+    "position": "C",
+    "status": "active"
+   },
+   {
+    "name": "Pat Spencer",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Phillip Wheeler",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Mark Williams",
+    "position": "C",
+    "status": "active"
+   }
+  ],
+  "POR": [
+   {
+    "name": "Deni Avdija",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Toumani Camara",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Branden Carlson",
+    "position": "C",
+    "status": "active"
+   },
+   {
+    "name": "Sidy Cissoko",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Donovan Clingan",
+    "position": "C",
+    "status": "active"
+   },
+   {
+    "name": "Yang Hansen",
+    "position": "C",
+    "status": "active"
+   },
+   {
+    "name": "Scoot Henderson",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Jrue Holiday",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Jayson Kent",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Vit Krejci",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Damian Lillard",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Ja Morant",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Micah Potter",
+    "position": "C",
+    "status": "active"
+   },
+   {
+    "name": "Shaedon Sharpe",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Jeremy Sochan",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "John Tonje",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Robert Williams III",
+    "position": "C",
+    "status": "active"
+   },
+   {
+    "name": "Chris Youngblood",
+    "position": "G",
+    "status": "active"
+   }
+  ],
+  "SAC": [
+   {
+    "name": "Precious Achiuwa",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Darius Acuff Jr.",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Leaky Black",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Dylan Cardwell",
+    "position": "C",
+    "status": "active"
+   },
+   {
+    "name": "Nique Clifford",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Adam Flagler",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "De'Andre Hunter",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Alex Karaban",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Zach LaVine",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Jonathan Mogbo",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Malik Monk",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Keegan Murray",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Tristen Newton",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Elfrid Payton",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Daeqwon Plowden",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Maxime Raynaud",
+    "position": "C",
+    "status": "active"
+   },
+   {
+    "name": "Domantas Sabonis",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Emanuel Sharp",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Ben Simmons",
+    "position": "G",
+    "status": "active"
+   }
+  ],
+  "SAS": [
+   {
+    "name": "Harrison Barnes",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Maliq Brown",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Carter Bryant",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Stephon Castle",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Julian Champagnie",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "RJ Davis",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Jon Elmore",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "De'Aaron Fox",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Ja'Kobi Gillespie",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Dylan Harper",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Tobias Harris",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Keldon Johnson",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "David Jones Garcia",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Luke Kornet",
+    "position": "C",
+    "status": "active"
+   },
+   {
+    "name": "Jordan McLaughlin",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Taelon Peter",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Jayden Quaintance",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Tarris Reed Jr.",
+    "position": "C",
+    "status": "active"
+   },
+   {
+    "name": "Devin Vassell",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Victor Wembanyama",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Malik Williams",
+    "position": "C",
+    "status": "active"
+   }
+  ],
+  "TOR": [
+   {
+    "name": "Kyle Anderson",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Scottie Barnes",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "RJ Barrett",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Jamison Battle",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Nate Bittle",
+    "position": "C",
+    "status": "active"
+   },
+   {
+    "name": "Jaden Bradley",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Allen Graves",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Chucky Hepburn",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Andre Jackson Jr.",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Trayce Jackson-Davis",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Trey Jemison III",
+    "position": "C",
+    "status": "active"
+   },
+   {
+    "name": "Tyreke Key",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Kawhi Leonard",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Alijah Martin",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Collin Murray-Boyles",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Jakob Poeltl",
+    "position": "C",
+    "status": "active"
+   },
+   {
+    "name": "Immanuel Quickley",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Jamal Shead",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Malachi Smith",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Ja'Kobe Walter",
+    "position": "G",
+    "status": "active"
+   }
+  ],
+  "UTA": [
+   {
+    "name": "Jonas Aidoo",
+    "position": "C",
+    "status": "active"
+   },
+   {
+    "name": "Trey Alexander",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Ace Bailey",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Mo Bamba",
+    "position": "C",
+    "status": "active"
+   },
+   {
+    "name": "Tamar Bates",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Isaiah Collier",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Kyle Filipowski",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Keyonte George",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Josh Green",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Jaxson Hayes",
+    "position": "C",
+    "status": "active"
+   },
+   {
+    "name": "Blake Hinson",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Harrison Ingram",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Jaren Jackson Jr.",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Lauri Markkanen",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Svi Mykhailiuk",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Jusuf Nurkic",
+    "position": "C",
+    "status": "active"
+   },
+   {
+    "name": "Josh Okogie",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Darryn Peterson",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Brice Sensabaugh",
+    "position": "F",
+    "status": "active"
+   }
+  ],
+  "WAS": [
+   {
+    "name": "Deandre Ayton",
+    "position": "C",
+    "status": "active"
+   },
+   {
+    "name": "Reece Beekman",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Bub Carrington",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Justin Champagnie",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Bilal Coulibaly",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Anthony Davis",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "AJ Dybantsa",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Kyshawn George",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Anthony Gill",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Tre Johnson",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Trevor Keels",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Chris Livingston",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Tre Mann",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Khris Middleton",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Felix Okpara",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Will Riley",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Alex Sarr",
+    "position": "C",
+    "status": "active"
+   },
+   {
+    "name": "Steve Settle III",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Tristan Vukcevic",
+    "position": "F",
+    "status": "active"
+   },
+   {
+    "name": "Jamir Watkins",
+    "position": "G",
+    "status": "active"
+   },
+   {
+    "name": "Trae Young",
+    "position": "G",
+    "status": "active"
+   }
+  ]
+ },
+ "summary": {
+  "teams": 30,
+  "roster_slots": 607,
+  "unique_players": 607
+ }
+}

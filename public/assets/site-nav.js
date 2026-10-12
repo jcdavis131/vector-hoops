@@ -7,6 +7,7 @@
   var LINKS = [
     { href: '/', label: 'Atlas', title: 'The map of 12,966 player-seasons' },
     { href: '/play', label: 'Play', title: 'Daily Court: five past All-Stars, find each modern twin' },
+    { href: '/live', label: 'Live', title: 'Live game companion: win probability, atlas twins, shot charts — plus the arcade between games' },
     { href: '/players', label: 'Players', title: 'Directory, skill profiles and leaderboards' },
     { href: '/teams', label: 'Teams', title: 'Thirty seamless team intro loops over the embedding atlas' },
     { href: '/model', label: 'Lab', title: 'How the embedding model is trained and evaluated' },
@@ -47,6 +48,27 @@
       '<div class="site-nav__links">' + linksHtml + '</div>' +
       '<div class="site-nav__end">' + end + '</div>';
     nav.setAttribute('data-mounted', '1');
+    markLive();
+  }
+
+  /* Live-dot: pulse the Live link while any NBA game is in progress.
+   * One ESPN scoreboard fetch per 90s per tab, cached in sessionStorage. */
+  function markLive() {
+    var link = document.querySelector('.site-nav__link[href="/live"]');
+    if (!link) return;
+    function set(on) { link.classList.toggle('is-live', !!on); }
+    try {
+      var c = sessionStorage.getItem('vh_nav_live');
+      if (c) { var o = JSON.parse(c); if (Date.now() - o.t < 90000) { set(o.on); return; } }
+    } catch (e) {}
+    fetch('https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard')
+      .then(function (r) { return r.json(); })
+      .then(function (d) {
+        var on = (d.events || []).some(function (e) { return e.status && e.status.type && e.status.type.state === 'in'; });
+        set(on);
+        try { sessionStorage.setItem('vh_nav_live', JSON.stringify({ on: on, t: Date.now() })); } catch (e) {}
+      })
+      .catch(function () {});
   }
 
   if (document.readyState === 'loading') {
