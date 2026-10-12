@@ -113,18 +113,35 @@
 .field__loading{ font-family: var(--font-display); font-size: 10px; font-weight: 600; font-stretch: 112%; letter-spacing: .24em; text-transform: uppercase; color: rgba(214,222,232,.55); }
 
 .legend{ display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0; margin-top: var(--s-4); border-top: 1px solid var(--line); }
+/* Patent-motion legend rows: numbered, hover (or linked canvas hover) inverts
+ * the row to an ink pill — the grammar's third feedback channel. */
 .legend-chip{
-  display: flex; justify-content: space-between; align-items: baseline; gap: 10px;
+  display: flex; justify-content: flex-start; align-items: baseline; gap: 10px;
   padding: 11px 12px 11px 0; min-height: 44px;
   font-family: var(--font-text); font-size: 12.5px; text-align: left; color: var(--fg-3);
   background: none; border: 0; border-bottom: 1px solid var(--line); cursor: pointer;
-  transition: color var(--dur-1) var(--ease);
+  border-radius: 999px;
+  transition: color var(--patent-hover) var(--patent-ease),
+              background var(--patent-hover) var(--patent-ease),
+              padding var(--patent-hover) var(--patent-ease);
 }
 .legend-chip:nth-child(4n+2), .legend-chip:nth-child(4n+3), .legend-chip:nth-child(4n+4){ padding-left: 16px; border-left: 1px solid var(--line); }
-.legend-chip .num{ font-size: 12px; color: var(--fg-3); }
-.legend-chip:hover{ color: var(--fg); }
+.legend-chip .legend-num{
+  font-family: var(--mono, monospace); font-size: 10px; font-weight: 700;
+  letter-spacing: .14em; color: var(--fg-3); flex: none;
+}
+.legend-chip .num{ font-size: 12px; color: var(--fg-3); margin-left: auto; }
+.legend-chip:hover, .legend-chip.is-hover{
+  color: var(--patent-paper); background: var(--patent-ink);
+  padding-left: 16px; padding-right: 16px; border-bottom-color: transparent;
+}
+.legend-chip:hover .legend-num, .legend-chip.is-hover .legend-num,
+.legend-chip:hover .num, .legend-chip.is-hover .num{ color: var(--patent-paper); }
 .legend-chip[aria-pressed="true"]{ color: var(--fg); box-shadow: inset 0 -2px 0 var(--accent); }
 .legend-chip[aria-pressed="true"] .num{ color: var(--accent); }
+/* an inverted row that is also the active filter keeps the accent marker */
+.legend-chip.is-hover[aria-pressed="true"]{ box-shadow: inset 0 -2px 0 var(--patent-accent); }
+.legend-chip.is-hover[aria-pressed="true"] .num{ color: var(--patent-accent); }
 
 /* ---------- team highlight ---------- */
 .team-highlight{ display: flex; gap: 8px; align-items: center; }
@@ -269,13 +286,15 @@
       </div>
     </div>
 
-    <div class="field" id="map-wrap">
+    <div class="field fig-frame" id="map-wrap" data-fig="1" data-fig-subject="12,966 player-seasons" data-fig-maker="Vector Hoops">
+      <i class="fig-frame__foot" aria-hidden="true"></i>
       <canvas id="sky-canvas" role="img" aria-label="Scatter of 12,966 NBA player-seasons. Left to right runs from paint players to perimeter players; top to bottom runs from high-usage scorers to low-usage role players. Use the search field to select a season."></canvas>
       <span class="axis axis--t">High usage</span>
       <span class="axis axis--b">Role players</span>
       <span class="axis axis--l">Paint</span>
       <span class="axis axis--r">Perimeter</span>
       <div class="hover-tip" id="hover-tip" hidden></div>
+      <div class="patent-caption" id="atlas-caption" hidden></div>
       <div class="team-caption" id="team-caption" hidden></div>
       <div class="field__controls" id="map-controls">
         <button type="button" data-map="share"><span>Copy link</span></button>
@@ -377,7 +396,7 @@
 
 <script src="/assets/site-nav.js?v=2a10730a"></script>
 <script src="/assets/mtnn.js?v=f72a913c"></script>
-<script src="/assets/atlas-map.js?v=7a260b23"></script>
+<script src="/assets/atlas-map.js?v=0c13d148"></script>
 <script src="/assets/career-trails.js?v=a0e9e836"></script>
 <script>
 if('serviceWorker' in navigator){ window.addEventListener('load', function(){ navigator.serviceWorker.register('/sw.js').catch(function(){}); }); }
