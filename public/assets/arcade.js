@@ -29,11 +29,15 @@ function shareText(t, msgEl) {
 function shuffle(a) { for (var i = a.length - 1; i > 0; i--) { var j = rnd(i + 1), t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
 
 // ---------- shared mini map ----------
+var _fitCache = {};
 function fitCanvas(cv, h) {
   var DPR = Math.min(2, window.devicePixelRatio || 1);
   var W = cv.clientWidth || 600;
-  cv.width = Math.round(W * DPR); cv.height = Math.round(h * DPR);
-  cv.style.height = h + 'px';
+  var bw = Math.round(W * DPR), bh = Math.round(h * DPR);
+  if (cv.width !== bw || cv.height !== bh) {
+    cv.width = bw; cv.height = bh;
+    cv.style.height = h + 'px';
+  }
   var ctx = cv.getContext('2d');
   ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
   return { ctx: ctx, W: W, H: h };
@@ -252,14 +256,18 @@ function eraDraw() {
 
 // ---------- main loop ----------
 var lastT = 0;
+var _lastFrame = 0;
 function loop(t) {
   if (!running) return;
+  rafId = requestAnimationFrame(loop);
+  if (document.hidden) return;
+  if (t - _lastFrame < 33) return; // ~30fps is plenty for pulses + trail sweeps
+  _lastFrame = t;
   var dt = Math.min(80, t - (lastT || t)); lastT = t;
   pulseT = t;
   try {
     snapDraw(); trailDraw(dt); eraDraw();
   } catch (e) {}
-  rafId = requestAnimationFrame(loop);
 }
 
 function bootData() {

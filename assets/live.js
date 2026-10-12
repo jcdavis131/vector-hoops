@@ -658,6 +658,7 @@ function renderMoments(d,g,idx){
   const vmoms=moms.filter(m=>m.seq<=idx);
   vmoms.sort((a,b)=>b.seq-a.seq);
   window._seenMom=window._seenMom||new Set();
+  if(window._seenMom.size>400){const _a=[...window._seenMom].slice(-200);window._seenMom=new Set(_a);}
   el.innerHTML=vmoms.slice(0,8).map(m=>{
     const k=m.clk+'|'+m.text.replace(/<[^>]*>/g,'');
     const fresh=!window._seenMom.has(k);

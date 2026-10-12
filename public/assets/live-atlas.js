@@ -18,6 +18,7 @@ var mode = 'twins';
 var livePlayers = [];   // {name, pts, mp, idx, abbr, color}
 var gameInfo = null;    // {aAbbr, hAbbr, aColor, hColor}
 var fireName = null;     // NBA Jam: player currently on fire
+var _lastSig = '';
 var selIdx = -1, twins = [];
 var rosters = null, matchup = { a: [], h: [] }, isoTeam = null;
 var trailPts = [], trailT = 0, trailName = null, trailTimer = null;
@@ -51,19 +52,31 @@ function buildGrid() {
   }
 }
 
+var gridCache = null, gridCacheKey = '';
+function drawGridLayer() {
+  // the 2,016-cell density field never changes — render once per size, blit after
+  var key = W + 'x' + H;
+  if (gridCache && gridCacheKey === key) return gridCache;
+  var DPR = Math.min(2, window.devicePixelRatio || 1);
+  var off = document.createElement('canvas');
+  off.width = Math.round(W * DPR); off.height = Math.round(H * DPR);
+  var c = off.getContext('2d'); c.setTransform(DPR, 0, 0, DPR, 0, 0);
+  var cw = (W - 28) / GX, ch = (H - 32) / GY;
+  c.fillStyle = '#1b1913';
+  for (var gy = 0; gy < GY; gy++) for (var gx = 0; gx < GX; gx++) {
+    var n = grid[gy * GX + gx];
+    if (!n) continue;
+    c.globalAlpha = Math.min(0.30, n / gmax * 0.55);
+    c.fillRect(14 + gx * cw, 16 + gy * ch, cw + 0.6, ch + 0.6);
+  }
+  c.globalAlpha = 1;
+  gridCache = off; gridCacheKey = key;
+  return off;
+}
 function draw() {
   if (!ctx || !liteReady) return;
   ctx.clearRect(0, 0, W, H);
-  // density field
-  var cw = (W - 28) / GX, ch = (H - 32) / GY;
-  ctx.fillStyle = '#1b1913';
-  for (var gy = 0; gy < GY; gy++) for (var gx = 0; gx < GX; gx++) {
-    var c = grid[gy * GX + gx];
-    if (!c) continue;
-    ctx.globalAlpha = Math.min(0.30, c / gmax * 0.55);
-    ctx.fillRect(14 + gx * cw, 16 + gy * ch, cw + 0.6, ch + 0.6);
-  }
-  ctx.globalAlpha = 1;
+  ctx.drawImage(drawGridLayer(), 0, 0, W, H);
   ctx.font = '700 8px ui-monospace,monospace'; ctx.fillStyle = '#8a8574'; ctx.textAlign = 'left';
   ctx.fillText('12,966 PLAYER-SEASONS · 1996–2026', 14, 11);
   if (mode === 'twins') drawTwins();
@@ -317,6 +330,9 @@ function onGame(d, g, fire) {
   });
   livePlayers.sort(function (a, b) { return b.pts - a.pts; });
   livePlayers = livePlayers.slice(0, 4);
+  var sig = livePlayers.map(function (p) { return p.name; }).join('|') + '#' + (fireName || '');
+  if (sig === _lastSig && liteReady) return; // nothing changed — skip the topK scan + redraw
+  _lastSig = sig;
   matchup = { a: [], h: [] }; rosters = null; isoTeam = null;
   trailPts = []; trailName = null; selIdx = -1; twins = [];
   if (mode === 'matchup') loadMatchup();
