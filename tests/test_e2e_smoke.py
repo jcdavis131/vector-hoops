@@ -57,6 +57,7 @@ import subprocess
 import sys
 from pathlib import Path
 
+import numpy as np
 import pytest
 
 # Only the subprocesses need torch. Checked, not imported: importing it here
@@ -381,6 +382,55 @@ def test_a_protocol_v2_run_that_lost_its_skill_labels_is_unscored(chain, tmp_pat
     assert {"skills_r2", "skill_nn"} <= set(block["components_expected"])
     assert block["cqs"] is None and "skills_r2, skill_nn" in block["cqs_unscored"]
     assert report["promote"]["ok"] is False and "CQS was not scored" in report["promote"]["reason"]
+
+
+def _train_with_game_cells(root: Path, value: float, measured: bool) -> dict:
+    """Train one epoch on the slice with every 7th row's FG3_PCT set to `value`, at mask `measured`.
+
+    The slice predates FA2, so every game cell in it is measured; this marks some
+    unmeasured the way build_vectors does since 078b75df (mask 0), which puts the
+    trainer on its masked-target path. Returns the run's embedding arrays.
+    """
+    build_skeleton(root)
+    data = root / "pipeline" / "data"
+    manifest = load(data / "feature_manifest.json")
+    col = manifest["features"].index("FG3_PCT")
+    with np.load(data / "train_matrix.npz", allow_pickle=False) as npz:
+        arrays = {k: npz[k] for k in npz.files}
+    rows = np.arange(0, len(arrays["Z"]), 7)
+    arrays["Z"][rows, col] = value
+    arrays["mask"][rows, col] = 1.0 if measured else 0.0
+    np.savez_compressed(data / "train_matrix.npz", **arrays)
+    run = data / "runs" / "t"
+    argv = ("pipeline/train_mtnn.py", "--recipe", "measure", "--epochs", "1", "--device", "cpu", "--seed", "5")
+    logs = root.parent / "logs"
+    logs.mkdir(exist_ok=True)
+    proc = run_step(root, (*argv, "--run-dir", str(run)), logs, root.name)
+    assert proc.returncode == 0, (proc.stdout + proc.stderr)[-3000:]
+    with np.load(run / "embedding_v3.npz", allow_pickle=False) as npz:
+        return {"log": proc.stdout, **{k: npz[k] for k in npz.files}}
+
+
+def test_the_trainer_leaves_unmeasured_game_targets_out_of_its_losses(chain, tmp_path):
+    """FA2 review note: the trainer's masked wiring was tested by source strings only.
+
+    Behaviour, end to end in the real trainer: two runs that differ only in the value
+    stored in 96 unmeasured FG3_PCT cells (0.0, as the matrix stores them, and 5.0)
+    train bit-identical embeddings. The towers read x * m, so an unmeasured input is
+    invisible; identical weights then mean the profile and next_profile losses took no
+    gradient from those targets either. The control: the same 5.0 marked measured
+    trains a different model, so the test can see a target that counts. Takes `chain`
+    so test_nothing_outside_the_skeleton_was_written also covers these runs.
+    """
+    zero = _train_with_game_cells(tmp_path / "unmeasured_zero", 0.0, measured=False)
+    five = _train_with_game_cells(tmp_path / "unmeasured_five", 5.0, measured=False)
+    control = _train_with_game_cells(tmp_path / "measured_five", 5.0, measured=True)
+    assert "unmeasured game cells" in zero["log"] and "unmeasured game cells" in five["log"]
+    keys = [k for k in zero if k != "log"]
+    assert keys and keys == [k for k in five if k != "log"]
+    for k in keys:
+        assert np.array_equal(zero[k], five[k]), k
+    assert not all(np.array_equal(zero[k], control[k]) for k in keys)
 
 
 def test_nothing_outside_the_skeleton_was_written(chain):
