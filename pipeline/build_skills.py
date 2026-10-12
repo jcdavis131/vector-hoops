@@ -24,6 +24,7 @@ Run:  python pipeline/build_skills.py [--out-root DIR]
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import time
 from pathlib import Path
@@ -219,7 +220,8 @@ def main() -> None:
     PROBE_OUT = rerooted(PROBE_OUT, args.out_root)
     LABELS_OUT = rerooted(LABELS_OUT, args.out_root)
 
-    vec = json.loads(VECTORS.read_text(encoding="utf-8"))
+    raw = VECTORS.read_bytes()
+    vec = json.loads(raw.decode("utf-8"))
     features: list[str] = vec["features"]
     players = vec["players"]
     n = len(players)
@@ -245,6 +247,10 @@ def main() -> None:
     skills_doc = {
         "built": built,
         "source": "assets/vectors.json (frozen 14-dim era-z contract)",
+        # The grades are row-aligned to that file. export_assets no longer
+        # rebuilds this one [final#25], so it checks the stamp against the
+        # vectors.json it ships beside.
+        "vectors_sha256": hashlib.sha256(raw).hexdigest(),
         "method": (
             "linear composite of era-z features -> percentile grade 0-99 within season pool; see docs/SKILLS_LENS.md"
         ),

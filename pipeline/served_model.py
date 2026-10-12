@@ -92,6 +92,11 @@ SIDECARS = (
     # since [final#0]; before, nothing rewrote it from the promoted bundle.
     "mtnn_attr_pop.json",
     "projections.json",  # project_next_season, run by export_assets
+    # archetype_time and career_trajectories cluster the served f32; stamped
+    # with its lineage (f32_stamp) since [final#2].
+    "archetypes_time.json",
+    "archetype_assignments.json",
+    "trajectories.json",
     "scoring_lite_index.json",  # build_scoring_lite
 )
 
@@ -164,6 +169,22 @@ def verify_f32(assets: Path) -> dict[str, Any]:
             f"{LINEAGE} records for run {lineage.get('run_id')}"
         )
     return lineage
+
+
+def f32_stamp(assets: Path) -> dict[str, Any] | None:
+    """What a file built from the served f32 records about it: promote's bundle.stamp() keys.
+
+    Read from mtnn_lineage.json after checking the f32 is the bytes it names,
+    so it equals the promoted bundle's stamp exactly when the f32 was
+    exported from that bundle. None when nothing ties the f32 to a run (no
+    lineage file, or other bytes): a file clustered from it then says so,
+    instead of borrowing the stamp of a bundle it was not built from [final#2].
+    """
+    try:
+        lineage = verify_f32(assets)
+    except (ServedModelError, OSError):
+        return None
+    return {k: lineage.get(k) for k in ("run_id", "embedding_npz_sha256", "checkpoint_sha256")}
 
 
 def problems(assets: Path) -> list[str]:

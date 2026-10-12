@@ -14,6 +14,7 @@ from __future__ import annotations
 import hashlib
 import json
 import sys
+import types
 from pathlib import Path
 
 import numpy as np
@@ -284,11 +285,128 @@ def test_served_keys_hash_is_the_matrix_fingerprints(env):
 def test_wide_skills_source_says_what_this_export_did():
     doc = {"built": "2026-07-30"}
     # Before: "real_caches" whenever any wide_skills_*.json existed, proxies included,
-    # whether or not this export rebuilt the file.
-    assert ea.wide_skills_source(True, None, doc).startswith("rebuilt by this export")
-    skipped = ea.wide_skills_source(False, "wide_skills_2013-14.json is a proxy doc", doc)
-    assert "not rebuilt" in skipped and "proxy" in skipped and "2026-07-30" in skipped
-    assert "build_wide_skills failed" in ea.wide_skills_source(False, None, {})
+    # whether or not this export rebuilt the file. The export rebuilds it never now
+    # [final#25]; the sentence says so and when the file on disk was built.
+    src = ea.wide_skills_source(doc)
+    assert src.startswith("not rebuilt by this export") and "--refresh-context" in src and "2026-07-30" in src
+    assert "unknown date" in ea.wide_skills_source({})
+
+
+# --- export_assets: order and write set [final#2, final#4, final#21, final#25] --------
+
+SIDE_BUILDERS = (
+    "build_skills",
+    "test_skills",
+    "build_wide_skills",
+    "test_wide_skills",
+    "build_pedigree",
+    "build_playoffs",
+    "build_honors",
+    "build_salary_market",
+    "build_game_ratings",
+)
+
+
+@pytest.fixture
+def export_env(tmp_path, monkeypatch):
+    """export_assets.main with every subprocess recorded instead of run, assets/ in tmp_path."""
+    assets = tmp_path / "assets"
+    write_vectors(assets)
+    vec_sha = hashlib.sha256((assets / "vectors.json").read_bytes()).hexdigest()
+    (assets / "skills.json").write_text(json.dumps({"vectors_sha256": vec_sha, "grades": []}), encoding="utf-8")
+    for name, value in {
+        "ROOT": tmp_path,
+        "ASSETS": assets,
+        "MANIFEST": assets / "manifest.json",
+        "LEDGER": tmp_path / "no_ledger.json",
+        "SWEEP": tmp_path / "no_sweep.json",
+    }.items():
+        monkeypatch.setattr(ea, name, value)
+    calls: list[tuple[str, bool]] = []
+
+    def run(name, cmd, required=True):
+        calls.append((Path(cmd[1]).stem, required))
+        return True
+
+    monkeypatch.setattr(ea, "run", run)
+    return assets, calls
+
+
+def _stems(calls):
+    return [name for name, _ in calls]
+
+
+def test_export_assets_clusters_the_new_f32_before_projecting(export_env, monkeypatch):
+    """[final#2] archetype_time and career_trajectories ran before export_mtnn_embeddings
+    wrote the new f32, so projections.json took archetype names from the previous model
+    and trajectories.json was built from the previous f32 under the new lineage."""
+    _, calls = export_env
+    bundle = types.SimpleNamespace(run_id="r1", manifest={"model": "m"}, metrics={}, metrics_source={})
+    monkeypatch.setattr(ea, "promoted_bundle", lambda: (bundle, None))
+    monkeypatch.setattr(ea, "mtnn_exports_allowed", lambda b: (True, None))
+    ea.main()
+    names = _stems(calls)
+    emb, proj = names.index("export_mtnn_embeddings"), names.index("project_next_season")
+    for reader in ("archetype_time", "career_trajectories"):
+        assert names.count(reader) == 1 and emb < names.index(reader) < proj, names
+        assert (reader, True) in calls  # required: a failure would ship mixed provenance
+    assert names.index("export_mtnn_viz") > proj
+    assert not set(names) & set(SIDE_BUILDERS)
+
+
+def test_export_assets_with_nothing_promoted_is_how_the_live_assets_were_built(export_env, monkeypatch):
+    """The skipped path is a primary case, not a fallback: origin b7ccea45 built the live
+    assets with export_assets and nothing promoted. It still clusters the served f32."""
+    assets, calls = export_env
+    monkeypatch.setattr(ea, "promoted_bundle", lambda: (None, "nothing is promoted: test"))
+    ea.main()
+    names = _stems(calls)
+    assert {"archetype_time", "career_trajectories", "procrustes_drift", "build_player_meta"} <= set(names)
+    assert not {"export_mtnn_embeddings", "project_next_season", "export_mtnn_viz"} & set(names)
+    assert not set(names) & set(SIDE_BUILDERS)
+    manifest = json.loads((assets / "manifest.json").read_text(encoding="utf-8"))
+    assert manifest["mtnn_promoted"] is False and manifest["mtnn_run_id"] is None
+
+
+def test_export_assets_runs_none_of_the_side_builders():
+    """[final#4, final#21, final#25] They rewrote pipeline/data training inputs undeclared;
+    rebuild_all's context block owns them."""
+    src = (ROOT / "pipeline" / "export_assets.py").read_text(encoding="utf-8")
+    for name in SIDE_BUILDERS:
+        assert f"pipeline/{name}.py" not in src, name
+
+
+def test_export_assets_stops_on_a_missing_or_stale_skills_json(export_env, monkeypatch):
+    assets, calls = export_env
+    monkeypatch.setattr(ea, "promoted_bundle", lambda: (None, "nothing is promoted: test"))
+    doc = json.loads((assets / "vectors.json").read_text(encoding="utf-8"))
+    doc["players"][0]["v"] = [0.5]  # vectors.json rebuilt since build_skills read it
+    (assets / "vectors.json").write_text(json.dumps(doc), encoding="utf-8")
+    with pytest.raises(SystemExit, match=r"skills\.json was built from vectors\.json .* --refresh-context"):
+        ea.main()
+    (assets / "skills.json").unlink()
+    with pytest.raises(SystemExit, match=r"skills\.json is missing; .* --only build_skills"):
+        ea.main()
+    assert calls == []  # stopped before any step
+    # A skills.json written before the stamp is not checked, and says so.
+    (assets / "skills.json").write_text(json.dumps({"grades": []}), encoding="utf-8")
+    ea.main()
+    assert "archetype_time" in _stems(calls)
+
+
+def test_the_files_clustered_from_the_served_f32_carry_its_lineage(env):
+    """served_model.f32_stamp: bundle.stamp() for an f32 exported from the bundle, None
+    for one nothing ties to a run (the live assets' state)."""
+    data, assets = env
+    (assets / sm.F32).write_bytes(np.zeros(24, np.float32).tobytes())
+    assert sm.f32_stamp(assets) is None  # no mtnn_lineage.json
+    pm.promote(make_run(data, "r1"))
+    eme.main(data_dir=data, assets=assets)
+    assert sm.f32_stamp(assets) == pm.load_promoted().stamp()
+    with open(assets / sm.F32, "ab") as f:
+        f.write(b"\0\0\0\0")
+    assert sm.f32_stamp(assets) is None  # other bytes than the lineage names
+    assert {"archetypes_time.json", "archetype_assignments.json", "trajectories.json"} <= set(sm.SIDECARS)
 
 
 def test_next_profile_eval_never_scores_an_unmeasured_actual(env, monkeypatch):

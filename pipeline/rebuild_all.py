@@ -46,7 +46,10 @@ optional; what does not run is left out of the plan by a flag you passed.
   context  only with --refresh-context, between enrich_vectors and
            integrate_context: the side builders whose outputs
            integrate_context and train_mtnn read, from real caches only and
-           never with --fixture. Every selected step's real input is checked
+           never with --fixture. They also write the served skills, wide
+           skills, pedigree, playoffs and honors files in assets/; the
+           export stage no longer rebuilds those [final#25]. Every
+           selected step's real input is checked
            (pipeline/real_caches.py) before the first step runs, so a missing
            or synthetic cache stops the run before anything is written. Off
            by default, so the default matrix stage is the climb's prepare and
@@ -58,6 +61,7 @@ optional; what does not run is left out of the plan by a flag you passed.
            publish a bundle promote.py checked.
   export   the exporters, then build_scoring_lite.py. Each reads the model
            through promote.load_promoted(): the current promoted bundle.
+           The stage writes assets/ only, never pipeline/data.
   verify   test_scoring_lite.py, verify_accuracy.py.
 
 Promotion (2026-10-09). The train step used to write its embedding to
@@ -207,10 +211,15 @@ def _context_steps() -> list[Step]:
     """Side builders, in dependency order. integrate_context reads roster,
     form, career, competition, pedigree, playoffs, honors, availability and
     system tags (salary_market and game_ratings it builds itself);
-    train_mtnn reads the skill labels; export_assets serves player_meta and
-    current_rosters. roster_context comes before everything that joins on its
-    teams, build_availability before build_career_context, build_honors
-    before build_player_meta. All of them read assets/vectors.json, and
+    train_mtnn reads the skill labels. The block is also the only writer of
+    the served assets/skills.json, skill_probe.json, skills_wide.json,
+    pedigree.json, playoffs.json, playoff_paths.json and honors.json:
+    export_assets used to rebuild them, and with them pipeline/data training
+    inputs no plan declared [final#25]. A box without every cache can run
+    the builders it has with --only (see docs/PIPELINE.md).
+    roster_context comes before everything that joins on its teams,
+    build_availability before build_career_context, build_honors before
+    build_player_meta. All of them read assets/vectors.json, and
     build_career_context and derive_system_tags read train_matrix.npz, so the
     block sits after build_vectors and enrich_vectors."""
     rc = real_caches
@@ -333,7 +342,11 @@ def build_plan(
     # The exporters this script ran before, now required, then the scoring
     # subset nothing rebuilt. export_assets also runs several of the steps
     # after it (softly) when its gates allow; they are idempotent, and here
-    # each one has to succeed.
+    # each one has to succeed. Nothing in this stage writes pipeline/data:
+    # the side builders export_assets used to run (skills, wide skills,
+    # pedigree, playoffs, honors, salary market, game ratings) rewrote
+    # training inputs this plan never declared; they are the context block's
+    # [final#4, final#21, final#25].
     # Each exporter with its own arguments. export_mtnn_jacobian ran with
     # none, and its --granularity defaults to tower, so mtnn_attr_pop.json and
     # mtnn_attr_topk.bin were never rewritten from the promoted bundle while
@@ -341,7 +354,32 @@ def build_plan(
     # checkpoint stamp after every real promote [final#0]. --granularity both
     # writes the tower Jacobian and the feature attribution in one pass.
     exporters = [
-        ("export_assets", (), (A + "manifest.json",)),
+        (
+            "export_assets",
+            (),
+            (
+                A + "manifest.json",
+                A + "player_meta.json",
+                A + "current_rosters.json",
+                A + "season_norms.json",
+                A + "drift.json",
+                A + "archetypes_time.json",
+                A + "archetype_assignments.json",
+                A + "trajectories.json",
+                A + "projections.json",
+                A + "next_profile_eval.json",
+                # With a promoted bundle that clears the floors (or was
+                # forced), export_assets also runs the embedding and viz
+                # exporters the next steps run again.
+                A + "mtnn_embeddings.f32",
+                A + "mtnn_meta.json",
+                A + "mtnn_lineage.json",
+                A + "mtnn_arch.json",
+                A + "mtnn_map.json",
+                A + "mtnn_heads.f32",
+                A + "mtnn_inputs.f32",
+            ),
+        ),
         ("export_mtnn_embeddings", (), (A + "mtnn_embeddings.f32", A + "mtnn_meta.json", A + "mtnn_lineage.json")),
         (
             "export_mtnn_jacobian",
@@ -617,9 +655,11 @@ def main(argv: Sequence[str] | None = None) -> int:
     rc = run_plan(steps, record, record_path)
     if rc == 0:
         print(f"\nall {len(steps)} step(s) passed; run record {record_path}")
-        if any(s.stage == "export" for s in steps):
-            print("assets/ was rewritten: review `git status` and `git diff --stat assets/` before committing.")
-            print("Pushing master deploys hoops.dumbmodel.com.")
+    # Also after a failed run: an export step that completed has rewritten
+    # assets/ whatever failed after it [final#25].
+    if any(r["stage"] == "export" and r["returncode"] == 0 for r in record.get("steps", [])):
+        print("assets/ was rewritten: review `git status` and `git diff --stat assets/` before committing.")
+        print("Pushing master deploys hoops.dumbmodel.com.")
     return rc
 
 

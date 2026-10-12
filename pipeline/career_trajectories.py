@@ -30,6 +30,7 @@ HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 import itertools  # noqa: E402
 
+import served_model  # noqa: E402
 from trend_mtnn import (  # noqa: E402
     assign_cluster_names,
     kmeans,
@@ -160,6 +161,9 @@ def main() -> None:
     data = json.loads((ASSETS / "vectors.json").read_text(encoding="utf-8"))
     players = data["players"]
     E, _ = load_mtnn_embeddings()
+    # The run the clustered f32 came from (null when no mtnn_lineage.json
+    # names it): trajectories.json had no lineage at all [final#2].
+    lineage = served_model.f32_stamp(ASSETS)
     grades, skill_meta = load_skill_grades()
     pm_idx = data["features"].index("PLUS_MINUS")
     ids = [p["id"] for p in players]
@@ -244,6 +248,7 @@ def main() -> None:
     (ASSETS / "trajectories.json").write_text(
         json.dumps(
             {
+                "lineage": lineage,
                 "n_charted": len(data["players"]),
                 "embeddingSpace": "mtnn",
                 "globalArchetypes": cluster_names,

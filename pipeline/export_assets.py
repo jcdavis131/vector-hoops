@@ -21,8 +21,18 @@ Run after integrate_context.py + train (or in parallel with training):
   python pipeline/export_assets.py
   python pipeline/verify_accuracy.py
 
-Steps: skills, player_meta, pedigree asset, playoffs asset (if cache),
-       archetype sidecars, assets/manifest.json ledger stamp.
+Steps: player_meta, current_rosters, season_norms, procrustes drift; then,
+       with a promoted bundle that clears the export floors (or was forced),
+       export_mtnn_embeddings, archetype_time + career_trajectories on the new
+       f32, project_next_season, export_mtnn_viz; without one, archetype_time
+       + career_trajectories on the f32 already served. Last, the
+       assets/manifest.json ledger stamp.
+
+Not here since 2026-10-11 [final#4, final#21, final#25]: the side builders
+(skills, wide skills, pedigree, playoffs, honors, salary market, game
+ratings). They wrote pipeline/data training inputs nobody declared; they
+are rebuild_all.py's --refresh-context block, and this script reads their
+assets/ files and writes nothing under pipeline/data.
 """
 
 from __future__ import annotations
@@ -38,7 +48,6 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "pipeline"))
 
 import promote
-import real_caches
 
 ASSETS = ROOT / "assets"
 CACHE_DIR = ROOT / "pipeline" / "cache"
@@ -94,35 +103,17 @@ def sha1(path: Path) -> str | None:
     return hashlib.sha1(path.read_bytes()).hexdigest()[:12]
 
 
-def wide_skills_source(rebuilt: bool, why_not: str | None, asset_doc: dict) -> str:
+def wide_skills_source(asset_doc: dict) -> str:
     """Where this export's assets/skills_wide.json came from, as a sentence that is true.
 
     This used to be "real_caches" whenever any wide_skills_*.json existed,
     which counted the two proxy docs of constants (2013-14/2014-15) as real
     and said "real_caches" even when this export had skipped the rebuild and
-    shipped whatever file an earlier build left [ingest#5].
+    shipped whatever file an earlier build left [ingest#5]. The export no
+    longer rebuilds it at all [final#25]: rebuild_all's context block does.
     """
     built = asset_doc.get("built") or "unknown date"
-    if rebuilt:
-        return f"rebuilt by this export from the real wide_skills caches (built {built})"
-    reason = why_not or "build_wide_skills failed"
-    return f"not rebuilt by this export ({reason}); file on disk built {built}"
-
-
-# No fixture builds in the export path [artifacts#12, orchestration#1]. This
-# used to pass --fixture to build_wide_skills when no real cache existed and
-# to build_game_ratings always, so a production export rewrote
-# pipeline/data/wide_skill_labels.npz (train_mtnn's skill targets) or
-# game_ratings.json (an integrate_context input) from the committed example
-# fixtures. Dropping the flag alone was not enough while both builders fell
-# back to the fixture by themselves; they no longer do [ingest#5]. Each step
-# still runs only when real_caches says its input is real, and otherwise is
-# skipped with the reason instead of failing the export.
-def run_if_real(name: str, cmd: list[str], why_not: str | None) -> bool:
-    if why_not:
-        print(f"== {name}: skipped, {why_not}\n")
-        return False
-    return run(name, cmd, required=False)
+    return f"not rebuilt by this export (rebuild_all.py --refresh-context builds it); file on disk built {built}"
 
 
 PROMOTION_PURITY_FLOOR = 0.63
@@ -225,28 +216,61 @@ def mtnn_promotion_eligible(report: dict | None) -> bool:
     )
 
 
+# The side builders (build_skills/test_skills, build_wide_skills, build_pedigree,
+# build_playoffs, build_honors, build_salary_market, build_game_ratings) used to
+# run here, without --out-root, so every export rewrote pipeline/data training
+# inputs (skill_labels.npz and wide_skill_labels.npz are train_mtnn lineage
+# inputs; honors, pedigree and playoffs feed integrate_context) that the plan,
+# --list, rebuild.json and PIPELINE.md never declared [final#4, final#21,
+# final#25]. They are rebuild_all's context block now (--refresh-context,
+# behind the real_caches preflight), which also writes their assets/ files;
+# integrate_context builds salary_market and game_ratings itself. This script
+# only reads their assets/ outputs, and writes nothing under pipeline/data.
+SIDE_ASSETS_REMEDY = (
+    "they are written by rebuild_all.py's context block: "
+    "`python pipeline/rebuild_all.py --refresh-context --stage matrix`, or only the builders whose caches "
+    "this box has, e.g. `python pipeline/rebuild_all.py --refresh-context --only build_skills --only test_skills "
+    "--only build_pedigree --only build_playoffs --only build_honors --only build_player_meta` (docs/PIPELINE.md)"
+)
+
+# Steps that cluster the served MTNN embedding: they read
+# assets/mtnn_embeddings.f32, so they run after export_mtnn_embeddings
+# writes it [final#2]. procrustes_drift reads only vectors.json.
+EMBEDDING_READERS = ("archetype_time.py", "career_trajectories.py")
+
+
+def check_side_assets() -> None:
+    """Stop when skills.json, which the archetype naming and the manifest read, is missing or
+    was built from another vectors.json than the one on disk."""
+    path = ASSETS / "skills.json"
+    if not path.exists():
+        raise SystemExit(f"export_assets: assets/skills.json is missing; {SIDE_ASSETS_REMEDY}")
+    built_from = json.loads(path.read_text(encoding="utf-8")).get("vectors_sha256")
+    if built_from is None:
+        print(
+            "== side assets: assets/skills.json does not record the vectors.json it was built from "
+            "(written before build_skills stamped it); not checked\n"
+        )
+        return
+    now = hashlib.sha256((ASSETS / "vectors.json").read_bytes()).hexdigest()
+    if built_from != now:
+        raise SystemExit(
+            f"export_assets: assets/skills.json was built from vectors.json {built_from[:12]}, "
+            f"but assets/vectors.json is {now[:12]}; rebuild it first: {SIDE_ASSETS_REMEDY}"
+        )
+
+
+def run_embedding_readers(py: str, steps_ok: dict[str, bool], *, required: bool) -> None:
+    for script in EMBEDDING_READERS:
+        steps_ok[script] = run(script, [py, f"pipeline/{script}"], required=required)
+
+
 def main() -> None:
     py = sys.executable
     steps_ok: dict[str, bool] = {}
 
-    steps_ok["skills"] = run("build_skills", [py, "pipeline/build_skills.py"])
-    steps_ok["skill_gates"] = run("test_skills", [py, "pipeline/test_skills.py"])
-    steps_ok["wide_skills"] = run_if_real(
-        "build_wide_skills", [py, "pipeline/build_wide_skills.py"], real_caches.wide_skills()
-    )
-    steps_ok["wide_skill_gates"] = run("test_wide_skills", [py, "pipeline/test_wide_skills.py"], required=False)
-    steps_ok["pedigree"] = run("build_pedigree", [py, "pipeline/build_pedigree.py"], required=False)
-    steps_ok["pedigree_gates"] = run("test_pedigree", [py, "pipeline/test_pedigree.py"], required=False)
-    steps_ok["playoffs"] = run("build_playoffs", [py, "pipeline/build_playoffs.py"], required=False)
-    steps_ok["playoffs_gates"] = run("test_playoffs", [py, "pipeline/test_playoffs.py"], required=False)
-    steps_ok["honors"] = run("build_honors", [py, "pipeline/build_honors.py"], required=False)
-    steps_ok["honors_gates"] = run("test_honors", [py, "pipeline/test_honors.py"], required=False)
-    steps_ok["salary_market"] = run("build_salary_market", [py, "pipeline/build_salary_market.py"], required=False)
-    steps_ok["salary_gates"] = run("test_salaries", [py, "pipeline/test_salaries.py"], required=False)
-    steps_ok["game_ratings"] = run_if_real(
-        "build_game_ratings", [py, "pipeline/build_game_ratings.py"], real_caches.game_ratings()
-    )
-    steps_ok["game_ratings_gates"] = run("test_game_ratings", [py, "pipeline/test_game_ratings.py"], required=False)
+    check_side_assets()
+    # Assets-only builders: they read pipeline/data and the caches, and write assets/ only.
     steps_ok["player_meta"] = run("build_player_meta", [py, "pipeline/build_player_meta.py"], required=False)
     steps_ok["current_rosters"] = run(
         "build_current_rosters",
@@ -257,33 +281,39 @@ def main() -> None:
     # per-100-possession numbers. Self-verifying: a (season, feature) pair that
     # fails the round-trip is dropped rather than shipped.
     steps_ok["season_norms"] = run("export_season_norms", [py, "pipeline/export_season_norms.py"], required=False)
-
-    # Archetype / drift sidecars (idempotent; fast when vectors unchanged).
-    for script in (
-        "procrustes_drift.py",
-        "archetype_time.py",
-        "career_trajectories.py",
-    ):
-        steps_ok[script] = run(script, [py, f"pipeline/{script}"], required=False)
+    # Drift sidecar (vectors.json only; idempotent).
+    steps_ok["procrustes_drift.py"] = run("procrustes_drift.py", [py, "pipeline/procrustes_drift.py"], required=False)
 
     bundle, not_promoted = promoted_bundle()
     # The floors read the report the bundle's metrics come from: for a refit,
     # the select run promote.py --selection-run recorded, not the refit's
     # in-sample report. A forced promotion waives them (mtnn_exports_allowed).
     allowed, waived = mtnn_exports_allowed(bundle) if bundle else (False, None)
-    if bundle is None:
-        print(f"== MTNN exports: skipped, {not_promoted}\n")
-    elif not allowed:
-        print(f"== MTNN exports: skipped, promoted run {bundle.run_id} misses the export floors\n")
+    if not allowed:
+        if bundle is None:
+            print(f"== MTNN exports: skipped, {not_promoted}\n")
+        else:
+            print(f"== MTNN exports: skipped, promoted run {bundle.run_id} misses the export floors\n")
+        # Not a fallback: the export with nothing (re)promoted, the way the
+        # live assets were built (origin b7ccea45). The archetype and
+        # trajectory files cluster the f32 already served and carry that
+        # f32's lineage (null when no mtnn_lineage.json names it).
+        run_embedding_readers(py, steps_ok, required=False)
     else:
         if waived is not None:
             print(
                 f"== MTNN exports: run {bundle.run_id} misses the export floors; its promotion was forced: {waived}\n"
             )
         steps_ok["mtnn_export"] = run("export_mtnn_embeddings", [py, "pipeline/export_mtnn_embeddings.py"])
-        steps_ok["mtnn_export_gates"] = run("test_mtnn_export", [py, "pipeline/test_mtnn_export.py"], required=False)
+        # After the new f32 and before the projections: project_next_season
+        # reads archetype_assignments.json's names. Both files used to cluster
+        # the previous model's f32 and ship under the new run [final#2].
+        run_embedding_readers(py, steps_ok, required=True)
         steps_ok["projections"] = run("project_next_season", [py, "pipeline/project_next_season.py"])
         steps_ok["mtnn_viz"] = run("export_mtnn_viz", [py, "pipeline/export_mtnn_viz.py"])
+        # Last: it reads mtnn_arch.json too, which ran before export_mtnn_viz
+        # wrote it, so it checked the previous export's arch (or none).
+        steps_ok["mtnn_export_gates"] = run("test_mtnn_export", [py, "pipeline/test_mtnn_export.py"], required=False)
     promoted_ok = bool(steps_ok.get("mtnn_export"))
     metrics = bundle.metrics if bundle else {}
 
@@ -304,7 +334,7 @@ def main() -> None:
         wide_meta = {
             "skill_count": len(wide_doc.get("skills", [])),
             "grade_rows": len(wide_doc.get("grades", {})),
-            "source": wide_skills_source(bool(steps_ok.get("wide_skills")), real_caches.wide_skills(), wide_doc),
+            "source": wide_skills_source(wide_doc),
         }
 
     manifest = {
