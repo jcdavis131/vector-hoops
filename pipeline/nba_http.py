@@ -25,6 +25,13 @@ Now each new session is warmed inside the try, and errors are classified:
   - 429 and 5xx, timeouts, resets, a non-JSON body: transient, retried with
     jittered exponential backoff up to RETRY_ATTEMPTS, then FetchError.
   - any other 4xx: the request itself is wrong; FetchError at once.
+  - a programming error with no status (ImportError, a missing nba_api
+    included, AttributeError, TypeError, NameError, ...): fatal, raised as
+    it is on the first attempt. Until 2026-10-11 these counted as transient,
+    so a box with neither curl_cffi nor nba_api made 5 attempts and slept
+    about 85 s before a FetchError, and the fetcher exited 2 ("fetch
+    failed") instead of 1 with a traceback, as ingest.run_fetch promises
+    for a bug [final#14].
 The nba_api fallback runs in the same loop with the same budget.
 retry_call() is that loop for callers that use nba_api's endpoint classes
 directly (build_vectors, fetch_team_season, fetch_gamelogs).
@@ -38,7 +45,7 @@ import time
 from collections.abc import Callable, Iterable
 from typing import Any, TypeVar
 
-from ingest import BlockedError, FetchError, require_columns
+from ingest import BlockedError, FetchError, is_network_error, require_columns
 
 STATS_ORIGIN = "https://www.nba.com/stats/"
 STATS_API = "https://stats.nba.com/stats/{endpoint}"
@@ -109,13 +116,26 @@ def status_of(exc: BaseException) -> int | None:
     return val if isinstance(val, int) else None
 
 
+# Exceptions that say the code is wrong, not the network: retrying cannot help.
+# A transport error from requests, urllib3 or curl_cffi is checked first
+# (ingest.is_network_error), so a library exception that also subclasses one
+# of these still counts as transient. ValueError stays transient: a 200 with a
+# non-JSON body (an Akamai page) raises JSONDecodeError, a ValueError.
+_FATAL = (ImportError, AttributeError, TypeError, NameError, NotImplementedError, AssertionError)
+
+
 def classify(exc: BaseException) -> str:
-    """One of blocked (403), client (any other 4xx) or transient (429, 5xx, or no status at all)."""
+    """One of blocked (403), client (any other 4xx), fatal (a programming error) or transient.
+
+    Transient: 429, 5xx, a network error, or anything else with no status.
+    """
     status = status_of(exc)
     if status == 403:
         return "blocked"
     if status is not None and 400 <= status < 500 and status != 429:
         return "client"
+    if status is None and not is_network_error(exc) and isinstance(exc, _FATAL):
+        return "fatal"
     return "transient"
 
 
@@ -129,7 +149,8 @@ def retry_call(fn: Callable[[], T], label: str, *, attempts: int = RETRY_ATTEMPT
     """Call fn until it returns, under the classification in the module docstring.
 
     Raises BlockedError after BLOCKED_ATTEMPTS 403s, FetchError at once on
-    another 4xx, and FetchError naming the last error once attempts run out.
+    another 4xx, a programming error (classify's "fatal") as it is on the
+    first attempt, and FetchError naming the last error once attempts run out.
     A FetchError raised by fn itself (a missing column, say) is not retried.
     """
     blocked = 0
@@ -142,6 +163,9 @@ def retry_call(fn: Callable[[], T], label: str, *, attempts: int = RETRY_ATTEMPT
         except Exception as e:
             last = e
             kind = classify(e)
+            if kind == "fatal":
+                # A bug, not a fetch failure: its own traceback, no FetchError.
+                raise
             if kind == "client":
                 raise FetchError(f"{label}: {e}; the request is rejected as made, not retrying") from e
             if kind == "blocked":

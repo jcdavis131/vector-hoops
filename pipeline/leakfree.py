@@ -124,6 +124,9 @@ def next_profile_metrics(
         p = pred[rows]
         if target_mask is not None:
             st = T.masked_residual_stats(y, p, target_mask[next_idx[rows]])
+            if st["r2"] is None:  # no measured target cell: absent, not a perfect score
+                out[s] = None
+                continue
             out[s] = {
                 "rows": len(rows),
                 "mae_z": round(st["mae"], 4),

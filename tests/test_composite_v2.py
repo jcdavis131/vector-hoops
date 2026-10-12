@@ -285,6 +285,28 @@ def test_next_head_leaves_out_target_cells_nobody_measured():
     assert out["baselines"]["test"]["train_mean"]["mae_z"] == pytest.approx(5.5 / 3, abs=1e-4)
 
 
+def test_next_head_split_with_no_measured_target_is_absent_not_perfect():
+    """FA2 review note: a split whose target cells are all unmeasured scored R2 1.0 and
+    MAE 0.0 from empty sums. It is absent now, like a split with no pairs; a NaN stored
+    in an unmeasured cell reaches none of the fitted baselines."""
+    pids = np.array([1, 1, 2, 2, 3, 3, 4, 4])
+    seasons = np.array(["2019-20", "2020-21"] * 2 + ["2023-24", "2024-25"] * 2)
+    Z = np.array([[1, 1], [0.5, 1.0], [2, 1], [1.0, 0.0], [2, 1], [1.5, 0.0], [-2, -1], [-1.0, -2.0]], dtype=np.float32)
+    M = np.ones_like(Z)
+    M[5, :] = M[7, :] = 0  # both test targets: nothing measured
+    M[3, 1] = 0
+    Z[3, 1] = np.nan  # an unmeasured train target holding NaN
+    pred = np.zeros((8, 2), np.float32)
+    out = cv.next_head_component(pred, Z, [0, 1], cv.split_pairs(pids, seasons), ["PTS", "FG3_PCT"], M)
+    # Before: next_r2 1.0 and next_mae 0.0 on the test split, which v2 then centred.
+    assert out == {"missing": "no measured test-split next-season target cell"}
+    M[7, 0] = 1  # one measured test target cell
+    out = cv.next_head_component(pred, Z, [0, 1], cv.split_pairs(pids, seasons), ["PTS", "FG3_PCT"], M)
+    assert out["measures"]["test"]["target_cells_unmeasured"] == 3
+    assert np.isfinite(list(out["baselines"]["shrink_factors"].values())).all()
+    assert out["baselines"]["shrink_factors"]["FG3_PCT"] == pytest.approx(1.0)
+
+
 def test_next_head_with_every_game_cell_measured_is_unchanged_bit_for_bit():
     rng = np.random.default_rng(11)
     pids = np.repeat(np.arange(30), 2)

@@ -40,3 +40,17 @@ def test_nothing_is_attributed_to_a_promoted_export_or_when_no_served_check_fail
 
 def test_every_attributed_check_is_one_the_harness_runs():
     assert all(callable(getattr(va, name, None)) for name in va.SERVED_BUNDLE_CHECKS)
+
+
+def test_a_stale_attribution_stamp_names_the_flag_that_rewrites_it(monkeypatch):
+    """[final#0] "re-run export_mtnn_jacobian.py after retraining" did not fix a stale
+    mtnn_attr_pop.json: the default --granularity tower never rewrites it."""
+    monkeypatch.setattr(va, "FAILS", [])
+    monkeypatch.setattr(va, "local_checkpoint_stamp", lambda: {"mtime": 2, "bytes": 2})
+    va.check_stamp("mtnn_attr_pop.json", {"mtime": 1, "bytes": 1}, None)
+    va.check_stamp("mtnn_jacobian.json", None, None)
+    assert len(va.FAILS) == 2
+    assert "--granularity both" in va.FAILS[0] and "does not rewrite it" in va.FAILS[0]
+    assert "--granularity both" in va.FAILS[1]
+    lines = va.attribute_failures(FAILS, ["mtnn_lineage.json: missing"])
+    assert "--granularity both" in lines[0] and "leaves mtnn_attr_pop.json stale" in lines[0]

@@ -18,24 +18,32 @@ steps are subprocesses. Then, from the skeleton's root:
 
   train_mtnn.py --recipe measure --epochs 1 --device cpu --seed 5 --run-dir <run>
   promote.py --run <run> --force "e2e smoke: 1 epoch on a 100-player slice"
-  export_mtnn_embeddings, project_next_season, export_mtnn_viz,
-    export_mtnn_jacobian --device cpu, build_scoring_lite
+  export_assets.py (export_mtnn_embeddings, then archetype_time and
+    career_trajectories on the new f32, project_next_season,
+    export_mtnn_viz), export_mtnn_jacobian --device cpu --granularity both,
+    build_scoring_lite
   scripts/sync_public.py
   scripts/check_served_model.py            -> exit 0
+  verify_accuracy V13 + V13b on the exported files -> exit 0
 
 --force because one epoch on 100 players clears neither should_promote nor
 the export floors (archetype top-1 0.115, purity 0.56 on this box); a
 forced promotion waives the floors and the served lineage records it.
-export_assets is not run: it rebuilds skills, pedigree and playoffs from
-pipeline/cache first. No metric value is asserted, only that every file
-names the same bytes: the report's lineage, the promoted manifest and
-CURRENT.json, the legacy paths, assets/mtnn_lineage.json, the meta and
-every sidecar.
+export_assets runs since it stopped rebuilding the side builders' outputs
+[final#25]; its steps that need pipeline/cache (season norms, drift, current
+rosters) fail softly on the slice, as it allows, and the test checks it
+wrote nothing under pipeline/data. No metric value is asserted, only that
+every file names the same bytes: the report's lineage, the promoted manifest
+and CURRENT.json, the legacy paths, assets/mtnn_lineage.json, the meta and
+every sidecar. A second skeleton runs export_assets with nothing promoted,
+the way the live assets were built (origin b7ccea45).
 
 8 to 16 s on the training box's CPU (measured 8.4 s and 15.4 s); nothing is
 written outside tmp_path. One more test trains a second skeleton the same
 way under --protocol-v2 with skill_labels.npz removed, to check the CQS
-rule that reads the report's lineage on a report the trainer wrote.
+rule that reads the report's lineage on a report the trainer wrote. And three
+more train the slice with 96 FG3_PCT cells marked unmeasured, to check the
+trainer takes no gradient from a game target nobody measured.
 
 Run:  python -m pytest tests/test_e2e_smoke.py
 """
@@ -51,6 +59,7 @@ import subprocess
 import sys
 from pathlib import Path
 
+import numpy as np
 import pytest
 
 # Only the subprocesses need torch. Checked, not imported: importing it here
@@ -78,13 +87,19 @@ LINEAGE_INPUTS = (
 )
 MODEL_ROLES = ("checkpoint", "embedding", "centroids")
 EXPORTERS = (
-    ("pipeline/export_mtnn_embeddings.py",),
-    ("pipeline/project_next_season.py",),
-    ("pipeline/export_mtnn_viz.py",),
-    ("pipeline/export_mtnn_jacobian.py", "--device", "cpu"),
+    # export_mtnn_embeddings, archetype_time + career_trajectories,
+    # project_next_season, export_mtnn_viz, in that order [final#2].
+    ("pipeline/export_assets.py",),
+    # --granularity both, as rebuild_all's export stage runs it [final#0].
+    ("pipeline/export_mtnn_jacobian.py", "--device", "cpu", "--granularity", "both"),
     ("pipeline/build_scoring_lite.py",),
 )
 STEP_TIMEOUT = 600
+VERIFY_SERVED = (
+    "import json, sys; sys.path.insert(0, 'pipeline'); import verify_accuracy as V; "
+    "data = json.loads((V.ASSETS / 'vectors.json').read_text(encoding='utf-8')); "
+    "V.v13_mtnn_jacobian(data); V.v13b_mtnn_attribution(data); sys.exit(1 if V.FAILS else 0)"
+)
 
 
 def sha(path: Path) -> str:
@@ -110,6 +125,32 @@ def build_skeleton(root: Path) -> None:
     (root / "public").mkdir()
 
 
+def tree_hashes(d: Path) -> dict[str, str]:
+    """sha256 of every file under d, by path relative to d."""
+    return {p.relative_to(d).as_posix(): sha(p) for p in sorted(d.rglob("*")) if p.is_file()}
+
+
+def run_step(root: Path, argv, logs: Path, name: str) -> subprocess.CompletedProcess:
+    env = {k: v for k, v in os.environ.items() if k != "PYTHONPATH"}
+    # git must not find a checkout above the skeleton and report it as the
+    # run's git state; lineage.git is then all None, as in the herdmux scratch
+    # copy. UTF-8 stdout: on Windows a piped child otherwise writes the ANSI
+    # code page, and a step printing a character outside it would crash.
+    env.update(PYTHONDONTWRITEBYTECODE="1", PYTHONIOENCODING="utf-8", GIT_CEILING_DIRECTORIES=str(root.parent))
+    proc = subprocess.run(
+        [sys.executable, "-u", *argv],
+        cwd=root,
+        env=env,
+        capture_output=True,
+        text=True,
+        encoding="utf-8",
+        errors="replace",
+        timeout=STEP_TIMEOUT,
+    )
+    (logs / f"{name}.log").write_text(proc.stdout + "\n--- stderr ---\n" + proc.stderr, encoding="utf-8")
+    return proc
+
+
 def outside_snapshot() -> dict[str, tuple[int, int]]:
     """(mtime, size) of what the real checkout's pipeline/data and assets hold at the top level."""
     out = {}
@@ -126,12 +167,6 @@ def chain(tmp_path_factory):
     root = tmp_path_factory.mktemp("e2e") / "repo"
     build_skeleton(root)
     run = root / "pipeline" / "data" / "runs" / RUN_ID
-    env = {k: v for k, v in os.environ.items() if k != "PYTHONPATH"}
-    # git must not find a checkout above the skeleton and report it as the
-    # run's git state; lineage.git is then all None, as in the herdmux scratch
-    # copy. UTF-8 stdout: on Windows a piped child otherwise writes the ANSI
-    # code page, and a step printing a character outside it would crash.
-    env.update(PYTHONDONTWRITEBYTECODE="1", PYTHONIOENCODING="utf-8", GIT_CEILING_DIRECTORIES=str(root.parent))
     steps = [
         (
             "train_mtnn",
@@ -142,34 +177,109 @@ def chain(tmp_path_factory):
         *((Path(argv[0]).stem, argv) for argv in EXPORTERS),
         ("sync_public", ("scripts/sync_public.py",)),
         ("check_served_model", ("scripts/check_served_model.py",)),
+        # verify_accuracy's checks of the files this chain exported: the
+        # whole harness also checks the slice's vectors.json, skills and
+        # norms, which a 100-player cut does not pass.
+        ("verify_served", ("-c", VERIFY_SERVED)),
     ]
     before = outside_snapshot()
     results = {}
     logs = root.parent / "logs"
     logs.mkdir()
+    data_around_export = {}
     for name, argv in steps:
-        proc = subprocess.run(
-            [sys.executable, "-u", *argv],
-            cwd=root,
-            env=env,
-            capture_output=True,
-            text=True,
-            encoding="utf-8",
-            errors="replace",
-            timeout=STEP_TIMEOUT,
-        )
-        (logs / f"{name}.log").write_text(proc.stdout + "\n--- stderr ---\n" + proc.stderr, encoding="utf-8")
+        if name == "export_assets":
+            data_around_export["before"] = tree_hashes(root / "pipeline" / "data")
+        proc = run_step(root, argv, logs, name)
+        if name == "export_assets":
+            data_around_export["after"] = tree_hashes(root / "pipeline" / "data")
         results[name] = proc
-        if name != "check_served_model" and proc.returncode != 0:
+        if name not in ("check_served_model", "verify_served") and proc.returncode != 0:
             tail = (proc.stdout + proc.stderr)[-3000:]
             pytest.fail(f"{name} exited {proc.returncode} (logs in {logs}):\n{tail}")
-    return {"root": root, "run": run, "results": results, "outside_before": before}
+    return {
+        "root": root,
+        "run": run,
+        "results": results,
+        "outside_before": before,
+        "data_around_export": data_around_export,
+    }
 
 
 def test_the_served_model_check_passes_on_what_the_chain_exported(chain):
     check = chain["results"]["check_served_model"]
     assert check.returncode == 0, check.stdout + check.stderr
     assert "served model: OK" in check.stdout
+
+
+def test_verify_accuracy_v13_and_v13b_pass_on_a_fresh_export(chain):
+    """[final#0, final#1] V13 failed on every fresh export (arch listed injury as a
+    tower, the Jacobian did not) and V13b after every promote (nothing rewrote
+    mtnn_attr_pop.json from the promoted bundle)."""
+    proc = chain["results"]["verify_served"]
+    assert proc.returncode == 0, proc.stdout + proc.stderr
+    assets = chain["root"] / "assets"
+    arch, jac = load(assets / "mtnn_arch.json"), load(assets / "mtnn_jacobian.json")
+    attr = load(assets / "mtnn_attr_pop.json")
+    assert set(arch["towerFamilies"]) == set(jac["towerFamilies"])
+    assert "injury" in arch["familyOrder"] and "injury" not in arch["towerFamilies"]
+    assert attr["lineage"] == jac["lineage"] and attr["lineage"]["run_id"] == RUN_ID
+    assert attr["checkpoint"] == jac["checkpoint"] == arch["checkpoint"]
+    assert (assets / "mtnn_attr_topk.bin").exists()
+
+
+def test_the_export_stage_writes_nothing_under_pipeline_data(chain):
+    """[final#4, final#21, final#25] export_assets ran the side builders without
+    --out-root, rewriting skill_labels.npz, wide_skill_labels.npz, pedigree.json,
+    playoffs.json and honors.json (training inputs) undeclared."""
+    around = chain["data_around_export"]
+    assert around["before"] and around["after"] == around["before"]
+    log = chain["results"]["export_assets"].stdout
+    for builder in ("build_skills", "build_wide_skills", "build_pedigree", "build_playoffs", "build_honors"):
+        assert f"== {builder}" not in log
+
+
+def test_the_archetype_files_cluster_the_new_f32_before_the_projections(chain):
+    """[final#2] In export_assets' log order, and by lineage: archetypes_time.json,
+    archetype_assignments.json and trajectories.json carry the bundle.stamp() of the run
+    whose f32 they clustered, as projections.json does."""
+    root = chain["root"]
+    log = chain["results"]["export_assets"].stdout
+    at = [
+        log.index(f"== {step}: ") for step in ("export_mtnn_embeddings", "archetype_time.py", "career_trajectories.py")
+    ]
+    assert at == sorted(at) and at[-1] < log.index("== project_next_season: "), log[-3000:]
+    stamp = load(root / "assets" / "projections.json")["lineage"]
+    assert stamp["run_id"] == RUN_ID
+    for name in ("archetypes_time.json", "archetype_assignments.json", "trajectories.json"):
+        assert load(root / "assets" / name)["lineage"] == stamp, name
+
+
+@pytest.mark.parametrize("with_lineage", [True, False], ids=["served-f32-has-lineage", "live-assets-state"])
+def test_export_assets_with_nothing_promoted(chain, tmp_path, with_lineage):
+    """The skipped path is a primary case: origin b7ccea45 built the live assets with
+    export_assets and nothing promoted (and no mtnn_lineage.json, the live state). It
+    exits 0, clusters the f32 already served, stamps that f32's lineage (null when
+    nothing names it), and writes nothing under pipeline/data."""
+    root = tmp_path / "repo"
+    build_skeleton(root)
+    served = chain["root"] / "assets"
+    names = (sm.F32, sm.META, *((sm.LINEAGE,) if with_lineage else ()))
+    for name in names:
+        shutil.copy2(served / name, root / "assets" / name)
+    logs = tmp_path / "logs"
+    logs.mkdir()
+    before = tree_hashes(root / "pipeline" / "data")
+    proc = run_step(root, ("pipeline/export_assets.py",), logs, "export_assets")
+    assert proc.returncode == 0, (proc.stdout + proc.stderr)[-3000:]
+    assert tree_hashes(root / "pipeline" / "data") == before
+    assert "MTNN exports: skipped, nothing is promoted" in proc.stdout
+    assert not (root / "assets" / "projections.json").exists()
+    manifest = load(root / "assets" / "manifest.json")
+    assert manifest["mtnn_promoted"] is False and manifest["steps"]["archetype_time.py"] is True
+    want = load(served / "projections.json")["lineage"] if with_lineage else None
+    for name in ("archetypes_time.json", "archetype_assignments.json", "trajectories.json"):
+        assert load(root / "assets" / name)["lineage"] == want, name
 
 
 def test_the_run_bundle_holds_the_bytes_its_lineage_names(chain):
@@ -274,6 +384,55 @@ def test_a_protocol_v2_run_that_lost_its_skill_labels_is_unscored(chain, tmp_pat
     assert {"skills_r2", "skill_nn"} <= set(block["components_expected"])
     assert block["cqs"] is None and "skills_r2, skill_nn" in block["cqs_unscored"]
     assert report["promote"]["ok"] is False and "CQS was not scored" in report["promote"]["reason"]
+
+
+def _train_with_game_cells(root: Path, value: float, measured: bool) -> dict:
+    """Train one epoch on the slice with every 7th row's FG3_PCT set to `value`, at mask `measured`.
+
+    The slice predates FA2, so every game cell in it is measured; this marks some
+    unmeasured the way build_vectors does since 078b75df (mask 0), which puts the
+    trainer on its masked-target path. Returns the run's embedding arrays.
+    """
+    build_skeleton(root)
+    data = root / "pipeline" / "data"
+    manifest = load(data / "feature_manifest.json")
+    col = manifest["features"].index("FG3_PCT")
+    with np.load(data / "train_matrix.npz", allow_pickle=False) as npz:
+        arrays = {k: npz[k] for k in npz.files}
+    rows = np.arange(0, len(arrays["Z"]), 7)
+    arrays["Z"][rows, col] = value
+    arrays["mask"][rows, col] = 1.0 if measured else 0.0
+    np.savez_compressed(data / "train_matrix.npz", **arrays)
+    run = data / "runs" / "t"
+    argv = ("pipeline/train_mtnn.py", "--recipe", "measure", "--epochs", "1", "--device", "cpu", "--seed", "5")
+    logs = root.parent / "logs"
+    logs.mkdir(exist_ok=True)
+    proc = run_step(root, (*argv, "--run-dir", str(run)), logs, root.name)
+    assert proc.returncode == 0, (proc.stdout + proc.stderr)[-3000:]
+    with np.load(run / "embedding_v3.npz", allow_pickle=False) as npz:
+        return {"log": proc.stdout, **{k: npz[k] for k in npz.files}}
+
+
+def test_the_trainer_leaves_unmeasured_game_targets_out_of_its_losses(chain, tmp_path):
+    """FA2 review note: the trainer's masked wiring was tested by source strings only.
+
+    Behaviour, end to end in the real trainer: two runs that differ only in the value
+    stored in 96 unmeasured FG3_PCT cells (0.0, as the matrix stores them, and 5.0)
+    train bit-identical embeddings. The towers read x * m, so an unmeasured input is
+    invisible; identical weights then mean the profile and next_profile losses took no
+    gradient from those targets either. The control: the same 5.0 marked measured
+    trains a different model, so the test can see a target that counts. Takes `chain`
+    so test_nothing_outside_the_skeleton_was_written also covers these runs.
+    """
+    zero = _train_with_game_cells(tmp_path / "unmeasured_zero", 0.0, measured=False)
+    five = _train_with_game_cells(tmp_path / "unmeasured_five", 5.0, measured=False)
+    control = _train_with_game_cells(tmp_path / "measured_five", 5.0, measured=True)
+    assert "unmeasured game cells" in zero["log"] and "unmeasured game cells" in five["log"]
+    keys = [k for k in zero if k != "log"]
+    assert keys and keys == [k for k in five if k != "log"]
+    for k in keys:
+        assert np.array_equal(zero[k], five[k]), k
+    assert not all(np.array_equal(zero[k], control[k]) for k in keys)
 
 
 def test_nothing_outside_the_skeleton_was_written(chain):

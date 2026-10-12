@@ -30,6 +30,7 @@ HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 import itertools  # noqa: E402
 
+import served_model  # noqa: E402
 from trend_mtnn import (  # noqa: E402
     ERA_K_RANGE,
     ERAS,
@@ -79,6 +80,10 @@ def main() -> None:
     players = data["players"]
     game_clusters = data["clusters"]
     E, mtnn_meta = load_mtnn_embeddings()
+    # The run the clustered f32 came from, written into both outputs so
+    # check_served_model can tell a file clustered from a previous model
+    # [final#2]; null when no mtnn_lineage.json names the f32.
+    lineage = served_model.f32_stamp(ASSETS)
     grades, skill_meta = load_skill_grades()
     idx = skill_index(skill_meta)
     if len(players) != E.shape[0]:
@@ -276,6 +281,7 @@ def main() -> None:
         json.dumps(
             {
                 "built": built,
+                "lineage": lineage,
                 "n_players": len(players),
                 "embeddingSpace": mtnn_meta.get("model", "mtnn"),
                 "globalK": GLOBAL_K,
@@ -308,6 +314,7 @@ def main() -> None:
         json.dumps(
             {
                 "built": built,
+                "lineage": lineage,
                 "n_players": len(players),
                 "method": (
                     "Per player-season: gameCluster (14-d K=8, Chimera contract), "

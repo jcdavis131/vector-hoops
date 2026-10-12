@@ -109,6 +109,8 @@ def _next_profile_metrics(
     if target_mask is not None:
         # Only the measured target cells count (mtnn_metrics.game_target_mask).
         st = masked_residual_stats(y, prediction[valid_rows], target_mask[next_index[valid_rows]])
+        # No measured target cell: r2 and mae are None (absent), which the flag
+        # logic below already skips, not a perfect 1.0 / 0.0.
         return {"rows": len(valid_rows), "r2": _round(st["r2"]), "mae_z": _round(st["mae"])}
     residual = y - prediction[valid_rows]
     ss_total = float(((y - y.mean(axis=0, keepdims=True)) ** 2).sum())

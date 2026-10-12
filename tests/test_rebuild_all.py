@@ -99,6 +99,17 @@ def test_context_block_sits_between_enrich_and_integrate():
         assert names.index(before) < names.index(after)
 
 
+def test_the_jacobian_step_writes_the_feature_attribution_it_declares():
+    """[final#0] It ran with no arguments (--granularity tower), so mtnn_attr_pop.json
+    and mtnn_attr_topk.bin were never rewritten while --list said they were."""
+    (jac,) = [s for s in ra.build_plan() if s.name == "export_mtnn_jacobian"]
+    assert jac.argv == ("pipeline/export_mtnn_jacobian.py", "--granularity", "both")
+    assert {"assets/mtnn_attr_pop.json", "assets/mtnn_attr_topk.bin"} <= set(jac.produces)
+    import served_model
+
+    assert "mtnn_attr_pop.json" in served_model.SIDECARS
+
+
 def test_default_matrix_steps_are_the_climb_prepare_chain():
     matrix = [s for s in ra.build_plan() if s.stage == "matrix" and s.name != "stage_contract"]
     assert [s.command(python="python")[1:] for s in matrix] == [
@@ -381,3 +392,59 @@ def test_a_dry_run_runs_the_read_only_preflights_too(runs, monkeypatch, capsys):
     assert "dry run:" in out and "cannot run build_wide_skills: wide_skills_2013-14.json is a proxy doc" in out
     assert "a real run would stop here" in out
     assert not runs.exists()
+
+
+# --- the side builders' served files [final#4, final#21, final#25] ---------------
+
+SIDE_ASSET_BUILDERS = [
+    "build_skills",
+    "test_skills",
+    "build_wide_skills",
+    "test_wide_skills",
+    "build_pedigree",
+    "build_playoffs",
+    "build_honors",
+    "build_player_meta",
+]
+
+
+def test_the_context_block_is_the_writer_of_the_side_builders_served_files():
+    """export_assets no longer rebuilds them; the plan says who does, and the export
+    stage declares nothing under pipeline/data."""
+    plan = ra.build_plan(refresh_context=True)
+    ctx = {p for s in plan if s.context for p in s.produces}
+    for asset in ("skills.json", "skill_probe.json", "skills_wide.json", "pedigree.json", "playoffs.json"):
+        assert f"assets/{asset}" in ctx, asset
+    assert {"assets/playoff_paths.json", "assets/honors.json", "assets/player_meta.json"} <= ctx
+    export = [s for s in plan if s.stage == "export"]
+    assert not [p for s in export for p in s.produces if p.startswith("pipeline/")]
+    (ea,) = [s for s in export if s.name == "export_assets"]
+    assert {"assets/archetypes_time.json", "assets/trajectories.json", "assets/projections.json"} <= set(ea.produces)
+
+
+def test_the_side_asset_builders_run_alone_on_a_box_without_game_logs(runs, monkeypatch, capsys):
+    """The documented replacement for what export_assets used to rebuild (PIPELINE.md runbook
+    step 3): --refresh-context --only <builders>. The preflight checks only the selected steps,
+    so missing game logs (origin's state in b7ccea45) do not block it."""
+    monkeypatch.setattr(ra.real_caches, "gamelogs", lambda: "no gamelogs_*.jsonl")
+    monkeypatch.setattr(ra.real_caches, "team_season", lambda: "no team-season cache")
+    for name in ("wide_skills", "draft_history", "playoffs", "honors"):
+        monkeypatch.setattr(ra.real_caches, name, lambda: None)
+    argv = ["--refresh-context", *(x for name in SIDE_ASSET_BUILDERS for x in ("--only", name))]
+    monkeypatch.setattr(ra, "subprocess", Forbidden())
+    assert ra.main(["--dry-run", *argv]) == 0
+    rec = Recorder()
+    monkeypatch.setattr(ra, "subprocess", rec)
+    assert ra.main(argv) == 0
+    assert rec.calls == SIDE_ASSET_BUILDERS
+
+
+def test_the_assets_notice_prints_after_a_failed_run_that_exported(runs, monkeypatch, capsys):
+    """[final#25] It printed only on exit 0, so a run failing after export_assets had
+    rewritten assets/ said nothing."""
+    monkeypatch.setattr(ra, "subprocess", Recorder(fail_at="build_scoring_lite"))
+    assert ra.main(["--stage", "export"]) == 3
+    assert "assets/ was rewritten" in capsys.readouterr().out
+    monkeypatch.setattr(ra, "subprocess", Recorder(fail_at="build_vectors"))
+    assert ra.main(["--stage", "matrix"]) == 3
+    assert "assets/ was rewritten" not in capsys.readouterr().out

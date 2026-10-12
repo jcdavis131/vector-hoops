@@ -23,10 +23,15 @@ via pipeline/served_model.problems():
 and that assets/ and public/assets/ serve the same run and the same bytes.
 Exit 1 with every problem listed, 0 when the bundle is consistent.
 
-On this branch it FAILS, by design: the committed bundle has no lineage, a
-hand-assembled meta, and sidecars from the 07-14 model. It goes green only
-when the served bundle is re-promoted (pipeline/promote.py), re-exported by
-rebuild_all.py's export stage and mirrored with scripts/sync_public.py.
+It FAILS today, by design. On master the served bundle is the July v5 export
+with no assets/mtnn_lineage.json; on forge/backend-hardening it is the
+2dc6ad78 smoke model, which also has a hand-assembled meta and sidecars from
+the 07-14 model [eval#0]. It goes green only when the served bundle is
+re-promoted (pipeline/promote.py), re-exported by rebuild_all.py's export
+stage, re-stamped with scripts/stamp_assets.py and then mirrored with
+scripts/sync_public.py. Stamp before the mirror: stamp_assets rewrites ?v=
+tokens in the root pages and assets/**/*.js only, never in public/, so a
+mirror taken first ships the old tokens [final#18].
 
 Stdlib only.
 
