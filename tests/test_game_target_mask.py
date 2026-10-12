@@ -108,6 +108,53 @@ def test_masked_cell_mean_ignores_the_unmeasured_cells_and_their_gradient(T):
     assert empty.detach().item() == 0.0 and empty.requires_grad
 
 
+def test_a_nan_in_an_unmeasured_target_gives_a_finite_loss_gradient_and_metric(T):
+    """FA2 review note: the mask was applied by multiplying, and 0 * NaN is NaN, in the
+    forward sum and, through (pred - target) ** 2, in the backward pass. The targets go
+    through measured_game_targets and the mean selects the measured cells."""
+    torch = pytest.importorskip("torch")
+    game_z = torch.tensor([[0.0, 1.0], [2.0, float("nan")], [1.0, float("inf")]])
+    game_m = torch.tensor([[1.0, 1.0], [1.0, 0.0], [1.0, 0.0]])
+    targets = T.measured_game_targets(game_z, game_m)
+    assert torch.isfinite(targets).all() and targets[0, 1].item() == 1.0 and targets[1, 1].item() == 0.0
+    pred = torch.zeros(3, 2, requires_grad=True)
+    loss = T.masked_cell_mean((pred - targets) ** 2, game_m)
+    assert loss.item() == pytest.approx((0 + 1 + 4 + 1) / 4)
+    loss.backward()
+    assert torch.isfinite(pred.grad).all()
+    assert pred.grad[1, 1].item() == 0.0 and pred.grad[2, 1].item() == 0.0
+    l1 = torch.nn.functional.smooth_l1_loss(pred, targets, reduction="none")
+    assert torch.isfinite(T.masked_cell_mean(l1, game_m))
+    # Without the target step the forward is finite but the gradient is not: the trap.
+    raw = torch.zeros(3, 2, requires_grad=True)
+    T.masked_cell_mean((raw - game_z) ** 2, game_m).backward()
+    assert not torch.isfinite(raw.grad).all()
+    # No mask: the targets object itself, untouched (the pre-FA2 path).
+    assert T.measured_game_targets(game_z, None) is game_z
+    # And the next-season metric on numpy.
+    y = np.array([[1.0, np.nan], [3.0, 0.0]])
+    st = mm.masked_residual_stats(y, np.zeros_like(y), np.array([[True, False], [True, True]]))
+    assert np.isfinite([st["r2"], st["mae"], st["mse"]]).all()
+
+
+def test_selecting_the_cells_gives_the_loss_and_gradient_multiplying_did(T):
+    """masked_cell_mean moved from cell_mask * values to torch.where. On finite values the
+    loss and every gradient are the same bits."""
+    torch = pytest.importorskip("torch")
+    g = torch.Generator().manual_seed(5)
+    target = torch.randn(64, 14, generator=g)
+    mask = (torch.rand(64, 14, generator=g) > 0.1).float()
+    target = target * mask  # as the matrix stores an unmeasured cell: 0.0
+    start = torch.randn(64, 14, generator=g)
+    a, b = start.clone().requires_grad_(), start.clone().requires_grad_()
+    new = T.masked_cell_mean((a - T.measured_game_targets(target, mask)) ** 2, mask)
+    old = (mask * (b - target) ** 2).sum() / mask.sum()
+    new.backward()
+    old.backward()
+    assert torch.equal(new.detach(), old.detach())
+    assert torch.equal(a.grad, b.grad)
+
+
 def test_trainer_takes_the_target_mask_from_the_matrix_as_built(T):
     """A --mask-* ablation zeroes M in place after Z_built / M_built are copied; the target
     mask must come from M_built, so an ablated input is not dropped as a target. The two
@@ -116,6 +163,8 @@ def test_trainer_takes_the_target_mask_from_the_matrix_as_built(T):
     assert "game_measured = game_target_mask(M_built, game_cols)" in src
     assert src.index("Z_built, M_built = Z.copy(), M.copy()") < src.index("game_measured = game_target_mask(")
     assert "target_mask=game_measured" in src and "game_profile_mask=game_measured" in src
+    assert "game_z = measured_game_targets(game_z, game_m)" in src
+    assert src.index("game_m = None if game_measured") < src.index("game_z = measured_game_targets(")
     assert "masked_cell_mean(profile_se, game_m[idx_t])" in src
     assert "masked_cell_mean(next_l1, game_m[next_t])" in src
     assert 'term("profile", F.mse_loss(out_a["profile"], game_z[idx_t]))' in src

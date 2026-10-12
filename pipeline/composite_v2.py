@@ -393,12 +393,13 @@ def regime_component(E, Z, game_cols, identity_cols, pairs_by_split, regime, mas
 # ---------------------------------------------------------------------------
 
 
-def _r2_mae(y: np.ndarray, p: np.ndarray, measured: np.ndarray | None = None) -> tuple[float, float]:
+def _r2_mae(y: np.ndarray, p: np.ndarray, measured: np.ndarray | None = None) -> tuple[float | None, float | None]:
     """Pooled R2 and MAE as train_mtnn.next_profile_holdout_metrics computes them.
 
     measured (a boolean array shaped like y) restricts both to the measured
     target cells, through the same mtnn_metrics.masked_residual_stats the
-    v1 metric uses; None is the original all-cell formula.
+    v1 metric uses; None is the original all-cell formula. With no measured
+    cell both are None (absent), not a perfect score.
     """
     if measured is not None:
         st = masked_residual_stats(y, p, measured)
@@ -418,8 +419,9 @@ def shrunk_persistence_factors(
     """
     x, y = Zg[train_pairs[:, 0]], Zg[train_pairs[:, 1]]
     if measured is not None:
-        w = measured[train_pairs[:, 1]].astype(np.float64)
-        return (w * x * y).sum(axis=0) / np.maximum((w * x * x).sum(axis=0), 1e-12)
+        # Selected, not multiplied by 0: a NaN in an unmeasured target stays out.
+        keep = measured[train_pairs[:, 1]]
+        return np.where(keep, x * y, 0.0).sum(axis=0) / np.maximum(np.where(keep, x * x, 0.0).sum(axis=0), 1e-12)
     return (x * y).sum(axis=0) / np.maximum((x * x).sum(axis=0), 1e-12)
 
 
@@ -446,8 +448,8 @@ def next_head_component(next_pred, Z, game_cols, pairs_by_split, game_names, M=N
     if measured is None:
         mean_next = Zg[train[:, 1]].mean(axis=0)
     else:
-        w = measured[train[:, 1]].astype(np.float64)
-        mean_next = (w * Zg[train[:, 1]]).sum(axis=0) / np.maximum(w.sum(axis=0), 1.0)
+        keep = measured[train[:, 1]]
+        mean_next = np.where(keep, Zg[train[:, 1]], 0.0).sum(axis=0) / np.maximum(keep.sum(axis=0), 1.0)
     out: dict = {"measures": {}, "baselines": {}, "scores": {"next_r2": {}, "next_mae": {}}}
     for s in SPLITS:
         p = pairs_by_split[s]
@@ -456,6 +458,12 @@ def next_head_component(next_pred, Z, game_cols, pairs_by_split, game_names, M=N
             continue
         x, y = Zg[p[:, 0]], Zg[p[:, 1]]
         m = None if measured is None else measured[p[:, 1]]
+        if m is not None and not m.any():
+            # No measured target cell in this split: every number here would be
+            # an empty sum read as perfect. Absent, as a split with no pairs is.
+            out["scores"]["next_r2"][s] = out["scores"]["next_mae"][s] = None
+            out["measures"][s] = {"pairs": len(p), "target_cells_unmeasured": int(m.size)}
+            continue
         r2_m, mae_m = _r2_mae(y, pred[p[:, 0]], m)
         r2_raw, mae_raw = _r2_mae(y, x, m)
         r2_shr, mae_shr = _r2_mae(y, x * beta, m)
@@ -476,6 +484,8 @@ def next_head_component(next_pred, Z, game_cols, pairs_by_split, game_names, M=N
         out["scores"]["next_mae"][s] = centered(mae_m, no_skill=mae_mean, baseline=best_mae, perfect=0.0)
     out["baselines"]["shrink_factors"] = {f: _r(b) for f, b in zip(game_names, beta, strict=True)}
     if out["scores"]["next_r2"].get(SCORED_SPLIT) is None:
+        if len(pairs_by_split[SCORED_SPLIT]):
+            return {"missing": f"no measured {SCORED_SPLIT}-split next-season target cell"}
         return {"missing": f"no {SCORED_SPLIT}-split next-season pairs"}
     return out
 

@@ -183,23 +183,37 @@ def masked_residual_stats(y: np.ndarray, p: np.ndarray, measured: np.ndarray) ->
 
     The pooled formulas the unmasked callers use, restricted to the cells
     where `measured` is True: residuals and the R2 total sum of squares are
-    summed over those cells, each feature's mean is the mean of its measured
-    cells, and a feature with no measured cell has MAE 0.0. Float64.
+    summed over those cells, and each feature's mean is the mean of its
+    measured cells. Float64.
+
+    Nothing measured is not a score. With no measured cell at all, r2, mae and
+    mse are None (absent), not the 1.0 / 0.0 / 0.0 the formulas give an empty
+    sum; a feature with no measured cell has per-feature MAE NaN, not 0.0.
+    Callers treat None as absent and leave NaN features out of rankings.
+
+    The unmeasured cells are selected out (np.where), not multiplied by 0, so
+    a NaN or inf stored there cannot reach a sum. On finite inputs the two
+    give the same sums: x * 1.0 is x, and a 0.0 term added in either form
+    leaves the total's bits as they were.
     """
-    w = np.asarray(measured, dtype=np.float64)
-    y = np.asarray(y, dtype=np.float64)
-    resid = y - np.asarray(p, dtype=np.float64)
+    keep = np.asarray(measured, dtype=bool)
+    w = keep.astype(np.float64)
+    y = np.where(keep, np.asarray(y, dtype=np.float64), 0.0)
+    resid = np.where(keep, y - np.asarray(p, dtype=np.float64), 0.0)
     n_feat = w.sum(axis=0)
     n = float(w.sum())
-    mean = (w * y).sum(axis=0) / np.maximum(n_feat, 1.0)
-    ss_tot = float((w * (y - mean) ** 2).sum())
-    ss_res = float((w * resid**2).sum())
-    abs_res = w * np.abs(resid)
+    mean = y.sum(axis=0) / np.maximum(n_feat, 1.0)
+    ss_tot = float(np.where(keep, (y - mean) ** 2, 0.0).sum())
+    ss_res = float((resid**2).sum())
+    abs_res = np.abs(resid)
+    with np.errstate(invalid="ignore", divide="ignore"):
+        per_feature = np.where(n_feat > 0, abs_res.sum(axis=0) / np.maximum(n_feat, 1.0), np.nan)
+    empty = n == 0
     return {
-        "r2": 1.0 - ss_res / max(ss_tot, 1e-9),
-        "mae": float(abs_res.sum()) / max(n, 1.0),
-        "mse": ss_res / max(n, 1.0),
-        "per_feature_mae": abs_res.sum(axis=0) / np.maximum(n_feat, 1.0),
+        "r2": None if empty else 1.0 - ss_res / max(ss_tot, 1e-9),
+        "mae": None if empty else float(abs_res.sum()) / n,
+        "mse": None if empty else ss_res / n,
+        "per_feature_mae": per_feature,
         "cells": int(n),
         "cells_unmeasured": int(w.size - n),
     }

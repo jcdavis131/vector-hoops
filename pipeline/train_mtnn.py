@@ -823,10 +823,31 @@ def masked_vector_mse(pred, target, feat_mask, row_mask) -> torch.Tensor:
 
 
 def masked_cell_mean(values, cell_mask) -> torch.Tensor:
-    """Mean of an elementwise loss over the cells whose mask is 1 (a graph-keeping 0.0 when none is)."""
+    """Mean of an elementwise loss over the cells whose mask is 1 (a graph-keeping 0.0 when none is).
+
+    The other cells are selected out (torch.where), not multiplied by 0, so a
+    NaN or inf there cannot reach the sum. On finite values the sum is the one
+    cell_mask * values gave. The gradient of the selected-out cells is 0, but
+    torch.where's backward still multiplies that 0 into the branch it did not
+    take, so a NaN target must not reach `values` at all: build the targets
+    with measured_game_targets first.
+    """
     if cell_mask.sum() <= 0:
         return values.sum() * 0.0
-    return (cell_mask * values).sum() / cell_mask.sum()
+    return torch.where(cell_mask > 0, values, torch.zeros_like(values)).sum() / cell_mask.sum()
+
+
+def measured_game_targets(game_z, game_m):
+    """The profile / next_profile targets with every unmeasured cell set to 0.0 (game_m None: unchanged).
+
+    The matrix already stores 0.0 there (z of a cell nobody measured), so on a
+    built matrix this changes no value. It is what keeps a NaN or inf in an
+    unmeasured target out of the loss's backward pass: (pred - NaN) ** 2 has a
+    NaN derivative, and 0 * NaN is NaN.
+    """
+    if game_m is None:
+        return game_z
+    return torch.where(game_m > 0, game_z, torch.zeros_like(game_z))
 
 
 def info_nce(
@@ -1215,9 +1236,14 @@ def next_profile_holdout_metrics(
             per_mae = np.abs(resid).mean(axis=0)
         else:
             st = masked_residual_stats(y, p, target_mask[next_idx[rows]])
+            if st["r2"] is None:
+                # No measured target cell in this split: absent, as a split with no rows is.
+                out[split] = None
+                continue
             mse, mae, r2, per_mae = st["mse"], st["mae"], st["r2"], st["per_feature_mae"]
             rmse = float(np.sqrt(mse))
-        top = np.argsort(-per_mae)[:5]
+        # A feature with no measured target cell (NaN) is not ranked.
+        top = [j for j in np.argsort(-per_mae) if np.isfinite(per_mae[j])][:5]
         out[split] = {
             "rows": len(rows),
             "mae_z": round(mae, 4),
@@ -1600,14 +1626,19 @@ def build_parser() -> argparse.ArgumentParser:
         type=str,
         default="",
         help="comma-separated families to zero out (values + mask) while "
-        "keeping their towers, so ablation arms share one architecture",
+        "keeping their towers, so ablation arms share one architecture. A family holding any "
+        "of the 14 game columns (volume, playmaking, rebounding, defense, efficiency) also zeroes those columns' profile "
+        "and next_profile TARGETS: they are read from the ablated matrix, at mask 1, so the "
+        "heads train toward 0.0 there (predates 2026-10; see docs/PIPELINE.md)",
     )
     ap.add_argument(
         "--mask-features",
         type=str,
         default="",
         help="comma-separated individual features to zero out (values + mask), "
-        "for testing a single column without rebuilding train_matrix.npz",
+        "for testing a single column without rebuilding train_matrix.npz. On one of the 14 "
+        "game columns this also zeroes its profile and next_profile targets, which still "
+        "count as measured: the heads train toward 0.0 (predates 2026-10; see docs/PIPELINE.md)",
     )
     ap.add_argument(
         "--exclude-families",
@@ -1644,7 +1675,10 @@ def build_parser() -> argparse.ArgumentParser:
         choices=("none", "procrustes"),
         default="none",
         help="v6: rotate the 14 game-feature dims into the 1996-97 root "
-        "frame via assets/drift.json chainedToRoot before training",
+        "frame via assets/drift.json chainedToRoot before training. The rotation mixes each "
+        "row's game columns, so the 0.0 an unmeasured game cell holds (FG3_PCT, FT_PCT with "
+        "no attempt) moves into that row's measured cells as if it were measured. The "
+        "legacy refit recipes only; measure and ship do not pass it",
     )
     ap.add_argument(
         "--robust-scaling",
@@ -1865,6 +1899,7 @@ def main(argv: list[str] | None = None) -> None:
     # losses and the metrics are the original ones, bit for bit.
     game_measured = game_target_mask(M_built, game_cols)
     game_m = None if game_measured is None else torch.tensor(game_measured, dtype=torch.float32, device=device)
+    game_z = measured_game_targets(game_z, game_m)
     if game_measured is not None:
         print(
             f"profile targets: {int((~game_measured).sum())} unmeasured game cells on "
