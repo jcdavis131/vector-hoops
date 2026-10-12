@@ -53,6 +53,10 @@
 }
 .site-nav__link:hover{color:#1A150F;background:#fff}
 .site-nav__link.is-active{color:#1A150F;border-color:#1A150F;background:#fff;box-shadow:1.5px 1.5px 0 #1A150F}
+.site-nav__link.is-live{position:relative;padding-right:16px}
+.site-nav__link.is-live::after{content:'';position:absolute;top:6px;right:6px;width:7px;height:7px;border-radius:50%;background:#D55E00;animation:vh-live-pulse 1.4s infinite}
+@keyframes vh-live-pulse{0%,100%{opacity:1}50%{opacity:.25}}
+@media(prefers-reduced-motion:reduce){.site-nav__link.is-live::after{animation:none}}
 @media(max-width:640px){
   .site-nav{padding:8px 12px;padding-top:calc(8px + env(safe-area-inset-top,0));gap:8px}
   .site-nav__brand{font-size:12px}
