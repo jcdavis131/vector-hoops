@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import json
 import sys
+import types
 from pathlib import Path
 
 import pytest
@@ -82,18 +83,26 @@ HTML = (
 ).encode("utf-8")
 
 
+def fake_requests(monkeypatch) -> None:
+    """A stand-in `requests` module: both scrapers import it inside the function and call only get().
+
+    These two tests used pytest.importorskip("requests"), and CI does not install
+    requests, so on the runner they always skipped [final#15]. The fake needs no
+    dependency and makes no request.
+    """
+    monkeypatch.setitem(sys.modules, "requests", types.SimpleNamespace(get=lambda *a, **k: _Resp(HTML)))
+
+
 def test_fetch_salaries_decodes_bbref_as_utf8(monkeypatch):
-    requests = pytest.importorskip("requests")
     import fetch_salaries
 
-    monkeypatch.setattr(requests, "get", lambda *a, **k: _Resp(HTML))
+    fake_requests(monkeypatch)
     assert fetch_salaries.fetch_bbref_contracts() == {"nikola jokic|2025-26": 55224526.0}
 
 
 def test_build_vectors_decodes_bbref_as_utf8(tmp_path, monkeypatch):
-    requests = pytest.importorskip("requests")
     import build_vectors
 
     monkeypatch.setattr(build_vectors, "CACHE", tmp_path)
-    monkeypatch.setattr(requests, "get", lambda *a, **k: _Resp(HTML))
+    fake_requests(monkeypatch)
     assert build_vectors.fetch_bbref_contracts(offline=False) == {("nikola jokic", "2025-26"): 55224526.0}
