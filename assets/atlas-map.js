@@ -36,6 +36,9 @@
   var PAD = 28;
   var grid = null, GX = 64, GY = 40;
   var selected = -1, peers = [], hover = -1, filterArch = -1;
+  var teams = [], hlTeam = -1, hlRoster = [], hlRosterSet = null;
+  var cycleTimer = null, cycleOn = false, nameToLatest = {};
+  var GOLD = '#e8b500', CYCLE_MS = 6000;
   var revealT = reduceMotion ? 1 : 0;
   var bounds = { x0: 0, x1: 1, y0: 0, y1: 1 };
 
@@ -142,15 +145,28 @@
     // points — revealed from the centre outward during the opening
     var n = P.length, rad = W < 520 ? 1.05 : 1.25;
     var maxR = Math.hypot(W / 2, H / 2) * revealT;
-    var dim = selected >= 0 || filterArch >= 0;
+    var dim = selected >= 0 || filterArch >= 0 || hlTeam >= 0;
+    var inRoster = hlRosterSet;
     for (var i = 0; i < n; i++) {
       var p = P[i], x = sx(p.x), y = sy(p.y);
       if (revealT < 1 && Math.hypot(x - W / 2, y - H / 2) > maxR) continue;
       var a;
       if (filterArch >= 0) a = p.c === filterArch ? 0.85 : 0.07;
+      else if (inRoster) a = inRoster[i] ? 0.9 : 0.06;
       else a = dim ? 0.26 : 0.5;
       ctx.fillStyle = COL.dot + a + ')';
       ctx.fillRect(x - rad, y - rad, rad * 2, rad * 2);
+    }
+
+    // team highlight: the roster's latest seasons glow gold
+    if (inRoster) {
+      ctx.fillStyle = GOLD;
+      var gr = W < 520 ? 2.4 : 3;
+      for (var ri = 0; ri < hlRoster.length; ri++) {
+        var rp = P[hlRoster[ri]], gx2 = sx(rp.x), gy2 = sy(rp.y);
+        if (revealT < 1 && Math.hypot(gx2 - W / 2, gy2 - H / 2) > maxR) continue;
+        ctx.beginPath(); ctx.arc(gx2, gy2, gr, 0, Math.PI * 2); ctx.fill();
+      }
     }
 
     // peers: hairlines back to the selected season, then rings
@@ -347,6 +363,89 @@
     });
   }
 
+  // ---------- team highlight ----------
+  function normName(s) {
+    return String(s).toLowerCase()
+      .replace(/\s+(jr|sr|ii|iii|iv|v)\.?$/, '')  // lite data strips suffixes
+      .replace(/[^a-z0-9]/g, '');
+  }
+  function buildNameIndex() {
+    nameToLatest = {};
+    for (var i = 0; i < P.length; i++) {
+      var k = normName(P[i].n), cur = nameToLatest[k];
+      if (cur == null || P[i].s > P[cur].s) nameToLatest[k] = i;
+    }
+  }
+  function teamRosterIdx(t) {
+    var out = [];
+    (t.players || []).forEach(function (nm) {
+      var i = nameToLatest[normName(nm)];
+      if (i != null) out.push(i);
+    });
+    return out;
+  }
+  function renderCaption() {
+    var cap = $('team-caption');
+    if (!cap) return;
+    if (hlTeam < 0 || !teams[hlTeam]) { cap.hidden = true; return; }
+    var t = teams[hlTeam];
+    cap.innerHTML = '<span class="dot"></span><span><b>' + esc(t.name) + '</b>' +
+      ' <span class="num">· ' + hlRoster.length + ' players' +
+      (cycleOn ? ' · ' + (hlTeam + 1) + '/' + teams.length : '') + '</span></span>';
+    cap.hidden = false;
+  }
+  function setTeam(k) {
+    hlTeam = (k == null || k < 0 || k >= teams.length) ? -1 : k;
+    hlRoster = hlTeam >= 0 ? teamRosterIdx(teams[hlTeam]) : [];
+    hlRosterSet = null;
+    if (hlRoster.length) {
+      hlRosterSet = {};
+      hlRoster.forEach(function (i) { hlRosterSet[i] = true; });
+    }
+    var sel = $('team-select');
+    if (sel) sel.value = hlTeam < 0 ? '' : String(hlTeam);
+    renderCaption();
+    draw();
+    var live = $('atlas-live');
+    if (live && hlTeam >= 0) live.textContent = teams[hlTeam].name + ' highlighted, ' + hlRoster.length + ' players.';
+  }
+  function stopCycle() {
+    cycleOn = false;
+    if (cycleTimer) { clearInterval(cycleTimer); cycleTimer = null; }
+    var btn = $('team-cycle');
+    if (btn) btn.setAttribute('aria-pressed', 'false');
+    renderCaption();
+  }
+  function initTeams() {
+    var sel = $('team-select'), btn = $('team-cycle');
+    if (!sel || !btn) return;
+    fetch('/assets/team-rosters.json?v=6bb25898', { cache: 'force-cache' })
+      .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+      .then(function (j) {
+        teams = j.teams || [];
+        teams.forEach(function (t, k) {
+          var o = document.createElement('option');
+          o.value = String(k); o.textContent = t.name;
+          sel.appendChild(o);
+        });
+      })
+      .catch(function () { /* select keeps its placeholder; map still works */ });
+    sel.addEventListener('change', function () {
+      stopCycle();
+      setTeam(sel.value === '' ? -1 : +sel.value);
+    });
+    btn.addEventListener('click', function () {
+      if (cycleOn) { stopCycle(); return; }
+      if (!teams.length) return;
+      cycleOn = true;
+      btn.setAttribute('aria-pressed', 'true');
+      setTeam(hlTeam >= 0 ? hlTeam : 0);
+      cycleTimer = setInterval(function () {
+        setTeam((hlTeam + 1) % teams.length);
+      }, CYCLE_MS);
+    });
+  }
+
   // ---------- pointer ----------
   function pointer(e) {
     var r = canvas.getBoundingClientRect();
@@ -377,7 +476,7 @@
   document.addEventListener('click', function (e) {
     var tr = e.target.closest && e.target.closest('#atlas-peers-body tr[data-id]');
     if (tr) select(+tr.getAttribute('data-id'));
-    if (e.target.closest && e.target.closest('[data-map="reset"]')) { filterArch = -1; initLegendReset(); select(-1); }
+    if (e.target.closest && e.target.closest('[data-map="reset"]')) { filterArch = -1; initLegendReset(); stopCycle(); setTeam(-1); select(-1); }
     if (e.target.closest && e.target.closest('[data-map="share"]')) share(e.target.closest('[data-map="share"]'));
   });
   document.addEventListener('keydown', function (e) {
@@ -415,7 +514,7 @@
       computeBounds(); buildGrid();
       var s = $('atlas-state'); if (s) s.hidden = true;
       var count = $('atlas-count'); if (count) count.textContent = P.length.toLocaleString('en-US');
-      initSearch(); initLegend();
+      initSearch(); initLegend(); buildNameIndex(); initTeams();
       var id = -1;
       try { var q = new URL(location.href).searchParams.get('id'); if (q != null && /^\d+$/.test(q)) id = +q; } catch (e) {}
       if (id < 0) { for (var i = 0; i < P.length; i++) if (P[i].n === FEATURED.n && P[i].s === FEATURED.s) { id = i; break; } }
@@ -430,6 +529,14 @@
     project: function (x, y) { return { x: sx(x), y: sy(y) }; },
     dims: function () { return { W: W, H: H, DPR: DPR }; },
     selectedPlayer: function () { return selected >= 0 ? P[selected] : null; },
-    onSelect: function (cb) { (window.__vhAtlasSelect = window.__vhAtlasSelect || []).push(cb); }
+    onSelect: function (cb) { (window.__vhAtlasSelect = window.__vhAtlasSelect || []).push(cb); },
+    highlightTeam: function (abbr) {
+      stopCycle();
+      for (var k = 0; k < teams.length; k++) {
+        if (teams[k].abbr === abbr) { setTeam(k); return true; }
+      }
+      setTeam(-1);
+      return false;
+    }
   };
 })();
