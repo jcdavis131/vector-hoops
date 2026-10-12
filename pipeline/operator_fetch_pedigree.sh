@@ -61,7 +61,8 @@ To ship it (review the cache first, then run):
     git push
 
 That lands on PR #1 and lights up the pedigree family for ~all players.
-The weekly refresh (update_dataset.py) will keep it current from here.
+update_dataset.py (run by hand on an operator machine; the weekly GitHub run
+is gone) rebuilds pedigree from it on each run.
 
 Optional — rebuild the matrix with real pedigree coverage and measure it
 (docs/PIPELINE.md; bootstrap_train_matrix.py builds a different, 14-column

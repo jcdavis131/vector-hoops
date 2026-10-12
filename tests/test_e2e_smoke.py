@@ -41,7 +41,9 @@ the way the live assets were built (origin b7ccea45).
 8 to 16 s on the training box's CPU (measured 8.4 s and 15.4 s); nothing is
 written outside tmp_path. One more test trains a second skeleton the same
 way under --protocol-v2 with skill_labels.npz removed, to check the CQS
-rule that reads the report's lineage on a report the trainer wrote.
+rule that reads the report's lineage on a report the trainer wrote. And three
+more train the slice with 96 FG3_PCT cells marked unmeasured, to check the
+trainer takes no gradient from a game target nobody measured.
 
 Run:  python -m pytest tests/test_e2e_smoke.py
 """
