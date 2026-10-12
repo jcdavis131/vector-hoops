@@ -129,6 +129,31 @@ def test_keeps_the_newest_five_and_never_the_current_one(data):
     assert names == ["r2", "r5", "r6"]
 
 
+def test_the_first_promotion_after_a_rollback_keeps_the_bundle_that_was_live(data):
+    """[final#26] Ranking is by first promotion and a rollback writes no manifest, so
+    promote r0..r4, roll back to r0, promote r9 used to delete r0, the model live
+    until that flip, and CURRENT.previous then named a directory that was gone."""
+    for i in range(5):
+        pm.promote(make_run(data, f"r{i}", seed=i), now=f"2026-10-09T00:00:0{i}Z")
+    man_r0 = (data / "promoted" / "r0" / "manifest.json").read_bytes()
+    pm.promote(data / "promoted" / "r0", now="2026-10-09T00:00:10Z")
+    assert current(data)["run_id"] == "r0" and current(data)["previous"] == "r4"
+    pm.promote(make_run(data, "r9", seed=9), now="2026-10-09T00:00:11Z")
+    cur = current(data)
+    assert (cur["run_id"], cur["previous"]) == ("r9", "r0")
+    assert (data / "promoted" / cur["previous"] / "manifest.json").exists()
+    # No manifest was rewritten to get there.
+    assert (data / "promoted" / "r0" / "manifest.json").read_bytes() == man_r0
+    names = sorted(p.name for p in (data / "promoted").iterdir() if p.is_dir())
+    # keep=5 by first promotion (r9, r4, r3, r2, r1) plus the protected previous r0.
+    assert names == ["r0", "r1", "r2", "r3", "r4", "r9"]
+    # Rolling back to it still works, and the next promotion prunes by the rule again.
+    assert pm.promote(data / "promoted" / "r0", now="2026-10-09T00:00:12Z")["previous"] == "r9"
+    pm.promote(make_run(data, "r8", seed=8), now="2026-10-09T00:00:13Z")
+    names = sorted(p.name for p in (data / "promoted").iterdir() if p.is_dir())
+    assert names == ["r0", "r2", "r3", "r4", "r8", "r9"]
+
+
 def test_rollback_re_promotes_an_existing_bundle_without_copying(data):
     pm.promote(make_run(data, "a"), now="2026-10-09T00:00:01Z")
     pm.promote(make_run(data, "b", seed=1), now="2026-10-09T00:00:02Z")

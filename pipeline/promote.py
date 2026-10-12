@@ -99,7 +99,9 @@ What it writes:
                                      refreshed from the bundle for readers
                                      outside this repo (the legacy paths
                                      above)
-The newest KEEP bundles are kept, and the current one always. Re-promoting
+The newest KEEP bundles (by first promotion) are kept, and always the
+current one and the one it replaced (CURRENT.json's previous), so the bundle
+a rollback returns to is never pruned by the next promotion. Re-promoting
 a bundle that is already in promoted/ (a rollback: --run
 pipeline/data/promoted/<run_id>, plus --selection-run
 pipeline/data/promoted/<run_id>/selection for a refit) copies nothing into
@@ -737,7 +739,13 @@ def promote(
 
     for role in LEGACY:
         atomic_copy(dest / BUNDLE_FILES[role], data / BUNDLE_FILES[role])
-    prune(promoted, keep=keep, protect={run_id})
+    # The bundle that was live until this flip is protected too [final#26].
+    # Ranking is by the manifest's promoted_at, the FIRST promotion, and a
+    # rollback writes no manifest: so after promote r0..r4, roll back to r0,
+    # promote r9, r0 ranked oldest and was deleted while CURRENT.previous
+    # still named it. Protecting `previous` keeps the one-step rollback
+    # target on disk without rewriting any manifest.
+    prune(promoted, keep=keep, protect={run_id} | ({previous} if previous else set()))
     return current
 
 

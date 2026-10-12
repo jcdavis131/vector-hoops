@@ -41,8 +41,11 @@ offline:
 # pipeline/data/train_matrix.npz + feature_manifest.json, which is why it is
 # split out of `offline`: CI does not run it and a check should not either --
 # `make ci` used to, which made verifying the repo a way to modify it.
-# Verified 2026-10-09: exit 0 in ~8 s, 12,966 rows x 142 columns, contract
-# passes, matrix byte-identical to the climb's prepare output.
+# Verified 2026-10-09 on the training box: exit 0 in ~8 s, 12,966 rows,
+# contract passes, matrix
+# byte-identical to the climb's prepare output. 143 columns since P10 added
+# DRAFT_UNDRAFTED (b0f37e50); the contract that holds the count now is
+# 366e06a5 (FA2), still 12,966 x 143.
 build:
 	$(PYTHON) pipeline/rebuild_all.py --to stage_contract
 

@@ -7,13 +7,20 @@ against a best real measurement of 0.768. Nothing failed loudly -- candidates
 were just silently rejected. These tests exist so that specific failure, and
 its neighbours, cannot come back.
 
-Run:  python -m unittest pipeline.test_composite_gate
-      python pipeline/test_composite_gate.py
+Run:  python -m pytest pipeline/test_composite_gate.py
+      python pipeline/test_composite_gate.py     (same tests; exit 0 = all gates pass)
+
+The script form is what update_dataset.py runs (it reads only the exit code).
+It used to be unittest.main, which never set HOOPS_REQUIRE_LOCAL_DATA and never
+went through conftest.py, so with no mtnn_report.json the required
+"promote-gate tests" step printed "OK (skipped=1)" and passed [final#16]. It
+is the pytest form the other gates use now, so a missing report fails there.
 """
 
 from __future__ import annotations
 
 import json
+import os
 import sys
 import unittest
 from pathlib import Path
@@ -222,4 +229,7 @@ class PromoteDecisionTests(unittest.TestCase):
 
 
 if __name__ == "__main__":
-    unittest.main(verbosity=2)
+    # Script form for update_dataset.py, which reads only the exit code.
+    # HOOPS_REQUIRE_LOCAL_DATA=1: a missing mtnn_report.json is a failure.
+    os.environ.setdefault("HOOPS_REQUIRE_LOCAL_DATA", "1")
+    sys.exit(pytest.main([__file__, "-p", "no:cacheprovider", "--runxfail"]))

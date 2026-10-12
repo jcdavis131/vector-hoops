@@ -72,6 +72,7 @@ import json
 import time
 from pathlib import Path
 
+import mtnn_towers
 import numpy as np
 import promote
 import torch
@@ -130,10 +131,11 @@ def tower_slices(manifest: dict, ckpt_args: dict) -> dict[str, list[int]]:
     it was added) failed with "no train matrix matches the checkpoint's
     families" (found by tests/test_e2e_smoke.py: ckpt 18 towers, matrix 19
     families, injury (None, 4)).
+
+    The rule lives in mtnn_towers now, so export_mtnn_viz (numpy only) lists
+    the same towers in arch.towerFamilies [final#1].
     """
-    split = lambda v: {s.strip() for s in str(v or "").split(",") if s.strip()}  # noqa: E731
-    drop, exclude = split(ckpt_args.get("drop_features")), split(ckpt_args.get("exclude_families"))
-    return {k: v for k, v in T.family_slices(manifest, drop).items() if k not in exclude and k != "injury"}
+    return mtnn_towers.tower_columns(manifest, ckpt_args)
 
 
 def load_matrix_for(ckpt_fams: dict[str, int], ckpt_args: dict | None = None):

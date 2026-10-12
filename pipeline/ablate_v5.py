@@ -134,6 +134,7 @@ def train_one(
     # losses and the next-profile metrics; None (all measured) is the old path.
     game_measured = T.game_target_mask(M, game_cols)
     game_m = None if game_measured is None else torch.tensor(game_measured, dtype=torch.float32, device=device)
+    game_z = T.measured_game_targets(game_z, game_m)
     n_seasons = int(season_ids.max()) + 1
 
     pairs = T.adjacent_season_pairs(pids, seasons, names)

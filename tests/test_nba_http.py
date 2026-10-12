@@ -208,6 +208,46 @@ def test_classify():
     assert nba_http.classify(nba_http.HTTPStatusError(502, "u")) == "transient"
     assert nba_http.classify(nba_http.HTTPStatusError(400, "u")) == "client"
     assert nba_http.classify(ConnectionResetError()) == "transient"
+    assert nba_http.classify(TimeoutError()) == "transient"
+    assert nba_http.classify(ValueError("Expecting value")) == "transient"  # a non-JSON body
+    for exc in (ModuleNotFoundError("No module named 'nba_api'"), AttributeError("x"), TypeError("x"), NameError("x")):
+        assert nba_http.classify(exc) == "fatal", exc
+
+
+def test_a_network_library_error_is_transient_whatever_else_it_subclasses():
+    # A transport library's exception class that also subclasses TypeError is
+    # still the network's: ingest.is_network_error is checked first.
+    err_type = type("LibError", (TypeError,), {"__module__": "requests.exceptions"})
+    assert nba_http.classify(err_type("x")) == "transient"
+
+
+@pytest.mark.parametrize(
+    "exc", [ModuleNotFoundError("No module named 'nba_api'"), AttributeError("'NoneType' object"), TypeError("bad arg")]
+)
+def test_a_programming_error_is_raised_at_once_unwrapped(monkeypatch, exc):
+    """[final#14] A missing nba_api counted as transient: 5 attempts, about 85 s of sleep,
+    then a FetchError, so the fetcher exited 2 ("fetch failed") instead of 1 with a traceback."""
+    monkeypatch.setattr(nba_http, "_sleep", lambda s: pytest.fail(f"slept {s}"))
+    calls = []
+
+    def fn():
+        calls.append(1)
+        raise exc
+
+    with pytest.raises(type(exc)) as ei:
+        nba_http.retry_call(fn, "x")
+    assert ei.value is exc and not isinstance(ei.value, ingest.FetchError)
+    assert calls == [1]
+    assert not ingest.is_network_error(ei.value)  # so ingest.run_fetch lets it propagate: exit 1
+
+
+def test_the_nba_api_fallback_without_nba_api_fails_at_once(monkeypatch):
+    monkeypatch.setattr(nba_http, "_have_curl_cffi", lambda: False)
+    monkeypatch.setattr(nba_http, "_sleep", lambda s: pytest.fail(f"slept {s}"))
+    # None in sys.modules makes `from nba_api... import` raise ModuleNotFoundError.
+    monkeypatch.setitem(sys.modules, "nba_api", None)
+    with pytest.raises(ModuleNotFoundError):
+        nba_http.fetch_stats_json("a", {})
 
 
 def test_patch_nba_api_session_without_curl_cffi(monkeypatch):

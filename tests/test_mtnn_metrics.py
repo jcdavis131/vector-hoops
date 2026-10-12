@@ -318,6 +318,51 @@ def test_masked_residual_stats_count_only_measured_cells():
     assert mm.masked_residual_stats(y, p, measured)["r2"] == pytest.approx(-0.75)
 
 
+def test_masked_residual_stats_with_nothing_measured_is_absent_not_perfect():
+    """FA2 review note: an empty sum read as R2 1.0, MAE 0.0, MSE 0.0, a perfect score
+    for a split nobody measured. Now None (absent); a feature with no measured cell has
+    per-feature MAE NaN, not 0.0."""
+    y, p = np.array([[1.0, 2.0], [3.0, 4.0]]), np.array([[0.0, 0.0], [0.0, 0.0]])
+    st = mm.masked_residual_stats(y, p, np.zeros_like(y, dtype=bool))
+    assert (st["r2"], st["mae"], st["mse"]) == (None, None, None)
+    assert np.isnan(st["per_feature_mae"]).all()
+    assert (st["cells"], st["cells_unmeasured"]) == (0, 4)
+    one = mm.masked_residual_stats(y, p, np.array([[True, False], [True, False]]))
+    assert one["mae"] == pytest.approx(2.0) and one["per_feature_mae"][0] == pytest.approx(2.0)
+    assert np.isnan(one["per_feature_mae"][1])
+
+
+def test_a_nan_in_an_unmeasured_cell_does_not_spread():
+    """FA2 review note: the mask was applied by multiplying, and 0 * NaN is NaN."""
+    y = np.array([[1.0, 4.0], [2.0, np.nan], [3.0, 6.0]])
+    p = np.array([[1.0, 5.0], [1.0, np.inf], [1.0, 5.0]])
+    measured = np.array([[True, True], [True, False], [True, True]])
+    st = mm.masked_residual_stats(y, p, measured)
+    # The by-hand numbers of test_masked_residual_stats_count_only_measured_cells.
+    assert st["r2"] == pytest.approx(-0.75) and st["mae"] == pytest.approx(1.0) and st["mse"] == pytest.approx(1.4)
+    assert np.isfinite(st["per_feature_mae"]).all()
+
+
+def test_selecting_the_measured_cells_gives_the_bits_multiplying_did():
+    """The switch from w * x to np.where(measured, x, 0) changes no number on finite data."""
+    rng = np.random.default_rng(7)
+    y, p = rng.normal(size=(200, 14)), rng.normal(size=(200, 14))
+    measured = rng.random((200, 14)) > 0.1
+    y[~measured] = 0.0  # as the matrix stores an unmeasured cell
+    w = measured.astype(np.float64)
+    resid = y - p
+    n_feat, n = w.sum(axis=0), float(w.sum())
+    mean = (w * y).sum(axis=0) / np.maximum(n_feat, 1.0)
+    old = {
+        "r2": 1.0 - float((w * resid**2).sum()) / max(float((w * (y - mean) ** 2).sum()), 1e-9),
+        "mae": float((w * np.abs(resid)).sum()) / n,
+        "mse": float((w * resid**2).sum()) / n,
+    }
+    st = mm.masked_residual_stats(y, p, measured)
+    assert {k: st[k] for k in old} == old
+    assert np.array_equal(st["per_feature_mae"], (w * np.abs(resid)).sum(axis=0) / np.maximum(n_feat, 1.0))
+
+
 def test_masked_residual_stats_with_every_cell_measured_is_the_pooled_formula():
     rng = np.random.default_rng(3)
     y, p = rng.normal(size=(20, 4)), rng.normal(size=(20, 4))
