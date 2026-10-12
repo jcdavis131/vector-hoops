@@ -315,8 +315,13 @@ def build_plan(
             "train_mtnn",
             tuple(train),
             "train",
-            # The last-run copies in pipeline/data, and the run's own bundle.
-            (D + "mtnn_report.json", D + "mtnn_best.pt", D + "_scratch/embedding_v3.npz", *bundle),
+            # The last-run copies in pipeline/data, and the run's own bundle
+            # (its checkpoint is the bundle's mtnn_best.pt). Not
+            # pipeline/data/mtnn_best.pt: train_mtnn writes it only for a run
+            # that selects a best epoch (validation on, no --no-best-checkpoint),
+            # and ship, measure and the legacy refits never do; promote writes
+            # it [final#22].
+            (D + "mtnn_report.json", D + "_scratch/embedding_v3.npz", *bundle),
         )
     )
     # Checks the bundle the train step just wrote and makes it the promoted

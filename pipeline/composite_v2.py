@@ -13,8 +13,9 @@ Why v1 needs a second opinion (each measured on this box, 2026-10-09):
     pipeline/data/embedding_v3.npz archetype top-1 is 0.9745 on train rows
     and 0.8779 on test rows.
   * Same-player recall@10 can be had without a model. Cosine nearest
-    neighbour over 7 career-constant draft/body columns (IDENTITY_FEATURES)
-    gives exhaustive test recall@10 0.9025 against the same embedding's
+    neighbour over 7 career-constant draft/body columns (IDENTITY_FEATURES
+    has 8 since DRAFT_UNDRAFTED joined it, ec66834c; 0.9025 was measured
+    with the first 7) gives exhaustive test recall@10 0.9025 against the same embedding's
     0.8304 [features#1].
   * The next-season head has no persistence baseline. Copying this season
     forward gives test R2 0.4998, and 14 per-feature shrink factors fit on
