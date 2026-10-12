@@ -55,7 +55,7 @@ function renderAll(d,g){
   if(g&&g.a&&g.h){try{document.title='Courtside — '+g.a.abbr+' @ '+g.h.abbr;}catch(e){}}
   const idx=TL.live?TL.n-1:TL.view;
   renderHeader(d,g,idx);renderWP(d,g,idx);renderMomentum(d,g,idx);
-  renderPlays(d,idx);renderLeaders(d,g);
+  renderPlays(d,idx);renderLeaders(d,g,idx);
   renderGhosts(d);renderMiles(d);renderMoments(d,g,idx);renderShotChart(d,g,idx);
   updateTlUI(d);
 }
@@ -75,7 +75,7 @@ async function loadGame(){
       TL.n=n;
     }
     renderAll(d,g);
-    if(window.LiveAtlas)window.LiveAtlas.onGame(d,g);
+    if(window.LiveAtlas){const f=fireNow(d,TL.live?TL.n-1:TL.view);window.LiveAtlas.onGame(d,g,f&&JAM?f.name:null);}
     window._lastD=d;window._lastG=g;
     lastUpd=new Date();
     $('upd').textContent='updated '+lastUpd.toLocaleTimeString();
@@ -341,9 +341,10 @@ function renderPlays(d,idx){
   if(maxId)window._lastPlayId=maxId;
 }
 
-function renderLeaders(d,g){
+function renderLeaders(d,g,idx){
   const bp=d.boxscore&&d.boxscore.players;
   if(!bp)return;
+  const fire=JAM?fireNow(d,idx===undefined?(d.plays||[]).length-1:idx):null;
   const mk=side=>{
     const t=bp.find(x=>x.team.abbreviation===(side==='h'?(g?g.h.abbr:''):(g?g.a.abbr:'')));
     const el=side==='h'?$('leadH'):$('leadA');
@@ -352,7 +353,8 @@ function renderLeaders(d,g){
     // stats order: MIN,PTS,FG,3PT,FT,REB,AST,TO,STL,BLK,OREB,DREB,PF,+/-
     el.innerHTML=`<h3>${t.team.abbreviation}</h3>`+athletes.map(a=>{
       const s=a.stats;
-      return `<div class="pl"><span>${esc(a.athlete.displayName)}</span><span>${s[1]} PTS · ${s[5]} REB · ${s[6]} AST</span></div>`;
+      const hot=fire&&fire.name===a.athlete.displayName?' 🔥':'';
+      return `<div class="pl"><span>${esc(a.athlete.displayName)}${hot}</span><span>${s[1]} PTS · ${s[5]} REB · ${s[6]} AST</span></div>`;
     }).join('');
   };
   mk('a');mk('h');
@@ -541,6 +543,70 @@ function renderMiles(d){
 }
 
 // ---- Live moments timeline ----
+/* NBA Jam layer — HEATING UP / ON FIRE from consecutive makes, FROM DOWNTOWN
+ * from deep threes, BOOMSHAKALAKA from dunks. All DVR-aware: scrub back and
+ * the fire goes out. Toggle with the JAM button (persisted). */
+let JAM = true;
+try { JAM = localStorage.getItem('vh_jam') !== 'off'; } catch (e) {}
+function idNameMap(d) {
+  const m = {};
+  ((d.boxscore && d.boxscore.players) || []).forEach(t => {
+    const ath = (((t.statistics || [])[0] || {}).athletes) || [];
+    ath.forEach(a => { m[a.athlete.id] = a.athlete.displayName; });
+  });
+  return m;
+}
+function isFG(p) {
+  const t = (p.type && p.type.text) || '';
+  return !!p.shootingPlay && !/free throw/i.test(t);
+}
+function shotDist(p) {
+  if (!p.coordinate) return 0;
+  const dx = p.coordinate.x - 25, dy = p.coordinate.y;
+  return Math.sqrt(dx * dx + dy * dy);
+}
+function jamEvents(d, idx) {
+  const idm = idNameMap(d), plays = d.plays || [], out = [], consec = {};
+  const clkOf = p => 'Q' + (p.period ? p.period.number : '?') + ' ' + (p.clock ? p.clock.displayValue : '');
+  for (let i = 0; i <= idx && i < plays.length; i++) {
+    const p = plays[i];
+    if (!isFG(p)) continue;
+    const aid = p.participants && p.participants[0] && p.participants[0].athlete && p.participants[0].athlete.id;
+    if (!aid) continue;
+    const nm = idm[aid] || 'Unknown';
+    const txt = p.text || '';
+    if (p.scoringPlay) {
+      consec[aid] = (consec[aid] || 0) + 1;
+      const c = consec[aid];
+      if (c === 2) out.push({ seq: i, clk: clkOf(p), text: '<b>' + esc(nm) + ' is HEATING UP…</b> (' + c + ' straight makes)' });
+      else if (c === 3) out.push({ seq: i, clk: clkOf(p), text: '<b>🔥 HE\u2019S ON FIRE — ' + esc(nm) + '</b> (' + c + ' straight makes)' });
+      else if (c > 3) out.push({ seq: i, clk: clkOf(p), text: '<b>🔥 ' + esc(nm) + ' is still on fire</b> (' + c + ' straight)' });
+      if (/three[ -]?point|3-pt/i.test(txt) && shotDist(p) >= 30)
+        out.push({ seq: i, clk: clkOf(p), text: '<b>🏙️ FROM DOWNTOWN — ' + esc(nm) + '</b> (' + Math.round(shotDist(p)) + '-footer)' });
+      if (/dunk/i.test(txt))
+        out.push({ seq: i, clk: clkOf(p), text: '<b>💥 BOOMSHAKALAKA</b> — ' + esc(txt) });
+    } else {
+      if (consec[aid] >= 3) out.push({ seq: i, clk: clkOf(p), text: '<b>🧊 ' + esc(nm) + ' cools off</b>' });
+      consec[aid] = 0;
+    }
+  }
+  return out;
+}
+function fireNow(d, idx) {
+  const idm = idNameMap(d), plays = d.plays || [], consec = {};
+  for (let i = 0; i <= idx && i < plays.length; i++) {
+    const p = plays[i];
+    if (!isFG(p)) continue;
+    const aid = p.participants && p.participants[0] && p.participants[0].athlete && p.participants[0].athlete.id;
+    if (!aid) continue;
+    consec[aid] = p.scoringPlay ? (consec[aid] || 0) + 1 : 0;
+  }
+  let best = null;
+  Object.keys(consec).forEach(id => {
+    if (consec[id] >= 3 && (!best || consec[id] > best.makes)) best = { name: idm[id], makes: consec[id] };
+  });
+  return best;
+}
 function renderMoments(d,g,idx){
   const el=$('moments');if(!el)return;
   const plays=d.plays||[],wp=d.winprobability||[];
@@ -587,6 +653,8 @@ function renderMoments(d,g,idx){
   if(rn>=10&&rt)moms.push({seq:plays.length-1,clk:clkOf(plays[plays.length-1]),text:`<b>🔥 ${rt==='H'?habbr:aabbr} ${rn}-0 run</b>`});
   // ghost passes (rebuilt each refresh)
   (window._ghostPasses||[]).forEach(m=>moms.push(m));
+  // NBA Jam callouts
+  if (JAM) jamEvents(d, idx).forEach(m => moms.push(m));
   const vmoms=moms.filter(m=>m.seq<=idx);
   vmoms.sort((a,b)=>b.seq-a.seq);
   window._seenMom=window._seenMom||new Set();
@@ -612,5 +680,16 @@ function setMode(m){
 $('tabCompanion').onclick=()=>setMode('companion');
 $('tabArcade').onclick=()=>setMode('arcade');
 window.CourtsideMode=setMode;
+(function(){
+  const b=document.getElementById('tabJam');if(!b)return;
+  const paint=()=>b.classList.toggle('picked',JAM);
+  paint();
+  b.onclick=()=>{
+    JAM=!JAM;
+    try{localStorage.setItem('vh_jam',JAM?'on':'off');}catch(e){}
+    paint();
+    if(window._lastD)renderAll(window._lastD,window._lastG);
+  };
+})();
 
 

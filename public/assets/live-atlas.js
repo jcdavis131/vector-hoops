@@ -17,6 +17,7 @@ var canvas = null, ctx = null, W = 600, H = 330, DPR = 1;
 var mode = 'twins';
 var livePlayers = [];   // {name, pts, mp, idx, abbr, color}
 var gameInfo = null;    // {aAbbr, hAbbr, aColor, hColor}
+var fireName = null;     // NBA Jam: player currently on fire
 var selIdx = -1, twins = [];
 var rosters = null, matchup = { a: [], h: [] }, isoTeam = null;
 var trailPts = [], trailT = 0, trailName = null, trailTimer = null;
@@ -204,7 +205,7 @@ function renderTwinList() {
   if (!listEl) return;
   if (!twins.length || selIdx < 0) {
     listEl.innerHTML = livePlayers.map(function (p, i) {
-      return '<button class="twin' + (p.idx === selIdx ? ' selp' : '') + '" data-lp="' + i + '">' + esc(p.name.split(' ').slice(-1)[0]) + '</button>';
+      return '<button class="twin' + (p.idx === selIdx ? ' selp' : '') + '" data-lp="' + i + '">' + esc(p.name.split(' ').slice(-1)[0]) + (fireName && p.name === fireName ? ' \U0001F525' : '') + '</button>';
     }).join('');
   } else {
     var sel = P[selIdx];
@@ -215,7 +216,7 @@ function renderTwinList() {
       }).join('') +
       '<span class="tlabel" style="margin-left:10px">ON COURT</span>' +
       livePlayers.map(function (p, i) {
-        return '<button class="twin' + (p.idx === selIdx ? ' selp' : '') + '" data-lp="' + i + '">' + esc(p.name.split(' ').slice(-1)[0]) + '</button>';
+        return '<button class="twin' + (p.idx === selIdx ? ' selp' : '') + '" data-lp="' + i + '">' + esc(p.name.split(' ').slice(-1)[0]) + (fireName && p.name === fireName ? ' \U0001F525' : '') + '</button>';
       }).join('') +
       '<button class="twin sharebtn" id="twinShare" style="margin-left:10px">Share</button>';
     var shb = document.getElementById('twinShare');
@@ -299,7 +300,8 @@ function setMode(m) {
   draw();
 }
 
-function onGame(d, g) {
+function onGame(d, g, fire) {
+  fireName = fire || null;
   gameInfo = { aAbbr: g.a.abbr, hAbbr: g.h.abbr, aColor: g.a.color || '#5b5545', hColor: g.h.color || '#1b1913' };
   livePlayers = [];
   var bp = d.boxscore && d.boxscore.players;
