@@ -815,7 +815,7 @@ def attribute_failures(by_check: dict[str, list[str]], served_problems: list[str
         "They belong to that bundle [eval#0] and clear when a run is promoted (pipeline/promote.py) and "
         "re-exported by `rebuild_all.py --stage export` (which runs export_mtnn_jacobian.py --granularity both; "
         "a bare export_mtnn_jacobian.py writes only the tower Jacobian and leaves mtnn_attr_pop.json stale), "
-        "then scripts/sync_public.py, not by editing assets/:",
+        "then scripts/stamp_assets.py and scripts/sync_public.py, in that order, not by editing assets/:",
         *(f"  [served bundle, unpromoted] {f}" for f in served),
     ]
 

@@ -2,10 +2,32 @@
 # and a human reads the result before any of it reaches master.
 #
 # stats.nba.com blocks most datacenter IPs, so the fetch step is expected
-# to no-op on GitHub runners more often than not; the run still rebuilds
-# skills deterministically from the committed cache/vectors, runs the
-# invariant gates and appends the growth ledger. Fresh season pulls happen
-# on an operator machine per docs/DATA_SOURCES_DEEP.md rate-limit policy.
+# to no-op on GitHub runners more often than not; the run then rebuilds
+# skills deterministically from the committed cache/vectors and runs the
+# invariant gates. Fresh season pulls happen on an operator machine per
+# docs/DATA_SOURCES_DEEP.md rate-limit policy.
+#
+# RED today, on both lines, by known causes [final#13, final#20]. Each
+# required step that fails stops update_dataset.py (run_step raises
+# SystemExit), so no ledger row is written and the Collect and upload steps
+# below never run: no patch artifact comes out of it yet.
+#   - "rebuild scoring lite": build_scoring_lite refuses an f32 that no
+#     assets/mtnn_lineage.json names. Neither line has one (master serves
+#     the July v5 export, this branch the 2dc6ad78 smoke model). Green after a
+#     run is promoted (pipeline/promote.py) and exported.
+#   - "feature-hygiene gates" and "promote-gate tests": their script forms
+#     set HOOPS_REQUIRE_LOCAL_DATA=1, and they read gitignored pipeline/data
+#     (train_matrix.npz, feature_manifest.json, mtnn_report.json), which a
+#     runner never has. No promotion fixes this; it needs a CI mode in
+#     update_dataset.py that skips the box-only gates and says so, or a run
+#     on the training box instead of a runner.
+#   - On forge/backend-hardening only, "eval-scoreboard gates" fails first:
+#     the served f32 is the 2dc6ad78 smoke model, below the honesty floors,
+#     and the script form runs --runxfail [eval#0]. On master, where the f32
+#     is the v5 export, the rebuilt board passes its gates (measured
+#     2026-10-11 on master's assets: 7 passed; mtnn test top5 0.7497 on
+#     747 pairs).
+# Steps before those were not run on a runner for this note.
 #
 # This used to run every Monday with `contents: write` and end in
 # `git commit` + `git push` to master, and pushing master deploys the site.
@@ -20,9 +42,12 @@
 # required gate before the push; that accident was the only safeguard.
 #
 # So now: workflow_dispatch only, read-only token, --keep-vectors (skills
-# come from the committed vectors.json), and the refreshed files are
-# uploaded as an artifact (a patch plus its diffstat) for someone to review
-# and apply by hand, through a PR that CI checks.
+# come from the committed vectors.json), and once every required step
+# passes, the refreshed files are uploaded as an artifact (a patch plus its
+# diffstat) for someone to review and apply by hand, through a PR that CI
+# checks. The `git add` below names skills.json, skill_probe.json and
+# pipeline/cache/ only; the run also rewrites other assets (the eval
+# scoreboard among them), so widen it before relying on the patch.
 name: skills-dataset-refresh
 
 on:
