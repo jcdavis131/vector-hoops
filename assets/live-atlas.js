@@ -174,9 +174,26 @@ function selectTwinPlayer(i) {
   computeTwins();
   draw();
 }
+var mtnnLoading = false;
+// LAZY: the 3.3MB model weights only download when twins are actually requested
+function ensureModel(cb) {
+  if (mtnnReady) { if (cb) cb(); return; }
+  if (window.VHMtnn && window.VHMtnn.isReady()) { mtnnReady = true; if (cb) cb(); draw(); return; }
+  if (!window.VHMtnn) { setTimeout(function () { ensureModel(cb); }, 400); return; }
+  if (mtnnLoading) return;
+  mtnnLoading = true;
+  if (typeof hintEl !== 'undefined' && hintEl) { hintEl.textContent = 'finding style-twins\u2026'; hintEl.style.display = 'block'; }
+  window.VHMtnn.load(function () {
+    mtnnLoading = false;
+    mtnnReady = window.VHMtnn.isReady();
+    if (cb) cb();
+    draw();
+  });
+}
 function computeTwins() {
   twins = [];
-  if (selIdx < 0 || !mtnnReady) { renderTwinList(); return; }
+  if (selIdx < 0) { renderTwinList(); return; }
+  if (!mtnnReady) { ensureModel(function () { computeTwins(); }); renderTwinList(); return; }
   var name = P[selIdx].n;
   try {
     twins = window.VHMtnn.topK(selIdx, 6, function (id) { return P[id] && P[id].n !== name; });
@@ -199,7 +216,15 @@ function renderTwinList() {
       '<span class="tlabel" style="margin-left:10px">ON COURT</span>' +
       livePlayers.map(function (p, i) {
         return '<button class="twin' + (p.idx === selIdx ? ' selp' : '') + '" data-lp="' + i + '">' + esc(p.name.split(' ').slice(-1)[0]) + '</button>';
-      }).join('');
+      }).join('') +
+      '<button class="twin sharebtn" id="twinShare" style="margin-left:10px">Share</button>';
+    var shb = document.getElementById('twinShare');
+    if (shb) shb.onclick = function () {
+      var q0 = twins.length ? P[twins[0].id] : null;
+      var txt = P[selIdx].n + '\u2019s closest style-twin is ' + (q0 ? q0.n + ' (' + q0.s + ')' : 'a mystery') + ' — find yours on Vector Hoops Live';
+      if (navigator.share) { navigator.share({ text: txt, url: location.origin + '/live' }).catch(function () {}); }
+      else if (navigator.clipboard && navigator.clipboard.writeText) { navigator.clipboard.writeText(txt + ' ' + location.origin + '/live'); }
+    };
   }
   var btns = listEl.querySelectorAll('[data-lp]');
   for (var i = 0; i < btns.length; i++) {
@@ -324,21 +349,7 @@ function init() {
     draw();
   }).catch(function () { if (hintEl) hintEl.textContent = 'map failed to load'; });
 
-  // MTNN for live twins
-  function boot() {
-    if (window.VHMtnn && window.VHMtnn.isReady()) {
-      mtnnReady = true;
-      if (hintEl) hintEl.style.display = 'none';
-      if (selIdx < 0 && livePlayers.length && mode === 'twins') { selIdx = livePlayers[0].idx; }
-      computeTwins(); draw();
-    } else if (window.VHMtnn) {
-      window.VHMtnn.load(function () { boot(); });
-    } else {
-      setTimeout(boot, 400);
-    }
-  }
-  if (window.VHMtnn) boot(); else setTimeout(boot, 400);
-  document.addEventListener('vh:mtnn-loaded', function () { mtnnReady = true; computeTwins(); draw(); });
+  document.addEventListener('vh:mtnn-loaded', function () { mtnnReady = true; mtnnLoading = false; computeTwins(); draw(); });
 
   canvas.addEventListener('click', function (e) {
     var r = canvas.getBoundingClientRect();

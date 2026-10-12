@@ -180,3 +180,8 @@
 .live-root .scoreline{font-size:13px;min-height:22px;margin-top:10px;font-family:ui-monospace,monospace;}
 .live-root .twin.nope{background:#5b5545;border-color:#5b5545;color:#fff;}
 .live-root .twin.selp{background:var(--ink);color:var(--paper);}
+
+.live-root .twin.sharebtn{background:var(--gold);border-color:var(--gold);color:#1c1a15;margin-left:8px;}
+.live-root .copied{font-size:11px;color:var(--ink2);}
+.live-root #snapDaily{margin-left:8px;font-size:10px;padding:6px 12px;}
+.live-root .card .plate{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}

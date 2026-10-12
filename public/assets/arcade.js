@@ -7,6 +7,7 @@ var LITE_URL = 'assets/vectors_search_lite.json';
 var TRAILS_INDEX = 'assets/trails_index.json', TRAILS_JSON = 'assets/trails.json';
 
 var P = [], liteReady = false, mtnnReady = false;
+var recentPool = []; // recognizable faces: current-era player-seasons
 var running = false, rafId = null, pulseT = 0;
 var trailsCache = null;
 var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -17,6 +18,14 @@ function streakGet(k) { try { return +(localStorage.getItem('vh_arcade_' + k) ||
 function streakSet(k, v) { try { localStorage.setItem('vh_arcade_' + k, String(v)); } catch (e) {} }
 function rnd(n) { return (Math.random() * n) | 0; }
 function disp(n) { return String(n || '').split(' ').map(function (w) { return w.charAt(0).toUpperCase() + w.slice(1); }).join(' '); }
+function mulberry32(a) { return function () { a |= 0; a = a + 0x6D2B79F5 | 0; var t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+function dailySeed() { var d = new Date(); return d.getFullYear() * 10000 + (d.getMonth() + 1) * 100 + d.getDate(); }
+function shareText(t, msgEl) {
+  var done = function () { if (msgEl) msgEl.innerHTML += ' <span class="copied">copied ✓</span>'; };
+  if (navigator.share) { navigator.share({ text: t, url: location.origin + '/live' }).catch(function () {}); }
+  else if (navigator.clipboard && navigator.clipboard.writeText) { navigator.clipboard.writeText(t + ' ' + location.origin + '/live').then(done, done); }
+  else done();
+}
 function shuffle(a) { for (var i = a.length - 1; i > 0; i--) { var j = rnd(i + 1), t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
 
 // ---------- shared mini map ----------
@@ -53,10 +62,12 @@ function MY(p, H) { return 12 + (H - 24) * (1 - p.y); }
 
 // ---------- GAME 01: Twin Snap ----------
 var snap = { p: null, twin: null, opts: [], lock: false };
-function snapRound() {
+function snapRound(daily) {
   snap.lock = false;
-  var p = P[rnd(P.length)];
-  snap.p = p;
+  var pool = recentPool.length ? recentPool : P;
+  var R = daily ? mulberry32(dailySeed()) : Math.random;
+  var p = pool[(R() * pool.length) | 0];
+  snap.p = p; snap.daily = !!daily;
   snap.twin = null; snap.opts = [];
   if (mtnnReady) {
     try {
@@ -75,12 +86,13 @@ function snapRound() {
   used[p.n] = 1; used[snap.twin.n] = 1;
   snap.opts = [snap.twin.n];
   var guard = 0;
+  var dpool = recentPool.length ? recentPool : P;
   while (snap.opts.length < 4 && guard++ < 200) {
-    var q = P[rnd(P.length)].n;
+    var q = dpool[(R() * dpool.length) | 0].n;
     if (!used[q]) { used[q] = 1; snap.opts.push(q); }
   }
-  shuffle(snap.opts);
-  $('snapQ').innerHTML = 'Whose <b>#1 style-twin</b> is the pulsing dot?';
+  for (var si = snap.opts.length - 1; si > 0; si--) { var sj = (R() * (si + 1)) | 0; var st2 = snap.opts[si]; snap.opts[si] = snap.opts[sj]; snap.opts[sj] = st2; }
+  $('snapQ').innerHTML = (snap.daily ? '🎯 <b>Daily</b> — ' : '') + 'Whose <b>#1 style-twin</b> is the pulsing dot?';
   $('snapOpts').innerHTML = snap.opts.map(function (n) {
     return '<button class="twin" data-o="' + esc(n) + '">' + esc(n) + '</button>';
   }).join('');
@@ -97,9 +109,14 @@ function snapGuess(name, btn) {
   var st = ok ? streakGet('snap') + 1 : 0;
   streakSet('snap', st); $('snapStreak').textContent = st;
   btn.classList.add(ok ? 'selp' : 'nope');
-  $('snapMsg').innerHTML = ok
-    ? '✓ <b>' + esc(snap.twin.n) + '</b> — ' + esc(snap.twin.s) + ' · streak ' + st
-    : '✗ it was <b>' + esc(snap.twin.n) + '</b> (' + esc(snap.twin.s) + ')';
+  if (ok) {
+    $('snapMsg').innerHTML = '✓ <b>' + esc(snap.twin.n) + '</b> — ' + esc(snap.twin.s) + ' · streak ' + st +
+      ' <button class="twin sharebtn" id="snapShare">Share</button>';
+    var sb = $('snapShare');
+    if (sb) sb.onclick = function () { shareText((snap.daily ? '🎯 I solved today\u2019s Daily Twin Snap' : '🔥 I\u2019m on a ' + st + '-game Twin Snap streak') + ' on Vector Hoops Live — whose style-twin is who?', $('snapMsg')); };
+  } else {
+    $('snapMsg').innerHTML = '✗ it was <b>' + esc(snap.twin.n) + '</b> (' + esc(snap.twin.s) + ')';
+  }
   setTimeout(function () { if (running) snapRound(); }, 1600);
 }
 function snapDraw() {
@@ -149,8 +166,13 @@ function trailGuess(name, btn) {
   var st = ok ? streakGet('trail') + 1 : 0;
   streakSet('trail', st); $('trailStreak').textContent = st;
   btn.classList.add(ok ? 'selp' : 'nope');
-  $('trailMsg').innerHTML = ok ? '✓ <b>' + esc(disp(trail.name)) + '</b> · streak ' + st
-    : '✗ it was <b>' + esc(disp(trail.name)) + '</b>';
+  if (ok) {
+    $('trailMsg').innerHTML = '✓ <b>' + esc(disp(trail.name)) + '</b> · streak ' + st + ' <button class="twin sharebtn" id="trailShare">Share</button>';
+    var tb = $('trailShare');
+    if (tb) tb.onclick = function () { shareText('🔥 I\u2019m on a ' + st + '-game Trail Blazer streak on Vector Hoops Live — guess the player from their career trail', $('trailMsg')); };
+  } else {
+    $('trailMsg').innerHTML = '✗ it was <b>' + esc(disp(trail.name)) + '</b>';
+  }
   setTimeout(function () { if (running) trailRound(); }, 1800);
 }
 function trailDraw(dt) {
@@ -182,8 +204,9 @@ function ensureTrails(cb) {
 var era = { a: null, b: null, lock: false };
 function eraRound() {
   era.lock = false;
-  var a = P[rnd(P.length)], b = P[rnd(P.length)], guard = 0;
-  while ((a.s === b.s || a.n === b.n) && guard++ < 50) { b = P[rnd(P.length)]; }
+  var epool = recentPool.length ? recentPool : P;
+  var a = epool[rnd(epool.length)], b = epool[rnd(epool.length)], guard = 0;
+  while (a.s === b.s && guard++ < 50) { b = epool[rnd(epool.length)]; }
   era.a = a; era.b = b;
   $('eraOpts').innerHTML =
     '<button class="twin" data-o="a"><b>A</b> · ' + esc(a.n.split(' ').slice(-1)[0]) + '</button>' +
@@ -202,7 +225,13 @@ function eraGuess(which, btn) {
   var st = ok ? streakGet('era') + 1 : 0;
   streakSet('era', st); $('eraStreak').textContent = st;
   btn.classList.add(ok ? 'selp' : 'nope');
-  $('eraMsg').innerHTML = (ok ? '✓ ' : '✗ ') + '<b>' + esc(era.a.n) + '</b> ' + esc(era.a.s) + ' vs <b>' + esc(era.b.n) + '</b> ' + esc(era.b.s);
+  if (ok) {
+    $('eraMsg').innerHTML = '✓ <b>' + esc(era.a.n) + '</b> ' + esc(era.a.s) + ' vs <b>' + esc(era.b.n) + '</b> ' + esc(era.b.s) + ' · streak ' + st + ' <button class="twin sharebtn" id="eraShare">Share</button>';
+    var eb = $('eraShare');
+    if (eb) eb.onclick = function () { shareText('🔥 I\u2019m on a ' + st + '-game Era Call streak on Vector Hoops Live', $('eraMsg')); };
+  } else {
+    $('eraMsg').innerHTML = '✗ <b>' + esc(era.a.n) + '</b> ' + esc(era.a.s) + ' vs <b>' + esc(era.b.n) + '</b> ' + esc(era.b.s);
+  }
   setTimeout(function () { if (running) eraRound(); }, 2000);
 }
 function eraDraw() {
@@ -236,6 +265,8 @@ function loop(t) {
 function bootData() {
   fetch(LITE_URL).then(function (r) { return r.json(); }).then(function (d) {
     P = d.players || []; liteReady = true;
+    recentPool = P.filter(function (p) { return p.s >= '2024-25'; });
+    if (!recentPool.length) recentPool = P;
     snapRound(); trailRound(); eraRound();
   }).catch(function () {});
   function mboot() {
@@ -253,6 +284,8 @@ window.Arcade = {
     running = true; lastT = 0;
     if (!liteReady) bootData();
     else { snapRound(); trailRound(); eraRound(); }
+    var db = document.getElementById('snapDaily');
+    if (db && !db._wired) { db._wired = true; db.onclick = function () { snapRound(true); }; }
     rafId = requestAnimationFrame(loop);
   },
   stop: function () { running = false; if (rafId) cancelAnimationFrame(rafId); rafId = null; }
