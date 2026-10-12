@@ -1,0 +1,244 @@
+{
+  "built": "2026-10-11 23:47 UTC",
+  "contract": "transparent_14d",
+  "wide_skills": {
+    "skill_count": 6,
+    "grade_rows": 5154,
+    "source": "rebuilt by this export from the real wide_skills caches (built 2026-10-11)"
+  },
+  "mtnn_promoted": false,
+  "mtnn_promotion_note": null,
+  "mtnn_run_id": null,
+  "mtnn_model": null,
+  "mtnn_eval_protocol": null,
+  "mtnn_transductive_recall_at_10": null,
+  "mtnn_transductive_purity_at_20": null,
+  "mtnn_leakfree": {
+    "protocol": "leak-free (pipeline/leakfree.py), player-level split, 3 seeds",
+    "objective": "train_mtnn.promotion_composite = 0.4*recall + 0.6*purity (the repo's own gate; next-profile RMSE is in NO gate)",
+    "recipe": "hb128_d48",
+    "recall_at_10": 0.977,
+    "purity_at_20_test": 0.6717,
+    "composite": 0.7937,
+    "gain_vs_previous": 0.009,
+    "separates_from_previous": true
+  },
+  "mtnn_test_recall_at_10": null,
+  "mtnn_purity_at_20": null,
+  "hp_sweep_best": null,
+  "dataset_ledger": {
+    "run": "2026-07-07 18:47 UTC",
+    "season_hint": null,
+    "steps": [
+      {
+        "step": "rebuild vectors (offline)",
+        "ok": false,
+        "seconds": 0.4
+      },
+      {
+        "step": "rebuild skills",
+        "ok": true,
+        "seconds": 0.8
+      },
+      {
+        "step": "skill gates",
+        "ok": true,
+        "seconds": 0.6
+      },
+      {
+        "step": "rebuild pedigree (Track H)",
+        "ok": true,
+        "seconds": 0.5
+      },
+      {
+        "step": "pedigree gates",
+        "ok": true,
+        "seconds": 0.9
+      },
+      {
+        "step": "rebuild playoffs (Track I)",
+        "ok": true,
+        "seconds": 0.6
+      },
+      {
+        "step": "playoff gates",
+        "ok": true,
+        "seconds": 1.0
+      },
+      {
+        "step": "rebuild wide skills (Track J)",
+        "ok": true,
+        "seconds": 0.9
+      },
+      {
+        "step": "wide-skill gates",
+        "ok": true,
+        "seconds": 1.4
+      }
+    ],
+    "pedigree": {
+      "cache_complete": true,
+      "players_drafted": 1755,
+      "players_undrafted": 538,
+      "players_unmatched_masked": 0,
+      "rows_covered": 12392,
+      "rows_total": 12392
+    },
+    "playoffs": {
+      "cache_complete": true,
+      "appearances": 5834,
+      "seasons_covered": 30,
+      "rows_total": 12392
+    },
+    "player_seasons": 12392,
+    "seasons": [
+      "1996-97",
+      "2025-26"
+    ],
+    "n_seasons": 30,
+    "skills": 12,
+    "badges": 14892,
+    "grade_sha1": "a1a73fc5d632"
+  },
+  "steps": {
+    "skills": true,
+    "skill_gates": true,
+    "wide_skills": true,
+    "wide_skill_gates": false,
+    "pedigree": true,
+    "pedigree_gates": true,
+    "playoffs": true,
+    "playoffs_gates": true,
+    "honors": true,
+    "honors_gates": true,
+    "salary_market": true,
+    "salary_gates": false,
+    "game_ratings": false,
+    "game_ratings_gates": true,
+    "player_meta": true,
+    "current_rosters": false,
+    "season_norms": true,
+    "procrustes_drift.py": true,
+    "archetype_time.py": true,
+    "career_trajectories.py": true
+  },
+  "assets": {
+    "season_norms.json": {
+      "sha1": "c19e7dabbd4e",
+      "present": true
+    },
+    "vectors.json": {
+      "sha1": "c04a77822aae",
+      "present": true
+    },
+    "skills.json": {
+      "sha1": "f918155c6aea",
+      "present": true
+    },
+    "skills_wide.json": {
+      "sha1": "a43aefee88e3",
+      "present": true
+    },
+    "skill_probe.json": {
+      "sha1": "22fd51630442",
+      "present": true
+    },
+    "player_meta.json": {
+      "sha1": "6bd86a7b4b5f",
+      "present": true
+    },
+    "teams.json": {
+      "sha1": "ca69e20cffac",
+      "present": true
+    },
+    "pedigree.json": {
+      "sha1": "9f63141a9a5a",
+      "present": true
+    },
+    "playoffs.json": {
+      "sha1": "8338b138eee2",
+      "present": true
+    },
+    "honors.json": {
+      "sha1": "2963993e8af7",
+      "present": true
+    },
+    "archetypes_time.json": {
+      "sha1": "89a0be2bf1a8",
+      "present": true
+    },
+    "archetype_assignments.json": {
+      "sha1": "94a6728b53f5",
+      "present": true
+    },
+    "archetype_emergence.json": {
+      "sha1": "3c19226265f4",
+      "present": true
+    },
+    "trajectories.json": {
+      "sha1": "5ba1cd423892",
+      "present": true
+    },
+    "drift.json": {
+      "sha1": "a5aea119f570",
+      "present": true
+    },
+    "deadline.json": {
+      "sha1": "3486f0a66deb",
+      "present": true
+    },
+    "chemistry.json": {
+      "sha1": "12205125febd",
+      "present": true
+    },
+    "pivots.json": {
+      "sha1": "1bdafd47648a",
+      "present": true
+    },
+    "current_rosters.json": {
+      "sha1": "18e2561831f4",
+      "present": true
+    },
+    "projections.json": {
+      "sha1": "36238b99b5be",
+      "present": true
+    },
+    "mtnn_arch.json": {
+      "sha1": "bb87ef32ef6b",
+      "present": true
+    },
+    "mtnn_map.json": {
+      "sha1": "ddf3cc4c5fa9",
+      "present": true
+    },
+    "mtnn_heads.f32": {
+      "sha1": "5b0591137c22",
+      "present": true
+    },
+    "mtnn_inputs.f32": {
+      "sha1": "a27b2defd4a4",
+      "present": true
+    },
+    "eratwins.json": {
+      "sha1": "b0f30cdea81d",
+      "present": true
+    },
+    "faderfinisher.json": {
+      "sha1": "306bf9b61758",
+      "present": true
+    },
+    "roles.json": {
+      "sha1": "ddc07e71112b",
+      "present": true
+    },
+    "mtnn_meta.json": {
+      "sha1": "594ab149073f",
+      "present": true
+    }
+  },
+  "mtnn_embeddings_f32": {
+    "sha1": "4ef850f60436",
+    "present": true,
+    "bytes": 3319296
+  }
+}

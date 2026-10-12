@@ -668,8 +668,8 @@ function renderMoments(d,g,idx){
 
 $('refreshBtn').onclick=loadGame;
 loadGames();
-fetch('assets/ghost_db.json').then(r=>r.json()).then(d=>{GHOST_DB=d;GV=null;if(window._lastD)renderGhosts(window._lastD);}).catch(()=>{});
-fetch('assets/player_form.json').then(r=>r.json()).then(d=>{FORM_DB=d;if(window._lastD)renderMiles(window._lastD);}).catch(()=>{});
+fetch('assets/ghost_db.json?v=77efab63').then(r=>r.json()).then(d=>{GHOST_DB=d;GV=null;if(window._lastD)renderGhosts(window._lastD);}).catch(()=>{});
+fetch('assets/player_form.json?v=25a671f3').then(r=>r.json()).then(d=>{FORM_DB=d;if(window._lastD)renderMiles(window._lastD);}).catch(()=>{});
 function setMode(m){
   const comp=m==='companion';
   $('companion').hidden=!comp;$('arcade').hidden=comp;

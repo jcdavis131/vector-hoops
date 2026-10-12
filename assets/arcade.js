@@ -194,8 +194,8 @@ function trailDraw(dt) {
 function ensureTrails(cb) {
   if (trailsCache) { cb(); return; }
   Promise.all([
-    fetch('assets/trails_index.json').then(function (r) { return r.json(); }),
-    fetch('assets/trails.json').then(function (r) { return r.json(); })
+    fetch('assets/trails_index.json?v=b0cdf1fd').then(function (r) { return r.json(); }),
+    fetch('assets/trails.json?v=6402d3b4').then(function (r) { return r.json(); })
   ]).then(function (res) { trailsCache = { idx: res[0], trails: res[1] }; cb(); })
     .catch(function () { $('trailMsg').textContent = 'trails failed to load'; });
 }

@@ -1,0 +1,21 @@
+{
+  "domain": "vector-hoops",
+  "entity_count": 12966,
+  "dims": 64,
+  "native": { "hoops": 12966 },
+  "source_files": 7,
+  "source_hashes": 7,
+  "verification": "7/7/0 provenance — vectors.json + mtnn_embeddings.f32 + mtnn_arch.json + eval_scoreboard.json + vectors_map_lite.json + vectors_search_lite.json + players_lite.json all present",
+  "files": [
+    {"path":"assets/vectors.json","rows":12966,"sha256_trunc":"21f33221880cd369"},
+    {"path":"assets/mtnn_embeddings.f32","rows":12966,"dim":64,"sha256_trunc":"2574ef581ac3d3ee"},
+    {"path":"assets/mtnn_arch.json","model":"mtnn_v5_concat_b2_h160_t32_d64_mlp128_fus256"},
+    {"path":"assets/eval_scoreboard.json","eligible_pairs":10104,"test_top5":0.757},
+    {"path":"assets/vectors_map_lite.json","sample":4322},
+    {"path":"assets/vectors_search_lite.json","sample":491},
+    {"path":"assets/players_lite.json","rows":12966}
+  ],
+  "built": "2026-08-07T10:31:00Z",
+  "dailySeed": "YYYYMMDD UTC LCG glibc 1103515245*seed+12345 & 0x7fffffff deterministic",
+  "pwa": "v66 CORE14 immutable SWR shell-only JSON never cached"
+}
