@@ -28,6 +28,7 @@ import json
 import time
 from pathlib import Path
 
+import mtnn_towers
 import numpy as np
 import promote
 import served_model as sm
@@ -65,11 +66,26 @@ TOWER_FAMILY_ORDER = [
 ]
 
 
-def tower_families(family_order: list[str]) -> list[str]:
-    present = set(family_order)
+def display_order(families: list[str]) -> list[str]:
+    """families in TOWER_FAMILY_ORDER, then any other in the order given."""
+    present = set(families)
     ordered = [f for f in TOWER_FAMILY_ORDER if f in present]
-    ordered += [f for f in family_order if f not in set(ordered)]
+    ordered += [f for f in families if f not in set(ordered)]
     return ordered
+
+
+def tower_families(manifest: dict, run_args: dict) -> list[str]:
+    """arch.towerFamilies: the families the promoted run has a tower for, in display order.
+
+    This listed every family in feature_manifest.json, injury included, while
+    export_mtnn_jacobian lists the checkpoint's towers (train_mtnn drops
+    injury always, and --exclude-families / a --drop-features that empties a
+    family drop more), so verify_accuracy V13 failed on every fresh export
+    [final#1]. Both now read mtnn_towers' rule on the run's own args.
+    familyOrder / familyFeatures stay the input families: mtnn_inputs.f32 is
+    keyed by them, and network-viz.js indexes it by familyOrder.
+    """
+    return display_order(mtnn_towers.tower_families(manifest, run_args))
 
 
 OUT_ARCH = ASSETS / "mtnn_arch.json"
@@ -252,7 +268,9 @@ def main() -> None:
         mlp_heads = bool(run_args["mlp_heads"])
     except KeyError as e:
         raise SystemExit(f"export_mtnn_viz: promoted run {bundle.run_id} records no {e} in lineage.args") from None
-    fams_used = tower_families(family_order)
+    fams_used = tower_families(manifest, run_args)
+    tower_cols = mtnn_towers.tower_columns(manifest, run_args)
+    n_tower_inputs = sum(len(c) for c in tower_cols.values())
     d_emb = int(E.shape[1])
     ckpt_path = bundle.checkpoint
 
@@ -287,7 +305,7 @@ def main() -> None:
             {
                 "id": "input",
                 "label": "Masked inputs",
-                "detail": f"{len(feats)} features in {len(fams_used)} families",
+                "detail": f"{n_tower_inputs} features in {len(fams_used)} families",
             },
             {
                 "id": "towers",
