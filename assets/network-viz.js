@@ -3394,7 +3394,7 @@ function buildFlowSvg(host) {
       else if (mq.addListener) mq.addListener(onMotion);
     }
     Promise.all([
-      fetch('assets/vectors.json?v=edaf4d2b').then(function (r) { return r.json(); }),
+      fetch('assets/vectors.json?v=fbcdf252').then(function (r) { return r.json(); }),
       fetch('assets/mtnn_arch.json?v=758a3d56').then(function (r) { return r.json(); }),
       fetch('assets/mtnn_map.json?v=008efe2f').then(function (r) { return r.json(); }),
       fetch('assets/mtnn_heads.f32?v=9b3f7454').then(function (r) {

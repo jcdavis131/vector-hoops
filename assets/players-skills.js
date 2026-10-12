@@ -701,7 +701,7 @@
     if (!document.getElementById('skills-search')) return;
     initDom();
     Promise.all([
-      fetch('assets/vectors.json?v=edaf4d2b').then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); }),
+      fetch('assets/vectors.json?v=fbcdf252').then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); }),
       fetch('assets/skills.json?v=e7655730').then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
     ]).then(function (loaded) {
       DATA = loaded[0]; SKILLS = loaded[1];

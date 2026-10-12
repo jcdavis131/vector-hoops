@@ -5,12 +5,12 @@
  "insights": [
   {
    "slug": "most-unique",
-   "tldr": "The weirdest ways anyone has ever played basketball mostly belong to MVPs — greatness looks strange.",
+   "tldr": "The weirdest ways anyone has ever played basketball mostly belong to MVPs \u2014 greatness looks strange.",
    "kicker": "Uniqueness",
    "title": "The strangest playing styles of the last 30 years belong to MVP-level superstars",
-   "lede": "Style distance from the league-average player, 14-dimensional embedding space. Minimum 1,500 minutes. The five strangest seasons ever charted — three of them MVP campaigns.",
+   "lede": "Style distance from the league-average player, 14-dimensional embedding space. Minimum 1,500 minutes. The five strangest seasons ever charted \u2014 three of them MVP campaigns.",
    "stat": "9.57",
-   "stat_label": "style distance — James Harden '18-19",
+   "stat_label": "style distance \u2014 James Harden '18-19",
    "viz": "bars",
    "viz_label": "Distance from league-average style",
    "rows": [
@@ -55,18 +55,18 @@
      "tag": null
     }
    ],
-   "foot": "Computed over 12,966 player-seasons (1996-97 → 2025-26). MVP seasons marked from the public record.",
+   "foot": "Computed over 12,966 player-seasons (1996-97 \u2192 2025-26). MVP seasons marked from the public record.",
    "og_title": "The weirdest NBA seasons in 30 years belong to superstars",
-   "og_desc": "Harden '18-19 sits 9.57 style-points from the average player — the strangest season in 30 years of data."
+   "og_desc": "Harden '18-19 sits 9.57 style-points from the average player \u2014 the strangest season in 30 years of data."
   },
   {
    "slug": "most-average",
-   "tldr": "We found the single most ordinary NBA season ever recorded — the perfectly average player, scientifically.",
+   "tldr": "We found the single most ordinary NBA season ever recorded \u2014 the perfectly average player, scientifically.",
    "kicker": "Uniqueness",
    "title": "The most average NBA season ever charted",
-   "lede": "Closest to the centroid of all 12,966 player-seasons in style space. Not bad, not weird — the platonic NBA role player, quantified.",
+   "lede": "Closest to the centroid of all 12,966 player-seasons in style space. Not bad, not weird \u2014 the platonic NBA role player, quantified.",
    "stat": "1.02",
-   "stat_label": "style distance — Caleb Martin '23-24",
+   "stat_label": "style distance \u2014 Caleb Martin '23-24",
    "viz": "bars",
    "viz_label": "Distance from league-average style (smaller = more average)",
    "rows": [
@@ -91,28 +91,28 @@
      "value": 1.16
     }
    ],
-   "foot": "Minimum 1,500 minutes. 14-dimensional serving vectors, 1996-97 → 2025-26.",
+   "foot": "Minimum 1,500 minutes. 14-dimensional serving vectors, 1996-97 \u2192 2025-26.",
    "og_title": "The most average NBA season ever: Caleb Martin '23-24",
-   "og_desc": "1.02 style-points from the league-average player — the platonic NBA season, measured."
+   "og_desc": "1.02 style-points from the league-average player \u2014 the platonic NBA season, measured."
   },
   {
    "slug": "transformed",
    "tldr": "Giannis reinvented his game more than any player in 30 years; Terrence Ross played 11 seasons as basically the same guy.",
    "kicker": "Career arcs",
    "title": "Nobody transformed like Giannis. Nobody stayed the same like Terrence Ross.",
-   "lede": "Style distance between a player's first and last charted season. Giannis went from raw rookie to MVP force — the biggest reinvention in the dataset. Ross played 11 seasons as essentially the same player.",
+   "lede": "Style distance between a player's first and last charted season. Giannis went from raw rookie to MVP force \u2014 the biggest reinvention in the dataset. Ross played 11 seasons as essentially the same player.",
    "stat": "8.43",
-   "stat_label": "style distance — Giannis Antetokounmpo's reinvention",
+   "stat_label": "style distance \u2014 Giannis Antetokounmpo's reinvention",
    "viz": "bars",
    "viz_label": "First-to-last season style distance",
    "rows": [
     {
-     "label": "Giannis Antetokounmpo '13-14 → '25-26",
+     "label": "Giannis Antetokounmpo '13-14 \u2192 '25-26",
      "value": 8.43,
      "tag": "13 seasons"
     },
     {
-     "label": "Terrence Ross '12-13 → '22-23",
+     "label": "Terrence Ross '12-13 \u2192 '22-23",
      "value": 1.07,
      "tag": "11 seasons"
     }
@@ -123,12 +123,12 @@
   },
   {
    "slug": "time-capsule",
-   "tldr": "Players 29 years apart can play almost identically — basketball styles echo across generations.",
+   "tldr": "Players 29 years apart can play almost identically \u2014 basketball styles echo across generations.",
    "kicker": "Era twins",
    "title": "Separated by 29 years. Nearly the same player.",
-   "lede": "The widest era gaps with similarity ≥ 0.60 in the full 64-d embedding — each player appears once for maximum variety. Styles echo across decades — the model keeps finding 1996-97 in 2025-26.",
+   "lede": "The widest era gaps with similarity \u2265 0.60 in the full 64-d embedding \u2014 each player appears once for maximum variety. Styles echo across decades \u2014 the model keeps finding 1996-97 in 2025-26.",
    "stat": "29y",
-   "stat_label": "widest twin gap — Jeff Green '25-26 ↔ LaSalle Thompson '96-97",
+   "stat_label": "widest twin gap \u2014 Jeff Green '25-26 \u2194 LaSalle Thompson '96-97",
    "viz": "timeline",
    "rows": [
     {
@@ -156,18 +156,18 @@
      "sim": 0.719
     }
    ],
-   "foot": "Twins found in the full 64-dimensional embedding; similarity is cosine there. Dataset window 1996-97 → 2025-26.",
+   "foot": "Twins found in the full 64-dimensional embedding; similarity is cosine there. Dataset window 1996-97 \u2192 2025-26.",
    "og_title": "29 years apart. Nearly the same player.",
-   "og_desc": "Jeff Green '25-26 ↔ LaSalle Thompson '96-97: the widest era-twin gap in the model."
+   "og_desc": "Jeff Green '25-26 \u2194 LaSalle Thompson '96-97: the widest era-twin gap in the model."
   },
   {
    "slug": "dead-styles",
-   "tldr": "The old-school bruising rebounder who lives at the rim is dying out — only a few are left.",
+   "tldr": "The old-school bruising rebounder who lives at the rim is dying out \u2014 only a few are left.",
    "kicker": "Archetypes",
    "title": "The \"Defensive Glass + Rim Pressure (Fts)\" is going extinct",
-   "lede": "Share of player-seasons in each style archetype: first three seasons vs last three. The 'Defensive Glass + Rim Pressure' archetype is being selected out of the league — these are its last true practitioners.",
+   "lede": "Share of player-seasons in each style archetype: first three seasons vs last three. The 'Defensive Glass + Rim Pressure' archetype is being selected out of the league \u2014 these are its last true practitioners.",
    "stat": "-8.4pp",
-   "stat_label": "share change — Defensive Glass + Rim Pressure (Fts)",
+   "stat_label": "share change \u2014 Defensive Glass + Rim Pressure (Fts)",
    "viz": "shares",
    "rows": [
     {
@@ -233,18 +233,18 @@
      "label": "Kyle Filipowski '25-26"
     }
    ],
-   "foot": "8 k-means archetypes over 14-d serving vectors. Shares of charted player-seasons. Examples are the players nearest the archetype centroid in 2024-25 → 2025-26 (min 800 min).",
+   "foot": "8 k-means archetypes over 14-d serving vectors. Shares of charted player-seasons. Examples are the players nearest the archetype centroid in 2024-25 \u2192 2025-26 (min 800 min).",
    "og_title": "An NBA playing style is going extinct",
    "og_desc": "\"Defensive Glass + Rim Pressure (Fts)\" fell -8.4 points of league share. The model watched it happen."
   },
   {
    "slug": "three-point-takeover",
-   "tldr": "NBA teams shoot way, way more threes than they used to — the biggest style shift in 30 years.",
+   "tldr": "NBA teams shoot way, way more threes than they used to \u2014 the biggest style shift in 30 years.",
    "kicker": "League drift",
    "title": "The three-point takeover, measured",
-   "lede": "League-average three-point attempts per game, 30 seasons. The single biggest stylistic shift in the dataset — the map itself rotated toward the arc.",
+   "lede": "League-average three-point attempts per game, 30 seasons. The single biggest stylistic shift in the dataset \u2014 the map itself rotated toward the arc.",
    "stat": "2.1x",
-   "stat_label": "growth in 3PA/game, 1996-97 → 2025-26",
+   "stat_label": "growth in 3PA/game, 1996-97 \u2192 2025-26",
    "viz": "line",
    "viz_label": "3-point attempts per game",
    "rows": [
@@ -379,16 +379,16 @@
    },
    "foot": "Per-game rates across charted player-seasons. See the drift section on trends for the full rotation analysis.",
    "og_title": "NBA 3-point attempts are up 2.1x in 30 years",
-   "og_desc": "From 3.4 to 7.0 per game — the biggest stylistic shift the model has measured."
+   "og_desc": "From 3.4 to 7.0 per game \u2014 the biggest stylistic shift the model has measured."
   },
   {
    "slug": "careful-era",
-   "tldr": "NBA players turn the ball over way less than they used to — the game got cleaner even as scoring went up.",
+   "tldr": "NBA players turn the ball over way less than they used to \u2014 the game got cleaner even as scoring went up.",
    "kicker": "League drift",
    "title": "The league stopped turning it over",
-   "lede": "League-average turnovers per game, 30 seasons. As the game moved to the perimeter — more catch-and-shoot, fewer post-ups — the riskiest plays faded and ball-handling tightened league-wide: assist-to-turnover ratio is up 37% over the same span.",
+   "lede": "League-average turnovers per game, 30 seasons. As the game moved to the perimeter \u2014 more catch-and-shoot, fewer post-ups \u2014 the riskiest plays faded and ball-handling tightened league-wide: assist-to-turnover ratio is up 37% over the same span.",
    "stat": "-18.3%",
-   "stat_label": "turnovers/game, 1996-97 → 2025-26 (3.17 → 2.59)",
+   "stat_label": "turnovers/game, 1996-97 \u2192 2025-26 (3.17 \u2192 2.59)",
    "viz": "line",
    "viz_label": "Turnovers per game",
    "rows": [
@@ -521,18 +521,18 @@
     "s": "2025-26",
     "v": 2.59
    },
-   "foot": "Per-game rates across charted player-seasons, 1996-97 → 2025-26. Scoring rose 9.6% over the same span — this is not a minutes artifact.",
+   "foot": "Per-game rates across charted player-seasons, 1996-97 \u2192 2025-26. Scoring rose 9.6% over the same span \u2014 this is not a minutes artifact.",
    "og_title": "NBA turnovers are down 18% in 30 years",
-   "og_desc": "From 3.17 to 2.59 per game — assist-to-turnover ratio up 37%. The careful era, measured."
+   "og_desc": "From 3.17 to 2.59 per game \u2014 assist-to-turnover ratio up 37%. The careful era, measured."
   },
   {
    "slug": "contender-chemistry",
-   "tldr": "Playoff rotations are way more stylistically diverse than lottery teams' — winners collect different weapons, not copies — but the spread doesn't predict how deep a run goes.",
+   "tldr": "Playoff rotations are way more stylistically diverse than lottery teams' \u2014 winners collect different weapons, not copies \u2014 but the spread doesn't predict how deep a run goes.",
    "kicker": "Contender chemistry",
-   "title": "Making the playoffs takes variety — surviving them takes matchups",
-   "lede": "Mean pairwise style distance among rotation players (≥1,000 min), 14-d embedding space, 1996-97 → 2024-25. Every tier of the playoffs draws from the same diverse pool — once you're in, style spread doesn't predict how far you go. Most-diverse champs: the 2014-15 Warriors (5.78), 2019-20 Lakers (5.62), 2010-11 Mavericks (5.62); tightest: the 1999-00 Lakers (4.10).",
+   "title": "Making the playoffs takes variety \u2014 surviving them takes matchups",
+   "lede": "Mean pairwise style distance among rotation players (\u22651,000 min), 14-d embedding space, 1996-97 \u2192 2024-25. Every tier of the playoffs draws from the same diverse pool \u2014 once you're in, style spread doesn't predict how far you go. Most-diverse champs: the 2014-15 Warriors (5.78), 2019-20 Lakers (5.62), 2010-11 Mavericks (5.62); tightest: the 1999-00 Lakers (4.10).",
    "stat": "+5.0%",
-   "stat_label": "wider rotation style spread — playoff teams vs non-playoff (5.06 vs 4.82)",
+   "stat_label": "wider rotation style spread \u2014 playoff teams vs non-playoff (5.06 vs 4.82)",
    "viz": "bars",
    "viz_label": "Mean rotation style spread by furthest round reached",
    "rows": [
@@ -564,14 +564,14 @@
    ],
    "foot": "862 team-seasons; furthest round from playoff series records; 2025-26 excluded (season in progress).",
    "og_title": "Winners don't look alike",
-   "og_desc": "Playoff rotations span 5% more style space — but Finals teams are no more diverse than first-round exits. Matchups decide."
+   "og_desc": "Playoff rotations span 5% more style space \u2014 but Finals teams are no more diverse than first-round exits. Matchups decide."
   },
   {
    "slug": "matchup-nightmares",
-   "tldr": "Playoff game plans erase pure shooters — scoring, usage and efficiency all crater — while playmakers are the only ones whose role grows. You can scheme a jumper in two days; not a creator.",
+   "tldr": "Playoff game plans erase pure shooters \u2014 scoring, usage and efficiency all crater \u2014 while playmakers are the only ones whose role grows. You can scheme a jumper in two days; not a creator.",
    "kicker": "Matchup nightmares",
    "title": "May solves shooters. It can't solve playmakers.",
-   "lede": "Playoff minus regular-season pts/100 by style archetype — 4,739 rotation player-seasons, 1996-97 → 2024-25. Pure 3-point specialists lose 2.3 pts/100 in May, with usage (-1.00) and true shooting (-0.039) falling too — worst of all eight archetypes. Playmakers are the only group whose role grows (usage +0.19), and 1 in 16 playoff teams is led in usage by a playmaker, up from 1 in 250 in the regular season. The pattern fits a game-planning story — a best-of-7 gives defenses time to scheme a jumper, not a creator — but that's the best-fit mechanism, not proven causation. Loudest single-postseason swings are small-sample color, but the 2026 Finals lived the pattern. The Knicks' title run rode its playmakers: Finals MVP Jalen Brunson averaged 32.6 points (45 in the closeout), and Jose Alvarado — just 4.2 points a night but a +18.9 on/off — sparked the 29-point Game 4 comeback with 8 fourth-quarter points. Spurs rookie creator Dylan Harper's role grew all series, up to 18.0 points per game off the bench from 11.8 in the regular season. At the other end, veteran shooter Harrison Barnes was squeezed out of the rotation in the Finals after 9.9 per game in the regular season. Even Victor Wembanyama's brilliant 26-a-night couldn't scheme-proof San Antonio alone.",
+   "lede": "Playoff minus regular-season pts/100 by style archetype \u2014 4,739 rotation player-seasons, 1996-97 \u2192 2024-25. Pure 3-point specialists lose 2.3 pts/100 in May, with usage (-1.00) and true shooting (-0.039) falling too \u2014 worst of all eight archetypes. Playmakers are the only group whose role grows (usage +0.19), and 1 in 16 playoff teams is led in usage by a playmaker, up from 1 in 250 in the regular season. The pattern fits a game-planning story \u2014 a best-of-7 gives defenses time to scheme a jumper, not a creator \u2014 but that's the best-fit mechanism, not proven causation. Loudest single-postseason swings are small-sample color, but the 2026 Finals lived the pattern. The Knicks' title run rode its playmakers: Finals MVP Jalen Brunson averaged 32.6 points (45 in the closeout), and Jose Alvarado \u2014 just 4.2 points a night but a +18.9 on/off \u2014 sparked the 29-point Game 4 comeback with 8 fourth-quarter points. Spurs rookie creator Dylan Harper's role grew all series, up to 18.0 points per game off the bench from 11.8 in the regular season. At the other end, veteran shooter Harrison Barnes was squeezed out of the rotation in the Finals after 9.9 per game in the regular season. Even Victor Wembanyama's brilliant 26-a-night couldn't scheme-proof San Antonio alone.",
    "stat": "-2.3",
    "stat_label": "playoff pts/100 drop for pure 3-point specialists (usage and efficiency fall too)",
    "viz": "bars",
@@ -580,7 +580,7 @@
     {
      "label": "Pure shooters",
      "value": -2.28,
-     "tag": "3PT accuracy + volume · n=1,010"
+     "tag": "3PT accuracy + volume \u00b7 n=1,010"
     },
     {
      "label": "Volume scorers",
@@ -610,214 +610,214 @@
     {
      "label": "3PT volume, low impact",
      "value": 0.3,
-     "tag": "n=125 · not significant"
+     "tag": "n=125 \u00b7 not significant"
     },
     {
      "label": "Playmakers",
      "value": -0.18,
-     "tag": "playmaking + steals · n=588 · role grows"
+     "tag": "playmaking + steals \u00b7 n=588 \u00b7 role grows"
     }
    ],
-   "foot": "4,739 rotation player-seasons (playoff GP ≥ 4, regular season ≥ 25 scaled min/g); regular-season vs playoff splits via stats.nba.com; 2025-26 excluded (season in progress).",
+   "foot": "4,739 rotation player-seasons (playoff GP \u2265 4, regular season \u2265 25 scaled min/g); regular-season vs playoff splits via stats.nba.com; 2025-26 excluded (season in progress).",
    "og_title": "The playoffs eat shooters",
-   "og_desc": "Pure 3-point specialists lose 2.3 pts/100 in May — playmakers are the only ones whose role grows."
+   "og_desc": "Pure 3-point specialists lose 2.3 pts/100 in May \u2014 playmakers are the only ones whose role grows."
   },
   {
    "slug": "playoff-swings",
-   "tldr": "Among established scorers, Donovan Mitchell owns the two biggest playoff scoring leaps of the last 30 years — and Joel Embiid owns the single biggest collapse (-14.6). May doesn't just test talent; it tests whose game translates.",
+   "tldr": "Among established scorers, Donovan Mitchell owns the two biggest playoff scoring leaps of the last 30 years \u2014 and Joel Embiid owns the single biggest collapse (-14.6). May doesn't just test talent; it tests whose game translates.",
    "kicker": "Playoff risers & fallers",
-   "title": "May makes some stars bigger — and shrinks others",
-   "lede": "Scoring-rate change from regular season to playoffs (pts/100) for established scorers: 28+ pts/100 across 40+ regular-season games, 8+ playoff games, and a real playoff role. 334 player-seasons qualified, 1996-97 → 2025-26. The risers: Mitchell's 2025 encore (+8.6) and his 2021 surge (+8.3), Duncan's 2006 throwback (+8.2), and a +7.2 tie for fourth between LeBron's 2009 rampage and Durant's pre-injury 2019 tear. The fallers: Embiid's 2023 collapse (-14.6, the largest in the sample) and his 2022 fade (-12.6), Porzingis's hollowed-out 2025 (-13.6), Jermaine O'Neal's 2005 fade (-13.2), and Jordan Clarkson's 2018 dip (-12.0).",
+   "title": "May makes some stars bigger \u2014 and shrinks others",
+   "lede": "Scoring-rate change from regular season to playoffs (pts/100) for established scorers: 28+ pts/100 across 40+ regular-season games, 8+ playoff games, and a real playoff role. 334 player-seasons qualified, 1996-97 \u2192 2025-26. The risers: Mitchell's 2025 encore (+8.6) and his 2021 surge (+8.3), Duncan's 2006 throwback (+8.2), and a +7.2 tie for fourth between LeBron's 2009 rampage and Durant's pre-injury 2019 tear. The fallers: Embiid's 2023 collapse (-14.6, the largest in the sample) and his 2022 fade (-12.6), Porzingis's hollowed-out 2025 (-13.6), Jermaine O'Neal's 2005 fade (-13.2), and Jordan Clarkson's 2018 dip (-12.0).",
    "stat": "+8.6",
-   "stat_label": "Mitchell's 2025 scoring jump (pts/100) — the biggest rise among established scorers",
+   "stat_label": "Mitchell's 2025 scoring jump (pts/100) \u2014 the biggest rise among established scorers",
    "viz": "bars",
-   "viz_label": "Scoring change, regular season → playoffs (pts/100)",
+   "viz_label": "Scoring change, regular season \u2192 playoffs (pts/100)",
    "rows": [
     {
      "label": "Donovan Mitchell '24-25",
      "value": 8.6,
-     "tag": "35.7 → 44.3 pts/100 · 9 games"
+     "tag": "35.7 \u2192 44.3 pts/100 \u00b7 9 games"
     },
     {
      "label": "Donovan Mitchell '20-21",
      "value": 8.3,
-     "tag": "38.0 → 46.3 pts/100 · 10 games"
+     "tag": "38.0 \u2192 46.3 pts/100 \u00b7 10 games"
     },
     {
      "label": "Tim Duncan '05-06",
      "value": 8.2,
-     "tag": "28.6 → 36.8 pts/100 · 13 games"
+     "tag": "28.6 \u2192 36.8 pts/100 \u00b7 13 games"
     },
     {
      "label": "LeBron James '08-09",
      "value": 7.2,
-     "tag": "39.9 → 47.1 pts/100 · 14 games"
+     "tag": "39.9 \u2192 47.1 pts/100 \u00b7 14 games"
     },
     {
      "label": "Kevin Durant '18-19",
      "value": 7.2,
-     "tag": "34.9 → 42.1 pts/100 · 12 games — tied 4th"
+     "tag": "34.9 \u2192 42.1 pts/100 \u00b7 12 games \u2014 tied 4th"
     },
     {
      "label": "Joel Embiid '22-23",
      "value": -14.6,
-     "tag": "47.1 → 32.5 pts/100 · 9 games"
+     "tag": "47.1 \u2192 32.5 pts/100 \u00b7 9 games"
     },
     {
      "label": "Kristaps Porzingis '24-25",
      "value": -13.6,
-     "tag": "32.4 → 18.8 pts/100 · 11 games"
+     "tag": "32.4 \u2192 18.8 pts/100 \u00b7 11 games"
     },
     {
      "label": "Jermaine O'Neal '04-05",
      "value": -13.2,
-     "tag": "37.3 → 24.1 pts/100 · 13 games"
+     "tag": "37.3 \u2192 24.1 pts/100 \u00b7 13 games"
     },
     {
      "label": "Joel Embiid '21-22",
      "value": -12.6,
-     "tag": "44.8 → 32.2 pts/100 · 10 games"
+     "tag": "44.8 \u2192 32.2 pts/100 \u00b7 10 games"
     },
     {
      "label": "Jordan Clarkson '17-18",
      "value": -12.0,
-     "tag": "28.1 → 16.1 pts/100 · 19 games"
+     "tag": "28.1 \u2192 16.1 pts/100 \u00b7 19 games"
     }
    ],
-   "foot": "334 established-scorer seasons (28+ RS pts/100, 40+ RS games, 8+ playoff games, playoff usage ≥ 18); regular-season vs playoff splits via stats.nba.com. This is the biggest swing in scoring rate — not the greatest postseason run; see the playoff-runs rankings for that.",
+   "foot": "334 established-scorer seasons (28+ RS pts/100, 40+ RS games, 8+ playoff games, playoff usage \u2265 18); regular-season vs playoff splits via stats.nba.com. This is the biggest swing in scoring rate \u2014 not the greatest postseason run; see the playoff-runs rankings for that.",
    "og_title": "Playoff risers & fallers",
    "og_desc": "Mitchell owns the two biggest May scoring leaps in 30 years. Embiid owns the biggest collapse."
   },
   {
    "slug": "contenders-pretenders",
-   "tldr": "Five teams clear both bars — a playoff-shaped rotation and a top-10 engine: the Lakers, Oklahoma City, Denver, Philadelphia and Miami. Portland has the most playoff-shaped rotation in the league and no engine to match; the champs and runners-up win on talent, not shape.",
+   "tldr": "Five teams clear both bars \u2014 a playoff-shaped rotation and a top-10 engine: the Lakers, Oklahoma City, Denver, Philadelphia and Miami. Portland has the most playoff-shaped rotation in the league and no engine to match; the champs and runners-up win on talent, not shape.",
    "kicker": "2026-27 preview",
-   "title": "Who looks like a contender — and who looks lottery-shaped",
-   "lede": "Each projected 2026-27 rotation measured with the contender-chemistry metric (mean pairwise style distance in the 14-d embedding space), centered on the historical playoff-team mean of 5.06 — right of the line is playoff-shaped, left is lottery-shaped. Five teams clear both bars, shape and engine: the Lakers pair the second-most playoff-shaped rotation (5.56) with Dončić (38.1 pts/100); Oklahoma City (5.31, Gilgeous-Alexander 44.1); Denver (5.20, Jokić 37.1); Philadelphia (5.14, Brown 41.0 — plus LeBron, plus Embiid); and Miami (5.12, Antetokounmpo 42.7). The twist: last June's finalists both sit BELOW the line — the champion Knicks (4.80) and the Spurs (4.84) win on talent, not shape, exactly what the chemistry card predicted: variety gets you in, matchups decide the rest. The cautionary tale is Portland: the most playoff-shaped rotation in the league (5.67) with no top-10 engine — Sacramento (5.45), Utah (5.44) and Detroit (5.41) fit the same profile. At the bottom, Atlanta (4.06) has the most homogeneous rotation in the league. One asterisk from the risers & fallers card: Philadelphia's ceiling runs through Embiid, owner of the largest playoff scoring collapse of the last 30 years — and he has played 39% of possible games across the last three seasons.",
+   "title": "Who looks like a contender \u2014 and who looks lottery-shaped",
+   "lede": "Each projected 2026-27 rotation measured with the contender-chemistry metric (mean pairwise style distance in the 14-d embedding space), centered on the historical playoff-team mean of 5.06 \u2014 right of the line is playoff-shaped, left is lottery-shaped. Five teams clear both bars, shape and engine: the Lakers pair the second-most playoff-shaped rotation (5.56) with Don\u010di\u0107 (38.1 pts/100); Oklahoma City (5.31, Gilgeous-Alexander 44.1); Denver (5.20, Joki\u0107 37.1); Philadelphia (5.14, Brown 41.0 \u2014 plus LeBron, plus Embiid); and Miami (5.12, Antetokounmpo 42.7). The twist: last June's finalists both sit BELOW the line \u2014 the champion Knicks (4.80) and the Spurs (4.84) win on talent, not shape, exactly what the chemistry card predicted: variety gets you in, matchups decide the rest. The cautionary tale is Portland: the most playoff-shaped rotation in the league (5.67) with no top-10 engine \u2014 Sacramento (5.45), Utah (5.44) and Detroit (5.41) fit the same profile. At the bottom, Atlanta (4.06) has the most homogeneous rotation in the league. One asterisk from the risers & fallers card: Philadelphia's ceiling runs through Embiid, owner of the largest playoff scoring collapse of the last 30 years \u2014 and he has played 39% of possible games across the last three seasons.",
    "stat": "+0.61",
-   "stat_label": "Portland's spread above the playoff-team line — most playoff-shaped rotation, without a top-10 engine",
+   "stat_label": "Portland's spread above the playoff-team line \u2014 most playoff-shaped rotation, without a top-10 engine",
    "viz": "bars",
    "viz_label": "2026-27 rotation spread vs the playoff-team mean (5.06)",
    "rows": [
     {
      "label": "Portland",
      "value": 0.61,
-     "tag": "5.67 spread · Morant 34.6 pts/100 — shape, no engine"
+     "tag": "5.67 spread \u00b7 Morant 34.6 pts/100 \u2014 shape, no engine"
     },
     {
      "label": "LA Lakers",
      "value": 0.5,
-     "tag": "5.56 spread · Dončić 38.1 pts/100"
+     "tag": "5.56 spread \u00b7 Don\u010di\u0107 38.1 pts/100"
     },
     {
      "label": "Oklahoma City",
      "value": 0.25,
-     "tag": "5.31 spread · Gilgeous-Alexander 44.1 pts/100"
+     "tag": "5.31 spread \u00b7 Gilgeous-Alexander 44.1 pts/100"
     },
     {
      "label": "Denver",
      "value": 0.14,
-     "tag": "5.20 spread · Jokić 37.1 pts/100"
+     "tag": "5.20 spread \u00b7 Joki\u0107 37.1 pts/100"
     },
     {
      "label": "Philadelphia",
      "value": 0.08,
-     "tag": "5.14 spread · Brown 41.0 pts/100 — plus LeBron"
+     "tag": "5.14 spread \u00b7 Brown 41.0 pts/100 \u2014 plus LeBron"
     },
     {
      "label": "Miami",
      "value": 0.06,
-     "tag": "5.12 spread · Antetokounmpo 42.7 pts/100"
+     "tag": "5.12 spread \u00b7 Antetokounmpo 42.7 pts/100"
     },
     {
      "label": "San Antonio",
      "value": -0.22,
-     "tag": "4.84 spread · Wembanyama 40.2 — lost Finals"
+     "tag": "4.84 spread \u00b7 Wembanyama 40.2 \u2014 lost Finals"
     },
     {
      "label": "New York",
      "value": -0.26,
-     "tag": "4.80 spread · Brunson 36.3 — defending champs"
+     "tag": "4.80 spread \u00b7 Brunson 36.3 \u2014 defending champs"
     }
    ],
-   "foot": "30 projected 2026-27 rotations as of 2026-10-01 (rostered players with ≥20 GP in 2025-26; stars who missed the season use their latest season's style; camp cuts pending). Spread = mean pairwise 14-d style distance, centered on the 1996-97 → 2024-25 playoff-team mean (5.06). Engine = latest regular-season pts/100 (2025-26 for 2026 playoff teams, 2024-25 otherwise). Shape predicts making the playoffs, not winning the title.",
+   "foot": "30 projected 2026-27 rotations as of 2026-10-01 (rostered players with \u226520 GP in 2025-26; stars who missed the season use their latest season's style; camp cuts pending). Spread = mean pairwise 14-d style distance, centered on the 1996-97 \u2192 2024-25 playoff-team mean (5.06). Engine = latest regular-season pts/100 (2025-26 for 2026 playoff teams, 2024-25 otherwise). Shape predicts making the playoffs, not winning the title.",
    "og_title": "Contenders & pretenders, 2026-27",
    "og_desc": "Five teams clear both bars: the Lakers, OKC, Denver, Philly and Miami. The champs break the mold."
   },
   {
    "slug": "know-your-role",
-   "tldr": "33 times since 1997, a high-usage star changed teams, took a much smaller piece of the offense — and won much bigger. Iguodala gave up 10.8 points of playoff usage and won Finals MVP as a sixth man; Gordon went from Orlando's playoff go-to guy to Denver's fourth option and a championship, more efficient on less.",
+   "tldr": "33 times since 1997, a high-usage star changed teams, took a much smaller piece of the offense \u2014 and won much bigger. Iguodala gave up 10.8 points of playoff usage and won Finals MVP as a sixth man; Gordon went from Orlando's playoff go-to guy to Denver's fourth option and a championship, more efficient on less.",
    "kicker": "Know your role",
    "title": "The fastest way to win more is to need the ball less",
-   "lede": "Usage sacrificed (regular-season or playoff USG, whichever shows the role change) against playoff rounds gained, for players who went from a team's hub (21.5+ USG) to its third option or lower on a different, much better team. Dwight Howard's −14.0 is the biggest sacrifice on a title team: Houston's hub to the Lakers' rim-runner at .677 true shooting. Rows are ranked by sacrifice × rounds gained, so JR Smith's record −14.6 sits sixth — his leap was three rounds, not four, and it came in a five-game 2011 cameo.",
+   "lede": "Usage sacrificed (regular-season or playoff USG, whichever shows the role change) against playoff rounds gained, for players who went from a team's hub (21.5+ USG) to its third option or lower on a different, much better team. Dwight Howard's \u221214.0 is the biggest sacrifice on a title team: Houston's hub to the Lakers' rim-runner at .677 true shooting. Rows are ranked by sacrifice \u00d7 rounds gained, so JR Smith's record \u221214.6 sits sixth \u2014 his leap was three rounds, not four, and it came in a five-game 2011 cameo.",
    "stat": "-14.0",
-   "stat_label": "Dwight Howard's playoff-usage drop, Houston hub to Lakers rim-runner — the biggest sacrifice on a title team",
+   "stat_label": "Dwight Howard's playoff-usage drop, Houston hub to Lakers rim-runner \u2014 the biggest sacrifice on a title team",
    "viz": "bars",
-   "viz_label": "Usage given up (USG points) × playoff rounds gained",
+   "viz_label": "Usage given up (USG points) \u00d7 playoff rounds gained",
    "rows": [
     {
      "label": "Dwight Howard '19-20",
      "value": -14.0,
-     "tag": "28.2 → 14.2 playoff USG · HOU '13-14 → LAL champs '19-20"
+     "tag": "28.2 \u2192 14.2 playoff USG \u00b7 HOU '13-14 \u2192 LAL champs '19-20"
     },
     {
      "label": "Mikal Bridges '25-26",
      "value": -13.9,
-     "tag": "29.3 → 15.4 playoff USG · BKN '22-23 → NYK champs '25-26"
+     "tag": "29.3 \u2192 15.4 playoff USG \u00b7 BKN '22-23 \u2192 NYK champs '25-26"
     },
     {
      "label": "David West '16-17",
      "value": -13.7,
-     "tag": "28.5 → 14.8 playoff USG · NOH '08-09 → GSW champs '16-17"
+     "tag": "28.5 \u2192 14.8 playoff USG \u00b7 NOH '08-09 \u2192 GSW champs '16-17"
     },
     {
      "label": "Pau Gasol '08-09",
      "value": -12.5,
-     "tag": "31.2 → 18.7 playoff USG · MEM '04-05 → LAL champs '08-09"
+     "tag": "31.2 \u2192 18.7 playoff USG \u00b7 MEM '04-05 \u2192 LAL champs '08-09"
     },
     {
      "label": "Brook Lopez '20-21",
      "value": -11.6,
-     "tag": "28.2 → 16.6 USG · BKN '12-13 → MIL champs '20-21"
+     "tag": "28.2 \u2192 16.6 USG \u00b7 BKN '12-13 \u2192 MIL champs '20-21"
     },
     {
      "label": "JR Smith '14-15",
      "value": -14.6,
-     "tag": "32.8 → 18.2 playoff USG · DEN '10-11 → CLE Finals '14-15"
+     "tag": "32.8 \u2192 18.2 playoff USG \u00b7 DEN '10-11 \u2192 CLE Finals '14-15"
     },
     {
      "label": "Andre Iguodala '14-15",
      "value": -10.8,
-     "tag": "25.7 → 14.9 playoff USG · PHI '08-09 → GSW champs '14-15"
+     "tag": "25.7 \u2192 14.9 playoff USG \u00b7 PHI '08-09 \u2192 GSW champs '14-15"
     },
     {
      "label": "Jrue Holiday '23-24",
      "value": -11.4,
-     "tag": "26.0 → 14.6 playoff USG · MIL '21-22 → BOS champs '23-24"
+     "tag": "26.0 \u2192 14.6 playoff USG \u00b7 MIL '21-22 \u2192 BOS champs '23-24"
     },
     {
      "label": "Ray Allen '12-13",
      "value": -10.9,
-     "tag": "28.5 → 17.6 playoff USG · SEA '04-05 → MIA champs '12-13"
+     "tag": "28.5 \u2192 17.6 playoff USG \u00b7 SEA '04-05 \u2192 MIA champs '12-13"
     },
     {
      "label": "Aaron Gordon '22-23",
      "value": -7.6,
-     "tag": "22.8 → 15.2 playoff USG · ORL '18-19 → DEN champs '22-23"
+     "tag": "22.8 \u2192 15.2 playoff USG \u00b7 ORL '18-19 \u2192 DEN champs '22-23"
     }
    ],
-   "foot": "33 qualifying transitions, 1996-97 → 2025-26. Old season: 50+ RS games, 21.5+ USG (RS or playoffs), team won ≤ 1 round. New season: different team, 3rd option or lower, 8+ playoff games at 14+ USG and .520+ TS, efficiency held vs the old role, team won ≥ 2 more rounds. Pre-move stardom on lottery teams is invisible to this dataset (it only covers playoff players) — see Kevin Love. Same-team sacrifices (Wade, Manu, Klay) need a different lens.",
+   "foot": "33 qualifying transitions, 1996-97 \u2192 2025-26. Old season: 50+ RS games, 21.5+ USG (RS or playoffs), team won \u2264 1 round. New season: different team, 3rd option or lower, 8+ playoff games at 14+ USG and .520+ TS, efficiency held vs the old role, team won \u2265 2 more rounds. Pre-move stardom on lottery teams is invisible to this dataset (it only covers playoff players) \u2014 see Kevin Love. Same-team sacrifices (Wade, Manu, Klay) need a different lens.",
    "og_title": "Know your role",
    "og_desc": "Iguodala gave up 10.8 points of usage and won Finals MVP. Gordon went from Orlando's go-to guy to Denver's fourth option and a ring. 33 stars who won bigger by needing the ball less."
   },
   {
    "slug": "the-188-million-win-share",
    "kicker": "Overpaid",
-   "title": "Rashard Lewis cost $21.1M for 0.3 win shares — the worst in the sampled panel",
+   "title": "Rashard Lewis cost $21.1M for 0.3 win shares \u2014 the worst in the sampled panel",
    "tldr": "A max-amnesty contract produced one-third of a win in a lockout season: $187.9M per win share in today's cap dollars.",
-   "lede": "Salary vs. production, 2011-12 top-10 salaries, era-adjusted to 2025-26 cap dollars. Lewis played 41 of 66 lockout games with a −0.3 VORP.",
+   "lede": "Salary vs. production, 2011-12 top-10 salaries, era-adjusted to 2025-26 cap dollars. Lewis played 41 of 66 lockout games with a \u22120.3 VORP.",
    "stat": "187.9",
-   "stat_label": "cap-adjusted $M per win share — Rashard Lewis '11-12",
+   "stat_label": "cap-adjusted $M per win share \u2014 Rashard Lewis '11-12",
    "viz": "bars",
    "viz_label": "Cap-adjusted $M paid per win share, 2011-12 (lockout, 66 games)",
    "rows": [
@@ -862,18 +862,18 @@
      "tag": "best value"
     }
    ],
-   "foot": "Panel: top-10 salaries × 6 matched seasons (1996-97 → 2025-26), WS/VORP/MP from Basketball-Reference. Adj = salary ÷ season cap × $154.647M cap.",
+   "foot": "Panel: top-10 salaries \u00d7 6 matched seasons (1996-97 \u2192 2025-26), WS/VORP/MP from Basketball-Reference. Adj = salary \u00f7 season cap \u00d7 $154.647M cap.",
    "og_title": "The worst NBA contract of the last 30 years: $188M per win share",
-   "og_desc": "Rashard Lewis' 2011-12 season: $21.1M for 0.3 win shares — $187.9M per win in today's cap dollars."
+   "og_desc": "Rashard Lewis' 2011-12 season: $21.1M for 0.3 win shares \u2014 $187.9M per win in today's cap dollars."
   },
   {
    "slug": "the-summer-the-cap-broke",
    "kicker": "2016 cap spike",
    "title": "The summer the salary cap broke: 12 teams spent $218M on 30.6 win shares",
-   "tldr": "When the cap jumped 34% in one summer, teams bid against the new money — not production. Chandler Parsons' $22.1M bought 0.2 win shares.",
+   "tldr": "When the cap jumped 34% in one summer, teams bid against the new money \u2014 not production. Chandler Parsons' $22.1M bought 0.2 win shares.",
    "lede": "The 12 defining free-agent signings of summer 2016, first-year salary vs. 2016-17 win shares, era-adjusted. Only Ryan Anderson cleared the bar.",
    "stat": "181.7",
-   "stat_label": "cap-adjusted $M per win share — Chandler Parsons '16-17",
+   "stat_label": "cap-adjusted $M per win share \u2014 Chandler Parsons '16-17",
    "viz": "bars",
    "viz_label": "Cap-adjusted $M paid per win share, summer-2016 signees (2016-17 season)",
    "rows": [
@@ -938,9 +938,9 @@
      "tag": "only one who cleared the bar"
     }
    ],
-   "foot": "Salaries: HoopsRumors top-50 2016-17 + Spotrac cap hits. Cap jumped $70.0M → $94.143M (July 2016). WS from Basketball-Reference.",
+   "foot": "Salaries: HoopsRumors top-50 2016-17 + Spotrac cap hits. Cap jumped $70.0M \u2192 $94.143M (July 2016). WS from Basketball-Reference.",
    "og_title": "The summer the NBA salary cap broke: $218M for 30.6 win shares",
-   "og_desc": "Twelve teams spent $218.4M on the summer-2016 free-agent class. It bought 30.6 win shares — barely twice LeBron's total, for 7× his salary."
+   "og_desc": "Twelve teams spent $218.4M on the summer-2016 free-agent class. It bought 30.6 win shares \u2014 barely twice LeBron's total, for 7\u00d7 his salary."
   },
   {
    "slug": "paid-to-not-play",
@@ -956,12 +956,12 @@
     {
      "label": "John Wall",
      "value": 61.0,
-     "tag": "DNP — sat out season"
+     "tag": "DNP \u2014 sat out season"
     },
     {
      "label": "Kawhi Leonard",
      "value": 54.1,
-     "tag": "DNP — torn ACL"
+     "tag": "DNP \u2014 torn ACL"
     },
     {
      "label": "Paul George",
@@ -994,18 +994,18 @@
      "tag": "best value, 12.9 WS"
     }
    ],
-   "foot": "WS/VORP/MP from Basketball-Reference; salaries cross-checked vs HoopsHype. Adj = salary ÷ $112.4M cap × $154.647M.",
+   "foot": "WS/VORP/MP from Basketball-Reference; salaries cross-checked vs HoopsHype. Adj = salary \u00f7 $112.4M cap \u00d7 $154.647M.",
    "og_title": "Paid to not play: $115M in cap-adjusted dollars for zero games",
-   "og_desc": "John Wall and Kawhi Leonard combined for zero 2021-22 games on $83.7M in salary — $115M in today's cap dollars."
+   "og_desc": "John Wall and Kawhi Leonard combined for zero 2021-22 games on $83.7M in salary \u2014 $115M in today's cap dollars."
   },
   {
    "slug": "max-money-bargains",
    "kicker": "Underpaid",
    "title": "The cheat code: the very top of the pay scale is usually a bargain",
-   "tldr": "James Harden's 2016-17 ($26.5M → 15.0 WS) cost $2.9M per win share in today's dollars. Eight of the ten best-value seasons are top-5 salaries — true superstars outproduce even max money.",
+   "tldr": "James Harden's 2016-17 ($26.5M \u2192 15.0 WS) cost $2.9M per win share in today's dollars. Eight of the ten best-value seasons are top-5 salaries \u2014 true superstars outproduce even max money.",
    "lede": "Best era-adjusted dollars-per-win-share among top-10 salaries, 6 matched seasons, minimum 5 win shares.",
    "stat": "2.9",
-   "stat_label": "cap-adjusted $M per win share — James Harden '16-17, best in panel",
+   "stat_label": "cap-adjusted $M per win share \u2014 James Harden '16-17, best in panel",
    "viz": "bars",
    "viz_label": "Cap-adjusted $M paid per win share (lower = better), min 5 WS",
    "rows": [
@@ -1025,7 +1025,7 @@
      "tag": null
     },
     {
-     "label": "Nikola Jokić '25-26",
+     "label": "Nikola Joki\u0107 '25-26",
      "value": 3.7,
      "tag": null
     },
@@ -1050,126 +1050,126 @@
      "tag": null
     }
    ],
-   "foot": "Panel: top-10 salaries × 6 seasons, Basketball-Reference WS. Era-adjusted to the 2025-26 $154.647M cap.",
+   "foot": "Panel: top-10 salaries \u00d7 6 seasons, Basketball-Reference WS. Era-adjusted to the 2025-26 $154.647M cap.",
    "og_title": "The NBA cheat code: max money for superstars is usually a bargain",
-   "og_desc": "Harden '16-17 cost $2.9M per win share in today's cap dollars. The dead zone isn't the top of the pay scale — it's ranks 8-15."
+   "og_desc": "Harden '16-17 cost $2.9M per win share in today's cap dollars. The dead zone isn't the top of the pay scale \u2014 it's ranks 8-15."
   },
   {
-   "foot": "12 qualifying moves, ΔUSG ≥ 4.0, 1999-00 → 2024-25. Pre = final pre-move season meeting the stardom bar (All-Star or 25+ USG or 20+ PPG or 8+ WS) on a team that won ≤1 playoff round. Post = first season with the new team. Team rounds from the public record; full methodology in research/invisible-stardom-FINDINGS.md.",
+   "foot": "12 qualifying moves, \u0394USG \u2265 4.0, 1999-00 \u2192 2024-25. Pre = final pre-move season meeting the stardom bar (All-Star or 25+ USG or 20+ PPG or 8+ WS) on a team that won \u22641 playoff round. Post = first season with the new team. Team rounds from the public record; full methodology in research/invisible-stardom-FINDINGS.md.",
    "kicker": "Invisible stardom",
-   "lede": "Usage surrendered by stars whose pre-move peaks happened on bad teams — the lottery-team stardom the playoff-only dataset can't see. Jrue Holiday's −8.7 tops the list: Milwaukee All-Star to Boston's fourth option, and a ring. But Malone, Harden, Payton, Beal, Melo and Lillard gave up as much and won nothing — the rings cluster where the star joined an already-elite core.",
-   "og_desc": "Jrue Holiday gave up 8.7 points of usage going from Milwaukee All-Star to Boston's fourth option — and won a ring. 12 invisible-stardom sacrifices, ranked.",
+   "lede": "Usage surrendered by stars whose pre-move peaks happened on bad teams \u2014 the lottery-team stardom the playoff-only dataset can't see. Jrue Holiday's \u22128.7 tops the list: Milwaukee All-Star to Boston's fourth option, and a ring. But Malone, Harden, Payton, Beal, Melo and Lillard gave up as much and won nothing \u2014 the rings cluster where the star joined an already-elite core.",
+   "og_desc": "Jrue Holiday gave up 8.7 points of usage going from Milwaukee All-Star to Boston's fourth option \u2014 and won a ring. 12 invisible-stardom sacrifices, ranked.",
    "og_title": "The biggest sacrifices nobody saw",
    "rows": [
     {
      "label": "Jrue Holiday '23-24",
-     "tag": "25.0 → 16.3 USG · MIL All-Star → BOS champs '24",
+     "tag": "25.0 \u2192 16.3 USG \u00b7 MIL All-Star \u2192 BOS champs '24",
      "value": -8.7
     },
     {
      "label": "Karl Malone '03-04",
-     "tag": "27.8 → 19.7 USG · UTA '03 → LAL Finals loss",
+     "tag": "27.8 \u2192 19.7 USG \u00b7 UTA '03 \u2192 LAL Finals loss",
      "value": -8.1
     },
     {
      "label": "Ray Allen '07-08",
-     "tag": "29.5 → 21.6 USG · SEA '07 → BOS champs '08",
+     "tag": "29.5 \u2192 21.6 USG \u00b7 SEA '07 \u2192 BOS champs '08",
      "value": -7.9
     },
     {
      "label": "James Harden '20-21",
-     "tag": "36.3 → 28.4 USG · HOU '20 → BKN 2nd-round exit",
+     "tag": "36.3 \u2192 28.4 USG \u00b7 HOU '20 \u2192 BKN 2nd-round exit",
      "value": -7.9
     },
     {
      "label": "Kevin Love '14-15",
-     "tag": "28.8 → 21.7 USG · MIN '14 → CLE champs '16",
+     "tag": "28.8 \u2192 21.7 USG \u00b7 MIN '14 \u2192 CLE champs '16",
      "value": -7.1
     },
     {
      "label": "Gary Payton '03-04",
-     "tag": "27.1 → 20.4 USG · SEA '03 → LAL Finals loss",
+     "tag": "27.1 \u2192 20.4 USG \u00b7 SEA '03 \u2192 LAL Finals loss",
      "value": -6.7
     },
     {
      "label": "Bradley Beal '23-24",
-     "tag": "29.2 → 22.7 USG · WAS '23 → PHX 1st-round exit",
+     "tag": "29.2 \u2192 22.7 USG \u00b7 WAS '23 \u2192 PHX 1st-round exit",
      "value": -6.5
     },
     {
      "label": "Carmelo Anthony '17-18",
-     "tag": "29.1 → 23.2 USG · NYK '17 → OKC 1st-round exit",
+     "tag": "29.1 \u2192 23.2 USG \u00b7 NYK '17 \u2192 OKC 1st-round exit",
      "value": -5.9
     },
     {
      "label": "Damian Lillard '23-24",
-     "tag": "33.8 → 28.4 USG · POR '23 → MIL 1st-round exit",
+     "tag": "33.8 \u2192 28.4 USG \u00b7 POR '23 \u2192 MIL 1st-round exit",
      "value": -5.4
     },
     {
      "label": "Chris Bosh '10-11",
-     "tag": "28.7 → 23.5 USG · TOR '10 → MIA champs '12, '13",
+     "tag": "28.7 \u2192 23.5 USG \u00b7 TOR '10 \u2192 MIA champs '12, '13",
      "value": -5.2
     }
    ],
    "slug": "invisible-stardom",
    "stat": "-8.7",
-   "stat_label": "Jrue Holiday's usage drop, Milwaukee All-Star to Boston's fourth option — the biggest invisible sacrifice, and a ring",
+   "stat_label": "Jrue Holiday's usage drop, Milwaukee All-Star to Boston's fourth option \u2014 the biggest invisible sacrifice, and a ring",
    "title": "The biggest sacrifices nobody saw",
-   "tldr": "Lottery-team stars who shrank for a contender: Jrue Holiday gave up 8.7 points of usage and won a ring, but Malone, Harden and Payton gave up as much and lost — rings went to the stars who joined already-elite cores.",
+   "tldr": "Lottery-team stars who shrank for a contender: Jrue Holiday gave up 8.7 points of usage and won a ring, but Malone, Harden and Payton gave up as much and lost \u2014 rings went to the stars who joined already-elite cores.",
    "viz": "bars",
    "viz_label": "Usage given up (USG points)"
   },
   {
-   "foot": "Love: '13-14 MIN (26.1 PPG, 28.8 USG, 14.0 WS) → '14-15 CLE. Bosh: '09-10 TOR (24.0 PPG, 28.7 USG, 10.1 WS) → '10-11 MIA. Both All-Stars on non-playoff teams; both won rings. Data: Basketball-Reference, scraped 2026-10-01.",
+   "foot": "Love: '13-14 MIN (26.1 PPG, 28.8 USG, 14.0 WS) \u2192 '14-15 CLE. Bosh: '09-10 TOR (24.0 PPG, 28.7 USG, 10.1 WS) \u2192 '10-11 MIA. Both All-Stars on non-playoff teams; both won rings. Data: Basketball-Reference, scraped 2026-10-01.",
    "kicker": "Invisible stardom",
-   "lede": "Same archetype, different economics. Kevin Love's win shares fell off a cliff (14.0 → 8.4) — real production surrendered, and it took two years to make the fit work. Chris Bosh's win shares rose (10.1 → 10.8) — he gave up shots, not wins, because the team around him was better. Two ways to disappear for a ring.",
+   "lede": "Same archetype, different economics. Kevin Love's win shares fell off a cliff (14.0 \u2192 8.4) \u2014 real production surrendered, and it took two years to make the fit work. Chris Bosh's win shares rose (10.1 \u2192 10.8) \u2014 he gave up shots, not wins, because the team around him was better. Two ways to disappear for a ring.",
    "og_desc": "Love gave up 5.6 win shares for a ring; Bosh gave up 5.3 points a game and his win shares went up. Two kinds of sacrifice.",
    "og_title": "Love gave up wins. Bosh gave up shots.",
    "rows": [
     {
-     "label": "Love — usage drop",
-     "tag": "28.8 → 21.7 USG · MIN '14 → CLE '15",
+     "label": "Love \u2014 usage drop",
+     "tag": "28.8 \u2192 21.7 USG \u00b7 MIN '14 \u2192 CLE '15",
      "value": -7.1
     },
     {
-     "label": "Love — scoring drop",
-     "tag": "26.1 → 16.4 PPG",
+     "label": "Love \u2014 scoring drop",
+     "tag": "26.1 \u2192 16.4 PPG",
      "value": -9.7
     },
     {
-     "label": "Love — win shares drop",
-     "tag": "14.0 → 8.4 WS · real production surrendered",
+     "label": "Love \u2014 win shares drop",
+     "tag": "14.0 \u2192 8.4 WS \u00b7 real production surrendered",
      "value": -5.6
     },
     {
-     "label": "Bosh — usage drop",
-     "tag": "28.7 → 23.5 USG · TOR '10 → MIA '11",
+     "label": "Bosh \u2014 usage drop",
+     "tag": "28.7 \u2192 23.5 USG \u00b7 TOR '10 \u2192 MIA '11",
      "value": -5.2
     },
     {
-     "label": "Bosh — scoring drop",
-     "tag": "24.0 → 18.7 PPG",
+     "label": "Bosh \u2014 scoring drop",
+     "tag": "24.0 \u2192 18.7 PPG",
      "value": -5.3
     },
     {
-     "label": "Bosh — win shares drop",
-     "tag": "10.1 → 10.8 WS · the better team absorbed his efficiency",
+     "label": "Bosh \u2014 win shares drop",
+     "tag": "10.1 \u2192 10.8 WS \u00b7 the better team absorbed his efficiency",
      "value": 0.7
     }
    ],
    "slug": "love-vs-bosh",
    "stat": "-5.6",
-   "stat_label": "Win shares Kevin Love surrendered going from Minnesota's everything to Cleveland's third wheel — Bosh's went up",
+   "stat_label": "Win shares Kevin Love surrendered going from Minnesota's everything to Cleveland's third wheel \u2014 Bosh's went up",
    "title": "Two ways to disappear for a ring",
-   "tldr": "Kevin Love gave up 5.6 win shares going from Minnesota's everything to Cleveland's third wheel. Chris Bosh gave up 5.3 points a game — and his win shares rose. Same archetype, different economics.",
+   "tldr": "Kevin Love gave up 5.6 win shares going from Minnesota's everything to Cleveland's third wheel. Chris Bosh gave up 5.3 points a game \u2014 and his win shares rose. Same archetype, different economics.",
    "viz": "bars",
    "viz_label": "What each star gave up (negative = surrendered)"
   },
   {
    "foot": "Peak = best 3-consecutive-season USG% on the same team, before the title window. Parker is approximate: 2008-09 single-season peak vs window average, intervening years unknown. Regular-season USG%; Basketball-Reference, 2026-10-01.",
    "kicker": "Sacrifice",
-   "lede": "Role drop measured against each player's own same-team peak — the lens the team-switch cards can't see. Manu Ginobili never had a peak to drop from: 349 starts in 1,019 games, peaking at 28.7 USG% as a sixth man while posting .240+ win shares per 48 — a starter with that production plays 32-34%.",
+   "lede": "Role drop measured against each player's own same-team peak \u2014 the lens the team-switch cards can't see. Manu Ginobili never had a peak to drop from: 349 starts in 1,019 games, peaking at 28.7 USG% as a sixth man while posting .240+ win shares per 48 \u2014 a starter with that production plays 32-34%.",
    "og_desc": "Wade surrendered 4.6 usage points in his prime and won two rings. Manu never took the big role at all.",
    "og_title": "The biggest NBA role shrinks happened without changing teams",
    "rows": [
@@ -1200,27 +1200,27 @@
     },
     {
      "label": "Manu Ginobili '02-18",
-     "tag": "permanent sacrifice — 349 starts in 1,019 games",
+     "tag": "permanent sacrifice \u2014 349 starts in 1,019 games",
      "value": 0.0
     },
     {
      "label": "Stephen Curry '16-19",
-     "tag": "control — usage rose",
+     "tag": "control \u2014 usage rose",
      "value": -0.5
     }
    ],
    "slug": "same-jersey-smaller-role",
    "stat": "4.6",
-   "stat_label": "usage points Wade surrendered in his prime, ages 29-32 — and won 2 titles",
+   "stat_label": "usage points Wade surrendered in his prime, ages 29-32 \u2014 and won 2 titles",
    "title": "The biggest role shrinks in NBA history happened without changing teams",
-   "tldr": "The storied sacrifices never switched teams — Wade ceded the Heat in his prime, Manu took the bench for a dynasty, Duncan shrank at 38.",
+   "tldr": "The storied sacrifices never switched teams \u2014 Wade ceded the Heat in his prime, Manu took the bench for a dynasty, Duncan shrank at 38.",
    "viz": "bars",
    "viz_label": "Usage points surrendered from 3-year same-team peak, in title windows"
   },
   {
    "foot": "Documented minimums from reporting, not exact counterfactuals. Salaries: Spotrac cash. Reporting: ESPN (Stein, MacMahon), HoopsRumors, NBC Sports, Basketball Network, Pounding The Rock, 2026-10-01.",
    "kicker": "Money",
-   "lede": "Dirk's 2010 discount funded the Tyson Chandler trade that anchored the 2011 title; Duncan's 2012 halving kept Diaw, Green and Mills for 2014. These pay cuts have receipts — and rings attached.",
+   "lede": "Dirk's 2010 discount funded the Tyson Chandler trade that anchored the 2011 title; Duncan's 2012 halving kept Diaw, Green and Mills for 2014. These pay cuts have receipts \u2014 and rings attached.",
    "og_desc": "Dirk left ~$46M documented on the table; Duncan ~$35M+. Both discounts bought championships.",
    "og_title": "The hometown discount leaderboard: millions left, rings won",
    "rows": [
@@ -1262,9 +1262,9 @@
    ],
    "slug": "hometown-discount",
    "stat": "46",
-   "stat_label": "documented $M Dirk Nowitzki left on the table — his 2010 discount bought the 2011 title",
+   "stat_label": "documented $M Dirk Nowitzki left on the table \u2014 his 2010 discount bought the 2011 title",
    "title": "The hometown discount: salary left on the table, rings won",
-   "tldr": "Dirk left ~$46M and Duncan ~$35M+ documented on the table — and both discounts are directly tied to championships.",
+   "tldr": "Dirk left ~$46M and Duncan ~$35M+ documented on the table \u2014 and both discounts are directly tied to championships.",
    "viz": "bars",
    "viz_label": "Documented $M left on the table (minimums)"
   },
@@ -1273,7 +1273,7 @@
    "kicker": "Money layer",
    "lede": "Revenue efficiency, team-level: 2024-25 total payroll (Basketball Insiders season snapshot) divided by regular-season wins. A 5.4x spread separates the most efficient checkbook from the least.",
    "og_desc": "Oklahoma City spent $159M and won 68 games. Washington spent $228M and won 18. Payroll per win, 2024-25.",
-   "og_title": "The cheapest NBA wins cost $2.34M — the priciest $12.67M",
+   "og_title": "The cheapest NBA wins cost $2.34M \u2014 the priciest $12.67M",
    "rows": [
     {
      "label": "Oklahoma City",
@@ -1323,8 +1323,8 @@
    ],
    "slug": "payroll-per-win",
    "stat": "2.34",
-   "stat_label": "$M per win — Oklahoma City, best payroll efficiency",
-   "title": "The cheapest wins in the NBA cost $2.34M — the priciest cost $12.67M",
+   "stat_label": "$M per win \u2014 Oklahoma City, best payroll efficiency",
+   "title": "The cheapest wins in the NBA cost $2.34M \u2014 the priciest cost $12.67M",
    "tldr": "Team payroll divided by 2024-25 wins: Oklahoma City bought the league's best record for $2.34M per win, while Washington spent $12.67M per win on 18 wins.",
    "viz": "bars",
    "viz_label": "Payroll $M per regular-season win, 2024-25 (lower = cheaper wins)"
@@ -1334,7 +1334,7 @@
    "kicker": "Money layer",
    "lede": "Fan cost per win flips the affordability story. The cheapest arenas in the league (Action Network's 2025 family-of-four game-day index, tickets + food + merch + parking) paired with the fewest wins produce the priciest win of all.",
    "og_desc": "The cheapest arenas hide the priciest wins. Houston fans paid $22.69 per win; Washington paid $61.11. Fan cost per win, 2024-25.",
-   "og_title": "Washington fans paid $61 per win — the NBA's worst fan deal",
+   "og_title": "Washington fans paid $61 per win \u2014 the NBA's worst fan deal",
    "rows": [
     {
      "label": "Washington",
@@ -1389,17 +1389,17 @@
    ],
    "slug": "fan-cost-per-win",
    "stat": "61.11",
-   "stat_label": "$ per win — Washington, worst fan value in the NBA",
+   "stat_label": "$ per win \u2014 Washington, worst fan value in the NBA",
    "title": "The cheapest ticket in the NBA hides the worst deal: $61 per win",
-   "tldr": "Family-of-four game-day cost divided by 2024-25 wins: Washington fans paid $61.11 per win and Utah $60.00 — worse value than a night at Madison Square Garden.",
+   "tldr": "Family-of-four game-day cost divided by 2024-25 wins: Washington fans paid $61.11 per win and Utah $60.00 \u2014 worse value than a night at Madison Square Garden.",
    "viz": "bars",
    "viz_label": "Fan cost per win, 2024-25 wins (higher = worse value)"
   },
   {
    "foot": "Sportscasting, secondary-market data: average get-in price per team for the 2025-26 season (2024-25 prices: NYK $186.80, MEM $34.62). League average get-in: $52.86.",
    "kicker": "Money layer",
-   "lede": "Secondary-market get-in prices for the 2025-26 season (Sportscasting). The Knicks' average gate is 46% above the next-priciest team — and the Oklahoma City Thunder, fresh off 68 wins, raised prices 92.7% year over year, the biggest jump in the league.",
-   "og_desc": "$213.43 average get-in at MSG vs. $22.00 in Memphis — the NBA's widest ticket-price gap, 2025-26 season.",
+   "lede": "Secondary-market get-in prices for the 2025-26 season (Sportscasting). The Knicks' average gate is 46% above the next-priciest team \u2014 and the Oklahoma City Thunder, fresh off 68 wins, raised prices 92.7% year over year, the biggest jump in the league.",
+   "og_desc": "$213.43 average get-in at MSG vs. $22.00 in Memphis \u2014 the NBA's widest ticket-price gap, 2025-26 season.",
    "og_title": "A Knicks ticket costs 9.7x a Grizzlies ticket",
    "rows": [
     {
@@ -1445,8 +1445,8 @@
    ],
    "slug": "ticket-price-gap",
    "stat": "9.7",
-   "stat_label": "x — Knicks get-in price vs. Grizzlies ($213.43 vs. $22.00)",
-   "title": "A Knicks ticket costs 9.7x a Grizzlies ticket — same hardwood",
+   "stat_label": "x \u2014 Knicks get-in price vs. Grizzlies ($213.43 vs. $22.00)",
+   "title": "A Knicks ticket costs 9.7x a Grizzlies ticket \u2014 same hardwood",
    "tldr": "Average get-in price for the 2025-26 season: the Knicks ($213.43) charge nearly ten times what Memphis ($22.00) charges, and MSG will host five of the ten priciest games of the season.",
    "viz": "bars",
    "viz_label": "Average get-in ticket price, 2025-26 season ($)"
@@ -1454,8 +1454,8 @@
   {
    "foot": "Final bills per Hoops Rumors, ESPN's Bobby Marks, and Spotrac estimates; 2022-23 figures are Eric Pincus near-final projections. Nominal dollars, not inflation-adjusted.",
    "kicker": "Tax Burden",
-   "lede": "Total luxury tax paid, 2015-16 → 2024-25. The five biggest-spending franchises that never won a ring in the window — led by a team that never even reached the Finals.",
-   "og_desc": "Second-biggest tax bill of the decade — and not one Finals appearance. Who paid the most for rings?",
+   "lede": "Total luxury tax paid, 2015-16 \u2192 2024-25. The five biggest-spending franchises that never won a ring in the window \u2014 led by a team that never even reached the Finals.",
+   "og_desc": "Second-biggest tax bill of the decade \u2014 and not one Finals appearance. Who paid the most for rings?",
    "og_title": "The Clippers paid $394.5M in luxury tax for zero Finals",
    "rows": [
     {
@@ -1486,17 +1486,17 @@
    ],
    "slug": "clippers-nothing-to-show",
    "stat": "394.5",
-   "stat_label": "$ millions in tax, Clippers 2015-25 — zero Finals",
+   "stat_label": "$ millions in tax, Clippers 2015-25 \u2014 zero Finals",
    "title": "The Clippers spent $394.5 million on the luxury tax and never made a Finals",
-   "tldr": "The second-biggest luxury-tax bill of the decade bought zero Finals appearances — spending buys contention, not certainty.",
+   "tldr": "The second-biggest luxury-tax bill of the decade bought zero Finals appearances \u2014 spending buys contention, not certainty.",
    "viz": "bars",
-   "viz_label": "Total luxury tax paid, 2015-16 → 2024-25 ($M), no championship"
+   "viz_label": "Total luxury tax paid, 2015-16 \u2192 2024-25 ($M), no championship"
   },
   {
    "foot": "Window totals divided by rings won in-window. Lakers excluded (2020-21 bill unconfirmed). Champions per Basketball-Reference; bills per Hoops Rumors / Bobby Marks / Spotrac.",
    "kicker": "Tax Burden",
-   "lede": "Luxury tax paid per championship won, 2015-16 → 2024-25. Four of the ten champions paid nothing the year they won; the 2025 Finals was the first in 20 years with two non-tax teams.",
-   "og_desc": "Golden State paid $232.9M per ring over the same span — more than 10x Toronto's one-title bill.",
+   "lede": "Luxury tax paid per championship won, 2015-16 \u2192 2024-25. Four of the ten champions paid nothing the year they won; the 2025 Finals was the first in 20 years with two non-tax teams.",
+   "og_desc": "Golden State paid $232.9M per ring over the same span \u2014 more than 10x Toronto's one-title bill.",
    "og_title": "Toronto's $21.4M title was the cheapest ring of the decade",
    "rows": [
     {
@@ -1537,17 +1537,17 @@
    ],
    "slug": "cheapest-ring",
    "stat": "21.4",
-   "stat_label": "$ millions in tax per ring, Toronto '18-19 — cheapest",
+   "stat_label": "$ millions in tax per ring, Toronto '18-19 \u2014 cheapest",
    "title": "Toronto won the cheapest championship of the decade: $21.4M in tax",
-   "tldr": "The Raptors' 2019 title cost one-eleventh of what the Warriors paid per ring — timing beats spending.",
+   "tldr": "The Raptors' 2019 title cost one-eleventh of what the Warriors paid per ring \u2014 timing beats spending.",
    "viz": "bars",
    "viz_label": "Luxury tax paid per championship, 2015-2025 ($M)"
   },
   {
    "foot": "Repeater = tax in 3 of previous 4 seasons (Hoops Rumors repeater tracker). Warriors' $176.9M in 2023-24 is the all-time single-season record; they missed the playoffs that year.",
    "kicker": "Repeater Tax",
-   "lede": "Repeater-rate tax paid in the window, 2015-16 → 2024-25. Golden State's four repeater seasons alone exceed the decade totals of every other franchise — and their 2019-20 duck-under bought them only one non-repeater year.",
-   "og_desc": "The Warriors' repeater bills alone top every other franchise's decade total — including a record $176.9M for a season they missed the playoffs.",
+   "lede": "Repeater-rate tax paid in the window, 2015-16 \u2192 2024-25. Golden State's four repeater seasons alone exceed the decade totals of every other franchise \u2014 and their 2019-20 duck-under bought them only one non-repeater year.",
+   "og_desc": "The Warriors' repeater bills alone top every other franchise's decade total \u2014 including a record $176.9M for a season they missed the playoffs.",
    "og_title": "$531.2M in repeater tax: the price of keeping a dynasty together",
    "rows": [
     {
@@ -1583,8 +1583,8 @@
    ],
    "slug": "warriors-repeater-record",
    "stat": "531.2",
-   "stat_label": "$ millions in repeater-rate tax, Warriors 2021-22 → 2024-25",
-   "title": "The Warriors paid $531.2M at repeater rates — including a record $176.9M for a season they missed the playoffs",
+   "stat_label": "$ millions in repeater-rate tax, Warriors 2021-22 \u2192 2024-25",
+   "title": "The Warriors paid $531.2M at repeater rates \u2014 including a record $176.9M for a season they missed the playoffs",
    "tldr": "Repeater penalties (tax in 3 of 4 seasons) turned the Warriors' dynasty maintenance into the most expensive tax run in NBA history.",
    "viz": "bars",
    "viz_label": "Tax paid at repeater rates, 2015-2025 ($M)"
@@ -1592,7 +1592,7 @@
   {
    "foot": "Boston $180M = projected tax penalties saved (Bobby Marks, June 2025; Keith Smith estimated ~$196M in total savings). GSW/LAC rows = bill reduction from 2023-24 to 2024-25 after letting Thompson/George walk to duck the apron. KAT = tax saved per the Beacon Journal. Reported by The Ringer, Boston Herald.",
    "kicker": "Second Apron",
-   "lede": "Approximate tax savings from apron-driven moves. The second apron doesn't just charge money — it bans the mid-level exception, salary aggregation, and future pick trades, so teams are shedding stars to get under it.",
+   "lede": "Approximate tax savings from apron-driven moves. The second apron doesn't just charge money \u2014 it bans the mid-level exception, salary aggregation, and future pick trades, so teams are shedding stars to get under it.",
    "og_desc": "Klay walked, PG walked, KAT was dumped, Boston tore apart a title team. The new cap ends dynasties faster than money ever did.",
    "og_title": "The second apron broke up contenders in two seasons",
    "rows": [
@@ -1603,12 +1603,12 @@
     },
     {
      "label": "Warriors: ducked 2nd apron",
-     "tag": "176.9M → 15.4M",
+     "tag": "176.9M \u2192 15.4M",
      "value": 161.5
     },
     {
      "label": "Clippers: ducked 2nd apron",
-     "tag": "142.4M → 0",
+     "tag": "142.4M \u2192 0",
      "value": 142.4
     },
     {
@@ -1621,15 +1621,15 @@
    "stat": "2",
    "stat_label": "seasons of the second apron before Boston dismantled a title core",
    "title": "The second apron ended dynasties faster than the luxury tax ever did",
-   "tldr": "Klay Thompson and Paul George walked for nothing, KAT was salary-dumped, and Boston tore apart a title team one summer later — the new cap broke up contenders in two seasons.",
+   "tldr": "Klay Thompson and Paul George walked for nothing, KAT was salary-dumped, and Boston tore apart a title team one summer later \u2014 the new cap broke up contenders in two seasons.",
    "viz": "bars",
    "viz_label": "Approximate tax savings from apron-driven moves ($M)"
   },
   {
-   "foot": "Entity extraction over title, tldr, lede, row labels and foot of all 20 live cards (origin/master, 2026-10-07). Player names normalized to dossier keys; short forms (LeBron, Giannis, Melo, Manu, Klay…) resolved by hand-checked alias rules. Full machine-readable index: assets/entity-index.json. Counts are card-level (a player cited twice in one card counts once).",
+   "foot": "Entity extraction over title, tldr, lede, row labels and foot of all 28 live cards (origin/master, 2026-10-07; analysis from 20-card set). Player names normalized to dossier keys; short forms (LeBron, Giannis, Melo, Manu, Klay\u2026) resolved by hand-checked alias rules. Full machine-readable index: assets/entity-index.json. Counts are card-level (a player cited twice in one card counts once).",
    "kicker": "Entity grounding",
-   "lede": "Every player, team and season named across the 20 live cards, counted. 70 players are cited in total; the top of the list is a tie. Giannis appears in most-unique, transformed, paid-to-not-play, max-money-bargains and contenders-pretenders — the uniqueness, reinvention and value stories. Duncan appears in playoff-swings, the-188-million-win-share, same-jersey-smaller-role, hometown-discount and max-money-bargains — the swings, money and sacrifice stories. LeBron James is next at 4; nine players sit at 3. All 70 cited players have dossiers — the noun layer is fully grounded.",
-   "og_desc": "Giannis Antetokounmpo and Tim Duncan are each cited in 5 of 20 Insights cards — more than any other player. The noun layer, counted.",
+   "lede": "Every player, team and season named across the 28 live cards, counted. 70 players are cited in total; the top of the list is a tie. Giannis appears in most-unique, transformed, paid-to-not-play, max-money-bargains and contenders-pretenders \u2014 the uniqueness, reinvention and value stories. Duncan appears in playoff-swings, the-188-million-win-share, same-jersey-smaller-role, hometown-discount and max-money-bargains \u2014 the swings, money and sacrifice stories. LeBron James is next at 4; nine players sit at 3. All 70 cited players have dossiers \u2014 the noun layer is fully grounded.",
+   "og_desc": "Giannis Antetokounmpo and Tim Duncan are each cited in 5 of 28 Insights cards \u2014 more than any other player. The noun layer, counted.",
    "og_title": "The two faces of our Insights: Giannis and Tim Duncan",
    "rows": [
     {
@@ -1686,8 +1686,8 @@
    "slug": "most-cited-players",
    "stat": "5",
    "stat_label": "cards citing Giannis Antetokounmpo and Tim Duncan each (of 20)",
-   "title": "Two players anchor all 20 Insights cards: Giannis and Tim Duncan",
-   "tldr": "Giannis Antetokounmpo and Tim Duncan are each cited in 5 of the 20 live cards — nobody else clears 4. The Insights section has a face: uniqueness and reinvention on one side, sacrifice and longevity on the other.",
+   "title": "Two players anchor all 28 Insights cards: Giannis and Tim Duncan",
+   "tldr": "Giannis Antetokounmpo and Tim Duncan are each cited in 5 of the 28 live cards \u2014 nobody else clears 4. The Insights section has a face: uniqueness and reinvention on one side, sacrifice and longevity on the other.",
    "viz": "bars",
    "viz_label": "Cards citing each player"
   }
