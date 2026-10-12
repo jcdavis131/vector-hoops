@@ -9,9 +9,9 @@ Live at https://hoops.dumbmodel.com — plain HTML/JS, no framework.
 
 > Solo personal project, no connection to employer, built with public/free-tier only (free data pipeline, ONNX optional, static Vercel).
 
-> **Picking up in-progress work?** Start at [`docs/HANDOFF.md`](docs/HANDOFF.md) — current state, dormant data tracks and how to activate them, verification commands, and open follow-ups.
+> **Building, training, verifying or shipping the model?** Start at [`docs/PIPELINE.md`](docs/PIPELINE.md): the stages, recipes, the data contract, lineage and promotion, the served-model check, CQS v1 and v2, the verification commands and the operator runbook.
 >
-> **Building, training or shipping the model?** [`docs/PIPELINE.md`](docs/PIPELINE.md): the stages, recipes, the data contract, lineage and promotion, the served-model check, CQS v1 and v2, and the operator runbook.
+> [`docs/HANDOFF.md`](docs/HANDOFF.md) is the 2026-08-09 handoff, kept for its history of the dormant data tracks. Its commands are superseded: its fixture recipe overwrites the training inputs in `pipeline/data` (see the note at its top).
 
 ## The embedding
 
@@ -30,6 +30,8 @@ python pipeline/build_vectors.py     # frozen 14-dim game contract + wide traini
 python pipeline/build_skills.py      # 12-skill grades + client-side probe weights
 python pipeline/update_dataset.py    # growth loop: fetch -> rebuild -> gate -> ledger
 ```
+
+`update_dataset.py` stops at a required gate today, before its ledger row: `build_scoring_lite` refuses the served f32 until a promoted run is exported (no `assets/mtnn_lineage.json`), and on this branch the eval-scoreboard floors fail first on the unpromoted smoke bundle. Its workflow, `.github/workflows/skills-dataset.yml`, is manual now (the weekly cron is gone), and its header lists every gate that is red on a runner.
 
 Sources: stats.nba.com league dashboards (Base/Advanced/Scoring/bio/tracking) and Basketball-Reference contracts. Every response is cached under `pipeline/cache/`; stats.nba.com throttles hard, so reruns resume, and `--offline` rebuilds from cache only. Rebuilds are gated by `pipeline/test_skills.py` before anything ships.
 

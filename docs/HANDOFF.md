@@ -1,5 +1,7 @@
 # Handoff 2026-08-09 — Skills Lens + dormant data tracks (coherence pass unified README/manifest + hub parity)
 
+> **Superseded (2026-10-11, `forge/backend-hardening`). Do not run the commands in this file to verify or rebuild anything.** [`docs/PIPELINE.md`](PIPELINE.md) is the current guide: the matrix stage, the data contract, training and promotion, the served-model check and the operator runbook. The "Retrain MTNN end-to-end" recipe that was in "How to verify" ran `bootstrap_train_matrix.py`, then `build_wide_skills`, `build_pedigree` and `build_playoffs` with `--fixture` and no `--out-root`. That overwrites the training inputs in `pipeline/data`: `train_matrix.npz` and `feature_manifest.json` with a 14-column bootstrap matrix, and `wide_skill_labels.npz`, `pedigree.json` and `playoffs.json` with fixture data. The climb's prepare rebuilds only the matrix, so the fixture side files stay, and `integrate_context` gates the pedigree and playoff families out under its 1% coverage rule; nothing fails [final#19]. The recipe is removed below. The rest of this file is the 2026-08-09 record of the Skills Lens and the dormant data tracks, kept for history.
+
 > **Date:** 2026-08-09 — verified assets/manifest.json composite 0.7937, eval_scoreboard.json test_top1 0.438 test_top5 0.757, bundles/manifest.json v3.3-OODA-Agentic-MoMA-Graph-Checkpoint + scout-cli 0.8.0 13 agents 12 packs 6 ultra 5 workflows
 > **Purpose:** let another agent (or future you) pick up this work without
 > re-deriving context. **Latest session:** [`HANDOFF_2026-07-25.md`](./HANDOFF_2026-07-25.md)
@@ -67,8 +69,9 @@ same branch name (see the "merged PR" rule in the repo's agent guidance).
   `playoff_riser`). Research lane only. The game ships transparent
   features; promotion is gated (see SKILLS_LENS section 3).
 - **Growth loop** (`pipeline/update_dataset.py`): fetch-best-effort, then
-  rebuild, then gate, then append `pipeline/cache/dataset_ledger.json`. Weekly
-  GitHub Action `.github/workflows/skills-dataset.yml`.
+  rebuild, then gate, then append `pipeline/cache/dataset_ledger.json`.
+  `.github/workflows/skills-dataset.yml` ran it weekly then; it is manual
+  (workflow_dispatch) since 2026-10-09 and red on a runner (its header says why).
 - **UI rule:** never show >2 decimals to users (`num2()` in skills.html,
   drift.js tooltip). Canvas rgba opacities are internal, left alone.
 
@@ -118,16 +121,14 @@ python pipeline/test_pedigree.py      # Track H (fixture mode)
 python pipeline/test_playoffs.py      # Track I
 python pipeline/test_wide_skills.py   # Tracks J + K (Curry/Wemby gravity)
 python pipeline/update_dataset.py --offline   # full loop + ledger
-
-# Retrain MTNN end-to-end (CPU ok) to confirm 17 skill towers + heads:
-python pipeline/bootstrap_train_matrix.py
-python pipeline/build_skills.py && python pipeline/build_wide_skills.py --fixture
-python pipeline/build_pedigree.py --fixture && python pipeline/build_playoffs.py --fixture
-python pipeline/integrate_context.py
-python pipeline/train_mtnn.py --epochs 40   # -> pipeline/data/mtnn_report.json
 ```
 
-torch is CPU-only here; a 40-epoch run on the bootstrap matrix is minutes.
+The "Retrain MTNN end-to-end" block that followed is removed: it overwrote
+the training inputs in `pipeline/data` with a bootstrap matrix and fixture
+side files (see the note at the top). Rebuild and train with
+`python pipeline/rebuild_all.py --dry-run`, `--stage matrix`, then the
+runbook in [`docs/PIPELINE.md`](PIPELINE.md); `python -m pytest -m "not local_data"`
+is what CI runs.
 UI checks: serve statically (`python -m http.server`) and drive
 `skills.html` — the dormant surfaces render only when their `assets/*.json`
 exists (build a temp complete cache to preview, then delete it; never
