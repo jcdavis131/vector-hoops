@@ -40,7 +40,7 @@
 .vh-tax__search-note{font:600 12.5px/1 var(--font-sans);color:var(--fg-2);white-space:nowrap}
 .vh-tax__fam{margin:0 0 var(--s-5)}
 .vh-tax__famhead{background:var(--void,#1E2022);color:#F9F6F0;border-radius:16px;padding:22px 24px;margin:0 0 12px;box-shadow:var(--shadow-soft)}
-.vh-tax__famhead h2{font:800 clamp(20px,3.4vw,27px)/1.2 var(--font-display);margin:0 0 6px;letter-spacing:-.01em}
+.vh-tax__famhead h2{font:800 clamp(20px,3.4vw,27px)/1.2 var(--font-display);margin:0 0 6px;letter-spacing:-.01em;color:#F9F6F0}
 .vh-tax__famhead h2::before{content:"";display:inline-block;width:10px;height:10px;border-radius:50%;background:var(--accent);margin-right:10px;vertical-align:2px}
 .vh-tax__famhead p{font:400 14px/1.6 var(--font-sans);color:#cfc9bd;margin:0 0 8px;max-width:62ch}
 .vh-tax__fammeta{font:600 11.5px/1 var(--font-sans);letter-spacing:.1em;text-transform:uppercase;color:var(--gold,#D4AF69)}
@@ -51,6 +51,8 @@
 .vh-tax__archname{font:700 clamp(16px,2.6vw,20px)/1.3 var(--font-display);letter-spacing:-.01em;flex:0 1 auto}
 .vh-tax__archmeta{font:400 12.5px/1.5 var(--font-sans);color:var(--fg-2);flex:1 1 auto}
 .vh-tax__chev{font-size:18px;color:var(--accent);transition:transform .18s ease;flex:0 0 auto}
+.vh-tax__archsum::after{content:"Details";font:700 10.5px/1 var(--font-sans);letter-spacing:.12em;text-transform:uppercase;color:var(--fg-3);flex:0 0 auto}
+.vh-tax__arch[open] .vh-tax__archsum::after{content:"Hide"}
 .vh-tax__arch[open] .vh-tax__chev{transform:rotate(180deg)}
 .vh-tax__archbody{padding:0 20px 20px;border-top:1px solid var(--line)}
 .vh-tax__archdesc{font:400 14.5px/1.65 var(--font-sans);color:var(--fg);margin:14px 0;max-width:66ch}
@@ -103,7 +105,7 @@
   <p class="site-footer__attribution">Every number recomputable from stats.nba.com · A <a href="https://dumbmodel.com">dumbmodel</a> project</p>
 </footer>
 <script src="/assets/site-nav.js?v=1d646996"></script>
-<script src="assets/taxonomy.js?v=f3065dca"></script>
+<script src="assets/taxonomy.js?v=4a2de619"></script>
 <script>if('serviceWorker' in navigator){window.addEventListener('load',()=>{navigator.serviceWorker.register('/sw.js').catch(()=>{})})}</script>
 <script src="assets/site-facts.js?v=cbb639f4" defer></script>
 <script>
