@@ -647,32 +647,32 @@
     var panelX = 12;
     var panelY = 12;
     var lineH = 14;
-    var panelH = 10 + Math.max(1, axes.length) * (lineH + 12);
+    var panelH = 22 + Math.max(1, axes.length) * (lineH + 12);
     ctx.font = '700 10px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace';
-    /* Fit by measurement, not by a fixed character slice: the old slice(0, 72)
-       overflowed the panel (and the canvas on narrow stages), clipping the
-       legend text at the right edge. Size the panel to the widest measured
-       line, capped to the canvas, and ellipsis-trim any line that still
-       exceeds the cap. */
-    function fitLine(s, maxW) {
-      s = String(s || '');
-      if (ctx.measureText(s).width <= maxW) return s;
-      while (s.length && ctx.measureText(s + '…').width > maxW) s = s.slice(0, -1);
+    /* The panel carries only short axis identifiers — 'X / PC1' plus the
+       axis name (~23 chars worst case in the real data). The full hi/lo axis
+       descriptions run to ~100 chars: at 10px mono they need a ~700px panel,
+       wider than the stage on most viewports, so every fit-by-measurement
+       variant ended up ellipsis-trimming them in the rendered page. Those
+       descriptions therefore live in HTML under the map (renderMapAxes),
+       where text wraps and cannot clip; this panel just names the axes and
+       points there. The char-slice below is a defensive guard only — the
+       panel is sized from the measured lines, so it never engages with the
+       real strings. */
+    var title = 'PCA Axes (MTNN ' + ((state.arch && state.arch.dEmb) || 64) + '-d) — full text below';
+    var rows = axes.map(function (ax, i) {
+      var label = (ax.axis || ['X', 'Y', 'Z'][i]) + ' / ' + (ax.pc || ('PC' + (i + 1)));
+      return ax.name ? label + ' · ' + ax.name : label;
+    });
+    var panelCap = Math.max(160, w - 24);
+    function fitShort(s) {
+      if (ctx.measureText(s).width <= panelCap - 16) return s;
+      while (s.length && ctx.measureText(s + '…').width > panelCap - 16) s = s.slice(0, -1);
       return s + '…';
     }
-    var panelCap = Math.max(160, w - 24);
-    var textBudget = Math.max(48, panelCap - 98); // hi/lo start at +90, 8px right pad
-    var title = 'PCA Axes (MTNN ' + ((state.arch && state.arch.dEmb) || 64) + '-d) — Cam\'s Lab light paper';
-    var rows = axes.map(function (ax, i) {
-      return {
-        label: (ax.axis || ['X', 'Y', 'Z'][i]) + ' / ' + (ax.pc || ('PC' + (i + 1))),
-        hi: fitLine(ax.hi, textBudget),
-        lo: fitLine(ax.lo, textBudget)
-      };
-    });
     var needW = ctx.measureText(title).width + 16;
     rows.forEach(function (r) {
-      needW = Math.max(needW, 98 + ctx.measureText(r.hi).width, 98 + ctx.measureText(r.lo).width);
+      needW = Math.max(needW, ctx.measureText(r).width + 16);
     });
     var panelW = Math.min(panelCap, Math.ceil(needW));
     ctx.fillStyle = CARD;
@@ -680,17 +680,33 @@
     ctx.lineWidth = 1.8;
     ctx.beginPath(); ctx.roundRect(panelX, panelY, panelW, panelH, 8); ctx.fill(); ctx.stroke();
     ctx.fillStyle = INK;
-    ctx.fillText(fitLine(title, panelW - 16), panelX + 8, panelY + 13);
+    ctx.fillText(fitShort(title), panelX + 8, panelY + 15);
     rows.forEach(function (r, i) {
-      var y = panelY + 30 + i * (lineH + 12);
+      var y = panelY + 36 + i * (lineH + 12);
       ctx.fillStyle = INK;
-      ctx.fillText(r.label, panelX + 8, y);
-      ctx.fillStyle = INK;
-      ctx.fillText(r.hi, panelX + 90, y);
-      ctx.fillStyle = SUBTLE_AAA;
-      ctx.fillText(r.lo, panelX + 90, y + lineH);
+      ctx.fillText(fitShort(r), panelX + 8, y);
     });
     ctx.restore();
+  }
+
+  /* Chip labels (selected player, hover readout) are drawn whole, or split
+     at ' · ' separators onto extra lines — never ellipsized and never
+     clipped: the split decision uses the drawing context's own measurements
+     and the caller sizes the background chip to the widest resulting line. */
+  function chipLines(ctx, label, maxW) {
+    label = String(label || '');
+    if (ctx.measureText(label).width <= maxW) return [label];
+    var parts = label.split(' · ');
+    if (parts.length < 2) return [label];
+    var lines = [];
+    var cur = parts[0];
+    for (var i = 1; i < parts.length; i++) {
+      var next = cur + ' · ' + parts[i];
+      if (ctx.measureText(next).width <= maxW) { cur = next; }
+      else { lines.push(cur); cur = parts[i]; }
+    }
+    lines.push(cur);
+    return lines;
   }
 
   function headRow(playerIdx) {
@@ -870,6 +886,27 @@
         '<span class="network-map-legend__name">unclustered</span></li>');
     }
     host.innerHTML = items.join('');
+  }
+
+  /* Full axis descriptions for the embedding map, rendered as HTML under
+     the canvas: the hi/lo strings run to ~100 chars, which no fixed canvas
+     panel can hold at every stage width (the in-canvas panel keeps only the
+     short axis identifiers). HTML wraps, so the text is complete by
+     construction — no measuring, no trimming, no clipping at any viewport. */
+  function renderMapAxes() {
+    var host = $('network-map-axes');
+    if (!host || !state.map || !state.map.axes || !state.map.axes.length) return;
+    var dim = (state.arch && state.arch.dEmb) || 64;
+    var html = '<p class="network-map-axes__title">PCA axes — what each direction means (MTNN ' + dim + '-d)</p>';
+    state.map.axes.forEach(function (ax, i) {
+      var label = (ax.axis || ['X', 'Y', 'Z'][i]) + ' / ' + (ax.pc || ('PC' + (i + 1))) +
+        (ax.name ? ' · ' + ax.name : '');
+      html += '<p class="network-map-axes__row">' +
+        '<strong class="network-map-axes__label">' + esc(label) + '</strong>' +
+        '<span class="network-map-axes__end"><em>High end:</em> ' + esc(ax.hi || '') + '</span>' +
+        '<span class="network-map-axes__end"><em>Low end:</em> ' + esc(ax.lo || '') + '</span></p>';
+    });
+    host.innerHTML = html;
   }
 
   function renderMapInsights() {
@@ -2536,20 +2573,27 @@ function buildFlowSvg(host) {
       ctx.arc(ap.sx, ap.sy, 5.2, 0, Math.PI * 2);
       ctx.fill();
 
-      // Selected player label — readability at the zoomed framing.
+      // Selected player label — readability at the zoomed framing. Drawn
+      // whole, or split at the ' · ' onto a second line (chipLines): the
+      // chip is sized to the widest line and clamped inside the canvas, so
+      // the name/season text cannot clip at any stage width.
       var sel = state.players[state.playerIdx];
       if (sel) {
         var label = sel.name + ' · ' + sel.season;
         ctx.font = '600 12px ui-sans-serif, system-ui, sans-serif';
-        var tw = ctx.measureText(label).width;
+        var lines = chipLines(ctx, label, w - 28);
+        var tw = 0;
+        lines.forEach(function (ln) { tw = Math.max(tw, ctx.measureText(ln).width); });
         var lx = Math.max(10, Math.min(w - tw - 18, ap.sx + 14));
-        var ly = Math.max(28, Math.min(h - 12, ap.sy - 14));
+        var ly = Math.max(28, Math.min(h - 11 - (lines.length - 1) * 15, ap.sy - 14));
         ctx.globalAlpha = 0.72;
         ctx.fillStyle = 'rgba(0,0,0,0.55)';
-        ctx.fillRect(lx - 6, ly - 13, tw + 12, 20);
+        ctx.fillRect(lx - 6, ly - 13, tw + 12, 20 + (lines.length - 1) * 15);
         ctx.globalAlpha = 1;
         ctx.fillStyle = CARD;
-        ctx.fillText(label, lx, ly);
+        lines.forEach(function (ln, li) {
+          ctx.fillText(ln, lx, ly + li * 15);
+        });
       }
     }
 
@@ -2564,12 +2608,14 @@ function buildFlowSvg(host) {
       var hLabel = hp ? (hp.name + ' · ' + hp.season + (archNm ? ' · ' + archNm : '')) : '';
       if (hLabel) {
         ctx.font = '600 11px ui-sans-serif, system-ui, sans-serif';
-        var htw = ctx.measureText(hLabel).width;
+        var hLines = chipLines(ctx, hLabel, w - 28);
+        var htw = 0;
+        hLines.forEach(function (ln) { htw = Math.max(htw, ctx.measureText(ln).width); });
         var hlx = Math.max(10, Math.min(w - htw - 18, hpr.sx + 12));
-        var hly = Math.max(28, Math.min(h - 12, hpr.sy - 12));
+        var hly = Math.max(28, Math.min(h - 10 - (hLines.length - 1) * 14, hpr.sy - 12));
         ctx.globalAlpha = 0.78;
         ctx.fillStyle = 'rgba(0,0,0,0.6)';
-        ctx.fillRect(hlx - 6, hly - 12, htw + 12, 18);
+        ctx.fillRect(hlx - 6, hly - 12, htw + 12, 18 + (hLines.length - 1) * 14);
         ctx.beginPath();
         ctx.arc(hpr.sx, hpr.sy, 5, 0, Math.PI * 2);
         ctx.strokeStyle = INK;
@@ -2577,7 +2623,9 @@ function buildFlowSvg(host) {
         ctx.stroke();
         ctx.globalAlpha = 1;
         ctx.fillStyle = INK;
-        ctx.fillText(hLabel, hlx, hly);
+        hLines.forEach(function (ln, li) {
+          ctx.fillText(ln, hlx, hly + li * 14);
+        });
       }
     }
     ctx.globalAlpha = 1;
@@ -3510,6 +3558,7 @@ function buildFlowSvg(host) {
       loadInputs();
       loadSeasonNorms();
       renderMapLegend();
+      renderMapAxes();
       renderMapInsights();
       renderFlowInsights();
       requestAnimationFrame(mapLoop);
