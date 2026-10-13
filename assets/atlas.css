@@ -1,6 +1,6 @@
 /* ==========================================================================
    Vector Hoops — Atlas design system
-   One stylesheet, loaded LAST on every page. It owns the tokens (palette,
+   One stylesheet, loaded LAST of the shared stack on every page. It owns the tokens (palette,
    type scale, spacing, motion) and restates the shared components so every
    page reads as one instrument: a coach's whiteboard on a drafting table —
    paper ground, pencil grid, marker annotations. Dark "night board" variant
@@ -288,6 +288,13 @@ p{ text-wrap: pretty; }
 .site-nav__link:hover{ color: var(--fg); background: none; }
 .site-nav__link.is-active{ color: var(--fg); border: 0; background: none; box-shadow: none; }
 .site-nav__link.is-active::after{ transform: scaleX(1); }
+.site-nav__link.is-live{ position: relative; }
+.site-nav__link.is-live::before{
+  content: ""; position: absolute; top: 6px; right: -8px; width: 7px; height: 7px;
+  border-radius: 50%; background: var(--verm); animation: vh-live-pulse 1.4s infinite;
+}
+@keyframes vh-live-pulse{ 0%,100%{ opacity: 1 } 50%{ opacity: .25 } }
+@media (prefers-reduced-motion: reduce){ .site-nav__link.is-live::before{ animation: none; } }
 .site-nav__end{ justify-self: end; display: flex; align-items: center; gap: var(--s-3); }
 .site-nav__meta{
   font-family: var(--font-code); font-size: var(--t-2xs); font-weight: 600; font-stretch: 112%;
