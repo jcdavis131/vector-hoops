@@ -106,7 +106,7 @@ canvas{display:block;width:100%;height:380px}
         <div style="padding:12px">
           <div class="mono" style="font-weight:900;font-size:13px">How Everyday Works</div>
           <div class="mono-sm" style="margin-top:4px;text-transform:none;line-height:1.5;color:#3a3732">One past player appears. Guess which modern player plays most like them. Score >68% locks it, shows orange career path. Finish 3 → streak ticks. Miss a calendar day → streak resets to 0. Built free · Open-source · No paywall — no login, PWA offline.</div>
-          <div style="margin-top:10px;display:flex;flex-wrap:wrap"><span class="chip" style="background:var(--accent-wash);color:var(--accent)">10 past × 1305 modern pool</span><span class="chip">14-d MTNN cosine</span><span class="chip">OKABE dots visible on void #080A0F</span><span class="chip">single-select clears prev</span></div>
+          <div style="margin-top:10px;display:flex;flex-wrap:wrap"><span class="chip" style="background:var(--accent-wash);color:var(--accent)">10 past × 1305 modern pool</span><span class="chip">14-d MTNN cosine</span><span class="chip">tap a pick again to clear it</span></div>
           <div id="streakDots" style="margin-top:10px"></div>
           <div id="wwDetail" class="mono-sm" style="margin-top:4px"></div>
         </div>
@@ -154,7 +154,7 @@ canvas{display:block;width:100%;height:380px}
 
   <div style="display:flex;flex-direction:column;gap:12px">
     <div class="card" style="overflow:hidden;padding:0">
-      <div style="display:flex;justify-content:space-between;padding:9px 12px;border-bottom:1px solid var(--line-2);background:var(--surface)"><span class="mono" style="font-weight:800">Map — 15-d proj + 1305 modern pool</span><span class="mono-sm">Past ★ Modern ○ • OKABE visible on void</span></div>
+      <div style="display:flex;justify-content:space-between;padding:9px 12px;border-bottom:1px solid var(--line-2);background:var(--surface)"><span class="mono" style="font-weight:800">Map — 15-d proj + 1305 modern pool</span><span class="mono-sm">Past ★ Modern ○</span></div>
       <div style="position:relative" class="canvas-box">
         <canvas id="c" width="640" height="380" aria-label="Everyday map. Modern pool 1305 points positioned by model, coloured by archetype, crosshair target past. Tap any dot to fill guess box — all also in suggestions."></canvas>
         <canvas id="trajOver" width="640" height="380" style="position:absolute;inset:0;pointer-events:none;background:transparent"></canvas>
@@ -165,9 +165,9 @@ canvas{display:block;width:100%;height:380px}
       <div style="padding:8px 12px;background:var(--paper);border-top:1px solid var(--line-2)" class="mono-sm">Tap a modern dot to guess • orange pulse = lock • grey dots hidden until select • trajectory orange shows change</div>
     </div>
     <div class="card" style="padding:12px">
-      <div class="mono" style="font-weight:900">Why viral?</div>
+      <div class="mono" style="font-weight:900">Why play it daily?</div>
       <div class="mono-sm" style="text-transform:none;line-height:1.5;margin-top:4px;color:#3a3732">
-        Same 3 every day → group chat domination. Copy link <code>?daily=YYYYMMDD&n=3</code> preserves stars via same seed chain. Challenge link gives identical puzzles (same-link-same-stars). Wordle share grid but with hoops heads: <code>🟩🟨⬛</code> = lock quality. Streak must be consecutive calendar days or it resets — t-learning from <code>vh_weekStreak</code> bug that counted ever, not streak. Magic sparkle when you go 3/3.
+        Same 3 puzzles for everyone, every day. Send a challenge link (it carries <code>?daily=YYYYMMDD&n=3</code>) and your friends play the identical three, stars and all. The share grid <code>🟩🟨⬛</code> shows how cleanly you locked each one. Streaks count consecutive calendar days — miss a day and it resets. Go 3/3 and you get the sparkle.
       </div>
       <div style="margin-top:10px;display:flex;gap:6px;flex-wrap:wrap">
         <span class="pill pill-y">Same daily = talk</span><span class="pill">Streak = come back</span><span class="pill">Share = flex</span><span class="pill">No login = no friction</span>
@@ -286,7 +286,7 @@ function drawBase(curObj){
   // modern pool
   if(!gameData||!gameData.modern){ return; }
   let m=vhMapXY();
-  // OKABE visible on dark per masterclass — increase alpha/size
+  // Okabe-Ito palette reads on dark — increase alpha/size
   const OKABE=['#2A8FEF','#FF7A1A','#1ECC8A','#E67BB1','#F8E946','#7EC8FF','#FFB000','#FF4D67']; // fallback
   gameData.modern.forEach(pt=>{
     let X=m.sx(pt.x), Y=m.sy(pt.y);
