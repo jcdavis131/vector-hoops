@@ -3,7 +3,7 @@
    person_id trajectories; held-out test macro-MAE 0.4382, props-weighted
    0.4269 — beats naive_last / avg3 / lite baselines). Per-game priors
    calibrated empirically on 2025-26 real data. Projection, not a prediction.
-   Methodology: /research (frontier program) + /methods. */
+   Methodology: /model#frontier (frontier program) + /methods. */
 (function () {
   'use strict';
   var URL = '/assets/arc_priors_2026-27.json';
@@ -55,7 +55,7 @@
       '<div class="arc-proj__grid">' + cells + '</div>' +
       (sub.length ? '<p class="arc-proj__sub">' + sub.join(' · ') + '</p>' : '') +
       '<p class="arc-proj__fine">Career-arc model on this player\u2019s own trajectory (held-out macro-MAE 0.44, measured in embedding space — not points — beating the naive baselines). ' +
-      'A projection, not a prediction. <a href="/research">How it works</a></p>' +
+      'A projection, not a prediction. <a href="/model#frontier">How it works</a></p>' +
       '</div>';
   }
 

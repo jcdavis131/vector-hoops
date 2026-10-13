@@ -10,11 +10,8 @@
     { href: '/live', label: 'Live', title: 'Live game companion: win probability, atlas twins, shot charts — plus the arcade between games' },
     { href: '/players', label: 'Players', title: 'Directory, skill profiles and leaderboards' },
     { href: '/teams', label: 'Teams', title: 'Thirty seamless team intro loops over the embedding atlas' },
-    { href: '/model', label: 'Lab', title: 'How the embedding model is trained and evaluated' },
-    { href: '/trends', label: 'Trends', title: 'Thirty seasons of league drift' },
-    { href: '/insights', label: 'Insights', title: 'What the model learned: shareable findings from 12,966 player-seasons' },
-    { href: '/props-lab', label: 'Props Lab', title: 'Paper-trading a game-log model against PrizePicks lines' },
-    { href: '/methods', label: 'Methods', title: 'Sources, features and the maths behind every number' }
+    { href: '/insights', label: 'Insights', title: 'Findings from the model — and from the ledger' },
+    { href: '/model', label: 'Lab', title: 'The model, its evals, methods, props and the frontier program' }
   ];
 
   // Centre circle of a court, seen from above: the site's mark.
