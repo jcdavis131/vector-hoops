@@ -713,7 +713,7 @@
     fetch('assets/honors.json?v=0b73617d').then(function(r){return r.ok?r.json():null;}).then(function(ho){ HONORS=ho||false; if (HONORS && current.slug) renderProfile(); }).catch(function(){HONORS=false;});
     fetch('assets/pedigree.json?v=a6e9ab2a').then(function(r){return r.ok?r.json():null;}).then(function(ped){ PEDIGREE=ped||false; if (PEDIGREE) addDraftBoardModes(); }).catch(function(){PEDIGREE=false;});
     fetch('assets/skills_wide.json?v=e73e28bd').then(function(r){return r.ok?r.json():null;}).then(function(w){ WIDE=w||false; if (WIDE) { addWideBoardModes(); if (current.slug) renderProfile(); } }).catch(function(){WIDE=false;});
-    fetch('assets/archetype_assignments.json?v=6ba6d757').then(function(r){return r.ok?r.json():null;}).then(function(aa){ ARCH_ASSIGN=aa||false; if (ARCH_ASSIGN && current.slug) renderProfile(); }).catch(function(){ARCH_ASSIGN=false;});
+    fetch('assets/archetype_assignments.json?v=bde7f5f0').then(function(r){return r.ok?r.json():null;}).then(function(aa){ ARCH_ASSIGN=aa||false; if (ARCH_ASSIGN && current.slug) renderProfile(); }).catch(function(){ARCH_ASSIGN=false;});
     fetch('assets/season_norms.json?v=bcd38ecb').then(function(r){return r.ok?r.json():null;}).then(function(sn){ SEASON_NORMS=sn||null; if (SEASON_NORMS && current.slug) renderProfile(); }).catch(function(){SEASON_NORMS=null;});
     fetch('assets/next_profile_eval.json?v=3ab3d23e').then(function(r){return r.ok?r.json():null;}).then(function(ne){ NEXT_EVAL=ne||false; if (NEXT_EVAL && current.slug) renderProfile(); }).catch(function(){NEXT_EVAL=false;});
     if (window.VHMtnn && window.VHMtnn.load) { window.VHMtnn.load(function (ok) { MTNN_READY = !!ok; if (MTNN_READY && current.slug) renderProfile(); }); } else { MTNN_READY=false; }
@@ -732,7 +732,7 @@
     if (!document.getElementById('skills-search')) return;
     initDom();
     Promise.all([
-      fetch('assets/vectors.json?v=fbcdf252').then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); }),
+      fetch('assets/vectors.json?v=14c4d17d').then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); }),
       fetch('assets/skills.json?v=e7655730').then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
     ]).then(function (loaded) {
       DATA = loaded[0]; SKILLS = loaded[1];

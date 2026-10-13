@@ -195,10 +195,6 @@
       "source": "/insights/:slug"
     },
     {
-      "destination": "/leaderboard.html",
-      "source": "/leaderboard"
-    },
-    {
       "destination": "/props-lab.html",
       "source": "/props-lab"
     },
@@ -215,10 +211,6 @@
       "source": "/taxonomy"
     },
     {
-      "destination": "/index.html",
-      "source": "/dfs"
-    },
-    {
       "source": "/playoff-runs",
       "destination": "/playoff-runs.html"
     }
@@ -228,6 +220,26 @@
     {
       "source": "/research",
       "destination": "/model#frontier",
+      "permanent": true
+    },
+    {
+      "source": "/leaderboard",
+      "destination": "/play",
+      "permanent": true
+    },
+    {
+      "source": "/dfs",
+      "destination": "/props-lab",
+      "permanent": true
+    },
+    {
+      "source": "/oracle",
+      "destination": "/props-lab",
+      "permanent": true
+    },
+    {
+      "source": "/models",
+      "destination": "/model",
       "permanent": true
     }
   ]

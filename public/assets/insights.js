@@ -42,7 +42,7 @@
   }
 
   function load() {
-    return fetch('assets/insights.json?v=3294fa9f').then(function (r) {
+    return fetch('assets/insights.json?v=a6a894c6').then(function (r) {
       if (!r.ok) throw new Error('insights.json ' + r.status);
       return r.json();
     });
@@ -212,7 +212,7 @@
   /* ---------- sharing ---------- */
 
   function pageURL(slug) {
-    return location.origin + location.pathname.replace(/[^/]*$/, '') + 'insights.html#' + slug;
+    return location.origin + '/insights/' + slug;
   }
 
   function bindShare(data) {
