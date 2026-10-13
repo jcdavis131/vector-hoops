@@ -50,57 +50,132 @@
 
   /* ---------- SVG viz renderers (on-page) ---------- */
 
+  /* The viz panel is always the dark void (#1E2022) in BOTH themes, so chart
+     fills use fixed on-void colors — never theme tokens. (The old code took
+     --gold from the theme; in the paper theme that is marker-black #1A1A1A,
+     which made the lead bar invisible on the void panel.) */
+  var VIZ_PAPER = '#F9F6F0';
+
+  /* Canvas-measured text fitting: labels/tags are truncated to a measured
+     budget, so no SVG text can ever run past the viewBox edge. */
+  var _mctx = null;
+  function measureText(t, font) {
+    try {
+      if (!_mctx) _mctx = document.createElement('canvas').getContext('2d');
+      _mctx.font = font;
+      return _mctx.measureText(t).width * 1.05 + 1;
+    } catch (e) { return String(t).length * 6.8; }
+  }
+  var F_LABEL = '400 13px Archivo, Inter, sans-serif';
+  var F_TAG = '400 12px Archivo, Inter, sans-serif';
+  var F_VAL = '700 13px Archivo, Inter, sans-serif';
+  function fitText(t, maxW, font) {
+    t = String(t);
+    if (measureText(t, font) <= maxW) return t;
+    var lo = 0, hi = t.length;
+    while (lo < hi) {
+      var mid = (lo + hi + 1) >> 1;
+      if (measureText(t.slice(0, mid) + '…', font) <= maxW) lo = mid; else hi = mid - 1;
+    }
+    return lo > 0 ? t.slice(0, lo) + '…' : '';
+  }
+
+  /* A row renders only with a real label and a finite value — never blank. */
+  function validRow(r) {
+    return r && typeof r.label === 'string' && r.label.trim() !== '' &&
+      typeof r.value === 'number' && isFinite(r.value);
+  }
+
   function barsSVG(ins) {
-    var P = palette();
-    var rows = ins.rows.slice(0, 8);
+    var rows = ins.rows.filter(validRow);
+    if (!rows.length) return '';
+    var W = 620, rowH = 46, barH = 13, barY = 21;
+    var H = rows.length * rowH + 6;
     var vals = rows.map(function (r) { return r.value; });
     var max = Math.max.apply(null, vals), min = Math.min.apply(null, vals);
-    var W = 620, rowH = 34, padL = 200, padR = 130;
-    var H = rows.length * rowH + 8;
     var s = '<svg viewBox="0 0 ' + W + ' ' + H + '" class="vh-ins__viz" role="img" aria-label="' + esc(ins.viz_label || 'bar chart') + '">';
-    if (min >= 0) {
-      rows.forEach(function (r, i) {
-        var y = i * rowH + 8, w = Math.max(3, (r.value / max) * (W - padL - padR));
-        var gold = i === 0;
-        s += '<text x="0" y="' + (y + 17) + '" class="vh-ins__svglabel">' + esc(r.label) + '</text>';
-        s += '<rect x="' + padL + '" y="' + y + '" width="' + w.toFixed(1) + '" height="20" rx="4" fill="' + (gold ? P.gold : P.terra) + '" opacity="' + (gold ? 1 : 0.55 + 0.4 * (1 - i / rows.length)) + '"/>';
-        s += '<text x="' + (padL + w + 8) + '" y="' + (y + 16) + '" class="vh-ins__svgval">' + r.value + (r.tag ? ' · ' + esc(r.tag) : '') + '</text>';
-      });
-    } else {
-      // Diverging bars around a zero axis (e.g. playoff deltas that go negative).
-      var span = max - min, plotW = W - padL - padR;
-      var zeroX = padL + ((0 - min) / span) * plotW;
-      s += '<line x1="' + zeroX.toFixed(1) + '" y1="4" x2="' + zeroX.toFixed(1) + '" y2="' + (H - 4) + '" stroke="' + P.muted + '" stroke-width="1"/>';
-      rows.forEach(function (r, i) {
-        var y = i * rowH + 8;
-        var bw = Math.max(3, (Math.abs(r.value) / span) * plotW);
-        var bx = r.value < 0 ? zeroX - bw : zeroX;
-        var fill = r.value < 0 ? TERRA : GOLD;
-        var lx = r.value < 0 ? zeroX + 8 : bx + bw + 8;
-        s += '<text x="0" y="' + (y + 17) + '" class="vh-ins__svglabel">' + esc(r.label) + '</text>';
-        s += '<rect x="' + bx.toFixed(1) + '" y="' + y + '" width="' + bw.toFixed(1) + '" height="20" rx="4" fill="' + fill + '"/>';
-        s += '<text x="' + lx.toFixed(1) + '" y="' + (y + 16) + '" class="vh-ins__svgval">' + r.value + (r.tag ? ' · ' + esc(r.tag) : '') + '</text>';
-      });
+
+    /* Geometry: bars span the full plot width from a true zero baseline.
+       Diverging data maps [min(0,min), max(0,max)] onto [0, W] so the zero
+       spine sits where the data puts it — never off-canvas. */
+    var diverging = min < 0;
+    var lo = diverging ? Math.min(0, min) : 0;
+    var hi = diverging ? Math.max(0, max) : (max || 1);
+    var span = (hi - lo) || 1;
+    function X(v) { return ((v - lo) / span) * W; }
+    var zeroX = X(0);
+
+    /* Per-row value placement, decided before tags so the tag budget can
+       reserve room when a value falls back to the label line:
+       1) inside the bar at its far end (dark text on the fill),
+       2) just outside the bar end,
+       3) the label line, right-aligned — always inside the viewBox. */
+    function planValue(r, bx, bw) {
+      var str = String(r.value);
+      var vw = measureText(str, F_VAL);
+      var end = bx + bw;
+      if (r.value >= 0) {
+        if (bw >= vw + 16) return { str: str, x: end - 7, anchor: 'end', cls: 'vh-ins__svgval vh-ins__svgval--in', onLabel: false };
+        if (end + 7 + vw <= W) return { str: str, x: end + 7, anchor: 'start', cls: 'vh-ins__svgval', onLabel: false };
+      } else {
+        if (bw >= vw + 16) return { str: str, x: bx + 7, anchor: 'start', cls: 'vh-ins__svgval vh-ins__svgval--in', onLabel: false };
+        if (bx - 7 - vw >= 0) return { str: str, x: bx - 7, anchor: 'end', cls: 'vh-ins__svgval', onLabel: false };
+      }
+      return { str: str, x: W, anchor: 'end', cls: 'vh-ins__svgval', onLabel: true, vw: vw };
     }
+
+    var plans = rows.map(function (r) {
+      var bx = X(Math.min(0, r.value)), bw = Math.max(3, Math.abs(X(r.value) - zeroX));
+      if (r.value < 0) bx = zeroX - bw;
+      return { bx: bx, bw: bw, v: planValue(r, bx, bw) };
+    });
+
+    rows.forEach(function (r, i) {
+      var y = i * rowH + 4, p = plans[i];
+      /* Label line: label first, tag fitted into whatever room remains. */
+      var label = fitText(r.label, W - 70, F_LABEL);
+      var lw = measureText(label, F_LABEL);
+      var reserve = p.v.onLabel ? p.v.vw + 12 : 0;
+      var tag = r.tag ? fitText(r.tag, W - lw - 12 - reserve, F_TAG) : '';
+      s += '<text x="0" y="' + (y + 13) + '" class="vh-ins__svglabel">' + esc(label) + '</text>';
+      if (tag) s += '<text x="' + (lw + 10).toFixed(1) + '" y="' + (y + 13) + '" class="vh-ins__svgtag">' + esc(tag) + '</text>';
+      /* Full-width track (the zero-baseline scale), then the bar itself. */
+      s += '<rect x="0" y="' + (y + barY) + '" width="' + W + '" height="' + barH + '" rx="4" fill="' + VIZ_PAPER + '" opacity="0.06"/>';
+      var fill = diverging ? (r.value < 0 ? TERRA : GOLD) : (i === 0 ? GOLD : TERRA);
+      s += '<rect x="' + p.bx.toFixed(1) + '" y="' + (y + barY) + '" width="' + p.bw.toFixed(1) + '" height="' + barH + '" rx="4" fill="' + fill + '"/>';
+      var vy = p.v.onLabel ? y + 13 : y + barY + 11;
+      s += '<text x="' + p.v.x.toFixed(1) + '" y="' + vy + '" class="' + p.v.cls + '" text-anchor="' + p.v.anchor + '">' + esc(p.v.str) + '</text>';
+    });
+
+    /* Zero spine last, on top: a clearly visible axis for diverging cards,
+       and the baseline edge for plain bar cards. */
+    s += '<line x1="' + zeroX.toFixed(1) + '" y1="2" x2="' + zeroX.toFixed(1) + '" y2="' + (H - 2) + '" stroke="' + VIZ_PAPER + '" stroke-width="' + (diverging ? 1.5 : 1) + '" opacity="' + (diverging ? 0.55 : 0.3) + '"/>';
     return s + '</svg>';
   }
 
   function sharesSVG(ins) {
-    var P = palette();
-    var rows = ins.rows;
-    var W = 620, rowH = 30, padL = 250, padR = 10;
+    var rows = ins.rows.filter(function (r) {
+      return r && typeof r.label === 'string' && r.label.trim() !== '' &&
+        isFinite(r.early) && isFinite(r.late) && isFinite(r.delta);
+    });
+    if (!rows.length) return '';
+    var W = 620, rowH = 30, padL = 250;
     var H = rows.length * rowH + 30;
+    /* Scale bars so the widest share still leaves a reserved gutter for the
+       end-anchored delta label — bars and labels can never collide. */
+    var maxShare = Math.max.apply(null, rows.map(function (r) { return Math.max(r.early, r.late); })) || 1;
+    var k = Math.min(9, (W - padL - 78) / maxShare);
     var s = '<svg viewBox="0 0 ' + W + ' ' + H + '" class="vh-ins__viz" role="img" aria-label="archetype share then vs now">';
-    s += '<text x="' + padL + '" y="12" class="vh-ins__svgval" fill="' + P.muted + '">then</text>';
+    s += '<text x="' + padL + '" y="12" class="vh-ins__svgval">then</text>';
     s += '<text x="' + (padL + 130) + '" y="12" class="vh-ins__svgval">now</text>';
     rows.forEach(function (r, i) {
       var y = 20 + i * rowH;
-      var w1 = Math.max(2, r.early * 9), w2 = Math.max(2, r.late * 9);
+      var w1 = Math.max(2, r.early * k), w2 = Math.max(2, r.late * k);
       var neg = r.delta < 0;
-      s += '<text x="0" y="' + (y + 15) + '" class="vh-ins__svglabel">' + esc(r.label) + '</text>';
-      s += '<rect x="' + padL + '" y="' + y + '" width="' + w1.toFixed(1) + '" height="9" rx="3" fill="' + P.muted + '"/>';
-      s += '<rect x="' + padL + '" y="' + (y + 11) + '" width="' + w2.toFixed(1) + '" height="9" rx="3" fill="' + (neg ? '#b0523c' : P.terra) + '"/>';
-      s += '<text x="' + (padL + 250) + '" y="' + (y + 16) + '" class="vh-ins__svgval">' + (r.delta > 0 ? '+' : '') + r.delta + 'pp</text>';
+      s += '<text x="0" y="' + (y + 15) + '" class="vh-ins__svglabel">' + esc(fitText(r.label, padL - 10, F_LABEL)) + '</text>';
+      s += '<rect x="' + padL + '" y="' + y + '" width="' + w1.toFixed(1) + '" height="9" rx="3" fill="' + MUTED + '"/>';
+      s += '<rect x="' + padL + '" y="' + (y + 11) + '" width="' + w2.toFixed(1) + '" height="9" rx="3" fill="' + (neg ? '#D96A52' : TERRA) + '"/>';
+      s += '<text x="' + W + '" y="' + (y + 16) + '" class="vh-ins__svgval" text-anchor="end">' + (r.delta > 0 ? '+' : '') + r.delta + 'pp</text>';
     });
     return s + '</svg>';
   }
@@ -136,7 +211,7 @@
     s += '<circle cx="' + X(0) + '" cy="' + Y(rows[0].v) + '" r="5" fill="' + P.gold + '"/>';
     s += '<circle cx="' + X(rows.length - 1) + '" cy="' + Y(rows[rows.length - 1].v) + '" r="5" fill="' + P.gold + '"/>';
     s += '<text x="' + (X(0) - 6) + '" y="' + (Y(rows[0].v) - 10) + '" class="vh-ins__svgval" text-anchor="end">' + rows[0].v + '</text>';
-    s += '<text x="' + (X(rows.length - 1) + 8) + '" y="' + (Y(rows[rows.length - 1].v) - 10) + '" class="vh-ins__svgval">' + rows[rows.length - 1].v + '</text>';
+    s += '<text x="' + W + '" y="' + (Y(rows[rows.length - 1].v) - 10) + '" class="vh-ins__svgval" text-anchor="end">' + rows[rows.length - 1].v + '</text>';
     s += '<text x="' + padL + '" y="' + (H - 8) + '" class="vh-ins__svglabel">' + esc(rows[0].s) + '</text>';
     s += '<text x="' + (W - 14) + '" y="' + (H - 8) + '" class="vh-ins__svglabel" text-anchor="end">' + esc(rows[rows.length - 1].s) + '</text>';
     return s + '</svg>';
@@ -334,8 +409,18 @@
           c.beginPath();
           c.roundRect(bx, ry + rh / 2 - 13, bw, 26, 6);
           c.fill();
-          c.fillStyle = MUTED; c.font = '400 24px ' + F;
-          c.fillText(String(r.value), bx + bw + 12, ry + rh / 2 + 8);
+          /* Value inside the bar end when it fits there, else just outside —
+             but never past the viz's right edge. */
+          var vs = String(r.value);
+          c.font = '700 24px ' + F;
+          var vw = c.measureText(vs).width;
+          if (bw >= vw + 24) {
+            c.fillStyle = '#1E2022';
+            c.fillText(vs, bx + bw - vw - 10, ry + rh / 2 + 8);
+          } else {
+            c.fillStyle = MUTED;
+            c.fillText(vs, bx + bw + 12, ry + rh / 2 + 8);
+          }
         });
       } else {
         // Diverging bars around a zero axis (e.g. playoff deltas that go negative).
@@ -354,8 +439,20 @@
           c.beginPath();
           c.roundRect(dbx, dry + rh / 2 - 13, dbw, 26, 6);
           c.fill();
-          c.fillStyle = MUTED; c.font = '400 24px ' + F;
-          c.fillText(String(r.value), (r.value < 0 ? dzero : dbx + dbw) + 12, dry + rh / 2 + 8);
+          /* Value adjacent to its own bar end: inside when it fits, else
+             outside on the bar's side of the spine — never across it. */
+          var dvs = String(r.value);
+          c.font = '700 24px ' + F;
+          var dvw = c.measureText(dvs).width;
+          c.fillStyle = MUTED;
+          if (dbw >= dvw + 24) {
+            c.fillStyle = '#1E2022';
+            c.fillText(dvs, r.value < 0 ? dbx + 10 : dbx + dbw - dvw - 10, dry + rh / 2 + 8);
+          } else if (r.value < 0) {
+            c.fillText(dvs, dbx - dvw - 12, dry + rh / 2 + 8);
+          } else {
+            c.fillText(dvs, dbx + dbw + 12, dry + rh / 2 + 8);
+          }
         });
       }
     } else if (ins.viz === 'shares') {
