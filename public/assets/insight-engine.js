@@ -181,7 +181,7 @@
   }
 
   function skillDeltas(aIdx,bIdx){
-    // Prefer real MTNN heads (48→16→1 skill towers) if available, fallback to transparent 0-99 grades
+    // Prefer real MTNN heads (64→16→1 skill towers) if available, fallback to transparent 0-99 grades
     if (global.VHMtnn && global.VHMtnn.getHeads) {
       var ha = global.VHMtnn.getHeads(aIdx);
       var hb = global.VHMtnn.getHeads(bIdx);
@@ -194,7 +194,7 @@
           diffs.push({skill:keys[i], from: from.toFixed(2), to: to.toFixed(2), delta: to-from, absDelta: Math.abs(to-from), rawFrom: from, rawTo: to});
         }
         diffs.sort(function(a,b){return b.absDelta-a.absDelta;});
-        return { aIdx:aIdx,bIdx:bIdx, diffs:diffs, top3:diffs.slice(0,3), summary:diffs.slice(0,3).map(function(d){return d.skill+ ' '+d.from+'→'+d.to+' ('+(d.delta>0?'+':'')+d.delta.toFixed(2)+')';}).join(', '), closeness:{avgAbs:(diffs.reduce(function(s,d){return s+d.absDelta;},0)/diffs.length).toFixed(2)}, source:'mtnn_heads 48→16→1 towers'};
+        return { aIdx:aIdx,bIdx:bIdx, diffs:diffs, top3:diffs.slice(0,3), summary:diffs.slice(0,3).map(function(d){return d.skill+ ' '+d.from+'→'+d.to+' ('+(d.delta>0?'+':'')+d.delta.toFixed(2)+')';}).join(', '), closeness:{avgAbs:(diffs.reduce(function(s,d){return s+d.absDelta;},0)/diffs.length).toFixed(2)}, source:'mtnn_heads 64→16→1 towers'};
       }
     }
     if(!DATA.grades) return { top3:[], summary:'skills loading', closeness:{score:'?'}, source:'transparent' };

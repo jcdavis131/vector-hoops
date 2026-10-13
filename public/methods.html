@@ -78,7 +78,7 @@
     <section id="vector-space">
       <div class="doc-n">01</div>
       <h2>The vector space — two views, one frame</h2>
-      <p><b>Games (fast):</b> 12,966 seasons, 1996–97 to 2025–26, from stats.nba.com, per 100 possessions. Eligibility is schedule-aware — about 15% of team games plus a minutes bar (6% of schedule minutes, floored at 450) — not a flat cutoff. Each season’s 14 features are z-scored within that season. Player counts site-wide are distinct player IDs — <span data-fact="players">2,426</span> (distinct display names: <span data-fact="player_names">2,422</span>; a few names belong to two different players).</p>
+      <p><b>Games (fast):</b> 12,966 player-seasons, 1996–97 to 2025–26, from stats.nba.com, per 100 possessions. Eligibility is schedule-aware — about 15% of team games plus a minutes bar (6% of schedule minutes, floored at 450) — not a flat cutoff. Each season’s 14 features are z-scored within that season. Player counts site-wide are distinct player IDs — <span data-fact="players">2,426</span> (distinct display names: <span data-fact="player_names">2,422</span>; a few names belong to two different players).</p>
       <table class="data-table">
         <thead><tr><th scope="col">Feature</th><th scope="col">Measures</th><th scope="col">Era note</th></tr></thead>
         <tbody>
@@ -98,7 +98,7 @@
     <section>
       <div class="doc-n">01·b</div>
       <h2>The richer research model</h2>
-      <p>The same 12,966 seasons with far more context: volume, playmaking, rebounding, defense, efficiency, shot mix, bio, tracking (2013+, masked before), form, market, roster, career, competition, team, pedigree, playoffs and honors. Each family feeds its own tower.</p>
+      <p>The same 12,966 player-seasons with far more context: volume, playmaking, rebounding, defense, efficiency, shot mix, bio, tracking (2013+, masked before), form, market, roster, career, competition, team, pedigree, playoffs and honors. Each family feeds its own tower.</p>
       <div class="cqs-strip"><span class="cqs-badge"><b data-fact="model_inputs">130</b>Features</span><span class="cqs-badge"><b>17</b>Towers</span><span class="cqs-badge"><b data-fact="seasons">30</b>Seasons</span><span class="cqs-badge"><b>8</b>Types</span><span class="cqs-badge"><b><span data-fact="model_dim">64</span>-d</b>L2</span></div>
       <dl class="doc-defs">
         <div><dt>z-score</dt><dd>How far above the league average: 0 is average, +2 is elite.</dd></div>
@@ -137,7 +137,7 @@ Heads: 8 arch / 5 pos / 14 next / 18 skills (64→16→1)
     <section id="archetypes">
       <div class="doc-n">04</div>
       <h2>Archetypes — eight types</h2>
-      <p>k-means with K = 8 on the era-z vectors, seeded so it reproduces.</p>
+      <p>k-means with K = 8, in two spaces. The labels on players, dossiers and games come from the frozen game contract — k-means on the 14-d era-z serving vectors, seeded so it reproduces; the MTNN archetype head learns to predict those labels (top-1 0.970). The Trends stream's prevalence is computed separately, from a K = 8 clustering of the 64-d MTNN v5 embedding, with the same naming rule (names from distinctive skill z-scores).</p>
       <ol class="doc-list">
         <li>Three-point accuracy (low TOV)</li><li>Scoring + shot volume</li><li>Defensive glass + rim pressure</li><li>Three-point volume + accuracy</li>
         <li>Offensive glass (low on-court)</li><li>Rim protection + offensive glass</li><li>Offensive glass + defensive glass</li><li>Playmaking + steals</li>
@@ -167,14 +167,14 @@ Heads: 8 arch / 5 pos / 14 next / 18 skills (64→16→1)
       <div class="doc-n">04&middot;e</div>
       <h2>Player dossier — every player, from the model</h2>
       <p>Open any player in the <a href="players.html">directory</a> and their dossier is built from the same model behind the map &mdash; no hand-written bios, nothing to go stale. Each dossier carries a minutes-weighted 14-trait style fingerprint, the player&rsquo;s archetype and how it moved across their career, their era twin (with the plain-words why), how their game changed from first to last charted season, the five nearest player-seasons in style space, and a plain-words read of where they live on the map.</p>
-      <p class="doc-note">All dossier numbers come from the promoted MTNN v5 14-d serving vectors and the derived research assets (era twins, career trails, archetype assignments, honors). Similarity is cosine in the 14-d style space. &ldquo;How his game changed&rdquo; compares first vs last charted season only; traits that moved less than half a standard deviation are left out.</p>
+      <p class="doc-note">All dossier numbers come from the 14-d serving projection (vectors.json — the transparent era-z style space, not an MTNN output) and the derived research assets (era twins, career trails, archetype assignments, honors). Similarity is cosine in the 14-d style space; era twins are matched in the 64-d MTNN v5 embedding. &ldquo;How his game changed&rdquo; compares first vs last charted season only; traits that moved less than half a standard deviation are left out.</p>
     </section>
 
     <section id="drift">
       <div class="doc-n">05</div>
       <h2>League drift — Procrustes</h2>
       <p class="doc-formula">Orthogonal Procrustes on consecutive-season shared players (≥ 30). Rotation = mean principal angle of Q against the identity; residual = Frobenius norm after alignment; chained to the 1996 root frame; RᵀR = I.</p>
-      <p>This powers the <a href="/trends">Trends</a> charts. The biggest summers: 2021–22 at 11.1° and 2022–23 at 7.6°.</p>
+      <p>This powers the <a href="/trends">Trends</a> charts. The biggest rotation: the summer entering 2019–20 (2018–19 → 2019–20) at 12.49°, then 2020–21 → 2021–22 at 11.35°.</p>
     </section>
 
     <section id="skills">
@@ -190,7 +190,7 @@ Heads: 8 arch / 5 pos / 14 next / 18 skills (64→16→1)
     <section id="forecast-method">
       <div class="doc-n">07 · Experimental</div>
       <h2>Forecast — where a player is headed</h2>
-      <p class="doc-formula">Three-season context → next-season embedding (first 8 of 64 dimensions). Same source as the map: embedding_v3_with_text.npz, 12,966 × 64. A torch-lite two-layer temporal transformer with cross-variate attention, 7,096 windows, 5 epochs full-batch, no chronological split, no quantile calibration yet. Not TimesFM-3 (non-commercial) or a validated TimesFM-2.5.</p>
+      <p class="doc-formula">Three-season context → next-season embedding (first 8 of 64 dimensions). Source: the served 64-d MTNN v5 embedding, 12,966 × 64. A deterministic numpy forecaster (patch length 3, cross-variate least squares, seed 7), 7,096 windows, chronological split — train ≤2021, validation 2022–23, test ≥2024; the metrics stored in the file are train-split, research-only. No quantile calibration yet. Not TimesFM-3 (non-commercial) or a validated TimesFM-2.5.</p>
       <p>One contract everywhere: <code>assets/timesfm_forecasts.json</code>, 7,096 forecasts, with an honest failure message if the file is missing.</p>
       <p class="doc-note">Future work: chronological, player-aware splits with no leakage; saved seeds and weights; naive-last and drift baselines; MAE / RMSE plus angular error; quantile coverage.</p>
     </section>
@@ -216,7 +216,7 @@ Heads: 8 arch / 5 pos / 14 next / 18 skills (64→16→1)
         <li>No lineup or on/off data — the model doesn’t know who shared the floor.</li>
         <li>A midseason move is a TEAM_ID change, not verified trade metadata.</li>
         <li>Tracking exists only from 2013; earlier seasons are masked, not imputed.</li>
-        <li>Position coverage is 99.7%.</li>
+        <li>Position coverage is high but not total; unlabelled rows are masked, not imputed.</li>
         <li>Archetype names describe centroid stats, not scouting reports.</li>
         <li>A Chimera’s fused vector never existed as a real season.</li>
       </ul>

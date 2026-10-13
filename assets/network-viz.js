@@ -73,7 +73,7 @@
     },
     {
       id: 'heads',
-      caption: 'Decode: MLP 48→64→k for archetype(8)/position(5)/profile(14)/next(14), plus 18×(48→16→1) skill towers and scalar aux heads.'
+      caption: 'Decode: MLP 48→64→k for archetype(8)/position(5)/profile(14)/next(14), plus 18×(64→16→1) skill towers and scalar aux heads.'
     }
   ];
 
@@ -1588,7 +1588,7 @@ function buildFlowSvg(host) {
     var headDefs = [
       { key: 'archetype', label: 'Archetype (8) 48→64→8', y: H * 0.20 },
       { key: 'position', label: 'Position (5) 48→64→5', y: H * 0.36 },
-      { key: 'skills', label: 'Skills (18) 18×(48→16→1)', y: H * 0.52 },
+      { key: 'skills', label: 'Skills (18) 18×(64→16→1)', y: H * 0.52 },
       { key: 'next_profile', label: 'Next season (14) 48→64→14', y: H * 0.68 },
       { key: 'aux', label: 'Aux 8 scalar 48→1', y: H * 0.84 }
     ];

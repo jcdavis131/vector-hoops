@@ -245,7 +245,7 @@
     });
     var foot=document.createElement('div');
     foot.style.cssText='grid-column:1/-1;font-family:ui-monospace,monospace;font-size:10px;opacity:.7';
-    foot.textContent=(opts.title||'Skill DNA 18 towers 48→16→1 — real mtnn_heads.f32')+' · top '+(grades.slice().sort(function(a,b){return b-a;}).slice(0,3).join(', '));
+    foot.textContent=(opts.title||'Skill DNA 18 towers 64→16→1 — real mtnn_heads.f32')+' · top '+(grades.slice().sort(function(a,b){return b-a;}).slice(0,3).join(', '));
     container.appendChild(foot);
   }
   g.VHSkillTowerViz = {
@@ -270,7 +270,7 @@
         var cache=mtnn._cache?mtnn._cache():null;
         var arch=cache?cache.arch:null;
         var keys=arch?arch.skillKeys:null;
-        render18(contF, fused.skills, keys, {title:'Skill DNA blend — real 48→16→1 towers + grade 0-99'});
+        render18(contF, fused.skills, keys, {title:'Skill DNA blend — real 64→16→1 towers + grade 0-99'});
       }
     }catch(e){}
   });
