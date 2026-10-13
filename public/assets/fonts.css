@@ -1,0 +1,4 @@
+/* Self-hosted variable fonts (latin subsets) — Archivo (wdth+wght) + Inter (opsz+wght),
+   the same files Google Fonts served, minus the third-party round trip. font-display: swap. */
+@font-face { font-family: 'Archivo'; font-style: normal; font-weight: 400 800; font-stretch: 62% 125%; font-display: swap; src: url('fonts/archivo-var.woff2') format('woff2'); }
+@font-face { font-family: 'Inter'; font-style: normal; font-weight: 400 700; font-display: swap; src: url('fonts/inter-var.woff2') format('woff2'); }

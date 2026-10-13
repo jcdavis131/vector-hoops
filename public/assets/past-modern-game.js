@@ -33,17 +33,31 @@
     }
   }
   let _mtnnP=null;
+  // heads (skill grades) are not needed to score a guess — pull them in the
+  // background once embeddings are in, so grades upgrade when they arrive.
+  function scheduleHeads(){
+    try{
+      const f=()=>{ try{ if(window.VHMtnn && window.VHMtnn.loadHeadsAsync) window.VHMtnn.loadHeadsAsync(); }catch{} };
+      if('requestIdleCallback' in window) requestIdleCallback(f,{timeout:5000}); else setTimeout(f,3000);
+    }catch{}
+  }
   async function ensureMtnn(){
     // memoized: all callers share one in-flight load; cleared on failure so a later call retries
     if(_mtnnP) return _mtnnP;
     _mtnnP=(async ()=>{
+      // embeddings only (3.1 MB, was 5.26 MB with heads): scoring is cosine
+      // over the embedding matrix; heads are a background upgrade.
+      if(window.VHMtnn && window.VHMtnn.loadEmbeddingsAsync){
+        await window.VHMtnn.loadEmbeddingsAsync(); scheduleHeads(); return;
+      }
       if(window.VHMtnn && window.VHMtnn.loadAsync){
         await window.VHMtnn.loadAsync(); return;
       }
       await new Promise((res,rej)=>{
         const s=document.createElement('script'); s.src='assets/mtnn.js'; s.async=true; s.onload=res; s.onerror=rej; document.head.appendChild(s);
       });
-      if(window.VHMtnn && window.VHMtnn.loadAsync) await window.VHMtnn.loadAsync();
+      if(window.VHMtnn && window.VHMtnn.loadEmbeddingsAsync){ await window.VHMtnn.loadEmbeddingsAsync(); scheduleHeads(); }
+      else if(window.VHMtnn && window.VHMtnn.loadAsync) await window.VHMtnn.loadAsync();
     })().catch(e=>{ _mtnnP=null; throw e; });
     return _mtnnP;
   }

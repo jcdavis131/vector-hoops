@@ -291,7 +291,10 @@
 
   function ensureEmbedding() {
     if (!window.VHMtnn) return;
-    window.VHMtnn.load(function (ok) {
+    // embeddings only (3.1 MB): the atlas's one model call is topK over the
+    // embedding matrix; the 2.2 MB heads file loads lazily elsewhere.
+    var loadFn = window.VHMtnn.loadEmbeddings || window.VHMtnn.load;
+    loadFn.call(window.VHMtnn, function (ok) {
       if (!ok) {
         var status = $('atlas-peers-status');
         if (status) status.textContent = 'The embedding could not be loaded on this connection. The atlas still works; peers need the 3.3 MB embedding file.';
@@ -520,7 +523,11 @@
       if (id < 0) { for (var i = 0; i < P.length; i++) if (P[i].n === FEATURED.n && P[i].s === FEATURED.s) { id = i; break; } }
       opening();
       select(id, { noUrl: true });
-      if ('requestIdleCallback' in window) requestIdleCallback(ensureEmbedding, { timeout: 1500 }); else setTimeout(ensureEmbedding, 400);
+      // Prefetch the embedding on first hover/touch/keyboard intent instead
+      // of on idle: visitors who never engage the map never pay the 3.1 MB.
+      ['pointerover', 'pointerdown', 'touchstart', 'focusin'].forEach(function (ev) {
+        document.addEventListener(ev, function () { ensureEmbedding(); }, { once: true, passive: true });
+      });
     })
     .catch(function (err) { fail('The season file did not arrive (' + err.message + '). Check your connection and try again.'); });
 
