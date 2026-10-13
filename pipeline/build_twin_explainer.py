@@ -192,7 +192,9 @@ def main():
     assert (
         "both fill it up scoring" in out[key_of(ah)]["shared"]
     ), "shooter pair chips wrong"
-    print(f"  sharpshooter: Allan Houston <-> Reggie Miller: {out[key_of(ah)]['shared']}")
+    print(
+        f"  sharpshooter: Allan Houston <-> Reggie Miller: {out[key_of(ah)]['shared']}"
+    )
 
     ag = next(p for p in twins if p["name"] == "AC Green" and p["season"] == "1999-00")
     ag_rec = out[key_of(ag)]
