@@ -116,7 +116,7 @@
     {
       "id": "fusion",
       "label": "Concat fusion",
-      "detail": "544 + 12-d season_emb = 556 → 128 → 64-d L2-norm, ~224K params"
+      "detail": "544 + 12-d season_emb = 556 → 256 → 64-d L2-norm"
     },
     {
       "id": "embedding",

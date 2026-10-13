@@ -768,7 +768,7 @@ Heads: 8 arch / 5 pos / 14 next / 18 skills (64→16→1)
 <script>if('serviceWorker' in navigator){window.addEventListener('load',()=>{navigator.serviceWorker.register('/sw.js').catch(()=>{})})}</script>
 <script src="assets/timesfm-forecast.js?v=67ee6481"></script>
 <script src="assets/mtnn.js?v=81d491f8"></script>
-<script src="assets/network-viz.js?v=5fe8d90a"></script>
+<script src="assets/network-viz.js?v=20785a36"></script>
 <script src="assets/site-facts.js?v=cbb639f4" defer></script>
 <script>
 (() => {
@@ -811,7 +811,7 @@ Heads: 8 arch / 5 pos / 14 next / 18 skills (64→16→1)
       document.getElementById('evsb-base5').textContent = pct(base.top5);
       document.getElementById('evsb-pairs').textContent = j.eligible_pairs.toLocaleString('en-US');
       if(cap) cap.textContent =
-        'Held-out retrieval: query the shipped 48-d space with a player’s season N — does that same player’s season N+1 rank in the top-5 nearest neighbors among all ' +
+        'Held-out retrieval: query the shipped 64-d space with a player’s season N — does that same player’s season N+1 rank in the top-5 nearest neighbors among all ' +
         j.embedding_asset.rows.toLocaleString('en-US') + ' player-seasons? Scored on ' + test.n.toLocaleString('en-US') +
         ' pairs whose target season (2024+) was never a training positive; ' + j.eligible_pairs.toLocaleString('en-US') +
         ' adjacent-season pairs total, keyed by stable PLAYER_ID. Baselines: transparent 14-d era-z profile (' + pct(base.top5) +
