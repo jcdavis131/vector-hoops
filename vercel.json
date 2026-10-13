@@ -320,7 +320,7 @@
   "redirects": [
     {
       "source": "/research",
-      "destination": "/model#frontier",
+      "destination": "/methods#frontier",
       "permanent": true
     },
     {
