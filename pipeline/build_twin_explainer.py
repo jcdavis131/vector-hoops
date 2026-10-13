@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Build twin-explainer assets — plain-words "why they're twins".
 
-Inputs : assets/eratwins.json (1,308 signature-season pairs + twin + similarity)
+Inputs : assets/eratwins.json (signature-season pairs + twin + similarity)
          assets/vectors.json (players[].v 14-d serving vectors, featureLabels)
          assets/vectors_search_lite.json (row ids n/s), assets/honors.json (asg)
 Outputs: assets/twin_explainer.json
@@ -102,7 +102,10 @@ def main():
         pid_by_key[key] = pid
 
     twins = json.load(open(ERATWINS, encoding="utf-8"))["players"]
-    assert len(twins) == 1308, f"expected 1308 pairs, got {len(twins)}"
+    # Pair count is a function of vectors.json careers (>=4 charted seasons):
+    # 1,308 in the retired 48-d-era data, 1,313 after the v5 regeneration on
+    # the identity-fixed vectors.json. Assert a sanity floor, not a count.
+    assert len(twins) >= 1000, f"expected 1000+ pairs, got {len(twins)}"
 
     # thin-match threshold from the sim distribution (bottom decile = genuinely thin)
     sims = sorted(p["twin"]["similarity"] for p in twins)
@@ -144,8 +147,9 @@ def main():
         }
         out[pair_key(a_key, b_key)] = rec
     assert not missing, f"{len(missing)} pairs missing vectors, e.g. {missing[:3]}"
-    # 127 unordered pairs repeat (mutual twins / duplicated rows); QA above proved
-    # their sims are identical, so first-wins dedup is lossless.
+    # Unordered pairs repeat when twins are mutual (A's twin is B and B's is
+    # A); cosine is symmetric, so their sims are identical and the dict
+    # overwrite dedup is lossless. (138 such repeats in the v5 data.)
     n_unique = len(
         {
             tuple(
@@ -182,10 +186,13 @@ def main():
     ah = next(
         p for p in twins if p["name"] == "Allan Houston" and p["season"] == "2002-03"
     )
+    # v5 pairings (2026-10-12 regen): Houston's twin is Reggie Miller (was
+    # JJ Redick in the retired 48-d space); chips hand-verified for this pair.
+    assert ah["twin"]["name"] == "Reggie Miller", "Houston twin changed?"
     assert (
-        "both let it fly from three" in out[key_of(ah)]["shared"]
+        "both fill it up scoring" in out[key_of(ah)]["shared"]
     ), "shooter pair chips wrong"
-    print(f"  sharpshooter: Allan Houston <-> JJ Redick: {out[key_of(ah)]['shared']}")
+    print(f"  sharpshooter: Allan Houston <-> Reggie Miller: {out[key_of(ah)]['shared']}")
 
     ag = next(p for p in twins if p["name"] == "AC Green" and p["season"] == "1999-00")
     ag_rec = out[key_of(ag)]
@@ -195,14 +202,17 @@ def main():
         f"  bigs: AC Green <-> Horace Grant: {ag_rec['shared']} | differ: {ag_rec['differ']}"
     )
 
+    # v5 pairings (2026-10-12 regen): Grant Hill's twin is now Paul Pierce
+    # (was LeBron James in the retired 48-d space), so the playmaker sanity
+    # pair is Stockton <-> Rondo — hand-verified pass-first point guards.
     pm = next(
-        p for p in twins if p["name"] == "Grant Hill" and p["season"] == "1996-97"
+        p for p in twins if p["name"] == "John Stockton" and p["season"] == "2000-01"
     )
-    assert pm["twin"]["name"] == "LeBron James", "Grant Hill twin changed?"
+    assert pm["twin"]["name"] == "Rajon Rondo", "Stockton twin changed?"
     assert (
         "both run the offense" in out[key_of(pm)]["shared"]
     ), "playmaker pair chips wrong"
-    print(f"  playmaker: Grant Hill <-> LeBron James: {out[key_of(pm)]['shared']}")
+    print(f"  playmaker: John Stockton <-> Rajon Rondo: {out[key_of(pm)]['shared']}")
 
     thin_pair = min(twins, key=lambda p: p["twin"]["similarity"])
     ta = f"{thin_pair['name']}|{thin_pair['season']}"
@@ -274,11 +284,19 @@ def main():
                 modern_rows[p["pid"]] = p
     pool_ids = past_ids | {p["i"] for p in modern_rows.values()}
     v_by_id = {(p["name"], p["season"]): p["v"] for p in players}
+    # Display names drift between files (lite still carries the unhyphenated
+    # "GilgeousAlexander" while vectors.json is hyphenated); person_id is the
+    # stable join key, same principle as the 2026-10-01 identity fix above.
+    v_by_pid = {(p["person_id"], p["season"]): p["v"] for p in players}
     id_to_ns = {p["i"]: (p["n"], p["s"]) for p in lite}
+    id_to_pid = {p["i"]: p["pid"] for p in lite}
     vec_out, missing_ids = {}, []
     for i in pool_ids:
         ns = id_to_ns.get(i)
         v = v_by_id.get(ns) if ns else None
+        if v is None and ns:
+            pid = id_to_pid.get(i)
+            v = v_by_pid.get((pid, ns[1])) if pid else None
         if v is None:
             missing_ids.append(i)
         else:

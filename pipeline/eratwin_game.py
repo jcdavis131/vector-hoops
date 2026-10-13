@@ -1,6 +1,6 @@
 """ERA TWIN game artifact. Packaged for play in the promoted MTNN embedding
-space (same 48-d vectors as Chimera scoring), index-aligned with
-vectors.json.
+space (the served assets/mtnn_embeddings.f32; dimension and row count are
+read from assets/mtnn_meta.json), index-aligned with vectors.json.
 
 - For each QUIZ-ELIGIBLE player (career with >=4 charted seasons), the
   signature season (max |v| norm, same convention as build_wiki) maps to
@@ -111,7 +111,8 @@ def main() -> None:
             {
                 "method": (
                     "signature seasons matched in the promoted MTNN embedding "
-                    "(48-d, L2-normalized, index-aligned with vectors.json); "
+                    f"({E.shape[1]}-d, L2-normalized, index-aligned with "
+                    "vectors.json); "
                     "twin = nearest OTHER-DECADE career by embedding cosine; "
                     "quiz pool = careers with >=4 charted seasons; top-5 "
                     "candidates shipped for warmth feedback; similarity shown "
