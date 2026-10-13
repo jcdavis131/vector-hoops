@@ -41,26 +41,6 @@
   --vx-lift:     2px;  /* hover displacement */
 }
 
-/* ---------- primary: entrance ----------
- * Opacity is never the only channel; position carries the change too. */
-@keyframes vx-rise{
-  from{ opacity:0; transform:translateY(var(--vx-rise)); }
-  to  { opacity:1; transform:none; }
-}
-
-.vx-rise{ animation: vx-rise var(--dur-base) var(--ease-emphasized) both; }
-
-/* Cascade. Capped at six steps so the tail never outruns the budget. */
-[data-vx-stagger] > *{
-  animation: vx-rise var(--dur-base) var(--ease-emphasized) both;
-}
-[data-vx-stagger] > :nth-child(1){ animation-delay: 0ms; }
-[data-vx-stagger] > :nth-child(2){ animation-delay: calc(var(--vx-stagger) * 1); }
-[data-vx-stagger] > :nth-child(3){ animation-delay: calc(var(--vx-stagger) * 2); }
-[data-vx-stagger] > :nth-child(4){ animation-delay: calc(var(--vx-stagger) * 3); }
-[data-vx-stagger] > :nth-child(5){ animation-delay: calc(var(--vx-stagger) * 4); }
-[data-vx-stagger] > :nth-child(n+6){ animation-delay: calc(var(--vx-stagger) * 5); }
-
 /* ---------- secondary: lift and press ----------
  * .btn already presses to translate(1px,1px) with the shadow dropping
  * 3px -> 1px. The hover here is the matching lift, scaled to that same

@@ -1,8 +1,9 @@
-/* keyboard-a11y.js — production AAA for 100M DAU
- * - n/p next/prev, l lock, / focus search, Esc closes sheets/modals, ? nux
- * - Tab order logical, arrow keys navigate suggest listbox, Enter activates, Esc closes
- * - bottom tabs: role=tab, ArrowLeft/Right navigation, Home/End, focus ring AAA
- * - respects prefers-reduced-motion, solo personal project
+/* keyboard-a11y.js — keyboard support for the site
+ * - / focuses the page's search/guess input, Esc closes sheets/modals/banners,
+ *   ? opens the tour when one is installed, arrow keys navigate suggestion
+ *   listboxes, Enter activates. (An earlier header also promised n/p/l
+ *   shortcuts and bottom-tab navigation — neither was ever implemented;
+ *   the dead input IDs it targeted are replaced with the real ones below.)
  */
 (function(){
   'use strict';
@@ -172,11 +173,10 @@
 
   function init(){
     var searchInputs = [
-      document.getElementById('landing-guess-input'),
-      document.getElementById('chimera-input'),
-      document.getElementById('daily-input'),
-      document.getElementById('lab-a-input'),
-      document.getElementById('lab-b-input')
+      document.getElementById('guess-input'),
+      document.getElementById('atlas-search'),
+      document.getElementById('wiki-search'),
+      document.getElementById('skills-search')
     ].filter(Boolean);
 
     document.addEventListener('keydown', function(e){

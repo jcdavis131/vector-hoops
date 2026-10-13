@@ -360,13 +360,8 @@
     return (Math.round(capped * 100) / 100).toFixed(2);
   }
   var SEASON_NORMS = null;
-  function seasonNormFor(season, key) {
-    if (!SEASON_NORMS || !season) return null;
-    var s = SEASON_NORMS.seasons && SEASON_NORMS.seasons[season];
-    return (s && s.features && s.features[season] && s.features[season]) || (s && s.features && s.features[key]) || null;
-    // fallback handled below in more robust way
-  }
-  // more robust: SEASON_NORMS.seasons[season].features[key]
+  // seasonNormForV2 (below) is the version callers use; the first
+  // seasonNormFor was dead code with a nonsense return expression.
   function seasonNormForV2(season, key){
     if (!SEASON_NORMS || !season) return null;
     var s = SEASON_NORMS.seasons && SEASON_NORMS.seasons[season];

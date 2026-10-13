@@ -1,7 +1,7 @@
 .live-root{
   --paper:#f4efe2; --card:#fffdf7; --ink:#1b1913; --ink2:#5b5545;
   --line:#d9d1b8; --faint:#ece4cd;
-  --accent:#c2401f; --court:#175e6e; --good:#2e7d4f;
+  --accent:#c2401f; --court:#175e6e;
   --mono:ui-monospace,'SF Mono',SFMono-Regular,Menlo,Consolas,monospace;
 }
 .live-root * {box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
@@ -186,7 +186,6 @@
 .live-root .gamedesc{font-size:13px;color:var(--ink2);margin:0 0 10px;}
 .live-root .scoreline{font-size:13px;min-height:22px;margin-top:10px;font-family:ui-monospace,monospace;}
 .live-root .twin.nope{background:#5b5545;border-color:#5b5545;color:#fff;}
-.live-root .twin.selp{background:var(--ink);color:var(--paper);}
 
 .live-root .twin.sharebtn{background:var(--coin-2);border-color:var(--coin-2);color:var(--coin-ink);margin-left:8px;}  /* coin gold + ink = 9.76:1; var(--gold) is marker-black in the light theme (was 1.00:1) */
 .live-root .copied{font-size:11px;color:var(--ink2);}
