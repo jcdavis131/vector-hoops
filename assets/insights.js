@@ -159,23 +159,32 @@
         isFinite(r.early) && isFinite(r.late) && isFinite(r.delta);
     });
     if (!rows.length) return '';
-    var W = 620, rowH = 30, padL = 250;
-    var H = rows.length * rowH + 30;
-    /* Scale bars so the widest share still leaves a reserved gutter for the
-       end-anchored delta label — bars and labels can never collide. */
+    var W = 620, rowH = 48, headH = 22;
+    var H = headH + rows.length * rowH + 4;
+    /* Label line above full-width bars (the barsSVG pattern): the label gets
+       the whole plot width minus the delta's reserved gutter, so real
+       archetype names render whole. The old layout fitted labels into a
+       240-unit side column and ellipsized the two longest names. Bars scale
+       to the full plot — the widest share spans it, like barsSVG's scale. */
     var maxShare = Math.max.apply(null, rows.map(function (r) { return Math.max(r.early, r.late); })) || 1;
-    var k = Math.min(9, (W - padL - 78) / maxShare);
+    var k = W / maxShare;
     var s = '<svg viewBox="0 0 ' + W + ' ' + H + '" class="vh-ins__viz" role="img" aria-label="archetype share then vs now">';
-    s += '<text x="' + padL + '" y="12" class="vh-ins__svgval">then</text>';
-    s += '<text x="' + (padL + 130) + '" y="12" class="vh-ins__svgval">now</text>';
+    s += '<rect x="0" y="3" width="10" height="9" rx="2" fill="' + MUTED + '"/>';
+    s += '<text x="15" y="12" class="vh-ins__svgval">then</text>';
+    s += '<rect x="58" y="3" width="10" height="9" rx="2" fill="' + TERRA + '"/>';
+    s += '<text x="73" y="12" class="vh-ins__svgval">now</text>';
     rows.forEach(function (r, i) {
-      var y = 20 + i * rowH;
+      var y = headH + i * rowH;
       var w1 = Math.max(2, r.early * k), w2 = Math.max(2, r.late * k);
       var neg = r.delta < 0;
-      s += '<text x="0" y="' + (y + 15) + '" class="vh-ins__svglabel">' + esc(fitText(r.label, padL - 10, F_LABEL)) + '</text>';
-      s += '<rect x="' + padL + '" y="' + y + '" width="' + w1.toFixed(1) + '" height="9" rx="3" fill="' + MUTED + '"/>';
-      s += '<rect x="' + padL + '" y="' + (y + 11) + '" width="' + w2.toFixed(1) + '" height="9" rx="3" fill="' + (neg ? '#D96A52' : TERRA) + '"/>';
-      s += '<text x="' + W + '" y="' + (y + 16) + '" class="vh-ins__svgval" text-anchor="end">' + (r.delta > 0 ? '+' : '') + r.delta + 'pp</text>';
+      var dstr = (r.delta > 0 ? '+' : '') + r.delta + 'pp';
+      var label = fitText(r.label, W - measureText(dstr, F_VAL) - 12, F_LABEL);
+      s += '<text x="0" y="' + (y + 13) + '" class="vh-ins__svglabel">' + esc(label) + '</text>';
+      s += '<text x="' + W + '" y="' + (y + 13) + '" class="vh-ins__svgval" text-anchor="end">' + dstr + '</text>';
+      s += '<rect x="0" y="' + (y + 20) + '" width="' + W + '" height="9" rx="3" fill="' + VIZ_PAPER + '" opacity="0.06"/>';
+      s += '<rect x="0" y="' + (y + 31) + '" width="' + W + '" height="9" rx="3" fill="' + VIZ_PAPER + '" opacity="0.06"/>';
+      s += '<rect x="0" y="' + (y + 20) + '" width="' + w1.toFixed(1) + '" height="9" rx="3" fill="' + MUTED + '"/>';
+      s += '<rect x="0" y="' + (y + 31) + '" width="' + w2.toFixed(1) + '" height="9" rx="3" fill="' + (neg ? '#D96A52' : TERRA) + '"/>';
     });
     return s + '</svg>';
   }
@@ -392,6 +401,14 @@
 
   function drawVizPNG(c, ins, x, y, w, h, F) {
     c.save();
+    /* Draw a row label whole: squeeze horizontally to fit maxW rather than
+       truncating with an ellipsis — the same no-truncated-labels rule the
+       on-page renderers follow. Caller sets font + fillStyle first. */
+    function fitLabel(str, lx, ly, maxW) {
+      var lw = c.measureText(str).width;
+      if (lw <= maxW) { c.fillText(str, lx, ly); return; }
+      c.save(); c.translate(lx, 0); c.scale(maxW / lw, 1); c.fillText(str, 0, ly); c.restore();
+    }
     if (ins.viz === 'bars') {
       var rows = ins.rows.slice(0, 5);
       var bvals = rows.map(function (r) { return r.value; });
@@ -402,8 +419,7 @@
           var ry = y + i * rh;
           var bw = Math.max(4, (r.value / bmax) * (w - 260));
           c.font = '400 26px ' + F; c.fillStyle = '#F9F6F0';
-          var label = r.label.length > 26 ? r.label.slice(0, 25) + '…' : r.label;
-          c.fillText(label, x, ry + rh / 2 + 8);
+          fitLabel(r.label, x, ry + rh / 2 + 8, 248);
           c.fillStyle = i === 0 ? GOLD : TERRA;
           var bx = x + 260;
           c.beginPath();
@@ -433,8 +449,7 @@
           var dbw = Math.max(4, (Math.abs(r.value) / dspan) * dplot);
           var dbx = r.value < 0 ? dzero - dbw : dzero;
           c.font = '400 26px ' + F; c.fillStyle = '#F9F6F0';
-          var dlabel = r.label.length > 26 ? r.label.slice(0, 25) + '…' : r.label;
-          c.fillText(dlabel, x, dry + rh / 2 + 8);
+          fitLabel(r.label, x, dry + rh / 2 + 8, 248);
           c.fillStyle = r.value < 0 ? TERRA : GOLD;
           c.beginPath();
           c.roundRect(dbx, dry + rh / 2 - 13, dbw, 26, 6);
@@ -461,8 +476,7 @@
       rows2.forEach(function (r, i) {
         var ry = y + i * rh2;
         c.font = '400 24px ' + F; c.fillStyle = '#F9F6F0';
-        var lb = r.label.length > 30 ? r.label.slice(0, 29) + '…' : r.label;
-        c.fillText(lb, x, ry + rh2 / 2 + 8);
+        fitLabel(r.label, x, ry + rh2 / 2 + 8, 318);
         var bx = x + 330, bw1 = Math.max(3, r.early * 14), bw2 = Math.max(3, r.late * 14);
         c.fillStyle = MUTED; c.fillRect(bx, ry + rh2 / 2 - 16, bw1, 12);
         c.fillStyle = r.delta < 0 ? '#b0523c' : TERRA;
