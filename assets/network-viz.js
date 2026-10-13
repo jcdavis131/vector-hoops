@@ -34,21 +34,32 @@
   var TERRA = __tok('--data-terra','#C17C60');
   var MAX_INPUT_NODES = 17; // truthful: 17 families, not top-10 truncated
   var SKILL_LABELS = {
-    ft: 'Free Throw Shooting',
+    scoring: 'Scoring Volume',
+    shooting: 'Perimeter Shooting',
+    finishing: 'Interior Finishing',
+    ft: 'Free-Throw Shooting',
     efficiency: 'Scoring Efficiency',
-    rim: 'Rim Pressure (FTs)',
+    rim: 'Rim Protection',
     three: 'Three-Point Volume',
     three_acc: 'Three-Point Accuracy',
-    dreb: 'Defensive Rebounding',
-    oreb: 'Offensive Rebounding',
+    dreb: 'Defensive Glass',
+    oreb: 'Offensive Glass',
     rim_def: 'Rim Protection',
     steal: 'Ball Pressure',
+    hands: 'Ball Pressure',
     playmaking: 'Playmaking',
     foul_avoid: 'Foul Discipline',
     security: 'Ball Security',
+    impact: 'Two-Way Impact',
+    post: 'Post Play',
+    transition: 'Transition',
+    motor: 'Motor',
     gravity_off: 'Off-Ball Gravity',
     gravity_on: 'On-Ball Gravity',
     gravity_rim: 'Rim Gravity',
+    shooting_gravity: 'Shooting Gravity',
+    rim_gravity: 'Rim Gravity',
+    disruption_gravity: 'Disruption Gravity',
     hand_activity: 'Hand Activity',
     recovery: 'Defensive Recovery',
     screen_nav: 'Screen Navigation'
@@ -73,7 +84,7 @@
     },
     {
       id: 'heads',
-      caption: 'Decode: MLP heads read the 64-d fingerprint — archetype (8), position (5), next-season profile (14), plus 18 skill heads at 64→16→1 each and scalar aux heads.'
+      caption: 'Decode: MLP heads read the 64-d fingerprint — archetype (8), position (5) and next-season profile (14) at 64→128→k, plus 18 skill heads at 64→16→1 each and scalar aux heads.'
     }
   ];
 
@@ -1289,7 +1300,7 @@ function buildFlowSvg(host) {
       { x: COLS.cat, y: TOP_LABEL_Y+16, txt: 'cat([x·m, m])  2·d_in' },
       { x: (COLS.b1h+COLS.b1o)/2, y: TOP_LABEL_Y+16, txt: 'B1 LN+GELU + skip' },
       { x: (COLS.b2h+COLS.b2o)/2, y: TOP_LABEL_Y+16, txt: 'B2 32→160→32 res' },
-      { x: COLS.fusion, y: TOP_LABEL_Y+16, txt: '556→128 GELU LN →48' }
+      { x: COLS.fusion, y: TOP_LABEL_Y+16, txt: '556→256 GELU LN →64' }
     ];
     subs.forEach(function(su){
       var t = document.createElementNS(SVG_NS, 'text');
@@ -1542,7 +1553,7 @@ function buildFlowSvg(host) {
     fusion.setAttribute('id', 'flow-fusion');
     fusion.setAttribute('style','fill:'+CARD+';stroke:'+INK+';stroke-width:2.5px;');
     var fusionTitle = document.createElementNS(SVG_NS, 'title');
-    fusionTitle.textContent = 'Concat fusion: flatten 17×32=544 + season 12 =556 → Linear 556→128 GELU LayerNorm';
+    fusionTitle.textContent = 'Concat fusion: flatten 17×32=544 + season 12 =556 → Linear 556→256 GELU LayerNorm → Linear 256→64';
     fusion.appendChild(fusionTitle);
     svg.appendChild(fusion);
 
@@ -1552,10 +1563,10 @@ function buildFlowSvg(host) {
     fusionLabel.setAttribute('text-anchor','middle');
     fusionLabel.setAttribute('class','network-flow-col-label');
     fusionLabel.setAttribute('style','font-size:11px;fill:'+SUBTLE_AAA+';font-weight:700;');
-    fusionLabel.textContent = '556→128';
+    fusionLabel.textContent = '556→256→64';
     svg.appendChild(fusionLabel);
 
-    // Fusion hidden 128
+    // Fusion hidden 256
     var fusionH = document.createElementNS(SVG_NS, 'circle');
     fusionH.setAttribute('cx', String(COLS.fusionHidden));
     fusionH.setAttribute('cy', String(midY));
@@ -1564,7 +1575,7 @@ function buildFlowSvg(host) {
     fusionH.setAttribute('id','flow-fusion-hidden');
     fusionH.setAttribute('style','fill:'+CARD+';stroke:'+INK+';stroke-width:2.5px;');
     var fhTitle = document.createElementNS(SVG_NS, 'title');
-    fhTitle.textContent = 'Fusion hidden 128-d: GELU + LayerNorm, then Linear 128→48';
+    fhTitle.textContent = 'Fusion hidden 256-d: GELU + LayerNorm, then Linear 256→64';
     fusionH.appendChild(fhTitle);
     svg.appendChild(fusionH);
 
@@ -1576,7 +1587,7 @@ function buildFlowSvg(host) {
     eFH.setAttribute('style','stroke:'+INK+';stroke-width:2;');
     edgeG.appendChild(eFH);
 
-    // Embed node 48-d
+    // Embed node 64-d
     var embed = document.createElementNS(SVG_NS, 'circle');
     embed.setAttribute('cx', String(COLS.embed));
     embed.setAttribute('cy', String(midY));
@@ -1608,11 +1619,11 @@ function buildFlowSvg(host) {
 
     // Heads — readable 12px
     var headDefs = [
-      { key: 'archetype', label: 'Archetype (8) 48→64→8', y: H * 0.20 },
-      { key: 'position', label: 'Position (5) 48→64→5', y: H * 0.36 },
+      { key: 'archetype', label: 'Archetype (8) 64→128→8', y: H * 0.20 },
+      { key: 'position', label: 'Position (5) 64→128→5', y: H * 0.36 },
       { key: 'skills', label: 'Skills (18) 18×(64→16→1)', y: H * 0.52 },
-      { key: 'next_profile', label: 'Next season (14) 48→64→14', y: H * 0.68 },
-      { key: 'aux', label: 'Aux 8 scalar 48→1', y: H * 0.84 }
+      { key: 'next_profile', label: 'Next season (14) 64→128→14', y: H * 0.68 },
+      { key: 'aux', label: 'Aux 8 scalar 64→1', y: H * 0.84 }
     ];
     var headG = document.createElementNS(SVG_NS, 'g');
     headG.setAttribute('id', 'flow-heads');
@@ -1628,7 +1639,7 @@ function buildFlowSvg(host) {
         hidden64.setAttribute('class','network-flow-node network-flow-node--head-hidden');
         hidden64.setAttribute('style','fill:'+CARD+';stroke:'+INK+';stroke-width:2px;');
         var hgTitle = document.createElementNS(SVG_NS, 'title');
-        hgTitle.textContent = headDefs[h].key+': MLP hidden '+(headDefs[h].key==='skills'?'16':'64')+' GELU';
+        hgTitle.textContent = headDefs[h].key+': MLP hidden '+(headDefs[h].key==='skills'?'16':'128')+' GELU';
         hidden64.appendChild(hgTitle);
         headG.appendChild(hidden64);
 
@@ -3427,8 +3438,8 @@ function buildFlowSvg(host) {
     // page — flow, explorer, map — over one stale optional dataset.
     Promise.all([
       fetch('assets/vectors.json?v=14c4d17d').then(function (r) { return r.json(); }),
-      fetch('assets/mtnn_arch.json?v=5513129c').then(function (r) { return r.json(); }),
-      fetch('assets/mtnn_map.json?v=9bcf3e49').then(function (r) { return r.json(); }),
+      fetch('assets/mtnn_arch.json?v=d5b8ac11').then(function (r) { return r.json(); }),
+      fetch('assets/mtnn_map.json?v=5f589b3b').then(function (r) { return r.json(); }),
       fetch('assets/mtnn_heads.f32?v=9b3f7454').then(function (r) {
         if (!r.ok) throw new Error('heads');
         return r.arrayBuffer();

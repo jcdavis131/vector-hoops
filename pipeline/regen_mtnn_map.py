@@ -35,23 +35,36 @@ ARCH = ASSETS / "mtnn_arch.json"
 VECTORS = ASSETS / "vectors.json"
 OUT_MAP = ASSETS / "mtnn_map.json"
 
-# Human skill labels — same table as export_mtnn_viz.human_skill_label.
+# Human skill labels for the served v5 skill keys (labels from
+# pipeline/build_skills.py + pipeline/build_wide_skills.py), with the older
+# export_mtnn_viz.human_skill_label keys kept as fallbacks.
 SKILL_LABELS = {
-    "ft": "Free Throw Shooting",
+    "scoring": "Scoring Volume",
+    "shooting": "Perimeter Shooting",
+    "finishing": "Interior Finishing",
+    "ft": "Free-Throw Shooting",
     "efficiency": "Scoring Efficiency",
-    "rim": "Rim Pressure",
+    "rim": "Rim Protection",
     "three": "3P Volume",
     "three_acc": "3P Accuracy",
-    "dreb": "Defensive Rebounding",
-    "oreb": "Offensive Rebounding",
+    "dreb": "Defensive Glass",
+    "oreb": "Offensive Glass",
     "rim_def": "Rim Protection",
     "steal": "Ball Pressure",
+    "hands": "Ball Pressure",
     "playmaking": "Playmaking",
     "foul_avoid": "Foul Discipline",
     "security": "Ball Security",
+    "impact": "Two-Way Impact",
+    "post": "Post Play",
+    "transition": "Transition",
+    "motor": "Motor",
     "gravity_off": "Off-ball Gravity",
     "gravity_on": "On-ball Gravity",
     "gravity_rim": "Rim Gravity",
+    "shooting_gravity": "Shooting Gravity",
+    "rim_gravity": "Rim Gravity",
+    "disruption_gravity": "Disruption Gravity",
     "hand_activity": "Hand Activity",
     "recovery": "Defensive Recovery",
     "screen_nav": "Screen Navigation",
