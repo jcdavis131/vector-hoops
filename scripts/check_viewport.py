@@ -53,7 +53,7 @@ PAGES = [
     "/", "/owner.html", "/brand.html", "/dfs.html", "/player.html", "/player-fit.html",
     "/teams.html", "/trends.html", "/model.html", "/play.html", "/players.html",
     "/player-cards.html", "/dictionary.html", "/methods.html", "/inventory.html",
-    "/leaderboard.html", "/offline.html", "/player-animations.html",
+    "/offline.html", "/player-animations.html",
 ]
 
 # What to ask the page once it has settled. Returns the two widths and the worst

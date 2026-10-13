@@ -22,7 +22,6 @@
 
   function isActive(active, href) {
     if (active === href) return true;
-    if (active === '/leaderboard' && href === '/play') return true;
     if (active === '/everyday' && href === '/play') return true;
     return false;
   }
