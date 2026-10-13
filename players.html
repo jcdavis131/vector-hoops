@@ -56,10 +56,10 @@
   <section class="card" id="players-panel-directory" role="tabpanel">
     <div class="wiki-controls">
       <div class="wiki-search-row">
-        <input class="input wiki-search" id="wiki-search" type="text" placeholder="Search a player — Curry, Jokic, Wemby…" autocomplete="off" spellcheck="false" disabled>
+        <input class="input wiki-search" id="wiki-search" aria-label="Search players" type="text" placeholder="Search a player — Curry, Jokic, Wemby…" autocomplete="off" spellcheck="false" disabled>
         <div class="wiki-filters">
-          <select id="wiki-filter-pos" disabled><option value="">All positions</option></select>
-          <select id="wiki-filter-arch" disabled><option value="">All archetypes</option></select>
+          <select id="wiki-filter-pos" aria-label="Filter by position" disabled><option value="">All positions</option></select>
+          <select id="wiki-filter-arch" aria-label="Filter by archetype" disabled><option value="">All archetypes</option></select>
         </div>
       </div>
       <div class="wiki-alphabet" id="wiki-alphabet" aria-label="Jump to letter"></div>
@@ -72,7 +72,7 @@
     <div class="skills-panel">
       <div class="pp-search-wrap">
         <div class="pp-search-top">
-          <input class="input" id="skills-search" data-pp-alias="pp-search" type="text" placeholder="Search 12,966 seasons — try Curry, Jokic, Wemby…" autocomplete="off" disabled>
+          <input class="input" id="skills-search" aria-label="Search the skills leaderboard" data-pp-alias="pp-search" type="text" placeholder="Search 12,966 seasons — try Curry, Jokic, Wemby…" autocomplete="off" disabled>
           <button class="pp-btn pp-btn--yellow" id="pp-random" type="button" title="Surprise me">🎲 Random</button>
         </div>
         <div class="pp-quick-row" id="pp-quick-row">
@@ -142,8 +142,8 @@
     <h2 class="hd" style="font-size:20px;margin:0 0 6px">Leaderboard</h2>
     <p style="font-size:13px;color:var(--fg-2);margin:0 0 12px">0–99 skill grades, era-normalized. Pick a skill, see top seasons. Tracking boards cover 2015-16+ only. Draft Steals/Busts rank career mean vs draft slot.</p>
     <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px">
-      <select id="board-skill" class="input" style="flex:1 1 180px;min-width:160px;min-height:44px" disabled><option>Loading skills…</option></select>
-      <select id="board-season" class="input" style="flex:0 0 160px;min-height:44px" disabled><option value="">All seasons</option></select>
+      <select id="board-skill" aria-label="Leaderboard skill" class="input" style="flex:1 1 180px;min-width:160px;min-height:44px" disabled><option>Loading skills…</option></select>
+      <select id="board-season" aria-label="Leaderboard season" class="input" style="flex:0 0 160px;min-height:44px" disabled><option value="">All seasons</option></select>
     </div>
     <ol class="wiki-list" id="skills-board" style="margin-top:6px"></ol>
     <p class="small-mono" style="margin-top:10px;color:var(--fg-3);text-transform:none">Grades are era-normalized percentiles. Details on <a href="/methods#skills">methods</a>.</p>
@@ -156,27 +156,27 @@
         <button class="btn" id="dossier-close" type="button" style="min-height:36px;padding:6px 10px">Close</button>
       </div>
       <div id="dossier-body" style="margin-top:10px;font-size:14px;line-height:1.6"></div>
-      <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap"><a class="btn btn-accent" id="dossier-source-link" href="#" target="_blank" rel="noopener" style="min-height:36px">View source →</a></div>
+      <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap"><a class="btn btn-accent" id="dossier-source-link" href="#" target="_blank" rel="noopener" style="min-height:36px">View source →</a><button class="btn" id="vh-share-btn" type="button" style="min-height:36px">Share dossier</button></div>
     </div>
   </div>
 </div>
 
 <footer class="site-footer">
-  <div class="site-footer__links"><a href="/play">Play</a><a href="/players">Players</a><a href="/trends">Trends</a><a href="/model">Lab</a><a href="/methods">Methods</a><a href="https://github.com/jcdavis131/vector-hoops" rel="noopener">Source</a></div>
+  <div class="site-footer__links"><a href="/play">Play</a><a href="/live">Live</a><a href="/players">Players</a><a href="/teams">Teams</a><a href="/insights">Insights</a><a href="/trends">Trends</a><a href="/taxonomy">Taxonomy</a><a href="/playoff-runs">Playoff Runs</a><a href="/leaderboard">Leaderboard</a><a href="/model">Lab</a><a href="/props-lab">Props Lab</a><a href="/methods">Methods</a><a href="https://github.com/jcdavis131/vector-hoops" rel="noopener">Source</a></div>
   <p class="site-footer__attribution">Every number recomputable from stats.nba.com · A <a href="https://dumbmodel.com">dumbmodel</a> project</p>
 </footer>
 <script src="assets/error-boundary.js?v=7ce53191"></script>
-<script src="assets/keyboard-a11y.js?v=514722c8"></script>
-<script src="assets/site-nav.js?v=2a10730a" defer></script>
+<script src="assets/keyboard-a11y.js?v=324c984b"></script>
+<script src="assets/site-nav.js?v=0c0b4db5" defer></script>
 <script src="assets/pwa-install.js?v=bd4f258e"></script>
 <script type="module" src="assets/timesfm-forecast.js?v=67ee6481"></script>
 <script src="assets/dossier.js?v=d96b1c6f"></script>
 <script src="assets/player-dossier.js?v=bd59e166"></script>
 <script src="assets/player-roster.js?v=263dd347"></script>
 <script src="assets/players-directory.js?v=06c7dd33"></script>
-<script src="assets/players-skills.js?v=3a2c41fa"></script>
+<script src="assets/players-skills.js?v=e131a40e"></script>
 <script src="assets/players-page.js?v=8300969b"></script>
-<script src="assets/arc-projections.js?v=afcdf28e"></script>
+<script src="assets/arc-projections.js?v=a9489bcb"></script>
 <script>
 // 2026-27 model projections in the skill profile (arc-ridge v1 priors)
 (function(){
@@ -203,4 +203,7 @@
 })();
 </script>
 <script>if('serviceWorker' in navigator){window.addEventListener('load',()=>{navigator.serviceWorker.register('/sw.js').catch(()=>{})})}</script>
+<script>
+(function(){var b=document.getElementById('vh-share-btn');if(!b)return;b.addEventListener('click',function(){var url=location.href;var t=document.getElementById('dossier-title');var title=t?t.textContent:document.title;function done(){b.textContent='Link copied';setTimeout(function(){b.textContent='Share dossier';},1600);}if(navigator.share){navigator.share({title:title,url:url}).catch(function(){});}else if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(url).then(done,done);}else{done();}});})();
+</script>
 </body></html>

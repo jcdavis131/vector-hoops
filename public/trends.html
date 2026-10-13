@@ -124,7 +124,7 @@ main#trends-app{
   font-family:var(--mono);font-size:10.5px;font-weight:700;cursor:pointer;
   box-shadow:none;min-height:30px;line-height:1;
 }
-.trends-chip--active{background:var(--orange);color:#fff;box-shadow:none}
+.trends-chip--active{background:#B34A00;color:#fff;box-shadow:none}
 .drift-active{stroke:#1A150F!important;stroke-width:3!important;filter:drop-shadow(0 0 4px #D55E00)}
 .caption{font-size:12px;color:var(--fg-2);line-height:1.5;margin:8px 0 0}
 
@@ -326,7 +326,7 @@ input[type=range]{touch-action:manipulation}
 .court-heatmap__era{ font-family:var(--mono); font-size:11px; font-weight:800; padding:6px 12px; border-radius:999px; border:1px solid var(--line-2); background:var(--surface); cursor:pointer; box-shadow:none; }
 .court-heatmap__era.is-active{ background:var(--accent);color:var(--on-accent); }
 .court-heatmap__mode{ font-family:var(--mono); font-size:10px; font-weight:800; text-transform:uppercase; padding:6px 12px; border:1px solid var(--line-2); border-radius:999px; background:var(--surface); cursor:pointer; }
-.court-heatmap__mode.is-active{ background:var(--orange); color:#fff; }
+.court-heatmap__mode.is-active{ background:#B34A00; color:#fff; }
 
 /* general legend tidy */
 .trends-viz-svg .legend{ font-family:var(--mono); font-size:10px; }
@@ -440,7 +440,7 @@ input[type=range]{touch-action:manipulation}
 
     <!-- hidden compat -->
     <div style="display:none">
-      <input type="range" id="trends-season-slider" min="0" max="28" value="28">
+      <input type="range" id="trends-season-slider" aria-label="Season selector" min="0" max="28" value="28">
       <span id="trends-season-label">2025-26</span>
     </div>
     <p id="trends-viz-caption" class="caption" style="margin-top:10px">Loading…</p>
@@ -448,7 +448,7 @@ input[type=range]{touch-action:manipulation}
 
   <section class="card">
     <h2>Biggest shifts — 5 summers where basketball reshaped</h2>
-    <div class="table-scroll"><table class="slim-table" id="drift-shifts-table"><thead><tr><th>Pair</th><th>°</th><th>Res</th><th>Shared</th><th>Most-rotated</th><th>Read</th></tr></thead><tbody><tr><td colspan="6">Loading…</td></tr></tbody></table></div>
+    <div class="table-scroll"><table class="slim-table" id="drift-shifts-table"><thead><tr><th scope="col">Pair</th><th scope="col">°</th><th scope="col">Res</th><th scope="col">Shared</th><th scope="col">Most-rotated</th><th scope="col">Read</th></tr></thead><tbody><tr><td colspan="6">Loading…</td></tr></tbody></table></div>
   </section>
 
   <details class="collapse" open>
@@ -544,13 +544,13 @@ input[type=range]{touch-action:manipulation}
 
 </main>
 <footer class="site-footer">
-  <div class="site-footer__links"><a href="/play">Play</a><a href="/players">Players</a><a href="/trends">Trends</a><a href="/model">Lab</a><a href="/methods">Methods</a><a href="https://github.com/jcdavis131/vector-hoops" rel="noopener">Source</a></div>
+  <div class="site-footer__links"><a href="/play">Play</a><a href="/live">Live</a><a href="/players">Players</a><a href="/teams">Teams</a><a href="/insights">Insights</a><a href="/trends">Trends</a><a href="/taxonomy">Taxonomy</a><a href="/playoff-runs">Playoff Runs</a><a href="/leaderboard">Leaderboard</a><a href="/model">Lab</a><a href="/props-lab">Props Lab</a><a href="/methods">Methods</a><a href="https://github.com/jcdavis131/vector-hoops" rel="noopener">Source</a></div>
   <p class="site-footer__attribution">Every number recomputable from stats.nba.com · A <a href="https://dumbmodel.com">dumbmodel</a> project</p>
 </footer>
 
 <script src="assets/error-boundary.js?v=7ce53191"></script>
-<script src="assets/keyboard-a11y.js?v=514722c8"></script>
-<script src="assets/site-nav.js?v=2a10730a" defer></script>
+<script src="assets/keyboard-a11y.js?v=324c984b"></script>
+<script src="assets/site-nav.js?v=0c0b4db5" defer></script>
 <script src="assets/pwa-install.js?v=bd4f258e"></script>
 <script src="assets/trends-viz.js?v=75df7dad" defer></script>
 <script src="assets/drift.js?v=caada0bf"></script>

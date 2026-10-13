@@ -22,7 +22,7 @@
       }
     });
     // legacy banners
-    var banners = ['pwa-install-banner','push-retention-banner','vh-offline-toast','vectors-error'];
+    var banners = ['pwa-install-banner','vh-offline-toast','vectors-error'];
     banners.forEach(function(id){
       var el=document.getElementById(id);
       if(el && id!=='vh-offline-toast'){} // keep offline toast? Actually close banners except offline?
@@ -191,8 +191,6 @@
         // close banners
         var b = document.getElementById('pwa-install-banner');
         if(b) b.remove();
-        var pb = document.getElementById('push-retention-banner');
-        if(pb) pb.remove();
         return;
       }
       if(isTyping()) return;

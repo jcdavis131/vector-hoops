@@ -416,6 +416,19 @@ a{color:inherit}
 </section>
 
 <!-- 2. ARCHITECTURE — 4 VIDEOS -->
+<section class="drift-card" id="frontier">
+<div class="drift-card__head"><span class="card-kicker">Research — in progress</span><h2>The Frontier Program</h2></div>
+<p>Four bets, each with a held-out eval gate. Nothing ships without beating the baseline that matters.</p>
+<h3>01 · Mixed-curvature embeddings</h3>
+<p>Player similarity isn't one geometry. Archetype hierarchies are tree-like, era drift is flat, matchup cycles are spherical — so we're learning a product space (hyperbolic × spherical × Euclidean) with curvatures the data chooses, not ones we guess. Challenger to our v5 embeddings, gated on a δ-hyperbolicity diagnostic and twin-retrieval evals.</p>
+<h3>02 · DARKO-style game forecasting</h3>
+<p>Per-player Bayesian state estimation — exponential decay plus Kalman filtering over every box score — with who-guards-whom matchup tensors and a minute-projection engine conditioned on blowout probability. The literature's verdict is blunt: minutes move the needle more than model cleverness. Evaluated against the betting line, never a naive baseline.</p>
+<h3>03 · Live in-game updating</h3>
+<p>Bayesian second-half projections from live play-by-play: current stat plus remaining minutes at current usage, pace, and foul state, shrunk toward the pre-game prior — because a hot first half predicts a cooler second half, not a continuation. Published baselines for this are few and far between — we're building a public one.</p>
+<h3>04 · Hyperbolic representation learning</h3>
+<p>The GGBall paper's hyperbolic VQ-VAE, repurposed as an encoder for the archetype taxonomy — the one job hyperbolic geometry was born for. Pursued only if the δ diagnostic says the data wants curvature. (We checked the hype first: the paper's "18%" claim appears in neither its abstract nor its full text.)</p>
+<p>Full provenance for everything in the Lab: <a href="/methods">Methods</a> · The paper-trading experiment: <a href="/props-lab">Props Lab</a>.</p>
+</section>
 <section class="drift-card" id="manim-mtnn">
 <div class="drift-card__head"><span class="card-kicker">Architecture — 4 animations • code-generated</span><h2>How MTNN actually works</h2></div>
 <div class="manim-grid">
@@ -477,7 +490,7 @@ a{color:inherit}
 
 <div class="search-row">
 <label class="network-compare-toggle" for="network-compare-toggle"><input type="checkbox" id="network-compare-toggle"> <span style="font-family:var(--mono);font-size:12px;font-weight:800">Compare</span></label>
-<input type="search" id="network-compare-search" class="wiki-search network-search" placeholder="2nd player-season" autocomplete="off" autocorrect="off" spellcheck="false" disabled style="min-width:180px;">
+<input type="search" id="network-compare-search" aria-label="Search a second player-season to compare" class="wiki-search network-search" placeholder="2nd player-season" autocomplete="off" autocorrect="off" spellcheck="false" disabled style="min-width:180px;">
 <ul class="network-suggest" id="network-compare-suggest" hidden></ul>
 <span id="network-compare-tag" class="network-player-tag">No compare</span>
 </div>
@@ -563,13 +576,13 @@ a{color:inherit}
 </main>
 
 <footer class="site-footer">
-  <div class="site-footer__links"><a href="/play">Play</a><a href="/players">Players</a><a href="/trends">Trends</a><a href="/model">Lab</a><a href="/methods">Methods</a><a href="https://github.com/jcdavis131/vector-hoops" rel="noopener">Source</a></div>
+  <div class="site-footer__links"><a href="/play">Play</a><a href="/live">Live</a><a href="/players">Players</a><a href="/teams">Teams</a><a href="/insights">Insights</a><a href="/trends">Trends</a><a href="/taxonomy">Taxonomy</a><a href="/playoff-runs">Playoff Runs</a><a href="/leaderboard">Leaderboard</a><a href="/model">Lab</a><a href="/props-lab">Props Lab</a><a href="/methods">Methods</a><a href="https://github.com/jcdavis131/vector-hoops" rel="noopener">Source</a></div>
   <p class="site-footer__attribution">Every number recomputable from stats.nba.com · A <a href="https://dumbmodel.com">dumbmodel</a> project</p>
 </footer>
 
 <script src="assets/error-boundary.js?v=7ce53191"></script>
-<script src="assets/keyboard-a11y.js?v=514722c8"></script>
-<script src="assets/site-nav.js?v=2a10730a" defer></script>
+<script src="assets/keyboard-a11y.js?v=324c984b"></script>
+<script src="assets/site-nav.js?v=0c0b4db5" defer></script>
 <script src="assets/pwa-install.js?v=bd4f258e"></script>
 <script type="module" src="assets/timesfm-forecast.js?v=67ee6481"></script>
 <script src="assets/mtnn.js?v=f72a913c" defer></script>
