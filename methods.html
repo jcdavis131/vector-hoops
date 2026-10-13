@@ -591,7 +591,7 @@ Heads: 8 arch / 5 pos / 14 next / 18 skills (64→16→1)
 
 <div class="cockpit-panel" style="margin-top:12px;border:1px dashed var(--line-2);border-radius:12px;background:var(--surface);">
 <h3>Forecast — same family, one season forward <span style="font-family:var(--mono);font-size:10px;background:var(--accent-wash);color:var(--accent);border:1px solid var(--line-2);border-radius:999px;padding:2px 8px;margin-left:6px">Where you're headed</span></h3>
-<p style="font-size:13px;line-height:1.6;margin:8px 0">A deterministic TimesFM-lite forecaster (numpy, seed 7) projects player embeddings one season forward from 3-season windows — <b>7,096 forecasts</b> served from <code>assets/timesfm_forecasts.json</code> (built 2026-09-02), used by Map, Trends, Players for ghost rings. The metrics in that file are train-split, so this stays <b>research-only</b>: not the map, not a prediction product. Stone dashed = uncertainty, terracotta dashed = headed direction. ONE champion served — MTNN v5.</p>
+<p style="font-size:13px;line-height:1.6;margin:8px 0">A deterministic TimesFM-lite forecaster (numpy, seed 7) projects player embeddings one season forward from 3-season windows — <b>7,096 forecasts</b> served from <code>assets/timesfm_forecasts.json</code> (built 2026-09-02), The metrics in that file are train-split, so this stays <b>research-only</b>: it does not drive the map or any prediction product. Stone dashed = uncertainty, terracotta dashed = headed direction. ONE champion served — MTNN v5.</p>
 <div style="display:flex;gap:6px;flex-wrap:wrap;margin:8px 0"><span class="stats-chip">8-d forecast head</span><span class="stats-chip">7,096 forecasts</span><span class="stats-chip">research-only</span><span class="stats-chip">Past → Modern → Headed</span></div>
 <canvas role="img" aria-label="Forecast lab chart — projected next-season embedding, first 8 of 64 dimensions" id="forecast-lab-canvas" width="800" height="180" style="width:100%;border:1px solid var(--line-2);border-radius:10px;background:var(--surface)"></canvas>
 <div id="forecast-lab-legend" style="font-family:var(--mono);font-size:11px;margin-top:6px;color:var(--fg-2)">Loading forecast…</div>
@@ -755,7 +755,7 @@ Heads: 8 arch / 5 pos / 14 next / 18 skills (64→16→1)
 <span class="site-next__label">Next →</span>
 <a href="/play">Play</a>
 <a href="/players">Players</a>
-<a href="/methods">Methods</a>
+<a href="/insights">Insights</a>
 </nav>
 
     </section>
@@ -778,10 +778,10 @@ Heads: 8 arch / 5 pos / 14 next / 18 skills (64→16→1)
   <div class="site-footer__links"><a href="/">Atlas</a><a href="/play">Play</a><a href="/players">Players</a><a href="/insights">Insights</a><a href="/methods">Methods</a><a href="https://github.com/jcdavis131/vector-hoops" rel="noopener">Source</a></div>
   <p class="site-footer__attribution">Every number recomputable from stats.nba.com · A <a href="https://dumbmodel.com">dumbmodel</a> project</p>
 </footer>
-<script src="assets/error-boundary.js?v=7ce53191"></script>
+<script src="assets/error-boundary.js?v=d0cf8ca0"></script>
 <script src="assets/keyboard-a11y.js?v=324c984b"></script>
 <script src="assets/site-nav.js?v=1d646996" defer></script>
-<script src="assets/pwa-install.js?v=bd4f258e"></script>
+<script src="assets/pwa-install.js?v=f1a26948"></script>
 <script>if('serviceWorker' in navigator){window.addEventListener('load',()=>{navigator.serviceWorker.register('/sw.js').catch(()=>{})})}</script>
 <script src="assets/timesfm-forecast.js?v=67ee6481"></script>
 <script src="assets/mtnn.js?v=81d491f8"></script>
@@ -859,7 +859,7 @@ window.addEventListener('load',function(){setTimeout(function(){
   [['forecast-lab-canvas','forecast-lab-legend']].forEach(function(p){
     var c=document.getElementById(p[0]), l=document.getElementById(p[1]);
     if(c) c.hidden=true;
-    if(l){ l.textContent='The forecast is research-only and isn’t drawn on the site yet. Its method and limits are on the Methods page.'; l.classList.add('empty-note'); }
+    if(l){ l.textContent='The forecast is research-only and isn’t drawn on the site yet — its method and limits are documented on this page.'; l.classList.add('empty-note'); }
   });
 },1500);});
 </script>

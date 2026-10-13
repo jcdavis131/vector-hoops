@@ -284,10 +284,6 @@
       "source": "/players"
     },
     {
-      "destination": "/model.html",
-      "source": "/lab"
-    },
-    {
       "destination": "/methods.html",
       "source": "/methods"
     },
@@ -360,6 +356,11 @@
     },
     {
       "source": "/model",
+      "destination": "/methods",
+      "permanent": true
+    },
+    {
+      "source": "/lab",
       "destination": "/methods",
       "permanent": true
     }
