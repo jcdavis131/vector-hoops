@@ -188,7 +188,7 @@
 .live-root .twin.nope{background:#5b5545;border-color:#5b5545;color:#fff;}
 .live-root .twin.selp{background:var(--ink);color:var(--paper);}
 
-.live-root .twin.sharebtn{background:var(--gold);border-color:var(--gold);color:#1c1a15;margin-left:8px;}
+.live-root .twin.sharebtn{background:var(--coin-2);border-color:var(--coin-2);color:var(--coin-ink);margin-left:8px;}  /* coin gold + ink = 9.76:1; var(--gold) is marker-black in the light theme (was 1.00:1) */
 .live-root .copied{font-size:11px;color:var(--ink2);}
 .live-root #snapDaily{margin-left:8px;font-size:10px;padding:6px 12px;}
 .live-root .card .plate{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}

@@ -430,7 +430,7 @@
 }
 .pp-skill__grade--gold{ background:#F0E442; color:var(--fg) }
 .pp-skill__grade--blue{ background:#0072B2; color:#fff; border-color:#0072B2 }
-.pp-skill__grade--green{ background:#009E73; color:#fff; border-color:#009E73 }
+.pp-skill__grade--green{ background:#00775A; color:#fff; border-color:#00775A }  /* white on it = 5.55:1 (was 3.42:1 on #009E73) */
 .pp-skill__grade--mid{ background:var(--surface); color:var(--fg) }
 .pp-skill__grade--low{ background:#EEE8D9; color:var(--fg-2) }
 
@@ -459,7 +459,7 @@
 .pp-skill__foot{
   font-family:ui-monospace,monospace;
   font-size:9.5px;
-  color:#7A746B;
+  color:var(--fg-2);
   display:flex;
   justify-content:space-between;
 }

@@ -90,7 +90,10 @@
   --orange: var(--accent);
   --verm: var(--accent);
   --yellow: var(--accent-wash);
-  --green: var(--ok);
+  --green: #00775A;
+  --page-gutter: clamp(12px, 3.2vw, 28px);  /* shell tokens responsive.css consumes — formerly defined only in the unloaded hoops.css */
+  --layout-wide: 1120px;
+  --heading-page: clamp(20px, 2.4vw + 12px, 28px);  /* legacy win/success green (Okabe-Ito) — was bridged to var(--ok) moss, which put white text at 2.97:1 */
   --shadow: none;
   --shadow-raised: none;
   --shadow-soft: none;
@@ -199,7 +202,7 @@ input:focus-visible, select:focus-visible, textarea:focus-visible{ outline-offse
 .skip-link{
   position: absolute; left: 50%; top: 8px; z-index: 1000;
   transform: translate(-50%, -160%);
-  background: var(--accent); color: var(--on-accent);
+  background: var(--block); color: var(--on-accent);
   font: 600 var(--t-sm)/1 var(--font-text);
   padding: 12px 16px; border-radius: var(--radius);
   text-decoration: none;
@@ -470,7 +473,8 @@ p{ text-wrap: pretty; }
   transition: color var(--dur-1) var(--ease), border-color var(--dur-1) var(--ease), background var(--dur-1) var(--ease);
 }
 a.pill:hover, button.pill:hover, .trends-chip:hover, .trends-shift-card:hover, .btn-speed:hover{ color: var(--fg); border-color: var(--fg-3); }
-.pill-yellow, .pill-blue, .pill-green{ background: var(--accent-wash); color: var(--accent-2); border-color: var(--accent-line); }
+.pill-yellow, .pill-blue{ background: var(--accent-wash); color: var(--accent-2); border-color: var(--accent-line); }
+.pill-green{ background: var(--pipe); color: var(--on-accent); border-color: var(--pipe); }  /* a green pill is green: pipe pairing 5.72:1 */
 .trends-chip--active, .trends-shift-card--active{ background: var(--accent); color: var(--on-accent) !important; border-color: var(--accent); box-shadow: none; transform: none; }
 .trends-shift-card--active .sc-deg{ color: var(--on-accent); }
 
@@ -621,11 +625,11 @@ table{ border-collapse: collapse; width: 100%; }
 .method-p{ font-size: var(--t-base); line-height: 1.7; color: var(--fg-2); margin: var(--s-2) 0; }
 .arch-diagram{
   font-family: var(--font-code); font-size: 12.5px; line-height: 1.75;
-  color: var(--fg-2); background: var(--void);
+  color: #D8DCD8; background: var(--void);  /* void panel is dark in both themes; #D8DCD8 on it = 11.79:1 */
   border: 1px solid var(--line); border-radius: var(--radius-lg); box-shadow: none;
   padding: var(--s-5); overflow: auto; white-space: pre;
 }
-.arch-diagram b{ color: var(--accent); }
+.arch-diagram b{ color: #FF7A5C; }  /* ember on void = 6.37:1; var(--accent) red was 4.02:1 */
 .cqs-strip{ display: flex; flex-wrap: wrap; gap: 0; border: 1px solid var(--line); border-radius: var(--radius); margin: var(--s-3) 0; }
 .cqs-badge{ flex: 1 1 0; flex-direction: column; align-items: flex-start; gap: 2px; min-height: 0; padding: 12px 14px; border: 0; border-radius: 0; color: var(--fg-3); }
 .cqs-badge + .cqs-badge{ border-left: 1px solid var(--line); }
