@@ -1,5 +1,6 @@
-/* Vector Hoops Insights — curated analytics cards from the embedding model.
-   Share-first: every card has a deep link + a client-rendered PNG export. */
+/* Vector Hoops Insights — two labeled series: From the model (computed from
+   the served vectors) and From the ledger (salary/tax/ticket findings from named
+   public sources). Share-first: every card has a deep link + a PNG export. */
 (function (global) {
   'use strict';
 
@@ -41,7 +42,7 @@
   }
 
   function load() {
-    return fetch('assets/insights.json?v=28b64417').then(function (r) {
+    return fetch('assets/insights.json?v=3294fa9f').then(function (r) {
       if (!r.ok) throw new Error('insights.json ' + r.status);
       return r.json();
     });
@@ -184,10 +185,20 @@
         new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric' }) + '</div>' +
         cardHTML(pick, true);
     }
-    host.innerHTML = rest.map(function (ins) { return cardHTML(ins, false); }).join('');
+    var lastSeries = null;
+    host.innerHTML = rest.map(function (ins) {
+      var head = '';
+      if (ins.series && ins.series !== lastSeries) { lastSeries = ins.series; head = seriesHead(ins.series); }
+      return head + cardHTML(ins, false);
+    }).join('');
     bindShare(data);
     var hash = (location.hash || '').replace('#', '');
     if (hash) highlight(hash);
+  }
+
+  function seriesHead(series) {
+    if (series === 'ledger') return '<div class="vh-ins__series"><h2 class="vh-ins__series-title">From the ledger</h2><p class="vh-ins__series-sub">Salary, tax and ticket findings assembled from named public sources — source, sample and window printed on every card.</p></div>';
+    return '<div class="vh-ins__series"><h2 class="vh-ins__series-title">From the model</h2><p class="vh-ins__series-sub">Computed from the served 64-d MTNN vectors — nothing hand-written, nothing invented.</p></div>';
   }
 
   function highlight(slug) {

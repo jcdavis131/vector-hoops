@@ -392,7 +392,7 @@ input[type=range]{touch-action:manipulation}
     <div class="drift-head">
       <div class="drift-head-left">
         <h2>Rotation, season to season — 29 Procrustes pairs <span id="current-year-top" class="pill" style="display:inline-flex;margin-left:6px">2025-26</span></h2>
-        <p class="sub">Advanced neural net MTNN v6 128-d × orthogonal Procrustes: Q = argmin ||XQ−Y||_F, Q^T Q=I. RotationDeg = mean principal angle of Q vs I, residual = normalized Frobenius after alignment, no scaling. ≥30 shared players / pair, chained transforms map any season into 1996-97 root frame. Orange ring = top 5 jumps. Vertical dash = your year — drives gauge, compass, bars, story below.</p>
+        <p class="sub">Orthogonal Procrustes on paired 14-d season stats: Q = argmin ||XQ−Y||_F, Q^T Q=I. RotationDeg = mean principal angle of Q vs I, residual = normalized Frobenius after alignment, no scaling. ≥30 shared players / pair, chained transforms map any season into 1996-97 root frame. Orange ring = top 5 jumps. Vertical dash = your year — drives gauge, compass, bars, story below.</p>
       </div>
       <div class="drift-head-right">
         <button id="btn-play-years" class="btn-play" type="button">▶ Play years</button>
@@ -417,7 +417,7 @@ input[type=range]{touch-action:manipulation}
         <span style="font-family:var(--mono);font-size:9px;font-weight:800;text-transform:uppercase;color:var(--fg-2);flex:0 0 auto">Jumps:</span>
         <div id="trends-story-chips" class="story-chips"></div>
       </div>
-      <p class="caption">Blue = our read near spikes (not math). Biggest: 2021-22 post-bubble spacing 11.1°. Use Space / ←→ to play. Swipe chips to jump years.</p>
+      <p class="caption">Blue marks are our annotations near spikes, not data. Biggest rotation: the summer entering 2019-20 (2018-19 → 2019-20), 12.5°. Use Space / ←→ to play. Swipe chips to jump years.</p>
     </div>
   </section>
 
@@ -524,22 +524,22 @@ input[type=range]{touch-action:manipulation}
 
   <section class="card">
     <h2>Method — advanced neural nets + Procrustes era alignment</h2>
-    <p id="drift-method-quote" class="method-quote">MTNN v6 champion: 120 raw feats → 17 families cat([x·m,m]) → 17 towers b3 h256 → t64 d128 mlp256 fus512 → 128-d L2 unit sphere, torch est 7.8M params / 233K sklearn fallback, 12,452 rows × 128-d, 1901 players 2+ seasons. Drift: for each consecutive season pair, take shared players ≥30 as paired 14-d stat matrix X (season t) and Y (t+1), solve orthogonal Procrustes Q = argmin ||XQ−Y||_F s.t. Q^T Q=I via SVD of X^T Y = UΣV^T, Q=UV^T (no scaling). RotationDeg = mean principal angle of Q vs identity, residual = ||XQ−Y||_F/√N after alignment, axisDrift = 1−|Q_ii| per feature. Chained Q's map any season into 1996-97 root frame so Era Twin compares directly. Archetypes: 8 player types via global clustering in 128-d, prevalence per season = share of minutes. statInsights: league per-100 rate in arrival season vs mean of all prior charted seasons. <span style="font-family:var(--mono);font-size:10px;background:var(--accent-wash);color:var(--accent);border:1px solid var(--line-2);border-radius:999px;padding:1px 6px">real drift.json only, honest 503 if missing</span></p>
-    <p class="caption">Root frame 1996 + Procrustes RᵀR=I, ≥30 shared players / pair. <a href="/methods#drift">Full write-up →</a> 12,966 seasons, 64-d MTNN v5 champion is champion — ONE model served. Forecast is research-only.</p>
+    <p id="drift-method-quote" class="method-quote">Drift: for each consecutive season pair, take shared players ≥30 as paired 14-d stat matrix X (season t) and Y (t+1), solve orthogonal Procrustes Q = argmin ||XQ−Y||_F s.t. Q^T Q=I via SVD of X^T Y = UΣV^T, Q=UV^T (no scaling). RotationDeg = mean principal angle of Q vs identity, residual = ||XQ−Y||_F/√N after alignment, axisDrift = 1−|Q_ii| per feature. Chained Q's map any season into 1996-97 root frame so Era Twin compares directly. Archetypes: 8 player types via global clustering in the served 64-d MTNN v5 embedding, prevalence per season = share of charted player-seasons. statInsights: league per-100 rate in arrival season vs mean of all prior charted seasons.</p>
+    <p class="caption">Root frame 1996 + Procrustes RᵀR=I, ≥30 shared players / pair. <a href="/methods#drift">Full write-up →</a> 12,966 seasons · 64-d MTNN v5 · one model served. Forecast is research-only.</p>
   </section>
 
   <section class="card" id="forecast-trends" style="border-style:dashed">
     <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:flex-start">
       <div>
         <h2>Where it's headed — experimental forecast <span class="pill" style="background:var(--accent-wash);color:var(--accent)">Past → Modern → Headed · research-only</span></h2>
-        <p class="sub">Same 12,452 map, same 128-d MTNN v6 champion. <b>Where you stood → how you grew → where you're headed</b> — now projected one season forward from 3-season windows. 10,551 windows from 1901 players 2+ seasons, d_model 128 2 layers 4 heads dim_ff 256 64-d output + 9 quantiles. Stone dashed = uncertainty, terracotta dashed = drift direction. Not a rank. Forecast is research-only, not served as map — single champion model only. Shared contract <code>/data/timesfm_forecasts.json</code> (10551 windows) used by Map, Trends, Players for ghost rings.</p>
+        <p class="sub">Same 12,966-season map, same 64-d MTNN v5 champion. <b>Where you stood → how you grew → where you're headed</b> — projected one season forward from 3-season windows by a deterministic TimesFM-lite forecaster: 7,096 forecasts in <code>assets/timesfm_forecasts.json</code> (built 2026-09-02), used by Map, Trends, Players for ghost rings. Stone dashed = uncertainty, terracotta dashed = drift direction. Not a rank. Forecast is research-only, not served as map — single champion model only.</p>
       </div>
       <div style="display:flex;gap:6px;flex-wrap:wrap"><span class="pill">8 of 128 dims shown</span><span class="pill">10551 windows</span><span class="pill">503 honest if missing</span><span class="pill">research-only</span></div>
     </div>
     <canvas id="forecast-canvas" width="800" height="220" style="width:100%;height:auto;display:block;border:1px solid var(--line-2);border-radius:12px;background:var(--surface);margin-top:10px"></canvas>
     <div id="forecast-legend" class="caption" style="margin-top:8px">Loading forecasts…</div>
     <div id="forecast-trends-slot" style="margin-top:12px"></div>
-    <p class="caption" style="margin-top:8px">Experimental — Forecast Transformer v2 0.4.0-incremental-full64-2plus, 10551 windows chronological train 8921/val 804/test 826, val MAE 0.0403 vs naive-last 0.0354 and seasonal-avg 0.0383 — loses to baselines so research-only per policy. Uses same embedding_v3 12,966×64 MTNN v6 that powers the map. Shows as stone ghost rings on the map, same family as orange guesses / yellow target. <b>Gold preserved:</b> 3D Era Twins map, DAILY COURT 5× Past→Modern, orange guess rings, yellow target, Model Lens VOL+3P, "Where you stood, how you grew."</p>
+    <p class="caption" style="margin-top:8px">Experimental — deterministic TimesFM-lite forecaster (numpy, seed 7) over the served 12,966×64 MTNN v5 embedding space; 7,096 forecasts, and the metrics in the file are train-split — research-only. Shows as stone ghost rings on the map, same family as orange guesses / yellow target.</p>
   </section>
 
 </main>
@@ -554,7 +554,7 @@ input[type=range]{touch-action:manipulation}
 <script src="assets/pwa-install.js?v=bd4f258e"></script>
 <script src="assets/trends-viz.js?v=75df7dad" defer></script>
 <script src="assets/drift.js?v=caada0bf"></script>
-<script type="module" src="assets/timesfm-forecast.js?v=3f69b28a"></script>
+<script type="module" src="assets/timesfm-forecast.js?v=67ee6481"></script>
 <script>
 (function(){
   var seasons=[], playing=false, timer=null, idx=0;

@@ -78,4 +78,5 @@ lint:
 ci: offline
 	$(PYTHON) -m pytest -m "not local_data"
 	$(PYTHON) scripts/stamp_assets.py --check
+	$(PYTHON) scripts/check_site_facts.py
 	@echo "CI green - offline fixtures, no external network"
