@@ -38,11 +38,9 @@ const CORE = [
 '/assets/error-boundary.js',
 '/assets/keyboard-a11y.js',
 '/assets/arc-projections.js',
-'/live.html',
 '/assets/live.css',
 '/assets/live.js',
-'/assets/live-atlas.js',
-'/assets/arcade.js'
+'/assets/live-atlas.js'
 ];
 const DENY = [
 '/assets/vectors.json',

@@ -186,15 +186,6 @@
           "value": "public, max-age=0, s-maxage=60, stale-while-revalidate=300"
         }
       ],
-      "source": "/teams"
-    },
-    {
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=0, s-maxage=60, stale-while-revalidate=300"
-        }
-      ],
       "source": "/insights"
     },
     {
@@ -205,24 +196,6 @@
         }
       ],
       "source": "/insights/:slug"
-    },
-    {
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=0, s-maxage=60, stale-while-revalidate=300"
-        }
-      ],
-      "source": "/model"
-    },
-    {
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=0, s-maxage=60, stale-while-revalidate=300"
-        }
-      ],
-      "source": "/trends"
     },
     {
       "headers": [
@@ -259,15 +232,6 @@
         }
       ],
       "source": "/playoff-runs"
-    },
-    {
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=0, s-maxage=60, stale-while-revalidate=300"
-        }
-      ],
-      "source": "/everyday"
     }
   ],
   "rewrites": [

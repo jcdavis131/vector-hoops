@@ -1,14 +1,10 @@
 /* Vector Hoops — assets/dossier.js
- * Shared OKF dossier addressing + markdown rendering. Extracted from
- * assets/game.js so play.html (the game) and wiki.html (the dossier
- * browser) render the exact same dossier experience from one source.
+ * Shared OKF dossier addressing + markdown rendering, used by the Players
+ * surface (players-directory.js, player-dossier.js, players-skills.js).
  *
  * Pure functions + one fetch helper only — no DOM/modal-stack code lives
- * here. Each page keeps its own modal wiring (game.js has a shared focus-
- * trapping modal stack already; wiki.html has a simpler standalone one).
- *
- * Load this script BEFORE assets/game.js / the wiki's inline script —
- * both read window.VHDossier synchronously during their own init.
+ * here. Consumers read window.VHDossier synchronously during their own
+ * init, so load this script before them.
  */
 (function (global) {
   'use strict';
