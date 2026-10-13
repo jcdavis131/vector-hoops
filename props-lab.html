@@ -34,6 +34,7 @@
 .vh-pl__banner--wait{background:rgba(193,124,96,.12);border:1px solid rgba(193,124,96,.45);color:var(--fg)}
 .vh-pl__banner--live{background:rgba(138,154,139,.14);border:1px solid rgba(138,154,139,.5);color:var(--fg)}
 .vh-pl__banner strong{font-weight:700}
+.vh-pl__status{border:1px solid rgba(193,124,96,.55);background:rgba(193,124,96,.10);border-radius:12px;padding:12px 16px;margin:0 0 var(--s-4);font:500 13.5px/1.55 var(--font-sans)}
 .vh-pl__grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:0 0 18px}
 .vh-pl__stat{background:var(--void,#1E2022);border-radius:12px;padding:14px 16px}
 .vh-pl__stat b{display:block;font:800 clamp(22px,4vw,32px)/1.1 var(--font-display);color:#F9F6F0;letter-spacing:-.01em}
@@ -71,6 +72,7 @@
   <section class="vh-pl__card" aria-label="Backtest">
     <p class="vh-pl__kicker">2025–26 regular season · frozen</p>
     <h2 class="vh-pl__h">Walk-forward backtest</h2>
+    <p class="vh-pl__status" id="pl-gate-status" role="note">Loading gate result…</p>
     <p class="vh-pl__lede" id="pl-method"></p>
     <div class="vh-pl__grid" id="pl-backtest-stats"></div>
     <p class="vh-pl__sub">Edge-rule equity curve (locked rule, eval half)</p>
@@ -110,14 +112,16 @@
 
   fetch('assets/backtest_summary.json?v=3e25e44d').then(function(r){ return r.json(); }).then(function(bt){
     $('pl-method').textContent = bt.method + '. Lines: Dec 2025 – Apr 2026 (' + bt.overall.n_eval.toLocaleString() + ' evaluated over ' + bt.overall.eval_days + ' board days).';
+    $('pl-gate-status').innerHTML = '<b>Gate result: FAILED.</b> The model did not beat the line — ' + fmt(bt.overall.proj_mae, 2) + ' vs ' + fmt(bt.overall.line_mae, 2) + ' MAE over ' + bt.overall.n_eval.toLocaleString() + ' evaluated lines. The stats and equity curve below are a locked tail rule evaluated after that failure: a lead, not a result.';
     var e = bt.edge_rule.eval;
     var html = '';
+    html += statCell('Gate', 'FAILED', false);
     html += statCell('Eval lines', bt.overall.n_eval.toLocaleString());
     html += statCell('Model MAE', fmt(bt.overall.proj_mae, 3));
     html += statCell('Line MAE', fmt(bt.overall.line_mae, 3));
     html += statCell('Edge plays', e.n);
     html += statCell('Edge W–L', e.w + '–' + (e.n - e.w), true);
-    html += statCell('Edge ROI @ -110', (e.roi >= 0 ? '+' : '') + fmt(e.roi * 100, 1) + '%', e.roi > 0);
+    html += statCell('Edge ROI @ -110 (n=' + e.n + ')', (e.roi >= 0 ? '+' : '') + fmt(e.roi * 100, 1) + '%', e.roi > 0);
     html += statCell('Under share', fmt(bt.edge_rule.under_lean_eval * 100, 0) + '%');
     html += statCell('68% / 95% cover', fmt(bt.coverage_68 * 100, 1) + ' / ' + fmt(bt.coverage_95 * 100, 1));
     $('pl-backtest-stats').innerHTML = html;

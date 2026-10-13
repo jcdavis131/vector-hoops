@@ -530,7 +530,7 @@ a{color:inherit}
 <div class="cockpit-grid">
 <div class="cockpit-panel">
 <h3>01 Gather → 02 Vectors</h3>
-<p style="font-size:14px; line-height:1.6;">Pull every per-100 split from stats.nba.com 1996-2026. 12,966 player-seasons after MIN≥800 filter. Per-season z-score so 1999 and 2026 are both 0 = average of their era. Mask m creates cat([x·m,m]) so model knows never-measured vs zero.</p>
+<p style="font-size:14px; line-height:1.6;">Pull every per-100 split from stats.nba.com 1996-2026. 12,966 player-seasons after the schedule-aware eligibility filter (games + minutes bars, 450-minute floor). Per-season z-score so 1999 and 2026 are both 0 = average of their era. Mask m creates cat([x·m,m]) so model knows never-measured vs zero.</p>
 <ul style="font-size:12px; line-height:1.6; margin:8px 0 0 18px;">
 <li>volume, playmaking, rebounding, defense, efficiency, shotmix</li>
 <li>bio age/height/weight/draft, tracking 2013+ masked, form 2015+ masked</li>

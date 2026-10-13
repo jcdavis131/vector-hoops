@@ -54,7 +54,7 @@
       '<div class="pp-section-head">2026–27 model projection <span class="arc-proj__tag">arc-ridge v1</span></div>' +
       '<div class="arc-proj__grid">' + cells + '</div>' +
       (sub.length ? '<p class="arc-proj__sub">' + sub.join(' · ') + '</p>' : '') +
-      '<p class="arc-proj__fine">Career-arc model on this player\u2019s own trajectory (held-out test MAE 0.44, beats all baselines). ' +
+      '<p class="arc-proj__fine">Career-arc model on this player\u2019s own trajectory (held-out macro-MAE 0.44, measured in embedding space — not points — beating the naive baselines). ' +
       'A projection, not a prediction. <a href="/research">How it works</a></p>' +
       '</div>';
   }
