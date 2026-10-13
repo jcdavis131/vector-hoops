@@ -55,6 +55,18 @@ function renderGames(){
 
 // ---- Timeline scrubber state ----
 const TL={n:0,view:-1,live:true,gameId:null,newCount:0};
+// ---- Wave 5 fold state ----
+// The six lower plates live inside #more-plates (display:none until opened).
+// Painting them on every load/refresh/scrub was pure main-thread cost for
+// pixels nobody could see — and on a loaded browser it stacked up at initial
+// load. renderAll paints them only while the fold is open; opening the fold
+// replays the full render + atlas sync against the latest data.
+let foldOpen=false;
+function syncAtlas(d,g){
+  if(!window.LiveAtlas)return;
+  const f=fireNow(d,TL.live?TL.n-1:TL.view);
+  window.LiveAtlas.onGame(d,g,f&&JAM?f.name:null);
+}
 function selectGame(id){
   cur=id;clearInterval(timer);renderGames();$('main').style.display='block';const ln2=$('live-loading');if(ln2)ln2.style.display='none';
   TL.gameId=null;TL.n=0;TL.view=-1;TL.live=true;TL.newCount=0;wpDrawnFor=null;
@@ -65,9 +77,13 @@ function selectGame(id){
 function renderAll(d,g){
   if(g&&g.a&&g.h){try{document.title='Courtside — '+g.a.abbr+' @ '+g.h.abbr;}catch(e){}}
   const idx=TL.live?TL.n-1:TL.view;
-  renderHeader(d,g,idx);renderWP(d,g,idx);renderMomentum(d,g,idx);
-  renderPlays(d,idx);renderLeaders(d,g,idx);
-  renderGhosts(d);renderMiles(d);renderMoments(d,g,idx);renderShotChart(d,g,idx);
+  renderHeader(d,g,idx);renderWP(d,g,idx);
+  renderGhosts(d);renderMoments(d,g,idx);
+  if(foldOpen){
+    renderMomentum(d,g,idx);
+    renderPlays(d,idx);renderLeaders(d,g,idx);
+    renderMiles(d);renderShotChart(d,g,idx);
+  }
   updateTlUI(d);
 }
 async function loadGame(){
@@ -86,7 +102,7 @@ async function loadGame(){
       TL.n=n;
     }
     renderAll(d,g);
-    if(window.LiveAtlas){const f=fireNow(d,TL.live?TL.n-1:TL.view);window.LiveAtlas.onGame(d,g,f&&JAM?f.name:null);}
+    if(foldOpen) syncAtlas(d,g);
     window._lastD=d;window._lastG=g;
     lastUpd=new Date();
     $('upd').textContent='updated '+lastUpd.toLocaleTimeString();
@@ -121,8 +137,13 @@ function updateTlUI(d){
     if(now-scrubT>90&&window._lastD){scrubT=now;renderAll(window._lastD,window._lastG);}
   });
   sc.addEventListener('change',()=>{if(window._lastD)renderAll(window._lastD,window._lastG);});
-  let rszT=null;
+  let rszT=null,rszW=window.innerWidth;
   window.addEventListener('resize',()=>{
+    // Height-only resizes (scrollbar/URL-bar churn) change nothing the fixed-
+    // height canvases draw; re-rendering all plates on them can feed a
+    // resize<->layout loop. Only a width change earns a full re-render.
+    if(window.innerWidth===rszW)return;
+    rszW=window.innerWidth;
     clearTimeout(rszT);
     rszT=setTimeout(()=>{if(window._lastD)renderAll(window._lastD,window._lastG);},220);
   });
@@ -700,8 +721,16 @@ window.CourtsideMode=setMode;
   b.onclick=()=>{
     const open=w.hidden;
     w.hidden=!open;
+    foldOpen=open;
     b.setAttribute('aria-expanded', open?'true':'false');
     b.textContent=open?'FEWER PLATES':'MORE PLATES — momentum · atlas twins · shot chart · milestones · leaders · play by play';
+    if(open&&window._lastD){
+      // First paint of the folded plates: full render + atlas sync at the
+      // real (now-visible) widths, then let live-atlas refit its canvas.
+      renderAll(window._lastD,window._lastG);
+      syncAtlas(window._lastD,window._lastG);
+      window.dispatchEvent(new Event('resize'));
+    }
   };
 })();
 (function(){
