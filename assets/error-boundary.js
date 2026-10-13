@@ -128,7 +128,7 @@
       });
       if((target.src||'').indexOf('mtnn_embeddings')!==-1 || (target.src||'').indexOf('vectors')!==-1){
         try{ window.dispatchEvent(new CustomEvent('vh:vectors-failed')); }catch(e){}
-        showFallbackCard('sky-demo','Sky took longer to load','12,966 seasons map is 617KB lite-first + 2.5MB embeddings. Check connection — cache still works offline.', function(){
+        showFallbackCard('sky-demo','Sky took longer to load','12,966 seasons map is 617KB lite-first + 3.3MB embeddings. Check connection — cache still works offline.', function(){
           location.reload();
           return false;
         });
@@ -189,7 +189,7 @@
 
   function handleVHCustomFailures(){
     window.addEventListener('vh:mtnn-failed', function(){
-      showFallbackCard('daily-guesses','Embeddings failed to load','48-d MTNN 2.5MB embeddings took too long. Daily cosine still works offline from cache if previously visited. Retrying 1s/2s/4s.', function(){
+      showFallbackCard('daily-guesses','Embeddings failed to load','64-d MTNN 3.3MB embeddings took too long. Daily cosine still works offline from cache if previously visited. Retrying 1s/2s/4s.', function(){
         if(window.VHMtnn && VHMtnn.load){
           return new Promise(function(res){
             var tries=0;
