@@ -12,7 +12,7 @@
     'phi':['#006BB6','#ED174C'], 'chi':['#CE1141','#000000'], 'mia':['#98002E','#F9A01B'],
     'default':['#0072B2','#F0E442']
   };
-  // Famous overrides — resembling actual player (googled: hair, skin, beard, headband, jersey era)
+  // Star overrides (15) — resembling the actual player (hair, skin, beard, headband, jersey era)
   const OVERRIDES = {
     'Michael Jordan':{skin:2,hair:'black',hairStyle:'bald',beard:false,jersey:'chi',headband:false,shoes:'#000'},
     'Stephen Curry':{skin:0,hair:'brown',hairStyle:'curly',beard:false,jersey:'gsw',headband:false},
@@ -40,12 +40,9 @@
   function getConfig(name, arch){
     const key = (name||'').split(' ')[0]+' '+(name||'').split(' ').slice(-1)[0];
     // try override exact or partial
-    let ov = OVERRIDES[name] || null;
-    if(!ov){
-      for(const k of Object.keys(OVERRIDES)){
-        if(name.toLowerCase().includes(k.toLowerCase().split(' ')[0])){ ov=OVERRIDES[k]; break; }
-      }
-    }
+    // exact full-name match only — the old first-name substring match gave
+    // every 'Michael' Jordan's face and every 'James' Harden's
+    let ov = OVERRIDES[name] || OVERRIDES[(name||'').trim()] || null;
     const h=hashStr(name||'player');
     const skinIdx = ov? ov.skin : (h % SKINS.length);
     const skin = SKINS[skinIdx];

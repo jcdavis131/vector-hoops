@@ -83,10 +83,7 @@
 
   /* ---- legacy token bridge ---- */
   --paper: var(--bg);
-  --paper-raised: var(--surface);
   --ink-muted: var(--fg-2);
-  --hair: var(--line);
-  --hairline: var(--line);
   --orange: var(--accent);
   --verm: var(--accent);
   --yellow: var(--accent-wash);
@@ -95,14 +92,12 @@
   --layout-wide: 1120px;
   --heading-page: clamp(20px, 2.4vw + 12px, 28px);  /* legacy win/success green (Okabe-Ito) — was bridged to var(--ok) moss, which put white text at 2.97:1 */
   --shadow: none;
-  --shadow-raised: none;
   --shadow-soft: none;
   --mono: var(--font-code);
   --sans: var(--font-text);
   --hd: var(--font-display);
   --font-mono: var(--font-code);
   --font-sans: var(--font-text);
-  --font-serif: var(--font-display);
   --focus: var(--accent);
 }
 
@@ -663,11 +658,9 @@ table{ border-collapse: collapse; width: 100%; }
    ========================================================================== */
 @keyframes atlas-rise{ from{ opacity: 0; transform: translateY(14px); } to{ opacity: 1; transform: none; } }
 @keyframes atlas-fade{ from{ opacity: 0; } to{ opacity: 1; } }
-@keyframes atlas-draw{ from{ transform: scaleX(0); } to{ transform: scaleX(1); } }
 .reveal{ animation: atlas-rise var(--dur-3) var(--ease) both; }
 .reveal-1{ animation-delay: 80ms; } .reveal-2{ animation-delay: 180ms; } .reveal-3{ animation-delay: 280ms; }
 .reveal-4{ animation-delay: 380ms; } .reveal-5{ animation-delay: 480ms; } .reveal-6{ animation-delay: 580ms; }
-.vx-rise, [data-vx-stagger] > *{ animation: atlas-rise var(--dur-2) var(--ease) both; }
 
 @media (prefers-reduced-motion: reduce){
   *, *::before, *::after{

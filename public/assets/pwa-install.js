@@ -15,11 +15,12 @@
     try{
       var dismissed = localStorage.getItem(LS_KEY);
       if(dismissed && (Date.now() - parseInt(dismissed,10) < 14*86400000)) return false;
-      var visitsRaw = localStorage.getItem('vectorHoops.visits');
-      var visits = visitsRaw ? JSON.parse(visitsRaw) : [];
-      var hasLocked = false;
-      try{ hasLocked = !!localStorage.getItem('vectorHoops.favoriteTeam'); }catch(e){}
-      return visits.length>=2 || hasLocked;
+      // (Removed: a visits>=2 gate and a favorite-team gate whose
+      // localStorage writers no longer exist anywhere in the repo, so
+      // this could only ever return false and the prompt never showed.
+      // The browser only fires beforeinstallprompt for engaged users,
+      // which is the gate that matters.)
+      return true;
     }catch(e){ return false; }
   }
 

@@ -96,7 +96,6 @@
       // pass full guess objects (idx/sim/rank), not just ids, so a resumed
       // in-progress slot still shows the distance line + label immediately
       sharedMapApi = await mod.mountSharedMap(canvasEl, { highlightId: tid>=0?tid:null, guessIds: (G.guesses||[]).slice(), dark:true });
-      console.log('shared-map mounted play', sharedMapApi?sharedMapApi.getCount():0);
       window._sharedMapApi = sharedMapApi;
       mountLensBar();
     }catch(e){ console.warn('mountGameMap fail',e); }
@@ -126,7 +125,6 @@
           try{
             var h = window.VHMapLenses.attach(window._sharedMapApi, {mountEl: mountEl, idToPid: map});
             window._mapLensHandle = h || null;
-            console.log('map-lenses attached, id->pid entries:', map.size);
           }catch(e){ console.warn('lens attach fail', e); }
           return;
         }
@@ -333,8 +331,6 @@
       if(window.VHPastModern && VHPastModern.savePackState) VHPastModern.savePackState();
     }catch{}
   }
-  function loadStreak(){ try{ const raw=localStorage.getItem('vh.streak'); if(!raw) return 0; return JSON.parse(raw).streak||0; }catch{ return 0; } }
-  function saveStreak(s){ try{ localStorage.setItem('vh.streak', JSON.stringify({streak:s,last:Date.now()})); }catch{} }
   // sound toggle — persisted mute, reflects state on the button
   function initSoundToggle(){
     try{
@@ -664,7 +660,7 @@
       else phase.textContent = count===0? 'See model lens' : `Playing — ${count}/6 used`;
     }
     // subset map stays visible — was ready-banner
-    try{ syncSubsetFromState(); }catch{}
+    /* syncSubsetFromState removed — it was defined nowhere (its partner subset-map.js is deleted); the calls threw a swallowed ReferenceError */
     const turnText=$('#turn-text'); if(turnText){
       if(st.isPack){
         const ps=VHPastModern.getPackState();
@@ -713,7 +709,7 @@
         }
       }
     }catch(e){}
-    try{ focusOnTarget(); projectFrame(); draw(); syncSubsetFromState(); }catch{}
+    try{ focusOnTarget(); projectFrame(); draw(); }catch{}
     if(st.isPack){
       const ps=VHPastModern.getPackState();
       $('#puzzle-pill').textContent=`PACK ${ps.index+1}/${ps.size}`;
@@ -1251,30 +1247,9 @@
 
     renderPast(); renderGuesses(); finish(); renderDailyCourt(); renderPackProgress(); renderPackSummary();
 
-    // cohesive forecast wiring for play — where you're headed
-    function wirePlayForecast(){
-      if(!window.HoopsForecast) return;
-      const slot = document.getElementById('play-forecast-slot');
-      if(!slot) return;
-      try{
-        const st = VHPastModern.state();
-        const name = st && st.target && st.target.n || '';
-        if(!name){ slot.innerHTML=''; return; }
-        window.HoopsForecast.load().then(()=>{
-          const f = window.HoopsForecast.getForName(name);
-          if(f){
-            slot.innerHTML = window.HoopsForecast.forecastCardHTML(name, f);
-            // ghost on map
-            if(window._sharedMapApi) window.HoopsForecast.attachToMap(window._sharedMapApi, name);
-            if(window.HoopsNebula) window.HoopsForecast.attachToMap(window.HoopsNebula, name);
-          } else {
-            slot.innerHTML = '';
-          }
-        });
-      }catch{}
-    }
-    setTimeout(wirePlayForecast, 900);
-    window.addEventListener('vh:game-state-changed', wirePlayForecast);
+    /* (Removed: wirePlayForecast — it returned immediately because
+       window.HoopsForecast is defined nowhere; the forecast exhibit
+       lives on Methods, wired as a real module import.) */
 
     const onboardSeen=localStorage.getItem('vh.onboardSeenV3');
     const backdrop=$('#onboarding-backdrop');
