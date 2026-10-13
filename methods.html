@@ -335,6 +335,7 @@ a{color:inherit}
 #network-map-axes .network-map-axes__label{font-weight:700;color:#E9E3D3}
 #network-map-axes .network-map-axes__end{display:block;color:#E9E3D3}
 #network-map-axes .network-map-axes__end em{font-style:normal;font-weight:700;color:#E9E3D3}
+.network-insights__note{font:400 11px/1.5 var(--font-sans);color:#E9E3D3;opacity:.85;margin:8px 0 0}
 
 /* next */
 .site-next{
@@ -438,13 +439,14 @@ Heads: 8 arch / 5 pos / 14 next / 18 skills (64→16→1)
     <section id="the-map">
       <div class="doc-n">03</div>
       <h2>The map</h2>
-      <p>The league map projects the 14-d or 64-d vectors down to three axes with PCA, min-max scaled to [0, 1]. Axes are named from their correlations; the centre is the league average.</p>
+      <p>Two maps, both PCA(3), both min-max scaled. The league map (Atlas, Play) flattens the 14 era-normalised stat traits — its three axes keep about 62% of those traits&rsquo; variance. The explorer map above flattens the model&rsquo;s 64-d embedding, whose first three axes keep only about 27% of its variance — so on either map, &ldquo;nearby&rdquo; is approximate, and the model&rsquo;s true nearest seasons are computed in the full spaces, not read off the picture. Axes are named from their correlations.</p>
+      <p class="doc-note">The Atlas map&rsquo;s axes:</p>
       <table class="data-table">
         <thead><tr><th scope="col">Axis</th><th scope="col">Low end</th><th scope="col">High end</th></tr></thead>
         <tbody>
           <tr><td>X</td><td>Paint: boards, blocks</td><td>Perimeter: shooters</td></tr>
           <tr><td>Y</td><td>High-usage scorers</td><td>Low-usage role players</td></tr>
-          <tr><td>Z</td><td>Defense, off-ball</td><td>Offense, on-ball handlers</td></tr>
+          <tr><td>Z</td><td>Off-ball, low-event</td><td>Handlers (assists, steals, turnovers)</td></tr>
         </tbody>
       </table>
     </section>
@@ -452,10 +454,10 @@ Heads: 8 arch / 5 pos / 14 next / 18 skills (64→16→1)
     <section id="archetypes">
       <div class="doc-n">04</div>
       <h2>Archetypes — eight types</h2>
-      <p>k-means with K = 8, in two spaces. The labels on players, dossiers and games come from the frozen game contract — k-means on the 14-d era-z serving vectors, seeded so it reproduces; the MTNN archetype head learns to predict those labels (top-1 0.970). The Trends stream's prevalence is computed separately, from a K = 8 clustering of the 64-d MTNN v5 embedding, with the same naming rule (names from distinctive skill z-scores).</p>
+      <p>k-means with K = 8, in two spaces. The labels on players, dossiers and games come from the frozen game contract — k-means on the 14-d era-z serving vectors, seeded so it reproduces; the MTNN archetype head was trained to predict those labels (top-1 0.970 against the training snapshot). The serving vectors were rebuilt in October 2026 and their k-means re-drawn, so the head and the served labels now agree more loosely — cousins, not copies; where a surface shows a model archetype instead, it uses the head&rsquo;s own assignment. The Trends stream's prevalence is computed separately, from a K = 8 clustering of the 64-d MTNN v5 embedding, with the same naming rule (names from distinctive skill z-scores).</p>
       <ol class="doc-list">
-        <li>Three-point accuracy (low TOV)</li><li>Scoring + shot volume</li><li>Defensive glass + rim pressure</li><li>Three-point volume + accuracy</li>
-        <li>Offensive glass (low on-court)</li><li>Rim protection + offensive glass</li><li>Offensive glass + defensive glass</li><li>Playmaking + steals</li>
+        <li>Rim protection + offensive glass</li><li>Three-point volume (low finishing)</li><li>Playmaking + steals</li><li>Offensive glass + defensive glass</li>
+        <li>Three-point volume + shot volume</li><li>Three-point volume + three-point accuracy</li><li>Scoring volume + shot volume</li><li>Rim pressure (FTs) + defensive glass</li>
       </ol>
     </section>
 
@@ -539,7 +541,7 @@ Heads: 8 arch / 5 pos / 14 next / 18 skills (64→16→1)
 </div>
 <p class="mono" style="font-size:12px; color:var(--fg-2); margin:8px 0 2px;">Promoted 2026-07-25: <code>mtnn_v5_concat_b2_h160_t32_d64_mlp128_fus256</code>, replacing the 2026-07-14 build. On the identical held-out protocol (assets/eval_scoreboard.json) it nearly quadruples the committed transparent baseline on never-trained 2024+ pairs — top-5 <b>0.196 → 0.757</b>, top-1 <b>0.079 → 0.438</b> (baseline: the 14-d era-z profile in vectors.json). The previous build predated the position-label, career-feature and durability-leak fixes.</p>
 
-<p class="mono" style="font-size:12px; color:var(--fg-2); margin:8px 0 2px;">Served-model scorecard — MTNN v5, built 2026-07-25 (<code>assets/mtnn_meta.json</code>): test recall@10 <b>0.846</b> · purity@20 <b>0.783</b> · archetype top-1 <b>0.970</b>. Held-out retrieval detail:</p>
+<p class="mono" style="font-size:12px; color:var(--fg-2); margin:8px 0 2px;">Served-model scorecard — MTNN v5, built 2026-07-25 (<code>assets/mtnn_meta.json</code>): test recall@10 <b>0.846</b> (held-out 2024+ targets) · cross-era purity@20 <b>0.783</b> · archetype top-1 <b>0.970</b> (training snapshot). Held-out retrieval detail:</p>
 <div class="cqs-strip" id="eval-scoreboard-strip" aria-label="Held-out retrieval scoreboard">
 <div class="cqs-badge is-primary"><b id="evsb-top5">…</b><span>held-out top-5 retrieval</span></div>
 <div class="cqs-badge"><b id="evsb-top1">…</b><span>held-out top-1</span></div>
@@ -786,7 +788,7 @@ Heads: 8 arch / 5 pos / 14 next / 18 skills (64→16→1)
 <script>if('serviceWorker' in navigator){window.addEventListener('load',()=>{navigator.serviceWorker.register('/sw.js').catch(()=>{})})}</script>
 
 <script src="assets/mtnn.js?v=81d491f8"></script>
-<script src="assets/network-viz.js?v=a4375f46"></script>
+<script src="assets/network-viz.js?v=aa7869da"></script>
 <script src="assets/site-facts.js?v=cbb639f4" defer></script>
 <script>
 (() => {
