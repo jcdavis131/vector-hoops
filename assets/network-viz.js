@@ -57,7 +57,7 @@
   var STEPS = [
     {
       id: 'input',
-      caption: '120 features in 17 families → each tower reads cat([x·m, m]), so missing stats have m=0 and zero gradient.'
+      caption: '130 features in 17 families → each tower reads cat([x·m, m]), so missing stats have m=0 and zero gradient.'
     },
     {
       id: 'towers',
@@ -65,15 +65,15 @@
     },
     {
       id: 'fusion',
-      caption: '17×32=544 tower outputs concat with learned season embedding 12-d → 556-d → 128 GELU LN → 48-d → L2 norm.'
+      caption: '17×32=544 tower outputs concat with learned season embedding 12-d → 556-d → concat fusion → 64-d → L2 norm.'
     },
     {
       id: 'embedding',
-      caption: '48-d L2-normalized fingerprint — that is where similarity, recall@10, and purity are measured.'
+      caption: '64-d L2-normalized fingerprint — that is where similarity, recall@10, and purity are measured.'
     },
     {
       id: 'heads',
-      caption: 'Decode: MLP 48→64→k for archetype(8)/position(5)/profile(14)/next(14), plus 18×(64→16→1) skill towers and scalar aux heads.'
+      caption: 'Decode: MLP heads read the 64-d fingerprint — archetype (8), position (5), next-season profile (14), plus 18 skill heads at 64→16→1 each and scalar aux heads.'
     }
   ];
 
@@ -245,8 +245,14 @@
     return (Math.round(capped * 100) / 100).toFixed(2);
   }
 
+  /* Per-family input signals, or null when the v5 input export is not
+     published. The committed mtnn_inputs.f32 is the previous 48-d build's
+     11-family layout; read against the shipped 17-family arch its values
+     would be another player's numbers, so loadInputs() adopts the file
+     only on an exact stride match and every consumer must treat null as
+     "not published" — never as zero. */
   function inputSignalsForPlayer(playerIdx) {
-    if (!state.inputs || !state.familyOrder.length || playerIdx < 0) return [];
+    if (!state.inputs || !state.familyOrder.length || playerIdx < 0) return null;
     var famVals = {};
     var rowOff = playerIdx * state.familyOrder.length;
     state.familyOrder.forEach(function (fam, i) {
@@ -282,6 +288,7 @@
   }
 
   function familyWeight(fam, signals) {
+    if (!signals) return null;
     for (var i = 0; i < signals.length; i++) {
       if (signals[i].key === fam) return signals[i].score;
     }
@@ -482,12 +489,15 @@
   function flowDiagnostics(playerIdx) {
     var signals = inputSignalsForPlayer(playerIdx);
     var row = headRow(playerIdx);
-    if (!signals.length || !row) return null;
+    if (!row) return null;
 
-    var signalVals = signals.map(function (s) { return s.score; });
-    var signalMass = signalVals.reduce(function (a, b) { return a + b; }, 0);
-    var top3Mass = topN(signals, 3, 'score').reduce(function (a, b) { return a + b.score; }, 0);
-    var inputFocus = signalMass > 1e-9 ? top3Mass / signalMass : 0;
+    var inputFocus = null;
+    if (signals) {
+      var signalVals = signals.map(function (s) { return s.score; });
+      var signalMass = signalVals.reduce(function (a, b) { return a + b; }, 0);
+      var top3Mass = topN(signals, 3, 'score').reduce(function (a, b) { return a + b.score; }, 0);
+      inputFocus = signalMass > 1e-9 ? top3Mass / signalMass : 0;
+    }
 
     // Tower selectivity must be measured on CAUSAL influence. Measured on raw
     // input magnitudes it reads ~0 for any superstar (every family maxes out),
@@ -497,8 +507,8 @@
       ? (state.arch.towerFamilies || []).map(function (f) {
           return embInf[f] != null ? embInf[f] : 0;
         })
-      : signalVals;
-    var towerSpread = 1 - normalizedEntropy(towerVals);
+      : (signals ? signals.map(function (s) { return s.score; }) : null);
+    var towerSpread = towerVals ? 1 - normalizedEntropy(towerVals) : null;
 
     var arch = softmax(Array.prototype.slice.call(row, 0, state.nArch));
     var archSorted = arch.slice().sort(function (a, b) { return b - a; });
@@ -634,7 +644,7 @@
     ctx.beginPath(); ctx.roundRect(panelX, panelY, panelW, panelH, 8); ctx.fill(); ctx.stroke();
     ctx.fillStyle = INK;
     ctx.font = '700 10px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace';
-    ctx.fillText('PCA Axes (MTNN 48-d) — Cam\'s Lab light paper', panelX + 8, panelY + 13);
+    ctx.fillText('PCA Axes (MTNN ' + ((state.arch && state.arch.dEmb) || 64) + '-d) — Cam\'s Lab light paper', panelX + 8, panelY + 13);
     axes.forEach(function (ax, i) {
       var y = panelY + 30 + i * (lineH + 12);
       ctx.fillStyle = INK;
@@ -678,7 +688,7 @@
 
   function summarizeStory(playerIdx) {
     var signals = inputSignalsForPlayer(playerIdx);
-    var topInputs = topN(signals, 3, 'score');
+    var topInputs = signals ? topN(signals, 3, 'score') : [];
 
     var fams = state.arch && state.arch.towerFamilies ? state.arch.towerFamilies : [];
     // Causal influence on the embedding when available — same signal as tower radii.
@@ -752,12 +762,12 @@
     var clsF = step === 2 || step === 3 ? ' is-active' : (step > 3 ? ' is-done' : '');
     var cls2 = step === 4 ? ' is-active' : '';
 
-    var inputsHtml = s.topInputs.map(function (x) {
+    var inputsHtml = s.topInputs.length ? s.topInputs.map(function (x) {
       return '<span class="network-story-chip">' + esc(x.label) + ' <b>' + Math.round(x.score * 100) + '%</b></span>';
-    }).join('');
+    }).join('') : '<span class="network-story-chip">Input signals — not published for this build</span>';
     var towersHtml = s.topTowers.map(function (x) {
-      return '<span class="network-story-chip">' + esc(x.fam.replace(/_/g, ' ')) + ' <b>' +
-        Math.round(x.score * 100) + '%</b></span>';
+      return '<span class="network-story-chip">' + esc(x.fam.replace(/_/g, ' ')) +
+        (x.score != null ? ' <b>' + Math.round(x.score * 100) + '%</b>' : '') + '</span>';
     }).join('');
     var predHtml = '';
     if (s.topArch) {
@@ -788,7 +798,7 @@
         '<div class="network-story-stage' + clsF + '">' +
           '<div class="network-story-stage__head">Fuse &amp; embed</div>' +
           '<div class="network-story-stage__chips">' +
-            '<span class="network-story-chip">544+12 → 48 L2</span>' +
+            '<span class="network-story-chip">544+12 → ' + ((state.arch && state.arch.dEmb) || 64) + ' L2</span>' +
           '</div>' +
         '</div>' +
         '<div class="network-story-arrow" aria-hidden="true">→</div>' +
@@ -878,14 +888,9 @@
     }
     // Each hint states what the bar means, which direction is "more", and a
     // typical range — and, where a low reading is easily misread as "the model
-    // is broken", says plainly what it usually means instead.
+    // is broken", says plainly what it usually means instead. Meters that need
+    // the unpublished per-family input signals are omitted, never zero-filled.
     var rows = [
-      { key: 'Top inputs', val: d.inputFocus,
-        hint: 'Share of this player’s signal coming from his 3 strongest stat groups. '
-          + 'Higher = a specialist; lower = an all-around profile. Most players sit around 25–45%.' },
-      { key: 'Tower spread', val: d.towerSpread,
-        hint: 'Whether a few parts of the network drive this player or all of them equally. '
-          + 'A superstar often reads LOW here — he lights up everything at once, which is a strength, not a fault.' },
       { key: 'Archetype gap', val: d.archMargin,
         hint: 'How far the model’s top play-style guess leads its second guess. '
           + 'High = a clear-cut type; low = a genuine hybrid between two styles.' },
@@ -899,10 +904,26 @@
         hint: 'How far the model expects next season’s stats to move from the league average. '
           + 'Higher = a more distinctive projected season; near zero = a roughly average line.' }
     ];
+    if (d.inputFocus != null) {
+      rows.unshift({ key: 'Top inputs', val: d.inputFocus,
+        hint: 'Share of this player’s signal coming from his 3 strongest stat groups. '
+          + 'Higher = a specialist; lower = an all-around profile. Most players sit around 25–45%.' });
+    }
+    if (d.towerSpread != null) {
+      rows.splice(d.inputFocus != null ? 1 : 0, 0, { key: 'Tower spread', val: d.towerSpread,
+        hint: 'Whether a few parts of the network drive this player or all of them equally. '
+          + 'A superstar often reads LOW here — he lights up everything at once, which is a strength, not a fault.' });
+    }
+    var inputsNote = (d.inputFocus == null && d.towerSpread == null)
+      ? '<p class="network-insight-note">Per-family input signals are not published for the v5 build yet, '
+        + 'so the input-side meters are hidden rather than estimated. These meters read the model’s '
+        + 'own head outputs, which are published.</p>'
+      : '';
     host.innerHTML =
       '<div class="network-insights__head">Signal check</div>' +
       '<p class="network-insight-note">These bars describe how the model is <em>reading</em> this '
         + 'player — they are not a rating of how good he is. Hover any bar for what it means.</p>' +
+      inputsNote +
       '<div class="network-insight-meters">' +
       rows.map(function (r) {
         return '<div class="network-insight-meter" title="' + esc(r.hint) + '">' +
@@ -1064,7 +1085,7 @@
         '<div class="network-insights__chips">' +
           '<span class="network-insight-chip">' + esc(inp.label) + '</span>' +
           '<span class="network-insight-chip">→ tower #' + (node.index + 1) + '</span>' +
-          '<span class="network-insight-chip">coverage <b>' + fmtPredScore(inp.score * 100) + '%</b></span>' +
+          '<span class="network-insight-chip">coverage <b>' + (inp.score != null ? fmtPredScore(inp.score * 100) + '%' : 'n/a') + '</b></span>' +
         '</div>' +
         '<ol class="network-node-inspector__list">' + featRows.slice(0, 16).map(function (f) {
           return '<li><span class="network-node-inspector__name">' + esc(f.label) + '</span>' +
@@ -1089,8 +1110,9 @@
         chips += '<span class="network-insight-chip">Fingerprint share <b>' +
           fmtPredScore(embScore * 100) + '%</b></span>';
       } else {
+        var covW = familyWeight(fam, signals);
         chips += '<span class="network-insight-chip">coverage <b>' +
-          fmtPredScore(familyWeight(fam, signals) * 100) + '%</b></span>';
+          (covW != null ? fmtPredScore(covW * 100) + '%' : 'n/a') + '</b></span>';
       }
       if (headScore != null) {
         chips += '<span class="network-insight-chip">' +
@@ -1207,8 +1229,8 @@ function buildFlowSvg(host) {
     if (!host || !state.arch) return;
     host.innerHTML = '';
     // AAA readable: taller canvas, larger fonts, no clip. Truthful W1380 H880 v4 baseline.
-    // Input mask m∈{0,1} • cat([x·m,m]) • 2 residual blocks per tower 160→32 LN GELU + skip • season 12-d concat • L2 embed 48-d • MLP heads 8/5/14/18
-    // Truthful invariants: 12,392 seasons, 120 feats, 17 families cat([x·m,m]) 17×160→32×2 544+12=556→128→48 L2, MAX_INPUT_NODES 17 truthful
+    // Input mask m∈{0,1} • cat([x·m,m]) • 2 residual blocks per tower 160→32 LN GELU + skip • season 12-d concat • L2 embed 64-d • MLP heads 8/5/14/18
+    // Truthful invariants: 12,966 seasons, 130 feats, 17 families cat([x·m,m]) 17×160→32×2 544+12=556→64 L2, MAX_INPUT_NODES 17 truthful
     var W = 1380;
     var H = 880;
     var TOP_LABEL_Y = 28;
@@ -1245,11 +1267,11 @@ function buildFlowSvg(host) {
 
     // Top labels — 12px mono bold, AAA #111 on #FFFEF7 18.6:1
     var topLabels = [
-      { x: COLS.input, label: 'Input 120 feats 17 families' },
+      { x: COLS.input, label: 'Input 130 feats 17 families' },
       { x: COLS.b2o, label: 'Towers 17×2 ResBlocks 160→32' },
       { x: COLS.fusion, label: 'Concat 544+12=556 + season 12-d' },
-      { x: COLS.embed, label: 'Embed 48-d L2' },
-      { x: COLS.heads, label: 'Heads MLP 48→64→k' }
+      { x: COLS.embed, label: 'Embed 64-d L2' },
+      { x: COLS.heads, label: 'Heads MLP on 64-d' }
     ];
     topLabels.forEach(function(o){
       var t = document.createElementNS(SVG_NS, 'text');
@@ -1563,7 +1585,7 @@ function buildFlowSvg(host) {
     embed.setAttribute('id', 'flow-embed');
     embed.setAttribute('style','fill:'+CARD+';stroke:'+INK+';stroke-width:2.5px;');
     var embedTitle = document.createElementNS(SVG_NS, 'title');
-    embedTitle.textContent = 'Embedding 48-d L2-normalized: output of Linear 128→48 then F.normalize, cosine similarity';
+    embedTitle.textContent = 'Embedding 64-d L2-normalized: output of the concat fusion then F.normalize, cosine similarity';
     embed.appendChild(embedTitle);
     svg.appendChild(embed);
 
@@ -1839,7 +1861,7 @@ function buildFlowSvg(host) {
   function traceForNode(node) {
     var fams = (state.arch && state.arch.towerFamilies) || [];
     var signals = inputSignalsForPlayer(state.playerIdx);
-    var nShown = Math.min(MAX_INPUT_NODES, signals.length);
+    var nShown = Math.min(MAX_INPUT_NODES, signals ? signals.length : 0);
     var headDefs = (state.flowLayout && state.flowLayout.headDefs) || [];
     var nodeSel = [];
     var edgeSel = ['emb-main'];
@@ -1879,7 +1901,7 @@ function buildFlowSvg(host) {
       addSpine();
       addAllHeads();
       summary = capWords((famLabel||'input '+(i+1)).replace(/_/g,' ')) + ' → Tower ' + (t + 1) +
-        ' → fusion (544+12=556→128→48 L2) → embedding → all ' + headDefs.length + ' heads';
+        ' → fusion (544+12=556 → 64 L2) → embedding → all ' + headDefs.length + ' heads';
     } else if (node.type === 'tower') {
       var t2 = node.index;
       origin = '[data-tower="' + t2 + '"]';
@@ -1904,7 +1926,10 @@ function buildFlowSvg(host) {
       var top = fams.map(function (fam, ix) {
         return { ix: ix, s: inf ? (inf[fam] != null ? inf[fam] : 0)
                                 : familyWeight(fam, signals) };
-      }).sort(function (a, b) { return b.s - a.s; }).slice(0, 5);
+      }).sort(function (a, b) { return (b.s || 0) - (a.s || 0); }).slice(0, 5);
+      // No causal weights and no input signals published: there is no
+      // truthful "top towers" ranking, so trace the spine only.
+      if (!inf && !signals) top = [];
       top.forEach(function (tp) {
         nodeSel.push('[data-tower="' + tp.ix + '"]');
         edgeSel.push('fuse-' + tp.ix);
@@ -1915,7 +1940,9 @@ function buildFlowSvg(host) {
       for (var d = 0; d < headDefs.length; d++) {
         if (headDefs[d].key === key) { label = headDefs[d].label; break; }
       }
-      summary = label + ' ← embedding ← fusion ← top ' + top.length + ' towers ← their inputs';
+      summary = top.length
+        ? label + ' ← embedding ← fusion ← top ' + top.length + ' towers ← their inputs'
+        : label + ' ← embedding ← fusion ← towers ← their inputs';
     }
     return { nodeSel: nodeSel, edgeSel: edgeSel, origin: origin, summary: summary };
   }
@@ -2013,7 +2040,7 @@ function buildFlowSvg(host) {
       svg.querySelectorAll('[data-input-value]').forEach(function (n, i) {
         var fam = fams[i] || '';
         var s = familyWeight(fam, signals);
-        n.textContent = fmtPredScore(s * 100) + '%';
+        n.textContent = s != null ? fmtPredScore(s * 100) + '%' : 'n/a';
       });
       svg.querySelectorAll('[data-input-label]').forEach(function (n, i) {
         var fam = fams[i] || '';
@@ -3393,16 +3420,17 @@ function buildFlowSvg(host) {
       if (mq.addEventListener) mq.addEventListener('change', onMotion);
       else if (mq.addListener) mq.addListener(onMotion);
     }
+    // Core assets only. Per-family input signals (mtnn_inputs.f32) load
+    // separately in loadInputs(): the committed file is the previous 48-d
+    // build's 11-family layout, and validating it inside this Promise.all
+    // used to throw 'inputs length mismatch' and kill every exhibit on the
+    // page — flow, explorer, map — over one stale optional dataset.
     Promise.all([
       fetch('assets/vectors.json?v=14c4d17d').then(function (r) { return r.json(); }),
       fetch('assets/mtnn_arch.json?v=5513129c').then(function (r) { return r.json(); }),
-      fetch('assets/mtnn_map.json?v=b63cf7f7').then(function (r) { return r.json(); }),
+      fetch('assets/mtnn_map.json?v=9bcf3e49').then(function (r) { return r.json(); }),
       fetch('assets/mtnn_heads.f32?v=9b3f7454').then(function (r) {
         if (!r.ok) throw new Error('heads');
-        return r.arrayBuffer();
-      }),
-      fetch('assets/mtnn_inputs.f32?v=cf5edf6a').then(function (r) {
-        if (!r.ok) throw new Error('inputs');
         return r.arrayBuffer();
       })
     ]).then(function (parts) {
@@ -3410,7 +3438,6 @@ function buildFlowSvg(host) {
       state.arch = parts[1];
       state.map = parts[2];
       var buf = parts[3];
-      var ibuf = parts[4];
       state.nArch = state.arch.nArchetypes || 8;
       state.nSkills = (state.arch.skillKeys || []).length || 18;
       state.nPos = state.arch.nPositions || 5;
@@ -3419,13 +3446,9 @@ function buildFlowSvg(host) {
       state.familyFeatures = state.arch.familyFeatures || {};
       var n = state.map.rows;
       state.heads = new Float32Array(buf);
-      state.inputs = new Float32Array(ibuf);
       var totalHeads = state.nArch + state.nSkills + state.nPos + state.nNext;
       if (state.heads.length !== n * totalHeads) {
         throw new Error('heads length mismatch');
-      }
-      if (state.familyOrder.length && state.inputs.length !== n * state.familyOrder.length) {
-        throw new Error('inputs length mismatch');
       }
       state.players = vec.players;
       buildNameIndex();
@@ -3448,6 +3471,7 @@ function buildFlowSvg(host) {
       // Attribution needs the Jacobian's population matrix for the heatmap and
       // the tower bars, so chain rather than race.
       loadJacobian().then(loadAttribution);
+      loadInputs();
       loadSeasonNorms();
       renderMapLegend();
       renderMapInsights();
@@ -3459,8 +3483,37 @@ function buildFlowSvg(host) {
       }
       var cap = $('network-step-caption');
       if (cap) {
-        cap.textContent = 'Could not load MTNN explorer assets. Run pipeline/export_mtnn_viz.py after training.';
+        cap.textContent = 'The explorer assets failed to load, so the interactive exhibits are off. '
+          + 'The architecture, scorecard and methods above still stand — reload the page to try again.';
       }
+    });
+  }
+
+  /* Optional: per-family input signals. Adopted only on an exact stride
+     match against the shipped arch — the committed file is the previous
+     48-d build's 11-family layout (12,966 × 11), which can never validate
+     against the 17-family v5 arch, so until a v5 export is published the
+     input-side meters stay hidden (see inputSignalsForPlayer). A future
+     correct export lights them up with no code change. */
+  function loadInputs() {
+    return fetch('assets/mtnn_inputs.f32?v=cf5edf6a').then(function (r) {
+      if (!r.ok) throw new Error('no inputs');
+      return r.arrayBuffer();
+    }).then(function (buf) {
+      var data = new Float32Array(buf);
+      var n = state.players.length;
+      if (!state.familyOrder.length || data.length !== n * state.familyOrder.length) {
+        throw new Error('inputs layout does not match shipped arch (stale export)');
+      }
+      state.inputs = data;
+      // Repaint the signal-dependent panels now that real signals exist.
+      updateFlowVisual();
+      renderStory();
+      renderFlowInsights();
+      renderNodeInspector();
+    }).catch(function (err) {
+      state.inputs = null;
+      if (window.console) console.warn('[network-viz] input signals unavailable:', err.message);
     });
   }
 
