@@ -5,7 +5,7 @@
 (function () {
   var els = document.querySelectorAll("[data-fact]");
   if (!els.length) return;
-  fetch("/assets/site_facts.json?v=9f98acfd")
+  fetch("/assets/site_facts.json?v=5596e28e")
     .then(function (r) { return r.json(); })
     .then(function (d) {
       var facts = (d && d.facts) || {};
