@@ -723,24 +723,24 @@ table{ border-collapse: collapse; width: 100%; }
 #trail-honest{ font-size:11.5px; color:rgba(214,222,232,.62); margin-top:6px; font-style:italic; }
 
 /* ==========================================================================
-   MARIO LIFT (preview layer — scout/mario-lift-hoops, DO NOT MERGE BLIND)
+   MARIO LIFT (shipped in PR #73 on Cameron's word, 2026-10-12; cleanup PR follows the line-by-line review)
    A slight platformer flavour over the Drafting Board: coin-gold rewards,
    pipe-green primary actions, ?-block lifelines, hard stepped shadows,
    squarer corners, level-style date labels, a whisper of sky on the home
    hero. Evocation only — no third-party assets, sprites, or characters.
    Foundations untouched: paper/night-board tokens, type system, and every
-   Wave-3 AA pairing are preserved; new pairings are computed in the PR.
+   Wave-3 AA pairing are preserved; new pairings were recomputed and verified
+   in the post-merge line-by-line review of PR #73.
    This layer loads last (end of atlas.css) and wins ties on purpose.
    ========================================================================== */
 :root{
   /* ---- platformer material tokens (light / paper) ---- */
   --pipe:        #1C7331;  /* primary-action green — 5.72:1 under --on-accent */
   --pipe-deep:   #175C2A;  /* hover — 7.80:1 */
-  --pipe-bright: #35A852;  /* graphic edges only, never text */
   --coin-1:      #FFD94D;  /* coin gradient, light stop */
-  --coin-2:      #F5B921;  /* coin gradient, deep stop — ink on it: 8.86:1 */
+  --coin-2:      #F5B921;  /* coin gradient, deep stop — ink on it: 9.76:1 */
   --coin-wash-1: #FDEFC0;  /* solved-fill wash, light stop */
-  --coin-wash-2: #F9DC7E;  /* solved-fill wash, deep stop — ink on it: 11.65:1 */
+  --coin-wash-2: #F9DC7E;  /* solved-fill wash, deep stop — ink on it: 12.83:1 */
   --coin-text:   #7A5200;  /* deep gold for glyphs/labels — 6.68:1 on board */
   --coin-ink:    #2A1600;  /* constant ink for text ON coin material, both themes */
   --qblock-1:    #F7B733;  /* ?-block amber, light stop */
@@ -761,14 +761,13 @@ table{ border-collapse: collapse; width: 100%; }
   :root{
     --pipe:        #3FB950;  /* night pipe — 7.75:1 under night --on-accent */
     --pipe-deep:   #35C759;  /* night hover lightens, like --accent-2 */
-    --pipe-bright: #4BD364;
     --coin-text:   #E8C766;  /* 11.52:1 on night board */
     --brick:       #8A5F36;
     --step:        rgba(0,0,0,.5);
     --block:       #000000;
     --block-line:  #454F5C;
     /* coin + qblock gradients are materials: identical on both themes,
-       always paired with ink text (8.86:1 / 7.33:1 worst stop). */
+       always paired with ink text (9.76:1 / 7.33:1 worst stop). */
   }
 }
 
@@ -781,10 +780,12 @@ table{ border-collapse: collapse; width: 100%; }
   box-shadow: 3px 3px 0 var(--block);
 }
 .btn:hover, .pp-btn:hover{
-  background: var(--surface-2);
   border-color: var(--block-line);
   transform: translate(-1px,-1px);
   box-shadow: 4px 4px 0 var(--block);
+}
+.btn:hover:not(.btn-accent), .pp-btn:hover{
+  background: var(--surface-2);
 }
 .btn:active, .pp-btn:active{
   transform: translate(2px,2px);

@@ -142,7 +142,7 @@ button,.input{min-height:44px}
 <meta name="twitter:description" content="Daily Court: five past All-Stars a day, the same five for everyone. Find each one’s closest modern twin in six guesses, or battle friends with a shared pack."/>
 <meta name="twitter:image" content="https://hoops.dumbmodel.com/assets/og-1200x630.png"/>
 <link rel="stylesheet" href="assets/fonts.css?v=8f376b2a"/>
-<link rel="stylesheet" href="/assets/atlas.css?v=14824be7"/>
+<link rel="stylesheet" href="/assets/atlas.css?v=db98ddb1"/>
 <style>
 /* ---- Play: atlas refinement layer ---- */
 .game-head{ padding-top: clamp(40px, 7vw, 88px); padding-bottom: 8px; max-width: 1000px; }
@@ -210,7 +210,7 @@ button,.input{min-height:44px}
 .guess-tile{ background: var(--surface-2); border: 1px solid var(--line); box-shadow: none; color: var(--fg); font-family: var(--font-text); font-weight: 600; }
 .guess-tile:hover:not([disabled]){ background: var(--surface); border-color: var(--line-2); }
 .guess-tile.is-picked{ background: transparent; opacity: .5; }
-.guess-tile.is-twin{ background: var(--ok); color: #05070A; border-color: var(--ok); }
+/* twin tile colours come from the atlas.css Mario-lift layer (.guess-tile.is-twin) — the local override that shadowed it was removed in the PR #73 cleanup. */
 .ready-banner{ background: var(--accent-wash); color: var(--fg); border: 1px solid var(--accent-line); border-radius: var(--radius-lg); }
 .turn-dot{ background: var(--accent); box-shadow: 0 0 0 3px var(--accent-wash); }
 .vh-sheet-backdrop{ background: var(--scrim); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); }
