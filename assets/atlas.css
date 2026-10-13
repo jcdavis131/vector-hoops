@@ -721,3 +721,255 @@ table{ border-collapse: collapse; width: 100%; }
 #trail-scrub{ flex:1; min-height:48px; accent-color:#C17C60; cursor:pointer; }
 #trail-changed{ font-size:12.5px; color:#A7B0BC; margin-top:4px; min-height:18px; }
 #trail-honest{ font-size:11.5px; color:rgba(214,222,232,.62); margin-top:6px; font-style:italic; }
+
+/* ==========================================================================
+   MARIO LIFT (preview layer — scout/mario-lift-hoops, DO NOT MERGE BLIND)
+   A slight platformer flavour over the Drafting Board: coin-gold rewards,
+   pipe-green primary actions, ?-block lifelines, hard stepped shadows,
+   squarer corners, level-style date labels, a whisper of sky on the home
+   hero. Evocation only — no third-party assets, sprites, or characters.
+   Foundations untouched: paper/night-board tokens, type system, and every
+   Wave-3 AA pairing are preserved; new pairings are computed in the PR.
+   This layer loads last (end of atlas.css) and wins ties on purpose.
+   ========================================================================== */
+:root{
+  /* ---- platformer material tokens (light / paper) ---- */
+  --pipe:        #1C7331;  /* primary-action green — 5.72:1 under --on-accent */
+  --pipe-deep:   #175C2A;  /* hover — 7.80:1 */
+  --pipe-bright: #35A852;  /* graphic edges only, never text */
+  --coin-1:      #FFD94D;  /* coin gradient, light stop */
+  --coin-2:      #F5B921;  /* coin gradient, deep stop — ink on it: 8.86:1 */
+  --coin-wash-1: #FDEFC0;  /* solved-fill wash, light stop */
+  --coin-wash-2: #F9DC7E;  /* solved-fill wash, deep stop — ink on it: 11.65:1 */
+  --coin-text:   #7A5200;  /* deep gold for glyphs/labels — 6.68:1 on board */
+  --coin-ink:    #2A1600;  /* constant ink for text ON coin material, both themes */
+  --qblock-1:    #F7B733;  /* ?-block amber, light stop */
+  --qblock-2:    #EE9420;  /* ?-block amber, deep stop — #2A1600 on it: 7.33:1 */
+  --qblock-ink:  #2A1600;
+  --brick:       #C08552;  /* brick-tan hairline — decorative divider (3.02:1) */
+  --step:        #EAE0CB;  /* warm paper step for card offset shadows */
+  --block:       #232323;  /* hard offset shadow colour (== --ink on paper) */
+  --block-line:  #232323;  /* button border — flips light on the night board */
+  --spring:      cubic-bezier(.34,1.56,.64,1); /* the one playful curve */
+
+  /* slightly squarer corners, system-wide */
+  --radius:    5px;
+  --radius-lg: 7px;
+  --radius-xl: 10px;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --pipe:        #3FB950;  /* night pipe — 7.75:1 under night --on-accent */
+    --pipe-deep:   #35C759;  /* night hover lightens, like --accent-2 */
+    --pipe-bright: #4BD364;
+    --coin-text:   #E8C766;  /* 11.52:1 on night board */
+    --brick:       #8A5F36;
+    --step:        rgba(0,0,0,.5);
+    --block:       #000000;
+    --block-line:  #454F5C;
+    /* coin + qblock gradients are materials: identical on both themes,
+       always paired with ink text (8.86:1 / 7.33:1 worst stop). */
+  }
+}
+
+/* ---- blocky materiality: hard stepped shadows, no blur ---- */
+.card{
+  box-shadow: 5px 5px 0 var(--step);
+}
+.btn, .btn-play, .pp-btn{
+  border-color: var(--block-line);
+  box-shadow: 3px 3px 0 var(--block);
+}
+.btn:hover, .pp-btn:hover{
+  background: var(--surface-2);
+  border-color: var(--block-line);
+  transform: translate(-1px,-1px);
+  box-shadow: 4px 4px 0 var(--block);
+}
+.btn:active, .pp-btn:active{
+  transform: translate(2px,2px);
+  box-shadow: 1px 1px 0 var(--block);
+}
+.btn[disabled], .btn:disabled, .pp-btn[disabled], .pp-btn:disabled{
+  box-shadow: none;
+}
+
+/* ---- pipe green: the single primary action per view ---- */
+.btn-primary, .btn-play, .pp-btn--yellow{
+  background: var(--pipe);
+  border-color: var(--block-line);
+  color: var(--on-accent);
+}
+.btn-primary:hover, .btn-play:hover, .pp-btn--yellow:hover{
+  background: var(--pipe-deep);
+  border-color: var(--block-line);
+  color: var(--on-accent);
+}
+.site-nav__cta{
+  background: var(--pipe);
+  border-color: var(--block-line);
+  color: var(--on-accent);
+  box-shadow: 2px 2px 0 var(--block);
+}
+.site-nav__cta:hover{ background: var(--pipe-deep); color: var(--on-accent); }
+
+/* ---- coin gold: the reward system ---- */
+/* Coin material is a light gradient on BOTH themes, so its text colour is
+   a constant deep gold — never the theme's --coin-text. #6E4B00 on the
+   wash's deep stop: 5.83:1. */
+.pill-yellow{
+  background: linear-gradient(180deg, var(--coin-wash-1), var(--coin-wash-2));
+  border-color: #6E4B00;
+  color: #6E4B00;
+}
+
+/* ---- reward motion: a short spring on the badge, nothing ambient ---- */
+@keyframes mario-coin-pop{
+  0%{ transform: scale(1); }
+  45%{ transform: scale(1.07); }
+  100%{ transform: scale(1); }
+}
+
+/* ---- sky touch: homepage hero only, paper theme only, a whisper ----
+   Faint blue fading from the hero's top edge. Worst-case text over it is
+   the hero eyebrow (pencil-text, 11px) at the smallest top padding:
+   effective tint alpha ~0.22 -> #EBF2F6 -> 4.54:1, still AA. Night board
+   keeps its void: this block is light-scheme only. */
+@media (prefers-color-scheme: light){
+  body.home .hero{
+    background-image: linear-gradient(180deg, rgba(169,207,242,.26) 0, rgba(169,207,242,0) 300px);
+    background-repeat: no-repeat;
+  }
+}
+
+/* ---- Today strip: a level tag + the one green door ---- */
+section.today-strip{ border-color: var(--brick); }
+section .today-strip__label{
+  background: linear-gradient(180deg, var(--coin-1), var(--coin-2));
+  color: var(--qblock-ink);
+  border: 1.5px solid var(--block);
+  border-radius: 4px;
+  box-shadow: 2px 2px 0 var(--block);
+  padding: 5px 10px;
+}
+#today-streak::before{ content: "★ "; color: var(--coin-text); }
+section .today-strip__links a:first-child{
+  background: var(--pipe);
+  color: var(--on-accent);
+  border: 1.5px solid var(--block);
+  border-radius: 4px;
+  box-shadow: 2px 2px 0 var(--block);
+  padding: 6px 10px;
+  text-decoration: none;
+  display: inline-block;
+}
+section .today-strip__links a:first-child:hover{ background: var(--pipe-deep); }
+
+/* ==========================================================================
+   Play — the level itself
+   ========================================================================== */
+
+/* streak counter: star + coin gold instead of a flame. The pill's ground
+   is the light coin wash on both themes, so its text is the constant
+   coin ink — theme --fg would be near-white on gold at night. */
+#streak-pill{
+  background: linear-gradient(180deg, var(--coin-wash-1), var(--coin-wash-2));
+  border-color: #6E4B00;
+  color: var(--coin-ink);
+  box-shadow: 2px 2px 0 var(--block);
+}
+#streak-pill::before{ content: "★ "; color: #7A5200; }
+#streak-pill.tick{ animation: mario-coin-pop .45s var(--spring); }
+
+/* slot dots become coin pips */
+.progress-dot.is-done{
+  background: linear-gradient(180deg, var(--coin-1), var(--coin-2));
+  border: 1.5px solid var(--block);
+  color: var(--coin-ink);
+  box-shadow: 2px 2px 0 var(--block);
+}
+.progress-dot.is-current{
+  background: var(--coin-wash-1);
+  border-color: #7A5200;
+  color: #7A5200;
+}
+
+/* a solved slot is a collected coin — constant coin ink on the wash,
+   both themes; the micro-labels deepen instead of fading */
+.court-card.is-solved{
+  background: linear-gradient(180deg, var(--coin-wash-1), var(--coin-wash-2));
+  border-color: #6E4B00;
+  color: var(--coin-ink);
+  box-shadow: 3px 3px 0 #6E4B00;
+  animation: mario-coin-pop .38s var(--spring);
+}
+.court-card.is-solved .court-meta{ color: #5C4300; }
+.court-card.is-solved .court-slot{ color: #5C4300; opacity: 1; }
+.guess-row.win{
+  background: linear-gradient(180deg, var(--coin-wash-1), var(--coin-wash-2));
+  border-color: var(--pipe);
+  color: var(--coin-ink);
+}
+.guess-tile.is-twin{
+  background: var(--pipe);
+  border-color: var(--block);
+  color: var(--on-accent);
+}
+.battle-win{ background: var(--pipe); color: var(--on-accent); }
+.reward.is-unlocked{
+  background: linear-gradient(180deg, var(--coin-1), var(--coin-2));
+  border-color: var(--block);
+  color: var(--qblock-ink);
+  box-shadow: 2px 2px 0 var(--block);
+  animation: mario-coin-pop .38s var(--spring);
+}
+
+/* brick-tan divider over the court */
+#game-header .game-status-bar{ border-top-color: var(--brick); }
+
+/* lifelines are power-ups: ?-blocks with a hard shadow and a springy press */
+#lifelines-bar .btn-lifeline{
+  background: linear-gradient(180deg, var(--qblock-1), var(--qblock-2));
+  border: 2px solid var(--block);
+  border-radius: 6px;
+  box-shadow: 3px 3px 0 var(--block);
+  color: var(--qblock-ink);
+  transition: transform .18s var(--spring), box-shadow .18s var(--spring);
+}
+#lifelines-bar .btn-lifeline::before{
+  content: "?";
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 18px; height: 18px; flex: 0 0 auto;
+  background: #FFFEF7;  /* a paper tag — constant on both themes */
+  border: 2px solid var(--block);
+  border-radius: 3px;
+  font-family: var(--font-code); font-size: 12px; font-weight: 900; line-height: 1;
+  color: var(--qblock-ink);
+}
+#lifelines-bar .btn-lifeline:hover:not(:disabled){
+  transform: translate(-1px,-1px);
+  box-shadow: 4px 4px 0 var(--block);
+}
+#lifelines-bar .btn-lifeline:active:not(:disabled){
+  transform: translate(2px,2px) scale(.98);
+  box-shadow: 1px 1px 0 var(--block);
+}
+#lifelines-bar .btn-lifeline:disabled{
+  filter: saturate(.35);
+  box-shadow: none;
+}
+#lifelines-bar .btn-lifeline .ll-cost{ color: var(--qblock-ink); opacity: .75; }
+
+/* ---- the lift respects reduced motion, explicitly ---- */
+@media (prefers-reduced-motion: reduce){
+  #streak-pill.tick, .court-card.is-solved, .reward.is-unlocked{ animation: none; }
+  #lifelines-bar .btn-lifeline{ transition: none; }
+  #lifelines-bar .btn-lifeline:hover:not(:disabled),
+  #lifelines-bar .btn-lifeline:active:not(:disabled){ transform: none; }
+}
+
+/* ---- print stays ink on paper ---- */
+@media print{
+  .card, .btn, .pp-btn, #streak-pill, .progress-dot.is-done,
+  .court-card.is-solved, section .today-strip__label{ box-shadow: none !important; }
+}

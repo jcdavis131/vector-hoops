@@ -27,7 +27,7 @@
 <meta name="twitter:image" content="https://hoops.dumbmodel.com/assets/og-1200x630.png"/>
 <link rel="stylesheet" href="assets/fonts.css?v=8f376b2a"/>
 <link rel="preload" href="/assets/vectors_search_lite.json" as="fetch" crossorigin/>
-<link rel="stylesheet" href="/assets/atlas.css?v=6eb8adc6"/>
+<link rel="stylesheet" href="/assets/atlas.css?v=14824be7"/>
 <style>
 /* ---------- Home: hero ---------- */
 .hero{ padding-top: clamp(48px, 9vw, 120px); padding-bottom: clamp(32px, 5vw, 64px); max-width: 1040px; }
@@ -236,7 +236,7 @@
 }
 </style>
 </head>
-<body>
+<body class="home">
 <a class="skip-link" href="#main">Skip to content</a>
 <noscript><div role="alert" style="padding:16px;text-align:center">The atlas and the game need JavaScript. Methods and sources are readable without it at <a href="/methods">/methods</a>.</div></noscript>
 
@@ -307,7 +307,7 @@
   </section>
 
   <section class="today-strip" aria-label="Today at Daily Court">
-    <span class="today-strip__label">Today — Daily Court</span>
+    <span class="today-strip__label">World <span id="today-world">––</span> · Daily Court</span>
     <span class="today-strip__text">Five past All-Stars, the same five for everyone. <span id="today-streak">Start your streak today.</span></span>
     <span class="today-strip__links"><a href="/play">Play today’s five →</a> · <a href="/play?mode=triple">Daily Triple (3) →</a></span>
   </section>
@@ -370,6 +370,8 @@ if('serviceWorker' in navigator){ window.addEventListener('load', function(){ na
    Daily Court + Daily Triple via past-modern-game.js). Legacy fallback to the
    retired Everyday game's vh_weekStreak until Play migrates it on next visit. */
 (function(){ try{
+  var wEl=document.getElementById('today-world');
+  if(wEl){ var iso=new Date().toISOString().slice(0,10); wEl.textContent=parseInt(iso.slice(5,7),10)+'-'+iso.slice(8,10); }
   var el=document.getElementById('today-streak'); if(!el) return;
   var rec=null;
   try{ rec=JSON.parse(localStorage.getItem('vh.streak.v2')||'null'); }catch(e){}

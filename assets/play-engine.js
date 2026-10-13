@@ -729,7 +729,7 @@
       $('#header-mode-label').textContent='DAILY COURT • 5× PAST → MODERN';
     }
     $('#streak-pill').textContent='streak '+v2Streak();
-    $('#puzzle-day-label').textContent= st.isPack ? `Pack ${st.packCode.slice(0,24)}…` : st.isDaily? `Daily Court ${st.dayKey} • 5 puzzles` : st.dayKey;
+    $('#puzzle-day-label').textContent= st.isPack ? `Pack ${st.packCode.slice(0,24)}…` : st.isDaily? `WORLD ${parseInt(st.dayKey.slice(5,7),10)}-${st.dayKey.slice(8,10)} · Daily Court · 5 puzzles` : st.dayKey;
     updateStatusBar(); projectFrame(); draw();
   }
   function renderGuesses(){
