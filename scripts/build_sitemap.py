@@ -7,15 +7,16 @@ from datetime import date
 
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..")
 BASE = "https://hoops.dumbmodel.com"
-PAGES = ["/", "/play", "/live", "/players", "/teams", "/insights", "/model",
-         "/trends", "/taxonomy", "/methods", "/props-lab",
-         "/everyday", "/playoff-runs"]
+PAGES = ["/", "/play", "/live", "/players", "/insights", "/taxonomy",
+         "/methods", "/props-lab", "/playoff-runs"]
 
 
 def main():
     with open(os.path.join(ROOT, "assets", "insights.json"), encoding="utf-8") as f:
         slugs = [c["slug"] for c in json.load(f)["insights"]]
-    urls = PAGES + [f"/insights/{s}" for s in slugs]
+    # Insight stubs stay live for social unfurls but leave the sitemap
+    # (Wave 5): the hub page is the indexable surface.
+    urls = list(PAGES)
     today = date.today().isoformat()
     lines = ['<?xml version="1.0" encoding="UTF-8"?>',
              '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']

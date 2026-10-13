@@ -1043,8 +1043,6 @@ def _map_vs_score() -> tuple[int, int]:
 
 
 COUNTS = (
-    ("trends.html", "12,038", "public/assets/season_map.json",
-     "sum of counts", lambda d: sum(d["counts"].values())),
     # The footer under /play's map tells a visitor how far to trust it. Nothing
     # on the page said the map was a projection at all before — /trends and
     # /model both state that caveat about their own figures, and the game, which
@@ -1059,13 +1057,9 @@ COUNTS = (
      "past seasons in the game pool", lambda d: d["counts"]["past"]),
     ("play.html", "1,305", "assets/game_vectors.json",
      "modern seasons in the game pool", lambda d: d["counts"]["modern"]),
-    ("trends.html", "1,308", "public/assets/trajectories.json",
-     "playerIndex entries", lambda d: len(d["playerIndex"])),
     # "over 10,104 eligible pairs", named to assets/eval_scoreboard.json on the
     # page. Printed with a comma, stored as 10104 — CITED matches verbatim and
     # cannot see it, which is the limit its own docstring describes.
-    ("model.html", "10,104", "assets/eval_scoreboard.json",
-     "eligible pairs", lambda d: d["eligible_pairs"]),
     # /inventory is an inventory: it prints the byte size of the files it lists.
     # Four of six had drifted from the files they name — player_season_props by
     # 111,134 bytes, payroll_enriched by 11,084, valuation_history by 2,581,

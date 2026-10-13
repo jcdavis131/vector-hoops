@@ -9,9 +9,8 @@
     { href: '/play', label: 'Play', title: 'Daily Court: five past All-Stars, find each modern twin' },
     { href: '/live', label: 'Live', title: 'Live game companion: win probability, atlas twins, shot charts — plus the arcade between games' },
     { href: '/players', label: 'Players', title: 'Directory, skill profiles and leaderboards' },
-    { href: '/teams', label: 'Teams', title: 'Thirty seamless team intro loops over the embedding atlas' },
     { href: '/insights', label: 'Insights', title: 'Findings from the model — and from the ledger' },
-    { href: '/model', label: 'Lab', title: 'The model, its evals, methods, props and the frontier program' }
+    { href: '/methods', label: 'Methods', title: 'Trust: every number recomputed from source, and the model graded' }
   ];
 
   // Centre circle of a court, seen from above: the site's mark.
@@ -22,7 +21,6 @@
 
   function isActive(active, href) {
     if (active === href) return true;
-    if (active === '/everyday' && href === '/play') return true;
     return false;
   }
 

@@ -51,7 +51,7 @@ BROWSERS = [
 # so the other fifteen had no reason to be assumed fine.
 PAGES = [
     "/", "/owner.html", "/brand.html", "/dfs.html", "/player.html", "/player-fit.html",
-    "/teams.html", "/trends.html", "/model.html", "/play.html", "/players.html",
+    "/play.html", "/players.html",
     "/player-cards.html", "/dictionary.html", "/methods.html", "/inventory.html",
     "/offline.html", "/player-animations.html",
 ]
