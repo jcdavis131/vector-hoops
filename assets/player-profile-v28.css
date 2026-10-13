@@ -580,3 +580,10 @@
 .pp-featured__name{ font-weight:900; font-size:13px }
 .pp-featured__line{ font-family:ui-monospace,monospace; font-size:10px; color:var(--fg-3); margin-top:2px }
 .pp-featured__grade{ margin-top:6px; display:inline-block; border:1px solid var(--line-2); border-radius:999px; padding:1px 7px; background:#F0E442; font-family:ui-monospace,monospace; font-size:11px; font-weight:900 }
+
+@media (prefers-reduced-motion: reduce){
+  .pp-drawer, .pp-drawer *, .player-profile, .player-profile *{
+    animation-duration: .01ms !important; animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important; scroll-behavior: auto !important;
+  }
+}

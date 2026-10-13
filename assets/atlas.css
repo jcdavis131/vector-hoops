@@ -20,10 +20,11 @@
   --marker-black: #1A1A1A;  /* hand annotations */
   --marker-red:   #E0483B;  /* emphasis, X's, alerts */
   --marker-blue:  #2B6CE5;  /* secondary annotations, O's, links */
-  --pencil:       #9A9A94;  /* dimension lines, callout leaders, micro-labels */
+  --pencil:       #9A9A94;  /* dimension lines, callout leaders — decoration only (2.73:1, never text) */
+  --pencil-text:  #6E6E66;  /* pencil darkened for text — 4.96:1 on board, AA */
   --grid:         #E7E4DA;  /* drafting hairlines */
   --highlight:    rgba(255,235,130,.55); /* highlighter wash — max one per view */
-  --data-terra:   #C17C60;  /* data only, inside charts */
+  --data-terra:   #A05A38;  /* data + chart text — 5.05:1 on board, AA (was #C17C60 at 3.21:1) */
   --data-moss:    #8A9A8B;  /* data only, inside charts */
   --void:         #1E2022;  /* 3D map surfaces only — dark on both themes */
 
@@ -35,7 +36,7 @@
   --line-2:    var(--pencil);
   --fg:        var(--ink);
   --fg-2:      #57574F;   /* secondary text — ink softened */
-  --fg-3:      var(--pencil);
+  --fg-3:      var(--pencil-text);
   --accent:    var(--marker-red);
   --accent-2:  #B93A30;   /* marker-red deepened for hover */
   --gold:      var(--marker-black);
@@ -112,6 +113,7 @@
     --marker-red:   #FF6F61;
     --marker-blue:  #6EA8FF;
     --pencil:       #7F8995;
+    --pencil-text:  #7F8995;  /* night board: pencil already passes at 5.33:1 */
     --grid:         #1D232C;
     --highlight:    rgba(255,235,130,.16);
     --data-terra:   #C17C60;
@@ -124,7 +126,7 @@
     --line-2:    #2A323D;
     --fg:        var(--ink);
     --fg-2:      #A7B0BC;
-    --fg-3:      var(--pencil);
+    --fg-3:      var(--pencil-text);
     --accent:    #FF7A33;   /* the signature ember — kept for night */
     --accent-2:  #FF9A62;
     --gold:      #D4AF69;
@@ -294,7 +296,7 @@ p{ text-wrap: pretty; }
 }
 .site-nav__cta{
   display: inline-flex; align-items: center; gap: 8px;
-  height: 34px; padding: 0 14px;
+  height: 40px; padding: 0 14px;
   font-family: var(--font-code); font-size: 11px; font-weight: 700; font-stretch: 112%;
   letter-spacing: .14em; text-transform: uppercase;
   color: var(--on-accent); background: var(--accent);
@@ -441,8 +443,8 @@ p{ text-wrap: pretty; }
   background: var(--accent); color: var(--on-accent); border-color: var(--accent);
 }
 .btn-primary:hover, .btn-play:hover, .pp-btn--yellow:hover{ background: var(--accent-2); border-color: var(--accent-2); color: var(--on-accent); }
-.btn-accent{ background: transparent; color: var(--accent); border-color: var(--accent-line); }
-.btn-accent:hover{ background: var(--accent-wash); border-color: var(--accent); color: var(--accent); }
+.btn-accent{ background: transparent; color: var(--accent-2); border-color: var(--accent-line); }
+.btn-accent:hover{ background: var(--accent-wash); border-color: var(--accent); color: var(--accent-2); }
 .btn-xl{ min-height: 52px; padding: 0 28px; font-size: 12px; }
 
 .pill, .hv6-pill, .chip, .cqs-badge, .trends-chip, .trends-shift-card, .btn-speed, .mini-badge, .story-stat{
@@ -461,7 +463,7 @@ p{ text-wrap: pretty; }
   transition: color var(--dur-1) var(--ease), border-color var(--dur-1) var(--ease), background var(--dur-1) var(--ease);
 }
 a.pill:hover, button.pill:hover, .trends-chip:hover, .trends-shift-card:hover, .btn-speed:hover{ color: var(--fg); border-color: var(--fg-3); }
-.pill-yellow, .pill-blue, .pill-green{ background: var(--accent-wash); color: var(--accent); border-color: var(--accent-line); }
+.pill-yellow, .pill-blue, .pill-green{ background: var(--accent-wash); color: var(--accent-2); border-color: var(--accent-line); }
 .trends-chip--active, .trends-shift-card--active{ background: var(--accent); color: var(--on-accent) !important; border-color: var(--accent); box-shadow: none; transform: none; }
 .trends-shift-card--active .sc-deg{ color: var(--on-accent); }
 
@@ -583,7 +585,7 @@ table{ border-collapse: collapse; width: 100%; }
   padding: 6px 10px; cursor: pointer;
 }
 .wiki-row__grades:hover{ color: var(--accent); border-color: var(--accent-line); }
-.skills-board__grade{ color: var(--accent); border-color: var(--accent-line); font-variant-numeric: tabular-nums; }
+.skills-board__grade{ color: var(--accent-2); border-color: var(--accent-line); font-variant-numeric: tabular-nums; }
 .skills-board__name{ font-weight: 600; color: var(--fg); }
 .skills-board__season{ font-family: var(--font-text); font-size: 13px; color: var(--fg-3); font-variant-numeric: tabular-nums; }
 .skills-board__empty, .wiki-empty{ border: 1px dashed var(--line-2); border-radius: var(--radius-lg); padding: var(--s-5); background: none; color: var(--fg-2); font-size: 14px; text-align: center; }

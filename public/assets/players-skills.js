@@ -470,6 +470,7 @@
   }
 
   function pickPlayer(slug, season) {
+    if (!dataReady) { pendingPick = { slug: slug, season: season || '' }; ensureInit(); return; }
     if (!INDEX[slug]) return;
     loadSecondary();
     current.slug = slug;
@@ -743,7 +744,10 @@
       els.boardSeason.disabled = false;
       renderBoard();
       renderFeatured();
+      dataReady = true;
       applyDeepLink();
+      if (pendingPick) { var pp = pendingPick; pendingPick = null; pickPlayer(pp.slug, pp.season); }
+      if (pendingTab) { var pt = pendingTab; pendingTab = null; global.dispatchEvent(new CustomEvent('vh:players-tab', { detail: pt })); }
       if (!current.slug) {
         // show empty state with featured
         if (els.ppEmptyWrap) els.ppEmptyWrap.hidden = false;
@@ -754,10 +758,37 @@ loadSecondaryWhenNeeded();
     });
   }
 
-  if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', init); } else { init(); }
+  var initStarted = false;
+  var dataReady = false;
+  var pendingPick = null;
+  var pendingTab = null;
+  function ensureInit() {
+    if (initStarted) return;
+    initStarted = true;
+    init();
+  }
+
+  // Deferred start (panel audit Wave 3): the directory is this page's front
+  // door and renders from its own fetch. This module's primary pair
+  // (vectors.json 4.1 MB + skills.json) used to load in parallel at
+  // DOMContentLoaded and starve the index render — the 'LOADING PLAYER
+  // INDEX...' freeze. Everything this module renders lives in the hidden
+  // profile/leaderboard panels, so it now loads on first need: a deep link
+  // that targets it, a tab event, or a Grades/profile click.
+  function bootSkills() {
+    var qp = new URLSearchParams(location.search);
+    var hash = location.hash || '';
+    if (qp.get('p') || hash.indexOf('profile') > -1 || hash.indexOf('leaderboard') > -1) { ensureInit(); return; }
+    document.addEventListener('click', function (ev) {
+      var tgt = ev.target && ev.target.closest && ev.target.closest('[data-tab="leaderboard"], [data-tab="profile"], [data-skills-slug]');
+      if (tgt) ensureInit();
+    });
+  }
+  if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', bootSkills); } else { bootSkills(); }
 
   global.addEventListener('vh:players-tab', function (ev) {
     var d = ev.detail || {};
+    if (!dataReady) { pendingTab = d; ensureInit(); return; }
     if (d.tab === 'profile' && d.slug && INDEX[d.slug]) { pickPlayer(d.slug, d.season || ''); }
     if (d.tab === 'leaderboard') {
       var board = document.getElementById('board-skill');

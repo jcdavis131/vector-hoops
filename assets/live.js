@@ -9,7 +9,7 @@ function etToday(){return new Intl.DateTimeFormat('en-CA',{timeZone:'America/New
 function shiftDay(yyyymmdd,n){const t=new Date(Date.UTC(+yyyymmdd.slice(0,4),+yyyymmdd.slice(4,6)-1,+yyyymmdd.slice(6,8))+n*864e5);return String(t.getUTCFullYear())+String(t.getUTCMonth()+1).padStart(2,'0')+String(t.getUTCDate()).padStart(2,'0');}
 function dayLabel(yyyymmdd){const t=new Date(Date.UTC(+yyyymmdd.slice(0,4),+yyyymmdd.slice(4,6)-1,+yyyymmdd.slice(6,8)));const s=t.toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric',timeZone:'UTC'});return (yyyymmdd===etToday()?'Today — ':'')+s;}
 function renderDayNav(){const cur2=sbDay||etToday();const lbl=$('dayLbl');if(lbl)lbl.textContent=dayLabel(cur2);const b=$('dayToday');if(b)b.hidden=cur2===etToday();}
-function resetView(){cur=null;clearInterval(timer);const m=$('main');if(m)m.style.display='none';}
+function resetView(){cur=null;clearInterval(timer);const m=$('main');if(m)m.style.display='block';const ln=$('live-loading');if(ln)ln.style.display='block';}
 function gotoDay(n){sbExplicit=true;resetView();loadGames(shiftDay(sbDay||etToday(),n));}
 
 const $=id=>document.getElementById(id);
@@ -57,7 +57,7 @@ function renderGames(){
 // ---- Timeline scrubber state ----
 const TL={n:0,view:-1,live:true,gameId:null,newCount:0};
 function selectGame(id){
-  cur=id;clearInterval(timer);renderGames();$('main').style.display='block';
+  cur=id;clearInterval(timer);renderGames();$('main').style.display='block';const ln2=$('live-loading');if(ln2)ln2.style.display='none';
   TL.gameId=null;TL.n=0;TL.view=-1;TL.live=true;TL.newCount=0;wpDrawnFor=null;
   window._seenMom=new Set();window._lastPlayId=0;
   LROOT().classList.remove('rewound');

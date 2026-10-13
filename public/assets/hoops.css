@@ -24,9 +24,9 @@
   --hot: #006300;
   --warm: #7a5b00;
   --cold: #d03b3b;
-  --identified: #e8b500;      /* IDENTIFIED win state — gold, never red */
+  --identified: #9a7b00;  /* deepened: 3.79:1 on its bg (was 1.79:1) */      /* IDENTIFIED win state — gold, never red */
   --identified-bg: #fff8e0;
-  --silver: #8f96a3;          /* Mashup "close enough" (>=92%) win state — a second, distinct WON color, never red */
+  --silver: #6e7684;  /* deepened: 4.04:1 on its bg (was 2.62:1) */          /* Mashup "close enough" (>=92%) win state — a second, distinct WON color, never red */
   --silver-bg: #eef1f4;
   --data-purple: var(--data-moss);     /* moss — collapsed to two data voices */
 
