@@ -235,6 +235,7 @@
 
     // try restore from storage unless forceFresh
     let restored = null;
+    let restoredGuesses = false;
     if(!options.forceFresh){
       const saved = loadPackState(state.packCode);
       if(saved && Array.isArray(saved.ids) && saved.ids.join('-')===state.packCode && Array.isArray(saved.results)){
@@ -278,6 +279,7 @@
       // restore current in-progress guesses if any and we are not complete
       if(!state.isPackComplete && Array.isArray(restored.currentGuesses) && restored.currentGuesses.length && idx===restored.index){
         state.guesses = restored.currentGuesses.slice();
+        restoredGuesses = true;
       }
     } else {
       state.packIndex=0;
@@ -296,7 +298,7 @@
 
     state.target=state.packEntries[state.packIndex];
     state.targetIdx=state.target ? state.target.i : null;
-    state.guesses = [];
+    if(!restoredGuesses) state.guesses = [];
     state.isPack = true;
     try{ computeClosest(); }catch(e){ console.warn('computeClosest pack fail', e); }
     savePackState();
@@ -374,7 +376,7 @@
     for(let i=0;i<ps.size;i++){
       const sc = challScores[i];
       if(typeof sc==='number' && sc>=1 && sc<=6){ challSolved++; challTotal+=sc; }
-      else if(typeof sc==='number' && sc===0){ challTotal+=7; } else if(sc!=null){ challTotal+=7; }
+      else if(typeof sc==='number' && sc===0){ challTotal+=6; } else if(sc!=null){ challTotal+=6; } // a failed slot costs 6 on BOTH sides (getPackState charges count||6 for your own loss)
     }
     const selfScoreForUrl = (ps.results||[]).map(r=> r ? (r.won ? r.count : 0) : 0);
     const battle = {
