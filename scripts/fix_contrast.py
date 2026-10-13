@@ -50,7 +50,7 @@ EDITS: list[tuple[str, str, str]] = [
      ".pill.b{background:#0072b2;color:#fff}"),
 ]
 
-for page in ("inventory.html", "leaderboard.html", "methods.html", "offline.html"):
+for page in ("inventory.html", "methods.html", "offline.html"):
     EDITS += [
         (page, ".pill-o{background:var(--orange);color:#fff}",
          ".pill-o{background:var(--orange);color:#111}"),

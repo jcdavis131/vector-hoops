@@ -23,7 +23,6 @@ PAGES = [
     "model.html",
     "methods.html",
     "trends.html",
-    "leaderboard.html",
     "everyday.html",
     "offline.html",
     "404.html",

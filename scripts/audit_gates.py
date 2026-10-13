@@ -80,8 +80,8 @@ CASES = [
      ('"1996-97":290', '"1996-97":291'),
      gate("check_frontend.py", "--only", "counts"), False),
 
-    ("free", "leaderboard.html",
-     (">Your Week Warrior progress<", ">Your Week Warrior progress — $9.99/mo<"),
+    ("free", "everyday.html",
+     ("Build a streak.", "Build a streak — $9.99/mo."),
      gate("check_frontend.py", "--only", "free"), True),
 
     # the one case that must NOT sync: the mirror check exists to notice a root
@@ -98,17 +98,17 @@ CASES = [
      ("<html lang=en>", "<html>"),
      gate("check_a11y.py"), True),
 
-    ("contrast", "leaderboard.html",
-     ("background:#0072b2;color:#fff", "background:#0072b2;color:#1166c0"),
+    ("contrast", "trends.html",
+     ("background:#B34A00;color:#fff", "background:#B34A00;color:#B34A00"),
      gate("check_contrast.py"), True),
 
     ("focus", "dictionary.html",
      ('<a class="vh-skip" href="#main">Skip to the dictionary</a>', ""),
      gate("check_focus.py"), True),
 
-    ("viewport", "leaderboard.html",
-     ('<main id="main" tabindex="-1">',
-      '<main id="main" tabindex="-1"><div style="width:2400px;height:4px"></div>'),
+    ("viewport", "index.html",
+     ('<main id="main" class="main" style="padding-top:0">',
+      '<main id="main" class="main" style="padding-top:0"><div style="width:2400px;height:4px"></div>'),
      gate("check_viewport.py"), True),
 
     # Put the CDN back. Measured with unpkg blocked, the eight players on that
