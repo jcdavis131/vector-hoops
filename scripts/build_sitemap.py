@@ -8,7 +8,7 @@ from datetime import date
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..")
 BASE = "https://hoops.dumbmodel.com"
 PAGES = ["/", "/play", "/live", "/players", "/teams", "/insights", "/model",
-         "/trends", "/taxonomy", "/methods", "/props-lab", "/leaderboard",
+         "/trends", "/taxonomy", "/methods", "/props-lab",
          "/everyday", "/playoff-runs"]
 
 
