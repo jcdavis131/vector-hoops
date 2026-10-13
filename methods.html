@@ -101,6 +101,12 @@ a{color:inherit}
   flex-wrap:nowrap;
 }
 .stats-strip::-webkit-scrollbar,.cqs-strip::-webkit-scrollbar{display:none}
+/* In a prose column a scrollable strip clips the last chip mid-word (seen on
+   the promote-gate strip). Doc-section strips wrap instead; full-bleed
+   strips keep the horizontal scroll. */
+.doc-sec .cqs-strip,.doc-section .cqs-strip,section .cqs-strip{
+  flex-wrap:wrap;overflow-x:visible;scroll-snap-type:none;
+}
 .stats-chip,.cqs-badge{
   flex:0 0 auto;white-space:nowrap;
   border:1px solid var(--line-2);border-radius:999px;
@@ -468,7 +474,7 @@ Heads: 8 arch / 5 pos / 14 next / 18 skills (64→16→1)
       <h2>League drift — Procrustes</h2>
       <p class="doc-formula">Orthogonal Procrustes on consecutive-season shared players (≥ 30). Rotation = mean principal angle of Q against the identity; residual = Frobenius norm after alignment; chained to the 1996 root frame; RᵀR = I.</p>
       <p>The biggest rotation: the summer entering 2019–20 (2018–19 → 2019–20) at 12.49°</p>
-      <p>Where careers end up, from the same trajectories: 51% of players stay stable specialists, 20% migrate to a neighbouring role, 13% drift, 10% reinvent themselves once, and 5% bloom late. Reinventors last longest — 9.3 seasons against 7.9 for everyone else. The steepest single fall is Interior Finishing + Defensive Glass: 16.5% of minutes early in the window to 8.0% late (−8.6 points). This section is what the Trends page showed until October 2026 — its charts were these numbers, drawn., then 2020–21 → 2021–22 at 11.35°.</p>
+      <p>Where careers end up, from the same trajectories: 51% of players stay stable specialists, 20% migrate to a neighbouring role, 13% drift, 10% reinvent themselves once, and 5% bloom late. Reinventors last longest — 9.3 seasons against 7.9 for everyone else. The steepest single fall is Interior Finishing + Defensive Glass: 16.5% of minutes early in the window to 8.0% late (−8.6 points). This section is what the Trends page showed until October 2026 — its charts were these numbers, drawn from the same drift series. After 2019–20, the next-largest rotation is 2020–21 → 2021–22 at 11.35°.</p>
     </section>
 
     <section id="skills">
@@ -762,7 +768,7 @@ Heads: 8 arch / 5 pos / 14 next / 18 skills (64→16→1)
 <script>if('serviceWorker' in navigator){window.addEventListener('load',()=>{navigator.serviceWorker.register('/sw.js').catch(()=>{})})}</script>
 <script src="assets/timesfm-forecast.js?v=67ee6481"></script>
 <script src="assets/mtnn.js?v=81d491f8"></script>
-<script src="assets/network-viz.js?v=288f0a24"></script>
+<script src="assets/network-viz.js?v=5fe8d90a"></script>
 <script src="assets/site-facts.js?v=cbb639f4" defer></script>
 <script>
 (() => {
