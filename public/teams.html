@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <link rel="manifest" href="/manifest.json">
 <title>Team Intros &mdash; Vector Hoops</title>
-<meta name="description" content="Thirty seamless team intros: every NBA team's 2026-27 roster glowing inside the 2,422-player embedding atlas, with franchise legends as ghost stars."/>
+<meta name="description" content="Thirty seamless team intros: every NBA team's 2026-27 roster glowing inside the 2,426-player embedding atlas, with franchise legends as ghost stars."/>
 <link rel="stylesheet" href="assets/shell.css?v=6eea16fb">
 <link rel="stylesheet" href="assets/responsive.css?v=cd95e82c">
 <link rel="stylesheet" href="assets/final-qa.css?v=b285e8b8">
@@ -68,8 +68,8 @@ a{color:inherit}
 <header class="title-card">
 <div class="title-card__eyebrow reveal">Vector Hoops</div>
 <h1 class="title-card__title reveal reveal-1">Team intros</h1>
-<p class="title-card__lede reveal reveal-2">Thirty seamless loops &mdash; one per team. The full 2,422-player atlas orbits once every eight seconds; each team&rsquo;s 2026&ndash;27 roster glows in its own colors with every name labeled, and franchise legends drift behind as ghost stars.</p>
-<div class="title-card__meta reveal reveal-3"><span><b>30</b>Teams</span><span><b>8s</b>Seamless loop</span><span><b>2,422</b>Players</span></div>
+<p class="title-card__lede reveal reveal-2">Thirty seamless loops &mdash; one per team. The full <span data-fact="players">2,426</span>-player atlas orbits once every eight seconds; each team&rsquo;s 2026&ndash;27 roster glows in its own colors with every name labeled, and franchise legends drift behind as ghost stars.</p>
+<div class="title-card__meta reveal reveal-3"><span><b>30</b>Teams</span><span><b>8s</b>Seamless loop</span><span><b data-fact="players">2,426</b>Players</span></div>
 </header>
 <p class="teams-note">Videos load as you scroll and pause when off-screen. Legends reflect the 1996-97 → 2025-26 embedding window; pre-1996 greats aren’t in the dataset.</p>
 </div>
@@ -410,6 +410,7 @@ a{color:inherit}
   vids.forEach(function(v){ io.observe(v); });
 })();
 </script>
+<script src="assets/site-facts.js?v=181ecc27" defer></script>
 <script>if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('/sw.js').catch(function(){})})}</script>
 </body>
 </html>

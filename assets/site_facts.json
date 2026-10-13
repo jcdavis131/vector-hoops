@@ -1,0 +1,67 @@
+{
+ "generated_by": "scripts/build_site_facts.py",
+ "facts": {
+  "player_seasons": 12966,
+  "players": 2426,
+  "players_note": "distinct player IDs (pid) in vectors_search_lite.json",
+  "player_names": 2422,
+  "player_names_note": "distinct display names; a few names belong to two players",
+  "seasons": 30,
+  "season_first": "1996-97",
+  "season_last": "2025-26",
+  "model_name": "mtnn_v5_concat_b2_h160_t32_d64_mlp128_fus256",
+  "model_dim": 64,
+  "model_inputs": 130,
+  "archetypes": 8,
+  "model_built": "2026-07-25",
+  "recall_at_10": 0.846,
+  "purity_at_20": 0.7834,
+  "archetype_top1": 0.9702,
+  "onnx_bytes": 561276,
+  "embeddings_bytes": 3319296,
+  "eligibility": "15% of season GP (clamp 10\u201315) + 6% of 48mpg schedule total minutes (floor 450)",
+  "drift_pairs": 29,
+  "drift_biggest": {
+   "from": "2018-19",
+   "to": "2019-20",
+   "rotation_deg": 12.49,
+   "shared_players": 357
+  },
+  "drift_top5": [
+   {
+    "from": "2018-19",
+    "to": "2019-20",
+    "rotation_deg": 12.49
+   },
+   {
+    "from": "2020-21",
+    "to": "2021-22",
+    "rotation_deg": 11.35
+   },
+   {
+    "from": "2015-16",
+    "to": "2016-17",
+    "rotation_deg": 9.8
+   },
+   {
+    "from": "2016-17",
+    "to": "2017-18",
+    "rotation_deg": 9.66
+   },
+   {
+    "from": "1997-98",
+    "to": "1998-99",
+    "rotation_deg": 9.54
+   }
+  ],
+  "trails_players": 1910,
+  "insights_cards": 28,
+  "ghost_games": 6000,
+  "forecasts": 7096,
+  "arc_priors_players": 675,
+  "props_evals": 17275,
+  "props_proj_mae": 2.8533,
+  "props_line_mae": 2.7843,
+  "props_gate_passed": false
+ }
+}

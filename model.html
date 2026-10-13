@@ -340,7 +340,7 @@ a{color:inherit}
 <div class="title-card__eyebrow reveal">The Lab</div>
 <h1 class="title-card__title reveal reveal-1">How the vector <em>knows</em></h1>
 <p class="title-card__lede reveal reveal-2">Every player-season becomes a fingerprint: 130 inputs in 17 masked feature families, each passed through its own residual tower, then fused into a unit vector where cosine is similarity. This is how that model is trained, gated and evaluated — with the numbers it has to beat.</p>
-<div class="title-card__meta reveal reveal-3"><span><b>12,966</b>Seasons</span><span><b>17</b>Towers</span><span><b>130</b>Inputs</span><span><b>8 / 5 / 14 / 18</b>Heads</span></div>
+<div class="title-card__meta reveal reveal-3"><span><b data-fact="player_seasons">12,966</b>Seasons</span><span><b>17</b>Towers</span><span><b data-fact="model_inputs">130</b>Inputs</span><span><b>8 / 5 / 14 / 18</b>Heads</span></div>
 </header>
 
 <p class="mono" style="font-size:12px; color:var(--fg-2); margin:6px 0 2px;">Promote-gate baseline, re-anchored 2026-07-24. The old baseline (CQS 85.87, recall@10 1.0, purity 0.8726) was measured on the pre-protocol loop that trained on held-out positives — that 1.0 was memorization, so the gate demanded ≥0.98 and no honest model could ever pass it. These numbers are leak-free, averaged across seeds.</p>
@@ -651,5 +651,6 @@ window.addEventListener('load',function(){setTimeout(function(){
   });
 },1500);});
 </script>
+<script src="assets/site-facts.js?v=181ecc27" defer></script>
 </body>
 </html>

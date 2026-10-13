@@ -259,7 +259,7 @@
                role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="atlas-results"/>
         <ul id="atlas-results" class="atlas-results" role="listbox" aria-label="Matching seasons" hidden></ul>
       </div>
-      <div class="label"><span id="atlas-count" class="num">12,966</span> plotted</div>
+      <div class="label"><span id="atlas-count" class="num" data-fact="player_seasons">12,966</span> plotted</div>
       <div class="team-highlight">
         <label class="visually-hidden" for="team-select">Highlight a team’s current roster on the atlas</label>
         <select id="team-select" class="team-select">
@@ -325,7 +325,7 @@
     <a class="door" href="/teams">
       <span class="door__n">04 — Teams</span>
       <span class="door__title">Team intros</span>
-      <p class="door__text">Thirty seamless loops: every 2026-27 roster glowing inside the 2,415-player atlas, franchise legends as ghost stars.</p>
+      <p class="door__text">Thirty seamless loops: every 2026-27 roster glowing inside the <span data-fact="players">2,426</span>-player atlas, franchise legends as ghost stars.</p>
       <span class="door__go">Watch the loops →</span>
     </a>
   </nav>
@@ -379,6 +379,7 @@
 <script src="/assets/mtnn.js?v=f72a913c"></script>
 <script src="/assets/atlas-map.js?v=7a260b23"></script>
 <script src="/assets/career-trails.js?v=a0e9e836"></script>
+<script src="assets/site-facts.js?v=181ecc27" defer></script>
 <script>
 if('serviceWorker' in navigator){ window.addEventListener('load', function(){ navigator.serviceWorker.register('/sw.js').catch(function(){}); }); }
 </script>
