@@ -272,7 +272,7 @@ button,.input{min-height:44px}
       <button class="mode-tab" data-mode="pack3" data-pack-n="3" type="button">Triple · 3</button>
       <button class="mode-tab" data-mode="pack5" data-pack-n="5" type="button">Full · 5</button>
     </div>
-    <div class="mode-desc" id="mode-desc">Daily Court: 5 fixed puzzles per day, same for all IPs. Refresh can't reroll. Play any order, progress saves per slot. Solve 3+ to keep bonus streak.</div>
+    <div class="mode-desc" id="mode-desc">Daily Court: 5 fixed puzzles per day, same for everyone — refresh can't reroll. Play any order; progress saves per slot. Solve 1 to save your streak, 3+ for the bonus streak.</div>
   </div>
 
   <div class="card" id="daily-court" style="display:none;">
@@ -287,11 +287,11 @@ button,.input{min-height:44px}
       <span class="reward" id="reward-3"><span>★</span> 3 solved → Sharpshooter + hint unlock</span>
       <span class="reward" id="reward-5"><span>🏆</span> 5 solved → Full Court perfect</span>
     </div>
-    <div class="small-mono" style="margin-top:8px;opacity:.6;text-transform:none">Each slot is fixed for the day — same for everyone. No reroll on refresh. Solve 3 to stay incentivized, 5 to dominate leaderboard.</div>
+    <div class="small-mono" style="margin-top:8px;opacity:.6;text-transform:none">Each slot is fixed for the day — same for everyone. No reroll on refresh. Solve 1 to save your streak, 3+ to keep the bonus streak, all 5 to top the board.</div>
   </div>
 
   <div id="lens-bar"></div>
-  <div id="map-wrap"><canvas id="sky-canvas" width="640" height="380" aria-label="12,966 player-seasons as points in a rotatable 3D embedding map — your guesses draw as orange rings connected by a line to the past target's bullseye, showing how close each guess landed"></canvas><div id="target-badge" style="position:absolute;left:0;top:0;transform:translate(-50%,-140%);background:var(--accent-wash);color:var(--accent);border:1px solid var(--line-2);border-radius:999px;padding:5px 10px;font-family:ui-monospace,monospace;font-size:10px;font-weight:900;box-shadow:none;z-index:4;display:none;pointer-events:none;white-space:nowrap">★ TARGET</div><div id="map-overlay"><span class="chip" id="map-fact">12,966 seasons • ★ target past</span><span class="chip">orange rings = your guesses • line = distance • ◎ bullseye = target</span></div><div id="map-controls"><button class="chip pill" id="btn-pause" type="button">Pause</button><button class="chip pill" id="btn-reset" type="button">Reset</button></div><div id="map-legend"><div style="font-family:var(--mono);font-size:7.5px;letter-spacing:.1em;text-transform:uppercase;font-weight:900;opacity:.55;margin-bottom:4px">Map</div><div style="font-family:var(--mono);font-size:9px">Drag to orbit • ◎ bullseye = past target (auto-centered)</div></div><div id="hover-tip"></div></div>
+  <div id="map-wrap"><canvas id="sky-canvas" width="640" height="380" aria-label="12,966 player-seasons as points in a rotatable 3D embedding map — your guesses draw as orange rings connected by a line to the past target's bullseye, showing how close each guess landed"></canvas><div id="target-badge" style="position:absolute;left:0;top:0;transform:translate(-50%,-140%);background:var(--accent-wash);color:var(--accent);border:1px solid var(--line-2);border-radius:999px;padding:5px 10px;font-family:ui-monospace,monospace;font-size:10px;font-weight:900;box-shadow:none;z-index:4;display:none;pointer-events:none;white-space:nowrap">★ TARGET</div><div id="map-overlay"><span class="chip" id="map-fact">12,966 player-seasons • ★ target past</span><span class="chip">orange rings = your guesses • line = distance • ◎ bullseye = target</span></div><div id="map-controls"><button class="chip pill" id="btn-pause" type="button">Pause</button><button class="chip pill" id="btn-reset" type="button">Reset</button></div><div id="map-legend"><div style="font-family:var(--mono);font-size:7.5px;letter-spacing:.1em;text-transform:uppercase;font-weight:900;opacity:.55;margin-bottom:4px">Map</div><div style="font-family:var(--mono);font-size:9px">Drag to orbit • ◎ bullseye = past target (auto-centered)</div></div><div id="hover-tip"></div></div>
 
   <!-- PACK BATTLE v2 Production UI -->
   <div class="card" id="pack-progress" style="display:none;"></div>

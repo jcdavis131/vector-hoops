@@ -168,14 +168,14 @@
    "slug": "dead-styles",
    "tldr": "The old-school bruising rebounder who lives at the rim is dying out — only a few are left.",
    "kicker": "Archetypes",
-   "title": "The \"Defensive Glass + Rim Pressure (Fts)\" is going extinct",
+   "title": "The \"Defensive Glass + Rim Pressure (FTs)\" is going extinct",
    "lede": "Share of player-seasons in each style archetype: first three seasons vs last three. The 'Defensive Glass + Rim Pressure' archetype is being selected out of the league — these are its last true practitioners.",
    "stat": "-8.4pp",
-   "stat_label": "share change — Defensive Glass + Rim Pressure (Fts)",
+   "stat_label": "share change — Defensive Glass + Rim Pressure (FTs)",
    "viz": "shares",
    "rows": [
     {
-     "label": "Defensive Glass + Rim Pressure (Fts)",
+     "label": "Defensive Glass + Rim Pressure (FTs)",
      "early": 17.0,
      "late": 8.6,
      "delta": -8.4
@@ -239,7 +239,7 @@
    ],
    "foot": "8 k-means archetypes over 14-d serving vectors. Shares of charted player-seasons. Examples are the players nearest the archetype centroid in 2024-25 → 2025-26 (min 800 min).",
    "og_title": "An NBA playing style is going extinct",
-   "og_desc": "\"Defensive Glass + Rim Pressure (Fts)\" fell -8.4 points of league share. The model watched it happen.",
+   "og_desc": "\"Defensive Glass + Rim Pressure (FTs)\" fell -8.4 points of league share. The model watched it happen.",
    "series": "model"
   },
   {
@@ -247,9 +247,9 @@
    "tldr": "NBA teams shoot way, way more threes than they used to — the biggest style shift in 30 years.",
    "kicker": "League drift",
    "title": "The three-point takeover, measured",
-   "lede": "League-average three-point attempts per game, 30 seasons. The single biggest stylistic shift in the dataset — the map itself rotated toward the arc.",
+   "lede": "Three-point attempts per game across charted player-seasons, 30 seasons. The single biggest stylistic shift in the dataset — the map itself rotated toward the arc.",
    "stat": "2.1x",
-   "stat_label": "growth in 3PA/game, 1996-97 → 2025-26",
+   "stat_label": "growth in 3PA per player-season, 1996-97 → 2025-26",
    "viz": "line",
    "viz_label": "3-point attempts per game",
    "rows": [
@@ -392,9 +392,9 @@
    "tldr": "NBA players turn the ball over way less than they used to — the game got cleaner even as scoring went up.",
    "kicker": "League drift",
    "title": "The league stopped turning it over",
-   "lede": "League-average turnovers per game, 30 seasons. As the game moved to the perimeter — more catch-and-shoot, fewer post-ups — the riskiest plays faded and ball-handling tightened league-wide: assist-to-turnover ratio is up 37% over the same span.",
+   "lede": "Turnovers per game across charted player-seasons, 30 seasons. As the game moved to the perimeter — more catch-and-shoot, fewer post-ups — the riskiest plays faded and ball-handling tightened league-wide: assist-to-turnover ratio is up 37% over the same span.",
    "stat": "-18.3%",
-   "stat_label": "turnovers/game, 1996-97 → 2025-26 (3.17 → 2.59)",
+   "stat_label": "turnovers per player-season, 1996-97 → 2025-26 (3.17 → 2.59)",
    "viz": "line",
    "viz_label": "Turnovers per game",
    "rows": [
@@ -1599,8 +1599,8 @@
    "foot": "Entity count over title, tldr, lede, row labels and foot of the other 26 live cards (this card excluded), recounted 2026-10-12. A card counts once per player; full names and common short forms (Giannis, LeBron, Klay) matched. An earlier version reported a two-way tie at 5 — that count came from a 20-card draft set; the recount over the full live set is what is printed here.",
    "kicker": "Entity grounding",
    "lede": "Every player named across the live cards, counted. Giannis appears in most-unique, transformed, paid-to-not-play and max-money-bargains; Duncan in playoff-swings, max-money-bargains, same-jersey-smaller-role and hometown-discount; LeBron in playoff-swings, contenders-pretenders, paid-to-not-play and max-money-bargains; Klay in know-your-role, same-jersey-smaller-role, hometown-discount and apron-casualties.",
-   "og_desc": "Giannis Antetokounmpo and Tim Duncan are each cited in 5 of 28 Insights cards — more than any other player. The noun layer, counted.",
-   "og_title": "The two faces of our Insights: Giannis and Tim Duncan",
+   "og_desc": "Giannis Antetokounmpo, LeBron James, Tim Duncan and Klay Thompson are each cited in 4 of 27 Insights cards — more than any other player. The noun layer, counted.",
+   "og_title": "Four players anchor the Insights: Giannis, LeBron, Duncan and Klay",
    "rows": [
     {
      "label": "Giannis Antetokounmpo",

@@ -8,7 +8,7 @@
     'Offensive Glass + Rim Protection':'Elite second-chance + paint deterrence. High OREB, BLK, low 3PA. Era evolves from Mutombo 1998 to Wemby 2024 same PC1 tip.',
     'Offensive Glass (Low Shot Volume)':'Garbage man, putbacks, screen-setter. Low USG, high OREB%, low TS load.',
     'Three-Point Volume (Low On-Court Impact)':'Shooter role, spacing but low PLUS_MINUS. Floor stretcher before gravity mattered.',
-    'Defensive Glass + Rim Pressure (Fts)':'Def rebound + drawing fouls. High DREB, FTA, traditional big to mobility_big shift.',
+    'Defensive Glass + Rim Pressure (FTs)':'Def rebound + drawing fouls. High DREB, FTA, traditional big to mobility_big shift.',
     'Shot Volume + Three-Point Volume':'Modern volume scorer, high FGA+3PA, shot creation.',
     'Three-Point Accuracy + Three-Point Volume':'Sniper archetype 97+ grade, Catch-Shoot, high EFG.',
     'Playmaking + Steals':'Primary creator + ball pressure, high AST, STL, front-court touches, ball-in-hand PC3 high.',

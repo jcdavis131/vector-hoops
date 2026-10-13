@@ -437,7 +437,7 @@
       if (shifts.length >= 2){
         var pure = shifts.find(function(sh){ return /Glass.*Rim/i.test(sh.archetype); }) || shifts[0];
         var newcomer = shifts.find(function(sh){ return sh.delta > 0; }) || shifts[1];
-        shiftLine = ' Pure <em>' + escapeHtml(pure.archetype) + '</em> went 28%→0% (' + (pure.delta*100).toFixed(1) + 'pp) replaced by <em>' + escapeHtml(newcomer.archetype) + '</em> +' + (newcomer.delta*100).toFixed(1) + 'pp.';
+        shiftLine = ' Pure <em>' + escapeHtml(pure.archetype) + '</em> went ' + Math.round(pure.early*100) + '% \u2192 ' + Math.round(pure.late*100) + '% (' + (pure.delta*100).toFixed(1) + 'pp) replaced by <em>' + escapeHtml(newcomer.archetype) + '</em> +' + (newcomer.delta*100).toFixed(1) + 'pp.';
       }
       story += '<p><span class="arch-era-kicker">2021–2026</span> <span class="arch-era-sentence">Modern hybrid: <strong>' + escapeHtml(s4.name) + '</strong> ' + Math.round(s4.share*100) + '% — bigs who shoot <em>and</em> board.' + shiftLine + '</span></p>';
     }
@@ -1201,7 +1201,7 @@
     'Three-Point Volume + Three-Point Accuracy→Three-Point Accuracy (Low Turnovers)': 'the aging-shooter arc',
     'Three-Point Accuracy (Low Turnovers)→Three-Point Volume + Three-Point Accuracy': 'volume creeping back in',
     'Rim Protection + Offensive Glass→Offensive Glass + Defensive Glass': 'trading blocks for boards',
-    'Defensive Glass + Rim Pressure (Fts)→Offensive Glass + Defensive Glass': 'settling into the glass',
+    'Defensive Glass + Rim Pressure (FTs)→Offensive Glass + Defensive Glass': 'settling into the glass',
     'Scoring Volume + Shot Volume→Playmaking + Steals': 'scorer turned table-setter',
     'Offensive Glass + Defensive Glass→Rim Protection + Offensive Glass': 'adding rim protection'
   };

@@ -106,7 +106,7 @@ canvas{display:block;width:100%;height:380px}
         <div style="padding:12px">
           <div class="mono" style="font-weight:900;font-size:13px">How Everyday Works</div>
           <div class="mono-sm" style="margin-top:4px;text-transform:none;line-height:1.5;color:#3a3732">One past player appears. Guess which modern player plays most like them. Score >68% locks it, shows orange career path. Finish 3 → streak ticks. Miss a calendar day → streak resets to 0. Built free · Open-source · No paywall — no login, PWA offline.</div>
-          <div style="margin-top:10px;display:flex;flex-wrap:wrap"><span class="chip" style="background:var(--accent-wash);color:var(--accent)">10 past × 1305 modern pool</span><span class="chip">14-d MTNN cosine</span><span class="chip">tap a pick again to clear it</span></div>
+          <div style="margin-top:10px;display:flex;flex-wrap:wrap"><span class="chip" style="background:var(--accent-wash);color:var(--accent)">3 past a day × 1,305 modern pool</span><span class="chip">14-d cosine</span><span class="chip">tap a pick again to clear it</span></div>
           <div id="streakDots" style="margin-top:10px"></div>
           <div id="wwDetail" class="mono-sm" style="margin-top:4px"></div>
         </div>
@@ -126,7 +126,7 @@ canvas{display:block;width:100%;height:380px}
         <button class="btn btn-p" id="go1">Guess ◎</button>
       </div>
       <div id="log1" class="log" style="margin:0 12px 8px"></div>
-      <div class="mono-sm" style="padding:0 12px 8px" id="hint1">Hint: tap map dots (all 1305 in suggestions) • score on 14-d</div>
+      <div class="mono-sm" style="padding:0 12px 8px" id="hint1">Hint: tap map dots (all 1,305 in suggestions) • score on 14-d</div>
       <div style="display:flex;gap:6px;padding:0 12px 10px;align-items:center"><button class="btn" id="hintBtn1">Hint</button><button class="btn" id="reveal1">Reveal</button><span id="score1" class="mono-sm"></span><span style="margin-left:auto" id="lock1" class="mono-sm"></span></div>
     </div>
     <div class="card" id="card2" style="opacity:.86">
@@ -154,9 +154,9 @@ canvas{display:block;width:100%;height:380px}
 
   <div style="display:flex;flex-direction:column;gap:12px">
     <div class="card" style="overflow:hidden;padding:0">
-      <div style="display:flex;justify-content:space-between;padding:9px 12px;border-bottom:1px solid var(--line-2);background:var(--surface)"><span class="mono" style="font-weight:800">Map — 15-d proj + 1305 modern pool</span><span class="mono-sm">Past ★ Modern ○</span></div>
+      <div style="display:flex;justify-content:space-between;padding:9px 12px;border-bottom:1px solid var(--line-2);background:var(--surface)"><span class="mono" style="font-weight:800">Map — 14-d proj + 1,305 modern pool</span><span class="mono-sm">Past ★ Modern ○</span></div>
       <div style="position:relative" class="canvas-box">
-        <canvas id="c" width="640" height="380" aria-label="Everyday map. Modern pool 1305 points positioned by model, coloured by archetype, crosshair target past. Tap any dot to fill guess box — all also in suggestions."></canvas>
+        <canvas id="c" width="640" height="380" aria-label="Everyday map. Modern pool 1,305 points positioned by model, coloured by archetype, crosshair target past. Tap any dot to fill guess box — all also in suggestions."></canvas>
         <canvas id="trajOver" width="640" height="380" style="position:absolute;inset:0;pointer-events:none;background:transparent"></canvas>
         <div style="position:absolute;left:10px;top:10px;z-index:3;display:flex;gap:6px"><span class="pill" id="gDotHint" style="background:rgba(250,250,248,.92)">Past ★ Modern ○</span></div>
         <div id="ring" style="position:absolute;left:50%;top:50%;width:58px;height:58px;border-radius:50%;border:3px solid #eb6834;display:none;place-items:center;color:#eb6834;background:radial-gradient(circle,rgba(235,104,52,.28),rgba(235,104,52,.08) 62%,transparent 72%);font-weight:900;transform:translate(-50%,-50%) scale(.6)">◎</div>
@@ -450,7 +450,7 @@ function makeShareCard(){
   // link
   sx.fillStyle='#5A6476'; sx.font='13px monospace';
   let qs=new URLSearchParams(location.search); let daily=qs.get('daily')||new Date().toISOString().slice(0,10);
-  sx.fillText('hoops.dumbmodel.com/everyday?daily='+daily+'&n=3 • same-link-same-stars • LCG glibc • 14-d MTNN cosine',36,600);
+  sx.fillText('hoops.dumbmodel.com/everyday?daily='+daily+'&n=3 • same-link-same-stars • LCG glibc • 14-d cosine',36,600);
   sx.fillStyle='#EB6834'; sx.font='26px monospace'; sx.fillText('◎', 900, 300);
 }
 function openShare(){
@@ -554,7 +554,7 @@ async function boot(dailyOverride){
       let scEl=$('score'+(s+1));
       if(!bm){ if(scEl) scEl.textContent='Hint: map dots all guessable'; return;}
       let last=(bm.p.n||'').split(' ').slice(-1)[0]||'';
-      if(scEl) scEl.textContent='Hint: starts with '+last[0]+' • closest ~'+Math.round(bm.s*100)+'% • '+1305+' modern in pool';
+      if(scEl) scEl.textContent='Hint: starts with '+last[0]+' • closest ~'+Math.round(bm.s*100)+'% • +'1,305'+' modern in pool';
     });
   }
   let bToday=$('bToday'); if(bToday) bToday.onclick=()=>{ history.replaceState(null,'','?daily='+new Date().toISOString().slice(0,10)+'&n=3'); boot(); };

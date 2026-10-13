@@ -3,7 +3,7 @@
   "model": "mtnn_v5_concat_b2_h160_t32_d64_mlp128_fus256",
   "dim": 64,
   "rows": 12966,
-  "method": "L2-normalized MTNN v4 embedding; index-aligned with vectors.json and skills.json. Daily puzzles score in this embedding space.",
+  "method": "L2-normalized MTNN v5 embedding; index-aligned with vectors.json and skills.json. Daily puzzles score in this embedding space.",
   "centroids": [
     [
       0.11140838265419006,

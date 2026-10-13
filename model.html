@@ -343,15 +343,14 @@ a{color:inherit}
 <div class="title-card__meta reveal reveal-3"><span><b data-fact="player_seasons">12,966</b>Seasons</span><span><b>17</b>Towers</span><span><b data-fact="model_inputs">130</b>Inputs</span><span><b>8 / 5 / 14 / 18</b>Heads</span></div>
 </header>
 
-<p class="mono" style="font-size:12px; color:var(--fg-2); margin:6px 0 2px;">Promote-gate baseline, re-anchored 2026-07-24. The old baseline (CQS 85.87, recall@10 1.0, purity 0.8726) was measured on the pre-protocol loop that trained on held-out positives — that 1.0 was memorization, so the gate demanded ≥0.98 and no honest model could ever pass it. These numbers are leak-free, averaged across seeds.</p>
+<p class="mono" style="font-size:12px; color:var(--fg-2); margin:6px 0 2px;">Promote-gate baseline, re-anchored 2026-07-24. The old baseline was measured on the pre-protocol loop that trained on held-out positives — its recall@10 of 1.0 was memorization, so the gate demanded ≥0.98 and no honest model could ever pass it. The current baseline is leak-free and averaged across seeds; it is computed by the gate at promotion time (pipeline/composite_score.py), not republished here as decimals.</p>
 <div class="cqs-strip" aria-label="Promote gate baseline (leak-free, multi-seed)">
-<div class="cqs-badge is-primary"><b>75.62</b><span>CQS baseline (leak-free)</span></div>
-<div class="cqs-badge"><b>0.742</b><span>test recall@10 (sd 0.128)</span></div>
-<div class="cqs-badge"><b>0.7822</b><span>purity@20 archetype</span></div>
-<div class="cqs-badge"><b>0.119</b><span>continuity spread (guard)</span></div>
+<div class="cqs-badge is-primary"><b>leak-free</b><span>CQS baseline protocol</span></div>
 <div class="cqs-badge"><b>multi-seed</b><span>mean baseline</span></div>
+<div class="cqs-badge"><b>player-split</b><span>no train/test leakage</span></div>
+<div class="cqs-badge"><b>2× SE</b><span>clearance over seed noise</span></div>
 </div>
-<p class="mono" style="font-size:12px; color:var(--fg-2); margin:8px 0 2px;">Promoted 2026-07-25: <code>mtnn_v5_concat_b2_h160_t32_d64_mlp128_fus256</code>, replacing the 2026-07-14 build. On the identical held-out protocol it more than doubles top-5 retrieval on never-trained 2024+ pairs — <b>0.363 → 0.757</b> (top-1 0.163 → 0.438). The previous model predated the position-label, career-feature and durability-leak fixes.</p>
+<p class="mono" style="font-size:12px; color:var(--fg-2); margin:8px 0 2px;">Promoted 2026-07-25: <code>mtnn_v5_concat_b2_h160_t32_d64_mlp128_fus256</code>, replacing the 2026-07-14 build. On the identical held-out protocol (assets/eval_scoreboard.json) it nearly quadruples the committed transparent baseline on never-trained 2024+ pairs — top-5 <b>0.196 → 0.757</b>, top-1 <b>0.079 → 0.438</b> (baseline: the 14-d era-z profile in vectors.json). The previous build predated the position-label, career-feature and durability-leak fixes.</p>
 
 <p class="mono" style="font-size:12px; color:var(--fg-2); margin:8px 0 2px;">Served-model scorecard — MTNN v5, built 2026-07-25 (<code>assets/mtnn_meta.json</code>): test recall@10 <b>0.846</b> · purity@20 <b>0.783</b> · archetype top-1 <b>0.970</b>. Held-out retrieval detail:</p>
 <div class="cqs-strip" id="eval-scoreboard-strip" aria-label="Held-out retrieval scoreboard">
@@ -381,7 +380,7 @@ a{color:inherit}
 <h3>Current deployed — mtnn_v5_concat_b2_h160_t32_d64_mlp128_fus256</h3>
 <div id="arch-current-meta" class="mono" style="font-size:12px; line-height:1.6;">Loading mtnn_arch.json…</div>
 <div class="weights-grid" id="weights-grid"></div>
-<p style="font-size:13px; line-height:1.6; margin-top:12px; color:var(--fg-2);">CQS weights from <code>pipeline/composite_score.py</code>: recall 0.18, purity 0.16, margin_14d 0.08, archetype 0.08, position 0.05, skills_r2 0.14, skill_nn 0.05, next_r2 0.12, next_mae 0.06, aux_r2 0.08. <b>Gate re-anchored</b> to a leak-free baseline (CQS 75.62 / recall 0.742 / purity 0.7822, multi-seed mean, 130-feature matrix). Thresholds are now 2× the standard error of the seed mean rather than a flat 0.02 — measured seed sd is 0.128 on test recall alone, so the old slack was adjudicating sampling noise. A candidate must also hold same-player continuity spread under its bar, which is what catches a model that memorizes the training window instead of generalizing.</p>
+<p style="font-size:13px; line-height:1.6; margin-top:12px; color:var(--fg-2);">CQS weights from <code>pipeline/composite_score.py</code>: recall 0.18, purity 0.16, margin_14d 0.08, archetype 0.08, position 0.05, skills_r2 0.14, skill_nn 0.05, next_r2 0.12, next_mae 0.06, aux_r2 0.08. <b>Gate re-anchored</b> to a leak-free baseline (multi-seed mean, 130-feature matrix). Thresholds are now 2× the standard error of the seed mean rather than a flat 0.02 — seed-to-seed spread on test recall is wide, so the old slack was adjudicating sampling noise. A candidate must also hold same-player continuity spread under its bar, which is what catches a model that memorizes the training window instead of generalizing.</p>
 </div>
 <div class="cockpit-panel">
 <h3>Hill-climb 01→05 + loss weights</h3>
@@ -470,7 +469,7 @@ a{color:inherit}
 <div class="viz-duo-grid network-flow-outputs__grid">
 <div class="viz-panel"><p class="viz-panel__label">Archetype — 8</p><div id="network-arch-out" class="network-arch-out"></div></div>
 <div class="viz-panel"><p class="viz-panel__label">Position — 5</p><div id="network-pos-out" class="network-arch-out"></div></div>
-<div class="viz-panel"><p class="viz-panel__label">Skill grades — 18×(48→16→1)</p><div id="network-skill-out" class="network-skill-out"></div></div>
+<div class="viz-panel"><p class="viz-panel__label">Skill grades — 18×(64→16→1)</p><div id="network-skill-out" class="network-skill-out"></div></div>
 <div class="viz-panel"><p class="viz-panel__label">Next-season forecast — per 100</p><div id="network-next-out" class="network-skill-out"></div></div>
 </div>
 </div>
