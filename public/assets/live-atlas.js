@@ -274,9 +274,13 @@ function loadTrailFor(name) {
   trailName = name; trailPts = []; trailT = 0;
   if (modeLbl) modeLbl.textContent = 'drawing ' + name + '’s career…';
   function got(idxData, trails) {
-    var key = idxData[siteNorm(name)];
-    if (!key || !trails[key]) { if (modeLbl) modeLbl.textContent = 'no trail for ' + name; return; }
-    trailPts = trails[key]; // [{x,y,s}]
+    // trails.json is keyed by pid slug ('stephen-curry'); the index maps
+    // slug -> season count and is NOT a name lookup. pts are [x, y, z]
+    // triples aligned with the seasons array.
+    var slug = siteNorm(name).normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
+    var t = trails[slug];
+    if (!t || !t.pts) { if (modeLbl) modeLbl.textContent = 'no trail for ' + name; return; }
+    trailPts = t.pts.map(function (p, i) { return { x: p[0], y: p[1], s: (t.seasons || [])[i] || '' }; });
     animateTrail();
   }
   if (trailsCache) { got(trailsCache.idx, trailsCache.trails); return; }

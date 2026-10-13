@@ -5,14 +5,14 @@ export async function mountPlayerCourtStory(rootEl, playerName, opts = {}) {
   const dpr = Math.min(window.devicePixelRatio || 1, 1.8);
   const OKABE = ['#0072B2', '#D55E00', '#009E73', '#F0E442', '#56B4E9', '#CC79A7', '#E69F00', '#111111'];
   const ARCH = [
-    { i:0, label:'Glass+Rim', off:32, def:92, color:OKABE[0], role:'Rim Anchor', desc:'Paint + glass' },
-    { i:1, label:'LowVol Glass', off:22, def:88, color:OKABE[1], role:'Energy Big' },
-    { i:2, label:'Low Impact', off:24, def:28, color:OKABE[2], role:'Deep Reserve' },
-    { i:3, label:'Def Glass FT', off:46, def:71, color:OKABE[3], role:'Two-Way Big' },
-    { i:4, label:'Vol+3P', off:88, def:34, color:OKABE[4], role:'Volume Scorer' },
-    { i:5, label:'3P Acc+Vol', off:84, def:38, color:OKABE[5], role:'Floor Spacer' },
-    { i:6, label:'Playmaking', off:76, def:66, color:OKABE[6], role:'Lead Playmaker' },
-    { i:7, label:'Scoring Vol', off:91, def:40, color:OKABE[7], role:'Bucket Getter' },
+    { i:0, label:'Glass+Rim', off:32, def:92, color:OKABE[0], role:'Rim Anchor', desc:'Paint + glass', x:-2, y:11 },,
+    { i:1, label:'LowVol Glass', off:22, def:88, color:OKABE[1], role:'Energy Big', x:-4, y:13 },,
+    { i:2, label:'Low Impact', off:24, def:28, color:OKABE[2], role:'Deep Reserve', x:6, y:19 },,
+    { i:3, label:'Def Glass FT', off:46, def:71, color:OKABE[3], role:'Two-Way Big', x:-1, y:14 },,
+    { i:4, label:'Vol+3P', off:88, def:34, color:OKABE[4], role:'Volume Scorer', x:16, y:24 },,
+    { i:5, label:'3P Acc+Vol', off:84, def:38, color:OKABE[5], role:'Floor Spacer', x:19, y:21 },,
+    { i:6, label:'Playmaking', off:76, def:66, color:OKABE[6], role:'Lead Playmaker', x:-8, y:28 },,
+    { i:7, label:'Scoring Vol', off:91, def:40, color:OKABE[7], role:'Bucket Getter', x:8, y:26 },,
   ];
   const POS_LABELS=['PG','SG','SF','PF','C'];
   const POS_OFF={PG:{x:-7,y:6},SG:{x:7,y:5},SF:{x:10,y:2},PF:{x:2,y:-2},C:{x:0,y:-4}};

@@ -567,9 +567,10 @@ export async function mountSharedMap(canvas, opts={}){
   // eliminated -> ~8% opacity, others brighten; preserved across layouts.
   function setDimmed(idArray){
     dimSet=null;
-    if(Array.isArray(idArray) && idArray.length && projById){
+    const idList = idArray ? Array.from(idArray) : [];
+    if(idList.length && projById){
       const s=new Set();
-      for(const id of idArray){
+      for(const id of idList){
         const ii=(id|0);
         if(ii>=0 && ii<=maxId && projById[ii]>=0) s.add(projById[ii]);
       }
