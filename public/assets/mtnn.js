@@ -8,6 +8,8 @@
 (function(global){
 'use strict';
 var CACHE=null;
+var LOAD_PENDING=null;
+var HEADS_PENDING=null;
 var ERRKEY='vh.errors';
 function logErr(m,ex){
   try{
@@ -27,15 +29,25 @@ function fetchRetry(url,attempt){
     return new Promise(function(res){ setTimeout(res,delay); }).then(function(){ return fetchRetry(url,attempt+1); });
   });
 }
-function loadAll(cb){
-  if(CACHE){ cb(CACHE===false?null:CACHE); return; }
-  Promise.all([
+function loadAll(cb, opts){
+  // opts.heads === false loads embeddings only (3.1 MB); the heads file
+  // (2.2 MB) is fetched lazily by loadHeads() when a feature needs it.
+  var wantHeads = !(opts && opts.heads === false);
+  if (CACHE && CACHE !== false) {
+    if (wantHeads && !CACHE.H) { loadHeads(function(){ cb(CACHE); }); return; }
+    cb(CACHE); return;
+  }
+  if (CACHE === false) { cb(null); return; }
+  if (LOAD_PENDING) { LOAD_PENDING.push({ cb: cb, heads: wantHeads }); return; }
+  LOAD_PENDING = [{ cb: cb, heads: wantHeads }];
+  var fetches = [
     fetchRetry('assets/mtnn_meta.json').then(function(r){return r.json();}),
     fetchRetry('assets/mtnn_arch.json').then(function(r){return r.json();}).catch(function(){return null;}),
-    fetchRetry('assets/mtnn_embeddings.f32').then(function(r){return r.arrayBuffer();}),
-    fetchRetry('assets/mtnn_heads.f32').then(function(r){return r.arrayBuffer();}).catch(function(){return null;})
-  ]).then(function(arr){
-    var meta=arr[0], arch=arr[1], embBuf=arr[2], headsBuf=arr[3];
+    fetchRetry('assets/mtnn_embeddings.f32').then(function(r){return r.arrayBuffer();})
+  ];
+  if (wantHeads) fetches.push(fetchRetry('assets/mtnn_heads.f32').then(function(r){return r.arrayBuffer();}).catch(function(){return null;}));
+  Promise.all(fetches).then(function(arr){
+    var meta=arr[0], arch=arr[1], embBuf=arr[2], headsBuf=arr[3]||null;
     var dim=meta.dim||64, rows=meta.rows||12966;
     var E=new Float32Array(embBuf);
     if(E.length!==rows*dim) throw new Error('emb len mismatch '+E.length+' vs '+rows*dim);
@@ -43,14 +55,39 @@ function loadAll(cb){
     if(headsBuf){ H=new Float32Array(headsBuf); }
     CACHE={ dim:dim, rows:rows, E:E, H:H, meta:meta, arch:arch, HEAD_ORDER:{arch:0,skill:8,pos:26,next:31}, HEAD_DIMS:{arch:8,skill:18,pos:5,next:14,total:45} };
     try{ global.dispatchEvent(new CustomEvent('vh:mtnn-loaded',{detail:{rows:rows,dim:dim,hasHeads:!!H}})); }catch(e){}
-    cb(CACHE);
+    var pending=LOAD_PENDING; LOAD_PENDING=null;
+    var needHeads=pending.filter(function(q){ return q.heads && !H; });
+    pending.forEach(function(q){ if(!(q.heads && !H)) q.cb(CACHE); });
+    if (needHeads.length) loadHeads(function(){ needHeads.forEach(function(q){ q.cb(CACHE); }); });
   }).catch(function(err){
     logErr('loadAll fail '+err.message,{stack:err.stack});
     try{ global.dispatchEvent(new CustomEvent('vh:mtnn-failed',{detail:{error:String(err)}})); }catch(e){}
     CACHE=false;
-    cb(null);
+    var pending=LOAD_PENDING; LOAD_PENDING=null;
+    if (pending) pending.forEach(function(q){ q.cb(null); });
   });
 }
+function loadHeads(cb){
+  cb = cb || function(){};
+  if (!CACHE || CACHE === false) { cb(null); return; }
+  if (CACHE.H) { cb(CACHE); return; }
+  if (HEADS_PENDING) { HEADS_PENDING.push(cb); return; }
+  HEADS_PENDING = [cb];
+  fetchRetry('assets/mtnn_heads.f32').then(function(r){ return r.arrayBuffer(); }).then(function(buf){
+    if (CACHE && CACHE !== false && buf) {
+      CACHE.H = new Float32Array(buf);
+      try{ global.dispatchEvent(new CustomEvent('vh:mtnn-loaded',{detail:{rows:CACHE.rows,dim:CACHE.dim,hasHeads:true}})); }catch(e){}
+    }
+    var pending=HEADS_PENDING; HEADS_PENDING=null;
+    if (pending) pending.forEach(function(f){ f(CACHE); });
+  }).catch(function(){
+    var pending=HEADS_PENDING; HEADS_PENDING=null;
+    if (pending) pending.forEach(function(f){ f(null); });
+  });
+}
+function loadEmbeddings(cb){ loadAll(cb, { heads: false }); }
+function loadEmbeddingsAsync(){ return new Promise(function(res){ loadEmbeddings(function(r){ res(r); }); }); }
+function loadHeadsAsync(){ return new Promise(function(res){ loadHeads(function(r){ res(r); }); }); }
 function loadAsync(){ return new Promise(function(res){ loadAll(function(r){res(r);}); }); }
 function isReady(){ return !!(CACHE && CACHE!==false && CACHE.E); }
 function rowVector(i){ if(!CACHE||CACHE===false) return null; var d=CACHE.dim; return CACHE.E.subarray(i*d, i*d+d); }
@@ -177,6 +214,10 @@ function fuseHeadsToProbs(fused){
 global.VHMtnn={
   load: loadAll,
   loadAsync: loadAsync,
+  loadEmbeddings: loadEmbeddings,
+  loadEmbeddingsAsync: loadEmbeddingsAsync,
+  loadHeads: loadHeads,
+  loadHeadsAsync: loadHeadsAsync,
   isReady: isReady,
   sim: sim,
   rowVector: rowVector,
