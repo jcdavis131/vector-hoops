@@ -26,10 +26,9 @@
 
 <header class="top">
   <div class="brand"><span class="live-dot"></span><h1>COURTSIDE LIVE</h1><span class="proto">VECTOR HOOPS</span></div>
-  <p class="tagline">The second-screen companion for NBA games — no video, no rights, just the numbers. Between games, the arcade keeps the map warm.</p>
+  <p class="tagline">The second-screen companion for NBA games — no video, no rights, just the numbers.</p>
   <div class="mode-tabs" role="tablist" aria-label="Live sections">
     <button id="tabCompanion" class="picked" role="tab">COMPANION</button>
-    <button id="tabArcade" role="tab">ARCADE</button>
     <button id="tabJam" role="tab" title="NBA Jam callouts">🔥 JAM</button>
   </div>
 </header>
@@ -67,22 +66,29 @@
     <div class="legend"><span id="lgA">Away</span><span id="lgH">Home</span></div>
   </div>
 
-  <div class="card">
-    <div class="plate"><span class="pno">PLATE 02</span><h2>MOMENTUM</h2><span class="prule"></span><span class="pmeta">lead trace</span></div>
+<div class="card liveonly">
+    <div class="plate"><span class="pno">PLATE 02</span><h2>GHOST WATCH</h2><span class="prule"></span><span class="pmeta">6k-game library</span></div>
+    <div id="ghosts"><span style="font-size:12px;color:#6b675c">Matching live lines against 6,000 historic games…</span></div>
+    
+  </div>
+
+<div class="card">
+    <div class="plate"><span class="pno">PLATE 03</span><h2>LIVE MOMENTS</h2><span class="prule"></span><span class="pmeta">auto-storylines</span></div>
+    <div id="moments"><span style="font-size:12px;color:#6b675c">Waiting for tip…</span></div>
+  </div>
+
+<button id="more-plates-btn" class="livebtn" style="display:block;margin:10px auto" aria-expanded="false" aria-controls="more-plates">MORE PLATES — momentum · atlas twins · shot chart · milestones · leaders · play by play</button>
+<div id="more-plates" hidden>
+<div class="card">
+    <div class="plate"><span class="pno">PLATE 04</span><h2>MOMENTUM</h2><span class="prule"></span><span class="pmeta">lead trace</span></div>
     <div class="wpnum"><div class="big num" id="diffBig">–</div><div class="lbl" id="diffLbl">current margin</div></div>
     <canvas role="img" aria-label="Momentum chart — lead trace for the selected game" id="momchart" class="chart" width="600" height="150"></canvas>
     <div class="legend"><span>tip →</span><span>Q1&nbsp;&nbsp;Q2&nbsp;&nbsp;Q3&nbsp;&nbsp;Q4</span><span>→ now</span></div>
     <div class="qbars" id="qbars"></div>
   </div>
 
-  <div class="card liveonly">
-    <div class="plate"><span class="pno">PLATE 03</span><h2>GHOST WATCH</h2><span class="prule"></span><span class="pmeta">6k-game library</span></div>
-    <div id="ghosts"><span style="font-size:12px;color:#6b675c">Matching live lines against 6,000 historic games…</span></div>
-    
-  </div>
-
-  <div class="card">
-    <div class="plate"><span class="pno">PLATE 04</span><h2>ATLAS</h2><span class="prule"></span><span class="pmeta">12,966 player-seasons &middot; 64-d MTNN</span></div>
+<div class="card">
+    <div class="plate"><span class="pno">PLATE 05</span><h2>ATLAS</h2><span class="prule"></span><span class="pmeta">12,966 player-seasons &middot; 64-d MTNN</span></div>
     <div class="shot-toggle" id="atlasModes" role="tablist" aria-label="Atlas views">
       <button data-m="twins" class="picked">TWINS</button><button data-m="matchup">MATCHUP</button><button data-m="trail">TRAIL</button>
     </div>
@@ -91,8 +97,8 @@
     <div class="twinrow" id="twinList"></div>
   </div>
 
-  <div class="card">
-    <div class="plate"><span class="pno">PLATE 05</span><h2>SHOT CHART</h2><span class="prule"></span><span class="pmeta">live attempts</span></div>
+<div class="card">
+    <div class="plate"><span class="pno">PLATE 06</span><h2>SHOT CHART</h2><span class="prule"></span><span class="pmeta">live attempts</span></div>
     <div class="shot-toggle" id="shotToggle">
       <button data-t="A">AWAY</button><button data-t="H" class="picked">HOME</button><button data-t="B">BOTH</button>
     </div>
@@ -100,26 +106,22 @@
     <div class="zone-stats" id="zoneStats"></div>
   </div>
 
-  <div class="card liveonly">
-    <div class="plate"><span class="pno">PLATE 06</span><h2>MILESTONE WATCH</h2><span class="prule"></span><span class="pmeta">bests since ’23</span></div>
+<div class="card liveonly">
+    <div class="plate"><span class="pno">PLATE 07</span><h2>MILESTONE WATCH</h2><span class="prule"></span><span class="pmeta">bests since ’23</span></div>
     <div id="miles"><span style="font-size:12px;color:#6b675c">Waiting for tip…</span></div>
     
   </div>
 
-  <div class="card">
-    <div class="plate"><span class="pno">PLATE 07</span><h2>LIVE MOMENTS</h2><span class="prule"></span><span class="pmeta">auto-storylines</span></div>
-    <div id="moments"><span style="font-size:12px;color:#6b675c">Waiting for tip…</span></div>
-  </div>
-
-  <div class="card liveonly">
+<div class="card liveonly">
     <div class="plate"><span class="pno">PLATE 08</span><h2>LEADERS</h2><span class="prule"></span><span class="pmeta">box score</span></div>
     <div class="leaders"><div class="lcol" id="leadA"></div><div class="lcol" id="leadH"></div></div>
   </div>
 
-  <div class="card">
+<div class="card">
     <div class="plate"><span class="pno">PLATE 09</span><h2>PLAY BY PLAY</h2><span class="prule"></span><span class="pmeta">every possession</span></div>
     <ul id="plays"></ul>
   </div>
+</div>
 
   <button class="refresh" id="refreshBtn">Refresh now</button>
   <p class="note">Win probability is ESPN's live model; scores and plays refresh every 30s while a game is live.
@@ -128,31 +130,7 @@
 </main>
 </section>
 
-<section id="arcade" aria-label="Arcade" hidden>
-  <div class="card">
-    <div class="plate"><span class="pno">GAME 01</span><h2>TWIN SNAP</h2><span class="prule"></span><span class="pmeta">streak <span id="snapStreak">0</span></span> <button class="twin" id="snapDaily">🎯 Daily</button></div>
-    <p class="gamedesc">A mystery player is pulsing on the map. Name their <b>#1 style-twin</b> — the closest player-season in the 64-d embedding.</p>
-    <div class="atlas-wrap"><canvas role="img" aria-label="Twin Snap game canvas" id="snapCanvas" height="260"></canvas></div>
-    <div class="twinrow" id="snapOpts"></div>
-    <div class="scoreline" id="snapMsg"></div>
-  </div>
 
-  <div class="card">
-    <div class="plate"><span class="pno">GAME 02</span><h2>TRAIL BLAZER</h2><span class="prule"></span><span class="pmeta">streak <span id="trailStreak">0</span></span></div>
-    <p class="gamedesc">Watch a career trail draw itself across thirty seasons of style. Whose journey is it?</p>
-    <div class="atlas-wrap"><canvas role="img" aria-label="Trail Blazer game canvas" id="trailCanvas" height="260"></canvas></div>
-    <div class="twinrow" id="trailOpts"></div>
-    <div class="scoreline" id="trailMsg"></div>
-  </div>
-
-  <div class="card">
-    <div class="plate"><span class="pno">GAME 03</span><h2>ERA CALL</h2><span class="prule"></span><span class="pmeta">streak <span id="eraStreak">0</span></span></div>
-    <p class="gamedesc">Two player-seasons glow on the map. Which one came <b>first</b>?</p>
-    <div class="atlas-wrap"><canvas role="img" aria-label="Era Call game canvas" id="eraCanvas" height="260"></canvas></div>
-    <div class="twinrow" id="eraOpts"></div>
-    <div class="scoreline" id="eraMsg"></div>
-  </div>
-</section>
 
 
 </div>
@@ -162,8 +140,7 @@
 </footer>
 <script src="assets/site-nav.js?v=1d646996" defer></script>
 <script src="assets/mtnn.js?v=81d491f8" defer></script>
-<script src="assets/live.js?v=d73e82f1" defer></script>
+<script src="assets/live.js?v=7b49f7ff" defer></script>
 <script src="assets/live-atlas.js?v=50079754" defer></script>
-<script src="assets/arcade.js?v=8e121c2a" defer></script>
 </body>
 </html>

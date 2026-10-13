@@ -36,7 +36,6 @@ async function loadGames(day){
     const live=games.find(g=>g.state==='in');
     if(live) selectGame(live.id);
     else if(games.length) selectGame(games[0].id);
-    else if(!sbExplicit) setMode('arcade');
   }catch(e){showErr('Could not load scoreboard: '+e.message);}
 }
 
@@ -688,15 +687,23 @@ loadGames();
 fetch('assets/ghost_db.json?v=77efab63').then(r=>r.json()).then(d=>{GHOST_DB=d;GV=null;if(window._lastD)renderGhosts(window._lastD);}).catch(()=>{});
 fetch('assets/player_form.json?v=25a671f3').then(r=>r.json()).then(d=>{FORM_DB=d;if(window._lastD)renderMiles(window._lastD);}).catch(()=>{});
 function setMode(m){
-  const comp=m==='companion';
-  $('companion').hidden=!comp;$('arcade').hidden=comp;
-  $('tabCompanion').classList.toggle('picked',comp);
-  $('tabArcade').classList.toggle('picked',!comp);
-  if(window.Arcade){if(!comp)window.Arcade.start();else window.Arcade.stop();}
+  // The arcade tab was retired in Wave 5 (games live on Play); the companion
+  // is the only mode now. Kept as a no-op-safe shim for any saved links.
+  $('companion').hidden=false;
+  $('tabCompanion').classList.add('picked');
 }
 $('tabCompanion').onclick=()=>setMode('companion');
-$('tabArcade').onclick=()=>setMode('arcade');
 window.CourtsideMode=setMode;
+(function(){
+  const b=document.getElementById('more-plates-btn'), w=document.getElementById('more-plates');
+  if(!b||!w) return;
+  b.onclick=()=>{
+    const open=w.hidden;
+    w.hidden=!open;
+    b.setAttribute('aria-expanded', open?'true':'false');
+    b.textContent=open?'FEWER PLATES':'MORE PLATES — momentum · atlas twins · shot chart · milestones · leaders · play by play';
+  };
+})();
 (function(){
   const b=document.getElementById('tabJam');if(!b)return;
   const paint=()=>b.classList.toggle('picked',JAM);
