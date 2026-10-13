@@ -3,17 +3,17 @@
 were removed from the sitemap in the 2026-10-12 focus cuts.)
 Run: python3 scripts/build_sitemap.py. Stdlib only."""
 import json
-import os
 from datetime import date
+from pathlib import Path
 
-ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..")
+ROOT = Path(__file__).resolve().parent.parent
 BASE = "https://hoops.dumbmodel.com"
 PAGES = ["/", "/play", "/live", "/players", "/insights", "/taxonomy",
          "/methods", "/props-lab", "/playoff-runs"]
 
 
 def main():
-    with open(os.path.join(ROOT, "assets", "insights.json"), encoding="utf-8") as f:
+    with open(ROOT / "assets" / "insights.json", encoding="utf-8") as f:
         slugs = [c["slug"] for c in json.load(f)["insights"]]
     # Insight stubs stay live for social unfurls but leave the sitemap
     # (Wave 5): the hub page is the indexable surface.
@@ -24,7 +24,7 @@ def main():
     for u in urls:
         lines.append(f"  <url><loc>{BASE}{u}</loc><lastmod>{today}</lastmod></url>")
     lines.append("</urlset>")
-    with open(os.path.join(ROOT, "sitemap.xml"), "w", encoding="utf-8") as f:
+    with open(ROOT / "sitemap.xml", "w", encoding="utf-8") as f:
         f.write("\n".join(lines) + "\n")
     print(f"wrote sitemap.xml — {len(urls)} URLs ({len(PAGES)} pages)")
 
