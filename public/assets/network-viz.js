@@ -646,24 +646,49 @@
 
     var panelX = 12;
     var panelY = 12;
-    var panelW = Math.min(w - 24, 520);
     var lineH = 14;
     var panelH = 10 + Math.max(1, axes.length) * (lineH + 12);
+    ctx.font = '700 10px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace';
+    /* Fit by measurement, not by a fixed character slice: the old slice(0, 72)
+       overflowed the panel (and the canvas on narrow stages), clipping the
+       legend text at the right edge. Size the panel to the widest measured
+       line, capped to the canvas, and ellipsis-trim any line that still
+       exceeds the cap. */
+    function fitLine(s, maxW) {
+      s = String(s || '');
+      if (ctx.measureText(s).width <= maxW) return s;
+      while (s.length && ctx.measureText(s + '…').width > maxW) s = s.slice(0, -1);
+      return s + '…';
+    }
+    var panelCap = Math.max(160, w - 24);
+    var textBudget = Math.max(48, panelCap - 98); // hi/lo start at +90, 8px right pad
+    var title = 'PCA Axes (MTNN ' + ((state.arch && state.arch.dEmb) || 64) + '-d) — Cam\'s Lab light paper';
+    var rows = axes.map(function (ax, i) {
+      return {
+        label: (ax.axis || ['X', 'Y', 'Z'][i]) + ' / ' + (ax.pc || ('PC' + (i + 1))),
+        hi: fitLine(ax.hi, textBudget),
+        lo: fitLine(ax.lo, textBudget)
+      };
+    });
+    var needW = ctx.measureText(title).width + 16;
+    rows.forEach(function (r) {
+      needW = Math.max(needW, 98 + ctx.measureText(r.hi).width, 98 + ctx.measureText(r.lo).width);
+    });
+    var panelW = Math.min(panelCap, Math.ceil(needW));
     ctx.fillStyle = CARD;
     ctx.strokeStyle = INK;
     ctx.lineWidth = 1.8;
     ctx.beginPath(); ctx.roundRect(panelX, panelY, panelW, panelH, 8); ctx.fill(); ctx.stroke();
     ctx.fillStyle = INK;
-    ctx.font = '700 10px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace';
-    ctx.fillText('PCA Axes (MTNN ' + ((state.arch && state.arch.dEmb) || 64) + '-d) — Cam\'s Lab light paper', panelX + 8, panelY + 13);
-    axes.forEach(function (ax, i) {
+    ctx.fillText(fitLine(title, panelW - 16), panelX + 8, panelY + 13);
+    rows.forEach(function (r, i) {
       var y = panelY + 30 + i * (lineH + 12);
       ctx.fillStyle = INK;
-      ctx.fillText((ax.axis || ['X', 'Y', 'Z'][i]) + ' / ' + (ax.pc || ('PC' + (i + 1))), panelX + 8, y);
+      ctx.fillText(r.label, panelX + 8, y);
       ctx.fillStyle = INK;
-      ctx.fillText((ax.hi || '').slice(0, 72), panelX + 90, y);
+      ctx.fillText(r.hi, panelX + 90, y);
       ctx.fillStyle = SUBTLE_AAA;
-      ctx.fillText((ax.lo || '').slice(0, 72), panelX + 90, y + lineH);
+      ctx.fillText(r.lo, panelX + 90, y + lineH);
     });
     ctx.restore();
   }
