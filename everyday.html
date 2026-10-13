@@ -84,7 +84,7 @@ canvas{display:block;width:100%;height:380px}
 <nav class="site-nav" data-active="/everyday" aria-label="Primary"></nav>
 
 <div class="hero-void" id="top">
-  <div class="wrap">
+  <div class="wrap" role="main">
     <div class="hero-grid">
       <div>
         <p class="kicker">Everyday · three a day · same for everyone · no account</p>
@@ -121,7 +121,7 @@ canvas{display:block;width:100%;height:380px}
       <div class="map-head"><span class="mono" style="font-weight:800">1 of 3 • past → modern twin</span><span class="pill pill-y" id="pos1">tap map or type to guess</span></div>
       <div id="q1" style="font-weight:900;font-size:16px;padding:9px 12px;min-height:26px">—</div>
       <div style="display:flex;gap:8px;padding:0 12px 10px">
-        <input id="guess1" list="guessList" autocomplete="off" placeholder="Modern twin — Curry, Wemby, Joker…" style="flex:1;font-family:var(--mono);font-size:12.5px;padding:9px 11px;border:1px solid var(--line-2);border-radius:10px">
+        <input id="guess1" aria-label="First guess — name the modern twin" list="guessList" autocomplete="off" placeholder="Modern twin — Curry, Wemby, Joker…" style="flex:1;font-family:var(--mono);font-size:12.5px;padding:9px 11px;border:1px solid var(--line-2);border-radius:10px">
         <datalist id="guessList"></datalist>
         <button class="btn btn-p" id="go1">Guess ◎</button>
       </div>
@@ -133,7 +133,7 @@ canvas{display:block;width:100%;height:380px}
       <div class="map-head"><span class="mono" style="font-weight:800">2 of 3 • locked to play</span><span class="pill" id="pos2">finish #1 first</span></div>
       <div id="q2" style="font-weight:900;font-size:16px;padding:9px 12px;min-height:26px;color:var(--fg-3)">Locked — beat #1</div>
       <div style="display:flex;gap:8px;padding:0 12px 10px">
-        <input id="guess2" list="guessList" disabled placeholder="Beat #1 to unlock…" style="flex:1;font-family:var(--mono);font-size:12.5px;padding:9px 11px;border:1px solid var(--line);border-radius:10px">
+        <input id="guess2" aria-label="Second guess — name the modern twin" list="guessList" disabled placeholder="Beat #1 to unlock…" style="flex:1;font-family:var(--mono);font-size:12.5px;padding:9px 11px;border:1px solid var(--line);border-radius:10px">
         <button class="btn" id="go2" disabled>Guess ◎</button>
       </div>
       <div id="log2" class="log" style="margin:0 12px 8px"></div>
@@ -143,7 +143,7 @@ canvas{display:block;width:100%;height:380px}
       <div class="map-head"><span class="mono" style="font-weight:800">3 of 3 • streak on line</span><span class="pill" id="pos3">last one wins streak dot</span></div>
       <div id="q3" style="font-weight:900;font-size:16px;padding:9px 12px;min-height:26px;color:var(--fg-3)">Locked — beat #2</div>
       <div style="display:flex;gap:8px;padding:0 12px 10px">
-        <input id="guess3" list="guessList" disabled placeholder="Beat #2 to unlock…" style="flex:1;font-family:var(--mono);font-size:12.5px;padding:9px 11px;border:1px solid var(--line);border-radius:10px">
+        <input id="guess3" aria-label="Third guess — name the modern twin" list="guessList" disabled placeholder="Beat #2 to unlock…" style="flex:1;font-family:var(--mono);font-size:12.5px;padding:9px 11px;border:1px solid var(--line);border-radius:10px">
         <button class="btn" id="go3" disabled>Guess ◎</button>
       </div>
       <div id="log3" class="log" style="margin:0 12px 8px"></div>

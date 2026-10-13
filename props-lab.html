@@ -79,12 +79,12 @@
     <canvas class="vh-pl__eq" id="pl-equity" width="860" height="300"></canvas>
     <p class="vh-pl__sub">Edge rule by month</p>
     <div style="overflow-x:auto"><table class="vh-pl__table" id="pl-monthly">
-      <thead><tr><th>Month</th><th class="num">Plays</th><th class="num">W</th><th class="num">ROI</th><th class="num">Cum. profit</th></tr></thead>
+      <thead><tr><th scope="col">Month</th><th scope="col" class="num">Plays</th><th scope="col" class="num">W</th><th scope="col" class="num">ROI</th><th scope="col" class="num">Cum. profit</th></tr></thead>
       <tbody></tbody>
     </table></div>
     <p class="vh-pl__sub">Model vs line, mean absolute error by stat</p>
     <div style="overflow-x:auto"><table class="vh-pl__table" id="pl-perstat">
-      <thead><tr><th>Stat</th><th class="num">Lines</th><th class="num">Model MAE</th><th class="num">Line MAE</th></tr></thead>
+      <thead><tr><th scope="col">Stat</th><th scope="col" class="num">Lines</th><th scope="col" class="num">Model MAE</th><th scope="col" class="num">Line MAE</th></tr></thead>
       <tbody></tbody>
     </table></div>
     <p class="vh-pl__foot" id="pl-backtest-foot"></p>
@@ -192,12 +192,12 @@
       return '<tr><td>' + p.game_date.slice(5) + '</td><td>' + p.player + '</td><td>' + p.stat + ' ' + pill + '</td><td class="num">' + p.line + '</td><td class="num">' + p.proj + '</td>' + res + '</tr>';
     }
     if (st.open_picks && st.open_picks.length) {
-      var oh = '<div style="overflow-x:auto"><table class="vh-pl__table"><thead><tr><th>Date</th><th>Player</th><th>Market</th><th class="num">Line</th><th class="num">Model</th></tr></thead><tbody>';
+      var oh = '<div style="overflow-x:auto"><table class="vh-pl__table"><thead><tr><th scope="col">Date</th><th scope="col">Player</th><th scope="col">Market</th><th scope="col" class="num">Line</th><th scope="col" class="num">Model</th></tr></thead><tbody>';
       st.open_picks.forEach(function(p){ oh += pickRow(p, false); });
       $('pl-open').innerHTML = oh + '</tbody></table></div>';
     }
     if (st.recent_graded && st.recent_graded.length) {
-      var rh = '<div style="overflow-x:auto"><table class="vh-pl__table"><thead><tr><th>Date</th><th>Player</th><th>Market</th><th class="num">Line</th><th class="num">Model</th><th>Result</th><th class="num">Actual</th><th class="num">P/L</th></tr></thead><tbody>';
+      var rh = '<div style="overflow-x:auto"><table class="vh-pl__table"><thead><tr><th scope="col">Date</th><th scope="col">Player</th><th scope="col">Market</th><th scope="col" class="num">Line</th><th scope="col" class="num">Model</th><th scope="col">Result</th><th scope="col" class="num">Actual</th><th scope="col" class="num">P/L</th></tr></thead><tbody>';
       st.recent_graded.slice().reverse().forEach(function(p){ rh += pickRow(p, true); });
       $('pl-recent').innerHTML = rh + '</tbody></table></div>';
     }

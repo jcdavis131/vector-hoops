@@ -4,7 +4,7 @@
 <link rel="manifest" href="/manifest.json"/>
 <link rel="stylesheet" href="assets/shell.css?v=6eea16fb"/><link rel="stylesheet" href="assets/responsive.css?v=cd95e82c"/><link rel="stylesheet" href="assets/final-qa.css?v=b285e8b8"/><link rel="stylesheet" href="assets/unified.css?v=ac218dce"/><link rel="stylesheet" href="assets/motion.css?v=cf251ced"/>
 <style>
-:root{--paper:#FFFEF7;--ink:#1A150F;--blue:#0072B2;--verm:#D55E00;--yellow:#F0E442;--green:#009E73;--radius:14px;--shadow:4px 4px 0 var(--ink);--mono:ui-monospace,monospace;--sans:ui-sans-serif,system-ui;}
+:root{--paper:#FFFEF7;--ink:#1A150F;--blue:#0072B2;--verm:#D55E00;--yellow:#F0E442;--green:#00775A;--radius:14px;--shadow:4px 4px 0 var(--ink);--mono:ui-monospace,monospace;--sans:ui-sans-serif,system-ui;}
 *{box-sizing:border-box}html,body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:18px;line-height:1.65;overflow-x:clip}
 button,.input{min-height:44px}
 .card{background:var(--surface);border:1px solid var(--line-2);border-radius:14px;box-shadow:var(--shadow);padding:14px 16px}
@@ -277,7 +277,7 @@ button,.input{min-height:44px}
 
   <div class="card" id="daily-court" style="display:none;">
     <div class="court-top">
-      <div><div class="small-mono">Daily Court — <span id="court-day-label">Today</span> • same for everyone • refresh-proof</div><h3 class="hd" style="margin:4px 0 0;font-size:20px"><span id="court-solved">0</span>/5 solved • <span id="court-guesses">0</span> guesses</h3></div>
+      <div><div class="small-mono">Daily Court — <span id="court-day-label">Today</span> • same for everyone • refresh-proof</div><h2 class="hd" style="margin:4px 0 0;font-size:20px"><span id="court-solved">0</span>/5 solved • <span id="court-guesses">0</span> guesses</h2></div>
       <div style="display:flex;gap:6px;flex-wrap:wrap"><span class="pill" id="court-ip-badge" aria-hidden="true">Same for everyone</span><button class="pill" id="btn-copy-court" type="button">📋 Copy court</button></div>
     </div>
     <div class="court-grid" id="court-grid"></div>
@@ -335,7 +335,7 @@ button,.input{min-height:44px}
 
 <div id="onboarding-backdrop" class="vh-sheet-backdrop" hidden>
   <div class="vh-sheet" role="dialog" aria-modal="true"><div class="vh-sheet__handle"></div>
-    <div class="vh-sheet__head"><h2 class="vh-sheet__title">Daily Court — 5× + Pack Battle</h2><button class="vh-sheet__close" id="btn-onboard-close" type="button">✕</button></div>
+    <div class="vh-sheet__head"><h2 class="vh-sheet__title">Daily Court — 5× + Pack Battle</h2><button class="vh-sheet__close" id="btn-onboard-close" type="button" aria-label="Close">✕</button></div>
     <div class="small-mono" style="margin-bottom:8px;color:var(--fg-2)">5 puzzles daily + viral packs</div>
     <div class="onboard-steps">
       <div class="onboard-step"><span class="onboard-step__num">1</span><div><b>Daily Court: 5 fixed past All-Stars per day, same for everyone</b><p>Deterministic from date: hash(date+slot). Refresh gives same 5. Guesses saved per slot in localStorage. Can't be rerolled.</p></div></div>
