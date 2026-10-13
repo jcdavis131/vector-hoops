@@ -110,10 +110,11 @@
   function hashStr(s){
     let h=0; for(let i=0;i<s.length;i++){ h=(h*31 + s.charCodeAt(i))>>>0; } return h;
   }
-  function buildDailyPool(dayKey, past){
+  function buildDailyPool(dayKey, past, count, seedTag){
+    count = count || 5; seedTag = seedTag || 'daily-court-v2';
     const pool=[]; const usedNames=new Set();
-    for(let slot=0; slot<5; slot++){
-      let h = hashStr(dayKey + '|daily-court-v2|' + slot);
+    for(let slot=0; slot<count; slot++){
+      let h = hashStr(dayKey + '|' + seedTag + '|' + slot);
       let idx = h % past.length;
       let guard=0;
       while((usedNames.has(past[idx].n) || pool.some(p=>p.i===past[idx].i)) && guard<120){
@@ -429,6 +430,7 @@
   }
 
   // DAILY COURT helpers
+  function slotKey(dayKey, i){ return (state.isTriple ? 'vh.triple.v1.' : 'vh.daily.v2.') + dayKey + '.slot' + i; }
   function getDailyState(){
     if(!state.dailyPool||!state.dailyPool.length) return {isDailyCourt:false};
     const dayKey=state.dayKey;
@@ -436,7 +438,7 @@
     let solved=0, totalGuesses=0, slotResults=[];
     for(let i=0;i<pool.length;i++){
       try{
-        const raw=localStorage.getItem('vh.daily.v2.'+dayKey+'.slot'+i);
+        const raw=localStorage.getItem(slotKey(dayKey, i));
         if(raw){
           const j=JSON.parse(raw);
           const won = (j.guesses||[]).some(g=>g.rank===0);
@@ -486,7 +488,7 @@
   let state={
     searchLite:null, honors:null, pastPool:[], modernPool:[], modernByName:new Map(), modernByLower:new Map(), modernListSorted:[], target:null, targetIdx:null, closestModern:null, guesses:[],
     dayKey:null, todayKey:null, urlDay:null, urlRandomId:null, modeParam:null,
-    isRandom:false,isChallenge:false,isDaily:false,isPack:false,
+    isRandom:false,isChallenge:false,isDaily:false,isPack:false,isTriple:false,
     packEntries:[],packIds:[],packSize:0,packIndex:0,packResults:[],packCode:'',isPackComplete:false,packChallengerScores:null,
     dailyPool:[],dailySlot:0,dailyTotal:5,dailyIsPractice:false,dailyAssignedSlot:null,ip:null,
     puzzleNum:1,
@@ -538,6 +540,7 @@
     const today=new Date(); const todayKey=today.toISOString().slice(0,10); const dayKey=urlDay||todayKey;
     state.dayKey=dayKey; state.todayKey=todayKey; state.urlDay=urlDay; state.urlRandomId=urlRandomId; state.modeParam=modeParam;
     state.isRandom=!!(urlRandomId!=null || (modeParam && modeParam.toLowerCase()==='random'));
+    state.isTriple=!!(modeParam && modeParam.toLowerCase()==='triple') && !state.isRandom;
     state.isChallenge=!!urlDay && urlDay!==todayKey;
     state.isDaily=!state.isRandom && !state.isChallenge;
     state.isPack=false;
@@ -596,7 +599,7 @@
     }
 
     // daily court pool
-    const dailyPool=buildDailyPool(dayKey, past);
+    const dailyPool=state.isTriple ? buildDailyPool(dayKey, past, 3, 'triple-v1') : buildDailyPool(dayKey, past);
     state.dailyPool=dailyPool; state.dailyTotal=dailyPool.length;
 
     let assignedSlot=null;
@@ -611,8 +614,8 @@
     else {
       let firstUnsolved=0; let found=false;
       try{
-        for(let i=0;i<5;i++){
-          const raw=localStorage.getItem('vh.daily.v2.'+dayKey+'.slot'+i);
+        for(let i=0;i<dailyPool.length;i++){
+          const raw=localStorage.getItem(slotKey(dayKey, i));
           if(!raw){ firstUnsolved=i; found=true; break; }
           const j=JSON.parse(raw); const won=(j.guesses||[]).some(g=>g.rank===0); const over=(j.guesses||[]).length>=6;
           if(!won && !over){ firstUnsolved=i; found=true; break; }
@@ -622,7 +625,7 @@
       effectiveSlot=firstUnsolved;
     }
 
-    fetchIp().then(ip=>{
+    if(!state.isTriple) fetchIp().then(ip=>{
       if(!ip) return;
       state.ip=ip;
       const ipSlot=getDailySlotFromIp(ip, dayKey);
@@ -635,7 +638,7 @@
     if(assignedSlot!=null) state.dailyAssignedSlot=assignedSlot;
 
     const dayObj=new Date(dayKey+'T12:00:00Z'); const baseNum=Math.floor((dayObj - new Date('2026-07-01T00:00:00Z'))/86400000);
-    state.puzzleNum = baseNum*5 + effectiveSlot +1;
+    state.puzzleNum = state.isTriple ? baseNum*3 + effectiveSlot +1 : baseNum*5 + effectiveSlot +1;
 
     let targetPicked=null;
     if(urlRandomId!=null){
@@ -758,7 +761,7 @@
   }
 
   const STREAK_KEY='vh.streak.v2';
-  function loadStreakRaw(){ try{ const raw=localStorage.getItem(STREAK_KEY); if(!raw) return {streak:0,lastPlayedDay:null,best:0,lastWin:false}; const j=JSON.parse(raw); return {streak:j.streak||0,lastPlayedDay:j.lastPlayedDay||null,best:j.best||j.streak||0,lastWin:!!j.lastWin}; }catch{ return {streak:0,lastPlayedDay:null,best:0,lastWin:false}; } }
+  function loadStreakRaw(){ try{ const raw=localStorage.getItem(STREAK_KEY); if(!raw){ const legacy=localStorage.getItem('vh_weekStreak'); if(legacy){ const w=JSON.parse(legacy); const seeded={streak:w.streak||0,lastPlayedDay:w.last||null,best:w.streak||0,lastWin:true}; saveStreakRaw(seeded); try{ localStorage.setItem('vh.streak', JSON.stringify({streak:seeded.streak})); }catch{} return seeded; } return {streak:0,lastPlayedDay:null,best:0,lastWin:false}; } const j=JSON.parse(raw); return {streak:j.streak||0,lastPlayedDay:j.lastPlayedDay||null,best:j.best||j.streak||0,lastWin:!!j.lastWin}; }catch{ return {streak:0,lastPlayedDay:null,best:0,lastWin:false}; } }
   function saveStreakRaw(obj){ try{ localStorage.setItem(STREAK_KEY, JSON.stringify(obj)); }catch{} }
   function getStreak(){ return loadStreakRaw(); }
   function onDailyWin(dayKey){

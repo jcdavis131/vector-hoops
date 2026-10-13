@@ -283,7 +283,7 @@
     document.addEventListener('click',function(e){ if(!ul.contains(e.target)&&e.target!==input) ul.style.display='none'; });
   }
   function dailyKey(){ try{ return VHPastModern.state().dayKey; }catch{ return new Date().toISOString().slice(0,10); } }
-  function dailySlotKey(dayKey,slot){ return `vh.daily.v2.${dayKey}.slot${slot}`; }
+  function dailySlotKey(dayKey,slot){ try{ if(VHPastModern.state().isTriple) return `vh.triple.v1.${dayKey}.slot${slot}`; }catch{} return `vh.daily.v2.${dayKey}.slot${slot}`; }
   function loadGuesses(){
     try{
       const st=VHPastModern.state();
@@ -370,7 +370,7 @@
     const dayKey=st.dayKey;
     let totalSolved=0, totalGuesses=0;
     const slotData=[];
-    for(let i=0;i<5;i++){
+    for(let i=0;i<st.dailyPool.length;i++){
       try{
         const raw=localStorage.getItem(dailySlotKey(dayKey,i));
         if(raw){ const j=JSON.parse(raw); const won=(j.guesses||[]).some(g=>g.rank===0); const cnt=(j.guesses||[]).length; totalGuesses+=cnt; if(won) totalSolved++; slotData[i]={won, cnt, guesses:j.guesses||[]}; }
@@ -378,6 +378,9 @@
       }catch{ slotData[i]=null; }
     }
     if(solvedEl) solvedEl.textContent=totalSolved;
+    const totalEl=$('#court-total'); if(totalEl) totalEl.textContent='/'+st.dailyPool.length;
+    const modeNameEl=$('#court-mode-name'); if(modeNameEl) modeNameEl.textContent=st.isTriple?'Daily Triple':'Daily Court';
+    const r5El=$('#reward-5'); if(r5El) r5El.style.display=st.isTriple?'none':'';
     if(guessesEl) guessesEl.textContent=totalGuesses;
     const r1=$('#reward-1'), r3=$('#reward-3'), r5=$('#reward-5');
     if(r1){ r1.classList.toggle('is-unlocked', totalSolved>=1); }
@@ -903,7 +906,7 @@
           try{
             const ds=VHPastModern.getDailyState();
             const slots=ds.slotResults||[];
-            const allResolved=slots.length===5 && slots.every(sr=>sr&&(((sr.guesses||[]).some(g=>g.rank===0))||((sr.guesses||[]).length>=6)));
+            const allResolved=slots.length===(st.dailyTotal||5) && slots.every(sr=>sr&&(((sr.guesses||[]).some(g=>g.rank===0))||((sr.guesses||[]).length>=6)));
             if(allResolved && (ds.solved||0)===0){
               VHPastModern.onDailyLoss(st.dayKey);
               const pill0=$('#streak-pill'); if(pill0) pill0.textContent='streak '+v2Streak();
@@ -914,8 +917,8 @@
       }
       const nextSlotBtn=document.getElementById('btn-next-slot');
       if(nextSlotBtn){ nextSlotBtn.addEventListener('click',()=>{
-        const st=VHPastModern.state(); let next=(st.dailySlot+1)%5;
-        for(let i=0;i<5;i++){ const cand=(st.dailySlot+1+i)%5; try{ const raw=localStorage.getItem(dailySlotKey(st.dayKey,cand)); if(!raw){ next=cand; break; } const j=JSON.parse(raw); const won=(j.guesses||[]).some(g=>g.rank===0); const over=(j.guesses||[]).length>=6; if(!won&&!over){ next=cand; break; } }catch{} }
+        const st=VHPastModern.state(); const courtN=st.dailyTotal||5; let next=(st.dailySlot+1)%courtN;
+        for(let i=0;i<courtN;i++){ const cand=(st.dailySlot+1+i)%courtN; try{ const raw=localStorage.getItem(dailySlotKey(st.dayKey,cand)); if(!raw){ next=cand; break; } const j=JSON.parse(raw); const won=(j.guesses||[]).some(g=>g.rank===0); const over=(j.guesses||[]).length>=6; if(!won&&!over){ next=cand; break; } }catch{} }
         const url=new URL(location.href); url.searchParams.set('slot', next); url.searchParams.delete('pack'); url.searchParams.delete('s'); location.href=url.toString();
       }); }
       const viewCourtBtn=document.getElementById('btn-view-court'); if(viewCourtBtn){ viewCourtBtn.addEventListener('click',()=>{ 
@@ -1208,7 +1211,8 @@
     try{ initSoundToggle(); }catch(e){ console.warn('sound toggle fail', e); }
 
     const isPack=!!st.isPack;
-    let mode='daily'; if(isPack) mode='pack'; else if(st.isRandom) mode='random';
+    let mode='daily'; if(isPack) mode='pack'; else if(st.isRandom) mode='random'; else if(st.isTriple) mode='triple';
+    if(mode==='triple'){ const md=$('#mode-desc'); if(md) md.textContent='Daily Triple: 3 fixed puzzles per day — the lighter court (the retired Everyday game, folded in). It shares the Daily Court streak: solve 1 to keep your streak alive.'; }
     document.querySelectorAll('.mode-tab').forEach(btn=>{ const m=btn.dataset.mode; const isPackTab=m.startsWith('pack'); if(isPack){ if(isPackTab && parseInt(btn.dataset.packN||'3',10)===st.packSize) btn.classList.add('is-active'); else if(!isPackTab) btn.classList.remove('is-active'); } else { if(m===mode) btn.classList.add('is-active'); else btn.classList.remove('is-active'); if(isPackTab) btn.classList.remove('is-active'); } });
     document.querySelectorAll('.mode-tab').forEach(btn=>{
       btn.addEventListener('click',()=>{
@@ -1216,6 +1220,7 @@
         if(m.startsWith('pack')){ const n=parseInt(btn.dataset.packN||'3',10); const entries=VHPastModern.generateRandomPack(n); if(!entries.length){ alert('Loading… try again in a sec'); return; } const ids=entries.map(e=>e.i); location.href=VHPastModern.packShareUrl(ids); return; }
         if(m==='random'){ const p=VHPastModern.pickRandomPast(); location.href='/play?mode=random&r='+p.i; return; }
         if(m==='daily'){ location.href='/play'; return; }
+        if(m==='triple'){ location.href='/play?mode=triple'; return; }
       });
     });
 
@@ -1324,7 +1329,7 @@
       const won=G.guesses.some(g=>g.rank===0);
       if(s.isDaily){
         const dailyState=VHPastModern.getDailyState(); const lines=s.dailyPool.map((p,i)=>{ const sd=dailyState.slotResults[i]; const status=sd? (sd.won? `✅ ${sd.cnt}/6` : `❌ ${sd.cnt}/6`): '⬜'; return `${status} Slot ${i+1}: ${p.n}`; }).join('\n');
-        const text=`Daily Court ${s.dayKey} — ${dailyState.solved}/5 in ${dailyState.totalGuesses} guesses\n${lines}\n${location.origin}/play?day=${s.dayKey}`; navigator.clipboard.writeText(text).then(()=>{ const b=$('#share-text-btn'); b.textContent='Copied'; setTimeout(()=>b.textContent='Copy Grid',1200); });
+        const text=`${s.isTriple?'Daily Triple':'Daily Court'} ${s.dayKey} — ${dailyState.solved}/${dailyState.total} in ${dailyState.totalGuesses} guesses\n${lines}\n${location.origin}/play?day=${s.dayKey}${s.isTriple?'&mode=triple':''}`; navigator.clipboard.writeText(text).then(()=>{ const b=$('#share-text-btn'); b.textContent='Copied'; setTimeout(()=>b.textContent='Copy Grid',1200); });
         return;
       }
       const grid=G.guesses.map(g=> g.rank===0?'🟩': g.rank<=3?'🟨':'⬜').join(''); const lines=G.guesses.map((g,i)=>`${i+1}. ${g.name} ${(g.sim*100).toFixed(0)}% #${g.rank+1}`).join('\n'); const text=`Vector Hoops P#${s.puzzleNum} ${s.dayKey} ${won?G.guesses.length+'/6':'X/6'} ${grid}\nPast ${s.target.n} → ${won?G.guesses.slice(-1)[0].name:'?'}\n${lines}\n${location.origin}/play?day=${s.dayKey}&slot=${s.dailySlot}`; navigator.clipboard.writeText(text).then(()=>{ const b=$('#share-text-btn'); b.textContent='Copied'; setTimeout(()=>b.textContent='Copy Grid',1200); });

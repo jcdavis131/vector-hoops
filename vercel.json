@@ -285,23 +285,11 @@
     },
     {
       "destination": "/model.html",
-      "source": "/model"
-    },
-    {
-      "destination": "/trends.html",
-      "source": "/trends"
-    },
-    {
-      "destination": "/model.html",
       "source": "/lab"
     },
     {
       "destination": "/methods.html",
       "source": "/methods"
-    },
-    {
-      "destination": "/teams.html",
-      "source": "/teams"
     },
     {
       "destination": "/insights.html",
@@ -314,10 +302,6 @@
     {
       "destination": "/props-lab.html",
       "source": "/props-lab"
-    },
-    {
-      "destination": "/everyday.html",
-      "source": "/everyday"
     },
     {
       "destination": "/offline.html",
@@ -356,7 +340,27 @@
     },
     {
       "source": "/models",
-      "destination": "/model",
+      "destination": "/methods",
+      "permanent": true
+    },
+    {
+      "source": "/everyday",
+      "destination": "/play",
+      "permanent": true
+    },
+    {
+      "source": "/teams",
+      "destination": "/#atlas",
+      "permanent": true
+    },
+    {
+      "source": "/trends",
+      "destination": "/methods#drift",
+      "permanent": true
+    },
+    {
+      "source": "/model",
+      "destination": "/methods",
       "permanent": true
     }
   ]

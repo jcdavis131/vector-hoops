@@ -20,10 +20,7 @@ PAGES = [
     "index.html",
     "play.html",
     "players.html",
-    "model.html",
     "methods.html",
-    "trends.html",
-    "everyday.html",
     "offline.html",
     "404.html",
 ]

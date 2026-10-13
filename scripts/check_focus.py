@@ -64,7 +64,7 @@ WS, BROWSERS = _cv.WS, _cv.BROWSERS
 # mistake there, so it is not repeated here.
 PAGES = [
     "/", "/owner.html", "/brand.html", "/dfs.html", "/player.html", "/player-fit.html",
-    "/teams.html", "/trends.html", "/model.html", "/play.html", "/players.html",
+    "/play.html", "/players.html",
     "/player-cards.html", "/dictionary.html", "/methods.html", "/inventory.html",
     "/offline.html", "/player-animations.html",
 ]
