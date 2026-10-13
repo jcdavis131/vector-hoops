@@ -2,20 +2,21 @@
 """Gate: assets/site_facts.json must equal a fresh compute from the served
 data files. Fails (exit 1) when data moved and the sheet was not rebuilt —
 the same contract as stamp_assets.py --check. Stdlib only."""
-import json
-import os
-import sys
 
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import json
+import sys
+from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
 from build_site_facts import compute_facts, A
 
 
 def main():
     path = A("site_facts.json")
-    if not os.path.exists(path):
+    if not path.exists():
         print("FAIL assets/site_facts.json missing — run scripts/build_site_facts.py")
         return 1
-    with open(path, encoding="utf-8") as f:
+    with path.open(encoding="utf-8") as f:
         current = json.load(f)
     fresh = compute_facts()
     if current.get("facts") == fresh["facts"]:
