@@ -4,7 +4,7 @@
 <link rel="manifest" href="/manifest.json">
 <title>Live — Vector Hoops</title>
 <meta name="description" content="Courtside Live: the second-screen companion for NBA games. Win probability, atlas twins, ghost watch, shot charts — and an arcade for between games."/>
-<link rel="stylesheet" href="assets/shell.css?v=6eea16fb"/><link rel="stylesheet" href="assets/responsive.css?v=cd95e82c"/><link rel="stylesheet" href="assets/final-qa.css?v=b285e8b8"/><link rel="stylesheet" href="assets/unified.css?v=ac218dce"/><link rel="stylesheet" href="assets/motion.css?v=cf251ced"/><link rel="stylesheet" href="assets/live.css?v=68899706"/>
+<link rel="stylesheet" href="assets/shell.css?v=6eea16fb"/><link rel="stylesheet" href="assets/responsive.css?v=cd95e82c"/><link rel="stylesheet" href="assets/final-qa.css?v=b285e8b8"/><link rel="stylesheet" href="assets/unified.css?v=5aac4897"/><link rel="stylesheet" href="assets/motion.css?v=cf251ced"/><link rel="stylesheet" href="assets/live.css?v=68899706"/>
 <meta name="color-scheme" content="dark light"/>
 <meta name="theme-color" content="#F4EFE2"/>
 <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml"/>
@@ -19,6 +19,8 @@
 <meta name="twitter:card" content="summary_large_image"/>
 </head>
 <body>
+<a class="skip-link" href="#main">Skip to content</a>
+
 <nav class="site-nav" data-active="/live" aria-label="Vector Hoops site"></nav>
 <div class="live-root">
 
@@ -40,7 +42,8 @@
 </div>
 <div id="games"><span style="font-size:13px;color:#6b675c">Loading tonight's games…</span></div>
 <button id="liveBtn" class="livebtn"><span class="dot"></span>JUMP TO LIVE<span id="liveNew"></span></button>
-<main id="main" style="display:none">
+<main id="main" tabindex="-1">
+  <p id="live-loading" class="caption" role="status" style="padding:12px 4px">Loading today&rsquo;s games&hellip;</p>
   <div class="stickybar">
   <div class="scorebug">
     <div class="team"><div class="abbr" id="aAbbr">–</div><div class="rec" id="aRec"></div></div>
@@ -60,14 +63,14 @@
   <div class="card">
     <div class="plate"><span class="pno">PLATE 01</span><h2>WIN PROBABILITY</h2><span class="prule"></span><span class="pmeta">live model</span></div>
     <div class="wpnum"><div class="big" id="wpBig">–</div><div class="lbl" id="wpLbl">live, via ESPN model</div></div>
-    <canvas id="wpchart" width="600" height="170"></canvas>
+    <canvas role="img" aria-label="Win probability chart — live win probability for the selected game" id="wpchart" width="600" height="170"></canvas>
     <div class="legend"><span id="lgA">Away</span><span id="lgH">Home</span></div>
   </div>
 
   <div class="card">
     <div class="plate"><span class="pno">PLATE 02</span><h2>MOMENTUM</h2><span class="prule"></span><span class="pmeta">lead trace</span></div>
     <div class="wpnum"><div class="big num" id="diffBig">–</div><div class="lbl" id="diffLbl">current margin</div></div>
-    <canvas id="momchart" class="chart" width="600" height="150"></canvas>
+    <canvas role="img" aria-label="Momentum chart — lead trace for the selected game" id="momchart" class="chart" width="600" height="150"></canvas>
     <div class="legend"><span>tip →</span><span>Q1&nbsp;&nbsp;Q2&nbsp;&nbsp;Q3&nbsp;&nbsp;Q4</span><span>→ now</span></div>
     <div class="qbars" id="qbars"></div>
   </div>
@@ -83,7 +86,7 @@
     <div class="shot-toggle" id="atlasModes" role="tablist" aria-label="Atlas views">
       <button data-m="twins" class="picked">TWINS</button><button data-m="matchup">MATCHUP</button><button data-m="trail">TRAIL</button>
     </div>
-    <div class="atlas-wrap"><canvas id="liveAtlas" height="330"></canvas><div class="atlas-hint" id="atlasHint">loading the map&hellip;</div></div>
+    <div class="atlas-wrap"><canvas role="img" aria-label="Atlas — players from both teams plotted on the style map" id="liveAtlas" height="330"></canvas><div class="atlas-hint" id="atlasHint">loading the map&hellip;</div></div>
     <div class="legend"><span>&larr; bigs / paint</span><span id="atlasModeLbl">tap a player for their style-twins</span><span>shooters / perimeter &rarr;</span></div>
     <div class="twinrow" id="twinList"></div>
   </div>
@@ -129,7 +132,7 @@
   <div class="card">
     <div class="plate"><span class="pno">GAME 01</span><h2>TWIN SNAP</h2><span class="prule"></span><span class="pmeta">streak <span id="snapStreak">0</span></span> <button class="twin" id="snapDaily">🎯 Daily</button></div>
     <p class="gamedesc">A mystery player is pulsing on the map. Name their <b>#1 style-twin</b> — the closest player-season in the 64-d embedding.</p>
-    <div class="atlas-wrap"><canvas id="snapCanvas" height="260"></canvas></div>
+    <div class="atlas-wrap"><canvas role="img" aria-label="Twin Snap game canvas" id="snapCanvas" height="260"></canvas></div>
     <div class="twinrow" id="snapOpts"></div>
     <div class="scoreline" id="snapMsg"></div>
   </div>
@@ -137,7 +140,7 @@
   <div class="card">
     <div class="plate"><span class="pno">GAME 02</span><h2>TRAIL BLAZER</h2><span class="prule"></span><span class="pmeta">streak <span id="trailStreak">0</span></span></div>
     <p class="gamedesc">Watch a career trail draw itself across thirty seasons of style. Whose journey is it?</p>
-    <div class="atlas-wrap"><canvas id="trailCanvas" height="260"></canvas></div>
+    <div class="atlas-wrap"><canvas role="img" aria-label="Trail Blazer game canvas" id="trailCanvas" height="260"></canvas></div>
     <div class="twinrow" id="trailOpts"></div>
     <div class="scoreline" id="trailMsg"></div>
   </div>
@@ -145,7 +148,7 @@
   <div class="card">
     <div class="plate"><span class="pno">GAME 03</span><h2>ERA CALL</h2><span class="prule"></span><span class="pmeta">streak <span id="eraStreak">0</span></span></div>
     <p class="gamedesc">Two player-seasons glow on the map. Which one came <b>first</b>?</p>
-    <div class="atlas-wrap"><canvas id="eraCanvas" height="260"></canvas></div>
+    <div class="atlas-wrap"><canvas role="img" aria-label="Era Call game canvas" id="eraCanvas" height="260"></canvas></div>
     <div class="twinrow" id="eraOpts"></div>
     <div class="scoreline" id="eraMsg"></div>
   </div>
@@ -159,7 +162,7 @@
 </footer>
 <script src="assets/site-nav.js?v=660eda9d" defer></script>
 <script src="assets/mtnn.js?v=81d491f8" defer></script>
-<script src="assets/live.js?v=2bf7e2b3" defer></script>
+<script src="assets/live.js?v=d73e82f1" defer></script>
 <script src="assets/live-atlas.js?v=50079754" defer></script>
 <script src="assets/arcade.js?v=8e121c2a" defer></script>
 </body>

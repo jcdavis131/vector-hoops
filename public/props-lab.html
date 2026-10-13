@@ -7,7 +7,7 @@
 <link rel="stylesheet" href="assets/shell.css?v=6eea16fb"/>
 <link rel="stylesheet" href="assets/responsive.css?v=cd95e82c"/>
 <link rel="stylesheet" href="assets/final-qa.css?v=b285e8b8"/>
-<link rel="stylesheet" href="assets/unified.css?v=ac218dce"/>
+<link rel="stylesheet" href="assets/unified.css?v=5aac4897"/>
 <link rel="stylesheet" href="assets/motion.css?v=cf251ced"/>
 <meta name="color-scheme" content="light dark"/>
 <meta name="theme-color" content="#0F1114" media="(prefers-color-scheme: dark)"/>
@@ -24,7 +24,7 @@
 <meta property="og:title" content="Props Lab — Vector Hoops"/>
 <meta property="og:description" content="A game-log model paper-traded against PrizePicks lines: last season's honest backtest, live paper picks from opening night."/>
 <link rel="stylesheet" href="assets/fonts.css?v=8f376b2a"/>
-<link rel="stylesheet" href="/assets/atlas.css?v=3a61798f"/>
+<link rel="stylesheet" href="/assets/atlas.css?v=d99a752b"/>
 <style>
 .vh-pl__wrap{max-width:920px;margin:0 auto;padding:0 var(--s-3) var(--s-6)}
 .vh-pl__kicker{font:700 12px/1.4 var(--font-sans);letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin:0 0 8px}
@@ -62,8 +62,10 @@
 @media(max-width:560px){.vh-pl__table{font-size:12.5px}.vh-pl__table th:nth-child(n+4),.vh-pl__table td:nth-child(n+4){display:none}}
 </style>
 </head><body>
+<a class="skip-link" href="#main">Skip to content</a>
+
 <nav class="site-nav" data-active="/props-lab" aria-label="Vector Hoops site"></nav>
-<main class="vh-pl__wrap">
+<main id="main" tabindex="-1" class="vh-pl__wrap">
   <p class="vh-pl__kicker">Paper trading · game-log form model</p>
   <h1 class="vh-pl__title">Props Lab</h1>
   <p class="vh-pl__lede">A model built only from trailing game logs — recent form, rest, home court — paper-traded against PrizePicks morning lines. No real wagers, ever. Below: last season's full walk-forward backtest, then the live paper ledger once the regular season starts.</p>
@@ -77,7 +79,7 @@
     <p class="vh-pl__lede" id="pl-method"></p>
     <div class="vh-pl__grid" id="pl-backtest-stats"></div>
     <p class="vh-pl__sub">Edge-rule equity curve (locked rule, eval half)</p>
-    <canvas class="vh-pl__eq" id="pl-equity" width="860" height="300"></canvas>
+    <canvas role="img" aria-label="Equity curve — paper-trading balance across graded picks" class="vh-pl__eq" id="pl-equity" width="860" height="300"></canvas>
     <p class="vh-pl__sub">Edge rule by month</p>
     <div style="overflow-x:auto"><table class="vh-pl__table" id="pl-monthly">
       <thead><tr><th scope="col">Month</th><th scope="col" class="num">Plays</th><th scope="col" class="num">W</th><th scope="col" class="num">ROI</th><th scope="col" class="num">Cum. profit</th></tr></thead>

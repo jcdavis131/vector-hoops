@@ -76,7 +76,7 @@ canvas{display:block;width:100%;height:380px}
 <meta name="twitter:description" content="Three past-to-modern twins a day, the same for everyone. Keep the streak alive; no account needed."/>
 <meta name="twitter:image" content="https://hoops.dumbmodel.com/assets/og-1200x630.png"/>
 <link rel="stylesheet" href="assets/fonts.css?v=8f376b2a"/>
-<link rel="stylesheet" href="/assets/atlas.css?v=3a61798f"/>
+<link rel="stylesheet" href="/assets/atlas.css?v=d99a752b"/>
 </head>
 <body>
 <a class="skip-link" href="#top">Skip to content</a>
@@ -474,7 +474,7 @@ function renderCalendar(){
 }
 function everydayUnavailable(){
   let h=document.querySelector('.hero-void .wrap'); if(!h) return;
-  h.innerHTML='<header class="title-card" role="status"><div class="title-card__eyebrow">Everyday · unavailable</div><h1 class="title-card__title">Today’s three aren’t available right now</h1><p class="title-card__lede">The season pool for this mode didn’t load, and we would rather show nothing than invent a puzzle. The Daily Court runs on the full data set.</p><div class="title-card__actions"><a class="btn btn-primary btn-xl" href="/play">Play the Daily Court</a><a class="btn btn-xl" href="/">Explore the atlas</a></div></header>';
+  h.innerHTML='<header class="title-card" role="status"><div class="title-card__eyebrow">Everyday · unavailable</div><h2 class="title-card__title">Today’s three aren’t available right now</h2><p class="title-card__lede">The season pool for this mode didn’t load, and we would rather show nothing than invent a puzzle. The Daily Court runs on the full data set.</p><div class="title-card__actions"><a class="btn btn-primary btn-xl" href="/play">Play the Daily Court</a><a class="btn btn-xl" href="/">Explore the atlas</a></div></header>';
   var hv=document.querySelector('.hero-void'); if(hv){ hv.style.background='var(--bg)'; hv.style.minHeight='calc(100vh - 260px)'; hv.style.display='grid'; hv.style.placeItems='center'; hv.style.borderBottom='0'; }
   document.querySelectorAll('.hero-void ~ *:not(footer):not(script)').forEach(function(el){ if(el.tagName!=='FOOTER') el.hidden=true; });
 }

@@ -9,7 +9,7 @@
 <link rel="stylesheet" href="assets/shell.css?v=6eea16fb">
 <link rel="stylesheet" href="assets/responsive.css?v=cd95e82c">
 <link rel="stylesheet" href="assets/final-qa.css?v=b285e8b8">
-<link rel="stylesheet" href="assets/unified.css?v=ac218dce">
+<link rel="stylesheet" href="assets/unified.css?v=5aac4897">
 <link rel="stylesheet" href="assets/motion.css?v=cf251ced">
 <style>
 :root{
@@ -305,7 +305,7 @@ a{color:inherit}
 <meta name="twitter:description" content="Inside the model: how 12,966 player-seasons become an embedding, how it is trained and gated, and how it is evaluated on held-out seasons."/>
 <meta name="twitter:image" content="https://hoops.dumbmodel.com/assets/og-1200x630.png"/>
 <link rel="stylesheet" href="assets/fonts.css?v=8f376b2a"/>
-<link rel="stylesheet" href="/assets/atlas.css?v=3a61798f"/>
+<link rel="stylesheet" href="/assets/atlas.css?v=d99a752b"/>
 <style>
 .research-main.network-main{ width:100%; max-width:calc(var(--content) + var(--gutter)*2); margin:0 auto; padding:0 var(--gutter) var(--s-9); }
 .research-main h1, .research-main h2, .research-main h3, .research-main h4{ font-family:var(--font-display) !important; letter-spacing:-.01em; text-transform:none; }
@@ -406,7 +406,7 @@ a{color:inherit}
 <h3>Forecast — same family, one season forward <span style="font-family:var(--mono);font-size:10px;background:var(--accent-wash);color:var(--accent);border:1px solid var(--line-2);border-radius:999px;padding:2px 8px;margin-left:6px">Where you're headed</span></h3>
 <p style="font-size:13px;line-height:1.6;margin:8px 0">A deterministic TimesFM-lite forecaster (numpy, seed 7) projects player embeddings one season forward from 3-season windows — <b>7,096 forecasts</b> served from <code>assets/timesfm_forecasts.json</code> (built 2026-09-02), used by Map, Trends, Players for ghost rings. The metrics in that file are train-split, so this stays <b>research-only</b>: not the map, not a prediction product. Stone dashed = uncertainty, terracotta dashed = headed direction. ONE champion served — MTNN v5.</p>
 <div style="display:flex;gap:6px;flex-wrap:wrap;margin:8px 0"><span class="stats-chip">8-d forecast head</span><span class="stats-chip">7,096 forecasts</span><span class="stats-chip">research-only</span><span class="stats-chip">Past → Modern → Headed</span></div>
-<canvas id="forecast-lab-canvas" width="800" height="180" style="width:100%;border:1px solid var(--line-2);border-radius:10px;background:var(--surface)"></canvas>
+<canvas role="img" aria-label="Forecast lab chart — projected next-season embedding, first 8 of 64 dimensions" id="forecast-lab-canvas" width="800" height="180" style="width:100%;border:1px solid var(--line-2);border-radius:10px;background:var(--surface)"></canvas>
 <div id="forecast-lab-legend" style="font-family:var(--mono);font-size:11px;margin-top:6px;color:var(--fg-2)">Loading forecast…</div>
 <div id="forecast-lab-slot" style="margin-top:10px"></div>
 </div>
