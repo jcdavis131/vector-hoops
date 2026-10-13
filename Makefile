@@ -68,8 +68,9 @@ lint:
 	$(PYTHON) -m ruff check . --statistics
 	$(PYTHON) -m ruff format --check .
 
-# Mirrors .github/workflows/ci.yml step for step. If the two drift, a local
-# green stops meaning anything -- which is the failure this whole file just had.
+# Local twin of .github/workflows/ci.yml's checks: same pytest selection and
+# (since the repo audit, Wave D) the same asset/content gates in the site job.
+# If the two drift, a local green stops meaning anything.
 # Same pytest selection as CI: local_data tests are deselected because a runner
 # has no pipeline/data. `make eval` is the one that runs them.
 # Not here, on purpose: ci.yml's served-model job (scripts/check_served_model.py).

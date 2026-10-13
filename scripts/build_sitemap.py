@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
-"""Build sitemap.xml from the site's canonical routes + the Insights cards
-in assets/insights.json. Run: python3 scripts/build_sitemap.py. Stdlib only."""
+"""Build sitemap.xml from the site's 9 canonical routes. (Insights cards
+were removed from the sitemap in the 2026-10-12 focus cuts.)
+Run: python3 scripts/build_sitemap.py. Stdlib only."""
 import json
 import os
 from datetime import date
@@ -25,7 +26,7 @@ def main():
     lines.append("</urlset>")
     with open(os.path.join(ROOT, "sitemap.xml"), "w", encoding="utf-8") as f:
         f.write("\n".join(lines) + "\n")
-    print(f"wrote sitemap.xml — {len(urls)} URLs ({len(PAGES)} pages + {len(slugs)} insights)")
+    print(f"wrote sitemap.xml — {len(urls)} URLs ({len(PAGES)} pages)")
 
 
 if __name__ == "__main__":

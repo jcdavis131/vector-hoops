@@ -22,7 +22,7 @@ The bytes are the same as the call each helper replaces. That was measured,
 not assumed, and the tests in tests/test_artifact_io.py re-check it:
   - np.savez / np.savez_compressed into an open file give the same bytes as
     the same call given a path. Checked on the real train_matrix.npz arrays
-    (12,966 x 142): savez 231b07f1df283205 and savez_compressed
+    (12,966 x 143): savez 231b07f1df283205 and savez_compressed
     220d0e36cc7b1bf9 (sha256/16) both ways.
   - torch.save does NOT. It names the zip's top-level folder after the file
     it is given: torch.save(obj, "mtnn_best.pt") writes mtnn_best/data.pkl

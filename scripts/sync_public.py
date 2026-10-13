@@ -32,11 +32,13 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 PUBLIC = ROOT / "public"
 
-# Directories whose index.html Vercel rewrites to (/owner -> /owner/index.html)
-PAGE_DIRS = ("owner", "player", "player-fit", "brand", "dfs")
+# Directories whose index.html Vercel rewrites to. None exist since the
+# 2026-10-12 folds (owner/player/player-fit/brand/dfs were phantom entries
+# the exists() guard skipped silently).
+PAGE_DIRS = ()
 
-# Whole trees the pages fetch at runtime. knowledge/ is 2,293 player cards that
-# /player.html reads directly; without it every card 404s.
+# Whole trees the pages fetch at runtime. (knowledge/ held player cards
+# for a deleted page; the tree list keeps the name so a restored tree syncs.)
 TREES = ("assets", "knowledge")
 
 # Root files the browser requests that are not pages. Enumerated rather than

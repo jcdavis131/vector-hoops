@@ -28,6 +28,13 @@ jobs:
           ruff check --isolated $SITE_PY && ruff format --isolated --check $SITE_PY
       - name: Site smoke tests (JSON assets, pages, asset refs, manifest, vectors)
         run: python -m pytest tests/test_site.py -q
+      - name: Asset + content gates (same checks as make ci)
+        run: |
+          python scripts/stamp_assets.py --check
+          python scripts/sync_public.py --check
+          python scripts/check_site_facts.py
+          python scripts/check_a11y.py
+          python scripts/check_contrast.py
 
   offline-build:
     runs-on: ubuntu-latest
