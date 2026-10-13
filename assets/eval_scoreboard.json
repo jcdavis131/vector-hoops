@@ -1,6 +1,6 @@
 {
  "metric": "held_out_adjacent_season_retrieval",
- "description": "Query the shipped 48-d MTNN space with a player's season N; hit if that same player's season N+1 (keyed by stable NBA PLAYER_ID) ranks in the top-k nearest neighbors among all 12966 player-seasons (self excluded). Only val/test-split targets are truly held out; train-split pairs were InfoNCE positives during training.",
+ "description": "Query the shipped 64-d MTNN space with a player's season N; hit if that same player's season N+1 (keyed by stable NBA PLAYER_ID) ranks in the top-k nearest neighbors among all 12966 player-seasons (self excluded). Only val/test-split targets are truly held out; train-split pairs were InfoNCE positives during training.",
  "protocol": {
   "cohort": "full 12966-row space minus the query row; features are z-scored within season, so cross-era candidates are era-honest by construction (train_mtnn.recall_at_k doctrine, computed exhaustively \u2014 no sampling)",
   "pairing": "stable PLAYER_ID from committed dashbase_* caches",

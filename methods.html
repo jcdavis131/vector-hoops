@@ -67,7 +67,7 @@
   <header class="title-card">
     <div class="title-card__eyebrow reveal">Methods</div>
     <h1 class="title-card__title reveal reveal-1">Every number can be <em>recomputed from source</em></h1>
-    <p class="title-card__lede reveal reveal-2">The games use 14 era-normalised per-100 features for speed and transparency. The research model, MTNN, widens that to 120 features in 17 towers and compresses each season to a 64-d unit vector for neighbour search. The architecture is covered in depth in <a href="/model">the Lab</a>.</p>
+    <p class="title-card__lede reveal reveal-2">The games use 14 era-normalised per-100 features for speed and transparency. The research model, MTNN, widens that to 130 features in 17 towers and compresses each season to a 64-d unit vector for neighbour search. The architecture is covered in depth in <a href="/model">the Lab</a>.</p>
   </header>
 
   <nav class="doc-toc" aria-label="On this page">
@@ -112,12 +112,12 @@
       <div class="doc-n">02</div>
       <h2>MTNN — the model behind every guess</h2>
       <p>17 towers → residual towers → a 64-d fingerprint, L2-normalised so cosine is similarity → decoded to archetype (8), position (5) and skills. An 18th family, injury, feeds a durability read-out head rather than an input tower: as an input it measured −0.088 test recall, because durability is not a style axis.</p>
-      <pre class="arch-diagram">Input 120 feats, mask m∈{0,1}
+      <pre class="arch-diagram">Input 130 feats, mask m∈{0,1}
 h = cat([x·m, m]) → 2·d_in per family
 Tower 17×: 2d_in→160 LN GELU → 160→32 LN + skip ×2 → 32-d (544 total)
 + season_emb 12-d → 556 → 556→256 GELU → <b>64 L2</b>
 Heads: 8 arch / 5 pos / 14 next / 18 skills (64→16→1)
-~224K params · ONNX 549KB</pre>
+~224K params · ONNX 548 KB</pre>
     </section>
 
     <section id="the-map">
@@ -191,7 +191,7 @@ Heads: 8 arch / 5 pos / 14 next / 18 skills (64→16→1)
       <div class="doc-n">07 · Experimental</div>
       <h2>Forecast — where a player is headed</h2>
       <p class="doc-formula">Three-season context → next-season embedding (first 8 of 64 dimensions). Same source as the map: embedding_v3_with_text.npz, 12,966 × 64. A torch-lite two-layer temporal transformer with cross-variate attention, 7,096 windows, 5 epochs full-batch, no chronological split, no quantile calibration yet. Not TimesFM-3 (non-commercial) or a validated TimesFM-2.5.</p>
-      <p>One contract everywhere: <code>/data/timesfm_forecasts.json</code>, 300 forecasts, with an honest failure message if the file is missing.</p>
+      <p>One contract everywhere: <code>assets/timesfm_forecasts.json</code>, 7,096 forecasts, with an honest failure message if the file is missing.</p>
       <p class="doc-note">Future work: chronological, player-aware splits with no leakage; saved seeds and weights; naive-last and drift baselines; MAE / RMSE plus angular error; quantile coverage.</p>
     </section>
 
@@ -206,7 +206,7 @@ Heads: 8 arch / 5 pos / 14 next / 18 skills (64→16→1)
           <tr><td class="num">V4</td><td>Chimera determinism across 30 dates; cosine &lt; 0.3 between donors</td></tr>
         </tbody>
       </table>
-      <p class="doc-note">MTNN extras: leak-free recall@10 via leakfree.py, purity@20, next-profile MAE. ONNX 549 KB.</p>
+      <p class="doc-note">MTNN extras: leak-free recall@10 via leakfree.py, purity@20, next-profile MAE. ONNX 548 KB.</p>
     </section>
 
     <section id="limitations">
