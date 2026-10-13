@@ -43,7 +43,7 @@ TREES = ("assets", "knowledge")
 # globbed by extension: a wildcard would publish vercel.json, package.json and
 # every other config sitting at the root. manifest.json is here because five
 # pages link it and /manifest.json returned 404 on the live site.
-ROOT_FILES = ("manifest.json", "sw.js", "robots.txt", "favicon.ico")
+ROOT_FILES = ("manifest.json", "sw.js", "robots.txt", "favicon.ico", "sitemap.xml")
 
 SKIP_SUFFIXES = (".py", ".pyc")
 
@@ -57,6 +57,10 @@ def sources() -> list[tuple[Path, Path]]:
         idx = ROOT / d / "index.html"
         if idx.exists():
             pairs.append((idx, PUBLIC / d / "index.html"))
+    ins_dir = ROOT / "insights"
+    if ins_dir.is_dir():
+        for p in sorted(ins_dir.glob("*.html")):
+            pairs.append((p, PUBLIC / "insights" / p.name))
     for name in ROOT_FILES:
         f = ROOT / name
         if f.exists():

@@ -24,6 +24,8 @@
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Taxonomy of Play Styles — Vector Hoops"/>
 <meta name="twitter:description" content="2,426 players, 22 archetypes, 5 families. Find where every NBA play style lives."/>
+<meta property="og:image" content="https://hoops.dumbmodel.com/assets/og/taxonomy.png"/>
+<meta name="twitter:image" content="https://hoops.dumbmodel.com/assets/og/taxonomy.png"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=Inter:opsz,wght@14..32,400..700&display=swap"/>
 <style>
@@ -81,7 +83,7 @@
   <div class="vh-tax__hero">
     <h1>Taxonomy of <span class="vh-tax__accent">Play Styles</span></h1>
     <p>Every NBA player-season since 1996, distilled to <span data-fact="players">2,426</span> career play styles and organized into 22 archetypes across 5 families — clustered from stat profiles, named from the numbers. Find your favorite player. See who they really play like.</p>
-    <span class="vh-tax__meta" id="tax-meta">loading…</span>
+    <span class="vh-tax__meta" id="tax-meta">loading…</span> <button class="vh-tax__meta" id="vh-share-btn" type="button" style="cursor:pointer">Share</button>
   </div>
 
   <div class="vh-tax__search">
@@ -103,4 +105,7 @@
 <script src="assets/taxonomy.js?v=f3065dca"></script>
 <script>if('serviceWorker' in navigator){window.addEventListener('load',()=>{navigator.serviceWorker.register('/sw.js').catch(()=>{})})}</script>
 <script src="assets/site-facts.js?v=cbb639f4" defer></script>
+<script>
+(function(){var b=document.getElementById('vh-share-btn');if(!b)return;b.addEventListener('click',function(){var url=location.href;var title=document.title;function done(){b.textContent='Link copied';setTimeout(function(){b.textContent='Share';},1600);}if(navigator.share){navigator.share({title:title,url:url}).catch(function(){});}else if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(url).then(done,done);}else{done();}});})();
+</script>
 </body></html>

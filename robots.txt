@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://hoops.dumbmodel.com/sitemap.xml
