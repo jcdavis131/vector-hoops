@@ -323,11 +323,18 @@ a{color:inherit}
 .network-map-legend__swatch{width:11px;height:11px;border-radius:3px;flex:0 0 auto;box-shadow:inset 0 0 0 1px rgba(255,255,255,.35)}
 .network-map-legend__name{color:#E9E3D3}/* explicit light ink: the legend sits on the always-dark --void stage, so inherited --fg was dark-on-dark in the paper theme */
 .network-map-axes{padding-top:10px;margin-top:10px;border-top:1px solid rgba(233,227,211,.25)}
-.network-map-axes__title{font:700 11px/1.4 var(--font-sans);letter-spacing:.08em;text-transform:uppercase;color:#E9E3D3;margin:0 0 6px}/* same light ink as the legend names: readable on the always-dark --void stage */
-.network-map-axes__row{font:400 12px/1.5 var(--font-sans);color:#E9E3D3;margin:0 0 6px}
-.network-map-axes__label{font-weight:700}
-.network-map-axes__end{display:block}
-.network-map-axes__end em{font-style:normal;font-weight:700}
+/* Every text element in this block carries an explicit #E9E3D3 (12.76:1 on the
+   stage's #1E2022) behind an ID-scoped selector — do not drop either. The block
+   sits inside .doc-body on the always-dark --void stage, and two ancestor traps
+   silently beat the old class-only rules in the paper theme: .doc-body p
+   (0,1,1) overrode the title/row color with --fg-2 #57574F (2.24:1), and
+   atlas.css b,strong{color:var(--fg)} painted the axis labels --ink (about
+   1:1). No element here may rely on inheritance for its color. */
+#network-map-axes .network-map-axes__title{font:700 11px/1.4 var(--font-sans);letter-spacing:.08em;text-transform:uppercase;color:#E9E3D3;margin:0 0 6px}
+#network-map-axes .network-map-axes__row{font:400 12px/1.5 var(--font-sans);color:#E9E3D3;margin:0 0 6px}
+#network-map-axes .network-map-axes__label{font-weight:700;color:#E9E3D3}
+#network-map-axes .network-map-axes__end{display:block;color:#E9E3D3}
+#network-map-axes .network-map-axes__end em{font-style:normal;font-weight:700;color:#E9E3D3}
 
 /* next */
 .site-next{
