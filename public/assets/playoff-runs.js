@@ -31,20 +31,20 @@
       encodeURIComponent(name) + '">' + esc(name) + '</a>';
   }
 
-  function barRow(rank, names, meta, score, maxScore, badge) {
-    var w = maxScore > 0 ? Math.max(4, Math.round(100 * score / maxScore)) : 4;
+  // No bar: board scores cluster within a few points of each other, so a
+  // max-normalised bar rendered every run at ~95% length and implied gaps
+  // that aren't in the numbers. The score itself is the signal.
+  function barRow(rank, names, meta, score, badge) {
     return '<article class="vh-runs__row">' +
       '<div class="vh-runs__rank">' + rank + '</div>' +
       '<div><h3 class="vh-runs__names">' + names + badge + '</h3>' +
       '<p class="vh-runs__meta">' + meta + '</p>' +
-      '<div class="vh-runs__bar" aria-hidden="true"><i style="width:' + w + '%"></i></div>' +
       '<p class="vh-runs__pts"><b>' + score.toFixed(1) + '</b> all-around score</p></div>' +
       '</article>';
   }
 
   function renderBoard(el, key, rows) {
     var head = HEADS[key];
-    var maxScore = rows.reduce(function (m, r) { return Math.max(m, r.score || 0); }, 0);
     var html = '<div class="vh-runs__boardhead"><h2>' + esc(head.title) + '</h2><p>' + esc(head.sub) + '</p></div>';
     html += rows.map(function (r, i) {
       var rank = i + 1;
@@ -52,18 +52,18 @@
         return barRow(rank, plink(r.player),
           '<b>' + esc(r.season) + '</b> · ' + esc(r.team) + ' · ' + esc(r.wl) + ' in ' + r.gp + ' games' +
           ' · ' + r.pts100.toFixed(1) + ' pts/100 · ' + signed(r.dbpm) + ' DBPM · team ' + signed(r.team_netrtg),
-          r.score, maxScore, champBadge(r));
+          r.score, champBadge(r));
       }
       if (key === 'teams') {
         return barRow(rank, esc(r.team),
           '<b>' + esc(r.season) + '</b> · ' + esc(r.wl) + ' · path ' + esc(r.path) +
           ' · ' + signed(r.netrtg) + ' net rating · led by ' + plink(r.top_scorer),
-          r.score, maxScore, champBadge(r));
+          r.score, champBadge(r));
       }
       return barRow(rank, r.players.map(plink).join(' <span aria-hidden="true">·</span> '),
         '<b>' + esc(r.team) + '</b> · ' + esc(r.season) + ' · ' + esc(r.wl) +
         ' · ' + signed(r.dbpm_sum) + ' DBPM · team ' + signed(r.team_netrtg),
-        r.score, maxScore, champBadge(r));
+        r.score, champBadge(r));
     }).join('');
     el.innerHTML = html;
   }

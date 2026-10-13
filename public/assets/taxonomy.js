@@ -10,15 +10,32 @@
     });
   }
 
+  function ordSuffix(n) {
+    var m = n % 100;
+    if (m >= 11 && m <= 13) return 'th';
+    switch (n % 10) {
+      case 1: return 'st';
+      case 2: return 'nd';
+      case 3: return 'rd';
+      default: return 'th';
+    }
+  }
+
+  // Feature keys are bare stat codes (e.g. "FTA"); strip any stray trailing
+  // separator a data build might bake in so labels never render "FTA -".
+  function featLabel(f) {
+    return String(f).replace(/[\s\-–—·]+$/, '');
+  }
+
   function barRow(feat, sig) {
     var s = sig[feat];
     var pct = s.pct;
     var left = Math.min(pct, 50), width = Math.abs(pct - 50);
     var cls = pct >= 50 ? 'is-pos' : 'is-neg';
     return '<div class="vh-tax__sigrow">' +
-      '<span class="vh-tax__signame">' + esc(feat) + '</span>' +
+      '<span class="vh-tax__signame">' + esc(featLabel(feat)) + '</span>' +
       '<span class="vh-tax__sigbar"><i class="' + cls + '" style="left:' + left + '%;width:' + width + '%"></i><b style="left:50%"></b></span>' +
-      '<span class="vh-tax__sigpct">' + pct + '<small>th</small></span>' +
+      '<span class="vh-tax__sigpct">' + pct + '<small>' + ordSuffix(pct) + '</small></span>' +
       '</div>';
   }
 
@@ -34,7 +51,8 @@
       '<span class="vh-tax__archname">' + esc(a.label) + '</span>' +
       '<span class="vh-tax__archmeta">' + a.member_count + ' players · ' +
       a.top_features.slice(0, 3).map(function (f) {
-        return esc(f) + ' ' + a.stat_signature[f].pct + 'th';
+        var p = a.stat_signature[f].pct;
+        return esc(featLabel(f)) + ' ' + p + ordSuffix(p);
       }).join(' · ') + '</span>' +
       '<span class="vh-tax__chev" aria-hidden="true">▾</span>' +
       '</summary>' +

@@ -124,29 +124,37 @@
     html += statCell('Line MAE', fmt(bt.overall.line_mae, 3));
     html += statCell('Edge plays', e.n);
     html += statCell('Edge W–L', e.w + '–' + (e.n - e.w), true);
-    html += statCell('Edge ROI @ -110 (n=' + e.n + ')', (e.roi >= 0 ? '+' : '') + fmt(e.roi * 100, 1) + '%', e.roi > 0);
+    html += statCell('Edge ROI @ -110 <span style="white-space:nowrap">(n=' + e.n + ')</span>', (e.roi >= 0 ? '+' : '') + fmt(e.roi * 100, 1) + '%', e.roi > 0);
     html += statCell('Under share', fmt(bt.edge_rule.under_lean_eval * 100, 0) + '%');
     html += statCell('68% / 95% cover', fmt(bt.coverage_68 * 100, 1) + ' / ' + fmt(bt.coverage_95 * 100, 1));
     $('pl-backtest-stats').innerHTML = html;
 
-    // equity curve
+    // equity curve — explicit axis margins so edge labels never clip:
+    // y labels right-align inside the left margin, first/last dates are
+    // anchored to the plot edges instead of guessed pixel offsets.
     var cv = $('pl-equity'), ctx = cv.getContext('2d');
-    var W = cv.width, H = cv.height, pad = 34;
+    var W = cv.width, H = cv.height;
+    var padL = 48, padR = 16, padT = 16, padB = 28;
     var pts = bt.equity_curve;
     var maxP = Math.max.apply(null, pts.map(function(p){ return p.cum_profit; }).concat([5]));
     var minP = Math.min.apply(null, pts.map(function(p){ return p.cum_profit; }).concat([0]));
-    function X(i){ return pad + i * (W - 2 * pad) / Math.max(pts.length - 1, 1); }
-    function Y(v){ return H - pad - (v - minP) * (H - 2 * pad) / (maxP - minP || 1); }
+    function X(i){ return padL + i * (W - padL - padR) / Math.max(pts.length - 1, 1); }
+    function Y(v){ return H - padB - (v - minP) * (H - padT - padB) / (maxP - minP || 1); }
     ctx.strokeStyle = '#3a3d40'; ctx.lineWidth = 1;
-    ctx.beginPath(); ctx.moveTo(pad, Y(0)); ctx.lineTo(W - pad, Y(0)); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(padL, Y(0)); ctx.lineTo(W - padR, Y(0)); ctx.stroke();
     ctx.beginPath();
     pts.forEach(function(p, i){ i ? ctx.lineTo(X(i), Y(p.cum_profit)) : ctx.moveTo(X(i), Y(p.cum_profit)); });
     ctx.strokeStyle = '#D4AF69'; ctx.lineWidth = 2; ctx.stroke();
     ctx.fillStyle = '#b9b2a4'; ctx.font = '11px Inter, sans-serif';
-    ctx.fillText('+' + fmt(maxP, 0) + 'u', 6, Y(maxP) + 4);
-    ctx.fillText(fmt(minP, 0) + 'u', 6, Y(minP) + 4);
-    ctx.fillText(pts[0].board, pad, H - 12);
-    ctx.fillText(pts[pts.length - 1].board, W - pad - 64, H - 12);
+    ctx.textAlign = 'right'; ctx.textBaseline = 'middle';
+    ctx.fillText('+' + fmt(maxP, 0) + 'u', padL - 8, Y(maxP));
+    ctx.fillText(fmt(minP, 0) + 'u', padL - 8, Y(minP));
+    ctx.textBaseline = 'alphabetic';
+    ctx.textAlign = 'left';
+    ctx.fillText(pts[0].board, padL, H - 10);
+    ctx.textAlign = 'right';
+    ctx.fillText(pts[pts.length - 1].board, W - padR, H - 10);
+    ctx.textAlign = 'left';
 
     var mb = '';
     bt.monthly.forEach(function(m){
