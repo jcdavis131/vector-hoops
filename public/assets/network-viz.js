@@ -716,6 +716,20 @@
     return state.heads.subarray(off, off + total);
   }
 
+  /* The archetype the MODEL assigns this season: argmax of the archetype
+     head. Map colours, the legend and the neighbour mix all use this one
+     assignment — the same one the explorer story shows for a player.
+     vectors.json's p.c is a DIFFERENT partition (k-means on the 14-d stat
+     traits); the two agree only loosely, so never label one with the
+     other's names. */
+  function archIndexFor(playerIdx) {
+    var row = headRow(playerIdx);
+    if (!row || !state.nArch) return -1;
+    var bi = 0;
+    for (var j = 1; j < state.nArch; j++) if (row[j] > row[bi]) bi = j;
+    return bi;
+  }
+
   /* Tower node size: causal influence on the embedding when the Jacobian is
      available, else the legacy input-magnitude proxy. */
   function towerHeights(playerIdx) {
@@ -870,8 +884,8 @@
     if (!host || !state.arch) return;
     var names = state.arch.gameArchetypes || [];
     if (!names.length) return;
-    var unknown = state.players.some(function (p) {
-      return !(typeof p.c === 'number' && p.c >= 0 && p.c < names.length);
+    var unknown = state.players.some(function (p, i) {
+      return archIndexFor(i) < 0;
     });
     var items = names.map(function (nm, i) {
       return '<li class="network-map-legend__item">' +
@@ -922,14 +936,15 @@
     nbs.forEach(function (n) {
       var p = state.players[n.idx];
       if (!p) return;
-      var nm = archNames[p.c] || ('Cluster ' + p.c);
+      var ai = archIndexFor(n.idx);
+      var nm = ai >= 0 && archNames[ai] ? archNames[ai] : 'Unclustered';
       counts[nm] = (counts[nm] || 0) + 1;
     });
     var mix = Object.keys(counts).map(function (k) {
       return { name: k, share: counts[k] / nbs.length };
     }).sort(function (a, b) { return b.share - a.share; }).slice(0, 3);
     host.innerHTML =
-      '<div class="network-insights__head">Nearby players</div>' +
+      '<div class="network-insights__head">Nearest on this map</div>' +
       '<div class="network-insights__chips">' +
         mix.map(function (m) {
           return '<span class="network-insight-chip">' + esc(m.name) + ' <b>' +
@@ -947,8 +962,11 @@
         return '<li><button type="button" class="network-neighbor-list__pick" data-neighbor-idx="' + n.idx + '">' +
           '<span class="network-neighbor-list__name">' + esc(p.name) + '</span>' +
           '<span class="network-neighbor-list__meta">' + esc(p.season) + ' · ' +
-          fmtPredScore(n.sim * 100) + '% match</span></button></li>';
-      }).join('') + '</ol>';
+          'map distance ' + n.dist.toFixed(2) + '</span></button></li>';
+      }).join('') + '</ol>' +
+      '<p class="network-insights__note">Distances are on this flattened 3-D map. ' +
+      'Close here is not the same as close in the model&rsquo;s full 64-d space — ' +
+      'the model&rsquo;s own nearest seasons are the peers shown on the Atlas.</p>';
   }
 
   function renderFlowInsights() {
@@ -1030,7 +1048,6 @@
     var archNameA = archNames[archA.idx] || ('Cluster ' + archA.idx);
     var archNameB = archNames[archB.idx] || ('Cluster ' + archB.idx);
     var dist = distance3(state.map.coords[state.playerIdx], state.map.coords[state.compareIdx]);
-    var localSim = 1 / (1 + dist * 12);
 
     var offSkill = state.nArch;
     var offPos = offSkill + state.nSkills;
@@ -1049,7 +1066,7 @@
     host.innerHTML =
       '<div class="network-insights__head">Side by side</div>' +
       '<div class="network-insights__chips">' +
-        '<span class="network-insight-chip">Local sim <b>' + fmtPredScore(localSim * 100) + '%</b></span>' +
+        '<span class="network-insight-chip">Map distance <b>' + dist.toFixed(2) + '</b></span>' +
         '<span class="network-insight-chip">' + esc(archNameA) + ' <b>' + fmtPredScore(archA.p * 100) + '%</b></span>' +
         '<span class="network-insight-chip">' + esc(archNameB) + ' <b>' + fmtPredScore(archB.p * 100) + '%</b></span>' +
       '</div>' +
@@ -1278,7 +1295,7 @@
       }).join('') + '</ol>' +
       '<p class="network-node-inspector__hint">' +
       (group === 'skills' || group === 'next_profile'
-        ? 'The range shows where the middle 80% of the most similar players land — a sense of how sure the estimate is.'
+        ? 'The range shows where the middle 80% of the nearest players on the map land — a sense of how sure the estimate is.'
         : 'Classification rows show the full class probability distribution. Click the head to see which inputs drove it.') +
       '</p>';
   }
@@ -2510,7 +2527,7 @@ function buildFlowSvg(host) {
     points.forEach(function (pt) {
       var alpha = 0.14 + 0.42 * (1 / (1 + pt.depth * 0.14));
       var p = state.players[pt.i];
-      var col = clusterColor(p && p.c != null ? p.c : -1);
+      var col = clusterColor(archIndexFor(pt.i));
       var r = pt.i === state.playerIdx ? 0 : (1.15 + 0.55 * (1 / (1 + pt.depth * 0.2)));
       ctx.globalAlpha = alpha;
       ctx.fillStyle = col;

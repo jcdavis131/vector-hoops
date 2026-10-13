@@ -126,7 +126,7 @@
       '</div>' +
       '<div class="twin-why__differ">Biggest difference: <b>' + esc(rec.differ) + '</b></div>' +
       thin +
-      '<div class="twin-why__method">The twin was found with the full embedding; this breakdown uses the 14 style traits from the map.</div>';
+      '<div class="twin-why__method">Twins are matched by embedding similarity; this breakdown uses the 14 style traits from the map.</div>';
     card.appendChild(el);
   }
 
