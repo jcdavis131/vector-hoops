@@ -711,8 +711,8 @@ $('dayNext').onclick=()=>gotoDay(1);
 $('dayToday').onclick=()=>{sbExplicit=true;resetView();loadGames(null);};
 renderDayNav();
 loadGames();
-fetch('assets/ghost_db.json?v=77efab63').then(r=>r.json()).then(d=>{GHOST_DB=d;GV=null;if(window._lastD)renderGhosts(window._lastD);}).catch(()=>{});
-fetch('assets/player_form.json?v=25a671f3').then(r=>r.json()).then(d=>{FORM_DB=d;if(window._lastD)renderMiles(window._lastD);}).catch(()=>{});
+fetch('assets/ghost_db.json?v=9a8f1588').then(r=>r.json()).then(d=>{GHOST_DB=d;GV=null;if(window._lastD)renderGhosts(window._lastD);}).catch(()=>{});
+fetch('assets/player_form.json?v=41a74427').then(r=>r.json()).then(d=>{FORM_DB=d;if(window._lastD)renderMiles(window._lastD);}).catch(()=>{});
 function setMode(m){
   // The arcade tab was retired in Wave 5 (games live on Play); the companion
   // is the only mode now. Kept as a no-op-safe shim for any saved links.
