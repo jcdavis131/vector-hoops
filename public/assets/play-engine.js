@@ -378,6 +378,7 @@
     const modeNameEl=$('#court-mode-name'); if(modeNameEl) modeNameEl.textContent=st.isTriple?'Daily Triple':'Daily Court';
     const r5El=$('#reward-5'); if(r5El) r5El.style.display=st.isTriple?'none':'';
     if(guessesEl) guessesEl.textContent=totalGuesses;
+    const guessesWordEl=$('#court-guesses-word'); if(guessesWordEl) guessesWordEl.textContent=totalGuesses===1?'guess':'guesses';
     const r1=$('#reward-1'), r3=$('#reward-3'), r5=$('#reward-5');
     if(r1){ r1.classList.toggle('is-unlocked', totalSolved>=1); }
     if(r3){ r3.classList.toggle('is-unlocked', totalSolved>=3); if(totalSolved>=3) r3.classList.add('gold'); }

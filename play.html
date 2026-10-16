@@ -276,7 +276,7 @@ button,.input{min-height:44px}
 
   <div class="card" id="daily-court" style="display:none;">
     <div class="court-top">
-      <div><div class="small-mono"><span id="court-mode-name">Daily Court</span> — <span id="court-day-label">Today</span> • same for everyone • refresh-proof</div><h2 class="hd" style="margin:4px 0 0;font-size:20px"><span id="court-solved">0</span><span id="court-total">/5</span> solved • <span id="court-guesses">0</span> guesses</h2></div>
+      <div><div class="small-mono"><span id="court-mode-name">Daily Court</span> — <span id="court-day-label">Today</span> • same for everyone • refresh-proof</div><h2 class="hd" style="margin:4px 0 0;font-size:20px"><span id="court-solved">0</span><span id="court-total">/5</span> solved • <span id="court-guesses">0</span> <span id="court-guesses-word">guesses</span></h2></div>
       <div style="display:flex;gap:6px;flex-wrap:wrap"><span class="pill" id="court-ip-badge" aria-hidden="true">Same for everyone</span><button class="pill" id="btn-copy-court" type="button">📋 Copy court</button></div>
     </div>
     <div class="court-grid" id="court-grid"></div>
@@ -357,7 +357,8 @@ button,.input{min-height:44px}
   <p class="small-mono" style="text-transform:none;opacity:.85">One court, every mode: the Daily five, the Triple, endless Random and the Pack</p>
 </section>
 <footer class="site-footer">
-  <div class="site-footer__links"><a href="/">Atlas</a><a href="/play">Play</a><a href="/players">Players</a><a href="/insights">Insights</a><a href="/methods">Methods</a><a href="https://github.com/jcdavis131/vector-hoops" rel="noopener">Source</a></div>
+  <div class="site-footer__links"><a href="/">Atlas</a><a href="/play">Play</a><a href="/live">Live</a><a href="/players">Players</a><a href="/insights">Insights</a><a href="/methods">Methods</a><a href="https://github.com/jcdavis131/vector-hoops" rel="noopener">Source</a></div>
+  <div class="site-footer__links site-footer__links--more"><span>More</span><a href="/props-lab">Props Lab</a><a href="/taxonomy">Taxonomy</a><a href="/playoff-runs">Playoff Runs</a></div>
   <p class="site-footer__attribution">Every number recomputable from stats.nba.com · A <a href="https://dumbmodel.com">dumbmodel</a> project</p>
 </footer>
 <script>if('serviceWorker' in navigator){window.addEventListener('load',()=>{navigator.serviceWorker.register('/sw.js').catch(()=>{})})}</script>
