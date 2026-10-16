@@ -24,16 +24,18 @@
     };
   }
 
-  /* Kicker -> theme class for color-coded card grouping. */
-  var KICKER_THEMES = {
-    'Money layer': 'money', 'Money': 'money', 'Overpaid': 'money',
-    'Underpaid': 'money', 'Dead money': 'money', '2016 cap spike': 'money',
-    'Tax Burden': 'money', 'Repeater Tax': 'money', 'Second Apron': 'money',
-    'Entity grounding': 'entity'
+  /* Kicker -> theme class for color-coded card grouping.
+     Kickers are a controlled topic vocabulary (see insights.json). */
+  var KICKER_THEMES = {    'Cap spike': 'money', 'Dead money': 'money', 'Contracts': 'money',
+    'Sacrifice': 'money', 'Payroll': 'money', 'Tickets': 'money',
+    'Tax': 'money', 'Meta': 'entity'
   };
   function kickerTheme(kicker) {
     return KICKER_THEMES[kicker] || 'default';
   }
+
+  /* Card numbers, filled by render() from JSON order. */
+  var NUM_BY_SLUG = {};
 
   function esc(s) {
     return String(s).replace(/[&<>"']/g, function (c) {
@@ -42,7 +44,7 @@
   }
 
   function load() {
-    return fetch('assets/insights.json?v=a6a894c6').then(function (r) {
+    return fetch('assets/insights.json?v=94016317').then(function (r) {
       if (!r.ok) throw new Error('insights.json ' + r.status);
       return r.json();
     });
@@ -232,8 +234,10 @@
 
   function cardHTML(ins, featured) {
     var viz = (VIZ[ins.viz] || barsSVG)(ins);
+    var num = NUM_BY_SLUG[ins.slug];
     return '<article class="vh-ins__card' + (featured ? ' vh-ins__card--featured' : '') + '" id="ins-' + ins.slug + '" data-slug="' + ins.slug + '" data-theme="' + kickerTheme(ins.kicker) + '">' +
-      '<div class="vh-ins__kicker vh-ins__kicker--' + kickerTheme(ins.kicker) + '">' + esc(ins.kicker) + '</div>' +
+      '<div class="vh-ins__kicker vh-ins__kicker--' + kickerTheme(ins.kicker) + '">' +
+      (num ? '<span class="vh-ins__num">№' + num + '</span>' : '') + esc(ins.kicker) + '</div>' +
       '<h2 class="vh-ins__title">' + esc(ins.title) + '</h2>' +
       (ins.tldr ? '<p class="vh-ins__tldr"><span>tl;dr</span>' + esc(ins.tldr) + '</p>' : '') +
       '<p class="vh-ins__lede">' + esc(ins.lede) + '</p>' +
@@ -270,7 +274,10 @@
         cardHTML(pick, true);
     }
     var lastSeries = null;
-    host.innerHTML = rest.map(function (ins) {
+    /* Card numbers (№1..№27) are the card's position in insights.json —
+       the home "Fresh from the lab" doors reference them. */
+    NUM_BY_SLUG = {};
+    list.forEach(function (ins, i) { NUM_BY_SLUG[ins.slug] = i + 1; });    host.innerHTML = rest.map(function (ins) {
       var head = '';
       if (ins.series && ins.series !== lastSeries) { lastSeries = ins.series; head = seriesHead(ins.series); }
       return head + cardHTML(ins, false);

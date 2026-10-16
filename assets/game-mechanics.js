@@ -131,8 +131,10 @@
         }catch(e){ console.warn('twin reveal map fail', e); }
       }
       var s=slotScope(); lsSet('vh.twinreveal.'+s.day+'.'+s.slot, true);
-      lifelineStatus('🔭 Twins of '+(q.name||'your guess')+': '+names.join(' • '));
+      /* renderLifelines() rebuilds #lifelines-bar (wiping #lifeline-status),
+         so flip the button state FIRST, then write the reveal text. */
       renderLifelines();
+      lifelineStatus('🔭 Twins of '+(q.name||'your guess')+': '+names.join(' • '));
     }).catch(function(e){ lifelineStatus('Twin data still loading — try again in a moment.'); });
   }
   function eraLock(){
@@ -155,8 +157,10 @@
     }).catch(function(){});
     // consume a turn: the status bar + finish() read eraLocksUsed(), so the cost is visible
     try{ if(window.updateStatusBar) window.updateStatusBar(); }catch(e){}
-    lifelineStatus('🕰 Era Lock: the mystery player is from the '+dec+' (−1 guess). Other decades dimmed.');
+    /* renderLifelines() rebuilds #lifelines-bar (wiping #lifeline-status),
+       so flip the button state FIRST, then write the status text. */
     renderLifelines();
+    lifelineStatus('🕰 Era Lock: the mystery player is from the '+dec+' (−1 guess). Other decades dimmed.');
   }
   function openCourtCheck(playerId){
     // Hook for the Court Lab page (spec §2.2). Hidden until the page exists.

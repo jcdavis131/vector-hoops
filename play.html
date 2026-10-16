@@ -137,7 +137,7 @@ button,.input{min-height:44px}
 <meta name="twitter:description" content="Daily Court: five past All-Stars a day, the same five for everyone. Find each one’s closest modern twin in six guesses, or battle friends with a shared pack."/>
 <meta name="twitter:image" content="https://hoops.dumbmodel.com/assets/og-1200x630.png"/>
 <link rel="stylesheet" href="assets/fonts.css?v=8f376b2a"/>
-<link rel="stylesheet" href="/assets/atlas.css?v=0e414fbd"/>
+<link rel="stylesheet" href="/assets/atlas.css?v=e01c0f2f"/>
 <style>
 /* ---- Play: atlas refinement layer ---- */
 .game-head{ padding-top: clamp(40px, 7vw, 88px); padding-bottom: 8px; max-width: 1000px; }
@@ -185,6 +185,12 @@ button,.input{min-height:44px}
 .court-card.is-solved, .pack-card.is-won{ background: color-mix(in srgb, var(--ok) 10%, var(--surface-2)); border-color: color-mix(in srgb, var(--ok) 55%, transparent); }
 .court-card.is-failed, .pack-card.is-lost{ background: color-mix(in srgb, var(--bad) 8%, var(--surface-2)); border-color: color-mix(in srgb, var(--bad) 45%, transparent); opacity: 1; }
 .court-slot, .pack-top{ font-family: var(--font-display); font-stretch: 112%; letter-spacing: .14em; font-weight: 600; font-size: 11px; color: var(--fg-3); opacity: 1; }
+/* Suit tag: the card-suit category of the slot's past target (Honors = All-Star/All-NBA/Finals MVP season;
+   Style = rare play style; Team = leader/key contributor; Era = fallback). Rendered as a chip so it
+   never reads as part of the archetype label. */
+.suit-tag{ display: inline-block; font-family: var(--mono); font-size: 8px; font-weight: 800; letter-spacing: .12em;
+  text-transform: uppercase; color: var(--accent); border: 1px solid var(--accent-line); border-radius: 999px;
+  padding: 2px 7px; margin-left: 6px; vertical-align: 1px; background: var(--accent-wash); }
 .court-name, .pack-name{ font-family: var(--font-text); font-weight: 650; font-size: 14px; color: var(--fg); font-variant-numeric: tabular-nums; }
 .court-meta, .pack-meta{ font-family: var(--font-text); font-size: 12px; color: var(--fg-2); }
 .lineup-chip, .reward{ font-family: var(--font-display); font-stretch: 112%; letter-spacing: .1em; font-weight: 600; font-size: 10px; text-transform: uppercase; color: var(--fg-2); background: none; border: 1px solid var(--line-2); }
@@ -276,7 +282,7 @@ button,.input{min-height:44px}
 
   <div class="card" id="daily-court" style="display:none;">
     <div class="court-top">
-      <div><div class="small-mono"><span id="court-mode-name">Daily Court</span> — <span id="court-day-label">Today</span> • same for everyone • refresh-proof</div><h2 class="hd" style="margin:4px 0 0;font-size:20px"><span id="court-solved">0</span><span id="court-total">/5</span> solved • <span id="court-guesses">0</span> guesses</h2></div>
+      <div><div class="small-mono"><span id="court-mode-name">Daily Court</span> — <span id="court-day-label">Today</span> • same for everyone • refresh-proof</div><h2 class="hd" style="margin:4px 0 0;font-size:20px"><span id="court-solved">0</span><span id="court-total">/5</span> solved • <span id="court-guesses">0</span> <span id="court-guesses-word">guesses</span></h2></div>
       <div style="display:flex;gap:6px;flex-wrap:wrap"><span class="pill" id="court-ip-badge" aria-hidden="true">Same for everyone</span><button class="pill" id="btn-copy-court" type="button">📋 Copy court</button></div>
     </div>
     <div class="court-grid" id="court-grid"></div>
@@ -348,16 +354,17 @@ button,.input{min-height:44px}
 <canvas id="confetti-canvas" class="confetti" style="display:none" aria-hidden="true"></canvas>
 <script src="assets/error-boundary.js?v=d0cf8ca0"></script>
 <script src="assets/keyboard-a11y.js?v=39777a87"></script>
-<script src="assets/site-nav.js?v=1d646996" defer></script>
-<script src="assets/pwa-install.js?v=b954d9d1"></script><script src="assets/audio.js?v=52cfa0d8"></script><script type="module" src="assets/timesfm-forecast.js?v=b530064c"></script><script src="assets/pixel-avatar.js?v=6216d2ba"></script><script src="assets/team-logo.js?v=864a7981"></script><script src="assets/viral-share.js?v=bb2fc0df"></script><script src="assets/past-modern-game.js?v=46aa5254"></script><script src="/assets/twin-explainer.js?v=02828095"></script>
+<script src="assets/site-nav.js?v=0f2cbdd2" defer></script>
+<script src="assets/pwa-install.js?v=b954d9d1"></script><script src="assets/audio.js?v=52cfa0d8"></script><script type="module" src="assets/timesfm-forecast.js?v=259274e6"></script><script src="assets/pixel-avatar.js?v=6216d2ba"></script><script src="assets/team-logo.js?v=864a7981"></script><script src="assets/viral-share.js?v=bb2fc0df"></script><script src="assets/past-modern-game.js?v=46aa5254"></script><script src="/assets/twin-explainer.js?v=02828095"></script>
 <script src="assets/map-lenses.js?v=656e8d30"></script>
-<script src="assets/game-mechanics.js?v=c65d1255"></script>
-<script src="assets/play-engine.js?v=ad598379"></script>
+<script src="assets/game-mechanics.js?v=e49ec57f"></script>
+<script src="assets/play-engine.js?v=0bfe1985"></script>
 <section aria-label="More ways to play" style="max-width:880px;margin:34px auto 0;padding:0 18px;text-align:center">
   <p class="small-mono" style="text-transform:none;opacity:.85">One court, every mode: the Daily five, the Triple, endless Random and the Pack</p>
 </section>
 <footer class="site-footer">
-  <div class="site-footer__links"><a href="/">Atlas</a><a href="/play">Play</a><a href="/players">Players</a><a href="/insights">Insights</a><a href="/methods">Methods</a><a href="https://github.com/jcdavis131/vector-hoops" rel="noopener">Source</a></div>
+  <div class="site-footer__links"><a href="/">Atlas</a><a href="/play">Play</a><a href="/live">Live</a><a href="/players">Players</a><a href="/insights">Insights</a><a href="/methods">Methods</a><a href="https://github.com/jcdavis131/vector-hoops" rel="noopener">Source</a></div>
+  <div class="site-footer__links site-footer__links--more"><span>More</span><a href="/props-lab">Props Lab</a><a href="/taxonomy">Taxonomy</a><a href="/playoff-runs">Playoff Runs</a></div>
   <p class="site-footer__attribution">Every number recomputable from stats.nba.com · A <a href="https://dumbmodel.com">dumbmodel</a> project</p>
 </footer>
 <script>if('serviceWorker' in navigator){window.addEventListener('load',()=>{navigator.serviceWorker.register('/sw.js').catch(()=>{})})}</script>

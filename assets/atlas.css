@@ -650,6 +650,12 @@ table{ border-collapse: collapse; width: 100%; }
   color: var(--fg-2); text-decoration: none;
 }
 .site-footer__links a:hover{ color: var(--fg); }
+.site-footer__links--more{ margin-top: var(--s-3); gap: 8px 20px; }
+.site-footer__links--more span{
+  font-family: var(--font-display); font-size: 11px; font-weight: 600; font-stretch: 112%;
+  letter-spacing: .16em; text-transform: uppercase; color: var(--fg-3);
+}
+.site-footer__links--more a{ font-size: 10px; }
 .site-footer__attribution{ margin: 0; opacity: 1; font-size: 12px; color: var(--fg-3); }
 .site-footer__attribution a{ color: var(--fg-2); }
 

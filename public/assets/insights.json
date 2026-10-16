@@ -535,7 +535,7 @@
   {
    "slug": "contender-chemistry",
    "tldr": "Playoff rotations are way more stylistically diverse than lottery teams' — winners collect different weapons, not copies — but the spread doesn't predict how deep a run goes.",
-   "kicker": "Contender chemistry",
+   "kicker": "Contenders",
    "title": "Making the playoffs takes variety — surviving them takes matchups",
    "lede": "Mean pairwise style distance among rotation players (≥1,000 min), 14-d embedding space, 1996-97 → 2024-25. Every tier of the playoffs draws from the same diverse pool — once you're in, style spread doesn't predict how far you go. Most-diverse champs: the 2014-15 Warriors (5.78), 2019-20 Lakers (5.62), 2010-11 Mavericks (5.62); tightest: the 1999-00 Lakers (4.10).",
    "stat": "+5.0%",
@@ -577,7 +577,7 @@
   {
    "slug": "matchup-nightmares",
    "tldr": "Playoff game plans erase pure shooters — scoring, usage and efficiency all crater — while playmakers are the only ones whose role grows. You can scheme a jumper in two days; not a creator.",
-   "kicker": "Matchup nightmares",
+   "kicker": "Contenders",
    "title": "May solves shooters. It can't solve playmakers.",
    "lede": "Playoff minus regular-season pts/100 by style archetype — 4,739 rotation player-seasons, 1996-97 → 2024-25. Pure 3-point specialists lose 2.3 pts/100 in May, with usage (-1.00) and true shooting (-0.039) falling too — worst of all eight archetypes. Playmakers are the only group whose role grows (usage +0.19), and 1 in 16 playoff teams is led in usage by a playmaker, up from 1 in 250 in the regular season. The pattern fits a game-planning story — a best-of-7 gives defenses time to scheme a jumper, not a creator — but that's the best-fit mechanism, not proven causation. Loudest single-postseason swings are small-sample color, but the 2026 Finals lived the pattern. The Knicks' title run rode its playmakers: Finals MVP Jalen Brunson averaged 32.6 points (45 in the closeout), and Jose Alvarado — just 4.2 points a night but a +18.9 on/off — sparked the 29-point Game 4 comeback with 8 fourth-quarter points. Spurs rookie creator Dylan Harper's role grew all series, up to 18.0 points per game off the bench from 11.8 in the regular season. At the other end, veteran shooter Harrison Barnes was squeezed out of the rotation in the Finals after 9.9 per game in the regular season. Even Victor Wembanyama's brilliant 26-a-night couldn't scheme-proof San Antonio alone.",
    "stat": "-2.3",
@@ -634,7 +634,7 @@
   {
    "slug": "playoff-swings",
    "tldr": "Among established scorers, Donovan Mitchell owns the two biggest playoff scoring leaps of the last 30 years — and Joel Embiid owns the single biggest collapse (-14.6). May doesn't just test talent; it tests whose game translates.",
-   "kicker": "Playoff risers & fallers",
+   "kicker": "Playoffs",
    "title": "May makes some stars bigger — and shrinks others",
    "lede": "Scoring-rate change from regular season to playoffs (pts/100) for established scorers: 28+ pts/100 across 40+ regular-season games, 8+ playoff games, and a real playoff role. 334 player-seasons qualified, 1996-97 → 2025-26. The risers: Mitchell's 2025 encore (+8.6) and his 2021 surge (+8.3), Duncan's 2006 throwback (+8.2), and a +7.2 tie for fourth between LeBron's 2009 rampage and Durant's pre-injury 2019 tear. The fallers: Embiid's 2023 collapse (-14.6, the largest in the sample) and his 2022 fade (-12.6), Porzingis's hollowed-out 2025 (-13.6), Jermaine O'Neal's 2005 fade (-13.2), and Jordan Clarkson's 2018 dip (-12.0).",
    "stat": "+8.6",
@@ -701,7 +701,7 @@
   {
    "slug": "contenders-pretenders",
    "tldr": "Five teams clear both bars — a playoff-shaped rotation and a top-10 engine: the Lakers, Oklahoma City, Denver, Philadelphia and Miami. Portland has the most playoff-shaped rotation in the league and no engine to match; the champs and runners-up win on talent, not shape.",
-   "kicker": "2026-27 preview",
+   "kicker": "Contenders",
    "title": "Who looks like a contender — and who looks lottery-shaped",
    "lede": "Each projected 2026-27 rotation measured with the contender-chemistry metric (mean pairwise style distance in the 14-d embedding space), centered on the historical playoff-team mean of 5.06 — right of the line is playoff-shaped, left is lottery-shaped. Five teams clear both bars, shape and engine: the Lakers pair the second-most playoff-shaped rotation (5.56) with Dončić (38.1 pts/100); Oklahoma City (5.31, Gilgeous-Alexander 44.1); Denver (5.20, Jokić 37.1); Philadelphia (5.14, Brown 41.0 — plus LeBron, plus Embiid); and Miami (5.12, Antetokounmpo 42.7). The twist: last June's finalists both sit BELOW the line — the champion Knicks (4.80) and the Spurs (4.84) win on talent, not shape, exactly what the chemistry card predicted: variety gets you in, matchups decide the rest. The cautionary tale is Portland: the most playoff-shaped rotation in the league (5.67) with no top-10 engine — Sacramento (5.45), Utah (5.44) and Detroit (5.41) fit the same profile. At the bottom, Atlanta (4.06) has the most homogeneous rotation in the league. One asterisk from the risers & fallers card: Philadelphia's ceiling runs through Embiid, owner of the largest playoff scoring collapse of the last 30 years — and he has played 39% of possible games across the last three seasons.",
    "stat": "+0.61",
@@ -758,7 +758,7 @@
   {
    "slug": "know-your-role",
    "tldr": "33 times since 1997, a high-usage star changed teams, took a much smaller piece of the offense — and won much bigger. Iguodala gave up 10.8 points of playoff usage and won Finals MVP as a sixth man; Gordon went from Orlando's playoff go-to guy to Denver's fourth option and a championship, more efficient on less.",
-   "kicker": "Know your role",
+   "kicker": "Roles",
    "title": "The fastest way to win more is to need the ball less",
    "lede": "Usage sacrificed (regular-season or playoff USG, whichever shows the role change) against playoff rounds gained, for players who went from a team's hub (21.5+ USG) to its third option or lower on a different, much better team. Dwight Howard's −14.0 is the biggest sacrifice on a title team: Houston's hub to the Lakers' rim-runner at .677 true shooting. Rows are ranked by sacrifice × rounds gained, so JR Smith's record −14.6 sits sixth — his leap was three rounds, not four, and it came in a five-game 2011 cameo.",
    "stat": "-14.0",
@@ -824,7 +824,7 @@
   },
   {
    "slug": "the-summer-the-cap-broke",
-   "kicker": "2016 cap spike",
+   "kicker": "Cap spike",
    "title": "The summer the salary cap broke: 12 defining signings, $218M for 30.6 win shares",
    "tldr": "When the cap jumped 34% in one summer, teams bid against the new money — not production. Chandler Parsons' $22.1M bought 0.2 win shares.",
    "lede": "The 12 defining free-agent signings of summer 2016, first-year salary vs. 2016-17 win shares, era-adjusted. Only Ryan Anderson cleared the bar.",
@@ -958,7 +958,7 @@
   },
   {
    "slug": "max-money-bargains",
-   "kicker": "Underpaid",
+   "kicker": "Contracts",
    "title": "The cheat code: the very top of the pay scale is usually a bargain",
    "tldr": "James Harden's 2016-17 ($26.5M → 15.0 WS) cost $2.9M per win share in today's dollars. Eight of the ten best-value seasons are top-5 salaries — true superstars outproduce even max money.",
    "lede": "Best era-adjusted dollars-per-win-share among top-10 salaries, 6 matched seasons, minimum 5 win shares.",
@@ -1015,7 +1015,7 @@
   },
   {
    "foot": "12 qualifying moves, ΔUSG ≥ 4.0, 1999-00 → 2024-25. Pre = final pre-move season meeting the stardom bar (All-Star or 25+ USG or 20+ PPG or 8+ WS) on a team that won ≤1 playoff round. Post = first season with the new team. Team rounds from the public record; full methodology in research/invisible-stardom-FINDINGS.md.",
-   "kicker": "Invisible stardom",
+   "kicker": "Sacrifice",
    "lede": "Usage surrendered by stars whose pre-move peaks happened on bad teams — the lottery-team stardom the playoff-only dataset can't see. Jrue Holiday's −8.7 tops the list: Milwaukee All-Star to Boston's fourth option, and a ring. But Malone, Harden, Payton, Beal, Melo and Lillard gave up as much and won nothing — the rings cluster where the star joined an already-elite core.",
    "og_desc": "Jrue Holiday gave up 8.7 points of usage going from Milwaukee All-Star to Boston's fourth option — and won a ring. 12 invisible-stardom sacrifices, ranked.",
    "og_title": "The biggest sacrifices nobody saw",
@@ -1082,7 +1082,7 @@
   },
   {
    "foot": "Love: '13-14 MIN (26.1 PPG, 28.8 USG, 14.0 WS) → '14-15 CLE. Bosh: '09-10 TOR (24.0 PPG, 28.7 USG, 10.1 WS) → '10-11 MIA. Both All-Stars on non-playoff teams; both won rings. Data: Basketball-Reference, scraped 2026-10-01.",
-   "kicker": "Invisible stardom",
+   "kicker": "Sacrifice",
    "lede": "Same archetype, different economics. Kevin Love's win shares fell off a cliff (14.0 → 8.4) — real production surrendered, and it took two years to make the fit work. Chris Bosh's win shares rose (10.1 → 10.8) — he gave up shots, not wins, because the team around him was better. Two ways to disappear for a ring.",
    "og_desc": "Love gave up 5.6 win shares for a ring; Bosh gave up 5.3 points a game and his win shares went up. Two kinds of sacrifice.",
    "og_title": "Love gave up wins. Bosh gave up shots.",
@@ -1181,7 +1181,7 @@
   },
   {
    "foot": "Documented minimums from reporting, not exact counterfactuals. Salaries: Spotrac cash. Reporting: ESPN (Stein, MacMahon), HoopsRumors, NBC Sports, Basketball Network, Pounding The Rock, 2026-10-01.",
-   "kicker": "Money",
+   "kicker": "Sacrifice",
    "lede": "Dirk's 2010 discount funded the Tyson Chandler trade that anchored the 2011 title; Duncan's 2012 halving kept Diaw, Green and Mills for 2014. These pay cuts have receipts — and rings attached.",
    "og_desc": "Dirk left ~$46M documented on the table; Duncan ~$35M+. Both discounts bought championships.",
    "og_title": "The hometown discount leaderboard: millions left, rings won",
@@ -1233,7 +1233,7 @@
   },
   {
    "foot": "Payrolls: Basketball Insiders 2024-25 season snapshot (total cap). Wins: 2024-25 regular season. Cross-checked against Spotrac cap tracker.",
-   "kicker": "Money layer",
+   "kicker": "Payroll",
    "lede": "Revenue efficiency, team-level: 2024-25 total payroll (Basketball Insiders season snapshot) divided by regular-season wins. A 5.4x spread separates the most efficient checkbook from the least.",
    "og_desc": "Oklahoma City spent $159M and won 68 games. Washington spent $228M and won 18. Payroll per win, 2024-25.",
    "og_title": "The cheapest NBA wins cost $2.34M — the priciest $12.67M",
@@ -1295,7 +1295,7 @@
   },
   {
    "foot": "Family-of-four cost: Action Network 2025 NBA Game-Day Cost Index (4 tickets, food & drinks, 4 hats + 4 jerseys, parking). Wins: 2024-25 regular season. Only the 10 teams with published per-team costs are shown.",
-   "kicker": "Money layer",
+   "kicker": "Tickets",
    "lede": "Fan cost per win flips the affordability story. The cheapest arenas in the league (Action Network's 2025 family-of-four game-day index, tickets + food + merch + parking) paired with the fewest wins produce the priciest win of all.",
    "og_desc": "The cheapest arenas hide the priciest wins. Houston fans paid $22.69 per win; Washington paid $61.11. Fan cost per win, 2024-25.",
    "og_title": "Washington fans paid $61 per win — the NBA's worst fan deal",
@@ -1362,7 +1362,7 @@
   },
   {
    "foot": "Sportscasting, secondary-market data: average get-in price per team for the 2025-26 season (2024-25 prices: NYK $186.80, MEM $34.62). League average get-in: $52.86. Prices are a secondary-market snapshot for the seasons shown, not face value.",
-   "kicker": "Money layer",
+   "kicker": "Tickets",
    "lede": "Secondary-market get-in prices for the 2025-26 season (Sportscasting). The Knicks' average gate is 46% above the next-priciest team — and the Oklahoma City Thunder, fresh off 68 wins, raised prices 92.7% year over year, the biggest jump in the league.",
    "og_desc": "$213.43 average get-in at MSG vs. $22.00 in Memphis — the NBA's widest ticket-price gap, 2025-26 season.",
    "og_title": "A Knicks ticket costs 9.7x a Grizzlies ticket",
@@ -1419,7 +1419,7 @@
   },
   {
    "foot": "Final bills per Hoops Rumors, ESPN's Bobby Marks, and Spotrac estimates; 2022-23 figures are Eric Pincus near-final projections. Nominal dollars, not inflation-adjusted.",
-   "kicker": "Tax Burden",
+   "kicker": "Tax",
    "lede": "Total luxury tax paid, 2015-16 → 2024-25. The five biggest-spending franchises that never won a ring in the window — led by a team that never even reached the Finals.",
    "og_desc": "Second-biggest tax bill of the decade — and not one Finals appearance. Who paid the most for rings?",
    "og_title": "The Clippers paid $394.5M in luxury tax for zero Finals",
@@ -1461,7 +1461,7 @@
   },
   {
    "foot": "Window totals divided by rings won in-window. Lakers excluded (2020-21 bill unconfirmed). Champions per Basketball-Reference; bills per Hoops Rumors / Bobby Marks / Spotrac.",
-   "kicker": "Tax Burden",
+   "kicker": "Tax",
    "lede": "Luxury tax paid per championship won, 2015-16 → 2024-25. Four of the ten champions paid nothing the year they won; the 2025 Finals was the first in 20 years with two non-tax teams.",
    "og_desc": "Golden State paid $232.9M per ring over the same span — more than 10x Toronto's one-title bill.",
    "og_title": "Toronto's $21.4M title was the cheapest ring of the decade",
@@ -1513,7 +1513,7 @@
   },
   {
    "foot": "Repeater = tax in 3 of previous 4 seasons (Hoops Rumors repeater tracker). Warriors’ $176.9M in 2023-24 is the largest single-season bill in that window; they missed the playoffs that year.",
-   "kicker": "Repeater Tax",
+   "kicker": "Tax",
    "lede": "Repeater-rate tax paid in the window, 2015-16 → 2024-25. Golden State's four repeater seasons alone exceed the decade totals of every other franchise — and their 2019-20 duck-under bought them only one non-repeater year.",
    "og_desc": "The Warriors' repeater bills alone top every other franchise's decade total — including a record $176.9M for a season they missed the playoffs.",
    "og_title": "$531.2M in repeater tax: the price of keeping a dynasty together",
@@ -1560,7 +1560,7 @@
   },
   {
    "foot": "Boston $180M = projected tax penalties saved (Bobby Marks, June 2025; Keith Smith estimated ~$196M in total savings). GSW/LAC rows = bill reduction from 2023-24 to 2024-25 after letting Thompson/George walk to duck the apron. KAT = tax saved per the Beacon Journal. Reported by The Ringer, Boston Herald.",
-   "kicker": "Second Apron",
+   "kicker": "Tax",
    "lede": "Approximate tax savings from apron-driven moves. The second apron doesn't just charge money — it bans the mid-level exception, salary aggregation, and future pick trades, so teams are shedding stars to get under it.",
    "og_desc": "Klay walked, PG walked, KAT was dumped, Boston tore apart a title team. The new cap ends dynasties faster than money ever did.",
    "og_title": "The second apron broke up contenders in two seasons",
@@ -1597,7 +1597,7 @@
   },
   {
    "foot": "Entity count over title, tldr, lede, row labels and foot of the other 26 live cards (this card excluded), recounted 2026-10-12. A card counts once per player; full names and common short forms (Giannis, LeBron, Klay) matched. An earlier version reported a two-way tie at 5 — that count came from a 20-card draft set; the recount over the full live set is what is printed here.",
-   "kicker": "Entity grounding",
+   "kicker": "Meta",
    "lede": "Every player named across the live cards, counted. Giannis appears in most-unique, transformed, paid-to-not-play and max-money-bargains; Duncan in playoff-swings, max-money-bargains, same-jersey-smaller-role and hometown-discount; LeBron in playoff-swings, contenders-pretenders, paid-to-not-play and max-money-bargains; Klay in know-your-role, same-jersey-smaller-role, hometown-discount and apron-casualties.",
    "og_desc": "Giannis Antetokounmpo, LeBron James, Tim Duncan and Klay Thompson are each cited in 4 of 27 Insights cards — more than any other player. The noun layer, counted.",
    "og_title": "Four players anchor the Insights: Giannis, LeBron, Duncan and Klay",

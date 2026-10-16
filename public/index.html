@@ -27,7 +27,7 @@
 <meta name="twitter:image" content="https://hoops.dumbmodel.com/assets/og-1200x630.png"/>
 <link rel="stylesheet" href="assets/fonts.css?v=8f376b2a"/>
 <link rel="preload" href="/assets/vectors_search_lite.json" as="fetch" crossorigin/>
-<link rel="stylesheet" href="/assets/atlas.css?v=0e414fbd"/>
+<link rel="stylesheet" href="/assets/atlas.css?v=e01c0f2f"/>
 <style>
 /* ---------- Home: hero ---------- */
 .hero{ padding-top: clamp(48px, 9vw, 120px); padding-bottom: clamp(32px, 5vw, 64px); max-width: 1040px; }
@@ -307,7 +307,7 @@
   </section>
 
   <section class="today-strip" aria-label="Today at Daily Court">
-    <span class="today-strip__label">World <span id="today-world">––</span> · Daily Court</span>
+    <span class="today-strip__label">Daily Court · <span id="today-world">today</span></span>
     <span class="today-strip__text">Five past All-Stars, the same five for everyone. <span id="today-streak">Start your streak today.</span></span>
     <span class="today-strip__links"><a href="/play">Play today’s five →</a> · <a href="/play?mode=triple">Daily Triple (3) →</a></span>
   </section>
@@ -353,13 +353,14 @@
 </main>
 
 <footer class="site-footer">
-  <div class="site-footer__links"><a href="/">Atlas</a><a href="/play">Play</a><a href="/players">Players</a><a href="/insights">Insights</a><a href="/methods">Methods</a><a href="https://github.com/jcdavis131/vector-hoops" rel="noopener">Source</a></div>
+  <div class="site-footer__links"><a href="/">Atlas</a><a href="/play">Play</a><a href="/live">Live</a><a href="/players">Players</a><a href="/insights">Insights</a><a href="/methods">Methods</a><a href="https://github.com/jcdavis131/vector-hoops" rel="noopener">Source</a></div>
+  <div class="site-footer__links site-footer__links--more"><span>More</span><a href="/props-lab">Props Lab</a><a href="/taxonomy">Taxonomy</a><a href="/playoff-runs">Playoff Runs</a></div>
   <p class="site-footer__attribution">Every number recomputable from stats.nba.com · A <a href="https://dumbmodel.com">dumbmodel</a> project</p>
 </footer>
 
-<script defer src="/assets/site-nav.js?v=1d646996"></script>
+<script defer src="/assets/site-nav.js?v=0f2cbdd2"></script>
 <script defer src="/assets/mtnn.js?v=81d491f8"></script>
-<script defer src="/assets/atlas-map.js?v=7aad5d98"></script>
+<script defer src="/assets/atlas-map.js?v=487076d0"></script>
 <script defer src="/assets/career-trails.js?v=a0e9e836"></script>
 <script src="assets/site-facts.js?v=cbb639f4" defer></script>
 <script>
@@ -371,7 +372,7 @@ if('serviceWorker' in navigator){ window.addEventListener('load', function(){ na
    retired Everyday game's vh_weekStreak until Play migrates it on next visit. */
 (function(){ try{
   var wEl=document.getElementById('today-world');
-  if(wEl){ var iso=new Date().toISOString().slice(0,10); wEl.textContent=parseInt(iso.slice(5,7),10)+'-'+iso.slice(8,10); }
+  if(wEl){ var iso=new Date().toISOString().slice(0,10); var MON=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']; wEl.textContent=MON[parseInt(iso.slice(5,7),10)-1]+' '+parseInt(iso.slice(8,10),10); }
   var el=document.getElementById('today-streak'); if(!el) return;
   var rec=null;
   try{ rec=JSON.parse(localStorage.getItem('vh.streak.v2')||'null'); }catch(e){}
