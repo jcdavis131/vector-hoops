@@ -242,7 +242,7 @@
         '<div><dt>Paint → perimeter</dt><dd>' + p.x.toFixed(3) + '</dd></div>' +
         '<div><dt>Scoring load</dt><dd>' + p.y.toFixed(3) + '</dd></div>' +
       '</dl>' +
-      '<a class="readout__link" href="/players">Open player directory →</a>';
+      '<a class="readout__link" href="/players?q=' + encodeURIComponent(p.n) + '">Open ' + esc(p.n) + ' dossier →</a>';
 
     if (!window.VHMtnn || !window.VHMtnn.isReady()) {
       body.innerHTML = [0, 1, 2].map(function (k) {

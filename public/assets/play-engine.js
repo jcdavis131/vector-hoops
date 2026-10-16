@@ -804,6 +804,24 @@
       }catch{ return `${i+1}. —`; }
     }).join(' • ');
 
+    /* Gap 10 fix: the reveal is a dead end no more. Deep links for the twin:
+       dossier via the players directory search (?q=), atlas via the ?id=
+       P-index deep link the atlas already reads on load (search-lite order). */
+    function twinLinks(){
+      try{
+        var tn=(closest.entry.n||'').replace(/</g,'&lt;');
+        var links='<a href="/players?q='+encodeURIComponent(closest.entry.n||'')+'">Open '+tn+' dossier \u2192</a>';
+        var pidx=-1;
+        try{
+          var sl=VHPastModern.state().searchLite, arr=sl&&(sl.players||sl);
+          if(arr) for(var k=0;k<arr.length;k++){ if(arr[k]&&arr[k].i===closest.entry.i){ pidx=k; break; } }
+        }catch(e){}
+        if(pidx>=0) links+='<a href="/?id='+pidx+'#atlas">See '+(closest.entry.s||'').replace(/</g,'&lt;')+' on the atlas \u2192</a>';
+        return '<div style="margin-top:10px;display:flex;gap:16px;flex-wrap:wrap;font-size:13px">'+links+'</div>';
+      }catch(e){ return ''; }
+    }
+    var twinLinksHtml=twinLinks();
+
     if(isPack){
       const ps=VHPastModern.getPackState();
       // save result for current slot if not already saved (idempotent)
@@ -819,9 +837,9 @@
       const nextLabel = isLast ? 'View Pack Summary' : `Next — ${ps.index+2}/${ps.size} →`;
 
       if(won){
-        resEl.innerHTML=`<div class="card" style="border-color:var(--green)"><h3 class="hd">✅ Solved in ${G.guesses.length}/6 — ${st.target.n} → ${closest.entry.n}</h3>${window.VHGameMechanics?`<div class="result-stars" aria-label="${VHGameMechanics.starsFor(G.guesses.length,6)} of 3 stars">${VHGameMechanics.starsHTML(VHGameMechanics.starsFor(G.guesses.length,6))}</div>`:''}<div style="font-size:13px;line-height:1.5">Answer: ${closest.entry.n} ${(closest.sim*100).toFixed(1)}%<br>Top 5: ${sortedTop}</div><div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap"><button class="btn btn-primary" id="btn-next-pack">${nextLabel}</button><button class="btn" id="btn-pack-share-mid">Share</button></div></div>`;
+        resEl.innerHTML=`<div class="card" style="border-color:var(--green)"><h3 class="hd">✅ Solved in ${G.guesses.length}/6 — ${st.target.n} → ${closest.entry.n}</h3>${window.VHGameMechanics?`<div class="result-stars" aria-label="${VHGameMechanics.starsFor(G.guesses.length,6)} of 3 stars">${VHGameMechanics.starsHTML(VHGameMechanics.starsFor(G.guesses.length,6))}</div>`:''}<div style="font-size:13px;line-height:1.5">Answer: ${closest.entry.n} ${(closest.sim*100).toFixed(1)}%<br>Top 5: ${sortedTop}</div>${twinLinksHtml}<div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap"><button class="btn btn-primary" id="btn-next-pack">${nextLabel}</button><button class="btn" id="btn-pack-share-mid">Share</button></div></div>`;
       } else {
-        resEl.innerHTML=`<div class="card" style="border-color:var(--verm)"><h3 class="hd">❌ ${st.target.n} → ${closest.entry.n}</h3><div style="font-size:13px;line-height:1.5">Closest: ${closest.entry.n} ${(closest.sim*100).toFixed(1)}%<br>Top 5: ${sortedTop}<br><span style="opacity:.7">You can still continue — pack counts failed as 0 in battle.</span></div><div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap"><button class="btn btn-primary" id="btn-next-pack">${nextLabel}</button><button class="btn" id="btn-pack-share-mid">Share</button></div></div>`;
+        resEl.innerHTML=`<div class="card" style="border-color:var(--verm)"><h3 class="hd">❌ ${st.target.n} → ${closest.entry.n}</h3><div style="font-size:13px;line-height:1.5">Closest: ${closest.entry.n} ${(closest.sim*100).toFixed(1)}%<br>Top 5: ${sortedTop}<br><span style="opacity:.7">You can still continue — pack counts failed as 0 in battle.</span></div>${twinLinksHtml}<div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap"><button class="btn btn-primary" id="btn-next-pack">${nextLabel}</button><button class="btn" id="btn-pack-share-mid">Share</button></div></div>`;
       }
 
       const nextBtn=document.getElementById('btn-next-pack');
@@ -894,7 +912,7 @@
           // streak chime lands after the win arpeggio — a cascade, not a pile
           try{ if(window.VHAudio) setTimeout(()=>VHAudio.play('streak'), 950); }catch{}
         }
-        resEl.innerHTML=`<div class="card" style="border-color:var(--green)"><h3 class="hd">✅ Solved in ${G.guesses.length}/6 — ${st.target.n} → ${closest.entry.n}</h3>${window.VHGameMechanics?`<div class="result-stars" aria-label="${VHGameMechanics.starsFor(G.guesses.length,6)} of 3 stars">${VHGameMechanics.starsHTML(VHGameMechanics.starsFor(G.guesses.length,6))}</div>`:''}<div style="font-size:13px">Answer: ${closest.entry.n} ${closest.entry.s} ${(closest.sim*100).toFixed(1)}%<br>Top 5: ${sortedTop}</div><div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap"><button class="btn btn-primary" id="btn-next-slot">Next slot →</button><button class="btn" id="btn-view-court">View court</button></div></div>`;
+        resEl.innerHTML=`<div class="card" style="border-color:var(--green)"><h3 class="hd">✅ Solved in ${G.guesses.length}/6 — ${st.target.n} → ${closest.entry.n}</h3>${window.VHGameMechanics?`<div class="result-stars" aria-label="${VHGameMechanics.starsFor(G.guesses.length,6)} of 3 stars">${VHGameMechanics.starsHTML(VHGameMechanics.starsFor(G.guesses.length,6))}</div>`:''}<div style="font-size:13px">Answer: ${closest.entry.n} ${closest.entry.s} ${(closest.sim*100).toFixed(1)}%<br>Top 5: ${sortedTop}</div>${twinLinksHtml}<div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap"><button class="btn btn-primary" id="btn-next-slot">Next slot →</button><button class="btn" id="btn-view-court">View court</button></div></div>`;
         if(celebrateNew) celebrateWin();
       } else {
         try{ if(window.VHAudio) VHAudio.play('reveal'); }catch{}
@@ -910,7 +928,7 @@
             }
           }catch{}
         }
-        resEl.innerHTML=`<div class="card" style="border-color:var(--verm)"><h3 class="hd">❌ Revealed — ${st.target.n} → ${closest.entry.n}</h3><div style="font-size:13px">Closest: ${closest.entry.n} ${(closest.sim*100).toFixed(1)}%<br>Top 5: ${sortedTop}</div><div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap"><button class="btn btn-primary" id="btn-next-slot">Next slot →</button><button class="btn" id="btn-view-court">View court</button></div></div>`;
+        resEl.innerHTML=`<div class="card" style="border-color:var(--verm)"><h3 class="hd">❌ Revealed — ${st.target.n} → ${closest.entry.n}</h3><div style="font-size:13px">Closest: ${closest.entry.n} ${(closest.sim*100).toFixed(1)}%<br>Top 5: ${sortedTop}</div>${twinLinksHtml}<div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap"><button class="btn btn-primary" id="btn-next-slot">Next slot →</button><button class="btn" id="btn-view-court">View court</button></div></div>`;
       }
       const nextSlotBtn=document.getElementById('btn-next-slot');
       if(nextSlotBtn){ nextSlotBtn.addEventListener('click',()=>{
