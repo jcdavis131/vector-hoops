@@ -393,7 +393,7 @@
         const cls = `court-card ${isActive?'is-active':''} ${isSolved?'is-solved':''} ${isFailed?'is-failed':''}`;
         const badge = isSolved? '✅': isFailed? '❌' : sd? `${sd.cnt}/6` : '▶';
         const arch = ARCH[p.c%ARCH.length];
-        return `<div class="${cls}" data-slot="${i}"><div class="court-slot">Slot ${i+1} • ${arch}${window.VHGameMechanics?VHGameMechanics.suitTagHTML(p.n,p.s,p.i):''} ${isActive? '• NOW':''}</div><div class="court-name">${p.n} ${p.s}</div><div class="court-meta">${sd? (isSolved? `Won in ${sd.cnt}/6` : `${sd.cnt}/6 tries`): 'Not started'}</div><span class="court-badge pill ${isSolved?'pill-green':''}">${badge}</span></div>`;
+        return `<div class="${cls}" data-slot="${i}"><div class="court-slot">Slot ${i+1} • ${arch} ${window.VHGameMechanics?VHGameMechanics.suitTagHTML(p.n,p.s,p.i):''} ${isActive? '• NOW':''}</div><div class="court-name">${p.n} ${p.s}</div><div class="court-meta">${sd? (isSolved? `Won in ${sd.cnt}/6` : `${sd.cnt}/6 tries`): 'Not started'}</div><span class="court-badge pill ${isSolved?'pill-green':''}">${badge}</span></div>`;
       }).join('');
       grid.querySelectorAll('.court-card').forEach(el=>{
         el.addEventListener('click',()=>{
@@ -726,7 +726,7 @@
       $('#header-mode-label').textContent='DAILY COURT • 5× PAST → MODERN';
     }
     $('#streak-pill').textContent='streak '+v2Streak();
-    $('#puzzle-day-label').textContent= st.isPack ? `Pack ${st.packCode.slice(0,24)}…` : st.isDaily? `WORLD ${parseInt(st.dayKey.slice(5,7),10)}-${st.dayKey.slice(8,10)} · Daily Court · 5 puzzles` : st.dayKey;
+    $('#puzzle-day-label').textContent= st.isPack ? `Pack ${st.packCode.slice(0,24)}…` : st.isDaily? `${['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][parseInt(st.dayKey.slice(5,7),10)-1]} ${parseInt(st.dayKey.slice(8,10),10)} · Daily Court · 5 puzzles` : st.dayKey;
     updateStatusBar(); projectFrame(); draw();
   }
   function renderGuesses(){
@@ -739,12 +739,12 @@
         const rankLabel=rankNum===0? '✅ #1 WIN': '#'+(rankNum+1);
         let warm='first';
         if(idx>0){
-          try{
-            const prevRank = G.guesses[idx-1] ? G.guesses[idx-1].rank : 9999;
-            if(typeof rankNum==='number' && typeof prevRank==='number'){
-              warm = rankNum < prevRank ? '🔥 warmer' : rankNum > prevRank ? '❄️ colder' : 'same';
-            }
-          }catch{}
+          /* Warmer/colder compares the similarity the player actually sees —
+             never the rank. Rank and similarity share one ordering, but rank
+             can go stale through old saves while sim is always recomputed,
+             and a tag that contradicts the visible % reads as a bug. */
+          const prevSim=(function(){ var p=G.guesses[idx-1]; return (p&&typeof p.sim==='number'&&!isNaN(p.sim))?p.sim:simVal; })();
+          warm = simVal > prevSim ? '🔥 warmer' : simVal < prevSim ? '❄️ colder' : 'same';
         }
         const isWin=rankNum===0;
         const archName = (typeof g.c==='number' && ARCH[g.c%ARCH.length]) ? ARCH[g.c%ARCH.length] : '—';
