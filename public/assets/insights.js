@@ -42,7 +42,7 @@
   }
 
   function load() {
-    return fetch('assets/insights.json?v=a6a894c6').then(function (r) {
+    return fetch('assets/insights.json?v=19b59a90').then(function (r) {
       if (!r.ok) throw new Error('insights.json ' + r.status);
       return r.json();
     });
