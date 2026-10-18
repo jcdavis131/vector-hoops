@@ -9,7 +9,6 @@ Gate: python3 scripts/check_site_facts.py  (fails if the sheet is stale)
 
 Stdlib only. Every fact names its source file so a reader can recompute.
 """
-
 import json
 from pathlib import Path
 
@@ -17,11 +16,11 @@ ROOT = Path(__file__).resolve().parent.parent
 
 
 def A(p):
-    return ROOT / "assets" / p
+    return str(ROOT / "assets" / p)
 
 
 def load(name):
-    with A(name).open(encoding="utf-8") as f:
+    with open(A(name), encoding="utf-8") as f:
         return json.load(f)
 
 
@@ -57,8 +56,8 @@ def compute_facts():
         "recall_at_10": meta["test_recall_at_10"],
         "purity_at_20": round(meta["purity_at_20"], 4),
         "archetype_top1": round(meta["archetype_top1_acc"], 4),
-        "onnx_bytes": A("mtnn.onnx").stat().st_size,
-        "embeddings_bytes": A("mtnn_embeddings.f32").stat().st_size,
+        "onnx_bytes": Path(A("mtnn.onnx")).stat().st_size,
+        "embeddings_bytes": Path(A("mtnn_embeddings.f32")).stat().st_size,
         "eligibility": vectors["eligibility"]["method"],
         "drift_pairs": len(drift["pairs"]),
         "drift_biggest": {
@@ -67,7 +66,10 @@ def compute_facts():
             "rotation_deg": pairs[0]["rotationDeg"],
             "shared_players": pairs[0]["sharedPlayers"],
         },
-        "drift_top5": [{"from": p["from"], "to": p["to"], "rotation_deg": p["rotationDeg"]} for p in pairs[:5]],
+        "drift_top5": [
+            {"from": p["from"], "to": p["to"], "rotation_deg": p["rotationDeg"]}
+            for p in pairs[:5]
+        ],
         "trails_players": len(trails),
         "insights_cards": len(insights["insights"]),
         "ghost_games": len(ghost["g"]),
@@ -83,7 +85,7 @@ def compute_facts():
 
 def main():
     out = compute_facts()
-    with A("site_facts.json").open("w", encoding="utf-8") as f:
+    with open(A("site_facts.json"), "w", encoding="utf-8") as f:
         json.dump(out, f, indent=1, sort_keys=False)
         f.write("\n")
     print("wrote assets/site_facts.json —", len(out["facts"]), "facts")
