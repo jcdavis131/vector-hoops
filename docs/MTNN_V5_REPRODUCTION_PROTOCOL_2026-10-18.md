@@ -1,9 +1,8 @@
 # MTNN v5 Champion Reproduction Protocol — pre-registered 2026-10-18
 
-Status: PRE-REGISTERED. No training run has started. Every number below was
-written before the first epoch. If the champion's numbers do not reproduce
-within the stated tolerance, the finding is "does not reproduce" — no tuning,
-no re-running with different flags until they do.
+Status: PRE-REGISTERED 2026-10-18 ~03:28 UTC. No training run had started.
+Every number in §§1–9 was written before the first epoch. §10 (results)
+was appended after training completed, without altering §§1–9.
 
 ## 1. Objective
 
@@ -129,3 +128,47 @@ legacy paths) — verified, no change needed.
 Draft PR with retrained + promoted artifacts and a green served-model
 check. **No merge without Cameron's explicit word** (production promotion
 gate). If §4 fails: no PR with artifacts; the report is the deliverable.
+
+## 10. Results (appended 2026-10-18 ~03:45 UTC — §§1–9 unchanged)
+
+**FINDING: does not reproduce.** Per §4, no tuning was attempted.
+
+| seed | test recall@10 | purity@20 | CQS | promote verdict |
+|------|---------------|-----------|-----|-----------------|
+| 7 | 0.7020 | 0.7430 | 68.36 | refused: recall 0.702 < floor 0.773 |
+| 13 | 0.8500 | 0.7385 | 71.08 | refused: purity 0.738 < floor 0.767 |
+| 21 | 0.7840 | 0.7567 | 69.81 | refused: purity 0.757 < floor 0.767 |
+| **mean** | **0.7787** | **0.7461** | **69.75** | — |
+| target | 0.846 ± 0.062 → [0.784, 0.908] | 0.7834 ± 0.011 → [0.7724, 0.7944] | ≥ 78.24 | — |
+
+Mean recall 0.7787 misses the band by 0.005; mean purity 0.7461 misses by
+0.026. No seed cleared `should_promote` unforced, so per §5 nothing was
+promoted and no artifacts were exported. The served-model gate stays red
+honestly.
+
+Structural identity (seed 13, best recall, vs served `mtnn_embeddings.f32`):
+linear CKA **0.7741**; top-1 neighbor identical on **32.8%** of 12,966
+probes; top-3 set identical on **21.3%**. The retrained space is
+substantially different geometry, not just noisier metrics.
+
+Why (evidence-grounded, not tuned):
+1. **The champion's exact setup is unrecoverable.** The champion commit
+   (53d35adb) is not in this repo's history — the recipe rests on notes,
+   not a recorded report. At least two runs claim to be the deployed model:
+   the 2026-07-25 no-checkpoint arm (recall 0.846 / purity 0.7834) and the
+   2026-07-30/31 smoothed-checkpoint run per `BASELINE_PROVENANCE`
+   (CQS 77.46 / recall 0.844 / purity 0.7675); the served f32 was replaced
+   again on 2026-08-13. There is no single "v5 champion" to reproduce —
+   the lineage was lost before this task began, which is exactly why the
+   gate is red.
+2. **Data drift** (§3 caveat): 73 features today vs 130/142 in July.
+3. **Device** (§6 caveat): CPU vs CUDA reduction order.
+4. **Seed luck**: the incumbent's 0.846 was a best-of-16 draw; my seed 7
+   drew 0.702. Cross-seed sd here was 0.074 vs the historical 0.031 —
+   the current matrix+CPU setup is noisier than the baseline assumes.
+
+What this unblocks: the §8 harness fix is real, tested, and independent of
+the reproduction outcome — it ships as its own draft PR. The lineage gate
+cannot be satisfied by retraining the July recipe; it needs either the
+original run directory (still missing) or a deliberate decision to promote
+a *new* champion through the gates as a replacement (Cameron's call).
