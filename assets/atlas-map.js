@@ -35,7 +35,7 @@
   var W = 0, H = 0, DPR = 1;
   var PAD = 28;
   var grid = null, GX = 64, GY = 40;
-  var selected = -1, peers = [], hover = -1, filterArch = -1;
+  var selected = -1, peers = [], hover = -1, filterArch = -1, twinBands = null;
   var teams = [], hlTeam = -1, hlRoster = [], hlRosterSet = null;
   var cycleTimer = null, cycleOn = false, nameToLatest = {};
   var GOLD = '#e8b500', CYCLE_MS = 6000;
@@ -263,7 +263,9 @@
         '<td class="peer-name">' + esc(q.n) + '</td>' +
         '<td class="num">' + esc(fmtSeason(q.s)) + '</td>' +
         '<td class="hide-s">' + esc(ARCHETYPES[q.c] || '—') + '</td>' +
-        '<td class="r num peer-sim">' + pr.sim.toFixed(3) + '</td></tr>';
+        '<td class="r num peer-sim">' + (window.VHTwinBands
+          ? window.VHTwinBands.inlineHTML(twinBands, pr.sim)
+          : pr.sim.toFixed(3)) + '</td></tr>';
     }).join('');
   }
 
@@ -519,6 +521,14 @@
 
   readColors();
   resize();
+  // Uncertainty grammar (Part 2 panel: Hullman): load twin bands once; the
+  // peers table shows band labels, and re-renders when the bands arrive.
+  if (window.VHTwinBands) {
+    window.VHTwinBands.load().then(function (b) {
+      twinBands = b;
+      if (selected >= 0) renderReadout();
+    });
+  }
   window.addEventListener('resize', function () { clearTimeout(resize._t); resize._t = setTimeout(resize, 120); });
   if (window.matchMedia) {
     var mq = window.matchMedia('(prefers-color-scheme: light)');

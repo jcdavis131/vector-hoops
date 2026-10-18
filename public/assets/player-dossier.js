@@ -45,6 +45,14 @@
     return cache;
   }
 
+  var bandsCache = null;
+  function loadBands() {
+    if (!bandsCache) {
+      bandsCache = (global.VHTwinBands ? global.VHTwinBands.load() : Promise.resolve(null));
+    }
+    return bandsCache;
+  }
+
   function h4(t) { return '<h4 class="vh-dossier__h4">' + esc(t) + '</h4>'; }
 
   function fingerprintBars(fp) {
@@ -66,15 +74,16 @@
       '(z-scores). Orange = above average.</p>';
   }
 
-  function twinsSection(tw) {
+  function twinsSection(tw, bands) {
     if (!tw) {
       return '<p class="vh-dos__note">No era twin charted yet — twin pool covers ' +
         'careers with 4+ seasons.</p>';
     }
     var t = tw.t;
+    var band = global.VHTwinBands ? global.VHTwinBands.chipHTML(bands, t.sim) : '';
     var html = '<div class="vh-dos__twin"><div class="vh-dos__twin-name">' +
       esc(t.n) + ' <span class="vh-dos__dim">' + esc(t.s) + '</span></div>' +
-      '<div class="vh-dos__twin-sim">similarity ' + t.sim.toFixed(3) + '</div></div>';
+      '<div class="vh-dos__twin-sim">' + band + '</div></div>';
     if (tw.why) {
       var w = tw.why;
       if (w.sh && w.sh.length) {
@@ -91,15 +100,16 @@
     }
     if (tw.t5 && tw.t5.length > 1) {
       html += '<div class="vh-dos__top5">' + tw.t5.slice(1).map(function (c) {
+        var cb = global.VHTwinBands ? global.VHTwinBands.inlineHTML(bands, c.sim) : '';
         return '<div class="vh-dos__row2"><span>' + esc(c.n) +
           ' <span class="vh-dos__dim">' + esc(c.s) + '</span></span>' +
-          '<span class="vh-dos__dim">' + c.sim.toFixed(3) + '</span></div>';
+          '<span class="vh-dos__dim">' + cb + '</span></div>';
       }).join('') + '</div>';
     }
     return html;
   }
 
-  function render(d) {
+  function render(d, bands) {
     var html = '';
     var meta = d.sp[0] + ' \u2192 ' + d.sp[1] + ' \u00b7 ' +
       d.ns + ' season' + (d.ns === 1 ? '' : 's') +
@@ -127,7 +137,7 @@
     }
 
     html += h4('Era twin');
-    html += twinsSection(d.tw);
+    html += twinsSection(d.tw, bands);
 
     html += h4('How his game changed');
     if (d.mu.length || d.md.length) {
@@ -145,9 +155,10 @@
 
     html += h4('The neighborhood');
     html += '<div class="vh-dos__top5">' + d.nb.map(function (n) {
+      var nb = global.VHTwinBands ? global.VHTwinBands.inlineHTML(bands, n.sim) : '';
       return '<div class="vh-dos__row2"><span>' + esc(n.n) +
         ' <span class="vh-dos__dim">' + esc(n.s) + '</span></span>' +
-        '<span class="vh-dos__dim">' + n.sim.toFixed(3) + '</span></div>';
+        '<span class="vh-dos__dim">' + nb + '</span></div>';
     }).join('') + '</div>';
     html += '<p class="vh-dos__note">Five nearest player-seasons to his signature ' +
       'season (' + esc(d.ss) + ') in the 14-d style space.</p>';
@@ -179,6 +190,11 @@
     '.vh-dos__twin{display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin:6px 0}' +
     '.vh-dos__twin-name{font-weight:700;font-size:15px}' +
     '.vh-dos__twin-sim{opacity:.7;font-size:12px;font-variant-numeric:tabular-nums}' +
+    /* uncertainty grammar (Part 2 panel: Hullman) — band labels, number on tap */
+    '.twin-band{display:inline}.twin-band__summary{display:inline;cursor:pointer}' +
+    '.twin-band--inline{display:inline}' +
+    '.twin-band__num{font-variant-numeric:tabular-nums;opacity:.75;font-size:.92em}' +
+    '.twin-band__label{opacity:.7}' +
     '.vh-dos__top5{display:grid;gap:2px;margin:6px 0}' +
     '.vh-dos__row2{display:flex;justify-content:space-between;gap:8px;font-size:13px}' +
     '.vh-dos__prov{opacity:.55;font-size:11.5px;border-top:1px solid rgba(128,128,128,.25);' +
@@ -200,11 +216,12 @@
   global.VHPlayerDossier = {
     renderInto: function (bodyEl, name) {
       injectCss();
-      return load().then(function (all) {
+      return Promise.all([load(), loadBands()]).then(function (res) {
+        var all = res[0], bands = res[1];
         META = all._meta;
         var d = all.dossiers[slug(name)];
         if (!d) return false;
-        bodyEl.innerHTML = render(d);
+        bodyEl.innerHTML = render(d, bands);
         return true;
       }, function () { return false; });
     }
