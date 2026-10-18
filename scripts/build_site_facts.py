@@ -10,10 +10,13 @@ Gate: python3 scripts/check_site_facts.py  (fails if the sheet is stale)
 Stdlib only. Every fact names its source file so a reader can recompute.
 """
 import json
-import os
+from pathlib import Path
 
-ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..")
-A = lambda p: os.path.join(ROOT, "assets", p)
+ROOT = Path(__file__).resolve().parent.parent
+
+
+def A(p):
+    return str(ROOT / "assets" / p)
 
 
 def load(name):
@@ -53,8 +56,8 @@ def compute_facts():
         "recall_at_10": meta["test_recall_at_10"],
         "purity_at_20": round(meta["purity_at_20"], 4),
         "archetype_top1": round(meta["archetype_top1_acc"], 4),
-        "onnx_bytes": os.path.getsize(A("mtnn.onnx")),
-        "embeddings_bytes": os.path.getsize(A("mtnn_embeddings.f32")),
+        "onnx_bytes": Path(A("mtnn.onnx")).stat().st_size,
+        "embeddings_bytes": Path(A("mtnn_embeddings.f32")).stat().st_size,
         "eligibility": vectors["eligibility"]["method"],
         "drift_pairs": len(drift["pairs"]),
         "drift_biggest": {
