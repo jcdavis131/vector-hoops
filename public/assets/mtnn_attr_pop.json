@@ -1,6 +1,9 @@
 {
   "lineage": {
-    "run_id": "july-v5-a4918f09"
+    "run_id": "pre-v5-48d-2026-07-11",
+    "stale": true,
+    "not_from_served_net": true,
+    "origin": "48-d checkpoint export built 2026-07-11 (checkpoint bytes 2262906); not the served 64-d v5 july-v5-a4918f09"
   },
   "built": "2026-07-11",
   "checkpoint": {

@@ -43,6 +43,6 @@
   "adoption": {
     "kind": "served-incumbent",
     "git_blob_f32": "a4918f09dfbd04120ecad5556a0736f65fa0ef6d",
-    "note": "mtnn_jacobian.json / mtnn_attr_pop.json still carry 2026-07-11/14 48-d checkpoint stamps; they are the files the site serves today. run_id names this served tree. A future promote+export replaces them."
+    "note": "mtnn_jacobian.json / mtnn_attr_pop.json are 48-d Jul 11\u201314 exports, marked not_from_served_net, not this run. A future promote+export replaces them from the served net."
   }
 }

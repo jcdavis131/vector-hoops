@@ -65,6 +65,37 @@ def test_the_committed_served_bundle_passes():
     assert csm.check(ROOT) == []
 
 
+def test_the_committed_jacobian_and_attr_pop_are_marked_not_from_served_net():
+    for name in ("mtnn_jacobian.json", "mtnn_attr_pop.json"):
+        lin = json.loads((ROOT / "assets" / name).read_text(encoding="utf-8"))["lineage"]
+        assert lin["stale"] is True and lin["not_from_served_net"] is True
+        assert lin["run_id"] != sm.INCUMBENT_RUN_ID
+
+
+def test_a_forced_lineage_with_a_different_sha_fails(site):
+    """Hand-written forced adoption of a non-incumbent f32 fails the check, not only the recorder."""
+    for rel in csm.SERVED_DIRS:
+        path = site / rel / sm.LINEAGE
+        lin = json.loads(path.read_text(encoding="utf-8"))
+        lin["forced"] = True
+        lin["force_reason"] = "sneak in a new model"
+        lin["checkpoint_sha256"] = None
+        lin["adoption"] = {"kind": "served-incumbent"}
+        path.write_text(json.dumps(lin), encoding="utf-8")
+    why = problems(site)
+    assert "forced adoption is pinned to the July v5 incumbent" in why
+    assert str(lin["embedding_f32_sha256"])[:12] in why
+    assert csm.main(["--root", str(site)]) == 1
+
+
+def test_a_stale_sidecar_claiming_the_served_run_fails(site):
+    (site / "assets" / "mtnn_jacobian.json").write_text(
+        json.dumps({"lineage": {"run_id": "r1", "stale": True, "not_from_served_net": True}}),
+        encoding="utf-8",
+    )
+    assert "assets/mtnn_jacobian.json is marked not-from-served-net but claims run 'r1'" in problems(site)
+
+
 def test_record_served_lineage_refuses_a_different_f32(tmp_path, monkeypatch, capsys):
     spec = importlib.util.spec_from_file_location(
         "record_served_lineage", ROOT / "scripts" / "record_served_lineage.py"

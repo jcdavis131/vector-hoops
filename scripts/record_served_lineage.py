@@ -8,10 +8,13 @@ nothing in this repo is a promote.py run directory that can rewrite it.
 This script does not train, promote, or re-export. It hashes the served f32
 and vectors.json row order, copies the metrics already in mtnn_meta.json, and
 stamps served_model.SIDECARS with that run id so check_served_model.py can
-verify the tree that is actually deployed.
+verify the tree that is actually deployed. mtnn_jacobian.json and
+mtnn_attr_pop.json are the 48-d Jul 11–14 exports; they are marked stale /
+not_from_served_net instead of claiming the v5 run id.
 
 It refuses any f32 other than the pinned incumbent. A replacement model still
 has to go through pipeline/promote.py + export_mtnn_embeddings.py.
+check_served_model.py also enforces that pin on forced adoption.
 
 Stdlib only.
 
@@ -24,6 +27,7 @@ Usage:
 from __future__ import annotations
 
 import json
+import re
 import sys
 from pathlib import Path
 
@@ -34,15 +38,34 @@ import served_model as sm  # noqa: E402
 
 ASSETS = ROOT / "assets"
 
-# git rev-parse HEAD:assets/mtnn_embeddings.f32 on origin/master (a4918f09).
-# sha256 of those bytes; the check compares this, not the git blob id.
-INCUMBENT_F32_SHA256 = "2574ef581ac3d3ee0f793447c26c5c48b82ec309985d6afcf177ed08510458f4"
-RUN_ID = "july-v5-a4918f09"
+INCUMBENT_F32_SHA256 = sm.INCUMBENT_F32_SHA256
+RUN_ID = sm.INCUMBENT_RUN_ID
 FORCE_REASON = (
     "Adopted the July 2026 v5 incumbent already served on master "
     "(git blob a4918f09). The original promote.py run directory is not in this "
     "repo; lineage records the served bytes. Not a new promotion."
 )
+
+# These two JSON files were exported from 48-d checkpoints, not the served 64-d
+# v5. Stamping them with july-v5-a4918f09 would tell network-viz they describe
+# the shipped net. The check requires them to be marked not_from_served_net
+# and to name a different run_id.
+STALE_SIDECARS = {
+    "mtnn_jacobian.json": {
+        "run_id": "pre-v5-48d-2026-07-14",
+        "origin": (
+            "48-d checkpoint export built 2026-07-14 (dEmb 48, checkpoint "
+            "mtime 1784057599); not the served 64-d v5 july-v5-a4918f09"
+        ),
+    },
+    "mtnn_attr_pop.json": {
+        "run_id": "pre-v5-48d-2026-07-11",
+        "origin": (
+            "48-d checkpoint export built 2026-07-11 (checkpoint bytes 2262906); "
+            "not the served 64-d v5 july-v5-a4918f09"
+        ),
+    },
+}
 
 
 def _stamp_sidecar(path: Path, run_id: str) -> None:
@@ -77,6 +100,33 @@ def _stamp_sidecar(path: Path, run_id: str) -> None:
         path.write_text('{"lineage":{"run_id":' + rid + "}," + raw[1:], encoding="utf-8")
         return
     raise SystemExit(f"{path.name}: does not start with '{{'")
+
+
+def _stale_lineage(run_id: str, origin: str) -> dict:
+    return {
+        "run_id": run_id,
+        "stale": True,
+        "not_from_served_net": True,
+        "origin": origin,
+    }
+
+
+def _stamp_stale_sidecar(path: Path, run_id: str, origin: str) -> None:
+    """Mark a sidecar as not from the served net without reformatting the rest."""
+    raw = path.read_text(encoding="utf-8")
+    data = json.loads(raw)
+    if not isinstance(data, dict):
+        raise SystemExit(f"{path.name}: not a JSON object")
+    want = _stale_lineage(run_id, origin)
+    existing = data.get("lineage")
+    if existing == want:
+        return
+    inner = json.dumps(want, indent=2).replace("\n", "\n  ")
+    replacement = '  "lineage": ' + inner
+    new, n = re.subn(r'  "lineage": \{.*?\n  \}', replacement, raw, count=1, flags=re.S)
+    if n != 1:
+        raise SystemExit(f"{path.name}: could not replace lineage block")
+    path.write_text(new, encoding="utf-8")
 
 
 def _patch_meta(meta_path: Path, run_id: str, f32_url: str) -> dict:
@@ -175,9 +225,9 @@ def main() -> int:
             "kind": "served-incumbent",
             "git_blob_f32": "a4918f09dfbd04120ecad5556a0736f65fa0ef6d",
             "note": (
-                "mtnn_jacobian.json / mtnn_attr_pop.json still carry 2026-07-11/14 "
-                "48-d checkpoint stamps; they are the files the site serves today. "
-                "run_id names this served tree. A future promote+export replaces them."
+                "mtnn_jacobian.json / mtnn_attr_pop.json are 48-d Jul 11–14 "
+                "exports, marked not_from_served_net, not this run. A future "
+                "promote+export replaces them from the served net."
             ),
         },
     }
@@ -187,7 +237,11 @@ def main() -> int:
         if not path.is_file():
             print(f"record_served_lineage: missing sidecar {name}", file=sys.stderr)
             return 1
-        _stamp_sidecar(path, RUN_ID)
+        stale = STALE_SIDECARS.get(name)
+        if stale:
+            _stamp_stale_sidecar(path, stale["run_id"], stale["origin"])
+        else:
+            _stamp_sidecar(path, RUN_ID)
     print(f"wrote {sm.LINEAGE} for run {RUN_ID} ({rows}x{dim}, sha256 {got[:12]})")
     return 0
 
