@@ -144,10 +144,14 @@
 
     // points — revealed from the centre outward during the opening
     var n = P.length, rad = W < 520 ? 1.05 : 1.25;
+    // LOD hook (atlas-regions.js): uniform stride subsample with a visible note.
+    // Unset (0/undefined) = every point, the historical behavior.
+    var cap = window.__vhAtlasCap > 0 ? window.__vhAtlasCap : 0;
+    var stride = cap > 0 && n > cap ? Math.ceil(n / cap) : 1;
     var maxR = Math.hypot(W / 2, H / 2) * revealT;
     var dim = selected >= 0 || filterArch >= 0 || hlTeam >= 0;
     var inRoster = hlRosterSet;
-    for (var i = 0; i < n; i++) {
+    for (var i = 0; i < n; i += stride) {
       var p = P[i], x = sx(p.x), y = sy(p.y);
       if (revealT < 1 && Math.hypot(x - W / 2, y - H / 2) > maxR) continue;
       var a;
@@ -239,7 +243,7 @@
       '<dl class="readout__facts">' +
         '<div><dt>Season</dt><dd>' + esc(fmtSeason(p.s)) + '</dd></div>' +
         '<div><dt>Archetype</dt><dd>' + esc(ARCHETYPES[p.c] || '—') + '</dd></div>' +
-        '<div><dt>Paint → perimeter</dt><dd>' + p.x.toFixed(3) + '</dd></div>' +
+        '<div><dt>Big → small</dt><dd>' + p.x.toFixed(3) + '</dd></div>' +
         '<div><dt>Scoring load</dt><dd>' + p.y.toFixed(3) + '</dd></div>' +
       '</dl>' +
       '<a class="readout__link" href="/players?q=' + encodeURIComponent(p.n) + '">Open ' + esc(p.n) + ' dossier →</a>';
@@ -548,6 +552,7 @@
     project: function (x, y) { return { x: sx(x), y: sy(y) }; },
     dims: function () { return { W: W, H: H, DPR: DPR }; },
     selectedPlayer: function () { return selected >= 0 ? P[selected] : null; },
+    setCap: function (c) { window.__vhAtlasCap = c; draw(); },
     onSelect: function (cb) { (window.__vhAtlasSelect = window.__vhAtlasSelect || []).push(cb); },
     highlightTeam: function (abbr) {
       stopCycle();
