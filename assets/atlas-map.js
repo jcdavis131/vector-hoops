@@ -330,8 +330,20 @@
         if (n.indexOf(q) === 0 || n.indexOf(' ' + q) > -1) starts.push(i);
         else if (n.indexOf(q) > -1) contains.push(i);
       }
+      // Rank: match tier first (name/word-start before substring), then
+      // MOST RECENT season first. The old comparator only ordered identical
+      // names and left everything else in file order — and the index is
+      // chronological, so a surname query filled the 8 slots with the
+      // OLDEST namesakes ("Curry" showed Dell and Michael, never Stephen).
+      var tier = {};
+      starts.forEach(function (i) { tier[i] = 0; });
+      contains.forEach(function (i) { tier[i] = 1; });
       var all = starts.concat(contains);
-      all.sort(function (a, b) { return P[a].n === P[b].n ? (P[b].s > P[a].s ? 1 : -1) : 0; });
+      all.sort(function (a, b) {
+        if (tier[a] !== tier[b]) return tier[a] - tier[b];
+        if (P[a].s !== P[b].s) return P[b].s > P[a].s ? 1 : -1;
+        return P[a].n < P[b].n ? -1 : P[a].n > P[b].n ? 1 : 0;
+      });
       results = all.slice(0, 8); active = results.length ? 0 : -1; render();
     });
     input.addEventListener('keydown', function (e) {
