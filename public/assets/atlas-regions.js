@@ -129,8 +129,13 @@
     if (!panel) return;
     if (k < 0) { panel.hidden = true; panel.innerHTML = ''; return; }
     var rg = regions[k];
+    // Display name/season come from the lite row (the map's own labels), not the
+    // regions file: 1 of 36 exemplars differs ("Mike Dunleavy" vs "Mike Dunleavy
+    // Jr.", row 7675). Row index is the join key and is correct in both files.
     var ex = rg.exemplars.map(function (e) {
-      return '<li><a href="/players?q=' + encodeURIComponent(e.name) + '">' + esc(e.name) + '</a> <span class="num">' + esc(fmtSeason(e.season)) + '</span></li>';
+      var lp = liteByIdx[e.row];
+      var nm = (lp && lp.n) || e.name, sn = (lp && lp.s) || e.season;
+      return '<li><a href="/players?q=' + encodeURIComponent(nm) + '">' + esc(nm) + '</a> <span class="num">' + esc(fmtSeason(sn)) + '</span></li>';
     }).join('');
     panel.innerHTML =
       '<div class="region-panel__head">' +
