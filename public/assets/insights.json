@@ -1,7 +1,4 @@
 {
- "built": "build_insights.py",
- "n_seasons": 12966,
- "domain": "https://hoops.dumbmodel.com",
  "insights": [
   {
    "slug": "most-unique",
@@ -1232,65 +1229,72 @@
    "series": "ledger"
   },
   {
-   "foot": "Payrolls: Basketball Insiders 2024-25 season snapshot (total cap). Wins: 2024-25 regular season. Cross-checked against Spotrac cap tracker.",
-   "kicker": "Payroll",
-   "lede": "Revenue efficiency, team-level: 2024-25 total payroll (Basketball Insiders season snapshot) divided by regular-season wins. A 5.4x spread separates the most efficient checkbook from the least.",
-   "og_desc": "Oklahoma City spent $159M and won 68 games. Washington spent $228M and won 18. Payroll per win, 2024-25.",
-   "og_title": "The cheapest NBA wins cost $2.34M — the priciest $12.67M",
+   "foot": "Payrolls: Spotrac NBA Team Salary Cap Tracker, 'Total Cap Allocations' (includes dead money and mid-season moves), one table per season. Wins: final regular-season records — 2023-24 wins cross-checked against landofbasketball.com, whose tracker record column was stale that year. League-average cost per win rose $3.84M → $4.83M over the window. The earlier single-season card used a Basketball Insiders snapshot, so 2024-25 figures differ slightly.",
+   "kicker": "Money layer",
+   "lede": "Revenue efficiency, team-level: Spotrac Total Cap Allocations divided by regular-season wins, 2022-23 through 2025-26. One consistent source across all four seasons.",
+   "og_desc": "Oklahoma City bought the cheapest wins three of the last four seasons. Washington paid the most three straight — $13.65M per win in 2025-26.",
+   "og_title": "The cheapest NBA wins cost $2.28M — the priciest $13.65M",
    "rows": [
     {
-     "label": "Oklahoma City",
-     "tag": "68 wins, best",
-     "value": 2.34
+     "s": "2022-23",
+     "cheap": {
+      "label": "Memphis",
+      "v": 2.28,
+      "note": "56 wins"
+     },
+     "pricey": {
+      "label": "Houston",
+      "v": 6.91,
+      "note": "20 wins"
+     }
     },
     {
-     "label": "Detroit",
-     "tag": null,
-     "value": 2.98
+     "s": "2023-24",
+     "cheap": {
+      "label": "Oklahoma City",
+      "v": 2.82,
+      "note": "57 wins"
+     },
+     "pricey": {
+      "label": "Washington",
+      "v": 12.66,
+      "note": "15 wins"
+     }
     },
     {
-     "label": "Cleveland",
-     "tag": null,
-     "value": 2.99
+     "s": "2024-25",
+     "cheap": {
+      "label": "Oklahoma City",
+      "v": 2.44,
+      "note": "68 wins"
+     },
+     "pricey": {
+      "label": "Washington",
+      "v": 11.76,
+      "note": "18 wins"
+     }
     },
     {
-     "label": "Boston",
-     "tag": null,
-     "value": 3.36
-    },
-    {
-     "label": "Phoenix",
-     "tag": "$237M for 36 wins",
-     "value": 6.58
-    },
-    {
-     "label": "Philadelphia",
-     "tag": null,
-     "value": 7.43
-    },
-    {
-     "label": "Utah",
-     "tag": null,
-     "value": 8.73
-    },
-    {
-     "label": "New Orleans",
-     "tag": null,
-     "value": 8.84
-    },
-    {
-     "label": "Washington",
-     "tag": "18 wins, worst",
-     "value": 12.67
+     "s": "2025-26",
+     "cheap": {
+      "label": "Oklahoma City",
+      "v": 2.94,
+      "note": "64 wins"
+     },
+     "pricey": {
+      "label": "Washington",
+      "v": 13.65,
+      "note": "17 wins"
+     }
     }
    ],
    "slug": "payroll-per-win",
-   "stat": "2.34",
-   "stat_label": "$M per win — Oklahoma City, best payroll efficiency",
-   "title": "The cheapest wins in the NBA cost $2.34M — the priciest cost $12.67M",
-   "tldr": "Team payroll divided by 2024-25 wins: Oklahoma City bought the league's best record for $2.34M per win, while Washington spent $12.67M per win on 18 wins.",
-   "viz": "bars",
-   "viz_label": "Payroll $M per regular-season win, 2024-25 (lower = cheaper wins)",
+   "stat": "6.0x",
+   "stat_label": "cheapest-to-priciest win across the four-season window",
+   "title": "The cheapest wins in the NBA cost $2.28M — the priciest cost $13.65M",
+   "tldr": "Payroll divided by wins, four seasons running: Oklahoma City bought the cheapest wins three of the last four years; Washington paid the most three straight, $13.65M per win last season.",
+   "viz": "seasons",
+   "viz_label": "Payroll $M per regular-season win — cheapest vs priciest, by season (lower = cheaper wins)",
    "series": "ledger"
   },
   {

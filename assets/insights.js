@@ -26,9 +26,14 @@
 
   /* Kicker -> theme class for color-coded card grouping.
      Kickers are a controlled topic vocabulary (see insights.json). */
-  var KICKER_THEMES = {    'Cap spike': 'money', 'Dead money': 'money', 'Contracts': 'money',
+  var KICKER_THEMES = {
+    'Cap spike': 'money', 'Dead money': 'money', 'Contracts': 'money',
     'Sacrifice': 'money', 'Payroll': 'money', 'Tickets': 'money',
-    'Tax': 'money', 'Meta': 'entity'
+    'Tax': 'money', 'Meta': 'entity',
+    'Money layer': 'money', 'Money': 'money', 'Overpaid': 'money',
+    'Underpaid': 'money', '2016 cap spike': 'money',
+    'Tax Burden': 'money', 'Repeater Tax': 'money', 'Second Apron': 'money',
+    'Entity grounding': 'entity'
   };
   function kickerTheme(kicker) {
     return KICKER_THEMES[kicker] || 'default';
@@ -44,7 +49,7 @@
   }
 
   function load() {
-    return fetch('assets/insights.json?v=94016317').then(function (r) {
+    return fetch('assets/insights.json?v=4ffe6eff').then(function (r) {
       if (!r.ok) throw new Error('insights.json ' + r.status);
       return r.json();
     });
@@ -228,7 +233,43 @@
     return s + '</svg>';
   }
 
-  var VIZ = { bars: barsSVG, shares: sharesSVG, timeline: timelineSVG, line: lineSVG };
+  var VIZ = { bars: barsSVG, shares: sharesSVG, timeline: timelineSVG, line: lineSVG, seasons: seasonsSVG };
+
+  /* Multi-season cheapest-vs-priciest comparison: one group per season, two
+     bars each (gold = cheapest wins, terra = priciest). Rows carry
+     {s, cheap:{label,v,note}, pricey:{label,v,note}}. */
+  function seasonsSVG(ins) {
+    var rows = (ins.rows || []).filter(function (r) {
+      return r && typeof r.s === 'string' &&
+        r.cheap && typeof r.cheap.label === 'string' && typeof r.cheap.v === 'number' && isFinite(r.cheap.v) &&
+        r.pricey && typeof r.pricey.label === 'string' && typeof r.pricey.v === 'number' && isFinite(r.pricey.v);
+    });
+    if (!rows.length) return '';
+    var W = 620, headH = 34, groupH = 96, barH = 13, barGap = 28;
+    var H = headH + rows.length * groupH + 6;
+    var maxV = Math.max.apply(null, rows.map(function (r) { return r.pricey.v; })) * 1.06 || 1;
+    function X(v) { return (v / maxV) * W; }
+    var s = '<svg viewBox="0 0 ' + W + ' ' + H + '" class="vh-ins__viz" role="img" aria-label="' +
+      esc(ins.viz_label || 'season comparison chart') + '">';
+    /* Legend: gold = cheapest wins, terra = priciest wins. */
+    s += '<rect x="0" y="8" width="12" height="12" rx="3" fill="' + GOLD + '"/>' +
+      '<text x="18" y="18" class="vh-ins__svgtag">cheapest wins</text>' +
+      '<rect x="152" y="8" width="12" height="12" rx="3" fill="' + TERRA + '"/>' +
+      '<text x="170" y="18" class="vh-ins__svgtag">priciest wins</text>';
+    rows.forEach(function (r, i) {
+      var gy = headH + i * groupH;
+      s += '<text x="0" y="' + (gy + 15) + '" class="vh-ins__svglabel">' + esc(r.s) + '</text>';
+      [['cheap', GOLD, gy + 24], ['pricey', TERRA, gy + 24 + barGap]].forEach(function (t) {
+        var d = r[t[0]], by = t[2];
+        var bw = Math.max(3, X(d.v));
+        var lbl = fitText(d.label + ' \u00b7 $' + d.v + 'M/win' + (d.note ? ' (' + d.note + ')' : ''), W - 8, F_TAG);
+        s += '<text x="0" y="' + (by - 5) + '" class="vh-ins__svgtag">' + esc(lbl) + '</text>';
+        s += '<rect x="0" y="' + by + '" width="' + W + '" height="' + barH + '" rx="4" fill="' + VIZ_PAPER + '" opacity="0.06"/>';
+        s += '<rect x="0" y="' + by + '" width="' + bw.toFixed(1) + '" height="' + barH + '" rx="4" fill="' + t[1] + '"/>';
+      });
+    });
+    return s + '</svg>';
+  }
 
   /* ---------- card + spotlight rendering ---------- */
 
@@ -530,6 +571,28 @@
       c.fillText(rows4[0].s, X(0), y + h + 34);
       var ls = rows4[rows4.length - 1].s;
       c.fillText(ls, X(rows4.length - 1) - c.measureText(ls).width, y + h + 34);
+    } else if (ins.viz === 'seasons') {
+      /* Multi-season cheapest-vs-priciest: season label, then a gold
+         (cheapest) and terra (priciest) bar per season. */
+      var rows5 = (ins.rows || []).filter(function (r) { return r && r.cheap && r.pricey; });
+      var rh5 = rows5.length ? h / rows5.length : h;
+      var max5 = rows5.length ?
+        Math.max.apply(null, rows5.map(function (r) { return r.pricey.v; })) * 1.06 : 1;
+      rows5.forEach(function (r, i) {
+        var ry = y + i * rh5;
+        c.font = '700 26px ' + F; c.fillStyle = '#F9F6F0';
+        c.fillText(r.s, x, ry + 32);
+        [['cheap', GOLD], ['pricey', TERRA]].forEach(function (t, j) {
+          var d = r[t[0]];
+          var bwy = ry + 46 + j * 46;
+          c.font = '400 22px ' + F; c.fillStyle = '#F9F6F0';
+          fitLabel(d.label + ' \u00b7 $' + d.v + 'M/win', x, bwy + 19, 300);
+          c.fillStyle = t[1];
+          c.beginPath();
+          c.roundRect(x + 320, bwy, Math.max(4, (d.v / max5) * (w - 320)), 24, 6);
+          c.fill();
+        });
+      });
     }
     c.restore();
     return y + h;
