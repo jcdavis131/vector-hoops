@@ -42,6 +42,13 @@
 .hero__title span{ display: block; }
 .hero__title em{ font-style: normal; color: var(--accent); }
 
+/* ---------- Home: season strip (2026-27 opening night) ---------- */
+.season-strip{ max-width: 1040px; margin: 0 auto var(--s-6); padding: var(--s-3) var(--s-4);
+  background: var(--surface-2); border: 1px solid var(--line); border-radius: var(--radius); }
+.season-strip p{ margin: 0; font-size: var(--t-sm); color: var(--fg-2); }
+.season-strip strong{ color: var(--fg); }
+.season-strip a{ color: var(--marker-blue); font-weight: 600; }
+
 /* ---------- Home: the instrument ---------- */
 .instrument{ width: 100%; max-width: var(--content); margin: 0 auto; }
 .instrument__bar{
@@ -251,6 +258,24 @@
       <a class="btn btn-primary btn-xl" href="#atlas">Tap a season — explore the atlas</a>
     </div>
   </header>
+
+  <div class="season-strip reveal" id="season-strip" role="note" hidden>
+    <p><strong id="season-strip-head">The 2026&ndash;27 season tips off Tuesday, Oct 20.</strong>
+    <span id="season-strip-body">A new Daily Court puzzle every day of the season &mdash; the same five for everyone.</span>
+    <a href="/play">Play today&rsquo;s &rarr;</a></p>
+  </div>
+  <script>
+  (function(){
+    /* Self-maintaining season strip: pre-tipoff vs underway copy, hidden after the season. */
+    var el = document.getElementById('season-strip'); if(!el) return;
+    var now = new Date();
+    if(now >= new Date(2027, 5, 21)) return; /* season over: stay hidden */
+    if(now >= new Date(2026, 9, 20)){
+      document.getElementById('season-strip-head').textContent = 'The 2026–27 season is underway.';
+    }
+    el.hidden = false;
+  })();
+  </script>
 
   <section id="atlas" class="instrument reveal reveal-4" aria-labelledby="atlas-title">
     <div class="instrument__bar">
