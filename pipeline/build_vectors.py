@@ -119,7 +119,7 @@ LABELS = {
     "FG3_PCT": "three-point accuracy",
     "FG_PCT": "finishing",
     "FT_PCT": "free-throw touch",
-    "PLUS_MINUS": "on-court impact",
+    "PLUS_MINUS": "on/off estimate (noisy)",
 }
 
 # Desired columns per extra endpoint; intersected with what the API returns

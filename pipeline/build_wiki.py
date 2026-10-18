@@ -128,7 +128,7 @@ STRENGTH_PHRASES = {
     "FG3_PCT": "Knockdown three-point shooter",
     "FG_PCT": "Efficient finisher inside the arc",
     "FT_PCT": "Reliable touch from the free-throw line",
-    "PLUS_MINUS": "Strong net on-court impact",
+    "PLUS_MINUS": "on/off estimate (noisy)",
 }
 
 # Concern phrases: rendered as "{phrase} ({sigma})" — "era" lives in the

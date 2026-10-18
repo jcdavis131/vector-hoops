@@ -14,7 +14,7 @@
   var ARCHETYPES = [
     'Offensive glass + rim protection',
     'Offensive glass, low shot volume',
-    'Three-point volume, low on-court impact',
+    'Three-point volume, quiet elsewhere',
     'Defensive glass + rim pressure',
     'Shot volume + three-point volume',
     'Three-point accuracy + volume',

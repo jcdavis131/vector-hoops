@@ -17,7 +17,7 @@
 
   function load() {
     if (!cacheP) {
-      cacheP = fetch('/assets/twin_bands.json', { cache: 'force-cache' })
+      cacheP = fetch('/assets/twin_bands.json?v=7e45deb5', { cache: 'force-cache' })
         .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
         .then(function (d) { return (d && d.bands) || null; })
         .catch(function () { return null; });
