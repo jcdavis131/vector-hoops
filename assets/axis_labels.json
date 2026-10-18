@@ -1,0 +1,25 @@
+{
+ "built": "2026-10-18",
+ "method": "Pearson r\u00b2 per axis: season-start-year and position (0=guard..4=center) vs xyz; label only if R\u00b2\u22650.25",
+ "axes": [
+  {
+   "axis": "x",
+   "label": "big \u2192 small",
+   "target": "position",
+   "r2": 0.586
+  },
+  {
+   "axis": "y",
+   "label": null,
+   "target": "position",
+   "r2": 0.036
+  },
+  {
+   "axis": "z",
+   "label": null,
+   "target": "position",
+   "r2": 0.072
+  }
+ ],
+ "rule": "label ONLY axes with R\u00b2 \u2265 0.25; others stay unlabeled. Season shows R\u00b2\u22480 on all axes (era-honest by construction)."
+}

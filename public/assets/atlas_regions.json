@@ -1,0 +1,571 @@
+{
+ "built": "2026-10-18",
+ "method": "k-means k=12 on served 64-d (mtnn_embeddings.f32), seed 0; names from cluster stat profiles",
+ "basis": "mtnn_embeddings.f32 12966x64",
+ "regions": [
+  {
+   "id": "00",
+   "name": "The Rim Protectors",
+   "blurb": "own the paint, finish everything, never shoot threes",
+   "profile": {
+    "top_stats": [
+     [
+      "BLK",
+      1.61
+     ],
+     [
+      "OREB",
+      1.59
+     ],
+     [
+      "DREB",
+      1.32
+     ],
+     [
+      "FG_PCT",
+      1.22
+     ]
+    ]
+   },
+   "exemplars": [
+    {
+     "name": "Dikembe Mutombo",
+     "season": "1999-00",
+     "row": 1289
+    },
+    {
+     "name": "Tyson Chandler",
+     "season": "2006-07",
+     "row": 4395
+    },
+    {
+     "name": "Clint Capela",
+     "season": "2025-26",
+     "row": 12558
+    }
+   ],
+   "size": 1009,
+   "era_span": [
+    "1996-97",
+    "2025-26"
+   ]
+  },
+  {
+   "id": "01",
+   "name": "The Deep Bench",
+   "blurb": "few shots, few mistakes, few minutes \u2014 the end of the rotation",
+   "profile": {
+    "top_stats": [
+     [
+      "FGA",
+      -0.76
+     ],
+     [
+      "PTS",
+      -0.73
+     ],
+     [
+      "FG3A",
+      -0.62
+     ],
+     [
+      "TOV",
+      -0.54
+     ]
+    ]
+   },
+   "exemplars": [
+    {
+     "name": "Ryan Bowen",
+     "season": "1999-00",
+     "row": 1490
+    },
+    {
+     "name": "Ryan Bowen",
+     "season": "2001-02",
+     "row": 2282
+    },
+    {
+     "name": "Eduardo Najera",
+     "season": "2005-06",
+     "row": 3703
+    }
+   ],
+   "size": 954,
+   "era_span": [
+    "1996-97",
+    "2025-26"
+   ]
+  },
+  {
+   "id": "02",
+   "name": "The Floor Generals",
+   "blurb": "run the offense, live on the pass",
+   "profile": {
+    "top_stats": [
+     [
+      "AST",
+      1.54
+     ],
+     [
+      "STL",
+      0.88
+     ],
+     [
+      "TOV",
+      0.79
+     ],
+     [
+      "OREB",
+      -0.79
+     ]
+    ]
+   },
+   "exemplars": [
+    {
+     "name": "Anthony Carter",
+     "season": "1999-00",
+     "row": 1186
+    },
+    {
+     "name": "Anthony Carter",
+     "season": "2000-01",
+     "row": 1581
+    },
+    {
+     "name": "Erick Barkley",
+     "season": "2001-02",
+     "row": 2096
+    }
+   ],
+   "size": 1660,
+   "era_span": [
+    "1996-97",
+    "2025-26"
+   ]
+  },
+  {
+   "id": "03",
+   "name": "The Deadeye Snipers",
+   "blurb": "catch, shoot, don't dribble",
+   "profile": {
+    "top_stats": [
+     [
+      "FG3A",
+      0.96
+     ],
+     [
+      "FG3_PCT",
+      0.94
+     ],
+     [
+      "FTA",
+      -0.81
+     ],
+     [
+      "TOV",
+      -0.77
+     ]
+    ]
+   },
+   "exemplars": [
+    {
+     "name": "Hubert Davis",
+     "season": "1999-00",
+     "row": 1339
+    },
+    {
+     "name": "Wesley Person",
+     "season": "1997-98",
+     "row": 785
+    },
+    {
+     "name": "Wesley Person",
+     "season": "1999-00",
+     "row": 1561
+    }
+   ],
+   "size": 748,
+   "era_span": [
+    "1996-97",
+    "2025-26"
+   ]
+  },
+  {
+   "id": "04",
+   "name": "The Energy Bigs",
+   "blurb": "crash the glass, swat shots, brick the free throws",
+   "profile": {
+    "top_stats": [
+     [
+      "OREB",
+      1.47
+     ],
+     [
+      "BLK",
+      1.28
+     ],
+     [
+      "FT_PCT",
+      -1.2
+     ],
+     [
+      "FG3A",
+      -1.13
+     ]
+    ]
+   },
+   "exemplars": [
+    {
+     "name": "Michael Stewart",
+     "season": "1997-98",
+     "row": 674
+    },
+    {
+     "name": "Justin Williams",
+     "season": "2006-07",
+     "row": 4207
+    },
+    {
+     "name": "Jeremy Evans",
+     "season": "2011-12",
+     "row": 6264
+    }
+   ],
+   "size": 791,
+   "era_span": [
+    "1996-97",
+    "2025-26"
+   ]
+  },
+  {
+   "id": "05",
+   "name": "The Tough Seasons",
+   "blurb": "the shots don't fall and the minutes bleed",
+   "profile": {
+    "top_stats": [
+     [
+      "PLUS_MINUS",
+      -1.17
+     ],
+     [
+      "FG_PCT",
+      -1.15
+     ],
+     [
+      "FG3_PCT",
+      -0.76
+     ],
+     [
+      "PTS",
+      -0.73
+     ]
+    ]
+   },
+   "exemplars": [
+    {
+     "name": "Devin Green",
+     "season": "2005-06",
+     "row": 3683
+    },
+    {
+     "name": "Charles Cooke",
+     "season": "2017-18",
+     "row": 8752
+    },
+    {
+     "name": "Deng Adel",
+     "season": "2018-19",
+     "row": 9251
+    }
+   ],
+   "size": 1118,
+   "era_span": [
+    "1996-97",
+    "2025-26"
+   ]
+  },
+  {
+   "id": "06",
+   "name": "The Gunners",
+   "blurb": "let it fly \u2014 volume scorers with range",
+   "profile": {
+    "top_stats": [
+     [
+      "FGA",
+      1.01
+     ],
+     [
+      "FG3A",
+      0.94
+     ],
+     [
+      "PTS",
+      0.92
+     ],
+     [
+      "FG3_PCT",
+      0.84
+     ]
+    ]
+   },
+   "exemplars": [
+    {
+     "name": "John Starks",
+     "season": "1997-98",
+     "row": 608
+    },
+    {
+     "name": "Allan Houston",
+     "season": "1999-00",
+     "row": 1176
+    },
+    {
+     "name": "Reggie Miller",
+     "season": "1998-99",
+     "row": 1084
+    }
+   ],
+   "size": 1543,
+   "era_span": [
+    "1996-97",
+    "2025-26"
+   ]
+  },
+  {
+   "id": "07",
+   "name": "The Stretch Wings",
+   "blurb": "size on the wing, range to match",
+   "profile": {
+    "top_stats": [
+     [
+      "FG3A",
+      0.89
+     ],
+     [
+      "FG3_PCT",
+      0.87
+     ],
+     [
+      "TOV",
+      -0.65
+     ],
+     [
+      "FTA",
+      -0.57
+     ]
+    ]
+   },
+   "exemplars": [
+    {
+     "name": "Walt Williams",
+     "season": "2001-02",
+     "row": 2352
+    },
+    {
+     "name": "Mike Dunleavy",
+     "season": "2014-15",
+     "row": 7675
+    },
+    {
+     "name": "Cameron Johnson",
+     "season": "2019-20",
+     "row": 9661
+    }
+   ],
+   "size": 759,
+   "era_span": [
+    "1996-97",
+    "2025-26"
+   ]
+  },
+  {
+   "id": "08",
+   "name": "The Low-Block Anchors",
+   "blurb": "score inside, own both glasses, live at the line",
+   "profile": {
+    "top_stats": [
+     [
+      "DREB",
+      1.06
+     ],
+     [
+      "FTA",
+      0.95
+     ],
+     [
+      "PTS",
+      0.91
+     ],
+     [
+      "OREB",
+      0.86
+     ]
+    ]
+   },
+   "exemplars": [
+    {
+     "name": "Elton Brand",
+     "season": "2000-01",
+     "row": 1697
+    },
+    {
+     "name": "Jermaine ONeal",
+     "season": "2002-03",
+     "row": 2539
+    },
+    {
+     "name": "Elton Brand",
+     "season": "2004-05",
+     "row": 3280
+    }
+   ],
+   "size": 1440,
+   "era_span": [
+    "1996-97",
+    "2025-26"
+   ]
+  },
+  {
+   "id": "09",
+   "name": "The Engines",
+   "blurb": "the offense is them",
+   "profile": {
+    "top_stats": [
+     [
+      "PTS",
+      1.9
+     ],
+     [
+      "FGA",
+      1.7
+     ],
+     [
+      "FTA",
+      1.67
+     ],
+     [
+      "AST",
+      1.41
+     ]
+    ]
+   },
+   "exemplars": [
+    {
+     "name": "Stephen Curry",
+     "season": "2020-21",
+     "row": 10478
+    },
+    {
+     "name": "James Harden",
+     "season": "2016-17",
+     "row": 8423
+    },
+    {
+     "name": "Ja Morant",
+     "season": "2024-25",
+     "row": 12159
+    }
+   ],
+   "size": 862,
+   "era_span": [
+    "1996-97",
+    "2025-26"
+   ]
+  },
+  {
+   "id": "10",
+   "name": "The 3-and-D Specialists",
+   "blurb": "guard the best wing, stand in the corner, knock it down",
+   "profile": {
+    "top_stats": [
+     [
+      "FG3_PCT",
+      1.02
+     ],
+     [
+      "FG3A",
+      1.0
+     ],
+     [
+      "TOV",
+      -0.85
+     ],
+     [
+      "FTA",
+      -0.82
+     ]
+    ]
+   },
+   "exemplars": [
+    {
+     "name": "Kevin Gamble",
+     "season": "1996-97",
+     "row": 223
+    },
+    {
+     "name": "James Jones",
+     "season": "2011-12",
+     "row": 6246
+    },
+    {
+     "name": "Bruce Bowen",
+     "season": "2004-05",
+     "row": 3206
+    }
+   ],
+   "size": 937,
+   "era_span": [
+    "1996-97",
+    "2025-26"
+   ]
+  },
+  {
+   "id": "11",
+   "name": "The Glue Guys",
+   "blurb": "do the little things, don't need the ball",
+   "profile": {
+    "top_stats": [
+     [
+      "PTS",
+      -0.7
+     ],
+     [
+      "FGA",
+      -0.68
+     ],
+     [
+      "TOV",
+      -0.59
+     ],
+     [
+      "FG3A",
+      -0.57
+     ]
+    ]
+   },
+   "exemplars": [
+    {
+     "name": "Horace Grant",
+     "season": "2003-04",
+     "row": 2903
+    },
+    {
+     "name": "Harvey Grant",
+     "season": "1998-99",
+     "row": 957
+    },
+    {
+     "name": "Horace Grant",
+     "season": "2001-02",
+     "row": 2122
+    }
+   ],
+   "size": 1145,
+   "era_span": [
+    "1996-97",
+    "2025-26"
+   ]
+  }
+ ]
+}

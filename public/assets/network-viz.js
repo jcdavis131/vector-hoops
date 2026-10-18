@@ -3527,7 +3527,7 @@ function buildFlowSvg(host) {
     // used to throw 'inputs length mismatch' and kill every exhibit on the
     // page — flow, explorer, map — over one stale optional dataset.
     Promise.all([
-      fetch('assets/vectors.json?v=6c8602b0').then(function (r) { return r.json(); }),
+      fetch('assets/vectors.json?v=90b2879d').then(function (r) { return r.json(); }),
       fetch('assets/mtnn_arch.json?v=d5b8ac11').then(function (r) { return r.json(); }),
       fetch('assets/mtnn_map.json?v=5f589b3b').then(function (r) { return r.json(); }),
       fetch('assets/mtnn_heads.f32?v=9b3f7454').then(function (r) {

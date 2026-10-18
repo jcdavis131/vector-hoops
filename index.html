@@ -88,6 +88,76 @@
 .axis--r{ right: 14px; top: 50%; transform: translateY(-50%); writing-mode: vertical-rl; }
 .axis--t{ top: 12px; left: 50%; transform: translateX(-50%); }
 .axis--b{ bottom: 12px; left: 50%; transform: translateX(-50%); }
+
+/* ---------- atlas regions (Part 2 panel) ---------- */
+.trust-badge{ font-size: 11px; color: var(--fg-3); max-width: 300px; }
+.trust-badge summary{
+  cursor: pointer; list-style: none; display: inline-block;
+  border-bottom: 1px dotted var(--line-2); padding-bottom: 1px;
+}
+.trust-badge summary::-webkit-details-marker{ display: none; }
+.trust-badge summary::before{ content: "◈ "; color: var(--pencil-text); }
+.trust-badge[open] summary{ color: var(--fg-2); }
+.trust-badge p{ margin: 6px 0 0; line-height: 1.5; color: var(--fg-2); }
+#region-layer{ position: absolute; inset: 0; z-index: 2; pointer-events: none; }
+.region-tag{
+  position: absolute; transform: translate(-50%, -50%);
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 5px 9px; border-radius: 999px; white-space: nowrap;
+  font-family: var(--font-display); font-size: 10px; font-weight: 600;
+  letter-spacing: .08em; text-transform: uppercase;
+  color: rgba(236,238,241,.92); background: rgba(7,9,12,.62);
+  border: 1px solid rgba(255,255,255,.16); cursor: pointer; pointer-events: auto;
+  -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+}
+.region-tag:hover{ border-color: rgba(255,255,255,.45); color: #fff; }
+.region-tag[aria-pressed="true"]{ border-color: var(--marker-red); color: #fff; }
+.region-tag__dot{ width: 6px; height: 6px; border-radius: 50%; background: var(--accent); flex: none; }
+#region-layer.is-regions .region-tag{ font-size: 11.5px; padding: 8px 13px; }
+#region-layer.is-regions .region-tag__dot{ width: 9px; height: 9px; }
+.region-tag.is-collided{ display: none; }
+#sky-canvas.is-regions{ opacity: .22; transition: opacity var(--dur-2) var(--ease); }
+#region-layer.has-selection .region-tag:not([aria-pressed="true"]){ opacity: .45; }
+.region-strip{
+  display: flex; gap: 8px; overflow-x: auto; padding: 10px 2px 4px;
+  -webkit-overflow-scrolling: touch; scrollbar-width: thin;
+}
+.region-chip{
+  flex: none; display: inline-flex; align-items: baseline; gap: 8px;
+  padding: 9px 13px; border: 1px solid var(--line); border-radius: 999px;
+  background: var(--surface-2); color: var(--fg-2); cursor: pointer;
+  font-family: var(--font-text); font-size: 12.5px; white-space: nowrap;
+}
+.region-chip .num{ font-size: 11px; color: var(--fg-3); }
+.region-chip:hover{ color: var(--fg); border-color: var(--line-2); }
+.region-chip[aria-pressed="true"]{ color: var(--fg); border-color: var(--accent); box-shadow: inset 0 -2px 0 var(--accent); }
+.region-note{
+  margin: 6px 0 0; font-size: 11.5px; color: var(--fg-3);
+  border-left: 2px solid var(--accent); padding-left: 10px;
+}
+.region-panel{
+  margin-top: 10px; padding: 16px; background: var(--surface-2);
+  border: 1px solid var(--line); border-radius: var(--radius-lg);
+}
+.region-panel__head{ display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
+.region-panel__name{ margin: 2px 0 0; font-family: var(--font-display); font-size: 19px; }
+.region-panel__close{
+  flex: none; width: 32px; height: 32px; border-radius: 50%;
+  border: 1px solid var(--line); background: none; color: var(--fg-2);
+  font-size: 18px; line-height: 1; cursor: pointer;
+}
+.region-panel__close:hover{ color: var(--fg); border-color: var(--line-2); }
+.region-panel__blurb{ margin: 8px 0 0; font-size: 14px; color: var(--fg-2); }
+.region-panel__exemplars{ list-style: none; margin: 6px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px 16px; }
+.region-panel__exemplars a{ color: var(--marker-blue); }
+.region-panel__note{ margin: 10px 0 0; font-size: 11px; color: var(--fg-3); }
+.field__fallback{ position: absolute; inset: 0; z-index: 4; overflow: auto; padding: 24px; background: var(--void); color: rgba(236,238,241,.9); }
+.field__fallback ul{ list-style: none; margin: 12px 0; padding: 0; display: grid; gap: 6px; }
+.field__fallback button{
+  background: none; border: 1px solid rgba(255,255,255,.2); border-radius: 999px;
+  color: inherit; padding: 8px 14px; cursor: pointer; font-size: 13px;
+}
+.field__fallback a{ color: #9db8e8; }
 .field__controls{ position: absolute; z-index: 3; right: 12px; bottom: 12px; display: flex; gap: 6px; }
 .field__controls button{
   height: 32px; padding: 0 12px;
@@ -173,6 +243,10 @@
 #atlas-peers-body tr{ cursor: pointer; }
 #atlas-peers-body tr:focus-visible{ outline: 2px solid var(--accent); outline-offset: -2px; }
 .peer-name{ color: var(--fg) !important; font-weight: 550; }
+.twin-band{ display: inline; } .twin-band__summary{ display: inline; cursor: pointer; }
+.twin-band--inline{ display: inline; }
+.twin-band__num{ font-variant-numeric: tabular-nums; opacity: .75; font-size: .92em; }
+.twin-band__label{ opacity: .7; }
 .peer-sim{ color: var(--accent) !important; font-weight: 600; }
 .peers__foot{ margin: 16px 0 0; font-size: 12.5px; line-height: 1.6; color: var(--fg-3); max-width: 62ch; }
 .skeleton{ display: inline-block; height: 10px; width: 120px; border-radius: 2px; background: var(--surface-2); animation: atlas-fade 1.2s var(--ease) infinite alternate; }
@@ -246,7 +320,7 @@
   <header class="title-card hero">
     <div class="title-card__eyebrow reveal">An atlas of NBA player-seasons</div>
     <h1 class="hero__title reveal reveal-1"><span>Who plays</span><span>like <em>this?</em></span></h1>
-    <p class="title-card__lede reveal reveal-2">Every season from 1996–97 to 2025–26 with enough minutes, placed by how it was played rather than who played it. Choose one, and a neural embedding returns the three seasons that play most alike.</p>
+    <p class="title-card__lede reveal reveal-2">Every season from 1996–97 to 2025–26 with enough minutes, placed by how it was played rather than who played it. Choose one, and a neural embedding returns the three seasons that play most alike. This map measures how players play, not how good they are.</p>
     <div class="title-card__actions reveal reveal-3">
       <a class="btn btn-primary btn-xl" href="#atlas">Tap a season — explore the atlas</a>
     </div>
@@ -263,6 +337,10 @@
         <ul id="atlas-results" class="atlas-results" role="listbox" aria-label="Matching seasons" hidden></ul>
       </div>
       <div class="label"><span id="atlas-count" class="num" data-fact="player_seasons">12,966</span> plotted</div>
+      <details class="trust-badge">
+        <summary>This view keeps 11% of each player's 20 nearest neighborhoods from the model</summary>
+        <p>We sampled 2,000 players and checked how many of each one&#8217;s 20 closest neighbors in the full 64-d model stay neighbors on this flat map — about 1 in 9 do.</p>
+      </details>
       <div class="team-highlight">
         <label class="visually-hidden" for="team-select">Highlight a team’s current roster on the atlas</label>
         <select id="team-select" class="team-select">
@@ -274,20 +352,28 @@
 
     <div class="field" id="map-wrap">
       <canvas id="sky-canvas" role="img" aria-label="Scatter of 12,966 NBA player-seasons. Left to right runs from paint players to perimeter players; top to bottom runs from high-usage scorers to low-usage role players. Use the search field to select a season."></canvas>
-      <span class="axis axis--t">High usage</span>
-      <span class="axis axis--b">Role players</span>
-      <span class="axis axis--l">Paint</span>
-      <span class="axis axis--r">Perimeter</span>
+      <span class="axis axis--l">big</span>
+      <span class="axis axis--r">small</span>
       <div class="hover-tip" id="hover-tip" hidden></div>
       <div class="team-caption" id="team-caption" hidden></div>
       <div class="field__controls" id="map-controls">
         <button type="button" data-map="share"><span>Copy link</span></button>
+        <button type="button" data-map="regions" aria-pressed="false"><span>Regions</span></button>
         <button type="button" data-map="reset">Clear</button>
       </div>
       <div class="field__state" id="atlas-state"><span class="field__loading">Plotting 12,966 player-seasons</span></div>
+      <div class="field__fallback" id="atlas-fallback" hidden>
+        <p><b>The atlas needs canvas to draw its map.</b> The regions below still work — pick one to explore its players.</p>
+        <ul></ul>
+        <p><a href="/players">Browse all players →</a></p>
+      </div>
     </div>
 
     <div class="legend" id="atlas-legend" role="group" aria-label="Highlight an archetype"></div>
+
+    <div class="region-strip" id="region-strip" role="group" aria-label="Explore regions of the atlas"></div>
+    <p class="region-note" id="region-note" hidden></p>
+    <div class="region-panel" id="region-panel" hidden></div>
 
     <div class="readout" aria-live="polite">
       <div id="atlas-selected"><p class="readout__empty">Select any point on the atlas, or search a name above.</p></div>
@@ -359,7 +445,9 @@
 
 <script defer src="/assets/site-nav.js?v=0f2cbdd2"></script>
 <script defer src="/assets/mtnn.js?v=81d491f8"></script>
-<script defer src="/assets/atlas-map.js?v=b8567a7c"></script>
+<script defer src="/assets/twin-bands.js?v=d8e155bd"></script>
+<script defer src="/assets/atlas-map.js?v=0870c2e8"></script>
+<script defer src="/assets/atlas-regions.js?v=ec87afa0"></script>
 <script defer src="/assets/career-trails.js?v=a0e9e836"></script>
 <script src="assets/site-facts.js?v=cbb639f4" defer></script>
 <script>

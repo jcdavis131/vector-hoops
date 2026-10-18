@@ -89,7 +89,7 @@
      "value": 1.16
     }
    ],
-   "foot": "Minimum 1,500 minutes. 14-dimensional serving vectors, 1996-97 → 2025-26.",
+   "foot": "Computed over 12,966 player-seasons (1996-97 → 2025-26); minimum 1,500 minutes. 14-dimensional serving vectors.",
    "og_title": "The most average NBA season ever: Caleb Martin '23-24",
    "og_desc": "1.02 style-points from the league-average player — the platonic NBA season, measured.",
    "series": "model"
@@ -116,7 +116,7 @@
      "tag": "11 seasons"
     }
    ],
-   "foot": "First-to-last style distance. Minimum 4 charted seasons at 800+ minutes each; the steadiest needs 11+. 14-d style space.",
+   "foot": "First-to-last style distance. Minimum 4 charted seasons at 800+ minutes each; the steadiest needs 11+. 14-d style space, 1996-97 → 2025-26.",
    "og_title": "Giannis reinvented his game more than anyone in 30 years",
    "og_desc": "8.43 style-points from his rookie season to now. Terrence Ross: 1.07 across 11 seasons.",
    "series": "model"
@@ -156,7 +156,7 @@
      "sim": 0.719
     }
    ],
-   "foot": "Twins found in the full 64-dimensional embedding; similarity is cosine there. Dataset window 1996-97 → 2025-26.",
+   "foot": "4 widest-era-gap twin pairs (similarity ≥ 0.60) in the full 64-dimensional embedding; similarity is cosine there. Dataset window 1996-97 → 2025-26.",
    "og_title": "29 years apart. Nearly the same player.",
    "og_desc": "Jeff Green '25-26 ↔ LaSalle Thompson '96-97: the widest era-twin gap in the model.",
    "series": "model"
@@ -234,7 +234,7 @@
      "label": "Kyle Filipowski '25-26"
     }
    ],
-   "foot": "8 k-means archetypes over 14-d serving vectors. Shares of charted player-seasons. Examples are the players nearest the archetype centroid in 2024-25 → 2025-26 (min 800 min).",
+   "foot": "8 k-means archetypes over 14-d serving vectors; shares of 12,966 charted player-seasons (1996-97 → 2025-26). Examples are the players nearest the archetype centroid in 2024-25 → 2025-26 (min 800 min).",
    "og_title": "An NBA playing style is going extinct",
    "og_desc": "\"Defensive Glass + Rim Pressure (FTs)\" fell -8.4 points of league share. The model watched it happen.",
    "series": "model"
@@ -379,7 +379,7 @@
     "s": "2025-26",
     "v": 7.0
    },
-   "foot": "Per-game rates across charted player-seasons. See the drift section on trends for the full rotation analysis.",
+   "foot": "Per-game rates across 12,966 charted player-seasons, 1996-97 → 2025-26 (30 seasons). See the drift section on trends for the full rotation analysis.",
    "og_title": "NBA 3-point attempts are up 2.1x in 30 years",
    "og_desc": "From 3.4 to 7.0 per game — the biggest stylistic shift the model has measured.",
    "series": "model"
@@ -948,7 +948,7 @@
      "tag": "best value, 12.9 WS"
     }
    ],
-   "foot": "WS/VORP/MP from Basketball-Reference; salaries cross-checked vs HoopsHype. Adj = salary ÷ $112.4M cap × $154.647M.",
+   "foot": "Top-10 salaries, 2021-22 season. WS/VORP/MP from Basketball-Reference; salaries cross-checked vs HoopsHype. Adj = salary ÷ $112.4M cap × $154.647M.",
    "og_title": "Paid to not play: $115M in cap-adjusted dollars for zero games",
    "og_desc": "John Wall and Kawhi Leonard combined for zero 2021-22 games on $83.7M in salary — $115M in today's cap dollars.",
    "series": "ledger"
@@ -1125,7 +1125,7 @@
    "series": "ledger"
   },
   {
-   "foot": "Peak = best 3-consecutive-season USG% on the same team, before the title window. Parker is approximate: 2008-09 single-season peak vs window average, intervening years unknown. Regular-season USG%; Basketball-Reference, 2026-10-01.",
+   "foot": "7 players. Peak = best 3-consecutive-season USG% on the same team, before the title window. Parker is approximate: 2008-09 single-season peak vs window average, intervening years unknown. Regular-season USG%; Basketball-Reference, 2026-10-01.",
    "kicker": "Sacrifice",
    "lede": "Role drop measured against each player's own same-team peak — the lens the team-switch cards can't see. Manu Ginobili never had a peak to drop from: 349 starts in 1,019 games, peaking at 28.7 USG% as a sixth man while posting .240+ win shares per 48 — a starter with that production plays 32-34%.",
    "og_desc": "Wade surrendered 4.6 usage points in his prime and won two rings. Manu never took the big role at all.",
@@ -1177,7 +1177,7 @@
    "series": "ledger"
   },
   {
-   "foot": "Documented minimums from reporting, not exact counterfactuals. Salaries: Spotrac cash. Reporting: ESPN (Stein, MacMahon), HoopsRumors, NBC Sports, Basketball Network, Pounding The Rock, 2026-10-01.",
+   "foot": "7 documented pay cuts. Documented minimums from reporting, not exact counterfactuals. Salaries: Spotrac cash. Reporting: ESPN (Stein, MacMahon), HoopsRumors, NBC Sports, Basketball Network, Pounding The Rock, 2026-10-01.",
    "kicker": "Sacrifice",
    "lede": "Dirk's 2010 discount funded the Tyson Chandler trade that anchored the 2011 title; Duncan's 2012 halving kept Diaw, Green and Mills for 2014. These pay cuts have receipts — and rings attached.",
    "og_desc": "Dirk left ~$46M documented on the table; Duncan ~$35M+. Both discounts bought championships.",
@@ -1229,7 +1229,7 @@
    "series": "ledger"
   },
   {
-   "foot": "Payrolls: Spotrac NBA Team Salary Cap Tracker, 'Total Cap Allocations' (includes dead money and mid-season moves), one table per season. Wins: final regular-season records — 2023-24 wins cross-checked against landofbasketball.com, whose tracker record column was stale that year. League-average cost per win rose $3.84M → $4.83M over the window. The earlier single-season card used a Basketball Insiders snapshot, so 2024-25 figures differ slightly.",
+   "foot": "2022-23 → 2025-26 (four seasons). Payrolls: Spotrac NBA Team Salary Cap Tracker, 'Total Cap Allocations' (includes dead money and mid-season moves), one table per season. Wins: final regular-season records — 2023-24 wins cross-checked against landofbasketball.com, whose tracker record column was stale that year. League-average cost per win rose $3.84M → $4.83M over the window. The earlier single-season card used a Basketball Insiders snapshot, so 2024-25 figures differ slightly.",
    "kicker": "Money layer",
    "lede": "Revenue efficiency, team-level: Spotrac Total Cap Allocations divided by regular-season wins, 2022-23 through 2025-26. One consistent source across all four seasons.",
    "og_desc": "Oklahoma City bought the cheapest wins three of the last four seasons. Washington paid the most three straight — $13.65M per win in 2025-26.",
@@ -1422,7 +1422,7 @@
    "series": "ledger"
   },
   {
-   "foot": "Final bills per Hoops Rumors, ESPN's Bobby Marks, and Spotrac estimates; 2022-23 figures are Eric Pincus near-final projections. Nominal dollars, not inflation-adjusted.",
+   "foot": "5 franchises, 2015-16 → 2024-25. Final bills per Hoops Rumors, ESPN's Bobby Marks, and Spotrac estimates; 2022-23 figures are Eric Pincus near-final projections. Nominal dollars, not inflation-adjusted.",
    "kicker": "Tax",
    "lede": "Total luxury tax paid, 2015-16 → 2024-25. The five biggest-spending franchises that never won a ring in the window — led by a team that never even reached the Finals.",
    "og_desc": "Second-biggest tax bill of the decade — and not one Finals appearance. Who paid the most for rings?",
@@ -1464,7 +1464,7 @@
    "series": "ledger"
   },
   {
-   "foot": "Window totals divided by rings won in-window. Lakers excluded (2020-21 bill unconfirmed). Champions per Basketball-Reference; bills per Hoops Rumors / Bobby Marks / Spotrac.",
+   "foot": "10 champions, 2015-16 → 2024-25. Window totals divided by rings won in-window. Lakers excluded (2020-21 bill unconfirmed). Champions per Basketball-Reference; bills per Hoops Rumors / Bobby Marks / Spotrac.",
    "kicker": "Tax",
    "lede": "Luxury tax paid per championship won, 2015-16 → 2024-25. Four of the ten champions paid nothing the year they won; the 2025 Finals was the first in 20 years with two non-tax teams.",
    "og_desc": "Golden State paid $232.9M per ring over the same span — more than 10x Toronto's one-title bill.",
@@ -1563,7 +1563,7 @@
    "series": "ledger"
   },
   {
-   "foot": "Boston $180M = projected tax penalties saved (Bobby Marks, June 2025; Keith Smith estimated ~$196M in total savings). GSW/LAC rows = bill reduction from 2023-24 to 2024-25 after letting Thompson/George walk to duck the apron. KAT = tax saved per the Beacon Journal. Reported by The Ringer, Boston Herald.",
+   "foot": "4 apron-driven moves. Boston $180M = projected tax penalties saved (Bobby Marks, June 2025; Keith Smith estimated ~$196M in total savings). GSW/LAC rows = bill reduction from 2023-24 to 2024-25 after letting Thompson/George walk to duck the apron. KAT = tax saved per the Beacon Journal. Reported by The Ringer, Boston Herald.",
    "kicker": "Tax",
    "lede": "Approximate tax savings from apron-driven moves. The second apron doesn't just charge money — it bans the mid-level exception, salary aggregation, and future pick trades, so teams are shedding stars to get under it.",
    "og_desc": "Klay walked, PG walked, KAT was dumped, Boston tore apart a title team. The new cap ends dynasties faster than money ever did.",

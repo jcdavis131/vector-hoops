@@ -52,7 +52,7 @@ CHIP = {
     "FG3_PCT": ("both snipe from deep", "both struggle from deep"),
     "FG_PCT": ("both finish everything inside", "both struggle to finish"),
     "FT_PCT": ("both automatic at the stripe", "both shaky at the stripe"),
-    "PLUS_MINUS": ("both tilt the floor", "both get outscored on court"),
+    "PLUS_MINUS": ("both outscore opponents on court", "both get outscored on court"),
 }
 
 
