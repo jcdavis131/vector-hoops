@@ -7,7 +7,7 @@
   var LINKS = [
     { href: '/', label: 'Atlas', title: 'The map of 12,966 player-seasons' },
     { href: '/play', label: 'Play', title: 'Daily Court: five past All-Stars, find each modern twin' },
-    { href: '/live', label: 'Live', title: 'Live game companion: win probability, atlas twins, shot charts — plus the arcade between games' },
+    { href: '/live', label: 'Live', title: 'Live game companion: win probability, atlas twins, shot charts' },
     { href: '/players', label: 'Players', title: 'Directory, skill profiles and leaderboards' },
     { href: '/insights', label: 'Insights', title: 'Findings from the model — and from the ledger' },
     { href: '/methods', label: 'Methods', title: 'Trust: every number recomputed from source, and the model graded' }

@@ -159,8 +159,10 @@ function renderHeader(d,g,idx){
   const hm=ts.find(t=>t.homeAway==='home'),am=ts.find(t=>t.homeAway==='away');
   $('aAbbr').textContent=am.team.abbreviation;$('hAbbr').textContent=hm.team.abbreviation;
   const pl=(d.plays||[])[idx];
-  tickNum($('aScore'),pl?+pl.awayScore:+am.score);
-  tickNum($('hScore'),pl?+pl.homeScore:+hm.score);
+  /* Pre-tip games carry no score from ESPN — show an en dash, never NaN. */
+  const numOrNull=s=>(s==null||s==='')?null:+s;
+  setScore($('aScore'), pl?+pl.awayScore:numOrNull(am.score));
+  setScore($('hScore'), pl?+pl.homeScore:numOrNull(hm.score));
   $('aRec').textContent=am.records&&am.records[0]?am.records[0].summary:'';
   $('hRec').textContent=hm.records&&hm.records[0]?hm.records[0].summary:'';
   const st=h.status.type;
@@ -175,6 +177,10 @@ function esc(s){return String(s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt
 function ordinal(n){return n+(['th','st','nd','rd'][n]||'th');}
 
 // ---- animation + canvas helpers ----
+function setScore(el,v){
+  if(v==null||isNaN(v)){ el.textContent='\u2013'; el.dataset.v=''; return; }
+  tickNum(el,v);
+}
 function tickNum(el,to,fmt){
   fmt=fmt||(v=>String(Math.round(v)));
   const from=parseFloat(el.dataset.v),f=isNaN(from)?to:from;
@@ -705,8 +711,8 @@ $('dayNext').onclick=()=>gotoDay(1);
 $('dayToday').onclick=()=>{sbExplicit=true;resetView();loadGames(null);};
 renderDayNav();
 loadGames();
-fetch('assets/ghost_db.json?v=77efab63').then(r=>r.json()).then(d=>{GHOST_DB=d;GV=null;if(window._lastD)renderGhosts(window._lastD);}).catch(()=>{});
-fetch('assets/player_form.json?v=25a671f3').then(r=>r.json()).then(d=>{FORM_DB=d;if(window._lastD)renderMiles(window._lastD);}).catch(()=>{});
+fetch('assets/ghost_db.json?v=9a8f1588').then(r=>r.json()).then(d=>{GHOST_DB=d;GV=null;if(window._lastD)renderGhosts(window._lastD);}).catch(()=>{});
+fetch('assets/player_form.json?v=41a74427').then(r=>r.json()).then(d=>{FORM_DB=d;if(window._lastD)renderMiles(window._lastD);}).catch(()=>{});
 function setMode(m){
   // The arcade tab was retired in Wave 5 (games live on Play); the companion
   // is the only mode now. Kept as a no-op-safe shim for any saved links.
