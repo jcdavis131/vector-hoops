@@ -302,22 +302,65 @@
       if(navigator.clipboard){await navigator.clipboard.writeText(text+'\n'+url); return true;}
     }catch(e){console.warn('shareChimera fail',e);} return false;
   }
+  /* Wordle-style Daily Court result card: compact emoji grid, spoiler-free
+     (no twin answers), streak hooked in. Web Share API with image when
+     available, text share, clipboard, then legacy execCommand fallback. */
   async function shareDailyCourt(opts){
+    opts=opts||{};
+    var mode=opts.mode==='triple'?'triple':'court';
+    var total=opts.total||(opts.pool?opts.pool.length:0)||(mode==='triple'?3:5);
+    var label=mode==='triple'?'Daily Triple':'Daily Court';
+    var solved=opts.solved||0;
+    var guesses=opts.totalGuesses||0;
+    var dayKey=opts.dayKey||'';
+    var streak=(opts.streak!=null)?opts.streak:0;
+    function slotEmoji(r){
+      if(!r) return '⬜';
+      var n=(r.count!=null?r.count:r.cnt);
+      if(r.won) return n<=2?'🟩': n<=4?'🟨':'🟧';
+      return '❌';
+    }
+    var grid=(opts.slotResults||[]).map(slotEmoji).join(' ');
+    var head='🏀 Vector Hoops '+label+' — '+dayKey;
+    var scoreLine=solved+'/'+total+' in '+guesses+' guess'+(guesses===1?'':'es');
+    var streakLine=streak>0?('🔥 '+streak+'-day streak'):'';
+    var url=opts.url||('https://hoops.dumbmodel.com/play?day='+dayKey+(mode==='triple'?'&mode=triple':''));
+    var text=head+'\n'+scoreLine+'\n'+grid+(streakLine?'\n'+streakLine:'')+'\nPlay the same '+(mode==='triple'?'triple':'court')+': '+url;
+    var title=label+' '+dayKey;
+    function legacyCopy(t){
+      try{
+        var ta=document.createElement('textarea'); ta.value=t; ta.setAttribute('readonly','');
+        ta.style.position='fixed'; ta.style.opacity='0'; document.body.appendChild(ta); ta.select();
+        var ok=document.execCommand('copy'); ta.remove(); return ok;
+      }catch(e){ return false; }
+    }
+    async function copyText(t){
+      if(navigator.clipboard&&navigator.clipboard.writeText){
+        try{ await navigator.clipboard.writeText(t); return 'copied'; }catch(e){}
+      }
+      if(legacyCopy(t)) return 'copied';
+      try{ window.prompt('Copy your result:', t); return 'prompted'; }catch(e){}
+      return false;
+    }
     try{
+      // canvas card (spoiler-free: slot numbers + status, no twin answers)
       var W=1080,H=1350; var c=document.createElement('canvas'); c.width=W; c.height=H; var ctx=c.getContext('2d');
       function rr(x,y,w,h,r){ctx.beginPath();ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);ctx.arcTo(x+w,y+h,x,y+h,r);ctx.arcTo(x,y+h,x,y,r);ctx.arcTo(x,y,x+w,y,r);ctx.closePath();}
       ctx.fillStyle='#FFFEF7'; ctx.fillRect(0,0,W,H);
       ctx.strokeStyle='#1A150F'; ctx.lineWidth=18; ctx.strokeRect(10,10,W-20,H-20);
       ctx.fillStyle='#1A150F'; ctx.fillRect(0,0,W,110);
-      ctx.fillStyle='#fff'; ctx.font='900 30px ui-monospace,monospace'; ctx.fillText('VECTOR HOOPS \u00B7 DAILY COURT 5×',28,42);
-      ctx.font='700 18px ui-monospace'; ctx.fillStyle='#F0E442'; ctx.fillText((opts.dayKey||'')+' \u00B7 SAME FOR EVERYONE \u00B7 '+opts.solved+'/5 \u00B7 '+opts.totalGuesses+' guesses',28,76);
-      var y=150; ctx.fillStyle='#111'; ctx.font='900 36px ui-sans-serif'; ctx.fillText('Daily Court — '+(opts.solved||0)+'/5 '+ ((opts.solved>=5)?'🏆 Full Court':''),36,y); y+=46;
-      ctx.font='700 16px ui-monospace'; ctx.fillStyle='#555'; ctx.fillText('5 past All-Stars → 5 modern twins • refresh can\'t reroll',36,y); y+=30;
-      var gridEmoji = (opts.slotResults||[]).map(function(r){ if(!r) return '⬜'; if(r.won) return r.count<=2?'🟩🔥': r.count<=4?'🟩':'🟨'; return '❌'; }).join(' ');
-      ctx.font='700 28px ui-monospace'; ctx.fillStyle='#111'; ctx.fillText(gridEmoji,36,y+20); y+=56;
+      ctx.fillStyle='#fff'; ctx.font='900 30px ui-monospace,monospace'; ctx.fillText('VECTOR HOOPS \u00B7 '+label.toUpperCase()+' '+total+'\u00D7',28,42);
+      ctx.font='700 18px ui-monospace'; ctx.fillStyle='#F0E442'; ctx.fillText(dayKey+' \u00B7 SAME FOR EVERYONE \u00B7 '+solved+'/'+total+' \u00B7 '+guesses+' guesses',28,76);
+      var y=150; ctx.fillStyle='#111'; ctx.font='900 36px ui-sans-serif';
+      var crown=(solved>=total&&total>0)?' \u{1F3C6}':'';
+      ctx.fillText(label+' — '+solved+'/'+total+crown,36,y); y+=46;
+      ctx.font='700 16px ui-monospace'; ctx.fillStyle='#555'; ctx.fillText(total+' past All-Stars \u2192 '+total+' modern twins \u00B7 refresh can\'t reroll',36,y); y+=30;
+      ctx.font='700 28px ui-monospace'; ctx.fillStyle='#111'; ctx.fillText(grid,36,y+20); y+=56;
+      if(streak>0){ ctx.font='900 30px ui-sans-serif'; ctx.fillStyle='#D55E00'; ctx.fillText('\u{1F525} '+streak+'-day streak',36,y+34); y+=52; }
       (opts.pool||[]).forEach(function(p,i){
         var sd=(opts.slotResults||[])[i];
-        var status=!sd? '⬜' : sd.won? '✅ '+sd.count+'/6' : '❌ '+sd.count+'/6';
+        var cnt=sd?(sd.count!=null?sd.count:sd.cnt):null;
+        var status=!sd? '\u2B1C' : sd.won? '\u2705 '+cnt+'/6' : '\u274C '+cnt+'/6';
         y+=8;
         ctx.fillStyle = sd&&sd.won ? '#e8f5e9' : (!sd? '#fff' : '#fef4e8');
         rr(ctx,36,y,W-72,56,14); ctx.fill(); ctx.strokeStyle='#111'; ctx.lineWidth=3; ctx.stroke();
@@ -326,15 +369,18 @@
         if(y>1050) return;
       });
       ctx.fillStyle='#F0E442'; ctx.strokeStyle='#111'; ctx.lineWidth=4; rr(ctx,36,H-110,W-72,70,18); ctx.fill(); ctx.stroke();
-      ctx.fillStyle='#111'; ctx.font='900 24px ui-sans-serif'; ctx.fillText('Play same court: hoops.dumbmodel.com/play?day='+(opts.dayKey||''),56,H-64);
+      ctx.fillStyle='#111'; ctx.font='900 24px ui-sans-serif'; ctx.fillText('Play same '+(mode==='triple'?'triple':'court')+': hoops.dumbmodel.com/play?day='+dayKey+(mode==='triple'?'&mode=triple':''),56,H-64);
       var blob=await new Promise(function(r){c.toBlob(function(b){r(b);},'image/png');});
-      var file=new File([blob],'daily-court-'+(opts.dayKey||'')+'.png',{type:'image/png'});
-      var lines=(opts.pool||[]).map(function(p,i){ var sd=(opts.slotResults||[])[i]; return (sd&&sd.won?'✅':'❌')+' Slot '+(i+1)+': '+p.n+' '+(sd? sd.count+'/6':'—'); }).join('\n');
-      var url=opts.url||('https://hoops.dumbmodel.com/play?day='+(opts.dayKey||''));
-      var text='Vector Hoops Daily Court '+ (opts.dayKey||'')+' — '+opts.solved+'/5 in '+opts.totalGuesses+' guesses '+gridEmoji+'\n'+lines+'\nCan you beat my Starting 5? '+url;
-      if(navigator.canShare&&navigator.canShare({files:[file]})){ await navigator.share({title:'Daily Court '+opts.dayKey, text:text, files:[file]}); return true; }
-      if(navigator.share){ try{ await navigator.share({title:'Daily Court', text:text, url:url}); return true; }catch(e){} }
-      if(navigator.clipboard&&navigator.clipboard.writeText){ await navigator.clipboard.writeText(text); return 'copied'; }
+      if(blob){
+        var file=new File([blob],'daily-'+mode+'-'+dayKey+'.png',{type:'image/png'});
+        if(navigator.canShare&&navigator.canShare({files:[file]})){
+          await navigator.share({title:title,text:text,files:[file]}); return true;
+        }
+      }
+    }catch(e){ console.warn('shareDailyCourt card fail',e); }
+    try{
+      if(navigator.share){ try{ await navigator.share({title:title,text:text,url:url}); return true; }catch(e){} }
+      return await copyText(text);
     }catch(e){ console.warn('shareDailyCourt fail',e); }
     return false;
   }

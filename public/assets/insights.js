@@ -443,7 +443,7 @@
     c.fillStyle = TERRA;
     c.fillRect(72, H - 150, W - 144, 3);
     text('VECTOR HOOPS', 72, H - 96, 30, PAPER, 700);
-    text('hoops.dumbmodel.com/insights.html#' + ins.slug, 72, H - 52, 26, MUTED, 400);
+    text('hoops.dumbmodel.com/insights/' + ins.slug, 72, H - 52, 26, MUTED, 400);
     return cv.toDataURL('image/png');
   }
 
