@@ -1,4 +1,7 @@
 {
+  "lineage": {
+    "run_id": "july-v5-a4918f09"
+  },
   "built": "2026-07-11",
   "checkpoint": {
     "mtime": 1783736655,

@@ -1,0 +1,48 @@
+{
+  "schema": 1,
+  "run_id": "july-v5-a4918f09",
+  "exported": "2026-07-25T00:00:00Z",
+  "model": "mtnn_v5_concat_b2_h160_t32_d64_mlp128_fus256",
+  "rows": 12966,
+  "dim": 64,
+  "embedding_f32_sha256": "2574ef581ac3d3ee0f793447c26c5c48b82ec309985d6afcf177ed08510458f4",
+  "f32_bytes": 3319296,
+  "keys_sha256": "d1b3d5cb7e37afcf726532d592c5cf4125221a4c811b859175b79f9a998da72e",
+  "embedding_npz_sha256": null,
+  "checkpoint_sha256": null,
+  "centroids_sha256": null,
+  "report_sha256": null,
+  "manifest_sha256": null,
+  "matrix": {
+    "rows": 12966,
+    "cols": null,
+    "keys_sha256": "d1b3d5cb7e37afcf726532d592c5cf4125221a4c811b859175b79f9a998da72e",
+    "columns_sha256": null,
+    "values_sha256": null
+  },
+  "metrics": {
+    "cqs": null,
+    "test_recall_at_10": 0.846,
+    "purity_at_20": 0.7834268306835064,
+    "archetype_top1_acc": 0.9701527070800555,
+    "position_top1_acc": null,
+    "transparent_14d_test_recall_at_10": null,
+    "continuity_spread": null
+  },
+  "promoted_at": null,
+  "forced": true,
+  "force_reason": "Adopted the July 2026 v5 incumbent already served on master (git blob a4918f09). The original promote.py run directory is not in this repo; lineage records the served bytes. Not a new promotion.",
+  "export_floors": {
+    "ok": false,
+    "failed": [
+      "test recall or the 14-d baseline recall is missing"
+    ],
+    "waived_by_force": "Adopted the July 2026 v5 incumbent already served on master (git blob a4918f09). The original promote.py run directory is not in this repo; lineage records the served bytes. Not a new promotion."
+  },
+  "train_git_sha": null,
+  "adoption": {
+    "kind": "served-incumbent",
+    "git_blob_f32": "a4918f09dfbd04120ecad5556a0736f65fa0ef6d",
+    "note": "mtnn_jacobian.json / mtnn_attr_pop.json still carry 2026-07-11/14 48-d checkpoint stamps; they are the files the site serves today. run_id names this served tree. A future promote+export replaces them."
+  }
+}

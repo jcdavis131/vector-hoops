@@ -3376,7 +3376,7 @@ function buildFlowSvg(host) {
      diagram silently keeps its legacy input-magnitude weights. */
   function loadJacobian() {
     return Promise.all([
-      fetch('assets/mtnn_jacobian.json?v=229c6b3d').then(function (r) {
+      fetch('assets/mtnn_jacobian.json?v=a4deda66').then(function (r) {
         if (!r.ok) throw new Error('no jacobian meta');
         return r.json();
       }),
@@ -3436,7 +3436,7 @@ function buildFlowSvg(host) {
      archetype up" is a claim about the SHIPPED net. */
   function loadAttribution() {
     return Promise.all([
-      fetch('assets/mtnn_attr_pop.json?v=ee83d0db').then(function (r) {
+      fetch('assets/mtnn_attr_pop.json?v=dcef921f').then(function (r) {
         if (!r.ok) throw new Error('no attribution meta');
         return r.json();
       }),
@@ -3528,8 +3528,8 @@ function buildFlowSvg(host) {
     // page — flow, explorer, map — over one stale optional dataset.
     Promise.all([
       fetch('assets/vectors.json?v=90b2879d').then(function (r) { return r.json(); }),
-      fetch('assets/mtnn_arch.json?v=d5b8ac11').then(function (r) { return r.json(); }),
-      fetch('assets/mtnn_map.json?v=5f589b3b').then(function (r) { return r.json(); }),
+      fetch('assets/mtnn_arch.json?v=32dbb20c').then(function (r) { return r.json(); }),
+      fetch('assets/mtnn_map.json?v=d9d2f55c').then(function (r) { return r.json(); }),
       fetch('assets/mtnn_heads.f32?v=9b3f7454').then(function (r) {
         if (!r.ok) throw new Error('heads');
         return r.arrayBuffer();

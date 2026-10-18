@@ -29,7 +29,9 @@ The served bundle is now:
                         from the promoted manifest
 and every JSON sidecar exported from the same bundle (SIDECARS) records the
 run_id it came from under "lineage". problems() is the whole check;
-scripts/check_served_model.py runs it on assets/ and public/assets/.
+scripts/check_served_model.py runs it on assets/ and public/assets/. On
+master, scripts/record_served_lineage.py wrote that lineage for the July v5
+incumbent (run july-v5-a4918f09) from the served bytes.
 
 Stdlib only, so the CI job that runs it needs no install.
 """
