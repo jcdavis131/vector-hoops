@@ -142,7 +142,8 @@ button,.input{min-height:44px}
 <meta name="twitter:description" content="Daily Court: five past All-Stars a day, the same five for everyone. Find each one’s closest modern twin in six guesses, or battle friends with a shared pack."/>
 <meta name="twitter:image" content="https://hoops.dumbmodel.com/assets/og-1200x630.png"/>
 <link rel="stylesheet" href="assets/fonts.css?v=8f376b2a"/>
-<link rel="stylesheet" href="/assets/atlas.css?v=e01c0f2f"/>
+<link rel="stylesheet" href="/assets/atlas.css?v=46d6e57a"/>
+<link rel="stylesheet" href="/assets/shell.css?v=7eb94ecf"/>
 <style>
 /* ---- Play: atlas refinement layer ---- */
 .game-head{ padding-top: clamp(40px, 7vw, 88px); padding-bottom: 8px; max-width: 1000px; }
@@ -288,7 +289,7 @@ button,.input{min-height:44px}
   <div class="card" id="daily-court" style="display:none;">
     <div class="court-top">
       <div><div class="small-mono"><span id="court-mode-name">Daily Court</span> — <span id="court-day-label">Today</span> • same for everyone • refresh-proof</div><h2 class="hd" style="margin:4px 0 0;font-size:20px"><span id="court-solved">0</span><span id="court-total">/5</span> solved • <span id="court-guesses">0</span> <span id="court-guesses-word">guesses</span></h2></div>
-      <div style="display:flex;gap:6px;flex-wrap:wrap"><span class="pill" id="court-ip-badge" aria-hidden="true">Same for everyone</span><button class="pill" id="btn-copy-court" type="button">📋 Copy court</button></div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap"><span class="pill" id="court-streak-pill" title="Current daily streak">🔥 streak 0</span><span class="pill" id="court-ip-badge" aria-hidden="true">Same for everyone</span><button class="pill" id="btn-copy-court" type="button">📋 Copy court</button></div>
     </div>
     <div class="court-grid" id="court-grid"></div>
     <div class="lineup-bar" id="lineup-bar"></div>
@@ -359,19 +360,37 @@ button,.input{min-height:44px}
 <canvas id="confetti-canvas" class="confetti" style="display:none" aria-hidden="true"></canvas>
 <script src="assets/error-boundary.js?v=d0cf8ca0"></script>
 <script src="assets/keyboard-a11y.js?v=39777a87"></script>
-<script src="assets/site-nav.js?v=0f2cbdd2" defer></script>
-<script src="assets/pwa-install.js?v=b954d9d1"></script><script src="assets/audio.js?v=52cfa0d8"></script><script type="module" src="assets/timesfm-forecast.js?v=259274e6"></script><script src="assets/pixel-avatar.js?v=6216d2ba"></script><script src="assets/team-logo.js?v=864a7981"></script><script src="assets/viral-share.js?v=bb2fc0df"></script><script src="assets/past-modern-game.js?v=46aa5254"></script><script src="/assets/twin-bands.js?v=d8e155bd"></script>
-<script src="/assets/twin-explainer.js?v=758a0b6c"></script>
+<script src="assets/site-nav.js?v=c12413c4" defer></script>
+<script src="assets/pwa-install.js?v=b954d9d1"></script><script src="assets/audio.js?v=52cfa0d8"></script><script type="module" src="assets/timesfm-forecast.js?v=259274e6"></script><script src="assets/pixel-avatar.js?v=6216d2ba"></script><script src="assets/team-logo.js?v=864a7981"></script><script src="assets/viral-share.js?v=245316b8"></script><script src="assets/past-modern-game.js?v=46aa5254"></script><script src="/assets/twin-bands.js?v=d8e155bd"></script><script src="/assets/twin-explainer.js?v=758a0b6c"></script>
 <script src="assets/map-lenses.js?v=656e8d30"></script>
 <script src="assets/game-mechanics.js?v=e49ec57f"></script>
-<script src="assets/play-engine.js?v=0bfe1985"></script>
+<script src="assets/play-engine.js?v=df5972e6"></script>
 <section aria-label="More ways to play" style="max-width:880px;margin:34px auto 0;padding:0 18px;text-align:center">
   <p class="small-mono" style="text-transform:none;opacity:.85">One court, every mode: the Daily five, the Triple, endless Random and the Pack</p>
 </section>
 <footer class="site-footer">
-  <div class="site-footer__links"><a href="/">Atlas</a><a href="/play">Play</a><a href="/live">Live</a><a href="/players">Players</a><a href="/insights">Insights</a><a href="/methods">Methods</a><a href="https://github.com/jcdavis131/vector-hoops" rel="noopener">Source</a></div>
-  <div class="site-footer__links site-footer__links--more"><span>More</span><a href="/props-lab">Props Lab</a><a href="/taxonomy">Taxonomy</a><a href="/playoff-runs">Playoff Runs</a></div>
-  <p class="site-footer__attribution">Every number recomputable from stats.nba.com · A <a href="https://dumbmodel.com">dumbmodel</a> project</p>
+  <nav class="site-footer__sitemap" aria-label="Sitemap">
+    <div class="site-footer__col">
+      <span class="site-footer__col-title">Play</span>
+      <a href="/play">Daily Court</a>
+    </div>
+    <div class="site-footer__col">
+      <span class="site-footer__col-title">Explore</span>
+      <a href="/">Atlas</a>
+      <a href="/live">Live</a>
+      <a href="/players">Players</a>
+      <a href="/insights">Insights</a>
+      <a href="/playoff-runs">Playoff Runs</a>
+      <a href="/props-lab">Props Lab</a>
+      <a href="/taxonomy">Taxonomy</a>
+      <a href="/methods">Methods</a>
+    </div>
+    <div class="site-footer__col">
+      <span class="site-footer__col-title">How it works</span>
+      <a href="https://dumbmodel.com" rel="noopener">dumbmodel.com</a>
+    </div>
+  </nav>
+  <p class="site-footer__attribution">Every number recomputable from stats.nba.com · A <a href="https://dumbmodel.com">dumbmodel</a> project · <a href="https://github.com/jcdavis131/vector-hoops" rel="noopener">Source</a></p>
 </footer>
 <script>if('serviceWorker' in navigator){window.addEventListener('load',()=>{navigator.serviceWorker.register('/sw.js').catch(()=>{})})}</script>
 </body></html>
