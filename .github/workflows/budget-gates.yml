@@ -1,0 +1,28 @@
+# Budget gates: page weight, interaction/parse proxies, ledger re-verification.
+#
+# Runs scripts/budget_check.py (stdlib only, no installs beyond Python):
+#   Gate 1 -- every served page's HTML+CSS+JS+JSON bytes vs budgets.json
+#   Gate 2 -- site-wide distinct JS bytes + heaviest-page JS / CSS+JS+JSON
+#   Gate 3 -- the repo's own freshness checks:
+#             check_site_facts.py, stamp_assets.py --check, sync_public.py --check
+# Any budget break fails the build. budgets.json was measured on origin/master
+# and budgets are 1.5x measured (32 KiB floor); regenerate with
+# `python scripts/budget_check.py --measure` and commit the result.
+name: Budget gates
+on:
+  push:
+    branches: [master, main]
+  pull_request:
+    branches: [master, main]
+permissions:
+  contents: read
+jobs:
+  budgets:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Page-weight, interaction/parse and ledger gates
+        run: python scripts/budget_check.py
