@@ -1,0 +1,22 @@
+{
+ "built": "2026-10-18",
+ "method": "terciles of twin_explainer.json sim distribution (n=1181)",
+ "bands": [
+  {
+   "min": 0.727,
+   "label": "strong twin",
+   "blurb": "the model is confident these two played the game the same way"
+  },
+  {
+   "min": 0.663,
+   "label": "lean twin",
+   "blurb": "real resemblance, with daylight between them"
+  },
+  {
+   "min": 0.0,
+   "label": "distant twin",
+   "blurb": "the closest match on record \u2014 and still a reach"
+  }
+ ],
+ "rule": "chips show the BAND LABEL, never a bare 3-decimal number. The number may appear on tap-through."
+}
