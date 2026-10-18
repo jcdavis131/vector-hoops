@@ -28,7 +28,8 @@
 <meta name="twitter:description" content="How Vector Hoops is built: data sources, the 14 era-normalised features, the MTNN embedding, the map projection, archetypes, league drift and known limits."/>
 <meta name="twitter:image" content="https://hoops.dumbmodel.com/assets/og-1200x630.png"/>
 <link rel="stylesheet" href="assets/fonts.css?v=8f376b2a"/>
-<link rel="stylesheet" href="/assets/atlas.css?v=e01c0f2f"/>
+<link rel="stylesheet" href="/assets/atlas.css?v=46d6e57a"/>
+<link rel="stylesheet" href="/assets/shell.css?v=7eb94ecf"/>
 <style>
 .doc{ padding-top:0; }
 .doc-toc{ display:flex; flex-wrap:wrap; justify-content:center; gap:0; border-top:1px solid var(--line); border-bottom:1px solid var(--line); max-width:980px; margin:0 auto; width:100%; }
@@ -778,13 +779,32 @@ Heads: 8 arch / 5 pos / 14 next / 18 skills (64→16→1)
   </article>
 </div>
 <footer class="site-footer">
-  <div class="site-footer__links"><a href="/">Atlas</a><a href="/play">Play</a><a href="/live">Live</a><a href="/players">Players</a><a href="/insights">Insights</a><a href="/methods">Methods</a><a href="https://github.com/jcdavis131/vector-hoops" rel="noopener">Source</a></div>
-  <div class="site-footer__links site-footer__links--more"><span>More</span><a href="/props-lab">Props Lab</a><a href="/taxonomy">Taxonomy</a><a href="/playoff-runs">Playoff Runs</a></div>
-  <p class="site-footer__attribution">Every number recomputable from stats.nba.com · A <a href="https://dumbmodel.com">dumbmodel</a> project</p>
+  <nav class="site-footer__sitemap" aria-label="Sitemap">
+    <div class="site-footer__col">
+      <span class="site-footer__col-title">Play</span>
+      <a href="/play">Daily Court</a>
+    </div>
+    <div class="site-footer__col">
+      <span class="site-footer__col-title">Explore</span>
+      <a href="/">Atlas</a>
+      <a href="/live">Live</a>
+      <a href="/players">Players</a>
+      <a href="/insights">Insights</a>
+      <a href="/playoff-runs">Playoff Runs</a>
+      <a href="/props-lab">Props Lab</a>
+      <a href="/taxonomy">Taxonomy</a>
+      <a href="/methods">Methods</a>
+    </div>
+    <div class="site-footer__col">
+      <span class="site-footer__col-title">How it works</span>
+      <a href="https://dumbmodel.com" rel="noopener">dumbmodel.com</a>
+    </div>
+  </nav>
+  <p class="site-footer__attribution">Every number recomputable from stats.nba.com · A <a href="https://dumbmodel.com">dumbmodel</a> project · <a href="https://github.com/jcdavis131/vector-hoops" rel="noopener">Source</a></p>
 </footer>
 <script src="assets/error-boundary.js?v=d0cf8ca0"></script>
 <script src="assets/keyboard-a11y.js?v=39777a87"></script>
-<script src="assets/site-nav.js?v=0f2cbdd2" defer></script>
+<script src="assets/site-nav.js?v=c12413c4" defer></script>
 <script src="assets/pwa-install.js?v=b954d9d1"></script>
 <script>if('serviceWorker' in navigator){window.addEventListener('load',()=>{navigator.serviceWorker.register('/sw.js').catch(()=>{})})}</script>
 

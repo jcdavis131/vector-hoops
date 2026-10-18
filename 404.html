@@ -12,7 +12,8 @@
 <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml"/>
 <link rel="manifest" href="/manifest.json"/>
 <link rel="stylesheet" href="assets/fonts.css?v=8f376b2a"/>
-<link rel="stylesheet" href="/assets/atlas.css?v=e01c0f2f"/>
+<link rel="stylesheet" href="/assets/atlas.css?v=46d6e57a"/>
+<link rel="stylesheet" href="/assets/shell.css?v=7eb94ecf"/>
 <style>
 .nf{ min-height: calc(100vh - var(--nav-h) - 180px); display: grid; place-items: center; }
 .nf__code{ font-family: var(--font-display); font-size: clamp(96px, 20vw, 220px); font-weight: 700; letter-spacing: -.06em; line-height: .85; color: transparent; -webkit-text-stroke: 1px var(--line-2); font-variant-numeric: tabular-nums; }
@@ -35,9 +36,29 @@
   </header>
 </main>
 <footer class="site-footer">
-  <div class="site-footer__links"><a href="/">Atlas</a><a href="/play">Play</a><a href="/players">Players</a><a href="/insights">Insights</a><a href="/methods">Methods</a><a href="https://github.com/jcdavis131/vector-hoops" rel="noopener">Source</a></div>
-  <p class="site-footer__attribution">Every number recomputable from stats.nba.com · A <a href="https://dumbmodel.com">dumbmodel</a> project</p>
+  <nav class="site-footer__sitemap" aria-label="Sitemap">
+    <div class="site-footer__col">
+      <span class="site-footer__col-title">Play</span>
+      <a href="/play">Daily Court</a>
+    </div>
+    <div class="site-footer__col">
+      <span class="site-footer__col-title">Explore</span>
+      <a href="/">Atlas</a>
+      <a href="/live">Live</a>
+      <a href="/players">Players</a>
+      <a href="/insights">Insights</a>
+      <a href="/playoff-runs">Playoff Runs</a>
+      <a href="/props-lab">Props Lab</a>
+      <a href="/taxonomy">Taxonomy</a>
+      <a href="/methods">Methods</a>
+    </div>
+    <div class="site-footer__col">
+      <span class="site-footer__col-title">How it works</span>
+      <a href="https://dumbmodel.com" rel="noopener">dumbmodel.com</a>
+    </div>
+  </nav>
+  <p class="site-footer__attribution">Every number recomputable from stats.nba.com · A <a href="https://dumbmodel.com">dumbmodel</a> project · <a href="https://github.com/jcdavis131/vector-hoops" rel="noopener">Source</a></p>
 </footer>
-<script src="/assets/site-nav.js?v=0f2cbdd2"></script>
+<script src="/assets/site-nav.js?v=c12413c4"></script>
 </body>
 </html>
