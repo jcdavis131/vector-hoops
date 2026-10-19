@@ -841,3 +841,11 @@ section .today-strip__links a:first-child:hover{ background: var(--pipe-deep); }
   .card, .btn, .pp-btn, #streak-pill, .progress-dot.is-done,
   .court-card.is-solved, section .today-strip__label{ box-shadow: none !important; }
 }
+
+/* ---- capability label: the atlas must announce its material (panel v4) ---- */
+.atlas-capability{
+  font-family: ui-monospace, monospace;
+  font-size: 11px;
+  color: var(--fg-3);
+  margin: 6px 4px 0;
+}

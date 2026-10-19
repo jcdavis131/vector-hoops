@@ -49,6 +49,14 @@ ROOT_FILES = ("manifest.json", "sw.js", "robots.txt", "favicon.ico", "sitemap.xm
 
 SKIP_SUFFIXES = (".py", ".pyc")
 
+# Raw model artifacts that must NEVER reach the served path. The embeddings f32
+# lives in the repo for the train lane only (pipeline/build_peers_topk.py and
+# pipeline/build_scoring_lite.py slice it at build time); the browser gets
+# precomputed JSON instead. NOTE: mtnn_heads.f32 is intentionally NOT excluded —
+# the Methods page network exhibit (assets/network-viz.js) still fetches it
+# directly as a core exhibit asset. See specs/serving-budget.md.
+NEVER_SERVE = ("assets/mtnn_embeddings.f32",)
+
 
 def sources() -> list[tuple[Path, Path]]:
     """(source, destination) for everything the deployed site can request."""
@@ -73,6 +81,8 @@ def sources() -> list[tuple[Path, Path]]:
             continue
         for p in sorted(base.rglob("*")):
             if p.is_dir() or p.suffix in SKIP_SUFFIXES:
+                continue
+            if p.relative_to(ROOT).as_posix() in NEVER_SERVE:
                 continue
             pairs.append((p, PUBLIC / p.relative_to(ROOT)))
     return pairs

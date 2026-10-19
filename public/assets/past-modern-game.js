@@ -1,5 +1,5 @@
 /* past-modern-game.js — Past All-Star -> Guess Modern Twin | 100M DAU prod
-   Loads: vectors_search_lite.json (12966 xyz), honors.json (asg), mtnn_embeddings via VHMtnn
+   Loads: vectors_search_lite.json (12966 xyz), honors.json (asg), scoring_lite.f32 (~410KB subset)
    Game: daily past all-star (asg=1, season<2024) -> closest modern (2025-26) by 64-d cosine
    Daily Court = 5 deterministic puzzles per day, broader meta game
    Pack Battle v2 — production-grade: progress, persistence, battle vs challenger, share with scores
@@ -32,36 +32,6 @@
       }catch(e2){ throw e; }
     }
   }
-  let _mtnnP=null;
-  // heads (skill grades) are not needed to score a guess — pull them in the
-  // background once embeddings are in, so grades upgrade when they arrive.
-  function scheduleHeads(){
-    try{
-      const f=()=>{ try{ if(window.VHMtnn && window.VHMtnn.loadHeadsAsync) window.VHMtnn.loadHeadsAsync(); }catch{} };
-      if('requestIdleCallback' in window) requestIdleCallback(f,{timeout:5000}); else setTimeout(f,3000);
-    }catch{}
-  }
-  async function ensureMtnn(){
-    // memoized: all callers share one in-flight load; cleared on failure so a later call retries
-    if(_mtnnP) return _mtnnP;
-    _mtnnP=(async ()=>{
-      // embeddings only (3.1 MB, was 5.26 MB with heads): scoring is cosine
-      // over the embedding matrix; heads are a background upgrade.
-      if(window.VHMtnn && window.VHMtnn.loadEmbeddingsAsync){
-        await window.VHMtnn.loadEmbeddingsAsync(); scheduleHeads(); return;
-      }
-      if(window.VHMtnn && window.VHMtnn.loadAsync){
-        await window.VHMtnn.loadAsync(); return;
-      }
-      await new Promise((res,rej)=>{
-        const s=document.createElement('script'); s.src='assets/mtnn.js'; s.async=true; s.onload=res; s.onerror=rej; document.head.appendChild(s);
-      });
-      if(window.VHMtnn && window.VHMtnn.loadEmbeddingsAsync){ await window.VHMtnn.loadEmbeddingsAsync(); scheduleHeads(); }
-      else if(window.VHMtnn && window.VHMtnn.loadAsync) await window.VHMtnn.loadAsync();
-    })().catch(e=>{ _mtnnP=null; throw e; });
-    return _mtnnP;
-  }
-
   // v54 lite scoring core: subset of mtnn_embeddings.f32 (past all-stars + 2024+ seasons,
   // ~300KB) built by pipeline/build_scoring_lite.py. Same L2-normalized rows, so sims are
   // bit-identical to the full matrix. Loaded eagerly — small enough for any device.
@@ -86,11 +56,10 @@
     })().catch(e=>{ _liteP=null; throw e; });
     return _liteP;
   }
-  // cosine sim by global row id from whichever source is available; null if neither covers the pair
+  // cosine sim by global row id from the lite scoring core; null when the
+  // pair is not covered (the lite subset covers every legal target +
+  // candidate, so this only happens before the lite load completes)
   function simById(a,b){
-    if(window.VHMtnn && window.VHMtnn.isReady && window.VHMtnn.isReady()){
-      try{ const s=window.VHMtnn.sim(a,b); if(typeof s==='number'&&!isNaN(s)) return s; }catch{}
-    }
     if(LITE){
       const ka=LITE.map.get(a), kb=LITE.map.get(b);
       if(ka!=null && kb!=null){
@@ -101,11 +70,14 @@
     }
     return null;
   }
-  // lite first; full matrix only if the current target sits outside the lite subset
+  // lite only: the lite subset covers every legal Daily Court target (past
+  // all-stars) and every modern candidate by construction, so the full
+  // 3.3 MB matrix never needs to reach the client. On lite failure the game
+  // keeps the honest "Loading scoring…" pending state — guessModern refuses
+  // to score against the alphabetical fallback ranking.
   function ensureScoring(){
     return loadScoringLite()
-      .then(()=>{ try{ computeClosest(); }catch{} if(!state.rankingReady) return ensureMtnn().then(()=>{ try{ computeClosest(); }catch{} }); })
-      .catch(()=> ensureMtnn().then(()=>{ try{ computeClosest(); }catch{} }));
+      .then(()=>{ try{ computeClosest(); }catch{} });
   }
   function hashStr(s){
     let h=0; for(let i=0;i<s.length;i++){ h=(h*31 + s.charCodeAt(i))>>>0; } return h;
@@ -784,12 +756,17 @@
    * ledger failed to load, reads return the safe default and writes no-op
    * rather than inventing parallel state. */
   function getStreak(){ try{ return window.VHLedger ? VHLedger.getStreak() : {streak:0,lastPlayedDay:null,best:0,lastWin:false}; }catch{ return {streak:0,lastPlayedDay:null,best:0,lastWin:false}; } }
+  // streak_day analytics (v4 systems): does a protected streak bring the
+  // player back tomorrow (day-2 return by streak state)?
+  function trackStreakDay(dayKey, streak, result){
+    try{ if(window.VHAnalytics) VHAnalytics.track('streak_day',{dayKey:dayKey, streak:streak, result:result}); }catch(_e){}
+  }
   function onDailyWin(dayKey){
-    try{ if(window.VHLedger){ return VHLedger.recordDayOutcome(dayKey,'win').streak||0; } }catch{}
+    try{ if(window.VHLedger){ const s=VHLedger.recordDayOutcome(dayKey,'win').streak||0; trackStreakDay(dayKey,s,'won'); return s; } }catch{}
     return 0;
   }
   function onDailyLoss(dayKey){
-    try{ if(window.VHLedger){ VHLedger.recordDayOutcome(dayKey,'loss'); } }catch{}
+    try{ if(window.VHLedger){ VHLedger.recordDayOutcome(dayKey,'loss'); trackStreakDay(dayKey,0,'lost'); } }catch{}
     return 0;
   }
   function msToNextDaily(){ const now=new Date(); const tomorrow=new Date(now); tomorrow.setDate(tomorrow.getDate()+1); tomorrow.setHours(0,0,0,0); return tomorrow-now; }

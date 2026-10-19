@@ -891,6 +891,22 @@
     opts=opts||{}; const celebrateNew=opts.celebrate===true;
     const won=G.guesses.some(g=>g.rank===0); const locksUsed=(window.VHGameMechanics&&VHGameMechanics.eraLocksUsed)?VHGameMechanics.eraLocksUsed():0; const over=won||G.guesses.length>=(6-locksUsed); const resEl=$('#result'); let st=VHPastModern.state(); const isPack=!!st.isPack;
     if(!over){ resEl.innerHTML=''; resEl.style.display='none'; updateStatusBar(); renderDailyCourt(); renderPackProgress(); renderPackSummary(); return; }
+    // game_completed — Owner Q: is difficulty in the productive zone — do solve
+    // rates by slot justify 6 guesses? Dedupe: finish() re-renders on reload of
+    // finished slots; track once per slot via localStorage.
+    try{
+      if(window.VHAnalytics){
+        var _gmode=st.isPack?'pack':(st.isDaily?'daily':(st.isRandom?'random':'other'));
+        var _gkey=(st.dayKey||'nodate')+':'+(st.dailySlot==null?'x':st.dailySlot)+':'+_gmode;
+        var _gseen={}; try{ _gseen=JSON.parse(localStorage.getItem('vh.analytics.done')||'{}'); }catch(_e){}
+        if(!_gseen[_gkey]){
+          _gseen[_gkey]=1;
+          var _gkeys=Object.keys(_gseen); if(_gkeys.length>500){ _gkeys.slice(0,_gkeys.length-500).forEach(function(k){ delete _gseen[k]; }); }
+          try{ localStorage.setItem('vh.analytics.done', JSON.stringify(_gseen)); }catch(_e){}
+          VHAnalytics.track('game_completed',{won:won, guesses:G.guesses.length, slot:(st.dailySlot==null?null:st.dailySlot), mode:_gmode, dayKey:st.dayKey||null});
+        }
+      }
+    }catch(_e){}
     resEl.style.display='block';
     // harden: embeddings may still be loading → closest null would crash (repro for "breaks when i guess")
     // If ranking isn't ready, the fallback (alphabetical, 0% sim) is NOT valid — wait for real data.
@@ -900,7 +916,7 @@
       try{ if(window.VHMtnn && VHMtnn.isReady && VHMtnn.isReady()){ VHPastModern.computeClosest(); st=VHPastModern.state(); closest=st.closestModern; list=st.modernListSorted||[]; } }catch(e){ console.warn('computeClosest retry fail', e); }
     }
     if(!st.rankingReady || !closest || !closest.entry){
-      resEl.innerHTML=`<div class="card"><h3 class="hd">⏳ Loading twin…</h3><div style="font-size:13px;line-height:1.5">Embeddings still loading (3.3MB). Your guess is saved (${G.guesses.length}/6).<br>Top: ${(list||[]).slice(0,3).map(o=>o.m && o.m.n || '').join(' • ')||'warming up'}<br><div style="margin-top:8px;display:flex;gap:8px"><button class="btn btn-primary" onclick="try{VHPastModern.computeClosest();}catch(e){} location.reload()">Retry</button><button class="btn" onclick="document.getElementById('result').style.display='none'">Keep playing</button></div></div></div>`;
+      resEl.innerHTML=`<div class="card"><h3 class="hd">⏳ Loading twin…</h3><div style="font-size:13px;line-height:1.5">Scoring data still loading. Your guess is saved (${G.guesses.length}/6).<br>Top: ${(list||[]).slice(0,3).map(o=>o.m && o.m.n || '').join(' • ')||'warming up'}<br><div style="margin-top:8px;display:flex;gap:8px"><button class="btn btn-primary" onclick="try{VHPastModern.computeClosest();}catch(e){} location.reload()">Retry</button><button class="btn" onclick="document.getElementById('result').style.display='none'">Keep playing</button></div></div></div>`;
       return;
     }
     // v42 hardened: safe mapping for top 5, handles missing m/sim
@@ -1542,11 +1558,17 @@
     }
     $('#share-btn').addEventListener('click', async ()=>{
       const s=VHPastModern.state();
+      // share_tapped — Owner Q: what fraction of completed games produce a share tap?
+      const _smode=s.isPack?'pack':(s.isDaily?'daily':'pastmodern');
+      try{ if(window.VHAnalytics) VHAnalytics.track('share_tapped',{mode:_smode}); }catch(_e){}
+      // share_confirmed — Owner Q: do VERIFIED shares (not taps) drive ref=share visits?
+      const _confirm=(res)=>{ try{ if(window.VHAnalytics && (res===true||res==='copied')) VHAnalytics.track('share_confirmed',{method:res==='copied'?'clipboard':'webshare', mode:_smode}); }catch(_e){} };
       if(s.isPack){
         const ps=VHPastModern.getPackState();
         const selfScores = ps.results.map(r=> r ? (r.won? r.count:0):0);
         const opts={size:ps.size, packEntries:ps.entries, results:ps.results, solved:ps.solved, totalGuesses:ps.totalGuesses, avg:ps.avg, packCode:ps.code, ids:ps.ids, selfScores};
         if(window.VHShare&&VHShare.sharePack){ const res=await VHShare.sharePack(opts); confirmShare($('#share-btn'), res, 'Share'); return; }
+        try{ if(window.VHAnalytics && (res===true||res==='copied')) VHAnalytics.track('share_confirmed',{method:res==='copied'?'clipboard':'webshare',mode:'pack'}); }catch(_e){}
         const url=VHPastModern.packShareUrl(ps.ids, selfScores);
         try{ await navigator.clipboard.writeText(`Pack Battle ${ps.size} — ${ps.solved}/${ps.size} in ${ps.totalGuesses} guesses — Can you beat me? ${url}`); confirmShare($('#share-btn'), 'copied', 'Share'); }catch{ confirmShare($('#share-btn'), false, 'Share'); }
         return;

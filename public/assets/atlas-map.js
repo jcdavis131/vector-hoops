@@ -31,6 +31,40 @@
   var ctx = canvas.getContext('2d');
   var tip = $('hover-tip');
 
+  // ---------- capability: the atlas must announce its material (panel v4) ----------
+  // Live instance: "Interactive model — drag to explore".
+  // Fallback:      "Still from the interactive model — tap to explore" + retry.
+  var interactiveTimer = null;
+  function setCapabilityLabel(text) {
+    var el = $('atlas-capability');
+    if (!el) {
+      el = document.createElement('p');
+      el.id = 'atlas-capability';
+      el.className = 'atlas-capability';
+      if (canvas.parentNode) canvas.parentNode.insertBefore(el, canvas.nextSibling);
+    }
+    el.textContent = text;
+  }
+  function showStill(reason) {
+    if (interactiveTimer) { clearTimeout(interactiveTimer); interactiveTimer = null; }
+    canvas.hidden = true;
+    var s = $('atlas-state');
+    if (s) {
+      s.hidden = false;
+      s.innerHTML = '<p><b>Still from the interactive model — tap to explore.</b><br>' +
+        esc(reason) + '</p><p><button type="button" class="btn" id="atlas-retry">Try the live map</button></p>';
+      var b = $('atlas-retry');
+      if (b) b.addEventListener('click', function () { location.reload(); });
+    }
+    setCapabilityLabel('Still from the interactive model — tap to explore');
+  }
+  function markInteractive() {
+    if (interactiveTimer) { clearTimeout(interactiveTimer); interactiveTimer = null; }
+    var s = $('atlas-state'); if (s) s.hidden = true;
+    setCapabilityLabel('Interactive model — drag to explore');
+  }
+  if (!ctx) { showStill('This device could not start the map canvas.'); return; }
+
   var P = [];            // players
   var W = 0, H = 0, DPR = 1;
   var PAD = 28;
@@ -248,7 +282,7 @@
       '</dl>' +
       '<a class="readout__link" href="/players?q=' + encodeURIComponent(p.n) + '">Open ' + esc(p.n) + ' dossier →</a>';
 
-    if (!window.VHMtnn || !window.VHMtnn.isReady()) {
+    if (!window.VHPeers || !window.VHPeers.isReady()) {
       body.innerHTML = [0, 1, 2].map(function (k) {
         return '<tr class="is-loading"><td class="r">' + (k + 1) + '</td><td><span class="skeleton"></span></td><td><span class="skeleton skeleton--s"></span></td><td class="hide-s"><span class="skeleton"></span></td><td class="r"><span class="skeleton skeleton--s"></span></td></tr>';
       }).join('');
@@ -271,10 +305,10 @@
 
   function computePeers() {
     peers = [];
-    if (selected < 0 || !window.VHMtnn || !window.VHMtnn.isReady()) return;
+    if (selected < 0 || !window.VHPeers || !window.VHPeers.isReady()) return;
     var name = P[selected].n;
     // other players only: a player's own adjacent seasons are trivially close
-    peers = window.VHMtnn.topK(selected, 3, function (i) { return P[i] && P[i].n !== name; });
+    peers = window.VHPeers.topK(selected, 3, function (i) { return P[i] && P[i].n !== name; });
   }
 
   function select(i, opts) {
@@ -295,15 +329,14 @@
     }
   }
 
-  function ensureEmbedding() {
-    if (!window.VHMtnn) return;
-    // embeddings only (3.1 MB): the atlas's one model call is topK over the
-    // embedding matrix; the 2.2 MB heads file loads lazily elsewhere.
-    var loadFn = window.VHMtnn.loadEmbeddings || window.VHMtnn.load;
-    loadFn.call(window.VHMtnn, function (ok) {
+  function ensurePeers() {
+    if (!window.VHPeers) return;
+    // Precomputed top-8 peers (~1.2 MB JSON) instead of the 3.3 MB raw
+    // embedding matrix: every neighbor list is a build-time constant.
+    window.VHPeers.load(function (ok) {
       if (!ok) {
         var status = $('atlas-peers-status');
-        if (status) status.textContent = 'The embedding could not be loaded on this connection. The atlas still works; peers need the 3.3 MB embedding file.';
+        if (status) status.textContent = 'The peer list could not be loaded on this connection. The atlas still works; peers will appear when the data arrives.';
         var body = $('atlas-peers-body'); if (body) body.innerHTML = '';
         return;
       }
@@ -515,12 +548,17 @@
 
   // ---------- boot ----------
   function fail(msg) {
-    var s = $('atlas-state');
-    if (s) { s.hidden = false; s.innerHTML = '<p><b>The atlas could not load.</b> ' + esc(msg) + '</p><button type="button" class="btn" onclick="location.reload()">Try again</button>'; }
+    // Every failure becomes the labeled still, never a silent dead map.
+    showStill(msg);
   }
 
   readColors();
   resize();
+  // 2s canvas watchdog (panel v4, Tier 2 item 14): if the atlas is not
+  // interactive within 2 seconds of boot, say so with the labeled still.
+  interactiveTimer = setTimeout(function () {
+    showStill('The live map did not start within 2 seconds on this connection.');
+  }, 2000);
   // Uncertainty grammar (Part 2 panel: Hullman): load twin bands once; the
   // peers table shows band labels, and re-renders when the bands arrive.
   if (window.VHTwinBands) {
@@ -548,11 +586,12 @@
       try { var q = new URL(location.href).searchParams.get('id'); if (q != null && /^\d+$/.test(q)) id = +q; } catch (e) {}
       if (id < 0) { for (var i = 0; i < P.length; i++) if (P[i].n === FEATURED.n && P[i].s === FEATURED.s) { id = i; break; } }
       opening();
+      markInteractive();
       select(id, { noUrl: true });
-      // Prefetch the embedding on first hover/touch/keyboard intent instead
-      // of on idle: visitors who never engage the map never pay the 3.1 MB.
+      // Prefetch the peer list on first hover/touch/keyboard intent instead
+      // of on idle: visitors who never engage the map never pay for it.
       ['pointerover', 'pointerdown', 'touchstart', 'focusin'].forEach(function (ev) {
-        document.addEventListener(ev, function () { ensureEmbedding(); }, { once: true, passive: true });
+        document.addEventListener(ev, function () { ensurePeers(); }, { once: true, passive: true });
       });
     })
     .catch(function (err) { fail('The season file did not arrive (' + err.message + '). Check your connection and try again.'); });
