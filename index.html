@@ -27,7 +27,7 @@
 <meta name="twitter:image" content="https://hoops.dumbmodel.com/assets/og-1200x630.png"/>
 <link rel="stylesheet" href="assets/fonts.css?v=8f376b2a"/>
 <link rel="preload" href="/assets/vectors_search_lite.json" as="fetch" crossorigin/>
-<link rel="stylesheet" href="/assets/atlas.css?v=e1eef2c7"/>
+<link rel="stylesheet" href="/assets/atlas.css?v=7c1d7652"/>
 <link rel="stylesheet" href="/assets/shell.css?v=7eb94ecf"/>
 <style>
 /* ---------- Home: hero ---------- */
@@ -100,14 +100,30 @@
 .trust-badge summary::before{ content: "◈ "; color: var(--pencil-text); }
 .trust-badge[open] summary{ color: var(--fg-2); }
 .trust-badge p{ margin: 6px 0 0; line-height: 1.5; color: var(--fg-2); }
-/* Panel v3 G6: overlaid region tags removed (Jobs's cut) — the region strip
-   below the map is the one list. */
+#region-layer{ position: absolute; inset: 0; z-index: 2; pointer-events: none; }
+.region-tag{
+  position: absolute; transform: translate(-50%, -50%);
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 5px 9px; border-radius: 999px; white-space: nowrap;
+  font-family: var(--font-display); font-size: 10px; font-weight: 600;
+  letter-spacing: .08em; text-transform: uppercase;
+  color: rgba(236,238,241,.92); background: rgba(7,9,12,.62);
+  border: 1px solid rgba(255,255,255,.16); cursor: pointer; pointer-events: auto;
+  -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+}
+.region-tag:hover{ border-color: rgba(255,255,255,.45); color: #fff; }
+.region-tag[aria-pressed="true"]{ border-color: var(--marker-red); color: #fff; }
+.region-tag__dot{ width: 6px; height: 6px; border-radius: 50%; background: var(--accent); flex: none; }
+#region-layer.is-regions .region-tag{ font-size: 11.5px; padding: 8px 13px; }
+#region-layer.is-regions .region-tag__dot{ width: 9px; height: 9px; }
+.region-tag.is-collided{ display: none; }
 /* v4 honesty grammar — embedding-truth vs map-approximation surfaces.
    truth (64-d MTNN embedding: twin bands, peers, game feedback): solid marker.
    approximation (the 2-D atlas of 14 stats): dashed marker. Light touch. */
 .vh-truth{ border-inline-start: 3px solid var(--accent, #e0762e); padding-inline-start: 10px; }
 .vh-approx{ border-inline-start: 3px dashed var(--line-2, #999); padding-inline-start: 10px; }
 #sky-canvas.is-regions{ opacity: .22; transition: opacity var(--dur-2) var(--ease); }
+#region-layer.has-selection .region-tag:not([aria-pressed="true"]){ opacity: .45; }
 .region-strip{
   display: flex; gap: 8px; overflow-x: auto; padding: 10px 2px 4px;
   -webkit-overflow-scrolling: touch; scrollbar-width: thin;
@@ -312,7 +328,7 @@
     <h1 class="hero__title reveal reveal-1"><span>Who plays</span><span>like <em>this?</em></span></h1>
     <p class="title-card__lede reveal reveal-2">Every season from 1996–97 to 2025–26 with enough minutes, placed by how it was played rather than who played it. Choose one, and a neural embedding returns the three seasons that play most alike. This map measures how players play, not how good they are.</p>
     <div class="title-card__actions reveal reveal-3">
-      <a class="btn btn-primary btn-xl" href="#atlas">Pick a season — meet its 3 closest twins</a>
+      <a class="btn btn-primary btn-xl" href="#atlas">Tap a season — explore the atlas</a>
     </div>
   </header>
 
@@ -358,6 +374,36 @@
         <p><a href="/players">Browse all players →</a></p>
       </div>
     </div>
+
+    <div class="atlas-axes" id="atlas-axes">
+      <div class="axes-pick">
+        <label class="axes-label" for="axis-x">X axis
+          <select id="axis-x" class="axes-select">
+            <option value="pca1" selected>Paint vs perimeter (PCA)</option>
+          </select>
+        </label>
+        <label class="axes-label" for="axis-y">Y axis
+          <select id="axis-y" class="axes-select">
+            <option value="pca2" selected>Scoring load (PCA)</option>
+          </select>
+        </label>
+      </div>
+      <div class="axes-view" role="group" aria-label="Atlas view">
+        <button type="button" id="view-2d" class="axes-btn" aria-pressed="true">2-D map</button>
+        <button type="button" id="view-1d" class="axes-btn" aria-pressed="false">1-D line</button>
+      </div>
+      <p class="axes-note" id="axes-note">Name both axes — every point re-plots. Pick a named stat to leave the PCA view.</p>
+    </div>
+
+    <figure class="map-note" id="map-note">
+      <figcaption class="label fig-label" style="margin:0">Fig. note <b>· How to read this map</b></figcaption>
+      <ul>
+        <li><b>A sketch, not the model.</b> The flat map shows two of three PCA axes; the three together keep about 62% of the variance in the 14 era-normalised stats (<a href="/methods">methods</a>). Nearby on the map is approximate.</li>
+        <li><b>Peers come from the model, not the picture.</b> &ldquo;Plays most alike&rdquo; is cosine similarity in the full 64-d embedding, so a peer can sit some distance away on the map.</li>
+        <li><b>Eras are normalised away.</b> Stats are z-scored within each season, so cross-era closeness is about style, not who would win.</li>
+        <li><b>Scores are opinions.</b> Name different axes and every point moves; retrain the model and the numbers wobble.</li>
+      </ul>
+    </figure>
 
     <div class="legend" id="atlas-legend" role="group" aria-label="Highlight an archetype"></div>
 
@@ -451,7 +497,7 @@
 <script defer src="/assets/vh-peers.js?v=STAMP"></script>
 <script defer src="/assets/served-constants.js?v=8ba12340"></script>
 <script defer src="/assets/twin-bands.js?v=0a191313"></script>
-<script defer src="/assets/atlas-map.js?v=40c34707"></script>
+<script defer src="/assets/atlas-map.js?v=e98d55fb"></script>
 <script defer src="/assets/atlas-regions.js?v=137f43e8"></script>
 <script defer src="/assets/career-trails.js?v=a0e9e836"></script>
 <script src="assets/site-facts.js?v=f8edaf37" defer></script>

@@ -198,8 +198,18 @@ def mtnn_exports_allowed(bundle: promote.PromotedBundle) -> tuple[bool, str | No
 
 
 def mtnn_promotion_eligible(report: dict | None) -> bool:
-    """export_mtnn_embeddings' floors, applied to the promoted run's report."""
+    """export_mtnn_embeddings' floors, applied to the promoted run's report,
+    plus the trainer's own promote verdict.
+
+    A run the trainer refused (report["promote"]["ok"] is False) must not
+    export silently even when the three floors clear [promote.py docstring,
+    2026-10-09 incident]. An operator --force still overrides via the
+    manifest's recorded `forced` flag in mtnn_exports_allowed.
+    """
     if not report:
+        return False
+    verdict = report.get("promote") or {}
+    if verdict.get("ok") is not True:
         return False
     ho = report.get("held_out_recall", {})
     test = ho.get("test", {})
