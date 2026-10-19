@@ -100,25 +100,9 @@
 .trust-badge summary::before{ content: "◈ "; color: var(--pencil-text); }
 .trust-badge[open] summary{ color: var(--fg-2); }
 .trust-badge p{ margin: 6px 0 0; line-height: 1.5; color: var(--fg-2); }
-#region-layer{ position: absolute; inset: 0; z-index: 2; pointer-events: none; }
-.region-tag{
-  position: absolute; transform: translate(-50%, -50%);
-  display: inline-flex; align-items: center; gap: 6px;
-  padding: 5px 9px; border-radius: 999px; white-space: nowrap;
-  font-family: var(--font-display); font-size: 10px; font-weight: 600;
-  letter-spacing: .08em; text-transform: uppercase;
-  color: rgba(236,238,241,.92); background: rgba(7,9,12,.62);
-  border: 1px solid rgba(255,255,255,.16); cursor: pointer; pointer-events: auto;
-  -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
-}
-.region-tag:hover{ border-color: rgba(255,255,255,.45); color: #fff; }
-.region-tag[aria-pressed="true"]{ border-color: var(--marker-red); color: #fff; }
-.region-tag__dot{ width: 6px; height: 6px; border-radius: 50%; background: var(--accent); flex: none; }
-#region-layer.is-regions .region-tag{ font-size: 11.5px; padding: 8px 13px; }
-#region-layer.is-regions .region-tag__dot{ width: 9px; height: 9px; }
-.region-tag.is-collided{ display: none; }
+/* Panel v3 G6: overlaid region tags removed (Jobs's cut) — the region strip
+   below the map is the one list. */
 #sky-canvas.is-regions{ opacity: .22; transition: opacity var(--dur-2) var(--ease); }
-#region-layer.has-selection .region-tag:not([aria-pressed="true"]){ opacity: .45; }
 .region-strip{
   display: flex; gap: 8px; overflow-x: auto; padding: 10px 2px 4px;
   -webkit-overflow-scrolling: touch; scrollbar-width: thin;
@@ -323,7 +307,7 @@
     <h1 class="hero__title reveal reveal-1"><span>Who plays</span><span>like <em>this?</em></span></h1>
     <p class="title-card__lede reveal reveal-2">Every season from 1996–97 to 2025–26 with enough minutes, placed by how it was played rather than who played it. Choose one, and a neural embedding returns the three seasons that play most alike. This map measures how players play, not how good they are.</p>
     <div class="title-card__actions reveal reveal-3">
-      <a class="btn btn-primary btn-xl" href="#atlas">Tap a season — explore the atlas</a>
+      <a class="btn btn-primary btn-xl" href="#atlas">Pick a season — meet its 3 closest twins</a>
     </div>
   </header>
 
@@ -468,7 +452,7 @@
 <script defer src="/assets/mtnn.js?v=81d491f8"></script>
 <script defer src="/assets/twin-bands.js?v=d8e155bd"></script>
 <script defer src="/assets/atlas-map.js?v=0870c2e8"></script>
-<script defer src="/assets/atlas-regions.js?v=ec87afa0"></script>
+<script defer src="/assets/atlas-regions.js?v=c9132685"></script>
 <script defer src="/assets/career-trails.js?v=a0e9e836"></script>
 <script src="assets/site-facts.js?v=cbb639f4" defer></script>
 <script>
