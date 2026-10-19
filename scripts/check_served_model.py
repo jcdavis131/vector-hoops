@@ -29,8 +29,12 @@ scripts/record_served_lineage.py recorded mtnn_lineage.json from those bytes
 forced: true lineage is pinned to that f32's sha256, regardless of
 checkpoint_sha256 or kind: a hand-written forced lineage for a different
 model fails. A matching promote.py manifest on disk is the only alternative
-(the real --force path). Only mtnn_jacobian.json and mtnn_attr_pop.json may
-skip the sidecar run-id check by marking stale / not_from_served_net; any
+(the real --force path): export writes assets/mtnn_embeddings.lineage.json
+next to the f32 (not under pipeline/data), and that sidecar's f32 sha plus
+its promote-manifest sha must match the served bytes and CURRENT.json.
+Only mtnn_jacobian.json and
+mtnn_attr_pop.json may skip the sidecar run-id check by marking stale /
+not_from_served_net; any
 other sidecar marked stale still fails on run-id drift. Those two must not
 claim the served run id. It still fails a swapped f32, extra meta keys, a
 keys-hash mismatch, live sidecar run-id drift, or assets/ vs public/assets/

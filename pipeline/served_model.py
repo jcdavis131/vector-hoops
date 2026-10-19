@@ -36,7 +36,8 @@ scripts/check_served_model.py runs it on assets/ and public/assets/. On master,
 scripts/record_served_lineage.py wrote that lineage for the July v5 incumbent
 (run july-v5-a4918f09) from the served bytes. Every forced: true lineage is
 pinned to INCUMBENT_F32_SHA256 unless a matching promote.py manifest verifies
-the bundle.
+the bundle, including that assets/mtnn_embeddings.lineage.json names the
+served f32 and the current promote manifest sha.
 
 Stdlib only, so the CI job that runs it needs no install.
 """
@@ -52,14 +53,16 @@ from typing import Any
 F32 = "mtnn_embeddings.f32"
 META = "mtnn_meta.json"
 LINEAGE = "mtnn_lineage.json"
+F32_LINEAGE = "mtnn_embeddings.lineage.json"
 VECTORS = "vectors.json"
 LINEAGE_SCHEMA = 1
+F32_LINEAGE_SCHEMA = 1
 
 # git rev-parse HEAD:assets/mtnn_embeddings.f32 on origin/master (a4918f09).
 # Forced adoption (record_served_lineage.py) is pinned to these bytes so a
 # hand-written forced lineage cannot bless a different f32. A matching
-# promote.py manifest on disk is the only other way a forced lineage may
-# name a different f32 (the real --force path).
+# promote.py bundle plus the f32 export sidecar is the only other way a
+# forced lineage may name a different f32 (the real --force path).
 INCUMBENT_F32_SHA256 = "2574ef581ac3d3ee0f793447c26c5c48b82ec309985d6afcf177ed08510458f4"
 INCUMBENT_RUN_ID = "july-v5-a4918f09"
 
@@ -183,21 +186,60 @@ def _candidate_promoted_dirs(assets: Path) -> tuple[Path, ...]:
     )
 
 
-def matching_promote_manifest(assets: Path, lineage: Mapping[str, Any]) -> bool:
-    """True when lineage names a real promote.py bundle whose manifest hashes match.
+def f32_export_sidecar(
+    *,
+    run_id: str,
+    embedding_f32_sha256: str,
+    embedding_npz_sha256: str | None,
+    promote_manifest: str,
+    promote_manifest_sha256: str,
+) -> dict[str, Any]:
+    """What export writes next to the f32: the served bytes and the promote they came from."""
+    return {
+        "schema": F32_LINEAGE_SCHEMA,
+        "run_id": run_id,
+        "embedding_f32_sha256": embedding_f32_sha256,
+        "embedding_npz_sha256": embedding_npz_sha256,
+        "promote_manifest": promote_manifest,
+        "promote_manifest_sha256": promote_manifest_sha256,
+    }
 
-    Fail-closed: a missing run_id, missing manifest_sha256, missing files, or
-    any hash/run mismatch is not a match. A hand-written checkpoint_sha256
-    string is not enough.
+
+def matching_promote_manifest(assets: Path, lineage: Mapping[str, Any]) -> bool:
+    """True when the f32 sidecar and CURRENT.json name the same promote bundle.
+
+    Fail-closed: a missing sidecar, missing hashes, missing files, or any
+    hash/run mismatch is not a match. The sidecar's embedding_f32_sha256 must
+    equal the served f32, and its promote_manifest_sha256 must be CURRENT.json's
+    manifest sha. Export writes the sidecar under assets/; it does not edit
+    promoted/.
     """
     run_id = lineage.get("run_id")
     man_sha = lineage.get("manifest_sha256")
     ckpt_sha = lineage.get("checkpoint_sha256")
+    emb_f32 = lineage.get("embedding_f32_sha256")
     if not isinstance(run_id, str) or not run_id:
         return False
     if not isinstance(man_sha, str) or not man_sha:
         return False
     if not isinstance(ckpt_sha, str) or not ckpt_sha:
+        return False
+    if not isinstance(emb_f32, str) or not emb_f32:
+        return False
+    side, err = _load(assets / F32_LINEAGE)
+    if err or not isinstance(side, dict):
+        return False
+    if side.get("embedding_f32_sha256") != emb_f32:
+        return False
+    if side.get("run_id") != run_id:
+        return False
+    side_man = side.get("promote_manifest_sha256")
+    if not isinstance(side_man, str) or not side_man or side_man != man_sha:
+        return False
+    side_npz = side.get("embedding_npz_sha256")
+    if not isinstance(side_npz, str) or not side_npz:
+        return False
+    if side_npz != lineage.get("embedding_npz_sha256"):
         return False
     for promoted in _candidate_promoted_dirs(assets):
         man_path = promoted / run_id / "manifest.json"
@@ -215,9 +257,11 @@ def matching_promote_manifest(assets: Path, lineage: Mapping[str, Any]) -> bool:
             continue
         if current.get("run_id") != run_id or current.get("manifest_sha256") != man_sha:
             continue
+        if current.get("manifest_sha256") != side_man:
+            continue
         files = man.get("files") if isinstance(man.get("files"), dict) else {}
-        rec = files.get("checkpoint") if isinstance(files.get("checkpoint"), dict) else {}
-        if rec.get("sha256") != ckpt_sha:
+        ckpt = files.get("checkpoint") if isinstance(files.get("checkpoint"), dict) else {}
+        if ckpt.get("sha256") != ckpt_sha:
             continue
         return True
     return False
@@ -350,6 +394,29 @@ def problems(assets: Path) -> list[str]:
             )
         if lineage.get("f32_bytes") != size:
             out.append(f"{F32} is {size} bytes, {LINEAGE} says {lineage.get('f32_bytes')}")
+    side, side_err = _load(assets / F32_LINEAGE)
+    if side_err is None and isinstance(side, dict):
+        if size is not None:
+            got = sha256_file(f32)
+            if got != side.get("embedding_f32_sha256"):
+                out.append(
+                    f"{F32} sha256 {got[:12]} is not the {str(side.get('embedding_f32_sha256'))[:12]} "
+                    f"{F32_LINEAGE} records"
+                )
+        for promoted in _candidate_promoted_dirs(assets):
+            current_path = promoted / "CURRENT.json"
+            if not current_path.is_file():
+                continue
+            try:
+                current = json.loads(current_path.read_text(encoding="utf-8"))
+            except (OSError, ValueError):
+                continue
+            if current.get("manifest_sha256") != side.get("promote_manifest_sha256"):
+                out.append(
+                    f"{F32_LINEAGE} promote manifest sha {str(side.get('promote_manifest_sha256'))[:12]} "
+                    f"is not CURRENT.json's {str(current.get('manifest_sha256'))[:12]}"
+                )
+            break
     if players is not None and keys_sha256(vector_keys(players)) != lineage.get("keys_sha256"):
         out.append(
             f"{VECTORS} rows (pid|season, in order) are not the rows the f32 was exported against; "
