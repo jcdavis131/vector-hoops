@@ -16,8 +16,8 @@ import pytest
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "pipeline"))
-from build_honors import normalize_allnba_teams  # noqa: E402
 from build_dossiers import slug  # noqa: E402
+from build_honors import normalize_allnba_teams  # noqa: E402
 
 
 def _rows(**kwargs):
