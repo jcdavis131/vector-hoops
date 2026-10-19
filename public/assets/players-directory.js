@@ -313,6 +313,18 @@
         }
       } catch (e) { /* search stays empty */ }
       render();
+      // Deep link: /players?dossier=<slug> opens the dossier modal directly.
+      // Panel v3 G4: "Open dossier" links must land on a dossier, not a search.
+      try {
+        var dslug = new URLSearchParams(location.search).get('dossier');
+        if (dslug && window.VHDossier) {
+          var hit = null;
+          for (var pi = 0; pi < PLAYERS.length; pi++) {
+            if (PLAYERS[pi].slug === dslug) { hit = PLAYERS[pi]; break; }
+          }
+          if (hit) openDossier(hit.slug, hit.name, null);
+        }
+      } catch (e) { /* modal stays closed */ }
     }).catch(function (err) {
       els.count.textContent = 'Could not load the player index (' + err.message + ').';
     });

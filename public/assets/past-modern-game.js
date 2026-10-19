@@ -112,18 +112,23 @@
   }
   function buildDailyPool(dayKey, past, count, seedTag){
     count = count || 5; seedTag = seedTag || 'daily-court-v2';
-    const pool=[]; const usedNames=new Set();
+    const pool=[]; const usedNames=new Set(); const archCount={};
     for(let slot=0; slot<count; slot++){
       let h = hashStr(dayKey + '|' + seedTag + '|' + slot);
       let idx = h % past.length;
       let guard=0;
-      while((usedNames.has(past[idx].n) || pool.some(p=>p.i===past[idx].i)) && guard<120){
+      /* Panel v3 G5: variety cap — at most 2 targets per day may share one
+         archetype (cluster id .c). Same-day puzzle sets were landing 4-of-5
+         in a single archetype, which makes the day feel samey. */
+      const archOk=(p)=> (archCount[p.c|0]||0) < 2;
+      while((usedNames.has(past[idx].n) || pool.some(p=>p.i===past[idx].i) || !archOk(past[idx])) && guard<400){
         h = (h*33 + 7 + guard)>>>0;
         idx = h % past.length;
         guard++;
       }
       pool.push(past[idx]);
       usedNames.add(past[idx].n);
+      archCount[past[idx].c|0]=(archCount[past[idx].c|0]||0)+1;
     }
     return pool;
   }
@@ -788,4 +793,8 @@
     generateRandomPack, startPackFromIds, advancePack, getPackState, packShareUrl, parseIdList, parseScores, getPackBattleSummary, resetCurrentPack, abandonPack, packChallengeUrl, savePackState, loadPackState, clearPackState,
     getDailyState, switchDailySlot, buildDailyPool, hashStr, fetchIp, PACK_MAX
   };
+  // node QA hook (browser-ignored)
+  if (typeof module !== 'undefined' && module.exports) {
+    module.exports = { buildDailyPool: buildDailyPool, hashStr: hashStr };
+  }
 })();

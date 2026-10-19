@@ -53,62 +53,15 @@
     };
   }
 
-  function buildLayer(P, bounds) {
+  /* Panel v3 G6 (Jobs's cut): the 12 overlaid region buttons are gone. They
+     cluttered the map and duplicated the region strip below it — which is
+     the one list that stays. selectRegion still toggles via the strip. */
+  function buildLayer() {
     var layer = document.getElementById('region-layer');
-    if (!layer) {
-      layer = document.createElement('div');
-      layer.id = 'region-layer';
-      layer.setAttribute('aria-hidden', 'false');
-      wrap.appendChild(layer);
-    }
-    layer.innerHTML = '';
-    regions.forEach(function (rg, k) {
-      var b = document.createElement('button');
-      b.type = 'button';
-      b.className = 'region-tag';
-      b.setAttribute('data-region', String(k));
-      b.setAttribute('aria-pressed', 'false');
-      b.setAttribute('aria-label', 'Atlas region: ' + rg.name + '. ' + rg.blurb);
-      b.innerHTML = '<span class="region-tag__dot" aria-hidden="true"></span><span class="region-tag__name">' + esc(rg.name) + '</span>';
-      b.addEventListener('click', function () { selectRegion(k); });
-      layer.appendChild(b);
-    });
-    positionTags(P, bounds);
+    if (layer && layer.parentNode) layer.parentNode.removeChild(layer);
   }
 
-  function positionTags(P, bounds) {
-    var layer = document.getElementById('region-layer');
-    if (!layer) return;
-    var r = wrap.getBoundingClientRect();
-    var W = Math.max(280, Math.round(r.width)), H = Math.max(260, Math.round(r.height));
-    var pad = W < 520 ? 18 : 36;
-    var tags = layer.querySelectorAll('.region-tag');
-    regions.forEach(function (rg, k) {
-      var a = anchors[k], tag = tags[k];
-      if (!a || !tag) return;
-      var pos = mapXY(a.x, a.y, W, H, bounds, pad);
-      tag.style.left = pos.left.toFixed(2) + '%';
-      tag.style.top = pos.top.toFixed(2) + '%';
-    });
-    // Greedy de-collision on narrow maps: larger regions keep their tags.
-    // Every region stays reachable via the strip below the map.
-    if (W < 700) {
-      var order = regions.map(function (rg, k) { return k; })
-        .sort(function (a, b) { return regions[b].size - regions[a].size; });
-      var placed = [];
-      order.forEach(function (k) {
-        var tag = tags[k], ra = tag.getBoundingClientRect(), clash = false;
-        for (var i = 0; i < placed.length; i++) {
-          var rb = placed[i].getBoundingClientRect();
-          if (ra.left < rb.right && ra.right > rb.left && ra.top < rb.bottom && ra.bottom > rb.top) { clash = true; break; }
-        }
-        if (clash) tag.classList.add('is-collided');
-        else { tag.classList.remove('is-collided'); placed.push(tag); }
-      });
-    } else {
-      tags.forEach(function (tag) { tag.classList.remove('is-collided'); });
-    }
-  }
+  function positionTags() { /* overlaid tags removed; strip needs no positioning */ }
 
   function buildStrip() {
     if (!strip) return;

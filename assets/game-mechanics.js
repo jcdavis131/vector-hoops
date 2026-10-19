@@ -95,7 +95,7 @@
     var bar=$('#lifelines-bar'); if(!bar) return;
     var used=twinUsed(), locks=eraLocksUsed(), over=gameOver();
     var html='<div class="lifeline-row" role="group" aria-label="Lifelines">'
-      +'<button class="btn btn-lifeline" id="ll-twin" type="button"'+(used||over?' disabled':'')+'>🔭 Twin Reveal'+(used?' ✓':'')+'</button>'
+      +'<button class="btn btn-lifeline" id="ll-twin" type="button"'+(used||over?' disabled':'')+' title="Spotlight the mystery star\u2019s 3 nearest twins on the map">🔭 Twin Reveal'+(used?' ✓':'')+'</button>'
       +'<button class="btn btn-lifeline" id="ll-era" type="button"'+(locks>=1||over?' disabled':'')+'>🕰 Era Lock <span class="ll-cost">−1 guess</span></button>';
     if(HAS_COURT_LAB) html+='<button class="btn btn-lifeline" id="ll-court" type="button"'+(over?' disabled':'')+'>📋 Court Check</button>';
     html+='</div><div class="small-mono" id="lifeline-status" style="margin-top:6px;opacity:.75"></div>';
@@ -111,13 +111,17 @@
   function twinReveal(){
     if(gameOver()){ lifelineStatus('Game over — lifelines closed.'); return; }
     if(twinUsed()){ lifelineStatus('Twin Reveal already used this slot.'); return; }
-    var g=lastGuess();
-    if(!g||g.idx==null){ lifelineStatus('Make a guess first — Twin Reveal spotlights its 3 nearest twins.'); return; }
+    /* Panel v3 G5: the reveal spotlights the TARGET's twins, not the last
+       guess's. Twins of your guess tell you where you already are; twins of
+       the mystery star point at where you need to go. */
+    var st=null; try{ st=window.VHPastModern.state(); }catch(e){}
+    var t=st&&st.target;
+    if(!t||t.i==null){ lifelineStatus('No active puzzle for Twin Reveal.'); return; }
     lifelineStatus('Finding twins…');
     ensureVectors().then(function(v){
-      var q=v[g.idx]; if(!q||!q.v){ lifelineStatus('No vector for that guess.'); return; }
+      var q=v[t.i]; if(!q||!q.v){ lifelineStatus('No vector for the mystery star.'); return; }
       var scored=[];
-      for(var i=0;i<v.length;i++){ if(i===g.idx||!v[i].v) continue; scored.push([cosSim(q.v,v[i].v), i]); }
+      for(var i=0;i<v.length;i++){ if(i===t.i||!v[i].v) continue; scored.push([cosSim(q.v,v[i].v), i]); }
       scored.sort(function(a,b){ return b[0]-a[0]; });
       var top=scored.slice(0,3).map(function(s){ return s[1]; });
       var names=top.map(function(i){ return v[i].name+' '+v[i].season; });
@@ -134,7 +138,7 @@
       /* renderLifelines() rebuilds #lifelines-bar (wiping #lifeline-status),
          so flip the button state FIRST, then write the reveal text. */
       renderLifelines();
-      lifelineStatus('🔭 Twins of '+(q.name||'your guess')+': '+names.join(' • '));
+      lifelineStatus('🔭 Twins of the mystery star: '+names.join(' • '));
     }).catch(function(e){ lifelineStatus('Twin data still loading — try again in a moment.'); });
   }
   function eraLock(){

@@ -279,6 +279,16 @@
   "trailingSlash": false,
   "redirects": [
     {
+      "source": "/atlas",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/daily",
+      "destination": "/play",
+      "permanent": true
+    },
+    {
       "source": "/research",
       "destination": "/methods#frontier",
       "permanent": true

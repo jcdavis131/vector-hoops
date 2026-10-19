@@ -822,12 +822,15 @@
     }).join(' • ');
 
     /* Gap 10 fix: the reveal is a dead end no more. Deep links for the twin:
-       dossier via the players directory search (?q=), atlas via the ?id=
-       P-index deep link the atlas already reads on load (search-lite order). */
+       dossier via /players?dossier=<slug> (opens the dossier modal directly —
+       Panel v3 G4: the link must land on a dossier, not a search page),
+       atlas via the ?id= P-index deep link the atlas already reads on load. */
     function twinLinks(){
       try{
         var tn=(closest.entry.n||'').replace(/</g,'&lt;');
-        var links='<a href="/players?q='+encodeURIComponent(closest.entry.n||'')+'">Open '+tn+' dossier \u2192</a>';
+        var dslug=''; try{ dslug=(window.VHDossier&&window.VHDossier.playerSlug)?window.VHDossier.playerSlug(closest.entry.n||''):''; }catch(e){}
+        var dlink=dslug?'/players?dossier='+encodeURIComponent(dslug):'/players?q='+encodeURIComponent(closest.entry.n||'');
+        var links='<a href="'+dlink+'">Open '+tn+' dossier \u2192</a>';
         var pidx=-1;
         try{
           var sl=VHPastModern.state().searchLite, arr=sl&&(sl.players||sl);
@@ -1325,6 +1328,8 @@
     $('#btn-onboard-play')?.addEventListener('click', ()=>{ closeOnboard(); $('#guess-input')?.focus(); });
     $('#btn-onboard-random')?.addEventListener('click', ()=>{ closeOnboard(); const p=VHPastModern.pickRandomPast(); location.href='/play?mode=random&r='+p.i; });
     backdrop?.addEventListener('click', e=>{ if(e.target===backdrop) closeOnboard(); });
+    /* Panel v3 G6: Escape dismisses the info sheet. */
+    document.addEventListener('keydown', e=>{ if(e.key==='Escape' && backdrop && !backdrop.hidden) closeOnboard(); });
 
     $('#btn-focus-guess')?.addEventListener('click', ()=>{ $('#guess-input')?.focus(); window.scrollTo({top: $('#guess-card').offsetTop-20, behavior:'smooth'}); });
     $('#guess-btn')?.addEventListener('click', ()=>{ if(typeof doGuess==='function') doGuess(); });
