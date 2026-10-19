@@ -1,5 +1,5 @@
 /* live-atlas.js — Plate 4 instrument: Twins / Matchup / Trail on the real 64-d atlas.
- * Data: assets/vectors_search_lite.json (12,966 positions) + VHMtnn.topK (live 64-d twins).
+ * Data: assets/vectors_search_lite.json (12,966 positions) + VHPeers.topK (precomputed 64-d twins).
  * API: window.LiveAtlas = { onGame(d, g), setMode(m) }.
  */
 (function () {
@@ -189,17 +189,18 @@ function selectTwinPlayer(i) {
   draw();
 }
 var mtnnLoading = false;
-// LAZY: the 3.3MB model weights only download when twins are actually requested
+// LAZY: the precomputed peer list (~1.2 MB) only downloads when twins are
+// actually requested — never the 3.3 MB raw embedding matrix.
 function ensureModel(cb) {
   if (mtnnReady) { if (cb) cb(); return; }
-  if (window.VHMtnn && window.VHMtnn.isReady()) { mtnnReady = true; if (cb) cb(); draw(); return; }
-  if (!window.VHMtnn) { setTimeout(function () { ensureModel(cb); }, 400); return; }
+  if (window.VHPeers && window.VHPeers.isReady()) { mtnnReady = true; if (cb) cb(); draw(); return; }
+  if (!window.VHPeers) { setTimeout(function () { ensureModel(cb); }, 400); return; }
   if (mtnnLoading) return;
   mtnnLoading = true;
   if (typeof hintEl !== 'undefined' && hintEl) { hintEl.textContent = 'finding style-twins\u2026'; hintEl.style.display = 'block'; }
-  window.VHMtnn.load(function () {
+  window.VHPeers.load(function () {
     mtnnLoading = false;
-    mtnnReady = window.VHMtnn.isReady();
+    mtnnReady = window.VHPeers.isReady();
     if (cb) cb();
     draw();
   });
@@ -210,7 +211,7 @@ function computeTwins() {
   if (!mtnnReady) { ensureModel(function () { computeTwins(); }); renderTwinList(); return; }
   var name = P[selIdx].n;
   try {
-    twins = window.VHMtnn.topK(selIdx, 6, function (id) { return P[id] && P[id].n !== name; });
+    twins = window.VHPeers.topK(selIdx, 6, function (id) { return P[id] && P[id].n !== name; });
   } catch (e) { twins = []; }
   renderTwinList();
 }
@@ -371,7 +372,7 @@ function init() {
     draw();
   }).catch(function () { if (hintEl) hintEl.textContent = 'map failed to load'; });
 
-  document.addEventListener('vh:mtnn-loaded', function () { mtnnReady = true; mtnnLoading = false; computeTwins(); draw(); });
+  document.addEventListener('vh:peers-ready', function () { mtnnReady = true; mtnnLoading = false; computeTwins(); draw(); });
 
   canvas.addEventListener('click', function (e) {
     var r = canvas.getBoundingClientRect();

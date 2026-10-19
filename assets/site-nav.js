@@ -85,6 +85,15 @@
 
     wireDrawer(nav);
     markLive(nav);
+
+    // visit — Owner Q: which inbound refs actually bring returning players?
+    // data-mounted guards double-fire; vh-analytics.js is a no-op until a
+    // backend is chosen, so this is honest scaffolding, not theater.
+    try {
+      var ref = null;
+      try { ref = new URL(location.href).searchParams.get('ref'); } catch (e) {}
+      if (window.VHAnalytics) VHAnalytics.track('visit', { path: location.pathname, ref: ref });
+    } catch (e) {}
   }
 
   function wireDrawer(nav) {

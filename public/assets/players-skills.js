@@ -452,9 +452,9 @@
 
   function renderMtnnNeighbors(playerIndex) {
     var box = els.mtnn; if (!box) return;
-    if (!MTNN_READY || !window.VHMtnn) { box.hidden = true; return; }
+    if (!MTNN_READY || !window.VHPeers) { box.hidden = true; return; }
     var selfName = DATA.players[playerIndex].name;
-    var hits = window.VHMtnn.topK(playerIndex, 5, function (i) { return DATA.players[i].name !== selfName; });
+    var hits = window.VHPeers.topK(playerIndex, 5, function (i) { return DATA.players[i].name !== selfName; });
     if (!hits.length) { box.hidden = true; return; }
     box.hidden = false;
     var items = hits.map(function (h) {
@@ -712,7 +712,7 @@
     fetch('assets/archetype_assignments.json?v=4118981a').then(function(r){return r.ok?r.json():null;}).then(function(aa){ ARCH_ASSIGN=aa||false; if (ARCH_ASSIGN && current.slug) renderProfile(); }).catch(function(){ARCH_ASSIGN=false;});
     fetch('assets/season_norms.json?v=bcd38ecb').then(function(r){return r.ok?r.json():null;}).then(function(sn){ SEASON_NORMS=sn||null; if (SEASON_NORMS && current.slug) renderProfile(); }).catch(function(){SEASON_NORMS=null;});
     fetch('assets/next_profile_eval.json?v=5de3c225').then(function(r){return r.ok?r.json():null;}).then(function(ne){ NEXT_EVAL=ne||false; if (NEXT_EVAL && current.slug) renderProfile(); }).catch(function(){NEXT_EVAL=false;});
-    if (window.VHMtnn && window.VHMtnn.load) { window.VHMtnn.load(function (ok) { MTNN_READY = !!ok; if (MTNN_READY && current.slug) renderProfile(); }); } else { MTNN_READY=false; }
+    if (window.VHPeers && window.VHPeers.load) { window.VHPeers.load(function (ok) { MTNN_READY = !!ok; if (MTNN_READY && current.slug) renderProfile(); }); } else { MTNN_READY=false; }
   }
 
   function loadSecondaryWhenNeeded() {

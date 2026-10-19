@@ -1,5 +1,5 @@
 /* past-modern-game.js — Past All-Star -> Guess Modern Twin | 100M DAU prod
-   Loads: vectors_search_lite.json (12966 xyz), honors.json (asg), mtnn_embeddings via VHMtnn
+   Loads: vectors_search_lite.json (12966 xyz), honors.json (asg), scoring_lite.f32 (~410KB subset)
    Game: daily past all-star (asg=1, season<2024) -> closest modern (2025-26) by 64-d cosine
    Daily Court = 5 deterministic puzzles per day, broader meta game
    Pack Battle v2 — production-grade: progress, persistence, battle vs challenger, share with scores
@@ -32,36 +32,6 @@
       }catch(e2){ throw e; }
     }
   }
-  let _mtnnP=null;
-  // heads (skill grades) are not needed to score a guess — pull them in the
-  // background once embeddings are in, so grades upgrade when they arrive.
-  function scheduleHeads(){
-    try{
-      const f=()=>{ try{ if(window.VHMtnn && window.VHMtnn.loadHeadsAsync) window.VHMtnn.loadHeadsAsync(); }catch{} };
-      if('requestIdleCallback' in window) requestIdleCallback(f,{timeout:5000}); else setTimeout(f,3000);
-    }catch{}
-  }
-  async function ensureMtnn(){
-    // memoized: all callers share one in-flight load; cleared on failure so a later call retries
-    if(_mtnnP) return _mtnnP;
-    _mtnnP=(async ()=>{
-      // embeddings only (3.1 MB, was 5.26 MB with heads): scoring is cosine
-      // over the embedding matrix; heads are a background upgrade.
-      if(window.VHMtnn && window.VHMtnn.loadEmbeddingsAsync){
-        await window.VHMtnn.loadEmbeddingsAsync(); scheduleHeads(); return;
-      }
-      if(window.VHMtnn && window.VHMtnn.loadAsync){
-        await window.VHMtnn.loadAsync(); return;
-      }
-      await new Promise((res,rej)=>{
-        const s=document.createElement('script'); s.src='assets/mtnn.js'; s.async=true; s.onload=res; s.onerror=rej; document.head.appendChild(s);
-      });
-      if(window.VHMtnn && window.VHMtnn.loadEmbeddingsAsync){ await window.VHMtnn.loadEmbeddingsAsync(); scheduleHeads(); }
-      else if(window.VHMtnn && window.VHMtnn.loadAsync) await window.VHMtnn.loadAsync();
-    })().catch(e=>{ _mtnnP=null; throw e; });
-    return _mtnnP;
-  }
-
   // v54 lite scoring core: subset of mtnn_embeddings.f32 (past all-stars + 2024+ seasons,
   // ~300KB) built by pipeline/build_scoring_lite.py. Same L2-normalized rows, so sims are
   // bit-identical to the full matrix. Loaded eagerly — small enough for any device.
@@ -86,11 +56,10 @@
     })().catch(e=>{ _liteP=null; throw e; });
     return _liteP;
   }
-  // cosine sim by global row id from whichever source is available; null if neither covers the pair
+  // cosine sim by global row id from the lite scoring core; null when the
+  // pair is not covered (the lite subset covers every legal target +
+  // candidate, so this only happens before the lite load completes)
   function simById(a,b){
-    if(window.VHMtnn && window.VHMtnn.isReady && window.VHMtnn.isReady()){
-      try{ const s=window.VHMtnn.sim(a,b); if(typeof s==='number'&&!isNaN(s)) return s; }catch{}
-    }
     if(LITE){
       const ka=LITE.map.get(a), kb=LITE.map.get(b);
       if(ka!=null && kb!=null){
@@ -101,11 +70,14 @@
     }
     return null;
   }
-  // lite first; full matrix only if the current target sits outside the lite subset
+  // lite only: the lite subset covers every legal Daily Court target (past
+  // all-stars) and every modern candidate by construction, so the full
+  // 3.3 MB matrix never needs to reach the client. On lite failure the game
+  // keeps the honest "Loading scoring…" pending state — guessModern refuses
+  // to score against the alphabetical fallback ranking.
   function ensureScoring(){
     return loadScoringLite()
-      .then(()=>{ try{ computeClosest(); }catch{} if(!state.rankingReady) return ensureMtnn().then(()=>{ try{ computeClosest(); }catch{} }); })
-      .catch(()=> ensureMtnn().then(()=>{ try{ computeClosest(); }catch{} }));
+      .then(()=>{ try{ computeClosest(); }catch{} });
   }
   function hashStr(s){
     let h=0; for(let i=0;i<s.length;i++){ h=(h*31 + s.charCodeAt(i))>>>0; } return h;
@@ -766,12 +738,17 @@
   function loadStreakRaw(){ try{ const raw=localStorage.getItem(STREAK_KEY); if(!raw){ const legacy=localStorage.getItem('vh_weekStreak'); if(legacy){ const w=JSON.parse(legacy); const seeded={streak:w.streak||0,lastPlayedDay:w.last||null,best:w.streak||0,lastWin:true}; saveStreakRaw(seeded); try{ localStorage.setItem('vh.streak', JSON.stringify({streak:seeded.streak})); }catch{} return seeded; } return {streak:0,lastPlayedDay:null,best:0,lastWin:false}; } const j=JSON.parse(raw); return {streak:j.streak||0,lastPlayedDay:j.lastPlayedDay||null,best:j.best||j.streak||0,lastWin:!!j.lastWin}; }catch{ return {streak:0,lastPlayedDay:null,best:0,lastWin:false}; } }
   function saveStreakRaw(obj){ try{ localStorage.setItem(STREAK_KEY, JSON.stringify(obj)); }catch{} }
   function getStreak(){ return loadStreakRaw(); }
+  // streak_day — Owner Q: does a protected streak bring the player back tomorrow
+  // (day-2 return by streak state)? Both writers run at most once per dayKey.
+  function trackStreakDay(dayKey, streak, result){
+    try{ if(window.VHAnalytics) VHAnalytics.track('streak_day',{dayKey:dayKey, streak:streak, result:result}); }catch(_e){}
+  }
   function onDailyWin(dayKey){
     if(!dayKey) return 0; const cur=getStreak(); if(cur.lastPlayedDay===dayKey) return cur.streak;
     let nxt=1; if(cur.lastPlayedDay){ const d1=new Date(cur.lastPlayedDay+'T00:00:00Z'); const d2=new Date(dayKey+'T00:00:00Z'); const diff=Math.round((d2-d1)/86400000); if(diff===1) nxt=cur.streak+1; else if(diff===0) nxt=cur.streak; else nxt=1; }
-    const best=Math.max(cur.best||0,nxt); const updated={streak:nxt,lastPlayedDay:dayKey,best:best,lastWin:true}; saveStreakRaw(updated); try{ localStorage.setItem('vh.streak', JSON.stringify({streak:nxt})); }catch{} return nxt;
+    const best=Math.max(cur.best||0,nxt); const updated={streak:nxt,lastPlayedDay:dayKey,best:best,lastWin:true}; saveStreakRaw(updated); try{ localStorage.setItem('vh.streak', JSON.stringify({streak:nxt})); }catch{} trackStreakDay(dayKey,nxt,'won'); return nxt;
   }
-  function onDailyLoss(dayKey){ const cur=getStreak(); const updated={streak:0,lastPlayedDay:dayKey,best:cur.best||cur.streak||0,lastWin:false}; saveStreakRaw(updated); try{ localStorage.setItem('vh.streak', JSON.stringify({streak:0})); }catch{} return 0; }
+  function onDailyLoss(dayKey){ const cur=getStreak(); const updated={streak:0,lastPlayedDay:dayKey,best:cur.best||cur.streak||0,lastWin:false}; saveStreakRaw(updated); try{ localStorage.setItem('vh.streak', JSON.stringify({streak:0})); }catch{} trackStreakDay(dayKey,0,'lost'); return 0; }
   function msToNextDaily(){ const now=new Date(); const tomorrow=new Date(now); tomorrow.setDate(tomorrow.getDate()+1); tomorrow.setHours(0,0,0,0); return tomorrow-now; }
   function fmtHMS(ms){ const s=Math.floor(ms/1000); const h=Math.floor(s/3600); const m=Math.floor((s%3600)/60); const sec=s%60; if(h>0) return `${h}h ${m}m`; if(m>0) return `${m}m ${sec}s`; return `${sec}s`; }
 

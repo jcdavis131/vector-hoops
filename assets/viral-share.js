@@ -324,7 +324,7 @@
     var head='🏀 Vector Hoops '+label+' — '+dayKey;
     var scoreLine=solved+'/'+total+' in '+guesses+' guess'+(guesses===1?'':'es');
     var streakLine=streak>0?('🔥 '+streak+'-day streak'):'';
-    var url=opts.url||('https://hoops.dumbmodel.com/play?day='+dayKey+(mode==='triple'?'&mode=triple':''));
+    var url=opts.url||('https://hoops.dumbmodel.com/play?day='+dayKey+(mode==='triple'?'&mode=triple':'')+'&ref=share');
     var text=head+'\n'+scoreLine+'\n'+grid+(streakLine?'\n'+streakLine:'')+'\nPlay the same '+(mode==='triple'?'triple':'court')+': '+url;
     var title=label+' '+dayKey;
     function legacyCopy(t){
