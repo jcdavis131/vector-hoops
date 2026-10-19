@@ -1332,26 +1332,41 @@
     $('#btn-random').addEventListener('click', ()=>{ const p=VHPastModern.pickRandomPast(); location.href='/play?mode=random&r='+p.i; });
     $('#btn-new').addEventListener('click', ()=>{ if(st.isPack){ VHPastModern.abandonPack(); } location.href='/play'; });
     $('#btn-copy-court')?.addEventListener('click', async ()=>{
-      const s=VHPastModern.state(); const url=location.origin+'/play?day='+s.dayKey; const court=s.dailyPool.map((p,i)=>`${i+1}. ${p.n} ${p.s}`).join('\n'); const text=`Daily Court ${s.dayKey} — 5 puzzles\n${court}\n${url}`; try{ await navigator.clipboard.writeText(text); const b=$('#btn-copy-court'); b.textContent='Copied!'; setTimeout(()=>b.textContent='📋 Copy court',1200); }catch{ prompt('Copy', text); }
+      const s=VHPastModern.state(); const url=location.origin+'/play?day='+s.dayKey; const court=s.dailyPool.map((p,i)=>`${i+1}. ${p.n} ${p.s}`).join('\n'); const text=`Daily Court ${s.dayKey} — 5 puzzles\n${court}\n${url}`; try{ await navigator.clipboard.writeText(text); confirmShare($('#btn-copy-court'), 'copied', '📋 Copy court'); }catch{ prompt('Copy', text); }
     });
+    // One confirmation pattern for every share control (panel v3 G2): the share
+    // call's result drives the button label, so a share is never silent.
+    // res: true = OS share sheet completed, 'copied' = clipboard, 'prompted' =
+    // manual-copy prompt shown, anything else = failed.
+    function confirmShare(btn, res, idle){
+      try{
+        if(!btn) return;
+        const orig=idle||btn.textContent;
+        if(res==='copied') btn.textContent='Copied!';
+        else if(res===true) btn.textContent='Shared ✓';
+        else if(res==='prompted') btn.textContent='Copy the text above';
+        else btn.textContent='Share failed — try Copy Grid';
+        setTimeout(()=>{ btn.textContent=orig; },1600);
+      }catch{}
+    }
     $('#share-btn').addEventListener('click', async ()=>{
       const s=VHPastModern.state();
       if(s.isPack){
         const ps=VHPastModern.getPackState();
         const selfScores = ps.results.map(r=> r ? (r.won? r.count:0):0);
         const opts={size:ps.size, packEntries:ps.entries, results:ps.results, solved:ps.solved, totalGuesses:ps.totalGuesses, avg:ps.avg, packCode:ps.code, ids:ps.ids, selfScores};
-        if(window.VHShare&&VHShare.sharePack){ const res=await VHShare.sharePack(opts); if(res==='copied'){ const b=$('#share-btn'); const orig=b.textContent; b.textContent='Copied!'; setTimeout(()=>b.textContent=orig,1200); } return; }
+        if(window.VHShare&&VHShare.sharePack){ const res=await VHShare.sharePack(opts); confirmShare($('#share-btn'), res, 'Share'); return; }
         const url=VHPastModern.packShareUrl(ps.ids, selfScores);
-        try{ await navigator.clipboard.writeText(`Pack Battle ${ps.size} — ${ps.solved}/${ps.size} in ${ps.totalGuesses} guesses — Can you beat me? ${url}`); const b=$('#share-btn'); b.textContent='Copied link!'; setTimeout(()=>b.textContent='Share',1200); }catch{}
+        try{ await navigator.clipboard.writeText(`Pack Battle ${ps.size} — ${ps.solved}/${ps.size} in ${ps.totalGuesses} guesses — Can you beat me? ${url}`); confirmShare($('#share-btn'), 'copied', 'Share'); }catch{ confirmShare($('#share-btn'), false, 'Share'); }
         return;
       }
       if(s.isDaily){
         const dailyState=VHPastModern.getDailyState(); const opts={dayKey:s.dayKey, pool:s.dailyPool, slotResults:dailyState.slotResults, solved:dailyState.solved, total:dailyState.total||s.dailyPool.length, totalGuesses:dailyState.totalGuesses, streak:v2Streak(), mode:s.isTriple?'triple':'court', url:location.origin+'/play?day='+s.dayKey+(s.isTriple?'&mode=triple':'')};
-        if(window.VHShare&&VHShare.shareDailyCourt){ await VHShare.shareDailyCourt(opts); return; }
+        if(window.VHShare&&VHShare.shareDailyCourt){ const res=await VHShare.shareDailyCourt(opts); confirmShare($('#share-btn'), res, 'Share'); return; }
       }
       const won=G.guesses.some(g=>g.rank===0);
       const opts={puzzleNum:s.puzzleNum, dayKey:s.dayKey, pastName:s.target.n, pastSeason:s.target.s, guesses:G.guesses, answerName:s.closestModern? s.closestModern.entry.n: '', answerSim:s.closestModern? s.closestModern.sim:0, won:won, streak:v2Streak(), url:location.origin+'/play?day='+s.dayKey+'&slot='+s.dailySlot};
-      if(window.VHShare&&window.VHShare.sharePastModern) await window.VHShare.sharePastModern(opts);
+      if(window.VHShare&&window.VHShare.sharePastModern){ const res=await window.VHShare.sharePastModern(opts); confirmShare($('#share-btn'), res, 'Share'); }
     });
     $('#share-text-btn').addEventListener('click', ()=>{
       const s=VHPastModern.state();
@@ -1361,16 +1376,16 @@
         const selfScores = ps.results.map(r=> r ? (r.won? r.count:0):0);
         const url=VHPastModern.packShareUrl(ps.ids, selfScores);
         const text=`Pack Battle (${ps.size}) — ${ps.solved}/${ps.size} in ${ps.totalGuesses} guesses avg ${ps.avg.toFixed(1)}\n${lines}\nBattle: ${url}`;
-        navigator.clipboard.writeText(text).then(()=>{ const b=$('#share-text-btn'); b.textContent='Copied'; setTimeout(()=>b.textContent='Copy Grid',1200); });
+        navigator.clipboard.writeText(text).then(()=>confirmShare($('#share-text-btn'),'copied','Copy Grid'), ()=>confirmShare($('#share-text-btn'),false,'Copy Grid'));
         return;
       }
       const won=G.guesses.some(g=>g.rank===0);
       if(s.isDaily){
         const dailyState=VHPastModern.getDailyState(); const lines=s.dailyPool.map((p,i)=>{ const sd=dailyState.slotResults[i]; const status=sd? (sd.won? `✅ ${sd.cnt}/6` : `❌ ${sd.cnt}/6`): '⬜'; return `${status} Slot ${i+1}: ${p.n}`; }).join('\n');
-        const text=`${s.isTriple?'Daily Triple':'Daily Court'} ${s.dayKey} — ${dailyState.solved}/${dailyState.total} in ${dailyState.totalGuesses} guesses${v2Streak()>0?`\n🔥 ${v2Streak()}-day streak`:''}\n${lines}\n${location.origin}/play?day=${s.dayKey}${s.isTriple?'&mode=triple':''}`; navigator.clipboard.writeText(text).then(()=>{ const b=$('#share-text-btn'); b.textContent='Copied'; setTimeout(()=>b.textContent='Copy Grid',1200); });
+        const text=`${s.isTriple?'Daily Triple':'Daily Court'} ${s.dayKey} — ${dailyState.solved}/${dailyState.total} in ${dailyState.totalGuesses} guesses${v2Streak()>0?`\n🔥 ${v2Streak()}-day streak`:''}\n${lines}\n${location.origin}/play?day=${s.dayKey}${s.isTriple?'&mode=triple':''}`; navigator.clipboard.writeText(text).then(()=>confirmShare($('#share-text-btn'),'copied','Copy Grid'), ()=>confirmShare($('#share-text-btn'),false,'Copy Grid'));
         return;
       }
-      const grid=G.guesses.map(g=> g.rank===0?'🟩': g.rank<=3?'🟨':'⬜').join(''); const lines=G.guesses.map((g,i)=>`${i+1}. ${g.name} ${(g.sim*100).toFixed(0)}% #${g.rank+1}`).join('\n'); const text=`Vector Hoops P#${s.puzzleNum} ${s.dayKey} ${won?G.guesses.length+'/6':'X/6'} ${grid}\nPast ${s.target.n} → ${won?G.guesses.slice(-1)[0].name:'?'}\n${lines}\n${location.origin}/play?day=${s.dayKey}&slot=${s.dailySlot}`; navigator.clipboard.writeText(text).then(()=>{ const b=$('#share-text-btn'); b.textContent='Copied'; setTimeout(()=>b.textContent='Copy Grid',1200); });
+      const grid=G.guesses.map(g=> g.rank===0?'🟩': g.rank<=3?'🟨':'⬜').join(''); const lines=G.guesses.map((g,i)=>`${i+1}. ${g.name} ${(g.sim*100).toFixed(0)}% #${g.rank+1}`).join('\n'); const text=`Vector Hoops P#${s.puzzleNum} ${s.dayKey} ${won?G.guesses.length+'/6':'X/6'} ${grid}\nPast ${s.target.n} → ${won?G.guesses.slice(-1)[0].name:'?'}\n${lines}\n${location.origin}/play?day=${s.dayKey}&slot=${s.dailySlot}`; navigator.clipboard.writeText(text).then(()=>confirmShare($('#share-text-btn'),'copied','Copy Grid'), ()=>confirmShare($('#share-text-btn'),false,'Copy Grid'));
     });
     $('#btn-challenge').addEventListener('click', async function(){
       const s=VHPastModern.state();
@@ -1379,10 +1394,10 @@
         const selfScores = ps.results.map(r=> r ? (r.won? r.count:0):0);
         const url=VHPastModern.packShareUrl(ps.ids, selfScores);
         const txt=`Can you beat my Pack ${ps.size}? I got ${ps.solved}/${ps.size} in ${ps.totalGuesses} guesses — ${url}`;
-        try{ await navigator.clipboard.writeText(txt); this.textContent='Copied!'; setTimeout(()=>this.textContent='Challenge',1200); }catch{ alert(url); }
+        try{ await navigator.clipboard.writeText(txt); confirmShare(this, 'copied', 'Challenge'); }catch{ alert(url); }
         return;
       }
-      const url=location.origin+'/play?day='+s.dayKey+(s.isDaily? `&slot=${s.dailySlot}`:''); const txt=`Can you beat my Daily Court ${s.dayKey}? Slot ${s.dailySlot+1} ${s.target.n} — ${url}`; try{ await navigator.clipboard.writeText(txt); this.textContent='Copied'; setTimeout(()=>this.textContent='Challenge',1200); }catch{ alert(url); }
+      const url=location.origin+'/play?day='+s.dayKey+(s.isDaily? `&slot=${s.dailySlot}`:''); const txt=`Can you beat my Daily Court ${s.dayKey}? Slot ${s.dailySlot+1} ${s.target.n} — ${url}`; try{ await navigator.clipboard.writeText(txt); confirmShare(this, 'copied', 'Challenge'); }catch{ alert(url); }
     });
   }
   main().catch(e=>{ console.error(e); const inv=$('#pack-invalid'); if(inv){ inv.style.display='block'; inv.innerHTML=`<div class="small-mono" style="color:var(--verm)">Error</div><h3>${e.message}</h3><pre style="white-space:pre-wrap;font-size:11px">${e.stack||''}</pre>`; } });
