@@ -178,6 +178,16 @@ button,.input{min-height:44px}
 }
 /* thumb zone: 16px kills iOS zoom-on-focus; 48px is a true thumb target */
 #guess-input{ font-size: 16px; min-height: 48px; }
+/* v4 honesty grammar — the guess rule stated where players type, not as a
+   failure message. Ineligible names in the picker are grayed, un-attemptable. */
+.guess-rule{ font-size: 12px; color: var(--fg-2, #555); margin: 6px 2px 0; }
+.suggest li.is-ineligible{ opacity: .45; cursor: default; }
+.suggest li.is-ineligible .why{ font-size: 11px; color: var(--fg-3, #777); }
+/* v4 honesty grammar — embedding-truth vs map-approximation surfaces.
+   truth (64-d MTNN embedding: twin bands, peers, game feedback): solid marker.
+   approximation (the 2-D atlas of 14 stats): dashed marker. Light touch. */
+.vh-truth{ border-inline-start: 3px solid var(--accent, #e0762e); padding-inline-start: 10px; }
+.vh-approx{ border-inline-start: 3px dashed #999; padding-inline-start: 10px; }
 #mode-selector{ display: flex; flex-direction: column; align-items: center; gap: 12px; background: transparent; border: 0; padding: 8px 0; }
 #mode-selector .mode-tabs{ width: auto; max-width: 100%; }
 .game-head__side{ align-items: center; }
@@ -342,10 +352,11 @@ button,.input{min-height:44px}
     </div>
   </div>
 
-  <div class="card" id="guess-card" style="border-width:2.5px">
-    <div class="ready-banner" id="ready-banner" style="margin:-2px -2px 14px;border-style:dashed"><div style="min-width:0"><h3 style="margin:0 0 4px;font-size:16px;line-height:1.2">▶ Ready? First guess begins game</h3><p style="margin:0;font-size:13px;line-height:1.45;opacity:.9">Same 5 puzzles for everyone today. You see past All-Star ★. Type a 2024–26 modern player below — 6 tries. Warmer/colder after each.</p></div><button class="btn btn-primary" id="btn-focus-guess" type="button" style="flex:0 0 auto">Start typing →</button></div>
+  <div class="card vh-truth" id="guess-card" style="border-width:2.5px">
+    <div class="ready-banner" id="ready-banner" style="margin:-2px -2px 14px;border-style:dashed"><div style="min-width:0"><h3 style="margin:0 0 4px;font-size:16px;line-height:1.2">▶ Ready? First guess begins game</h3><p style="margin:0;font-size:13px;line-height:1.45;opacity:.9">Same 5 puzzles for everyone today. You see past All-Star ★. Type a 2025–26 modern player below — 6 tries. Warmer/colder after each.</p></div><button class="btn btn-primary" id="btn-focus-guess" type="button" style="flex:0 0 auto">Start typing →</button></div>
     <div style="display:flex;justify-content:space-between;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:8px"><label class="small-mono" for="guess-input" style="margin:0">Guess modern — turn <span id="turn-count">1</span>/6 • <span id="slot-label-wrap">slot <span id="slot-label">1</span>/5</span></label><span class="pill" id="warm-label" style="display:none"></span></div>
     <div class="suggest"><input id="guess-input" class="input" placeholder="Type modern — e.g., Wembanyama, SGA, Ant" autocomplete="off" spellcheck="false" disabled/><ul id="guess-suggest" style="display:none"></ul></div>
+    <p class="guess-rule" id="guess-rule" data-served-const="guess_rule">Only players with a qualifying 2025-26 season (12+ games, 450+ minutes)</p>
     <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap"><button id="guess-btn" class="btn btn-primary" type="button" disabled>Guess</button><button id="share-btn" class="btn" type="button">Share</button><button id="share-text-btn" class="btn" type="button">Copy Grid</button><button id="btn-challenge" class="btn" type="button">Challenge</button></div>
     <div id="lifelines-bar" style="margin-top:4px"></div>
     <div id="guesses" style="margin-top:8px"></div><p class="small-mono" style="text-transform:none;opacity:.65;margin-top:6px">The % is style similarity (cosine × 100) between your guess and the target — era-adjusted, so a 90s big can match a modern one. #rank is your guess's rank among all 12,966 seasons.</p><div id="result" style="margin-top:12px"></div>
@@ -371,10 +382,11 @@ button,.input{min-height:44px}
 <script src="assets/error-boundary.js?v=d0cf8ca0"></script>
 <script src="assets/keyboard-a11y.js?v=39777a87"></script>
 <script src="assets/site-nav.js?v=c12413c4" defer></script>
-<script src="assets/pwa-install.js?v=b954d9d1"></script><script src="assets/audio.js?v=52cfa0d8"></script><script type="module" src="assets/timesfm-forecast.js?v=259274e6"></script><script src="assets/pixel-avatar.js?v=6216d2ba"></script><script src="assets/team-logo.js?v=864a7981"></script><script src="assets/viral-share.js?v=f2fddbac"></script><script src="assets/daily-ledger.js?v=99a36168"></script><script src="assets/past-modern-game.js?v=38d33a19"></script><script src="/assets/twin-bands.js?v=d8e155bd"></script><script src="/assets/twin-explainer.js?v=758a0b6c"></script>
+<script src="assets/pwa-install.js?v=b954d9d1"></script><script src="assets/audio.js?v=52cfa0d8"></script><script type="module" src="assets/timesfm-forecast.js?v=259274e6"></script><script src="assets/pixel-avatar.js?v=6216d2ba"></script><script src="assets/team-logo.js?v=864a7981"></script><script src="assets/viral-share.js?v=245316b8"></script><script src="assets/daily-ledger.js?v=STAMP"></script><script src="assets/past-modern-game.js?v=d9a56177"></script><script src="/assets/served-constants.js?v=8ba12340"></script>
+<script src="/assets/twin-bands.js?v=0a191313"></script><script src="/assets/twin-explainer.js?v=9f5b2d4d"></script>
 <script src="assets/map-lenses.js?v=656e8d30"></script>
 <script src="assets/game-mechanics.js?v=e49ec57f"></script>
-<script src="assets/play-engine.js?v=417716ef"></script>
+<script src="assets/play-engine.js?v=8d95c86c"></script>
 <section aria-label="More ways to play" style="max-width:880px;margin:34px auto 0;padding:0 18px;text-align:center">
   <p class="small-mono" style="text-transform:none;opacity:.85">One court, every mode: the Daily five, the Triple, endless Random and the Pack</p>
 </section>

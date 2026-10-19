@@ -5,7 +5,12 @@
  * pair key), and injects three wrapping chips + biggest-difference line into
  * the reveal card. Pairs not in the static file (Daily Court computes its twin
  * live) are explained on the fly from twin_explainer_vectors.json with the
- * exact same algorithm the pipeline used — QA-verified to agree 1308/1308.
+ * exact same algorithm the pipeline used — QA-verified to agree on all pairs
+ * (presence-preference rule, 2026-10-19).
+ *
+ * v4 manners rule: chips lead with shared PRESENCES, never shared absences;
+ * a "strong twin" evidenced only by absences shows the qualifier
+ * "Strong twin, mostly in what they don't do."
  *
  * Honest note: the twin match itself comes from the full 64-d embedding;
  * this breakdown decomposes the 14 serving traits, not the full space.
@@ -43,28 +48,40 @@
     PLUS_MINUS: ['both outscore opponents on court', 'both get outscored on court']
   };
 
-  // Panel v3 G4: a chip set citing only absences fails the honesty bar.
-  // "Both rarely block shots / both stay off the offensive glass" is true
-  // but vacuous as an explanation of twinness — similarity by shared
-  // absence is not a style match.
-  var LOW_CHIPS = {};
-  Object.keys(CHIP).forEach(function (k) { LOW_CHIPS[CHIP[k][1]] = true; });
-  function isAbsenceOnly(shared) {
-    return (shared || []).length > 0 && shared.every(function (c) { return !!LOW_CHIPS[c]; });
-  }
-
-  // Mirrors pipeline explain(): shared = 3 closest dims, differ = widest gap.
+  // Mirrors pipeline explain(): 3 closest dims, stable-partitioned so shared
+  // PRESENCES lead, then average traits, then shared absences. differ = widest gap.
+  // v4 presence-preference (2026-10-19) — keep in lockstep with the pipeline.
   function explainPair(va, vb, codes, labels) {
     var order = codes.map(function (c, k) { return k; }).sort(function (x, y) {
       return Math.abs(va[x] - vb[x]) - Math.abs(va[y] - vb[y]);
     });
-    var shared = order.slice(0, 3).map(function (k) {
+    function kind(k) {
       var mean = (va[k] + vb[k]) / 2;
-      if (mean >= 0.25) return CHIP[codes[k]][0];
-      if (mean <= -0.25) return CHIP[codes[k]][1];
-      return 'both average ' + labels[codes[k]];
-    });
-    return { shared: shared, differ: labels[codes[order[order.length - 1]]] };
+      return mean >= 0.25 ? 'presence' : (mean <= -0.25 ? 'absence' : 'average');
+    }
+    var pres = [], avg = [], absn = [];
+    for (var i = 0; i < order.length; i++) {
+      var k = order[i], kd = kind(k);
+      if (kd === 'presence') pres.push(k); else if (kd === 'absence') absn.push(k); else avg.push(k);
+    }
+    var ranked = pres.concat(avg, absn);
+    var shared = [], kinds = [];
+    for (var j = 0; j < 3 && j < ranked.length; j++) {
+      var q = ranked[j], qd = kind(q), mean = (va[q] + vb[q]) / 2;
+      kinds.push(qd);
+      if (mean >= 0.25) shared.push(CHIP[codes[q]][0]);
+      else if (mean <= -0.25) shared.push(CHIP[codes[q]][1]);
+      else shared.push('both average ' + labels[codes[q]]);
+    }
+    var absenceOnly = kinds.length === 3 && kinds.every(function (x) { return x === 'absence'; });
+    return { shared: shared, kinds: kinds, differ: labels[codes[order[order.length - 1]]], absenceOnly: absenceOnly };
+  }
+
+  function strongMin() {
+    try {
+      var bs = (window.VHServedConstants && window.VHServedConstants.twin_bands) || [];
+      return bs.length ? bs[0].min : 0.727;
+    } catch (e) { return 0.727; }
   }
 
   function pairKey(a, b) { return [a, b].sort().join(' ~ '); }
@@ -117,7 +134,8 @@
           var labels = meta.labels || {};
           var codes = Object.keys(labels);
           var live = explainPair(va, vb, codes, labels);
-          rec = { shared: live.shared, differ: live.differ, sim: sim,
+          rec = { shared: live.shared, kinds: live.kinds, differ: live.differ, sim: sim,
+                  absenceOnly: live.absenceOnly,
                   thin: !!(meta.threshold && sim < meta.threshold) };
         }
         render(rec, bands);
@@ -131,20 +149,28 @@
     var old = card.querySelector('.twin-why');
     if (old) old.parentNode.removeChild(old);
 
-    // Uncertainty grammar (Part 2 panel: Hullman): every twin claim carries its
-    // band label; the bare number lives behind tap-through only.
+    // Uncertainty grammar (Part 2 panel: Hullman; v4: Silver): every twin
+    // claim headlines the band label + percentile; the number lives behind
+    // tap-through only, with its bootstrap interval.
+    var meta = { se: rec.sim_se, pct: rec.pct };
     var band = window.VHTwinBands
-      ? window.VHTwinBands.chipHTML(bands, rec.sim)
+      ? window.VHTwinBands.chipHTML(bands, rec.sim, meta)
       : '';
+    // v4 manners rule: a "strong twin" evidenced only by shared absences is
+    // downgraded with a shown qualifier — presence precedes absence.
+    var qual = '';
+    if (rec.absenceOnly && Number(rec.sim) >= strongMin()) {
+      qual = '<div class="twin-why__qual">Strong twin, mostly in what they don&rsquo;t do.</div>';
+    }
     var el = document.createElement('div');
-    el.className = 'twin-why';
-    var chipsHTML = isAbsenceOnly(rec.shared)
-      ? '<span class="twin-why__honest">Their similarity is mostly about what they <i>don&rsquo;t</i> do — no shared strengths stood out. Treat this pairing as directional, not a style match.</span>'
-      : rec.shared.map(function (c) { return '<span class="pill">' + esc(c) + '</span>'; }).join('');
+    el.className = 'twin-why vh-truth';
     el.innerHTML =
       '<div class="twin-why__label">Why they&rsquo;re twins</div>' +
       (band ? '<div class="twin-why__band">' + band + '</div>' : '') +
-      '<div class="twin-why__chips">' + chipsHTML + '</div>' +
+      qual +
+      '<div class="twin-why__chips">' +
+        rec.shared.map(function (c) { return '<span class="pill">' + esc(c) + '</span>'; }).join('') +
+      '</div>' +
       '<div class="twin-why__differ">Biggest difference: <b>' + esc(rec.differ) + '</b></div>' +
       '<div class="twin-why__method">Twins are matched by embedding similarity; this breakdown uses the 14 style traits from the map.</div>';
     card.appendChild(el);

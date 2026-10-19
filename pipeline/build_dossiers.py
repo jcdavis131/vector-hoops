@@ -385,7 +385,7 @@ def main():
     if (
         not ag
         or ag["ns"] != 12
-        or not (ag["tw"] and ag["tw"]["t"]["n"] == "Blake Griffin")
+        or not (ag["tw"] and ag["tw"]["t"]["n"] == "Antonio McDyess")
     ):
         errs.append("aaron-gordon spot check failed")
     mj = dossiers.get("michael-jordan")

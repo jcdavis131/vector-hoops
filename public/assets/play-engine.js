@@ -207,13 +207,33 @@
   //     already superseded it (defensive: matching semantics are preserved
   //     — substring match, so "james" still finds "LeBron James" — this is
   //     a performance and allocation rewrite, not a behavior change)
-  let _searchIndex=null;
+  let _searchIndex=null, _ineligibleIndex=null;
   function buildSearchIndex(){
     const st=(window.VHPastModern && VHPastModern.state) ? VHPastModern.state() : null;
     const pool=st && st.modernPool;
     if(!pool || !pool.length) return null;
     _searchIndex=[];
-    for(let i=0;i<pool.length;i++){ const m=pool[i]; if(m&&m.n) _searchIndex.push({ref:m, lower:m.n.toLowerCase()}); }
+    const eligibleNames=new Set();
+    for(let i=0;i<pool.length;i++){ const m=pool[i]; if(m&&m.n){ _searchIndex.push({ref:m, lower:m.n.toLowerCase()}); eligibleNames.add(m.n.toLowerCase()); } }
+    // v4 manners: also index recognizable INELIGIBLE names (search-lite rows
+    // with no 2025-26 season) so the picker can show them grayed with the
+    // reason inline, instead of letting the user attempt them blind.
+    // Full picker rebuild is out of scope; this is the honest interim.
+    _ineligibleIndex=[];
+    try{
+      const sl=st.searchLite && st.searchLite.players;
+      if(sl && sl.length){
+        const latest=new Map(); // lower name -> row with latest season
+        for(let i=0;i<sl.length;i++){
+          const p=sl[i]; if(!p||!p.n) continue;
+          const low=p.n.toLowerCase();
+          if(eligibleNames.has(low)) continue;
+          const ex=latest.get(low);
+          if(!ex || String(p.s||'')>String(ex.s||'')) latest.set(low,p);
+        }
+        latest.forEach(function(p,low){ _ineligibleIndex.push({ref:p, lower:low}); });
+      }
+    }catch(e){ /* ineligible index is best-effort */ }
     return _searchIndex;
   }
   function filteredModern(q){
@@ -223,7 +243,13 @@
       const idx=_searchIndex || buildSearchIndex();
       if(!idx) return [];
       const out=[];
-      for(let i=0;i<idx.length && out.length<8;i++){ if(idx[i].lower.indexOf(q)!==-1) out.push(idx[i].ref); }
+      for(let i=0;i<idx.length && out.length<8;i++){ if(idx[i].lower.indexOf(q)!==-1) out.push({m:idx[i].ref, eligible:true}); }
+      // fill remaining rows with ineligible-but-recognizable names, grayed
+      if(_ineligibleIndex && out.length<8){
+        for(let i=0;i<_ineligibleIndex.length && out.length<8;i++){
+          if(_ineligibleIndex[i].lower.indexOf(q)!==-1) out.push({m:_ineligibleIndex[i].ref, eligible:false, reason:'not a 2025-26 season'});
+        }
+      }
       return out;
     }catch(e){ return []; }
   }
@@ -245,11 +271,23 @@
       renderScheduled=false;
       if(!last.length){ ul.style.display='none'; for(const li of rowEls) li.hidden=true; return; }
       for(let i=0;i<ROWS;i++){
-        const li=rowEls[i], m=last[i];
-        if(!m){ li.hidden=true; continue; }
+        const li=rowEls[i], e=last[i];
+        if(!e){ li.hidden=true; continue; }
+        const m=e.m||{};
         li.hidden=false;
-        li.textContent=m.n+' '+(m.s||'');
         li.classList.toggle('is-active', i===active);
+        li.classList.toggle('is-ineligible', !e.eligible);
+        if(e.eligible){
+          li.textContent=m.n+' '+(m.s||'');
+          li.removeAttribute('aria-disabled');
+        }else{
+          // ineligible: grayed, inline reason, never attemptable
+          li.textContent='';
+          const nm=document.createElement('span'); nm.textContent=m.n+' '+(m.s||'');
+          const why=document.createElement('span'); why.className='why'; why.textContent=' — '+(e.reason||'not guessable');
+          li.appendChild(nm); li.appendChild(why);
+          li.setAttribute('aria-disabled','true');
+        }
       }
       ul.style.display='block';
     }
@@ -268,16 +306,22 @@
     input.addEventListener('input', function(){
       const v=this.value; clearTimeout(debounceTimer); debounceTimer=setTimeout(()=>searchAndRender(v),120);
     });
+    function nextEligible(from, dir){
+      // arrow keys skip ineligible rows — they can never be attempted
+      let i=from;
+      for(let k=0;k<last.length;k++){ i+=dir; if(i<0||i>=last.length) return from; if(last[i]&&last[i].eligible) return i; }
+      return from;
+    }
     input.addEventListener('keydown',function(e){
-      if(e.key==='ArrowDown'){ if(!last.length) return; e.preventDefault(); active=Math.min(active+1,last.length-1); render(last); }
-      else if(e.key==='ArrowUp'){ if(!last.length) return; e.preventDefault(); active=Math.max(active-1,0); render(last); }
+      if(e.key==='ArrowDown'){ if(!last.length) return; e.preventDefault(); active=nextEligible(active,1); render(last); }
+      else if(e.key==='ArrowUp'){ if(!last.length) return; e.preventDefault(); active=nextEligible(active,-1); render(last); }
       else if(e.key==='Enter'){
-        const hasActive = active>=0 && last[active];
-        if(hasActive){ e.preventDefault(); input.value=last[active].n; ul.style.display='none'; active=-1; doGuess(); return; }
+        const hasActive = active>=0 && last[active] && last[active].eligible;
+        if(hasActive){ e.preventDefault(); input.value=last[active].m.n; ul.style.display='none'; active=-1; doGuess(); return; }
         if((input.value||'').trim().length>=2){ e.preventDefault(); ul.style.display='none'; doGuess(); }
       } else if(e.key==='Escape'){ ul.style.display='none'; active=-1; }
     });
-    ul.addEventListener('click',function(e){ const li=e.target.closest('li'); if(!li||li.hidden) return; const i=parseInt(li.dataset.i,10); if(!isNaN(i)&&last[i]){ input.value=last[i].n; ul.style.display='none'; active=-1; doGuess(); } });
+    ul.addEventListener('click',function(e){ const li=e.target.closest('li'); if(!li||li.hidden) return; const i=parseInt(li.dataset.i,10); const en=(!isNaN(i)&&last[i])?last[i]:null; if(en&&en.eligible){ input.value=en.m.n; ul.style.display='none'; active=-1; doGuess(); } /* ineligible: no-op, never attempted */ });
     document.addEventListener('click',function(e){ if(!ul.contains(e.target)&&e.target!==input) ul.style.display='none'; });
   }
   function dailyKey(){ try{ return VHPastModern.state().dayKey; }catch{ return new Date().toISOString().slice(0,10); } }
