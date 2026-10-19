@@ -89,11 +89,14 @@ def explain(va, vb, labels, dim_codes):
     for k in ranked[:3]:
         mean = (va[k] + vb[k]) / 2
         if mean >= 0.25:
-            shared.append(CHIP[dim_codes[k]][0]); kinds.append("presence")
+            shared.append(CHIP[dim_codes[k]][0])
+            kinds.append("presence")
         elif mean <= -0.25:
-            shared.append(CHIP[dim_codes[k]][1]); kinds.append("absence")
+            shared.append(CHIP[dim_codes[k]][1])
+            kinds.append("absence")
         else:
-            shared.append(f"both average {labels[dim_codes[k]]}"); kinds.append("average")
+            shared.append(f"both average {labels[dim_codes[k]]}")
+            kinds.append("average")
     differ = labels[dim_codes[order[-1]]]
     return shared, kinds, differ
 
