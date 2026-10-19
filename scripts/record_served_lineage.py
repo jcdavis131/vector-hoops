@@ -14,7 +14,8 @@ not_from_served_net instead of claiming the v5 run id.
 
 It refuses any f32 other than the pinned incumbent. A replacement model still
 has to go through pipeline/promote.py + export_mtnn_embeddings.py.
-check_served_model.py also enforces that pin on forced adoption.
+check_served_model.py also enforces that pin on every forced: true lineage,
+regardless of checkpoint_sha256.
 
 Stdlib only.
 
