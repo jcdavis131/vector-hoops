@@ -469,21 +469,14 @@ Heads: 8 arch / 5 pos / 14 next / 18 skills (64→16→1)
       <p class="doc-note">Trails show movement in <i>style</i>, not improvement &mdash; a trail drifting across the map means the player&rsquo;s statistical shape changed, not that they got better or worse. Nearby points are similarity, not rankings.</p>
     </section>
 
-    <section id="twin-explainer">
-      <div class="doc-n">04&middot;c</div>
-      <h2>Twin explainer — why they&rsquo;re twins</h2>
-      <p>Every twin reveal now says why, in three short chips: the three style traits the two seasons share most closely, plus the single biggest difference between them. Matches below 0.60 similarity are flagged as looser matches.</p>
-      <p class="doc-note">The twin itself is found in the full 64-dimensional embedding; the explanation is a simpler breakdown using the 14 serving traits behind the map. It describes the match rather than re-deriving it.</p>
-    </section>
-
     <section id="insights">
-      <div class="doc-n">04&middot;d</div>
+      <div class="doc-n">04&middot;c</div>
       <h2>Insights — shareable findings</h2>
       <p>The <a href="/insights">Insights</a> page curates the most striking things the embedding model has measured: the strangest and most average seasons, the biggest career reinventions, era twins decades apart, dying archetypes, the three-point takeover, and the turnover decline. The model cards there are generated from the same served vectors — nothing hand-written, nothing invented. Alongside them sits a second, labeled series, <em>From the ledger</em>: salary, tax and ticket findings assembled by hand from named public sources (Spotrac, Hoops Rumors, Basketball-Reference and the others printed on each card), each with its source, sample and window on the card face. The two series are never blended, and a ledger card never borrows the model's authority.</p>
       <p class="doc-note">Uniqueness is Euclidean distance from the centroid of all 12,966 player-seasons in the 14-d style space (minimum 1,500 minutes). Career transformation is first-to-last season distance (minimum 4 seasons at 800+ minutes). Era-twin gaps use the full 64-d cosine similarity, similarity ≥ 0.60, one appearance per player. Every card deep-links (<code>/insights.html#&lt;slug&gt;</code>), exports a 1080&times;1350 PNG rendered in the browser, and has a crawler page at <code>/insights/&lt;slug&gt;</code> with a pre-rendered unfurl image. The daily spotlight never repeats a card shown in the grid below it.</p>
     </section>
     <section id="dossier">
-      <div class="doc-n">04&middot;e</div>
+      <div class="doc-n">04&middot;d</div>
       <h2>Player dossier — every player, from the model</h2>
       <p>Open any player in the <a href="players.html">directory</a> and their dossier is built from the same model behind the map &mdash; no hand-written bios, nothing to go stale. Each dossier carries a minutes-weighted 14-trait style fingerprint, the player&rsquo;s archetype and how it moved across their career, their era twin (with the plain-words why), how their game changed from first to last charted season, the five nearest player-seasons in style space, and a plain-words read of where they live on the map.</p>
       <p class="doc-note">All dossier numbers come from the 14-d serving projection (vectors.json — the transparent era-z style space, not an MTNN output) and the derived research assets (era twins, career trails, archetype assignments, honors). Similarity is cosine in the 14-d style space; era twins are matched in the 64-d MTNN v5 embedding. &ldquo;How his game changed&rdquo; compares first vs last charted season only; traits that moved less than half a standard deviation are left out.</p>
