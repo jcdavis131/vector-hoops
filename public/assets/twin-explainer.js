@@ -43,6 +43,16 @@
     PLUS_MINUS: ['both outscore opponents on court', 'both get outscored on court']
   };
 
+  // Panel v3 G4: a chip set citing only absences fails the honesty bar.
+  // "Both rarely block shots / both stay off the offensive glass" is true
+  // but vacuous as an explanation of twinness — similarity by shared
+  // absence is not a style match.
+  var LOW_CHIPS = {};
+  Object.keys(CHIP).forEach(function (k) { LOW_CHIPS[CHIP[k][1]] = true; });
+  function isAbsenceOnly(shared) {
+    return (shared || []).length > 0 && shared.every(function (c) { return !!LOW_CHIPS[c]; });
+  }
+
   // Mirrors pipeline explain(): shared = 3 closest dims, differ = widest gap.
   function explainPair(va, vb, codes, labels) {
     var order = codes.map(function (c, k) { return k; }).sort(function (x, y) {
@@ -128,12 +138,13 @@
       : '';
     var el = document.createElement('div');
     el.className = 'twin-why';
+    var chipsHTML = isAbsenceOnly(rec.shared)
+      ? '<span class="twin-why__honest">Their similarity is mostly about what they <i>don&rsquo;t</i> do — no shared strengths stood out. Treat this pairing as directional, not a style match.</span>'
+      : rec.shared.map(function (c) { return '<span class="pill">' + esc(c) + '</span>'; }).join('');
     el.innerHTML =
       '<div class="twin-why__label">Why they&rsquo;re twins</div>' +
       (band ? '<div class="twin-why__band">' + band + '</div>' : '') +
-      '<div class="twin-why__chips">' +
-        rec.shared.map(function (c) { return '<span class="pill">' + esc(c) + '</span>'; }).join('') +
-      '</div>' +
+      '<div class="twin-why__chips">' + chipsHTML + '</div>' +
       '<div class="twin-why__differ">Biggest difference: <b>' + esc(rec.differ) + '</b></div>' +
       '<div class="twin-why__method">Twins are matched by embedding similarity; this breakdown uses the 14 style traits from the map.</div>';
     card.appendChild(el);
@@ -143,6 +154,6 @@
 
   // node QA hook (browser-ignored)
   if (typeof module !== 'undefined' && module.exports) {
-    module.exports = { explainPair: explainPair, pairKey: pairKey, CHIP: CHIP };
+    module.exports = { explainPair: explainPair, pairKey: pairKey, CHIP: CHIP, isAbsenceOnly: isAbsenceOnly };
   }
 })();
