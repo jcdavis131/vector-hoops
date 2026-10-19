@@ -346,13 +346,13 @@ button,.input{min-height:44px}
 
 <div id="onboarding-backdrop" class="vh-sheet-backdrop" hidden>
   <div class="vh-sheet" role="dialog" aria-modal="true"><div class="vh-sheet__handle"></div>
-    <div class="vh-sheet__head"><h2 class="vh-sheet__title">Daily Court — 5× + Pack Battle</h2><button class="vh-sheet__close" id="btn-onboard-close" type="button" aria-label="Close">✕</button></div>
-    <div class="small-mono" style="margin-bottom:8px;color:var(--fg-2)">5 puzzles daily + viral packs</div>
+    <div class="vh-sheet__head"><h2 class="vh-sheet__title">How to play — guess the star</h2><button class="vh-sheet__close" id="btn-onboard-close" type="button" aria-label="Close">✕</button></div>
+    <div class="small-mono" style="margin-bottom:8px;color:var(--fg-2)">6 guesses · warmer/colder · daily puzzles + pack battles</div>
     <div class="onboard-steps">
-      <div class="onboard-step"><span class="onboard-step__num">1</span><div><b>Daily Court: 5 fixed past All-Stars per day, same for everyone</b><p>Deterministic from date: hash(date+slot). Refresh gives same 5. Guesses saved per slot in localStorage. Can't be rerolled.</p></div></div>
-      <div class="onboard-step"><span class="onboard-step__num">2</span><div><b>Guess modern players — the % tells you how close</b><p>Each guess shows a similarity % and a rank: the % is style similarity (cosine × 100) between your guess and the mystery star, era-adjusted across decades. The rank is where your guess sits among all 12,966 seasons. Warmer/colder compares the % you see. 6 guesses per slot.</p></div></div>
-      <div class="onboard-step"><span class="onboard-step__num">3</span><div><b>Pack Battle: 1, 3 or 5 random All-Stars — same link for friends</b><p><code>?pack=672-123-456</code> = identical pack for everyone. Share link, friends get same stars. Add <code>&s=2-3-0</code> to include your scores (0=fail). Battle: who solves more in fewer guesses? Streak-safe, persists through refresh.</p></div></div>
-      <div class="onboard-step"><span class="onboard-step__num">4</span><div><b>Battle flow</b><p>Solve slot → Next → final summary shows total solved, total guesses, avg, and vs challenger. Share final pack image (canvas) with score. Copy challenge link to beat friends. New packs via ⚡🔥🏀 buttons.</p></div></div>
+      <div class="onboard-step"><span class="onboard-step__num">1</span><div><b>Guess the mystery star in 6 tries</b><p>Type a modern player's name. Each guess shows a <b>similarity %</b> — how close their playing style is to the mystery star (cosine × 100, era-adjusted across decades) — and a <b>rank</b> among all 12,966 seasons. Higher % = warmer. Hit 100% to win the slot.</p></div></div>
+      <div class="onboard-step"><span class="onboard-step__num">2</span><div><b>Daily Court: 5 fixed past All-Stars per day, same for everyone</b><p>Deterministic from date: hash(date+slot). Refresh gives same 5. Guesses saved per slot in localStorage. Can't be rerolled. Solve 1 to keep your streak alive.</p></div></div>
+      <div class="onboard-step"><span class="onboard-step__num">3</span><div><b>Lifelines when you're stuck</b><p>🔭 <b>Twin Reveal</b> spotlights the mystery star's 3 nearest twins on the map. 🕰 <b>Era Lock</b> reveals the decade (−1 guess). One use each per slot.</p></div></div>
+      <div class="onboard-step"><span class="onboard-step__num">4</span><div><b>Pack Battle: 1, 3 or 5 random All-Stars — same link for friends</b><p><code>?pack=672-123-456</code> = identical pack for everyone. Share link, friends get same stars. Add <code>&s=2-3-0</code> to include your scores (0=fail). Battle: who solves more in fewer guesses?</p></div></div>
     </div>
     <div style="display:flex;gap:10px;margin-top:12px;flex-wrap:wrap"><button class="btn btn-primary" id="btn-onboard-play" type="button">▶ Play Court</button><button class="btn" id="btn-onboard-random" type="button">🎲 Random</button></div>
   </div>
@@ -362,9 +362,9 @@ button,.input{min-height:44px}
 <script src="assets/error-boundary.js?v=d0cf8ca0"></script>
 <script src="assets/keyboard-a11y.js?v=39777a87"></script>
 <script src="assets/site-nav.js?v=c12413c4" defer></script>
-<script src="assets/pwa-install.js?v=b954d9d1"></script><script src="assets/audio.js?v=52cfa0d8"></script><script type="module" src="assets/timesfm-forecast.js?v=b1376756"></script><script src="assets/pixel-avatar.js?v=6216d2ba"></script><script src="assets/team-logo.js?v=864a7981"></script><script src="assets/viral-share.js?v=b60bab24"></script><script src="assets/past-modern-game.js?v=dc2d6eac"></script><script src="/assets/twin-bands.js?v=d8e155bd"></script><script src="/assets/twin-explainer.js?v=99af7d7d"></script>
+<script src="assets/pwa-install.js?v=b954d9d1"></script><script src="assets/audio.js?v=52cfa0d8"></script><script type="module" src="assets/timesfm-forecast.js?v=b1376756"></script><script src="assets/pixel-avatar.js?v=6216d2ba"></script><script src="assets/team-logo.js?v=864a7981"></script><script src="assets/viral-share.js?v=b60bab24"></script><script src="assets/past-modern-game.js?v=ad5bef1b"></script><script src="/assets/twin-bands.js?v=d8e155bd"></script><script src="/assets/twin-explainer.js?v=99af7d7d"></script>
 <script src="assets/map-lenses.js?v=656e8d30"></script>
-<script src="assets/game-mechanics.js?v=e49ec57f"></script>
+<script src="assets/game-mechanics.js?v=a03fd0bf"></script>
 <script src="assets/daily-ledger.js?v=c6d4240f"></script>
 <script src="assets/play-engine.js?v=8ca576d8"></script>
 <section aria-label="More ways to play" style="max-width:880px;margin:34px auto 0;padding:0 18px;text-align:center">
