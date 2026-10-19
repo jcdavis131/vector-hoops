@@ -433,7 +433,7 @@ a{color:inherit}
 h = cat([x·m, m]) → 2·d_in per family
 Tower 17×: 2d_in→160 LN GELU → 160→32 LN + skip ×2 → 32-d (544 total)
 + season_emb 12-d → 556 → 556→256 GELU → <b>64 L2</b>
-Heads: 8 arch / 5 pos / 14 next / 18 skills (64→16→1)
+Heads: 8 arch / 5 pos / 14 next / 18 skill towers — 12 core + 6 wide (64→16→1)
 ~224K params · ONNX 548 KB</pre>
     </section>
 
@@ -500,7 +500,7 @@ Heads: 8 arch / 5 pos / 14 next / 18 skills (64→16→1)
     <section id="skills">
       <div class="doc-n">06</div>
       <h2>Skills lens — 0 to 99</h2>
-      <p>Twelve skills, each a fixed linear composite of era-z per-100 stats, expressed as a percentile within the season, so a 90 in 1997 equals a 90 in 2026. Badges start at 90; gold at 97.</p>
+      <p>Twelve skills, each a fixed linear composite of era-z per-100 stats, expressed as a percentile within the season, so a 90 in 1997 equals a 90 in 2026. Badges start at 90; gold at 97. These are the 12 <em>core</em> skills — the ones with badges. The model trains 18 skill towers: these 12 plus 6 wide tracking-based skills (post, transition, motor, shooting gravity, rim gravity, disruption gravity), masked to seasons with tracking data.</p>
       <dl class="doc-defs">
         <div><dt>recall@10</dt><dd>Can the model find the same player the following season?</dd></div>
         <div><dt>purity@20</dt><dd>Do a season’s neighbours share its archetype?</dd></div>
@@ -581,7 +581,7 @@ Heads: 8 arch / 5 pos / 14 next / 18 skills (64→16→1)
 <div class="pipe-step is-done"><span class="step-num">04</span><b>Fusion</b><i>556→256→64 L2</i></div><div class="pipe-arrow">→</div>
 <div class="pipe-step is-done"><span class="step-num">05</span><b>Deploy</b><i>ONNX + WASM + Procrustes</i></div>
 </div>
-<p style="font-size:13px; margin-top:12px; line-height:1.6;">The served champion: 17 towers × 2 residual blocks, 160 hidden → 32 out (LN + GELU + skip) = 544, + 12-d season embedding = 556 concat → 256 fusion → 64-d L2 unit sphere. One embedding feeds every head — 8 archetype + 5 position + 14 next-profile + 18 skills. It holds 12,966 player-seasons, and Procrustes-chained drift maps any season into the 1996-97 root frame.</p>
+<p style="font-size:13px; margin-top:12px; line-height:1.6;">The served champion: 17 towers × 2 residual blocks, 160 hidden → 32 out (LN + GELU + skip) = 544, + 12-d season embedding = 556 concat → 256 fusion → 64-d L2 unit sphere. One embedding feeds every head — 8 archetype + 5 position + 14 next-profile + 18 skill towers (12 core skills + 6 wide tracking skills). It holds 12,966 player-seasons, and Procrustes-chained drift maps any season into the 1996-97 root frame.</p>
 <p style="font-size:13px; margin-top:8px; line-height:1.6;"><b>Research candidate — not served:</b> an MTNN v6 transformer-fusion build (d-model 128, 64-d out) is specified in <code>assets/eval_scoreboard_v6.json</code> — its own status there is candidate, not trained to completion, with projected rather than measured metrics. <b>Production serves ONE model only — MTNN v5 above.</b> Nothing becomes champion without a leak-free held-out win over v5.</p>
 </div>
 </div>
@@ -809,7 +809,7 @@ Heads: 8 arch / 5 pos / 14 next / 18 skills (64→16→1)
 <script>if('serviceWorker' in navigator){window.addEventListener('load',()=>{navigator.serviceWorker.register('/sw.js').catch(()=>{})})}</script>
 
 <script src="assets/mtnn.js?v=81d491f8"></script>
-<script src="assets/network-viz.js?v=24672911"></script>
+<script src="assets/network-viz.js?v=f07df411"></script>
 <script src="assets/site-facts.js?v=cbb639f4" defer></script>
 <script>
 (() => {

@@ -44,7 +44,7 @@ def load(name):
 def slug(name):
     s = unicodedata.normalize("NFD", name)
     s = "".join(ch for ch in s if unicodedata.category(ch) != "Mn")
-    s = s.lower()
+    s = s.lower().replace("'", "")  # apostrophe-insensitive: O'Neal -> oneal
     out = []
     for ch in s:
         out.append(ch if ch.isalnum() else "-")
@@ -142,7 +142,9 @@ def main():
             nk, {"asg": 0, "allNba": 0, "finalsMvp": 0, "seasons": set()}
         )
         agg["asg"] += int(h.get("asg") or 0)
-        agg["allNba"] += int(h.get("allNbaTeam") or 0)
+        # Panel v3 G3: count SELECTIONS (1 per season with a real team slot),
+        # never sum the team ordinals (3/2/1) — that fabricated "24x All-NBA".
+        agg["allNba"] += 1 if h.get("allNbaTeam") else 0
         agg["finalsMvp"] += int(h.get("finalsMvp") or 0)
         if h.get("asg") or h.get("allNbaTeam") or h.get("finalsMvp"):
             agg["seasons"].add(season)

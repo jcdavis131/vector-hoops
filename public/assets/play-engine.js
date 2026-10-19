@@ -409,7 +409,8 @@
         const cls = `court-card ${isActive?'is-active':''} ${isSolved?'is-solved':''} ${isFailed?'is-failed':''}`;
         const badge = isSolved? '✅': isFailed? '❌' : sd? `${sd.cnt}/6` : '▶';
         const arch = ARCH[p.c%ARCH.length];
-        return `<div class="${cls}" data-slot="${i}"><div class="court-slot">Slot ${i+1} • ${arch} ${window.VHGameMechanics?VHGameMechanics.suitTagHTML(p.n,p.s,p.i):''} ${isActive? '• NOW':''}</div><div class="court-name">${p.n} ${p.s}</div><div class="court-meta">${sd? (isSolved? `Won in ${sd.cnt}/6` : `${sd.cnt}/6 tries`): 'Not started'}</div><span class="court-badge pill ${isSolved?'pill-green':''}">${badge}</span></div>`;
+        const suit=window.VHGameMechanics?VHGameMechanics.suitTagHTML(p.n,p.s,p.i):'';
+        return `<div class="${cls}" data-slot="${i}"><div class="court-slot">Slot ${i+1} • ${arch}${suit?' • '+suit:''}${isActive? ' • NOW':''}</div><div class="court-name">${p.n} ${p.s}</div><div class="court-meta">${sd? (isSolved? `Won in ${sd.cnt}/6` : `${sd.cnt}/6 tries`): 'Not started'}</div><span class="court-badge pill ${isSolved?'pill-green':''}">${badge}</span></div>`;
       }).join('');
       grid.querySelectorAll('.court-card').forEach(el=>{
         el.addEventListener('click',()=>{
@@ -701,7 +702,7 @@
     const modeLabel = st.isPack ? `PACK ${slotNum}/${totalSlots}` : `Slot ${slotNum}/${totalSlots}`;
     $('#past-name').textContent=past.n+' '+past.s;
     try{ markCourtReady(); }catch{}
-    const hon=st.honors[past.n+'|'+past.s]||{}; const allNba=hon.allNbaTeam? 'All-NBA '+hon.allNbaTeam : '';
+    const hon=st.honors[past.n+'|'+past.s]||{}; const allNba=hon.allNbaTeam? 'All-NBA '+({3:'1st',2:'2nd',1:'3rd'}[hon.allNbaTeam]||hon.allNbaTeam) : '';
     let teamAbbr=null; try{ teamAbbr=getTeamAbbr(past.n, past.s); }catch{}
     if(teamAbbr){
       $('#past-meta').innerHTML=(hon.asg?'All-Star ':'')+(allNba? allNba+' • ' : '')+archLabel+` • ${past.s} • `+modeLabel+` • <span style="display:inline-flex;align-items:center;gap:6px"><span class="pill" style="background:var(--accent);color:var(--on-accent)">${teamAbbr}</span> finished with</span>`;
@@ -963,7 +964,7 @@
         setTimeout(()=>{ try{ el.scrollIntoView({behavior:'smooth', block:'start'}); }catch{} }, 50);
       }); }
     }
-    const hintEl=$('#past-closest-hint'); if(hintEl&&closest){ hintEl.style.display='block'; hintEl.textContent=`Answer: ${closest.entry.n} ${(closest.sim*100).toFixed(0)}% — ${won?'won':'over'}`; hintEl.style.background='#fff'; hintEl.style.border='1.4px dashed var(--ink)'; hintEl.style.borderRadius='8px'; hintEl.style.padding='6px 8px'; }
+    const hintEl=$('#past-closest-hint'); if(hintEl&&closest){ hintEl.style.display='block'; hintEl.textContent=`Answer: ${closest.entry.n} ${(closest.sim*100).toFixed(1)}% — ${won?'won':'over'}`; hintEl.style.background='#fff'; hintEl.style.border='1.4px dashed var(--ink)'; hintEl.style.borderRadius='8px'; hintEl.style.padding='6px 8px'; }
     projectFrame(); draw(); updateStatusBar(); renderDailyCourt();
     try{ if(window.VHTwinExplainer && VHTwinExplainer.onReveal) VHTwinExplainer.onReveal(); }catch(e){}
   }

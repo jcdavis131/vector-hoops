@@ -157,7 +157,7 @@
   function $(id) { return document.getElementById(id); }
 
   function slugify(name) {
-    return name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+    return name.toLowerCase().replace(/'/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
   }
 
   /* ---- z-score -> real units -------------------------------------------

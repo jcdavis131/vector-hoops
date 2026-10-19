@@ -206,6 +206,32 @@ def unmatched_honorees(award_idx: dict[str, dict], charted: dict[str, set[str]])
     return out
 
 
+def normalize_allnba_teams(rows):
+    """Zero out vote-receiver noise in allNbaTeam (panel v3 G3).
+
+    The honors cache assigns team tiers (3 = 1st team, 2 = 2nd, 1 = 3rd)
+    beyond the real 15 All-NBA slots to players who merely received votes
+    (e.g. Jaylen Brown 2023-24 got team=1 on 50 vote points without making
+    a team). The real team in each tier is the 5 highest vote-getters per
+    season; everything else is reset to 0, the "other receiving votes"
+    tier (per test_iverson_vote_points_without_a_top3_team_slot).
+    Mutates rows in place. Returns the number of rows zeroed.
+    """
+    by_season = {}
+    for key, r in rows.items():
+        season = key.rsplit("|", 1)[1] if "|" in key else ""
+        by_season.setdefault(season, []).append((key, r))
+    zeroed = 0
+    for season, items in by_season.items():
+        for tier in (3, 2, 1):
+            cand = [(k, r) for k, r in items if int(r.get("allNbaTeam") or 0) == tier]
+            cand.sort(key=lambda kr: (-int(kr[1].get("allNbaVotePts") or 0), kr[0]))
+            for k, r in cand[5:]:
+                r["allNbaTeam"] = 0
+                zeroed += 1
+    return zeroed
+
+
 def main() -> None:
     global OUT, ASSET_OUT
     ap = argparse.ArgumentParser()
@@ -355,6 +381,11 @@ def main() -> None:
         if vote_pts > 0:
             vote_reco_rows += 1
 
+    # Panel v3 G3: the honors cache assigns All-NBA team tiers beyond the
+    # real 15 slots to mere vote-receivers. Normalize before writing so the
+    # badge counts and per-season labels downstream are real selections.
+    allnba_zeroed = normalize_allnba_teams(contemporaneous)
+
     OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text(
         json.dumps(
@@ -392,7 +423,10 @@ def main() -> None:
                 {
                     "built": time.strftime("%Y-%m-%d"),
                     "note": (
-                        "All-NBA voting expands beyond the 15 team slots. "
+                        "All-NBA team tiers are the real 15 slots per season "
+                        "(3 = 1st team, 2 = 2nd, 1 = 3rd: the 5 highest "
+                        "vote-getters per tier); vote-receivers outside the "
+                        "slots are tier 0. "
                         "Same-season keys for UI include Finals MVP when "
                         "honors_finals_mvp.json is present. Lagged HON_* in pipeline/data."
                     ),
