@@ -16,7 +16,14 @@
   var EXPLAIN_URL = '/assets/twin_explainer.json';
   var VECTORS_URL = '/assets/twin_explainer_vectors.json';
 
-  var explainP = null, vectorsP = null;
+  var explainP = null, vectorsP = null, bandsP = null;
+
+  function loadBands() {
+    if (!bandsP) {
+      bandsP = (window.VHTwinBands ? window.VHTwinBands.load() : Promise.resolve(null));
+    }
+    return bandsP;
+  }
 
   // dim code -> [high chip, low chip]. Mirrors pipeline/build_twin_explainer.py exactly.
   var CHIP = {
@@ -33,7 +40,7 @@
     FG3_PCT: ['both snipe from deep', 'both struggle from deep'],
     FG_PCT:  ['both finish everything inside', 'both struggle to finish'],
     FT_PCT:  ['both automatic at the stripe', 'both shaky at the stripe'],
-    PLUS_MINUS: ['both tilt the floor', 'both get outscored on court']
+    PLUS_MINUS: ['both outscore opponents on court', 'both get outscored on court']
   };
 
   // Mirrors pipeline explain(): shared = 3 closest dims, differ = widest gap.
@@ -85,8 +92,8 @@
       var bKey = twin.entry.n + '|' + twin.entry.s;
       var key = pairKey(aKey, bKey);
 
-      Promise.all([loadExplain(), loadVectors()]).then(function (res) {
-        var data = res[0], pool = res[1];
+      Promise.all([loadExplain(), loadVectors(), loadBands()]).then(function (res) {
+        var data = res[0], pool = res[1], bands = res[2];
         if (!data) return;
         var rec = data[key] || null;
         var sim = twin.sim;
@@ -103,29 +110,31 @@
           rec = { shared: live.shared, differ: live.differ, sim: sim,
                   thin: !!(meta.threshold && sim < meta.threshold) };
         }
-        render(rec);
+        render(rec, bands);
       });
     } catch (e) { /* the game must never break because of the explainer */ }
   }
 
-  function render(rec) {
+  function render(rec, bands) {
     var card = document.querySelector('#result .card');
     if (!card || !rec) return;
     var old = card.querySelector('.twin-why');
     if (old) old.parentNode.removeChild(old);
 
-    var thin = rec.thin
-      ? '<div class="twin-why__thin">Looser match &mdash; similarity ' + Number(rec.sim).toFixed(2) + '</div>'
+    // Uncertainty grammar (Part 2 panel: Hullman): every twin claim carries its
+    // band label; the bare number lives behind tap-through only.
+    var band = window.VHTwinBands
+      ? window.VHTwinBands.chipHTML(bands, rec.sim)
       : '';
     var el = document.createElement('div');
     el.className = 'twin-why';
     el.innerHTML =
       '<div class="twin-why__label">Why they&rsquo;re twins</div>' +
+      (band ? '<div class="twin-why__band">' + band + '</div>' : '') +
       '<div class="twin-why__chips">' +
         rec.shared.map(function (c) { return '<span class="pill">' + esc(c) + '</span>'; }).join('') +
       '</div>' +
       '<div class="twin-why__differ">Biggest difference: <b>' + esc(rec.differ) + '</b></div>' +
-      thin +
       '<div class="twin-why__method">Twins are matched by embedding similarity; this breakdown uses the 14 style traits from the map.</div>';
     card.appendChild(el);
   }

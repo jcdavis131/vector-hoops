@@ -1,0 +1,16 @@
+{
+ "built": "2026-10-18",
+ "method": "trustworthiness/continuity k=20, 2000-row sample seed 0 (SAMPLED \u2014 labeled as such)",
+ "atlas_xyz_basis": "PCA(3) of 14-d vectors.json per-100 z-scored stats",
+ "vs_64d": {
+  "trustworthiness": 0.869,
+  "continuity": 0.885,
+  "neighborhood_overlap_k20": 0.115
+ },
+ "vs_14d": {
+  "trustworthiness": 0.917,
+  "continuity": 0.974,
+  "neighborhood_overlap_k20": 0.262
+ },
+ "badge_text": "This view keeps 11% of each player's 20 nearest neighborhoods from the model"
+}

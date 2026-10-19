@@ -2,9 +2,8 @@
 
 The bundle is exported for real (export_mtnn_embeddings on a tiny promoted
 run in tmp_path) and mirrored into a tmp public/assets, then broken one way
-at a time. Nothing here reads the repo's assets/: run against them the check
-fails by design until the served bundle is re-promoted, and that verdict
-belongs to its own CI job, not to this suite.
+at a time. test_the_committed_served_bundle_passes reads the repo's assets/
+so a drift that would redden ci.yml's served-model job also fails this suite.
 
 Run:  python -m pytest tests/test_check_served_model.py
 """
@@ -59,6 +58,96 @@ def test_a_promoted_exported_bundle_passes(site, capsys):
     assert csm.check(site) == []
     assert csm.main(["--root", str(site)]) == 0
     assert "served model: OK" in capsys.readouterr().out
+
+
+def test_the_committed_served_bundle_passes():
+    """July v5 incumbent on master, after scripts/record_served_lineage.py."""
+    assert csm.check(ROOT) == []
+
+
+def test_the_committed_jacobian_and_attr_pop_are_marked_not_from_served_net():
+    assert sm.STALE_SIDECAR_ALLOWLIST == frozenset({"mtnn_jacobian.json", "mtnn_attr_pop.json"})
+    for name in ("mtnn_jacobian.json", "mtnn_attr_pop.json"):
+        lin = json.loads((ROOT / "assets" / name).read_text(encoding="utf-8"))["lineage"]
+        assert lin["stale"] is True and lin["not_from_served_net"] is True
+        assert lin["run_id"] != sm.INCUMBENT_RUN_ID
+
+
+def test_a_forced_lineage_with_a_different_sha_fails(site):
+    """Hand-written forced adoption of a non-incumbent f32 fails the check, not only the recorder."""
+    for rel in csm.SERVED_DIRS:
+        path = site / rel / sm.LINEAGE
+        lin = json.loads(path.read_text(encoding="utf-8"))
+        lin["forced"] = True
+        lin["force_reason"] = "sneak in a new model"
+        lin["checkpoint_sha256"] = None
+        lin["adoption"] = {"kind": "served-incumbent"}
+        path.write_text(json.dumps(lin), encoding="utf-8")
+    why = problems(site)
+    assert "forced adoption is pinned to the July v5 incumbent" in why
+    assert str(lin["embedding_f32_sha256"])[:12] in why
+    assert csm.main(["--root", str(site)]) == 1
+
+
+def test_a_forced_lineage_with_a_fake_checkpoint_sha_fails(site):
+    """forced: true pins the July v5 sha even when checkpoint_sha256 is a non-empty fake."""
+    for rel in csm.SERVED_DIRS:
+        path = site / rel / sm.LINEAGE
+        lin = json.loads(path.read_text(encoding="utf-8"))
+        lin["forced"] = True
+        lin["force_reason"] = "sneak in a new model"
+        lin["checkpoint_sha256"] = "a" * 64
+        path.write_text(json.dumps(lin), encoding="utf-8")
+    why = problems(site)
+    assert "forced adoption is pinned to the July v5 incumbent" in why
+    assert str(lin["embedding_f32_sha256"])[:12] in why
+    assert csm.main(["--root", str(site)]) == 1
+
+
+def test_a_stale_sidecar_claiming_the_served_run_fails(site):
+    (site / "assets" / "mtnn_jacobian.json").write_text(
+        json.dumps({"lineage": {"run_id": "r1", "stale": True, "not_from_served_net": True}}),
+        encoding="utf-8",
+    )
+    assert "assets/mtnn_jacobian.json is marked not-from-served-net but claims run 'r1'" in problems(site)
+
+
+def test_a_non_allowlisted_stale_sidecar_with_drifted_run_id_fails(site):
+    """Marking a sidecar stale is not a self-exemption; only the 48-d allowlist skips drift."""
+    (site / "assets" / "mtnn_map.json").write_text(
+        json.dumps({"lineage": {"run_id": "other-run", "stale": True, "not_from_served_net": True}}),
+        encoding="utf-8",
+    )
+    assert "assets/mtnn_map.json is from run 'other-run', the served embedding from 'r1'" in problems(site)
+
+
+def test_allowlisted_stale_sidecars_with_drifted_run_id_pass(site):
+    """The 48-d jacobian and attr_pop may still skip run-id drift when marked stale."""
+    for name, rid in (
+        ("mtnn_jacobian.json", "pre-v5-48d-2026-07-14"),
+        ("mtnn_attr_pop.json", "pre-v5-48d-2026-07-11"),
+    ):
+        for rel in csm.SERVED_DIRS:
+            (site / rel / name).write_text(
+                json.dumps({"lineage": {"run_id": rid, "stale": True, "not_from_served_net": True}}),
+                encoding="utf-8",
+            )
+    assert csm.check(site) == []
+
+
+def test_record_served_lineage_refuses_a_different_f32(tmp_path, monkeypatch, capsys):
+    spec = importlib.util.spec_from_file_location(
+        "record_served_lineage", ROOT / "scripts" / "record_served_lineage.py"
+    )
+    rsl = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(rsl)
+    assets = tmp_path / "assets"
+    assets.mkdir()
+    (assets / sm.F32).write_bytes(b"not-the-incumbent")
+    monkeypatch.setattr(rsl, "ASSETS", assets)
+    assert rsl.main() == 1
+    assert "not the pinned July v5 incumbent" in capsys.readouterr().err
+    assert rsl.INCUMBENT_F32_SHA256 == sm.sha256_file(ROOT / "assets" / sm.F32)
 
 
 def test_an_f32_of_the_wrong_size_fails(site, capsys):

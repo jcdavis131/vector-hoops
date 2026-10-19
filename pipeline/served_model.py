@@ -28,8 +28,15 @@ The served bundle is now:
                         sha of the served row order, and the metrics copied
                         from the promoted manifest
 and every JSON sidecar exported from the same bundle (SIDECARS) records the
-run_id it came from under "lineage". problems() is the whole check;
-scripts/check_served_model.py runs it on assets/ and public/assets/.
+run_id it came from under "lineage", unless it is one of
+STALE_SIDECAR_ALLOWLIST (the 48-d jacobian and attr_pop still served from
+2026-07-11/14) and marked stale / not_from_served_net. A stale mark on any
+other sidecar does not skip the run-id check. problems() is the whole check;
+scripts/check_served_model.py runs it on assets/ and public/assets/. On master,
+scripts/record_served_lineage.py wrote that lineage for the July v5 incumbent
+(run july-v5-a4918f09) from the served bytes. Every forced: true lineage is
+pinned to INCUMBENT_F32_SHA256 unless a matching promote.py manifest verifies
+the bundle.
 
 Stdlib only, so the CI job that runs it needs no install.
 """
@@ -47,6 +54,19 @@ META = "mtnn_meta.json"
 LINEAGE = "mtnn_lineage.json"
 VECTORS = "vectors.json"
 LINEAGE_SCHEMA = 1
+
+# git rev-parse HEAD:assets/mtnn_embeddings.f32 on origin/master (a4918f09).
+# Forced adoption (record_served_lineage.py) is pinned to these bytes so a
+# hand-written forced lineage cannot bless a different f32. A matching
+# promote.py manifest on disk is the only other way a forced lineage may
+# name a different f32 (the real --force path).
+INCUMBENT_F32_SHA256 = "2574ef581ac3d3ee0f793447c26c5c48b82ec309985d6afcf177ed08510458f4"
+INCUMBENT_RUN_ID = "july-v5-a4918f09"
+
+# Only these two files may skip the sidecar run-id drift check by marking
+# stale / not_from_served_net. Any other sidecar that sets those flags still
+# has to name the served run.
+STALE_SIDECAR_ALLOWLIST = frozenset({"mtnn_jacobian.json", "mtnn_attr_pop.json"})
 
 # Metrics the promoted manifest carries (copied from the training report by
 # promote.py). The meta and the lineage file both copy them from there.
@@ -141,6 +161,92 @@ def f32_url(sha256: str) -> str:
     return f"assets/{F32}?v={sha256[:8]}"
 
 
+def sidecar_not_from_served_net(lineage: Mapping[str, Any] | None) -> bool:
+    """True when a sidecar explicitly refuses to describe the served embedding."""
+    if not isinstance(lineage, Mapping):
+        return False
+    return bool(lineage.get("stale") or lineage.get("not_from_served_net"))
+
+
+def sidecar_skips_run_id_check(name: str, lineage: Mapping[str, Any] | None) -> bool:
+    """Only the allowlisted 48-d jacobian and attr_pop may skip run-id drift."""
+    return name in STALE_SIDECAR_ALLOWLIST and sidecar_not_from_served_net(lineage)
+
+
+def _candidate_promoted_dirs(assets: Path) -> tuple[Path, ...]:
+    """Conventional places promote.py writes a bundle, relative to an assets dir."""
+    parent = assets.parent
+    return (
+        parent / "pipeline" / "data" / "promoted",
+        parent.parent / "pipeline" / "data" / "promoted",
+        parent / "data" / "promoted",
+    )
+
+
+def matching_promote_manifest(assets: Path, lineage: Mapping[str, Any]) -> bool:
+    """True when lineage names a real promote.py bundle whose manifest hashes match.
+
+    Fail-closed: a missing run_id, missing manifest_sha256, missing files, or
+    any hash/run mismatch is not a match. A hand-written checkpoint_sha256
+    string is not enough.
+    """
+    run_id = lineage.get("run_id")
+    man_sha = lineage.get("manifest_sha256")
+    ckpt_sha = lineage.get("checkpoint_sha256")
+    if not isinstance(run_id, str) or not run_id:
+        return False
+    if not isinstance(man_sha, str) or not man_sha:
+        return False
+    if not isinstance(ckpt_sha, str) or not ckpt_sha:
+        return False
+    for promoted in _candidate_promoted_dirs(assets):
+        man_path = promoted / run_id / "manifest.json"
+        current_path = promoted / "CURRENT.json"
+        if not (man_path.is_file() and current_path.is_file()):
+            continue
+        try:
+            if sha256_file(man_path) != man_sha:
+                continue
+            man = json.loads(man_path.read_text(encoding="utf-8"))
+            current = json.loads(current_path.read_text(encoding="utf-8"))
+        except (OSError, ValueError):
+            continue
+        if not isinstance(man, dict) or man.get("run_id") != run_id:
+            continue
+        if current.get("run_id") != run_id or current.get("manifest_sha256") != man_sha:
+            continue
+        files = man.get("files") if isinstance(man.get("files"), dict) else {}
+        rec = files.get("checkpoint") if isinstance(files.get("checkpoint"), dict) else {}
+        if rec.get("sha256") != ckpt_sha:
+            continue
+        return True
+    return False
+
+
+def forced_adoption_pin_problem(lineage: Mapping[str, Any], assets: Path | None = None) -> str | None:
+    """Every forced: true lineage must name the July v5 f32, fail-closed.
+
+    checkpoint_sha256 being present used to skip this pin; a hand-written
+    forced lineage with any fake string then blessed a different f32. Now
+    forced: true is pinned regardless of checkpoint_sha256 or kind. A matching
+    promote.py manifest on disk (tests/test_e2e_smoke.py) is the only
+    alternative. adoption.kind == served-incumbent is also pinned, forced or not.
+    """
+    adoption = lineage.get("adoption") if isinstance(lineage.get("adoption"), dict) else {}
+    forced = bool(lineage.get("forced"))
+    if not forced and adoption.get("kind") != "served-incumbent":
+        return None
+    sha = lineage.get("embedding_f32_sha256")
+    if sha == INCUMBENT_F32_SHA256:
+        return None
+    if forced and assets is not None and matching_promote_manifest(assets, lineage):
+        return None
+    return (
+        f"{LINEAGE}: forced adoption is pinned to the July v5 incumbent "
+        f"sha256 {INCUMBENT_F32_SHA256[:12]}, not {str(sha)[:12]}"
+    )
+
+
 def _load(path: Path) -> tuple[Any, str | None]:
     if not path.exists():
         return None, f"{path.name}: missing"
@@ -231,6 +337,9 @@ def problems(assets: Path) -> list[str]:
         return out
     if lineage.get("schema") != LINEAGE_SCHEMA:
         out.append(f"{LINEAGE}: schema {lineage.get('schema')!r}, expected {LINEAGE_SCHEMA}")
+    pin = forced_adoption_pin_problem(lineage, assets)
+    if pin:
+        out.append(pin)
     run_id = lineage.get("run_id")
     if size is not None:
         got = sha256_file(f32)
@@ -264,7 +373,12 @@ def problems(assets: Path) -> list[str]:
         if err:
             out.append(err)
             continue
-        side = (doc.get("lineage") or {}).get("run_id") if isinstance(doc, dict) else None
+        side_lin = doc.get("lineage") if isinstance(doc, dict) else None
+        side = side_lin.get("run_id") if isinstance(side_lin, dict) else None
+        if sidecar_skips_run_id_check(name, side_lin if isinstance(side_lin, dict) else None):
+            if side == run_id:
+                out.append(f"{name} is marked not-from-served-net but claims run {run_id!r}")
+            continue
         if side != run_id:
             out.append(f"{name} is from run {side!r}, the served embedding from {run_id!r}")
     return out

@@ -376,6 +376,7 @@
     if(solvedEl) solvedEl.textContent=totalSolved;
     const totalEl=$('#court-total'); if(totalEl) totalEl.textContent='/'+st.dailyPool.length;
     const modeNameEl=$('#court-mode-name'); if(modeNameEl) modeNameEl.textContent=st.isTriple?'Daily Triple':'Daily Court';
+    updateStreakPills();
     const r5El=$('#reward-5'); if(r5El) r5El.style.display=st.isTriple?'none':'';
     if(guessesEl) guessesEl.textContent=totalGuesses;
     const guessesWordEl=$('#court-guesses-word'); if(guessesWordEl) guessesWordEl.textContent=totalGuesses===1?'guess':'guesses';
@@ -725,7 +726,7 @@
       $('#mode-badge').textContent= st.isDaily? 'DAILY 5' : st.isRandom? 'RANDOM' : 'DAILY';
       $('#header-mode-label').textContent='DAILY COURT • 5× PAST → MODERN';
     }
-    $('#streak-pill').textContent='streak '+v2Streak();
+    updateStreakPills();
     $('#puzzle-day-label').textContent= st.isPack ? `Pack ${st.packCode.slice(0,24)}…` : st.isDaily? `${['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][parseInt(st.dayKey.slice(5,7),10)-1]} ${parseInt(st.dayKey.slice(8,10),10)} · Daily Court · 5 puzzles` : st.dayKey;
     updateStatusBar(); projectFrame(); draw();
   }
@@ -906,6 +907,7 @@
         if(pill){
           const prev=parseInt((pill.textContent||'').replace(/\D/g,''),10)||0;
           pill.textContent='streak '+sNow;
+          pill.title='Best: '+v2StreakBest()+' days — Daily Court + Daily Triple share one streak';
           if(sNow>prev){ pill.classList.remove('tick'); void pill.offsetWidth; pill.classList.add('tick'); }
         }
         if(celebrateNew){
@@ -924,7 +926,7 @@
             const allResolved=slots.length===(st.dailyTotal||5) && slots.every(sr=>sr&&(((sr.guesses||[]).some(g=>g.rank===0))||((sr.guesses||[]).length>=6)));
             if(allResolved && (ds.solved||0)===0){
               VHPastModern.onDailyLoss(st.dayKey);
-              const pill0=$('#streak-pill'); if(pill0) pill0.textContent='streak '+v2Streak();
+              updateStreakPills();
             }
           }catch{}
         }
@@ -1052,6 +1054,15 @@
     }catch{}
   }
   function v2Streak(){ try{ return VHPastModern.getStreak().streak||0; }catch{ return 0; } }
+  function v2StreakBest(){ try{ const g=VHPastModern.getStreak(); return g.best||g.streak||0; }catch{ return 0; } }
+  /* Streak display only — reads vh.streak.v2, never writes it. */
+  function updateStreakPills(){
+    const cur=v2Streak(), best=v2StreakBest();
+    const pill=$('#streak-pill');
+    if(pill){ pill.textContent='streak '+cur; pill.title='Best: '+best+' days — Daily Court + Daily Triple share one streak'; }
+    const court=$('#court-streak-pill');
+    if(court){ court.textContent='🔥 streak '+cur; court.title='Best: '+best+' days — Daily Court + Daily Triple share one streak'; }
+  }
   // --- multi-choice grid (replaces the typeahead; removes the RESULT_CODE_HUNG path) ---
   let _gridCandidates=null, _gridTargetKey=null;
   function _seededShuffle(arr, seed){
@@ -1302,7 +1313,7 @@
         return;
       }
       if(s.isDaily){
-        const dailyState=VHPastModern.getDailyState(); const opts={dayKey:s.dayKey, pool:s.dailyPool, slotResults:dailyState.slotResults, solved:dailyState.solved, totalGuesses:dailyState.totalGuesses, url:location.origin+'/play?day='+s.dayKey};
+        const dailyState=VHPastModern.getDailyState(); const opts={dayKey:s.dayKey, pool:s.dailyPool, slotResults:dailyState.slotResults, solved:dailyState.solved, total:dailyState.total||s.dailyPool.length, totalGuesses:dailyState.totalGuesses, streak:v2Streak(), mode:s.isTriple?'triple':'court', url:location.origin+'/play?day='+s.dayKey+(s.isTriple?'&mode=triple':'')};
         if(window.VHShare&&VHShare.shareDailyCourt){ await VHShare.shareDailyCourt(opts); return; }
       }
       const won=G.guesses.some(g=>g.rank===0);
@@ -1323,7 +1334,7 @@
       const won=G.guesses.some(g=>g.rank===0);
       if(s.isDaily){
         const dailyState=VHPastModern.getDailyState(); const lines=s.dailyPool.map((p,i)=>{ const sd=dailyState.slotResults[i]; const status=sd? (sd.won? `✅ ${sd.cnt}/6` : `❌ ${sd.cnt}/6`): '⬜'; return `${status} Slot ${i+1}: ${p.n}`; }).join('\n');
-        const text=`${s.isTriple?'Daily Triple':'Daily Court'} ${s.dayKey} — ${dailyState.solved}/${dailyState.total} in ${dailyState.totalGuesses} guesses\n${lines}\n${location.origin}/play?day=${s.dayKey}${s.isTriple?'&mode=triple':''}`; navigator.clipboard.writeText(text).then(()=>{ const b=$('#share-text-btn'); b.textContent='Copied'; setTimeout(()=>b.textContent='Copy Grid',1200); });
+        const text=`${s.isTriple?'Daily Triple':'Daily Court'} ${s.dayKey} — ${dailyState.solved}/${dailyState.total} in ${dailyState.totalGuesses} guesses${v2Streak()>0?`\n🔥 ${v2Streak()}-day streak`:''}\n${lines}\n${location.origin}/play?day=${s.dayKey}${s.isTriple?'&mode=triple':''}`; navigator.clipboard.writeText(text).then(()=>{ const b=$('#share-text-btn'); b.textContent='Copied'; setTimeout(()=>b.textContent='Copy Grid',1200); });
         return;
       }
       const grid=G.guesses.map(g=> g.rank===0?'🟩': g.rank<=3?'🟨':'⬜').join(''); const lines=G.guesses.map((g,i)=>`${i+1}. ${g.name} ${(g.sim*100).toFixed(0)}% #${g.rank+1}`).join('\n'); const text=`Vector Hoops P#${s.puzzleNum} ${s.dayKey} ${won?G.guesses.length+'/6':'X/6'} ${grid}\nPast ${s.target.n} → ${won?G.guesses.slice(-1)[0].name:'?'}\n${lines}\n${location.origin}/play?day=${s.dayKey}&slot=${s.dailySlot}`; navigator.clipboard.writeText(text).then(()=>{ const b=$('#share-text-btn'); b.textContent='Copied'; setTimeout(()=>b.textContent='Copy Grid',1200); });

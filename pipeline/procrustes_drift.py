@@ -284,7 +284,7 @@ FEATURE_LABELS = {
     "FG3_PCT": "three-point accuracy",
     "FG_PCT": "finishing efficiency",
     "FT_PCT": "free-throw shooting",
-    "PLUS_MINUS": "on-court impact",
+    "PLUS_MINUS": "on/off estimate (noisy)",
 }
 
 SEASON_CONTEXT = {
@@ -307,7 +307,7 @@ def interpret_shift(pair: dict) -> str:
     if m0["feature"] in ("FG3_PCT", "FG3A") or m1["feature"] in ("FG3_PCT", "FG3A"):
         gist = "Spacing/shooting frame moved."
     elif m0["feature"] == "PLUS_MINUS" or m1["feature"] == "PLUS_MINUS":
-        gist = "Impact harder to compare YoY."
+        gist = "Plus-minus is noisy — harder to compare YoY."
     elif m0["feature"] in ("OREB", "DREB", "BLK") or m1["feature"] in (
         "OREB",
         "DREB",
