@@ -11,6 +11,7 @@ committed data files that carry per-season honors:
 
 Idempotent: re-running zeroes nothing new. Run from the repo root.
 """
+
 import json
 import sys
 from pathlib import Path
