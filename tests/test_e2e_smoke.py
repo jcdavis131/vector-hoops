@@ -255,12 +255,12 @@ def test_the_archetype_files_cluster_the_new_f32_before_the_projections(chain):
         assert load(root / "assets" / name)["lineage"] == stamp, name
 
 
-@pytest.mark.parametrize("with_lineage", [True, False], ids=["served-f32-has-lineage", "live-assets-state"])
+@pytest.mark.parametrize("with_lineage", [True, False], ids=["served-f32-has-lineage", "no-lineage-file"])
 def test_export_assets_with_nothing_promoted(chain, tmp_path, with_lineage):
-    """The skipped path is a primary case: origin b7ccea45 built the live assets with
-    export_assets and nothing promoted (and no mtnn_lineage.json, the live state). It
-    exits 0, clusters the f32 already served, stamps that f32's lineage (null when
-    nothing names it), and writes nothing under pipeline/data."""
+    """The skipped path is a primary case: origin b7ccea45 built live assets with
+    export_assets and nothing promoted. It exits 0, clusters the f32 already
+    served, stamps that f32's lineage (null when nothing names it), and writes
+    nothing under pipeline/data."""
     root = tmp_path / "repo"
     build_skeleton(root)
     served = chain["root"] / "assets"

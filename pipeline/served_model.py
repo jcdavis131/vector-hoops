@@ -28,8 +28,13 @@ The served bundle is now:
                         sha of the served row order, and the metrics copied
                         from the promoted manifest
 and every JSON sidecar exported from the same bundle (SIDECARS) records the
-run_id it came from under "lineage". problems() is the whole check;
-scripts/check_served_model.py runs it on assets/ and public/assets/.
+run_id it came from under "lineage", unless it is marked stale /
+not_from_served_net (the 48-d jacobian and attr_pop still served from
+2026-07-11/14). problems() is the whole check; scripts/check_served_model.py
+runs it on assets/ and public/assets/. On master, scripts/record_served_lineage.py
+wrote that lineage for the July v5 incumbent (run july-v5-a4918f09) from the
+served bytes. A forced adoption without a promoted checkpoint is pinned to
+INCUMBENT_F32_SHA256.
 
 Stdlib only, so the CI job that runs it needs no install.
 """
@@ -47,6 +52,13 @@ META = "mtnn_meta.json"
 LINEAGE = "mtnn_lineage.json"
 VECTORS = "vectors.json"
 LINEAGE_SCHEMA = 1
+
+# git rev-parse HEAD:assets/mtnn_embeddings.f32 on origin/master (a4918f09).
+# Forced adoption (record_served_lineage.py) is pinned to these bytes so a
+# hand-written forced lineage cannot bless a different f32. promote.py --force
+# of a real bundle still carries checkpoint_sha256 and is not this path.
+INCUMBENT_F32_SHA256 = "2574ef581ac3d3ee0f793447c26c5c48b82ec309985d6afcf177ed08510458f4"
+INCUMBENT_RUN_ID = "july-v5-a4918f09"
 
 # Metrics the promoted manifest carries (copied from the training report by
 # promote.py). The meta and the lineage file both copy them from there.
@@ -141,6 +153,35 @@ def f32_url(sha256: str) -> str:
     return f"assets/{F32}?v={sha256[:8]}"
 
 
+def sidecar_not_from_served_net(lineage: Mapping[str, Any] | None) -> bool:
+    """True when a sidecar explicitly refuses to describe the served embedding."""
+    if not isinstance(lineage, Mapping):
+        return False
+    return bool(lineage.get("stale") or lineage.get("not_from_served_net"))
+
+
+def forced_adoption_pin_problem(lineage: Mapping[str, Any]) -> str | None:
+    """Forced adoption without a promoted checkpoint is only valid for the July v5 f32.
+
+    promote.py --force of a real bundle writes checkpoint_sha256 and is not
+    pinned here (tests/test_e2e_smoke.py). A hand-written forced lineage, or
+    adoption.kind == served-incumbent, must name INCUMBENT_F32_SHA256.
+    """
+    adoption = lineage.get("adoption") if isinstance(lineage.get("adoption"), dict) else {}
+    is_adoption = adoption.get("kind") == "served-incumbent" or (
+        bool(lineage.get("forced")) and not lineage.get("checkpoint_sha256")
+    )
+    if not is_adoption:
+        return None
+    sha = lineage.get("embedding_f32_sha256")
+    if sha != INCUMBENT_F32_SHA256:
+        return (
+            f"{LINEAGE}: forced adoption is pinned to the July v5 incumbent "
+            f"sha256 {INCUMBENT_F32_SHA256[:12]}, not {str(sha)[:12]}"
+        )
+    return None
+
+
 def _load(path: Path) -> tuple[Any, str | None]:
     if not path.exists():
         return None, f"{path.name}: missing"
@@ -231,6 +272,9 @@ def problems(assets: Path) -> list[str]:
         return out
     if lineage.get("schema") != LINEAGE_SCHEMA:
         out.append(f"{LINEAGE}: schema {lineage.get('schema')!r}, expected {LINEAGE_SCHEMA}")
+    pin = forced_adoption_pin_problem(lineage)
+    if pin:
+        out.append(pin)
     run_id = lineage.get("run_id")
     if size is not None:
         got = sha256_file(f32)
@@ -264,7 +308,12 @@ def problems(assets: Path) -> list[str]:
         if err:
             out.append(err)
             continue
-        side = (doc.get("lineage") or {}).get("run_id") if isinstance(doc, dict) else None
+        side_lin = doc.get("lineage") if isinstance(doc, dict) else None
+        side = side_lin.get("run_id") if isinstance(side_lin, dict) else None
+        if sidecar_not_from_served_net(side_lin if isinstance(side_lin, dict) else None):
+            if side == run_id:
+                out.append(f"{name} is marked not-from-served-net but claims run {run_id!r}")
+            continue
         if side != run_id:
             out.append(f"{name} is from run {side!r}, the served embedding from {run_id!r}")
     return out

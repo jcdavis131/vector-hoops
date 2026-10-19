@@ -23,15 +23,18 @@ via pipeline/served_model.problems():
 and that assets/ and public/assets/ serve the same run and the same bytes.
 Exit 1 with every problem listed, 0 when the bundle is consistent.
 
-It FAILS today, by design. On master the served bundle is the July v5 export
-with no assets/mtnn_lineage.json; on forge/backend-hardening it is the
-2dc6ad78 smoke model, which also has a hand-assembled meta and sidecars from
-the 07-14 model [eval#0]. It goes green only when the served bundle is
-re-promoted (pipeline/promote.py), re-exported by rebuild_all.py's export
-stage, re-stamped with scripts/stamp_assets.py and then mirrored with
-scripts/sync_public.py. Stamp before the mirror: stamp_assets rewrites ?v=
-tokens in the root pages and assets/**/*.js only, never in public/, so a
-mirror taken first ships the old tokens [final#18].
+On master the served bundle is the July v5 export (f32 git blob a4918f09).
+scripts/record_served_lineage.py recorded mtnn_lineage.json from those bytes
+(run july-v5-a4918f09) so this check verifies the deployed tree. A forced
+adoption (forced: true and no checkpoint_sha256, or adoption.kind
+served-incumbent) is pinned to that f32's sha256: a hand-written forced
+lineage for a different model fails. Sidecars marked stale /
+not_from_served_net must not claim the served run id (the 48-d jacobian
+and attr_pop). It still fails a swapped f32, extra meta keys, a keys-hash
+mismatch, live sidecar run-id drift, or assets/ vs public/assets/ skew.
+A replacement model is not recorded that way: re-promote (pipeline/promote.py),
+re-export through rebuild_all.py's export stage, re-stamp with
+scripts/stamp_assets.py, then mirror with scripts/sync_public.py.
 
 Stdlib only.
 
