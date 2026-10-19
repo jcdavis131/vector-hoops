@@ -38,11 +38,18 @@ The Twin Explainer had no standalone URL — its standalone surface was the docu
 - Dead-link crawl: every internal link in root + `public/` HTML resolves (see verification below)
 
 ## Verification
-- `node --check` on all edited JS files: pass
-- Internal-link crawl (stdlib, root + public HTML): all internal links resolve
-- `python3 scripts/stamp_assets.py` + `python3 scripts/sync_public.py` run per commit; root↔public mirror verified
-- pytest: could not run — no pytest on this VM and no package installs without his approval (standing rule). Test files touching these surfaces were grep-checked for hard-coded references (none found)
+- `node --check` on all edited JS files (play-engine.js, past-modern-game.js, viral-share.js, site-nav.js, insights.js): pass
+- Dead-link crawl (`scripts/check_dead_links.py`, new): 488 internal links across root + public HTML — all resolve, zero dead
+- `python3 scripts/stamp_assets.py` + `python3 scripts/sync_public.py` run per commit; `--check` passes on both (mirror current, tokens current)
+- pytest: could not run — no pytest on this VM and no package installs without his approval (standing rule). Grep-checked tests/ and scripts/ for hard-coded references to the cut surfaces (none found; pipeline build scripts for the cut cards remain but are unserved build tooling, not public surfaces)
 - `assets/mtnn_embeddings.f32` untouched
+
+## Commits (each independently revertible)
+1. `D1: retire Props Lab as a public surface`
+2. `D2: retire the Twin Explainer standalone surface`
+3. `D3: retire Pack Battle as a public surface`
+4. `D4: cut Insights 27 -> 7 (the held money/sacrifice track)`
+5. `D5: dead-link crawl + nav/footer/sitemap sync`
 
 ## What survives, defended in one line each
 - **Daily Court** — the product: guess today's player, feel how basketball works.
