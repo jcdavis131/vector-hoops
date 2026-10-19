@@ -711,7 +711,7 @@
     fetch('assets/skills_wide.json?v=ba361640').then(function(r){return r.ok?r.json():null;}).then(function(w){ WIDE=w||false; if (WIDE) { addWideBoardModes(); if (current.slug) renderProfile(); } }).catch(function(){WIDE=false;});
     fetch('assets/archetype_assignments.json?v=4118981a').then(function(r){return r.ok?r.json():null;}).then(function(aa){ ARCH_ASSIGN=aa||false; if (ARCH_ASSIGN && current.slug) renderProfile(); }).catch(function(){ARCH_ASSIGN=false;});
     fetch('assets/season_norms.json?v=bcd38ecb').then(function(r){return r.ok?r.json():null;}).then(function(sn){ SEASON_NORMS=sn||null; if (SEASON_NORMS && current.slug) renderProfile(); }).catch(function(){SEASON_NORMS=null;});
-    fetch('assets/next_profile_eval.json?v=5de3c225').then(function(r){return r.ok?r.json():null;}).then(function(ne){ NEXT_EVAL=ne||false; if (NEXT_EVAL && current.slug) renderProfile(); }).catch(function(){NEXT_EVAL=false;});
+    fetch('assets/next_profile_eval.json?v=2f216162').then(function(r){return r.ok?r.json():null;}).then(function(ne){ NEXT_EVAL=ne||false; if (NEXT_EVAL && current.slug) renderProfile(); }).catch(function(){NEXT_EVAL=false;});
     if (window.VHPeers && window.VHPeers.load) { window.VHPeers.load(function (ok) { MTNN_READY = !!ok; if (MTNN_READY && current.slug) renderProfile(); }); } else { MTNN_READY=false; }
   }
 
