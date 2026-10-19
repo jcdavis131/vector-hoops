@@ -432,26 +432,28 @@
   }
 
   // DAILY COURT helpers
-  function slotKey(dayKey, i){ return (state.isTriple ? 'vh.triple.v1.' : 'vh.daily.v2.') + dayKey + '.slot' + i; }
+  /* Slot keys are owned by the ledger — this is a read-only alias kept so
+   * old call sites don't scatter the key format. */
+  function slotKey(dayKey, i){ try{ if(window.VHLedger) return VHLedger.slotKey(dayKey, i, state.isTriple?'triple':'court'); }catch{} return (state.isTriple ? 'vh.triple.v1.' : 'vh.daily.v2.') + dayKey + '.slot' + i; }
   function getDailyState(){
     if(!state.dailyPool||!state.dailyPool.length) return {isDailyCourt:false};
     const dayKey=state.dayKey;
     const pool=state.dailyPool;
+    const mode=state.isTriple?'triple':'court';
+    let ledger=null;
+    try{ ledger = window.VHLedger ? VHLedger.read(dayKey, mode, pool.length) : null; }catch{ ledger=null; }
     let solved=0, totalGuesses=0, slotResults=[];
     for(let i=0;i<pool.length;i++){
-      try{
-        const raw=localStorage.getItem(slotKey(dayKey, i));
-        if(raw){
-          const j=JSON.parse(raw);
-          const won = (j.guesses||[]).some(g=>g.rank===0);
-          const count = (j.guesses||[]).length;
-          if(won) solved++;
-          totalGuesses+=count;
-          slotResults[i]={won, count, guesses:j.guesses||[]};
-        } else {
-          slotResults[i]=null;
-        }
-      }catch{ slotResults[i]=null; }
+      let rec=null;
+      if(ledger && ledger.slots[i]) rec=ledger.slots[i];
+      if(rec){
+        const won=rec.won, count=rec.count;
+        if(won) solved++;
+        totalGuesses+=count;
+        slotResults[i]={won, count, guesses:rec.guesses||[]};
+      } else {
+        slotResults[i]=null;
+      }
     }
     const tiers={
       one: solved>=1,
@@ -616,11 +618,12 @@
     else {
       let firstUnsolved=0; let found=false;
       try{
+        const mode=state.isTriple?'triple':'court';
         for(let i=0;i<dailyPool.length;i++){
-          const raw=localStorage.getItem(slotKey(dayKey, i));
-          if(!raw){ firstUnsolved=i; found=true; break; }
-          const j=JSON.parse(raw); const won=(j.guesses||[]).some(g=>g.rank===0); const over=(j.guesses||[]).length>=6;
-          if(!won && !over){ firstUnsolved=i; found=true; break; }
+          let rec=null;
+          try{ rec = window.VHLedger ? VHLedger.readSlot(dayKey, i, mode) : null; }catch{}
+          if(!rec){ firstUnsolved=i; found=true; break; }
+          if(!rec.won && !rec.over){ firstUnsolved=i; found=true; break; }
         }
         if(!found){ firstUnsolved=0; }
       }catch{ firstUnsolved=0; }
@@ -752,26 +755,38 @@
       return {ok:false, reason:'Guess failed — try another'};
     }
   }
+  /* Warmer/colder in twin-band vocabulary (Ive/Diaconis/Dye): the resting
+   * state is a discrete band word — strong / lean / distant — from the
+   * guess's embedding similarity, never color alone: ▲ warmer, ▼ colder.
+   * Motion (the guess-row bar) may stay smooth; truth is discrete. */
   function warmCold(){
     try{
       const gs=state.guesses||[];
-      if(gs.length<2) return null;
-      const last=gs[gs.length-1]; const prev=gs[gs.length-2];
-      if(!last||!prev||typeof last.rank!=='number'||typeof prev.rank!=='number') return null;
-      if(last.rank<prev.rank) return 'warmer 🔥'; if(last.rank>prev.rank) return 'colder ❄️'; return 'same';
+      if(!gs.length) return null;
+      const last=gs[gs.length-1];
+      const sim=(last&&typeof last.sim==='number'&&isFinite(last.sim))?last.sim:0;
+      const band=(window.VHLedger&&VHLedger.bandForSim)?VHLedger.bandForSim(sim):'twin';
+      if(gs.length<2) return band;
+      const prev=gs[gs.length-2];
+      const prevSim=(prev&&typeof prev.sim==='number'&&isFinite(prev.sim))?prev.sim:sim;
+      const arrow=sim>prevSim?' \u25B2':sim<prevSim?' \u25BC':'';
+      return band+arrow;
     }catch{ return null; }
   }
 
-  const STREAK_KEY='vh.streak.v2';
-  function loadStreakRaw(){ try{ const raw=localStorage.getItem(STREAK_KEY); if(!raw){ const legacy=localStorage.getItem('vh_weekStreak'); if(legacy){ const w=JSON.parse(legacy); const seeded={streak:w.streak||0,lastPlayedDay:w.last||null,best:w.streak||0,lastWin:true}; saveStreakRaw(seeded); try{ localStorage.setItem('vh.streak', JSON.stringify({streak:seeded.streak})); }catch{} return seeded; } return {streak:0,lastPlayedDay:null,best:0,lastWin:false}; } const j=JSON.parse(raw); return {streak:j.streak||0,lastPlayedDay:j.lastPlayedDay||null,best:j.best||j.streak||0,lastWin:!!j.lastWin}; }catch{ return {streak:0,lastPlayedDay:null,best:0,lastWin:false}; } }
-  function saveStreakRaw(obj){ try{ localStorage.setItem(STREAK_KEY, JSON.stringify(obj)); }catch{} }
-  function getStreak(){ return loadStreakRaw(); }
+  /* Streak state is owned by the ledger (assets/daily-ledger.js). These are
+   * thin delegates — there is no second copy of the streak anywhere. If the
+   * ledger failed to load, reads return the safe default and writes no-op
+   * rather than inventing parallel state. */
+  function getStreak(){ try{ return window.VHLedger ? VHLedger.getStreak() : {streak:0,lastPlayedDay:null,best:0,lastWin:false}; }catch{ return {streak:0,lastPlayedDay:null,best:0,lastWin:false}; } }
   function onDailyWin(dayKey){
-    if(!dayKey) return 0; const cur=getStreak(); if(cur.lastPlayedDay===dayKey) return cur.streak;
-    let nxt=1; if(cur.lastPlayedDay){ const d1=new Date(cur.lastPlayedDay+'T00:00:00Z'); const d2=new Date(dayKey+'T00:00:00Z'); const diff=Math.round((d2-d1)/86400000); if(diff===1) nxt=cur.streak+1; else if(diff===0) nxt=cur.streak; else nxt=1; }
-    const best=Math.max(cur.best||0,nxt); const updated={streak:nxt,lastPlayedDay:dayKey,best:best,lastWin:true}; saveStreakRaw(updated); try{ localStorage.setItem('vh.streak', JSON.stringify({streak:nxt})); }catch{} return nxt;
+    try{ if(window.VHLedger){ return VHLedger.recordDayOutcome(dayKey,'win').streak||0; } }catch{}
+    return 0;
   }
-  function onDailyLoss(dayKey){ const cur=getStreak(); const updated={streak:0,lastPlayedDay:dayKey,best:cur.best||cur.streak||0,lastWin:false}; saveStreakRaw(updated); try{ localStorage.setItem('vh.streak', JSON.stringify({streak:0})); }catch{} return 0; }
+  function onDailyLoss(dayKey){
+    try{ if(window.VHLedger){ VHLedger.recordDayOutcome(dayKey,'loss'); } }catch{}
+    return 0;
+  }
   function msToNextDaily(){ const now=new Date(); const tomorrow=new Date(now); tomorrow.setDate(tomorrow.getDate()+1); tomorrow.setHours(0,0,0,0); return tomorrow-now; }
   function fmtHMS(ms){ const s=Math.floor(ms/1000); const h=Math.floor(s/3600); const m=Math.floor((s%3600)/60); const sec=s%60; if(h>0) return `${h}h ${m}m`; if(m>0) return `${m}m ${sec}s`; return `${sec}s`; }
 
