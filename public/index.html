@@ -27,7 +27,7 @@
 <meta name="twitter:image" content="https://hoops.dumbmodel.com/assets/og-1200x630.png"/>
 <link rel="stylesheet" href="assets/fonts.css?v=8f376b2a"/>
 <link rel="preload" href="/assets/vectors_search_lite.json" as="fetch" crossorigin/>
-<link rel="stylesheet" href="/assets/atlas.css?v=46d6e57a"/>
+<link rel="stylesheet" href="/assets/atlas.css?v=1ed34fb5"/>
 <link rel="stylesheet" href="/assets/shell.css?v=7eb94ecf"/>
 <style>
 /* ---------- Home: hero ---------- */
@@ -42,13 +42,6 @@
 }
 .hero__title span{ display: block; }
 .hero__title em{ font-style: normal; color: var(--accent); }
-
-/* ---------- Home: season strip (2026-27 opening night) ---------- */
-.season-strip{ max-width: 1040px; margin: 0 auto var(--s-6); padding: var(--s-3) var(--s-4);
-  background: var(--surface-2); border: 1px solid var(--line); border-radius: var(--radius); }
-.season-strip p{ margin: 0; font-size: var(--t-sm); color: var(--fg-2); }
-.season-strip strong{ color: var(--fg); }
-.season-strip a{ color: var(--marker-blue); font-weight: 600; }
 
 /* ---------- Home: the instrument ---------- */
 .instrument{ width: 100%; max-width: var(--content); margin: 0 auto; }
@@ -107,9 +100,25 @@
 .trust-badge summary::before{ content: "◈ "; color: var(--pencil-text); }
 .trust-badge[open] summary{ color: var(--fg-2); }
 .trust-badge p{ margin: 6px 0 0; line-height: 1.5; color: var(--fg-2); }
-/* Panel v3 G6: overlaid region tags removed (Jobs's cut) — the region strip
-   below the map is the one list. */
+#region-layer{ position: absolute; inset: 0; z-index: 2; pointer-events: none; }
+.region-tag{
+  position: absolute; transform: translate(-50%, -50%);
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 5px 9px; border-radius: 999px; white-space: nowrap;
+  font-family: var(--font-display); font-size: 10px; font-weight: 600;
+  letter-spacing: .08em; text-transform: uppercase;
+  color: rgba(236,238,241,.92); background: rgba(7,9,12,.62);
+  border: 1px solid rgba(255,255,255,.16); cursor: pointer; pointer-events: auto;
+  -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+}
+.region-tag:hover{ border-color: rgba(255,255,255,.45); color: #fff; }
+.region-tag[aria-pressed="true"]{ border-color: var(--marker-red); color: #fff; }
+.region-tag__dot{ width: 6px; height: 6px; border-radius: 50%; background: var(--accent); flex: none; }
+#region-layer.is-regions .region-tag{ font-size: 11.5px; padding: 8px 13px; }
+#region-layer.is-regions .region-tag__dot{ width: 9px; height: 9px; }
+.region-tag.is-collided{ display: none; }
 #sky-canvas.is-regions{ opacity: .22; transition: opacity var(--dur-2) var(--ease); }
+#region-layer.has-selection .region-tag:not([aria-pressed="true"]){ opacity: .45; }
 .region-strip{
   display: flex; gap: 8px; overflow-x: auto; padding: 10px 2px 4px;
   -webkit-overflow-scrolling: touch; scrollbar-width: thin;
@@ -314,27 +323,9 @@
     <h1 class="hero__title reveal reveal-1"><span>Who plays</span><span>like <em>this?</em></span></h1>
     <p class="title-card__lede reveal reveal-2">Every season from 1996–97 to 2025–26 with enough minutes, placed by how it was played rather than who played it. Choose one, and a neural embedding returns the three seasons that play most alike. This map measures how players play, not how good they are.</p>
     <div class="title-card__actions reveal reveal-3">
-      <a class="btn btn-primary btn-xl" href="#atlas">Pick a season — meet its 3 closest twins</a>
+      <a class="btn btn-primary btn-xl" href="#atlas">Tap a season — explore the atlas</a>
     </div>
   </header>
-
-  <div class="season-strip reveal" id="season-strip" role="note" hidden>
-    <p><strong id="season-strip-head">The 2026&ndash;27 season tips off Tuesday, Oct 20.</strong>
-    <span id="season-strip-body">A new Daily Court puzzle every day of the season &mdash; the same five for everyone.</span>
-    <a href="/play">Play today&rsquo;s &rarr;</a></p>
-  </div>
-  <script>
-  (function(){
-    /* Self-maintaining season strip: pre-tipoff vs underway copy, hidden after the season. */
-    var el = document.getElementById('season-strip'); if(!el) return;
-    var now = new Date();
-    if(now >= new Date(2027, 5, 21)) return; /* season over: stay hidden */
-    if(now >= new Date(2026, 9, 20)){
-      document.getElementById('season-strip-head').textContent = 'The 2026–27 season is underway.';
-    }
-    el.hidden = false;
-  })();
-  </script>
 
   <section id="atlas" class="instrument reveal reveal-4" aria-labelledby="atlas-title">
     <div class="instrument__bar">
@@ -378,6 +369,36 @@
         <p><a href="/players">Browse all players →</a></p>
       </div>
     </div>
+
+    <div class="atlas-axes" id="atlas-axes">
+      <div class="axes-pick">
+        <label class="axes-label" for="axis-x">X axis
+          <select id="axis-x" class="axes-select">
+            <option value="pca1" selected>Paint vs perimeter (PCA)</option>
+          </select>
+        </label>
+        <label class="axes-label" for="axis-y">Y axis
+          <select id="axis-y" class="axes-select">
+            <option value="pca2" selected>Scoring load (PCA)</option>
+          </select>
+        </label>
+      </div>
+      <div class="axes-view" role="group" aria-label="Atlas view">
+        <button type="button" id="view-2d" class="axes-btn" aria-pressed="true">2-D map</button>
+        <button type="button" id="view-1d" class="axes-btn" aria-pressed="false">1-D line</button>
+      </div>
+      <p class="axes-note" id="axes-note">Name both axes — every point re-plots. Pick a named stat to leave the PCA view.</p>
+    </div>
+
+    <figure class="map-note" id="map-note">
+      <figcaption class="label fig-label" style="margin:0">Fig. note <b>· How to read this map</b></figcaption>
+      <ul>
+        <li><b>A sketch, not the model.</b> The flat map shows two of three PCA axes; the three together keep about 62% of the variance in the 14 era-normalised stats (<a href="/methods">methods</a>). Nearby on the map is approximate.</li>
+        <li><b>Peers come from the model, not the picture.</b> &ldquo;Plays most alike&rdquo; is cosine similarity in the full 64-d embedding, so a peer can sit some distance away on the map.</li>
+        <li><b>Eras are normalised away.</b> Stats are z-scored within each season, so cross-era closeness is about style, not who would win.</li>
+        <li><b>Scores are opinions.</b> Name different axes and every point moves; retrain the model and the numbers wobble.</li>
+      </ul>
+    </figure>
 
     <div class="legend" id="atlas-legend" role="group" aria-label="Highlight an archetype"></div>
 
@@ -476,7 +497,7 @@
 <script defer src="/assets/site-nav.js?v=c12413c4"></script>
 <script defer src="/assets/mtnn.js?v=81d491f8"></script>
 <script defer src="/assets/twin-bands.js?v=d8e155bd"></script>
-<script defer src="/assets/atlas-map.js?v=0870c2e8"></script>
+<script defer src="/assets/atlas-map.js?v=c55ab565"></script>
 <script defer src="/assets/atlas-regions.js?v=c9132685"></script>
 <script defer src="/assets/career-trails.js?v=a0e9e836"></script>
 <script src="assets/site-facts.js?v=cbb639f4" defer></script>
