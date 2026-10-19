@@ -27,7 +27,7 @@
 <meta name="twitter:image" content="https://hoops.dumbmodel.com/assets/og-1200x630.png"/>
 <link rel="stylesheet" href="assets/fonts.css?v=8f376b2a"/>
 <link rel="preload" href="/assets/vectors_search_lite.json" as="fetch" crossorigin/>
-<link rel="stylesheet" href="/assets/atlas.css?v=46d6e57a"/>
+<link rel="stylesheet" href="/assets/atlas.css?v=1ed34fb5"/>
 <link rel="stylesheet" href="/assets/shell.css?v=7eb94ecf"/>
 <style>
 /* ---------- Home: hero ---------- */
@@ -370,6 +370,36 @@
       </div>
     </div>
 
+    <div class="atlas-axes" id="atlas-axes">
+      <div class="axes-pick">
+        <label class="axes-label" for="axis-x">X axis
+          <select id="axis-x" class="axes-select">
+            <option value="pca1" selected>Paint vs perimeter (PCA)</option>
+          </select>
+        </label>
+        <label class="axes-label" for="axis-y">Y axis
+          <select id="axis-y" class="axes-select">
+            <option value="pca2" selected>Scoring load (PCA)</option>
+          </select>
+        </label>
+      </div>
+      <div class="axes-view" role="group" aria-label="Atlas view">
+        <button type="button" id="view-2d" class="axes-btn" aria-pressed="true">2-D map</button>
+        <button type="button" id="view-1d" class="axes-btn" aria-pressed="false">1-D line</button>
+      </div>
+      <p class="axes-note" id="axes-note">Name both axes — every point re-plots. Pick a named stat to leave the PCA view.</p>
+    </div>
+
+    <figure class="map-note" id="map-note">
+      <figcaption class="label fig-label" style="margin:0">Fig. note <b>· How to read this map</b></figcaption>
+      <ul>
+        <li><b>A sketch, not the model.</b> The flat map shows two of three PCA axes; the three together keep about 62% of the variance in the 14 era-normalised stats (<a href="/methods">methods</a>). Nearby on the map is approximate.</li>
+        <li><b>Peers come from the model, not the picture.</b> &ldquo;Plays most alike&rdquo; is cosine similarity in the full 64-d embedding, so a peer can sit some distance away on the map.</li>
+        <li><b>Eras are normalised away.</b> Stats are z-scored within each season, so cross-era closeness is about style, not who would win.</li>
+        <li><b>Scores are opinions.</b> Name different axes and every point moves; retrain the model and the numbers wobble.</li>
+      </ul>
+    </figure>
+
     <div class="legend" id="atlas-legend" role="group" aria-label="Highlight an archetype"></div>
 
     <div class="region-strip" id="region-strip" role="group" aria-label="Explore regions of the atlas"></div>
@@ -467,7 +497,7 @@
 <script defer src="/assets/site-nav.js?v=c12413c4"></script>
 <script defer src="/assets/mtnn.js?v=81d491f8"></script>
 <script defer src="/assets/twin-bands.js?v=d8e155bd"></script>
-<script defer src="/assets/atlas-map.js?v=0870c2e8"></script>
+<script defer src="/assets/atlas-map.js?v=c55ab565"></script>
 <script defer src="/assets/atlas-regions.js?v=ec87afa0"></script>
 <script defer src="/assets/career-trails.js?v=a0e9e836"></script>
 <script src="assets/site-facts.js?v=cbb639f4" defer></script>

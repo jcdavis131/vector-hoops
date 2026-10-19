@@ -42,6 +42,16 @@
   var revealT = reduceMotion ? 1 : 0;
   var bounds = { x0: 0, x1: 1, y0: 0, y1: 1 };
 
+  // ---------- named concept axes (semanticspace-inspired) ----------
+  // Default view is the PCA map; the picker swaps in plain-words concepts
+  // derived from the 14 era-normalised features (assets/atlas-concepts.json).
+  var PCA_AXES = {
+    pca1: { name: 'Paint vs perimeter', lo: 'bigs (boards, blocks)', hi: 'shooters (3PA, 3P%)' },
+    pca2: { name: 'Scoring load', lo: 'high-usage scorers', hi: 'low-usage role players' }
+  };
+  var view = { x: { type: 'pca1' }, y: { type: 'pca2' }, mode: '2d' };
+  var concepts = null, conceptsLoading = false, conceptsQueued = null;
+
   function css(name) { return getComputedStyle(document.documentElement).getPropertyValue(name).trim(); }
   var COL = {};
   function readColors() {
@@ -140,6 +150,15 @@
     // centre circle
     ctx.beginPath(); ctx.arc(mx, my, Math.min(W, H) * 0.09, 0, Math.PI * 2); ctx.stroke();
 
+    // 1-D line mode: a baseline to read the sort against
+    if (view.mode === '1d') {
+      ctx.strokeStyle = COL.axisStrong;
+      ctx.beginPath();
+      var by = Math.round(sy(0.5)) + 0.5;
+      ctx.moveTo(PAD, by); ctx.lineTo(W - PAD, by);
+      ctx.stroke();
+    }
+
     if (!P.length) return;
 
     // points — revealed from the centre outward during the opening
@@ -154,8 +173,7 @@
     for (var i = 0; i < n; i += stride) {
       var p = P[i], x = sx(p.x), y = sy(p.y);
       if (revealT < 1 && Math.hypot(x - W / 2, y - H / 2) > maxR) continue;
-      var a;
-      if (filterArch >= 0) a = p.c === filterArch ? 0.85 : 0.07;
+      var a;      if (filterArch >= 0) a = p.c === filterArch ? 0.85 : 0.07;
       else if (inRoster) a = inRoster[i] ? 0.9 : 0.06;
       else a = dim ? 0.26 : 0.5;
       ctx.fillStyle = COL.dot + a + ')';
@@ -243,8 +261,9 @@
       '<dl class="readout__facts">' +
         '<div><dt>Season</dt><dd>' + esc(fmtSeason(p.s)) + '</dd></div>' +
         '<div><dt>Archetype</dt><dd>' + esc(ARCHETYPES[p.c] || '—') + '</dd></div>' +
-        '<div><dt>Big → small</dt><dd>' + p.x.toFixed(3) + '</dd></div>' +
-        '<div><dt>Scoring load</dt><dd>' + p.y.toFixed(3) + '</dd></div>' +
+        '<div><dt>' + esc(axisName(view.x)) + '</dt><dd>' + p.x.toFixed(3) + '</dd></div>' +
+        (view.mode === '1d' ? '' :
+          '<div><dt>' + esc(axisName(view.y)) + '</dt><dd>' + p.y.toFixed(3) + '</dd></div>') +
       '</dl>' +
       '<a class="readout__link" href="/players?q=' + encodeURIComponent(p.n) + '">Open ' + esc(p.n) + ' dossier →</a>';
 
@@ -513,6 +532,138 @@
     if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(url).then(done, function () {});
   }
 
+  // ---------- named concept axes ----------
+  function axisMeta(ax) {
+    if (ax.type === 'pca1' || ax.type === 'pca2') return PCA_AXES[ax.type];
+    if (concepts && concepts.list[ax.k]) return concepts.list[ax.k];
+    return { name: 'loading…', lo: '', hi: '' };
+  }
+  function axisName(ax) { return axisMeta(ax).name; }
+
+  function axisValue(i, ax) {
+    if (ax.type === 'pca1') return P[i].px;
+    if (ax.type === 'pca2') return P[i].py;
+    var k = ax.k, q = concepts.data[i * concepts.n + k];
+    var s = (q > 127 ? q - 256 : q) / concepts.scale;
+    var mm = concepts.minmax[concepts.list[k].id];
+    var t = (s - mm[0]) / (mm[1] - mm[0]);
+    return t < 0 ? 0 : t > 1 ? 1 : t;
+  }
+
+  function jitter(i) { // deterministic spread so the 1-D line stays readable
+    return (((i * 2654435761) % 1000) / 1000 - 0.5) * 0.09;
+  }
+
+  function updateAxisLabels() {
+    var m = axisMeta(view.x);
+    var l = document.querySelector('.axis--l'), r = document.querySelector('.axis--r');
+    if (l) l.textContent = m.lo || 'low';
+    if (r) r.textContent = m.hi || 'high';
+    var c = $('sky-canvas');
+    if (c) {
+      var ybit = view.mode === '1d'
+        ? 'One-dimensional line view.'
+        : 'Y axis: ' + axisName(view.y) + '.';
+      c.setAttribute('aria-label', 'Scatter of 12,966 NBA player-seasons. ' +
+        'X axis: ' + m.name + ', ' + m.lo + ' to ' + m.hi + '. ' + ybit +
+        ' Use the search field to select a season.');
+    }
+  }
+
+  function applyView() {
+    for (var i = 0; i < P.length; i++) {
+      P[i].x = axisValue(i, view.x);
+      P[i].y = view.mode === '1d' ? 0.5 + jitter(i) : axisValue(i, view.y);
+    }
+    computeBounds(); buildGrid(); draw();
+    updateAxisLabels(); renderReadout();
+  }
+
+  function decodeConcepts(j) {
+    var bin = atob(j.data), n = j.concepts.length, arr = new Uint8Array(bin.length);
+    for (var i = 0; i < bin.length; i++) arr[i] = bin.charCodeAt(i);
+    concepts = { list: j.concepts, minmax: j.minmax, data: arr, n: n, scale: j.scale || 25 };
+  }
+
+  function populateConceptOptions() {
+    ['axis-x', 'axis-y'].forEach(function (id) {
+      var sel = $(id);
+      if (!sel || sel.getAttribute('data-concepts')) return;
+      concepts.list.forEach(function (c, k) {
+        var o = document.createElement('option');
+        o.value = 'c' + k; o.textContent = c.name;
+        sel.appendChild(o);
+      });
+      sel.setAttribute('data-concepts', '1');
+    });
+    var note = $('axes-note');
+    if (note) note.textContent = 'Name both axes — every point re-plots. Concepts are weighted mixes of the 14 era-normalised stats; each formula ships in the data file.';
+  }
+
+  function ensureConcepts(cb) {
+    if (concepts) { cb(true); return; }
+    if (conceptsLoading) { conceptsQueued = cb; return; }
+    conceptsLoading = true;
+    var note = $('axes-note');
+    if (note) note.textContent = 'Loading the concept axes…';
+    fetch('/assets/atlas-concepts.json?v=8fe7a882', { cache: 'force-cache' })
+      .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+      .then(function (j) {
+        decodeConcepts(j); conceptsLoading = false; populateConceptOptions();
+        cb(true);
+        if (conceptsQueued) { var q = conceptsQueued; conceptsQueued = null; q(true); }
+      })
+      .catch(function () {
+        conceptsLoading = false;
+        if (note) note.textContent = 'The concept axes did not arrive. The PCA map still works — check your connection and try again.';
+        cb(false);
+      });
+  }
+
+  function onAxisChange(which, val) {
+    var go = function () {
+      view[which] = val.charAt(0) === 'c' ? { type: 'concept', k: +val.slice(1) } : { type: val };
+      applyView();
+    };
+    if (val.charAt(0) === 'c') ensureConcepts(function (ok) { if (ok) go(); });
+    else go();
+  }
+
+  function syncViewButtons() {
+    var b2 = $('view-2d'), b1 = $('view-1d');
+    if (b2) b2.setAttribute('aria-pressed', String(view.mode === '2d'));
+    if (b1) b1.setAttribute('aria-pressed', String(view.mode === '1d'));
+  }
+
+  function setMode(m) {
+    if (m === view.mode) return;
+    view.mode = m;
+    syncViewButtons();
+    var ysel = $('axis-y');
+    if (ysel) ysel.disabled = (m === '1d');
+    applyView();
+    var live = $('atlas-live');
+    if (live) live.textContent = m === '1d'
+      ? 'One-dimensional line view: every season on one named axis.'
+      : 'Two-dimensional map view.';
+  }
+
+  function initAxes() {
+    var sx = $('axis-x'), sy = $('axis-y');
+    if (!sx || !sy) return;
+    // Mobile-first: the 1-D line is the default on small screens.
+    if (window.matchMedia && window.matchMedia('(max-width: 560px)').matches) view.mode = '1d';
+    syncViewButtons();
+    sy.disabled = (view.mode === '1d');
+    sx.addEventListener('change', function () { onAxisChange('x', sx.value); });
+    sy.addEventListener('change', function () { onAxisChange('y', sy.value); });
+    var b2 = $('view-2d'), b1 = $('view-1d');
+    if (b2) b2.addEventListener('click', function () { setMode('2d'); });
+    if (b1) b1.addEventListener('click', function () { setMode('1d'); });
+    if (view.mode === '1d') applyView();
+    else updateAxisLabels();
+  }
+
   // ---------- boot ----------
   function fail(msg) {
     var s = $('atlas-state');
@@ -540,10 +691,11 @@
     .then(function (j) {
       P = j.players || [];
       if (!P.length) throw new Error('no rows');
+      for (var pi = 0; pi < P.length; pi++) { P[pi].px = P[pi].x; P[pi].py = P[pi].y; }
       computeBounds(); buildGrid();
       var s = $('atlas-state'); if (s) s.hidden = true;
       var count = $('atlas-count'); if (count) count.textContent = P.length.toLocaleString('en-US');
-      initSearch(); initLegend(); buildNameIndex(); initTeams();
+      initSearch(); initLegend(); buildNameIndex(); initTeams(); initAxes();
       var id = -1;
       try { var q = new URL(location.href).searchParams.get('id'); if (q != null && /^\d+$/.test(q)) id = +q; } catch (e) {}
       if (id < 0) { for (var i = 0; i < P.length; i++) if (P[i].n === FEATURED.n && P[i].s === FEATURED.s) { id = i; break; } }
