@@ -61,7 +61,19 @@ def test_export_writes_the_f32_meta_and_lineage_from_the_promoted_bundle(env):
     data, assets = env
     pm.promote(make_run(data, "r1"))
     b = pm.load_promoted()
+    assert "embedding_f32_sha256" not in b.manifest
+    before_data = {
+        p.relative_to(data).as_posix(): hashlib.sha256(p.read_bytes()).hexdigest()
+        for p in sorted(data.rglob("*"))
+        if p.is_file()
+    }
     eme.main(data_dir=data, assets=assets)
+    after_data = {
+        p.relative_to(data).as_posix(): hashlib.sha256(p.read_bytes()).hexdigest()
+        for p in sorted(data.rglob("*"))
+        if p.is_file()
+    }
+    assert after_data == before_data
 
     E = np.load(b.embedding)["E"]
     blob = (assets / sm.F32).read_bytes()
@@ -79,6 +91,18 @@ def test_export_writes_the_f32_meta_and_lineage_from_the_promoted_bundle(env):
     assert lineage["embedding_npz_sha256"] == aio.sha256_file(b.embedding)
     assert lineage["checkpoint_sha256"] == aio.sha256_file(b.checkpoint)
     assert meta["f32"] == sm.f32_url(lineage["embedding_f32_sha256"])
+    after = pm.load_promoted()
+    assert "embedding_f32_sha256" not in after.manifest
+    assert after.current == b.current
+    assert (
+        after.current["manifest_sha256"] == lineage["manifest_sha256"] == aio.sha256_file(after.dir / "manifest.json")
+    )
+    assert after.manifest["files"]["embedding"]["sha256"] == lineage["embedding_npz_sha256"]
+    side = json.loads((assets / sm.F32_LINEAGE).read_text(encoding="utf-8"))
+    assert side["embedding_f32_sha256"] == lineage["embedding_f32_sha256"]
+    assert side["promote_manifest_sha256"] == b.current["manifest_sha256"]
+    assert side["embedding_npz_sha256"] == lineage["embedding_npz_sha256"]
+    assert side["run_id"] == "r1"
 
     stamp_sidecars(assets, "r1")
     assert sm.problems(assets) == []

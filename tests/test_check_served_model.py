@@ -54,6 +54,15 @@ def problems(site: Path) -> str:
     return " | ".join(csm.check(site))
 
 
+def _rewrite_f32_sidecar(site: Path, **fields: object) -> None:
+    """Corrupt the export sidecar in assets/ and public/assets/; leave promoted/ alone."""
+    for rel in csm.SERVED_DIRS:
+        path = site / rel / sm.F32_LINEAGE
+        side = json.loads(path.read_text(encoding="utf-8"))
+        side.update(fields)
+        path.write_text(json.dumps(side), encoding="utf-8")
+
+
 def test_a_promoted_exported_bundle_passes(site, capsys):
     assert csm.check(site) == []
     assert csm.main(["--root", str(site)]) == 0
@@ -101,6 +110,55 @@ def test_a_forced_lineage_with_a_fake_checkpoint_sha_fails(site):
     why = problems(site)
     assert "forced adoption is pinned to the July v5 incumbent" in why
     assert str(lin["embedding_f32_sha256"])[:12] in why
+    assert csm.main(["--root", str(site)]) == 1
+
+
+def test_a_forced_lineage_passes_after_real_promote_then_export(site):
+    """export writes the f32 sidecar next to the f32; no hand restamp of promoted/."""
+    promoted = site / "pipeline" / "data" / "promoted"
+    current = json.loads((promoted / "CURRENT.json").read_text(encoding="utf-8"))
+    man = json.loads((promoted / current["run_id"] / "manifest.json").read_text(encoding="utf-8"))
+    side = json.loads((site / "assets" / sm.F32_LINEAGE).read_text(encoding="utf-8"))
+    f32_sha = None
+    for rel in csm.SERVED_DIRS:
+        path = site / rel / sm.LINEAGE
+        lin = json.loads(path.read_text(encoding="utf-8"))
+        f32_sha = lin["embedding_f32_sha256"]
+        lin["forced"] = True
+        lin["force_reason"] = "matching promote"
+        path.write_text(json.dumps(lin), encoding="utf-8")
+    assert "embedding_f32_sha256" not in man
+    assert side["embedding_f32_sha256"] == f32_sha
+    assert side["promote_manifest_sha256"] == current["manifest_sha256"] == lin["manifest_sha256"]
+    assert side["embedding_npz_sha256"] == man["files"]["embedding"]["sha256"] != f32_sha
+    assert csm.check(site) == []
+    assert csm.main(["--root", str(site)]) == 0
+
+
+def test_a_forced_lineage_fails_when_sidecar_f32_sha_differs(site):
+    """Valid checkpoint shas are not enough if the sidecar f32 sha is not the served one."""
+    f32_sha = None
+    for rel in csm.SERVED_DIRS:
+        path = site / rel / sm.LINEAGE
+        lin = json.loads(path.read_text(encoding="utf-8"))
+        f32_sha = lin["embedding_f32_sha256"]
+        lin["forced"] = True
+        lin["force_reason"] = "checkpoint-only promote"
+        path.write_text(json.dumps(lin), encoding="utf-8")
+    _rewrite_f32_sidecar(site, embedding_f32_sha256="b" * 64)
+    why = problems(site)
+    assert "forced adoption is pinned to the July v5 incumbent" in why
+    assert str(f32_sha)[:12] in why
+    assert f"{sm.F32_LINEAGE} records" in why
+    assert csm.main(["--root", str(site)]) == 1
+
+
+def test_a_sidecar_pointing_at_a_stale_promote_manifest_fails(site):
+    """The sidecar must name the CURRENT.json manifest, not an older promote."""
+    _rewrite_f32_sidecar(site, promote_manifest_sha256="c" * 64)
+    why = problems(site)
+    assert f"{sm.F32_LINEAGE} promote manifest sha" in why
+    assert "is not CURRENT.json's" in why
     assert csm.main(["--root", str(site)]) == 1
 
 

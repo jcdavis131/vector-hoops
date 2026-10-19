@@ -4,10 +4,12 @@ Reads the promoted bundle through promote.load_promoted(), which re-hashes
 every file against its manifest, checks every row against assets/vectors.json
 by (player_id, season), and writes:
 
-  assets/mtnn_embeddings.f32   row-major float32 (n_rows x dim)
-  assets/mtnn_meta.json        dim, rows, model, run_id, centroids, metrics
-  assets/mtnn_lineage.json     run_id, the f32's sha256, the bundle's shas,
-                               the keys sha of the served row order, metrics
+  assets/mtnn_embeddings.f32            row-major float32 (n_rows x dim)
+  assets/mtnn_meta.json                 dim, rows, model, run_id, centroids, metrics
+  assets/mtnn_lineage.json              run_id, the f32's sha256, the bundle's shas,
+                                        the keys sha of the served row order, metrics
+  assets/mtnn_embeddings.lineage.json   f32 sha, npz sha, promote manifest path + sha
+                                        (export never writes under pipeline/data)
 
 Why it changed (2026-10-09). It read pipeline/data/embedding_v3.npz and
 pipeline/data/mtnn_report.json, which on this box came from different runs
@@ -191,6 +193,7 @@ def main(data_dir: Path | None = None, assets: Path | None = None) -> None:
         "skill_hidden": report.get("skill_hidden"),
         "fusion": report.get("fusion"),
     }
+    atomic_write_bytes(assets / sm.F32, blob)
     lineage = {
         "schema": sm.LINEAGE_SCHEMA,
         "run_id": bundle.run_id,
@@ -215,12 +218,24 @@ def main(data_dir: Path | None = None, assets: Path | None = None) -> None:
         "train_git_sha": (bundle.manifest.get("train_git") or {}).get("sha"),
     }
 
-    atomic_write_bytes(assets / sm.F32, blob)
     atomic_write_json(assets / sm.META, meta, indent=2)
-    # Last: a lineage file only ever describes bytes already on disk.
+    # Last: lineage files only ever describe bytes already on disk. The f32
+    # sidecar lives next to the f32 (not under pipeline/data): promote ran
+    # first and cannot know this sha.
+    atomic_write_json(
+        assets / sm.F32_LINEAGE,
+        sm.f32_export_sidecar(
+            run_id=bundle.run_id,
+            embedding_f32_sha256=f32_sha,
+            embedding_npz_sha256=(files.get("embedding") or {}).get("sha256"),
+            promote_manifest=f"{bundle.current.get('dir') or f'promoted/{bundle.run_id}'}/manifest.json",
+            promote_manifest_sha256=str(bundle.current.get("manifest_sha256") or ""),
+        ),
+        indent=2,
+    )
     atomic_write_json(assets / sm.LINEAGE, lineage, indent=2)
     print(f"wrote {sm.F32} ({E.shape[0]}x{E.shape[1]}, {len(blob) / (1024 * 1024):.2f} MB) from run {bundle.run_id}")
-    print(f"wrote {sm.META}, {sm.LINEAGE}")
+    print(f"wrote {sm.META}, {sm.LINEAGE}, {sm.F32_LINEAGE}")
 
 
 if __name__ == "__main__":
