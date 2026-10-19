@@ -488,7 +488,7 @@ if('serviceWorker' in navigator){ window.addEventListener('load', function(){ na
   if(rec&&rec.streak>0&&rec.lastPlayedDay){
     var today=new Date().toISOString().slice(0,10);
     var d=Math.round((new Date(today+'T00:00:00Z')-new Date(rec.lastPlayedDay+'T00:00:00Z'))/86400000);
-    if(d===0) el.textContent='Your streak: '+rec.streak+(rec.streak===1?' day':' days')+' — keep it alive today.';
+    if(d===0) el.textContent='Your streak: '+rec.streak+(rec.streak===1?' day':' days')+' — solve 1 to keep it alive.';
     else if(d===1) el.textContent='Your streak: '+rec.streak+(rec.streak===1?' day':' days')+' — play today to extend it.';
   }
 }catch(e){} })();
