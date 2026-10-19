@@ -222,15 +222,6 @@
           "value": "public, max-age=0, s-maxage=60, stale-while-revalidate=300"
         }
       ],
-      "source": "/props-lab"
-    },
-    {
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=0, s-maxage=60, stale-while-revalidate=300"
-        }
-      ],
       "source": "/playoff-runs"
     }
   ],
@@ -258,10 +249,6 @@
     {
       "destination": "/insights/:slug.html",
       "source": "/insights/:slug"
-    },
-    {
-      "destination": "/props-lab.html",
-      "source": "/props-lab"
     },
     {
       "destination": "/offline.html",
@@ -300,12 +287,12 @@
     },
     {
       "source": "/dfs",
-      "destination": "/props-lab",
+      "destination": "/insights",
       "permanent": true
     },
     {
       "source": "/oracle",
-      "destination": "/props-lab",
+      "destination": "/insights",
       "permanent": true
     },
     {

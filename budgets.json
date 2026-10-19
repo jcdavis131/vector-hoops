@@ -12,85 +12,25 @@
     "insights.html": {
       "budget_bytes": 166912
     },
-    "insights/apron-casualties.html": {
-      "budget_bytes": 32768
-    },
-    "insights/careful-era.html": {
-      "budget_bytes": 32768
-    },
-    "insights/cheapest-ring.html": {
-      "budget_bytes": 32768
-    },
-    "insights/clippers-nothing-to-show.html": {
-      "budget_bytes": 32768
-    },
-    "insights/contender-chemistry.html": {
-      "budget_bytes": 32768
-    },
-    "insights/contenders-pretenders.html": {
-      "budget_bytes": 32768
-    },
-    "insights/dead-styles.html": {
-      "budget_bytes": 32768
-    },
-    "insights/fan-cost-per-win.html": {
-      "budget_bytes": 32768
-    },
     "insights/hometown-discount.html": {
       "budget_bytes": 32768
     },
     "insights/invisible-stardom.html": {
       "budget_bytes": 32768
     },
-    "insights/know-your-role.html": {
-      "budget_bytes": 32768
-    },
     "insights/love-vs-bosh.html": {
-      "budget_bytes": 32768
-    },
-    "insights/matchup-nightmares.html": {
       "budget_bytes": 32768
     },
     "insights/max-money-bargains.html": {
       "budget_bytes": 32768
     },
-    "insights/most-average.html": {
-      "budget_bytes": 32768
-    },
-    "insights/most-cited-players.html": {
-      "budget_bytes": 32768
-    },
-    "insights/most-unique.html": {
-      "budget_bytes": 32768
-    },
     "insights/paid-to-not-play.html": {
-      "budget_bytes": 32768
-    },
-    "insights/payroll-per-win.html": {
-      "budget_bytes": 32768
-    },
-    "insights/playoff-swings.html": {
       "budget_bytes": 32768
     },
     "insights/same-jersey-smaller-role.html": {
       "budget_bytes": 32768
     },
     "insights/the-summer-the-cap-broke.html": {
-      "budget_bytes": 32768
-    },
-    "insights/three-point-takeover.html": {
-      "budget_bytes": 32768
-    },
-    "insights/ticket-price-gap.html": {
-      "budget_bytes": 32768
-    },
-    "insights/time-capsule.html": {
-      "budget_bytes": 32768
-    },
-    "insights/transformed.html": {
-      "budget_bytes": 32768
-    },
-    "insights/warriors-repeater-record.html": {
       "budget_bytes": 32768
     },
     "live.html": {
@@ -110,9 +50,6 @@
     },
     "playoff-runs.html": {
       "budget_bytes": 130048
-    },
-    "props-lab.html": {
-      "budget_bytes": 148480
     },
     "taxonomy.html": {
       "budget_bytes": 135168

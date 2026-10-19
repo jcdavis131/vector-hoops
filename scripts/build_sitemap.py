@@ -9,7 +9,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 BASE = "https://hoops.dumbmodel.com"
 PAGES = ["/", "/play", "/live", "/players", "/insights", "/taxonomy",
-         "/methods", "/props-lab", "/playoff-runs"]
+         "/methods", "/playoff-runs"]
 
 
 def main():

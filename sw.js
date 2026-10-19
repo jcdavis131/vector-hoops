@@ -8,7 +8,6 @@ const CORE = [
 '/',
 '/index.html',
 '/offline.html',
-'/props-lab.html',
 '/play.html',
 '/live.html',
 '/players.html',

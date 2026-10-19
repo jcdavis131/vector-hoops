@@ -1,6 +1,6 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
 <title>Play — Daily Court — Vector Hoops</title>
-<meta name="description" content="Daily Court: five past All-Stars a day, the same five for everyone. Find each one’s closest modern twin in six guesses, or battle friends with a shared pack."/>
+<meta name="description" content="Daily Court: five past All-Stars a day, the same five for everyone. Find each one’s closest modern twin in six guesses."/>
 <link rel="manifest" href="/manifest.json"/>
 <link rel="stylesheet" href="assets/responsive.css?v=cc8e5207"/><link rel="stylesheet" href="assets/final-qa.css?v=fb603ee5"/><link rel="stylesheet" href="assets/unified.css?v=fd25e8ca"/><link rel="stylesheet" href="assets/motion.css?v=aa8dedc2"/>
 <style>
@@ -78,16 +78,6 @@ button,.input{min-height:44px}
 .progress-dot.is-done{background:var(--accent);color:var(--on-accent)}.progress-dot.is-current{background:var(--accent-wash);color:var(--accent)}
 
 /* PACK PRODUCTION */
-.pack-header{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:10px}
-.pack-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:8px}
-@media(max-width:640px){.pack-grid{grid-template-columns:1fr}}
-.pack-card{border:1px solid var(--line-2);border-radius:12px;padding:10px;background:var(--surface);box-shadow:none;position:relative;min-height:92px;display:flex;flex-direction:column;justify-content:space-between}
-.pack-card.is-active{border-color:var(--blue);background:#f0f8ff;outline:3px solid var(--yellow)}
-.pack-card.is-lost{border-color:var(--verm);background:#fef2e8}
-.pack-top{font-family:var(--mono);font-size:9px;letter-spacing:.08em;text-transform:uppercase;opacity:.6;display:flex;justify-content:space-between;gap:6px}
-.pack-name{font-weight:900;font-size:13px;line-height:1.2;margin:4px 0}
-.pack-meta{font-family:var(--mono);font-size:10px;color:var(--fg-2)}
-.pack-badge{position:absolute;top:8px;right:8px;font-size:10px}
 .battle-banner{border:1px solid var(--line-2);border-radius:12px;padding:10px 12px;background:var(--accent-wash);color:var(--accent);box-shadow:none;display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:center;margin-top:10px}
 .battle-win{background:var(--green);color:#fff}
 .battle-lose{background:var(--surface)}
@@ -134,12 +124,12 @@ button,.input{min-height:44px}
 <meta property="og:site_name" content="Vector Hoops"/>
 <meta property="og:url" content="https://hoops.dumbmodel.com/play"/>
 <meta property="og:title" content="Play — Daily Court — Vector Hoops"/>
-<meta property="og:description" content="Daily Court: five past All-Stars a day, the same five for everyone. Find each one’s closest modern twin in six guesses, or battle friends with a shared pack."/>
+<meta property="og:description" content="Daily Court: five past All-Stars a day, the same five for everyone. Find each one’s closest modern twin in six guesses."/>
 <meta property="og:image" content="https://hoops.dumbmodel.com/assets/og-1200x630.png"/>
 <meta property="og:image:width" content="1200"/><meta property="og:image:height" content="630"/>
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:title" content="Play — Daily Court — Vector Hoops"/>
-<meta name="twitter:description" content="Daily Court: five past All-Stars a day, the same five for everyone. Find each one’s closest modern twin in six guesses, or battle friends with a shared pack."/>
+<meta name="twitter:description" content="Daily Court: five past All-Stars a day, the same five for everyone. Find each one’s closest modern twin in six guesses."/>
 <meta name="twitter:image" content="https://hoops.dumbmodel.com/assets/og-1200x630.png"/>
 <link rel="stylesheet" href="assets/fonts.css?v=8f376b2a"/>
 <link rel="stylesheet" href="/assets/atlas.css?v=e1eef2c7"/>
@@ -195,20 +185,20 @@ button,.input{min-height:44px}
 .mode-head__note{ font-size: 12.5px; color: var(--fg-2); }
 .mode-desc{ max-width: 70ch; text-align: center; font-size: 13px; line-height: 1.6; color: var(--fg-2); background: none; border: 0; padding: 0; margin: 0; }
 #daily-court{ background: var(--surface); border-width: 1px; }
-.court-card, .pack-card{ background: var(--surface-2); border: 1px solid var(--line); border-radius: var(--radius-lg); transition: border-color var(--dur-1) var(--ease), transform var(--dur-2) var(--ease); }
+.court-card{ background: var(--surface-2); border: 1px solid var(--line); border-radius: var(--radius-lg); transition: border-color var(--dur-1) var(--ease), transform var(--dur-2) var(--ease); }
 .court-card:hover{ border-color: var(--line-2); transform: none; }
-.court-card.is-active, .pack-card.is-active{ background: var(--surface-2); border-color: var(--accent); outline: 0; box-shadow: inset 0 0 0 1px var(--accent); }
-.court-card.is-solved, .pack-card.is-won{ background: color-mix(in srgb, var(--ok) 10%, var(--surface-2)); border-color: color-mix(in srgb, var(--ok) 55%, transparent); }
-.court-card.is-failed, .pack-card.is-lost{ background: color-mix(in srgb, var(--bad) 8%, var(--surface-2)); border-color: color-mix(in srgb, var(--bad) 45%, transparent); opacity: 1; }
-.court-slot, .pack-top{ font-family: var(--font-display); font-stretch: 112%; letter-spacing: .14em; font-weight: 600; font-size: 11px; color: var(--fg-3); opacity: 1; }
+.court-card.is-active{ background: var(--surface-2); border-color: var(--accent); outline: 0; box-shadow: inset 0 0 0 1px var(--accent); }
+.court-card.is-solved{ background: color-mix(in srgb, var(--ok) 10%, var(--surface-2)); border-color: color-mix(in srgb, var(--ok) 55%, transparent); }
+.court-card.is-failed{ background: color-mix(in srgb, var(--bad) 8%, var(--surface-2)); border-color: color-mix(in srgb, var(--bad) 45%, transparent); opacity: 1; }
+.court-slot{ font-family: var(--font-display); font-stretch: 112%; letter-spacing: .14em; font-weight: 600; font-size: 11px; color: var(--fg-3); opacity: 1; }
 /* Suit tag: the card-suit category of the slot's past target (Honors = All-Star/All-NBA/Finals MVP season;
    Style = rare play style; Team = leader/key contributor; Era = fallback). Rendered as a chip so it
    never reads as part of the archetype label. */
 .suit-tag{ display: inline-block; font-family: var(--mono); font-size: 8px; font-weight: 800; letter-spacing: .12em;
   text-transform: uppercase; color: var(--accent); border: 1px solid var(--accent-line); border-radius: 999px;
   padding: 2px 7px; margin-left: 6px; vertical-align: 1px; background: var(--accent-wash); }
-.court-name, .pack-name{ font-family: var(--font-text); font-weight: 650; font-size: 14px; color: var(--fg); font-variant-numeric: tabular-nums; }
-.court-meta, .pack-meta{ font-family: var(--font-text); font-size: 12px; color: var(--fg-2); }
+.court-name{ font-family: var(--font-text); font-weight: 650; font-size: 14px; color: var(--fg); font-variant-numeric: tabular-nums; }
+.court-meta{ font-family: var(--font-text); font-size: 12px; color: var(--fg-2); }
 .lineup-chip, .reward{ font-family: var(--font-display); font-stretch: 112%; letter-spacing: .1em; font-weight: 600; font-size: 10px; text-transform: uppercase; color: var(--fg-2); background: none; border: 1px solid var(--line-2); }
 .reward.is-unlocked{ background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
 .reward.is-unlocked.gold{ background: var(--accent-wash); border-color: var(--accent-line); color: var(--accent); }
@@ -298,9 +288,6 @@ button,.input{min-height:44px}
       <button class="mode-tab is-active daily-active" data-mode="daily" type="button">Daily Court</button>
       <button class="mode-tab" data-mode="triple" type="button">Daily Triple</button>
       <button class="mode-tab" data-mode="random" type="button">Random</button>
-      <button class="mode-tab" data-mode="pack1" data-pack-n="1" type="button">Solo · 1</button>
-      <button class="mode-tab" data-mode="pack3" data-pack-n="3" type="button">Pack · 3</button>
-      <button class="mode-tab" data-mode="pack5" data-pack-n="5" type="button">Full · 5</button>
     </div>
     <div class="mode-desc" id="mode-desc">Daily Court: 5 fixed puzzles per day, same for everyone — refresh can't reroll. Play any order; progress saves per slot. Solve 1 to save your streak, 3+ for the bonus streak.</div>
   </div>
@@ -323,10 +310,9 @@ button,.input{min-height:44px}
   <div id="lens-bar"></div>
   <div id="map-wrap"><canvas id="sky-canvas" width="640" height="380" aria-label="12,966 player-seasons as points in a rotatable 3D stat-shape map — your guesses draw as orange rings connected by a line to the past target's bullseye, showing how close each guess landed"></canvas><div id="target-badge" style="position:absolute;left:0;top:0;transform:translate(-50%,-140%);background:var(--accent-wash);color:var(--accent);border:1px solid var(--line-2);border-radius:999px;padding:5px 10px;font-family:ui-monospace,monospace;font-size:10px;font-weight:900;box-shadow:none;z-index:4;display:none;pointer-events:none;white-space:nowrap">★ TARGET</div><div id="map-overlay"><span class="chip" id="map-fact">12,966 player-seasons • ★ target past</span><span class="chip">orange rings = your guesses • line = distance • ◎ bullseye = target</span></div><div id="map-controls"><button class="chip pill" id="btn-pause" type="button">Pause</button><button class="chip pill" id="btn-reset" type="button">Reset</button></div><div id="map-legend"><div style="font-family:var(--mono);font-size:7.5px;letter-spacing:.1em;text-transform:uppercase;font-weight:900;opacity:.55;margin-bottom:4px">Map</div><div style="font-family:var(--mono);font-size:9px">Drag to orbit • ◎ bullseye = past target (auto-centered)</div></div><div id="hover-tip"></div></div>
 
-  <!-- PACK BATTLE v2 Production UI -->
-  <div class="card" id="pack-progress" style="display:none;"></div>
-  <div class="card" id="pack-summary" style="display:none;border-width:2.5px"></div>
-  <div class="card" id="pack-invalid" style="display:none;border-color:var(--verm);border-width:2.5px"></div>
+  <!-- PACK BATTLE retired: old ?pack= links render an honest note here, not pack mode -->
+  <div class="card" id="pack-retired" style="display:none;"></div>
+  <div class="card" id="boot-error" style="display:none;border-color:var(--verm);border-width:2.5px"></div>
 
   <div class="card" id="past-card" style="border-width:2.5px">
     <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:flex-start">
@@ -366,13 +352,10 @@ button,.input{min-height:44px}
 
 <div id="onboarding-backdrop" class="vh-sheet-backdrop" hidden>
   <div class="vh-sheet" role="dialog" aria-modal="true"><div class="vh-sheet__handle"></div>
-    <div class="vh-sheet__head"><h2 class="vh-sheet__title">How to play — guess the star</h2><button class="vh-sheet__close" id="btn-onboard-close" type="button" aria-label="Close">✕</button></div>
-    <div class="small-mono" style="margin-bottom:8px;color:var(--fg-2)">6 guesses · warmer/colder · daily puzzles + pack battles</div>
+    <div class="vh-sheet__head"><h2 class="vh-sheet__title">Daily Court — 5× daily</h2><button class="vh-sheet__close" id="btn-onboard-close" type="button" aria-label="Close">✕</button></div>
+    <div class="small-mono" style="margin-bottom:8px;color:var(--fg-2)">5 puzzles daily, same for everyone</div>
     <div class="onboard-steps">
-      <div class="onboard-step"><span class="onboard-step__num">1</span><div><b>Guess the mystery star in 6 tries</b><p>Type a modern player's name. Each guess shows a <b>similarity %</b> — how close their playing style is to the mystery star (cosine × 100, era-adjusted across decades) — and a <b>rank</b> among all 12,966 seasons. Higher % = warmer. Hit 100% to win the slot.</p></div></div>
-      <div class="onboard-step"><span class="onboard-step__num">2</span><div><b>Daily Court: 5 fixed past All-Stars per day, same for everyone</b><p>Deterministic from date: hash(date+slot). Refresh gives same 5. Guesses saved per slot in localStorage. Can't be rerolled. Solve 1 to keep your streak alive.</p></div></div>
-      <div class="onboard-step"><span class="onboard-step__num">3</span><div><b>Lifelines when you're stuck</b><p>🔭 <b>Twin Reveal</b> spotlights the mystery star's 3 nearest twins on the map. 🕰 <b>Era Lock</b> reveals the decade (−1 guess). One use each per slot.</p></div></div>
-      <div class="onboard-step"><span class="onboard-step__num">4</span><div><b>Pack Battle: 1, 3 or 5 random All-Stars — same link for friends</b><p><code>?pack=672-123-456</code> = identical pack for everyone. Share link, friends get same stars. Add <code>&s=2-3-0</code> to include your scores (0=fail). Battle: who solves more in fewer guesses?</p></div></div>
+      <div class="onboard-step"><span class="onboard-step__num">1</span><div><b>Daily Court: 5 fixed past All-Stars per day, same for everyone</b><p>Deterministic from date: hash(date+slot). Refresh gives same 5. Guesses saved per slot in localStorage. Can't be rerolled.</p></div></div>
     </div>
     <div style="display:flex;gap:10px;margin-top:12px;flex-wrap:wrap"><button class="btn btn-primary" id="btn-onboard-play" type="button">▶ Play Court</button><button class="btn" id="btn-onboard-random" type="button">🎲 Random</button></div>
   </div>
@@ -381,12 +364,11 @@ button,.input{min-height:44px}
 <canvas id="confetti-canvas" class="confetti" style="display:none" aria-hidden="true"></canvas>
 <script src="assets/error-boundary.js?v=8079215c"></script>
 <script src="assets/keyboard-a11y.js?v=39777a87"></script>
-<script src="assets/site-nav.js?v=c12413c4" defer></script>
-<script src="assets/pwa-install.js?v=b954d9d1"></script><script src="assets/audio.js?v=52cfa0d8"></script><script type="module" src="assets/timesfm-forecast.js?v=259274e6"></script><script src="assets/pixel-avatar.js?v=6216d2ba"></script><script src="assets/team-logo.js?v=864a7981"></script><script src="assets/viral-share.js?v=245316b8"></script><script src="assets/daily-ledger.js?v=STAMP"></script><script src="assets/past-modern-game.js?v=d9a56177"></script><script src="/assets/served-constants.js?v=8ba12340"></script>
-<script src="/assets/twin-bands.js?v=0a191313"></script><script src="/assets/twin-explainer.js?v=9f5b2d4d"></script>
+<script src="assets/site-nav.js?v=c9bfba02" defer></script>
+<script src="assets/pwa-install.js?v=b954d9d1"></script><script src="assets/audio.js?v=52cfa0d8"></script><script type="module" src="assets/timesfm-forecast.js?v=259274e6"></script><script src="assets/pixel-avatar.js?v=6216d2ba"></script><script src="assets/team-logo.js?v=864a7981"></script><script src="assets/viral-share.js?v=1c47ba19"></script><script src="assets/past-modern-game.js?v=6c5f0d14"></script><script src="/assets/twin-bands.js?v=d8e155bd"></script><script src="/assets/twin-explainer.js?v=758a0b6c"></script>
 <script src="assets/map-lenses.js?v=656e8d30"></script>
 <script src="assets/game-mechanics.js?v=e49ec57f"></script>
-<script src="assets/play-engine.js?v=8d95c86c"></script>
+<script src="assets/play-engine.js?v=edfb4dd7"></script>
 <section aria-label="More ways to play" style="max-width:880px;margin:34px auto 0;padding:0 18px;text-align:center">
   <p class="small-mono" style="text-transform:none;opacity:.85">One court, every mode: the Daily five, the Triple, endless Random and the Pack</p>
 </section>
@@ -403,7 +385,7 @@ button,.input{min-height:44px}
       <a href="/players">Players</a>
       <a href="/insights">Insights</a>
       <a href="/playoff-runs">Playoff Runs</a>
-      <a href="/props-lab">Props Lab</a>
+
       <a href="/taxonomy">Taxonomy</a>
       <a href="/methods">Methods</a>
     </div>
