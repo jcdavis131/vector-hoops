@@ -285,17 +285,6 @@
   function loadGuesses(){
     try{
       const st=VHPastModern.state();
-      if(st.isPack){
-        // load from state (restored from storage includes currentGuesses)
-        if(st.guesses && st.guesses.length) return st.guesses.slice();
-        // also check LS for in-progress if state empty (fallback)
-        const code = st.packCode;
-        if(code){
-          const raw = localStorage.getItem('vh.pack.'+code);
-          if(raw){ const j=JSON.parse(raw); if(Array.isArray(j.currentGuesses)) return j.currentGuesses; }
-        }
-        return [];
-      }
       if(st.isDaily||st.isChallenge){
         const k=dailySlotKey(st.dayKey, st.dailySlot||0);
         const raw=localStorage.getItem(k);
@@ -311,24 +300,12 @@
   function saveGuesses(){
     try{
       const st=VHPastModern.state();
-      if(st.isPack){
-        // persist current guesses for this pack slot
-        statePackSaveGuesses();
-        return;
-      }
       if(st.isDaily||st.isChallenge){
         const k=dailySlotKey(st.dayKey, st.dailySlot||0);
         localStorage.setItem(k, JSON.stringify({day:st.dayKey, slot:st.dailySlot, guesses:G.guesses}));
       } else {
         localStorage.setItem('vh.pastmodern.v10', JSON.stringify({day:st.dayKey, guesses:G.guesses}));
       }
-    }catch{}
-  }
-  function statePackSaveGuesses(){
-    try{
-      const st=VHPastModern.state();
-      st.guesses = G.guesses.slice();
-      if(window.VHPastModern && VHPastModern.savePackState) VHPastModern.savePackState();
     }catch{}
   }
   // sound toggle — persisted mute, reflects state on the button
@@ -359,7 +336,6 @@
   function renderDailyCourt(){
     const grid=$('#court-grid'), label=$('#court-day-label'), solvedEl=$('#court-solved'), guessesEl=$('#court-guesses'), lineupBar=$('#lineup-bar'), ipBadge=$('#court-ip-badge');
     const st=VHPastModern.state(); if(!st.dailyPool||!st.dailyPool.length){ $('#daily-court').style.display='none'; return; }
-    if(st.isPack){ $('#daily-court').style.display='none'; return; }
     $('#daily-court').style.display='block';
     if(label) label.textContent=st.dayKey;
     if(ipBadge) ipBadge.textContent = st.ip ? `Slot ${st.dailyAssignedSlot!=null?st.dailyAssignedSlot+1:'?'} • same for everyone` : 'Same for everyone • refresh-proof';
@@ -428,200 +404,17 @@
     }
   }
 
-  // --- PACK BATTLE PROD ---
-  // escHtml: packInvalidRaw comes straight from the ?pack= query string — never
-  // interpolate it into innerHTML raw (reflected XSS via a crafted share link)
-  function escHtml(s){ return String(s==null?'':s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
-  function renderPackInvalid(){
-    const el=$('#pack-invalid'); const st=VHPastModern.state();
-    if(!st.packInvalid){ el.style.display='none'; return; }
+  // --- PACK BATTLE RETIRED ---
+  // Pack Battle was retired (subtraction pass, Oct 2026). Old ?pack= links
+  // land here instead of launching pack mode — an honest note, not a 404.
+  function renderPackRetired(){
+    const el=$('#pack-retired'); const st=VHPastModern.state();
+    if(!st.packRetired){ el.style.display='none'; return; }
     el.style.display='block';
     el.innerHTML=`<div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:flex-start">
-      <div><div class="small-mono" style="color:var(--verm)">⚠️ Invalid pack link</div><h3 class="hd" style="margin:6px 0">Couldn't load pack <code>${escHtml((st.packInvalidRaw||'').slice(0,64))}</code></h3><div style="font-size:13px;line-height:1.5">Pack must be past All-Star IDs (1996-2023, All-Star seasons). Example: <code>?pack=672-1234-456</code>. Generate a new one.</div></div>
-      <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn btn-primary" id="btn-pack-fix-3">🔥 New Triple 3</button><button class="btn" id="btn-pack-fix-5">🏀 Full 5</button></div>
+      <div><div class="small-mono" style="opacity:.6">Retired surface</div><h3 class="hd" style="margin:6px 0">Pack Battle is gone</h3><div style="font-size:13px;line-height:1.5">One daily ritual, one map behind it. Daily Court — five past All-Stars, the same five for everyone — is the game now.</div></div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap"><a class="btn btn-primary" href="/play">Play Daily Court</a></div>
     </div>`;
-    el.querySelector('#btn-pack-fix-3')?.addEventListener('click',()=>{ const entries=VHPastModern.generateRandomPack(3); location.href=VHPastModern.packShareUrl(entries.map(e=>e.i)); });
-    el.querySelector('#btn-pack-fix-5')?.addEventListener('click',()=>{ const entries=VHPastModern.generateRandomPack(5); location.href=VHPastModern.packShareUrl(entries.map(e=>e.i)); });
-  }
-
-  function renderPackProgress(){
-    const el=$('#pack-progress'); const st=VHPastModern.state();
-    if(!st.isPack){ el.style.display='none'; return; }
-    const ps=VHPastModern.getPackState();
-    const battle=VHPastModern.getPackBattleSummary();
-    el.style.display='block';
-
-    const size = ps.size;
-    const idx = ps.index;
-    const solved = ps.solved;
-    const progress = ps.progress;
-    const chall = ps.challengerScores||[];
-    const hasChallenger = chall.length>0;
-
-    // header
-    let header = `<div class="pack-header"><div><div class="small-mono" style="display:flex;gap:6px;align-items:center"><span class="pill" style="background:var(--accent);color:var(--on-accent)">📦 PACK BATTLE</span><span class="pill pill-yellow">${size} PACK</span><span class="pill">${solved}/${size} solved • ${idx+1}/${size}</span>${hasChallenger?`<span class="pill pill-blue">vs Friend ${chall.filter(s=>s>0).length}/${size}</span>`:''}</div><h3 class="hd" style="margin:6px 0 0;font-size:20px">Pack ${size===1?'Solo ⚡':size===3?'Triple 🔥':'Full Court 🏀'} — ${progress}/${size} played</h3><div style="font-size:12px;color:var(--fg-2)">Code <code>${ps.code.slice(0,42)}</code> • Same link = same All-Stars for friends • Refresh-proof</div></div><div style="display:flex;gap:6px;flex-wrap:wrap"><button class="pill" id="btn-pack-copy-link" type="button">📋 Copy pack link</button><button class="pill" id="btn-pack-abandon" type="button">✕ Exit pack</button></div></div>`;
-
-    // dots
-    let dotsHtml = `<div class="progress-dots" style="margin:8px 0 10px">`;
-    for(let i=0;i<size;i++){
-      const r = ps.results[i];
-      let cls='progress-dot'; let txt=i+1;
-      if(r){ if(r.won){ cls+=' is-done'; txt='✓'; } else { cls+=' is-done'; txt='✗'; } }
-      if(i===idx) cls+=' is-current';
-      dotsHtml+=`<span class="${cls}" title="${ps.entries[i]?ps.entries[i].n:''}">${txt}</span>`;
-    }
-    dotsHtml+=`</div>`;
-
-    // grid
-    let grid = `<div class="pack-grid">`;
-    for(let i=0;i<size;i++){
-      const e = ps.entries[i];
-      const r = ps.results[i];
-      const challScore = chall[i];
-      const isActive = i===idx;
-      let cls='pack-card'; let badge='⏳'; let meta='Not started';
-      if(isActive) cls+=' is-active';
-      if(r){
-        if(r.won){ cls+=' is-won'; badge=`✅ ${r.count}/6`; meta=`Won in ${r.count} • ${r.guesses && r.guesses[r.guesses.length-1]? r.guesses[r.guesses.length-1].name : ''}`; }
-        else { cls+=' is-lost'; badge=`❌ ${r.count}/6`; meta=`Failed • answer ${VHPastModern.state().closestModern && isActive ? VHPastModern.state().closestModern.entry.n : '—'}`; }
-      } else if(isActive){
-        badge=`▶ NOW`; meta=`${G.guesses.length}/6 used • ${ARCH[e.c%ARCH.length]}`;
-      }
-      const challText = (hasChallenger && typeof challScore==='number') ? (challScore>0 ? `Friend: ✅ ${challScore}/6` : `Friend: ❌`) : '';
-      grid+=`<div class="${cls}" data-pack-i="${i}"><div class="pack-top"><span>Slot ${i+1}</span><span>${ARCH[e.c%ARCH.length]}</span></div><div class="pack-name">${e.n} ${e.s}</div><div class="pack-meta">${meta}${challText?`<br><span style="opacity:.8">${challText}</span>`:''}</div><span class="pack-badge pill ${r&&r.won?'pill-green':''}">${badge}</span></div>`;
-    }
-    grid+=`</div>`;
-
-    // battle banner if has challenger and any progress
-    let battleHtml='';
-    if(hasChallenger){
-      const bs = battle;
-      let resultText='Battle vs friend';
-      let bannerCls='battle-banner battle-tie';
-      if(bs){
-        if(bs.isTie) { resultText=`🤝 Tie — ${bs.selfSolved}/${size} vs ${bs.challSolved}/${size} — ${bs.selfTotal} vs ${bs.challTotal} guesses`; bannerCls='battle-banner battle-tie'; }
-        else if(bs.selfWins) { resultText=`🏆 You lead — ${bs.selfSolved}/${size} (${bs.selfTotal} guesses) vs ${bs.challSolved}/${size} (${bs.challTotal})`; bannerCls='battle-banner battle-win'; }
-        else { resultText=`😤 Friend leads — ${bs.challSolved}/${size} (${bs.challTotal}) vs ${bs.selfSolved}/${size} (${bs.selfTotal})`; bannerCls='battle-banner battle-lose'; }
-      }
-      battleHtml=`<div class="${bannerCls}"><b>${resultText}</b><span class="small-mono" style="text-transform:none">Share with &s= scores to battle. 0=fail</span></div>`;
-    } else {
-      battleHtml=`<div class="small-mono" style="margin-top:10px;opacity:.6;text-transform:none">Tip: Finish pack, then share link with your scores (add &s=) — friends play same pack and try to beat you. Streak-safe, refresh keeps progress.</div>`;
-    }
-
-    el.innerHTML = header+dotsHtml+grid+battleHtml;
-
-    // interactions
-    el.querySelectorAll('.pack-card').forEach(card=>{
-      card.addEventListener('click',()=>{
-        const i=parseInt(card.dataset.packI,10);
-        if(isNaN(i)) return;
-        // allow jumping to already played or current? For production, allow jump to any completed or current, but not future locked? We'll allow jump to any completed or current to review, but not future unplayed to avoid cheat? Actually allow.
-        if(i>ps.results.filter(Boolean).length && i!==idx) {
-          // future locked - show toast but allow? We'll block
-          // allow only if <= progress or is current
-          if(i>progress && i!==idx) return;
-        }
-        // switch target
-        try{ if(window.VHAudio) VHAudio.play('click'); }catch{}
-        const st2=VHPastModern.state();
-        // save current guesses first
-        statePackSaveGuesses();
-        // if switching away from active unfinished, keep its in-progress guesses in memory via save
-        st2.packIndex = i;
-        st2.target = st2.packEntries[i];
-        st2.targetIdx = st2.target.i;
-        // load guesses for that slot: if result exists, show its guesses, else load currentGuesses if was active
-        const res = st2.packResults[i];
-        if(res && res.guesses){
-          G.guesses = res.guesses.slice();
-          st2.guesses = G.guesses.slice();
-        } else {
-          // check if this slot had in-progress saved in overall storage
-          try{
-            const raw = localStorage.getItem('vh.pack.'+st2.packCode);
-            if(raw){ const j=JSON.parse(raw); if(j.index===i && Array.isArray(j.currentGuesses) && !res){ G.guesses=j.currentGuesses.slice(); st2.guesses=G.guesses.slice(); } else { G.guesses=[]; st2.guesses=[]; } }
-            else { G.guesses=[]; st2.guesses=[]; }
-          }catch{ G.guesses=[]; st2.guesses=[]; }
-          if(i!==idx && !res){ G.guesses=[]; st2.guesses=[]; }
-        }
-        try{ VHPastModern.computeClosest(); }catch{}
-        VHPastModern.savePackState();
-        renderPast(); renderGuesses(); renderPackProgress(); renderPackSummary(); updateStatusBar(); projectFrame(); draw();
-        window.scrollTo({top: $('#past-card').offsetTop-20, behavior:'smooth'});
-      });
-    });
-
-    const copyBtn = el.querySelector('#btn-pack-copy-link');
-    if(copyBtn){
-      copyBtn.addEventListener('click', async()=>{
-        const url = VHPastModern.packChallengeUrl(ps.ids);
-        try{ await navigator.clipboard.writeText(url); copyBtn.textContent='Copied!'; setTimeout(()=>copyBtn.textContent='📋 Copy pack link',1200); }catch{ prompt('Copy link', url); }
-      });
-    }
-    const abandonBtn = el.querySelector('#btn-pack-abandon');
-    if(abandonBtn){
-      abandonBtn.addEventListener('click', ()=>{
-        if(confirm('Exit pack? Progress stays saved for this link but you will return to Daily Court.')){
-          VHPastModern.abandonPack();
-          location.href='/play';
-        }
-      });
-    }
-  }
-
-  function renderPackSummary(){
-    const el=$('#pack-summary'); const st=VHPastModern.state();
-    if(!st.isPack){ el.style.display='none'; return; }
-    const ps=VHPastModern.getPackState();
-    if(!ps.complete && ps.progress < ps.size){ el.style.display='none'; return; }
-    // complete -> show summary
-    el.style.display='block';
-    const battle=VHPastModern.getPackBattleSummary();
-    const solved = ps.solved;
-    const total = ps.size;
-    const totalGuesses = ps.totalGuesses;
-    const avg = ps.avg.toFixed(1);
-    const avgWin = ps.avgWin ? ps.avgWin.toFixed(1) : '—';
-    const hasChall = battle && battle.hasChallenger;
-
-    let title = solved===total ? `🏆 Pack Perfect ${solved}/${total}` : solved>=Math.ceil(total/2) ? `🔥 Pack Won ${solved}/${total}` : `📦 Pack Complete ${solved}/${total}`;
-    let battleBlock='';
-    if(hasChall){
-      if(battle.isTie) battleBlock=`<div class="battle-banner battle-tie"><b>🤝 Tie vs Friend</b> — you ${battle.selfSolved}/${total} in ${battle.selfTotal} • friend ${battle.challSolved}/${total} in ${battle.challTotal}</div>`;
-      else if(battle.selfWins) battleBlock=`<div class="battle-banner battle-win"><b>🏆 You Beat Friend!</b> — ${battle.selfSolved}/${total} (${battle.selfTotal}) vs ${battle.challSolved}/${total} (${battle.challTotal})</div>`;
-      else battleBlock=`<div class="battle-banner battle-lose"><b>😤 Friend Wins — Rematch?</b> — friend ${battle.challSolved}/${total} (${battle.challTotal}) vs you ${battle.selfSolved}/${total} (${battle.selfTotal})</div>`;
-    }
-
-    const rows = ps.entries.map((e,i)=>{
-      const r=ps.results[i];
-      const challScore = (ps.challengerScores||[])[i];
-      const you = r ? (r.won ? `✅ ${r.count}/6 — ${r.guesses.find(g=>g.rank===0)?.name || ''}` : `❌ ${r.count}/6`) : '—';
-      const friend = (hasChall && typeof challScore==='number') ? (challScore>0?`✅ ${challScore}/6`:`❌`) : '—';
-      return `<div style="display:flex;justify-content:space-between;gap:8px;border-bottom:1px dashed var(--line);padding:6px 0"><span><b>${i+1}. ${e.n} ${e.s}</b></span><span style="font-family:var(--mono);font-size:11px">${you} ${hasChall?`| Friend: ${friend}`:''}</span></div>`;
-    }).join('');
-
-    el.innerHTML=`<div><div class="small-mono" style="display:flex;gap:6px;align-items:center"><span class="pill" style="background:var(--accent);color:var(--on-accent)">PACK FINAL</span><span class="pill pill-yellow">${solved}/${total} solved</span><span class="pill">${totalGuesses} guesses • avg ${avg}</span></div><h3 class="hd" style="margin:8px 0 6px;font-size:24px">${title}</h3><div style="font-size:13px;line-height:1.5">Total ${totalGuesses} guesses • Avg ${avg} overall • Avg win ${avgWin} • Code ${ps.code.slice(0,48)}</div>${battleBlock}<div style="margin-top:10px">${rows}</div><div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px"><button class="btn btn-primary" id="btn-pack-share-img">📸 Share Pack Image</button><button class="btn" id="btn-pack-copy-battle">📋 Copy Battle Link (with scores)</button><button class="btn" id="btn-pack-replay">🔁 Replay Same Pack</button><button class="btn" id="btn-pack-new" type="button">🎲 New ${total} Pack</button><button class="btn" id="btn-pack-daily">🏀 Daily Court</button></div></div>`;
-
-    el.querySelector('#btn-pack-share-img')?.addEventListener('click', async()=>{
-      const ps2=VHPastModern.getPackState();
-      const opts={size:ps2.size, packEntries:ps2.entries, results:ps2.results, solved:ps2.solved, totalGuesses:ps2.totalGuesses, avg:ps2.avg, packCode:ps2.code, ids:ps2.ids};
-      if(window.VHShare && VHShare.sharePack){ const res=await VHShare.sharePack(opts); if(res==='copied') { const b=el.querySelector('#btn-pack-share-img'); b.textContent='Copied text!'; setTimeout(()=>b.textContent='📸 Share Pack Image',1200); } }
-    });
-    el.querySelector('#btn-pack-copy-battle')?.addEventListener('click', async()=>{
-      const ps2=VHPastModern.getPackState();
-      const selfScores = ps2.results.map(r=> r ? (r.won? r.count:0):0);
-      const url = VHPastModern.packShareUrl(ps2.ids, selfScores);
-      try{ await navigator.clipboard.writeText(url); const b=el.querySelector('#btn-pack-copy-battle'); b.textContent='Copied!'; setTimeout(()=>b.textContent='📋 Copy Battle Link (with scores)',1400); }catch{ prompt('Copy', url); }
-    });
-    el.querySelector('#btn-pack-replay')?.addEventListener('click', ()=>{
-      VHPastModern.resetCurrentPack();
-      G.guesses=[]; renderPast(); renderGuesses(); renderPackProgress(); renderPackSummary(); updateStatusBar(); projectFrame(); draw();
-      window.scrollTo({top: $('#past-card').offsetTop-20, behavior:'smooth'});
-    });
-    el.querySelector('#btn-pack-new')?.addEventListener('click', ()=>{
-      const n=ps.size; const entries=VHPastModern.generateRandomPack(n); location.href=VHPastModern.packShareUrl(entries.map(e=>e.i));
-    });
-    el.querySelector('#btn-pack-daily')?.addEventListener('click', ()=>{ location.href='/play'; });
   }
 
   function updateStatusBar(){
@@ -639,8 +432,7 @@
     // place that can also swap the "slot"/"pack" prefix word), so the
     // textContent branch was pure redundant DOM churn on every guess.
     if(slotWrap){
-      if(st.isPack) slotWrap.innerHTML=`pack <span id="slot-label">${st.packIndex+1}</span>/${st.packSize}`;
-      else slotWrap.innerHTML=`slot <span id="slot-label">${st.dailySlot!=null?st.dailySlot+1:1}</span>/5`;
+      slotWrap.innerHTML=`slot <span id="slot-label">${st.dailySlot!=null?st.dailySlot+1:1}</span>/5`;
     }
     if(dots){
       dots.innerHTML='';
@@ -654,36 +446,25 @@
     const won=G.guesses.some(g=>g.rank===0); const over=won||count>=6;
     const safeSlotDaily = (st.dailySlot!=null ? st.dailySlot+1 : 1);
     if(phase){
-      if(st.isPack){
-        const ps=VHPastModern.getPackState();
-        phase.textContent= over? (won? `Pack ${ps.index+1}/${ps.size} won in ${count}/6`:`Pack ${ps.index+1}/${ps.size} failed`) : `Pack Battle ${ps.code.slice(0,24)} • ${ps.index+1}/${ps.size} • ${count}/6 • vs friends`;
-      } else if(st.isDaily) phase.textContent= over? (won? `Slot ${safeSlotDaily} won in ${count}/6`:`Slot ${safeSlotDaily} failed`) : `Slot ${safeSlotDaily}/5 • ${count}/6 • same 5 for everyone today`;
+      if(st.isDaily) phase.textContent= over? (won? `Slot ${safeSlotDaily} won in ${count}/6`:`Slot ${safeSlotDaily} failed`) : `Slot ${safeSlotDaily}/5 • ${count}/6 • same 5 for everyone today`;
       else if(over) phase.textContent=won? `Won in ${count}/6`:'Game over';
       else phase.textContent = count===0? 'See model lens' : `Playing — ${count}/6 used`;
     }
     // subset map stays visible — was ready-banner
     /* syncSubsetFromState removed — it was defined nowhere (its partner subset-map.js is deleted); the calls threw a swallowed ReferenceError */
     const turnText=$('#turn-text'); if(turnText){
-      if(st.isPack){
-        const ps=VHPastModern.getPackState();
-        if(ps.complete) turnText.textContent=`Pack ${ps.solved}/${ps.size} • Final summary below`;
-        else if(over) turnText.textContent=won? `Won in ${count} — Next pack slot` : `Failed — answer was ${st.closestModern?st.closestModern.entry.n:'?'}`;
-        else if(count===0) turnText.textContent=`Pack ${ps.index+1}/${ps.size} • ${st.target?st.target.n:'…'} • model lens shows teammates`;
-        else turnText.textContent=`Guess ${count}/6 used — ${6-count} left — Pack ${ps.index+1}/${ps.size}`;
-      } else {
-        if(over) turnText.textContent=won? `Won in ${count} — switch slot for next` : `Failed — answer was ${st.closestModern?st.closestModern.entry.n:'?'}`;
-        else if(count===0) turnText.textContent=`Model lens: ${st.target?st.target.n:'…'} archetype • team logo shows ${(()=>{try{return st.target? (getTeamAbbr(st.target.n,st.target.s)||'team'):'team'}catch{return 'team'}})()} • picks left`;
-        else turnText.textContent=`Guess ${count}/6 used — ${6-count} left`;
-      }
+      if(over) turnText.textContent=won? `Won in ${count} — switch slot for next` : `Failed — answer was ${st.closestModern?st.closestModern.entry.n:'?'}`;
+      else if(count===0) turnText.textContent=`Model lens: ${st.target?st.target.n:'…'} archetype • team logo shows ${(()=>{try{return st.target? (getTeamAbbr(st.target.n,st.target.s)||'team'):'team'}catch{return 'team'}})()} • picks left`;
+      else turnText.textContent=`Guess ${count}/6 used — ${6-count} left`;
     }
   }
 
   function renderPast(){
     const st=VHPastModern.state(); const past=st.target; if(!past) return;
-    const slotNum = st.isPack ? (st.packIndex+1) : (st.dailySlot!=null ? st.dailySlot+1 : 1);
-    const totalSlots = st.isPack ? st.packSize : 5;
+    const slotNum = (st.dailySlot!=null ? st.dailySlot+1 : 1);
+    const totalSlots = 5;
     const archLabel = ARCH[past.c%ARCH.length];
-    const modeLabel = st.isPack ? `PACK ${slotNum}/${totalSlots}` : `Slot ${slotNum}/${totalSlots}`;
+    const modeLabel = `Slot ${slotNum}/${totalSlots}`;
     $('#past-name').textContent=past.n+' '+past.s;
     try{ markCourtReady(); }catch{}
     const hon=st.honors[past.n+'|'+past.s]||{}; const allNba=hon.allNbaTeam? 'All-NBA '+hon.allNbaTeam : '';
@@ -712,22 +493,11 @@
       }
     }catch(e){}
     try{ focusOnTarget(); projectFrame(); draw(); }catch{}
-    if(st.isPack){
-      const ps=VHPastModern.getPackState();
-      $('#puzzle-pill').textContent=`PACK ${ps.index+1}/${ps.size}`;
-      $('#mode-badge').textContent=`PACK ${ps.size}`;
-      
-      $('#header-mode-label').textContent=`PACK BATTLE • ${ps.size} × PAST → MODERN`;
-      $('#game-title').innerHTML=`Pack Battle — <em>${ps.size} cards</em>`;
-      $('#game-subtitle').textContent=`${ps.size} past All-Stars, same link for friends. Solve 1/6 each. Share with scores to battle. Refresh-proof save.`;
-      $('#mode-desc').textContent=`Pack Battle: ${ps.size} fixed past All-Stars from link ${ps.code.slice(0,36)}... — same for everyone with link. Progress saves locally, streak-safe. Share with &s= scores to challenge friends.`;
-    } else {
-      $('#puzzle-pill').textContent= st.isDaily? `COURT ${slotNum}/5` : 'P#'+st.puzzleNum;
-      $('#mode-badge').textContent= st.isDaily? 'DAILY 5' : st.isRandom? 'RANDOM' : 'DAILY';
-      $('#header-mode-label').textContent='DAILY COURT • 5× PAST → MODERN';
-    }
+    $('#puzzle-pill').textContent= st.isDaily? `COURT ${slotNum}/5` : 'P#'+st.puzzleNum;
+    $('#mode-badge').textContent= st.isDaily? 'DAILY 5' : st.isRandom? 'RANDOM' : 'DAILY';
+    $('#header-mode-label').textContent='DAILY COURT • 5× PAST → MODERN';
     updateStreakPills();
-    $('#puzzle-day-label').textContent= st.isPack ? `Pack ${st.packCode.slice(0,24)}…` : st.isDaily? `${['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][parseInt(st.dayKey.slice(5,7),10)-1]} ${parseInt(st.dayKey.slice(8,10),10)} · Daily Court · 5 puzzles` : st.dayKey;
+    $('#puzzle-day-label').textContent= st.isDaily? `${['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][parseInt(st.dayKey.slice(5,7),10)-1]} ${parseInt(st.dayKey.slice(8,10),10)} · Daily Court · 5 puzzles` : st.dayKey;
     updateStatusBar(); projectFrame(); draw();
   }
   function renderGuesses(){
@@ -782,8 +552,8 @@
   // already-solved slot must not replay the fanfare or touch the streak
   function finish(opts){
     opts=opts||{}; const celebrateNew=opts.celebrate===true;
-    const won=G.guesses.some(g=>g.rank===0); const locksUsed=(window.VHGameMechanics&&VHGameMechanics.eraLocksUsed)?VHGameMechanics.eraLocksUsed():0; const over=won||G.guesses.length>=(6-locksUsed); const resEl=$('#result'); let st=VHPastModern.state(); const isPack=!!st.isPack;
-    if(!over){ resEl.innerHTML=''; resEl.style.display='none'; updateStatusBar(); renderDailyCourt(); renderPackProgress(); renderPackSummary(); return; }
+    const won=G.guesses.some(g=>g.rank===0); const locksUsed=(window.VHGameMechanics&&VHGameMechanics.eraLocksUsed)?VHGameMechanics.eraLocksUsed():0; const over=won||G.guesses.length>=(6-locksUsed); const resEl=$('#result'); let st=VHPastModern.state();
+    if(!over){ resEl.innerHTML=''; resEl.style.display='none'; updateStatusBar(); renderDailyCourt(); return; }
     resEl.style.display='block';
     // harden: embeddings may still be loading → closest null would crash (repro for "breaks when i guess")
     // If ranking isn't ready, the fallback (alphabetical, 0% sim) is NOT valid — wait for real data.
@@ -823,73 +593,6 @@
     }
     var twinLinksHtml=twinLinks();
 
-    if(isPack){
-      const ps=VHPastModern.getPackState();
-      // save result for current slot if not already saved (idempotent)
-      if(!ps.results[ps.index] || ps.results[ps.index].count!==G.guesses.length){
-        // store result via advance helper? Actually we store manually here for immediate UI, then advance on Next click
-        // update in-memory result but don't advance yet
-        if(!st.packResults) st.packResults=[];
-        st.packResults[st.packIndex]={guesses:G.guesses.slice(), won:won, count:G.guesses.length, solved:won, ts:Date.now()};
-        VHPastModern.savePackState();
-      }
-
-      const isLast = ps.index+1>=ps.size;
-      const nextLabel = isLast ? 'View Pack Summary' : `Next — ${ps.index+2}/${ps.size} →`;
-
-      if(won){
-        resEl.innerHTML=`<div class="card" style="border-color:var(--green)"><h3 class="hd">✅ Solved in ${G.guesses.length}/6 — ${st.target.n} → ${closest.entry.n}</h3>${window.VHGameMechanics?`<div class="result-stars" aria-label="${VHGameMechanics.starsFor(G.guesses.length,6)} of 3 stars">${VHGameMechanics.starsHTML(VHGameMechanics.starsFor(G.guesses.length,6))}</div>`:''}<div style="font-size:13px;line-height:1.5">Answer: ${closest.entry.n} ${(closest.sim*100).toFixed(1)}%<br>Top 5: ${sortedTop}</div>${twinLinksHtml}<div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap"><button class="btn btn-primary" id="btn-next-pack">${nextLabel}</button><button class="btn" id="btn-pack-share-mid">Share</button></div></div>`;
-      } else {
-        resEl.innerHTML=`<div class="card" style="border-color:var(--verm)"><h3 class="hd">❌ ${st.target.n} → ${closest.entry.n}</h3><div style="font-size:13px;line-height:1.5">Closest: ${closest.entry.n} ${(closest.sim*100).toFixed(1)}%<br>Top 5: ${sortedTop}<br><span style="opacity:.7">You can still continue — pack counts failed as 0 in battle.</span></div>${twinLinksHtml}<div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap"><button class="btn btn-primary" id="btn-next-pack">${nextLabel}</button><button class="btn" id="btn-pack-share-mid">Share</button></div></div>`;
-      }
-
-      const nextBtn=document.getElementById('btn-next-pack');
-      if(nextBtn){
-        nextBtn.addEventListener('click',()=>{
-          // advance explicitly
-          const currentResult = {guesses:G.guesses.slice(), won:won, count:G.guesses.length, solved:won, ts:Date.now()};
-          const nxt = VHPastModern.advancePack(currentResult);
-          if(!nxt){
-            // completed
-            resEl.style.display='none';
-            $('#guesses').innerHTML='';
-            G.guesses=[];
-            renderPast();
-            renderPackProgress();
-            renderPackSummary();
-            projectFrame(); draw();
-            celebrateWin();
-            // scroll to summary
-            setTimeout(()=>{ $('#pack-summary').scrollIntoView({behavior:'smooth'}); }, 200);
-            return;
-          }
-          G.guesses=[];
-          // try restore if next slot had saved currentGuesses (should be empty)
-          renderPast(); renderGuesses(); resEl.style.display='none';
-          $('#past-closest-hint').style.display='none'; $('#warm-label').style.display='none'; renderGuessGrid();
-          renderPackProgress(); renderPackSummary(); updateStatusBar(); projectFrame(); draw();
-        });
-      }
-      const shareMidBtn=document.getElementById('btn-pack-share-mid');
-      if(shareMidBtn){
-        shareMidBtn.addEventListener('click', async()=>{
-          const ps2=VHPastModern.getPackState();
-          const selfScores = ps2.results.map(r=> r ? (r.won? r.count:0):0);
-          const opts={size:ps2.size, packEntries:ps2.entries, results:ps2.results, solved:ps2.solved, totalGuesses:ps2.totalGuesses, avg:ps2.avg, packCode:ps2.code, ids:ps2.ids, selfScores};
-          // copy battle link
-          const url=VHPastModern.packShareUrl(ps2.ids, selfScores);
-          try{ await navigator.clipboard.writeText(url); shareMidBtn.textContent='Link copied!'; setTimeout(()=>shareMidBtn.textContent='Share',1200); }catch{}
-          if(window.VHShare && VHShare.sharePack){ await VHShare.sharePack(opts); }
-        });
-      }
-
-      if(won && celebrateNew) celebrateWin();
-      renderPackProgress();
-      // if last was just completed, also render summary after small delay? Actually summary rendered on next click for final, but we want summary when complete via advance. For case where user refreshes and pack already complete, finish() will be called with over false? Need to handle complete case separately
-      if(ps.complete){
-        renderPackSummary();
-      }
-    } else {
       if(won){
         // Random and Challenge wins never touch the streak — Daily Court only,
         // as the mode tabs promise
@@ -947,7 +650,6 @@
         // fallback
         setTimeout(()=>{ try{ el.scrollIntoView({behavior:'smooth', block:'start'}); }catch{} }, 50);
       }); }
-    }
     const hintEl=$('#past-closest-hint'); if(hintEl&&closest){ hintEl.style.display='block'; hintEl.textContent=`Answer: ${closest.entry.n} ${(closest.sim*100).toFixed(0)}% — ${won?'won':'over'}`; hintEl.style.background='#fff'; hintEl.style.border='1.4px dashed var(--ink)'; hintEl.style.borderRadius='8px'; hintEl.style.padding='6px 8px'; }
     projectFrame(); draw(); updateStatusBar(); renderDailyCourt();
     try{ if(window.VHTwinExplainer && VHTwinExplainer.onReveal) VHTwinExplainer.onReveal(); }catch(e){}
@@ -1042,9 +744,8 @@
     try{
       const input=$('#guess-input'), btn=$('#guess-btn');
       const st0=(window.VHPastModern && VHPastModern.state)?VHPastModern.state():null;
-      const packDone=!!(st0 && st0.isPack && st0.isPackComplete);
       const won=(G.guesses||[]).some(g=>g.rank===0);
-      const over=won||(G.guesses||[]).length>=6||packDone;
+      const over=won||(G.guesses||[]).length>=6;
       if(input){
         input.disabled=over;
         input.placeholder=over?(won?'Solved — pick another slot':'Answer revealed below'):'Type modern — e.g., Wembanyama, SGA, Ant';
@@ -1119,11 +820,10 @@
     try{
       const input=$('#guess-input');
       const st0=(window.VHPastModern && VHPastModern.state)?VHPastModern.state():null;
-      const packDone=!!(st0 && st0.isPack && st0.isPackComplete);
-      // the slot is decided — no more guesses after a win, 6 tries, or pack completion
+      // the slot is decided — no more guesses after a win or 6 tries
       const _gWon=(G.guesses||[]).some(g=>g.rank===0);
-      if(_gWon || (G.guesses||[]).length>=6 || packDone){
-        setGuessStatus(packDone?'Pack complete — summary below':(_gWon?'Already solved — pick another slot':'No guesses left — answer revealed below'),'warn');
+      if(_gWon || (G.guesses||[]).length>=6){
+        setGuessStatus(_gWon?'Already solved — pick another slot':'No guesses left — answer revealed below','warn');
         nudgeInput();
         return;
       }
@@ -1236,14 +936,12 @@
     try{ attachSuggest(); }catch(e){ console.warn('attachSuggest fail', e); }
     try{ initSoundToggle(); }catch(e){ console.warn('sound toggle fail', e); }
 
-    const isPack=!!st.isPack;
-    let mode='daily'; if(isPack) mode='pack'; else if(st.isRandom) mode='random'; else if(st.isTriple) mode='triple';
+    let mode='daily'; if(st.isRandom) mode='random'; else if(st.isTriple) mode='triple';
     if(mode==='triple'){ const md=$('#mode-desc'); if(md) md.textContent='Daily Triple: 3 fixed puzzles per day — the lighter court (the retired Everyday game, folded in). It shares the Daily Court streak: solve 1 to keep your streak alive.'; }
-    document.querySelectorAll('.mode-tab').forEach(btn=>{ const m=btn.dataset.mode; const isPackTab=m.startsWith('pack'); if(isPack){ if(isPackTab && parseInt(btn.dataset.packN||'3',10)===st.packSize) btn.classList.add('is-active'); else if(!isPackTab) btn.classList.remove('is-active'); } else { if(m===mode) btn.classList.add('is-active'); else btn.classList.remove('is-active'); if(isPackTab) btn.classList.remove('is-active'); } });
+    document.querySelectorAll('.mode-tab').forEach(btn=>{ const m=btn.dataset.mode; if(m===mode) btn.classList.add('is-active'); else btn.classList.remove('is-active'); });
     document.querySelectorAll('.mode-tab').forEach(btn=>{
       btn.addEventListener('click',()=>{
         const m=btn.dataset.mode;
-        if(m.startsWith('pack')){ const n=parseInt(btn.dataset.packN||'3',10); const entries=VHPastModern.generateRandomPack(n); if(!entries.length){ alert('Loading… try again in a sec'); return; } const ids=entries.map(e=>e.i); location.href=VHPastModern.packShareUrl(ids); return; }
         if(m==='random'){ const p=VHPastModern.pickRandomPast(); location.href='/play?mode=random&r='+p.i; return; }
         if(m==='daily'){ location.href='/play'; return; }
         if(m==='triple'){ location.href='/play?mode=triple'; return; }
@@ -1251,31 +949,14 @@
     });
 
     renderDailyCourt();
-    renderPackInvalid();
+    renderPackRetired();
     window.addEventListener('vh-daily-ip',()=>{ renderDailyCourt(); });
 
     const saved=loadGuesses();
-    if(!isPack){
-      if(saved.length){ G.guesses=saved.slice(); try{ VHPastModern.state().guesses=saved.slice(); }catch{} }
-      else { G.guesses=[]; }
-    } else {
-      // pack: loadGuesses already returns currentGuesses from storage
-      G.guesses = saved.slice();
-      try{ VHPastModern.state().guesses=G.guesses.slice(); }catch{}
-      // if pack already complete, show summary immediately
-      if(st.isPackComplete){
-        renderPackProgress();
-        renderPackSummary();
-        // set guesses to last slot's guesses for map viz
-        const lastRes = st.packResults[st.packSize-1];
-        if(lastRes && lastRes.guesses) G.guesses = lastRes.guesses.slice();
-        else G.guesses=[];
-      } else {
-        renderPackProgress();
-      }
-    }
+    if(saved.length){ G.guesses=saved.slice(); try{ VHPastModern.state().guesses=saved.slice(); }catch{} }
+    else { G.guesses=[]; }
 
-    renderPast(); renderGuesses(); finish(); renderDailyCourt(); renderPackProgress(); renderPackSummary();
+    renderPast(); renderGuesses(); finish(); renderDailyCourt();
 
     /* (Removed: wirePlayForecast — it returned immediately because
        window.HoopsForecast is defined nowhere; the forecast exhibit
@@ -1297,21 +978,12 @@
     $('#guess-input')?.addEventListener('keydown', e=>{ if(e.key==='Enter'){ e.preventDefault(); if(typeof doGuess==='function') doGuess(); } });
     // grid mode: tiles call doGuess(name) directly
     $('#btn-random').addEventListener('click', ()=>{ const p=VHPastModern.pickRandomPast(); location.href='/play?mode=random&r='+p.i; });
-    $('#btn-new').addEventListener('click', ()=>{ if(st.isPack){ VHPastModern.abandonPack(); } location.href='/play'; });
+    $('#btn-new').addEventListener('click', ()=>{ location.href='/play'; });
     $('#btn-copy-court')?.addEventListener('click', async ()=>{
       const s=VHPastModern.state(); const url=location.origin+'/play?day='+s.dayKey; const court=s.dailyPool.map((p,i)=>`${i+1}. ${p.n} ${p.s}`).join('\n'); const text=`Daily Court ${s.dayKey} — 5 puzzles\n${court}\n${url}`; try{ await navigator.clipboard.writeText(text); const b=$('#btn-copy-court'); b.textContent='Copied!'; setTimeout(()=>b.textContent='📋 Copy court',1200); }catch{ prompt('Copy', text); }
     });
     $('#share-btn').addEventListener('click', async ()=>{
       const s=VHPastModern.state();
-      if(s.isPack){
-        const ps=VHPastModern.getPackState();
-        const selfScores = ps.results.map(r=> r ? (r.won? r.count:0):0);
-        const opts={size:ps.size, packEntries:ps.entries, results:ps.results, solved:ps.solved, totalGuesses:ps.totalGuesses, avg:ps.avg, packCode:ps.code, ids:ps.ids, selfScores};
-        if(window.VHShare&&VHShare.sharePack){ const res=await VHShare.sharePack(opts); if(res==='copied'){ const b=$('#share-btn'); const orig=b.textContent; b.textContent='Copied!'; setTimeout(()=>b.textContent=orig,1200); } return; }
-        const url=VHPastModern.packShareUrl(ps.ids, selfScores);
-        try{ await navigator.clipboard.writeText(`Pack Battle ${ps.size} — ${ps.solved}/${ps.size} in ${ps.totalGuesses} guesses — Can you beat me? ${url}`); const b=$('#share-btn'); b.textContent='Copied link!'; setTimeout(()=>b.textContent='Share',1200); }catch{}
-        return;
-      }
       if(s.isDaily){
         const dailyState=VHPastModern.getDailyState(); const opts={dayKey:s.dayKey, pool:s.dailyPool, slotResults:dailyState.slotResults, solved:dailyState.solved, total:dailyState.total||s.dailyPool.length, totalGuesses:dailyState.totalGuesses, streak:v2Streak(), mode:s.isTriple?'triple':'court', url:location.origin+'/play?day='+s.dayKey+(s.isTriple?'&mode=triple':'')};
         if(window.VHShare&&VHShare.shareDailyCourt){ await VHShare.shareDailyCourt(opts); return; }
@@ -1322,15 +994,6 @@
     });
     $('#share-text-btn').addEventListener('click', ()=>{
       const s=VHPastModern.state();
-      if(s.isPack){
-        const ps=VHPastModern.getPackState();
-        const lines=ps.entries.map((p,i)=>{ const r=ps.results[i]; const status=r? (r.won? `✅ ${r.count}/6`:`❌`) : '⬜'; return `${status} Slot ${i+1}: ${p.n} ${p.s}`; }).join('\n');
-        const selfScores = ps.results.map(r=> r ? (r.won? r.count:0):0);
-        const url=VHPastModern.packShareUrl(ps.ids, selfScores);
-        const text=`Pack Battle (${ps.size}) — ${ps.solved}/${ps.size} in ${ps.totalGuesses} guesses avg ${ps.avg.toFixed(1)}\n${lines}\nBattle: ${url}`;
-        navigator.clipboard.writeText(text).then(()=>{ const b=$('#share-text-btn'); b.textContent='Copied'; setTimeout(()=>b.textContent='Copy Grid',1200); });
-        return;
-      }
       const won=G.guesses.some(g=>g.rank===0);
       if(s.isDaily){
         const dailyState=VHPastModern.getDailyState(); const lines=s.dailyPool.map((p,i)=>{ const sd=dailyState.slotResults[i]; const status=sd? (sd.won? `✅ ${sd.cnt}/6` : `❌ ${sd.cnt}/6`): '⬜'; return `${status} Slot ${i+1}: ${p.n}`; }).join('\n');
@@ -1341,16 +1004,8 @@
     });
     $('#btn-challenge').addEventListener('click', async function(){
       const s=VHPastModern.state();
-      if(s.isPack){
-        const ps=VHPastModern.getPackState();
-        const selfScores = ps.results.map(r=> r ? (r.won? r.count:0):0);
-        const url=VHPastModern.packShareUrl(ps.ids, selfScores);
-        const txt=`Can you beat my Pack ${ps.size}? I got ${ps.solved}/${ps.size} in ${ps.totalGuesses} guesses — ${url}`;
-        try{ await navigator.clipboard.writeText(txt); this.textContent='Copied!'; setTimeout(()=>this.textContent='Challenge',1200); }catch{ alert(url); }
-        return;
-      }
       const url=location.origin+'/play?day='+s.dayKey+(s.isDaily? `&slot=${s.dailySlot}`:''); const txt=`Can you beat my Daily Court ${s.dayKey}? Slot ${s.dailySlot+1} ${s.target.n} — ${url}`; try{ await navigator.clipboard.writeText(txt); this.textContent='Copied'; setTimeout(()=>this.textContent='Challenge',1200); }catch{ alert(url); }
     });
   }
-  main().catch(e=>{ console.error(e); const inv=$('#pack-invalid'); if(inv){ inv.style.display='block'; inv.innerHTML=`<div class="small-mono" style="color:var(--verm)">Error</div><h3>${e.message}</h3><pre style="white-space:pre-wrap;font-size:11px">${e.stack||''}</pre>`; } });
+  main().catch(e=>{ console.error(e); const inv=$('#boot-error'); if(inv){ inv.style.display='block'; inv.innerHTML=`<div class="small-mono" style="color:var(--verm)">Error</div><h3>${e.message}</h3><pre style="white-space:pre-wrap;font-size:11px">${e.stack||''}</pre>`; } });
 })();

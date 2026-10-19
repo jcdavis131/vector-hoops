@@ -30,7 +30,7 @@ Removed from `assets/insights.json`, deleted each card's crawler stub (`insights
 Honest discrepancy to flag: the 2026-10-18 walkthrough transcripts contain no specific Insights cards the walkers named as delights (their route was homepage → Daily Court → Atlas → dossier → share → methods; they never visited Insights). The "8" above is the documented, owner-approved group the panel ratified — kept as named, with the Lewis card's earlier retirement recorded. He should confirm this is the right 8 (or 7) before merge.
 
 ### 4. Twin Explainer — standalone surface retired
-The Twin Explainer had no standalone URL — its standalone surface was the documentation section in `methods.html` (`#twin-explainer`). Removed that section (renumbered 04·d → 04·c, 04·e → 04·d). The chips themselves (`assets/twin-explainer.js`) remain exactly where the panel wants them: inside the twin reveal (`play.html`) and Career Trails (`index.html`).
+The Twin Explainer had no standalone URL — its standalone surface was the documentation section in `methods.html` (`#twin-explainer`). Removed that section (renumbered 04·d → 04·c, 04·e → 04·d). The chips themselves (`assets/twin-explainer.js`) remain exactly where the panel wants them: inside the Daily Court twin reveal (`play.html`); the panel's "Career Trails" placement is a future wiring, not a removal.
 
 ### 5. Nav / footer / sitemap sync
 - Footer sitemap columns updated on all pages (Props Lab link removed everywhere)
