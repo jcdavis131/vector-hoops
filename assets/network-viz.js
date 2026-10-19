@@ -157,7 +157,7 @@
   function $(id) { return document.getElementById(id); }
 
   function slugify(name) {
-    return name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+    return name.toLowerCase().replace(/'/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
   }
 
   /* ---- z-score -> real units -------------------------------------------
@@ -3533,7 +3533,7 @@ function buildFlowSvg(host) {
     // used to throw 'inputs length mismatch' and kill every exhibit on the
     // page — flow, explorer, map — over one stale optional dataset.
     Promise.all([
-      fetch('assets/vectors.json?v=90b2879d').then(function (r) { return r.json(); }),
+      fetch('assets/vectors.json?v=5e7141ff').then(function (r) { return r.json(); }),
       fetch('assets/mtnn_arch.json?v=32dbb20c').then(function (r) { return r.json(); }),
       fetch('assets/mtnn_map.json?v=d9d2f55c').then(function (r) { return r.json(); }),
       fetch('assets/mtnn_heads.f32?v=9b3f7454').then(function (r) {

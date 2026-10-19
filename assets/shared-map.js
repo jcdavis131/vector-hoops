@@ -209,7 +209,7 @@ export async function mountSharedMap(canvas, opts={}){
       if(game){ console.log('shared-map v2 names merged from game state', mergeNames(game)); return; }
     }catch{}
     try{
-      const r=await fetch('assets/vectors_search_lite_pos.json?v=1429d901',{cache:'default'});
+      const r=await fetch('assets/vectors_search_lite_pos.json?v=94ddeb70',{cache:'default'});
       if(!r.ok) return;
       const j=await r.json();
       const arr=j.players||j;

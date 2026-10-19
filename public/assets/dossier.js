@@ -16,7 +16,7 @@
   // accent-fold, lowercase, non-alphanumerics collapse to single hyphens.
   function playerSlug(name) {
     return name.normalize('NFD').replace(/[̀-ͯ]/g, '')
-      .toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+      .toLowerCase().replace(/'/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
   }
 
   function dossierPath(slug) {
