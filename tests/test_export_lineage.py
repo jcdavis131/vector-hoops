@@ -291,6 +291,34 @@ def test_a_forced_promotion_waives_the_export_floors_and_the_lineage_says_so(env
     assert sm.problems(assets) == []  # a waiver is consistent; quality is the floors' job, not this check's
 
 
+def test_export_refuses_a_run_the_trainer_refused_even_when_floors_pass(env):
+    """The 2026-10-09 incident: the export gates checked three floors and
+    never read the trainer's own verdict, so a refused run could still ship.
+    Floors passing + report["promote"]["ok"] False must refuse; --force
+    waives it with the reason in the lineage."""
+    data, assets = env
+    run = make_run(data, "r1")  # floors pass (recall 0.9, arch 0.91, purity 0.8)
+    rep = json.loads((run / "mtnn_report.json").read_text(encoding="utf-8"))
+    rep["promote"] = {"ok": False, "reason": "recall 0.742 < floor 0.773"}
+    (run / "mtnn_report.json").write_text(json.dumps(rep), encoding="utf-8")
+    pm.promote(run)  # should_promote re-runs on the composite block, which passes
+    assert not eme.promotion_eligible(pm.load_promoted().metrics_report)
+    assert not ea.mtnn_promotion_eligible(pm.load_promoted().metrics_report)
+    with pytest.raises(SystemExit, match=r"refused by its own training verdict.*recall 0\.742"):
+        eme.main(data_dir=data, assets=assets)
+    assert served_files(assets) == set()
+
+    run2 = make_run(data, "r2", seed=1)
+    rep2 = json.loads((run2 / "mtnn_report.json").read_text(encoding="utf-8"))
+    rep2["promote"] = {"ok": False, "reason": "recall 0.742 < floor 0.773"}
+    (run2 / "mtnn_report.json").write_text(json.dumps(rep2), encoding="utf-8")
+    pm.promote(run2, force="e2e smoke: trainer refused, operator overrides")
+    eme.main(data_dir=data, assets=assets)
+    lineage = json.loads((assets / sm.LINEAGE).read_text(encoding="utf-8"))
+    assert lineage["trainer_verdict"]["ok"] is False
+    assert lineage["trainer_verdict"]["waived_by_force"] == "e2e smoke: trainer refused, operator overrides"
+
+
 def test_metric_keys_are_the_ones_the_served_meta_carries():
     assert set(sm.METRIC_KEYS) <= set(sm.META_KEYS)
     assert set(pm.metrics_from_report({})) == set(sm.METRIC_KEYS)

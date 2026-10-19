@@ -84,8 +84,20 @@ def floor_failures(report: dict | None) -> list[str]:
 
 
 def promotion_eligible(report: dict | None) -> bool:
-    """True when the report clears every export floor (floor_failures is empty)."""
-    return not floor_failures(report)
+    """True when the report clears every export floor AND the trainer's own
+    promote verdict was ok.
+
+    The floors alone are not enough: a run the trainer refused (report
+    ["promote"]["ok"] is False — e.g. should_promote failed, population
+    validation flagged, or metrics in-sample) must not export silently.
+    An operator --force still overrides via the manifest's recorded `forced`
+    flag (see export_floors / mtnn_exports_allowed); this closes the silent
+    pass, not the explicit one. [promote.py docstring, 2026-10-09 incident]
+    """
+    if floor_failures(report):
+        return False
+    verdict = (report or {}).get("promote") or {}
+    return verdict.get("ok") is True
 
 
 def export_floors(bundle: promote.PromotedBundle) -> dict:
@@ -138,6 +150,24 @@ def main(data_dir: Path | None = None, assets: Path | None = None) -> None:
         print(
             f"WARNING: promoted run {bundle.run_id} misses the export floors ({'; '.join(floors['failed'])}); "
             f"exported because its promotion was forced: {floors['waived_by_force']}"
+        )
+    # The trainer's own verdict is a separate gate from the floors: a run the
+    # trainer refused must not export silently even when the floors clear
+    # [promote.py docstring, 2026-10-09 incident]. --force waives it, recorded.
+    verdict = (bundle.metrics_report or {}).get("promote") or {}
+    verdict_ok = verdict.get("ok") is True
+    forced = bool(bundle.manifest.get("forced"))
+    if not verdict_ok and not forced:
+        raise SystemExit(
+            f"promoted run {bundle.run_id} was refused by its own training verdict "
+            f"({verdict.get('reason') or 'no reason recorded'}); not exported. "
+            'A promotion forced with promote.py --force "<reason>" waives this, recorded in mtnn_lineage.json'
+        )
+    if not verdict_ok:
+        print(
+            f"WARNING: promoted run {bundle.run_id} was refused by its own training verdict "
+            f"({verdict.get('reason') or 'no reason recorded'}); "
+            f"exported because its promotion was forced: {bundle.manifest.get('force_reason')}"
         )
 
     with np.load(bundle.embedding, allow_pickle=False) as data:
@@ -215,6 +245,11 @@ def main(data_dir: Path | None = None, assets: Path | None = None) -> None:
         "forced": bool(bundle.manifest.get("forced")),
         "force_reason": bundle.manifest.get("force_reason"),
         "export_floors": floors,
+        "trainer_verdict": {
+            "ok": verdict_ok,
+            "reason": verdict.get("reason"),
+            "waived_by_force": bundle.manifest.get("force_reason") if (not verdict_ok and forced) else None,
+        },
         "train_git_sha": (bundle.manifest.get("train_git") or {}).get("sha"),
     }
 
