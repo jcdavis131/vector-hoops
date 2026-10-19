@@ -19,7 +19,6 @@
     { href: '/players', label: 'Players', desc: 'Directory, skill profiles and leaderboards' },
     { href: '/insights', label: 'Insights', desc: 'Findings from the model — and from the ledger' },
     { href: '/playoff-runs', label: 'Playoff Runs', desc: 'The greatest postseason runs, ranked' },
-    { href: '/props-lab', label: 'Props Lab', desc: 'Prop research — paper trades only, never real money' },
     { href: '/taxonomy', label: 'Taxonomy', desc: 'A taxonomy of play styles' },
     { href: '/methods', label: 'Methods', desc: 'Trust: every number recomputed from source, and the model graded' }
   ];
