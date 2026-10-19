@@ -11,7 +11,10 @@ bytes came from, so a mixed or hand-edited bundle looks the same as a real one.
 
 What it checks, in assets/ and in public/assets/ (the tree Vercel serves),
 via pipeline/served_model.problems():
-  - mtnn_embeddings.f32 is rows*dim*4 bytes, rows and dim from mtnn_meta.json;
+  - mtnn_embeddings.f32 is rows*dim*4 bytes, rows and dim from mtnn_meta.json
+    (assets/ only — panel v4, 2026-10-19: nothing raw to the browser, so the
+    f32 must NOT exist under public/assets/; its presence there is a problem,
+    its absence is not);
   - mtnn_meta.json carries only keys export_mtnn_embeddings writes;
   - vectors.json has meta's row count, and its (pid, season) rows in order
     hash to the keys the f32 was exported against;
@@ -74,7 +77,17 @@ def check(root: Path) -> list[str]:
         if not d.is_dir():
             out.append(f"{rel}/: missing")
             continue
-        out += [f"{rel}/{p}" for p in sm.problems(d)]
+        dir_problems = sm.problems(d)
+        if rel == "public/assets":
+            # The f32 stays in assets/ for the train lane; the served tree
+            # must not carry raw model weights (specs/serving-budget.md).
+            dir_problems = [p for p in dir_problems if p != f"{sm.F32}: missing"]
+            if (d / sm.F32).exists():
+                dir_problems.append(
+                    f"{sm.F32}: raw model weights must not be served "
+                    "(see specs/serving-budget.md)"
+                )
+        out += [f"{rel}/{p}" for p in dir_problems]
         try:
             lin = json.loads((d / sm.LINEAGE).read_text(encoding="utf-8"))
             served[rel] = (lin.get("run_id"), lin.get("embedding_f32_sha256"))

@@ -1,6 +1,6 @@
 {
  "built": "2026-10-18",
- "method": "terciles of twin_explainer.json sim distribution (n=1181)",
+ "method": "terciles of twin_explainer.json sim distribution; cutoffs frozen 2026-10-18 (n=1181), re-verified on the 2026-10-19 regen (n=1175); the SERVED source of these cutoffs is now assets/served-constants.js (built by pipeline/build_served_constants.py)",
  "bands": [
   {
    "min": 0.727,
@@ -18,5 +18,6 @@
    "blurb": "the closest match on record \u2014 and still a reach"
   }
  ],
- "rule": "chips show the BAND LABEL, never a bare 3-decimal number. The number may appear on tap-through."
+ "rule": "chips show the BAND LABEL, never a bare 3-decimal number. The number may appear on tap-through.",
+ "served_source": "assets/served-constants.js"
 }

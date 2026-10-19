@@ -1,6 +1,19 @@
-/* viral-share.js — v2 Pack Battle production - battle cards & sharing */
+/* viral-share.js — share cards (Daily Court, past-modern, chimera, universe) */
 (function(){
   'use strict';
+  /* Shared confirmation toast for every share gesture (Lane A: the share
+   * loop must visibly land — SHARE taps here get a visible response in
+   * <=1s. NOTE: showToast's visible styling lives in play.html's <style>
+   * (.vh-toast); without it the element exists but is invisible. */
+  function showToast(msg){
+    try{
+      var t=document.getElementById('vh-toast');
+      if(!t){ t=document.createElement('div'); t.id='vh-toast'; t.className='vh-toast'; t.setAttribute('role','status'); document.body.appendChild(t); }
+      t.textContent=msg; t.classList.add('is-visible');
+      clearTimeout(showToast._t);
+      showToast._t=setTimeout(function(){ t.classList.remove('is-visible'); }, 2600);
+    }catch(e){}
+  }
   function roundedRect(ctx,x,y,w,h,r){ctx.beginPath();ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);ctx.arcTo(x+w,y+h,x,y+h,r);ctx.arcTo(x,y+h,x,y,r);ctx.arcTo(x,y,x+w,y,r);ctx.closePath();}
   function drawTeamCard(abbr,titleLine,metaLine){
     var W=1080,H=1080; var canvas=document.createElement('canvas'); canvas.width=W; canvas.height=H; var ctx=canvas.getContext('2d');
@@ -67,131 +80,6 @@
     return c;
   }
 
-  // --- PACK BATTLE CARD v2 PRODUCTION WITH BATTLE ---
-  function drawPackCard(opts){
-    var W=1080, H=1500;
-    var c=document.createElement('canvas'); c.width=W; c.height=H; var ctx=c.getContext('2d');
-    ctx.fillStyle='#FFFEF7'; ctx.fillRect(0,0,W,H);
-    ctx.strokeStyle='#1A150F'; ctx.lineWidth=18; ctx.strokeRect(10,10,W-20,H-20);
-    // header bar
-    ctx.fillStyle='#1A150F'; ctx.fillRect(0,0,W,122);
-    ctx.fillStyle='#fff'; ctx.font='900 30px ui-monospace,monospace';
-    var sizeLabel = (opts.size|| (opts.packEntries?opts.packEntries.length:0) || '?');
-    ctx.fillText('VECTOR HOOPS \u00B7 PACK BATTLE '+sizeLabel,28,44);
-    ctx.font='700 19px ui-monospace,monospace'; ctx.fillStyle='#F0E442';
-    var code = (opts.packCode|| (opts.ids?opts.ids.join('-'):'')).slice(0,44);
-    ctx.fillText(sizeLabel+'-PACK \u00B7 '+code,28,76);
-    ctx.fillStyle='#aaa'; ctx.font='600 14px ui-monospace'; ctx.fillText('SAME LINK = SAME ALL-STARS FOR FRIENDS \u00B7 REFRESH-PROOF \u00B7 STREAK-SAFE',28,100);
-
-    // summary numbers
-    var solved = opts.solved!=null? opts.solved : (opts.results? opts.results.filter(function(r){return r&&r.won;}).length : 0);
-    var totalG = opts.totalGuesses!=null? opts.totalGuesses : (opts.results? opts.results.reduce(function(a,r){return a+(r?r.count:0);},0):0);
-    var avg = opts.avg!=null? (typeof opts.avg==='number'?opts.avg.toFixed(1):opts.avg) : (opts.size? (totalG/opts.size).toFixed(1) : '0');
-    var avgWin = opts.avgWin!=null? (typeof opts.avgWin==='number'?opts.avgWin.toFixed(1):opts.avgWin) : null;
-
-    ctx.fillStyle='#111'; ctx.font='950 48px ui-sans-serif';
-    ctx.fillText(solved+'/'+sizeLabel+' solved \u00B7 '+totalG+' guesses \u00B7 avg '+avg,36,180);
-    if(avgWin){ ctx.font='700 20px ui-monospace'; ctx.fillStyle='#555'; ctx.fillText('avg win '+avgWin+' \u00B7 12,966 past All-Stars map',36,210); }
-
-    // battle header if challenger
-    var y=240;
-    var hasChall = false, battle=null;
-    if(opts.battle && opts.battle.hasChallenger) { hasChall=true; battle=opts.battle; }
-    else if(opts.challengerScores && opts.challengerScores.length){ hasChall=true; }
-    if(hasChall){
-      // calculate fallback battle if not provided
-      if(!battle){
-        var cs=opts.challengerScores||[];
-        var challSolved=cs.filter(function(s){return s>0;}).length;
-        var challTotal=cs.reduce(function(a,b){return a+(b||0);},0);
-        battle={hasChallenger:true,selfSolved:solved,challSolved:challSolved,selfTotal:totalG,challTotal:challTotal, isTie:(solved===challSolved && totalG===challTotal), selfWins: (solved>challSolved) || (solved===challSolved && totalG<challTotal && totalG>0)};
-      }
-      // battle banner
-      var bannerText = '';
-      if(battle.isTie) bannerText='🤝 TIE — '+battle.selfSolved+'/'+sizeLabel+' vs '+battle.challSolved+'/'+sizeLabel+' — '+battle.selfTotal+' vs '+battle.challTotal+' guesses';
-      else if(battle.selfWins) bannerText='🏆 YOU WIN — '+battle.selfSolved+'/'+sizeLabel+' ('+battle.selfTotal+') vs FRIEND '+battle.challSolved+'/'+sizeLabel+' ('+battle.challTotal+')';
-      else bannerText='😤 FRIEND WINS — '+battle.challSolved+'/'+sizeLabel+' ('+battle.challTotal+') vs YOU '+battle.selfSolved+'/'+sizeLabel+' ('+battle.selfTotal+')';
-      // draw banner bg
-      ctx.fillStyle = battle.selfWins ? '#009E73' : battle.isTie ? '#fff' : '#fff';
-      ctx.strokeStyle='#1A150F'; ctx.lineWidth=4;
-      roundedRect(ctx,36,y,W-72,58,14); ctx.fill(); ctx.stroke();
-      ctx.fillStyle = battle.selfWins ? '#fff' : '#111'; ctx.font='900 18px ui-monospace,monospace';
-      ctx.fillText(bannerText.slice(0,78),52,y+36);
-      y+=78;
-    } else {
-      // tip
-      ctx.fillStyle='#E8F5E9'; ctx.strokeStyle='#1A150F'; ctx.lineWidth=3;
-      roundedRect(ctx,36,y,W-72,48,12); ctx.fill(); ctx.stroke();
-      ctx.fillStyle='#111'; ctx.font='700 16px ui-monospace';
-      ctx.fillText('Share with &s= scores — friends play same pack to beat you. Streak-safe.',52,y+30);
-      y+=66;
-    }
-
-    // entries
-    var entries = opts.packEntries||[];
-    var results = opts.results||[];
-    var selfScoresRaw = opts.selfScores || results.map(function(r){return r? (r.won? r.count:0):0;});
-    var challScores = opts.challengerScores || [];
-
-    ctx.font='700 16px ui-monospace';
-    entries.forEach(function(e,i){
-      var r=results[i];
-      var youScore = selfScoresRaw[i];
-      var friendScore = challScores[i];
-      var status = !r ? '⏳' : r.won ? '✅' : '❌';
-      var count = r ? r.count+'/6' : '—';
-      // row
-      ctx.fillStyle = r && r.won ? '#e8f5e9' : r ? '#fef4e8' : '#fafaf8';
-      roundedRect(ctx,36,y,W-72,78,14); ctx.fill(); ctx.strokeStyle='#111'; ctx.lineWidth=3; ctx.stroke();
-      ctx.fillStyle='#111'; ctx.font='800 22px ui-sans-serif';
-      ctx.fillText(status+' '+(e.n+' '+e.s).slice(0,34),48,y+28);
-      ctx.font='700 16px ui-monospace';
-      var youLabel = r ? (r.won? 'YOU ✅ '+count : 'YOU ❌ '+count) : 'YOU —';
-      var extra = '';
-      if(typeof friendScore==='number' && hasChall){
-        extra = ' | FRIEND '+(friendScore>0? '✅ '+friendScore+'/6':'❌');
-      }
-      ctx.fillText(youLabel+extra,48,y+50);
-      // small bar visual - you vs friend
-      var barY=y+60;
-      if(r){
-        var wYou = Math.max(10, (r.won? 110 - r.count*14 : 40));
-        ctx.fillStyle = r.won? '#009E73':'#D55E00';
-        ctx.fillRect(48,barY,wYou*2,8);
-        if(hasChall && friendScore>0){
-          var wFr = Math.max(10, 110 - friendScore*14);
-          ctx.fillStyle='#0072B2';
-          ctx.fillRect(48,barY+10,wFr*2,4);
-        }
-      }
-      ctx.fillStyle='#666'; ctx.font='600 12px ui-monospace';
-      ctx.fillText((e.s||'')+' • past All-Star → modern twin • '+ARCH(e), 260, y+50);
-      y+=92;
-      if(y>1180) return;
-    });
-
-    function ARCH(ent){
-      var map=['Glass+Rim','LowVol Glass','Low Impact 3P Vol','Def Glass+Rim FT','Vol+3P Vol','3P Acc+Vol','Playmaking+Steals','Scoring Vol'];
-      var cc=ent&&ent.c!=null? ent.c:0; return map[cc%map.length]||'';
-    }
-
-    // scores text fallback
-    ctx.fillStyle='#111'; ctx.font='700 18px ui-monospace';
-    var footerY = H-210;
-    ctx.fillText('Can you beat this pack? Same All-Stars, share link challenge.',36,footerY);
-    ctx.font='600 15px ui-monospace'; ctx.fillStyle='#444';
-    ctx.fillText(sizeLabel+' past All-Stars • Past→Modern MTNN 64-d recall@10 0.846 • streak-safe',36,footerY+26);
-    ctx.fillStyle='#1A150F'; ctx.font='700 14px ui-monospace'; ctx.fillText('12,966 seasons as rotating 3D map · daily court 5× same for everyone',36,footerY+48);
-
-    // CTA box
-    var longCode = (opts.ids? opts.ids.join('-') : code).slice(0,56);
-    ctx.fillStyle='#F0E442'; ctx.strokeStyle='#111'; ctx.lineWidth=4; roundedRect(ctx,36,H-120,W-72,76,18); ctx.fill(); ctx.stroke();
-    ctx.fillStyle='#111'; ctx.font='900 20px ui-sans-serif'; 
-    var cta = 'Play pack: hoops.dumbmodel.com/play?pack='+longCode.slice(0,28)+(longCode.length>28?'…':'');
-    ctx.fillText(cta,56,H-78);
-    ctx.font='700 13px ui-monospace'; ctx.fillText('Add &s=2-0-4 to battle with scores · 0=fail · free, no trackers',56,H-52);
-    return c;
-  }
 
   async function sharePastModern(opts){
     try{
@@ -214,62 +102,9 @@
       }
     }catch(e){console.warn('sharePastModern fail',e);} return false;
   }
-  async function sharePack(opts){
-    try{
-      // enrich opts for battle
-      if(!opts.battle && (opts.challengerScores||opts.selfScores)){
-        // build battle if needed
-        var selfSolved = (opts.results? opts.results.filter(function(r){return r&&r.won;}).length : opts.solved||0);
-        var selfTotal = opts.totalGuesses|| (opts.results? opts.results.reduce(function(a,r){return a+(r?r.count:0);},0):0);
-        var cs = opts.challengerScores||[];
-        if(cs.length){
-          var challSolved=cs.filter(function(s){return s>0;}).length;
-          var challTotal=cs.reduce(function(a,b){return a+(b||0);},0);
-          opts.battle={hasChallenger:true,selfSolved:selfSolved,challSolved:challSolved,selfTotal:selfTotal,challTotal:challTotal,isTie:(selfSolved===challSolved && selfTotal===challTotal), selfWins: (selfSolved>challSolved) || (selfSolved===challSolved && selfTotal<challTotal && selfTotal>0)};
-        }
-      }
-      if(!opts.selfScores && opts.results){
-        opts.selfScores = opts.results.map(function(r){return r? (r.won? r.count:0):0;});
-      }
-      var canvas=drawPackCard(opts);
-      var blob=await new Promise(function(r){canvas.toBlob(function(b){r(b);},'image/png');});
-      var file=new File([blob],'pack-'+(opts.size||3)+'-'+(opts.packCode||'').slice(0,12)+'.png',{type:'image/png'});
-      var ids = opts.ids || (opts.packEntries? opts.packEntries.map(function(e){return e.i;}) : []);
-      var scores = opts.selfScores || (opts.results||[]).map(function(r){ return r ? (r.won? r.count:0) : 0; });
-      var baseOrigin = (location.origin||'https://hoops.dumbmodel.com');
-      var url = baseOrigin + '/play?pack=' + ids.join('-') + (scores.length? '&s='+scores.join('-'):'');
-      var solved = opts.solved!=null? opts.solved : (opts.results? opts.results.filter(function(r){return r&&r.won;}).length : 0);
-      var total = opts.totalGuesses!=null? opts.totalGuesses : (opts.results? opts.results.reduce(function(a,r){return a+(r?r.count:0);},0):0);
-      var avg = opts.avg!=null? (typeof opts.avg==='number'?opts.avg.toFixed(1):opts.avg) : (opts.size? (total/opts.size).toFixed(1) : '0');
-      var gridEmoji = (opts.results||[]).map(function(r){ if(!r) return '⬜'; if(!r.won) return '❌'; if(r.count<=2) return '🟩🔥'; if(r.count<=4) return '🟩'; return '🟨'; }).join('');
-      var lines = (opts.packEntries||[]).map(function(e,i){ var r=opts.results&&opts.results[i]; var fr=opts.challengerScores&&opts.challengerScores[i]; var fTxt = (typeof fr==='number'&&opts.battle)? ' | Friend '+(fr>0? '✅ '+fr+'/6':'❌') : ''; return (r&&r.won?'✅':'❌')+' '+e.n+' '+e.s+' '+(r?r.count+'/6':'—')+fTxt; }).join('\n');
-      var battleTxt = '';
-      if(opts.battle && opts.battle.hasChallenger){
-        battleTxt = opts.battle.isTie? '\n🤝 Tie vs Friend' : (opts.battle.selfWins? '\n🏆 I beat friend!' : '\n😤 Friend wins — rematch?');
-      }
-      var text='Vector Hoops Pack Battle ('+(opts.size||'?')+') — '+solved+'/'+(opts.size||'?')+' in '+total+' guesses avg '+avg+' '+gridEmoji+battleTxt+'\n'+lines+'\nChallenge same pack: '+url;
-      if(navigator.canShare && navigator.canShare({files:[file]})){
-        await navigator.share({title:'Vector Hoops Pack '+ (opts.size||'?'), text:text, files:[file]});
-        return true;
-      }
-      if(navigator.share){
-        try{ await navigator.share({title:'Pack '+(opts.size||'3'), text:text, url:url}); return true; }catch(e){}
-      }
-      if(navigator.clipboard && navigator.clipboard.writeText){
-        await navigator.clipboard.writeText(text);
-        return 'copied';
-      }
-    }catch(e){console.warn('sharePack fail',e);} return false;
-  }
   async function shareUniverse(abbr,text,url,copiedEl){
-    function showToast(msg){
-      try{
-        var t=document.getElementById('vh-toast');
-        if(!t){ t=document.createElement('div'); t.id='vh-toast'; t.className='vh-toast'; document.body.appendChild(t); }
-        t.textContent=msg; t.classList.add('is-visible');
-        setTimeout(function(){ t.classList.remove('is-visible'); }, 2600);
-      }catch(e){}
-    }
+    /* showToast is the module-scope toast now (exported on VHShare below) —
+       calls inside this function resolve to it. */
     try{
       var titleEl=document.getElementById('team-universe-title'); var metaEl=document.getElementById('team-universe-meta');
       var titleLine=titleEl?titleEl.textContent:abbr+' universe'; var metaLine=metaEl?metaEl.textContent.replace(/\s+/g,' ').trim().slice(0,80):'';
@@ -305,10 +140,7 @@
   /* Wordle-style Daily Court result card: compact emoji grid, spoiler-free
      (no twin answers), streak hooked in. Web Share API with image when
      available, text share, clipboard, then legacy execCommand fallback. */
-  // Pure text builder for the Daily Court/Triple share artifact (panel v3 G2:
-  // one code path for the share text, unit-tested in tests/daily-share.test.mjs).
-  // Spoiler-free by construction: slot status emoji only, no twin answers, no names.
-  function buildDailyCourtText(opts){
+  async function shareDailyCourt(opts){
     opts=opts||{};
     var mode=opts.mode==='triple'?'triple':'court';
     var total=opts.total||(opts.pool?opts.pool.length:0)||(mode==='triple'?3:5);
@@ -327,19 +159,13 @@
     var head='🏀 Vector Hoops '+label+' — '+dayKey;
     var scoreLine=solved+'/'+total+' in '+guesses+' guess'+(guesses===1?'':'es');
     var streakLine=streak>0?('🔥 '+streak+'-day streak'):'';
-    var url=opts.url||('https://hoops.dumbmodel.com/play?day='+dayKey+(mode==='triple'?'&mode=triple':''));
-    var text=head+'\n'+scoreLine+'\n'+grid+(streakLine?'\n'+streakLine:'')+'\nPlay the same '+(mode==='triple'?'triple':'court')+': '+url;
-    return {text:text, title:label+' '+dayKey, url:url, mode:mode, total:total, solved:solved, grid:grid};
-  }
-  async function shareDailyCourt(opts){
-    opts=opts||{};
-    var built=buildDailyCourtText(opts);
-    var text=built.text, title=built.title, url=built.url, grid=built.grid;
-    var mode=built.mode, total=built.total, solved=built.solved;
-    var guesses=opts.totalGuesses||0;
-    var dayKey=opts.dayKey||'';
-    var streak=(opts.streak!=null)?opts.streak:0;
-    var label=mode==='triple'?'Daily Triple':'Daily Court';
+    var url=opts.url||('https://hoops.dumbmodel.com/play?day='+dayKey+(mode==='triple'?'&mode=triple':'')+'&ref=share');
+    /* Lane A: the Daily Court card text is built by the ledger (the ONLY
+       scorer) when the caller passes it; the inline builder below stays as
+       the fallback. Either way every shared URL carries ref=share so
+       inbound plays are visible. */
+    var text=opts.text||(head+'\n'+scoreLine+'\n'+grid+(streakLine?'\n'+streakLine:'')+'\nPlay the same '+(mode==='triple'?'triple':'court')+': '+url);
+    var title=label+' '+dayKey;
     function legacyCopy(t){
       try{
         var ta=document.createElement('textarea'); ta.value=t; ta.setAttribute('readonly','');
@@ -382,7 +208,7 @@
         if(y>1050) return;
       });
       ctx.fillStyle='#F0E442'; ctx.strokeStyle='#111'; ctx.lineWidth=4; rr(ctx,36,H-110,W-72,70,18); ctx.fill(); ctx.stroke();
-      ctx.fillStyle='#111'; ctx.font='900 24px ui-sans-serif'; ctx.fillText('Play same '+(mode==='triple'?'triple':'court')+': hoops.dumbmodel.com/play?day='+dayKey+(mode==='triple'?'&mode=triple':''),56,H-64);
+      ctx.fillStyle='#111'; ctx.font='900 24px ui-sans-serif'; ctx.fillText('Play same '+(mode==='triple'?'triple':'court')+': '+String(url).replace(/^https?:\/\//,''),56,H-64);
       var blob=await new Promise(function(r){c.toBlob(function(b){r(b);},'image/png');});
       if(blob){
         var file=new File([blob],'daily-'+mode+'-'+dayKey+'.png',{type:'image/png'});
@@ -397,5 +223,5 @@
     }catch(e){ console.warn('shareDailyCourt fail',e); }
     return false;
   }
-  window.VHShare={shareUniverse:shareUniverse,shareChimera:shareChimera,sharePastModern:sharePastModern,drawTeamCard:drawTeamCard,drawChimeraCard:drawChimeraCard,drawPastModernCard:drawPastModernCard,drawPackCard:drawPackCard,sharePack:sharePack,shareDailyCourt:shareDailyCourt,buildDailyCourtText:buildDailyCourtText};
+  window.VHShare={showToast:showToast,shareUniverse:shareUniverse,shareChimera:shareChimera,sharePastModern:sharePastModern,drawTeamCard:drawTeamCard,drawChimeraCard:drawChimeraCard,drawPastModernCard:drawPastModernCard,shareDailyCourt:shareDailyCourt};
 })();

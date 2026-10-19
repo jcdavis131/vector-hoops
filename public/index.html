@@ -27,7 +27,7 @@
 <meta name="twitter:image" content="https://hoops.dumbmodel.com/assets/og-1200x630.png"/>
 <link rel="stylesheet" href="assets/fonts.css?v=8f376b2a"/>
 <link rel="preload" href="/assets/vectors_search_lite.json" as="fetch" crossorigin/>
-<link rel="stylesheet" href="/assets/atlas.css?v=1ed34fb5"/>
+<link rel="stylesheet" href="/assets/atlas.css?v=7c1d7652"/>
 <link rel="stylesheet" href="/assets/shell.css?v=7eb94ecf"/>
 <style>
 /* ---------- Home: hero ---------- */
@@ -117,6 +117,11 @@
 #region-layer.is-regions .region-tag{ font-size: 11.5px; padding: 8px 13px; }
 #region-layer.is-regions .region-tag__dot{ width: 9px; height: 9px; }
 .region-tag.is-collided{ display: none; }
+/* v4 honesty grammar — embedding-truth vs map-approximation surfaces.
+   truth (64-d MTNN embedding: twin bands, peers, game feedback): solid marker.
+   approximation (the 2-D atlas of 14 stats): dashed marker. Light touch. */
+.vh-truth{ border-inline-start: 3px solid var(--accent, #e0762e); padding-inline-start: 10px; }
+.vh-approx{ border-inline-start: 3px dashed var(--line-2, #999); padding-inline-start: 10px; }
 #sky-canvas.is-regions{ opacity: .22; transition: opacity var(--dur-2) var(--ease); }
 #region-layer.has-selection .region-tag:not([aria-pressed="true"]){ opacity: .45; }
 .region-strip{
@@ -338,8 +343,8 @@
         <ul id="atlas-results" class="atlas-results" role="listbox" aria-label="Matching seasons" hidden></ul>
       </div>
       <div class="label"><span id="atlas-count" class="num" data-fact="player_seasons">12,966</span> plotted</div>
-      <details class="trust-badge">
-        <summary>This view keeps 11% of each player's 20 nearest neighborhoods from the model</summary>
+      <details class="trust-badge vh-approx">
+        <summary>This view keeps <span data-served-const="badge_overlap_pct">12</span>% of each player's 20 nearest neighborhoods from the model</summary>
         <p>We sampled 2,000 players and checked how many of each one&#8217;s 20 closest neighbors in the full 64-d model stay neighbors on this flat map — about 1 in 9 do.</p>
       </details>
       <div class="team-highlight">
@@ -417,7 +422,7 @@
           <thead><tr><th class="r" scope="col">#</th><th scope="col">Player</th><th scope="col">Season</th><th scope="col" class="hide-s">Archetype</th><th class="r" scope="col">Similarity</th></tr></thead>
           <tbody id="atlas-peers-body"></tbody>
         </table>
-        <p class="peers__foot">Peers are the nearest seasons by cosine similarity in the 64-dimensional MTNN embedding. The atlas itself is a 2-D view of 14 era-normalised per-100 stats, so a peer can sit some distance away on it.</p>
+        <p class="peers__foot vh-truth">Peers are the nearest seasons by cosine similarity in the 64-dimensional MTNN embedding. The atlas itself is a 2-D view of 14 era-normalised per-100 stats, so a peer can sit some distance away on it.</p>
       </div>
     </div>
     <p class="visually-hidden" id="atlas-live" aria-live="polite"></p>
@@ -432,24 +437,17 @@
   <section class="findings" aria-label="Fresh from the lab">
     <h2 class="label fig-label" style="margin:0 0 4px">Fresh from the lab <b>· new findings</b></h2>
     <nav class="doors" aria-label="New findings" style="margin-top:var(--s-4)">
-      <a class="door" href="/insights#playoff-swings">
-        <span class="door__n">Insight №10 — Risers &amp; fallers</span>
-        <span class="door__title">May makes some stars bigger</span>
-        <p class="door__text">Mitchell owns the two biggest playoff scoring leaps in 30 years (<b>+8.6</b>, <b>+8.3</b>); Embiid owns the biggest collapse (<b>−14.6</b>). 334 established-scorer seasons, charted.</p>
-        <span class="door__go">See the swings →</span>
+      <a class="door" href="/insights#invisible-stardom">
+        <span class="door__n">Insight — Know your role</span>
+        <span class="door__title">The biggest sacrifices nobody saw</span>
+        <p class="door__text">Jrue Holiday gave up <b>8.7</b> points of usage going from Milwaukee All-Star to Boston&rsquo;s fourth option — and won a ring. 12 invisible-stardom sacrifices, ranked.</p>
+        <span class="door__go">See the sacrifices →</span>
       </a>
-      <a class="door" href="/insights#contenders-pretenders">
-        <span class="door__n">Insight №11 — 2026–27 preview</span>
-        <span class="door__title">Contenders &amp; pretenders</span>
-        <div class="chem" aria-label="Teams clearing both contender bars">
-          <div class="chem__row"><span>LAL</span><i style="width:98%"><b>5.56</b></i></div>
-          <div class="chem__row"><span>OKC</span><i style="width:94%"><b>5.31</b></i></div>
-          <div class="chem__row"><span>DEN</span><i style="width:92%"><b>5.20</b></i></div>
-          <div class="chem__row"><span>PHI</span><i style="width:91%"><b>5.14</b></i></div>
-          <div class="chem__row"><span>MIA</span><i style="width:90%"><b>5.12</b></i></div>
-        </div>
-        <p class="door__text">Five teams clear both bars — shape and engine. Portland is the most playoff-shaped team alive (5.67) with no engine to drive it.</p>
-        <span class="door__go">See the preview →</span>
+      <a class="door" href="/insights#the-summer-the-cap-broke">
+        <span class="door__n">Insight — 2016 cap spike</span>
+        <span class="door__title">The summer the salary cap broke</span>
+        <p class="door__text">When the cap jumped 34% in one summer, teams bid against the new money — not production. Chandler Parsons&rsquo; $22.1M bought <b>0.2</b> win shares.</p>
+        <span class="door__go">See the signings →</span>
       </a>
       <a class="door" href="/playoff-runs">
         <span class="door__n">New page — 42 ranked runs</span>
@@ -482,7 +480,7 @@
       <a href="/players">Players</a>
       <a href="/insights">Insights</a>
       <a href="/playoff-runs">Playoff Runs</a>
-      <a href="/props-lab">Props Lab</a>
+
       <a href="/taxonomy">Taxonomy</a>
       <a href="/methods">Methods</a>
     </div>
@@ -494,13 +492,15 @@
   <p class="site-footer__attribution">Every number recomputable from stats.nba.com · A <a href="https://dumbmodel.com">dumbmodel</a> project · <a href="https://github.com/jcdavis131/vector-hoops" rel="noopener">Source</a></p>
 </footer>
 
-<script defer src="/assets/site-nav.js?v=c12413c4"></script>
-<script defer src="/assets/mtnn.js?v=81d491f8"></script>
-<script defer src="/assets/twin-bands.js?v=d8e155bd"></script>
-<script defer src="/assets/atlas-map.js?v=c55ab565"></script>
-<script defer src="/assets/atlas-regions.js?v=c9132685"></script>
+<script defer src="/assets/site-nav.js?v=75a5e046"></script>
+<script defer src="/assets/vh-analytics.js?v=STAMP"></script>
+<script defer src="/assets/vh-peers.js?v=STAMP"></script>
+<script defer src="/assets/served-constants.js?v=8ba12340"></script>
+<script defer src="/assets/twin-bands.js?v=0a191313"></script>
+<script defer src="/assets/atlas-map.js?v=e98d55fb"></script>
+<script defer src="/assets/atlas-regions.js?v=137f43e8"></script>
 <script defer src="/assets/career-trails.js?v=a0e9e836"></script>
-<script src="assets/site-facts.js?v=cbb639f4" defer></script>
+<script src="assets/site-facts.js?v=f8edaf37" defer></script>
 <script>
 if('serviceWorker' in navigator){ window.addEventListener('load', function(){ navigator.serviceWorker.register('/sw.js').catch(function(){}); }); }
 </script>

@@ -47,6 +47,8 @@ def site(tmp_path, monkeypatch) -> Path:
     for name in sm.SIDECARS:
         (assets / name).write_text(json.dumps({"lineage": {"run_id": "r1"}}), encoding="utf-8")
     shutil.copytree(assets, tmp_path / "public" / "assets")
+    # sync_public.py NEVER_SERVE: the raw f32 never reaches the served tree
+    (tmp_path / "public" / "assets" / sm.F32).unlink()
     return tmp_path
 
 
@@ -209,12 +211,20 @@ def test_record_served_lineage_refuses_a_different_f32(tmp_path, monkeypatch, ca
 
 
 def test_an_f32_of_the_wrong_size_fails(site, capsys):
-    f32 = site / "public" / "assets" / sm.F32
+    f32 = site / "assets" / sm.F32
     f32.write_bytes(f32.read_bytes()[:-16])
     why = problems(site)
-    assert "public/assets/mtnn_embeddings.f32 is 80 bytes, but mtnn_meta.json rows*dim*4 = 6*4*4 = 96" in why
+    assert "assets/mtnn_embeddings.f32 is 80 bytes, but mtnn_meta.json rows*dim*4 = 6*4*4 = 96" in why
     assert csm.main(["--root", str(site)]) == 1
     assert "problem(s)" in capsys.readouterr().out
+
+
+def test_an_f32_in_the_served_tree_fails(site, capsys):
+    """Panel v4: raw model weights must not be served — presence is the problem."""
+    (site / "public" / "assets" / sm.F32).write_bytes(b"raw weights do not belong here")
+    why = problems(site)
+    assert "public/assets/mtnn_embeddings.f32: raw model weights must not be served" in why
+    assert csm.main(["--root", str(site)]) == 1
 
 
 def test_a_missing_lineage_file_fails(site):

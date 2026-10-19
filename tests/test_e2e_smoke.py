@@ -348,8 +348,11 @@ def test_the_served_files_name_the_promoted_bundle(chain):
     assert {k: meta[k] for k in sm.METRIC_KEYS} == served["metrics"] == manifest["metrics"]
     for name in sm.SIDECARS:
         assert load(assets / name)["lineage"]["run_id"] == RUN_ID, name
-    # sync_public mirrored the bundle into the tree Vercel serves.
-    for name in (sm.F32, sm.META, sm.LINEAGE, sm.F32_LINEAGE, *sm.SIDECARS):
+    # sync_public mirrored the bundle into the tree Vercel serves — except the
+    # raw f32, which NEVER_SERVE keeps out of the served path (panel v4:
+    # nothing raw to the browser; the client gets precomputed JSON).
+    assert not (root / "public" / "assets" / sm.F32).exists(), sm.F32
+    for name in (sm.META, sm.LINEAGE, sm.F32_LINEAGE, *sm.SIDECARS):
         assert (root / "public" / "assets" / name).read_bytes() == (assets / name).read_bytes(), name
 
 

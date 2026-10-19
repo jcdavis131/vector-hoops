@@ -48,12 +48,13 @@
    "era_span": [
     "1996-97",
     "2025-26"
-   ]
+   ],
+   "geometry": "Region 00 of 12: k-means (k=12) on the 64-d MTNN embedding (seed 0; names from each cluster's stat profile). 1,009 player-seasons (1996-97 to 2025-26). Centroid style vs the league average: high rim protection (+1.61σ); high offensive glass (+1.59σ); high defensive glass (+1.32σ); high finishing (+1.22σ). The map marker sits at the center of the region's exemplars — the region itself has no drawn boundary, and atlas proximity is approximate (see the trust badge)."
   },
   {
    "id": "01",
    "name": "The Deep Bench",
-   "blurb": "few shots, few mistakes, few minutes \u2014 the end of the rotation",
+   "blurb": "few shots, few mistakes, few minutes — the end of the rotation",
    "profile": {
     "top_stats": [
      [
@@ -95,7 +96,8 @@
    "era_span": [
     "1996-97",
     "2025-26"
-   ]
+   ],
+   "geometry": "Region 01 of 12: k-means (k=12) on the 64-d MTNN embedding (seed 0; names from each cluster's stat profile). 954 player-seasons (1996-97 to 2025-26). Centroid style vs the league average: low shot volume (-0.76σ); low scoring volume (-0.73σ); low three-point volume (-0.62σ); low turnovers (-0.54σ). The map marker sits at the center of the region's exemplars — the region itself has no drawn boundary, and atlas proximity is approximate (see the trust badge)."
   },
   {
    "id": "02",
@@ -142,7 +144,8 @@
    "era_span": [
     "1996-97",
     "2025-26"
-   ]
+   ],
+   "geometry": "Region 02 of 12: k-means (k=12) on the 64-d MTNN embedding (seed 0; names from each cluster's stat profile). 1,660 player-seasons (1996-97 to 2025-26). Centroid style vs the league average: high playmaking (+1.54σ); high steals (+0.88σ); high turnovers (+0.79σ); low offensive glass (-0.79σ). The map marker sits at the center of the region's exemplars — the region itself has no drawn boundary, and atlas proximity is approximate (see the trust badge)."
   },
   {
    "id": "03",
@@ -189,7 +192,8 @@
    "era_span": [
     "1996-97",
     "2025-26"
-   ]
+   ],
+   "geometry": "Region 03 of 12: k-means (k=12) on the 64-d MTNN embedding (seed 0; names from each cluster's stat profile). 748 player-seasons (1996-97 to 2025-26). Centroid style vs the league average: high three-point volume (+0.96σ); high three-point accuracy (+0.94σ); low rim pressure (FTs) (-0.81σ); low turnovers (-0.77σ). The map marker sits at the center of the region's exemplars — the region itself has no drawn boundary, and atlas proximity is approximate (see the trust badge)."
   },
   {
    "id": "04",
@@ -236,12 +240,13 @@
    "era_span": [
     "1996-97",
     "2025-26"
-   ]
+   ],
+   "geometry": "Region 04 of 12: k-means (k=12) on the 64-d MTNN embedding (seed 0; names from each cluster's stat profile). 791 player-seasons (1996-97 to 2025-26). Centroid style vs the league average: high offensive glass (+1.47σ); high rim protection (+1.28σ); low free-throw touch (-1.20σ); low three-point volume (-1.13σ). The map marker sits at the center of the region's exemplars — the region itself has no drawn boundary, and atlas proximity is approximate (see the trust badge)."
   },
   {
    "id": "05",
    "name": "The Brief Stints",
-   "blurb": "short stints, cold shooting \u2014 the ten-day contracts",
+   "blurb": "the shots don't fall and the minutes bleed",
    "profile": {
     "top_stats": [
      [
@@ -283,12 +288,13 @@
    "era_span": [
     "1996-97",
     "2025-26"
-   ]
+   ],
+   "geometry": "Region 05 of 12: k-means (k=12) on the 64-d MTNN embedding (seed 0; names from each cluster's stat profile). 1,118 player-seasons (1996-97 to 2025-26). Centroid style vs the league average: low on/off estimate (noisy) (-1.17σ); low finishing (-1.15σ); low three-point accuracy (-0.76σ); low scoring volume (-0.73σ). The map marker sits at the center of the region's exemplars — the region itself has no drawn boundary, and atlas proximity is approximate (see the trust badge)."
   },
   {
    "id": "06",
    "name": "The Gunners",
-   "blurb": "let it fly \u2014 volume scorers with range",
+   "blurb": "let it fly — volume scorers with range",
    "profile": {
     "top_stats": [
      [
@@ -330,7 +336,8 @@
    "era_span": [
     "1996-97",
     "2025-26"
-   ]
+   ],
+   "geometry": "Region 06 of 12: k-means (k=12) on the 64-d MTNN embedding (seed 0; names from each cluster's stat profile). 1,543 player-seasons (1996-97 to 2025-26). Centroid style vs the league average: high shot volume (+1.01σ); high three-point volume (+0.94σ); high scoring volume (+0.92σ); high three-point accuracy (+0.84σ). The map marker sits at the center of the region's exemplars — the region itself has no drawn boundary, and atlas proximity is approximate (see the trust badge)."
   },
   {
    "id": "07",
@@ -377,7 +384,8 @@
    "era_span": [
     "1996-97",
     "2025-26"
-   ]
+   ],
+   "geometry": "Region 07 of 12: k-means (k=12) on the 64-d MTNN embedding (seed 0; names from each cluster's stat profile). 759 player-seasons (1996-97 to 2025-26). Centroid style vs the league average: high three-point volume (+0.89σ); high three-point accuracy (+0.87σ); low turnovers (-0.65σ); low rim pressure (FTs) (-0.57σ). The map marker sits at the center of the region's exemplars — the region itself has no drawn boundary, and atlas proximity is approximate (see the trust badge)."
   },
   {
    "id": "08",
@@ -424,7 +432,8 @@
    "era_span": [
     "1996-97",
     "2025-26"
-   ]
+   ],
+   "geometry": "Region 08 of 12: k-means (k=12) on the 64-d MTNN embedding (seed 0; names from each cluster's stat profile). 1,440 player-seasons (1996-97 to 2025-26). Centroid style vs the league average: high defensive glass (+1.06σ); high rim pressure (FTs) (+0.95σ); high scoring volume (+0.91σ); high offensive glass (+0.86σ). The map marker sits at the center of the region's exemplars — the region itself has no drawn boundary, and atlas proximity is approximate (see the trust badge)."
   },
   {
    "id": "09",
@@ -471,7 +480,8 @@
    "era_span": [
     "1996-97",
     "2025-26"
-   ]
+   ],
+   "geometry": "Region 09 of 12: k-means (k=12) on the 64-d MTNN embedding (seed 0; names from each cluster's stat profile). 862 player-seasons (1996-97 to 2025-26). Centroid style vs the league average: high scoring volume (+1.90σ); high shot volume (+1.70σ); high rim pressure (FTs) (+1.67σ); high playmaking (+1.41σ). The map marker sits at the center of the region's exemplars — the region itself has no drawn boundary, and atlas proximity is approximate (see the trust badge)."
   },
   {
    "id": "10",
@@ -518,7 +528,8 @@
    "era_span": [
     "1996-97",
     "2025-26"
-   ]
+   ],
+   "geometry": "Region 10 of 12: k-means (k=12) on the 64-d MTNN embedding (seed 0; names from each cluster's stat profile). 937 player-seasons (1996-97 to 2025-26). Centroid style vs the league average: high three-point accuracy (+1.02σ); high three-point volume (+1.00σ); low turnovers (-0.85σ); low rim pressure (FTs) (-0.82σ). The map marker sits at the center of the region's exemplars — the region itself has no drawn boundary, and atlas proximity is approximate (see the trust badge)."
   },
   {
    "id": "11",
@@ -565,7 +576,8 @@
    "era_span": [
     "1996-97",
     "2025-26"
-   ]
+   ],
+   "geometry": "Region 11 of 12: k-means (k=12) on the 64-d MTNN embedding (seed 0; names from each cluster's stat profile). 1,145 player-seasons (1996-97 to 2025-26). Centroid style vs the league average: low scoring volume (-0.70σ); low shot volume (-0.68σ); low turnovers (-0.59σ); low three-point volume (-0.57σ). The map marker sits at the center of the region's exemplars — the region itself has no drawn boundary, and atlas proximity is approximate (see the trust badge)."
   }
  ]
 }

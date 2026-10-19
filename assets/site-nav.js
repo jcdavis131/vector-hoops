@@ -19,7 +19,6 @@
     { href: '/players', label: 'Players', desc: 'Directory, skill profiles and leaderboards' },
     { href: '/insights', label: 'Insights', desc: 'Findings from the model — and from the ledger' },
     { href: '/playoff-runs', label: 'Playoff Runs', desc: 'The greatest postseason runs, ranked' },
-    { href: '/props-lab', label: 'Props Lab', desc: 'Prop research — paper trades only, never real money' },
     { href: '/taxonomy', label: 'Taxonomy', desc: 'A taxonomy of play styles' },
     { href: '/methods', label: 'Methods', desc: 'Trust: every number recomputed from source, and the model graded' }
   ];
@@ -85,6 +84,15 @@
 
     wireDrawer(nav);
     markLive(nav);
+
+    // visit — Owner Q: which inbound refs actually bring returning players?
+    // data-mounted guards double-fire; vh-analytics.js is a no-op until a
+    // backend is chosen, so this is honest scaffolding, not theater.
+    try {
+      var ref = null;
+      try { ref = new URL(location.href).searchParams.get('ref'); } catch (e) {}
+      if (window.VHAnalytics) VHAnalytics.track('visit', { path: location.pathname, ref: ref });
+    } catch (e) {}
   }
 
   function wireDrawer(nav) {
