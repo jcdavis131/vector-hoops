@@ -42,7 +42,7 @@ def lens() -> dict:
         "probe": probe,
         "grades": grades,
         "keys": [s["key"] for s in sk["skills"]],
-        "by_name_season": {(p["name"], p["season"]): grades[i] for i, p in enumerate(vec["players"])},
+        "by_name_season": {(canonical_name(p["name"]), p["season"]): grades[i] for i, p in enumerate(vec["players"])},
     }
 
 
