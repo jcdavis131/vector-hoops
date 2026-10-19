@@ -305,7 +305,10 @@
   /* Wordle-style Daily Court result card: compact emoji grid, spoiler-free
      (no twin answers), streak hooked in. Web Share API with image when
      available, text share, clipboard, then legacy execCommand fallback. */
-  async function shareDailyCourt(opts){
+  // Pure text builder for the Daily Court/Triple share artifact (panel v3 G2:
+  // one code path for the share text, unit-tested in tests/daily-share.test.mjs).
+  // Spoiler-free by construction: slot status emoji only, no twin answers, no names.
+  function buildDailyCourtText(opts){
     opts=opts||{};
     var mode=opts.mode==='triple'?'triple':'court';
     var total=opts.total||(opts.pool?opts.pool.length:0)||(mode==='triple'?3:5);
@@ -326,7 +329,17 @@
     var streakLine=streak>0?('🔥 '+streak+'-day streak'):'';
     var url=opts.url||('https://hoops.dumbmodel.com/play?day='+dayKey+(mode==='triple'?'&mode=triple':''));
     var text=head+'\n'+scoreLine+'\n'+grid+(streakLine?'\n'+streakLine:'')+'\nPlay the same '+(mode==='triple'?'triple':'court')+': '+url;
-    var title=label+' '+dayKey;
+    return {text:text, title:label+' '+dayKey, url:url, mode:mode, total:total, solved:solved, grid:grid};
+  }
+  async function shareDailyCourt(opts){
+    opts=opts||{};
+    var built=buildDailyCourtText(opts);
+    var text=built.text, title=built.title, url=built.url, grid=built.grid;
+    var mode=built.mode, total=built.total, solved=built.solved;
+    var guesses=opts.totalGuesses||0;
+    var dayKey=opts.dayKey||'';
+    var streak=(opts.streak!=null)?opts.streak:0;
+    var label=mode==='triple'?'Daily Triple':'Daily Court';
     function legacyCopy(t){
       try{
         var ta=document.createElement('textarea'); ta.value=t; ta.setAttribute('readonly','');
@@ -384,5 +397,5 @@
     }catch(e){ console.warn('shareDailyCourt fail',e); }
     return false;
   }
-  window.VHShare={shareUniverse:shareUniverse,shareChimera:shareChimera,sharePastModern:sharePastModern,drawTeamCard:drawTeamCard,drawChimeraCard:drawChimeraCard,drawPastModernCard:drawPastModernCard,drawPackCard:drawPackCard,sharePack:sharePack,shareDailyCourt:shareDailyCourt};
+  window.VHShare={shareUniverse:shareUniverse,shareChimera:shareChimera,sharePastModern:sharePastModern,drawTeamCard:drawTeamCard,drawChimeraCard:drawChimeraCard,drawPastModernCard:drawPastModernCard,drawPackCard:drawPackCard,sharePack:sharePack,shareDailyCourt:shareDailyCourt,buildDailyCourtText:buildDailyCourtText};
 })();
