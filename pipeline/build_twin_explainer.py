@@ -14,8 +14,15 @@ Outputs: assets/twin_explainer.json
            so the client can explain ANY reveal pair live (same algorithm).
 
 Method per pair (A, B) in the 14-d serving space:
-  shared dims  = 3 smallest |a_d - b_d|  -> chip from mean sign ("both high/low/average X")
+  shared dims  = 3 closest |a_d - b_d|, stable-partitioned so shared PRESENCES
+                 (mean z >= 0.25) lead, then average traits, then shared
+                 ABSENCES (mean z <= -0.25)  [v4 presence-preference, 2026-10-19]
   differentiator = largest |a_d - b_d|    -> "biggest difference: X"
+  sim_se       = bootstrap se of the 64-d cosine under resampling of the
+                 64 embedding dims (reps=100, seed=20261019)
+  pct          = percentile of sim within the twin sim distribution
+  absence_only = all 3 chips are shared absences -> strong-band pairs get a
+                 shown qualifier ("strong twin, mostly in what they don't do")
 The MATCH itself was found in the full 64-d MTNN embedding (see eratwins.json
 method); the explainer only decomposes observable style overlap in 14-d.
 
@@ -61,19 +68,82 @@ def season_year(s):
 
 
 def explain(va, vb, labels, dim_codes):
-    """Same algorithm the client runs live. Returns (shared_chips[3], differ_label)."""
-    diffs = sorted(range(14), key=lambda k: abs(va[k] - vb[k]))
-    shared = []
-    for k in diffs[:3]:
+    """Same algorithm the client runs live.
+
+    Returns (shared_chips[3], chip_kinds[3], differ_label).
+
+    Presence-preference (2026-10-19, v4 panel): the 3 closest dims are
+    stable-partitioned so shared PRESENCES (mean z >= 0.25) lead, then
+    average traits, then shared ABSENCES (mean z <= -0.25). A twin story
+    should say what two players DO, not what they don't.
+    chip_kinds entries are 'presence' | 'average' | 'absence'.
+    """
+    order = sorted(range(14), key=lambda k: abs(va[k] - vb[k]))
+    # stable partition: presences first, then average, then absences
+    pres, avg, absn = [], [], []
+    for k in order:
+        mean = (va[k] + vb[k]) / 2
+        (pres if mean >= 0.25 else avg if mean > -0.25 else absn).append(k)
+    ranked = pres + avg + absn
+    shared, kinds = [], []
+    for k in ranked[:3]:
         mean = (va[k] + vb[k]) / 2
         if mean >= 0.25:
-            shared.append(CHIP[dim_codes[k]][0])
+            shared.append(CHIP[dim_codes[k]][0]); kinds.append("presence")
         elif mean <= -0.25:
-            shared.append(CHIP[dim_codes[k]][1])
+            shared.append(CHIP[dim_codes[k]][1]); kinds.append("absence")
         else:
-            shared.append(f"both average {labels[dim_codes[k]]}")
-    differ = labels[dim_codes[diffs[-1]]]
-    return shared, differ
+            shared.append(f"both average {labels[dim_codes[k]]}"); kinds.append("average")
+    differ = labels[dim_codes[order[-1]]]
+    return shared, kinds, differ
+
+
+EMB_F32 = A("assets", "mtnn_embeddings.f32")
+
+
+def load_embedding_rows():
+    """Full 64-d MTNN embedding (f32 row = vectors.json player id). Loaded once."""
+    from array import array
+
+    emb = array("f")
+    with open(EMB_F32, "rb") as f:
+        emb.fromfile(f, 12966 * 64)
+    return emb
+
+
+def pair_rows(emb, a_id, b_id):
+    out = []
+    for pid in (a_id, b_id):
+        i = pid * 64
+        out.append([emb[i + k] for k in range(64)])
+    return out
+
+
+def bootstrap_sim_se(va64, vb64, seed=20261019, reps=100):
+    """Bootstrap se of the 64-d cosine under resampling of embedding dims.
+
+    Deterministic (fixed seed). This is the honest uncertainty on the twin
+    similarity number the surfaces display: how stable the cosine is to
+    which of the 64 embedding dims you keep.
+    """
+    import math
+    import random
+
+    ab = [x * y for x, y in zip(va64, vb64)]
+    aa = [x * x for x in va64]
+    bb = [x * x for x in vb64]
+    rng = random.Random(seed)
+    R = range(64)
+    cs = []
+    for _ in range(reps):
+        s = rng.choices(R, k=64)
+        d = sum(ab[i] for i in s)
+        na = math.sqrt(sum(aa[i] for i in s))
+        nb = math.sqrt(sum(bb[i] for i in s))
+        cs.append(d / (na * nb) if na and nb else 0.0)
+    m = sum(cs) / len(cs)
+    var = sum((c - m) ** 2 for c in cs) / (len(cs) - 1)
+    return math.sqrt(var)
 
 
 def main():
@@ -116,6 +186,26 @@ def main():
         f"max {sims[-1]:.3f} -> thin threshold {threshold}"
     )
 
+    # percentile lookup table for the client (sim at each percentile 0..100),
+    # so every surface can headline the percentile from the sim alone.
+    pct_table = []
+    srt = sims
+    for q in range(101):
+        i = (len(srt) - 1) * q / 100
+        lo = int(i)
+        pct_table.append(
+            round(srt[lo] + (srt[lo + 1] - srt[lo]) * (i - lo), 4)
+            if lo + 1 < len(srt)
+            else round(srt[lo], 4)
+        )
+    print(f"  percentile table: {len(pct_table)} entries written to _meta")
+
+    def percentile_rank(s):
+        # Defined by the SAME rule the client uses (twin-bands.js
+        # pctFromTable): count of percentile-table entries strictly below s.
+        # One definition everywhere — no surface can contradict another.
+        return sum(1 for t in pct_table if t < s)
+
     def pair_key(a_key, b_key):
         # canonical pair key: twin seasons repeat across pairs (e.g. AC Green
         # 1999-00 is the twin in 7 pairs), so a single-season key is ambiguous.
@@ -124,6 +214,11 @@ def main():
 
     out = {}
     missing = []
+    se_cache = {}
+    emb64 = load_embedding_rows()
+    id_by_key = {
+        f"{p['name']}|{p['season']}": p["id"] for p in players
+    }
     for p in twins:
         a_key = f"{p['name']}|{p['season']}"
         t = p["twin"]
@@ -132,17 +227,25 @@ def main():
         if va is None or vb is None:
             missing.append((a_key, b_key))
             continue
-        shared, differ = explain(va, vb, labels, dim_codes)
+        shared, kinds, differ = explain(va, vb, labels, dim_codes)
         sim = t["similarity"]
         assert 0 < sim <= 1, f"bad sim {sim}"
+        pair_ids = tuple(sorted((id_by_key[a_key], id_by_key[b_key])))
+        if pair_ids not in se_cache:
+            va64, vb64 = pair_rows(emb64, *pair_ids)
+            se_cache[pair_ids] = bootstrap_sim_se(va64, vb64)
         rec = {
             "a": a_key,
             "b": b_key,
             "a_pid": pid_by_key[a_key],
             "b_pid": pid_by_key[b_key],
             "shared": shared,
+            "kinds": kinds,
             "differ": differ,
             "sim": round(sim, 3),
+            "sim_se": round(se_cache[pair_ids], 3),
+            "pct": percentile_rank(sim),
+            "absence_only": all(k == "absence" for k in kinds),
             "thin": bool(sim < threshold),
         }
         out[pair_key(a_key, b_key)] = rec
@@ -171,13 +274,33 @@ def main():
         "explainer_space": "14-d era-normalised serving vectors (vectors.json)",
         "labels": labels,
         "chips": {c: list(v) for c, v in CHIP.items()},
+        "chip_rule": (
+            "2026-10-19 presence-preference: the 3 closest of the 14 style dims "
+            "are stable-partitioned so shared PRESENCES (mean z >= 0.25) lead, "
+            "then average traits, then shared ABSENCES (mean z <= -0.25). "
+            "absence_only = all 3 chips are shared absences; a strong-band twin "
+            "with absence_only gets a shown qualifier."
+        ),
+        "sim_interval_method": (
+            "sim_se: bootstrap standard error of the 64-d cosine under "
+            "resampling of the 64 embedding dims (reps=100, seed=20261019); "
+            "displayed as '<sim> ± <se>' on tap-through only."
+        ),
+        "pct_table": pct_table,
+        "pct_note": (
+            "percentile = number of percentile-table entries strictly below "
+            "the sim (0..100); the client uses the identical rule, so every "
+            "surface headlines the same percentile. Headline as "
+            "'more similar than N% of pairs'."
+        ),
     }
 
     # ---- QA: 5-pair sanity (spec acceptance) ----
-    # NOTE: archetype labels do NOT predict the top-3 shared dims (verified:
-    # sharpshooter archetype pairs share a 3pt dim only 28% of the time), because
-    # "shared" usually means shared absences (both similarly low). The checks
-    # below use concrete, hand-verified pairs instead.
+    # NOTE (2026-10-19): archetype labels do NOT predict the top-3 shared dims
+    # (verified: sharpshooter archetype pairs share a 3pt dim only 28% of the
+    # time), because pre-presence-preference "shared" usually meant shared
+    # absences (both similarly low). The v4 chip rule now surfaces shared
+    # presences first; the checks below use concrete, hand-verified pairs.
     def key_of(p):
         return pair_key(
             f"{p['name']}|{p['season']}", f"{p['twin']['name']}|{p['twin']['season']}"
@@ -198,10 +321,19 @@ def main():
 
     ag = next(p for p in twins if p["name"] == "AC Green" and p["season"] == "1999-00")
     ag_rec = out[key_of(ag)]
-    assert "both rarely shoot threes" in ag_rec["shared"], "AC Green pair chips wrong"
+    # v4 presence-preference (2026-10-19): chips must LEAD with presences.
+    # AC Green ~ Horace Grant (0.775, strong band) was evidenced by three
+    # shared absences; it now leads with presences and is NOT absence_only.
+    assert ag_rec["shared"][0] == "both outscore opponents on court", (
+        f"AC Green pair chips wrong: {ag_rec['shared']}"
+    )
+    assert not ag_rec["absence_only"], "AC Green pair wrongly flagged absence_only"
     assert ag_rec["differ"] == "rim protection", "AC Green differ wrong"
+    assert ag_rec["pct"] > 66, f"AC Green pct wrong: {ag_rec['pct']}"
+    assert 0 < ag_rec["sim_se"] < 0.2, f"AC Green sim_se implausible: {ag_rec['sim_se']}"
     print(
-        f"  bigs: AC Green <-> Horace Grant: {ag_rec['shared']} | differ: {ag_rec['differ']}"
+        f"  bigs: AC Green <-> Horace Grant: {ag_rec['shared']} | differ: {ag_rec['differ']} "
+        f"| pct {ag_rec['pct']} | se {ag_rec['sim_se']}"
     )
 
     # v5 pairings (2026-10-12 regen): Grant Hill's twin is now Paul Pierce
@@ -244,10 +376,22 @@ def main():
     for p in twins:
         a_key = f"{p['name']}|{p['season']}"
         b_key = f"{p['twin']['name']}|{p['twin']['season']}"
-        s2, d2 = explain(v_by_key[a_key], v_by_key[b_key], labels, dim_codes)
+        s2, k2, d2 = explain(v_by_key[a_key], v_by_key[b_key], labels, dim_codes)
         rec = out[pair_key(a_key, b_key)]
-        assert s2 == rec["shared"] and d2 == rec["differ"], f"algo drift: {a_key}"
+        assert (
+            s2 == rec["shared"] and k2 == rec["kinds"] and d2 == rec["differ"]
+        ), f"algo drift: {a_key}"
     print(f"  live-compute agreement: {len(twins)}/{len(twins)} pairs")
+
+    # QA: strong-band twins evidenced ONLY by absences must be flagged for the
+    # shown qualifier (manners before errors: presence precedes absence).
+    strong_absence = [
+        k for k, r in out.items()
+        if not k.startswith("_") and r["sim"] >= 0.727 and r["absence_only"]
+    ]
+    print(f"  strong-band absence_only pairs (get the shown qualifier): {len(strong_absence)}")
+    for k in strong_absence[:5]:
+        print(f"    {k}: {out[k]['shared']}")
 
     def emit(path, obj):
         # mirror to public/ (Vercel serves public/ at the site root)

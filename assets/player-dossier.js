@@ -81,7 +81,7 @@
     }
     var t = tw.t;
     var band = global.VHTwinBands ? global.VHTwinBands.chipHTML(bands, t.sim) : '';
-    var html = '<div class="vh-dos__twin"><div class="vh-dos__twin-name">' +
+    var html = '<div class="vh-dos__twin vh-truth"><div class="vh-dos__twin-name">' +
       esc(t.n) + ' <span class="vh-dos__dim">' + esc(t.s) + '</span></div>' +
       '<div class="vh-dos__twin-sim">' + band + '</div></div>';
     if (tw.why) {
@@ -160,15 +160,16 @@
         ' <span class="vh-dos__dim">' + esc(n.s) + '</span></span>' +
         '<span class="vh-dos__dim">' + nb + '</span></div>';
     }).join('') + '</div>';
-    html += '<p class="vh-dos__note">Five nearest player-seasons to his signature ' +
-      'season (' + esc(d.ss) + ') in the 14-d style space.</p>';
+    html += '<p class="vh-dos__note vh-approx">Five nearest player-seasons to his signature ' +
+      'season (' + esc(d.ss) + ') in the 14-d style space — the same space behind the atlas.</p>';
 
     html += h4('On the map');
     html += '<p class="vh-dos__note">' + esc(d.mr.join(' \u00b7 ')) + '.</p>';
 
-    html += '<p class="vh-dos__prov">Built from the house embedding model ' +
-      '(MTNN v5, 14-d serving vectors) plus derived research \u2014 era twins, ' +
-      'career trails, archetypes, honors. ' +
+    html += '<p class="vh-dos__prov vh-truth">Era twins are matched by cosine similarity in the ' +
+      '64-dimensional MTNN embedding. Everything else on this page — the fingerprint, the ' +
+      'neighborhood, how his game changed — is cosine distance in the 14 era-normalised ' +
+      'per-100 stats behind the atlas. ' +
       '<a href="methods.html#dossier">How it\u2019s made \u2192</a></p>';
     return html;
   }
@@ -200,6 +201,13 @@
     '.vh-dos__prov{opacity:.55;font-size:11.5px;border-top:1px solid rgba(128,128,128,.25);' +
     'padding-top:8px;margin-top:10px}' +
     '.vh-dos__prov a{color:inherit}' +
+    /* v4 honesty grammar — embedding-truth vs map-approximation surfaces.
+       truth (64-d MTNN embedding: twin bands, peers, game feedback): solid marker.
+       approximation (the 2-D atlas of 14 stats): dashed marker. Light touch. */
+    '.vh-truth{border-inline-start:3px solid #e0762e;padding-inline-start:10px}' +
+    '.vh-approx{border-inline-start:3px dashed rgba(128,128,128,.55);padding-inline-start:10px}' +
+    '.twin-why__qual{font-size:12px;opacity:.75;margin:6px 0;font-style:italic}' +
+    '.twin-band__detail{font-size:12px;opacity:.8;margin-top:4px;line-height:1.5}' +
     '@media(max-width:520px){.vh-dos__trait{grid-template-columns:104px 1fr 40px}}' +
     /* keep the modal title + close reachable while the long dossier scrolls */
     '#dossier-modal>div:first-child{position:sticky;top:-14px;z-index:3;' +

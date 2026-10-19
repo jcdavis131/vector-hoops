@@ -144,6 +144,7 @@
         '<button type="button" class="region-panel__close" aria-label="Close region panel">×</button>' +
       '</div>' +
       '<p class="region-panel__blurb">' + esc(rg.blurb) + '</p>' +
+      (rg.geometry ? '<p class="region-panel__geometry">' + esc(rg.geometry) + '</p>' : '') +
       '<dl class="readout__facts">' +
         '<div><dt>Player-seasons</dt><dd class="num">' + rg.size.toLocaleString('en-US') + '</dd></div>' +
         '<div><dt>Era span</dt><dd class="num">' + esc(fmtSeason(rg.era_span[0])) + ' – ' + esc(fmtSeason(rg.era_span[1])) + '</dd></div>' +

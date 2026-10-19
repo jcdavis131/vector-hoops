@@ -737,7 +737,7 @@
       }
       let low=trimmed.toLowerCase(); let m=trimmed.match(/^(.+?)\s+\d{4}-\d{2}$/); if(m) low=m[1].trim().toLowerCase();
       if(state.target && state.target.n && low===state.target.n.toLowerCase().trim()) return {ok:false, reason:'Target self excluded'};
-      const r=rankOfModernName(trimmed); if(!r) return {ok:false, reason:'Not a current 2024-26 player'};
+      const r=rankOfModernName(trimmed); if(!r) return {ok:false, reason:'Not guessable — only players with a qualifying 2025-26 season (12+ games, 450+ minutes)'};
       const guesses = state.guesses||[];
       const already=guesses.find(g=> {
         try{

@@ -100,6 +100,11 @@
 .trust-badge summary::before{ content: "◈ "; color: var(--pencil-text); }
 .trust-badge[open] summary{ color: var(--fg-2); }
 .trust-badge p{ margin: 6px 0 0; line-height: 1.5; color: var(--fg-2); }
+/* v4 honesty grammar — embedding-truth vs map-approximation surfaces.
+   truth (64-d MTNN embedding: twin bands, peers, game feedback): solid marker.
+   approximation (the 2-D atlas of 14 stats): dashed marker. Light touch. */
+.vh-truth{ border-inline-start: 3px solid var(--accent, #e0762e); padding-inline-start: 10px; }
+.vh-approx{ border-inline-start: 3px dashed var(--line-2, #999); padding-inline-start: 10px; }
 #region-layer{ position: absolute; inset: 0; z-index: 2; pointer-events: none; }
 .region-tag{
   position: absolute; transform: translate(-50%, -50%);
@@ -338,8 +343,8 @@
         <ul id="atlas-results" class="atlas-results" role="listbox" aria-label="Matching seasons" hidden></ul>
       </div>
       <div class="label"><span id="atlas-count" class="num" data-fact="player_seasons">12,966</span> plotted</div>
-      <details class="trust-badge">
-        <summary>This view keeps 11% of each player's 20 nearest neighborhoods from the model</summary>
+      <details class="trust-badge vh-approx">
+        <summary>This view keeps <span data-served-const="badge_overlap_pct">12</span>% of each player's 20 nearest neighborhoods from the model</summary>
         <p>We sampled 2,000 players and checked how many of each one&#8217;s 20 closest neighbors in the full 64-d model stay neighbors on this flat map — about 1 in 9 do.</p>
       </details>
       <div class="team-highlight">
@@ -384,10 +389,10 @@
           <span class="peers__note" id="atlas-peers-status"></span>
         </div>
         <table class="data-table">
-          <thead><tr><th class="r" scope="col">#</th><th scope="col">Player</th><th scope="col">Season</th><th scope="col" class="hide-s">Archetype</th><th class="r" scope="col">Cosine</th></tr></thead>
+          <thead><tr><th class="r" scope="col">#</th><th scope="col">Player</th><th scope="col">Season</th><th scope="col" class="hide-s">Archetype</th><th class="r" scope="col">Similarity</th></tr></thead>
           <tbody id="atlas-peers-body"></tbody>
         </table>
-        <p class="peers__foot">Peers are the nearest seasons by cosine similarity in the 64-dimensional MTNN embedding. The atlas itself is a 2-D view of 14 era-normalised per-100 stats, so a peer can sit some distance away on it.</p>
+        <p class="peers__foot vh-truth">Peers are the nearest seasons by cosine similarity in the 64-dimensional MTNN embedding. The atlas itself is a 2-D view of 14 era-normalised per-100 stats, so a peer can sit some distance away on it.</p>
       </div>
     </div>
     <p class="visually-hidden" id="atlas-live" aria-live="polite"></p>
@@ -466,9 +471,10 @@
 
 <script defer src="/assets/site-nav.js?v=c12413c4"></script>
 <script defer src="/assets/mtnn.js?v=81d491f8"></script>
-<script defer src="/assets/twin-bands.js?v=d8e155bd"></script>
+<script defer src="/assets/served-constants.js?v=8ba12340"></script>
+<script defer src="/assets/twin-bands.js?v=0a191313"></script>
 <script defer src="/assets/atlas-map.js?v=0870c2e8"></script>
-<script defer src="/assets/atlas-regions.js?v=ec87afa0"></script>
+<script defer src="/assets/atlas-regions.js?v=6d28577c"></script>
 <script defer src="/assets/career-trails.js?v=a0e9e836"></script>
 <script src="assets/site-facts.js?v=cbb639f4" defer></script>
 <script>
