@@ -1,6 +1,19 @@
 /* viral-share.js — v2 Pack Battle production - battle cards & sharing */
 (function(){
   'use strict';
+  /* Shared confirmation toast for every share gesture (Lane A: the share
+   * loop must visibly land — SHARE taps here get a visible response in
+   * <=1s. NOTE: showToast's visible styling lives in play.html's <style>
+   * (.vh-toast); without it the element exists but is invisible. */
+  function showToast(msg){
+    try{
+      var t=document.getElementById('vh-toast');
+      if(!t){ t=document.createElement('div'); t.id='vh-toast'; t.className='vh-toast'; t.setAttribute('role','status'); document.body.appendChild(t); }
+      t.textContent=msg; t.classList.add('is-visible');
+      clearTimeout(showToast._t);
+      showToast._t=setTimeout(function(){ t.classList.remove('is-visible'); }, 2600);
+    }catch(e){}
+  }
   function roundedRect(ctx,x,y,w,h,r){ctx.beginPath();ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);ctx.arcTo(x+w,y+h,x,y+h,r);ctx.arcTo(x,y+h,x,y,r);ctx.arcTo(x,y,x+w,y,r);ctx.closePath();}
   function drawTeamCard(abbr,titleLine,metaLine){
     var W=1080,H=1080; var canvas=document.createElement('canvas'); canvas.width=W; canvas.height=H; var ctx=canvas.getContext('2d');
@@ -262,14 +275,8 @@
     }catch(e){console.warn('sharePack fail',e);} return false;
   }
   async function shareUniverse(abbr,text,url,copiedEl){
-    function showToast(msg){
-      try{
-        var t=document.getElementById('vh-toast');
-        if(!t){ t=document.createElement('div'); t.id='vh-toast'; t.className='vh-toast'; document.body.appendChild(t); }
-        t.textContent=msg; t.classList.add('is-visible');
-        setTimeout(function(){ t.classList.remove('is-visible'); }, 2600);
-      }catch(e){}
-    }
+    /* showToast is the module-scope toast now (exported on VHShare below) —
+       calls inside this function resolve to it. */
     try{
       var titleEl=document.getElementById('team-universe-title'); var metaEl=document.getElementById('team-universe-meta');
       var titleLine=titleEl?titleEl.textContent:abbr+' universe'; var metaLine=metaEl?metaEl.textContent.replace(/\s+/g,' ').trim().slice(0,80):'';
@@ -305,10 +312,7 @@
   /* Wordle-style Daily Court result card: compact emoji grid, spoiler-free
      (no twin answers), streak hooked in. Web Share API with image when
      available, text share, clipboard, then legacy execCommand fallback. */
-  // Pure text builder for the Daily Court/Triple share artifact (panel v3 G2:
-  // one code path for the share text, unit-tested in tests/daily-share.test.mjs).
-  // Spoiler-free by construction: slot status emoji only, no twin answers, no names.
-  function buildDailyCourtText(opts){
+  async function shareDailyCourt(opts){
     opts=opts||{};
     var mode=opts.mode==='triple'?'triple':'court';
     var total=opts.total||(opts.pool?opts.pool.length:0)||(mode==='triple'?3:5);
@@ -327,19 +331,13 @@
     var head='🏀 Vector Hoops '+label+' — '+dayKey;
     var scoreLine=solved+'/'+total+' in '+guesses+' guess'+(guesses===1?'':'es');
     var streakLine=streak>0?('🔥 '+streak+'-day streak'):'';
-    var url=opts.url||('https://hoops.dumbmodel.com/play?day='+dayKey+(mode==='triple'?'&mode=triple':''));
-    var text=head+'\n'+scoreLine+'\n'+grid+(streakLine?'\n'+streakLine:'')+'\nPlay the same '+(mode==='triple'?'triple':'court')+': '+url;
-    return {text:text, title:label+' '+dayKey, url:url, mode:mode, total:total, solved:solved, grid:grid};
-  }
-  async function shareDailyCourt(opts){
-    opts=opts||{};
-    var built=buildDailyCourtText(opts);
-    var text=built.text, title=built.title, url=built.url, grid=built.grid;
-    var mode=built.mode, total=built.total, solved=built.solved;
-    var guesses=opts.totalGuesses||0;
-    var dayKey=opts.dayKey||'';
-    var streak=(opts.streak!=null)?opts.streak:0;
-    var label=mode==='triple'?'Daily Triple':'Daily Court';
+    var url=opts.url||('https://hoops.dumbmodel.com/play?day='+dayKey+(mode==='triple'?'&mode=triple':'')+'&ref=share');
+    /* Lane A: the Daily Court card text is built by the ledger (the ONLY
+       scorer) when the caller passes it; the inline builder below stays as
+       the fallback. Either way every shared URL carries ref=share so
+       inbound plays are visible. */
+    var text=opts.text||(head+'\n'+scoreLine+'\n'+grid+(streakLine?'\n'+streakLine:'')+'\nPlay the same '+(mode==='triple'?'triple':'court')+': '+url);
+    var title=label+' '+dayKey;
     function legacyCopy(t){
       try{
         var ta=document.createElement('textarea'); ta.value=t; ta.setAttribute('readonly','');
@@ -382,7 +380,7 @@
         if(y>1050) return;
       });
       ctx.fillStyle='#F0E442'; ctx.strokeStyle='#111'; ctx.lineWidth=4; rr(ctx,36,H-110,W-72,70,18); ctx.fill(); ctx.stroke();
-      ctx.fillStyle='#111'; ctx.font='900 24px ui-sans-serif'; ctx.fillText('Play same '+(mode==='triple'?'triple':'court')+': hoops.dumbmodel.com/play?day='+dayKey+(mode==='triple'?'&mode=triple':''),56,H-64);
+      ctx.fillStyle='#111'; ctx.font='900 24px ui-sans-serif'; ctx.fillText('Play same '+(mode==='triple'?'triple':'court')+': '+String(url).replace(/^https?:\/\//,''),56,H-64);
       var blob=await new Promise(function(r){c.toBlob(function(b){r(b);},'image/png');});
       if(blob){
         var file=new File([blob],'daily-'+mode+'-'+dayKey+'.png',{type:'image/png'});
@@ -397,5 +395,5 @@
     }catch(e){ console.warn('shareDailyCourt fail',e); }
     return false;
   }
-  window.VHShare={shareUniverse:shareUniverse,shareChimera:shareChimera,sharePastModern:sharePastModern,drawTeamCard:drawTeamCard,drawChimeraCard:drawChimeraCard,drawPastModernCard:drawPastModernCard,drawPackCard:drawPackCard,sharePack:sharePack,shareDailyCourt:shareDailyCourt,buildDailyCourtText:buildDailyCourtText};
+  window.VHShare={showToast:showToast,shareUniverse:shareUniverse,shareChimera:shareChimera,sharePastModern:sharePastModern,drawTeamCard:drawTeamCard,drawChimeraCard:drawChimeraCard,drawPastModernCard:drawPastModernCard,drawPackCard:drawPackCard,sharePack:sharePack,shareDailyCourt:shareDailyCourt};
 })();

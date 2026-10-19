@@ -243,6 +243,15 @@ button,.input{min-height:44px}
 #guess-input.shake{animation:vhShake .25s ease}
 .btn[disabled]{opacity:.45;cursor:default}
 #guess-input[disabled]{opacity:.55}
+/* ── share toast + share sheet (Lane A: the share loop must visibly land) ── */
+.vh-toast{position:fixed;left:50%;bottom:88px;transform:translateX(-50%) translateY(16px);background:#1A150F;color:#FFFDF6;padding:10px 18px;border-radius:999px;font:600 14px/1.4 system-ui,-apple-system,sans-serif;opacity:0;pointer-events:none;transition:opacity .18s ease,transform .18s ease;z-index:9999;box-shadow:0 6px 24px rgba(0,0,0,.28);max-width:min(92vw,440px);text-align:center}
+.vh-toast.is-visible{opacity:1;transform:translateX(-50%) translateY(0)}
+#vh-share-sheet{position:fixed;inset:0;z-index:9998;display:flex;align-items:flex-end;justify-content:center;background:rgba(26,21,15,.5)}
+.vh-share-card{background:#FFFDF6;border-radius:16px 16px 0 0;padding:18px 18px 24px;max-width:560px;width:100%;box-shadow:0 -8px 32px rgba(0,0,0,.28);animation:vhCardIn .3s ease}
+.vh-share-preview{font:12px/1.65 ui-monospace,SFMono-Regular,monospace;background:#F7F3E8;border:1px solid #E4DCC8;border-radius:10px;padding:10px 12px;white-space:pre-wrap;max-height:230px;overflow:auto;color:#1A150F}
+.vh-share-row{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+.vh-share-row .btn{flex:1 1 0;min-width:120px}
+.vh-share-fine{font:11px/1.5 system-ui,sans-serif;color:#8a8172;margin-top:10px}
 @media (prefers-reduced-motion: reduce){
   .guess-row.is-new,#result .card,#warm-label.pop,#streak-pill.tick,#guess-input.shake{animation:none}
   .bar>i{transition:none}
@@ -362,11 +371,10 @@ button,.input{min-height:44px}
 <script src="assets/error-boundary.js?v=d0cf8ca0"></script>
 <script src="assets/keyboard-a11y.js?v=39777a87"></script>
 <script src="assets/site-nav.js?v=c12413c4" defer></script>
-<script src="assets/pwa-install.js?v=b954d9d1"></script><script src="assets/audio.js?v=52cfa0d8"></script><script type="module" src="assets/timesfm-forecast.js?v=b1376756"></script><script src="assets/pixel-avatar.js?v=6216d2ba"></script><script src="assets/team-logo.js?v=864a7981"></script><script src="assets/viral-share.js?v=b60bab24"></script><script src="assets/past-modern-game.js?v=ad5bef1b"></script><script src="/assets/twin-bands.js?v=d8e155bd"></script><script src="/assets/twin-explainer.js?v=99af7d7d"></script>
+<script src="assets/pwa-install.js?v=b954d9d1"></script><script src="assets/audio.js?v=52cfa0d8"></script><script type="module" src="assets/timesfm-forecast.js?v=259274e6"></script><script src="assets/pixel-avatar.js?v=6216d2ba"></script><script src="assets/team-logo.js?v=864a7981"></script><script src="assets/viral-share.js?v=f2fddbac"></script><script src="assets/daily-ledger.js?v=99a36168"></script><script src="assets/past-modern-game.js?v=38d33a19"></script><script src="/assets/twin-bands.js?v=d8e155bd"></script><script src="/assets/twin-explainer.js?v=758a0b6c"></script>
 <script src="assets/map-lenses.js?v=656e8d30"></script>
-<script src="assets/game-mechanics.js?v=a03fd0bf"></script>
-<script src="assets/daily-ledger.js?v=c6d4240f"></script>
-<script src="assets/play-engine.js?v=6b0b86cc"></script>
+<script src="assets/game-mechanics.js?v=e49ec57f"></script>
+<script src="assets/play-engine.js?v=417716ef"></script>
 <section aria-label="More ways to play" style="max-width:880px;margin:34px auto 0;padding:0 18px;text-align:center">
   <p class="small-mono" style="text-transform:none;opacity:.85">One court, every mode: the Daily five, the Triple, endless Random and the Pack</p>
 </section>

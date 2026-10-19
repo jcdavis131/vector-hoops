@@ -306,6 +306,18 @@
         return [];
       }
       if(st.isDaily||st.isChallenge){
+        /* The ledger is the ONLY writer of Daily Court slot state (Lane A).
+           Reads go through VHLedger.readSlot — mid-game reloads restore the
+           guess history verbatim from the same store the ledger scored. */
+        try{
+          const mode=st.isTriple?'triple':'court';
+          if(window.VHLedger){
+            const rec=VHLedger.readSlot(st.dayKey, st.dailySlot||0, mode);
+            if(rec&&rec.guesses) return rec.guesses.slice();
+            return [];
+          }
+        }catch{ return []; }
+        // degraded fallback (ledger script missing): same key format, direct read
         const k=dailySlotKey(st.dayKey, st.dailySlot||0);
         const L=dailyLedger();
         if(L){ return L.load(k, st.dayKey, st.dailySlot||0).guesses; }
@@ -328,6 +340,20 @@
         return;
       }
       if(st.isDaily||st.isChallenge){
+        /* The ledger is the ONLY writer of Daily Court slot state (Lane A).
+           On write failure the ledger reports ok:false and queues for retry —
+           the streak pill shows "unsynced", never a stale number. */
+        try{
+          const mode=st.isTriple?'triple':'court';
+          if(window.VHLedger){
+            VHLedger.flush(); // retry any earlier queued write first
+            const r=VHLedger.record(st.dayKey, st.dailySlot||0, {guesses:G.guesses}, mode);
+            if(!r.ok && window.VHShare && VHShare.showToast) VHShare.showToast('\u26a0\uFE0F Couldn\u2019t sync \u2014 streak shows unsynced, retrying');
+            updateStreakPills();
+            return;
+          }
+        }catch{}
+        // degraded fallback (ledger script missing): same key format, direct write
         const k=dailySlotKey(st.dayKey, st.dailySlot||0);
         const L=dailyLedger();
         if(L){ G.guesses=L.save(k, st.dayKey, st.dailySlot||0, G.guesses, VH_SID); }
@@ -376,15 +402,29 @@
     const st=VHPastModern.state(); if(!st.dailyPool||!st.dailyPool.length){ $('#daily-court').style.display='none'; return; }
     if(st.isPack){ $('#daily-court').style.display='none'; return; }
     $('#daily-court').style.display='block';
-    if(label) label.textContent=st.dayKey;
-    if(ipBadge) ipBadge.textContent = st.ip ? `Slot ${st.dailyAssignedSlot!=null?st.dailyAssignedSlot+1:'?'} • same for everyone` : 'Same for everyone • refresh-proof';
     const dayKey=st.dayKey;
+    if(label) label.textContent=dayKey + (st.todayKey && dayKey!==st.todayKey ? ' \u00B7 yesterday' : '');
+    if(ipBadge) ipBadge.textContent = st.ip ? `Slot ${st.dailyAssignedSlot!=null?st.dailyAssignedSlot+1:'?'} • same for everyone` : 'Same for everyone • refresh-proof';
+    /* Lane A: the court board renders from VHLedger.read — the same records
+       the ledger card, streak pill and share card render from. No parallel
+       state, so the screen cannot disagree with the ledger. */
+    const mode=st.isTriple?'triple':'court';
+    let ledger=null;
+    try{ ledger = window.VHLedger ? VHLedger.read(dayKey, mode, st.dailyPool.length) : null; }catch{ ledger=null; }
+    const fmtLedger = (guesses)=>{
+      try{ if(window.VHLedger) return VHLedger.fmtSlotScore({guesses:guesses||[]}, dayKey); }catch{}
+      return null;
+    };
     let totalSolved=0, totalGuesses=0;
     const slotData=[];
     for(let i=0;i<st.dailyPool.length;i++){
       try{
-        const raw=localStorage.getItem(dailySlotKey(dayKey,i));
-        if(raw){ const j=JSON.parse(raw); const won=(j.guesses||[]).some(g=>g.rank===0); const cnt=(j.guesses||[]).length; totalGuesses+=cnt; if(won) totalSolved++; slotData[i]={won, cnt, guesses:j.guesses||[]}; }
+        const rec=ledger&&ledger.slots?ledger.slots[i]:null;
+        if(rec){
+          const won=rec.won, cnt=rec.count;
+          totalGuesses+=cnt; if(won) totalSolved++;
+          slotData[i]={won, cnt, lost:rec.state==='lost', guesses:rec.guesses||[], ledgerLine:fmtLedger(rec.guesses)};
+        }
         else slotData[i]=null;
       }catch{ slotData[i]=null; }
     }
@@ -405,12 +445,16 @@
         const sd=slotData[i];
         const isActive = i===st.dailySlot;
         const isSolved = sd&&sd.won;
-        const isFailed = sd&&!sd.won&&sd.cnt>=6;
+        const isFailed = sd&&sd.lost;
         const cls = `court-card ${isActive?'is-active':''} ${isSolved?'is-solved':''} ${isFailed?'is-failed':''}`;
         const badge = isSolved? '✅': isFailed? '❌' : sd? `${sd.cnt}/6` : '▶';
         const arch = ARCH[p.c%ARCH.length];
         const suit=window.VHGameMechanics?VHGameMechanics.suitTagHTML(p.n,p.s,p.i):'';
-        return `<div class="${cls}" data-slot="${i}"><div class="court-slot">Slot ${i+1} • ${arch}${suit?' • '+suit:''}${isActive? ' • NOW':''}</div><div class="court-name">${p.n} ${p.s}</div><div class="court-meta">${sd? (isSolved? `Won in ${sd.cnt}/6` : `${sd.cnt}/6 tries`): 'Not started'}</div><span class="court-badge pill ${isSolved?'pill-green':''}">${badge}</span></div>`;
+        /* The score string comes from the ledger (fmtSlotScore): "Won in
+           N/6 · {date}" / "Missed · {date}" / "N/6 tries" — the same string
+           the ledger card and share card use. A loss is "Missed", never "Won". */
+        const meta = sd ? (sd.ledgerLine || (isSolved? `Won in ${sd.cnt}/6` : `${sd.cnt}/6 tries`)) : 'Not started';
+        return `<div class="${cls}" data-slot="${i}"><div class="court-slot">Slot ${i+1} • ${arch} ${window.VHGameMechanics?VHGameMechanics.suitTagHTML(p.n,p.s,p.i):''} ${isActive? '• NOW':''}</div><div class="court-name">${p.n} ${p.s}</div><div class="court-meta">${meta}</div><span class="court-badge pill ${isSolved?'pill-green':''}">${badge}</span></div>`;
       }).join('');
       grid.querySelectorAll('.court-card').forEach(el=>{
         el.addEventListener('click',()=>{
@@ -761,7 +805,10 @@
              can go stale through old saves while sim is always recomputed,
              and a tag that contradicts the visible % reads as a bug. */
           const prevSim=(function(){ var p=G.guesses[idx-1]; return (p&&typeof p.sim==='number'&&!isNaN(p.sim))?p.sim:simVal; })();
-          warm = simVal > prevSim ? '🔥 warmer' : simVal < prevSim ? '❄️ colder' : 'same';
+          /* Lane A (Ive/Kubrick): never color-alone — the guess-row warmth tag
+             carries an explicit ▲/▼ channel alongside the word. The smooth
+             motion (the row bar) stays; the resting label is discrete. */
+          warm = simVal > prevSim ? '▲ warmer' : simVal < prevSim ? '▼ colder' : 'same';
         }
         const isWin=rankNum===0;
         const archName = (typeof g.c==='number' && ARCH[g.c%ARCH.length]) ? ARCH[g.c%ARCH.length] : '—';
@@ -912,28 +959,32 @@
       if(won){
         // Random and Challenge wins never touch the streak — Daily Court only,
         // as the mode tabs promise
+        let streakN=0;
         if(st.isDaily){
           try{
             const dailyState=VHPastModern.getDailyState();
-            if(dailyState.solved>=1 || G.guesses.some(g=>g.rank===0)) { VHPastModern.onDailyWin(st.dayKey); }
+            if(dailyState.solved>=1 || G.guesses.some(g=>g.rank===0)) { streakN=VHPastModern.onDailyWin(st.dayKey)||0; }
           }catch{}
           try{ if(window.VHGameMechanics&&VHGameMechanics.collectTwin&&st.target) VHGameMechanics.collectTwin(st.target.n, st.target.s); }catch{}
         }
-        // pill reads the honest v2 streak — the old loadStreak()+1 inflated it
-        // on every render, including plain reloads of already-solved slots
-        const sNow=v2Streak();
+        // pill renders through the honest gate (hidden unless the ledger's
+        // self-check passed; "unsynced" on write failure) — then ticks.
+        updateStreakPills();
         const pill=$('#streak-pill');
         if(pill){
           const prev=parseInt((pill.textContent||'').replace(/\D/g,''),10)||0;
-          pill.textContent='streak '+sNow;
-          pill.title='Best: '+v2StreakBest()+' days — Daily Court + Daily Triple share one streak';
-          if(sNow>prev){ pill.classList.remove('tick'); void pill.offsetWidth; pill.classList.add('tick'); }
+          if(streakN>prev){ pill.classList.remove('tick'); void pill.offsetWidth; pill.classList.add('tick'); }
         }
         if(celebrateNew){
           // streak chime lands after the win arpeggio — a cascade, not a pile
           try{ if(window.VHAudio) setTimeout(()=>VHAudio.play('streak'), 950); }catch{}
         }
-        resEl.innerHTML=`<div class="card" style="border-color:var(--green)"><h3 class="hd">✅ Solved in ${G.guesses.length}/6 — ${st.target.n} → ${closest.entry.n}</h3>${window.VHGameMechanics?`<div class="result-stars" aria-label="${VHGameMechanics.starsFor(G.guesses.length,6)} of 3 stars">${VHGameMechanics.starsHTML(VHGameMechanics.starsFor(G.guesses.length,6))}</div>`:''}<div style="font-size:13px">Answer: ${closest.entry.n} ${closest.entry.s} ${(closest.sim*100).toFixed(1)}%<br>Top 5: ${sortedTop}</div>${twinLinksHtml}<div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap"><button class="btn btn-primary" id="btn-next-slot">Next slot →</button><button class="btn" id="btn-view-court">View court</button></div></div>`;
+        /* Lane A (panel Tier 0 #1 + Tier 2 #13): the win rule stated once,
+           beside the score; the streak as an explicit goal (Locke) with
+           Diaconis's labeled base-rate parenthetical, not a bare number. */
+        const winRuleHtml=(st.isDaily&&window.VHLedger&&VHLedger.WIN_RULE)?`<div class="small-mono" style="opacity:.65;margin-top:6px">Win rule: ${VHLedger.WIN_RULE}</div>`:'';
+        const streakGoalHtml=(st.isDaily&&streakN>0&&window.VHLedger&&VHLedger.streakOddsText)?`<div style="margin-top:8px">\uD83D\uDD25 ${streakN}-day streak \u2014 protect it: play tomorrow to keep it.</div><div class="small-mono" style="opacity:.65">${VHLedger.streakOddsText(streakN)}</div>`:'';
+        resEl.innerHTML=`<div class="card" style="border-color:var(--green)"><h3 class="hd">✅ Solved in ${G.guesses.length}/6 — ${st.target.n} → ${closest.entry.n}</h3>${winRuleHtml}${window.VHGameMechanics?`<div class="result-stars" aria-label="${VHGameMechanics.starsFor(G.guesses.length,6)} of 3 stars">${VHGameMechanics.starsHTML(VHGameMechanics.starsFor(G.guesses.length,6))}</div>`:''}<div style="font-size:13px">Answer: ${closest.entry.n} ${closest.entry.s} ${(closest.sim*100).toFixed(1)}%<br>Top 5: ${sortedTop}</div>${streakGoalHtml}${twinLinksHtml}<div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap"><button class="btn btn-primary" id="btn-next-slot">Next slot →</button><button class="btn" id="btn-view-court">View court</button></div></div>`;
         if(celebrateNew) celebrateWin();
       } else {
         try{ if(window.VHAudio) VHAudio.play('reveal'); }catch{}
@@ -949,12 +1000,16 @@
             }
           }catch{}
         }
-        resEl.innerHTML=`<div class="card" style="border-color:var(--verm)"><h3 class="hd">❌ Revealed — ${st.target.n} → ${closest.entry.n}</h3><div style="font-size:13px">Closest: ${closest.entry.n} ${(closest.sim*100).toFixed(1)}%<br>Top 5: ${sortedTop}</div>${twinLinksHtml}<div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap"><button class="btn btn-primary" id="btn-next-slot">Next slot →</button><button class="btn" id="btn-view-court">View court</button></div></div>`;
+        /* Kubrick's state matrix: a loss is "Missed · {date}" — never "Won" —
+           and the win rule beside the score, same as the win card. */
+        const missedHtml=(st.isDaily&&window.VHLedger)?`<div class="small-mono" style="opacity:.65;margin-top:6px">Missed \u00B7 ${st.dayKey} \u2014 ${VHLedger.WIN_RULE}</div>`:'';
+        resEl.innerHTML=`<div class="card" style="border-color:var(--verm)"><h3 class="hd">❌ Revealed — ${st.target.n} → ${closest.entry.n}</h3>${missedHtml}<div style="font-size:13px">Closest: ${closest.entry.n} ${(closest.sim*100).toFixed(1)}%<br>Top 5: ${sortedTop}</div>${twinLinksHtml}<div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap"><button class="btn btn-primary" id="btn-next-slot">Next slot →</button><button class="btn" id="btn-view-court">View court</button></div></div>`;
       }
       const nextSlotBtn=document.getElementById('btn-next-slot');
       if(nextSlotBtn){ nextSlotBtn.addEventListener('click',()=>{
         const st=VHPastModern.state(); const courtN=st.dailyTotal||5; let next=(st.dailySlot+1)%courtN;
-        for(let i=0;i<courtN;i++){ const cand=(st.dailySlot+1+i)%courtN; try{ const raw=localStorage.getItem(dailySlotKey(st.dayKey,cand)); if(!raw){ next=cand; break; } const j=JSON.parse(raw); const won=(j.guesses||[]).some(g=>g.rank===0); const over=(j.guesses||[]).length>=6; if(!won&&!over){ next=cand; break; } }catch{} }
+        const _mode=st.isTriple?'triple':'court';
+        for(let i=0;i<courtN;i++){ const cand=(st.dailySlot+1+i)%courtN; try{ const rec=window.VHLedger?VHLedger.readSlot(st.dayKey,cand,_mode):null; if(!rec){ next=cand; break; } if(!rec.won&&!rec.over){ next=cand; break; } }catch{} }
         const url=new URL(location.href); url.searchParams.set('slot', next); url.searchParams.delete('pack'); url.searchParams.delete('s'); location.href=url.toString();
       }); }
       const viewCourtBtn=document.getElementById('btn-view-court'); if(viewCourtBtn){ viewCourtBtn.addEventListener('click',()=>{ 
@@ -1074,13 +1129,38 @@
   }
   function v2Streak(){ try{ return VHPastModern.getStreak().streak||0; }catch{ return 0; } }
   function v2StreakBest(){ try{ const g=VHPastModern.getStreak(); return g.best||g.streak||0; }catch{ return 0; } }
-  /* Streak display only — reads vh.streak.v2, never writes it. */
+  /* Streak display only — reads vh.streak.v2, never writes it.
+     Lane A honesty contract (Dye/Dean/Diaconis):
+       - hidden unless VHLedger.honest (the runtime self-check passed AND the
+         CI fuzz suite is green) — a wrong streak is worse than no streak.
+       - "unsynced" (never a stale number) when a ledger write failed.
+       - the title carries the Diaconis base-rate parenthetical with the
+         EXPLICITLY LABELED assumed daily win rate (0.6) — illustrative,
+         not measured. */
   function updateStreakPills(){
+    const led=window.VHLedger||null;
+    const honest=!!(led&&led.honest);
+    const unsynced=!!(led&&led.unsynced&&led.unsynced());
     const cur=v2Streak(), best=v2StreakBest();
+    const odds=(led&&led.streakOddsText)?led.streakOddsText(cur):'';
     const pill=$('#streak-pill');
-    if(pill){ pill.textContent='streak '+cur; pill.title='Best: '+best+' days — Daily Court + Daily Triple share one streak'; }
+    if(pill){
+      if(!honest){ pill.style.display='none'; }
+      else{
+        pill.style.display='';
+        if(unsynced){ pill.textContent='unsynced'; pill.title='A ledger write failed \u2014 retrying; showing nothing rather than a stale number.'; }
+        else{ pill.textContent='streak '+cur; pill.title='Best: '+best+' days \u2014 Daily Court + Daily Triple share one streak. '+odds; }
+      }
+    }
     const court=$('#court-streak-pill');
-    if(court){ court.textContent='🔥 streak '+cur; court.title='Best: '+best+' days — Daily Court + Daily Triple share one streak'; }
+    if(court){
+      if(!honest){ court.style.display='none'; }
+      else{
+        court.style.display='';
+        if(unsynced){ court.textContent='\u26a0\uFE0F unsynced'; court.title='A ledger write failed \u2014 retrying; showing nothing rather than a stale number.'; }
+        else{ court.textContent='\uD83D\uDD25 streak '+cur; court.title='Best: '+best+' days \u2014 Daily Court + Daily Triple share one streak. '+odds; }
+      }
+    }
   }
   // --- multi-choice grid (replaces the typeahead; removes the RESULT_CODE_HUNG path) ---
   let _gridCandidates=null, _gridTargetKey=null;
@@ -1355,6 +1435,67 @@
         setTimeout(()=>{ btn.textContent=orig; },1600);
       }catch{}
     }
+    /* ── Lane A share loop (panel Tier 0 #3, Harada goal 2) ──
+       SHARE tap → the card rises into a preview sheet with a destination row;
+       the toast lands immediately (<=1s visible response) and "Copied ✓"
+       fires only after the clipboard write is VERIFIED — never an animated
+       lie. Every shared URL carries ref=share so inbound plays are visible. */
+    async function copyTextVerified(t){
+      try{ if(navigator.clipboard&&navigator.clipboard.writeText){ await navigator.clipboard.writeText(t); return true; } }catch(e){}
+      try{
+        const ta=document.createElement('textarea'); ta.value=t; ta.setAttribute('readonly','');
+        ta.style.position='fixed'; ta.style.opacity='0'; document.body.appendChild(ta); ta.select();
+        const ok=document.execCommand('copy'); ta.remove(); if(ok) return true;
+      }catch(e){}
+      return false;
+    }
+    function toastMsg(m){ try{ if(window.VHShare&&VHShare.showToast) VHShare.showToast(m); }catch(e){} }
+    function dailyShareContext(){
+      const s=VHPastModern.state();
+      const mode=s.isTriple?'triple':'court';
+      let ledger=null, text='', url=location.origin+'/play?day='+s.dayKey+(s.isTriple?'&mode=triple':'')+'&ref=share';
+      try{
+        if(window.VHLedger){
+          ledger=VHLedger.read(s.dayKey, mode, s.dailyPool.length);
+          url=location.origin+VHLedger.shareUrl(s.dayKey, mode);
+          text=VHLedger.shareText(ledger, s.dailyPool, v2Streak());
+        }
+      }catch(e){}
+      if(!text){
+        // degraded: hand-built card from the ledger-backed daily state
+        const ds=VHPastModern.getDailyState();
+        text=(s.isTriple?'Daily Triple':'Daily Court')+' '+s.dayKey+' \u2014 '+(ds.solved||0)+'/'+(ds.total||s.dailyPool.length)+' in '+(ds.totalGuesses||0)+' guesses\n'+url;
+      }
+      return {s, mode, ledger, text, url, title:(s.isTriple?'Daily Triple':'Daily Court')+' '+s.dayKey};
+    }
+    function closeDailyShareSheet(){ const sh=$('#vh-share-sheet'); if(sh) sh.remove(); }
+    function openDailyShareSheet(){
+      const ctx=dailyShareContext();
+      toastMsg('Opening share\u2026'); // <=1s visible response to the tap
+      closeDailyShareSheet();
+      const sh=document.createElement('div'); sh.id='vh-share-sheet'; sh.setAttribute('role','dialog'); sh.setAttribute('aria-label','Share your Daily Court result');
+      sh.innerHTML='<div class="vh-share-card"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px"><b>Share your card</b><button class="btn" id="vh-share-close" type="button">\u2715</button></div><pre class="vh-share-preview"></pre><div class="vh-share-row"><button class="btn btn-primary" id="vh-share-copy-card" type="button">\uD83D\uDCCB Copy card</button><button class="btn" id="vh-share-copy-link" type="button">\uD83D\uDD17 Copy link</button><button class="btn" id="vh-share-native" type="button">\u2197\uFE0F More\u2026</button></div><div class="vh-share-fine">The card text above is exactly what gets copied \u2014 no spoilers, every link carries ref=share.</div></div>';
+      sh.querySelector('.vh-share-preview').textContent=ctx.text;
+      document.body.appendChild(sh);
+      const close=()=>closeDailyShareSheet();
+      sh.addEventListener('click',(e)=>{ if(e.target===sh) close(); });
+      sh.querySelector('#vh-share-close').addEventListener('click',close);
+      sh.querySelector('#vh-share-copy-card').addEventListener('click',async()=>{
+        const ok=await copyTextVerified(ctx.text);
+        toastMsg(ok?'Copied \u2713':'Copy failed \u2014 long-press the preview to copy'); if(ok) close();
+      });
+      sh.querySelector('#vh-share-copy-link').addEventListener('click',async()=>{
+        const ok=await copyTextVerified(ctx.url);
+        toastMsg(ok?'Link copied \u2713':'Copy failed \u2014 long-press the preview to copy'); if(ok) close();
+      });
+      sh.querySelector('#vh-share-native').addEventListener('click',async()=>{
+        try{
+          if(navigator.share){ await navigator.share({title:ctx.title, text:ctx.text, url:ctx.url}); toastMsg('Shared \u2713'); close(); return; }
+        }catch(e){ /* user dismissed the native sheet — stay open, no false confirmation */ }
+        const ok=await copyTextVerified(ctx.text);
+        toastMsg(ok?'Copied \u2713':'Copy failed \u2014 long-press the preview to copy'); if(ok) close();
+      });
+    }
     $('#share-btn').addEventListener('click', async ()=>{
       const s=VHPastModern.state();
       if(s.isPack){
@@ -1367,14 +1508,13 @@
         return;
       }
       if(s.isDaily){
-        const dailyState=VHPastModern.getDailyState(); const opts={dayKey:s.dayKey, pool:s.dailyPool, slotResults:dailyState.slotResults, solved:dailyState.solved, total:dailyState.total||s.dailyPool.length, totalGuesses:dailyState.totalGuesses, streak:v2Streak(), mode:s.isTriple?'triple':'court', url:location.origin+'/play?day='+s.dayKey+(s.isTriple?'&mode=triple':'')};
-        if(window.VHShare&&VHShare.shareDailyCourt){ const res=await VHShare.shareDailyCourt(opts); confirmShare($('#share-btn'), res, 'Share'); return; }
+        openDailyShareSheet(); return;
       }
       const won=G.guesses.some(g=>g.rank===0);
       const opts={puzzleNum:s.puzzleNum, dayKey:s.dayKey, pastName:s.target.n, pastSeason:s.target.s, guesses:G.guesses, answerName:s.closestModern? s.closestModern.entry.n: '', answerSim:s.closestModern? s.closestModern.sim:0, won:won, streak:v2Streak(), url:location.origin+'/play?day='+s.dayKey+'&slot='+s.dailySlot};
       if(window.VHShare&&window.VHShare.sharePastModern){ const res=await window.VHShare.sharePastModern(opts); confirmShare($('#share-btn'), res, 'Share'); }
     });
-    $('#share-text-btn').addEventListener('click', ()=>{
+    $('#share-text-btn').addEventListener('click', async ()=>{
       const s=VHPastModern.state();
       if(s.isPack){
         const ps=VHPastModern.getPackState();
@@ -1387,8 +1527,13 @@
       }
       const won=G.guesses.some(g=>g.rank===0);
       if(s.isDaily){
-        const dailyState=VHPastModern.getDailyState(); const lines=s.dailyPool.map((p,i)=>{ const sd=dailyState.slotResults[i]; const status=sd? (sd.won? `✅ ${sd.cnt}/6` : `❌ ${sd.cnt}/6`): '⬜'; return `${status} Slot ${i+1}: ${p.n}`; }).join('\n');
-        const text=`${s.isTriple?'Daily Triple':'Daily Court'} ${s.dayKey} — ${dailyState.solved}/${dailyState.total} in ${dailyState.totalGuesses} guesses${v2Streak()>0?`\n🔥 ${v2Streak()}-day streak`:''}\n${lines}\n${location.origin}/play?day=${s.dayKey}${s.isTriple?'&mode=triple':''}`; navigator.clipboard.writeText(text).then(()=>confirmShare($('#share-text-btn'),'copied','Copy Grid'), ()=>confirmShare($('#share-text-btn'),false,'Copy Grid'));
+        /* Lane A: the card text is built by the ledger (the ONLY scorer) —
+           this is the "undefined/6" regression the fuzz suite quotes. The
+           copy is verified before "Copied ✓" ever shows. */
+        const ctx=dailyShareContext();
+        const ok=await copyTextVerified(ctx.text);
+        toastMsg(ok?'Copied \u2713':'Copy failed \u2014 try again');
+        const b=$('#share-text-btn'); b.textContent=ok?'Copied':'Copy Grid'; setTimeout(()=>b.textContent='Copy Grid',1200);
         return;
       }
       const grid=G.guesses.map(g=> g.rank===0?'🟩': g.rank<=3?'🟨':'⬜').join(''); const lines=G.guesses.map((g,i)=>`${i+1}. ${g.name} ${(g.sim*100).toFixed(0)}% #${g.rank+1}`).join('\n'); const text=`Vector Hoops P#${s.puzzleNum} ${s.dayKey} ${won?G.guesses.length+'/6':'X/6'} ${grid}\nPast ${s.target.n} → ${won?G.guesses.slice(-1)[0].name:'?'}\n${lines}\n${location.origin}/play?day=${s.dayKey}&slot=${s.dailySlot}`; navigator.clipboard.writeText(text).then(()=>confirmShare($('#share-text-btn'),'copied','Copy Grid'), ()=>confirmShare($('#share-text-btn'),false,'Copy Grid'));
