@@ -6,6 +6,7 @@ public/ mirrors); joins/slugs are apostrophe-insensitive after the
 companion slug-function fix, so keys keep resolving.
 Idempotent. Run from the repo root.
 """
+
 import glob
 from pathlib import Path
 
@@ -17,6 +18,7 @@ RENAMES = {
 }
 
 ROOT = Path(__file__).resolve().parent.parent
+
 
 def main():
     files = sorted(glob.glob(str(ROOT / "assets" / "*.json")))
