@@ -282,6 +282,15 @@
   }
   function dailyKey(){ try{ return VHPastModern.state().dayKey; }catch{ return new Date().toISOString().slice(0,10); } }
   function dailySlotKey(dayKey,slot){ try{ if(VHPastModern.state().isTriple) return `vh.triple.v1.${dayKey}.slot${slot}`; }catch{} return `vh.daily.v2.${dayKey}.slot${slot}`; }
+  // --- append-only daily ledger (panel v3 G1): a recorded guess is never
+  // removed or altered by a later write; concurrent writers merge by union.
+  var VH_SID=(function(){ try{ return window.DailyLedger?DailyLedger.newSessionId():'s0'; }catch(e){ return 's0'; } })();
+  var __ledger=null;
+  function dailyLedger(){
+    if(__ledger) return __ledger;
+    try{ if(window.DailyLedger && window.localStorage) __ledger=DailyLedger.createLedger(window.localStorage); }catch(e){}
+    return __ledger;
+  }
   function loadGuesses(){
     try{
       const st=VHPastModern.state();
@@ -298,6 +307,8 @@
       }
       if(st.isDaily||st.isChallenge){
         const k=dailySlotKey(st.dayKey, st.dailySlot||0);
+        const L=dailyLedger();
+        if(L){ return L.load(k, st.dayKey, st.dailySlot||0).guesses; }
         const raw=localStorage.getItem(k);
         if(!raw) return [];
         const j=JSON.parse(raw);
@@ -318,9 +329,13 @@
       }
       if(st.isDaily||st.isChallenge){
         const k=dailySlotKey(st.dayKey, st.dailySlot||0);
-        localStorage.setItem(k, JSON.stringify({day:st.dayKey, slot:st.dailySlot, guesses:G.guesses}));
+        const L=dailyLedger();
+        if(L){ G.guesses=L.save(k, st.dayKey, st.dailySlot||0, G.guesses, VH_SID); }
+        else localStorage.setItem(k, JSON.stringify({day:st.dayKey, slot:st.dailySlot, guesses:G.guesses}));
       } else {
-        localStorage.setItem('vh.pastmodern.v10', JSON.stringify({day:st.dayKey, guesses:G.guesses}));
+        const L2=dailyLedger();
+        if(L2){ G.guesses=L2.save('vh.pastmodern.v10', st.dayKey, null, G.guesses, VH_SID); }
+        else localStorage.setItem('vh.pastmodern.v10', JSON.stringify({day:st.dayKey, guesses:G.guesses}));
       }
     }catch{}
   }
@@ -1146,7 +1161,8 @@
       }
       if(G.guesses.some(g=>{ try{return g.idx===r.guess.idx|| (g.name||'').toLowerCase().trim()===r.guess.name.toLowerCase().trim();}catch{return false;}})){ crumbClear(); setGuessStatus('Already guessed','warn'); nudgeInput(); if(fromInput&&input) input.value=''; return; }
       setGuessStatus('');
-      G.guesses.push(r.guess); try{ VHPastModern.state().guesses=G.guesses.slice(); }catch{} saveGuesses(); if(fromInput&&input) input.value='';
+      try{ if(window.DailyLedger) DailyLedger.stampGuess(r.guess, st0.dayKey, (st0.isDaily||st0.isChallenge)?(st0.dailySlot||0):null, VH_SID); }catch{}
+      G.guesses.push(r.guess); try{ VHPastModern.state().guesses=G.guesses.slice(); }catch{} saveGuesses(); try{ VHPastModern.state().guesses=G.guesses.slice(); }catch{} if(fromInput&&input) input.value='';
       G._animateNew=true;
       const warmEl=$('#warm-label'); let wc=null; try{ wc=VHPastModern.warmCold(); }catch{}
       if(wc&&G.guesses.length>1){ if(warmEl){ warmEl.style.display='inline-flex'; if(warmEl.textContent!==wc){ warmEl.textContent=wc; warmEl.classList.remove('pop'); void warmEl.offsetWidth; warmEl.classList.add('pop'); } }} else { if(warmEl) warmEl.style.display='none'; }
@@ -1179,6 +1195,23 @@
       if(pendingGuess){ const n=pendingGuess; pendingGuess=null; setGuessStatus(''); doGuess(n); }
       else { projectFrame(); draw(); }
     }catch(e){ console.warn('ranking-ready flush fail', e); }
+  });
+  // cross-tab convergence (panel v3 G1): another tab's write re-merges here
+  // instead of being silently clobbered by this tab's next save.
+  window.addEventListener('storage', function(ev){
+    try{
+      if(!ev||!ev.key) return;
+      if(ev.key.indexOf('vh.daily.v2.')!==0 && ev.key.indexOf('vh.triple.v1.')!==0 && ev.key!=='vh.pastmodern.v10') return;
+      const st=(window.VHPastModern&&VHPastModern.state)?VHPastModern.state():null;
+      if(!st||st.isPack||(!st.isDaily&&!st.isChallenge)) return;
+      const cur=loadGuesses(), before=(G.guesses||[]).length;
+      G.guesses=cur;
+      try{ VHPastModern.state().guesses=G.guesses.slice(); }catch(_){}
+      if(cur.length!==before){
+        try{ if(typeof renderGuesses==='function') renderGuesses(); }catch(_){}
+        try{ if(typeof renderDailyCourt==='function') renderDailyCourt(); }catch(_){}
+      }
+    }catch(_){}
   });
 
   async function main(){
