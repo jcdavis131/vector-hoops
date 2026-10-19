@@ -31,11 +31,11 @@ Stdlib only. Real data only. Any QA failure is a hard failure (non-zero exit).
 
 import json
 import math
-import os
 import statistics
+from pathlib import Path
 
-ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-A = lambda *p: os.path.join(ROOT, *p)  # noqa: E731
+ROOT = Path(__file__).resolve().parent.parent
+A = lambda *p: str(ROOT.joinpath(*p))  # noqa: E731
 
 ERATWINS = A("assets", "eratwins.json")
 VEC = A("assets", "vectors.json")
@@ -185,7 +185,7 @@ def main():
     p10 = sims[len(sims) // 10]
     threshold = round(p10, 2)
     print(
-        f"  sim: min {sims[0]:.3f} p10 {p10:.3f} median {sims[len(sims)//2]:.3f} "
+        f"  sim: min {sims[0]:.3f} p10 {p10:.3f} median {sims[len(sims) // 2]:.3f} "
         f"max {sims[-1]:.3f} -> thin threshold {threshold}"
     )
 
@@ -197,9 +197,7 @@ def main():
         i = (len(srt) - 1) * q / 100
         lo = int(i)
         pct_table.append(
-            round(srt[lo] + (srt[lo + 1] - srt[lo]) * (i - lo), 4)
-            if lo + 1 < len(srt)
-            else round(srt[lo], 4)
+            round(srt[lo] + (srt[lo + 1] - srt[lo]) * (i - lo), 4) if lo + 1 < len(srt) else round(srt[lo], 4)
         )
     print(f"  percentile table: {len(pct_table)} entries written to _meta")
 
@@ -219,9 +217,7 @@ def main():
     missing = []
     se_cache = {}
     emb64 = load_embedding_rows()
-    id_by_key = {
-        f"{p['name']}|{p['season']}": p["id"] for p in players
-    }
+    id_by_key = {f"{p['name']}|{p['season']}": p["id"] for p in players}
     for p in twins:
         a_key = f"{p['name']}|{p['season']}"
         t = p["twin"]
@@ -305,31 +301,21 @@ def main():
     # absences (both similarly low). The v4 chip rule now surfaces shared
     # presences first; the checks below use concrete, hand-verified pairs.
     def key_of(p):
-        return pair_key(
-            f"{p['name']}|{p['season']}", f"{p['twin']['name']}|{p['twin']['season']}"
-        )
+        return pair_key(f"{p['name']}|{p['season']}", f"{p['twin']['name']}|{p['twin']['season']}")
 
-    ah = next(
-        p for p in twins if p["name"] == "Allan Houston" and p["season"] == "2002-03"
-    )
+    ah = next(p for p in twins if p["name"] == "Allan Houston" and p["season"] == "2002-03")
     # v5 pairings (2026-10-12 regen): Houston's twin is Reggie Miller (was
     # JJ Redick in the retired 48-d space); chips hand-verified for this pair.
     assert ah["twin"]["name"] == "Reggie Miller", "Houston twin changed?"
-    assert (
-        "both fill it up scoring" in out[key_of(ah)]["shared"]
-    ), "shooter pair chips wrong"
-    print(
-        f"  sharpshooter: Allan Houston <-> Reggie Miller: {out[key_of(ah)]['shared']}"
-    )
+    assert "both fill it up scoring" in out[key_of(ah)]["shared"], "shooter pair chips wrong"
+    print(f"  sharpshooter: Allan Houston <-> Reggie Miller: {out[key_of(ah)]['shared']}")
 
     ag = next(p for p in twins if p["name"] == "AC Green" and p["season"] == "1999-00")
     ag_rec = out[key_of(ag)]
     # v4 presence-preference (2026-10-19): chips must LEAD with presences.
     # AC Green ~ Horace Grant (0.775, strong band) was evidenced by three
     # shared absences; it now leads with presences and is NOT absence_only.
-    assert ag_rec["shared"][0] == "both outscore opponents on court", (
-        f"AC Green pair chips wrong: {ag_rec['shared']}"
-    )
+    assert ag_rec["shared"][0] == "both outscore opponents on court", f"AC Green pair chips wrong: {ag_rec['shared']}"
     assert not ag_rec["absence_only"], "AC Green pair wrongly flagged absence_only"
     assert ag_rec["differ"] == "rim protection", "AC Green differ wrong"
     assert ag_rec["pct"] > 66, f"AC Green pct wrong: {ag_rec['pct']}"
@@ -342,13 +328,9 @@ def main():
     # v5 pairings (2026-10-12 regen): Grant Hill's twin is now Paul Pierce
     # (was LeBron James in the retired 48-d space), so the playmaker sanity
     # pair is Stockton <-> Rondo — hand-verified pass-first point guards.
-    pm = next(
-        p for p in twins if p["name"] == "John Stockton" and p["season"] == "2000-01"
-    )
+    pm = next(p for p in twins if p["name"] == "John Stockton" and p["season"] == "2000-01")
     assert pm["twin"]["name"] == "Rajon Rondo", "Stockton twin changed?"
-    assert (
-        "both run the offense" in out[key_of(pm)]["shared"]
-    ), "playmaker pair chips wrong"
+    assert "both run the offense" in out[key_of(pm)]["shared"], "playmaker pair chips wrong"
     print(f"  playmaker: John Stockton <-> Rajon Rondo: {out[key_of(pm)]['shared']}")
 
     thin_pair = min(twins, key=lambda p: p["twin"]["similarity"])
@@ -381,17 +363,12 @@ def main():
         b_key = f"{p['twin']['name']}|{p['twin']['season']}"
         s2, k2, d2 = explain(v_by_key[a_key], v_by_key[b_key], labels, dim_codes)
         rec = out[pair_key(a_key, b_key)]
-        assert (
-            s2 == rec["shared"] and k2 == rec["kinds"] and d2 == rec["differ"]
-        ), f"algo drift: {a_key}"
+        assert s2 == rec["shared"] and k2 == rec["kinds"] and d2 == rec["differ"], f"algo drift: {a_key}"
     print(f"  live-compute agreement: {len(twins)}/{len(twins)} pairs")
 
     # QA: strong-band twins evidenced ONLY by absences must be flagged for the
     # shown qualifier (manners before errors: presence precedes absence).
-    strong_absence = [
-        k for k, r in out.items()
-        if not k.startswith("_") and r["sim"] >= 0.727 and r["absence_only"]
-    ]
+    strong_absence = [k for k, r in out.items() if not k.startswith("_") and r["sim"] >= 0.727 and r["absence_only"]]
     print(f"  strong-band absence_only pairs (get the shown qualifier): {len(strong_absence)}")
     for k in strong_absence[:5]:
         print(f"    {k}: {out[k]['shared']}")
@@ -401,13 +378,13 @@ def main():
         with open(path, "w", encoding="utf-8") as f:
             json.dump(obj, f, separators=(",", ":"))
         pub = path.replace(A("assets"), A("public", "assets"), 1)
-        os.makedirs(os.path.dirname(pub), exist_ok=True)
+        Path(pub).parent.mkdir(parents=True, exist_ok=True)
         with open(pub, "w", encoding="utf-8") as f:
             json.dump(obj, f, separators=(",", ":"))
 
     emit(OUT_PAIRS, out)
     json.load(open(OUT_PAIRS, encoding="utf-8"))  # round-trip
-    print(f"OK: {OUT_PAIRS}: {len(out)} pairs, {os.path.getsize(OUT_PAIRS)//1024} KB")
+    print(f"OK: {OUT_PAIRS}: {len(out)} pairs, {Path(OUT_PAIRS).stat().st_size // 1024} KB")
 
     # ---- pool vectors for live client compute (any Daily Court reveal pair) ----
     lite = json.load(open(LITE, encoding="utf-8"))["players"]
@@ -416,20 +393,13 @@ def main():
     past_ids, modern_rows = set(), {}
     for p in lite:
         yr = season_year(p["s"])
-        if (
-            1996 <= yr <= 2023
-            and (honors.get(f"{p['n']}|{p['s']}", {}) or {}).get("asg") == 1
-        ):
+        if 1996 <= yr <= 2023 and (honors.get(f"{p['n']}|{p['s']}", {}) or {}).get("asg") == 1:
             past_ids.add(p["i"])
         if yr >= 2025:
             # keyed by person_id, never display name (identity fix 2026-10-01):
             # two persons can share a display name (e.g. Reggie Williams).
             ex = modern_rows.get(p["pid"])
-            if (
-                ex is None
-                or season_year(ex["s"]) < yr
-                or (season_year(ex["s"]) == yr and p["s"] > ex["s"])
-            ):
+            if ex is None or season_year(ex["s"]) < yr or (season_year(ex["s"]) == yr and p["s"] > ex["s"]):
                 modern_rows[p["pid"]] = p
     pool_ids = past_ids | {p["i"] for p in modern_rows.values()}
     v_by_id = {(p["name"], p["season"]): p["v"] for p in players}
@@ -455,7 +425,7 @@ def main():
     print(
         f"OK: {OUT_VEC}: {len(vec_out)} rows "
         f"(past {len(past_ids)}, modern {len(modern_rows)}), "
-        f"{os.path.getsize(OUT_VEC)//1024} KB"
+        f"{Path(OUT_VEC).stat().st_size // 1024} KB"
     )
 
 
