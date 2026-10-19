@@ -18,10 +18,10 @@ import pytest
 ROOT = Path(__file__).resolve().parent.parent
 
 BANNED = [
-    "14-d serving vectors",          # the dossier footer contradiction (McInnes)
-    "11% of each player's",          # badge drift: overlap@20 = 0.115 -> 12%
-    "Not a current 2024-26 player",   # the false eligibility message
-    "The Tough Seasons",             # renamed -> "The Brief Stints"
+    "14-d serving vectors",  # the dossier footer contradiction (McInnes)
+    "11% of each player's",  # badge drift: overlap@20 = 0.115 -> 12%
+    "Not a current 2024-26 player",  # the false eligibility message
+    "The Tough Seasons",  # renamed -> "The Brief Stints"
 ]
 
 
@@ -122,10 +122,7 @@ def test_strong_band_absence_only_pairs_are_flagged() -> None:
             continue
         assert "absence_only" in r, f"{k} missing absence_only"
         assert "kinds" in r and len(r["kinds"]) == 3
-    strong_absence = [
-        k for k, r in te.items()
-        if not k.startswith("_") and r["sim"] >= 0.727 and r["absence_only"]
-    ]
+    strong_absence = [k for k, r in te.items() if not k.startswith("_") and r["sim"] >= 0.727 and r["absence_only"]]
     assert strong_absence, "expected at least one absence_only strong pair to exercise the qualifier"
     # the renderer must show the qualifier for these
     src = (ROOT / "assets" / "twin-explainer.js").read_text(encoding="utf-8")

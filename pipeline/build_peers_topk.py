@@ -61,9 +61,7 @@ def main() -> int:
 
     emb = np.fromfile(str(ASSETS / "mtnn_embeddings.f32"), dtype=np.float32)
     if emb.size != rows * dim:
-        raise SystemExit(
-            f"build_peers_topk: f32 has {emb.size} floats, expected {rows * dim}"
-        )
+        raise SystemExit(f"build_peers_topk: f32 has {emb.size} floats, expected {rows * dim}")
     emb = emb.reshape(rows, dim)
 
     lite = json.loads((ASSETS / "vectors_search_lite.json").read_text(encoding="utf-8"))
