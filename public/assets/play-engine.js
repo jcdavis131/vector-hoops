@@ -1328,6 +1328,8 @@
     $('#btn-onboard-play')?.addEventListener('click', ()=>{ closeOnboard(); $('#guess-input')?.focus(); });
     $('#btn-onboard-random')?.addEventListener('click', ()=>{ closeOnboard(); const p=VHPastModern.pickRandomPast(); location.href='/play?mode=random&r='+p.i; });
     backdrop?.addEventListener('click', e=>{ if(e.target===backdrop) closeOnboard(); });
+    /* Panel v3 G6: Escape dismisses the info sheet. */
+    document.addEventListener('keydown', e=>{ if(e.key==='Escape' && backdrop && !backdrop.hidden) closeOnboard(); });
 
     $('#btn-focus-guess')?.addEventListener('click', ()=>{ $('#guess-input')?.focus(); window.scrollTo({top: $('#guess-card').offsetTop-20, behavior:'smooth'}); });
     $('#guess-btn')?.addEventListener('click', ()=>{ if(typeof doGuess==='function') doGuess(); });
