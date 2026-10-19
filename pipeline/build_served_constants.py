@@ -22,10 +22,10 @@ Any QA failure is a hard failure (non-zero exit).
 """
 
 import json
-import os
+from pathlib import Path
 
-ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-A = lambda *p: os.path.join(ROOT, *p)  # noqa: E731
+ROOT = Path(__file__).resolve().parent.parent
+A = lambda *p: str(ROOT.joinpath(*p))  # noqa: E731
 
 OUT = A("assets", "served-constants.js")
 
@@ -108,9 +108,7 @@ def main():
 """ % (
         overlap_at_20,
         badge_pct,
-        json.dumps(
-            [{"min": b["min"], "label": b["label"], "blurb": b["blurb"]} for b in bands]
-        ),
+        json.dumps([{"min": b["min"], "label": b["label"], "blurb": b["blurb"]} for b in bands]),
         pair_count,
         pair_count,
         json.dumps(pct_table),
@@ -120,7 +118,7 @@ def main():
     with open(OUT, "w", encoding="utf-8") as f:
         f.write(js)
     pub = OUT.replace(A("assets"), A("public", "assets"), 1)
-    os.makedirs(os.path.dirname(pub), exist_ok=True)
+    Path(pub).parent.mkdir(parents=True, exist_ok=True)
     with open(pub, "w", encoding="utf-8") as f:
         f.write(js)
     print(f"OK: {OUT}: badge {badge_pct}%, bands {cuts}, regions {region_count}, pairs {pair_count}")
