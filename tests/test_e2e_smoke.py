@@ -338,13 +338,18 @@ def test_the_served_files_name_the_promoted_bundle(chain):
     assert served["forced"] is True and served["force_reason"] == REASON
     floors = served["export_floors"]
     assert floors["ok"] or floors["waived_by_force"] == REASON
+    side = load(assets / sm.F32_LINEAGE)
+    assert side["embedding_f32_sha256"] == served["embedding_f32_sha256"]
+    assert side["promote_manifest_sha256"] == current["manifest_sha256"]
+    assert side["embedding_npz_sha256"] == files["embedding"]
+    assert "embedding_f32_sha256" not in manifest
     meta = load(assets / sm.META)
     assert meta["run_id"] == RUN_ID and (meta["rows"], meta["dim"]) == (671, 64)
     assert {k: meta[k] for k in sm.METRIC_KEYS} == served["metrics"] == manifest["metrics"]
     for name in sm.SIDECARS:
         assert load(assets / name)["lineage"]["run_id"] == RUN_ID, name
     # sync_public mirrored the bundle into the tree Vercel serves.
-    for name in (sm.F32, sm.META, sm.LINEAGE, *sm.SIDECARS):
+    for name in (sm.F32, sm.META, sm.LINEAGE, sm.F32_LINEAGE, *sm.SIDECARS):
         assert (root / "public" / "assets" / name).read_bytes() == (assets / name).read_bytes(), name
 
 
