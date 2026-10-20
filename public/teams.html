@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="manifest" href="/manifest.json">
+<title>Team Intros &mdash; Vector Hoops</title>
+<meta name="description" content="Thirty seamless team intros: every NBA team's 2026-27 roster glowing inside the 2,422-player embedding atlas, with franchise legends as ghost stars."/>
+<link rel="stylesheet" href="assets/shell.css?v=7eb94ecf">
+<link rel="stylesheet" href="assets/responsive.css?v=cc8e5207">
+<link rel="stylesheet" href="assets/final-qa.css?v=fb603ee5">
+<link rel="stylesheet" href="assets/unified.css?v=fd25e8ca">
+<link rel="stylesheet" href="assets/motion.css?v=aa8dedc2">
+<style>
+:root{
+  --paper:#FFFEF7;--ink:#1A150F;
+  --mono:ui-monospace,monospace;--sans:ui-sans-serif,system-ui;
+  --page-gutter:clamp(12px,3.2vw,20px);
+}
+html,body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:18px;line-height:1.65;overflow-x:clip;-webkit-text-size-adjust:100%}
+*,*::before,*::after{box-sizing:border-box}
+img,svg,video,canvas{max-width:100%;height:auto;display:block}
+a{color:inherit}
+.site-nav{position:sticky;top:0;z-index:100}
+.research-main.network-main{
+  width:min(1180px,100%);max-width:1180px;margin:0 auto;
+  padding:12px var(--page-gutter) calc(96px + env(safe-area-inset-bottom));
+  display:flex;flex-direction:column;gap:16px;
+}
+/* team intro cards */
+.teams-grid{display:grid;grid-template-columns:1fr;gap:14px;padding:4px 0}
+@media(min-width:700px){.teams-grid{grid-template-columns:1fr 1fr}}
+.team-card{
+  border:1px solid var(--line-2);border-radius:14px;overflow:hidden;
+  background:var(--surface);display:flex;flex-direction:column;
+}
+.team-card__head{padding:12px 14px 10px}
+.team-card__head h2{
+  margin:0;font-family:var(--mono);font-size:clamp(19px,4.6vw,24px);
+  letter-spacing:-.01em;line-height:1.1;
+}
+.team-card__meta{margin:4px 0 0;font-size:13px;color:var(--fg-2)}
+.team-card__video{width:100%;aspect-ratio:16/9;object-fit:cover;background:#08080b}
+/* hero */
+.title-card__eyebrow{margin:0 0 6px;font-family:var(--mono);font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--fg-2)}
+.title-card__title{margin:0 0 10px;font-size:clamp(32px,7vw,46px);letter-spacing:-.02em;line-height:1.04}
+.title-card__lede{margin:0 0 16px;max-width:64ch;font-size:16px;line-height:1.6;color:var(--fg-2)}
+.title-card__meta{display:flex;flex-wrap:wrap;gap:8px;margin:0}
+.title-card__meta span{
+  border:1px solid var(--line-2);border-radius:999px;background:var(--surface);
+  padding:7px 14px;font-family:var(--mono);font-size:12.5px;color:var(--fg-2);
+  white-space:nowrap;
+}
+.title-card__meta b{color:var(--ink);font-weight:700;margin-right:6px}
+.teams-note{
+  font-size:14px;color:var(--fg-2);max-width:72ch;margin:0;
+}
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<nav class="site-nav" data-active="/teams" aria-label="Vector Hoops site"></nav>
+
+<main id="main" class="research-main network-main">
+
+<div class="research-head network-head">
+<header class="title-card">
+<div class="title-card__eyebrow reveal">Vector Hoops</div>
+<h1 class="title-card__title reveal reveal-1">Team intros</h1>
+<p class="title-card__lede reveal reveal-2">Thirty seamless loops &mdash; one per team. The full 2,422-player atlas orbits once every eight seconds; each team&rsquo;s 2026&ndash;27 roster glows in its own colors with every name labeled, and franchise legends drift behind as ghost stars.</p>
+<div class="title-card__meta reveal reveal-3"><span><b>30</b>Teams</span><span><b>8s</b>Seamless loop</span><span><b>2,422</b>Players</span></div>
+</header>
+<p class="teams-note">Videos load as you scroll and pause when off-screen. Legends reflect the 1996-97 → 2025-26 embedding window; pre-1996 greats aren’t in the dataset.</p>
+</div>
+
+<div class="teams-grid">
+  <article class="team-card">
+    <header class="team-card__head">
+      <h2>Atlanta Hawks</h2>
+      <p class="team-card__meta">14 current players &middot; 6 franchise legends</p>
+    </header>
+    <video class="team-card__video" loop muted playsinline preload="metadata"
+           data-src="assets/team-intros/atlanta-loop-phone.mp4"
+           poster="assets/team-intros/atlanta-loop-poster.jpg"
+           aria-label="Atlanta Hawks team intro loop"></video>
+  </article>
+  <article class="team-card">
+    <header class="team-card__head">
+      <h2>Boston Celtics</h2>
+      <p class="team-card__meta">15 current players &middot; 7 franchise legends</p>
+    </header>
+    <video class="team-card__video" loop muted playsinline preload="metadata"
+           data-src="assets/team-intros/boston-loop-phone.mp4"
+           poster="assets/team-intros/boston-loop-poster.jpg"
+           aria-label="Boston Celtics team intro loop"></video>
+  </article>
+  <article class="team-card">
+    <header class="team-card__head">
+      <h2>Brooklyn Nets</h2>
+      <p class="team-card__meta">14 current players &middot; 7 franchise legends</p>
+    </header>
+    <video class="team-card__video" loop muted playsinline preload="metadata"
+           data-src="assets/team-intros/brooklyn-loop-phone.mp4"
+           poster="assets/team-intros/brooklyn-loop-poster.jpg"
+           aria-label="Brooklyn Nets team intro loop"></video>
+  </article>
+  <article class="team-card">
+    <header class="team-card__head">
+      <h2>Charlotte Hornets</h2>
+      <p class="team-card__meta">15 current players &middot; 7 franchise legends</p>
+    </header>
+    <video class="team-card__video" loop muted playsinline preload="metadata"
+           data-src="assets/team-intros/charlotte-loop-phone.mp4"
+           poster="assets/team-intros/charlotte-loop-poster.jpg"
+           aria-label="Charlotte Hornets team intro loop"></video>
+  </article>
+  <article class="team-card">
+    <header class="team-card__head">
+      <h2>Chicago Bulls</h2>
+      <p class="team-card__meta">14 current players &middot; 7 franchise legends</p>
+    </header>
+    <video class="team-card__video" loop muted playsinline preload="metadata"
+           data-src="assets/team-intros/chicago-loop-phone.mp4"
+           poster="assets/team-intros/chicago-loop-poster.jpg"
+           aria-label="Chicago Bulls team intro loop"></video>
+  </article>
+  <article class="team-card">
+    <header class="team-card__head">
+      <h2>Cleveland Cavaliers</h2>
+      <p class="team-card__meta">12 current players &middot; 7 franchise legends</p>
+    </header>
+    <video class="team-card__video" loop muted playsinline preload="metadata"
+           data-src="assets/team-intros/cleveland-loop-phone.mp4"
+           poster="assets/team-intros/cleveland-loop-poster.jpg"
+           aria-label="Cleveland Cavaliers team intro loop"></video>
+  </article>
+  <article class="team-card">
+    <header class="team-card__head">
+      <h2>Dallas Mavericks</h2>
+      <p class="team-card__meta">15 current players &middot; 7 franchise legends</p>
+    </header>
+    <video class="team-card__video" loop muted playsinline preload="metadata"
+           data-src="assets/team-intros/dallas-loop-phone.mp4"
+           poster="assets/team-intros/dallas-loop-poster.jpg"
+           aria-label="Dallas Mavericks team intro loop"></video>
+  </article>
+  <article class="team-card">
+    <header class="team-card__head">
+      <h2>Denver Nuggets</h2>
+      <p class="team-card__meta">15 current players &middot; 7 franchise legends</p>
+    </header>
+    <video class="team-card__video" loop muted playsinline preload="metadata"
+           data-src="assets/team-intros/denver-loop-phone.mp4"
+           poster="assets/team-intros/denver-loop-poster.jpg"
+           aria-label="Denver Nuggets team intro loop"></video>
+  </article>
+  <article class="team-card">
+    <header class="team-card__head">
+      <h2>Detroit Pistons</h2>
+      <p class="team-card__meta">16 current players &middot; 7 franchise legends</p>
+    </header>
+    <video class="team-card__video" loop muted playsinline preload="metadata"
+           data-src="assets/team-intros/detroit-loop-phone.mp4"
+           poster="assets/team-intros/detroit-loop-poster.jpg"
+           aria-label="Detroit Pistons team intro loop"></video>
+  </article>
+  <article class="team-card">
+    <header class="team-card__head">
+      <h2>Golden State Warriors</h2>
+      <p class="team-card__meta">18 current players &middot; 8 franchise legends</p>
+    </header>
+    <video class="team-card__video" loop muted playsinline preload="metadata"
+           data-src="assets/team-intros/golden-state-loop-phone.mp4"
+           poster="assets/team-intros/golden-state-loop-poster.jpg"
+           aria-label="Golden State Warriors team intro loop"></video>
+  </article>
+  <article class="team-card">
+    <header class="team-card__head">
+      <h2>Houston Rockets</h2>
+      <p class="team-card__meta">15 current players &middot; 7 franchise legends</p>
+    </header>
+    <video class="team-card__video" loop muted playsinline preload="metadata"
+           data-src="assets/team-intros/houston-loop-phone.mp4"
+           poster="assets/team-intros/houston-loop-poster.jpg"
+           aria-label="Houston Rockets team intro loop"></video>
+  </article>
+  <article class="team-card">
+    <header class="team-card__head">
+      <h2>Indiana Pacers</h2>
+      <p class="team-card__meta">17 current players &middot; 7 franchise legends</p>
+    </header>
+    <video class="team-card__video" loop muted playsinline preload="metadata"
+           data-src="assets/team-intros/indiana-loop-phone.mp4"
+           poster="assets/team-intros/indiana-loop-poster.jpg"
+           aria-label="Indiana Pacers team intro loop"></video>
+  </article>
+  <article class="team-card">
+    <header class="team-card__head">
+      <h2>LA Clippers</h2>
+      <p class="team-card__meta">17 current players &middot; 8 franchise legends</p>
+    </header>
+    <video class="team-card__video" loop muted playsinline preload="metadata"
+           data-src="assets/team-intros/la-clippers-loop-phone.mp4"
+           poster="assets/team-intros/la-clippers-loop-poster.jpg"
+           aria-label="LA Clippers team intro loop"></video>
+  </article>
+  <article class="team-card">
+    <header class="team-card__head">
+      <h2>Los Angeles Lakers</h2>
+      <p class="team-card__meta">16 current players &middot; 8 franchise legends</p>
+    </header>
+    <video class="team-card__video" loop muted playsinline preload="metadata"
+           data-src="assets/team-intros/la-lakers-loop-phone.mp4"
+           poster="assets/team-intros/la-lakers-loop-poster.jpg"
+           aria-label="Los Angeles Lakers team intro loop"></video>
+  </article>
+  <article class="team-card">
+    <header class="team-card__head">
+      <h2>Memphis Grizzlies</h2>
+      <p class="team-card__meta">18 current players &middot; 8 franchise legends</p>
+    </header>
+    <video class="team-card__video" loop muted playsinline preload="metadata"
+           data-src="assets/team-intros/memphis-loop-phone.mp4"
+           poster="assets/team-intros/memphis-loop-poster.jpg"
+           aria-label="Memphis Grizzlies team intro loop"></video>
+  </article>
+  <article class="team-card">
+    <header class="team-card__head">
+      <h2>Miami Heat</h2>
+      <p class="team-card__meta">16 current players &middot; 9 franchise legends</p>
+    </header>
+    <video class="team-card__video" loop muted playsinline preload="metadata"
+           data-src="assets/team-intros/miami-loop-phone.mp4"
+           poster="assets/team-intros/miami-loop-poster.jpg"
+           aria-label="Miami Heat team intro loop"></video>
+  </article>
+  <article class="team-card">
+    <header class="team-card__head">
+      <h2>Milwaukee Bucks</h2>
+      <p class="team-card__meta">16 current players &middot; 6 franchise legends</p>
+    </header>
+    <video class="team-card__video" loop muted playsinline preload="metadata"
+           data-src="assets/team-intros/milwaukee-loop-phone.mp4"
+           poster="assets/team-intros/milwaukee-loop-poster.jpg"
+           aria-label="Milwaukee Bucks team intro loop"></video>
+  </article>
+  <article class="team-card">
+    <header class="team-card__head">
+      <h2>Minnesota Timberwolves</h2>
+      <p class="team-card__meta">17 current players &middot; 7 franchise legends</p>
+    </header>
+    <video class="team-card__video" loop muted playsinline preload="metadata"
+           data-src="assets/team-intros/minnesota-loop-phone.mp4"
+           poster="assets/team-intros/minnesota-loop-poster.jpg"
+           aria-label="Minnesota Timberwolves team intro loop"></video>
+  </article>
+  <article class="team-card">
+    <header class="team-card__head">
+      <h2>New Orleans Pelicans</h2>
+      <p class="team-card__meta">19 current players &middot; 7 franchise legends</p>
+    </header>
+    <video class="team-card__video" loop muted playsinline preload="metadata"
+           data-src="assets/team-intros/new-orleans-loop-phone.mp4"
+           poster="assets/team-intros/new-orleans-loop-poster.jpg"
+           aria-label="New Orleans Pelicans team intro loop"></video>
+  </article>
+  <article class="team-card">
+    <header class="team-card__head">
+      <h2>New York Knicks</h2>
+      <p class="team-card__meta">19 current players &middot; 9 franchise legends</p>
+    </header>
+    <video class="team-card__video" loop muted playsinline preload="metadata"
+           data-src="assets/team-intros/new-york-loop-phone.mp4"
+           poster="assets/team-intros/new-york-loop-poster.jpg"
+           aria-label="New York Knicks team intro loop"></video>
+  </article>
+  <article class="team-card">
+    <header class="team-card__head">
+      <h2>Oklahoma City Thunder</h2>
+      <p class="team-card__meta">11 current players &middot; 9 franchise legends</p>
+    </header>
+    <video class="team-card__video" loop muted playsinline preload="metadata"
+           data-src="assets/team-intros/oklahoma-city-loop-phone.mp4"
+           poster="assets/team-intros/oklahoma-city-loop-poster.jpg"
+           aria-label="Oklahoma City Thunder team intro loop"></video>
+  </article>
+  <article class="team-card">
+    <header class="team-card__head">
+      <h2>Orlando Magic</h2>
+      <p class="team-card__meta">18 current players &middot; 8 franchise legends</p>
+    </header>
+    <video class="team-card__video" loop muted playsinline preload="metadata"
+           data-src="assets/team-intros/orlando-loop-phone.mp4"
+           poster="assets/team-intros/orlando-loop-poster.jpg"
+           aria-label="Orlando Magic team intro loop"></video>
+  </article>
+  <article class="team-card">
+    <header class="team-card__head">
+      <h2>Philadelphia 76ers</h2>
+      <p class="team-card__meta">17 current players &middot; 7 franchise legends</p>
+    </header>
+    <video class="team-card__video" loop muted playsinline preload="metadata"
+           data-src="assets/team-intros/philadelphia-loop-phone.mp4"
+           poster="assets/team-intros/philadelphia-loop-poster.jpg"
+           aria-label="Philadelphia 76ers team intro loop"></video>
+  </article>
+  <article class="team-card">
+    <header class="team-card__head">
+      <h2>Phoenix Suns</h2>
+      <p class="team-card__meta">18 current players &middot; 8 franchise legends</p>
+    </header>
+    <video class="team-card__video" loop muted playsinline preload="metadata"
+           data-src="assets/team-intros/phoenix-loop-phone.mp4"
+           poster="assets/team-intros/phoenix-loop-poster.jpg"
+           aria-label="Phoenix Suns team intro loop"></video>
+  </article>
+  <article class="team-card">
+    <header class="team-card__head">
+      <h2>Portland Trail Blazers</h2>
+      <p class="team-card__meta">16 current players &middot; 7 franchise legends</p>
+    </header>
+    <video class="team-card__video" loop muted playsinline preload="metadata"
+           data-src="assets/team-intros/portland-loop-phone.mp4"
+           poster="assets/team-intros/portland-loop-poster.jpg"
+           aria-label="Portland Trail Blazers team intro loop"></video>
+  </article>
+  <article class="team-card">
+    <header class="team-card__head">
+      <h2>Sacramento Kings</h2>
+      <p class="team-card__meta">15 current players &middot; 7 franchise legends</p>
+    </header>
+    <video class="team-card__video" loop muted playsinline preload="metadata"
+           data-src="assets/team-intros/sacramento-loop-phone.mp4"
+           poster="assets/team-intros/sacramento-loop-poster.jpg"
+           aria-label="Sacramento Kings team intro loop"></video>
+  </article>
+  <article class="team-card">
+    <header class="team-card__head">
+      <h2>San Antonio Spurs</h2>
+      <p class="team-card__meta">13 current players &middot; 8 franchise legends</p>
+    </header>
+    <video class="team-card__video" loop muted playsinline preload="metadata"
+           data-src="assets/team-intros/san-antonio-loop-phone.mp4"
+           poster="assets/team-intros/san-antonio-loop-poster.jpg"
+           aria-label="San Antonio Spurs team intro loop"></video>
+  </article>
+  <article class="team-card">
+    <header class="team-card__head">
+      <h2>Toronto Raptors</h2>
+      <p class="team-card__meta">15 current players &middot; 8 franchise legends</p>
+    </header>
+    <video class="team-card__video" loop muted playsinline preload="metadata"
+           data-src="assets/team-intros/toronto-loop-phone.mp4"
+           poster="assets/team-intros/toronto-loop-poster.jpg"
+           aria-label="Toronto Raptors team intro loop"></video>
+  </article>
+  <article class="team-card">
+    <header class="team-card__head">
+      <h2>Utah Jazz</h2>
+      <p class="team-card__meta">15 current players &middot; 7 franchise legends</p>
+    </header>
+    <video class="team-card__video" loop muted playsinline preload="metadata"
+           data-src="assets/team-intros/utah-loop-phone.mp4"
+           poster="assets/team-intros/utah-loop-poster.jpg"
+           aria-label="Utah Jazz team intro loop"></video>
+  </article>
+  <article class="team-card">
+    <header class="team-card__head">
+      <h2>Washington Wizards</h2>
+      <p class="team-card__meta">17 current players &middot; 7 franchise legends</p>
+    </header>
+    <video class="team-card__video" loop muted playsinline preload="metadata"
+           data-src="assets/team-intros/washington-loop-phone.mp4"
+           poster="assets/team-intros/washington-loop-poster.jpg"
+           aria-label="Washington Wizards team intro loop"></video>
+  </article>
+
+</div>
+
+</main>
+
+<footer class="site-footer">
+  <div class="site-footer__links"><a href="/play">Play</a><a href="/players">Players</a><a href="/teams">Teams</a><a href="/trends">Trends</a><a href="/model">Lab</a><a href="/methods">Methods</a><a href="https://github.com/jcdavis131/vector-hoops" rel="noopener">Source</a></div>
+  <p class="site-footer__attribution">Every number recomputable from stats.nba.com &middot; A <a href="https://dumbmodel.com">dumbmodel</a> project</p>
+</footer>
+
+<script src="assets/error-boundary.js?v=8079215c"></script>
+<script src="assets/keyboard-a11y.js?v=39777a87"></script>
+<script src="assets/site-nav.js?v=194d9f40" defer></script>
+<script src="assets/pwa-install.js?v=b954d9d1"></script>
+<script>
+/* Lazy team videos: load + autoplay when visible, pause when off-screen. */
+(function(){
+  'use strict';
+  var vids = Array.prototype.slice.call(document.querySelectorAll('.team-card__video'));
+  function enable(v){
+    if(!v.getAttribute('src')) v.src = v.getAttribute('data-src');
+    var p = v.play(); if(p && p.catch) p.catch(function(){});
+  }
+  function disable(v){ v.pause(); }
+  if(!('IntersectionObserver' in window)){
+    vids.forEach(enable); return;
+  }
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting) enable(e.target); else disable(e.target);
+    });
+  }, {rootMargin:'240px 0px'});
+  vids.forEach(function(v){ io.observe(v); });
+})();
+</script>
+<script>if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('/sw.js').catch(function(){})})}</script>
+</body>
+</html>

@@ -53,6 +53,15 @@
     },
     "taxonomy.html": {
       "budget_bytes": 135168
+    },
+    "insights/era-uniqueness.html": {
+      "budget_bytes": 32768
+    },
+    "teams.html": {
+      "budget_bytes": 131072
+    },
+    "twin-network.html": {
+      "budget_bytes": 159744
     }
   },
   "interaction": {
