@@ -1,0 +1,152 @@
+{
+ "Los Angeles Lakers": {
+  "founded": "1947-01-01",
+  "hq": "Los Angeles",
+  "wikidata": "Q121783"
+ },
+ "Chicago Bulls": {
+  "founded": "1966-01-01",
+  "hq": "Chicago",
+  "wikidata": "Q128109"
+ },
+ "New York Knicks": {
+  "founded": "1946-01-01",
+  "hq": "New York City",
+  "wikidata": "Q131364"
+ },
+ "Boston Celtics": {
+  "founded": "1946-01-01",
+  "hq": "Boston",
+  "wikidata": "Q131371"
+ },
+ "Toronto Raptors": {
+  "founded": "1995-01-01",
+  "hq": "Toronto",
+  "wikidata": "Q132880"
+ },
+ "Dallas Mavericks": {
+  "founded": "1980-01-01",
+  "hq": "Dallas",
+  "wikidata": "Q132893"
+ },
+ "Philadelphia 76ers": {
+  "founded": "1946-01-01",
+  "hq": "Philadelphia",
+  "wikidata": "Q138089"
+ },
+ "Golden State Warriors": {
+  "founded": "1946-01-01",
+  "hq": "San Francisco",
+  "wikidata": "Q157376"
+ },
+ "San Antonio Spurs": {
+  "founded": "1967-01-01",
+  "hq": "San Antonio",
+  "wikidata": "Q159729"
+ },
+ "Atlanta Hawks": {
+  "founded": "1946-01-01",
+  "hq": "Atlanta",
+  "wikidata": "Q159893"
+ },
+ "Orlando Magic": {
+  "founded": "1989-01-01",
+  "hq": "Orlando",
+  "wikidata": "Q161337"
+ },
+ "Houston Rockets": {
+  "founded": "1967-01-01",
+  "hq": "Houston",
+  "wikidata": "Q161345"
+ },
+ "Denver Nuggets": {
+  "founded": "1948-01-01",
+  "hq": "Denver",
+  "wikidata": "Q726423"
+ },
+ "Cleveland Cavaliers": {
+  "founded": "1970-01-01",
+  "hq": "Cleveland",
+  "wikidata": "Q162990"
+ },
+ "Charlotte Hornets": {
+  "founded": "1988-01-01",
+  "hq": "Charlotte",
+  "wikidata": "Q163480"
+ },
+ "Phoenix Suns": {
+  "founded": "1968-01-01",
+  "hq": "Phoenix",
+  "wikidata": "Q164177"
+ },
+ "Memphis Grizzlies": {
+  "founded": "1995-01-01",
+  "hq": "Memphis",
+  "wikidata": "Q165529"
+ },
+ "Sacramento Kings": {
+  "founded": "1945-01-01",
+  "hq": "Sacramento",
+  "wikidata": "Q166105"
+ },
+ "Portland Trail Blazers": {
+  "founded": "1970-01-01",
+  "hq": "Portland",
+  "wikidata": "Q167253"
+ },
+ "Miami Heat": {
+  "founded": "1988-01-01",
+  "hq": "Miami",
+  "wikidata": "Q169138"
+ },
+ "Washington Wizards": {
+  "founded": "1961-01-01",
+  "hq": "Washington, D.C.",
+  "wikidata": "Q169165"
+ },
+ "Milwaukee Bucks": {
+  "founded": "1968-01-01",
+  "hq": "Milwaukee",
+  "wikidata": "Q169637"
+ },
+ "Detroit Pistons": {
+  "founded": "1941-01-01",
+  "hq": "Detroit",
+  "wikidata": "Q169661"
+ },
+ "Indiana Pacers": {
+  "founded": "1967-01-01",
+  "hq": "Indianapolis",
+  "wikidata": "Q170329"
+ },
+ "Minnesota Timberwolves": {
+  "founded": "1989-01-01",
+  "hq": "Minneapolis",
+  "wikidata": "Q170558"
+ },
+ "Utah Jazz": {
+  "founded": "1974-01-01",
+  "hq": "Salt Lake City",
+  "wikidata": "Q170649"
+ },
+ "New Orleans Pelicans": {
+  "founded": "1887-01-01",
+  "hq": null,
+  "wikidata": "Q3700349"
+ },
+ "Oklahoma City Thunder": {
+  "founded": "2008-01-01",
+  "hq": "Oklahoma City",
+  "wikidata": "Q180950"
+ },
+ "Brooklyn Nets": {
+  "founded": "1967-01-01",
+  "hq": "Brooklyn",
+  "wikidata": "Q572134"
+ },
+ "Los Angeles Clippers": {
+  "founded": "1970-01-01",
+  "hq": "Los Angeles",
+  "wikidata": "Q976396"
+ }
+}
