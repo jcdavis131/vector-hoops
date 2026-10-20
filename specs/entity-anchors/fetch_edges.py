@@ -11,11 +11,12 @@ D = os.path.join(os.path.dirname(os.path.abspath(__file__)), "v2")
 UA = {"User-Agent": "atlas-anchor-fetch/1.0 (research; contact: jc@example.com)"}
 
 def sp_sparql(q):
+    data = urllib.parse.urlencode({"query": q, "format": "json"}).encode()
     for wait in (0, 5, 30):
         if wait: time.sleep(wait)
         try:
-            url = "https://query.wikidata.org/sparql?" + urllib.parse.urlencode({"query": q, "format": "json"})
-            r = urllib.request.Request(url, headers=UA); r.add_header("Accept", "application/sparql-results+json")
+            r = urllib.request.Request("https://query.wikidata.org/sparql", data=data, headers=UA)
+            r.add_header("Accept", "application/sparql-results+json")
             with urllib.request.urlopen(r, timeout=120) as fh:
                 return json.load(fh)["results"]["bindings"]
         except Exception as e:
@@ -25,6 +26,8 @@ def sp_sparql(q):
 def chunk(xs, n=500):
     for i in range(0, len(xs), n):
         yield xs[i:i+n]
+
+CHUNK = {"played_for": 250, "alma_mater": 500, "employer": 500, "founded_by": 500}
 
 def qids_for(layers):
     q = {}
@@ -36,15 +39,24 @@ def qids_for(layers):
             if r.get("qid"): q[r["qid"]] = (lay, r["name"])
     return q
 
+def rec_qid(rec):
+    if rec.get("qid"): return rec["qid"]
+    src = (rec.get("provenance") or {}).get("source", "")
+    if src.startswith("wikidata:"): return src.split(":", 1)[1]
+    return None
+
 # map QID -> our entity id for every finished layer
-LAYERS = ["cities","universities","nfl","mlb","nhl","soccer","business","authors","politicians"]
+LAYERS = ["cities","universities","nfl","mlb","nhl","soccer","business","authors","politicians","franchises"]
 ENT = {}   # qid -> (entity_id, layer)
 for lay in LAYERS:
     f = os.path.join(D, f"layer_{lay}.jsonl")
+    if lay == "franchises":
+        f = os.path.join(D, "franchises.jsonl")
     if not os.path.exists(f): continue
     for line in open(f):
         r = json.loads(line)
-        if r.get("qid"): ENT[r["qid"]] = (r["entity_id"], lay)
+        q = rec_qid(r)
+        if q: ENT[q] = (r["entity_id"], lay)
 
 PHASES = {
     "played_for":   ("wdt:P54", True),
@@ -60,7 +72,7 @@ def phase_edges(name, prop, tenure):
     wrote = os.path.exists(out) and sum(1 for _ in open(out))
     qids = [q for q in ENT if q not in done]
     print(f"{name}: {len(qids)} qids remaining, {wrote} edges banked", flush=True)
-    for c in chunk(qids):
+    for c in chunk(qids, CHUNK.get(name, 500)):
         vals = " ".join(f"wd:{q}" for q in c)
         if tenure:
             q = ("SELECT ?e ?v ?st ?et WHERE { VALUES ?e { " + vals + " } "
