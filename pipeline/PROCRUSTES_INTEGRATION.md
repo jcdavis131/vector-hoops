@@ -41,6 +41,7 @@ Expected lift:
 
 ```python
 from realmlp_preproc import RobustScaler
+
 # Replace manual z-score with robust scaler:
 scaler = RobustScaler(clip=3.0)
 # Fit per-season median/IQR

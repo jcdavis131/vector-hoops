@@ -5,6 +5,7 @@ hashed anchor features (layer x decade x country x latlon-grid).
 Link score = dot product. Evaluated on held-out played_for edges,
 same protocol as the popularity/cohort baselines.
 """
+
 import hashlib
 import math
 import random
@@ -16,9 +17,11 @@ DB = S / "v2" / "atlas.db"
 DIM = 32
 ROUNDS = 2
 
+
 def hslot(feat_str):
     h = int(hashlib.md5(feat_str.encode()).hexdigest(), 16)
     return h % DIM, 1.0 if (h >> 7) % 2 else -1.0
+
 
 def base_vector(layer, decade, country, lat, lon):
     v = [0.0] * DIM
@@ -31,11 +34,13 @@ def base_vector(layer, decade, country, lat, lon):
     n = math.sqrt(sum(x * x for x in v)) or 1.0
     return [x / n for x in v]
 
+
 def main():
     db = sqlite3.connect(DB)
     ent = {}
     for eid, layer, td, ctry, lat, lon in db.execute(
-            "SELECT entity_id, layer, time_date, country, lat, lon FROM entities"):
+        "SELECT entity_id, layer, time_date, country, lat, lon FROM entities"
+    ):
         dec = "?"
         if td and len(td) >= 4:
             try:
@@ -76,8 +81,7 @@ def main():
         if s not in ent or truth not in pop:
             continue
         sv = ent[s]
-        scored = sorted(targets, key=lambda t: (
-            -sum(a * b for a, b in zip(sv, ent[t])), -pop[t]))
+        scored = sorted(targets, key=lambda t: (-sum(a * b for a, b in zip(sv, ent[t])), -pop[t]))
         n += 1
         try:
             r = scored.index(truth) + 1
@@ -87,7 +91,8 @@ def main():
         h1 += r == 1
         h10 += r <= 10
     db.close()
-    print(f"gnn-mean2hop: MRR={rr/n:.4f} H@1={h1/n:.4f} H@10={h10/n:.4f} n={n}")
+    print(f"gnn-mean2hop: MRR={rr / n:.4f} H@1={h1 / n:.4f} H@10={h10 / n:.4f} n={n}")
+
 
 if __name__ == "__main__":
     main()
