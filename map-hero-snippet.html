@@ -1,0 +1,41 @@
+<!-- Vector Hoops 3D Embedding Map — hero block snippet (placed by Worker B).
+     Self-contained: mount div + renderer script + "How to read this" card.
+     Requires assets/embed-3d.js and assets/projections/embed3d.json. -->
+<section class="embed3d-hero" aria-label="3D map of every NBA player-season">
+  <div id="embed3d-hero" data-projection="pca" data-height="440"></div>
+  <script src="assets/embed-3d.js?v=99d08a30"></script>
+  <script>
+    (function () {
+      var el = document.getElementById('embed3d-hero');
+      if (!el || !window.Embed3D) return;
+      window.__embed3dHero = window.Embed3D.mount(el, {
+        projection: el.dataset.projection || 'pca',
+        height: parseInt(el.dataset.height, 10) || 440,
+        onSelect: function (id) {
+          /* Worker B/C: wire to player dossier / twin panel here. */
+          window.dispatchEvent(new CustomEvent('embed3d:select', { detail: { id: id } }));
+        }
+      });
+    })();
+  </script>
+
+  <!-- How to read this (binding: honest about what projections preserve/distort) -->
+  <aside class="embed3d-howto" aria-label="How to read this map"
+         style="margin-top:10px;font:13px/1.6 system-ui,sans-serif;color:#6f6a5e;max-width:72ch;">
+    <strong style="color:#3a3d40;">How to read this</strong>
+    <ul style="margin:6px 0 0;padding-left:20px;">
+      <li><strong>Each dot is one player-season</strong> — 12,966 of them, positioned by our
+        64-dimensional player embedding, squashed into 3D so you can see it.</li>
+      <li><strong>Closeness means similar playing style</strong> — dots near each other played
+        the game in similar ways that season. That's all it means.</li>
+      <li><strong>What it does NOT mean:</strong> the axes have no names — there is no
+        "offense ↔ defense" axis. And the squashing distorts: t-SNE and UMAP keep
+        <em>local neighborhoods</em> together but scramble distances between far-apart
+        groups; PCA keeps the <em>big-picture spread</em> but can scramble neighbors.
+        Pick the projection for the question you're asking.</li>
+      <li><strong>Colors</strong> are k-means (k=8) clusters found by the algorithm on the
+        full 64-d embeddings — not hand-drawn, and not positions or eras.</li>
+      <li>Drag to rotate, scroll or pinch to zoom, click any dot to select that player-season.</li>
+    </ul>
+  </aside>
+</section>
