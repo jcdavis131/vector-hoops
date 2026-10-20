@@ -5,7 +5,7 @@
 <title>Live — Vector Hoops</title>
 <meta name="description" content="Courtside Live: the second-screen companion for NBA games. Win probability, atlas twins, ghost watch, shot charts — the second screen for NBA nights."/>
 <link rel="stylesheet" href="assets/responsive.css?v=cc8e5207"/><link rel="stylesheet" href="assets/final-qa.css?v=fb603ee5"/><link rel="stylesheet" href="assets/unified.css?v=fd25e8ca"/><link rel="stylesheet" href="assets/motion.css?v=aa8dedc2"/><link rel="stylesheet" href="assets/fonts.css?v=8f376b2a"/><link rel="stylesheet" href="assets/atlas.css?v=7c1d7652"/>
-<link rel="stylesheet" href="assets/shell.css?v=7eb94ecf"/><link rel="stylesheet" href="assets/live.css?v=aea1cbf6"/>
+<link rel="stylesheet" href="assets/shell.css?v=7eb94ecf"/><link rel="stylesheet" href="assets/live.css?v=033a4adb"/>
 <meta name="color-scheme" content="dark light"/>
 <meta name="theme-color" content="#F4EFE2"/>
 <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml"/>
@@ -43,6 +43,7 @@
   <button id="dayToday" class="daybtn today" hidden>Back to today</button>
 </div>
 <div id="games"><span style="font-size:13px;color:#6b675c">Loading tonight's games…</span></div>
+<div id="feedcard" class="feedcard" hidden role="alert"></div>
 <button id="liveBtn" class="livebtn"><span class="dot"></span>JUMP TO LIVE<span id="liveNew"></span></button>
 <main id="main" tabindex="-1">
   <p id="live-loading" class="caption" role="status" style="padding:12px 4px">Loading today&rsquo;s games&hellip;</p>
@@ -62,11 +63,18 @@
 </div>
   </div>
 
+  <div class="card" id="pregame" hidden></div>
+
   <div class="card">
-    <div class="plate"><span class="pno">PLATE 01</span><h2>WIN PROBABILITY</h2><span class="prule"></span><span class="pmeta">live model</span></div>
-    <div class="wpnum"><div class="big" id="wpBig">–</div><div class="lbl" id="wpLbl">live, via ESPN model</div></div>
-    <canvas role="img" aria-label="Win probability chart — live win probability for the selected game" id="wpchart" width="600" height="170"></canvas>
+    <div class="plate"><span class="pno">PLATE 01</span><h2>WIN PROBABILITY</h2><span class="prule"></span><span class="pmeta">our heuristic · honest intervals</span></div>
+    <div class="wpnum"><div class="big" id="wpBig">–</div><div class="lbl" id="wpBand"></div><div class="lbl" id="wpLbl">our experimental heuristic</div></div>
+    <canvas role="img" aria-label="Win probability chart — our heuristic with an honest interval band, ESPN's model as a thin reference line" id="wpchart" width="600" height="170"></canvas>
     <div class="legend"><span id="lgA">Away</span><span id="lgH">Home</span></div>
+    <p class="method">Our model, stated plainly: p(home wins) = &sigma;((lead + 3.0) / (13.5&middot;&radic;time-left)).
+    Lead is the current home lead in points, time-left is the fraction of the game remaining, +3.0 is a fixed
+    home-court edge. The shaded band is &plusmn;10pp&middot;&radic;time-left &mdash; wide early, tight late.
+    <b>Experimental heuristic, not fitted to historical data.</b> The interval is the point: it shows how much
+    this crude model doesn&rsquo;t know. Thin gray line = ESPN&rsquo;s own model, shown for reference.</p>
   </div>
 
 <div class="card liveonly">
@@ -78,6 +86,11 @@
 <div class="card">
     <div class="plate"><span class="pno">PLATE 03</span><h2>LIVE MOMENTS</h2><span class="prule"></span><span class="pmeta">auto-storylines</span></div>
     <div id="moments"><span style="font-size:12px;color:#6b675c">Waiting for tip…</span></div>
+  </div>
+
+<div class="card">
+    <div class="plate"><span class="pno">PLATE 10</span><h2>KEY RUNS</h2><span class="prule"></span><span class="pmeta">8–0+ unanswered</span></div>
+    <div id="runs"><span style="font-size:12px;color:#6b675c">Waiting for tip…</span></div>
   </div>
 
 <button id="more-plates-btn" class="livebtn" style="display:block;margin:10px auto" aria-expanded="false" aria-controls="more-plates">MORE PLATES — momentum · atlas twins · shot chart · milestones · leaders · play by play</button>
@@ -98,6 +111,16 @@
     <div class="atlas-wrap"><canvas role="img" aria-label="Atlas — players from both teams plotted on the style map" id="liveAtlas" height="330"></canvas><div class="atlas-hint" id="atlasHint">loading the map&hellip;</div></div>
     <div class="legend"><span>&larr; bigs / paint</span><span id="atlasModeLbl">tap a player for their style-twins</span><span>shooters / perimeter &rarr;</span></div>
     <div class="twinrow" id="twinList"></div>
+  </div>
+
+<div class="card">
+    <div class="plate"><span class="pno">PLATE 11</span><h2>ARCHETYPES TONIGHT</h2><span class="prule"></span><span class="pmeta">momentum in embedding space</span></div>
+    <div id="arche"><span style="font-size:12px;color:#6b675c">Box score not up yet.</span></div>
+  </div>
+
+<div class="card">
+    <div class="plate"><span class="pno">PLATE 12</span><h2>STYLE MAP</h2><span class="prule"></span><span class="pmeta">3D atlas</span></div>
+    <div class="embed3d-mount" data-projection="pca" style="height:420px"></div>
   </div>
 
 <div class="card">
@@ -127,7 +150,9 @@
 </div>
 
   <button class="refresh" id="refreshBtn">Refresh now</button>
-  <p class="note">Win probability is ESPN's live model; scores and plays refresh every 30s while a game is live.
+  <p class="note">Win probability is our stated heuristic with an honest interval &mdash; formula on the card, ESPN&rsquo;s model as the thin gray reference.
+  Scores and plays poll every 30s while a game is live, every 5 minutes otherwise, and back off automatically when the feed stumbles.
+  If the feed goes down you&rsquo;ll see the last-known score with its timestamp &mdash; never a silently stale page.
   Use the day arrows up top to replay another day's games with the timeline scrubber. Milestone bests are since 2023 (our play-by-play window).</p>
   <div class="err" id="err"></div>
 </main>
@@ -164,7 +189,7 @@
 <script src="assets/vh-analytics.js?v=d838a3e1" defer></script>
 <script src="assets/site-nav.js?v=194d9f40" defer></script>
 <script src="assets/vh-peers.js?v=860629b9" defer></script>
-<script src="assets/live.js?v=2f015751" defer></script>
+<script src="assets/live.js?v=d5087577" defer></script>
 <script src="assets/live-atlas.js?v=6d7fafa9" defer></script>
 </body>
 </html>
