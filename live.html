@@ -5,6 +5,192 @@
 <title>Live — Vector Hoops</title>
 <meta name="description" content="Courtside Live: the second-screen companion for NBA games. Win probability, atlas twins, ghost watch, shot charts — the second screen for NBA nights."/>
 <link rel="stylesheet" href="assets/responsive.css?v=cc8e5207"/><link rel="stylesheet" href="assets/final-qa.css?v=fb603ee5"/><link rel="stylesheet" href="assets/unified.css?v=fd25e8ca"/><link rel="stylesheet" href="assets/motion.css?v=aa8dedc2"/><link rel="stylesheet" href="assets/fonts.css?v=8f376b2a"/><link rel="stylesheet" href="assets/atlas.css?v=ff374431"/>
-<link rel="stylesheet" href="assets/shell.css?v=7eb94ecf"/><link rel="stylesheet" href="assets/live.css?v=033a4adb"/>
-<link rel="stylesheet" href="assets/realtime/realtime.css?v=540a748b"/>
+<link rel="stylesheet" href="assets/shell.css?v=7eb94ecf"/><link rel="stylesheet" href="assets/live.css?v=033a4adb"/><link rel="stylesheet" href="assets/realtime/realtime.css?v=540a748b"/>
+<meta name="color-scheme" content="dark light"/>
+<meta name="theme-color" content="#F4EFE2"/>
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml"/>
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png"/>
+<link rel="canonical" href="https://hoops.dumbmodel.com/live"/>
+<meta property="og:type" content="website"/>
+<meta property="og:site_name" content="Vector Hoops"/>
+<meta property="og:url" content="https://hoops.dumbmodel.com/live"/>
+<meta property="og:title" content="Live — Vector Hoops"/>
+<meta property="og:description" content="The second-screen companion for NBA games: win probability, atlas twins, ghost watch, shot charts."/>
+<meta property="og:image" content="https://hoops.dumbmodel.com/assets/og-1200x630.png"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="Courtside Live — Vector Hoops"/>
+<meta name="twitter:description" content="Courtside Live: the second-screen companion for NBA games. Win probability, atlas twins, ghost watch, shot charts — the second screen for NBA nights."/>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<nav class="site-nav" data-active="/live" aria-label="Vector Hoops site"></nav>
+<div class="live-root">
+
+<header class="top">
+  <div class="brand"><span class="live-dot"></span><h1>COURTSIDE LIVE</h1><span class="proto">VECTOR HOOPS</span></div>
+  <p class="tagline">The second-screen companion for NBA games — no video, no rights, just the numbers.</p>
+  <div class="mode-tabs" role="tablist" aria-label="Live sections">
+    <button id="tabCompanion" class="picked" role="tab">COMPANION</button>
+    <button id="tabJam" role="tab" title="NBA Jam callouts">🔥 JAM</button>
+  </div>
+</header>
+<section id="companion" aria-label="Game companion">
+<div class="daynav" aria-label="Game day">
+  <button id="dayPrev" class="daybtn" aria-label="Previous day">&lsaquo;</button>
+  <div class="daylbl" id="dayLbl">Today</div>
+  <button id="dayNext" class="daybtn" aria-label="Next day">&rsaquo;</button>
+  <button id="dayToday" class="daybtn today" hidden>Back to today</button>
+</div>
+<div id="games"><span style="font-size:13px;color:#6b675c">Loading tonight's games…</span></div>
+<div id="feedcard" class="feedcard" hidden role="alert"></div>
+<button id="liveBtn" class="livebtn"><span class="dot"></span>JUMP TO LIVE<span id="liveNew"></span></button>
+<main id="main" tabindex="-1">
+  <p id="live-loading" class="caption" role="status" style="padding:12px 4px">Loading today&rsquo;s games&hellip;</p>
+  <div class="stickybar">
+  <div class="scorebug">
+    <div class="team"><div class="abbr" id="aAbbr">–</div><div class="rec" id="aRec"></div></div>
+    <div class="mid"><div class="score"><span id="aScore">0</span> – <span id="hScore">0</span></div>
+      <div class="clock" id="clock">–</div><div class="upd" id="upd"></div></div>
+    <div class="team"><div class="abbr" id="hAbbr">–</div><div class="rec" id="hRec"></div></div>
+  </div>
+<div id="tlbar" style="display:none">
+  <div class="tlrow">
+    <input type="range" id="scrub" min="0" max="100" value="100" step="1" aria-label="Rewind game timeline">
+    <div id="tlclock" class="num">LIVE</div>
+  </div>
+  <div id="tlticks"><span>Q1</span><span>Q2</span><span>Q3</span><span>Q4</span></div>
+</div>
+  </div>
+
+  <div class="card" id="pregame" hidden></div>
+
+  <div class="card">
+    <div class="plate"><span class="pno">PLATE 01</span><h2>WIN PROBABILITY</h2><span class="prule"></span><span class="pmeta">our heuristic · honest uncertainty bands</span></div>
+    <div class="wpnum"><div class="big" id="wpBig">–</div><div class="lbl" id="wpBand"></div><div class="lbl" id="wpLbl">our experimental heuristic</div></div>
+    <canvas role="img" aria-label="Win probability chart — our heuristic with a candid uncertainty band, ESPN's model as a thin reference line" id="wpchart" width="600" height="170"></canvas>
+    <div class="legend"><span id="lgA">Away</span><span id="lgH">Home</span></div>
+    <p class="method">Our model, stated plainly: p(home wins) = &sigma;((lead + 3.0) / (13.5&middot;&radic;time-left)).
+    Lead is the current home lead in points, time-left is the fraction of the game remaining, +3.0 is a fixed
+    home-court edge. The shaded band is &plusmn;10pp&middot;&radic;time-left &mdash; wide early, tight late.
+    <b>Experimental heuristic, not fitted to historical data.</b> The band is the point: it shows how much
+    this crude model doesn&rsquo;t know. Thin gray line = ESPN&rsquo;s own model, shown for reference.</p>
+  </div>
+
+<div class="card liveonly">
+    <div class="plate"><span class="pno">PLATE 02</span><h2>GHOST WATCH</h2><span class="prule"></span><span class="pmeta">6k-game library</span></div>
+    <div id="ghosts"><span style="font-size:12px;color:#6b675c">Matching live lines against 6,000 historic games…</span></div>
+    
+  </div>
+
+<div class="card">
+    <div class="plate"><span class="pno">PLATE 03</span><h2>LIVE MOMENTS</h2><span class="prule"></span><span class="pmeta">auto-storylines</span></div>
+    <div id="moments"><span style="font-size:12px;color:#6b675c">Waiting for tip…</span></div>
+  </div>
+
+<div class="card">
+    <div class="plate"><span class="pno">PLATE 04</span><h2>KEY RUNS</h2><span class="prule"></span><span class="pmeta">8–0+ unanswered</span></div>
+    <div id="runs"><span style="font-size:12px;color:#6b675c">Waiting for tip…</span></div>
+  </div>
+
+<button id="more-plates-btn" class="livebtn" style="display:block;margin:10px auto" aria-expanded="false" aria-controls="more-plates">MORE PLATES — momentum · atlas twins · shot chart · milestones · leaders · play by play</button>
+<div id="more-plates" hidden>
+<div class="card">
+    <div class="plate"><span class="pno">PLATE 05</span><h2>MOMENTUM</h2><span class="prule"></span><span class="pmeta">lead trace</span></div>
+    <div class="wpnum"><div class="big num" id="diffBig">–</div><div class="lbl" id="diffLbl">current margin</div></div>
+    <canvas role="img" aria-label="Momentum chart — lead trace for the selected game" id="momchart" class="chart" width="600" height="150"></canvas>
+    <div class="legend"><span>tip →</span><span>Q1&nbsp;&nbsp;Q2&nbsp;&nbsp;Q3&nbsp;&nbsp;Q4</span><span>→ now</span></div>
+    <div class="qbars" id="qbars"></div>
+  </div>
+
+<div class="card">
+    <div class="plate"><span class="pno">PLATE 06</span><h2>ATLAS</h2><span class="prule"></span><span class="pmeta">12,966 player-seasons &middot; 64-d MTNN</span></div>
+    <div class="shot-toggle" id="atlasModes" role="tablist" aria-label="Atlas views">
+      <button data-m="twins" class="picked">TWINS</button><button data-m="matchup">MATCHUP</button><button data-m="trail">TRAIL</button>
+    </div>
+    <div class="atlas-wrap"><canvas role="img" aria-label="Atlas — players from both teams plotted on the style map" id="liveAtlas" height="330"></canvas><div class="atlas-hint" id="atlasHint">loading the map&hellip;</div></div>
+    <div class="legend"><span>&larr; bigs / paint</span><span id="atlasModeLbl">tap a player for their style-twins</span><span>shooters / perimeter &rarr;</span></div>
+    <div class="twinrow" id="twinList"></div>
+  </div>
+
+<div class="card">
+<div class="plate"><span class="pno">PLATE 07</span><h2>ARCHETYPE EFFICIENCY</h2><span class="prule"></span><span class="pmeta">who's carrying the scoring tonight</span></div>
+    <div id="arche"><span style="font-size:12px;color:#6b675c">Box score not up yet.</span></div>
+  </div>
+
+<div class="card">
+    <div class="plate"><span class="pno">PLATE 08</span><h2>STYLE MAP</h2><span class="prule"></span><span class="pmeta">3D atlas</span></div>
+    <div class="embed3d-mount" data-projection="pca" style="height:420px"></div>
+  </div>
+
+<div class="card">
+    <div class="plate"><span class="pno">PLATE 09</span><h2>SHOT CHART</h2><span class="prule"></span><span class="pmeta">live attempts</span></div>
+    <div class="shot-toggle" id="shotToggle">
+      <button data-t="A">AWAY</button><button data-t="H" class="picked">HOME</button><button data-t="B">BOTH</button>
+    </div>
+    <svg id="shotSvg" class="shot" viewBox="0 0 50 54" role="img" aria-label="Shot chart"></svg>
+    <div class="zone-stats" id="zoneStats"></div>
+  </div>
+
+<div class="card liveonly">
+    <div class="plate"><span class="pno">PLATE 10</span><h2>MILESTONE WATCH</h2><span class="prule"></span><span class="pmeta">bests since ’23</span></div>
+    <div id="miles"><span style="font-size:12px;color:#6b675c">Waiting for tip…</span></div>
+    
+  </div>
+
+<div class="card liveonly">
+    <div class="plate"><span class="pno">PLATE 11</span><h2>LEADERS</h2><span class="prule"></span><span class="pmeta">box score</span></div>
+    <div class="leaders"><div class="lcol" id="leadA"></div><div class="lcol" id="leadH"></div></div>
+  </div>
+
+<div class="card">
+    <div class="plate"><span class="pno">PLATE 12</span><h2>PLAY BY PLAY</h2><span class="prule"></span><span class="pmeta">every possession</span></div>
+    <ul id="plays"></ul>
+  </div>
+</div>
+
+  <button class="refresh" id="refreshBtn">Refresh now</button>
+  <p class="note">Win probability is our stated heuristic with a candid uncertainty band &mdash; formula on the card, ESPN&rsquo;s model as the thin gray reference.
+  Scores and plays poll every 30s while a game is live, every 5 minutes otherwise, and back off automatically when the feed stumbles.
+  If the feed goes down you&rsquo;ll see the last-known score with its timestamp &mdash; never a silently stale page.
+  Use the day arrows up top to replay another day's games with the timeline scrubber. Milestone bests are since 2023 (our play-by-play window).</p>
+  <div class="err" id="err"></div>
+</main>
+</section>
+
+
+
+
+</div>
+<footer class="site-footer">
+  <nav class="site-footer__sitemap" aria-label="Sitemap">
+    <div class="site-footer__col">
+      <span class="site-footer__col-title">Play</span>
+      <a href="/play">Daily Court</a>
+    </div>
+    <div class="site-footer__col">
+      <span class="site-footer__col-title">Explore</span>
+      <a href="/">Atlas</a>
+      <a href="/live">Live</a>
+      <a href="/players">Players</a>
+      <a href="/insights">Insights</a>
+      <a href="/playoff-runs">Playoff Runs</a>
+
+      <a href="/taxonomy">Taxonomy</a>
+      <a href="/methods">Methods</a>
+    </div>
+    <div class="site-footer__col">
+      <span class="site-footer__col-title">How it works</span>
+      <a href="https://dumbmodel.com" rel="noopener">dumbmodel.com</a>
+    </div>
+  </nav>
+  <p class="site-footer__attribution">Live scores via ESPN · Every number recomputable from stats.nba.com · A <a href="https://dumbmodel.com">dumbmodel</a> project · <a href="https://github.com/jcdavis131/vector-hoops" rel="noopener">Source</a> · Nearest seasons by cosine similarity in the 64-dimensional MTNN v5 embedding.</p>
+</footer>
+<script src="assets/vh-analytics.js?v=d838a3e1" defer></script>
+<script src="assets/site-nav.js?v=45144897" defer></script>
+<script src="assets/vh-peers.js?v=860629b9" defer></script>
+<script src="assets/realtime/realtime.js?v=c6ee0c22" defer></script>
+<script src="assets/live.js?v=cb1c803c" defer></script>
+<script src="assets/live-atlas.js?v=6d7fafa9" defer></script>
+</body>
 </html>
