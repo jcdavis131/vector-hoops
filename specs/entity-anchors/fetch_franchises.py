@@ -13,9 +13,13 @@ MLB = ["Arizona Diamondbacks","Athletics","Atlanta Braves","Baltimore Orioles","
 NHL = ["Anaheim Ducks","Boston Bruins","Buffalo Sabres","Calgary Flames","Carolina Hurricanes","Chicago Blackhawks","Colorado Avalanche","Columbus Blue Jackets","Dallas Stars","Detroit Red Wings","Edmonton Oilers","Florida Panthers","Los Angeles Kings","Minnesota Wild","Montreal Canadiens","Nashville Predators","New Jersey Devils","New York Islanders","New York Rangers","Ottawa Senators","Philadelphia Flyers","Pittsburgh Penguins","San Jose Sharks","Seattle Kraken","St. Louis Blues","Tampa Bay Lightning","Toronto Maple Leafs","Utah Mammoth","Vancouver Canucks","Vegas Golden Knights","Washington Capitals","Winnipeg Jets"]
 MLS = ["Atlanta United","Austin FC","Charlotte FC","Chicago Fire","FC Cincinnati","Colorado Rapids","Columbus Crew","D.C. United","FC Dallas","Houston Dynamo","Sporting Kansas City","LA Galaxy","LAFC","Inter Miami","Minnesota United","CF Montréal","Nashville SC","New England Revolution","New York City FC","New York Red Bulls","Orlando City","Philadelphia Union","Portland Timbers","Real Salt Lake","San Diego FC","San Jose Earthquakes","Seattle Sounders","St. Louis City SC","Toronto FC","Vancouver Whitecaps"]
 WNBA = ["Atlanta Dream","Chicago Sky","Connecticut Sun","Dallas Wings","Golden State Valkyries","Indiana Fever","Las Vegas Aces","Los Angeles Sparks","Minnesota Lynx","New York Liberty","Phoenix Mercury","Seattle Storm","Washington Mystics"]
-CURATED = {'NFL': NFL, 'MLB': MLB, 'NHL': NHL, 'MLS': MLS, 'WNBA': WNBA}
+# LaLiga/SerieA: Wikidata carries NO P118 statements for ES/IT clubs (verified:
+# zero statements point at Q32454/Q397) — curated rosters instead.
+LALIGA = ["Athletic Bilbao","Atlético Madrid","FC Barcelona","Celta Vigo","Deportivo Alavés","Elche CF","RCD Espanyol","Getafe CF","Girona FC","Levante UD","RCD Mallorca","CA Osasuna","Rayo Vallecano","Real Betis","Real Madrid","Real Sociedad","Sevilla FC","Valencia CF","Villarreal CF","Real Oviedo"]
+SERIEA = ["Atalanta BC","Bologna FC 1909","Cagliari Calcio","Como 1907","US Cremonese","ACF Fiorentina","Genoa CFC","Hellas Verona FC","Inter Milan","Juventus FC","SS Lazio","US Lecce","AC Milan","SSC Napoli","Parma Calcio 1913","Pisa SC","AS Roma","US Sassuolo","Torino FC","Udinese Calcio"]
+CURATED = {'NFL': NFL, 'MLB': MLB, 'NHL': NHL, 'MLS': MLS, 'WNBA': WNBA, 'LaLiga': LALIGA, 'SerieA': SERIEA}
 
-SOCCER = {'EPL': 'Q9448', 'LaLiga': 'Q32454', 'Bundesliga': 'Q82595', 'SerieA': 'Q397', 'Ligue1': 'Q13394'}
+SOCCER = {'EPL': 'Q9448', 'Bundesliga': 'Q82595', 'Ligue1': 'Q13394'}
 
 def api(params):
     url = 'https://www.wikidata.org/w/api.php?' + urllib.parse.urlencode(params)
@@ -82,10 +86,9 @@ if os.path.exists(CKPT):
     ck = json.load(open(CKPT))
     seen = set(ck.get('qids', []))
     if os.path.exists(os.path.join(EA, 'franchises.jsonl')):
-        # only reuse if it's the new-format file (not the 13k-row buggy one)
         n_old = sum(1 for _ in open(os.path.join(EA, 'franchises.jsonl')))
-        if n_old < 2000:
-            out = [json.loads(l) for l in open(os.path.join(EA, 'franchises.jsonl'))]
+        out = [json.loads(l) for l in open(os.path.join(EA, 'franchises.jsonl'))]
+        print(f'resuming with {len(out)} banked rows', flush=True)
 def save():
     with open(os.path.join(EA, 'franchises.jsonl'), 'w') as fh:
         for r in out:
@@ -115,10 +118,13 @@ for league, teams in CURATED.items():
     save()
     print(f'{league}: {n}/{len(teams)}', flush=True)
 
-# soccer: active membership (P118 with no end date)
+# soccer: active membership (P118 with no end date), subjects constrained to
+# sports clubs (association football club Q476028, subclass path) — players
+# also carry P118 league statements and must not match
 for league, qid in SOCCER.items():
     q = '''SELECT DISTINCT ?team ?teamLabel WHERE {
       ?team p:P118 ?st. ?st ps:P118 wd:%s.
+      ?team wdt:P31/wdt:P279* wd:Q476028.
       FILTER NOT EXISTS { ?st pq:P582 ?end. }
       SERVICE wikibase:label { bd:serviceParam wikibase:language "en". }
     }''' % qid

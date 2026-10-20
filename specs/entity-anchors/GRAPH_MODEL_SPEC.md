@@ -56,6 +56,15 @@ Pre-registered predictions (recorded before any run):
   - (f) wins downstream explanation quality; (d) wins pure structure.
 Gate: a model ships only if it beats (b) on ALL primary metrics.
 
+## 7. Bake-off results (2026-10-20, snapshot atlas-20261020-e216d06c)
+Held-out played_for edges, n=1,512:
+  popularity (a):        MRR 0.2084  H@1 0.0767  H@10 0.5456
+  cohort-affinity (b):   MRR 0.2066  H@1 0.0661  H@10 0.5450
+  gnn-mean2hop (c):      MRR 0.3092  H@1 0.1515  H@10 0.6766
+Verdict: (c) beats (b) on ALL primaries — the relations hypothesis
+confirmed: neighborhood structure carries the signal that anchor features
+don't. (d) JEPA still to run; (e)/(f) pending text gold set.
+
 ## 5. Build order
 
 1. Entities complete (running) → 2. Edges → 3. Store build + QA

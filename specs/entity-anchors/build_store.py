@@ -22,8 +22,11 @@ def main():
         nonlocal n
         ta = rec.get("time_anchor") or {}; pa = rec.get("place_anchor") or {}
         pv = rec.get("provenance") or {}
+        qid = rec.get("qid")
+        if not qid and str(pv.get("source","")).startswith("wikidata:"):
+            qid = pv["source"].split(":", 1)[1]
         db.execute("INSERT OR REPLACE INTO entities VALUES (?,?,?,?,?,?,?,?,?,?,?)",
-            (rec["entity_id"], rec.get("qid"), layer, rec["name"],
+            (rec["entity_id"], qid, layer, rec["name"],
              ta.get("date"), ta.get("precision"), pa.get("name"),
              pa.get("country"), pa.get("lat"), pa.get("lon"), json.dumps(pv)))
         n += 1
@@ -32,6 +35,9 @@ def main():
             layer = fn[6:-6]
             for line in open(os.path.join(D, fn)):
                 add(json.loads(line), layer)
+        elif fn == "franchises.jsonl":
+            for line in open(os.path.join(D, fn)):
+                add(json.loads(line), "franchises")
     for fn in ("players.jsonl","teams.jsonl"):
         for line in open(os.path.join(V1, fn)):
             add(json.loads(line), "nba_" + fn[:-6])
@@ -51,6 +57,7 @@ def main():
     db.execute("CREATE INDEX idx_edges_rel ON edges(rel)")
     db.commit()
     sz = os.path.getsize(DB)
+    n = db.execute("SELECT COUNT(*) FROM entities").fetchone()[0]
     print(f"store: {n} entities, {m} edges, {sz/1e6:.1f} MB")
     db.close()
 
