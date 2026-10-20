@@ -297,7 +297,7 @@
           state.twinSim = g[6];
         }
         paintPuzzleMeta();
-        return fetchU8(ASSET_BASE + 'dist/' + state.day + '-' + state.mode + '.u8');
+        return fetchU8(ASSET_BASE + 'puzzles/' + state.day + '-' + state.mode + '.u8');
       });
     }).then(function (u8) {
       if (u8.length !== N_ROWS) throw new Error('distance file has ' + u8.length + ' rows, expected ' + N_ROWS);
@@ -327,7 +327,7 @@
     var modeWord = state.mode === 'mh' ? 'Daily Map Hunt' : 'Twin Hunt';
     var replay = state.replay ? ' <span class="mh-replay">replaying a shared puzzle</span>' : '';
     var given = state.mode === 'th'
-      ? '<p class="mh-given">Find the nearest embedding neighbor of <b>' + state.givenName + '</b> <span class="mh-season">' + state.givenSeason + '</span> — the highlighted point.</p>'
+      ? '<p class="mh-given">Find <b>' + state.givenName + '</b> <span class="mh-season">' + state.givenSeason + '</span>&rsquo;s <b>era twin</b> — the season from another decade that plays most alike (the highlighted point is the given player).</p>'
       : '<p class="mh-given">A mystery star is hiding somewhere in the 12,966-point map. Tap points — get warmer or colder.</p>';
     el.innerHTML = '<p class="mh-meta"><b>' + modeWord + '</b> · ' + state.day + replay + ' · ' + MAX_TAPS + ' taps</p>' + given;
     document.querySelectorAll('.mode-tab').forEach(function (t) {

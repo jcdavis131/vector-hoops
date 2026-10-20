@@ -43,6 +43,24 @@
 .hero__title span{ display: block; }
 .hero__title em{ font-style: normal; color: var(--accent); }
 
+/* ---------- Home: hero 3D map (opening night) ---------- */
+.hero-map{ max-width: 1040px; margin: 0 auto var(--s-6); }
+.hero-map__kicker{ font-family: var(--font-code); font-size: var(--t-xs); font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--accent); margin: 0 0 var(--s-2); }
+.hero-map__title{ margin: 0; font-family: var(--font-display); font-size: clamp(28px, 5.4vw, 52px); font-weight: 700; letter-spacing: -.03em; line-height: .95; text-wrap: balance; }
+.hero-map__sub{ margin: var(--s-2) 0 var(--s-4); font-size: var(--t-md); color: var(--fg-2); max-width: 60ch; }
+.embed3d-mount{ position: relative; border: 1px solid var(--line-2); border-radius: var(--radius-lg); overflow: hidden;
+  background: radial-gradient(120% 80% at 70% 20%, rgba(0,114,178,.10), transparent 48%), var(--surface); }
+.embed3d-placeholder{ position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; padding: 24px; text-align: center; color: var(--fg-2); font-size: 14px; }
+.embed3d-placeholder .spin{ width: 34px; height: 34px; border-radius: 50%; border: 3px solid var(--line-2); border-top-color: var(--accent); animation: hero-spin 1s linear infinite; }
+@keyframes hero-spin{ to{ transform: rotate(360deg); } }
+.hero-map__bar{ display: flex; flex-wrap: wrap; align-items: center; gap: var(--s-2) var(--s-4); margin-top: var(--s-3); }
+.hero-map__hint{ margin: 0; font-family: var(--font-code); font-size: var(--t-xs); color: var(--fg-3); }
+.hero-map__proj{ display: inline-flex; gap: 6px; }
+.proj-btn{ appearance: none; border: 1px solid var(--line-2); border-radius: 999px; background: var(--surface); color: var(--fg-2);
+  font-family: var(--font-code); font-size: 11px; font-weight: 800; padding: 6px 12px; cursor: pointer; min-height: 36px; }
+.proj-btn[aria-pressed="true"]{ background: var(--fg); color: var(--surface); border-color: var(--fg); }
+.hero-map__cta{ margin-left: auto; }
+
 /* ---------- Home: season strip (2026-27 opening night) ---------- */
 .season-strip{ max-width: 1040px; margin: 0 auto var(--s-6); padding: var(--s-3) var(--s-4);
   background: var(--surface-2); border: 1px solid var(--line); border-radius: var(--radius); }
@@ -357,6 +375,51 @@
   })();
   </script>
 
+  <section class="hero-map reveal" aria-label="Opening night on the 3D map">
+    <p class="hero-map__kicker">Opening night &middot; Thunder @ Spurs &middot; 8:30 PM CT on NBC</p>
+    <h2 class="hero-map__title">The map is the game tonight.</h2>
+    <p class="hero-map__sub">All 12,966 player-seasons, floating in 3D by how they played. A mystery star is hiding in there &mdash; tap points and the model answers <b>warmer</b> or <b>colder</b> in true 64-d cosine distance.</p>
+    <div class="embed3d-mount" data-projection="pca" id="hero-3d" style="height:min(72vw,440px)" role="application" aria-label="3D embedding map of 12,966 player-seasons">
+      <div class="embed3d-placeholder">
+        <span class="spin" aria-hidden="true"></span>
+        <p><b>Warming up the 3D map&hellip;</b><br/>If it can&rsquo;t load, the full atlas is right below &mdash; same data, same twins.</p>
+      </div>
+    </div>
+    <div class="hero-map__bar">
+      <p class="hero-map__hint">Drag to orbit &middot; scroll to zoom &middot; projections:</p>
+      <div class="hero-map__proj" role="group" aria-label="Map projection">
+        <button class="proj-btn" type="button" data-proj="pca" aria-pressed="true">PCA</button>
+        <button class="proj-btn" type="button" data-proj="tsne" aria-pressed="false">t-SNE</button>
+        <button class="proj-btn" type="button" data-proj="umap" aria-pressed="false">UMAP</button>
+      </div>
+      <a class="btn btn-primary hero-map__cta" href="/map-guess">Play Map Hunt &rarr;</a>
+    </div>
+    <noscript><p class="hero-map__hint" style="margin-top:8px">The 3D map needs JavaScript &mdash; the atlas below works the same way, and <a href="/play">Daily Court</a> plays without it.</p></noscript>
+  </section>
+  <script src="/assets/embed-3d.js"></script>
+  <script>
+  (function(){
+    /* Guarded 3D mount: the page is complete without it (placeholder stays). */
+    var el = document.getElementById('hero-3d'); if(!el) return;
+    function mount(proj){
+      if(!(window.Embed3D && typeof window.Embed3D.mount === 'function')) return false;
+      try{
+        window.Embed3D.mount(el, {projection: proj, height: el.clientHeight || 440});
+        var ph = el.querySelector('.embed3d-placeholder'); if(ph) ph.style.display = 'none';
+        return true;
+      }catch(e){ return false; }
+    }
+    if(!mount('pca')) return;
+    document.querySelectorAll('.hero-map__proj .proj-btn').forEach(function(b){
+      b.addEventListener('click', function(){
+        document.querySelectorAll('.hero-map__proj .proj-btn').forEach(function(x){ x.setAttribute('aria-pressed','false'); });
+        b.setAttribute('aria-pressed','true');
+        mount(b.getAttribute('data-proj'));
+      });
+    });
+  })();
+  </script>
+
   <section id="atlas" class="instrument reveal reveal-4" aria-labelledby="atlas-title">
     <div class="instrument__bar">
       <h2 id="atlas-title" class="label fig-label" style="margin:0">Fig. 1 <b>· The atlas</b></h2>
@@ -517,7 +580,7 @@
   <p class="site-footer__attribution">Every number recomputable from stats.nba.com · A <a href="https://dumbmodel.com">dumbmodel</a> project · <a href="https://github.com/jcdavis131/vector-hoops" rel="noopener">Source</a></p>
 </footer>
 
-<script defer src="/assets/site-nav.js?v=194d9f40"></script>
+<script defer src="/assets/site-nav.js?v=9b341f72"></script>
 <script defer src="/assets/vh-analytics.js?v=STAMP"></script>
 <script defer src="/assets/vh-peers.js?v=STAMP"></script>
 <script defer src="/assets/served-constants.js?v=8ba12340"></script>

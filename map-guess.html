@@ -13,7 +13,7 @@
 <meta name="twitter:description" content="A mystery star hides in the 3D map of 12,966 player-seasons. Tap points, get warmer or colder."/>
 <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml"/>
 <link rel="manifest" href="/manifest.json"/>
-<link rel="stylesheet" href="assets/shell.css"/>
+<link rel="stylesheet" href="assets/shell.css?v=7eb94ecf"/>
 <style>
 :root{--paper:#FFFEF7;--ink:#1A150F;--radius:14px;--mono:ui-monospace,monospace;--sans:ui-sans-serif,system-ui}
 *{box-sizing:border-box}html,body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:18px;line-height:1.6;overflow-x:clip}
@@ -111,14 +111,14 @@ button,.input{min-height:44px}
 
   <section class="card" aria-label="How it works">
     <p class="small-mono" style="margin:0 0 6px">How the hunt works</p>
-    <p style="font-size:14px;color:var(--fg-2);margin:0">The mystery is one of 1,313 notable player-seasons, picked deterministically — the same star for everyone today. Distance is cosine distance in the 64-d MTNN embedding (L2-normalized), the same space the twin engine uses. Twin Hunt hands you a player and asks for their nearest neighbor — the reveal comes from the same twin data as Daily Court.</p>
+    <p style="font-size:14px;color:var(--fg-2);margin:0">The mystery is one of 64 notable player-seasons, picked deterministically — the same star for everyone today. Distance is cosine distance in the 64-d MTNN embedding (L2-normalized), the same space the twin engine uses. Twin Hunt hands you a player and asks for their <b>era twin</b> — the season from another decade that plays most alike, straight from the same twin data as Daily Court.</p>
   </section>
 </main>
 <footer class="site-footer">
   <p>Every number recomputable from stats.nba.com · A <a href="https://dumbmodel.com">dumbmodel</a> project · <a href="/play">Classic Daily Court</a> · <a href="/">The atlas</a></p>
 </footer>
 <script src="/assets/embed-3d.js"></script>
-<script src="assets/map-hunt.js"></script>
-<script src="assets/viral-share.js"></script>
-<script src="assets/site-nav.js" defer></script>
+<script src="assets/map-hunt.js?v=443f0e51"></script>
+<script src="assets/viral-share.js?v=dc36888b"></script>
+<script src="assets/site-nav.js?v=9b341f72" defer></script>
 </body></html>

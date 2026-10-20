@@ -83,12 +83,26 @@ def main() -> int:
     print(f"resolved {len(candidates)}/{len(era['players'])} quiz-pool candidates "
           f"({unresolved} dropped: no row match)")
 
+    # Map Hunt mystery pool: recognizable names only (dossier players). Twin Hunt
+    # keeps the full pool — variety is fine there because the given player is shown.
+    try:
+        ei = json.loads((ASSETS / "entity-index.json").read_text())["entities"]
+        dossier = {e["name"].lower() for e in ei if e.get("dossier")}
+    except (OSError, KeyError):
+        dossier = set()
+    mh_pool = [c for c in candidates if c[1].lower() in dossier]
+    if len(mh_pool) < 20:
+        mh_pool = candidates  # honest fallback: thin fame list, use everyone
+    print(f"map-hunt mystery pool: {len(mh_pool)} dossier players; "
+          f"twin-hunt given pool: {len(candidates)}")
+
     nc = len(candidates)
+    nm = len(mh_pool)
     if nc < 100:
         sys.exit("too few candidates — refusing to ship a thin pool")
 
     OUT.mkdir(exist_ok=True)
-    (OUT / "dist").mkdir(exist_ok=True)
+    (OUT / "puzzles").mkdir(exist_ok=True)
     (OUT / "candidates.json").write_text(json.dumps(candidates, separators=(",", ":")))
 
     E = np.fromfile(str(ASSETS / "mtnn_embeddings.f32"), dtype="<f4").reshape(n, 64)
@@ -102,13 +116,15 @@ def main() -> int:
     day_list: list[tuple[str, int, int]] = []
     while d <= END:
         k = day_key(d)
-        mh = pick_index(k, "mh", nc)
+        mh = pick_index(k, "mh", nm)
         th = pick_index(k, "th", nc)
-        if th == mh:
-            th = (th + 1) % nc
-        mi = candidates[mh][0]
+        mi = mh_pool[mh][0]
         gi = candidates[th][0]
         ti = candidates[th][3]
+        if gi == mi:
+            th = (th + 1) % nc
+            gi = candidates[th][0]
+            ti = candidates[th][3]
         days[k] = {"mh": mi, "th": gi, "tht": ti}
         targets.add(mi)
         targets.add(ti)
@@ -121,12 +137,12 @@ def main() -> int:
         dist = np.clip(2.0 - 2.0 * dot, 0.0, 2.0)
         q = np.round(dist / 2.0 * 255.0).astype(np.uint8)
         # stash on disk keyed by target; the day loop renames copies.
-        q.tofile(str(OUT / "dist" / f"_t{t}.u8"))
+        q.tofile(str(OUT / "puzzles" / f"_t{t}.u8"))
 
     for k, mi, ti in day_list:
-        (OUT / "dist" / f"{k}-mh.u8").write_bytes((OUT / "dist" / f"_t{mi}.u8").read_bytes())
-        (OUT / "dist" / f"{k}-th.u8").write_bytes((OUT / "dist" / f"_t{ti}.u8").read_bytes())
-    for f in (OUT / "dist").glob("_t*.u8"):
+        (OUT / "puzzles" / f"{k}-mh.u8").write_bytes((OUT / "puzzles" / f"_t{mi}.u8").read_bytes())
+        (OUT / "puzzles" / f"{k}-th.u8").write_bytes((OUT / "puzzles" / f"_t{ti}.u8").read_bytes())
+    for f in (OUT / "puzzles").glob("_t*.u8"):
         f.unlink()
 
     (OUT / "index.json").write_text(json.dumps(
@@ -135,7 +151,7 @@ def main() -> int:
 
     # Sanity: mystery is its own nearest (dist 0) and twin is near the given.
     k0, mi0, ti0 = day_list[0]
-    q = np.fromfile(str(OUT / "dist" / f"{k0}-mh.u8"), dtype=np.uint8)
+    q = np.fromfile(str(OUT / "puzzles" / f"{k0}-mh.u8"), dtype=np.uint8)
     assert len(q) == n and q[mi0] == 0, "self-distance must quantize to 0"
     print(f"OK  {len(day_list)} days, {len(targets)} unique targets, "
           f"self-dist of {k0} mystery = 0")
