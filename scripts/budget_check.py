@@ -42,7 +42,7 @@ ROOT = Path(__file__).resolve().parent.parent
 BUDGETS = ROOT / "budgets.json"
 
 COUNTED_EXTENSIONS = {".css", ".js", ".json"}
-PAGE_GLOBS = ("*.html", "insights/*.html")
+PAGE_GLOBS = ("*.html", "insights/*.html", "models/*.html")
 
 # Gate 3: the repo's own freshness checks, run as subprocesses.
 LEDGER_CHECKS = [

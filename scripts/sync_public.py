@@ -71,6 +71,15 @@ def sources() -> list[tuple[Path, Path]]:
     if ins_dir.is_dir():
         for p in sorted(ins_dir.glob("*.html")):
             pairs.append((p, PUBLIC / "insights" / p.name))
+    # Pillar 1 (2026-10-20): models/ is a served directory now — the registry
+    # (models/registry.json) and the on-site model cards (models/*.html).
+    # Mirrored whole like assets/, minus .py per SKIP_SUFFIXES.
+    models_dir = ROOT / "models"
+    if models_dir.is_dir():
+        for p in sorted(models_dir.glob("*")):
+            if p.is_dir() or p.suffix in SKIP_SUFFIXES:
+                continue
+            pairs.append((p, PUBLIC / "models" / p.name))
     for name in ROOT_FILES:
         f = ROOT / name
         if f.exists():

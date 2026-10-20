@@ -1,0 +1,117 @@
+{
+  "champion": "mtnn-v5",
+  "models": [
+    {
+      "artifacts": {
+        "arch": "assets/mtnn_arch.json",
+        "card": "/models/mtnn-v5.html",
+        "embedding_f32": "assets/mtnn_embeddings.f32",
+        "lineage": "assets/mtnn_lineage.json",
+        "meta": "assets/mtnn_meta.json",
+        "vectors": "assets/vectors.json"
+      },
+      "data_window": {
+        "dim": 64,
+        "rows": 12966,
+        "seasons": [
+          "1996-97",
+          "2025-26"
+        ],
+        "source": "assets/vectors.json",
+        "unique_players": 2415
+      },
+      "description": "MTNN v5 incumbent: 64-d L2-normalized player-season embedding. Concatenated towers (2 blocks, hidden 160, tower out 32), MLP 128, fusion 256. Incumbent since 2026-07-25.",
+      "id": "mtnn-v5",
+      "known_limits": [
+        "Lineage is reconstructed from served bytes, not from the original promote.py run directory (which is absent from the repo).",
+        "Export floors were waived by --force (missing test recall / 14-d baseline recall at record time).",
+        "Train git SHA, checkpoint hash, and run report are not recoverable from the repo — recorded as null until the original run files are found or a replacement champion is ordered.",
+        "mtnn_jacobian.json and mtnn_attr_pop.json are 48-d July 11-14 exports marked not_from_served_net — not from this run."
+      ],
+      "metrics": {
+        "held_out_adjacent_season_retrieval": {
+          "baseline_14d_overall_top1": 0.0749,
+          "baseline_14d_overall_top5": 0.1954,
+          "overall_top1": 0.5081,
+          "overall_top5": 0.9339,
+          "protocol": "Query the shipped 64-d space with a player's season N; hit if that same player's season N+1 (stable NBA PLAYER_ID) ranks top-k among all 12,966 player-seasons. Splits: train <=2021, val 2022-23, test >=2024.",
+          "source": "assets/eval_scoreboard.json (computed 2026-07-25)",
+          "test_top1": 0.438,
+          "test_top5": 0.757
+        },
+        "lineage_metrics": {
+          "archetype_top1_acc": 0.9701527070800556,
+          "purity_at_20": 0.7834268306835064,
+          "source": "assets/mtnn_lineage.json",
+          "test_recall_at_10": 0.846
+        }
+      },
+      "model": "mtnn_v5_concat_b2_h160_t32_d64_mlp128_fus256",
+      "provenance": {
+        "centroids_sha256": null,
+        "checkpoint_sha256": null,
+        "embedding_f32_sha256": "2574ef581ac3d3ee0f793447c26c5c48b82ec309985d6afcf177ed08510458f4",
+        "embedding_npz_sha256": null,
+        "exported": "2026-07-25T00:00:00Z",
+        "f32_bytes": 3319296,
+        "force_reason": "Adopted the July 2026 v5 incumbent already served on master (git blob a4918f09). The original promote.py run directory is not in this repo; lineage records the served bytes. Not a new promotion.",
+        "forced": true,
+        "git_blob_f32": "a4918f09dfbd04120ecad5556a0736f65fa0ef6d",
+        "lineage_gate": "see models/lineage-gate.md",
+        "manifest_sha256": null,
+        "original_run_dir": null,
+        "promoted_at": null,
+        "promoted_via": "pipeline/promote.py",
+        "report_sha256": null,
+        "train_git_sha": null
+      },
+      "run_id": "july-v5-a4918f09",
+      "status": "champion",
+      "vintage": "2026-07-25"
+    },
+    {
+      "artifacts": {
+        "report": "data/mtnn_v6_b3_h256_t64_d128_mlp256_fus512_12452rows_sklearn_report.json"
+      },
+      "data_window": {
+        "filter": "every player with 2+ seasons; 514 one-season rows excluded",
+        "input_features": 120,
+        "rows": 12452,
+        "seasons": "1996-97 to 2025-26 (filter applied)",
+        "source": "data/mtnn_v6_b3_h256_t64_d128_mlp256_fus512_12452rows_sklearn_report.json",
+        "unique_players": 1901
+      },
+      "description": "MTNN v6 smoke run: 128-d, 3 tower blocks (hidden 256, tower out 64), MLP 256, fusion 512. ~35x the v5 parameter count (~7.8M est torch). Challenger only — not promoted, not exported, not served.",
+      "id": "mtnn-v6",
+      "known_limits": [
+        "Sklearn-fallback training (the report names it), not the full torch pipeline.",
+        "No held-out win over the v5 champion, so it stays a challenger under the standing rule: no promotion without a held-out win and Cameron's word."
+      ],
+      "metrics": {
+        "loss_final": 0.00098614,
+        "note": "Training loss only. No held-out retrieval evaluation comparable to the v5 champion's eval_scoreboard protocol has been run; it has not cleared any promotion gate."
+      },
+      "model": "mtnn_v6_concat_b3_h256_t64_d128_mlp256_fus512",
+      "provenance": {
+        "lineage_gate": "not applicable — never promoted",
+        "prev_model": "mtnn_v5_concat_b2_h160_t32_d64_mlp128_fus256",
+        "promoted_at": null,
+        "promoted_via": null
+      },
+      "run_id": null,
+      "status": "challenger",
+      "vintage": "2026-09-02"
+    }
+  ],
+  "open_decisions": [
+    "Single-model serving policy vs multi-model platform — Cameron's call (Pillar 1.8).",
+    "Served-model lineage gate resolution: find the original July v5 run files, or order a deliberate replacement champion — Cameron's call (see models/lineage-gate.md)."
+  ],
+  "retired": [],
+  "schema": 1,
+  "schema_note": "Versioned model registry for Vector Hoops. Every served model gets: id, vintage, data window, metrics, status, artifact paths, provenance. Seeded from repo-verified facts only; fields not verifiable in the repo are null or \"unknown\" — never invented.",
+  "serving_policy": "single-model",
+  "serving_policy_note": "Changed only on Cameron's word (Pillar 1.8 open decision). The site serves one promoted, exported MTNN bundle, verified by scripts/check_served_model.py in CI.",
+  "updated": "2026-10-20",
+  "updated_by": "scout/platform-p1-registry"
+}
