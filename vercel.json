@@ -223,6 +223,15 @@
         }
       ],
       "source": "/playoff-runs"
+    },
+    {
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, s-maxage=60, stale-while-revalidate=300"
+        }
+      ],
+      "source": "/map-guess"
     }
   ],
   "rewrites": [
@@ -261,6 +270,10 @@
     {
       "source": "/playoff-runs",
       "destination": "/playoff-runs.html"
+    },
+    {
+      "source": "/map-guess",
+      "destination": "/map-guess.html"
     }
   ],
   "trailingSlash": false,

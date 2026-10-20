@@ -1,0 +1,124 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
+<title>Map Hunt — find the hidden star on the 3D map — Vector Hoops</title>
+<meta name="description" content="A mystery NBA star is hiding in the 3D embedding map of 12,966 player-seasons. Tap points — warmer or colder by true 64-d cosine distance. Same map for everyone, every day."/>
+<link rel="canonical" href="https://hoops.dumbmodel.com/map-guess"/>
+<meta property="og:type" content="website"/>
+<meta property="og:site_name" content="Vector Hoops"/>
+<meta property="og:url" content="https://hoops.dumbmodel.com/map-guess"/>
+<meta property="og:title" content="Map Hunt — find the hidden star on the 3D map"/>
+<meta property="og:description" content="Tap points on the embedding map. Warmer or colder by true 64-d cosine distance. Same map for everyone."/>
+<meta property="og:image" content="https://hoops.dumbmodel.com/assets/og-1200x630.png"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="Map Hunt — Vector Hoops"/>
+<meta name="twitter:description" content="A mystery star hides in the 3D map of 12,966 player-seasons. Tap points, get warmer or colder."/>
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml"/>
+<link rel="manifest" href="/manifest.json"/>
+<link rel="stylesheet" href="assets/shell.css?v=7eb94ecf"/>
+<style>
+:root{--paper:#FFFEF7;--ink:#1A150F;--radius:14px;--mono:ui-monospace,monospace;--sans:ui-sans-serif,system-ui}
+*{box-sizing:border-box}html,body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:18px;line-height:1.6;overflow-x:clip}
+button,.input{min-height:44px}
+.main{max-width:880px;margin:0 auto;padding:12px clamp(12px,3vw,20px) calc(92px + env(safe-area-inset-bottom));display:flex;flex-direction:column;gap:14px}
+.card{background:var(--surface);border:1px solid var(--line-2);border-radius:14px;padding:14px 16px}
+.btn{appearance:none;border:1px solid var(--line-2);border-radius:12px;min-height:48px;padding:10px 14px;font-weight:900;font-family:var(--mono);text-transform:uppercase;letter-spacing:.04em;cursor:pointer;background:var(--surface);color:var(--ink);display:inline-flex;align-items:center;gap:8px;justify-content:center}
+.btn-primary{background:var(--accent);color:var(--on-accent)}
+.input{width:100%;border:1px solid var(--line-2);border-radius:12px;padding:0 12px;font-size:16px;font-weight:600}
+.small-mono{font-family:var(--mono);font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase}
+.game-title{margin:0;font-size:clamp(26px,6vw,40px);line-height:.95;letter-spacing:-.02em}
+.game-subtitle{margin:8px 0 0;font-size:15px;line-height:1.55;color:var(--fg-2);max-width:64ch}
+.mode-tabs{display:flex;gap:8px;overflow-x:auto;flex-wrap:nowrap;padding:4px 0 8px;scrollbar-width:none}
+.mode-tab{flex:0 0 auto;appearance:none;border:1px solid var(--line-2);border-radius:999px;padding:8px 14px;background:var(--surface);font-family:var(--mono);font-size:11px;font-weight:900;text-transform:uppercase;cursor:pointer;min-height:40px;display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
+.mode-tab.is-active{background:var(--accent);color:var(--on-accent)}
+.mode-tab.is-link{text-decoration:none;color:var(--ink)}
+.embed3d-mount{position:relative;min-height:380px;border:1px solid var(--line-2);border-radius:16px;overflow:hidden;background:radial-gradient(120% 80% at 70% 20%,rgba(0,114,178,.10),transparent 48%),var(--paper)}
+.embed3d-placeholder{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:24px;text-align:center;color:var(--fg-2);font-size:14px}
+.embed3d-placeholder .spin{width:34px;height:34px;border-radius:50%;border:3px solid var(--line-2);border-top-color:var(--accent);animation:mhspin 1s linear infinite}
+@keyframes mhspin{to{transform:rotate(360deg)}}
+.guess-row{border:1px solid var(--line-2);border-radius:12px;padding:10px 12px;background:var(--surface);margin-top:8px}
+.mh-dist{font-size:13px;color:var(--fg-2)}
+.mh-warmer{color:var(--verm)} .mh-colder{color:var(--blue)}
+.mh-season{font-family:var(--mono);font-size:12px;color:var(--fg-3)}
+.mh-empty{color:var(--fg-3);font-size:14px}
+.mh-meta{font-family:var(--mono);font-size:11px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:var(--fg-2);margin:0 0 6px}
+.mh-replay{background:var(--yellow);color:var(--ink);border-radius:6px;padding:1px 8px}
+.mh-given{margin:4px 0 0;font-size:14px;color:var(--fg-2)}
+.progress-dots{display:flex;gap:6px;align-items:center;margin-top:10px;flex-wrap:wrap}
+.progress-dot{width:26px;height:26px;border-radius:50%;border:1px solid var(--line-2);display:inline-flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:11px;font-weight:900;background:var(--surface)}
+.progress-dot.is-done{background:var(--accent);color:var(--on-accent)}.progress-dot.is-current{background:var(--accent-wash);color:var(--accent)}
+#mh-status{font-size:14px;color:var(--fg-2);min-height:1.6em}
+#mh-result h3{margin:0 0 6px;font-size:22px}
+.mh-answer{font-size:18px}.mh-score{font-family:var(--mono);font-weight:800}
+.mh-twin{font-size:14px;color:var(--fg-2)}
+.mh-share-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.mh-fallback-row{display:flex;gap:8px;margin-top:10px}
+.mh-fallback-row .input{flex:1}
+#mh-error{border:2px solid var(--verm);border-radius:14px;padding:16px;background:var(--surface)}
+.vh-toast{position:fixed;left:50%;bottom:88px;transform:translateX(-50%) translateY(16px);background:#1A150F;color:#FFFDF6;padding:10px 18px;border-radius:999px;font:600 14px/1.4 system-ui,-apple-system,sans-serif;opacity:0;pointer-events:none;transition:opacity .18s ease,transform .18s ease;z-index:9999;max-width:min(92vw,440px);text-align:center}
+.vh-toast.is-visible{opacity:1;transform:translateX(-50%) translateY(0)}
+.site-footer{border-top:1px solid var(--line);margin-top:26px;padding:22px clamp(12px,3vw,20px) 40px;font-size:13px;color:var(--fg-3);max-width:880px;margin-left:auto;margin-right:auto}
+.site-footer a{color:var(--fg-2)}
+@media (prefers-color-scheme:dark){:root{--paper:#101216}}
+</style>
+</head>
+<body>
+<nav class="site-nav" data-active="/map-guess" aria-label="Vector Hoops site"></nav>
+<main id="main" class="main">
+  <header class="card" id="game-header">
+    <p class="small-mono" style="color:var(--accent);margin:0 0 6px">Opening night · new daily game</p>
+    <h1 class="game-title">Map Hunt</h1>
+    <p class="game-subtitle">A mystery star is hiding somewhere in the 3D map of 12,966 player-seasons. Tap a point — the model answers in true 64-d cosine distance: <b>warmer</b> or <b>colder</b>, and how close you are versus every player-season ever charted. Find them in 8 taps.</p>
+    <div class="mode-tabs" role="tablist" aria-label="Game modes">
+      <button class="mode-tab" role="tab" data-mode="mh" type="button">🗺️ Daily Map Hunt</button>
+      <button class="mode-tab" role="tab" data-mode="th" type="button">👯 Twin Hunt</button>
+      <a class="mode-tab is-link" href="/play">🏀 Classic Daily Court</a>
+    </div>
+  </header>
+
+  <div id="mh-error" hidden></div>
+
+  <div id="mh-game">
+    <section class="card" aria-label="Today's puzzle">
+      <div id="mh-puzzle"><p class="mh-meta">Loading today&rsquo;s puzzle&hellip;</p></div>
+    </section>
+
+    <section aria-label="The 3D map">
+      <div class="embed3d-mount" data-projection="pca" style="height:min(72vw,460px)" role="application" aria-label="3D embedding map — tap a point to guess">
+        <div class="embed3d-placeholder">
+          <span class="spin" aria-hidden="true"></span>
+          <p><b>Warming up the 3D map&hellip;</b><br/>12,966 player-seasons, placed by how they played. If the map can&rsquo;t load, the search box below keeps the game fully playable.</p>
+        </div>
+      </div>
+      <noscript><div class="card" style="margin-top:10px"><p><b>Map Hunt needs JavaScript</b> for the 3D map and distance feedback. The classic game works the same idea with text: <a href="/play">play Daily Court →</a></p></div></noscript>
+    </section>
+
+    <section class="card" id="mh-fallback" hidden aria-label="Search fallback">
+      <p class="small-mono" style="margin:0 0 8px">No 3D? Search instead — same puzzle</p>
+      <div class="mh-fallback-row">
+        <input class="input" id="mh-search" list="mh-search-list" placeholder="Type a player name…" autocomplete="off"/>
+        <datalist id="mh-search-list"></datalist>
+        <button class="btn btn-primary" id="mh-search-btn" type="button">Tap</button>
+      </div>
+    </section>
+
+    <section class="card" aria-label="Your taps">
+      <div id="mh-status" role="status" aria-live="polite">Tap a point on the map to start.</div>
+      <div class="progress-dots" id="mh-dots" aria-hidden="true"></div>
+      <div id="mh-taps"></div>
+    </section>
+
+    <section class="card" id="mh-result" hidden aria-label="Result"></section>
+  </div>
+
+  <section class="card" aria-label="How it works">
+    <p class="small-mono" style="margin:0 0 6px">How the hunt works</p>
+    <p style="font-size:14px;color:var(--fg-2);margin:0">The mystery is one of 64 notable player-seasons, picked deterministically — the same star for everyone today. Distance is cosine distance in the 64-d MTNN embedding (L2-normalized), the same space the twin engine uses. Twin Hunt hands you a player and asks for their <b>era twin</b> — the season from another decade that plays most alike, straight from the same twin data as Daily Court.</p>
+  </section>
+</main>
+<footer class="site-footer">
+  <p>Every number recomputable from stats.nba.com · A <a href="https://dumbmodel.com">dumbmodel</a> project · <a href="/play">Classic Daily Court</a> · <a href="/">The atlas</a></p>
+</footer>
+<script src="/assets/embed-3d.js"></script>
+<script src="assets/map-hunt.js?v=700f61f0"></script>
+<script src="assets/viral-share.js?v=dc36888b"></script>
+<script src="assets/site-nav.js?v=9b341f72" defer></script>
+</body></html>
