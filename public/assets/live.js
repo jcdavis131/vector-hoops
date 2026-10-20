@@ -242,14 +242,16 @@ function qDividers(s,pts,X,padT,H,padB){
 }
 
 // ---- Our win-probability heuristic (stated, experimental, never a bare number) ----
-// p(home wins) = sigmoid( (homeLead + 3.0) / (13.5 * sqrt(fractionOfGameLeft)) )
-// fractionOfGameLeft = secondsLeft / 2880. The +3.0 is a fixed home-court edge
-// in points; 13.5 is a per-game scoring-volatility scale. NOT fitted to data.
-// Interval: +/- 10pp * sqrt(fractionLeft) — wide early, tight late. The interval
+// p(home wins) = sigmoid( (homeLead + 3.0*f) / (13.5 * sqrt(f)) )
+// f = fractionOfGameLeft = secondsLeft / 2880. The 3.0 is a home-court edge in
+// points that DECAYS with time left (3.0*f): full weight at tipoff, ~0 at the
+// buzzer, so a home team down 2 with 1s left is not shown at 98%. 13.5 is a
+// per-game scoring-volatility scale. NOT fitted to data.
+// Uncertainty band: +/- 10pp * sqrt(f) — wide early, tight late. The band
 // is the point of the number: it says how much this crude model doesn't know.
 function ourWP(marginHome, secsLeft){
   const f=Math.max(secsLeft,1)/2880;
-  const z=(marginHome+3.0)/(13.5*Math.sqrt(f));
+  const z=(marginHome+3.0*f)/(13.5*Math.sqrt(f));
   const p=1/(1+Math.exp(-z));
   const half=0.10*Math.sqrt(f);
   return {p:p, lo:Math.max(0,p-half), hi:Math.min(1,p+half)};
@@ -469,24 +471,27 @@ function renderShotChart(d,g,idx){
   s+=`<circle cx="25" cy="19" r="6" fill="none" stroke="${INK}" stroke-width="0.5" stroke-dasharray="1.6,1.3"/>`;
   s+=`<circle cx="25" cy="5.25" r="0.9" fill="none" stroke="${INK}" stroke-width="0.5"/>`;
   s+=`<line x1="22" y1="4" x2="28" y2="4" stroke="${INK}" stroke-width="0.7"/>`;
-  s+=`<path d="M3,14 A23.75,23.75 0 0 1 47,14" fill="none" stroke="${INK}" stroke-width="0.6"/>`;
+  s+=`<path d="M1.25,5.25 A23.75,23.75 0 0 0 48.75,5.25" fill="none" stroke="${INK}" stroke-width="0.6"/>`;
   s+=`<line x1="3" y1="0" x2="3" y2="14" stroke="${INK}" stroke-width="0.6"/>`;
   s+=`<line x1="47" y1="0" x2="47" y2="14" stroke="${INK}" stroke-width="0.6"/>`;
-  s+=`<path d="M21,5.25 A4,4 0 0 1 29,5.25" fill="none" stroke="${INK}" stroke-width="0.4" stroke-dasharray="1,1"/>`;
+  s+=`<path d="M21,5.25 A4,4 0 0 0 29,5.25" fill="none" stroke="${INK}" stroke-width="0.4" stroke-dasharray="1,1"/>`;
   s+=`<line x1="0.5" y1="47" x2="49.5" y2="47" stroke="${INK}" stroke-width="0.7"/>`;
   s+=`<text x="25" y="52.5" text-anchor="middle" font-size="2.6" font-family="ui-monospace,monospace" fill="#5b5545">HALF COURT · MAKES ● / MISSES ○</text>`;
   show.forEach((sh,i)=>{
     const col=sh.t===habbr?hcol:(sh.t===aabbr?acol:'#8a8574');
     const dl=Math.min(i*7,1400);
-    if(sh.make)s+=`<circle cx="${sh.x.toFixed(1)}" cy="${sh.y.toFixed(1)}" r="1.2" fill="${col}" style="animation:pop .35s ${dl}ms both"/>`;
-    else s+=`<circle cx="${sh.x.toFixed(1)}" cy="${sh.y.toFixed(1)}" r="1.2" fill="none" stroke="${col}" stroke-width="0.55" style="animation:pop .35s ${dl}ms both"/>`;
+    // ESPN shot coords put the rim at (25,0); the drawn court puts it at (25,5.25),
+    // so shift shots +5.25 in y to land on the drawing. Verified vs 136 ESPN
+    // "N-foot" shot descriptions (mean err 0.69ft at (25,0) vs 2.71ft at (25,5.25)).
+    if(sh.make)s+=`<circle cx="${sh.x.toFixed(1)}" cy="${(sh.y+5.25).toFixed(1)}" r="1.2" fill="${col}" style="animation:pop .35s ${dl}ms both"/>`;
+    else s+=`<circle cx="${sh.x.toFixed(1)}" cy="${(sh.y+5.25).toFixed(1)}" r="1.2" fill="none" stroke="${col}" stroke-width="0.55" style="animation:pop .35s ${dl}ms both"/>`;
   });
   svg.innerHTML=s;
   // zone FG%
   const zone={rim:[0,0],mid:[0,0],three:[0,0]};
   show.forEach(sh=>{
-    const dd=Math.hypot(sh.x-25,sh.y-5.25);
-    const z=(dd>23.75||(sh.y<14&&(sh.x<3.5||sh.x>46.5)))?'three':(dd<=8?'rim':'mid');
+    const dd=Math.hypot(sh.x-25,sh.y); // rim at ESPN (25,0); corner 3s: |x-25|>22 and inside the arc break (y<9)
+    const z=(dd>23.75||(sh.y<9&&(sh.x<3||sh.x>47)))?'three':(dd<=8?'rim':'mid');
     zone[z][1]++;if(sh.make)zone[z][0]++;
   });
   const zh=(k,l)=>{const m=zone[k][0],a=zone[k][1],pc=a?Math.round(m/a*100):0;
@@ -546,7 +551,7 @@ function renderGhosts(d){
       if(!s||s.length<14)return null;
       const mstr=s[0];
       const mp=mstr.indexOf(':')>=0?(+mstr.split(':')[0])+(+mstr.split(':')[1])/60:+mstr||0;
-      if(!(mp>=10))return null;
+      if(!(mp>=15))return null; // 15-min floor: per-36 at 10 min is wild extrapolation (Panel N2)
       const fga=(String(s[2]).indexOf('-')>=0)?+String(s[2]).split('-')[1]:0;
       return {nm:a.athlete.displayName,mp:mp,pts:+s[1]||0,reb:+s[5]||0,ast:+s[6]||0,
         tov:+s[7]||0,stl:+s[8]||0,blk:+s[9]||0,fga:fga};
@@ -554,7 +559,7 @@ function renderGhosts(d){
     aths.forEach(p=>{
       const gh=ghostFor(p.mp,p.pts,p.reb,p.ast,p.stl,p.blk,p.tov,p.fga);
       const lp36=p.pts/p.mp*36, delta=lp36-gh.gp36;
-      const tier=gh.blend<0.9?'strong match':(gh.blend<1.4?'decent match':'faint match');
+      const tier=gh.blend<0.9?'closest ghost':(gh.blend<1.4?'nearby ghost':'distant ghost'); // soft words: cutoffs uncalibrated (Panel N2)
       const dCls=delta>=0?'up':'dn', dTxt=(delta>=0?'+':'')+delta.toFixed(1)+' pts/36';
       const mx=Math.max(lp36,gh.gp36,1);
       const lw=Math.round(lp36/mx*100), gw=Math.round(gh.gp36/mx*100);
@@ -568,8 +573,8 @@ function renderGhosts(d){
         </div>
         <div class="g-pace">pace: <b class="${dCls}">${dTxt}</b> vs ghost<span class="tier">${tier}</span></div>
       </div>`;
-      if(delta>=2)window._ghostPasses.push({seq:1e9,clk:'now',
-        text:`<b>🔥 ${esc(p.nm)} blew past ${esc(gh.name)}'s ghost pace</b>`});
+      if(delta>=5)window._ghostPasses.push({seq:1e9,clk:'now',
+        text:`<b>🔥 ${esc(p.nm)} well ahead of ${esc(gh.name)}'s ghost pace</b> <span class="when">early, noisy</span>`});
     });
   });
   el.innerHTML=html||'<span style="font-size:12px;color:#6b675c">Not enough minutes yet for ghost matches.</span>';
@@ -713,10 +718,10 @@ function renderMoments(d,g,idx){
     const a=+p.awayScore,h=+p.homeScore;
     let sc=null,pts=0;
     if(a>cA&&h===cH){sc='A';pts=a-cA;}else if(h>cH&&a===cA){sc='H';pts=h-cH;}
-    if(sc){if(sc===rt)rn+=pts;else{if(rn>=10&&rt)moms.push({seq:i,clk:clkOf(p),text:`<b>🔥 ${rt==='H'?habbr:aabbr} ${rn}-0 run</b>`});rt=sc;rn=pts;}}
+    if(sc){if(sc===rt)rn+=pts;else{if(rn>=8&&rt)moms.push({seq:i,clk:clkOf(p),text:`<b>🔥 ${rt==='H'?habbr:aabbr} ${rn}-0 run</b>`});rt=sc;rn=pts;}}
     cA=a;cH=h;
   });
-  if(rn>=10&&rt)moms.push({seq:plays.length-1,clk:clkOf(plays[plays.length-1]),text:`<b>🔥 ${rt==='H'?habbr:aabbr} ${rn}-0 run</b>`});
+  if(rn>=8&&rt)moms.push({seq:plays.length-1,clk:clkOf(plays[plays.length-1]),text:`<b>🔥 ${rt==='H'?habbr:aabbr} ${rn}-0 run</b>`});
   // ghost passes (rebuilt each refresh)
   (window._ghostPasses||[]).forEach(m=>moms.push(m));
   // NBA Jam callouts
@@ -782,7 +787,8 @@ function renderRuns(d,g,idx){
   }).join('');
 }
 
-// ---- Momentum in embedding space: tonight's points by archetype vs minute share ----
+// ---- Archetype efficiency: tonight's points by archetype vs minute share ----
+// (A within-game efficiency snapshot, not momentum — no time dimension.)
 // archetype = mtnnGlobal (K=8 k-means cluster of player-season representations),
 // assets/archetype_assignments.json built 2026-10-11; live players mapped by
 // display name to their latest player-season <= 2025-26 (assets/live_opening.json).
@@ -823,36 +829,58 @@ function renderPregame(d,g){
   const el=$('pregame');if(!el)return;
   const h=d.header.competitions[0];
   const st=h.status.type.state;
-  if(st!=='pre'){el.hidden=true;return;}
+  if(st!=='pre'){el.hidden=true;el.dataset.gid='';return;}
   el.hidden=false;
-  if(el.dataset.done||!window.OPEN_DOC)return;
-  el.dataset.done='1';
+  const gid=String(h.id||'');
+  if(el.dataset.gid===gid&&window.OPEN_DOC)return; // already rendered for this game
+  el.dataset.gid=gid;
+  if(!window.OPEN_DOC)return;
   const doc=window.OPEN_DOC.game;
-  const pred=d.predictor||{};
-  const homeP=pred.homeTeam?+pred.homeTeam.gameProjection:(doc.predictor?doc.predictor.home_win_pct:50);
-  const habbr=g?g.h.abbr:'SA',aabbr=g?g.a.abbr:'OKC';
+  const isDocGame=String(doc.event_id)===gid;
+  const habbr=g?g.h.abbr:'',aabbr=g?g.a.abbr:'';
+  // Predictor: ONLY when this game is the documented opening-night matchup.
+  // ESPN's summary payload carries no predictor field, so a build-time fetch
+  // shown for any other game would be misattributed. (Panel S1)
+  const pred=doc.predictor||{};
+  const showPred=isDocGame&&pred.home_win_pct!=null;
+  const homeP=showPred?+pred.home_win_pct:50;
+  const predHtml=showPred?
+    '<div class="pg-pred"><div class="pbar"><div class="pfill" style="width:'+homeP+'%"></div></div>'+
+    '<div class="plbl"><span>'+aabbr+' '+(100-homeP).toFixed(0)+'%</span><span>'+habbr+' '+homeP.toFixed(0)+'%</span></div>'+
+    '<div class="psrc">'+esc(pred.source||'Matchup predictor')+' \u00b7 pre-game fetch, '+esc(doc.label||'')+'</div></div>':'';
+  // Tip time: from the doc for the documented game, else from ESPN's date (CT).
+  let when='';
+  if(isDocGame&&doc.tip_ct){
+    try{when=new Date(doc.tip_ct).toLocaleString('en-US',{timeZone:'America/Chicago',weekday:'short',hour:'numeric',minute:'2-digit'})+' CT';}catch(e){when='';}
+  }else if(h.date){
+    try{when=new Date(h.date).toLocaleString('en-US',{timeZone:'America/Chicago',weekday:'short',hour:'numeric',minute:'2-digit'})+' CT';}catch(e){when='';}
+  }
+  const ctxLine=isDocGame
+    ? esc(doc.label||'Pre-game')+' \u2014 both teams 0\u20130.'
+    : 'Pre-game.';
   const comp=window.OPEN_DOC.team_composition||{};
   const chips=window.OPEN_DOC.star_twins||{};
   const compHtml=abbr=>{
-    const c=comp[abbr];if(!c)return '';
+    const c=comp[abbr];if(!c||!isDocGame)return '';
     const bars=c.clusters.slice(0,4).map(x=>'<div class="cmp"><span>'+esc(x.name)+'</span><b class="num">'+x.n+'</b></div>').join('');
     return '<div class="cmpcol"><h4>'+abbr+' flavor</h4>'+bars+'<div class="cnote">'+c.mapped_n+' of '+c.roster_n+' roster players mapped to archetypes</div></div>';
   };
   const chipHtml=abbr=>{
+    if(!isDocGame)return '';
     const cs=chips[abbr]||[];
     if(!cs.length)return '<div class="cnote">No twin-library comps for this roster\u2019s young stars yet (twin pool needs \u22654 charted seasons).</div>';
     return cs.map(c=>'<div class="tchip"><b>'+esc(c.name)+'</b><span>'+esc(c.archetype||'')+'</span><span class="tt">twins '+esc(c.twin)+' \u00b7 '+esc(c.twin_season)+' <i>'+(c.similarity*100).toFixed(0)+'%</i></span></div>').join('');
   };
-  el.innerHTML=
-    '<div class="plate"><span class="pno">PRE-GAME</span><h2>TONIGHT\u2019S MATCHUP</h2><span class="prule"></span><span class="pmeta">'+esc(doc.label)+'</span></div>'+
-    '<div class="pg-grid"><div><div class="pg-teams"><span>'+aabbr+'</span><span class="at">@</span><span>'+habbr+'</span></div>'+
-    '<div class="pg-when">Tonight, 8:30 PM CT \u00b7 '+esc(doc.venue)+'</div>'+
-    '<div class="pg-pred"><div class="pbar"><div class="pfill" style="width:'+homeP+'%"></div></div>'+
-    '<div class="plbl"><span>'+aabbr+' '+(100-homeP).toFixed(0)+'%</span><span>'+habbr+' '+homeP.toFixed(0)+'%</span></div>'+
-    '<div class="psrc">ESPN Matchup Predictor, pre-game</div></div>'+
-    '<div class="pg-ctx">Opening night \u2014 both teams 0\u20130. Season series tied 0\u20130.</div></div>'+
+  const sideHtml=isDocGame?
     '<div class="pg-side"><h3>WHAT THE MODELS SEE</h3><div class="cmpgrid">'+compHtml(aabbr)+compHtml(habbr)+'</div>'+
-    '<h3>TWIN COMPS</h3><div class="chips">'+chipHtml(aabbr)+chipHtml(habbr)+'</div></div></div>';
+    '<h3>TWIN COMPS</h3><div class="chips">'+chipHtml(aabbr)+chipHtml(habbr)+'</div></div>':'';
+  el.innerHTML=
+    '<div class="plate"><span class="pno">PRE-GAME</span><h2>TONIGHT\u2019S MATCHUP</h2><span class="prule"></span><span class="pmeta">'+esc(isDocGame?doc.label:'Pre-game')+'</span></div>'+
+    '<div class="pg-grid"><div><div class="pg-teams"><span>'+aabbr+'</span><span class="at">@</span><span>'+habbr+'</span></div>'+
+    (when?'<div class="pg-when">'+esc(when)+' \u00b7 '+esc(doc.venue||'')+'</div>':'')+
+    predHtml+
+    '<div class="pg-ctx">'+ctxLine+'</div></div>'+
+    sideHtml+'</div>';
 }
 
 // ---- Opening-night data (archetype map + pregame chips) ----

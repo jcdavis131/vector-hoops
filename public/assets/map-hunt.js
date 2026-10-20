@@ -176,10 +176,9 @@
   }
   function shareText(taps, stars, pct) {
     var modeWord = state.mode === 'mh' ? 'Map Hunt' : 'Twin Hunt';
-    var twinBit = state.twinName ? ' His era twin: ' + state.twinName + ' (' + (state.twinSim * 100).toFixed(0) + '% style match).' : '';
     return '🗺️ Vector Hoops ' + modeWord + ' ' + state.day + ': ' + starsStr(stars) +
-      ' — found ' + state.targetName + ' (' + state.targetSeason + ') in ' + taps + ' taps on the 3D embedding map,' +
-      ' closer than ' + pct.toFixed(1) + '% of all 12,966 player-seasons.' + twinBit +
+      ' — found today\u2019s mystery player in ' + taps + ' taps on the 3D embedding map,' +
+      ' closer than ' + pct.toFixed(1) + '% of all 12,966 player-seasons.' +
       ' Play the same map: ' + shareURL(taps, stars);
   }
   function shareCard() {

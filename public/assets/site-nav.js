@@ -7,7 +7,7 @@
 (function (global) {
   'use strict';
 
-  var MAP = { href: '/#atlas', label: 'Map', title: 'The 3D atlas of 12,966 player-seasons' };
+  var MAP = { href: '/#map3d', label: 'Map', title: 'The 3D embedding map of 12,966 player-seasons' };
   var PLAY = { href: '/play', label: 'Play', title: 'Daily Court: five past All-Stars, find each modern twin' };
   var HOW = {
     href: 'https://dumbmodel.com',
@@ -17,6 +17,7 @@
 
   var EXPLORE = [
     { href: '/', label: 'Atlas', desc: 'The map of 12,966 player-seasons' },
+    { href: '/map-guess', label: 'Map Hunt', desc: 'Find the mystery star on the 3D map — new tonight', live: true },
     { href: '/live', label: 'Live', desc: 'Live game companion: win probability, atlas twins, shot charts', live: true },
     { href: '/players', label: 'Players', desc: 'Directory, skill profiles and leaderboards' },
     { href: '/insights', label: 'Insights', desc: 'Findings from the model — and from the ledger' },
@@ -44,7 +45,7 @@
     if (!nav || nav.getAttribute('data-mounted') === '1') return;
     var active = nav.getAttribute('data-active') || '';
 
-    var mapOn = (active === '/' || active === '/#atlas' || active === '/map-guess');
+    var mapOn = (active === '/' || active === '/#map3d' || active === '/map-guess');
     var playOn = active === PLAY.href;
     var exploreItem = EXPLORE.filter(function (l) { return l.href === active; })[0] || null;
     var exploreOn = !!exploreItem;

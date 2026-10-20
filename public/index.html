@@ -375,10 +375,10 @@
   })();
   </script>
 
-  <section class="hero-map reveal" aria-label="Opening night on the 3D map">
+  <section class="hero-map reveal" id="map3d" aria-label="Opening night on the 3D map">
     <p class="hero-map__kicker">Opening night &middot; Thunder @ Spurs &middot; 8:30 PM CT on NBC</p>
     <h2 class="hero-map__title">The map is the game tonight.</h2>
-    <p class="hero-map__sub">All 12,966 player-seasons, floating in 3D by how they played. A mystery star is hiding in there &mdash; tap points and the model answers <b>warmer</b> or <b>colder</b> in true 64-d cosine distance.</p>
+    <p class="hero-map__sub">All 12,966 player-seasons, floating in 3D by how similarly they played. Drag to explore the landscape &mdash; then hunt today&rsquo;s mystery star on this same map.</p>
     <div class="embed3d-mount" data-projection="pca" id="hero-3d" style="height:min(72vw,440px)" role="application" aria-label="3D embedding map of 12,966 player-seasons">
       <div class="embed3d-placeholder">
         <span class="spin" aria-hidden="true"></span>
@@ -396,25 +396,44 @@
     </div>
     <noscript><p class="hero-map__hint" style="margin-top:8px">The 3D map needs JavaScript &mdash; the atlas below works the same way, and <a href="/play">Daily Court</a> plays without it.</p></noscript>
   </section>
-  <script src="/assets/embed-3d.js"></script>
+  <script src="/assets/embed-3d.js?v=6241a59a"></script>
   <script>
   (function(){
     /* Guarded 3D mount: the page is complete without it (placeholder stays). */
     var el = document.getElementById('hero-3d'); if(!el) return;
+    function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
+    /* Tap-to-identify caption (Panel B4): taps name the player and link the game. */
+    var cap = document.createElement('p');
+    cap.className = 'hero-map__pick'; cap.hidden = true;
+    cap.style.cssText = 'margin:6px 0 0;font-size:13px;color:#5b5545';
+    el.parentNode.insertBefore(cap, el.nextSibling);
+    var handle = null;
+    function onPick(id){
+      if(!handle || typeof handle.info !== 'function') return;
+      var info = handle.info(id);
+      if(!info){ cap.hidden = true; return; }
+      cap.innerHTML = 'Selected: <b>' + esc(info.name) + '</b> &middot; ' + esc(info.season) +
+        (info.team ? ' &middot; ' + esc(info.team) : '') +
+        ' &mdash; <a href="/map-guess">hunt today&rsquo;s mystery star &rarr;</a>';
+      cap.hidden = false;
+    }
     function mount(proj){
       if(!(window.Embed3D && typeof window.Embed3D.mount === 'function')) return false;
       try{
-        window.Embed3D.mount(el, {projection: proj, height: el.clientHeight || 440});
+        handle = window.Embed3D.mount(el, {projection: proj, height: el.clientHeight || 440, onSelect: onPick});
         var ph = el.querySelector('.embed3d-placeholder'); if(ph) ph.style.display = 'none';
         return true;
       }catch(e){ return false; }
     }
     if(!mount('pca')) return;
+    /* Projection switcher reuses the mount handle — no re-fetch (Panel S9). */
     document.querySelectorAll('.hero-map__proj .proj-btn').forEach(function(b){
       b.addEventListener('click', function(){
         document.querySelectorAll('.hero-map__proj .proj-btn').forEach(function(x){ x.setAttribute('aria-pressed','false'); });
         b.setAttribute('aria-pressed','true');
-        mount(b.getAttribute('data-proj'));
+        var p = b.getAttribute('data-proj');
+        if(handle && typeof handle.setProjection === 'function') handle.setProjection(p);
+        else mount(p);
       });
     });
   })();
@@ -580,7 +599,7 @@
   <p class="site-footer__attribution">Every number recomputable from stats.nba.com · A <a href="https://dumbmodel.com">dumbmodel</a> project · <a href="https://github.com/jcdavis131/vector-hoops" rel="noopener">Source</a></p>
 </footer>
 
-<script defer src="/assets/site-nav.js?v=9b341f72"></script>
+<script defer src="/assets/site-nav.js?v=9183f1b2"></script>
 <script defer src="/assets/vh-analytics.js?v=STAMP"></script>
 <script defer src="/assets/vh-peers.js?v=STAMP"></script>
 <script defer src="/assets/served-constants.js?v=8ba12340"></script>

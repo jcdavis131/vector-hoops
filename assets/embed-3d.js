@@ -14,9 +14,10 @@
 (function (global) {
   'use strict';
 
+  /* Okabe-Ito CVD-safe categorical palette (Panel S6) */
   var CLUSTER_COLORS = [
-    '#C17C60', '#D4AF69', '#7FB069', '#5B8E7D',
-    '#4C6E91', '#8E6B9E', '#B5654D', '#8A8F98'
+    '#0072B2', '#D55E00', '#009E73', '#CC79A7',
+    '#56B4E9', '#E69F00', '#000000', '#F0E442'
   ];
 
   /* What each projection preserves / distorts. Shown in the UI. */
@@ -57,11 +58,24 @@
       'margin-bottom:8px;font:13px system-ui,sans-serif;';
     var canvas = document.createElement('canvas');
     canvas.style.cssText = 'display:block;width:100%;height:' + height +
-      'px;touch-action:none;cursor:grab;border-radius:8px;background:#151619;';
+      'px;touch-action:pan-y;cursor:grab;border-radius:8px;background:#151619;';
     var note = document.createElement('div');
     note.className = 'embed3d-note';
     note.style.cssText = 'margin-top:6px;font:12px/1.5 system-ui,sans-serif;' +
       'color:#8b8578;max-width:70ch;';
+    /* Panel S3: color legend. These are this map's own k-means groups — NOT the
+       named archetypes used on other plates (different clustering build). */
+    var legend = document.createElement('div');
+    legend.className = 'embed3d-legend';
+    legend.style.cssText = 'margin-top:6px;display:flex;flex-wrap:wrap;gap:4px 10px;' +
+      'font:11px/1.6 system-ui,sans-serif;color:#8b8578;align-items:center;';
+    legend.setAttribute('aria-label', 'Map color legend: 8 algorithm-found groups');
+    var legendHtml = '<span style="color:#b9b3a6">Colors = 8 k-means groups on the 64-d embeddings (this map\u2019s build; loose groups, not positions or eras):</span>';
+    for (var li = 0; li < 8; li++) {
+      legendHtml += '<span style="display:inline-flex;align-items:center;gap:4px"><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:' +
+        CLUSTER_COLORS[li] + '"></span>Group ' + (li + 1) + '</span>';
+    }
+    legend.innerHTML = legendHtml;
     var tip = document.createElement('div');
     tip.style.cssText = 'position:absolute;pointer-events:none;display:none;' +
       'background:rgba(20,21,23,.92);color:#f9f6f0;font:12px/1.4 system-ui,sans-serif;' +
@@ -69,6 +83,7 @@
     wrap.appendChild(bar);
     wrap.appendChild(canvas);
     wrap.appendChild(note);
+    wrap.appendChild(legend);
     wrap.appendChild(tip);
     el.appendChild(wrap);
     var ctx = canvas.getContext('2d');
@@ -177,6 +192,9 @@
       state.sx = new Float32Array(n);
       state.sy = new Float32Array(n);
       state.sz = new Float32Array(n);
+      /* Panel S7: reusable index array for per-frame back-to-front depth sort */
+      state.order = new Array(n);
+      for (i = 0; i < n; i++) state.order[i] = i;
       buildSwitcher(avail);
       updateNote();
       state.loaded = true;
@@ -212,11 +230,17 @@
     }
 
     function updateNote() {
+      /* Panel S10: plain words, with the number. Panel S4: silhouette disclosed. */
+      var plain = {
+        pca: 'PCA shows the widest spread but keeps only ~27% of the differences \u2014 nearby dots can mislead.',
+        tsne: 't-SNE keeps tight groups together, but gaps between groups mean nothing.',
+        umap: 'UMAP keeps tight groups together, but gaps between groups mean nothing.'
+      };
       note.innerHTML = '<strong style="color:#f9f6f0;">' +
         state.proj.toUpperCase().replace('TSNE', 't-SNE') + '</strong> \u2014 ' +
-        (PROJ_NOTES[state.proj] || '') +
-        ' Colors: k-means (k=8) on the 64-d embeddings \u2014 groups found by the ' +
-        'algorithm, not hand-drawn. Each dot is one player-season.';
+        (plain[state.proj] || (PROJ_NOTES[state.proj] || '')) +
+        ' Colors: 8 rough groups found by the k-means algorithm (silhouette 0.09 \u2014 loose, treat as flavor, not positions). ' +
+        'Each dot is one player-season. Axes are arbitrary units.';
     }
 
     function setProjection(name) {
@@ -256,6 +280,25 @@
     var pointers = new Map();
     var pinchD0 = 0, pinchDist0 = 1;
     var downX = 0, downY = 0, moved = false;
+
+    /* Panel N5: keyboard operation — arrows rotate, +/− zoom. */
+    canvas.tabIndex = 0;
+    canvas.setAttribute('aria-keyshortcuts', 'ArrowLeft ArrowRight ArrowUp ArrowDown');
+    canvas.addEventListener('keydown', function (e) {
+      var step = 0.12, handled = true;
+      if (e.key === 'ArrowLeft') state.yaw -= step;
+      else if (e.key === 'ArrowRight') state.yaw += step;
+      else if (e.key === 'ArrowUp') state.pitch = Math.max(-1.4, Math.min(1.4, state.pitch - step));
+      else if (e.key === 'ArrowDown') state.pitch = Math.max(-1.4, Math.min(1.4, state.pitch + step));
+      else if (e.key === '+' || e.key === '=') state.dist = Math.max(1.6, state.dist * 0.9);
+      else if (e.key === '-' || e.key === '_') state.dist = Math.min(8, state.dist * 1.1);
+      else handled = false;
+      if (handled) {
+        e.preventDefault();
+        state.autoRotate = false;
+        if (state.idleTimer) clearTimeout(state.idleTimer);
+      }
+    });
 
     canvas.addEventListener('pointerdown', function (e) {
       canvas.setPointerCapture(e.pointerId);
@@ -371,18 +414,21 @@
         projectAll();
         ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
         ctx.clearRect(0, 0, canvas.width / dpr, canvas.height / dpr);
-        var sx = state.sx, syy = state.sy, sz = state.sz;
-        for (var c = 0; c < 8; c++) {
-          var list = state.byCluster[c];
-          if (!list || !list.length) continue;
-          ctx.fillStyle = CLUSTER_COLORS[c];
-          for (var j = 0; j < list.length; j++) {
-            var i = list[j];
-            var depth = sz[i];
-            var size = 1 + depth * 1.6;
-            ctx.globalAlpha = 0.35 + depth * 0.55;
-            ctx.fillRect(sx[i] - size / 2, syy[i] - size / 2, size, size);
-          }
+        var sx = state.sx, syy = state.sy, sz = state.sz, cl = state.clusters;
+        /* Panel S7: single back-to-front pass — perceived density is real depth,
+           not a fixed cluster draw-order artifact. sz is perspective scale:
+           smaller = farther, so ascending order paints far points first. */
+        var order = state.order;
+        order.sort(function(a, b){ return sz[a] - sz[b]; });
+        var lastC = -1;
+        for (var k = 0; k < n; k++) {
+          var i = order[k];
+          var cc = cl[i] % 8;
+          if (cc !== lastC) { ctx.fillStyle = CLUSTER_COLORS[cc]; lastC = cc; }
+          var depth = sz[i];
+          var size = 1 + depth * 1.6;
+          ctx.globalAlpha = 0.35 + depth * 0.55;
+          ctx.fillRect(sx[i] - size / 2, syy[i] - size / 2, size, size);
         }
         ctx.globalAlpha = 1;
         /* highlights: larger dots + ring */
@@ -414,7 +460,12 @@
       el.innerHTML = '';
     }
 
-    return { setProjection: setProjection, setHighlight: setHighlight, destroy: destroy };
+    function info(i) {
+      if (!state.loaded || i < 0 || i >= state.names.length) return null;
+      return { name: state.names[i], season: state.seasons[i], team: state.teams[i], cluster: state.clusters[i] };
+    }
+
+    return { setProjection: setProjection, setHighlight: setHighlight, destroy: destroy, info: info };
   }
 
   global.Embed3D = { mount: mount };

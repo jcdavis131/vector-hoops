@@ -224,16 +224,14 @@
     return false;
   }
   /* ---------- Map Hunt / Twin Hunt share card (opening-night overhaul) --------
-   * opts: {mode ('MAP HUNT'|'TWIN HUNT'), dayKey, stars (0-3), taps, pct,
-   *   name, season, twinName, twinSeason, twinSim (0-1|null), url}
-   * Copy earns the share: score (stars+taps) + one surprising stat
-   * (closeness percentile + the era twin across decades).
+   * opts: {mode ('MAP HUNT'|'TWIN HUNT'), dayKey, stars (0-3), taps, pct, url}
+   * SPOILER-FREE (Panel B3): never prints the mystery name/season/twin — the
+   * recipient plays the same puzzle. Copy earns the share: score + percentile.
    */
   function mapHuntText(o){
-    var twinBit = o.twinName ? ' Era twin: '+o.twinName+' ('+(o.twinSim*100).toFixed(0)+'% style match).' : '';
     return '\u{1F5FA}\uFE0F Vector Hoops '+o.mode+' '+o.dayKey+': '+'\u2605'.repeat(o.stars)+'\u2606'.repeat(3-o.stars)+
-      ' \u2014 found '+o.name+' ('+o.season+') in '+o.taps+' taps on the 3D embedding map, closer than '+(+o.pct).toFixed(1)+
-      '% of all 12,966 player-seasons.'+twinBit+' Play the same map: '+o.url;
+      ' \u2014 found today\u2019s mystery player in '+o.taps+' taps on the 3D embedding map, closer than '+(+o.pct).toFixed(1)+
+      '% of all 12,966 player-seasons. Play the same map: '+o.url;
   }
   function drawMapHuntCard(o){
     var W=1080,H=1350; var c=document.createElement('canvas'); c.width=W; c.height=H;
@@ -247,9 +245,9 @@
     ctx.fillText(String(o.dayKey||'')+' \u00B7 SAME MAP FOR EVERYONE \u00B7 12,966 SEASONS',28,78);
     var y=190;
     ctx.fillStyle='#111'; ctx.font='950 64px ui-sans-serif';
-    ctx.fillText(String(o.name||'?'),36,y); y+=58;
+    ctx.fillText('???',36,y); y+=58; /* spoiler-free: the mystery name stays hidden (Panel B3) */
     ctx.font='800 26px ui-monospace'; ctx.fillStyle='#555';
-    ctx.fillText(String(o.season||''),36,y); y+=70;
+    ctx.fillText('MYSTERY PLAYER \u00b7 '+String(o.dayKey||''),36,y); y+=70;
     ctx.font='900 44px ui-sans-serif'; ctx.fillStyle='#111';
     ctx.fillText('\u2605'.repeat(o.stars||0)+'\u2606'.repeat(3-(o.stars||0)),36,y); y+=14;
     ctx.font='700 26px ui-monospace'; ctx.fillStyle='#D55E00';
