@@ -4,16 +4,23 @@ Checkpointed per phase. VALUES batches of 500 QIDs; phases:
   played_for (P54 + P580/P582 tenure), alma_mater (P69), employer (P108), founded_by (P112).
 Only sources/targets already in our layers are kept.
 """
-import json, os, subprocess, sys, time, urllib.parse, urllib.request
-from collections import defaultdict
 
-D = os.path.join(os.path.dirname(os.path.abspath(__file__)), "v2")
+import json
+import sys
+import time
+import urllib.parse
+import urllib.request
+from pathlib import Path
+
+D = (Path(__file__).resolve().parent) / "v2"
 UA = {"User-Agent": "atlas-anchor-fetch/1.0 (research; contact: jc@example.com)"}
+
 
 def sp_sparql(q):
     data = urllib.parse.urlencode({"query": q, "format": "json"}).encode()
     for wait in (0, 5, 30):
-        if wait: time.sleep(wait)
+        if wait:
+            time.sleep(wait)
         try:
             r = urllib.request.Request("https://query.wikidata.org/sparql", data=data, headers=UA)
             r.add_header("Accept", "application/sparql-results+json")
@@ -23,84 +30,109 @@ def sp_sparql(q):
             print("SPARQL fail:", e, flush=True)
     return None
 
+
 def chunk(xs, n=500):
     for i in range(0, len(xs), n):
-        yield xs[i:i+n]
+        yield xs[i : i + n]
+
 
 CHUNK = {"played_for": 250, "alma_mater": 500, "employer": 500, "founded_by": 500}
+
 
 def qids_for(layers):
     q = {}
     for lay in layers:
-        f = os.path.join(D, f"layer_{lay}.jsonl")
-        if not os.path.exists(f): continue
+        f = D / f"layer_{lay}.jsonl"
+        if not f.exists():
+            continue
         for line in open(f):
             r = json.loads(line)
-            if r.get("qid"): q[r["qid"]] = (lay, r["name"])
+            if r.get("qid"):
+                q[r["qid"]] = (lay, r["name"])
     return q
 
+
 def rec_qid(rec):
-    if rec.get("qid"): return rec["qid"]
+    if rec.get("qid"):
+        return rec["qid"]
     src = (rec.get("provenance") or {}).get("source", "")
-    if src.startswith("wikidata:"): return src.split(":", 1)[1]
+    if src.startswith("wikidata:"):
+        return src.split(":", 1)[1]
     return None
 
+
 # map QID -> our entity id for every finished layer
-LAYERS = ["cities","universities","nfl","mlb","nhl","soccer","business","authors","politicians","franchises"]
-ENT = {}   # qid -> (entity_id, layer)
+LAYERS = ["cities", "universities", "nfl", "mlb", "nhl", "soccer", "business", "authors", "politicians", "franchises"]
+ENT = {}  # qid -> (entity_id, layer)
 for lay in LAYERS:
-    f = os.path.join(D, f"layer_{lay}.jsonl")
+    f = D / f"layer_{lay}.jsonl"
     if lay == "franchises":
-        f = os.path.join(D, "franchises.jsonl")
-    if not os.path.exists(f): continue
+        f = D / "franchises.jsonl"
+    if not f.exists():
+        continue
     for line in open(f):
         r = json.loads(line)
         q = rec_qid(r)
-        if q: ENT[q] = (r["entity_id"], lay)
+        if q:
+            ENT[q] = (r["entity_id"], lay)
 
 PHASES = {
-    "played_for":   ("wdt:P54", True),
-    "alma_mater":   ("wdt:P69", False),
-    "employer":     ("wdt:P108", False),
-    "founded_by":   ("wdt:P112", False),
+    "played_for": ("wdt:P54", True),
+    "alma_mater": ("wdt:P69", False),
+    "employer": ("wdt:P108", False),
+    "founded_by": ("wdt:P112", False),
 }
 
+
 def phase_edges(name, prop, tenure):
-    out = os.path.join(D, f"edges_{name}.jsonl")
-    ck = os.path.join(D, f"ckpt_edges_{name}.json")
-    done = set(json.load(open(ck))) if os.path.exists(ck) else set()
-    wrote = os.path.exists(out) and sum(1 for _ in open(out))
+    out = D / f"edges_{name}.jsonl"
+    ck = D / f"ckpt_edges_{name}.json"
+    done = set(json.load(open(ck))) if ck.exists() else set()
+    wrote = out.exists() and sum(1 for _ in open(out))
     qids = [q for q in ENT if q not in done]
     print(f"{name}: {len(qids)} qids remaining, {wrote} edges banked", flush=True)
     for c in chunk(qids, CHUNK.get(name, 500)):
         vals = " ".join(f"wd:{q}" for q in c)
         if tenure:
-            q = ("SELECT ?e ?v ?st ?et WHERE { VALUES ?e { " + vals + " } "
-                 "?e p:P54 ?stmt . ?stmt ps:P54 ?v . "
-                 "OPTIONAL { ?stmt pq:P580 ?st } OPTIONAL { ?stmt pq:P582 ?et } }")
+            q = (
+                "SELECT ?e ?v ?st ?et WHERE { VALUES ?e { " + vals + " } "
+                "?e p:P54 ?stmt . ?stmt ps:P54 ?v . "
+                "OPTIONAL { ?stmt pq:P580 ?st } OPTIONAL { ?stmt pq:P582 ?et } }"
+            )
         else:
-            q = ("SELECT ?e ?v WHERE { VALUES ?e { " + vals + " } ?e " + prop + " ?v }")
+            q = "SELECT ?e ?v WHERE { VALUES ?e { " + vals + " } ?e " + prop + " ?v }"
         rows = sp_sparql(q)
         if rows is None:
-            print("phase failed, checkpoint saved", flush=True); return False
+            print("phase failed, checkpoint saved", flush=True)
+            return False
         with open(out, "a") as f:
             for row in rows:
-                eq = row["e"]["value"].rsplit("/",1)[-1]; vq = row["v"]["value"].rsplit("/",1)[-1]
-                if vq not in ENT: continue
-                src, _ = ENT[eq]; dst, _ = ENT[vq]
-                rec = {"src": src, "dst": dst, "rel": name,
-                       "start": row.get("st",{}).get("value"),
-                       "end": row.get("et",{}).get("value")}
+                eq = row["e"]["value"].rsplit("/", 1)[-1]
+                vq = row["v"]["value"].rsplit("/", 1)[-1]
+                if vq not in ENT:
+                    continue
+                src, _ = ENT[eq]
+                dst, _ = ENT[vq]
+                rec = {
+                    "src": src,
+                    "dst": dst,
+                    "rel": name,
+                    "start": row.get("st", {}).get("value"),
+                    "end": row.get("et", {}).get("value"),
+                }
                 f.write(json.dumps(rec) + "\n")
         done.update(c)
-        json.dump(sorted(done), open(ck,"w"))
-        print(f"{name}: {len(done)}/{len(done)+len(qids)-len(done)} qids", flush=True)
+        json.dump(sorted(done), open(ck, "w"))
+        print(f"{name}: {len(done)}/{len(done) + len(qids) - len(done)} qids", flush=True)
     return True
+
 
 if __name__ == "__main__":
     only = sys.argv[1:] or list(PHASES)
     ok = True
     for name in only:
         prop, tenure = PHASES[name]
-        if not phase_edges(name, prop, tenure): ok = False; break
+        if not phase_edges(name, prop, tenure):
+            ok = False
+            break
     print("EDGES DONE" if ok else "EDGES PARTIAL", flush=True)
