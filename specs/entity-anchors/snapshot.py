@@ -3,10 +3,15 @@
 Creates v2/snapshots/<name>/ with atlas.db copy + manifest.json.
 Usage: python3 snapshot.py [name]  (default: atlas-YYYYMMDD-<shorthash>)
 """
-import hashlib, json, os, shutil, sys, time
+import hashlib
+import json
+import shutil
+import sys
+import time
+from pathlib import Path
 
-D = os.path.join(os.path.dirname(os.path.abspath(__file__)), "v2")
-DB = os.path.join(D, "atlas.db")
+D = (Path(__file__).resolve().parent) / "v2"
+DB = D / "atlas.db"
 
 def sha256_file(p):
     h = hashlib.sha256()
@@ -16,21 +21,21 @@ def sha256_file(p):
     return h.hexdigest()
 
 def main():
-    if not os.path.exists(DB):
+    if not DB.exists():
         sys.exit("no atlas.db — run build_store.py first")
     manifest = {"created": time.strftime("%Y-%m-%dT%H:%M:%S"), "layers": {}, "edges": {}}
-    for fn in sorted(os.listdir(D)):
+    for fn in sorted(_p.name for _p in D.iterdir()):
         if fn.startswith("layer_") and fn.endswith(".jsonl"):
-            p = os.path.join(D, fn)
+            p = D / fn
             manifest["layers"][fn] = {"rows": sum(1 for _ in open(p)), "sha256": sha256_file(p)[:16]}
         elif fn.startswith("edges_") and fn.endswith(".jsonl"):
-            p = os.path.join(D, fn)
+            p = D / fn
             manifest["edges"][fn] = {"rows": sum(1 for _ in open(p)), "sha256": sha256_file(p)[:16]}
         elif fn == "franchises.jsonl":
-            p = os.path.join(D, fn)
+            p = D / fn
             manifest["layers"][fn] = {"rows": sum(1 for _ in open(p)), "sha256": sha256_file(p)[:16]}
     manifest["store"] = {"sha256": sha256_file(DB)[:16],
-                         "bytes": os.path.getsize(DB)}
+                         "bytes": DB.stat().st_size}
     import sqlite3
     db = sqlite3.connect(DB)
     manifest["entities"] = db.execute("SELECT COUNT(*) FROM entities").fetchone()[0]
@@ -38,10 +43,10 @@ def main():
     db.close()
     name = sys.argv[1] if len(sys.argv) > 1 else (
         f"atlas-{time.strftime('%Y%m%d')}-{manifest['store']['sha256'][:8]}")
-    snap = os.path.join(D, "snapshots", name)
-    os.makedirs(snap, exist_ok=True)
-    shutil.copy2(DB, os.path.join(snap, "atlas.db"))
-    json.dump(manifest, open(os.path.join(snap, "manifest.json"), "w"), indent=1)
+    snap = D / "snapshots" / name
+    snap.mkdir(parents=True, exist_ok=True)
+    shutil.copy2(DB, snap / "atlas.db")
+    json.dump(manifest, open(snap / "manifest.json", "w"), indent=1)
     print(f"snapshot {name}: {manifest['entities']} entities, {manifest['edge_rows']} edges")
 
 if __name__ == "__main__":

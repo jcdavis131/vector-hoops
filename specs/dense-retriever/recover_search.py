@@ -2,10 +2,14 @@
 """Recover missing birth data via Wikidata fuzzy entity search.
 For each name without dob: wbsearchentities -> top basketball-player hit -> P569/P19.
 """
-import json, os, time, urllib.parse, urllib.request
+import json
+import time
+import urllib.parse
+import urllib.request
+from pathlib import Path
 
-DR = os.path.expanduser('~/workspace/vector-hoops/specs/dense-retriever')
-P = os.path.join(DR, 'player_birth.json')
+DR = Path('~/workspace/vector-hoops/specs/dense-retriever').expanduser()
+P = DR / 'player_birth.json'
 d = json.load(open(P))
 miss = [n for n, v in d.items() if not v.get('dob')]
 print(f'recovering {len(miss)}', flush=True)
@@ -37,7 +41,8 @@ def is_bball(ent):
 
 def get_str(ent, prop):
     cs = ent.get('claims', {}).get(prop, [])
-    if not cs: return None
+    if not cs:
+        return None
     try:
         return cs[0]['mainsnak']['datavalue']['value']
     except KeyError:

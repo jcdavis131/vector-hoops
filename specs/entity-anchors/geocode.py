@@ -2,18 +2,22 @@
 """Geocode all distinct birthplaces/HQs via Nominatim. Resume-safe.
 Writes specs/entity-anchors/v1/geocode.json: place -> {lat, lon, display, precision}
 """
-import json, os, time, urllib.parse, urllib.request
+import json
+import time
+import urllib.parse
+import urllib.request
+from pathlib import Path
 
-DR = os.path.expanduser('~/workspace/vector-hoops/specs/dense-retriever')
-EA = os.path.expanduser('~/workspace/vector-hoops/specs/entity-anchors/v1')
-OUT = os.path.join(EA, 'geocode.json')
+DR = Path('~/workspace/vector-hoops/specs/dense-retriever').expanduser()
+EA = Path('~/workspace/vector-hoops/specs/entity-anchors/v1').expanduser()
+OUT = EA / 'geocode.json'
 
-d = json.load(open(os.path.join(DR, 'player_birth.json')))
-t = json.load(open(os.path.join(DR, 'team_birth.json')))
+d = json.load(open(DR / 'player_birth.json'))
+t = json.load(open(DR / 'team_birth.json'))
 places = sorted(set(v['birthplace'] for v in d.values() if v.get('birthplace'))
                 | set(v['hq'] for v in t.values() if v.get('hq')))
 
-done = json.load(open(OUT)) if os.path.exists(OUT) else {}
+done = json.load(open(OUT)) if OUT.exists() else {}
 todo = [p for p in places if p not in done]
 print(f'{len(places)} places, {len(done)} cached, {len(todo)} to geocode', flush=True)
 UA = {'User-Agent': 'ScoutAtlas/1.0 (research; contact via repo)'}

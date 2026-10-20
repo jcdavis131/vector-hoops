@@ -2,14 +2,17 @@
 """Build the atlas SQLite store from completed v2 layers + v1.
 Stdlib only. Idempotent: drops and rebuilds tables each run.
 """
-import json, os, sqlite3, sys
+import json
+import sqlite3
+from pathlib import Path
 
-D = os.path.join(os.path.dirname(os.path.abspath(__file__)), "v2")
-V1 = os.path.join(os.path.dirname(os.path.abspath(__file__)), "v1")
-DB = os.path.join(D, "atlas.db")
+D = (Path(__file__).resolve().parent) / "v2"
+V1 = (Path(__file__).resolve().parent) / "v1"
+DB = D / "atlas.db"
 
 def main():
-    if os.path.exists(DB): os.remove(DB)
+    if DB.exists():
+        DB.unlink()
     db = sqlite3.connect(DB)
     db.execute("""CREATE TABLE entities(
         entity_id TEXT PRIMARY KEY, qid TEXT, layer TEXT, name TEXT,
@@ -20,7 +23,8 @@ def main():
     n = 0
     def add(rec, layer):
         nonlocal n
-        ta = rec.get("time_anchor") or {}; pa = rec.get("place_anchor") or {}
+        ta = rec.get("time_anchor") or {}
+        pa = rec.get("place_anchor") or {}
         pv = rec.get("provenance") or {}
         qid = rec.get("qid")
         if not qid and str(pv.get("source","")).startswith("wikidata:"):
@@ -30,24 +34,24 @@ def main():
              ta.get("date"), ta.get("precision"), pa.get("name"),
              pa.get("country"), pa.get("lat"), pa.get("lon"), json.dumps(pv)))
         n += 1
-    for fn in sorted(os.listdir(D)):
+    for fn in sorted(_p.name for _p in D.iterdir()):
         if fn.startswith("layer_") and fn.endswith(".jsonl"):
             layer = fn[6:-6]
-            for line in open(os.path.join(D, fn)):
+            for line in open(D / fn):
                 add(json.loads(line), layer)
         elif fn == "franchises.jsonl":
-            for line in open(os.path.join(D, fn)):
+            for line in open(D / fn):
                 add(json.loads(line), "franchises")
     for fn in ("players.jsonl","teams.jsonl"):
-        for line in open(os.path.join(V1, fn)):
+        for line in open(V1 / fn):
             add(json.loads(line), "nba_" + fn[:-6])
     db.commit()
     for idx in ("qid","layer","place_name","time_date"):
         db.execute(f"CREATE INDEX idx_e_{idx} ON entities({idx})")
     m = 0
-    for fn in sorted(os.listdir(D)):
+    for fn in sorted(_p.name for _p in D.iterdir()):
         if fn.startswith("edges_") and fn.endswith(".jsonl"):
-            for line in open(os.path.join(D, fn)):
+            for line in open(D / fn):
                 r = json.loads(line)
                 db.execute("INSERT INTO edges VALUES (?,?,?,?,?,?)",
                     (r["src"], r["dst"], r["rel"], r.get("start"), r.get("end"), "{}"))
@@ -56,7 +60,7 @@ def main():
     db.execute("CREATE INDEX idx_edges_dst ON edges(dst)")
     db.execute("CREATE INDEX idx_edges_rel ON edges(rel)")
     db.commit()
-    sz = os.path.getsize(DB)
+    sz = DB.stat().st_size
     n = db.execute("SELECT COUNT(*) FROM entities").fetchone()[0]
     print(f"store: {n} entities, {m} edges, {sz/1e6:.1f} MB")
     db.close()

@@ -3,17 +3,21 @@
 Writes specs/dense-retriever/player_birth.json: name -> {dob, birthplace, wikidata_id}
 Resumable: skips names already in the output file.
 """
-import json, os, sys, time, urllib.parse, urllib.request
+import json
+import time
+import urllib.parse
+import urllib.request
+from pathlib import Path
 
-BASE = os.path.expanduser('~/workspace/vector-hoops')
-SPEC = os.path.join(BASE, 'specs/dense-retriever')
-OUT = os.path.join(SPEC, 'player_birth.json')
+BASE = Path('~/workspace/vector-hoops').expanduser()
+SPEC = BASE / 'specs/dense-retriever'
+OUT = SPEC / 'player_birth.json'
 
-v = json.load(open(os.path.join(BASE, 'assets/vectors.json')))
+v = json.load(open(BASE / 'assets/vectors.json'))
 names = sorted(set(p['name'] for p in v['players']))
 
 done = {}
-if os.path.exists(OUT):
+if OUT.exists():
     done = json.load(open(OUT))
 todo = [n for n in names if n not in done]
 print(f'{len(names)} players, {len(done)} done, {len(todo)} to fetch', flush=True)
@@ -53,7 +57,8 @@ for i in range(0, len(todo), BATCH):
             # fuzzy: find case-insensitive match
             for n in batch:
                 if n.lower() == label.lower():
-                    key = n; break
+                    key = n
+                    break
         if key is None:
             continue
         done[key] = {

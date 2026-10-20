@@ -3,10 +3,17 @@
 in bulk afterward via the Action API. Resume-safe per sport+range.
 Usage: python3 fetch_athletes2.py [sport]
 """
-import json, os, re, sys, time, unicodedata, urllib.parse, urllib.request
+import json
+import re
+import sys
+import time
+import unicodedata
+import urllib.parse
+import urllib.request
+from pathlib import Path
 
-EA = os.path.expanduser('~/workspace/vector-hoops/specs/entity-anchors/v2')
-os.makedirs(EA, exist_ok=True)
+EA = Path('~/workspace/vector-hoops/specs/entity-anchors/v2').expanduser()
+EA.mkdir(parents=True, exist_ok=True)
 UA = {'User-Agent': 'ScoutAtlas/1.0 (research)'}
 
 SPORTS = {'nfl': 'Q19204627', 'mlb': 'Q10871364', 'nhl': 'Q11774891',
@@ -57,9 +64,9 @@ def slug(n):
 only = sys.argv[1:] or [s for s in SPORTS if s not in ('soccer',)]
 for sport in only:
     qid, ns, etype, extra = ALL[sport]
-    ckpt_p = os.path.join(EA, f'ckpt2_{sport}.json')
-    ckpt = json.load(open(ckpt_p)) if os.path.exists(ckpt_p) else {'ranges_done': []}
-    raw_p = os.path.join(EA, f'raw_{sport}.jsonl')
+    ckpt_p = EA / f'ckpt2_{sport}.json'
+    ckpt = json.load(open(ckpt_p)) if ckpt_p.exists() else {'ranges_done': []}
+    raw_p = EA / f'raw_{sport}.jsonl'
     seen_ranges = set(ckpt['ranges_done'])
     total = 0
     for lo in range(0, QID_MAX, RANGE):
@@ -94,7 +101,7 @@ for sport in only:
 
     # phase 2: bulk label resolution
     print(f'{sport} phase 2: resolving labels', flush=True)
-    raw = [json.loads(l) for l in open(raw_p)]
+    raw = [json.loads(line) for line in open(raw_p)]
     qids = [x['qid'] for x in raw]
     pob_qids = sorted(set(x['pob_qid'] for x in raw if x['pob_qid']))
     labels, places = {}, {}
@@ -105,7 +112,8 @@ for sport in only:
         if r:
             for q_, e in r.get('entities', {}).items():
                 lb = e.get('labels', {}).get('en', {}).get('value')
-                if lb: labels[q_] = lb
+                if lb:
+                    labels[q_] = lb
         time.sleep(0.5)
     for i in range(0, len(pob_qids), 50):
         batch = pob_qids[i:i+50]
@@ -114,11 +122,12 @@ for sport in only:
         if r:
             for q_, e in r.get('entities', {}).items():
                 lb = e.get('labels', {}).get('en', {}).get('value')
-                if lb: places[q_] = lb
+                if lb:
+                    places[q_] = lb
         time.sleep(0.5)
     print(f'{sport}: labels {len(labels)}/{len(qids)}, places {len(places)}/{len(pob_qids)}', flush=True)
 
-    out_p = os.path.join(EA, f'layer_{sport}.jsonl')
+    out_p = EA / f'layer_{sport}.jsonl'
     with open(out_p, 'w') as fh:
         for x in raw:
             name = labels.get(x['qid'])
@@ -126,7 +135,8 @@ for sport in only:
                 continue
             dobv = x['dob']
             prec = 'year' if dobv[5:] == '01-01' else 'day'
-            if prec == 'year': dobv = dobv[:4]
+            if prec == 'year':
+                dobv = dobv[:4]
             pob = places.get(x['pob_qid']) if x['pob_qid'] else None
             fh.write(json.dumps({
                 'entity_id': f'{ns}:{slug(name)}',
