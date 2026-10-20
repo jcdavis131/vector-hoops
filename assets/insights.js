@@ -276,7 +276,7 @@
   function cardHTML(ins, featured) {
     var viz = (VIZ[ins.viz] || barsSVG)(ins);
     var num = NUM_BY_SLUG[ins.slug];
-    return '<article class="vh-ins__card' + (featured ? ' vh-ins__card--featured' : '') + '" id="ins-' + ins.slug + '" data-slug="' + ins.slug + '" data-theme="' + kickerTheme(ins.kicker) + '">' +
+    return '<article class="vh-ins__card' + (featured ? ' vh-ins__card--featured' : '') + '" id="ins-' + esc(ins.slug) + '" data-slug="' + esc(ins.slug) + '" data-theme="' + kickerTheme(ins.kicker) + '">' +
       '<div class="vh-ins__kicker vh-ins__kicker--' + kickerTheme(ins.kicker) + '">' +
       (num ? '<span class="vh-ins__num">№' + num + '</span>' : '') + esc(ins.kicker) + '</div>' +
       '<h2 class="vh-ins__title">' + esc(ins.title) + '</h2>' +
@@ -289,8 +289,8 @@
         ins.examples.map(function (e) { return esc(e.label); }).join(' · ') + '</p>' : '') +
       '<p class="vh-ins__foot">' + esc(ins.foot) + '</p>' +
       '<div class="vh-ins__share">' +
-      '<button class="btn vh-ins__copy" data-slug="' + ins.slug + '" type="button">Copy link</button>' +
-      '<button class="btn btn-accent vh-ins__png" data-slug="' + ins.slug + '" type="button">Save PNG</button>' +
+      '<button class="btn vh-ins__copy" data-slug="' + esc(ins.slug) + '" type="button">Copy link</button>' +
+      '<button class="btn btn-accent vh-ins__png" data-slug="' + esc(ins.slug) + '" type="button">Save PNG</button>' +
       '</div></article>';
   }
 
