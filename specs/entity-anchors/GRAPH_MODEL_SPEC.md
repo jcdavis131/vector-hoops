@@ -56,14 +56,22 @@ Pre-registered predictions (recorded before any run):
   - (f) wins downstream explanation quality; (d) wins pure structure.
 Gate: a model ships only if it beats (b) on ALL primary metrics.
 
-## 7. Bake-off results (2026-10-20, snapshot atlas-20261020-e216d06c)
-Held-out played_for edges, n=1,512:
-  popularity (a):        MRR 0.2084  H@1 0.0767  H@10 0.5456
-  cohort-affinity (b):   MRR 0.2066  H@1 0.0661  H@10 0.5450
-  gnn-mean2hop (c):      MRR 0.3092  H@1 0.1515  H@10 0.6766
-Verdict: (c) beats (b) on ALL primaries — the relations hypothesis
-confirmed: neighborhood structure carries the signal that anchor features
-don't. (d) JEPA still to run; (e)/(f) pending text gold set.
+## 7. Bake-off results
+CORRECTION 2026-10-20 ~13:00: the first published run (mean2hop MRR 0.309)
+had a protocol leak — the encoder was built on ALL edges including the
+held-out test set, inflating the GNN vs the graph-blind baselines.
+what/why/fix/prevents: built graph before splitting (transductive trap);
+fix = split-first, graph from TRAIN only, all methods re-run on the same
+split; prevents = bake-off harness now enforces split-before-encode.
+Honest numbers below (snapshot atlas-20261020-f3c5146b, n=8,703):
+
+  popularity:        MRR 0.0934  H@1 0.0252  H@10 0.2145
+  gnn-mean2hop:      MRR 0.1064  H@1 0.0217  H@10 0.2721
+  gnn-gcn2hop:       MRR 0.1582  H@1 0.0376  H@10 0.4464
+Verdict: gnn-gcn2hop beats popularity on ALL primaries (+70% MRR).
+The relations hypothesis holds with honest numbers. Two lessons:
+(1) GCN symmetric normalization beats plain mean (hub downweighting);
+(2) the probe ships the gcn encoder. (d) JEPA still to run.
 
 ## 5. Build order
 
