@@ -18,6 +18,8 @@
     { href: '/live', label: 'Live', desc: 'Live game companion: win probability, atlas twins, shot charts', live: true },
     { href: '/players', label: 'Players', desc: 'Directory, skill profiles and leaderboards' },
     { href: '/insights', label: 'Insights', desc: 'Findings from the model — and from the ledger' },
+    { href: '/twin-network', label: 'Twin Networks', desc: 'Every player\u2019s nearest neighbors, mapped as a network' },
+    { href: '/teams', label: 'Teams', desc: 'Thirty team intro loops and season snapshots' },
     { href: '/playoff-runs', label: 'Playoff Runs', desc: 'The greatest postseason runs, ranked' },
     { href: '/taxonomy', label: 'Taxonomy', desc: 'A taxonomy of play styles' },
     { href: '/methods', label: 'Methods', desc: 'Trust: every number recomputed from source, and the model graded' }
