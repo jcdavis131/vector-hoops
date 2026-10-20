@@ -6,6 +6,9 @@
     "404.html": {
       "budget_bytes": 102400
     },
+    "feed-health.html": {
+      "budget_bytes": 99328
+    },
     "index.html": {
       "budget_bytes": 3661824
     },

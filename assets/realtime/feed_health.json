@@ -1,0 +1,45 @@
+{
+  "sources": {
+    "espn_scoreboard": {
+      "checked_at": "2026-10-20T19:03:40Z",
+      "consecutive_failures": 0,
+      "detail": "3 events today",
+      "last_good_tick": "2026-10-20T19:03:40Z",
+      "latency_ms": 2181,
+      "status": "ok"
+    },
+    "espn_summary": {
+      "checked_at": "2026-10-20T19:03:42Z",
+      "consecutive_failures": 0,
+      "detail": "event 401909088: HTTP 200, players=absent",
+      "last_good_tick": "2026-10-20T19:03:42Z",
+      "latency_ms": 1859,
+      "status": "ok"
+    },
+    "espn_teams": {
+      "checked_at": "2026-10-20T19:03:43Z",
+      "consecutive_failures": 0,
+      "detail": "30 teams",
+      "last_good_tick": "2026-10-20T19:03:43Z",
+      "latency_ms": 1489,
+      "status": "ok"
+    },
+    "scoreboard_snapshot": {
+      "checked_at": "2026-10-20T19:03:43Z",
+      "consecutive_failures": 0,
+      "detail": "scoreboard.json as_of 2026-10-20T19:01:25Z (138s ago)",
+      "last_good_tick": "2026-10-20T19:01:25Z",
+      "latency_ms": null,
+      "status": "ok"
+    },
+    "season_snapshot": {
+      "checked_at": "2026-10-20T19:03:43Z",
+      "consecutive_failures": 0,
+      "detail": "season_2026_27.json as_of 2026-10-20T19:02:34Z (69s ago)",
+      "last_good_tick": "2026-10-20T19:02:34Z",
+      "latency_ms": null,
+      "status": "ok"
+    }
+  },
+  "updated_at": "2026-10-20T19:03:43Z"
+}
