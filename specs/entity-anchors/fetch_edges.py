@@ -4,6 +4,7 @@ Checkpointed per phase. VALUES batches of 500 QIDs; phases:
   played_for (P54 + P580/P582 tenure), alma_mater (P69), employer (P108), founded_by (P112).
 Only sources/targets already in our layers are kept.
 """
+
 import json
 import sys
 import time
@@ -13,6 +14,7 @@ from pathlib import Path
 
 D = Path(__file__).resolve().parent / "v2"
 UA = {"User-Agent": "atlas-anchor-fetch/1.0 (research; contact: jc@example.com)"}
+
 
 def sp_sparql(q):
     for wait in (0, 5, 30):
@@ -28,9 +30,11 @@ def sp_sparql(q):
             print("SPARQL fail:", e, flush=True)
     return None
 
+
 def chunk(xs, n=500):
     for i in range(0, len(xs), n):
-        yield xs[i:i+n]
+        yield xs[i : i + n]
+
 
 def qids_for(layers):
     q = {}
@@ -44,9 +48,10 @@ def qids_for(layers):
                 q[r["qid"]] = (lay, r["name"])
     return q
 
+
 # map QID -> our entity id for every finished layer
-LAYERS = ["cities","universities","nfl","mlb","nhl","soccer","business","authors","politicians"]
-ENT = {}   # qid -> (entity_id, layer)
+LAYERS = ["cities", "universities", "nfl", "mlb", "nhl", "soccer", "business", "authors", "politicians"]
+ENT = {}  # qid -> (entity_id, layer)
 for lay in LAYERS:
     f = Path(D) / f"layer_{lay}.jsonl"
     if not Path(f).exists():
@@ -57,11 +62,12 @@ for lay in LAYERS:
             ENT[r["qid"]] = (r["entity_id"], lay)
 
 PHASES = {
-    "played_for":   ("wdt:P54", True),
-    "alma_mater":   ("wdt:P69", False),
-    "employer":     ("wdt:P108", False),
-    "founded_by":   ("wdt:P112", False),
+    "played_for": ("wdt:P54", True),
+    "alma_mater": ("wdt:P69", False),
+    "employer": ("wdt:P108", False),
+    "founded_by": ("wdt:P112", False),
 }
+
 
 def phase_edges(name, prop, tenure):
     out = Path(D) / f"edges_{name}.jsonl"
@@ -73,31 +79,38 @@ def phase_edges(name, prop, tenure):
     for c in chunk(qids):
         vals = " ".join(f"wd:{q}" for q in c)
         if tenure:
-            q = ("SELECT ?e ?v ?st ?et WHERE { VALUES ?e { " + vals + " } "
-                 "?e p:P54 ?stmt . ?stmt ps:P54 ?v . "
-                 "OPTIONAL { ?stmt pq:P580 ?st } OPTIONAL { ?stmt pq:P582 ?et } }")
+            q = (
+                "SELECT ?e ?v ?st ?et WHERE { VALUES ?e { " + vals + " } "
+                "?e p:P54 ?stmt . ?stmt ps:P54 ?v . "
+                "OPTIONAL { ?stmt pq:P580 ?st } OPTIONAL { ?stmt pq:P582 ?et } }"
+            )
         else:
-            q = ("SELECT ?e ?v WHERE { VALUES ?e { " + vals + " } ?e " + prop + " ?v }")
+            q = "SELECT ?e ?v WHERE { VALUES ?e { " + vals + " } ?e " + prop + " ?v }"
         rows = sp_sparql(q)
         if rows is None:
             print("phase failed, checkpoint saved", flush=True)
             return False
         with Path(out).open("a") as f:
             for row in rows:
-                eq = row["e"]["value"].rsplit("/",1)[-1]
-                vq = row["v"]["value"].rsplit("/",1)[-1]
+                eq = row["e"]["value"].rsplit("/", 1)[-1]
+                vq = row["v"]["value"].rsplit("/", 1)[-1]
                 if vq not in ENT:
                     continue
                 src, _ = ENT[eq]
                 dst, _ = ENT[vq]
-                rec = {"src": src, "dst": dst, "rel": name,
-                       "start": row.get("st",{}).get("value"),
-                       "end": row.get("et",{}).get("value")}
+                rec = {
+                    "src": src,
+                    "dst": dst,
+                    "rel": name,
+                    "start": row.get("st", {}).get("value"),
+                    "end": row.get("et", {}).get("value"),
+                }
                 f.write(json.dumps(rec) + "\n")
         done.update(c)
         json.dump(sorted(done), Path(ck).open("w"))
-        print(f"{name}: {len(done)}/{len(done)+len(qids)-len(done)} qids", flush=True)
+        print(f"{name}: {len(done)}/{len(done) + len(qids) - len(done)} qids", flush=True)
     return True
+
 
 if __name__ == "__main__":
     only = sys.argv[1:] or list(PHASES)

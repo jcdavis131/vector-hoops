@@ -4,6 +4,7 @@ Candidates (a) popularity and (b) cohort-affinity, on held-out
 player->team links from player_team_season.json. Pure stdlib.
 Slot for (c)-(f): GNN, GNN+JEPA, CLM, hybrid — same eval, later.
 """
+
 import json
 import random
 import sqlite3
@@ -14,9 +15,9 @@ S = Path(__file__).resolve().parent
 DB = Path(S) / "v2" / "atlas.db"
 PTS = "/home/hatch/workspace/vector-hoops/assets/player_team_season.json"
 
+
 def decade(name):
-    r = db.execute("SELECT time_date FROM entities WHERE name=? AND layer='nba_players' LIMIT 1",
-                   (name,)).fetchone()
+    r = db.execute("SELECT time_date FROM entities WHERE name=? AND layer='nba_players' LIMIT 1", (name,)).fetchone()
     if r and r[0] and len(r[0]) >= 4:
         try:
             return str(int(r[0][:4]) // 10 * 10) + "s"
@@ -24,10 +25,11 @@ def decade(name):
             return None
     return None
 
+
 def country(name):
-    r = db.execute("SELECT country FROM entities WHERE name=? AND layer='nba_players' LIMIT 1",
-                   (name,)).fetchone()
+    r = db.execute("SELECT country FROM entities WHERE name=? AND layer='nba_players' LIMIT 1", (name,)).fetchone()
     return r[0] if r else None
+
 
 def main():
     global db
@@ -70,8 +72,9 @@ def main():
             h1 += r == 1
             h10 += r <= 10
         n = len(test)
-        print(f"{label}: MRR={rr/n:.4f} Hits@1={h1/n:.4f} Hits@10={h10/n:.4f} (n={n})")
+        print(f"{label}: MRR={rr / n:.4f} Hits@1={h1 / n:.4f} Hits@10={h10 / n:.4f} (n={n})")
     db.close()
+
 
 if __name__ == "__main__":
     main()
