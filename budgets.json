@@ -1,16 +1,19 @@
 {
   "version": 1,
-  "measured_commit": "f9a01d1c2fcb2c3319fae63de932b77bf4808988",
+  "measured_commit": "1feb2ad54926660e222e919e90ac4fde7f17ba55",
   "method": "Per page: page HTML bytes + CSS/JS/JSON bytes referenced by markup (script src, link href), asset literals inside inline scripts, and JSON fetched by the page's JS bundles (one level, string literals). Budgets are 1.5x measured, rounded up to 1 KiB, with a 32 KiB floor. Interaction budgets are 1.25x measured, rounded up to 1 KiB.",
   "pages": {
     "404.html": {
-      "budget_bytes": 79872
+      "budget_bytes": 102400
     },
     "index.html": {
-      "budget_bytes": 3616768
+      "budget_bytes": 3661824
     },
     "insights.html": {
-      "budget_bytes": 166912
+      "budget_bytes": 189440
+    },
+    "insights/era-uniqueness.html": {
+      "budget_bytes": 32768
     },
     "insights/hometown-discount.html": {
       "budget_bytes": 32768
@@ -34,39 +37,39 @@
       "budget_bytes": 32768
     },
     "live.html": {
-      "budget_bytes": 245760
+      "budget_bytes": 252928
+    },
+    "map-guess.html": {
+      "budget_bytes": 107520
     },
     "methods.html": {
-      "budget_bytes": 501760
+      "budget_bytes": 503808
     },
     "offline.html": {
       "budget_bytes": 32768
     },
     "play.html": {
-      "budget_bytes": 1214464
+      "budget_bytes": 1387520
     },
     "players.html": {
-      "budget_bytes": 503808
+      "budget_bytes": 535552
     },
     "playoff-runs.html": {
-      "budget_bytes": 130048
+      "budget_bytes": 152576
     },
     "taxonomy.html": {
-      "budget_bytes": 135168
-    },
-    "insights/era-uniqueness.html": {
-      "budget_bytes": 32768
+      "budget_bytes": 157696
     },
     "teams.html": {
-      "budget_bytes": 131072
+      "budget_bytes": 132096
     },
     "twin-network.html": {
-      "budget_bytes": 159744
+      "budget_bytes": 160768
     }
   },
   "interaction": {
-    "js_total_bytes": 787456,
-    "js_worst_page_bytes": 292864,
-    "assets_worst_page_bytes": 2974720
+    "js_total_bytes": 835584,
+    "js_worst_page_bytes": 301056,
+    "assets_worst_page_bytes": 3002368
   }
 }

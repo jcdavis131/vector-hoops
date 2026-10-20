@@ -290,8 +290,9 @@
         } else {
           state.givenIdx = dayInfo.th; state.targetIdx = dayInfo.tht;
           var g = state.candByIdx[state.givenIdx];
-          var t = state.candByIdx[state.targetIdx];
-          state.targetName = t[1]; state.targetSeason = t[2];
+          /* The twin is a row index, not necessarily a quiz-pool candidate;
+             its name/season live on the given player's candidate entry. */
+          state.targetName = g[4]; state.targetSeason = g[5];
           state.twinName = null; // the target IS the twin
           state.givenName = g[1]; state.givenSeason = g[2];
           state.twinSim = g[6];

@@ -5,8 +5,8 @@ Stdlib + numpy. Outputs under assets/map-hunt/:
 
   candidates.json   compact quiz pool: [index, name, season, twinIndex, twinName, twinSeason, sim]
   index.json        {v, generated, days: {dayKey: {mh: mysteryIdx, th: givenIdx, tht: twinIdx}}}
-  dist/<day>-mh.u8  12,966 uint8 cosine distances TO the mystery player
-  dist/<day>-th.u8  12,966 uint8 cosine distances TO the twin-hunt target (the twin)
+  puzzles/<day>-mh.u8  12,966 uint8 cosine distances TO the mystery player
+  puzzles/<day>-th.u8  12,966 uint8 cosine distances TO the twin-hunt target (the twin)
 
 Row order = vectors.json['players'] order (0..12965), index-aligned with
 mtnn_embeddings.f32 (64-d, L2-normalized) and mtnn_map.json coords.
@@ -150,7 +150,7 @@ def main() -> int:
         separators=(",", ":")))
 
     # Sanity: mystery is its own nearest (dist 0) and twin is near the given.
-    k0, mi0, ti0 = day_list[0]
+    k0, mi0, _ti0 = day_list[0]
     q = np.fromfile(str(OUT / "puzzles" / f"{k0}-mh.u8"), dtype=np.uint8)
     assert len(q) == n and q[mi0] == 0, "self-distance must quantize to 0"
     print(f"OK  {len(day_list)} days, {len(targets)} unique targets, "

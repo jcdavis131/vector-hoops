@@ -25,6 +25,17 @@ REWRITES = {
     "/offline": "offline.html",
     "/taxonomy": "taxonomy.html",
     "/playoff-runs": "playoff-runs.html",
+    "/map-guess": "map-guess.html",
+}
+
+# In-flight cross-worker assets: referenced by guarded mounts that degrade
+# gracefully when the file is absent. The 3D map (assets/embed-3d.js) is
+# built on a sibling overhaul branch; pages mount it only behind
+# `if (window.Embed3D)` and show a placeholder otherwise. Listed here so the
+# crawler doesn't cry wolf while the file is in flight — remove the entry
+# once the asset lands on master.
+KNOWN_INFLIGHT = {
+    "/assets/embed-3d.js",
 }
 
 HREF = re.compile(r'href="([^"]+)"')
@@ -88,6 +99,8 @@ def main():
                 checked += 1
                 # strip cache-buster query strings for file resolution
                 link_path = link.split("?")[0]
+                if link_path in KNOWN_INFLIGHT:
+                    continue  # in-flight cross-worker asset; guarded at runtime
                 path, _, frag = link_path.partition("#")
                 # relative links resolve against the file's dir; we only
                 # author site-absolute links, but handle both
