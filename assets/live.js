@@ -389,7 +389,7 @@ function renderLeaders(d,g,idx){
     if(!t||!t.statistics||!t.statistics[0]){el.innerHTML='';return;}
     const athletes=(t.statistics[0].athletes||[]).slice().sort((a,b)=>(+b.stats[1]||0)-(+a.stats[1]||0)).slice(0,3);
     // stats order: MIN,PTS,FG,3PT,FT,REB,AST,TO,STL,BLK,OREB,DREB,PF,+/-
-    el.innerHTML=`<h3>${t.team.abbreviation}</h3>`+athletes.map(a=>{
+    el.innerHTML=`<h3>${esc(t.team.abbreviation)}</h3>`+athletes.map(a=>{
       const s=a.stats;
       const hot=fire&&fire.name===a.athlete.displayName?' 🔥':'';
       return `<div class="pl"><span>${esc(a.athlete.displayName)}${hot}</span><span>${s[1]} PTS · ${s[5]} REB · ${s[6]} AST</span></div>`;

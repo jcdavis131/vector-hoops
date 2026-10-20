@@ -5,7 +5,7 @@
   "timestamp": "2026-09-02T02:37:06Z",
   "seed": 7,
   "data": {
-    "npz_path": "/home/hatch/workspace/vector-hoops/data/embedding_v3_with_text.npz",
+    "npz_path": "./data/embedding_v3_with_text.npz",
     "total_unique": 2415,
     "eligible_2plus": 1901,
     "eligible_3plus": 1554,
@@ -55,9 +55,9 @@
     }
   },
   "files": {
-    "model_npz": "/home/hatch/workspace/vector-hoops/data/timesfm_transformer_v2_full64.npz",
-    "report_json": "/home/hatch/workspace/vector-hoops/data/timesfm_transformer_v2_report.json",
-    "forecasts_json": "/home/hatch/workspace/vector-hoops/data/timesfm_transformer_v2_forecasts.json"
+    "model_npz": "./data/timesfm_transformer_v2_full64.npz",
+    "report_json": "./data/timesfm_transformer_v2_report.json",
+    "forecasts_json": "./data/timesfm_transformer_v2_forecasts.json"
   },
   "provenance": "real data only, no synthetic, Apache-2.0 safe from scratch, deterministic seed 7, full 64-d, uses every 2+ player",
   "next": "torch transformer trained on CPU (10 epochs) or numpy fallback, promote to Vercel after browser verification"
