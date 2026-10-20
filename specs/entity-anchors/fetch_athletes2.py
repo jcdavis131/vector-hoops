@@ -3,10 +3,17 @@
 in bulk afterward via the Action API. Resume-safe per sport+range.
 Usage: python3 fetch_athletes2.py [sport]
 """
-import json, os, re, sys, time, unicodedata, urllib.parse, urllib.request
+import json
+import re
+import sys
+import time
+import unicodedata
+import urllib.parse
+import urllib.request
+from pathlib import Path
 
-EA = os.path.expanduser('~/workspace/vector-hoops/specs/entity-anchors/v2')
-os.makedirs(EA, exist_ok=True)
+EA = Path('~/workspace/vector-hoops/specs/entity-anchors/v2').expanduser()
+Path(EA).mkdir(parents=True, exist_ok=True)
 UA = {'User-Agent': 'ScoutAtlas/1.0 (research)'}
 
 SPORTS = {'nfl': 'Q19204627', 'mlb': 'Q10871364', 'nhl': 'Q11774891',
@@ -57,9 +64,9 @@ def slug(n):
 only = sys.argv[1:] or [s for s in SPORTS if s not in ('soccer',)]
 for sport in only:
     qid, ns, etype, extra = ALL[sport]
-    ckpt_p = os.path.join(EA, f'ckpt2_{sport}.json')
-    ckpt = json.load(open(ckpt_p)) if os.path.exists(ckpt_p) else {'ranges_done': []}
-    raw_p = os.path.join(EA, f'raw_{sport}.jsonl')
+    ckpt_p = Path(EA) / f'ckpt2_{sport}.json'
+    ckpt = json.load(Path(ckpt_p).open()) if Path(ckpt_p).exists() else {'ranges_done': []}
+    raw_p = Path(EA) / f'raw_{sport}.jsonl'
     seen_ranges = set(ckpt['ranges_done'])
     total = 0
     for lo in range(0, QID_MAX, RANGE):
@@ -77,7 +84,7 @@ for sport in only:
             print(f'{sport} Q{lo}-{hi}: FAILED, will retry next run', flush=True)
             continue
         rows = r['results']['bindings']
-        with open(raw_p, 'a') as fh:
+        with Path(raw_p).open('a') as fh:
             for b in rows:
                 fh.write(json.dumps({
                     'qid': b['p']['value'].rsplit('/', 1)[-1],
@@ -86,7 +93,7 @@ for sport in only:
                 }) + '\n')
         total += len(rows)
         seen_ranges.add(lo)
-        json.dump({'ranges_done': sorted(seen_ranges)}, open(ckpt_p, 'w'))
+        json.dump({'ranges_done': sorted(seen_ranges)}, Path(ckpt_p).open('w'))
         if rows:
             print(f'{sport} Q{lo}-{hi}: {len(rows)} (total {total})', flush=True)
         time.sleep(2)
@@ -94,7 +101,7 @@ for sport in only:
 
     # phase 2: bulk label resolution
     print(f'{sport} phase 2: resolving labels', flush=True)
-    raw = [json.loads(l) for l in open(raw_p)]
+    raw = [json.loads(line) for line in Path(raw_p).open()]
     qids = [x['qid'] for x in raw]
     pob_qids = sorted(set(x['pob_qid'] for x in raw if x['pob_qid']))
     labels, places = {}, {}
@@ -105,7 +112,8 @@ for sport in only:
         if r:
             for q_, e in r.get('entities', {}).items():
                 lb = e.get('labels', {}).get('en', {}).get('value')
-                if lb: labels[q_] = lb
+                if lb:
+                    labels[q_] = lb
         time.sleep(0.5)
     for i in range(0, len(pob_qids), 50):
         batch = pob_qids[i:i+50]
@@ -114,19 +122,21 @@ for sport in only:
         if r:
             for q_, e in r.get('entities', {}).items():
                 lb = e.get('labels', {}).get('en', {}).get('value')
-                if lb: places[q_] = lb
+                if lb:
+                    places[q_] = lb
         time.sleep(0.5)
     print(f'{sport}: labels {len(labels)}/{len(qids)}, places {len(places)}/{len(pob_qids)}', flush=True)
 
-    out_p = os.path.join(EA, f'layer_{sport}.jsonl')
-    with open(out_p, 'w') as fh:
+    out_p = Path(EA) / f'layer_{sport}.jsonl'
+    with Path(out_p).open('w') as fh:
         for x in raw:
             name = labels.get(x['qid'])
             if not name:
                 continue
             dobv = x['dob']
             prec = 'year' if dobv[5:] == '01-01' else 'day'
-            if prec == 'year': dobv = dobv[:4]
+            if prec == 'year':
+                dobv = dobv[:4]
             pob = places.get(x['pob_qid']) if x['pob_qid'] else None
             fh.write(json.dumps({
                 'entity_id': f'{ns}:{slug(name)}',
@@ -140,5 +150,5 @@ for sport in only:
                                'retrieved': '2026-10-19', 'method': 'sparql-qidrange+bulklab'},
                 'confidence': 'high' if pob else 'medium',
             }) + '\n')
-    n = sum(1 for _ in open(out_p))
+    n = sum(1 for _ in Path(out_p).open())
     print(f'{sport}: WROTE {n} records', flush=True)

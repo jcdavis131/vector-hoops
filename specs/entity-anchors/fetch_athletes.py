@@ -4,10 +4,17 @@ Writes specs/entity-anchors/v2/athletes_<sport>.jsonl
 Resume-safe via per-sport offset checkpoint file.
 Usage: python3 fetch_athletes.py [sport]  (default: all remaining)
 """
-import json, os, re, sys, time, unicodedata, urllib.parse, urllib.request
+import json
+import re
+import sys
+import time
+import unicodedata
+import urllib.parse
+import urllib.request
+from pathlib import Path
 
-EA = os.path.expanduser('~/workspace/vector-hoops/specs/entity-anchors/v2')
-os.makedirs(EA, exist_ok=True)
+EA = Path('~/workspace/vector-hoops/specs/entity-anchors/v2').expanduser()
+Path(EA).mkdir(parents=True, exist_ok=True)
 UA = {'User-Agent': 'ScoutAtlas/1.0 (research)'}
 
 SPORTS = {
@@ -35,10 +42,10 @@ def slug(n):
 only = sys.argv[1:] or list(SPORTS)
 for sport in only:
     qid = SPORTS[sport]
-    ckpt_p = os.path.join(EA, f'ckpt_{sport}.json')
-    ckpt = json.load(open(ckpt_p)) if os.path.exists(ckpt_p) else {'offset': 0}
-    out_p = os.path.join(EA, f'athletes_{sport}.jsonl')
-    fh = open(out_p, 'a')
+    ckpt_p = Path(EA) / f'ckpt_{sport}.json'
+    ckpt = json.load(Path(ckpt_p).open()) if Path(ckpt_p).exists() else {'offset': 0}
+    out_p = Path(EA) / f'athletes_{sport}.jsonl'
+    fh = Path(out_p).open('a')
     offset = ckpt['offset']
     total = 0
     while True:
@@ -74,7 +81,7 @@ for sport in only:
             }) + '\n')
         offset += len(rows)
         total += len(rows)
-        json.dump({'offset': offset}, open(ckpt_p, 'w'))
+        json.dump({'offset': offset}, Path(ckpt_p).open('w'))
         fh.flush()
         print(f'{sport}: {total} pulled (offset {offset})', flush=True)
         time.sleep(2)

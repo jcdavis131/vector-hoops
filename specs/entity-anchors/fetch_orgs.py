@@ -2,10 +2,17 @@
 """Org layers: universities + companies via QID-range pagination.
 Writes layer_universities.jsonl / layer_companies.jsonl
 """
-import json, os, re, sys, time, unicodedata, urllib.parse, urllib.request
+import json
+import re
+import sys
+import time
+import unicodedata
+import urllib.parse
+import urllib.request
+from pathlib import Path
 
-EA = os.path.expanduser('~/workspace/vector-hoops/specs/entity-anchors/v2')
-os.makedirs(EA, exist_ok=True)
+EA = Path('~/workspace/vector-hoops/specs/entity-anchors/v2').expanduser()
+Path(EA).mkdir(parents=True, exist_ok=True)
 UA = {'User-Agent': 'ScoutAtlas/1.0 (research)'}
 
 # layer -> (instance-of qid, namespace, type)
@@ -44,12 +51,14 @@ def slug(n):
 only = sys.argv[1:] or list(ORGS)
 for layer in only:
     inst_qid, ns, etype = ORGS[layer]
-    ckpt_p = os.path.join(EA, f'ckpt2_{layer}.json')
-    ckpt = json.load(open(ckpt_p)) if os.path.exists(ckpt_p) else {'ranges_done': []}
-    raw_p = os.path.join(EA, f'raw_{layer}.jsonl')
-    seen = set(ckpt['ranges_done']); total = 0
+    ckpt_p = Path(EA) / f'ckpt2_{layer}.json'
+    ckpt = json.load(Path(ckpt_p).open()) if Path(ckpt_p).exists() else {'ranges_done': []}
+    raw_p = Path(EA) / f'raw_{layer}.jsonl'
+    seen = set(ckpt['ranges_done'])
+    total = 0
     for lo in range(0, QID_MAX, RANGE):
-        if lo in seen: continue
+        if lo in seen:
+            continue
         hi = lo + RANGE
         q = '''SELECT ?p ?inc ?hq WHERE {
           ?p wdt:P31/wdt:P279* wd:%s.
@@ -60,22 +69,25 @@ for layer in only:
         }''' % (inst_qid, lo, hi)
         r = sparql(q)
         if not r:
-            print(f'{layer} Q{lo}-{hi}: FAILED', flush=True); continue
+            print(f'{layer} Q{lo}-{hi}: FAILED', flush=True)
+            continue
         rows = r['results']['bindings']
-        with open(raw_p, 'a') as fh:
+        with Path(raw_p).open('a') as fh:
             for b in rows:
                 fh.write(json.dumps({
                     'qid': b['p']['value'].rsplit('/', 1)[-1],
                     'inc': b.get('inc', {}).get('value', '')[:10] or None,
                     'hq_qid': b.get('hq', {}).get('value', '').rsplit('/', 1)[-1] or None,
                 }) + '\n')
-        total += len(rows); seen.add(lo)
-        json.dump({'ranges_done': sorted(seen)}, open(ckpt_p, 'w'))
-        if rows: print(f'{layer} Q{lo}-{hi}: {len(rows)} (total {total})', flush=True)
+        total += len(rows)
+        seen.add(lo)
+        json.dump({'ranges_done': sorted(seen)}, Path(ckpt_p).open('w'))
+        if rows:
+            print(f'{layer} Q{lo}-{hi}: {len(rows)} (total {total})', flush=True)
         time.sleep(2)
     print(f'{layer} phase 1 done: {total}', flush=True)
 
-    raw = [json.loads(l) for l in open(raw_p)]
+    raw = [json.loads(line) for line in Path(raw_p).open()]
     qids = [x['qid'] for x in raw]
     hq_qids = sorted(set(x['hq_qid'] for x in raw if x['hq_qid']))
     labels, places = {}, {}
@@ -87,18 +99,21 @@ for layer in only:
             if r:
                 for q_, e in r.get('entities', {}).items():
                     lb = e.get('labels', {}).get('en', {}).get('value')
-                    if lb: store[q_] = lb
+                    if lb:
+                        store[q_] = lb
             time.sleep(0.5)
     print(f'{layer}: labels {len(labels)}/{len(qids)}, hq places {len(places)}/{len(hq_qids)}', flush=True)
 
-    out_p = os.path.join(EA, f'layer_{layer}.jsonl')
-    with open(out_p, 'w') as fh:
+    out_p = Path(EA) / f'layer_{layer}.jsonl'
+    with Path(out_p).open('w') as fh:
         for x in raw:
             name = labels.get(x['qid'])
-            if not name: continue
+            if not name:
+                continue
             f = x['inc']
             prec = 'unknown' if not f else ('year' if f[5:] == '01-01' else 'day')
-            if prec == 'year': f = f[:4]
+            if prec == 'year':
+                f = f[:4]
             hq = places.get(x['hq_qid']) if x['hq_qid'] else None
             fh.write(json.dumps({
                 'entity_id': f'{ns}:{slug(name)}',
@@ -111,4 +126,4 @@ for layer in only:
                                'retrieved': '2026-10-19', 'method': 'sparql-org-p571-p159'},
                 'confidence': 'high' if f and hq else 'medium',
             }) + '\n')
-    print(f'{layer}: WROTE {sum(1 for _ in open(out_p))}', flush=True)
+    print(f'{layer}: WROTE {sum(1 for _ in Path(out_p).open())}', flush=True)

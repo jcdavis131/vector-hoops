@@ -2,10 +2,17 @@
 """Conflicts layer: wars + battles with date ranges and coordinates.
 Writes layer_conflicts.jsonl
 """
-import json, os, re, sys, time, unicodedata, urllib.parse, urllib.request
+import json
+import re
+import sys
+import time
+import unicodedata
+import urllib.parse
+import urllib.request
+from pathlib import Path
 
-EA = os.path.expanduser('~/workspace/vector-hoops/specs/entity-anchors/v2')
-os.makedirs(EA, exist_ok=True)
+EA = Path('~/workspace/vector-hoops/specs/entity-anchors/v2').expanduser()
+Path(EA).mkdir(parents=True, exist_ok=True)
 UA = {'User-Agent': 'ScoutAtlas/1.0 (research)'}
 
 KINDS = {'wars': 'Q198', 'battles': 'Q178561'}
@@ -40,12 +47,14 @@ def slug(n):
 only = sys.argv[1:] or list(KINDS)
 for kind in only:
     inst = KINDS[kind]
-    ckpt_p = os.path.join(EA, f'ckpt2_{kind}.json')
-    ckpt = json.load(open(ckpt_p)) if os.path.exists(ckpt_p) else {'ranges_done': []}
-    raw_p = os.path.join(EA, f'raw_{kind}.jsonl')
-    seen = set(ckpt['ranges_done']); total = 0
+    ckpt_p = Path(EA) / f'ckpt2_{kind}.json'
+    ckpt = json.load(Path(ckpt_p).open()) if Path(ckpt_p).exists() else {'ranges_done': []}
+    raw_p = Path(EA) / f'raw_{kind}.jsonl'
+    seen = set(ckpt['ranges_done'])
+    total = 0
     for lo in range(0, QID_MAX, RANGE):
-        if lo in seen: continue
+        if lo in seen:
+            continue
         hi = lo + RANGE
         q = '''SELECT ?p ?start ?end ?coord WHERE {
           ?p wdt:P31/wdt:P279* wd:%s.
@@ -57,9 +66,10 @@ for kind in only:
         }''' % (inst, lo, hi)
         r = sparql(q)
         if not r:
-            print(f'{kind} Q{lo}-{hi}: FAILED', flush=True); continue
+            print(f'{kind} Q{lo}-{hi}: FAILED', flush=True)
+            continue
         rows = r['results']['bindings']
-        with open(raw_p, 'a') as fh:
+        with Path(raw_p).open('a') as fh:
             for b in rows:
                 c = b.get('coord', {}).get('value', '')
                 m = re.match(r'Point\(([-\d.]+) ([-\d.]+)\)', c)
@@ -70,13 +80,15 @@ for kind in only:
                     'lon': float(m.group(1)) if m else None,
                     'lat': float(m.group(2)) if m else None,
                 }) + '\n')
-        total += len(rows); seen.add(lo)
-        json.dump({'ranges_done': sorted(seen)}, open(ckpt_p, 'w'))
-        if rows: print(f'{kind} Q{lo}-{hi}: {len(rows)} (total {total})', flush=True)
+        total += len(rows)
+        seen.add(lo)
+        json.dump({'ranges_done': sorted(seen)}, Path(ckpt_p).open('w'))
+        if rows:
+            print(f'{kind} Q{lo}-{hi}: {len(rows)} (total {total})', flush=True)
         time.sleep(2)
     print(f'{kind} phase 1 done: {total}', flush=True)
 
-    raw = [json.loads(l) for l in open(raw_p)]
+    raw = [json.loads(line) for line in Path(raw_p).open()]
     qids = [x['qid'] for x in raw]
     labels = {}
     for i in range(0, len(qids), 50):
@@ -86,13 +98,15 @@ for kind in only:
         if r:
             for q_, e in r.get('entities', {}).items():
                 lb = e.get('labels', {}).get('en', {}).get('value')
-                if lb: labels[q_] = lb
+                if lb:
+                    labels[q_] = lb
         time.sleep(0.5)
-    out_p = os.path.join(EA, f'layer_{kind}.jsonl')
-    with open(out_p, 'w') as fh:
+    out_p = Path(EA) / f'layer_{kind}.jsonl'
+    with Path(out_p).open('w') as fh:
         for x in raw:
             name = labels.get(x['qid'])
-            if not name: continue
+            if not name:
+                continue
             fh.write(json.dumps({
                 'entity_id': f'events:{kind[:-1]}:{slug(name)}',
                 'entity_type': kind[:-1], 'name': name,
@@ -104,4 +118,4 @@ for kind in only:
                                'retrieved': '2026-10-19', 'method': 'sparql-event-p580-p582-p625'},
                 'confidence': 'medium',
             }) + '\n')
-    print(f'{kind}: WROTE {sum(1 for _ in open(out_p))}', flush=True)
+    print(f'{kind}: WROTE {sum(1 for _ in Path(out_p).open())}', flush=True)

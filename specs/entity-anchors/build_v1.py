@@ -4,17 +4,19 @@ Reads:  specs/dense-retriever/player_birth.json, team_birth.json
 Writes: specs/entity-anchors/v1/players.jsonl, teams.jsonl, REPORT.md
 Idempotent: re-run any time; QA gates print pass/fail.
 """
-import json, os, re, sys
+import json
+import re
 from datetime import date
+from pathlib import Path
 
-HERE = os.path.dirname(os.path.abspath(__file__))
-SPEC = os.path.join(HERE, '..', 'entity-anchors')
-V1 = os.path.join(SPEC, 'v1')
-os.makedirs(V1, exist_ok=True)
+HERE = Path(__file__).resolve().parent
+SPEC = Path(HERE) / '..' / 'entity-anchors'
+V1 = Path(SPEC) / 'v1'
+Path(V1).mkdir(parents=True, exist_ok=True)
 
-DR = os.path.join(HERE, '..', 'dense-retriever')
-players_raw = json.load(open(os.path.join(DR, 'player_birth.json')))
-teams_raw = json.load(open(os.path.join(DR, 'team_birth.json')))
+DR = Path(HERE) / '..' / 'dense-retriever'
+players_raw = json.load(open(Path(DR) / 'player_birth.json'))
+teams_raw = json.load(open(Path(DR) / 'team_birth.json'))
 
 def slug(n):
     s = n.lower().replace("'", '').replace('.', '')
@@ -23,8 +25,10 @@ def slug(n):
 
 def date_precision(d):
     # Wikidata year-pad trap: 1946-01-01 usually means year-only
-    if d is None: return None, 'unknown'
-    if d[5:] == '01-01': return d[:4], 'year'
+    if d is None:
+        return None, 'unknown'
+    if d[5:] == '01-01':
+        return d[:4], 'year'
     return d, 'day'
 
 records = []
@@ -65,9 +69,9 @@ for name, v in sorted(teams_raw.items()):
     })
 
 # --- v1.1 additions: geocode + dossier name map ---
-GEOCODE = os.path.join(V1, 'geocode.json')
-geocode = json.load(open(GEOCODE)) if os.path.exists(GEOCODE) else {}
-NAME_MAP = json.load(open(os.path.join(DR, 'dossier_name_map.json'))) if os.path.exists(os.path.join(DR, 'dossier_name_map.json')) else {}
+GEOCODE = Path(V1) / 'geocode.json'
+geocode = json.load(Path(GEOCODE).open()) if Path(GEOCODE).exists() else {}
+NAME_MAP = json.load(open(Path(DR) / 'dossier_name_map.json')) if (Path(DR) / 'dossier_name_map.json').exists() else {}
 
 for r in records:
     if r['entity_type'] == 'player':
@@ -85,10 +89,12 @@ for r in records:
 
 players = [r for r in records if r['entity_type'] == 'player']
 teams = [r for r in records if r['entity_type'] == 'team']
-with open(os.path.join(V1, 'players.jsonl'), 'w') as fh:
-    for r in players: fh.write(json.dumps(r) + '\n')
-with open(os.path.join(V1, 'teams.jsonl'), 'w') as fh:
-    for r in teams: fh.write(json.dumps(r) + '\n')
+with open(Path(V1) / 'players.jsonl', 'w') as fh:
+    for r in players:
+        fh.write(json.dumps(r) + '\n')
+with open(Path(V1) / 'teams.jsonl', 'w') as fh:
+    for r in teams:
+        fh.write(json.dumps(r) + '\n')
 
 # --- QA gates ---
 gates = []
@@ -117,7 +123,7 @@ report += ['', '## Unknown rates',
            '- variant pass for 353 label mismatches (running)',
            '- geocode all place anchors → lat/lon',
            '- split region/country from place names']
-open(os.path.join(V1, 'REPORT.md'), 'w').write('\n'.join(report) + '\n')
+open(Path(V1) / 'REPORT.md', 'w').write('\n'.join(report) + '\n')
 print('\n'.join(f'[{"PASS" if ok else "FAIL"}] {n}' for n, ok in gates))
 print(f'players {len(players)}, teams {len(teams)}, unknown-time {p_unk_t}, unknown-place {p_unk_p}')
 print('ALL PASS' if allpass else 'GATES FAILING')

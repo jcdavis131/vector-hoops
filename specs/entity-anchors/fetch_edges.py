@@ -4,18 +4,24 @@ Checkpointed per phase. VALUES batches of 500 QIDs; phases:
   played_for (P54 + P580/P582 tenure), alma_mater (P69), employer (P108), founded_by (P112).
 Only sources/targets already in our layers are kept.
 """
-import json, os, subprocess, sys, time, urllib.parse, urllib.request
-from collections import defaultdict
+import json
+import sys
+import time
+import urllib.parse
+import urllib.request
+from pathlib import Path
 
-D = os.path.join(os.path.dirname(os.path.abspath(__file__)), "v2")
+D = Path(__file__).resolve().parent / "v2"
 UA = {"User-Agent": "atlas-anchor-fetch/1.0 (research; contact: jc@example.com)"}
 
 def sp_sparql(q):
     for wait in (0, 5, 30):
-        if wait: time.sleep(wait)
+        if wait:
+            time.sleep(wait)
         try:
             url = "https://query.wikidata.org/sparql?" + urllib.parse.urlencode({"query": q, "format": "json"})
-            r = urllib.request.Request(url, headers=UA); r.add_header("Accept", "application/sparql-results+json")
+            r = urllib.request.Request(url, headers=UA)
+            r.add_header("Accept", "application/sparql-results+json")
             with urllib.request.urlopen(r, timeout=120) as fh:
                 return json.load(fh)["results"]["bindings"]
         except Exception as e:
@@ -29,22 +35,26 @@ def chunk(xs, n=500):
 def qids_for(layers):
     q = {}
     for lay in layers:
-        f = os.path.join(D, f"layer_{lay}.jsonl")
-        if not os.path.exists(f): continue
-        for line in open(f):
+        f = Path(D) / f"layer_{lay}.jsonl"
+        if not Path(f).exists():
+            continue
+        for line in Path(f).open():
             r = json.loads(line)
-            if r.get("qid"): q[r["qid"]] = (lay, r["name"])
+            if r.get("qid"):
+                q[r["qid"]] = (lay, r["name"])
     return q
 
 # map QID -> our entity id for every finished layer
 LAYERS = ["cities","universities","nfl","mlb","nhl","soccer","business","authors","politicians"]
 ENT = {}   # qid -> (entity_id, layer)
 for lay in LAYERS:
-    f = os.path.join(D, f"layer_{lay}.jsonl")
-    if not os.path.exists(f): continue
-    for line in open(f):
+    f = Path(D) / f"layer_{lay}.jsonl"
+    if not Path(f).exists():
+        continue
+    for line in Path(f).open():
         r = json.loads(line)
-        if r.get("qid"): ENT[r["qid"]] = (r["entity_id"], lay)
+        if r.get("qid"):
+            ENT[r["qid"]] = (r["entity_id"], lay)
 
 PHASES = {
     "played_for":   ("wdt:P54", True),
@@ -54,10 +64,10 @@ PHASES = {
 }
 
 def phase_edges(name, prop, tenure):
-    out = os.path.join(D, f"edges_{name}.jsonl")
-    ck = os.path.join(D, f"ckpt_edges_{name}.json")
-    done = set(json.load(open(ck))) if os.path.exists(ck) else set()
-    wrote = os.path.exists(out) and sum(1 for _ in open(out))
+    out = Path(D) / f"edges_{name}.jsonl"
+    ck = Path(D) / f"ckpt_edges_{name}.json"
+    done = set(json.load(Path(ck).open())) if Path(ck).exists() else set()
+    wrote = Path(out).exists() and sum(1 for _ in Path(out).open())
     qids = [q for q in ENT if q not in done]
     print(f"{name}: {len(qids)} qids remaining, {wrote} edges banked", flush=True)
     for c in chunk(qids):
@@ -70,18 +80,22 @@ def phase_edges(name, prop, tenure):
             q = ("SELECT ?e ?v WHERE { VALUES ?e { " + vals + " } ?e " + prop + " ?v }")
         rows = sp_sparql(q)
         if rows is None:
-            print("phase failed, checkpoint saved", flush=True); return False
-        with open(out, "a") as f:
+            print("phase failed, checkpoint saved", flush=True)
+            return False
+        with Path(out).open("a") as f:
             for row in rows:
-                eq = row["e"]["value"].rsplit("/",1)[-1]; vq = row["v"]["value"].rsplit("/",1)[-1]
-                if vq not in ENT: continue
-                src, _ = ENT[eq]; dst, _ = ENT[vq]
+                eq = row["e"]["value"].rsplit("/",1)[-1]
+                vq = row["v"]["value"].rsplit("/",1)[-1]
+                if vq not in ENT:
+                    continue
+                src, _ = ENT[eq]
+                dst, _ = ENT[vq]
                 rec = {"src": src, "dst": dst, "rel": name,
                        "start": row.get("st",{}).get("value"),
                        "end": row.get("et",{}).get("value")}
                 f.write(json.dumps(rec) + "\n")
         done.update(c)
-        json.dump(sorted(done), open(ck,"w"))
+        json.dump(sorted(done), Path(ck).open("w"))
         print(f"{name}: {len(done)}/{len(done)+len(qids)-len(done)} qids", flush=True)
     return True
 
@@ -90,5 +104,7 @@ if __name__ == "__main__":
     ok = True
     for name in only:
         prop, tenure = PHASES[name]
-        if not phase_edges(name, prop, tenure): ok = False; break
+        if not phase_edges(name, prop, tenure):
+            ok = False
+            break
     print("EDGES DONE" if ok else "EDGES PARTIAL", flush=True)

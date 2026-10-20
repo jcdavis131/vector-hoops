@@ -2,11 +2,15 @@
 """Recover missing birth data via Wikidata fuzzy entity search.
 For each name without dob: wbsearchentities -> top basketball-player hit -> P569/P19.
 """
-import json, os, time, urllib.parse, urllib.request
+import json
+import time
+import urllib.parse
+import urllib.request
+from pathlib import Path
 
-DR = os.path.expanduser('~/workspace/vector-hoops/specs/dense-retriever')
-P = os.path.join(DR, 'player_birth.json')
-d = json.load(open(P))
+DR = Path('~/workspace/vector-hoops/specs/dense-retriever').expanduser()
+P = Path(DR) / 'player_birth.json'
+d = json.load(Path(P).open())
 miss = [n for n, v in d.items() if not v.get('dob')]
 print(f'recovering {len(miss)}', flush=True)
 
@@ -37,7 +41,8 @@ def is_bball(ent):
 
 def get_str(ent, prop):
     cs = ent.get('claims', {}).get(prop, [])
-    if not cs: return None
+    if not cs:
+        return None
     try:
         return cs[0]['mainsnak']['datavalue']['value']
     except KeyError:
@@ -70,8 +75,8 @@ for n in miss:
         print(f'  {n}: {e}', flush=True)
     time.sleep(0.4)
     if fixed % 25 == 0:
-        json.dump(d, open(P, 'w'), indent=1)
+        json.dump(d, Path(P).open('w'), indent=1)
 
-json.dump(d, open(P, 'w'), indent=1)
+json.dump(d, Path(P).open('w'), indent=1)
 have = sum(1 for x in d.values() if x.get('dob'))
 print(f'fixed {fixed}; now {have}/2415 with dob', flush=True)

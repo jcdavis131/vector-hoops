@@ -3,18 +3,22 @@
 Writes specs/dense-retriever/player_birth.json: name -> {dob, birthplace, wikidata_id}
 Resumable: skips names already in the output file.
 """
-import json, os, sys, time, urllib.parse, urllib.request
+import json
+import time
+import urllib.parse
+import urllib.request
+from pathlib import Path
 
-BASE = os.path.expanduser('~/workspace/vector-hoops')
-SPEC = os.path.join(BASE, 'specs/dense-retriever')
-OUT = os.path.join(SPEC, 'player_birth.json')
+BASE = Path('~/workspace/vector-hoops').expanduser()
+SPEC = Path(BASE) / 'specs/dense-retriever'
+OUT = Path(SPEC) / 'player_birth.json'
 
-v = json.load(open(os.path.join(BASE, 'assets/vectors.json')))
+v = json.load(open(Path(BASE) / 'assets/vectors.json'))
 names = sorted(set(p['name'] for p in v['players']))
 
 done = {}
-if os.path.exists(OUT):
-    done = json.load(open(OUT))
+if Path(OUT).exists():
+    done = json.load(Path(OUT).open())
 todo = [n for n in names if n not in done]
 print(f'{len(names)} players, {len(done)} done, {len(todo)} to fetch', flush=True)
 
@@ -53,7 +57,8 @@ for i in range(0, len(todo), BATCH):
             # fuzzy: find case-insensitive match
             for n in batch:
                 if n.lower() == label.lower():
-                    key = n; break
+                    key = n
+                    break
         if key is None:
             continue
         done[key] = {
@@ -66,7 +71,7 @@ for i in range(0, len(todo), BATCH):
     for n in batch:
         if n not in done:
             done[n] = {'dob': None, 'birthplace': None, 'wikidata': None}
-    json.dump(done, open(OUT, 'w'), indent=1)
+    json.dump(done, Path(OUT).open('w'), indent=1)
     print(f'  batch {i//BATCH}: {hits}/{len(batch)} hits ({len(done)}/{len(names)})', flush=True)
     time.sleep(1)
 

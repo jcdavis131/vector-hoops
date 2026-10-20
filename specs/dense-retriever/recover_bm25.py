@@ -4,12 +4,17 @@ For each missed name: wbsearchentities -> normalize diacritics -> BM25-lite
 token ranking over candidate labels -> verify best is a basketball player
 with a dob -> record.
 """
-import json, math, os, re, time, unicodedata, urllib.parse, urllib.request
-from collections import Counter
+import json
+import re
+import time
+import unicodedata
+import urllib.parse
+import urllib.request
+from pathlib import Path
 
-DR = os.path.expanduser('~/workspace/vector-hoops/specs/dense-retriever')
-P = os.path.join(DR, 'player_birth.json')
-d = json.load(open(P))
+DR = Path('~/workspace/vector-hoops/specs/dense-retriever').expanduser()
+P = Path(DR) / 'player_birth.json'
+d = json.load(Path(P).open())
 miss = [n for n, v in d.items() if not v.get('dob')]
 print(f'recovering {len(miss)}', flush=True)
 
@@ -99,10 +104,10 @@ for n in miss:
         print(f'  {n}: {e}', flush=True)
     time.sleep(0.35)
     if fixed % 10 == 0:
-        json.dump(d, open(P, 'w'), indent=1)
+        json.dump(d, Path(P).open('w'), indent=1)
         print(f'  checkpoint: {fixed} fixed', flush=True)
 
-json.dump(d, open(P, 'w'), indent=1)
+json.dump(d, Path(P).open('w'), indent=1)
 have = sum(1 for x in d.values() if x.get('dob'))
 print(f'fixed {fixed}; now {have}/2415 with dob; {len(wrong)} unmatched', flush=True)
 if wrong:
