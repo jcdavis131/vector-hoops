@@ -4,15 +4,22 @@ Graph built from TRAIN edges only (no test leakage). Two encoder variants:
 mean aggregation and GCN symmetric normalization. Baselines re-run on the
 same split. Held-out played_for edges.
 """
-import hashlib, json, math, os, random, sqlite3
 
-S = os.path.dirname(os.path.abspath(__file__))
-DB = os.path.join(S, "v2", "atlas.db")
+import hashlib
+import math
+import random
+import sqlite3
+from pathlib import Path
+
+S = Path(__file__).resolve().parent
+DB = S / "v2" / "atlas.db"
 DIM, ROUNDS = 32, 2
+
 
 def hslot(fstr):
     h = int(hashlib.md5(fstr.encode()).hexdigest(), 16)
     return h % DIM, 1.0 if (h >> 7) % 2 else -1.0
+
 
 def base_vector(layer, decade, country, lat, lon):
     v = [0.0] * DIM
@@ -24,6 +31,7 @@ def base_vector(layer, decade, country, lat, lon):
         v[i] += s
     n = math.sqrt(sum(x * x for x in v)) or 1.0
     return [x / n for x in v]
+
 
 def encode(ent0, adj, mode):
     ent = {e: list(v) for e, v in ent0.items()}
@@ -52,6 +60,7 @@ def encode(ent0, adj, mode):
         ent = new
     return ent
 
+
 def evaluate(ent, test, pop):
     targets = sorted(pop)
     rr = h1 = h10 = n = 0
@@ -59,8 +68,7 @@ def evaluate(ent, test, pop):
         if s not in ent or truth not in pop:
             continue
         sv = ent[s]
-        scored = sorted(targets,
-                        key=lambda t: (-sum(a * b for a, b in zip(sv, ent[t])), -pop[t]))
+        scored = sorted(targets, key=lambda t: (-sum(a * b for a, b in zip(sv, ent[t])), -pop[t]))
         n += 1
         try:
             r = scored.index(truth) + 1
@@ -71,11 +79,13 @@ def evaluate(ent, test, pop):
         h10 += r <= 10
     return rr / n, h1 / n, h10 / n, n
 
+
 def main():
     db = sqlite3.connect(DB)
     ent0, meta = {}, {}
     for eid, layer, td, ctry, lat, lon in db.execute(
-            "SELECT entity_id, layer, time_date, country, lat, lon FROM entities"):
+        "SELECT entity_id, layer, time_date, country, lat, lon FROM entities"
+    ):
         dec = "?"
         if td and len(td) >= 4:
             try:
@@ -84,8 +94,7 @@ def main():
                 pass
         meta[eid] = layer
         ent0[eid] = base_vector(layer or "?", dec, ctry or "?", lat, lon)
-    rows = [(s, d) for s, d in db.execute(
-        "SELECT src, dst FROM edges WHERE rel='played_for'")]
+    rows = [(s, d) for s, d in db.execute("SELECT src, dst FROM edges WHERE rel='played_for'")]
     db.close()
     random.seed(42)
     random.shuffle(rows)
@@ -111,11 +120,12 @@ def main():
         rr += 1.0 / r
         h1 += r == 1
         h10 += r <= 10
-    print(f"popularity: MRR={rr/n:.4f} H@1={h1/n:.4f} H@10={h10/n:.4f} n={n}")
+    print(f"popularity: MRR={rr / n:.4f} H@1={h1 / n:.4f} H@10={h10 / n:.4f} n={n}")
     for mode in ("mean", "gcn"):
         ent = encode(ent0, adj, mode)
         mrr, hh1, hh10, nn = evaluate(ent, test, pop)
         print(f"gnn-{mode}2hop: MRR={mrr:.4f} H@1={hh1:.4f} H@10={hh10:.4f} n={nn}")
+
 
 if __name__ == "__main__":
     main()

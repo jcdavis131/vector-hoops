@@ -49,7 +49,7 @@
     var sub = [];
     if (p.mpg_prior != null) sub.push(num(p.mpg_prior) + ' mpg');
     if (p.gp_est != null) sub.push('~' + Math.round(p.gp_est) + ' games');
-    if (p.last_season) sub.push('based on thru ' + p.last_season);
+    if (p.last_season) sub.push('based on thru ' + String(p.last_season).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'));
     return '<div class="pp-section arc-proj">' +
       '<div class="pp-section-head">2026–27 model projection <span class="arc-proj__tag">arc-ridge v1</span></div>' +
       '<div class="arc-proj__grid">' + cells + '</div>' +
