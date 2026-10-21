@@ -67,7 +67,7 @@
 
   /* ---- grid & space (8px base) ---- */
   --s-2: 8px; --s-3: 12px; --s-4: 16px; --s-5: 24px;
-  --s-6: 32px; --s-7: 48px; --s-9: 96px;
+  --s-6: 32px; --s-7: 48px; --s-8: 64px; --s-9: 96px;
   --gutter: clamp(16px, 4vw, 48px);
   --content: 1200px;
   /* ---- radii: single-sourced here (ex-MARIO LIFT 5/7/10, PR #73, 2026-10-12) ---- */
@@ -223,7 +223,7 @@ button, input, select, textarea{ font: inherit; color: inherit; }
 }
 input:focus-visible, select:focus-visible, textarea:focus-visible{ outline-offset: 0; }
 
-.num, .tnum, table, .lb-table, .wiki-row__meta, .cqs-badge, [data-num]{ font-variant-numeric: tabular-nums lining-nums; }
+.num, table, .wiki-row__meta, .cqs-badge, [data-num]{ font-variant-numeric: tabular-nums lining-nums; }
 
 /* Shell chrome (skip link, site-nav, site-footer) lives in assets/shell.css
    since the three-slot nav rebuild (Lane A, scout/nav-three-slot). */
@@ -333,8 +333,8 @@ p{ text-wrap: pretty; }
   min-width: 0;
   transition: border-color var(--dur-2) var(--ease);
 }
-.card .card{ background: var(--surface-2); border-color: var(--line); box-shadow: none !important; }
-.card h2, .method-h2{
+.card .card{ background: var(--surface-2); border-color: var(--line); box-shadow: none; }
+.card h2{
   font-family: var(--font-display);
   font-size: var(--t-lg); font-weight: 700; letter-spacing: -.01em; line-height: 1.2;
   text-transform: none;
@@ -373,7 +373,7 @@ p{ text-wrap: pretty; }
 .btn-accent:hover{ background: var(--accent-wash); border-color: var(--accent); color: var(--accent-2); }
 .btn-xl{ min-height: 52px; padding: 0 28px; font-size: 12px; }
 
-.pill, .hv6-pill, .chip, .cqs-badge, .trends-chip, .trends-shift-card, .btn-speed, .mini-badge, .story-stat{
+.pill, .chip, .cqs-badge{
   display: inline-flex; align-items: center; gap: 6px;
   min-height: 28px; padding: 4px 12px;
   font-family: var(--font-display);
@@ -388,11 +388,9 @@ p{ text-wrap: pretty; }
   font-variant-numeric: tabular-nums;
   transition: color var(--dur-1) var(--ease), border-color var(--dur-1) var(--ease), background var(--dur-1) var(--ease);
 }
-a.pill:hover, button.pill:hover, .trends-chip:hover, .trends-shift-card:hover, .btn-speed:hover{ color: var(--fg); border-color: var(--fg-3); }
+a.pill:hover, button.pill:hover{ color: var(--fg); border-color: var(--fg-3); }
 .pill-yellow, .pill-blue{ background: var(--accent-wash); color: var(--accent-2); border-color: var(--accent-line); }
 .pill-green{ background: var(--pipe); color: var(--on-accent); border-color: var(--pipe); }  /* a green pill is green: pipe pairing 5.72:1 */
-.trends-chip--active, .trends-shift-card--active{ background: var(--accent); color: var(--on-accent) !important; border-color: var(--accent); box-shadow: none; transform: none; }
-.trends-shift-card--active .sc-deg{ color: var(--on-accent); }
 
 .input, input[type="text"], input[type="search"], input[type="email"], input[type="number"], select, textarea{
   width: 100%;
@@ -444,12 +442,12 @@ input[type="range"]{ accent-color: var(--accent); }
    Data tables — the instrument panel
    ========================================================================== */
 table{ border-collapse: collapse; width: 100%; }
-.lb-table, .data-table{
+.data-table{
   width: 100%; border-collapse: collapse;
   font-size: var(--t-sm);
   font-variant-numeric: tabular-nums lining-nums;
 }
-.lb-table th, .data-table th{
+.data-table th{
   text-align: left;
   font-family: var(--font-display); font-size: var(--t-2xs); font-weight: 600; font-stretch: 112%;
   letter-spacing: .16em; text-transform: uppercase;
@@ -458,17 +456,17 @@ table{ border-collapse: collapse; width: 100%; }
   border-bottom: 1px solid var(--line-2);
   white-space: nowrap;
 }
-.lb-table td, .data-table td{
+.data-table td{
   padding: 11px 12px;
   border-top: 0; border-bottom: 1px solid var(--line);
   color: var(--fg-2);
   vertical-align: baseline;
 }
-.lb-table td:first-child, .data-table td:first-child, .lb-table th:first-child, .data-table th:first-child{ padding-left: 0; }
-.lb-table td:last-child, .data-table td:last-child, .lb-table th:last-child, .data-table th:last-child{ padding-right: 0; }
-.lb-table tr:hover td, .data-table tbody tr:hover td{ background: transparent; color: var(--fg); }
-.data-table .r, .lb-table .r{ text-align: right; }
-.data-table td code, .lb-table td code{ background: none; border: 0; padding: 0; color: var(--fg); font-size: 12.5px; }
+.data-table td:first-child, .data-table th:first-child{ padding-left: 0; }
+.data-table td:last-child, .data-table th:last-child{ padding-right: 0; }
+.data-table tbody tr:hover td{ background: transparent; color: var(--fg); }
+.data-table .r{ text-align: right; }
+.data-table td code{ background: none; border: 0; padding: 0; color: var(--fg); font-size: 12.5px; }
 
 /* ==========================================================================
    Players — directory, skills, boards
@@ -492,7 +490,7 @@ table{ border-collapse: collapse; width: 100%; }
 .wiki-alphabet button.is-disabled{ opacity: .28; }
 .wiki-count{ font-family: var(--font-display); font-size: var(--t-2xs); font-weight: 600; font-stretch: 112%; letter-spacing: .14em; text-transform: uppercase; color: var(--fg-3); font-variant-numeric: tabular-nums; }
 .wiki-list{ list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0; border-top: 1px solid var(--line-2); }
-.wiki-row-wrap, .skills-board__item, .skills-board li{
+.wiki-row-wrap, .skills-board li{
   display: flex; align-items: center; gap: var(--s-3);
   background: transparent; border: 0; border-bottom: 1px solid var(--line); border-radius: 0; box-shadow: none;
   padding: 0 4px; min-height: 52px;
@@ -522,11 +520,8 @@ table{ border-collapse: collapse; width: 100%; }
 .skills-player-meta{ color: var(--fg-3); font-family: var(--font-text); }
 .skills-seasons button{ background: none; border: 1px solid var(--line-2); color: var(--fg-2); font-family: var(--font-text); font-variant-numeric: tabular-nums; border-radius: var(--radius); box-shadow: none; }
 .skills-seasons button.is-active{ background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
-.skillbar{ background: none; border: 0; border-bottom: 1px solid var(--line); border-radius: 0; box-shadow: none; }
-.skillbar__label{ font-family: var(--font-display); font-stretch: 112%; letter-spacing: .12em; color: var(--fg-2); }
-.skillbar__track, .skillbar-list .bar{ background: var(--surface-2); border: 0; height: 4px; }
-.skillbar__fill, .skillbar-list .bar i{ background: var(--accent); }
-.skillbar__grade{ color: var(--fg); font-variant-numeric: tabular-nums; }
+.skillbar-list .bar{ background: var(--surface-2); border: 0; height: 4px; }
+.skillbar-list .bar i{ background: var(--accent); }
 .vh-skill-badges span{ background: none; border: 1px solid var(--accent-line); color: var(--accent); box-shadow: none; font-family: var(--font-display); font-stretch: 112%; letter-spacing: .1em; }
 
 /* Modal */
@@ -536,9 +531,6 @@ table{ border-collapse: collapse; width: 100%; }
 /* ==========================================================================
    Methods & Lab
    ========================================================================== */
-.method-grid{ display: grid; grid-template-columns: 1fr 1fr; gap: var(--s-5); }
-@media (max-width: 860px){ .method-grid{ grid-template-columns: 1fr; } }
-.method-p{ font-size: var(--t-base); line-height: 1.7; color: var(--fg-2); margin: var(--s-2) 0; }
 .arch-diagram{
   font-family: var(--font-code); font-size: 12.5px; line-height: 1.75;
   color: #D8DCD8; background: var(--void);  /* void panel is dark in both themes; #D8DCD8 on it = 11.79:1 */
@@ -561,7 +553,7 @@ table{ border-collapse: collapse; width: 100%; }
 @keyframes atlas-fade{ from{ opacity: 0; } to{ opacity: 1; } }
 .reveal{ animation: atlas-rise var(--dur-3) var(--ease) both; }
 .reveal-1{ animation-delay: 80ms; } .reveal-2{ animation-delay: 180ms; } .reveal-3{ animation-delay: 280ms; }
-.reveal-4{ animation-delay: 380ms; } .reveal-5{ animation-delay: 480ms; } .reveal-6{ animation-delay: 580ms; }
+.reveal-4{ animation-delay: 380ms; }
 
 @media (prefers-reduced-motion: reduce){
   *, *::before, *::after{
@@ -578,13 +570,12 @@ table{ border-collapse: collapse; width: 100%; }
    ========================================================================== */
 @media print{
   :root{ --bg:#fff; --surface:#fff; --surface-2:#f4f4f4; --fg:#000; --fg-2:#222; --fg-3:#444; --line:#ccc; --line-2:#999; --accent:#000; }
-  .site-nav, .site-footer, .skip-link, .btn, .tab-pills, #map-controls, .no-print{ display: none !important; }
+  .site-nav, .site-footer, .skip-link, .btn, .tab-pills, #map-controls{ display: none !important; }
   body{ background: #fff; color: #000; }
   .card{ border-color: #ccc; break-inside: avoid; }
   a{ text-decoration: underline; }
 }
 
-.empty-note{ font-family: var(--font-text) !important; font-size: 13px !important; color: var(--fg-3) !important; padding: 16px; border: 1px dashed var(--line-2); border-radius: var(--radius-lg); text-align: center; }
 
 /* ---------- Career Trails (additive) ---------- */
 .trail-btn{

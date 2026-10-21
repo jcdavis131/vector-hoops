@@ -27,8 +27,8 @@
 <meta name="twitter:image" content="https://hoops.dumbmodel.com/assets/og-1200x630.png"/>
 <link rel="stylesheet" href="assets/fonts.css?v=8f376b2a"/>
 <link rel="preload" href="/assets/vectors_search_lite.json" as="fetch" crossorigin/>
-<link rel="stylesheet" href="/assets/atlas.css?v=ff374431"/>
-<link rel="stylesheet" href="/assets/shell.css?v=fdb1f985"/>
+<link rel="stylesheet" href="/assets/atlas.css?v=c43e0f47"/>
+<link rel="stylesheet" href="/assets/shell.css?v=729457dd"/>
 <style>
 /* ---------- Home: hero ---------- */
 .hero{ padding-top: clamp(48px, 9vw, 120px); padding-bottom: clamp(32px, 5vw, 64px); max-width: 1040px; }
@@ -55,10 +55,6 @@
 @keyframes hero-spin{ to{ transform: rotate(360deg); } }
 .hero-map__bar{ display: flex; flex-wrap: wrap; align-items: center; gap: var(--s-2) var(--s-4); margin-top: var(--s-3); }
 .hero-map__hint{ margin: 0; font-family: var(--font-code); font-size: var(--t-xs); color: var(--fg-3); }
-.hero-map__proj{ display: inline-flex; gap: 6px; }
-.proj-btn{ appearance: none; border: 1px solid var(--line-2); border-radius: 999px; background: var(--surface); color: var(--fg-2);
-  font-family: var(--font-code); font-size: 11px; font-weight: 800; padding: 6px 12px; cursor: pointer; min-height: 36px; }
-.proj-btn[aria-pressed="true"]{ background: var(--fg); color: var(--surface); border-color: var(--fg); }
 .hero-map__cta{ margin-left: auto; }
 
 /* ---------- Home: season strip (2026-27 opening night) ---------- */
@@ -90,7 +86,7 @@
 .atlas-results li .num{ color: var(--fg-3); }
 .atlas-results li.is-active, .atlas-results li:hover{ background: var(--surface-2); }
 .atlas-results li.is-active{ box-shadow: inset 2px 0 0 var(--accent); }
-.atlas-results__empty{ color: var(--fg-3) !important; cursor: default !important; }
+.atlas-results li.atlas-results__empty{ color: var(--fg-3); cursor: default; }
 
 .field{
   position: relative;
@@ -273,12 +269,12 @@
 .peers__note{ font-size: 12px; color: var(--fg-3); }
 #atlas-peers-body tr{ cursor: pointer; }
 #atlas-peers-body tr:focus-visible{ outline: 2px solid var(--accent); outline-offset: -2px; }
-.peer-name{ color: var(--fg) !important; font-weight: 550; }
+.data-table tbody tr td.peer-name{ color: var(--fg); font-weight: 550; }
 .twin-band{ display: inline; } .twin-band__summary{ display: inline; cursor: pointer; }
 .twin-band--inline{ display: inline; }
 .twin-band__num{ font-variant-numeric: tabular-nums; opacity: .75; font-size: .92em; }
 .twin-band__label{ opacity: .7; }
-.peer-sim{ color: var(--accent) !important; font-weight: 600; }
+.data-table tbody tr td.peer-sim{ color: var(--accent); font-weight: 600; }
 .peers__foot{ margin: 16px 0 0; font-size: 12.5px; line-height: 1.6; color: var(--fg-3); max-width: 62ch; }
 .skeleton{ display: inline-block; height: 10px; width: 120px; border-radius: 2px; background: var(--surface-2); animation: atlas-fade 1.2s var(--ease) infinite alternate; }
 .skeleton--s{ width: 48px; }
@@ -358,7 +354,7 @@
       <span><b>Model</b> Nearest seasons by cosine similarity in the 64-dimensional MTNN v5 embedding</span>
     </div>
     <div class="title-card__actions reveal reveal-3">
-      <a class="btn btn-primary btn-xl" href="#atlas">Tap a season — explore the atlas</a>
+      <a class="btn btn-primary btn-xl" href="#map3d">Choose a season — explore the atlas.</a>
     </div>
   </header>
 
@@ -380,17 +376,12 @@
       </div>
     </div>
     <div class="hero-map__bar">
-      <p class="hero-map__hint">Drag to orbit &middot; scroll to zoom &middot; projections:</p>
-      <div class="hero-map__proj" role="group" aria-label="Map projection">
-        <button class="proj-btn" type="button" data-proj="pca" aria-pressed="true">PCA</button>
-        <button class="proj-btn" type="button" data-proj="tsne" aria-pressed="false">t-SNE</button>
-        <button class="proj-btn" type="button" data-proj="umap" aria-pressed="false">UMAP</button>
-      </div>
+      <p class="hero-map__hint">Drag to orbit &middot; scroll to zoom</p>
       <a class="btn btn-primary hero-map__cta" href="/map-guess">Play Map Hunt &rarr;</a>
     </div>
     <noscript><p class="hero-map__hint" style="margin-top:8px">The 3D map needs JavaScript &mdash; the atlas below works the same way, and <a href="/play">Daily Court</a> plays without it.</p></noscript>
   </section>
-  <script src="/assets/embed-3d.js?v=3818e6cd"></script>
+  <script src="/assets/embed-3d.js?v=ecab5292"></script>
   <script>
   (function(){
     /* Guarded 3D mount: the page is complete without it (placeholder stays). */
@@ -420,16 +411,6 @@
       }catch(e){ return false; }
     }
     if(!mount('pca')) return;
-    /* Projection switcher reuses the mount handle — no re-fetch (Panel S9). */
-    document.querySelectorAll('.hero-map__proj .proj-btn').forEach(function(b){
-      b.addEventListener('click', function(){
-        document.querySelectorAll('.hero-map__proj .proj-btn').forEach(function(x){ x.setAttribute('aria-pressed','false'); });
-        b.setAttribute('aria-pressed','true');
-        var p = b.getAttribute('data-proj');
-        if(handle && typeof handle.setProjection === 'function') handle.setProjection(p);
-        else mount(p);
-      });
-    });
   })();
   </script>
 
@@ -593,12 +574,12 @@
   <p class="site-footer__attribution">Every number recomputable from stats.nba.com · A <a href="https://dumbmodel.com">dumbmodel</a> project · <a href="https://github.com/jcdavis131/vector-hoops" rel="noopener">Source</a> · Nearest seasons by cosine similarity in the 64-dimensional MTNN v5 embedding.</p>
 </footer>
 
-<script defer src="/assets/site-nav.js?v=29a94905"></script>
+<script defer src="/assets/site-nav.js?v=76d1e530"></script>
 <script defer src="/assets/vh-analytics.js?v=STAMP"></script>
 <script defer src="/assets/vh-peers.js?v=STAMP"></script>
 <script defer src="/assets/served-constants.js?v=8ba12340"></script>
 <script defer src="/assets/twin-bands.js?v=0a191313"></script>
-<script defer src="/assets/atlas-map.js?v=c79d8921"></script>
+<script defer src="/assets/atlas-map.js?v=72854f1c"></script>
 <script defer src="/assets/atlas-regions.js?v=137f43e8"></script>
 <script defer src="/assets/career-trails.js?v=a0e9e836"></script>
 <script src="assets/site-facts.js?v=f8edaf37" defer></script>
