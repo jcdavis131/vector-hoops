@@ -1,0 +1,44 @@
+{
+  "generated_at": "2026-10-20T19:09:10+00:00",
+  "overall": "degraded",
+  "deploy": {
+    "commit": "ed032e0a",
+    "commit_date": "2026-10-20 12:56:23 -0500",
+    "csp": "enforcing"
+  },
+  "data": {
+    "model_name": "mtnn_v5_concat_b2_h160_t32_d64_mlp128_fus256",
+    "model_built": "2026-07-25",
+    "seasons": "1996-97\u20132025-26",
+    "player_seasons": 12966,
+    "players": 2426
+  },
+  "model_serving": {
+    "state": "pass",
+    "detail": "served model: OK, assets, public/assets serve one promoted, exported bundle",
+    "flags": [
+      "::warning title=served model override::assets: run july-v5-a4918f09 was promoted with --force: Adopted the July 2026 v5 incumbent already served on master (git blob a4918f09). The original promote.py run directory is not in this repo; lineage records the served bytes. Not a new promotion.",
+      "::warning title=served model override::assets: export floors waived by that force, failed: ['test recall or the 14-d baseline recall is missing']",
+      "::warning title=served model override::public/assets: run july-v5-a4918f09 was promoted with --force: Adopted the July 2026 v5 incumbent already served on master (git blob a4918f09). The original promote.py run directory is not in this repo; lineage records the served bytes. Not a new promotion.",
+      "::warning title=served model override::public/assets: export floors waived by that force, failed: ['test recall or the 14-d baseline recall is missing']"
+    ],
+    "note": "Lineage records a forced adoption of the July 2026 v5 incumbent; the original promote.py run files are not in this repo. Find the run files or order a replacement champion \u2014 Cameron's decision."
+  },
+  "feed_health": {
+    "state": "unknown",
+    "detail": "No feed-health source wired yet (Pillar 2 realtime plane owns this)."
+  },
+  "incidents": [],
+  "checks": [
+    {
+      "name": "Model serving",
+      "state": "warn",
+      "note": "pass with lineage override flags"
+    },
+    {
+      "name": "Site facts",
+      "state": "ok",
+      "note": "31 facts"
+    }
+  ]
+}

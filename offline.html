@@ -49,12 +49,6 @@ ul a:hover{ color:var(--fg); }
   <p class="note">Nearest seasons by cosine similarity in the 64-dimensional MTNN v5 embedding.</p>
   <nav aria-label="Offline navigation"><ul aria-label="Pages that may be cached"><li><a href="/play">Play</a></li><li><a href="/players">Players</a></li><li><a href="/methods">Methods</a></li></ul></nav>
 </main>
-<script>
-(function(){
-  var s=document.getElementById('status');
-  document.getElementById('retry').addEventListener('click',function(){ s.textContent='Checking the connection…'; location.reload(); });
-  window.addEventListener('online',function(){ s.textContent='Back online — reloading.'; setTimeout(function(){ location.reload(); },400); });
-})();
-</script>
+<script src="/assets/inline-offline.js?v=61689e91"></script>
 </body>
 </html>

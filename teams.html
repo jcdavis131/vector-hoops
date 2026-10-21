@@ -389,27 +389,7 @@ a{color:inherit}
 <script src="assets/keyboard-a11y.js?v=39777a87"></script>
 <script src="assets/site-nav.js?v=af70db2b" defer></script>
 <script src="assets/pwa-install.js?v=b954d9d1"></script>
-<script>
-/* Lazy team videos: load + autoplay when visible, pause when off-screen. */
-(function(){
-  'use strict';
-  var vids = Array.prototype.slice.call(document.querySelectorAll('.team-card__video'));
-  function enable(v){
-    if(!v.getAttribute('src')) v.src = v.getAttribute('data-src');
-    var p = v.play(); if(p && p.catch) p.catch(function(){});
-  }
-  function disable(v){ v.pause(); }
-  if(!('IntersectionObserver' in window)){
-    vids.forEach(enable); return;
-  }
-  var io = new IntersectionObserver(function(entries){
-    entries.forEach(function(e){
-      if(e.isIntersecting) enable(e.target); else disable(e.target);
-    });
-  }, {rootMargin:'240px 0px'});
-  vids.forEach(function(v){ io.observe(v); });
-})();
-</script>
-<script>if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('/sw.js').catch(function(){})})}</script>
+<script src="/assets/inline-teams.js?v=3ca2ef11"></script>
+<script src="/assets/inline-teams.js?v=3ca2ef11"></script>
 </body>
 </html>

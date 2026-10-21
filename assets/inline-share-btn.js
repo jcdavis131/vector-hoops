@@ -1,0 +1,5 @@
+/* --- extracted from playoff-runs.html (share button wiring) (pure move; no behavior change) --- */
+(function(){var b=document.getElementById('vh-share-btn');if(!b)return;b.addEventListener('click',function(){var url=location.href;var title=document.title;function done(){b.textContent='Link copied';setTimeout(function(){b.textContent='Share';},1600);}if(navigator.share){navigator.share({title:title,url:url}).catch(function(){});}else if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(url).then(done,done);}else{done();}});})();
+
+/* --- extracted from taxonomy.html (share button wiring) (pure move; no behavior change) --- */
+(function(){var b=document.getElementById('vh-share-btn');if(!b)return;b.addEventListener('click',function(){var url=location.href;var title=document.title;function done(){b.textContent='Link copied';setTimeout(function(){b.textContent='Share';},1600);}if(navigator.share){navigator.share({title:title,url:url}).catch(function(){});}else if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(url).then(done,done);}else{done();}});})();
