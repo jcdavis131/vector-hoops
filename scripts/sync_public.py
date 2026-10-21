@@ -71,6 +71,11 @@ def sources() -> list[tuple[Path, Path]]:
     if ins_dir.is_dir():
         for p in sorted(ins_dir.glob("*.html")):
             pairs.append((p, PUBLIC / "insights" / p.name))
+    # play/ holds game pages served at /play/<name>.html (Pillar 6 games).
+    play_dir = ROOT / "play"
+    if play_dir.is_dir():
+        for p in sorted(play_dir.glob("*.html")):
+            pairs.append((p, PUBLIC / "play" / p.name))
     # Pillar 1 (2026-10-20): models/ is a served directory now — the registry
     # (models/registry.json) and the on-site model cards (models/*.html).
     # Mirrored whole like assets/, minus .py per SKIP_SUFFIXES.

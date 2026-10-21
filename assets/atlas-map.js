@@ -588,10 +588,17 @@
   }
 
   function updateAxisLabels() {
-    var m = axisMeta(view.x);
+    var m = axisMeta(view.x), my = axisMeta(view.y);
     var l = document.querySelector('.axis--l'), r = document.querySelector('.axis--r');
     if (l) l.textContent = m.lo || 'low';
     if (r) r.textContent = m.hi || 'high';
+    // P1: the picker labels show the semantic axis name, never "X axis"/"Y axis".
+    // PCA axes carry their loading direction (lo → hi); anything else shows its
+    // concept name. Unlabeled stays unlabeled — no placeholders.
+    var xn = document.getElementById('axis-x-name');
+    if (xn) xn.textContent = m.name + (m.lo && m.hi ? ' → ' + m.hi : '');
+    var yn = document.getElementById('axis-y-name');
+    if (yn) yn.textContent = my.name + (my.lo && my.hi ? ' → ' + my.hi : '');
     var c = $('sky-canvas');
     if (c) {
       var ybit = view.mode === '1d'

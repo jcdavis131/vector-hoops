@@ -29,7 +29,7 @@
 <meta name="twitter:image" content="https://hoops.dumbmodel.com/assets/og-1200x630.png"/>
 <link rel="stylesheet" href="assets/fonts.css?v=8f376b2a"/>
 <link rel="stylesheet" href="/assets/atlas.css?v=ff374431"/>
-<link rel="stylesheet" href="/assets/shell.css?v=7eb94ecf"/>
+<link rel="stylesheet" href="/assets/shell.css?v=fdb1f985"/>
 <style>
 .doc{ padding-top:0; }
 .doc-toc{ display:flex; flex-wrap:wrap; justify-content:center; gap:0; border-top:1px solid var(--line); border-bottom:1px solid var(--line); max-width:980px; margin:0 auto; width:100%; }
@@ -798,84 +798,12 @@ Heads: 8 arch / 5 pos / 14 next / 18 skill towers — 12 core + 6 wide (64→16�
 <script src="assets/error-boundary.js?v=8079215c"></script>
 <script src="assets/keyboard-a11y.js?v=39777a87"></script>
 <script src="assets/vh-analytics.js?v=d838a3e1" defer></script>
-<script src="assets/site-nav.js?v=af70db2b" defer></script>
+<script src="assets/site-nav.js?v=29a94905" defer></script>
 <script src="assets/pwa-install.js?v=b954d9d1"></script>
-<script>if('serviceWorker' in navigator){window.addEventListener('load',()=>{navigator.serviceWorker.register('/sw.js').catch(()=>{})})}</script>
+<script src="/assets/inline-sw-register.js?v=48fb8eb4"></script>
 
 <script src="assets/network-viz.js?v=f07df411"></script>
 <script src="assets/site-facts.js?v=f8edaf37" defer></script>
-<script>
-(() => {
-  async function loadArch(){
-    try{
-      const r = await fetch('assets/mtnn_arch.json?v='+Date.now());
-      const j = await r.json();
-      const el = document.getElementById('arch-current-meta');
-      const pre = document.getElementById('arch-layers-pre');
-      if(el){
-        el.innerHTML = `
-          <div><b>model</b> ${j.model||'mtnn_v4'} • <b>dTower</b> ${j.dTower||32} • <b>dEmb</b> ${j.dEmb||48} • <b>blocks</b> ${j.towerBlocks||2} • <b>fusion</b> ${j.fusion||'concat'}</div>
-          <div style="margin-top:6px;"><b>families</b> ${(j.towerFamilies||[]).join(', ')} (${(j.towerFamilies||[]).length})</div>
-          <div style="margin-top:6px;"><b>checkpoint</b> mtime ${j.checkpoint?.mtime||'—'} • ${(j.checkpoint?.bytes/1e6||0).toFixed(2)}MB • ${j.nArchetypes||8} archetypes • ${j.skillKeys?.length||18} skills</div>
-        `;
-      }
-      if(pre) pre.textContent = JSON.stringify(j, null, 2).slice(0, 12000);
-    }catch(e){
-      const el=document.getElementById('arch-current-meta');
-      if(el) el.textContent='Failed to load assets/mtnn_arch.json — ' + e;
-    }
-  }
-  function loadWeights(){
-    const WEIGHTS = {recall:0.18,purity:0.16,margin_14d:0.08,archetype:0.08,position:0.05,skills_r2:0.14,skill_nn:0.05,next_r2:0.12,next_mae:0.06,aux_r2:0.08};
-    const grid=document.getElementById('weights-grid');
-    if(!grid) return;
-    grid.innerHTML = Object.entries(WEIGHTS).map(([k,v])=>`<div class="weight-chip"><b>${k}</b><span>${v}</span></div>`).join('');
-  }
-  async function loadScoreboard(){
-    const cap = document.getElementById('evsb-caption');
-    try{
-      const r = await fetch('assets/eval_scoreboard.json?v='+Date.now());
-      const j = await r.json();
-      const pct = x => (x*100).toFixed(1) + '%';
-      const test = j.results.mtnn.by_split.test;
-      const base = j.results.baseline_transparent_14d.by_split.test;
-      const rnd = j.results.baseline_random;
-      document.getElementById('evsb-top5').textContent = pct(test.top5);
-      document.getElementById('evsb-top1').textContent = pct(test.top1);
-      document.getElementById('evsb-base5').textContent = pct(base.top5);
-      document.getElementById('evsb-pairs').textContent = j.eligible_pairs.toLocaleString('en-US');
-      if(cap) cap.textContent =
-        'Held-out retrieval: query the shipped 64-d space with a player’s season N — does that same player’s season N+1 rank in the top-5 nearest neighbors among all ' +
-        j.embedding_asset.rows.toLocaleString('en-US') + ' player-seasons? Scored on ' + test.n.toLocaleString('en-US') +
-        ' pairs whose target season (2024+) was never a training positive; ' + j.eligible_pairs.toLocaleString('en-US') +
-        ' adjacent-season pairs total, keyed by stable PLAYER_ID. Baselines: transparent 14-d era-z profile (' + pct(base.top5) +
-        ') and random rank (' + (rnd.top5*100).toFixed(2) + '%). Recomputed + gated every rebuild — pipeline/build_eval_scoreboard.py.';
-    }catch(e){
-      if(cap) cap.textContent = 'Failed to load assets/eval_scoreboard.json — ' + e;
-    }
-  }
-  window.addEventListener('DOMContentLoaded', ()=>{ loadArch(); loadWeights(); loadScoreboard(); });
-})();
-</script>
-<script type="module">
-/* Forecast lab: the module publishes loadForecast/renderForecast as ES
-   exports (it never had a window.HoopsForecast global — the old loader
-   called one that doesn't exist, so the exhibit never drew). On any
-   failure the research-only note below replaces the endless Loading. */
-import { loadForecast, renderForecast } from './assets/timesfm-forecast.js?v=67ee6481';
-const legend = document.getElementById('forecast-lab-legend');
-const canvas = document.getElementById('forecast-lab-canvas');
-function honestNote(){
-  if(canvas) canvas.hidden = true;
-  if(legend) legend.textContent = 'The forecast is research-only and isn’t drawn on the site yet — its method and limits are documented on this page.';
-}
-loadForecast().then(d => {
-  if(!d || !d.forecasts || !d.forecasts.length){ honestNote(); return; }
-  renderForecast(d);
-  const slot = document.getElementById('forecast-lab-slot');
-  if(slot && d.metrics){
-    slot.innerHTML = '<p class="doc-note">' + d.forecasts.length.toLocaleString('en-US') + ' player forecasts &middot; train MAE ' + d.metrics.mae_train.toFixed(4) + ' vs naive ' + d.metrics.baselines.naive_last.toFixed(4) + ' — train-split metrics, research-only.</p>';
-  }
-}).catch(honestNote);
-</script>
+<script src="/assets/inline-methods.js?v=f777fcb4"></script>
+<script type="module" src="/assets/inline-methods-forecast.js?v=a410ced9"></script>
 </body></html>

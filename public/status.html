@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
+<title>Status — Vector Hoops</title>
+<meta name="description" content="Live operational status for Vector Hoops: site, data freshness, model serving, and incident history. Every number carries its as-of."/>
+<meta name="robots" content="noindex"/>
+<meta name="color-scheme" content="light dark"/>
+<meta name="theme-color" content="#0F1114" media="(prefers-color-scheme: dark)"/>
+<meta name="theme-color" content="#FCFBF7" media="(prefers-color-scheme: light)"/>
+<meta http-equiv="refresh" content="300"/>
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml"/>
+<link rel="manifest" href="/manifest.json"/>
+<link rel="stylesheet" href="/assets/fonts.css?v=8f376b2a"/>
+<link rel="stylesheet" href="/assets/shell.css?v=fdb1f985"/>
+<style>
+.st{ max-width: 880px; margin: 0 auto; padding: 32px 20px 64px; }
+.st__banner{ display:flex; gap:14px; align-items:center; border:1px solid var(--line-2);
+  border-radius:14px; padding:18px 20px; background:var(--card); margin:22px 0 26px; }
+.st__dot{ width:14px; height:14px; border-radius:50%; flex:none; }
+.st__dot--ok{ background:#2e9e5b; box-shadow:0 0 0 5px rgba(46,158,91,.18); }
+.st__dot--warn{ background:#d9931e; box-shadow:0 0 0 5px rgba(217,147,30,.18); }
+.st__dot--bad{ background:#d64545; box-shadow:0 0 0 5px rgba(214,69,69,.18); }
+.st__grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:14px; }
+.st__card{ border:1px solid var(--line-2); border-radius:14px; padding:16px 18px; background:var(--card); }
+.st__card h2{ font-size:13px; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); margin:0 0 10px; }
+.st__row{ display:flex; justify-content:space-between; gap:12px; padding:6px 0; border-top:1px dashed var(--line-1); font-size:14px; }
+.st__row:first-of-type{ border-top:0; }
+.st__k{ color:var(--muted); }
+.st__v{ text-align:right; font-variant-numeric:tabular-nums; }
+.st__pill{ display:inline-block; padding:2px 10px; border-radius:999px; font-size:12px; font-weight:600; }
+.st__pill--ok{ background:rgba(46,158,91,.14); color:#2e9e5b; }
+.st__pill--warn{ background:rgba(217,147,30,.16); color:#b57a14; }
+.st__pill--bad{ background:rgba(214,69,69,.14); color:#d64545; }
+.st__pill--na{ background:var(--line-1); color:var(--muted); }
+.st__foot{ margin-top:26px; color:var(--muted); font-size:13px; }
+.st__foot code{ font-size:12px; }
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<nav class="site-nav" aria-label="Primary"></nav>
+<main id="main" class="st">
+  <header class="title-card">
+    <div class="title-card__eyebrow">Platform plumbing</div>
+    <h1 class="title-card__title">System status</h1>
+    <p class="title-card__lede">Honest and machine-checked. Stale means &ldquo;last known&rdquo;,
+    unknown means we don&rsquo;t know — never a guess.</p>
+  </header>
+<!--STATUS-SNAPSHOT-->
+  <div class="st__banner" role="status">
+    <span class="st__dot st__dot--warn" aria-hidden="true"></span>
+    <div>
+      <strong>Degraded — see flags below</strong><br/>
+      <span style="color:var(--muted);font-size:13px">Snapshot 2026-10-20T19:09:10+00:00 UTC</span>
+    </div>
+  </div>
+  <div class="st__grid">
+    <section class="st__card" aria-label="Site and deploy">
+      <h2>Site &amp; deploy</h2>
+      <div class="st__row"><span class="st__k">Commit</span><span class="st__v">ed032e0a</span></div>
+      <div class="st__row"><span class="st__k">Commit date</span><span class="st__v">2026-10-20 12:56:23 -0500</span></div>
+      <div class="st__row"><span class="st__k">CSP</span><span class="st__v">enforcing</span></div>
+    </section>
+    <section class="st__card" aria-label="Data freshness">
+      <h2>Data</h2>
+      <div class="st__row"><span class="st__k">Model</span><span class="st__v">mtnn_v5_concat_b2_h160_t32_d64_mlp128_fus256</span></div>
+      <div class="st__row"><span class="st__k">Model built</span><span class="st__v">2026-07-25</span></div>
+      <div class="st__row"><span class="st__k">Seasons</span><span class="st__v">1996-97–2025-26</span></div>
+      <div class="st__row"><span class="st__k">Player-seasons</span><span class="st__v">12966</span></div>
+      <div class="st__row"><span class="st__k">Players</span><span class="st__v">2426</span></div>
+    </section>
+    <section class="st__card" aria-label="Model serving">
+      <h2>Model serving</h2>
+      <div class="st__row"><span class="st__k">Lineage check</span>
+        <span class="st__v"><span class="st__pill st__pill--ok">pass</span></span></div>
+      <div class="st__row"><span class="st__k">Champion</span><span class="st__v">MTNN v5 (single-model policy)</span></div>
+      <ul><li><code>::warning title=served model override::assets: run july-v5-a4918f09 was promoted with --force: Adopted the July 2026 v5 incumbent already served on master (git </code></li><li><code>::warning title=served model override::assets: export floors waived by that force, failed: [&#x27;test recall or the 14-d baseline recall is missing&#x27;]</code></li><li><code>::warning title=served model override::public/assets: run july-v5-a4918f09 was promoted with --force: Adopted the July 2026 v5 incumbent already served on maste</code></li><li><code>::warning title=served model override::public/assets: export floors waived by that force, failed: [&#x27;test recall or the 14-d baseline recall is missing&#x27;]</code></li></ul>
+      <p style="color:var(--muted);font-size:13px">Lineage records a forced adoption of the July 2026 v5 incumbent; the original promote.py run files are not in this repo. Find the run files or order a replacement champion — Cameron&#x27;s decision.</p>
+    </section>
+    <section class="st__card" aria-label="Feed health">
+      <h2>Feed health</h2>
+      <div class="st__row"><span class="st__k">Realtime feeds</span>
+        <span class="st__v"><span class="st__pill st__pill--na">unknown</span></span></div>
+      <p style="color:var(--muted);font-size:13px">No feed-health source wired yet (Pillar 2 realtime plane owns this).</p>
+    </section>
+    <section class="st__card" aria-label="Incident history">
+      <h2>Incidents</h2>
+      <p>No incidents recorded.</p>
+    </section>
+  </div>
+<p class="st__foot">Snapshot generated by <code>scripts/build_status.py</code>.
+  This page refreshes every 5 minutes; the underlying checks re-run on a schedule.
+  Incidents and the runbook: <code>docs/platform/incident-runbook.md</code> in the repo.</p>
+</main>
+<footer class="site-footer">
+  <nav class="site-footer__sitemap" aria-label="Sitemap">
+    <div class="site-footer__col">
+      <span class="site-footer__col-title">Explore</span>
+      <a href="/">Atlas</a>
+      <a href="/live">Live</a>
+      <a href="/players">Players</a>
+      <a href="/insights">Insights</a>
+    </div>
+    <div class="site-footer__col">
+      <span class="site-footer__col-title">How it works</span>
+      <a href="https://dumbmodel.com" rel="noopener">dumbmodel.com</a>
+    </div>
+  </nav>
+  <p class="site-footer__attribution">Every number recomputable from stats.nba.com · A <a href="https://dumbmodel.com">dumbmodel</a> project · <a href="https://github.com/jcdavis131/vector-hoops" rel="noopener">Source</a></p>
+</footer>
+<script src="/assets/site-nav.js?v=29a94905"></script>
+</body>
+</html>

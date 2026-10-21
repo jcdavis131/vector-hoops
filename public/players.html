@@ -30,7 +30,7 @@
 <meta name="twitter:image" content="https://hoops.dumbmodel.com/assets/og-1200x630.png"/>
 <link rel="stylesheet" href="assets/fonts.css?v=8f376b2a"/>
 <link rel="stylesheet" href="/assets/atlas.css?v=ff374431"/>
-<link rel="stylesheet" href="/assets/shell.css?v=7eb94ecf"/>
+<link rel="stylesheet" href="/assets/shell.css?v=fdb1f985"/>
 <style>.players-tabs{display:flex;justify-content:center;margin-bottom:var(--s-2)}</style>
 </head><body>
 <a class="skip-link" href="#main">Skip to content</a>
@@ -188,7 +188,7 @@
 <script src="assets/error-boundary.js?v=8079215c"></script>
 <script src="assets/keyboard-a11y.js?v=39777a87"></script>
 <script src="assets/vh-analytics.js?v=d838a3e1" defer></script>
-<script src="assets/site-nav.js?v=af70db2b" defer></script>
+<script src="assets/site-nav.js?v=29a94905" defer></script>
 <script src="assets/pwa-install.js?v=b954d9d1"></script>
 <script type="module" src="assets/timesfm-forecast.js?v=b1376756"></script>
 <script src="assets/dossier.js?v=7fdb3848"></script>
@@ -200,43 +200,7 @@
 <script src="assets/players-skills.js?v=17ee06d1"></script>
 <script src="assets/players-page.js?v=ba682099"></script>
 <script src="assets/arc-projections.js?v=ea916497"></script>
-<script>
-// 2026-27 model projections in the skill profile (arc-ridge v1 priors)
-(function(){
-  function currentName(){
-    var el = document.getElementById('pp-name');
-    return (el && el.textContent || '').trim();
-  }
-  var lastRenderedName = null;
-  function update(){
-    var slot = document.getElementById('pp-forecast-slot');
-    if(!slot || !window.ArcProjections) return;
-    var name = currentName();
-    /* The observer below watches the whole #skills-profile subtree — which
-       contains #pp-forecast-slot itself. renderInto() writes into that slot,
-       so an unguarded update() re-triggers the observer, whose callback calls
-       update() again: an unbounded MutationObserver/promise microtask loop
-       that never yields to the main thread and freezes the renderer (the
-       /players hang). Render only when the displayed player actually changed;
-       the mutation our own render causes then settles instead of looping. */
-    if(name === lastRenderedName) return;
-    lastRenderedName = name;
-    if(!name || name.length < 2){ slot.innerHTML=''; return; }
-    window.ArcProjections.renderInto(slot, name);
-  }
-  function wire(){
-    var profile = document.getElementById('skills-profile');
-    if(profile){
-      var obs = new MutationObserver(function(){ update(); });
-      obs.observe(profile, {childList:true, subtree:true});
-    }
-    setTimeout(update, 1200);
-  }
-  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', wire); else setTimeout(wire, 800);
-})();
-</script>
-<script>if('serviceWorker' in navigator){window.addEventListener('load',()=>{navigator.serviceWorker.register('/sw.js').catch(()=>{})})}</script>
-<script>
-(function(){var b=document.getElementById('vh-share-btn');if(!b)return;b.addEventListener('click',function(){var url=location.href;var t=document.getElementById('dossier-title');var title=t?t.textContent:document.title;function done(){b.textContent='Link copied';setTimeout(function(){b.textContent='Share dossier';},1600);}if(navigator.share){navigator.share({title:title,url:url}).catch(function(){});}else if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(url).then(done,done);}else{done();}});})();
-</script>
+<script src="/assets/inline-players.js?v=948cc3cd"></script>
+<script src="/assets/inline-sw-register.js?v=48fb8eb4"></script>
+<script src="/assets/inline-players-share.js?v=7ed94553"></script>
 </body></html>
