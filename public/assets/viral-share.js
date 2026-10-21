@@ -223,5 +223,87 @@
     }catch(e){ console.warn('shareDailyCourt fail',e); }
     return false;
   }
-  window.VHShare={showToast:showToast,shareUniverse:shareUniverse,shareChimera:shareChimera,sharePastModern:sharePastModern,drawTeamCard:drawTeamCard,drawChimeraCard:drawChimeraCard,drawPastModernCard:drawPastModernCard,shareDailyCourt:shareDailyCourt};
+  /* ---------- Map Hunt / Twin Hunt share card (opening-night overhaul) --------
+   * opts: {mode ('MAP HUNT'|'TWIN HUNT'), dayKey, stars (0-3), taps, pct, url}
+   * SPOILER-FREE (Panel B3): never prints the mystery name/season/twin — the
+   * recipient plays the same puzzle. Copy earns the share: score + percentile.
+   */
+  function mapHuntText(o){
+    return '\u{1F5FA}\uFE0F Vector Hoops '+o.mode+' '+o.dayKey+': '+'\u2605'.repeat(o.stars)+'\u2606'.repeat(3-o.stars)+
+      ' \u2014 found today\u2019s mystery player in '+o.taps+' taps on the 3D embedding map, closer than '+(+o.pct).toFixed(1)+
+      '% of all 12,966 player-seasons. Play the same map: '+o.url;
+  }
+  function drawMapHuntCard(o){
+    var W=1080,H=1350; var c=document.createElement('canvas'); c.width=W; c.height=H;
+    var ctx=c.getContext('2d');
+    ctx.fillStyle='#FFFEF7'; ctx.fillRect(0,0,W,H);
+    ctx.strokeStyle='#1A150F'; ctx.lineWidth=18; ctx.strokeRect(10,10,W-20,H-20);
+    ctx.fillStyle='#1A150F'; ctx.fillRect(0,0,W,110);
+    ctx.fillStyle='#fff'; ctx.font='900 30px ui-monospace,monospace';
+    ctx.fillText('VECTOR HOOPS \u00B7 '+String(o.mode||'MAP HUNT'),28,44);
+    ctx.font='700 18px ui-monospace,monospace'; ctx.fillStyle='#F0E442';
+    ctx.fillText(String(o.dayKey||'')+' \u00B7 SAME MAP FOR EVERYONE \u00B7 12,966 SEASONS',28,78);
+    var y=190;
+    ctx.fillStyle='#111'; ctx.font='950 64px ui-sans-serif';
+    ctx.fillText('???',36,y); y+=58; /* spoiler-free: the mystery name stays hidden (Panel B3) */
+    ctx.font='800 26px ui-monospace'; ctx.fillStyle='#555';
+    ctx.fillText('MYSTERY PLAYER \u00b7 '+String(o.dayKey||''),36,y); y+=70;
+    ctx.font='900 44px ui-sans-serif'; ctx.fillStyle='#111';
+    ctx.fillText('\u2605'.repeat(o.stars||0)+'\u2606'.repeat(3-(o.stars||0)),36,y); y+=14;
+    ctx.font='700 26px ui-monospace'; ctx.fillStyle='#D55E00';
+    ctx.fillText('found in '+o.taps+' tap'+(o.taps===1?'':'s'),36,y+34); y+=76;
+    /* percentile bar */
+    ctx.fillStyle='#E8E8E8'; roundedRect(ctx,36,y,W-72,44,22); ctx.fill();
+    var pw=Math.max(8,Math.min(1,(+o.pct||0)/100))*(W-72);
+    ctx.fillStyle='#0072B2'; roundedRect(ctx,36,y,pw,44,22); ctx.fill();
+    ctx.fillStyle='#111'; ctx.font='800 24px ui-monospace';
+    ctx.fillText('closer than '+(+o.pct).toFixed(1)+'% of all player-seasons',36,y+76); y+=120;
+    if(o.twinName){
+      ctx.fillStyle='#111'; ctx.font='700 26px ui-monospace';
+      var twin='Era twin: '+o.twinName+' ('+(o.twinSim*100).toFixed(0)+'% style match)';
+      ctx.fillText(twin.slice(0,52),36,y); y+=44;
+      ctx.fillStyle='#555'; ctx.font='700 22px ui-monospace';
+      ctx.fillText('Same playing style, different decade.',36,y); y+=64;
+    }
+    ctx.fillStyle='#F0E442'; ctx.strokeStyle='#111'; ctx.lineWidth=4;
+    roundedRect(ctx,36,H-150,W-72,92,20); ctx.fill(); ctx.stroke();
+    ctx.fillStyle='#111'; ctx.font='900 24px ui-monospace';
+    ctx.fillText('Play the same map:',56,H-104);
+    ctx.font='700 22px ui-monospace';
+    ctx.fillText(String(o.url||'').replace(/^https?:\/\//,''),56,H-72);
+    return c;
+  }
+  async function shareMapHunt(o){
+    var title='Vector Hoops '+String(o.mode||'Map Hunt');
+    var text=mapHuntText(o); var url=o.url;
+    try{
+      var canvas=drawMapHuntCard(o);
+      var blob=await new Promise(function(r){c2b(canvas,r);});
+      function c2b(cv,cb){ try{cv.toBlob(function(b){cb(b);},'image/png');}catch(e){cb(null);} }
+      if(blob){
+        var file=new File([blob],'map-hunt-'+o.dayKey+'.png',{type:'image/png'});
+        if(navigator.canShare&&navigator.canShare({files:[file]})){
+          await navigator.share({title:title,text:text,files:[file]}); return true;
+        }
+      }
+    }catch(e){ console.warn('shareMapHunt card fail',e); }
+    try{
+      if(navigator.share){ try{ await navigator.share({title:title,text:text,url:url}); return true; }catch(e){} }
+      return await copyTextFallback(text);
+    }catch(e){ console.warn('shareMapHunt fail',e); }
+    return false;
+  }
+  function copyTextFallback(text){
+    return new Promise(function(resolve){
+      try{
+        if(navigator.clipboard&&navigator.clipboard.writeText){
+          navigator.clipboard.writeText(text).then(function(){showToast('Result copied.');resolve(true);},function(){resolve(false);}); return;
+        }
+        var ta=document.createElement('textarea'); ta.value=text; document.body.appendChild(ta);
+        ta.select(); var ok=false; try{ok=document.execCommand('copy');}catch(e){}
+        document.body.removeChild(ta); showToast(ok?'Result copied.':'Copy failed.'); resolve(ok);
+      }catch(e){ resolve(false); }
+    });
+  }
+  window.VHShare={showToast:showToast,shareUniverse:shareUniverse,shareChimera:shareChimera,sharePastModern:sharePastModern,drawTeamCard:drawTeamCard,drawChimeraCard:drawChimeraCard,drawPastModernCard:drawPastModernCard,shareDailyCourt:shareDailyCourt,shareMapHunt:shareMapHunt,drawMapHuntCard:drawMapHuntCard,mapHuntText:mapHuntText};
 })();

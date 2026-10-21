@@ -2,6 +2,16 @@
 const SB='https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard';
 const SUM=id=>`https://site.api.espn.com/apis/site/v2/sports/basketball/nba/summary?event=${id}`;
 let games=[], cur=null, timer=null, lastUpd=null;
+// ---- Respectful polling: 30s while a game is live, 5m when idle,
+// exponential backoff on consecutive failures (30s -> 60s -> 120s -> 300s cap).
+// Never hammer ESPN: at most one in-flight request, no retries on 429.
+let pollTimer=null, failStreak=0, lastOkAt=null;
+const POLL_LIVE=30000, POLL_IDLE=300000, POLL_MAX=300000;
+function pollDelayMs(){
+  if(failStreak>0) return Math.min(POLL_MAX, POLL_LIVE*Math.pow(2,Math.min(failStreak,3)));
+  return games.some(g=>g.state==='in')?POLL_LIVE:POLL_IDLE;
+}
+function schedulePoll(){clearTimeout(pollTimer);pollTimer=setTimeout(loadGame,pollDelayMs());}
 
 // ---- Day navigation (ESPN days run on America/New_York) ----
 let sbDay=null, sbExplicit=false; // sbDay: 'YYYYMMDD' being viewed; null = today
@@ -33,10 +43,13 @@ async function loadGames(day){
         a:{abbr:a.team.abbreviation,name:a.team.displayName,score:a.score,color:'#'+(a.team.color||'6b675c'),rec:a.records&&a.records[0]?a.records[0].summary:''}};
     });
     renderGames();
+    // Opening night: prefer OKC @ SA (event 401909090), then any live game.
+    const opener=games.find(g=>String(g.id)==='401909090');
     const live=games.find(g=>g.state==='in');
-    if(live) selectGame(live.id);
+    if(opener) selectGame(opener.id);
+    else if(live) selectGame(live.id);
     else if(games.length) selectGame(games[0].id);
-  }catch(e){showErr('Could not load scoreboard: '+e.message);}
+  }catch(e){showErr('Could not load scoreboard: '+e.message);showFeedCard('Could not load scoreboard: '+e.message);}
 }
 
 function renderGames(){
@@ -68,21 +81,21 @@ function syncAtlas(d,g){
   window.LiveAtlas.onGame(d,g,f&&JAM?f.name:null);
 }
 function selectGame(id){
-  cur=id;clearInterval(timer);renderGames();$('main').style.display='block';const ln2=$('live-loading');if(ln2)ln2.style.display='none';
+  cur=id;clearInterval(timer);clearTimeout(pollTimer);renderGames();$('main').style.display='block';const ln2=$('live-loading');if(ln2)ln2.style.display='none';
   TL.gameId=null;TL.n=0;TL.view=-1;TL.live=true;TL.newCount=0;wpDrawnFor=null;
   window._seenMom=new Set();window._lastPlayId=0;
   LROOT().classList.remove('rewound');
-  loadGame();timer=setInterval(loadGame,30000);
+  loadGame(); // loadGame schedules the next poll when it finishes
 }
 function renderAll(d,g){
   if(g&&g.a&&g.h){try{document.title='Courtside — '+g.a.abbr+' @ '+g.h.abbr;}catch(e){}}
   const idx=TL.live?TL.n-1:TL.view;
   renderHeader(d,g,idx);renderWP(d,g,idx);
-  renderGhosts(d);renderMoments(d,g,idx);
+  renderGhosts(d);renderMoments(d,g,idx);renderRuns(d,g,idx);
   if(foldOpen){
     renderMomentum(d,g,idx);
     renderPlays(d,idx);renderLeaders(d,g,idx);
-    renderMiles(d);renderShotChart(d,g,idx);
+    renderMiles(d);renderShotChart(d,g,idx);renderArche(d,g);
   }
   updateTlUI(d);
 }
@@ -104,9 +117,16 @@ async function loadGame(){
     renderAll(d,g);
     if(foldOpen) syncAtlas(d,g);
     window._lastD=d;window._lastG=g;
-    lastUpd=new Date();
+    lastUpd=new Date();lastOkAt=lastUpd;failStreak=0;
+    hideFeedCard();
+    renderPregame(d,g);
     $('upd').textContent='updated '+lastUpd.toLocaleTimeString();
-  }catch(e){showErr('Refresh failed: '+e.message+' — will retry.');}
+    schedulePoll();
+  }catch(e){
+    failStreak++;
+    showFeedCard('Refresh failed: '+e.message);
+    schedulePoll();
+  }
 }
 function updateTlUI(d){
   const bar=$('tlbar'),n=TL.n,show=n>1;
@@ -221,83 +241,93 @@ function qDividers(s,pts,X,padT,H,padB){
   });
 }
 
+// ---- Our win-probability heuristic (stated, experimental, never a bare number) ----
+// p(home wins) = sigmoid( (homeLead + 3.0*f) / (13.5 * sqrt(f)) )
+// f = fractionOfGameLeft = secondsLeft / 2880. The 3.0 is a home-court edge in
+// points that DECAYS with time left (3.0*f): full weight at tipoff, ~0 at the
+// buzzer, so a home team down 2 with 1s left is not shown at 98%. 13.5 is a
+// per-game scoring-volatility scale. NOT fitted to data.
+// Uncertainty band: +/- 10pp * sqrt(f) — wide early, tight late. The band
+// is the point of the number: it says how much this crude model doesn't know.
+function ourWP(marginHome, secsLeft){
+  const f=Math.max(secsLeft,1)/2880;
+  const z=(marginHome+3.0*f)/(13.5*Math.sqrt(f));
+  const p=1/(1+Math.exp(-z));
+  const half=0.10*Math.sqrt(f);
+  return {p:p, lo:Math.max(0,p-half), hi:Math.min(1,p+half)};
+}
+function secsLeftOf(pl){
+  const q=pl&&pl.period?pl.period.number:1;
+  const clk=pl&&pl.clock?pl.clock.displayValue:'0:00';
+  const m=/(\d+):(\d+)/.exec(clk||''); const s=m?(+m[1])*60+(+m[2]):0;
+  if(q<=4) return s+(4-q)*720;
+  return s; // OT periods are 5:00
+}
+
 let wpDrawnFor=null;
 function renderWP(d,g,idx){
   const wp=d.winprobability||[],plays=d.plays||[];
   const habbr=g?g.h.abbr:'HOME',aabbr=g?g.a.abbr:'AWAY';
   const hcol=g?g.h.color:'#1b1913',acol=g?g.a.color:'#5b5545';
-  if(!wp.length){$('wpBig').textContent='\u2013';return;}
-  const byId={};wp.forEach(w=>byId[w.playId]=w.homeWinPercentage);
-  const pts=[];
-  plays.forEach((p,i)=>{if(byId[p.id]!==undefined)pts.push({p:p,i:i});});
-  const n=pts.length;if(!n)return;
+  // Our model's series, one point per play with a score.
+  const ser=[];
+  plays.forEach((p,i)=>{
+    if(p.awayScore==null||p.homeScore==null)return;
+    const w=ourWP((+p.homeScore)-(+p.awayScore),secsLeftOf(p));
+    ser.push({i:i,p:w.p,lo:w.lo,hi:w.hi,id:p.id});
+  });
+  const byId={};wp.forEach(w=>{byId[w.playId]=w.homeWinPercentage;});
+  const espn=plays.map((p,i)=>({i:i,v:byId[p.id]})).filter(x=>x.v!==undefined);
+  if(!ser.length){$('wpBig').textContent='\u2013';const wb=$('wpBand');if(wb)wb.textContent='';return;}
+  const n=ser.length;
+  let vp=0;
+  for(let k=0;k<n;k++){if(ser[k].i<=idx)vp=k;else break;}
+  const cur2=ser[vp],hpct=Math.round(cur2.p*100);
+  tickNum($('wpBig'),hpct,function(v){return Math.round(v)+'% '+habbr;});
+  $('wpBig').style.color=cur2.p>=0.5?'#1b1913':'#5b5545';
+  const wb=$('wpBand');
+  if(wb)wb.textContent='range '+Math.round(cur2.lo*100)+'\u2013'+Math.round(cur2.hi*100)+'% \u00b7 '+aabbr+' '+(100-hpct)+'%';
+  $('wpLbl').textContent=TL.live?'our experimental heuristic \u00b7 thin gray = ESPN model':'at this moment \u00b7 our heuristic vs ESPN (thin gray)';
+  $('lgA').textContent='Tip \u2192 '+aabbr;$('lgH').textContent=habbr+' \u2192 now';
+  // chart: band + our line + ESPN reference
   const {ctx,W,H}=prepCanvas('wpchart',170);
   const padL=30,padR=10,padT=16,padB=8;
-  const X=i=>padL+(W-padL-padR)*(i/Math.max(n-1,1));
+  const X=k=>padL+(W-padL-padR)*(k/Math.max(n-1,1));
   const Y=v=>padT+(H-padT-padB)*(1-v);
-  const vals=pts.map(x=>byId[x.p.id]);
-  let vp=n-1;
-  for(let k=0;k<n;k++){if(pts[k].i<=idx)vp=k;else break;}
-  vp=Math.max(0,vp);
-  const sc=document.createElement('canvas');sc.width=ctx.canvas.width;sc.height=ctx.canvas.height;
-  const s=sc.getContext('2d');s.setTransform(ctx.getTransform());
   [0,0.25,0.5,0.75,1].forEach(f=>{
     const y=Y(f);
-    s.strokeStyle=f===0.5?'rgba(27,25,19,.45)':'rgba(27,25,19,.1)';
-    s.setLineDash(f===0.5?[5,4]:[]);s.lineWidth=1;
-    s.beginPath();s.moveTo(padL,y);s.lineTo(W-padR,y);s.stroke();s.setLineDash([]);
-    s.fillStyle='#5b5545';s.font='8px ui-monospace,monospace';s.textAlign='right';
-    s.fillText(Math.round(f*100)+'%',padL-4,y+3);
+    ctx.strokeStyle=f===0.5?'rgba(27,25,19,.45)':'rgba(27,25,19,.1)';
+    ctx.setLineDash(f===0.5?[5,4]:[]);ctx.lineWidth=1;
+    ctx.beginPath();ctx.moveTo(padL,y);ctx.lineTo(W-padR,y);ctx.stroke();ctx.setLineDash([]);
+    ctx.fillStyle='#5b5545';ctx.font='8px ui-monospace,monospace';ctx.textAlign='right';
+    ctx.fillText(Math.round(f*100)+'%',padL-4,y+3);
   });
-  qDividers(s,pts.map(x=>x.p),X,padT,H,padB);
-  let iMax=0,iMin=0;
-  vals.forEach((v,i)=>{if(v>vals[iMax])iMax=i;if(v<vals[iMin])iMin=i;});
-  s.font='8px ui-monospace,monospace';s.textAlign='center';
-  s.fillStyle=hcol;s.fillText('peak '+Math.round(vals[iMax]*100)+'%',X(iMax),Y(vals[iMax])-7);
-  s.fillStyle=acol;s.fillText('low '+Math.round(vals[iMin]*100)+'%',X(iMin),Y(vals[iMin])+11);
-  const key=cur+'wp',animate=wpDrawnFor!==key;
-  const t0=performance.now(),dur=animate?1100:1;
-  function frame(t){
-    const prog=Math.min(1,(t-t0)/dur),e=1-Math.pow(1-prog,3);
-    const upto=animate?Math.max(2,Math.ceil(n*e)):n;
-    ctx.clearRect(0,0,W,H);
-    ctx.drawImage(sc,0,0,W,H);
-    for(let i=1;i<upto;i++){
-      const x0=X(i-1),x1=X(i),v0=vals[i-1],v1=vals[i];
-      ctx.fillStyle=hexA(((v0+v1)/2)>=0.5?hcol:acol,0.16);
-      ctx.beginPath();
-      ctx.moveTo(x0,Y(v0));ctx.lineTo(x1,Y(v1));
-      ctx.lineTo(x1,Y(0.5));ctx.lineTo(x0,Y(0.5));ctx.closePath();ctx.fill();
-    }
-    ctx.beginPath();ctx.moveTo(X(0),Y(vals[0]));
-    for(let i=1;i<upto;i++)ctx.lineTo(X(i),Y(vals[i]));
-    ctx.strokeStyle='#1b1913';ctx.lineWidth=2.2;ctx.lineJoin='round';ctx.stroke();
-    if(prog>=1){
-      [[iMax,hcol],[iMin,acol]].forEach(function(pair){
-        const ii=pair[0],c=pair[1];
-        ctx.beginPath();ctx.arc(X(ii),Y(vals[ii]),3.5,0,7);ctx.fillStyle=c;ctx.fill();
-        ctx.beginPath();ctx.arc(X(ii),Y(vals[ii]),6,0,7);ctx.strokeStyle=hexA(c,.4);ctx.lineWidth=1.5;ctx.stroke();
-      });
-      const xd=X(vp);
-      if(vp<n-1){
-        ctx.fillStyle='rgba(244,239,226,.62)';
-        ctx.fillRect(xd,padT,W-padR-xd,H-padT-padB);
-        ctx.strokeStyle='#c2401f';ctx.lineWidth=1.5;ctx.setLineDash([4,3]);
-        ctx.beginPath();ctx.moveTo(xd,padT);ctx.lineTo(xd,H-padB);ctx.stroke();ctx.setLineDash([]);
-      }
-      const lx=X(vp),ly=Y(vals[vp]);
-      ctx.beginPath();ctx.arc(lx,ly,8,0,7);ctx.strokeStyle=hexA('#c2401f',.5);ctx.lineWidth=2;ctx.stroke();
-      ctx.beginPath();ctx.arc(lx,ly,4,0,7);ctx.fillStyle='#c2401f';ctx.fill();
-      wpDrawnFor=key;
-    }
-    if(prog<1)requestAnimationFrame(frame);
+  qDividers(ctx,ser.map(x=>plays[x.i]),X,padT,H,padB);
+  // interval band
+  ctx.beginPath();ctx.moveTo(X(0),Y(ser[0].hi));
+  for(let k=1;k<n;k++)ctx.lineTo(X(k),Y(ser[k].hi));
+  for(let k=n-1;k>=0;k--)ctx.lineTo(X(k),Y(ser[k].lo));
+  ctx.closePath();ctx.fillStyle='rgba(27,25,19,.10)';ctx.fill();
+  // ESPN reference (thin gray, dashed) — their black box, for comparison only
+  if(espn.length>1){
+    const eX=new Map();espn.forEach(x=>eX.set(x.i,x.v));
+    ctx.beginPath();let started=false;
+    ser.forEach((x,k)=>{const v=eX.get(x.i);if(v===undefined)return;
+      if(!started){ctx.moveTo(X(k),Y(v));started=true;}else ctx.lineTo(X(k),Y(v));});
+    ctx.strokeStyle='#8a8574';ctx.lineWidth=1;ctx.setLineDash([4,3]);ctx.stroke();ctx.setLineDash([]);
   }
-  requestAnimationFrame(frame);
-  const lv=vals[vp],hpct=Math.round(lv*100);
-  tickNum($('wpBig'),hpct,function(v){return Math.round(v)+'% '+habbr;});
-  $('wpBig').style.color=lv>=0.5?'#1b1913':'#5b5545';
-  $('wpLbl').textContent=TL.live?(aabbr+' '+(100-hpct)+'% \u00b7 live, via ESPN model'):'at this moment \u00b7 via ESPN model';
-  $('lgA').textContent='Tip \u2192 '+aabbr;$('lgH').textContent=habbr+' \u2192 now';
+  // our line
+  ctx.beginPath();ctx.moveTo(X(0),Y(ser[0].p));
+  for(let k=1;k<n;k++)ctx.lineTo(X(k),Y(ser[k].p));
+  ctx.strokeStyle='#1b1913';ctx.lineWidth=2.2;ctx.lineJoin='round';ctx.stroke();
+  // viewed-moment marker
+  const xd=X(vp);
+  if(vp<n-1){
+    ctx.strokeStyle='#c2401f';ctx.lineWidth=1.5;ctx.setLineDash([4,3]);
+    ctx.beginPath();ctx.moveTo(xd,padT);ctx.lineTo(xd,H-padB);ctx.stroke();ctx.setLineDash([]);
+  }
+  ctx.beginPath();ctx.arc(X(vp),Y(cur2.p),4,0,7);ctx.fillStyle='#c2401f';ctx.fill();
+  wpDrawnFor=cur+'wp'+n;
 }
 
 function renderMomentum(d,g,idx){
@@ -441,24 +471,27 @@ function renderShotChart(d,g,idx){
   s+=`<circle cx="25" cy="19" r="6" fill="none" stroke="${INK}" stroke-width="0.5" stroke-dasharray="1.6,1.3"/>`;
   s+=`<circle cx="25" cy="5.25" r="0.9" fill="none" stroke="${INK}" stroke-width="0.5"/>`;
   s+=`<line x1="22" y1="4" x2="28" y2="4" stroke="${INK}" stroke-width="0.7"/>`;
-  s+=`<path d="M3,14 A23.75,23.75 0 0 1 47,14" fill="none" stroke="${INK}" stroke-width="0.6"/>`;
+  s+=`<path d="M1.25,5.25 A23.75,23.75 0 0 0 48.75,5.25" fill="none" stroke="${INK}" stroke-width="0.6"/>`;
   s+=`<line x1="3" y1="0" x2="3" y2="14" stroke="${INK}" stroke-width="0.6"/>`;
   s+=`<line x1="47" y1="0" x2="47" y2="14" stroke="${INK}" stroke-width="0.6"/>`;
-  s+=`<path d="M21,5.25 A4,4 0 0 1 29,5.25" fill="none" stroke="${INK}" stroke-width="0.4" stroke-dasharray="1,1"/>`;
+  s+=`<path d="M21,5.25 A4,4 0 0 0 29,5.25" fill="none" stroke="${INK}" stroke-width="0.4" stroke-dasharray="1,1"/>`;
   s+=`<line x1="0.5" y1="47" x2="49.5" y2="47" stroke="${INK}" stroke-width="0.7"/>`;
   s+=`<text x="25" y="52.5" text-anchor="middle" font-size="2.6" font-family="ui-monospace,monospace" fill="#5b5545">HALF COURT · MAKES ● / MISSES ○</text>`;
   show.forEach((sh,i)=>{
     const col=sh.t===habbr?hcol:(sh.t===aabbr?acol:'#8a8574');
     const dl=Math.min(i*7,1400);
-    if(sh.make)s+=`<circle cx="${sh.x.toFixed(1)}" cy="${sh.y.toFixed(1)}" r="1.2" fill="${col}" style="animation:pop .35s ${dl}ms both"/>`;
-    else s+=`<circle cx="${sh.x.toFixed(1)}" cy="${sh.y.toFixed(1)}" r="1.2" fill="none" stroke="${col}" stroke-width="0.55" style="animation:pop .35s ${dl}ms both"/>`;
+    // ESPN shot coords put the rim at (25,0); the drawn court puts it at (25,5.25),
+    // so shift shots +5.25 in y to land on the drawing. Verified vs 136 ESPN
+    // "N-foot" shot descriptions (mean err 0.69ft at (25,0) vs 2.71ft at (25,5.25)).
+    if(sh.make)s+=`<circle cx="${sh.x.toFixed(1)}" cy="${(sh.y+5.25).toFixed(1)}" r="1.2" fill="${col}" style="animation:pop .35s ${dl}ms both"/>`;
+    else s+=`<circle cx="${sh.x.toFixed(1)}" cy="${(sh.y+5.25).toFixed(1)}" r="1.2" fill="none" stroke="${col}" stroke-width="0.55" style="animation:pop .35s ${dl}ms both"/>`;
   });
   svg.innerHTML=s;
   // zone FG%
   const zone={rim:[0,0],mid:[0,0],three:[0,0]};
   show.forEach(sh=>{
-    const dd=Math.hypot(sh.x-25,sh.y-5.25);
-    const z=(dd>23.75||(sh.y<14&&(sh.x<3.5||sh.x>46.5)))?'three':(dd<=8?'rim':'mid');
+    const dd=Math.hypot(sh.x-25,sh.y); // rim at ESPN (25,0); corner 3s: |x-25|>22 and inside the arc break (y<9)
+    const z=(dd>23.75||(sh.y<9&&(sh.x<3||sh.x>47)))?'three':(dd<=8?'rim':'mid');
     zone[z][1]++;if(sh.make)zone[z][0]++;
   });
   const zh=(k,l)=>{const m=zone[k][0],a=zone[k][1],pc=a?Math.round(m/a*100):0;
@@ -518,7 +551,7 @@ function renderGhosts(d){
       if(!s||s.length<14)return null;
       const mstr=s[0];
       const mp=mstr.indexOf(':')>=0?(+mstr.split(':')[0])+(+mstr.split(':')[1])/60:+mstr||0;
-      if(!(mp>=10))return null;
+      if(!(mp>=15))return null; // 15-min floor: per-36 at 10 min is wild extrapolation (Panel N2)
       const fga=(String(s[2]).indexOf('-')>=0)?+String(s[2]).split('-')[1]:0;
       return {nm:a.athlete.displayName,mp:mp,pts:+s[1]||0,reb:+s[5]||0,ast:+s[6]||0,
         tov:+s[7]||0,stl:+s[8]||0,blk:+s[9]||0,fga:fga};
@@ -526,7 +559,7 @@ function renderGhosts(d){
     aths.forEach(p=>{
       const gh=ghostFor(p.mp,p.pts,p.reb,p.ast,p.stl,p.blk,p.tov,p.fga);
       const lp36=p.pts/p.mp*36, delta=lp36-gh.gp36;
-      const tier=gh.blend<0.9?'strong match':(gh.blend<1.4?'decent match':'faint match');
+      const tier=gh.blend<0.9?'closest ghost':(gh.blend<1.4?'nearby ghost':'distant ghost'); // soft words: cutoffs uncalibrated (Panel N2)
       const dCls=delta>=0?'up':'dn', dTxt=(delta>=0?'+':'')+delta.toFixed(1)+' pts/36';
       const mx=Math.max(lp36,gh.gp36,1);
       const lw=Math.round(lp36/mx*100), gw=Math.round(gh.gp36/mx*100);
@@ -540,8 +573,8 @@ function renderGhosts(d){
         </div>
         <div class="g-pace">pace: <b class="${dCls}">${dTxt}</b> vs ghost<span class="tier">${tier}</span></div>
       </div>`;
-      if(delta>=2)window._ghostPasses.push({seq:1e9,clk:'now',
-        text:`<b>🔥 ${esc(p.nm)} blew past ${esc(gh.name)}'s ghost pace</b>`});
+      if(delta>=5)window._ghostPasses.push({seq:1e9,clk:'now',
+        text:`<b>🔥 ${esc(p.nm)} well ahead of ${esc(gh.name)}'s ghost pace</b> <span class="when">early, noisy</span>`});
     });
   });
   el.innerHTML=html||'<span style="font-size:12px;color:#6b675c">Not enough minutes yet for ghost matches.</span>';
@@ -685,10 +718,10 @@ function renderMoments(d,g,idx){
     const a=+p.awayScore,h=+p.homeScore;
     let sc=null,pts=0;
     if(a>cA&&h===cH){sc='A';pts=a-cA;}else if(h>cH&&a===cA){sc='H';pts=h-cH;}
-    if(sc){if(sc===rt)rn+=pts;else{if(rn>=10&&rt)moms.push({seq:i,clk:clkOf(p),text:`<b>🔥 ${rt==='H'?habbr:aabbr} ${rn}-0 run</b>`});rt=sc;rn=pts;}}
+    if(sc){if(sc===rt)rn+=pts;else{if(rn>=8&&rt)moms.push({seq:i,clk:clkOf(p),text:`<b>🔥 ${rt==='H'?habbr:aabbr} ${rn}-0 run</b>`});rt=sc;rn=pts;}}
     cA=a;cH=h;
   });
-  if(rn>=10&&rt)moms.push({seq:plays.length-1,clk:clkOf(plays[plays.length-1]),text:`<b>🔥 ${rt==='H'?habbr:aabbr} ${rn}-0 run</b>`});
+  if(rn>=8&&rt)moms.push({seq:plays.length-1,clk:clkOf(plays[plays.length-1]),text:`<b>🔥 ${rt==='H'?habbr:aabbr} ${rn}-0 run</b>`});
   // ghost passes (rebuilt each refresh)
   (window._ghostPasses||[]).forEach(m=>moms.push(m));
   // NBA Jam callouts
@@ -704,6 +737,167 @@ function renderMoments(d,g,idx){
     return `<div class="ms-item${fresh?' fresh':''}"><span class="mc">${m.clk}</span><span class="mt">${m.text}</span></div>`;
   }).join('')||'<span style="font-size:12px;color:#6b675c">Waiting for the first big moment…</span>';
 }
+
+// ---- Feed-down 503 card: last-known score + as-of + retry, never invented numbers ----
+function showFeedCard(msg){
+  const el=$('feedcard');if(!el)return;
+  el.hidden=false;
+  let scoreLine='No score on record yet.';
+  const d=window._lastD,g=window._lastG;
+  if(d&&g){
+    const plays=d.plays||[],last=plays[plays.length-1];
+    if(last)scoreLine='Last known: '+g.a.abbr+' '+(+last.awayScore)+' \u2013 '+(+last.homeScore)+' '+g.h.abbr;
+  }
+  const asof=lastOkAt?(' as of '+lastOkAt.toLocaleTimeString()+'.'):'';
+  const retry=' Retrying in ~'+Math.round(pollDelayMs()/1000)+'s \u2014 resumes automatically.';
+  el.innerHTML='<b>FEED UNREACHABLE</b><span>'+esc(msg)+'</span><span class="fc-score">'+scoreLine+asof+'</span><span class="fc-retry">'+retry+'</span>';
+}
+function hideFeedCard(){const el=$('feedcard');if(el)el.hidden=true;}
+
+// ---- Key runs: unanswered 8-0+ bursts with Q/clock timestamps ----
+function renderRuns(d,g,idx){
+  const el=$('runs');if(!el)return;
+  const plays=d.plays||[];
+  if(!plays.length){el.innerHTML='<span style="font-size:12px;color:#6b675c">Waiting for tip\u2026</span>';return;}
+  const habbr=g?g.h.abbr:'HOME',aabbr=g?g.a.abbr:'AWAY';
+  const live=d.header&&d.header.competitions[0].status.type.state==='in';
+  const clkOf=p=>'Q'+(p.period?p.period.number:'?')+' '+(p.clock?p.clock.displayValue:'');
+  const runs=[];let rt=null,rn=0,rs=null,re=null,cA=0,cH=0;
+  plays.forEach((p,i)=>{
+    if(i>idx||!p.scoringPlay)return;
+    const a=+p.awayScore,h=+p.homeScore;
+    let sc=null,pts=0;
+    if(a>cA&&h===cH){sc='A';pts=a-cA;}else if(h>cH&&a===cA){sc='H';pts=h-cH;}
+    if(sc){
+      if(sc===rt){rn+=pts;re=p;}
+      else{
+        if(rn>=8&&rt)runs.push({t:rt,pts:rn,s:rs,e:re});
+        rt=sc;rn=pts;rs=p;re=p;
+      }
+    }
+    cA=a;cH=h;
+  });
+  const openRun=(rn>=8&&rt)?{t:rt,pts:rn,s:rs,e:re||plays[Math.min(idx,plays.length-1)],ongoing:live}:null;
+  const all=openRun?[openRun].concat(runs):runs;
+  all.sort((a,b)=>b.pts-a.pts);
+  if(!all.length){el.innerHTML='<span style="font-size:12px;color:#6b675c">No 8\u20130 runs yet.</span>';return;}
+  el.innerHTML=all.slice(0,6).map(r=>{
+    const tabbr=r.t==='H'?habbr:aabbr;
+    return '<div class="run"><b>'+tabbr+' '+r.pts+'\u20130</b><span class="rc">'+clkOf(r.s)+' \u2192 '+clkOf(r.e)+'</span>'+(r.ongoing?'<span class="ongoing">ongoing</span>':'')+'</div>';
+  }).join('');
+}
+
+// ---- Archetype efficiency: tonight's points by archetype vs minute share ----
+// (A within-game efficiency snapshot, not momentum — no time dimension.)
+// archetype = mtnnGlobal (K=8 k-means cluster of player-season representations),
+// assets/archetype_assignments.json built 2026-10-11; live players mapped by
+// display name to their latest player-season <= 2025-26 (assets/live_opening.json).
+// delta = points share minus minutes share, in percentage points.
+function renderArche(d,g){
+  const el=$('arche');if(!el)return;
+  const map=window.OPEN_ARCH;
+  if(!map){el.innerHTML='<span style="font-size:12px;color:#6b675c">Loading archetype map\u2026</span>';return;}
+  const bp=d.boxscore&&d.boxscore.players;
+  if(!bp){el.innerHTML='<span style="font-size:12px;color:#6b675c">Box score not up yet.</span>';return;}
+  const agg={};let totPts=0,totMin=0,unmapped=0;
+  bp.forEach(side=>{(side.statistics[0].athletes||[]).forEach(a=>{
+    const s=a.stats;if(!s||s.length<2)return;
+    const mstr=s[0];
+    const mp=mstr.indexOf(':')>=0?(+mstr.split(':')[0])+(+mstr.split(':')[1])/60:(+mstr||0);
+    if(!(mp>0))return;
+    const hit=map[a.athlete.displayName];
+    if(!hit){unmapped++;return;}
+    const c=agg[hit.name]||(agg[hit.name]={pts:0,min:0});
+    c.pts+=(+s[1]||0);c.min+=mp;totPts+=(+s[1]||0);totMin+=mp;
+  });});
+  if(totMin<30||!totPts){el.innerHTML='<span style="font-size:12px;color:#6b675c">Not enough mapped minutes yet \u2014 archetypes light up as rotations settle.</span>';return;}
+  const rows=Object.keys(agg).map(k=>{
+    const c=agg[k],ps=c.pts/totPts*100,ms=c.min/totMin*100;
+    return {name:k,pts:c.pts,ps:ps,ms:ms,d:ps-ms};
+  }).sort((a,b)=>b.d-a.d);
+  const max=Math.max.apply(null,rows.map(r=>r.ps));
+  el.innerHTML=rows.map(r=>{
+    const dc=r.d>=0?'up':'dn',dt=(r.d>=0?'+':'')+r.d.toFixed(0)+'pp';
+    return '<div class="arow"><div class="ahead"><b>'+esc(r.name)+'</b><span>'+Math.round(r.pts)+' pts \u00b7 '+r.ps.toFixed(0)+'% of scoring</span></div>'+
+      '<div class="abar"><div class="afill" style="width:'+Math.max(4,Math.round(r.ps/max*100))+'%"></div></div>'+
+      '<div class="adelta '+dc+'">'+dt+' vs minute share</div></div>';
+  }).join('')+'<p class="method">Method: each live player is mapped to their mtnnGlobal archetype (K=8 k-means of player-season representations, built 2026-10-11). \u0394 = share of tonight\u2019s points minus share of tonight\u2019s minutes. '+(unmapped?unmapped+' player(s) unmatched (rookies / name variants) and excluded.':'')+'</p>';
+}
+
+// ---- Pre-game: matchup card before tip ----
+function renderPregame(d,g){
+  const el=$('pregame');if(!el)return;
+  const h=d.header.competitions[0];
+  const st=h.status.type.state;
+  if(st!=='pre'){el.hidden=true;el.dataset.gid='';return;}
+  el.hidden=false;
+  const gid=String(h.id||'');
+  if(el.dataset.gid===gid&&window.OPEN_DOC)return; // already rendered for this game
+  el.dataset.gid=gid;
+  if(!window.OPEN_DOC)return;
+  const doc=window.OPEN_DOC.game;
+  const isDocGame=String(doc.event_id)===gid;
+  const habbr=g?g.h.abbr:'',aabbr=g?g.a.abbr:'';
+  // Predictor: ONLY when this game is the documented opening-night matchup.
+  // ESPN's summary payload carries no predictor field, so a build-time fetch
+  // shown for any other game would be misattributed. (Panel S1)
+  const pred=doc.predictor||{};
+  const showPred=isDocGame&&pred.home_win_pct!=null;
+  const homeP=showPred?+pred.home_win_pct:50;
+  const predHtml=showPred?
+    '<div class="pg-pred"><div class="pbar"><div class="pfill" style="width:'+homeP+'%"></div></div>'+
+    '<div class="plbl"><span>'+aabbr+' '+(100-homeP).toFixed(0)+'%</span><span>'+habbr+' '+homeP.toFixed(0)+'%</span></div>'+
+    '<div class="psrc">'+esc(pred.source||'Matchup predictor')+' \u00b7 pre-game fetch, '+esc(doc.label||'')+'</div></div>':'';
+  // Tip time: from the doc for the documented game, else from ESPN's date (CT).
+  let when='';
+  if(isDocGame&&doc.tip_ct){
+    try{when=new Date(doc.tip_ct).toLocaleString('en-US',{timeZone:'America/Chicago',weekday:'short',hour:'numeric',minute:'2-digit'})+' CT';}catch(e){when='';}
+  }else if(h.date){
+    try{when=new Date(h.date).toLocaleString('en-US',{timeZone:'America/Chicago',weekday:'short',hour:'numeric',minute:'2-digit'})+' CT';}catch(e){when='';}
+  }
+  const ctxLine=isDocGame
+    ? esc(doc.label||'Pre-game')+' \u2014 both teams 0\u20130.'
+    : 'Pre-game.';
+  const comp=window.OPEN_DOC.team_composition||{};
+  const chips=window.OPEN_DOC.star_twins||{};
+  const compHtml=abbr=>{
+    const c=comp[abbr];if(!c||!isDocGame)return '';
+    const bars=c.clusters.slice(0,4).map(x=>'<div class="cmp"><span>'+esc(x.name)+'</span><b class="num">'+x.n+'</b></div>').join('');
+    return '<div class="cmpcol"><h4>'+abbr+' flavor</h4>'+bars+'<div class="cnote">'+c.mapped_n+' of '+c.roster_n+' roster players mapped to archetypes</div></div>';
+  };
+  const chipHtml=abbr=>{
+    if(!isDocGame)return '';
+    const cs=chips[abbr]||[];
+    if(!cs.length)return '<div class="cnote">No twin-library comps for this roster\u2019s young stars yet (twin pool needs \u22654 charted seasons).</div>';
+    return cs.map(c=>'<div class="tchip"><b>'+esc(c.name)+'</b><span>'+esc(c.archetype||'')+'</span><span class="tt">twins '+esc(c.twin)+' \u00b7 '+esc(c.twin_season)+' <i>'+(c.similarity*100).toFixed(0)+'%</i></span></div>').join('');
+  };
+  const sideHtml=isDocGame?
+    '<div class="pg-side"><h3>WHAT THE MODELS SEE</h3><div class="cmpgrid">'+compHtml(aabbr)+compHtml(habbr)+'</div>'+
+    '<h3>TWIN COMPS</h3><div class="chips">'+chipHtml(aabbr)+chipHtml(habbr)+'</div></div>':'';
+  el.innerHTML=
+    '<div class="plate"><span class="pno">PRE-GAME</span><h2>TONIGHT\u2019S MATCHUP</h2><span class="prule"></span><span class="pmeta">'+esc(isDocGame?doc.label:'Pre-game')+'</span></div>'+
+    '<div class="pg-grid"><div><div class="pg-teams"><span>'+aabbr+'</span><span class="at">@</span><span>'+habbr+'</span></div>'+
+    (when?'<div class="pg-when">'+esc(when)+' \u00b7 '+esc(doc.venue||'')+'</div>':'')+
+    predHtml+
+    '<div class="pg-ctx">'+ctxLine+'</div></div>'+
+    sideHtml+'</div>';
+}
+
+// ---- Opening-night data (archetype map + pregame chips) ----
+window.OPEN_DOC=null;window.OPEN_ARCH=null;
+fetch('assets/live_opening.json?v=cc7d0ec4').then(r=>{if(!r.ok)throw new Error('HTTP '+r.status);return r.json();}).then(doc=>{
+  window.OPEN_DOC=doc;window.OPEN_ARCH=doc.archetypes;
+  if(window._lastD){renderArche(window._lastD,window._lastG);renderPregame(window._lastD,window._lastG);}
+}).catch(()=>{});
+
+// ---- 3D map plate (Worker A's Embed3D; guarded — no-op when absent) ----
+function mountEmbed3D(){
+  const el=document.querySelector('.embed3d-mount');
+  if(!el||!window.Embed3D)return;
+  try{window.Embed3D.mount(el,{projection:'pca',highlightIds:[],onSelect:function(){}});}catch(e){}
+}
+mountEmbed3D();
+window.addEventListener('load',mountEmbed3D);
 
 $('refreshBtn').onclick=loadGame;
 $('dayPrev').onclick=()=>gotoDay(-1);

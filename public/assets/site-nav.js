@@ -1,11 +1,13 @@
 /* Shared top navigation — mount on <nav class="site-nav" data-active="/path">
- * Three primary slots on one axis: Play · Explore (drawer) · How it works.
+ * Four primary slots on one axis: Map · Play · Explore (drawer) · How it works.
+ * Map is first: the 3D atlas is the site's front door and the games' board.
  * The Explore drawer holds every other destination, one level down.
  * Styles live in assets/shell.css.
  */
 (function (global) {
   'use strict';
 
+  var MAP = { href: '/#map3d', label: 'Map', title: 'The 3D embedding map of 12,966 player-seasons' };
   var PLAY = { href: '/play', label: 'Play', title: 'Daily Court: five past All-Stars, find each modern twin' };
   var HOW = {
     href: 'https://dumbmodel.com',
@@ -15,6 +17,7 @@
 
   var EXPLORE = [
     { href: '/', label: 'Atlas', desc: 'The map of 12,966 player-seasons' },
+    { href: '/map-guess', label: 'Map Hunt', desc: 'Find the mystery star on the 3D map — new tonight', live: true },
     { href: '/live', label: 'Live', desc: 'Live game companion: win probability, atlas twins, shot charts', live: true },
     { href: '/players', label: 'Players', desc: 'Directory, skill profiles and leaderboards' },
     { href: '/insights', label: 'Insights', desc: 'Findings from the model — and from the ledger' },
@@ -42,6 +45,7 @@
     if (!nav || nav.getAttribute('data-mounted') === '1') return;
     var active = nav.getAttribute('data-active') || '';
 
+    var mapOn = (active === '/' || active === '/#map3d' || active === '/map-guess');
     var playOn = active === PLAY.href;
     var exploreItem = EXPLORE.filter(function (l) { return l.href === active; })[0] || null;
     var exploreOn = !!exploreItem;
@@ -60,6 +64,8 @@
       '<a class="site-nav__brand" href="/" aria-label="Vector Hoops, home">' + MARK +
         '<span>Vector<span class="site-nav__accent"> Hoops</span></span></a>' +
       '<div class="site-nav__slots" role="group" aria-label="Primary destinations">' +
+        '<a class="site-nav__slot site-nav__link' + (mapOn ? ' is-active' : '') + '" href="' + MAP.href +
+          '" title="' + MAP.title + '"' + (mapOn ? ' aria-current="page"' : '') + '>' + MAP.label + '</a>' +
         '<a class="site-nav__slot site-nav__link' + (playOn ? ' is-active' : '') + '" href="' + PLAY.href +
           '" title="' + PLAY.title + '"' + (playOn ? ' aria-current="page"' : '') + '>' + PLAY.label + '</a>' +
         '<button class="site-nav__slot site-nav__explore' + (exploreOn ? ' is-active' : '') + '" type="button"' +
