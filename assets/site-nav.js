@@ -25,7 +25,8 @@
     { href: '/teams', label: 'Teams', desc: 'Thirty team intro loops and season snapshots' },
     { href: '/playoff-runs', label: 'Playoff Runs', desc: 'The greatest postseason runs, ranked' },
     { href: '/taxonomy', label: 'Taxonomy', desc: 'A taxonomy of play styles' },
-    { href: '/methods', label: 'Methods', desc: 'Trust: every number recomputed from source, and the model graded' }
+    { href: '/methods', label: 'Methods', desc: 'Trust: every number recomputed from source, and the model graded' },
+    { href: '/models/mtnn-v5', label: 'Models', desc: 'Model registry and the MTNN v5 champion card' }
   ];
 
   // Centre circle of a court, seen from above: the site's mark.

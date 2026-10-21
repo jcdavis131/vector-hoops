@@ -63,6 +63,9 @@
     "taxonomy.html": {
       "budget_bytes": 157696
     },
+    "models/mtnn-v5.html": {
+      "budget_bytes": 165888
+    },
     "teams.html": {
       "budget_bytes": 132096
     },

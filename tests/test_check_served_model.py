@@ -49,6 +49,28 @@ def site(tmp_path, monkeypatch) -> Path:
     shutil.copytree(assets, tmp_path / "public" / "assets")
     # sync_public.py NEVER_SERVE: the raw f32 never reaches the served tree
     (tmp_path / "public" / "assets" / sm.F32).unlink()
+    # The real repo ships models/registry.json (Pillar 1); the fixture mirrors
+    # it so the registry wiring in check_served_model.py is exercised.
+    lin = json.loads((assets / sm.LINEAGE).read_text(encoding="utf-8"))
+    models_dir = tmp_path / "models"
+    models_dir.mkdir()
+    (models_dir / "registry.json").write_text(
+        json.dumps(
+            {
+                "schema": 1,
+                "champion": "mtnn-v5",
+                "models": [
+                    {
+                        "id": "mtnn-v5",
+                        "status": "champion",
+                        "run_id": lin.get("run_id"),
+                        "provenance": {"embedding_f32_sha256": lin.get("embedding_f32_sha256")},
+                    }
+                ],
+            }
+        ),
+        encoding="utf-8",
+    )
     return tmp_path
 
 
@@ -293,3 +315,49 @@ def test_assets_and_public_serving_different_runs_fails(site):
     lin["run_id"] = "r0"
     path.write_text(json.dumps(lin), encoding="utf-8")
     assert "assets/ and public/assets/ serve different bundles" in problems(site)
+
+
+def _rewrite_registry(site: Path, **fields: object) -> None:
+    """Rewrite the fixture registry's champion entry fields."""
+    path = site / "models" / "registry.json"
+    reg = json.loads(path.read_text(encoding="utf-8"))
+    entry = reg["models"][0]
+    for key, value in fields.items():
+        if key == "sha256":
+            entry["provenance"]["embedding_f32_sha256"] = value
+        else:
+            entry[key] = value
+    path.write_text(json.dumps(reg), encoding="utf-8")
+
+
+def test_registry_champion_matches_served_passes(site):
+    """The fixture mirrors the repo: a matching registry adds no problems."""
+    assert csm.check(site) == []
+    assert "models/registry.json" not in " | ".join(csm.overrides(site))
+
+
+def test_registry_champion_run_id_mismatch_fails(site):
+    _rewrite_registry(site, run_id="r-evil")
+    assert "registry/models/registry.json: champion run_id 'r-evil' != served 'r1'" in problems(site)
+
+
+def test_registry_champion_sha_mismatch_fails(site):
+    _rewrite_registry(site, sha256="0" * 64)
+    assert "registry/models/registry.json: champion f32 sha256" in problems(site)
+
+
+def test_registry_champion_not_champion_status_fails(site):
+    _rewrite_registry(site, status="challenger")
+    assert "has status 'challenger', not 'champion'" in problems(site)
+
+
+def test_missing_registry_warns_but_does_not_fail(site):
+    """Legacy mode: no registry is a warning, never a gate failure."""
+    shutil.rmtree(site / "models")
+    assert csm.check(site) == []
+    assert "models/registry.json: missing" in " | ".join(csm.overrides(site))
+
+
+def test_committed_registry_matches_served_bundle():
+    """The real models/registry.json names the real served bundle (Pillar 1)."""
+    assert csm.check_registry(ROOT) == []

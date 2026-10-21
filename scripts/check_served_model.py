@@ -24,6 +24,9 @@ via pipeline/served_model.problems():
   - the JSON sidecars exported from the same bundle (served_model.SIDECARS)
     carry the same run id;
 and that assets/ and public/assets/ serve the same run and the same bytes.
+Plus the registry wiring (Pillar 1): models/registry.json's champion entry must
+name the served run id and f32 sha256 (mismatch fails); a missing registry only
+warns.
 Exit 1 with every problem listed, 0 when the bundle is consistent.
 
 On master the served bundle is the July v5 export (f32 git blob a4918f09).
@@ -68,6 +71,46 @@ import served_model as sm  # noqa: E402
 
 SERVED_DIRS = ("assets", "public/assets")
 
+REGISTRY = Path("models/registry.json")
+
+
+def check_registry(root: Path) -> list[str]:
+    """Cross-check the registry champion against the served bundle (Pillar 1).
+
+    models/registry.json is a second source of truth now: its champion entry's
+    run_id and embedding_f32_sha256 must name the bundle assets/ serves, or the
+    gate fails. A missing or unreadable registry is not a problem here -
+    overrides() notes it as a warning (legacy mode), so sites without the
+    registry (e.g. test fixtures) don't fail on this check.
+    """
+    out: list[str] = []
+    try:
+        reg = json.loads((root / REGISTRY).read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return out
+    if not isinstance(reg, dict):
+        return [f"{REGISTRY}: not a JSON object"]
+    models = reg.get("models")
+    champion = reg.get("champion")
+    if not isinstance(models, list) or not champion:
+        return [f"{REGISTRY}: missing 'models' list or 'champion' id"]
+    entry = next((m for m in models if isinstance(m, dict) and m.get("id") == champion), None)
+    if entry is None:
+        return [f"{REGISTRY}: no entry with id '{champion}'"]
+    if entry.get("status") != "champion":
+        out.append(f"{REGISTRY}: champion entry '{champion}' has status '{entry.get('status')}', not 'champion'")
+    try:
+        lin = json.loads((root / "assets" / sm.LINEAGE).read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return out + [f"{REGISTRY}: cannot read assets/{sm.LINEAGE} to compare"]
+    want_run, want_sha = lin.get("run_id"), lin.get("embedding_f32_sha256")
+    prov = entry.get("provenance") or {}
+    if entry.get("run_id") != want_run:
+        out.append(f"{REGISTRY}: champion run_id '{entry.get('run_id')}' != served '{want_run}'")
+    if prov.get("embedding_f32_sha256") != want_sha:
+        out.append(f"{REGISTRY}: champion f32 sha256 != served {str(want_sha)[:12]}…")
+    return out
+
 
 def check(root: Path) -> list[str]:
     out: list[str] = []
@@ -96,6 +139,7 @@ def check(root: Path) -> list[str]:
     if len(set(served.values())) > 1:
         detail = ", ".join(f"{rel}: run {run} f32 {str(sha)[:12]}" for rel, (run, sha) in served.items())
         out.append(f"assets/ and public/assets/ serve different bundles ({detail}); run scripts/sync_public.py")
+    out += [f"registry/{p}" for p in check_registry(root)]
     return out
 
 
@@ -119,6 +163,8 @@ def overrides(root: Path) -> list[str]:
             out.append(f"{rel}: run {lin.get('run_id')} was promoted with --force: {lin.get('force_reason')}")
         if floors.get("waived_by_force"):
             out.append(f"{rel}: export floors waived by that force, failed: {floors.get('failed')}")
+    if not (root / REGISTRY).exists():
+        out.append(f"{REGISTRY}: missing — champion provenance is lineage-only until the registry ships (Pillar 1)")
     return out
 
 
