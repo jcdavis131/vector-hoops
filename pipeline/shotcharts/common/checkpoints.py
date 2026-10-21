@@ -26,8 +26,7 @@ def mark_complete(dirs, source: str, date: str, game_id: str) -> None:
     p = checkpoint_path(dirs, source, date)
     done = load_completed(dirs, source, date)
     done.add(game_id)
-    p.write_text(json.dumps({"source": source, "date": date,
-                             "completed_game_ids": sorted(done)}) + "\n")
+    p.write_text(json.dumps({"source": source, "date": date, "completed_game_ids": sorted(done)}) + "\n")
 
 
 def clear(dirs, source: str, date: str) -> None:

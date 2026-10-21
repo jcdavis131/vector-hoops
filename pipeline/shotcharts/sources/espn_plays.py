@@ -70,7 +70,7 @@ import random
 import time
 import urllib.error
 import urllib.request
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 
 from common import checkpoints as cp
@@ -82,21 +82,21 @@ GATED = False
 
 BASE = "https://sports.core.api.espn.com/v2/sports/basketball/leagues/nba"
 QS = "lang=en&region=us"
-POLITE_S = 3.0          # >=3s between requests
+POLITE_S = 3.0  # >=3s between requests
 RETRY_ATTEMPTS = 5
 BACKOFF_BASE_S = 2.0
 BACKOFF_CAP_S = 60.0
 
-_SENTINEL = 1000.0      # |coord| >= this means "no chart data" (INT32 sentinels)
+_SENTINEL = 1000.0  # |coord| >= this means "no chart data" (INT32 sentinels)
 _HALF_COURT_Y = 47.0
 
-_UA = ("Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 "
-       "(KHTML, like Gecko) Chrome/120.0 Safari/537.36")
+_UA = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0 Safari/537.36"
 
 _last_req = 0.0
 
 
 # ---------------------------------------------------------------- HTTP -----
+
 
 def _polite_wait() -> None:
     global _last_req
@@ -107,8 +107,7 @@ def _polite_wait() -> None:
 
 
 def _backoff(attempt: int) -> None:
-    time.sleep(min(BACKOFF_CAP_S,
-                   BACKOFF_BASE_S * (2 ** attempt) * (0.7 + 0.6 * random.random())))
+    time.sleep(min(BACKOFF_CAP_S, BACKOFF_BASE_S * (2**attempt) * (0.7 + 0.6 * random.random())))
 
 
 def http_get_json(url: str) -> dict:
@@ -117,8 +116,7 @@ def http_get_json(url: str) -> dict:
     for attempt in range(RETRY_ATTEMPTS):
         _polite_wait()
         try:
-            req = urllib.request.Request(
-                url, headers={"User-Agent": _UA, "Accept": "application/json"})
+            req = urllib.request.Request(url, headers={"User-Agent": _UA, "Accept": "application/json"})
             with urllib.request.urlopen(req, timeout=40) as resp:
                 return json.loads(resp.read().decode("utf-8"))
         except urllib.error.HTTPError as exc:
@@ -135,12 +133,12 @@ def http_get_json(url: str) -> dict:
 
 # ------------------------------------------------------------- ref cache ---
 
+
 class RefCache:
     """Athlete/team $ref resolutions, persisted per date in the checkpoint dir."""
 
     def __init__(self, dirs, date: str):
-        self.path = (Path(cp.checkpoint_path(dirs, SOURCE, date)).parent
-                     / "refcache.json")
+        self.path = Path(cp.checkpoint_path(dirs, SOURCE, date)).parent / "refcache.json"
         try:
             self._d = json.loads(self.path.read_text())
         except (OSError, json.JSONDecodeError):
@@ -158,9 +156,10 @@ class RefCache:
         """(athlete_id, display_name) for an athlete $ref."""
         if ref not in self._d:
             d = http_get_json(ref)
-            self._d[ref] = {"id": str(d.get("id") or self._ref_id(ref)),
-                            "name": d.get("displayName") or d.get("shortName")
-                            or "Unknown"}
+            self._d[ref] = {
+                "id": str(d.get("id") or self._ref_id(ref)),
+                "name": d.get("displayName") or d.get("shortName") or "Unknown",
+            }
             self._save()
         e = self._d[ref]
         return e["id"], e["name"]
@@ -169,14 +168,14 @@ class RefCache:
         """(team_id, abbreviation) for a team $ref."""
         if ref not in self._d:
             d = http_get_json(ref)
-            self._d[ref] = {"id": str(d.get("id") or self._ref_id(ref)),
-                            "abbr": d.get("abbreviation") or "UNK"}
+            self._d[ref] = {"id": str(d.get("id") or self._ref_id(ref)), "abbr": d.get("abbreviation") or "UNK"}
             self._save()
         e = self._d[ref]
         return e["id"], e["abbr"]
 
 
 # ------------------------------------------------------------------ fetch ---
+
 
 def _slate_ids(date: str) -> list[str]:
     yyyymmdd = date.replace("-", "")
@@ -198,9 +197,7 @@ def _fetch_plays(game_id: str) -> list[dict]:
     items: list[dict] = []
     page = 1
     while True:
-        d = http_get_json(
-            f"{BASE}/events/{game_id}/competitions/{game_id}/plays"
-            f"?limit=1000&page={page}&{QS}")
+        d = http_get_json(f"{BASE}/events/{game_id}/competitions/{game_id}/plays?limit=1000&page={page}&{QS}")
         items.extend(d.get("items", []))
         if page >= int(d.get("pageCount", 1)):
             break
@@ -216,7 +213,7 @@ def _is_chartable_shot(play: dict) -> bool:
         return False  # free throws (1) excluded; anything else is unknown
     c = play.get("coordinate") or {}
     x, y = c.get("x"), c.get("y")
-    if not isinstance(x, (int, float)) or not isinstance(y, (int, float)):
+    if not isinstance(x, int | float) or not isinstance(y, int | float):
         return False
     if abs(x) >= _SENTINEL or abs(y) >= _SENTINEL:
         return False
@@ -246,7 +243,7 @@ def fetch(date: str, resume: bool, dirs: dict) -> dict:
             "game_id": gid,
             "date": date,
             "source": SOURCE,
-            "fetched_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+            "fetched_at": datetime.now(UTC).strftime("%Y-%m-%dT%H:%M:%SZ"),
             "plays_url": (f"{BASE}/events/{gid}/competitions/{gid}/plays"),
             "n_plays": len(plays),
             "response": {"items": plays},
@@ -259,6 +256,7 @@ def fetch(date: str, resume: bool, dirs: dict) -> dict:
 
 
 # --------------------------------------------------------------- normalize ---
+
 
 def _shooter_ref(play: dict) -> str | None:
     for pt in play.get("participants", []) or []:
@@ -280,6 +278,7 @@ def _to_canonical(x_e: float, y_e: float) -> tuple[float, float]:
 
 def _shot_zone(x: float, y: float, shot_type: str) -> str:
     import math
+
     d = math.hypot(x, y)
     ax = abs(x)
     if y > _HALF_COURT_Y:
@@ -299,8 +298,7 @@ def _season_for(date: str) -> str:
     return f"{y}-{str(y + 1)[-2:]}" if m >= 10 else f"{y - 1}-{str(y)[-2:]}"
 
 
-def _normalize_play(play: dict, game_id: str, date: str, season: str,
-                    refs: RefCache) -> dict | None:
+def _normalize_play(play: dict, game_id: str, date: str, season: str, refs: RefCache) -> dict | None:
     if not _is_chartable_shot(play):
         return None
     c = play["coordinate"]
@@ -352,9 +350,9 @@ def normalize(date: str, dirs: dict) -> list:
 
 # --------------------------------------------------------------- validate ---
 
+
 def _record_key(rec: dict) -> tuple:
-    return (rec["period"], rec["clock"], rec["player_id"],
-            rec["x"], rec["y"], rec["made"], rec["shot_type"])
+    return (rec["period"], rec["clock"], rec["player_id"], rec["x"], rec["y"], rec["made"], rec["shot_type"])
 
 
 def _raw_key(play: dict, refs: RefCache) -> tuple:
@@ -363,9 +361,15 @@ def _raw_key(play: dict, refs: RefCache) -> tuple:
     pid = sref.split("?")[0].rstrip("/").rsplit("/", 1)[-1] if sref else "0"
     made = bool(play.get("scoreValue", 0) > 0)
     st = "3PT" if play.get("pointsAttempted") == 3 else "2PT"
-    return ((play.get("period") or {}).get("number", 0),
-            str((play.get("clock") or {}).get("displayValue", "")),
-            pid, x, y, made, st)
+    return (
+        (play.get("period") or {}).get("number", 0),
+        str((play.get("clock") or {}).get("displayValue", "")),
+        pid,
+        x,
+        y,
+        made,
+        st,
+    )
 
 
 def _keyset_hash(keys: list[tuple]) -> str:
@@ -389,9 +393,11 @@ def validate(date: str, dirs: dict) -> dict:
         plays = _fetch_plays(gid)  # fresh pull from ESPN
         fresh = [p for p in plays if _is_chartable_shot(p)]
         local = [r for r in records if r["game_id"] == gid]
-        khash = ("match" if _keyset_hash([_raw_key(p, refs) for p in fresh])
-                 == _keyset_hash([_record_key(r) for r in local])
-                 else "MISMATCH")
+        khash = (
+            "match"
+            if _keyset_hash([_raw_key(p, refs) for p in fresh]) == _keyset_hash([_record_key(r) for r in local])
+            else "MISMATCH"
+        )
         return (gid, len(fresh), khash)
 
     return qa_mod.run_qa(records, refetch_one)
@@ -399,10 +405,10 @@ def validate(date: str, dirs: dict) -> dict:
 
 # --------------------------------------------------------------- snapshot ---
 
+
 def _sort_key(rec: dict) -> tuple:
     # chronological within a period: clock counts down, so -seconds
-    return (rec["game_id"], rec["period"], -rec["_clock_s"],
-            rec["player_id"], rec["x"], rec["y"])
+    return (rec["game_id"], rec["period"], -rec["_clock_s"], rec["player_id"], rec["x"], rec["y"])
 
 
 def snapshot(date: str, dirs: dict, records: list, qa: dict) -> tuple:
@@ -423,7 +429,7 @@ def snapshot(date: str, dirs: dict, records: list, qa: dict) -> tuple:
         man_dir / f"shotcharts-{stamp}.manifest.json",
         source=SOURCE,
         date=date,
-        fetched_at=datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+        fetched_at=datetime.now(UTC).strftime("%Y-%m-%dT%H:%M:%SZ"),
         snapshot_path=snap_path,
         records=len(ordered),
         games=len({r["game_id"] for r in ordered}),
@@ -434,6 +440,7 @@ def snapshot(date: str, dirs: dict, records: list, qa: dict) -> tuple:
 
 
 # ---------------------------------------------------------------- publish ---
+
 
 def _served_paths(dirs: dict) -> tuple[Path, Path]:
     return (Path(dirs["served"]) / SOURCE, Path(dirs["served_public"]) / SOURCE)
@@ -448,13 +455,12 @@ def publish(date: str, dirs: dict) -> dict:
     manifest = manifest_mod.read_manifest(man_path)
     qa = manifest.get("qa") or {}
     if qa.get("verdict") != "PASS":
-        return {"published": False,
-                "reason": f"QA verdict {qa.get('verdict')} — publish hard-blocked"}
+        return {"published": False, "reason": f"QA verdict {qa.get('verdict')} — publish hard-blocked"}
     if not manifest_mod.verify_manifest(man_path, snap_path):
-        return {"published": False,
-                "reason": "manifest sha256 mismatch — snapshot changed after write"}
+        return {"published": False, "reason": "manifest sha256 mismatch — snapshot changed after write"}
 
     import shutil
+
     files: list[str] = []
     for served in _served_paths(dirs):
         served.mkdir(parents=True, exist_ok=True)

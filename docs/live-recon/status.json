@@ -1,0 +1,1 @@
+{"$ref":"http://sports.core.api.espn.com/v2/sports/basketball/leagues/nba/events/401909834/competitions/401909834/status?lang=en&region=us","clock":0.0,"displayClock":"0.0","period":0,"type":{"id":"1","name":"STATUS_SCHEDULED","state":"pre","completed":false,"description":"Scheduled","detail":"Wed, October 21st at 7:00 PM EDT","shortDetail":"10/21 - 7:00 PM EDT"}}

@@ -21,7 +21,7 @@ from __future__ import annotations
 
 import argparse
 import sys
-from datetime import datetime, timezone
+from datetime import datetime
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
@@ -48,6 +48,7 @@ def build_dirs(root: Path) -> dict:
 
 def load_source(name: str):
     import importlib
+
     try:
         return importlib.import_module(f"sources.{name}")
     except ImportError:
@@ -55,25 +56,19 @@ def load_source(name: str):
 
 
 def cmd_all(mod, date: str, resume: bool, dirs: dict) -> int:
-    now = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
     r = mod.fetch(date, resume, dirs)
-    print(f"[{mod.SOURCE}] fetch: {r['games']} games, "
-          f"{len(r['raw_files'])} raw files")
+    print(f"[{mod.SOURCE}] fetch: {r['games']} games, {len(r['raw_files'])} raw files")
     qa = mod.validate(date, dirs)
     print(f"[{mod.SOURCE}] validate: {qa['verdict']}")
     if qa["verdict"] != "PASS":
-        print(f"[{mod.SOURCE}] QA FAIL — publish blocked",
-              file=sys.stderr)
+        print(f"[{mod.SOURCE}] QA FAIL — publish blocked", file=sys.stderr)
         return 1
     records = mod.normalize(date, dirs)
     print(f"[{mod.SOURCE}] normalize: {len(records)} records")
     snap_path, manifest = mod.snapshot(date, dirs, records, qa)
-    print(f"[{mod.SOURCE}] snapshot: {snap_path} "
-          f"({manifest['records']} records, sha {manifest['sha256'][:12]})")
+    print(f"[{mod.SOURCE}] snapshot: {snap_path} ({manifest['records']} records, sha {manifest['sha256'][:12]})")
     pub = mod.publish(date, dirs)
-    print(f"[{mod.SOURCE}] publish: "
-          f"{'done' if pub['published'] else 'skipped'} "
-          f"({pub.get('reason', '')})")
+    print(f"[{mod.SOURCE}] publish: {'done' if pub['published'] else 'skipped'} ({pub.get('reason', '')})")
     return 0
 
 
@@ -83,8 +78,7 @@ def main(argv=None) -> int:
     ap.add_argument("stage", choices=STAGES)
     ap.add_argument("--date", required=True, help="YYYY-MM-DD")
     ap.add_argument("--resume", action="store_true")
-    ap.add_argument("--root", default=".",
-                    help="repo root (default: cwd)")
+    ap.add_argument("--root", default=".", help="repo root (default: cwd)")
     args = ap.parse_args(argv)
 
     try:
@@ -115,19 +109,17 @@ def main(argv=None) -> int:
             print(f"[{mod.SOURCE}] normalize: {len(recs)} records")
             return 0
         if args.stage == "snapshot":
-            from common import qa as qa_mod
             recs = mod.normalize(args.date, dirs)
             qa = mod.validate(args.date, dirs)
             if qa["verdict"] != "PASS":
                 print("QA FAIL — snapshot not written", file=sys.stderr)
                 return 1
-            snap_path, manifest = mod.snapshot(args.date, dirs, recs, qa)
+            snap_path, _manifest = mod.snapshot(args.date, dirs, recs, qa)
             print(f"[{mod.SOURCE}] snapshot: {snap_path}")
             return 0
         if args.stage == "publish":
             pub = mod.publish(args.date, dirs)
-            print(f"[{mod.SOURCE}] publish: "
-                  f"{'done' if pub['published'] else 'blocked'}")
+            print(f"[{mod.SOURCE}] publish: {'done' if pub['published'] else 'blocked'}")
             return 0 if pub["published"] else 1
     except GateError as exc:
         print(f"[{args.source}] GATED (honest 503): {exc}", file=sys.stderr)

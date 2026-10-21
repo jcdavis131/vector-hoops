@@ -1,0 +1,212 @@
+{
+ "1": {
+  "abbr": "ATL",
+  "name": "Atlanta Hawks",
+  "short": "Hawks",
+  "color": "c8102e",
+  "alt": "fdb927"
+ },
+ "2": {
+  "abbr": "BOS",
+  "name": "Boston Celtics",
+  "short": "Celtics",
+  "color": "008348",
+  "alt": "ffffff"
+ },
+ "3": {
+  "abbr": "NO",
+  "name": "New Orleans Pelicans",
+  "short": "Pelicans",
+  "color": "0a2240",
+  "alt": "b4975a"
+ },
+ "4": {
+  "abbr": "CHI",
+  "name": "Chicago Bulls",
+  "short": "Bulls",
+  "color": "ce1141",
+  "alt": "000000"
+ },
+ "5": {
+  "abbr": "CLE",
+  "name": "Cleveland Cavaliers",
+  "short": "Cavaliers",
+  "color": "860038",
+  "alt": "bc945c"
+ },
+ "6": {
+  "abbr": "DAL",
+  "name": "Dallas Mavericks",
+  "short": "Mavericks",
+  "color": "0064b1",
+  "alt": "bbc4ca"
+ },
+ "7": {
+  "abbr": "DEN",
+  "name": "Denver Nuggets",
+  "short": "Nuggets",
+  "color": "0e2240",
+  "alt": "fec524"
+ },
+ "8": {
+  "abbr": "DET",
+  "name": "Detroit Pistons",
+  "short": "Pistons",
+  "color": "1d428a",
+  "alt": "c8102e"
+ },
+ "9": {
+  "abbr": "GS",
+  "name": "Golden State Warriors",
+  "short": "Warriors",
+  "color": "fdb927",
+  "alt": "1d428a"
+ },
+ "10": {
+  "abbr": "HOU",
+  "name": "Houston Rockets",
+  "short": "Rockets",
+  "color": "ce0e2d",
+  "alt": "000000"
+ },
+ "11": {
+  "abbr": "IND",
+  "name": "Indiana Pacers",
+  "short": "Pacers",
+  "color": "0c2340",
+  "alt": "ffd520"
+ },
+ "12": {
+  "abbr": "LAC",
+  "name": "LA Clippers",
+  "short": "Clippers",
+  "color": "12173f",
+  "alt": "c8102e"
+ },
+ "13": {
+  "abbr": "LAL",
+  "name": "Los Angeles Lakers",
+  "short": "Lakers",
+  "color": "552583",
+  "alt": "fdb927"
+ },
+ "14": {
+  "abbr": "MIA",
+  "name": "Miami Heat",
+  "short": "Heat",
+  "color": "98002e",
+  "alt": "000000"
+ },
+ "15": {
+  "abbr": "MIL",
+  "name": "Milwaukee Bucks",
+  "short": "Bucks",
+  "color": "00471b",
+  "alt": "eee1c6"
+ },
+ "16": {
+  "abbr": "MIN",
+  "name": "Minnesota Timberwolves",
+  "short": "Timberwolves",
+  "color": "266092",
+  "alt": "79bc43"
+ },
+ "17": {
+  "abbr": "BKN",
+  "name": "Brooklyn Nets",
+  "short": "Nets",
+  "color": "000000",
+  "alt": "ffffff"
+ },
+ "18": {
+  "abbr": "NY",
+  "name": "New York Knicks",
+  "short": "Knicks",
+  "color": "1d428a",
+  "alt": "f58426"
+ },
+ "19": {
+  "abbr": "ORL",
+  "name": "Orlando Magic",
+  "short": "Magic",
+  "color": "0150b5",
+  "alt": "9ca0a3"
+ },
+ "20": {
+  "abbr": "PHI",
+  "name": "Philadelphia 76ers",
+  "short": "76ers",
+  "color": "1d428a",
+  "alt": "e01234"
+ },
+ "21": {
+  "abbr": "PHX",
+  "name": "Phoenix Suns",
+  "short": "Suns",
+  "color": "29127a",
+  "alt": "e56020"
+ },
+ "22": {
+  "abbr": "POR",
+  "name": "Portland Trail Blazers",
+  "short": "Trail Blazers",
+  "color": "e03a3e",
+  "alt": "000000"
+ },
+ "23": {
+  "abbr": "SAC",
+  "name": "Sacramento Kings",
+  "short": "Kings",
+  "color": "5a2d81",
+  "alt": "6a7a82"
+ },
+ "24": {
+  "abbr": "SA",
+  "name": "San Antonio Spurs",
+  "short": "Spurs",
+  "color": "000000",
+  "alt": "c4ced4"
+ },
+ "25": {
+  "abbr": "OKC",
+  "name": "Oklahoma City Thunder",
+  "short": "Thunder",
+  "color": "007ac1",
+  "alt": "ef3b24"
+ },
+ "26": {
+  "abbr": "UTAH",
+  "name": "Utah Jazz",
+  "short": "Jazz",
+  "color": "4e008e",
+  "alt": "79a3dc"
+ },
+ "27": {
+  "abbr": "WSH",
+  "name": "Washington Wizards",
+  "short": "Wizards",
+  "color": "e31837",
+  "alt": "002b5c"
+ },
+ "28": {
+  "abbr": "TOR",
+  "name": "Toronto Raptors",
+  "short": "Raptors",
+  "color": "d91244",
+  "alt": "000000"
+ },
+ "29": {
+  "abbr": "MEM",
+  "name": "Memphis Grizzlies",
+  "short": "Grizzlies",
+  "color": "5d76a9",
+  "alt": "12173f"
+ },
+ "30": {
+  "abbr": "CHA",
+  "name": "Charlotte Hornets",
+  "short": "Hornets",
+  "color": "008ca8",
+  "alt": "1d1060"
+ }
+}

@@ -17,8 +17,7 @@ def sha256_file(path) -> str:
     return h.hexdigest()
 
 
-def write_manifest(manifest_path, *, source, date, fetched_at, snapshot_path,
-                   records, games, players, qa) -> dict:
+def write_manifest(manifest_path, *, source, date, fetched_at, snapshot_path, records, games, players, qa) -> dict:
     manifest_path = Path(manifest_path)
     manifest_path.parent.mkdir(parents=True, exist_ok=True)
     m = {

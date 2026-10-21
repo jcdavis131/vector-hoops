@@ -26,8 +26,7 @@ from common.errors import GateError
 SOURCE = "stats_nba"
 GATED = True
 
-GATE_REASON = (__doc__.split("RETRY_PROCEDURE:")[0]
-               .split("GATE_REASON:")[1].strip())
+GATE_REASON = __doc__.split("RETRY_PROCEDURE:")[0].split("GATE_REASON:")[1].strip()
 RETRY_PROCEDURE = __doc__.split("RETRY_PROCEDURE:")[1].strip()
 
 _GAP = f"{GATE_REASON}\n\nRETRY: {RETRY_PROCEDURE}"

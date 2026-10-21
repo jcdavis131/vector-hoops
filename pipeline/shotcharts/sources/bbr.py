@@ -46,7 +46,7 @@ import sys
 import time
 import urllib.error
 import urllib.request
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from html.parser import HTMLParser
 from pathlib import Path
 
@@ -62,8 +62,7 @@ PIPELINE_VERSION = manifest.PIPELINE_VERSION
 _ALREADY_COMPLETE: set = set()
 
 BASE = "https://www.basketball-reference.com"
-UA = ("Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 "
-      "(KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36")
+UA = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36"
 RATE_S = 3.1  # <=1 req / 3s, single-threaded (BBR throttle discipline)
 
 # Shot-dot geometry, fit 2026-10-21 (see module docstring).
@@ -76,14 +75,12 @@ _GAME_RE = re.compile(r"boxscores/shot-chart/(\d{9}[A-Z]{3})\.html")
 _CONTAINER_RE = re.compile(r"^shots-([A-Z]{3})$")
 _STYLE_RE = re.compile(r"^top:(-?\d+)px;left:(-?\d+)px;$")
 _CLASS_RE = re.compile(r"^tooltip q-(\d+) p-([a-z0-9-]+) (make|miss)$")
-_TIP_HEAD_RE = re.compile(
-    r"^(\d+)(?:st|nd|rd|th) (quarter|OT), (\d{1,2}):(\d{2})(?:\.\d+)? remaining$")
-_TIP_SHOT_RE = re.compile(
-    r"^(.+?) (made|missed) ([23])-pointer from (\d+) ft$")
+_TIP_HEAD_RE = re.compile(r"^(\d+)(?:st|nd|rd|th) (quarter|OT), (\d{1,2}):(\d{2})(?:\.\d+)? remaining$")
+_TIP_SHOT_RE = re.compile(r"^(.+?) (made|missed) ([23])-pointer from (\d+) ft$")
 
 
 def _utcnow() -> str:
-    return datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+    return datetime.now(UTC).strftime("%Y-%m-%dT%H:%M:%SZ")
 
 
 def _get(url: str) -> str:
@@ -145,10 +142,9 @@ class _ShotHTMLParser(HTMLParser):
         tm = _TIP_SHOT_RE.match(parts[1].strip()) if len(parts) >= 2 else None
         hm = _TIP_HEAD_RE.match(parts[0].strip()) if parts else None
         if not (sm and cm and tm and hm):
-            self.malformed.append(
-                f"style={style!r} class={cls!r} tip={tip[:80]!r}")
+            self.malformed.append(f"style={style!r} class={cls!r} tip={tip[:80]!r}")
             return
-        q_num = int(cm.group(1))
+        _q_num = int(cm.group(1))
         made_cls = cm.group(3) == "make"
         made_tip = tm.group(2) == "made"
         if made_cls != made_tip:
@@ -158,18 +154,20 @@ class _ShotHTMLParser(HTMLParser):
         period = n if kind == "quarter" else 4 + n
         x = (int(sm.group(2)) - HOOP_X_PX) / PX_PER_FT
         y = (int(sm.group(1)) - HOOP_Y_PX) / PX_PER_FT
-        self.shots.append({
-            "team": self._team,
-            "player_id": cm.group(2),
-            "player_name": html_mod.unescape(tm.group(1).strip()),
-            "period": period,
-            "clock": f"{int(mm):02d}:{ss}",
-            "x": round(x, 1),
-            "y": round(y, 1),
-            "made": made_tip,
-            "pt": int(tm.group(3)),
-            "dist_reported_ft": int(tm.group(4)),
-        })
+        self.shots.append(
+            {
+                "team": self._team,
+                "player_id": cm.group(2),
+                "player_name": html_mod.unescape(tm.group(1).strip()),
+                "period": period,
+                "clock": f"{int(mm):02d}:{ss}",
+                "x": round(x, 1),
+                "y": round(y, 1),
+                "made": made_tip,
+                "pt": int(tm.group(3)),
+                "dist_reported_ft": int(tm.group(4)),
+            }
+        )
 
 
 def parse_shot_chart(html_text: str, game_id: str):
@@ -185,6 +183,7 @@ def _season(date: str) -> str:
 
 def _shot_zone(x: float, y: float, pt: int) -> str:
     import math
+
     r = math.hypot(x, y)
     if pt == 3:
         return "Corner 3" if abs(x) >= 22.0 else "Above the Break 3"
@@ -234,8 +233,7 @@ def _parse_all(date: str, dirs):
         game_id = f.stem
         p = parse_shot_chart(f.read_text(), game_id)
         if p.malformed:
-            errors.append(f"{game_id}: {len(p.malformed)} malformed shot divs "
-                          f"(e.g. {p.malformed[0]})")
+            errors.append(f"{game_id}: {len(p.malformed)} malformed shot divs (e.g. {p.malformed[0]})")
         if not p.teams:
             errors.append(f"{game_id}: no shots-XXX containers found")
         for s in p.shots:
@@ -265,11 +263,12 @@ def fetch(date: str, resume: bool, dirs) -> dict:
     if _is_complete(date, dirs, games):
         _ALREADY_COMPLETE.add(date)
         raw_dir = _raw_dir(dirs, date)
-        print(f"[{SOURCE}] already complete for {date} "
-              f"(snapshot sha verified) -- no-op")
-        return {"games": len(games),
-                "raw_files": [str(p) for p in sorted(raw_dir.glob("*.html"))],
-                "already_complete": True}
+        print(f"[{SOURCE}] already complete for {date} (snapshot sha verified) -- no-op")
+        return {
+            "games": len(games),
+            "raw_files": [str(p) for p in sorted(raw_dir.glob("*.html"))],
+            "already_complete": True,
+        }
     done = checkpoints.load_completed(dirs, SOURCE, date) if resume else set()
     raw_dir = _raw_dir(dirs, date)
     raw_files = []
@@ -294,51 +293,55 @@ def _refetch_one(date: str, dirs):
     p = parse_shot_chart(_get(f"{BASE}/boxscores/shot-chart/{gid}.html"), gid)
     if p.malformed:
         raise RuntimeError(f"refetch parse: {len(p.malformed)} malformed divs")
-    keys = sorted("|".join((gid, s["player_id"], str(s["period"]),
-                            s["clock"], str(s["x"]), str(s["y"])))
-                  for s in p.shots)
+    keys = sorted(
+        "|".join((gid, s["player_id"], str(s["period"]), s["clock"], str(s["x"]), str(s["y"]))) for s in p.shots
+    )
     return gid, len(keys), hashlib.sha256("\n".join(keys).encode()).hexdigest()
 
 
 def validate(date: str, dirs) -> dict:
     records, errors = _parse_all(date, dirs)
     if errors:
-        return {"verdict": "FAIL",
-                "checks": {"schema": "FAIL", "row_counts": "FAIL",
-                           "spot_sample": "FAIL", "geometry": "FAIL"},
-                "detail": {"markup_errors": errors}}
+        return {
+            "verdict": "FAIL",
+            "checks": {"schema": "FAIL", "row_counts": "FAIL", "spot_sample": "FAIL", "geometry": "FAIL"},
+            "detail": {"markup_errors": errors},
+        }
     import math
+
     # geometry: median |computed radial - BBR reported ft| over raw shots
     raw = []
     for f in sorted(_raw_dir(dirs, date).glob("*.html")):
         raw.extend(parse_shot_chart(f.read_text(), f.stem).shots)
-    geo = ([abs(math.hypot(s["x"], s["y"]) - s["dist_reported_ft"])
-            for s in raw])
+    geo = [abs(math.hypot(s["x"], s["y"]) - s["dist_reported_ft"]) for s in raw]
     geo_med = statistics.median(geo) if geo else float("inf")
-    geometry = {"verdict": "PASS" if geo_med <= GEOMETRY_QA_TOL_FT else "FAIL",
-                "median_abs_err_ft": round(geo_med, 2),
-                "tol_ft": GEOMETRY_QA_TOL_FT, "shots": len(geo)}
+    geometry = {
+        "verdict": "PASS" if geo_med <= GEOMETRY_QA_TOL_FT else "FAIL",
+        "median_abs_err_ft": round(geo_med, 2),
+        "tol_ft": GEOMETRY_QA_TOL_FT,
+        "shots": len(geo),
+    }
     q = qa.run_qa(records, lambda: _refetch_one(date, dirs))
-    verdict = "PASS" if q["verdict"] == "PASS" and \
-        geometry["verdict"] == "PASS" else "FAIL"
-    return {"verdict": verdict,
-            "checks": {**q["checks"], "geometry": geometry["verdict"]},
-            "detail": {**q["detail"], "geometry": geometry}}
+    verdict = "PASS" if q["verdict"] == "PASS" and geometry["verdict"] == "PASS" else "FAIL"
+    return {
+        "verdict": verdict,
+        "checks": {**q["checks"], "geometry": geometry["verdict"]},
+        "detail": {**q["detail"], "geometry": geometry},
+    }
 
 
 def normalize(date: str, dirs) -> list:
     records, errors = _parse_all(date, dirs)
     if errors:
-        raise ValueError("markup changed, refusing to emit: "
-                         + "; ".join(errors))
+        raise ValueError("markup changed, refusing to emit: " + "; ".join(errors))
     return records
 
 
 def snapshot(date: str, dirs, records: list, q: dict):
     def sort_key(r):
         mm, ss = r["clock"].split(":")
-        return (r["game_id"], r["period"], int(mm) * 60 + int(ss),
-                r["player_id"], r["x"], r["y"])
+        return (r["game_id"], r["period"], int(mm) * 60 + int(ss), r["player_id"], r["x"], r["y"])
+
     records = sorted(records, key=sort_key)
     stamp = date.replace("-", "")
     man_dir = Path(dirs["manifests"]) / SOURCE
@@ -358,11 +361,16 @@ def snapshot(date: str, dirs, records: list, q: dict):
         for r in records:
             f.write(json.dumps(r, sort_keys=True) + "\n")
     m = manifest.write_manifest(
-        man_path, source=SOURCE, date=date, fetched_at=fetched_at,
-        snapshot_path=snap_path, records=len(records),
+        man_path,
+        source=SOURCE,
+        date=date,
+        fetched_at=fetched_at,
+        snapshot_path=snap_path,
+        records=len(records),
         games=len({r["game_id"] for r in records}),
         players=len({r["player_id"] for r in records}),
-        qa={"verdict": q["verdict"], "checks": q["checks"]})
+        qa={"verdict": q["verdict"], "checks": q["checks"]},
+    )
     return snap_path, m
 
 
@@ -378,10 +386,8 @@ def publish(date: str, dirs) -> dict:
     if not manifest.verify_manifest(man_path, snap_path):
         return {"published": False, "reason": "manifest sha mismatch"}
     served_bytes = snap_path.stat().st_size
-    budget_note = ("OVER 500KB served budget -- allowlist note required in PR"
-                   if served_bytes > 500 * 1024 else None)
-    for served in (Path(dirs["served"]) / SOURCE,
-                   Path(dirs["served_public"]) / SOURCE):
+    budget_note = "OVER 500KB served budget -- allowlist note required in PR" if served_bytes > 500 * 1024 else None
+    for served in (Path(dirs["served"]) / SOURCE, Path(dirs["served_public"]) / SOURCE):
         served.mkdir(parents=True, exist_ok=True)
         shutil.copy2(snap_path, served / snap_path.name)
         latest = {
@@ -397,5 +403,4 @@ def publish(date: str, dirs) -> dict:
             "fetched_at": m["fetched_at"],
         }
         (served / "LATEST.json").write_text(json.dumps(latest, indent=2) + "\n")
-    return {"published": True, "served_bytes": served_bytes,
-            "reason": budget_note or "ok"}
+    return {"published": True, "served_bytes": served_bytes, "reason": budget_note or "ok"}
