@@ -65,15 +65,23 @@
       if (kd === 'presence') pres.push(k); else if (kd === 'absence') absn.push(k); else avg.push(k);
     }
     var ranked = pres.concat(avg, absn);
-    var shared = [], kinds = [];
-    for (var j = 0; j < 3 && j < ranked.length; j++) {
+    // absence-evidenced pairs keep their qualifier (computed pre-cap)
+    var preKinds = ranked.slice(0, 3).map(kind);
+    var absenceOnly = preKinds.length === 3 && preKinds.every(function (x) { return x === 'absence'; });
+    // P1: never ≥2 absence traits in the 3 chips — the generator must lead
+    // with what players DO. Cap absences at one; backfill from pres/avg.
+    var shared = [], kinds = [], absUsed = 0;
+    for (var j = 0; j < ranked.length && shared.length < 3; j++) {
       var q = ranked[j], qd = kind(q), mean = (va[q] + vb[q]) / 2;
+      if (qd === 'absence') {
+        if (absUsed >= 1) continue;
+        absUsed++;
+      }
       kinds.push(qd);
       if (mean >= 0.25) shared.push(CHIP[codes[q]][0]);
       else if (mean <= -0.25) shared.push(CHIP[codes[q]][1]);
       else shared.push('both average ' + labels[codes[q]]);
     }
-    var absenceOnly = kinds.length === 3 && kinds.every(function (x) { return x === 'absence'; });
     return { shared: shared, kinds: kinds, differ: labels[codes[order[order.length - 1]]], absenceOnly: absenceOnly };
   }
 
@@ -180,6 +188,6 @@
 
   // node QA hook (browser-ignored)
   if (typeof module !== 'undefined' && module.exports) {
-    module.exports = { explainPair: explainPair, pairKey: pairKey, CHIP: CHIP, isAbsenceOnly: isAbsenceOnly };
+    module.exports = { explainPair: explainPair, pairKey: pairKey, CHIP: CHIP };
   }
 })();

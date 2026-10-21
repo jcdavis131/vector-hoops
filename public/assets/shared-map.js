@@ -322,9 +322,13 @@ export async function mountSharedMap(canvas, opts={}){
           ctx.beginPath(); ctx.moveTo(gx,gy); ctx.lineTo(targetPr.sx|0, targetPr.sy|0); ctx.stroke();
           ctx.restore();
         }
-        // orange ring
-        ctx.strokeStyle=dark?'#05070A':'#FFFFFF'; ctx.lineWidth=4; ctx.strokeRect(gx-5, gy-5, 10,10);
-        ctx.strokeStyle=dark?'#FF7A33':'#D55E00'; ctx.lineWidth=2; ctx.strokeRect(gx-5, gy-5, 10,10);
+        // orange ring — P1: thickness ∝ similarity to target (the Bostock
+        // "gradient descent" made visible). Closer guesses read heavier;
+        // a guess with no sim data gets the base weight. Fill alpha follows.
+        var simW = (gm.sim != null) ? gm.sim : 0.5;
+        var ringW = 1.5 + simW * 4; // 1.5px (far) → 5.5px (exact)
+        ctx.strokeStyle=dark?'#05070A':'#FFFFFF'; ctx.lineWidth=ringW+2; ctx.strokeRect(gx-5, gy-5, 10,10);
+        ctx.strokeStyle=dark?'#FF7A33':'#D55E00'; ctx.lineWidth=ringW; ctx.strokeRect(gx-5, gy-5, 10,10);
         // numbered badge — tiny black pill with white 1..6 so you can match list ↔ map
         const num=(gi+1).toString();
         ctx.font='800 9px ui-monospace,monospace';

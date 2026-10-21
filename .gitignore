@@ -35,3 +35,4 @@ assets/mtnn_training/
 # pattern added later from hiding them.
 !pipeline/cache/_fetch_meta/
 !pipeline/cache/_fetch_meta/*.json
+.qa/

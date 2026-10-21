@@ -8,6 +8,24 @@
   var VOID = '#1E2022', PAPER = '#F9F6F0', TERRA = '#C17C60',
       GOLD = '#D4AF69', MUTED = '#8b8578', LINE = '#3a3d40';
 
+  // Era → color (functional: color encodes time, nothing else).
+  // Drafting Board tokens: pencil gray → terra → marker blue → marker red,
+  // oldest to newest. Red is reserved for the current era, not for alerts here.
+  var ERA_COLORS = {
+    '1990s': '#8b8578',
+    '2000s': '#A05A38',
+    '2010s': '#2B6CE5',
+    '2020s': '#E0483B'
+  };
+  function eraColor(decade) { return ERA_COLORS[decade] || MUTED; }
+
+  // Similarity band labels — never a naked number (kept disagreement, binding).
+  function simBand(sim) {
+    if (sim >= 0.727) return 'strong twin';
+    if (sim >= 0.663) return 'lean twin';
+    return 'distant twin';
+  }
+
   var NAME_FIXES = {
     'Shai GilgeousAlexander': 'Shai Gilgeous-Alexander',
     'KarlAnthony Towns': 'Karl-Anthony Towns',
@@ -100,33 +118,88 @@
     return scored.slice(0, k).map(function (s) { return { id: s[1], sim: s[0] }; });
   }
 
-  /* ---------- network SVG ---------- */
+  /* ---------- network SVG ----------
+     P1 rebuild: position is the strongest channel, so it encodes meaning now.
+     - node distance from center ∝ (1 − similarity): closer twins sit closer
+     - angle encodes era: neighbors grouped into decade sectors, chronological
+     - edge width ∝ similarity
+     - center node size ∝ Twin Centrality (sqrt-scaled)
+     - node color = era (functional color, see ERA_COLORS)
+     - labels show the similarity BAND, never a naked number
+     - Twin Centrality + Era-Bridge fold into the diagram caption, not boxes */
 
-  function networkSVG(p, neighbors) {
-    var W = 620, H = 320, cx = W / 2, cy = H / 2 - 10, R = 118;
+  function networkSVG(p, neighbors, centrality, eraBridge) {
+    var W = 620, H = 360, cx = W / 2, cy = H / 2 - 22;
     var s = '<svg viewBox="0 0 ' + W + ' ' + H + '" class="vh-ins__viz" role="img" aria-label="twin network of ' + esc(pretty(p.name)) + '">';
-    neighbors.forEach(function (nb, i) {
-      var a = (i / neighbors.length) * Math.PI * 2 - Math.PI / 2;
-      var x = cx + R * Math.cos(a), y = cy + R * Math.sin(a);
-      nb._x = x; nb._y = y;
-      var w = Math.max(1.5, (nb.sim - 0.5) * 14);
-      s += '<line x1="' + cx.toFixed(1) + '" y1="' + cy.toFixed(1) + '" x2="' + x.toFixed(1) + '" y2="' + y.toFixed(1) +
-        '" stroke="' + TERRA + '" stroke-width="' + w.toFixed(1) + '" opacity="0.75"/>';
+    // group by decade, chronological; sort by similarity inside each group
+    var groups = {};
+    neighbors.forEach(function (nb) {
+      var dec = state.byId[nb.id].decade || 'unknown';
+      (groups[dec] = groups[dec] || []).push(nb);
     });
+    var decades = Object.keys(groups).sort();
+    decades.forEach(function (dec) {
+      groups[dec].sort(function (a, b) { return b.sim - a.sim; });
+    });
+    // lay out: each decade gets an angular sector proportional to its count.
+    // Distance ∝ (1 − sim), normalized to the observed sim range so twins
+    // never collapse onto each other when their sims cluster tightly.
+    var sims = neighbors.map(function (nb) { return nb.sim; });
+    var simMax = Math.max.apply(null, sims), simMin = Math.min.apply(null, sims);
+    var simSpan = (simMax - simMin) || 0.001;
+    var total = neighbors.length, a0 = -Math.PI / 2;
+    decades.forEach(function (dec) {
+      var members = groups[dec];
+      var span = (members.length / total) * Math.PI * 2;
+      members.forEach(function (nb, k) {
+        // most similar twin nearest the sector's leading edge
+        var a = a0 + span * ((k + 0.5) / members.length);
+        var R = 44 + ((simMax - nb.sim) / simSpan) * 96; // 44 → 140
+        nb._x = cx + R * Math.cos(a); nb._y = cy + R * Math.sin(a);
+        nb._dec = dec;
+      });
+      a0 += span;
+    });
+    // edges first (under nodes); width ∝ similarity
+    neighbors.forEach(function (nb) {
+      var w = 1 + (nb.sim - 0.5) * 10;
+      if (w < 1) w = 1; if (w > 6) w = 6;
+      s += '<line x1="' + cx.toFixed(1) + '" y1="' + cy.toFixed(1) + '" x2="' + nb._x.toFixed(1) + '" y2="' + nb._y.toFixed(1) +
+        '" stroke="' + eraColor(nb._dec) + '" stroke-width="' + w.toFixed(1) + '" opacity="0.65"/>';
+    });
+    // twin nodes, colored by era. Labels sit on the outward side (away from
+    // center), split by hemisphere — this halves label collisions without
+    // leader lines.
     neighbors.forEach(function (nb) {
       var q = state.byId[nb.id];
-      var lx = nb._x, ly = nb._y + 30;
-      s += '<circle cx="' + nb._x.toFixed(1) + '" cy="' + nb._y.toFixed(1) + '" r="15" fill="' + TERRA + '" opacity="0.9"/>';
-      s += '<text x="' + lx.toFixed(1) + '" y="' + ly.toFixed(1) + '" text-anchor="middle" class="vh-ins__svglabel">' +
+      var out = (nb._y < cy) ? -1 : 1;
+      var lx = nb._x, ly = nb._y + out * 28;
+      // text halo (dark stroke under the fill) keeps labels readable where
+      // dense neighborhoods overlap — readability without leader lines.
+      var halo = ' style="paint-order:stroke;stroke:#1E2022;stroke-width:3px"';
+      s += '<circle cx="' + nb._x.toFixed(1) + '" cy="' + nb._y.toFixed(1) + '" r="14" fill="' + eraColor(nb._dec) + '" opacity="0.92"/>';
+      s += '<text x="' + lx.toFixed(1) + '" y="' + ly.toFixed(1) + '" text-anchor="middle" class="vh-ins__svglabel"' + halo + '>' +
         esc(pretty(q.name)) + '</text>';
-      s += '<text x="' + lx.toFixed(1) + '" y="' + (ly + 15).toFixed(1) + '" text-anchor="middle" class="vh-ins__svgval">' +
-        esc(shortSeason(q.season)) + ' · ' + nb.sim.toFixed(3) + '</text>';
+      s += '<text x="' + lx.toFixed(1) + '" y="' + (ly + out * 15).toFixed(1) + '" text-anchor="middle" class="vh-ins__svgval"' + halo + '>' +
+        esc(shortSeason(q.season)) + ' · ' + simBand(nb.sim) + '</text>';
     });
-    s += '<circle cx="' + cx + '" cy="' + cy + '" r="24" fill="' + GOLD + '"/>';
-    s += '<text x="' + cx + '" y="' + (cy + 42) + '" text-anchor="middle" class="vh-ins__svgval">' +
-      esc(pretty(p.name)) + '</text>';
-    s += '<text x="' + cx + '" y="' + (cy + 58) + '" text-anchor="middle" class="vh-ins__svglabel">' +
-      esc(shortSeason(p.season)) + ' · ' + esc(p.decade) + '</text>';
+    // center node: size ∝ Twin Centrality (sqrt-scaled; max 61 → r 33).
+    // No text label — the selected player-season is already the page title
+    // and the picker value. Text here only ever collided with twin labels.
+    var cr = 16 + Math.sqrt(centrality || 0) * 2.2;
+    if (cr > 34) cr = 34;
+    s += '<circle cx="' + cx + '" cy="' + cy + '" r="' + cr.toFixed(1) + '" fill="' + GOLD + '"/>';
+    s += '<circle cx="' + cx + '" cy="' + cy + '" r="' + (cr - 5).toFixed(1) + '" fill="none" stroke="#1E2022" stroke-width="2" opacity="0.5"/>';
+    // the folded metrics: one caption line, not boxes
+    s += '<text x="' + cx + '" y="' + (H - 8) + '" text-anchor="middle" class="vh-ins__svglabel">' +
+      'Twin Centrality ' + centrality + ' of 12,966 neighbor sets · Era-Bridge ' + eraBridge + ' of 8 twins from another decade</text>';
+    // era legend, top-left — clear of the caption
+    var lx0 = 14;
+    decades.forEach(function (dec, i) {
+      var lx = lx0 + i * 92;
+      s += '<circle cx="' + lx + '" cy="16" r="5" fill="' + eraColor(dec) + '"/>';
+      s += '<text x="' + (lx + 9) + '" y="20" class="vh-ins__svglabel">' + esc(dec) + '</text>';
+    });
     return s + '</svg>';
   }
 
@@ -141,17 +214,22 @@
   }
 
   function flowSVG(p) {
+    // P1: three columns — the Era column was redundant (the era twin carries
+    // the era). Flows carry direct z-score labels; widths ∝ |z| share.
     var W = 620, H = 330;
-    var X = [36, 196, 356, 516], CW = 104;
+    var X = [56, 258, 460], CW = 104;
     var s = '<svg viewBox="0 0 ' + W + ' ' + H + '" class="vh-ins__viz" role="img" aria-label="stat flow of ' + esc(pretty(p.name)) + '">';
-    var heads = ['Era', 'Archetype', 'Stat signature', 'Era twin'];
+    var heads = ['Archetype', 'Stat signature', 'Era twin'];
     heads.forEach(function (h, i) {
       s += '<text x="' + (X[i] + CW / 2) + '" y="22" text-anchor="middle" class="vh-ins__svglabel" style="text-transform:uppercase;letter-spacing:.12em;font-size:11px">' + h + '</text>';
     });
-    function link(x1, y1, x2, y2, w, color) {
+    function link(x1, y1, x2, y2, w, color, label) {
       var mx = (x1 + x2) / 2;
       s += '<path d="M' + x1 + ',' + y1 + ' C' + mx + ',' + y1 + ' ' + mx + ',' + y2 + ' ' + x2 + ',' + y2 +
         '" fill="none" stroke="' + (color || TERRA) + '" stroke-width="' + w.toFixed(1) + '" opacity="0.7"/>';
+      if (label) {
+        s += '<text x="' + mx.toFixed(1) + '" y="' + ((y1 + y2) / 2 - 6).toFixed(1) + '" text-anchor="middle" class="vh-ins__svglabel">' + esc(label) + '</text>';
+      }
     }
     function node(x, y, w, h, fill, lines, dashed) {
       s += '<rect x="' + x + '" y="' + y + '" width="' + w + '" height="' + h + '" rx="8" fill="' + fill + '"' +
@@ -161,37 +239,35 @@
           '" text-anchor="middle" class="vh-ins__svgval">' + esc(ln) + '</text>';
       });
     }
-    // Era node
-    node(X[0], 150, CW, 46, VOID === '#1E2022' ? '#2a2d30' : '#eee', [p.decade]);
-    // Archetype node
+    // Archetype node (the era lives in the twin column now)
     var archLines = wrap2(p.archetype || 'Unknown');
-    node(X[1], 138, CW, 70, '#2a2d30', archLines);
-    link(X[0] + CW, 173, X[1], 173, 12);
-    // Stat nodes: heights proportional to |z| share
+    node(X[0], 138, CW, 70, '#2a2d30', archLines);
+    // Stat nodes: heights proportional to |z| share; flows labeled with z
     var tot = p.top3.reduce(function (a, t) { return a + Math.abs(t.z); }, 0) || 1;
     var y = 56, Htot = 218;
     p.top3.forEach(function (t) {
       var h = Math.max(30, (Math.abs(t.z) / tot) * Htot);
       var lbl = t.label.length > 16 ? t.label.slice(0, 15) + '…' : t.label;
-      node(X[2], y, CW, h, '#2a2d30', [lbl, (t.z > 0 ? '+' : '') + t.z.toFixed(2) + 'σ']);
+      var zlbl = (t.z > 0 ? '+' : '') + t.z.toFixed(2) + 'σ';
+      node(X[1], y, CW, h, '#2a2d30', [lbl, zlbl]);
       var share = Math.abs(t.z) / tot;
-      link(X[1] + CW, 173, X[2], y + h / 2, Math.max(2, share * 30));
+      link(X[0] + CW, 173, X[1], y + h / 2, Math.max(2, share * 30), TERRA, zlbl);
       t._cy = y + h / 2;
       y += h + 8;
     });
-    // Twin node (or honest empty state)
+    // Twin node (or honest empty state) — band label, never a naked number
     var tw = state.twins[p.name.toLowerCase() + '|' + p.season];
     if (tw && tw.twin) {
-      node(X[3], 138, CW, 70, GOLD, [pretty(tw.twin.name).split(' ').slice(-1)[0], shortSeason(tw.twin.season)]);
-      s += '<text x="' + (X[3] + CW / 2) + '" y="' + (138 + 88) + '" text-anchor="middle" class="vh-ins__svglabel">sim ' +
-        Number(tw.twin.similarity).toFixed(3) + '</text>';
+      node(X[2], 138, CW, 70, GOLD, [pretty(tw.twin.name).split(' ').slice(-1)[0], shortSeason(tw.twin.season)]);
+      s += '<text x="' + (X[2] + CW / 2) + '" y="' + (138 + 88) + '" text-anchor="middle" class="vh-ins__svglabel">' +
+        simBand(Number(tw.twin.similarity)) + '</text>';
       p.top3.forEach(function (t) {
         var share = Math.abs(t.z) / tot;
-        link(X[2] + CW, t._cy, X[3], 173, Math.max(2, share * 30), GOLD);
+        link(X[1] + CW, t._cy, X[2], 173, Math.max(2, share * 30), GOLD);
       });
     } else {
-      node(X[3], 138, CW, 70, 'none', ['No era twin', 'charted'], true);
-      s += '<text x="' + (X[3] + CW / 2) + '" y="' + (138 + 88) + '" text-anchor="middle" class="vh-ins__svglabel">pool: 4+ seasons</text>';
+      node(X[2], 138, CW, 70, 'none', ['No era twin', 'charted'], true);
+      s += '<text x="' + (X[2] + CW / 2) + '" y="' + (138 + 88) + '" text-anchor="middle" class="vh-ins__svglabel">pool: 4+ seasons</text>';
     }
     return s + '</svg>';
   }
@@ -213,26 +289,20 @@
 
     document.getElementById('tn-title').textContent =
       pretty(p.name) + ' ' + shortSeason(p.season) + ' — twin network';
-    document.getElementById('tn-vizwrap').innerHTML = networkSVG(p, neighbors);
 
-    var eraBridge = neighbors.filter(function (nb) {
+    var eraBridgeCount = neighbors.filter(function (nb) {
       return state.byId[nb.id].decade !== p.decade;
-    }).length / neighbors.length;
-    var metrics = document.getElementById('tn-metrics');
-    metrics.innerHTML =
-      metricHTML(String(state.counts[id]), 'Twin Centrality — in ' + state.counts[id] + ' of 12,966 top-10 neighbor sets (#' + state.rankOf[id] + ' overall)') +
-      metricHTML((eraBridge * 100).toFixed(0) + '%', 'Era-Bridge Score — ' + (eraBridge * K_SHOW).toFixed(0) + ' of ' + K_SHOW + ' shown twins from another decade') +
-      metricHTML(neighbors[0].sim.toFixed(3), 'Closest twin — ' + pretty(state.byId[neighbors[0].id].name) + ' ' + shortSeason(state.byId[neighbors[0].id].season));
+    }).length;
+    // P1: the metric boxes are gone — centrality + era-bridge fold into the
+    // diagram caption. The #tn-metrics container is removed from the page.
+    document.getElementById('tn-vizwrap').innerHTML =
+      networkSVG(p, neighbors, state.counts[id], eraBridgeCount);
 
     document.getElementById('tn-flowwrap').innerHTML = flowSVG(p);
 
     var url = new URL(location.href);
     url.searchParams.set('p', id);
     history.replaceState(null, '', url.toString());
-  }
-
-  function metricHTML(big, small) {
-    return '<div class="vh-tn__metric"><b>' + esc(big) + '</b><span>' + esc(small) + '</span></div>';
   }
 
   /* ---------- picker ---------- */

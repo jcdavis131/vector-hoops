@@ -4,7 +4,7 @@
 <link rel="manifest" href="/manifest.json">
 <title>Twin Networks — Vector Hoops</title>
 <meta name="description" content="Every player-season sits in a neighborhood of statistical twins. Explore the twin network and stat flow of any of 12,966 player-seasons, measured in the MTNN v5 embedding."/>
-<link rel="stylesheet" href="assets/shell.css?v=7eb94ecf"/>
+<link rel="stylesheet" href="assets/shell.css?v=fdb1f985"/>
 <link rel="stylesheet" href="assets/responsive.css?v=cc8e5207"/>
 <link rel="stylesheet" href="assets/final-qa.css?v=fb603ee5"/>
 <link rel="stylesheet" href="assets/unified.css?v=fd25e8ca"/>
@@ -29,10 +29,6 @@
 .vh-tn__field{display:flex;flex-direction:column;gap:6px;flex:1 1 220px;min-width:0}
 .vh-tn__field label{font:700 11px/1.4 var(--font-sans);letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
 .vh-tn__field input,.vh-tn__field select{font:400 15px/1.4 var(--font-sans);color:var(--fg);background:var(--surface-2,var(--surface));border:1px solid var(--line);border-radius:10px;padding:10px 12px;width:100%}
-.vh-tn__metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:0 0 16px}
-.vh-tn__metric{background:var(--surface-2,var(--surface));border:1px solid var(--line);border-radius:12px;padding:12px 14px}
-.vh-tn__metric b{display:block;font:800 clamp(22px,4vw,30px)/1.1 var(--font-display);color:var(--gold,#D4AF69)}
-.vh-tn__metric span{font:400 12.5px/1.5 var(--font-sans);color:var(--fg-2)}
 .vh-tn__node{cursor:default}
 .vh-tn__back{display:inline-block;margin:0 0 var(--s-4);font:600 14px var(--font-sans);color:var(--accent);text-decoration:none}
 @media(max-width:560px){.vh-tn__picker{flex-direction:column;align-items:stretch}}
@@ -67,7 +63,6 @@
           <select id="tn-season"></select>
         </div>
       </div>
-      <div class="vh-tn__metrics" id="tn-metrics"></div>
       <div class="vh-ins__vizwrap" id="tn-vizwrap"><p class="vh-ins__error" id="tn-status">Loading the embedding…</p></div>
       <p class="vh-ins__foot">Nodes are player-seasons; edge width is proportional to cosine similarity in the L2-normalized MTNN v5 64-d embedding (self excluded, top 8 shown). <b>Twin Centrality</b> = how many of the 12,966 player-seasons count this season among their 10 nearest neighbors. <b>Era-Bridge Score</b> = share of the 8 shown twins from a different decade. Every number recomputed from the served vectors.</p>
       <div class="vh-ins__share">
@@ -78,7 +73,7 @@
     <article class="vh-ins__card" aria-label="Stat flow">
       <div class="vh-ins__kicker">Stat Flow</div>
       <h2 class="vh-ins__title">How this season is built</h2>
-      <p class="vh-ins__lede">Four stages, one story: the era it belongs to, the archetype it plays like, the three stats that define it, and the twin it mirrors across time.</p>
+      <p class="vh-ins__lede">Three stages, one story: the archetype it plays like, the three stats that define it, and the twin it mirrors across time.</p>
       <div class="vh-ins__vizwrap" id="tn-flowwrap"></div>
       <p class="vh-ins__foot">Flow widths are proportional to |z-score| share of the three defining stats in the 14-dim era-honest style vector. The era twin is the nearest other-decade career in the 64-d embedding. Twin coverage spans careers with 4+ charted seasons — seasons outside the pool show an honest empty state, never a placeholder.</p>
     </article>
@@ -92,6 +87,6 @@
   <p class="site-footer__attribution">Every number recomputable from stats.nba.com · A <a href="https://dumbmodel.com">dumbmodel</a> project · Nearest seasons by cosine similarity in the 64-dimensional MTNN v5 embedding.</p>
 </footer>
 <script src="/assets/site-nav.js?v=af70db2b"></script>
-<script src="assets/twin-network.js?v=4a7c2ac5"></script>
+<script src="assets/twin-network.js?v=d34be1d3"></script>
 <script src="/assets/inline-sw-register.js?v=48fb8eb4"></script>
 </body></html>
