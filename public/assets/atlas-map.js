@@ -305,7 +305,7 @@
       body.innerHTML = [0, 1, 2].map(function (k) {
         return '<tr class="is-loading"><td class="r">' + (k + 1) + '</td><td><span class="skeleton"></span></td><td><span class="skeleton skeleton--s"></span></td><td class="hide-s"><span class="skeleton"></span></td><td class="r"><span class="skeleton skeleton--s"></span></td></tr>';
       }).join('');
-      if (status) status.textContent = 'Loading the 64-d embedding…';
+      if (status) status.textContent = 'Loading nearest-neighbor list…';
       return;
     }
     if (status) status.textContent = '';
@@ -745,6 +745,22 @@
       ['pointerover', 'pointerdown', 'touchstart', 'focusin'].forEach(function (ev) {
         document.addEventListener(ev, function () { ensurePeers(); }, { once: true, passive: true });
       });
+      // P0-2: no engagement needed either — fetch the peer list the first time
+      // the peer table scrolls into view, so the skeleton state resolves on
+      // its own for visitors who only ever scroll. (VHPeers.load is idempotent:
+      // the engagement prefetch above cannot double-fetch.)
+      try {
+        var readoutEl = document.querySelector('#atlas .readout');
+        if (readoutEl && 'IntersectionObserver' in window) {
+          var peerIO = new IntersectionObserver(function (entries) {
+            if (entries.some(function (e) { return e.isIntersecting; })) {
+              peerIO.disconnect();
+              ensurePeers();
+            }
+          });
+          peerIO.observe(readoutEl);
+        }
+      } catch (e) { /* IO unsupported: engagement prefetch still applies */ }
     })
     .catch(function (err) { fail('The season file did not arrive (' + err.message + '). Check your connection and try again.'); });
 
