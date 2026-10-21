@@ -43,6 +43,7 @@ Run:  python3 scripts/quantize_embed3d.py
 Then: python3 scripts/stamp_assets.py   # refresh ?v= content hashes
       python3 scripts/sync_public.py    # mirror root -> public/
 """
+
 import datetime
 import json
 import math
@@ -143,11 +144,12 @@ new_meta = {
     "season_base": SEASON_BASE,
     "fields": {
         "n": "delta-encoded indices into meta.names (prefix-sum to decode)",
-        "m": ("packed per-point int: season=1996+(m>>9), "
-              "team=meta.teams[((m>>3)&63)-1] (-1 => null), cluster=m&7"),
-        "pca/tsne/umap": ("flat int arrays, 3 per point in row order; "
-                           "int millis of centered unit-normalized coords, "
-                           "/1000; loader must not re-center/re-normalize"),
+        "m": ("packed per-point int: season=1996+(m>>9), team=meta.teams[((m>>3)&63)-1] (-1 => null), cluster=m&7"),
+        "pca/tsne/umap": (
+            "flat int arrays, 3 per point in row order; "
+            "int millis of centered unit-normalized coords, "
+            "/1000; loader must not re-center/re-normalize"
+        ),
     },
 }
 

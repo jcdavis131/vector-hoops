@@ -31,6 +31,5 @@ def test_daily_refresh_proof() -> None:
         timeout=300,
     )
     assert proc.returncode == 0, (
-        "daily-refresh-proof fuzz test failed:\n"
-        f"--- stdout ---\n{proc.stdout}\n--- stderr ---\n{proc.stderr}"
+        f"daily-refresh-proof fuzz test failed:\n--- stdout ---\n{proc.stdout}\n--- stderr ---\n{proc.stderr}"
     )

@@ -10,6 +10,7 @@ Run: python3 scripts/check_css_braces.py [root-dir]
 Exits 1 with the file + line of the first imbalance it finds.
 stdlib only.
 """
+
 import re
 import sys
 from pathlib import Path
@@ -21,8 +22,8 @@ CLOSE = set(PAIRS.values())
 
 def stripped_lines(path):
     src = path.read_text(encoding="utf-8")
-    src = re.sub(r"/\*.*?\*/", "", src, flags=re.S)          # comments
-    src = re.sub(r'(["\'])(?:\\.|(?!\1).)*\1', '""', src)    # strings
+    src = re.sub(r"/\*.*?\*/", "", src, flags=re.S)  # comments
+    src = re.sub(r'(["\'])(?:\\.|(?!\1).)*\1', '""', src)  # strings
     return src.splitlines()
 
 
@@ -42,8 +43,7 @@ def check(path):
                 if PAIRS[o] != ch:
                     return (
                         False,
-                        f"{path}:{ln}:{col + 1}: '{ch}' closes '{o}' "
-                        f"opened at {path}:{oln}:{ocol}",
+                        f"{path}:{ln}:{col + 1}: '{ch}' closes '{o}' opened at {path}:{oln}:{ocol}",
                     )
             col += 1
     if stack:
