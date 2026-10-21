@@ -66,6 +66,12 @@
     "models/mtnn-v5.html": {
       "budget_bytes": 165888
     },
+    "status.html": {
+      "budget_bytes": 44032
+    },
+    "insights/era-uniqueness.html": {
+      "budget_bytes": 32768
+    },
     "teams.html": {
       "budget_bytes": 132096
     },
