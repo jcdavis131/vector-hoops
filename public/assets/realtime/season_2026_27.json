@@ -1,0 +1,4386 @@
+{
+  "as_of": "2026-10-20T19:02:34Z",
+  "season": {
+    "display": "2026-27",
+    "year": 2027
+  },
+  "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba",
+  "teams": [
+    {
+      "abbr": "ATL",
+      "athletes": [
+        {
+          "id": "4278039",
+          "injury": "none",
+          "jersey": "7",
+          "name": "Nickeil Alexander-Walker",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "4869342",
+          "injury": "none",
+          "jersey": "5",
+          "name": "Dyson Daniels",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "4431941",
+          "injury": "none",
+          "jersey": "10",
+          "name": "RayJ Dennis",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "4397020",
+          "injury": "none",
+          "jersey": "0",
+          "name": "Luguentz Dort",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "5106262",
+          "injury": "none",
+          "jersey": "20",
+          "name": "Zuby Ejiofor",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "2578185",
+          "injury": "none",
+          "jersey": "8",
+          "name": "Dorian Finney-Smith",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "5149077",
+          "injury": "none",
+          "jersey": "4",
+          "name": "Kingston Flemings",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "4585618",
+          "injury": "none",
+          "jersey": "00",
+          "name": "Keshon Gilbert",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "4712863",
+          "injury": "unknown",
+          "jersey": "18",
+          "name": "Mouhamed Gueye",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "4701230",
+          "injury": "none",
+          "jersey": "1",
+          "name": "Jalen Johnson",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "4280151",
+          "injury": "none",
+          "jersey": "24",
+          "name": "Corey Kispert",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "3146557",
+          "injury": "none",
+          "jersey": "31",
+          "name": "Jock Landale",
+          "position": "C",
+          "status": "Active"
+        },
+        {
+          "id": "2490149",
+          "injury": "none",
+          "jersey": "3",
+          "name": "CJ McCollum",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "4873201",
+          "injury": "none",
+          "jersey": "14",
+          "name": "Asa Newell",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "4431680",
+          "injury": "none",
+          "jersey": "17",
+          "name": "Onyeka Okongwu",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "5105571",
+          "injury": "unknown",
+          "jersey": "13",
+          "name": "Henri Veesaar",
+          "position": "C",
+          "status": "Active"
+        },
+        {
+          "id": "4397183",
+          "injury": "none",
+          "jersey": "2",
+          "name": "Aaron Wiggins",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "4431714",
+          "injury": "none",
+          "jersey": "22",
+          "name": "Jalen Wilson",
+          "position": "F",
+          "status": "Active"
+        }
+      ],
+      "id": "1",
+      "name": "Atlanta Hawks",
+      "record": "unknown"
+    },
+    {
+      "abbr": "BOS",
+      "athletes": [
+        {
+          "id": "4433188",
+          "injury": "unknown",
+          "jersey": "99",
+          "name": "Devin Carter",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "5142621",
+          "injury": "none",
+          "jersey": "12",
+          "name": "Chris Cenac Jr.",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "3195",
+          "injury": "none",
+          "jersey": "45",
+          "name": "Mike Conley",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "4277951",
+          "injury": "none",
+          "jersey": "52",
+          "name": "Luka Garza",
+          "position": "C",
+          "status": "Active"
+        },
+        {
+          "id": "4251",
+          "injury": "none",
+          "jersey": "13",
+          "name": "Paul George",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "5175647",
+          "injury": "none",
+          "jersey": "28",
+          "name": "Hugo Gonzalez",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "4397251",
+          "injury": "none",
+          "jersey": "8",
+          "name": "Ron Harper Jr.",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "4065804",
+          "injury": "none",
+          "jersey": "30",
+          "name": "Sam Hauser",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "5106283",
+          "injury": "none",
+          "jersey": "20",
+          "name": "Dillon Mitchell",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "4066354",
+          "injury": "none",
+          "jersey": "11",
+          "name": "Payton Pritchard",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "4397424",
+          "injury": "none",
+          "jersey": "88",
+          "name": "Neemias Queta",
+          "position": "C",
+          "status": "Active"
+        },
+        {
+          "id": "4351852",
+          "injury": "none",
+          "jersey": "4",
+          "name": "Mitchell Robinson",
+          "position": "C",
+          "status": "Active"
+        },
+        {
+          "id": "4593841",
+          "injury": "none",
+          "jersey": "55",
+          "name": "Baylor Scheierman",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "4065648",
+          "injury": "none",
+          "jersey": "0",
+          "name": "Jayson Tatum",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "4683689",
+          "injury": "none",
+          "jersey": "27",
+          "name": "Jordan Walsh",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "3078576",
+          "injury": "none",
+          "jersey": "9",
+          "name": "Derrick White",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "4702745",
+          "injury": "none",
+          "jersey": "77",
+          "name": "Amari Williams",
+          "position": "F",
+          "status": "Active"
+        }
+      ],
+      "id": "2",
+      "name": "Boston Celtics",
+      "record": "unknown"
+    },
+    {
+      "abbr": "BKN",
+      "athletes": [
+        {
+          "id": "5105626",
+          "injury": "unknown",
+          "jersey": "34",
+          "name": "Tyler Bilodeau",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "5101761",
+          "injury": "none",
+          "jersey": "0",
+          "name": "Mikel Brown Jr.",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "4712896",
+          "injury": "none",
+          "jersey": "21",
+          "name": "Noah Clowney",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "5175643",
+          "injury": "none",
+          "jersey": "8",
+          "name": "Egor Demin",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "4702177",
+          "injury": "none",
+          "jersey": "1",
+          "name": "Keon Ellis",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "4870564",
+          "injury": "none",
+          "jersey": "9",
+          "name": "Joshua Jefferson",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "5174655",
+          "injury": "none",
+          "jersey": "31",
+          "name": "Chaney Johnson",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "3907823",
+          "injury": "none",
+          "jersey": "14",
+          "name": "Terance Mann",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "4687718",
+          "injury": "none",
+          "jersey": "00",
+          "name": "Josh Minott",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "4702670",
+          "injury": "none",
+          "jersey": "16",
+          "name": "Grant Nelson",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "4278104",
+          "injury": "none",
+          "jersey": "17",
+          "name": "Michael Porter Jr.",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "5037873",
+          "injury": "none",
+          "jersey": "4",
+          "name": "Drake Powell",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "3064514",
+          "injury": "none",
+          "jersey": "30",
+          "name": "Julius Randle",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "5242502",
+          "injury": "none",
+          "jersey": "77",
+          "name": "Ben Saraf",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "4432194",
+          "injury": "none",
+          "jersey": "20",
+          "name": "Day'Ron Sharpe",
+          "position": "C",
+          "status": "Active"
+        },
+        {
+          "id": "5279130",
+          "injury": "none",
+          "jersey": "10",
+          "name": "Nolan Traore",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "3150844",
+          "injury": "none",
+          "jersey": "13",
+          "name": "Moritz Wagner",
+          "position": "C",
+          "status": "Active"
+        },
+        {
+          "id": "5107173",
+          "injury": "none",
+          "jersey": "2",
+          "name": "Danny Wolf",
+          "position": "F",
+          "status": "Active"
+        }
+      ],
+      "id": "17",
+      "name": "Brooklyn Nets",
+      "record": "unknown"
+    },
+    {
+      "abbr": "CHA",
+      "athletes": [
+        {
+          "id": "3135045",
+          "injury": "unknown",
+          "jersey": "8",
+          "name": "Grayson Allen",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "5060701",
+          "injury": "none",
+          "jersey": "5",
+          "name": "Christian Anderson",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "4684269",
+          "injury": "unknown",
+          "jersey": "18",
+          "name": "Kylan Boswell",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "4433249",
+          "injury": "unknown",
+          "jersey": "14",
+          "name": "Moussa Diabate",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "4701225",
+          "injury": "none",
+          "jersey": "16",
+          "name": "PJ Hall",
+          "position": "C",
+          "status": "Active"
+        },
+        {
+          "id": "4602025",
+          "injury": "none",
+          "jersey": "4",
+          "name": "Sion James",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "4576060",
+          "injury": "none",
+          "jersey": "11",
+          "name": "Ryan Kalkbrenner",
+          "position": "C",
+          "status": "Active"
+        },
+        {
+          "id": "5061575",
+          "injury": "unknown",
+          "jersey": "7",
+          "name": "Kon Knueppel",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "5239590",
+          "injury": "none",
+          "jersey": "33",
+          "name": "Liam McNeeley",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "4433287",
+          "injury": "none",
+          "jersey": "24",
+          "name": "Brandon Miller",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "2583632",
+          "injury": "none",
+          "jersey": "00",
+          "name": "Royce O'Neale",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "4396971",
+          "injury": "none",
+          "jersey": "0",
+          "name": "Naz Reid",
+          "position": "C",
+          "status": "Active"
+        },
+        {
+          "id": "5211176",
+          "injury": "none",
+          "jersey": "31",
+          "name": "Tidjane Salaun",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "3032979",
+          "injury": "none",
+          "jersey": "17",
+          "name": "Dennis Schroder",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "5281370",
+          "injury": "none",
+          "jersey": "22",
+          "name": "Hannes Steinbach",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "4395651",
+          "injury": "unknown",
+          "jersey": "3",
+          "name": "Coby White",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "4066218",
+          "injury": "unknown",
+          "jersey": "2",
+          "name": "Grant Williams",
+          "position": "F",
+          "status": "Active"
+        }
+      ],
+      "id": "30",
+      "name": "Charlotte Hornets",
+      "record": "unknown"
+    },
+    {
+      "abbr": "CHI",
+      "athletes": [
+        {
+          "id": "5105555",
+          "injury": "unknown",
+          "jersey": "19",
+          "name": "Tobe Awaka",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "4711294",
+          "injury": "none",
+          "jersey": "14",
+          "name": "Matas Buzelis",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "4278067",
+          "injury": "unknown",
+          "jersey": "9",
+          "name": "Nic Claxton",
+          "position": "C",
+          "status": "Active"
+        },
+        {
+          "id": "4066650",
+          "injury": "unknown",
+          "jersey": "12",
+          "name": "Zach Collins",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "5242496",
+          "injury": "none",
+          "jersey": "2",
+          "name": "Noa Essengue",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "4871145",
+          "injury": "none",
+          "jersey": "3",
+          "name": "Josh Giddey",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "4683750",
+          "injury": "unknown",
+          "jersey": "15",
+          "name": "Jordan Hawkins",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "2990984",
+          "injury": "none",
+          "jersey": "7",
+          "name": "Buddy Hield",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "4395626",
+          "injury": "none",
+          "jersey": "30",
+          "name": "Tre Jones",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "5044385",
+          "injury": "unknown",
+          "jersey": "11",
+          "name": "Leonard Miller",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "4432822",
+          "injury": "unknown",
+          "jersey": "35",
+          "name": "Isaac Okoro",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "2595516",
+          "injury": "none",
+          "jersey": "24",
+          "name": "Norman Powell",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "4898010",
+          "injury": "none",
+          "jersey": "22",
+          "name": "Jaylin Sellers",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "4397189",
+          "injury": "none",
+          "jersey": "25",
+          "name": "Jalen Smith",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "4848625",
+          "injury": "unknown",
+          "jersey": "5",
+          "name": "Dailyn Swain",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "4431687",
+          "injury": "none",
+          "jersey": "44",
+          "name": "Patrick Williams",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "5095151",
+          "injury": "none",
+          "jersey": "8",
+          "name": "Caleb Wilson",
+          "position": "F",
+          "status": "Active"
+        }
+      ],
+      "id": "4",
+      "name": "Chicago Bulls",
+      "record": "unknown"
+    },
+    {
+      "abbr": "CLE",
+      "athletes": [
+        {
+          "id": "4066328",
+          "injury": "none",
+          "jersey": "31",
+          "name": "Jarrett Allen",
+          "position": "C",
+          "status": "Active"
+        },
+        {
+          "id": "3934723",
+          "injury": "none",
+          "jersey": "3",
+          "name": "Thomas Bryant",
+          "position": "C",
+          "status": "Active"
+        },
+        {
+          "id": "4997530",
+          "injury": "unknown",
+          "jersey": "18",
+          "name": "Khalifa Diop",
+          "position": "C",
+          "status": "Active"
+        },
+        {
+          "id": "4431734",
+          "injury": "none",
+          "jersey": "21",
+          "name": "Tristan Enaruna",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "3992",
+          "injury": "none",
+          "jersey": "1",
+          "name": "James Harden",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "2995706",
+          "injury": "none",
+          "jersey": "33",
+          "name": "Mario Hezonja",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "4066757",
+          "injury": "unknown",
+          "jersey": "5",
+          "name": "Sam Merrill",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "5177362",
+          "injury": "none",
+          "jersey": "12",
+          "name": "Riley Minix",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "3908809",
+          "injury": "none",
+          "jersey": "45",
+          "name": "Donovan Mitchell",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "4432158",
+          "injury": "none",
+          "jersey": "4",
+          "name": "Evan Mobley",
+          "position": "C",
+          "status": "Active"
+        },
+        {
+          "id": "4701233",
+          "injury": "none",
+          "jersey": "9",
+          "name": "Craig Porter Jr.",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "5023693",
+          "injury": "none",
+          "jersey": "24",
+          "name": "Tyrese Proctor",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "5041951",
+          "injury": "none",
+          "jersey": "15",
+          "name": "Meleek Thomas",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "5106268",
+          "injury": "unknown",
+          "jersey": "35",
+          "name": "Nae'Qwan Tomlin",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "4683747",
+          "injury": "none",
+          "jersey": "20",
+          "name": "Jaylon Tyson",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "5106261",
+          "injury": "none",
+          "jersey": "39",
+          "name": "Ernest Udeh Jr.",
+          "position": "C",
+          "status": "Active"
+        },
+        {
+          "id": "4576087",
+          "injury": "none",
+          "jersey": "8",
+          "name": "Peyton Watson",
+          "position": "G",
+          "status": "Active"
+        }
+      ],
+      "id": "5",
+      "name": "Cleveland Cavaliers",
+      "record": "unknown"
+    },
+    {
+      "abbr": "DAL",
+      "athletes": [
+        {
+          "id": "4593125",
+          "injury": "unknown",
+          "jersey": "34",
+          "name": "Santi Aldama",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "5148538",
+          "injury": "unknown",
+          "jersey": "13",
+          "name": "Tarik Biberovic",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "4432582",
+          "injury": "none",
+          "jersey": "0",
+          "name": "Max Christie",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "4701208",
+          "injury": "none",
+          "jersey": "30",
+          "name": "Moussa Cisse",
+          "position": "C",
+          "status": "Active"
+        },
+        {
+          "id": "5279129",
+          "injury": "none",
+          "jersey": "55",
+          "name": "Sergio de Larrea",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "5041939",
+          "injury": "none",
+          "jersey": "32",
+          "name": "Cooper Flagg",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "4278049",
+          "injury": "none",
+          "jersey": "21",
+          "name": "Daniel Gafford",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "5105806",
+          "injury": "unknown",
+          "jersey": "9",
+          "name": "Jett Howard",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "6442",
+          "injury": "none",
+          "jersey": "11",
+          "name": "Kyrie Irving",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "4873153",
+          "injury": "none",
+          "jersey": "14",
+          "name": "Morez Johnson Jr.",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "5106040",
+          "injury": "none",
+          "jersey": "33",
+          "name": "Tobi Lawal",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "4683688",
+          "injury": "unknown",
+          "jersey": "2",
+          "name": "Dereck Lively II",
+          "position": "C",
+          "status": "Active"
+        },
+        {
+          "id": "4278594",
+          "injury": "none",
+          "jersey": "3",
+          "name": "Naji Marshall",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "3138160",
+          "injury": "none",
+          "jersey": "16",
+          "name": "Caleb Martin",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "5211175",
+          "injury": "none",
+          "jersey": "10",
+          "name": "Zaccharie Risacher",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "4432107",
+          "injury": "none",
+          "jersey": "8",
+          "name": "Marcus Sasser",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "4278078",
+          "injury": "none",
+          "jersey": "25",
+          "name": "P.J. Washington",
+          "position": "F",
+          "status": "Active"
+        }
+      ],
+      "id": "6",
+      "name": "Dallas Mavericks",
+      "record": "unknown"
+    },
+    {
+      "abbr": "DEN",
+      "athletes": [
+        {
+          "id": "4277848",
+          "injury": "none",
+          "jersey": "3",
+          "name": "Marvin Bagley III",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "4431767",
+          "injury": "none",
+          "jersey": "0",
+          "name": "Christian Braun",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "4698719",
+          "injury": "none",
+          "jersey": "7",
+          "name": "Trevon Brazile",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "3978",
+          "injury": "none",
+          "jersey": "10",
+          "name": "DeMar DeRozan",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "4065813",
+          "injury": "none",
+          "jersey": "11",
+          "name": "Alpha Diallo",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "3064290",
+          "injury": "none",
+          "jersey": "32",
+          "name": "Aaron Gordon",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "4433607",
+          "injury": "none",
+          "jersey": "14",
+          "name": "DaRon Holmes II",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "4565698",
+          "injury": "none",
+          "jersey": "13",
+          "name": "Bryce Hopkins",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "3138196",
+          "injury": "none",
+          "jersey": "23",
+          "name": "Cameron Johnson",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "3112335",
+          "injury": "none",
+          "jersey": "15",
+          "name": "Nikola Jokic",
+          "position": "C",
+          "status": "Active"
+        },
+        {
+          "id": "4592427",
+          "injury": "unknown",
+          "jersey": "21",
+          "name": "Spencer Jones",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "3135046",
+          "injury": "none",
+          "jersey": "5",
+          "name": "Tyus Jones",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "3936299",
+          "injury": "none",
+          "jersey": "27",
+          "name": "Jamal Murray",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "4433629",
+          "injury": "none",
+          "jersey": "9",
+          "name": "Ryan Nembhard",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "4431690",
+          "injury": "none",
+          "jersey": "22",
+          "name": "Zeke Nnaji",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "4432181",
+          "injury": "unknown",
+          "jersey": "1",
+          "name": "Julian Strawther",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "5105592",
+          "injury": "none",
+          "jersey": "00",
+          "name": "Cam Whitmore",
+          "position": "F",
+          "status": "Active"
+        }
+      ],
+      "id": "7",
+      "name": "Denver Nuggets",
+      "record": "unknown"
+    },
+    {
+      "abbr": "DET",
+      "athletes": [
+        {
+          "id": "3908845",
+          "injury": "none",
+          "jersey": "20",
+          "name": "John Collins",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "4432166",
+          "injury": "none",
+          "jersey": "2",
+          "name": "Cade Cunningham",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "4433621",
+          "injury": "none",
+          "jersey": "0",
+          "name": "Jalen Duren",
+          "position": "C",
+          "status": "Active"
+        },
+        {
+          "id": "2596112",
+          "injury": "none",
+          "jersey": "31",
+          "name": "Javonte Green",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "4397449",
+          "injury": "none",
+          "jersey": "94",
+          "name": "Elijah Harkless",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "4683771",
+          "injury": "none",
+          "jersey": "5",
+          "name": "Ronald Holland II",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "4066372",
+          "injury": "none",
+          "jersey": "27",
+          "name": "Kevin Huerter",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "5107199",
+          "injury": "none",
+          "jersey": "24",
+          "name": "Daniss Jenkins",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "4395702",
+          "injury": "none",
+          "jersey": "17",
+          "name": "Isaiah Joe",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "5107818",
+          "injury": "none",
+          "jersey": "13",
+          "name": "Isaac Jones",
+          "position": "C",
+          "status": "Active"
+        },
+        {
+          "id": "4700852",
+          "injury": "none",
+          "jersey": "8",
+          "name": "Chaz Lanier",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "5258459",
+          "injury": "none",
+          "jersey": "23",
+          "name": "Ebuka Okorie",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "5037878",
+          "injury": "none",
+          "jersey": "34",
+          "name": "Ugonna Onyenso",
+          "position": "C",
+          "status": "Active"
+        },
+        {
+          "id": "2990962",
+          "injury": "unknown",
+          "jersey": "12",
+          "name": "Taurean Prince",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "4278562",
+          "injury": "none",
+          "jersey": "7",
+          "name": "Paul Reed",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "3157465",
+          "injury": "none",
+          "jersey": "55",
+          "name": "Duncan Robinson",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "4397882",
+          "injury": "none",
+          "jersey": "35",
+          "name": "Tolu Smith",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "4684742",
+          "injury": "none",
+          "jersey": "9",
+          "name": "Ausar Thompson",
+          "position": "G",
+          "status": "Active"
+        }
+      ],
+      "id": "8",
+      "name": "Detroit Pistons",
+      "record": "unknown"
+    },
+    {
+      "abbr": "GS",
+      "athletes": [
+        {
+          "id": "4397886",
+          "injury": "unknown",
+          "jersey": "28",
+          "name": "Charles Bassey",
+          "position": "C",
+          "status": "Active"
+        },
+        {
+          "id": "6430",
+          "injury": "unknown",
+          "jersey": "10",
+          "name": "Jimmy Butler III",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "4433149",
+          "injury": "none",
+          "jersey": "18",
+          "name": "LJ Cryer",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "3975",
+          "injury": "unknown",
+          "jersey": "30",
+          "name": "Stephen Curry",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "6589",
+          "injury": "none",
+          "jersey": "23",
+          "name": "Draymond Green",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "3213",
+          "injury": "none",
+          "jersey": "20",
+          "name": "Al Horford",
+          "position": "C",
+          "status": "Active"
+        },
+        {
+          "id": "4703396",
+          "injury": "none",
+          "jersey": "unknown",
+          "name": "Graham Ike",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "5175737",
+          "injury": "none",
+          "jersey": "1",
+          "name": "Yaxel Lendeborg",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "4897449",
+          "injury": "none",
+          "jersey": "33",
+          "name": "Malevy Leons",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "4066436",
+          "injury": "none",
+          "jersey": "8",
+          "name": "De'Anthony Melton",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "4432171",
+          "injury": "unknown",
+          "jersey": "4",
+          "name": "Moses Moody",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "2990969",
+          "injury": "none",
+          "jersey": "32",
+          "name": "Georges Niang",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "3134903",
+          "injury": "none",
+          "jersey": "0",
+          "name": "Gary Payton II",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "4709138",
+          "injury": "unknown",
+          "jersey": "2",
+          "name": "Brandin Podziemski",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "3102531",
+          "injury": "unknown",
+          "jersey": "7",
+          "name": "Kristaps Porzingis",
+          "position": "C",
+          "status": "Active"
+        },
+        {
+          "id": "4897262",
+          "injury": "none",
+          "jersey": "3",
+          "name": "Will Richard",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "4997536",
+          "injury": "none",
+          "jersey": "15",
+          "name": "Gui Santos",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "4397040",
+          "injury": "none",
+          "jersey": "12",
+          "name": "Brandon Williams",
+          "position": "G",
+          "status": "Active"
+        }
+      ],
+      "id": "9",
+      "name": "Golden State Warriors",
+      "record": "unknown"
+    },
+    {
+      "abbr": "HOU",
+      "athletes": [
+        {
+          "id": "2991235",
+          "injury": "none",
+          "jersey": "12",
+          "name": "Steven Adams",
+          "position": "C",
+          "status": "Active"
+        },
+        {
+          "id": "3037789",
+          "injury": "none",
+          "jersey": "31",
+          "name": "Bogdan Bogdanovic",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "3102529",
+          "injury": "none",
+          "jersey": "30",
+          "name": "Clint Capela",
+          "position": "C",
+          "status": "Active"
+        },
+        {
+          "id": "4683860",
+          "injury": "none",
+          "jersey": "25",
+          "name": "Quadir Copeland",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "4592857",
+          "injury": "none",
+          "jersey": "27",
+          "name": "Isaiah Crawford",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "3202",
+          "injury": "none",
+          "jersey": "7",
+          "name": "Kevin Durant",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "4433192",
+          "injury": "none",
+          "jersey": "17",
+          "name": "Tari Eason",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "5105553",
+          "injury": "none",
+          "jersey": "3",
+          "name": "Julian Phillips",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "4871144",
+          "injury": "none",
+          "jersey": "28",
+          "name": "Alperen Sengun",
+          "position": "C",
+          "status": "Active"
+        },
+        {
+          "id": "4711272",
+          "injury": "none",
+          "jersey": "15",
+          "name": "Reed Sheppard",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "2990992",
+          "injury": "none",
+          "jersey": "36",
+          "name": "Marcus Smart",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "4432639",
+          "injury": "none",
+          "jersey": "10",
+          "name": "Jabari Smith Jr.",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "3136777",
+          "injury": "none",
+          "jersey": "8",
+          "name": "Jae'Sean Tate",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "4684740",
+          "injury": "none",
+          "jersey": "1",
+          "name": "Amen Thompson",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "5105837",
+          "injury": "none",
+          "jersey": "2",
+          "name": "Bruce Thornton",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "4432827",
+          "injury": "none",
+          "jersey": "9",
+          "name": "Oscar Tshiebwe",
+          "position": "C",
+          "status": "Active"
+        },
+        {
+          "id": "2991230",
+          "injury": "none",
+          "jersey": "5",
+          "name": "Fred VanVleet",
+          "position": "G",
+          "status": "Active"
+        }
+      ],
+      "id": "10",
+      "name": "Houston Rockets",
+      "record": "unknown"
+    },
+    {
+      "abbr": "IND",
+      "athletes": [
+        {
+          "id": "4431752",
+          "injury": "none",
+          "jersey": "24",
+          "name": "Kobe Brown",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "5157066",
+          "injury": "none",
+          "jersey": "12",
+          "name": "Johnny Furphy",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "4396993",
+          "injury": "none",
+          "jersey": "0",
+          "name": "Tyrese Haliburton",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "4065731",
+          "injury": "none",
+          "jersey": "32",
+          "name": "Jay Huff",
+          "position": "C",
+          "status": "Active"
+        },
+        {
+          "id": "4592829",
+          "injury": "none",
+          "jersey": "29",
+          "name": "Quenton Jackson",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "2530530",
+          "injury": "unknown",
+          "jersey": "9",
+          "name": "T.J. McConnell",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "2580365",
+          "injury": "none",
+          "jersey": "22",
+          "name": "Larry Nance Jr.",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "4395712",
+          "injury": "none",
+          "jersey": "2",
+          "name": "Andrew Nembhard",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "4396909",
+          "injury": "unknown",
+          "jersey": "23",
+          "name": "Aaron Nesmith",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "3133603",
+          "injury": "none",
+          "jersey": "10",
+          "name": "Kelly Oubre Jr.",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "4433076",
+          "injury": "none",
+          "jersey": "26",
+          "name": "Ben Sheppard",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "3149673",
+          "injury": "none",
+          "jersey": "43",
+          "name": "Pascal Siakam",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "4398207",
+          "injury": "none",
+          "jersey": "18",
+          "name": "Jalen Slawson",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "5105854",
+          "injury": "none",
+          "jersey": "3",
+          "name": "Braden Smith",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "4278355",
+          "injury": "none",
+          "jersey": "1",
+          "name": "Obi Toppin",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "5106060",
+          "injury": "unknown",
+          "jersey": "5",
+          "name": "Jarace Walker",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "4017837",
+          "injury": "none",
+          "jersey": "40",
+          "name": "Ivica Zubac",
+          "position": "C",
+          "status": "Active"
+        }
+      ],
+      "id": "11",
+      "name": "Indiana Pacers",
+      "record": "unknown"
+    },
+    {
+      "abbr": "LAC",
+      "athletes": [
+        {
+          "id": "6580",
+          "injury": "unknown",
+          "jersey": "3",
+          "name": "Bradley Beal",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "4845363",
+          "injury": "none",
+          "jersey": "24",
+          "name": "Cam Christie",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "5106258",
+          "injury": "none",
+          "jersey": "9",
+          "name": "Gradey Dick",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "2991139",
+          "injury": "none",
+          "jersey": "8",
+          "name": "Kris Dunn",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "4396907",
+          "injury": "none",
+          "jersey": "10",
+          "name": "Darius Garland",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "4066648",
+          "injury": "none",
+          "jersey": "28",
+          "name": "Rui Hachimura",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "3913176",
+          "injury": "unknown",
+          "jersey": "7",
+          "name": "Brandon Ingram",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "4432170",
+          "injury": "none",
+          "jersey": "23",
+          "name": "Isaiah Jackson",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "3936099",
+          "injury": "none",
+          "jersey": "5",
+          "name": "Derrick Jones Jr.",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "3448",
+          "injury": "none",
+          "jersey": "11",
+          "name": "Brook Lopez",
+          "position": "C",
+          "status": "Active"
+        },
+        {
+          "id": "5105832",
+          "injury": "none",
+          "jersey": "12",
+          "name": "Nick Martinelli",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "5075626",
+          "injury": "none",
+          "jersey": "18",
+          "name": "Baba Miller",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "4396818",
+          "injury": "unknown",
+          "jersey": "22",
+          "name": "Jordan Miller",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "5108024",
+          "injury": "unknown",
+          "jersey": "14",
+          "name": "Yanic Konan Niederhauser",
+          "position": "C",
+          "status": "Active"
+        },
+        {
+          "id": "4398390",
+          "injury": "none",
+          "jersey": "21",
+          "name": "Jalen Pickett",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "4702352",
+          "injury": "none",
+          "jersey": "4",
+          "name": "Kobe Sanders",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "4065778",
+          "injury": "unknown",
+          "jersey": "31",
+          "name": "Max Strus",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "5254165",
+          "injury": "none",
+          "jersey": "1",
+          "name": "Keaton Wagler",
+          "position": "G",
+          "status": "Active"
+        }
+      ],
+      "id": "12",
+      "name": "LA Clippers",
+      "record": "unknown"
+    },
+    {
+      "abbr": "LAL",
+      "athletes": [
+        {
+          "id": "5113969",
+          "injury": "unknown",
+          "jersey": "43",
+          "name": "Cameron Carr",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "3945274",
+          "injury": "none",
+          "jersey": "77",
+          "name": "Luka Doncic",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "4397014",
+          "injury": "none",
+          "jersey": "5",
+          "name": "Quentin Grimes",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "4868423",
+          "injury": "none",
+          "jersey": "7",
+          "name": "Jaden Hardy",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "4683774",
+          "injury": "unknown",
+          "jersey": "9",
+          "name": "Bronny James",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "4433599",
+          "injury": "none",
+          "jersey": "47",
+          "name": "Arthur Kaluma",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "4433136",
+          "injury": "none",
+          "jersey": "14",
+          "name": "Walker Kessler",
+          "position": "C",
+          "status": "Active"
+        },
+        {
+          "id": "4592691",
+          "injury": "none",
+          "jersey": "12",
+          "name": "Jake LaRavia",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "3155535",
+          "injury": "none",
+          "jersey": "55",
+          "name": "Kevon Looney",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "4278580",
+          "injury": "none",
+          "jersey": "54",
+          "name": "Sandro Mamukelashvili",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "4702972",
+          "injury": "none",
+          "jersey": "30",
+          "name": "Chris Manon",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "5114350",
+          "injury": "none",
+          "jersey": "31",
+          "name": "AK Okereke",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "4066457",
+          "injury": "none",
+          "jersey": "15",
+          "name": "Austin Reaves",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "4277811",
+          "injury": "unknown",
+          "jersey": "10",
+          "name": "Collin Sexton",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "5060631",
+          "injury": "unknown",
+          "jersey": "1",
+          "name": "Adou Thiero",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "3907498",
+          "injury": "none",
+          "jersey": "26",
+          "name": "Matisse Thybulle",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "4278077",
+          "injury": "unknown",
+          "jersey": "2",
+          "name": "Jarred Vanderbilt",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "4433137",
+          "injury": "none",
+          "jersey": "11",
+          "name": "Ziaire Williams",
+          "position": "F",
+          "status": "Active"
+        }
+      ],
+      "id": "13",
+      "name": "Los Angeles Lakers",
+      "record": "unknown"
+    },
+    {
+      "abbr": "MEM",
+      "athletes": [
+        {
+          "id": "5041935",
+          "injury": "none",
+          "jersey": "27",
+          "name": "Cameron Boozer",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "5105817",
+          "injury": "none",
+          "jersey": "20",
+          "name": "Carson Cooper",
+          "position": "C",
+          "status": "Active"
+        },
+        {
+          "id": "4903027",
+          "injury": "none",
+          "jersey": "23",
+          "name": "Cedric Coward",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "4600663",
+          "injury": "none",
+          "jersey": "14",
+          "name": "Zach Edey",
+          "position": "C",
+          "status": "Active"
+        },
+        {
+          "id": "2991070",
+          "injury": "unknown",
+          "jersey": "3",
+          "name": "Jerami Grant",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "4684806",
+          "injury": "none",
+          "jersey": "22",
+          "name": "Taylor Hendricks",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "5105550",
+          "injury": "unknown",
+          "jersey": "45",
+          "name": "GG Jackson",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "4065733",
+          "injury": "none",
+          "jersey": "2",
+          "name": "Ty Jerome",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "5231919",
+          "injury": "none",
+          "jersey": "35",
+          "name": "Karim Lopez",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "4683934",
+          "injury": "none",
+          "jersey": "21",
+          "name": "Jahmai Mashack",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "4594326",
+          "injury": "none",
+          "jersey": "17",
+          "name": "Kris Murray",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "4431785",
+          "injury": "none",
+          "jersey": "1",
+          "name": "Scotty Pippen Jr.",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "4593016",
+          "injury": "none",
+          "jersey": "41",
+          "name": "Quinten Post",
+          "position": "C",
+          "status": "Active"
+        },
+        {
+          "id": "4595400",
+          "injury": "none",
+          "jersey": "18",
+          "name": "Olivier-Maxence Prosper",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "4781746",
+          "injury": "none",
+          "jersey": "10",
+          "name": "Javon Small",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "4433083",
+          "injury": "none",
+          "jersey": "24",
+          "name": "Cam Spencer",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "4432810",
+          "injury": "unknown",
+          "jersey": "28",
+          "name": "Isaiah Stewart",
+          "position": "C",
+          "status": "Active"
+        },
+        {
+          "id": "5112087",
+          "injury": "none",
+          "jersey": "0",
+          "name": "Jaylen Wells",
+          "position": "F",
+          "status": "Active"
+        }
+      ],
+      "id": "29",
+      "name": "Memphis Grizzlies",
+      "record": "unknown"
+    },
+    {
+      "abbr": "MIA",
+      "athletes": [
+        {
+          "id": "4066261",
+          "injury": "unknown",
+          "jersey": "13",
+          "name": "Bam Adebayo",
+          "position": "C",
+          "status": "Active"
+        },
+        {
+          "id": "3032977",
+          "injury": "none",
+          "jersey": "7",
+          "name": "Giannis Antetokounmpo",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "5107157",
+          "injury": "none",
+          "jersey": "4",
+          "name": "Ryan Conwell",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "4837356",
+          "injury": "none",
+          "jersey": "24",
+          "name": "Tre Donaldson",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "3899664",
+          "injury": "none",
+          "jersey": "0",
+          "name": "Simone Fontecchio",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "4431772",
+          "injury": "none",
+          "jersey": "15",
+          "name": "Myron Gardner",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "4700818",
+          "injury": "unknown",
+          "jersey": "50",
+          "name": "Vladislav Goldin",
+          "position": "C",
+          "status": "Active"
+        },
+        {
+          "id": "2528210",
+          "injury": "none",
+          "jersey": "10",
+          "name": "Tim Hardaway Jr.",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "4431786",
+          "injury": "none",
+          "jersey": "16",
+          "name": "Keshad Johnson",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "4997528",
+          "injury": "none",
+          "jersey": "5",
+          "name": "Nikola Jovic",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "4601025",
+          "injury": "unknown",
+          "jersey": "9",
+          "name": "Pelle Larsson",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "4278053",
+          "injury": "none",
+          "jersey": "2",
+          "name": "Davion Mitchell",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "3064482",
+          "injury": "none",
+          "jersey": "95",
+          "name": "Bobby Portis",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "4278076",
+          "injury": "none",
+          "jersey": "8",
+          "name": "Nick Richards",
+          "position": "C",
+          "status": "Active"
+        },
+        {
+          "id": "4066993",
+          "injury": "unknown",
+          "jersey": "12",
+          "name": "Dru Smith",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "6475",
+          "injury": "none",
+          "jersey": "11",
+          "name": "Klay Thompson",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "3059319",
+          "injury": "none",
+          "jersey": "22",
+          "name": "Andrew Wiggins",
+          "position": "F",
+          "status": "Active"
+        }
+      ],
+      "id": "14",
+      "name": "Miami Heat",
+      "record": "unknown"
+    },
+    {
+      "abbr": "MIL",
+      "athletes": [
+        {
+          "id": "5164559",
+          "injury": "unknown",
+          "jersey": "15",
+          "name": "Nate Ament",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "5082206",
+          "injury": "none",
+          "jersey": "0",
+          "name": "Brayden Burries",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "4997526",
+          "injury": "none",
+          "jersey": "21",
+          "name": "Ousmane Dieng",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "4397475",
+          "injury": "none",
+          "jersey": "20",
+          "name": "AJ Green",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "4395725",
+          "injury": "none",
+          "jersey": "11",
+          "name": "Tyler Herro",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "5214640",
+          "injury": "none",
+          "jersey": "25",
+          "name": "Kasparas Jakucionis",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "4432848",
+          "injury": "none",
+          "jersey": "24",
+          "name": "Jaime Jaquez Jr.",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "4697268",
+          "injury": "none",
+          "jersey": "19",
+          "name": "Kam Jones",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "3134907",
+          "injury": "none",
+          "jersey": "18",
+          "name": "Kyle Kuzma",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "2991043",
+          "injury": "none",
+          "jersey": "12",
+          "name": "Caris LeVert",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "5214989",
+          "injury": "none",
+          "jersey": "23",
+          "name": "Bogoljub Markovic",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "4591725",
+          "injury": "none",
+          "jersey": "13",
+          "name": "Ryan Rollins",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "4397114",
+          "injury": "none",
+          "jersey": "30",
+          "name": "Cormac Ryan",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "4277922",
+          "injury": "unknown",
+          "jersey": "00",
+          "name": "Jericho Sims",
+          "position": "C",
+          "status": "Active"
+        },
+        {
+          "id": "4277843",
+          "injury": "none",
+          "jersey": "5",
+          "name": "Gary Trent Jr.",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "3133628",
+          "injury": "none",
+          "jersey": "3",
+          "name": "Myles Turner",
+          "position": "C",
+          "status": "Active"
+        },
+        {
+          "id": "5105623",
+          "injury": "none",
+          "jersey": "9",
+          "name": "Kel'el Ware",
+          "position": "C",
+          "status": "Active"
+        }
+      ],
+      "id": "15",
+      "name": "Milwaukee Bucks",
+      "record": "unknown"
+    },
+    {
+      "abbr": "MIN",
+      "athletes": [
+        {
+          "id": "4432816",
+          "injury": "none",
+          "jersey": "1",
+          "name": "LaMelo Ball",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "5279133",
+          "injury": "none",
+          "jersey": "19",
+          "name": "Joan Beringer",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "4432247",
+          "injury": "none",
+          "jersey": "7",
+          "name": "Jaylen Clark",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "3934673",
+          "injury": "unknown",
+          "jersey": "0",
+          "name": "Donte DiVincenzo",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "4397002",
+          "injury": "none",
+          "jersey": "13",
+          "name": "Ayo Dosunmu",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "4594268",
+          "injury": "none",
+          "jersey": "5",
+          "name": "Anthony Edwards",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "5061585",
+          "injury": "none",
+          "jersey": "33",
+          "name": "Isaiah Evans",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "3032976",
+          "injury": "none",
+          "jersey": "27",
+          "name": "Rudy Gobert",
+          "position": "C",
+          "status": "Active"
+        },
+        {
+          "id": "4592492",
+          "injury": "none",
+          "jersey": "8",
+          "name": "Bones Hyland",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "4433247",
+          "injury": "none",
+          "jersey": "24",
+          "name": "Jonathan Kuminga",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "3136196",
+          "injury": "none",
+          "jersey": "41",
+          "name": "Trey Lyles",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "4431671",
+          "injury": "none",
+          "jersey": "3",
+          "name": "Jaden McDaniels",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "4592979",
+          "injury": "none",
+          "jersey": "15",
+          "name": "Zyon Pullin",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "4432847",
+          "injury": "none",
+          "jersey": "4",
+          "name": "Terrence Shannon Jr.",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "4895758",
+          "injury": "none",
+          "jersey": "9",
+          "name": "Cody Williams",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "5157587",
+          "injury": "unknown",
+          "jersey": "44",
+          "name": "Rocco Zikarsky",
+          "position": "C",
+          "status": "Active"
+        }
+      ],
+      "id": "16",
+      "name": "Minnesota Timberwolves",
+      "record": "unknown"
+    },
+    {
+      "abbr": "NO",
+      "athletes": [
+        {
+          "id": "4397136",
+          "injury": "none",
+          "jersey": "41",
+          "name": "Saddiq Bey",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "4712862",
+          "injury": "none",
+          "jersey": "8",
+          "name": "Malik Dia",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "5144091",
+          "injury": "none",
+          "jersey": "0",
+          "name": "Jeremiah Fears",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "5170947",
+          "injury": "none",
+          "jersey": "14",
+          "name": "AJ Johnson",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "4277813",
+          "injury": "none",
+          "jersey": "2",
+          "name": "Herbert Jones",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "3442",
+          "injury": "none",
+          "jersey": "6",
+          "name": "DeAndre Jordan",
+          "position": "C",
+          "status": "Active"
+        },
+        {
+          "id": "4683634",
+          "injury": "none",
+          "jersey": "24",
+          "name": "Bennedict Mathurin",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "4997538",
+          "injury": "none",
+          "jersey": "17",
+          "name": "Karlo Matkovic",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "4576086",
+          "injury": "none",
+          "jersey": "11",
+          "name": "Bryce McGowens",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "5061589",
+          "injury": "none",
+          "jersey": "21",
+          "name": "Yves Missi",
+          "position": "C",
+          "status": "Active"
+        },
+        {
+          "id": "4397688",
+          "injury": "none",
+          "jersey": "25",
+          "name": "Trey Murphy III",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "3907497",
+          "injury": "none",
+          "jersey": "5",
+          "name": "Dejounte Murray",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "4703115",
+          "injury": "none",
+          "jersey": "10",
+          "name": "Jaron Pierre Jr.",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "4277956",
+          "injury": "none",
+          "jersey": "3",
+          "name": "Jordan Poole",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "4869780",
+          "injury": "none",
+          "jersey": "22",
+          "name": "Derik Queen",
+          "position": "C",
+          "status": "Active"
+        },
+        {
+          "id": "4683742",
+          "injury": "none",
+          "jersey": "13",
+          "name": "Julian Reese",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "4431675",
+          "injury": "none",
+          "jersey": "9",
+          "name": "Trendon Watford",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "4395628",
+          "injury": "none",
+          "jersey": "1",
+          "name": "Zion Williamson",
+          "position": "F",
+          "status": "Active"
+        }
+      ],
+      "id": "3",
+      "name": "New Orleans Pelicans",
+      "record": "unknown"
+    },
+    {
+      "abbr": "NY",
+      "athletes": [
+        {
+          "id": "4683730",
+          "injury": "none",
+          "jersey": "14",
+          "name": "Jaden Akins",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "4277869",
+          "injury": "none",
+          "jersey": "5",
+          "name": "Jose Alvarado",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "3934719",
+          "injury": "none",
+          "jersey": "8",
+          "name": "OG Anunoby",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "3147657",
+          "injury": "none",
+          "jersey": "25",
+          "name": "Mikal Bridges",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "3934672",
+          "injury": "none",
+          "jersey": "11",
+          "name": "Jalen Brunson",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "2528426",
+          "injury": "none",
+          "jersey": "00",
+          "name": "Jordan Clarkson",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "5211983",
+          "injury": "none",
+          "jersey": "4",
+          "name": "Pacome Dadiet",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "5289900",
+          "injury": "none",
+          "jersey": "51",
+          "name": "Mohamed Diawara",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "6585",
+          "injury": "none",
+          "jersey": "0",
+          "name": "Andre Drummond",
+          "position": "C",
+          "status": "Active"
+        },
+        {
+          "id": "3062679",
+          "injury": "none",
+          "jersey": "3",
+          "name": "Josh Hart",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "4433225",
+          "injury": "none",
+          "jersey": "13",
+          "name": "Tyler Kolek",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "4431823",
+          "injury": "none",
+          "jersey": "2",
+          "name": "Miles McBride",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "4411057",
+          "injury": "none",
+          "jersey": "9",
+          "name": "Kevin McCullar Jr.",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "4838721",
+          "injury": "none",
+          "jersey": "55",
+          "name": "Tyler Nickel",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "3914044",
+          "injury": "none",
+          "jersey": "44",
+          "name": "Landry Shamet",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "3136195",
+          "injury": "none",
+          "jersey": "32",
+          "name": "Karl-Anthony Towns",
+          "position": "C",
+          "status": "Active"
+        },
+        {
+          "id": "4432808",
+          "injury": "none",
+          "jersey": "35",
+          "name": "James Wiseman",
+          "position": "C",
+          "status": "Active"
+        }
+      ],
+      "id": "18",
+      "name": "New York Knicks",
+      "record": "unknown"
+    },
+    {
+      "abbr": "OKC",
+      "athletes": [
+        {
+          "id": "4684208",
+          "injury": "none",
+          "jersey": "23",
+          "name": "Brooks Barnhizer",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "2991350",
+          "injury": "none",
+          "jersey": "9",
+          "name": "Alex Caruso",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "5105800",
+          "injury": "none",
+          "jersey": "21",
+          "name": "Josh Dix",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "4278073",
+          "injury": "none",
+          "jersey": "2",
+          "name": "Shai Gilgeous-Alexander",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "4222252",
+          "injury": "none",
+          "jersey": "55",
+          "name": "Isaiah Hartenstein",
+          "position": "C",
+          "status": "Active"
+        },
+        {
+          "id": "4433255",
+          "injury": "none",
+          "jersey": "7",
+          "name": "Chet Holmgren",
+          "position": "C",
+          "status": "Active"
+        },
+        {
+          "id": "5174983",
+          "injury": "none",
+          "jersey": "15",
+          "name": "Aday Mara",
+          "position": "C",
+          "status": "Active"
+        },
+        {
+          "id": "4683778",
+          "injury": "none",
+          "jersey": "3",
+          "name": "Jared McCain",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "4900671",
+          "injury": "none",
+          "jersey": "25",
+          "name": "Ajay Mitchell",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "5106270",
+          "injury": "unknown",
+          "jersey": "13",
+          "name": "Otega Oweh",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "5061603",
+          "injury": "unknown",
+          "jersey": "12",
+          "name": "Thomas Sorber",
+          "position": "C",
+          "status": "Active"
+        },
+        {
+          "id": "5241364",
+          "injury": "none",
+          "jersey": "14",
+          "name": "Bennett Stirtz",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "5159925",
+          "injury": "unknown",
+          "jersey": "44",
+          "name": "Nikola Topic",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "4683692",
+          "injury": "none",
+          "jersey": "22",
+          "name": "Cason Wallace",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "4593803",
+          "injury": "none",
+          "jersey": "8",
+          "name": "Jalen Williams",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "4432823",
+          "injury": "none",
+          "jersey": "6",
+          "name": "Jaylin Williams",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "3133626",
+          "injury": "none",
+          "jersey": "34",
+          "name": "Kenrich Williams",
+          "position": "G",
+          "status": "Active"
+        }
+      ],
+      "id": "25",
+      "name": "Oklahoma City Thunder",
+      "record": "unknown"
+    },
+    {
+      "abbr": "ORL",
+      "athletes": [
+        {
+          "id": "4432573",
+          "injury": "none",
+          "jersey": "5",
+          "name": "Paolo Banchero",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "4066320",
+          "injury": "none",
+          "jersey": "3",
+          "name": "Desmond Bane",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "4348700",
+          "injury": "none",
+          "jersey": "35",
+          "name": "Goga Bitadze",
+          "position": "C",
+          "status": "Active"
+        },
+        {
+          "id": "4712849",
+          "injury": "unknown",
+          "jersey": "0",
+          "name": "Anthony Black",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "4278572",
+          "injury": "none",
+          "jersey": "8",
+          "name": "Jamal Cain",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "3133635",
+          "injury": "none",
+          "jersey": "2",
+          "name": "Jevon Carter",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "4277847",
+          "injury": "none",
+          "jersey": "34",
+          "name": "Wendell Carter Jr.",
+          "position": "C",
+          "status": "Active"
+        },
+        {
+          "id": "4397204",
+          "injury": "none",
+          "jersey": "14",
+          "name": "Colin Castleton",
+          "position": "C",
+          "status": "Active"
+        },
+        {
+          "id": "4702382",
+          "injury": "none",
+          "jersey": "23",
+          "name": "Tristan da Silva",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "4065654",
+          "injury": "unknown",
+          "jersey": "1",
+          "name": "Jonathan Isaac",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "4593034",
+          "injury": "none",
+          "jersey": "30",
+          "name": "Alex Morales",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "5107251",
+          "injury": "unknown",
+          "jersey": "25",
+          "name": "Izaiyah Nelson",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "5214637",
+          "injury": "unknown",
+          "jersey": "93",
+          "name": "Noah Penda",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "5239561",
+          "injury": "unknown",
+          "jersey": "11",
+          "name": "Jase Richardson",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "4432165",
+          "injury": "none",
+          "jersey": "4",
+          "name": "Jalen Suggs",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "6478",
+          "injury": "none",
+          "jersey": "9",
+          "name": "Nikola Vucevic",
+          "position": "C",
+          "status": "Active"
+        },
+        {
+          "id": "4566434",
+          "injury": "unknown",
+          "jersey": "22",
+          "name": "Franz Wagner",
+          "position": "F",
+          "status": "Active"
+        }
+      ],
+      "id": "19",
+      "name": "Orlando Magic",
+      "record": "unknown"
+    },
+    {
+      "abbr": "PHI",
+      "athletes": [
+        {
+          "id": "4870562",
+          "injury": "unknown",
+          "jersey": "25",
+          "name": "Dominick Barlow",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "5105637",
+          "injury": "unknown",
+          "jersey": "30",
+          "name": "Adem Bona",
+          "position": "C",
+          "status": "Active"
+        },
+        {
+          "id": "3917376",
+          "injury": "none",
+          "jersey": "7",
+          "name": "Jaylen Brown",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "2581018",
+          "injury": "none",
+          "jersey": "1",
+          "name": "Kentavious Caldwell-Pope",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "5124612",
+          "injury": "none",
+          "jersey": "77",
+          "name": "VJ Edgecombe",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "4711297",
+          "injury": "none",
+          "jersey": "11",
+          "name": "Justin Edwards",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "3059318",
+          "injury": "none",
+          "jersey": "21",
+          "name": "Joel Embiid",
+          "position": "C",
+          "status": "Active"
+        },
+        {
+          "id": "3904625",
+          "injury": "unknown",
+          "jersey": "99",
+          "name": "Tacko Fall",
+          "position": "C",
+          "status": "Active"
+        },
+        {
+          "id": "4871141",
+          "injury": "unknown",
+          "jersey": "55",
+          "name": "Ariel Hukporti",
+          "position": "C",
+          "status": "Active"
+        },
+        {
+          "id": "1966",
+          "injury": "none",
+          "jersey": "23",
+          "name": "LeBron James",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "4433144",
+          "injury": "none",
+          "jersey": "8",
+          "name": "Caleb Love",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "4431678",
+          "injury": "none",
+          "jersey": "0",
+          "name": "Tyrese Maxey",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "4873090",
+          "injury": "none",
+          "jersey": "00",
+          "name": "Labaron Philon Jr.",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "5099752",
+          "injury": "none",
+          "jersey": "12",
+          "name": "Rayan Rupert",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "4351851",
+          "injury": "unknown",
+          "jersey": "5",
+          "name": "Anfernee Simons",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "3912848",
+          "injury": "unknown",
+          "jersey": "45",
+          "name": "Dean Wade",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "4432446",
+          "injury": "none",
+          "jersey": "33",
+          "name": "Jabari Walker",
+          "position": "F",
+          "status": "Active"
+        }
+      ],
+      "id": "20",
+      "name": "Philadelphia 76ers",
+      "record": "unknown"
+    },
+    {
+      "abbr": "PHX",
+      "athletes": [
+        {
+          "id": "3136193",
+          "injury": "none",
+          "jersey": "15",
+          "name": "Devin Booker",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "4280245",
+          "injury": "none",
+          "jersey": "17",
+          "name": "Jamaree Bouyea",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "4066383",
+          "injury": "none",
+          "jersey": "22",
+          "name": "Miles Bridges",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "3155526",
+          "injury": "none",
+          "jersey": "3",
+          "name": "Dillon Brooks",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "4888725",
+          "injury": "none",
+          "jersey": "0",
+          "name": "Ryan Dunn",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "5105977",
+          "injury": "none",
+          "jersey": "20",
+          "name": "Rasheer Fleming",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "4278585",
+          "injury": "none",
+          "jersey": "12",
+          "name": "Collin Gillespie",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "4278402",
+          "injury": "none",
+          "jersey": "23",
+          "name": "Jordan Goodwin",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "4437244",
+          "injury": "none",
+          "jersey": "4",
+          "name": "Jalen Green",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "4601023",
+          "injury": "unknown",
+          "jersey": "11",
+          "name": "Oso Ighodaro",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "3913174",
+          "injury": "unknown",
+          "jersey": "8",
+          "name": "Luke Kennard",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "5203685",
+          "injury": "none",
+          "jersey": "10",
+          "name": "Khaman Maluach",
+          "position": "C",
+          "status": "Active"
+        },
+        {
+          "id": "5041953",
+          "injury": "none",
+          "jersey": "18",
+          "name": "Koa Peat",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "4066268",
+          "injury": "none",
+          "jersey": "26",
+          "name": "Duop Reath",
+          "position": "C",
+          "status": "Active"
+        },
+        {
+          "id": "4592714",
+          "injury": "none",
+          "jersey": "61",
+          "name": "Pat Spencer",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "4431695",
+          "injury": "none",
+          "jersey": "unknown",
+          "name": "Drew Timme",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "4701232",
+          "injury": "unknown",
+          "jersey": "25",
+          "name": "Mark Williams",
+          "position": "C",
+          "status": "Active"
+        }
+      ],
+      "id": "21",
+      "name": "Phoenix Suns",
+      "record": "unknown"
+    },
+    {
+      "abbr": "POR",
+      "athletes": [
+        {
+          "id": "4683021",
+          "injury": "none",
+          "jersey": "8",
+          "name": "Deni Avdija",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "4431736",
+          "injury": "none",
+          "jersey": "33",
+          "name": "Toumani Camara",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "4592435",
+          "injury": "none",
+          "jersey": "10",
+          "name": "Branden Carlson",
+          "position": "C",
+          "status": "Active"
+        },
+        {
+          "id": "5081727",
+          "injury": "none",
+          "jersey": "91",
+          "name": "Sidy Cissoko",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "5105565",
+          "injury": "none",
+          "jersey": "23",
+          "name": "Donovan Clingan",
+          "position": "C",
+          "status": "Active"
+        },
+        {
+          "id": "5217746",
+          "injury": "none",
+          "jersey": "16",
+          "name": "Yang Hansen",
+          "position": "C",
+          "status": "Active"
+        },
+        {
+          "id": "4683678",
+          "injury": "none",
+          "jersey": "00",
+          "name": "Scoot Henderson",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "3995",
+          "injury": "unknown",
+          "jersey": "5",
+          "name": "Jrue Holiday",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "4703889",
+          "injury": "none",
+          "jersey": "29",
+          "name": "Jayson Kent",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "4578893",
+          "injury": "none",
+          "jersey": "27",
+          "name": "Vit Krejci",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "6606",
+          "injury": "none",
+          "jersey": "0",
+          "name": "Damian Lillard",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "4279888",
+          "injury": "none",
+          "jersey": "1",
+          "name": "Ja Morant",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "4066399",
+          "injury": "unknown",
+          "jersey": "9",
+          "name": "Micah Potter",
+          "position": "C",
+          "status": "Active"
+        },
+        {
+          "id": "4914336",
+          "injury": "unknown",
+          "jersey": "17",
+          "name": "Shaedon Sharpe",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "4593043",
+          "injury": "none",
+          "jersey": "2",
+          "name": "John Tonje",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "4066211",
+          "injury": "none",
+          "jersey": "35",
+          "name": "Robert Williams III",
+          "position": "C",
+          "status": "Active"
+        },
+        {
+          "id": "4706557",
+          "injury": "unknown",
+          "jersey": "11",
+          "name": "Chris Youngblood",
+          "position": "G",
+          "status": "Active"
+        }
+      ],
+      "id": "22",
+      "name": "Portland Trail Blazers",
+      "record": "unknown"
+    },
+    {
+      "abbr": "SAC",
+      "athletes": [
+        {
+          "id": "4431679",
+          "injury": "none",
+          "jersey": "9",
+          "name": "Precious Achiuwa",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "5142620",
+          "injury": "none",
+          "jersey": "5",
+          "name": "Darius Acuff Jr.",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "4395650",
+          "injury": "none",
+          "jersey": "19",
+          "name": "Leaky Black",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "4433174",
+          "injury": "unknown",
+          "jersey": "32",
+          "name": "Dylan Cardwell",
+          "position": "C",
+          "status": "Active"
+        },
+        {
+          "id": "4702384",
+          "injury": "none",
+          "jersey": "10",
+          "name": "Nique Clifford",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "4065732",
+          "injury": "none",
+          "jersey": "15",
+          "name": "De'Andre Hunter",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "4917149",
+          "injury": "none",
+          "jersey": "33",
+          "name": "Alex Karaban",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "3064440",
+          "injury": "none",
+          "jersey": "8",
+          "name": "Zach LaVine",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "5107897",
+          "injury": "none",
+          "jersey": "22",
+          "name": "Jonathan Mogbo",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "4066262",
+          "injury": "unknown",
+          "jersey": "0",
+          "name": "Malik Monk",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "4594327",
+          "injury": "none",
+          "jersey": "13",
+          "name": "Keegan Murray",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "4279318",
+          "injury": "none",
+          "jersey": "29",
+          "name": "Daeqwon Plowden",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "4898371",
+          "injury": "unknown",
+          "jersey": "42",
+          "name": "Maxime Raynaud",
+          "position": "C",
+          "status": "Active"
+        },
+        {
+          "id": "3155942",
+          "injury": "none",
+          "jersey": "11",
+          "name": "Domantas Sabonis",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "5106058",
+          "injury": "none",
+          "jersey": "34",
+          "name": "Emanuel Sharp",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "3907387",
+          "injury": "unknown",
+          "jersey": "25",
+          "name": "Ben Simmons",
+          "position": "G",
+          "status": "Active"
+        }
+      ],
+      "id": "23",
+      "name": "Sacramento Kings",
+      "record": "unknown"
+    },
+    {
+      "abbr": "SA",
+      "athletes": [
+        {
+          "id": "6578",
+          "injury": "none",
+          "jersey": "40",
+          "name": "Harrison Barnes",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "5105337",
+          "injury": "none",
+          "jersey": "15",
+          "name": "Maliq Brown",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "5061568",
+          "injury": "none",
+          "jersey": "11",
+          "name": "Carter Bryant",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "4845367",
+          "injury": "none",
+          "jersey": "5",
+          "name": "Stephon Castle",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "4592479",
+          "injury": "none",
+          "jersey": "30",
+          "name": "Julian Champagnie",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "4066259",
+          "injury": "none",
+          "jersey": "4",
+          "name": "De'Aaron Fox",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "5107968",
+          "injury": "none",
+          "jersey": "17",
+          "name": "Ja'Kobi Gillespie",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "5037871",
+          "injury": "none",
+          "jersey": "2",
+          "name": "Dylan Harper",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "6440",
+          "injury": "unknown",
+          "jersey": "23",
+          "name": "Tobias Harris",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "4395723",
+          "injury": "none",
+          "jersey": "3",
+          "name": "Keldon Johnson",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "4713010",
+          "injury": "none",
+          "jersey": "25",
+          "name": "David Jones Garcia",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "3064560",
+          "injury": "none",
+          "jersey": "7",
+          "name": "Luke Kornet",
+          "position": "C",
+          "status": "Active"
+        },
+        {
+          "id": "3134916",
+          "injury": "none",
+          "jersey": "0",
+          "name": "Jordan McLaughlin",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "5101845",
+          "injury": "unknown",
+          "jersey": "22",
+          "name": "Jayden Quaintance",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "5105809",
+          "injury": "none",
+          "jersey": "10",
+          "name": "Tarris Reed Jr.",
+          "position": "C",
+          "status": "Active"
+        },
+        {
+          "id": "4395630",
+          "injury": "none",
+          "jersey": "24",
+          "name": "Devin Vassell",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "5104157",
+          "injury": "none",
+          "jersey": "1",
+          "name": "Victor Wembanyama",
+          "position": "F",
+          "status": "Active"
+        }
+      ],
+      "id": "24",
+      "name": "San Antonio Spurs",
+      "record": "unknown"
+    },
+    {
+      "abbr": "TOR",
+      "athletes": [
+        {
+          "id": "2993874",
+          "injury": "none",
+          "jersey": "12",
+          "name": "Kyle Anderson",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "4433134",
+          "injury": "none",
+          "jersey": "4",
+          "name": "Scottie Barnes",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "4395625",
+          "injury": "none",
+          "jersey": "9",
+          "name": "RJ Barrett",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "4431893",
+          "injury": "none",
+          "jersey": "77",
+          "name": "Jamison Battle",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "4432586",
+          "injury": "unknown",
+          "jersey": "unknown",
+          "name": "Nate Bittle",
+          "position": "C",
+          "status": "Active"
+        },
+        {
+          "id": "4432737",
+          "injury": "none",
+          "jersey": "8",
+          "name": "Jaden Bradley",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "5149115",
+          "injury": "none",
+          "jersey": "22",
+          "name": "Allen Graves",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "4431684",
+          "injury": "none",
+          "jersey": "32",
+          "name": "Trayce Jackson-Davis",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "6450",
+          "injury": "none",
+          "jersey": "2",
+          "name": "Kawhi Leonard",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "4702656",
+          "injury": "none",
+          "jersey": "55",
+          "name": "Alijah Martin",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "5093267",
+          "injury": "none",
+          "jersey": "30",
+          "name": "Collin Murray-Boyles",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "3134908",
+          "injury": "none",
+          "jersey": "19",
+          "name": "Jakob Poeltl",
+          "position": "C",
+          "status": "Active"
+        },
+        {
+          "id": "4395724",
+          "injury": "none",
+          "jersey": "5",
+          "name": "Immanuel Quickley",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "4432241",
+          "injury": "none",
+          "jersey": "23",
+          "name": "Jamal Shead",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "4397784",
+          "injury": "none",
+          "jersey": "18",
+          "name": "Malachi Smith",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "4684272",
+          "injury": "none",
+          "jersey": "14",
+          "name": "Ja'Kobe Walter",
+          "position": "G",
+          "status": "Active"
+        }
+      ],
+      "id": "28",
+      "name": "Toronto Raptors",
+      "record": "unknown"
+    },
+    {
+      "abbr": "UTAH",
+      "athletes": [
+        {
+          "id": "4433268",
+          "injury": "unknown",
+          "jersey": "15",
+          "name": "Trey Alexander",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "4873138",
+          "injury": "none",
+          "jersey": "19",
+          "name": "Ace Bailey",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "4277919",
+          "injury": "none",
+          "jersey": "44",
+          "name": "Mo Bamba",
+          "position": "C",
+          "status": "Active"
+        },
+        {
+          "id": "4065673",
+          "injury": "none",
+          "jersey": "13",
+          "name": "Tony Bradley",
+          "position": "C",
+          "status": "Active"
+        },
+        {
+          "id": "4683766",
+          "injury": "none",
+          "jersey": "8",
+          "name": "Isaiah Collier",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "4684793",
+          "injury": "unknown",
+          "jersey": "2",
+          "name": "Kyle Filipowski",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "4433627",
+          "injury": "none",
+          "jersey": "3",
+          "name": "Keyonte George",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "4432811",
+          "injury": "none",
+          "jersey": "5",
+          "name": "Josh Green",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "4397077",
+          "injury": "none",
+          "jersey": "11",
+          "name": "Jaxson Hayes",
+          "position": "C",
+          "status": "Active"
+        },
+        {
+          "id": "4396963",
+          "injury": "unknown",
+          "jersey": "25",
+          "name": "Blake Hinson",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "4433618",
+          "injury": "none",
+          "jersey": "00",
+          "name": "Harrison Ingram",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "4277961",
+          "injury": "none",
+          "jersey": "20",
+          "name": "Jaren Jackson Jr.",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "4066336",
+          "injury": "none",
+          "jersey": "23",
+          "name": "Lauri Markkanen",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "3133602",
+          "injury": "none",
+          "jersey": "10",
+          "name": "Svi Mykhailiuk",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "3102530",
+          "injury": "unknown",
+          "jersey": "30",
+          "name": "Jusuf Nurkic",
+          "position": "C",
+          "status": "Active"
+        },
+        {
+          "id": "4065663",
+          "injury": "none",
+          "jersey": "21",
+          "name": "Josh Okogie",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "5041955",
+          "injury": "none",
+          "jersey": "22",
+          "name": "Darryn Peterson",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "5105839",
+          "injury": "none",
+          "jersey": "28",
+          "name": "Brice Sensabaugh",
+          "position": "F",
+          "status": "Active"
+        }
+      ],
+      "id": "26",
+      "name": "Utah Jazz",
+      "record": "unknown"
+    },
+    {
+      "abbr": "WSH",
+      "athletes": [
+        {
+          "id": "4278129",
+          "injury": "none",
+          "jersey": "8",
+          "name": "Deandre Ayton",
+          "position": "C",
+          "status": "Active"
+        },
+        {
+          "id": "4432187",
+          "injury": "none",
+          "jersey": "26",
+          "name": "Reece Beekman",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "4845374",
+          "injury": "none",
+          "jersey": "7",
+          "name": "Bub Carrington",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "4432907",
+          "injury": "none",
+          "jersey": "9",
+          "name": "Justin Champagnie",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "5104155",
+          "injury": "none",
+          "jersey": "0",
+          "name": "Bilal Coulibaly",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "6583",
+          "injury": "none",
+          "jersey": "23",
+          "name": "Anthony Davis",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "5142718",
+          "injury": "unknown",
+          "jersey": "4",
+          "name": "AJ Dybantsa",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "5174563",
+          "injury": "none",
+          "jersey": "18",
+          "name": "Kyshawn George",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "2581184",
+          "injury": "none",
+          "jersey": "16",
+          "name": "Anthony Gill",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "5238230",
+          "injury": "none",
+          "jersey": "12",
+          "name": "Tre Johnson",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "4432819",
+          "injury": "none",
+          "jersey": "1",
+          "name": "Tre Mann",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "6609",
+          "injury": "none",
+          "jersey": "22",
+          "name": "Khris Middleton",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "5105841",
+          "injury": "none",
+          "jersey": "34",
+          "name": "Felix Okpara",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "5144126",
+          "injury": "none",
+          "jersey": "27",
+          "name": "Will Riley",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "5160992",
+          "injury": "none",
+          "jersey": "20",
+          "name": "Alex Sarr",
+          "position": "C",
+          "status": "Active"
+        },
+        {
+          "id": "4997537",
+          "injury": "unknown",
+          "jersey": "00",
+          "name": "Tristan Vukcevic",
+          "position": "F",
+          "status": "Active"
+        },
+        {
+          "id": "4606840",
+          "injury": "unknown",
+          "jersey": "5",
+          "name": "Jamir Watkins",
+          "position": "G",
+          "status": "Active"
+        },
+        {
+          "id": "4277905",
+          "injury": "none",
+          "jersey": "3",
+          "name": "Trae Young",
+          "position": "G",
+          "status": "Active"
+        }
+      ],
+      "id": "27",
+      "name": "Washington Wizards",
+      "record": "unknown"
+    }
+  ]
+}

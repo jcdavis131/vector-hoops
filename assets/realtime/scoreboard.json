@@ -1,0 +1,73 @@
+{
+  "as_of": "2026-10-20T19:01:25Z",
+  "date": "20261020",
+  "games": [
+    {
+      "away": {
+        "abbr": "BOS",
+        "name": "Boston Celtics",
+        "record": "0-0",
+        "score": "0"
+      },
+      "clock": "0.0",
+      "detail": "10/20 - 3:00 PM EDT",
+      "home": {
+        "abbr": "DET",
+        "name": "Detroit Pistons",
+        "record": "0-0",
+        "score": "0"
+      },
+      "id": "401909088",
+      "period": 0,
+      "state": "pre",
+      "tip_et": "2026-10-20T19:00Z"
+    },
+    {
+      "away": {
+        "abbr": "PHI",
+        "name": "Philadelphia 76ers",
+        "record": "0-0",
+        "score": "0"
+      },
+      "clock": "0.0",
+      "detail": "10/20 - 7:00 PM EDT",
+      "home": {
+        "abbr": "NY",
+        "name": "New York Knicks",
+        "record": "0-0",
+        "score": "0"
+      },
+      "id": "401909089",
+      "period": 0,
+      "state": "pre",
+      "tip_et": "2026-10-20T23:00Z"
+    },
+    {
+      "away": {
+        "abbr": "OKC",
+        "name": "Oklahoma City Thunder",
+        "record": "0-0",
+        "score": "0"
+      },
+      "clock": "0.0",
+      "detail": "10/20 - 9:30 PM EDT",
+      "home": {
+        "abbr": "SA",
+        "name": "San Antonio Spurs",
+        "record": "0-0",
+        "score": "0"
+      },
+      "id": "401909090",
+      "period": 0,
+      "state": "pre",
+      "tip_et": "2026-10-21T01:30Z"
+    }
+  ],
+  "games_final": 0,
+  "games_live": 0,
+  "games_scheduled": 3,
+  "last_good_tick": "2026-10-20T19:01:25Z",
+  "quiet": false,
+  "season": "2026-27",
+  "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba"
+}
