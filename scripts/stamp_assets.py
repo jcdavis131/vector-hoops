@@ -79,6 +79,8 @@ def pages() -> list[Path]:
         # CI stamp step reported 25 stale pages where a local run reported 24.
         if sub.parent.name != "public" and not sub.parent.name.startswith("."):
             found.append(sub)
+    # play/ holds game pages served at /play/<name>.html (Pillar 6 games).
+    found.extend(sorted((ROOT / "play").glob("*.html")))
     return sorted(found)
 
 
