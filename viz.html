@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
+<link rel="manifest" href="/manifest.json">
+<title>Viz Library — Vector Hoops</title>
+<meta name="description" content="One component system for every Vector Hoops visualization: twin networks, stat flows, era-uniqueness bars, era drift maps, head-to-head matchups, career trajectories. Every demo runs on real data."/>
+<link rel="stylesheet" href="assets/shell.css?v=fdb1f985"/>
+<link rel="stylesheet" href="assets/responsive.css?v=cc8e5207"/>
+<link rel="stylesheet" href="assets/final-qa.css?v=fb603ee5"/>
+<link rel="stylesheet" href="assets/unified.css?v=fd25e8ca"/>
+<link rel="stylesheet" href="assets/motion.css?v=aa8dedc2"/>
+<link rel="stylesheet" href="assets/insights-cards.css?v=58bee766"/>
+<link rel="stylesheet" href="assets/viz-lib/viz-lib.css?v=7aae39b1"/>
+<meta name="color-scheme" content="dark light"/>
+<meta name="theme-color" content="#07090C" media="(prefers-color-scheme: dark)"/>
+<meta name="theme-color" content="#F3F1EC" media="(prefers-color-scheme: light)"/>
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml"/>
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png"/>
+<link rel="canonical" href="https://hoops.dumbmodel.com/viz"/>
+<meta property="og:type" content="website"/>
+<meta property="og:site_name" content="Vector Hoops"/>
+<meta property="og:url" content="https://hoops.dumbmodel.com/viz"/>
+<meta property="og:title" content="Viz Library — Vector Hoops"/>
+<meta property="og:description" content="One component system, six primitives, all real data. Twin networks, stat flows, era-uniqueness, drift maps, matchups, career trails."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=Inter:opsz,wght@14..32,400..700&display=swap"/>
+<link rel="stylesheet" href="/assets/atlas.css?v=ff374431"/>
+</head><body>
+<a class="skip-link" href="#main">Skip to content</a>
+<noscript><div role="alert" style="padding:16px;text-align:center">Enable JS — the Viz Library needs JavaScript</div></noscript>
+
+<nav class="site-nav" data-active="/insights" aria-label="Vector Hoops site"></nav>
+<div id="main" class="main" role="main" style="padding-top:0">
+  <header class="title-card">
+    <div class="title-card__eyebrow reveal">Platform</div>
+    <h1 class="title-card__title reveal reveal-1">Viz Library</h1>
+    <p class="title-card__lede reveal reveal-2">One component system for every visualization on the site. Six primitives, each demoed below on real data — lazy-loaded, snapshot-able, linkable, and legible on a phone.</p>
+    <div class="title-card__meta reveal reveal-3"><span><b>6</b>Primitives</span><span><b>12,966</b>Player-seasons</span><span><b>0</b>Invented numbers</span></div>
+  </header>
+
+  <div class="vh-ins__wrap">
+
+    <section class="vhl-sec" id="sec-network" aria-label="network primitive demo">
+      <div class="vhl-sec__head"><span class="vhl-sec__kick">Primitive · network</span><h2 class="vhl-sec__title">Twin Network</h2></div>
+      <p class="vhl-sec__lede">The radial twin graph, graduated from the Twin Networks launch page. Center node in gold, ring of nearest statistical twins, edge width proportional to cosine similarity in the 64-d embedding.</p>
+      <div class="vhl-pick" id="demo-pick" role="group" aria-label="pick a featured player-season"></div>
+      <div id="demo-network"></div>
+      <p class="vhl-sec__foot" id="net-status" aria-live="polite"></p>
+      <div class="vhl-share"><button class="vhl-btn" type="button" data-vhl="copy">Copy link</button><button class="vhl-btn" type="button" data-vhl="shot">Snapshot PNG</button></div>
+    </section>
+
+    <section class="vhl-sec" id="sec-flow" aria-label="flow primitive demo">
+      <div class="vhl-sec__head"><span class="vhl-sec__kick">Primitive · flow</span><h2 class="vhl-sec__title">Stat Flow</h2></div>
+      <p class="vhl-sec__lede">The four-stage Sankey, graduated from the launch page: era → archetype → the three stats that define the season → the twin it mirrors across time. Link widths carry the |z-score| shares.</p>
+      <div id="demo-flow"></div>
+      <p class="vhl-sec__foot" id="flow-status" aria-live="polite"></p>
+      <div class="vhl-share"><button class="vhl-btn" type="button" data-vhl="copy">Copy link</button><button class="vhl-btn" type="button" data-vhl="shot">Snapshot PNG</button></div>
+    </section>
+
+    <section class="vhl-sec" id="sec-bars" aria-label="bars primitive demo">
+      <div class="vhl-sec__head"><span class="vhl-sec__kick">Primitive · bars</span><h2 class="vhl-sec__title">Era-Uniqueness Leaderboard</h2></div>
+      <p class="vhl-sec__lede">Distribution bars, graduated from the Insights card pattern. The strangest player-seasons in the dataset — ranked by distance from their own era's center.</p>
+      <div id="demo-bars"></div>
+      <p class="vhl-sec__foot">Era-Uniqueness 0–100 = 1 − cosine(player, own-decade mean) in the L2-normalized MTNN v5 64-d embedding, minus the player's own season median (whole seasons drift together), min-maxed over all 12,966 player-seasons.</p>
+      <div class="vhl-share"><button class="vhl-btn" type="button" data-vhl="copy">Copy link</button><button class="vhl-btn" type="button" data-vhl="shot">Snapshot PNG</button></div>
+    </section>
+
+    <section class="vhl-sec" id="sec-drift" aria-label="drift primitive demo">
+      <div class="vhl-sec__head"><span class="vhl-sec__kick">Primitive · drift</span><h2 class="vhl-sec__title">Era Drift Map</h2></div>
+      <p class="vhl-sec__lede">Every decade as a lane of uniqueness scores. Read the medians: which eras played alike, which ones scattered. The red dot is the player picked above.</p>
+      <div id="demo-drift"></div>
+      <p class="vhl-sec__foot">All 12,966 player-seasons, binned per decade. Same Era-Uniqueness definition as above; medians are per-decade. Higher medians don't mean "better" — they mean the era's style was further from its own center.</p>
+      <div class="vhl-share"><button class="vhl-btn" type="button" data-vhl="copy">Copy link</button><button class="vhl-btn" type="button" data-vhl="shot">Snapshot PNG</button></div>
+    </section>
+
+    <section class="vhl-sec" id="sec-matchup" aria-label="matchup primitive demo">
+      <div class="vhl-sec__head"><span class="vhl-sec__kick">Primitive · matchup · new</span><h2 class="vhl-sec__title">Twin Matchup</h2></div>
+      <p class="vhl-sec__lede">Two twin rings head to head. Twins of both light up gold; the strip between them carries the direct cosine similarity with a plain-words read.</p>
+      <div class="vhl-pick" id="demo-pick-a" role="group" aria-label="pick player A"></div>
+      <div class="vhl-pick" id="demo-pick-b" role="group" aria-label="pick player B"></div>
+      <div id="demo-matchup"></div>
+      <p class="vhl-sec__foot" id="matchup-status" aria-live="polite"></p>
+      <div class="vhl-share"><button class="vhl-btn" type="button" data-vhl="copy">Copy link</button><button class="vhl-btn" type="button" data-vhl="shot">Snapshot PNG</button></div>
+    </section>
+
+    <section class="vhl-sec" id="sec-traj" aria-label="trajectory primitive demo">
+      <div class="vhl-sec__head"><span class="vhl-sec__kick">Primitive · trajectory · new</span><h2 class="vhl-sec__title">Career Trajectory</h2></div>
+      <p class="vhl-sec__lede">A career as a path through the atlas plane — rookie to twilight. Scrub the seasons; the strip below says what changed, in plain words. Standalone: no atlas required.</p>
+      <div class="vhl-pick" id="demo-pick-c" role="group" aria-label="pick a career"></div>
+      <div id="demo-traj"></div>
+      <p class="vhl-sec__foot">Paths from the precomputed career trails (atlas x/y plane); deltas are the season-over-season stat shifts the trail builder charted. First entry is the rookie baseline.</p>
+      <div class="vhl-share"><button class="vhl-btn" type="button" data-vhl="copy">Copy link</button><button class="vhl-btn" type="button" data-vhl="shot">Snapshot PNG</button></div>
+    </section>
+
+    <p class="vh-ins__foot" style="text-align:center">Methods and provenance: <a href="/methods.html#insights">methods.html#insights</a> · Library source: <a href="https://github.com/jcdavis131/vector-hoops/tree/scout/platform-p4-viz/assets/viz-lib">assets/viz-lib</a> · Every figure computed from the served vectors, never invented.</p>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <div class="site-footer__links"><a href="/play">Play</a><a href="/players">Players</a><a href="/methods">Methods</a><a href="https://github.com/jcdavis131/vector-hoops" rel="noopener">Source</a></div>
+  <p class="site-footer__attribution">Every number recomputable from stats.nba.com · A <a href="https://dumbmodel.com">dumbmodel</a> project</p>
+</footer>
+<script src="/assets/site-nav.js?v=29a94905"></script>
+<script src="/assets/viz-lib/viz.js?v=652b340d"></script>
+<script src="/assets/viz-lib/network.js?v=1bd151fd"></script>
+<script src="/assets/viz-lib/flow.js?v=a860dcec"></script>
+<script src="/assets/viz-lib/bars.js?v=4386c48c"></script>
+<script src="/assets/viz-lib/drift.js?v=f5d636b1"></script>
+<script src="/assets/viz-lib/matchup.js?v=4f81f77a"></script>
+<script src="/assets/viz-lib/trajectory.js?v=cef8a44f"></script>
+<script src="/assets/viz-gallery.js?v=c6a62818"></script>
+<script>if('serviceWorker' in navigator){window.addEventListener('load',()=>{navigator.serviceWorker.register('/sw.js').catch(()=>{})})}</script>
+</body></html>
