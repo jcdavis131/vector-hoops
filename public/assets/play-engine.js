@@ -269,7 +269,20 @@
 
     function paint(){
       renderScheduled=false;
-      if(!last.length){ ul.style.display='none'; for(const li of rowEls) li.hidden=true; return; }
+      // P1: zero silent dropdown failures — an empty result is a stated
+      // state ("No matches"), never a dropdown that just doesn't open.
+      if(!last.length){
+        if(searchToken > 0 && input.value.trim().length >= 2){
+          ul.innerHTML='<li class="no-results" aria-disabled="true" style="cursor:default;opacity:.65">No matches — check the spelling, or try a last name</li>';
+          ul.style.display='block';
+        } else {
+          ul.style.display='none';
+        }
+        for(const li of rowEls) li.hidden=true;
+        return;
+      }
+      // restore the reusable rows (a no-results message may have replaced them)
+      if(!ul.contains(rowEls[0])){ ul.innerHTML=''; for(const li of rowEls) ul.appendChild(li); }
       for(let i=0;i<ROWS;i++){
         const li=rowEls[i], e=last[i];
         if(!e){ li.hidden=true; continue; }
