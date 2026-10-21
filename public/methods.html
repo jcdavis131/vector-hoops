@@ -28,7 +28,7 @@
 <meta name="twitter:description" content="How Vector Hoops is built: data sources, the 14 era-normalised features, the MTNN embedding, the map projection, archetypes, league drift and known limits."/>
 <meta name="twitter:image" content="https://hoops.dumbmodel.com/assets/og-1200x630.png"/>
 <link rel="stylesheet" href="assets/fonts.css?v=8f376b2a"/>
-<link rel="stylesheet" href="/assets/atlas.css?v=7c1d7652"/>
+<link rel="stylesheet" href="/assets/atlas.css?v=ff374431"/>
 <link rel="stylesheet" href="/assets/shell.css?v=7eb94ecf"/>
 <style>
 .doc{ padding-top:0; }
@@ -384,7 +384,7 @@ a{color:inherit}
   <header class="title-card">
     <div class="title-card__eyebrow reveal">Methods</div>
     <h1 class="title-card__title reveal reveal-1">Every number can be <em>recomputed from source</em></h1>
-    <p class="title-card__lede reveal reveal-2">The games use 14 era-normalised per-100 features for speed and transparency. The research model, MTNN, widens that to 130 features in 17 towers and compresses each season to a 64-d unit vector for neighbour search. The architecture is covered in depth in <a href="#the-model">the model section below</a>.</p>
+    <p class="title-card__lede reveal reveal-2">Nearest seasons by cosine similarity in the 64-dimensional MTNN v5 embedding. The served model widens 14 era-normalised per-100 features to 130 features in 17 towers and compresses each season to a 64-d unit vector for neighbour search. The architecture is covered in depth in <a href="#the-model">the model section below</a>.</p>
   </header>
 
   <nav class="doc-toc" aria-label="On this page">
@@ -414,7 +414,7 @@ a{color:inherit}
 
     <section>
       <div class="doc-n">01·b</div>
-      <h2>The richer research model</h2>
+      <h2>The richer served model</h2>
       <p>The same 12,966 player-seasons with far more context: volume, playmaking, rebounding, defense, efficiency, shot mix, bio, tracking (2013+, masked before), form, market, roster, career, competition, team, pedigree, playoffs and honors. Each family feeds its own tower.</p>
       <div class="cqs-strip"><span class="cqs-badge"><b data-fact="model_inputs">130</b>Features</span><span class="cqs-badge"><b>17</b>Towers</span><span class="cqs-badge"><b data-fact="seasons">30</b>Seasons</span><span class="cqs-badge"><b>8</b>Types</span><span class="cqs-badge"><b><span data-fact="model_dim">64</span>-d</b>L2</span></div>
       <dl class="doc-defs">
@@ -793,12 +793,12 @@ Heads: 8 arch / 5 pos / 14 next / 18 skill towers — 12 core + 6 wide (64→16�
       <a href="https://dumbmodel.com" rel="noopener">dumbmodel.com</a>
     </div>
   </nav>
-  <p class="site-footer__attribution">Every number recomputable from stats.nba.com · A <a href="https://dumbmodel.com">dumbmodel</a> project · <a href="https://github.com/jcdavis131/vector-hoops" rel="noopener">Source</a></p>
+  <p class="site-footer__attribution">Every number recomputable from stats.nba.com · A <a href="https://dumbmodel.com">dumbmodel</a> project · <a href="https://github.com/jcdavis131/vector-hoops" rel="noopener">Source</a> · Nearest seasons by cosine similarity in the 64-dimensional MTNN v5 embedding.</p>
 </footer>
 <script src="assets/error-boundary.js?v=8079215c"></script>
 <script src="assets/keyboard-a11y.js?v=39777a87"></script>
 <script src="assets/vh-analytics.js?v=d838a3e1" defer></script>
-<script src="assets/site-nav.js?v=9183f1b2" defer></script>
+<script src="assets/site-nav.js?v=45144897" defer></script>
 <script src="assets/pwa-install.js?v=b954d9d1"></script>
 <script>if('serviceWorker' in navigator){window.addEventListener('load',()=>{navigator.serviceWorker.register('/sw.js').catch(()=>{})})}</script>
 

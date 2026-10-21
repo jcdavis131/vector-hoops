@@ -27,7 +27,7 @@
 <meta name="twitter:image" content="https://hoops.dumbmodel.com/assets/og-1200x630.png"/>
 <link rel="stylesheet" href="assets/fonts.css?v=8f376b2a"/>
 <link rel="preload" href="/assets/vectors_search_lite.json" as="fetch" crossorigin/>
-<link rel="stylesheet" href="/assets/atlas.css?v=7c1d7652"/>
+<link rel="stylesheet" href="/assets/atlas.css?v=ff374431"/>
 <link rel="stylesheet" href="/assets/shell.css?v=7eb94ecf"/>
 <style>
 /* ---------- Home: hero ---------- */
@@ -352,6 +352,11 @@
     <div class="title-card__eyebrow reveal">An atlas of NBA player-seasons</div>
     <h1 class="hero__title reveal reveal-1"><span>Who plays</span><span>like <em>this?</em></span></h1>
     <p class="title-card__lede reveal reveal-2">Every season from 1996–97 to 2025–26 with enough minutes, placed by how it was played rather than who played it. Choose one, and a neural embedding returns the three seasons that play most alike. This map measures how players play, not how good they are.</p>
+    <div class="title-card__meta reveal reveal-2" role="note" aria-label="Scope, trust and model">
+      <span><b>Scope</b> every season 1996&ndash;97 &rarr; 2025&ndash;26 with enough minutes</span>
+      <span><b>Trust</b> the flat view keeps 12% of each season&rsquo;s true 20 nearest from the 64-d model</span>
+      <span><b>Model</b> Nearest seasons by cosine similarity in the 64-dimensional MTNN v5 embedding</span>
+    </div>
     <div class="title-card__actions reveal reveal-3">
       <a class="btn btn-primary btn-xl" href="#atlas">Tap a season — explore the atlas</a>
     </div>
@@ -396,7 +401,7 @@
     </div>
     <noscript><p class="hero-map__hint" style="margin-top:8px">The 3D map needs JavaScript &mdash; the atlas below works the same way, and <a href="/play">Daily Court</a> plays without it.</p></noscript>
   </section>
-  <script src="/assets/embed-3d.js?v=6241a59a"></script>
+  <script src="/assets/embed-3d.js?v=3818e6cd"></script>
   <script>
   (function(){
     /* Guarded 3D mount: the page is complete without it (placeholder stays). */
@@ -529,7 +534,7 @@
           <thead><tr><th class="r" scope="col">#</th><th scope="col">Player</th><th scope="col">Season</th><th scope="col" class="hide-s">Archetype</th><th class="r" scope="col">Similarity</th></tr></thead>
           <tbody id="atlas-peers-body"></tbody>
         </table>
-        <p class="peers__foot vh-truth">Peers are the nearest seasons by cosine similarity in the 64-dimensional MTNN embedding. The atlas itself is a 2-D view of 14 era-normalised per-100 stats, so a peer can sit some distance away on it.</p>
+        <p class="peers__foot vh-truth">Peers are the nearest seasons by cosine similarity in the 64-dimensional MTNN v5 embedding. The atlas itself is a 2-D view of 14 era-normalised per-100 stats, so a peer can sit some distance away on it.</p>
       </div>
     </div>
     <p class="visually-hidden" id="atlas-live" aria-live="polite"></p>
@@ -596,10 +601,10 @@
       <a href="https://dumbmodel.com" rel="noopener">dumbmodel.com</a>
     </div>
   </nav>
-  <p class="site-footer__attribution">Every number recomputable from stats.nba.com · A <a href="https://dumbmodel.com">dumbmodel</a> project · <a href="https://github.com/jcdavis131/vector-hoops" rel="noopener">Source</a></p>
+  <p class="site-footer__attribution">Every number recomputable from stats.nba.com · A <a href="https://dumbmodel.com">dumbmodel</a> project · <a href="https://github.com/jcdavis131/vector-hoops" rel="noopener">Source</a> · Nearest seasons by cosine similarity in the 64-dimensional MTNN v5 embedding.</p>
 </footer>
 
-<script defer src="/assets/site-nav.js?v=9183f1b2"></script>
+<script defer src="/assets/site-nav.js?v=45144897"></script>
 <script defer src="/assets/vh-analytics.js?v=STAMP"></script>
 <script defer src="/assets/vh-peers.js?v=STAMP"></script>
 <script defer src="/assets/served-constants.js?v=8ba12340"></script>
