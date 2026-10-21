@@ -1,0 +1,107 @@
+/* viz-lib.css — shared frame chrome for the viz-lib component system.
+   Drafting Board tokens only (atlas.css). Paper default + night-board dark. */
+
+/* No-layout-shift frame: aspect-ratio is set inline per viz. */
+.vhl-frame{
+  position:relative;width:100%;overflow:hidden;
+  background:var(--void,#1E2022);
+  border:1px solid var(--line);border-radius:12px;
+}
+.vhl-frame .vhl-svg{position:absolute;inset:0}
+
+/* Skeleton shown while lazy data loads — same frame, shimmer paused under
+   reduced-motion. */
+.vhl-skel{position:absolute;inset:0;
+  background:linear-gradient(100deg,transparent 30%,rgba(255,255,255,.05) 50%,transparent 70%);
+  background-size:200% 100%;animation:vhl-shimmer 1.6s linear infinite}
+@media (prefers-reduced-motion:reduce){.vhl-skel{animation:none}}
+
+/* Honest 503 card. */
+.vhl-error{
+  display:flex;flex-direction:column;gap:8px;align-items:center;justify-content:center;
+  text-align:center;padding:36px 24px;min-height:220px;
+  background:var(--surface-2,var(--surface));border:1px dashed var(--line-2);
+  border-radius:12px;color:var(--fg-2);
+  font:400 14px/1.6 var(--font-text);
+}
+.vhl-error b{color:var(--fg);font-weight:700}
+
+/* Share row under each viz: copy-link + snapshot buttons. */
+.vhl-share{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0 22px}
+.vhl-btn{
+  font:600 13px/1 var(--font-text);color:var(--fg);
+  background:var(--surface-2,var(--surface));border:1px solid var(--line);
+  border-radius:999px;padding:11px 18px;min-height:44px;cursor:pointer;
+  display:inline-flex;align-items:center;gap:8px;
+}
+.vhl-btn:hover{border-color:var(--accent);color:var(--accent)}
+.vhl-btn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+/* Section shell used by the gallery page. */
+.vhl-sec{margin:0 0 var(--s-6)}
+.vhl-sec__head{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin:0 0 6px}
+.vhl-sec__kick{font:700 11px/1.4 var(--font-text);letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
+.vhl-sec__title{font:700 clamp(20px,3.4vw,28px)/1.2 var(--font-display);margin:0;letter-spacing:-.01em}
+.vhl-sec__lede{font:400 14px/1.6 var(--font-text);color:var(--fg-2);margin:0 0 14px;max-width:64ch}
+.vhl-sec__foot{font:400 12.5px/1.6 var(--font-text);color:var(--fg-3);margin:12px 0 0;max-width:68ch}
+
+/* Tappable svg nodes: visible focus ring, pointer on hit areas. */
+.vhl-svg [data-vhl-node]{cursor:pointer}
+.vhl-svg [data-vhl-node]:focus{outline:none}
+.vhl-svg [data-vhl-node]:focus-visible circle.vhl-hit{stroke:var(--accent);stroke-width:2}
+
+/* Motion: edges draw outward from the center node. Duration is set inline
+   per edge — higher similarity draws faster, so motion encodes the data.
+   pathLength="100" normalizes the dash math. */
+@keyframes vhl-draw{from{stroke-dashoffset:100}to{stroke-dashoffset:0}}
+.vhl-anim .vhl-edge{stroke-dasharray:100;stroke-dashoffset:100;animation:vhl-draw var(--vhl-dur,.8s) ease-out forwards}
+.vhl-anim .vhl-node{opacity:0;animation:vhl-fade .5s ease-out forwards;animation-delay:var(--vhl-d)}
+@keyframes vhl-fade{from{opacity:0;transform:scale(.6)}to{opacity:1;transform:scale(1)}}
+
+/* Flow links: animated dash drift = data in motion. Paused under
+   reduced-motion. */
+@keyframes vhl-drift{to{stroke-dashoffset:-48}}
+.vhl-anim .vhl-flowlink{stroke-dasharray:12 12;animation:vhl-drift 2.4s linear infinite}
+
+@media (prefers-reduced-motion:reduce){
+  .vhl-anim .vhl-edge,.vhl-anim .vhl-node{animation:none;opacity:1;stroke-dashoffset:0}
+  .vhl-anim .vhl-flowlink{animation:none}
+}
+
+/* Bars: grow from the baseline, longest (rank 1) first.
+   transform-origin is set inline in SVG viewport px (default transform-box). */
+@keyframes vhl-grow{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+/* Drift bins: rise from the lane baseline. transform-origin set inline. */
+@keyframes vhl-rise{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+@media (prefers-reduced-motion:reduce){
+  .vhl-anim .vhl-bar{animation:none}
+}
+
+/* Career scrubber. */
+.vhl-scrub{display:flex;align-items:center;gap:12px;margin:12px 0 4px}
+.vhl-scrub input[type=range]{flex:1;min-height:44px;accent-color:var(--accent)}
+.vhl-scrub output{font:700 13px var(--font-text);color:var(--fg);min-width:88px;text-align:right}
+.vhl-deltas{font:400 13.5px/1.6 var(--font-text);color:var(--fg-2);margin:6px 0 0;min-height:44px}
+.vhl-deltas b{color:var(--accent)}
+
+/* Matchup layout: two networks side by side, stacked on phones. */
+.vhl-duo{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media (max-width:640px){.vhl-duo{grid-template-columns:1fr}}
+.vhl-vs{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin:0 0 14px;
+  background:var(--surface-2,var(--surface));border:1px solid var(--line);
+  border-radius:12px;padding:14px 18px}
+.vhl-vs__sim{font:800 clamp(28px,5vw,40px)/1 var(--font-display);color:var(--gold,#D4AF69)}
+.vhl-vs__lbl{font:400 12.5px/1.5 var(--font-text);color:var(--fg-2);max-width:40ch}
+.vhl-vs__shared{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.vhl-chip{font:600 12px/1 var(--font-text);color:var(--fg);border:1px solid var(--gold,#D4AF69);
+  border-radius:999px;padding:8px 12px;background:transparent}
+
+/* Demo picker (gallery page). */
+.vhl-pick{display:flex;gap:10px;flex-wrap:wrap;margin:0 0 14px}
+.vhl-pick button{
+  font:600 13px/1 var(--font-text);color:var(--fg-2);
+  background:transparent;border:1px solid var(--line);border-radius:999px;
+  padding:11px 16px;min-height:44px;cursor:pointer;
+}
+.vhl-pick button[aria-pressed=true]{color:var(--on-accent,#FCFBF7);background:var(--accent);border-color:var(--accent)}
+.vhl-pick button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}

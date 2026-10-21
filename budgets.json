@@ -83,6 +83,9 @@
     },
     "twin-network.html": {
       "budget_bytes": 160768
+    },
+    "viz.html": {
+      "budget_bytes": 396288
     }
   },
   "interaction": {
