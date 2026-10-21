@@ -161,7 +161,7 @@
       var c = sessionStorage.getItem('vh_nav_live');
       if (c) { var o = JSON.parse(c); if (Date.now() - o.t < 90000) { set(o.on); return; } }
     } catch (e) {}
-    fetch('https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard')
+    fetch('/api/espn/scoreboard')
       .then(function (r) { return r.json(); })
       .then(function (d) {
         var on = (d.events || []).some(function (e) { return e.status && e.status.type && e.status.type.state === 'in'; });

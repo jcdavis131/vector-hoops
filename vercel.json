@@ -236,6 +236,10 @@
   ],
   "rewrites": [
     {
+      "destination": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard",
+      "source": "/api/espn/scoreboard"
+    },
+    {
       "destination": "/live.html",
       "source": "/live"
     },
