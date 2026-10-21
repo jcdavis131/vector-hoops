@@ -1,0 +1,18 @@
+{
+  "source": "espn_plays",
+  "date": "2026-10-20",
+  "fetched_at": "2026-10-21T18:51:00Z",
+  "sha256": "1a85bf673c0694ed1dc7011b57b96b3962bb649803389359fe03d74e2b41cacc",
+  "records": 546,
+  "games": 3,
+  "players": 62,
+  "qa": {
+    "verdict": "PASS",
+    "checks": {
+      "schema": "PASS",
+      "row_counts": "PASS",
+      "spot_sample": "PASS"
+    }
+  },
+  "pipeline_version": "1.0.0"
+}

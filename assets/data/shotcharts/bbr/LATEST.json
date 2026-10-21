@@ -1,0 +1,12 @@
+{
+  "source": "bbr",
+  "date": "2026-10-20",
+  "snapshot": "shotcharts-20261020.jsonl",
+  "manifest": "shotcharts-20261020.manifest.json",
+  "sha256": "881e951b4b6d1bc9e843c3b6fa9f83213d749c8b127f8c1352b2cbd0a9518b1b",
+  "records": 545,
+  "games": 3,
+  "served_bytes": 195198,
+  "budget_note": null,
+  "fetched_at": "2026-10-21T18:47:41Z"
+}

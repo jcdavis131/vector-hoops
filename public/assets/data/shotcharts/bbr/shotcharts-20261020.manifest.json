@@ -1,0 +1,19 @@
+{
+  "source": "bbr",
+  "date": "2026-10-20",
+  "fetched_at": "2026-10-21T18:47:41Z",
+  "sha256": "881e951b4b6d1bc9e843c3b6fa9f83213d749c8b127f8c1352b2cbd0a9518b1b",
+  "records": 545,
+  "games": 3,
+  "players": 62,
+  "qa": {
+    "verdict": "PASS",
+    "checks": {
+      "schema": "PASS",
+      "row_counts": "PASS",
+      "spot_sample": "PASS",
+      "geometry": "PASS"
+    }
+  },
+  "pipeline_version": "1.0.0"
+}

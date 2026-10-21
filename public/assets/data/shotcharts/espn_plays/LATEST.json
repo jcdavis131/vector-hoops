@@ -1,0 +1,12 @@
+{
+  "source": "espn_plays",
+  "date": "2026-10-20",
+  "snapshot": "shotcharts-20261020.jsonl",
+  "manifest": "shotcharts-20261020.manifest.json",
+  "sha256": "1a85bf673c0694ed1dc7011b57b96b3962bb649803389359fe03d74e2b41cacc",
+  "records": 546,
+  "games": 3,
+  "players": 62,
+  "qa_verdict": "PASS",
+  "fetched_at": "2026-10-21T18:50:41Z"
+}
