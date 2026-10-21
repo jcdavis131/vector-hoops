@@ -444,7 +444,7 @@
         projectAll();
         ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
         ctx.clearRect(0, 0, canvas.width / dpr, canvas.height / dpr);
-        var sx = state.sx, syy = state.sy, sz = state.sz, cl = state.clusters;
+        var sx = state.sx, syy = state.sy, sz = state.sz, cl = state.clusters, n = state.n;
         /* Panel S7: single back-to-front pass — perceived density is real depth,
            not a fixed cluster draw-order artifact. sz is perspective scale:
            smaller = farther, so ascending order paints far points first. */
