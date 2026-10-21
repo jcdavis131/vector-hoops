@@ -54,6 +54,9 @@
     "play.html": {
       "budget_bytes": 1387520
     },
+    "play/era-crossed.html": {
+      "budget_bytes": 840704
+    },
     "players.html": {
       "budget_bytes": 535552
     },
@@ -74,6 +77,9 @@
     },
     "teams.html": {
       "budget_bytes": 132096
+    },
+    "twenty-questions.html": {
+      "budget_bytes": 964608
     },
     "twin-network.html": {
       "budget_bytes": 160768
