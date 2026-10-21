@@ -53,8 +53,12 @@
 
     var drawerItems = EXPLORE.map(function (l) {
       var on = l.href === active;
+      // P1-5: one aria-current per page — when a top-level slot already marks
+      // this page (e.g. MAP for '/' and '/map-guess'), the drawer twin keeps
+      // its visual is-active but does not claim aria-current a second time.
+      var slotClaims = mapOn || playOn;
       return '<li><a class="explore-item' + (on ? ' is-active' : '') + '" href="' + l.href + '"' +
-        (on ? ' aria-current="page"' : '') + '>' +
+        (on && !slotClaims ? ' aria-current="page"' : '') + '>' +
         '<span class="explore-item__label">' + l.label +
         (l.live ? '<span class="explore-item__livedot" aria-hidden="true"></span>' : '') + '</span>' +
         '<span class="explore-item__desc">' + l.desc + '</span></a></li>';
@@ -71,7 +75,7 @@
           '" title="' + PLAY.title + '"' + (playOn ? ' aria-current="page"' : '') + '>' + PLAY.label + '</a>' +
         '<button class="site-nav__slot site-nav__explore' + (exploreOn ? ' is-active' : '') + '" type="button"' +
           ' aria-expanded="false" aria-controls="vh-explore-drawer" aria-haspopup="true"' +
-          (exploreOn ? ' aria-current="true"' : '') + ' title="Everything else, one level down">' +
+          ' title="Everything else, one level down">' +
           '<span>Explore</span>' + CHEVRON + '<span class="site-nav__live-dot" aria-hidden="true"></span></button>' +
         '<a class="site-nav__slot site-nav__link" href="' + HOW.href + '" rel="noopener" title="' + HOW.title + '">' +
           '<span>' + HOW.label + '</span>' + EXT + '</a>' +
