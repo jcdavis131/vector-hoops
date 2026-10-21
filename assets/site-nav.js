@@ -10,9 +10,9 @@
   var MAP = { href: '/#map3d', label: 'Map', title: 'The 3D embedding map of 12,966 player-seasons' };
   var PLAY = { href: '/play', label: 'Play', title: 'Daily Court: five past All-Stars, find each modern twin' };
   var HOW = {
-    href: 'https://dumbmodel.com',
+    href: '/methods',
     label: 'How it works',
-    title: 'The neural nets behind the hoops — dumbmodel.com'
+    title: 'Methods — every number recomputed from source, and the model graded'
   };
 
   var EXPLORE = [

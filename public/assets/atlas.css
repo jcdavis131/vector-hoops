@@ -70,10 +70,30 @@
   --s-6: 32px; --s-7: 48px; --s-9: 96px;
   --gutter: clamp(16px, 4vw, 48px);
   --content: 1200px;
-  --radius: 6px;
-  --radius-lg: 10px;
-  --radius-xl: 14px;
+  /* ---- radii: single-sourced here (ex-MARIO LIFT 5/7/10, PR #73, 2026-10-12) ---- */
+  --radius: 5px;
+  --radius-lg: 7px;
+  --radius-xl: 10px;
   --nav-h: 44px;
+
+  /* ---- platformer material tokens (ex-MARIO LIFT layer, promoted 2026-10-21;
+     primary-action green + reward gold; contrast receipts kept inline) ---- */
+  --pipe:        #1C7331;  /* primary-action green — 5.72:1 under --on-accent */
+  --pipe-deep:   #175C2A;  /* hover — 7.80:1 */
+  --coin-1:      #FFD94D;  /* coin gradient, light stop */
+  --coin-2:      #F5B921;  /* coin gradient, deep stop — ink on it: 9.76:1 */
+  --coin-wash-1: #FDEFC0;  /* solved-fill wash, light stop */
+  --coin-wash-2: #F9DC7E;  /* solved-fill wash, deep stop — ink on it: 12.83:1 */
+  --coin-text:   #7A5200;  /* deep gold for glyphs/labels — 6.68:1 on board */
+  --coin-ink:    #2A1600;  /* constant ink for text ON coin material, both themes */
+  --qblock-1:    #F7B733;  /* ?-block amber, light stop */
+  --qblock-2:    #EE9420;  /* ?-block amber, deep stop — #2A1600 on it: 7.33:1 */
+  --qblock-ink:  #2A1600;
+  --brick:       #C08552;  /* brick-tan hairline — decorative divider (3.02:1, never text) */
+  --step:        #EAE0CB;  /* warm paper step for card offset shadows */
+  --block:       #232323;  /* hard offset shadow colour (== --ink on paper) */
+  --block-line:  #232323;  /* button border — flips light on the night board */
+  --spring:      cubic-bezier(.34,1.56,.64,1); /* the one playful curve */
 
   /* ---- motion ---- */
   --ease: cubic-bezier(.2,.7,.1,1);
@@ -135,6 +155,17 @@
     --bad:       #E5624F;
     --scrim:     rgba(3,4,6,.72);
     --blue:      #7FA7D9;
+
+    /* ---- platformer materials, night board (ex-MARIO LIFT, promoted 2026-10-21) ---- */
+    --pipe:        #3FB950;  /* night pipe — 7.75:1 under night --on-accent */
+    --pipe-deep:   #35C759;  /* night hover lightens, like --accent-2 */
+    --coin-text:   #E8C766;  /* 11.52:1 on night board */
+    --brick:       #8A5F36;
+    --step:        rgba(0,0,0,.5);
+    --block:       #000000;
+    --block-line:  #454F5C;
+    /* coin + qblock gradients are materials: identical on both themes,
+       always paired with ink text (9.76:1 / 7.33:1 worst stop). */
   }
 }
 
@@ -598,45 +629,14 @@ table{ border-collapse: collapse; width: 100%; }
    Foundations untouched: paper/night-board tokens, type system, and every
    Wave-3 AA pairing are preserved; new pairings were recomputed and verified
    in the post-merge line-by-line review of PR #73.
-   This layer loads last (end of atlas.css) and wins ties on purpose.
+   2026-10-21 P0: this layer's token re-definitions were promoted into the
+   single canonical token tables (light + night :root); it now carries only
+   component rules. Every token is defined exactly once.
    ========================================================================== */
-:root{
-  /* ---- platformer material tokens (light / paper) ---- */
-  --pipe:        #1C7331;  /* primary-action green — 5.72:1 under --on-accent */
-  --pipe-deep:   #175C2A;  /* hover — 7.80:1 */
-  --coin-1:      #FFD94D;  /* coin gradient, light stop */
-  --coin-2:      #F5B921;  /* coin gradient, deep stop — ink on it: 9.76:1 */
-  --coin-wash-1: #FDEFC0;  /* solved-fill wash, light stop */
-  --coin-wash-2: #F9DC7E;  /* solved-fill wash, deep stop — ink on it: 12.83:1 */
-  --coin-text:   #7A5200;  /* deep gold for glyphs/labels — 6.68:1 on board */
-  --coin-ink:    #2A1600;  /* constant ink for text ON coin material, both themes */
-  --qblock-1:    #F7B733;  /* ?-block amber, light stop */
-  --qblock-2:    #EE9420;  /* ?-block amber, deep stop — #2A1600 on it: 7.33:1 */
-  --qblock-ink:  #2A1600;
-  --brick:       #C08552;  /* brick-tan hairline — decorative divider (3.02:1) */
-  --step:        #EAE0CB;  /* warm paper step for card offset shadows */
-  --block:       #232323;  /* hard offset shadow colour (== --ink on paper) */
-  --block-line:  #232323;  /* button border — flips light on the night board */
-  --spring:      cubic-bezier(.34,1.56,.64,1); /* the one playful curve */
-
-  /* slightly squarer corners, system-wide */
-  --radius:    5px;
-  --radius-lg: 7px;
-  --radius-xl: 10px;
-}
-@media (prefers-color-scheme: dark){
-  :root{
-    --pipe:        #3FB950;  /* night pipe — 7.75:1 under night --on-accent */
-    --pipe-deep:   #35C759;  /* night hover lightens, like --accent-2 */
-    --coin-text:   #E8C766;  /* 11.52:1 on night board */
-    --brick:       #8A5F36;
-    --step:        rgba(0,0,0,.5);
-    --block:       #000000;
-    --block-line:  #454F5C;
-    /* coin + qblock gradients are materials: identical on both themes,
-       always paired with ink text (9.76:1 / 7.33:1 worst stop). */
-  }
-}
+/* NOTE 2026-10-21 (P0 accent-war end): the late :root re-definition block that
+   lived here was promoted into the single canonical token tables above
+   (light :root + night-board :root). Tokens are now defined exactly once;
+   this layer keeps only component rules. */
 
 /* ---- blocky materiality: hard stepped shadows, no blur ---- */
 .card{
@@ -848,6 +848,7 @@ section .today-strip__links a:first-child:hover{ background: var(--pipe-deep); }
   font-size: 11px;
   color: var(--fg-3);
   margin: 6px 4px 0;
+}
 /* ---- named concept axes + honesty strip (semanticspace pass) ---- */
 .atlas-axes{
   display: flex; flex-wrap: wrap; gap: 10px 16px; align-items: flex-end;

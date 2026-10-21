@@ -108,7 +108,7 @@
     var dataUrl = opts.src || el.dataset.src;
     var req = dataUrl
       ? fetch(dataUrl, { cache: 'force-cache' })
-      : fetch('assets/projections/embed3d.json?v=2d0c151f', { cache: 'force-cache' });
+      : fetch('assets/projections/embed3d.json?v=fce603a1', { cache: 'force-cache' });
     req.then(function (r) {
       if (!r.ok) throw new Error('HTTP ' + r.status + ' for ' + src);
       return r.json();
@@ -122,13 +122,12 @@
     });
 
     function ingest(doc) {
-      var pts = doc && doc.points;
       var meta = doc && doc.meta;
-      if (!pts || !pts.length || !meta || !meta.projections) {
-        fail(el, 'The projection data is malformed (missing points or meta).');
+      if (!meta || meta.format !== 4 || !meta.projections) {
+        fail(el, 'The projection data is malformed (missing v4 points or meta).');
         return;
       }
-      var n = pts.length;
+      var n = meta.n;
       state.n = n;
       var avail = meta.projections;
       if (avail.indexOf(state.proj) < 0) state.proj = avail[0];
@@ -143,9 +142,31 @@
       state.seasons = new Array(n);
       state.teams = new Array(n);
       state.clusters = new Uint8Array(n);
-      /* V3 compact format (see meta.fields): n=meta.names idx, s=season start
-         year, t=team, c=cluster, coords int millis. */
+      /* V4 columnar format (see meta.fields): doc.n = delta-encoded indices
+         into meta.names; doc.m = packed per-point int
+           season = season_base + (m >> 9),
+           team   = meta.teams[((m >> 3) & 63) - 1]  (-1 => unknown),
+           cluster = m & 7;
+         doc.pca/tsne/umap = flat int arrays, 3 per point in row order,
+         int millis of the centered, unit-normalized projection
+         (divide by 1000; meta.normalized=true so no re-center below). */
       var names = meta.names || [];
+      var teams = meta.teams || [];
+      var sBase = meta.season_base || 1996;
+      var dn = doc.n, mc = doc.m;
+      if (!dn || !mc || dn.length !== n || mc.length !== n) {
+        fail(el, 'The projection data is malformed (column length mismatch).');
+        return;
+      }
+      var col = {};
+      for (k = 0; k < avail.length; k++) {
+        col[avail[k]] = doc[avail[k]];
+        if (!col[avail[k]] || col[avail[k]].length !== n * 3) {
+          fail(el, 'The projection data is malformed (coordinate column "' +
+            avail[k] + '" missing or short).');
+          return;
+        }
+      }
       state.idToIdx = new Map();
       function seasonStr(y) {
         var y2 = String(y + 1).slice(-2);
@@ -153,31 +174,40 @@
       }
       var cx = {}, cy = {}, cz = {};
       for (k = 0; k < avail.length; k++) { cx[avail[k]] = 0; cy[avail[k]] = 0; cz[avail[k]] = 0; }
+      var nameIdx = 0, code, ti, arr, o, inv = 1 / 1000;
       for (i = 0; i < n; i++) {
-        p = pts[i];
-        state.names[i] = names[p.n] || ('#' + i);
-        state.seasons[i] = seasonStr(p.s);
-        state.teams[i] = p.t || ''; state.clusters[i] = p.c | 0;
+        nameIdx += dn[i];
+        state.names[i] = names[nameIdx] || ('#' + i);
+        code = mc[i];
+        state.seasons[i] = seasonStr(sBase + (code >> 9));
+        ti = ((code >> 3) & 63) - 1;
+        state.teams[i] = ti >= 0 ? (teams[ti] || '') : '';
+        state.clusters[i] = code & 7;
         state.idToIdx.set(i, i); /* id IS the array index (meta.id) */
         for (k = 0; k < avail.length; k++) {
-          a = avail[k]; var v = p[a]; if (!v) continue;
-          var o = i * 3;
-          state.pos[a][o] = v[0] / 1000; state.pos[a][o + 1] = v[1] / 1000; state.pos[a][o + 2] = v[2] / 1000;
-          cx[a] += v[0] / 1000; cy[a] += v[1] / 1000; cz[a] += v[2] / 1000;
+          a = avail[k]; arr = col[a]; o = i * 3;
+          var x = arr[o] * inv, y = arr[o + 1] * inv, z = arr[o + 2] * inv;
+          state.pos[a][o] = x; state.pos[a][o + 1] = y; state.pos[a][o + 2] = z;
+          cx[a] += x; cy[a] += y; cz[a] += z;
         }
       }
-      /* center + normalize each projection to unit max-radius */
-      for (k = 0; k < avail.length; k++) {
-        a = avail[k]; var arr = state.pos[a];
-        var mx = cx[a] / n, my = cy[a] / n, mz = cz[a] / n, rmax = 0;
-        for (i = 0; i < n; i++) {
-          var o = i * 3;
-          arr[o] -= mx; arr[o + 1] -= my; arr[o + 2] -= mz;
-          var r = Math.sqrt(arr[o] * arr[o] + arr[o + 1] * arr[o + 1] + arr[o + 2] * arr[o + 2]);
-          if (r > rmax) rmax = r;
+      /* center + normalize each projection to unit max-radius.
+         V4 data arrives already centered + unit-normalized (meta.normalized),
+         so this step is skipped: re-centering rounded data would double the
+         quantization error. Kept for any future non-normalized format. */
+      if (!meta.normalized) {
+        for (k = 0; k < avail.length; k++) {
+          a = avail[k]; var arr = state.pos[a];
+          var mx = cx[a] / n, my = cy[a] / n, mz = cz[a] / n, rmax = 0;
+          for (i = 0; i < n; i++) {
+            var o = i * 3;
+            arr[o] -= mx; arr[o + 1] -= my; arr[o + 2] -= mz;
+            var r = Math.sqrt(arr[o] * arr[o] + arr[o + 1] * arr[o + 1] + arr[o + 2] * arr[o + 2]);
+            if (r > rmax) rmax = r;
+          }
+          var s = rmax > 0 ? 1 / rmax : 1;
+          for (i = 0; i < n * 3; i++) arr[i] *= s;
         }
-        var s = rmax > 0 ? 1 / rmax : 1;
-        for (i = 0; i < n * 3; i++) arr[i] *= s;
       }
       /* per-cluster index lists for single-pass batched draws */
       state.byCluster = [];

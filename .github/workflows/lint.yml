@@ -22,3 +22,15 @@ jobs:
         run: ruff check . --statistics
       - name: Ruff format check
         run: ruff format --check .
+  css-braces:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      # A single missing `}` in atlas.css once silently swallowed ~18 rules
+      # (the Fig.1 axes + honesty strip shipped unstyled). stdlib, no deps.
+      # Also enforces the root -> public/ byte-identical mirror rule.
+      - name: Check CSS brace balance
+        run: python3 scripts/check_css_braces.py .
