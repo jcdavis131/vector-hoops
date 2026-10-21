@@ -55,10 +55,6 @@
 @keyframes hero-spin{ to{ transform: rotate(360deg); } }
 .hero-map__bar{ display: flex; flex-wrap: wrap; align-items: center; gap: var(--s-2) var(--s-4); margin-top: var(--s-3); }
 .hero-map__hint{ margin: 0; font-family: var(--font-code); font-size: var(--t-xs); color: var(--fg-3); }
-.hero-map__proj{ display: inline-flex; gap: 6px; }
-.proj-btn{ appearance: none; border: 1px solid var(--line-2); border-radius: 999px; background: var(--surface); color: var(--fg-2);
-  font-family: var(--font-code); font-size: 11px; font-weight: 800; padding: 6px 12px; cursor: pointer; min-height: 36px; }
-.proj-btn[aria-pressed="true"]{ background: var(--fg); color: var(--surface); border-color: var(--fg); }
 .hero-map__cta{ margin-left: auto; }
 
 /* ---------- Home: season strip (2026-27 opening night) ---------- */
@@ -391,12 +387,7 @@
       </div>
     </div>
     <div class="hero-map__bar">
-      <p class="hero-map__hint">Drag to orbit &middot; scroll to zoom &middot; projections:</p>
-      <div class="hero-map__proj" role="group" aria-label="Map projection">
-        <button class="proj-btn" type="button" data-proj="pca" aria-pressed="true">PCA</button>
-        <button class="proj-btn" type="button" data-proj="tsne" aria-pressed="false">t-SNE</button>
-        <button class="proj-btn" type="button" data-proj="umap" aria-pressed="false">UMAP</button>
-      </div>
+      <p class="hero-map__hint">Drag to orbit &middot; scroll to zoom</p>
       <a class="btn btn-primary hero-map__cta" href="/map-guess">Play Map Hunt &rarr;</a>
     </div>
     <noscript><p class="hero-map__hint" style="margin-top:8px">The 3D map needs JavaScript &mdash; the atlas below works the same way, and <a href="/play">Daily Court</a> plays without it.</p></noscript>
@@ -431,16 +422,6 @@
       }catch(e){ return false; }
     }
     if(!mount('pca')) return;
-    /* Projection switcher reuses the mount handle — no re-fetch (Panel S9). */
-    document.querySelectorAll('.hero-map__proj .proj-btn').forEach(function(b){
-      b.addEventListener('click', function(){
-        document.querySelectorAll('.hero-map__proj .proj-btn').forEach(function(x){ x.setAttribute('aria-pressed','false'); });
-        b.setAttribute('aria-pressed','true');
-        var p = b.getAttribute('data-proj');
-        if(handle && typeof handle.setProjection === 'function') handle.setProjection(p);
-        else mount(p);
-      });
-    });
   })();
   </script>
 

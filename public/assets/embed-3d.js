@@ -245,9 +245,13 @@
         b.type = 'button';
         b.textContent = name.toUpperCase().replace('TSNE', 't-SNE').replace('UMAP', 'UMAP').replace('PCA', 'PCA');
         b.setAttribute('aria-pressed', name === state.proj ? 'true' : 'false');
+        /* P2-2: theme-aware pill colors — the bar sits on the page background
+           (paper in light, void in night-board), so hard-coded dark-mode text
+           (#f9f6f0) was illegible in light mode. var(--fg)/var(--line-2)
+           follow the OS theme; gold stays the functional active marker. */
         b.style.cssText = 'font:13px system-ui,sans-serif;padding:5px 12px;border-radius:999px;' +
-          'border:1px solid #3a3d40;background:' + (name === state.proj ? '#D4AF69' : 'transparent') +
-          ';color:' + (name === state.proj ? '#151619' : '#f9f6f0') + ';cursor:pointer;';
+          'border:1px solid var(--line-2);background:' + (name === state.proj ? '#D4AF69' : 'transparent') +
+          ';color:' + (name === state.proj ? '#151619' : 'var(--fg)') + ';cursor:pointer;';
         b.addEventListener('click', function () { setProjection(name); });
         bar.appendChild(b);
         state.buttons[name] = b;
@@ -266,7 +270,7 @@
         tsne: 't-SNE keeps tight groups together, but gaps between groups mean nothing.',
         umap: 'UMAP keeps tight groups together, but gaps between groups mean nothing.'
       };
-      note.innerHTML = '<strong style="color:#f9f6f0;">' +
+      note.innerHTML = '<strong style="color:var(--fg);">' + /* P2-2: theme-aware; #f9f6f0 was illegible on paper */
         state.proj.toUpperCase().replace('TSNE', 't-SNE') + '</strong> \u2014 ' +
         (plain[state.proj] || (PROJ_NOTES[state.proj] || '')) +
         ' Colors: 8 rough groups found by the k-means algorithm (silhouette 0.09 \u2014 loose, treat as flavor, not positions). ' +
@@ -282,7 +286,7 @@
           var b = state.buttons[k];
           b.setAttribute('aria-pressed', on ? 'true' : 'false');
           b.style.background = on ? '#D4AF69' : 'transparent';
-          b.style.color = on ? '#151619' : '#f9f6f0';
+          b.style.color = on ? '#151619' : 'var(--fg)'; /* P2-2: theme-aware, see buildSwitcher */
         });
         if (state.axisLabel) state.axisLabel.textContent = PROJ_AXIS[name] || '';
       }
