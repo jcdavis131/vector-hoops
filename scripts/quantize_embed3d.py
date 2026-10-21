@@ -127,7 +127,7 @@ new_meta = {
     "silhouette": meta["silhouette"],
     "silhouette_sample": meta["silhouette_sample"],
     "built_at": meta["built_at"],
-    "repacked_at": datetime.datetime.now(datetime.timezone.utc).isoformat(),
+    "repacked_at": datetime.datetime.now(datetime.UTC).isoformat(),
     "repacked_by": "scripts/quantize_embed3d.py (V3->V4 columnar diet)",
     "n": n,
     "seed": meta["seed"],
