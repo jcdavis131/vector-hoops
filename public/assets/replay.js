@@ -638,9 +638,21 @@
     });
     if (S.ball) { var qb = P(S.ball[0], S.ball[1], S.ball[2]); if (qb) objs.push({ z: qb.z - 0.4, f: function () { drawBall(S.ball); } }); }
     objs.sort(function (a, b) { return b.z - a.z; }); objs.forEach(function (o) { o.f(); });
-    drawHud(S);
+    drawHud(S); drawWipe();
     return S;
   }
+  /* pixel wipe on game switch and period start, 0.5 s (after huashu-motion's mosaic, alchaincyf, MIT) */
+  var wipe = 0;
+  function startWipe() { if (!reduce) { wipe = performance.now(); snd('wipe'); } }
+  function drawWipe() {
+    if (!wipe) return; var p = (performance.now() - wipe) / 500; if (p >= 1) { wipe = 0; return; }
+    ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.fillStyle = '#121417';
+    for (var c = 0, bw = Math.ceil(W / 16), rh = H / 9; c < 16; c++) {
+      var u = Math.max(0, Math.min(1, p * 1.6 - c / 32 - hash(c, 7) * 0.1)), y = Math.round((u % 0.5) * 18) * rh;
+      if (u > 0 && u < 1) ctx.fillRect(c * bw, u < 0.5 ? 0 : y, bw, u < 0.5 ? y : H - y);
+    }
+  }
+  function snd(n, d) { if (window.VHSound && VHSound.sfx) VHSound.sfx(n, d); }
 
   /* ---------- effects ---------- */
   function popFor(i) {
@@ -651,7 +663,10 @@
       fx.push({ txt: txt, t0: perf + 0.9, col: lum(team.c) < 70 ? team.alt : team.c, big: ty === '3pt' || /dunk/.test(sub) });
       flash = e[4] === 1 ? 1 : 0.5; if (/dunk/.test(sub)) shake = 0.35;
       if (prev && Math.sign(prev[8] - prev[9]) !== Math.sign(e[8] - e[9]) && e[8] !== e[9] && prev[8] !== prev[9]) fx.push({ txt: 'LEAD CHANGE', t0: perf + 1.5, col: '#FF7A33' });
-    } else if (ty === 'block') fx.push({ txt: 'REJECTED!', t0: perf, col: '#6EA8FF', big: true });
+      snd('swish', 0.9);
+    } else if (ty === '2pt' || ty === '3pt') snd('miss', 0.9);
+    else if (ty === 'period' && e[3] === 'start') startWipe();
+    if (ty === 'block') { fx.push({ txt: 'REJECTED!', t0: perf, col: '#6EA8FF', big: true }); snd('block'); }
     else if (ty === 'steal') fx.push({ txt: 'PICKED!', t0: perf, col: '#6EA8FF' });
     else if (ty === 'game') fx.push({ txt: 'FINAL', t0: perf, col: '#F2C14E', big: true });
     else if (ty === 'period' && e[3] === 'end') fx.push({ txt: 'END ' + (e[0] <= 4 ? 'Q' + e[0] : 'OT'), t0: perf, col: '#F2EEE4' });
@@ -738,7 +753,7 @@
     catch (err) { G = keep.G; EV = keep.EV; RT = keep.RT; FR = keep.FR; T_END = keep.T_END; DIR = keep.DIR; stats.setGameFailed = (stats.setGameFailed || 0) + 1; throw err; }
     sceneVer++; moments();
     if (!same) {
-      buildCrowd(); cur.idx = -1; cur.dir = 1; cur.loop = null; attr('rpRev', 'aria-pressed', 'false'); attr('rpLoop', 'aria-pressed', 'false');
+      buildCrowd(); startWipe(); cur.idx = -1; cur.dir = 1; cur.loop = null; attr('rpRev', 'aria-pressed', 'false'); attr('rpLoop', 'aria-pressed', 'false');
       cur.live = !!opts.live; seek(cur.live ? Math.max(0, headT() - 6) : 0); setPlaying(cur.live);
     } else {
       cur.t = Math.min(T_END, RT[Math.min(i0, RT.length - 1)] + f0); lastFxIdx = segAt(cur.t);
@@ -754,7 +769,7 @@
      before the replay waits for the next one */
   function headT() { return RT.length ? Math.min(T_END, RT[RT.length - 1] + 1.8) : 0; }
   function liveUi() { var b = $('rpLive'); if (b) { b.setAttribute('aria-pressed', cur.live ? 'true' : 'false'); b.hidden = !G || !G.live; } }
-  function goLive() { if (!G) return; cur.live = true; cur.dir = 1; cur.loop = null; attr('rpRev', 'aria-pressed', 'false'); attr('rpLoop', 'aria-pressed', 'false'); seek(Math.max(0, headT() - 6)); setPlaying(true); liveUi(); }
+  function goLive() { if (!G) return; snd('live'); cur.live = true; cur.dir = 1; cur.loop = null; attr('rpRev', 'aria-pressed', 'false'); attr('rpLoop', 'aria-pressed', 'false'); seek(Math.max(0, headT() - 6)); setPlaying(true); liveUi(); }
   function manual() { if (cur.live) { cur.live = false; var sp = $('rpSpeed'); if (sp) cur.speed = parseFloat(sp.value) || cur.speed; liveUi(); } }
   function loadGame(id) {
     return fetch(DATA + id + '.json', { cache: 'no-cache' }).then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); }).then(function (g) {

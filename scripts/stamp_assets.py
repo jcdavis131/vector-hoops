@@ -60,6 +60,10 @@ RE_LINK = re.compile(
     r"""(<link[^>]*?\shref=['"])(/?assets/[\w./-]+\.css)(?:\?v=[0-9a-f]+)?(['"])"""
 )
 
+# lazyScript('/assets/….js') inside a module: a script loaded on demand (site-nav.js
+# loads sound.js only once a visitor turns sound on) is cached as immutably as a tag.
+RE_LAZY = re.compile(r"""(lazyScript\(\s*['"])(/?assets/[\w./-]+\.js)(?:\?v=[0-9a-f]+)?(['"])""")
+
 PATTERNS = (RE_FETCH, RE_SCRIPT, RE_LINK)
 
 
@@ -109,7 +113,7 @@ def main() -> int:
     for page in modules() + pages():
         text = page.read_text(encoding="utf-8")
         # a .js file has no <script src>; only its fetch() calls are in scope
-        patterns = (RE_FETCH,) if page.suffix == ".js" else PATTERNS
+        patterns = (RE_FETCH, RE_LAZY) if page.suffix == ".js" else PATTERNS
 
         def sub(m: re.Match) -> str:
             raw = m.group(2)          # as written on the page, may be root-absolute
