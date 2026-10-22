@@ -65,14 +65,16 @@ body{ background:var(--rp-board); color:var(--rp-ink); }
 .rp-filter button{ border:1px solid var(--rp-ink2); background:var(--rp-board); color:var(--rp-ink); }
 .rp-filter button.on{ background:var(--rp-ink); color:var(--rp-board); }
 .rp-moments, .rp-feed{ list-style:none; margin:0; padding:0; max-height:320px; overflow-y:auto; display:grid; gap:2px; }
-.rp-moments button{ width:100%; text-align:left; display:grid; grid-template-columns:52px 1fr; gap:8px; align-items:baseline;
+.rp-moments button{ width:100%; text-align:left; display:grid; grid-template-columns:52px minmax(0,1fr); gap:8px; align-items:baseline;
   min-height:32px; padding:6px 8px; border:0; border-radius:6px; background:transparent; color:var(--rp-ink); cursor:pointer; font-size:13px; }
 .rp-moments button:hover, .rp-moments button.cur{ background:var(--rp-board); }
 .rp-moments .t, .rp-feed .t{ font:700 11px var(--rp-mono); color:var(--rp-ink2); font-variant-numeric:tabular-nums; }
-.rp-feed li{ display:grid; grid-template-columns:52px 1fr; gap:8px; padding:4px 8px; font-size:12.5px; color:var(--rp-ink2); }
+.rp-feed li{ display:grid; grid-template-columns:52px minmax(0,1fr); gap:8px; padding:4px 8px; font-size:12.5px; color:var(--rp-ink2); }
 .rp-feed li.cur{ color:var(--rp-ink); font-weight:700; }
 .rp-honest p{ margin:0 0 8px; max-width:78ch; color:var(--rp-ink2); line-height:1.55; }
 .rp-honest a{ color:var(--rp-ink); }
+/* Phone: long player names and play text wrap inside their row instead of widening the page. */
+.rp-moments button span, .rp-feed li span, .rp-now{ overflow-wrap:anywhere; }
 
 @media (max-width: 860px){
   .rp{ grid-template-columns:minmax(0,1fr); }

@@ -233,13 +233,14 @@
       var to = Bf.pos[id], from = A.pos[id] || [bench(G.players[id] ? G.players[id].t : 0)[0], -3.5];
       var dist = Math.hypot(to[0] - from[0], to[1] - from[1]), need = Math.max(0.35, dist / 17), start = Math.max(0, dur - need);
       var p = i === j ? 1 : smooth((loc - start) / Math.max(0.01, dur - start)), moving = p > 0 && p < 1 && dist > 0.6;
-      players.push({ id: id, x: from[0] + (to[0] - from[0]) * p, y: from[1] + (to[1] - from[1]) * p, moving: moving, side: G.players[id] ? G.players[id].t : 0 });
+      players.push({ id: id, x: from[0] + (to[0] - from[0]) * p, y: from[1] + (to[1] - from[1]) * p, dx: to[0] - from[0], dy: to[1] - from[1], moving: moving, side: G.players[id] ? G.players[id].t : 0 });
     });
     var byId = {}; players.forEach(function (p) { byId[p.id] = p; });
-    var ball = null, e = EV[i], ty = A.ty, shooting = false;
+    var ball = null, e = EV[i], ty = A.ty, shooting = false, shot = null;
     function hand(id, up) { var q = byId[id] || (A.pos[id] ? { x: A.pos[id][0], y: A.pos[id][1] } : null); return q ? [q.x + 0.6, q.y - 0.4, up ? 7.6 : 2.4 + Math.abs(Math.sin(t * 9)) * 1.4] : null; }
     if ((ty === '2pt' || ty === '3pt' || ty === 'freethrow') && A.holder) {
       var fl = Math.min(1.1, dur * 0.75), u = loc / fl, rimX = hoopX(ty === 'freethrow' ? A.d : (e[6] > L / 2 ? 1 : -1)), s0 = A.pos[A.holder];
+      shot = { u: u, post: loc - fl, rimX: rimX, d: rimX > L / 2 ? 1 : -1, ft: ty === 'freethrow', dunk: ty !== 'freethrow' && /dunk/i.test(e[3] || ''), made: A.made === 1, team: e[4] };
       if (u < 1) {
         shooting = true; var apex = ty === '3pt' ? 17 : ty === 'freethrow' ? 14 : (G.types && /dunk/i.test(e[3]) ? 11 : 15);
         var dunk = /dunk/i.test(e[3]);
@@ -255,7 +256,30 @@
       var h0 = A.holder ? hand(A.holder) : null, h1 = Bf.holder ? hand(Bf.holder) : null, k = smooth((loc / dur - 0.35) / 0.3);
       ball = h0 && h1 ? [h0[0] + (h1[0] - h0[0]) * k, h0[1] + (h1[1] - h0[1]) * k, h0[2] + (h1[2] - h0[2]) * k + (A.holder !== Bf.holder ? 4 * k * (1 - k) * 3 : 0)] : (h0 || h1);
     }
-    return { i: i, players: players, ball: ball, shooter: shooting ? A.holder : null, focus: A.focus, holder: A.holder, e: e };
+    var fxs = shot ? stage(shot, byId[A.holder], players, ball) : { net: null, rim: null };
+    return { i: i, players: players, ball: ball, shooter: shooting ? A.holder : null, focus: A.focus, holder: A.holder, e: e, net: fxs.net, rim: fxs.rim };
+  }
+
+  /* Poses and hoop effects for a shot, from the replay clock alone, so scrubbing and
+     playing backwards show the same thing as playing forwards. Under reduced motion
+     nobody leaves the floor and the net and rim hold still; the poses stay. */
+  function stage(sh, me, players, ball) {
+    var out = { net: null, rim: null }, lift = reduce ? 0 : 1;
+    if (sh.u < 1) {
+      if (me) {
+        me.ph = sh.u; if (sh.dunk) { me.pose = 'dunk'; me.z = lift * 3.4 * smooth(sh.u * 1.3); if (ball) { me.x = ball[0] - sh.d * 0.9; me.y = ball[1] + 0.4; } }
+        else { me.pose = 'jumper'; me.ph = Math.min(1, sh.u * 1.25); me.z = lift * (sh.ft ? 0.5 : 2.4) * Math.sin(Math.PI * Math.min(1, sh.u * 1.25)); }
+      }
+    } else if (sh.made) {
+      var p = sh.post;
+      if (p < 0.9 && !reduce) out.net = { d: sh.d, k: p / 0.9 };
+      if (sh.dunk && p < 0.6) {
+        if (!reduce) out.rim = { d: sh.d, amp: 1 - p / 0.6 };
+        if (me) { me.pose = 'hang'; me.z = lift * 3.4 * (p < 0.35 ? 1 : 1 - smooth((p - 0.35) / 0.25)); me.x = sh.rimX - sh.d * 0.9; me.y = CW / 2 + 0.4; }
+      }
+      if (p < 2.2) players.forEach(function (q, k) { if (q.side === sh.team && !q.moving && !q.pose) { q.pose = 'celebrate'; q.z = lift * Math.abs(Math.sin(perf * 9 + k)) * 0.8; } });
+    } else if (sh.post < 0.45 && !sh.ft && !reduce) out.rim = { d: sh.d, amp: 0.7 * (1 - sh.post / 0.45) };
+    return out;
   }
 
   /* ---------- scene ---------- */
@@ -287,8 +311,9 @@
       arc3(hx, CW / 2, Z, 4, d > 0 ? Math.PI / 2 : -Math.PI / 2, d > 0 ? Math.PI * 1.5 : Math.PI / 2, c);
     });
   }
-  function drawHoop(d) {
-    var hx = hoopX(d), bx = d > 0 ? L + 4 : -4, bb = d > 0 ? L - 4 : 4;
+  /* the stanchion, arm and backboard never move: drawn once per camera into a hoop layer */
+  function drawHoopFrame(d) {
+    var bx = d > 0 ? L + 4 : -4, bb = d > 0 ? L - 4 : 4;
     seg3(bx, CW / 2, 0, bx, CW / 2, 12.6, '#5A6068', 1); seg3(bx + d * 0.4, CW / 2, 0, bx + d * 0.4, CW / 2, 12.6, '#3E434A', 1);
     seg3(bx, CW / 2, 12.4, bb, CW / 2, 12, '#5A6068', 1);
     var a = P(bb, 22, 9.6), b = P(bb, 28, 9.6), cc = P(bb, 28, 13.1), dd = P(bb, 22, 13.1);
@@ -298,30 +323,131 @@
       var s1 = P(bb, 24, 10), s2 = P(bb, 26, 10), s3 = P(bb, 26, 11.5), s4 = P(bb, 24, 11.5);
       if (s1 && s2 && s3 && s4) { line2(s1, s2, '#E0483B'); line2(s2, s3, '#E0483B'); line2(s3, s4, '#E0483B'); line2(s4, s1, '#E0483B'); }
     }
-    for (var k = 0; k < 6; k++) { var an = k / 6 * Math.PI * 2; seg3(hx + 0.75 * Math.cos(an), CW / 2 + 0.75 * Math.sin(an), 10, hx + 0.45 * Math.cos(an), CW / 2 + 0.45 * Math.sin(an), 8.4, 'rgba(250,250,250,.85)', 1); }
-    arc3(hx, CW / 2, 10, 0.75, 0, Math.PI * 2, '#F26A1B');
   }
+  /* rim and net are live: the net ripples and pinches as a make drops through, the rim
+     shakes after a dunk or a clank. Both hold still under prefers-reduced-motion. */
+  function drawRimNet(d, S) {
+    var hx = hoopX(d), k = S.net && S.net.d === d ? S.net.k : -1, amp = S.rim && S.rim.d === d ? S.rim.amp : 0;
+    if (k >= 0) stats.netRipple++; if (amp > 0) stats.rimShake++;
+    var rz = 10 + (amp > 0 ? Math.sin(perf * 70) * 0.22 * amp : 0), rx = hx + (amp > 0 ? Math.cos(perf * 55) * 0.15 * amp : 0);
+    var rip = k >= 0 ? Math.sin(Math.PI * k) : 0, sway = k >= 0 ? Math.sin(k * 14) * 0.2 * (1 - k) : 0;
+    var br = 0.45 * (1 - 0.5 * rip), bz = 8.4 - 0.8 * rip, mz = (rz + bz) / 2, mr = (0.75 + br) / 2 + 0.06 * rip;
+    for (var n = 0; n < 6; n++) {
+      var an = n / 6 * Math.PI * 2, c = Math.cos(an), s = Math.sin(an);
+      seg3(rx + 0.75 * c, CW / 2 + 0.75 * s, rz, hx + mr * c + sway * 0.5, CW / 2 + mr * s, mz, 'rgba(250,250,250,.85)', 1);
+      seg3(hx + mr * c + sway * 0.5, CW / 2 + mr * s, mz, hx + br * c + sway, CW / 2 + br * s, bz, 'rgba(250,250,250,.85)', 1);
+    }
+    arc3(rx, CW / 2, rz, 0.75, 0, Math.PI * 2, '#F26A1B');
+  }
+  /* ---------- Blender sprites ----------
+     assets/sprites/players.png is rendered offline by scripts/sprites/build_sprites.py
+     (Blender, headless, a procedural blocky player): 8 facings x 2 camera pitches x 16 pose
+     frames. The jersey renders pure red, the shorts pure green and the trim pure blue, so
+     each team's sheet is one recolour pass here. Cells are scaled to the player's projected
+     height and cached per size. Until the sheet loads, if it fails, or with ?sprites=0,
+     players are drawn as boxes. */
+  var SPR = null, sheets = {}, cells = {}, cellN = 0;
+  function loadSprites() {
+    if (/[?&]sprites=0/.test(location.search) || typeof Image === 'undefined') return;
+    fetch('/assets/sprites/players.json?v=38993b8f').then(function (r) { return r.ok ? r.json() : null; }).then(function (m) {
+      if (!m) return;
+      var img = new Image();
+      img.onload = function () { m.img = img; SPR = m; stats.sprites.ready = 1; };
+      img.onerror = function () { stats.sprites.failed = 1; };
+      img.src = '/assets/sprites/' + m.image + (m.hash ? '?v=' + m.hash : '');
+    }).catch(function () {});
+  }
+  /* jersey, shorts (10% darker), trim as [r,g,b]; mix() returns an rgb() string, so not used here */
+  function teamTints(team) { var c = hex(team.c); return [c, c.map(function (v) { return v * 0.9; }), hex(team.alt)]; }
+  function sheetFor(team) {
+    var key = team.c + team.alt; if (sheets[key]) return sheets[key];
+    var l = mkLayer(), im = SPR.img; l.c.width = im.width; l.c.height = im.height; l.x.drawImage(im, 0, 0);
+    var px = l.x.getImageData(0, 0, im.width, im.height), d = px.data, top = [1, 1, 1], i, k;
+    var cls = function (r, g, b) { return r > 24 && g < r * 0.3 && b < r * 0.3 ? 0 : g > 24 && r < g * 0.3 && b < g * 0.3 ? 1 : b > 24 && r < b * 0.3 && g < b * 0.3 ? 2 : -1; };
+    for (i = 0; i < d.length; i += 4) if (d[i + 3]) { k = cls(d[i], d[i + 1], d[i + 2]); if (k >= 0) top[k] = Math.max(top[k], d[i + k]); }
+    var tint = teamTints(team);
+    for (i = 0; i < d.length; i += 4) if (d[i + 3]) {
+      k = cls(d[i], d[i + 1], d[i + 2]); if (k < 0) continue;
+      var s = d[i + k] / top[k]; d[i] = tint[k][0] * s; d[i + 1] = tint[k][1] * s; d[i + 2] = tint[k][2] * s;
+    }
+    l.x.putImageData(px, 0, 0); stats.sprites.sheets++;
+    return (sheets[key] = l.c);
+  }
+  /* one cell at a pixel height: shrinking smooths then snaps alpha back to on/off, so the
+     outline survives at 12 px tall without a blur halo; growing stays nearest-neighbour */
+  function cellAt(team, row, col, s) {
+    var key = team.c + team.alt + '|' + row + '|' + col + '|' + s.toFixed(3); if (cells[key]) return cells[key];
+    if (cellN > 3000) { cells = {}; cellN = 0; }
+    var cw = SPR.cell[0], ch = SPR.cell[1], w = Math.max(1, Math.round(cw * s)), h = Math.max(1, Math.round(ch * s)), l = mkLayer();
+    l.c.width = w; l.c.height = h; l.x.imageSmoothingEnabled = s < 1; if (s < 1) l.x.imageSmoothingQuality = 'high';
+    l.x.drawImage(sheetFor(team), col * cw, row * ch, cw, ch, 0, 0, w, h);
+    if (s < 1) { var px = l.x.getImageData(0, 0, w, h), d = px.data; for (var i = 3; i < d.length; i += 4) d[i] = d[i] >= 110 ? 255 : 0; l.x.putImageData(px, 0, 0); }
+    cellN++; stats.sprites.cells++;
+    return (cells[key] = l.c);
+  }
+  function spriteCol(p, pose) {
+    var Q = SPR.poses, t = reduce ? 0 : perf, j = Math.abs(Math.floor(p.x * 0.7));
+    if (pose === 'run') return Q.run[(Math.floor(t * 10) + j) % 4];
+    if (pose === 'jumper') { var u = p.ph || 0; return Q.jumper[u < 0.15 ? 0 : u < 0.45 ? 1 : u < 0.75 ? 2 : 3]; }
+    if (pose === 'dunk') { var v = p.ph || 0; return Q.dunk[v < 0.2 ? 0 : v < 0.6 ? 1 : 2]; }
+    if (pose === 'hang') return Q.dunk[2];
+    if (pose === 'celebrate') return Q.celebrate[(Math.floor(t * 4) + j) % 2];
+    return Q.idle[(Math.floor(t * 1.5) + j) % 2];
+  }
+  /* facing: where the player is running, else toward the ball; turned into the sheet's
+     8 camera-relative directions (0 faces the camera, 2 faces screen right) */
+  function spriteDir(p, S) {
+    var ax = p.moving ? p.dx : (S.ball ? S.ball[0] - p.x : L / 2 - p.x), ay = p.moving ? p.dy : (S.ball ? S.ball[1] - p.y : CW / 2 - p.y);
+    if (Math.abs(ax) + Math.abs(ay) < 0.01) return 0;
+    var right = ax * B.rx + ay * B.ry, toward = -(ax * B.fx + ay * B.fy);
+    return ((Math.round(Math.atan2(right, toward) / (Math.PI / 4)) % 8) + 8) % 8;
+  }
+  function drawSprite(p, S, f, ph, pose) {
+    var ei = cam.pitch > 0.79 ? 1 : 0, an = SPR.anchors[ei], span = an.foot[1] - an.head[1];
+    var s = Math.round(ph / span * 16) / 16, row = ei * SPR.dirs + spriteDir(p, S), c = cellAt(G.teams[p.side], row, spriteCol(p, pose), s);
+    ctx.drawImage(c, Math.round(f.x - an.foot[0] * s), Math.round(f.y - an.foot[1] * s)); stats.sprites.drawn++;
+    return Math.round(f.y - an.head[1] * s);
+  }
+
+  /* Poses: idle, run (4-frame cycle with arm swing), jumper (arms up + hop), dunk (rise to
+     the rim), hang (on the rim, knees tucked), celebrate (arms up, bouncing; the scoring
+     team after a make). p.z is how far the feet are off the floor, in feet. */
   function drawPlayer(p, S) {
-    var team = G.teams[p.side], f = P(p.x, p.y, 0), h = P(p.x, p.y, 6.6); if (!f || !h) return;
+    var team = G.teams[p.side], z = p.z || 0, g = P(p.x, p.y, 0), f = z > 0 ? P(p.x, p.y, z) : g, h = P(p.x, p.y, z + 6.6); if (!f || !h || !g) return;
+    var pose = p.pose || (p.moving ? 'run' : 'idle'); stats.poses[pose] = (stats.poses[pose] || 0) + 1; if (z > 0) stats.hop++;
     var ph = Math.max(4, Math.round(f.y - h.y)), w = Math.max(3, Math.round(B.f * 1.9 / f.z));
-    var x0 = Math.round(f.x - w / 2), top = Math.round(f.y - ph);
-    ctx.fillStyle = COL.shadow; ctx.fillRect(x0 - 1, Math.round(f.y) - 1, w + 2, Math.max(1, Math.round(w / 3)));
+    var x0 = Math.round(f.x - w / 2), top = Math.round(f.y - ph), sw = z > 0 ? Math.max(1, w - Math.round(z)) : w;
+    ctx.fillStyle = COL.shadow; ctx.fillRect(Math.round(g.x - sw / 2) - 1, Math.round(g.y) - 1, sw + 2, Math.max(1, Math.round(w / 3)));
     if (ph < w * 0.9) { // looking straight down: a jersey-coloured token
       ctx.fillStyle = team.c; ctx.fillRect(x0, Math.round(f.y - w / 2), w, w); ctx.fillStyle = team.alt; ctx.fillRect(x0 + 1, Math.round(f.y - w / 2) + 1, Math.max(1, w - 2), 1);
       ctx.fillStyle = COL.hair; ctx.fillRect(Math.round(f.x) - 1, Math.round(f.y) - 1, 2, 2);
+    } else if (SPR && (function () { try { top = drawSprite(p, S, f, ph, pose); return true; } catch (e) { SPR = null; stats.sprites.failed = 1; return false; } })()) {
+      // drawn from the sheet; a throw drops every later frame back to boxes
     } else {
       var hh = Math.max(2, Math.round(ph * 0.2)), jh = Math.max(2, Math.round(ph * 0.36)), sh = Math.max(1, Math.round(ph * 0.16)), lh = Math.max(1, ph - hh - jh - sh);
       var hw = Math.max(2, Math.round(w * 0.6)), hx = Math.round(f.x - hw / 2), y = top;
-      var up = S.shooter === p.id;
-      if (up) { ctx.fillStyle = COL.skin; ctx.fillRect(x0, y - Math.round(hh * 0.9), 1, Math.round(hh * 1.2)); ctx.fillRect(x0 + w - 1, y - Math.round(hh * 0.9), 1, Math.round(hh * 1.2)); }
+      var up = pose === 'jumper' || pose === 'dunk' || pose === 'hang' || pose === 'celebrate';
+      var fr = pose === 'run' && !reduce ? Math.floor(perf * 12 + p.x * 0.7) % 4 : 1;
+      if (up) {
+        var ah = Math.round(hh * 1.2), ay = y - Math.round(hh * 0.9);
+        ctx.fillStyle = COL.skin; ctx.fillRect(x0, ay, 1, ah); ctx.fillRect(x0 + w - 1, ay, 1, ah);
+        if (pose === 'celebrate') { ctx.fillRect(x0 - 1, ay - 1, 1, 2); ctx.fillRect(x0 + w, ay - 1, 1, 2); }
+      }
       ctx.fillStyle = COL.skin; ctx.fillRect(hx, y, hw, hh); ctx.fillStyle = COL.hair; ctx.fillRect(hx, y, hw, 1); y += hh;
       ctx.fillStyle = team.c; ctx.fillRect(x0, y, w, jh); ctx.fillStyle = team.alt; ctx.fillRect(x0, y, w, 1);
       if (w >= 5 && jh >= 4) ctx.fillRect(Math.round(f.x) - 1, y + 2, 2, Math.max(1, jh - 3));
-      if (!up) { ctx.fillStyle = COL.skin; ctx.fillRect(x0 - 1, y + 1, 1, Math.max(1, jh - 1)); ctx.fillRect(x0 + w, y + 1, 1, Math.max(1, jh - 1)); }
+      if (!up) { // arms at the sides; on the run they swing, one forward (raised a pixel) at a time
+        var la = fr === 0 ? 1 : 0, ra = fr === 2 ? 1 : 0, ah2 = Math.max(1, jh - 1);
+        ctx.fillStyle = COL.skin; ctx.fillRect(x0 - 1, y + 1 - la, 1, ah2); ctx.fillRect(x0 + w, y + 1 - ra, 1, ah2);
+      }
       y += jh; ctx.fillStyle = mix(team.c, '#000000', 0.25); ctx.fillRect(x0, y, w, sh); y += sh;
-      var step = p.moving && !reduce ? (Math.floor(perf * 10 + p.x) % 2) : 0, lw = Math.max(1, Math.floor(w / 3));
-      ctx.fillStyle = COL.skin; ctx.fillRect(x0, y, lw, lh - step); ctx.fillRect(x0 + w - lw, y, lw, lh - (1 - step) * (p.moving ? 1 : 0));
-      ctx.fillStyle = '#F4F4F4'; ctx.fillRect(x0, y + lh - 1 - step, lw, 1); ctx.fillRect(x0 + w - lw, y + lh - 1 - (p.moving ? 1 - step : 0), lw, 1);
+      var lw = Math.max(1, Math.floor(w / 3)), ll = 0, rl = 0;
+      if (pose === 'run') { ll = fr === 2 ? 1 : 0; rl = fr === 0 ? 1 : 0; }
+      else if (pose === 'hang' || pose === 'dunk') { ll = rl = Math.min(2, lh - 1); }
+      else if (pose === 'jumper' && z > 0.3) { ll = rl = Math.min(1, lh - 1); }
+      var lhl = Math.max(1, lh - ll), lhr = Math.max(1, lh - rl), lx = x0 + (pose === 'run' && (fr === 1 || fr === 3) ? 1 : 0);
+      ctx.fillStyle = COL.skin; ctx.fillRect(lx, y, lw, lhl); ctx.fillRect(x0 + w - lw, y, lw, lhr);
+      ctx.fillStyle = '#F4F4F4'; ctx.fillRect(lx, y + lhl - 1, lw, 1); ctx.fillRect(x0 + w - lw, y + lhr - 1, lw, 1);
     }
     if (p.id === S.focus || p.id === S.holder) {
       var bob = reduce ? 0 : Math.round(Math.sin(perf * 6) * 1.5), name = lastName(p.id);
@@ -336,8 +462,9 @@
     ctx.fillStyle = COL.ball; ctx.fillRect(Math.round(p.x - r), Math.round(p.y - r), r * 2, r * 2);
     ctx.fillStyle = '#7A3510'; ctx.fillRect(Math.round(p.x - r), Math.round(p.y), r * 2, 1);
   }
-  function drawCrowd() {
-    var boost = flash > 0 ? flash : 0;
+  function drawBackdrop() { ctx.fillStyle = '#1A1D21'; for (var r = 0; r < 6; r++) ctx.fillRect(-4, r * 6 - 4, W + 8, 3); }
+  function drawCrowd(still) {
+    var boost = !still && flash > 0 ? flash : 0;
     for (var k = 0; k < crowd.length; k++) {
       var c = crowd[k], jump = (!reduce && boost > 0) ? Math.max(0, Math.sin(perf * 14 + c.ph)) * 0.9 * boost : 0, p = P(c.x, c.y, c.z + jump); if (!p) continue;
       var s = Math.max(1, Math.round(B.f * 0.9 / p.z)); ctx.fillStyle = c.c; ctx.fillRect(Math.round(p.x), Math.round(p.y), s, s);
@@ -358,6 +485,29 @@
     }
   }
   var perf = 0;
+  var stats = { poses: { idle: 0, run: 0, jumper: 0, dunk: 0, hang: 0, celebrate: 0 }, hop: 0, netRipple: 0, rimShake: 0, cache: { hits: 0, builds: 0, direct: 0 }, sprites: { ready: 0, failed: 0, sheets: 0, cells: 0, drawn: 0 } };
+
+  /* Static-court cache. The stands, floor, lines and the two hoop frames only change when
+     the camera or the game does, so they are drawn once into offscreen layers and blitted.
+     A layer is built when the camera has held still for two frames; while it moves (drag,
+     preset glide, follow-ball) the scene is drawn straight to the screen as before, so a
+     moving camera never pays for both. The crowd jumps after a make, so while it does the
+     stands are drawn live. */
+  var LY = null, layerKey = '', pendKey = '', sceneVer = 0;
+  function mkLayer() { var c = document.createElement('canvas'); c.width = W; c.height = H; var x = c.getContext('2d'); x.imageSmoothingEnabled = false; return { c: c, x: x }; }
+  function into(l, fn) { var keep = ctx; ctx = l.x; ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.clearRect(0, 0, W, H); try { fn(); } finally { ctx = keep; } }
+  function courtCache() {
+    var key = [sceneVer, cam.yaw, cam.pitch, cam.dist, cam.fov, cam.tx, cam.ty, cam.tz].join('|');
+    if (LY && key === layerKey) { stats.cache.hits++; return true; }
+    if (key !== pendKey) { pendKey = key; stats.cache.direct++; return false; }
+    if (!LY) LY = { stands: mkLayer(), court: mkLayer(), hoopR: mkLayer(), hoopL: mkLayer() };
+    into(LY.stands, function () { drawBackdrop(); drawCrowd(true); });
+    into(LY.court, drawCourt);
+    into(LY.hoopR, function () { drawHoopFrame(1); });
+    into(LY.hoopL, function () { drawHoopFrame(-1); });
+    layerKey = key; stats.cache.builds++; return true;
+  }
+
   function render() {
     if (!G) return;
     if (camGoal) {
@@ -371,12 +521,16 @@
     setupCam();
     ctx.setTransform(1, 0, 0, 1, 0, 0);
     if (shake > 0 && !reduce) ctx.translate(Math.round((Math.random() - 0.5) * 3), Math.round((Math.random() - 0.5) * 3));
+    var still = courtCache(), crowdLive = !reduce && flash > 0;
     ctx.fillStyle = '#121417'; ctx.fillRect(-4, -4, W + 8, H + 8);
-    ctx.fillStyle = '#1A1D21'; for (var r = 0; r < 6; r++) ctx.fillRect(-4, r * 6 - 4, W + 8, 3);
-    drawCrowd(); drawCourt();
+    if (still && !crowdLive) ctx.drawImage(LY.stands.c, 0, 0); else { drawBackdrop(); drawCrowd(false); }
+    if (still) ctx.drawImage(LY.court.c, 0, 0); else drawCourt();
     var objs = [];
     S.players.forEach(function (p) { var q = P(p.x, p.y, 0); if (q) objs.push({ z: q.z, f: function () { drawPlayer(p, S); } }); });
-    [1, -1].forEach(function (d) { var q = P(hoopX(d), CW / 2, 10); if (q) objs.push({ z: q.z + 0.5, f: function () { drawHoop(d); } }); });
+    [1, -1].forEach(function (d) {
+      var q = P(hoopX(d), CW / 2, 10);
+      if (q) objs.push({ z: q.z + 0.5, f: function () { if (still) ctx.drawImage(d > 0 ? LY.hoopR.c : LY.hoopL.c, 0, 0); else drawHoopFrame(d); drawRimNet(d, S); } });
+    });
     if (S.ball) { var qb = P(S.ball[0], S.ball[1], S.ball[2]); if (qb) objs.push({ z: qb.z - 0.4, f: function () { drawBall(S.ball); } }); }
     objs.sort(function (a, b) { return b.z - a.z; }); objs.forEach(function (o) { o.f(); });
     drawHud(S);
@@ -461,7 +615,7 @@
 
   function loadGame(id) {
     return fetch(DATA + id + '.json', { cache: 'no-cache' }).then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); }).then(function (g) {
-      G = g; EV = g.events; TY = {}; buildTimeline(); buildDirs(); buildFrames(); buildCrowd(); moments();
+      G = g; EV = g.events; TY = {}; buildTimeline(); buildDirs(); buildFrames(); buildCrowd(); sceneVer++; moments();
       cur.idx = -1; cur.dir = 1; cur.loop = null; $('rpRev').setAttribute('aria-pressed', 'false'); $('rpLoop').setAttribute('aria-pressed', 'false'); seek(0); setPlaying(false);
       $('rpSrc').href = g.source; $('rpAsOf').textContent = 'Game of ' + g.date + (g.final ? ' · final' : ' · in progress when the feed was read') + ' · ' + EV.length + ' events · feed file sha256 ' + g.sourceSha256.slice(0, 12) + '…';
       document.querySelectorAll('.rp-game').forEach(function (b) { b.setAttribute('aria-pressed', b.dataset.id === id ? 'true' : 'false'); });
@@ -502,6 +656,8 @@
       document.querySelectorAll('.rp-cams button').forEach(function (x) { x.classList.toggle('on', x === b); x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
     });
   });
+  var wantCam = new URLSearchParams(location.search).get('cam'); // ?cam=follow shares a camera
+  if (PRESETS.hasOwnProperty(wantCam)) document.querySelectorAll('.rp-cams button').forEach(function (b) { if (b.dataset.cam === wantCam) b.click(); });
   document.querySelectorAll('.rp-filter button').forEach(function (b) {
     b.addEventListener('click', function () { filter = b.dataset.f; document.querySelectorAll('.rp-filter button').forEach(function (x) { x.classList.toggle('on', x === b); x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); }); renderMoments(); });
   });
@@ -525,6 +681,7 @@
     else if (e.key === 'l' || e.key === 'L') $('rpLoop').click();
     else if (/^[1-5]$/.test(e.key)) { var bs = document.querySelectorAll('.rp-cams button'); if (bs[+e.key - 1]) bs[+e.key - 1].click(); }
   });
-  window.PixelReplay = { load: loadGame, seek: seek, play: function (on) { setPlaying(on !== false); }, state: cur, speed: function (x) { cur.speed = x; } };
+  window.PixelReplay = { load: loadGame, seek: seek, play: function (on) { setPlaying(on !== false); }, state: cur, speed: function (x) { cur.speed = x; }, stats: stats, teamTints: teamTints };
+  loadSprites();
   boot();
 })();

@@ -44,3 +44,47 @@ def test_shot_spots_match_feed_distances_and_lineups_are_five():
 def test_page_says_what_is_staged():
     html = (ROOT / "replay.html").read_text(encoding="utf-8")
     assert "staged" in html and "not tracking data" in html
+
+
+NETWORK_MODULES = {"urllib", "http", "socket", "ssl", "ftplib", "requests", "httpx"}
+
+
+def test_refresh_replays_is_offline_and_dry_runs(tmp_path):
+    import ast
+
+    script = ROOT / "scripts" / "refresh_replays.py"
+    assert script.exists(), "scripts/refresh_replays.py is missing"
+    tree = ast.parse(script.read_text(encoding="utf-8"))
+    names = set()
+    for node in ast.walk(tree):
+        if isinstance(node, ast.Import):
+            names |= {a.name.split(".")[0] for a in node.names}
+        elif isinstance(node, ast.ImportFrom) and node.module:
+            names.add(node.module.split(".")[0])
+    assert not names & NETWORK_MODULES, names & NETWORK_MODULES
+    doc = ast.get_docstring(tree) or ""
+    assert "no network" in doc.lower() and "build_replays.py" in doc
+    r = subprocess.run(
+        [sys.executable, str(script), "--from", str(tmp_path), "--dry-run"],
+        cwd=ROOT,
+        capture_output=True,
+        text=True,
+    )
+    assert r.returncode == 0, r.stdout + r.stderr
+    assert "0 new" in r.stdout, r.stdout
+
+
+def test_phone_layout_rules():
+    """At phone width (390px) nothing on the page is wider than the viewport: one column
+    under 860px, the game strip scrolls inside itself, the canvas is fluid, and the
+    feed/moment rows can shrink and wrap long names."""
+    import re
+
+    css = (ROOT / "assets" / "replay.css").read_text(encoding="utf-8")
+    flat = re.sub(r"\s+", "", css)
+    assert "@media(max-width:860px){.rp{grid-template-columns:minmax(0,1fr);}" in flat
+    assert ".rp-gamelist{display:flex;" in flat and "overflow-x:auto" in flat
+    assert "#rpCanvas{display:block;width:100%;height:auto;" in flat
+    rows = re.findall(r"grid-template-columns:52px([^;]+);", flat)
+    assert rows and all(r == "minmax(0,1fr)" for r in rows), rows
+    assert "overflow-wrap:anywhere" in flat

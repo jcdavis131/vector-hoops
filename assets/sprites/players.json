@@ -1,0 +1,88 @@
+{
+ "image": "players.png",
+ "cell": [
+  32,
+  48
+ ],
+ "elevations": [
+  28,
+  62
+ ],
+ "dirs": 8,
+ "dirNote": "row = elevationIndex * dirs + dir; dir = player facing relative to the camera in 45 deg steps, 0 facing the camera, 2 facing screen right",
+ "frames": [
+  "idle:0",
+  "idle:1",
+  "run:0",
+  "run:1",
+  "run:2",
+  "run:3",
+  "jumper:0",
+  "jumper:1",
+  "jumper:2",
+  "jumper:3",
+  "dunk:0",
+  "dunk:1",
+  "dunk:2",
+  "dunk:3",
+  "celebrate:0",
+  "celebrate:1"
+ ],
+ "poses": {
+  "idle": [
+   0,
+   1
+  ],
+  "run": [
+   2,
+   3,
+   4,
+   5
+  ],
+  "jumper": [
+   6,
+   7,
+   8,
+   9
+  ],
+  "dunk": [
+   10,
+   11,
+   12,
+   13
+  ],
+  "celebrate": [
+   14,
+   15
+  ]
+ },
+ "anchors": [
+  {
+   "foot": [
+    16.0,
+    41.09
+   ],
+   "head": [
+    16.0,
+    13.75
+   ]
+  },
+  {
+   "foot": [
+    16.0,
+    33.09
+   ],
+   "head": [
+    16.0,
+    18.55
+   ]
+  }
+ ],
+ "masks": {
+  "jersey": "red channel dominant",
+  "shorts": "green channel dominant",
+  "trim": "blue channel dominant"
+ },
+ "hash": "655d3dac",
+ "generator": "scripts/sprites/build_sprites.py (Blender 5.2.2 LTS, Workbench, procedural model)"
+}
