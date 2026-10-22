@@ -239,3 +239,27 @@
 .live-root .tchip .tt i {font-style:normal;font-weight:700;color:var(--ink);}
 .live-root .wpnum .lbl {font-size:11px;}
 .live-root #wpBand {font-family:var(--mono);font-weight:700;font-size:12px;color:var(--ink);}
+
+/* One board: score, clock and timeline in a single sticky card; LIVE sits in the timeline row */
+.live-root .brand {flex-wrap:wrap;}
+.live-root .brand .mode-tabs {margin:0 0 0 auto;gap:6px;}
+.live-root .brand .mode-tabs button {padding:6px 12px;font-size:10px;}
+.live-root .daynav {flex-wrap:wrap;}
+.live-root .daynav #games {flex:1 1 100%;padding:4px 0 0;}
+.live-root .gbtn {padding:6px 10px;}
+.live-root .board {margin:10px 14px 0;background:var(--card);border:2px solid var(--ink);border-radius:6px;}
+.live-root .board .scorebug {border:0;margin:0;padding:10px 14px 4px;background:none;}
+.live-root .board .scorebug::before,.live-root .board .scorebug::after {display:none;}
+.live-root .board .mid .score {font-size:28px;}
+.live-root .board .team .abbr {font-size:20px;}
+.live-root .board #tlbar {margin:0;border:0;border-top:1px dashed var(--line);border-radius:0;background:none;padding:6px 12px 4px;}
+.live-root .board .livebtn {position:static;box-shadow:none;padding:4px 10px;font-size:10px;border-radius:14px;}
+.live-root .mid .upd {display:flex;align-items:center;justify-content:center;gap:6px;}
+.live-root .board button.refresh {margin:0;width:auto;min-width:28px;min-height:28px;padding:2px 6px;font-size:13px;background:none;color:var(--ink2);border:1px solid var(--line);border-radius:4px;}
+.live-root .morebtn {display:block;margin:14px auto 0;padding:10px 16px;font:700 11px var(--mono);letter-spacing:.06em;background:var(--card);color:var(--ink);border:2px solid var(--ink);border-radius:20px;cursor:pointer;}
+.live-root details.method {font-size:12px;color:var(--ink2);margin-top:8px;}
+.live-root details.method summary {cursor:pointer;font:700 10px var(--mono);letter-spacing:.06em;color:var(--ink);}
+.live-root .daynav {max-width:672px;margin:0 auto;box-sizing:border-box;padding-left:14px;padding-right:14px;}
+.live-root .daynav #games:empty, .live-root .daynav #games.one {display:none;}
+.live-root .stickybar {padding:0 0 4px;}
+.live-root .wpnum {flex-wrap:wrap;column-gap:12px;row-gap:2px;}

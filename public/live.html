@@ -5,7 +5,7 @@
 <title>Live — Vector Hoops</title>
 <meta name="description" content="Courtside Live: the second-screen companion for NBA games. Win probability, atlas twins, ghost watch, shot charts — the second screen for NBA nights."/>
 <link rel="stylesheet" href="assets/responsive.css?v=cc8e5207"/><link rel="stylesheet" href="assets/final-qa.css?v=fb603ee5"/><link rel="stylesheet" href="assets/unified.css?v=fd25e8ca"/><link rel="stylesheet" href="assets/motion.css?v=aa8dedc2"/><link rel="stylesheet" href="assets/fonts.css?v=8f376b2a"/><link rel="stylesheet" href="assets/atlas.css?v=c43e0f47"/>
-<link rel="stylesheet" href="assets/shell.css?v=36a047f1"/><link rel="stylesheet" href="assets/live.css?v=033a4adb"/><link rel="stylesheet" href="assets/realtime/realtime.css?v=540a748b"/><link rel="stylesheet" href="assets/replay-embed.css?v=4bce00e6"/>
+<link rel="stylesheet" href="assets/shell.css?v=36a047f1"/><link rel="stylesheet" href="assets/live.css?v=a4526c48"/><link rel="stylesheet" href="assets/realtime/realtime.css?v=540a748b"/><link rel="stylesheet" href="assets/replay-embed.css?v=62df0d6d"/>
 <meta name="color-scheme" content="dark light"/>
 <meta name="theme-color" content="#F4EFE2"/>
 <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml"/>
@@ -28,12 +28,12 @@
 <div class="live-root">
 
 <header class="top">
-  <div class="brand"><span class="live-dot"></span><h1>COURTSIDE LIVE</h1><span class="proto">VECTOR HOOPS</span></div>
-  <p class="tagline">The second-screen companion for NBA games — no video, no rights, just the numbers. <a href="/replay">▶ Relive any game in Pixel Replay</a></p>
+  <div class="brand"><span class="live-dot"></span><h1>COURTSIDE LIVE</h1>
   <div class="mode-tabs" role="tablist" aria-label="Live sections">
     <button id="tabCompanion" class="picked" role="tab">COMPANION</button>
     <button id="tabJam" role="tab" title="NBA Jam callouts">🔥 JAM</button>
-  </div>
+  </div></div>
+  <p class="tagline">The second screen for NBA games: no video, just the numbers.</p>
 </header>
 <section id="companion" aria-label="Game companion">
 <div class="daynav" aria-label="Game day">
@@ -41,27 +41,27 @@
   <div class="daylbl" id="dayLbl">Today</div>
   <button id="dayNext" class="daybtn" aria-label="Next day">&rsaquo;</button>
   <button id="dayToday" class="daybtn today" hidden>Back to today</button>
+  <div id="games"><span style="font-size:13px;color:#6b675c">Loading tonight's games…</span></div>
 </div>
-<div id="games"><span style="font-size:13px;color:#6b675c">Loading tonight's games…</span></div>
 <div id="feedcard" class="feedcard" hidden role="alert"></div>
-<button id="liveBtn" class="livebtn"><span class="dot"></span>JUMP TO LIVE<span id="liveNew"></span></button>
 <main id="main" tabindex="-1">
   <p id="live-loading" class="caption" role="status" style="padding:12px 4px">Loading today&rsquo;s games&hellip;</p>
-  <div class="stickybar">
+  <div class="stickybar"><div class="board">
   <div class="scorebug">
     <div class="team"><div class="abbr" id="aAbbr">–</div><div class="rec" id="aRec"></div></div>
     <div class="mid"><div class="score"><span id="aScore">0</span> – <span id="hScore">0</span></div>
-      <div class="clock" id="clock">–</div><div class="upd" id="upd"></div></div>
+      <div class="clock" id="clock">–</div><div class="upd"><span id="upd"></span><button class="refresh" id="refreshBtn" aria-label="Refresh now" title="Refresh now">&#8635;</button></div></div>
     <div class="team"><div class="abbr" id="hAbbr">–</div><div class="rec" id="hRec"></div></div>
   </div>
 <div id="tlbar" style="display:none">
   <div class="tlrow">
     <input type="range" id="scrub" min="0" max="100" value="100" step="1" aria-label="Rewind game timeline">
     <div id="tlclock" class="num">LIVE</div>
+    <button id="liveBtn" class="livebtn"><span class="dot"></span>LIVE<span id="liveNew"></span></button>
   </div>
   <div id="tlticks"><span>Q1</span><span>Q2</span><span>Q3</span><span>Q4</span></div>
 </div>
-  </div>
+  </div></div>
 
   <div class="card" id="pregame" hidden></div>
 
@@ -69,21 +69,17 @@
     <div class="plate"><span class="pno">PLATE 01</span><h2>PIXEL REPLAY</h2><span class="prule"></span><span class="pmeta" id="rpPlateMeta">from ESPN play-by-play</span></div>
     <div class="rp-embed__screen">
       <canvas id="rpCanvas" data-mode="embed" width="400" height="225" role="img" aria-label="Animated pixel replay of this game, a play behind the live feed"></canvas>
-      <div class="rp-cams" role="group" aria-label="Camera">
-        <button type="button" data-cam="broadcast" class="on" aria-pressed="true">Broadcast</button>
-        <button type="button" data-cam="iso" aria-pressed="false">Arcade</button>
-        <button type="button" data-cam="follow" aria-pressed="false">Follow ball</button>
-      </div>
     </div>
     <div class="rp-embed__bar">
-      <button type="button" id="rpBack" aria-label="Back 6 seconds">&#10226; 6s</button>
       <button type="button" id="rpPlay" class="rp-play" aria-label="Play">&#9654;</button>
-      <button type="button" id="rpLive" class="rp-live" aria-pressed="true" hidden><span class="dot"></span>LIVE</button>
+      <div class="rp-cams" role="group" aria-label="Camera">
+        <button type="button" data-cam="broadcast" class="on" aria-pressed="true">Broadcast</button><button type="button" data-cam="iso" aria-pressed="false">Arcade</button><button type="button" data-cam="follow" aria-pressed="false">Follow</button>
+      </div>
       <span class="rp-embed__lag num" id="rpLag"></span>
       <a class="rp-embed__full" id="rpFull" href="/replay">Full replay &#8599;</a>
     </div>
     <p id="rpNow" class="rp-embed__now" aria-live="off"></p>
-    <p class="caption">Every play, shooter and shot spot is ESPN&rsquo;s. The other nine players are mostly projected by a model trained on 2015-16 SportVU tracking (jump balls, timeouts and plays it can't read keep formation templates), and which basket each team shoots at is assumed. A projection of the possession, not tracking data.</p>
+    <p class="caption">Plays and shot spots are ESPN&rsquo;s; the other nine players are projected by our model, and which basket each team shoots at is assumed: a projection, not tracking data. The page timeline drives the court.</p>
   </div>
 
   <div class="card">
@@ -91,11 +87,11 @@
     <div class="wpnum"><div class="big" id="wpBig">–</div><div class="lbl" id="wpBand"></div><div class="lbl" id="wpLbl">our experimental heuristic</div></div>
     <canvas role="img" aria-label="Win probability chart — our heuristic with a candid uncertainty band, ESPN's model as a thin reference line" id="wpchart" width="600" height="170"></canvas>
     <div class="legend"><span id="lgA">Away</span><span id="lgH">Home</span></div>
-    <p class="method">Our model, stated plainly: p(home wins) = &sigma;((lead + 3.0) / (13.5&middot;&radic;time-left)).
+    <details class="method"><summary>How this is computed</summary>Our model, stated plainly: p(home wins) = &sigma;((lead + 3.0) / (13.5&middot;&radic;time-left)).
     Lead is the current home lead in points, time-left is the fraction of the game remaining, +3.0 is a fixed
     home-court edge. The shaded band is &plusmn;10pp&middot;&radic;time-left &mdash; wide early, tight late.
     <b>Experimental heuristic, not fitted to historical data.</b> The band is the point: it shows how much
-    this crude model doesn&rsquo;t know. Thin gray line = ESPN&rsquo;s own model, shown for reference.</p>
+    this crude model doesn&rsquo;t know. Thin gray line = ESPN&rsquo;s own model, shown for reference.</details>
   </div>
 
 <div class="card liveonly">
@@ -114,7 +110,7 @@
     <div id="runs"><span style="font-size:12px;color:#6b675c">Waiting for tip…</span></div>
   </div>
 
-<button id="more-plates-btn" class="livebtn" style="display:block;margin:10px auto" aria-expanded="false" aria-controls="more-plates">MORE PLATES — momentum · atlas twins · shot chart · milestones · leaders · play by play</button>
+<button id="more-plates-btn" class="morebtn" aria-expanded="false" aria-controls="more-plates">More plates: shot chart, leaders, play by play &amp; 5 more</button>
 <div id="more-plates" hidden>
 <div class="card">
     <div class="plate"><span class="pno">PLATE 06</span><h2>MOMENTUM</h2><span class="prule"></span><span class="pmeta">lead trace</span></div>
@@ -170,11 +166,7 @@
   </div>
 </div>
 
-  <button class="refresh" id="refreshBtn">Refresh now</button>
-  <p class="note">Win probability is our stated heuristic with a candid uncertainty band &mdash; formula on the card, ESPN&rsquo;s model as the thin gray reference.
-  Scores and plays poll every 30s while a game is live, every 5 minutes otherwise, and back off automatically when the feed stumbles.
-  If the feed goes down you&rsquo;ll see the last-known score with its timestamp &mdash; never a silently stale page.
-  Use the day arrows up top to replay another day's games with the timeline scrubber. Milestone bests are since 2023 (our play-by-play window).</p>
+  <p class="note">Scores and plays refresh every 30 s while a game is live and every 5 minutes otherwise; if the feed stalls you see the last-known score with its time. Use the day arrows for other days and the timeline to rewind.</p>
   <div class="err" id="err"></div>
 </main>
 </section>
@@ -214,8 +206,8 @@
 <script src="assets/replay-espn.js?v=af4e5d05" defer></script>
 <script src="assets/replay-model.js?v=023bb286" defer></script>
 <script src="assets/replay.js?v=b727321f" defer></script>
-<script src="assets/replay-live.js?v=e137af9f" defer></script>
-<script src="assets/live.js?v=5e296bd5" defer></script>
+<script src="assets/replay-live.js?v=31eb2ec7" defer></script>
+<script src="assets/live.js?v=653f4d4c" defer></script>
 <script src="assets/live-atlas.js?v=6d7fafa9" defer></script>
 <script src="assets/engagement.js?v=9afde51a" defer></script>
 </body>
