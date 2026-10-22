@@ -1,0 +1,11 @@
+{
+ "fetched_at": "2026-10-21T21:16:58-0500",
+ "fixture_note": "sha256 is of the untrimmed response; the body here keeps only the fixture's PLAYER_IDs",
+ "header_set": "H0_bare",
+ "headers_sent": {},
+ "name": "leaders_1996-97",
+ "sha256": "fb024568656dfcd176f74df72d83583e1b61a564135ea7b8aa27471b85d10700",
+ "status": 200,
+ "url": "https://stats.nba.com/stats/leagueleaders?ActiveFlag=&LeagueID=00&PerMode=Totals&Scope=S&Season=1996-97&SeasonType=Regular+Season&StatCategory=PTS",
+ "works": true
+}

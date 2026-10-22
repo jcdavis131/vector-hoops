@@ -1,0 +1,69 @@
+{
+ "built": "2026-10-11",
+ "eligibility": {
+  "method": "15% of season GP (clamp 10\u201315) + 6% of 48mpg schedule total minutes (floor 450)",
+  "min_gp": null,
+  "min_total_minutes": null,
+  "sample_gates": {
+   "1998-99": {
+    "min_gp": 10,
+    "min_total_minutes": 450,
+    "season_games": 50
+   },
+   "2011-12": {
+    "min_gp": 10,
+    "min_total_minutes": 450,
+    "season_games": 66
+   },
+   "2023-24": {
+    "min_gp": 12,
+    "min_total_minutes": 450,
+    "season_games": 82
+   }
+  },
+  "schedule_aware": true
+ },
+ "features": [],
+ "players": [
+  {
+   "gp": 26,
+   "mpg": 51.4,
+   "name": "Kevin Duckworth",
+   "person_id": "kevin-duckworth",
+   "pid": 404,
+   "season": "1996-97",
+   "total_min": 1336
+  },
+  {
+   "gp": 17,
+   "mpg": 50.0,
+   "name": "Amal McCaskill",
+   "person_id": "amal-mccaskill",
+   "pid": 1043,
+   "season": "1996-97",
+   "total_min": 850
+  },
+  {
+   "gp": 79,
+   "mpg": 50.7,
+   "name": "Byron Scott",
+   "person_id": "byron-scott",
+   "pid": 2,
+   "season": "1996-97",
+   "total_min": 4005
+  },
+  {
+   "gp": 65,
+   "mpg": 56.5,
+   "name": "Grant Long",
+   "person_id": "grant-long",
+   "pid": 3,
+   "season": "1996-97",
+   "total_min": 3672
+  }
+ ],
+ "seasons": [
+  "1996-97",
+  "2025-26"
+ ]
+}
