@@ -741,7 +741,8 @@
     try { G = g; EV = g.events; TY = {}; buildTimeline(); DIR = {}; buildDirs(); buildFrames(); }
     catch (err) { G = keep.G; EV = keep.EV; RT = keep.RT; FR = keep.FR; T_END = keep.T_END; DIR = keep.DIR; stats.setGameFailed = (stats.setGameFailed || 0) + 1; throw err; }
     if (same) for (var j = Math.min(i0 + 1, FR.length - 1, keep.FR.length - 1); j >= 0; j--) { // a poll re-smooths: plays already watched keep their spots
-      var a = keep.EV[j], b = EV[j]; if (a[0] === b[0] && a[1] === b[1] && a[2] === b[2] && a[5] === b[5]) FR[j].pos = keep.FR[j].pos;
+      var a = keep.EV[j], b = EV[j], o = keep.FR[j].pos, f = FR[j];
+      if (a[0] === b[0] && a[1] === b[1] && a[2] === b[2] && a[5] === b[5] && a[6] === b[6]) f.ids.forEach(function (id) { if (o[id]) f.pos[id] = o[id]; }); // per player: a late sub keeps the new man's spot
     }
     sceneVer++; moments();
     if (!same) {
