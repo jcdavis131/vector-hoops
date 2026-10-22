@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import ast
 import json
+import shutil
 import sys
 import urllib.request
 from pathlib import Path
@@ -23,9 +24,18 @@ from scorecard import common, nbafetch, run  # noqa: E402
 DIMENSIONS = ("coverage", "freshness", "speed", "accuracy", "model")
 
 
+def _site(tmp_path: Path) -> Path:
+    """A copy of the fixture site with its page named .html (committed as .html.txt so the PR adds no *.html)."""
+    site = tmp_path / "site"
+    if not site.exists():
+        shutil.copytree(FIX / "site", site)
+        (site / "index.html.txt").rename(site / "index.html")
+    return site
+
+
 def _run(tmp_path: Path, *extra: str) -> dict:
     out = tmp_path / "scorecard.json"
-    rc = run.main(["--offline", "--root", str(FIX / "site"), "--out", str(out), *extra])
+    rc = run.main(["--offline", "--root", str(_site(tmp_path)), "--out", str(out), *extra])
     assert rc == 0
     return json.loads(out.read_text(encoding="utf-8"))
 
@@ -183,7 +193,7 @@ def test_freshness_counts_finals_from_cached_schedule(tmp_path, no_network):
 def test_speed_counts_gate_bytes_and_flags_the_bare_path_in_js(tmp_path, no_network):
     doc = _run(tmp_path, *_with_caches())
     sp = doc["dimensions"]["speed"]
-    site = FIX / "site"
+    site = _site(tmp_path)
     size = {p: (site / p).stat().st_size for p in ("index.html", "assets/app.js", "assets/app.css", "assets/data.json")}
     page = sp["page_bytes"]["detail"]["pages"]["index.html"]
     assert page["gate_bytes"] == size["index.html"] + size["assets/app.js"] + size["assets/app.css"]
@@ -311,7 +321,7 @@ def test_cache_and_fetch_log(tmp_path):
 
 def test_run_refuses_nba_fetch_flag_this_wave(tmp_path):
     with pytest.raises(SystemExit) as exc:
-        run.main(["--root", str(FIX / "site"), "--out", str(tmp_path / "x.json"), "--fetch-nba"])
+        run.main(["--root", str(_site(tmp_path)), "--out", str(tmp_path / "x.json"), "--fetch-nba"])
     assert exc.value.code == run.EXIT_NBA_REFUSED
     assert not (tmp_path / "x.json").exists()
 

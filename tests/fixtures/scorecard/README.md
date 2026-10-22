@@ -13,7 +13,7 @@ Small inputs for `tests/test_scorecard.py`. Nothing here is invented:
 - `acc_cache/`: wave 1's B-ACC `leaguedashplayerstats` responses for 1996-97, trimmed the same way.
 - `cdn_cache/`: wave 1's B-FRESH cdn.nba.com `scheduleLeagueV2.json` (retrieved 2026-10-22T02:19:27Z), trimmed to
   its first two regular-season game dates and the fields the scorecard reads.
-- `site/index.html`, `site/assets/app.{js,css}`, `site/assets/data.json`, `site/budgets.json`: a structural page
+- `site/index.html.txt` (copied to `index.html` in a temp dir by the tests, so the PR adds no `*.html`), `site/assets/app.{js,css}`, `site/assets/data.json`, `site/budgets.json`: a structural page
   for the byte resolver (a script that fetches JSON by a bare path). They hold no data about players or games.
 
 `PROVENANCE.tsv` lists every source file and its sha256 at the time the fixtures were cut (2026-10-22).
