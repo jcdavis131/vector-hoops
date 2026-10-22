@@ -32,17 +32,13 @@ def test_shot_spots_match_feed_distances_and_lineups_are_five():
     for p in REPLAYS.glob("00*.json"):
         g = json.loads(p.read_text(encoding="utf-8"))
         assert g["check"]["shots"] > 50
-        assert (
-            g["check"]["distErrP95Ft"] is not None and g["check"]["distErrP95Ft"] <= 1.0
-        ), p.name
+        assert g["check"]["distErrP95Ft"] is not None and g["check"]["distErrP95Ft"] <= 1.0, p.name
         for idx, away, home in g["lineups"]:
             assert len(away) == 5 and len(home) == 5, (p.name, idx)
             assert all(g["players"][pid]["t"] == 0 for pid in away)
             assert all(g["players"][pid]["t"] == 1 for pid in home)
         assert "staged" in g and "nine" in g["staged"]
-        assert g["source"].startswith(
-            "https://cdn.nba.com/static/json/liveData/playbyplay/"
-        )
+        assert g["source"].startswith("https://cdn.nba.com/static/json/liveData/playbyplay/")
 
 
 def test_page_says_what_is_staged():
