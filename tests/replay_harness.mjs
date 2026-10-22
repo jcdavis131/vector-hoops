@@ -1,6 +1,6 @@
 // Pixel Replay harness: runs assets/replay.js in node against a stub canvas and DOM.
 //
-//   node tests/replay_harness.mjs [--js assets/replay.js] [--reduce] [--starts 40] [--frames 20] [--sweep 0.25] [--out file.json]
+//   node tests/replay_harness.mjs [--js assets/replay.js] [--reduce] [--sprites] [--starts 40] [--frames 20] [--sweep 0.25] [--out file.json]
 //
 // No dependencies (node:vm only). For every game in assets/replays/index.json it opens a
 // fresh context, loads the game through window.PixelReplay.load, then plays short bursts
@@ -19,6 +19,10 @@
 // An error is: an exception out of a frame, an exception at load, or the page's own
 // "could not be loaded" message. --js lets the same harness measure an older replay.js
 // (for example `git show db483cde:assets/replay.js > old.js`).
+//
+// Without --sprites the page has no Image, so players are drawn as boxes. --sprites adds a
+// stub Image (512x768, loads at once) and blank getImageData, so the Blender sprite path
+// (recolour, per-size cell cache, one drawImage per player) runs instead.
 import fs from 'node:fs';
 import path from 'node:path';
 import vm from 'node:vm';
@@ -28,11 +32,12 @@ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const DRAW = new Set(['fillRect', 'fill', 'stroke', 'strokeRect', 'drawImage', 'clearRect', 'fillText']);
 
 function args(argv) {
-  const o = { js: path.join(ROOT, 'assets', 'replay.js'), reduce: false, starts: 40, frames: 20, sweep: 0.25, out: null };
+  const o = { js: path.join(ROOT, 'assets', 'replay.js'), reduce: false, sprites: false, starts: 40, frames: 20, sweep: 0.25, out: null };
   for (let i = 2; i < argv.length; i++) {
     const a = argv[i];
     if (a === '--js') o.js = path.resolve(argv[++i]);
     else if (a === '--reduce') o.reduce = true;
+    else if (a === '--sprites') o.sprites = true;
     else if (a === '--starts') o.starts = +argv[++i];
     else if (a === '--frames') o.frames = +argv[++i];
     else if (a === '--sweep') o.sweep = +argv[++i];
@@ -49,6 +54,8 @@ function makeCtx(counter) {
   for (const n of names) {
     ctx[n] = function () { if (DRAW.has(n)) counter.n++; };
   }
+  ctx.getImageData = (x, y, w, h) => ({ data: new Uint8ClampedArray(w * h * 4), width: w, height: h });
+  ctx.putImageData = () => {};
   return ctx;
 }
 
@@ -79,7 +86,7 @@ function makeEl(tag, doc) {
   return el;
 }
 
-function makeContext(gameId, reduce) {
+function makeContext(gameId, reduce, sprites) {
   const clock = { now: 1000 };
   const counters = { main: { n: 0 }, off: { n: 0 } };
   const raf = { cb: null };
@@ -118,11 +125,15 @@ function makeContext(gameId, reduce) {
     fetch(url) {
       const rel = String(url).split('?')[0].replace(/^\//, '');
       const file = path.join(ROOT, rel);
-      if (!file.startsWith(path.join(ROOT, 'assets', 'replays')) || !fs.existsSync(file)) return Promise.resolve({ ok: false, status: 404, json: () => Promise.reject(new Error('404')) });
+      const okDir = file.startsWith(path.join(ROOT, 'assets', 'replays')) || (sprites && file.startsWith(path.join(ROOT, 'assets', 'sprites')));
+      if (!okDir || !fs.existsSync(file)) return Promise.resolve({ ok: false, status: 404, json: () => Promise.reject(new Error('404')) });
       const txt = fs.readFileSync(file, 'utf8');
       return Promise.resolve({ ok: true, status: 200, json: () => Promise.resolve(JSON.parse(txt)) });
     },
   };
+  if (sprites) {
+    sandbox.Image = class { set src(v) { this._src = v; this.width = 512; this.height = 768; setImmediate(() => this.onload && this.onload()); } get src() { return this._src; } };
+  }
   sandbox.window = sandbox;
   sandbox.globalThis = sandbox;
   vm.createContext(sandbox);
@@ -138,7 +149,7 @@ function summarize(xs) {
 }
 
 async function runGame(js, gameId, o) {
-  const H = makeContext(gameId, o.reduce), errors = [];
+  const H = makeContext(gameId, o.reduce, o.sprites), errors = [];
   try { vm.runInContext(js, H.sandbox, { filename: 'replay.js' }); } catch (e) { errors.push('boot: ' + e.message); return { gameId, errors }; }
   const PR = H.sandbox.window.PixelReplay;
   if (!PR) { errors.push('window.PixelReplay missing'); return { gameId, errors }; }
@@ -195,7 +206,7 @@ async function main() {
   for (const g of ix.games) games.push(await runGame(js, g.gameId, o));
   const restMeans = games.map((g) => g.passes && g.passes[0].perFrame.mean).filter((x) => x != null);
   const report = {
-    js: path.relative(ROOT, o.js).split(path.sep).join('/'), reduce: o.reduce, starts: o.starts, framesPerStart: o.frames,
+    js: path.relative(ROOT, o.js).split(path.sep).join('/'), reduce: o.reduce, sprites: o.sprites, starts: o.starts, framesPerStart: o.frames,
     games, errors: games.reduce((a, g) => a + g.errors.length, 0),
     restMeanPerFrame: restMeans.length ? +(restMeans.reduce((a, b) => a + b, 0) / restMeans.length).toFixed(1) : null,
   };

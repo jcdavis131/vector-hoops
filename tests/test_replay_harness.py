@@ -86,3 +86,19 @@ def test_reduced_motion_holds_still(reduced: dict) -> None:
             g["gameId"],
             s,
         )
+
+
+@pytest.fixture(scope="module")
+def sprited() -> dict:
+    return _run("--sprites", "--starts", "15")
+
+
+def test_sprite_path_draws_every_game(sprited: dict) -> None:
+    """With an Image available the players come off the Blender sheet: one drawImage each."""
+    assert sprited["errors"] == 0, [g["errors"][:3] for g in sprited["games"] if g["errors"]]
+    for g in sprited["games"]:
+        s = g["stats"]["sprites"]
+        assert s["ready"] == 1 and s["sheets"] == 2 and s["drawn"] > 0, (g["gameId"], s)
+        assert s["cells"] <= 3000, (g["gameId"], s)
+    seen = {p: sum(g["stats"]["poses"].get(p, 0) for g in sprited["games"]) for p in POSES}
+    assert all(seen.values()), seen

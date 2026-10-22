@@ -233,7 +233,7 @@
       var to = Bf.pos[id], from = A.pos[id] || [bench(G.players[id] ? G.players[id].t : 0)[0], -3.5];
       var dist = Math.hypot(to[0] - from[0], to[1] - from[1]), need = Math.max(0.35, dist / 17), start = Math.max(0, dur - need);
       var p = i === j ? 1 : smooth((loc - start) / Math.max(0.01, dur - start)), moving = p > 0 && p < 1 && dist > 0.6;
-      players.push({ id: id, x: from[0] + (to[0] - from[0]) * p, y: from[1] + (to[1] - from[1]) * p, moving: moving, side: G.players[id] ? G.players[id].t : 0 });
+      players.push({ id: id, x: from[0] + (to[0] - from[0]) * p, y: from[1] + (to[1] - from[1]) * p, dx: to[0] - from[0], dy: to[1] - from[1], moving: moving, side: G.players[id] ? G.players[id].t : 0 });
     });
     var byId = {}; players.forEach(function (p) { byId[p.id] = p; });
     var ball = null, e = EV[i], ty = A.ty, shooting = false, shot = null;
@@ -267,8 +267,8 @@
     var out = { net: null, rim: null }, lift = reduce ? 0 : 1;
     if (sh.u < 1) {
       if (me) {
-        if (sh.dunk) { me.pose = 'dunk'; me.z = lift * 3.4 * smooth(sh.u * 1.3); if (ball) { me.x = ball[0] - sh.d * 0.9; me.y = ball[1] + 0.4; } }
-        else { me.pose = 'jumper'; me.z = lift * (sh.ft ? 0.5 : 2.4) * Math.sin(Math.PI * Math.min(1, sh.u * 1.25)); }
+        me.ph = sh.u; if (sh.dunk) { me.pose = 'dunk'; me.z = lift * 3.4 * smooth(sh.u * 1.3); if (ball) { me.x = ball[0] - sh.d * 0.9; me.y = ball[1] + 0.4; } }
+        else { me.pose = 'jumper'; me.ph = Math.min(1, sh.u * 1.25); me.z = lift * (sh.ft ? 0.5 : 2.4) * Math.sin(Math.PI * Math.min(1, sh.u * 1.25)); }
       }
     } else if (sh.made) {
       var p = sh.post;
@@ -339,6 +339,73 @@
     }
     arc3(rx, CW / 2, rz, 0.75, 0, Math.PI * 2, '#F26A1B');
   }
+  /* ---------- Blender sprites ----------
+     assets/sprites/players.png is rendered offline by scripts/sprites/build_sprites.py
+     (Blender, headless, a procedural blocky player): 8 facings x 2 camera pitches x 16 pose
+     frames. The jersey renders pure red, the shorts pure green and the trim pure blue, so
+     each team's sheet is one recolour pass here. Cells are scaled to the player's projected
+     height and cached per size. Until the sheet loads, if it fails, or with ?sprites=0,
+     players are drawn as boxes. */
+  var SPR = null, sheets = {}, cells = {}, cellN = 0;
+  function loadSprites() {
+    if (/[?&]sprites=0/.test(location.search) || typeof Image === 'undefined') return;
+    fetch('/assets/sprites/players.json?v=8a1df7ee').then(function (r) { return r.ok ? r.json() : null; }).then(function (m) {
+      if (!m) return;
+      var img = new Image();
+      img.onload = function () { m.img = img; SPR = m; stats.sprites.ready = 1; };
+      img.src = '/assets/sprites/' + m.image + (m.hash ? '?v=' + m.hash : '');
+    }).catch(function () {});
+  }
+  function sheetFor(team) {
+    var key = team.c + team.alt; if (sheets[key]) return sheets[key];
+    var l = mkLayer(), im = SPR.img; l.c.width = im.width; l.c.height = im.height; l.x.drawImage(im, 0, 0);
+    var px = l.x.getImageData(0, 0, im.width, im.height), d = px.data, top = [1, 1, 1], i, k;
+    var cls = function (r, g, b) { return r > 24 && g < r * 0.3 && b < r * 0.3 ? 0 : g > 24 && r < g * 0.3 && b < g * 0.3 ? 1 : b > 24 && r < b * 0.3 && g < b * 0.3 ? 2 : -1; };
+    for (i = 0; i < d.length; i += 4) if (d[i + 3]) { k = cls(d[i], d[i + 1], d[i + 2]); if (k >= 0) top[k] = Math.max(top[k], d[i + k]); }
+    var tint = [hex(team.c), hex(mix(team.c, '#000000', 0.25)), hex(team.alt)];
+    for (i = 0; i < d.length; i += 4) if (d[i + 3]) {
+      k = cls(d[i], d[i + 1], d[i + 2]); if (k < 0) continue;
+      var s = d[i + k] / top[k]; d[i] = tint[k][0] * s; d[i + 1] = tint[k][1] * s; d[i + 2] = tint[k][2] * s;
+    }
+    l.x.putImageData(px, 0, 0); stats.sprites.sheets++;
+    return (sheets[key] = l.c);
+  }
+  /* one cell at a pixel height: shrinking smooths then snaps alpha back to on/off, so the
+     outline survives at 12 px tall without a blur halo; growing stays nearest-neighbour */
+  function cellAt(team, row, col, s) {
+    var key = team.c + team.alt + '|' + row + '|' + col + '|' + s.toFixed(3); if (cells[key]) return cells[key];
+    if (cellN > 3000) { cells = {}; cellN = 0; }
+    var cw = SPR.cell[0], ch = SPR.cell[1], w = Math.max(1, Math.round(cw * s)), h = Math.max(1, Math.round(ch * s)), l = mkLayer();
+    l.c.width = w; l.c.height = h; l.x.imageSmoothingEnabled = s < 1; if (s < 1) l.x.imageSmoothingQuality = 'high';
+    l.x.drawImage(sheetFor(team), col * cw, row * ch, cw, ch, 0, 0, w, h);
+    if (s < 1) { var px = l.x.getImageData(0, 0, w, h), d = px.data; for (var i = 3; i < d.length; i += 4) d[i] = d[i] >= 110 ? 255 : 0; l.x.putImageData(px, 0, 0); }
+    cellN++; stats.sprites.cells++;
+    return (cells[key] = l.c);
+  }
+  function spriteCol(p, pose) {
+    var Q = SPR.poses, t = reduce ? 0 : perf, j = Math.abs(Math.floor(p.x * 0.7));
+    if (pose === 'run') return Q.run[(Math.floor(t * 10) + j) % 4];
+    if (pose === 'jumper') { var u = p.ph || 0; return Q.jumper[u < 0.15 ? 0 : u < 0.45 ? 1 : u < 0.75 ? 2 : 3]; }
+    if (pose === 'dunk') { var v = p.ph || 0; return Q.dunk[v < 0.2 ? 0 : v < 0.6 ? 1 : 2]; }
+    if (pose === 'hang') return Q.dunk[2];
+    if (pose === 'celebrate') return Q.celebrate[(Math.floor(t * 4) + j) % 2];
+    return Q.idle[(Math.floor(t * 1.5) + j) % 2];
+  }
+  /* facing: where the player is running, else toward the ball; turned into the sheet's
+     8 camera-relative directions (0 faces the camera, 2 faces screen right) */
+  function spriteDir(p, S) {
+    var ax = p.moving ? p.dx : (S.ball ? S.ball[0] - p.x : L / 2 - p.x), ay = p.moving ? p.dy : (S.ball ? S.ball[1] - p.y : CW / 2 - p.y);
+    if (Math.abs(ax) + Math.abs(ay) < 0.01) return 0;
+    var right = ax * B.rx + ay * B.ry, toward = -(ax * B.fx + ay * B.fy);
+    return ((Math.round(Math.atan2(right, toward) / (Math.PI / 4)) % 8) + 8) % 8;
+  }
+  function drawSprite(p, S, f, ph, pose) {
+    var ei = cam.pitch > 0.79 ? 1 : 0, an = SPR.anchors[ei], span = an.foot[1] - an.head[1];
+    var s = Math.round(ph / span * 16) / 16, row = ei * SPR.dirs + spriteDir(p, S), c = cellAt(G.teams[p.side], row, spriteCol(p, pose), s);
+    ctx.drawImage(c, Math.round(f.x - an.foot[0] * s), Math.round(f.y - an.foot[1] * s)); stats.sprites.drawn++;
+    return Math.round(f.y - an.head[1] * s);
+  }
+
   /* Poses: idle, run (4-frame cycle with arm swing), jumper (arms up + hop), dunk (rise to
      the rim), hang (on the rim, knees tucked), celebrate (arms up, bouncing; the scoring
      team after a make). p.z is how far the feet are off the floor, in feet. */
@@ -351,6 +418,8 @@
     if (ph < w * 0.9) { // looking straight down: a jersey-coloured token
       ctx.fillStyle = team.c; ctx.fillRect(x0, Math.round(f.y - w / 2), w, w); ctx.fillStyle = team.alt; ctx.fillRect(x0 + 1, Math.round(f.y - w / 2) + 1, Math.max(1, w - 2), 1);
       ctx.fillStyle = COL.hair; ctx.fillRect(Math.round(f.x) - 1, Math.round(f.y) - 1, 2, 2);
+    } else if (SPR) {
+      top = drawSprite(p, S, f, ph, pose);
     } else {
       var hh = Math.max(2, Math.round(ph * 0.2)), jh = Math.max(2, Math.round(ph * 0.36)), sh = Math.max(1, Math.round(ph * 0.16)), lh = Math.max(1, ph - hh - jh - sh);
       var hw = Math.max(2, Math.round(w * 0.6)), hx = Math.round(f.x - hw / 2), y = top;
@@ -413,7 +482,7 @@
     }
   }
   var perf = 0;
-  var stats = { poses: { idle: 0, run: 0, jumper: 0, dunk: 0, hang: 0, celebrate: 0 }, hop: 0, netRipple: 0, rimShake: 0, cache: { hits: 0, builds: 0, direct: 0 } };
+  var stats = { poses: { idle: 0, run: 0, jumper: 0, dunk: 0, hang: 0, celebrate: 0 }, hop: 0, netRipple: 0, rimShake: 0, cache: { hits: 0, builds: 0, direct: 0 }, sprites: { ready: 0, sheets: 0, cells: 0, drawn: 0 } };
 
   /* Static-court cache. The stands, floor, lines and the two hoop frames only change when
      the camera or the game does, so they are drawn once into offscreen layers and blitted.
@@ -584,6 +653,8 @@
       document.querySelectorAll('.rp-cams button').forEach(function (x) { x.classList.toggle('on', x === b); x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
     });
   });
+  var wantCam = new URLSearchParams(location.search).get('cam'); // ?cam=follow shares a camera
+  if (PRESETS.hasOwnProperty(wantCam)) document.querySelectorAll('.rp-cams button').forEach(function (b) { if (b.dataset.cam === wantCam) b.click(); });
   document.querySelectorAll('.rp-filter button').forEach(function (b) {
     b.addEventListener('click', function () { filter = b.dataset.f; document.querySelectorAll('.rp-filter button').forEach(function (x) { x.classList.toggle('on', x === b); x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); }); renderMoments(); });
   });
@@ -608,5 +679,6 @@
     else if (/^[1-5]$/.test(e.key)) { var bs = document.querySelectorAll('.rp-cams button'); if (bs[+e.key - 1]) bs[+e.key - 1].click(); }
   });
   window.PixelReplay = { load: loadGame, seek: seek, play: function (on) { setPlaying(on !== false); }, state: cur, speed: function (x) { cur.speed = x; }, stats: stats };
+  loadSprites();
   boot();
 })();
