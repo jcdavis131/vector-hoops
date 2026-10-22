@@ -6,8 +6,10 @@ Builds a blocky, procedural player (no downloaded models or textures), poses it 
 values computed here, and renders every (elevation, direction, frame) cell with the Workbench
 engine: studio light, no specular, no anti-aliasing, a dark outline, transparent film, Standard
 view transform. Team colours are not baked in: the jersey renders pure red, the shorts pure
-green and the trim pure blue, each shaded by the light only, so replay.js recolours one atlas for
-any team (class = dominant channel, shade = that channel's value).
+green and the trim pure blue, so replay.js recolours one atlas for any team (class = dominant
+channel, shade = that channel's value). Studio light greys colours out (a lit red jersey comes back
+near 128,32,32), so every cell renders twice: FLAT gives each pixel's exact material colour, STUDIO
+gives how lit it is, and the cell keeps the flat colour times that light.
 
 Writes players.png (atlas) and players.json (layout, poses, anchors). Stdlib + bpy only.
 """
@@ -15,10 +17,10 @@ Writes players.png (atlas) and players.json (layout, poses, anchors). Stdlib + b
 import hashlib
 import json
 import math
+from pathlib import Path
 import struct
 import sys
 import zlib
-from pathlib import Path
 
 import bpy
 from bpy_extras.object_utils import world_to_camera_view
@@ -64,9 +66,10 @@ POSES = {
 ORDER = ["idle", "run", "jumper", "dunk", "celebrate"]
 FRAMES = [(p, i) for p in ORDER for i in range(len(POSES[p]))]
 
-SKIN = (0.79, 0.55, 0.37, 1)
+SKIN = (0.55, 0.27, 0.13, 1)  # linear; about 195,143,100 on screen
 HAIR = (0.10, 0.07, 0.05, 1)
 SHOE = (0.95, 0.95, 0.95, 1)
+SOCK = (0.85, 0.85, 0.85, 1)
 MASK_JERSEY = (1, 0, 0, 1)
 MASK_SHORTS = (0, 1, 0, 1)
 MASK_TRIM = (0, 0, 1, 1)
@@ -85,7 +88,7 @@ sh.light = "STUDIO"
 sh.color_type = "MATERIAL"
 sh.show_specular_highlight = False
 sh.show_object_outline = True
-sh.object_outline_color = (0.06, 0.06, 0.08)
+sh.object_outline_color = (0.004, 0.004, 0.004)  # linear: near-black and grey, so never read as a mask
 sh.show_cavity = False
 sh.show_shadows = False
 sc.view_settings.view_transform = "Standard"
@@ -98,7 +101,7 @@ def mat(name, rgba):
     return m
 
 
-MATS = {k: mat(k, v) for k, v in dict(skin=SKIN, hair=HAIR, shoe=SHOE, jersey=MASK_JERSEY, shorts=MASK_SHORTS, trim=MASK_TRIM).items()}
+MATS = {k: mat(k, v) for k, v in dict(skin=SKIN, hair=HAIR, shoe=SHOE, sock=SOCK, jersey=MASK_JERSEY, shorts=MASK_SHORTS, trim=MASK_TRIM).items()}
 
 
 def box(name, size, loc, m, parent):
@@ -123,19 +126,21 @@ def empty(name, loc, parent=None):
 # The body faces -Y. A limb swing of +a degrees (forward) is a rotation of -a about X.
 root = empty("root", (0, 0, 0))
 hips = empty("hips", (0, 0, 0.95), root)
-box("shorts", (0.46, 0.28, 0.24), (0, 0, 0.0), "shorts", hips)
-box("shorts_stripe_l", (0.02, 0.29, 0.22), (0.235, 0, 0.0), "trim", hips)
-box("shorts_stripe_r", (0.02, 0.29, 0.22), (-0.235, 0, 0.0), "trim", hips)
+box("shorts", (0.52, 0.30, 0.20), (0, 0, 0.02), "shorts", hips)
+box("shorts_stripe_l", (0.02, 0.31, 0.20), (0.265, 0, 0.02), "trim", hips)
+box("shorts_stripe_r", (0.02, 0.31, 0.20), (-0.265, 0, 0.02), "trim", hips)
 torso = empty("torso", (0, 0, 0.1), hips)
-box("jersey", (0.48, 0.26, 0.58), (0, 0, 0.3), "jersey", torso)
-box("collar", (0.50, 0.27, 0.05), (0, 0, 0.6), "trim", torso)
+box("jersey", (0.54, 0.30, 0.60), (0, 0, 0.3), "jersey", torso)
+box("collar", (0.56, 0.31, 0.05), (0, 0, 0.6), "trim", torso)
 box("neck", (0.1, 0.1, 0.08), (0, 0, 0.66), "skin", torso)
 box("head", (0.24, 0.24, 0.27), (0, 0, 0.82), "skin", torso)
 box("hair", (0.25, 0.25, 0.06), (0, 0, 0.97), "hair", torso)
 legs, arms = {}, {}
 for side, x in (("l", 0.12), ("r", -0.12)):
     leg = empty("leg_" + side, (x, 0, -0.1), hips)
-    box("thigh_" + side, (0.16, 0.18, 0.80), (0, 0, -0.40), "skin", leg)
+    box("shortleg_" + side, (0.21, 0.24, 0.36), (0, 0, -0.16), "shorts", leg)  # baggy shorts to the knee
+    box("thigh_" + side, (0.15, 0.17, 0.80), (0, 0, -0.40), "skin", leg)
+    box("sock_" + side, (0.16, 0.18, 0.16), (0, 0, -0.70), "sock", leg)
     box("shoe_" + side, (0.18, 0.28, 0.1), (0, -0.04, -0.82), "shoe", leg)
     legs[side] = leg
     arm = empty("arm_" + side, (x * 2.75, 0, 0.56), torso)
@@ -191,28 +196,50 @@ cols = len(FRAMES)
 rows_n = len(ELEVATIONS) * DIRS
 AW, AH = cols * CW, rows_n * CH
 atlas = [bytearray(AW * 4) for _ in range(AH)]
+
+
+def render(path, light):
+    sh.light = light
+    sc.render.filepath = str(path)
+    bpy.ops.render.render(write_still=True)
+    img = bpy.data.images.load(str(path))
+    px = img.pixels[:]
+    bpy.data.images.remove(img)
+    path.unlink()
+    return px
+
+
+cellpx = {}  # (row, col) -> list of (x, y, flat rgb, light)
+lights = []
 for ei, elev in enumerate(ELEVATIONS):
     set_camera(elev)
     for d in range(DIRS):
         for fi, (pose, k) in enumerate(FRAMES):
             set_pose(POSES[pose][k], d)
             path = TMP / f"e{ei}_d{d}_f{fi}.png"
-            sc.render.filepath = str(path)
-            bpy.ops.render.render(write_still=True)
-            img = bpy.data.images.load(str(path))
-            px = img.pixels[:]
+            flat, lit = render(path, "FLAT"), render(path, "STUDIO")
+            out = []
             for y in range(CH):
                 src = (CH - 1 - y) * CW * 4
-                dst_row = atlas[(ei * DIRS + d) * CH + y]
                 for x in range(CW):
                     i = src + x * 4
-                    a = px[i + 3]
-                    o = (fi * CW + x) * 4
-                    if a < 0.5:
+                    if flat[i + 3] < 0.5:
                         continue
-                    dst_row[o : o + 4] = bytes((round(px[i] * 255), round(px[i + 1] * 255), round(px[i + 2] * 255), 255))
-            bpy.data.images.remove(img)
-            path.unlink()
+                    f = flat[i : i + 3]
+                    m = max(f)
+                    li = max(lit[i : i + 3]) / m if m > 0.05 else 1.0
+                    out.append((x, y, f, li))
+                    if m > 0.05:
+                        lights.append(li)
+            cellpx[(ei * DIRS + d, fi)] = out
+lights.sort()
+print("LIGHT_PCT", [round(lights[int(len(lights) * q)], 3) for q in (0.05, 0.25, 0.5, 0.75, 0.95)])
+LO, TOP = lights[int(len(lights) * 0.05)], lights[int(len(lights) * 0.95)]  # shadowed faces 0.68, lit faces full colour
+for (row, fi), out in cellpx.items():
+    for x, y, f, li in out:
+        k = min(1.0, max(0.68, 0.68 + 0.32 * (li - LO) / (TOP - LO)))
+        o = (fi * CW + x) * 4
+        atlas[row * CH + y][o : o + 4] = bytes((round(f[0] * k * 255), round(f[1] * k * 255), round(f[2] * k * 255), 255))
 TMP.rmdir()
 write_png(OUT / "players.png", AW, AH, atlas)
 

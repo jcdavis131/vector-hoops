@@ -349,7 +349,7 @@
   var SPR = null, sheets = {}, cells = {}, cellN = 0;
   function loadSprites() {
     if (/[?&]sprites=0/.test(location.search) || typeof Image === 'undefined') return;
-    fetch('/assets/sprites/players.json?v=8a1df7ee').then(function (r) { return r.ok ? r.json() : null; }).then(function (m) {
+    fetch('/assets/sprites/players.json?v=38993b8f').then(function (r) { return r.ok ? r.json() : null; }).then(function (m) {
       if (!m) return;
       var img = new Image();
       img.onload = function () { m.img = img; SPR = m; stats.sprites.ready = 1; };
@@ -362,7 +362,7 @@
     var px = l.x.getImageData(0, 0, im.width, im.height), d = px.data, top = [1, 1, 1], i, k;
     var cls = function (r, g, b) { return r > 24 && g < r * 0.3 && b < r * 0.3 ? 0 : g > 24 && r < g * 0.3 && b < g * 0.3 ? 1 : b > 24 && r < b * 0.3 && g < b * 0.3 ? 2 : -1; };
     for (i = 0; i < d.length; i += 4) if (d[i + 3]) { k = cls(d[i], d[i + 1], d[i + 2]); if (k >= 0) top[k] = Math.max(top[k], d[i + k]); }
-    var tint = [hex(team.c), hex(mix(team.c, '#000000', 0.25)), hex(team.alt)];
+    var tint = [hex(team.c), hex(mix(team.c, '#000000', 0.1)), hex(team.alt)];
     for (i = 0; i < d.length; i += 4) if (d[i + 3]) {
       k = cls(d[i], d[i + 1], d[i + 2]); if (k < 0) continue;
       var s = d[i + k] / top[k]; d[i] = tint[k][0] * s; d[i + 1] = tint[k][1] * s; d[i + 2] = tint[k][2] * s;

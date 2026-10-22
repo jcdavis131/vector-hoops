@@ -83,6 +83,6 @@
   "shorts": "green channel dominant",
   "trim": "blue channel dominant"
  },
- "generator": "scripts/sprites/build_sprites.py (Blender 5.2.2 LTS, Workbench, procedural model)",
- "hash": "6a0e714a"
+ "hash": "655d3dac",
+ "generator": "scripts/sprites/build_sprites.py (Blender 5.2.2 LTS, Workbench, procedural model)"
 }
