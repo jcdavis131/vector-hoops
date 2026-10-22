@@ -222,7 +222,7 @@
         e.target.style.transitionDelay = Math.min(k++, 5) * 50 + 'ms';
         e.target.classList.add('vh-in'); io.unobserve(e.target);
       });
-    }});
+    });
     Array.prototype.forEach.call(document.querySelectorAll('section, .plate'), function (el) {
       if (n > 40 || el.closest('.site-nav') || (el.parentElement && el.parentElement.closest('.vh-rv')) || (el.tagName === 'SECTION' && el.querySelector('.plate, section'))) return;
       var r = el.getBoundingClientRect();
