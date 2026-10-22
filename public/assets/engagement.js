@@ -311,26 +311,40 @@
     var t = twinOfDay();
     var st = load();
     var seenKey = 'totd:' + dayKey();
+    var apart = t.gap + (t.gap === 1 ? ' season' : ' seasons') + ' apart';
+    function unlock() {
+      var s2 = load();
+      s2.unlocked = s2.unlocked || [];
+      if (s2.unlocked.indexOf(seenKey) < 0) {
+        s2.unlocked.push(seenKey); save(s2);
+        if (t.deep) toast('Deep cut unlocked — ' + t.gap + ' seasons apart, one style.');
+      }
+    }
+    // Landing hero: a compact one-liner in #totd-slot, its disclosure kept in view.
+    var slot = document.getElementById('totd-slot');
+    if (slot) {
+      slot.innerHTML =
+        '<p class="vh-totd vh-totd--compact"><span class="vh-totd__k">Twin of the day</span>' +
+        '<a href="/twin-network.html">' + esc(t.a) + ' <span class="vh-totd__tilde">~</span> ' + esc(t.b) + '</a>' +
+        ' &middot; ' + apart + (t.deep ? ' <span class="vh-totd__deep">DEEP CUT</span>' : '') +
+        '<span class="vh-totd__why">Same pair for everyone today, picked by the calendar &mdash; not by an algorithm watching you.</span></p>';
+      var link = slot.querySelector('a');
+      if (link) link.addEventListener('click', unlock);
+      return;
+    }
     var card = el('section', 'vh-totd reveal', '');
     card.setAttribute('aria-label', 'Twin of the day');
     card.innerHTML =
       '<p class="vh-totd__k">Twin of the day</p>' +
       '<h2 class="vh-totd__pair">' + esc(t.a) + ' <span class="vh-totd__tilde">~</span> ' + esc(t.b) + '</h2>' +
-      '<p class="vh-totd__sub">' + t.gap + ' seasons apart, one playing style.' +
+      '<p class="vh-totd__sub">' + apart + ', one playing style.' +
       (t.deep ? ' <span class="vh-totd__deep">DEEP CUT</span>' : '') + '</p>' +
       '<a class="btn btn-primary" href="/twin-network.html">See why they&rsquo;re twins &rarr;</a>';
     var n = note('Same pair for everyone today, picked by the calendar &mdash; not by an algorithm watching you. ' +
       'Deep cuts are era-bridging twins (20+ seasons apart) for explorers.');
     card.appendChild(n);
     anchor.parentNode.insertBefore(card, anchor);
-    card.querySelector('.btn').addEventListener('click', function () {
-      var s2 = load();
-      s2.unlocked = s2.unlocked || [];
-      if (s2.unlocked.indexOf(seenKey) < 0) {
-        s2.unlocked.push(seenKey); save(s2);
-        if (t.deep) toast('Deep cut unlocked \u2014 ' + t.gap + ' seasons apart, one style.');
-      }
-    });
+    card.querySelector('.btn').addEventListener('click', unlock);
   }
 
   function initLivePage() {
@@ -400,7 +414,7 @@
     try {
       if (document.getElementById('q-card')) initTwentyQuestions();
       if (document.getElementById('daily-court')) initDailyCourt();
-      if (document.getElementById('atlas') && document.querySelector('.hero-map')) initHome();
+      if (document.getElementById('atlas') && (document.getElementById('totd-slot') || document.querySelector('.hero-map'))) initHome();
       if (document.querySelector('.live-root')) initLivePage();
     } catch (e) { /* the games never break because of engagement */ }
   }

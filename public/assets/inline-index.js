@@ -1,16 +1,4 @@
 /* --- extracted from index.html (inline block) (pure move; no behavior change) --- */
-(function(){
-    /* Self-maintaining season strip: pre-tipoff vs underway copy, hidden after the season. */
-    var el = document.getElementById('season-strip'); if(!el) return;
-    var now = new Date();
-    if(now >= new Date(2027, 5, 21)) return; /* season over: stay hidden */
-    if(now >= new Date(2026, 9, 20)){
-      document.getElementById('season-strip-head').textContent = 'The 2026–27 season is underway.';
-    }
-    el.hidden = false;
-  })();
-
-/* --- extracted from index.html (inline block) (pure move; no behavior change) --- */
 if('serviceWorker' in navigator){ window.addEventListener('load', function(){ navigator.serviceWorker.register('/sw.js').catch(function(){}); }); }
 
 /* --- extracted from index.html (inline block) (pure move; no behavior change) --- */

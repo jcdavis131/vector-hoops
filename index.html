@@ -43,34 +43,54 @@
 .hero__title span{ display: block; }
 .hero__title em{ font-style: normal; color: var(--accent); }
 
-/* ---------- Home: hero 3D map (opening night) ---------- */
-.hero-map{ max-width: 1040px; margin: 0 auto var(--s-6); }
-.hero-map__kicker{ font-family: var(--font-code); font-size: var(--t-xs); font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--accent); margin: 0 0 var(--s-2); }
-.hero-map__title{ margin: 0; font-family: var(--font-display); font-size: clamp(28px, 5.4vw, 52px); font-weight: 700; letter-spacing: -.03em; line-height: .95; text-wrap: balance; }
-.hero-map__sub{ margin: var(--s-2) 0 var(--s-4); font-size: var(--t-md); color: var(--fg-2); max-width: 60ch; }
-.embed3d-mount{ position: relative; border: 1px solid var(--line-2); border-radius: var(--radius-lg); overflow: hidden;
-  background: radial-gradient(120% 80% at 70% 20%, rgba(0,114,178,.10), transparent 48%), var(--surface); }
-.embed3d-placeholder{ position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; padding: 24px; text-align: center; color: var(--fg-2); font-size: 14px; }
-.embed3d-placeholder .spin{ width: 34px; height: 34px; border-radius: 50%; border: 3px solid var(--line-2); border-top-color: var(--accent); animation: hero-spin 1s linear infinite; }
-@keyframes hero-spin{ to{ transform: rotate(360deg); } }
-.hero-map__bar{ display: flex; flex-wrap: wrap; align-items: center; gap: var(--s-2) var(--s-4); margin-top: var(--s-3); }
-.hero-map__hint{ margin: 0; font-family: var(--font-code); font-size: var(--t-xs); color: var(--fg-3); }
-.hero-map__cta{ margin-left: auto; }
+/* ---------- Home: one hero, one action (search the atlas) ---------- */
+.hero{ padding-top: clamp(40px, 7vw, 96px); padding-bottom: clamp(24px, 3.4vw, 44px); max-width: 1040px; }
+.hero__lede{ max-width: 54ch; }
+.hero-search{ width: 100%; max-width: 600px; margin: var(--s-2) auto 0; }
+.hero-search .atlas-search input{ height: 58px; padding-left: 48px; font-size: 17px; border-radius: 999px; border-width: 1.5px; border-color: var(--line-2); box-shadow: 0 10px 30px rgba(0,0,0,.06); }
+.hero-search .atlas-search input:focus{ border-color: var(--accent); outline: none; box-shadow: 0 0 0 4px var(--accent-wash); }
+.hero-search .atlas-search svg{ left: 19px; width: 18px; height: 18px; }
+.hero-search .atlas-results{ text-align: left; }
+.hero__try{ display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 8px 14px; margin-top: var(--s-3); font-size: 14px; color: var(--fg-3); }
+.hero__try .btn{ min-height: 40px; }
+.hero .vh-totd--compact{ margin: 0; max-width: none; padding: 0; font-size: 14px; color: var(--fg-2); }
+.vh-totd--compact .vh-totd__k{ display: inline; margin: 0 6px 0 0; }
+.vh-totd--compact a{ color: var(--fg); font-weight: 650; }
+.vh-totd--compact a:hover{ color: var(--accent); }
+.vh-totd__why{ display: block; margin-top: 2px; font-size: 11.5px; color: var(--fg-3); }
 
-/* ---------- Home: season strip (2026-27 opening night) ---------- */
-.season-strip{ max-width: 1040px; margin: 0 auto var(--s-6); padding: var(--s-3) var(--s-4);
-  background: var(--surface-2); border: 1px solid var(--line); border-radius: var(--radius); }
-.season-strip p{ margin: 0; font-size: var(--t-sm); color: var(--fg-2); }
-.season-strip strong{ color: var(--fg); }
-.season-strip a{ color: var(--marker-blue); font-weight: 600; }
+/* ---------- Home: tonight strip (ESPN's public scoreboard, quiet on failure) ---------- */
+.tonight{ display: flex; flex-wrap: wrap; align-items: center; gap: 8px 16px; max-width: var(--content); margin: 0 auto var(--s-6); padding: 12px clamp(14px, 2.4vw, 22px); border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--surface-2); }
+.tonight__k{ display: inline-flex; align-items: center; gap: 7px; font-family: var(--font-display); font-size: var(--t-2xs); font-weight: 700; letter-spacing: .2em; text-transform: uppercase; color: var(--accent-2); }
+.tonight__dot{ width: 8px; height: 8px; border-radius: 50%; background: var(--line-2); flex: none; }
+.tonight.is-live .tonight__dot{ background: var(--accent); animation: tonight-pulse 1.6s ease-in-out infinite; }
+@keyframes tonight-pulse{ 50%{ opacity: .35; } }
+.tonight__text{ margin: 0; font-size: 14px; color: var(--fg-2); min-width: 0; }
+.tonight__games{ display: flex; flex-wrap: wrap; gap: 6px; list-style: none; margin: 0; padding: 0; }
+.tonight__games li{ padding: 4px 10px; border: 1px solid var(--line); border-radius: 999px; background: var(--surface); font-size: 12.5px; color: var(--fg-2); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.tonight__games li b{ color: var(--fg); font-weight: 650; }
+.tonight__games li.is-live{ border-color: var(--accent-line); }
+.tonight__links{ display: flex; flex-wrap: wrap; gap: 6px 16px; margin-left: auto; font-family: var(--font-display); font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+.tonight__links a{ color: var(--fg); }
+.tonight__links a:hover{ color: var(--accent); }
 
+/* ---------- Home: advanced atlas controls, folded ---------- */
+.atlas-more{ margin-top: var(--s-4); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.atlas-more > summary{ display: flex; align-items: center; gap: 10px; min-height: 48px; cursor: pointer; list-style: none; font-family: var(--font-display); font-size: 11px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--fg-2); }
+.atlas-more > summary::-webkit-details-marker{ display: none; }
+.atlas-more > summary::before{ content: "+"; display: inline-grid; place-content: center; width: 24px; height: 24px; border: 1px solid var(--line-2); border-radius: 50%; font-size: 14px; letter-spacing: 0; }
+.atlas-more[open] > summary::before{ content: "\2212"; }
+.atlas-more > summary:hover{ color: var(--fg); }
+.atlas-more > summary span{ font-family: var(--font-text); font-size: 12.5px; font-weight: 400; letter-spacing: 0; text-transform: none; color: var(--fg-3); }
+.atlas-more__body{ padding: 4px 0 var(--s-4); }
+.atlas-more__row{ display: flex; flex-wrap: wrap; gap: 12px 20px; align-items: center; margin-bottom: 8px; }
 /* ---------- Home: the instrument ---------- */
 .instrument{ width: 100%; max-width: var(--content); margin: 0 auto; }
 .instrument__bar{
-  display: grid; grid-template-columns: 1fr minmax(0, 420px) 1fr; align-items: center; gap: var(--s-4);
-  padding: 0 0 var(--s-4);
+  display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: var(--s-2) var(--s-4);
+  padding: 0 0 var(--s-3);
 }
-.instrument__bar .label:last-child{ justify-self: end; text-align: right; }
+.instrument__bar .label:last-child{ text-align: right; }
 .fig-label b{ color: var(--fg); font-weight: 700; }
 .atlas-search{ position: relative; }
 .atlas-search input{ padding-left: 40px; height: 44px; background: var(--surface); }
@@ -279,43 +299,32 @@
 .skeleton{ display: inline-block; height: 10px; width: 120px; border-radius: 2px; background: var(--surface-2); animation: atlas-fade 1.2s var(--ease) infinite alternate; }
 .skeleton--s{ width: 48px; }
 
-/* ---------- doors ---------- */
-.today-strip{ display: flex; flex-wrap: wrap; gap: 8px 18px; align-items: baseline; margin-top: var(--s-8); border: 1px solid var(--line); background: var(--surface); padding: 14px clamp(16px, 2.6vw, 28px); }
-.today-strip__label{ font-family: var(--font-display); font-size: var(--t-2xs); font-weight: 700; letter-spacing: .2em; text-transform: uppercase; color: var(--accent-2); }
-.today-strip__text{ font-size: 14px; color: var(--fg-2); }
-.today-strip__links{ margin-left: auto; font-family: var(--font-display); font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
-.today-strip__links a{ color: var(--fg); }
-.doors{ display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0; margin-top: var(--s-8); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
-.door{ display: flex; flex-direction: column; gap: 10px; padding: clamp(24px, 3vw, 40px) clamp(20px, 2.6vw, 36px); text-decoration: none; color: var(--fg); transition: background var(--dur-2) var(--ease); min-width: 0; }
-.door + .door{ border-left: 1px solid var(--line); }
-.door:hover{ background: var(--surface); }
-.door__n{ font-family: var(--font-display); font-size: var(--t-2xs); font-weight: 600; font-stretch: 112%; letter-spacing: .2em; color: var(--fg-3); font-variant-numeric: tabular-nums; }
+/* ---------- Home: three play doors ---------- */
+.play{ margin-top: var(--s-8); }
+.play__head{ margin: 0 0 var(--s-3); }
+.doors{ display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--s-3); }
+.door{ display: flex; flex-direction: column; gap: 8px; padding: clamp(20px, 2.6vw, 30px); text-decoration: none; color: var(--fg); background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-lg); min-width: 0; transition: border-color var(--dur-2) var(--ease), transform var(--dur-2) var(--ease), box-shadow var(--dur-2) var(--ease); }
+.door:hover{ border-color: var(--line-2); transform: translateY(-2px); box-shadow: 0 14px 34px rgba(0,0,0,.08); }
+.door:focus-visible{ outline: 2px solid var(--accent); outline-offset: 2px; }
+.door__n{ font-family: var(--font-display); font-size: var(--t-2xs); font-weight: 700; font-stretch: 112%; letter-spacing: .2em; text-transform: uppercase; color: var(--accent-2); }
 .door__title{ font-family: var(--font-display); font-size: var(--t-xl); font-weight: 700; letter-spacing: -.02em; line-height: 1.05; }
-.door__text{ margin: 0; font-size: 14px; line-height: 1.6; color: var(--fg-2); }
-.door__go{ margin-top: auto; padding-top: 8px; font-family: var(--font-display); font-size: 10.5px; font-weight: 700; font-stretch: 112%; letter-spacing: .16em; text-transform: uppercase; color: var(--fg-2); transition: color var(--dur-1) var(--ease), letter-spacing var(--dur-2) var(--ease); }
+.door__text{ margin: 0; font-size: 14px; line-height: 1.55; color: var(--fg-2); }
+.door__meta{ margin: 0; font-size: 12.5px; color: var(--fg-3); }
+.door__go{ margin-top: auto; padding-top: 6px; font-family: var(--font-display); font-size: 10.5px; font-weight: 700; font-stretch: 112%; letter-spacing: .16em; text-transform: uppercase; color: var(--fg); transition: color var(--dur-1) var(--ease), letter-spacing var(--dur-2) var(--ease); }
 .door:hover .door__go{ color: var(--accent); letter-spacing: .2em; }
 
-/* ---------- ledger ---------- */
-.findings{ margin-top: var(--s-8); }
-.chem{ display: flex; flex-direction: column; gap: 6px; margin: 2px 0 4px; }
-.chem__row{ display: flex; align-items: center; gap: 10px; font-family: var(--font-display); font-size: 11px; font-weight: 700; }
-.chem__row > span{ width: 34px; color: var(--fg-3); letter-spacing: .08em; }
-.chem__row > i{ display: block; height: 14px; background: var(--surface-2); border-radius: 999px; position: relative; font-style: normal; }
-.chem__row > i > b{ position: absolute; right: 8px; top: 50%; transform: translateY(-50%); font-size: 10px; color: var(--fg-2); font-variant-numeric: tabular-nums; }
-.chem__row:first-child > i{ background: var(--accent); }
-.chem__row:first-child > i > b{ color: #fff; }
-.ledger{ display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); margin-top: var(--s-8); text-align: center; }
-.ledger > div{ padding: 0 16px; }
-.ledger > div + div{ border-left: 1px solid var(--line); }
-.ledger b{ display: block; font-family: var(--font-display); font-size: clamp(30px, 3.6vw, 48px); font-weight: 700; letter-spacing: -.03em; line-height: 1; color: var(--fg); font-variant-numeric: tabular-nums; }
-.ledger span{ display: block; margin-top: 10px; font-family: var(--font-display); font-size: var(--t-2xs); font-weight: 600; font-stretch: 112%; letter-spacing: .18em; text-transform: uppercase; color: var(--fg-3); }
-.ledger-note{ margin: var(--s-5) auto 0; max-width: 64ch; text-align: center; font-size: 13px; line-height: 1.7; color: var(--fg-3); }
-.ledger-note a{ color: var(--fg-2); }
-
+/* ---------- Home: lab row + footnote ---------- */
+.lab{ margin-top: var(--s-8); }
+.lab__row{ display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0; margin: var(--s-3) 0 0; padding: 0; list-style: none; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.lab__row li{ min-width: 0; }
+.lab__row li + li{ border-left: 1px solid var(--line); }
+.lab__row a{ display: block; height: 100%; padding: 14px 16px; text-decoration: none; color: var(--fg-2); font-size: 13px; line-height: 1.5; }
+.lab__row a b{ display: block; margin-bottom: 3px; font-family: var(--font-display); font-size: 15px; letter-spacing: -.01em; color: var(--fg); }
+.lab__row a:hover b{ color: var(--accent); }
+.home-foot{ margin: var(--s-6) auto 0; max-width: 72ch; text-align: center; font-size: 12.5px; line-height: 1.7; color: var(--fg-3); }
+.home-foot a{ color: var(--fg-2); }
 @media (max-width: 900px){
-  .instrument__bar{ grid-template-columns: 1fr 1fr; }
-  .atlas-search{ grid-column: 1 / -1; grid-row: 1; }
-  .team-highlight{ grid-column: 1 / -1; }
+  .team-highlight{ width: 100%; }
   .team-select{ flex: 1; max-width: none; }
   .field{ aspect-ratio: 4 / 5; min-height: 0; }
   .legend{ grid-template-columns: 1fr 1fr; }
@@ -324,14 +333,15 @@
   .readout{ grid-template-columns: 1fr; }
   .readout > * + *{ border-left: 0; border-top: 1px solid var(--line); }
   .doors{ grid-template-columns: 1fr; }
-  .door + .door{ border-left: 0; border-top: 1px solid var(--line); }
-  .ledger{ grid-template-columns: 1fr 1fr; row-gap: 32px; }
-  .ledger > div:nth-child(3){ border-left: 0; }
+  .lab__row{ grid-template-columns: 1fr; }
+  .lab__row li + li{ border-left: 0; border-top: 1px solid var(--line); }
+  .tonight__links{ margin-left: 0; }
   .hide-s{ display: none; }
   .field__controls{ top: 10px; bottom: auto; right: 10px; }
   .axis--t{ left: 14px; transform: none; }
 }
 @media (max-width: 480px){
+  .atlas-more > summary span{ display: none; }
   .legend-chip{ font-size: 11.5px; }
   .legend-chip .num{ display: none; }
 }
@@ -347,66 +357,33 @@
   <header class="title-card hero">
     <div class="title-card__eyebrow reveal">An atlas of NBA player-seasons</div>
     <h1 class="hero__title reveal reveal-1"><span>Who plays</span><span>like <em>this?</em></span></h1>
-    <p class="title-card__lede reveal reveal-2">Every season from 1996–97 to 2025–26 with enough minutes, placed by how it was played rather than who played it. Choose one, and a neural embedding returns the three seasons that play most alike. This map measures how players play, not how good they are.</p>
-    <div class="title-card__meta reveal reveal-2" role="note" aria-label="Scope, trust and model">
-      <span><b>Scope</b> every season 1996&ndash;97 &rarr; 2025&ndash;26 with enough minutes</span>
-      <span><b>Trust</b> the flat view keeps 12% of each season&rsquo;s true 20 nearest from the 64-d model</span>
-      <span><b>Model</b> Nearest seasons by cosine similarity in the 64-dimensional MTNN v5 embedding</span>
-    </div>
-    <div class="title-card__actions reveal reveal-3">
-      <a class="btn btn-primary btn-xl" href="#map3d">Choose a season — explore the atlas.</a>
+    <p class="title-card__lede hero__lede reveal reveal-2">Type any player. A neural embedding finds the three seasons since <span data-fact="season_first">1996-97</span> that play most alike &mdash; across eras, teams and positions.</p>
+    <div class="hero-search reveal reveal-3">
+      <div class="atlas-search" role="search">
+        <svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="7" cy="7" r="5.25" fill="none" stroke="currentColor" stroke-width="1.5"/><line x1="11" y1="11" x2="15" y2="15" stroke="currentColor" stroke-width="1.5"/></svg>
+        <label class="visually-hidden" for="atlas-search">Find a player-season</label>
+        <input id="atlas-search" type="search" placeholder="Find a player — Curry, Jokić…" autocomplete="off" spellcheck="false"
+               role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="atlas-results"/>
+        <ul id="atlas-results" class="atlas-results" role="listbox" aria-label="Matching seasons" hidden></ul>
+      </div>
+      <div class="hero__try">
+        <button type="button" class="btn" id="atlas-surprise">Surprise me</button>
+        <div id="totd-slot"></div>
+      </div>
     </div>
   </header>
 
-  <div class="season-strip reveal" id="season-strip" role="note" hidden>
-    <p><strong id="season-strip-head">The 2026&ndash;27 season tips off Tuesday, Oct 20.</strong>
-    <span id="season-strip-body">A new Daily Court puzzle every day of the season &mdash; the same five for everyone.</span>
-    <a href="/play">Play today&rsquo;s &rarr;</a></p>
-  </div>
-    <script src="/assets/inline-index.js?v=6f6acb3b"></script>
-
-  <section class="hero-map reveal" id="map3d" aria-label="Opening night on the 3D map">
-    <p class="hero-map__kicker">Opening night &middot; Thunder @ Spurs &middot; 8:30 PM CT on NBC</p>
-    <h2 class="hero-map__title">The map is the game tonight.</h2>
-    <p class="hero-map__sub">All 12,966 player-seasons, floating in 3D by how similarly they played. Drag to explore the landscape &mdash; then hunt today&rsquo;s mystery star on this same map.</p>
-    <div class="embed3d-mount" data-projection="pca" id="hero-3d" style="height:min(72vw,440px)" role="application" aria-label="3D embedding map of 12,966 player-seasons">
-      <div class="embed3d-placeholder">
-        <span class="spin" aria-hidden="true"></span>
-        <p><b>Warming up the 3D map&hellip;</b><br/>If it can&rsquo;t load, the full atlas is right below &mdash; same data, same twins.</p>
-      </div>
-    </div>
-    <div class="hero-map__bar">
-      <p class="hero-map__hint">Drag to orbit &middot; scroll to zoom</p>
-      <a class="btn btn-primary hero-map__cta" href="/map-guess">Play Map Hunt &rarr;</a>
-    </div>
-    <noscript><p class="hero-map__hint" style="margin-top:8px">The 3D map needs JavaScript &mdash; the atlas below works the same way, and <a href="/play">Daily Court</a> plays without it.</p></noscript>
+  <section class="tonight" id="tonight" aria-label="Tonight in the NBA">
+    <span class="tonight__k"><span class="tonight__dot" aria-hidden="true"></span><span id="tonight-k">Tonight</span></span>
+    <p class="tonight__text" id="tonight-text">Courtside Live follows every NBA game as it happens, with Pixel Replay a play behind the feed.</p>
+    <ul class="tonight__games" id="tonight-games" hidden></ul>
+    <span class="tonight__links"><a href="/live">Courtside Live &rarr;</a><a href="/replay">Pixel Replay &rarr;</a></span>
   </section>
-  <script src="/assets/embed-3d.js?v=ecab5292"></script>
-  <script src="/assets/hero-3d-mount.js?v=2dde6747"></script>
-  <script src="/assets/engagement.js?v=a970e669"></script>
 
   <section id="atlas" class="instrument reveal reveal-4" aria-labelledby="atlas-title">
     <div class="instrument__bar">
       <h2 id="atlas-title" class="label fig-label" style="margin:0">Fig. 1 <b>· The atlas</b></h2>
-      <div class="atlas-search" role="search">
-        <svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="7" cy="7" r="5.25" fill="none" stroke="currentColor" stroke-width="1.5"/><line x1="11" y1="11" x2="15" y2="15" stroke="currentColor" stroke-width="1.5"/></svg>
-        <label class="visually-hidden" for="atlas-search">Find a player-season</label>
-        <input id="atlas-search" type="search" placeholder="Find a season — Curry, Jokić, Wembanyama…" autocomplete="off" spellcheck="false"
-               role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="atlas-results"/>
-        <ul id="atlas-results" class="atlas-results" role="listbox" aria-label="Matching seasons" hidden></ul>
-      </div>
-      <div class="label"><span id="atlas-count" class="num" data-fact="player_seasons">12,966</span> plotted</div>
-      <details class="trust-badge vh-approx">
-        <summary>This view keeps <span data-served-const="badge_overlap_pct">12</span>% of each player's 20 nearest neighborhoods from the model</summary>
-        <p>We sampled 2,000 players and checked how many of each one&#8217;s 20 closest neighbors in the full 64-d model stay neighbors on this flat map — about 1 in 9 do.</p>
-      </details>
-      <div class="team-highlight">
-        <label class="visually-hidden" for="team-select">Highlight a team’s current roster on the atlas</label>
-        <select id="team-select" class="team-select">
-          <option value="">Highlight team…</option>
-        </select>
-        <button type="button" id="team-cycle" class="team-cycle" aria-pressed="false"><span class="team-cycle__icon" aria-hidden="true">▶</span><span>Cycle</span></button>
-      </div>
+      <div class="label"><span id="atlas-count" class="num" data-fact="player_seasons">12,966</span> plotted &middot; tap any dot</div>
     </div>
 
     <div class="field" id="map-wrap">
@@ -428,39 +405,6 @@
       </div>
     </div>
 
-    <div class="atlas-axes" id="atlas-axes">
-      <div class="axes-pick">
-        <label class="axes-label" for="axis-x">X axis
-          <select id="axis-x" class="axes-select">
-            <option value="pca1" selected>Paint vs perimeter (PCA)</option>
-          </select>
-        </label>
-        <label class="axes-label" for="axis-y">Y axis
-          <select id="axis-y" class="axes-select">
-            <option value="pca2" selected>Scoring load (PCA)</option>
-          </select>
-        </label>
-      </div>
-      <div class="axes-view" role="group" aria-label="Atlas view">
-        <button type="button" id="view-2d" class="axes-btn" aria-pressed="true">2-D map</button>
-        <button type="button" id="view-1d" class="axes-btn" aria-pressed="false">1-D line</button>
-      </div>
-      <p class="axes-note" id="axes-note">Name both axes — every point re-plots. Pick a named stat to leave the PCA view.</p>
-    </div>
-
-    <figure class="map-note" id="map-note">
-      <figcaption class="label fig-label" style="margin:0">Fig. note <b>· How to read this map</b></figcaption>
-      <ul>
-        <li><b>A sketch, not the model.</b> The flat map shows two of three PCA axes; the three together keep about 62% of the variance in the 14 era-normalised stats (<a href="/methods">methods</a>). Nearby on the map is approximate.</li>
-        <li><b>Peers come from the model, not the picture.</b> &ldquo;Plays most alike&rdquo; is cosine similarity in the full 64-d embedding, so a peer can sit some distance away on the map.</li>
-        <li><b>Eras are normalised away.</b> Stats are z-scored within each season, so cross-era closeness is about style, not who would win.</li>
-        <li><b>Scores are opinions.</b> Name different axes and every point moves; retrain the model and the numbers wobble.</li>
-      </ul>
-    </figure>
-
-    <div class="legend" id="atlas-legend" role="group" aria-label="Highlight an archetype"></div>
-
-    <div class="region-strip" id="region-strip" role="group" aria-label="Explore regions of the atlas"></div>
     <p class="region-note" id="region-note" hidden></p>
     <div class="region-panel" id="region-panel" hidden></div>
 
@@ -479,45 +423,95 @@
       </div>
     </div>
     <p class="visually-hidden" id="atlas-live" aria-live="polite"></p>
+
+    <details class="atlas-more" id="atlas-more">
+      <summary>More ways to read the map <span>teams, axes, archetypes, regions</span></summary>
+      <div class="atlas-more__body">
+        <div class="atlas-more__row">
+          <div class="team-highlight">
+            <label class="visually-hidden" for="team-select">Highlight a team’s current roster on the atlas</label>
+            <select id="team-select" class="team-select">
+              <option value="">Highlight team…</option>
+            </select>
+            <button type="button" id="team-cycle" class="team-cycle" aria-pressed="false"><span class="team-cycle__icon" aria-hidden="true">▶</span><span>Cycle</span></button>
+          </div>
+          <details class="trust-badge vh-approx">
+            <summary>This view keeps <span data-served-const="badge_overlap_pct">12</span>% of each player's 20 nearest neighborhoods from the model</summary>
+            <p>We sampled 2,000 players and checked how many of each one&#8217;s 20 closest neighbors in the full 64-d model stay neighbors on this flat map — about 1 in 9 do.</p>
+          </details>
+        </div>
+
+        <div class="atlas-axes" id="atlas-axes">
+          <div class="axes-pick">
+            <label class="axes-label" for="axis-x">X axis
+              <select id="axis-x" class="axes-select">
+                <option value="pca1" selected>Paint vs perimeter (PCA)</option>
+              </select>
+            </label>
+            <label class="axes-label" for="axis-y">Y axis
+              <select id="axis-y" class="axes-select">
+                <option value="pca2" selected>Scoring load (PCA)</option>
+              </select>
+            </label>
+          </div>
+          <div class="axes-view" role="group" aria-label="Atlas view">
+            <button type="button" id="view-2d" class="axes-btn" aria-pressed="true">2-D map</button>
+            <button type="button" id="view-1d" class="axes-btn" aria-pressed="false">1-D line</button>
+          </div>
+          <p class="axes-note" id="axes-note">Name both axes — every point re-plots. Pick a named stat to leave the PCA view.</p>
+        </div>
+
+        <div class="legend" id="atlas-legend" role="group" aria-label="Highlight an archetype"></div>
+        <div class="region-strip" id="region-strip" role="group" aria-label="Explore regions of the atlas"></div>
+
+        <figure class="map-note" id="map-note">
+          <figcaption class="label fig-label" style="margin:0">Fig. note <b>· How to read this map</b></figcaption>
+          <ul>
+            <li><b>A sketch, not the model.</b> The flat map shows two of three PCA axes; the three together keep about 62% of the variance in the 14 era-normalised stats (<a href="/methods">methods</a>). Nearby on the map is approximate.</li>
+            <li><b>Peers come from the model, not the picture.</b> &ldquo;Plays most alike&rdquo; is cosine similarity in the full 64-d embedding, so a peer can sit some distance away on the map.</li>
+            <li><b>Eras are normalised away.</b> Stats are z-scored within each season, so cross-era closeness is about style, not who would win.</li>
+            <li><b>Scores are opinions.</b> Name different axes and every point moves; retrain the model and the numbers wobble.</li>
+          </ul>
+        </figure>
+      </div>
+    </details>
   </section>
 
-  <section class="today-strip" aria-label="Today at Daily Court">
-    <span class="today-strip__label">World <span id="today-world">––</span> · Daily Court</span>
-    <span class="today-strip__text">Five past All-Stars, the same five for everyone. <span id="today-streak">Start your streak today.</span></span>
-    <span class="today-strip__links"><a href="/play">Play today’s five →</a> · <a href="/play?mode=triple">Daily Triple (3) →</a></span>
-  </section>
-
-  <section class="findings" aria-label="Fresh from the lab">
-    <h2 class="label fig-label" style="margin:0 0 4px">Fresh from the lab <b>· new findings</b></h2>
-    <nav class="doors" aria-label="New findings" style="margin-top:var(--s-4)">
-      <a class="door" href="/insights#invisible-stardom">
-        <span class="door__n">Insight — Know your role</span>
-        <span class="door__title">The biggest sacrifices nobody saw</span>
-        <p class="door__text">Jrue Holiday gave up <b>8.7</b> points of usage going from Milwaukee All-Star to Boston&rsquo;s fourth option — and won a ring. 12 invisible-stardom sacrifices, ranked.</p>
-        <span class="door__go">See the sacrifices →</span>
+  <section class="play" aria-labelledby="play-title">
+    <h2 id="play-title" class="label fig-label play__head">Play <b>· three ways in</b></h2>
+    <nav class="doors" aria-label="Games">
+      <a class="door" href="/play">
+        <span class="door__n">Daily Court &middot; World <span id="today-world">today</span></span>
+        <span class="door__title">Find the modern twin</span>
+        <p class="door__text">Five past All-Stars, the same five for everyone. Find each one&rsquo;s closest modern twin in six guesses.</p>
+        <p class="door__meta" id="today-streak">Start your streak today.</p>
+        <span class="door__go">Play today&rsquo;s five &rarr;</span>
       </a>
-      <a class="door" href="/insights#the-summer-the-cap-broke">
-        <span class="door__n">Insight — 2016 cap spike</span>
-        <span class="door__title">The summer the salary cap broke</span>
-        <p class="door__text">When the cap jumped 34% in one summer, teams bid against the new money — not production. Chandler Parsons&rsquo; $22.1M bought <b>0.2</b> win shares.</p>
-        <span class="door__go">See the signings →</span>
+      <a class="door" href="/replay">
+        <span class="door__n">Pixel Replay</span>
+        <span class="door__title">Rewatch it in pixels</span>
+        <p class="door__text">Real NBA games redrawn play by play. Pause, rewind, loop, rotate the court.</p>
+        <span class="door__go">Watch a replay &rarr;</span>
       </a>
-      <a class="door" href="/playoff-runs">
-        <span class="door__n">New page — 42 ranked runs</span>
-        <span class="door__title">Greatest playoff runs</span>
-        <p class="door__text">LeBron '09 over Jordan '98 — now two-way. Curry + Durant '17, the greatest duo ever. The '26 Knicks' +15.5 demolition over the 15–1 Lakers. Individuals, duos, trios, teams.</p>
-        <span class="door__go">Rank the runs →</span>
+      <a class="door" href="/map-guess">
+        <span class="door__n">Map Hunt &middot; 3D</span>
+        <span class="door__title">Find the hidden star</span>
+        <p class="door__text">Tap points on the 3D embedding map. Warmer or colder by true 64-d cosine distance. Same map for everyone.</p>
+        <span class="door__go">Start the hunt &rarr;</span>
       </a>
     </nav>
   </section>
 
-  <section class="ledger" aria-label="The numbers">
-    <div><b>12,966</b><span>Player-seasons</span></div>
-    <div><b>30</b><span>Seasons, 1996–2026</span></div>
-    <div><b>64</b><span>Embedding dimensions</span></div>
-    <div><b>17</b><span>Feature towers</span></div>
+  <section class="lab" aria-labelledby="lab-title">
+    <h2 id="lab-title" class="label fig-label" style="margin:0">From the lab <b>· <a href="/insights">all insights</a></b></h2>
+    <ul class="lab__row">
+      <li><a href="/insights#invisible-stardom"><b>The biggest sacrifices nobody saw</b>Jrue Holiday gave up 8.7 points of usage and won a ring.</a></li>
+      <li><a href="/insights#the-summer-the-cap-broke"><b>The summer the salary cap broke</b>Chandler Parsons&rsquo; $22.1M bought 0.2 win shares.</a></li>
+      <li><a href="/playoff-runs"><b>Greatest playoff runs</b>Individuals, duos, trios and teams, ranked.</a></li>
+    </ul>
   </section>
-  <p class="ledger-note">Stats come from stats.nba.com, per 100 possessions and z-scored within their own season, so a 1997 number and a 2026 number mean the same thing. Every figure on this site can be recomputed from source — see <a href="/methods">Methods</a>.</p>
+
+  <p class="home-foot"><span data-fact="player_seasons">12,966</span> player-seasons, <span data-fact="season_first">1996-97</span> to <span data-fact="season_last">2025-26</span>. Stats from stats.nba.com, per 100 possessions and z-scored within their own season; twins from a <span data-fact="model_dim">64</span>-dimensional embedding. The map measures how players play, not how good they are. Every figure can be recomputed &mdash; see <a href="/methods">Methods</a>.</p>
 </main>
 
 <footer class="site-footer">
@@ -546,15 +540,16 @@
 </footer>
 
 <script defer src="/assets/site-nav.js?v=76d1e530"></script>
-<script defer src="/assets/vh-analytics.js?v=STAMP"></script>
-<script defer src="/assets/vh-peers.js?v=STAMP"></script>
+<script defer src="/assets/vh-analytics.js?v=d838a3e1"></script>
+<script defer src="/assets/vh-peers.js?v=860629b9"></script>
 <script defer src="/assets/served-constants.js?v=8ba12340"></script>
 <script defer src="/assets/twin-bands.js?v=0a191313"></script>
-<script defer src="/assets/atlas-map.js?v=72854f1c"></script>
+<script defer src="/assets/atlas-map.js?v=3d5ca8bf"></script>
 <script defer src="/assets/atlas-regions.js?v=137f43e8"></script>
 <script defer src="/assets/career-trails.js?v=a0e9e836"></script>
 <script src="assets/site-facts.js?v=f8edaf37" defer></script>
-<script src="/assets/inline-index.js?v=6f6acb3b"></script>
-<script src="/assets/inline-index.js?v=6f6acb3b"></script>
+<script defer src="/assets/engagement.js?v=c8a9761b"></script>
+<script defer src="/assets/home-tonight.js?v=defd431a"></script>
+<script defer src="/assets/inline-index.js?v=2ad73c39"></script>
 </body>
 </html>

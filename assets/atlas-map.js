@@ -776,6 +776,8 @@
     project: function (x, y) { return { x: sx(x), y: sy(y) }; },
     dims: function () { return { W: W, H: H, DPR: DPR }; },
     selectedPlayer: function () { return selected >= 0 ? P[selected] : null; },
+    size: function () { return P ? P.length : 0; },
+    select: function (i) { select(i); },
     setCap: function (c) { window.__vhAtlasCap = c; draw(); },
     onSelect: function (cb) { (window.__vhAtlasSelect = window.__vhAtlasSelect || []).push(cb); },
     highlightTeam: function (abbr) {
