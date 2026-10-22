@@ -122,9 +122,7 @@ def build_game(path: Path, colors: dict) -> dict | None:
     teams = []
     for s in (0, 1):
         t = tri[s]
-        c = colors.get(
-            ALIAS.get(t, t), {"name": t, "short": t, "c": "#555555", "alt": "#ffffff"}
-        )
+        c = colors.get(ALIAS.get(t, t), {"name": t, "short": t, "c": "#555555", "alt": "#ffffff"})
         teams.append({"tri": t, **c})
 
     players: dict[str, dict] = {}
@@ -138,15 +136,8 @@ def build_game(path: Path, colors: dict) -> dict | None:
     for a in acts:
         pid = str(a.get("personId") or "")
         if pid in players and pid not in first:
-            first[pid] = (
-                "in"
-                if (a["actionType"] == "substitution" and a.get("subType") == "in")
-                else "on"
-            )
-    lineup = [
-        [p for p in first if first[p] == "on" and players[p]["t"] == s][:5]
-        for s in (0, 1)
-    ]
+            first[pid] = "in" if (a["actionType"] == "substitution" and a.get("subType") == "in") else "on"
+    lineup = [[p for p in first if first[p] == "on" and players[p]["t"] == s][:5] for s in (0, 1)]
     last_seen: dict[str, int] = {}
     lineups = [[0, list(lineup[0]), list(lineup[1])]]
     events = []
@@ -178,11 +169,7 @@ def build_game(path: Path, colors: dict) -> dict | None:
             else:
                 lineups.append([i, list(lineup[0]), list(lineup[1])])
         x = y = None
-        if (
-            a.get("isFieldGoal") == 1
-            and a.get("x") is not None
-            and a.get("y") is not None
-        ):
+        if a.get("isFieldGoal") == 1 and a.get("x") is not None and a.get("y") is not None:
             x = round(a["x"] / 100 * COURT_L, 2)
             y = round(a["y"] / 100 * COURT_W, 2)
         res = {"Made": 1, "Missed": 0}.get(a.get("shotResult"))
@@ -202,20 +189,14 @@ def build_game(path: Path, colors: dict) -> dict | None:
                 res,
                 a.get("description") or "",
                 poss,
-                1
-                if a.get("side") == "right"
-                else (0 if a.get("side") == "left" else -1),
+                1 if a.get("side") == "right" else (0 if a.get("side") == "left" else -1),
             ]
         )
 
     # Self-check: feed shot distance vs distance from (x, y) to the nearer rim.
     errs = []
     for a in acts:
-        if (
-            a.get("isFieldGoal") == 1
-            and a.get("shotDistance") is not None
-            and a.get("x") is not None
-        ):
+        if a.get("isFieldGoal") == 1 and a.get("shotDistance") is not None and a.get("x") is not None:
             x, y = a["x"] / 100 * COURT_L, a["y"] / 100 * COURT_W
             d = min(
                 math.hypot(x - HOOP_IN, y - COURT_W / 2),
@@ -285,9 +266,7 @@ def main() -> int:
         "note": built[0]["staged"] if built else "",
     }
     for g in index["games"]:
-        g["teams"] = [
-            {k: t[k] for k in ("tri", "short", "c", "alt")} for t in g["teams"]
-        ]
+        g["teams"] = [{k: t[k] for k in ("tri", "short", "c", "alt")} for t in g["teams"]]
     files = {OUT / f"{g['gameId']}.json": g for g in built}
     files[OUT / "index.json"] = index
     stale = []

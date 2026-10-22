@@ -13,7 +13,9 @@ on:
   push:
     branches: [master, main]
   pull_request:
-    branches: [master, main]
+    # forge/** too: a PR stacked on a forge/ branch (base is the parent PR's branch)
+    # is gated by the same jobs before it is retargeted to master.
+    branches: [master, main, 'forge/**']
 permissions:
   contents: read
 jobs:
