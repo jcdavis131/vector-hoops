@@ -38,6 +38,7 @@ DIRS = 8  # player facing relative to the camera, 45 deg steps; 0 = facing the c
 ORTHO = 3.1  # metres visible vertically
 TARGET_Z = 1.25
 
+
 # pose name -> list of frames; each frame: root z (m), lean (deg, forward +), arm L/R and leg L/R swing (deg, forward +)
 def run_frames():
     out = []
@@ -45,6 +46,7 @@ def run_frames():
         s = math.sin(2 * math.pi * k / 4 + math.pi / 4)
         out.append(dict(z=0.05 * abs(s), lean=12, al=-45 * s, ar=45 * s, ll=38 * s, lr=-38 * s))
     return out
+
 
 POSES = {
     "idle": [dict(z=0, lean=4, al=6, ar=6, ll=0, lr=0), dict(z=-0.025, lean=6, al=10, ar=10, ll=0, lr=0)],
@@ -101,7 +103,12 @@ def mat(name, rgba):
     return m
 
 
-MATS = {k: mat(k, v) for k, v in dict(skin=SKIN, hair=HAIR, shoe=SHOE, sock=SOCK, jersey=MASK_JERSEY, shorts=MASK_SHORTS, trim=MASK_TRIM).items()}
+MATS = {
+    k: mat(k, v)
+    for k, v in dict(
+        skin=SKIN, hair=HAIR, shoe=SHOE, sock=SOCK, jersey=MASK_JERSEY, shorts=MASK_SHORTS, trim=MASK_TRIM
+    ).items()
+}
 
 
 def box(name, size, loc, m, parent):
@@ -239,7 +246,9 @@ for (row, fi), out in cellpx.items():
     for x, y, f, li in out:
         k = min(1.0, max(0.68, 0.68 + 0.32 * (li - LO) / (TOP - LO)))
         o = (fi * CW + x) * 4
-        atlas[row * CH + y][o : o + 4] = bytes((round(f[0] * k * 255), round(f[1] * k * 255), round(f[2] * k * 255), 255))
+        atlas[row * CH + y][o : o + 4] = bytes(
+            (round(f[0] * k * 255), round(f[1] * k * 255), round(f[2] * k * 255), 255)
+        )
 TMP.rmdir()
 write_png(OUT / "players.png", AW, AH, atlas)
 
@@ -255,7 +264,9 @@ meta = {
     "anchors": [{"foot": anchor(e, 0.0), "head": anchor(e, 2.0)} for e in ELEVATIONS],
     "masks": {"jersey": "red channel dominant", "shorts": "green channel dominant", "trim": "blue channel dominant"},
     "hash": hashlib.sha256((OUT / "players.png").read_bytes()).hexdigest()[:8],  # replay.js puts it on the image URL
-    "generator": "scripts/sprites/build_sprites.py (Blender " + bpy.app.version_string + ", Workbench, procedural model)",
+    "generator": "scripts/sprites/build_sprites.py (Blender "
+    + bpy.app.version_string
+    + ", Workbench, procedural model)",
 }
 json.dump(meta, (OUT / "players.json").open("w"), indent=1)
 print("SPRITES_OK", AW, "x", AH, "cells", cols * rows_n)

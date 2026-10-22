@@ -195,7 +195,9 @@ async function runGame(js, gameId, o) {
   follow.click(); for (let k = 0; k < 40; k++) frame(16.7);
   passes.push(pass('follow'));
   const dbg = PR.stats ? JSON.parse(JSON.stringify(PR.stats)) : null;
-  return { gameId, tEnd: +tEnd.toFixed(2), errors, passes, stats: dbg };
+  let tints = null;
+  try { tints = PR.teamTints ? JSON.parse(JSON.stringify(JSON.parse(fs.readFileSync(path.join(ROOT, 'assets', 'replays', gameId + '.json'), 'utf8')).teams.map((t) => ({ c: t.c, alt: t.alt, tint: PR.teamTints(t) })))) : null; } catch (e) { errors.push('tints: ' + e.message); }
+  return { gameId, tEnd: +tEnd.toFixed(2), errors, passes, stats: dbg, tints };
 }
 
 async function main() {

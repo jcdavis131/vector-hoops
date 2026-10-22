@@ -353,16 +353,19 @@
       if (!m) return;
       var img = new Image();
       img.onload = function () { m.img = img; SPR = m; stats.sprites.ready = 1; };
+      img.onerror = function () { stats.sprites.failed = 1; };
       img.src = '/assets/sprites/' + m.image + (m.hash ? '?v=' + m.hash : '');
     }).catch(function () {});
   }
+  /* jersey, shorts (10% darker), trim as [r,g,b]; mix() returns an rgb() string, so not used here */
+  function teamTints(team) { var c = hex(team.c); return [c, c.map(function (v) { return v * 0.9; }), hex(team.alt)]; }
   function sheetFor(team) {
     var key = team.c + team.alt; if (sheets[key]) return sheets[key];
     var l = mkLayer(), im = SPR.img; l.c.width = im.width; l.c.height = im.height; l.x.drawImage(im, 0, 0);
     var px = l.x.getImageData(0, 0, im.width, im.height), d = px.data, top = [1, 1, 1], i, k;
     var cls = function (r, g, b) { return r > 24 && g < r * 0.3 && b < r * 0.3 ? 0 : g > 24 && r < g * 0.3 && b < g * 0.3 ? 1 : b > 24 && r < b * 0.3 && g < b * 0.3 ? 2 : -1; };
     for (i = 0; i < d.length; i += 4) if (d[i + 3]) { k = cls(d[i], d[i + 1], d[i + 2]); if (k >= 0) top[k] = Math.max(top[k], d[i + k]); }
-    var tint = [hex(team.c), hex(mix(team.c, '#000000', 0.1)), hex(team.alt)];
+    var tint = teamTints(team);
     for (i = 0; i < d.length; i += 4) if (d[i + 3]) {
       k = cls(d[i], d[i + 1], d[i + 2]); if (k < 0) continue;
       var s = d[i + k] / top[k]; d[i] = tint[k][0] * s; d[i + 1] = tint[k][1] * s; d[i + 2] = tint[k][2] * s;
@@ -418,8 +421,8 @@
     if (ph < w * 0.9) { // looking straight down: a jersey-coloured token
       ctx.fillStyle = team.c; ctx.fillRect(x0, Math.round(f.y - w / 2), w, w); ctx.fillStyle = team.alt; ctx.fillRect(x0 + 1, Math.round(f.y - w / 2) + 1, Math.max(1, w - 2), 1);
       ctx.fillStyle = COL.hair; ctx.fillRect(Math.round(f.x) - 1, Math.round(f.y) - 1, 2, 2);
-    } else if (SPR) {
-      top = drawSprite(p, S, f, ph, pose);
+    } else if (SPR && (function () { try { top = drawSprite(p, S, f, ph, pose); return true; } catch (e) { SPR = null; stats.sprites.failed = 1; return false; } })()) {
+      // drawn from the sheet; a throw drops every later frame back to boxes
     } else {
       var hh = Math.max(2, Math.round(ph * 0.2)), jh = Math.max(2, Math.round(ph * 0.36)), sh = Math.max(1, Math.round(ph * 0.16)), lh = Math.max(1, ph - hh - jh - sh);
       var hw = Math.max(2, Math.round(w * 0.6)), hx = Math.round(f.x - hw / 2), y = top;
@@ -482,7 +485,7 @@
     }
   }
   var perf = 0;
-  var stats = { poses: { idle: 0, run: 0, jumper: 0, dunk: 0, hang: 0, celebrate: 0 }, hop: 0, netRipple: 0, rimShake: 0, cache: { hits: 0, builds: 0, direct: 0 }, sprites: { ready: 0, sheets: 0, cells: 0, drawn: 0 } };
+  var stats = { poses: { idle: 0, run: 0, jumper: 0, dunk: 0, hang: 0, celebrate: 0 }, hop: 0, netRipple: 0, rimShake: 0, cache: { hits: 0, builds: 0, direct: 0 }, sprites: { ready: 0, failed: 0, sheets: 0, cells: 0, drawn: 0 } };
 
   /* Static-court cache. The stands, floor, lines and the two hoop frames only change when
      the camera or the game does, so they are drawn once into offscreen layers and blitted.
@@ -678,7 +681,7 @@
     else if (e.key === 'l' || e.key === 'L') $('rpLoop').click();
     else if (/^[1-5]$/.test(e.key)) { var bs = document.querySelectorAll('.rp-cams button'); if (bs[+e.key - 1]) bs[+e.key - 1].click(); }
   });
-  window.PixelReplay = { load: loadGame, seek: seek, play: function (on) { setPlaying(on !== false); }, state: cur, speed: function (x) { cur.speed = x; }, stats: stats };
+  window.PixelReplay = { load: loadGame, seek: seek, play: function (on) { setPlaying(on !== false); }, state: cur, speed: function (x) { cur.speed = x; }, stats: stats, teamTints: teamTints };
   loadSprites();
   boot();
 })();

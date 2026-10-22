@@ -102,3 +102,20 @@ def test_sprite_path_draws_every_game(sprited: dict) -> None:
         assert s["cells"] <= 3000, (g["gameId"], s)
     seen = {p: sum(g["stats"]["poses"].get(p, 0) for g in sprited["games"]) for p in POSES}
     assert all(seen.values()), seen
+
+
+def test_team_tints_are_real_colours(sprited: dict) -> None:
+    """Every mask's tint is a finite colour; shorts are the jersey colour 10% darker.
+
+    The blank getImageData stub never exercises the recolour loop, so this checks the
+    tint table it uses directly (a NaN here once turned every team's shorts black).
+    """
+    for g in sprited["games"]:
+        assert g["tints"], g["gameId"]
+        for t in g["tints"]:
+            jersey, shorts, trim = t["tint"]
+            for v in (*jersey, *shorts, *trim):
+                assert isinstance(v, (int, float)) and 0 <= v <= 255, (g["gameId"], t)
+            want = [int(t["c"][i : i + 2], 16) for i in (1, 3, 5)]
+            assert jersey == want, (g["gameId"], t)
+            assert all(abs(s - 0.9 * c) < 1e-6 for s, c in zip(shorts, want)), (g["gameId"], t)
