@@ -157,6 +157,22 @@
     var old = card.querySelector('.twin-why');
     if (old) old.parentNode.removeChild(old);
 
+    // Hook 6 double-down (ethical engagement): the honest confidence number is
+    // VISIBLE in the chips block, not only behind tap-through. Same data the
+    // band already headlines — surfaced, never inflated. The anti-Block-Blast
+    // signature: show the receipts, plainly.
+    var conf = '';
+    try {
+      var simN = Number(rec.sim);
+      if (isFinite(simN)) {
+        var b2 = window.VHTwinBands ? window.VHTwinBands.bandFor(bands, simN) : null;
+        var pctN = (rec.pct != null) ? rec.pct : null;
+        conf = '<div class="twin-why__conf">Twin score <span class="num">' + simN.toFixed(2) + '</span>' +
+          (b2 && b2.label ? ' &middot; ' + esc(b2.label) : '') +
+          (pctN != null ? ' &middot; more similar than ' + pctN + '% of all pairs' : '') + '</div>';
+      }
+    } catch (e2) {}
+
     // Uncertainty grammar (Part 2 panel: Hullman; v4: Silver): every twin
     // claim headlines the band label + percentile; the number lives behind
     // tap-through only, with its bootstrap interval.
@@ -174,6 +190,7 @@
     el.className = 'twin-why vh-truth';
     el.innerHTML =
       '<div class="twin-why__label">Why they&rsquo;re twins</div>' +
+      conf +
       (band ? '<div class="twin-why__band">' + band + '</div>' : '') +
       qual +
       '<div class="twin-why__chips">' +
