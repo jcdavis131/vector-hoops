@@ -7,7 +7,7 @@
 (function (global) {
   'use strict';
 
-  var MAP = { href: '/#map3d', label: 'Map', title: 'The 3D embedding map of 12,966 player-seasons' };
+  var MAP = { href: '/#atlas', label: 'Map', title: 'The atlas: 12,966 player-seasons on a 2-D map' };
   var PLAY = { href: '/play', label: 'Play', title: 'Daily Court: five past All-Stars, find each modern twin' };
   var HOW = {
     href: '/methods',
@@ -47,7 +47,7 @@
     if (!nav || nav.getAttribute('data-mounted') === '1') return;
     var active = nav.getAttribute('data-active') || '';
 
-    var mapOn = (active === '/' || active === '/#map3d' || active === '/map-guess');
+    var mapOn = (active === '/' || active === '/#atlas' || active === '/map-guess');
     var playOn = active === PLAY.href;
     var exploreItem = EXPLORE.filter(function (l) { return l.href === active; })[0] || null;
     var exploreOn = !!exploreItem;
