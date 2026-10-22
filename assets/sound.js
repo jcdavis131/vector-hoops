@@ -225,8 +225,9 @@
   var armed = false;
   function unlockOnGesture() { // one listener pair, however many times start() runs
     if (armed) return; armed = true;
-    var go = function () { armed = false; W.removeEventListener('pointerdown', go, true); W.removeEventListener('keydown', go, true); if (on && ctx) ctx.resume().then(rebase, function () {}); };
-    W.addEventListener('pointerdown', go, true); W.addEventListener('keydown', go, true);
+    var E = ['pointerup', 'touchend', 'keydown']; // a tap unlocks audio on touchend/pointerup, not pointerdown
+    var go = function () { armed = false; E.forEach(function (t) { W.removeEventListener(t, go, true); }); if (on && ctx) ctx.resume().then(rebase, function () {}); };
+    E.forEach(function (t) { W.addEventListener(t, go, true); });
   }
   function rebase() { // keep the groove where it was across a suspend
     var b = beatNow(); t0 = ctx.currentTime + 0.05; beat0 = cursor = Math.max(b, cursor);

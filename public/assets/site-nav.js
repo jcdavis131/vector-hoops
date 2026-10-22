@@ -203,7 +203,7 @@
     document.head.appendChild(s);
   }
   function wireSound(nav) {
-    var b = nav.querySelector('.site-nav__sound'), on = false, ev = ['pointerdown', 'keydown'];
+    var b = nav.querySelector('.site-nav__sound'), on = false, wait = false, ev = ['pointerup', 'touchend', 'keydown'];
     if (!b) return;
     try { on = localStorage.getItem('vh.sound') === '1'; } catch (e) {}
     function set(v, store) {
@@ -213,21 +213,22 @@
       try { document.dispatchEvent(new CustomEvent('vh-sound', { detail: on })); } catch (e) {}
     }
     function start() {
-      lazyScript('/assets/sound.js?v=7f91fcdb', function () { if (on && global.VHSound) global.VHSound.start(family()); },
+      lazyScript('/assets/sound.js?v=853c2441', function () { if (on && global.VHSound) global.VHSound.start(family()); },
         function () { set(false, false); }); // offline: show off; the stored choice stays, so the next page retries
     }
     function first(e) { // a returning visitor: music waits for the first gesture on this page
       if (e && e.target && e.target.closest && e.target.closest('.site-nav__sound')) return;
       ev.forEach(function (t) { global.removeEventListener(t, first, true); });
-      if (on) { audioCtx(); start(); }
+      wait = false; if (on) { audioCtx(); start(); }
     }
     function toggle(v) {
+      if (wait) { first(); return; } // waiting: start
       ev.forEach(function (t) { global.removeEventListener(t, first, true); });
       set(v, true);
       if (on) { audioCtx(); start(); } else if (global.VHSound) global.VHSound.stop();
     }
     set(on, false);
-    if (on) ev.forEach(function (t) { global.addEventListener(t, first, true); });
+    if (on) { wait = true; ev.forEach(function (t) { global.addEventListener(t, first, true); }); }
     b.addEventListener('click', function () { toggle(!on); });
     global.VHSiteNav = global.VHSiteNav || {};
     global.VHSiteNav.setSound = toggle;
