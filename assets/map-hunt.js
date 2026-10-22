@@ -144,6 +144,7 @@
   /* ---------- finish / result / share -------------------------------------- */
   function finish(won) {
     state.over = true; state.won = won;
+    if (window.VHSound) VHSound.sfx(won ? 'right' : 'wrong');
     renderDots(); renderTaps(); saveProgress();
     var taps = state.taps.length;
     var stars = starsFor(taps);

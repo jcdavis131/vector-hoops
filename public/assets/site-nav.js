@@ -42,6 +42,11 @@
   var EXT = '<svg class="site-nav__ext" viewBox="0 0 12 12" aria-hidden="true" focusable="false">' +
     '<path d="M4.5 2.5H9.5V7.5M9.5 2.5 5.75 6.25M7.5 9.5h-5v-5" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>';
 
+  // Sound: off by default; music starts only after a visitor turns it on
+  var SOUND = '<button class="site-nav__sound" type="button" aria-pressed="false"><svg viewBox="0 0 16 16" aria-hidden="true">' +
+    '<path d="M2 6h3l4-3v10l-4-3H2z" fill="currentColor"/><path class="w" d="M11 5.5a3.5 3.5 0 0 1 0 5M13 3.5a6 6 0 0 1 0 9" fill="none" stroke="currentColor" stroke-width="1.4"/>' +
+    '<path class="x" d="M11 6l4 4m0-4-4 4" stroke="currentColor" stroke-width="1.4"/></svg><span>Sound</span></button>';
+
   function mount() {
     var nav = document.querySelector('.site-nav');
     if (!nav || nav.getAttribute('data-mounted') === '1') return;
@@ -81,7 +86,7 @@
         '<a class="site-nav__slot site-nav__link" href="' + HOW.href + '" rel="noopener" title="' + HOW.title + '">' +
           '<span>' + HOW.label + '</span>' + EXT + '</a>' +
       '</div>' +
-      '<div class="site-nav__end">' +
+      '<div class="site-nav__end">' + SOUND +
         (active === '/play'
           ? '<span class="site-nav__meta">1996–97 → 2025–26</span>'
           : '<span class="site-nav__meta">12,966 seasons</span>') +
@@ -98,6 +103,8 @@
 
     wireDrawer(nav);
     markLive(nav);
+    wireSound(nav);
+    motion();
 
     // visit — Owner Q: which inbound refs actually bring returning players?
     // data-mounted guards double-fire; vh-analytics.js is a no-op until a
@@ -176,11 +183,82 @@
       .catch(function () {});
   }
 
+  // sound.js loads once per page, only when sound is on; the AudioContext is made inside a gesture (Safari)
+  function family() {
+    var p = location.pathname.replace(/(\/index)?(\.html)?\/?$/, '');
+    return !p ? 'home' : p === '/live' ? 'live' : p === '/replay' ? 'replay' : /^\/(play|map-guess|twenty-questions)/.test(p) ? 'play' : 'calm';
+  }
+  function audioCtx() {
+    var A = global.AudioContext || global.webkitAudioContext;
+    try { var c = global.VHAudioCtx || (global.VHAudioCtx = new A()); if (c.state !== 'running') c.resume(); } catch (e) {}
+  }
+  var pend = null;
+  function lazyScript(src, cb, fail) {
+    if (global.VHSound) return cb();
+    if (pend) return; // already loading: its callback reads the toggle's state when it lands
+    pend = 1;
+    var s = document.createElement('script'); s.src = src;
+    s.onload = function () { pend = null; cb(); };
+    s.onerror = function () { pend = null; s.remove(); fail(); };
+    document.head.appendChild(s);
+  }
+  function wireSound(nav) {
+    var b = nav.querySelector('.site-nav__sound'), on = false, wait = false, ev = ['pointerup', 'touchend', 'keydown'];
+    if (!b) return;
+    try { on = localStorage.getItem('vh.sound') === '1'; } catch (e) {}
+    function set(v, store) {
+      on = v; b.setAttribute('aria-pressed', on ? 'true' : 'false');
+      if (store) try { localStorage.setItem('vh.sound', on ? '1' : '0'); } catch (e) {}
+      if (global.VHAudio) global.VHAudio.setMuted(!on); // Daily Court's effects follow the one control
+      try { document.dispatchEvent(new CustomEvent('vh-sound', { detail: on })); } catch (e) {}
+    }
+    function start() {
+      lazyScript('/assets/sound.js?v=853c2441', function () { if (on && global.VHSound) global.VHSound.start(family()); },
+        function () { set(false, false); }); // offline: show off; the stored choice stays, so the next page retries
+    }
+    function first(e) { // a returning visitor: music waits for the first gesture on this page
+      if (e && e.target && e.target.closest && e.target.closest('.site-nav__sound')) return;
+      ev.forEach(function (t) { global.removeEventListener(t, first, true); });
+      wait = false; if (on) { audioCtx(); start(); }
+    }
+    function toggle(v) {
+      if (wait) { first(); return; } // waiting: start
+      ev.forEach(function (t) { global.removeEventListener(t, first, true); });
+      set(v, true);
+      if (on) { audioCtx(); start(); } else if (global.VHSound) global.VHSound.stop();
+    }
+    set(on, false);
+    if (on) { wait = true; ev.forEach(function (t) { global.addEventListener(t, first, true); }); }
+    b.addEventListener('click', function () { toggle(!on); });
+    global.VHSiteNav = global.VHSiteNav || {};
+    global.VHSiteNav.setSound = toggle;
+  }
+
+  // reveal sections/plates below the fold (visible without JS and under reduced motion)
+  function motion() {
+    if (!global.IntersectionObserver || (global.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches)) return;
+    var vh = global.innerHeight || 800, n = 0, io = new IntersectionObserver(function (es) {
+      var k = 0;
+      es.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        e.target.style.transitionDelay = Math.min(k++, 5) * 50 + 'ms';
+        e.target.classList.add('vh-in'); io.unobserve(e.target);
+        e.target.addEventListener('transitionend', function () { this.style.transitionDelay = ''; }, { once: true });
+      });
+    });
+    Array.prototype.forEach.call(document.querySelectorAll('section, .plate'), function (el) {
+      if (n > 40 || el.closest('.site-nav') || (el.parentElement && el.parentElement.closest('.vh-rv')) || (el.tagName === 'SECTION' && el.querySelector('.plate, section'))) return;
+      var r = el.getBoundingClientRect();
+      if (r.height && r.top > vh) { el.classList.add('vh-rv'); io.observe(el); n++; }
+    });
+  }
+
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', mount);
   } else {
     mount();
   }
 
-  global.VHSiteNav = { mount: mount, explore: EXPLORE };
+  var api = global.VHSiteNav = global.VHSiteNav || {};
+  api.mount = mount; api.explore = EXPLORE;
 })(window);
