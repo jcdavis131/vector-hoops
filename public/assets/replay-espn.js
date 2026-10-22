@@ -107,7 +107,7 @@
         return;
       }
       if (/rebound/.test(tl)) { push(p, pi, 'rebound', /offensive/.test(tl) ? 'offensive' : 'defensive', side, a0, null, null, text, side); return; }
-      if (/turnover|traveling|double dribble|3-second|offensive goaltending|backcourt|palming|discontinue/.test(tl)) {
+      if (/turnover|traveling|double dribble|3-second|offensive goaltending|backcourt|palming|discontinue/.test(tl) && side >= 0) { // a team turnover with no team: 'other' below
         if (/foul/.test(tl)) push(p, pi, 'foul', 'offensive', side, a0, null, null, text, -1); // the NBA feed logs both
         push(p, pi, 'turnover', tt, side, a0, null, null, text, side);
         if (/ steals\)/.test(text) && a1 && side >= 0) push(p, pi, 'steal', '', 1 - side, a1, null, null, players[a1].n + ' STEAL', 1 - side);

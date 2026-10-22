@@ -56,8 +56,26 @@ PR.seekEvent(20); frames(30);
 report.rewindLeavesLive = PR.state.live === false && PR.state.playing === false;
 PR.goLive(); frames(10);
 report.backToLive = PR.state.live === true;
+// the game goes final while followed: once its last play has run it stops being live
+const fin = JSON.parse(JSON.stringify(summary)); fin.plays = summary.plays.slice(0, 100);
+fin.header.competitions[0].status.type = { state: 'post', completed: true };
+PR.setGame(ESPN.toGame(fin, '401909834'), { keep: true });
+frames(60 * 20);
+report.finalEndsLive = PR.state.live === false && PR.state.playing === false;
+
+// a malformed poll (a turnover with no team, which buildFrames cannot place) must not stop the loop
+PR.goLive(); frames(10);
+const bad = JSON.parse(JSON.stringify(more)); bad.plays = summary.plays.slice(0, 101);
+bad.plays[100] = Object.assign({}, bad.plays[100], { type: { id: '62', text: 'Bad Pass Turnover' }, text: 'team bad pass turnover', team: undefined, shootingPlay: false });
+const gBad = ESPN.toGame(bad, '401909834');
+report.teamlessTurnoverIsOther = gBad.types[gBad.events[gBad.events.length - 1][2]] === 'other';
+gBad.events[gBad.events.length - 1][2] = gBad.types.indexOf('turnover'); // force the old failure past the adapter
+const t0 = PR.state.t; let threw = false;
+try { PR.setGame(gBad, { keep: true }); } catch (e) { threw = true; }
+const errsBefore = errors.length; frames(60 * 3);
+report.badPollKeepsLoop = errors.length === errsBefore && PR.state.t > t0 && (threw ? PR.game().events.length === g2.events.length : true);
 report.events = [n1, g2.events.length];
 report.errors = errors;
-report.ok = !errors.length && ['embedSkipsGameList', 'followingAtLoad', 'holdsAtHead', 'keptPlace', 'advancesAfterPoll', 'rewindLeavesLive', 'backToLive'].every((k) => report[k]);
+report.ok = !errors.length && ['embedSkipsGameList', 'followingAtLoad', 'holdsAtHead', 'keptPlace', 'advancesAfterPoll', 'rewindLeavesLive', 'backToLive', 'finalEndsLive', 'teamlessTurnoverIsOther', 'badPollKeepsLoop'].every((k) => report[k]);
 process.stdout.write(JSON.stringify(report, null, 1) + '\n');
 process.exit(report.ok ? 0 : 1);
