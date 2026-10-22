@@ -225,7 +225,8 @@
         }
         var sx = xs[n - 1];
         for (k = n - 2; k >= 0; k--) {
-          var dt2 = dts[k + 1], A = Ps[k], B = Pp[k + 1], det = B[0] * B[3] - B[1] * B[2]; if (!det) continue;
+          var dt2 = dts[k + 1], A = Ps[k], B = Pp[k + 1], det = B[0] * B[3] - B[1] * B[2];
+          if (!det) { sx = xs[k].slice(); run[k].s = run[k].s || []; run[k].s[ax] = sx[0]; continue; } // cannot happen with q > 0; keep the filtered spot
           var AF = [A[0] + A[1] * dt2, A[1], A[2] + A[3] * dt2, A[3]]; // A F^T
           var inv = [B[3] / det, -B[1] / det, -B[2] / det, B[0] / det];
           var C = [AF[0] * inv[0] + AF[1] * inv[2], AF[0] * inv[1] + AF[1] * inv[3], AF[2] * inv[0] + AF[3] * inv[2], AF[2] * inv[1] + AF[3] * inv[3]];
@@ -240,7 +241,7 @@
     for (var i = 0; i < FR.length; i++) {
       var f = FR[i], prev = i ? FR[i - 1] : null, on = {};
       f.ids.forEach(function (id) { on[id] = 1; });
-      if (!f.m || (prev && Math.floor(prev.t / 720 - 1e-9) !== Math.floor(f.t / 720 - 1e-9))) { for (var id0 in runs) flush(id0); if (!f.m) continue; }
+      if (!f.m || (prev && prev.per !== f.per)) { for (var id0 in runs) flush(id0); if (!f.m) continue; }
       for (var id1 in runs) if (!on[id1]) flush(id1);
       f.ids.forEach(function (id) { var z = f.pos[id]; if (!z) return; (runs[id] = runs[id] || []).push({ i: i, z: z, r: f.anc === id ? cfg.ra : cfg.r, anc: f.anc }); });
     }
@@ -317,7 +318,7 @@
       if (mp) { for (var mk in mp) if (pos[mk] || ln[0].indexOf(mk) >= 0 || ln[1].indexOf(mk) >= 0) pos[mk] = mp[mk]; }
       if ((ty === '2pt' || ty === '3pt') && e[6] != null) lastShotXY = [e[6], e[7]];
       FR.push({ pos: pos, holder: holder && pos[holder] ? holder : null, focus: focus, ty: ty, made: e[10], d: d, ids: ln[0].concat(ln[1]),
-        m: mp ? 1 : 0, anc: mp && ((ty === '2pt' || ty === '3pt') && e[6] != null || ty === 'freethrow') ? pid : null, t: e[0] * 720 - e[1] });
+        m: mp ? 1 : 0, anc: mp && ((ty === '2pt' || ty === '3pt') && e[6] != null || ty === 'freethrow') ? pid : null, t: e[0] * 720 - e[1], per: e[0] });
     }
     smoothFrames();
   }
