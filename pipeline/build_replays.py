@@ -240,7 +240,7 @@ def build_game(path: Path, colors: dict) -> dict | None:
             "distErrMedianFt": round(errs[len(errs) // 2], 2) if errs else None,
             "distErrP95Ft": round(errs[int(len(errs) * 0.95)], 2) if errs else None,
         },
-        "staged": "Shooter, shot spot, event, clock and score are from the NBA feed. The other nine players are staged from formation templates: no public feed has their positions.",
+        "staged": "Shooter, shot spot, event, clock and score are from the NBA feed. The other nine players are projected by the coordinate model (trained on 2015-16 SportVU tracking), or staged from formation templates where it is not loaded: no public feed has their positions.",
     }
 
 

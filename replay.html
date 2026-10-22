@@ -88,7 +88,7 @@
 
   <section class="rp-panel rp-honest" aria-label="How this works">
     <h2>What's real, what's staged</h2>
-    <p>Every event, clock, score, shooter and shot spot comes from the play-by-play (<a id="rpSrc" href="https://cdn.nba.com/" rel="noopener">source file</a>): the NBA's own feed for games marked NBA, where shot spots match the feed's shot distances to the inch, and ESPN's for games marked ESPN, which is what Courtside Live reads. ESPN folds every shot onto one half-court, so for those games which basket each team shoots at is assumed (away attacks right in the first half). The NBA doesn't publish where the other nine players stand, so they are staged from formation templates: offense spread around the arc, defenders between their man and the rim. Treat their spots as a sketch, not tracking data.</p>
+    <p>Every event, clock, score, shooter and shot spot comes from the play-by-play (<a id="rpSrc" href="https://cdn.nba.com/" rel="noopener">source file</a>): the NBA's own feed for games marked NBA, where shot spots match the feed's shot distances to the inch, and ESPN's for games marked ESPN, which is what Courtside Live reads. ESPN folds every shot onto one half-court, so for those games which basket each team shoots at is assumed (away attacks right in the first half). No public feed says where the other nine players stand, so a model places them: a small network trained on the 2015-16 SportVU tracking that was once public (<a href="https://github.com/linouk23/NBA-Player-Movements" rel="noopener">linouk23/NBA-Player-Movements</a>, events from <a href="https://github.com/sealneaward/nba-movement-data" rel="noopener">sealneaward/nba-movement-data</a>). From the event, the shooter's spot, the clock, the score and each player's role, it sets all ten players as one scene. On 80 games it never saw, it puts a player 18.7 ft from where he really stood, on average, against 21.2 ft for the formation templates it replaces, and it keeps players about as far apart as real ones. The tracking itself is never served here; only the model's projections. Jump balls, and any visit where the model fails to load, use the formation templates. Treat the other nine as projected, not tracked.</p>
     <p id="rpAsOf" class="rp-muted"></p>
   </section>
 </main>
@@ -96,7 +96,8 @@
   <p class="site-footer__attribution">Play-by-play from cdn.nba.com and ESPN · A <a href="https://dumbmodel.com">dumbmodel</a> project</p>
 </footer>
 <script src="/assets/site-nav.js?v=22a3a194" defer></script>
-<script src="/assets/replay-espn.js?v=1eda79ec" defer></script>
-<script src="/assets/replay.js?v=ecb383c0" defer></script>
+<script src="/assets/replay-espn.js?v=af4e5d05" defer></script>
+<script src="/assets/replay-model.js?v=023bb286" defer></script>
+<script src="/assets/replay.js?v=5b1acfec" defer></script>
 </body>
 </html>

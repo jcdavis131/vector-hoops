@@ -156,8 +156,29 @@
   function at(d, dx, dy) { return [hoopX(d) - d * dx, CW / 2 + dy]; }
   function clampCourt(p) { return [Math.max(1, Math.min(L - 1, p[0])), Math.max(1, Math.min(CW - 1, p[1]))]; }
 
+  /* Rung (b): where the coordinate model (assets/replay-model.js) places the ten players for
+     this event, or null. It needs the same facts the formations use: event, acting player, the
+     real shot spot, who has the ball and which rim they attack, clock, score, lineup. */
+  var lastShotXY = null;
+  function modelPlace(e, ty, pid, ln, off, d) {
+    var RM = window.ReplayModel; if (!RM || !RM.ready) return null;
+    if (ty === 'jumpball') return null; // the one event where the formation scored closer to the tracking
+    var anchor = null;
+    if ((ty === '2pt' || ty === '3pt') && e[6] != null) anchor = [e[6], e[7]];
+    else if (ty === 'freethrow') anchor = at(d, 13.75, 0);
+    var R = window.ReplayRoles, roles = R && R.forGame ? R.forGame(G) : null;
+    try {
+      var out = RM.place({ type: ty, period: e[0], clock: e[1], margin: off === 0 ? e[8] - e[9] : e[9] - e[8], right: d > 0, offense: ln[off], defense: ln[1 - off],
+        actor: pid, anchor: anchor, lastShot: (ty === 'rebound' || ty === 'block') ? lastShotXY : null, roles: roles });
+      if (!out) return null;
+      if (anchor && pid && out[pid]) out[pid] = anchor; // the real spot stays exactly where the feed put it
+      for (var k in out) out[k] = clampCourt(out[k]);
+      stats.model.events++;
+      return out;
+    } catch (err) { stats.model.failed++; return null; }
+  }
   function buildFrames() {
-    FR = []; var possSeq = 0, lastPoss = -1, holder = null, prevOff = 0;
+    FR = []; var possSeq = 0, lastPoss = -1, holder = null, prevOff = 0; lastShotXY = null; stats.model.events = 0;
     for (var i = 0; i < EV.length; i++) {
       var e = EV[i], ty = G.types[e[2]], team = e[4], pid = e[5] ? String(e[5]) : null, ln = lineupAt(i);
       var poss = e[12] >= 0 ? e[12] : (team >= 0 ? team : lastPoss < 0 ? 0 : lastPoss);
@@ -222,6 +243,9 @@
         if (ty === 'foul' || ty === 'violation' || ty === 'substitution' || ty === 'other' || ty === 'block') { /* keep the ball where it was */ }
       }
       [0, 1].forEach(function (s) { ln[s].forEach(function (id) { if (!pos[id]) pos[id] = at(DIR[e[0] + ':' + off], 20, 0); }); });
+      var mp = modelPlace(e, ty, pid, ln, off, DIR[e[0] + ':' + off]);
+      if (mp) { for (var mk in mp) if (pos[mk] || ln[0].indexOf(mk) >= 0 || ln[1].indexOf(mk) >= 0) pos[mk] = mp[mk]; }
+      if ((ty === '2pt' || ty === '3pt') && e[6] != null) lastShotXY = [e[6], e[7]];
       FR.push({ pos: pos, holder: holder && pos[holder] ? holder : null, focus: focus, ty: ty, made: e[10], d: d, ids: ln[0].concat(ln[1]) });
     }
   }
@@ -493,7 +517,7 @@
     }
   }
   var perf = 0;
-  var stats = { poses: { idle: 0, run: 0, jumper: 0, dunk: 0, hang: 0, celebrate: 0 }, hop: 0, netRipple: 0, rimShake: 0, cache: { hits: 0, builds: 0, direct: 0 }, sprites: { ready: 0, failed: 0, sheets: 0, cells: 0, drawn: 0 } };
+  var stats = { poses: { idle: 0, run: 0, jumper: 0, dunk: 0, hang: 0, celebrate: 0 }, hop: 0, netRipple: 0, rimShake: 0, cache: { hits: 0, builds: 0, direct: 0 }, model: { events: 0, failed: 0, ready: 0 }, sprites: { ready: 0, failed: 0, sheets: 0, cells: 0, drawn: 0 } };
 
   /* Static-court cache. The stands, floor, lines and the two hoop frames only change when
      the camera or the game does, so they are drawn once into offscreen layers and blitted.
@@ -796,7 +820,17 @@
   window.PixelReplay = { load: loadGame, setGame: setGame, goLive: goLive, seek: seek, play: function (on) { setPlaying(on !== false); }, state: cur, speed: function (x) { cur.speed = x; }, stats: stats, teamTints: teamTints,
     /* hold on event i (the live page's rewind scrubber) */
     seekEvent: function (i) { if (!G || !RT.length) return; manual(); seek(RT[Math.max(0, Math.min(RT.length - 1, i))] + 1.6); setPlaying(false); },
-    game: function () { return G; } };
+    game: function () { return G; }, frames: function () { return FR; } };
+  /* the coordinate model loads after the page; when it lands, the current game's frames are rebuilt with it */
+  if (window.ReplayModel && !/[?&]model=0/.test(location.search)) {
+    var rolesP = window.ReplayRoles ? window.ReplayRoles.load('/assets/replay_roles.json').catch(function () { /* the model runs without roles */ }) : null;
+    fetch('/assets/replay-model.json?v=dc42490a').then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); }).then(function (doc) {
+      return Promise.resolve(rolesP).then(function () { return doc; });
+    }).then(function (doc) {
+      window.ReplayModel._init(doc); stats.model.ready = 1;
+      if (G) { var i0 = segAt(cur.t), f0 = cur.t - RT[i0]; buildFrames(); sceneVer++; cur.t = RT[i0] + f0; }
+    }).catch(function () { /* formations stay */ });
+  }
   loadSprites();
   if (EMBED) requestAnimationFrame(tick); // the host page hands games in through setGame
   else boot();

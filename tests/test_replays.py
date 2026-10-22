@@ -43,7 +43,7 @@ def test_shot_spots_match_feed_distances_and_lineups_are_five():
 
 def test_page_says_what_is_staged():
     html = (ROOT / "replay.html").read_text(encoding="utf-8")
-    assert "staged" in html and "not tracking data" in html
+    assert "projected, not tracked" in html and "formation templates" in html and "never served" in html
 
 
 NETWORK_MODULES = {"urllib", "http", "socket", "ssl", "ftplib", "requests", "httpx"}
