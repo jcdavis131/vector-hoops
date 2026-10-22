@@ -278,7 +278,7 @@ def _fetcher(tmp_path, clock, calls):
 def test_nba_hosts_are_refused_without_allow_nba(tmp_path, url):
     calls: list[str] = []
     f = _fetcher(tmp_path, _Clock(), calls)
-    with pytest.raises(nbafetch.NBAFetchRefused):
+    with pytest.raises(nbafetch.NBAFetchRefusedError):
         f.get(url)
     assert calls == []
 
