@@ -160,12 +160,7 @@
      this event, or null. It needs the same facts the formations use: event, acting player, the
      real shot spot, who has the ball and which rim they attack, clock, score, lineup. */
   var lastShotXY = null;
-  /* Training (scripts/tracking/extract_snapshots.py) calls the offense the team that is not
-     fouling on a foul and the shooter's team on a block; ESPN leaves possession blank on both,
-     and the templates fall back to the acting team, so the model is told the convention it
-     learned. Shots use the feed's own attack side when it has one. Events with no acting
-     player on the court were never in training: they keep the templates. Scenes are cached
-     by everything the model reads, so a 30 s poll only pays for the new plays. */
+  /* Rung (b) placement; conventions, cache and limits: docs/REPLAY_COORDINATE_MODEL.md */
   var MC = {}, mcN = 0;
   function modelPlace(e, ty, pid, ln) {
     var RM = window.ReplayModel; if (!RM || !RM.ready) return null;
@@ -194,13 +189,7 @@
       return copyScene(out);
     } catch (err) { stats.model.failed++; return null; }
   }
-  /* Kalman smoother over the model's scenes. Each event's scene is predicted on its own, so a
-     player's spot can jump between plays. Here each model spot is a noisy measurement of where
-     he is (noise KF.r ft, from the model's error), the feed's real shot spots are near-exact
-     ones (KF.ra ft), and he moves at a roughly constant velocity between events (process noise
-     KF.q, scaled by the game-clock gap). A forward filter and a backward (Rauch-Tung-Striebel)
-     pass per player run over each unbroken run of model scenes within a period; template
-     scenes, period changes and trips to the bench break the run. Real spots are left exact. */
+  /* Kalman smoother (constant velocity + RTS) over runs of model scenes: docs/REPLAY_COORDINATE_MODEL.md */
   var KF = { on: 1, q: 150, r: 12, ra: 0.5, v0: 10 }; // q, r tuned on 40 training games (tests/replay_model_eval.mjs --kf)
   function smoothFrames() {
     var cfg = window.ReplayKF || KF; if (!cfg.on || !stats.model.events) return;
@@ -751,6 +740,10 @@
     var keep = { G: G, EV: EV, RT: RT, FR: FR, T_END: T_END, DIR: DIR };
     try { G = g; EV = g.events; TY = {}; buildTimeline(); DIR = {}; buildDirs(); buildFrames(); }
     catch (err) { G = keep.G; EV = keep.EV; RT = keep.RT; FR = keep.FR; T_END = keep.T_END; DIR = keep.DIR; stats.setGameFailed = (stats.setGameFailed || 0) + 1; throw err; }
+    if (same) for (var j = Math.min(i0 + 1, FR.length - 1, keep.FR.length - 1); j >= 0; j--) { // a poll re-smooths: plays already watched keep their spots
+      var a = keep.EV[j], b = EV[j], o = keep.FR[j].pos, f = FR[j];
+      if (a[0] === b[0] && a[1] === b[1] && a[2] === b[2] && a[5] === b[5] && a[6] === b[6]) f.ids.forEach(function (id) { if (o[id]) f.pos[id] = o[id]; }); // per player: a late sub keeps the new man's spot
+    }
     sceneVer++; moments();
     if (!same) {
       buildCrowd(); startWipe(); cur.idx = -1; cur.dir = 1; cur.loop = null; attr('rpRev', 'aria-pressed', 'false'); attr('rpLoop', 'aria-pressed', 'false');

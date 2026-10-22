@@ -225,8 +225,14 @@
   var armed = false;
   function unlockOnGesture() { // one listener pair, however many times start() runs
     if (armed) return; armed = true;
-    var E = ['pointerup', 'touchend', 'keydown']; // a tap unlocks audio on touchend/pointerup, not pointerdown
-    var go = function () { armed = false; E.forEach(function (t) { W.removeEventListener(t, go, true); }); if (on && ctx) ctx.resume().then(rebase, function () {}); };
+    var E = ['pointerup', 'touchend', 'keydown', 'click']; // a tap unlocks audio on touchend/pointerup/click, not pointerdown
+    // not every gesture counts (the touchend that ends a scroll, Escape): if the context is still
+    // suspended afterwards, listen again for the next one
+    var go = function () {
+      armed = false; E.forEach(function (t) { W.removeEventListener(t, go, true); });
+      if (!on || !ctx) return;
+      ctx.resume().then(rebase, function () {}).then(function () { if (on && ctx.state !== 'running') unlockOnGesture(); });
+    };
     E.forEach(function (t) { W.addEventListener(t, go, true); });
   }
   function rebase() { // keep the groove where it was across a suspend

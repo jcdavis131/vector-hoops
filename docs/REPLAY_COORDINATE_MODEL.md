@@ -75,4 +75,5 @@ q and σ were tuned on 40 training games, not on the holdout (`node tests/replay
 - `?model=0` turns the model off. If the fetch fails, the formation templates stay.
 - The model is told the training convention for offense: on ESPN fouls and blocks (no possession in the feed) the offense is the team not fouling, and the shooter's team. Shots use the feed's own attack side. Events with no acting player on the court keep the templates.
 - Scenes are cached by everything the model reads, so a live poll only computes the new plays.
+- The backward smoothing pass is not causal: new plays revise the latest frames (up to 17.9 ft in a test near the live head). On a live poll (`setGame(g, {keep: true})`), frames up to one past the playhead keep the spots the viewer already saw; only frames ahead are re-smoothed.
 - NBA-built games match roles by NBA id; ESPN games match by full name, normalized the same way as `build_roles.py`.
