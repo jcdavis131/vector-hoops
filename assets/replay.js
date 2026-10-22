@@ -13,8 +13,11 @@
   var W = 400, H = 225, L = 94, CW = 50, HOOP = 5.25;
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var $ = function (id) { return document.getElementById(id); };
+  function on(id, ev, fn) { var el = $(id); if (el) el.addEventListener(ev, fn); }
+  function attr(id, k, v) { var el = $(id); if (el) el.setAttribute(k, v); }
   var cv = $('rpCanvas'); if (!cv) return;
   var ctx = cv.getContext('2d'); ctx.imageSmoothingEnabled = false;
+  var EMBED = cv.dataset && cv.dataset.mode === 'embed';
 
   /* ---------- 3x5 pixel font ---------- */
   var GL = {
@@ -477,7 +480,12 @@
     ctx.fillStyle = a.c; ctx.fillRect(6, 5, 3, 9); ctx.fillStyle = h.c; ctx.fillRect(61, 5, 3, 9);
     drawText(a.tri + ' ' + e[8], 11, y + 1, 1, '#F2EEE4'); drawText(h.tri + ' ' + e[9], 66, y + 1, 1, '#F2EEE4');
     var cl = clockStr(e[0], e[1]); ctx.fillStyle = 'rgba(20,22,26,.86)'; ctx.fillRect(124, 3, textW(cl, 1) + 6, 13); drawText(cl, 127, y + 1, 1, '#F2C14E');
-    if (!G.final && S.i >= EV.length - 1) { ctx.fillStyle = '#E0483B'; ctx.fillRect(124 + textW(cl, 1) + 9, 6, 4, 4); }
+    if (cur.live || (!G.final && S.i >= EV.length - 1)) {
+      var lx = 124 + textW(cl, 1) + 9, blink = reduce || Math.floor(perf * 2) % 2 === 0;
+      ctx.fillStyle = 'rgba(20,22,26,.86)'; ctx.fillRect(lx - 3, 3, cur.live ? 30 : 10, 13);
+      if (blink) { ctx.fillStyle = '#E0483B'; ctx.fillRect(lx, 7, 4, 4); }
+      if (cur.live) drawText('LIVE', lx + 7, y + 1, 1, '#F2EEE4');
+    }
     for (var k = fx.length - 1; k >= 0; k--) {
       var f = fx[k], age = perf - f.t0; if (age > 1.4) { fx.splice(k, 1); continue; } if (age < 0) continue;
       var sc = f.big ? 3 : 2, yy = Math.round(56 - (reduce ? 0 : age * 14)), xx = Math.round(W / 2 - textW(f.txt, sc) / 2);
@@ -555,7 +563,7 @@
   /* ---------- UI ---------- */
   var scrub = $('rpScrub'), playBtn = $('rpPlay'), nowEl = $('rpNow'), feedEl = $('rpFeed'), momEl = $('rpMoments'), filter = 'all', MOM = [];
   function fmtT(i) { return clockStr(EV[i][0], EV[i][1]); }
-  function setPlaying(on) { cur.playing = on; playBtn.textContent = on ? '❚❚' : '▶'; playBtn.setAttribute('aria-label', on ? 'Pause' : 'Play'); }
+  function setPlaying(on) { cur.playing = on; if (!playBtn) return; playBtn.textContent = on ? '❚❚' : '▶'; playBtn.setAttribute('aria-label', on ? 'Pause' : 'Play'); }
   function seek(t) { cur.t = Math.max(0, Math.min(T_END, t)); lastFxIdx = segAt(cur.t); fx = []; }
   function moments() {
     MOM = [];
@@ -570,13 +578,14 @@
       if (tag) MOM.push({ i: i, f: tag });
     }
     var seen = {}; MOM = MOM.filter(function (m) { var k = m.i + m.f; if (seen[k]) return false; seen[k] = 1; return true; });
-    var marks = $('rpMarks'); marks.innerHTML = '';
-    MOM.forEach(function (m) { if (m.f === 'clutch') return; var s = document.createElement('span'); s.style.left = (RT[m.i] / T_END * 100) + '%'; if (m.f === 'd') s.className = 'd'; if (m.f === 'lead') s.className = 'l'; marks.appendChild(s); });
-    var ticks = $('rpTicks'); ticks.innerHTML = ''; ticks.style.position = 'relative'; ticks.style.height = '12px';
-    for (var q = 1; q <= G.periods; q++) { var k = EV.findIndex(function (e) { return e[0] === q; }); if (k < 0) continue; var sp = document.createElement('span'); sp.textContent = q <= 4 ? 'Q' + q : 'OT' + (q - 4); sp.style.position = 'absolute'; sp.style.left = (RT[k] / T_END * 100) + '%'; ticks.appendChild(sp); }
+    var marks = $('rpMarks'), ticks = $('rpTicks');
+    if (marks) { marks.innerHTML = ''; MOM.forEach(function (m) { if (m.f === 'clutch') return; var s = document.createElement('span'); s.style.left = (RT[m.i] / T_END * 100) + '%'; if (m.f === 'd') s.className = 'd'; if (m.f === 'lead') s.className = 'l'; marks.appendChild(s); }); }
+    if (ticks) { ticks.innerHTML = ''; ticks.style.position = 'relative'; ticks.style.height = '12px'; }
+    for (var q = 1; ticks && q <= G.periods; q++) { var k = EV.findIndex(function (e) { return e[0] === q; }); if (k < 0) continue; var sp = document.createElement('span'); sp.textContent = q <= 4 ? 'Q' + q : 'OT' + (q - 4); sp.style.position = 'absolute'; sp.style.left = (RT[k] / T_END * 100) + '%'; ticks.appendChild(sp); }
     renderMoments();
   }
   function renderMoments() {
+    if (!momEl) return;
     momEl.innerHTML = '';
     var list = MOM.filter(function (m) { return filter === 'all' ? m.f !== 'lead' : m.f === filter; });
     if (!list.length) { var li0 = document.createElement('li'); li0.className = 'rp-muted'; li0.textContent = 'None in this game.'; momEl.appendChild(li0); return; }
@@ -584,71 +593,164 @@
       var li = document.createElement('li'), b = document.createElement('button'), t = document.createElement('span'), d = document.createElement('span');
       b.type = 'button'; t.className = 't'; t.textContent = fmtT(m.i); d.textContent = (m.f === 'lead' ? 'Lead change: ' : m.f === 'clutch' ? 'Clutch: ' : '') + EV[m.i][11];
       b.appendChild(t); b.appendChild(d); b.dataset.i = m.i;
-      b.addEventListener('click', function () { seek(RT[m.i] - 3.2); cur.dir = 1; $('rpRev').setAttribute('aria-pressed', 'false'); setPlaying(true); });
+      b.addEventListener('click', function () { cur.live = false; seek(RT[m.i] - 3.2); cur.dir = 1; attr('rpRev', 'aria-pressed', 'false'); setPlaying(true); });
       li.appendChild(b); momEl.appendChild(li);
     });
   }
   function updateText(S) {
     if (S.i === cur.idx) return; cur.idx = S.i; var e = S.e;
-    nowEl.textContent = fmtT(S.i) + ' · ' + (e[11] || '') + ' · ' + G.teams[0].tri + ' ' + e[8] + ' – ' + G.teams[1].tri + ' ' + e[9];
+    if (window.PixelReplay && window.PixelReplay.onEvent) try { window.PixelReplay.onEvent(S.i, G); } catch (er) { /* the host page's bug, not the replay's */ }
+    if (nowEl) nowEl.textContent = fmtT(S.i) + ' · ' + (e[11] || '') + ' · ' + G.teams[0].tri + ' ' + e[8] + ' – ' + G.teams[1].tri + ' ' + e[9];
+    if (!feedEl) return;
     feedEl.innerHTML = '';
     for (var k = Math.max(0, S.i - 7); k <= S.i; k++) { if (!EV[k][11]) continue; var li = document.createElement('li'); if (k === S.i) li.className = 'cur'; var t = document.createElement('span'); t.className = 't'; t.textContent = fmtT(k); var d = document.createElement('span'); d.textContent = EV[k][11]; li.appendChild(t); li.appendChild(d); feedEl.insertBefore(li, feedEl.firstChild); }
   }
 
+  /* embedded on the live page: skip drawing while the plate is scrolled out of view (the clock still runs) */
+  var onScreen = true;
+  if (EMBED && typeof IntersectionObserver === 'function') new IntersectionObserver(function (es) { onScreen = es[es.length - 1].isIntersecting; }).observe(cv);
   var lastNow = performance.now();
   function tick(now) {
     var dt = Math.min(0.1, (now - lastNow) / 1000); lastNow = now; perf += dt;
     if (G && cur.playing) {
-      cur.t += dt * cur.speed * cur.dir;
+      if (cur.live) { // trail the newest play in real time; quicker when one poll lands several plays
+        var behind = headT() - cur.t;
+        cur.t = Math.min(headT(), cur.t + dt * (behind > 24 ? 4 : behind > 10 ? 2 : 1));
+      } else cur.t += dt * cur.speed * cur.dir;
       if (cur.loop && cur.t > cur.loop[1]) { cur.t = cur.loop[0]; lastFxIdx = segAt(cur.t); }
       if (cur.loop && cur.t < cur.loop[0]) { cur.t = cur.loop[1]; lastFxIdx = segAt(cur.t); }
-      if (cur.t >= T_END) { cur.t = T_END; setPlaying(false); }
+      if (cur.t >= T_END && !cur.live) { cur.t = T_END; setPlaying(false); }
       if (cur.t <= 0) { cur.t = 0; setPlaying(false); }
       var i = segAt(cur.t);
       if (cur.dir > 0 && i > lastFxIdx) { for (var k = lastFxIdx + 1; k <= i; k++) if (k > 0) popFor(k); }
       lastFxIdx = i;
     }
     shake = Math.max(0, shake - dt); flash = Math.max(0, flash - dt * 0.9);
-    var S = render(); if (S) { updateText(S); if (document.activeElement !== scrub) scrub.value = Math.round(cur.t / T_END * 1000); }
+    var S = onScreen ? render() : null; if (S) { updateText(S); if (scrub && document.activeElement !== scrub) scrub.value = Math.round(cur.t / T_END * 1000); }
     requestAnimationFrame(tick);
   }
 
+  /* Show a game. opts.keep: the same game with more events (a live poll), so stay on the
+     same play. opts.live: follow the newest play, a few seconds behind it. */
+  function setGame(g, opts) {
+    opts = opts || {};
+    var same = !!(opts.keep && G && G.gameId === g.gameId), i0 = same ? segAt(cur.t) : 0, f0 = same ? cur.t - RT[i0] : 0;
+    G = g; EV = g.events; TY = {}; buildTimeline(); buildDirs(); buildFrames(); sceneVer++; moments();
+    if (!same) {
+      buildCrowd(); cur.idx = -1; cur.dir = 1; cur.loop = null; attr('rpRev', 'aria-pressed', 'false'); attr('rpLoop', 'aria-pressed', 'false');
+      cur.live = !!opts.live; seek(cur.live ? Math.max(0, headT() - 6) : 0); setPlaying(cur.live);
+    } else {
+      cur.t = Math.min(T_END, RT[Math.min(i0, RT.length - 1)] + f0); lastFxIdx = segAt(cur.t);
+      if (opts.live === true && !cur.live) goLive();
+    }
+    var srcEl = $('rpSrc'); if (srcEl) srcEl.href = g.source;
+    var asOf = $('rpAsOf');
+    if (asOf) asOf.textContent = 'Game of ' + g.date + (g.final ? ' · final' : g.live ? ' · live, refreshed every 30 s' : ' · in progress when the feed was read') + ' · ' + EV.length + ' events' +
+      (g.sourceSha256 ? ' · feed file sha256 ' + g.sourceSha256.slice(0, 12) + '…' : ' · from ' + (g.sourceName || 'the feed'));
+    liveUi();
+  }
+  /* where following live holds: a beat after the newest play, so its shot finishes
+     before the replay waits for the next one */
+  function headT() { return RT.length ? Math.min(T_END, RT[RT.length - 1] + 1.8) : 0; }
+  function liveUi() { var b = $('rpLive'); if (b) { b.setAttribute('aria-pressed', cur.live ? 'true' : 'false'); b.hidden = !G || !G.live; } }
+  function goLive() { if (!G) return; cur.live = true; cur.dir = 1; cur.loop = null; attr('rpRev', 'aria-pressed', 'false'); attr('rpLoop', 'aria-pressed', 'false'); seek(Math.max(0, headT() - 6)); setPlaying(true); liveUi(); }
+  function manual() { if (cur.live) { cur.live = false; var sp = $('rpSpeed'); if (sp) cur.speed = parseFloat(sp.value) || cur.speed; liveUi(); } }
   function loadGame(id) {
     return fetch(DATA + id + '.json', { cache: 'no-cache' }).then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); }).then(function (g) {
-      G = g; EV = g.events; TY = {}; buildTimeline(); buildDirs(); buildFrames(); buildCrowd(); sceneVer++; moments();
-      cur.idx = -1; cur.dir = 1; cur.loop = null; $('rpRev').setAttribute('aria-pressed', 'false'); $('rpLoop').setAttribute('aria-pressed', 'false'); seek(0); setPlaying(false);
-      $('rpSrc').href = g.source; $('rpAsOf').textContent = 'Game of ' + g.date + (g.final ? ' · final' : ' · in progress when the feed was read') + ' · ' + EV.length + ' events · feed file sha256 ' + g.sourceSha256.slice(0, 12) + '…';
+      setGame(g);
       document.querySelectorAll('.rp-game').forEach(function (b) { b.setAttribute('aria-pressed', b.dataset.id === id ? 'true' : 'false'); });
-      try { var u = new URL(location.href); u.searchParams.set('g', id); history.replaceState(null, '', u); } catch (e) { /* ignore */ }
-    }).catch(function () { nowEl.textContent = 'This replay could not be loaded. Try another game or reload the page.'; });
+      try { var u = new URL(location.href); u.searchParams.set('g', id); u.searchParams.delete('espn'); history.replaceState(null, '', u); } catch (e) { /* ignore */ }
+    }).catch(function () { if (nowEl) nowEl.textContent = 'This replay could not be loaded. Try another game or reload the page.'; });
+  }
+  /* ---------- tonight's games, from the same ESPN summary Courtside Live polls ----------
+     Games the NBA-built files cover open from those; the rest (tonight, and any game the
+     pipeline has not built yet) open from ESPN through assets/replay-espn.js. A live game
+     is polled every 30 s and followed a play behind; nothing is polled once it is final. */
+  var SB = 'https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard', espnTimer = null, espnFails = 0, wantEspn = null;
+  var NBA_TRI = { GS: 'GSW', NO: 'NOP', NY: 'NYK', SA: 'SAS', UTAH: 'UTA', WSH: 'WAS' };
+  function etDay(offset) {
+    var d = new Date(Date.now() + (offset || 0) * 864e5);
+    return new Intl.DateTimeFormat('en-CA', { timeZone: 'America/New_York', year: 'numeric', month: '2-digit', day: '2-digit' }).format(d).replace(/-/g, '');
+  }
+  function card(id, teams, score, meta, label, onClick) {
+    var b = document.createElement('button'); b.type = 'button'; b.className = 'rp-game'; b.dataset.id = id; b.setAttribute('role', 'listitem'); b.setAttribute('aria-pressed', 'false');
+    b.innerHTML = '<span><i class="sw"></i></span><span></span><span><i class="sw"></i></span><span></span><span class="meta"></span>';
+    var sp = b.children; sp[0].querySelector('i').style.background = teams[0].c; sp[0].appendChild(document.createTextNode(teams[0].tri)); sp[1].textContent = score[0];
+    sp[2].querySelector('i').style.background = teams[1].c; sp[2].appendChild(document.createTextNode(teams[1].tri)); sp[3].textContent = score[1];
+    sp[4].textContent = meta; b.setAttribute('aria-label', label); b.addEventListener('click', onClick);
+    return b;
+  }
+  function pressed(id) { document.querySelectorAll('.rp-game').forEach(function (b) { b.setAttribute('aria-pressed', b.dataset.id === id ? 'true' : 'false'); }); }
+  function loadEspn(id, again) {
+    clearTimeout(espnTimer); wantEspn = id;
+    return fetch(window.ReplayESPN.summaryUrl(id)).then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); }).then(function (d) {
+      if (wantEspn !== id) return;
+      var g = window.ReplayESPN.toGame(d, id); if (!g) throw new Error('no plays yet');
+      espnFails = 0;
+      if (again) setGame(g, { keep: true }); else setGame(g, { live: g.live });
+      pressed('espn-' + id);
+      try { var u = new URL(location.href); u.searchParams.set('espn', id); u.searchParams.delete('g'); history.replaceState(null, '', u); } catch (e) { /* ignore */ }
+      if (g.live) espnTimer = setTimeout(function () { loadEspn(id, true); }, 30000);
+    }).catch(function () {
+      if (wantEspn !== id) return;
+      espnFails++;
+      if (again) espnTimer = setTimeout(function () { loadEspn(id, true); }, Math.min(300000, 30000 * Math.pow(2, Math.min(espnFails, 3))));
+      else if (nowEl) nowEl.textContent = 'This game has no plays to replay yet. Pick another, or check back after tip-off.';
+    });
+  }
+  function espnGames(built) {
+    var have = {};
+    built.forEach(function (g) { have[g.teams[0].tri + '@' + g.teams[1].tri] = 1; });
+    var days = [etDay(0), etDay(-1)];
+    return Promise.all(days.map(function (day) { return fetch(SB + '?dates=' + day).then(function (r) { return r.ok ? r.json() : { events: [] }; }).catch(function () { return { events: [] }; }); })).then(function (res) {
+      var out = [];
+      res.forEach(function (sb, k) {
+        (sb.events || []).forEach(function (e) {
+          var c = e.competitions && e.competitions[0], st = e.status && e.status.type; if (!c || !st || st.state === 'pre') return;
+          var aw = c.competitors.filter(function (t) { return t.homeAway === 'away'; })[0], hm = c.competitors.filter(function (t) { return t.homeAway === 'home'; })[0]; if (!aw || !hm) return;
+          var tri = function (t) { return NBA_TRI[t.team.abbreviation] || t.team.abbreviation; };
+          if (have[tri(aw) + '@' + tri(hm)]) return; // the NBA-built file is the better source
+          var col = function (t) { return '#' + (t.team.color || '555555'); };
+          out.push({ id: e.id, live: st.state === 'in', teams: [{ tri: aw.team.abbreviation, c: col(aw), short: aw.team.shortDisplayName }, { tri: hm.team.abbreviation, c: col(hm), short: hm.team.shortDisplayName }],
+            score: [aw.score, hm.score], meta: (k === 0 ? 'TONIGHT' : 'LAST NIGHT') + ' · ' + (st.state === 'in' ? 'LIVE ' + (st.shortDetail || '') : 'FINAL') + ' · ESPN' });
+        });
+      });
+      return out;
+    });
   }
   function boot() {
+    var q = new URLSearchParams(location.search), wantG = q.get('g'), wantE = q.get('espn');
     fetch(DATA + 'index.json', { cache: 'no-cache' }).then(function (r) { return r.json(); }).then(function (ix) {
       var box = $('rpGames'); box.innerHTML = '';
+      var tail = document.createElement('span'); tail.hidden = true; box.appendChild(tail);
       ix.games.forEach(function (g) {
-        var b = document.createElement('button'); b.type = 'button'; b.className = 'rp-game'; b.dataset.id = g.gameId; b.setAttribute('role', 'listitem'); b.setAttribute('aria-pressed', 'false');
-        b.innerHTML = '<span><i class="sw"></i></span><span></span><span><i class="sw"></i></span><span></span><span class="meta"></span>';
-        var sp = b.children; sp[0].querySelector('i').style.background = g.teams[0].c; sp[0].appendChild(document.createTextNode(g.teams[0].tri)); sp[1].textContent = g.score[0];
-        sp[2].querySelector('i').style.background = g.teams[1].c; sp[2].appendChild(document.createTextNode(g.teams[1].tri)); sp[3].textContent = g.score[1];
-        sp[4].textContent = g.date + (g.final ? ' · FINAL' : ' · LIVE FEED');
-        b.setAttribute('aria-label', g.teams[0].short + ' ' + g.score[0] + ' at ' + g.teams[1].short + ' ' + g.score[1] + ', ' + g.date);
-        b.addEventListener('click', function () { loadGame(g.gameId); });
-        box.appendChild(b);
+        box.appendChild(card(g.gameId, g.teams, g.score, g.date + (g.final ? ' · FINAL' : ' · LIVE FEED') + ' · NBA',
+          g.teams[0].short + ' ' + g.score[0] + ' at ' + g.teams[1].short + ' ' + g.score[1] + ', ' + g.date, function () { clearTimeout(espnTimer); wantEspn = null; loadGame(g.gameId); }));
       });
-      var want = new URLSearchParams(location.search).get('g'), pick = ix.games.some(function (g) { return g.gameId === want; }) ? want : (ix.games[0] && ix.games[0].gameId);
-      if (pick) loadGame(pick).then(function () { var tt = parseFloat(new URLSearchParams(location.search).get('t')); if (tt > 0) seek(tt); });
-    }).catch(function () { $('rpGames').textContent = 'The game list could not be loaded.'; });
+      var built = ix.games.some(function (g) { return g.gameId === wantG; }) ? wantG : null;
+      var startBuilt = function () { var pick = built || (ix.games[0] && ix.games[0].gameId); if (pick) loadGame(pick).then(function () { var tt = parseFloat(q.get('t')); if (tt > 0) seek(tt); }); };
+      if (!window.ReplayESPN) { startBuilt(); return; }
+      espnGames(ix.games).then(function (eg) {
+        eg.forEach(function (g) {
+          box.insertBefore(card('espn-' + g.id, g.teams, g.score, g.meta, g.teams[0].short + ' ' + g.score[0] + ' at ' + g.teams[1].short + ' ' + g.score[1] + ', ' + g.meta,
+            function () { loadEspn(g.id); }), tail);
+        });
+        var liveOne = eg.filter(function (g) { return g.live; })[0];
+        if (wantE) loadEspn(wantE); else if (!built && liveOne) loadEspn(liveOne.id); else startBuilt();
+      });
+    }).catch(function () { $('rpGames').textContent = 'The game list could not be loaded.'; if (wantE && window.ReplayESPN) loadEspn(wantE); });
     requestAnimationFrame(tick);
   }
 
-  playBtn.addEventListener('click', function () { if (!cur.playing && cur.t >= T_END) seek(0); setPlaying(!cur.playing); });
-  $('rpBack').addEventListener('click', function () { seek(cur.t - 6); });
-  $('rpFwd').addEventListener('click', function () { seek(cur.t + 6); });
-  $('rpRev').addEventListener('click', function () { cur.dir = -cur.dir; this.setAttribute('aria-pressed', cur.dir < 0 ? 'true' : 'false'); if (!cur.playing) setPlaying(true); });
-  $('rpLoop').addEventListener('click', function () { cur.loop = cur.loop ? null : [Math.max(0, cur.t - 8), cur.t + 0.5]; this.setAttribute('aria-pressed', cur.loop ? 'true' : 'false'); if (cur.loop) { seek(cur.loop[0]); cur.dir = 1; setPlaying(true); } });
-  $('rpSpeed').addEventListener('change', function () { cur.speed = parseFloat(this.value) || 2; });
-  $('rpCondense').addEventListener('change', function () { if (!G) return; var i = segAt(cur.t); condensed = this.checked; buildTimeline(); seek(RT[i]); moments(); });
-  scrub.addEventListener('input', function () { seek(this.value / 1000 * T_END); });
+  on('rpPlay', 'click', function () { if (cur.live) { manual(); setPlaying(false); return; } if (!cur.playing && cur.t >= T_END) seek(0); setPlaying(!cur.playing); });
+  on('rpBack', 'click', function () { manual(); seek(cur.t - 6); });
+  on('rpFwd', 'click', function () { manual(); seek(cur.t + 6); });
+  on('rpLive', 'click', goLive);
+  on('rpRev', 'click', function () { manual(); cur.dir = -cur.dir; this.setAttribute('aria-pressed', cur.dir < 0 ? 'true' : 'false'); if (!cur.playing) setPlaying(true); });
+  on('rpLoop', 'click', function () { manual(); cur.loop = cur.loop ? null : [Math.max(0, cur.t - 8), cur.t + 0.5]; this.setAttribute('aria-pressed', cur.loop ? 'true' : 'false'); if (cur.loop) { seek(cur.loop[0]); cur.dir = 1; setPlaying(true); } });
+  on('rpSpeed', 'change', function () { cur.speed = parseFloat(this.value) || 2; });
+  on('rpCondense', 'change', function () { if (!G) return; var i = segAt(cur.t); condensed = this.checked; buildTimeline(); seek(RT[i]); moments(); });
+  on('rpScrub', 'input', function () { manual(); seek(this.value / 1000 * T_END); });
   document.querySelectorAll('.rp-cams button').forEach(function (b) {
     b.addEventListener('click', function () {
       var pr = PRESETS[b.dataset.cam]; cam.follow = !!pr.follow;
@@ -675,13 +777,18 @@
   document.addEventListener('keydown', function (e) {
     var tg = e.target && e.target.tagName; if (tg === 'INPUT' || tg === 'SELECT' || tg === 'TEXTAREA') return;
     if (tg === 'BUTTON' && (e.key === ' ' || e.key === 'Enter')) return;
-    if (e.key === ' ') { e.preventDefault(); playBtn.click(); }
-    else if (e.key === 'ArrowLeft') { e.preventDefault(); seek(cur.t - 6); }
-    else if (e.key === 'ArrowRight') { e.preventDefault(); seek(cur.t + 6); }
-    else if (e.key === 'l' || e.key === 'L') $('rpLoop').click();
+    if (EMBED && !(cv.closest && cv.closest('.rp-embed') && cv.closest('.rp-embed').contains(document.activeElement))) return; // the live page owns its own keys
+    if (e.key === ' ' && playBtn) { e.preventDefault(); playBtn.click(); }
+    else if (e.key === 'ArrowLeft') { e.preventDefault(); manual(); seek(cur.t - 6); }
+    else if (e.key === 'ArrowRight') { e.preventDefault(); manual(); seek(cur.t + 6); }
+    else if ((e.key === 'l' || e.key === 'L') && $('rpLoop')) $('rpLoop').click();
     else if (/^[1-5]$/.test(e.key)) { var bs = document.querySelectorAll('.rp-cams button'); if (bs[+e.key - 1]) bs[+e.key - 1].click(); }
   });
-  window.PixelReplay = { load: loadGame, seek: seek, play: function (on) { setPlaying(on !== false); }, state: cur, speed: function (x) { cur.speed = x; }, stats: stats, teamTints: teamTints };
+  window.PixelReplay = { load: loadGame, setGame: setGame, goLive: goLive, seek: seek, play: function (on) { setPlaying(on !== false); }, state: cur, speed: function (x) { cur.speed = x; }, stats: stats, teamTints: teamTints,
+    /* hold on event i (the live page's rewind scrubber) */
+    seekEvent: function (i) { if (!G || !RT.length) return; manual(); seek(RT[Math.max(0, Math.min(RT.length - 1, i))] + 1.6); setPlaying(false); },
+    game: function () { return G; } };
   loadSprites();
-  boot();
+  if (EMBED) requestAnimationFrame(tick); // the host page hands games in through setGame
+  else boot();
 })();

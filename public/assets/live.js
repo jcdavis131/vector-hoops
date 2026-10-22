@@ -98,6 +98,8 @@ function renderAll(d,g){
     renderMiles(d);renderShotChart(d,g,idx);renderArche(d,g);
   }
   updateTlUI(d);
+  // the Pixel Replay plate (assets/replay-live.js) follows the same data and timeline
+  try{window.dispatchEvent(new CustomEvent('courtside:render',{detail:{d:d,g:g,idx:idx,live:TL.live}}));}catch(e){}
 }
 async function loadGame(){
   const myId=cur;
