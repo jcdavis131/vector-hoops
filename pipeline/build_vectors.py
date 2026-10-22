@@ -74,6 +74,7 @@ from eligibility import (
 from ingest import FetchError, cache_is_fresh, require_columns, run_fetch, write_cache
 from name_utils import bbref_key, bbref_lookup_key, canonical_name, norm_name
 from nba_http import fetch_stats_json, legacy_result_set_rows, patch_nba_api_session, retry_call
+from official_minutes import gate_summary, load_official_totals, official_minutes
 from seasons import HUSTLE_FIRST_SEASON, TRACKING_FIRST_SEASON, is_regular_season, season_range
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -805,6 +806,45 @@ def compute_shape_features(season: str) -> dict[str, dict]:
 # ---------------------------------------------------------------------------
 
 
+# vectors.json mpg / total_min come from the official Totals dashboard by
+# default [F6]; "per100" keeps the old arithmetic (MIN per 100 possessions
+# labelled mpg) for an A/B arm that asks for it. See official_minutes.py.
+DEFAULT_MINUTES_SOURCE = "official"
+
+
+def row_minutes(
+    source: str,
+    *,
+    gp: float,
+    per100_min: float,
+    official: tuple[int, float] | None = None,
+) -> tuple[float | None, float | None]:
+    """(mpg, total_min) for one row under --minutes-source official or per100.
+
+    official: MIN/GP and MIN from the Totals entry; no entry is (None, None),
+    never the per-100 value. per100: the Per100Possessions MIN and GP x it.
+    """
+    if source == "official":
+        return official_minutes(official)
+    if source == "per100":
+        return float(per100_min), float(gp) * float(per100_min)
+    raise ValueError(f"row_minutes: unknown minutes source {source!r}")
+
+
+def minutes_eligibility_fields(source: str, players: list[dict], minutes_stats: dict) -> dict:
+    """The minutes keys of vectors.json's eligibility block; per100 adds none (its file is unchanged)."""
+    if source == "official":
+        return {
+            "minutes_source": "official",
+            "minutes_note": "mpg = official MIN/GP and total_min = official MIN, stats.nba.com leaguedashplayerstats "
+            "Base Totals Regular Season (pipeline/cache/official_totals/SOURCES.json)",
+            "official_minutes_gate": gate_summary(players),
+        }
+    if source == "real":
+        return {"minutes_source": "real", "minutes_stats": minutes_stats}
+    return {}
+
+
 def load_real_minutes(season: str) -> tuple[dict[int, tuple[float, int]], dict[str, tuple[float, int]], str]:
     """Per-game minutes and games, regular season: (by PLAYER_ID, by bbref_key, source).
 
@@ -1155,9 +1195,12 @@ def main() -> None:
     )
     ap.add_argument(
         "--minutes-source",
-        choices=("per100", "real"),
-        default="per100",
-        help="per100 (default, unchanged): eligibility, mpg and total_min use the Per100Possessions MIN, so the "
+        choices=("official", "per100", "real"),
+        default=DEFAULT_MINUTES_SOURCE,
+        help="official (default): mpg and total_min are the official stats.nba.com Totals MIN/GP and MIN "
+        "(pipeline/cache/official_totals); eligibility still uses the Per100Possessions arithmetic, so the "
+        "universe is per100's and vectors.json counts the rows whose official minutes miss the gate. "
+        "per100: eligibility, mpg and total_min use the Per100Possessions MIN, so the "
         "450-minute gate never binds. real: real per-game minutes (game logs 2015-16 on, BBRef per-game before) "
         "gate eligibility and fill mpg/total_min (min_per100 keeps the old value), and shrinkage weights by "
         "attempt counts. real changes the universe and every baseline: re-baseline before comparing",
@@ -1213,6 +1256,7 @@ def main() -> None:
             sco_rows = fetch_dash(season, "Scoring", SCORING_COLS, args.offline)
             bio_rows = fetch_bio(season, args.offline)
             trk_rows = fetch_tracking(season, args.offline)
+            off_totals = load_official_totals(season) if args.minutes_source == "official" else {}
         except FetchError as e:
             problems[season] = f"fetch failed: {e}"
             missing.append(season)
@@ -1228,6 +1272,7 @@ def main() -> None:
                 ("Scoring", sco_rows),
                 ("bio", bio_rows),
                 ("tracking", trk_rows),
+                ("official_totals", off_totals),
             )
             if rows is None
         ]
@@ -1322,8 +1367,12 @@ def main() -> None:
                 row["_total_min"] = real_total
                 row["_min_per100"] = float(mpg)
             else:
-                row["_mpg"] = float(mpg)
-                row["_total_min"] = float(gp) * float(mpg)
+                row["_mpg"], row["_total_min"] = row_minutes(
+                    args.minutes_source,
+                    gp=gp,
+                    per100_min=mpg,
+                    official=(off_totals or {}).get(int(r["PLAYER_ID"])),
+                )
             for src, name in ((adv, "advanced"), (sco, "scoring"), (bio, "bio")):
                 extra = src.get(pid, {})
                 for k, v in source_columns(name, extra).items():
@@ -1560,11 +1609,12 @@ def main() -> None:
                     "sample_gates": {
                         s: gates_for_season(s, schedule_aware=schedule_aware) for s in ("1998-99", "2011-12", "2023-24")
                     },
-                    # Only under --minutes-source real, so the default file is unchanged.
-                    **(
-                        {"minutes_source": "real", "minutes_stats": minutes_stats}
-                        if args.minutes_source == "real"
-                        else {}
+                    # official and real record their source; per100's file is unchanged.
+                    **minutes_eligibility_fields(
+                        args.minutes_source,
+                        # unrounded official minutes, as the gate sees them
+                        [{"season": r["season"], "gp": r["_gp"], "total_min": r["_total_min"]} for r in all_rows],
+                        minutes_stats,
                     ),
                 },
                 "features": GAME_FEATURES,
