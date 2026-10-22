@@ -15,20 +15,20 @@ Writes players.png (atlas) and players.json (layout, poses, anchors). Stdlib + b
 import hashlib
 import json
 import math
-import os
 import struct
 import sys
 import zlib
+from pathlib import Path
 
 import bpy
 from bpy_extras.object_utils import world_to_camera_view
 from mathutils import Vector
 
 ARGS = sys.argv[sys.argv.index("--") + 1 :] if "--" in sys.argv else []
-OUT = ARGS[ARGS.index("--out") + 1] if "--out" in ARGS else os.path.join(os.getcwd(), "assets", "sprites")
-os.makedirs(OUT, exist_ok=True)
-TMP = os.path.join(OUT, "_cells")
-os.makedirs(TMP, exist_ok=True)
+OUT = Path(ARGS[ARGS.index("--out") + 1]) if "--out" in ARGS else Path.cwd() / "assets" / "sprites"
+OUT.mkdir(parents=True, exist_ok=True)
+TMP = OUT / "_cells"
+TMP.mkdir(parents=True, exist_ok=True)
 
 CW, CH = 32, 48  # cell size, px
 ELEVATIONS = [28, 62]  # camera pitch, degrees
@@ -196,10 +196,10 @@ for ei, elev in enumerate(ELEVATIONS):
     for d in range(DIRS):
         for fi, (pose, k) in enumerate(FRAMES):
             set_pose(POSES[pose][k], d)
-            path = os.path.join(TMP, f"e{ei}_d{d}_f{fi}.png")
-            sc.render.filepath = path
+            path = TMP / f"e{ei}_d{d}_f{fi}.png"
+            sc.render.filepath = str(path)
             bpy.ops.render.render(write_still=True)
-            img = bpy.data.images.load(path)
+            img = bpy.data.images.load(str(path))
             px = img.pixels[:]
             for y in range(CH):
                 src = (CH - 1 - y) * CW * 4
@@ -212,9 +212,9 @@ for ei, elev in enumerate(ELEVATIONS):
                         continue
                     dst_row[o : o + 4] = bytes((round(px[i] * 255), round(px[i + 1] * 255), round(px[i + 2] * 255), 255))
             bpy.data.images.remove(img)
-            os.remove(path)
-os.rmdir(TMP)
-write_png(os.path.join(OUT, "players.png"), AW, AH, atlas)
+            path.unlink()
+TMP.rmdir()
+write_png(OUT / "players.png", AW, AH, atlas)
 
 root.location = (0, 0, 0)
 meta = {
@@ -227,8 +227,8 @@ meta = {
     "poses": {p: [i for i, (q, _) in enumerate(FRAMES) if q == p] for p in ORDER},
     "anchors": [{"foot": anchor(e, 0.0), "head": anchor(e, 2.0)} for e in ELEVATIONS],
     "masks": {"jersey": "red channel dominant", "shorts": "green channel dominant", "trim": "blue channel dominant"},
-    "hash": hashlib.sha256(open(os.path.join(OUT, "players.png"), "rb").read()).hexdigest()[:8],  # replay.js puts it on the image URL
+    "hash": hashlib.sha256((OUT / "players.png").read_bytes()).hexdigest()[:8],  # replay.js puts it on the image URL
     "generator": "scripts/sprites/build_sprites.py (Blender " + bpy.app.version_string + ", Workbench, procedural model)",
 }
-json.dump(meta, open(os.path.join(OUT, "players.json"), "w"), indent=1)
+json.dump(meta, (OUT / "players.json").open("w"), indent=1)
 print("SPRITES_OK", AW, "x", AH, "cells", cols * rows_n)
