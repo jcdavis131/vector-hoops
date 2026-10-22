@@ -529,6 +529,7 @@
     if (G && cur.playing) {
       cur.t += dt * cur.speed * cur.dir;
       if (cur.loop && cur.t > cur.loop[1]) { cur.t = cur.loop[0]; lastFxIdx = segAt(cur.t); }
+      if (cur.loop && cur.t < cur.loop[0]) { cur.t = cur.loop[1]; lastFxIdx = segAt(cur.t); }
       if (cur.t >= T_END) { cur.t = T_END; setPlaying(false); }
       if (cur.t <= 0) { cur.t = 0; setPlaying(false); }
       var i = segAt(cur.t);
@@ -543,7 +544,7 @@
   function loadGame(id) {
     return fetch(DATA + id + '.json', { cache: 'no-cache' }).then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); }).then(function (g) {
       G = g; EV = g.events; TY = {}; buildTimeline(); buildDirs(); buildFrames(); buildCrowd(); sceneVer++; moments();
-      cur.idx = -1; seek(0); setPlaying(false);
+      cur.idx = -1; cur.dir = 1; cur.loop = null; $('rpRev').setAttribute('aria-pressed', 'false'); $('rpLoop').setAttribute('aria-pressed', 'false'); seek(0); setPlaying(false);
       $('rpSrc').href = g.source; $('rpAsOf').textContent = 'Game of ' + g.date + (g.final ? ' · final' : ' · in progress when the feed was read') + ' · ' + EV.length + ' events · feed file sha256 ' + g.sourceSha256.slice(0, 12) + '…';
       document.querySelectorAll('.rp-game').forEach(function (b) { b.setAttribute('aria-pressed', b.dataset.id === id ? 'true' : 'false'); });
       try { var u = new URL(location.href); u.searchParams.set('g', id); history.replaceState(null, '', u); } catch (e) { /* ignore */ }
@@ -599,6 +600,7 @@
   cv.addEventListener('wheel', function (e) { e.preventDefault(); cam.dist = Math.max(20, Math.min(140, cam.dist * Math.exp(e.deltaY * 0.0012))); }, { passive: false });
   document.addEventListener('keydown', function (e) {
     var tg = e.target && e.target.tagName; if (tg === 'INPUT' || tg === 'SELECT' || tg === 'TEXTAREA') return;
+    if (tg === 'BUTTON' && (e.key === ' ' || e.key === 'Enter')) return;
     if (e.key === ' ') { e.preventDefault(); playBtn.click(); }
     else if (e.key === 'ArrowLeft') { e.preventDefault(); seek(cur.t - 6); }
     else if (e.key === 'ArrowRight') { e.preventDefault(); seek(cur.t + 6); }
