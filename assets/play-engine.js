@@ -412,7 +412,9 @@
       const btn=$('#btn-sound'); if(!btn||!window.VHAudio) return;
       const paint=()=>{ btn.textContent = VHAudio.isMuted() ? '🔇' : '🔊'; };
       paint();
-      btn.addEventListener('click',()=>{ VHAudio.unlock(); VHAudio.toggleMuted(); paint(); if(!VHAudio.isMuted()) VHAudio.play('click'); });
+      // one sound control: this button and the site nav's Sound toggle drive the same setting
+      btn.addEventListener('click',()=>{ VHAudio.unlock(); const on=VHAudio.isMuted(); if(window.VHSiteNav&&VHSiteNav.setSound) VHSiteNav.setSound(on); else VHAudio.setMuted(!on); paint(); if(on) VHAudio.play('click'); });
+      document.addEventListener('vh-sound',paint);
     }catch{}
   }
   function confettiBurst(){

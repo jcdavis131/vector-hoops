@@ -183,7 +183,7 @@
       .catch(function () {});
   }
 
-  // sound.js loads only once sound is on; the AudioContext resumes inside the click (Safari)
+  // sound.js loads once per page, only when sound is on; the AudioContext is made inside a gesture (Safari)
   function family() {
     var p = location.pathname.replace(/(\/index)?(\.html)?\/?$/, '');
     return !p ? 'home' : p === '/live' ? 'live' : p === '/replay' ? 'replay' : /^\/(play|map-guess|twenty-questions)/.test(p) ? 'play' : 'calm';
@@ -192,28 +192,49 @@
     var A = global.AudioContext || global.webkitAudioContext;
     try { var c = global.VHAudioCtx || (global.VHAudioCtx = new A()); if (c.state !== 'running') c.resume(); } catch (e) {}
   }
-  function lazyScript(src, cb) {
+  var pend = null;
+  function lazyScript(src, cb, fail) {
     if (global.VHSound) return cb();
-    var s = document.createElement('script'); s.src = src; s.onload = cb; document.head.appendChild(s);
+    if (pend) return; // already loading: its callback reads the toggle's state when it lands
+    pend = 1;
+    var s = document.createElement('script'); s.src = src;
+    s.onload = function () { pend = null; cb(); };
+    s.onerror = function () { pend = null; s.remove(); fail(); };
+    document.head.appendChild(s);
   }
   function wireSound(nav) {
-    var b = nav.querySelector('.site-nav__sound'), on = false;
+    var b = nav.querySelector('.site-nav__sound'), on = false, ev = ['pointerdown', 'keydown'];
     if (!b) return;
     try { on = localStorage.getItem('vh.sound') === '1'; } catch (e) {}
-    function go() { lazyScript('/assets/sound.js?v=f8cfcc72', function () { if (global.VHSound && on) global.VHSound.start(family()); }); }
-    b.setAttribute('aria-pressed', on ? 'true' : 'false');
-    if (on) go();
-    b.addEventListener('click', function () {
-      on = !on; b.setAttribute('aria-pressed', on ? 'true' : 'false');
-      try { localStorage.setItem('vh.sound', on ? '1' : '0'); } catch (e) {}
-      if (on) { audioCtx(); go(); } else if (global.VHSound) global.VHSound.stop();
-    });
+    function set(v, store) {
+      on = v; b.setAttribute('aria-pressed', on ? 'true' : 'false');
+      if (store) try { localStorage.setItem('vh.sound', on ? '1' : '0'); } catch (e) {}
+      if (global.VHAudio) global.VHAudio.setMuted(!on); // Daily Court's effects follow the one control
+      try { document.dispatchEvent(new CustomEvent('vh-sound', { detail: on })); } catch (e) {}
+    }
+    function start() {
+      lazyScript('/assets/sound.js?v=7f91fcdb', function () { if (on && global.VHSound) global.VHSound.start(family()); },
+        function () { set(false, false); }); // offline: show off; the stored choice stays, so the next page retries
+    }
+    function first(e) { // a returning visitor: music waits for the first gesture on this page
+      if (e && e.target && e.target.closest && e.target.closest('.site-nav__sound')) return;
+      ev.forEach(function (t) { global.removeEventListener(t, first, true); });
+      if (on) { audioCtx(); start(); }
+    }
+    function toggle(v) {
+      ev.forEach(function (t) { global.removeEventListener(t, first, true); });
+      set(v, true);
+      if (on) { audioCtx(); start(); } else if (global.VHSound) global.VHSound.stop();
+    }
+    set(on, false);
+    if (on) ev.forEach(function (t) { global.addEventListener(t, first, true); });
+    b.addEventListener('click', function () { toggle(!on); });
+    global.VHSiteNav = global.VHSiteNav || {};
+    global.VHSiteNav.setSound = toggle;
   }
 
-  // view-transition title; reveal sections/plates below the fold (visible without JS)
+  // reveal sections/plates below the fold (visible without JS and under reduced motion)
   function motion() {
-    var h1 = document.querySelector('main h1') || document.querySelector('h1');
-    if (h1) h1.classList.add('vh-title');
     if (!global.IntersectionObserver || (global.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches)) return;
     var vh = global.innerHeight || 800, n = 0, io = new IntersectionObserver(function (es) {
       var k = 0;
@@ -221,6 +242,7 @@
         if (!e.isIntersecting) return;
         e.target.style.transitionDelay = Math.min(k++, 5) * 50 + 'ms';
         e.target.classList.add('vh-in'); io.unobserve(e.target);
+        e.target.addEventListener('transitionend', function () { this.style.transitionDelay = ''; }, { once: true });
       });
     });
     Array.prototype.forEach.call(document.querySelectorAll('section, .plate'), function (el) {
@@ -236,5 +258,6 @@
     mount();
   }
 
-  global.VHSiteNav = { mount: mount, explore: EXPLORE };
+  var api = global.VHSiteNav = global.VHSiteNav || {};
+  api.mount = mount; api.explore = EXPLORE;
 })(window);

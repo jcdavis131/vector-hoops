@@ -652,7 +652,7 @@
       if (u > 0 && u < 1) ctx.fillRect(c * bw, u < 0.5 ? 0 : y, bw, u < 0.5 ? y : H - y);
     }
   }
-  function snd(n, d) { if (window.VHSound && VHSound.sfx) VHSound.sfx(n, d); }
+  function snd(n, d) { if (onScreen && window.VHSound && VHSound.sfx) VHSound.sfx(n, d); } // silent while the plate is scrolled away
 
   /* ---------- effects ---------- */
   function popFor(i) {

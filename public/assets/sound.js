@@ -1,8 +1,8 @@
 /* assets/sound.js: site music and sound effects, synthesized with WebAudio. No samples,
    files or requests; site-nav.js loads it only after a visitor turns sound on.
-   Each page family loops a short cue written in ABC notation. The ABC subset and GM drum
-   map are ported from huashu-motion by alchaincyf (MIT), cli/lib/composer.js,
-   https://github.com/alchaincyf/huashu-motion . ABC: M L Q K headers, V: inst= gain=,
+   Each page family loops a short cue written in ABC notation. The ABC parser and GM drum
+   map are ported in part from huashu-motion (cli/lib/composer.js), Copyright (c) 2026
+   Huashu, MIT License: https://github.com/alchaincyf/huashu-motion/blob/main/LICENSE . ABC: M L Q K headers, V: inst= gain=,
    ^ _ = accidentals, , ' octaves, lengths, z rests, [chords], - ties, |: :|, !p!..!ff!.
    Drums: C,, kick, D,, snare, ^F,, hat, ^A,, open hat. Tests: tests/sound.test.mjs. */
 (function () {
@@ -175,13 +175,13 @@
   }
 
   function drum(name, t, g, bus) {
-    var src = ctx.createBufferSource(), f = ctx.createBiquadFilter(), e = ctx.createGain();
+    var e = ctx.createGain();
     if (name === 'kick') {
       var o = ctx.createOscillator(); o.frequency.setValueAtTime(150, t); o.frequency.exponentialRampToValueAtTime(42, t + 0.12);
       e.gain.setValueAtTime(g, t); e.gain.exponentialRampToValueAtTime(0.001, t + 0.28);
       o.connect(e); e.connect(bus); o.start(t); o.stop(t + 0.3); return;
     }
-    var dec = name === 'snare' ? 0.11 : name === 'hat' ? 0.035 : name === 'ohat' ? 0.16 : 0.5;
+    var src = ctx.createBufferSource(), f = ctx.createBiquadFilter(), dec = name === 'snare' ? 0.11 : name === 'hat' ? 0.035 : name === 'ohat' ? 0.16 : 0.5;
     src.buffer = noise; f.type = name === 'snare' ? 'bandpass' : 'highpass'; f.frequency.value = name === 'snare' ? 1800 : 7000;
     e.gain.setValueAtTime(g * (name === 'snare' ? 0.9 : 0.45), t); e.gain.exponentialRampToValueAtTime(0.001, t + dec);
     src.connect(f); f.connect(e); e.connect(bus); src.start(t, (t * 7.3) % 0.3); src.stop(t + dec + 0.02);
@@ -217,12 +217,15 @@
   }
   function pump() {
     if (!on || ctx.state !== 'running') return;
-    var spb = 60 / cue.bpm, end = beatNow() + 0.3 / spb;
+    var spb = 60 / cue.bpm, now = beatNow(), end = now + 0.3 / spb;
+    cursor = Math.max(cursor, now); // after a stall, skip the missed notes rather than fire them at once
     if (end > cursor) { play(cue, slice(cue, cursor, end), function (b) { return t0 + (b - beat0) * spb; }, music, spb); cursor = end; }
     if (Date.now() - saved > 1000) { saved = Date.now(); save(); }
   }
-  function unlockOnGesture() {
-    var go = function () { W.removeEventListener('pointerdown', go, true); W.removeEventListener('keydown', go, true); if (on && ctx) ctx.resume().then(rebase, function () {}); };
+  var armed = false;
+  function unlockOnGesture() { // one listener pair, however many times start() runs
+    if (armed) return; armed = true;
+    var go = function () { armed = false; W.removeEventListener('pointerdown', go, true); W.removeEventListener('keydown', go, true); if (on && ctx) ctx.resume().then(rebase, function () {}); };
     W.addEventListener('pointerdown', go, true); W.addEventListener('keydown', go, true);
   }
   function rebase() { // keep the groove where it was across a suspend
@@ -230,6 +233,7 @@
   }
 
   API.start = function (family) {
+    if (on) return true;
     if (!graph()) return false;
     cue = score(CUES[family] ? family : 'calm', CUES);
     var b = 0;

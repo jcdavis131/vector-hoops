@@ -247,10 +247,9 @@ a.site-nav__slot{ display: inline-flex; }
 /* Motion: view transitions, reveals, sound toggle; timing after huashu-motion by alchaincyf (MIT) */
 @view-transition{ navigation: auto; }
 .site-nav{ view-transition-name: vh-nav; }
-.vh-title{ view-transition-name: vh-title; }
-::view-transition-old(root){ animation: 150ms cubic-bezier(.3,0,1,1) both vh-vt-out; }
-::view-transition-new(root){ animation: 300ms cubic-bezier(.2,0,0,1) 50ms both vh-vt-in; }
-@keyframes vh-vt-out{ to{ opacity: 0; } }
+h1{ view-transition-name: vh-title; }
+::view-transition-old(root){ animation: none; }
+::view-transition-new(root){ animation: 280ms cubic-bezier(.2,0,0,1) both vh-vt-in; }
 @keyframes vh-vt-in{ from{ opacity: 0; transform: translateY(8px); } }
 .vh-rv{ opacity: 0; transform: translateY(14px); }
 .vh-rv.vh-in{ opacity: 1; transform: none; transition: opacity 380ms cubic-bezier(.2,0,0,1), transform 460ms cubic-bezier(.16,1,.3,1); }
@@ -264,3 +263,4 @@ a.site-nav__slot{ display: inline-flex; }
   ::view-transition-group(*), ::view-transition-old(*), ::view-transition-new(*){ animation: none !important; }
   .vh-rv{ opacity: 1; transform: none; }
 }
+@media print{ .vh-rv{ opacity: 1 !important; transform: none !important; } }
