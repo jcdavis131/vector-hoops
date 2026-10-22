@@ -90,7 +90,7 @@ def test_live_page_carries_the_plate() -> None:
     order = [m.group(1) for m in re.finditer(r'<script src="assets/([\w.-]+?)\.js', html)]
     assert order.index("replay-espn") < order.index("replay") < order.index("replay-live") < order.index("live")
     plate = html[html.index('id="rpPlate"') : html.index("</div>\n", html.index("rp-embed__now"))]
-    assert "staged" in plate and "assumed" in plate
+    assert "projected" in plate and "assumed" in plate and "not tracking data" in plate
     nums = [int(n) for n in re.findall(r"PLATE (\d\d)", html)]
     assert nums == list(range(1, len(nums) + 1))
     js = (ROOT / "assets" / "live.js").read_text(encoding="utf-8")

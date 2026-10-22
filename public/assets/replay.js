@@ -156,8 +156,100 @@
   function at(d, dx, dy) { return [hoopX(d) - d * dx, CW / 2 + dy]; }
   function clampCourt(p) { return [Math.max(1, Math.min(L - 1, p[0])), Math.max(1, Math.min(CW - 1, p[1]))]; }
 
+  /* Rung (b): where the coordinate model (assets/replay-model.js) places the ten players for
+     this event, or null. It needs the same facts the formations use: event, acting player, the
+     real shot spot, who has the ball and which rim they attack, clock, score, lineup. */
+  var lastShotXY = null;
+  /* Training (scripts/tracking/extract_snapshots.py) calls the offense the team that is not
+     fouling on a foul and the shooter's team on a block; ESPN leaves possession blank on both,
+     and the templates fall back to the acting team, so the model is told the convention it
+     learned. Shots use the feed's own attack side when it has one. Events with no acting
+     player on the court were never in training: they keep the templates. Scenes are cached
+     by everything the model reads, so a 30 s poll only pays for the new plays. */
+  var MC = {}, mcN = 0;
+  function modelPlace(e, ty, pid, ln) {
+    var RM = window.ReplayModel; if (!RM || !RM.ready) return null;
+    if (ty === 'jumpball') return null; // the one event where the formation scored closer to the tracking
+    if (!pid || (ln[0].indexOf(pid) < 0 && ln[1].indexOf(pid) < 0)) return null;
+    var team = e[4], off = e[12] >= 0 ? e[12] : team;
+    if (e[12] < 0 && team >= 0 && (ty === 'foul' || ty === 'block')) off = 1 - team;
+    if (off !== 0 && off !== 1) return null;
+    var right = DIR[e[0] + ':' + off] > 0;
+    if ((ty === '2pt' || ty === '3pt') && e[13] >= 0 && e[6] != null) right = !!e[13];
+    var d = right ? 1 : -1, anchor = null;
+    if ((ty === '2pt' || ty === '3pt') && e[6] != null) anchor = [e[6], e[7]];
+    else if (ty === 'freethrow') anchor = at(d, 13.75, 0);
+    var lastShot = (ty === 'rebound' || ty === 'block') ? lastShotXY : null;
+    var key = [ty, e[0], e[1], e[8], e[9], pid, off, right, ln[off].join(), ln[1 - off].join(), anchor, lastShot].join('|');
+    if (MC[key]) { stats.model.events++; return copyScene(MC[key]); }
+    var R = window.ReplayRoles, roles = R && R.forGame ? R.forGame(G) : null;
+    try {
+      var out = RM.place({ type: ty, period: e[0], clock: e[1], margin: off === 0 ? e[8] - e[9] : e[9] - e[8], right: right, offense: ln[off], defense: ln[1 - off],
+        actor: pid, anchor: anchor, lastShot: lastShot, roles: roles });
+      if (!out) return null;
+      for (var k in out) out[k] = clampCourt(out[k]);
+      if (anchor && out[pid]) out[pid] = [anchor[0], anchor[1]]; // the real spot stays exactly where the feed put it (corner threes sit inside the clamp)
+      if (++mcN > 6000) { MC = {}; mcN = 1; }
+      MC[key] = out; stats.model.events++;
+      return copyScene(out);
+    } catch (err) { stats.model.failed++; return null; }
+  }
+  /* Kalman smoother over the model's scenes. Each event's scene is predicted on its own, so a
+     player's spot can jump between plays. Here each model spot is a noisy measurement of where
+     he is (noise KF.r ft, from the model's error), the feed's real shot spots are near-exact
+     ones (KF.ra ft), and he moves at a roughly constant velocity between events (process noise
+     KF.q, scaled by the game-clock gap). A forward filter and a backward (Rauch-Tung-Striebel)
+     pass per player run over each unbroken run of model scenes within a period; template
+     scenes, period changes and trips to the bench break the run. Real spots are left exact. */
+  var KF = { on: 1, q: 150, r: 12, ra: 0.5, v0: 10 }; // q, r tuned on 40 training games (tests/replay_model_eval.mjs --kf)
+  function smoothFrames() {
+    var cfg = window.ReplayKF || KF; if (!cfg.on || !stats.model.events) return;
+    var runs = {}; // id -> current run [{i, z, r}]
+    function flush(id) {
+      var run = runs[id]; delete runs[id]; if (!run || run.length < 2) return;
+      for (var ax = 0; ax < 2; ax++) {
+        var n = run.length, xs = [], Ps = [], xp = [], Pp = [], dts = [];
+        var x = [run[0].z[ax], 0], P = [run[0].r * run[0].r, 0, 0, cfg.v0 * cfg.v0];
+        for (var k = 0; k < n; k++) {
+          if (k) {
+            var dt = Math.max(0.3, FR[run[k].i].t - FR[run[k - 1].i].t), q = cfg.q;
+            x = [x[0] + dt * x[1], x[1]];
+            P = [P[0] + dt * (P[1] + P[2]) + dt * dt * P[3] + q * dt * dt * dt / 3, P[1] + dt * P[3] + q * dt * dt / 2, P[2] + dt * P[3] + q * dt * dt / 2, P[3] + q * dt];
+            dts[k] = dt;
+          }
+          xp[k] = x.slice(); Pp[k] = P.slice();
+          var R = run[k].r * run[k].r, S = P[0] + R, K0 = P[0] / S, K1 = P[2] / S, y = run[k].z[ax] - x[0];
+          x = [x[0] + K0 * y, x[1] + K1 * y];
+          P = [(1 - K0) * P[0], (1 - K0) * P[1], P[2] - K1 * P[0], P[3] - K1 * P[1]];
+          xs[k] = x.slice(); Ps[k] = P.slice();
+        }
+        var sx = xs[n - 1];
+        for (k = n - 2; k >= 0; k--) {
+          var dt2 = dts[k + 1], A = Ps[k], B = Pp[k + 1], det = B[0] * B[3] - B[1] * B[2];
+          if (!det) { sx = xs[k].slice(); run[k].s = run[k].s || []; run[k].s[ax] = sx[0]; continue; } // cannot happen with q > 0; keep the filtered spot
+          var AF = [A[0] + A[1] * dt2, A[1], A[2] + A[3] * dt2, A[3]]; // A F^T
+          var inv = [B[3] / det, -B[1] / det, -B[2] / det, B[0] / det];
+          var C = [AF[0] * inv[0] + AF[1] * inv[2], AF[0] * inv[1] + AF[1] * inv[3], AF[2] * inv[0] + AF[3] * inv[2], AF[2] * inv[1] + AF[3] * inv[3]];
+          var d0 = sx[0] - xp[k + 1][0], d1 = sx[1] - xp[k + 1][1];
+          sx = [xs[k][0] + C[0] * d0 + C[1] * d1, xs[k][1] + C[2] * d0 + C[3] * d1];
+          run[k].s = run[k].s || []; run[k].s[ax] = sx[0];
+        }
+        run[n - 1].s = run[n - 1].s || []; run[n - 1].s[ax] = xs[n - 1][0];
+      }
+      run.forEach(function (o) { if (o.r > cfg.ra || o.anc !== id) FR[o.i].pos[id] = clampCourt([o.s[0], o.s[1]]); });
+    }
+    for (var i = 0; i < FR.length; i++) {
+      var f = FR[i], prev = i ? FR[i - 1] : null, on = {};
+      f.ids.forEach(function (id) { on[id] = 1; });
+      if (!f.m || (prev && prev.per !== f.per)) { for (var id0 in runs) flush(id0); if (!f.m) continue; }
+      for (var id1 in runs) if (!on[id1]) flush(id1);
+      f.ids.forEach(function (id) { var z = f.pos[id]; if (!z) return; (runs[id] = runs[id] || []).push({ i: i, z: z, r: f.anc === id ? cfg.ra : cfg.r, anc: f.anc }); });
+    }
+    for (var id2 in runs) flush(id2);
+  }
+  function copyScene(o) { var c = {}; for (var k in o) c[k] = [o[k][0], o[k][1]]; return c; }
   function buildFrames() {
-    FR = []; var possSeq = 0, lastPoss = -1, holder = null, prevOff = 0;
+    FR = []; var possSeq = 0, lastPoss = -1, holder = null, prevOff = 0; lastShotXY = null; stats.model.events = 0;
     for (var i = 0; i < EV.length; i++) {
       var e = EV[i], ty = G.types[e[2]], team = e[4], pid = e[5] ? String(e[5]) : null, ln = lineupAt(i);
       var poss = e[12] >= 0 ? e[12] : (team >= 0 ? team : lastPoss < 0 ? 0 : lastPoss);
@@ -222,8 +314,13 @@
         if (ty === 'foul' || ty === 'violation' || ty === 'substitution' || ty === 'other' || ty === 'block') { /* keep the ball where it was */ }
       }
       [0, 1].forEach(function (s) { ln[s].forEach(function (id) { if (!pos[id]) pos[id] = at(DIR[e[0] + ':' + off], 20, 0); }); });
-      FR.push({ pos: pos, holder: holder && pos[holder] ? holder : null, focus: focus, ty: ty, made: e[10], d: d, ids: ln[0].concat(ln[1]) });
+      var mp = modelPlace(e, ty, pid, ln);
+      if (mp) { for (var mk in mp) if (pos[mk] || ln[0].indexOf(mk) >= 0 || ln[1].indexOf(mk) >= 0) pos[mk] = mp[mk]; }
+      if ((ty === '2pt' || ty === '3pt') && e[6] != null) lastShotXY = [e[6], e[7]];
+      FR.push({ pos: pos, holder: holder && pos[holder] ? holder : null, focus: focus, ty: ty, made: e[10], d: d, ids: ln[0].concat(ln[1]),
+        m: mp ? 1 : 0, anc: mp && ((ty === '2pt' || ty === '3pt') && e[6] != null || ty === 'freethrow') ? pid : null, t: e[0] * 720 - e[1], per: e[0] });
     }
+    smoothFrames();
   }
 
   function smooth(x) { return x <= 0 ? 0 : x >= 1 ? 1 : x * x * (3 - 2 * x); }
@@ -493,7 +590,7 @@
     }
   }
   var perf = 0;
-  var stats = { poses: { idle: 0, run: 0, jumper: 0, dunk: 0, hang: 0, celebrate: 0 }, hop: 0, netRipple: 0, rimShake: 0, cache: { hits: 0, builds: 0, direct: 0 }, sprites: { ready: 0, failed: 0, sheets: 0, cells: 0, drawn: 0 } };
+  var stats = { poses: { idle: 0, run: 0, jumper: 0, dunk: 0, hang: 0, celebrate: 0 }, hop: 0, netRipple: 0, rimShake: 0, cache: { hits: 0, builds: 0, direct: 0 }, model: { events: 0, failed: 0, ready: 0 }, sprites: { ready: 0, failed: 0, sheets: 0, cells: 0, drawn: 0 } };
 
   /* Static-court cache. The stands, floor, lines and the two hoop frames only change when
      the camera or the game does, so they are drawn once into offscreen layers and blitted.
@@ -796,7 +893,18 @@
   window.PixelReplay = { load: loadGame, setGame: setGame, goLive: goLive, seek: seek, play: function (on) { setPlaying(on !== false); }, state: cur, speed: function (x) { cur.speed = x; }, stats: stats, teamTints: teamTints,
     /* hold on event i (the live page's rewind scrubber) */
     seekEvent: function (i) { if (!G || !RT.length) return; manual(); seek(RT[Math.max(0, Math.min(RT.length - 1, i))] + 1.6); setPlaying(false); },
-    game: function () { return G; } };
+    game: function () { return G; }, frames: function () { return FR; } };
+  /* the coordinate model loads after the page; when it lands, the current game's frames are rebuilt with it */
+  if (window.ReplayModel && !/[?&]model=0(&|$)/.test(location.search)) {
+    var rolesP = window.ReplayRoles ? fetch('/assets/replay_roles.json?v=cc918287').then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+      .then(function (doc) { window.ReplayRoles._init(doc); }).catch(function () { /* the model runs without roles */ }) : null;
+    fetch('/assets/replay-model.json?v=dc42490a').then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); }).then(function (doc) {
+      return Promise.resolve(rolesP).then(function () { return doc; });
+    }).then(function (doc) {
+      window.ReplayModel._init(doc); stats.model.ready = 1;
+      if (G) { var keepFR = FR; try { buildFrames(); sceneVer++; } catch (err) { FR = keepFR; stats.model.failed++; } } // RT is unchanged, so the playhead stays put
+    }).catch(function () { /* formations stay */ });
+  }
   loadSprites();
   if (EMBED) requestAnimationFrame(tick); // the host page hands games in through setGame
   else boot();

@@ -40,7 +40,7 @@
       "budget_bytes": 32768
     },
     "live.html": {
-      "budget_bytes": 303104
+      "budget_bytes": 401408
     },
     "map-guess.html": {
       "budget_bytes": 107520
@@ -52,13 +52,13 @@
       "budget_bytes": 32768
     },
     "play.html": {
-      "budget_bytes": 1387520
+      "budget_bytes": 1556480
     },
     "play/era-crossed.html": {
       "budget_bytes": 840704
     },
     "players.html": {
-      "budget_bytes": 535552
+      "budget_bytes": 921600
     },
     "playoff-runs.html": {
       "budget_bytes": 152576
@@ -82,7 +82,7 @@
       "budget_bytes": 160768
     },
     "replay.html": {
-      "budget_bytes": 113664
+      "budget_bytes": 215040
     }
   },
   "interaction": {

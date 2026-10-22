@@ -56,7 +56,7 @@
       var s = sideOf[tp.team && tp.team.id]; if (s == null) return;
       ((tp.statistics && tp.statistics[0] && tp.statistics[0].athletes) || []).forEach(function (a) {
         var id = a.athlete && a.athlete.id; if (!id) return;
-        players[id] = { n: a.athlete.shortName || a.athlete.displayName || '', t: s };
+        players[id] = { n: a.athlete.shortName || a.athlete.displayName || '', f: a.athlete.displayName || '', t: s };
         if (a.starter && starters[s].length < 5) starters[s].push(String(id));
       });
     });
@@ -129,7 +129,7 @@
       periods: Math.max.apply(null, events.map(function (e) { return e[0]; })),
       teams: teams, score: [last[8], last[9]], date: (comp.date || '').slice(0, 10),
       types: TYPES, players: players, lineups: lineups, events: events, src: src, wall: wall,
-      staged: 'Shooter, shot spot, event, clock and score are from ESPN\'s play-by-play. Which basket each team shoots at is assumed (away attacks right in the first half). The other nine players are staged from formation templates: no public feed has their positions.'
+      staged: 'Shooter, shot spot, event, clock and score are from ESPN\'s play-by-play. Which basket each team shoots at is assumed (away attacks right in the first half). The other nine players are projected by the coordinate model (trained on 2015-16 SportVU tracking), or staged from formation templates where it is not loaded: no public feed has their positions.'
     };
   }
 
