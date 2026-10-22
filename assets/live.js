@@ -173,7 +173,7 @@ function updateTlUI(d){
   $('liveBtn').onclick=()=>{
     TL.live=true;TL.view=TL.n-1;TL.newCount=0;
     if(window._lastD)renderAll(window._lastD,window._lastG);
-    window.scrollTo({top:0,behavior:'smooth'});
+    $('scrub').focus(); // the button hides once live; keep keyboard focus on the timeline (the board is sticky, no scroll needed)
   };
 })();
 
@@ -926,7 +926,7 @@ window.CourtsideMode=setMode;
     w.hidden=!open;
     foldOpen=open;
     b.setAttribute('aria-expanded', open?'true':'false');
-    b.textContent=open?'FEWER PLATES':'MORE PLATES — momentum · atlas twins · shot chart · milestones · leaders · play by play';
+    b.textContent=open?'Fewer plates':'More plates: shot chart, leaders, play by play & 5 more';
     if(open&&window._lastD){
       // First paint of the folded plates: full render + atlas sync at the
       // real (now-visible) widths, then let live-atlas refit its canvas.
