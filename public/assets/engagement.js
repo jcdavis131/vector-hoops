@@ -326,7 +326,7 @@
       slot.innerHTML =
         '<p class="vh-totd vh-totd--compact"><span class="vh-totd__k">Twin of the day</span>' +
         '<a href="/twin-network.html">' + esc(t.a) + ' <span class="vh-totd__tilde">~</span> ' + esc(t.b) + '</a>' +
-        ' &middot; ' + apart + (t.deep ? ' <span class="vh-totd__deep">DEEP CUT</span>' : '') +
+        ' &middot; ' + apart + (t.deep ? ' <span class="vh-totd__deep" title="Era-bridging twin: 20+ seasons apart">DEEP CUT</span>' : '') +
         '<span class="vh-totd__why">Same pair for everyone today, picked by the calendar &mdash; not by an algorithm watching you.</span></p>';
       var link = slot.querySelector('a');
       if (link) link.addEventListener('click', unlock);

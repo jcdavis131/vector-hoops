@@ -31,7 +31,6 @@
 <link rel="stylesheet" href="/assets/shell.css?v=729457dd"/>
 <style>
 /* ---------- Home: hero ---------- */
-.hero{ padding-top: clamp(48px, 9vw, 120px); padding-bottom: clamp(32px, 5vw, 64px); max-width: 1040px; }
 .hero__title{
   margin: 0;
   font-family: var(--font-display);
@@ -46,7 +45,7 @@
 /* ---------- Home: one hero, one action (search the atlas) ---------- */
 .hero{ padding-top: clamp(40px, 7vw, 96px); padding-bottom: clamp(24px, 3.4vw, 44px); max-width: 1040px; }
 .hero__lede{ max-width: 54ch; }
-.hero-search{ width: 100%; max-width: 600px; margin: var(--s-2) auto 0; }
+.hero-search{ position: relative; z-index: 40; width: 100%; max-width: 600px; margin: var(--s-2) auto 0; }
 .hero-search .atlas-search input{ height: 58px; padding-left: 48px; font-size: 17px; border-radius: 999px; border-width: 1.5px; border-color: var(--line-2); box-shadow: 0 10px 30px rgba(0,0,0,.06); }
 .hero-search .atlas-search input:focus{ border-color: var(--accent); outline: none; box-shadow: 0 0 0 4px var(--accent-wash); }
 .hero-search .atlas-search svg{ left: 19px; width: 18px; height: 18px; }
@@ -60,7 +59,7 @@
 .vh-totd__why{ display: block; margin-top: 2px; font-size: 11.5px; color: var(--fg-3); }
 
 /* ---------- Home: tonight strip (ESPN's public scoreboard, quiet on failure) ---------- */
-.tonight{ display: flex; flex-wrap: wrap; align-items: center; gap: 8px 16px; max-width: var(--content); margin: 0 auto var(--s-6); padding: 12px clamp(14px, 2.4vw, 22px); border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--surface-2); }
+.tonight{ display: flex; flex-wrap: wrap; align-items: center; gap: 8px 16px; width: 100%; box-sizing: border-box; max-width: var(--content); margin: 0 auto var(--s-6); padding: 12px clamp(14px, 2.4vw, 22px); border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--surface-2); }
 .tonight__k{ display: inline-flex; align-items: center; gap: 7px; font-family: var(--font-display); font-size: var(--t-2xs); font-weight: 700; letter-spacing: .2em; text-transform: uppercase; color: var(--accent-2); }
 .tonight__dot{ width: 8px; height: 8px; border-radius: 50%; background: var(--line-2); flex: none; }
 .tonight.is-live .tonight__dot{ background: var(--accent); animation: tonight-pulse 1.6s ease-in-out infinite; }
@@ -548,7 +547,7 @@
 <script defer src="/assets/atlas-regions.js?v=137f43e8"></script>
 <script defer src="/assets/career-trails.js?v=a0e9e836"></script>
 <script src="assets/site-facts.js?v=f8edaf37" defer></script>
-<script defer src="/assets/engagement.js?v=c8a9761b"></script>
+<script defer src="/assets/engagement.js?v=9afde51a"></script>
 <script defer src="/assets/home-tonight.js?v=defd431a"></script>
 <script defer src="/assets/inline-index.js?v=2ad73c39"></script>
 </body>
