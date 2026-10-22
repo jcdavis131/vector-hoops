@@ -213,7 +213,7 @@
       try { document.dispatchEvent(new CustomEvent('vh-sound', { detail: on })); } catch (e) {}
     }
     function start() {
-      lazyScript('/assets/sound.js?v=853c2441', function () { if (on && global.VHSound) global.VHSound.start(family()); },
+      lazyScript('/assets/sound.js?v=b3a48598', function () { if (on && global.VHSound) global.VHSound.start(family()); },
         function () { set(false, false); }); // offline: show off; the stored choice stays, so the next page retries
     }
     function first(e) { // a returning visitor: music waits for the first gesture on this page

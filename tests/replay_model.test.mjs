@@ -89,3 +89,27 @@ test('with the shipped model and the smoother, every real shot spot stays exactl
   assert.ok(shots > 50, 'shots placed by the model: ' + shots);
   assert.equal(moved, 0);
 });
+
+test('a live poll keeps the spots of plays already watched, however the smoother re-runs', { skip: !fs.existsSync(W) && 'no shipped model yet' }, async () => {
+  const { makeContext } = await import('./replay_harness.mjs');
+  const vm = await import('node:vm');
+  const full = JSON.parse(fs.readFileSync(path.join(ROOT, 'assets', 'replays', '0022600001.json'), 'utf8'));
+  const H = makeContext('model-poll', false, false);
+  H.canvas.dataset.mode = 'embed';
+  H.sandbox.location.search = '?model=0';
+  H.sandbox.atob = H.sandbox.window.atob = (b) => Buffer.from(b, 'base64').toString('binary');
+  vm.runInContext(fs.readFileSync(path.join(ROOT, 'assets', 'replay-model.js'), 'utf8'), H.sandbox, { filename: 'replay-model.js' });
+  H.sandbox.window.ReplayModel._init(JSON.parse(fs.readFileSync(W, 'utf8')));
+  vm.runInContext(fs.readFileSync(path.join(ROOT, 'assets', 'replay.js'), 'utf8'), H.sandbox, { filename: 'replay.js' });
+  const PR = H.sandbox.window.PixelReplay, n = Math.floor(full.events.length / 2);
+  const part = JSON.parse(JSON.stringify(full)); part.events = full.events.slice(0, n);
+  PR.setGame(part);
+  PR.seekEvent(n - 2); // a live viewer trails the newest play by about one (without the freeze, 5 frames here moved up to 17.9 ft)
+  const before = PR.frames().map((f) => JSON.stringify(f.pos));
+  PR.setGame(JSON.parse(JSON.stringify(full)), { keep: true }); // the poll brings the rest of the game
+  const after = PR.frames();
+  let changed = 0;
+  for (let j = 0; j <= n - 1; j++) if (JSON.stringify(after[j].pos) !== before[j]) changed++;
+  assert.equal(changed, 0, 'watched frames moved');
+  assert.equal(after.length, full.events.length);
+});
