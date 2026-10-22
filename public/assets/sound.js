@@ -154,7 +154,7 @@
     pad: { w: 'triangle', a: 0.45, s: 0.8, r: 0.7, lp: 1100, det: 7 },
     sub: { w: 'sine', a: 0.006, s: 0.9, r: 0.08 }
   };
-  var MUSIC = 0.35, KEY = 'vh.snd';
+  var MUSIC = 0.18, KEY = 'vh.snd';
   var ctx = null, music = null, fx = null, cue = null, timer = 0, on = false, t0 = 0, beat0 = 0, cursor = 0, saved = 0, noise = null, cache = {};
 
   function graph() {

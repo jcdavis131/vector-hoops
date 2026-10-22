@@ -200,7 +200,7 @@
     var b = nav.querySelector('.site-nav__sound'), on = false;
     if (!b) return;
     try { on = localStorage.getItem('vh.sound') === '1'; } catch (e) {}
-    function go() { lazyScript('/assets/sound.js?v=2e012622', function () { if (global.VHSound && on) global.VHSound.start(family()); }); }
+    function go() { lazyScript('/assets/sound.js?v=f8cfcc72', function () { if (global.VHSound && on) global.VHSound.start(family()); }); }
     b.setAttribute('aria-pressed', on ? 'true' : 'false');
     if (on) go();
     b.addEventListener('click', function () {
