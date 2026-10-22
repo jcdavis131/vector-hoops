@@ -13,13 +13,14 @@ import vm from 'node:vm';
 import { makeContext, ROOT } from './replay_harness.mjs';
 
 function args(argv) {
-  const o = { games: null, weights: null, roles: null, limit: 0 };
+  const o = { games: null, weights: null, roles: null, limit: 0, kf: null };
   for (let i = 2; i < argv.length; i++) {
     const a = argv[i];
     if (a === '--games') o.games = argv[++i];
     else if (a === '--weights') o.weights = argv[++i];
     else if (a === '--roles') o.roles = argv[++i];
     else if (a === '--limit') o.limit = +argv[++i];
+    else if (a === '--kf') o.kf = argv[++i]; // off | q,r : the Kalman smoother's settings (default: replay.js's own)
     else throw new Error('unknown argument ' + a);
   }
   return o;
@@ -37,6 +38,8 @@ function frames(game, withModel) {
   if (withModel) {
     H.sandbox.atob = H.sandbox.window.atob = (b) => Buffer.from(b, 'base64').toString('binary'); // a browser has atob; the stub sandbox does not
     vm.runInContext(MODEL, H.sandbox, { filename: 'replay-model.js' });
+    if (o.kf === 'off') H.sandbox.window.ReplayKF = { on: 0 };
+    else if (o.kf) { const [q, r] = o.kf.split(',').map(Number); H.sandbox.window.ReplayKF = { on: 1, q, r, ra: 0.5, v0: 10 }; }
     H.sandbox.window.ReplayModel._init(W);
     if (ROLES) {
       const R = ROLES;

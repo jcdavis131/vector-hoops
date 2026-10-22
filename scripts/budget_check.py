@@ -52,7 +52,8 @@ LEDGER_CHECKS = [
 ]
 
 # Asset literals inside scripts: /assets/x.json, assets/x.js, ./assets/x.css...
-_ASSET_LITERAL = re.compile(r"""['"`](\.?\.?/?assets/[A-Za-z0-9_./-]+\.(?:css|js|json))['"`]""")
+# A cache token (?v=<hex>, from scripts/stamp_assets.py) may follow the path; the file still counts.
+_ASSET_LITERAL = re.compile(r"""['"`](\.?\.?/?assets/[A-Za-z0-9_./-]+\.(?:css|js|json))(?:\?v=[0-9a-f]+)?['"`]""")
 
 
 class _Refs(HTMLParser):
