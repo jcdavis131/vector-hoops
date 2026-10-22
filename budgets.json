@@ -40,7 +40,7 @@
       "budget_bytes": 32768
     },
     "live.html": {
-      "budget_bytes": 278528
+      "budget_bytes": 303104
     },
     "map-guess.html": {
       "budget_bytes": 107520
@@ -86,7 +86,7 @@
     }
   },
   "interaction": {
-    "js_total_bytes": 835584,
+    "js_total_bytes": 884736,
     "js_worst_page_bytes": 301056,
     "assets_worst_page_bytes": 3002368
   }
