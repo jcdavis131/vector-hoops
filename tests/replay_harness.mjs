@@ -1,12 +1,14 @@
 // Pixel Replay harness: runs assets/replay.js in node against a stub canvas and DOM.
 //
-//   node tests/replay_harness.mjs [--js assets/replay.js] [--reduce] [--starts 40] [--frames 20] [--out file.json]
+//   node tests/replay_harness.mjs [--js assets/replay.js] [--reduce] [--starts 40] [--frames 20] [--sweep 0.25] [--out file.json]
 //
 // No dependencies (node:vm only). For every game in assets/replays/index.json it opens a
 // fresh context, loads the game through window.PixelReplay.load, then plays short bursts
 // from evenly spaced points across the whole game with the camera at rest (the Broadcast
 // preset, untouched), then the same bursts while dragging the camera every frame, then
-// with the Follow-ball preset. It prints one JSON report.
+// with the Follow-ball preset. A paused sweep then renders one frame every --sweep seconds of
+// replay time across the whole game (rest camera), so short moments (a dunker on the rim)
+// are always sampled. It prints one JSON report.
 //
 // A "draw call" is one call to fillRect, fill, stroke, strokeRect, drawImage, clearRect or
 // fillText on a 2d context. "main" counts the page's visible canvas; "offscreen" counts
@@ -26,13 +28,14 @@ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const DRAW = new Set(['fillRect', 'fill', 'stroke', 'strokeRect', 'drawImage', 'clearRect', 'fillText']);
 
 function args(argv) {
-  const o = { js: path.join(ROOT, 'assets', 'replay.js'), reduce: false, starts: 40, frames: 20, out: null };
+  const o = { js: path.join(ROOT, 'assets', 'replay.js'), reduce: false, starts: 40, frames: 20, sweep: 0.25, out: null };
   for (let i = 2; i < argv.length; i++) {
     const a = argv[i];
     if (a === '--js') o.js = path.resolve(argv[++i]);
     else if (a === '--reduce') o.reduce = true;
     else if (a === '--starts') o.starts = +argv[++i];
     else if (a === '--frames') o.frames = +argv[++i];
+    else if (a === '--sweep') o.sweep = +argv[++i];
     else if (a === '--out') o.out = argv[++i];
     else throw new Error('unknown argument ' + a);
   }
@@ -166,6 +169,11 @@ async function runGame(js, gameId, o) {
   frame(16.7); // first frame after load (cache build, if any), not part of any pass
   const passes = [];
   passes.push(pass('rest'));
+  { const main = [], off = [];
+    PR.play(false);
+    for (let t = 0; t <= tEnd; t += o.sweep) { PR.seek(t); const [m, x] = frame(16.7); main.push(m); off.push(x); }
+    const tot = main.reduce((a, b) => a + b, 0), totOff = off.reduce((a, b) => a + b, 0);
+    passes.push({ name: 'sweep', perFrame: summarize(main), offscreenCalls: totOff, amortizedPerFrame: +((tot + totOff) / Math.max(1, main.length)).toFixed(1) }); }
   let px = 100;
   passes.push(pass('drag', (f) => {
     if (f === 0) { H.canvas.dispatch('pointerdown', { pointerId: 1, clientX: px, clientY: 100 }); }
