@@ -210,7 +210,7 @@
       } else if (ty === 'timeout' || (ty === 'period' && e[3] === 'end') || ty === 'game') {
         [0, 1].forEach(function (s) { ln[s].forEach(function (id, k) { var b = bench(s); pos[id] = [b[0] + Math.cos(k * 1.26) * 2.2, b[1] + 1.8 + Math.sin(k * 1.26) * 1.6]; }); });
         holder = null;
-      } else if (ty === 'steal' || ty === 'turnover') {
+      } else if ((ty === 'steal' || ty === 'turnover') && team >= 0) {
         var od = DIR[e[0] + ':' + (ty === 'steal' ? 1 - team : team)];
         var o2 = ty === 'steal' ? ln[1 - team] : ln[team], d2 = ty === 'steal' ? ln[team] : ln[1 - team];
         offIds = o2; defIds = d2; place(o2, OFF, od); guard(od, false);
@@ -611,11 +611,13 @@
   if (EMBED && typeof IntersectionObserver === 'function') new IntersectionObserver(function (es) { onScreen = es[es.length - 1].isIntersecting; }).observe(cv);
   var lastNow = performance.now();
   function tick(now) {
+    requestAnimationFrame(tick); // first, so a throw below costs one frame, not the loop
     var dt = Math.min(0.1, (now - lastNow) / 1000); lastNow = now; perf += dt;
     if (G && cur.playing) {
       if (cur.live) { // trail the newest play in real time; quicker when one poll lands several plays
         var behind = headT() - cur.t;
         cur.t = Math.min(headT(), cur.t + dt * (behind > 24 ? 4 : behind > 10 ? 2 : 1));
+        if (!G.live && cur.t >= headT()) { cur.live = false; setPlaying(false); liveUi(); } // the game went final: its last play has run
       } else cur.t += dt * cur.speed * cur.dir;
       if (cur.loop && cur.t > cur.loop[1]) { cur.t = cur.loop[0]; lastFxIdx = segAt(cur.t); }
       if (cur.loop && cur.t < cur.loop[0]) { cur.t = cur.loop[1]; lastFxIdx = segAt(cur.t); }
@@ -627,7 +629,6 @@
     }
     shake = Math.max(0, shake - dt); flash = Math.max(0, flash - dt * 0.9);
     var S = onScreen ? render() : null; if (S) { updateText(S); if (scrub && document.activeElement !== scrub) scrub.value = Math.round(cur.t / T_END * 1000); }
-    requestAnimationFrame(tick);
   }
 
   /* Show a game. opts.keep: the same game with more events (a live poll), so stay on the
@@ -635,7 +636,10 @@
   function setGame(g, opts) {
     opts = opts || {};
     var same = !!(opts.keep && G && G.gameId === g.gameId), i0 = same ? segAt(cur.t) : 0, f0 = same ? cur.t - RT[i0] : 0;
-    G = g; EV = g.events; TY = {}; buildTimeline(); buildDirs(); buildFrames(); sceneVer++; moments();
+    var keep = { G: G, EV: EV, RT: RT, FR: FR, T_END: T_END, DIR: DIR };
+    try { G = g; EV = g.events; TY = {}; buildTimeline(); DIR = {}; buildDirs(); buildFrames(); }
+    catch (err) { G = keep.G; EV = keep.EV; RT = keep.RT; FR = keep.FR; T_END = keep.T_END; DIR = keep.DIR; stats.setGameFailed = (stats.setGameFailed || 0) + 1; throw err; }
+    sceneVer++; moments();
     if (!same) {
       buildCrowd(); cur.idx = -1; cur.dir = 1; cur.loop = null; attr('rpRev', 'aria-pressed', 'false'); attr('rpLoop', 'aria-pressed', 'false');
       cur.live = !!opts.live; seek(cur.live ? Math.max(0, headT() - 6) : 0); setPlaying(cur.live);
@@ -687,22 +691,27 @@
       if (wantEspn !== id) return;
       var g = window.ReplayESPN.toGame(d, id); if (!g) throw new Error('no plays yet');
       espnFails = 0;
-      if (again) setGame(g, { keep: true }); else setGame(g, { live: g.live });
+      try { if (again) setGame(g, { keep: true }); else setGame(g, { live: g.live }); }
+      catch (err) { if (nowEl && !again) nowEl.textContent = 'This game could not be replayed. Pick another.'; return; }
       pressed('espn-' + id);
       try { var u = new URL(location.href); u.searchParams.set('espn', id); u.searchParams.delete('g'); history.replaceState(null, '', u); } catch (e) { /* ignore */ }
       if (g.live) espnTimer = setTimeout(function () { loadEspn(id, true); }, 30000);
     }).catch(function () {
       if (wantEspn !== id) return;
       espnFails++;
-      if (again) espnTimer = setTimeout(function () { loadEspn(id, true); }, Math.min(300000, 30000 * Math.pow(2, Math.min(espnFails, 3))));
-      else if (nowEl) nowEl.textContent = 'This game has no plays to replay yet. Pick another, or check back after tip-off.';
+      var wait = Math.min(300000, 30000 * Math.pow(2, Math.min(espnFails, 3)));
+      if (again || (G && G.gameId === 'espn-' + id)) espnTimer = setTimeout(function () { loadEspn(id, true); }, wait);
+      else { if (nowEl) nowEl.textContent = 'This game has no plays to replay yet. It will start here once the feed has them.'; espnTimer = setTimeout(function () { loadEspn(id); }, wait); }
     });
   }
   function espnGames(built) {
     var have = {};
     built.forEach(function (g) { have[g.teams[0].tri + '@' + g.teams[1].tri] = 1; });
     var days = [etDay(0), etDay(-1)];
-    return Promise.all(days.map(function (day) { return fetch(SB + '?dates=' + day).then(function (r) { return r.ok ? r.json() : { events: [] }; }).catch(function () { return { events: [] }; }); })).then(function (res) {
+    var none = { events: [] }, late = function (ms) { return new Promise(function (r) { setTimeout(function () { r(none); }, ms); }); };
+    return Promise.all(days.map(function (day) { // 4 s each at most: the NBA-built games must not wait on ESPN
+      return Promise.race([fetch(SB + '?dates=' + day).then(function (r) { return r.ok ? r.json() : none; }).catch(function () { return none; }), late(4000)]);
+    })).then(function (res) {
       var out = [];
       res.forEach(function (sb, k) {
         (sb.events || []).forEach(function (e) {

@@ -14,7 +14,7 @@
   var plate = document.getElementById('rpPlate');
   if (!plate || !window.ReplayESPN) return;
   var meta = document.getElementById('rpPlateMeta'), full = document.getElementById('rpFull'), lag = document.getElementById('rpLag');
-  var shown = null, plays = -1, lastIdx = null, lastLive = null;
+  var shown = null, plays = -1, status = '', lastIdx = null, lastLive = null, newest = null;
 
   function eventFor(g, idx) { // the replay event for ESPN play idx: the last one built from a play at or before it
     var k = 0; for (var i = 0; i < g.src.length; i++) { if (g.src[i] <= idx) k = i; else break; }
@@ -29,14 +29,16 @@
     var d = ev.detail && ev.detail.d, gm = ev.detail && ev.detail.g, idx = ev.detail.idx, live = !!ev.detail.live;
     if (!d || !gm || !window.PixelReplay) return;
     var R = window.PixelReplay, n = (d.plays || []).length, id = String(gm.id), g = null;
-    if (id !== shown || n !== plays) {
+    var st = d.header && d.header.competitions && d.header.competitions[0] && d.header.competitions[0].status && d.header.competitions[0].status.type;
+    var stKey = st ? st.state + (st.completed ? ':done' : '') : '';
+    if (id !== shown || n !== plays || stKey !== status) { // new game, new plays, or the game went final
       try { g = window.ReplayESPN.toGame(d, id); } catch (e) { g = null; }
-      if (!g) { plate.hidden = true; return; }
-      plate.hidden = false;
       var first = id !== shown;
-      R.setGame(g, first ? { live: live && g.live } : { keep: true });
-      if (first && !(live && g.live)) R.seekEvent(eventFor(g, idx));
-      shown = id; plays = n; lastIdx = idx; lastLive = live;
+      try { if (g) { R.setGame(g, first ? { live: live && g.live } : { keep: true }); if (first && !(live && g.live)) R.seekEvent(eventFor(g, idx)); } }
+      catch (e) { g = null; }
+      if (!g) { plate.hidden = true; shown = null; return; } // tried again on the next poll
+      plate.hidden = false;
+      shown = id; plays = n; status = stKey; lastIdx = idx; lastLive = live; newest = g;
       if (full) full.href = '/replay?espn=' + encodeURIComponent(id);
       if (meta) meta.textContent = g.live ? 'live · trails the feed by a play' : g.final ? 'final · scrub the timeline above' : 'from ESPN play-by-play';
     }
@@ -46,6 +48,12 @@
       if (live && g.live) R.goLive(); else R.seekEvent(eventFor(g, idx));
       lastIdx = idx; lastLive = live;
     }
-    if (lag) { var s = g.live ? wallLag(g) : null; lag.textContent = s == null ? '' : 'newest play ' + (s < 90 ? s + ' s' : Math.round(s / 60) + ' min') + ' ago'; }
+    showLag();
   });
+  function showLag() {
+    if (!lag) return;
+    var s = newest && newest.live ? wallLag(newest) : null;
+    lag.textContent = s == null ? '' : 'newest play ' + (s < 90 ? s + ' s' : Math.round(s / 60) + ' min') + ' ago';
+  }
+  setInterval(showLag, 5000); // between polls too, so the age counts up instead of freezing
 })();
