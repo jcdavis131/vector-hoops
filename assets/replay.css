@@ -1,14 +1,15 @@
 /* Pixel Replay (replay.html). Page chrome uses the site's tokens (assets/TOKENS.md);
    the arcade cabinet is the dark --void surface, dark on both themes by design. */
 :root{
-  --rp-board:#FCFBF7; --rp-ink:#232323; --rp-ink2:#57574F; --rp-line:#E7E4DA; --rp-card:#F5F2E9;
-  --rp-accent:#E0483B; --rp-on-accent:#FCFBF7;
+  /* light: Courtside Live's paper (assets/live.css), so /replay and /live read as one product */
+  --rp-board:#F4EFE2; --rp-ink:#1B1913; --rp-ink2:#5B5545; --rp-line:#D9D1B8; --rp-card:#FFFDF7;
+  --rp-accent:#C2401F; --rp-on-accent:#FFFDF7; --rp-court:#175E6E;
   --rp-void:#1E2022; --rp-void2:#2A2D30; --rp-glow:#F2EEE4; --rp-glow2:#B9B4A6; --rp-coin:#F2C14E;
   --rp-mono:ui-monospace,'SF Mono',SFMono-Regular,Menlo,Consolas,monospace;
 }
 @media (prefers-color-scheme: dark){
-  :root{ --rp-board:#0F1114; --rp-ink:#ECEEF1; --rp-ink2:#A7B0BC; --rp-line:#1D232C; --rp-card:#1A1D22;
-         --rp-accent:#FF7A33; --rp-on-accent:#0A0B0D; }
+  :root{ --rp-board:#0F1114; --rp-ink:#ECEEF1; --rp-ink2:#A7B0BC; --rp-line:#2A313B; --rp-card:#1A1D22;
+         --rp-accent:#FF7A33; --rp-on-accent:#0A0B0D; --rp-court:#6FC3D2; }
 }
 body{ background:var(--rp-board); color:var(--rp-ink); }
 .rp{ max-width:1120px; margin:0 auto; padding-block:20px 48px;
@@ -59,8 +60,11 @@ body{ background:var(--rp-board); color:var(--rp-ink); }
 .rp-now{ margin:10px 0 0; font:600 13px var(--rp-mono); color:var(--rp-glow); min-height:1.4em; }
 
 .rp-side{ display:grid; gap:14px; min-width:0; }
-.rp-panel{ border:1px solid var(--rp-line); border-radius:12px; padding:14px; background:var(--rp-card); min-width:0; }
-.rp-panel h2{ margin:0 0 10px; font:800 12px var(--rp-mono); letter-spacing:.14em; text-transform:uppercase; color:var(--rp-ink); }
+.rp-panel{ border:2px solid var(--rp-ink); border-radius:6px; padding:14px; background:var(--rp-card); min-width:0; }
+/* panel headings wear Courtside Live's plate header: a dark tag, then a dashed rule */
+.rp-panel h2{ display:flex; align-items:center; gap:9px; margin:0 0 10px; font:800 12px var(--rp-mono); letter-spacing:.16em; text-transform:uppercase; color:var(--rp-ink); }
+.rp-panel h2::before{ content:'PLATE'; font:700 9px var(--rp-mono); letter-spacing:.08em; color:var(--rp-card); background:var(--rp-ink); padding:2px 5px; border-radius:2px; }
+.rp-panel h2::after{ content:''; flex:1; min-width:12px; border-top:1px dashed var(--rp-line); }
 .rp-filter{ display:flex; flex-wrap:wrap; gap:4px; margin-bottom:8px; }
 .rp-filter button{ border:1px solid var(--rp-ink2); background:var(--rp-board); color:var(--rp-ink); }
 .rp-filter button.on{ background:var(--rp-ink); color:var(--rp-board); }
@@ -84,3 +88,12 @@ body{ background:var(--rp-board); color:var(--rp-ink); }
 @media (prefers-reduced-motion: reduce){
   .rp-game[aria-pressed="true"]{ transform:none; }
 }
+
+.rp-kicker a{ color:inherit; text-decoration:none; border-bottom:2px solid currentColor; }
+.rp-lede a{ color:var(--rp-court); }
+.rp-live{ display:inline-flex; align-items:center; gap:6px; }
+.rp-live .dot{ width:8px; height:8px; border-radius:50%; background:var(--rp-accent); }
+.rp-live[aria-pressed="true"]{ outline:2px solid var(--rp-accent); outline-offset:-2px; }
+.rp-live[aria-pressed="true"] .dot{ animation:rpPulse 1.4s ease-in-out infinite; }
+@keyframes rpPulse{ 50%{ opacity:.25 } }
+@media (prefers-reduced-motion: reduce){ .rp-live[aria-pressed="true"] .dot{ animation:none } }

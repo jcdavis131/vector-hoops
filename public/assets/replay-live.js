@@ -1,0 +1,51 @@
+/* Courtside Live: the Pixel Replay plate.
+ *
+ * live.js fires `courtside:render` every time it draws the page: after each poll (30 s
+ * while a game is live) and while the viewer drags the rewind scrubber. This turns the
+ * same ESPN summary into a replay game (assets/replay-espn.js) and hands it to the
+ * embedded replay (assets/replay.js, data-mode="embed"). No request of its own.
+ *
+ * Following live, the replay plays each new play as it lands, in real time, a beat behind
+ * the scoreboard and the other plates. Rewinding the page's timeline holds the court on
+ * that play; JUMP TO LIVE (or the plate's own LIVE button) follows again.
+ */
+(function () {
+  'use strict';
+  var plate = document.getElementById('rpPlate');
+  if (!plate || !window.ReplayESPN) return;
+  var meta = document.getElementById('rpPlateMeta'), full = document.getElementById('rpFull'), lag = document.getElementById('rpLag');
+  var shown = null, plays = -1, lastIdx = null, lastLive = null;
+
+  function eventFor(g, idx) { // the replay event for ESPN play idx: the last one built from a play at or before it
+    var k = 0; for (var i = 0; i < g.src.length; i++) { if (g.src[i] <= idx) k = i; else break; }
+    return k;
+  }
+  function wallLag(g) { // how far the newest play trails the clock on the wall, from ESPN's own wallclock stamps
+    for (var i = g.wall.length - 1; i >= 0; i--) if (g.wall[i]) return Math.max(0, Math.round((Date.now() - g.wall[i]) / 1000));
+    return null;
+  }
+
+  window.addEventListener('courtside:render', function (ev) {
+    var d = ev.detail && ev.detail.d, gm = ev.detail && ev.detail.g, idx = ev.detail.idx, live = !!ev.detail.live;
+    if (!d || !gm || !window.PixelReplay) return;
+    var R = window.PixelReplay, n = (d.plays || []).length, id = String(gm.id), g = null;
+    if (id !== shown || n !== plays) {
+      try { g = window.ReplayESPN.toGame(d, id); } catch (e) { g = null; }
+      if (!g) { plate.hidden = true; return; }
+      plate.hidden = false;
+      var first = id !== shown;
+      R.setGame(g, first ? { live: live && g.live } : { keep: true });
+      if (first && !(live && g.live)) R.seekEvent(eventFor(g, idx));
+      shown = id; plays = n; lastIdx = idx; lastLive = live;
+      if (full) full.href = '/replay?espn=' + encodeURIComponent(id);
+      if (meta) meta.textContent = g.live ? 'live · trails the feed by a play' : g.final ? 'final · scrub the timeline above' : 'from ESPN play-by-play';
+    }
+    g = R.game();
+    if (!g || !g.src) return;
+    if (live !== lastLive || (!live && idx !== lastIdx)) {
+      if (live && g.live) R.goLive(); else R.seekEvent(eventFor(g, idx));
+      lastIdx = idx; lastLive = live;
+    }
+    if (lag) { var s = g.live ? wallLag(g) : null; lag.textContent = s == null ? '' : 'newest play ' + (s < 90 ? s + ' s' : Math.round(s / 60) + ' min') + ' ago'; }
+  });
+})();

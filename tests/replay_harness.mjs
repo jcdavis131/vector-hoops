@@ -218,4 +218,7 @@ async function main() {
   process.exit(report.errors ? 1 : 0);
 }
 
-main().catch((e) => { console.error(e); process.exit(2); });
+export { makeContext, flush, ROOT };
+
+// run only as a script, so tests/replay_live_check.mjs can import the stubs
+if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) main().catch((e) => { console.error(e); process.exit(2); });
