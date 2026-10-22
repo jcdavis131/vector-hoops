@@ -1,0 +1,12 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>scorecard speed fixture</title>
+<link rel="stylesheet" href="assets/app.css?v=1">
+</head>
+<body>
+<p>Structural fixture for scripts/scorecard/speed.py: one page, one stylesheet, one script that fetches JSON by a bare path.</p>
+<script src="assets/app.js?v=1"></script>
+</body>
+</html>

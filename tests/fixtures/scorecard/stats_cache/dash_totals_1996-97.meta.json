@@ -1,0 +1,19 @@
+{
+ "fetched_at": "2026-10-21T21:20:41-0500",
+ "fixture_note": "sha256 is of the untrimmed response; the body here keeps only the fixture's PLAYER_IDs",
+ "header_set": "H1_repo_chrome",
+ "headers_sent": {
+  "Accept": "application/json, text/plain, */*",
+  "Accept-Language": "en-US,en;q=0.9",
+  "Origin": "https://www.nba.com",
+  "Referer": "https://www.nba.com/",
+  "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+  "x-nba-stats-origin": "stats",
+  "x-nba-stats-token": "true"
+ },
+ "name": "dash_totals_1996-97",
+ "sha256": "faf2748fe31219c12bb15ec5458d5ee4f285bdd77230756b26a3aacc763c4d26",
+ "status": 200,
+ "url": "https://stats.nba.com/stats/leaguedashplayerstats?College=&Conference=&Country=&DateFrom=&DateTo=&Division=&DraftPick=&DraftYear=&GameScope=&GameSegment=&Height=&Location=&Outcome=&PlayerExperience=&PlayerPosition=&SeasonSegment=&ShotClockRange=&StarterBench=&VsConference=&VsDivision=&Weight=&LastNGames=0&LeagueID=00&MeasureType=Base&Month=0&OpponentTeamID=0&PORound=0&PaceAdjust=N&PerMode=Totals&Period=0&PlusMinus=N&Rank=N&Season=1996-97&SeasonType=Regular+Season&TeamID=0&TwoWay=0",
+ "works": true
+}

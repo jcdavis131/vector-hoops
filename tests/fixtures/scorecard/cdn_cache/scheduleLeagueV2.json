@@ -1,0 +1,260 @@
+{
+ "leagueSchedule": {
+  "gameDates": [
+   {
+    "gameDate": "10/20/2026 00:00:00",
+    "games": [
+     {
+      "awayTeam": {
+       "score": 113,
+       "teamId": 1610612738,
+       "teamTricode": "BOS"
+      },
+      "gameCode": "20261020/BOSDET",
+      "gameDateTimeUTC": "2026-10-20T19:00:00Z",
+      "gameId": "0022600001",
+      "gameStatus": 3,
+      "gameStatusText": "Final",
+      "homeTeam": {
+       "score": 121,
+       "teamId": 1610612765,
+       "teamTricode": "DET"
+      }
+     },
+     {
+      "awayTeam": {
+       "score": 106,
+       "teamId": 1610612755,
+       "teamTricode": "PHI"
+      },
+      "gameCode": "20261020/PHINYK",
+      "gameDateTimeUTC": "2026-10-20T23:00:00Z",
+      "gameId": "0022600002",
+      "gameStatus": 3,
+      "gameStatusText": "Final",
+      "homeTeam": {
+       "score": 100,
+       "teamId": 1610612752,
+       "teamTricode": "NYK"
+      }
+     },
+     {
+      "awayTeam": {
+       "score": 116,
+       "teamId": 1610612760,
+       "teamTricode": "OKC"
+      },
+      "gameCode": "20261020/OKCSAS",
+      "gameDateTimeUTC": "2026-10-21T01:30:00Z",
+      "gameId": "0022600003",
+      "gameStatus": 3,
+      "gameStatusText": "Final",
+      "homeTeam": {
+       "score": 104,
+       "teamId": 1610612759,
+       "teamTricode": "SAS"
+      }
+     }
+    ]
+   },
+   {
+    "gameDate": "10/21/2026 00:00:00",
+    "games": [
+     {
+      "awayTeam": {
+       "score": 0,
+       "teamId": 1610612750,
+       "teamTricode": "MIN"
+      },
+      "gameCode": "20261021/MINMIA",
+      "gameDateTimeUTC": "2026-10-21T23:30:00Z",
+      "gameId": "0022600004",
+      "gameStatus": 2,
+      "gameStatusText": "4th Qtr             ",
+      "homeTeam": {
+       "score": 0,
+       "teamId": 1610612748,
+       "teamTricode": "MIA"
+      }
+     },
+     {
+      "awayTeam": {
+       "score": 0,
+       "teamId": 1610612744,
+       "teamTricode": "GSW"
+      },
+      "gameCode": "20261021/GSWLAL",
+      "gameDateTimeUTC": "2026-10-22T02:00:00Z",
+      "gameId": "0022600005",
+      "gameStatus": 1,
+      "gameStatusText": "10:00 pm ET",
+      "homeTeam": {
+       "score": 0,
+       "teamId": 1610612747,
+       "teamTricode": "LAL"
+      }
+     },
+     {
+      "awayTeam": {
+       "score": 132,
+       "teamId": 1610612737,
+       "teamTricode": "ATL"
+      },
+      "gameCode": "20261021/ATLORL",
+      "gameDateTimeUTC": "2026-10-21T23:00:00Z",
+      "gameId": "0022600085",
+      "gameStatus": 3,
+      "gameStatusText": "Final",
+      "homeTeam": {
+       "score": 125,
+       "teamId": 1610612753,
+       "teamTricode": "ORL"
+      }
+     },
+     {
+      "awayTeam": {
+       "score": 116,
+       "teamId": 1610612749,
+       "teamTricode": "MIL"
+      },
+      "gameCode": "20261021/MILWAS",
+      "gameDateTimeUTC": "2026-10-21T23:00:00Z",
+      "gameId": "0022600086",
+      "gameStatus": 3,
+      "gameStatusText": "Final",
+      "homeTeam": {
+       "score": 128,
+       "teamId": 1610612764,
+       "teamTricode": "WAS"
+      }
+     },
+     {
+      "awayTeam": {
+       "score": 0,
+       "teamId": 1610612766,
+       "teamTricode": "CHA"
+      },
+      "gameCode": "20261021/CHABKN",
+      "gameDateTimeUTC": "2026-10-21T23:30:00Z",
+      "gameId": "0022600087",
+      "gameStatus": 2,
+      "gameStatusText": "4th Qtr             ",
+      "homeTeam": {
+       "score": 0,
+       "teamId": 1610612751,
+       "teamTricode": "BKN"
+      }
+     },
+     {
+      "awayTeam": {
+       "score": 0,
+       "teamId": 1610612741,
+       "teamTricode": "CHI"
+      },
+      "gameCode": "20261021/CHITOR",
+      "gameDateTimeUTC": "2026-10-21T23:30:00Z",
+      "gameId": "0022600088",
+      "gameStatus": 2,
+      "gameStatusText": "4th Qtr             ",
+      "homeTeam": {
+       "score": 0,
+       "teamId": 1610612761,
+       "teamTricode": "TOR"
+      }
+     },
+     {
+      "awayTeam": {
+       "score": 0,
+       "teamId": 1610612762,
+       "teamTricode": "UTA"
+      },
+      "gameCode": "20261021/UTAMEM",
+      "gameDateTimeUTC": "2026-10-22T00:00:00Z",
+      "gameId": "0022600089",
+      "gameStatus": 2,
+      "gameStatusText": "4th Qtr             ",
+      "homeTeam": {
+       "score": 0,
+       "teamId": 1610612763,
+       "teamTricode": "MEM"
+      }
+     },
+     {
+      "awayTeam": {
+       "score": 0,
+       "teamId": 1610612754,
+       "teamTricode": "IND"
+      },
+      "gameCode": "20261021/INDNOP",
+      "gameDateTimeUTC": "2026-10-22T00:00:00Z",
+      "gameId": "0022600090",
+      "gameStatus": 2,
+      "gameStatusText": "4th Qtr             ",
+      "homeTeam": {
+       "score": 0,
+       "teamId": 1610612740,
+       "teamTricode": "NOP"
+      }
+     },
+     {
+      "awayTeam": {
+       "score": 0,
+       "teamId": 1610612742,
+       "teamTricode": "DAL"
+      },
+      "gameCode": "20261021/DALHOU",
+      "gameDateTimeUTC": "2026-10-22T00:30:00Z",
+      "gameId": "0022600091",
+      "gameStatus": 2,
+      "gameStatusText": "3rd Qtr             ",
+      "homeTeam": {
+       "score": 0,
+       "teamId": 1610612745,
+       "teamTricode": "HOU"
+      }
+     },
+     {
+      "awayTeam": {
+       "score": 0,
+       "teamId": 1610612756,
+       "teamTricode": "PHX"
+      },
+      "gameCode": "20261021/PHXPOR",
+      "gameDateTimeUTC": "2026-10-22T02:00:00Z",
+      "gameId": "0022600092",
+      "gameStatus": 1,
+      "gameStatusText": "10:00 pm ET",
+      "homeTeam": {
+       "score": 0,
+       "teamId": 1610612757,
+       "teamTricode": "POR"
+      }
+     },
+     {
+      "awayTeam": {
+       "score": 0,
+       "teamId": 1610612758,
+       "teamTricode": "SAC"
+      },
+      "gameCode": "20261021/SACLAC",
+      "gameDateTimeUTC": "2026-10-22T02:30:00Z",
+      "gameId": "0022600093",
+      "gameStatus": 1,
+      "gameStatusText": "10:30 pm ET",
+      "homeTeam": {
+       "score": 0,
+       "teamId": 1610612746,
+       "teamTricode": "LAC"
+      }
+     }
+    ]
+   }
+  ],
+  "seasonYear": "2026-27"
+ },
+ "meta": {
+  "request": "http://nba.cloud/league/00/2026-27/scheduleleaguev2?Format=json",
+  "time": "2026-10-21T22:14:11.1411Z",
+  "version": 1
+ }
+}

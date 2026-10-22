@@ -1,0 +1,19 @@
+{
+ "fetched_at": "2026-10-21T21:08:12-0500",
+ "fixture_note": "sha256 is of the untrimmed response; the body keeps 3 GAME_IDs",
+ "header_set": "H1_repo_chrome",
+ "headers_sent": {
+  "Accept": "application/json, text/plain, */*",
+  "Accept-Language": "en-US,en;q=0.9",
+  "Origin": "https://www.nba.com",
+  "Referer": "https://www.nba.com/",
+  "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+  "x-nba-stats-origin": "stats",
+  "x-nba-stats-token": "true"
+ },
+ "name": "gamelog_T_1996-97",
+ "sha256": "c4391a8759fde620c96af909fd272d4fe03a8f348681b5cb627a59cace59d339",
+ "status": 200,
+ "url": "https://stats.nba.com/stats/leaguegamelog?Counter=0&DateFrom=&DateTo=&Direction=ASC&LeagueID=00&PlayerOrTeam=T&Season=1996-97&SeasonType=Regular+Season&Sorter=DATE",
+ "works": true
+}
