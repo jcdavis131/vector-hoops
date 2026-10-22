@@ -64,6 +64,7 @@ function renderGames(){
     el.appendChild(b);
   });
   if(!games.length)el.innerHTML='<span style="font-size:13px">No NBA games — '+dayLabel(sbDay||etToday())+'.</span>';
+  el.classList.toggle('one',games.length===1); // one game: the board above already is its scoreboard
 }
 
 // ---- Timeline scrubber state ----

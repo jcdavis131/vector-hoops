@@ -7,7 +7,8 @@
  *
  * Following live, the replay plays each new play as it lands, in real time, a beat behind
  * the scoreboard and the other plates. Rewinding the page's timeline holds the court on
- * that play; JUMP TO LIVE (or the plate's own LIVE button) follows again.
+ * that play; the timeline's LIVE button follows again. The plate has one transport button:
+ * play/pause, and pressing play while the page is at LIVE follows live again.
  */
 (function () {
   'use strict';
@@ -55,5 +56,10 @@
     var s = newest && newest.live ? wallLag(newest) : null;
     lag.textContent = s == null ? '' : 'newest play ' + (s < 90 ? s + ' s' : Math.round(s / 60) + ' min') + ' ago';
   }
+  var playBtn = document.getElementById('rpPlay'); // replay.js handles the click first; this only re-follows live
+  if (playBtn) playBtn.addEventListener('click', function () {
+    var R = window.PixelReplay, g = R && R.game();
+    if (lastLive && g && g.live && R.state.playing && !R.state.live) R.goLive();
+  });
   setInterval(showLag, 5000); // between polls too, so the age counts up instead of freezing
 })();

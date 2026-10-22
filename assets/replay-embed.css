@@ -30,3 +30,9 @@
 @media (max-width:520px){
   .live-root .rp-embed .rp-cams{position:static;max-width:none;justify-content:flex-start;padding:6px;}
 }
+/* cameras sit in the control bar, under the court, as one segmented control */
+.live-root .rp-embed__bar .rp-cams{position:static;display:inline-flex;gap:0;max-width:none;padding:0;}
+.live-root .rp-embed__bar .rp-cams button{min-height:36px;min-width:0;border-radius:0;margin-left:-2px;background:var(--card);color:var(--ink);border:2px solid var(--ink);font:700 10px var(--mono);letter-spacing:.04em;}
+.live-root .rp-embed__bar .rp-cams button:first-child{border-radius:6px 0 0 6px;margin-left:0;}
+.live-root .rp-embed__bar .rp-cams button:last-child{border-radius:0 6px 6px 0;}
+.live-root .rp-embed__bar .rp-cams button.on{background:var(--ink);color:var(--card);border-color:var(--ink);}
