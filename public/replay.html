@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
+<title>Pixel Replay — Vector Hoops</title>
+<meta name="description" content="Relive every NBA game in pixels: an animated court you can pause, rewind, loop and spin around, rebuilt from the NBA's own play-by-play."/>
+<meta name="color-scheme" content="light dark"/>
+<meta name="theme-color" content="#0F1114" media="(prefers-color-scheme: dark)"/>
+<meta name="theme-color" content="#FCFBF7" media="(prefers-color-scheme: light)"/>
+<meta property="og:title" content="Pixel Replay — Vector Hoops"/>
+<meta property="og:description" content="Last night's games, replayed in pixels. Pause, rewind, loop, rotate the court."/>
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml"/>
+<link rel="manifest" href="/manifest.json"/>
+<link rel="canonical" href="https://hoops.dumbmodel.com/replay"/>
+<link rel="stylesheet" href="/assets/fonts.css?v=8f376b2a"/>
+<link rel="stylesheet" href="/assets/shell.css?v=729457dd"/>
+<link rel="stylesheet" href="/assets/replay.css?v=e0d7c63e"/>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<nav class="site-nav" data-active="/live" aria-label="Vector Hoops site"></nav>
+<main id="main" class="rp" tabindex="-1">
+  <header class="rp-head">
+    <p class="rp-kicker">COURTSIDE LIVE · PIXEL REPLAY</p>
+    <h1 class="rp-title">Relive the game, one pixel at a time</h1>
+    <p class="rp-lede">Pick a game, hit play, and spin the court. Pause on any possession, rewind it, loop it.</p>
+  </header>
+
+  <section class="rp-games" aria-label="Games">
+    <div id="rpGames" class="rp-gamelist" role="list"><span class="rp-muted">Loading games…</span></div>
+  </section>
+
+  <section class="rp-cab" aria-label="Replay">
+    <div class="rp-screen" id="rpScreen">
+      <canvas id="rpCanvas" width="400" height="225" role="img" aria-label="Animated pixel replay of the selected game"></canvas>
+      <div class="rp-cams" role="group" aria-label="Camera">
+        <button type="button" data-cam="broadcast" class="on" aria-pressed="true">Broadcast</button>
+        <button type="button" data-cam="baseline" aria-pressed="false">Baseline</button>
+        <button type="button" data-cam="overhead" aria-pressed="false">Overhead</button>
+        <button type="button" data-cam="iso" aria-pressed="false">Arcade</button>
+        <button type="button" data-cam="follow" aria-pressed="false">Follow ball</button>
+      </div>
+      <p class="rp-hint">Drag to rotate · scroll or pinch to zoom</p>
+    </div>
+
+    <div class="rp-controls">
+      <div class="rp-buttons" role="group" aria-label="Playback">
+        <button type="button" id="rpBack" title="Back 6 seconds (left arrow)" aria-label="Back 6 seconds">⟲ 6s</button>
+        <button type="button" id="rpRev" title="Play backwards" aria-label="Play backwards" aria-pressed="false">◀◀</button>
+        <button type="button" id="rpPlay" class="rp-play" title="Play or pause (space)" aria-label="Play">▶</button>
+        <button type="button" id="rpFwd" title="Forward 6 seconds (right arrow)" aria-label="Forward 6 seconds">6s ⟳</button>
+        <button type="button" id="rpLoop" title="Loop the last 8 seconds" aria-label="Loop this moment" aria-pressed="false">↻ Loop</button>
+        <label class="rp-speed">Speed
+          <select id="rpSpeed" aria-label="Playback speed">
+            <option value="0.5">½×</option><option value="1">1×</option><option value="2" selected>2×</option><option value="4">4×</option><option value="8">8×</option>
+          </select>
+        </label>
+        <label class="rp-check"><input type="checkbox" id="rpCondense" checked aria-label="Skip dead time"/> Skip dead time</label>
+      </div>
+      <div class="rp-timeline">
+        <input type="range" id="rpScrub" min="0" max="1000" value="0" step="1" aria-label="Game timeline"/>
+        <div id="rpMarks" class="rp-marks" aria-hidden="true"></div>
+        <div id="rpTicks" class="rp-ticks" aria-hidden="true"></div>
+      </div>
+      <p id="rpNow" class="rp-now" aria-live="polite"></p>
+    </div>
+  </section>
+
+  <section class="rp-side">
+    <div class="rp-panel">
+      <h2>Big moments</h2>
+      <div class="rp-filter" role="group" aria-label="Moment filter">
+        <button type="button" data-f="all" class="on" aria-pressed="true">All</button>
+        <button type="button" data-f="3" aria-pressed="false">Threes</button>
+        <button type="button" data-f="dunk" aria-pressed="false">Dunks</button>
+        <button type="button" data-f="d" aria-pressed="false">Blocks + steals</button>
+        <button type="button" data-f="lead" aria-pressed="false">Lead changes</button>
+      </div>
+      <ol id="rpMoments" class="rp-moments"></ol>
+    </div>
+    <div class="rp-panel">
+      <h2>Play-by-play</h2>
+      <ol id="rpFeed" class="rp-feed"></ol>
+    </div>
+  </section>
+
+  <section class="rp-panel rp-honest" aria-label="How this works">
+    <h2>What's real, what's staged</h2>
+    <p>Every event, clock, score, shooter and shot spot comes from the NBA's own play-by-play feed (<a id="rpSrc" href="https://cdn.nba.com/" rel="noopener">source file</a>). Shot spots match the feed's shot distances to the inch. The NBA doesn't publish where the other nine players stand, so they are staged from formation templates: offense spread around the arc, defenders between their man and the rim. Treat their spots as a sketch, not tracking data.</p>
+    <p id="rpAsOf" class="rp-muted"></p>
+  </section>
+</main>
+<footer class="site-footer">
+  <p class="site-footer__attribution">Play-by-play from cdn.nba.com · A <a href="https://dumbmodel.com">dumbmodel</a> project</p>
+</footer>
+<script src="/assets/site-nav.js?v=76d1e530" defer></script>
+<script src="/assets/replay.js?v=a4b0b17b" defer></script>
+</body>
+</html>

@@ -253,6 +253,10 @@
       "source": "/live"
     },
     {
+      "destination": "/replay.html",
+      "source": "/replay"
+    },
+    {
       "destination": "/play.html",
       "source": "/play"
     },
