@@ -86,7 +86,7 @@ def test_band_cutoffs_match_registry_and_json() -> None:
 def test_dossier_footer_tells_one_true_story() -> None:
     src = (ROOT / "assets" / "player-dossier.js").read_text(encoding="utf-8")
     assert "64-dimensional MTNN embedding" in src
-    assert "14 era-normalised" in src
+    assert "14 era-normalized" in src
 
 
 def test_regions_renamed_and_geometried() -> None:
