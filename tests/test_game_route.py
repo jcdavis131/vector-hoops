@@ -12,7 +12,6 @@ import json
 import subprocess
 from pathlib import Path
 
-
 ROOT = Path(__file__).resolve().parents[1]
 JS = ROOT / "assets" / "game-route.js"
 H = 3600 * 1000
@@ -22,8 +21,7 @@ NOW = "Date.now()"
 def run_table(cases):
     """cases: list of (state, age_ms_or_None, margin_ms, expected)."""
     prog = (
-        "const G=require(%s);const R=[];"
-        % json.dumps(str(JS))
+        "const G=require(%s);const R=[];" % json.dumps(str(JS))
         + "const NOW=Date.now();"
         + "".join(
             "R.push(G.surfaceFor(%s,%s,%s));"
@@ -36,9 +34,7 @@ def run_table(cases):
         )
         + "console.log(JSON.stringify(R));"
     )
-    out = subprocess.run(
-        ["node", "-e", prog], capture_output=True, text=True, check=True, timeout=30
-    )
+    out = subprocess.run(["node", "-e", prog], capture_output=True, text=True, check=True, timeout=30)
     return json.loads(out.stdout)
 
 
@@ -68,15 +64,12 @@ def test_surfacefor_truth_table():
 
 def test_readparams_normalizes_id_spellings():
     prog = (
-        "const G=require(%s);const R=["
-        % json.dumps(str(JS))
+        "const G=require(%s);const R=[" % json.dumps(str(JS))
         + "G.readParams('?game=ABC'),G.readParams('?g=ABC'),G.readParams('?espn=ABC'),"
         + "G.readParams('?espn=ABC&possession=12&t=44&view=follow&cam=baseline'),"
         + "G.readParams('?t=44'),G.readParams('')];console.log(JSON.stringify(R));"
     )
-    out = subprocess.run(
-        ["node", "-e", prog], capture_output=True, text=True, check=True, timeout=30
-    )
+    out = subprocess.run(["node", "-e", prog], capture_output=True, text=True, check=True, timeout=30)
     r = json.loads(out.stdout)
     assert r[0]["id"] == "ABC" and r[1]["id"] == "ABC" and r[2]["id"] == "ABC"
     # deep-link params preserved, never treated as ids
@@ -105,9 +98,7 @@ def test_guard_never_loops():
         + "var l5=mkLoc('?game=E3');var r5=G.guard('live',function(){return{state:'post',gameTimeMs:null};},l5);"
         + "console.log(JSON.stringify({r1:r1,to1:l1.replaced,r2:r2,r3:r3,to3:l3.replaced,r4:r4,r5:r5}));"
     )
-    out = subprocess.run(
-        ["node", "-e", prog], capture_output=True, text=True, check=True, timeout=30
-    )
+    out = subprocess.run(["node", "-e", prog], capture_output=True, text=True, check=True, timeout=30)
     d = json.loads(out.stdout)
     assert d["r1"] is True and d["to1"].startswith("/replay?espn=E1")
     assert "notice=moved-to-replay" in d["to1"]

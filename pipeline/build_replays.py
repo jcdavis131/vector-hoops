@@ -282,10 +282,7 @@ def main() -> int:
             continue
         listed.append(g)
     index = {
-        "games": [
-            {k: g[k] for k in ("gameId", "date", "final", "teams", "score", "periods")}
-            for g in listed
-        ],
+        "games": [{k: g[k] for k in ("gameId", "date", "final", "teams", "score", "periods")} for g in listed],
         "note": built[0]["staged"] if built else "",
     }
     for gid, age_h in newborn:
