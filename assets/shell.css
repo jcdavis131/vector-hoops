@@ -139,6 +139,7 @@ a.site-nav__slot{ display: inline-flex; }
 }
 @media (max-width: 480px){
   .site-nav__ext{ display: none; }
+  .site-nav__slot, .site-nav__slot.site-nav__link{ padding: 0 6px; } /* 361-389 px with the live dot: 325 px in a 329 px box, one row */
 }
 @media (max-width: 360px){
   .site-nav__slot, .site-nav__slot.site-nav__link{ padding: 0 4px; }
