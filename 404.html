@@ -11,13 +11,19 @@
 <meta name="theme-color" content="#FCFBF7" media="(prefers-color-scheme: light)"/>
 <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml"/>
 <link rel="manifest" href="/manifest.json"/>
-<link rel="stylesheet" href="assets/fonts.css?v=8f376b2a"/>
+<link rel="stylesheet" href="/assets/fonts.css?v=8f376b2a"/>
 <link rel="stylesheet" href="/assets/atlas.css?v=c43e0f47"/>
 <link rel="stylesheet" href="/assets/shell.css?v=36a047f1"/>
 <style>
-.nf{ min-height: calc(100vh - var(--nav-h) - 180px); display: grid; place-items: center; }
-.nf__code{ font-family: var(--font-display); font-size: clamp(96px, 20vw, 220px); font-weight: 700; letter-spacing: -.06em; line-height: .85; color: transparent; -webkit-text-stroke: 1px var(--line-2); font-variant-numeric: tabular-nums; }
-.nf__code span{ color: var(--accent); -webkit-text-stroke: 0; }
+.nf{ min-height: calc(100vh - var(--nav-h,44px) - 180px); display: grid; place-items: center; }
+.nf__code{ font-family: var(--font-display, ui-sans-serif, system-ui, sans-serif); font-size: clamp(96px, 20vw, 220px); font-weight: 700; letter-spacing: -.06em; line-height: .85; color: transparent; -webkit-text-stroke: 1px var(--line-2, #9a9a94); font-variant-numeric: tabular-nums; }
+.nf__code span{ color: var(--accent, #e0483b); -webkit-text-stroke: 0; }
+/* Critical button rules inlined: the 404 page must render its actions even if
+   the shared stylesheet is stale or blocked (title-card__actions was reported
+   unstyled on the served page). Values match assets/atlas.css. */
+.title-card__actions{ display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; margin-top: 8px; }
+.title-card__actions .btn{ appearance: none; display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 44px; padding: 0 20px; font-family: var(--font-display, ui-sans-serif, system-ui, sans-serif); font-size: 11.5px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--fg, #232323); background: transparent; border: 1px solid var(--line-2, #9a9a94); border-radius: 5px; text-decoration: none; cursor: pointer; }
+.title-card__actions .btn-primary{ background: var(--accent, #e0483b); color: var(--on-accent, #fcfbf7); border-color: var(--accent, #e0483b); }
 </style>
 </head>
 <body>

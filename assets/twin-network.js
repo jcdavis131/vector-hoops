@@ -390,7 +390,7 @@
   loadAll().then(function () {
     bindPicker();
   }).catch(function (e) {
-    fail('Could not load the twin data right now — check your connection and reload.');
+    fail('The twin data didn't load on our side — try again in a bit.');
   });
 
 })(window);
