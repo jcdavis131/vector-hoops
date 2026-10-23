@@ -27,6 +27,13 @@
   --data-terra:   #A05A38;  /* data + chart text — 5.05:1 on board, AA (was #C17C60 at 3.21:1) */
   --data-moss:    #8A9A8B;  /* data only, inside charts */
   --void:         #1E2022;  /* 3D map surfaces only — dark on both themes */
+  /* the void's own ink: constant on both themes, like the void itself (wave 1 kit, .card--void) */
+  --void-ink:     #D8DCD8;  /* text on the void — 11.79:1 */
+  --void-ink-2:   #A7B0BC;  /* secondary text on the void — 7.46:1 */
+  --void-accent:  #FF7A5C;  /* ember on the void — 6.37:1; var(--accent) red is 4.02:1 there */
+  --void-line:    rgba(255,255,255,.14);  /* hairline on the void */
+  --void-line-2:  rgba(255,255,255,.28);  /* stronger line on the void: control borders, hard steps */
+  --void-surface: rgba(13,16,21,.92);     /* raised chrome on the void: tooltips, overlays, nested cards */
 
   /* ---- semantic aliases (components resolve through these) ---- */
   --bg:        var(--board);
@@ -53,7 +60,7 @@
   --font-text: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   --font-code: ui-monospace, "SFMono-Regular", "SF Mono", Menlo, Consolas, monospace;
 
-  --t-2xs: 10px;
+  --t-2xs: 11px;   /* the floor: nothing on the site is declared under 11px (was 10px) */
   --t-xs: 11px;    /* tracked labels */
   --t-sm: 13px;
   --t-base: 15px;
@@ -86,6 +93,7 @@
   --coin-wash-2: #F9DC7E;  /* solved-fill wash, deep stop — ink on it: 12.83:1 */
   --coin-text:   #7A5200;  /* deep gold for glyphs/labels — 6.68:1 on board */
   --coin-ink:    #2A1600;  /* constant ink for text ON coin material, both themes */
+  --coin-deep:   #6E4B00;  /* deep gold for borders + glyphs ON coin material, both themes — 5.83:1 on the wash's deep stop */
   --qblock-1:    #F7B733;  /* ?-block amber, light stop */
   --qblock-2:    #EE9420;  /* ?-block amber, deep stop — #2A1600 on it: 7.33:1 */
   --qblock-ink:  #2A1600;
@@ -137,6 +145,13 @@
     --data-terra:   #C17C60;
     --data-moss:    #8A9A8B;
     --void:         #1E2022;
+    /* the void never swaps, so neither does its ink (restated so the dark table is complete) */
+    --void-ink:     #D8DCD8;
+    --void-ink-2:   #A7B0BC;
+    --void-accent:  #FF7A5C;
+    --void-line:    rgba(255,255,255,.14);
+    --void-line-2:  rgba(255,255,255,.28);
+    --void-surface: rgba(13,16,21,.92);
     --bg:        var(--board);
     --surface:   #14161A;
     --surface-2: #1A1D22;
@@ -166,6 +181,8 @@
     --block-line:  #454F5C;
     /* coin + qblock gradients are materials: identical on both themes,
        always paired with ink text (9.76:1 / 7.33:1 worst stop). */
+    /* legacy bridge: --green is only ever a fill under white text (5.55:1); it keeps its value at night */
+    --green:       #00775A;
   }
 }
 
@@ -263,6 +280,8 @@ p{ text-wrap: pretty; }
   display: flex; flex-direction: column; gap: var(--s-5);
   min-width: 0;
 }
+/* Narrow frame for prose and games: one measure, no page overrides .main width. */
+.main--narrow{ max-width: calc(760px + var(--gutter) * 2); }
 
 /* Title card: the composed header every page opens with. */
 .title-card{
@@ -320,6 +339,39 @@ p{ text-wrap: pretty; }
   letter-spacing: .24em; text-transform: uppercase; color: var(--fg-2);
 }
 
+/* Plate header: the numbered head a card or JS-rendered section opens with
+   (Courtside Live's plate chrome, promoted; geometry from live.css:68-73).
+     <div class="plate"><span class="plate__no">01</span><h2>Form</h2>
+          <span class="plate__rule"></span><span class="plate__meta">ESPN scoreboard</span></div>
+   plate.js emits .pno / .prule / .pmeta for the same slots; both spellings
+   are styled until that markup is renamed. .section-head stays for centred
+   page sections; .plate is left-aligned and lives inside a card. */
+.plate{
+  display: flex; align-items: center; gap: 10px;
+  margin: 0 0 var(--s-3); min-width: 0;
+}
+.plate__no, .plate > .pno{
+  flex: 0 0 auto;
+  font-family: var(--font-display); font-size: var(--t-xs); font-weight: 700; font-stretch: 112%;
+  letter-spacing: .1em; text-transform: uppercase; line-height: 1.2;
+  color: var(--bg); background: var(--fg);
+  padding: 3px 7px; border-radius: 3px;
+  font-variant-numeric: tabular-nums;
+}
+/* .card .plate > h2 restates the selector at card specificity so .card h2 (below) does not resize it */
+.plate > h2, .plate__title, .card .plate > h2{
+  flex: 0 1 auto; min-width: 0; margin: 0;
+  font-family: var(--font-display); font-size: var(--t-xs); font-weight: 700; font-stretch: 112%;
+  letter-spacing: var(--track-label); text-transform: uppercase; line-height: 1.4;
+  color: var(--fg);
+}
+.plate__rule, .plate > .prule{ flex: 1 1 12px; min-width: 12px; height: 0; border-top: 1px solid var(--line); }
+.plate__meta, .plate > .pmeta{
+  flex: 0 1 auto; min-width: 0; text-align: right;
+  font-family: var(--font-text); font-size: var(--t-sm); line-height: 1.4; color: var(--fg-3);
+  font-variant-numeric: tabular-nums;
+}
+
 /* ==========================================================================
    Surfaces
    ========================================================================== */
@@ -346,7 +398,7 @@ p{ text-wrap: pretty; }
 /* ==========================================================================
    Controls
    ========================================================================== */
-.btn, .btn-play, .pp-btn{
+.btn, .btn-play, .pp-btn, .trail-btn{
   appearance: none;
   display: inline-flex; align-items: center; justify-content: center; gap: 10px;
   min-height: 44px; padding: 0 20px;
@@ -362,16 +414,16 @@ p{ text-wrap: pretty; }
   cursor: pointer;
   transition: border-color var(--dur-1) var(--ease), background var(--dur-1) var(--ease), color var(--dur-1) var(--ease), transform var(--dur-1) var(--ease);
 }
-.btn:hover, .pp-btn:hover{ border-color: var(--fg-3); background: var(--surface-2); transform: none; box-shadow: none; }
-.btn:active, .pp-btn:active{ transform: translateY(1px); box-shadow: none; }
-.btn[disabled], .btn:disabled{ opacity: .45; cursor: not-allowed; }
-.btn-primary, .btn-play, .pp-btn--yellow{
-  background: var(--accent); color: var(--on-accent); border-color: var(--accent);
-}
-.btn-primary:hover, .btn-play:hover, .pp-btn--yellow:hover{ background: var(--accent-2); border-color: var(--accent-2); color: var(--on-accent); }
+.btn:hover, .pp-btn:hover, .trail-btn:hover{ border-color: var(--fg-3); background: var(--surface-2); transform: none; box-shadow: none; }
+.btn:active, .pp-btn:active, .trail-btn:active{ transform: translateY(1px); box-shadow: none; }
+.btn[disabled], .btn:disabled, .trail-btn:disabled{ opacity: .45; cursor: not-allowed; }
+/* .btn-primary is defined once, in the pipe block below (one rule, one token: --pipe). */
 .btn-accent{ background: transparent; color: var(--accent-2); border-color: var(--accent-line); }
 .btn-accent:hover{ background: var(--accent-wash); border-color: var(--accent); color: var(--accent-2); }
 .btn-xl{ min-height: 52px; padding: 0 28px; font-size: 12px; }
+/* Icon-only button: a 44px square; the icon is the only content, so aria-label is required. */
+.btn--icon{ width: 44px; min-width: 44px; height: 44px; min-height: 44px; padding: 0; gap: 0; }
+.btn--icon svg{ width: 16px; height: 16px; flex: 0 0 auto; }
 
 .pill, .chip, .cqs-badge{
   display: inline-flex; align-items: center; gap: 6px;
@@ -500,12 +552,12 @@ table{ border-collapse: collapse; width: 100%; }
 .wiki-row{ color: var(--fg); padding: 12px 0; font: inherit; }
 .wiki-row__name{ font-family: var(--font-text); font-weight: 600; font-size: 15px; color: var(--fg); letter-spacing: -.005em; }
 .wiki-row__name .vh-team-tag{
-  font-family: var(--font-display); font-size: 9.5px; font-weight: 600; font-stretch: 112%; letter-spacing: .12em;
+  font-family: var(--font-display); font-size: var(--t-xs); font-weight: 600; font-stretch: 112%; letter-spacing: .12em;
   color: var(--fg-3); background: none; border: 1px solid var(--line-2); border-radius: 999px; padding: 1px 7px; margin-left: 10px; vertical-align: 2px;
 }
 .wiki-row__meta{ font-family: var(--font-text); font-size: 13px; color: var(--fg-3); font-variant-numeric: tabular-nums; letter-spacing: 0; }
 .wiki-row__grades, .skills-board__grade{
-  font-family: var(--font-display); font-size: 10px; font-weight: 700; font-stretch: 112%; letter-spacing: .14em; text-transform: uppercase;
+  font-family: var(--font-display); font-size: var(--t-xs); font-weight: 700; font-stretch: 112%; letter-spacing: .14em; text-transform: uppercase;
   color: var(--fg-2); background: none; border: 1px solid var(--line-2); border-radius: var(--radius); box-shadow: none;
   padding: 6px 10px; cursor: pointer;
 }
@@ -533,15 +585,41 @@ table{ border-collapse: collapse; width: 100%; }
    ========================================================================== */
 .arch-diagram{
   font-family: var(--font-code); font-size: 12.5px; line-height: 1.75;
-  color: #D8DCD8; background: var(--void);  /* void panel is dark in both themes; #D8DCD8 on it = 11.79:1 */
+  color: var(--void-ink); background: var(--void);  /* void panel is dark in both themes; its ink = 11.79:1 */
   border: 1px solid var(--line); border-radius: var(--radius-lg); box-shadow: none;
   padding: var(--s-5); overflow: auto; white-space: pre;
 }
-.arch-diagram b{ color: #FF7A5C; }  /* ember on void = 6.37:1; var(--accent) red was 4.02:1 */
+.arch-diagram b{ color: var(--void-accent); }  /* ember on void = 6.37:1; var(--accent) red was 4.02:1 */
 .cqs-strip{ display: flex; flex-wrap: wrap; gap: 0; border: 1px solid var(--line); border-radius: var(--radius); margin: var(--s-3) 0; }
 .cqs-badge{ flex: 1 1 0; flex-direction: column; align-items: flex-start; gap: 2px; min-height: 0; padding: 12px 14px; border: 0; border-radius: 0; color: var(--fg-3); }
 .cqs-badge + .cqs-badge{ border-left: 1px solid var(--line); }
 .cqs-badge b{ display: block; font-family: var(--font-display); font-size: 20px; font-weight: 700; letter-spacing: -.01em; color: var(--fg); text-transform: none; }
+
+/* Stat tile: one number with its label; the number first.
+     <div class="stat"><b>12,966</b>player-seasons</div>
+   .stat-strip joins tiles with hairlines (the .cqs-strip / .title-card__meta geometry);
+   .stat--xl is the one big readout a page may carry. */
+.stat{
+  display: flex; flex-direction: column; gap: 2px; min-width: 0;
+  padding: 12px 14px;
+  font-family: var(--font-display); font-size: var(--t-xs); font-weight: 600; font-stretch: 112%;
+  letter-spacing: var(--track-label); text-transform: uppercase; line-height: 1.4;
+  color: var(--fg-3);
+}
+.stat b, .stat__num{
+  display: block;
+  font-family: var(--font-display); font-size: var(--t-lg); font-weight: 700; font-stretch: 100%;
+  letter-spacing: -.01em; text-transform: none; line-height: 1.1;
+  color: var(--fg); font-variant-numeric: tabular-nums lining-nums;
+}
+.stat--xl b, .stat--xl .stat__num{ font-size: var(--t-2xl); letter-spacing: var(--track-display); }
+.stat-strip{
+  display: flex; flex-wrap: wrap; gap: 0;
+  border: 1px solid var(--line); border-radius: var(--radius);
+  background: var(--surface);
+}
+.stat-strip > .stat{ flex: 1 1 0; min-width: 120px; }
+.stat-strip > .stat + .stat{ border-left: 1px solid var(--line); }
 
 /* Site footer styles live in assets/shell.css (three-slot nav rebuild). */
 
@@ -577,39 +655,34 @@ table{ border-collapse: collapse; width: 100%; }
 }
 
 
-/* ---------- Career Trails (additive) ---------- */
-.trail-btn{
-  display:inline-flex; align-items:center; justify-content:center;
-  margin-top:14px; min-height:48px; padding:0 22px;
-  font-family:var(--font-display); font-size:12px; font-weight:800;
-  letter-spacing:.12em; text-transform:uppercase;
-  color:#0B0E12; background:linear-gradient(135deg,#8A9A8B,#C17C60);
-  border:0; border-radius:8px; cursor:pointer;
-}
-.trail-btn:hover{ filter:brightness(1.08); }
-.trail-btn:disabled{ opacity:.6; cursor:wait; }
-.trail-btn:focus-visible{ outline:2px solid var(--focus); outline-offset:2px; }
+/* ---------- Career Trails (additive) ----------
+   .trail-btn is the view's primary action, so it is a .btn-primary (selector lists
+   above and in the pipe block below): it reads --pipe like every other primary.
+   #trail-bar is chrome on the void and wears the void ink. */
+.trail-btn{ margin-top: 14px; min-height: 48px; padding: 0 22px; }
+.trail-btn:disabled{ opacity: .6; cursor: wait; }
 
 #trail-bar{
-  position:absolute; z-index:3; left:12px; right:12px; bottom:64px;
-  background:rgba(13,16,21,.94); border:1px solid rgba(255,255,255,.14);
-  border-radius:12px; padding:10px 14px 12px; color:#ECEEF1;
+  position: absolute; z-index: 3; left: 12px; right: 12px; bottom: 64px;
+  padding: 10px 14px 12px;
+  color: var(--void-ink); background: var(--void-surface);
+  border: 1px solid var(--void-line); border-radius: var(--radius-lg);
 }
 @media (max-width:900px){
   /* the map's own buttons move to the top on small screens */
-  #trail-bar{ bottom:12px; }
+  #trail-bar{ bottom: 12px; }
 }
-#trail-bar .trail-row{ display:flex; align-items:center; gap:12px; }
+#trail-bar .trail-row{ display: flex; align-items: center; gap: 12px; }
 #trail-close{
-  width:48px; height:48px; flex:0 0 auto; border-radius:8px;
-  background:rgba(255,255,255,.08); color:#ECEEF1; border:1px solid rgba(255,255,255,.16);
-  font-size:22px; line-height:1; cursor:pointer;
+  width: 48px; height: 48px; flex: 0 0 auto; border-radius: var(--radius);
+  background: transparent; color: var(--void-ink); border: 1px solid var(--void-line-2);
+  font-size: 22px; line-height: 1; cursor: pointer;
 }
-#trail-close:hover{ background:rgba(255,255,255,.16); }
-#trail-season{ font-weight:700; min-width:76px; font-variant-numeric:tabular-nums; }
-#trail-scrub{ flex:1; min-height:48px; accent-color:#C17C60; cursor:pointer; }
-#trail-changed{ font-size:12.5px; color:#A7B0BC; margin-top:4px; min-height:18px; }
-#trail-honest{ font-size:11.5px; color:rgba(214,222,232,.62); margin-top:6px; font-style:italic; }
+#trail-close:hover{ background: var(--void-line); }
+#trail-season{ font-family: var(--font-code); font-weight: 700; min-width: 76px; font-variant-numeric: tabular-nums; }
+#trail-scrub{ flex: 1; min-height: 48px; accent-color: var(--void-accent); cursor: pointer; }
+#trail-changed{ font-size: var(--t-sm); color: var(--void-ink-2); margin-top: 4px; min-height: 18px; }
+#trail-honest{ font-size: var(--t-xs); color: var(--void-ink-2); margin-top: 6px; font-style: italic; }
 
 /* ==========================================================================
    MARIO LIFT (shipped in PR #73 on Cameron's word, 2026-10-12; cleanup PR follows the line-by-line review)
@@ -633,11 +706,11 @@ table{ border-collapse: collapse; width: 100%; }
 .card{
   box-shadow: 5px 5px 0 var(--step);
 }
-.btn, .btn-play, .pp-btn{
+.btn, .btn-play, .pp-btn, .trail-btn{
   border-color: var(--block-line);
   box-shadow: 3px 3px 0 var(--block);
 }
-.btn:hover, .pp-btn:hover{
+.btn:hover, .pp-btn:hover, .trail-btn:hover{
   border-color: var(--block-line);
   transform: translate(-1px,-1px);
   box-shadow: 4px 4px 0 var(--block);
@@ -645,21 +718,22 @@ table{ border-collapse: collapse; width: 100%; }
 .btn:hover:not(.btn-accent), .pp-btn:hover{
   background: var(--surface-2);
 }
-.btn:active, .pp-btn:active{
+.btn:active, .pp-btn:active, .trail-btn:active{
   transform: translate(2px,2px);
   box-shadow: 1px 1px 0 var(--block);
 }
-.btn[disabled], .btn:disabled, .pp-btn[disabled], .pp-btn:disabled{
+.btn[disabled], .btn:disabled, .pp-btn[disabled], .pp-btn:disabled, .trail-btn:disabled{
   box-shadow: none;
 }
 
-/* ---- pipe green: the single primary action per view ---- */
-.btn-primary, .btn-play, .pp-btn--yellow{
+/* ---- the single primary action per view: one rule, one token (--pipe).
+   Cam's hue call is pending; flipping --pipe to --marker-red flips every primary. ---- */
+.btn-primary, .btn-play, .pp-btn--yellow, .trail-btn{
   background: var(--pipe);
   border-color: var(--block-line);
   color: var(--on-accent);
 }
-.btn-primary:hover, .btn-play:hover, .pp-btn--yellow:hover{
+.btn-primary:hover, .btn-play:hover, .pp-btn--yellow:hover, .trail-btn:hover{
   background: var(--pipe-deep);
   border-color: var(--block-line);
   color: var(--on-accent);
@@ -740,6 +814,17 @@ section .today-strip__links a:first-child:hover{ background: var(--pipe-deep); }
 #streak-pill::before{ content: "★ "; color: #7A5200; }
 #streak-pill.tick{ animation: mario-coin-pop .45s var(--spring); }
 
+/* Progress dots: one per guess, 32px so a thumb can read them; done = a collected coin,
+   current = the coin wash (seed play.html:148-150 + the coin pips below). */
+.progress-dots{ display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+.progress-dot{
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 32px; height: 32px; border-radius: 50%;
+  font-family: var(--font-display); font-size: var(--t-xs); font-weight: 700; font-stretch: 112%;
+  color: var(--fg-3); background: transparent;
+  border: 1px solid var(--line-2); box-shadow: none;
+  font-variant-numeric: tabular-nums;
+}
 /* slot dots become coin pips */
 .progress-dot.is-done{
   background: linear-gradient(180deg, var(--coin-1), var(--coin-2));
@@ -749,8 +834,8 @@ section .today-strip__links a:first-child:hover{ background: var(--pipe-deep); }
 }
 .progress-dot.is-current{
   background: var(--coin-wash-1);
-  border-color: #7A5200;
-  color: #7A5200;
+  border-color: var(--coin-deep);
+  color: var(--coin-deep);
 }
 
 /* a solved slot is a collected coin — constant coin ink on the wash,
@@ -786,8 +871,10 @@ section .today-strip__links a:first-child:hover{ background: var(--pipe-deep); }
 /* brick-tan divider over the court */
 #game-header .game-status-bar{ border-top-color: var(--brick); }
 
-/* lifelines are power-ups: ?-blocks with a hard shadow and a springy press */
-#lifelines-bar .btn-lifeline{
+/* lifelines are power-ups: ?-blocks with a hard shadow and a springy press.
+   Kit name: .lifeline (a .btn modifier); the #lifelines-bar .btn-lifeline
+   selector is game-mechanics.js's current markup and shares every rule. */
+.btn.lifeline, #lifelines-bar .btn-lifeline{
   background: linear-gradient(180deg, var(--qblock-1), var(--qblock-2));
   border: 2px solid var(--block);
   border-radius: 6px;
@@ -795,7 +882,7 @@ section .today-strip__links a:first-child:hover{ background: var(--pipe-deep); }
   color: var(--qblock-ink);
   transition: transform .18s var(--spring), box-shadow .18s var(--spring);
 }
-#lifelines-bar .btn-lifeline::before{
+.btn.lifeline::before, #lifelines-bar .btn-lifeline::before{
   content: "?";
   display: inline-flex; align-items: center; justify-content: center;
   width: 18px; height: 18px; flex: 0 0 auto;
@@ -805,24 +892,26 @@ section .today-strip__links a:first-child:hover{ background: var(--pipe-deep); }
   font-family: var(--font-code); font-size: 12px; font-weight: 900; line-height: 1;
   color: var(--qblock-ink);
 }
-#lifelines-bar .btn-lifeline:hover:not(:disabled){
+.btn.lifeline:hover:not(:disabled), #lifelines-bar .btn-lifeline:hover:not(:disabled){
+  background: linear-gradient(180deg, var(--qblock-1), var(--qblock-2));
   transform: translate(-1px,-1px);
   box-shadow: 4px 4px 0 var(--block);
 }
-#lifelines-bar .btn-lifeline:active:not(:disabled){
+.btn.lifeline:active:not(:disabled), #lifelines-bar .btn-lifeline:active:not(:disabled){
   transform: translate(2px,2px) scale(.98);
   box-shadow: 1px 1px 0 var(--block);
 }
-#lifelines-bar .btn-lifeline:disabled{
+.btn.lifeline:disabled, #lifelines-bar .btn-lifeline:disabled{
   filter: saturate(.35);
   box-shadow: none;
 }
-#lifelines-bar .btn-lifeline .ll-cost{ color: var(--qblock-ink); opacity: .75; }
+.lifeline__cost, #lifelines-bar .btn-lifeline .ll-cost{ color: var(--qblock-ink); opacity: .75; }
 
 /* ---- the lift respects reduced motion, explicitly ---- */
 @media (prefers-reduced-motion: reduce){
   #streak-pill.tick, .court-card.is-solved, .reward.is-unlocked{ animation: none; }
-  #lifelines-bar .btn-lifeline{ transition: none; }
+  .btn.lifeline, #lifelines-bar .btn-lifeline{ transition: none; }
+  .btn.lifeline:hover:not(:disabled), .btn.lifeline:active:not(:disabled),
   #lifelines-bar .btn-lifeline:hover:not(:disabled),
   #lifelines-bar .btn-lifeline:active:not(:disabled){ transform: none; }
 }
@@ -833,9 +922,351 @@ section .today-strip__links a:first-child:hover{ background: var(--pipe-deep); }
   .court-card.is-solved, section .today-strip__label{ box-shadow: none !important; }
 }
 
+/* ==========================================================================
+   Kit — wave 1 (DESIGN-DIRECTION §2). Additive classes, each promoted from
+   the best page copy named in its comment. They sit after the component
+   rules above on purpose: .card / .btn restate their materials up there, and
+   a variant placed earlier would lose the tie.
+   ========================================================================== */
+
+/* ---- card variants ---- */
+/* The model window: the void ground on both themes, with the void's own ink.
+   The semantic aliases are remapped here once, so every kit child (plate,
+   stat, seg, label, caption, state, embed3d chrome, data-table) reads the
+   void pairings with no per-class variant. This is the one scoped remap the
+   system allows — a component, not a :root, and the only place the ink
+   changes without the OS. --step / --on-accent / --pipe are not remapped:
+   the window's own shadow falls on paper, and a primary action keeps its
+   pairing wherever it stands. */
+.card--void, .embed3d__state{
+  --bg: var(--void); --surface: var(--void); --surface-2: var(--void-surface);
+  --fg: var(--void-ink); --fg-2: var(--void-ink-2); --fg-3: var(--void-ink-2);
+  --line: var(--void-line); --line-2: var(--void-line-2);
+  --accent: var(--void-accent); --accent-2: var(--void-accent);
+  --accent-line: color-mix(in srgb, var(--void-accent) 45%, transparent);
+  --accent-wash: color-mix(in srgb, var(--void-accent) 12%, transparent);
+  --bad: var(--void-accent); --focus: var(--void-accent);
+  --block: var(--void-line-2); --block-line: var(--void-line-2);
+  color-scheme: dark;
+}
+.card--void{ background: var(--void); color: var(--void-ink); border-color: var(--grid); }
+.card--void .card{ box-shadow: none; }
+
+/* Door: a card that is one link (home's three play doors, index.html:305-313).
+   Hover changes the border, nothing lifts and nothing blurs. */
+.card--door{
+  display: flex; flex-direction: column; gap: var(--s-2);
+  color: var(--fg); text-decoration: none;
+  transition: border-color var(--dur-2) var(--ease);
+}
+.card--door:hover{ border-color: var(--line-2); transform: none; }
+.card--door:focus-visible{ outline: 2px solid var(--accent); outline-offset: 2px; }
+/* card children, usable in any card */
+.card__n{
+  font-family: var(--font-display); font-size: var(--t-xs); font-weight: 700; font-stretch: 112%;
+  letter-spacing: .2em; text-transform: uppercase; color: var(--accent-2);
+}
+.card__title{
+  margin: 0;
+  font-family: var(--font-display); font-size: var(--t-xl); font-weight: 700;
+  letter-spacing: var(--track-display); line-height: 1.05; color: var(--fg);
+}
+.card__text{ margin: 0; font-size: var(--t-base); line-height: 1.55; color: var(--fg-2); }
+.card__meta{ margin: 0; font-size: var(--t-sm); color: var(--fg-3); font-variant-numeric: tabular-nums; }
+.card__go{
+  margin-top: auto; padding-top: 6px;
+  font-family: var(--font-display); font-size: var(--t-xs); font-weight: 700; font-stretch: 112%;
+  letter-spacing: var(--track-label); text-transform: uppercase; color: var(--fg);
+  transition: color var(--dur-1) var(--ease);
+}
+.card--door:hover .card__go{ color: var(--accent); }
+
+/* ---- segmented control: one setting, N exclusive options (replay cams, projection).
+   Seed replay-embed.css:34-38; 44px targets; the chosen segment is ink. Real tabs
+   that switch panels stay .tab-pills. ---- */
+.seg{
+  display: inline-flex; align-items: stretch; gap: 0; max-width: 100%;
+  border: 1px solid var(--line-2); border-radius: var(--radius); background: var(--surface);
+  overflow-x: auto; scrollbar-width: none;
+}
+.seg::-webkit-scrollbar{ display: none; }
+.seg > button, .seg > a{
+  flex: 0 0 auto; display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+  min-height: 44px; min-width: 44px; padding: 0 14px;
+  font-family: var(--font-display); font-size: var(--t-xs); font-weight: 600; font-stretch: 112%;
+  letter-spacing: .12em; text-transform: uppercase; white-space: nowrap;
+  color: var(--fg-2); background: transparent;
+  border: 0; border-left: 1px solid var(--line); border-radius: 0; box-shadow: none;
+  text-decoration: none; cursor: pointer;
+  font-variant-numeric: tabular-nums;
+  transition: color var(--dur-1) var(--ease), background var(--dur-1) var(--ease);
+}
+.seg > :first-child{ border-left: 0; border-radius: calc(var(--radius) - 1px) 0 0 calc(var(--radius) - 1px); }
+.seg > :last-child{ border-radius: 0 calc(var(--radius) - 1px) calc(var(--radius) - 1px) 0; }
+.seg > button:hover, .seg > a:hover{ color: var(--fg); background: var(--surface-2); }
+.seg > [aria-pressed="true"], .seg > [aria-current="true"], .seg > [aria-current="page"], .seg > .is-active{
+  color: var(--bg); background: var(--fg);
+}
+.seg > button:disabled{ opacity: .45; cursor: not-allowed; }
+.seg > button:focus-visible, .seg > a:focus-visible{ outline-offset: -3px; border-radius: var(--radius); }
+
+/* ---- chip link: a link or toggle dressed as a chip, but a 44px target
+   (.chip / .pill stay 28px status, never a control). ---- */
+.chip-link{
+  display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+  min-height: 44px; padding: 0 16px;
+  font-family: var(--font-display); font-size: var(--t-xs); font-weight: 600; font-stretch: 112%;
+  letter-spacing: .12em; text-transform: uppercase; white-space: nowrap;
+  color: var(--fg-2); background: transparent;
+  border: 1px solid var(--line-2); border-radius: 999px; box-shadow: none;
+  text-decoration: none; cursor: pointer;
+  font-variant-numeric: tabular-nums;
+  transition: color var(--dur-1) var(--ease), border-color var(--dur-1) var(--ease), background var(--dur-1) var(--ease);
+}
+.chip-link:hover{ color: var(--fg); border-color: var(--fg-3); background: var(--surface-2); }
+.chip-link.is-active, .chip-link[aria-current="page"], .chip-link[aria-pressed="true"]{
+  color: var(--fg); border-color: var(--fg); box-shadow: inset 0 -2px 0 var(--accent);
+}
+
+/* ---- row list: hairline rows, 52px, hover raises the paper (seed .wiki-row-wrap). ---- */
+.row-list{ list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line-2); }
+.row-list > li, .row-list__row{
+  display: flex; align-items: center; gap: var(--s-3);
+  min-height: 52px; padding: 0 4px;
+  border-bottom: 1px solid var(--line);
+  transition: background var(--dur-1) var(--ease);
+}
+.row-list > li:hover, .row-list__row:hover{ background: var(--surface-2); }
+.row-list > li > a, .row-list__row > a{
+  display: flex; align-items: center; gap: var(--s-3);
+  flex: 1 1 auto; min-width: 0; min-height: 52px;
+  color: inherit; text-decoration: none;
+}
+.row-list__main{ flex: 1 1 auto; min-width: 0; font-family: var(--font-text); font-size: var(--t-base); font-weight: 600; letter-spacing: -.005em; color: var(--fg); }
+.row-list__meta{ flex: 0 0 auto; font-family: var(--font-text); font-size: var(--t-sm); color: var(--fg-3); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.row-list__num{ flex: 0 0 auto; font-family: var(--font-code); font-size: var(--t-sm); color: var(--fg-2); font-variant-numeric: tabular-nums; }
+
+/* ---- disclosure: a <details> with a 48px summary and a +/− glyph (seed index.html:77-84). ---- */
+.disclosure{ border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.disclosure + .disclosure{ border-top: 0; }
+.disclosure > summary{
+  display: flex; align-items: center; gap: 10px;
+  min-height: 48px; padding: 0; cursor: pointer; list-style: none;
+  font-family: var(--font-display); font-size: var(--t-xs); font-weight: 700; font-stretch: 112%;
+  letter-spacing: var(--track-label); text-transform: uppercase; color: var(--fg-2);
+}
+.disclosure > summary::-webkit-details-marker{ display: none; }
+.disclosure > summary::before{
+  content: "+"; display: inline-grid; place-content: center; flex: 0 0 auto;
+  width: 24px; aspect-ratio: 1 / 1;
+  border: 1px solid var(--line-2); border-radius: 50%;
+  font-family: var(--font-text); font-size: var(--t-base); font-weight: 500; letter-spacing: 0; line-height: 1;
+}
+.disclosure[open] > summary::before{ content: "\2212"; }
+.disclosure > summary:hover{ color: var(--fg); }
+.disclosure > summary span, .disclosure__hint{
+  font-family: var(--font-text); font-size: var(--t-sm); font-weight: 400;
+  letter-spacing: 0; text-transform: none; color: var(--fg-3);
+}
+.disclosure__body{ padding: 4px 0 var(--s-4); }
+
+/* ---- share bar: the .btn group plus a live-region status line; the copy panel
+   appears when the clipboard is denied (seed play.html:253 + its feedback contract). ---- */
+.share-bar{ display: flex; flex-wrap: wrap; align-items: center; gap: var(--s-2); margin-top: var(--s-3); }
+.share-bar .btn{ flex: 1 1 120px; }
+.share-bar__status{ flex-basis: 100%; margin: 0; min-height: 1.5em; font-size: var(--t-sm); color: var(--fg-2); }
+.share-bar__status:empty{ min-height: 0; }
+.share-bar__copy{
+  flex-basis: 100%; display: block; width: 100%; min-height: 96px; resize: vertical;
+  padding: 10px 12px; white-space: pre-wrap;
+  font-family: var(--font-code); font-size: var(--t-sm); line-height: 1.6; color: var(--fg);
+  background: var(--surface-2); border: 1px solid var(--line-2); border-radius: var(--radius);
+}
+
+/* ---- toast: one pill, ink on paper, bottom centre (seed play.html:247-248). ---- */
+.toast{
+  position: fixed; left: 50%; bottom: calc(88px + env(safe-area-inset-bottom, 0)); z-index: 9999;
+  transform: translate(-50%, 16px);
+  max-width: min(92vw, 440px); margin: 0; padding: 10px 18px;
+  font-family: var(--font-text); font-size: var(--t-base); font-weight: 600; line-height: 1.4; text-align: center;
+  color: var(--bg); background: var(--fg);
+  border-radius: 999px; box-shadow: none;
+  opacity: 0; pointer-events: none;
+  transition: opacity var(--dur-2) var(--ease), transform var(--dur-2) var(--ease);
+}
+.toast.is-visible{ opacity: 1; transform: translate(-50%, 0); }
+
+/* ---- empty / loading / error states (seeds: .wiki-empty, index + insights skeletons,
+   twenty-questions.html:135-139). The error state keeps --bad for its rule only:
+   marker-red is 3.93:1 on paper, so the words stay ink. ---- */
+.state{
+  display: grid; justify-items: center; align-content: center; gap: var(--s-3);
+  min-height: 160px; padding: var(--s-6) var(--s-4);
+  text-align: center; color: var(--fg-2); font-size: var(--t-sm); line-height: 1.6;
+  border-radius: var(--radius-lg);
+}
+.state p{ margin: 0; max-width: 48ch; }
+.state__title{ margin: 0; font-family: var(--font-display); font-size: var(--t-md); font-weight: 700; letter-spacing: -.01em; line-height: 1.2; color: var(--fg); }
+.state__label{
+  font-family: var(--font-display); font-size: var(--t-xs); font-weight: 600; font-stretch: 112%;
+  letter-spacing: .24em; text-transform: uppercase; color: var(--fg-3);
+}
+.state__sketch{ width: min(100%, 430px); height: auto; opacity: .55; }
+.state--empty{ border: 1px dashed var(--line-2); }
+.state--loading{ color: var(--fg-3); }
+.state--error{
+  justify-items: start; align-content: start; text-align: left;
+  color: var(--fg); background: var(--surface);
+  border: 1px solid var(--line); border-left: 3px solid var(--bad);
+}
+.state--error .btn{ margin-top: var(--s-2); }
+.skeleton{
+  display: block; width: 100%; max-width: 240px; height: 12px; border-radius: 2px;
+  background: var(--surface-2);
+  animation: atlas-fade 1.2s var(--ease) infinite alternate;
+}
+.skeleton--s{ max-width: 48px; }
+.skeleton--l{ max-width: 100%; }
+.skeleton--block{ max-width: none; height: 120px; border-radius: var(--radius-lg); }
+.skeleton + .skeleton{ margin-top: var(--s-2); }
+
+/* ---- game frame (seeds play.html:141-150, :170, :47, :241) ---- */
+/* status row under the title: the day label, the phase, the dots */
+.game-status{
+  display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: var(--s-2) 10px;
+  width: 100%; margin-top: var(--s-3); padding-top: var(--s-3);
+  border-top: 1px solid var(--line);
+}
+.game-status > .label{ display: inline-flex; align-items: center; gap: 8px; }
+/* the answer block: label row, the input inside its .suggest wrapper, the rule under it.
+   keyboard-a11y.js wires .suggest as the combobox wrapper (input + ul), so that shape stays. */
+.answer{ display: flex; flex-direction: column; gap: var(--s-2); }
+.answer__row{ display: flex; flex-wrap: wrap; gap: var(--s-2); align-items: stretch; }
+.answer input, .answer .input{ min-height: 48px; font-size: 16px; }  /* 16px: iOS does not zoom a focused field */
+.answer__rule{ margin: 0; font-size: var(--t-sm); color: var(--fg-2); }
+.suggest{ position: relative; }
+.suggest > ul, .suggest__list{
+  position: absolute; z-index: 20; left: 0; right: 0; top: calc(100% + 4px);
+  list-style: none; margin: 0; padding: 4px; max-height: 300px; overflow: auto;
+  background: var(--surface); border: 1px solid var(--line-2); border-radius: var(--radius);
+  box-shadow: 5px 5px 0 var(--step);
+}
+.suggest li{
+  display: flex; justify-content: space-between; align-items: center; gap: 12px;
+  min-height: 44px; padding: 8px 10px; border-radius: 3px; cursor: pointer;
+  font-size: var(--t-base); color: var(--fg);
+}
+.suggest li:hover, .suggest li.is-active{ background: var(--surface-2); box-shadow: inset 2px 0 0 var(--accent); }
+.suggest li .num, .suggest__meta{ font-size: var(--t-sm); color: var(--fg-3); }
+.suggest li.is-ineligible{ opacity: .45; cursor: default; }
+.suggest li.is-ineligible .why{ font-size: var(--t-xs); color: var(--fg-3); }
+/* the result: a .card that opens with a .plate, states the verdict, ends in a .share-bar.
+   Won is the reward material (the coin wash, constant ink on it); lost keeps the paper. */
+.result{ border-left: 3px solid var(--pipe); animation: atlas-rise var(--dur-2) var(--ease) both; }
+.result--lost{ border-left-color: var(--bad); }
+.result--won{
+  background: linear-gradient(180deg, var(--coin-wash-1), var(--coin-wash-2));
+  border-color: var(--coin-deep); color: var(--coin-ink);
+  box-shadow: 3px 3px 0 var(--coin-deep);
+}
+.result--won .plate > h2, .result--won .plate__title, .result--won .plate__meta, .result--won .plate > .pmeta,
+.result--won .result__detail, .result--won .caption{ color: var(--coin-ink); }
+.result--won .plate__no, .result--won .plate > .pno{ color: var(--coin-wash-1); background: var(--coin-ink); }
+.result--won .plate__rule, .result--won .plate > .prule{ border-top-color: var(--coin-deep); }
+.result__verdict{ margin: 0 0 var(--s-2); font-family: var(--font-display); font-size: var(--t-lg); font-weight: 700; letter-spacing: -.01em; line-height: 1.2; }
+.result__detail{ margin: 0; font-size: var(--t-sm); line-height: 1.6; color: var(--fg-2); }
+
+/* ---- Embed3D chrome: the one atlas, one bar, one legend, one loading and
+   error state wherever the model is shown. Classes only — embed-3d.js adopts
+   them in task 1.4 (today it inlines style.cssText and hyphenated names).
+     .embed3d > .embed3d__bar (a .seg for projection + .embed3d__axis)
+              > .embed3d__frame > canvas.embed3d__canvas + .embed3d__state + .embed3d__tip
+              > .embed3d__legend (none for home, warm/cold for game, team swatches for live)
+              > .embed3d__note ---- */
+.embed3d{ position: relative; width: 100%; min-width: 0; }
+.embed3d__bar{ display: flex; flex-wrap: wrap; align-items: center; gap: var(--s-2) var(--s-3); padding: 0 0 var(--s-2); }
+.embed3d__axis{
+  margin-left: auto;
+  font-family: var(--font-display); font-size: var(--t-xs); font-weight: 600; font-stretch: 112%;
+  letter-spacing: .12em; text-transform: uppercase; color: var(--fg-3);
+}
+.embed3d__frame{ position: relative; min-width: 0; }
+.embed3d__canvas{
+  display: block; width: 100%; height: auto; min-height: 320px;
+  background: var(--void); border-radius: var(--radius-lg);
+  touch-action: pan-y; cursor: grab;
+}
+.embed3d__canvas:active{ cursor: grabbing; }
+.embed3d__legend{
+  display: flex; flex-wrap: wrap; align-items: center; gap: 6px 14px;
+  margin-top: var(--s-2); font-size: var(--t-sm); color: var(--fg-3);
+}
+.embed3d__key{ display: inline-flex; align-items: center; gap: 6px; }
+.embed3d__swatch{ display: inline-block; width: 10px; height: 10px; border-radius: 2px; flex: 0 0 auto; }
+.embed3d__note{ margin: var(--s-2) 0 0; max-width: 70ch; font-size: var(--t-sm); line-height: 1.55; color: var(--fg-2); }
+.embed3d__note b{ color: var(--fg); }
+.embed3d__tip{
+  position: absolute; z-index: 3; display: none; pointer-events: none; white-space: nowrap;
+  padding: 6px 9px; font-size: var(--t-sm); line-height: 1.4;
+  color: var(--void-ink); background: var(--void-surface);
+  border: 1px solid var(--void-line); border-radius: var(--radius);
+}
+.embed3d__tip b{ color: var(--void-ink); }
+.embed3d__tip .num{ color: var(--void-ink-2); }
+/* the state covers the frame; it is a void host (remapped above), so .state rules read right inside it */
+.embed3d__state{
+  position: absolute; inset: 0; z-index: 5;
+  display: grid; justify-items: center; align-content: center; gap: var(--s-3);
+  padding: var(--s-5); text-align: center;
+  color: var(--void-ink-2); font-size: var(--t-sm); line-height: 1.6;
+  background: var(--void); border-radius: var(--radius-lg);
+}
+.embed3d__state p{ margin: 0; max-width: 48ch; }
+.embed3d__state b{ color: var(--void-ink); }
+.embed3d__state--error{ color: var(--void-ink); }
+.embed3d__state--error::before{ content: ""; width: 48px; height: 3px; background: var(--void-accent); }
+
+/* ---- sheet: the bottom sheet (seed play.html:105-106 .vh-sheet). Rises from the
+   bottom on phones, sits centred from 600px. Close is a 44px square. ---- */
+.sheet__backdrop{
+  position: fixed; inset: 0; z-index: 110;
+  display: flex; align-items: flex-end; justify-content: center; padding: 0;
+  background: var(--scrim);
+  -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+}
+.sheet{
+  width: 100%; max-width: 680px; max-height: min(88dvh, calc(100dvh - 16px)); overflow: auto;
+  padding: var(--s-4) var(--s-4) calc(var(--s-4) + env(safe-area-inset-bottom, 0));
+  color: var(--fg); background: var(--surface);
+  border: 1px solid var(--line-2); border-bottom: 0;
+  border-radius: var(--radius-xl) var(--radius-xl) 0 0; box-shadow: none;
+  animation: atlas-sheet-up var(--dur-2) var(--ease) both;
+}
+@keyframes atlas-sheet-up{ from{ transform: translateY(100%); } to{ transform: none; } }
+.sheet__handle{ width: 36px; height: 4px; margin: 2px auto var(--s-3); border-radius: 2px; background: var(--line-2); }
+.sheet__head{ display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; margin-bottom: var(--s-3); }
+.sheet__title{ margin: 0; font-family: var(--font-display); font-size: var(--t-lg); font-weight: 700; letter-spacing: -.01em; line-height: 1.1; }
+.sheet__close{
+  flex: 0 0 auto; display: inline-flex; align-items: center; justify-content: center;
+  width: 44px; height: 44px; padding: 0;
+  font-size: var(--t-md); line-height: 1; color: var(--fg);
+  background: transparent; border: 1px solid var(--line-2); border-radius: 50%; cursor: pointer;
+}
+.sheet__close:hover{ border-color: var(--fg-3); background: var(--surface-2); }
+.sheet__actions{ display: flex; flex-wrap: wrap; gap: 10px; margin-top: var(--s-3); }
+@media (min-width: 600px){
+  .sheet__backdrop{ align-items: center; padding: 20px; }
+  .sheet{
+    border-bottom: 1px solid var(--line-2); border-radius: var(--radius-xl);
+    box-shadow: 5px 5px 0 var(--step);
+    animation: atlas-rise var(--dur-2) var(--ease) both;
+  }
+  .sheet__handle{ display: none; }
+}
+
 /* ---- capability label: the atlas must announce its material (panel v4) ---- */
 .atlas-capability{
-  font-family: ui-monospace, monospace;
+  font-family: var(--font-code);
   font-size: 11px;
   color: var(--fg-3);
   margin: 6px 4px 0;

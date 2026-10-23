@@ -40,7 +40,7 @@
       "budget_bytes": 696320
     },
     "map-guess.html": {
-      "budget_bytes": 151552
+      "budget_bytes": 177152
     },
     "methods.html": {
       "budget_bytes": 503808
@@ -55,7 +55,7 @@
       "budget_bytes": 840704
     },
     "players.html": {
-      "budget_bytes": 921600
+      "budget_bytes": 953344
     },
     "playoff-runs.html": {
       "budget_bytes": 152576
@@ -67,10 +67,10 @@
       "budget_bytes": 165888
     },
     "status.html": {
-      "budget_bytes": 81920
+      "budget_bytes": 108544
     },
     "teams.html": {
-      "budget_bytes": 156672
+      "budget_bytes": 182272
     },
     "twenty-questions.html": {
       "budget_bytes": 964608
