@@ -264,3 +264,8 @@ h1{ view-transition-name: vh-title; }
   .vh-rv{ opacity: 1; transform: none; }
 }
 @media print{ .vh-rv{ opacity: 1 !important; transform: none !important; } }
+
+/* No-JS nav fallback: renders only inside <noscript>; the site-nav.js mount replaces it. */
+.site-nav__noscript{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:6px 16px;justify-content:center;padding:12px}
+.site-nav__noscript a{font:600 12.5px/1.5 ui-sans-serif,system-ui,sans-serif;color:var(--fg-2,#454c57);text-decoration:none;white-space:nowrap}
+.site-nav__noscript a:hover{color:var(--fg,#0e1116)}

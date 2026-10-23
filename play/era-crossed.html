@@ -19,7 +19,7 @@
 <meta name="twitter:description" content="A past star, four modern candidates. Pick the true closest twin by the embedding."/>
 <meta name="twitter:image" content="https://hoops.dumbmodel.com/assets/og-1200x630.png"/>
 <link rel="stylesheet" href="/assets/atlas.css?v=c43e0f47"/>
-<link rel="stylesheet" href="/assets/shell.css?v=36a047f1"/>
+<link rel="stylesheet" href="/assets/shell.css?v=b7460aa9"/>
 <style>
 *{box-sizing:border-box}
 html,body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--font-text);font-size:17px;line-height:1.6;overflow-x:clip}
@@ -71,7 +71,7 @@ details.howto p,details.howto li{font-size:14px;color:var(--fg-2)}
 <a class="skip-link" href="#main">Skip to content</a>
 <noscript><div role="alert" style="padding:16px;text-align:center">Enable JavaScript — Era Crossed needs it to deal the rounds.</div></noscript>
 
-<nav class="site-nav" data-active="/play" aria-label="Vector Hoops site"></nav>
+<nav class="site-nav" data-active="/play" aria-label="Vector Hoops site"><noscript class="site-nav__noscript"><a href="/">Atlas</a><a href="/play">Play</a><a href="/map-guess">Map Hunt</a><a href="/live">Live</a><a href="/players">Players</a><a href="/insights">Insights</a><a href="/taxonomy">Taxonomy</a><a href="/methods">Methods</a><a href="/models/mtnn-v5">Models</a></noscript></nav>
 <div id="main" class="main" role="main">
 
   <header class="title-card ec-head">
@@ -129,7 +129,7 @@ details.howto p,details.howto li{font-size:14px;color:var(--fg-2)}
     </ul>
   </details>
 
-  <p class="provenance">Provenance: quiz built 2026-10-20 from assets/eratwins.json &mdash; twin = nearest other-decade career by 64-d MTNN embedding cosine; distractors = 3 of the other 4 shipped top-5 candidates. 1,313 rounds in the pool, 10 dealt per game.</p>
+  <p class="provenance">Provenance: quiz built 2026-10-20 from assets/eratwins.json &mdash; twin = nearest other-decade career by 64-d MTNN embedding cosine; distractors = 3 of the other 4 shipped top-5 candidates. 1,313 rounds pre-dealt into 131 games at build time &mdash; only one game's rounds (~4KB) download per visit.</p>
 </div>
 
 <footer class="site-footer">
@@ -162,12 +162,15 @@ details.howto p,details.howto li{font-size:14px;color:var(--fg-2)}
 <script src="/assets/keyboard-a11y.js?v=39777a87"></script>
 <script src="/assets/site-nav.js?v=08ff3eda" defer></script>
 <script>
-/* Era Crossed — pick the true closest modern twin. Quiz ships as JSON
- * (see scripts/build_era_crossed.py); 10 rounds dealt per game. */
+/* Era Crossed — pick the true closest modern twin. The quiz ships as per-game
+ * JSON subsets (see scripts/build_era_crossed.py): one ~3.5KB game file per
+ * visit instead of the whole 459KB pool. 10 rounds dealt per game. */
 (function(){
 'use strict';
-var QUIZ_URL='/assets/era-crossed-quiz.json';
+var GAME_COUNT=131; /* pre-dealt game files; build_era_crossed.py --check keeps this in sync */
 var ROUNDS_PER_GAME=10, STREAK_BAR=7, LS_KEY='vh-era-crossed';
+var curGame=0;
+function gameURL(n){return '/assets/era-crossed-games/g'+('00'+n).slice(-3)+'.json';}
 var $=function(id){return document.getElementById(id);};
 
 var Q=null, order=[], ri=0, score=0, answered=false;
@@ -260,7 +263,7 @@ function finish(){
 
 /* ---------- share ---------- */
 function shareText(){
-  return '\u23F1\uFE0F Era Crossed \u2014 Vector Hoops\n'+score+'/'+ROUNDS_PER_GAME+' twins spotted (streak '+store.streak+')\nPlay: https://hoops.dumbmodel.com/play/era-crossed.html';
+  return '\ud83d\udd00 Era Crossed \u2014 Vector Hoops\n'+score+'/'+ROUNDS_PER_GAME+' twins spotted (streak '+store.streak+')\nPlay: https://hoops.dumbmodel.com/play/era-crossed.html';
 }
 function shareCard(){
   var W=1080,H=1350,c=document.createElement('canvas');c.width=W;c.height=H;
@@ -315,8 +318,8 @@ $('btn-next').addEventListener('click',function(){
   if(ri>=order.length){finish();return;}
   round();
 });
-$('btn-again').addEventListener('click',deal);
-$('btn-retry').addEventListener('click',function(){$('err-card').hidden=true;boot();});
+$('btn-again').addEventListener('click',newGame);
+$('btn-retry').addEventListener('click',function(){$('err-card').hidden=true;boot(curGame||1);});
 document.addEventListener('keydown',function(e){
   if($('done-card').hidden===false||$('err-card').hidden===false||$('round-card').hidden)return;
   var tag=(e.target&&e.target.tagName||'').toLowerCase();
@@ -327,8 +330,9 @@ document.addEventListener('keydown',function(e){
     if(b&&!b.disabled)b.click();
   }
 });
-function boot(){
-  fetch(QUIZ_URL).then(function(r){if(!r.ok)throw new Error('quiz '+r.status);return r.json();})
+function boot(n){
+  curGame=n;
+  fetch(gameURL(n)).then(function(r){if(!r.ok)throw new Error('quiz '+r.status);return r.json();})
   .then(function(doc){
     if(!doc.rounds||!doc.rounds.length)throw new Error('empty quiz');
     Q=doc;deal();
@@ -336,7 +340,11 @@ function boot(){
     $('round-card').hidden=true;$('err-card').hidden=false;
   });
 }
-boot();
+function newGame(){
+  var n;do{n=1+Math.floor(Math.random()*GAME_COUNT);}while(n===curGame&&GAME_COUNT>1);
+  $('err-card').hidden=true;$('done-card').hidden=true;boot(n);
+}
+boot(1+Math.floor(Math.random()*GAME_COUNT));
 })();
 </script>
 </body></html>
