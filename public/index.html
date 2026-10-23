@@ -406,50 +406,16 @@
     </div>
 
     <div class="field" id="map-wrap">
-      <canvas id="sky-canvas" role="img" aria-label="Scatter of 12,966 NBA player-seasons. Left to right runs from paint players to perimeter players; top to bottom runs from high-usage scorers to low-usage role players. Use the search field to select a season."></canvas>
-      <span class="axis axis--l">big</span>
-      <span class="axis axis--r">small</span>
-      <div class="hover-tip" id="hover-tip" hidden></div>
-      <div class="team-caption" id="team-caption" hidden></div>
-      <div class="field__state" id="atlas-state"><span class="field__loading">Plotting 12,966 player-seasons — give the map a second.</span></div>
-      <div class="field__fallback" id="atlas-fallback" hidden>
-        <p><b>The atlas needs canvas to draw its map.</b> The regions below still work — pick one to explore its players.</p>
-        <ul></ul>
-        <p><a href="/players">Browse all players →</a></p>
-      </div>
+      <div class="embed3d-mount" data-projection="pca" style="height:min(72vw,460px)" role="application" aria-label="3D embedding map — 12,966 player-seasons. Drag to rotate, tap a point to select."></div>
     </div>
 
     <div class="atlas-toolbar" id="atlas-toolbar" role="toolbar" aria-label="Atlas controls">
-      <div class="axes-pick">
-        <label class="axes-label" for="axis-x">X axis
-          <select id="axis-x" class="axes-select">
-            <option value="pca1" selected>Paint vs perimeter (PCA)</option>
-          </select>
-        </label>
-        <label class="axes-label" for="axis-y">Y axis
-          <select id="axis-y" class="axes-select">
-            <option value="pca2" selected>Scoring load (PCA)</option>
-          </select>
-        </label>
-      </div>
       <div class="atlas-toolbar__btns">
-        <button type="button" data-map="regions" aria-pressed="false"><span>Regions</span></button>
         <button type="button" data-map="reset">Clear</button>
-        <details class="atlas-overflow">
-          <summary>More</summary>
-          <div class="atlas-overflow__menu">
-            <button type="button" data-map="share"><span>Copy link</span></button>
-            <button type="button" id="atlas-export">Share image</button>
-            <button type="button" id="view-2d" class="axes-btn" aria-pressed="true">2-D map</button>
-            <button type="button" id="view-1d" class="axes-btn" aria-pressed="false">1-D line</button>
-          </div>
-        </details>
+        <button type="button" data-map="share"><span>Copy link</span></button>
+        <button type="button" id="atlas-export">Share image</button>
       </div>
-      <p class="axes-note" id="axes-note">Name both axes — every point re-plots. Pick a named stat to leave the PCA view.</p>
     </div>
-
-    <p class="region-note" id="region-note" hidden></p>
-    <div class="region-panel" id="region-panel" hidden></div>
 
     <div class="readout" aria-live="polite">
       <div id="atlas-selected"><p class="readout__empty">Select any point on the atlas, or search a name above.</p></div>
@@ -462,42 +428,20 @@
           <thead><tr><th class="r" scope="col">#</th><th scope="col">Player</th><th scope="col">Season</th><th scope="col" class="hide-s">Archetype</th><th class="r" scope="col">Similarity</th></tr></thead>
           <tbody id="atlas-peers-body"></tbody>
         </table>
-        <p class="peers__foot vh-truth">Peers are the nearest seasons by cosine similarity in the 64-dimensional MTNN v5 embedding. The atlas itself is a 2-D view of 14 era-normalized per-100 stats, so a peer can sit some distance away on it.</p>
+        <p class="peers__foot vh-truth">Peers are the nearest seasons by cosine similarity in the 64-dimensional MTNN v5 embedding. The atlas itself is a 3-D sketch of 14 era-normalized per-100 stats, so a peer can sit some distance away on it.</p>
       </div>
     </div>
     <p class="visually-hidden" id="atlas-live" aria-live="polite"></p>
 
-    <details class="atlas-more" id="atlas-more">
-      <summary>More ways to read the map <span>teams, axes, archetypes, regions</span></summary>
-      <div class="atlas-more__body">
-        <div class="atlas-more__row">
-          <div class="team-highlight">
-            <label class="visually-hidden" for="team-select">Highlight a team’s current roster on the atlas</label>
-            <select id="team-select" class="team-select">
-              <option value="">Highlight team…</option>
-            </select>
-            <button type="button" id="team-cycle" class="team-cycle" aria-pressed="false"><span class="team-cycle__icon" aria-hidden="true">▶</span><span>Cycle</span></button>
-          </div>
-          <details class="trust-badge vh-approx">
-            <summary>We spot-checked 2,000 players: about 1 in 9 of each one’s 20 closest model neighbors stay close on this flat map.</summary>
-            <p>We sampled 2,000 players and checked how many of each one&#8217;s 20 closest neighbors in the full 64-d model stay neighbors on this flat map — about 1 in 9 do.</p>
-          </details>
-        </div>
-
-        <div class="legend" id="atlas-legend" role="group" aria-label="Highlight an archetype"></div>
-        <div class="region-strip" id="region-strip" role="group" aria-label="Explore regions of the atlas"></div>
-
-        <figure class="map-note" id="map-note">
-          <figcaption class="label fig-label" style="margin:0">Fig. note <b>· How to read this map</b></figcaption>
-          <ul>
-            <li><b>A sketch, not the model.</b> The flat map shows two of three PCA axes; the three together keep about 62% of the variance in the 14 era-normalized stats (<a href="/methods">methods</a>). Nearby on the map is approximate.</li>
-            <li><b>Peers come from the model, not the picture.</b> &ldquo;Plays most alike&rdquo; is cosine similarity in the full 64-d embedding, so a peer can sit some distance away on the map.</li>
-            <li><b>Eras are normalized away.</b> Stats are z-scored within each season, so cross-era closeness is about style, not who would win.</li>
-            <li><b>Scores are opinions.</b> Name different axes and every point moves; retrain the model and the numbers wobble.</li>
-          </ul>
-        </figure>
-      </div>
-    </details>
+    <figure class="map-note" id="map-note">
+      <figcaption class="label fig-label" style="margin:0">Fig. note <b>· How to read this map</b></figcaption>
+      <ul>
+        <li><b>A sketch, not the model.</b> This view shows three PCA dimensions at once; the map is a sketch of the 14 era-normalized stats, not the model itself.</li>
+        <li><b>Peers come from the model, not the picture.</b> &ldquo;Plays most alike&rdquo; is cosine similarity in the full 64-d embedding — nearby dots mislead more often than not, so trust the peer list, not the picture.</li>
+        <li><b>Eras are normalized away.</b> Stats are z-scored within each season, so cross-era closeness is about style, not who would win.</li>
+        <li><b>Switch projections and the shape changes.</b> PCA, t-SNE and UMAP each keep different things; retrain the model and the numbers wobble.</li>
+      </ul>
+    </figure>
   </section>
 
   <section class="play" aria-labelledby="play-title">
@@ -567,9 +511,8 @@
 <script defer src="/assets/vh-peers.js?v=860629b9"></script>
 <script defer src="/assets/served-constants.js?v=8ba12340"></script>
 <script defer src="/assets/twin-bands.js?v=0a191313"></script>
-<script defer src="/assets/atlas-map.js?v=5524301b"></script>
-<script defer src="/assets/atlas-regions.js?v=a86d62d9"></script>
-<script defer src="/assets/career-trails.js?v=a0e9e836"></script>
+<script defer src="/assets/embed-3d.js?v=f929c396"></script>
+<script defer src="/assets/atlas-3d.js?v=e015a3c3"></script>
 <script src="assets/site-facts.js?v=f8edaf37" defer></script>
 <script defer src="/assets/engagement.js?v=9afde51a"></script>
 <script defer src="/assets/home-tonight.js?v=468ecae8"></script>
