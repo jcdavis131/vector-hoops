@@ -71,6 +71,8 @@
 <main id="main" tabindex="-1">
   <p id="live-loading" class="caption" role="status" style="padding:12px 4px">Loading today&rsquo;s games&hellip;</p>
   <div class="stickybar"><div class="board">
+  <div id="routeNotice" hidden></div>
+  <div id="ghMount"></div>
   <div class="scorebug">
     <div class="team"><div class="abbr" id="aAbbr">–</div><div class="rec" id="aRec"></div></div>
     <div class="mid"><div class="score"><span id="aScore">0</span> – <span id="hScore">0</span></div>
@@ -88,6 +90,7 @@
   </div></div>
 
   <div class="card" id="pregame" hidden></div>
+  <div class="card" id="morning" hidden></div>
 
   <details class="band" id="band-game" open>
   <summary><span class="band__k">Band A</span><span class="band__t">The game</span><span class="band__d">replay · win probability · momentum · shot chart</span></summary>
@@ -226,15 +229,20 @@
   <p class="site-footer__attribution">Live scores via ESPN · Every number recomputable from stats.nba.com · A <a href="https://dumbmodel.com">dumbmodel</a> project · <a href="https://github.com/jcdavis131/vector-hoops" rel="noopener">Source</a> · Nearest seasons by cosine similarity in the 64-dimensional MTNN v5 embedding.</p>
 </footer>
 <script src="assets/vh-analytics.js?v=d838a3e1" defer></script>
-<script src="assets/site-nav.js?v=08ff3eda" defer></script>
+<script src="assets/site-nav.js?v=6d18b361" defer></script>
 <script src="assets/vh-peers.js?v=860629b9" defer></script>
 <script src="assets/realtime/realtime.js?v=c6ee0c22" defer></script>
 <script src="assets/replay-espn.js?v=af4e5d05" defer></script>
 <script src="assets/replay-model.js?v=023bb286" defer></script>
-<script src="assets/replay.js?v=a18e7f02" defer></script>
+<script src="assets/replay.js?v=cdc13add" defer></script>
 <script src="assets/replay-live.js?v=31eb2ec7" defer></script>
+<script src="assets/game-route.js?v=ae0bf9df" defer></script>
+<script src="assets/game-header.js?v=758eca08" defer></script>
+<script src="assets/plate.js?v=9ffa45dd" defer></script>
+<script src="assets/pregame.js?v=cc9b4739" defer></script>
+<script src="assets/scoreboard.js?v=1d769757" defer></script>
 <script src="assets/embed-3d.js?v=ecab5292" defer></script>
-<script src="assets/live.js?v=1936cf49" defer></script>
+<script src="assets/live.js?v=c699b5dd" defer></script>
 <script src="assets/live-atlas.js?v=6d7fafa9" defer></script>
 <script src="assets/engagement.js?v=9afde51a" defer></script>
 </body>

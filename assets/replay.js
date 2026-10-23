@@ -753,6 +753,15 @@
       if (opts.live === true && !cur.live) goLive();
     }
     var srcEl = $('rpSrc'); if (srcEl) srcEl.href = g.source;
+    try{
+      if(window.GameHeader){
+        var ghEl=document.getElementById('gameHeader');
+        if(ghEl&&g.teams&&g.teams.length>1){
+          window.GameHeader.render(ghEl,{a:{abbr:g.teams[0].tri},h:{abbr:g.teams[1].tri},
+            venue:'',when:g.date||'',state:g.final?'post':(g.live?'in':'pre')});
+        }
+      }
+    }catch(e){}
     var asOf = $('rpAsOf');
     if (asOf) asOf.textContent = 'Game of ' + g.date + (g.final ? ' · final' : g.live ? ' · live, refreshed every 30 s' : ' · in progress when the feed was read') + ' · ' + EV.length + ' events' +
       (g.sourceSha256 ? ' · feed file sha256 ' + g.sourceSha256.slice(0, 12) + '…' : ' · from ' + (g.sourceName || 'the feed'));
@@ -776,7 +785,6 @@
      pipeline has not built yet) open from ESPN through assets/replay-espn.js. A live game
      is polled every 30 s and followed a play behind; nothing is polled once it is final. */
   var SB = 'https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard', espnTimer = null, espnFails = 0, wantEspn = null;
-  var NBA_TRI = { GS: 'GSW', NO: 'NOP', NY: 'NYK', SA: 'SAS', UTAH: 'UTA', WSH: 'WAS' };
   function etDay(offset) {
     var d = new Date(Date.now() + (offset || 0) * 864e5);
     return new Intl.DateTimeFormat('en-CA', { timeZone: 'America/New_York', year: 'numeric', month: '2-digit', day: '2-digit' }).format(d).replace(/-/g, '');
@@ -809,24 +817,20 @@
       else { if (nowEl) nowEl.textContent = 'This game has no plays to replay yet. It will start here once the feed has them.'; espnTimer = setTimeout(function () { loadEspn(id); }, wait); }
     });
   }
-  function espnGames(built) {
-    var have = {};
-    built.forEach(function (g) { have[g.teams[0].tri + '@' + g.teams[1].tri] = 1; });
+  /* C2.1/T3.1: ESPN is now guard-lookup only — no cards. Returns [{id, state}]
+     for today + yesterday so ?espn= deep links route through the 24h guard.
+     All states are included (pre-games belong on /live too). */
+  function espnLookup() {
     var days = [etDay(0), etDay(-1)];
     var none = { events: [] }, late = function (ms) { return new Promise(function (r) { setTimeout(function () { r(none); }, ms); }); };
-    return Promise.all(days.map(function (day) { // 4 s each at most: the NBA-built games must not wait on ESPN
+    return Promise.all(days.map(function (day) { // 4 s each at most: the built games must not wait on ESPN
       return Promise.race([fetch(SB + '?dates=' + day).then(function (r) { return r.ok ? r.json() : none; }).catch(function () { return none; }), late(4000)]);
     })).then(function (res) {
       var out = [];
-      res.forEach(function (sb, k) {
+      res.forEach(function (sb) {
         (sb.events || []).forEach(function (e) {
-          var c = e.competitions && e.competitions[0], st = e.status && e.status.type; if (!c || !st || st.state === 'pre') return;
-          var aw = c.competitors.filter(function (t) { return t.homeAway === 'away'; })[0], hm = c.competitors.filter(function (t) { return t.homeAway === 'home'; })[0]; if (!aw || !hm) return;
-          var tri = function (t) { return NBA_TRI[t.team.abbreviation] || t.team.abbreviation; };
-          if (have[tri(aw) + '@' + tri(hm)]) return; // the NBA-built file is the better source
-          var col = function (t) { return '#' + (t.team.color || '555555'); };
-          out.push({ id: e.id, live: st.state === 'in', teams: [{ tri: aw.team.abbreviation, c: col(aw), short: aw.team.shortDisplayName }, { tri: hm.team.abbreviation, c: col(hm), short: hm.team.shortDisplayName }],
-            score: [aw.score, hm.score], meta: (k === 0 ? 'TONIGHT' : 'LAST NIGHT') + ' · ' + (st.state === 'in' ? 'LIVE ' + (st.shortDetail || '') : 'FINAL') + ' · ESPN' });
+          var st = e.status && e.status.type; if (!st) return;
+          out.push({ id: e.id, state: st.state });
         });
       });
       return out;
@@ -842,22 +846,65 @@
     }
     fetch(DATA + 'index.json', { cache: 'no-cache' }).then(function (r) { return r.json(); }).then(function (ix) {
       var box = $('rpGames'); box.innerHTML = '';
-      var tail = document.createElement('span'); tail.hidden = true; box.appendChild(tail);
-      ix.games.forEach(function (g) {
-        box.appendChild(card(g.gameId, g.teams, g.score, g.date + (g.final ? ' · FINAL' : ' · LIVE FEED') + ' · NBA',
-          g.teams[0].short + ' ' + g.score[0] + ' at ' + g.teams[1].short + ' ' + g.score[1] + ', ' + g.date, function () { clearTimeout(espnTimer); wantEspn = null; loadGame(g.gameId); }));
-      });
+      // T3.1: the replay index is built games only. Tonight's games live on
+      // Courtside Live — the link below replaces the old ESPN cards.
+      var liveLink = document.createElement('a');
+      liveLink.className = 'rp-live-link'; liveLink.href = 'live.html';
+      liveLink.textContent = 'Tonight\u2019s games \u2192 Courtside Live';
+      box.appendChild(liveLink);
+      // Team filter.
+      var triSet = {};
+      ix.games.forEach(function (g) { triSet[g.teams[0].tri] = 1; triSet[g.teams[1].tri] = 1; });
+      var tris = Object.keys(triSet).sort(), sel = null;
+      if (tris.length > 1) {
+        sel = document.createElement('select');
+        sel.className = 'rp-filter'; sel.setAttribute('aria-label', 'Filter by team');
+        sel.innerHTML = '<option value="">All teams</option>' +
+          tris.map(function (t) { return '<option value="' + t + '">' + t + '</option>'; }).join('');
+        box.appendChild(sel);
+      }
+      // Date-grouped built games (newborn games never reach the index: --min-age).
+      function renderGroups() {
+        var f = sel ? sel.value : '';
+        box.querySelectorAll('.rp-dategroup').forEach(function (n) { n.remove(); });
+        var groups = {}, order = [];
+        ix.games.forEach(function (g) {
+          if (f && g.teams[0].tri !== f && g.teams[1].tri !== f) return;
+          if (!groups[g.date]) { groups[g.date] = []; order.push(g.date); }
+          groups[g.date].push(g);
+        });
+        order.sort().reverse().forEach(function (date) {
+          var gd = document.createElement('div'); gd.className = 'rp-dategroup';
+          var h = document.createElement('h3'); h.textContent = date; gd.appendChild(h);
+          groups[date].forEach(function (g) {
+            gd.appendChild(card(g.gameId, g.teams, g.score, g.date + (g.final ? ' \u00b7 FINAL' : ' \u00b7 LIVE FEED') + ' \u00b7 NBA',
+              g.teams[0].short + ' ' + g.score[0] + ' at ' + g.teams[1].short + ' ' + g.score[1] + ', ' + g.date,
+              function () { clearTimeout(espnTimer); wantEspn = null; loadGame(g.gameId); }));
+          });
+          box.appendChild(gd);
+        });
+        if (!order.length) {
+          var em = document.createElement('div'); em.className = 'rp-dategroup';
+          em.innerHTML = '<p class="rp-muted">No built replays for this filter yet.</p>';
+          box.appendChild(em);
+        }
+      }
+      if (sel) sel.addEventListener('change', renderGroups);
+      renderGroups();
       var built = ix.games.some(function (g) { return g.gameId === wantG; }) ? wantG : null;
       var startBuilt = function () { var pick = built || (ix.games[0] && ix.games[0].gameId); if (pick) loadGame(pick).then(function () { applyDeepTime(); }); };
       if (!window.ReplayESPN) { startBuilt(); return; }
-      espnGames(ix.games).then(function (eg) {
-        eg.forEach(function (g) {
-          box.insertBefore(card('espn-' + g.id, g.teams, g.score, g.meta, g.teams[0].short + ' ' + g.score[0] + ' at ' + g.teams[1].short + ' ' + g.score[1] + ', ' + g.meta,
-            function () { loadEspn(g.id); }), tail);
-        });
-        var liveOne = eg.filter(function (g) { return g.live; })[0];
+      // C2.1: the 24h guard — a ?espn= for a live/recent/pre game belongs on /live.
+      // espnLookup covers today + yesterday; anything older (or unknown) stays put.
+      espnLookup().then(function (eg) {
+        if (wantE && window.GameRoute) {
+          var egHit = eg.filter(function (g) { return String(g.id) === String(wantE); })[0];
+          var info = egHit ? { state: egHit.state, gameTimeMs: Date.now() - 3600e3 } : null;
+          if (window.GameRoute.guard('replay', function () { return info; })) return;
+        }
+        if (window.GameRoute) window.GameRoute.notice('routeNotice');
         if (wantE) loadEspn(wantE).then(function () { applyDeepTime(); });
-        else if (!built && liveOne) loadEspn(liveOne.id); else startBuilt();
+        else startBuilt();
       });
     }).catch(function () { $('rpGames').textContent = 'The game list could not be loaded.'; if (wantE && window.ReplayESPN) loadEspn(wantE); });
     requestAnimationFrame(tick);
