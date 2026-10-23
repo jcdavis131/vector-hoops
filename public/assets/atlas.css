@@ -358,17 +358,17 @@ p{ text-wrap: pretty; }
   padding: 3px 7px; border-radius: 3px;
   font-variant-numeric: tabular-nums;
 }
-/* .card .plate > h2 restates the selector at card specificity so .card h2 (below) does not resize it */
+/* .card .plate > h2 restates the selector at card specificity so .card h2 (below) does not resize it.
+   Only properties live.css:81-83 also sets are declared on the h2 / rule / meta slots, so
+   live.html's plates (which live.css still owns) do not change until wave 2.4 adopts the kit. */
 .plate > h2, .plate__title, .card .plate > h2{
-  flex: 0 1 auto; min-width: 0; margin: 0;
-  font-family: var(--font-display); font-size: var(--t-xs); font-weight: 700; font-stretch: 112%;
-  letter-spacing: var(--track-label); text-transform: uppercase; line-height: 1.4;
-  color: var(--fg);
+  margin: 0;
+  font-family: var(--font-display); font-size: var(--t-xs); font-weight: 700;
+  letter-spacing: var(--track-label); text-transform: uppercase;
 }
-.plate__rule, .plate > .prule{ flex: 1 1 12px; min-width: 12px; height: 0; border-top: 1px solid var(--line); }
+.plate__rule, .plate > .prule{ flex: 1 1 12px; min-width: 12px; border-top: 1px solid var(--line); }
 .plate__meta, .plate > .pmeta{
-  flex: 0 1 auto; min-width: 0; text-align: right;
-  font-family: var(--font-text); font-size: var(--t-sm); line-height: 1.4; color: var(--fg-3);
+  font-family: var(--font-text); font-size: var(--t-sm); color: var(--fg-3);
   font-variant-numeric: tabular-nums;
 }
 
@@ -715,7 +715,10 @@ table{ border-collapse: collapse; width: 100%; }
   transform: translate(-1px,-1px);
   box-shadow: 4px 4px 0 var(--block);
 }
-.btn:hover:not(.btn-accent), .pp-btn:hover{
+/* :not() carries its argument's weight, so this is (0,3,0): without the
+   primary exclusions it outranked .btn-primary:hover and painted paper under
+   --on-accent text on hover (pre-existing; fixed with the kit). */
+.btn:hover:not(.btn-accent):not(.btn-primary):not(.btn-play), .pp-btn:hover{
   background: var(--surface-2);
 }
 .btn:active, .pp-btn:active, .trail-btn:active{

@@ -15,7 +15,7 @@ Each class lives once in `assets/atlas.css`, next to the primitive it extends, i
 | `.stat`, `.stat--xl`, `.stat-strip` | atlas `.cqs-strip/.cqs-badge` 541-544, `.title-card__meta` 297-309 |
 | `.card--void` (+ the one scoped remap), `.card--door`, `.card__n/__title/__text/__meta/__go` | `.arch-diagram` void pairings 534-540; index.html:305-313 `.door` |
 | `.btn--icon` (44×44) | play `#btn-sound`, `.vh-sheet__close` |
-| `.btn-primary` collapsed to one rule; `.trail-btn` aliased into `.btn` / `.btn-primary` | atlas 368-371 + 657-666 were two definitions; `.trail-btn` 581-591 carried its own gradient |
+| `.btn-primary` collapsed to one rule; `.trail-btn` aliased into `.btn` / `.btn-primary`; primary hover fixed | atlas 368-371 + 657-666 were two definitions; `.trail-btn` 581-591 carried its own gradient. Pre-existing cascade bug: `.btn:hover:not(.btn-accent)` is (0,3,0) — `:not()` carries its argument's weight — so it outranked `.btn-primary:hover` (0,2,0) and painted paper under `--on-accent` text on every primary's hover; the selector now excludes `.btn-primary` / `.btn-play` |
 | `.btn.lifeline`, `.lifeline__cost` | atlas `#lifelines-bar .btn-lifeline` 790-820 (same rules, both selectors) |
 | `.seg` (44px segments, chosen = ink) | replay-embed.css:34-38 `.rp-cams` |
 | `.chip-link` (44px) | map-guess:29-32 `.mode-tab.is-link`, players `.pp-quick-chip` |
@@ -67,7 +67,7 @@ Other gates, all run on this branch after stamp and mirror:
 - `python scripts/check_a11y.py` — OK, 19 pages, 0 fails (its target-size check reads page styles only; the kit's 44/48/52px targets are declared, not gate-verified).
 - `python scripts/check_css_braces.py` — balanced.
 - `python -m pytest tests/test_site.py tests/test_check_design.py -q` — exit 0, 0 failures.
-- `python scripts/budget_check.py` — green after re-measuring four rows. atlas.css grew 39,665 → 64,766 bytes (gzip 10,310 → 15,760); shell.css 13,069 → 13,207. That pushed four pages over their 1.5× budgets, so those four are set to measured + 3 %, rounded up to 1 KiB, as the brief allows: `map-guess.html` 151,552 → 177,152 (measured 171,734), `players.html` 921,600 → 953,344 (925,259), `status.html` 81,920 → 108,544 (104,395), `teams.html` 156,672 → 182,272 (176,574). Untouched but close: `play.html` at 1,539,533 / 1,556,480 (98.9 %) and `404.html` at 100,981 / 102,400; wave 1.2's deletion of the four legacy sheets gives them room back.
+- `python scripts/budget_check.py` — green after re-measuring four rows. atlas.css grew 39,665 → 65,037 bytes (gzip 10,310 → 15,935); shell.css 13,069 → 13,207. That pushed four pages over their 1.5× budgets, so those four are set to measured + 3 %, rounded up to 1 KiB, as the brief allows: `map-guess.html` 151,552 → 177,152 (measured 171,734), `players.html` 921,600 → 953,344 (925,259), `status.html` 81,920 → 108,544 (104,395), `teams.html` 156,672 → 182,272 (176,574). Untouched but close: `play.html` at 1,539,533 / 1,556,480 (98.9 %) and `404.html` at 100,981 / 102,400; wave 1.2's deletion of the four legacy sheets gives them room back.
 
 ## Mechanical consequences
 
@@ -78,12 +78,12 @@ Other gates, all run on this branch after stamp and mirror:
 
 ## Written down for wave 2 (seeds that need a page change to wear the kit)
 
-- plate.js emits `.pno / .prule / .pmeta`; the kit styles those as aliases of `.plate__no / __rule / __meta`. Rename when plate.js is next touched (2.4), then drop the aliases.
+- plate.js emits `.pno / .prule / .pmeta`; the kit styles those as aliases of `.plate__no / __rule / __meta`. Rename when plate.js is next touched (2.4), then drop the aliases. live.html's 14 static plates and pregame.js's six carry the same markup today and live.css:78-83 still owns them at higher specificity: the kit's h2 / rule / meta slots declare only properties live.css also sets (the h2 keeps `text-transform: uppercase`, and every live plate title is already uppercase in the markup), so nothing on /live changes until 2.4.
 - keyboard-a11y.js:164 closes sheets by adding `.hidden` to `.sheet`; the kit's closed state is `[hidden]` on `.sheet__backdrop`. 2.2 reconciles (one line either side).
 - `.suggest` stays the combobox wrapper (input + ul) because keyboard-a11y.js:84 wires it on that shape; `.answer` is the block around it. Pages adopt `class="answer"` on the block and keep `.suggest`.
 - `.btn.lifeline` is the kit name; game-mechanics.js still emits `.btn-lifeline` under `#lifelines-bar`, which shares every rule. It also injects its own `.btn-lifeline` sizes (game-mechanics.js:288-289) — 2.2 removes those.
 - `.card--door` children are `.card__n / __title / __text / __meta / __go`; index.html's `.door__*` copies win on index until 2.1 deletes them.
 - `.progress-dot` is 32px in the kit; play.html and map-guess.html still carry 26/28px copies that win until 1.3 removes them (D5).
 - `.truth` (the 3px accent rule, §2 #12) was not promoted: not in task 1.1's list. `.map-note` already carries that rule; one line when 2.2 needs it.
-- Visible now, no page edit needed: `.wiki-row__name .vh-team-tag` and `.wiki-row__grades` on /players are 11px (were 9.5 / 10); the career-trails button on index is pipe green with the hard step (was a moss→terra gradient); the nav labels are Archivo.
+- Visible now, no page edit needed (these are the renders the next task should look at first): `.wiki-row__name .vh-team-tag` and `.wiki-row__grades` on /players are 11px (were 9.5 / 10); the career-trails button on index is pipe green with the hard step (was a moss→terra gradient); the nav labels are Archivo; every primary button hovers to `--pipe-deep` instead of paper; `--t-2xs` 10 → 11px moves every `.pill/.chip`, `.data-table th`, `.title-card__meta` cell and the nav meta up 1px site-wide. Two seeds leak a property their page copy never set: play.html's `.suggest li` rows take the kit's `--t-base` (15px, from the page's 18px body) and map-guess.html's `.progress-dot` numerals take `--fg-3`. Both are what 1.3 ships anyway.
 - `.trail-btn` reads `--pipe` and `--pipe` is still green; the flip to marker-red is Cam's call (TOKENS.md "Open brand question").
