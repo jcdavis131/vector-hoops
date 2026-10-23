@@ -776,6 +776,7 @@
   function loadGame(id) {
     return fetch(DATA + id + '.json', { cache: 'no-cache' }).then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); }).then(function (g) {
       setGame(g);
+      if (window.ReplayBoxscore) { try { window.ReplayBoxscore.render(g); } catch (e) { /* panel is decorative */ } }
       document.querySelectorAll('.rp-game').forEach(function (b) { b.setAttribute('aria-pressed', b.dataset.id === id ? 'true' : 'false'); });
       try { var u = new URL(location.href); u.searchParams.set('game', id); u.searchParams.delete('g'); u.searchParams.delete('espn'); history.replaceState(null, '', u); } catch (e) { /* ignore */ }
     }).catch(function () { if (nowEl) nowEl.textContent = 'This replay could not be loaded. Try another game or reload the page.'; });
@@ -806,6 +807,7 @@
       espnFails = 0;
       try { if (again) setGame(g, { keep: true }); else setGame(g, { live: g.live }); }
       catch (err) { if (nowEl && !again) nowEl.textContent = 'This game could not be replayed. Pick another.'; return; }
+      if (window.ReplayBoxscore) { try { window.ReplayBoxscore.render(g); } catch (e) { /* panel is decorative */ } }
       pressed('espn-' + id);
       try { var u = new URL(location.href); u.searchParams.set('espn', id); u.searchParams.delete('g'); history.replaceState(null, '', u); } catch (e) { /* ignore */ }
       if (g.live) espnTimer = setTimeout(function () { loadEspn(id, true); }, 30000);
@@ -838,6 +840,11 @@
   }
   function boot() {
     var q = new URLSearchParams(location.search), wantG = q.get('game') || q.get('g'), wantE = q.get('espn');
+    /* chrome=0: chromeless embed for the /live plate's Full view. Hides the page
+       chrome and stands down the 24h guard, so a live game replays inline
+       instead of redirecting back to /live inside the frame. */
+    var chrome0 = /[?&]chrome=0(&|$)/.test(location.search);
+    if (chrome0 && document.body) document.body.classList.add('rp-chrome0');
     // G4/T4.1: possession links — seek to an event index, falling back to ?t= seconds.
     function applyDeepTime() {
       var pi = parseInt(q.get('possession'), 10);
@@ -897,7 +904,7 @@
       // C2.1: the 24h guard — a ?espn= for a live/recent/pre game belongs on /live.
       // espnLookup covers today + yesterday; anything older (or unknown) stays put.
       espnLookup().then(function (eg) {
-        if (wantE && window.GameRoute) {
+        if (wantE && window.GameRoute && !chrome0) {
           var egHit = eg.filter(function (g) { return String(g.id) === String(wantE); })[0];
           var info = egHit ? { state: egHit.state, gameTimeMs: Date.now() - 3600e3 } : null;
           if (window.GameRoute.guard('replay', function () { return info; })) return;
