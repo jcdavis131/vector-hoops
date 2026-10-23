@@ -17,13 +17,12 @@
 
   var EXPLORE = [
     { href: '/', label: 'Atlas', desc: 'The map of 12,966 player-seasons' },
-    { href: '/map-guess', label: 'Map Hunt', desc: 'Find the mystery star on the 3D map — new tonight', live: true },
+    { href: '/map-guess', label: 'Map Hunt', desc: 'Find the mystery star on the 3D map' },
     { href: '/live', label: 'Live', desc: 'Live game companion: win probability, atlas twins, shot charts', live: true },
     { href: '/schedule', label: 'Schedule', desc: 'Seven days of games — tonight on Live, last night on Replay' },
     { href: '/players', label: 'Players', desc: 'Directory, skill profiles and leaderboards' },
     { href: '/insights', label: 'Insights', desc: 'Findings from the model — and from the ledger' },
     { href: '/twin-network', label: 'Twin Networks', desc: 'Every player\u2019s nearest neighbors, mapped as a network' },
-    { href: '/teams', label: 'Teams', desc: 'Thirty team intro loops and season snapshots' },
     { href: '/playoff-runs', label: 'Playoff Runs', desc: 'The greatest postseason runs, ranked' },
     { href: '/twenty-questions', label: 'Twenty Questions', desc: 'Think of a player — 20 yes/no questions, the map dims the rest' },
     { href: '/taxonomy', label: 'Taxonomy', desc: 'A taxonomy of play styles' },

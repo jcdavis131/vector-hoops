@@ -240,6 +240,24 @@
           "value": "public, max-age=0, s-maxage=60, stale-while-revalidate=300"
         }
       ],
+      "source": "/twin-network"
+    },
+    {
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, s-maxage=60, stale-while-revalidate=300"
+        }
+      ],
+      "source": "/models/mtnn-v5"
+    },
+    {
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, s-maxage=60, stale-while-revalidate=300"
+        }
+      ],
       "source": "/twenty-questions"
     }
   ],
@@ -291,6 +309,14 @@
     {
       "source": "/map-guess",
       "destination": "/map-guess.html"
+    },
+    {
+      "source": "/twin-network",
+      "destination": "/twin-network.html"
+    },
+    {
+      "source": "/models/mtnn-v5",
+      "destination": "/models/mtnn-v5.html"
     },
     {
       "source": "/twenty-questions",

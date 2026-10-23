@@ -294,7 +294,7 @@
       '.suit-team{background:#e2f0e4;border-color:#4a8f5d}',
       '.suit-era{background:#efece4;border-color:#9A9A94}',
       '.coachmark-backdrop{position:fixed;inset:0;background:var(--scrim,rgba(35,35,35,.45));z-index:90}',
-      '.coachmark{position:fixed;left:50%;transform:translateX(-50%);max-width:min(92vw,380px);max-height:calc(100dvh - 32px);overflow:auto;background:var(--board,#FCFBF7);border:1.5px solid var(--ink,#232323);border-radius:10px;padding:14px 16px;z-index:91;box-shadow:0 12px 40px rgba(35,35,35,.18)}',
+      '.coachmark{position:fixed;left:50%;transform:translateX(-50%);width:min(92vw,380px);max-height:calc(100dvh - 32px);overflow:auto;background:var(--board,#FCFBF7);border:1.5px solid var(--ink,#232323);border-radius:10px;padding:14px 16px;z-index:91;box-shadow:0 12px 40px rgba(35,35,35,.18)}',
       '.coachmark-step{font-family:ui-monospace,monospace;font-size:11px;letter-spacing:.1em;color:var(--fg-3,#9A9A94)}',
       '.coachmark-title{font-size:17px;font-weight:800;margin:4px 0}',
       '.coachmark-body{font-size:13px;line-height:1.5;color:var(--fg-2,#57574F)}',
