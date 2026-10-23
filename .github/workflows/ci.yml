@@ -35,6 +35,21 @@ jobs:
           python scripts/check_site_facts.py
           python scripts/check_a11y.py
           python scripts/check_contrast.py
+      # DESIGN-DIRECTION section 5's static detectors (D1-D10, D12-D15, D17,
+      # D19-D21). Non-blocking on purpose: --report exits 0 whatever the table
+      # says, and most rows are red until the redesign's wave 1 lands. The
+      # receipts JSON is what a wave PR quotes via `--baseline` to show the
+      # per-detector delta. The gating form (no --report; D1 + D14 enforced)
+      # is in `make ci` next to this one's twin.
+      - name: Design gate report (non-blocking)
+        continue-on-error: true
+        run: python scripts/check_design.py --report --json design-report.json
+      - name: Upload design gate receipts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: design-report
+          path: design-report.json
 
   offline-build:
     runs-on: ubuntu-latest
