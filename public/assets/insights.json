@@ -197,8 +197,8 @@
     {
       "foot": "12 qualifying moves, \u0394USG \u2265 4.0, 1999-00 \u2192 2024-25. Pre = final pre-move season meeting the stardom bar (All-Star or 25+ USG or 20+ PPG or 8+ WS) on a team that won \u22641 playoff round. Post = first season with the new team. Team rounds from the public record; full methodology in research/invisible-stardom-FINDINGS.md.",
       "kicker": "Sacrifice",
-      "lede": "Stars who shrank for a contender: Jrue Holiday gave up 8.7 usage points and won a ring. Malone, Harden, Payton gave up as much and lost. Rings cluster where the star joined an already-elite core.",
-      "og_desc": "Jrue Holiday gave up 8.7 points of usage going from Milwaukee All-Star to Boston's fourth option \u2014 and won a ring. 12 invisible-stardom sacrifices, ranked.",
+      "lede": "Stars who shrank for a contender: Jrue Holiday gave up 8.7 points of usage rate and won a ring. Malone, Harden, Payton gave up as much and lost. Rings cluster where the star joined an already-elite core.",
+      "og_desc": "Jrue Holiday gave up 8.7 points of usage rate going from Milwaukee All-Star to Boston's fourth option \u2014 and won a ring. 12 invisible-stardom sacrifices, ranked.",
       "og_title": "The biggest sacrifices nobody saw",
       "rows": [
         {
@@ -256,7 +256,7 @@
       "stat": "-8.7",
       "stat_label": "Jrue Holiday's usage drop, Milwaukee All-Star to Boston's fourth option \u2014 the biggest invisible sacrifice, and a ring",
       "title": "The biggest sacrifices nobody saw",
-      "tldr": "Lottery-team stars who shrank for a contender: Jrue Holiday gave up 8.7 points of usage and won a ring, but Malone, Harden and Payton gave up as much and lost \u2014 rings went to the stars who joined already-elite cores.",
+      "tldr": "Lottery-team stars who shrank for a contender: Jrue Holiday gave up 8.7 points of usage rate and won a ring, but Malone, Harden and Payton gave up as much and lost \u2014 rings went to the stars who joined already-elite cores.",
       "viz": "bars",
       "viz_label": "Usage given up (USG points)",
       "series": "ledger",

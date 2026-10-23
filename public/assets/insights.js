@@ -51,7 +51,7 @@
   }
 
   function load() {
-    return fetch('assets/insights.json?v=f76aacab').then(function (r) {
+    return fetch('assets/insights.json?v=bbd755c6').then(function (r) {
       if (!r.ok) throw new Error('insights.json ' + r.status);
       return r.json();
     });
