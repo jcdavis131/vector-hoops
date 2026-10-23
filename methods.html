@@ -80,8 +80,8 @@
 <div id="main" class="main doc" role="main">
   <header class="title-card">
     <div class="title-card__eyebrow reveal">Methods</div>
-    <h1 class="title-card__title reveal reveal-1">Every number can be <em>recomputed from source</em></h1>
-    <p class="title-card__lede reveal reveal-2">Every season becomes a 64-number fingerprint. Seasons with similar fingerprints played similar basketball. The model reads 130 features per season to build it. The training lab — how the fingerprint was taught, graded and debugged — lives in the <a href="/research.html">research notebook</a>.</p>
+    <h1 class="title-card__title reveal reveal-1">Every data number can be <em>recomputed from source</em></h1>
+    <p class="title-card__lede reveal reveal-2">Every season becomes a 64-number fingerprint. Seasons with similar fingerprints played similar basketball. The model reads 130 features per season to build it. The training lab — how the fingerprint was taught, graded and debugged — lives in the <a href="/research.html">research notebook</a>. One caveat: the v5 champion was promoted with its promotion gate waived — see <a href="/status.html">Status</a>.</p>
   </header>
 
   <nav class="doc-toc" aria-label="On this page">
@@ -92,7 +92,7 @@
     <section id="vector-space">
       <div class="doc-eyebrow">What does the model see?</div>
       <h2>The vector space — two views, one frame</h2>
-      <p><b>Games (fast):</b> 12,966 player-seasons, 1996–97 to 2025–26, from stats.nba.com, per 100 possessions. A season counts if the player appeared in enough games and minutes — scaled to each season&rsquo;s schedule, not one flat cutoff. Each season&rsquo;s 14 features are z-scored within that season. Player counts site-wide are distinct player IDs — <span data-fact="players">2,426</span> (distinct display names: <span data-fact="player_names">2,422</span>; a few names belong to two different players).</p>
+      <p><b>Games (fast):</b> 12,966 player-seasons, 1996–97 to 2025–26, from stats.nba.com, per 100 possessions. A season counts if the player cleared both gates: at least 15% of the season&rsquo;s scheduled games (10–15 GP, clamped) and at least 450 total minutes. For a normal 82-game season that&rsquo;s 12+ games and 450+ minutes; the shortened seasons scale down — 11 GP in the 72-game COVID seasons, 10 GP in the lockout seasons (1998–99, 2011–12). Each season&rsquo;s 14 features are z-scored within that season. Player counts site-wide are distinct player IDs — <span data-fact="players">2,426</span> (distinct display names: <span data-fact="player_names">2,422</span>; a few names belong to two different players).</p>
       <table class="data-table">
         <thead><tr><th scope="col">Feature</th><th scope="col">Measures</th><th scope="col">Era note</th></tr></thead>
         <tbody>
@@ -128,7 +128,7 @@ Tower 17×: 2d_in→160 LN GELU → 160→32 LN + skip ×2 → 32-d (544 total)
 + season_emb 12-d → 556 → 556→256 GELU → <b>64 L2</b>
 Heads: 8 arch / 5 pos / 14 next / 18 skill towers — 12 core + 6 wide (64→16→1)
 ~224K params · ONNX 548 KB</pre>
-      <p class="doc-note">The old test was too easy — a memorizing model scored 1.0. The current test is leak-free. The full scorecard, the training commands and the promote gate live in the <a href="/research.html">research notebook</a>.</p>
+      <p class="doc-note">The old test was too easy — a memorizing model scored 1.0. The current test is leak-free <i>by design</i> — train and test never overlap, so the 1.0 score can&rsquo;t come back. But &ldquo;leak-free&rdquo; covers the test, not the champion: the v5 champion was promoted with its promotion gate waived, and the original run files needed to re-derive its numbers have a lineage gap, disclosed in <a href="/status.html">Status</a>. The full scorecard, the training commands and the promote gate live in the <a href="/research.html">research notebook</a>.</p>
     </section>
 
     <section id="the-map">
@@ -154,6 +154,7 @@ Heads: 8 arch / 5 pos / 14 next / 18 skill towers — 12 core + 6 wide (64→16�
         <li>Rim protection + offensive glass</li><li>Three-point volume (low finishing)</li><li>Playmaking + steals</li><li>Offensive glass + defensive glass</li>
         <li>Three-point volume + shot volume</li><li>Three-point volume + three-point accuracy</li><li>Scoring volume + shot volume</li><li>Rim pressure (FTs) + defensive glass</li>
       </ol>
+      <p class="doc-note">The three-point archetypes describe season-level specialist shooters: a season lands in one when shooting dominates its statistical shape. Star shooters usually sit in scoring-volume archetypes instead — their shot volume dominates their profile more than their accuracy does.</p>
     </section>
 
     <section id="dossier">
@@ -174,8 +175,8 @@ Heads: 8 arch / 5 pos / 14 next / 18 skill towers — 12 core + 6 wide (64→16�
       <div class="doc-eyebrow">How does the league change?</div>
       <h2>League drift — the headlines</h2>
       <p class="doc-formula" aria-label="Orthogonal Procrustes: rotate one season's player map onto the next so rotations preserve distances — R transpose R equals identity. Rotation is the mean principal angle of Q against the identity; residual is the distance left after alignment.">Orthogonal Procrustes on consecutive-season shared players (≥ 30). Rotation = mean principal angle of Q against the identity; residual = Frobenius norm after alignment; chained to the 1996 root frame; RᵀR = I.</p>
-      <p>The biggest rotation: the summer entering 2019–20 (2018–19 → 2019–20) at 12.49° — the league&rsquo;s playing style turned further that summer than any other in the window. Next-largest: 2020–21 → 2021–22 at 11.35°.</p>
-      <p>Where careers end up, from the same trajectories: 51% of players stay stable specialists, 20% migrate to a neighbouring role, 13% drift, 10% reinvent themselves once, and 5% bloom late. Reinventors last longest — 9.3 seasons against 7.9 for everyone else. The steepest single fall is Interior Finishing + Defensive Glass: 16.5% of minutes early in the window to 8.0% late (−8.6 points).</p>
+      <p>The biggest rotation: the summer entering 2019–20 (2018–19 → 2019–20) at 12.49&deg;* — the league&rsquo;s playing style turned further that summer than any other in the window. *The 2019–20 season was COVID-shortened and finished in a bubble, so that rotation may reflect schedule and roster disruption as much as a genuine style shift. Next-largest: 2020–21 → 2021–22 at 11.35&deg;.</p>
+      <p>Where careers end up, from the same trajectories (n = 1,313 careers with &ge;4 charted seasons): 51% of players stay stable specialists, 20% migrate to a neighbouring role, 13% drift, 10% reinvent themselves once, and 5% bloom late (shares rounded). Players with the longest careers are the ones who reinvented — 9.3 charted seasons on average, against 8.3 for everyone else. That gap is confounded by selection: the reinvention label needs at least two seasons on each side of the switch, so short careers can never earn it. These are class means with wide within-class spreads — a pattern, not a prediction about any one player. The steepest single fall is Interior Finishing + Defensive Glass: 16.54% of minutes early in the window to 7.98% late (&minus;8.56 points).</p>
       <p class="doc-note">These numbers are what the Trends page charted until October 2026, drawn from the same drift series.</p>
     </section>
 
@@ -184,7 +185,7 @@ Heads: 8 arch / 5 pos / 14 next / 18 skill towers — 12 core + 6 wide (64→16�
       <h2>Buried sentences, worth quoting</h2>
       <p class="doc-note">The site&rsquo;s voice at its most honest, one anchor link each:</p>
       <blockquote class="vh-quote" id="quote-chimera"><p>&ldquo;A Chimera&rsquo;s fused vector never existed as a real season.&rdquo;</p><a class="vh-quote__src" href="#limitations">from What can&rsquo;t it do?</a></blockquote>
-      <blockquote class="vh-quote" id="quote-recompute"><p>&ldquo;Every number can be recomputed from source.&rdquo;</p><a class="vh-quote__src" href="#vector-space">from What does the model see?</a></blockquote>
+      <blockquote class="vh-quote" id="quote-recompute"><p>&ldquo;Every data number can be recomputed from source.&rdquo;</p><a class="vh-quote__src" href="#vector-space">from What does the model see?</a></blockquote>
       <blockquote class="vh-quote" id="quote-how-players-play"><p>&ldquo;The model&rsquo;s cards measure how players play, not how good they are.&rdquo;</p><a class="vh-quote__src" href="/insights.html">from the Insights hub</a></blockquote>
       <blockquote class="vh-quote" id="quote-no-fake"><p>&ldquo;We don&rsquo;t fake them.&rdquo;</p><a class="vh-quote__src" href="/playoff-runs.html#how-scored">from Greatest Playoff Runs</a></blockquote>
       <blockquote class="vh-quote" id="quote-hype-check"><p>&ldquo;We checked the hype first: the paper&rsquo;s &lsquo;18%&rsquo; claim appears in neither its abstract nor its full text.&rdquo;</p><a class="vh-quote__src" href="/research.html#frontier">from the Frontier Program, research notebook</a></blockquote>
@@ -235,7 +236,7 @@ Heads: 8 arch / 5 pos / 14 next / 18 skill towers — 12 core + 6 wide (64→16�
       <a href="https://dumbmodel.com" rel="noopener">dumbmodel.com</a>
     </div>
   </nav>
-  <p class="site-footer__attribution">Every number recomputable from stats.nba.com · A <a href="https://dumbmodel.com">dumbmodel</a> project · <a href="https://github.com/jcdavis131/vector-hoops" rel="noopener">Source</a> · Colophon: page transitions, the Pixel Replay wipe and the site&rsquo;s music (written in ABC notation and synthesized in your browser, no audio files) follow <a href="https://github.com/alchaincyf/huashu-motion" rel="noopener">huashu-motion</a>; the music code is ported in part from it, Copyright (c) 2026 Huashu, <a href="https://github.com/alchaincyf/huashu-motion/blob/main/LICENSE" rel="noopener">MIT License</a>.</p>
+  <p class="site-footer__attribution">Every data number recomputable from stats.nba.com · A <a href="https://dumbmodel.com">dumbmodel</a> project · <a href="https://github.com/jcdavis131/vector-hoops" rel="noopener">Source</a> · Colophon: page transitions, the Pixel Replay wipe and the site&rsquo;s music (written in ABC notation and synthesized in your browser, no audio files) follow <a href="https://github.com/alchaincyf/huashu-motion" rel="noopener">huashu-motion</a>; the music code is ported in part from it, Copyright (c) 2026 Huashu, <a href="https://github.com/alchaincyf/huashu-motion/blob/main/LICENSE" rel="noopener">MIT License</a>.</p>
 </footer>
 <script src="assets/error-boundary.js?v=8079215c"></script>
 <script src="assets/keyboard-a11y.js?v=39777a87"></script>
