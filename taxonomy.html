@@ -131,6 +131,6 @@
 <script>if('serviceWorker' in navigator){window.addEventListener('load',()=>{navigator.serviceWorker.register('/sw.js').catch(()=>{})})}</script>
 <script src="assets/site-facts.js?v=f8edaf37" defer></script>
 <script>
-(function(){var b=document.getElementById('vh-share-btn');if(!b)return;b.addEventListener('click',function(){var url=location.href;var title=document.title;function done(){b.textContent='Link copied';setTimeout(function(){b.textContent='Share';},1600);}if(navigator.share){navigator.share({title:title,url:url}).catch(function(){});}else if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(url).then(done,done);}else{done();}});})();
+(function(){var b=document.getElementById('vh-share-btn');if(!b)return;b.addEventListener('click',function(){var url=location.href;var title=document.title;function ok(){b.textContent='Link copied';setTimeout(function(){b.textContent='Share';},1600);}function no(){b.textContent='Copy failed';setTimeout(function(){b.textContent='Share';},1600);}if(navigator.share){navigator.share({title:title,url:url}).catch(function(){});}else if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(url).then(ok,no);}else{no();}});})();
 </script>
 </body></html>
