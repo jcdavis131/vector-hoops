@@ -42,6 +42,7 @@ jobs:
       # per-detector delta. The gating form (no --report; D1 + D14 enforced)
       # is in `make ci` next to this one's twin.
       - name: Design gate report (non-blocking)
+        continue-on-error: true
         run: python scripts/check_design.py --report --json design-report.json
       - name: Upload design gate receipts
         if: always()

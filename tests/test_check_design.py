@@ -384,3 +384,55 @@ def test_cli_delta_against_a_baseline(tmp_path: Path, capsys: pytest.CaptureFixt
 def test_cli_rejects_unknown_detector(tmp_path: Path) -> None:
     with pytest.raises(SystemExit):
         cd.main(["--root", str(write_site(tmp_path, clean_site())), "--enforce", "D99"])
+
+
+def test_games_list_is_read_from_site_nav_and_is_not_a_nav_destination(tmp_path: Path) -> None:
+    files = clean_site()
+    files["assets/site-nav.js"] = SITE_NAV + "const GAMES = ['/play', '/era'];\n"
+    rewrites = VERCEL["rewrites"] + [{"source": "/era", "destination": "/era.html"}]
+    files["vercel.json"] = json.dumps({**VERCEL, "rewrites": rewrites})
+    files["era.html"] = page("/era", "Era", nav='<nav class="site-nav" data-active="/play" aria-label="Primary"></nav>')
+    for k in list(files):
+        if k.endswith(".html"):
+            files[k] = files[k].replace('<a href="/play">Play</a>', '<a href="/play">Play</a><a href="/era">Era</a>')
+    root = write_site(tmp_path, files)
+    assert hits(root, "D12") == []  # /era is allowed in the footer only because GAMES names it
+    assert hits(root, "D13") == []  # and era.html may light /play, since /era is not a nav destination
+    _explore, known, games, source = cd.nav_lists(files["assets/site-nav.js"])
+    assert games == ("/play", "/era") and source.startswith("assets/site-nav.js")
+    assert "/era" not in known
+
+
+def test_games_parser_reads_objects_and_refuses_an_unclosed_array() -> None:
+    objects = "let GAMES = [\n  { href: '/play', label: 'Play' },\n  { href: '/map-guess' }\n];\n"
+    assert cd.nav_lists(objects)[2] == ("/play", "/map-guess")
+    unclosed = "var GAMES = [ '/play', '/map-guess'\nvar EXPLORE = [ { href: '/' } ];\n"
+    explore, known, games, source = cd.nav_lists(unclosed)
+    assert games == cd.GAMES and "built-in" in source
+    assert explore == ["/"] and known == {"/"}
+
+
+def test_relative_import_literals_count_as_served(tmp_path: Path) -> None:
+    files = clean_site()
+    files["assets/app.js"] = "import('./deep/lazy.js?v=0a1b');\n"
+    files["assets/deep/lazy.js"] = "el.style.cssText = 'color:#abcdef';\n"
+    _play(files, scripts=("site-nav", "app"))
+    assert hits(write_site(tmp_path, files), "D6") == ["assets/deep/lazy.js:1: #abcdef in JS string 'color:#abcdef'"]
+
+
+def test_report_mode_survives_a_broken_input(tmp_path: Path, capsys: pytest.CaptureFixture) -> None:
+    files = clean_site()
+    files["vercel.json"] = "{not json"
+    root = write_site(tmp_path, files)
+    assert cd.main(["--root", str(root), "--report"]) == 0
+    assert "the gate itself failed" in capsys.readouterr().out
+    with pytest.raises(json.JSONDecodeError):
+        cd.main(["--root", str(root)])
+
+
+def test_copy_lint_is_spec_only_and_word_bounded(tmp_path: Path) -> None:
+    files = clean_site()
+    files["research.html"] = page("/research", "Research", body="<h1>R</h1><p>Nearest by cosine.</p>")
+    _play(files, body="<h1>P</h1><p>The x64-d build and the 64-dimensional one.</p>")
+    found = hits(write_site(tmp_path, files), "D21")
+    assert [h.split(": ", 1)[1][:15] for h in found] == ["'64-d' in 'The ", "'cosine' in 'Ne"]

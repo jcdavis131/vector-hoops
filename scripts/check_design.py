@@ -18,8 +18,9 @@ always exits 0; `--json` writes the receipts a PR body quotes; `--baseline`
 prints the per-detector delta a reviewer wants to see ("D6 112 -> 97").
 
 Scope: the served pages are budget_check.py's PAGE_GLOBS (root *.html plus
-insights/, play/ and models/), and the CSS and JS those pages actually load -
-not every file under assets/, so a dead sheet nothing links stops counting.
+insights/, play/ and models/), and the CSS and JS those pages actually load,
+transitively through import()/fetch literals - not every file under assets/,
+so a dead sheet nothing links stops counting.
 public/ is a mirror and is not read; D19 runs sync_public.py --check so the
 mirror still has to match.
 
@@ -49,7 +50,8 @@ docstring):
   D20  a <summary> with no rule declaring a height >= 44px is a hit, because a
        static read cannot credit padding it cannot sum.
   D21  text nodes only, <head> excluded, <noscript> included; <p class=
-       "provenance"> is not a <details> and counts.
+       "provenance"> is not a <details> and counts; only /methods and /models
+       are exempt, exactly as the spec says.
 
     python scripts/check_design.py                      # gate: D1, D14
     python scripts/check_design.py --report             # table, exit 0
@@ -65,6 +67,7 @@ import json
 import re
 import subprocess
 import sys
+import traceback
 from collections import Counter
 from dataclasses import dataclass, field
 from html.parser import HTMLParser
@@ -104,9 +107,9 @@ DATA_SCRIPT_TYPES = ("application/json", "application/ld+json", "importmap", "te
 # D21: the spec's pattern, word-bounded; `64-d` deliberately open-ended so
 # "64-dimensional" counts.
 JARGON = re.compile(
-    r"\bMTNN\b|64-d|\b[Cc]osine\b|\bL2\b|\bPCA\b|\b[Tt]-SNE\b|\bUMAP\b|\b[Kk]-means\b|\b[Ss]ilhouette\b|\b[Hh]euristic\b"
+    r"\bMTNN\b|(?<!\w)64-d|\b[Cc]osine\b|\bL2\b|\bPCA\b|\b[Tt]-SNE\b|\bUMAP\b|\b[Kk]-means\b|\b[Ss]ilhouette\b|\b[Hh]euristic\b"
 )
-COPY_EXEMPT_PAGES = {"methods.html", "research.html", "status.html", "feed-health.html"}
+COPY_EXEMPT_PAGES = {"methods.html"}  # plus models/*: the spec's two exemptions, nothing more
 
 RE_COMMENT = re.compile(r"<!--.*?-->", re.S)
 RE_SCRIPT = re.compile(r"<script\b[^>]*>.*?</script>", re.S | re.I)
@@ -128,7 +131,10 @@ RE_FAMILY = re.compile(
 )
 RE_QUOTED_FAMILY = re.compile(r"""["'][A-Za-z][\w -]*["']""")
 RE_INLINE_SCRIPT = re.compile(r"<script(?![^>]*(?<![\w-])src=)([^>]*)>", re.I)
-RE_ASSET_LITERAL = re.compile(r"""['"`](\.?\.?/?assets/[A-Za-z0-9_./-]+\.(?:css|js))(?:\?v=[0-9a-f]+)?['"`]""")
+# `/assets/x.js`, `assets/x.css`, and `./x.js` / `../lemmino/x.js` relative to the importing file.
+RE_ASSET_LITERAL = re.compile(
+    r"""['"`]((?:\.?\.?/)?assets/[A-Za-z0-9_./-]+\.(?:css|js)|\.\.?/[A-Za-z0-9_./-]+\.(?:css|js))(?:\?v=[0-9a-f]+)?['"`]"""
+)
 RE_COLOURISH = re.compile(r"(?<![\w-])(color|background[\w-]*|font[\w-]*|fill|stroke)\s*:", re.I)
 RE_FONT_SHORTHAND_PX = re.compile(
     r"(?:^|font\s*:)\s*(?:(?:\d{3}|bold|bolder|lighter|normal|italic|oblique|small-caps)\s+)*(\d+(?:\.\d+)?)px\b"
@@ -157,17 +163,6 @@ def blank_spans(text: str, spans: list[tuple[int, int]]) -> str:
 
 def spans_of(pattern: re.Pattern, text: str, group: int = 0) -> list[tuple[int, int]]:
     return [(m.start(group), m.end(group)) for m in pattern.finditer(text)]
-
-
-def keep_only(text: str, spans: list[tuple[int, int]]) -> str:
-    """The inverse of blank_spans: everything outside the spans becomes spaces."""
-    inverse: list[tuple[int, int]] = []
-    pos = 0
-    for s, e in sorted(spans):
-        inverse.append((pos, s))
-        pos = max(pos, e)
-    inverse.append((pos, len(text)))
-    return blank_spans(text, inverse)
 
 
 def line_of(text: str, offset: int) -> int:
@@ -266,7 +261,7 @@ class Page:
     raw: str
     text: str  # HTML comments blanked
     markup: str  # comments + every <script> blanked: what the browser builds the DOM from
-    css_view: str  # only <style> contents left; same offsets as text
+    style_blocks: list[tuple[int, str]]  # (offset in markup, <style> body with CSS comments blanked)
     svg_spans: list[tuple[int, int]]
     style_attrs: list[tuple[int, int, str]]  # (offset, line, value)
     sheets: list[str] = field(default_factory=list)  # served CSS this page loads
@@ -347,22 +342,35 @@ def parse_decls(body: str, base: int, src: str) -> list[tuple[str, str, int]]:
     return [(d.group(1).lower(), d.group(2).strip(), line_of(src, base + d.start(1))) for d in RE_DECL.finditer(body)]
 
 
-def css_rules(rel: str, css: str, kind: str, svg_spans: list[tuple[int, int]] | None = None) -> list[Rule]:
-    """Every `selector{decls}` in css, with offsets in css's own coordinates."""
+def css_rules(
+    rel: str,
+    css: str,
+    kind: str,
+    svg_spans: list[tuple[int, int]] | None = None,
+    base: int = 0,
+    src: str | None = None,
+) -> list[Rule]:
+    """Every `selector{decls}` in css. Offsets and lines are in src's coordinates when css is src[base:...].
+
+    RE_RULE is run on the block alone, never on a page-length string: `[^{}]+\{` backtracks across
+    everything after the last `}`, which made one page cost six seconds.
+    """
+    src = css if src is None else src
     out = []
     for m in RE_RULE.finditer(css):
         sel = m.group(1).strip()
         if not sel:
             continue
+        off = base + m.start(2)
         out.append(
             Rule(
                 rel=rel,
-                line=line_of(css, m.start(2)),
-                offset=m.start(2),
+                line=line_of(src, off),
+                offset=off,
                 selector=sel,
-                decls=parse_decls(m.group(2), m.start(2), css),
+                decls=parse_decls(m.group(2), off, src),
                 kind=kind,
-                in_svg=inside(m.start(2), svg_spans or []),
+                in_svg=inside(off, svg_spans or []),
             )
         )
     return out
@@ -380,39 +388,54 @@ def load_page(root: Path, rel: str) -> Page:
     raw = (root / rel).read_text(encoding="utf-8", errors="replace")
     text = blank_spans(raw, spans_of(RE_COMMENT, raw))
     markup = blank_spans(text, spans_of(RE_SCRIPT, text))
-    style_spans = spans_of(RE_STYLE, markup, group=1)
-    css_view = keep_only(markup, style_spans)
-    css_view = blank_spans(css_view, spans_of(RE_CSS_COMMENT, css_view))
+    style_blocks = []
+    for s, e in spans_of(RE_STYLE, markup, group=1):
+        block = markup[s:e]
+        style_blocks.append((s, blank_spans(block, spans_of(RE_CSS_COMMENT, block))))
     svg_spans = spans_of(RE_SVG, markup)
     style_attrs = [
         (m.start(1 if m.group(1) is not None else 2), line_of(markup, m.start()), m.group(1) or m.group(2) or "")
         for m in RE_STYLE_ATTR.finditer(markup)
     ]
-    return Page(rel, clean_url(rel), raw, text, markup, css_view, svg_spans, style_attrs)
+    return Page(rel, clean_url(rel), raw, text, markup, style_blocks, svg_spans, style_attrs)
 
 
-def nav_lists(js: str) -> tuple[list[str], set[str], tuple[str, ...]]:
-    """EXPLORE hrefs, the nav destinations site-nav.js can light (EXPLORE + MAP/PLAY/HOW), and GAMES.
+def nav_lists(js: str) -> tuple[list[str], set[str], tuple[str, ...], str]:
+    """EXPLORE hrefs, the nav destinations site-nav.js can light (EXPLORE + MAP/PLAY/HOW), GAMES, and GAMES' source.
 
-    GAMES is read from site-nav.js when a `var GAMES = [` exists there, else the constant above.
+    js is site-nav.js with its comments blanked. GAMES is read from a `var|let|const GAMES = [...]` there when
+    one exists (object items with `href:` or bare path strings), else the constant above; the source is
+    returned so the run can say which. An array that never closes is treated as absent, not read to EOF.
     """
 
-    def array(name: str) -> list[str]:
-        m = re.search(r"\bvar\s+" + name + r"\s*=\s*\[", js)
+    def array(name: str) -> list[str] | None:
+        m = re.search(r"\b(?:var|let|const)\s+" + name + r"\s*=\s*\[", js)
         if not m:
-            return []
-        end = js.find("];", m.end())
-        body = js[m.end() : end if end > 0 else len(js)]
-        return re.findall(r"""href:\s*['"]([^'"]+)['"]""", body)
+            return None
+        open_idx = m.end() - 1
+        depth = 0
+        body = None
+        for i in range(open_idx, len(js)):
+            if js[i] == "[":
+                depth += 1
+            elif js[i] == "]":
+                depth -= 1
+                if depth == 0:
+                    body = js[open_idx + 1 : i]
+                    break
+        if body is None:
+            return None
+        return re.findall(r"""href:\s*['"]([^'"]+)['"]""", body) or re.findall(r"""['"](/[^'"]*)['"]""", body)
 
-    explore = array("EXPLORE")
+    explore = array("EXPLORE") or []
     known = set(explore)
     for name in ("MAP", "PLAY", "HOW"):
-        m = re.search(r"\bvar\s+" + name + r"\s*=\s*\{[^}]*href:\s*['\"]([^'\"]+)['\"]", js)
+        m = re.search(r"\b(?:var|let|const)\s+" + name + r"\s*=\s*\{[^}]*href:\s*['\"]([^'\"]+)['\"]", js)
         if m:
             known.add(m.group(1))
-    games = tuple(array("GAMES")) or GAMES
-    return explore, {p.split("#")[0] or "/" for p in known}, games
+    found = array("GAMES")
+    games, source = (tuple(found), "assets/site-nav.js GAMES") if found else (GAMES, "the built-in GAMES constant")
+    return explore, {p.split("#")[0] or "/" for p in known}, games, source
 
 
 def load_site(root: Path, ledger_checks: list[list[str]] | None = None) -> Site:
@@ -446,18 +469,24 @@ def load_site(root: Path, ledger_checks: list[list[str]] | None = None) -> Site:
             hit = resolve_ref(root, attrs(m.group(1)).get("src", ""), base)
             if hit:
                 page.scripts.append(add_asset(hit))
-    # one level deeper: CSS/JS a served script names by literal
-    for asset in list(js.values()):
+    # and whatever served scripts name by literal, transitively: import('./shared-map.js'),
+    # fetch('/assets/x.css'), a lazy module two hops down. All of it is served.
+    queue = list(js.values())
+    while queue:
+        asset = queue.pop()
         for lit in RE_ASSET_LITERAL.findall(asset.text):
             hit = resolve_ref(root, lit, root / asset.rel)
-            if hit:
-                add_asset(hit)
+            if hit and hit.relative_to(root).as_posix() not in js and hit.relative_to(root).as_posix() not in css:
+                rel = add_asset(hit)
+                if rel in js:
+                    queue.append(js[rel])
 
     rules: list[Rule] = []
     for rel, asset in css.items():
         rules += css_rules(rel, asset.text, "css")
     for page in pages:
-        rules += css_rules(page.rel, page.css_view, "style", page.svg_spans)
+        for off, block in page.style_blocks:
+            rules += css_rules(page.rel, block, "style", page.svg_spans, base=off, src=page.markup)
         for off, line, value in page.style_attrs:
             rules.append(
                 Rule(
@@ -471,10 +500,16 @@ def load_site(root: Path, ledger_checks: list[list[str]] | None = None) -> Site:
                 )
             )
 
-    nav_js = root / "assets" / "site-nav.js"
-    explore, known, games = (
-        nav_lists(nav_js.read_text(encoding="utf-8", errors="replace")) if nav_js.is_file() else ([], set(), GAMES)
-    )
+    nav_rel = "assets/site-nav.js"
+    if nav_rel in js:
+        nav_text = js[nav_rel].text
+    elif (root / nav_rel).is_file():
+        nav_src = (root / nav_rel).read_text(encoding="utf-8", errors="replace")
+        nav_text = blank_spans(nav_src, js_scan(nav_src)[0])
+    else:
+        nav_text = ""
+    explore, known, games, games_source = nav_lists(nav_text)
+    print(f"check_design: GAMES read from {games_source}", file=sys.stderr)
 
     vercel_path = root / "vercel.json"
     vercel = json.loads(vercel_path.read_text(encoding="utf-8")) if vercel_path.is_file() else {}
@@ -637,8 +672,9 @@ def d3(site: Site) -> list[str]:
                 continue
             if "stylesheet" in rel:
                 links.append((line, Path(href.split("?")[0]).name, href))
-        for m in re.finditer(r"@import\b[^;]*;", p.css_view):
-            out.append(hit(p.rel, line_of(p.css_view, m.start()), f"@import in <style>: {m.group(0)[:50]}"))
+        for off, block in p.style_blocks:
+            for m in re.finditer(r"@import\b[^;]*;", block):
+                out.append(hit(p.rel, line_of(p.markup, off + m.start()), f"@import in <style>: {m.group(0)[:50]}"))
         pos: dict[str, int] = {}
         page_sheets = []
         for i, (line, name, href) in enumerate(links):
@@ -705,10 +741,7 @@ def d6(site: Site) -> list[str]:
             lit = text[s:e]
             if "#" not in lit:
                 continue
-            ls = text.rfind("\n", 0, s) + 1
-            le = text.find("\n", e)
-            line_text = text[ls : le if le > 0 else len(text)]
-            if "<svg" in line_text or "fill=" in line_text or "stroke=" in line_text:
+            if "<svg" in lit or "fill=" in lit or "stroke=" in lit:  # SVG markup in a string: an icon, not chrome
                 continue
             line = line_of(text, s)
             for m in RE_HEX_LONG.finditer(lit):
@@ -1106,7 +1139,11 @@ class _Copy(HTMLParser):
 
 
 def d21(site: Site) -> list[str]:
-    """Copy lint: no model jargon in visitor-visible text outside /methods, /models, /research, /status, /feed-health and details.provenance."""
+    """Copy lint: no model jargon in visitor-visible text outside /methods, /models and details.provenance.
+
+    Text nodes only: attributes (alt, title, meta content), <template> bodies and <script type="text/template">
+    bodies are not copy a visitor reads on the page. <noscript> text is.
+    """
     out = []
     for p in site.pages:
         if p.rel in COPY_EXEMPT_PAGES or p.rel.startswith("models/"):
@@ -1259,7 +1296,14 @@ def main(argv: list[str] | None = None) -> int:
     if args.delta and not args.baseline:
         sys.exit("--delta needs --baseline <json>")
 
-    results = run(root, only)
+    try:
+        results = run(root, only)
+    except Exception:
+        if not args.report:
+            raise
+        traceback.print_exc()
+        print("check_design: the gate itself failed (traceback above); report mode exits 0 so CI stays green")
+        return 0
     n_pages = len(discover_pages(root))
     print(f"check_design: {n_pages} served pages under {root.name}/\n")
     print_table(results, verbose=args.verbose)
