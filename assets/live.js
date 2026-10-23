@@ -319,7 +319,11 @@ function renderWP(d,g,idx){
   });
   const byId={};wp.forEach(w=>{byId[w.playId]=w.homeWinPercentage;});
   const espn=plays.map((p,i)=>({i:i,v:byId[p.id]})).filter(x=>x.v!==undefined);
-  if(!ser.length){$('wpBig').textContent='\u2013';const wb=$('wpBand');if(wb)wb.textContent='';return;}
+  if(!ser.length){$('wpBig').textContent='\u2013';const wb=$('wpBand');if(wb)wb.textContent='';
+    // No plays yet (pre-game select): wipe any prior game's chart and re-label
+    // the axes for THIS game, so a stale chart can never persist across selections.
+    const wc=$('wpchart');if(wc){wc.getContext('2d').clearRect(0,0,wc.width,wc.height);}
+    $('lgA').textContent='Tip \u2192 '+aabbr;$('lgH').textContent=habbr+' \u2192 now';return;}
   const n=ser.length;
   let vp=0;
   for(let k=0;k<n;k++){if(ser[k].i<=idx)vp=k;else break;}
@@ -373,7 +377,8 @@ function renderWP(d,g,idx){
 
 function renderMomentum(d,g,idx){
   const plays=d.plays||[];
-  if(!plays.length)return;
+  // No plays yet (pre-game select): wipe any prior game's chart so nothing stale persists.
+  if(!plays.length){const mc=$('momchart');if(mc){mc.getContext('2d').clearRect(0,0,mc.width,mc.height);}return;}
   const habbr=g?g.h.abbr:'HOME',aabbr=g?g.a.abbr:'AWAY';
   const hcol=g?g.h.color:'#1b1913',acol=g?g.a.color:'#5b5545';
   const {ctx,W,H}=prepCanvas('momchart',150);
