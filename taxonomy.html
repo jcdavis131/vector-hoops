@@ -128,18 +128,7 @@
 <script src="/assets/vh-analytics.js?v=d838a3e1"></script>
 <script src="/assets/site-nav.js?v=d849b7d7"></script>
 <script src="assets/taxonomy.js?v=4a2de619"></script>
-<script>if('serviceWorker' in navigator){window.addEventListener('load',()=>{navigator.serviceWorker.register('/sw.js').catch(()=>{})})}</script>
+<script src="assets/inline-sw-register.js?v=3fccd5e4"></script>
 <script src="assets/site-facts.js?v=f8edaf37" defer></script>
-<script>
-/* Share button: every path reports what actually happened. "Link copied"
- * shows only after a real copy; "Copy failed" on genuine failure. */
-(function(){var b=document.getElementById('vh-share-btn');if(!b)return;
-function say(msg){b.textContent=msg;setTimeout(function(){b.textContent='Share';},1600);}
-function legacyCopy(url){var ta=document.createElement('textarea');ta.value=url;ta.style.cssText='position:fixed;opacity:0';document.body.appendChild(ta);ta.select();var ok=false;try{ok=document.execCommand('copy');}catch(e){}ta.remove();return ok;}
-b.addEventListener('click',function(){var url=location.href;var title=document.title;
-if(navigator.share){navigator.share({title:title,url:url}).then(function(){say('Shared');},function(){});return;}
-function copied(ok){say(ok?'Link copied':'Copy failed');}
-if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(url).then(function(){copied(true);},function(){copied(legacyCopy(url));});}
-else{copied(legacyCopy(url));}});})();
-</script>
+<script src="assets/inline-share-btn.js?v=e041d558"></script>
 </body></html>
