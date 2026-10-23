@@ -175,7 +175,7 @@ function shareCard(){
   x.fillStyle='#FCFBF7';x.font='700 30px ui-monospace,monospace';
   x.fillText('VECTOR HOOPS \u00B7 TWENTY QUESTIONS',36,48);
   x.font='700 22px ui-monospace,monospace';x.fillStyle='#E7E4DA';
-  x.fillText('2,426 careers \u00B7 up to 20 questions \u00B7 the map is the moat',36,84);
+  x.fillText('2,426 careers \u00B7 up to 20 questions \u00B7 every answer dims the map',36,84);
   var p=T.players[lastPi];
   x.fillStyle='#E0483B';x.font='800 44px ui-sans-serif,system-ui';
   x.fillText('Solved in '+answers.length+' questions',48,220);

@@ -326,6 +326,11 @@
   "trailingSlash": false,
   "redirects": [
     {
+      "source": "/insights/era-uniqueness",
+      "destination": "/insights",
+      "permanent": true
+    },
+    {
       "source": "/atlas",
       "destination": "/",
       "permanent": true
