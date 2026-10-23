@@ -37,6 +37,16 @@
     return attacksRight(side, period) ? [+(L - HOOP - c.y).toFixed(2), +(+c.x).toFixed(2)] : [+(HOOP + c.y).toFixed(2), +(CW - c.x).toFixed(2)];
   }
 
+  /* quarter-by-quarter linescores, for the box-score panel (assets/replay-boxscore.js).
+     Keyed by team abbreviation to match the game object's teams. */
+  function quartersOf(comp) {
+    return ((comp && comp.competitors) || []).map(function (c) {
+      return { abbr: c.team && c.team.abbreviation,
+        q: (c.linescores || []).map(function (l) { return l.value; }),
+        t: c.score };
+    });
+  }
+
   function toGame(d, eventId) {
     var comp = d && d.header && d.header.competitions && d.header.competitions[0];
     if (!comp || !d.plays) return null;
@@ -129,6 +139,7 @@
       periods: Math.max.apply(null, events.map(function (e) { return e[0]; })),
       teams: teams, score: [last[8], last[9]], date: (comp.date || '').slice(0, 10),
       types: TYPES, players: players, lineups: lineups, events: events, src: src, wall: wall,
+      boxscore: d.boxscore || null, quarters: quartersOf(comp),
       staged: 'Shooter, shot spot, event, clock and score are from ESPN\'s play-by-play. Which basket each team shoots at is assumed (away attacks right in the first half). The other nine players are projected by the coordinate model (trained on 2015-16 SportVU tracking), or staged from formation templates where it is not loaded: no public feed has their positions.'
     };
   }
