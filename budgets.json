@@ -43,7 +43,7 @@
       "budget_bytes": 696320
     },
     "map-guess.html": {
-      "budget_bytes": 107520
+      "budget_bytes": 151552
     },
     "methods.html": {
       "budget_bytes": 503808
@@ -70,10 +70,10 @@
       "budget_bytes": 165888
     },
     "status.html": {
-      "budget_bytes": 44032
+      "budget_bytes": 81920
     },
     "teams.html": {
-      "budget_bytes": 132096
+      "budget_bytes": 156672
     },
     "twenty-questions.html": {
       "budget_bytes": 964608

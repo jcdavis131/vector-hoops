@@ -50,7 +50,7 @@ body{ background:var(--rp-board); color:var(--rp-ink); }
 .rp-buttons button[aria-pressed="true"]{ background:var(--rp-coin); color:var(--rp-void); border-color:var(--rp-coin); }
 .rp-buttons .rp-play{ min-width:64px; font-size:16px; background:var(--rp-coin); color:var(--rp-void); border-color:var(--rp-coin); }
 .rp-speed, .rp-check{ font:600 11px var(--rp-mono); color:var(--rp-glow); display:flex; gap:6px; align-items:center; min-height:36px; }
-.rp-speed select{ min-height:30px; background:var(--rp-void2); color:var(--rp-glow); border:1px solid var(--rp-glow2); border-radius:4px; font:700 12px var(--rp-mono); }
+.rp-speed select{ appearance:auto; -webkit-appearance:menulist; width:auto; padding:0 8px; min-height:30px; background:var(--rp-void2); color:var(--rp-glow); border:1px solid var(--rp-glow2); border-radius:4px; font:700 12px var(--rp-mono); }
 .rp-timeline{ position:relative; margin-top:12px; }
 #rpScrub{ width:100%; min-height:28px; accent-color:var(--rp-coin); margin:0; }
 .rp-marks{ position:relative; height:10px; margin-top:2px; }
