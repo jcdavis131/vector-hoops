@@ -89,7 +89,7 @@
     }
   },
   "interaction": {
-    "js_total_bytes": 884736,
+    "js_total_bytes": 901120,
     "js_worst_page_bytes": 301056,
     "assets_worst_page_bytes": 3002368
   }
