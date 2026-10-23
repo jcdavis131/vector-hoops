@@ -83,6 +83,9 @@
     },
     "replay.html": {
       "budget_bytes": 215040
+    },
+    "research.html": {
+      "budget_bytes": 502784
     }
   },
   "interaction": {

@@ -2,8 +2,8 @@
 <html lang="en"><head>
 <meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
 <link rel="manifest" href="/manifest.json">
-<title>Trust — methods &amp; the model · Vector Hoops</title>
-<meta name="description" content="How Vector Hoops is built: data sources, the 14 era-normalised features, the MTNN embedding, the map projection, archetypes, league drift and known limits."/>
+<title>How it works — methods · Vector Hoops</title>
+<meta name="description" content="How Vector Hoops is built: data sources, the 14 era-normalized features, the MTNN embedding, the map projection, archetypes, league drift and known limits."/>
 
 <link rel="stylesheet" href="assets/responsive.css?v=cc8e5207"/>
 <link rel="stylesheet" href="assets/final-qa.css?v=fb603ee5"/>
@@ -20,12 +20,12 @@
 <meta property="og:site_name" content="Vector Hoops"/>
 <meta property="og:url" content="https://hoops.dumbmodel.com/methods"/>
 <meta property="og:title" content="Methods — Vector Hoops"/>
-<meta property="og:description" content="How Vector Hoops is built: data sources, the 14 era-normalised features, the MTNN embedding, the map projection, archetypes, league drift and known limits."/>
+<meta property="og:description" content="How Vector Hoops is built: data sources, the 14 era-normalized features, the MTNN embedding, the map projection, archetypes, league drift and known limits."/>
 <meta property="og:image" content="https://hoops.dumbmodel.com/assets/og-1200x630.png"/>
 <meta property="og:image:width" content="1200"/><meta property="og:image:height" content="630"/>
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:title" content="Methods — Vector Hoops"/>
-<meta name="twitter:description" content="How Vector Hoops is built: data sources, the 14 era-normalised features, the MTNN embedding, the map projection, archetypes, league drift and known limits."/>
+<meta name="twitter:description" content="How Vector Hoops is built: data sources, the 14 era-normalized features, the MTNN embedding, the map projection, archetypes, league drift and known limits."/>
 <meta name="twitter:image" content="https://hoops.dumbmodel.com/assets/og-1200x630.png"/>
 <link rel="stylesheet" href="assets/fonts.css?v=8f376b2a"/>
 <link rel="stylesheet" href="/assets/atlas.css?v=c43e0f47"/>
@@ -33,13 +33,12 @@
 <style>
 .doc{ padding-top:0; }
 .doc-toc{ display:flex; flex-wrap:wrap; justify-content:center; gap:0; border-top:1px solid var(--line); border-bottom:1px solid var(--line); max-width:980px; margin:0 auto; width:100%; }
-.doc-toc a{ display:inline-flex; gap:7px; align-items:baseline; padding:14px 9px; text-decoration:none; font-family:var(--font-display); font-size:11px; font-weight:600; font-stretch:112%; letter-spacing:.14em; text-transform:uppercase; color:var(--fg-2); transition:color var(--dur-1) var(--ease); }
-.doc-toc a span{ color:var(--fg-3); font-variant-numeric:tabular-nums; }
-.doc-toc a:hover{ color:var(--fg); } .doc-toc a:hover span{ color:var(--accent); }
+.doc-toc a{ display:inline-flex; gap:7px; align-items:baseline; padding:14px 12px; text-decoration:none; font-family:var(--font-display); font-size:12.5px; font-weight:600; color:var(--fg-2); transition:color var(--dur-1) var(--ease); }
+.doc-toc a:hover{ color:var(--fg); }
 .doc-body{ width:100%; max-width:760px; margin:var(--s-6) auto 0; }
 .doc-body section{ padding:var(--s-7) 0; border-bottom:1px solid var(--line); }
 .doc-body section:last-child{ border-bottom:0; }
-.doc-n{ font-family:var(--font-display); font-size:var(--t-2xs); font-weight:600; font-stretch:112%; letter-spacing:.24em; text-transform:uppercase; color:var(--accent); margin-bottom:12px; }
+.doc-eyebrow{ font-family:var(--font-display); font-size:var(--t-2xs); font-weight:600; font-stretch:112%; letter-spacing:.24em; text-transform:uppercase; color:var(--accent); margin-bottom:12px; }
 .doc-body h2{ font-size:var(--t-xl); margin:0 0 16px; }
 .doc-body p{ font-size:16px; line-height:1.75; color:var(--fg-2); margin:0 0 16px; }
 .doc-body a{ color:var(--fg); text-decoration-color:var(--accent-line); }
@@ -56,346 +55,44 @@
 .doc-list--plain{ columns:1; list-style:none; padding:0; }
 .doc-list--plain li{ padding:10px 0; border-bottom:1px solid var(--line); }
 .doc-list--plain li:last-child{ border-bottom:0; }
-@media (max-width:640px){ .doc-defs, .doc-list{ grid-template-columns:1fr; columns:1; } .doc-defs > div:nth-child(even){ padding-left:0; border-left:0; } .cqs-strip{ flex-wrap:wrap; } .cqs-badge{ flex:1 1 33%; } }
-</style>
-<style>
-:root{
-  --paper:#FFFEF7;--ink:#1A150F;--orange:#D55E00;--blue:#0072B2;--yellow:#F0E442;
-  --mono:ui-monospace,monospace;--sans:ui-sans-serif,system-ui;
-  --page-gutter:clamp(12px,3.2vw,20px);
-}
-html,body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:18px;line-height:1.65;overflow-x:clip;-webkit-text-size-adjust:100%}
-*,*::before,*::after{box-sizing:border-box}
-img,svg,video,canvas{max-width:100%;height:auto;display:block}
-a{color:inherit}
-.site-nav{position:sticky;top:0;z-index:100}
-
-/* main shell mobile-first */
-.research-main.network-main{
-  width:min(1180px,100%);
-  max-width:1180px;
-  margin:0 auto;
-  padding:12px var(--page-gutter) calc(96px + env(safe-area-inset-bottom));
-  display:flex;flex-direction:column;gap:16px;
-}
-.research-head.network-head{display:flex;flex-direction:column;gap:12px}
-.research-head h1{
-  margin:0;
-  font-family:var(--mono);
-  font-size:clamp(28px,6vw,48px);
-  line-height:.95;
-  letter-spacing:-.02em;
-}
-.network-hero{
-  margin:0;max-width:68ch;
-  font-size:clamp(15px,3.6vw,18px);
-  line-height:1.55;color:var(--fg-2);
-}
-.network-hero b{font-weight:900;color:var(--ink)}
-
-/* scrollable chip strips — thumb-friendly */
-.stats-strip,.cqs-strip{
-  display:flex;gap:8px;overflow-x:auto;overflow-y:hidden;
-  -webkit-overflow-scrolling:touch;scrollbar-width:none;
-  padding:2px 0 8px;margin:0 -2px;
-  scroll-snap-type:x proximity;
-  flex-wrap:nowrap;
-}
-.stats-strip::-webkit-scrollbar,.cqs-strip::-webkit-scrollbar{display:none}
-/* In a prose column a scrollable strip clips the last chip mid-word (seen on
-   the promote-gate strip). Doc-section strips wrap instead; full-bleed
-   strips keep the horizontal scroll. */
-.doc-sec .cqs-strip,.doc-section .cqs-strip,section .cqs-strip{
-  flex-wrap:wrap;overflow-x:visible;scroll-snap-type:none;
-}
-.stats-chip,.cqs-badge{
-  flex:0 0 auto;white-space:nowrap;
-  border:1px solid var(--line-2);border-radius:999px;
-  padding:6px 12px;background:var(--surface);
-  font-family:var(--mono);font-size:11px;font-weight:800;
-  box-shadow:none;
-  scroll-snap-align:start;
-  min-height:32px;display:inline-flex;align-items:center;
-}
-.cqs-badge b{font-size:14px;margin-right:6px}
-.cqs-badge.is-primary{background:var(--accent);color:var(--on-accent)}
-.cqs-badge.is-primary b{color:var(--yellow)}
-
-/* anchor nav as scrollable pills */
-.anchor-nav{
-  display:flex;gap:8px;overflow-x:auto;flex-wrap:nowrap;
-  padding:4px 0 6px;-webkit-overflow-scrolling:touch;scrollbar-width:none;
-  position:sticky;top:calc(48px + env(safe-area-inset-top,0));
-  z-index:5;background:var(--paper);
-  margin:0 calc(var(--page-gutter) * -1);padding-inline:var(--page-gutter);
-  border-bottom:1px solid var(--line);
-}
-.anchor-nav::-webkit-scrollbar{display:none}
-.anchor-nav a{
-  flex:0 0 auto;white-space:nowrap;text-decoration:none;
-  border:1px solid var(--line-2);border-radius:999px;
-  padding:8px 14px;background:var(--surface);
-  font-family:var(--mono);font-size:11px;font-weight:900;
-  text-transform:uppercase;letter-spacing:.04em;
-  box-shadow:none;
-  min-height:40px;display:inline-flex;align-items:center;
-}
-.anchor-nav a:active{transform:translate(1px,1px);box-shadow:none}
-
-/* cards */
-.drift-card{
-  background:var(--surface);border:1px solid var(--line-2);
-  border-radius:16px;box-shadow:none;
-  overflow:hidden;display:flex;flex-direction:column;
-}
-.drift-card__head{padding:14px 16px 10px;border-bottom:1px solid var(--line)}
-.card-kicker{
-  font-family:var(--mono);font-size:10px;font-weight:800;
-  text-transform:uppercase;letter-spacing:.08em;color:var(--fg-2);
-  display:flex;gap:6px;align-items:center;
-}
-.card-kicker::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--orange);display:inline-block}
-.drift-card__head h2{
-  margin:6px 0 0;
-  font-family:var(--mono);font-size:clamp(16px,4vw,22px);
-  line-height:1.15;letter-spacing:-.01em;
-}
-
-/* cockpit */
-.cockpit-grid{
-  display:grid;grid-template-columns:1fr;gap:0;
-  border-top:1px solid #f0ede5;
-}
-@media(min-width:900px){.cockpit-grid{grid-template-columns:1fr 1fr}}
-.cockpit-panel{padding:14px 16px;min-width:0}
-.cockpit-panel + .cockpit-panel{border-top:1px solid var(--line)}
-@media(min-width:900px){
-  .cockpit-panel + .cockpit-panel{border-top:0;border-left:1px solid var(--line)}
-}
-.cockpit-panel h3{
-  margin:0 0 8px;font-family:var(--mono);
-  font-size:12px;text-transform:uppercase;letter-spacing:.04em;
-}
-.code-block{
-  font-family:var(--mono);font-size:12px;line-height:1.5;
-  background:var(--surface-2);color:var(--fg);border:1px solid var(--line);
-  border-radius:10px;padding:12px;
-  overflow-x:auto;white-space:pre-wrap;word-break:break-word;
-  border:1px solid var(--line-2);
-  -webkit-overflow-scrolling:touch;
-}
-.pipe{
-  display:flex;gap:8px;overflow-x:auto;flex-wrap:nowrap;
-  padding:6px 0 8px;-webkit-overflow-scrolling:touch;scrollbar-width:none;
-}
-.pipe::-webkit-scrollbar{display:none}
-.pipe-step{
-  flex:0 0 auto;min-width:84px;
-  border:1px solid var(--line-2);border-radius:12px;
-  padding:8px 10px;background:var(--surface);box-shadow:none;
-  display:flex;flex-direction:column;gap:2px;
-}
-.pipe-step b{font-size:12px}
-.pipe-step i{font-style:normal;font-family:var(--mono);font-size:10px;color:var(--fg-2)}
-.step-num{
-  font-family:var(--mono);font-size:10px;font-weight:800;
-  background:var(--accent);color:var(--on-accent);border-radius:999px;
-  width:18px;height:18px;display:inline-flex;align-items:center;justify-content:center;
-}
-.pipe-arrow{flex:0 0 auto;display:flex;align-items:center;font-weight:900}
-
-/* weights */
-.weights-grid{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
-.weight-chip{
-  border:1px solid var(--line-2);border-radius:999px;
-  padding:4px 8px;background:var(--surface);
-  font-family:var(--mono);font-size:10px;font-weight:800;
-  display:inline-flex;gap:6px;align-items:center;
-}
-.weight-chip b{opacity:.6}
-.weight-chip span{font-weight:900}
-
-/* manim videos */
-.manim-grid{
-  display:grid;grid-template-columns:1fr;gap:12px;
-  padding:12px;
-}
-@media(min-width:700px){.manim-grid{grid-template-columns:1fr 1fr}}
-.manim-card{
-  border:1px solid var(--line-2);border-radius:14px;
-  overflow:hidden;background:#000;box-shadow:none;
-  display:flex;flex-direction:column;
-}
-.manim-card video{width:100%;aspect-ratio:16/9;object-fit:cover;background:#000}
-.manim-caption{
-  padding:10px 12px;background:var(--surface);
-  font-size:13px;line-height:1.5;color:var(--fg-2);
-  border-top:1px solid var(--line-2)
-}
-.manim-caption b{font-weight:900}
-
-/* network flow */
-.network-section__head{padding:12px 14px;display:flex;flex-direction:column;gap:8px}
-.viz-panel__label{
-  font-family:var(--mono);font-size:11px;font-weight:900;
-  text-transform:uppercase;letter-spacing:.06em;
-}
-.network-flow-subhead{font-size:13px;line-height:1.5;color:var(--fg-2);margin:4px 0 0;max-width:70ch}
-.network-flow-tools{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
-.network-trace-status{font-family:var(--mono);font-size:11px;color:var(--fg-2);background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:5px 10px}
-.network-trace-clear{
-  appearance:none;border:1px solid var(--line-2);border-radius:999px;
-  padding:6px 12px;background:var(--surface);font-family:var(--mono);font-size:11px;font-weight:800;
-  box-shadow:none;min-height:36px;cursor:pointer
-}
-.network-flow-layout{display:grid;grid-template-columns:1fr;gap:0}
-@media(min-width:980px){.network-flow-layout{grid-template-columns:1.2fr .8fr}}
-.network-flow-host{
-  min-height:280px;background:var(--surface);border-top:1px solid var(--line);
-  border-bottom:1px solid var(--line);overflow:hidden;
-  position:relative;
-}
-.network-flow-host svg{width:100%;height:auto;display:block}
-.network-insights{padding:12px 14px;font-size:13px;line-height:1.5}
-.network-node-inspector{border-top:1px solid var(--line);background:var(--surface)}
-@media(min-width:980px){.network-node-inspector{border-top:0;border-left:1px solid var(--line)}}
-
-.network-flow-outputs{border-top:1px solid var(--line-2)}
-.network-flow-outputs__head{padding:12px 14px}
-.network-flow-outputs__grid{
-  display:grid;grid-template-columns:1fr;gap:10px;padding:0 12px 12px;
-}
-@media(min-width:700px){.network-flow-outputs__grid{grid-template-columns:1fr 1fr}}
-.viz-panel{background:var(--surface);border:1px solid var(--line-2);border-radius:12px;padding:10px;box-shadow:none}
-.network-arch-out,.network-skill-out{display:flex;flex-direction:column;gap:6px;margin-top:6px}
-
-/* explorer */
-.network-controls{display:flex;flex-direction:column;gap:12px}
-.search-row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
-.wiki-search.network-search{
-  flex:1 1 220px;min-width:0;
-  border:1px solid var(--line-2);border-radius:12px;
-  padding:12px 14px;font-size:16px;min-height:48px;
-  background:var(--surface);box-shadow:none;
-}
-.network-player-tag{
-  font-family:var(--mono);font-size:11px;background:var(--surface);
-  border:1px solid var(--line-2);border-radius:999px;
-  padding:5px 10px;box-shadow:none}
-.network-step-nav{
-  display:flex;gap:6px;overflow-x:auto;flex-wrap:nowrap;
-  padding:2px 0 6px;-webkit-overflow-scrolling:touch;scrollbar-width:none
-}
-.network-step-nav::-webkit-scrollbar{display:none}
-.network-step-btn{
-  flex:0 0 auto;white-space:nowrap;
-  border:1px solid var(--line-2);border-radius:999px;
-  padding:8px 12px;background:var(--surface);
-  font-family:var(--mono);font-size:11px;font-weight:800;
-  box-shadow:none;min-height:40px;cursor:pointer
-}
-.network-step-btn.is-active{background:var(--accent);color:var(--on-accent)}
-.network-play-btn{
-  appearance:none;border:1px solid var(--line-2);border-radius:12px;
-  padding:12px 16px;background:var(--accent);color:var(--on-accent);
-  font-family:var(--mono);font-size:12px;font-weight:900;
-  text-transform:uppercase;letter-spacing:.04em;
-  box-shadow:none;min-height:48px;cursor:pointer;
-  width:100%;justify-content:center;display:inline-flex;align-items:center;gap:8px;
-}
-@media(min-width:500px){.network-play-btn{width:auto}}
-.network-timebar{margin-top:8px;padding:10px 12px;background:var(--surface);border:1px solid var(--line-2);border-radius:12px}
-.network-timebar__head{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap}
-.network-timebar__label,.network-timebar__current{font-family:var(--mono);font-size:11px;font-weight:800}
-#network-time-scrubber{width:100%;accent-color:var(--orange);height:36px}
-.network-step-caption{font-size:13px;line-height:1.5;color:var(--fg-2);margin:8px 0 0}
-.network-story{margin-top:10px;padding:12px;background:var(--surface);border:1px dashed var(--line-2);border-radius:12px;font-size:14px;line-height:1.6}
-.attr-grid{display:grid;grid-template-columns:1fr;gap:10px;padding:12px}
-@media(min-width:800px){.attr-grid{grid-template-columns:1fr 1fr 1fr}}
-.attr-panel{min-height:120px}
-
-/* map */
-.network-map-layout{display:grid;grid-template-columns:1fr;gap:0}
-@media(min-width:900px){.network-map-layout{grid-template-columns:1fr 360px}}
-.network-map-stage{padding:12px;background:var(--void);border-radius:var(--radius-lg)}
-.network-map-canvas{width:100%;aspect-ratio:1/1;max-height:560px;background:#111;display:block;border-radius:12px;border:2px solid #222}
-.network-map-legend{display:flex;gap:6px 14px;flex-wrap:wrap;padding:10px 0 0;list-style:none;margin:0}
-.network-map-legend__item{display:inline-flex;align-items:center;gap:6px;font:600 12px/1.3 var(--font-sans)}
-.network-map-legend__swatch{width:11px;height:11px;border-radius:3px;flex:0 0 auto;box-shadow:inset 0 0 0 1px rgba(255,255,255,.35)}
-.network-map-legend__name{color:#E9E3D3}/* explicit light ink: the legend sits on the always-dark --void stage, so inherited --fg was dark-on-dark in the paper theme */
-.network-map-axes{padding-top:10px;margin-top:10px;border-top:1px solid rgba(233,227,211,.25)}
-/* Every text element in this block carries an explicit #E9E3D3 (12.76:1 on the
-   stage's #1E2022) behind an ID-scoped selector — do not drop either. The block
-   sits inside .doc-body on the always-dark --void stage, and two ancestor traps
-   silently beat the old class-only rules in the paper theme: .doc-body p
-   (0,1,1) overrode the title/row color with --fg-2 #57574F (2.24:1), and
-   atlas.css b,strong{color:var(--fg)} painted the axis labels --ink (about
-   1:1). No element here may rely on inheritance for its color. */
-#network-map-axes .network-map-axes__title{font:700 11px/1.4 var(--font-sans);letter-spacing:.08em;text-transform:uppercase;color:#E9E3D3;margin:0 0 6px}
-#network-map-axes .network-map-axes__row{font:400 12px/1.5 var(--font-sans);color:#E9E3D3;margin:0 0 6px}
-#network-map-axes .network-map-axes__label{font-weight:700;color:#E9E3D3}
-#network-map-axes .network-map-axes__end{display:block;color:#E9E3D3}
-#network-map-axes .network-map-axes__end em{font-style:normal;font-weight:700;color:#E9E3D3}
-.network-insights__note{font:400 11px/1.5 var(--font-sans);color:#E9E3D3;opacity:.85;margin:8px 0 0}
-
-/* next */
-.site-next{
-  display:flex;gap:8px;flex-wrap:wrap;align-items:center;
-  padding:8px var(--page-gutter) 0;
-  font-family:var(--mono);font-size:12px;font-weight:800;
-}
-.site-next__label{color:var(--fg-2)}
-.site-next a{
-  border:1px solid var(--line-2);border-radius:999px;
-  padding:6px 12px;background:var(--surface);text-decoration:none;
-  box-shadow:none}
-.network-arch-pre{
-  font-family:var(--mono);font-size:11px;line-height:1.5;
-  background:#111;color:#ddd;border-radius:10px;
-  padding:12px;overflow:auto;max-height:60vh;
-  border:1px solid var(--line-2);white-space:pre-wrap;word-break:break-word;
-}
-.drift-loading{color:var(--fg-3);font-size:13px;font-style:italic}
-</style>
-<style>
-.research-main.network-main{ width:100%; max-width:calc(var(--content) + var(--gutter)*2); margin:0 auto; padding:0 var(--gutter) var(--s-9); }
-.research-main h1, .research-main h2, .research-main h3, .research-main h4{ font-family:var(--font-display) !important; letter-spacing:-.01em; text-transform:none; }
-.research-main .mono, .research-main p.mono{ font-family:var(--font-text) !important; }
-.research-head{ display:flex; flex-direction:column; gap:16px; padding-bottom:var(--s-6); border-bottom:1px solid var(--line); margin-bottom:var(--s-6); }
-.research-head > p.mono{ max-width:84ch; margin-left:auto !important; margin-right:auto !important; text-align:center; font-size:13px !important; line-height:1.7 !important; color:var(--fg-3) !important; }
-.research-head .cqs-strip{ width:100%; margin:0; background:var(--surface); }
-.cqs-badge{ align-items:center; text-align:center; padding:18px 12px; }
-.cqs-badge span{ font-family:var(--font-display); font-size:9.5px; font-weight:600; font-stretch:112%; letter-spacing:.14em; text-transform:uppercase; color:var(--fg-3); }
-.cqs-badge b{ font-size:clamp(22px,2.4vw,30px) !important; font-variant-numeric:tabular-nums; }
-.cqs-badge.is-primary{ background:transparent !important; color:var(--fg-3) !important; box-shadow:inset 0 -2px 0 var(--accent); }
-.cqs-badge.is-primary b{ color:var(--accent) !important; }
-.anchor-nav{ display:flex; flex-wrap:wrap; justify-content:center; gap:0; border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
-.anchor-nav a{ padding:14px 16px; font-family:var(--font-display); font-size:11px; font-weight:600; font-stretch:112%; letter-spacing:.14em; text-transform:uppercase; color:var(--fg-2); text-decoration:none; border:0 !important; background:none !important; box-shadow:none !important; border-radius:0 !important; }
-.anchor-nav a:hover{ color:var(--accent); }
-.research-main pre, .research-main code{ font-family:var(--font-code) !important; }
-@media (max-width:720px){ .research-head .cqs-strip{ display:grid !important; grid-template-columns:1fr 1fr; } .research-head .cqs-badge{ border-left:0 !important; border-top:1px solid var(--line); } .research-head .cqs-badge:nth-child(even){ border-left:1px solid var(--line) !important; } .research-head .cqs-badge.is-primary{ grid-column:1 / -1; border-top:0; } .research-head .cqs-badge.is-primary ~ .cqs-badge:nth-child(even){ border-left:0 !important; } .research-head .cqs-badge.is-primary ~ .cqs-badge:nth-child(odd){ border-left:1px solid var(--line) !important; } }
+@media (max-width:640px){ .doc-defs, .doc-list{ grid-template-columns:1fr; columns:1; } .doc-defs > div:nth-child(even){ padding-left:0; border-left:0; } }
+/* Stat-strip chips (130 Features / 17 Towers / …) */
+.stats-strip{ display:flex; gap:8px; overflow-x:auto; overflow-y:hidden; -webkit-overflow-scrolling:touch; scrollbar-width:none; padding:2px 0 8px; margin:0 -2px; flex-wrap:nowrap; }
+.stats-strip::-webkit-scrollbar{ display:none }
+.stats-chip{ flex:0 0 auto; white-space:nowrap; border:1px solid var(--line-2); border-radius:999px; padding:6px 12px; background:var(--surface); font-family:var(--font-code); font-size:11px; font-weight:800; min-height:32px; display:inline-flex; align-items:center; }
+.stats-chip b{ font-size:14px; margin-right:6px }
+/* Words we stand by: anchor-linked pull-quotes */
+.vh-quote{ margin:0 0 var(--s-4); padding:18px 20px; border-left:3px solid var(--accent); background:var(--surface); border-radius:0 12px 12px 0; }
+.vh-quote p{ font-family:var(--font-display); font-size:clamp(18px,3.2vw,24px); line-height:1.35; color:var(--fg); margin:0 0 8px; }
+.vh-quote a.vh-quote__src{ font-size:13px; color:var(--fg-3); text-decoration:none; }
+.vh-quote a.vh-quote__src:hover{ color:var(--accent); }
+/* Research notebook card */
+.vh-researchcard{ border:1px solid var(--line-2); border-radius:16px; padding:22px; background:var(--surface); }
+.vh-researchcard h3{ margin:0 0 8px; font-size:20px; }
+.vh-researchcard p{ font-size:15px; }
 </style>
 </head><body>
 <a class="skip-link" href="#main">Skip to content</a>
-<noscript><div role="alert" style="padding:16px;text-align:center">Enable JS — Vector Hoops needs JavaScript for Daily Court + Map</div></noscript>
+<noscript><div role="alert" style="padding:16px;text-align:center">Vector Hoops Methods — this page reads fully without JavaScript.</div>
+<nav aria-label="Site (no JavaScript)" style="padding:16px;text-align:center"><a href="/">Atlas</a> · <a href="/play">Daily Court</a> · <a href="/players">Players</a> · <a href="/insights">Insights</a> · <a href="/playoff-runs">Playoff Runs</a> · <a href="/research.html">Research notebook</a></nav></noscript>
 
 <nav class="site-nav" data-active="/methods" aria-label="Vector Hoops site"></nav>
 <div id="main" class="main doc" role="main">
   <header class="title-card">
     <div class="title-card__eyebrow reveal">Methods</div>
     <h1 class="title-card__title reveal reveal-1">Every number can be <em>recomputed from source</em></h1>
-    <p class="title-card__lede reveal reveal-2">Nearest seasons by cosine similarity in the 64-dimensional MTNN v5 embedding. The served model widens 14 era-normalised per-100 features to 130 features in 17 towers and compresses each season to a 64-d unit vector for neighbour search. The architecture is covered in depth in <a href="#the-model">the model section below</a>.</p>
+    <p class="title-card__lede reveal reveal-2">Every season becomes a 64-number fingerprint. Seasons with similar fingerprints played similar basketball. The model reads 130 features per season to build it. The training lab — how the fingerprint was taught, graded and debugged — lives in the <a href="/research.html">research notebook</a>.</p>
   </header>
 
   <nav class="doc-toc" aria-label="On this page">
-    <a href="#vector-space"><span>01</span>Vector space</a><a href="#mtnn-v4"><span>02</span>MTNN</a><a href="#the-map"><span>03</span>The map</a><a href="#archetypes"><span>04</span>Archetypes</a><a href="#drift"><span>05</span>League drift</a><a href="#skills"><span>06</span>Skills lens</a><a href="#forecast-method"><span>07</span>Forecast</a><a href="#accuracy-harness"><span>08</span>Harness</a><a href="#limitations"><span>09</span>Limits</a>
+    <a href="#vector-space">What does the model see?</a><a href="#the-model">How does it learn?</a><a href="#the-map">Where does the map lie?</a><a href="#archetypes">What kinds of players are there?</a><a href="#dossier">Where else does it show up?</a><a href="#insights">What do the Insights cards claim?</a><a href="#drift">How does the league change?</a><a href="#quotes">Words we stand by</a><a href="#limitations">What can&rsquo;t it do?</a>
   </nav>
 
   <article class="doc-body">
     <section id="vector-space">
-      <div class="doc-n">01</div>
+      <div class="doc-eyebrow">What does the model see?</div>
       <h2>The vector space — two views, one frame</h2>
-      <p><b>Games (fast):</b> 12,966 player-seasons, 1996–97 to 2025–26, from stats.nba.com, per 100 possessions. Eligibility is schedule-aware — about 15% of team games plus a minutes bar (6% of schedule minutes, floored at 450) — not a flat cutoff. Each season’s 14 features are z-scored within that season. Player counts site-wide are distinct player IDs — <span data-fact="players">2,426</span> (distinct display names: <span data-fact="player_names">2,422</span>; a few names belong to two different players).</p>
+      <p><b>Games (fast):</b> 12,966 player-seasons, 1996–97 to 2025–26, from stats.nba.com, per 100 possessions. A season counts if the player appeared in enough games and minutes — scaled to each season&rsquo;s schedule, not one flat cutoff. Each season&rsquo;s 14 features are z-scored within that season. Player counts site-wide are distinct player IDs — <span data-fact="players">2,426</span> (distinct display names: <span data-fact="player_names">2,422</span>; a few names belong to two different players).</p>
       <table class="data-table">
         <thead><tr><th scope="col">Feature</th><th scope="col">Measures</th><th scope="col">Era note</th></tr></thead>
         <tbody>
@@ -409,38 +106,35 @@ a{color:inherit}
           <tr><td><code>PLUS_MINUS</code></td><td>On-court impact</td><td>Per 100</td></tr>
         </tbody>
       </table>
-      <p class="doc-note">Cleaning: dedupe; missing → season mean plus a mask bit <i>m</i>; attempt-weighted empirical-Bayes shrinkage on percentages; clip at ±4σ.</p>
-    </section>
-
-    <section>
-      <div class="doc-n">01·b</div>
+      <p class="doc-note">Cleaning: dedupe; missing → season mean plus a mask bit <i>m</i>; percentages are shrunk toward the league average (more shots = more trust); extremes clipped.</p>
       <h2>The richer served model</h2>
       <p>The same 12,966 player-seasons with far more context: volume, playmaking, rebounding, defense, efficiency, shot mix, bio, tracking (2013+, masked before), form, market, roster, career, competition, team, pedigree, playoffs and honors. Each family feeds its own tower.</p>
-      <div class="cqs-strip"><span class="cqs-badge"><b data-fact="model_inputs">130</b>Features</span><span class="cqs-badge"><b>17</b>Towers</span><span class="cqs-badge"><b data-fact="seasons">30</b>Seasons</span><span class="cqs-badge"><b>8</b>Types</span><span class="cqs-badge"><b><span data-fact="model_dim">64</span>-d</b>L2</span></div>
+      <div class="stats-strip"><span class="stats-chip"><b data-fact="model_inputs">130</b>Features</span><span class="stats-chip"><b>17</b>Towers</span><span class="stats-chip"><b data-fact="seasons">30</b>Seasons</span><span class="stats-chip"><b>8</b>Types</span><span class="stats-chip"><b><span data-fact="model_dim">64</span>-d</b>L2</span></div>
       <dl class="doc-defs">
         <div><dt>z-score</dt><dd>How far above the league average: 0 is average, +2 is elite.</dd></div>
         <div><dt>era-z</dt><dd>Measured against that season only.</dd></div>
-        <div><dt>mask</dt><dd>“Never measured”, kept distinct from zero.</dd></div>
-        <div><dt>per 100</dt><dd>Per 100 team possessions, so pace doesn’t inflate a number.</dd></div>
+        <div><dt>mask</dt><dd>&ldquo;Never measured&rdquo;, kept distinct from zero.</dd></div>
+        <div><dt>per 100</dt><dd>Per 100 team possessions, so pace doesn&rsquo;t inflate a number.</dd></div>
       </dl>
     </section>
 
-    <section id="mtnn-v4">
-      <div class="doc-n">02</div>
+    <section id="the-model" tabindex="-1">
+      <div class="doc-eyebrow">How does it learn?</div>
       <h2>MTNN — the model behind every guess</h2>
-      <p>17 towers → residual towers → a 64-d fingerprint, L2-normalised so cosine is similarity → decoded to archetype (8), position (5) and skills. An 18th family, injury, feeds a durability read-out head rather than an input tower: as an input it measured −0.088 test recall, because durability is not a style axis.</p>
+      <p>17 towers → residual towers → a 64-d fingerprint, L2-normalized so cosine is similarity → decoded to archetype (8), position (5) and skills. An 18th family, injury, feeds a durability read-out head rather than an input tower: as an input it measured −0.088 test recall, because durability is not a style axis.</p>
       <pre class="arch-diagram">Input 130 feats, mask m∈{0,1}
 h = cat([x·m, m]) → 2·d_in per family
 Tower 17×: 2d_in→160 LN GELU → 160→32 LN + skip ×2 → 32-d (544 total)
 + season_emb 12-d → 556 → 556→256 GELU → <b>64 L2</b>
 Heads: 8 arch / 5 pos / 14 next / 18 skill towers — 12 core + 6 wide (64→16→1)
 ~224K params · ONNX 548 KB</pre>
+      <p class="doc-note">The old test was too easy — a memorizing model scored 1.0. The current test is leak-free. The full scorecard, the training commands and the promote gate live in the <a href="/research.html">research notebook</a>.</p>
     </section>
 
     <section id="the-map">
-      <div class="doc-n">03</div>
+      <div class="doc-eyebrow">Where does the map lie?</div>
       <h2>The map</h2>
-      <p>Two maps, both PCA(3), both min-max scaled. The league map (Atlas, Play) flattens the 14 era-normalised stat traits — its three axes keep about 62% of those traits&rsquo; variance. The explorer map above flattens the model&rsquo;s 64-d embedding, whose first three axes keep only about 27% of its variance — so on either map, &ldquo;nearby&rdquo; is approximate, and the model&rsquo;s true nearest seasons are computed in the full spaces, not read off the picture. Axes are named from their correlations.</p>
+      <p>Two maps, both PCA(3), both min-max scaled. The league map (Atlas, Play) flattens the 14 era-normalized stat traits — its three axes keep about 62% of those traits&rsquo; variance. The explorer map flattens the model&rsquo;s 64-d embedding, whose first three axes keep only about 27% of its variance — so on either map, &ldquo;nearby&rdquo; is approximate, and the model&rsquo;s true nearest seasons are computed in the full spaces, not read off the picture. Axes are named from their correlations.</p>
       <p class="doc-note">The Atlas map&rsquo;s axes:</p>
       <table class="data-table">
         <thead><tr><th scope="col">Axis</th><th scope="col">Low end</th><th scope="col">High end</th></tr></thead>
@@ -453,322 +147,69 @@ Heads: 8 arch / 5 pos / 14 next / 18 skill towers — 12 core + 6 wide (64→16�
     </section>
 
     <section id="archetypes">
-      <div class="doc-n">04</div>
+      <div class="doc-eyebrow">What kinds of players are there?</div>
       <h2>Archetypes — eight types</h2>
-      <p>k-means with K = 8, in two spaces. The labels on players, dossiers and games come from the frozen game contract — k-means on the 14-d era-z serving vectors, seeded so it reproduces; the MTNN archetype head was trained to predict those labels (top-1 0.970 against the training snapshot). The serving vectors were rebuilt in October 2026 and their k-means re-drawn, so the head and the served labels now agree more loosely — cousins, not copies; where a surface shows a model archetype instead, it uses the head&rsquo;s own assignment. The Trends stream's prevalence is computed separately, from a K = 8 clustering of the 64-d MTNN v5 embedding, with the same naming rule (names from distinctive skill z-scores).</p>
+      <p>k-means with K = 8, in two spaces. The labels on players, dossiers and games come from the frozen game contract — k-means on the 14-d era-z serving vectors, seeded so it reproduces; the MTNN archetype head was trained to predict those labels (top-1 0.970 against the training snapshot). The serving vectors were rebuilt in October 2026 and their k-means re-drawn, so the head and the served labels now agree more loosely — cousins, not copies; where a surface shows a model archetype instead, it uses the head&rsquo;s own assignment. The Trends stream&rsquo;s prevalence is computed separately, from a K = 8 clustering of the 64-d MTNN v5 embedding, with the same naming rule (names from distinctive skill z-scores).</p>
       <ol class="doc-list">
         <li>Rim protection + offensive glass</li><li>Three-point volume (low finishing)</li><li>Playmaking + steals</li><li>Offensive glass + defensive glass</li>
         <li>Three-point volume + shot volume</li><li>Three-point volume + three-point accuracy</li><li>Scoring volume + shot volume</li><li>Rim pressure (FTs) + defensive glass</li>
       </ol>
     </section>
 
-    <section id="career-trails">
-      <div class="doc-n">04&middot;b</div>
-      <h2>Career trails — a player, season by season</h2>
-      <p>Every player with two or more seasons gets a trail: their season points joined in order and drawn over the same map projection you see. The scrubber walks rookie &rarr; twilight, and the &ldquo;what changed&rdquo; strip names the two style traits that moved most each season, in plain words. Dotted stretches mean a missed season (injury, retirement, lockout).</p>
-      <p class="doc-note">Trails show movement in <i>style</i>, not improvement &mdash; a trail drifting across the map means the player&rsquo;s statistical shape changed, not that they got better or worse. Nearby points are similarity, not rankings.</p>
+    <section id="dossier">
+      <div class="doc-eyebrow">Where else does the model show up?</div>
+      <h2>Career trails and player dossiers</h2>
+      <p><span id="career-trails"></span>Every player with two or more seasons gets a career trail: their season points joined in order and drawn over the same map projection you see — rookie &rarr; twilight, dotted stretches where a season was missed (injury, retirement, lockout). Trails show movement in <i>style</i>, not improvement — a trail drifting across the map means the player&rsquo;s statistical shape changed, not that they got better or worse.</p>
+      <p>Every player dossier is built from the same model behind the map — no hand-written bios, nothing to go stale: a minutes-weighted 14-trait style fingerprint, the player&rsquo;s archetype and how it moved across their career, their era twin (with the plain-words why), how their game changed from first to last charted season, the five nearest player-seasons in style space, and a plain-words read of where they live on the map. All dossier numbers come from the 14-d serving projection (the transparent era-z style space, not an MTNN output) and the derived research assets; era twins are matched in the 64-d MTNN v5 embedding. &ldquo;How his game changed&rdquo; compares first vs last charted season only; traits that moved less than half a standard deviation are left out.</p>
     </section>
 
     <section id="insights">
-      <div class="doc-n">04&middot;c</div>
+      <div class="doc-eyebrow">What do the Insights cards claim?</div>
       <h2>Insights — shareable findings</h2>
-      <p>The <a href="/insights">Insights</a> page curates seven findings about money and sacrifice: the 2016 cap spike, the most expensive seats in basketball, the max-money cheat code, the biggest invisible sacrifices, Love vs Bosh, the biggest same-team role shrinks, and the hometown discount leaderboard. They are the <em>From the ledger</em> series: salary, tax and ticket findings assembled by hand from named public sources (Spotrac, Hoops Rumors, Basketball-Reference and the others printed on each card), each with its source, sample and window on the card face. A ledger card never borrows the model's authority.</p>
+      <p>The <a href="/insights">Insights</a> page curates seven findings about money and sacrifice: the 2016 cap spike, the most expensive seats in basketball, the max-money cheat code, the biggest invisible sacrifices, Love vs Bosh, the biggest same-team role shrinks, and the hometown discount leaderboard. They are the <em>From the ledger</em> series: salary, tax and ticket findings assembled by hand from named public sources (Spotrac, Hoops Rumors, Basketball-Reference and the others printed on each card), each with its source, sample and window on the card face. A ledger card never borrows the model&rsquo;s authority. Cards computed from the embedding model arrive as their own series when they ship — nothing on the Insights page advertises them meanwhile.</p>
       <p class="doc-note">Every card deep-links (<code>/insights.html#&lt;slug&gt;</code>), exports a 1080&times;1350 PNG rendered in the browser, and has a crawler page at <code>/insights/&lt;slug&gt;</code> with a pre-rendered unfurl image. The daily spotlight never repeats a card shown in the grid below it.</p>
-    </section>
-    <section id="dossier">
-      <div class="doc-n">04&middot;d</div>
-      <h2>Player dossier — every player, from the model</h2>
-      <p>Open any player in the <a href="players.html">directory</a> and their dossier is built from the same model behind the map &mdash; no hand-written bios, nothing to go stale. Each dossier carries a minutes-weighted 14-trait style fingerprint, the player&rsquo;s archetype and how it moved across their career, their era twin (with the plain-words why), how their game changed from first to last charted season, the five nearest player-seasons in style space, and a plain-words read of where they live on the map.</p>
-      <p class="doc-note">All dossier numbers come from the 14-d serving projection (vectors.json — the transparent era-z style space, not an MTNN output) and the derived research assets (era twins, career trails, archetype assignments, honors). Similarity is cosine in the 14-d style space; era twins are matched in the 64-d MTNN v5 embedding. &ldquo;How his game changed&rdquo; compares first vs last charted season only; traits that moved less than half a standard deviation are left out.</p>
     </section>
 
     <section id="drift">
-      <div class="doc-n">05</div>
-      <h2>League drift — Procrustes</h2>
-      <p class="doc-formula">Orthogonal Procrustes on consecutive-season shared players (≥ 30). Rotation = mean principal angle of Q against the identity; residual = Frobenius norm after alignment; chained to the 1996 root frame; RᵀR = I.</p>
-      <p>The biggest rotation: the summer entering 2019–20 (2018–19 → 2019–20) at 12.49°</p>
-      <p>Where careers end up, from the same trajectories: 51% of players stay stable specialists, 20% migrate to a neighbouring role, 13% drift, 10% reinvent themselves once, and 5% bloom late. Reinventors last longest — 9.3 seasons against 7.9 for everyone else. The steepest single fall is Interior Finishing + Defensive Glass: 16.5% of minutes early in the window to 8.0% late (−8.6 points). This section is what the Trends page showed until October 2026 — its charts were these numbers, drawn from the same drift series. After 2019–20, the next-largest rotation is 2020–21 → 2021–22 at 11.35°.</p>
+      <div class="doc-eyebrow">How does the league change?</div>
+      <h2>League drift — the headlines</h2>
+      <p class="doc-formula" aria-label="Orthogonal Procrustes: rotate one season's player map onto the next so rotations preserve distances — R transpose R equals identity. Rotation is the mean principal angle of Q against the identity; residual is the distance left after alignment.">Orthogonal Procrustes on consecutive-season shared players (≥ 30). Rotation = mean principal angle of Q against the identity; residual = Frobenius norm after alignment; chained to the 1996 root frame; RᵀR = I.</p>
+      <p>The biggest rotation: the summer entering 2019–20 (2018–19 → 2019–20) at 12.49° — the league&rsquo;s playing style turned further that summer than any other in the window. Next-largest: 2020–21 → 2021–22 at 11.35°.</p>
+      <p>Where careers end up, from the same trajectories: 51% of players stay stable specialists, 20% migrate to a neighbouring role, 13% drift, 10% reinvent themselves once, and 5% bloom late. Reinventors last longest — 9.3 seasons against 7.9 for everyone else. The steepest single fall is Interior Finishing + Defensive Glass: 16.5% of minutes early in the window to 8.0% late (−8.6 points).</p>
+      <p class="doc-note">These numbers are what the Trends page charted until October 2026, drawn from the same drift series.</p>
     </section>
 
-    <section id="skills">
-      <div class="doc-n">06</div>
-      <h2>Skills lens — 0 to 99</h2>
-      <p>Twelve skills, each a fixed linear composite of era-z per-100 stats, expressed as a percentile within the season, so a 90 in 1997 equals a 90 in 2026. Badges start at 90; gold at 97. These are the 12 <em>core</em> skills — the ones with badges. The model trains 18 skill towers: these 12 plus 6 wide tracking-based skills (post, transition, motor, shooting gravity, rim gravity, disruption gravity), masked to seasons with tracking data.</p>
-      <dl class="doc-defs">
-        <div><dt>recall@10</dt><dd>Can the model find the same player the following season?</dd></div>
-        <div><dt>purity@20</dt><dd>Do a season’s neighbours share its archetype?</dd></div>
-      </dl>
-    </section>
-
-    <section id="forecast-method">
-      <div class="doc-n">07 · Experimental</div>
-      <h2>Forecast — where a player is headed</h2>
-      <p class="doc-formula">Three-season context → next-season embedding (first 8 of 64 dimensions). Source: the served 64-d MTNN v5 embedding, 12,966 × 64. A deterministic numpy forecaster (patch length 3, cross-variate least squares, seed 7), 7,096 windows, chronological split — train ≤2021, validation 2022–23, test ≥2024; the metrics stored in the file are train-split, research-only. No quantile calibration yet. Not TimesFM-3 (non-commercial) or a validated TimesFM-2.5.</p>
-      <p>One contract everywhere: <code>assets/timesfm_forecasts.json</code>, 7,096 forecasts, with an honest failure message if the file is missing.</p>
-      <p class="doc-note">Future work: chronological, player-aware splits with no leakage; saved seeds and weights; naive-last and drift baselines; MAE / RMSE plus angular error; quantile coverage.</p>
-    </section>
-
-    <section id="accuracy-harness">
-      <div class="doc-n">08</div>
-      <h2>Accuracy harness — blocks a deploy on failure</h2>
-      <table class="data-table">
-        <tbody>
-          <tr><td class="num">V1</td><td><code>vectors.json</code> dimensions, ranges, no duplicates</td></tr>
-          <tr><td class="num">V2</td><td>Cluster labels recomputed by nearest centroid; all 12,966 match</td></tr>
-          <tr><td class="num">V3</td><td><code>deadline.json</code> deltas recomputed from raw logs, 0.01 tolerance</td></tr>
-          <tr><td class="num">V4</td><td>Chimera determinism across 30 dates; cosine &lt; 0.3 between donors</td></tr>
-        </tbody>
-      </table>
-      <p class="doc-note">MTNN extras: leak-free recall@10 via leakfree.py, purity@20, next-profile MAE. ONNX 548 KB.</p>
-    </section>
-
-    <section id="the-model" tabindex="-1">
-      <div class="doc-n">08+</div>
-      <h2>The model, graded — the Lab, on this page</h2>
-      <p class="doc-note">The Lab and Methods are one page now: the scorecard, the architecture and the live exhibits sit under the same recompute promise as everything above.</p>
-<p class="mono" style="font-size:12px; color:var(--fg-2); margin:6px 0 2px;">Promote-gate baseline, re-anchored 2026-07-24. The old baseline was measured on the pre-protocol loop that trained on held-out positives — its recall@10 of 1.0 was memorization, so the gate demanded ≥0.98 and no honest model could ever pass it. The current baseline is leak-free and averaged across seeds; it is computed by the gate at promotion time (pipeline/composite_score.py), not republished here as decimals.</p>
-<div class="cqs-strip" aria-label="Promote gate baseline (leak-free, multi-seed)">
-<div class="cqs-badge is-primary"><b>leak-free</b><span>CQS baseline protocol</span></div>
-<div class="cqs-badge"><b>multi-seed</b><span>mean baseline</span></div>
-<div class="cqs-badge"><b>player-split</b><span>no train/test leakage</span></div>
-<div class="cqs-badge"><b>2× SE</b><span>clearance over seed noise</span></div>
-</div>
-<p class="mono" style="font-size:12px; color:var(--fg-2); margin:8px 0 2px;">Promoted 2026-07-25: <code>mtnn_v5_concat_b2_h160_t32_d64_mlp128_fus256</code>, replacing the 2026-07-14 build. On the identical held-out protocol (assets/eval_scoreboard.json) it nearly quadruples the committed transparent baseline on never-trained 2024+ pairs — top-5 <b>0.196 → 0.757</b>, top-1 <b>0.079 → 0.438</b> (baseline: the 14-d era-z profile in vectors.json). The previous build predated the position-label, career-feature and durability-leak fixes.</p>
-
-<p class="mono" style="font-size:12px; color:var(--fg-2); margin:8px 0 2px;">Served-model scorecard — MTNN v5, built 2026-07-25 (<code>assets/mtnn_meta.json</code>): test recall@10 <b>0.846</b> (held-out 2024+ targets) · cross-era purity@20 <b>0.783</b> · archetype top-1 <b>0.970</b> (training snapshot). Held-out retrieval detail:</p>
-<div class="cqs-strip" id="eval-scoreboard-strip" aria-label="Held-out retrieval scoreboard">
-<div class="cqs-badge is-primary"><b id="evsb-top5">…</b><span>held-out top-5 retrieval</span></div>
-<div class="cqs-badge"><b id="evsb-top1">…</b><span>held-out top-1</span></div>
-<div class="cqs-badge"><b id="evsb-base5">…</b><span>14-d baseline top-5</span></div>
-<div class="cqs-badge"><b id="evsb-pairs">…</b><span>eligible pairs</span></div>
-</div>
-<p id="evsb-caption" class="mono" style="font-size:12px; line-height:1.6; color:var(--fg-2); margin:6px 0 0;">Loading assets/eval_scoreboard.json…</p>
-
-<nav class="anchor-nav" aria-label="Page sections">
-<a href="#training-cockpit">Training Cockpit</a>
-<a href="#manim-mtnn">Architecture</a>
-<a href="#network-flow">Flow</a>
-<a href="#explorer">Explorer</a>
-<a href="#pipeline">Pipeline</a>
-<a href="#arch-spec">Spec</a>
-</nav>
-
-
-<!-- 1. TRAINING COCKPIT -->
-<section class="drift-card" id="training-cockpit">
-<div class="drift-card__head"><span class="card-kicker">Training Cockpit • MTNN v5 — served · v6 — research</span><h2>Training cockpit — what ships now and what trains next</h2></div>
-
-<div class="cockpit-grid">
-<div class="cockpit-panel">
-<h3>Current deployed — mtnn_v5_concat_b2_h160_t32_d64_mlp128_fus256</h3>
-<div id="arch-current-meta" class="mono" style="font-size:12px; line-height:1.6;">Loading mtnn_arch.json…</div>
-<div class="weights-grid" id="weights-grid"></div>
-<p style="font-size:13px; line-height:1.6; margin-top:12px; color:var(--fg-2);">CQS weights from <code>pipeline/composite_score.py</code>: recall 0.18, purity 0.16, margin_14d 0.08, archetype 0.08, position 0.05, skills_r2 0.14, skill_nn 0.05, next_r2 0.12, next_mae 0.06, aux_r2 0.08. <b>Gate re-anchored</b> to a leak-free baseline (multi-seed mean, 130-feature matrix). Thresholds are now 2× the standard error of the seed mean rather than a flat 0.02 — seed-to-seed spread on test recall is wide, so the old slack was adjudicating sampling noise. A candidate must also hold same-player continuity spread under its bar, which is what catches a model that memorizes the training window instead of generalizing.</p>
-</div>
-<div class="cockpit-panel">
-<h3>Hill-climb 01→05 + loss weights</h3>
-<div class="pipe">
-<div class="pipe-step is-done"><span class="step-num">01</span><b>Gather</b><i>stats.nba 12,966</i></div><div class="pipe-arrow">→</div>
-<div class="pipe-step is-done"><span class="step-num">02</span><b>Vectors</b><i>per-season z ±4 + mask</i></div><div class="pipe-arrow">→</div>
-<div class="pipe-step is-done"><span class="step-num">03</span><b>Towers</b><i>17×160→32 ×2 blocks</i></div><div class="pipe-arrow">→</div>
-<div class="pipe-step is-done"><span class="step-num">04</span><b>Fusion</b><i>556→256→64 L2</i></div><div class="pipe-arrow">→</div>
-<div class="pipe-step is-done"><span class="step-num">05</span><b>Deploy</b><i>ONNX + WASM + Procrustes</i></div>
-</div>
-<p style="font-size:13px; margin-top:12px; line-height:1.6;">The served champion: 17 towers × 2 residual blocks, 160 hidden → 32 out (LN + GELU + skip) = 544, + 12-d season embedding = 556 concat → 256 fusion → 64-d L2 unit sphere. One embedding feeds every head — 8 archetype + 5 position + 14 next-profile + 18 skill towers (12 core skills + 6 wide tracking skills). It holds 12,966 player-seasons, and Procrustes-chained drift maps any season into the 1996-97 root frame.</p>
-<p style="font-size:13px; margin-top:8px; line-height:1.6;"><b>Research candidate — not served:</b> an MTNN v6 transformer-fusion build (d-model 128, 64-d out) is specified in <code>assets/eval_scoreboard_v6.json</code> — its own status there is candidate, not trained to completion, with projected rather than measured metrics. <b>Production serves ONE model only — MTNN v5 above.</b> Nothing becomes champion without a leak-free held-out win over v5.</p>
-</div>
-</div>
-
-<div style="padding:0 16px 16px;">
-<div class="cockpit-panel" style="margin-top:4px;border:1px solid var(--line-2);border-radius:12px;background:var(--surface);">
-<h3>Exact v6 candidate training command (research — not the served model)</h3>
-<pre class="code-block" id="train-command">python pipeline/train_mtnn.py --epochs 150 --dim 64 --tower-width 40 --tower-hidden 192 --tower-blocks 3 --mlp-heads --d-head-hidden 128 --fusion transformer --d-model 128 --n-fusion-layers 4 --n-attn-heads 4 --fusion-hidden 512 --lr 0.001 --lr-schedule onecycle --warmup-pct 0.1 --anneal-strategy linear --weight-decay 0.0002 --nce-loss hybrid --nce-player-weight 0.65 --nce-arch-weight 0.35 --hard-neg-boost 0.4 --drop-p 0.15 --checkpoint-metric cqs --val-every 5 --era-align procrustes --robust-scaling --phase auto</pre>
-<p style="font-size:11px; color:var(--fg-3); margin-top:8px;" class="mono">Preprocessing: Procrustes chains drift.json back to 1996-97 root RᵀR=I, robust median/IQR clip[-3,3]. Loss: NCE hybrid player 0.65 arch 0.35 + archetype/position/profile/next/skills/salary/team_fit/roster_lift/form_recon/career_slope/competition/pedigree/playoff/honors. Split: player leakfree. Optim: AdamW no decay bias/LN. Scheduler: OneCycle warmup 10% linear.</p>
-</div>
-
-<div class="cockpit-panel" style="margin-top:12px;border:1px dashed var(--line-2);border-radius:12px;background:var(--surface);">
-<h3>Forecast — same family, one season forward <span style="font-family:var(--mono);font-size:10px;background:var(--accent-wash);color:var(--accent);border:1px solid var(--line-2);border-radius:999px;padding:2px 8px;margin-left:6px">Where you're headed</span></h3>
-<p style="font-size:13px;line-height:1.6;margin:8px 0">A deterministic TimesFM-lite forecaster (numpy, seed 7) projects player embeddings one season forward from 3-season windows — <b>7,096 forecasts</b> served from <code>assets/timesfm_forecasts.json</code> (built 2026-09-02), The metrics in that file are train-split, so this stays <b>research-only</b>: it does not drive the map or any prediction product. Stone dashed = uncertainty, terracotta dashed = headed direction. ONE champion served — MTNN v5.</p>
-<div style="display:flex;gap:6px;flex-wrap:wrap;margin:8px 0"><span class="stats-chip">8-d forecast head</span><span class="stats-chip">7,096 forecasts</span><span class="stats-chip">research-only</span><span class="stats-chip">Past → Modern → Headed</span></div>
-<canvas role="img" aria-label="Forecast lab chart — projected next-season embedding, first predicted dimension across 50 players" id="forecast-lab-canvas" width="800" height="180" style="width:100%;border:1px solid var(--line-2);border-radius:10px;background:var(--surface)"></canvas>
-<div id="forecast-lab-legend" style="font-family:var(--mono);font-size:11px;margin-top:6px;color:var(--fg-2)">Loading forecast…</div>
-<div id="forecast-lab-slot" style="margin-top:10px"></div>
-</div>
-</div>
-</section>
-
-<!-- 2. ARCHITECTURE — 4 VIDEOS -->
-<section class="drift-card" id="frontier">
-<div class="drift-card__head"><span class="card-kicker">Research — in progress</span><h2>The Frontier Program</h2></div>
-<p>Four bets, each with a held-out eval gate. Nothing ships without beating the baseline that matters.</p>
-<h3>01 · Mixed-curvature embeddings</h3>
-<p>Player similarity isn't one geometry. Archetype hierarchies are tree-like, era drift is flat, matchup cycles are spherical — so we're learning a product space (hyperbolic × spherical × Euclidean) with curvatures the data chooses, not ones we guess. Challenger to our v5 embeddings, gated on a δ-hyperbolicity diagnostic and twin-retrieval evals.</p>
-<h3>02 · DARKO-style game forecasting</h3>
-<p>Per-player Bayesian state estimation — exponential decay plus Kalman filtering over every box score — with who-guards-whom matchup tensors and a minute-projection engine conditioned on blowout probability. The literature's verdict is blunt: minutes move the needle more than model cleverness. Evaluated against the betting line, never a naive baseline.</p>
-<h3>03 · Live in-game updating</h3>
-<p>Bayesian second-half projections from live play-by-play: current stat plus remaining minutes at current usage, pace, and foul state, shrunk toward the pre-game prior — because a hot first half predicts a cooler second half, not a continuation. Published baselines for this are few and far between — we're building a public one.</p>
-<h3>04 · Hyperbolic representation learning</h3>
-<p>The GGBall paper's hyperbolic VQ-VAE, repurposed as an encoder for the archetype taxonomy — the one job hyperbolic geometry was born for. Pursued only if the δ diagnostic says the data wants curvature. (We checked the hype first: the paper's "18%" claim appears in neither its abstract nor its full text.)</p>
-<p>Full provenance for everything in the Lab: the sections at the top of this page. The Props Lab paper-trading experiment has been retired — it was a model lab in a game costume, and nothing in it belonged in the game.</p>
-</section>
-<section class="drift-card" id="manim-mtnn">
-<div class="drift-card__head"><span class="card-kicker">Architecture — 4 animations • code-generated</span><h2>How MTNN actually works</h2></div>
-<div class="manim-grid">
-<div class="manim-card">
-<video autoplay loop muted playsinline controls preload="metadata" src="assets/manim/MTNNFlow.mp4" aria-label="MTNNFlow"></video>
-<div class="manim-caption"><b>MTNNFlow — glass box</b><br>17 towers, 130 feats cat([x·m,m]) → 17× 160→32 LN+GELU ×2 blocks → 544 + season emb 12 → 556→256 fusion → 64 L2 → heads 8/5/14/18. Every box is a real dimension. <em style="display:block;margin-top:6px;background:var(--surface);border:1px dashed var(--line-2);border-radius:8px;padding:6px 8px">Renders the served MTNN v5 architecture. Injury is a durability read-out family, not an input tower.</em></div>
-</div>
-<div class="manim-card">
-<video autoplay loop muted playsinline controls preload="metadata" src="assets/manim/ChimeraEquation.mp4" aria-label="ChimeraEquation"></video>
-<div class="manim-caption"><b>ChimeraEquation — how Chimera scores</b><br>Donor A + Donor B → fuse in 64-d → nearest real season among 12,966 by cosine. The argmin behind daily puzzle. <span style="font-family:var(--mono);font-size:10px;background:var(--accent-wash);color:var(--accent);border:1px solid var(--line-2);border-radius:999px;padding:1px 6px">MTNN v5 · 64-d</span></div>
-</div>
-<div class="manim-card">
-<video autoplay loop muted playsinline controls preload="metadata" src="assets/manim/InputFamilies.mp4" aria-label="InputFamilies"></video>
-<div class="manim-caption"><b>InputFamilies — 130 feats → 17 families → cat([x·m,m])</b><br>volume·play·reb·def·eff·shotmix·bio·tracking*·form*·market·roster·career·comp·team·pedig·playoffs·honors =130. Missing tracking pre-2013 masked to zero.</div>
-</div>
-<div class="manim-card">
-<video autoplay loop muted playsinline controls preload="metadata" src="assets/manim/EmbeddingL2.mp4" aria-label="EmbeddingL2"></video>
-<div class="manim-caption"><b>EmbeddingL2 — 64-d → L2 → unit sphere</b><br>v̂ = v/||v||₂, ||v̂||=1, cos = v̂·ŵ. 12,966 points on sphere powers Chimera + Era Twin.</div>
-</div>
-</div>
-</section>
-
-<!-- 3. FLOW -->
-<section class="drift-card" id="network-flow" aria-label="Network data flow">
-<div class="network-section__head">
-<div><p class="viz-panel__label" style="margin:0;">Data flow — truthful boxes measured</p><p class="network-flow-subhead">Input mask m∈{0,1} • cat([x·m,m]) → 17 towers b2 h160 → t32 ×2 residual LN GELU + skip → 544 + season 12 =556 concat → 256 fusion → L2 embed 64-d → MLP heads 8/5/14/18. Tap any node. MTNN v5 champion, 12,966×64.</p></div>
-<div class="network-flow-tools"><span id="network-trace-status" class="network-trace-status">Tap a node to see what fed it.</span><button type="button" id="network-trace-clear" class="network-trace-clear" hidden>✕ Clear</button></div>
-</div>
-<div class="network-flow-layout">
-<div class="network-flow-main">
-<div id="network-flow-svg" class="network-flow-host" role="img" aria-label="MTNN layer diagram"></div>
-<div id="network-flow-insights" class="network-insights"><p class="drift-loading">Loading tower activations, family share per head…</p></div>
-</div>
-<div id="network-node-inspector" class="network-insights network-node-inspector"><p class="drift-loading">Tap an input, tower, or output to see exact numbers.</p></div>
-</div>
-
-<div class="network-flow-outputs" id="network-output-card">
-<div class="network-flow-outputs__head"><p class="viz-panel__label">Guess & grade — heads decode the 64-d MTNN v5 embedding</p><p style="font-size:12px; color:var(--fg-3); margin-top:4px;">Same MLP heads as rightmost column. Tap a row to lock trace back through network.</p></div>
-<div class="viz-duo-grid network-flow-outputs__grid">
-<div class="viz-panel"><p class="viz-panel__label">Archetype — 8</p><div id="network-arch-out" class="network-arch-out"></div></div>
-<div class="viz-panel"><p class="viz-panel__label">Position — 5</p><div id="network-pos-out" class="network-arch-out"></div></div>
-<div class="viz-panel"><p class="viz-panel__label">Skill grades — 18×(64→16→1)</p><div id="network-skill-out" class="network-skill-out"></div></div>
-<div class="viz-panel"><p class="viz-panel__label">Next-season forecast — per 100</p><div id="network-next-out" class="network-skill-out"></div></div>
-</div>
-</div>
-</section>
-
-<!-- 4. EXPLORER -->
-<section class="drift-card network-controls-card" id="explorer">
-<div class="drift-card__head"><span class="card-kicker">Explorer • Glass box debugger</span><h2>Probe any player-season</h2></div>
-
-<div class="network-controls" style="padding:14px 16px;">
-<div class="search-row">
-<label class="viz-panel__label" for="network-search">Player</label>
-<input type="search" id="network-search" class="wiki-search network-search" placeholder="Search 12,966 — e.g. LeBron 2013, Curry 2016… MTNN v5 champion" autocomplete="off" autocorrect="off" spellcheck="false">
-<ul class="network-suggest" id="network-suggest" hidden></ul>
-<span id="network-player-tag" class="network-player-tag">Loading index…</span>
-</div>
-
-<div class="search-row">
-<label class="network-compare-toggle" for="network-compare-toggle"><input type="checkbox" id="network-compare-toggle"> <span style="font-family:var(--mono);font-size:12px;font-weight:800">Compare</span></label>
-<input type="search" id="network-compare-search" aria-label="Search a second player-season to compare" class="wiki-search network-search" placeholder="2nd player-season" autocomplete="off" autocorrect="off" spellcheck="false" disabled style="min-width:180px;">
-<ul class="network-suggest" id="network-compare-suggest" hidden></ul>
-<span id="network-compare-tag" class="network-player-tag">No compare</span>
-</div>
-
-<div class="network-step-nav" id="network-step-nav" role="tablist">
-<button type="button" class="network-step-btn is-active" data-step="0" role="tab" aria-selected="true">◉ Input</button>
-<button type="button" class="network-step-btn" data-step="1" role="tab" aria-selected="false">⬢ Towers</button>
-<button type="button" class="network-step-btn" data-step="2" role="tab" aria-selected="false">⬣ Fusion</button>
-<button type="button" class="network-step-btn" data-step="3" role="tab" aria-selected="false">⬔ Embed</button>
-<button type="button" class="network-step-btn" data-step="4" role="tab" aria-selected="false">⬕ Heads</button>
-</div>
-
-<button type="button" id="network-play" class="network-play-btn">▶ Play flow — trace signal</button>
-</div>
-
-<div style="padding:0 16px 16px;">
-<div class="network-timebar" id="network-timebar" hidden>
-<div class="network-timebar__head"><span class="network-timebar__label">Career timeline — scrub season</span><span id="network-timebar-current" class="network-timebar__current"></span></div>
-<input type="range" id="network-time-scrubber" min="0" max="0" step="1" value="0" aria-label="Career timeline">
-<div id="network-timebar-range" class="network-timebar__range"></div>
-</div>
-
-<p id="network-step-caption" class="network-step-caption">Loading architecture… MTNN v5: 17 towers 160→32, LN GELU ×2 blocks, 12-d season emb, 544+12=556 → 256 fusion → 64 L2. Era-honest sigma per-season, masked, Procrustes-chained drift root 1996-97 Q^T Q=I.</p>
-
-<div id="network-story" class="network-story"><p class="drift-loading">Loading story…</p></div>
-<div id="network-compare-summary" class="network-insights" style="margin-top:12px;"><p class="drift-loading">Compare off — toggle to diff two seasons.</p></div>
-</div>
-</section>
-
-<section class="drift-card network-attr-card" id="network-attr-card" aria-label="What drove this prediction" hidden>
-<div class="network-section__head" style="flex-direction:column; align-items:stretch;"><div style="display:flex; flex-wrap:wrap; justify-content:space-between; gap:10px; align-items:center;"><p class="viz-panel__label" style="margin:0;">What drove this prediction</p><div style="display:flex; flex-wrap:wrap; gap:6px;"><div id="attr-target-tabs" role="tablist"></div><div id="attr-scope" role="group"></div><button type="button" id="attr-table-toggle" class="network-trace-clear" aria-pressed="false">Table view</button></div></div><p class="attr-subject" id="attr-subject" style="margin:8px 0 0; font-size:13px;"></p></div>
-<div class="attr-grid"><div class="viz-panel attr-panel" id="attr-tile"></div><div class="viz-panel attr-panel" id="attr-towers"></div><div class="viz-panel attr-panel" id="attr-features"></div></div>
-<div id="attr-population" hidden></div>
-</section>
-
-<section class="drift-card network-map-card" aria-label="64-d MTNN v5 embedding map">
-<div class="network-section__head"><div><p class="viz-panel__label" style="margin:0;">Embedding map — 64-d MTNN v5 rendered in 3D</p><p style="font-size:12px; color:var(--fg-3); margin-top:6px;">Slow auto-rotate • drag to orbit • scroll to zoom • orange=selected — 12,966 points L2-normalized.</p></div></div>
-<div class="network-map-layout">
-<div class="network-map-stage">
-<canvas id="network-map-canvas" class="network-map-canvas" aria-label="3D MTNN embedding map"></canvas>
-<ul id="network-map-legend" class="network-map-legend"></ul>
-<div id="network-map-axes" class="network-map-axes"></div>
-</div>
-<div id="network-map-insights" class="network-insights"><p class="drift-loading">Loading nearby players…</p></div>
-</div>
-</section>
-
-<!-- 5. PIPELINE -->
-<section class="drift-card" id="pipeline">
-<div class="drift-card__head"><span class="card-kicker">Lab pipeline 01→05</span><h2>From box score to fingerprint</h2></div>
-<div class="cockpit-grid">
-<div class="cockpit-panel">
-<h3>01 Gather → 02 Vectors</h3>
-<p style="font-size:14px; line-height:1.6;">Pull every per-100 split from stats.nba.com 1996-2026. 12,966 player-seasons after the schedule-aware eligibility filter (games + minutes bars, 450-minute floor). Per-season z-score so 1999 and 2026 are both 0 = average of their era. Mask m creates cat([x·m,m]) so model knows never-measured vs zero.</p>
-<ul style="font-size:12px; line-height:1.6; margin:8px 0 0 18px;">
-<li>volume, playmaking, rebounding, defense, efficiency, shotmix</li>
-<li>bio age/height/weight/draft, tracking 2013+ masked, form 2015+ masked</li>
-<li>market salary, roster complement, career lag cosine, competition SOS, team, pedigree, playoffs, honors</li>
-</ul>
-</div>
-<div class="cockpit-panel">
-<h3>03 Train → 04 Export → 05 Deploy</h3>
-<p style="font-size:14px; line-height:1.6;">Residual towers 17×160→32 ×2 LN GELU + skip =544, + season emb 12 =556 concat, fusion 256 → 64 L2. 17 families, cat([x·m,m]) masked, Procrustes chained RᵀR=I root 1996-97 so Era Twin compares directly. Heads MLP decode 8/5/14/18. Forecasts research-only. ONNX 548 KB runs in the browser (WASM).</p>
-</div>
-</div>
-</section>
-
-<!-- 6. ARCH SPEC -->
-<section class="drift-card" id="arch-spec">
-<div class="drift-card__head"><span class="card-kicker">Shipped spec reproducible</span><h2>Arch spec — mtnn_arch.json</h2></div>
-<div style="padding:14px;">
-<pre id="arch-layers-pre" class="network-arch-pre">Loading mtnn_arch.json…</pre>
-</div>
-</section>
-
-<nav class="site-next" aria-label="Continue exploring">
-<span class="site-next__label">Next →</span>
-<a href="/play">Play</a>
-<a href="/players">Players</a>
-<a href="/insights">Insights</a>
-</nav>
-
+    <section id="quotes">
+      <div class="doc-eyebrow">Words we stand by</div>
+      <h2>Buried sentences, worth quoting</h2>
+      <p class="doc-note">The site&rsquo;s voice at its most honest, one anchor link each:</p>
+      <blockquote class="vh-quote" id="quote-chimera"><p>&ldquo;A Chimera&rsquo;s fused vector never existed as a real season.&rdquo;</p><a class="vh-quote__src" href="#limitations">from What can&rsquo;t it do?</a></blockquote>
+      <blockquote class="vh-quote" id="quote-recompute"><p>&ldquo;Every number can be recomputed from source.&rdquo;</p><a class="vh-quote__src" href="#vector-space">from What does the model see?</a></blockquote>
+      <blockquote class="vh-quote" id="quote-how-players-play"><p>&ldquo;The model&rsquo;s cards measure how players play, not how good they are.&rdquo;</p><a class="vh-quote__src" href="/insights.html">from the Insights hub</a></blockquote>
+      <blockquote class="vh-quote" id="quote-no-fake"><p>&ldquo;We don&rsquo;t fake them.&rdquo;</p><a class="vh-quote__src" href="/playoff-runs.html#how-scored">from Greatest Playoff Runs</a></blockquote>
+      <blockquote class="vh-quote" id="quote-hype-check"><p>&ldquo;We checked the hype first: the paper&rsquo;s &lsquo;18%&rsquo; claim appears in neither its abstract nor its full text.&rdquo;</p><a class="vh-quote__src" href="/research.html#frontier">from the Frontier Program, research notebook</a></blockquote>
     </section>
 
     <section id="limitations">
-      <div class="doc-n">09</div>
+      <div class="doc-eyebrow">What can&rsquo;t it do?</div>
       <h2>Attribution and limits</h2>
       <ul class="doc-list doc-list--plain">
-        <li>No lineup or on/off data — the model doesn’t know who shared the floor.</li>
+        <li>No lineup or on/off data — the model doesn&rsquo;t know who shared the floor.</li>
         <li>A midseason move is a TEAM_ID change, not verified trade metadata.</li>
         <li>Tracking exists only from 2013; earlier seasons are masked, not imputed.</li>
         <li>Position coverage is high but not total; unlabelled rows are masked, not imputed.</li>
         <li>Archetype names describe centroid stats, not scouting reports.</li>
-        <li>A Chimera’s fused vector never existed as a real season.</li>
-        <li>Motion and music: the page transitions, the Pixel Replay wipe and the site’s music (written in ABC notation and synthesized in your browser, no audio files) follow <a href="https://github.com/alchaincyf/huashu-motion" rel="noopener">huashu-motion</a>; the music code is ported in part from it, Copyright (c) 2026 Huashu, <a href="https://github.com/alchaincyf/huashu-motion/blob/main/LICENSE" rel="noopener">MIT License</a>. Sound is off until you turn it on in the top bar.</li>
+        <li>A Chimera&rsquo;s fused vector never existed as a real season.</li>
+        <li>Motion and music: the page transitions, the Pixel Replay wipe and the site&rsquo;s music follow huashu-motion — see the footer colophon. Sound is off until you turn it on in the top bar.</li>
       </ul>
+    </section>
+
+    <section id="research">
+      <div class="doc-eyebrow">For engineers</div>
+      <div class="vh-researchcard">
+        <h3>The research notebook</h3>
+        <p>Everything this page leaves out lives in the <a href="/research.html">research notebook</a>: the training cockpit with the exact v6 candidate command, the promote-gate scorecard, the CQS weight dumps, the explorer and probe debuggers, the architecture animations, the full lab pipeline, and the skills lens, forecast and accuracy-harness sections. Written for engineers and research readers — it also feeds the eye.jcamd.com research entries. Not a fan explainer.</p>
+      </div>
     </section>
   </article>
 </div>
@@ -794,7 +235,7 @@ Heads: 8 arch / 5 pos / 14 next / 18 skill towers — 12 core + 6 wide (64→16�
       <a href="https://dumbmodel.com" rel="noopener">dumbmodel.com</a>
     </div>
   </nav>
-  <p class="site-footer__attribution">Every number recomputable from stats.nba.com · A <a href="https://dumbmodel.com">dumbmodel</a> project · <a href="https://github.com/jcdavis131/vector-hoops" rel="noopener">Source</a> · Nearest seasons by cosine similarity in the 64-dimensional MTNN v5 embedding.</p>
+  <p class="site-footer__attribution">Every number recomputable from stats.nba.com · A <a href="https://dumbmodel.com">dumbmodel</a> project · <a href="https://github.com/jcdavis131/vector-hoops" rel="noopener">Source</a> · Colophon: page transitions, the Pixel Replay wipe and the site&rsquo;s music (written in ABC notation and synthesized in your browser, no audio files) follow <a href="https://github.com/alchaincyf/huashu-motion" rel="noopener">huashu-motion</a>; the music code is ported in part from it, Copyright (c) 2026 Huashu, <a href="https://github.com/alchaincyf/huashu-motion/blob/main/LICENSE" rel="noopener">MIT License</a>.</p>
 </footer>
 <script src="assets/error-boundary.js?v=8079215c"></script>
 <script src="assets/keyboard-a11y.js?v=39777a87"></script>
@@ -803,8 +244,5 @@ Heads: 8 arch / 5 pos / 14 next / 18 skill towers — 12 core + 6 wide (64→16�
 <script src="assets/pwa-install.js?v=b954d9d1"></script>
 <script src="/assets/inline-sw-register.js?v=48fb8eb4"></script>
 
-<script src="assets/network-viz.js?v=f07df411"></script>
 <script src="assets/site-facts.js?v=f8edaf37" defer></script>
-<script src="/assets/inline-methods.js?v=f777fcb4"></script>
-<script type="module" src="/assets/inline-methods-forecast.js?v=a410ced9"></script>
 </body></html>

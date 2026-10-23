@@ -75,7 +75,8 @@
       "foot": "Salaries: HoopsRumors top-50 2016-17 + Spotrac cap hits. Cap jumped $70.0M \u2192 $94.143M (July 2016). WS from Basketball-Reference.",
       "og_title": "The summer the NBA salary cap broke: $218M for 30.6 win shares",
       "og_desc": "Twelve teams spent $218.4M on the summer-2016 free-agent class. It bought 30.6 win shares \u2014 barely twice LeBron's total, for 7\u00d7 his salary.",
-      "series": "ledger"
+      "series": "ledger",
+      "but": "But \u2014 win shares aren't dollars: this measures production per dollar, not whether the signing was defensible on the day. It would fall apart if Basketball-Reference's win shares systematically undercount 2016-17 role players."
     },
     {
       "slug": "paid-to-not-play",
@@ -132,7 +133,8 @@
       "foot": "Top-10 salaries, 2021-22 season. WS/VORP/MP from Basketball-Reference; salaries cross-checked vs HoopsHype. Adj = salary \u00f7 $112.4M cap \u00d7 $154.647M.",
       "og_title": "Paid to not play: $115M in cap-adjusted dollars for zero games",
       "og_desc": "John Wall and Kawhi Leonard combined for zero 2021-22 games on $83.7M in salary \u2014 $115M in today's cap dollars.",
-      "series": "ledger"
+      "series": "ledger",
+      "but": "But \u2014 not all of it is waste: Kawhi's absence was a torn ACL, not a choice, and guaranteed contracts make this the price of doing business. This card says what the money bought, not that anyone should have known."
     },
     {
       "slug": "max-money-bargains",
@@ -189,12 +191,13 @@
       "foot": "Panel: top-10 salaries \u00d7 6 seasons, Basketball-Reference WS. Era-adjusted to the 2025-26 $154.647M cap.",
       "og_title": "The NBA cheat code: max money for superstars is usually a bargain",
       "og_desc": "Harden '16-17 cost $2.9M per win share in today's cap dollars. The dead zone isn't the top of the pay scale \u2014 it's ranks 8-15.",
-      "series": "ledger"
+      "series": "ledger",
+      "but": "But \u2014 the 5-win-share floor screens out the true top-of-the-pay-scale busts; this ranks the best top-10 seasons, not all of them. A lower salary band (ranks 11\u201330) with better $/win-share seasons would break the 'cheat code' claim."
     },
     {
       "foot": "12 qualifying moves, \u0394USG \u2265 4.0, 1999-00 \u2192 2024-25. Pre = final pre-move season meeting the stardom bar (All-Star or 25+ USG or 20+ PPG or 8+ WS) on a team that won \u22641 playoff round. Post = first season with the new team. Team rounds from the public record; full methodology in research/invisible-stardom-FINDINGS.md.",
       "kicker": "Sacrifice",
-      "lede": "Usage surrendered by stars whose pre-move peaks happened on bad teams \u2014 the lottery-team stardom the playoff-only dataset can't see. Jrue Holiday's \u22128.7 tops the list: Milwaukee All-Star to Boston's fourth option, and a ring. But Malone, Harden, Payton, Beal, Melo and Lillard gave up as much and won nothing \u2014 the rings cluster where the star joined an already-elite core.",
+      "lede": "Stars who shrank for a contender: Jrue Holiday gave up 8.7 usage points and won a ring. Malone, Harden, Payton gave up as much and lost. Rings cluster where the star joined an already-elite core.",
       "og_desc": "Jrue Holiday gave up 8.7 points of usage going from Milwaukee All-Star to Boston's fourth option \u2014 and won a ring. 12 invisible-stardom sacrifices, ranked.",
       "og_title": "The biggest sacrifices nobody saw",
       "rows": [
@@ -256,7 +259,8 @@
       "tldr": "Lottery-team stars who shrank for a contender: Jrue Holiday gave up 8.7 points of usage and won a ring, but Malone, Harden and Payton gave up as much and lost \u2014 rings went to the stars who joined already-elite cores.",
       "viz": "bars",
       "viz_label": "Usage given up (USG points)",
-      "series": "ledger"
+      "series": "ledger",
+      "but": "But \u2014 correlation isn't the recipe: joining an already-elite core is easier to measure than whether the sacrifice caused the ring. The 12 qualifying moves are the ones we could verify \u2014 the dataset only covers what the ledger can see."
     },
     {
       "foot": "Love: '13-14 MIN (26.1 PPG, 28.8 USG, 14.0 WS) \u2192 '14-15 CLE. Bosh: '09-10 TOR (24.0 PPG, 28.7 USG, 10.1 WS) \u2192 '10-11 MIA. Both All-Stars on non-playoff teams; both won rings. Data: Basketball-Reference, scraped 2026-10-01.",
@@ -298,12 +302,13 @@
       ],
       "slug": "love-vs-bosh",
       "stat": "-5.6",
-      "stat_label": "Win shares Kevin Love surrendered going from Minnesota's everything to Cleveland's third wheel \u2014 Bosh's went up",
+      "stat_label": "Win shares Love gave up, Minnesota to Cleveland. Bosh's went up.",
       "title": "Two ways to disappear for a ring",
       "tldr": "Kevin Love gave up 5.6 win shares going from Minnesota's everything to Cleveland's third wheel. Chris Bosh gave up 5.3 points a game \u2014 and his win shares rose. Same archetype, different economics.",
       "viz": "bars",
       "viz_label": "What each star gave up (negative = surrendered)",
-      "series": "ledger"
+      "series": "ledger",
+      "but": "But \u2014 two players isn't a pattern: this is a case study in fit, not a rule. It would fall apart if Bosh's win-share rise was driven by LeBron and Wade's gravity rather than his own adjustment."
     },
     {
       "foot": "7 players. Peak = best 3-consecutive-season USG% on the same team, before the title window. Parker is approximate: 2008-09 single-season peak vs window average, intervening years unknown. Regular-season USG%; Basketball-Reference, 2026-10-01.",
@@ -355,10 +360,11 @@
       "tldr": "The storied sacrifices never switched teams \u2014 Wade ceded the Heat in his prime, Manu took the bench for a dynasty, Duncan shrank at 38.",
       "viz": "bars",
       "viz_label": "Usage points surrendered from 3-year same-team peak, in title windows",
-      "series": "ledger"
+      "series": "ledger",
+      "but": "But \u2014 regular-season usage isn't the whole role: playoff minutes and defensive assignments shifted too. Parker is approximate: 2008-09 single-season peak vs window average, intervening years unknown."
     },
     {
-      "foot": "7 documented pay cuts. Documented minimums from reporting, not exact counterfactuals. Salaries: Spotrac cash. Reporting: ESPN (Stein, MacMahon), HoopsRumors, NBC Sports, Basketball Network, Pounding The Rock, 2026-10-01.",
+      "foot": "4 documented pay cuts. Documented minimums from reporting, not exact counterfactuals. Salaries: Spotrac cash. Reporting: ESPN (Stein, MacMahon), HoopsRumors, NBC Sports, Basketball Network, Pounding The Rock, 2026-10-01. Three zero rows folded into this footnote: Parker's discount was real but unquantifiable; Klay (full max 2019) and Curry (full supermax) took no discount.",
       "kicker": "Sacrifice",
       "lede": "Dirk's 2010 discount funded the Tyson Chandler trade that anchored the 2011 title; Duncan's 2012 halving kept Diaw, Green and Mills for 2014. These pay cuts have receipts \u2014 and rings attached.",
       "og_desc": "Dirk left ~$46M documented on the table; Duncan ~$35M+. Both discounts bought championships.",
@@ -383,21 +389,6 @@
           "label": "Manu Ginobili",
           "tag": "2015 one-year drop*",
           "value": 4.2
-        },
-        {
-          "label": "Tony Parker",
-          "tag": "modest, unquantified",
-          "value": 0.0
-        },
-        {
-          "label": "Klay Thompson",
-          "tag": "full max 2019",
-          "value": 0.0
-        },
-        {
-          "label": "Stephen Curry",
-          "tag": "full supermax",
-          "value": 0.0
         }
       ],
       "slug": "hometown-discount",
@@ -407,7 +398,8 @@
       "tldr": "Dirk left ~$46M and Duncan ~$35M+ documented on the table \u2014 and both discounts are directly tied to championships.",
       "viz": "bars",
       "viz_label": "Documented $M left on the table (minimums)",
-      "series": "ledger"
+      "series": "ledger",
+      "but": "But \u2014 'documented minimums' are floors, not totals: the real discounts were likely bigger, and the counterfactual max offers are reported, not offered. If the reported offers weren't real, the leaderboard moves."
     }
   ]
 }

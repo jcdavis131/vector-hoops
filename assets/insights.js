@@ -1,6 +1,8 @@
-/* Vector Hoops Insights — two labeled series: From the model (computed from
-   the served vectors) and From the ledger (salary/tax/ticket findings from named
-   public sources). Share-first: every card has a deep link + a PNG export. */
+/* Vector Hoops Insights — one labeled series today: From the ledger
+   (salary/tax/ticket findings from named public sources). The "From the
+   model" series renders too, when model cards ship — until then the hub
+   says what exists, never what is promised. Share-first: every card has
+   a deep link + a PNG export. */
 (function (global) {
   'use strict';
 
@@ -49,7 +51,7 @@
   }
 
   function load() {
-    return fetch('assets/insights.json?v=8359474f').then(function (r) {
+    return fetch('assets/insights.json?v=f76aacab').then(function (r) {
       if (!r.ok) throw new Error('insights.json ' + r.status);
       return r.json();
     });
@@ -288,6 +290,9 @@
       (ins.examples ? '<p class="vh-ins__examples"><span>Last of the breed</span>' +
         ins.examples.map(function (e) { return esc(e.label); }).join(' · ') + '</p>' : '') +
       '<p class="vh-ins__foot">' + esc(ins.foot) + '</p>' +
+      /* The pudding "But…" turn: every card carries its own invalidation line,
+         printed on the card face — what this doesn't mean / what would break it. */
+      (ins.but ? '<p class="vh-ins__but"><span>But…</span>' + esc(ins.but) + '</p>' : '') +
       '<div class="vh-ins__share">' +
       '<button class="btn vh-ins__copy" data-slug="' + esc(ins.slug) + '" type="button">Copy link</button>' +
       '<button class="btn btn-accent vh-ins__png" data-slug="' + esc(ins.slug) + '" type="button">Save PNG</button>' +
@@ -315,7 +320,7 @@
         cardHTML(pick, true);
     }
     var lastSeries = null;
-    /* Card numbers (№1..№27) are the card's position in insights.json —
+    /* Card numbers (№1, №2, …) are the card's position in insights.json —
        the home "Fresh from the lab" doors reference them. */
     NUM_BY_SLUG = {};
     list.forEach(function (ins, i) { NUM_BY_SLUG[ins.slug] = i + 1; });    host.innerHTML = rest.map(function (ins) {
