@@ -51,11 +51,19 @@
 .vh-runs__pts b{color:var(--fg);font-weight:800;font-size:17px}
 .vh-runs__foot{font:400 12.5px/1.7 var(--font-sans);color:var(--fg-3);margin:var(--s-5) 0 0;max-width:68ch}
 .vh-runs__foot a{color:var(--accent)}
+.vh-runs__details{margin:var(--s-4) 0 0}
+.vh-runs__details summary{cursor:pointer;color:var(--accent);font-weight:600;font-size:13.5px}
+.vh-runs__details summary::-webkit-details-marker{color:var(--accent)}
+.vh-runs__boardshare{margin-top:12px}
 .vh-runs__err{padding:24px;text-align:center;color:var(--fg-2)}
 @media(max-width:560px){.vh-runs__row{grid-template-columns:40px 1fr;padding:14px}.vh-runs__rank{font-size:24px}}
 </style>
 </head><body>
 <a class="skip-link" href="#main">Skip to content</a>
+<noscript>
+<nav aria-label="Site (no JavaScript)" style="padding:16px;text-align:center"><a href="/">Atlas</a> · <a href="/play">Daily Court</a> · <a href="/players">Players</a> · <a href="/insights">Insights</a> · <a href="/methods">Methods</a></nav>
+<p style="padding:8px 16px;text-align:center;color:var(--fg-2)">The 42 ranked playoff runs (individuals, duos, trios, teams) need JavaScript to load. Summary: ranked by an all-around, two-way score — per-possession dominance first, winning second.</p>
+</noscript>
 
 <nav class="site-nav" data-active="/playoff-runs" aria-label="Vector Hoops site"></nav>
 <div id="main" class="main" role="main" tabindex="-1" style="padding-top:0">
@@ -78,7 +86,11 @@
     <section id="board-duos" class="vh-runs__board" role="tabpanel"></section>
     <section id="board-trios" class="vh-runs__board" role="tabpanel"></section>
     <section id="board-teams" class="vh-runs__board" role="tabpanel"></section>
-    <p class="vh-runs__foot">How it's scored: an all-around, two-way score — per-100 playoff scoring plus shooting efficiency, plus defensive impact (DBPM, points prevented per 100 possessions, counting one-for-one with scoring), plus a quarter-share of the team's playoff net rating. Then +2 per round won and +4 for the title — winning matters, but it never swamps the per-possession signal. Duos and trios are the best two-way units whose members each played real rotation roles (40+ regular-season games, 12+ playoff games — every unit here won a series). Fives and starters aren't ranked: the source minutes field can't identify them, so we don't fake them. Team runs are ranked by official playoff net rating (Basketball-Reference), minimum two series won. Every figure recomputes from <a href="/methods.html">stats.nba.com splits, 1996-97 → 2025-26</a> and Basketball-Reference advanced stats.</p>
+    <p class="vh-runs__foot">Ranked by an all-around, two-way score: per-possession dominance first, winning second.</p>
+    <details class="vh-runs__foot vh-runs__details" id="how-scored"><summary>How it's scored</summary>
+      An all-around, two-way score — per-100 playoff scoring plus shooting efficiency, plus defensive impact (DBPM, points prevented per 100 possessions, counting one-for-one with scoring), plus a quarter-share of the team's playoff net rating. Then +2 per round won and +4 for the title — winning matters, but it never swamps the per-possession signal. Duos and trios are the best two-way units whose members each played real rotation roles (40+ regular-season games, 12+ playoff games — every unit here won a series). Fives and starters aren't ranked: the source minutes field can't identify them, so we don't fake them. Team runs are ranked by official playoff net rating (Basketball-Reference), minimum two series won.
+    </details>
+    <p class="vh-runs__foot">Every figure recomputes from <a href="/methods.html">stats.nba.com splits, 1996-97 → 2025-26</a> and Basketball-Reference advanced stats.</p>
     <p class="vh-runs__foot" style="text-align:center">Sacrifice stories from the same playoffs: <a href="/insights.html#invisible-stardom">the biggest sacrifices nobody saw</a> — stars who shrank their games for a ring.</p>
   </div>
 </div>
@@ -109,7 +121,7 @@
 </footer>
 <script src="/assets/vh-analytics.js?v=d838a3e1"></script>
 <script src="/assets/site-nav.js?v=08ff3eda"></script>
-<script src="assets/playoff-runs.js?v=8f0a420e"></script>
+<script src="assets/playoff-runs.js?v=27b39020"></script>
 <script src="/assets/inline-sw-register.js?v=48fb8eb4"></script>
 <script src="/assets/inline-share-btn.js?v=82cebde3"></script>
 </body></html>

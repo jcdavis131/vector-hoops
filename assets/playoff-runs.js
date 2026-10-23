@@ -6,7 +6,7 @@
 
   var HEADS = {
     individuals: { title: 'Individual runs', sub: 'Ten-plus playoff games. All-around score: per-100 scoring and shooting efficiency, plus defensive impact (DBPM) and a share of team net rating — with a bonus for each round won and the title.' },
-    duos: { title: 'Duos', sub: 'The two best two-way teammates of each run — both real rotation players (40+ regular-season games, 12+ playoff games).' },
+    duos: { title: 'Duos', sub: 'The two best two-way teammates on each ranked team run — both real rotation players (40+ regular-season games, 12+ playoff games).' },
     trios: { title: 'Trios', sub: 'The three best two-way teammates of each run. Two-way cores, not lineups.' },
     teams: { title: 'Team runs', sub: 'The most dominant postseasons of the last 30 years, ranked by playoff net rating, then wins. Minimum two series won.' }
   };
@@ -32,7 +32,7 @@
   }
 
   // No bar: board scores cluster within a few points of each other, so a
-  // max-normalised bar rendered every run at ~95% length and implied gaps
+  // max-normalized bar rendered every run at ~95% length and implied gaps
   // that aren't in the numbers. The score itself is the signal.
   function barRow(rank, names, meta, score, badge) {
     return '<article class="vh-runs__row">' +
@@ -43,9 +43,39 @@
       '</article>';
   }
 
+  /* "Share this board": every leaderboard is a shareable, debatable unit.
+     Web Share API where available, clipboard fallback otherwise — the same
+     honest-share pattern as the page-level button, but per board. */
+  var SHARE_TEXT = {
+    individuals: 'Greatest Playoff Runs — Individuals',
+    duos: 'Greatest Playoff Runs — Duos',
+    trios: 'Greatest Playoff Runs — Trios',
+    teams: 'Greatest Playoff Runs — Team runs'
+  };
+
+  function bindBoardShare() {
+    document.querySelectorAll('.vh-runs__boardshare').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var key = btn.getAttribute('data-board');
+        var url = location.origin + location.pathname + '#board-' + key;
+        var title = SHARE_TEXT[key] + ' — Vector Hoops';
+        function done() {
+          btn.textContent = 'Link copied';
+          setTimeout(function () { btn.textContent = 'Share this board'; }, 1600);
+        }
+        if (navigator.share) {
+          navigator.share({ title: title, url: url }).catch(function () {});
+        } else if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(url).then(done, done);
+        } else { done(); }
+      });
+    });
+  }
+
   function renderBoard(el, key, rows) {
     var head = HEADS[key];
-    var html = '<div class="vh-runs__boardhead"><h2>' + esc(head.title) + '</h2><p>' + esc(head.sub) + '</p></div>';
+    var html = '<div class="vh-runs__boardhead"><h2>' + esc(head.title) + '</h2><p>' + esc(head.sub) + '</p>' +
+      '<button class="btn vh-runs__boardshare" data-board="' + key + '" type="button">Share this board</button></div>';
     html += rows.map(function (r, i) {
       var rank = i + 1;
       if (key === 'individuals') {
@@ -73,6 +103,7 @@
       var el = document.getElementById('board-' + key);
       if (el && data.rankings[key]) renderBoard(el, key, data.rankings[key]);
     });
+    bindBoardShare();
   }
 
   function fail() {
