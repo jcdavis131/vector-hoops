@@ -99,7 +99,15 @@
     var root = document.getElementById('tonight');
     var text = document.getElementById('tonight-text');
     var list = document.getElementById('tonight-games');
-    if (!root || !text || !list || !games.length) return;
+    if (!root || !text || !list) return;
+    if (!games.length) {
+      // G2/T2.2: the static strip promises live coverage; gate it on game
+      // presence so an empty slate doesn't read as a promise.
+      var k0 = document.getElementById('tonight-k');
+      if (k0) k0.textContent = 'Tonight';
+      text.textContent = 'No games tonight — replays from last night are ready.';
+      return;
+    }
     var s = summarize(games);
     if (s.live) root.classList.add('is-live');
     var k = document.getElementById('tonight-k');
@@ -144,7 +152,16 @@
     var b = document.getElementById('atlas-surprise');
     function ready() { var A = window.VHAtlas; return !!(A && A.size && A.size() > 0 && A.select); }
     // Disabled until the season file has loaded (the atlas's first select).
-    if (b && !ready()) b.disabled = true;
+    if (b && !ready()) {
+      b.disabled = true;
+      // G2/T2.2: the atlas canvas boots lazily, but the season file (phase 1)
+      // lands eagerly — enable Surprise me as soon as the data is in.
+      try {
+        if (window.VHAtlas && window.VHAtlas.onReady) {
+          window.VHAtlas.onReady(function () { if (b && ready()) b.disabled = false; });
+        }
+      } catch (e) {}
+    }
     try {
       if (window.VHAtlas && window.VHAtlas.onSelect) window.VHAtlas.onSelect(function (p) {
         if (b && b.disabled && ready()) b.disabled = false;

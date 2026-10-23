@@ -768,7 +768,7 @@
     return fetch(DATA + id + '.json', { cache: 'no-cache' }).then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); }).then(function (g) {
       setGame(g);
       document.querySelectorAll('.rp-game').forEach(function (b) { b.setAttribute('aria-pressed', b.dataset.id === id ? 'true' : 'false'); });
-      try { var u = new URL(location.href); u.searchParams.set('g', id); u.searchParams.delete('espn'); history.replaceState(null, '', u); } catch (e) { /* ignore */ }
+      try { var u = new URL(location.href); u.searchParams.set('game', id); u.searchParams.delete('g'); u.searchParams.delete('espn'); history.replaceState(null, '', u); } catch (e) { /* ignore */ }
     }).catch(function () { if (nowEl) nowEl.textContent = 'This replay could not be loaded. Try another game or reload the page.'; });
   }
   /* ---------- tonight's games, from the same ESPN summary Courtside Live polls ----------
@@ -833,7 +833,13 @@
     });
   }
   function boot() {
-    var q = new URLSearchParams(location.search), wantG = q.get('g'), wantE = q.get('espn');
+    var q = new URLSearchParams(location.search), wantG = q.get('game') || q.get('g'), wantE = q.get('espn');
+    // G4/T4.1: possession links — seek to an event index, falling back to ?t= seconds.
+    function applyDeepTime() {
+      var pi = parseInt(q.get('possession'), 10);
+      if (RT.length && pi >= 0 && pi < RT.length) { seek(RT[pi] + 0.1); return; }
+      var tt = parseFloat(q.get('t')); if (tt > 0) seek(tt);
+    }
     fetch(DATA + 'index.json', { cache: 'no-cache' }).then(function (r) { return r.json(); }).then(function (ix) {
       var box = $('rpGames'); box.innerHTML = '';
       var tail = document.createElement('span'); tail.hidden = true; box.appendChild(tail);
@@ -842,7 +848,7 @@
           g.teams[0].short + ' ' + g.score[0] + ' at ' + g.teams[1].short + ' ' + g.score[1] + ', ' + g.date, function () { clearTimeout(espnTimer); wantEspn = null; loadGame(g.gameId); }));
       });
       var built = ix.games.some(function (g) { return g.gameId === wantG; }) ? wantG : null;
-      var startBuilt = function () { var pick = built || (ix.games[0] && ix.games[0].gameId); if (pick) loadGame(pick).then(function () { var tt = parseFloat(q.get('t')); if (tt > 0) seek(tt); }); };
+      var startBuilt = function () { var pick = built || (ix.games[0] && ix.games[0].gameId); if (pick) loadGame(pick).then(function () { applyDeepTime(); }); };
       if (!window.ReplayESPN) { startBuilt(); return; }
       espnGames(ix.games).then(function (eg) {
         eg.forEach(function (g) {
@@ -850,7 +856,8 @@
             function () { loadEspn(g.id); }), tail);
         });
         var liveOne = eg.filter(function (g) { return g.live; })[0];
-        if (wantE) loadEspn(wantE); else if (!built && liveOne) loadEspn(liveOne.id); else startBuilt();
+        if (wantE) loadEspn(wantE).then(function () { applyDeepTime(); });
+        else if (!built && liveOne) loadEspn(liveOne.id); else startBuilt();
       });
     }).catch(function () { $('rpGames').textContent = 'The game list could not be loaded.'; if (wantE && window.ReplayESPN) loadEspn(wantE); });
     requestAnimationFrame(tick);
@@ -862,6 +869,25 @@
   on('rpLive', 'click', goLive);
   on('rpRev', 'click', function () { manual(); cur.dir = -cur.dir; this.setAttribute('aria-pressed', cur.dir < 0 ? 'true' : 'false'); if (!cur.playing) setPlaying(true); });
   on('rpLoop', 'click', function () { manual(); cur.loop = cur.loop ? null : [Math.max(0, cur.t - 8), cur.t + 0.5]; this.setAttribute('aria-pressed', cur.loop ? 'true' : 'false'); if (cur.loop) { seek(cur.loop[0]); cur.dir = 1; setPlaying(true); } });
+  // G4/T4.1: copy link to this possession at this timestamp:
+  // ?game=&possession=&view=&t= reopens the replay at that moment.
+  on('rpShare', 'click', function () {
+    var btn = this;
+    var done = function (msg) { var old = btn.textContent; btn.textContent = msg; setTimeout(function () { btn.textContent = old; }, 1800); };
+    if (!G) { done('No game'); return; }
+    var gid = G.gameId || '';
+    var idPart = gid.indexOf('espn-') === 0 ? 'espn=' + encodeURIComponent(gid.slice(5)) : 'game=' + encodeURIComponent(gid);
+    var poss = 0;
+    try { poss = segAt(cur.t); } catch (e) {}
+    var view = 'broadcast';
+    try { var cb = document.querySelector('.rp-cams button.on'); if (cb && cb.dataset.cam) view = cb.dataset.cam; } catch (e) {}
+    var url = location.origin + '/replay?' + idPart + '&possession=' + poss + '&view=' + encodeURIComponent(view) + '&t=' + Math.max(0, Math.round(cur.t));
+    var ok = function () { done('Copied \u2713'); }, no = function () { done('Copy failed'); };
+    try {
+      if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(url).then(ok, no);
+      else no();
+    } catch (e) { no(); }
+  });
   on('rpSpeed', 'change', function () { cur.speed = parseFloat(this.value) || 2; });
   on('rpCondense', 'change', function () { if (!G) return; var i = segAt(cur.t); condensed = this.checked; buildTimeline(); seek(RT[i]); moments(); });
   on('rpScrub', 'input', function () { manual(); seek(this.value / 1000 * T_END); });
@@ -872,7 +898,7 @@
       document.querySelectorAll('.rp-cams button').forEach(function (x) { x.classList.toggle('on', x === b); x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
     });
   });
-  var wantCam = new URLSearchParams(location.search).get('cam'); // ?cam=follow shares a camera
+  var wantCam = new URLSearchParams(location.search).get('view') || new URLSearchParams(location.search).get('cam'); // ?view=follow shares a camera
   if (PRESETS.hasOwnProperty(wantCam)) document.querySelectorAll('.rp-cams button').forEach(function (b) { if (b.dataset.cam === wantCam) b.click(); });
   document.querySelectorAll('.rp-filter button').forEach(function (b) {
     b.addEventListener('click', function () { filter = b.dataset.f; document.querySelectorAll('.rp-filter button').forEach(function (x) { x.classList.toggle('on', x === b); x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); }); renderMoments(); });
@@ -895,6 +921,8 @@
     if (e.key === ' ' && playBtn) { e.preventDefault(); playBtn.click(); }
     else if (e.key === 'ArrowLeft') { e.preventDefault(); manual(); seek(cur.t - 6); }
     else if (e.key === 'ArrowRight') { e.preventDefault(); manual(); seek(cur.t + 6); }
+    else if (e.key === 'ArrowUp') { e.preventDefault(); camGoal = null; cam.pitch = Math.max(0.12, Math.min(1.5, cam.pitch - 0.08)); }
+    else if (e.key === 'ArrowDown') { e.preventDefault(); camGoal = null; cam.pitch = Math.max(0.12, Math.min(1.5, cam.pitch + 0.08)); }
     else if ((e.key === 'l' || e.key === 'L') && $('rpLoop')) $('rpLoop').click();
     else if (/^[1-5]$/.test(e.key)) { var bs = document.querySelectorAll('.rp-cams button'); if (bs[+e.key - 1]) bs[+e.key - 1].click(); }
   });

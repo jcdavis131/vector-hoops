@@ -313,6 +313,26 @@
 .door:hover .door__go{ color: var(--accent); letter-spacing: .2em; }
 
 /* ---------- Home: lab row + footnote ---------- */
+/* ---------- Home: one compact atlas toolbar (G2/T2.2) ---------- */
+.atlas-toolbar{ display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; width: 100%; max-width: var(--content); margin: var(--s-3) auto 0; padding: 10px 14px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--surface); }
+.atlas-toolbar .axes-pick{ display: flex; flex-wrap: wrap; gap: 10px 16px; }
+.atlas-toolbar__btns{ display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-left: auto; }
+.atlas-toolbar__btns > button{
+  height: 40px; padding: 0 14px;
+  font-family: var(--font-display); font-size: 10px; font-weight: 600; font-stretch: 112%; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--fg-2); background: none; border: 1px solid var(--line); border-radius: var(--radius); cursor: pointer;
+}
+.atlas-toolbar__btns > button:hover{ color: var(--fg); border-color: var(--line-2); }
+.atlas-toolbar__btns > button[aria-pressed="true"]{ color: var(--fg); border-color: var(--accent); box-shadow: inset 0 -2px 0 var(--accent); }
+.atlas-toolbar .axes-note{ flex-basis: 100%; margin: 0; }
+.atlas-overflow{ position: relative; }
+.atlas-overflow > summary{ list-style: none; cursor: pointer; height: 40px; display: inline-flex; align-items: center; padding: 0 14px; border: 1px solid var(--line); border-radius: var(--radius); font-family: var(--font-display); font-size: 10px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--fg-2); }
+.atlas-overflow > summary::-webkit-details-marker{ display: none; }
+.atlas-overflow > summary:hover{ color: var(--fg); border-color: var(--line-2); }
+.atlas-overflow__menu{ position: absolute; right: 0; top: calc(100% + 6px); z-index: 30; display: flex; flex-direction: column; gap: 4px; min-width: 180px; padding: 6px; background: var(--surface); border: 1px solid var(--line-2); border-radius: var(--radius); box-shadow: 0 20px 50px rgba(0,0,0,.35); }
+.atlas-overflow__menu button{ text-align: left; padding: 10px 12px; background: none; border: 0; border-radius: 3px; cursor: pointer; font-size: 13.5px; color: var(--fg); min-height: 44px; }
+.atlas-overflow__menu button:hover{ background: var(--surface-2); }
+.atlas-overflow__menu button[aria-pressed="true"]{ box-shadow: inset 2px 0 0 var(--accent); }
 .lab{ margin-top: var(--s-8); }
 .lab__row{ display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0; margin: var(--s-3) 0 0; padding: 0; list-style: none; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
 .lab__row li{ min-width: 0; }
@@ -391,17 +411,41 @@
       <span class="axis axis--r">small</span>
       <div class="hover-tip" id="hover-tip" hidden></div>
       <div class="team-caption" id="team-caption" hidden></div>
-      <div class="field__controls" id="map-controls">
-        <button type="button" data-map="share"><span>Copy link</span></button>
-        <button type="button" data-map="regions" aria-pressed="false"><span>Regions</span></button>
-        <button type="button" data-map="reset">Clear</button>
-      </div>
-      <div class="field__state" id="atlas-state"><span class="field__loading">Plotting 12,966 player-seasons</span></div>
+      <div class="field__state" id="atlas-state"><span class="field__loading">Plotting 12,966 player-seasons — give the map a second.</span></div>
       <div class="field__fallback" id="atlas-fallback" hidden>
         <p><b>The atlas needs canvas to draw its map.</b> The regions below still work — pick one to explore its players.</p>
         <ul></ul>
         <p><a href="/players">Browse all players →</a></p>
       </div>
+    </div>
+
+    <div class="atlas-toolbar" id="atlas-toolbar" role="toolbar" aria-label="Atlas controls">
+      <div class="axes-pick">
+        <label class="axes-label" for="axis-x">X axis
+          <select id="axis-x" class="axes-select">
+            <option value="pca1" selected>Paint vs perimeter (PCA)</option>
+          </select>
+        </label>
+        <label class="axes-label" for="axis-y">Y axis
+          <select id="axis-y" class="axes-select">
+            <option value="pca2" selected>Scoring load (PCA)</option>
+          </select>
+        </label>
+      </div>
+      <div class="atlas-toolbar__btns">
+        <button type="button" data-map="regions" aria-pressed="false"><span>Regions</span></button>
+        <button type="button" data-map="reset">Clear</button>
+        <details class="atlas-overflow">
+          <summary>More</summary>
+          <div class="atlas-overflow__menu">
+            <button type="button" data-map="share"><span>Copy link</span></button>
+            <button type="button" id="atlas-export">Share image</button>
+            <button type="button" id="view-2d" class="axes-btn" aria-pressed="true">2-D map</button>
+            <button type="button" id="view-1d" class="axes-btn" aria-pressed="false">1-D line</button>
+          </div>
+        </details>
+      </div>
+      <p class="axes-note" id="axes-note">Name both axes — every point re-plots. Pick a named stat to leave the PCA view.</p>
     </div>
 
     <p class="region-note" id="region-note" hidden></p>
@@ -418,7 +462,7 @@
           <thead><tr><th class="r" scope="col">#</th><th scope="col">Player</th><th scope="col">Season</th><th scope="col" class="hide-s">Archetype</th><th class="r" scope="col">Similarity</th></tr></thead>
           <tbody id="atlas-peers-body"></tbody>
         </table>
-        <p class="peers__foot vh-truth">Peers are the nearest seasons by cosine similarity in the 64-dimensional MTNN v5 embedding. The atlas itself is a 2-D view of 14 era-normalised per-100 stats, so a peer can sit some distance away on it.</p>
+        <p class="peers__foot vh-truth">Peers are the nearest seasons by cosine similarity in the 64-dimensional MTNN v5 embedding. The atlas itself is a 2-D view of 14 era-normalized per-100 stats, so a peer can sit some distance away on it.</p>
       </div>
     </div>
     <p class="visually-hidden" id="atlas-live" aria-live="polite"></p>
@@ -435,29 +479,9 @@
             <button type="button" id="team-cycle" class="team-cycle" aria-pressed="false"><span class="team-cycle__icon" aria-hidden="true">▶</span><span>Cycle</span></button>
           </div>
           <details class="trust-badge vh-approx">
-            <summary>This view keeps <span data-served-const="badge_overlap_pct">12</span>% of each player's 20 nearest neighborhoods from the model</summary>
+            <summary>We spot-checked 2,000 players: about 1 in 9 of each one’s 20 closest model neighbors stay close on this flat map.</summary>
             <p>We sampled 2,000 players and checked how many of each one&#8217;s 20 closest neighbors in the full 64-d model stay neighbors on this flat map — about 1 in 9 do.</p>
           </details>
-        </div>
-
-        <div class="atlas-axes" id="atlas-axes">
-          <div class="axes-pick">
-            <label class="axes-label" for="axis-x">X axis
-              <select id="axis-x" class="axes-select">
-                <option value="pca1" selected>Paint vs perimeter (PCA)</option>
-              </select>
-            </label>
-            <label class="axes-label" for="axis-y">Y axis
-              <select id="axis-y" class="axes-select">
-                <option value="pca2" selected>Scoring load (PCA)</option>
-              </select>
-            </label>
-          </div>
-          <div class="axes-view" role="group" aria-label="Atlas view">
-            <button type="button" id="view-2d" class="axes-btn" aria-pressed="true">2-D map</button>
-            <button type="button" id="view-1d" class="axes-btn" aria-pressed="false">1-D line</button>
-          </div>
-          <p class="axes-note" id="axes-note">Name both axes — every point re-plots. Pick a named stat to leave the PCA view.</p>
         </div>
 
         <div class="legend" id="atlas-legend" role="group" aria-label="Highlight an archetype"></div>
@@ -466,9 +490,9 @@
         <figure class="map-note" id="map-note">
           <figcaption class="label fig-label" style="margin:0">Fig. note <b>· How to read this map</b></figcaption>
           <ul>
-            <li><b>A sketch, not the model.</b> The flat map shows two of three PCA axes; the three together keep about 62% of the variance in the 14 era-normalised stats (<a href="/methods">methods</a>). Nearby on the map is approximate.</li>
+            <li><b>A sketch, not the model.</b> The flat map shows two of three PCA axes; the three together keep about 62% of the variance in the 14 era-normalized stats (<a href="/methods">methods</a>). Nearby on the map is approximate.</li>
             <li><b>Peers come from the model, not the picture.</b> &ldquo;Plays most alike&rdquo; is cosine similarity in the full 64-d embedding, so a peer can sit some distance away on the map.</li>
-            <li><b>Eras are normalised away.</b> Stats are z-scored within each season, so cross-era closeness is about style, not who would win.</li>
+            <li><b>Eras are normalized away.</b> Stats are z-scored within each season, so cross-era closeness is about style, not who would win.</li>
             <li><b>Scores are opinions.</b> Name different axes and every point moves; retrain the model and the numbers wobble.</li>
           </ul>
         </figure>
@@ -543,12 +567,12 @@
 <script defer src="/assets/vh-peers.js?v=860629b9"></script>
 <script defer src="/assets/served-constants.js?v=8ba12340"></script>
 <script defer src="/assets/twin-bands.js?v=0a191313"></script>
-<script defer src="/assets/atlas-map.js?v=3d5ca8bf"></script>
-<script defer src="/assets/atlas-regions.js?v=137f43e8"></script>
+<script defer src="/assets/atlas-map.js?v=5524301b"></script>
+<script defer src="/assets/atlas-regions.js?v=a86d62d9"></script>
 <script defer src="/assets/career-trails.js?v=a0e9e836"></script>
 <script src="assets/site-facts.js?v=f8edaf37" defer></script>
 <script defer src="/assets/engagement.js?v=9afde51a"></script>
-<script defer src="/assets/home-tonight.js?v=f98684eb"></script>
+<script defer src="/assets/home-tonight.js?v=468ecae8"></script>
 <script defer src="/assets/inline-index.js?v=2ad73c39"></script>
 </body>
 </html>

@@ -19,6 +19,7 @@
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
+<noscript><nav aria-label="Site" style="padding:12px 16px;text-align:center;font-size:14px"><a href="/">Atlas</a> · <a href="/play">Daily Court</a> · <a href="/live">Live</a> · <a href="/replay">Replay</a> · <a href="/players">Players</a> · <a href="/insights">Insights</a> · <a href="/methods">Methods</a></nav><p role="alert" style="padding:0 16px 12px;text-align:center;font-size:13px">Pixel Replay needs JavaScript; the game list and methods are readable without it.</p></noscript>
 <nav class="site-nav" data-active="/live" aria-label="Vector Hoops site"></nav>
 <main id="main" class="rp" tabindex="-1">
   <header class="rp-head">
@@ -33,7 +34,7 @@
 
   <section class="rp-cab" aria-label="Replay">
     <div class="rp-screen" id="rpScreen">
-      <canvas id="rpCanvas" width="400" height="225" role="img" aria-label="Animated pixel replay of the selected game"></canvas>
+      <canvas id="rpCanvas" width="400" height="225" role="img" aria-label="Animated pixel replay of the selected game" aria-describedby="rp-sr-note"></canvas>
       <div class="rp-cams" role="group" aria-label="Camera">
         <button type="button" data-cam="broadcast" class="on" aria-pressed="true">Broadcast</button>
         <button type="button" data-cam="baseline" aria-pressed="false">Baseline</button>
@@ -41,7 +42,8 @@
         <button type="button" data-cam="iso" aria-pressed="false">Arcade</button>
         <button type="button" data-cam="follow" aria-pressed="false">Follow ball</button>
       </div>
-      <p class="rp-hint">Drag to rotate · scroll or pinch to zoom</p>
+      <p class="rp-hint">Drag to rotate · scroll or pinch to zoom · ↑↓ tilt · space plays/pauses</p>
+      <p class="rp-sr-note" id="rp-sr-note">Screen-reader users: the <a href="#rpFeed">play-by-play list</a> below is the full text alternative to this animation.</p>
     </div>
 
     <div class="rp-controls">
@@ -52,6 +54,7 @@
         <button type="button" id="rpFwd" title="Forward 6 seconds (right arrow)" aria-label="Forward 6 seconds">6s ⟳</button>
         <button type="button" id="rpLive" class="rp-live" aria-pressed="false" hidden><span class="dot"></span>LIVE</button>
         <button type="button" id="rpLoop" title="Loop the last 8 seconds" aria-label="Loop this moment" aria-pressed="false">↻ Loop</button>
+        <button type="button" id="rpShare" title="Copy link to this possession at this timestamp" aria-label="Copy link to this possession at this timestamp">⧉ Link</button>
         <label class="rp-speed">Speed
           <select id="rpSpeed" aria-label="Playback speed">
             <option value="0.5">½×</option><option value="1">1×</option><option value="2" selected>2×</option><option value="4">4×</option><option value="8">8×</option>
@@ -88,8 +91,12 @@
 
   <section class="rp-panel rp-honest" aria-label="How this works">
     <h2>What's real, what's staged</h2>
-    <p>Every event, clock, score, shooter and shot spot comes from the play-by-play (<a id="rpSrc" href="https://cdn.nba.com/" rel="noopener">source file</a>): the NBA's own feed for games marked NBA, where shot spots match the feed's shot distances to the inch, and ESPN's for games marked ESPN, which is what Courtside Live reads. ESPN folds every shot onto one half-court, so for those games which basket each team shoots at is assumed (away attacks right in the first half). No public feed says where the other nine players stand, so a model places them: a small network trained on the 2015-16 SportVU tracking that was once public (<a href="https://github.com/linouk23/NBA-Player-Movements" rel="noopener">linouk23/NBA-Player-Movements</a>, events from <a href="https://github.com/sealneaward/nba-movement-data" rel="noopener">sealneaward/nba-movement-data</a>). From the event, the shooter's spot, the clock, the score and each player's role, it sets all ten players as one scene, and a Kalman smoother then carries each player from play to play so nobody teleports. On 80 games it never trained on, it puts a player 17.6 ft from where he really stood, on average, against 21.2 ft for the formation templates it replaces. Its players stand within 2 ft of each other a little more often than real ones (1.4% of pairs against 1.1%). The tracking itself is never served here; only the model's projections. Jump balls, and any visit where the model fails to load, use the formation templates. Treat the other nine as projected, not tracked.</p>
-    <p id="rpAsOf" class="rp-muted"></p>
+    <p class="rp-verdict"><b>Shot spots and scores are real; the other nine players are modeled.</b></p>
+    <details class="rp-provenance">
+      <summary>Full provenance</summary>
+      <p>Every event, clock, score, shooter and shot spot comes from the play-by-play (<a id="rpSrc" href="https://cdn.nba.com/" rel="noopener">source file</a>): the NBA's own feed for games marked NBA, where shot spots match the feed's shot distances to the inch, and ESPN's for games marked ESPN, which is what Courtside Live reads. ESPN folds every shot onto one half-court, so for those games which basket each team shoots at is assumed (away attacks right in the first half). No public feed says where the other nine players stand, so a model places them: a small network trained on the 2015-16 SportVU tracking that was once public (<a href="https://github.com/linouk23/NBA-Player-Movements" rel="noopener">linouk23/NBA-Player-Movements</a>, events from <a href="https://github.com/sealneaward/nba-movement-data" rel="noopener">sealneaward/nba-movement-data</a>). From the event, the shooter's spot, the clock, the score and each player's role, it sets all ten players as one scene, and a Kalman smoother then carries each player from play to play so nobody teleports. On 80 games it never trained on, it puts a player 17.6 ft from where he really stood, on average, against 21.2 ft for the formation templates it replaces. Its players stand within 2 ft of each other a little more often than real ones (1.4% of pairs against 1.1%). The tracking itself is never served here; only the model's projections. Jump balls, and any visit where the model fails to load, use the formation templates. Treat the other nine as projected, not tracked.</p>
+      <p id="rpAsOf" class="rp-muted"></p>
+    </details>
   </section>
 </main>
 <footer class="site-footer">
@@ -98,6 +105,6 @@
 <script src="/assets/site-nav.js?v=08ff3eda" defer></script>
 <script src="/assets/replay-espn.js?v=af4e5d05" defer></script>
 <script src="/assets/replay-model.js?v=023bb286" defer></script>
-<script src="/assets/replay.js?v=b727321f" defer></script>
+<script src="/assets/replay.js?v=a18e7f02" defer></script>
 </body>
 </html>

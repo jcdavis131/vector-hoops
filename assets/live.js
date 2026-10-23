@@ -19,7 +19,7 @@ function etToday(){return new Intl.DateTimeFormat('en-CA',{timeZone:'America/New
 function shiftDay(yyyymmdd,n){const t=new Date(Date.UTC(+yyyymmdd.slice(0,4),+yyyymmdd.slice(4,6)-1,+yyyymmdd.slice(6,8))+n*864e5);return String(t.getUTCFullYear())+String(t.getUTCMonth()+1).padStart(2,'0')+String(t.getUTCDate()).padStart(2,'0');}
 function dayLabel(yyyymmdd){const t=new Date(Date.UTC(+yyyymmdd.slice(0,4),+yyyymmdd.slice(4,6)-1,+yyyymmdd.slice(6,8)));const s=t.toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric',timeZone:'UTC'});return (yyyymmdd===etToday()?'Today — ':'')+s;}
 function renderDayNav(){const cur2=sbDay||etToday();const lbl=$('dayLbl');if(lbl)lbl.textContent=dayLabel(cur2);const b=$('dayToday');if(b)b.hidden=cur2===etToday();}
-function resetView(){cur=null;clearInterval(timer);const m=$('main');if(m)m.style.display='block';const ln=$('live-loading');if(ln)ln.style.display='block';}
+function resetView(){cur=null;clearInterval(timer);const m=$('main');if(m){m.hidden=false;m.style.display='block';}const og=$('offgame');if(og)og.hidden=true;const ln=$('live-loading');if(ln)ln.style.display='block';}
 function gotoDay(n){sbExplicit=true;resetView();loadGames(shiftDay(sbDay||etToday(),n));}
 
 const $=id=>document.getElementById(id);
@@ -43,12 +43,17 @@ async function loadGames(day){
         a:{abbr:a.team.abbreviation,name:a.team.displayName,score:a.score,color:'#'+(a.team.color||'6b675c'),rec:a.records&&a.records[0]?a.records[0].summary:''}};
     });
     renderGames();
-    // Opening night: prefer OKC @ SA (event 401909090), then any live game.
-    const opener=games.find(g=>String(g.id)==='401909090');
+    // ?game= deep link (a shared moment) wins; otherwise only auto-select a
+    // LIVE game. No live game -> the off-day shell: schedule strip, one
+    // last-game replay entry, day arrows. Plate init is skipped entirely.
+    // (The old opening-night opener special-case is retired: ?game= covers it.)
+    let qg=null;
+    try{ qg=new URLSearchParams(location.search).get('game'); }catch(e){}
+    const qmatch=qg?games.find(x=>String(x.id)===String(qg)):null;
     const live=games.find(g=>g.state==='in');
-    if(opener) selectGame(opener.id);
+    if(qmatch) selectGame(qmatch.id);
     else if(live) selectGame(live.id);
-    else if(games.length) selectGame(games[0].id);
+    else offGame();
   }catch(e){showErr('Could not load scoreboard: '+e.message);showFeedCard('Could not load scoreboard: '+e.message);}
 }
 
@@ -69,20 +74,52 @@ function renderGames(){
 
 // ---- Timeline scrubber state ----
 const TL={n:0,view:-1,live:true,gameId:null,newCount:0};
-// ---- Wave 5 fold state ----
-// The six lower plates live inside #more-plates (display:none until opened).
-// Painting them on every load/refresh/scrub was pure main-thread cost for
-// pixels nobody could see — and on a loaded browser it stacked up at initial
-// load. renderAll paints them only while the fold is open; opening the fold
-// replays the full render + atlas sync against the latest data.
-let foldOpen=false;
+// ---- Bands (G2/T2.3): the 13 plates live in three collapsible groups.
+// A band's plates paint only while it is open (the old fold's perf contract):
+// opening a band replays the full render at real widths.
+function bandOpen(id){const b=$(id);return !!(b&&b.open);}
+function renderBand(id){
+  const d=window._lastD,g=window._lastG;
+  if(!d)return;
+  const idx=TL.live?TL.n-1:TL.view;
+  if(id==='band-game'){renderWP(d,g,idx);renderMomentum(d,g,idx);renderShotChart(d,g,idx);}
+  else if(id==='band-story'){renderGhosts(d);renderMoments(d,g,idx);renderRuns(d,g,idx);renderMiles(d);renderPlays(d,idx);}
+  else if(id==='band-players'){renderLeaders(d,g,idx);renderArche(d,g);syncAtlas(d,g);}
+  try{window.dispatchEvent(new Event('resize'));}catch(e){}
+}
+function resetBands(){['band-game','band-story','band-players'].forEach(id=>{const b=$(id);if(b){b.open=true;delete b._xc;}});}
+// G2/T2.3: no live game -> schedule strip + last-game replay + day arrows.
+// The 13 plates never render; ESPN fetch-driven init is skipped.
+function offGame(){
+  cur=null;clearInterval(timer);clearTimeout(pollTimer);
+  const m=$('main');if(m)m.hidden=true;
+  const ln=$('live-loading');if(ln)ln.style.display='none';
+  const og=$('offgame');
+  if(og){
+    og.hidden=false;
+    const finals=games.filter(x=>x.state==='post');
+    const last=finals.length?finals[finals.length-1]:null;
+    const a=$('offgame-replay');
+    if(a){
+      if(last){a.href='/replay?game='+encodeURIComponent(last.id);a.textContent='Rewatch '+last.a.abbr+' @ '+last.h.abbr+' ('+last.a.score+'\u2013'+last.h.score+') in Pixel Replay \u2192';}
+      else{a.href='/replay';a.textContent='Rewatch a game in Pixel Replay \u2192';}
+    }
+    const meta=$('offgame-meta');
+    if(meta)meta.textContent=games.length?games.length+' on the board \u00b7 none live':'no games on the board';
+  }
+  try{document.title='Courtside Live \u2014 Vector Hoops';}catch(e){}
+}
 function syncAtlas(d,g){
   if(!window.LiveAtlas)return;
   const f=fireNow(d,TL.live?TL.n-1:TL.view);
   window.LiveAtlas.onGame(d,g,f&&JAM?f.name:null);
 }
 function selectGame(id){
-  cur=id;clearInterval(timer);clearTimeout(pollTimer);renderGames();$('main').style.display='block';const ln2=$('live-loading');if(ln2)ln2.style.display='none';
+  cur=id;clearInterval(timer);clearTimeout(pollTimer);renderGames();
+  const m=$('main');if(m){m.hidden=false;m.style.display='block';}
+  const og=$('offgame');if(og)og.hidden=true;
+  resetBands();
+  const ln2=$('live-loading');if(ln2)ln2.style.display='none';
   TL.gameId=null;TL.n=0;TL.view=-1;TL.live=true;TL.newCount=0;wpDrawnFor=null;
   window._seenMom=new Set();window._lastPlayId=0;
   LROOT().classList.remove('rewound');
@@ -91,14 +128,15 @@ function selectGame(id){
 function renderAll(d,g){
   if(g&&g.a&&g.h){try{document.title='Courtside — '+g.a.abbr+' @ '+g.h.abbr;}catch(e){}}
   const idx=TL.live?TL.n-1:TL.view;
-  renderHeader(d,g,idx);renderWP(d,g,idx);
-  renderGhosts(d);renderMoments(d,g,idx);renderRuns(d,g,idx);
-  if(foldOpen){
-    renderMomentum(d,g,idx);
-    renderPlays(d,idx);renderLeaders(d,g,idx);
-    renderMiles(d);renderShotChart(d,g,idx);renderArche(d,g);
-  }
+  renderHeader(d,g,idx);
+  if(bandOpen('band-game')){renderWP(d,g,idx);renderMomentum(d,g,idx);renderShotChart(d,g,idx);}
+  if(bandOpen('band-story')){renderGhosts(d);renderMoments(d,g,idx);renderRuns(d,g,idx);renderMiles(d);renderPlays(d,idx);}
+  if(bandOpen('band-players')){renderLeaders(d,g,idx);renderArche(d,g);}
   updateTlUI(d);
+  // Collapse bands with no data: a pre-tip selection leaves the story band
+  // empty, so it starts closed (still user-openable). Once per game only.
+  const plays=d.plays||[];
+  const bs=$('band-story');if(bs&&!plays.length&&!bs._xc){bs.open=false;bs._xc=true;}
   // the Pixel Replay plate (assets/replay-live.js) follows the same data and timeline
   try{window.dispatchEvent(new CustomEvent('courtside:render',{detail:{d:d,g:g,idx:idx,live:TL.live}}));}catch(e){}
 }
@@ -118,7 +156,7 @@ async function loadGame(){
       TL.n=n;
     }
     renderAll(d,g);
-    if(foldOpen) syncAtlas(d,g);
+    if(bandOpen('band-players')) syncAtlas(d,g);
     window._lastD=d;window._lastG=g;
     lastUpd=new Date();lastOkAt=lastUpd;failStreak=0;
     hideFeedCard();
@@ -281,7 +319,11 @@ function renderWP(d,g,idx){
   });
   const byId={};wp.forEach(w=>{byId[w.playId]=w.homeWinPercentage;});
   const espn=plays.map((p,i)=>({i:i,v:byId[p.id]})).filter(x=>x.v!==undefined);
-  if(!ser.length){$('wpBig').textContent='\u2013';const wb=$('wpBand');if(wb)wb.textContent='';return;}
+  if(!ser.length){$('wpBig').textContent='\u2013';const wb=$('wpBand');if(wb)wb.textContent='';
+    // No plays yet (pre-game select): wipe any prior game's chart and re-label
+    // the axes for THIS game, so a stale chart can never persist across selections.
+    const wc=$('wpchart');if(wc){wc.getContext('2d').clearRect(0,0,wc.width,wc.height);}
+    $('lgA').textContent='Tip \u2192 '+aabbr;$('lgH').textContent=habbr+' \u2192 now';return;}
   const n=ser.length;
   let vp=0;
   for(let k=0;k<n;k++){if(ser[k].i<=idx)vp=k;else break;}
@@ -335,7 +377,8 @@ function renderWP(d,g,idx){
 
 function renderMomentum(d,g,idx){
   const plays=d.plays||[];
-  if(!plays.length)return;
+  // No plays yet (pre-game select): wipe any prior game's chart so nothing stale persists.
+  if(!plays.length){const mc=$('momchart');if(mc){mc.getContext('2d').clearRect(0,0,mc.width,mc.height);}return;}
   const habbr=g?g.h.abbr:'HOME',aabbr=g?g.a.abbr:'AWAY';
   const hcol=g?g.h.color:'#1b1913',acol=g?g.a.color:'#5b5545';
   const {ctx,W,H}=prepCanvas('momchart',150);
@@ -737,8 +780,30 @@ function renderMoments(d,g,idx){
     const k=m.clk+'|'+m.text.replace(/<[^>]*>/g,'');
     const fresh=!window._seenMom.has(k);
     window._seenMom.add(k);
-    return `<div class="ms-item${fresh?' fresh':''}"><span class="mc">${m.clk}</span><span class="mt">${m.text}</span></div>`;
+    return `<div class="ms-item${fresh?' fresh':''}"><span class="mc">${m.clk}</span><span class="mt">${m.text}</span><button type="button" class="ms-share" data-seq="${m.seq}">Share</button></div>`;
   }).join('')||'<span style="font-size:12px;color:#6b675c">Waiting for the first big moment…</span>';
+  window._lastMoms=vmoms.slice(0,8);
+}
+
+// G4/T4.3: "share this moment" — one share affordance per storyline, score
+// state baked into the text, ?game= deep link.
+function shareMoment(btn,seq){
+  const d=window._lastD,g=window._lastG;
+  const moms=window._lastMoms||[];
+  const m=moms.find(x=>x.seq===seq);
+  const done=msg=>{const old=btn.textContent;btn.textContent=msg;setTimeout(()=>{btn.textContent=old;},1800);};
+  if(!d||!g||!m){done('No moment');return;}
+  const plays=d.plays||[];
+  const p=plays[Math.max(0,Math.min(plays.length-1,seq))]||{};
+  const plain=String(m.text||'').replace(/<[^>]*>/g,'');
+  const score=g.a.abbr+' '+(p.awayScore||0)+' \u2013 '+(p.homeScore||0)+' '+g.h.abbr;
+  const url=location.origin+'/live?game='+encodeURIComponent(g.id);
+  const full='Courtside Live: '+plain+' \u2014 '+score+' ('+m.clk+')\n'+url;
+  const ok=()=>done('Copied \u2713'),no=()=>done('Copy failed');
+  try{
+    if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(full).then(ok,no);}
+    else no();
+  }catch(e){no();}
 }
 
 // ---- Feed-down 503 card: last-known score + as-of + retry, never invented numbers ----
@@ -918,23 +983,19 @@ function setMode(m){
 }
 $('tabCompanion').onclick=()=>setMode('companion');
 window.CourtsideMode=setMode;
+// G2/T2.3: band toggles — opening a band paints its plates at real widths.
+['band-game','band-story','band-players'].forEach(id=>{
+  const b=$(id);
+  if(b)b.addEventListener('toggle',()=>{if(b.open)renderBand(id);});
+});
+// G4/T4.3: one share affordance per storyline.
 (function(){
-  const b=document.getElementById('more-plates-btn'), w=document.getElementById('more-plates');
-  if(!b||!w) return;
-  b.onclick=()=>{
-    const open=w.hidden;
-    w.hidden=!open;
-    foldOpen=open;
-    b.setAttribute('aria-expanded', open?'true':'false');
-    b.textContent=open?'Fewer plates':'More plates: shot chart, leaders, play by play & 5 more';
-    if(open&&window._lastD){
-      // First paint of the folded plates: full render + atlas sync at the
-      // real (now-visible) widths, then let live-atlas refit its canvas.
-      renderAll(window._lastD,window._lastG);
-      syncAtlas(window._lastD,window._lastG);
-      window.dispatchEvent(new Event('resize'));
-    }
-  };
+  const el=$('moments');
+  if(!el)return;
+  el.addEventListener('click',e=>{
+    const b=e.target&&e.target.closest?e.target.closest('.ms-share'):null;
+    if(b)shareMoment(b,+b.dataset.seq);
+  });
 })();
 (function(){
   const b=document.getElementById('tabJam');if(!b)return;
