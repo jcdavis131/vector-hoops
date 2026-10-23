@@ -177,6 +177,24 @@
           "value": "public, max-age=0, s-maxage=60, stale-while-revalidate=300"
         }
       ],
+      "source": "/play/era-crossed"
+    },
+    {
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, s-maxage=60, stale-while-revalidate=300"
+        }
+      ],
+      "source": "/schedule"
+    },
+    {
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, s-maxage=60, stale-while-revalidate=300"
+        }
+      ],
       "source": "/players"
     },
     {
@@ -277,6 +295,14 @@
     {
       "destination": "/play.html",
       "source": "/play"
+    },
+    {
+      "destination": "/play/era-crossed.html",
+      "source": "/play/era-crossed"
+    },
+    {
+      "destination": "/schedule.html",
+      "source": "/schedule"
     },
     {
       "destination": "/players.html",

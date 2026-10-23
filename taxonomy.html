@@ -101,32 +101,39 @@
   <p class="vh-tax__foot">How it's built: each player's 14-feature stat profile (per-100 possessions, z-scored within season so eras compare honestly) is collapsed to a career-typical vector — the median season, robust to late-career decline. Ward agglomerative clustering on all 2,426 players yields one dendrogram; 5 families and 22 archetypes are cut from it. Archetype names come from each cluster's stat signature (percentiles vs all players), never vibes — 20 sanity anchors verified, including Curry/Lillard (sharpshooting stars), Gobert/Mutombo (rim runners), Rodman/Wallace (rebound specialists) and Nash/Stockton (elite point guards). Magic Johnson is absent: his career predates the 1996–97 dataset. Full method and QA: <a href="/methods.html">methods</a>. Note: these 22 archetypes are career-level — a separate clustering from the model's 8 season archetypes used on the Atlas and in the games.</p>
 </div>
 
+<!-- footer:stamped -->
 <footer class="site-footer">
   <nav class="site-footer__sitemap" aria-label="Sitemap">
     <div class="site-footer__col">
       <span class="site-footer__col-title">Play</span>
       <a href="/play">Daily Court</a>
+      <a href="/map-guess">Map Hunt</a>
+      <a href="/twenty-questions">Twenty Questions</a>
+      <a href="/play/era-crossed">Era Crossed</a>
+      <a href="/replay">Pixel Replay</a>
     </div>
     <div class="site-footer__col">
       <span class="site-footer__col-title">Explore</span>
-      <a href="/">Atlas</a>
       <a href="/live">Live</a>
+      <a href="/schedule">Schedule</a>
       <a href="/players">Players</a>
       <a href="/insights">Insights</a>
+      <a href="/twin-network">Twin Networks</a>
       <a href="/playoff-runs">Playoff Runs</a>
-
       <a href="/taxonomy">Taxonomy</a>
-      <a href="/methods">Methods</a>
     </div>
     <div class="site-footer__col">
       <span class="site-footer__col-title">How it works</span>
-      <a href="https://dumbmodel.com" rel="noopener">dumbmodel.com</a>
+      <a href="/methods">Methods</a>
+      <a href="/models/mtnn-v5">Models</a>
+      <a href="https://github.com/jcdavis131/vector-hoops" rel="noopener">Source on GitHub</a>
     </div>
   </nav>
-  <p class="site-footer__attribution">Every number recomputable from stats.nba.com · A <a href="https://dumbmodel.com">dumbmodel</a> project · <a href="https://github.com/jcdavis131/vector-hoops" rel="noopener">Source</a> · Nearest seasons by cosine similarity in the 64-dimensional MTNN v5 embedding.</p>
+  <p class="site-footer__attribution">Scores and stats from stats.nba.com and ESPN · A <a href="https://dumbmodel.com">dumbmodel</a> project</p>
 </footer>
+<!-- /footer:stamped -->
 <script src="/assets/vh-analytics.js?v=d838a3e1"></script>
-<script src="/assets/site-nav.js?v=d849b7d7"></script>
+<script src="/assets/site-nav.js?v=13e9219d"></script>
 <script src="assets/taxonomy.js?v=4a2de619"></script>
 <script src="assets/inline-sw-register.js?v=3fccd5e4"></script>
 <script src="assets/site-facts.js?v=f8edaf37" defer></script>
