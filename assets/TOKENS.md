@@ -38,6 +38,7 @@ primary actions, coin-gold rewards) stay; their tokens are now first-class citiz
 | `--void-ink` | `#D8DCD8` | same | text on the void (wave 1 kit; was the literal in `.arch-diagram`) | 11.79:1 on void |
 | `--void-ink-2` | `#A7B0BC` | same | secondary text on the void | 7.46:1 on void, 8.63:1 on `--void-surface` |
 | `--void-accent` | `#FF7A5C` | same | ember on the void; `--accent` red is 4.02:1 there | 6.37:1 on void |
+| `--void-accent-line` / `--void-accent-wash` | `rgba(255,122,92,.45)` / `rgba(255,122,92,.12)` | same | `--accent-line` / `--accent-wash` inside the void (the ember at 45 % / 12 %) | — |
 | `--void-line` | `rgba(255,255,255,.14)` | same | hairline on the void | — |
 | `--void-line-2` | `rgba(255,255,255,.28)` | same | control borders and hard steps on the void | — |
 | `--void-surface` | `rgba(13,16,21,.92)` | same | raised chrome on the void: tooltips, overlays, nested cards | ≈ `#0E1116` over void |
@@ -133,7 +134,8 @@ primary actions, coin-gold rewards) stay; their tokens are now first-class citiz
 `.card--void` (and `.embed3d__state`, which sits on the void) remaps the semantic aliases
 once — `--bg/--surface/--surface-2` → the void and `--void-surface`, `--fg/--fg-2/--fg-3` →
 the void inks, `--line/--line-2` → the void lines, `--accent/--accent-2/--bad/--focus` →
-`--void-accent`, `--block/--block-line` → `--void-line-2` — so every kit child inside the model
+`--void-accent`, `--accent-line/--accent-wash` → `--void-accent-line/-wash`, `--block/--block-line` →
+`--void-line-2` — so every kit child inside the model
 window reads the void pairings with no per-class variant. It is a component rule, not a `:root`,
 and the only place the ink changes without the OS. Not remapped on purpose: `--step` (the
 window's own shadow falls on paper), `--on-accent` and `--pipe` (a primary action keeps its

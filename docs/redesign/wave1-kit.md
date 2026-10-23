@@ -36,7 +36,7 @@ shell.css: `.site-nav__brand`, `__link`, `__explore`, `__meta`, `__drawer-title`
 
 ## Receipts
 
-`python scripts/check_design.py --report --json after.json --baseline before.json` on this worktree, before = 22d419a0 untouched, after = this branch after stamp and mirror.
+`python scripts/check_design.py --report --json after.json --baseline before.json` on this worktree, before = origin/master eb5cd6cf (#171) measured in a throwaway worktree, after = this branch rebased on it, after stamp and mirror. (The first round measured against 22d419a0; #171 moved D12 26 → 2, D17 32 → 28 and D21 110 → 80 on its own, and none of those three are touched here.)
 
 | Detector | Site before → after | atlas.css | shell.css |
 |---|---|---|---|
@@ -50,14 +50,14 @@ shell.css: `.site-nav__brand`, `__link`, `__explore`, `__meta`, `__drawer-title`
 | **D8** | 131 → 128 | **3 → 0** (`--t-2xs`, `.vh-team-tag` 9.5px, `.wiki-row__grades` 10px) | **0 → 0** |
 | D9 | 170 → 168 | 1 → 0 (`.atlas-capability`) | 1 → 0 (`.site-nav__noscript a`) |
 | **D10** | 1 → 0 | **1 → 0 = 100 %** (`--green` had no night value) | — |
-| D12 | 26 → 26 | | |
+| D12 | 2 → 2 | | |
 | D13 | 15 → 15 | | |
 | D14 | 0 → 0 | | |
 | D15 | 165 → 165 | | |
-| D17 | 32 → 32 | | |
+| D17 | 28 → 28 | | |
 | D19 | 0 → 0 (stamp + mirror current) | | |
 | D20 | 7 → 7 | 0 → 0 | 0 → 0 |
-| D21 | 110 → 110 | | |
+| D21 | 80 → 80 | | |
 
 Hex colours in atlas.css outside the two token tables (not detector-enforced, counted by hand): 23 → 12. The 12 that remain are print's `#fff/#000/#ccc` and the MARIO block's `#6E4B00 / #7A5200 / #5C4300 / #FFFEF7` (coin and ?-block constants, out of this task's scope; `--coin-deep` is the token they can move onto). `rgba()` outside the tables 9 → 3 (`.vh-modal` shadow, the hero sky wash ×2).
 
@@ -67,14 +67,31 @@ Other gates, all run on this branch after stamp and mirror:
 - `python scripts/check_a11y.py` — OK, 19 pages, 0 fails (its target-size check reads page styles only; the kit's 44/48/52px targets are declared, not gate-verified).
 - `python scripts/check_css_braces.py` — balanced.
 - `python -m pytest tests/test_site.py tests/test_check_design.py -q` — exit 0, 0 failures.
-- `python scripts/budget_check.py` — green after re-measuring four rows. atlas.css grew 39,665 → 65,037 bytes (gzip 10,310 → 15,935); shell.css 13,069 → 13,207. That pushed four pages over their 1.5× budgets, so those four are set to measured + 3 %, rounded up to 1 KiB, as the brief allows: `map-guess.html` 151,552 → 177,152 (measured 171,734), `players.html` 921,600 → 953,344 (925,259), `status.html` 81,920 → 108,544 (104,395), `teams.html` 156,672 → 182,272 (176,574). Untouched but close: `play.html` at 1,539,533 / 1,556,480 (98.9 %) and `404.html` at 100,981 / 102,400; wave 1.2's deletion of the four legacy sheets gives them room back.
+- `python scripts/budget_check.py` — green after re-measuring four rows. atlas.css grew 39,665 → 65,408 bytes (gzip 10,310 → 16,026); shell.css 13,069 → 13,727 (gzip 3,335 → 3,590). That pushed four pages over their 1.5× budgets, and the #171 footer stamp pushed `404.html` over after the rebase, so those five rows are set to measured + 3 %, rounded up to 1 KiB, as the brief allows (measured on eb5cd6cf + the kit; `method` in budgets.json says so): `404.html` 102,400 → 106,496 (measured 102,984), `map-guess.html` 151,552 → 180,224 (174,529), `players.html` 921,600 → 955,392 (927,262), `status.html` 81,920 → 110,592 (106,742), `teams.html` 156,672 → 185,344 (179,173). Untouched but close: `play.html` at 1,541,617 / 1,556,480 (99.0 %); wave 1.2's deletion of the four legacy sheets gives it room back.
+
+## Review round (REQUEST_CHANGES on ff1a528b, fixed)
+
+**B1 — the nav slot row clipped at 390.** Archivo at 112 % width, .06em tracking and the un-shadowed 14/18px paddings put the four slots at ~436px inside a 358px box, and `html,body{overflow-x:clip}` hid the spill ("MAP" cut at the left, "HOW IT WORKS" at the right in the reviewer's render). Arithmetic with the reviewer's metrics (11px / 600 / 112 % / .1em: MAP 31.2, PLAY 37.1, EXPLORE 67.5, HOW IT WORKS 108.7px):
+
+| | before (≤900) | after (≤900) |
+|---|---|---|
+| glyphs (text minus .1em tracking = 1.1px × 3/4/7/12 chars) | 27.9 + 32.7 + 59.8 + 95.5 = 215.9 at 112 % | × 100/112 = 24.9 + 29.2 + 53.4 + 85.3 = **192.8** at 100 % |
+| tracking | .1em = 1.1px × 26 chars = 28.6 | .06em = .66px × 26 = **17.2** |
+| padding | links 14px × 2 × 3 + Explore 18px × 2 = 120 | 10px × 2 × 4 = **80** |
+| glyphs: chevron, external-link | 18 + 18 = 36 | 18 (ext hidden ≤ 480) |
+| gaps | 12 × 3 = 36 | 36 |
+| **row** | **436.5** | **344.0** in 358 → **14 to spare** |
+
+At 360 (box 328, padding 4px) the row is 296; from 480 to 900 the external-link glyph returns (e.g. 600px: 362 in a 552 box). `.site-nav__slots` also gets `flex-wrap: wrap`, so if real metrics run wider than this linear estimate the row breaks to a second line instead of clipping. The compound `.site-nav__slot.site-nav__link` is restated in the media blocks because shell.css:104 (0,2,0) shadows a plain `.site-nav__slot` padding; the ≤360 block now only tightens padding (tracking is already .06em).
+
+**S2** `.btn:hover:not(...)` now also excludes `.lifeline` (it is (0,6,0) and beat `.btn.lifeline:hover:not(:disabled)` at (0,4,0)); the lifeline hover no longer restates its gradient. **S3** `.seg > button:hover` / `a:hover` exclude the chosen segment (`[aria-pressed=true]`, `[aria-current]`, `.is-active`), since `button:hover` (0,2,1) outranked the attribute rule (0,2,0). **S4** budgets.json `method` names the four +3 % rows and says they wait for the wave-1.2 re-baseline. **S5** `.sheet` has a `max-height: 88vh` fallback before the `dvh` line. Nits: `.sheet__handle{min-height:0}` (responsive.css:163 would otherwise win on legacy pages); `.card--void` reads `--void-accent-line` / `--void-accent-wash` (new tokens, both roots) instead of `color-mix()`; `.disclosure__hint` is the only hint selector.
 
 ## Mechanical consequences
 
 - `python C:/Users/jcdav/wt/hoops-audit/stamp_lf.py` re-stamped the atlas.css / shell.css `?v=` tokens on 19 pages with LF endings (both sheets are LF in the index and on disk, so the hashes match CI).
-- `sw.js` `CACHE_NAME` v25 → v26 (master is v25).
-- `python scripts/sync_public.py` mirrored 23 files; `--check` is current.
-- `git merge origin/master` (228a3d05) for the gate script and its tests; no conflicts, none of its five files are mine.
+- `sw.js` `CACHE_NAME` v26 → v27 (#171 took v26).
+- `python scripts/sync_public.py` mirrored the pages and sheets; `--check` is current.
+- Rebased onto origin/master eb5cd6cf (#171 footer stamp) with upstream preferred on the 38 page/mirror token lines and sw.js, then re-stamped; the six owned files came through byte-identical (verified by `git diff` against the pre-rebase head).
 
 ## Written down for wave 2 (seeds that need a page change to wear the kit)
 

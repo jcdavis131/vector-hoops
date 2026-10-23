@@ -1,10 +1,10 @@
 {
   "version": 1,
   "measured_commit": "1feb2ad54926660e222e919e90ac4fde7f17ba55",
-  "method": "Per page: page HTML bytes + CSS/JS/JSON bytes referenced by markup (script src, link href), asset literals inside inline scripts, and JSON fetched by the page's JS bundles (one level, string literals). Budgets are 1.5x measured, rounded up to 1 KiB, with a 32 KiB floor. Interaction budgets are 1.25x measured, rounded up to 1 KiB.",
+  "method": "Per page: page HTML bytes + CSS/JS/JSON bytes referenced by markup (script src, link href), asset literals inside inline scripts, and JSON fetched by the page's JS bundles (one level, string literals). Budgets are 1.5x measured, rounded up to 1 KiB, with a 32 KiB floor. Interaction budgets are 1.25x measured, rounded up to 1 KiB. Rows marked +3% (404.html, map-guess.html, players.html, status.html, teams.html; wave 1.1, atlas.css grew 25 KB, measured on eb5cd6cf + the kit) are measured + 3%, rounded up to 1 KiB, pending the wave-1.2 re-baseline.",
   "pages": {
     "404.html": {
-      "budget_bytes": 102400
+      "budget_bytes": 106496
     },
     "feed-health.html": {
       "budget_bytes": 99328
@@ -40,7 +40,7 @@
       "budget_bytes": 696320
     },
     "map-guess.html": {
-      "budget_bytes": 177152
+      "budget_bytes": 180224
     },
     "methods.html": {
       "budget_bytes": 503808
@@ -55,7 +55,7 @@
       "budget_bytes": 840704
     },
     "players.html": {
-      "budget_bytes": 953344
+      "budget_bytes": 955392
     },
     "playoff-runs.html": {
       "budget_bytes": 152576
@@ -67,10 +67,10 @@
       "budget_bytes": 165888
     },
     "status.html": {
-      "budget_bytes": 108544
+      "budget_bytes": 110592
     },
     "teams.html": {
-      "budget_bytes": 182272
+      "budget_bytes": 185344
     },
     "twenty-questions.html": {
       "budget_bytes": 964608

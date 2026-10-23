@@ -31,6 +31,8 @@
   --void-ink:     #D8DCD8;  /* text on the void — 11.79:1 */
   --void-ink-2:   #A7B0BC;  /* secondary text on the void — 7.46:1 */
   --void-accent:  #FF7A5C;  /* ember on the void — 6.37:1; var(--accent) red is 4.02:1 there */
+  --void-accent-line: rgba(255,122,92,.45);  /* --accent-line inside the void */
+  --void-accent-wash: rgba(255,122,92,.12);  /* --accent-wash inside the void */
   --void-line:    rgba(255,255,255,.14);  /* hairline on the void */
   --void-line-2:  rgba(255,255,255,.28);  /* stronger line on the void: control borders, hard steps */
   --void-surface: rgba(13,16,21,.92);     /* raised chrome on the void: tooltips, overlays, nested cards */
@@ -149,6 +151,8 @@
     --void-ink:     #D8DCD8;
     --void-ink-2:   #A7B0BC;
     --void-accent:  #FF7A5C;
+    --void-accent-line: rgba(255,122,92,.45);
+    --void-accent-wash: rgba(255,122,92,.12);
     --void-line:    rgba(255,255,255,.14);
     --void-line-2:  rgba(255,255,255,.28);
     --void-surface: rgba(13,16,21,.92);
@@ -715,10 +719,10 @@ table{ border-collapse: collapse; width: 100%; }
   transform: translate(-1px,-1px);
   box-shadow: 4px 4px 0 var(--block);
 }
-/* :not() carries its argument's weight, so this is (0,3,0): without the
-   primary exclusions it outranked .btn-primary:hover and painted paper under
-   --on-accent text on hover (pre-existing; fixed with the kit). */
-.btn:hover:not(.btn-accent):not(.btn-primary):not(.btn-play), .pp-btn:hover{
+/* :not() carries its argument's weight, so this is (0,6,0): without the
+   exclusions it outranked .btn-primary:hover and the lifeline's hover and
+   painted paper under them (pre-existing on the primary; fixed with the kit). */
+.btn:hover:not(.btn-accent):not(.btn-primary):not(.btn-play):not(.lifeline), .pp-btn:hover{
   background: var(--surface-2);
 }
 .btn:active, .pp-btn:active, .trail-btn:active{
@@ -896,7 +900,6 @@ section .today-strip__links a:first-child:hover{ background: var(--pipe-deep); }
   color: var(--qblock-ink);
 }
 .btn.lifeline:hover:not(:disabled), #lifelines-bar .btn-lifeline:hover:not(:disabled){
-  background: linear-gradient(180deg, var(--qblock-1), var(--qblock-2));
   transform: translate(-1px,-1px);
   box-shadow: 4px 4px 0 var(--block);
 }
@@ -946,8 +949,7 @@ section .today-strip__links a:first-child:hover{ background: var(--pipe-deep); }
   --fg: var(--void-ink); --fg-2: var(--void-ink-2); --fg-3: var(--void-ink-2);
   --line: var(--void-line); --line-2: var(--void-line-2);
   --accent: var(--void-accent); --accent-2: var(--void-accent);
-  --accent-line: color-mix(in srgb, var(--void-accent) 45%, transparent);
-  --accent-wash: color-mix(in srgb, var(--void-accent) 12%, transparent);
+  --accent-line: var(--void-accent-line); --accent-wash: var(--void-accent-wash);
   --bad: var(--void-accent); --focus: var(--void-accent);
   --block: var(--void-line-2); --block-line: var(--void-line-2);
   color-scheme: dark;
@@ -1006,7 +1008,9 @@ section .today-strip__links a:first-child:hover{ background: var(--pipe-deep); }
 }
 .seg > :first-child{ border-left: 0; border-radius: calc(var(--radius) - 1px) 0 0 calc(var(--radius) - 1px); }
 .seg > :last-child{ border-radius: 0 calc(var(--radius) - 1px) calc(var(--radius) - 1px) 0; }
-.seg > button:hover, .seg > a:hover{ color: var(--fg); background: var(--surface-2); }
+/* hover excludes the chosen segment: button:hover is (0,2,1) and would beat the [aria-pressed] rule below */
+.seg > button:hover:not([aria-pressed="true"]):not(.is-active),
+.seg > a:hover:not([aria-current="true"]):not([aria-current="page"]):not(.is-active){ color: var(--fg); background: var(--surface-2); }
 .seg > [aria-pressed="true"], .seg > [aria-current="true"], .seg > [aria-current="page"], .seg > .is-active{
   color: var(--bg); background: var(--fg);
 }
@@ -1067,7 +1071,7 @@ section .today-strip__links a:first-child:hover{ background: var(--pipe-deep); }
 }
 .disclosure[open] > summary::before{ content: "\2212"; }
 .disclosure > summary:hover{ color: var(--fg); }
-.disclosure > summary span, .disclosure__hint{
+.disclosure__hint{
   font-family: var(--font-text); font-size: var(--t-sm); font-weight: 400;
   letter-spacing: 0; text-transform: none; color: var(--fg-3);
 }
@@ -1238,7 +1242,8 @@ section .today-strip__links a:first-child:hover{ background: var(--pipe-deep); }
   -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
 }
 .sheet{
-  width: 100%; max-width: 680px; max-height: min(88dvh, calc(100dvh - 16px)); overflow: auto;
+  width: 100%; max-width: 680px; overflow: auto;
+  max-height: 88vh; max-height: min(88dvh, calc(100dvh - 16px));
   padding: var(--s-4) var(--s-4) calc(var(--s-4) + env(safe-area-inset-bottom, 0));
   color: var(--fg); background: var(--surface);
   border: 1px solid var(--line-2); border-bottom: 0;
@@ -1246,7 +1251,7 @@ section .today-strip__links a:first-child:hover{ background: var(--pipe-deep); }
   animation: atlas-sheet-up var(--dur-2) var(--ease) both;
 }
 @keyframes atlas-sheet-up{ from{ transform: translateY(100%); } to{ transform: none; } }
-.sheet__handle{ width: 36px; height: 4px; margin: 2px auto var(--s-3); border-radius: 2px; background: var(--line-2); }
+.sheet__handle{ width: 36px; height: 4px; min-height: 0; margin: 2px auto var(--s-3); border-radius: 2px; background: var(--line-2); }
 .sheet__head{ display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; margin-bottom: var(--s-3); }
 .sheet__title{ margin: 0; font-family: var(--font-display); font-size: var(--t-lg); font-weight: 700; letter-spacing: -.01em; line-height: 1.1; }
 .sheet__close{

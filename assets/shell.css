@@ -121,20 +121,27 @@ a.site-nav__slot{ display: inline-flex; }
   .site-nav__slots{
     grid-column: 1 / -1; grid-row: 2;
     justify-self: stretch; justify-content: center;
-    height: auto; gap: var(--s-3);
+    height: auto; gap: var(--s-3); flex-wrap: wrap;
     margin: 0 calc(var(--gutter) * -1); padding: 6px var(--gutter);
     border-top: 1px solid var(--line);
   }
-  .site-nav__slot{
+  /* Four slots must fit a 358px box at 390: Archivo at its normal width with .06em
+     tracking, 10px link padding, the external-link glyph hidden under 480 (arithmetic
+     in docs/redesign/wave1-kit.md: 344px, 14 to spare); the row wraps before it clips.
+     The compound selector is needed because .site-nav__slot.site-nav__link above
+     (0,2,0) shadows a plain .site-nav__slot padding declared here. */
+  .site-nav__slot, .site-nav__slot.site-nav__link{
     flex: 0 1 auto; min-height: 48px;
-    font-size: 11px; letter-spacing: .1em; padding: 0 18px;
+    font-size: 11px; font-stretch: 100%; letter-spacing: .06em; padding: 0 10px;
   }
   .site-nav__brand, .site-nav__end{ height: 52px; }
   .site-nav__brand{ max-width: none; overflow: visible; }
 }
-@media (max-width: 360px){
-  .site-nav__slot{ letter-spacing: .06em; padding: 0 4px; }
+@media (max-width: 480px){
   .site-nav__ext{ display: none; }
+}
+@media (max-width: 360px){
+  .site-nav__slot, .site-nav__slot.site-nav__link{ padding: 0 4px; }
 }
 
 /* ==========================================================================
