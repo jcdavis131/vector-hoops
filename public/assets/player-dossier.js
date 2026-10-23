@@ -168,7 +168,7 @@
 
     html += '<p class="vh-dos__prov vh-truth">Era twins are matched by cosine similarity in the ' +
       '64-dimensional MTNN embedding. Everything else on this page — the fingerprint, the ' +
-      'neighborhood, how his game changed — is cosine distance in the 14 era-normalised ' +
+      'neighborhood, how his game changed — is cosine distance in the 14 era-normalized ' +
       'per-100 stats behind the atlas. ' +
       '<a href="methods.html#dossier">How it\u2019s made \u2192</a></p>';
     return html;

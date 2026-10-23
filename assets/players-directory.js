@@ -2,7 +2,10 @@
 (function (global) {
   'use strict';
 
-  var DATA_URL = 'assets/vectors.json';
+  /* T3.2: the directory renders from the slim player_directory_index.json (~0.4 MB:
+     name/season/position/archetype only). The full vectors.json (4.1 MB)
+     loads only when the profile/leaderboard tabs need it. Stamp: the
+     fetch() literal below gets its ?v= token from scripts/stamp_assets.py. */
   var SWINGS_URL = 'assets/playoff-swings.json';
   var POSITIONS = ['PG', 'SG', 'SF', 'PF', 'C'];
   var MAX_ROWS = 400;
@@ -12,6 +15,7 @@
   var SWINGS = {}; // normalized name -> [{season, rs_pts100, po_pts100, delta, po_gp}]
   var state = { q: '', pos: '', arch: '', letter: '' };
   var dossierTriggerEl = null;
+  var dossierPrevUrl = null; // URL before the dossier opened; restored on close
 
   // Same normalization as pipeline/build_playoff_swings.py: accent-fold,
   // lowercase, strip non-alphanumerics.
@@ -83,20 +87,22 @@
   }
 
   function buildPlayerIndex(data) {
+    // Compact rows: [name, season, positionIdx, clusterIdx]
     var bySlug = {};
     var order = [];
     for (var i = 0; i < data.players.length; i++) {
-      var p = data.players[i];
-      var slug = global.VHDossier.playerSlug(p.name);
+      var row = data.players[i];
+      var name = row[0], season = row[1], pi = row[2], ci = row[3];
+      var slug = global.VHDossier.playerSlug(name);
       var rec = bySlug[slug];
       if (!rec) {
-        rec = { name: p.name, slug: slug, seasons: [], positions: {}, archetypes: {} };
+        rec = { name: name, slug: slug, seasons: [], positions: {}, archetypes: {} };
         bySlug[slug] = rec;
         order.push(slug);
       }
-      rec.seasons.push(p.season);
-      if (typeof p.p === 'number' && POSITIONS[p.p]) rec.positions[POSITIONS[p.p]] = true;
-      if (typeof p.c === 'number' && data.clusters[p.c]) rec.archetypes[data.clusters[p.c]] = true;
+      rec.seasons.push(season);
+      if (typeof pi === 'number' && POSITIONS[pi]) rec.positions[POSITIONS[pi]] = true;
+      if (typeof ci === 'number' && data.clusters[ci]) rec.archetypes[data.clusters[ci]] = true;
     }
     return order.map(function (slug) {
       var rec = bySlug[slug];
@@ -183,6 +189,14 @@
     els.dossierBackdrop.hidden = false;
     document.body.classList.add('vh-modal-open');
     els.dossierClose.focus();
+    // T4.4 one share path: the URL becomes the dossier deep link, so the
+    // modal's "Share dossier" button (which copies location.href) shares a
+    // link that re-opens this exact dossier — twin-network's render-then-copy
+    // pattern. Restored on close.
+    try {
+      dossierPrevUrl = location.href;
+      history.replaceState(null, '', '/players?dossier=' + encodeURIComponent(slug));
+    } catch (e) { dossierPrevUrl = null; }
 
     function showMarkdown() {
       return global.VHDossier.fetchDossierMarkdown(slug)
@@ -216,6 +230,10 @@
     document.body.classList.remove('vh-modal-open');
     if (dossierTriggerEl && dossierTriggerEl.focus) dossierTriggerEl.focus();
     dossierTriggerEl = null;
+    try {
+      if (dossierPrevUrl) history.replaceState(null, '', dossierPrevUrl);
+    } catch (e) { /* URL stays on the dossier link */ }
+    dossierPrevUrl = null;
   }
 
   function setupControls() {
@@ -279,7 +297,7 @@
     if (!document.getElementById('wiki-list')) return;
     initDom();
     Promise.all([
-      fetch(DATA_URL).then(function (res) {
+      fetch('assets/player_directory_index.json?v=7c40e417').then(function (res) {
         if (!res.ok) throw new Error('HTTP ' + res.status);
         return res.json();
       }),
@@ -313,6 +331,10 @@
         }
       } catch (e) { /* search stays empty */ }
       render();
+      // T3.2: loading state announced — the #wiki-count region (aria-live)
+      // carried "Loading player index…" and now carries the count.
+      var panel = document.getElementById('players-panel-directory');
+      if (panel) panel.setAttribute('aria-busy', 'false');
       // Deep link: /players?dossier=<slug> opens the dossier modal directly.
       // Panel v3 G4: "Open dossier" links must land on a dossier, not a search.
       try {
@@ -327,6 +349,8 @@
       } catch (e) { /* modal stays closed */ }
     }).catch(function (err) {
       els.count.textContent = 'Could not load the player index (' + err.message + ').';
+      var panel = document.getElementById('players-panel-directory');
+      if (panel) panel.setAttribute('aria-busy', 'false');
     });
   }
 

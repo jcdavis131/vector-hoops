@@ -71,6 +71,13 @@ def sources() -> list[tuple[Path, Path]]:
     if ins_dir.is_dir():
         for p in sorted(ins_dir.glob("*.html")):
             pairs.append((p, PUBLIC / "insights" / p.name))
+    # teams/ holds per-team OG stubs (social unfurls) that redirect to
+    # /teams#team-<slug>. Kept out of the sitemap like the insight stubs —
+    # the hub page is the indexable surface.
+    teams_dir = ROOT / "teams"
+    if teams_dir.is_dir():
+        for p in sorted(teams_dir.glob("*.html")):
+            pairs.append((p, PUBLIC / "teams" / p.name))
     # play/ holds game pages served at /play/<name>.html (Pillar 6 games).
     play_dir = ROOT / "play"
     if play_dir.is_dir():

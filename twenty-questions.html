@@ -47,7 +47,7 @@ kbd{font-family:var(--font-code);font-size:11px;border:1px solid var(--line-2);b
 #map-overlay{position:absolute;left:10px;right:10px;top:10px;display:flex;justify-content:space-between;gap:8px;z-index:2;pointer-events:none;flex-wrap:wrap}
 #map-overlay .chip{background:color-mix(in srgb, var(--surface) 92%, transparent);border:1px solid var(--line-2);border-radius:999px;padding:4px 10px;font-family:var(--font-code);font-size:10px;font-weight:700}
 #map-legend{position:absolute;right:10px;bottom:10px;z-index:2;background:color-mix(in srgb, var(--surface) 94%, transparent);border:1px solid var(--line-2);border-radius:var(--radius);padding:7px 10px;font-family:var(--font-code);font-size:10px;line-height:1.5;pointer-events:none;max-width:230px}
-@media(max-width:719px){#map-legend{display:none}#map-wrap{min-height:300px}}
+@media(max-width:719px){#map-legend{left:10px;right:10px;bottom:8px;max-width:none;padding:4px 10px;font-size:9px;line-height:1.4}#map-legend .legend-long{display:none}#map-wrap{min-height:300px}}
 /* question */
 #q-text{margin:6px 0 0;font-family:var(--font-display);font-size:clamp(20px,4.4vw,30px);line-height:1.25;letter-spacing:-.01em}
 .fine{font-size:13px;color:var(--fg-2);margin:10px 0 0}
@@ -80,7 +80,7 @@ details.howto p,details.howto li{font-size:14px;color:var(--fg-2)}
 <div id="main" class="main" role="main">
 
   <header class="title-card tq-head">
-    <div class="title-card__eyebrow">TWENTY QUESTIONS &middot; THE MAP IS THE MOAT</div>
+    <div class="title-card__eyebrow">TWENTY QUESTIONS &middot; THE MAP DIMS AS YOU ANSWER</div>
     <h1 class="title-card__title">Think of a <em>player</em>.</h1>
     <p class="title-card__lede">Answer up to 20 yes/no questions. Every answer dims the careers it can&rsquo;t be &mdash; live, on the real embedding map &mdash; until one player is left.</p>
     <div class="tq-status">
@@ -95,10 +95,10 @@ details.howto p,details.howto li{font-size:14px;color:var(--fg-2)}
   <div id="map-wrap">
     <canvas id="tq-canvas" role="img" aria-label="Map of 12,966 player-seasons. Points dim as your answers rule out careers."></canvas>
     <div id="map-overlay"><span class="chip" id="map-fact">12,966 player-seasons</span><span class="chip">dim = ruled out</span></div>
-    <div id="map-legend"><b>Map</b><br>2-D atlas projection of the 14 era-normalised per-100 stat features.<br>Bright = still possible &middot; faint = ruled out.</div>
+    <div id="map-legend"><b>Map</b> <span class="legend-long">2-D atlas projection of the 14 era-normalized per-100 stat features. </span>Bright = still possible &middot; faint = ruled out.</div>
   </div>
 
-  <section class="card" id="q-card" aria-labelledby="q-text">
+  <section class="card" id="q-card" aria-labelledby="q-text" aria-busy="true">
     <p class="small-mono" id="q-count">Question 1</p>
     <h2 id="q-text" aria-live="polite">Loading the question tree&hellip;</h2>
     <div class="btn-row" role="group" aria-label="Answer">
@@ -144,12 +144,12 @@ details.howto p,details.howto li{font-size:14px;color:var(--fg-2)}
       <li>Think of any NBA player with a charted season since 1996 &mdash; 2,426 careers are in the tree.</li>
       <li>Questions come from real career data: position, era, play style, Skills Lens tags, All-Star / All-NBA honours.</li>
       <li>The tree is built offline for maximum information gain; every career resolves within 20 questions (worst case observed: 18).</li>
-      <li>The map plots all 12,966 player-seasons as a 2-D projection of the 14 era-normalised per-100 features &mdash; the site&rsquo;s atlas view, not the 64-d MTNN embedding itself.</li>
+      <li>The map plots all 12,966 player-seasons as a 2-D projection of the 14 era-normalized per-100 features &mdash; the site&rsquo;s atlas view, not the 64-d MTNN embedding itself.</li>
+      <li>Provenance: tree built 2026-10-20 from the season vectors, archetype assignments and honors data &mdash; greedy max-information-gain, worst case 18 questions observed. Map: PCA of the 14 era-normalized per-100 features.</li>
       <li>Keyboard: <kbd>Y</kbd> yes, <kbd>N</kbd> no, <kbd>U</kbd> not sure.</li>
     </ul>
   </details>
 
-  <p class="provenance" id="provenance">Provenance: tree built 2026-10-20 from assets/vectors.json, assets/archetype_assignments.json, assets/honors.json &mdash; greedy max-information-gain, worst case 18 questions. Map: 12,966 player-seasons, PCA of the 14 era-normalised per-100 features.</p>
 </div>
 
 <footer class="site-footer">
@@ -258,6 +258,7 @@ function restore(s){node=s.node;prefix=s.prefix;answers=s.answers;tieElim=s.tieE
 function setQuestionUI(){
   var nd=T.tree[node];
   $('q-card').hidden=false;$('tie-card').hidden=true;$('reveal-card').hidden=true;
+  $('q-card').setAttribute('aria-busy','false');
   $('q-count').textContent='Question '+(answers.length+1)+' of '+MAXQ;
   $('q-text').textContent=nd.t;
   $('pill-q').textContent='Q '+(answers.length+1)+'/'+MAXQ;
@@ -433,15 +434,24 @@ document.addEventListener('keydown',function(e){
 
 function boot(){
   sizeCanvas();
-  Promise.all([
-    fetch(TREE_URL).then(function(r){if(!r.ok)throw new Error('tree '+r.status);return r.json();}),
-    fetch(MAP_URL).then(function(r){if(!r.ok)throw new Error('map '+r.status);return r.json();})
-  ]).then(function(res){
-    T=res[0];PTS=res[1].points;
-    if(!T.tree||!T.paths||!PTS){throw new Error('bad payload');}
+  // Stream: the question UI goes live the moment the tree (298K) lands.
+  // The map points (238K) follow and start drawing whenever they arrive —
+  // drawMap() already no-ops until PTS is set.
+  fetch(TREE_URL).then(function(r){if(!r.ok)throw new Error('tree '+r.status);return r.json();})
+  .then(function(t){
+    T=t;
+    if(!T.tree||!T.paths){throw new Error('bad payload');}
     reset();
   }).catch(function(){
     $('q-card').hidden=true;$('err-card').hidden=false;
+  });
+  fetch(MAP_URL).then(function(r){if(!r.ok)throw new Error('map '+r.status);return r.json();})
+  .then(function(m){
+    if(!m.points){throw new Error('bad payload');}
+    PTS=m.points;drawMap();
+  }).catch(function(){
+    // The game is fully playable without the map; say so once.
+    toast('The map view didn\u2019t load \u2014 the questions still work.');
   });
 }
 boot();

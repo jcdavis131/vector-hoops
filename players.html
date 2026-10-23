@@ -3,7 +3,7 @@
 <meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
 <link rel="manifest" href="/manifest.json">
 <title>Players — Vector Hoops</title>
-<meta name="description" content="Every charted NBA player since 1996–97: a searchable directory, 0–99 skill grades normalised within each season, and leaderboards by skill."/>
+<meta name="description" content="Every charted NBA player since 1996–97: a searchable directory, 0–99 skill grades normalized within each season, and leaderboards by skill."/>
 
 <link rel="stylesheet" href="assets/responsive.css?v=cc8e5207"/>
 <link rel="stylesheet" href="assets/final-qa.css?v=fb603ee5"/>
@@ -21,17 +21,18 @@
 <meta property="og:site_name" content="Vector Hoops"/>
 <meta property="og:url" content="https://hoops.dumbmodel.com/players"/>
 <meta property="og:title" content="Players — Vector Hoops"/>
-<meta property="og:description" content="Every charted NBA player since 1996–97: a searchable directory, 0–99 skill grades normalised within each season, and leaderboards by skill."/>
+<meta property="og:description" content="Every charted NBA player since 1996–97: a searchable directory, 0–99 skill grades normalized within each season, and leaderboards by skill."/>
 <meta property="og:image" content="https://hoops.dumbmodel.com/assets/og-1200x630.png"/>
 <meta property="og:image:width" content="1200"/><meta property="og:image:height" content="630"/>
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:title" content="Players — Vector Hoops"/>
-<meta name="twitter:description" content="Every charted NBA player since 1996–97: a searchable directory, 0–99 skill grades normalised within each season, and leaderboards by skill."/>
+<meta name="twitter:description" content="Every charted NBA player since 1996–97: a searchable directory, 0–99 skill grades normalized within each season, and leaderboards by skill."/>
 <meta name="twitter:image" content="https://hoops.dumbmodel.com/assets/og-1200x630.png"/>
 <link rel="stylesheet" href="assets/fonts.css?v=8f376b2a"/>
 <link rel="stylesheet" href="/assets/atlas.css?v=c43e0f47"/>
 <link rel="stylesheet" href="/assets/shell.css?v=36a047f1"/>
-<style>.players-tabs{display:flex;justify-content:center;margin-bottom:var(--s-2)}</style>
+<style>.players-tabs{display:flex;justify-content:center;margin-bottom:var(--s-2)}
+.visually-hidden{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}</style>
 </head><body>
 <a class="skip-link" href="#main">Skip to content</a>
 <noscript><div role="alert" style="padding:16px;text-align:center">Enable JS — Vector Hoops needs JavaScript for the player directory and profiles</div></noscript>
@@ -42,7 +43,7 @@
     <div class="title-card__eyebrow reveal">Players</div>
     <h1 class="title-card__title reveal reveal-1">Every charted player, graded <em>within their own season</em></h1>
     <p class="title-card__lede reveal reveal-2">Search the directory, open a skill profile, or rank seasons by skill. Grades run 0–99 as percentiles inside each season, so a 90 in 1997 means what a 90 means in 2026.</p>
-    <div class="title-card__meta reveal reveal-3"><span><b>12,966</b>Player-seasons</span><span><b>1996–97</b>to 2025–26</span><span><b>0–99</b>Era-normalised grades</span></div>
+    <div class="title-card__meta reveal reveal-3"><span><b>12,966</b>Player-seasons</span><span><b>1996–97</b>to 2025–26</span><span><b>0–99</b>Era-normalized grades</span></div>
   </header>
 
   <div class="players-tabs">
@@ -53,7 +54,7 @@
     </div>
   </div>
 
-  <section class="card" id="players-panel-directory" role="tabpanel">
+  <section class="card" id="players-panel-directory" role="tabpanel" aria-busy="true">
     <div class="wiki-controls">
       <div class="wiki-search-row">
         <input class="input wiki-search" id="wiki-search" aria-label="Search players" type="text" placeholder="Search a player — Curry, Jokic, Wemby…" autocomplete="off" spellcheck="false" disabled>
@@ -63,12 +64,13 @@
         </div>
       </div>
       <div class="wiki-alphabet" id="wiki-alphabet" aria-label="Jump to letter"></div>
-      <div class="wiki-count" id="wiki-count">Loading player index…</div>
+      <div class="wiki-count" id="wiki-count" role="status" aria-live="polite">Loading player index…</div>
     </div>
     <ol class="wiki-list" id="wiki-list" style="margin-top:10px"></ol>
   </section>
 
-  <section class="card" id="players-panel-profile" role="tabpanel" hidden>
+  <section class="card" id="players-panel-profile" role="tabpanel" aria-busy="true" hidden>
+    <p class="visually-hidden" role="status" id="skills-status">Loading skills data…</p>
     <div class="skills-panel">
       <div class="pp-search-wrap">
         <div class="pp-search-top">
@@ -132,13 +134,14 @@
       </div>
 
       <div id="pp-empty" style="margin-top:10px">
-        <p style="font-size:13px;color:var(--fg-3);margin:0" id="skills-empty">Pick a player to see skill profile, season by season — including next-season predicted vs actual when following year is charted. Try “Curry”, “Smart”, or “Jokic”.</p>
+        <p style="font-size:13px;color:var(--fg-3);margin:0" id="skills-empty">Pick a player — skill profile, season by season, with next-season predicted vs actual. Try “Curry”, “Smart”, or “Jokic”.</p>
         <div class="pp-featured" id="pp-featured"></div>
       </div>
     </div>
   </section>
 
-  <section class="card" id="players-panel-leaderboard" role="tabpanel" hidden>
+  <section class="card" id="players-panel-leaderboard" role="tabpanel" aria-busy="true" hidden>
+    <p class="visually-hidden" role="status" id="board-status">Loading leaderboard data…</p>
     <h2 class="hd" style="font-size:20px;margin:0 0 6px">Leaderboard</h2>
     <p style="font-size:13px;color:var(--fg-2);margin:0 0 12px">0–99 skill grades, era-normalized. Pick a skill, see top seasons. Tracking boards cover 2015-16+ only. Draft Steals/Busts rank career mean vs draft slot.</p>
     <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px">
@@ -194,10 +197,10 @@
 <script src="assets/dossier.js?v=7fdb3848"></script>
 <script src="assets/served-constants.js?v=8ba12340"></script>
 <script src="assets/twin-bands.js?v=0a191313"></script>
-<script src="assets/player-dossier.js?v=15756e56"></script>
+<script src="assets/player-dossier.js?v=2a9f1a19"></script>
 <script src="assets/player-roster.js?v=263dd347"></script>
-<script src="assets/players-directory.js?v=165543a5"></script>
-<script src="assets/players-skills.js?v=17ee06d1"></script>
+<script src="assets/players-directory.js?v=799c8f41"></script>
+<script src="assets/players-skills.js?v=89c7e606"></script>
 <script src="assets/players-page.js?v=ba682099"></script>
 <script src="assets/arc-projections.js?v=ea916497"></script>
 <script src="/assets/inline-players.js?v=948cc3cd"></script>
