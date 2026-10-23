@@ -687,7 +687,9 @@
 
   function applyDeepLink() {
     var qp = new URLSearchParams(location.search);
-    var slug = qp.get('p');
+    // Canonical is ?p=<slug> (twin-network's Copy-link pattern); ?player=
+    // accepted as an inbound alias. Outbound links always write ?p=.
+    var slug = qp.get('p') || qp.get('player');
     if (slug && INDEX[slug]) {
       pickPlayer(slug, qp.get('s') || '');
       if (global.VHPlayersPage) global.VHPlayersPage.showTab('profile', { skipHistory: true });
@@ -740,6 +742,15 @@
       renderBoard();
       renderFeatured();
       dataReady = true;
+      // T3.2: announce that the disabled-until-loaded inputs are now live.
+      var ss = document.getElementById('skills-status');
+      if (ss) ss.textContent = 'Skills data loaded \u2014 search and filters are ready.';
+      var bs = document.getElementById('board-status');
+      if (bs) bs.textContent = 'Leaderboard data loaded.';
+      ['players-panel-profile', 'players-panel-leaderboard'].forEach(function (id) {
+        var p = document.getElementById(id);
+        if (p) p.setAttribute('aria-busy', 'false');
+      });
       applyDeepLink();
       if (pendingPick) { var pp = pendingPick; pendingPick = null; pickPlayer(pp.slug, pp.season); }
       if (pendingTab) { var pt = pendingTab; pendingTab = null; global.dispatchEvent(new CustomEvent('vh:players-tab', { detail: pt })); }
@@ -750,6 +761,12 @@
 loadSecondaryWhenNeeded();
     }).catch(function (err) {
       if (els.empty) els.empty.textContent = 'Could not load the skills data (' + err.message + ').';
+      var ss = document.getElementById('skills-status');
+      if (ss) ss.textContent = 'Could not load the skills data.';
+      ['players-panel-profile', 'players-panel-leaderboard'].forEach(function (id) {
+        var p = document.getElementById(id);
+        if (p) p.setAttribute('aria-busy', 'false');
+      });
     });
   }
 

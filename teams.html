@@ -4,8 +4,17 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <link rel="manifest" href="/manifest.json">
-<title>Team Intros &mdash; Vector Hoops</title>
+<title>Team intros &mdash; Vector Hoops</title>
 <meta name="description" content="Thirty seamless team intros: every NBA team's 2026-27 roster glowing inside the 2,422-player embedding atlas, with franchise legends as ghost stars."/>
+<meta property="og:type" content="website"/>
+<meta property="og:site_name" content="Vector Hoops"/>
+<meta property="og:url" content="https://hoops.dumbmodel.com/teams"/>
+<meta property="og:title" content="Team intros &mdash; Vector Hoops"/>
+<meta property="og:description" content="Thirty seamless team intro loops: every NBA team's 2026-27 roster glowing inside the 2,422-player embedding atlas, with franchise legends as ghost stars."/>
+<meta property="og:image" content="https://hoops.dumbmodel.com/assets/og-1200x630.png"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="Team intros &mdash; Vector Hoops"/>
+<meta name="twitter:description" content="Thirty seamless team intro loops: every NBA team's 2026-27 roster glowing inside the embedding atlas."/>
 <link rel="stylesheet" href="assets/shell.css?v=36a047f1">
 <link rel="stylesheet" href="assets/responsive.css?v=cc8e5207">
 <link rel="stylesheet" href="assets/final-qa.css?v=fb603ee5">
@@ -52,6 +61,11 @@ a{color:inherit}
   white-space:nowrap;
 }
 .title-card__meta b{color:var(--ink);font-weight:700;margin-right:6px}
+.team-card__head{position:relative}
+.team-card__anchor{color:var(--fg-3);text-decoration:none;font-size:.65em;vertical-align:middle}
+.team-card__anchor:hover,.team-card__anchor:focus-visible{color:var(--accent)}
+.team-card__share{position:absolute;top:10px;right:10px;appearance:none;border:1px solid var(--line-2);border-radius:999px;background:var(--surface);color:var(--ink);font-family:var(--mono);font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;padding:7px 12px;min-height:36px;cursor:pointer}
+.team-card__share:hover{border-color:var(--accent);color:var(--accent)}
 .teams-note{
   font-size:14px;color:var(--fg-2);max-width:72ch;margin:0;
 }
@@ -75,9 +89,9 @@ a{color:inherit}
 </div>
 
 <div class="teams-grid">
-  <article class="team-card">
+  <article class="team-card" id="team-atlanta">
     <header class="team-card__head">
-      <h2>Atlanta Hawks</h2>
+      <h2>Atlanta Hawks <a class="team-card__anchor" href="#team-atlanta" aria-label="Direct link to Atlanta Hawks card">#</a></h2>
       <p class="team-card__meta">14 current players &middot; 6 franchise legends</p>
     </header>
     <video class="team-card__video" loop muted playsinline preload="metadata"
@@ -85,9 +99,9 @@ a{color:inherit}
            poster="assets/team-intros/atlanta-loop-poster.jpg"
            aria-label="Atlanta Hawks team intro loop"></video>
   </article>
-  <article class="team-card">
+  <article class="team-card" id="team-boston">
     <header class="team-card__head">
-      <h2>Boston Celtics</h2>
+      <h2>Boston Celtics <a class="team-card__anchor" href="#team-boston" aria-label="Direct link to Boston Celtics card">#</a></h2>
       <p class="team-card__meta">15 current players &middot; 7 franchise legends</p>
     </header>
     <video class="team-card__video" loop muted playsinline preload="metadata"
@@ -95,9 +109,9 @@ a{color:inherit}
            poster="assets/team-intros/boston-loop-poster.jpg"
            aria-label="Boston Celtics team intro loop"></video>
   </article>
-  <article class="team-card">
+  <article class="team-card" id="team-brooklyn">
     <header class="team-card__head">
-      <h2>Brooklyn Nets</h2>
+      <h2>Brooklyn Nets <a class="team-card__anchor" href="#team-brooklyn" aria-label="Direct link to Brooklyn Nets card">#</a></h2>
       <p class="team-card__meta">14 current players &middot; 7 franchise legends</p>
     </header>
     <video class="team-card__video" loop muted playsinline preload="metadata"
@@ -105,9 +119,9 @@ a{color:inherit}
            poster="assets/team-intros/brooklyn-loop-poster.jpg"
            aria-label="Brooklyn Nets team intro loop"></video>
   </article>
-  <article class="team-card">
+  <article class="team-card" id="team-charlotte">
     <header class="team-card__head">
-      <h2>Charlotte Hornets</h2>
+      <h2>Charlotte Hornets <a class="team-card__anchor" href="#team-charlotte" aria-label="Direct link to Charlotte Hornets card">#</a></h2>
       <p class="team-card__meta">15 current players &middot; 7 franchise legends</p>
     </header>
     <video class="team-card__video" loop muted playsinline preload="metadata"
@@ -115,9 +129,9 @@ a{color:inherit}
            poster="assets/team-intros/charlotte-loop-poster.jpg"
            aria-label="Charlotte Hornets team intro loop"></video>
   </article>
-  <article class="team-card">
+  <article class="team-card" id="team-chicago">
     <header class="team-card__head">
-      <h2>Chicago Bulls</h2>
+      <h2>Chicago Bulls <a class="team-card__anchor" href="#team-chicago" aria-label="Direct link to Chicago Bulls card">#</a></h2>
       <p class="team-card__meta">14 current players &middot; 7 franchise legends</p>
     </header>
     <video class="team-card__video" loop muted playsinline preload="metadata"
@@ -125,9 +139,9 @@ a{color:inherit}
            poster="assets/team-intros/chicago-loop-poster.jpg"
            aria-label="Chicago Bulls team intro loop"></video>
   </article>
-  <article class="team-card">
+  <article class="team-card" id="team-cleveland">
     <header class="team-card__head">
-      <h2>Cleveland Cavaliers</h2>
+      <h2>Cleveland Cavaliers <a class="team-card__anchor" href="#team-cleveland" aria-label="Direct link to Cleveland Cavaliers card">#</a></h2>
       <p class="team-card__meta">12 current players &middot; 7 franchise legends</p>
     </header>
     <video class="team-card__video" loop muted playsinline preload="metadata"
@@ -135,9 +149,9 @@ a{color:inherit}
            poster="assets/team-intros/cleveland-loop-poster.jpg"
            aria-label="Cleveland Cavaliers team intro loop"></video>
   </article>
-  <article class="team-card">
+  <article class="team-card" id="team-dallas">
     <header class="team-card__head">
-      <h2>Dallas Mavericks</h2>
+      <h2>Dallas Mavericks <a class="team-card__anchor" href="#team-dallas" aria-label="Direct link to Dallas Mavericks card">#</a></h2>
       <p class="team-card__meta">15 current players &middot; 7 franchise legends</p>
     </header>
     <video class="team-card__video" loop muted playsinline preload="metadata"
@@ -145,9 +159,9 @@ a{color:inherit}
            poster="assets/team-intros/dallas-loop-poster.jpg"
            aria-label="Dallas Mavericks team intro loop"></video>
   </article>
-  <article class="team-card">
+  <article class="team-card" id="team-denver">
     <header class="team-card__head">
-      <h2>Denver Nuggets</h2>
+      <h2>Denver Nuggets <a class="team-card__anchor" href="#team-denver" aria-label="Direct link to Denver Nuggets card">#</a></h2>
       <p class="team-card__meta">15 current players &middot; 7 franchise legends</p>
     </header>
     <video class="team-card__video" loop muted playsinline preload="metadata"
@@ -155,9 +169,9 @@ a{color:inherit}
            poster="assets/team-intros/denver-loop-poster.jpg"
            aria-label="Denver Nuggets team intro loop"></video>
   </article>
-  <article class="team-card">
+  <article class="team-card" id="team-detroit">
     <header class="team-card__head">
-      <h2>Detroit Pistons</h2>
+      <h2>Detroit Pistons <a class="team-card__anchor" href="#team-detroit" aria-label="Direct link to Detroit Pistons card">#</a></h2>
       <p class="team-card__meta">16 current players &middot; 7 franchise legends</p>
     </header>
     <video class="team-card__video" loop muted playsinline preload="metadata"
@@ -165,9 +179,9 @@ a{color:inherit}
            poster="assets/team-intros/detroit-loop-poster.jpg"
            aria-label="Detroit Pistons team intro loop"></video>
   </article>
-  <article class="team-card">
+  <article class="team-card" id="team-golden-state">
     <header class="team-card__head">
-      <h2>Golden State Warriors</h2>
+      <h2>Golden State Warriors <a class="team-card__anchor" href="#team-golden-state" aria-label="Direct link to Golden State Warriors card">#</a></h2>
       <p class="team-card__meta">18 current players &middot; 8 franchise legends</p>
     </header>
     <video class="team-card__video" loop muted playsinline preload="metadata"
@@ -175,9 +189,9 @@ a{color:inherit}
            poster="assets/team-intros/golden-state-loop-poster.jpg"
            aria-label="Golden State Warriors team intro loop"></video>
   </article>
-  <article class="team-card">
+  <article class="team-card" id="team-houston">
     <header class="team-card__head">
-      <h2>Houston Rockets</h2>
+      <h2>Houston Rockets <a class="team-card__anchor" href="#team-houston" aria-label="Direct link to Houston Rockets card">#</a></h2>
       <p class="team-card__meta">15 current players &middot; 7 franchise legends</p>
     </header>
     <video class="team-card__video" loop muted playsinline preload="metadata"
@@ -185,9 +199,9 @@ a{color:inherit}
            poster="assets/team-intros/houston-loop-poster.jpg"
            aria-label="Houston Rockets team intro loop"></video>
   </article>
-  <article class="team-card">
+  <article class="team-card" id="team-indiana">
     <header class="team-card__head">
-      <h2>Indiana Pacers</h2>
+      <h2>Indiana Pacers <a class="team-card__anchor" href="#team-indiana" aria-label="Direct link to Indiana Pacers card">#</a></h2>
       <p class="team-card__meta">17 current players &middot; 7 franchise legends</p>
     </header>
     <video class="team-card__video" loop muted playsinline preload="metadata"
@@ -195,9 +209,9 @@ a{color:inherit}
            poster="assets/team-intros/indiana-loop-poster.jpg"
            aria-label="Indiana Pacers team intro loop"></video>
   </article>
-  <article class="team-card">
+  <article class="team-card" id="team-la-clippers">
     <header class="team-card__head">
-      <h2>LA Clippers</h2>
+      <h2>LA Clippers <a class="team-card__anchor" href="#team-la-clippers" aria-label="Direct link to LA Clippers card">#</a></h2>
       <p class="team-card__meta">17 current players &middot; 8 franchise legends</p>
     </header>
     <video class="team-card__video" loop muted playsinline preload="metadata"
@@ -205,9 +219,9 @@ a{color:inherit}
            poster="assets/team-intros/la-clippers-loop-poster.jpg"
            aria-label="LA Clippers team intro loop"></video>
   </article>
-  <article class="team-card">
+  <article class="team-card" id="team-la-lakers">
     <header class="team-card__head">
-      <h2>Los Angeles Lakers</h2>
+      <h2>Los Angeles Lakers <a class="team-card__anchor" href="#team-la-lakers" aria-label="Direct link to Los Angeles Lakers card">#</a></h2>
       <p class="team-card__meta">16 current players &middot; 8 franchise legends</p>
     </header>
     <video class="team-card__video" loop muted playsinline preload="metadata"
@@ -215,9 +229,9 @@ a{color:inherit}
            poster="assets/team-intros/la-lakers-loop-poster.jpg"
            aria-label="Los Angeles Lakers team intro loop"></video>
   </article>
-  <article class="team-card">
+  <article class="team-card" id="team-memphis">
     <header class="team-card__head">
-      <h2>Memphis Grizzlies</h2>
+      <h2>Memphis Grizzlies <a class="team-card__anchor" href="#team-memphis" aria-label="Direct link to Memphis Grizzlies card">#</a></h2>
       <p class="team-card__meta">18 current players &middot; 8 franchise legends</p>
     </header>
     <video class="team-card__video" loop muted playsinline preload="metadata"
@@ -225,9 +239,9 @@ a{color:inherit}
            poster="assets/team-intros/memphis-loop-poster.jpg"
            aria-label="Memphis Grizzlies team intro loop"></video>
   </article>
-  <article class="team-card">
+  <article class="team-card" id="team-miami">
     <header class="team-card__head">
-      <h2>Miami Heat</h2>
+      <h2>Miami Heat <a class="team-card__anchor" href="#team-miami" aria-label="Direct link to Miami Heat card">#</a></h2>
       <p class="team-card__meta">16 current players &middot; 9 franchise legends</p>
     </header>
     <video class="team-card__video" loop muted playsinline preload="metadata"
@@ -235,9 +249,9 @@ a{color:inherit}
            poster="assets/team-intros/miami-loop-poster.jpg"
            aria-label="Miami Heat team intro loop"></video>
   </article>
-  <article class="team-card">
+  <article class="team-card" id="team-milwaukee">
     <header class="team-card__head">
-      <h2>Milwaukee Bucks</h2>
+      <h2>Milwaukee Bucks <a class="team-card__anchor" href="#team-milwaukee" aria-label="Direct link to Milwaukee Bucks card">#</a></h2>
       <p class="team-card__meta">16 current players &middot; 6 franchise legends</p>
     </header>
     <video class="team-card__video" loop muted playsinline preload="metadata"
@@ -245,9 +259,9 @@ a{color:inherit}
            poster="assets/team-intros/milwaukee-loop-poster.jpg"
            aria-label="Milwaukee Bucks team intro loop"></video>
   </article>
-  <article class="team-card">
+  <article class="team-card" id="team-minnesota">
     <header class="team-card__head">
-      <h2>Minnesota Timberwolves</h2>
+      <h2>Minnesota Timberwolves <a class="team-card__anchor" href="#team-minnesota" aria-label="Direct link to Minnesota Timberwolves card">#</a></h2>
       <p class="team-card__meta">17 current players &middot; 7 franchise legends</p>
     </header>
     <video class="team-card__video" loop muted playsinline preload="metadata"
@@ -255,9 +269,9 @@ a{color:inherit}
            poster="assets/team-intros/minnesota-loop-poster.jpg"
            aria-label="Minnesota Timberwolves team intro loop"></video>
   </article>
-  <article class="team-card">
+  <article class="team-card" id="team-new-orleans">
     <header class="team-card__head">
-      <h2>New Orleans Pelicans</h2>
+      <h2>New Orleans Pelicans <a class="team-card__anchor" href="#team-new-orleans" aria-label="Direct link to New Orleans Pelicans card">#</a></h2>
       <p class="team-card__meta">19 current players &middot; 7 franchise legends</p>
     </header>
     <video class="team-card__video" loop muted playsinline preload="metadata"
@@ -265,9 +279,9 @@ a{color:inherit}
            poster="assets/team-intros/new-orleans-loop-poster.jpg"
            aria-label="New Orleans Pelicans team intro loop"></video>
   </article>
-  <article class="team-card">
+  <article class="team-card" id="team-new-york">
     <header class="team-card__head">
-      <h2>New York Knicks</h2>
+      <h2>New York Knicks <a class="team-card__anchor" href="#team-new-york" aria-label="Direct link to New York Knicks card">#</a></h2>
       <p class="team-card__meta">19 current players &middot; 9 franchise legends</p>
     </header>
     <video class="team-card__video" loop muted playsinline preload="metadata"
@@ -275,9 +289,9 @@ a{color:inherit}
            poster="assets/team-intros/new-york-loop-poster.jpg"
            aria-label="New York Knicks team intro loop"></video>
   </article>
-  <article class="team-card">
+  <article class="team-card" id="team-oklahoma-city">
     <header class="team-card__head">
-      <h2>Oklahoma City Thunder</h2>
+      <h2>Oklahoma City Thunder <a class="team-card__anchor" href="#team-oklahoma-city" aria-label="Direct link to Oklahoma City Thunder card">#</a></h2>
       <p class="team-card__meta">11 current players &middot; 9 franchise legends</p>
     </header>
     <video class="team-card__video" loop muted playsinline preload="metadata"
@@ -285,9 +299,9 @@ a{color:inherit}
            poster="assets/team-intros/oklahoma-city-loop-poster.jpg"
            aria-label="Oklahoma City Thunder team intro loop"></video>
   </article>
-  <article class="team-card">
+  <article class="team-card" id="team-orlando">
     <header class="team-card__head">
-      <h2>Orlando Magic</h2>
+      <h2>Orlando Magic <a class="team-card__anchor" href="#team-orlando" aria-label="Direct link to Orlando Magic card">#</a></h2>
       <p class="team-card__meta">18 current players &middot; 8 franchise legends</p>
     </header>
     <video class="team-card__video" loop muted playsinline preload="metadata"
@@ -295,9 +309,9 @@ a{color:inherit}
            poster="assets/team-intros/orlando-loop-poster.jpg"
            aria-label="Orlando Magic team intro loop"></video>
   </article>
-  <article class="team-card">
+  <article class="team-card" id="team-philadelphia">
     <header class="team-card__head">
-      <h2>Philadelphia 76ers</h2>
+      <h2>Philadelphia 76ers <a class="team-card__anchor" href="#team-philadelphia" aria-label="Direct link to Philadelphia 76ers card">#</a></h2>
       <p class="team-card__meta">17 current players &middot; 7 franchise legends</p>
     </header>
     <video class="team-card__video" loop muted playsinline preload="metadata"
@@ -305,9 +319,9 @@ a{color:inherit}
            poster="assets/team-intros/philadelphia-loop-poster.jpg"
            aria-label="Philadelphia 76ers team intro loop"></video>
   </article>
-  <article class="team-card">
+  <article class="team-card" id="team-phoenix">
     <header class="team-card__head">
-      <h2>Phoenix Suns</h2>
+      <h2>Phoenix Suns <a class="team-card__anchor" href="#team-phoenix" aria-label="Direct link to Phoenix Suns card">#</a></h2>
       <p class="team-card__meta">18 current players &middot; 8 franchise legends</p>
     </header>
     <video class="team-card__video" loop muted playsinline preload="metadata"
@@ -315,9 +329,9 @@ a{color:inherit}
            poster="assets/team-intros/phoenix-loop-poster.jpg"
            aria-label="Phoenix Suns team intro loop"></video>
   </article>
-  <article class="team-card">
+  <article class="team-card" id="team-portland">
     <header class="team-card__head">
-      <h2>Portland Trail Blazers</h2>
+      <h2>Portland Trail Blazers <a class="team-card__anchor" href="#team-portland" aria-label="Direct link to Portland Trail Blazers card">#</a></h2>
       <p class="team-card__meta">16 current players &middot; 7 franchise legends</p>
     </header>
     <video class="team-card__video" loop muted playsinline preload="metadata"
@@ -325,9 +339,9 @@ a{color:inherit}
            poster="assets/team-intros/portland-loop-poster.jpg"
            aria-label="Portland Trail Blazers team intro loop"></video>
   </article>
-  <article class="team-card">
+  <article class="team-card" id="team-sacramento">
     <header class="team-card__head">
-      <h2>Sacramento Kings</h2>
+      <h2>Sacramento Kings <a class="team-card__anchor" href="#team-sacramento" aria-label="Direct link to Sacramento Kings card">#</a></h2>
       <p class="team-card__meta">15 current players &middot; 7 franchise legends</p>
     </header>
     <video class="team-card__video" loop muted playsinline preload="metadata"
@@ -335,9 +349,9 @@ a{color:inherit}
            poster="assets/team-intros/sacramento-loop-poster.jpg"
            aria-label="Sacramento Kings team intro loop"></video>
   </article>
-  <article class="team-card">
+  <article class="team-card" id="team-san-antonio">
     <header class="team-card__head">
-      <h2>San Antonio Spurs</h2>
+      <h2>San Antonio Spurs <a class="team-card__anchor" href="#team-san-antonio" aria-label="Direct link to San Antonio Spurs card">#</a></h2>
       <p class="team-card__meta">13 current players &middot; 8 franchise legends</p>
     </header>
     <video class="team-card__video" loop muted playsinline preload="metadata"
@@ -345,9 +359,9 @@ a{color:inherit}
            poster="assets/team-intros/san-antonio-loop-poster.jpg"
            aria-label="San Antonio Spurs team intro loop"></video>
   </article>
-  <article class="team-card">
+  <article class="team-card" id="team-toronto">
     <header class="team-card__head">
-      <h2>Toronto Raptors</h2>
+      <h2>Toronto Raptors <a class="team-card__anchor" href="#team-toronto" aria-label="Direct link to Toronto Raptors card">#</a></h2>
       <p class="team-card__meta">15 current players &middot; 8 franchise legends</p>
     </header>
     <video class="team-card__video" loop muted playsinline preload="metadata"
@@ -355,9 +369,9 @@ a{color:inherit}
            poster="assets/team-intros/toronto-loop-poster.jpg"
            aria-label="Toronto Raptors team intro loop"></video>
   </article>
-  <article class="team-card">
+  <article class="team-card" id="team-utah">
     <header class="team-card__head">
-      <h2>Utah Jazz</h2>
+      <h2>Utah Jazz <a class="team-card__anchor" href="#team-utah" aria-label="Direct link to Utah Jazz card">#</a></h2>
       <p class="team-card__meta">15 current players &middot; 7 franchise legends</p>
     </header>
     <video class="team-card__video" loop muted playsinline preload="metadata"
@@ -365,9 +379,9 @@ a{color:inherit}
            poster="assets/team-intros/utah-loop-poster.jpg"
            aria-label="Utah Jazz team intro loop"></video>
   </article>
-  <article class="team-card">
+  <article class="team-card" id="team-washington">
     <header class="team-card__head">
-      <h2>Washington Wizards</h2>
+      <h2>Washington Wizards <a class="team-card__anchor" href="#team-washington" aria-label="Direct link to Washington Wizards card">#</a></h2>
       <p class="team-card__meta">17 current players &middot; 7 franchise legends</p>
     </header>
     <video class="team-card__video" loop muted playsinline preload="metadata"
@@ -389,6 +403,6 @@ a{color:inherit}
 <script src="assets/keyboard-a11y.js?v=39777a87"></script>
 <script src="assets/site-nav.js?v=08ff3eda" defer></script>
 <script src="assets/pwa-install.js?v=b954d9d1"></script>
-<script src="/assets/inline-teams.js?v=3ca2ef11"></script>
+<script src="/assets/inline-teams.js?v=fa730cef"></script>
 </body>
 </html>

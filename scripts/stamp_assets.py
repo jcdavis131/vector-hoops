@@ -119,9 +119,11 @@ def main() -> int:
             raw = m.group(2)          # as written on the page, may be root-absolute
             rel = raw.lstrip("/")     # as found on disk
             target = ROOT / rel
-            if not target.exists():
+            if not target.is_file():
                 # check_frontend's assets check owns reporting this; here it
-                # only means "cannot stamp what is not there"
+                # only means "cannot stamp what is not there" (a directory
+                # matches the fetch() pattern too — e.g. a poster path built
+                # at runtime — and has no bytes to hash).
                 missing.append(f"{page.name} -> {raw}")
                 return m.group(0)
             if rel not in cache:

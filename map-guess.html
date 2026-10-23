@@ -32,6 +32,7 @@ button,.input{min-height:44px}
 .mode-tab.is-link{text-decoration:none;color:var(--ink)}
 .embed3d-mount{position:relative;min-height:380px;border:1px solid var(--line-2);border-radius:16px;overflow:hidden;background:radial-gradient(120% 80% at 70% 20%,rgba(0,114,178,.10),transparent 48%),var(--paper)}
 .embed3d-placeholder{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:24px;text-align:center;color:var(--fg-2);font-size:14px}
+.embed3d-sketch{width:min(100%,430px);height:auto;margin-bottom:2px}
 .embed3d-placeholder .spin{width:34px;height:34px;border-radius:50%;border:3px solid var(--line-2);border-top-color:var(--accent);animation:mhspin 1s linear infinite}
 @keyframes mhspin{to{transform:rotate(360deg)}}
 .guess-row{border:1px solid var(--line-2);border-radius:12px;padding:10px 12px;background:var(--surface);margin-top:8px}
@@ -64,9 +65,9 @@ button,.input{min-height:44px}
 <nav class="site-nav" data-active="/map-guess" aria-label="Vector Hoops site"></nav>
 <main id="main" class="main">
   <header class="card" id="game-header">
-    <p class="small-mono" style="color:var(--accent);margin:0 0 6px">Opening night · new daily game</p>
+    <p class="small-mono" style="color:var(--accent);margin:0 0 6px">A new daily game</p>
     <h1 class="game-title">Map Hunt</h1>
-    <p class="game-subtitle">A mystery star is hiding somewhere in the 3D map of 12,966 player-seasons. Tap a point — the model answers in true 64-d cosine distance: <b>warmer</b> or <b>colder</b>, and how close you are versus every player-season ever charted. Find them in 8 taps.</p>
+    <p class="game-subtitle">A mystery star is hiding somewhere in the 3D map of 12,966 player-seasons. Tap a point — the model answers <b>warmer</b> or <b>colder</b> &mdash; in true embedding distance, not vibes, and how close you are versus every player-season ever charted. Find them in 8 taps.</p>
     <div class="mode-tabs" role="tablist" aria-label="Game modes">
       <button class="mode-tab" role="tab" data-mode="mh" type="button">🗺️ Daily Map Hunt</button>
       <button class="mode-tab" role="tab" data-mode="th" type="button">👯 Twin Hunt</button>
@@ -84,8 +85,68 @@ button,.input{min-height:44px}
     <section aria-label="The 3D map">
       <div class="embed3d-mount" data-projection="pca" style="height:min(72vw,460px)" role="application" aria-label="3D embedding map — tap a point to guess">
         <div class="embed3d-placeholder">
+          <svg class="embed3d-sketch" viewBox="0 0 400 260" role="img" aria-label="Sketch of the 3D player map — the live map is loading">
+          <rect x="4" y="4" width="392" height="252" fill="#FFFEF7" stroke="#1A150F" stroke-width="1.4"/>
+          <line x1="40" y1="8" x2="40" y2="252" stroke="#1A150F" stroke-width=".6" opacity=".1"/>
+          <line x1="120" y1="8" x2="120" y2="252" stroke="#1A150F" stroke-width=".6" opacity=".1"/>
+          <line x1="200" y1="8" x2="200" y2="252" stroke="#1A150F" stroke-width=".6" opacity=".1"/>
+          <line x1="280" y1="8" x2="280" y2="252" stroke="#1A150F" stroke-width=".6" opacity=".1"/>
+          <line x1="360" y1="8" x2="360" y2="252" stroke="#1A150F" stroke-width=".6" opacity=".1"/>
+          <line x1="8" y1="52" x2="392" y2="52" stroke="#1A150F" stroke-width=".6" opacity=".1"/>
+          <line x1="8" y1="132" x2="392" y2="132" stroke="#1A150F" stroke-width=".6" opacity=".1"/>
+          <line x1="8" y1="212" x2="392" y2="212" stroke="#1A150F" stroke-width=".6" opacity=".1"/>
+          <g stroke="#E0483B" stroke-width="1.2" stroke-dasharray="5 4"><line x1="40" y1="226" x2="200" y2="196"/><line x1="40" y1="226" x2="120" y2="120"/><line x1="40" y1="226" x2="300" y2="226"/></g>
+          <g font-family="ui-monospace,monospace" font-size="9" fill="#6E6E66"><text x="206" y="198">style</text><text x="112" y="112">era</text><text x="306" y="228">role</text></g>
+          <circle cx="115" cy="176" r="2.2" fill="#1A150F" opacity="0.41"/>
+          <circle cx="154" cy="107" r="3.0" fill="#1A150F" opacity="0.66"/>
+          <circle cx="135" cy="86" r="2.2" fill="#1A150F" opacity="0.56"/>
+          <circle cx="329" cy="38" r="3.0" fill="#1A150F" opacity="0.31"/>
+          <circle cx="185" cy="197" r="3.0" fill="#1A150F" opacity="0.37"/>
+          <circle cx="282" cy="40" r="2.2" fill="#1A150F" opacity="0.56"/>
+          <circle cx="118" cy="176" r="2.2" fill="#1A150F" opacity="0.32"/>
+          <circle cx="39" cy="189" r="2.2" fill="#1A150F" opacity="0.41"/>
+          <circle cx="333" cy="203" r="2.2" fill="#1A150F" opacity="0.62"/>
+          <circle cx="243" cy="208" r="2.2" fill="#1A150F" opacity="0.44"/>
+          <circle cx="284" cy="87" r="2.2" fill="#1A150F" opacity="0.31"/>
+          <circle cx="294" cy="58" r="2.2" fill="#1A150F" opacity="0.39"/>
+          <circle cx="349" cy="183" r="2.2" fill="#1A150F" opacity="0.66"/>
+          <circle cx="236" cy="164" r="1.6" fill="#1A150F" opacity="0.63"/>
+          <circle cx="91" cy="187" r="1.6" fill="#1A150F" opacity="0.60"/>
+          <circle cx="141" cy="215" r="2.2" fill="#1A150F" opacity="0.32"/>
+          <circle cx="167" cy="104" r="3.0" fill="#1A150F" opacity="0.34"/>
+          <circle cx="319" cy="63" r="2.2" fill="#1A150F" opacity="0.37"/>
+          <circle cx="189" cy="110" r="3.0" fill="#1A150F" opacity="0.31"/>
+          <circle cx="266" cy="53" r="3.0" fill="#1A150F" opacity="0.56"/>
+          <circle cx="109" cy="34" r="2.2" fill="#1A150F" opacity="0.59"/>
+          <circle cx="137" cy="205" r="2.2" fill="#1A150F" opacity="0.46"/>
+          <circle cx="55" cy="148" r="2.2" fill="#1A150F" opacity="0.37"/>
+          <circle cx="182" cy="37" r="1.6" fill="#1A150F" opacity="0.49"/>
+          <circle cx="39" cy="153" r="1.6" fill="#1A150F" opacity="0.42"/>
+          <circle cx="354" cy="92" r="1.6" fill="#1A150F" opacity="0.65"/>
+          <circle cx="222" cy="190" r="1.6" fill="#1A150F" opacity="0.50"/>
+          <circle cx="321" cy="207" r="2.2" fill="#1A150F" opacity="0.36"/>
+          <circle cx="331" cy="162" r="2.2" fill="#1A150F" opacity="0.43"/>
+          <circle cx="222" cy="72" r="1.6" fill="#1A150F" opacity="0.66"/>
+          <circle cx="313" cy="70" r="2.2" fill="#1A150F" opacity="0.35"/>
+          <circle cx="57" cy="189" r="1.6" fill="#1A150F" opacity="0.65"/>
+          <circle cx="351" cy="150" r="2.2" fill="#1A150F" opacity="0.64"/>
+          <circle cx="262" cy="126" r="1.6" fill="#1A150F" opacity="0.46"/>
+          <circle cx="109" cy="82" r="3.0" fill="#1A150F" opacity="0.53"/>
+          <circle cx="270" cy="191" r="2.2" fill="#1A150F" opacity="0.61"/>
+          <circle cx="46" cy="34" r="3.0" fill="#1A150F" opacity="0.40"/>
+          <circle cx="330" cy="205" r="3.0" fill="#1A150F" opacity="0.51"/>
+          <circle cx="331" cy="144" r="1.6" fill="#1A150F" opacity="0.64"/>
+          <circle cx="363" cy="99" r="2.2" fill="#1A150F" opacity="0.52"/>
+          <circle cx="140" cy="60" r="2.2" fill="#1A150F" opacity="0.56"/>
+          <circle cx="259" cy="137" r="3.0" fill="#1A150F" opacity="0.37"/>
+          <circle cx="358" cy="98" r="2.2" fill="#1A150F" opacity="0.45"/>
+          <circle cx="185" cy="78" r="1.6" fill="#1A150F" opacity="0.36"/>
+          <circle cx="262" cy="96" r="11" fill="none" stroke="#E0483B" stroke-width="2" stroke-dasharray="4 3"/><circle cx="262" cy="96" r="3.4" fill="#E0483B"/>
+          <text x="262" y="74" text-anchor="middle" font-family="ui-monospace,monospace" font-size="13" font-weight="800" fill="#E0483B">?</text>
+          <path d="M4 22V4h18M378 4h18v18M396 238v18h-18M22 256H4v-18" fill="none" stroke="#1A150F" stroke-width="1.6"/>
+          </svg>
           <span class="spin" aria-hidden="true"></span>
-          <p><b>Warming up the 3D map&hellip;</b><br/>12,966 player-seasons, placed by how they played. If the map can&rsquo;t load, the search box below keeps the game fully playable.</p>
+          <p><b>Loading 12,966 player-seasons&hellip;</b><br/>placed by how they played. If the map can&rsquo;t load, the search box below keeps the game fully playable.</p>
         </div>
       </div>
       <noscript><div class="card" style="margin-top:10px"><p><b>Map Hunt needs JavaScript</b> for the 3D map and distance feedback. The classic game works the same idea with text: <a href="/play">play Daily Court →</a></p></div></noscript>
@@ -96,7 +157,7 @@ button,.input{min-height:44px}
       <div class="mh-fallback-row">
         <input class="input" id="mh-search" list="mh-search-list" placeholder="Type a player name…" autocomplete="off" aria-label="Search player seasons"/>
         <datalist id="mh-search-list"></datalist>
-        <button class="btn btn-primary" id="mh-search-btn" type="button">Tap</button>
+        <button class="btn btn-primary" id="mh-search-btn" type="button">Guess</button>
       </div>
     </section>
 
@@ -111,7 +172,7 @@ button,.input{min-height:44px}
 
   <section class="card" aria-label="How it works">
     <p class="small-mono" style="margin:0 0 6px">How the hunt works</p>
-    <p style="font-size:14px;color:var(--fg-2);margin:0">The mystery is one of 64 notable player-seasons, picked deterministically — the same star for everyone today. Distance is cosine distance in the 64-d MTNN v5 embedding (L2-normalized), the same space the twin engine uses. Twin Hunt hands you a player and asks for their <b>era twin</b> — the season from another decade that plays most alike, straight from the same twin data as Daily Court.</p>
+    <p style="font-size:14px;color:var(--fg-2);margin:0">The mystery is one of 64 notable player-seasons, the same star for everyone today, picked by the calendar. Distance is cosine distance in the 64-d MTNN v5 embedding (L2-normalized), the same space the twin engine uses. Twin Hunt hands you a player and asks for their <b>era twin</b> — the season from another decade that plays most alike, straight from the same twin data as Daily Court.</p>
   </section>
 </main>
 <footer class="site-footer">
