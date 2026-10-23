@@ -103,8 +103,13 @@
   // Map lenses: layout switcher bar above the game map. Builds the
   // external-id -> person_id join from the game's searchLite pool, then
   // attaches VHMapLenses. Degrades gracefully (bar hidden) if data never arrives.
-  function mountLensBar(){
+  function mountLensBar(waitedMs){
     try{
+      // T3.1: map-lenses.js is deferred now — retry briefly if it hasn't run yet.
+      if((!window.VHMapLenses || !window._sharedMapApi) && (waitedMs||0) < 8000){
+        setTimeout(function(){ mountLensBar((waitedMs||0)+250); }, 250);
+        return;
+      }
       if(!window.VHMapLenses || !window._sharedMapApi) return;
       var mountEl = document.getElementById('lens-bar');
       if(!mountEl || mountEl.dataset.done) return;
@@ -1076,6 +1081,12 @@
   async function main(){
     // if the last guess never finished, say which step it was on
     crumbReport();
+    // T3.1: most page scripts are deferred now; the game boot (this file) stays
+    // blocking, so wait for the deferred game-data layer before touching it.
+    try{
+      const t0=Date.now();
+      while(!window.VHPastModern){ if(Date.now()-t0>8000) throw new Error('VHPastModern never loaded'); await new Promise(r=>setTimeout(r,50)); }
+    }catch(e){ console.warn('boot wait', e); }
     // shared-map handles resize/drag/hover/pause internally — legacy listeners removed
     window.addEventListener('resize',()=>{ try{ resize(); }catch{} },{passive:true});
 
@@ -1129,7 +1140,7 @@
     try{ initSoundToggle(); }catch(e){ console.warn('sound toggle fail', e); }
 
     let mode='daily'; if(st.isRandom) mode='random'; else if(st.isTriple) mode='triple';
-    if(mode==='triple'){ const md=$('#mode-desc'); if(md) md.textContent='Daily Triple: 3 fixed puzzles per day — the lighter court (the retired Everyday game, folded in). It shares the Daily Court streak: solve 1 to keep your streak alive.'; }
+    if(mode==='triple'){ const md=$('#mode-desc'); if(md) md.innerHTML='Daily Triple: 3 fixed puzzles per day — the lighter court (the retired Everyday game, folded in). It shares the Daily Court streak. <button type="button" class="linkbtn" id="mode-howto">Streak rules: How to play</button>'; }
     document.querySelectorAll('.mode-tab').forEach(btn=>{ const m=btn.dataset.mode; if(m===mode) btn.classList.add('is-active'); else btn.classList.remove('is-active'); });
     document.querySelectorAll('.mode-tab').forEach(btn=>{
       btn.addEventListener('click',()=>{
@@ -1160,6 +1171,7 @@
     function closeOnboard(){ if(backdrop){ backdrop.hidden=true; document.body.style.overflow=''; } try{ localStorage.setItem('vh.onboardSeenV3','1'); }catch{} }
     if(!onboardSeen){ setTimeout(openOnboard, 700); }
     $('#btn-howto')?.addEventListener('click', openOnboard);
+    $('#mode-howto')?.addEventListener('click', openOnboard);
     $('#btn-onboard-close')?.addEventListener('click', closeOnboard);
     $('#btn-onboard-play')?.addEventListener('click', ()=>{ closeOnboard(); $('#guess-input')?.focus(); });
     $('#btn-onboard-random')?.addEventListener('click', ()=>{ closeOnboard(); const p=VHPastModern.pickRandomPast(); location.href='/play?mode=random&r='+p.i; });

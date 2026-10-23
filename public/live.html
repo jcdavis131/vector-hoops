@@ -20,9 +20,27 @@
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:title" content="Courtside Live — Vector Hoops"/>
 <meta name="twitter:description" content="Courtside Live: the second-screen companion for NBA games. Win probability, atlas twins, ghost watch, shot charts — the second screen for NBA nights."/>
+<style>
+/* G2/T2.3: the 13 plates live in three collapsible bands */
+.band{border:1px solid var(--line,#e5ddc9);border-radius:12px;margin:10px 0;background:transparent}
+.band>summary{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;min-height:48px;padding:10px 14px;cursor:pointer;list-style:none}
+.band>summary::-webkit-details-marker{display:none}
+.band>summary::before{content:"+";display:inline-grid;place-content:center;width:24px;height:24px;border:1px solid var(--line-2,#d8cfb8);border-radius:50%;font-size:14px;flex:none}
+.band[open]>summary::before{content:"\2212"}
+.band__k{font-family:ui-monospace,monospace;font-size:10px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;opacity:.55}
+.band__t{font-family:ui-monospace,monospace;font-size:13px;font-weight:900;letter-spacing:.1em;text-transform:uppercase}
+.band__d{font-size:12px;opacity:.6}
+.band__body{display:flex;flex-direction:column;gap:10px;padding:0 10px 12px}
+.band__body .card{margin:0}
+#offgame .offgame-link{display:inline-block;min-height:44px;line-height:44px;padding:0 18px;border:1px solid var(--line-2,#d8cfb8);border-radius:999px;font-family:ui-monospace,monospace;font-size:12px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;text-decoration:none;color:inherit}
+.ms-share{margin-left:8px;font-family:ui-monospace,monospace;font-size:10px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;background:none;border:1px solid var(--line-2,#d8cfb8);border-radius:999px;padding:6px 10px;cursor:pointer;min-height:32px;color:inherit}
+.ms-share:hover{border-color:currentColor}
+.vh-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+</style>
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
+<noscript><nav aria-label="Site" style="padding:12px 16px;text-align:center;font-size:14px"><a href="/">Atlas</a> · <a href="/play">Daily Court</a> · <a href="/live">Live</a> · <a href="/replay">Replay</a> · <a href="/players">Players</a> · <a href="/insights">Insights</a> · <a href="/methods">Methods</a></nav><p role="alert" style="padding:0 16px 12px;text-align:center;font-size:13px">The live plates need JavaScript; schedules and methods are readable without it.</p></noscript>
 
 <nav class="site-nav" data-active="/live" aria-label="Vector Hoops site"></nav>
 <div class="live-root">
@@ -44,6 +62,12 @@
   <div id="games"><span style="font-size:13px;color:#6b675c">Loading tonight's games…</span></div>
 </div>
 <div id="feedcard" class="feedcard" hidden role="alert"></div>
+<div class="card" id="offgame" hidden>
+  <div class="plate"><span class="pno">OFF DAY</span><h2>NO LIVE GAME</h2><span class="prule"></span><span class="pmeta">the plates wake up at tip</span></div>
+  <p class="caption">Nothing is live right now — the full plate set loads when a game tips. Use the day arrows for other days, or rewatch the last one in pixels.</p>
+  <p><a id="offgame-replay" class="offgame-link" href="/replay">Rewatch the last game in Pixel Replay &rarr;</a></p>
+</div>
+
 <main id="main" tabindex="-1">
   <p id="live-loading" class="caption" role="status" style="padding:12px 4px">Loading today&rsquo;s games&hellip;</p>
   <div class="stickybar"><div class="board">
@@ -65,7 +89,10 @@
 
   <div class="card" id="pregame" hidden></div>
 
-  <div class="card rp-embed" id="rpPlate" hidden>
+  <details class="band" id="band-game" open>
+  <summary><span class="band__k">Band A</span><span class="band__t">The game</span><span class="band__d">replay · win probability · momentum · shot chart</span></summary>
+  <div class="band__body">
+<div class="card rp-embed" id="rpPlate" hidden>
     <div class="plate"><span class="pno">PLATE 01</span><h2>PIXEL REPLAY</h2><span class="prule"></span><span class="pmeta" id="rpPlateMeta">from ESPN play-by-play</span></div>
     <div class="rp-embed__screen">
       <canvas id="rpCanvas" data-mode="embed" width="400" height="225" role="img" aria-label="Animated pixel replay of this game, a play behind the live feed"></canvas>
@@ -78,10 +105,9 @@
       <span class="rp-embed__lag num" id="rpLag"></span>
       <a class="rp-embed__full" id="rpFull" href="/replay">Full replay &#8599;</a>
     </div>
-    <p id="rpNow" class="rp-embed__now" aria-live="off"></p>
+    <p id="rpNow" class="rp-embed__now" aria-live="polite"></p>
     <p class="caption">Plays and shot spots are ESPN&rsquo;s; the other nine players are projected by our model, and which basket each team shoots at is assumed: a projection, not tracking data. The page timeline drives the court.</p>
   </div>
-
   <div class="card">
     <div class="plate"><span class="pno">PLATE 02</span><h2>WIN PROBABILITY</h2><span class="prule"></span><span class="pmeta">our heuristic · honest uncertainty bands</span></div>
     <div class="wpnum"><div class="big" id="wpBig">–</div><div class="lbl" id="wpBand"></div><div class="lbl" id="wpLbl">our experimental heuristic</div></div>
@@ -93,25 +119,6 @@
     <b>Experimental heuristic, not fitted to historical data.</b> The band is the point: it shows how much
     this crude model doesn&rsquo;t know. Thin gray line = ESPN&rsquo;s own model, shown for reference.</details>
   </div>
-
-<div class="card liveonly">
-    <div class="plate"><span class="pno">PLATE 03</span><h2>GHOST WATCH</h2><span class="prule"></span><span class="pmeta">6k-game library</span></div>
-    <div id="ghosts"><span style="font-size:12px;color:#6b675c">Matching live lines against 6,000 historic games…</span></div>
-    
-  </div>
-
-<div class="card">
-    <div class="plate"><span class="pno">PLATE 04</span><h2>LIVE MOMENTS</h2><span class="prule"></span><span class="pmeta">auto-storylines</span></div>
-    <div id="moments"><span style="font-size:12px;color:#6b675c">Waiting for tip…</span></div>
-  </div>
-
-<div class="card">
-    <div class="plate"><span class="pno">PLATE 05</span><h2>KEY RUNS</h2><span class="prule"></span><span class="pmeta">8–0+ unanswered</span></div>
-    <div id="runs"><span style="font-size:12px;color:#6b675c">Waiting for tip…</span></div>
-  </div>
-
-<button id="more-plates-btn" class="morebtn" aria-expanded="false" aria-controls="more-plates">More plates: shot chart, leaders, play by play &amp; 5 more</button>
-<div id="more-plates" hidden>
 <div class="card">
     <div class="plate"><span class="pno">PLATE 06</span><h2>MOMENTUM</h2><span class="prule"></span><span class="pmeta">lead trace</span></div>
     <div class="wpnum"><div class="big num" id="diffBig">–</div><div class="lbl" id="diffLbl">current margin</div></div>
@@ -119,7 +126,60 @@
     <div class="legend"><span>tip →</span><span>Q1&nbsp;&nbsp;Q2&nbsp;&nbsp;Q3&nbsp;&nbsp;Q4</span><span>→ now</span></div>
     <div class="qbars" id="qbars"></div>
   </div>
+<div class="card">
+    <div class="plate"><span class="pno">PLATE 10</span><h2>SHOT CHART</h2><span class="prule"></span><span class="pmeta">live attempts</span></div>
+    <div class="shot-toggle" id="shotToggle">
+      <button data-t="A">AWAY</button><button data-t="H" class="picked">HOME</button><button data-t="B">BOTH</button>
+    </div>
+    <svg id="shotSvg" class="shot" viewBox="0 0 50 54" role="img" aria-label="Shot chart"></svg>
+    <div class="zone-stats" id="zoneStats"></div>
+  </div>
+  </div>
+</details>
 
+<details class="band" id="band-story" open>
+  <summary><span class="band__k">Band B</span><span class="band__t">The story</span><span class="band__d">live moments · key runs · ghost watch · milestone watch · play by play</span></summary>
+  <div class="band__body">
+<div class="card liveonly">
+    <div class="plate"><span class="pno">PLATE 03</span><h2>GHOST WATCH</h2><span class="prule"></span><span class="pmeta">Which of 6,000 past games does this one rhyme with?</span></div>
+    <div id="ghosts"><span style="font-size:12px;color:#6b675c">Matching live lines against 6,000 historic games…</span></div>
+    
+  </div>
+<div class="card">
+    <div class="plate"><span class="pno">PLATE 04</span><h2>LIVE MOMENTS</h2><span class="prule"></span><span class="pmeta">auto-storylines</span></div>
+    <div id="moments"><span style="font-size:12px;color:#6b675c">Waiting for tip…</span></div>
+  </div>
+<div class="card">
+    <div class="plate"><span class="pno">PLATE 05</span><h2>KEY RUNS</h2><span class="prule"></span><span class="pmeta">8–0+ unanswered</span></div>
+    <div id="runs"><span style="font-size:12px;color:#6b675c">Waiting for tip…</span></div>
+  </div>
+<div class="card liveonly">
+    <div class="plate"><span class="pno">PLATE 11</span><h2>MILESTONE WATCH</h2><span class="prule"></span><span class="pmeta">bests since ’23</span></div>
+    <div id="miles"><span style="font-size:12px;color:#6b675c">Waiting for tip…</span></div>
+    
+  </div>
+<div class="card">
+    <div class="plate"><span class="pno">PLATE 13</span><h2>PLAY BY PLAY</h2><span class="prule"></span><span class="pmeta">every possession</span></div>
+    <ul id="plays"></ul>
+  </div>
+  </div>
+</details>
+
+<details class="band" id="band-players" open>
+  <summary><span class="band__k">Band C</span><span class="band__t">The players</span><span class="band__d">leaders · archetype efficiency · style map · atlas</span></summary>
+  <div class="band__body">
+<div class="card liveonly">
+    <div class="plate"><span class="pno">PLATE 12</span><h2>LEADERS</h2><span class="prule"></span><span class="pmeta">box score</span></div>
+    <div class="leaders"><div class="lcol" id="leadA"></div><div class="lcol" id="leadH"></div></div>
+  </div>
+<div class="card">
+<div class="plate"><span class="pno">PLATE 08</span><h2>ARCHETYPE EFFICIENCY</h2><span class="prule"></span><span class="pmeta">who's carrying the scoring tonight</span></div>
+    <div id="arche"><span style="font-size:12px;color:#6b675c">Box score not up yet.</span></div>
+  </div>
+<div class="card">
+    <div class="plate"><span class="pno">PLATE 09</span><h2>STYLE MAP</h2><span class="prule"></span><span class="pmeta">3D atlas</span></div>
+    <div class="embed3d-mount" data-projection="pca" style="height:420px"></div>
+  </div>
 <div class="card">
     <div class="plate"><span class="pno">PLATE 07</span><h2>ATLAS</h2><span class="prule"></span><span class="pmeta">12,966 player-seasons &middot; 64-d MTNN</span></div>
     <div class="shot-toggle" id="atlasModes" role="tablist" aria-label="Atlas views">
@@ -129,44 +189,10 @@
     <div class="legend"><span>&larr; bigs / paint</span><span id="atlasModeLbl">tap a player for their style-twins</span><span>shooters / perimeter &rarr;</span></div>
     <div class="twinrow" id="twinList"></div>
   </div>
-
-<div class="card">
-<div class="plate"><span class="pno">PLATE 08</span><h2>ARCHETYPE EFFICIENCY</h2><span class="prule"></span><span class="pmeta">who's carrying the scoring tonight</span></div>
-    <div id="arche"><span style="font-size:12px;color:#6b675c">Box score not up yet.</span></div>
   </div>
+</details>
 
-<div class="card">
-    <div class="plate"><span class="pno">PLATE 09</span><h2>STYLE MAP</h2><span class="prule"></span><span class="pmeta">3D atlas</span></div>
-    <div class="embed3d-mount" data-projection="pca" style="height:420px"></div>
-  </div>
-
-<div class="card">
-    <div class="plate"><span class="pno">PLATE 10</span><h2>SHOT CHART</h2><span class="prule"></span><span class="pmeta">live attempts</span></div>
-    <div class="shot-toggle" id="shotToggle">
-      <button data-t="A">AWAY</button><button data-t="H" class="picked">HOME</button><button data-t="B">BOTH</button>
-    </div>
-    <svg id="shotSvg" class="shot" viewBox="0 0 50 54" role="img" aria-label="Shot chart"></svg>
-    <div class="zone-stats" id="zoneStats"></div>
-  </div>
-
-<div class="card liveonly">
-    <div class="plate"><span class="pno">PLATE 11</span><h2>MILESTONE WATCH</h2><span class="prule"></span><span class="pmeta">bests since ’23</span></div>
-    <div id="miles"><span style="font-size:12px;color:#6b675c">Waiting for tip…</span></div>
-    
-  </div>
-
-<div class="card liveonly">
-    <div class="plate"><span class="pno">PLATE 12</span><h2>LEADERS</h2><span class="prule"></span><span class="pmeta">box score</span></div>
-    <div class="leaders"><div class="lcol" id="leadA"></div><div class="lcol" id="leadH"></div></div>
-  </div>
-
-<div class="card">
-    <div class="plate"><span class="pno">PLATE 13</span><h2>PLAY BY PLAY</h2><span class="prule"></span><span class="pmeta">every possession</span></div>
-    <ul id="plays"></ul>
-  </div>
-</div>
-
-  <p class="note">Scores and plays refresh every 30 s while a game is live and every 5 minutes otherwise; if the feed stalls you see the last-known score with its time. Use the day arrows for other days and the timeline to rewind.</p>
+<p class="note">Scores and plays refresh every 30 s while a game is live and every 5 minutes otherwise; if the feed stalls you see the last-known score with its time. Use the day arrows for other days and the timeline to rewind.</p>
   <div class="err" id="err"></div>
 </main>
 </section>
@@ -205,9 +231,9 @@
 <script src="assets/realtime/realtime.js?v=c6ee0c22" defer></script>
 <script src="assets/replay-espn.js?v=af4e5d05" defer></script>
 <script src="assets/replay-model.js?v=023bb286" defer></script>
-<script src="assets/replay.js?v=b727321f" defer></script>
+<script src="assets/replay.js?v=a18e7f02" defer></script>
 <script src="assets/replay-live.js?v=31eb2ec7" defer></script>
-<script src="assets/live.js?v=653f4d4c" defer></script>
+<script src="assets/live.js?v=15458f92" defer></script>
 <script src="assets/live-atlas.js?v=6d7fafa9" defer></script>
 <script src="assets/engagement.js?v=9afde51a" defer></script>
 </body>

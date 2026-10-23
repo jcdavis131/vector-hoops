@@ -68,8 +68,11 @@ def test_badge_matches_registry() -> None:
     assert m and int(m.group(1)) == 12, "badge must be 12 (overlap@20 = 0.115)"
     assert re.search(r"badge_overlap_at20:\s*0\.115", src), "registry must cite 0.115"
     index = (ROOT / "index.html").read_text(encoding="utf-8")
-    # the badge reads from the registry; the static fallback is the same value
-    assert 'data-served-const="badge_overlap_pct">12<' in index
+    # G2/T2.2: the badge copy is the plain-words rendering of the registry
+    # value (overlap@20 = 0.115 -> "about 1 in 9"), not the "neighborhoods" jargon.
+    assert "about 1 in 9" in index, "badge copy must carry the plain-words overlap"
+    assert "20 closest model neighbors" in index
+    assert "nearest neighborhoods" not in index, "jargon badge copy must stay retired"
 
 
 def test_band_cutoffs_match_registry_and_json() -> None:

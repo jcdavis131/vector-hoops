@@ -125,7 +125,7 @@
 
   function setRegionsMode(on) {
     regionsMode = on;
-    var btn = wrap.querySelector('[data-map="regions"]');
+    var btn = document.querySelector('[data-map="regions"]');
     if (btn) {
       btn.setAttribute('aria-pressed', String(on));
       var label = btn.querySelector('span');
@@ -196,7 +196,7 @@
       window.addEventListener('resize', function () {
         clearTimeout(t); t = setTimeout(function () { positionTags(P, bounds); }, 120);
       });
-      var rbtn = wrap.querySelector('[data-map="regions"]');
+      var rbtn = document.querySelector('[data-map="regions"]');
       if (rbtn) rbtn.addEventListener('click', function () { setRegionsMode(!regionsMode); });
     }).catch(function () { /* regions are enhancement; the base map still works */ });
   }

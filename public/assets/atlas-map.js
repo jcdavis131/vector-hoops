@@ -1,7 +1,7 @@
 /* atlas-map.js — the home-page instrument.
  *
  * Plots all 12,966 player-seasons from vectors_search_lite.json on a 2-D view
- * (x: paint → perimeter, y: scoring load; PCA of the 14 era-normalised
+ * (x: paint → perimeter, y: scoring load; PCA of the 14 era-normalized
  * per-100 features, as recorded in vectors.json). Selecting a season asks the
  * 64-d MTNN embedding (VHMtnn, mtnn.js) for its three nearest seasons by
  * cosine similarity. Nothing here is invented: every name, season, archetype
@@ -78,7 +78,7 @@
 
   // ---------- named concept axes (semanticspace-inspired) ----------
   // Default view is the PCA map; the picker swaps in plain-words concepts
-  // derived from the 14 era-normalised features (assets/atlas-concepts.json).
+  // derived from the 14 era-normalized features (assets/atlas-concepts.json).
   var PCA_AXES = {
     pca1: { name: 'Paint vs perimeter', lo: 'bigs (boards, blocks)', hi: 'shooters (3PA, 3P%)' },
     pca2: { name: 'Scoring load', lo: 'high-usage scorers', hi: 'low-usage role players' }
@@ -565,6 +565,41 @@
     if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(url).then(done, function () {});
   }
 
+  // G4/T4.4: the atlas "Copy link" is weak — offer the current view as an
+  // image for social. Web Share with a file where allowed, PNG download else.
+  function shareImage(btn) {
+    var done = function (msg) { var old = btn.textContent; btn.textContent = msg; setTimeout(function () { btn.textContent = old; }, 1800); };
+    var A = window.VHAtlas;
+    if (!A || !A.exportImage) { done('Map not ready'); return; }
+    A.exportImage().then(function (blob) {
+      if (!blob) { done('Map not ready'); return; }
+      var p = null;
+      try { p = A.selectedPlayer ? A.selectedPlayer() : null; } catch (e) {}
+      var title = (p ? p.n + ' ' + p.s : 'The atlas') + ' — Vector Hoops';
+      var file = null;
+      try { file = new File([blob], 'vector-hoops-atlas.png', { type: 'image/png' }); } catch (e) {}
+      if (file && navigator.canShare && navigator.canShare({ files: [file] })) {
+        try {
+          navigator.share({ files: [file], title: title, text: title })
+            .then(function () { done('Shared ✓'); }, function () { /* dismissed */ });
+          return;
+        } catch (e) { /* fall through to download */ }
+      }
+      try {
+        var a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = 'vector-hoops-atlas.png';
+        document.body.appendChild(a); a.click();
+        setTimeout(function () { try { URL.revokeObjectURL(a.href); } catch (e) {} a.remove(); }, 4000);
+        done('Image saved ✓');
+      } catch (e) { done('Could not export'); }
+    });
+  }
+  document.addEventListener('click', function (e) {
+    var b = e.target && e.target.closest ? e.target.closest('#atlas-export') : null;
+    if (b) shareImage(b);
+  });
+
   // ---------- named concept axes ----------
   function axisMeta(ax) {
     if (ax.type === 'pca1' || ax.type === 'pca2') return PCA_AXES[ax.type];
@@ -637,7 +672,7 @@
       sel.setAttribute('data-concepts', '1');
     });
     var note = $('axes-note');
-    if (note) note.textContent = 'Name both axes — every point re-plots. Concepts are weighted mixes of the 14 era-normalised stats; each formula ships in the data file.';
+    if (note) note.textContent = 'Name both axes — every point re-plots. Concepts are weighted mixes of the 14 era-normalized stats; each formula ships in the data file.';
   }
 
   function ensureConcepts(cb) {
@@ -712,23 +747,76 @@
 
   readColors();
   resize();
-  // 2s canvas watchdog (panel v4, Tier 2 item 14): if the atlas is not
-  // interactive within 2 seconds of boot, say so with the labeled still.
-  interactiveTimer = setTimeout(function () {
-    showStill('The live map did not start within 2 seconds on this connection.');
-  }, 2000);
-  // Uncertainty grammar (Part 2 panel: Hullman): load twin bands once; the
-  // peers table shows band labels, and re-renders when the bands arrive.
-  if (window.VHTwinBands) {
-    window.VHTwinBands.load().then(function (b) {
-      twinBands = b;
-      if (selected >= 0) renderReadout();
-    });
-  }
   window.addEventListener('resize', function () { clearTimeout(resize._t); resize._t = setTimeout(resize, 120); });
   if (window.matchMedia) {
     var mq = window.matchMedia('(prefers-color-scheme: light)');
     if (mq.addEventListener) mq.addEventListener('change', function () { readColors(); draw(); });
+  }
+
+  // Phase 2 (lazy): the canvas, legend, teams, and opening selection boot
+  // when the map scrolls near (G2/T2.2) — below the hero, so unscrolled
+  // visitors never pay for the canvas.
+  var canvasBooted = false;
+  function startCanvasWatchdog() {
+    // 2s canvas watchdog (panel v4, Tier 2 item 14): if the atlas is not
+    // interactive within 2 seconds of its boot, say so with the labeled still.
+    interactiveTimer = setTimeout(function () {
+      showStill('The live map did not start within 2 seconds on this connection.');
+    }, 2000);
+  }
+  function bootCanvas(id) {
+    if (canvasBooted) return;
+    canvasBooted = true;
+    startCanvasWatchdog();
+    // Uncertainty grammar (Part 2 panel: Hullman): load twin bands once; the
+    // peers table shows band labels, and re-renders when the bands arrive.
+    if (window.VHTwinBands) {
+      window.VHTwinBands.load().then(function (b) {
+        twinBands = b;
+        if (selected >= 0) renderReadout();
+      });
+    }
+    initLegend(); initTeams();
+    opening();
+    markInteractive();
+    select(id, { noUrl: true });
+    // Prefetch the peer list on first hover/touch/keyboard intent instead
+    // of on idle: visitors who never engage the map never pay for it.
+    ['pointerover', 'pointerdown', 'touchstart', 'focusin'].forEach(function (ev) {
+      document.addEventListener(ev, function () { ensurePeers(); }, { once: true, passive: true });
+    });
+    // P0-2: no engagement needed either — fetch the peer list the first time
+    // the peer table scrolls into view, so the skeleton state resolves on
+    // its own for visitors who only ever scroll. (VHPeers.load is idempotent:
+    // the engagement prefetch above cannot double-fetch.)
+    try {
+      var readoutEl = document.querySelector('#atlas .readout');
+      if (readoutEl && 'IntersectionObserver' in window) {
+        var peerIO = new IntersectionObserver(function (entries) {
+          if (entries.some(function (e) { return e.isIntersecting; })) {
+            peerIO.disconnect();
+            ensurePeers();
+          }
+        });
+        peerIO.observe(readoutEl);
+      }
+    } catch (e) { /* IO unsupported: engagement prefetch still applies */ }
+  }
+  function scheduleCanvasBoot(id) {
+    try {
+      var wrap = document.getElementById('map-wrap');
+      if (wrap && 'IntersectionObserver' in window) {
+        var io = new IntersectionObserver(function (entries) {
+          if (entries.some(function (e) { return e.isIntersecting; })) {
+            io.disconnect();
+            bootCanvas(id);
+          }
+        }, { rootMargin: '600px' });
+        io.observe(wrap);
+        return;
+      }
+    } catch (e) { /* fall through to immediate boot */ }
+    bootCanvas(id);
   }
 
   fetch(DATA_URL, { cache: 'force-cache' })
@@ -738,36 +826,18 @@
       if (!P.length) throw new Error('no rows');
       for (var pi = 0; pi < P.length; pi++) { P[pi].px = P[pi].x; P[pi].py = P[pi].y; }
       computeBounds(); buildGrid();
-      var s = $('atlas-state'); if (s) s.hidden = true;
       var count = $('atlas-count'); if (count) count.textContent = P.length.toLocaleString('en-US');
-      initSearch(); initLegend(); buildNameIndex(); initTeams(); initAxes();
+      // Phase 1 (eager): the hero search, the name index, and the axis
+      // pickers work without scrolling — the data file is needed for all.
+      initSearch(); buildNameIndex(); initAxes();
+      try {
+        (window.__vhAtlasReady || []).forEach(function (cb) { try { cb(); } catch (e) {} });
+        window.__vhAtlasReady = [];
+      } catch (e) {}
       var id = -1;
       try { var q = new URL(location.href).searchParams.get('id'); if (q != null && /^\d+$/.test(q)) id = +q; } catch (e) {}
       if (id < 0) { for (var i = 0; i < P.length; i++) if (P[i].n === FEATURED.n && P[i].s === FEATURED.s) { id = i; break; } }
-      opening();
-      markInteractive();
-      select(id, { noUrl: true });
-      // Prefetch the peer list on first hover/touch/keyboard intent instead
-      // of on idle: visitors who never engage the map never pay for it.
-      ['pointerover', 'pointerdown', 'touchstart', 'focusin'].forEach(function (ev) {
-        document.addEventListener(ev, function () { ensurePeers(); }, { once: true, passive: true });
-      });
-      // P0-2: no engagement needed either — fetch the peer list the first time
-      // the peer table scrolls into view, so the skeleton state resolves on
-      // its own for visitors who only ever scroll. (VHPeers.load is idempotent:
-      // the engagement prefetch above cannot double-fetch.)
-      try {
-        var readoutEl = document.querySelector('#atlas .readout');
-        if (readoutEl && 'IntersectionObserver' in window) {
-          var peerIO = new IntersectionObserver(function (entries) {
-            if (entries.some(function (e) { return e.isIntersecting; })) {
-              peerIO.disconnect();
-              ensurePeers();
-            }
-          });
-          peerIO.observe(readoutEl);
-        }
-      } catch (e) { /* IO unsupported: engagement prefetch still applies */ }
+      scheduleCanvasBoot(id);
     })
     .catch(function (err) { fail('The season file did not arrive (' + err.message + '). Check your connection and try again.'); });
 
@@ -780,6 +850,23 @@
     select: function (i) { select(i); },
     setCap: function (c) { window.__vhAtlasCap = c; draw(); },
     onSelect: function (cb) { (window.__vhAtlasSelect = window.__vhAtlasSelect || []).push(cb); },
+    onReady: function (cb) {
+      // Fires when the season file lands (phase 1, eager). Late subscribers
+      // get an immediate call if data is already in.
+      if (P && P.length) { try { cb(); } catch (e) {} return; }
+      (window.__vhAtlasReady = window.__vhAtlasReady || []).push(cb);
+    },
+    exportImage: function () {
+      // G4/T4.4: shareable atlas image, twins highlight baked in. Re-draw,
+      // then capture: the selected season's rings + peer hairlines.
+      return new Promise(function (resolve) {
+        if (!P || !P.length) { resolve(null); return; }
+        try { draw(); } catch (e) {}
+        try {
+          canvas.toBlob(function (b) { resolve(b); }, 'image/png');
+        } catch (e) { resolve(null); }
+      });
+    },
     highlightTeam: function (abbr) {
       stopCycle();
       for (var k = 0; k < teams.length; k++) {

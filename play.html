@@ -252,6 +252,8 @@ button,.input{min-height:44px}
 .vh-share-row{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
 .vh-share-row .btn{flex:1 1 0;min-width:120px}
 .vh-share-fine{font:11px/1.5 system-ui,sans-serif;color:#8a8172;margin-top:10px}
+/* single-line pointer to the canonical ruleset (modal) */
+.linkbtn{background:none;border:0;padding:0;font:inherit;color:var(--accent,#e0762e);font-weight:800;cursor:pointer;text-decoration:underline;text-underline-offset:2px}
 @media (prefers-reduced-motion: reduce){
   .guess-row.is-new,#result .card,#warm-label.pop,#streak-pill.tick,#guess-input.shake{animation:none}
   .bar>i{transition:none}
@@ -267,7 +269,7 @@ button,.input{min-height:44px}
   <header class="title-card game-head" id="game-header">
     <div class="title-card__eyebrow"><span id="header-mode-label">DAILY COURT • 5× PAST → MODERN</span><span id="mode-badge" class="visually-hidden">DAILY 5</span></div>
     <h1 class="title-card__title" id="game-title">Find the <em>modern twin</em></h1>
-    <p class="title-card__lede" id="game-subtitle">Same 5 for everyone today. 6 tries each. Solve 1 to save streak.</p>
+    <p class="title-card__lede" id="game-subtitle">Daily Court — find each past All-Star’s modern twin. 5 puzzles, 6 tries each, same for everyone today.</p>
     <div class="game-head__bar">
       <div class="game-head__side"><span class="pill" id="puzzle-pill">P#—</span><span class="pill" id="streak-pill">streak 0</span></div>
       <div class="game-status-bar" id="game-status-bar">
@@ -289,7 +291,7 @@ button,.input{min-height:44px}
       <button class="mode-tab" data-mode="triple" type="button">Daily Triple</button>
       <button class="mode-tab" data-mode="random" type="button">Random</button>
     </div>
-    <div class="mode-desc" id="mode-desc">Daily Court: 5 fixed puzzles per day, same for everyone — refresh can't reroll. Play any order; progress saves per slot. Solve 1 to save your streak, 3+ for the bonus streak.</div>
+    <div class="mode-desc" id="mode-desc">Daily Court: 5 fixed past All-Stars a day — same five for everyone, all day. Refresh won’t change them. Play any order; progress saves per slot. <button type="button" class="linkbtn" id="mode-howto">Streak rules: How to play</button></div>
   </div>
 
   <div class="card" id="daily-court" style="display:none;">
@@ -304,7 +306,7 @@ button,.input{min-height:44px}
       <span class="reward" id="reward-3"><span>★</span> 3 solved → Sharpshooter + hint unlock</span>
       <span class="reward" id="reward-5"><span>🏆</span> 5 solved → Full Court perfect</span>
     </div>
-    <div class="small-mono" style="margin-top:8px;opacity:.6;text-transform:none">Each slot is fixed for the day — same for everyone. No reroll on refresh. Solve 1 to save your streak, 3+ to keep the bonus streak, all 5 to top the board.</div>
+    <div class="small-mono" style="margin-top:8px;opacity:.6;text-transform:none">Same five for everyone, all day. Refresh won’t change them.</div>
   </div>
 
   <div id="lens-bar"></div>
@@ -339,23 +341,25 @@ button,.input{min-height:44px}
   </div>
 
   <div class="card vh-truth" id="guess-card" style="border-width:2.5px">
-    <div class="ready-banner" id="ready-banner" style="margin:-2px -2px 14px;border-style:dashed"><div style="min-width:0"><h3 style="margin:0 0 4px;font-size:16px;line-height:1.2">▶ Ready? First guess begins game</h3><p style="margin:0;font-size:13px;line-height:1.45;opacity:.9">Same 5 puzzles for everyone today. You see past All-Star ★. Type a 2025–26 modern player below — 6 tries. Warmer/colder after each.</p></div><button class="btn btn-primary" id="btn-focus-guess" type="button" style="flex:0 0 auto">Start typing →</button></div>
-    <div style="display:flex;justify-content:space-between;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:8px"><label class="small-mono" for="guess-input" style="margin:0">Guess modern — turn <span id="turn-count">1</span>/6 • <span id="slot-label-wrap">slot <span id="slot-label">1</span>/5</span></label><span class="pill" id="warm-label" style="display:none"></span></div>
+    <div class="ready-banner" id="ready-banner" style="margin:-2px -2px 14px;border-style:dashed"><div style="min-width:0"><h3 style="margin:0 0 4px;font-size:16px;line-height:1.2">▶ Ready? First guess begins game</h3><p style="margin:0;font-size:13px;line-height:1.45;opacity:.9">Same five for everyone, all day. Refresh won’t change them. You see past All-Star ★. Type a 2025–26 modern player below — 6 tries. Warmer/colder after each.</p></div><button class="btn btn-primary" id="btn-focus-guess" type="button" style="flex:0 0 auto">Start typing →</button></div>
+    <div style="display:flex;justify-content:space-between;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:8px"><label class="small-mono" for="guess-input" style="margin:0">Guess modern — turn <span id="turn-count">1</span>/6 • <span id="slot-label-wrap">slot <span id="slot-label">1</span>/5</span></label><span class="pill" id="warm-label" style="display:none" role="status" aria-live="polite"></span></div>
     <div class="suggest"><input id="guess-input" class="input" placeholder="Type modern — e.g., Wembanyama, SGA, Ant" autocomplete="off" spellcheck="false" disabled/><ul id="guess-suggest" style="display:none"></ul></div>
     <p class="guess-rule" id="guess-rule" data-served-const="guess_rule">Only players with a qualifying 2025-26 season (12+ games, 450+ minutes)</p>
     <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap"><button id="guess-btn" class="btn btn-primary" type="button" disabled>Guess</button><button id="share-btn" class="btn" type="button">Share</button><button id="share-text-btn" class="btn" type="button">Copy Grid</button><button id="btn-challenge" class="btn" type="button">Challenge</button></div>
     <div id="lifelines-bar" style="margin-top:4px"></div>
-    <div id="guesses" style="margin-top:8px"></div><p class="small-mono" style="text-transform:none;opacity:.65;margin-top:6px">The % is style similarity (cosine × 100) between your guess and the target — era-adjusted, so a 90s big can match a modern one. #rank is your guess's rank among all 12,966 seasons.</p><div id="result" style="margin-top:12px"></div>
+    <div id="guesses" style="margin-top:8px"></div><p class="small-mono" style="text-transform:none;opacity:.65;margin-top:6px">The % is style similarity (0–100) between your guess and the target — era-adjusted, so a 90s big can match a modern one. Details in Methods. #rank is your guess’s rank among all 12,966 seasons.</p><div id="result" style="margin-top:12px"></div>
     <div id="play-forecast-slot" style="margin-top:12px"></div>
   </div>
 </div>
 
 <div id="onboarding-backdrop" class="vh-sheet-backdrop" hidden>
   <div class="vh-sheet" role="dialog" aria-modal="true"><div class="vh-sheet__handle"></div>
-    <div class="vh-sheet__head"><h2 class="vh-sheet__title">Daily Court — 5× daily</h2><button class="vh-sheet__close" id="btn-onboard-close" type="button" aria-label="Close">✕</button></div>
-    <div class="small-mono" style="margin-bottom:8px;color:var(--fg-2)">5 puzzles daily, same for everyone</div>
+    <div class="vh-sheet__head"><h2 class="vh-sheet__title">How to play</h2><button class="vh-sheet__close" id="btn-onboard-close" type="button" aria-label="Close">✕</button></div>
+    <div class="small-mono" style="margin-bottom:8px;color:var(--fg-2)">Daily Court · one canonical ruleset</div>
     <div class="onboard-steps">
-      <div class="onboard-step"><span class="onboard-step__num">1</span><div><b>Daily Court: 5 fixed past All-Stars per day, same for everyone</b><p>Deterministic from date: hash(date+slot). Refresh gives same 5. Guesses saved per slot in localStorage. Can't be rerolled.</p></div></div>
+      <div class="onboard-step"><span class="onboard-step__num">1</span><div><b>Find the modern twin</b><p>Type a 2025–26 modern player — 6 tries to name the past All-Star’s closest modern twin. Warmer/colder after each guess.</p></div></div>
+      <div class="onboard-step"><span class="onboard-step__num">2</span><div><b>Streaks</b><p>Solve 1 to keep your streak. 3+ earns Sharpshooter. All 5 is a perfect board.</p></div></div>
+      <div class="onboard-step"><span class="onboard-step__num">3</span><div><b>Same five for everyone</b><p>Daily Court deals 5 fixed past All-Stars a day, same for everyone. Refresh won’t change them — progress saves per slot.</p></div></div>
     </div>
     <div style="display:flex;gap:10px;margin-top:12px;flex-wrap:wrap"><button class="btn btn-primary" id="btn-onboard-play" type="button">▶ Play Court</button><button class="btn" id="btn-onboard-random" type="button">🎲 Random</button></div>
   </div>
@@ -365,11 +369,11 @@ button,.input{min-height:44px}
 <script src="assets/error-boundary.js?v=8079215c"></script>
 <script src="assets/keyboard-a11y.js?v=39777a87"></script>
 <script src="assets/site-nav.js?v=08ff3eda" defer></script>
-<script src="assets/pwa-install.js?v=b954d9d1"></script><script src="assets/audio.js?v=52cfa0d8"></script><script type="module" src="assets/timesfm-forecast.js?v=b1376756"></script><script src="assets/pixel-avatar.js?v=6216d2ba"></script><script src="assets/team-logo.js?v=864a7981"></script><script src="assets/viral-share.js?v=cf0464c7"></script><script src="assets/daily-ledger.js?v=4d0840fa"></script><script src="assets/daily-score.js?v=1700d0af"></script><script src="assets/past-modern-game.js?v=730a82fc"></script><script src="assets/served-constants.js?v=8ba12340"></script><script src="/assets/twin-bands.js?v=0a191313"></script><script src="/assets/twin-explainer.js?v=a005619a"></script>
-<script src="assets/map-lenses.js?v=656e8d30"></script>
-<script src="assets/game-mechanics.js?v=a03fd0bf"></script>
-<script src="assets/play-engine.js?v=67aaf3c2"></script>
-<script src="assets/engagement.js?v=9afde51a"></script>
+<script src="assets/pwa-install.js?v=b954d9d1" defer></script><script src="assets/audio.js?v=52cfa0d8" defer></script><script type="module" src="assets/timesfm-forecast.js?v=b1376756"></script><script src="assets/pixel-avatar.js?v=6216d2ba" defer></script><script src="assets/team-logo.js?v=864a7981" defer></script><script src="assets/viral-share.js?v=cf0464c7" defer></script><script src="assets/daily-ledger.js?v=4d0840fa" defer></script><script src="assets/daily-score.js?v=1700d0af" defer></script><script src="assets/past-modern-game.js?v=730a82fc" defer></script><script src="assets/served-constants.js?v=8ba12340" defer></script><script src="/assets/twin-bands.js?v=0a191313" defer></script><script src="/assets/twin-explainer.js?v=a005619a" defer></script>
+<script src="assets/map-lenses.js?v=656e8d30" defer></script>
+<script src="assets/game-mechanics.js?v=a03fd0bf" defer></script>
+<script src="assets/play-engine.js?v=fd15076f"></script>
+<script src="assets/engagement.js?v=9afde51a" defer></script>
 <script>
 /* P0 share/copy feedback insurance (ux-revamp PLAN §6: "feedback in ≤100ms").
  * play-engine.js owns the actual share/copy work; this layer only guarantees
