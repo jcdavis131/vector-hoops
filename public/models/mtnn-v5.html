@@ -54,16 +54,12 @@
 .doc-list{ columns:2; column-gap:40px; margin:0; padding-left:1.4em; color:var(--fg-2); font-size:15px; line-height:1.9; }
 .doc-list li::marker{ color:var(--fg-3); font-variant-numeric:tabular-nums; }
 @media (max-width:640px){ .doc-defs, .doc-list{ grid-template-columns:1fr; columns:1; } .doc-defs > div:nth-child(even){ padding-left:0; border-left:0; } }
-.mc-strip{ display:flex; flex-wrap:wrap; gap:10px; margin:8px 0 20px; }
-.mc-badge{ flex:1 1 30%; min-width:150px; border:1px solid var(--line); border-radius:var(--radius); padding:12px 14px; background:var(--surface); }
-.mc-badge b{ display:block; font-variant-numeric:tabular-nums; font-size:var(--t-lg); color:var(--fg); }
-.mc-badge span{ font-size:12px; color:var(--fg-3); text-transform:uppercase; letter-spacing:.12em; }
 .mc-status{ display:inline-block; font-family:var(--font-display); font-size:11px; font-weight:700; letter-spacing:.2em; text-transform:uppercase; color:var(--fg); border:1px solid var(--accent); border-radius:999px; padding:6px 14px; margin-bottom:14px; }
 </style>
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
-<nav class="site-nav" data-active="/models/mtnn-v5" aria-label="Vector Hoops site"></nav>
+<nav class="site-nav" data-active="/models/mtnn-v5" aria-label="Vector Hoops site"><noscript class="site-nav__noscript"><a href="/">Atlas</a><a href="/play">Play</a><a href="/map-guess">Map Hunt</a><a href="/live">Live</a><a href="/players">Players</a><a href="/insights">Insights</a><a href="/taxonomy">Taxonomy</a><a href="/methods">Methods</a><a href="/models/mtnn-v5">Models</a></noscript></nav>
 <div id="main" class="main doc" role="main">
   <header class="title-card">
     <div class="title-card__eyebrow reveal">Model card</div>
@@ -73,22 +69,17 @@
   </header>
 
   <nav class="doc-toc" aria-label="On this page">
-    <a href="#at-a-glance"><span>01</span>At a glance</a><a href="#predicts"><span>02</span>Predicts</a><a href="#cannot"><span>03</span>Cannot</a><a href="#biases"><span>04</span>Biases</a><a href="#plain-words"><span>05</span>Plain words</a><a href="#registry"><span>06</span>Registry &amp; lineage</a><a href="#challenger"><span>07</span>Challenger</a>
+    <a href="#at-a-glance"><span>01</span>At a glance</a><a href="#predicts"><span>02</span>Predicts</a><a href="#plain-words"><span>03</span>Plain words</a><a href="#cannot"><span>04</span>Cannot</a><a href="#biases"><span>05</span>Biases</a><a href="#registry"><span>06</span>Registry &amp; lineage</a><a href="#challenger"><span>07</span>Challenger</a>
   </nav>
 
   <article class="doc-body">
     <section id="at-a-glance">
       <div class="doc-n">01</div>
       <h2>At a glance</h2>
-      <div class="mc-strip">
-        <div class="mc-badge"><b>12,966</b><span>player-seasons embedded</span></div>
-        <div class="mc-badge"><b>64-d</b><span>L2-normalized embedding</span></div>
-        <div class="mc-badge"><b>1996-97 → 2025-26</b><span>data window, 2,415 players</span></div>
-        <div class="mc-badge"><b>2026-07-25</b><span>incumbent since (vintage)</span></div>
-        <div class="mc-badge"><b>test top-1 43.8%</b><span>held-out next-season retrieval</span></div>
-        <div class="mc-badge"><b>~1 in 13</b><span>beats the 14-d baseline ~6×</span></div>
-      </div>
       <dl class="doc-defs">
+        <div><dt>12,966 player-seasons</dt><dd>2,415 players, 1996-97 → 2025-26 — each season a 64-d L2-normalized fingerprint.</dd></div>
+        <div><dt>Test top-1 43.8%</dt><dd>Held-out next-season retrieval — about 6× the 14-d baseline (7.9%, roughly 1 in 13).</dd></div>
+        <div><dt>Incumbent since 2026-07-25</dt><dd>Single-model serving policy: this one bundle serves the whole site.</dd></div>
         <div><dt>Model string</dt><dd><code>mtnn_v5_concat_b2_h160_t32_d64_mlp128_fus256</code> — 2 tower blocks, hidden 160, tower out 32, MLP 128, fusion 256.</dd></div>
         <div><dt>Run id</dt><dd><code>july-v5-a4918f09</code> — the adopted July 2026 incumbent; lineage was reconstructed from the served bytes, not from original run files (see <a href="#registry">lineage</a>).</dd></div>
         <div><dt>Artifact</dt><dd><code>assets/mtnn_embeddings.f32</code> — 3,319,296 bytes (12,966 × 64 × 4). The raw weights are <b>never served to the browser</b>; pages use precomputed JSON.</dd></div>
@@ -100,7 +91,7 @@
       <div class="doc-n">02</div>
       <h2>What it predicts</h2>
       <p>Given one player-season's stat profile, MTNN v5 answers a single question: <b>which other player-seasons play the game most like this one?</b> It compresses each season into a 64-d unit vector and ranks neighbors by cosine similarity. Everything on the site that says "twin" runs on this space: Daily Court, Twin Networks, era twins, career trails.</p>
-      <p>The honest measurement is the <b>held-out adjacent-season retrieval</b> protocol: query season N, hit if the <i>same player's</i> season N+1 lands in the top-k neighbors among all 12,966 seasons. Splits: train ≤2021, val 2022–23, test ≥2024.</p>
+      <p>The honest test: given season N, can it find the same player's season N+1 among all 12,966 seasons? (We call this held-out adjacent-season retrieval.) Splits: train ≤2021, val 2022–23, test ≥2024.</p>
       <table class="data-table">
         <thead><tr><th scope="col">Split</th><th scope="col">n</th><th scope="col">MTNN top-1</th><th scope="col">MTNN top-5</th><th scope="col">14-d baseline top-1</th></tr></thead>
         <tbody>
@@ -109,12 +100,19 @@
           <tr><td>Overall</td><td>10,104</td><td>50.8%</td><td>93.4%</td><td>7.5%</td></tr>
         </tbody>
       </table>
-      <p class="doc-note">The baseline is the transparent 14 era-z features (vectors.json, cosine). MTNN beats it roughly six-fold on the test split. The lineage's headline numbers — test recall@10 0.846, archetype top-1 accuracy 0.970 — were recorded from the adopted run; the held-out table above is the number to trust.</p>
+      <p class="doc-note">The baseline is the transparent 14 era-z features (vectors.json, cosine). MTNN beats it roughly six-fold on the test split. The adopted run claims test recall@10 of 0.846 and archetype accuracy of 0.970, but those were recorded before the holdout — trust the table above, not the claim.</p>
       <p>Secondary outputs from the lineage: archetype classification (top-1 accuracy 0.970) and purity@20 of 0.783 — nearest neighbors land in the same archetype family about four times in five.</p>
     </section>
 
-    <section id="cannot">
+    <section id="plain-words">
       <div class="doc-n">03</div>
+      <h2>In plain words</h2>
+      <p class="doc-formula">Take every NBA season from 1996 to today. Turn each one into a 64-number fingerprint that captures how a player scored, passed, rebounded, defended, and shot — adjusted so a 1998 season can fairly meet a 2025 one. Seasons with similar fingerprints sit near each other. That's it. The games on this site are different ways of walking around that neighborhood: guessing twins, drawing networks, comparing eras.</p>
+      <p>The fingerprint gets it right a lot more than the simple version does — on genuinely unseen seasons it finds the right player's next season 44% of the time versus 8% for the simple stat table — but it's weaker on modern seasons, blind to anything not in the box score, and it never tells you who was <i>better</i>, only whose game <i>looked alike</i>.</p>
+    </section>
+
+    <section id="cannot">
+      <div class="doc-n">04</div>
       <h2>What it cannot do</h2>
       <ul class="doc-list">
         <li><b>It cannot say who was better.</b> It ranks similarity, not greatness. A twin match means "played the game the same way", never "was as good as".</li>
@@ -127,7 +125,7 @@
     </section>
 
     <section id="biases">
-      <div class="doc-n">04</div>
+      <div class="doc-n">05</div>
       <h2>Known biases</h2>
       <dl class="doc-defs">
         <div><dt>Era bias — weaker in the modern game</dt><dd>Test-split retrieval top-1 is 61.6% for 1996–99 queries but 38.5% for 2020s queries. Similarity is less certain in the modern game, where roles and shot mixes have converged.</dd></div>
@@ -138,25 +136,20 @@
       </dl>
     </section>
 
-    <section id="plain-words">
-      <div class="doc-n">05</div>
-      <h2>In plain words</h2>
-      <p class="doc-formula">Take every NBA season from 1996 to today. Turn each one into a 64-number fingerprint that captures how a player scored, passed, rebounded, defended, and shot — adjusted so a 1998 season can fairly meet a 2025 one. Seasons with similar fingerprints sit near each other. That's it. The games on this site are different ways of walking around that neighborhood: guessing twins, drawing networks, comparing eras.</p>
-      <p>The fingerprint gets it right a lot more than the simple version does — on genuinely unseen seasons it finds the right player's next season 44% of the time versus 8% for the simple stat table — but it's weaker on modern seasons, blind to anything not in the box score, and it never tells you who was <i>better</i>, only whose game <i>looked alike</i>.</p>
-    </section>
+
 
     <section id="registry">
       <div class="doc-n">06</div>
       <h2>Registry &amp; lineage</h2>
       <p>This model is tracked in the versioned registry: <a href="/models/registry.json">models/registry.json</a> — id <code>mtnn-v5</code>, status <code>champion</code>, data window, metrics, artifact paths, and provenance, all machine-readable. The registry's champion entry is checked against the served bytes by CI's served-model gate: if the registry and the served bundle ever disagree about the run id or the file fingerprint, the build fails.</p>
-      <p>The gate's current state is <b>red</b>: the lineage was reconstructed from the served bytes (git blob <code>a4918f09</code>) because the original July 2026 run directory is not in the repo. Export floors were waived by <code>--force</code>; the checkpoint, train git SHA, and run report are unknown. Resolving it takes one of two things — find the original run files, or order a deliberate replacement champion — and both are Cameron's call. The full accounting is in <a href="https://github.com/jcdavis131/vector-hoops/blob/master/models/lineage-gate.md">models/lineage-gate.md</a>.</p>
+      <p>The gate's current state is <b>red</b>: the lineage was reconstructed from the served bytes (git blob <code>a4918f09</code>) because the original July 2026 run directory is not in the repo. Export floors were waived by <code>--force</code>; the checkpoint, train git SHA, and run report are unknown. Resolving it takes one of two things — find the original run files, or order a deliberate replacement champion — and both are the owner's decision. The full accounting is in <a href="https://github.com/jcdavis131/vector-hoops/blob/master/models/lineage-gate.md">models/lineage-gate.md</a>.</p>
     </section>
 
     <section id="challenger">
       <div class="doc-n">07</div>
       <h2>The challenger queue</h2>
-      <p>One challenger is tracked in the registry: <code>mtnn-v6</code> (<code>mtnn_v6_concat_b3_h256_t64_d128_mlp256_fus512</code>, 128-d, ~7.8M params, vintage 2026-09-02, trained on 12,452 rows from players with 2+ seasons). It is <b>not promoted, not exported, not served</b> — and the standing rule says it never will be without a held-out eval win over this champion plus Cameron's word.</p>
-      <p class="doc-note">The single-model serving policy is unchanged: this site serves one promoted, exported MTNN bundle. Whether the platform should ever become multi-model is <a href="https://github.com/jcdavis131/vector-hoops/blob/master/models/registry.json">an open decision for Cameron</a> (Pillar 1.8), not a quiet engineering change.</p>
+      <p>One challenger is tracked in the registry: <code>mtnn-v6</code> (<code>mtnn_v6_concat_b3_h256_t64_d128_mlp256_fus512</code>, 128-d, ~7.8M params, vintage 2026-09-02, trained on 12,452 rows from players with 2+ seasons). It is <b>not promoted, not exported, not served</b> — and the standing rule says it never will be without a held-out eval win over this champion plus the owner's sign-off.</p>
+      <p class="doc-note">The single-model serving policy is unchanged: this site serves one promoted, exported MTNN bundle. Whether the platform should ever become multi-model is <a href="https://github.com/jcdavis131/vector-hoops/blob/master/models/registry.json">an open decision for the owner</a> (Pillar 1.8), not a quiet engineering change.</p>
     </section>
   </article>
 </div>

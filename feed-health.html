@@ -1,21 +1,53 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Feed health — Vector Hoops</title>
-<meta name="description" content="Realtime data-plane feed health for Vector Hoops — now part of the system status page.">
-<link rel="canonical" href="https://hoops.dumbmodel.com/feed-health">
-<meta name="robots" content="noindex">
-<meta http-equiv="refresh" content="0; url=/status.html#feed-health">
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
+<meta name="robots" content="noindex,nofollow"/>
+<title>Feed Health — Vector Hoops (internal)</title>
+<meta name="description" content="Internal: realtime data-plane feed health — source uptime, lag, last-good-tick."/>
+<link rel="stylesheet" href="assets/atlas.css?v=c43e0f47"/>
+<link rel="stylesheet" href="assets/shell.css?v=b7460aa9"/>
+<link rel="stylesheet" href="assets/realtime/realtime.css?v=540a748b"/>
+<style>
+.fh{max-width:760px;margin:0 auto;padding:24px var(--gutter,16px) 64px}
+.fh h1{font-family:var(--font-display);margin:0 0 4px}
+.fh .sub{color:var(--fg-3);font-size:13px;margin:0 0 20px}
+.fh-internal{display:inline-block;font-family:var(--font-code);font-size:11px;letter-spacing:.18em;
+  border:1px solid var(--accent);color:var(--accent);border-radius:4px;padding:3px 10px;margin-bottom:12px}
+.fh-overall{display:flex;align-items:center;gap:12px;border:1px solid var(--line);border-radius:var(--radius,10px);
+  padding:16px;background:var(--surface);margin-bottom:20px}
+.fh-dot{width:14px;height:14px;border-radius:50%;flex:0 0 auto}
+.fh-dot.ok{background:var(--ok)} .fh-dot.degraded{background:var(--accent)} .fh-dot.down{background:var(--bad)}
+.fh h2{font-family:var(--font-code);font-size:13px;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--fg-3);margin:26px 0 10px}
+.fh-card{border:1px solid var(--line);border-radius:var(--radius,10px);padding:14px 16px;
+  background:var(--surface);margin-bottom:10px}
+.fh-card header{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.fh-card h3{margin:0;font-size:15px;font-family:var(--font-code)}
+.fh-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px 16px;font-size:13px}
+.fh-grid dt{color:var(--fg-3);font-size:11px;text-transform:uppercase;letter-spacing:.1em}
+.fh-grid dd{margin:2px 0 0;font-family:var(--font-code)}
+.fh-detail{font-size:13px;color:var(--fg-3);margin:10px 0 0}
+.fh-foot{margin-top:28px;font-size:12px;color:var(--fg-3)}
+.fh-loading{color:var(--fg-3);font-size:14px}
+</style>
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
-<nav aria-label="Back to site"><a href="/status.html#feed-health">System status</a></nav>
-<main id="main">
-<h1>Feed health — Vector Hoops</h1>
-<p>Feed health now lives on the <a href="/status.html#feed-health">system status page</a>.</p>
+<nav aria-label="Back to site"><a href="/" rel="noopener">← Vector Hoops</a></nav>
+<main id="main" class="fh" tabindex="-1">
+  <span class="fh-internal">INTERNAL — NOT LINKED FROM SITE NAV</span>
+  <h1>Feed Health</h1>
+  <p class="sub">Realtime data-plane sources: uptime, lag, last-good-tick. This page reads the last
+  deployed snapshots — staleness here means the pipeline (not the page) is behind.</p>
+  <div class="fh-overall" id="overall"><span class="fh-loading">Probing…</span></div>
+  <h2>Sources</h2>
+  <div id="sources"></div>
+  <h2>Game-night snapshot</h2>
+  <div id="snapshot"></div>
+  <p class="fh-foot">Pipeline: <code>scripts/realtime/*.py</code> · runbook in
+  <code>scripts/realtime/README.md</code> · honest 503: a down feed keeps the last-known snapshot,
+  never invented numbers.</p>
 </main>
-<script src="/assets/inline-redirect.js?v=582a8bbb" data-target="/status.html#feed-health"></script>
-</body>
-</html>
+<script src="assets/realtime/realtime.js?v=c6ee0c22" defer></script>
+<script src="assets/realtime/feed-health.js?v=7ec677f9" defer></script>
+</body></html>

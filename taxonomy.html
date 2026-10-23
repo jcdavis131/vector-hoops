@@ -27,7 +27,7 @@
 <meta property="og:image" content="https://hoops.dumbmodel.com/assets/og/taxonomy.png"/>
 <meta name="twitter:image" content="https://hoops.dumbmodel.com/assets/og/taxonomy.png"/>
 <link rel="stylesheet" href="/assets/atlas.css?v=c43e0f47"/>
-<link rel="stylesheet" href="/assets/shell.css?v=36a047f1"/>
+<link rel="stylesheet" href="/assets/shell.css?v=b7460aa9"/>
 <style>
 .vh-tax__wrap{max-width:960px;margin:0 auto;padding:0 var(--s-3) var(--s-6)}
 .vh-tax__hero{margin:var(--s-5) 0 var(--s-4);text-align:center}
@@ -81,12 +81,12 @@
 </head><body>
 <a class="skip-link" href="#main">Skip to content</a>
 
-<nav class="site-nav" data-active="/taxonomy" aria-label="Vector Hoops site"></nav>
+<nav class="site-nav" data-active="/taxonomy" aria-label="Vector Hoops site"><noscript class="site-nav__noscript"><a href="/">Atlas</a><a href="/play">Play</a><a href="/map-guess">Map Hunt</a><a href="/live">Live</a><a href="/players">Players</a><a href="/insights">Insights</a><a href="/taxonomy">Taxonomy</a><a href="/methods">Methods</a><a href="/models/mtnn-v5">Models</a></noscript></nav>
 
 <div class="vh-tax__wrap" role="main" id="main" tabindex="-1">
   <div class="vh-tax__hero">
     <h1>Taxonomy of <span class="vh-tax__accent">Play Styles</span></h1>
-    <p>Every NBA player-season since 1996, distilled to <span data-fact="players">2,426</span> career play styles and organized into 22 archetypes across 5 families — clustered from stat profiles, named from the numbers. These 22 career types are a separate, career-level clustering from the model's 8 season archetypes used on the Atlas and in the games. Find your favorite player. See who they really play like.</p>
+    <p>Every NBA player-season since 1996, distilled to <span data-fact="players">2,426</span> career play styles and organized into 22 archetypes across 5 families — clustered from stat profiles, named from the numbers. Find your favorite player. See who they really play like.</p>
     <span class="vh-tax__meta" id="tax-meta">loading…</span> <button class="vh-tax__meta" id="vh-share-btn" type="button" style="cursor:pointer">Share</button>
   </div>
 
@@ -98,7 +98,7 @@
   <div id="taxonomy-tree"></div>
   <p class="vh-tax__err" id="taxonomy-err" hidden></p>
 
-  <p class="vh-tax__foot">How it's built: each player's 14-feature stat profile (per-100 possessions, z-scored within season so eras compare honestly) is collapsed to a career-typical vector — the median season, robust to late-career decline. Ward agglomerative clustering on all 2,426 players yields one dendrogram; 5 families and 22 archetypes are cut from it. Archetype names come from each cluster's stat signature (percentiles vs all players), never vibes — 20 sanity anchors verified, including Curry/Lillard (sharpshooting stars), Gobert/Mutombo (rim runners), Rodman/Wallace (rebound specialists) and Nash/Stockton (elite point guards). Magic Johnson is absent: his career predates the 1996–97 dataset. Full method and QA: <a href="/methods.html">methods</a>.</p>
+  <p class="vh-tax__foot">How it's built: each player's 14-feature stat profile (per-100 possessions, z-scored within season so eras compare honestly) is collapsed to a career-typical vector — the median season, robust to late-career decline. Ward agglomerative clustering on all 2,426 players yields one dendrogram; 5 families and 22 archetypes are cut from it. Archetype names come from each cluster's stat signature (percentiles vs all players), never vibes — 20 sanity anchors verified, including Curry/Lillard (sharpshooting stars), Gobert/Mutombo (rim runners), Rodman/Wallace (rebound specialists) and Nash/Stockton (elite point guards). Magic Johnson is absent: his career predates the 1996–97 dataset. Full method and QA: <a href="/methods.html">methods</a>. Note: these 22 archetypes are career-level — a separate clustering from the model's 8 season archetypes used on the Atlas and in the games.</p>
 </div>
 
 <footer class="site-footer">
@@ -131,6 +131,15 @@
 <script>if('serviceWorker' in navigator){window.addEventListener('load',()=>{navigator.serviceWorker.register('/sw.js').catch(()=>{})})}</script>
 <script src="assets/site-facts.js?v=f8edaf37" defer></script>
 <script>
-(function(){var b=document.getElementById('vh-share-btn');if(!b)return;b.addEventListener('click',function(){var url=location.href;var title=document.title;function ok(){b.textContent='Link copied';setTimeout(function(){b.textContent='Share';},1600);}function no(){b.textContent='Copy failed';setTimeout(function(){b.textContent='Share';},1600);}if(navigator.share){navigator.share({title:title,url:url}).catch(function(){});}else if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(url).then(ok,no);}else{no();}});})();
+/* Share button: every path reports what actually happened. "Link copied"
+ * shows only after a real copy; "Copy failed" on genuine failure. */
+(function(){var b=document.getElementById('vh-share-btn');if(!b)return;
+function say(msg){b.textContent=msg;setTimeout(function(){b.textContent='Share';},1600);}
+function legacyCopy(url){var ta=document.createElement('textarea');ta.value=url;ta.style.cssText='position:fixed;opacity:0';document.body.appendChild(ta);ta.select();var ok=false;try{ok=document.execCommand('copy');}catch(e){}ta.remove();return ok;}
+b.addEventListener('click',function(){var url=location.href;var title=document.title;
+if(navigator.share){navigator.share({title:title,url:url}).then(function(){say('Shared');},function(){});return;}
+function copied(ok){say(ok?'Link copied':'Copy failed');}
+if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(url).then(function(){copied(true);},function(){copied(legacyCopy(url));});}
+else{copied(legacyCopy(url));}});})();
 </script>
 </body></html>
