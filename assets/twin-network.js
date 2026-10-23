@@ -1,7 +1,8 @@
 /* Vector Hoops Twin Networks — graphsketball-style node-link explorer over the
    MTNN v5 64-d embedding, plus a 4-stage Stat Flow Sankey. No dependencies.
-   k-NN runs client-side (12,966 x 64 cosine sims per query); Twin Centrality
-   comes from the precomputed assets/twin_centrality.json. */
+   k-NN is precomputed (assets/peers_top8.json, pinned to the f32's sha256) —
+   no raw model weights reach the browser (specs/serving-budget.md). Twin
+   Centrality comes from the precomputed assets/twin_centrality.json. */
 (function (global) {
   'use strict';
 
@@ -54,7 +55,7 @@
   var state = {
     players: null, byId: null, names: null,
     counts: null, rankOf: null,
-    emb: null, norms: null, n: 0,
+    peers: null, // peers_top8.json: peers[row_id] = flat [peer_id, cosine4, ...]
     twins: null, // "name|season" -> twin entry
     current: null
   };
@@ -65,10 +66,10 @@
     return Promise.all([
       get('assets/player_index.json').then(function (r) { return r.json(); }),
       get('assets/twin_centrality.json').then(function (r) { return r.json(); }),
-      get('assets/mtnn_embeddings.f32').then(function (r) { return r.arrayBuffer(); }),
+      get('assets/peers_top8.json').then(function (r) { return r.json(); }),
       get('assets/eratwins.json').then(function (r) { return r.json(); }).catch(function () { return { players: [] }; })
     ]).then(function (res) {
-      var idx = res[0], cen = res[1], buf = res[2], tw = res[3];
+      var idx = res[0], cen = res[1], pk = res[2], tw = res[3];
       state.players = idx.players;
       state.byId = {};
       state.players.forEach(function (p) { state.byId[p.id] = p; });
@@ -87,16 +88,7 @@
         .sort(function (a, b) { return cen.counts[b] - cen.counts[a]; });
       state.rankOf = {};
       order.forEach(function (id, r) { state.rankOf[id] = r + 1; });
-      var f32 = new Float32Array(buf);
-      state.n = cen.n;
-      state.emb = f32;
-      var norms = new Float32Array(state.n);
-      for (var i = 0; i < state.n; i++) {
-        var s = 0, off = i * 64;
-        for (var d = 0; d < 64; d++) s += f32[off + d] * f32[off + d];
-        norms[i] = Math.sqrt(s) || 1;
-      }
-      state.norms = norms;
+      state.peers = pk.peers || [];
       state.twins = {};
       (tw.players || []).forEach(function (t) {
         state.twins[t.name.toLowerCase() + '|' + t.season] = t;
@@ -104,18 +96,16 @@
     });
   }
 
+  /* Precomputed top-8 peers (same player excluded at build time, desc by
+     cosine). Identical neighbor sets to the old live k-NN for k <= 8, minus
+     the player's own seasons. */
   function topNeighbors(id, k) {
-    var emb = state.emb, norms = state.norms, n = state.n;
-    var off = id * 64, na = norms[id];
-    var scored = [];
-    for (var j = 0; j < n; j++) {
-      if (j === id) continue;
-      var dot = 0, offj = j * 64;
-      for (var d = 0; d < 64; d++) dot += emb[off + d] * emb[offj + d];
-      scored.push([dot / (na * norms[j]), j]);
+    var flat = state.peers[id] || [];
+    var out = [];
+    for (var i = 0; i < flat.length && out.length < k; i += 2) {
+      out.push({ id: flat[i], sim: flat[i + 1] });
     }
-    scored.sort(function (a, b) { return b[0] - a[0]; });
-    return scored.slice(0, k).map(function (s) { return { id: s[1], sim: s[0] }; });
+    return out;
   }
 
   /* ---------- network SVG ----------
@@ -390,7 +380,7 @@
   loadAll().then(function () {
     bindPicker();
   }).catch(function (e) {
-    fail('Could not load the twin data right now — check your connection and reload.');
+    fail("The twin data didn't load on our side — try again in a bit.");
   });
 
 })(window);
