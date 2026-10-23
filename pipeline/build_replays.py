@@ -268,7 +268,7 @@ def main() -> int:
         g = build_game(p, colors)
         if g:
             built.append(g)
-    now = datetime.datetime.now(datetime.timezone.utc)
+    now = datetime.datetime.now(datetime.UTC)
     listed, newborn = [], []
     for g in sorted(built, key=lambda g: (g["date"], g["gameId"]), reverse=True):
         try:
