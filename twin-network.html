@@ -46,7 +46,7 @@
   <header class="title-card">
     <div class="title-card__eyebrow reveal">Insights</div>
     <h1 class="title-card__title reveal reveal-1">Twin Networks</h1>
-    <p class="title-card__lede reveal reveal-2">Every player-season sits in a neighborhood of statistical twins — measured live in the 64-d embedding. Pick any player-season and see theirs.</p>
+    <p class="title-card__lede reveal reveal-2">Every player-season sits in a neighborhood of statistical twins — computed from the 64-d embedding. Pick any player-season and see theirs.</p>
     <div class="title-card__meta reveal reveal-3"><span><b>12,966</b>Player-seasons</span><span><b>64</b>Embedding dims</span><span><b>8</b>Nearest twins</span></div>
   </header>
 
@@ -68,8 +68,8 @@
         </div>
       </div>
       <div class="vh-tn__metrics" id="tn-metrics"></div>
-      <div class="vh-ins__vizwrap" id="tn-vizwrap"><p class="vh-ins__error" id="tn-status" aria-live="polite">Loading the embedding…</p></div>
-      <p class="vh-ins__foot">Nodes are player-seasons; edge width is proportional to cosine similarity in the L2-normalized MTNN v5 64-d embedding (self excluded, top 8 shown). <b>Twin Centrality</b> = how many of the 12,966 player-seasons count this season among their 10 nearest neighbors. <b>Era-Bridge Score</b> = share of the 8 shown twins from a different decade. Every number recomputed from the served vectors.</p>
+      <div class="vh-ins__vizwrap" id="tn-vizwrap"><p class="vh-ins__error" id="tn-status" aria-live="polite">Loading the twin data…</p></div>
+      <p class="vh-ins__foot">Nodes are player-seasons; edge width is proportional to cosine similarity in the L2-normalized MTNN v5 64-d embedding (the player's own seasons excluded, top 8 shown). <b>Twin Centrality</b> = how many of the 12,966 player-seasons count this season among their 10 nearest neighbors. <b>Era-Bridge Score</b> = share of the 8 shown twins from a different decade. Every number computed from the 64-d embedding.</p>
       <div class="vh-ins__share">
         <button class="btn vh-tn__copy" type="button">Copy link</button>
       </div>
@@ -92,6 +92,6 @@
   <p class="site-footer__attribution">Every number recomputable from stats.nba.com · A <a href="https://dumbmodel.com">dumbmodel</a> project · Nearest seasons by cosine similarity in the 64-dimensional MTNN v5 embedding.</p>
 </footer>
 <script src="/assets/site-nav.js?v=08ff3eda"></script>
-<script src="assets/twin-network.js?v=cf1f007f"></script>
+<script src="assets/twin-network.js?v=d71c0911"></script>
 <script src="/assets/inline-sw-register.js?v=48fb8eb4"></script>
 </body></html>
