@@ -439,7 +439,9 @@ def load_site(root: Path, ledger_checks: list[list[str]] | None = None) -> Site:
             if "stylesheet" in a.get("rel", "").lower():
                 hit = resolve_ref(root, a.get("href", ""), base)
                 if hit:
-                    page.sheets.append(add_asset(hit))
+                    rel = add_asset(hit)
+                    if rel not in page.sheets:  # a sheet linked twice is still one sheet
+                        page.sheets.append(rel)
         for m in re.finditer(r"<script\b([^>]*)>", page.text, re.I):
             hit = resolve_ref(root, attrs(m.group(1)).get("src", ""), base)
             if hit:
@@ -1021,6 +1023,7 @@ def d20(site: Site) -> list[str]:
                 hit(p.rel, line_of(p.markup, m.start()), "role=tab on a link that navigates; tabs switch panels")
             )
         rules = page_rules.get(p.rel, []) + [r for s in p.sheets for r in page_rules.get(s, [])]
+        short_rules: set[tuple[str, int]] = set()
         for m in re.finditer(r"<summary\b([^>]*)>", p.markup, re.I):
             classes = set(attrs(m.group(1)).get("class", "").split())
             dm = None
@@ -1048,7 +1051,8 @@ def d20(site: Site) -> list[str]:
                 )
             else:
                 for px, rel, rline in declared:
-                    if px < 44:
+                    if px < 44 and (rel, rline) not in short_rules:
+                        short_rules.add((rel, rline))  # one rule shared by N summaries is one hit
                         out.append(hit(rel, rline, f"summary rule declares {px:g}px, tap targets need 44px"))
     return out
 
@@ -1158,7 +1162,7 @@ def run(root: Path, only: set[str] | None = None, ledger_checks: list[list[str]]
     for did, desc, criterion, fn in DETECTORS:
         if only and did not in only:
             continue
-        hits = sorted(set(fn(site)), key=_hit_key)
+        hits = sorted(fn(site), key=_hit_key)  # no set(): two identical hits on one line are two hits
         results[did] = Result(did, desc, criterion, hits)
     return results
 
