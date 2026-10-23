@@ -18,6 +18,7 @@ Stdlib only.   python pipeline/build_replays.py [--check]
 from __future__ import annotations
 
 import argparse
+import datetime
 import hashlib
 import json
 import math
@@ -215,6 +216,7 @@ def build_game(path: Path, colors: dict) -> dict | None:
         "teams": teams,
         "score": [events[-1][8], events[-1][9]],
         "date": (acts[0].get("timeActual") or "")[:10],
+        "_end_iso": (acts[-1].get("timeActual") or acts[0].get("timeActual") or ""),
         "types": TYPES,
         "fields": [
             "period",
@@ -251,6 +253,14 @@ def main() -> int:
         action="store_true",
         help="fail if the committed files differ from a fresh build",
     )
+    ap.add_argument(
+        "--min-age",
+        type=float,
+        default=24.0,
+        metavar="HOURS",
+        help="newborn games younger than this (from the final whistle) are built "
+        "but NOT listed in index.json — the 24h live/replay rule (default: 24)",
+    )
     args = ap.parse_args()
     colors = team_colors()
     built = []
@@ -258,15 +268,32 @@ def main() -> int:
         g = build_game(p, colors)
         if g:
             built.append(g)
+    now = datetime.datetime.now(datetime.timezone.utc)
+    listed, newborn = [], []
+    for g in sorted(built, key=lambda g: (g["date"], g["gameId"]), reverse=True):
+        try:
+            end = datetime.datetime.fromisoformat(g["_end_iso"].replace("Z", "+00:00"))
+            age_h = (now - end).total_seconds() / 3600.0
+        except Exception:
+            age_h = float("inf")  # unknown age: fail open for the file, but not the index
+            end = None
+        if end is not None and age_h < args.min_age:
+            newborn.append((g["gameId"], round(age_h, 1)))
+            continue
+        listed.append(g)
     index = {
         "games": [
             {k: g[k] for k in ("gameId", "date", "final", "teams", "score", "periods")}
-            for g in sorted(built, key=lambda g: (g["date"], g["gameId"]), reverse=True)
+            for g in listed
         ],
         "note": built[0]["staged"] if built else "",
     }
+    for gid, age_h in newborn:
+        print(f"  newborn: {gid} is {age_h}h old (< {args.min_age}h) — built but not indexed")
     for g in index["games"]:
         g["teams"] = [{k: t[k] for k in ("tri", "short", "c", "alt")} for t in g["teams"]]
+    for g in built:
+        g.pop("_end_iso", None)  # build-internal: age gating only, never written
     files = {OUT / f"{g['gameId']}.json": g for g in built}
     files[OUT / "index.json"] = index
     stale = []

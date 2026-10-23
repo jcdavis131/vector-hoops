@@ -11,7 +11,12 @@ function pollDelayMs(){
   if(failStreak>0) return Math.min(POLL_MAX, POLL_LIVE*Math.pow(2,Math.min(failStreak,3)));
   return games.some(g=>g.state==='in')?POLL_LIVE:POLL_IDLE;
 }
-function schedulePoll(){clearTimeout(pollTimer);pollTimer=setTimeout(loadGame,pollDelayMs());}
+function schedulePoll(){
+  clearTimeout(pollTimer);
+  const g=cur?games.find(x=>x.id===String(cur))||games.find(x=>x.id===cur):null;
+  if(g&&g.state==='post')return; // final: no polling, no live chrome (C2.6)
+  pollTimer=setTimeout(loadGame,pollDelayMs());
+}
 
 // ---- Day navigation (ESPN days run on America/New_York) ----
 let sbDay=null, sbExplicit=false; // sbDay: 'YYYYMMDD' being viewed; null = today
@@ -29,15 +34,37 @@ function hideErr(){$('err').style.display='none';}
 
 async function jget(u){const r=await fetch(u);if(!r.ok)throw new Error('HTTP '+r.status);return r.json();}
 
+/* C2.1: estimated final-whistle ms for the 24h guard. Callers only ever know
+   tip time, so final ~= tip + 2.5h; GameRoute's estimation margin absorbs it. */
+function estFinalMs(g){
+  if(!g||!g.date)return null;
+  const t=Date.parse(g.date);
+  return isNaN(t)?null:t+2.5*3600e3;
+}
+/* Resolve a ?game= id to {state, gameTimeMs, game} — from the day's board if
+   present, else one summary fetch (shared links never rot). */
+async function resolveGameInfo(id){
+  const g=games.find(x=>String(x.id)===String(id));
+  if(g)return{state:g.state,gameTimeMs:estFinalMs(g),game:g};
+  try{
+    const d=await jget(SUM(id));
+    const h=d.header.competitions[0],ts=h.competitors;
+    const hm=ts.find(t=>t.homeAway==='home'),am=ts.find(t=>t.homeAway==='away');
+    const gg={id:String(id),date:h.date,state:h.status.type.state,detail:h.status.type.shortDetail,
+      h:{abbr:hm.team.abbreviation,name:hm.team.displayName,score:hm.score,color:'#'+(hm.team.color||'1c1a15'),rec:''},
+      a:{abbr:am.team.abbreviation,name:am.team.displayName,score:am.score,color:'#'+(hm.team.color||'6b675c'),rec:''}};
+    return{state:gg.state,gameTimeMs:estFinalMs(gg),game:gg};
+  }catch(e){return null;}
+}
 async function loadGames(day){
   sbDay=day||null;
   renderDayNav();
   try{
     const d=await jget(sbDay?SB+'?dates='+sbDay:SB);
-    games=(d.events||[]).map(e=>{
+    games=window.Scoreboard?window.Scoreboard.parseEvents(d):(d.events||[]).map(e=>{
       const c=e.competitions[0],ts=c.competitors;
       const h=ts.find(t=>t.homeAway==='home'),a=ts.find(t=>t.homeAway==='away');
-      return {id:e.id,state:e.status.type.state,detail:e.status.type.shortDetail,
+      return {id:e.id,date:e.date,state:e.status.type.state,detail:e.status.type.shortDetail,
         clock:c.status.displayClock,period:c.status.period,
         h:{abbr:h.team.abbreviation,name:h.team.displayName,score:h.score,color:'#'+(h.team.color||'1c1a15'),rec:h.records&&h.records[0]?h.records[0].summary:''},
         a:{abbr:a.team.abbreviation,name:a.team.displayName,score:a.score,color:'#'+(a.team.color||'6b675c'),rec:a.records&&a.records[0]?a.records[0].summary:''}};
@@ -49,6 +76,14 @@ async function loadGames(day){
     // (The old opening-night opener special-case is retired: ?game= covers it.)
     let qg=null;
     try{ qg=new URLSearchParams(location.search).get('game'); }catch(e){}
+    // C2.1: the 24h guard — a ?game= older than 24h belongs on /replay.
+    // A redirect stops here; otherwise the game renders even off-board.
+    if(qg&&window.GameRoute){
+      const info=await resolveGameInfo(qg);
+      if(info&&window.GameRoute.guard('live',()=>({state:info.state,gameTimeMs:info.gameTimeMs})))return;
+      if(info&&info.game&&!games.find(x=>String(x.id)===String(qg))){games.unshift(info.game);renderGames();}
+    }
+    if(window.GameRoute)window.GameRoute.notice('routeNotice');
     const qmatch=qg?games.find(x=>String(x.id)===String(qg)):null;
     const live=games.find(g=>g.state==='in');
     if(qmatch) selectGame(qmatch.id);
@@ -57,6 +92,14 @@ async function loadGames(day){
   }catch(e){showErr('Could not load scoreboard: '+e.message);showFeedCard('Could not load scoreboard: '+e.message);}
 }
 
+/* C2.6/T2.4: graduation marking — a recent final shows when it moves to Replay. */
+function finalLabel(g){
+  const ms=estFinalMs(g);
+  if(ms==null)return 'Final';
+  const hrs=(ms-Date.now())/3600e3;
+  if(hrs<=0)return 'Final';
+  return 'Final · moves to Replay in '+Math.max(1,Math.round(hrs))+'h';
+}
 function renderGames(){
   const el=$('games');el.innerHTML='';
   games.forEach(g=>{
@@ -64,7 +107,7 @@ function renderGames(){
     b.className='gbtn'+(g.state==='in'?' live':'')+(cur===g.id?' sel':'');
     b.innerHTML=`<div class="ms">${g.a.abbr} @ ${g.h.abbr}</div>
       ${g.state!=='pre'?`<div class="sc">${g.a.score} – ${g.h.score}</div>`:''}
-      <div class="st">${g.state==='in'?'● LIVE — '+g.detail:g.state==='post'?'Final':g.detail}</div>`;
+      <div class="st">${g.state==='in'?'● LIVE — '+g.detail:g.state==='post'?finalLabel(g):g.detail}</div>`;
     b.onclick=()=>selectGame(g.id);
     el.appendChild(b);
   });
@@ -125,8 +168,30 @@ function selectGame(id){
   LROOT().classList.remove('rewound');
   loadGame(); // loadGame schedules the next poll when it finishes
 }
+/* C2.6: the morning-after card — FINAL badge header via plates, an anchor to the
+   embedded replay viewer (V5: NO cross-surface CTA within 24h), and the
+   graduation notice. Refresh timers are already off for finals (schedulePoll). */
+function renderMorning(d,g,isPost){
+  const mo=$('morning');if(!mo)return;
+  if(!isPost){mo.hidden=true;return;}
+  mo.hidden=false;
+  const ms=estFinalMs(g);
+  const hrs=ms!=null?Math.max(1,Math.round((ms-Date.now())/3600e3)):null;
+  const head=window.Plate?window.Plate.html('FINAL','THE MORNING AFTER','final · complete')
+    :'<div class="plate"><span class="pno">FINAL</span><h2>THE MORNING AFTER</h2><span class="prule"></span></div>';
+  mo.innerHTML=head+
+    '<div class="mg-row"><a href="#rpPlate">\u2193 Jump to the replay viewer</a>'+
+    (hrs!=null?'<span>Moves to Pixel Replay in '+hrs+'h</span>':'')+'</div>';
+}
 function renderAll(d,g){
   if(g&&g.a&&g.h){try{document.title='Courtside — '+g.a.abbr+' @ '+g.h.abbr;}catch(e){}}
+  const st=(d.header&&d.header.competitions[0]&&d.header.competitions[0].status.type.state)||'';
+  const isPre=st==='pre',isPost=st==='post';
+  // C2.4: panels follow game state — a pre-game selection renders ONLY the
+  // pre-game module (HOU@SA regression: zero data plates, zero waiting walls).
+  const pg=$('pregame');if(pg&&!isPre){pg.hidden=true;pg.dataset.gid='';}
+  ['band-game','band-story','band-players'].forEach(id=>{const b=$(id);if(b)b.style.display=isPre?'none':'';});
+  renderMorning(d,g,isPost);
   const idx=TL.live?TL.n-1:TL.view;
   renderHeader(d,g,idx);
   if(bandOpen('band-game')){renderWP(d,g,idx);renderMomentum(d,g,idx);renderShotChart(d,g,idx);}
@@ -233,6 +298,16 @@ function renderHeader(d,g,idx){
     : (pl?('Q'+pl.period.number+' '+pl.clock.displayValue+' · '+st.shortDetail):st.shortDetail);
   $('clock').style.color=liveNow?'#c2401f':'#5b5545';
   LROOT().classList.toggle('final',st.state==='post');
+  // C2.2: one game header, identical markup both surfaces.
+  try{
+    if(window.GameHeader){
+      const gh=$('ghMount');
+      if(gh)window.GameHeader.render(gh,{a:{abbr:am.team.abbreviation},h:{abbr:hm.team.abbreviation},
+        venue:(h.venue&&h.venue.fullName)||'',
+        when:h.date?new Date(h.date).toLocaleString('en-US',{timeZone:'America/Chicago',weekday:'short',hour:'numeric',minute:'2-digit'})+' CT':'',
+        state:st.state});
+    }
+  }catch(e){}
 }
 function esc(s){return String(s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
 function ordinal(n){return n+(['th','st','nd','rd'][n]||'th');}
@@ -900,10 +975,10 @@ function renderPregame(d,g){
   if(st!=='pre'){el.hidden=true;el.dataset.gid='';return;}
   el.hidden=false;
   const gid=String(h.id||'');
-  if(el.dataset.gid===gid&&window.OPEN_DOC)return; // already rendered for this game
+  if(el.dataset.gid===gid)return; // already rendered for this game
   el.dataset.gid=gid;
-  if(!window.OPEN_DOC)return;
-  const doc=window.OPEN_DOC.game;
+  const hasDoc=!!window.OPEN_DOC;
+  const doc=hasDoc?window.OPEN_DOC.game:{};
   const isDocGame=String(doc.event_id)===gid;
   const habbr=g?g.h.abbr:'',aabbr=g?g.a.abbr:'';
   // Predictor: ONLY when this game is the documented opening-night matchup.
@@ -926,8 +1001,8 @@ function renderPregame(d,g){
   const ctxLine=isDocGame
     ? esc(doc.label||'Pre-game')+' \u2014 both teams 0\u20130.'
     : 'Pre-game.';
-  const comp=window.OPEN_DOC.team_composition||{};
-  const chips=window.OPEN_DOC.star_twins||{};
+  const comp=(window.OPEN_DOC||{}).team_composition||{};
+  const chips=(window.OPEN_DOC||{}).star_twins||{};
   const compHtml=abbr=>{
     const c=comp[abbr];if(!c||!isDocGame)return '';
     const bars=c.clusters.slice(0,4).map(x=>'<div class="cmp"><span>'+esc(x.name)+'</span><b class="num">'+x.n+'</b></div>').join('');
@@ -948,7 +1023,19 @@ function renderPregame(d,g){
     (when?'<div class="pg-when">'+esc(when)+' \u00b7 '+esc(doc.venue||'')+'</div>':'')+
     predHtml+
     '<div class="pg-ctx">'+ctxLine+'</div></div>'+
-    sideHtml+'</div>';
+    sideHtml+'</div>'+
+    '<div id="pgMod"></div>';
+  // C2.4: the full pre-game show — scouting for EVERY pre-game, not just the
+  // documented opening-night game. Renders into #pgMod after the opening block.
+  try{
+    const mod=document.getElementById('pgMod');
+    if(mod&&window.Pregame&&g&&g.a&&g.h){
+      const hc=h.competitors.find(c=>c.home),ac=h.competitors.find(c=>!c.home);
+      const rec=c=>{try{return c.records[0].summary;}catch(e){return '';}};
+      let venue='';try{venue=(h.venue&&h.venue.fullName)||'';}catch(e){}
+      window.Pregame.render(mod,{aAbbr:g.a.abbr,hAbbr:g.h.abbr,aRec:rec(ac),hRec:rec(hc),when:when,venue:venue});
+    }
+  }catch(e){}
 }
 
 // ---- Opening-night data (archetype map + pregame chips) ----
