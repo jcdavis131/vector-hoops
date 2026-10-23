@@ -30,6 +30,19 @@
     { href: '/models/mtnn-v5', label: 'Models', desc: 'Model registry and the MTNN v5 champion card' }
   ];
 
+  // The games, in the order the footer's Play column lists them. One flat object
+  // per line, single quotes, no `{`/`}` in a value, no nested objects, no `]`:
+  // scripts/stamp_footer.py and scripts/check_design.py (D12) read this list and
+  // EXPLORE straight out of the source, and the stamper refuses a list it cannot
+  // read in full.
+  var GAMES = [
+    { href: '/play', label: 'Daily Court' },
+    { href: '/map-guess', label: 'Map Hunt' },
+    { href: '/twenty-questions', label: 'Twenty Questions' },
+    { href: '/play/era-crossed', label: 'Era Crossed' },
+    { href: '/replay', label: 'Pixel Replay' }
+  ];
+
   // Centre circle of a court, seen from above: the site's mark.
   var MARK = '<svg class="site-nav__mark" viewBox="0 0 24 24" aria-hidden="true" focusable="false">' +
     '<circle cx="12" cy="12" r="10.25" fill="none" stroke="currentColor" stroke-width="1.5"/>' +
@@ -260,5 +273,5 @@
   }
 
   var api = global.VHSiteNav = global.VHSiteNav || {};
-  api.mount = mount; api.explore = EXPLORE;
+  api.mount = mount; api.explore = EXPLORE; api.games = GAMES;
 })(window);
