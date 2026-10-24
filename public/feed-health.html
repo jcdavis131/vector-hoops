@@ -1,12 +1,33 @@
 <!doctype html>
 <html lang="en"><head>
-<meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
-<meta name="robots" content="noindex,nofollow"/>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
 <title>Feed Health — Vector Hoops (internal)</title>
 <meta name="description" content="Internal: realtime data-plane feed health — source uptime, lag, last-good-tick."/>
-<link rel="stylesheet" href="assets/atlas.css?v=a737547a"/>
-<link rel="stylesheet" href="assets/shell.css?v=398d5e37"/>
-<link rel="stylesheet" href="assets/realtime/realtime.css?v=540a748b"/>
+<meta name="robots" content="noindex,nofollow"/>
+<link rel="canonical" href="https://hoops.dumbmodel.com/feed-health"/>
+<meta name="color-scheme" content="light dark"/>
+<meta name="theme-color" content="#FCFBF7" media="(prefers-color-scheme: light)"/>
+<meta name="theme-color" content="#0F1114" media="(prefers-color-scheme: dark)"/>
+<meta property="og:type" content="website"/>
+<meta property="og:site_name" content="Vector Hoops"/>
+<meta property="og:url" content="https://hoops.dumbmodel.com/feed-health"/>
+<meta property="og:title" content="Feed Health — Vector Hoops (internal)"/>
+<meta property="og:description" content="Internal: realtime data-plane feed health — source uptime, lag, last-good-tick."/>
+<meta property="og:image" content="https://hoops.dumbmodel.com/assets/og-1200x630.png"/>
+<meta property="og:image:width" content="1200"/>
+<meta property="og:image:height" content="630"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="Feed Health — Vector Hoops (internal)"/>
+<meta name="twitter:description" content="Internal: realtime data-plane feed health — source uptime, lag, last-good-tick."/>
+<meta name="twitter:image" content="https://hoops.dumbmodel.com/assets/og-1200x630.png"/>
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml"/>
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png"/>
+<link rel="manifest" href="/manifest.json"/>
+<link rel="stylesheet" href="/assets/fonts.css?v=8f376b2a"/>
+<link rel="stylesheet" href="/assets/atlas.css?v=31711e9d"/>
+<link rel="stylesheet" href="/assets/shell.css?v=398d5e37"/>
+<link rel="stylesheet" href="/assets/realtime/realtime.css?v=540a748b"/>
 <style>
 .fh{max-width:760px;margin:0 auto;padding:24px var(--gutter,16px) 64px}
 .fh h1{font-family:var(--font-display);margin:0 0 4px}
@@ -33,7 +54,7 @@
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
-<nav aria-label="Back to site"><a href="/" rel="noopener">← Vector Hoops</a></nav>
+<nav class="site-nav" data-active="" aria-label="Vector Hoops site"><noscript class="site-nav__noscript"><a href="/">Atlas</a><a href="/play">Play</a><a href="/map-guess">Map Hunt</a><a href="/live">Live</a><a href="/players">Players</a><a href="/insights">Insights</a><a href="/taxonomy">Taxonomy</a><a href="/methods">Methods</a><a href="/models/mtnn-v5">Models</a></noscript></nav>
 <main id="main" class="fh" tabindex="-1">
   <span class="fh-internal">INTERNAL — NOT LINKED FROM SITE NAV</span>
   <h1>Feed Health</h1>
@@ -48,6 +69,7 @@
   <code>scripts/realtime/README.md</code> · honest 503: a down feed keeps the last-known snapshot,
   never invented numbers.</p>
 </main>
+<script src="assets/site-nav.js?v=13e9219d" defer></script>
 <script src="assets/realtime/realtime.js?v=c6ee0c22" defer></script>
 <script src="assets/realtime/feed-health.js?v=7ec677f9" defer></script>
 <!-- footer:stamped -->

@@ -1,4 +1,9 @@
 /* Player Profile v28 — collectible card + discovery */
+/* Ported from responsive.css (wave 1.2): the only two of its rules that still
+   reached the players page. Everything else there was overridden by unified.css
+   (still loaded here, before this sheet) or by atlas.css/shell.css (after it). */
+.skills-panel, .wiki-controls{ padding: clamp(12px, 2.5vw, 16px); min-width: 0; }
+@media (max-width: 479px){ .wiki-row{ flex-direction: column; } }
 #players-panel-profile .skills-panel{ gap:0 }
 #players-panel-profile .skills-panel > h2{ display:none } /* hide old title, we render inside profile */
 

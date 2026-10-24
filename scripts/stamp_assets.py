@@ -85,6 +85,10 @@ def pages() -> list[Path]:
             found.append(sub)
     # play/ holds game pages served at /play/<name>.html (Pillar 6 games).
     found.extend(sorted((ROOT / "play").glob("*.html")))
+    # models/ and insights/ are served pages too (budget_check.py's PAGE_GLOBS);
+    # without them models/mtnn-v5.html kept a stale atlas.css token for weeks.
+    found.extend(sorted((ROOT / "models").glob("*.html")))
+    found.extend(sorted((ROOT / "insights").glob("*.html")))
     return sorted(found)
 
 

@@ -194,6 +194,9 @@
    Base
    ========================================================================== */
 *,*::before,*::after{ box-sizing:border-box; }
+/* Inner scroll containers keep the thin bar the document has (html, below);
+   scrollbar-width does not inherit. Ported from final-qa.css:3 (wave 1.2). */
+*{ scrollbar-width: thin; }
 html{
   -webkit-text-size-adjust:100%;
   text-size-adjust:100%;
@@ -237,6 +240,9 @@ button, input, select, textarea{ font: inherit; color: inherit; }
 [hidden]{ display:none !important; }
 
 :focus{ outline: none; }
+/* The ring never eases in: a keyboard user needs it at once (motion.css:75-76,
+   kept as a rule by DESIGN-DIRECTION §4 wave 3; ported in wave 1.2). */
+a:focus-visible, button:focus-visible{ transition: none; }
 :focus-visible{
   outline: 2px solid var(--accent);
   outline-offset: 3px;
@@ -390,6 +396,9 @@ p{ text-wrap: pretty; }
   transition: border-color var(--dur-2) var(--ease);
 }
 .card .card{ background: var(--surface-2); border-color: var(--line); box-shadow: none; }
+/* A long unbroken token (a URL, a hash) wraps inside the card instead of pushing
+   it past a 390px viewport. Ported from final-qa.css:9 (wave 1.2). */
+.card, .btn{ overflow-wrap: break-word; }
 .card h2{
   font-family: var(--font-display);
   font-size: var(--t-lg); font-weight: 700; letter-spacing: -.01em; line-height: 1.2;
@@ -452,7 +461,9 @@ a.pill:hover, button.pill:hover{ color: var(--fg); border-color: var(--fg-3); }
   width: 100%;
   min-height: 44px;
   padding: 0 14px;
-  font-family: var(--font-text); font-size: 15px; font-weight: 450;
+  /* 16px, not 15: iOS zooms a focused field under 16px. Ported from
+     responsive.css:158 (it held 16px with !important on 11 pages, wave 1.2). */
+  font-family: var(--font-text); font-size: 16px; font-weight: 450;
   color: var(--fg);
   background: var(--surface);
   border: 1px solid var(--line-2);
@@ -530,7 +541,7 @@ table{ border-collapse: collapse; width: 100%; }
 .wiki-controls{ display: flex; flex-direction: column; gap: var(--s-3); }
 .wiki-search-row{ display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: var(--s-2); }
 .wiki-filters{ display: flex; gap: var(--s-2); }
-.wiki-filters select{ width: auto; min-width: 170px; font-family: var(--font-text); font-size: 14px; font-weight: 450; box-shadow: none; border: 1px solid var(--line-2); background-color: var(--surface); }
+.wiki-filters select{ width: auto; min-width: 170px; font-family: var(--font-text); font-size: 16px; font-weight: 450; box-shadow: none; border: 1px solid var(--line-2); background-color: var(--surface); }
 @media (max-width: 720px){
   .wiki-search-row{ grid-template-columns: 1fr; }
   .wiki-filters select{ flex: 1 1 0; min-width: 0; }
