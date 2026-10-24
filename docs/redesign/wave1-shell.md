@@ -146,3 +146,21 @@ Served CSS (linked sheet bytes per page, `origin/master` → branch, `wt/w1shell
 - The site-nav.js external glyph.
 - The full budgets 1.5× re-baseline after 1.3.
 - `scrollbar-width` and overflow-wrap now also apply to index and the game pages: one-line atlas rules, worth a glance in their renders.
+
+## Follow-up: schedule in dark (render review on f5d2726d)
+
+The 390 dark render showed schedule.html keeping a cream ground while atlas.css flipped the tokens. The date pills went black on black, the nav dark on dark, and the copy was `#A7B0BC` on cream: 12 hits at ratios 1.0-2.2. The cause was the page `<style>`: `:root{--paper:#FFFEF7;--ink:#1A150F;--mono…;--sans…;--page-gutter…}` plus `html,body{background:var(--paper);color:var(--ink);font-size:18px…}`. Those pinned light values, overriding atlas's night board. Before this branch, unified.css supplied the same light pins and atlas never loaded, so the page was light-only.
+
+The fix lets atlas own ground, ink and type in both themes:
+- Dropped the `:root` block and the `html,body` / `*` rules. atlas defines `--page-gutter`, `--mono` and `--sans` itself.
+- `.sched-day` text now uses `--fg`; `.sched-day.is-active` is `--fg` on `--bg`.
+- `.sched-game:hover` border uses `--fg`.
+- `.live-dot` `#c2401f` became `--accent`.
+
+As a side effect, D4 drops by 1 (schedule's `:root`).
+
+I checked the other in-scope pages for the same pattern: `--paper/--ink/--bg/--fg/--surface` defined in a page `<style>`, `html/body/:root` colour rules, and light hex backgrounds.
+- **offline** defines both themes in its self-contained `<style>`, so it is not affected.
+- **research**'s `html,body` uses `var(--paper)`/`var(--ink)`, which follow atlas in both themes. Its `:root` only redefines `--mono`, `--sans` and `--page-gutter`. It was unchanged by this branch and is left for 2.7.
+- **status**'s `:root` only aliases atlas tokens.
+- The remaining raw hex text colours sit on fixed void or gold panels that are constant in both themes: playoff-runs tabs and champ chip, taxonomy famhead, research's dark map and code panels. The status dots and pills are mid-tone accents. All of these are wave-2 D6 work, not ground pins.
