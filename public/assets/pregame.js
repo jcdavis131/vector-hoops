@@ -205,8 +205,9 @@
         var totTxt = od.total ? 'O/U ' + od.total.line : '—';
         html += '<div class="pcard">' + plate('01', 'ODDS',
           'the-odds-api · median of ' + od.books + ' books · as of ' + esc(asofOdds)) +
-          '<div class="orow"><div><h4>SPREAD</h4><b>' + spTxt + '</b></div>' +
-          '<div><h4>MONEYLINE</h4><b>' + mlBits + '</b></div>' +
+          '<div class="odds-hero"><span class="ospread">' + spTxt + '</span>' +
+          '<span class="olab">POINT SPREAD</span></div>' +
+          '<div class="orow"><div><h4>MONEYLINE</h4><b>' + mlBits + '</b></div>' +
           '<div><h4>TOTAL</h4><b>' + totTxt + '</b></div></div>' +
           '<p class="pnote">Market prices, not picks — lines move.</p></div>';
       }
