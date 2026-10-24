@@ -523,8 +523,9 @@ input[type="range"]{ accent-color: var(--accent); }
 }
 .tab-pills button:hover, .mode-tab:hover{ color: var(--fg); }
 .tab-pills button.is-active, .mode-tab.is-active, .mode-tab.is-active.daily-active{ background: var(--surface-2); color: var(--fg); box-shadow: inset 0 -2px 0 var(--accent); }
+/* phone: three tabs (e.g. players' Directory / Skill profile / Leaderboards) fit one row at 390 */
 @media (max-width: 420px){
-  .tab-pills button, .mode-tab{ padding: 0 12px; letter-spacing: .1em; }
+  .tab-pills button, .mode-tab{ padding: 0 8px; font-size: var(--t-xs); letter-spacing: .06em; }
 }
 
 /* ==========================================================================
@@ -568,7 +569,7 @@ table{ border-collapse: collapse; width: 100%; }
   .wiki-search-row{ grid-template-columns: minmax(0, 1fr); }
   .wiki-filters select{ flex: 1 1 0; min-width: 0; }
 }
-/* 44px letters on an even grid: 8 to a row at 390, one row from ~1180px */
+/* 44px letters on an even grid: 7 to a row in the players card at 390 */
 .wiki-alphabet{ display: grid; grid-template-columns: repeat(auto-fill, minmax(44px, 1fr)); gap: 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 4px 0; }
 .wiki-alphabet button{
   min-width: 44px; min-height: 44px; padding: 0;
@@ -1152,7 +1153,8 @@ details.card > summary:focus-visible{ outline: 2px solid var(--focus); outline-o
    appears when the clipboard is denied (seed play.html:253 + its feedback contract). ---- */
 .share-bar{ display: flex; flex-wrap: wrap; align-items: center; gap: var(--s-2); margin-top: var(--s-3); }
 .share-bar .btn{ flex: 1 1 120px; }
-.share-bar--compact .btn{ flex: 1 1 0; min-width: 0; padding: 0 10px; letter-spacing: .1em; }
+/* compact: up to three short labels (two words max) share one row at 390 */
+.share-bar--compact .btn{ flex: 1 1 0; min-width: 0; padding: 0 6px; letter-spacing: .06em; white-space: nowrap; }
 .share-bar__status{ flex-basis: 100%; margin: 0; min-height: 1.5em; font-size: var(--t-sm); color: var(--fg-2); }
 .share-bar__status:empty{ min-height: 0; }
 .share-bar__copy{
