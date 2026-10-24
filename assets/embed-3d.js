@@ -86,8 +86,7 @@
     for (i = 40; i < 400; i += 80) s += '<line x1="' + i + '" y1="8" x2="' + i + '" y2="252" stroke="currentColor" stroke-width=".6" opacity=".15"/>';
     for (i = 52; i < 260; i += 80) s += '<line x1="8" y1="' + i + '" x2="392" y2="' + i + '" stroke="currentColor" stroke-width=".6" opacity=".15"/>';
     s += '<g stroke="currentColor" stroke-width="1.2" stroke-dasharray="5 4" opacity=".7"><line x1="40" y1="226" x2="200" y2="196"/>' +
-      '<line x1="40" y1="226" x2="120" y2="120"/><line x1="40" y1="226" x2="300" y2="226"/></g>' +
-      '<g fill="currentColor" font-size="11"><text x="206" y="198">style</text><text x="112" y="112">era</text><text x="306" y="228">role</text></g>';
+      '<line x1="40" y1="226" x2="120" y2="120"/><line x1="40" y1="226" x2="300" y2="226"/></g>';
     for (i = 0; i < SKETCH_DOTS.length; i += 4) {
       s += '<circle cx="' + SKETCH_DOTS[i] + '" cy="' + SKETCH_DOTS[i + 1] + '" r="' + SKETCH_DOTS[i + 2] +
         '" fill="currentColor" opacity="' + SKETCH_DOTS[i + 3] + '"/>';
