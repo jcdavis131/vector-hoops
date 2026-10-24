@@ -1,6 +1,6 @@
 # Wave 1, task 1.3: the game sheet (receipts)
 
-Branch `forge/w1-game`, built on origin/master 7d2bbbf6 (the kit from #172). Scope per
+Branch `forge/w1-game`, rebased onto origin/master ba68e9d0 (the kit from #172, plus #161/#162/#163/#165/#175). Scope per
 DESIGN-DIRECTION.md section 4, task 1.3: the four game pages (`play.html`, `map-guess.html`,
 `twenty-questions.html`, `play/era-crossed.html`), their heads and page CSS, plus
 `assets/game.css` (layout only) and `assets/toast.js` (one `VHToast.show(msg)`).
@@ -73,6 +73,9 @@ No browser was run (RAM); the states that need a render before merge are listed 
   setting (play-engine.js's `initSoundToggle` returns when the button is absent).
 - Item 13, How to play: one opener, `#btn-howto`. The static `#mode-howto` link is gone
   (play-engine.js still injects one in triple mode, null-safe; `.linkbtn` stays styled).
+- #163's similarity sentence is kept, minus "cosine" in visitor text (D21): "Style similarity
+  (0-100) - a closeness score, not a percentage of anything - between your guess and the target."
+  #163's era-crossed caveat (stat-plus-stardom profiles) is kept in the plain How to play list.
 - Item 14: "#rank is your guess's rank among all 12,966 seasons" now reads "#rank is where
   your guess ranks among this season's eligible players" (no new hard-coded count).
 - Item 23: build provenance on twenty-questions and era-crossed moved into
@@ -80,20 +83,20 @@ No browser was run (RAM); the states that need a render before merge are listed 
   wording. Era Crossed's lede says "the model" instead of "the 64-d embedding".
 - Item 22: map-guess's method card moved into `details.disclosure.provenance`.
 
-## Detector deltas (check_design.py --report --json, baseline = master 7d2bbbf6)
+## Detector deltas (check_design.py --report --json, baseline = master ba68e9d0)
 
 Hits on each page file (game.css and toast.js add 0 everywhere):
 
 | Page | D4 | D5 | D6 | D8 | D14 | D15 | D20 | D21 | also |
 |---|---|---|---|---|---|---|---|---|---|
-| play.html | 1 -> 0 | 10 -> 0 | 42 -> 0 | 12 -> 0 | 0 -> 0 | 49 -> 8 | 0 -> 0 | 0 -> 0 | D2 1->0, D3 4->0, D7 7->0, D9 6->0 |
+| play.html | 1 -> 0 | 10 -> 0 | 42 -> 0 | 12 -> 0 | 0 -> 0 | 49 -> 8 | 0 -> 0 | 1 -> 0 | D2 1->0, D3 4->0, D7 7->0, D9 6->0 |
 | map-guess.html | 1 -> 0 | 6 -> 0 | 2 -> 0 | 0 -> 0 | 0 -> 0 | 6 -> 0 | 0 -> 0 | 4 -> 0 | D2 1->0, D3 1->0, D9 1->0 |
 | twenty-questions.html | 0 -> 0 | 5 -> 0 | 2 -> 0 | 5 -> 0 | 0 -> 0 | 5 -> 0 | 0 -> 0 | 3 -> 0 | D2 1->0, D3 1->0, D7 1->0, D9 1->0 |
 | play/era-crossed.html | 0 -> 0 | 5 -> 0 | 2 -> 0 | 1 -> 0 | 0 -> 0 | 8 -> 0 | 0 -> 0 | 8 -> 0 | D2 2->0, D3 1->0, D7 1->0, D9 1->0, D17 2->0 |
 
-Site totals: D2 60->55, D3 83->76, D4 16->14, D5 63->37, D6 994->946, D7 84->75, D8 133->115,
-D9 168->159, D15 165->105, D17 28->26, D21 80->65; D1, D10, D14, D19 stay 0; D12 2, D13 15,
-D20 7 unchanged (none of those hits are on the four pages).
+Site totals: D2 58->53, D3 78->71, D4 15->13, D5 58->32, D6 985->937, D7 84->75, D8 131->113,
+D9 167->158, D15 166->106, D17 27->25, D21 78->62; D1, D10, D14, D19 stay 0; D12 1, D13 14,
+D20 4 unchanged (none of those hits are on the four pages).
 
 play.html's 8 remaining `style=""` attributes are `display:none` toggles play-engine.js flips
 through `.style.display`, plus the noscript note: wave 2.2's job with the engine. The game JS
@@ -107,8 +110,9 @@ quizzes 31 D6 hits, mostly share-card canvas colours): untouched beyond the clas
 - `python scripts/sync_public.py` then `--check`: OK, 533 files.
 - `python scripts/budget_check.py`: **map-guess.html went red** (192.2 KiB over its 176.0 KiB
   +3% row: it now loads fonts.css and game.css). Re-measured +3% per the task: 196,804 bytes
-  -> 202,752 budget, noted in budgets.json's method. All 28 pages then pass. play.html
-  1,484.4 / 1,520.0 KiB, twenty-questions 180.4 / 942.0, era-crossed 154.6 / 821.0.
+  -> 202,752 budget, noted in budgets.json's method. After the rebase (#165 grew embed-3d.js)
+  all 27 pages pass: map-guess 195.1 / 198.0 KiB (tight), play.html 1,484.8 / 1,520.0,
+  twenty-questions 180.7 / 942.0, era-crossed 155.1 / 821.0.
 - `python scripts/check_contrast.py`: OK. `python scripts/check_a11y.py`: OK, 19 pages.
 - `pytest tests/test_site.py tests/test_check_design.py tests/test_no_inline_scripts.py
   tests/test_play_engine_refs.py tests/test_game_target_mask.py -q` (+ test_served_constants,
@@ -116,9 +120,12 @@ quizzes 31 D6 hits, mostly share-card canvas colours): untouched beyond the clas
   assets/game.css, where play's `.vh-truth/.vh-approx` treatments moved.
 - `node --check` on toast.js, map-hunt.js, inline-twenty-questions.js, inline-era-crossed.js,
   inline-play.js, play-engine.js: OK. `python -m ruff check scripts tests`: OK.
+- `scripts/check_site_facts.py`, `check_css_braces.py`, `check_motion.py`, `check_selectors.py`,
+  `check_target_size.py`, `check_viewport.py`: OK. `check_dead_links.py` reports 41 on both
+  master and this branch (pre-existing; it does not read vercel.json rewrites).
 - JS id contract: every id the touched JS reads still exists, except `#btn-sound` and
   `#mode-howto`, which the task removes and which play-engine.js null-guards.
-- sw.js: `CACHE_NAME` v27 -> v28; `/assets/game.css` and `/assets/toast.js` added to CORE
+- sw.js: `CACHE_NAME` v28 -> v29 (master took v28 in #175); `/assets/game.css` and `/assets/toast.js` added to CORE
   next to atlas.css (expect a one-line conflict with the 1.2b branch).
 
 ## Renders needed before merge (390 and 1280, light and dark)
