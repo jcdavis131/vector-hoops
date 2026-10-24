@@ -428,6 +428,16 @@
       "permanent": true
     },
     {
+      "source": "/teams.html",
+      "destination": "/#atlas",
+      "permanent": true
+    },
+    {
+      "source": "/teams/:slug*",
+      "destination": "/#atlas",
+      "permanent": true
+    },
+    {
       "source": "/trends",
       "destination": "/methods#drift",
       "permanent": true

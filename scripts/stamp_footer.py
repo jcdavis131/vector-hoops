@@ -58,7 +58,6 @@ PAGE_GLOBS = ("*.html", "insights/*.html", "play/*.html", "models/*.html")
 
 # Pages left alone in both modes, each with the reason.
 DEFER = {
-    "index.html": "Scout's #165 rewrites index.html; its footer is stamped on the next pass",
     "offline.html": "self-contained, no shell.css until task 2.7 gives it the head",
 }
 
