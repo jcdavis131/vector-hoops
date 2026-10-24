@@ -68,10 +68,14 @@ def test_badge_matches_registry() -> None:
     assert m and int(m.group(1)) == 12, "badge must be 12 (overlap@20 = 0.115)"
     assert re.search(r"badge_overlap_at20:\s*0\.115", src), "registry must cite 0.115"
     index = (ROOT / "index.html").read_text(encoding="utf-8")
-    # G2/T2.2: the badge copy is the plain-words rendering of the registry
-    # value (overlap@20 = 0.115 -> "about 1 in 9"), not the "neighborhoods" jargon.
-    assert "about 1 in 9" in index, "badge copy must carry the plain-words overlap"
-    assert "20 closest model neighbors" in index
+    # Track 1 (2026-10-23, panel V2): Fig. 1 is now the 3D ball. The "about
+    # 1 in 9" / "20 closest model neighbors" claim was measured on the 2D map
+    # and must not survive the move; the 3D neighbor-preservation number came
+    # in at 4.3% (scripts/neighbor_preservation_3d.py), so K1 kills any numeric
+    # badge — qualitative framing only.
+    assert "about 1 in 9" not in index, "2D badge copy must not survive on the 3D page"
+    assert "20 closest model neighbors" not in index, "2D badge copy must not survive on the 3D page"
+    assert "trust the peer list, not the picture" in index, "3D page must carry the qualitative framing"
     assert "nearest neighborhoods" not in index, "jargon badge copy must stay retired"
 
 

@@ -5,9 +5,14 @@
    Contract (Workers B and C depend on it — do not change):
      window.Embed3D.mount(el, opts)
      opts = { projection: 'pca'|'tsne'|'umap', highlightIds: [ids],
-              onSelect: function(id){}, height: px, src: url }
+              onSelect: function(id){}, height: px, src: url,
+              greyscale: bool (C1.1, default false) }
      - el.dataset.projection is the default when opts.projection is absent.
-     - Returns { setProjection(name), setHighlight(ids), destroy() }.
+     - Returns { setProjection(name), setHighlight(ids), setSelected(id),
+                 destroy(), info(i) }.
+     - greyscale: depth-shaded greys, k-means legend suppressed, selection =
+       accent + ring, twins = accent dots, tap pick radius 28px on coarse
+       pointers (18px otherwise), non-highlighted points dim on selection.
 
    Honesty rules (binding): axes are arbitrary units — never semantic labels.
    Each projection is labeled with what it preserves and what it distorts. */
@@ -46,6 +51,14 @@
     var onSelect = typeof opts.onSelect === 'function' ? opts.onSelect : null;
     var reduceMotion = (typeof global.matchMedia === 'function') &&
       global.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    /* C1.1: greyscale mode (opt-in). Depth-shaded greys replace CLUSTER_COLORS;
+       the k-means legend is suppressed; default OFF so map-guess.html and
+       live.html mounts are pixel-identical to before. */
+    var greyscale = !!opts.greyscale;
+    var ACCENT = '#FF7A33'; /* site ember; selection + twins only */
+    var coarsePointer = (typeof global.matchMedia === 'function') &&
+      global.matchMedia('(pointer: coarse)').matches;
+    var pickRadius = coarsePointer ? 28 : 18;
 
     /* ---- DOM ---- */
     el.innerHTML = '';
@@ -83,7 +96,7 @@
     wrap.appendChild(bar);
     wrap.appendChild(canvas);
     wrap.appendChild(note);
-    wrap.appendChild(legend);
+    if (!greyscale) wrap.appendChild(legend);
     wrap.appendChild(tip);
     el.appendChild(wrap);
     var ctx = canvas.getContext('2d');
@@ -94,7 +107,7 @@
       names: null, seasons: null, teams: null, clusters: null,
       byCluster: null, idToIdx: null,
       yaw: 0.6, pitch: 0.45, dist: 3.2,
-      proj: projection, highlight: new Set(),
+      proj: projection, highlight: new Set(), selectedId: null,
       autoRotate: !reduceMotion, lastTouch: 0, idleTimer: 0,
       sx: null, sy: null, sz: null, /* screen coords of last frame */
       destroyed: false
@@ -270,10 +283,13 @@
         tsne: 't-SNE keeps tight groups together, but gaps between groups mean nothing.',
         umap: 'UMAP keeps tight groups together, but gaps between groups mean nothing.'
       };
+      var colorNote = greyscale
+        ? ' Points are shaded by depth \u2014 nearer dots are brighter. Color appears only on your selection and its twins.'
+        : ' Colors: 8 rough groups found by the k-means algorithm (silhouette 0.09 \u2014 loose, treat as flavor, not positions). ';
       note.innerHTML = '<strong style="color:var(--fg);">' + /* P2-2: theme-aware; #f9f6f0 was illegible on paper */
         state.proj.toUpperCase().replace('TSNE', 't-SNE') + '</strong> \u2014 ' +
         (plain[state.proj] || (PROJ_NOTES[state.proj] || '')) +
-        ' Colors: 8 rough groups found by the k-means algorithm (silhouette 0.09 \u2014 loose, treat as flavor, not positions). ' +
+        colorNote +
         'Each dot is one player-season. Axes are arbitrary units.';
     }
 
@@ -295,6 +311,11 @@
 
     function setHighlight(ids) {
       state.highlight = new Set(ids || []);
+    }
+
+    /* C1.1: the selected point, styled apart from the twin highlights. */
+    function setSelected(id) {
+      state.selectedId = (id == null || id < 0) ? null : id;
     }
 
     /* ---- sizing ---- */
@@ -415,7 +436,7 @@
     function pick(e) {
       var r = canvas.getBoundingClientRect();
       var mx = e.clientX - r.left, my = e.clientY - r.top;
-      var best = -1, bestD = 18 * 18;
+      var best = -1, bestD = pickRadius * pickRadius;
       for (var i = 0; i < state.n; i++) {
         var dx = state.sx[i] - mx, dy = state.sy[i] - my;
         var q = dx * dx + dy * dy;
@@ -454,33 +475,68 @@
            smaller = farther, so ascending order paints far points first. */
         var order = state.order;
         order.sort(function(a, b){ return sz[a] - sz[b]; });
-        var lastC = -1;
+        var selActive = state.selectedId != null;
+        var lastC = -1, lastB = -1;
         for (var k = 0; k < n; k++) {
           var i = order[k];
-          var cc = cl[i] % 8;
-          if (cc !== lastC) { ctx.fillStyle = CLUSTER_COLORS[cc]; lastC = cc; }
           var depth = sz[i];
           var size = 1 + depth * 1.6;
-          ctx.globalAlpha = 0.35 + depth * 0.55;
+          var alpha = 0.35 + depth * 0.55;
+          if (greyscale) {
+            /* C1.1: depth-shaded greys, batched by quantized bucket (order is
+               already depth-sorted, so fillStyle changes are rare). Dim the
+               field when a selection is active — color belongs to the
+               selection and its twins only. */
+            var b = depth > 1 ? 15 : (depth * 16) | 0;
+            if (b !== lastB) {
+              var g = 40 + b * 12;
+              ctx.fillStyle = 'rgb(' + g + ',' + g + ',' + g + ')';
+              lastB = b;
+            }
+            if (selActive && i !== state.selectedId && !state.highlight.has(i)) alpha *= 0.35;
+          } else {
+            var cc = cl[i] % 8;
+            if (cc !== lastC) { ctx.fillStyle = CLUSTER_COLORS[cc]; lastC = cc; }
+          }
+          ctx.globalAlpha = alpha;
           ctx.fillRect(sx[i] - size / 2, syy[i] - size / 2, size, size);
         }
         ctx.globalAlpha = 1;
         /* highlights: larger dots + ring */
-        if (state.highlight.size) {
-          ctx.strokeStyle = '#F9F6F0';
+        var hlColor = greyscale ? ACCENT : '#F9F6F0';
+        if (state.highlight.size || selActive) {
+          ctx.strokeStyle = hlColor;
           ctx.lineWidth = 1.5;
+          /* selected point: solid accent + ring */
+          if (selActive) {
+            var si = state.idToIdx.get(state.selectedId);
+            if (si !== undefined) {
+              var sdepth = sz[si];
+              var ssize = 3 + sdepth * 2.5;
+              ctx.fillStyle = hlColor;
+              ctx.beginPath();
+              ctx.arc(sx[si], syy[si], ssize / 2, 0, 6.2832);
+              ctx.fill();
+              ctx.beginPath();
+              ctx.arc(sx[si], syy[si], ssize / 2 + 3, 0, 6.2832);
+              ctx.stroke();
+            }
+          }
           state.highlight.forEach(function (id) {
+            if (id === state.selectedId) return;
             var i = state.idToIdx.get(id);
             if (i === undefined) return;
             var depth = sz[i];
             var size = 3 + depth * 2.5;
-            ctx.fillStyle = '#F9F6F0';
+            ctx.fillStyle = hlColor;
             ctx.beginPath();
             ctx.arc(sx[i], syy[i], size / 2, 0, 6.2832);
             ctx.fill();
-            ctx.beginPath();
-            ctx.arc(sx[i], syy[i], size / 2 + 3, 0, 6.2832);
-            ctx.stroke();
+            if (!greyscale) {
+              ctx.beginPath();
+              ctx.arc(sx[i], syy[i], size / 2 + 3, 0, 6.2832);
+              ctx.stroke();
+            }
           });
         }
       }
@@ -499,7 +555,7 @@
       return { name: state.names[i], season: state.seasons[i], team: state.teams[i], cluster: state.clusters[i] };
     }
 
-    return { setProjection: setProjection, setHighlight: setHighlight, destroy: destroy, info: info };
+    return { setProjection: setProjection, setHighlight: setHighlight, setSelected: setSelected, destroy: destroy, info: info };
   }
 
   global.Embed3D = { mount: mount };
