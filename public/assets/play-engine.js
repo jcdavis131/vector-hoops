@@ -1140,8 +1140,8 @@
 
     let mode='daily'; if(st.isRandom) mode='random'; else if(st.isTriple) mode='triple';
     if(mode==='triple'){ const md=$('#mode-desc'); if(md) md.innerHTML='Daily Triple: 3 fixed puzzles per day — the lighter court (the retired Everyday game, folded in). It shares the Daily Court streak. <button type="button" class="linkbtn" id="mode-howto">Streak rules: How to play</button>'; }
-    document.querySelectorAll('.mode-tab').forEach(btn=>{ const m=btn.dataset.mode; if(m===mode) btn.classList.add('is-active'); else btn.classList.remove('is-active'); });
-    document.querySelectorAll('.mode-tab').forEach(btn=>{
+    document.querySelectorAll('#mode-tabs [data-mode]').forEach(btn=>{ const m=btn.dataset.mode; if(m===mode) btn.classList.add('is-active'); else btn.classList.remove('is-active'); });
+    document.querySelectorAll('#mode-tabs [data-mode]').forEach(btn=>{
       btn.addEventListener('click',()=>{
         const m=btn.dataset.mode;
         if(m==='random'){ const p=VHPastModern.pickRandomPast(); location.href='/play?mode=random&r='+p.i; return; }
@@ -1216,7 +1216,7 @@
       }catch(e){}
       return false;
     }
-    function toastMsg(m){ try{ if(window.VHShare&&VHShare.showToast) VHShare.showToast(m); }catch(e){} }
+    function toastMsg(m){ try{ if(window.VHToast) VHToast.show(m); else if(window.VHShare&&VHShare.showToast) VHShare.showToast(m); }catch(e){} }
     function dailyShareContext(){
       const s=VHPastModern.state();
       const mode=s.isTriple?'triple':'court';
@@ -1241,7 +1241,7 @@
       toastMsg('Opening share\u2026'); // <=1s visible response to the tap
       closeDailyShareSheet();
       const sh=document.createElement('div'); sh.id='vh-share-sheet'; sh.setAttribute('role','dialog'); sh.setAttribute('aria-label','Share your Daily Court result');
-      sh.innerHTML='<div class="vh-share-card"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px"><b>Share your card</b><button class="btn" id="vh-share-close" type="button">\u2715</button></div><pre class="vh-share-preview"></pre><div class="vh-share-row"><button class="btn btn-primary" id="vh-share-copy-card" type="button">\uD83D\uDCCB Copy card</button><button class="btn" id="vh-share-copy-link" type="button">\uD83D\uDD17 Copy link</button><button class="btn" id="vh-share-native" type="button">\u2197\uFE0F More\u2026</button></div><div class="vh-share-fine">The card text above is exactly what gets copied \u2014 no spoilers, every link carries ref=share.</div></div>';
+      sh.innerHTML='<div class="vh-share-card"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px"><b>Share your card</b><button class="btn" id="vh-share-close" type="button">\u2715</button></div><pre class="vh-share-preview"></pre><div class="share-bar"><button class="btn btn-primary" id="vh-share-copy-card" type="button">\uD83D\uDCCB Copy card</button><button class="btn" id="vh-share-copy-link" type="button">\uD83D\uDD17 Copy link</button><button class="btn" id="vh-share-native" type="button">\u2197\uFE0F More\u2026</button></div><div class="vh-share-fine">The card text above is exactly what gets copied \u2014 no spoilers, every link carries ref=share.</div></div>';
       sh.querySelector('.vh-share-preview').textContent=ctx.text;
       document.body.appendChild(sh);
       const close=()=>closeDailyShareSheet();

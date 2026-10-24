@@ -157,8 +157,9 @@ def test_guess_rule_stated_where_players_type() -> None:
 
 def test_material_treatments_exist() -> None:
     # distinct CSS treatment for embedding-truth vs map-approximation surfaces
-    for page in ("index.html", "play.html"):
-        css = (ROOT / page).read_text(encoding="utf-8")
+    # play.html's page CSS lives in assets/game.css since wave 1.3 (DESIGN-DIRECTION task 1.3)
+    for page, sheets in (("index.html", ()), ("play.html", ("assets/game.css",))):
+        css = "".join((ROOT / f).read_text(encoding="utf-8") for f in (page, *sheets))
         assert ".vh-truth" in css and ".vh-approx" in css, page
     dos = (ROOT / "assets" / "player-dossier.js").read_text(encoding="utf-8")
     assert "vh-truth" in dos and "vh-approx" in dos

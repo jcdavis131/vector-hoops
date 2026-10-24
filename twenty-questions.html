@@ -1,13 +1,10 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
 <title>Twenty Questions — Vector Hoops</title>
 <meta name="description" content="Think of an NBA player. Answer up to 20 yes/no questions and watch the embedding map dim every career it can't be — until one player is left."/>
-<link rel="manifest" href="/manifest.json"/>
+<link rel="canonical" href="https://hoops.dumbmodel.com/twenty-questions"/>
 <meta name="color-scheme" content="light dark"/>
 <meta name="theme-color" content="#0F1114" media="(prefers-color-scheme: dark)"/>
 <meta name="theme-color" content="#FCFBF7" media="(prefers-color-scheme: light)"/>
-<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml"/>
-<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png"/>
-<link rel="canonical" href="https://hoops.dumbmodel.com/twenty-questions"/>
 <meta property="og:type" content="website"/>
 <meta property="og:site_name" content="Vector Hoops"/>
 <meta property="og:url" content="https://hoops.dumbmodel.com/twenty-questions"/>
@@ -18,77 +15,29 @@
 <meta name="twitter:title" content="Twenty Questions — Vector Hoops"/>
 <meta name="twitter:description" content="Think of a player. 20 yes/no questions. The map dims every career it can't be."/>
 <meta name="twitter:image" content="https://hoops.dumbmodel.com/assets/og-1200x630.png"/>
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml"/>
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png"/>
+<link rel="manifest" href="/manifest.json"/>
+<link rel="stylesheet" href="assets/fonts.css?v=8f376b2a"/>
 <link rel="stylesheet" href="assets/atlas.css?v=a737547a"/>
 <link rel="stylesheet" href="assets/shell.css?v=398d5e37"/>
-<style>
-/* Twenty Questions — Drafting Board page layer (tokens from atlas.css) */
-*{box-sizing:border-box}
-html,body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--font-text);font-size:17px;line-height:1.6;overflow-x:clip}
-button{min-height:44px}
-.main{max-width:980px;margin:0 auto;padding:0 clamp(12px,3vw,20px) calc(88px + env(safe-area-inset-bottom));display:flex;flex-direction:column;gap:14px}
-.card{background:var(--surface);border:1px solid var(--line-2);border-radius:var(--radius);padding:14px 16px}
-.btn{appearance:none;border:1px solid var(--line-2);border-radius:var(--radius);min-height:48px;padding:10px 16px;font-weight:700;font-family:var(--font-code);font-size:13px;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;background:var(--surface);color:var(--fg);display:inline-flex;align-items:center;justify-content:center;gap:8px}
-.btn:hover{border-color:var(--fg-3)}
-.btn-primary{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
-.btn-primary:hover{background:var(--accent-2);border-color:var(--accent-2)}
-.btn[disabled]{opacity:.45;cursor:default}
-.btn-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
-.btn-row .btn{flex:1 1 120px}
-kbd{font-family:var(--font-code);font-size:11px;border:1px solid var(--line-2);border-radius:4px;padding:1px 6px;background:var(--surface-2);font-weight:700}
-.small-mono{font-family:var(--font-code);font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--fg-3)}
-.pill{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line-2);border-radius:999px;padding:5px 12px;background:var(--surface);font-family:var(--font-code);font-size:11px;font-weight:700;letter-spacing:.06em}
-.tq-head{padding-top:clamp(40px,7vw,88px)}
-.tq-status{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:12px;padding-top:12px;border-top:1px dashed var(--line)}
-.tq-status .spacer{flex:1}
-.link-btn{background:none;border:0;color:var(--blue);font:inherit;cursor:pointer;text-decoration:underline;padding:8px;min-height:44px}
-/* map */
-#map-wrap{position:relative;min-height:340px;border:1px solid var(--line-2);border-radius:var(--radius);overflow:hidden;background:var(--surface-2)}
-#tq-canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
-#map-overlay{position:absolute;left:10px;right:10px;top:10px;display:flex;justify-content:space-between;gap:8px;z-index:2;pointer-events:none;flex-wrap:wrap}
-#map-overlay .chip{background:color-mix(in srgb, var(--surface) 92%, transparent);border:1px solid var(--line-2);border-radius:999px;padding:4px 10px;font-family:var(--font-code);font-size:10px;font-weight:700}
-#map-legend{position:absolute;right:10px;bottom:10px;z-index:2;background:color-mix(in srgb, var(--surface) 94%, transparent);border:1px solid var(--line-2);border-radius:var(--radius);padding:7px 10px;font-family:var(--font-code);font-size:10px;line-height:1.5;pointer-events:none;max-width:230px}
-@media(max-width:719px){#map-legend{left:10px;right:10px;bottom:8px;max-width:none;padding:4px 10px;font-size:9px;line-height:1.4}#map-legend .legend-long{display:none}#map-wrap{min-height:300px}}
-/* question */
-#q-text{margin:6px 0 0;font-family:var(--font-display);font-size:clamp(20px,4.4vw,30px);line-height:1.25;letter-spacing:-.01em}
-.fine{font-size:13px;color:var(--fg-2);margin:10px 0 0}
-#answer-log{display:flex;gap:4px;flex-wrap:wrap;margin-top:10px}
-#answer-log .a{font-family:var(--font-code);font-size:10px;font-weight:800;width:26px;height:26px;display:inline-flex;align-items:center;justify-content:center;border-radius:6px;border:1px solid var(--line-2)}
-#answer-log .a.y{background:var(--ok);color:var(--board);border-color:var(--ok)}
-#answer-log .a.n{background:var(--bad);color:var(--board);border-color:var(--bad)}
-#answer-log .a.u{background:var(--surface-2);color:var(--fg-3)}
-/* reveal */
-#reveal-name{margin:4px 0;font-family:var(--font-display);font-size:clamp(28px,6vw,44px);line-height:1.05;letter-spacing:-.02em}
-#reveal-career{font-family:var(--font-code);font-size:12px;color:var(--fg-2);margin:0}
-.badge-row{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
-.badge{font-family:var(--font-code);font-size:10px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;border:1px solid var(--line-2);border-radius:999px;padding:3px 9px}
-.badge.star{background:var(--accent-wash);border-color:var(--accent-line);color:var(--accent)}
-/* share toast (same contract as play.html: element styled here) */
-.vh-toast{position:fixed;left:50%;bottom:88px;transform:translateX(-50%) translateY(16px);background:#1A150F;color:#FFFDF6;padding:10px 18px;border-radius:999px;font:600 14px/1.4 system-ui,-apple-system,sans-serif;opacity:0;pointer-events:none;transition:opacity .18s ease,transform .18s ease;z-index:9999;box-shadow:0 6px 24px rgba(0,0,0,.28);max-width:min(92vw,440px);text-align:center}
-.vh-toast.is-visible{opacity:1;transform:translateX(-50%) translateY(0)}
-@media (prefers-reduced-motion: reduce){.vh-toast{transition:none}}
-details.howto{border:1px solid var(--line);border-radius:var(--radius);padding:10px 14px;background:var(--surface)}
-details.howto summary{cursor:pointer;font-weight:700;min-height:44px;display:flex;align-items:center}
-details.howto p,details.howto li{font-size:14px;color:var(--fg-2)}
-.provenance{font-family:var(--font-code);font-size:11px;line-height:1.7;color:var(--fg-3)}
-.visually-hidden{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
-</style>
-</head><body>
+<link rel="stylesheet" href="assets/game.css?v=636e71bb"/>
+</head><body class="game game--tq">
 <a class="skip-link" href="#main">Skip to content</a>
 <noscript><div role="alert" style="padding:16px;text-align:center">Enable JavaScript — Twenty Questions needs it to ask, filter and draw the map.</div></noscript>
 
 <nav class="site-nav" data-active="/twenty-questions" aria-label="Vector Hoops site"></nav>
-<div id="main" class="main" role="main">
+<div id="main" class="main main--narrow" role="main">
 
-  <header class="title-card tq-head">
+  <header class="title-card">
     <div class="title-card__eyebrow">TWENTY QUESTIONS &middot; THE MAP DIMS AS YOU ANSWER</div>
     <h1 class="title-card__title">Think of a <em>player</em>.</h1>
     <p class="title-card__lede">Answer up to 20 yes/no questions. Every answer dims the careers it can&rsquo;t be &mdash; live, on the real embedding map &mdash; until one player is left.</p>
-    <div class="tq-status">
+    <div class="game-status">
       <span class="pill" id="pill-q">Q 0/20</span>
       <span class="pill" id="pill-left">2,426 careers</span>
-      <span class="spacer"></span>
-      <button class="link-btn" id="btn-undo" type="button" disabled>Undo</button>
-      <button class="link-btn" id="btn-restart" type="button">Restart</button>
+      <button class="chip-link" id="btn-undo" type="button" disabled>Undo</button>
+      <button class="chip-link" id="btn-restart" type="button">Restart</button>
     </div>
   </header>
 
@@ -106,48 +55,60 @@ details.howto p,details.howto li{font-size:14px;color:var(--fg-2)}
       <button class="btn" id="btn-no" type="button" disabled>No <kbd>N</kbd></button>
       <button class="btn" id="btn-unsure" type="button" disabled>Not sure <kbd>U</kbd></button>
     </div>
-    <div id="answer-log" aria-hidden="true"></div>
-    <p class="fine">&ldquo;Not sure&rdquo; follows the bigger half &mdash; the game keeps going either way. Undo any answer above.</p>
+    <div id="answer-log" class="progress-dots" aria-hidden="true"></div>
+    <p class="caption">&ldquo;Not sure&rdquo; follows the bigger half &mdash; the game keeps going either way. Undo any answer above.</p>
   </section>
 
   <section class="card" id="tie-card" hidden aria-labelledby="tie-text">
     <p class="small-mono">Down to the last few</p>
-    <h2 id="tie-text" aria-live="polite" style="margin:6px 0 0;font-family:var(--font-display);font-size:clamp(20px,4.4vw,28px)"></h2>
+    <h2 id="tie-text" aria-live="polite"></h2>
     <div class="btn-row" role="group" aria-label="Is this your player?">
       <button class="btn btn-primary" id="btn-tie-yes" type="button">Yes, that&rsquo;s them</button>
       <button class="btn" id="btn-tie-no" type="button">No, keep going</button>
     </div>
   </section>
 
-  <section class="card" id="reveal-card" hidden aria-labelledby="reveal-name">
+  <section class="card result" id="reveal-card" hidden aria-labelledby="reveal-name">
     <p class="small-mono" id="reveal-kicker">Solved</p>
     <h2 id="reveal-name"></h2>
     <p id="reveal-career"></p>
     <div class="badge-row" id="reveal-badges"></div>
-    <div class="btn-row">
+    <div class="share-bar">
       <button class="btn btn-primary" id="btn-share" type="button">Share result</button>
       <button class="btn" id="btn-copy" type="button">Copy text</button>
       <button class="btn" id="btn-again" type="button">Play again</button>
     </div>
-    <p class="fine">The share card is generated on your device &mdash; nothing is uploaded.</p>
+    <p class="caption">The share card is generated on your device &mdash; nothing is uploaded.</p>
   </section>
 
-  <div class="card" id="err-card" hidden role="alert" style="border-color:var(--bad)">
-    <h2 style="margin:0 0 6px;font-size:18px">The game data didn&rsquo;t load</h2>
-    <p class="fine" style="margin:0 0 10px">The question tree never arrived &mdash; check your connection and try again. Nothing was invented in the meantime.</p>
+  <div class="state state--error" id="err-card" hidden role="alert">
+    <h2 class="state__title">The game data didn&rsquo;t load</h2>
+    <p>The question tree never arrived &mdash; check your connection and try again. Nothing was invented in the meantime.</p>
     <button class="btn btn-primary" id="btn-retry" type="button">Retry</button>
   </div>
 
-  <details class="howto">
-    <summary>How it works</summary>
-    <ul>
-      <li>Think of any NBA player with a charted season since 1996 &mdash; 2,426 careers are in the tree.</li>
-      <li>Questions come from real career data: position, era, play style, Skills Lens tags, All-Star / All-NBA honours.</li>
-      <li>The tree is built offline for maximum information gain; every career resolves within 20 questions (worst case observed: 18).</li>
-      <li>The map plots all 12,966 player-seasons as a 2-D projection of the 14 era-normalized per-100 features &mdash; the site&rsquo;s atlas view, not the 64-d MTNN embedding itself.</li>
-      <li>Provenance: tree built 2026-10-20 from the season vectors, archetype assignments and honors data &mdash; greedy max-information-gain, worst case 18 questions observed. Map: PCA of the 14 era-normalized per-100 features.</li>
-      <li>Keyboard: <kbd>Y</kbd> yes, <kbd>N</kbd> no, <kbd>U</kbd> not sure.</li>
-    </ul>
+  <details class="disclosure">
+    <summary>How to play</summary>
+    <div class="disclosure__body caption">
+      <ul>
+        <li>Think of any NBA player with a charted season since 1996 &mdash; 2,426 careers are in the tree.</li>
+        <li>Questions come from real career data: position, era, play style, Skills Lens tags, All-Star / All-NBA honours.</li>
+        <li>Every career resolves within 20 questions.</li>
+        <li>The map plots all 12,966 player-seasons by how they played &mdash; the site&rsquo;s atlas view.</li>
+        <li>Keyboard: <kbd>Y</kbd> yes, <kbd>N</kbd> no, <kbd>U</kbd> not sure.</li>
+      </ul>
+    </div>
+  </details>
+
+  <details class="disclosure provenance">
+    <summary>How it was built</summary>
+    <div class="disclosure__body caption">
+      <ul>
+        <li>The tree is built offline for maximum information gain; every career resolves within 20 questions (worst case observed: 18).</li>
+        <li>The map is a 2-D projection of the 14 era-normalized per-100 features &mdash; the site&rsquo;s atlas view, not the 64-d MTNN embedding itself.</li>
+        <li>Provenance: tree built 2026-10-20 from the season vectors, archetype assignments and honors data &mdash; greedy max-information-gain, worst case 18 questions observed. Map: PCA of the 14 era-normalized per-100 features.</li>
+      </ul>
+    </div>
   </details>
 
 </div>
@@ -188,5 +149,6 @@ details.howto p,details.howto li{font-size:14px;color:var(--fg-2)}
 <script src="assets/keyboard-a11y.js?v=39777a87"></script>
 <script src="assets/engagement.js?v=9afde51a"></script>
 <script src="assets/site-nav.js?v=13e9219d" defer></script>
-<script src="assets/inline-twenty-questions.js?v=0657b45a"></script>
+<script src="assets/toast.js?v=06285043"></script>
+<script src="assets/inline-twenty-questions.js?v=90b98a73"></script>
 </body></html>

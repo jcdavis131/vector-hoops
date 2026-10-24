@@ -17,13 +17,16 @@
 
   function vhToast(msg, ms){
     try{
+      if (window.VHToast){ window.VHToast.show(msg, ms); return; }
+    }catch(e){}
+    try{
       if (window.VHShare && typeof window.VHShare.showToast === 'function'){
         window.VHShare.showToast(msg); return;
       }
     }catch(e){}
     try{
       var t = document.createElement('div');
-      t.className = 'vh-toast'; t.setAttribute('role', 'status');
+      t.className = 'toast'; t.setAttribute('role', 'status');
       t.textContent = msg; document.body.appendChild(t);
       requestAnimationFrame(function(){ t.classList.add('is-visible'); });
       setTimeout(function(){ t.classList.remove('is-visible'); setTimeout(function(){ t.remove(); }, 250); }, ms || 2000);

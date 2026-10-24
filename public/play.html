@@ -1,125 +1,10 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
 <title>Play — Daily Court — Vector Hoops</title>
 <meta name="description" content="Daily Court: five past All-Stars a day, the same five for everyone. Find each one’s closest modern twin in six guesses."/>
-<link rel="manifest" href="/manifest.json"/>
-<link rel="stylesheet" href="assets/responsive.css?v=cc8e5207"/><link rel="stylesheet" href="assets/final-qa.css?v=fb603ee5"/><link rel="stylesheet" href="assets/unified.css?v=fd25e8ca"/><link rel="stylesheet" href="assets/motion.css?v=aa8dedc2"/>
-<style>
-:root{--paper:#FFFEF7;--ink:#1A150F;--blue:#0072B2;--verm:#D55E00;--yellow:#F0E442;--green:#00775A;--radius:14px;--shadow:4px 4px 0 var(--ink);--mono:ui-monospace,monospace;--sans:ui-sans-serif,system-ui;}
-*{box-sizing:border-box}html,body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:18px;line-height:1.65;overflow-x:clip}
-button,.input{min-height:44px}
-.card{background:var(--surface);border:1px solid var(--line-2);border-radius:14px;box-shadow:var(--shadow);padding:14px 16px}
-.btn{appearance:none;border:1px solid var(--line-2);border-radius:12px;min-height:48px;padding:10px 14px;font-weight:900;font-family:var(--mono);text-transform:uppercase;letter-spacing:.04em;cursor:pointer;box-shadow:none;background:var(--surface);color:var(--ink);display:inline-flex;align-items:center;gap:8px;justify-content:center}
-.btn:active{transform:translate(1px,1px);box-shadow:none}
-.btn-primary{background:var(--accent);color:var(--on-accent)}.btn-accent{background:var(--accent-wash);color:var(--accent)}
-.input{width:100%;border:1px solid var(--line-2);border-radius:12px;padding:0 12px;font-size:16px;font-weight:600;box-shadow:none}
-.small-mono{font-family:var(--mono);font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase}
-.pill{border:1px solid var(--line-2);border-radius:999px;padding:4px 10px;background:var(--surface);font-family:var(--mono);font-size:11px;font-weight:800;box-shadow:none;display:inline-flex;align-items:center;gap:6px}
-.twin-why{margin-top:16px;padding-top:14px;border-top:1px solid rgba(255,255,255,.12)}
-.twin-why__label{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--fg-2);margin-bottom:8px}
-.twin-why__chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px}
-.twin-why__chips .pill{font-size:13px;padding:7px 13px}
-.twin-why__differ{font-size:14px}
-.twin-why__thin{margin-top:8px;font-size:13px;font-style:italic;color:var(--fg-2)}
-.twin-why__band{margin-bottom:10px;font-size:13px}
-.twin-band{display:inline}.twin-band__summary{display:inline;cursor:pointer}
-.twin-band--inline{display:inline}
-.twin-band__num{font-variant-numeric:tabular-nums;opacity:.75;font-size:.92em}
-.twin-band__label{opacity:.7}
-.twin-why__method{margin-top:8px;font-size:11.5px;color:rgba(167,176,188,.75);font-style:italic}
-.pill-yellow{background:var(--accent-wash);color:var(--accent)}.pill-green{background:var(--green);color:#fff}.pill-blue{background:var(--blue);color:#fff}
-.main{max-width:980px;margin:0 auto;padding:12px clamp(12px,3vw,20px) calc(92px + env(safe-area-inset-bottom));display:flex;flex-direction:column;gap:14px}
-#map-wrap{position:relative;min-height:380px;border:1px solid var(--line-2);border-radius:16px;box-shadow:none;overflow:hidden;background:radial-gradient(120% 80% at 70% 20%,rgba(0,114,178,.12),transparent 48%),radial-gradient(90% 60% at 20% 70%,rgba(213,94,0,.10),transparent 46%),var(--paper)}
-#sky-canvas{position:absolute;inset:0;width:100%;height:100%;display:block;cursor:grab}
-#map-overlay{position:absolute;left:10px;right:10px;top:10px;display:flex;justify-content:space-between;gap:8px;z-index:2;pointer-events:none;flex-wrap:wrap}
-#map-overlay .chip{background:rgba(255,254,247,.92);border:1px solid var(--line-2);border-radius:999px;padding:4px 8px;font-family:var(--mono);font-size:10px;box-shadow:none}
-#map-controls{position:absolute;left:10px;bottom:10px;z-index:3;display:flex;gap:6px;flex-wrap:wrap}
-#lens-bar{margin:0 0 8px;min-height:0}
-#lens-bar:empty{display:none}
-.vh-lensbar{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
-.vh-lens-btn.on{background:#1A150F;color:#FFFEF7;border-color:#1A150F}
-.vh-lens-cap{font-family:ui-monospace,monospace;font-size:10px;opacity:.55}
-.vh-lens-count{font-family:ui-monospace,monospace;font-size:11px;font-weight:900}
-.vh-lens-iso[aria-pressed="true"]{background:#1A150F;color:#FFFEF7;border-color:#1A150F}
-#map-legend{position:absolute;right:10px;bottom:10px;z-index:3;background:rgba(255,254,247,.94);border:1px solid var(--line-2);border-radius:12px;padding:7px 9px;box-shadow:none;font-family:var(--mono);font-size:9px;line-height:1.35;pointer-events:none;min-width:128px}
-#hover-tip{position:absolute;left:50%;top:50%;transform:translate(-50%,-100%);background:var(--surface);border:1px solid var(--line-2);border-radius:10px;padding:6px 8px;box-shadow:none;font-size:11px;display:none;z-index:3;pointer-events:none;max-width:220px}
-.guess-row{border:1px solid var(--line-2);border-radius:12px;padding:10px 12px;background:var(--surface);margin-top:8px;box-shadow:none}
-.bar{height:8px;border-radius:999px;background:var(--surface-2);overflow:hidden;margin-top:6px;border:1px solid var(--line)}.bar>i{display:block;height:100%}
-.suggest{position:relative}.suggest ul{position:absolute;z-index:20;left:0;right:0;top:52px;background:var(--surface);border:1px solid var(--line-2);border-radius:12px;box-shadow:none;list-style:none;margin:0;padding:6px;max-height:300px;overflow:auto}
-.suggest li{padding:8px 10px;border-radius:8px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;min-height:44px}.suggest li:hover,.suggest li.is-active{background:var(--accent-wash);color:var(--accent)}
-.hd{font-family:var(--mono);line-height:1.05}
-.confetti{position:fixed;inset:0;pointer-events:none;z-index:98}
-#game-header{padding:16px 16px 12px;border-width:2.5px}
-.game-title{margin:0;font-size:clamp(22px,5vw,32px);line-height:.95;letter-spacing:-.01em}
-.game-subtitle{margin:6px 0 0;font-size:14px;line-height:1.5;color:var(--fg-2);max-width:62ch}
-.game-status-bar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:10px;padding-top:10px;border-top:1px dashed var(--line);}
-.mode-tabs{display:flex;gap:8px;overflow-x:auto;flex-wrap:nowrap;padding:4px 0 8px;scrollbar-width:none}.mode-tabs::-webkit-scrollbar{display:none}
-.mode-tab{flex:0 0 auto;appearance:none;border:1px solid var(--line-2);border-radius:999px;padding:8px 14px;background:var(--surface);font-family:var(--mono);font-size:11px;font-weight:900;text-transform:uppercase;box-shadow:none;cursor:pointer;min-height:40px;display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
-.mode-tab.is-active{background:var(--accent);color:var(--on-accent)}
-.mode-tab.is-active.daily-active{background:var(--blue)}
-.mode-desc{font-size:12px;line-height:1.5;color:var(--fg-2);background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:8px 10px;margin-top:8px}
-.ready-banner{border:1px dashed var(--line-2);background:var(--accent-wash);color:var(--accent);border-radius:12px;padding:12px 14px;display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap;box-sizing:border-box}
-.turn-indicator{display:flex;gap:8px;align-items:center;margin-top:6px;font-family:var(--mono);font-size:11px;font-weight:800}
-.turn-dot{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 0 3px rgba(0,158,115,.18);animation:pulse 1.6s infinite}
-.guess-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:4px 0 2px}
-.guess-tile{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;min-height:60px;padding:9px 6px;border:1px solid var(--line-2);border-radius:12px;background:var(--surface);font-family:inherit;font-size:13px;font-weight:800;line-height:1.15;color:var(--ink,#1A150F);text-align:center;cursor:pointer;box-shadow:none;transition:transform .07s,box-shadow .07s}
-.guess-tile:hover:not([disabled]){background:var(--surface)}
-.guess-tile:active:not([disabled]){transform:translate(1px,1px);box-shadow:none}
-.guess-tile .tile-dot{width:15px;height:15px;border-radius:50%;border:1px solid var(--line-2);flex:0 0 auto}
-.guess-tile .tile-name{word-break:break-word}
-.guess-tile .tile-rank{font-size:10px;font-weight:700;opacity:.85;text-transform:uppercase;letter-spacing:.03em}
-.guess-tile.is-picked{opacity:.55;cursor:default;box-shadow:none;background:var(--surface)}
-.guess-tile.is-twin{opacity:1;background:var(--green,#009E73);color:#fff;border-color:var(--ink,#1A150F);box-shadow:none}
-.guess-tile.is-twin .tile-dot{border-color:#fff}
-.guess-tile[disabled]{cursor:default}
-.grid-loading{grid-column:1/-1;text-align:center;padding:22px 8px;font-family:var(--mono);font-size:12px;color:var(--fg-3)}
-@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.18)}}
-.progress-dots{display:flex;gap:6px;align-items:center}
-.progress-dot{width:26px;height:26px;border-radius:50%;border:1px solid var(--line-2);display:inline-flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:11px;font-weight:900;background:var(--surface);box-shadow:none}
-.progress-dot.is-done{background:var(--accent);color:var(--on-accent)}.progress-dot.is-current{background:var(--accent-wash);color:var(--accent)}
-
-/* PACK PRODUCTION */
-.battle-banner{border:1px solid var(--line-2);border-radius:12px;padding:10px 12px;background:var(--accent-wash);color:var(--accent);box-shadow:none;display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:center;margin-top:10px}
-.battle-win{background:var(--green);color:#fff}
-.battle-lose{background:var(--surface)}
-.battle-tie{background:var(--surface)}
-
-/* DAILY COURT */
-#daily-court{border-width:2.5px;background:linear-gradient(180deg,#fff 0%, #FFFEF7 100%)}
-.court-top{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:center}
-.court-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-top:12px}
-@media(max-width:720px){.court-grid{grid-template-columns:1fr;}}
-.court-card{border:1px solid var(--line-2);border-radius:12px;padding:10px;background:var(--surface);box-shadow:none;cursor:pointer;position:relative;min-height:92px;display:flex;flex-direction:column;justify-content:space-between;transition:transform .08s}
-.court-card:hover{transform:translateY(-1px)}
-.court-card.is-active{border-color:var(--blue);box-shadow:none;background:#f0f8ff;outline:3px solid var(--yellow)}
-.court-card.is-failed{border-color:var(--verm);background:#fef2e8;opacity:.9}
-.court-slot{font-family:var(--mono);font-size:9px;letter-spacing:.08em;text-transform:uppercase;opacity:.6}
-.court-name{font-weight:900;font-size:13px;line-height:1.2;margin:4px 0}
-.court-meta{font-family:var(--mono);font-size:10px;color:var(--fg-3)}
-.court-badge{position:absolute;top:8px;right:8px}
-.lineup-bar{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
-.lineup-chip{border:1px solid var(--line-2);border-radius:999px;padding:3px 8px;background:var(--surface);font-family:var(--mono);font-size:10px;font-weight:800;box-shadow:none}
-.rewards-row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:10px}
-.reward{border:1px solid var(--line-2);border-radius:999px;padding:6px 10px;background:var(--surface);font-family:var(--mono);font-size:11px;font-weight:900;box-shadow:none;display:inline-flex;gap:6px;align-items:center}
-
-/* onboarding sheet */
-.vh-sheet-backdrop{position:fixed;inset:0;background:rgba(26,21,15,.55);display:flex;align-items:flex-end;justify-content:center;z-index:110;padding:0}
-.vh-sheet{background:var(--surface);width:100%;max-width:680px;max-height:min(88dvh, calc(100dvh - 16px));overflow:auto;border:1px solid var(--line-2);border-bottom:none;border-radius:16px 16px 0 0;box-shadow:none;padding:16px 16px calc(16px + env(safe-area-inset-bottom));animation:sheetUp .22s ease-out}
-@keyframes sheetUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
-@media(min-width:600px){.vh-sheet-backdrop{align-items:center;padding:20px}.vh-sheet{border-bottom:1px solid var(--line-2);border-radius:16px;box-shadow:none;animation:sheetFade .16s ease-out}@keyframes sheetFade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}}
-.vh-sheet__handle{width:36px;height:4px;background:var(--surface-2);border-radius:2px;margin:2px auto 12px}
-.vh-sheet__head{display:flex;justify-content:space-between;gap:10px;align-items:flex-start;margin-bottom:10px}
-.vh-sheet__title{margin:0;font-family:var(--mono);font-size:22px;line-height:1.05}
-.vh-sheet__close{flex:0 0 auto;border:1px solid var(--line-2);background:var(--surface);border-radius:50%;width:36px;height:36px;font-weight:900;cursor:pointer;box-shadow:none}
-.onboard-steps{display:flex;flex-direction:column;gap:10px;margin:12px 0}
-.onboard-step{display:flex;gap:10px;align-items:flex-start;border:1px solid var(--line-2);border-radius:12px;padding:10px 12px;background:var(--surface);box-shadow:none}
-.onboard-step__num{flex:0 0 28px;width:28px;height:28px;border-radius:50%;background:var(--accent);color:var(--on-accent);display:inline-flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:13px;font-weight:900}
-</style>
+<link rel="canonical" href="https://hoops.dumbmodel.com/play"/>
 <meta name="color-scheme" content="light dark"/>
 <meta name="theme-color" content="#0F1114" media="(prefers-color-scheme: dark)"/>
 <meta name="theme-color" content="#FCFBF7" media="(prefers-color-scheme: light)"/>
-<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml"/>
-<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png"/>
-<link rel="canonical" href="https://hoops.dumbmodel.com/play"/>
 <meta property="og:type" content="website"/>
 <meta property="og:site_name" content="Vector Hoops"/>
 <meta property="og:url" content="https://hoops.dumbmodel.com/play"/>
@@ -131,173 +16,52 @@ button,.input{min-height:44px}
 <meta name="twitter:title" content="Play — Daily Court — Vector Hoops"/>
 <meta name="twitter:description" content="Daily Court: five past All-Stars a day, the same five for everyone. Find each one’s closest modern twin in six guesses."/>
 <meta name="twitter:image" content="https://hoops.dumbmodel.com/assets/og-1200x630.png"/>
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml"/>
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png"/>
+<link rel="manifest" href="/manifest.json"/>
 <link rel="stylesheet" href="assets/fonts.css?v=8f376b2a"/>
 <link rel="stylesheet" href="/assets/atlas.css?v=a737547a"/>
 <link rel="stylesheet" href="/assets/shell.css?v=398d5e37"/>
-<style>
-/* ---- Play: atlas refinement layer ---- */
-.game-head{ padding-top: clamp(40px, 7vw, 88px); padding-bottom: 8px; max-width: 1000px; }
-.game-head .title-card__title{ font-size: clamp(34px, 5.4vw, 64px); }
-.game-head__bar{ width: 100%; display: grid; grid-template-columns: 1fr; justify-items: center; row-gap: 10px; margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--line); }
-@media (min-width: 720px){
-  .game-head__bar{ grid-template-columns: 1fr auto 1fr; justify-items: stretch; align-items: center; gap: 16px; margin-top: 18px; padding-top: 18px; }
-}
-.game-head__side{ display: flex; gap: 6px; flex-wrap: wrap; }
-.game-head__side--end{ justify-content: flex-end; }
-.game-status-bar{ display: flex; flex-direction: column; align-items: center; gap: 10px; margin: 0; padding: 0; border: 0; }
-.progress-dot{ width: 28px; height: 28px; font-family: var(--font-display); font-size: 11px; font-weight: 700; color: var(--fg-3); background: transparent; border: 1px solid var(--line-2); }
-.progress-dot.is-done{ background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
-.progress-dot.is-current{ background: var(--accent-wash); border-color: var(--accent-line); color: var(--accent); }
-@media (max-width: 719px){
-  #map-legend{ display: none; }
-  /* compact hero — the guess card starts within the first screenful */
-  #game-header{ padding: 8px 12px; }
-  .game-head .title-card__title{ font-size: clamp(28px, 8vw, 34px); }
-  .game-head__bar{ margin-top: 8px; padding-top: 10px; }
-  /* map yields screen space so the guess card stays in reach */
-  #map-wrap{ min-height: 320px; }
-  /* thumb-zone touch targets */
-  .progress-dot{ width: 32px; height: 32px; }
-  .tab-pills button, .mode-tab{ min-height: 44px; }
-  /* all five mode tabs visible — no hidden swipe on phones */
-  #mode-selector .mode-tabs{ flex-wrap: wrap; justify-content: center; row-gap: 6px; }
-  .title-card__eyebrow{ letter-spacing: .18em; }
-  .vh-lensbar .pill{ min-height: 44px; }
-  #game-header button.pill{ min-height: 44px; }
-  .vh-sheet__close{ width: 44px; height: 44px; }
-}
-/* thumb zone: 16px kills iOS zoom-on-focus; 48px is a true thumb target */
-#guess-input{ font-size: 16px; min-height: 48px; }
-/* v4 honesty grammar — the guess rule stated where players type, not as a
-   failure message. Ineligible names in the picker are grayed, un-attemptable. */
-.guess-rule{ font-size: 12px; color: var(--fg-2, #555); margin: 6px 2px 0; }
-.suggest li.is-ineligible{ opacity: .45; cursor: default; }
-.suggest li.is-ineligible .why{ font-size: 11px; color: var(--fg-3, #777); }
-/* v4 honesty grammar — embedding-truth vs map-approximation surfaces.
-   truth (64-d MTNN embedding: twin bands, peers, game feedback): solid marker.
-   approximation (the 2-D atlas of 14 stats): dashed marker. Light touch. */
-.vh-truth{ border-inline-start: 3px solid var(--accent, #e0762e); padding-inline-start: 10px; }
-.vh-approx{ border-inline-start: 3px dashed #999; padding-inline-start: 10px; }
-#mode-selector{ display: flex; flex-direction: column; align-items: center; gap: 12px; background: transparent; border: 0; padding: 8px 0; }
-#mode-selector .mode-tabs{ width: auto; max-width: 100%; }
-.game-head__side{ align-items: center; }
-.mode-head{ display: flex; gap: 12px; align-items: baseline; justify-content: center; flex-wrap: wrap; }
-.mode-head__note{ font-size: 12.5px; color: var(--fg-2); }
-.mode-desc{ max-width: 70ch; text-align: center; font-size: 13px; line-height: 1.6; color: var(--fg-2); background: none; border: 0; padding: 0; margin: 0; }
-#daily-court{ background: var(--surface); border-width: 1px; }
-.court-card{ background: var(--surface-2); border: 1px solid var(--line); border-radius: var(--radius-lg); transition: border-color var(--dur-1) var(--ease), transform var(--dur-2) var(--ease); }
-.court-card:hover{ border-color: var(--line-2); transform: none; }
-.court-card.is-active{ background: var(--surface-2); border-color: var(--accent); outline: 0; box-shadow: inset 0 0 0 1px var(--accent); }
-.court-card.is-solved{ background: color-mix(in srgb, var(--ok) 10%, var(--surface-2)); border-color: color-mix(in srgb, var(--ok) 55%, transparent); }
-.court-card.is-failed{ background: color-mix(in srgb, var(--bad) 8%, var(--surface-2)); border-color: color-mix(in srgb, var(--bad) 45%, transparent); opacity: 1; }
-.court-slot{ font-family: var(--font-display); font-stretch: 112%; letter-spacing: .14em; font-weight: 600; font-size: 11px; color: var(--fg-3); opacity: 1; }
-/* Suit tag: the card-suit category of the slot's past target (Honors = All-Star/All-NBA/Finals MVP season;
-   Style = rare play style; Team = leader/key contributor; Era = fallback). Rendered as a chip so it
-   never reads as part of the archetype label. */
-.suit-tag{ display: inline-block; font-family: var(--mono); font-size: 8px; font-weight: 800; letter-spacing: .12em;
-  text-transform: uppercase; color: var(--accent); border: 1px solid var(--accent-line); border-radius: 999px;
-  padding: 2px 7px; margin-left: 6px; vertical-align: 1px; background: var(--accent-wash); }
-.court-name{ font-family: var(--font-text); font-weight: 650; font-size: 14px; color: var(--fg); font-variant-numeric: tabular-nums; }
-.court-meta{ font-family: var(--font-text); font-size: 12px; color: var(--fg-2); }
-.lineup-chip, .reward{ font-family: var(--font-display); font-stretch: 112%; letter-spacing: .1em; font-weight: 600; font-size: 10px; text-transform: uppercase; color: var(--fg-2); background: none; border: 1px solid var(--line-2); }
-.reward.is-unlocked{ background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
-.reward.is-unlocked.gold{ background: var(--accent-wash); border-color: var(--accent-line); color: var(--accent); }
-#map-wrap{ min-height: 420px; background: #05070A; border: 1px solid var(--line); border-radius: var(--radius-lg); }
-#map-overlay .chip{ background: rgba(7,9,12,.72); color: rgba(236,238,241,.82); border: 1px solid rgba(255,255,255,.14); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); }
-#map-controls .chip{ background: rgba(7,9,12,.72); color: rgba(236,238,241,.85); border-color: rgba(255,255,255,.16); }
-#map-legend{ background: rgba(7,9,12,.78); color: rgba(236,238,241,.8); border: 1px solid rgba(255,255,255,.14); box-shadow: none; }
-#hover-tip{ background: rgba(13,16,21,.94); color: #ECEEF1; border: 1px solid rgba(255,255,255,.14); box-shadow: none; }
-#target-badge{ background: #FFFFFF !important; color: #05070A !important; border-color: #FFFFFF !important; }
-#past-avatar{ background: var(--surface-2) !important; border-color: var(--line) !important; }
-.guess-row{ background: var(--surface-2); border: 1px solid var(--line); box-shadow: none; }
-.guess-row.win{ border-color: var(--ok); background: color-mix(in srgb, var(--ok) 10%, var(--surface-2)); }
-.bar{ background: var(--surface-2); border: 0; height: 4px; }
-.suggest ul{ background: var(--surface); border: 1px solid var(--line-2); box-shadow: 0 20px 50px rgba(0,0,0,.35); }
-.suggest li:hover, .suggest li.is-active{ background: var(--surface-2); box-shadow: inset 2px 0 0 var(--accent); }
-.guess-tile{ background: var(--surface-2); border: 1px solid var(--line); box-shadow: none; color: var(--fg); font-family: var(--font-text); font-weight: 600; }
-.guess-tile:hover:not([disabled]){ background: var(--surface); border-color: var(--line-2); }
-.guess-tile.is-picked{ background: transparent; opacity: .5; }
-/* twin tile colours come from the atlas.css Mario-lift layer (.guess-tile.is-twin) — the local override that shadowed it was removed in the PR #73 cleanup. */
-.ready-banner{ background: var(--accent-wash); color: var(--fg); border: 1px solid var(--accent-line); border-radius: var(--radius-lg); }
-.turn-dot{ background: var(--accent); box-shadow: 0 0 0 3px var(--accent-wash); }
-.vh-sheet-backdrop{ background: var(--scrim); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); }
-.vh-sheet{ background: var(--surface); border: 1px solid var(--line-2); box-shadow: 0 30px 80px rgba(0,0,0,.5); }
-.vh-sheet__title{ font-family: var(--font-display); font-weight: 700; letter-spacing: -.01em; }
-.vh-sheet__close{ background: transparent; color: var(--fg); }
-.onboard-step{ background: var(--surface-2); border-color: var(--line); }
-.onboard-step__num{ font-family: var(--font-display); }
-@media (prefers-reduced-motion: reduce){ .turn-dot{ animation: none; } }
-.guess-row .bar>i{ background: var(--accent) !important; }
-.guess-row.win .bar>i{ background: var(--ok) !important; }
-/* ── game-feel polish: entrances, pops, ticks, shakes ── */
-@keyframes vhRowIn{from{opacity:0;transform:translateY(10px) scale(.985)}to{opacity:1;transform:none}}
-.guess-row.is-new{animation:vhRowIn .38s cubic-bezier(.2,.7,.3,1.15)}
-.bar>i{transition:width .7s cubic-bezier(.25,.8,.3,1)}
-@keyframes vhPop{0%{transform:scale(.8)}55%{transform:scale(1.1)}100%{transform:scale(1)}}
-#warm-label.pop{animation:vhPop .32s ease}
-@keyframes vhTick{0%{transform:scale(1)}40%{transform:scale(1.3)}100%{transform:scale(1)}}
-#streak-pill.tick{animation:vhTick .45s ease;display:inline-block}
-@keyframes vhCardIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
-#result .card{animation:vhCardIn .4s ease}
-@keyframes vhShake{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
-#guess-input.shake{animation:vhShake .25s ease}
-.btn[disabled]{opacity:.45;cursor:default}
-#guess-input[disabled]{opacity:.55}
-/* ── share toast + share sheet (Lane A: the share loop must visibly land) ── */
-.vh-toast{position:fixed;left:50%;bottom:88px;transform:translateX(-50%) translateY(16px);background:#1A150F;color:#FFFDF6;padding:10px 18px;border-radius:999px;font:600 14px/1.4 system-ui,-apple-system,sans-serif;opacity:0;pointer-events:none;transition:opacity .18s ease,transform .18s ease;z-index:9999;box-shadow:0 6px 24px rgba(0,0,0,.28);max-width:min(92vw,440px);text-align:center}
-.vh-toast.is-visible{opacity:1;transform:translateX(-50%) translateY(0)}
-#vh-share-sheet{position:fixed;inset:0;z-index:9998;display:flex;align-items:flex-end;justify-content:center;background:rgba(26,21,15,.5)}
-.vh-share-card{background:#FFFDF6;border-radius:16px 16px 0 0;padding:18px 18px 24px;max-width:560px;width:100%;box-shadow:0 -8px 32px rgba(0,0,0,.28);animation:vhCardIn .3s ease}
-.vh-share-preview{font:12px/1.65 ui-monospace,SFMono-Regular,monospace;background:#F7F3E8;border:1px solid #E4DCC8;border-radius:10px;padding:10px 12px;white-space:pre-wrap;max-height:230px;overflow:auto;color:#1A150F}
-.vh-share-row{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
-.vh-share-row .btn{flex:1 1 0;min-width:120px}
-.vh-share-fine{font:11px/1.5 system-ui,sans-serif;color:#8a8172;margin-top:10px}
-/* single-line pointer to the canonical ruleset (modal) */
-.linkbtn{background:none;border:0;padding:0;font:inherit;color:var(--accent,#e0762e);font-weight:800;cursor:pointer;text-decoration:underline;text-underline-offset:2px}
-@media (prefers-reduced-motion: reduce){
-  .guess-row.is-new,#result .card,#warm-label.pop,#streak-pill.tick,#guess-input.shake{animation:none}
-  .bar>i{transition:none}
-}
-</style>
-</head><body>
+<link rel="stylesheet" href="/assets/game.css?v=636e71bb"/>
+</head><body class="game game--play">
 <a class="skip-link" href="#main">Skip to content</a>
 <noscript><div role="alert" style="padding:16px;text-align:center">Enable JS — Vector Hoops needs JavaScript for Daily Court + Map</div></noscript>
 
 <nav class="site-nav" data-active="/play" aria-label="Vector Hoops site"></nav>
-<div id="main" class="main" role="main" style="padding-top:0">
+<div id="main" class="main main--narrow" role="main">
 
-  <header class="title-card game-head" id="game-header">
+  <header class="title-card" id="game-header">
     <div class="title-card__eyebrow"><span id="header-mode-label">DAILY COURT • 5× PAST → MODERN</span><span id="mode-badge" class="visually-hidden">DAILY 5</span></div>
     <h1 class="title-card__title" id="game-title">Find the <em>modern twin</em></h1>
-    <p class="title-card__lede" id="game-subtitle">Daily Court — find each past All-Star’s modern twin. 5 puzzles, 6 tries each, same for everyone today.</p>
-    <div class="game-head__bar">
-      <div class="game-head__side"><span class="pill" id="puzzle-pill">P#—</span><span class="pill" id="streak-pill">streak 0</span></div>
-      <div class="game-status-bar" id="game-status-bar">
-        <div class="label" style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;justify-content:center"><span id="puzzle-day-label">Today</span><span aria-hidden="true" style="opacity:.4">·</span><span id="game-phase-label">Loading court…</span></div>
-        <div id="court-load-fallback" hidden role="alert" style="margin-top:10px;text-align:center">
-          <p style="margin:0 0 8px;font-size:13px">The court didn&rsquo;t load &mdash; the puzzle data never arrived. Check your connection and try again.</p>
+    <p class="title-card__lede" id="game-subtitle">Daily Court — find each past All-Star’s modern twin. 5 puzzles, 6 tries each, the same five for everyone today.</p>
+    <div class="game-status">
+      <div class="game-status__side"><span class="pill" id="puzzle-pill">P#—</span><span class="pill" id="streak-pill">streak 0</span></div>
+      <div id="game-status-bar">
+        <div class="label game-status__phase"><span id="puzzle-day-label">Today</span><span class="game-status__sep" aria-hidden="true">·</span><span id="game-phase-label">Loading court…</span></div>
+        <div id="court-load-fallback" class="state state--error" hidden role="alert">
+          <p>The court didn&rsquo;t load &mdash; the puzzle data never arrived. Check your connection and try again.</p>
           <button id="btn-reload-court" class="btn btn-primary" type="button">Reload court</button>
         </div>
         <div class="progress-dots" id="guess-dots"></div>
       </div>
-      <div class="game-head__side game-head__side--end"><button class="pill" id="btn-howto" type="button">How to play</button><button class="pill" id="btn-sound" type="button" title="Toggle sound" aria-label="Toggle sound">🔊</button></div>
+      <div class="game-status__side game-status__side--end"><button class="chip-link" id="btn-howto" type="button">How to play</button></div>
     </div>
   </header>
 
   <div class="card" id="mode-selector">
-    <div class="mode-head"><span class="label">Mode</span><span class="mode-head__note">Random and Pack games don’t affect your streak — Daily Court and Daily Triple share one</span></div>
-    <div class="mode-tabs" id="mode-tabs">
-      <button class="mode-tab is-active daily-active" data-mode="daily" type="button">Daily Court</button>
-      <button class="mode-tab" data-mode="triple" type="button">Daily Triple</button>
-      <button class="mode-tab" data-mode="random" type="button">Random</button>
+    <div class="mode-head"><span class="label">Mode</span><span class="mode-head__note">Random games don’t affect your streak — Daily Court and Daily Triple share one</span></div>
+    <div class="seg" id="mode-tabs">
+      <button class="is-active" data-mode="daily" type="button">Daily Court</button>
+      <button data-mode="triple" type="button">Daily Triple</button>
+      <button data-mode="random" type="button">Random</button>
     </div>
-    <div class="mode-desc" id="mode-desc">Daily Court: 5 fixed past All-Stars a day — same five for everyone, all day. Refresh won’t change them. Play any order; progress saves per slot. <button type="button" class="linkbtn" id="mode-howto">Streak rules: How to play</button></div>
+    <div class="mode-desc" id="mode-desc">Daily Court: 5 fixed past All-Stars a day. Play any order; progress saves per slot.</div>
   </div>
 
   <div class="card" id="daily-court" style="display:none;">
     <div class="court-top">
-      <div><div class="small-mono"><span id="court-mode-name">Daily Court</span> — <span id="court-day-label">Today</span> • same for everyone • refresh-proof</div><h2 class="hd" style="margin:4px 0 0;font-size:20px"><span id="court-solved">0</span><span id="court-total">/5</span> solved • <span id="court-guesses">0</span> <span id="court-guesses-word">guesses</span></h2></div>
-      <div style="display:flex;gap:6px;flex-wrap:wrap"><span class="pill" id="court-streak-pill" title="Current daily streak">🔥 streak 0</span><span class="pill" id="court-ip-badge" aria-hidden="true">Same for everyone</span><button class="pill" id="btn-copy-court" type="button">📋 Copy court</button></div>
+      <div><div class="small-mono"><span id="court-mode-name">Daily Court</span> — <span id="court-day-label">Today</span></div><h2 class="hd"><span id="court-solved">0</span><span id="court-total">/5</span> solved • <span id="court-guesses">0</span> <span id="court-guesses-word">guesses</span></h2></div>
+      <div class="court-top__actions"><span class="pill" id="court-streak-pill" title="Current daily streak">🔥 streak 0</span><span class="pill" id="court-ip-badge" aria-hidden="true" hidden>Same for everyone</span><button class="chip-link" id="btn-copy-court" type="button">📋 Copy court</button></div>
     </div>
     <div class="court-grid" id="court-grid"></div>
     <div class="lineup-bar" id="lineup-bar"></div>
@@ -306,78 +70,76 @@ button,.input{min-height:44px}
       <span class="reward" id="reward-3"><span>★</span> 3 solved → Sharpshooter + hint unlock</span>
       <span class="reward" id="reward-5"><span>🏆</span> 5 solved → Full Court perfect</span>
     </div>
-    <div class="small-mono" style="margin-top:8px;opacity:.6;text-transform:none">Same five for everyone, all day. Refresh won’t change them.</div>
   </div>
 
   <div id="lens-bar"></div>
-  <div id="map-wrap"><canvas id="sky-canvas" width="640" height="380" aria-label="12,966 player-seasons as points in a rotatable 3D stat-shape map — your guesses draw as orange rings connected by a line to the past target's bullseye, showing how close each guess landed"></canvas><div id="target-badge" style="position:absolute;left:0;top:0;transform:translate(-50%,-140%);background:var(--accent-wash);color:var(--accent);border:1px solid var(--line-2);border-radius:999px;padding:5px 10px;font-family:ui-monospace,monospace;font-size:10px;font-weight:900;box-shadow:none;z-index:4;display:none;pointer-events:none;white-space:nowrap">★ TARGET</div><div id="map-overlay"><span class="chip" id="map-fact">12,966 player-seasons • ★ target past</span><span class="chip">orange rings = your guesses • line = distance • ◎ bullseye = target</span></div><div id="map-controls"><button class="chip pill" id="btn-pause" type="button">Pause</button><button class="chip pill" id="btn-reset" type="button">Reset</button></div><div id="map-legend"><div style="font-family:var(--mono);font-size:7.5px;letter-spacing:.1em;text-transform:uppercase;font-weight:900;opacity:.55;margin-bottom:4px">Map</div><div style="font-family:var(--mono);font-size:9px">Drag to orbit • ◎ bullseye = past target (auto-centered)</div></div><div id="hover-tip"></div></div>
+  <div id="map-wrap" class="card--void"><canvas id="sky-canvas" width="640" height="380" aria-label="12,966 player-seasons as points in a rotatable 3D stat-shape map — your guesses draw as orange rings connected by a line to the past target's bullseye, showing how close each guess landed"></canvas><div id="map-overlay"><span class="chip" id="map-fact">12,966 player-seasons • ★ target past</span><span class="chip">orange rings = your guesses • line = distance • ◎ bullseye = target</span></div><div id="map-controls"><button class="chip-link" id="btn-pause" type="button">Pause</button><button class="chip-link" id="btn-reset" type="button">Reset</button></div><div id="map-legend"><div class="label map-legend__title">Map</div><div>Drag to orbit • ◎ bullseye = past target (auto-centered)</div></div><div id="hover-tip"></div></div>
 
   <!-- PACK BATTLE retired: old ?pack= links render an honest note here, not pack mode -->
   <div class="card" id="pack-retired" style="display:none;"></div>
-  <div class="card" id="boot-error" style="display:none;border-color:var(--verm);border-width:2.5px"></div>
+  <div class="card" id="boot-error" style="display:none;"></div>
 
-  <div class="card" id="past-card" style="border-width:2.5px">
-    <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:flex-start">
-      <div style="display:flex;gap:12px;align-items:flex-start;flex:1 1 280px;min-width:0">
-        <div id="past-avatar" style="width:64px;height:64px;flex:0 0 64px;background:#FFF6D5;border:1px solid var(--line-2);border-radius:12px;box-shadow:none;image-rendering:pixelated;overflow:hidden;display:flex;align-items:center;justify-content:center"></div>
-        <div style="flex:1;min-width:0">
-          <div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin-bottom:8px">
+  <div class="card" id="past-card">
+    <div class="past-card__row">
+      <div class="past-card__who">
+        <div id="past-avatar"></div>
+        <div class="past-card__text">
+          <div class="past-card__pills">
             <span class="pill pill-yellow">TARGET • PAST ALL-STAR</span>
-            <span class="pill" id="past-arch-pill" style="background:var(--surface)">—</span>
+            <span class="pill" id="past-arch-pill">—</span>
             <span class="pill" id="past-slot-pill">Slot 1/5</span>
-            <span id="past-xyz" class="small-mono" style="display:none"></span>
+            <span id="past-xyz" class="small-mono" hidden></span>
           </div>
-          <h2 id="past-name" class="hd" style="margin:0 0 6px;font-size:clamp(24px,5vw,32px);line-height:1">Loading…</h2>
-          <div id="past-meta" class="small-mono" style="text-transform:none;color:var(--fg-2);line-height:1.45"></div>
-          <div class="turn-indicator" style="margin-top:10px"><span class="turn-dot"></span><span id="turn-text">Game starts now — 6 guesses to find modern twin</span></div>
+          <h2 id="past-name" class="hd">Loading…</h2>
+          <div id="past-meta" class="small-mono"></div>
+          <div class="turn-indicator"><span class="turn-dot"></span><span id="turn-text">Game starts now — 6 guesses to find modern twin</span></div>
           <div id="past-closest-hint" class="small-mono" style="margin-top:10px;text-transform:none;display:none"></div>
         </div>
       </div>
-      <div style="flex:0 0 auto;display:flex;gap:8px;flex-wrap:wrap;align-self:flex-start">
+      <div class="past-card__actions">
         <button id="btn-random" class="btn" type="button">🎲 Random</button>
         <button id="btn-new" class="btn btn-accent" type="button">Daily Court</button>
       </div>
     </div>
   </div>
 
-  <div class="card vh-truth" id="guess-card" style="border-width:2.5px">
-    <div class="ready-banner" id="ready-banner" style="margin:-2px -2px 14px;border-style:dashed"><div style="min-width:0"><h3 style="margin:0 0 4px;font-size:16px;line-height:1.2">▶ Ready? First guess begins game</h3><p style="margin:0;font-size:13px;line-height:1.45;opacity:.9">Same five for everyone, all day. Refresh won’t change them. You see past All-Star ★. Type a 2025–26 modern player below — 6 tries. Warmer/colder after each.</p></div><button class="btn btn-primary" id="btn-focus-guess" type="button" style="flex:0 0 auto">Start typing →</button></div>
-    <div style="display:flex;justify-content:space-between;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:8px"><label class="small-mono" for="guess-input" style="margin:0">Guess modern — turn <span id="turn-count">1</span>/6 • <span id="slot-label-wrap">slot <span id="slot-label">1</span>/5</span></label><span class="pill" id="warm-label" style="display:none" role="status" aria-live="polite"></span></div>
-    <div class="suggest"><input id="guess-input" class="input" placeholder="Type modern — e.g., Wembanyama, SGA, Ant" autocomplete="off" spellcheck="false" disabled/><ul id="guess-suggest" style="display:none"></ul></div>
-    <p class="guess-rule" id="guess-rule" data-served-const="guess_rule">Only players with a qualifying 2025-26 season (12+ games, 450+ minutes)</p>
-    <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap"><button id="guess-btn" class="btn btn-primary" type="button" disabled>Guess</button><button id="share-btn" class="btn" type="button">Share</button><button id="share-text-btn" class="btn" type="button">Copy Grid</button><button id="btn-challenge" class="btn" type="button">Challenge</button></div>
-    <div id="lifelines-bar" style="margin-top:4px"></div>
-    <div id="guesses" style="margin-top:8px"></div><p class="small-mono" style="text-transform:none;opacity:.65;margin-top:6px">Style similarity (cosine &times; 100) &mdash; a closeness score, not a percentage of anything &mdash; between your guess and the target. Era-adjusted, so a 90s big can match a modern one. Details in Methods. #rank is your guess’s rank among all 12,966 seasons.</p><div id="result" style="margin-top:12px"></div>
-    <div id="play-forecast-slot" style="margin-top:12px"></div>
+  <div class="card vh-truth" id="guess-card">
+    <div class="ready-banner" id="ready-banner"><div class="ready-banner__body"><h3>▶ Ready? First guess begins game</h3><p>You see past All-Star ★. Type a 2025–26 modern player below — 6 tries. Warmer/colder after each.</p></div><button class="btn btn-primary" id="btn-focus-guess" type="button">Start typing →</button></div>
+    <div class="answer">
+      <div class="answer__head"><label class="small-mono" for="guess-input">Guess modern — turn <span id="turn-count">1</span>/6 • <span id="slot-label-wrap">slot <span id="slot-label">1</span>/5</span></label><span class="pill" id="warm-label" style="display:none" role="status" aria-live="polite"></span></div>
+      <div class="suggest"><input id="guess-input" class="input" placeholder="Type modern — e.g., Wembanyama, SGA, Ant" autocomplete="off" spellcheck="false" disabled/><ul id="guess-suggest" style="display:none"></ul></div>
+      <p class="answer__rule guess-rule" id="guess-rule" data-served-const="guess_rule">Only players with a qualifying 2025-26 season (12+ games, 450+ minutes)</p>
+    </div>
+    <div class="guess-actions"><button id="guess-btn" class="btn btn-primary" type="button" disabled>Guess</button><button id="share-btn" class="btn" type="button">Share</button><button id="share-text-btn" class="btn" type="button">Copy Grid</button><button id="btn-challenge" class="btn" type="button">Challenge</button></div>
+    <div id="lifelines-bar"></div>
+    <div id="guesses"></div><p class="small-mono guess-note">Style similarity (0&ndash;100) &mdash; a closeness score, not a percentage of anything &mdash; between your guess and the target. Era-adjusted, so a 90s big can match a modern one. Details in Methods. #rank is where your guess ranks among this season’s eligible players.</p><div id="result"></div>
   </div>
 </div>
 
 <div id="onboarding-backdrop" class="vh-sheet-backdrop" hidden>
-  <div class="vh-sheet" role="dialog" aria-modal="true"><div class="vh-sheet__handle"></div>
-    <div class="vh-sheet__head"><h2 class="vh-sheet__title">How to play</h2><button class="vh-sheet__close" id="btn-onboard-close" type="button" aria-label="Close">✕</button></div>
-    <div class="small-mono" style="margin-bottom:8px;color:var(--fg-2)">Daily Court · one canonical ruleset</div>
+  <div class="vh-sheet" role="dialog" aria-modal="true" aria-labelledby="onboard-title"><div class="vh-sheet__handle"></div>
+    <div class="vh-sheet__head"><h2 class="vh-sheet__title" id="onboard-title">How to play</h2><button class="btn btn--icon vh-sheet__close" id="btn-onboard-close" type="button" aria-label="Close">✕</button></div>
+    <div class="small-mono vh-sheet__kicker">Daily Court · one canonical ruleset</div>
     <div class="onboard-steps">
       <div class="onboard-step"><span class="onboard-step__num">1</span><div><b>Find the modern twin</b><p>Type a 2025–26 modern player — 6 tries to name the past All-Star’s closest modern twin. Warmer/colder after each guess.</p></div></div>
       <div class="onboard-step"><span class="onboard-step__num">2</span><div><b>Streaks</b><p>Solve 1 to keep your streak. 3+ earns Sharpshooter. All 5 is a perfect board.</p></div></div>
       <div class="onboard-step"><span class="onboard-step__num">3</span><div><b>Same five for everyone</b><p>Daily Court deals 5 fixed past All-Stars a day, same for everyone. Refresh won’t change them — progress saves per slot.</p></div></div>
     </div>
-    <div style="display:flex;gap:10px;margin-top:12px;flex-wrap:wrap"><button class="btn btn-primary" id="btn-onboard-play" type="button">▶ Play Court</button><button class="btn" id="btn-onboard-random" type="button">🎲 Random</button></div>
+    <div class="vh-sheet__actions"><button class="btn btn-primary" id="btn-onboard-play" type="button">▶ Play Court</button><button class="btn" id="btn-onboard-random" type="button">🎲 Random</button></div>
   </div>
 </div>
 
 <canvas id="confetti-canvas" class="confetti" style="display:none" aria-hidden="true"></canvas>
 <script src="assets/error-boundary.js?v=8079215c"></script>
 <script src="assets/keyboard-a11y.js?v=39777a87"></script>
+<script src="assets/toast.js?v=06285043"></script>
 <script src="assets/site-nav.js?v=13e9219d" defer></script>
 <script src="assets/pwa-install.js?v=b954d9d1" defer></script><script src="assets/audio.js?v=52cfa0d8" defer></script><script type="module" src="assets/timesfm-forecast.js?v=b1376756"></script><script src="assets/pixel-avatar.js?v=6216d2ba" defer></script><script src="assets/team-logo.js?v=864a7981" defer></script><script src="assets/viral-share.js?v=cf0464c7" defer></script><script src="assets/daily-ledger.js?v=4d0840fa" defer></script><script src="assets/daily-score.js?v=1700d0af" defer></script><script src="assets/past-modern-game.js?v=730a82fc" defer></script><script src="assets/served-constants.js?v=8ba12340" defer></script><script src="/assets/twin-bands.js?v=0a191313" defer></script><script src="/assets/twin-explainer.js?v=a005619a" defer></script>
 <script src="assets/map-lenses.js?v=656e8d30" defer></script>
 <script src="assets/game-mechanics.js?v=fd94b8c0" defer></script>
-<script src="assets/play-engine.js?v=fcdd59b0"></script>
+<script src="assets/play-engine.js?v=da7adc4b"></script>
 <script src="assets/engagement.js?v=9afde51a" defer></script>
-<script src="assets/inline-play.js?v=daca5201"></script>
-<section aria-label="More ways to play" style="max-width:880px;margin:34px auto 0;padding:0 18px;text-align:center">
-  <p class="small-mono" style="text-transform:none;opacity:.85">One court, every mode: the Daily five, the Triple, endless Random and the Pack</p>
-</section>
+<script src="assets/inline-play.js?v=b01d2319"></script>
 <!-- footer:stamped -->
 <footer class="site-footer">
   <nav class="site-footer__sitemap" aria-label="Sitemap">

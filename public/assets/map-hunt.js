@@ -80,12 +80,7 @@
   /* ---------- UI helpers --------------------------------------------------- */
   function setStatus(html) { var el = $('#mh-status'); if (el) el.innerHTML = html; }
   function toast(msg) {
-    try {
-      var t = $('#vh-toast');
-      if (!t) { t = document.createElement('div'); t.id = 'vh-toast'; t.className = 'vh-toast'; t.setAttribute('role', 'status'); document.body.appendChild(t); }
-      t.textContent = msg; t.classList.add('is-visible');
-      clearTimeout(toast._t); toast._t = setTimeout(function () { t.classList.remove('is-visible'); }, 2600);
-    } catch (e) {}
+    try { if (window.VHToast) window.VHToast.show(msg); } catch (e) {}
   }
   function renderDots() {
     var el = $('#mh-dots'); if (!el) return;
@@ -160,11 +155,12 @@
       '<p class="mh-score">' + starsStr(stars) + ' · ' + taps + ' tap' + (taps === 1 ? '' : 's') +
       (won ? ' · closer than <b>' + pct.toFixed(1) + '%</b> of all player-seasons' : '') + '</p>' +
       twinLine +
-      '<div class="mh-share-row">' +
+      '<div class="share-bar">' +
       '<button class="btn btn-primary" id="mh-share-card" type="button">Share card</button>' +
       '<button class="btn" id="mh-copy-link" type="button">Copy link</button>' +
       '<button class="btn" id="mh-copy-text" type="button">Copy result</button>' +
       '</div>';
+    el.classList.toggle('result--lost', !won);
     el.hidden = false;
     setStatus(won ? 'Found in ' + taps + ' taps. ' + starsStr(stars) : 'The mystery was ' + answer + '.');
     var sc = $('#mh-share-card'); if (sc) sc.addEventListener('click', shareCard);
@@ -331,14 +327,17 @@
       ? '<p class="mh-given">Find <b>' + state.givenName + '</b> <span class="mh-season">' + state.givenSeason + '</span>&rsquo;s <b>era twin</b> — the season from another decade that plays most alike (the highlighted point is the given player).</p>'
       : '<p class="mh-given">A mystery star is hiding somewhere in the 12,966-point map. Tap points — get warmer or colder.</p>';
     el.innerHTML = '<p class="mh-meta"><b>' + modeWord + '</b> · ' + state.day + replay + ' · ' + MAX_TAPS + ' taps</p>' + given;
-    document.querySelectorAll('.mode-tab').forEach(function (t) {
-      t.classList.toggle('is-active', t.getAttribute('data-mode') === state.mode);
+    document.querySelectorAll('.game-modes [data-mode]').forEach(function (t) {
+      var on = t.getAttribute('data-mode') === state.mode;
+      t.classList.toggle('is-active', on);
+      if (on) t.setAttribute('aria-current', 'page'); else t.removeAttribute('aria-current');
     });
   }
   function wireTabs() {
-    document.querySelectorAll('.mode-tab[data-mode]').forEach(function (t) {
-      t.addEventListener('click', function () {
+    document.querySelectorAll('.game-modes [data-mode]').forEach(function (t) {
+      t.addEventListener('click', function (e) {
         var m = t.getAttribute('data-mode');
+        e.preventDefault(); // the link's own href drops ?day=; keep the day being played
         if (m === state.mode) return;
         location.href = '/map-guess?day=' + state.day + '&mode=' + m;
       });

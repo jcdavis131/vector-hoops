@@ -1,16 +1,13 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
 <title>Era Crossed — Vector Hoops</title>
 <meta name="description" content="A past star, four modern candidates. Pick the true closest twin — ranked by the 64-d MTNN embedding. 10 rounds, no repeats."/>
-<link rel="manifest" href="/manifest.json"/>
+<link rel="canonical" href="https://hoops.dumbmodel.com/play/era-crossed"/>
 <meta name="color-scheme" content="light dark"/>
 <meta name="theme-color" content="#0F1114" media="(prefers-color-scheme: dark)"/>
 <meta name="theme-color" content="#FCFBF7" media="(prefers-color-scheme: light)"/>
-<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml"/>
-<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png"/>
-<link rel="canonical" href="https://hoops.dumbmodel.com/play/era-crossed.html"/>
 <meta property="og:type" content="website"/>
 <meta property="og:site_name" content="Vector Hoops"/>
-<meta property="og:url" content="https://hoops.dumbmodel.com/play/era-crossed.html"/>
+<meta property="og:url" content="https://hoops.dumbmodel.com/play/era-crossed"/>
 <meta property="og:title" content="Era Crossed — Vector Hoops"/>
 <meta property="og:description" content="A past star, four modern candidates. Pick the true closest twin by the embedding."/>
 <meta property="og:image" content="https://hoops.dumbmodel.com/assets/og-1200x630.png"/>
@@ -18,72 +15,30 @@
 <meta name="twitter:title" content="Era Crossed — Vector Hoops"/>
 <meta name="twitter:description" content="A past star, four modern candidates. Pick the true closest twin by the embedding."/>
 <meta name="twitter:image" content="https://hoops.dumbmodel.com/assets/og-1200x630.png"/>
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml"/>
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png"/>
+<link rel="manifest" href="/manifest.json"/>
+<link rel="stylesheet" href="/assets/fonts.css?v=8f376b2a"/>
 <link rel="stylesheet" href="/assets/atlas.css?v=a737547a"/>
 <link rel="stylesheet" href="/assets/shell.css?v=398d5e37"/>
-<style>
-*{box-sizing:border-box}
-html,body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--font-text);font-size:17px;line-height:1.6;overflow-x:clip}
-button{min-height:44px}
-.main{max-width:760px;margin:0 auto;padding:0 clamp(12px,3vw,20px) calc(88px + env(safe-area-inset-bottom));display:flex;flex-direction:column;gap:14px}
-.card{background:var(--surface);border:1px solid var(--line-2);border-radius:var(--radius);padding:14px 16px}
-.btn{appearance:none;border:1px solid var(--line-2);border-radius:var(--radius);min-height:48px;padding:10px 16px;font-weight:700;font-family:var(--font-code);font-size:13px;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;background:var(--surface);color:var(--fg);display:inline-flex;align-items:center;justify-content:center;gap:8px}
-.btn:hover{border-color:var(--fg-3)}
-.btn-primary{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
-.btn-primary:hover{background:var(--accent-2);border-color:var(--accent-2)}
-.btn[disabled]{opacity:.45;cursor:default}
-.small-mono{font-family:var(--font-code);font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--fg-3)}
-.pill{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line-2);border-radius:999px;padding:5px 12px;background:var(--surface);font-family:var(--font-code);font-size:11px;font-weight:700;letter-spacing:.06em}
-.ec-head{padding-top:clamp(40px,7vw,88px)}
-.ec-status{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:12px;padding-top:12px;border-top:1px dashed var(--line)}
-.anchor{border-left:4px solid var(--accent);padding-left:12px}
-.anchor h2{margin:4px 0;font-family:var(--font-display);font-size:clamp(24px,5.4vw,36px);line-height:1.05;letter-spacing:-.01em}
-.anchor p{margin:0;font-family:var(--font-code);font-size:12px;color:var(--fg-2)}
-.opts{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
-@media(max-width:560px){.opts{grid-template-columns:1fr}}
-.opt{appearance:none;border:1px solid var(--line-2);border-radius:var(--radius);background:var(--surface);padding:14px;cursor:pointer;text-align:left;display:flex;flex-direction:column;gap:4px;min-height:76px}
-.opt:hover:not([disabled]){border-color:var(--accent)}
-.opt .nm{font-weight:800;font-size:16px;line-height:1.2}
-.opt .ss{font-family:var(--font-code);font-size:11px;color:var(--fg-3)}
-.opt .sim{font-family:var(--font-code);font-size:11px;font-weight:800;margin-top:4px}
-.opt.is-correct{border-color:var(--ok);background:color-mix(in srgb, var(--ok) 12%, var(--surface))}
-.opt.is-wrong{border-color:var(--bad);background:color-mix(in srgb, var(--bad) 8%, var(--surface))}
-.opt[disabled]{cursor:default}
-.bar{height:6px;border-radius:999px;background:var(--surface-2);overflow:hidden;margin-top:6px}
-.bar>i{display:block;height:100%;background:var(--accent)}
-.btn-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
-.btn-row .btn{flex:1 1 140px}
-kbd{font-family:var(--font-code);font-size:11px;border:1px solid var(--line-2);border-radius:4px;padding:1px 6px;background:var(--surface-2);font-weight:700}
-.fine{font-size:13px;color:var(--fg-2);margin:10px 0 0}
-.vh-toast{position:fixed;left:50%;bottom:88px;transform:translateX(-50%) translateY(16px);background:#1A150F;color:#FFFDF6;padding:10px 18px;border-radius:999px;font:600 14px/1.4 system-ui,-apple-system,sans-serif;opacity:0;pointer-events:none;transition:opacity .18s ease,transform .18s ease;z-index:9999;box-shadow:0 6px 24px rgba(0,0,0,.28);max-width:min(92vw,440px);text-align:center}
-.vh-toast.is-visible{opacity:1;transform:translateX(-50%) translateY(0)}
-@media (prefers-reduced-motion: reduce){.vh-toast{transition:none}}
-details.howto{border:1px solid var(--line);border-radius:var(--radius);padding:10px 14px;background:var(--surface)}
-details.howto summary{cursor:pointer;font-weight:700;min-height:44px;display:flex;align-items:center}
-details.howto p,details.howto li{font-size:14px;color:var(--fg-2)}
-.provenance{font-family:var(--font-code);font-size:11px;line-height:1.7;color:var(--fg-3)}
-.visually-hidden{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
-#round-dots{display:flex;gap:6px;margin-top:10px}
-#round-dots .d{width:22px;height:22px;border-radius:50%;border:1px solid var(--line-2);display:inline-flex;align-items:center;justify-content:center;font-family:var(--font-code);font-size:10px;font-weight:800}
-#round-dots .d.hit{background:var(--ok);border-color:var(--ok);color:var(--board)}
-#round-dots .d.miss{background:var(--bad);border-color:var(--bad);color:var(--board)}
-</style>
-</head><body>
+<link rel="stylesheet" href="/assets/game.css?v=636e71bb"/>
+</head><body class="game game--era">
 <a class="skip-link" href="#main">Skip to content</a>
 <noscript><div role="alert" style="padding:16px;text-align:center">Enable JavaScript — Era Crossed needs it to deal the rounds.</div></noscript>
 
 <nav class="site-nav" data-active="/play" aria-label="Vector Hoops site"><noscript class="site-nav__noscript"><a href="/">Atlas</a><a href="/play">Play</a><a href="/map-guess">Map Hunt</a><a href="/live">Live</a><a href="/players">Players</a><a href="/insights">Insights</a><a href="/taxonomy">Taxonomy</a><a href="/methods">Methods</a><a href="/models/mtnn-v5">Models</a></noscript></nav>
-<div id="main" class="main" role="main">
+<div id="main" class="main main--narrow" role="main">
 
-  <header class="title-card ec-head">
+  <header class="title-card">
     <div class="title-card__eyebrow">ERA CROSSED &middot; A TWIN GAME</div>
     <h1 class="title-card__title">Whose <em>twin</em> is it?</h1>
-    <p class="title-card__lede">A past star, four modern candidates &mdash; all real near-twins. Pick the one the 64-d embedding calls closest. 10 rounds.</p>
-    <div class="ec-status">
+    <p class="title-card__lede">A past star, four modern candidates &mdash; all real near-twins. Pick the one the model calls closest. 10 rounds.</p>
+    <div class="game-status">
       <span class="pill" id="pill-round">Round 1/10</span>
       <span class="pill" id="pill-score">Score 0</span>
       <span class="pill" id="pill-streak">Streak 0</span>
     </div>
-    <div id="round-dots" aria-hidden="true"></div>
+    <div id="round-dots" class="progress-dots" aria-hidden="true"></div>
   </header>
 
   <section class="card" id="round-card" aria-labelledby="anchor-name">
@@ -92,44 +47,55 @@ details.howto p,details.howto li{font-size:14px;color:var(--fg-2)}
       <h2 id="anchor-name" aria-live="polite">Loading&hellip;</h2>
       <p id="anchor-meta"></p>
     </div>
-    <p class="small-mono" style="margin:14px 0 0">Which of these four is the closest modern twin? <span style="text-transform:none;letter-spacing:0">(keys 1&ndash;4)</span></p>
+    <p class="small-mono ec-ask">Which of these four is the closest modern twin? <span class="ec-ask__keys">(keys 1&ndash;4)</span></p>
     <div class="opts" id="opts" role="group" aria-label="Twin candidates"></div>
-    <p class="fine" id="reveal-note" hidden></p>
+    <p class="caption" id="reveal-note" hidden></p>
     <div class="btn-row">
       <button class="btn btn-primary" id="btn-next" type="button" hidden>Next round &rarr;</button>
     </div>
   </section>
 
-  <section class="card" id="done-card" hidden aria-labelledby="done-title">
+  <section class="card result" id="done-card" hidden aria-labelledby="done-title">
     <p class="small-mono" id="done-kicker">Game over</p>
-    <h2 id="done-title" style="margin:4px 0;font-family:var(--font-display);font-size:clamp(26px,6vw,40px)">0/10</h2>
-    <p class="fine" id="done-line" style="margin-top:0"></p>
-    <div class="btn-row">
+    <h2 id="done-title">0/10</h2>
+    <p class="caption" id="done-line"></p>
+    <div class="share-bar">
       <button class="btn btn-primary" id="btn-share" type="button">Share score</button>
       <button class="btn" id="btn-copy" type="button">Copy text</button>
       <button class="btn" id="btn-again" type="button">Play again</button>
     </div>
-    <p class="fine">The share card is generated on your device &mdash; nothing is uploaded.</p>
+    <p class="caption">The share card is generated on your device &mdash; nothing is uploaded.</p>
   </section>
 
-  <div class="card" id="err-card" hidden role="alert" style="border-color:var(--bad)">
-    <h2 style="margin:0 0 6px;font-size:18px">The quiz data didn&rsquo;t load</h2>
-    <p class="fine" style="margin:0 0 10px">The twin candidates never arrived &mdash; check your connection and try again. Nothing was invented in the meantime.</p>
+  <div class="state state--error" id="err-card" hidden role="alert">
+    <h2 class="state__title">The quiz data didn&rsquo;t load</h2>
+    <p>The twin candidates never arrived &mdash; check your connection and try again. Nothing was invented in the meantime.</p>
     <button class="btn btn-primary" id="btn-retry" type="button">Retry</button>
   </div>
 
-  <details class="howto">
-    <summary>How it works</summary>
-    <ul>
-      <li>Each anchor is a real past career (4+ charted seasons) with a signature season.</li>
-      <li>The correct answer is the nearest <em>other-decade</em> career by 64-d MTNN embedding cosine &mdash; the same twin the site&rsquo;s Twin Networks use. Twins match full stat-plus-stardom profiles &mdash; a statistical neighbor is not necessarily the same position or role.</li>
-      <li>The three wrong options aren&rsquo;t random: they&rsquo;re the next-closest shipped candidates, so every round is genuinely hard.</li>
-      <li>Similarity shown after you pick is embedding cosine &times; 100 &mdash; a closeness score, not a percentage of anything.</li>
-      <li>Streak: consecutive games at 7+/10. Saved on this device only.</li>
-    </ul>
+  <details class="disclosure">
+    <summary>How to play</summary>
+    <div class="disclosure__body caption">
+      <ul>
+        <li>Each anchor is a real past career (4+ charted seasons) with a signature season.</li>
+        <li>The correct answer is the nearest career from another decade &mdash; the same twin the site&rsquo;s Twin Networks use. Twins match full stat-plus-stardom profiles &mdash; a statistical neighbor is not necessarily the same position or role.</li>
+        <li>The three wrong options aren&rsquo;t random: they&rsquo;re the next-closest shipped candidates, so every round is genuinely hard.</li>
+        <li>The similarity shown after you pick is a closeness score out of 100, not a percentage of anything.</li>
+        <li>Streak: consecutive games at 7+/10. Saved on this device only.</li>
+      </ul>
+    </div>
   </details>
 
-  <p class="provenance">Provenance: quiz built 2026-10-20 from assets/eratwins.json &mdash; twin = nearest other-decade career by 64-d MTNN embedding cosine; distractors = 3 of the other 4 shipped top-5 candidates. 1,313 rounds pre-dealt into 131 games at build time &mdash; only one game's rounds (~4KB) download per visit.</p>
+  <details class="disclosure provenance">
+    <summary>How it was built</summary>
+    <div class="disclosure__body caption">
+      <ul>
+        <li>The correct answer is the nearest <em>other-decade</em> career by 64-d MTNN embedding cosine.</li>
+        <li>Similarity shown after you pick is embedding cosine &times; 100 &mdash; a closeness score, not a percentage of anything.</li>
+      </ul>
+      <p>Provenance: quiz built 2026-10-20 from assets/eratwins.json &mdash; twin = nearest other-decade career by 64-d MTNN embedding cosine; distractors = 3 of the other 4 shipped top-5 candidates. 1,313 rounds pre-dealt into 131 games at build time &mdash; only one game's rounds (~4KB) download per visit.</p>
+    </div>
+  </details>
 </div>
 
 <!-- footer:stamped -->
@@ -167,5 +133,6 @@ details.howto p,details.howto li{font-size:14px;color:var(--fg-2)}
 <script src="/assets/error-boundary.js?v=8079215c"></script>
 <script src="/assets/keyboard-a11y.js?v=39777a87"></script>
 <script src="/assets/site-nav.js?v=13e9219d" defer></script>
-<script src="/assets/inline-era-crossed.js?v=2e994af1"></script>
+<script src="/assets/toast.js?v=06285043"></script>
+<script src="/assets/inline-era-crossed.js?v=7f4a61f6"></script>
 </body></html>
