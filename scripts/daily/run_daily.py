@@ -61,6 +61,9 @@ DATA_PREFIXES = (
 )
 FORBIDDEN_PREFIXES = ("api/", ".github/", "scripts/", "tests/", "pipeline/")
 FORBIDDEN_FILES = ("vercel.json", "sw.js", "public/sw.js", "public/vercel.json")
+# assets/** and public/assets/** are -text in .gitattributes, so a Windows text-mode write
+# would commit CRLF verbatim. The run checks every changed text file before step f.
+TEXT_SUFFIXES = (".js", ".json", ".html", ".css", ".md", ".txt", ".svg", ".xml")
 
 
 # ---------------------------------------------------------------------------
@@ -86,6 +89,13 @@ def classify_changes(porcelain: Iterable[str]) -> tuple[list[str], list[str]]:
         else:  # code (FORBIDDEN_PREFIXES) or anything unexpected
             bad.append(path)
     return sorted(data), sorted(bad)
+
+
+def new_crlf(path: str, work: bytes, head: bytes | None) -> bool:
+    """True when a text file gained CRLF line endings its committed version (or a new file) does not have."""
+    if not path.endswith(TEXT_SUFFIXES) or b"\r\n" not in work:
+        return False
+    return head is None or b"\r" not in head
 
 
 def _row(prev: dict | None, *, ok: bool, now: str, latency: int | None, detail: str, down: bool = False) -> dict:
@@ -433,6 +443,22 @@ class Runner:
     def changes(self) -> tuple[list[str], list[str]]:
         return classify_changes(self.git("status", "--porcelain", "--untracked-files=all").splitlines())
 
+    def eol_guard(self, data: list[str]) -> list[str]:
+        """Changed text files that would land with new CRLF line endings."""
+        bad = []
+        for rel in data:
+            f = self.tree / rel
+            if not f.is_file():
+                continue
+            p = subprocess.run(["git", "show", f"HEAD:{rel}"], cwd=self.tree, capture_output=True)
+            if new_crlf(rel, f.read_bytes(), p.stdout if p.returncode == 0 else None):
+                bad.append(rel)
+        rc = 1 if bad else 0
+        self.log(f"[e.eol] {len(bad)} changed text file(s) with new CRLF line endings {bad[:5]}")
+        self.checks.append(("eol guard: no new CRLF in changed text files", rc))
+        self.steps["stamp+checks"] = self.steps.get("stamp+checks", True) and rc == 0
+        return bad
+
     def open_pr(self, date: str, body: str, data: list[str]) -> int:
         branch = f"data/daily-{date}"
         if self.git("ls-remote", "--heads", "origin", branch).strip():
@@ -519,6 +545,7 @@ def main(argv: list[str] | None = None) -> int:
         r.stamp_and_check()
         data, bad = r.changes()
         log(f"changed: {len(data)} data file(s); {len(bad)} outside the data paths {bad[:10]}")
+        r.eol_guard(data)
         idx = json.loads((a.tree / "assets" / "map-hunt" / "index.json").read_text(encoding="utf-8"))
         mh_end = max(idx.get("days") or {"?": 0})
         added = added_games(a.tree, (report or {}).get("fetched", {}).get("pbp", []))

@@ -174,8 +174,9 @@ def next_cursor(games: Iterable[Game], have: dict[str, set[str]], since: str | N
 
 
 def pbp_is_final(doc: dict) -> bool:
+    """The feed has its game-end action. Not necessarily the last one: a late correction can follow it."""
     acts = (doc.get("game") or {}).get("actions") or []
-    return bool(acts) and acts[-1].get("actionType") == "game" and acts[-1].get("subType") == "end"
+    return any(a.get("actionType") == "game" and a.get("subType") == "end" for a in acts)
 
 
 def box_is_final(doc: dict) -> bool:

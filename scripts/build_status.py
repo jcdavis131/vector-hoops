@@ -427,7 +427,7 @@ def main() -> int:
 
     rendered = render(snapshot)
 
-    (ROOT / "assets" / "status.json").write_text(json.dumps(snapshot, indent=2) + "\n", encoding="utf-8")
+    (ROOT / "assets" / "status.json").write_text(json.dumps(snapshot, indent=2) + "\n", encoding="utf-8", newline="\n")
     text = page.read_text(encoding="utf-8")
     head, _, tail = text.partition(SNAPSHOT_MARKER)
     # drop any previously rendered snapshot between marker and the footer paragraph
@@ -435,7 +435,7 @@ def main() -> int:
     foot = '<p class="st__foot">'
     fi = rest.find(foot)
     rest = rest[fi:] if fi != -1 else rest
-    page.write_text(head + SNAPSHOT_MARKER + rendered + rest, encoding="utf-8")
+    page.write_text(head + SNAPSHOT_MARKER + rendered + rest, encoding="utf-8", newline="\n")
     print("wrote assets/status.json + status.html snapshot —", snapshot["generated_at"], f"({snapshot['overall']})")
     return 0
 

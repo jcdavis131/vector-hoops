@@ -141,7 +141,7 @@ def main() -> int:
             rel_page = page.relative_to(ROOT).as_posix()
             stale.append(rel_page)
             if not args.check:
-                page.write_text(new, encoding="utf-8")
+                page.write_text(new, encoding="utf-8", newline="\n")
                 written += 1
 
     if missing:

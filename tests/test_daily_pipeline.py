@@ -109,6 +109,8 @@ def test_cursor_waits_for_unfinished_games_but_not_postponed_ones():
 def test_final_detection():
     assert fcg.pbp_is_final({"game": {"actions": [{"actionType": "period"}, {"actionType": "game", "subType": "end"}]}})
     assert not fcg.pbp_is_final({"game": {"actions": [{"actionType": "period", "subType": "end"}]}})
+    late = [{"actionType": "game", "subType": "end"}, {"actionType": "foul", "subType": "technical"}]
+    assert fcg.pbp_is_final({"game": {"actions": late}})  # a correction after the final horn
     assert fcg.box_is_final({"game": {"gameStatus": 3}})
     assert not fcg.box_is_final({"game": {"gameStatus": 2}})
 
@@ -385,3 +387,11 @@ def test_copy_new_is_idempotent(tmp_path):
     assert rd.copy_new(src, dst, "boxscore_*.json") == []
     (src / "boxscore_0022600001.json").write_text('{"x":1}')
     assert rd.copy_new(src, dst, "boxscore_*.json") == ["boxscore_0022600001.json"]
+
+
+def test_new_crlf_flags_only_text_files_that_gained_crlf():
+    assert rd.new_crlf("assets/status.json", b"{\r\n}\r\n", b"{\n}\n")
+    assert rd.new_crlf("assets/realtime/daily_pipeline.json", b"{\r\n}", None)
+    assert not rd.new_crlf("assets/status.json", b"{\n}\n", b"{\n}\n")
+    assert not rd.new_crlf("legacy.html", b"a\r\n", b"a\r\n")  # already CRLF upstream
+    assert not rd.new_crlf("assets/map-hunt/puzzles/2026-11-14-mh.u8", b"\r\n", None)
