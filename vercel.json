@@ -277,6 +277,24 @@
         }
       ],
       "source": "/twenty-questions"
+    },
+    {
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, s-maxage=60, stale-while-revalidate=300"
+        }
+      ],
+      "source": "/status"
+    },
+    {
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, s-maxage=60, stale-while-revalidate=300"
+        }
+      ],
+      "source": "/feed-health"
     }
   ],
   "rewrites": [
@@ -347,6 +365,14 @@
     {
       "source": "/twenty-questions",
       "destination": "/twenty-questions.html"
+    },
+    {
+      "source": "/status",
+      "destination": "/status.html"
+    },
+    {
+      "source": "/feed-health",
+      "destination": "/feed-health.html"
     }
   ],
   "trailingSlash": false,
