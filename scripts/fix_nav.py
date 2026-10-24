@@ -47,7 +47,6 @@ CANON: list[tuple[str, str]] = [
     ("/model.html", "Model"),
     ("/players.html", "Explorer"),
     ("/player.html", "Players"),
-    ("/teams.html", "Teams"),
     ("/dictionary.html", "Dictionary"),
 ]
 
