@@ -3,11 +3,14 @@
    - CORE shell (styles, nav, icons, offline page): stale-while-revalidate.
    - Large data files (DENY): network only, never cached.
    Bump CACHE_NAME whenever shipped assets change so clients drop the old shell. */
-const CACHE_NAME = 'vector-hoops-live-v23';
+const CACHE_NAME = 'vector-hoops-live-v27';
 const CORE = [
 '/',
 '/index.html',
 '/offline.html',
+'/assets/offline.js',
+'/assets/shell.css',
+'/assets/fonts.css',
 '/play.html',
 '/live.html',
 '/players.html',
@@ -116,7 +119,7 @@ self.addEventListener('fetch', e=>{
       const fetchPromise=fetch(req).then(r=>{ if(r&&r.ok) cache.put(req,r.clone()).catch(()=>{}); return r; }).catch(()=>null);
       if(cached){ e.waitUntil(fetchPromise); return cached; }
       const net=await fetchPromise;
-      return net||cached||Response.error();
+      return net||cached||(await cache.match(req,{ignoreSearch:true}))||Response.error(); // offline: the bare install-time precache answers the ?v= request
     })());
     return;
   }

@@ -4,7 +4,7 @@
 <link rel="manifest" href="/manifest.json">
 <title>Twin Networks — Vector Hoops</title>
 <meta name="description" content="Every player-season sits in a neighborhood of statistical twins. Explore the twin network and stat flow of any of 12,966 player-seasons, measured in the MTNN v5 embedding."/>
-<link rel="stylesheet" href="assets/shell.css?v=b7460aa9"/>
+<link rel="stylesheet" href="assets/shell.css?v=398d5e37"/>
 <link rel="stylesheet" href="assets/responsive.css?v=cc8e5207"/>
 <link rel="stylesheet" href="assets/final-qa.css?v=fb603ee5"/>
 <link rel="stylesheet" href="assets/unified.css?v=fd25e8ca"/>
@@ -21,9 +21,8 @@
 <meta property="og:url" content="https://hoops.dumbmodel.com/twin-network"/>
 <meta property="og:title" content="Twin Networks — Vector Hoops"/>
 <meta property="og:description" content="Pick any player-season and see its neighborhood of statistical twins — plus the stat flow that built it. Measured, shareable."/>
-<link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=Inter:opsz,wght@14..32,400..700&display=swap"/>
-<link rel="stylesheet" href="/assets/atlas.css?v=c43e0f47"/>
+<link rel="stylesheet" href="/assets/fonts.css?v=8f376b2a"/>
+<link rel="stylesheet" href="/assets/atlas.css?v=a737547a"/>
 <style>
 .vh-tn__picker{display:flex;gap:10px;flex-wrap:wrap;margin:0 0 18px;align-items:flex-end}
 .vh-tn__field{display:flex;flex-direction:column;gap:6px;flex:1 1 220px;min-width:0}
@@ -41,7 +40,7 @@
 <a class="skip-link" href="#main">Skip to content</a>
 <noscript><div role="alert" style="padding:16px;text-align:center">Enable JS — Twin Networks needs JavaScript</div></noscript>
 
-<nav class="site-nav" data-active="/insights" aria-label="Vector Hoops site"></nav>
+<nav class="site-nav" data-active="/twin-network" aria-label="Vector Hoops site"></nav>
 <div id="main" class="main" role="main" style="padding-top:0">
   <header class="title-card">
     <div class="title-card__eyebrow reveal">Insights</div>
@@ -87,11 +86,38 @@
   </div>
 </div>
 
+<!-- footer:stamped -->
 <footer class="site-footer">
-  <div class="site-footer__links"><a href="/play">Play</a><a href="/players">Players</a><a href="/methods">Methods</a><a href="https://github.com/jcdavis131/vector-hoops" rel="noopener">Source</a></div>
-  <p class="site-footer__attribution">Every number recomputable from stats.nba.com · A <a href="https://dumbmodel.com">dumbmodel</a> project · Nearest seasons by cosine similarity in the 64-dimensional MTNN v5 embedding.</p>
+  <nav class="site-footer__sitemap" aria-label="Sitemap">
+    <div class="site-footer__col">
+      <span class="site-footer__col-title">Play</span>
+      <a href="/play">Daily Court</a>
+      <a href="/map-guess">Map Hunt</a>
+      <a href="/twenty-questions">Twenty Questions</a>
+      <a href="/play/era-crossed">Era Crossed</a>
+      <a href="/replay">Pixel Replay</a>
+    </div>
+    <div class="site-footer__col">
+      <span class="site-footer__col-title">Explore</span>
+      <a href="/live">Live</a>
+      <a href="/schedule">Schedule</a>
+      <a href="/players">Players</a>
+      <a href="/insights">Insights</a>
+      <a href="/twin-network">Twin Networks</a>
+      <a href="/playoff-runs">Playoff Runs</a>
+      <a href="/taxonomy">Taxonomy</a>
+    </div>
+    <div class="site-footer__col">
+      <span class="site-footer__col-title">How it works</span>
+      <a href="/methods">Methods</a>
+      <a href="/models/mtnn-v5">Models</a>
+      <a href="https://github.com/jcdavis131/vector-hoops" rel="noopener">Source on GitHub</a>
+    </div>
+  </nav>
+  <p class="site-footer__attribution">Scores and stats from stats.nba.com and ESPN · A <a href="https://dumbmodel.com">dumbmodel</a> project</p>
 </footer>
-<script src="/assets/site-nav.js?v=08ff3eda"></script>
+<!-- /footer:stamped -->
+<script src="/assets/site-nav.js?v=13e9219d"></script>
 <script src="assets/twin-network.js?v=d71c0911"></script>
-<script src="/assets/inline-sw-register.js?v=48fb8eb4"></script>
+<script src="/assets/inline-sw-register.js?v=3fccd5e4"></script>
 </body></html>

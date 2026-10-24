@@ -680,7 +680,7 @@
   function finish(opts){
     opts=opts||{}; const celebrateNew=opts.celebrate===true;
     const won=G.guesses.some(g=>g.rank===0); const locksUsed=(window.VHGameMechanics&&VHGameMechanics.eraLocksUsed)?VHGameMechanics.eraLocksUsed():0; const over=won||G.guesses.length>=(6-locksUsed); const resEl=$('#result'); let st=VHPastModern.state(); const isPack=!!st.isPack;
-    if(!over){ resEl.innerHTML=''; resEl.style.display='none'; updateStatusBar(); renderDailyCourt(); renderPackSummary(); return; }
+    if(!over){ resEl.innerHTML=''; resEl.style.display='none'; updateStatusBar(); renderDailyCourt(); return; } // the Pack Battle summary call that used to sit here threw on every boot after D3 retired it
     // game_completed — Owner Q: is difficulty in the productive zone — do solve
     // rates by slot justify 6 guesses? Dedupe: finish() re-renders on reload of
     // finished slots; track once per slot via localStorage.
@@ -1039,7 +1039,6 @@
       // (the win arpeggio is staged in finish() so the two never overlap)
       try{ if(window.VHAudio) VHAudio.play('guess'); }catch{}
       try{ if(sharedMapApi && sharedMapApi.pulseGuess && r.guess) sharedMapApi.pulseGuess(r.guess.idx); }catch{}
-      crumb('packProgress');   renderPackProgress();
       crumb('guessGrid');      renderGuessGrid();
       crumbClear();
     }catch(e){

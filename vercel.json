@@ -177,6 +177,24 @@
           "value": "public, max-age=0, s-maxage=60, stale-while-revalidate=300"
         }
       ],
+      "source": "/play/era-crossed"
+    },
+    {
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, s-maxage=60, stale-while-revalidate=300"
+        }
+      ],
+      "source": "/schedule"
+    },
+    {
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, s-maxage=60, stale-while-revalidate=300"
+        }
+      ],
       "source": "/players"
     },
     {
@@ -232,6 +250,24 @@
         }
       ],
       "source": "/map-guess"
+    },
+    {
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, s-maxage=60, stale-while-revalidate=300"
+        }
+      ],
+      "source": "/twin-network"
+    },
+    {
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, s-maxage=60, stale-while-revalidate=300"
+        }
+      ],
+      "source": "/models/mtnn-v5"
     },
     {
       "headers": [
@@ -297,6 +333,14 @@
       "source": "/play"
     },
     {
+      "destination": "/play/era-crossed.html",
+      "source": "/play/era-crossed"
+    },
+    {
+      "destination": "/schedule.html",
+      "source": "/schedule"
+    },
+    {
       "destination": "/players.html",
       "source": "/players"
     },
@@ -329,6 +373,14 @@
       "destination": "/map-guess.html"
     },
     {
+      "source": "/twin-network",
+      "destination": "/twin-network.html"
+    },
+    {
+      "source": "/models/mtnn-v5",
+      "destination": "/models/mtnn-v5.html"
+    },
+    {
       "source": "/twenty-questions",
       "destination": "/twenty-questions.html"
     },
@@ -351,6 +403,11 @@
   ],
   "trailingSlash": false,
   "redirects": [
+    {
+      "source": "/insights/era-uniqueness",
+      "destination": "/insights",
+      "permanent": true
+    },
     {
       "source": "/atlas",
       "destination": "/",
