@@ -336,6 +336,7 @@
   function wireTabs() {
     document.querySelectorAll('.game-modes [data-mode]').forEach(function (t) {
       t.addEventListener('click', function (e) {
+        if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button) return; // let a new-tab click through
         var m = t.getAttribute('data-mode');
         e.preventDefault(); // the link's own href drops ?day=; keep the day being played
         if (m === state.mode) return;

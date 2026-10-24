@@ -231,7 +231,9 @@
   /* compact hero: the guess card starts within the first screenful */
   :where(.game--play) #map-legend{ display: none; }
   :where(.game--play) #map-wrap{ min-height: 320px; }
-  :where(.game--play) #mode-tabs{ flex-wrap: wrap; justify-content: center; }
+  /* three equal segments in one joined row; a long label wraps inside its own segment */
+  :where(.game--play) #mode-tabs{ display: flex; width: 100%; flex-wrap: nowrap; }
+  :where(.game--play) #mode-tabs > button{ flex: 1 1 0; min-width: 0; padding: 6px 8px; letter-spacing: .06em; white-space: normal; text-align: center; line-height: 1.2; }
 }
 @media (prefers-reduced-motion: reduce){
   :where(.game--play) .turn-dot,
@@ -334,3 +336,6 @@
 :where(.game--era) .opt .bar{ height: 6px; }
 :where(.game--era) #done-title{ margin: 4px 0; font-size: var(--t-2xl); }
 :where(.game--era) #done-line{ margin-top: 0; }
+
+/* 3- and 5-solved rewards earn the gold tint over the coin look */
+:where(.game--play) .reward.is-unlocked.gold{ background: var(--accent-wash); border-color: var(--accent-line); color: var(--accent); }
