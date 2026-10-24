@@ -347,7 +347,7 @@ button,.input{min-height:44px}
     <p class="guess-rule" id="guess-rule" data-served-const="guess_rule">Only players with a qualifying 2025-26 season (12+ games, 450+ minutes)</p>
     <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap"><button id="guess-btn" class="btn btn-primary" type="button" disabled>Guess</button><button id="share-btn" class="btn" type="button">Share</button><button id="share-text-btn" class="btn" type="button">Copy Grid</button><button id="btn-challenge" class="btn" type="button">Challenge</button></div>
     <div id="lifelines-bar" style="margin-top:4px"></div>
-    <div id="guesses" style="margin-top:8px"></div><p class="small-mono" style="text-transform:none;opacity:.65;margin-top:6px">The % is style similarity (0–100) between your guess and the target — era-adjusted, so a 90s big can match a modern one. Details in Methods. #rank is your guess’s rank among all 12,966 seasons.</p><div id="result" style="margin-top:12px"></div>
+    <div id="guesses" style="margin-top:8px"></div><p class="small-mono" style="text-transform:none;opacity:.65;margin-top:6px">Style similarity (cosine &times; 100) &mdash; a closeness score, not a percentage of anything &mdash; between your guess and the target. Era-adjusted, so a 90s big can match a modern one. Details in Methods. #rank is your guess’s rank among all 12,966 seasons.</p><div id="result" style="margin-top:12px"></div>
     <div id="play-forecast-slot" style="margin-top:12px"></div>
   </div>
 </div>
