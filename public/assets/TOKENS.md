@@ -11,7 +11,7 @@ primary actions, coin-gold rewards) stay; their tokens are now first-class citiz
 *Exceptions that are NOT duplicates:*
 - `@media print :root` — print-only overrides (ink on paper). Deliberate variant.
 - `.live-root` (live.css) — scoped tokens for the live-game widget subtree only.
-- `unified.css :root` — loads BEFORE atlas.css; atlas.css loads last and owns the tokens.
+- `unified.css (deleted in wave 2.5) :root` — loads BEFORE atlas.css; atlas.css loads last and owns the tokens.
   The unified values are the legacy bridge for elements atlas does not restyle.
 - `responsive.css @media (min-width:1440px)` — widens `--layout-wide` to 1200px on very
   wide viewports. Deliberate responsive step.
