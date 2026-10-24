@@ -206,7 +206,7 @@
       else if (count97>0) els.ppMega.innerHTML = '<b>'+count97+'</b>' + (count97===1 ? 'grade' : 'grades') + ' 97+';
       else if (count90>0) els.ppMega.innerHTML = '<b>'+count90+'</b>' + (count90===1 ? 'grade' : 'grades') + ' 90+';
       else els.ppMega.innerHTML = '<b>'+avg+'</b>avg grade';
-      els.ppMega.title = count99+' grades at 99, '+count90+' at 90+, avg '+avg;
+      els.ppMega.title = total99+' grades at 99 (incl. wide), '+count90+' at 90+, avg '+avg;
     }
 
     // meta pills
@@ -237,9 +237,9 @@
     if (total99 >= 4) {
       rarityHtml += '<span class="pp-rarity pp-rarity--gold"><b>'+total99+'× 99</b> — rarer than 0.3% of seasons in 12,966 charted. Collector card.</span>';
     } else if (total99 >= 1) {
-      rarityHtml += '<span class="pp-rarity pp-rarity--gold"><b>'+total99+'× 99</b> — roughly the top 9% that year. Elite signature.</span>';
+      rarityHtml += '<span class="pp-rarity pp-rarity--gold"><b>'+total99+'× 99</b> — an elite signature skill.</span>';
     } else if (count90 >= 5) {
-      rarityHtml += '<span class="pp-rarity pp-rarity--blue"><b>'+count90+'× 90+</b> — two-way star, 88th+ percentile across era.</span>';
+      rarityHtml += '<span class="pp-rarity pp-rarity--blue"><b>'+count90+'× 90+</b> — strong across the board.</span>';
     } else if (count90 >= 1) {
       rarityHtml += '<span class="pp-rarity"><b>'+count90+'× 90+</b> — has an elite skill. Average '+avg+'.</span>';
     } else {
