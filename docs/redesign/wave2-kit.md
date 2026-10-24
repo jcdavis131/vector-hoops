@@ -47,11 +47,11 @@ no projection names, instead of matching "t-SNE".
 | Request | Done | Page workaround removed |
 |---|---|---|
 | `.stat-strip` divider between wrapped rows (docs) | each tile draws its top + left hairline 1 px outside itself, the strip clips its own edge (`overflow:hidden`); replaces `.stat + .stat{border-left}` | none needed |
-| `.pill` nowrap (docs) | `.pill, .chip{white-space:nowrap; max-width:100%; overflow:hidden}`; `.pill__text` for an ellipsis (an inline-flex box cannot ellipsize a bare text node). `.cqs-badge` left out (column flex) | - |
+| `.pill` nowrap (docs) | opt-in, after review: pills still wrap by default (`.pill{max-width:100%}`), so long labels (players' archetype and era-native pills, mtnn-v5's "Status: champion — single-model serving policy") wrap readably; `.pill--nowrap` and the status pills `.pill--ok/--warn/--bad` stay on one line and clip past their container; `.pill__text` adds an ellipsis. `.chip` is unchanged from master | - |
 | `--warn` + status pills (docs) | `--warn` (mark: 3.33:1 light, 8.77:1 dark) and `--ok-text/--warn-text/--bad-text` in both themes; `.pill--ok/--warn/--bad` = state-coloured text, hairline and its own 10% tint | status.html `.st__pill*` (6 rules) gone; `.st__dot--warn` uses `--warn`, not `--qblock-2`; scripts/build_status.py emits `pill pill--{state}` (unknown = plain `.pill`). Changed by hand; the builder was not rerun, so the snapshot is unchanged |
 | `.share-bar--compact` (home) | `flex:1 1 0`, 6 px padding, `.06em` tracking, nowrap | index.html `.instrument > .share-bar .btn` |
 | `.row-list__title` slot (home) | `.row-list__title` block, `+ .caption` stacked, `__main:has(> __title)` 12 px padding, hover title `--accent-2` (the page's `--accent` hover was 3.93:1 on paper) | index.html `.lab .row-list__*` (3 rules) |
-| `details.card` collapsible (editorial) | `details.card > summary`: 48 px head, +/- glyph in a 28 px circle, focus ring | insights-cards.css `.vh-ins__sum` geometry (4 rules; the hover title colour stays) |
+| `details.card` collapsible (editorial) | opt-in `details.card.card--collapsible > summary` (after review: a bare `details.card` rule restyled taxonomy's archetype cards); insights.js adds `card--collapsible`: 48 px head, +/- glyph in a 28 px circle, focus ring | insights-cards.css `.vh-ins__sum` geometry (4 rules; the hover title colour stays) |
 | `.card--choice` (games) | button card: resets, tap layout, `--focus` ring, `.is-correct` (`--ok-text`) / `.is-wrong` (`--bad-text`) | game.css Era `.opt` layout/hover/focus/disabled/state rules; inline-era-crossed.js adds `card--choice` |
 | `.wiki-alphabet button` 44 px (players) | 44 x 44 on a `repeat(auto-fill, minmax(44px,1fr))` grid | - |
 | `.tab-pills` compact at <= 420 px (players) | 8 px padding, 11 px, `.06em`: Directory / Skill profile / Leaderboards fit one row at 390 (the first try at 12 px padding still scrolled; render below) | - |
@@ -88,6 +88,20 @@ status; atlas.css +5.3 KB, embed-3d.js +2.8 KB; stated in budgets.json `method`)
 (OK), check_a11y (OK, 18 pages), check_site_facts (31 facts), ruff format --check + ruff check
 (clean), pytest (only the 3 known tests/test_check_served_model.py failures), node --check on every
 touched JS, node --test tests/embed3d.test.mjs 20/20.
+
+## Review fixes (after 39d2bfd2)
+
+- H1 pills: nowrap is opt-in (above). Renders at 390 light: Stephen Curry 2015-16 profile, archetype and
+  era-native pills wrap to two lines inside the card (players-profile-pills-390-light.png); mtnn-v5's
+  status pill wraps to two centred lines (mtnn-v5-status-pill-390-light.png); status pills one line
+  (status-pills-390-light.png).
+- H2 collapsible card: opt-in class. taxonomy at 390 light pixel-diffed against an origin/master
+  render: the only differing rows are the six stat strips (the 1 px hairline offset of the new
+  stat-strip rule; the "ARCHETYPES" label touches its tile edge on master too); the archetype cards
+  and their ▾ summaries are identical (taxonomy-archetypes-390-light.png). Insights still collapses, with
+  the − glyph on the open card (insights-collapsible-390-light.png).
+- L1 budgets re-measured on the final tree: 404 109,757 -> 113,664; map-guess 221,120 -> 228,352;
+  status 114,665 -> 118,784; schedule 137,344 -> 142,336 (feed-health and offline unchanged).
 
 ## Renders (serve.py + shoot.mjs, 390, dark and light; wave2-kit/)
 

@@ -463,9 +463,12 @@ p{ text-wrap: pretty; }
   transition: color var(--dur-1) var(--ease), border-color var(--dur-1) var(--ease), background var(--dur-1) var(--ease);
 }
 a.pill:hover, button.pill:hover{ color: var(--fg); border-color: var(--fg-3); }
-/* a pill is one line, never a two-line lozenge; text past its container clips
-   (an inline-flex box cannot ellipsize its bare text: wrap it in .pill__text for the dots) */
-.pill, .chip{ white-space: nowrap; max-width: 100%; overflow: hidden; }
+/* pills wrap by default (long labels such as a player's archetype stay readable); a short
+   label opts in to one line with .pill--nowrap (the status pills below do so by default).
+   Past its container a nowrap pill clips; wrap the text in .pill__text for an ellipsis
+   (an inline-flex box cannot ellipsize its bare text node). */
+.pill{ max-width: 100%; }
+.pill--nowrap, .pill--ok, .pill--warn, .pill--bad{ white-space: nowrap; overflow: hidden; }
 .pill__text{ min-width: 0; overflow: hidden; text-overflow: ellipsis; }
 /* status pills: the state colour is the text, the hairline and a 10% tint of itself.
    --ok-text / --warn-text / --bad-text are AA on paper, raised paper and that tint, both themes. */
@@ -1005,21 +1008,21 @@ section .today-strip__links a:first-child:hover{ background: var(--pipe-deep); }
 }
 .card--door:hover{ border-color: var(--line-2); transform: none; }
 .card--door:focus-visible{ outline: 2px solid var(--accent); outline-offset: 2px; }
-/* Collapsible card: <details class="card"> whose <summary> is the head (seed insights'
+/* Collapsible card: <details class="card card--collapsible"> whose <summary> is the head (seed insights'
    .vh-ins__sum). 48px summary, the +/- glyph of .disclosure in a 28px circle on the right. */
-details.card > summary{
+details.card--collapsible > summary{
   display: block; position: relative; min-height: 48px; padding-right: 40px;
   cursor: pointer; list-style: none;
 }
-details.card > summary::-webkit-details-marker{ display: none; }
-details.card > summary::after{
+details.card--collapsible > summary::-webkit-details-marker{ display: none; }
+details.card--collapsible > summary::after{
   content: "+"; position: absolute; top: 0; right: 0;
   display: grid; place-content: center; width: 28px; height: 28px;
   border: 1px solid var(--line-2); border-radius: 50%;
   font-family: var(--font-text); font-size: var(--t-base); font-weight: 500; line-height: 1; color: var(--fg-2);
 }
-details.card[open] > summary::after{ content: "\2212"; }
-details.card > summary:focus-visible{ outline: 2px solid var(--focus); outline-offset: 4px; border-radius: var(--radius); }
+details.card--collapsible[open] > summary::after{ content: "\2212"; }
+details.card--collapsible > summary:focus-visible{ outline: 2px solid var(--focus); outline-offset: 4px; border-radius: var(--radius); }
 /* Choice card: a <button class="card card--choice"> option (seed Era Crossed .opt). Button
    resets, a tap layout, the focus ring, and the pick states; inside another .card the kit's
    .card .card rule gives it the raised surface. */
