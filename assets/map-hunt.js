@@ -336,7 +336,7 @@
     state.mode = p.mode === 'th' ? 'th' : 'mh';
     state.replay = !!p.day && p.day !== todayKey();
 
-    jsonOf(fetch('assets/map-hunt/index.json?v=764b5a7f', { cache: 'force-cache' }), 'index.json').then(function (idx) {
+    jsonOf(fetch('assets/map-hunt/index.json?v=f9a7fbbd', { cache: 'force-cache' }), 'index.json').then(function (idx) {
       var dayInfo = idx.days && idx.days[state.day];
       if (!dayInfo) throw new NoPuzzle(state.day);
       state.mhPool = +idx.mh_pool || null; state.thPool = +idx.th_pool || null;

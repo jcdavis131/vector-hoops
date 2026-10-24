@@ -1,0 +1,42 @@
+{
+  "updated_at": "2026-10-24T18:38:15Z",
+  "source": "scripts/daily/run_daily.py",
+  "sources": {
+    "cdn_boxscore": {
+      "checked_at": "2026-10-24T18:17:15Z",
+      "status": "ok",
+      "last_good_tick": "2026-10-24T18:17:15Z",
+      "latency_ms": null,
+      "consecutive_failures": 0,
+      "detail": "boxscore_<id>.json: fetched 0, failed 0, deferred 22 (cursor 2026-10-21)",
+      "stale_after_minutes": 2160
+    },
+    "cdn_playbyplay": {
+      "checked_at": "2026-10-24T18:17:15Z",
+      "status": "ok",
+      "last_good_tick": "2026-10-24T18:17:15Z",
+      "latency_ms": null,
+      "consecutive_failures": 0,
+      "detail": "playbyplay_<id>.json: fetched 0, failed 0, deferred 0 (cursor 2026-10-21)",
+      "stale_after_minutes": 2160
+    },
+    "cdn_schedule": {
+      "checked_at": "2026-10-24T18:17:15Z",
+      "status": "ok",
+      "last_good_tick": "2026-10-24T18:17:15Z",
+      "latency_ms": null,
+      "consecutive_failures": 0,
+      "detail": "scheduleLeagueV2_1.json: 1206 games (cache (13 min old))",
+      "stale_after_minutes": 2160
+    },
+    "daily_pipeline": {
+      "checked_at": "2026-10-24T18:38:15Z",
+      "status": "ok",
+      "last_good_tick": "2026-10-24T18:38:15Z",
+      "latency_ms": null,
+      "consecutive_failures": 0,
+      "detail": "steps replays, maphunt ok",
+      "stale_after_minutes": 2160
+    }
+  }
+}

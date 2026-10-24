@@ -1,9 +1,9 @@
 {
-  "generated_at": "2026-10-23T15:18:55+00:00",
+  "generated_at": "2026-10-24T18:38:15+00:00",
   "overall": "degraded",
   "deploy": {
-    "commit": "f9b27a4e",
-    "commit_date": "2026-10-23 09:35:47 -0500",
+    "commit": "f04f0558",
+    "commit_date": "2026-10-24 13:38:13 -0500",
     "csp": "enforcing"
   },
   "data": {
@@ -26,8 +26,8 @@
   },
   "feed_health": {
     "state": "degraded",
-    "detail": "Realtime data-plane sources: uptime, lag, last-good-tick. This card reads the last deployed snapshot \u2014 staleness here means the pipeline (not the page) is behind. A source whose last good tick is older than 120 min is flagged stale and the header drops from ok to warn. Currently stale: espn_scoreboard, espn_summary, espn_teams, scoreboard_snapshot, season_snapshot.",
-    "updated_at": "2026-10-20T19:03:43Z",
+    "detail": "Realtime data-plane sources: uptime, lag, last-good-tick. This card reads the last deployed snapshot \u2014 staleness here means the pipeline (not the page) is behind. A source whose last good tick is older than 120 min (the daily cdn.nba.com rows: their own gate) is flagged stale and the header drops from ok to warn. Currently stale: espn_scoreboard, espn_summary, espn_teams, scoreboard_snapshot, season_snapshot.",
+    "updated_at": "2026-10-24T18:38:15Z",
     "sources": [
       {
         "name": "espn_scoreboard",
@@ -35,7 +35,8 @@
         "last_good_tick": "2026-10-20T19:03:40Z",
         "latency_ms": 2181,
         "consecutive_failures": 0,
-        "detail": "3 events today [last good tick 4095 min ago \u2014 over the 120-min freshness gate]"
+        "detail": "3 events today [last good tick 5735 min ago \u2014 over the 120-min freshness gate]",
+        "stale_after_minutes": 120
       },
       {
         "name": "espn_summary",
@@ -43,7 +44,8 @@
         "last_good_tick": "2026-10-20T19:03:42Z",
         "latency_ms": 1859,
         "consecutive_failures": 0,
-        "detail": "event 401909088: HTTP 200, players=absent [last good tick 4095 min ago \u2014 over the 120-min freshness gate]"
+        "detail": "event 401909088: HTTP 200, players=absent [last good tick 5735 min ago \u2014 over the 120-min freshness gate]",
+        "stale_after_minutes": 120
       },
       {
         "name": "espn_teams",
@@ -51,7 +53,8 @@
         "last_good_tick": "2026-10-20T19:03:43Z",
         "latency_ms": 1489,
         "consecutive_failures": 0,
-        "detail": "30 teams [last good tick 4095 min ago \u2014 over the 120-min freshness gate]"
+        "detail": "30 teams [last good tick 5735 min ago \u2014 over the 120-min freshness gate]",
+        "stale_after_minutes": 120
       },
       {
         "name": "scoreboard_snapshot",
@@ -59,7 +62,8 @@
         "last_good_tick": "2026-10-20T19:01:25Z",
         "latency_ms": null,
         "consecutive_failures": 0,
-        "detail": "scoreboard.json as_of 2026-10-20T19:01:25Z (138s ago) [last good tick 4097 min ago \u2014 over the 120-min freshness gate]"
+        "detail": "scoreboard.json as_of 2026-10-20T19:01:25Z (138s ago) [last good tick 5737 min ago \u2014 over the 120-min freshness gate]",
+        "stale_after_minutes": 120
       },
       {
         "name": "season_snapshot",
@@ -67,7 +71,44 @@
         "last_good_tick": "2026-10-20T19:02:34Z",
         "latency_ms": null,
         "consecutive_failures": 0,
-        "detail": "season_2026_27.json as_of 2026-10-20T19:02:34Z (69s ago) [last good tick 4096 min ago \u2014 over the 120-min freshness gate]"
+        "detail": "season_2026_27.json as_of 2026-10-20T19:02:34Z (69s ago) [last good tick 5736 min ago \u2014 over the 120-min freshness gate]",
+        "stale_after_minutes": 120
+      },
+      {
+        "name": "cdn_boxscore",
+        "status": "ok",
+        "last_good_tick": "2026-10-24T18:17:15Z",
+        "latency_ms": null,
+        "consecutive_failures": 0,
+        "detail": "boxscore_<id>.json: fetched 0, failed 0, deferred 22 (cursor 2026-10-21)",
+        "stale_after_minutes": 2160
+      },
+      {
+        "name": "cdn_playbyplay",
+        "status": "ok",
+        "last_good_tick": "2026-10-24T18:17:15Z",
+        "latency_ms": null,
+        "consecutive_failures": 0,
+        "detail": "playbyplay_<id>.json: fetched 0, failed 0, deferred 0 (cursor 2026-10-21)",
+        "stale_after_minutes": 2160
+      },
+      {
+        "name": "cdn_schedule",
+        "status": "ok",
+        "last_good_tick": "2026-10-24T18:17:15Z",
+        "latency_ms": null,
+        "consecutive_failures": 0,
+        "detail": "scheduleLeagueV2_1.json: 1206 games (cache (13 min old))",
+        "stale_after_minutes": 2160
+      },
+      {
+        "name": "daily_pipeline",
+        "status": "ok",
+        "last_good_tick": "2026-10-24T18:38:15Z",
+        "latency_ms": null,
+        "consecutive_failures": 0,
+        "detail": "steps replays, maphunt ok",
+        "stale_after_minutes": 2160
       }
     ]
   },
