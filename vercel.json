@@ -1,6 +1,12 @@
 {
   "cleanUrls": false,
   "framework": null,
+  "functions": {
+    "api/nba/*.js": {
+      "regions": ["iad1"],
+      "maxDuration": 15
+    }
+  },
   "headers": [
     {
       "headers": [
