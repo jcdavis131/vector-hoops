@@ -42,12 +42,6 @@
 :where(.game--play) .mode-head__note{ font-size: var(--t-sm); color: var(--fg-2); }
 :where(.game--play) #mode-tabs{ max-width: 100%; }
 :where(.game--play) .mode-desc{ max-width: 70ch; margin: 0; text-align: center; font-size: var(--t-sm); line-height: 1.6; color: var(--fg-2); }
-/* play-engine.js re-injects a #mode-howto .linkbtn into #mode-desc in triple mode */
-:where(.game--play) .linkbtn{
-  min-height: 0; padding: 0; border: 0; background: none; cursor: pointer;
-  font: inherit; font-weight: 700; color: var(--accent-2);
-  text-decoration: underline; text-underline-offset: 2px;
-}
 
 /* the court */
 :where(.game--play) .court-top{ display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px; }
@@ -58,7 +52,7 @@
   :where(.game--play) .court-grid{ grid-template-columns: 1fr; }
 }
 :where(.game--play) .court-card{
-  position: relative; display: flex; flex-direction: column; justify-content: space-between;
+  display: flex; flex-direction: column; gap: 2px;
   min-height: 92px; padding: 10px; cursor: pointer;
   background: var(--surface-2); border: 1px solid var(--line); border-radius: var(--radius-lg);
   transition: border-color var(--dur-1) var(--ease);
@@ -75,7 +69,12 @@
 }
 :where(.game--play) .court-name{ margin: 4px 0; font-family: var(--font-text); font-size: var(--t-sm); font-weight: 650; line-height: 1.2; color: var(--fg); font-variant-numeric: tabular-nums; }
 :where(.game--play) .court-meta{ font-family: var(--font-text); font-size: var(--t-xs); color: var(--fg-2); }
-:where(.game--play) .court-badge{ position: absolute; top: 8px; right: 8px; }
+/* label and badge share one row; the label wraps under itself, never under the badge */
+:where(.game--play) .court-card__head{ display: flex; align-items: flex-start; justify-content: space-between; gap: var(--s-2); }
+:where(.game--play) .court-card__head .court-slot{ flex: 1 1 auto; min-width: 0; padding-top: 4px; }
+:where(.game--play) .court-badge{ flex: 0 0 auto; }
+:where(.game--play) .court-card__suit{ margin-top: 2px; }
+:where(.game--play) .court-card__suit .suit-tag{ margin-left: 0; }
 /* suit tag: the card-suit category of a slot's past target, a chip so it never reads as the label */
 :where(.game--play) .suit-tag{
   display: inline-block; margin-left: 6px; padding: 2px 7px; vertical-align: 1px;
@@ -85,6 +84,8 @@
 }
 :where(.game--play) .lineup-bar,
 :where(.game--play) .rewards-row{ display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin-top: 10px; }
+:where(.game--play) .lineup-chip.is-empty{ color: var(--fg-3); border-style: dashed; }
+:where(.game--play) .lineup-note{ margin: 0; }
 :where(.game--play) .lineup-chip,
 :where(.game--play) .reward{
   display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px;
@@ -93,36 +94,11 @@
   background: none; border: 1px solid var(--line-2); border-radius: 999px;
 }
 
-/* the map window: #map-wrap carries .card--void, so everything inside reads the void pairings */
-:where(.game--play) #lens-bar{ margin: 0 0 var(--s-2); }
-:where(.game--play) #lens-bar:empty{ display: none; }
-:where(.game--play) .vh-lensbar{ display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
-:where(.game--play) .vh-lensbar .pill{ min-height: 44px; }
-:where(.game--play) .vh-lens-btn.on,
-:where(.game--play) .vh-lens-iso[aria-pressed="true"]{ color: var(--bg); background: var(--fg); border-color: var(--fg); }
-:where(.game--play) .vh-lens-cap{ font-size: var(--t-xs); color: var(--fg-3); }
-:where(.game--play) .vh-lens-count{ font-family: var(--font-code); font-size: var(--t-xs); font-weight: 700; }
-:where(.game--play) #map-wrap{ position: relative; min-height: 420px; overflow: hidden; border: 1px solid var(--line); border-radius: var(--radius-lg); }
-:where(.game--play) #sky-canvas{ position: absolute; inset: 0; display: block; width: 100%; height: 100%; cursor: grab; }
-:where(.game--play) #map-overlay{
-  position: absolute; left: 10px; right: 10px; top: 10px; z-index: 2;
-  display: flex; flex-wrap: wrap; justify-content: space-between; gap: var(--s-2); pointer-events: none;
-}
-:where(.game--play) #map-overlay .chip{ background: var(--surface-2); }
-:where(.game--play) #map-controls{ position: absolute; left: 10px; bottom: 10px; z-index: 3; display: flex; flex-wrap: wrap; gap: 6px; }
-:where(.game--play) #map-controls .chip-link{ background: var(--surface-2); }
-:where(.game--play) #map-legend{
-  position: absolute; right: 10px; bottom: 10px; z-index: 3; min-width: 128px; padding: 7px 9px;
-  font-size: var(--t-xs); line-height: 1.35; color: var(--fg-2);
-  background: var(--surface-2); border: 1px solid var(--line); border-radius: var(--radius); pointer-events: none;
-}
-:where(.game--play) .map-legend__title{ margin-bottom: 4px; }
-:where(.game--play) #hover-tip{
-  position: absolute; left: 50%; top: 50%; z-index: 3; display: none; max-width: 220px; padding: 6px 8px;
-  transform: translate(-50%, -100%);
-  font-size: var(--t-xs); color: var(--fg); background: var(--surface-2);
-  border: 1px solid var(--line); border-radius: var(--radius); pointer-events: none;
-}
+/* the map window: #map-wrap carries .card--void, so the Embed3D chrome inside (legend, note,
+   tip, loading and error states) reads the void pairings. The component sizes its own canvas. */
+:where(.game--play) #map-wrap{ min-width: 0; padding: var(--s-3); border: 1px solid var(--line); border-radius: var(--radius-lg); }
+:where(.game--play) .play-map{ min-width: 0; }
+:where(.game--play) .play-map .embed3d__note{ margin-bottom: 0; }
 
 /* past target card */
 :where(.game--play) #boot-error{ border-left: 3px solid var(--bad); }
@@ -137,6 +113,15 @@
 }
 :where(.game--play) #past-name{ margin: 0 0 6px; font-size: var(--t-xl); line-height: 1; }
 :where(.game--play) #past-meta{ text-transform: none; color: var(--fg-2); line-height: 1.45; }
+:where(.game--play) .past-meta__team{ color: var(--on-accent); background: var(--accent); border-color: var(--accent); }
+:where(.game--play) .past-card__hint{
+  margin-top: 10px; padding: 6px 8px; font-size: var(--t-sm); color: var(--fg);
+  background: var(--surface); border: 1px dashed var(--line-2); border-radius: var(--radius);
+}
+:where(.game--play) .pack-retired__row{ display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-start; gap: var(--s-3); }
+:where(.game--play) .pack-retired__title{ margin: 6px 0; }
+:where(.game--play) #boot-error .state{ min-height: 0; }
+:where(.game--play) .noscript-note{ padding: var(--s-4); text-align: center; }
 :where(.game--play) .turn-indicator{ display: flex; align-items: center; gap: var(--s-2); margin-top: 10px; font-size: var(--t-sm); font-weight: 600; }
 :where(.game--play) .turn-dot{ width: 8px; height: 8px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 3px var(--accent-wash); animation: game-pulse 1.6s infinite; }
 @keyframes game-pulse{ 0%, 100%{ transform: scale(1); } 50%{ transform: scale(1.18); } }
@@ -161,6 +146,46 @@
 :where(.game--play) .guess-note{ margin-top: 6px; text-transform: none; }
 :where(.game--play) #result{ margin-top: var(--s-3); }
 :where(.game--play) .guess-row{ margin-top: var(--s-2); padding: 10px 12px; background: var(--surface-2); border: 1px solid var(--line); border-radius: var(--radius-lg); }
+:where(.game--play) .guess-row__inner{ display: flex; align-items: center; gap: 10px; }
+:where(.game--play) .guess-row__avatar{
+  flex: 0 0 36px; width: 36px; height: 36px; overflow: hidden; image-rendering: pixelated;
+  background: var(--surface); border: 1px solid var(--line-2); border-radius: var(--radius);
+}
+:where(.game--play) .guess-row__body{ flex: 1; min-width: 0; }
+:where(.game--play) .guess-row__head{ display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 4px 8px; }
+:where(.game--play) .guess-row__meta{ margin-top: 4px; font-size: var(--t-xs); color: var(--fg-2); }
+:where(.game--play) .guess-row.win .guess-row__meta{ color: inherit; }
+:where(.game--play) .guess-row.win .bar > i{ background: var(--ok); }
+:where(.game--play) .guess-status{ margin-top: 6px; font-size: var(--t-xs); font-weight: 700; color: var(--fg); }
+:where(.game--play) .guess-status.is-warn{ color: var(--bad); }
+:where(.game--play) .suggest .no-results{ cursor: default; color: var(--fg-3); }
+:where(.game--play) .result__links{ display: flex; flex-wrap: wrap; gap: var(--s-2) var(--s-4); margin-top: 10px; font-size: var(--t-sm); }
+:where(.game--play) .result__streak{ margin-top: var(--s-2); color: var(--fg); }
+:where(.game--play) .result .caption{ margin: 6px 0 0; }
+:where(.game--play) .result-stars{ margin: 2px 0 6px; font-size: var(--t-lg); letter-spacing: .15em; }
+/* lifelines (game-mechanics.js) */
+:where(.game--play) .lifeline-row{ display: flex; flex-wrap: wrap; gap: var(--s-2); margin-top: 10px; }
+:where(.game--play) .btn-lifeline{ min-height: 44px; padding: 8px 12px; font-size: var(--t-xs); }
+:where(.game--play) .lifeline-status{ margin-top: 6px; text-transform: none; color: var(--fg-2); }
+/* twin-set collection (game-mechanics.js renderTwinSets) */
+:where(.game--play) .twinsets{ display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 10px; }
+:where(.game--play) .twinset{ padding: 10px 12px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-lg); }
+:where(.game--play) .twinset.is-done{ border-color: var(--ok); }
+:where(.game--play) .twinset-head{ display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; font-size: var(--t-sm); font-weight: 800; }
+:where(.game--play) .twinset-bar{ height: 6px; overflow: hidden; background: var(--surface-2); border-radius: 3px; }
+:where(.game--play) .twinset-fill{ height: 100%; background: var(--accent); border-radius: 3px; }
+:where(.game--play) .twinsets-note{ margin-top: var(--s-2); }
+/* the crash breadcrumb banner (play-engine.js crumbReport) */
+:where(.game--play) .crash-crumb{
+  position: fixed; left: 0; right: 0; top: 0; z-index: 120;
+  padding: 10px 56px 10px 12px; word-break: break-word;
+  font-family: var(--font-code); font-size: var(--t-sm); font-weight: 700; line-height: 1.45;
+  color: var(--bg); background: var(--fg); border-bottom: 3px solid var(--accent);
+}
+:where(.game--play) .crash-crumb__close{ position: absolute; right: 6px; top: 4px; color: var(--bg); background: transparent; border-color: var(--bg); }
+/* clipboard-denied select-to-copy sheet (inline-play.js) */
+:where(.game--play) .copy-panel__text{ width: 100%; min-height: 150px; font-family: var(--font-code); font-size: var(--t-sm); line-height: 1.6; }
+:where(.game--play).is-sheet-open{ overflow: hidden; }
 :where(.game--play) .twin-why{ margin-top: var(--s-3); padding-top: 14px; border-top: 1px solid var(--line); }
 :where(.game--play) .twin-why__label{ margin-bottom: var(--s-2); font-size: var(--t-xs); letter-spacing: .14em; text-transform: uppercase; color: var(--fg-2); }
 :where(.game--play) .twin-why__chips{ display: flex; flex-wrap: wrap; gap: var(--s-2); margin-bottom: 10px; }
@@ -186,25 +211,7 @@
 :where(.game--play) #guess-input.shake{ animation: game-shake .25s var(--ease); }
 :where(.game--play) .confetti{ position: fixed; inset: 0; z-index: 98; pointer-events: none; }
 
-/* onboarding sheet (.vh-sheet stays until wave 2.2 moves it to the kit .sheet; keyboard-a11y.js closes it) */
-:where(.game--play) .vh-sheet-backdrop{ position: fixed; inset: 0; z-index: 110; display: flex; align-items: flex-end; justify-content: center; padding: 0; background: var(--scrim); }
-:where(.game--play) .vh-sheet{
-  width: 100%; max-width: 680px; max-height: min(88dvh, calc(100dvh - 16px)); overflow: auto;
-  padding: var(--s-4) var(--s-4) calc(var(--s-4) + env(safe-area-inset-bottom));
-  background: var(--surface); border: 1px solid var(--line-2); border-bottom: 0; border-radius: var(--radius-xl) var(--radius-xl) 0 0;
-  animation: game-sheet-up .22s var(--ease);
-}
-@keyframes game-sheet-up{ from{ transform: translateY(100%); } to{ transform: translateY(0); } }
-@media (min-width: 600px){
-  :where(.game--play) .vh-sheet-backdrop{ align-items: center; padding: 20px; }
-  :where(.game--play) .vh-sheet{ border-bottom: 1px solid var(--line-2); border-radius: var(--radius-xl); }
-}
-:where(.game--play) .vh-sheet__handle{ width: 36px; height: 4px; margin: 2px auto 12px; border-radius: 2px; background: var(--line); }
-:where(.game--play) .vh-sheet__head{ display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; margin-bottom: 10px; }
-:where(.game--play) .vh-sheet__title{ margin: 0; font-family: var(--font-display); font-size: var(--t-lg); font-weight: 700; line-height: 1.05; letter-spacing: -.01em; }
-:where(.game--play) .vh-sheet__close{ flex: 0 0 auto; }
-:where(.game--play) .vh-sheet__kicker{ margin-bottom: var(--s-2); color: var(--fg-2); }
-:where(.game--play) .vh-sheet__actions{ display: flex; flex-wrap: wrap; gap: 10px; margin-top: var(--s-3); }
+/* How to play: the kit .sheet (atlas.css); only the step list is page layout */
 :where(.game--play) .onboard-steps{ display: flex; flex-direction: column; gap: 10px; margin: var(--s-3) 0; }
 :where(.game--play) .onboard-step{ display: flex; align-items: flex-start; gap: 10px; padding: 10px 12px; background: var(--surface-2); border: 1px solid var(--line); border-radius: var(--radius-lg); }
 :where(.game--play) .onboard-step p{ margin: 4px 0 0; }
@@ -213,13 +220,7 @@
   font-family: var(--font-display); font-size: var(--t-sm); font-weight: 700; color: var(--on-accent); background: var(--accent);
 }
 
-/* the daily share sheet play-engine.js builds (#vh-share-sheet > .vh-share-card) */
-:where(.game--play) #vh-share-sheet{ position: fixed; inset: 0; z-index: 9998; display: flex; align-items: flex-end; justify-content: center; background: var(--scrim); }
-:where(.game--play) .vh-share-card{
-  width: 100%; max-width: 560px; padding: 18px 18px 24px;
-  background: var(--surface); border: 1px solid var(--line-2); border-bottom: 0; border-radius: var(--radius-xl) var(--radius-xl) 0 0;
-  animation: game-card-in .3s var(--ease);
-}
+/* the daily share sheet play-engine.js builds: a kit .sheet; the preview is page layout */
 :where(.game--play) .vh-share-preview{
   max-height: 230px; overflow: auto; padding: 10px 12px; white-space: pre-wrap;
   font-family: var(--font-code); font-size: var(--t-sm); line-height: 1.65; color: var(--fg);
@@ -229,8 +230,7 @@
 
 @media (max-width: 719px){
   /* compact hero: the guess card starts within the first screenful */
-  :where(.game--play) #map-legend{ display: none; }
-  :where(.game--play) #map-wrap{ min-height: 320px; }
+  :where(.game--play) #map-wrap{ padding: var(--s-2); }
   /* three equal segments in one joined row; a long label wraps inside its own segment */
   :where(.game--play) #mode-tabs{ display: flex; width: 100%; flex-wrap: nowrap; }
   :where(.game--play) #mode-tabs > button{ flex: 1 1 0; min-width: 0; padding: 6px 8px; letter-spacing: .06em; white-space: normal; text-align: center; line-height: 1.2; }
@@ -240,9 +240,7 @@
   :where(.game--play) .guess-row.is-new,
   :where(.game--play) #result .card,
   :where(.game--play) #warm-label.pop,
-  :where(.game--play) #guess-input.shake,
-  :where(.game--play) .vh-sheet,
-  :where(.game--play) .vh-share-card{ animation: none; }
+  :where(.game--play) #guess-input.shake{ animation: none; }
 }
 
 /* ==========================================================================

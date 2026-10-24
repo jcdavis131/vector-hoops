@@ -1,6 +1,7 @@
 (function(){
   const $=s=>document.querySelector(s);
-  const OKABE=['#0072B2','#D55E00','#009E73','#F0E442','#56B4E9','#CC79A7','#E69F00','#000000'];
+  /* confetti colours come from the atlas tokens, read at burst time (no hex in the engine) */
+  const CONFETTI_TOKENS=['--accent','--ok','--coin-1','--blue','--data-terra','--pipe'];
   const ARCH=["Glass+Rim","LowVol Glass","Low Impact 3P Vol","Def Glass+Rim FT","Vol+3P Vol","3P Acc+Vol","Playmaking+Steals","Scoring Vol"];
   let G={guesses:[]};
   // --- court readiness: guess controls stay disabled until a target is on
@@ -38,152 +39,77 @@
       return _teamMap[`${name}|${season}`]||null;
     }catch{ return null; }
   }
-    // --- shared map v1 — unified simple 2D canvas, replaces old inline engine ---
-  let sharedMapApi = null;
-  let isTyping = false;
-  let _targetIdCached = -1;
-  let auto = true;
-  let mapPaused = false;
-  let W=0,H=0;
-  let projected = [];
-  let baseOx=null, baseOy=null, baseOz=null, baseC=null, baseI=null, baseN=null, baseS=null, projById=null, maxId=0;
-  let modernPoolLower = [];
-
-  function resize(){ try{ sharedMapApi && sharedMapApi.resize(); }catch{} }
-  function projectFrame(){}
-  let _lastGuessKey=null;
-  function draw(){
-    // pushes guesses to the map only when they changed — keeps the 900ms sync + the
-    // projectFrame();draw() idiom from forcing a full canvas redraw while idle-paused
+  // --- the map: the one atlas component (Embed3D, variant 'game') ---
+  // Ids line up end to end: embed3d.json row i == vectors.json row i == the
+  // game's target.i / guess.idx, so rings and the target need no mapping and
+  // every one of the 12,966 player-seasons is on the map (no lite sample).
+  let playMap=null;
+  let _mapKey=null, _mapTarget=null;
+  // guess rings: the same warmer/colder rule renderGuesses() prints, so the
+  // list and the map never disagree; the winning guess is the 'exact' ring
+  function ringsFor(guesses){
+    const out=[];
+    (guesses||[]).forEach((g,idx)=>{
+      if(!g||g.idx==null) return;
+      if(g.rank===0){ out.push({id:g.idx, kind:'exact'}); return; }
+      const sim=(typeof g.sim==='number'&&!isNaN(g.sim))?g.sim:0;
+      const p=idx>0?guesses[idx-1]:null;
+      const prev=(p&&typeof p.sim==='number'&&!isNaN(p.sim))?p.sim:sim;
+      out.push({id:g.idx, kind:(idx>0&&sim<prev)?'cold':'warm'});
+    });
+    return out;
+  }
+  // push the target (selection) and the guess rings to the map; cheap and
+  // idempotent, so every render path can call it
+  function syncMap(){
     try{
-      if(!sharedMapApi) return;
-      const guesses=(G&&G.guesses)?G.guesses:[];
-      // key on ids only — sim/rank never change for a guess once it exists,
-      // so identity of the id list is enough to detect "something changed"
-      const key=guesses.map(g=>g.idx).join(',');
-      // force if any guess missing from lite sample (modern 2024-26 often outside 4322-pt map)
-      let needsForce=false;
-      if(key===_lastGuessKey){
-        try{
-          for(const g of guesses){
-            if(g&&g.idx!=null && sharedMapApi.hasPoint && !sharedMapApi.hasPoint(g.idx)){ needsForce=true; break; }
-          }
-        }catch{}
-        if(!needsForce) return;
+      if(!playMap) return;
+      const st=(window.VHPastModern && VHPastModern.state)?VHPastModern.state():null;
+      const tid=(st&&st.target&&typeof st.target.i==='number')?st.target.i:null;
+      const rings=ringsFor(G&&G.guesses);
+      const key=tid+'|'+rings.map(r=>r.id+':'+r.kind).join(',');
+      if(key===_mapKey) return;
+      _mapKey=key;
+      if(tid!==_mapTarget){
+        // a new slot: lifeline spotlights (Twin Reveal, Era Lock) belong to the old one
+        _mapTarget=tid;
+        playMap.setHighlight([]); playMap.setDim(null);
       }
-      _lastGuessKey=key;
-      sharedMapApi.setGuesses(guesses);
-    }catch{}
+      playMap.setSelected(tid);
+      playMap.overlay(rings);
+    }catch(e){ console.warn('syncMap fail', e); }
   }
-  function focusOnTarget(){ try{ sharedMapApi && sharedMapApi.focusOnTarget && sharedMapApi.focusOnTarget(); }catch{} }
-  function ensureModernLower(){
+  // tap a dot: an eligible modern player fills the guess box (never auto-submits)
+  function pickFromMap(id){
     try{
-      const st = (window.VHPastModern && VHPastModern.state) ? VHPastModern.state() : null;
-      if(!st || !st.modernPool || !st.modernPool.length) return;
-      if(modernPoolLower.length !== st.modernPool.length){
-        modernPoolLower = st.modernPool.map(m=>(m.n||'').toLowerCase());
-      }
-    }catch{}
-  }
-  async function mountGameMap(){
-    try{
-      const mod = await import('./shared-map.js?v=59');
-      const canvasEl = document.querySelector('#sky-canvas');
-      if(!canvasEl) return;
-      const st = (window.VHPastModern && VHPastModern.state) ? VHPastModern.state() : null;
-      let tid = _targetIdCached;
-      if(st && st.target && typeof st.target.i==='number'){ tid = st.target.i; _targetIdCached = tid; }
-      // pass full guess objects (idx/sim/rank), not just ids, so a resumed
-      // in-progress slot still shows the distance line + label immediately
-      sharedMapApi = await mod.mountSharedMap(canvasEl, { highlightId: tid>=0?tid:null, guessIds: (G.guesses||[]).slice(), dark:true });
-      window._sharedMapApi = sharedMapApi;
-      mountLensBar();
-    }catch(e){ console.warn('mountGameMap fail',e); }
-  }
-  // Map lenses: layout switcher bar above the game map. Builds the
-  // external-id -> person_id join from the game's searchLite pool, then
-  // attaches VHMapLenses. Degrades gracefully (bar hidden) if data never arrives.
-  function mountLensBar(waitedMs){
-    try{
-      // T3.1: map-lenses.js is deferred now — retry briefly if it hasn't run yet.
-      if((!window.VHMapLenses || !window._sharedMapApi) && (waitedMs||0) < 8000){
-        setTimeout(function(){ mountLensBar((waitedMs||0)+250); }, 250);
+      const inf=playMap&&playMap.info(id); if(!inf) return;
+      const st=VHPastModern.state();
+      const over=(G.guesses||[]).some(g=>g.rank===0)||(G.guesses||[]).length>=6;
+      const modern=(st&&st.modernPool||[]).find(m=>m&&m.i===id);
+      const input=$('#guess-input');
+      if(modern && !over && input && !input.disabled){
+        input.value=modern.n; input.focus();
+        setGuessStatus('Picked '+modern.n+' on the map. Press Guess to lock it in.');
         return;
       }
-      if(!window.VHMapLenses || !window._sharedMapApi) return;
-      var mountEl = document.getElementById('lens-bar');
-      if(!mountEl || mountEl.dataset.done) return;
-      mountEl.dataset.done = '1';
-      var t0 = Date.now();
-      (function poll(){
-        var map = new Map();
-        try{
-          var st = (window.VHPastModern && VHPastModern.state) ? VHPastModern.state() : null;
-          var sl = st && st.searchLite;
-          var arr = sl && (sl.players || sl);
-          if(arr) for(var k=0;k<arr.length;k++){
-            var p=arr[k];
-            if(p && p.i!=null && p.pid) map.set(p.i|0, p.pid);
-          }
-        }catch(e){}
-        if(map.size || Date.now()-t0 > 8000){
-          try{
-            var h = window.VHMapLenses.attach(window._sharedMapApi, {mountEl: mountEl, idToPid: map});
-            window._mapLensHandle = h || null;
-          }catch(e){ console.warn('lens attach fail', e); }
-          return;
-        }
-        setTimeout(poll, 250);
-      })();
+      setGuessStatus(inf.name+' '+inf.season+(modern?'':' is not one of this season’s eligible players'));
     }catch(e){}
   }
-  setTimeout(mountGameMap, 80);
-  let _mapAddFailedId=null;
-  function syncMapFromState(){
+  function mountGameMap(waited){
     try{
-      const st=(window.VHPastModern && VHPastModern.state)?VHPastModern.state():null;
-      if(!st) return;
-      let tid=null;
-      if(st.target && typeof st.target.i==='number') tid=st.target.i;
-      if(tid!=null && sharedMapApi){
-        const firstSee = tid!==_targetIdCached;
-        _targetIdCached=tid;
-        let added=false;
-        // the lite map is a sample — inject the target row from searchLite so the bullseye always exists
-        if(tid!==_mapAddFailedId && sharedMapApi.hasPoint && !sharedMapApi.hasPoint(tid)){
-          try{
-            const sl=st.searchLite && st.searchLite.players;
-            const row=sl && sl.find(p=>p && p.i===tid);
-            if(row && sharedMapApi.addPoint) added=sharedMapApi.addPoint(row);
-            if(!added) _mapAddFailedId=tid;
-          }catch{ _mapAddFailedId=tid; }
-        }
-        if(firstSee||added){ sharedMapApi.setTarget(tid); sharedMapApi.focusOnTarget(); }
+      const host=document.getElementById('play-map'); if(!host) return;
+      if(!window.Embed3D){
+        if((waited||0)<8000) setTimeout(()=>mountGameMap((waited||0)+100), 100);
+        return;
       }
-      // guesses: modern 2024-26 players are often outside the 4322-pt lite map —
-      // inject any missing so orange rings show up as you type
-      try{
-        if(sharedMapApi && G && G.guesses && G.guesses.length){
-          const sl=st.searchLite && st.searchLite.players;
-          for(const gm of G.guesses){
-            if(!gm||gm.idx==null) continue;
-            if(sharedMapApi.hasPoint && sharedMapApi.hasPoint(gm.idx)) continue;
-            let row=null;
-            if(gm.x!=null && gm.y!=null && gm.z!=null){
-              row={i:gm.idx, x:gm.x, y:gm.y, z:gm.z, c:gm.c??0, n:gm.name||'', s:gm.season||''};
-            } else if(sl){
-              row=sl.find(p=>p&&p.i===gm.idx);
-            }
-            if(row) sharedMapApi.addPoint(row);
-          }
-        }
-      }catch(e){ console.warn('sync guesses inject fail',e); }
-      draw();
-    }catch(e){ console.warn('syncMapFromState fail',e); }
+      playMap=window.Embed3D.mount(host,{variant:'game', height:380, onSelect:pickFromMap});
+      window.VHPlayMap=playMap; // game-mechanics.js lifelines spotlight through it
+      _mapKey=null; _mapTarget=null; syncMap();
+    }catch(e){ console.warn('mountGameMap fail',e); }
   }
-  // periodically sync in case target changes via pack/daily
-  setInterval(syncMapFromState, 900);
-  window.addEventListener('vh:game-state-changed', syncMapFromState);
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', ()=>mountGameMap(0));
+  else mountGameMap(0);
+  window.addEventListener('vh:game-state-changed', syncMap);
 
 
   // --- helpers ---
@@ -278,10 +204,10 @@
       // state ("No matches"), never a dropdown that just doesn't open.
       if(!last.length){
         if(searchToken > 0 && input.value.trim().length >= 2){
-          ul.innerHTML='<li class="no-results" aria-disabled="true" style="cursor:default;opacity:.65">No matches — check the spelling, or try a last name</li>';
-          ul.style.display='block';
+          ul.innerHTML='<li class="no-results" aria-disabled="true">No matches — check the spelling, or try a last name</li>';
+          ul.hidden=false;
         } else {
-          ul.style.display='none';
+          ul.hidden=true;
         }
         for(const li of rowEls) li.hidden=true;
         return;
@@ -307,7 +233,7 @@
           li.setAttribute('aria-disabled','true');
         }
       }
-      ul.style.display='block';
+      ul.hidden=false;
     }
     function render(list){
       last=Array.isArray(list)?list:[];
@@ -335,12 +261,12 @@
       else if(e.key==='ArrowUp'){ if(!last.length) return; e.preventDefault(); active=nextEligible(active,-1); render(last); }
       else if(e.key==='Enter'){
         const hasActive = active>=0 && last[active] && last[active].eligible;
-        if(hasActive){ e.preventDefault(); input.value=last[active].m.n; ul.style.display='none'; active=-1; doGuess(); return; }
-        if((input.value||'').trim().length>=2){ e.preventDefault(); ul.style.display='none'; doGuess(); }
-      } else if(e.key==='Escape'){ ul.style.display='none'; active=-1; }
+        if(hasActive){ e.preventDefault(); input.value=last[active].m.n; ul.hidden=true; active=-1; doGuess(); return; }
+        if((input.value||'').trim().length>=2){ e.preventDefault(); ul.hidden=true; doGuess(); }
+      } else if(e.key==='Escape'){ ul.hidden=true; active=-1; }
     });
-    ul.addEventListener('click',function(e){ const li=e.target.closest('li'); if(!li||li.hidden) return; const i=parseInt(li.dataset.i,10); const en=(!isNaN(i)&&last[i])?last[i]:null; if(en&&en.eligible){ input.value=en.m.n; ul.style.display='none'; active=-1; doGuess(); } /* ineligible: no-op, never attempted */ });
-    document.addEventListener('click',function(e){ if(!ul.contains(e.target)&&e.target!==input) ul.style.display='none'; });
+    ul.addEventListener('click',function(e){ const li=e.target.closest('li'); if(!li||li.hidden) return; const i=parseInt(li.dataset.i,10); const en=(!isNaN(i)&&last[i])?last[i]:null; if(en&&en.eligible){ input.value=en.m.n; ul.hidden=true; active=-1; doGuess(); } /* ineligible: no-op, never attempted */ });
+    document.addEventListener('click',function(e){ if(!ul.contains(e.target)&&e.target!==input) ul.hidden=true; });
   }
   function dailyKey(){ try{ return VHPastModern.state().dayKey; }catch{ return new Date().toISOString().slice(0,10); } }
   function dailySlotKey(dayKey,slot){ try{ if(VHPastModern.state().isTriple) return `vh.triple.v1.${dayKey}.slot${slot}`; }catch{} return `vh.daily.v2.${dayKey}.slot${slot}`; }
@@ -411,21 +337,10 @@
       }
     }catch{}
   }
-  // sound toggle — persisted mute, reflects state on the button
-  function initSoundToggle(){
-    try{
-      const btn=$('#btn-sound'); if(!btn||!window.VHAudio) return;
-      const paint=()=>{ btn.textContent = VHAudio.isMuted() ? '🔇' : '🔊'; };
-      paint();
-      // one sound control: this button and the site nav's Sound toggle drive the same setting
-      btn.addEventListener('click',()=>{ VHAudio.unlock(); const on=VHAudio.isMuted(); if(window.VHSiteNav&&VHSiteNav.setSound) VHSiteNav.setSound(on); else VHAudio.setMuted(!on); paint(); if(on) VHAudio.play('click'); });
-      document.addEventListener('vh-sound',paint);
-    }catch{}
-  }
   function confettiBurst(){
     try{ if(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return; }catch{}
-    const cv=$('#confetti-canvas'); if(!cv) return; cv.style.display='block'; const ctx=cv.getContext('2d'); cv.width=innerWidth; cv.height=innerHeight; const parts=[]; for(let i=0;i<140;i++){ parts.push({x:Math.random()*cv.width, y:-20-Math.random()*100, vx:(Math.random()-0.5)*6, vy:Math.random()*4+2.5, r:Math.random()*6+3, c:OKABE[i%OKABE.length], a:1}); }
-    const t0=performance.now(); function frame(t){ const dt=t-t0; ctx.clearRect(0,0,cv.width,cv.height); let alive=false; for(let i=0;i<parts.length;i++){ const p=parts[i]; p.x+=p.vx; p.y+=p.vy; p.vy+=0.09; p.vx*=0.99; p.a-=0.005; if(p.a>0){ alive=true; ctx.globalAlpha=p.a; ctx.fillStyle=p.c; ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2); ctx.fill(); } } ctx.globalAlpha=1; if(alive&&dt<4500) requestAnimationFrame(frame); else cv.style.display='none'; } requestAnimationFrame(frame);
+    const cv=$('#confetti-canvas'); if(!cv) return; const cs=getComputedStyle(document.documentElement); const pal=CONFETTI_TOKENS.map(t=>cs.getPropertyValue(t).trim()).filter(Boolean); if(!pal.length) return; cv.hidden=false; const ctx=cv.getContext('2d'); cv.width=innerWidth; cv.height=innerHeight; const parts=[]; for(let i=0;i<140;i++){ parts.push({x:Math.random()*cv.width, y:-20-Math.random()*100, vx:(Math.random()-0.5)*6, vy:Math.random()*4+2.5, r:Math.random()*6+3, c:pal[i%pal.length], a:1}); }
+    const t0=performance.now(); function frame(t){ const dt=t-t0; ctx.clearRect(0,0,cv.width,cv.height); let alive=false; for(let i=0;i<parts.length;i++){ const p=parts[i]; p.x+=p.vx; p.y+=p.vy; p.vy+=0.09; p.vx*=0.99; p.a-=0.005; if(p.a>0){ alive=true; ctx.globalAlpha=p.a; ctx.fillStyle=p.c; ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2); ctx.fill(); } } ctx.globalAlpha=1; if(alive&&dt<4500) requestAnimationFrame(frame); else cv.hidden=true; } requestAnimationFrame(frame);
   }
   // staged win: arpeggio first, haptic on its peak, confetti last —
   // a sequence that lands, not everything firing at once
@@ -439,12 +354,11 @@
 
   // --- DAILY COURT ---
   function renderDailyCourt(){
-    const grid=$('#court-grid'), label=$('#court-day-label'), solvedEl=$('#court-solved'), guessesEl=$('#court-guesses'), lineupBar=$('#lineup-bar'), ipBadge=$('#court-ip-badge');
-    const st=VHPastModern.state(); if(!st.dailyPool||!st.dailyPool.length){ $('#daily-court').style.display='none'; return; }
-    $('#daily-court').style.display='block';
+    const grid=$('#court-grid'), label=$('#court-day-label'), solvedEl=$('#court-solved'), guessesEl=$('#court-guesses'), lineupBar=$('#lineup-bar');
+    const st=VHPastModern.state(); if(!st.dailyPool||!st.dailyPool.length){ $('#daily-court').hidden=true; return; }
+    $('#daily-court').hidden=false;
     const dayKey=st.dayKey;
     if(label) label.textContent=dayKey + (st.todayKey && dayKey!==st.todayKey ? ' \u00B7 yesterday' : '');
-    if(ipBadge) ipBadge.textContent = st.ip ? `Slot ${st.dailyAssignedSlot!=null?st.dailyAssignedSlot+1:'?'} • same for everyone` : 'Same for everyone • refresh-proof';
     /* Lane A: the court board renders from VHLedger.read — the same records
        the ledger card, streak pill and share card render from. No parallel
        state, so the screen cannot disagree with the ledger. */
@@ -472,7 +386,7 @@
     const totalEl=$('#court-total'); if(totalEl) totalEl.textContent='/'+st.dailyPool.length;
     const modeNameEl=$('#court-mode-name'); if(modeNameEl) modeNameEl.textContent=st.isTriple?'Daily Triple':'Daily Court';
     updateStreakPills();
-    const r5El=$('#reward-5'); if(r5El) r5El.style.display=st.isTriple?'none':'';
+    const r5El=$('#reward-5'); if(r5El) r5El.hidden=!!st.isTriple;
     if(guessesEl) guessesEl.textContent=totalGuesses;
     const guessesWordEl=$('#court-guesses-word'); if(guessesWordEl) guessesWordEl.textContent=totalGuesses===1?'guess':'guesses';
     const r1=$('#reward-1'), r3=$('#reward-3'), r5=$('#reward-5');
@@ -490,11 +404,12 @@
         const badge = isSolved? '✅': isFailed? '❌' : sd? `${sd.cnt}/6` : '▶';
         const arch = ARCH[p.c%ARCH.length];
         const suit=window.VHGameMechanics?VHGameMechanics.suitTagHTML(p.n,p.s,p.i):'';
+        const badgeLabel = isSolved? 'Solved' : isFailed? 'Missed' : sd? `${sd.cnt} of 6 used` : 'Not started';
         /* The score string comes from the ledger (fmtSlotScore): "Won in
            N/6 · {date}" / "Missed · {date}" / "N/6 tries" — the same string
            the ledger card and share card use. A loss is "Missed", never "Won". */
         const meta = sd ? (sd.ledgerLine || (isSolved? `Won in ${sd.cnt}/6` : `${sd.cnt}/6 tries`)) : 'Not started';
-        return `<div class="${cls}" data-slot="${i}"><div class="court-slot">Slot ${i+1} • ${arch} ${window.VHGameMechanics?VHGameMechanics.suitTagHTML(p.n,p.s,p.i):''} ${isActive? '• NOW':''}</div><div class="court-name">${p.n} ${p.s}</div><div class="court-meta">${meta}</div><span class="court-badge pill ${isSolved?'pill-green':''}">${badge}</span></div>`;
+        return `<div class="${cls}" data-slot="${i}"><div class="court-card__head"><div class="court-slot">Slot ${i+1} • ${arch}${isActive? ' • Now':''}</div><span class="court-badge pill${isSolved?' pill-green':''}" aria-label="${badgeLabel}">${badge}</span></div>${suit?`<div class="court-card__suit">${suit}</div>`:''}<div class="court-name">${p.n} ${p.s}</div><div class="court-meta">${meta}</div></div>`;
       }).join('');
       grid.querySelectorAll('.court-card').forEach(el=>{
         el.addEventListener('click',()=>{
@@ -506,7 +421,7 @@
             const url=new URL(location.href); url.searchParams.set('slot', slot); url.searchParams.delete('pack'); url.searchParams.delete('s'); history.replaceState(null,'',url);
             G.guesses = loadGuesses();
             try{ VHPastModern.state().guesses=G.guesses.slice(); }catch{}
-            renderPast(); renderGuesses(); renderDailyCourt(); updateStatusBar(); projectFrame(); draw();
+            renderPast(); renderGuesses(); renderDailyCourt(); updateStatusBar(); syncMap();
             window.scrollTo({top: $('#past-card').offsetTop-20, behavior:'smooth'});
           }
         });
@@ -521,10 +436,10 @@
           if(winGuess) chips.push(`<span class="lineup-chip">Slot ${i+1}: ${winGuess.name} ← ${st.dailyPool[i].n}</span>`);
           else chips.push(`<span class="lineup-chip">Slot ${i+1}: solved</span>`);
         } else {
-          chips.push(`<span class="lineup-chip" style="opacity:.5">Slot ${i+1}: —</span>`);
+          chips.push(`<span class="lineup-chip is-empty">Slot ${i+1}: —</span>`);
         }
       }
-      lineupBar.innerHTML = chips.join('') + `<span class="small-mono" style="opacity:.6">Modern 5 • ${totalSolved}/5 collected. Solve 3 for Sharpshooter, 5 for Full Court perfect.</span>`;
+      lineupBar.innerHTML = chips.join('') + `<span class="caption lineup-note">${totalSolved}/5 collected.</span>`;
     }
   }
 
@@ -533,11 +448,11 @@
   // land here instead of launching pack mode — an honest note, not a 404.
   function renderPackRetired(){
     const el=$('#pack-retired'); const st=VHPastModern.state();
-    if(!st.packRetired){ el.style.display='none'; return; }
-    el.style.display='block';
-    el.innerHTML=`<div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:flex-start">
-      <div><div class="small-mono" style="opacity:.6">Retired surface</div><h3 class="hd" style="margin:6px 0">Pack Battle is gone</h3><div style="font-size:13px;line-height:1.5">One daily ritual, one map behind it. Daily Court — five past All-Stars, the same five for everyone — is the game now.</div></div>
-      <div style="display:flex;gap:8px;flex-wrap:wrap"><a class="btn btn-primary" href="/play">Play Daily Court</a></div>
+    if(!st.packRetired){ el.hidden=true; return; }
+    el.hidden=false;
+    el.innerHTML=`<div class="pack-retired__row">
+      <div><div class="label">Retired</div><h3 class="hd pack-retired__title">Pack Battle is gone</h3><p class="caption">One daily ritual, one map behind it: Daily Court is the game now.</p></div>
+      <div class="btn-row"><a class="btn btn-primary" href="/play">Play Daily Court</a></div>
     </div>`;
   }
 
@@ -570,15 +485,15 @@
     const won=G.guesses.some(g=>g.rank===0); const over=won||count>=6;
     const safeSlotDaily = (st.dailySlot!=null ? st.dailySlot+1 : 1);
     if(phase){
-      if(st.isDaily) phase.textContent= over? (won? `Slot ${safeSlotDaily} won in ${count}/6`:`Slot ${safeSlotDaily} failed`) : `Slot ${safeSlotDaily}/5 • ${count}/6 • same 5 for everyone today`;
+      if(st.isDaily) phase.textContent= over? (won? `Slot ${safeSlotDaily} won in ${count}/6`:`Slot ${safeSlotDaily} failed`) : `Slot ${safeSlotDaily}/5 • ${count}/6`;
       else if(over) phase.textContent=won? `Won in ${count}/6`:'Game over';
-      else phase.textContent = count===0? 'See model lens' : `Playing — ${count}/6 used`;
+      else phase.textContent = count===0? 'Make your first guess' : `Playing — ${count}/6 used`;
     }
     // subset map stays visible — was ready-banner
     /* syncSubsetFromState removed — it was defined nowhere (its partner subset-map.js is deleted); the calls threw a swallowed ReferenceError */
     const turnText=$('#turn-text'); if(turnText){
       if(over) turnText.textContent=won? `Won in ${count} — switch slot for next` : `Failed — answer was ${st.closestModern?st.closestModern.entry.n:'?'}`;
-      else if(count===0) turnText.textContent=`Model lens: ${st.target?st.target.n:'…'} archetype • team logo shows ${(()=>{try{return st.target? (getTeamAbbr(st.target.n,st.target.s)||'team'):'team'}catch{return 'team'}})()} • picks left`;
+      else if(count===0) turnText.textContent='6 guesses to find the modern twin';
       else turnText.textContent=`Guess ${count}/6 used — ${6-count} left`;
     }
   }
@@ -594,14 +509,14 @@
     const hon=st.honors[past.n+'|'+past.s]||{}; const allNba=hon.allNbaTeam? 'All-NBA '+({3:'1st',2:'2nd',1:'3rd'}[hon.allNbaTeam]||hon.allNbaTeam) : '';
     let teamAbbr=null; try{ teamAbbr=getTeamAbbr(past.n, past.s); }catch{}
     if(teamAbbr){
-      $('#past-meta').innerHTML=(hon.asg?'All-Star ':'')+(allNba? allNba+' • ' : '')+archLabel+` • ${past.s} • `+modeLabel+` • <span style="display:inline-flex;align-items:center;gap:6px"><span class="pill" style="background:var(--accent);color:var(--on-accent)">${teamAbbr}</span> finished with</span>`;
+      $('#past-meta').innerHTML=(hon.asg?'All-Star ':'')+(allNba? allNba+' • ' : '')+archLabel+` • ${past.s} • `+modeLabel+` • <span class="pill past-meta__team" title="Team they finished the season with">${teamAbbr}</span>`;
     } else {
       $('#past-meta').innerHTML=(hon.asg?'All-Star ':'')+(allNba? allNba+' • ' : '')+archLabel+' • '+past.s+' • '+modeLabel;
     }
     // new pills
     const archPill=$('#past-arch-pill'); if(archPill) archPill.textContent=archLabel;
     const slotPill=$('#past-slot-pill'); if(slotPill) slotPill.textContent=modeLabel;
-    const xyz=$('#past-xyz'); if(xyz){ xyz.textContent=''; xyz.style.display='none'; }
+    const xyz=$('#past-xyz'); if(xyz){ xyz.textContent=''; xyz.hidden=true; }
     // TEAM LOGO pixel art – team they finished season with
     try{
       const avEl=$('#past-avatar');
@@ -616,13 +531,13 @@
         }
       }
     }catch(e){}
-    try{ focusOnTarget(); projectFrame(); draw(); }catch{}
-    $('#puzzle-pill').textContent= st.isDaily? `COURT ${slotNum}/5` : 'P#'+st.puzzleNum;
+    try{ syncMap(); }catch{}
+    $('#puzzle-pill').textContent= st.isDaily? `Court ${slotNum}/5` : st.isRandom? 'Random' : (st.puzzleNum!=null? 'Puzzle '+st.puzzleNum : 'Puzzle');
     $('#mode-badge').textContent= st.isDaily? 'DAILY 5' : st.isRandom? 'RANDOM' : 'DAILY';
     $('#header-mode-label').textContent='DAILY COURT • 5× PAST → MODERN';
     updateStreakPills();
     $('#puzzle-day-label').textContent= st.isDaily? `${['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][parseInt(st.dayKey.slice(5,7),10)-1]} ${parseInt(st.dayKey.slice(8,10),10)} · Daily Court · 5 puzzles` : st.dayKey;
-    updateStatusBar(); projectFrame(); draw();
+    updateStatusBar(); syncMap();
   }
   function renderGuesses(){
     const cont=$('#guesses'); cont.innerHTML='';
@@ -655,7 +570,7 @@
         const div=document.createElement('div'); div.className='guess-row'+(isWin?' win':'')+(isNew?' is-new':'');
         // pixel avatar for each guess resembling player
         const avatarId = `guess-av-${idx}-${Date.now()}`;
-        div.innerHTML=`<div style="display:flex;gap:10px;align-items:center"><div id="${avatarId}" style="width:36px;height:36px;flex:0 0 36px;background:#FFF6D5;border:1px solid var(--line-2);border-radius:8px;overflow:hidden;image-rendering:pixelated"></div><div style="flex:1;min-width:0"><div style="display:flex;justify-content:space-between;gap:8px;align-items:center"><b>${idx+1}. ${safeName} ${safeSeason}</b><span class="pill" style="${isWin?'background:var(--green);color:#fff':''}">${simPct}% • ${rankLabel}</span></div><div class="small-mono" style="text-transform:none;margin-top:4px;color:var(--fg-2)">${warm} • ${archName}</div><div class="bar" style="margin-top:6px"><i style="width:${isNew?0:targetW}%;background:${isWin?'#009E73':'#0072B2'}"></i></div></div></div>`;
+        div.innerHTML=`<div class="guess-row__inner"><div id="${avatarId}" class="guess-row__avatar"></div><div class="guess-row__body"><div class="guess-row__head"><b>${idx+1}. ${safeName} ${safeSeason}</b><span class="pill${isWin?' pill-green':''}">${simPct}% • ${rankLabel}</span></div><div class="guess-row__meta">${warm} • ${archName}</div><div class="bar"><i style="width:${isNew?0:targetW}%"></i></div></div></div>`;
         cont.appendChild(div);
         if(isNew){
           const bar=div.querySelector('.bar>i');
@@ -680,7 +595,7 @@
   function finish(opts){
     opts=opts||{}; const celebrateNew=opts.celebrate===true;
     const won=G.guesses.some(g=>g.rank===0); const locksUsed=(window.VHGameMechanics&&VHGameMechanics.eraLocksUsed)?VHGameMechanics.eraLocksUsed():0; const over=won||G.guesses.length>=(6-locksUsed); const resEl=$('#result'); let st=VHPastModern.state(); const isPack=!!st.isPack;
-    if(!over){ resEl.innerHTML=''; resEl.style.display='none'; updateStatusBar(); renderDailyCourt(); return; } // the Pack Battle summary call that used to sit here threw on every boot after D3 retired it
+    if(!over){ resEl.innerHTML=''; resEl.hidden=true; updateStatusBar(); renderDailyCourt(); return; } // the Pack Battle summary call that used to sit here threw on every boot after D3 retired it
     // game_completed — Owner Q: is difficulty in the productive zone — do solve
     // rates by slot justify 6 guesses? Dedupe: finish() re-renders on reload of
     // finished slots; track once per slot via localStorage.
@@ -697,7 +612,7 @@
         }
       }
     }catch(_e){}
-    resEl.style.display='block';
+    resEl.hidden=false;
     // harden: embeddings may still be loading → closest null would crash (repro for "breaks when i guess")
     // If ranking isn't ready, the fallback (alphabetical, 0% sim) is NOT valid — wait for real data.
     let closest=st.closestModern;
@@ -706,7 +621,9 @@
       try{ if(window.VHMtnn && VHMtnn.isReady && VHMtnn.isReady()){ VHPastModern.computeClosest(); st=VHPastModern.state(); closest=st.closestModern; list=st.modernListSorted||[]; } }catch(e){ console.warn('computeClosest retry fail', e); }
     }
     if(!st.rankingReady || !closest || !closest.entry){
-      resEl.innerHTML=`<div class="card"><h3 class="hd">⏳ Loading twin…</h3><div style="font-size:13px;line-height:1.5">Scoring data still loading. Your guess is saved (${G.guesses.length}/6).<br>Top: ${(list||[]).slice(0,3).map(o=>o.m && o.m.n || '').join(' • ')||'warming up'}<br><div style="margin-top:8px;display:flex;gap:8px"><button class="btn btn-primary" onclick="try{VHPastModern.computeClosest();}catch(e){} location.reload()">Retry</button><button class="btn" onclick="document.getElementById('result').style.display='none'">Keep playing</button></div></div></div>`;
+      resEl.innerHTML=`<div class="card"><h3 class="hd">⏳ Loading twin…</h3><p class="result__detail">Scoring data still loading. Your guess is saved (${G.guesses.length}/6).</p><div class="btn-row"><button class="btn btn-primary" type="button" id="btn-result-retry">Retry</button><button class="btn" type="button" id="btn-result-keep">Keep playing</button></div></div>`;
+      $('#btn-result-retry')?.addEventListener('click',()=>{ try{ VHPastModern.computeClosest(); }catch(e){} location.reload(); });
+      $('#btn-result-keep')?.addEventListener('click',()=>{ resEl.hidden=true; });
       return;
     }
     // v42 hardened: safe mapping for top 5, handles missing m/sim
@@ -734,7 +651,7 @@
           if(arr) for(var k=0;k<arr.length;k++){ if(arr[k]&&arr[k].i===closest.entry.i){ pidx=k; break; } }
         }catch(e){}
         if(pidx>=0) links+='<a href="/?id='+pidx+'#atlas">See '+(closest.entry.s||'').replace(/</g,'&lt;')+' on the atlas \u2192</a>';
-        return '<div style="margin-top:10px;display:flex;gap:16px;flex-wrap:wrap;font-size:13px">'+links+'</div>';
+        return '<div class="result__links">'+links+'</div>';
       }catch(e){ return ''; }
     }
     var twinLinksHtml=twinLinks();
@@ -765,9 +682,9 @@
         /* Lane A (panel Tier 0 #1 + Tier 2 #13): the win rule stated once,
            beside the score; the streak as an explicit goal (Locke) with
            Diaconis's labeled base-rate parenthetical, not a bare number. */
-        const winRuleHtml=(st.isDaily&&window.VHLedger&&VHLedger.WIN_RULE)?`<div class="small-mono" style="opacity:.65;margin-top:6px">Win rule: ${VHLedger.WIN_RULE}</div>`:'';
-        const streakGoalHtml=(st.isDaily&&streakN>0&&window.VHLedger&&VHLedger.streakOddsText)?`<div style="margin-top:8px">\uD83D\uDD25 ${streakN}-day streak \u2014 protect it: play tomorrow to keep it.</div><div class="small-mono" style="opacity:.65">${VHLedger.streakOddsText(streakN)}</div>`:'';
-        resEl.innerHTML=`<div class="card" style="border-color:var(--green)"><h3 class="hd">✅ Solved in ${G.guesses.length}/6 — ${st.target.n} → ${closest.entry.n}</h3>${winRuleHtml}${window.VHGameMechanics?`<div class="result-stars" aria-label="${VHGameMechanics.starsFor(G.guesses.length,6)} of 3 stars">${VHGameMechanics.starsHTML(VHGameMechanics.starsFor(G.guesses.length,6))}</div>`:''}<div style="font-size:13px">Answer: ${closest.entry.n} ${closest.entry.s} ${(closest.sim*100).toFixed(1)}%<br>Top 5: ${sortedTop}</div>${streakGoalHtml}${twinLinksHtml}<div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap"><button class="btn btn-primary" id="btn-next-slot">Next slot →</button><button class="btn" id="btn-view-court">View court</button></div></div>`;
+        const winRuleHtml=(st.isDaily&&window.VHLedger&&VHLedger.WIN_RULE)?`<p class="caption">Win rule: ${VHLedger.WIN_RULE}</p>`:'';
+        const streakGoalHtml=(st.isDaily&&streakN>0&&window.VHLedger&&VHLedger.streakOddsText)?`<p class="result__detail result__streak">\uD83D\uDD25 ${streakN}-day streak \u2014 protect it: play tomorrow to keep it.</p><p class="caption">${VHLedger.streakOddsText(streakN)}</p>`:'';
+        resEl.innerHTML=`<div class="card result"><h3 class="hd">✅ Solved in ${G.guesses.length}/6 — ${st.target.n} → ${closest.entry.n}</h3>${winRuleHtml}${window.VHGameMechanics?`<div class="result-stars" aria-label="${VHGameMechanics.starsFor(G.guesses.length,6)} of 3 stars">${VHGameMechanics.starsHTML(VHGameMechanics.starsFor(G.guesses.length,6))}</div>`:''}<p class="result__detail">Answer: ${closest.entry.n} ${closest.entry.s} ${(closest.sim*100).toFixed(1)}%<br>Top 5: ${sortedTop}</p>${streakGoalHtml}${twinLinksHtml}<div class="btn-row"><button class="btn btn-primary" type="button" id="btn-next-slot">Next slot →</button><button class="btn" type="button" id="btn-view-court">View court</button></div></div>`;
         if(celebrateNew) celebrateWin();
       } else {
         try{ if(window.VHAudio) VHAudio.play('reveal'); }catch{}
@@ -785,8 +702,8 @@
         }
         /* Kubrick's state matrix: a loss is "Missed · {date}" — never "Won" —
            and the win rule beside the score, same as the win card. */
-        const missedHtml=(st.isDaily&&window.VHLedger)?`<div class="small-mono" style="opacity:.65;margin-top:6px">Missed \u00B7 ${st.dayKey} \u2014 ${VHLedger.WIN_RULE}</div>`:'';
-        resEl.innerHTML=`<div class="card" style="border-color:var(--verm)"><h3 class="hd">❌ Revealed — ${st.target.n} → ${closest.entry.n}</h3>${missedHtml}<div style="font-size:13px">Closest: ${closest.entry.n} ${(closest.sim*100).toFixed(1)}%<br>Top 5: ${sortedTop}</div>${twinLinksHtml}<div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap"><button class="btn btn-primary" id="btn-next-slot">Next slot →</button><button class="btn" id="btn-view-court">View court</button></div></div>`;
+        const missedHtml=(st.isDaily&&window.VHLedger)?`<p class="caption">Missed \u00B7 ${st.dayKey} \u2014 ${VHLedger.WIN_RULE}</p>`:'';
+        resEl.innerHTML=`<div class="card result result--lost"><h3 class="hd">❌ Revealed — ${st.target.n} → ${closest.entry.n}</h3>${missedHtml}<p class="result__detail">Closest: ${closest.entry.n} ${(closest.sim*100).toFixed(1)}%<br>Top 5: ${sortedTop}</p>${twinLinksHtml}<div class="btn-row"><button class="btn btn-primary" type="button" id="btn-next-slot">Next slot →</button><button class="btn" type="button" id="btn-view-court">View court</button></div></div>`;
       }
       const nextSlotBtn=document.getElementById('btn-next-slot');
       if(nextSlotBtn){ nextSlotBtn.addEventListener('click',()=>{
@@ -798,14 +715,14 @@
       const viewCourtBtn=document.getElementById('btn-view-court'); if(viewCourtBtn){ viewCourtBtn.addEventListener('click',()=>{ 
         const el=document.getElementById('daily-court')||document.getElementById('game-header');
         if(!el) return;
-        try{ if(el.style.display==='none'){ el.style.display='block'; renderDailyCourt(); } }catch{}
+        try{ if(el.hidden){ el.hidden=false; renderDailyCourt(); } }catch{}
         const y=el.getBoundingClientRect().top + window.pageYOffset - 10;
         window.scrollTo({top:y, behavior:'smooth'});
         // fallback
         setTimeout(()=>{ try{ el.scrollIntoView({behavior:'smooth', block:'start'}); }catch{} }, 50);
       }); }
-    const hintEl=$('#past-closest-hint'); if(hintEl&&closest){ hintEl.style.display='block'; hintEl.textContent=`Answer: ${closest.entry.n} ${(closest.sim*100).toFixed(0)}% — ${won?'won':'over'}`; hintEl.style.background='#fff'; hintEl.style.border='1.4px dashed var(--ink)'; hintEl.style.borderRadius='8px'; hintEl.style.padding='6px 8px'; }
-    projectFrame(); draw(); updateStatusBar(); renderDailyCourt();
+    const hintEl=$('#past-closest-hint'); if(hintEl&&closest){ hintEl.hidden=false; hintEl.textContent=`Answer: ${closest.entry.n} ${(closest.sim*100).toFixed(0)}% — ${won?'won':'over'}`; }
+    syncMap(); updateStatusBar(); renderDailyCourt();
     try{ if(window.VHTwinExplainer && VHTwinExplainer.onReveal) VHTwinExplainer.onReveal(); }catch(e){}
   }
 
@@ -846,19 +763,14 @@
          until it is dismissed. */
       const bar=document.createElement('div');
       bar.setAttribute('role','status');
-      bar.style.cssText='position:fixed;left:0;right:0;top:0;z-index:99999;'+
-        'background:#1A150F;color:#FFFEF7;font:700 13px/1.45 ui-monospace,monospace;'+
-        'padding:10px 44px 10px 12px;border-bottom:3px solid #D55E00;'+
-        'box-shadow:0 3px 0 rgba(0,0,0,.35);word-break:break-word';
+      bar.className='crash-crumb';
       bar.textContent='Last guess stopped at: '+c.step+
         '  ·  '+(c.w||'?')+'x'+(c.h||'?')+' dpr'+(c.dpr||'?')+
         (c.mem?(' · '+c.mem+'GB'):'')+' · after '+(c.guesses||0)+' guesses';
       const x=document.createElement('button');
-      x.textContent='x';
+      x.type='button'; x.className='btn btn--icon crash-crumb__close';
+      x.textContent='\u2715';
       x.setAttribute('aria-label','Dismiss');
-      x.style.cssText='position:absolute;right:8px;top:6px;width:30px;height:30px;'+
-        'background:transparent;color:#FFFEF7;border:2px solid #FFFEF7;border-radius:6px;'+
-        'font:700 13px ui-monospace,monospace;cursor:pointer';
       x.addEventListener('click',()=>bar.remove());
       bar.appendChild(x);
       const mount=()=>document.body && document.body.appendChild(bar);
@@ -872,17 +784,16 @@
       if(!el){
         const anchor=document.querySelector('.suggest'); if(!anchor) return;
         el=document.createElement('div');
-        el.id='guess-status'; el.className='small-mono';
+        el.id='guess-status'; el.className='guess-status'; el.hidden=true;
         el.setAttribute('role','status'); el.setAttribute('aria-live','polite');
-        el.style.cssText='margin-top:6px;font-size:11px;font-weight:800;text-transform:none;display:none';
         anchor.insertAdjacentElement('afterend', el);
       }
       clearTimeout(el._t);
-      if(!msg){ el.style.display='none'; el.textContent=''; return; }
+      if(!msg){ el.hidden=true; el.textContent=''; return; }
       el.textContent=msg;
-      el.style.color = tone==='warn' ? '#D55E00' : '#1A150F';
-      el.style.display='block';
-      if(tone!=='sticky') el._t=setTimeout(()=>{ el.style.display='none'; }, 4000);
+      el.classList.toggle('is-warn', tone==='warn');
+      el.hidden=false;
+      if(tone!=='sticky') el._t=setTimeout(()=>{ el.hidden=true; }, 4000);
     }catch{}
   }
   // tiny shake on the guess input for rejected guesses — felt, not read
@@ -905,7 +816,7 @@
         input.placeholder=over?(won?'Solved — pick another slot':'Answer revealed below'):'Type modern — e.g., Wembanyama, SGA, Ant';
       }
       if(btn){ btn.disabled=over; }
-      const rb=$('#ready-banner'); if(rb) rb.style.display=(G.guesses||[]).length?'none':'';
+      const rb=$('#ready-banner'); if(rb) rb.hidden=!!(G.guesses||[]).length;
     }catch{}
   }
   function v2Streak(){ try{ return VHPastModern.getStreak().streak||0; }catch{ return 0; } }
@@ -926,75 +837,23 @@
     const odds=(led&&led.streakOddsText)?led.streakOddsText(cur):'';
     const pill=$('#streak-pill');
     if(pill){
-      if(!honest){ pill.style.display='none'; }
+      if(!honest){ pill.hidden=true; }
       else{
-        pill.style.display='';
+        pill.hidden=false;
         if(unsynced){ pill.textContent='unsynced'; pill.title='A ledger write failed \u2014 retrying; showing nothing rather than a stale number.'; }
         else{ pill.textContent='streak '+cur; pill.title='Best: '+best+' days \u2014 Daily Court + Daily Triple share one streak. '+odds; }
       }
     }
     const court=$('#court-streak-pill');
     if(court){
-      if(!honest){ court.style.display='none'; }
+      if(!honest){ court.hidden=true; }
       else{
-        court.style.display='';
+        court.hidden=false;
         if(unsynced){ court.textContent='\u26a0\uFE0F unsynced'; court.title='A ledger write failed \u2014 retrying; showing nothing rather than a stale number.'; }
         else{ court.textContent='\uD83D\uDD25 streak '+cur; court.title='Best: '+best+' days \u2014 Daily Court + Daily Triple share one streak. '+odds; }
       }
     }
   }
-  // --- multi-choice grid (replaces the typeahead; removes the RESULT_CODE_HUNG path) ---
-  let _gridCandidates=null, _gridTargetKey=null;
-  function _seededShuffle(arr, seed){
-    const a=arr.slice(); let s=(seed>>>0)||1;
-    const rnd=()=>{ s=(s*1103515245+12345)&0x7fffffff; return s/0x7fffffff; };
-    for(let i=a.length-1;i>0;i--){ const j=Math.floor(rnd()*(i+1)); const t=a[i]; a[i]=a[j]; a[j]=t; }
-    return a;
-  }
-  function buildGridCandidates(){
-    try{
-      const st=VHPastModern.state(); const list=st&&st.modernListSorted||[];
-      if(list.length<6) return null;
-      const seed=(st.target&&st.target.i)||1;
-      const twin=list[0];                       // rank 0 = the correct modern twin
-      const contenders=list.slice(1,4);         // 3 close decoys (same neighborhood)
-      const fillerPool=_seededShuffle(list.slice(18), seed);  // far-away, clearly different
-      const used=new Set([twin.m.i, ...contenders.map(c=>c.m.i)]);
-      const filler=[];
-      for(const f of fillerPool){ if(filler.length>=5) break; if(f&&f.m&&!used.has(f.m.i)){ filler.push(f); used.add(f.m.i); } }
-      return _seededShuffle([twin, ...contenders, ...filler].filter(Boolean), seed^0x5bd1e995).map(x=>x.m);
-    }catch(e){ console.warn('buildGridCandidates fail', e); return null; }
-  }
-  function renderGuessGrid(){
-    const grid=$('#guess-grid'); if(!grid) return;
-    try{
-      const st=VHPastModern.state();
-      if(!st||!st.rankingReady){ grid.innerHTML='<div class="grid-loading">Loading players…</div>'; return; }
-      const key=st.targetIdx;
-      if(!_gridCandidates||_gridTargetKey!==key){ _gridCandidates=buildGridCandidates(); _gridTargetKey=key; }
-      if(!_gridCandidates){ grid.innerHTML='<div class="grid-loading">Loading players…</div>'; return; }
-      const byId=new Map((G.guesses||[]).map(g=>[g.idx,g]));
-      const won=(G.guesses||[]).some(g=>g.rank===0);
-      const over=won||(G.guesses||[]).length>=6;
-      grid.textContent='';
-      const frag=document.createDocumentFragment();
-      for(const m of _gridCandidates){
-        const g=byId.get(m.i);
-        const btn=document.createElement('button'); btn.type='button'; btn.className='guess-tile';
-        const c=(typeof m.c==='number')?m.c:0;
-        if(g){ btn.classList.add('is-picked'); if(g.rank===0) btn.classList.add('is-twin'); }
-        if(over||g) btn.disabled=true;
-        const dot=document.createElement('span'); dot.className='tile-dot'; dot.style.background=OKABE[c%8];
-        const nm=document.createElement('span'); nm.className='tile-name'; nm.textContent=m.n||'';
-        btn.appendChild(dot); btn.appendChild(nm);
-        if(g){ const rk=document.createElement('span'); rk.className='tile-rank'; rk.textContent=(g.rank===0)?'✓ twin':('#'+(g.rank+1)+' close'); btn.appendChild(rk); }
-        if(!g&&!over){ btn.addEventListener('click', ()=>{ if(btn.disabled) return; btn.disabled=true; doGuess(m.n); }); }
-        frag.appendChild(btn);
-      }
-      grid.appendChild(frag);
-    }catch(e){ console.warn('renderGuessGrid fail', e); }
-  }
-
   function doGuess(nameArg){
     try{
       const input=$('#guess-input');
@@ -1029,17 +888,15 @@
       G.guesses.push(r.guess); try{ VHPastModern.state().guesses=G.guesses.slice(); }catch{} saveGuesses(); try{ VHPastModern.state().guesses=G.guesses.slice(); }catch{} if(fromInput&&input) input.value='';
       G._animateNew=true;
       const warmEl=$('#warm-label'); let wc=null; try{ wc=VHPastModern.warmCold(); }catch{}
-      if(wc&&G.guesses.length>1){ if(warmEl){ warmEl.style.display='inline-flex'; if(warmEl.textContent!==wc){ warmEl.textContent=wc; warmEl.classList.remove('pop'); void warmEl.offsetWidth; warmEl.classList.add('pop'); } }} else { if(warmEl) warmEl.style.display='none'; }
+      if(wc&&G.guesses.length>1){ if(warmEl){ warmEl.hidden=false; if(warmEl.textContent!==wc){ warmEl.textContent=wc; warmEl.classList.remove('pop'); void warmEl.offsetWidth; warmEl.classList.add('pop'); } }} else { if(warmEl) warmEl.hidden=true; }
       // Each step is stamped before it runs; whichever stamp survives a crash
       // is the step that killed the renderer.
       crumb('renderGuesses');  renderGuesses();
       crumb('finish');         finish({celebrate: !!r.isWin});
-      crumb('draw');           projectFrame(); draw();
-      // game feel: guess blip + pulse the guessed dot, ease the camera to it
+      crumb('draw');           syncMap();
+      // game feel: the guess blip (the ring lands on the map through syncMap)
       // (the win arpeggio is staged in finish() so the two never overlap)
       try{ if(window.VHAudio) VHAudio.play('guess'); }catch{}
-      try{ if(sharedMapApi && sharedMapApi.pulseGuess && r.guess) sharedMapApi.pulseGuess(r.guess.idx); }catch{}
-      crumb('guessGrid');      renderGuessGrid();
       crumbClear();
     }catch(e){
       // a caught exception is not the crash we are chasing, so drop the crumb
@@ -1052,11 +909,10 @@
   // a guess made before scoring was ready auto-submits the moment it is
   window.addEventListener('vh:ranking-ready', ()=>{
     try{
-      renderGuessGrid();
       // If a completed slot's reveal is showing the loading state, re-render with real data
       try{ if(typeof finish==='function') finish(); }catch(e){}
       if(pendingGuess){ const n=pendingGuess; pendingGuess=null; setGuessStatus(''); doGuess(n); }
-      else { projectFrame(); draw(); }
+      else { syncMap(); }
     }catch(e){ console.warn('ranking-ready flush fail', e); }
   });
   // cross-tab convergence (panel v3 G1): another tab's write re-merges here
@@ -1086,8 +942,6 @@
       const t0=Date.now();
       while(!window.VHPastModern){ if(Date.now()-t0>8000) throw new Error('VHPastModern never loaded'); await new Promise(r=>setTimeout(r,50)); }
     }catch(e){ console.warn('boot wait', e); }
-    // shared-map handles resize/drag/hover/pause internally — legacy listeners removed
-    window.addEventListener('resize',()=>{ try{ resize(); }catch{} },{passive:true});
 
 
     // load watchdog: if the court is not usable within 12s, say so and offer
@@ -1105,12 +959,8 @@
       initOk=true;
     }catch(e){ console.warn('init fallback v47', e); }
     try{ st=VHPastModern.state(); }catch(e){ st={searchLite:{players:[]}}; }
-    try{ ensureModernLower(); }catch(e){ console.warn('modern pool seed fail', e); }
     try{ clearTimeout(loadingWatchdog); }catch{} 
-    // focus camera on target before first projection so star starts centered
-    try{ focusOnTarget(); }catch{}
-    try{ projectFrame(); }catch(e){ console.warn(e); }
-    try{ draw(); }catch(e){ console.warn(e); }
+    try{ syncMap(); }catch(e){ console.warn(e); }
     try{ if(!initOk || !st || !(st.dailyPool && st.dailyPool.length)) markCourtFailed(); }catch{}
 
     // v47 hardened continuation — even if earlier failed, force UI to usable state
@@ -1122,7 +972,7 @@
             VHPastModern.computeClosest();
             // re-render closest hint if already finished
             try{ finish(); }catch{}
-            projectFrame(); draw();
+            syncMap();
           }
         }catch(e){ console.warn('mtnn-loaded recompute fail', e); }
       });
@@ -1136,10 +986,9 @@
       }
     }catch{}
     try{ attachSuggest(); }catch(e){ console.warn('attachSuggest fail', e); }
-    try{ initSoundToggle(); }catch(e){ console.warn('sound toggle fail', e); }
 
     let mode='daily'; if(st.isRandom) mode='random'; else if(st.isTriple) mode='triple';
-    if(mode==='triple'){ const md=$('#mode-desc'); if(md) md.innerHTML='Daily Triple: 3 fixed puzzles per day — the lighter court (the retired Everyday game, folded in). It shares the Daily Court streak. <button type="button" class="linkbtn" id="mode-howto">Streak rules: How to play</button>'; }
+    if(mode==='triple'){ const md=$('#mode-desc'); if(md) md.innerHTML='Daily Triple: 3 fixed puzzles per day — the lighter court (the retired Everyday game, folded in). It shares the Daily Court streak.'; }
     document.querySelectorAll('#mode-tabs [data-mode]').forEach(btn=>{ const m=btn.dataset.mode; if(m===mode) btn.classList.add('is-active'); else btn.classList.remove('is-active'); });
     document.querySelectorAll('#mode-tabs [data-mode]').forEach(btn=>{
       btn.addEventListener('click',()=>{
@@ -1166,11 +1015,24 @@
 
     const onboardSeen=localStorage.getItem('vh.onboardSeenV3');
     const backdrop=$('#onboarding-backdrop');
-    function openOnboard(){ if(backdrop){ backdrop.hidden=false; document.body.style.overflow='hidden'; } }
-    function closeOnboard(){ if(backdrop){ backdrop.hidden=true; document.body.style.overflow=''; } try{ localStorage.setItem('vh.onboardSeenV3','1'); }catch{} }
+    let onboardReturn=null;
+    function openOnboard(){
+      if(!backdrop) return;
+      onboardReturn=document.activeElement;
+      // keyboard-a11y.js's Escape marks the .sheet with a .hidden class; the backdrop's hidden attribute is the real state
+      backdrop.querySelector('.sheet')?.classList.remove('hidden');
+      backdrop.hidden=false; document.body.classList.add('is-sheet-open');
+      $('#btn-onboard-close')?.focus();
+    }
+    function closeOnboard(){
+      if(backdrop && !backdrop.hidden){
+        backdrop.hidden=true; document.body.classList.remove('is-sheet-open');
+        try{ (onboardReturn && onboardReturn.focus ? onboardReturn : $('#btn-howto'))?.focus(); }catch{}
+      }
+      try{ localStorage.setItem('vh.onboardSeenV3','1'); }catch{}
+    }
     if(!onboardSeen){ setTimeout(openOnboard, 700); }
     $('#btn-howto')?.addEventListener('click', openOnboard);
-    $('#mode-howto')?.addEventListener('click', openOnboard);
     $('#btn-onboard-close')?.addEventListener('click', closeOnboard);
     $('#btn-onboard-play')?.addEventListener('click', ()=>{ closeOnboard(); $('#guess-input')?.focus(); });
     $('#btn-onboard-random')?.addEventListener('click', ()=>{ closeOnboard(); const p=VHPastModern.pickRandomPast(); location.href='/play?mode=random&r='+p.i; });
@@ -1185,7 +1047,7 @@
     $('#btn-random').addEventListener('click', ()=>{ const p=VHPastModern.pickRandomPast(); location.href='/play?mode=random&r='+p.i; });
     $('#btn-new').addEventListener('click', ()=>{ location.href='/play'; });
     $('#btn-copy-court')?.addEventListener('click', async ()=>{
-      const s=VHPastModern.state(); const url=location.origin+'/play?day='+s.dayKey; const court=s.dailyPool.map((p,i)=>`${i+1}. ${p.n} ${p.s}`).join('\n'); const text=`Daily Court ${s.dayKey} — 5 puzzles\n${court}\n${url}`; try{ await navigator.clipboard.writeText(text); confirmShare($('#btn-copy-court'), 'copied', '📋 Copy court'); }catch{ prompt('Copy', text); }
+      const s=VHPastModern.state(); const url=location.origin+'/play?day='+s.dayKey; const court=s.dailyPool.map((p,i)=>`${i+1}. ${p.n} ${p.s}`).join('\n'); const text=`Daily Court ${s.dayKey} — 5 puzzles\n${court}\n${url}`; const ok=await copyTextVerified(text); confirmShare($('#btn-copy-court'), ok?'copied':false, '📋 Copy court'); if(!ok) toastMsg('Copy failed \u2014 try again');
     });
     // One confirmation pattern for every share control (panel v3 G2): the share
     // call's result drives the button label, so a share is never silent.
@@ -1240,8 +1102,8 @@
       const ctx=dailyShareContext();
       toastMsg('Opening share\u2026'); // <=1s visible response to the tap
       closeDailyShareSheet();
-      const sh=document.createElement('div'); sh.id='vh-share-sheet'; sh.setAttribute('role','dialog'); sh.setAttribute('aria-label','Share your Daily Court result');
-      sh.innerHTML='<div class="vh-share-card"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px"><b>Share your card</b><button class="btn" id="vh-share-close" type="button">\u2715</button></div><pre class="vh-share-preview"></pre><div class="share-bar"><button class="btn btn-primary" id="vh-share-copy-card" type="button">\uD83D\uDCCB Copy card</button><button class="btn" id="vh-share-copy-link" type="button">\uD83D\uDD17 Copy link</button><button class="btn" id="vh-share-native" type="button">\u2197\uFE0F More\u2026</button></div><div class="vh-share-fine">The card text above is exactly what gets copied \u2014 no spoilers, every link carries ref=share.</div></div>';
+      const sh=document.createElement('div'); sh.id='vh-share-sheet'; sh.className='sheet__backdrop';
+      sh.innerHTML='<div class="sheet" role="dialog" aria-modal="true" aria-labelledby="vh-share-title"><div class="sheet__handle"></div><div class="sheet__head"><h2 class="sheet__title" id="vh-share-title">Share your card</h2><button class="sheet__close" id="vh-share-close" type="button" aria-label="Close">\u2715</button></div><pre class="vh-share-preview"></pre><div class="share-bar"><button class="btn btn-primary" id="vh-share-copy-card" type="button">\uD83D\uDCCB Copy card</button><button class="btn" id="vh-share-copy-link" type="button">\uD83D\uDD17 Copy link</button><button class="btn" id="vh-share-native" type="button">\u2197\uFE0F More\u2026</button></div><div class="vh-share-fine">The card text above is exactly what gets copied \u2014 no spoilers, every link carries ref=share.</div></div>';
       sh.querySelector('.vh-share-preview').textContent=ctx.text;
       document.body.appendChild(sh);
       const close=()=>closeDailyShareSheet();
@@ -1289,8 +1151,8 @@
     });
     $('#btn-challenge').addEventListener('click', async function(){
       const s=VHPastModern.state();
-      const url=location.origin+'/play?day='+s.dayKey+(s.isDaily? `&slot=${s.dailySlot}`:''); const txt=`Can you beat my Daily Court ${s.dayKey}? Slot ${s.dailySlot+1} ${s.target.n} — ${url}`; try{ await navigator.clipboard.writeText(txt); this.textContent='Copied'; setTimeout(()=>this.textContent='Challenge',1200); }catch{ alert(url); }
+      const url=location.origin+'/play?day='+s.dayKey+(s.isDaily? `&slot=${s.dailySlot}`:''); const txt=`Can you beat my Daily Court ${s.dayKey}? Slot ${s.dailySlot+1} ${s.target.n} — ${url}`; const btn=this; const ok=await copyTextVerified(txt); toastMsg(ok?'Challenge link copied \u2713':'Copy failed \u2014 try again'); if(ok){ btn.textContent='Copied'; setTimeout(()=>btn.textContent='Challenge',1200); }
     });
   }
-  main().catch(e=>{ console.error(e); const inv=$('#boot-error'); if(inv){ inv.style.display='block'; inv.innerHTML=`<div class="small-mono" style="color:var(--verm)">Error</div><h3>${e.message}</h3><pre style="white-space:pre-wrap;font-size:11px">${e.stack||''}</pre>`; } });
+  main().catch(e=>{ console.error(e); const inv=$('#boot-error'); if(inv){ inv.hidden=false; inv.innerHTML='<div class="state state--error" role="alert"><p class="state__title">The game hit an error</p><p class="boot-error__msg"></p><button class="btn btn-primary" type="button" id="btn-boot-reload">Reload</button></div>'; inv.querySelector('.boot-error__msg').textContent=String(e&&e.message||e); inv.querySelector('#btn-boot-reload').addEventListener('click',()=>location.reload()); } });
 })();

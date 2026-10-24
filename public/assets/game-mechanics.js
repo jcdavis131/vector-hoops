@@ -1,6 +1,7 @@
 /* Vector Hoops — game-mechanics.js (Slice B)
- * Lifelines, scoring stars, twin-set collection, 3-mark tutorial,
- * attract mode, question suits. IIFE, zero deps, real data only.
+ * Lifelines, scoring stars, twin-set collection, question suits.
+ * IIFE, zero deps, real data only. First-visit teaching is the How to play
+ * sheet (play-engine.js, vh.onboardSeenV3); its styles live in game.css.
  * Spec: specs/map-projections-game-mechanics-SPEC.md §2 + §5 Slice B.
  */
 (function(){
@@ -80,7 +81,7 @@
   function twinUsed(){ var s=slotScope(); return !!lsGet('vh.twinreveal.'+s.day+'.'+s.slot, false); }
   function decadeOf(season){ var m=/(\d{4})/.exec(season||''); if(!m) return null; var y=+m[1]; return Math.floor(y/10)*10+'s'; }
   function lifelineStatus(msg){
-    var el=$('#lifeline-status'); if(!el){ var bar=$('#lifelines-bar'); if(!bar) return; el=document.createElement('div'); el.id='lifeline-status'; el.className='small-mono'; bar.appendChild(el); }
+    var el=$('#lifeline-status'); if(!el){ var bar=$('#lifelines-bar'); if(!bar) return; el=document.createElement('div'); el.id='lifeline-status'; el.className='small-mono lifeline-status'; bar.appendChild(el); }
     el.textContent=msg;
   }
   function gameOver(){
@@ -98,7 +99,7 @@
       +'<button class="btn btn-lifeline" id="ll-twin" type="button"'+(used||over?' disabled':'')+' title="Spotlight the mystery star\u2019s 3 nearest twins on the map">🔭 Twin Reveal'+(used?' ✓':'')+'</button>'
       +'<button class="btn btn-lifeline" id="ll-era" type="button"'+(locks>=1||over?' disabled':'')+'>🕰 Era Lock <span class="ll-cost">−1 guess</span></button>';
     if(HAS_COURT_LAB) html+='<button class="btn btn-lifeline" id="ll-court" type="button"'+(over?' disabled':'')+'>📋 Court Check</button>';
-    html+='</div><div class="small-mono" id="lifeline-status" style="margin-top:6px;opacity:.75"></div>';
+    html+='</div><div class="small-mono lifeline-status" id="lifeline-status"></div>';
     bar.innerHTML=html;
     var t=$('#ll-twin'); if(t) t.addEventListener('click', twinReveal);
     var e=$('#ll-era'); if(e) e.addEventListener('click', eraLock);
@@ -125,13 +126,11 @@
       scored.sort(function(a,b){ return b[0]-a[0]; });
       var top=scored.slice(0,3).map(function(s){ return s[1]; });
       var names=top.map(function(i){ return v[i].name+' '+v[i].season; });
-      var api=window._sharedMapApi;
-      if(api){
+      var map=window.VHPlayMap; // the Embed3D handle play-engine.js mounts
+      if(map){
         try{
-          var all=api.getRowIds()||[];
-          var keep={}; top.forEach(function(i){ keep[i]=true; });
-          api.setDimmed(all.filter(function(id){ return !keep[id]; }));
-          top.forEach(function(i){ try{ if(api.pulseGuess) api.pulseGuess(i); }catch(e){} });
+          map.setHighlight(top);
+          map.setDim(top.concat([t.i])); // setDim takes the ids to keep lit
         }catch(e){ console.warn('twin reveal map fail', e); }
       }
       var s=slotScope(); lsSet('vh.twinreveal.'+s.day+'.'+s.slot, true);
@@ -151,11 +150,11 @@
     var s=slotScope(); lsSet('vh.eralock.'+s.day+'.'+s.slot, 1);
     ensureVectors().then(function(v){
       try{
-        var api=window._sharedMapApi;
-        if(api&&api.getRowIds){
-          var ids=api.getRowIds()||[];
-          var other=ids.filter(function(id){ var p=v[id]; return p&&decadeOf(p.season)!==dec; });
-          api.setDimmed(other);
+        var map=window.VHPlayMap;
+        if(map){
+          var keep=[]; // vectors.json row i == the map's point id i
+          for(var i=0;i<v.length;i++){ if(v[i]&&decadeOf(v[i].season)===dec) keep.push(i); }
+          map.setDim(keep);
         }
       }catch(e){ console.warn('era lock dim fail', e); }
     }).catch(function(){});
@@ -173,69 +172,7 @@
     return true;
   }
 
-  /* ---------- 4. tutorial: exactly 3 coach marks, first play ever ---------- */
-  var TUT_KEY='vh.tutorial.done';
-  var TUT_STEPS=[
-    {sel:'#guess-card', title:'Think of a player.', body:'The game thought of one — a past star. Type a modern player and take your 6 guesses.'},
-    {sel:'#map-wrap', title:'Answer — watch the map.', body:'Every guess lands on the map as a ring. Warmer means closer in the embedding.'},
-    {sel:'#lens-bar', title:'Switch the lens — new arrangement, same truth.', body:'Map, PCA, t-SNE: three true views of the same players. Free to use, always.'}
-  ];
-  function runTutorial(){
-    if(lsGet(TUT_KEY,false)) return;
-    if(!$('#guess-card')) return; // play page only
-    var idx=0, root=document.createElement('div'); root.id='coachmark-root';
-    document.body.appendChild(root);
-    function show(){
-      if(idx>=TUT_STEPS.length){ root.remove(); lsSet(TUT_KEY,true); return; }
-      var st=TUT_STEPS[idx], anchor=$(st.sel);
-      var rect=anchor?anchor.getBoundingClientRect():null;
-      root.innerHTML='<div class="coachmark-backdrop"></div><div class="coachmark" role="dialog" aria-label="Tutorial step '+(idx+1)+' of 3">'
-        +'<div class="coachmark-step"> '+(idx+1)+' / 3</div>'
-        +'<div class="coachmark-title">'+st.title+'</div>'
-        +'<div class="coachmark-body">'+st.body+'</div>'
-        +'<div class="coachmark-actions"><button class="btn" id="cm-skip" type="button">Skip</button>'
-        +(idx<TUT_STEPS.length-1?'<button class="btn btn-primary" id="cm-next" type="button">Next →</button>':'<button class="btn btn-primary" id="cm-done" type="button">Play →</button>')
-        +'</div></div>';
-      var card=root.querySelector('.coachmark');
-      // position:fixed uses VIEWPORT coords — never add pageYOffset to a fixed card
-      if(rect){
-        var top=rect.bottom+8;
-        if(rect.top<0) top=12; // anchor scrolled above the viewport — pin to top
-        var cardH=card.offsetHeight||190;
-        top=Math.max(12, Math.min(top, window.innerHeight-cardH-16));
-        card.style.top=top+'px';
-      } else {
-        card.style.top='12px';
-      }
-      var nx=$('#cm-next'), dn=$('#cm-done'), sk=$('#cm-skip');
-      if(nx) nx.addEventListener('click', function(){ idx++; show(); });
-      if(dn) dn.addEventListener('click', function(){ idx=TUT_STEPS.length; show(); });
-      if(sk) sk.addEventListener('click', function(){ idx=TUT_STEPS.length; show(); });
-    }
-    // wait a beat for the game to settle, then teach
-    setTimeout(show, 1200);
-  }
-
-  /* ---------- 5. attract mode: 30s idle -> slow auto-rotate; any input wakes ---------- */
-  var attractOn=false, idleTimer=null;
-  var reduceMotion=(typeof window!=='undefined'&&window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches);
-  function armAttract(){
-    if(idleTimer) clearTimeout(idleTimer);
-    if(reduceMotion) return;
-    idleTimer=setTimeout(function(){
-      if(!$('#sky-canvas')) return; // map pages only
-      attractOn=true;
-      try{ window.dispatchEvent(new Event('vh:resume-maps')); }catch(e){}
-    }, 30000);
-  }
-  ['pointerdown','keydown','wheel','touchstart'].forEach(function(ev){
-    window.addEventListener(ev, function(){
-      if(attractOn){ attractOn=false; try{ window.dispatchEvent(new Event('vh:pause-maps')); }catch(e){} }
-      armAttract();
-    }, {passive:true});
-  });
-
-  /* ---------- 6. twin-set collection (Daily Court meta-goal) ---------- */
+  /* ---------- 4. twin-set collection (Daily Court meta-goal) ---------- */
   var TWIN_SETS=[
     {id:'pillars90', name:'90s Pillars', need:5, match:function(p){ return p.decade==='1990s'; }},
     {id:'icons00', name:'2000s Icons', need:5, match:function(p){ return p.decade==='2000s'; }},
@@ -273,53 +210,19 @@
         return '<div class="twinset'+(s.done?' is-done':'')+'"><div class="twinset-head"><span class="twinset-name">'+s.name+(s.done?' ✓':'')+'</span><span class="small-mono">'+s.have+'/'+s.need+'</span></div>'
           +'<div class="twinset-bar"><div class="twinset-fill" style="width:'+pct+'%"></div></div></div>';
       }).join('')+'</div>'
-      +'<p class="small-mono" style="opacity:.65;margin-top:8px">Solve Daily Court puzzles — each era-twin you reveal joins its set. Same device, no account.</p>';
+      +'<p class="caption twinsets-note">Solve Daily Court puzzles — each era-twin you reveal joins its set. Same device, no account.</p>';
     }
     if(_eratwins){ draw(); }
     else { el.innerHTML='<div class="small-mono">Loading twin sets…</div>'; ensureEraTwins().then(draw).catch(function(){ el.innerHTML='<div class="small-mono">Twin sets unavailable offline.</div>'; }); }
   }
 
-  /* ---------- styles (kept here so play.html needs no CSS edit) ---------- */
-  function injectCSS(){
-    if(document.getElementById('vh-mechanics-css')) return;
-    var st=document.createElement('style'); st.id='vh-mechanics-css';
-    st.textContent=[
-      '.lifeline-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}',
-      '.btn-lifeline{font-size:12px;padding:8px 12px;min-height:40px}',
-      '.btn-lifeline:disabled{opacity:.45;cursor:default}',
-      '.ll-cost{opacity:.65;font-size:11px}',
-      '.suit-tag{display:inline-block;font-family:ui-monospace,monospace;font-size:10px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;border:1px solid var(--line-2,#d8d2c4);border-radius:999px;padding:2px 8px;margin-left:6px;vertical-align:middle}',
-      '.suit-honors{background:#f6e8c8;border-color:#c9a227}',
-      '.suit-style{background:#e4ecf9;border-color:#2B6CE5}',
-      '.suit-team{background:#e2f0e4;border-color:#4a8f5d}',
-      '.suit-era{background:#efece4;border-color:#9A9A94}',
-      '.coachmark-backdrop{position:fixed;inset:0;background:var(--scrim,rgba(35,35,35,.45));z-index:90}',
-      '.coachmark{position:fixed;left:50%;transform:translateX(-50%);width:min(92vw,380px);max-height:calc(100dvh - 32px);overflow:auto;background:var(--board,#FCFBF7);border:1.5px solid var(--ink,#232323);border-radius:10px;padding:14px 16px;z-index:91;box-shadow:0 12px 40px rgba(35,35,35,.18)}',
-      '.coachmark-step{font-family:ui-monospace,monospace;font-size:11px;letter-spacing:.1em;color:var(--fg-3,#9A9A94)}',
-      '.coachmark-title{font-size:17px;font-weight:800;margin:4px 0}',
-      '.coachmark-body{font-size:13px;line-height:1.5;color:var(--fg-2,#57574F)}',
-      '.coachmark-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:10px}',
-      '.twinsets{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px}',
-      '.twinset{border:1px solid var(--line,#e5e0d2);border-radius:10px;padding:10px 12px;background:var(--surface,#fffdf8)}',
-      '.twinset.is-done{border-color:#4a8f5d}',
-      '.twinset-head{display:flex;justify-content:space-between;align-items:center;font-weight:800;font-size:13px;margin-bottom:6px}',
-      '.twinset-bar{height:6px;border-radius:3px;background:#eee9db;overflow:hidden}',
-      '.twinset-fill{height:100%;background:var(--accent,#C17C60);border-radius:3px}',
-      '.result-stars{font-size:20px;letter-spacing:.15em;margin:2px 0 6px}'
-    ].join('\n');
-    document.head.appendChild(st);
-  }
-
   /* ---------- init ---------- */
   function init(){
-    injectCSS();
     if($('#lifelines-bar')){ renderLifelines(); preloadSuits();
       // re-render lifelines when the slot changes (delegated, light)
       var grid=$('#court-grid');
       if(grid) grid.addEventListener('click', function(){ setTimeout(renderLifelines, 400); });
     }
-    if($('#guess-card')) runTutorial();
-    armAttract();
     onSuitsReady(function(){ try{ if(window.renderDailyCourt) window.renderDailyCourt(); }catch(e){} });
   }
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', init);
