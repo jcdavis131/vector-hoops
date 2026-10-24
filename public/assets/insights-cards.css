@@ -32,13 +32,12 @@ details.vh-ins__card:not([open]) .vh-ins__title{margin:0}
 .vh-ins__today{color:var(--accent-2)}
 
 /* ---- skeleton (loading) ---- */
-.vh-ins__skeleton{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-xl);padding:clamp(20px,4vw,36px);margin:0 0 var(--s-4);animation:vh-sk-pulse 1.4s ease-in-out infinite}
+.vh-ins__skeleton{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-xl);padding:clamp(20px,4vw,36px);margin:0 0 var(--s-4)}
 .vh-ins__sk-line{height:14px;border-radius:7px;background:var(--line);margin:0 0 12px}
 .vh-ins__sk-kicker{width:32%;height:11px}
 .vh-ins__sk-title{width:78%;height:26px;border-radius:var(--radius-lg)}
 .vh-ins__sk-short{width:46%}
 .vh-ins__sk-viz{height:120px;border-radius:var(--radius-xl);background:var(--line);margin-top:16px}
-@keyframes vh-sk-pulse{0%,100%{opacity:1}50%{opacity:.55}}
 
 /* ---- card body ---- */
 .vh-ins__tldr{font:500 clamp(16px,2.6vw,19px)/1.55 var(--font-sans);color:var(--fg);margin:0 0 16px;max-width:62ch}
@@ -90,7 +89,7 @@ details.vh-ins__card:not([open]) .vh-ins__title{margin:0}
 /* deep-link flash: an outline pulse, so the card keeps its hard step shadow throughout */
 .vh-ins__flash{animation:vhInsFlash 2.2s ease}
 @keyframes vhInsFlash{0%,60%{outline:3px solid var(--accent);outline-offset:2px}100%{outline:3px solid transparent;outline-offset:2px}}
-@media (prefers-reduced-motion: reduce){.vh-ins__flash{animation:none;outline:3px solid var(--accent);outline-offset:2px}}
+@media (prefers-reduced-motion: reduce){.vh-ins__flash{outline:3px solid var(--accent);outline-offset:2px}}
 @media(max-width:560px){.vh-ins__vizwrap{padding:14px 10px}}
 
 /* ---- no-JS fallback (insights.html <noscript>) ---- */

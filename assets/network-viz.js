@@ -1857,7 +1857,7 @@ function buildFlowSvg(host) {
     if (opts.scroll) {
       var card = $('network-attr-card');
       if (card && !card.hidden) {
-        try { card.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }
+        try { card.scrollIntoView({ behavior:(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'), block: 'nearest' }); }
         catch (e) { /* older browsers */ }
       }
     }

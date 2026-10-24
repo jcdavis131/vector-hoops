@@ -1,0 +1,62 @@
+{
+ "from": "methods",
+ "to": "",
+ "w": 390,
+ "theme": "light",
+ "totalFrames": 30,
+ "offsetsMs": [
+  2,
+  19,
+  36,
+  86,
+  119,
+  136,
+  152,
+  169,
+  186,
+  202,
+  219,
+  236,
+  252,
+  269,
+  286,
+  302,
+  319,
+  335,
+  352,
+  369,
+  385,
+  402,
+  419,
+  435,
+  452,
+  469,
+  485,
+  502,
+  519,
+  535
+ ],
+ "picked": [
+  36,
+  86,
+  136,
+  186,
+  236,
+  286,
+  335,
+  385,
+  435,
+  485
+ ],
+ "page": {
+  "h1": "Who playslike this?",
+  "vtName": "vh-title",
+  "reveals": [
+   "title-card__eyebrow reveal",
+   "title-card__lede hero__lede reveal reveal-1",
+   "hero-search reveal reveal-2",
+   "instrument reveal reveal-3"
+  ],
+  "anims": 4
+ }
+}

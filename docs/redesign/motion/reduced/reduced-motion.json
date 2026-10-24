@@ -1,0 +1,59 @@
+[
+ {
+  "page": "index",
+  "w": 390,
+  "theme": "light",
+  "animations": 0,
+  "list": [],
+  "canvases": 1,
+  "canvasAtRest": [
+   true
+  ],
+  "reduce": true,
+  "errors": []
+ },
+ {
+  "page": "play",
+  "w": 390,
+  "theme": "light",
+  "animations": 0,
+  "list": [],
+  "canvases": 3,
+  "canvasAtRest": [
+   true,
+   true,
+   true
+  ],
+  "reduce": true,
+  "errors": []
+ },
+ {
+  "page": "live",
+  "w": 390,
+  "theme": "light",
+  "animations": 0,
+  "list": [],
+  "canvases": 4,
+  "canvasAtRest": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "reduce": true,
+  "errors": []
+ },
+ {
+  "page": "map-guess",
+  "w": 390,
+  "theme": "light",
+  "animations": 0,
+  "list": [],
+  "canvases": 1,
+  "canvasAtRest": [
+   true
+  ],
+  "reduce": true,
+  "errors": []
+ }
+]

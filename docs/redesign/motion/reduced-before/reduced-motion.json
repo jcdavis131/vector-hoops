@@ -1,0 +1,97 @@
+[
+ {
+  "page": "index",
+  "w": 390,
+  "theme": "light",
+  "animations": 5,
+  "list": [
+   {
+    "type": "CSSAnimation",
+    "name": "atlas-rise",
+    "state": "finished",
+    "target": "div.title-card__eyebrow.reveal"
+   },
+   {
+    "type": "CSSAnimation",
+    "name": "atlas-rise",
+    "state": "finished",
+    "target": "h1.hero__title.reveal.reveal-1"
+   },
+   {
+    "type": "CSSAnimation",
+    "name": "atlas-rise",
+    "state": "finished",
+    "target": "p.title-card__lede.hero__lede.reveal.reveal-2"
+   },
+   {
+    "type": "CSSAnimation",
+    "name": "atlas-rise",
+    "state": "finished",
+    "target": "div.hero-search.reveal.reveal-3"
+   },
+   {
+    "type": "CSSAnimation",
+    "name": "atlas-rise",
+    "state": "finished",
+    "target": "section#atlas.instrument.reveal.reveal-4"
+   }
+  ],
+  "canvases": 1,
+  "canvasAtRest": [
+   true
+  ],
+  "reduce": true,
+  "errors": []
+ },
+ {
+  "page": "play",
+  "w": 390,
+  "theme": "light",
+  "animations": 1,
+  "list": [
+   {
+    "type": "CSSAnimation",
+    "name": "atlas-sheet-up",
+    "state": "finished",
+    "target": "div.sheet"
+   }
+  ],
+  "canvases": 3,
+  "canvasAtRest": [
+   true,
+   true,
+   true
+  ],
+  "reduce": true,
+  "errors": []
+ },
+ {
+  "page": "live",
+  "w": 390,
+  "theme": "light",
+  "animations": 0,
+  "list": [],
+  "canvases": 4,
+  "canvasAtRest": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "reduce": true,
+  "errors": []
+ },
+ {
+  "page": "map-guess",
+  "w": 390,
+  "theme": "light",
+  "animations": 0,
+  "list": [],
+  "canvases": 1,
+  "canvasAtRest": [
+   true
+  ],
+  "reduce": true,
+  "errors": []
+ }
+]

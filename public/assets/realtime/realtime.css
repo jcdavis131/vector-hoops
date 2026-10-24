@@ -81,6 +81,3 @@
 }
 .rt-retry:active{ transform: translateY(1px); }
 
-@media (prefers-reduced-motion: reduce){
-  .rt-retry:active{ transform: none; }
-}

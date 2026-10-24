@@ -460,7 +460,7 @@
             G.guesses = loadGuesses();
             try{ VHPastModern.state().guesses=G.guesses.slice(); }catch{}
             renderPast(); renderGuesses(); renderDailyCourt(); updateStatusBar(); syncMap();
-            window.scrollTo({top: $('#past-card').offsetTop-20, behavior:'smooth'});
+            window.scrollTo({top: $('#past-card').offsetTop-20, behavior:(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth')});
           }
         });
       });
@@ -608,12 +608,8 @@
         const div=document.createElement('div'); div.className='guess-row'+(isWin?' win':'')+(isNew?' is-new':'');
         // pixel avatar for each guess resembling player
         const avatarId = `guess-av-${idx}-${Date.now()}`;
-        div.innerHTML=`<div class="guess-row__inner"><div id="${avatarId}" class="guess-row__avatar"></div><div class="guess-row__body"><div class="guess-row__head"><b>${idx+1}. ${safeName} ${safeSeason}</b><span class="pill${isWin?' pill-green':''}">${simPct}% • ${rankLabel}</span></div><div class="guess-row__meta">${warm} • ${archName}</div><div class="bar"><i style="width:${isNew?0:targetW}%"></i></div></div></div>`;
+        div.innerHTML=`<div class="guess-row__inner"><div id="${avatarId}" class="guess-row__avatar"></div><div class="guess-row__body"><div class="guess-row__head"><b>${idx+1}. ${safeName} ${safeSeason}</b><span class="pill${isWin?' pill-green':''}">${simPct}% • ${rankLabel}</span></div><div class="guess-row__meta">${warm} • ${archName}</div><div class="bar"><i style="width:${targetW}%"></i></div></div></div>`;
         cont.appendChild(div);
-        if(isNew){
-          const bar=div.querySelector('.bar>i');
-          requestAnimationFrame(()=>requestAnimationFrame(()=>{ try{ if(bar) bar.style.width=targetW+'%'; }catch{} }));
-        }
         // mount avatar after append
         try{
           const avEl=document.getElementById(avatarId);
@@ -755,9 +751,9 @@
         if(!el) return;
         try{ if(el.hidden){ el.hidden=false; renderDailyCourt(); } }catch{}
         const y=el.getBoundingClientRect().top + window.pageYOffset - 10;
-        window.scrollTo({top:y, behavior:'smooth'});
+        window.scrollTo({top:y, behavior:(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth')});
         // fallback
-        setTimeout(()=>{ try{ el.scrollIntoView({behavior:'smooth', block:'start'}); }catch{} }, 50);
+        setTimeout(()=>{ try{ el.scrollIntoView({behavior:(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'), block:'start'}); }catch{} }, 50);
       }); }
     const hintEl=$('#past-closest-hint'); if(hintEl&&closest){ hintEl.hidden=false; hintEl.textContent=`Answer: ${closest.entry.n} ${(closest.sim*100).toFixed(0)}% — ${won?'won':'over'}`; }
     syncMap(); updateStatusBar(); renderDailyCourt();
@@ -1075,7 +1071,7 @@
     backdrop?.addEventListener('click', e=>{ if(e.target===backdrop) closeOnboard(); });
     /* Panel v3 G6: Escape dismisses the info sheet (sheetFocus owns the key while it is open). */
 
-    $('#btn-focus-guess')?.addEventListener('click', ()=>{ $('#guess-input')?.focus(); window.scrollTo({top: $('#guess-card').offsetTop-20, behavior:'smooth'}); });
+    $('#btn-focus-guess')?.addEventListener('click', ()=>{ $('#guess-input')?.focus(); window.scrollTo({top: $('#guess-card').offsetTop-20, behavior:(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth')}); });
     $('#guess-btn')?.addEventListener('click', ()=>{ if(typeof doGuess==='function') doGuess(); });
     $('#guess-input')?.addEventListener('keydown', e=>{ if(e.key==='Enter'){ e.preventDefault(); if(typeof doGuess==='function') doGuess(); } });
     // grid mode: tiles call doGuess(name) directly

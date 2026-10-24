@@ -396,7 +396,7 @@
     var el = document.getElementById('ins-' + slug);
     if (!el) return;
     if (el.tagName === 'DETAILS') el.open = true;
-    el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    el.scrollIntoView({ behavior:(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'), block: 'center' });
     el.classList.add('vh-ins__flash');
     setTimeout(function () { el.classList.remove('vh-ins__flash'); }, 2200);
   }
