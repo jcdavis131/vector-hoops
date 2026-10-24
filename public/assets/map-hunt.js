@@ -219,6 +219,7 @@
     if (window.Embed3D && typeof window.Embed3D.mount === 'function') {
       try {
         window.Embed3D.mount(el, {
+          variant: 'game',
           projection: 'pca',
           highlightIds: state.givenIdx !== null ? [state.givenIdx] : [],
           onSelect: handleTap,
