@@ -290,7 +290,6 @@
 :where(.game--tq) .game-status .chip-link:disabled{ opacity: .45; cursor: default; }
 :where(.game--tq) #map-wrap{ min-width: 0; padding: var(--s-3); border: 1px solid var(--line); border-radius: var(--radius-lg); }
 :where(.game--tq) .tq-map{ min-width: 0; }
-:where(.game--tq) .tq-map .embed3d__note{ margin-bottom: 0; }
 :where(.game--tq) .tq-map-key{ margin: var(--s-2) 0 0; }
 :where(.game--tq) #q-text{ margin: 6px 0 0; font-size: var(--t-xl); line-height: 1.25; letter-spacing: -.01em; }
 :where(.game--tq) #tie-text{ margin: 6px 0 0; font-size: var(--t-xl); }
@@ -318,21 +317,11 @@
 @media (max-width: 560px){
   :where(.game--era) .opts{ grid-template-columns: 1fr; }
 }
-/* each option is a kit card as a button (button.card.opt). Inside #round-card the
-   kit's .card .card rule gives it the raised surface; this adds the button resets,
-   the tap layout and the pick states. */
-:where(.game--era) .opt{
-  appearance: none; display: flex; flex-direction: column; gap: 4px; min-height: 76px; padding: 14px;
-  text-align: left; cursor: pointer; font: inherit;
-}
-:where(.game--era) .opt:hover:not([disabled]){ border-color: var(--accent); }
-:where(.game--era) .opt:focus-visible{ outline: 2px solid var(--accent); outline-offset: 2px; }
-:where(.game--era) .opt[disabled]{ cursor: default; }
+/* each option is the kit choice card (button.card.card--choice.opt: resets, layout, focus
+   ring and the .is-correct/.is-wrong states live in atlas.css); this styles its lines. */
 :where(.game--era) .opt .nm{ font-size: var(--t-md); font-weight: 800; line-height: 1.2; }
 :where(.game--era) .opt .ss{ font-family: var(--font-code); font-size: var(--t-xs); color: var(--fg-3); }
 :where(.game--era) .opt .sim{ margin-top: 4px; font-family: var(--font-code); font-size: var(--t-xs); font-weight: 800; }
-:where(.game--era) .opt.is-correct{ border-color: var(--ok); background: color-mix(in srgb, var(--ok) 12%, var(--surface)); }
-:where(.game--era) .opt.is-wrong{ border-color: var(--bad); background: color-mix(in srgb, var(--bad) 8%, var(--surface)); }
 :where(.game--era) .opt .bar{ height: 6px; }
 :where(.game--era) #done-title{ margin: 4px 0; font-size: var(--t-2xl); }
 :where(.game--era) #done-line{ margin-top: 0; }

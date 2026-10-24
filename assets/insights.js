@@ -276,7 +276,7 @@
   function cardHTML(ins, featured, open) {
     var viz = (VIZ[ins.viz] || barsSVG)(ins);
     var num = NUM_BY_SLUG[ins.slug];
-    return '<details class="card vh-ins__card' + (featured ? ' vh-ins__card--featured' : '') + '" id="ins-' + esc(ins.slug) + '" data-slug="' + esc(ins.slug) + '" data-theme="' + kickerTheme(ins.kicker) + '"' + (open ? ' open' : '') + '>' +
+    return '<details class="card card--collapsible vh-ins__card' + (featured ? ' vh-ins__card--featured' : '') + '" id="ins-' + esc(ins.slug) + '" data-slug="' + esc(ins.slug) + '" data-theme="' + kickerTheme(ins.kicker) + '"' + (open ? ' open' : '') + '>' +
       '<summary class="vh-ins__sum">' +
       '<span class="vh-ins__kicker vh-ins__kicker--' + kickerTheme(ins.kicker) + '">' +
       (num ? '<span class="vh-ins__num">№' + num + '</span>' : '') + esc(ins.kicker) + '</span>' +

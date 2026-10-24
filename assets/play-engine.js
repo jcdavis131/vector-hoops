@@ -83,7 +83,8 @@
   let playMap=null;
   let _mapKey=null, _mapTarget=null;
   // guess rings: the same warmer/colder rule renderGuesses() prints, so the
-  // list and the map never disagree; the winning guess is the 'exact' ring
+  // list and the map never disagree; the winning guess is the 'exact' ring,
+  // and a first guess or a same-similarity guess is the neutral 'guess' ring
   function ringsFor(guesses){
     const out=[];
     (guesses||[]).forEach((g,idx)=>{
@@ -92,7 +93,7 @@
       const sim=(typeof g.sim==='number'&&!isNaN(g.sim))?g.sim:0;
       const p=idx>0?guesses[idx-1]:null;
       const prev=(p&&typeof p.sim==='number'&&!isNaN(p.sim))?p.sim:sim;
-      out.push({id:g.idx, kind:(idx>0&&sim<prev)?'cold':'warm'});
+      out.push({id:g.idx, kind:idx===0?'guess':sim>prev?'warm':sim<prev?'cold':'guess'});
     });
     return out;
   }
@@ -139,7 +140,7 @@
         if((waited||0)<8000) setTimeout(()=>mountGameMap((waited||0)+100), 100);
         return;
       }
-      playMap=window.Embed3D.mount(host,{variant:'game', height:380, onSelect:pickFromMap});
+      playMap=window.Embed3D.mount(host,{variant:'game', height:380, onSelect:pickFromMap, selectedLabel:'Past All-Star'});
       window.VHPlayMap=playMap; // game-mechanics.js lifelines spotlight through it
       _mapKey=null; _mapTarget=null; syncMap();
     }catch(e){ console.warn('mountGameMap fail',e); }

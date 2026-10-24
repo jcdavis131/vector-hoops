@@ -3,7 +3,8 @@
  * The map is the shared Embed3D engine, mounted with variant 'game'
  * (no projection switcher, no clustering legend). The handle is kept in
  * state.map: every tap is drawn as a ring with overlay() (warm/cold against
- * the previous tap, exact when found), and the answer is setSelected() when
+ * the previous tap, the neutral 'guess' for a first or same-distance tap,
+ * exact when found), and the answer is setSelected() when
  * the game ends. Point ids are the row indices 0..12965 of vectors.json /
  * embed3d.json (index-aligned by lineage); anything else is resolved
  * defensively and a tap that cannot be resolved is ignored, never crashes.
@@ -142,7 +143,8 @@
     var m = state.map; if (!m) return;
     try {
       m.overlay(state.taps.map(function (t) {
-        return { id: t.idx, kind: t.idx === state.targetIdx ? 'exact' : t.trend === 'cold' ? 'cold' : 'warm' };
+        /* a first tap (trend null) and a same-distance tap are the neutral 'guess' ring */
+        return { id: t.idx, kind: t.idx === state.targetIdx ? 'exact' : t.trend === 'cold' ? 'cold' : t.trend === 'warm' ? 'warm' : 'guess' };
       }));
       m.setSelected(state.over ? state.targetIdx : null);
     } catch (e) { console.warn('map-hunt: map sync failed', e); }
@@ -150,23 +152,17 @@
   /* Taps restored before the map loaded have no name yet unless they are in
      the quiz pool; once the map's names arrive, repaint them. */
   function relabelWhenLoaded() {
-    var tries = 0;
-    function needs() {
-      return state.taps.some(function (t) { return !state.candByIdx[t.idx]; });
-    }
-    if (!needs()) return;
-    (function poll() {
-      if (!state.map || tries++ > 120) return;
-      if (state.map.info(0)) {
-        renderTaps();
-        if (!state.over && state.taps.length) {
-          var t = state.taps[state.taps.length - 1];
-          setStatus(feedbackFor(t));
-        }
-        return;
+    var m = state.map;
+    var needs = state.taps.some(function (t) { return !state.candByIdx[t.idx]; });
+    if (!needs || !m || !m.ready || typeof m.ready.then !== 'function') return;
+    m.ready.then(function () {
+      if (state.map !== m) return;
+      renderTaps();
+      if (!state.over && state.taps.length) {
+        var t = state.taps[state.taps.length - 1];
+        setStatus(feedbackFor(t));
       }
-      setTimeout(poll, 250);
-    })();
+    });
   }
 
   /* ---------- tap handling ------------------------------------------------- */
@@ -281,7 +277,9 @@
           projection: 'pca',
           highlightIds: state.givenIdx !== null ? [state.givenIdx] : [],
           onSelect: handleTap,
-          height: 400
+          height: 400,
+          loadingText: false, /* the lede states the count (data-fact) */
+          selectedLabel: 'Answer' /* setSelected runs only on finish */
         });
         syncMap(); /* taps restored from today's progress land as rings too */
         relabelWhenLoaded();

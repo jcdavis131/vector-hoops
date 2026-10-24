@@ -26,7 +26,7 @@
 <meta name="twitter:description" content="An atlas of 12,966 NBA player-seasons. Pick one; the model returns the three that play most alike."/>
 <meta name="twitter:image" content="https://hoops.dumbmodel.com/assets/og-1200x630.png"/>
 <link rel="stylesheet" href="assets/fonts.css?v=8f376b2a"/>
-<link rel="stylesheet" href="/assets/atlas.css?v=31711e9d"/>
+<link rel="stylesheet" href="/assets/atlas.css?v=9306fe9e"/>
 <link rel="stylesheet" href="/assets/shell.css?v=398d5e37"/>
 <style>
 /* Home layout only: every colour, card, plate, stat, row, button and state is the kit (atlas.css). */
@@ -91,7 +91,6 @@
 
 /* ---------- the atlas (Embed3D variant 'home' paints its own void, bar and note) ---------- */
 .instrument{ width: 100%; max-width: var(--content); margin: 0 auto; }
-.instrument > .share-bar .btn{ flex: 0 1 auto; }
 
 /* ---------- readout: the selected season and its three twins ---------- */
 .readout{ display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 0; margin-top: var(--s-5); padding: 0; }
@@ -121,9 +120,6 @@
 .doors{ display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--s-3); }
 .plate__meta a{ display: inline-flex; align-items: center; min-height: 44px; color: var(--fg-2); }
 .plate__meta a:hover{ color: var(--accent); }
-.lab .row-list__main{ padding: 12px 0; }
-.lab .row-list__main .caption{ display: block; margin-top: 2px; font-weight: 400; }
-.lab .row-list > li > a:hover .row-list__title{ color: var(--accent); }
 .home-foot{ margin: var(--s-6) auto 0; max-width: 72ch; text-align: center; }
 .home-foot a{ color: var(--fg-2); }
 .noscript-note{ padding: var(--s-3); text-align: center; }
@@ -182,7 +178,7 @@
       <div class="embed3d-mount" data-projection="pca" role="application" aria-label="3D map of every player-season. Drag to rotate, tap a point to select."></div>
     </div>
 
-    <div class="share-bar" id="atlas-toolbar" role="group" aria-label="Atlas controls">
+    <div class="share-bar share-bar--compact" id="atlas-toolbar" role="group" aria-label="Atlas controls">
       <button type="button" class="btn" data-map="reset">Clear</button>
       <button type="button" class="btn" data-map="share">Copy link</button>
       <button type="button" class="btn" id="atlas-export">Share image</button>
@@ -303,8 +299,8 @@
 <script defer src="/assets/vh-peers.js?v=860629b9"></script>
 <script defer src="/assets/served-constants.js?v=8ba12340"></script>
 <script defer src="/assets/twin-bands.js?v=0a191313"></script>
-<script defer src="/assets/embed-3d.js?v=9e81f90c"></script>
-<script defer src="/assets/atlas-3d.js?v=c76b867a"></script>
+<script defer src="/assets/embed-3d.js?v=4a99acfa"></script>
+<script defer src="/assets/atlas-3d.js?v=996735df"></script>
 <script src="assets/site-facts.js?v=f8edaf37" defer></script>
 <script defer src="/assets/engagement.js?v=d7430330"></script>
 <script defer src="/assets/home-tonight.js?v=881d28f9"></script>

@@ -62,14 +62,15 @@
   var document = global.document;
   function $(id) { return document.getElementById(id); }
 
-  var host = null, handle = null, nameIdx = null, pending = null, lastSig = '';
-  var waitTimer = 0, waitTries = 0, players = [], selId = null;
+  var host = null, handle = null, nameIdx = null, pending = null, pendingSig = '', lastSig = '';
+  var waiting = false, players = [], selId = null;
 
   function mount() {
     host = $('liveMap');
     if (!host || !global.Embed3D || handle) return;
     try {
-      handle = global.Embed3D.mount(host, { variant: 'live', projection: 'pca', height: 380, onSelect: onSelect });
+      handle = global.Embed3D.mount(host, { variant: 'live', projection: 'pca', height: 380, onSelect: onSelect,
+        loadingText: false /* the plate meta states the count */ });
     } catch (e) { handle = null; }
   }
 
@@ -77,15 +78,14 @@
     try { return !!(handle && handle.snapshot().loaded); } catch (e) { return false; }
   }
 
-  /* Embed3D has no load event: one bounded polling timer, restarted per game. */
+  /* Run fn once the map's data has loaded: now, or when handle.ready
+     resolves (one subscription; the latest pending game wins). */
   function whenLoaded(fn) {
-    clearTimeout(waitTimer);
-    waitTries = 0;
-    (function tick() {
-      if (loaded()) { fn(); return; }
-      if (waitTries++ > 120) return;
-      waitTimer = setTimeout(tick, 250);
-    })();
+    if (loaded()) { fn(); return; }
+    if (waiting || !handle || !handle.ready || typeof handle.ready.then !== 'function') return;
+    waiting = true;
+    var h = handle;
+    h.ready.then(function () { waiting = false; if (handle === h) fn(); });
   }
 
   /* normalised name -> [{id, season, team}] for every row of that name */
@@ -175,13 +175,20 @@
     }
   }
 
+  function flush() {
+    if (!pending) return;
+    var d = pending;
+    lastSig = pendingSig; pending = null;
+    apply(d);
+  }
+
   function onGame(d) {
     if (!d) return;
     mount();
     var sig = JSON.stringify(sides(d).map(function (s) { return [s.abbr, s.color, s.names.join('|')]; }));
     if (sig === lastSig && loaded()) return;
-    pending = d;
-    whenLoaded(function () { if (pending) { lastSig = sig; apply(pending); pending = null; } });
+    pending = d; pendingSig = sig;
+    whenLoaded(flush);
   }
 
   function twinsText(id, twins) {
