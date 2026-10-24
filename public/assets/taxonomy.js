@@ -40,13 +40,13 @@
   }
 
   function memberChip(m) {
-    return '<a class="vh-tax__chip" href="/players?p=' + encodeURIComponent(m.slug) + '#profile">' +
+    return '<a class="chip-link vh-tax__chip" href="/players?p=' + encodeURIComponent(m.slug) + '#profile">' +
       esc(m.name) + '<span>' + esc(m.pos) + '</span></a>';
   }
 
   function renderArch(a) {
     var sigRows = a.top_features.map(function (f) { return barRow(f, a.stat_signature); }).join('');
-    return '<details class="vh-tax__arch" data-arch="' + esc(a.id) + '">' +
+    return '<details class="card vh-tax__arch" data-arch="' + esc(a.id) + '">' +
       '<summary class="vh-tax__archsum">' +
       '<span class="vh-tax__archname">' + esc(a.label) + '</span>' +
       '<span class="vh-tax__archmeta">' + a.member_count + ' players · ' +
@@ -67,9 +67,10 @@
   function renderFamily(f) {
     var archs = f.children.map(renderArch).join('');
     return '<section class="vh-tax__fam" data-fam="' + esc(f.id) + '">' +
-      '<header class="vh-tax__famhead"><h2>' + esc(f.label) + '</h2>' +
+      '<header class="card card--void vh-tax__famhead"><h2>' + esc(f.label) + '</h2>' +
       '<p>' + esc(f.description) + '</p>' +
-      '<span class="vh-tax__fammeta">' + f.member_count + ' players · ' + f.children.length + ' archetypes</span></header>' +
+      '<div class="stat-strip vh-tax__fammeta"><div class="stat"><b>' + f.member_count + '</b>Players</div>' +
+      '<div class="stat"><b>' + f.children.length + '</b>Archetypes</div></div></header>' +
       '<div class="vh-tax__archs">' + archs + '</div></section>';
   }
 
@@ -146,9 +147,12 @@
       root.innerHTML = data.families.map(renderFamily).join('');
       wireLazy(root, byId);
       wireSearch(root, data);
-      var meta = document.getElementById('tax-meta');
-      if (meta) meta.textContent = data.n_players.toLocaleString() + ' players · ' +
-        data.n_families + ' families · ' + data.n_archetypes + ' archetypes';
+      // the hero .stat-strip ships the published counts; refresh them from the data
+      var facts = { players: data.n_players, families: data.n_families, archetypes: data.n_archetypes };
+      Object.keys(facts).forEach(function (k) {
+        var el = document.querySelector('#tax-meta [data-tax="' + k + '"]');
+        if (el && typeof facts[k] === 'number') el.textContent = facts[k].toLocaleString();
+      });
     }).catch(function (e) {
       if (err) { err.hidden = false; err.textContent = 'Could not load the taxonomy data (' + e.message + ').'; }
     });

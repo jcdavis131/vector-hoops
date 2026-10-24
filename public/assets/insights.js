@@ -6,23 +6,20 @@
 (function (global) {
   'use strict';
 
-  var VOID = '#1E2022', PAPER = '#F9F6F0', TERRA = '#C17C60',
-      GOLD = '#D4AF69', MUTED = '#8b8578';
-
-  /* Theme-safe palette: read CSS custom properties at render time so SVG
-     charts follow the active theme (dark/light) instead of hardcoded colors. */
+  /* Chart + PNG palette: the void pairings and the coin gold, read from
+     atlas.css at draw time. All five are constant on both themes (the chart
+     panel is the void in both), so the on-page SVG uses token classes
+     (.vh-ins__mark*, insights-cards.css) and only the canvas PNG export,
+     which cannot read CSS, reads the values here. */
   function palette() {
     var cs = getComputedStyle(document.documentElement);
-    function v(name, fb) {
-      var s = cs.getPropertyValue(name).trim();
-      return s || fb;
-    }
+    function v(name) { return cs.getPropertyValue(name).trim(); }
     return {
-      void: v('--void', VOID),
-      paper: v('--fg', PAPER),
-      terra: v('--accent', TERRA),
-      gold: v('--gold', GOLD),
-      muted: v('--fg-3', MUTED)
+      void: v('--void'),
+      ink: v('--void-ink'),
+      ink2: v('--void-ink-2'),
+      ember: v('--void-accent'),
+      gold: v('--coin-2')
     };
   }
 
@@ -59,11 +56,10 @@
 
   /* ---------- SVG viz renderers (on-page) ---------- */
 
-  /* The viz panel is always the dark void (#1E2022) in BOTH themes, so chart
-     fills use fixed on-void colors — never theme tokens. (The old code took
-     --gold from the theme; in the paper theme that is marker-black #1A1A1A,
-     which made the lead bar invisible on the void panel.) */
-  var VIZ_PAPER = '#F9F6F0';
+  /* The viz panel is the void in BOTH themes, so chart marks use the
+     constant void tokens through classes — never theme tokens. (--gold is
+     marker-black in the paper theme, which once made the lead bar invisible
+     on the void panel.) */
 
   /* Canvas-measured text fitting: labels/tags are truncated to a measured
      budget, so no SVG text can ever run past the viewBox edge. */
@@ -149,16 +145,16 @@
       s += '<text x="0" y="' + (y + 13) + '" class="vh-ins__svglabel">' + esc(label) + '</text>';
       if (tag) s += '<text x="' + (lw + 10).toFixed(1) + '" y="' + (y + 13) + '" class="vh-ins__svgtag">' + esc(tag) + '</text>';
       /* Full-width track (the zero-baseline scale), then the bar itself. */
-      s += '<rect x="0" y="' + (y + barY) + '" width="' + W + '" height="' + barH + '" rx="4" fill="' + VIZ_PAPER + '" opacity="0.06"/>';
-      var fill = diverging ? (r.value < 0 ? TERRA : GOLD) : (i === 0 ? GOLD : TERRA);
-      s += '<rect x="' + p.bx.toFixed(1) + '" y="' + (y + barY) + '" width="' + p.bw.toFixed(1) + '" height="' + barH + '" rx="4" fill="' + fill + '"/>';
+      s += '<rect x="0" y="' + (y + barY) + '" width="' + W + '" height="' + barH + '" rx="4" class="vh-ins__track"/>';
+      var gold = diverging ? r.value >= 0 : i === 0;
+      s += '<rect x="' + p.bx.toFixed(1) + '" y="' + (y + barY) + '" width="' + p.bw.toFixed(1) + '" height="' + barH + '" rx="4" class="vh-ins__mark' + (gold ? ' vh-ins__mark--gold' : '') + '"/>';
       var vy = p.v.onLabel ? y + 13 : y + barY + 11;
       s += '<text x="' + p.v.x.toFixed(1) + '" y="' + vy + '" class="' + p.v.cls + '" text-anchor="' + p.v.anchor + '">' + esc(p.v.str) + '</text>';
     });
 
     /* Zero spine last, on top: a clearly visible axis for diverging cards,
        and the baseline edge for plain bar cards. */
-    s += '<line x1="' + zeroX.toFixed(1) + '" y1="2" x2="' + zeroX.toFixed(1) + '" y2="' + (H - 2) + '" stroke="' + VIZ_PAPER + '" stroke-width="' + (diverging ? 1.5 : 1) + '" opacity="' + (diverging ? 0.55 : 0.3) + '"/>';
+    s += '<line x1="' + zeroX.toFixed(1) + '" y1="2" x2="' + zeroX.toFixed(1) + '" y2="' + (H - 2) + '" class="vh-ins__spine" stroke-width="' + (diverging ? 1.5 : 1) + '" opacity="' + (diverging ? 0.55 : 0.3) + '"/>';
     return s + '</svg>';
   }
 
@@ -178,9 +174,9 @@
     var maxShare = Math.max.apply(null, rows.map(function (r) { return Math.max(r.early, r.late); })) || 1;
     var k = W / maxShare;
     var s = '<svg viewBox="0 0 ' + W + ' ' + H + '" class="vh-ins__viz" role="img" aria-label="archetype share then vs now">';
-    s += '<rect x="0" y="3" width="10" height="9" rx="2" fill="' + MUTED + '"/>';
+    s += '<rect x="0" y="3" width="10" height="9" rx="2" class="vh-ins__mark vh-ins__mark--muted"/>';
     s += '<text x="15" y="12" class="vh-ins__svgval">then</text>';
-    s += '<rect x="58" y="3" width="10" height="9" rx="2" fill="' + TERRA + '"/>';
+    s += '<rect x="58" y="3" width="10" height="9" rx="2" class="vh-ins__mark"/>';
     s += '<text x="73" y="12" class="vh-ins__svgval">now</text>';
     rows.forEach(function (r, i) {
       var y = headH + i * rowH;
@@ -190,16 +186,15 @@
       var label = fitText(r.label, W - measureText(dstr, F_VAL) - 12, F_LABEL);
       s += '<text x="0" y="' + (y + 13) + '" class="vh-ins__svglabel">' + esc(label) + '</text>';
       s += '<text x="' + W + '" y="' + (y + 13) + '" class="vh-ins__svgval" text-anchor="end">' + dstr + '</text>';
-      s += '<rect x="0" y="' + (y + 20) + '" width="' + W + '" height="9" rx="3" fill="' + VIZ_PAPER + '" opacity="0.06"/>';
-      s += '<rect x="0" y="' + (y + 31) + '" width="' + W + '" height="9" rx="3" fill="' + VIZ_PAPER + '" opacity="0.06"/>';
-      s += '<rect x="0" y="' + (y + 20) + '" width="' + w1.toFixed(1) + '" height="9" rx="3" fill="' + MUTED + '"/>';
-      s += '<rect x="0" y="' + (y + 31) + '" width="' + w2.toFixed(1) + '" height="9" rx="3" fill="' + (neg ? '#D96A52' : TERRA) + '"/>';
+      s += '<rect x="0" y="' + (y + 20) + '" width="' + W + '" height="9" rx="3" class="vh-ins__track"/>';
+      s += '<rect x="0" y="' + (y + 31) + '" width="' + W + '" height="9" rx="3" class="vh-ins__track"/>';
+      s += '<rect x="0" y="' + (y + 20) + '" width="' + w1.toFixed(1) + '" height="9" rx="3" class="vh-ins__mark vh-ins__mark--muted"/>';
+      s += '<rect x="0" y="' + (y + 31) + '" width="' + w2.toFixed(1) + '" height="9" rx="3" class="vh-ins__mark' + (neg ? ' vh-ins__mark--neg' : '') + '"/>';
     });
     return s + '</svg>';
   }
 
   function timelineSVG(ins) {
-    var P = palette();
     var rows = ins.rows;
     var W = 620, rowH = 64;
     var H = rows.length * rowH + 16;
@@ -208,16 +203,15 @@
       var y = i * rowH + 16, midY = y + 26;
       s += '<text x="0" y="' + (y + 12) + '" class="vh-ins__svglabel">' + esc(r.a) + '</text>';
       s += '<text x="0" y="' + (y + 44) + '" class="vh-ins__svglabel">' + esc(r.b) + '</text>';
-      s += '<line x1="300" y1="' + (y + 8) + '" x2="300" y2="' + (y + 48) + '" stroke="' + P.terra + '" stroke-width="2"/>';
-      s += '<circle cx="300" cy="' + (y + 8) + '" r="4" fill="' + P.gold + '"/>';
-      s += '<circle cx="300" cy="' + (y + 48) + '" r="4" fill="' + P.gold + '"/>';
+      s += '<line x1="300" y1="' + (y + 8) + '" x2="300" y2="' + (y + 48) + '" class="vh-ins__line" stroke-width="2"/>';
+      s += '<circle cx="300" cy="' + (y + 8) + '" r="4" class="vh-ins__mark vh-ins__mark--gold"/>';
+      s += '<circle cx="300" cy="' + (y + 48) + '" r="4" class="vh-ins__mark vh-ins__mark--gold"/>';
       s += '<text x="320" y="' + (midY + 5) + '" class="vh-ins__svgval">' + r.gap + 'y apart · sim ' + r.sim + '</text>';
     });
     return s + '</svg>';
   }
 
   function lineSVG(ins) {
-    var P = palette();
     var rows = ins.rows;
     var W = 620, H = 240, padL = 44, padB = 30, padT = 16;
     var max = Math.max.apply(null, rows.map(function (r) { return r.v; })) * 1.08;
@@ -225,9 +219,9 @@
     function Y(v) { return padT + (1 - v / max) * (H - padT - padB); }
     var pts = rows.map(function (r, i) { return X(i).toFixed(1) + ',' + Y(r.v).toFixed(1); }).join(' ');
     var s = '<svg viewBox="0 0 ' + W + ' ' + H + '" class="vh-ins__viz" role="img" aria-label="' + esc(ins.viz_label || 'line chart') + '">';
-    s += '<polyline points="' + pts + '" fill="none" stroke="' + P.terra + '" stroke-width="3"/>';
-    s += '<circle cx="' + X(0) + '" cy="' + Y(rows[0].v) + '" r="5" fill="' + P.gold + '"/>';
-    s += '<circle cx="' + X(rows.length - 1) + '" cy="' + Y(rows[rows.length - 1].v) + '" r="5" fill="' + P.gold + '"/>';
+    s += '<polyline points="' + pts + '" class="vh-ins__line" stroke-width="3"/>';
+    s += '<circle cx="' + X(0) + '" cy="' + Y(rows[0].v) + '" r="5" class="vh-ins__mark vh-ins__mark--gold"/>';
+    s += '<circle cx="' + X(rows.length - 1) + '" cy="' + Y(rows[rows.length - 1].v) + '" r="5" class="vh-ins__mark vh-ins__mark--gold"/>';
     s += '<text x="' + (X(0) - 6) + '" y="' + (Y(rows[0].v) - 10) + '" class="vh-ins__svgval" text-anchor="end">' + rows[0].v + '</text>';
     s += '<text x="' + W + '" y="' + (Y(rows[rows.length - 1].v) - 10) + '" class="vh-ins__svgval" text-anchor="end">' + rows[rows.length - 1].v + '</text>';
     s += '<text x="' + padL + '" y="' + (H - 8) + '" class="vh-ins__svglabel">' + esc(rows[0].s) + '</text>';
@@ -254,20 +248,20 @@
     var s = '<svg viewBox="0 0 ' + W + ' ' + H + '" class="vh-ins__viz" role="img" aria-label="' +
       esc(ins.viz_label || 'season comparison chart') + '">';
     /* Legend: gold = cheapest wins, terra = priciest wins. */
-    s += '<rect x="0" y="8" width="12" height="12" rx="3" fill="' + GOLD + '"/>' +
+    s += '<rect x="0" y="8" width="12" height="12" rx="3" class="vh-ins__mark vh-ins__mark--gold"/>' +
       '<text x="18" y="18" class="vh-ins__svgtag">cheapest wins</text>' +
-      '<rect x="152" y="8" width="12" height="12" rx="3" fill="' + TERRA + '"/>' +
+      '<rect x="152" y="8" width="12" height="12" rx="3" class="vh-ins__mark"/>' +
       '<text x="170" y="18" class="vh-ins__svgtag">priciest wins</text>';
     rows.forEach(function (r, i) {
       var gy = headH + i * groupH;
       s += '<text x="0" y="' + (gy + 15) + '" class="vh-ins__svglabel">' + esc(r.s) + '</text>';
-      [['cheap', GOLD, gy + 24], ['pricey', TERRA, gy + 24 + barGap]].forEach(function (t) {
+      [['cheap', 'vh-ins__mark vh-ins__mark--gold', gy + 24], ['pricey', 'vh-ins__mark', gy + 24 + barGap]].forEach(function (t) {
         var d = r[t[0]], by = t[2];
         var bw = Math.max(3, X(d.v));
         var lbl = fitText(d.label + ' \u00b7 $' + d.v + 'M/win' + (d.note ? ' (' + d.note + ')' : ''), W - 8, F_TAG);
         s += '<text x="0" y="' + (by - 5) + '" class="vh-ins__svgtag">' + esc(lbl) + '</text>';
-        s += '<rect x="0" y="' + by + '" width="' + W + '" height="' + barH + '" rx="4" fill="' + VIZ_PAPER + '" opacity="0.06"/>';
-        s += '<rect x="0" y="' + by + '" width="' + bw.toFixed(1) + '" height="' + barH + '" rx="4" fill="' + t[1] + '"/>';
+        s += '<rect x="0" y="' + by + '" width="' + W + '" height="' + barH + '" rx="4" class="vh-ins__track"/>';
+        s += '<rect x="0" y="' + by + '" width="' + bw.toFixed(1) + '" height="' + barH + '" rx="4" class="' + t[1] + '"/>';
       });
     });
     return s + '</svg>';
@@ -275,28 +269,34 @@
 
   /* ---------- card + spotlight rendering ---------- */
 
-  function cardHTML(ins, featured) {
+  /* Every card is a kit .card <details>: the summary carries the number,
+     kicker and title (heading content is allowed in <summary>), the body
+     carries everything else, so a collapsed list is the index and nothing
+     is dropped. Native <details>: keyboard, aria-expanded, no handlers. */
+  function cardHTML(ins, featured, open) {
     var viz = (VIZ[ins.viz] || barsSVG)(ins);
     var num = NUM_BY_SLUG[ins.slug];
-    return '<article class="vh-ins__card' + (featured ? ' vh-ins__card--featured' : '') + '" id="ins-' + esc(ins.slug) + '" data-slug="' + esc(ins.slug) + '" data-theme="' + kickerTheme(ins.kicker) + '">' +
+    return '<details class="card vh-ins__card' + (featured ? ' vh-ins__card--featured' : '') + '" id="ins-' + esc(ins.slug) + '" data-slug="' + esc(ins.slug) + '" data-theme="' + kickerTheme(ins.kicker) + '"' + (open ? ' open' : '') + '>' +
+      '<summary class="vh-ins__sum">' +
       '<div class="vh-ins__kicker vh-ins__kicker--' + kickerTheme(ins.kicker) + '">' +
       (num ? '<span class="vh-ins__num">№' + num + '</span>' : '') + esc(ins.kicker) + '</div>' +
       '<h2 class="vh-ins__title">' + esc(ins.title) + '</h2>' +
+      '</summary><div class="vh-ins__body">' +
       (ins.tldr ? '<p class="vh-ins__tldr"><span>tl;dr</span>' + esc(ins.tldr) + '</p>' : '') +
       '<p class="vh-ins__lede">' + esc(ins.lede) + '</p>' +
       '<div class="vh-ins__stat"><span class="vh-ins__statnum">' + esc(ins.stat) + '</span>' +
       '<span class="vh-ins__statlabel">' + esc(ins.stat_label) + '</span></div>' +
-      '<div class="vh-ins__vizwrap">' + viz + '</div>' +
+      '<div class="card--void vh-ins__vizwrap">' + viz + '</div>' +
       (ins.examples ? '<p class="vh-ins__examples"><span>Last of the breed</span>' +
         ins.examples.map(function (e) { return esc(e.label); }).join(' · ') + '</p>' : '') +
       '<p class="vh-ins__foot">' + esc(ins.foot) + '</p>' +
       /* The pudding "But…" turn: every card carries its own invalidation line,
          printed on the card face — what this doesn't mean / what would break it. */
-      (ins.but ? '<p class="vh-ins__but"><span>But…</span>' + esc(ins.but) + '</p>' : '') +
+      (ins.but ? '<p class="vh-ins__but"><span>But</span>' + esc(ins.but) + '</p>' : '') +
       '<div class="vh-ins__share">' +
       '<button class="btn vh-ins__copy" data-slug="' + esc(ins.slug) + '" type="button">Copy link</button>' +
       '<button class="btn btn-accent vh-ins__png" data-slug="' + esc(ins.slug) + '" type="button">Save PNG</button>' +
-      '</div></article>';
+      '</div></div></details>';
   }
 
   function dayOfYear(d) {
@@ -313,24 +313,78 @@
     var pick = list[dayOfYear(new Date()) % list.length];
     // The spotlight never duplicates a grid card: the grid shows everything else.
     var rest = list.filter(function (ins) { return ins.slug !== pick.slug; });
-    var spot = document.getElementById('insights-spotlight');
-    if (spot) {
-      spot.innerHTML = '<div class="vh-ins__spotlabel">Insight of the day — ' +
-        new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric' }) + '</div>' +
-        cardHTML(pick, true);
-    }
     var lastSeries = null;
     /* Card numbers (№1, №2, …) are the card's position in insights.json —
        the home "Fresh from the lab" doors reference them. */
     NUM_BY_SLUG = {};
-    list.forEach(function (ins, i) { NUM_BY_SLUG[ins.slug] = i + 1; });    host.innerHTML = rest.map(function (ins) {
+    list.forEach(function (ins, i) { NUM_BY_SLUG[ins.slug] = i + 1; });
+    /* Open policy: the spotlight is always open; the rest open on wide
+       screens and start collapsed on phones (< 720px), where the 390 page
+       ran ~9,600px. A deep link (#slug) opens its card in highlight(). */
+    var wide = !(global.matchMedia && global.matchMedia('(max-width: 719px)').matches);
+    renderIndex(list, pick);
+    var spot = document.getElementById('insights-spotlight');
+    if (spot) {
+      spot.innerHTML = '<div class="vh-ins__spotlabel">Insight of the day — ' +
+        new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric' }) + '</div>' +
+        cardHTML(pick, true, true);
+    }
+    host.innerHTML = rest.map(function (ins) {
       var head = '';
       if (ins.series && ins.series !== lastSeries) { lastSeries = ins.series; head = seriesHead(ins.series); }
-      return head + cardHTML(ins, false);
+      return head + cardHTML(ins, false, wide);
     }).join('');
     bindShare(data);
+    bindIndex();
     var hash = (location.hash || '').replace('#', '');
     if (hash) highlight(hash);
+  }
+
+  /* The card index: every finding's number and title as one .row-list, so
+     a phone reader sees them all in a screenful; each row is a plain
+     #ins-slug link that routes through highlight() via hashchange. */
+  function renderIndex(list, pick) {
+    var box = document.getElementById('insights-index');
+    if (!box) return;
+    box.innerHTML = '<div class="vh-ins__indexhead">' +
+      '<h2 class="vh-ins__spotlabel" id="insights-index-title">All ' + list.length + ' findings</h2>' +
+      '<button class="btn vh-ins__toggle" type="button" aria-controls="insights-list">Expand all</button></div>' +
+      '<ol class="row-list" aria-labelledby="insights-index-title">' +
+      list.map(function (ins) {
+        return '<li><a href="#' + esc(ins.slug) + '">' +
+          '<span class="row-list__num">№' + NUM_BY_SLUG[ins.slug] + '</span>' +
+          '<span class="row-list__main">' + esc(ins.title) + '</span>' +
+          (ins.slug === pick.slug ? '<span class="row-list__meta vh-ins__today">Today</span>' : '') +
+          '</a></li>';
+      }).join('') + '</ol>';
+    box.hidden = false;
+  }
+
+  function bindIndex() {
+    var btn = document.querySelector('.vh-ins__toggle');
+    if (!btn) return;
+    function cards() { return document.querySelectorAll('#insights-list .vh-ins__card'); }
+    function sync() {
+      var all = cards(), open = 0;
+      all.forEach(function (d) { if (d.open) open++; });
+      btn.textContent = open === all.length ? 'Collapse all' : 'Expand all';
+    }
+    btn.addEventListener('click', function () {
+      var all = cards(), open = 0;
+      all.forEach(function (d) { if (d.open) open++; });
+      var to = open !== all.length;
+      all.forEach(function (d) { d.open = to; });
+      sync();
+    });
+    document.getElementById('insights-list').addEventListener('toggle', sync, true);
+    sync();
+    /* a row whose hash is already current fires no hashchange: open it directly */
+    document.querySelectorAll('#insights-index a[href^="#"]').forEach(function (a) {
+      a.addEventListener('click', function () {
+        var slug = a.getAttribute('href').slice(1);
+        if ((location.hash || '').replace('#', '') === slug) highlight(slug);
+      });
+    });
   }
 
   function seriesHead(series) {
@@ -341,6 +395,7 @@
   function highlight(slug) {
     var el = document.getElementById('ins-' + slug);
     if (!el) return;
+    if (el.tagName === 'DETAILS') el.open = true;
     el.scrollIntoView({ behavior: 'smooth', block: 'center' });
     el.classList.add('vh-ins__flash');
     setTimeout(function () { el.classList.remove('vh-ins__flash'); }, 2200);
@@ -406,9 +461,10 @@
     cv.width = W; cv.height = H;
     var c = cv.getContext('2d');
     var F = '"Archivo","Inter",system-ui,-apple-system,"Segoe UI",sans-serif';
-    c.fillStyle = VOID;
+    var P = palette();
+    c.fillStyle = P.void;
     c.fillRect(0, 0, W, H);
-    c.fillStyle = TERRA;
+    c.fillStyle = P.ember;
     c.fillRect(0, 0, W, 14);
     c.textBaseline = 'alphabetic';
 
@@ -437,22 +493,23 @@
       return y + Math.min(lines.length, maxLines || 4) * lh;
     }
 
-    text(ins.kicker.toUpperCase(), 72, 110, 34, TERRA, 700);
+    text(ins.kicker.toUpperCase(), 72, 110, 34, P.ember, 700);
     var sy = 250;
-    text(ins.stat, 68, sy, 150, GOLD, 800, W - 140);
-    wrap(ins.stat_label, 74, sy + 52, 30, MUTED, 400, W - 148, 40, 2);
-    var ty = wrap(ins.title, 72, sy + 170, 62, PAPER, 700, W - 144, 76, 3);
+    text(ins.stat, 68, sy, 150, P.gold, 800, W - 140);
+    wrap(ins.stat_label, 74, sy + 52, 30, P.ink2, 400, W - 148, 40, 2);
+    var ty = wrap(ins.title, 72, sy + 170, 62, P.ink, 700, W - 144, 76, 3);
     var vy = ty + 40;
-    var vend = drawVizPNG(c, ins, 72, vy, W - 144, 420, F);
+    var vend = drawVizPNG(c, ins, 72, vy, W - 144, 420, F, P);
     // footer
-    c.fillStyle = TERRA;
+    c.fillStyle = P.ember;
     c.fillRect(72, H - 150, W - 144, 3);
-    text('VECTOR HOOPS', 72, H - 96, 30, PAPER, 700);
-    text('hoops.dumbmodel.com/insights/' + ins.slug, 72, H - 52, 26, MUTED, 400);
+    text('VECTOR HOOPS', 72, H - 96, 30, P.ink, 700);
+    text('hoops.dumbmodel.com/insights/' + ins.slug, 72, H - 52, 26, P.ink2, 400);
     return cv.toDataURL('image/png');
   }
 
-  function drawVizPNG(c, ins, x, y, w, h, F) {
+  function drawVizPNG(c, ins, x, y, w, h, F, P) {
+    var VOID = P.void, PAPER = P.ink, MUTED = P.ink2, TERRA = P.ember, GOLD = P.gold;
     c.save();
     /* Draw a row label whole: squeeze horizontally to fit maxW rather than
        truncating with an ellipsis — the same no-truncated-labels rule the
@@ -471,7 +528,7 @@
         rows.forEach(function (r, i) {
           var ry = y + i * rh;
           var bw = Math.max(4, (r.value / bmax) * (w - 260));
-          c.font = '400 26px ' + F; c.fillStyle = '#F9F6F0';
+          c.font = '400 26px ' + F; c.fillStyle = PAPER;
           fitLabel(r.label, x, ry + rh / 2 + 8, 248);
           c.fillStyle = i === 0 ? GOLD : TERRA;
           var bx = x + 260;
@@ -484,7 +541,7 @@
           c.font = '700 24px ' + F;
           var vw = c.measureText(vs).width;
           if (bw >= vw + 24) {
-            c.fillStyle = '#1E2022';
+            c.fillStyle = VOID;
             c.fillText(vs, bx + bw - vw - 10, ry + rh / 2 + 8);
           } else {
             c.fillStyle = MUTED;
@@ -501,7 +558,7 @@
           var dry = y + i * rh;
           var dbw = Math.max(4, (Math.abs(r.value) / dspan) * dplot);
           var dbx = r.value < 0 ? dzero - dbw : dzero;
-          c.font = '400 26px ' + F; c.fillStyle = '#F9F6F0';
+          c.font = '400 26px ' + F; c.fillStyle = PAPER;
           fitLabel(r.label, x, dry + rh / 2 + 8, 248);
           c.fillStyle = r.value < 0 ? TERRA : GOLD;
           c.beginPath();
@@ -514,7 +571,7 @@
           var dvw = c.measureText(dvs).width;
           c.fillStyle = MUTED;
           if (dbw >= dvw + 24) {
-            c.fillStyle = '#1E2022';
+            c.fillStyle = VOID;
             c.fillText(dvs, r.value < 0 ? dbx + 10 : dbx + dbw - dvw - 10, dry + rh / 2 + 8);
           } else if (r.value < 0) {
             c.fillText(dvs, dbx - dvw - 12, dry + rh / 2 + 8);
@@ -528,12 +585,13 @@
       var rh2 = h / rows2.length;
       rows2.forEach(function (r, i) {
         var ry = y + i * rh2;
-        c.font = '400 24px ' + F; c.fillStyle = '#F9F6F0';
+        c.font = '400 24px ' + F; c.fillStyle = PAPER;
         fitLabel(r.label, x, ry + rh2 / 2 + 8, 318);
         var bx = x + 330, bw1 = Math.max(3, r.early * 14), bw2 = Math.max(3, r.late * 14);
         c.fillStyle = MUTED; c.fillRect(bx, ry + rh2 / 2 - 16, bw1, 12);
-        c.fillStyle = r.delta < 0 ? '#b0523c' : TERRA;
+        c.fillStyle = TERRA; c.globalAlpha = r.delta < 0 ? 0.7 : 1;
         c.fillRect(bx, ry + rh2 / 2 + 2, bw2, 12);
+        c.globalAlpha = 1;
         c.fillStyle = MUTED; c.font = '400 22px ' + F;
         c.fillText((r.delta > 0 ? '+' : '') + r.delta + 'pp', bx + 200, ry + rh2 / 2 + 10);
       });
@@ -542,7 +600,7 @@
       var rh3 = h / rows3.length;
       rows3.forEach(function (r, i) {
         var ry = y + i * rh3;
-        c.font = '400 28px ' + F; c.fillStyle = '#F9F6F0';
+        c.font = '400 28px ' + F; c.fillStyle = PAPER;
         c.fillText(r.a, x, ry + 34);
         c.fillText(r.b, x, ry + 72);
         var lx = x + 420;
@@ -585,12 +643,12 @@
         Math.max.apply(null, rows5.map(function (r) { return r.pricey.v; })) * 1.06 : 1;
       rows5.forEach(function (r, i) {
         var ry = y + i * rh5;
-        c.font = '700 26px ' + F; c.fillStyle = '#F9F6F0';
+        c.font = '700 26px ' + F; c.fillStyle = PAPER;
         c.fillText(r.s, x, ry + 32);
         [['cheap', GOLD], ['pricey', TERRA]].forEach(function (t, j) {
           var d = r[t[0]];
           var bwy = ry + 46 + j * 46;
-          c.font = '400 22px ' + F; c.fillStyle = '#F9F6F0';
+          c.font = '400 22px ' + F; c.fillStyle = PAPER;
           fitLabel(d.label + ' \u00b7 $' + d.v + 'M/win', x, bwy + 19, 300);
           c.fillStyle = t[1];
           c.beginPath();

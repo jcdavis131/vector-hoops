@@ -26,23 +26,22 @@
 <link rel="stylesheet" href="/assets/fonts.css?v=8f376b2a"/>
 <link rel="stylesheet" href="/assets/atlas.css?v=31711e9d"/>
 <link rel="stylesheet" href="/assets/shell.css?v=398d5e37"/>
-<link rel="stylesheet" href="/assets/insights-cards.css?v=58bee766"/>
+<link rel="stylesheet" href="/assets/insights-cards.css?v=b5228d9d"/>
 <style>
 .vh-tn__picker{display:flex;gap:10px;flex-wrap:wrap;margin:0 0 18px;align-items:flex-end}
 .vh-tn__field{display:flex;flex-direction:column;gap:6px;flex:1 1 220px;min-width:0}
 .vh-tn__field label{font:700 11px/1.4 var(--font-sans);letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
-.vh-tn__field input,.vh-tn__field select{font:400 16px/1.4 var(--font-sans);color:var(--fg);background:var(--surface-2,var(--surface));border:1px solid var(--line);border-radius:10px;padding:10px 12px;width:100%}
-.vh-tn__metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:0 0 16px}
-.vh-tn__metric{background:var(--surface-2,var(--surface));border:1px solid var(--line);border-radius:12px;padding:12px 14px}
-.vh-tn__metric b{display:block;font:800 clamp(22px,4vw,30px)/1.1 var(--font-display);color:var(--gold,#D4AF69)}
-.vh-tn__metric span{font:400 12.5px/1.5 var(--font-sans);color:var(--fg-2)}
-.vh-tn__node{cursor:default}
-.vh-tn__back{display:inline-block;margin:0 0 var(--s-4);font:600 14px var(--font-sans);color:var(--accent);text-decoration:none}
-@media(max-width:560px){.vh-tn__picker{flex-direction:column;align-items:stretch}}
+.vh-tn__field--season{flex:0 1 160px}
+.vh-tn__field input,.vh-tn__field select{font:400 16px/1.4 var(--font-sans);color:var(--fg);background:var(--surface-2);border:1px solid var(--line);border-radius:var(--radius-xl);padding:10px 12px;width:100%}
+.vh-tn__metrics{margin:0 0 16px}
+.vh-tn__metrics:empty{display:none}
+.vh-tn__back{display:inline-flex;align-items:center;min-height:44px;margin:0 0 var(--s-2);font:600 14px var(--font-sans);color:var(--accent);text-decoration:none}
+/* in a column the fields' flex-basis (220px / 160px) became their height: the 390px gap */
+@media(max-width:560px){.vh-tn__picker{flex-direction:column;align-items:stretch}.vh-tn__field,.vh-tn__field--season{flex:0 0 auto}}
 </style>
 </head><body>
 <a class="skip-link" href="#main">Skip to content</a>
-<noscript><div role="alert" style="padding:16px;text-align:center">Enable JS — Twin Networks needs JavaScript</div></noscript>
+<noscript><div role="alert" class="vh-ins__noscript">Enable JS — Twin Networks needs JavaScript</div></noscript>
 
 <nav class="site-nav" data-active="/twin-network" aria-label="Vector Hoops site"><noscript class="site-nav__noscript"><a href="/">Atlas</a><a href="/play">Play</a><a href="/map-guess">Map Hunt</a><a href="/live">Live</a><a href="/players">Players</a><a href="/insights">Insights</a><a href="/taxonomy">Taxonomy</a><a href="/methods">Methods</a><a href="/models/mtnn-v5">Models</a></noscript></nav>
 <div id="main" class="main" role="main" style="padding-top:0">
@@ -56,7 +55,7 @@
   <div class="vh-ins__wrap">
     <a class="vh-tn__back" href="/insights">← All insights</a>
 
-    <article class="vh-ins__card vh-ins__card--featured" aria-label="Twin network explorer">
+    <article class="card vh-ins__card vh-ins__card--featured" aria-label="Twin network explorer">
       <div class="vh-ins__kicker">Twin Network</div>
       <h2 class="vh-ins__title" id="tn-title">Pick a player-season</h2>
       <div class="vh-tn__picker">
@@ -65,28 +64,28 @@
           <input id="tn-search" type="search" placeholder="e.g. Stephen Curry" autocomplete="off" list="tn-names"/>
           <datalist id="tn-names"></datalist>
         </div>
-        <div class="vh-tn__field" style="flex:0 1 160px">
+        <div class="vh-tn__field vh-tn__field--season">
           <label for="tn-season">Season</label>
           <select id="tn-season"></select>
         </div>
       </div>
-      <div class="vh-tn__metrics" id="tn-metrics"></div>
-      <div class="vh-ins__vizwrap" id="tn-vizwrap"><p class="vh-ins__error" id="tn-status" aria-live="polite">Loading the twin data…</p></div>
+      <div class="vh-tn__metrics" id="tn-metrics" aria-live="polite"></div>
+      <div class="card--void vh-ins__vizwrap" id="tn-vizwrap"><p class="vh-ins__error" id="tn-status" aria-live="polite">Loading the twin data…</p></div>
       <p class="vh-ins__foot">Nodes are player-seasons; edge width is proportional to cosine similarity in the L2-normalized MTNN v5 64-d embedding (the player's own seasons excluded, top 8 shown). <b>Twin Centrality</b> = how many of the 12,966 player-seasons count this season among their 10 nearest neighbors. <b>Era-Bridge Score</b> = share of the 8 shown twins from a different decade. Every number computed from the 64-d embedding. Twins match full stat-plus-stardom profiles — a statistical neighbor is not necessarily the same position or role.</p>
       <div class="vh-ins__share">
         <button class="btn vh-tn__copy" type="button">Copy link</button>
       </div>
     </article>
 
-    <article class="vh-ins__card" aria-label="Stat flow">
+    <article class="card vh-ins__card" aria-label="Stat flow">
       <div class="vh-ins__kicker">Stat Flow</div>
       <h2 class="vh-ins__title">How this season is built</h2>
       <p class="vh-ins__lede">Four stages, one story: the era it belongs to, the archetype it plays like, the three stats that define it, and the twin it mirrors across time.</p>
-      <div class="vh-ins__vizwrap" id="tn-flowwrap"></div>
+      <div class="card--void vh-ins__vizwrap" id="tn-flowwrap"></div>
       <p class="vh-ins__foot">Flow widths are proportional to |z-score| share of the three defining stats in the 14-dim era-honest style vector. The era twin is the nearest other-decade career in the 64-d embedding. Twin coverage spans careers with 4+ charted seasons — seasons outside the pool show an honest empty state, never a placeholder.</p>
     </article>
 
-    <p class="vh-ins__foot" style="text-align:center">Methods and provenance: <a href="/methods#insights">methods.html#insights</a> · Every figure is computed from the served vectors, never invented.</p>
+    <p class="vh-ins__foot vh-ins__foot--c">Methods and provenance: <a href="/methods#insights">methods.html#insights</a> · Every figure is computed from the served vectors, never invented.</p>
   </div>
 </div>
 
@@ -122,6 +121,6 @@
 </footer>
 <!-- /footer:stamped -->
 <script src="/assets/site-nav.js?v=13e9219d"></script>
-<script src="assets/twin-network.js?v=d71c0911"></script>
+<script src="assets/twin-network.js?v=e665aada"></script>
 <script src="/assets/inline-sw-register.js?v=3fccd5e4"></script>
 </body></html>
