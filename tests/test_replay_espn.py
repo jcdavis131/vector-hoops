@@ -92,10 +92,10 @@ def test_live_page_carries_the_plate() -> None:
     plate = html[html.index('id="rpPlate"') : html.index("</div>\n", html.index("rp-embed__now"))]
     assert "projected" in plate and "assumed" in plate and "not tracking data" in plate
     nums = [int(n) for n in re.findall(r"PLATE (\d\d)", html)]
-    # G2/T2.3: plates are band-grouped (The game / The story / The players),
-    # so document order is no longer numeric — the invariant is that all 13
-    # plates are present, each exactly once.
-    assert sorted(nums) == list(range(1, 14)), "live page must carry all 13 plates"
+    # G2/T2.3: plates are band-grouped (The game / The story / The players).
+    # Wave 2.4 retired the old 2D atlas plate for the one Embed3D style map, so
+    # the page carries 12 plates, numbered in document order, each exactly once.
+    assert nums == list(range(1, 13)), "live page must carry plates 01-12 in order"
     assert len(nums) == len(set(nums)), "each plate must appear exactly once"
     js = (ROOT / "assets" / "live.js").read_text(encoding="utf-8")
     assert "courtside:render" in js

@@ -24,14 +24,42 @@ function etToday(){return new Intl.DateTimeFormat('en-CA',{timeZone:'America/New
 function shiftDay(yyyymmdd,n){const t=new Date(Date.UTC(+yyyymmdd.slice(0,4),+yyyymmdd.slice(4,6)-1,+yyyymmdd.slice(6,8))+n*864e5);return String(t.getUTCFullYear())+String(t.getUTCMonth()+1).padStart(2,'0')+String(t.getUTCDate()).padStart(2,'0');}
 function dayLabel(yyyymmdd){const t=new Date(Date.UTC(+yyyymmdd.slice(0,4),+yyyymmdd.slice(4,6)-1,+yyyymmdd.slice(6,8)));const s=t.toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric',timeZone:'UTC'});return (yyyymmdd===etToday()?'Today — ':'')+s;}
 function renderDayNav(){const cur2=sbDay||etToday();const lbl=$('dayLbl');if(lbl)lbl.textContent=dayLabel(cur2);const b=$('dayToday');if(b)b.hidden=cur2===etToday();}
-function resetView(){cur=null;clearInterval(timer);const m=$('main');if(m){m.hidden=false;m.style.display='block';}const og=$('offgame');if(og)og.hidden=true;const ln=$('live-loading');if(ln)ln.style.display='block';}
+function resetView(){cur=null;clearInterval(timer);const m=$('main');if(m)m.hidden=false;const og=$('offgame');if(og)og.hidden=true;const ln=$('live-loading');if(ln)ln.hidden=false;}
 function gotoDay(n){sbExplicit=true;resetView();loadGames(shiftDay(sbDay||etToday(),n));}
 
 const $=id=>document.getElementById(id);
 const LROOT=()=>document.querySelector('.live-root');
-function showErr(m){const e=$('err');e.style.display='block';e.textContent=m;}
-function hideErr(){$('err').style.display='none';}
+function showErr(m){const e=$('err');e.hidden=false;e.textContent=m;}
+function hideErr(){$('err').hidden=true;}
 
+/* Wave 2.4: chart inks are the page's tokens, read when a chart draws, so the
+   charts follow light/dark with the rest of the page. */
+function tok(name,fb){try{const v=getComputedStyle(document.documentElement).getPropertyValue(name).trim();return v||fb||'';}catch(e){return fb||'';}}
+function chartFont(){return '11px '+tok('--font-code');}
+/* Team colours from the summary's own boxscore.teams (ESPN), keyed by team id.
+   assets/scoreboard.js gives the away team the home colour (its documented quirk),
+   so the scoreboard row is not used for colour. '' when ESPN sends none. */
+function teamColors(d){
+  const out={a:'',h:''};
+  try{
+    const byId={};((d.boxscore&&d.boxscore.teams)||[]).forEach(t=>{if(t.team&&t.team.id&&/^[0-9a-f]{6}$/i.test(String(t.team.color||'')))byId[String(t.team.id)]='#'+t.team.color;});
+    d.header.competitions[0].competitors.forEach(c=>{const k=c.homeAway==='home'?'h':'a';out[k]=byId[String(c.team&&c.team.id)]||'';});
+  }catch(e){}
+  return out;
+}
+/* gamePhase:begin (tests/live_phase.test.mjs evaluates this block)
+   ESPN marks postponed, cancelled and suspended games state 'post' too: a final is
+   'post' AND completed AND not one of those. Anything else 'post' is 'off', shown
+   with ESPN's own description and neutral copy. */
+function gamePhase(t){
+  t=t||{};
+  const st=t.state||'',nm=String(t.name||'').toUpperCase();
+  if(st!=='post')return {phase:st,label:''};
+  if(t.completed===true&&!/POSTPONED|CANCELED|CANCELLED|SUSPENDED/.test(nm))return {phase:'post',label:'Final'};
+  return {phase:'off',label:String(t.description||t.shortDetail||'Not played')};
+}
+/* gamePhase:end */
+function phaseOf(d){try{return gamePhase(d.header.competitions[0].status.type);}catch(e){return {phase:'',label:''};}}
 async function jget(u){const r=await fetch(u);if(!r.ok)throw new Error('HTTP '+r.status);return r.json();}
 
 /* C2.1: estimated final-whistle ms for the 24h guard. Callers only ever know
@@ -51,8 +79,8 @@ async function resolveGameInfo(id){
     const h=d.header.competitions[0],ts=h.competitors;
     const hm=ts.find(t=>t.homeAway==='home'),am=ts.find(t=>t.homeAway==='away');
     const gg={id:String(id),date:h.date,state:h.status.type.state,detail:h.status.type.shortDetail,
-      h:{abbr:hm.team.abbreviation,name:hm.team.displayName,score:hm.score,color:'#'+(hm.team.color||'1c1a15'),rec:''},
-      a:{abbr:am.team.abbreviation,name:am.team.displayName,score:am.score,color:'#'+(hm.team.color||'6b675c'),rec:''}};
+      h:{abbr:hm.team.abbreviation,name:hm.team.displayName,score:hm.score,color:hm.team.color?'#'+hm.team.color:'',rec:''},
+      a:{abbr:am.team.abbreviation,name:am.team.displayName,score:am.score,color:am.team.color?'#'+am.team.color:'',rec:''}};
     return{state:gg.state,gameTimeMs:estFinalMs(gg),game:gg};
   }catch(e){return null;}
 }
@@ -66,8 +94,8 @@ async function loadGames(day){
       const h=ts.find(t=>t.homeAway==='home'),a=ts.find(t=>t.homeAway==='away');
       return {id:e.id,date:e.date,state:e.status.type.state,detail:e.status.type.shortDetail,
         clock:c.status.displayClock,period:c.status.period,
-        h:{abbr:h.team.abbreviation,name:h.team.displayName,score:h.score,color:'#'+(h.team.color||'1c1a15'),rec:h.records&&h.records[0]?h.records[0].summary:''},
-        a:{abbr:a.team.abbreviation,name:a.team.displayName,score:a.score,color:'#'+(a.team.color||'6b675c'),rec:a.records&&a.records[0]?a.records[0].summary:''}};
+        h:{abbr:h.team.abbreviation,name:h.team.displayName,score:h.score,color:h.team.color?'#'+h.team.color:'',rec:h.records&&h.records[0]?h.records[0].summary:''},
+        a:{abbr:a.team.abbreviation,name:a.team.displayName,score:a.score,color:a.team.color?'#'+a.team.color:'',rec:a.records&&a.records[0]?a.records[0].summary:''}};
     });
     renderGames();
     // ?game= deep link (a shared moment) wins; otherwise only auto-select a
@@ -104,14 +132,17 @@ function renderGames(){
   const el=$('games');el.innerHTML='';
   games.forEach(g=>{
     const b=document.createElement('button');
-    b.className='gbtn'+(g.state==='in'?' live':'')+(cur===g.id?' sel':'');
-    b.innerHTML=`<div class="ms">${g.a.abbr} @ ${g.h.abbr}</div>
-      ${g.state!=='pre'?`<div class="sc">${g.a.score} – ${g.h.score}</div>`:''}
-      <div class="st">${g.state==='in'?'● LIVE — '+g.detail:g.state==='post'?finalLabel(g):g.detail}</div>`;
+    b.type='button';
+    b.className='gbtn'+(g.state==='in'?' live':'');
+    b.setAttribute('aria-pressed',cur===g.id?'true':'false');
+    const line=(cls,txt)=>{const s=document.createElement('span');s.className=cls;s.textContent=txt;b.appendChild(s);};
+    line('ms',g.a.abbr+' @ '+g.h.abbr);
+    if(g.state!=='pre')line('sc',g.a.score+' \u2013 '+g.h.score);
+    line('st',g.state==='in'?'\u25cf LIVE \u2014 '+g.detail:(g.state==='post'&&/^final/i.test(g.detail||''))?finalLabel(g):g.detail);
     b.onclick=()=>selectGame(g.id);
     el.appendChild(b);
   });
-  if(!games.length)el.innerHTML='<span style="font-size:13px">No NBA games — '+dayLabel(sbDay||etToday())+'.</span>';
+  if(!games.length){const p=document.createElement('p');p.className='caption';p.textContent='No NBA games \u2014 '+dayLabel(sbDay||etToday())+'.';el.appendChild(p);}
   el.classList.toggle('one',games.length===1); // one game: the board above already is its scoreboard
 }
 
@@ -136,11 +167,12 @@ function resetBands(){['band-game','band-story','band-players'].forEach(id=>{con
 function offGame(){
   cur=null;clearInterval(timer);clearTimeout(pollTimer);
   const m=$('main');if(m)m.hidden=true;
-  const ln=$('live-loading');if(ln)ln.style.display='none';
+  const ln=$('live-loading');if(ln)ln.hidden=true;
+  setPhase('');
   const og=$('offgame');
   if(og){
     og.hidden=false;
-    const finals=games.filter(x=>x.state==='post');
+    const finals=games.filter(x=>x.state==='post'&&/^final/i.test(x.detail||''));
     const last=finals.length?finals[finals.length-1]:null;
     const a=$('offgame-replay');
     if(a){
@@ -159,10 +191,10 @@ function syncAtlas(d,g){
 }
 function selectGame(id){
   cur=id;clearInterval(timer);clearTimeout(pollTimer);renderGames();
-  const m=$('main');if(m){m.hidden=false;m.style.display='block';}
+  const m=$('main');if(m)m.hidden=false;
   const og=$('offgame');if(og)og.hidden=true;
   resetBands();
-  const ln2=$('live-loading');if(ln2)ln2.style.display='none';
+  const ln2=$('live-loading');if(ln2)ln2.hidden=true;
   TL.gameId=null;TL.n=0;TL.view=-1;TL.live=true;TL.newCount=0;wpDrawnFor=null;
   window._seenMom=new Set();window._lastPlayId=0;
   LROOT().classList.remove('rewound');
@@ -183,14 +215,36 @@ function renderMorning(d,g,isPost){
     '<div class="mg-row"><a href="#rpPlate">\u2193 Jump to the replay viewer</a>'+
     (hrs!=null?'<span>Moves to Pixel Replay in '+hrs+'h</span>':'')+'</div>';
 }
+/* Audit #18: one phase for the page. 'in' lights the live chrome; 'post' says Final
+   and switches every plate's empty copy to past tense; nothing pretends to be live. */
+let PHASE='';
+let PHASE_LABEL='';
+function setPhase(ph,label){
+  PHASE=ph;PHASE_LABEL=label||'';
+  const r=LROOT();if(r){r.classList.toggle('is-live',ph==='in');r.classList.toggle('final',ph==='post');}
+  const st=$('liveState');if(st)st.textContent=ph==='in'?'Live now':ph==='post'?'Final':ph==='pre'?'Before tip':ph==='off'?PHASE_LABEL:'Courtside';
+  const le=$('liveLede');if(le)le.textContent=ph==='post'
+    ?'This game is over: every plate below is the final record, and the timeline rewinds it.'
+    :ph==='off'?'ESPN lists this game as '+PHASE_LABEL.toLowerCase()+'. The plates show whatever was played.'
+    :'The second screen for NBA games: no video, just the numbers.';
+  const no=$('liveNote');if(no)no.textContent=ph==='post'
+    ?'Final: the feed is no longer polled for this game. Use the day arrows for other days and the timeline to rewind.'
+    :ph==='off'?'This game is not in progress, so the feed is not polled for it. Use the day arrows for other days.'
+    :'Scores and plays refresh every 30 s while a game is live and every 5 minutes otherwise; if the feed stalls you see the last-known score with its time. Use the day arrows for other days and the timeline to rewind.';
+}
+/* Empty-plate copy by phase: a final never says 'yet' or 'waiting'. */
+function emptyMsg(live,fin){return '<p class="caption">'+(PHASE==='post'?fin:PHASE==='off'?'Nothing here: ESPN lists this game as '+esc(PHASE_LABEL.toLowerCase())+'.':live)+'</p>';}
 function renderAll(d,g){
   if(g&&g.a&&g.h){try{document.title='Courtside — '+g.a.abbr+' @ '+g.h.abbr;}catch(e){}}
-  const st=(d.header&&d.header.competitions[0]&&d.header.competitions[0].status.type.state)||'';
+  const gp=phaseOf(d),st=gp.phase;
   const isPre=st==='pre',isPost=st==='post';
+  setPhase(st,gp.label);
+  const tc=teamColors(d),root=LROOT();
+  if(root){root.style.setProperty('--team-a',tc.a||'');root.style.setProperty('--team-h',tc.h||'');}
   // C2.4: panels follow game state — a pre-game selection renders ONLY the
   // pre-game module (HOU@SA regression: zero data plates, zero waiting walls).
   const pg=$('pregame');if(pg&&!isPre){pg.hidden=true;pg.dataset.gid='';}
-  ['band-game','band-story','band-players'].forEach(id=>{const b=$(id);if(b)b.style.display=isPre?'none':'';});
+  ['band-game','band-story','band-players'].forEach(id=>{const b=$(id);if(b)b.hidden=isPre;});
   renderMorning(d,g,isPost);
   const idx=TL.live?TL.n-1:TL.view;
   renderHeader(d,g,idx);
@@ -236,7 +290,7 @@ async function loadGame(){
 }
 function updateTlUI(d){
   const bar=$('tlbar'),n=TL.n,show=n>1;
-  bar.style.display=show?'block':'none';
+  bar.hidden=!show;
   if(!show){LROOT().classList.remove('rewound');$('liveBtn').classList.remove('show');return;}
   const sc=$('scrub');
   sc.max=n-1;
@@ -246,10 +300,12 @@ function updateTlUI(d){
   const qs=[];let pq=null;
   plays.forEach((pl,i)=>{if(pl.period.number!==pq){qs.push({q:pl.period.number,i:i});pq=pl.period.number;}});
   $('tlticks').innerHTML=qs.map(o=>'<span style="left:'+(o.i/Math.max(1,n-1)*100).toFixed(1)+'%">Q'+o.q+'</span>').join('');
-  $('tlclock').textContent=TL.live?'● LIVE':(p?('Q'+p.period.number+' '+p.clock.displayValue):'');
-  $('tlclock').style.color=TL.live?'#c2401f':'#5b5545';
+  const tlc=$('tlclock');
+  tlc.textContent=TL.live?(PHASE==='post'?'FINAL':PHASE==='off'?PHASE_LABEL.toUpperCase():'\u25cf LIVE'):(p?('Q'+p.period.number+' '+p.clock.displayValue):'');
+  tlc.classList.toggle('is-live',TL.live&&PHASE==='in');
   LROOT().classList.toggle('rewound',!TL.live);
   $('liveBtn').classList.toggle('show',!TL.live);
+  $('liveLbl').textContent=PHASE==='in'?'LIVE':'END';
   $('liveNew').textContent=TL.newCount?(' +'+TL.newCount):'';
 }
 (function(){
@@ -296,8 +352,6 @@ function renderHeader(d,g,idx){
   $('clock').textContent=liveNow
     ? (h.status.displayClock+' — '+ordinal(h.status.period)+' quarter')
     : (pl?('Q'+pl.period.number+' '+pl.clock.displayValue+' · '+st.shortDetail):st.shortDetail);
-  $('clock').style.color=liveNow?'#c2401f':'#5b5545';
-  LROOT().classList.toggle('final',st.state==='post');
   // C2.2: one game header, identical markup both surfaces.
   try{
     if(window.GameHeader){
@@ -309,7 +363,7 @@ function renderHeader(d,g,idx){
     }
   }catch(e){}
 }
-function esc(s){return String(s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
+function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
 function ordinal(n){return n+(['th','st','nd','rd'][n]||'th');}
 
 // ---- animation + canvas helpers ----
@@ -330,7 +384,9 @@ function tickNum(el,to,fmt){
   })(t0);
 }
 function hexA(hex,a){
-  const h=String(hex||'#1b1913').replace('#','');
+  let h=String(hex||'').trim().replace('#','');
+  if(h.length===3)h=h.split('').map(c=>c+c).join('');
+  if(!/^[0-9a-f]{6}$/i.test(h))return String(hex||'');  /* a non-hex token value: drawn as is */
   const r=parseInt(h.substr(0,2),16),g=parseInt(h.substr(2,2),16),b=parseInt(h.substr(4,2),16);
   return `rgba(${r},${g},${b},${a})`;
 }
@@ -345,13 +401,14 @@ function prepCanvas(id,hCss){
 }
 function qDividers(s,pts,X,padT,H,padB){
   let prev=null;
-  s.font='8px ui-monospace,monospace';s.textAlign='left';
+  s.font=chartFont();s.textAlign='left';
+  const grid=tok('--line-2'),ink2=tok('--fg-2');
   pts.forEach((p,i)=>{
     if(p.period.number!==prev){
       const x=X(i);
-      s.strokeStyle='rgba(27,25,19,.22)';s.setLineDash([3,3]);s.lineWidth=1;
+      s.strokeStyle=grid;s.setLineDash([3,3]);s.lineWidth=1;
       s.beginPath();s.moveTo(x,padT-6);s.lineTo(x,H-padB);s.stroke();s.setLineDash([]);
-      s.fillStyle='#5b5545';s.fillText('Q'+p.period.number,x+4,padT-8);
+      s.fillStyle=ink2;s.fillText('Q'+p.period.number,x+4,padT-4);
       prev=p.period.number;
     }
   });
@@ -384,7 +441,6 @@ let wpDrawnFor=null;
 function renderWP(d,g,idx){
   const wp=d.winprobability||[],plays=d.plays||[];
   const habbr=g?g.h.abbr:'HOME',aabbr=g?g.a.abbr:'AWAY';
-  const hcol=g?g.h.color:'#1b1913',acol=g?g.a.color:'#5b5545';
   // Our model's series, one point per play with a score.
   const ser=[];
   plays.forEach((p,i)=>{
@@ -404,49 +460,49 @@ function renderWP(d,g,idx){
   for(let k=0;k<n;k++){if(ser[k].i<=idx)vp=k;else break;}
   const cur2=ser[vp],hpct=Math.round(cur2.p*100);
   tickNum($('wpBig'),hpct,function(v){return Math.round(v)+'% '+habbr;});
-  $('wpBig').style.color=cur2.p>=0.5?'#1b1913':'#5b5545';
   const wb=$('wpBand');
   if(wb)wb.textContent='range '+Math.round(cur2.lo*100)+'\u2013'+Math.round(cur2.hi*100)+'% \u00b7 '+aabbr+' '+(100-hpct)+'%';
-  $('wpLbl').textContent=TL.live?'our experimental heuristic \u00b7 thin gray = ESPN model':'at this moment \u00b7 our heuristic vs ESPN (thin gray)';
+  $('wpLbl').textContent=PHASE==='post'&&TL.live?'at the final buzzer \u00b7 thin grey line = ESPN\u2019s model':(TL.live?'our estimate \u00b7 thin grey line = ESPN\u2019s model':'at this moment \u00b7 our estimate vs ESPN (thin grey)');
   $('lgA').textContent='Tip \u2192 '+aabbr;$('lgH').textContent=habbr+' \u2192 now';
   // chart: band + our line + ESPN reference
   const {ctx,W,H}=prepCanvas('wpchart',170);
-  const padL=30,padR=10,padT=16,padB=8;
+  const INK=tok('--fg'),INK2=tok('--fg-2'),RULE=tok('--line-2'),HAIR=tok('--line'),MARK=tok('--accent');
+  const padL=38,padR=10,padT=18,padB=8;
   const X=k=>padL+(W-padL-padR)*(k/Math.max(n-1,1));
   const Y=v=>padT+(H-padT-padB)*(1-v);
   [0,0.25,0.5,0.75,1].forEach(f=>{
     const y=Y(f);
-    ctx.strokeStyle=f===0.5?'rgba(27,25,19,.45)':'rgba(27,25,19,.1)';
+    ctx.strokeStyle=f===0.5?RULE:HAIR;
     ctx.setLineDash(f===0.5?[5,4]:[]);ctx.lineWidth=1;
     ctx.beginPath();ctx.moveTo(padL,y);ctx.lineTo(W-padR,y);ctx.stroke();ctx.setLineDash([]);
-    ctx.fillStyle='#5b5545';ctx.font='8px ui-monospace,monospace';ctx.textAlign='right';
-    ctx.fillText(Math.round(f*100)+'%',padL-4,y+3);
+    ctx.fillStyle=INK2;ctx.font=chartFont();ctx.textAlign='right';
+    ctx.fillText(Math.round(f*100)+'%',padL-4,y+4);
   });
   qDividers(ctx,ser.map(x=>plays[x.i]),X,padT,H,padB);
   // interval band
   ctx.beginPath();ctx.moveTo(X(0),Y(ser[0].hi));
   for(let k=1;k<n;k++)ctx.lineTo(X(k),Y(ser[k].hi));
   for(let k=n-1;k>=0;k--)ctx.lineTo(X(k),Y(ser[k].lo));
-  ctx.closePath();ctx.fillStyle='rgba(27,25,19,.10)';ctx.fill();
+  ctx.closePath();ctx.fillStyle=hexA(INK,.12);ctx.fill();
   // ESPN reference (thin gray, dashed) — their black box, for comparison only
   if(espn.length>1){
     const eX=new Map();espn.forEach(x=>eX.set(x.i,x.v));
     ctx.beginPath();let started=false;
     ser.forEach((x,k)=>{const v=eX.get(x.i);if(v===undefined)return;
       if(!started){ctx.moveTo(X(k),Y(v));started=true;}else ctx.lineTo(X(k),Y(v));});
-    ctx.strokeStyle='#8a8574';ctx.lineWidth=1;ctx.setLineDash([4,3]);ctx.stroke();ctx.setLineDash([]);
+    ctx.strokeStyle=tok('--fg-3');ctx.lineWidth=1;ctx.setLineDash([4,3]);ctx.stroke();ctx.setLineDash([]);
   }
   // our line
   ctx.beginPath();ctx.moveTo(X(0),Y(ser[0].p));
   for(let k=1;k<n;k++)ctx.lineTo(X(k),Y(ser[k].p));
-  ctx.strokeStyle='#1b1913';ctx.lineWidth=2.2;ctx.lineJoin='round';ctx.stroke();
+  ctx.strokeStyle=INK;ctx.lineWidth=2.2;ctx.lineJoin='round';ctx.stroke();
   // viewed-moment marker
   const xd=X(vp);
   if(vp<n-1){
-    ctx.strokeStyle='#c2401f';ctx.lineWidth=1.5;ctx.setLineDash([4,3]);
+    ctx.strokeStyle=MARK;ctx.lineWidth=1.5;ctx.setLineDash([4,3]);
     ctx.beginPath();ctx.moveTo(xd,padT);ctx.lineTo(xd,H-padB);ctx.stroke();ctx.setLineDash([]);
   }
-  ctx.beginPath();ctx.arc(X(vp),Y(cur2.p),4,0,7);ctx.fillStyle='#c2401f';ctx.fill();
+  ctx.beginPath();ctx.arc(X(vp),Y(cur2.p),4,0,7);ctx.fillStyle=MARK;ctx.fill();
   wpDrawnFor=cur+'wp'+n;
 }
 
@@ -455,22 +511,23 @@ function renderMomentum(d,g,idx){
   // No plays yet (pre-game select): wipe any prior game's chart so nothing stale persists.
   if(!plays.length){const mc=$('momchart');if(mc){mc.getContext('2d').clearRect(0,0,mc.width,mc.height);}return;}
   const habbr=g?g.h.abbr:'HOME',aabbr=g?g.a.abbr:'AWAY';
-  const hcol=g?g.h.color:'#1b1913',acol=g?g.a.color:'#5b5545';
+  const tc=teamColors(d),INK=tok('--fg'),INK2=tok('--fg-2'),MARK=tok('--accent');
+  const hcol=tc.h||INK,acol=tc.a||tok('--fg-3');
   const {ctx,W,H}=prepCanvas('momchart',150);
   const diffs=plays.map(p=>(+p.homeScore)-(+p.awayScore));
   const n=diffs.length;
   const vi=Math.max(0,Math.min(idx,n-1));
   const mx=Math.max(8,...diffs.map(v=>Math.abs(v)));
-  const padL=30,padR=10,padT=12,padB=8;
+  const padL=38,padR=10,padT=16,padB=8;
   const X=i=>padL+(W-padL-padR)*(i/Math.max(n-1,1));
   const Y=v=>padT+(H-padT-padB)*(1-(v+mx)/(2*mx));
   // quarter dividers
   qDividers(ctx,plays,X,padT,H,padB);
   // zero line
-  ctx.strokeStyle='rgba(27,25,19,.5)';ctx.lineWidth=1.2;
+  ctx.strokeStyle=tok('--line-2');ctx.lineWidth=1.2;
   ctx.beginPath();ctx.moveTo(padL,Y(0));ctx.lineTo(W-padR,Y(0));ctx.stroke();
-  ctx.fillStyle='#5b5545';ctx.font='8px ui-monospace,monospace';ctx.textAlign='right';
-  ctx.fillText('0',padL-4,Y(0)+3);
+  ctx.fillStyle=INK2;ctx.font=chartFont();ctx.textAlign='right';
+  ctx.fillText('0',padL-4,Y(0)+4);
   ctx.fillText('+'+mx,padL-4,Y(mx)+3);ctx.fillText('−'+mx,padL-4,Y(-mx)+3);
   // split fill
   function areaPath(){
@@ -484,15 +541,15 @@ function renderMomentum(d,g,idx){
   areaPath();ctx.fillStyle=hexA(acol,.28);ctx.fill();ctx.restore();
   ctx.beginPath();ctx.moveTo(X(0),Y(diffs[0]));
   for(let i=1;i<n;i++)ctx.lineTo(X(i),Y(diffs[i]));
-  ctx.strokeStyle='#1b1913';ctx.lineWidth=2;ctx.lineJoin='round';ctx.stroke();
+  ctx.strokeStyle=INK;ctx.lineWidth=2;ctx.lineJoin='round';ctx.stroke();
   // rewind: dim future + marker
   if(vi<n-1){
-    ctx.fillStyle='rgba(244,239,226,.62)';
+    ctx.fillStyle=hexA(tok('--surface'),.62);
     ctx.fillRect(X(vi),padT,W-padR-X(vi),H-padT-padB);
-    ctx.strokeStyle='#c2401f';ctx.lineWidth=1.5;ctx.setLineDash([4,3]);
+    ctx.strokeStyle=MARK;ctx.lineWidth=1.5;ctx.setLineDash([4,3]);
     ctx.beginPath();ctx.moveTo(X(vi),padT);ctx.lineTo(X(vi),H-padB);ctx.stroke();ctx.setLineDash([]);
   }
-  ctx.beginPath();ctx.arc(X(vi),Y(diffs[vi]),4,0,7);ctx.fillStyle='#c2401f';ctx.fill();
+  ctx.beginPath();ctx.arc(X(vi),Y(diffs[vi]),4,0,7);ctx.fillStyle=MARK;ctx.fill();
   // margin at viewed moment
   const cur=diffs[vi];
   tickNum($('diffBig'),cur,v=>{const r=Math.round(v);return r===0?'TIED':(r>0?'+':'')+r;});
@@ -507,8 +564,8 @@ function renderMomentum(d,g,idx){
   const mxq=Math.max(1,...bars.flatMap(b=>[b.a,b.h]));
   $('qbars').innerHTML=bars.map(b=>
     `<div class="qbar"><div class="qbwrap">`+
-    `<div class="qb" title="${aabbr} Q${b.q}: ${b.a}" style="height:${Math.max(3,Math.round(b.a/mxq*60))}px;background:${hexA(acol,.85)}"></div>`+
-    `<div class="qb" title="${habbr} Q${b.q}: ${b.h}" style="height:${Math.max(3,Math.round(b.h/mxq*60))}px;background:${hexA(hcol,.85)}"></div>`+
+    `<div class="qb qb--a" title="${esc(aabbr)} Q${b.q}: ${b.a}" style="height:${Math.max(3,Math.round(b.a/mxq*60))}px"></div>`+
+    `<div class="qb qb--h" title="${esc(habbr)} Q${b.q}: ${b.h}" style="height:${Math.max(3,Math.round(b.h/mxq*60))}px"></div>`+
     `</div><div class="qv num">${b.a}–${b.h}</div><div class="ql">Q${b.q}</div></div>`
   ).join('');
 }
@@ -524,7 +581,7 @@ function renderPlays(d,idx){
     if(p.scoringPlay)li.className='score';
     if(TL.live&&maxId&&+p.id>(+window._lastPlayId||0))li.className+=(li.className?' ':'')+'fresh';
     const clk=(p.period?p.period.number+'Q ':'')+(p.clock?p.clock.displayValue:'');
-    li.innerHTML=`<span class="pc">${clk}</span><span>${p.scoringPlay?'<b>'+esc(p.text)+'</b>':esc(p.text)}</span><span class="sc">${p.awayScore}–${p.homeScore}</span>`;
+    li.innerHTML=`<span class="pc">${esc(clk)}</span><span>${p.scoringPlay?'<b>'+esc(p.text)+'</b>':esc(p.text)}</span><span class="sc">${esc(p.awayScore)}–${esc(p.homeScore)}</span>`;
     ul.appendChild(li);
   });
   if(maxId)window._lastPlayId=maxId;
@@ -543,7 +600,7 @@ function renderLeaders(d,g,idx){
     el.innerHTML=`<h3>${esc(t.team.abbreviation)}</h3>`+athletes.map(a=>{
       const s=a.stats;
       const hot=fire&&fire.name===a.athlete.displayName?' 🔥':'';
-      return `<div class="pl"><span>${esc(a.athlete.displayName)}${hot}</span><span>${s[1]} PTS · ${s[5]} REB · ${s[6]} AST</span></div>`;
+      return `<div class="pl"><span>${esc(a.athlete.displayName)}${hot}</span><span>${esc(s[1])} PTS · ${esc(s[5])} REB · ${esc(s[6])} AST</span></div>`;
     }).join('');
   };
   mk('a');mk('h');
@@ -557,7 +614,7 @@ function renderShotChart(d,g,idx){
   const svg=$('shotSvg');if(!svg)return;
   const plays=d.plays||[];
   const habbr=g?g.h.abbr:'HOME',aabbr=g?g.a.abbr:'AWAY';
-  const hcol=g?g.h.color:'#1b1913',acol=g?g.a.color:'#5b5545';
+  const tc=teamColors(d),hcol=tc.h||tok('--fg'),acol=tc.a||tok('--fg-3');
   // toggle labels
   const btns=document.querySelectorAll('#shotToggle button');
   btns.forEach(b=>{
@@ -565,7 +622,7 @@ function renderShotChart(d,g,idx){
     b.textContent=t==='A'?aabbr:(t==='H'?habbr:'BOTH');
     if(!b.onclick)b.onclick=()=>{
       shotTeam=t;
-      btns.forEach(x=>x.classList.toggle('picked',x===b));
+      btns.forEach(x=>x.setAttribute('aria-pressed',x===b?'true':'false'));
       if(window._lastD)renderShotChart(window._lastD,window._lastG,TL.live?TL.n-1:TL.view);
     };
   });
@@ -586,9 +643,9 @@ function renderShotChart(d,g,idx){
     shots.push({x:p.coordinate.x,y:p.coordinate.y,make:!!p.scoringPlay,t:teamOf(p.text||'')});
   });
   const show=shotTeam==='B'?shots:shots.filter(s=>s.t===(shotTeam==='H'?habbr:aabbr));
-  const INK='#1b1913';
+  const INK='currentColor';
   let s=`<rect x="0.5" y="0.5" width="49" height="47" fill="none" stroke="${INK}" stroke-width="0.7"/>`;
-  s+=`<rect x="17" y="0" width="16" height="19" fill="rgba(27,25,19,.045)" stroke="${INK}" stroke-width="0.5"/>`;
+  s+=`<rect class="court-paint" x="17" y="0" width="16" height="19" stroke="${INK}" stroke-width="0.5"/>`;
   s+=`<circle cx="25" cy="19" r="6" fill="none" stroke="${INK}" stroke-width="0.5" stroke-dasharray="1.6,1.3"/>`;
   s+=`<circle cx="25" cy="5.25" r="0.9" fill="none" stroke="${INK}" stroke-width="0.5"/>`;
   s+=`<line x1="22" y1="4" x2="28" y2="4" stroke="${INK}" stroke-width="0.7"/>`;
@@ -597,15 +654,14 @@ function renderShotChart(d,g,idx){
   s+=`<line x1="47" y1="0" x2="47" y2="14" stroke="${INK}" stroke-width="0.6"/>`;
   s+=`<path d="M21,5.25 A4,4 0 0 0 29,5.25" fill="none" stroke="${INK}" stroke-width="0.4" stroke-dasharray="1,1"/>`;
   s+=`<line x1="0.5" y1="47" x2="49.5" y2="47" stroke="${INK}" stroke-width="0.7"/>`;
-  s+=`<text x="25" y="52.5" text-anchor="middle" font-size="2.6" font-family="ui-monospace,monospace" fill="#5b5545">HALF COURT · MAKES ● / MISSES ○</text>`;
+  s+=`<text class="annot" x="25" y="52.5" text-anchor="middle" font-size="2.6">HALF COURT · MAKES ● / MISSES ○</text>`;
   show.forEach((sh,i)=>{
-    const col=sh.t===habbr?hcol:(sh.t===aabbr?acol:'#8a8574');
-    const dl=Math.min(i*7,1400);
+    const col=sh.t===habbr?hcol:(sh.t===aabbr?acol:tok('--fg-3'));
     // ESPN shot coords put the rim at (25,0); the drawn court puts it at (25,5.25),
     // so shift shots +5.25 in y to land on the drawing. Verified vs 136 ESPN
     // "N-foot" shot descriptions (mean err 0.69ft at (25,0) vs 2.71ft at (25,5.25)).
-    if(sh.make)s+=`<circle cx="${sh.x.toFixed(1)}" cy="${(sh.y+5.25).toFixed(1)}" r="1.2" fill="${col}" style="animation:pop .35s ${dl}ms both"/>`;
-    else s+=`<circle cx="${sh.x.toFixed(1)}" cy="${(sh.y+5.25).toFixed(1)}" r="1.2" fill="none" stroke="${col}" stroke-width="0.55" style="animation:pop .35s ${dl}ms both"/>`;
+    if(sh.make)s+=`<circle cx="${sh.x.toFixed(1)}" cy="${(sh.y+5.25).toFixed(1)}" r="1.2" fill="${col}" class="shot-dot"/>`;
+    else s+=`<circle cx="${sh.x.toFixed(1)}" cy="${(sh.y+5.25).toFixed(1)}" r="1.2" fill="none" stroke="${col}" stroke-width="0.55" class="shot-dot"/>`;
   });
   svg.innerHTML=s;
   // zone FG%
@@ -662,7 +718,7 @@ function renderGhosts(d){
   const el=$('ghosts');if(!el)return;
   ghostInit();
   window._ghostPasses=[];
-  if(!GV){el.innerHTML='<span style="font-size:12px;color:#6b675c">'+(GHOST_DB?'Ghost library failed to load.':'Loading ghost library&hellip;')+'</span>';return;}
+  if(!GV){el.innerHTML='<p class="caption">'+(GHOST_DB?'Ghost library failed to load.':'Loading ghost library&hellip;')+'</p>';return;}
   const bp=d.boxscore&&d.boxscore.players;
   if(!bp){el.innerHTML='';return;}
   let html='';
@@ -687,10 +743,10 @@ function renderGhosts(d){
       const last1=s=>esc(s.split(' ').slice(-1)[0]);
       html+=`<div class="ghost">
         <div class="g-top"><b>${esc(p.nm)}</b> <span class="live">${p.pts}p ${p.reb}r ${p.ast}a · ${Math.round(p.mp)} min</span></div>
-        <div class="g-mid">is channeling <b>${esc(gh.name)}</b> <span class="when">${fmtDate(gh.date)} · ${gh.team} vs ${gh.opp} — ${gh.gpts}p ${gh.greb}r ${gh.gast}a</span></div>
+        <div class="g-mid">is channeling <b>${esc(gh.name)}</b> <span class="when">${fmtDate(gh.date)} · ${esc(gh.team)} vs ${esc(gh.opp)} — ${gh.gpts}p ${gh.greb}r ${gh.gast}a</span></div>
         <div class="race">
-          <div class="rrow"><span class="who">${last1(p.nm)}</span><div class="bar"><div class="fill" style="width:${lw}%;background:#1c1a15"></div></div><span class="val">${lp36.toFixed(1)}/36</span></div>
-          <div class="rrow"><span class="who">👻 ${last1(gh.name)}</span><div class="bar"><div class="fill" style="width:${gw}%;background:#c8401f"></div></div><span class="val">${gh.gp36.toFixed(1)}/36</span></div>
+          <div class="rrow"><span class="who">${last1(p.nm)}</span><div class="bar"><div class="fill fill--live" style="width:${lw}%"></div></div><span class="val">${lp36.toFixed(1)}/36</span></div>
+          <div class="rrow"><span class="who">👻 ${last1(gh.name)}</span><div class="bar"><div class="fill fill--ghost" style="width:${gw}%"></div></div><span class="val">${gh.gp36.toFixed(1)}/36</span></div>
         </div>
         <div class="g-pace">pace: <b class="${dCls}">${dTxt}</b> vs ghost<span class="tier">${tier}</span></div>
       </div>`;
@@ -698,7 +754,7 @@ function renderGhosts(d){
         text:`<b>🔥 ${esc(p.nm)} well ahead of ${esc(gh.name)}'s ghost pace</b> <span class="when">early, noisy</span>`});
     });
   });
-  el.innerHTML=html||'<span style="font-size:12px;color:#6b675c">Not enough minutes yet for ghost matches.</span>';
+  el.innerHTML=html||emptyMsg('Not enough minutes yet for ghost matches.','No player reached the 15 minutes a ghost match needs.');
 }
 
 let FORM_DB=null;
@@ -708,7 +764,7 @@ function renderMiles(d){
   const el=$('miles');if(!el)return;
   if(!FORM_DB){el.innerHTML='';return;}
   const bp=d.boxscore&&d.boxscore.players;
-  if(!bp){el.innerHTML='<span style="font-size:12px;color:#6b675c">Waiting for tip…</span>';return;}
+  if(!bp){el.innerHTML=emptyMsg('Waiting for tip\u2026','No box score for this game.');return;}
   const rows=[];
   bp.forEach(side=>{(side.statistics[0].athletes||[]).forEach(a=>{
     const s=a.stats;if(!s||s.length<14)return;
@@ -731,7 +787,7 @@ function renderMiles(d){
     else if(c3===2&&n3>=3)bits.push(`triple-double brewing (${x.p}p ${x.r}r ${x.a}a)`);
     if(bits.length)html+=`<div class="mile"><div class="mline"><b>${esc(x.nm)}</b> — ${x.p}p ${x.r}r ${x.a}a</div><div class="msub">${bits.join(' · ')}</div></div>`;
   });
-  el.innerHTML=html||'<span style="font-size:12px;color:#6b675c">No milestones brewing yet.</span>';
+  el.innerHTML=html||emptyMsg('No milestones brewing yet.','No milestones in this game.');
 }
 
 // ---- Live moments timeline ----
@@ -802,10 +858,10 @@ function fireNow(d, idx) {
 function renderMoments(d,g,idx){
   const el=$('moments');if(!el)return;
   const plays=d.plays||[],wp=d.winprobability||[];
-  if(!plays.length){el.innerHTML='<span style="font-size:12px;color:#6b675c">Waiting for tip…</span>';return;}
+  if(!plays.length){el.innerHTML=emptyMsg('Waiting for tip\u2026','No plays on record for this game.');return;}
   const moms=[];
   const clkOf=p=>'Q'+(p.period?p.period.number:'?')+' '+(p.clock?p.clock.displayValue:'');
-  const habbr=g?g.h.abbr:'HOME',aabbr=g?g.a.abbr:'AWAY';
+  const habbr=esc(g?g.h.abbr:'HOME'),aabbr=esc(g?g.a.abbr:'AWAY');
   // lead changes
   let leader=null,prevA=0,prevH=0;
   plays.forEach((p,i)=>{
@@ -855,8 +911,8 @@ function renderMoments(d,g,idx){
     const k=m.clk+'|'+m.text.replace(/<[^>]*>/g,'');
     const fresh=!window._seenMom.has(k);
     window._seenMom.add(k);
-    return `<div class="ms-item${fresh?' fresh':''}"><span class="mc">${m.clk}</span><span class="mt">${m.text}</span><button type="button" class="ms-share" data-seq="${m.seq}">Share</button></div>`;
-  }).join('')||'<span style="font-size:12px;color:#6b675c">Waiting for the first big moment…</span>';
+    return `<div class="ms-item${fresh?' fresh':''}"><span class="mc">${esc(m.clk)}</span><span class="mt">${m.text}</span><button type="button" class="btn ms-share" data-seq="${m.seq}">Share</button></div>`;
+  }).join('')||emptyMsg('Waiting for the first big moment\u2026','No big moments in this game.');
   window._lastMoms=vmoms.slice(0,8);
 }
 
@@ -901,8 +957,8 @@ function hideFeedCard(){const el=$('feedcard');if(el)el.hidden=true;}
 function renderRuns(d,g,idx){
   const el=$('runs');if(!el)return;
   const plays=d.plays||[];
-  if(!plays.length){el.innerHTML='<span style="font-size:12px;color:#6b675c">Waiting for tip\u2026</span>';return;}
-  const habbr=g?g.h.abbr:'HOME',aabbr=g?g.a.abbr:'AWAY';
+  if(!plays.length){el.innerHTML=emptyMsg('Waiting for tip\u2026','No plays on record for this game.');return;}
+  const habbr=esc(g?g.h.abbr:'HOME'),aabbr=esc(g?g.a.abbr:'AWAY');
   const live=d.header&&d.header.competitions[0].status.type.state==='in';
   const clkOf=p=>'Q'+(p.period?p.period.number:'?')+' '+(p.clock?p.clock.displayValue:'');
   const runs=[];let rt=null,rn=0,rs=null,re=null,cA=0,cH=0;
@@ -923,7 +979,7 @@ function renderRuns(d,g,idx){
   const openRun=(rn>=8&&rt)?{t:rt,pts:rn,s:rs,e:re||plays[Math.min(idx,plays.length-1)],ongoing:live}:null;
   const all=openRun?[openRun].concat(runs):runs;
   all.sort((a,b)=>b.pts-a.pts);
-  if(!all.length){el.innerHTML='<span style="font-size:12px;color:#6b675c">No 8\u20130 runs yet.</span>';return;}
+  if(!all.length){el.innerHTML=emptyMsg('No 8\u20130 runs yet.','No 8\u20130 runs in this game.');return;}
   el.innerHTML=all.slice(0,6).map(r=>{
     const tabbr=r.t==='H'?habbr:aabbr;
     return '<div class="run"><b>'+tabbr+' '+r.pts+'\u20130</b><span class="rc">'+clkOf(r.s)+' \u2192 '+clkOf(r.e)+'</span>'+(r.ongoing?'<span class="ongoing">ongoing</span>':'')+'</div>';
@@ -939,9 +995,9 @@ function renderRuns(d,g,idx){
 function renderArche(d,g){
   const el=$('arche');if(!el)return;
   const map=window.OPEN_ARCH;
-  if(!map){el.innerHTML='<span style="font-size:12px;color:#6b675c">Loading archetype map\u2026</span>';return;}
+  if(!map){el.innerHTML='<p class="caption">Loading the style groups\u2026</p>';return;}
   const bp=d.boxscore&&d.boxscore.players;
-  if(!bp){el.innerHTML='<span style="font-size:12px;color:#6b675c">Box score not up yet.</span>';return;}
+  if(!bp){el.innerHTML=emptyMsg('Box score not up yet.','No box score for this game.');return;}
   const agg={};let totPts=0,totMin=0,unmapped=0;
   bp.forEach(side=>{(side.statistics[0].athletes||[]).forEach(a=>{
     const s=a.stats;if(!s||s.length<2)return;
@@ -953,7 +1009,7 @@ function renderArche(d,g){
     const c=agg[hit.name]||(agg[hit.name]={pts:0,min:0});
     c.pts+=(+s[1]||0);c.min+=mp;totPts+=(+s[1]||0);totMin+=mp;
   });});
-  if(totMin<30||!totPts){el.innerHTML='<span style="font-size:12px;color:#6b675c">Not enough mapped minutes yet \u2014 archetypes light up as rotations settle.</span>';return;}
+  if(totMin<30||!totPts){el.innerHTML=emptyMsg('Not enough mapped minutes yet: the groups light up as rotations settle.','Too few mapped minutes in this game to split the scoring by style.');return;}
   const rows=Object.keys(agg).map(k=>{
     const c=agg[k],ps=c.pts/totPts*100,ms=c.min/totMin*100;
     return {name:k,pts:c.pts,ps:ps,ms:ms,d:ps-ms};
@@ -964,7 +1020,7 @@ function renderArche(d,g){
     return '<div class="arow"><div class="ahead"><b>'+esc(r.name)+'</b><span>'+Math.round(r.pts)+' pts \u00b7 '+r.ps.toFixed(0)+'% of scoring</span></div>'+
       '<div class="abar"><div class="afill" style="width:'+Math.max(4,Math.round(r.ps/max*100))+'%"></div></div>'+
       '<div class="adelta '+dc+'">'+dt+' vs minute share</div></div>';
-  }).join('')+'<p class="method">Method: each live player is mapped to their mtnnGlobal archetype (K=8 k-means of player-season representations, built 2026-10-11). \u0394 = share of tonight\u2019s points minus share of tonight\u2019s minutes. '+(unmapped?unmapped+' player(s) unmatched (rookies / name variants) and excluded.':'')+'</p>';
+  }).join('')+'<p class="method">Each player is placed in one of eight playing-style groups from their past seasons. The change is that group\u2019s share of the points minus its share of the minutes. '+(unmapped?unmapped+' player(s) unmatched (rookies / name variants) and excluded.':'')+'</p>';
 }
 
 // ---- Pre-game: matchup card before tip ----
@@ -980,7 +1036,7 @@ function renderPregame(d,g){
   const hasDoc=!!window.OPEN_DOC;
   const doc=hasDoc?window.OPEN_DOC.game:{};
   const isDocGame=String(doc.event_id)===gid;
-  const habbr=g?g.h.abbr:'',aabbr=g?g.a.abbr:'';
+  const habbr=esc(g?g.h.abbr:''),aabbr=esc(g?g.a.abbr:'');
   // Predictor: ONLY when this game is the documented opening-night matchup.
   // ESPN's summary payload carries no predictor field, so a build-time fetch
   // shown for any other game would be misattributed. (Panel S1)
@@ -1045,13 +1101,7 @@ fetch('assets/live_opening.json?v=cc7d0ec4').then(r=>{if(!r.ok)throw new Error('
   if(window._lastD){renderArche(window._lastD,window._lastG);renderPregame(window._lastD,window._lastG);}
 }).catch(()=>{});
 
-// ---- 3D map plate (Worker A's Embed3D; guarded — no-op when absent) ----
-function mountEmbed3D(){
-  const el=document.querySelector('.embed3d-mount');
-  if(!el||!window.Embed3D)return;
-  try{window.Embed3D.mount(el,{variant:'live',projection:'pca',highlightIds:[],onSelect:function(){}});}catch(e){}
-}
-if(document.readyState==='complete')mountEmbed3D();else window.addEventListener('load',mountEmbed3D,{once:true});
+// The style map (plate 12) is assets/live-atlas.js: Embed3D's live variant, coloured by team.
 
 $('refreshBtn').onclick=loadGame;
 $('dayPrev').onclick=()=>gotoDay(-1);
@@ -1061,14 +1111,7 @@ renderDayNav();
 loadGames();
 fetch('assets/ghost_db.json?v=3ccf22f9').then(r=>r.json()).then(d=>{GHOST_DB=d;GV=null;if(window._lastD)renderGhosts(window._lastD);}).catch(()=>{});
 fetch('assets/player_form.json?v=58db3287').then(r=>r.json()).then(d=>{FORM_DB=d;if(window._lastD)renderMiles(window._lastD);}).catch(()=>{});
-function setMode(m){
-  // The arcade tab was retired in Wave 5 (games live on Play); the companion
-  // is the only mode now. Kept as a no-op-safe shim for any saved links.
-  $('companion').hidden=false;
-  $('tabCompanion').classList.add('picked');
-}
-$('tabCompanion').onclick=()=>setMode('companion');
-window.CourtsideMode=setMode;
+try{const mq=window.matchMedia('(prefers-color-scheme: dark)');const rt=()=>{if(window._lastD)renderAll(window._lastD,window._lastG);};if(mq.addEventListener)mq.addEventListener('change',rt);else if(mq.addListener)mq.addListener(rt);}catch(e){}
 // G2/T2.3: band toggles — opening a band paints its plates at real widths.
 ['band-game','band-story','band-players'].forEach(id=>{
   const b=$(id);
@@ -1085,7 +1128,7 @@ window.CourtsideMode=setMode;
 })();
 (function(){
   const b=document.getElementById('tabJam');if(!b)return;
-  const paint=()=>b.classList.toggle('picked',JAM);
+  const paint=()=>b.setAttribute('aria-pressed',JAM?'true':'false');
   paint();
   b.onclick=()=>{
     JAM=!JAM;

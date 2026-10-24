@@ -27,17 +27,18 @@
 <link rel="stylesheet" href="/assets/fonts.css?v=8f376b2a"/>
 <link rel="stylesheet" href="/assets/atlas.css?v=31711e9d"/>
 <link rel="stylesheet" href="/assets/shell.css?v=398d5e37"/>
-<link rel="stylesheet" href="/assets/replay.css?v=3648957a"/>
+<link rel="stylesheet" href="/assets/replay.css?v=27e719d8"/>
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
-<noscript><p role="alert" style="padding:0 16px 12px;text-align:center;font-size:13px">Pixel Replay needs JavaScript; the game list and methods are readable without it.</p></noscript>
+<noscript><p role="alert" class="rp-noscript">Pixel Replay needs JavaScript; the game list and methods are readable without it.</p></noscript>
 <nav class="site-nav" data-active="" aria-label="Vector Hoops site"><noscript class="site-nav__noscript"><a href="/">Atlas</a><a href="/play">Play</a><a href="/map-guess">Map Hunt</a><a href="/live">Live</a><a href="/players">Players</a><a href="/insights">Insights</a><a href="/taxonomy">Taxonomy</a><a href="/methods">Methods</a><a href="/models/mtnn-v5">Models</a></noscript></nav>
 <main id="main" class="rp" tabindex="-1">
   <header class="rp-head">
-    <p class="rp-kicker"><a href="/live">COURTSIDE LIVE</a> · PIXEL REPLAY</p>
+    <p class="label rp-kicker"><a href="/live">Courtside Live</a> · Pixel Replay</p>
     <h1 class="rp-title">Relive the game, one pixel at a time</h1>
-    <p class="rp-lede">Pick a game, hit play, and spin the court. Pause on any possession, rewind it, loop it. Tonight's games follow the live feed a play behind, the same plate you see on <a href="/live">Courtside Live</a>.</p>
+    <p class="rp-lede">Pick a game, hit play, and spin the court. Pause on any possession, rewind it, loop it. A game still in progress follows the live feed a play behind, the same plate you see on <a href="/live">Courtside Live</a>.</p>
+    <p class="rp-status" id="rpStatus" aria-live="polite" hidden></p>
   </header>
 
   <div id="routeNotice" hidden></div>
@@ -46,10 +47,10 @@
     <div id="rpGames" class="rp-gamelist" role="list"><span class="rp-muted">Loading games…</span></div>
   </section>
 
-  <section class="rp-cab" aria-label="Replay">
+  <section class="card card--void rp-cab" aria-label="Replay">
     <div class="rp-screen" id="rpScreen">
       <canvas id="rpCanvas" width="400" height="225" role="img" aria-label="Animated pixel replay of the selected game" aria-describedby="rp-sr-note"></canvas>
-      <div class="rp-cams" role="group" aria-label="Camera">
+      <div class="seg rp-cams" role="group" aria-label="Camera">
         <button type="button" data-cam="broadcast" class="on" aria-pressed="true">Broadcast</button>
         <button type="button" data-cam="baseline" aria-pressed="false">Baseline</button>
         <button type="button" data-cam="overhead" aria-pressed="false">Overhead</button>
@@ -62,13 +63,13 @@
 
     <div class="rp-controls">
       <div class="rp-buttons" role="group" aria-label="Playback">
-        <button type="button" id="rpBack" title="Back 6 seconds (left arrow)" aria-label="Back 6 seconds">⟲ 6s</button>
-        <button type="button" id="rpRev" title="Play backwards" aria-label="Play backwards" aria-pressed="false">◀◀</button>
-        <button type="button" id="rpPlay" class="rp-play" title="Play or pause (space)" aria-label="Play">▶</button>
-        <button type="button" id="rpFwd" title="Forward 6 seconds (right arrow)" aria-label="Forward 6 seconds">6s ⟳</button>
-        <button type="button" id="rpLive" class="rp-live" aria-pressed="false" hidden><span class="dot"></span>LIVE</button>
-        <button type="button" id="rpLoop" title="Loop the last 8 seconds" aria-label="Loop this moment" aria-pressed="false">↻ Loop</button>
-        <button type="button" id="rpShare" title="Copy link to this possession at this timestamp" aria-label="Copy link to this possession at this timestamp">⧉ Link</button>
+        <button type="button" class="btn" id="rpBack" title="Back 6 seconds (left arrow)" aria-label="Back 6 seconds">⟲ 6s</button>
+        <button type="button" class="btn" id="rpRev" title="Play backwards" aria-label="Play backwards" aria-pressed="false">◀◀</button>
+        <button type="button" id="rpPlay" class="btn btn-primary rp-play" title="Play or pause (space)" aria-label="Play">▶</button>
+        <button type="button" class="btn" id="rpFwd" title="Forward 6 seconds (right arrow)" aria-label="Forward 6 seconds">6s ⟳</button>
+        <button type="button" id="rpLive" class="btn btn-accent rp-live" aria-pressed="false" hidden><span class="dot"></span>LIVE</button>
+        <button type="button" class="btn" id="rpLoop" title="Loop the last 8 seconds" aria-label="Loop this moment" aria-pressed="false">↻ Loop</button>
+        <button type="button" class="btn" id="rpShare" title="Copy link to this possession at this timestamp" aria-label="Copy link to this possession at this timestamp">⧉ Link</button>
         <label class="rp-speed">Speed
           <select id="rpSpeed" aria-label="Playback speed">
             <option value="0.5">½×</option><option value="1">1×</option><option value="2" selected>2×</option><option value="4">4×</option><option value="8">8×</option>
@@ -86,9 +87,9 @@
   </section>
 
   <section class="rp-side">
-    <div class="rp-panel">
-      <h2>Big moments</h2>
-      <div class="rp-filter" role="group" aria-label="Moment filter">
+    <div class="card rp-panel">
+      <div class="plate"><span class="pno">PLATE 01</span><h2>Big moments</h2><span class="prule"></span></div>
+      <div class="seg rp-filter" role="group" aria-label="Moment filter">
         <button type="button" data-f="all" class="on" aria-pressed="true">All</button>
         <button type="button" data-f="3" aria-pressed="false">Threes</button>
         <button type="button" data-f="dunk" aria-pressed="false">Dunks</button>
@@ -97,20 +98,20 @@
       </div>
       <ol id="rpMoments" class="rp-moments"></ol>
     </div>
-    <div class="rp-panel">
-      <h2>Play-by-play</h2>
+    <div class="card rp-panel">
+      <div class="plate"><span class="pno">PLATE 02</span><h2>Play-by-play</h2><span class="prule"></span></div>
       <ol id="rpFeed" class="rp-feed"></ol>
     </div>
-    <div class="rp-panel">
-      <h2>Box score</h2>
+    <div class="card rp-panel">
+      <div class="plate"><span class="pno">PLATE 03</span><h2>Box score</h2><span class="prule"></span></div>
       <div id="rpBox" class="rp-box"><p class="rp-muted">Box score not up yet.</p></div>
     </div>
   </section>
 
-  <section class="rp-panel rp-honest" aria-label="How this works">
-    <h2>What's real, what's staged</h2>
+  <section class="card rp-honest" aria-label="How this works">
+    <div class="plate"><span class="pno">PLATE 04</span><h2>What's real, what's staged</h2><span class="prule"></span></div>
     <p class="rp-verdict"><b>Shot spots and scores are real; the other nine players are modeled.</b></p>
-    <details class="rp-provenance">
+    <details class="disclosure rp-provenance">
       <summary>Full provenance</summary>
       <p>Every event, clock, score, shooter and shot spot comes from the play-by-play (<a id="rpSrc" href="https://cdn.nba.com/" rel="noopener">source file</a>): the NBA's own feed for games marked NBA, where shot spots match the feed's shot distances to the inch, and ESPN's for games marked ESPN, which is what Courtside Live reads. ESPN folds every shot onto one half-court, so for those games which basket each team shoots at is assumed (away attacks right in the first half). No public feed says where the other nine players stand, so a model places them: a small network trained on the 2015-16 SportVU tracking that was once public (<a href="https://github.com/linouk23/NBA-Player-Movements" rel="noopener">linouk23/NBA-Player-Movements</a>, events from <a href="https://github.com/sealneaward/nba-movement-data" rel="noopener">sealneaward/nba-movement-data</a>). From the event, the shooter's spot, the clock, the score and each player's role, it sets all ten players as one scene, and a Kalman smoother then carries each player from play to play so nobody teleports. On 80 games it never trained on, it puts a player 17.6 ft from where he really stood, on average, against 21.2 ft for the formation templates it replaces. Its players stand within 2 ft of each other a little more often than real ones (1.4% of pairs against 1.1%). The tracking itself is never served here; only the model's projections. Jump balls, and any visit where the model fails to load, use the formation templates. Treat the other nine as projected, not tracked.</p>
       <p id="rpAsOf" class="rp-muted"></p>
@@ -155,6 +156,6 @@
 <script src="/assets/game-route.js?v=ae0bf9df" defer></script>
 <script src="/assets/game-header.js?v=758eca08" defer></script>
 <script src="/assets/plate.js?v=9ffa45dd" defer></script>
-<script src="/assets/replay.js?v=6738966b" defer></script>
+<script src="/assets/replay.js?v=5f7739e1" defer></script>
 </body>
 </html>
