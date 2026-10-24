@@ -262,6 +262,8 @@ body.vh-modal-open{ overflow: hidden; overscroll-behavior: contain; }
   font-size: var(--t-sm); font-variant-numeric: tabular-nums;
 }
 .np-split > span + span{ text-align: right; font-family: var(--font-code); }
+.np-split > span{ overflow-wrap: normal; } /* cells wrap between words, never mid-word */
+@media (max-width: 479px){ .np-split{ grid-auto-columns: minmax(44px, 60px); gap: 6px; } .np-split--head{ letter-spacing: .04em; } }
 .np-split--head{
   font-family: var(--font-display); font-size: var(--t-xs); font-weight: 600; font-stretch: 112%;
   letter-spacing: .12em; text-transform: uppercase; color: var(--fg-3);
