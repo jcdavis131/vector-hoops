@@ -199,9 +199,9 @@ svg.shot .annot{ font-family: var(--font-code); fill: var(--fg-2); }
 .pfill{ height: 100%; background: var(--fg); }
 .plbl{ display: flex; justify-content: space-between; margin-top: 4px; font-family: var(--font-code); font-size: var(--t-xs); font-weight: 700; }
 .psrc, .cnote, .pnote{ font-size: var(--t-xs); color: var(--fg-2); }
-.pg-side h3, .orow h4, .frow h4, .steam h4, .pcard h4{ margin: 12px 0 6px; font-family: var(--font-display); font-size: var(--t-xs); font-weight: 700;
+.pg-side h3, .frow h4, .steam h4, .pcard h4{ margin: 12px 0 6px; font-family: var(--font-display); font-size: var(--t-xs); font-weight: 700;
   letter-spacing: .12em; text-transform: uppercase; color: var(--fg-2); }
-.cmpgrid, .sgrid, .frow, .orow{ display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.cmpgrid, .sgrid, .frow{ display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
 .cmp, .srow, .irow{ display: flex; justify-content: space-between; gap: 8px; padding: 3px 0; border-bottom: 1px solid var(--line); font-size: var(--t-sm); }
 .chips{ display: flex; flex-direction: column; gap: 6px; }
 .tchip{ display: flex; flex-direction: column; gap: 2px; padding: 6px 8px; font-size: var(--t-sm); background: var(--surface-2); border: 1px solid var(--line); border-radius: var(--radius); }
@@ -209,10 +209,6 @@ svg.shot .annot{ font-family: var(--font-code); fill: var(--fg-2); }
 .tchip .tt i{ font-style: normal; font-weight: 700; color: var(--fg); }
 .pcard{ margin-top: var(--s-4); padding-top: var(--s-3); border-top: 1px solid var(--line); }
 .pg-loading{ font-size: var(--t-sm); color: var(--fg-3); }
-.odds-hero{ padding: 12px 4px 8px; text-align: center; }
-.odds-hero .ospread{ font-family: var(--font-display); font-size: var(--t-xl); font-weight: 800; }
-.odds-hero .olab{ display: block; margin-top: 4px; font-family: var(--font-display); font-size: var(--t-xs); font-weight: 700; letter-spacing: .2em; color: var(--fg-2); }
-.orow b{ font-size: var(--t-base); }
 .edges{ margin: 0; padding-left: 1.2em; font-size: var(--t-sm); color: var(--fg-2); }
 .pstr{ font-family: var(--font-code); }
 .mg-row{ display: flex; flex-wrap: wrap; align-items: center; gap: var(--s-3); font-size: var(--t-sm); color: var(--fg-2); }
@@ -220,7 +216,7 @@ svg.shot .annot{ font-family: var(--font-code); fill: var(--fg-2); }
 
 @media (max-width: 480px){
   .scorebug .score{ font-size: var(--t-lg); }
-  .leaders, .cmpgrid, .sgrid, .frow, .orow{ grid-template-columns: minmax(0, 1fr); }
+  .leaders, .cmpgrid, .sgrid, .frow{ grid-template-columns: minmax(0, 1fr); }
 }
 
 /* ---- Pixel Replay as a Courtside Live plate (live.html #rpPlate). Wave 2.4: the plate is a
