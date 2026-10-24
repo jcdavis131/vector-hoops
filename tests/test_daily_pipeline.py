@@ -310,7 +310,7 @@ def test_classify_changes_splits_data_from_code():
 
 REPORT = {
     "schedule": {"origin": "network", "games": 1206},
-    "latency_ms": {"schedule": 300, "pbp:0022600087": 200, "box:0022600001": 150},
+    "latency_ms": {"schedule": 300, "pbp": 200, "box": 150},  # the shape Client.latency_ms has
     "fetched": {"pbp": ["0022600087"], "box": ["0022600001"]},
     "failed": [],
     "deferred": ["box:0022600088"],

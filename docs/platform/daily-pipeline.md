@@ -66,7 +66,9 @@ which calls `run_daily.ps1`. That script:
 The 24 h replay rule (`build_replays.py --min-age 24`) holds a game out of
 `assets/replays/index.json` until 24 h after its final horn. The game's replay file is
 built the night it is fetched, and the next run indexes it. At 10:00 local, last night's
-games are fetched and built, and the night before's games are indexed.
+games are fetched and built, and the night before's games are indexed. Each game is indexed about 33 h
+after its final horn. A slot near 02:00 local would cut that by about 9 h, but would risk catching late West
+Coast games before their files are final. That is the operator's call.
 
 ## How long, how many requests
 
@@ -129,6 +131,10 @@ powershell -NoProfile -ExecutionPolicy Bypass -File scripts\daily\register_task.
 powershell -NoProfile -ExecutionPolicy Bypass -File scripts\daily\register_task.ps1 -Unregister
 Start-ScheduledTask -TaskName "Hoops Daily Pipeline"; Get-ScheduledTaskInfo -TaskName "Hoops Daily Pipeline"
 ```
+
+If you register before the dedicated tree exists, the task points at the checkout you registered from.
+Rerun `register_task.ps1` after the first run has created `C:\Users\jcdav\wt\hoops-daily`.
+The wrapper's `git fetch` and `worktree add` write to the main repo's `.git`, never to its working tree.
 
 The task runs as the logged-on user, so it uses that user's git credentials and `gh auth`.
 Both must work non-interactively.

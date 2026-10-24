@@ -148,7 +148,7 @@ def build_receipt(prev: dict | None, report: dict | None, steps: dict[str, bool]
                     prev_src.get(name),
                     ok=not f_k and not blocked,
                     now=now,
-                    latency=lat.get(kind + ":" + got[-1]) if got else None,
+                    latency=lat.get(kind) if got else None,
                     detail=f"{file}_<id>.json: fetched {len(got)}, failed {len(f_k)}, deferred {len(d_k)} "
                     f"(cursor {report.get('cursor')})",
                     down=blocked,
