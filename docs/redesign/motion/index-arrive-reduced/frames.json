@@ -1,0 +1,35 @@
+{
+ "from": "methods",
+ "to": "",
+ "w": 390,
+ "theme": "light",
+ "totalFrames": 8,
+ "offsetsMs": [
+  20,
+  70,
+  86,
+  120,
+  136,
+  170,
+  186,
+  220
+ ],
+ "picked": [
+  20,
+  70,
+  120,
+  170,
+  220
+ ],
+ "page": {
+  "h1": "Who playslike this?",
+  "vtName": "vh-title",
+  "reveals": [
+   "title-card__eyebrow reveal",
+   "title-card__lede hero__lede reveal reveal-1",
+   "hero-search reveal reveal-2",
+   "instrument reveal reveal-3"
+  ],
+  "anims": 0
+ }
+}

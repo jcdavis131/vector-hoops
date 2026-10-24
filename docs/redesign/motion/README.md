@@ -109,6 +109,15 @@ What the frames show:
   named h1 was lifted above that sheet during the transition. That is an artefact of navigating with
   a modal open (the nav sits behind the backdrop then), so the committed run starts from /methods.
 
+**Index arriving under reduced motion** (`index-arrive-reduced/`). Same run with `reduce` emulated.
+The first frame after navigation (70ms) is already the settled page: no double exposure, no h1
+ghosting, `getAnimations()` 0. The gate's `@view-transition{navigation:none}` holds in a real
+browser. The only difference between frames 70ms and 120ms is the web fonts swapping in.
+
+**Side effect worth knowing.** `.btn` now transitions `box-shadow`. On the nine pages that load
+keyboard-a11y.js, its injected focus halo (a box-shadow) therefore eases *out* on blur over `--dur-1`.
+Focus-in is still instant (`button:focus-visible{transition:none}`).
+
 ## Deferred
 
 - The "play solving" 10-frame capture and the 390/1280 × light/dark sweep the spec lists for this wave
