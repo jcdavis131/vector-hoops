@@ -27,7 +27,9 @@
 /* status strip: pills | phase + dots | how to play */
 :where(.game--play) #game-header .game-status{ display: grid; grid-template-columns: 1fr; justify-items: center; row-gap: 10px; }
 @media (min-width: 720px){
-  :where(.game--play) #game-header .game-status{ grid-template-columns: 1fr auto 1fr; justify-items: stretch; align-items: center; gap: var(--s-3); }
+  /* sides size to their pills (one row each); the date line and dots take what is left */
+  :where(.game--play) #game-header .game-status{ grid-template-columns: auto minmax(0, 1fr) auto; justify-items: stretch; align-items: center; gap: var(--s-3); }
+  :where(.game--play) #game-header .game-status__side{ flex-wrap: nowrap; }
 }
 :where(.game--play) .game-status__side{ display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
 :where(.game--play) .game-status__side--end{ justify-content: flex-end; }
@@ -51,6 +53,13 @@
 @media (max-width: 720px){
   :where(.game--play) .court-grid{ grid-template-columns: 1fr; }
 }
+/* five-up: a card is too narrow to share a row, so the badge sits on its own line
+   above the kicker, which gets the full card width and wraps only between words */
+@media (min-width: 721px){
+  :where(.game--play) .court-card__head{ flex-direction: column-reverse; align-items: stretch; gap: 4px; }
+  :where(.game--play) .court-card__head .court-badge{ align-self: flex-end; }
+  :where(.game--play) .court-card__head .court-slot{ padding-top: 0; }
+}
 :where(.game--play) .court-card{
   display: flex; flex-direction: column; gap: 2px;
   min-height: 92px; padding: 10px; cursor: pointer;
@@ -71,7 +80,7 @@
 :where(.game--play) .court-meta{ font-family: var(--font-text); font-size: var(--t-xs); color: var(--fg-2); }
 /* label and badge share one row; the label wraps under itself, never under the badge */
 :where(.game--play) .court-card__head{ display: flex; align-items: flex-start; justify-content: space-between; gap: var(--s-2); }
-:where(.game--play) .court-card__head .court-slot{ flex: 1 1 auto; min-width: 0; padding-top: 4px; }
+:where(.game--play) .court-card__head .court-slot{ flex: 1 1 auto; min-width: 0; padding-top: 4px; overflow-wrap: normal; word-break: normal; hyphens: none; }
 :where(.game--play) .court-badge{ flex: 0 0 auto; }
 :where(.game--play) .court-card__suit{ margin-top: 2px; }
 :where(.game--play) .court-card__suit .suit-tag{ margin-left: 0; }

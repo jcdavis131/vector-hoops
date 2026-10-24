@@ -56,15 +56,22 @@
       sel.type = 'button'; sel.className = 'btn btn-primary'; sel.textContent = 'Select all';
       var close = document.createElement('button');
       close.type = 'button'; close.className = 'btn'; close.textContent = 'Close';
-      var done = function(){ back.remove(); document.removeEventListener('keydown', esc, true); };
+      var release = null, opener = document.activeElement;
+      var done = function(){
+        back.remove();
+        if (release) { release(); release = null; }
+        else { document.removeEventListener('keydown', esc, true); try{ if (opener && opener.focus) opener.focus(); }catch(e){} }
+      };
       var esc = function(e){ if (e.key === 'Escape') done(); };
       sel.addEventListener('click', function(){ ta.focus(); ta.select(); });
       close.addEventListener('click', done);
       back.addEventListener('click', function(e){ if (e.target === back) done(); });
-      document.addEventListener('keydown', esc, true);
       row.appendChild(sel); row.appendChild(close);
       card.appendChild(head); card.appendChild(p); card.appendChild(ta); card.appendChild(row);
       back.appendChild(card); document.body.appendChild(back);
+      // play-engine.js's sheet contract: inert page, Tab wraps, Escape closes, focus returns
+      if (window.VHSheetFocus) release = window.VHSheetFocus(back, done);
+      else document.addEventListener('keydown', esc, true);
       ta.focus(); ta.select();
     }catch(e){}
   }

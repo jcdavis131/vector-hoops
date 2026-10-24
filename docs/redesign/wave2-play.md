@@ -133,3 +133,30 @@ shot (Available fell to 493 MB); a second gated run took 390 light and dark. 128
   (from 1.4) still apply.
 - **past-modern-game.js** `OKABE` (8 D6), not owned.
 - Map Hunt still keeps no Embed3D handle for rings (wave 2.3).
+
+## Review follow-up (f6d4a4b0 review, APPROVE with fixes)
+
+- M1/M2: one sheet focus contract, `sheetFocus(backdrop, onEscape)` in play-engine.js (also
+  `window.VHSheetFocus`). While a sheet is open the body's other children are `inert` (the toast
+  stays live), Tab and Shift+Tab wrap inside the sheet, Escape closes it, `body.is-sheet-open`
+  locks scroll, and release() puts focus back on the opener. The How to play sheet, the share sheet
+  and inline-play.js's copy-blocked panel all use it.
+- keyboard-a11y.js: Escape skips any `.sheet` inside a `[data-sheet-managed]` backdrop or a
+  `[hidden]` ancestor (those pages own the sheet), so it no longer marks /play's sheets with a
+  `.hidden` class nothing styles. Other pages keep the old behaviour for their own sheets.
+- L6: keyboard-a11y.js reads the suggest list as visible only when it has neither the `hidden`
+  attribute nor the `.hidden` class, and its Escape sets the attribute on lists marked
+  `data-hide="attr"` (/play's `#guess-suggest`), so `aria-expanded` follows the real state.
+- L1: a cross-tab ledger write now also calls `syncMap()`.
+- L5: player names, seasons and team codes go through `esc()` before every `innerHTML`
+  (court cards, lineup chips, past meta, result cards, top-5 line, guess rows).
+- L3 (not fixed, kit request): Embed3D's game legend labels every `warm` ring "Warmer guess", and
+  `overlay()` has only warm/cold/exact with no label option, so a first or "same" guess still shows
+  under "Warmer guess". Needs a neutral kind in embed-3d.js (e.g. `kind:'guess'`, key "Guess").
+- 1280: the five-up slot cards put the badge on its own line above the kicker
+  (`column-reverse` from 721 px) and the kicker wraps only between words; the status strip is
+  `auto minmax(0,1fr) auto` with `nowrap` sides, so COURT 1/5 and STREAK 0 stay on one row.
+- Gates rerun: stamp_lf (+ --check), stamp_footer --check, sync_public (+ --check), budget_check,
+  check_contrast, check_a11y, pytest (only the 3 known test_check_served_model failures),
+  node --check, embed3d.test.mjs 15/15. The keyboard-a11y.js token moved on the six pages that
+  load it.

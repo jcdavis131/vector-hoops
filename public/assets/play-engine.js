@@ -4,6 +4,43 @@
   const CONFETTI_TOKENS=['--accent','--ok','--coin-1','--blue','--data-terra','--pipe'];
   const ARCH=["Glass+Rim","LowVol Glass","Low Impact 3P Vol","Def Glass+Rim FT","Vol+3P Vol","3P Acc+Vol","Playmaking+Steals","Scoring Vol"];
   let G={guesses:[]};
+  // player names and seasons are data: escape them before they meet innerHTML
+  const esc=v=>String(v==null?'':v).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  /* One focus contract for every sheet on /play (How to play, share, copy-blocked):
+     the page behind goes inert, Tab and Shift+Tab wrap inside the sheet, Escape
+     closes it, and focus goes back to whatever opened it. Returns release(). The
+     backdrop is marked data-sheet-managed so keyboard-a11y.js leaves it alone. */
+  function sheetFocus(backdrop, onEscape){
+    const opener=document.activeElement;
+    const sheet=backdrop.querySelector('.sheet')||backdrop;
+    backdrop.setAttribute('data-sheet-managed','');
+    const inerted=[];
+    Array.from(document.body.children).forEach(el=>{
+      if(el===backdrop||el.contains(backdrop)||el.tagName==='SCRIPT'||el.classList.contains('toast')||el.inert) return;
+      el.inert=true; inerted.push(el);
+    });
+    document.body.classList.add('is-sheet-open');
+    const focusables=()=>Array.from(sheet.querySelectorAll('a[href],button:not([disabled]),input:not([disabled]),textarea,select,[tabindex]:not([tabindex="-1"])')).filter(n=>!n.closest('[hidden]'));
+    function onKey(e){
+      if(e.key==='Escape'){ e.preventDefault(); e.stopPropagation(); onEscape(); return; }
+      if(e.key!=='Tab') return;
+      const f=focusables(); if(!f.length){ e.preventDefault(); return; }
+      const first=f[0], last=f[f.length-1], inside=sheet.contains(document.activeElement);
+      if(e.shiftKey && (!inside || document.activeElement===first)){ e.preventDefault(); last.focus(); }
+      else if(!e.shiftKey && (!inside || document.activeElement===last)){ e.preventDefault(); first.focus(); }
+    }
+    document.addEventListener('keydown', onKey, true);
+    try{ (sheet.querySelector('.sheet__close')||focusables()[0])?.focus(); }catch{}
+    let released=false;
+    return function release(){
+      if(released) return; released=true;
+      document.removeEventListener('keydown', onKey, true);
+      inerted.forEach(el=>{ el.inert=false; });
+      document.body.classList.remove('is-sheet-open');
+      try{ if(opener && opener.focus && document.contains(opener)) opener.focus(); }catch{}
+    };
+  }
+  window.VHSheetFocus=sheetFocus;
   // --- court readiness: guess controls stay disabled until a target is on
   // the floor; a failed load surfaces a fallback with a reload action
   // instead of an endless 'Loading court...' spinner.
@@ -409,7 +446,7 @@
            N/6 · {date}" / "Missed · {date}" / "N/6 tries" — the same string
            the ledger card and share card use. A loss is "Missed", never "Won". */
         const meta = sd ? (sd.ledgerLine || (isSolved? `Won in ${sd.cnt}/6` : `${sd.cnt}/6 tries`)) : 'Not started';
-        return `<div class="${cls}" data-slot="${i}"><div class="court-card__head"><div class="court-slot">Slot ${i+1} • ${arch}${isActive? ' • Now':''}</div><span class="court-badge pill${isSolved?' pill-green':''}" aria-label="${badgeLabel}">${badge}</span></div>${suit?`<div class="court-card__suit">${suit}</div>`:''}<div class="court-name">${p.n} ${p.s}</div><div class="court-meta">${meta}</div></div>`;
+        return `<div class="${cls}" data-slot="${i}"><div class="court-card__head"><div class="court-slot">Slot ${i+1} • ${arch}${isActive? ' • Now':''}</div><span class="court-badge pill${isSolved?' pill-green':''}" aria-label="${badgeLabel}">${badge}</span></div>${suit?`<div class="court-card__suit">${suit}</div>`:''}<div class="court-name">${esc(p.n)} ${esc(p.s)}</div><div class="court-meta">${meta}</div></div>`;
       }).join('');
       grid.querySelectorAll('.court-card').forEach(el=>{
         el.addEventListener('click',()=>{
@@ -433,7 +470,7 @@
         const sd=slotData[i];
         if(sd&&sd.won){
           const winGuess = sd.guesses.find(g=>g.rank===0);
-          if(winGuess) chips.push(`<span class="lineup-chip">Slot ${i+1}: ${winGuess.name} ← ${st.dailyPool[i].n}</span>`);
+          if(winGuess) chips.push(`<span class="lineup-chip">Slot ${i+1}: ${esc(winGuess.name)} ← ${esc(st.dailyPool[i].n)}</span>`);
           else chips.push(`<span class="lineup-chip">Slot ${i+1}: solved</span>`);
         } else {
           chips.push(`<span class="lineup-chip is-empty">Slot ${i+1}: —</span>`);
@@ -509,9 +546,9 @@
     const hon=st.honors[past.n+'|'+past.s]||{}; const allNba=hon.allNbaTeam? 'All-NBA '+({3:'1st',2:'2nd',1:'3rd'}[hon.allNbaTeam]||hon.allNbaTeam) : '';
     let teamAbbr=null; try{ teamAbbr=getTeamAbbr(past.n, past.s); }catch{}
     if(teamAbbr){
-      $('#past-meta').innerHTML=(hon.asg?'All-Star ':'')+(allNba? allNba+' • ' : '')+archLabel+` • ${past.s} • `+modeLabel+` • <span class="pill past-meta__team" title="Team they finished the season with">${teamAbbr}</span>`;
+      $('#past-meta').innerHTML=(hon.asg?'All-Star ':'')+(allNba? allNba+' • ' : '')+archLabel+` • ${esc(past.s)} • `+modeLabel+` • <span class="pill past-meta__team" title="Team they finished the season with">${esc(teamAbbr)}</span>`;
     } else {
-      $('#past-meta').innerHTML=(hon.asg?'All-Star ':'')+(allNba? allNba+' • ' : '')+archLabel+' • '+past.s+' • '+modeLabel;
+      $('#past-meta').innerHTML=(hon.asg?'All-Star ':'')+(allNba? allNba+' • ' : '')+archLabel+' • '+esc(past.s)+' • '+modeLabel;
     }
     // new pills
     const archPill=$('#past-arch-pill'); if(archPill) archPill.textContent=archLabel;
@@ -561,8 +598,8 @@
         }
         const isWin=rankNum===0;
         const archName = (typeof g.c==='number' && ARCH[g.c%ARCH.length]) ? ARCH[g.c%ARCH.length] : '—';
-        const safeName = (g.name||'').replace(/</g,'&lt;');
-        const safeSeason = (g.season||'').replace(/</g,'&lt;');
+        const safeName = esc(g.name);
+        const safeSeason = esc(g.season);
         // only the just-submitted row animates in — re-renders (load, slot
         // switch) must not replay the entrance on every row
         const isNew = !!G._animateNew && idx===(G.guesses.length-1);
@@ -631,7 +668,7 @@
       try{
         const name = o && o.m && o.m.n ? o.m.n : '—';
         const sim = (o && typeof o.sim==='number') ? o.sim : 0;
-        return `${i+1}. ${name} ${(sim*100).toFixed(0)}%`;
+        return `${i+1}. ${esc(name)} ${(sim*100).toFixed(0)}%`;
       }catch{ return `${i+1}. —`; }
     }).join(' • ');
 
@@ -684,7 +721,7 @@
            Diaconis's labeled base-rate parenthetical, not a bare number. */
         const winRuleHtml=(st.isDaily&&window.VHLedger&&VHLedger.WIN_RULE)?`<p class="caption">Win rule: ${VHLedger.WIN_RULE}</p>`:'';
         const streakGoalHtml=(st.isDaily&&streakN>0&&window.VHLedger&&VHLedger.streakOddsText)?`<p class="result__detail result__streak">\uD83D\uDD25 ${streakN}-day streak \u2014 protect it: play tomorrow to keep it.</p><p class="caption">${VHLedger.streakOddsText(streakN)}</p>`:'';
-        resEl.innerHTML=`<div class="card result"><h3 class="hd">✅ Solved in ${G.guesses.length}/6 — ${st.target.n} → ${closest.entry.n}</h3>${winRuleHtml}${window.VHGameMechanics?`<div class="result-stars" aria-label="${VHGameMechanics.starsFor(G.guesses.length,6)} of 3 stars">${VHGameMechanics.starsHTML(VHGameMechanics.starsFor(G.guesses.length,6))}</div>`:''}<p class="result__detail">Answer: ${closest.entry.n} ${closest.entry.s} ${(closest.sim*100).toFixed(1)}%<br>Top 5: ${sortedTop}</p>${streakGoalHtml}${twinLinksHtml}<div class="btn-row"><button class="btn btn-primary" type="button" id="btn-next-slot">Next slot →</button><button class="btn" type="button" id="btn-view-court">View court</button></div></div>`;
+        resEl.innerHTML=`<div class="card result"><h3 class="hd">✅ Solved in ${G.guesses.length}/6 — ${esc(st.target.n)} → ${esc(closest.entry.n)}</h3>${winRuleHtml}${window.VHGameMechanics?`<div class="result-stars" aria-label="${VHGameMechanics.starsFor(G.guesses.length,6)} of 3 stars">${VHGameMechanics.starsHTML(VHGameMechanics.starsFor(G.guesses.length,6))}</div>`:''}<p class="result__detail">Answer: ${esc(closest.entry.n)} ${esc(closest.entry.s)} ${(closest.sim*100).toFixed(1)}%<br>Top 5: ${sortedTop}</p>${streakGoalHtml}${twinLinksHtml}<div class="btn-row"><button class="btn btn-primary" type="button" id="btn-next-slot">Next slot →</button><button class="btn" type="button" id="btn-view-court">View court</button></div></div>`;
         if(celebrateNew) celebrateWin();
       } else {
         try{ if(window.VHAudio) VHAudio.play('reveal'); }catch{}
@@ -703,7 +740,7 @@
         /* Kubrick's state matrix: a loss is "Missed · {date}" — never "Won" —
            and the win rule beside the score, same as the win card. */
         const missedHtml=(st.isDaily&&window.VHLedger)?`<p class="caption">Missed \u00B7 ${st.dayKey} \u2014 ${VHLedger.WIN_RULE}</p>`:'';
-        resEl.innerHTML=`<div class="card result result--lost"><h3 class="hd">❌ Revealed — ${st.target.n} → ${closest.entry.n}</h3>${missedHtml}<p class="result__detail">Closest: ${closest.entry.n} ${(closest.sim*100).toFixed(1)}%<br>Top 5: ${sortedTop}</p>${twinLinksHtml}<div class="btn-row"><button class="btn btn-primary" type="button" id="btn-next-slot">Next slot →</button><button class="btn" type="button" id="btn-view-court">View court</button></div></div>`;
+        resEl.innerHTML=`<div class="card result result--lost"><h3 class="hd">❌ Revealed — ${esc(st.target.n)} → ${esc(closest.entry.n)}</h3>${missedHtml}<p class="result__detail">Closest: ${esc(closest.entry.n)} ${(closest.sim*100).toFixed(1)}%<br>Top 5: ${sortedTop}</p>${twinLinksHtml}<div class="btn-row"><button class="btn btn-primary" type="button" id="btn-next-slot">Next slot →</button><button class="btn" type="button" id="btn-view-court">View court</button></div></div>`;
       }
       const nextSlotBtn=document.getElementById('btn-next-slot');
       if(nextSlotBtn){ nextSlotBtn.addEventListener('click',()=>{
@@ -929,6 +966,7 @@
       if(cur.length!==before){
         try{ if(typeof renderGuesses==='function') renderGuesses(); }catch(_){}
         try{ if(typeof renderDailyCourt==='function') renderDailyCourt(); }catch(_){}
+        try{ syncMap(); }catch(_){}
       }
     }catch(_){}
   });
@@ -1015,19 +1053,16 @@
 
     const onboardSeen=localStorage.getItem('vh.onboardSeenV3');
     const backdrop=$('#onboarding-backdrop');
-    let onboardReturn=null;
+    let releaseOnboard=null;
     function openOnboard(){
-      if(!backdrop) return;
-      onboardReturn=document.activeElement;
-      // keyboard-a11y.js's Escape marks the .sheet with a .hidden class; the backdrop's hidden attribute is the real state
-      backdrop.querySelector('.sheet')?.classList.remove('hidden');
-      backdrop.hidden=false; document.body.classList.add('is-sheet-open');
-      $('#btn-onboard-close')?.focus();
+      if(!backdrop || !backdrop.hidden) return;
+      backdrop.hidden=false;
+      releaseOnboard=sheetFocus(backdrop, closeOnboard);
     }
     function closeOnboard(){
       if(backdrop && !backdrop.hidden){
-        backdrop.hidden=true; document.body.classList.remove('is-sheet-open');
-        try{ (onboardReturn && onboardReturn.focus ? onboardReturn : $('#btn-howto'))?.focus(); }catch{}
+        backdrop.hidden=true;
+        if(releaseOnboard){ releaseOnboard(); releaseOnboard=null; }
       }
       try{ localStorage.setItem('vh.onboardSeenV3','1'); }catch{}
     }
@@ -1037,8 +1072,7 @@
     $('#btn-onboard-play')?.addEventListener('click', ()=>{ closeOnboard(); $('#guess-input')?.focus(); });
     $('#btn-onboard-random')?.addEventListener('click', ()=>{ closeOnboard(); const p=VHPastModern.pickRandomPast(); location.href='/play?mode=random&r='+p.i; });
     backdrop?.addEventListener('click', e=>{ if(e.target===backdrop) closeOnboard(); });
-    /* Panel v3 G6: Escape dismisses the info sheet. */
-    document.addEventListener('keydown', e=>{ if(e.key==='Escape' && backdrop && !backdrop.hidden) closeOnboard(); });
+    /* Panel v3 G6: Escape dismisses the info sheet (sheetFocus owns the key while it is open). */
 
     $('#btn-focus-guess')?.addEventListener('click', ()=>{ $('#guess-input')?.focus(); window.scrollTo({top: $('#guess-card').offsetTop-20, behavior:'smooth'}); });
     $('#guess-btn')?.addEventListener('click', ()=>{ if(typeof doGuess==='function') doGuess(); });
@@ -1097,7 +1131,8 @@
       }
       return {s, mode, ledger, text, url, title:(s.isTriple?'Daily Triple':'Daily Court')+' '+s.dayKey};
     }
-    function closeDailyShareSheet(){ const sh=$('#vh-share-sheet'); if(sh) sh.remove(); }
+    let releaseShare=null;
+    function closeDailyShareSheet(){ const sh=$('#vh-share-sheet'); if(sh) sh.remove(); if(releaseShare){ releaseShare(); releaseShare=null; } }
     function openDailyShareSheet(){
       const ctx=dailyShareContext();
       toastMsg('Opening share\u2026'); // <=1s visible response to the tap
@@ -1107,6 +1142,7 @@
       sh.querySelector('.vh-share-preview').textContent=ctx.text;
       document.body.appendChild(sh);
       const close=()=>closeDailyShareSheet();
+      releaseShare=sheetFocus(sh, close);
       sh.addEventListener('click',(e)=>{ if(e.target===sh) close(); });
       sh.querySelector('#vh-share-close').addEventListener('click',close);
       sh.querySelector('#vh-share-copy-card').addEventListener('click',async()=>{

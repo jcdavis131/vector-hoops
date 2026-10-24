@@ -15,8 +15,13 @@
     return tag==='input' || tag==='textarea' || tag==='select' || ae.isContentEditable;
   }
 
+  /* A sheet inside a [data-sheet-managed] backdrop closes itself (its page owns
+     Escape, focus and the hidden attribute); one under a [hidden] ancestor is
+     not open. Neither is ours to touch. */
+  function ownSheet(s){ return !s.closest('[data-sheet-managed]') && !s.closest('[hidden]'); }
+
   function closeSheets(){
-    var sheets = document.querySelectorAll('.sheet:not(.hidden), #why-sheet:not(.hidden), [data-sheet]:not(.hidden)');
+    var sheets = Array.prototype.filter.call(document.querySelectorAll('.sheet:not(.hidden), #why-sheet:not(.hidden), [data-sheet]:not(.hidden)'), ownSheet);
     sheets.forEach(function(s){
       if(s.id==='why-sheet' || s.classList.contains('sheet')){
         s.classList.add('hidden');
@@ -112,7 +117,7 @@
       // in play.html's typeahead and confirming Page.loadEventFired /
       // Runtime.evaluate stopped hanging.
       var observer = new MutationObserver(function(){
-        var visible = !ul.classList.contains('hidden');
+        var visible = !ul.hidden && !ul.classList.contains('hidden');
         var wantExpanded = visible ? 'true' : 'false';
         if(input.getAttribute('aria-expanded') !== wantExpanded) input.setAttribute('aria-expanded', wantExpanded);
         // ensure children have role option
@@ -140,7 +145,8 @@
       // keyboard already partially in play.html attachSuggest, but ensure Enter triggers click if active
       input.addEventListener('keydown', function(e){
         if(e.key==='Escape'){
-          ul.classList.add('hidden');
+          // pages that toggle the list with the hidden attribute (data-hide="attr", /play) get it back the same way
+          if(ul.getAttribute('data-hide') === 'attr') ul.hidden = true; else ul.classList.add('hidden');
           input.setAttribute('aria-expanded','false');
           input.removeAttribute('aria-activedescendant');
           e.stopPropagation();
@@ -161,7 +167,7 @@
           return;
         }
         // close any .sheet
-        var sheets = document.querySelectorAll('.sheet:not(.hidden)');
+        var sheets = Array.prototype.filter.call(document.querySelectorAll('.sheet:not(.hidden)'), ownSheet);
         if(sheets.length){
           e.preventDefault();
           sheets.forEach(function(s){ s.classList.add('hidden'); });
