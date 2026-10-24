@@ -164,3 +164,8 @@ I checked the other in-scope pages for the same pattern: `--paper/--ink/--bg/--f
 - **research**'s `html,body` uses `var(--paper)`/`var(--ink)`, which follow atlas in both themes. Its `:root` only redefines `--mono`, `--sans` and `--page-gutter`. It was unchanged by this branch and is left for 2.7.
 - **status**'s `:root` only aliases atlas tokens.
 - The remaining raw hex text colours sit on fixed void or gold panels that are constant in both themes: playoff-runs tabs and champ chip, taxonomy famhead, research's dark map and code panels. The status dots and pills are mid-tone accents. All of these are wave-2 D6 work, not ground pins.
+
+## Review follow-up (9f4af8e4 review, APPROVE)
+- The old no-JavaScript link rows are gone from insights, methods, playoff-runs, research, live and replay; `.site-nav__noscript` is the one fallback.
+- Correction to "Not ported, safe-area footer": shell's `.site-footer` did not load later on twin-network or schedule (shell loaded first there). Both pages now get the standard footer (48 px + safe area, the shell gutter), a consistency change.
+- Rebased onto #176: the four game pages take master's heads (this branch only re-stamped their tokens). sw.js CACHE_NAME v29 → v30.
