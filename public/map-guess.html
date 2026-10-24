@@ -1,6 +1,6 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
 <title>Map Hunt — find the hidden star on the 3D map — Vector Hoops</title>
-<meta name="description" content="A mystery NBA star is hiding in the 3D embedding map of 12,966 player-seasons. Tap points — warmer or colder by true 64-d cosine distance. Same map for everyone, every day."/>
+<meta name="description" content="A mystery NBA star is hiding in the 3D map of every player-season since 1996-97. Tap points and get warmer or colder. Same map for everyone, every day."/>
 <link rel="canonical" href="https://hoops.dumbmodel.com/map-guess"/>
 <meta name="color-scheme" content="light dark"/>
 <meta name="theme-color" content="#0F1114" media="(prefers-color-scheme: dark)"/>
@@ -9,18 +9,18 @@
 <meta property="og:site_name" content="Vector Hoops"/>
 <meta property="og:url" content="https://hoops.dumbmodel.com/map-guess"/>
 <meta property="og:title" content="Map Hunt — find the hidden star on the 3D map"/>
-<meta property="og:description" content="Tap points on the embedding map. Warmer or colder by true 64-d cosine distance. Same map for everyone."/>
+<meta property="og:description" content="Tap points on the 3D player map and get warmer or colder. Same map for everyone."/>
 <meta property="og:image" content="https://hoops.dumbmodel.com/assets/og-1200x630.png"/>
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:title" content="Map Hunt — Vector Hoops"/>
-<meta name="twitter:description" content="A mystery star hides in the 3D map of 12,966 player-seasons. Tap points, get warmer or colder."/>
+<meta name="twitter:description" content="A mystery star hides in the 3D player map. Tap points, get warmer or colder."/>
 <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml"/>
 <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png"/>
 <link rel="manifest" href="/manifest.json"/>
 <link rel="stylesheet" href="assets/fonts.css?v=8f376b2a"/>
 <link rel="stylesheet" href="assets/atlas.css?v=31711e9d"/>
 <link rel="stylesheet" href="assets/shell.css?v=398d5e37"/>
-<link rel="stylesheet" href="assets/game.css?v=0e919957"/>
+<link rel="stylesheet" href="assets/game.css?v=d663ac90"/>
 </head>
 <body class="game game--map">
 <a class="skip-link" href="#main">Skip to content</a>
@@ -29,11 +29,11 @@
   <header class="title-card" id="game-header">
     <div class="title-card__eyebrow">A new daily game</div>
     <h1 class="title-card__title">Map Hunt</h1>
-    <p class="title-card__lede">A mystery star is hiding somewhere in the 3D map of 12,966 player-seasons. Tap a point — the model answers <b>warmer</b> or <b>colder</b> &mdash; in true embedding distance, not vibes, and how close you are versus every player-season ever charted. Find them in 8 taps.</p>
+    <p class="title-card__lede">A mystery star is hiding somewhere in the 3D map of <span data-fact="player_seasons">12,966</span> player-seasons, placed by how they played. Tap a point and the model answers <b>warmer</b> or <b>colder</b>, and how close you are against every season on the map. Find them in 8 taps.</p>
     <nav class="game-modes" aria-label="Game modes">
-      <a class="chip-link" data-mode="mh" href="/map-guess?mode=mh">🗺️ Daily Map Hunt</a>
-      <a class="chip-link" data-mode="th" href="/map-guess?mode=th">👯 Twin Hunt</a>
-      <a class="chip-link" href="/play">🏀 Classic Daily Court</a>
+      <a class="chip-link" data-mode="mh" href="/map-guess?mode=mh">Daily Map Hunt</a>
+      <a class="chip-link" data-mode="th" href="/map-guess?mode=th">Twin Hunt</a>
+      <a class="chip-link" href="/play">Daily Court</a>
     </nav>
   </header>
 
@@ -45,69 +45,9 @@
     </section>
 
     <section aria-label="The 3D map">
-      <div class="embed3d-mount" data-projection="pca" role="application" aria-label="3D embedding map — tap a point to guess">
-        <div class="embed3d-placeholder state state--loading">
-          <svg class="state__sketch" viewBox="0 0 400 260" role="img" aria-label="Sketch of the 3D player map — the live map is loading">
-          <rect x="4" y="4" width="392" height="252" fill="#FFFEF7" stroke="#1A150F" stroke-width="1.4"/>
-          <line x1="40" y1="8" x2="40" y2="252" stroke="#1A150F" stroke-width=".6" opacity=".1"/>
-          <line x1="120" y1="8" x2="120" y2="252" stroke="#1A150F" stroke-width=".6" opacity=".1"/>
-          <line x1="200" y1="8" x2="200" y2="252" stroke="#1A150F" stroke-width=".6" opacity=".1"/>
-          <line x1="280" y1="8" x2="280" y2="252" stroke="#1A150F" stroke-width=".6" opacity=".1"/>
-          <line x1="360" y1="8" x2="360" y2="252" stroke="#1A150F" stroke-width=".6" opacity=".1"/>
-          <line x1="8" y1="52" x2="392" y2="52" stroke="#1A150F" stroke-width=".6" opacity=".1"/>
-          <line x1="8" y1="132" x2="392" y2="132" stroke="#1A150F" stroke-width=".6" opacity=".1"/>
-          <line x1="8" y1="212" x2="392" y2="212" stroke="#1A150F" stroke-width=".6" opacity=".1"/>
-          <g stroke="#E0483B" stroke-width="1.2" stroke-dasharray="5 4"><line x1="40" y1="226" x2="200" y2="196"/><line x1="40" y1="226" x2="120" y2="120"/><line x1="40" y1="226" x2="300" y2="226"/></g>
-          <g font-family="ui-monospace,monospace" font-size="9" fill="#6E6E66"><text x="206" y="198">style</text><text x="112" y="112">era</text><text x="306" y="228">role</text></g>
-          <circle cx="115" cy="176" r="2.2" fill="#1A150F" opacity="0.41"/>
-          <circle cx="154" cy="107" r="3.0" fill="#1A150F" opacity="0.66"/>
-          <circle cx="135" cy="86" r="2.2" fill="#1A150F" opacity="0.56"/>
-          <circle cx="329" cy="38" r="3.0" fill="#1A150F" opacity="0.31"/>
-          <circle cx="185" cy="197" r="3.0" fill="#1A150F" opacity="0.37"/>
-          <circle cx="282" cy="40" r="2.2" fill="#1A150F" opacity="0.56"/>
-          <circle cx="118" cy="176" r="2.2" fill="#1A150F" opacity="0.32"/>
-          <circle cx="39" cy="189" r="2.2" fill="#1A150F" opacity="0.41"/>
-          <circle cx="333" cy="203" r="2.2" fill="#1A150F" opacity="0.62"/>
-          <circle cx="243" cy="208" r="2.2" fill="#1A150F" opacity="0.44"/>
-          <circle cx="284" cy="87" r="2.2" fill="#1A150F" opacity="0.31"/>
-          <circle cx="294" cy="58" r="2.2" fill="#1A150F" opacity="0.39"/>
-          <circle cx="349" cy="183" r="2.2" fill="#1A150F" opacity="0.66"/>
-          <circle cx="236" cy="164" r="1.6" fill="#1A150F" opacity="0.63"/>
-          <circle cx="91" cy="187" r="1.6" fill="#1A150F" opacity="0.60"/>
-          <circle cx="141" cy="215" r="2.2" fill="#1A150F" opacity="0.32"/>
-          <circle cx="167" cy="104" r="3.0" fill="#1A150F" opacity="0.34"/>
-          <circle cx="319" cy="63" r="2.2" fill="#1A150F" opacity="0.37"/>
-          <circle cx="189" cy="110" r="3.0" fill="#1A150F" opacity="0.31"/>
-          <circle cx="266" cy="53" r="3.0" fill="#1A150F" opacity="0.56"/>
-          <circle cx="109" cy="34" r="2.2" fill="#1A150F" opacity="0.59"/>
-          <circle cx="137" cy="205" r="2.2" fill="#1A150F" opacity="0.46"/>
-          <circle cx="55" cy="148" r="2.2" fill="#1A150F" opacity="0.37"/>
-          <circle cx="182" cy="37" r="1.6" fill="#1A150F" opacity="0.49"/>
-          <circle cx="39" cy="153" r="1.6" fill="#1A150F" opacity="0.42"/>
-          <circle cx="354" cy="92" r="1.6" fill="#1A150F" opacity="0.65"/>
-          <circle cx="222" cy="190" r="1.6" fill="#1A150F" opacity="0.50"/>
-          <circle cx="321" cy="207" r="2.2" fill="#1A150F" opacity="0.36"/>
-          <circle cx="331" cy="162" r="2.2" fill="#1A150F" opacity="0.43"/>
-          <circle cx="222" cy="72" r="1.6" fill="#1A150F" opacity="0.66"/>
-          <circle cx="313" cy="70" r="2.2" fill="#1A150F" opacity="0.35"/>
-          <circle cx="57" cy="189" r="1.6" fill="#1A150F" opacity="0.65"/>
-          <circle cx="351" cy="150" r="2.2" fill="#1A150F" opacity="0.64"/>
-          <circle cx="262" cy="126" r="1.6" fill="#1A150F" opacity="0.46"/>
-          <circle cx="109" cy="82" r="3.0" fill="#1A150F" opacity="0.53"/>
-          <circle cx="270" cy="191" r="2.2" fill="#1A150F" opacity="0.61"/>
-          <circle cx="46" cy="34" r="3.0" fill="#1A150F" opacity="0.40"/>
-          <circle cx="330" cy="205" r="3.0" fill="#1A150F" opacity="0.51"/>
-          <circle cx="331" cy="144" r="1.6" fill="#1A150F" opacity="0.64"/>
-          <circle cx="363" cy="99" r="2.2" fill="#1A150F" opacity="0.52"/>
-          <circle cx="140" cy="60" r="2.2" fill="#1A150F" opacity="0.56"/>
-          <circle cx="259" cy="137" r="3.0" fill="#1A150F" opacity="0.37"/>
-          <circle cx="358" cy="98" r="2.2" fill="#1A150F" opacity="0.45"/>
-          <circle cx="185" cy="78" r="1.6" fill="#1A150F" opacity="0.36"/>
-          <circle cx="262" cy="96" r="11" fill="none" stroke="#E0483B" stroke-width="2" stroke-dasharray="4 3"/><circle cx="262" cy="96" r="3.4" fill="#E0483B"/>
-          <text x="262" y="74" text-anchor="middle" font-family="ui-monospace,monospace" font-size="13" font-weight="800" fill="#E0483B">?</text>
-          <path d="M4 22V4h18M378 4h18v18M396 238v18h-18M22 256H4v-18" fill="none" stroke="#1A150F" stroke-width="1.6"/>
-          </svg>
-          <p><b>Loading 12,966 player-seasons&hellip;</b><br/>placed by how they played. If the map can&rsquo;t load, the search box below keeps the game fully playable.</p>
+      <div class="mh-map card--void">
+        <div class="embed3d-mount" data-variant="game" role="group" aria-label="The 3D player map: tap a point to guess">
+          <div class="embed3d-placeholder state state--loading"><p><b>Loading the map&hellip;</b><br/>If it can&rsquo;t load, a search box takes its place and the game stays fully playable.</p></div>
         </div>
       </div>
       <noscript><div class="card mh-noscript"><p><b>Map Hunt needs JavaScript</b> for the 3D map and distance feedback. The classic game works the same idea with text: <a href="/play">play Daily Court →</a></p></div></noscript>
@@ -134,7 +74,7 @@
   <details class="disclosure provenance">
     <summary>How the hunt works</summary>
     <div class="disclosure__body">
-      <p class="caption">The mystery is one of 64 notable player-seasons, the same star for everyone today, picked by the calendar. Distance is cosine distance in the 64-d MTNN v5 embedding (L2-normalized), the same space the twin engine uses. Twin Hunt hands you a player and asks for their <b>era twin</b> — the season from another decade that plays most alike, straight from the same twin data as Daily Court.</p>
+      <p class="caption">The mystery is one of <span id="mh-pool-count">1,313</span> notable player-seasons, the same star for everyone today, picked by the calendar. Warmer and colder come from distance in the model&rsquo;s embedding, the same space the twin engine uses. Twin Hunt hands you a player and asks for their <b>era twin</b>: the season from another decade that plays most alike, from the same twin data as Daily Court. <a href="/methods#the-model">How the model measures style</a></p>
     </div>
   </details>
 </main>
@@ -171,7 +111,8 @@
 <!-- /footer:stamped -->
 <script src="/assets/embed-3d.js?v=9e81f90c"></script>
 <script src="assets/toast.js?v=06285043"></script>
-<script src="assets/map-hunt.js?v=a7675f0d"></script>
+<script src="assets/map-hunt.js?v=6e8071c0"></script>
 <script src="assets/viral-share.js?v=cf0464c7"></script>
+<script src="assets/site-facts.js?v=f8edaf37" defer></script>
 <script src="assets/site-nav.js?v=13e9219d" defer></script>
 </body></html>

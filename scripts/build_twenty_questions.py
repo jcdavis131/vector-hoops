@@ -8,8 +8,10 @@ Reads only committed files (no network, no models, no pipeline cache):
 
 Writes:
   assets/twenty-questions-tree.json  decision tree + compact player table
-  assets/twenty-questions-map.json   per-season [x, y, playerIdx] for the
-                                     live-dimming map (12,966 points)
+  assets/twenty-questions-map.json   career index per player-season, in
+                                     vectors.json row order (12,966 ints): row i
+                                     is Embed3D point i, so the page dims the
+                                     shared 3D map with setDim()
 
 Method: players are grouped by person_id (2,426 careers). Each career gets
 human-answerable boolean attributes (position, era span, style cluster,
@@ -116,8 +118,12 @@ class Player:
         return f"{self.name} ({short_year(self.first)}-{short_year(self.last)})"
 
 
-def load_players() -> tuple[list[Player], list[tuple[float, float, int]]]:
-    """Aggregate the 12,966 seasons into careers. Returns (players, map_pts)."""
+def load_players() -> tuple[list[Player], list[int]]:
+    """Aggregate the 12,966 seasons into careers.
+
+    Returns (players, career_of_row): career_of_row[i] is the career index of
+    vectors.json row i, which is also point i of assets/projections/embed3d.json.
+    """
     v = json.loads(VECTORS.read_text())
     rows = v["players"]
     aa = json.loads(ARCHETYPES.read_text())
@@ -125,11 +131,13 @@ def load_players() -> tuple[list[Player], list[tuple[float, float, int]]]:
     honors = json.loads(HONORS.read_text())["bySeason"]
 
     by_person: dict[str, list[dict]] = defaultdict(list)
-    for r in rows:
+    row_of: dict[int, int] = {}
+    for i, r in enumerate(rows):
         by_person[r["person_id"]].append(r)
+        row_of[id(r)] = i
 
     players: list[Player] = []
-    map_pts: list[tuple[float, float, int]] = []
+    career_of_row: list[int] = [-1] * len(rows)
     for person_id in sorted(by_person):
         rs = by_person[person_id]
         pl = Player(len(players), rs[0]["name"], person_id)
@@ -154,13 +162,14 @@ def load_players() -> tuple[list[Player], list[tuple[float, float, int]]]:
                     pl.allstar = True
                 if hz.get("allNbaTeam", 0) >= 1:
                     pl.allnba = True
-            map_pts.append((round(r["x"], 3), round(r["y"], 3), pl.idx))
+            career_of_row[row_of[id(r)]] = pl.idx
         if pos_votes:
             pl.pos = max(pos_votes, key=lambda k: pos_votes[k])
         if clu_votes:
             pl.cluster = max(clu_votes, key=lambda k: clu_votes[k])
         players.append(pl)
-    return players, map_pts
+    assert min(career_of_row) >= 0, "every row belongs to a career"
+    return players, career_of_row
 
 
 def last_name(p: Player) -> str:
@@ -338,12 +347,12 @@ def main() -> int:
     ap.add_argument("--check", action="store_true", help="verify shipped files match a fresh build")
     args = ap.parse_args()
 
-    players, map_pts = load_players()
+    players, career_of_row = load_players()
     dupes = defaultdict(list)
     for p in players:
         dupes[p.name].append(p.idx)
     dup_names = {k: v for k, v in dupes.items() if len(v) > 1}
-    print(f"players: {len(players)}  map points: {len(map_pts)}")
+    print(f"players: {len(players)}  map rows: {len(career_of_row)}")
     print(f"duplicate display names: {len(dup_names)}" + (f" e.g. {list(dup_names)[:3]}" if dup_names else ""))
 
     nodes, questions, depths, paths = build_tree(players)
@@ -386,9 +395,9 @@ def main() -> int:
             "n_players": len(players),
             "max_questions": MAX_QUESTIONS,
             "worst_case": worst,
-            "note": "Map dims by eliminated careers; xyz shown are the "
-            "site's 2-D atlas projection of the 14 era-normalised "
-            "per-100 features, not the 64-d MTNN embedding.",
+            "note": "The page dims the shared 3D map (assets/projections/"
+            "embed3d.json, the 64-d embedding's projection) by eliminated "
+            "careers, joined through twenty-questions-map.json.",
         },
         "questions": questions,
         "players": ptab,
@@ -396,13 +405,15 @@ def main() -> int:
         "tree": nodes,
     }
     map_doc = {
-        "built": "2026-10-20",
+        "built": "2026-10-24",
         "lineage": {
             "source": "assets/vectors.json",
-            "fields": ["x", "y", "playerIdx"],
-            "note": "2-D atlas projection (PCA of the 14 era-normalised per-100 features)",
+            "fields": ["career"],
+            "note": "career[i] = index into twenty-questions-tree.json players for "
+            "vectors.json row i (== Embed3D point i); careers are person_id groups "
+            "in sorted person_id order",
         },
-        "points": [[x, y, pi] for x, y, pi in map_pts],
+        "career": career_of_row,
     }
 
     def dump(doc: object) -> str:

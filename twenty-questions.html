@@ -21,10 +21,10 @@
 <link rel="stylesheet" href="assets/fonts.css?v=8f376b2a"/>
 <link rel="stylesheet" href="assets/atlas.css?v=31711e9d"/>
 <link rel="stylesheet" href="assets/shell.css?v=398d5e37"/>
-<link rel="stylesheet" href="assets/game.css?v=0e919957"/>
+<link rel="stylesheet" href="assets/game.css?v=d663ac90"/>
 </head><body class="game game--tq">
 <a class="skip-link" href="#main">Skip to content</a>
-<noscript><div role="alert" style="padding:16px;text-align:center">Enable JavaScript — Twenty Questions needs it to ask, filter and draw the map.</div></noscript>
+<noscript><p class="game-noscript">Enable JavaScript: Twenty Questions needs it to ask, filter and draw the map.</p></noscript>
 
 <nav class="site-nav" data-active="/twenty-questions" aria-label="Vector Hoops site"></nav>
 <div id="main" class="main main--narrow" role="main">
@@ -32,7 +32,7 @@
   <header class="title-card">
     <div class="title-card__eyebrow">TWENTY QUESTIONS &middot; THE MAP DIMS AS YOU ANSWER</div>
     <h1 class="title-card__title">Think of a <em>player</em>.</h1>
-    <p class="title-card__lede">Answer up to 20 yes/no questions. Every answer dims the careers it can&rsquo;t be &mdash; live, on the real embedding map &mdash; until one player is left.</p>
+    <p class="title-card__lede">Answer up to 20 yes/no questions. Every answer dims the careers it can&rsquo;t be &mdash; live, on the player map &mdash; until one player is left.</p>
     <div class="game-status">
       <span class="pill" id="pill-q">Q 0/20</span>
       <span class="pill" id="pill-left">2,426 careers</span>
@@ -40,12 +40,6 @@
       <button class="chip-link" id="btn-restart" type="button">Restart</button>
     </div>
   </header>
-
-  <div id="map-wrap">
-    <canvas id="tq-canvas" role="img" aria-label="Map of 12,966 player-seasons. Points dim as your answers rule out careers."></canvas>
-    <div id="map-overlay"><span class="chip" id="map-fact">12,966 player-seasons</span><span class="chip">dim = ruled out</span></div>
-    <div id="map-legend"><b>Map</b> <span class="legend-long">2-D atlas projection of the 14 era-normalized per-100 stat features. </span>Bright = still possible &middot; faint = ruled out.</div>
-  </div>
 
   <section class="card" id="q-card" aria-labelledby="q-text" aria-busy="true">
     <p class="small-mono" id="q-count">Question 1</p>
@@ -87,6 +81,11 @@
     <button class="btn btn-primary" id="btn-retry" type="button">Retry</button>
   </div>
 
+  <section class="tq-map-section" aria-label="The player map">
+    <div id="map-wrap" class="card--void"><div id="tq-map" class="tq-map" data-variant="game" role="group" aria-label="The player map: one dot per player-season. Seasons fade as your answers rule out careers."></div></div>
+    <p class="caption tq-map-key">Faded dots are careers your answers have ruled out. When the game names your player, their seasons light up.</p>
+  </section>
+
   <details class="disclosure">
     <summary>How to play</summary>
     <div class="disclosure__body caption">
@@ -94,19 +93,9 @@
         <li>Think of any NBA player with a charted season since 1996 &mdash; 2,426 careers are in the tree.</li>
         <li>Questions come from real career data: position, era, play style, Skills Lens tags, All-Star / All-NBA honours.</li>
         <li>Every career resolves within 20 questions.</li>
-        <li>The map plots all 12,966 player-seasons by how they played &mdash; the site&rsquo;s atlas view.</li>
+        <li>The map is the site&rsquo;s 3D player map: one dot per season, placed by how that season was played. Tap a dot to see who it is.</li>
         <li>Keyboard: <kbd>Y</kbd> yes, <kbd>N</kbd> no, <kbd>U</kbd> not sure.</li>
-      </ul>
-    </div>
-  </details>
-
-  <details class="disclosure provenance">
-    <summary>How it was built</summary>
-    <div class="disclosure__body caption">
-      <ul>
-        <li>The tree is built offline for maximum information gain; every career resolves within 20 questions (worst case observed: 18).</li>
-        <li>The map is a 2-D projection of the 14 era-normalized per-100 features &mdash; the site&rsquo;s atlas view, not the 64-d MTNN embedding itself.</li>
-        <li>Provenance: tree built 2026-10-20 from the season vectors, archetype assignments and honors data &mdash; greedy max-information-gain, worst case 18 questions observed. Map: PCA of the 14 era-normalized per-100 features.</li>
+        <li>How the map is made: <a href="/methods#the-map">Methods</a>.</li>
       </ul>
     </div>
   </details>
@@ -147,8 +136,9 @@
 
 <script src="assets/error-boundary.js?v=8079215c"></script>
 <script src="assets/keyboard-a11y.js?v=e79ec37c"></script>
-<script src="assets/engagement.js?v=9afde51a"></script>
+<script src="assets/engagement.js?v=d7430330"></script>
 <script src="assets/site-nav.js?v=13e9219d" defer></script>
 <script src="assets/toast.js?v=06285043"></script>
-<script src="assets/inline-twenty-questions.js?v=90b98a73"></script>
+<script src="/assets/embed-3d.js?v=9e81f90c"></script>
+<script src="assets/inline-twenty-questions.js?v=826da79f"></script>
 </body></html>

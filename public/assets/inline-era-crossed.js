@@ -48,7 +48,7 @@ function round(){
   var box=$('opts');box.innerHTML='';
   r.o.forEach(function(o,i){
     var b=document.createElement('button');
-    b.type='button';b.className='opt';b.dataset.i=i;
+    b.type='button';b.className='card opt';b.dataset.i=i;
     b.innerHTML='<span class="nm">'+esc(o.n)+'</span><span class="ss">'+esc(o.s)+' \u00B7 <kbd>'+(i+1)+'</kbd></span>';
     b.addEventListener('click',function(){pick(i);});
     box.appendChild(b);
@@ -77,7 +77,7 @@ function pick(i){
   });
   var truth=r.o.filter(function(o){return o.correct;})[0];
   var note=$('reveal-note');note.hidden=false;
-  note.textContent=(hit?'\u2713 Correct. ':'\u2717 Not quite. ')+truth.n+' ('+truth.s+') is the closest twin at similarity '+Math.round(truth.sim*100)+' \u2014 embedding cosine \u00D7 100.';
+  note.textContent=(hit?'\u2713 Correct. ':'\u2717 Not quite. ')+truth.n+' ('+truth.s+') is the closest twin, similarity '+Math.round(truth.sim*100)+' out of 100.';
   $('btn-next').hidden=false;
   paintStatus();paintDots();
   $('btn-next').focus();
@@ -97,37 +97,43 @@ function finish(){
 
 /* ---------- share ---------- */
 function shareText(){
-  return '\ud83d\udd00 Era Crossed \u2014 Vector Hoops\n'+score+'/'+ROUNDS_PER_GAME+' twins spotted (streak '+store.streak+')\nPlay: https://hoops.dumbmodel.com/play/era-crossed.html';
+  return '\ud83d\udd00 Era Crossed \u2014 Vector Hoops\n'+score+'/'+ROUNDS_PER_GAME+' twins spotted (streak '+store.streak+')\nPlay: https://hoops.dumbmodel.com/play/era-crossed';
 }
+/* The card is drawn in the page's own tokens, so it follows the visitor's theme. */
+function tok(n,fb){var v='';try{v=getComputedStyle(document.documentElement).getPropertyValue(n).trim();}catch(e){}return v||fb;}
 function shareCard(){
   var W=1080,H=1350,c=document.createElement('canvas');c.width=W;c.height=H;
   var x=c.getContext('2d');
-  x.fillStyle='#FCFBF7';x.fillRect(0,0,W,H);
-  x.strokeStyle='#232323';x.lineWidth=18;x.strokeRect(10,10,W-20,H-20);
-  x.fillStyle='#232323';x.fillRect(0,0,W,110);
-  x.fillStyle='#FCFBF7';x.font='700 30px ui-monospace,monospace';
+  var bg=tok('--bg','white'), fg=tok('--fg','black'), fg2=tok('--fg-2','dimgray'), fg3=tok('--fg-3','gray');
+  var accent=tok('--accent','firebrick'), ok=tok('--ok','seagreen');
+  var face=getComputedStyle(document.body).fontFamily, mono=tok('--font-code',face), disp=tok('--font-display',face);
+  x.fillStyle=bg;x.fillRect(0,0,W,H);
+  x.strokeStyle=fg;x.lineWidth=18;x.strokeRect(10,10,W-20,H-20);
+  x.fillStyle=fg;x.fillRect(0,0,W,110);
+  x.fillStyle=bg;x.font='700 30px '+mono;
   x.fillText('VECTOR HOOPS \u00B7 ERA CROSSED',36,48);
-  x.font='700 22px ui-monospace,monospace';x.fillStyle='#E7E4DA';
-  x.fillText('past star \u2192 closest modern twin \u00B7 64-d embedding',36,84);
-  x.fillStyle='#E0483B';x.font='800 44px ui-sans-serif,system-ui';
+  x.font='700 22px '+mono;x.globalAlpha=.75;
+  x.fillText('past star \u2192 closest modern twin',36,84);
+  x.globalAlpha=1;
+  x.fillStyle=accent;x.font='800 44px '+disp;
   x.fillText(score+'/'+ROUNDS_PER_GAME+' twins spotted',48,220);
-  x.fillStyle='#232323';x.font='700 30px ui-monospace,monospace';
+  x.font='700 30px '+mono;
   var y=320;
   order.forEach(function(r,i){
     var mark=r.hit?'\u2713':'\u2717';
-    x.fillStyle=r.hit?'#8A9A8B':'#E0483B';
+    x.fillStyle=r.hit?ok:accent;
     x.fillText(mark,48,y);
-    x.fillStyle='#232323';
+    x.fillStyle=fg;
     var label=(i+1)+'. '+r.a+' \u2192 '+(r.o.filter(function(o){return o.correct;})[0]||{}).n;
     if(label.length>44)label=label.slice(0,43)+'\u2026';
     x.fillText(label,110,y);
     y+=62;
   });
-  x.fillStyle='#57574F';x.font='700 26px ui-monospace,monospace';
+  x.fillStyle=fg2;x.font='700 26px '+mono;
   x.fillText('Streak '+store.streak+' \u00B7 best '+store.best+'/'+ROUNDS_PER_GAME,48,y+20);
-  x.fillStyle='#232323';x.font='700 30px ui-monospace,monospace';
-  x.fillText('hoops.dumbmodel.com/play/era-crossed.html',48,H-90);
-  x.font='700 22px ui-monospace,monospace';x.fillStyle='#6E6E66';
+  x.fillStyle=fg;x.font='700 30px '+mono;
+  x.fillText('hoops.dumbmodel.com/play/era-crossed',48,H-90);
+  x.font='700 22px '+mono;x.fillStyle=fg3;
   x.fillText('Free \u00B7 No account \u00B7 No ads \u00B7 Real data only',48,H-52);
   return c;
 }
