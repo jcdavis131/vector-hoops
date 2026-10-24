@@ -26,71 +26,38 @@
 <meta name="twitter:description" content="An atlas of 12,966 NBA player-seasons. Pick one; the model returns the three that play most alike."/>
 <meta name="twitter:image" content="https://hoops.dumbmodel.com/assets/og-1200x630.png"/>
 <link rel="stylesheet" href="assets/fonts.css?v=8f376b2a"/>
-<link rel="preload" href="/assets/vectors_search_lite.json" as="fetch" crossorigin/>
 <link rel="stylesheet" href="/assets/atlas.css?v=31711e9d"/>
 <link rel="stylesheet" href="/assets/shell.css?v=398d5e37"/>
 <style>
-/* ---------- Home: hero ---------- */
+/* Home layout only: every colour, card, plate, stat, row, button and state is the kit (atlas.css). */
+.home .main{ padding-top: 0; }
+
+/* ---------- hero: one title, one action (search the atlas) ---------- */
+.hero{ max-width: 1040px; }
 .hero__title{
   margin: 0;
-  font-family: var(--font-display);
-  font-size: var(--t-hero);
+  font-family: var(--font-display); font-size: var(--t-hero);
   font-weight: 700; font-stretch: 94%;
   line-height: .92; letter-spacing: -.035em;
   text-wrap: balance;
 }
 .hero__title span{ display: block; }
 .hero__title em{ font-style: normal; color: var(--accent); }
-
-/* ---------- Home: one hero, one action (search the atlas) ---------- */
-.hero{ padding-top: clamp(40px, 7vw, 96px); padding-bottom: clamp(24px, 3.4vw, 44px); max-width: 1040px; }
 .hero__lede{ max-width: 54ch; }
 .hero-search{ position: relative; z-index: 40; width: 100%; max-width: 600px; margin: var(--s-2) auto 0; }
-.hero-search .atlas-search input{ height: 58px; padding-left: 48px; font-size: 17px; border-radius: 999px; border-width: 1.5px; border-color: var(--line-2); box-shadow: 0 10px 30px rgba(0,0,0,.06); }
+.hero-search .atlas-search input{ height: 58px; padding-left: 48px; font-size: var(--t-md); border-radius: 999px; border-width: 1.5px; border-color: var(--line-2); }
 .hero-search .atlas-search input:focus{ border-color: var(--accent); outline: none; box-shadow: 0 0 0 4px var(--accent-wash); }
 .hero-search .atlas-search svg{ left: 19px; width: 18px; height: 18px; }
 .hero-search .atlas-results{ text-align: left; }
-.hero__try{ display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 8px 14px; margin-top: var(--s-3); font-size: 14px; color: var(--fg-3); }
-.hero__try .btn{ min-height: 40px; }
-.hero .vh-totd--compact{ margin: 0; max-width: none; padding: 0; font-size: 14px; color: var(--fg-2); }
+.hero__try{ display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: var(--s-2) var(--s-3); margin-top: var(--s-3); font-size: var(--t-sm); color: var(--fg-3); }
+/* Twin of the day (engagement.js fills #totd-slot) */
+.hero .vh-totd--compact{ margin: 0; max-width: none; padding: 0; font-size: var(--t-sm); color: var(--fg-2); }
 .vh-totd--compact .vh-totd__k{ display: inline; margin: 0 6px 0 0; }
 .vh-totd--compact a{ color: var(--fg); font-weight: 650; }
 .vh-totd--compact a:hover{ color: var(--accent); }
-.vh-totd__why{ display: block; margin-top: 2px; font-size: 11.5px; color: var(--fg-3); }
+.vh-totd__why{ display: block; margin-top: 2px; font-size: var(--t-xs); color: var(--fg-3); }
 
-/* ---------- Home: tonight strip (ESPN's public scoreboard, quiet on failure) ---------- */
-.tonight{ display: flex; flex-wrap: wrap; align-items: center; gap: 8px 16px; width: 100%; box-sizing: border-box; max-width: var(--content); margin: 0 auto var(--s-6); padding: 12px clamp(14px, 2.4vw, 22px); border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--surface-2); }
-.tonight__k{ display: inline-flex; align-items: center; gap: 7px; font-family: var(--font-display); font-size: var(--t-2xs); font-weight: 700; letter-spacing: .2em; text-transform: uppercase; color: var(--accent-2); }
-.tonight__dot{ width: 8px; height: 8px; border-radius: 50%; background: var(--line-2); flex: none; }
-.tonight.is-live .tonight__dot{ background: var(--accent); animation: tonight-pulse 1.6s ease-in-out infinite; }
-@keyframes tonight-pulse{ 50%{ opacity: .35; } }
-.tonight__text{ margin: 0; font-size: 14px; color: var(--fg-2); min-width: 0; }
-.tonight__games{ display: flex; flex-wrap: wrap; gap: 6px; list-style: none; margin: 0; padding: 0; }
-.tonight__games li{ padding: 4px 10px; border: 1px solid var(--line); border-radius: 999px; background: var(--surface); font-size: 12.5px; color: var(--fg-2); font-variant-numeric: tabular-nums; white-space: nowrap; }
-.tonight__games li b{ color: var(--fg); font-weight: 650; }
-.tonight__games li.is-live{ border-color: var(--accent-line); }
-.tonight__links{ display: flex; flex-wrap: wrap; gap: 6px 16px; margin-left: auto; font-family: var(--font-display); font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
-.tonight__links a{ color: var(--fg); }
-.tonight__links a:hover{ color: var(--accent); }
-
-/* ---------- Home: advanced atlas controls, folded ---------- */
-.atlas-more{ margin-top: var(--s-4); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
-.atlas-more > summary{ display: flex; align-items: center; gap: 10px; min-height: 48px; cursor: pointer; list-style: none; font-family: var(--font-display); font-size: 11px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--fg-2); }
-.atlas-more > summary::-webkit-details-marker{ display: none; }
-.atlas-more > summary::before{ content: "+"; display: inline-grid; place-content: center; width: 24px; height: 24px; border: 1px solid var(--line-2); border-radius: 50%; font-size: 14px; letter-spacing: 0; }
-.atlas-more[open] > summary::before{ content: "\2212"; }
-.atlas-more > summary:hover{ color: var(--fg); }
-.atlas-more > summary span{ font-family: var(--font-text); font-size: 12.5px; font-weight: 400; letter-spacing: 0; text-transform: none; color: var(--fg-3); }
-.atlas-more__body{ padding: 4px 0 var(--s-4); }
-.atlas-more__row{ display: flex; flex-wrap: wrap; gap: 12px 20px; align-items: center; margin-bottom: 8px; }
-/* ---------- Home: the instrument ---------- */
-.instrument{ width: 100%; max-width: var(--content); margin: 0 auto; }
-.instrument__bar{
-  display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: var(--s-2) var(--s-4);
-  padding: 0 0 var(--s-3);
-}
-.instrument__bar .label:last-child{ text-align: right; }
-.fig-label b{ color: var(--fg); font-weight: 700; }
+/* ---------- search ---------- */
 .atlas-search{ position: relative; }
 .atlas-search input{ padding-left: 40px; height: 44px; background: var(--surface); }
 .atlas-search svg{ position: absolute; left: 14px; top: 50%; width: 16px; height: 16px; transform: translateY(-50%); color: var(--fg-3); pointer-events: none; }
@@ -98,281 +65,85 @@
   position: absolute; z-index: 30; left: 0; right: 0; top: calc(100% + 6px);
   list-style: none; margin: 0; padding: 4px;
   background: var(--surface); border: 1px solid var(--line-2); border-radius: var(--radius);
-  box-shadow: 0 20px 50px rgba(0,0,0,.35);
+  box-shadow: 5px 5px 0 var(--step);
   max-height: 340px; overflow: auto;
 }
-.atlas-results li{ display: flex; justify-content: space-between; gap: 12px; padding: 10px 12px; border-radius: 3px; cursor: pointer; font-size: 14px; color: var(--fg); }
+.atlas-results li{ display: flex; justify-content: space-between; gap: 12px; min-height: 44px; align-items: center; padding: 0 12px; border-radius: 3px; cursor: pointer; font-size: var(--t-base); color: var(--fg); }
 .atlas-results li .num{ color: var(--fg-3); }
 .atlas-results li.is-active, .atlas-results li:hover{ background: var(--surface-2); }
 .atlas-results li.is-active{ box-shadow: inset 2px 0 0 var(--accent); }
 .atlas-results li.atlas-results__empty{ color: var(--fg-3); cursor: default; }
 
-.field{
-  position: relative;
-  aspect-ratio: 16 / 8.2;
-  min-height: 360px;
-  background:
-    radial-gradient(60% 70% at 50% 50%, rgba(255,255,255,.035), transparent 70%),
-    var(--void);
-  border: 1px solid var(--line);
-  border-radius: var(--radius-lg);
-  overflow: hidden;
-  isolation: isolate;
-}
-.field canvas{ position: absolute; inset: 0; width: 100%; height: 100%; display: block; cursor: crosshair; touch-action: manipulation; }
-.axis{
-  position: absolute; z-index: 2; pointer-events: none;
-  font-family: var(--font-display); font-size: 9.5px; font-weight: 600; font-stretch: 112%;
-  letter-spacing: .2em; text-transform: uppercase; color: rgba(214,222,232,.55);
-}
-.axis--l{ left: 14px; top: 50%; transform: translateY(-50%) rotate(180deg); writing-mode: vertical-rl; }
-.axis--r{ right: 14px; top: 50%; transform: translateY(-50%); writing-mode: vertical-rl; }
-.axis--t{ top: 12px; left: 50%; transform: translateX(-50%); }
-.axis--b{ bottom: 12px; left: 50%; transform: translateX(-50%); }
+/* ---------- tonight strip (ESPN's public scoreboard, quiet on failure) ---------- */
+.tonight{ display: flex; flex-wrap: wrap; align-items: center; gap: var(--s-2) var(--s-3); width: 100%; box-sizing: border-box; max-width: var(--content); margin: 0 auto; padding: 8px clamp(14px, 2.4vw, 22px); border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--surface-2); }
+.tonight__k{ display: inline-flex; align-items: center; gap: 7px; font-family: var(--font-display); font-size: var(--t-2xs); font-weight: 700; letter-spacing: .2em; text-transform: uppercase; color: var(--accent-2); }
+.tonight__dot{ width: 8px; height: 8px; border-radius: 50%; background: var(--line-2); flex: none; }
+.tonight.is-live .tonight__dot{ background: var(--accent); animation: tonight-pulse 1.6s ease-in-out infinite; }
+@keyframes tonight-pulse{ 50%{ opacity: .35; } }
+.tonight__text{ margin: 0; font-size: var(--t-base); color: var(--fg-2); min-width: 0; }
+.tonight__games{ display: flex; flex-wrap: wrap; gap: 6px; list-style: none; margin: 0; padding: 0; }
+.tonight__games li{ padding: 4px 10px; border: 1px solid var(--line); border-radius: 999px; background: var(--surface); font-size: var(--t-sm); color: var(--fg-2); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.tonight__games li b{ color: var(--fg); font-weight: 650; }
+.tonight__games li.is-live{ border-color: var(--accent-line); }
+.tonight__links{ display: flex; flex-wrap: wrap; gap: 0 var(--s-3); margin-left: auto; font-family: var(--font-display); font-size: var(--t-xs); font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+.tonight__links a{ display: inline-flex; align-items: center; min-height: 44px; color: var(--fg); }
+.tonight__links a:hover{ color: var(--accent); }
 
-/* ---------- atlas regions (Part 2 panel) ---------- */
-.trust-badge{ font-size: 11px; color: var(--fg-3); max-width: 300px; }
-.trust-badge summary{
-  cursor: pointer; list-style: none; display: inline-block;
-  border-bottom: 1px dotted var(--line-2); padding-bottom: 1px;
-}
-.trust-badge summary::-webkit-details-marker{ display: none; }
-.trust-badge summary::before{ content: "◈ "; color: var(--pencil-text); }
-.trust-badge[open] summary{ color: var(--fg-2); }
-.trust-badge p{ margin: 6px 0 0; line-height: 1.5; color: var(--fg-2); }
-#region-layer{ position: absolute; inset: 0; z-index: 2; pointer-events: none; }
-.region-tag{
-  position: absolute; transform: translate(-50%, -50%);
-  display: inline-flex; align-items: center; gap: 6px;
-  padding: 5px 9px; border-radius: 999px; white-space: nowrap;
-  font-family: var(--font-display); font-size: 10px; font-weight: 600;
-  letter-spacing: .08em; text-transform: uppercase;
-  color: rgba(236,238,241,.92); background: rgba(7,9,12,.62);
-  border: 1px solid rgba(255,255,255,.16); cursor: pointer; pointer-events: auto;
-  -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
-}
-.region-tag:hover{ border-color: rgba(255,255,255,.45); color: #fff; }
-.region-tag[aria-pressed="true"]{ border-color: var(--marker-red); color: #fff; }
-.region-tag__dot{ width: 6px; height: 6px; border-radius: 50%; background: var(--accent); flex: none; }
-#region-layer.is-regions .region-tag{ font-size: 11.5px; padding: 8px 13px; }
-#region-layer.is-regions .region-tag__dot{ width: 9px; height: 9px; }
-.region-tag.is-collided{ display: none; }
-/* v4 honesty grammar — embedding-truth vs map-approximation surfaces.
-   truth (64-d MTNN embedding: twin bands, peers, game feedback): solid marker.
-   approximation (the 2-D atlas of 14 stats): dashed marker. Light touch. */
-.vh-truth{ border-inline-start: 3px solid var(--accent, #e0762e); padding-inline-start: 10px; }
-.vh-approx{ border-inline-start: 3px dashed var(--line-2, #999); padding-inline-start: 10px; }
-#sky-canvas.is-regions{ opacity: .22; transition: opacity var(--dur-2) var(--ease); }
-#region-layer.has-selection .region-tag:not([aria-pressed="true"]){ opacity: .45; }
-.region-strip{
-  display: flex; gap: 8px; overflow-x: auto; padding: 10px 2px 4px;
-  -webkit-overflow-scrolling: touch; scrollbar-width: thin;
-}
-.region-chip{
-  flex: none; display: inline-flex; align-items: baseline; gap: 8px;
-  padding: 9px 13px; border: 1px solid var(--line); border-radius: 999px;
-  background: var(--surface-2); color: var(--fg-2); cursor: pointer;
-  font-family: var(--font-text); font-size: 12.5px; white-space: nowrap;
-}
-.region-chip .num{ font-size: 11px; color: var(--fg-3); }
-.region-chip:hover{ color: var(--fg); border-color: var(--line-2); }
-.region-chip[aria-pressed="true"]{ color: var(--fg); border-color: var(--accent); box-shadow: inset 0 -2px 0 var(--accent); }
-.region-note{
-  margin: 6px 0 0; font-size: 11.5px; color: var(--fg-3);
-  border-left: 2px solid var(--accent); padding-left: 10px;
-}
-.region-panel{
-  margin-top: 10px; padding: 16px; background: var(--surface-2);
-  border: 1px solid var(--line); border-radius: var(--radius-lg);
-}
-.region-panel__head{ display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
-.region-panel__name{ margin: 2px 0 0; font-family: var(--font-display); font-size: 19px; }
-.region-panel__close{
-  flex: none; width: 32px; height: 32px; border-radius: 50%;
-  border: 1px solid var(--line); background: none; color: var(--fg-2);
-  font-size: 18px; line-height: 1; cursor: pointer;
-}
-.region-panel__close:hover{ color: var(--fg); border-color: var(--line-2); }
-.region-panel__blurb{ margin: 8px 0 0; font-size: 14px; color: var(--fg-2); }
-.region-panel__exemplars{ list-style: none; margin: 6px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px 16px; }
-.region-panel__exemplars a{ color: var(--marker-blue); }
-.region-panel__note{ margin: 10px 0 0; font-size: 11px; color: var(--fg-3); }
-.field__fallback{ position: absolute; inset: 0; z-index: 4; overflow: auto; padding: 24px; background: var(--void); color: rgba(236,238,241,.9); }
-.field__fallback ul{ list-style: none; margin: 12px 0; padding: 0; display: grid; gap: 6px; }
-.field__fallback button{
-  background: none; border: 1px solid rgba(255,255,255,.2); border-radius: 999px;
-  color: inherit; padding: 8px 14px; cursor: pointer; font-size: 13px;
-}
-.field__fallback a{ color: #9db8e8; }
-.field__controls{ position: absolute; z-index: 3; right: 12px; bottom: 12px; display: flex; gap: 6px; }
-.field__controls button{
-  height: 32px; padding: 0 12px;
-  font-family: var(--font-display); font-size: 10px; font-weight: 600; font-stretch: 112%; letter-spacing: .14em; text-transform: uppercase;
-  color: rgba(236,238,241,.85); background: rgba(7,9,12,.7); border: 1px solid rgba(255,255,255,.14); border-radius: var(--radius); cursor: pointer;
-  -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
-  transition: border-color var(--dur-1) var(--ease), color var(--dur-1) var(--ease);
-}
-.field__controls button:hover{ border-color: rgba(255,255,255,.4); color: #fff; }
-.hover-tip{
-  position: absolute; z-index: 4; pointer-events: none;
-  transform: translate(-50%, calc(-100% - 14px));
-  display: flex; gap: 10px; align-items: baseline; white-space: nowrap;
-  padding: 7px 10px; font-size: 12.5px; color: #ECEEF1;
-  background: rgba(13,16,21,.94); border: 1px solid rgba(255,255,255,.14); border-radius: var(--radius);
-}
-.hover-tip b{ color: #fff; font-weight: 600; }
-.hover-tip .num{ color: #A7B0BC; }
-.field__state{ position: absolute; inset: 0; z-index: 5; display: grid; place-content: center; gap: 14px; text-align: center; color: #A7B0BC; padding: 24px; }
-.field__state p{ margin: 0; }
-.field__state b{ color: #ECEEF1; }
-.field__loading{ font-family: var(--font-display); font-size: 10px; font-weight: 600; font-stretch: 112%; letter-spacing: .24em; text-transform: uppercase; color: rgba(214,222,232,.55); }
+/* ---------- the atlas (Embed3D variant 'home' paints its own void, bar and note) ---------- */
+.instrument{ width: 100%; max-width: var(--content); margin: 0 auto; }
+.instrument > .share-bar .btn{ flex: 0 1 auto; }
 
-.legend{ display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0; margin-top: var(--s-4); border-top: 1px solid var(--line); }
-.legend-chip{
-  display: flex; justify-content: space-between; align-items: baseline; gap: 10px;
-  padding: 11px 12px 11px 0; min-height: 44px;
-  font-family: var(--font-text); font-size: 12.5px; text-align: left; color: var(--fg-3);
-  background: none; border: 0; border-bottom: 1px solid var(--line); cursor: pointer;
-  transition: color var(--dur-1) var(--ease);
-}
-.legend-chip:nth-child(4n+2), .legend-chip:nth-child(4n+3), .legend-chip:nth-child(4n+4){ padding-left: 16px; border-left: 1px solid var(--line); }
-.legend-chip .num{ font-size: 12px; color: var(--fg-3); }
-.legend-chip:hover{ color: var(--fg); }
-.legend-chip[aria-pressed="true"]{ color: var(--fg); box-shadow: inset 0 -2px 0 var(--accent); }
-.legend-chip[aria-pressed="true"] .num{ color: var(--accent); }
-
-/* ---------- team highlight ---------- */
-.team-highlight{ display: flex; gap: 8px; align-items: center; }
-.team-select{
-  height: 44px; padding: 0 10px; max-width: 210px;
-  border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface);
-  color: var(--fg); font-family: var(--font-display); font-size: 12.5px; font-weight: 600; cursor: pointer;
-}
-.team-cycle{
-  display: inline-flex; align-items: center; gap: 7px; height: 44px; padding: 0 14px;
-  border: 1px solid var(--line); border-radius: var(--radius); background: none; cursor: pointer;
-  color: var(--fg-3); font-family: var(--font-display); font-size: 10px; font-weight: 600;
-  letter-spacing: .14em; text-transform: uppercase;
-  transition: color var(--dur-1) var(--ease), border-color var(--dur-1) var(--ease), background var(--dur-1) var(--ease);
-}
-.team-cycle:hover{ color: var(--fg); border-color: var(--fg-3); }
-.team-cycle[aria-pressed="true"]{ color: #14100a; background: #e8b500; border-color: #e8b500; }
-.team-cycle__icon{ font-size: 9px; }
-.team-caption{
-  position: absolute; top: 12px; left: 12px; z-index: 4;
-  display: flex; align-items: center; gap: 8px; padding: 8px 13px;
-  background: rgba(7,9,12,.8); border: 1px solid rgba(255,255,255,.14); border-radius: 999px;
-  color: #ECEEF1; font-size: 12.5px; pointer-events: none;
-  -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
-}
-.team-caption .dot{ width: 8px; height: 8px; border-radius: 50%; background: #e8b500; flex: 0 0 auto; }
-.team-caption b{ color: #fff; }
-.team-caption .num{ color: #A7B0BC; }
-
-/* ---------- readout ---------- */
-.readout{ display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 0; margin-top: var(--s-6); border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--surface); }
+/* ---------- readout: the selected season and its three twins ---------- */
+.readout{ display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 0; margin-top: var(--s-5); padding: 0; }
 .readout > *{ padding: clamp(20px, 2.6vw, 32px); min-width: 0; }
 .readout > * + *{ border-left: 1px solid var(--line); }
-.readout__label{ font-family: var(--font-display); font-size: var(--t-2xs); font-weight: 600; font-stretch: 112%; letter-spacing: .2em; text-transform: uppercase; color: var(--accent); margin-bottom: 10px; }
-.readout__name{ font-family: var(--font-display); font-size: clamp(26px, 3vw, 36px); font-weight: 700; letter-spacing: -.02em; line-height: 1.05; }
-.readout__facts{ display: grid; grid-template-columns: 1fr 1fr; gap: 0; margin: 20px 0 0; border-top: 1px solid var(--line); }
-.readout__facts > div{ padding: 12px 0; border-bottom: 1px solid var(--line); }
-.readout__facts > div:nth-child(even){ padding-left: 16px; border-left: 1px solid var(--line); }
-.readout__facts dt{ font-family: var(--font-display); font-size: 9.5px; font-weight: 600; font-stretch: 112%; letter-spacing: .16em; text-transform: uppercase; color: var(--fg-3); }
-.readout__facts dd{ margin: 4px 0 0; font-size: 14px; color: var(--fg); font-variant-numeric: tabular-nums; }
-.readout__link{ display: inline-block; margin-top: 18px; font-size: 13px; color: var(--fg-2); text-decoration: none; }
+.readout__name{ margin: 6px 0 0; font-family: var(--font-display); font-size: var(--t-2xl); font-weight: 700; letter-spacing: -.02em; line-height: 1.05; overflow-wrap: anywhere; }
+.readout .stat-strip{ margin-top: var(--s-3); }
+.readout .stat b{ font-size: var(--t-md); }
+.readout__link{ display: inline-flex; align-items: center; min-height: 44px; margin-top: var(--s-2); font-size: var(--t-sm); color: var(--fg-2); }
 .readout__link:hover{ color: var(--accent); }
-.readout__empty{ margin: 0; color: var(--fg-2); }
-.peers__head{ display: flex; justify-content: space-between; align-items: baseline; gap: 12px; margin-bottom: 14px; }
-.peers__title{ font-family: var(--font-display); font-size: var(--t-2xs); font-weight: 600; font-stretch: 112%; letter-spacing: .2em; text-transform: uppercase; color: var(--fg-2); }
-.peers__note{ font-size: 12px; color: var(--fg-3); }
+.readout__empty{ margin: 0; }
+.peers__head{ display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 4px 12px; margin-bottom: 14px; }
+.peers__note{ font-size: var(--t-sm); color: var(--fg-3); }
 #atlas-peers-body tr{ cursor: pointer; }
 #atlas-peers-body tr:focus-visible{ outline: 2px solid var(--accent); outline-offset: -2px; }
 .data-table tbody tr td.peer-name{ color: var(--fg); font-weight: 550; }
-.twin-band{ display: inline; } .twin-band__summary{ display: inline; cursor: pointer; }
-.twin-band--inline{ display: inline; }
-.twin-band__num{ font-variant-numeric: tabular-nums; opacity: .75; font-size: .92em; }
-.twin-band__label{ opacity: .7; }
 .data-table tbody tr td.peer-sim{ color: var(--accent); font-weight: 600; }
-.peers__foot{ margin: 16px 0 0; font-size: 12.5px; line-height: 1.6; color: var(--fg-3); max-width: 62ch; }
-.skeleton{ display: inline-block; height: 10px; width: 120px; border-radius: 2px; background: var(--surface-2); animation: atlas-fade 1.2s var(--ease) infinite alternate; }
-.skeleton--s{ width: 48px; }
+.peers__foot{ margin: var(--s-3) 0 0; max-width: 62ch; }
+/* honesty grammar: solid rule = the model's own answer, dashed = the map's approximation */
+.vh-truth{ border-inline-start: 3px solid var(--accent); padding-inline-start: 10px; }
+.vh-approx{ border-inline-start: 3px dashed var(--line-2); padding-inline-start: 10px; }
+.map-read{ margin-top: var(--s-4); }
+.map-read .map-note{ margin: 0; }
 
-/* ---------- Home: three play doors ---------- */
-.play{ margin-top: var(--s-8); }
-.play__head{ margin: 0 0 var(--s-3); }
+/* ---------- three play doors (kit .card--door) ---------- */
+.play, .lab{ width: 100%; max-width: var(--content); margin: var(--s-6) auto 0; }
 .doors{ display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--s-3); }
-.door{ display: flex; flex-direction: column; gap: 8px; padding: clamp(20px, 2.6vw, 30px); text-decoration: none; color: var(--fg); background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-lg); min-width: 0; transition: border-color var(--dur-2) var(--ease), transform var(--dur-2) var(--ease), box-shadow var(--dur-2) var(--ease); }
-.door:hover{ border-color: var(--line-2); transform: translateY(-2px); box-shadow: 0 14px 34px rgba(0,0,0,.08); }
-.door:focus-visible{ outline: 2px solid var(--accent); outline-offset: 2px; }
-.door__n{ font-family: var(--font-display); font-size: var(--t-2xs); font-weight: 700; font-stretch: 112%; letter-spacing: .2em; text-transform: uppercase; color: var(--accent-2); }
-.door__title{ font-family: var(--font-display); font-size: var(--t-xl); font-weight: 700; letter-spacing: -.02em; line-height: 1.05; }
-.door__text{ margin: 0; font-size: 14px; line-height: 1.55; color: var(--fg-2); }
-.door__meta{ margin: 0; font-size: 12.5px; color: var(--fg-3); }
-.door__go{ margin-top: auto; padding-top: 6px; font-family: var(--font-display); font-size: 10.5px; font-weight: 700; font-stretch: 112%; letter-spacing: .16em; text-transform: uppercase; color: var(--fg); transition: color var(--dur-1) var(--ease), letter-spacing var(--dur-2) var(--ease); }
-.door:hover .door__go{ color: var(--accent); letter-spacing: .2em; }
-
-/* ---------- Home: lab row + footnote ---------- */
-/* ---------- Home: one compact atlas toolbar (G2/T2.2) ---------- */
-.atlas-toolbar{ display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; width: 100%; max-width: var(--content); margin: var(--s-3) auto 0; padding: 10px 14px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--surface); }
-.atlas-toolbar .axes-pick{ display: flex; flex-wrap: wrap; gap: 10px 16px; }
-.atlas-toolbar__btns{ display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-left: auto; }
-.atlas-toolbar__btns > button{
-  height: 40px; padding: 0 14px;
-  font-family: var(--font-display); font-size: 10px; font-weight: 600; font-stretch: 112%; letter-spacing: .14em; text-transform: uppercase;
-  color: var(--fg-2); background: none; border: 1px solid var(--line); border-radius: var(--radius); cursor: pointer;
-}
-.atlas-toolbar__btns > button:hover{ color: var(--fg); border-color: var(--line-2); }
-.atlas-toolbar__btns > button[aria-pressed="true"]{ color: var(--fg); border-color: var(--accent); box-shadow: inset 0 -2px 0 var(--accent); }
-.atlas-toolbar .axes-note{ flex-basis: 100%; margin: 0; }
-.atlas-overflow{ position: relative; }
-.atlas-overflow > summary{ list-style: none; cursor: pointer; height: 40px; display: inline-flex; align-items: center; padding: 0 14px; border: 1px solid var(--line); border-radius: var(--radius); font-family: var(--font-display); font-size: 10px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--fg-2); }
-.atlas-overflow > summary::-webkit-details-marker{ display: none; }
-.atlas-overflow > summary:hover{ color: var(--fg); border-color: var(--line-2); }
-.atlas-overflow__menu{ position: absolute; right: 0; top: calc(100% + 6px); z-index: 30; display: flex; flex-direction: column; gap: 4px; min-width: 180px; padding: 6px; background: var(--surface); border: 1px solid var(--line-2); border-radius: var(--radius); box-shadow: 0 20px 50px rgba(0,0,0,.35); }
-.atlas-overflow__menu button{ text-align: left; padding: 10px 12px; background: none; border: 0; border-radius: 3px; cursor: pointer; font-size: 13.5px; color: var(--fg); min-height: 44px; }
-.atlas-overflow__menu button:hover{ background: var(--surface-2); }
-.atlas-overflow__menu button[aria-pressed="true"]{ box-shadow: inset 2px 0 0 var(--accent); }
-.lab{ margin-top: var(--s-8); }
-.lab__row{ display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0; margin: var(--s-3) 0 0; padding: 0; list-style: none; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
-.lab__row li{ min-width: 0; }
-.lab__row li + li{ border-left: 1px solid var(--line); }
-.lab__row a{ display: block; height: 100%; padding: 14px 16px; text-decoration: none; color: var(--fg-2); font-size: 13px; line-height: 1.5; }
-.lab__row a b{ display: block; margin-bottom: 3px; font-family: var(--font-display); font-size: 15px; letter-spacing: -.01em; color: var(--fg); }
-.lab__row a:hover b{ color: var(--accent); }
-.home-foot{ margin: var(--s-6) auto 0; max-width: 72ch; text-align: center; font-size: 12.5px; line-height: 1.7; color: var(--fg-3); }
+.plate__meta a{ display: inline-flex; align-items: center; min-height: 44px; color: var(--fg-2); }
+.plate__meta a:hover{ color: var(--accent); }
+.lab .row-list__main{ padding: 12px 0; }
+.lab .row-list__main .caption{ display: block; margin-top: 2px; font-weight: 400; }
+.lab .row-list > li > a:hover .row-list__title{ color: var(--accent); }
+.home-foot{ margin: var(--s-6) auto 0; max-width: 72ch; text-align: center; }
 .home-foot a{ color: var(--fg-2); }
+.noscript-note{ padding: var(--s-3); text-align: center; }
+
 @media (max-width: 900px){
-  .team-highlight{ width: 100%; }
-  .team-select{ flex: 1; max-width: none; }
-  .field{ aspect-ratio: 4 / 5; min-height: 0; }
-  .legend{ grid-template-columns: 1fr 1fr; }
-  .legend-chip:nth-child(n){ padding-left: 0; border-left: 0; }
-  .legend-chip:nth-child(even){ padding-left: 14px; border-left: 1px solid var(--line); }
   .readout{ grid-template-columns: 1fr; }
   .readout > * + *{ border-left: 0; border-top: 1px solid var(--line); }
   .doors{ grid-template-columns: 1fr; }
-  .lab__row{ grid-template-columns: 1fr; }
-  .lab__row li + li{ border-left: 0; border-top: 1px solid var(--line); }
   .tonight__links{ margin-left: 0; }
   .hide-s{ display: none; }
-  .field__controls{ top: 10px; bottom: auto; right: 10px; }
-  .axis--t{ left: 14px; transform: none; }
-}
-@media (max-width: 480px){
-  .atlas-more > summary span{ display: none; }
-  .legend-chip{ font-size: 11.5px; }
-  .legend-chip .num{ display: none; }
 }
 </style>
 </head>
 <body class="home">
 <a class="skip-link" href="#main">Skip to content</a>
-<noscript><div role="alert" style="padding:16px;text-align:center">The atlas and the game need JavaScript. Methods and sources are readable without it at <a href="/methods">/methods</a>.</div></noscript>
+<noscript><div role="alert" class="noscript-note">The atlas and the game need JavaScript. Methods and sources are readable without it at <a href="/methods">/methods</a>.</div></noscript>
 
-<nav class="site-nav" data-active="/" aria-label="Primary"></nav>
+<nav class="site-nav" data-active="/" aria-label="Vector Hoops site"></nav>
 
-<main id="main" class="main" style="padding-top:0">
+<main id="main" class="main">
   <header class="title-card hero">
     <div class="title-card__eyebrow reveal">An atlas of NBA player-seasons</div>
     <h1 class="hero__title reveal reveal-1"><span>Who plays</span><span>like <em>this?</em></span></h1>
@@ -400,85 +171,99 @@
   </section>
 
   <section id="atlas" class="instrument reveal reveal-4" aria-labelledby="atlas-title">
-    <div class="instrument__bar">
-      <h2 id="atlas-title" class="label fig-label" style="margin:0">Fig. 1 <b>· The atlas</b></h2>
-      <div class="label"><span id="atlas-count" class="num" data-fact="player_seasons">12,966</span> plotted &middot; tap any dot</div>
+    <div class="plate">
+      <span class="plate__no">Fig. 1</span>
+      <h2 id="atlas-title">The atlas</h2>
+      <span class="plate__rule"></span>
+      <span class="plate__meta"><span id="atlas-count" class="num">12,966</span> plotted</span>
     </div>
 
-    <div class="field" id="map-wrap">
-      <div class="embed3d-mount" data-projection="pca" style="height:min(72vw,460px)" role="application" aria-label="3D embedding map — 12,966 player-seasons. Drag to rotate, tap a point to select."></div>
+    <div id="map-wrap">
+      <div class="embed3d-mount" data-projection="pca" role="application" aria-label="3D map of every player-season. Drag to rotate, tap a point to select."></div>
     </div>
 
-    <div class="atlas-toolbar" id="atlas-toolbar" role="toolbar" aria-label="Atlas controls">
-      <div class="atlas-toolbar__btns">
-        <button type="button" data-map="reset">Clear</button>
-        <button type="button" data-map="share"><span>Copy link</span></button>
-        <button type="button" id="atlas-export">Share image</button>
-      </div>
+    <div class="share-bar" id="atlas-toolbar" role="group" aria-label="Atlas controls">
+      <button type="button" class="btn" data-map="reset">Clear</button>
+      <button type="button" class="btn" data-map="share">Copy link</button>
+      <button type="button" class="btn" id="atlas-export">Share image</button>
+      <p class="share-bar__status" id="atlas-share-status" role="status" aria-live="polite"></p>
     </div>
 
-    <div class="readout" aria-live="polite">
-      <div id="atlas-selected"><p class="readout__empty">Select any point on the atlas, or search a name above.</p></div>
+    <div class="card readout">
+      <div id="atlas-selected"><p class="readout__empty caption">Select any point on the atlas, or search a name above.</p></div>
       <div>
         <div class="peers__head">
-          <span class="peers__title">Other players who play most alike</span>
+          <span class="label">Other players who play most alike</span>
           <span class="peers__note" id="atlas-peers-status"></span>
         </div>
         <table class="data-table">
           <thead><tr><th class="r" scope="col">#</th><th scope="col">Player</th><th scope="col">Season</th><th scope="col" class="hide-s">Archetype</th><th class="r" scope="col">Similarity</th></tr></thead>
           <tbody id="atlas-peers-body"></tbody>
         </table>
-        <p class="peers__foot vh-truth">Peers are the nearest seasons by cosine similarity in the 64-dimensional MTNN v5 embedding. The atlas itself is a 3-D sketch of 14 era-normalized per-100 stats, so a peer can sit some distance away on it.</p>
+        <p class="peers__foot caption vh-truth">Peers are the seasons the model itself places closest in style. The map is a 3-D sketch of 14 era-normalized per-100 stats, so a peer can sit some distance away on it.</p>
       </div>
     </div>
     <p class="visually-hidden" id="atlas-live" aria-live="polite"></p>
 
-    <figure class="map-note" id="map-note">
-      <figcaption class="label fig-label" style="margin:0">Fig. note <b>· How to read this map</b></figcaption>
-      <ul>
-        <li><b>A sketch, not the model.</b> This view shows three PCA dimensions at once; the map is a sketch of the 14 era-normalized stats, not the model itself.</li>
-        <li><b>Peers come from the model, not the picture.</b> &ldquo;Plays most alike&rdquo; is cosine similarity in the full 64-d embedding — nearby dots mislead more often than not, so trust the peer list, not the picture.</li>
-        <li><b>Eras are normalized away.</b> Stats are z-scored within each season, so cross-era closeness is about style, not who would win.</li>
-        <li><b>Switch projections and the shape changes.</b> PCA, t-SNE and UMAP each keep different things; retrain the model and the numbers wobble.</li>
-      </ul>
-    </figure>
+    <details class="disclosure provenance map-read" id="map-note">
+      <summary>How to read this map</summary>
+      <div class="disclosure__body">
+        <figure class="map-note">
+          <ul>
+            <li><b>A sketch, not the model.</b> This view shows three PCA dimensions at once; the map is a sketch of the 14 era-normalized stats, not the model itself.</li>
+            <li><b>Peers come from the model, not the picture.</b> &ldquo;Plays most alike&rdquo; is cosine similarity in the full 64-d embedding — nearby dots mislead more often than not, so trust the peer list, not the picture.</li>
+            <li><b>Eras are normalized away.</b> Stats are z-scored within each season, so cross-era closeness is about style, not who would win.</li>
+            <li><b>Switch projections and the shape changes.</b> PCA, t-SNE and UMAP each keep different things; retrain the model and the numbers wobble.</li>
+          </ul>
+        </figure>
+      </div>
+    </details>
   </section>
 
   <section class="play" aria-labelledby="play-title">
-    <h2 id="play-title" class="label fig-label play__head">Play <b>· three ways in</b></h2>
+    <div class="plate">
+      <span class="plate__no">Play</span>
+      <h2 id="play-title">Three ways in</h2>
+      <span class="plate__rule"></span>
+    </div>
     <nav class="doors" aria-label="Games">
-      <a class="door" href="/play">
-        <span class="door__n">Daily Court &middot; World <span id="today-world">today</span></span>
-        <span class="door__title">Find the modern twin</span>
-        <p class="door__text">Five past All-Stars, the same five for everyone. Find each one&rsquo;s closest modern twin in six guesses.</p>
-        <p class="door__meta" id="today-streak">Start your streak today.</p>
-        <span class="door__go">Play today&rsquo;s five &rarr;</span>
+      <a class="card card--door" href="/play">
+        <span class="card__n">Daily Court &middot; World <span id="today-world">today</span></span>
+        <span class="card__title">Find the modern twin</span>
+        <p class="card__text">Five past All-Stars, the same five for everyone. Find each one&rsquo;s closest modern twin in six guesses.</p>
+        <p class="card__meta" id="today-streak">Start your streak today.</p>
+        <span class="card__go">Play today&rsquo;s five &rarr;</span>
       </a>
-      <a class="door" href="/replay">
-        <span class="door__n">Pixel Replay</span>
-        <span class="door__title">Rewatch it in pixels</span>
-        <p class="door__text">Real NBA games redrawn play by play. Pause, rewind, loop, rotate the court.</p>
-        <span class="door__go">Watch a replay &rarr;</span>
+      <a class="card card--door" href="/replay">
+        <span class="card__n">Pixel Replay</span>
+        <span class="card__title">Rewatch it in pixels</span>
+        <p class="card__text">Real NBA games redrawn play by play. Pause, rewind, loop, rotate the court.</p>
+        <span class="card__go">Watch a replay &rarr;</span>
       </a>
-      <a class="door" href="/map-guess">
-        <span class="door__n">Map Hunt &middot; 3D</span>
-        <span class="door__title">Find the hidden star</span>
-        <p class="door__text">Tap points on the 3D embedding map. Warmer or colder by true 64-d cosine distance. Same map for everyone.</p>
-        <span class="door__go">Start the hunt &rarr;</span>
+      <a class="card card--door" href="/map-guess">
+        <span class="card__n">Map Hunt &middot; 3D</span>
+        <span class="card__title">Find the hidden star</span>
+        <p class="card__text">Tap points on the 3D map. Warmer or colder by the model&rsquo;s own distance, not the picture. Same map for everyone.</p>
+        <span class="card__go">Start the hunt &rarr;</span>
       </a>
     </nav>
   </section>
 
   <section class="lab" aria-labelledby="lab-title">
-    <h2 id="lab-title" class="label fig-label" style="margin:0">From the lab <b>· <a href="/insights">all insights</a></b></h2>
-    <ul class="lab__row">
-      <li><a href="/insights#invisible-stardom"><b>The biggest sacrifices nobody saw</b>Jrue Holiday gave up 8.7 points of usage rate and won a ring.</a></li>
-      <li><a href="/insights#the-summer-the-cap-broke"><b>The summer the salary cap broke</b>Chandler Parsons&rsquo; $22.1M bought 0.2 win shares.</a></li>
-      <li><a href="/playoff-runs"><b>Greatest playoff runs</b>Individuals, duos, trios and teams, ranked.</a></li>
+    <div class="plate">
+      <span class="plate__no">Lab</span>
+      <h2 id="lab-title">From the lab</h2>
+      <span class="plate__rule"></span>
+      <span class="plate__meta"><a href="/insights">All insights &rarr;</a></span>
+    </div>
+    <ul class="row-list">
+      <li><a href="/insights#invisible-stardom"><span class="row-list__main"><span class="row-list__title">The biggest sacrifices nobody saw</span><span class="caption">Jrue Holiday gave up 8.7 points of usage rate and won a ring.</span></span></a></li>
+      <li><a href="/insights#the-summer-the-cap-broke"><span class="row-list__main"><span class="row-list__title">The summer the salary cap broke</span><span class="caption">Chandler Parsons&rsquo; $22.1M bought 0.2 win shares.</span></span></a></li>
+      <li><a href="/playoff-runs"><span class="row-list__main"><span class="row-list__title">Greatest playoff runs</span><span class="caption">Individuals, duos, trios and teams, ranked.</span></span></a></li>
     </ul>
   </section>
 
-  <p class="home-foot"><span data-fact="player_seasons">12,966</span> player-seasons, <span data-fact="season_first">1996-97</span> to <span data-fact="season_last">2025-26</span>. Stats from stats.nba.com, per 100 possessions and z-scored within their own season; twins from a <span data-fact="model_dim">64</span>-dimensional embedding. The map measures how players play, not how good they are. Every figure can be recomputed &mdash; see <a href="/methods">Methods</a>.</p>
+  <p class="home-foot caption"><span data-fact="player_seasons">12,966</span> player-seasons, <span data-fact="season_first">1996-97</span> to <span data-fact="season_last">2025-26</span>. Stats from stats.nba.com, per 100 possessions and z-scored within their own season; twins from a <span data-fact="model_dim">64</span>-dimensional embedding. The map measures how players play, not how good they are. Every figure can be recomputed &mdash; see <a href="/methods">Methods</a>.</p>
 </main>
 
 <!-- footer:stamped -->
@@ -519,10 +304,10 @@
 <script defer src="/assets/served-constants.js?v=8ba12340"></script>
 <script defer src="/assets/twin-bands.js?v=0a191313"></script>
 <script defer src="/assets/embed-3d.js?v=9e81f90c"></script>
-<script defer src="/assets/atlas-3d.js?v=41999aa5"></script>
+<script defer src="/assets/atlas-3d.js?v=c76b867a"></script>
 <script src="assets/site-facts.js?v=f8edaf37" defer></script>
 <script defer src="/assets/engagement.js?v=9afde51a"></script>
-<script defer src="/assets/home-tonight.js?v=468ecae8"></script>
+<script defer src="/assets/home-tonight.js?v=881d28f9"></script>
 <script defer src="/assets/inline-index.js?v=2ad73c39"></script>
 </body>
 </html>

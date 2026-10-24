@@ -61,6 +61,9 @@
     }
     N = n;
     indexReady = true;
+    // The plotted count is the rows actually decoded, never a typed number.
+    var count = $('atlas-count');
+    if (count && n > 0) count.textContent = n.toLocaleString('en-US');
     var w = indexWaiters; indexWaiters = [];
     w.forEach(function (cb) { try { cb(); } catch (e) {} });
     var r = readyWaiters; readyWaiters = [];
@@ -127,8 +130,6 @@
       projection: 'pca',
       onSelect: function (id) { select(id); }
     });
-    var count = $('atlas-count');
-    if (count) count.textContent = '12,966';
   }
   function bootWhenNear() {
     var sec = $('atlas');
@@ -179,19 +180,19 @@
     var sel = $('atlas-selected'), body = $('atlas-peers-body'), status = $('atlas-peers-status');
     if (!sel || !body) return;
     if (selected < 0) {
-      sel.innerHTML = '<p class="readout__empty">Select any point on the atlas, or search a name above.</p>';
+      sel.innerHTML = '<p class="readout__empty caption">Select any point on the atlas, or search a name above.</p>';
       body.innerHTML = '';
       if (status) status.textContent = '';
       return;
     }
     var nm = NAMES[selected];
     sel.innerHTML =
-      '<div class="readout__label">Selected season</div>' +
+      '<div class="label">Selected season</div>' +
       '<div class="readout__name">' + esc(nm) + '</div>' +
-      '<dl class="readout__facts">' +
-        '<div><dt>Season</dt><dd>' + esc(fmtSeason(SEASONS[selected])) + '</dd></div>' +
-        '<div><dt>Archetype</dt><dd>' + esc((archNames && archNames[selected]) || '—') + '</dd></div>' +
-      '</dl>' +
+      '<div class="stat-strip">' +
+        '<div class="stat"><b>' + esc(fmtSeason(SEASONS[selected])) + '</b>Season</div>' +
+        '<div class="stat"><b>' + esc((archNames && archNames[selected]) || '—') + '</b>Archetype</div>' +
+      '</div>' +
       '<a class="readout__link" href="/players?q=' + encodeURIComponent(nm) + '">Open ' + esc(nm) + ' dossier →</a>';
     if (!peersReady) {
       body.innerHTML = [0, 1, 2].map(function (k) {
@@ -283,9 +284,9 @@
     var rb = e.target.closest && e.target.closest('[data-map="reset"]');
     if (rb) select(-1);
     var sb = e.target.closest && e.target.closest('[data-map="share"]');
-    if (sb) share(sb);
+    if (sb) share();
     var eb = e.target && e.target.closest ? e.target.closest('#atlas-export') : null;
-    if (eb) shareImage(eb);
+    if (eb) shareImage();
   });
   document.addEventListener('keydown', function (e) {
     var tr = e.target.closest && e.target.closest('#atlas-peers-body tr[data-id]');
@@ -293,11 +294,18 @@
   });
 
   /* ---------- copy link (honest: "Copy failed" unless the write succeeds) ---------- */
-  function share(btn) {
+  /* Feedback goes to the share bar's live region (kit .share-bar__status), not into the button label. */
+  var statusTimer = 0;
+  function say(msg) {
+    var st = $('atlas-share-status');
+    if (!st) return;
+    st.textContent = msg;
+    clearTimeout(statusTimer);
+    statusTimer = setTimeout(function () { st.textContent = ''; }, 2600);
+  }
+  function share() {
     var url = location.href;
-    var label = btn.querySelector('span') || btn;
-    var old = label.textContent;
-    function done(msg) { label.textContent = msg; setTimeout(function () { label.textContent = old; }, 1800); }
+    var done = say;
     if (navigator.clipboard && navigator.clipboard.writeText) {
       navigator.clipboard.writeText(url).then(function () { done('Link copied'); }, function () { done('Copy failed'); });
     } else { done('Copy failed'); }
@@ -317,10 +325,10 @@
       });
     });
   }
-  function shareImage(btn) {
-    var done = function (msg) { var old = btn.textContent; btn.textContent = msg; setTimeout(function () { btn.textContent = old; }, 1800); };
+  function shareImage() {
+    var done = say;
     exportImage().then(function (blob) {
-      if (!blob) { done('Map not ready'); return; }
+      if (!blob) { done('The map is not ready yet. Try again in a moment.'); return; }
       var p = selected >= 0 ? { n: NAMES[selected], s: SEASONS[selected] } : null;
       var title = (p ? p.n + ' ' + fmtSeason(p.s) : 'The atlas') + ' — Vector Hoops';
       var file = null;
@@ -328,7 +336,7 @@
       if (file && navigator.canShare && navigator.canShare({ files: [file] })) {
         try {
           navigator.share({ files: [file], title: title, text: title })
-            .then(function () { done('Shared ✓'); }, function () { /* dismissed */ });
+            .then(function () { done('Shared'); }, function () { /* dismissed */ });
           return;
         } catch (e) { /* fall through to download */ }
       }
@@ -338,7 +346,7 @@
         a.download = 'vector-hoops-atlas.png';
         document.body.appendChild(a); a.click();
         setTimeout(function () { try { URL.revokeObjectURL(a.href); } catch (e) {} a.remove(); }, 4000);
-        done('Image saved ✓');
+        done('Image saved');
       } catch (e) { done('Could not export'); }
     });
   }
