@@ -38,6 +38,10 @@ MAX_SNAPSHOT_AGE_HOURS = 48
 # 30 s–5 min during the season, so 120 min of silence means the pipeline
 # (not the page) is behind.
 FEED_STALE_AFTER_MINUTES = 120
+# The daily box pipeline (scripts/daily/run_daily.py) writes its own probes of
+# cdn.nba.com here, one row per feed it read, each with its own freshness gate
+# (stale_after_minutes: a daily feed is not stale two hours after it ran).
+DAILY_RECEIPT = Path("assets") / "realtime" / "daily_pipeline.json"
 
 # GitHub Actions workflow-annotation syntax (e.g. "::warning title=x::message").
 # Stripped here so CI annotations never leak into user-facing HTML.
@@ -135,45 +139,52 @@ def feed_health_snapshot() -> dict:
     card's overall state drops from ok to degraded (warn). Without this, a
     days-old snapshot renders "Overall ok" — a false green.
     """
-    path = ROOT / "assets" / "realtime" / "feed_health.json"
-    try:
-        doc = json.load(path.open(encoding="utf-8"))
-    except Exception:
+    docs = []
+    for rel in (Path("assets") / "realtime" / "feed_health.json", DAILY_RECEIPT):
+        try:
+            docs.append(json.load((ROOT / rel).open(encoding="utf-8")))
+        except Exception:
+            continue
+    if not docs:
         return {
             "state": "unknown",
             "detail": "No feed-health snapshot found in the repo.",
             "updated_at": "unknown",
             "sources": [],
         }
-    sources = doc.get("sources", {}) or {}
     rows = []
-    for name in sorted(sources):
-        s = sources[name] or {}
-        rows.append(
-            {
-                "name": name,
-                "status": s.get("status", "unknown"),
-                "last_good_tick": s.get("last_good_tick") or "unknown",
-                "latency_ms": s.get("latency_ms"),
-                "consecutive_failures": s.get("consecutive_failures"),
-                "detail": s.get("detail") or "",
-            }
-        )
+    for doc in docs:
+        sources = doc.get("sources", {}) or {}
+        for name in sorted(sources):
+            s = sources[name] or {}
+            gate = s.get("stale_after_minutes")
+            rows.append(
+                {
+                    "name": name,
+                    "status": s.get("status", "unknown"),
+                    "last_good_tick": s.get("last_good_tick") or "unknown",
+                    "latency_ms": s.get("latency_ms"),
+                    "consecutive_failures": s.get("consecutive_failures"),
+                    "detail": s.get("detail") or "",
+                    "stale_after_minutes": gate if isinstance(gate, int | float) and gate > 0 else FEED_STALE_AFTER_MINUTES,
+                }
+            )
     now = datetime.now(UTC)
     stale_names = []
     for r in rows:
         if r["status"] != "ok":
             continue
+        gate = r["stale_after_minutes"]
         tick = _parse_tick(r["last_good_tick"])
         age_min = (now - tick).total_seconds() / 60 if tick else None
-        if age_min is None or age_min > FEED_STALE_AFTER_MINUTES:
+        if age_min is None or age_min > gate:
             r["status"] = "stale"
             why = (
                 f"last good tick {age_min:.0f} min ago"
                 if age_min is not None
                 else "last good tick missing or unparsable"
             )
-            r["detail"] = f"{r['detail']} [{why} — over the {FEED_STALE_AFTER_MINUTES}-min freshness gate]".strip()
+            r["detail"] = f"{r['detail']} [{why} — over the {gate:g}-min freshness gate]".strip()
             stale_names.append(r["name"])
     statuses = {r["status"] for r in rows}
     if not rows:
@@ -188,15 +199,17 @@ def feed_health_snapshot() -> dict:
         "Realtime data-plane sources: uptime, lag, last-good-tick. "
         "This card reads the last deployed snapshot — staleness here "
         "means the pipeline (not the page) is behind. A source whose last "
-        f"good tick is older than {FEED_STALE_AFTER_MINUTES} min is flagged "
-        "stale and the header drops from ok to warn."
+        f"good tick is older than {FEED_STALE_AFTER_MINUTES} min (the daily "
+        "cdn.nba.com rows: their own gate) is flagged stale and the header "
+        "drops from ok to warn."
     )
     if stale_names:
         detail += f" Currently stale: {', '.join(sorted(stale_names))}."
+    stamps = [d.get("updated_at") for d in docs if d.get("updated_at")]
     return {
         "state": state,
         "detail": detail,
-        "updated_at": doc.get("updated_at") or "unknown",
+        "updated_at": max(stamps) if stamps else "unknown",
         "sources": rows,
     }
 
