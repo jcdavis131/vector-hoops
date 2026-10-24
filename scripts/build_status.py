@@ -312,7 +312,7 @@ def render(snapshot: dict) -> str:
         f'{fh_sources_html}'
         f'<div class="st__row"><span class="st__k">Snapshot</span>'
         f'<span class="st__v">{e(str(fh["updated_at"]))}</span></div>'
-        f'<p style="color:var(--muted);font-size:13px">{e(fh["detail"])}</p>'
+        f'<p class="st__note">{e(fh["detail"])}</p>'
         f"</section>"
     )
 
@@ -334,7 +334,7 @@ def render(snapshot: dict) -> str:
     <span class="st__dot st__dot--{dot}" aria-hidden="true"></span>
     <div>
       <strong>{e(banner_label)}</strong><br/>
-      <span style="color:var(--muted);font-size:13px">Snapshot {e(snapshot["generated_at"])} UTC</span>
+      <span class="st__note">Snapshot {e(snapshot["generated_at"])} UTC</span>
     </div>
   </div>
   <div class="st__grid">
@@ -358,7 +358,7 @@ def render(snapshot: dict) -> str:
         <span class="st__v">{model_pill}</span></div>
       {row("Champion", "MTNN v5 (single-model policy)")}
       {flags_html}
-      <p style="color:var(--muted);font-size:13px">{e(ms["note"])}</p>
+      <p class="st__note">{e(ms["note"])}</p>
     </section>
     {fh_html}
     <section class="st__card" aria-label="Incident history">

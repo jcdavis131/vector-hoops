@@ -28,20 +28,18 @@
 <link rel="stylesheet" href="/assets/shell.css?v=398d5e37"/>
 <style>
 .doc{ padding-top:0; }
-.doc-toc{ display:flex; flex-wrap:wrap; justify-content:center; gap:0; border-top:1px solid var(--line); border-bottom:1px solid var(--line); max-width:980px; margin:0 auto; width:100%; }
-.doc-toc a{ display:inline-flex; gap:7px; align-items:baseline; padding:14px 9px; text-decoration:none; font-family:var(--font-display); font-size:11px; font-weight:600; font-stretch:112%; letter-spacing:.14em; text-transform:uppercase; color:var(--fg-2); }
-.doc-toc a span{ color:var(--fg-3); font-variant-numeric:tabular-nums; }
-.doc-toc a:hover{ color:var(--fg); } .doc-toc a:hover span{ color:var(--accent); }
+.doc-toc{ display:flex; flex-wrap:wrap; justify-content:center; gap:var(--s-2); max-width:980px; margin:0 auto; width:100%; padding:var(--s-4) 0; border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
+@media (max-width:640px){ .doc-toc{ flex-wrap:nowrap; justify-content:flex-start; overflow-x:auto; scroll-snap-type:x proximity; } .doc-toc .chip-link{ scroll-snap-align:start; } }
+.doc-toc .chip-link span{ color:var(--fg-3); }
 .doc-body{ width:100%; max-width:760px; margin:var(--s-6) auto 0; }
 .doc-body section{ padding:var(--s-7) 0; border-bottom:1px solid var(--line); }
 .doc-body section:last-child{ border-bottom:0; }
 .doc-n{ font-family:var(--font-display); font-size:var(--t-2xs); font-weight:600; font-stretch:112%; letter-spacing:.24em; text-transform:uppercase; color:var(--accent); margin-bottom:12px; }
 .doc-body h2{ font-size:var(--t-xl); margin:0 0 16px; }
-.doc-body p{ font-size:16px; line-height:1.75; color:var(--fg-2); margin:0 0 16px; }
+:where(.doc-body p){ font-size:16px; line-height:1.75; color:var(--fg-2); margin:0 0 16px; }
 .doc-body a{ color:var(--fg); text-decoration-color:var(--accent-line); }
 .doc-body .data-table{ margin:8px 0 20px; }
-.doc-note{ font-size:14px !important; color:var(--fg-3) !important; }
-.doc-formula{ font-size:14px !important; line-height:1.75 !important; padding:16px 20px; border-left:2px solid var(--accent); background:var(--surface); color:var(--fg-2) !important; }
+.doc-formula{ padding:16px 20px; border-left:2px solid var(--accent); background:var(--surface); }
 .doc-defs{ display:grid; grid-template-columns:1fr 1fr; gap:0; margin:16px 0 0; border-top:1px solid var(--line); }
 .doc-defs > div{ padding:14px 0; border-bottom:1px solid var(--line); }
 .doc-defs > div:nth-child(even){ padding-left:20px; border-left:1px solid var(--line); }
@@ -50,7 +48,7 @@
 .doc-list{ columns:2; column-gap:40px; margin:0; padding-left:1.4em; color:var(--fg-2); font-size:15px; line-height:1.9; }
 .doc-list li::marker{ color:var(--fg-3); font-variant-numeric:tabular-nums; }
 @media (max-width:640px){ .doc-defs, .doc-list{ grid-template-columns:1fr; columns:1; } .doc-defs > div:nth-child(even){ padding-left:0; border-left:0; } }
-.mc-status{ display:inline-block; font-family:var(--font-display); font-size:11px; font-weight:700; letter-spacing:.2em; text-transform:uppercase; color:var(--fg); border:1px solid var(--accent); border-radius:999px; padding:6px 14px; margin-bottom:14px; }
+.mc-status{ margin-bottom:14px; }
 </style>
 </head>
 <body>
@@ -61,11 +59,11 @@
     <div class="title-card__eyebrow reveal">Model card</div>
     <h1 class="title-card__title reveal reveal-1">MTNN v5, the champion behind the map</h1>
     <p class="title-card__lede reveal reveal-2">This page is the model's card: what it predicts, what it cannot, its known biases, and a plain-words summary. Every claim here comes from the repo's own artifacts — <a href="/models/registry.json">the registry</a>, the held-out scoreboard, and the served lineage. Anything we don't know is labeled <i>unknown</i>, never invented.</p>
-    <p class="reveal reveal-3"><span class="mc-status">Status: champion — single-model serving policy</span></p>
+    <p class="reveal reveal-3"><span class="pill mc-status">Status: champion — single-model serving policy</span></p>
   </header>
 
   <nav class="doc-toc" aria-label="On this page">
-    <a href="#at-a-glance"><span>01</span>At a glance</a><a href="#predicts"><span>02</span>Predicts</a><a href="#plain-words"><span>03</span>Plain words</a><a href="#cannot"><span>04</span>Cannot</a><a href="#biases"><span>05</span>Biases</a><a href="#registry"><span>06</span>Registry &amp; lineage</a>
+    <a class="chip-link" href="#at-a-glance"><span>01</span>At a glance</a><a class="chip-link" href="#predicts"><span>02</span>Predicts</a><a class="chip-link" href="#plain-words"><span>03</span>Plain words</a><a class="chip-link" href="#cannot"><span>04</span>Cannot</a><a class="chip-link" href="#biases"><span>05</span>Biases</a><a class="chip-link" href="#registry"><span>06</span>Registry &amp; lineage</a>
   </nav>
 
   <article class="doc-body">
@@ -96,14 +94,14 @@
           <tr><td>Overall</td><td>10,104</td><td>50.8%</td><td>93.4%</td><td>7.5%</td></tr>
         </tbody>
       </table>
-      <p class="doc-note">The baseline is the transparent 14 era-z features (vectors.json, cosine). MTNN beats it roughly six-fold on the test split. The adopted run claims test recall@10 of 0.846 and archetype accuracy of 0.970, but those were recorded before the holdout — trust the table above, not the claim.</p>
+      <p class="caption">The baseline is the transparent 14 era-z features (vectors.json, cosine). MTNN beats it roughly six-fold on the test split. The adopted run claims test recall@10 of 0.846 and archetype accuracy of 0.970, but those were recorded before the holdout — trust the table above, not the claim.</p>
       <p>Secondary outputs from the lineage: archetype classification (top-1 accuracy 0.970) and purity@20 of 0.783 — nearest neighbors land in the same archetype family about four times in five.</p>
     </section>
 
     <section id="plain-words">
       <div class="doc-n">03</div>
       <h2>In plain words</h2>
-      <p class="doc-formula">Take every NBA season from 1996 to today. Turn each one into a 64-number fingerprint that captures how a player scored, passed, rebounded, defended, and shot — adjusted so a 1998 season can fairly meet a 2025 one. Seasons with similar fingerprints sit near each other. That's it. The games on this site are different ways of walking around that neighborhood: guessing twins, drawing networks, comparing eras.</p>
+      <p class="caption doc-formula">Take every NBA season from 1996 to today. Turn each one into a 64-number fingerprint that captures how a player scored, passed, rebounded, defended, and shot — adjusted so a 1998 season can fairly meet a 2025 one. Seasons with similar fingerprints sit near each other. That's it. The games on this site are different ways of walking around that neighborhood: guessing twins, drawing networks, comparing eras.</p>
       <p>The fingerprint gets it right a lot more than the simple version does — on genuinely unseen seasons it finds the right player's next season 44% of the time versus 8% for the simple stat table — but it's weaker on modern seasons, blind to anything not in the box score, and it never tells you who was <i>better</i>, only whose game <i>looked alike</i>.</p>
     </section>
 

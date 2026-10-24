@@ -57,9 +57,7 @@ ROOT = Path(__file__).resolve().parent.parent
 PAGE_GLOBS = ("*.html", "insights/*.html", "play/*.html", "models/*.html")
 
 # Pages left alone in both modes, each with the reason.
-DEFER = {
-    "offline.html": "self-contained, no shell.css until task 2.7 gives it the head",
-}
+DEFER: dict[str, str] = {}  # offline.html got the shell head in task 2.7
 
 NAV_SRC = "assets/site-nav.js"
 SOURCE_URL = "https://github.com/jcdavis131/vector-hoops"

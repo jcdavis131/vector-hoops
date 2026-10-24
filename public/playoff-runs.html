@@ -30,39 +30,42 @@
 .vh-runs__wrap{max-width:880px;margin:0 auto;padding:0 var(--s-3) var(--s-6)}
 .vh-runs__tabs{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 var(--s-4);position:sticky;top:var(--nav-h,60px);padding:12px 0;z-index:5;background:color-mix(in srgb,var(--bg) 88%,transparent)}
 .vh-runs__tab{font:700 13px/1 var(--font-sans);letter-spacing:.06em;text-transform:uppercase;padding:10px 16px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--fg-2);cursor:pointer}
-.vh-runs__tab.is-active{background:var(--void,#1E2022);color:#F9F6F0;border-color:var(--void,#1E2022)}
+.vh-runs__tab.is-active{background:var(--fg);color:var(--bg);border-color:var(--fg)}
 .vh-runs__board{display:none}
 .vh-runs__board.is-active{display:block}
 .vh-runs__boardhead{margin:0 0 var(--s-3)}
 .vh-runs__boardhead h2{font:700 clamp(20px,3.6vw,28px)/1.2 var(--font-display);margin:0 0 6px;letter-spacing:-.01em}
 .vh-runs__boardhead p{font:400 14px/1.6 var(--font-sans);color:var(--fg-2);margin:0;max-width:62ch}
 .vh-runs__row{display:grid;grid-template-columns:52px 1fr;gap:6px 14px;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin:0 0 10px;box-shadow:var(--shadow-soft);align-items:start}
-.vh-runs__rank{font:800 30px/1 var(--font-display);color:var(--gold,#D4AF69);letter-spacing:-.02em}
+.vh-runs__rank{font:800 30px/1 var(--font-display);color:var(--coin-text);letter-spacing:-.02em}
 .vh-runs__names{font:700 clamp(16px,2.8vw,21px)/1.3 var(--font-display);margin:0 0 4px;letter-spacing:-.01em}
 .vh-runs__plink{color:inherit;text-decoration:underline;text-decoration-color:color-mix(in srgb,var(--accent) 55%,transparent);text-underline-offset:3px;text-decoration-thickness:1.5px}
 .vh-runs__plink:hover{color:var(--accent)}
 .vh-runs__meta{font:400 13px/1.5 var(--font-sans);color:var(--fg-2);margin:0 0 8px}
 .vh-runs__meta b{color:var(--fg);font-weight:600}
-.vh-runs__champ{display:inline-block;font:700 10.5px/1 var(--font-sans);letter-spacing:.12em;text-transform:uppercase;color:#1E2022;background:#D4AF69;border-radius:999px;padding:5px 10px;margin-left:8px;vertical-align:2px}
+.vh-runs__champ{display:inline-block;font:700 11px/1 var(--font-sans);letter-spacing:.12em;text-transform:uppercase;color:var(--coin-ink);background:var(--coin-2);border-radius:999px;padding:5px 10px;margin-left:8px;vertical-align:2px}
 .vh-runs__pts{font:600 13.5px/1.4 var(--font-sans);color:var(--fg-2)}
 .vh-runs__pts b{color:var(--fg);font-weight:800;font-size:17px}
 .vh-runs__foot{font:400 12.5px/1.7 var(--font-sans);color:var(--fg-3);margin:var(--s-5) 0 0;max-width:68ch}
 .vh-runs__foot a{color:var(--accent)}
 .vh-runs__details{margin:var(--s-4) 0 0}
-.vh-runs__details summary{cursor:pointer;color:var(--accent);font-weight:600;font-size:13.5px}
+.vh-runs__details summary{cursor:pointer;color:var(--accent);font-weight:600;font-size:13.5px;min-height:44px;padding:12px 0}
 .vh-runs__details summary::-webkit-details-marker{color:var(--accent)}
 .vh-runs__boardshare{margin-top:12px}
 .vh-runs__err{padding:24px;text-align:center;color:var(--fg-2)}
 @media(max-width:560px){.vh-runs__row{grid-template-columns:40px 1fr;padding:14px}.vh-runs__rank{font-size:24px}}
+.vh-runs__main{padding-top:0}
+.vh-runs__noscript{padding:8px 16px;text-align:center;color:var(--fg-2)}
+.vh-runs__foot--center{text-align:center}
 </style>
 </head><body>
 <a class="skip-link" href="#main">Skip to content</a>
 <noscript>
-<p style="padding:8px 16px;text-align:center;color:var(--fg-2)">The 42 ranked playoff runs (individuals, duos, trios, teams) need JavaScript to load. Summary: ranked by an all-around, two-way score — per-possession dominance first, winning second.</p>
+<p class="vh-runs__noscript">The 42 ranked playoff runs (individuals, duos, trios, teams) need JavaScript to load. Summary: ranked by an all-around, two-way score — per-possession dominance first, winning second.</p>
 </noscript>
 
 <nav class="site-nav" data-active="/playoff-runs" aria-label="Vector Hoops site"><noscript class="site-nav__noscript"><a href="/">Atlas</a><a href="/play">Play</a><a href="/map-guess">Map Hunt</a><a href="/live">Live</a><a href="/players">Players</a><a href="/insights">Insights</a><a href="/taxonomy">Taxonomy</a><a href="/methods">Methods</a><a href="/models/mtnn-v5">Models</a></noscript></nav>
-<div id="main" class="main" role="main" tabindex="-1" style="padding-top:0">
+<div id="main" class="main vh-runs__main" role="main" tabindex="-1">
   <header class="title-card">
     <div class="title-card__eyebrow reveal">Rankings</div>
     <h1 class="title-card__title reveal reveal-1">Greatest Playoff Runs</h1>
@@ -87,7 +90,7 @@
       An all-around, two-way score — per-100 playoff scoring plus shooting efficiency, plus defensive impact (DBPM, points prevented per 100 possessions, counting one-for-one with scoring), plus a quarter-share of the team's playoff net rating. Then +2 per round won and +4 for the title — winning matters, but it never swamps the per-possession signal: the win bonus maxes out at 12, while the per-possession components (scoring + efficiency + defense + quarter-share of team net rating) sum to roughly 43–55 on the individual board and scale up for duos and trios. Duos and trios are the best two-way units whose members each played real rotation roles (40+ regular-season games, 12+ playoff games — every unit here won a series). Fives and starters aren't ranked: the source minutes field can't identify them, so we don't fake them. Team runs are ranked by official playoff net rating (Basketball-Reference), minimum two series won.
     </details>
     <p class="vh-runs__foot">Every figure recomputes from <a href="/methods">stats.nba.com splits, 1996-97 → 2025-26</a> and Basketball-Reference advanced stats.</p>
-    <p class="vh-runs__foot" style="text-align:center">Sacrifice stories from the same playoffs: <a href="/insights#invisible-stardom">the biggest sacrifices nobody saw</a> — stars who shrank their games for a ring.</p>
+    <p class="vh-runs__foot vh-runs__foot--center">Sacrifice stories from the same playoffs: <a href="/insights#invisible-stardom">the biggest sacrifices nobody saw</a> — stars who shrank their games for a ring.</p>
   </div>
 </div>
 

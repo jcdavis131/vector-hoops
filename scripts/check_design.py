@@ -28,7 +28,8 @@ Where section 5 left room, this is what was decided (each is also in the detecto
 docstring):
 
   D2   order is the *relative* order of the named tags; unlisted tags between
-       them are fine. og:url must equal the canonical.
+       them are fine. og:url must equal the canonical. A noindex page (robots
+       meta) needs neither: it is not the canonical copy of any URL.
   D4   a "scoped token block" is any rule outside atlas.css that defines a
        custom property, not only `:root{`.
   D5   the spec regex is applied to each comma-separated selector, so
@@ -559,7 +560,11 @@ def d1(site: Site) -> list[str]:
 
 
 def d2(site: Site) -> list[str]:
-    """Head parity. Relative order of the named tags only; og:url must equal canonical."""
+    """Head parity. Relative order of the named tags only; og:url must equal canonical.
+
+    A noindex page (404, offline, status, feed-health) is exempt from canonical and og:url:
+    404 and offline are served at whatever URL failed, so any canonical would be false.
+    """
     out = []
     for p in site.pages:
         head = head_of(p)
@@ -594,7 +599,13 @@ def d2(site: Site) -> list[str]:
         if tm and tm.group(1).strip():
             found("title", tm.start())
 
+        noindex = any(
+            t == "meta" and a.get("name", "").lower() == "robots" and "noindex" in a.get("content", "").lower()
+            for _, t, a in tags
+        )
         for key in ("charset", "viewport", "title", "description", "canonical"):
+            if key == "canonical" and noindex:
+                continue
             if key not in first:
                 missing.append(key)
         canon = next(
@@ -632,6 +643,8 @@ def d2(site: Site) -> list[str]:
             if t == "meta" and a.get("property", "").lower().startswith("og:")
         }
         for key in ("og:title", "og:description", "og:image", "og:url"):
+            if key == "og:url" and noindex:
+                continue
             if not og.get(key, "").strip():
                 missing.append(key)
         if og.get("og:url") and canon and og["og:url"] != canon:
