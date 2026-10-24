@@ -55,6 +55,8 @@ def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
     ap.add_argument("--from", dest="src", required=True, type=Path, help="directory holding playbyplay_*.json")
     ap.add_argument("--dry-run", action="store_true", help="list what would be copied; change nothing")
+    ap.add_argument("--min-age", type=float, default=24.0, metavar="HOURS",
+                    help="forwarded to build_replays.py: games younger than this are not indexed (default: 24)")
     a = ap.parse_args(argv)
     if not a.src.is_dir():
         print(f"--from {a.src}: not a directory", file=sys.stderr)
@@ -70,7 +72,7 @@ def main(argv: list[str] | None = None) -> int:
     CACHE.mkdir(parents=True, exist_ok=True)
     for f in todo:
         shutil.copy2(f, CACHE / f.name)
-    for step in (["pipeline/build_replays.py"], ["scripts/sync_public.py"]):
+    for step in (["pipeline/build_replays.py", "--min-age", str(a.min_age)], ["scripts/sync_public.py"]):
         r = subprocess.run([sys.executable, *step], cwd=ROOT)
         if r.returncode != 0:
             print(f"{step[0]} exited {r.returncode}", file=sys.stderr)

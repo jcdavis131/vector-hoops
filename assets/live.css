@@ -4,6 +4,16 @@
   --accent:#c2401f; --court:#175e6e;
   --mono:ui-monospace,'SF Mono',SFMono-Regular,Menlo,Consolas,monospace;
 }
+/* dark mode: the charts (live.js, live-atlas.js) still draw paper inks, so the page stays a paper island
+   until those read the tokens; what must not happen is atlas's light --fg on paper cards, so text is
+   pinned to ink here and form controls stay light. Night board proper: design program, live adoption. */
+@media (prefers-color-scheme: dark){
+  .live-root{ color:var(--ink); background:var(--paper); color-scheme:light;
+    /* atlas components read these; inside the island they must resolve to the paper palette */
+    --bg:var(--paper); --surface:var(--card); --surface-2:var(--faint); --fg:var(--ink); --fg-2:var(--ink2); --fg-3:var(--ink2);
+    --line-2:#8a8574; --on-accent:#fff; --accent-wash:rgba(194,64,31,.12); --scrim:rgba(27,25,19,.55); --step:#EAE0CB; }
+  .live-root .mode-tabs{ border:0; background:none; padding:0; }
+}
 .live-root * {box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
 .live-root .num {font-variant-numeric:tabular-nums;}
 .live-root header.top {position:sticky;top:0;z-index:10;background:var(--paper);
@@ -263,3 +273,9 @@
 .live-root .daynav #games:empty, .live-root .daynav #games.one {display:none;}
 .live-root .stickybar {padding:0 0 4px;}
 .live-root .wpnum {flex-wrap:wrap;column-gap:12px;row-gap:2px;}
+.live-root .odds-hero {text-align:center;padding:12px 4px 8px;}
+.live-root .odds-hero .ospread {font-size:34px;font-weight:800;letter-spacing:.02em;}
+.live-root .odds-hero .olab {display:block;font:700 9px var(--mono);letter-spacing:.22em;color:var(--ink2);margin-top:4px;}
+.live-root .orow {display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:6px;}
+.live-root .orow h4 {margin:0 0 3px;font:700 9px var(--mono);letter-spacing:.14em;color:var(--ink2);}
+.live-root .orow b {font-size:14px;}

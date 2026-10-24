@@ -76,10 +76,16 @@ lint:
 # Not here, on purpose: ci.yml's served-model job (scripts/check_served_model.py).
 # It is red until the served bundle is re-promoted, and a target that is
 # always red stops telling you anything.
+# scripts/check_design.py --report is the DESIGN-DIRECTION section 5 gate in
+# its reporting mode: it prints every detector's hit count and exits 0, so the
+# table is in every local run without blocking anything. Its gating mode
+# (`check_design.py`, no flag) enforces D1 and D14 only until wave 1 lands.
 ci: offline
 	$(PYTHON) -m pytest -m "not local_data"
 	$(PYTHON) scripts/stamp_assets.py --check
+	$(PYTHON) scripts/stamp_footer.py --check
 	$(PYTHON) scripts/check_site_facts.py
 	$(PYTHON) scripts/check_a11y.py
 	$(PYTHON) scripts/check_contrast.py
+	$(PYTHON) scripts/check_design.py --report
 	@echo "CI green - offline fixtures, no external network"

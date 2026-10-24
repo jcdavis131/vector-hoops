@@ -1,9 +1,9 @@
 {
-  "generated_at": "2026-10-23T12:32:06+00:00",
-  "overall": "incident",
+  "generated_at": "2026-10-23T15:18:55+00:00",
+  "overall": "degraded",
   "deploy": {
-    "commit": "26c2af70",
-    "commit_date": "2026-10-22 17:32:25 -0500",
+    "commit": "f9b27a4e",
+    "commit_date": "2026-10-23 09:35:47 -0500",
     "csp": "enforcing"
   },
   "data": {
@@ -14,8 +14,8 @@
     "players": 2426
   },
   "model_serving": {
-    "state": "fail",
-    "detail": "ot in this repo; lineage records the served bytes. Not a new promotion.\n::warning title=served model override::assets: export floors waived by that force, failed: ['test recall or the 14-d baseline recall is missing']\n::warning title=served model override::public/assets: run july-v5-a4918f09 was promoted with --force: Adopted the July 2026 v5 incumbent already served on master (git blob a4918f09). The original promote.py run directory is not in this repo; lineage records the served bytes. Not a new promotion.\n::warning title=served model override::public/assets: export floors waived by that force, failed: ['test recall or the 14-d baseline recall is missing']\nserved model: 1 problem(s)\n  - public/assets/mtnn_embeddings.f32: raw model weights must not be served (see specs/serving-budget.md)",
+    "state": "pass",
+    "detail": "served model: OK, assets, public/assets serve one promoted, exported bundle",
     "flags": [
       "assets: run july-v5-a4918f09 was promoted with --force: Adopted the July 2026 v5 incumbent already served on master (git blob a4918f09). The original\u2026",
       "assets: export floors waived by that force, failed: ['test recall or the 14-d baseline recall is missing']",
@@ -25,49 +25,49 @@
     "note": "Lineage records a forced adoption of the July 2026 v5 incumbent; the original promote.py run files are not in this repo. Find the run files or order a replacement champion \u2014 the owner's decision."
   },
   "feed_health": {
-    "state": "ok",
-    "detail": "Realtime data-plane sources: uptime, lag, last-good-tick. This card reads the last deployed snapshot \u2014 staleness here means the pipeline (not the page) is behind.",
+    "state": "degraded",
+    "detail": "Realtime data-plane sources: uptime, lag, last-good-tick. This card reads the last deployed snapshot \u2014 staleness here means the pipeline (not the page) is behind. A source whose last good tick is older than 120 min is flagged stale and the header drops from ok to warn. Currently stale: espn_scoreboard, espn_summary, espn_teams, scoreboard_snapshot, season_snapshot.",
     "updated_at": "2026-10-20T19:03:43Z",
     "sources": [
       {
         "name": "espn_scoreboard",
-        "status": "ok",
+        "status": "stale",
         "last_good_tick": "2026-10-20T19:03:40Z",
         "latency_ms": 2181,
         "consecutive_failures": 0,
-        "detail": "3 events today"
+        "detail": "3 events today [last good tick 4095 min ago \u2014 over the 120-min freshness gate]"
       },
       {
         "name": "espn_summary",
-        "status": "ok",
+        "status": "stale",
         "last_good_tick": "2026-10-20T19:03:42Z",
         "latency_ms": 1859,
         "consecutive_failures": 0,
-        "detail": "event 401909088: HTTP 200, players=absent"
+        "detail": "event 401909088: HTTP 200, players=absent [last good tick 4095 min ago \u2014 over the 120-min freshness gate]"
       },
       {
         "name": "espn_teams",
-        "status": "ok",
+        "status": "stale",
         "last_good_tick": "2026-10-20T19:03:43Z",
         "latency_ms": 1489,
         "consecutive_failures": 0,
-        "detail": "30 teams"
+        "detail": "30 teams [last good tick 4095 min ago \u2014 over the 120-min freshness gate]"
       },
       {
         "name": "scoreboard_snapshot",
-        "status": "ok",
+        "status": "stale",
         "last_good_tick": "2026-10-20T19:01:25Z",
         "latency_ms": null,
         "consecutive_failures": 0,
-        "detail": "scoreboard.json as_of 2026-10-20T19:01:25Z (138s ago)"
+        "detail": "scoreboard.json as_of 2026-10-20T19:01:25Z (138s ago) [last good tick 4097 min ago \u2014 over the 120-min freshness gate]"
       },
       {
         "name": "season_snapshot",
-        "status": "ok",
+        "status": "stale",
         "last_good_tick": "2026-10-20T19:02:34Z",
         "latency_ms": null,
         "consecutive_failures": 0,
-        "detail": "season_2026_27.json as_of 2026-10-20T19:02:34Z (69s ago)"
+        "detail": "season_2026_27.json as_of 2026-10-20T19:02:34Z (69s ago) [last good tick 4096 min ago \u2014 over the 120-min freshness gate]"
       }
     ]
   },
@@ -75,13 +75,18 @@
   "checks": [
     {
       "name": "Model serving",
-      "state": "bad",
-      "note": "lineage check failing"
+      "state": "warn",
+      "note": "pass with lineage override flags"
     },
     {
       "name": "Site facts",
       "state": "ok",
       "note": "31 facts"
+    },
+    {
+      "name": "Feed health",
+      "state": "warn",
+      "note": "feed stale \u2014 last good tick older than freshness gate"
     }
   ]
 }

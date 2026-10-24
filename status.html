@@ -13,8 +13,10 @@
 <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml"/>
 <link rel="manifest" href="/manifest.json"/>
 <link rel="stylesheet" href="/assets/fonts.css?v=8f376b2a"/>
-<link rel="stylesheet" href="/assets/shell.css?v=b7460aa9"/>
+<link rel="stylesheet" href="/assets/atlas.css?v=a737547a"/>
+<link rel="stylesheet" href="/assets/shell.css?v=398d5e37"/>
 <style>
+:root{ --card: var(--surface); --muted: var(--fg-3); --line-1: var(--line); } /* this page's names for the atlas tokens */
 .st{ max-width: 880px; margin: 0 auto; padding: 32px 20px 64px; }
 .st__banner{ display:flex; gap:14px; align-items:center; border:1px solid var(--line-2);
   border-radius:14px; padding:18px 20px; background:var(--card); margin:22px 0 26px; }
@@ -50,17 +52,17 @@
   </header>
 <!--STATUS-SNAPSHOT-->
   <div class="st__banner" role="status">
-    <span class="st__dot st__dot--bad" aria-hidden="true"></span>
+    <span class="st__dot st__dot--warn" aria-hidden="true"></span>
     <div>
-      <strong>Incident — see below</strong><br/>
-      <span style="color:var(--muted);font-size:13px">Snapshot 2026-10-23T12:32:06+00:00 UTC</span>
+      <strong>Degraded — see flags below</strong><br/>
+      <span style="color:var(--muted);font-size:13px">Snapshot 2026-10-23T15:18:55+00:00 UTC</span>
     </div>
   </div>
   <div class="st__grid">
     <section class="st__card" aria-label="Site and deploy">
       <h2>Site &amp; deploy</h2>
-      <div class="st__row"><span class="st__k">Commit</span><span class="st__v">26c2af70</span></div>
-      <div class="st__row"><span class="st__k">Commit date</span><span class="st__v">2026-10-22 17:32:25 -0500</span></div>
+      <div class="st__row"><span class="st__k">Commit</span><span class="st__v">f9b27a4e</span></div>
+      <div class="st__row"><span class="st__k">Commit date</span><span class="st__v">2026-10-23 09:35:47 -0500</span></div>
       <div class="st__row"><span class="st__k">CSP</span><span class="st__v">enforcing</span></div>
     </section>
     <section class="st__card" aria-label="Data freshness">
@@ -74,12 +76,12 @@
     <section class="st__card" aria-label="Model serving">
       <h2>Model serving</h2>
       <div class="st__row"><span class="st__k">Lineage check</span>
-        <span class="st__v"><span class="st__pill st__pill--bad">fail</span></span></div>
+        <span class="st__v"><span class="st__pill st__pill--ok">pass</span></span></div>
       <div class="st__row"><span class="st__k">Champion</span><span class="st__v">MTNN v5 (single-model policy)</span></div>
       <ul><li><code>assets: run july-v5-a4918f09 was promoted with --force: Adopted the July 2026 v5 incumbent already served on master (git blob a4918f09). The original…</code></li><li><code>assets: export floors waived by that force, failed: [&#x27;test recall or the 14-d baseline recall is missing&#x27;]</code></li><li><code>public/assets: run july-v5-a4918f09 was promoted with --force: Adopted the July 2026 v5 incumbent already served on master (git blob a4918f09). The original…</code></li><li><code>public/assets: export floors waived by that force, failed: [&#x27;test recall or the 14-d baseline recall is missing&#x27;]</code></li></ul>
       <p style="color:var(--muted);font-size:13px">Lineage records a forced adoption of the July 2026 v5 incumbent; the original promote.py run files are not in this repo. Find the run files or order a replacement champion — the owner&#x27;s decision.</p>
     </section>
-    <section class="st__card" id="feed-health" aria-label="Feed health"><h2>Feed health</h2><div class="st__row"><span class="st__k">Overall</span><span class="st__v"><span class="st__pill st__pill--ok">ok</span></span></div><div class="st__row"><span class="st__k">espn scoreboard</span><span class="st__v"><span class="st__pill st__pill--ok">ok</span></span></div><div class="st__row"><span class="st__k">Last good tick</span><span class="st__v">2026-10-20T19:03:40Z</span></div><div class="st__row"><span class="st__k">Latency</span><span class="st__v">2181 ms</span></div><div class="st__row"><span class="st__k">Consecutive failures</span><span class="st__v">0</span></div><div class="st__row"><span class="st__k">espn summary</span><span class="st__v"><span class="st__pill st__pill--ok">ok</span></span></div><div class="st__row"><span class="st__k">Last good tick</span><span class="st__v">2026-10-20T19:03:42Z</span></div><div class="st__row"><span class="st__k">Latency</span><span class="st__v">1859 ms</span></div><div class="st__row"><span class="st__k">Consecutive failures</span><span class="st__v">0</span></div><div class="st__row"><span class="st__k">espn teams</span><span class="st__v"><span class="st__pill st__pill--ok">ok</span></span></div><div class="st__row"><span class="st__k">Last good tick</span><span class="st__v">2026-10-20T19:03:43Z</span></div><div class="st__row"><span class="st__k">Latency</span><span class="st__v">1489 ms</span></div><div class="st__row"><span class="st__k">Consecutive failures</span><span class="st__v">0</span></div><div class="st__row"><span class="st__k">scoreboard snapshot</span><span class="st__v"><span class="st__pill st__pill--ok">ok</span></span></div><div class="st__row"><span class="st__k">Last good tick</span><span class="st__v">2026-10-20T19:01:25Z</span></div><div class="st__row"><span class="st__k">Latency</span><span class="st__v">unknown</span></div><div class="st__row"><span class="st__k">Consecutive failures</span><span class="st__v">0</span></div><div class="st__row"><span class="st__k">season snapshot</span><span class="st__v"><span class="st__pill st__pill--ok">ok</span></span></div><div class="st__row"><span class="st__k">Last good tick</span><span class="st__v">2026-10-20T19:02:34Z</span></div><div class="st__row"><span class="st__k">Latency</span><span class="st__v">unknown</span></div><div class="st__row"><span class="st__k">Consecutive failures</span><span class="st__v">0</span></div><div class="st__row"><span class="st__k">Snapshot</span><span class="st__v">2026-10-20T19:03:43Z</span></div><p style="color:var(--muted);font-size:13px">Realtime data-plane sources: uptime, lag, last-good-tick. This card reads the last deployed snapshot — staleness here means the pipeline (not the page) is behind.</p></section>
+    <section class="st__card" id="feed-health" aria-label="Feed health"><h2>Feed health</h2><div class="st__row"><span class="st__k">Overall</span><span class="st__v"><span class="st__pill st__pill--warn">degraded</span></span></div><div class="st__row"><span class="st__k">espn scoreboard</span><span class="st__v"><span class="st__pill st__pill--warn">stale</span></span></div><div class="st__row"><span class="st__k">Last good tick</span><span class="st__v">2026-10-20T19:03:40Z</span></div><div class="st__row"><span class="st__k">Latency</span><span class="st__v">2181 ms</span></div><div class="st__row"><span class="st__k">Consecutive failures</span><span class="st__v">0</span></div><div class="st__row"><span class="st__k">espn summary</span><span class="st__v"><span class="st__pill st__pill--warn">stale</span></span></div><div class="st__row"><span class="st__k">Last good tick</span><span class="st__v">2026-10-20T19:03:42Z</span></div><div class="st__row"><span class="st__k">Latency</span><span class="st__v">1859 ms</span></div><div class="st__row"><span class="st__k">Consecutive failures</span><span class="st__v">0</span></div><div class="st__row"><span class="st__k">espn teams</span><span class="st__v"><span class="st__pill st__pill--warn">stale</span></span></div><div class="st__row"><span class="st__k">Last good tick</span><span class="st__v">2026-10-20T19:03:43Z</span></div><div class="st__row"><span class="st__k">Latency</span><span class="st__v">1489 ms</span></div><div class="st__row"><span class="st__k">Consecutive failures</span><span class="st__v">0</span></div><div class="st__row"><span class="st__k">scoreboard snapshot</span><span class="st__v"><span class="st__pill st__pill--warn">stale</span></span></div><div class="st__row"><span class="st__k">Last good tick</span><span class="st__v">2026-10-20T19:01:25Z</span></div><div class="st__row"><span class="st__k">Latency</span><span class="st__v">unknown</span></div><div class="st__row"><span class="st__k">Consecutive failures</span><span class="st__v">0</span></div><div class="st__row"><span class="st__k">season snapshot</span><span class="st__v"><span class="st__pill st__pill--warn">stale</span></span></div><div class="st__row"><span class="st__k">Last good tick</span><span class="st__v">2026-10-20T19:02:34Z</span></div><div class="st__row"><span class="st__k">Latency</span><span class="st__v">unknown</span></div><div class="st__row"><span class="st__k">Consecutive failures</span><span class="st__v">0</span></div><div class="st__row"><span class="st__k">Snapshot</span><span class="st__v">2026-10-20T19:03:43Z</span></div><p style="color:var(--muted);font-size:13px">Realtime data-plane sources: uptime, lag, last-good-tick. This card reads the last deployed snapshot — staleness here means the pipeline (not the page) is behind. A source whose last good tick is older than 120 min is flagged stale and the header drops from ok to warn. Currently stale: espn_scoreboard, espn_summary, espn_teams, scoreboard_snapshot, season_snapshot.</p></section>
     <section class="st__card" aria-label="Incident history">
       <h2>Incidents</h2>
       <p>No incidents recorded.</p>
@@ -89,22 +91,37 @@
   This page refreshes every 5 minutes; the underlying checks re-run on a schedule.
   Incidents and the runbook: <code>docs/platform/incident-runbook.md</code> in the repo.</p>
 </main>
+<!-- footer:stamped -->
 <footer class="site-footer">
   <nav class="site-footer__sitemap" aria-label="Sitemap">
     <div class="site-footer__col">
+      <span class="site-footer__col-title">Play</span>
+      <a href="/play">Daily Court</a>
+      <a href="/map-guess">Map Hunt</a>
+      <a href="/twenty-questions">Twenty Questions</a>
+      <a href="/play/era-crossed">Era Crossed</a>
+      <a href="/replay">Pixel Replay</a>
+    </div>
+    <div class="site-footer__col">
       <span class="site-footer__col-title">Explore</span>
-      <a href="/">Atlas</a>
       <a href="/live">Live</a>
+      <a href="/schedule">Schedule</a>
       <a href="/players">Players</a>
       <a href="/insights">Insights</a>
+      <a href="/twin-network">Twin Networks</a>
+      <a href="/playoff-runs">Playoff Runs</a>
+      <a href="/taxonomy">Taxonomy</a>
     </div>
     <div class="site-footer__col">
       <span class="site-footer__col-title">How it works</span>
-      <a href="https://dumbmodel.com" rel="noopener">dumbmodel.com</a>
+      <a href="/methods">Methods</a>
+      <a href="/models/mtnn-v5">Models</a>
+      <a href="https://github.com/jcdavis131/vector-hoops" rel="noopener">Source on GitHub</a>
     </div>
   </nav>
-  <p class="site-footer__attribution">Every number recomputable from stats.nba.com · A <a href="https://dumbmodel.com">dumbmodel</a> project · <a href="https://github.com/jcdavis131/vector-hoops" rel="noopener">Source</a></p>
+  <p class="site-footer__attribution">Scores and stats from stats.nba.com and ESPN · A <a href="https://dumbmodel.com">dumbmodel</a> project</p>
 </footer>
-<script src="/assets/site-nav.js?v=08ff3eda"></script>
+<!-- /footer:stamped -->
+<script src="/assets/site-nav.js?v=13e9219d"></script>
 </body>
 </html>
