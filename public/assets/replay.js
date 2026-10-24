@@ -681,8 +681,8 @@
     var seen = {}; MOM = MOM.filter(function (m) { var k = m.i + m.f; if (seen[k]) return false; seen[k] = 1; return true; });
     var marks = $('rpMarks'), ticks = $('rpTicks');
     if (marks) { marks.innerHTML = ''; MOM.forEach(function (m) { if (m.f === 'clutch') return; var s = document.createElement('span'); s.style.left = (RT[m.i] / T_END * 100) + '%'; if (m.f === 'd') s.className = 'd'; if (m.f === 'lead') s.className = 'l'; marks.appendChild(s); }); }
-    if (ticks) { ticks.innerHTML = ''; ticks.style.position = 'relative'; ticks.style.height = '12px'; }
-    for (var q = 1; ticks && q <= G.periods; q++) { var k = EV.findIndex(function (e) { return e[0] === q; }); if (k < 0) continue; var sp = document.createElement('span'); sp.textContent = q <= 4 ? 'Q' + q : 'OT' + (q - 4); sp.style.position = 'absolute'; sp.style.left = (RT[k] / T_END * 100) + '%'; ticks.appendChild(sp); }
+    if (ticks) { ticks.innerHTML = ''; }  /* layout is CSS (.rp-ticks); only each tick's left is data */
+    for (var q = 1; ticks && q <= G.periods; q++) { var k = EV.findIndex(function (e) { return e[0] === q; }); if (k < 0) continue; var sp = document.createElement('span'); sp.textContent = q <= 4 ? 'Q' + q : 'OT' + (q - 4); sp.style.left = (RT[k] / T_END * 100) + '%'; ticks.appendChild(sp); }
     renderMoments();
   }
   function renderMoments() {
@@ -753,6 +753,16 @@
       if (opts.live === true && !cur.live) goLive();
     }
     var srcEl = $('rpSrc'); if (srcEl) srcEl.href = g.source;
+    /* audit #18: say what state this game is in; a final never reads as live */
+    var stEl = $('rpStatus');
+    if (stEl && g.teams && g.teams.length > 1) {
+      var sc = g.score || [];
+      var line = g.teams[0].tri + (sc[0] != null ? ' ' + sc[0] : '') + ' at ' + g.teams[1].tri + (sc[1] != null ? ' ' + sc[1] : '');
+      stEl.textContent = g.final ? 'Final: ' + line + '. Every possession is here to rewind.'
+        : g.live ? 'In progress: ' + line + '. The replay follows the live feed a play behind.'
+        : line + (g.date ? ', ' + g.date : '') + '.';
+      stEl.hidden = false;
+    }
     try{
       if(window.GameHeader){
         var ghEl=document.getElementById('gameHeader');
