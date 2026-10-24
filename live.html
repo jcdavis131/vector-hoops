@@ -26,7 +26,7 @@
 <link rel="stylesheet" href="/assets/fonts.css?v=8f376b2a"/>
 <link rel="stylesheet" href="/assets/atlas.css?v=31711e9d"/>
 <link rel="stylesheet" href="/assets/shell.css?v=398d5e37"/>
-<link rel="stylesheet" href="/assets/live.css?v=880500ac"/>
+<link rel="stylesheet" href="/assets/live.css?v=a8ae8189"/>
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
@@ -75,7 +75,7 @@
   <div class="tlrow">
     <input type="range" id="scrub" min="0" max="100" value="100" step="1" aria-label="Rewind game timeline">
     <div id="tlclock" class="num">LIVE</div>
-    <button type="button" id="liveBtn" class="btn btn-accent livebtn"><span class="dot" aria-hidden="true"></span>LIVE<span id="liveNew"></span></button>
+    <button type="button" id="liveBtn" class="btn btn-accent livebtn"><span class="dot" aria-hidden="true"></span><span id="liveLbl">LIVE</span><span id="liveNew"></span></button>
   </div>
   <div id="tlticks" aria-hidden="true"></div>
 </div>
@@ -181,7 +181,8 @@
 <div class="card">
     <div class="plate"><span class="pno">PLATE 12</span><h2>STYLE MAP</h2><span class="prule"></span><span class="pmeta" id="atlasMeta">tonight&rsquo;s players among 12,966 player-seasons</span></div>
     <div class="card--void live-map" id="liveMap" data-projection="pca"></div>
-    <p class="caption" id="atlasNote" aria-live="polite">Tap a dot to see that player&rsquo;s closest style twins.</p>
+    <p class="caption" id="atlasNote" aria-live="polite">Pick a player below, or tap a dot, to see their closest style twins.</p>
+    <ul class="row-list live-map__players" id="atlasPlayers" aria-label="Tonight&rsquo;s players on the map" hidden></ul>
   </div>
   </div>
 </details>

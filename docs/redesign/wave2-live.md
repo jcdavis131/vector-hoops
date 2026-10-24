@@ -145,3 +145,22 @@ in-progress or final and the tip an hour ago. No numbers change.
 3. An Embed3D load event or `onLoad` option: live-atlas.js polls `snapshot().loaded` (250 ms,
    bounded) before `find()`/`setGroups()`.
 4. A void colour set for pixel-art canvases (replay.js) if D6 is to reach 0 there.
+
+## Review fixes (after 171318f0)
+
+- M1 name collisions: the map index keeps every row per name; a match must be 2024-25 or later,
+  a row on his current team wins, a single recent row elsewhere is a traded player, anything else
+  is unmatched (tests/live_atlas_match.test.mjs, run by tests/test_live_node.py). Fixture game:
+  19 of 26 players placed (23 before), "(7 not on the map yet)" in the plate meta.
+- M2 postponed/cancelled/suspended: `gamePhase()` makes 'post' a final only when completed and
+  not one of those; otherwise phase 'off' with ESPN's description and neutral copy, no Final, no
+  morning-after card (tests/live_phase.test.mjs). Schedule rows and the off-day "last final" use
+  the same rule via ESPN's detail.
+- M3 keyboard path to twins: a `.row-list` of tonight's matched players under the map, each a
+  44 px button into the same select path (`aria-pressed` on the chosen one).
+- Lows: ESPN colours accepted only as 6-digit hex (live.js teamColors, live-atlas.js sides);
+  timeline button label in `#liveLbl`; one polling timer for the map load; milestones final copy
+  "No milestones in this game."; play-by-play clock/scores and moment clocks escaped; `esc()`
+  no longer turns 0 into ''.
+- 171318f0 had live.html/replay.html with stale `?v=` tokens for live.css/replay.css (the stamped
+  pages were not staged); this commit carries the current tokens.

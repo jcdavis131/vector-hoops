@@ -248,3 +248,9 @@ svg.shot .annot{ font-family: var(--font-code); fill: var(--fg-2); }
 #offgame-replay{ white-space: normal; height: auto; padding-top: 8px; padding-bottom: 8px; text-align: center; }
 /* game-header.js markup (.gh-*): layout only until the kit styles it (kit request, wave 2.4) */
 #ghMount .gh{ display: flex; flex-wrap: wrap; align-items: center; gap: 4px 10px; }
+/* tonight's matched players: the keyboard and screen-reader way into the map's twins */
+.live-map__players{ margin-top: var(--s-3); max-height: 360px; overflow-y: auto; }
+.live-map__players > li{ padding: 0; }
+.live-map__player{ display: flex; align-items: center; gap: var(--s-3); width: 100%; min-height: 44px; padding: 0 4px;
+  font: inherit; text-align: left; color: var(--fg); background: transparent; border: 0; cursor: pointer; }
+.live-map__player[aria-pressed="true"]{ box-shadow: inset 2px 0 0 var(--accent); background: var(--surface-2); }

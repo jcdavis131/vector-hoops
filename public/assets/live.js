@@ -42,12 +42,24 @@ function chartFont(){return '11px '+tok('--font-code');}
 function teamColors(d){
   const out={a:'',h:''};
   try{
-    const byId={};((d.boxscore&&d.boxscore.teams)||[]).forEach(t=>{if(t.team&&t.team.id&&t.team.color)byId[String(t.team.id)]='#'+t.team.color;});
+    const byId={};((d.boxscore&&d.boxscore.teams)||[]).forEach(t=>{if(t.team&&t.team.id&&/^[0-9a-f]{6}$/i.test(String(t.team.color||'')))byId[String(t.team.id)]='#'+t.team.color;});
     d.header.competitions[0].competitors.forEach(c=>{const k=c.homeAway==='home'?'h':'a';out[k]=byId[String(c.team&&c.team.id)]||'';});
   }catch(e){}
   return out;
 }
-function phaseOf(d){try{return d.header.competitions[0].status.type.state||'';}catch(e){return '';}}
+/* gamePhase:begin (tests/live_phase.test.mjs evaluates this block)
+   ESPN marks postponed, cancelled and suspended games state 'post' too: a final is
+   'post' AND completed AND not one of those. Anything else 'post' is 'off', shown
+   with ESPN's own description and neutral copy. */
+function gamePhase(t){
+  t=t||{};
+  const st=t.state||'',nm=String(t.name||'').toUpperCase();
+  if(st!=='post')return {phase:st,label:''};
+  if(t.completed===true&&!/POSTPONED|CANCELED|CANCELLED|SUSPENDED/.test(nm))return {phase:'post',label:'Final'};
+  return {phase:'off',label:String(t.description||t.shortDetail||'Not played')};
+}
+/* gamePhase:end */
+function phaseOf(d){try{return gamePhase(d.header.competitions[0].status.type);}catch(e){return {phase:'',label:''};}}
 async function jget(u){const r=await fetch(u);if(!r.ok)throw new Error('HTTP '+r.status);return r.json();}
 
 /* C2.1: estimated final-whistle ms for the 24h guard. Callers only ever know
@@ -126,7 +138,7 @@ function renderGames(){
     const line=(cls,txt)=>{const s=document.createElement('span');s.className=cls;s.textContent=txt;b.appendChild(s);};
     line('ms',g.a.abbr+' @ '+g.h.abbr);
     if(g.state!=='pre')line('sc',g.a.score+' \u2013 '+g.h.score);
-    line('st',g.state==='in'?'\u25cf LIVE \u2014 '+g.detail:g.state==='post'?finalLabel(g):g.detail);
+    line('st',g.state==='in'?'\u25cf LIVE \u2014 '+g.detail:(g.state==='post'&&/^final/i.test(g.detail||''))?finalLabel(g):g.detail);
     b.onclick=()=>selectGame(g.id);
     el.appendChild(b);
   });
@@ -160,7 +172,7 @@ function offGame(){
   const og=$('offgame');
   if(og){
     og.hidden=false;
-    const finals=games.filter(x=>x.state==='post');
+    const finals=games.filter(x=>x.state==='post'&&/^final/i.test(x.detail||''));
     const last=finals.length?finals[finals.length-1]:null;
     const a=$('offgame-replay');
     if(a){
@@ -206,24 +218,27 @@ function renderMorning(d,g,isPost){
 /* Audit #18: one phase for the page. 'in' lights the live chrome; 'post' says Final
    and switches every plate's empty copy to past tense; nothing pretends to be live. */
 let PHASE='';
-function setPhase(ph){
-  PHASE=ph;
+let PHASE_LABEL='';
+function setPhase(ph,label){
+  PHASE=ph;PHASE_LABEL=label||'';
   const r=LROOT();if(r){r.classList.toggle('is-live',ph==='in');r.classList.toggle('final',ph==='post');}
-  const st=$('liveState');if(st)st.textContent=ph==='in'?'Live now':ph==='post'?'Final':ph==='pre'?'Before tip':'Courtside';
+  const st=$('liveState');if(st)st.textContent=ph==='in'?'Live now':ph==='post'?'Final':ph==='pre'?'Before tip':ph==='off'?PHASE_LABEL:'Courtside';
   const le=$('liveLede');if(le)le.textContent=ph==='post'
     ?'This game is over: every plate below is the final record, and the timeline rewinds it.'
+    :ph==='off'?'ESPN lists this game as '+PHASE_LABEL.toLowerCase()+'. The plates show whatever was played.'
     :'The second screen for NBA games: no video, just the numbers.';
   const no=$('liveNote');if(no)no.textContent=ph==='post'
     ?'Final: the feed is no longer polled for this game. Use the day arrows for other days and the timeline to rewind.'
+    :ph==='off'?'This game is not in progress, so the feed is not polled for it. Use the day arrows for other days.'
     :'Scores and plays refresh every 30 s while a game is live and every 5 minutes otherwise; if the feed stalls you see the last-known score with its time. Use the day arrows for other days and the timeline to rewind.';
 }
 /* Empty-plate copy by phase: a final never says 'yet' or 'waiting'. */
-function emptyMsg(live,fin){return '<p class="caption">'+(PHASE==='post'?fin:live)+'</p>';}
+function emptyMsg(live,fin){return '<p class="caption">'+(PHASE==='post'?fin:PHASE==='off'?'Nothing here: ESPN lists this game as '+esc(PHASE_LABEL.toLowerCase())+'.':live)+'</p>';}
 function renderAll(d,g){
   if(g&&g.a&&g.h){try{document.title='Courtside — '+g.a.abbr+' @ '+g.h.abbr;}catch(e){}}
-  const st=(d.header&&d.header.competitions[0]&&d.header.competitions[0].status.type.state)||'';
+  const gp=phaseOf(d),st=gp.phase;
   const isPre=st==='pre',isPost=st==='post';
-  setPhase(st);
+  setPhase(st,gp.label);
   const tc=teamColors(d),root=LROOT();
   if(root){root.style.setProperty('--team-a',tc.a||'');root.style.setProperty('--team-h',tc.h||'');}
   // C2.4: panels follow game state — a pre-game selection renders ONLY the
@@ -286,11 +301,11 @@ function updateTlUI(d){
   plays.forEach((pl,i)=>{if(pl.period.number!==pq){qs.push({q:pl.period.number,i:i});pq=pl.period.number;}});
   $('tlticks').innerHTML=qs.map(o=>'<span style="left:'+(o.i/Math.max(1,n-1)*100).toFixed(1)+'%">Q'+o.q+'</span>').join('');
   const tlc=$('tlclock');
-  tlc.textContent=TL.live?(PHASE==='post'?'FINAL':'\u25cf LIVE'):(p?('Q'+p.period.number+' '+p.clock.displayValue):'');
+  tlc.textContent=TL.live?(PHASE==='post'?'FINAL':PHASE==='off'?PHASE_LABEL.toUpperCase():'\u25cf LIVE'):(p?('Q'+p.period.number+' '+p.clock.displayValue):'');
   tlc.classList.toggle('is-live',TL.live&&PHASE==='in');
   LROOT().classList.toggle('rewound',!TL.live);
   $('liveBtn').classList.toggle('show',!TL.live);
-  $('liveBtn').lastChild.previousSibling.textContent=PHASE==='post'?'END':'LIVE';
+  $('liveLbl').textContent=PHASE==='in'?'LIVE':'END';
   $('liveNew').textContent=TL.newCount?(' +'+TL.newCount):'';
 }
 (function(){
@@ -348,7 +363,7 @@ function renderHeader(d,g,idx){
     }
   }catch(e){}
 }
-function esc(s){return String(s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
+function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
 function ordinal(n){return n+(['th','st','nd','rd'][n]||'th');}
 
 // ---- animation + canvas helpers ----
@@ -566,7 +581,7 @@ function renderPlays(d,idx){
     if(p.scoringPlay)li.className='score';
     if(TL.live&&maxId&&+p.id>(+window._lastPlayId||0))li.className+=(li.className?' ':'')+'fresh';
     const clk=(p.period?p.period.number+'Q ':'')+(p.clock?p.clock.displayValue:'');
-    li.innerHTML=`<span class="pc">${clk}</span><span>${p.scoringPlay?'<b>'+esc(p.text)+'</b>':esc(p.text)}</span><span class="sc">${p.awayScore}–${p.homeScore}</span>`;
+    li.innerHTML=`<span class="pc">${esc(clk)}</span><span>${p.scoringPlay?'<b>'+esc(p.text)+'</b>':esc(p.text)}</span><span class="sc">${esc(p.awayScore)}–${esc(p.homeScore)}</span>`;
     ul.appendChild(li);
   });
   if(maxId)window._lastPlayId=maxId;
@@ -772,7 +787,7 @@ function renderMiles(d){
     else if(c3===2&&n3>=3)bits.push(`triple-double brewing (${x.p}p ${x.r}r ${x.a}a)`);
     if(bits.length)html+=`<div class="mile"><div class="mline"><b>${esc(x.nm)}</b> — ${x.p}p ${x.r}r ${x.a}a</div><div class="msub">${bits.join(' · ')}</div></div>`;
   });
-  el.innerHTML=html||emptyMsg('No milestones brewing yet.','No one came within reach of a personal best.');
+  el.innerHTML=html||emptyMsg('No milestones brewing yet.','No milestones in this game.');
 }
 
 // ---- Live moments timeline ----
@@ -896,7 +911,7 @@ function renderMoments(d,g,idx){
     const k=m.clk+'|'+m.text.replace(/<[^>]*>/g,'');
     const fresh=!window._seenMom.has(k);
     window._seenMom.add(k);
-    return `<div class="ms-item${fresh?' fresh':''}"><span class="mc">${m.clk}</span><span class="mt">${m.text}</span><button type="button" class="btn ms-share" data-seq="${m.seq}">Share</button></div>`;
+    return `<div class="ms-item${fresh?' fresh':''}"><span class="mc">${esc(m.clk)}</span><span class="mt">${m.text}</span><button type="button" class="btn ms-share" data-seq="${m.seq}">Share</button></div>`;
   }).join('')||emptyMsg('Waiting for the first big moment\u2026','No big moments in this game.');
   window._lastMoms=vmoms.slice(0,8);
 }
