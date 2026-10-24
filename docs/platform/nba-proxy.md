@@ -125,4 +125,14 @@ CI runs it through `tests/test_nba_proxy_node.py`, which follows the `test_live_
 
 ## Gate: does cdn.nba.com answer a Vercel IP?
 
-See the result section below, filled in from the preview deploy of branch `forge/f1proxy`.
+Not yet proven. Preview of commit `53b7fcc2`: deployment `dpl_8m1W4Ru2Wi4zb21JuhQ5nvYtBaLj`, READY, function region `iad1`.
+Branch alias: https://vector-hoops-git-forge-f1proxy-cams-projects-c5c4c5f6.vercel.app.
+
+A plain request for `/api/nba/scoreboard` (one call, 2026-10-24) got `302` to `vercel.com/sso-api`.
+Vercel deployment protection is on for previews, so no request reached the function and nothing reached cdn.nba.com.
+The probe goes through the Vercel connector next:
+1. `/api/nba/scoreboard`;
+2. `/api/nba/boxscore?game=<id from that scoreboard>`;
+3. the matching `nba_upstream` line from the runtime logs.
+
+P2 must not start until that probe shows a 200 from cdn.nba.com.
