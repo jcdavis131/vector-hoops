@@ -224,8 +224,10 @@
       s += '<rect x="' + x + '" y="' + y + '" width="' + w + '" height="' + h + '" rx="8" class="' + cls + '"/>';
       var ink = cls.indexOf('--gold') !== -1 ? ' vh-ins__svgval--on-gold' : '';
       lines.forEach(function (ln, i) {
+        // a line past ~16 chars is squeezed to the node width, never cut
+        var fit = String(ln).length > 16 ? '" textLength="' + (w - 10) + '" lengthAdjust="spacingAndGlyphs' : '';
         s += '<text x="' + (x + w / 2) + '" y="' + (y + h / 2 - (lines.length - 1) * 8 + i * 16) +
-          '" text-anchor="middle" class="vh-ins__svgval' + ink + '">' + esc(ln) + '</text>';
+          '" text-anchor="middle" class="vh-ins__svgval' + ink + fit + '">' + esc(ln) + '</text>';
       });
     }
     // Archetype node (the era lives in the twin column now)
@@ -236,7 +238,7 @@
     var y = 56, Htot = 218;
     p.top3.forEach(function (t) {
       var h = Math.max(30, (Math.abs(t.z) / tot) * Htot);
-      var lbl = t.label.length > 16 ? t.label.slice(0, 15) + '…' : t.label;
+      var lbl = t.label;
       var zlbl = (t.z > 0 ? '+' : '') + t.z.toFixed(2) + 'σ';
       node(X[1], y, CW, h, 'vh-ins__mark--node', [lbl, zlbl]);
       var share = Math.abs(t.z) / tot;
