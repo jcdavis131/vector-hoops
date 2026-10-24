@@ -15,10 +15,7 @@ var store={streak:0,best:0,games:0};
 try{var s=JSON.parse(localStorage.getItem(LS_KEY)||'null');if(s)store=s;}catch(e){}
 
 function toast(msg){
-  var t=$('vh-toast');
-  if(!t){t=document.createElement('div');t.id='vh-toast';t.className='vh-toast';t.setAttribute('role','status');document.body.appendChild(t);}
-  t.textContent=msg;t.classList.add('is-visible');
-  clearTimeout(toast._t);toast._t=setTimeout(function(){t.classList.remove('is-visible');},2600);
+  try{if(window.VHToast)window.VHToast.show(msg);}catch(e){}
 }
 function esc(s){return String(s).replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
 function shuffle(a){for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),t=a[i];a[i]=a[j];a[j]=t;}return a;}
@@ -32,7 +29,7 @@ function paintStatus(){
 function paintDots(){
   var el=$('round-dots');el.innerHTML='';
   for(var i=0;i<order.length;i++){
-    var d=document.createElement('span');d.className='d'+(order[i].hit===true?' hit':order[i].hit===false?' miss':'');
+    var d=document.createElement('span');d.className='progress-dot'+(order[i].hit===true?' is-done':order[i].hit===false?' is-miss':'');
     d.textContent=i+1;el.appendChild(d);
   }
 }

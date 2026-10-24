@@ -20,10 +20,7 @@ var lastPi=-1;                   // player index of the current reveal
 function dpr(){return Math.min(2,window.devicePixelRatio||1);}
 
 function toast(msg){
-  var t=$('vh-toast');
-  if(!t){t=document.createElement('div');t.id='vh-toast';t.className='vh-toast';t.setAttribute('role','status');document.body.appendChild(t);}
-  t.textContent=msg;t.classList.add('is-visible');
-  clearTimeout(toast._t);toast._t=setTimeout(function(){t.classList.remove('is-visible');},2600);
+  try{if(window.VHToast)window.VHToast.show(msg);}catch(e){}
 }
 function esc(s){return String(s).replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
 function fmt(n){return n.toLocaleString('en-US');}
@@ -86,7 +83,7 @@ function setQuestionUI(){
 function renderLog(){
   var el=$('answer-log');el.innerHTML='';
   answers.forEach(function(a){
-    var s=document.createElement('span');s.className='a '+a[1];s.textContent=a[1]==='y'?'Y':(a[1]==='n'?'N':'?');el.appendChild(s);
+    var s=document.createElement('span');s.className='progress-dot '+(a[1]==='y'?'is-yes':(a[1]==='n'?'is-no':'is-unsure'));s.textContent=a[1]==='y'?'Y':(a[1]==='n'?'N':'?');el.appendChild(s);
   });
 }
 function answer(dir){ // dir: 'y' | 'n' | 'u'
@@ -149,8 +146,8 @@ function reveal(pi){
   $('reveal-name').textContent=p[0];
   $('reveal-career').textContent=careerLine(p);
   var b=$('reveal-badges');b.innerHTML='';
-  if(p[6]){var s=document.createElement('span');s.className='badge star';s.textContent='\u2605 All-Star';b.appendChild(s);}
-  if(p[7]){var a=document.createElement('span');a.className='badge star';a.textContent='\u25C8 All-NBA';b.appendChild(a);}
+  if(p[6]){var s=document.createElement('span');s.className='pill pill-yellow';s.textContent='\u2605 All-Star';b.appendChild(s);}
+  if(p[7]){var a=document.createElement('span');a.className='pill pill-yellow';a.textContent='\u25C8 All-NBA';b.appendChild(a);}
   $('pill-q').textContent='Q '+answers.length+'/'+MAXQ;
   refreshAlive();drawMap();
   $('btn-again').focus();

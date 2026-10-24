@@ -1,0 +1,341 @@
+/* game.css: layout for the four game pages (/play, /map-guess, /twenty-questions, /play/era-crossed).
+   DESIGN-DIRECTION task 1.3. Layout only: no tokens are defined here, no hex, and no kit class
+   (.card, .btn, .pill, .chip, .chip-link, .seg, .progress-dot, .toast, .state, .disclosure,
+   .share-bar, .answer, .suggest, .result, .game-status) is redeclared; atlas.css owns those.
+   Every rule sits under its page's body class wrapped in :where(), so the page prefix adds no
+   specificity and atlas.css's material rules (.court-card.is-solved, .reward.is-unlocked,
+   .guess-row.win) still win over the plain layout here. */
+
+/* ==========================================================================
+   Shared by the four pages
+   ========================================================================== */
+:where(.game) .btn-row{ display: flex; flex-wrap: wrap; gap: var(--s-2); margin-top: var(--s-3); }
+:where(.game) .btn-row .btn{ flex: 1 1 120px; }
+:where(.game) .bar{ display: block; height: 4px; margin-top: 6px; border-radius: 999px; background: var(--surface-2); overflow: hidden; }
+:where(.game) .bar > i{ display: block; height: 100%; background: var(--accent); transition: width .7s var(--ease); }
+:where(.game) kbd{ padding: 1px 6px; border: 1px solid var(--line-2); border-radius: 4px; background: var(--surface-2); font-weight: 700; }
+/* the error card's heading reads as the kit state title */
+:where(.game) .state--error > h2{ margin: 0; }
+:where(.game) .state--error > p{ margin: 0; }
+@media (prefers-reduced-motion: reduce){
+  :where(.game) .bar > i{ transition: none; }
+}
+
+/* ==========================================================================
+   /play: Daily Court
+   ========================================================================== */
+/* status strip: pills | phase + dots | how to play */
+:where(.game--play) #game-header .game-status{ display: grid; grid-template-columns: 1fr; justify-items: center; row-gap: 10px; }
+@media (min-width: 720px){
+  :where(.game--play) #game-header .game-status{ grid-template-columns: 1fr auto 1fr; justify-items: stretch; align-items: center; gap: var(--s-3); }
+}
+:where(.game--play) .game-status__side{ display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+:where(.game--play) .game-status__side--end{ justify-content: flex-end; }
+:where(.game--play) #game-status-bar{ display: flex; flex-direction: column; align-items: center; gap: 10px; }
+:where(.game--play) .game-status__phase{ display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 8px; }
+:where(.game--play) .game-status__sep{ opacity: .4; }
+:where(.game--play) #court-load-fallback{ min-height: 0; padding: var(--s-4); }
+
+/* mode switcher */
+:where(.game--play) #mode-selector{ display: flex; flex-direction: column; align-items: center; gap: var(--s-3); }
+:where(.game--play) .mode-head{ display: flex; flex-wrap: wrap; align-items: baseline; justify-content: center; gap: var(--s-3); }
+:where(.game--play) .mode-head__note{ font-size: var(--t-sm); color: var(--fg-2); }
+:where(.game--play) #mode-tabs{ max-width: 100%; }
+:where(.game--play) .mode-desc{ max-width: 70ch; margin: 0; text-align: center; font-size: var(--t-sm); line-height: 1.6; color: var(--fg-2); }
+/* play-engine.js re-injects a #mode-howto .linkbtn into #mode-desc in triple mode */
+:where(.game--play) .linkbtn{
+  min-height: 0; padding: 0; border: 0; background: none; cursor: pointer;
+  font: inherit; font-weight: 700; color: var(--accent-2);
+  text-decoration: underline; text-underline-offset: 2px;
+}
+
+/* the court */
+:where(.game--play) .court-top{ display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px; }
+:where(.game--play) .court-top h2{ margin: 4px 0 0; font-size: var(--t-lg); }
+:where(.game--play) .court-top__actions{ display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+:where(.game--play) .court-grid{ display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: var(--s-2); margin-top: var(--s-3); }
+@media (max-width: 720px){
+  :where(.game--play) .court-grid{ grid-template-columns: 1fr; }
+}
+:where(.game--play) .court-card{
+  position: relative; display: flex; flex-direction: column; justify-content: space-between;
+  min-height: 92px; padding: 10px; cursor: pointer;
+  background: var(--surface-2); border: 1px solid var(--line); border-radius: var(--radius-lg);
+  transition: border-color var(--dur-1) var(--ease);
+}
+:where(.game--play) .court-card:hover{ border-color: var(--line-2); }
+:where(.game--play) .court-card.is-active{ border-color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent); }
+:where(.game--play) .court-card.is-failed{
+  background: color-mix(in srgb, var(--bad) 8%, var(--surface-2));
+  border-color: color-mix(in srgb, var(--bad) 45%, transparent);
+}
+:where(.game--play) .court-slot{
+  font-family: var(--font-display); font-size: var(--t-xs); font-weight: 600; font-stretch: 112%;
+  letter-spacing: .14em; text-transform: uppercase; color: var(--fg-3);
+}
+:where(.game--play) .court-name{ margin: 4px 0; font-family: var(--font-text); font-size: var(--t-sm); font-weight: 650; line-height: 1.2; color: var(--fg); font-variant-numeric: tabular-nums; }
+:where(.game--play) .court-meta{ font-family: var(--font-text); font-size: var(--t-xs); color: var(--fg-2); }
+:where(.game--play) .court-badge{ position: absolute; top: 8px; right: 8px; }
+/* suit tag: the card-suit category of a slot's past target, a chip so it never reads as the label */
+:where(.game--play) .suit-tag{
+  display: inline-block; margin-left: 6px; padding: 2px 7px; vertical-align: 1px;
+  font-family: var(--font-display); font-size: var(--t-xs); font-weight: 700; font-stretch: 112%;
+  letter-spacing: .12em; text-transform: uppercase;
+  color: var(--accent-2); background: var(--accent-wash); border: 1px solid var(--accent-line); border-radius: 999px;
+}
+:where(.game--play) .lineup-bar,
+:where(.game--play) .rewards-row{ display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin-top: 10px; }
+:where(.game--play) .lineup-chip,
+:where(.game--play) .reward{
+  display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px;
+  font-family: var(--font-display); font-size: var(--t-xs); font-weight: 600; font-stretch: 112%;
+  letter-spacing: .1em; text-transform: uppercase; color: var(--fg-2);
+  background: none; border: 1px solid var(--line-2); border-radius: 999px;
+}
+
+/* the map window: #map-wrap carries .card--void, so everything inside reads the void pairings */
+:where(.game--play) #lens-bar{ margin: 0 0 var(--s-2); }
+:where(.game--play) #lens-bar:empty{ display: none; }
+:where(.game--play) .vh-lensbar{ display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+:where(.game--play) .vh-lensbar .pill{ min-height: 44px; }
+:where(.game--play) .vh-lens-btn.on,
+:where(.game--play) .vh-lens-iso[aria-pressed="true"]{ color: var(--bg); background: var(--fg); border-color: var(--fg); }
+:where(.game--play) .vh-lens-cap{ font-size: var(--t-xs); color: var(--fg-3); }
+:where(.game--play) .vh-lens-count{ font-family: var(--font-code); font-size: var(--t-xs); font-weight: 700; }
+:where(.game--play) #map-wrap{ position: relative; min-height: 420px; overflow: hidden; border: 1px solid var(--line); border-radius: var(--radius-lg); }
+:where(.game--play) #sky-canvas{ position: absolute; inset: 0; display: block; width: 100%; height: 100%; cursor: grab; }
+:where(.game--play) #map-overlay{
+  position: absolute; left: 10px; right: 10px; top: 10px; z-index: 2;
+  display: flex; flex-wrap: wrap; justify-content: space-between; gap: var(--s-2); pointer-events: none;
+}
+:where(.game--play) #map-overlay .chip{ background: var(--surface-2); }
+:where(.game--play) #map-controls{ position: absolute; left: 10px; bottom: 10px; z-index: 3; display: flex; flex-wrap: wrap; gap: 6px; }
+:where(.game--play) #map-controls .chip-link{ background: var(--surface-2); }
+:where(.game--play) #map-legend{
+  position: absolute; right: 10px; bottom: 10px; z-index: 3; min-width: 128px; padding: 7px 9px;
+  font-size: var(--t-xs); line-height: 1.35; color: var(--fg-2);
+  background: var(--surface-2); border: 1px solid var(--line); border-radius: var(--radius); pointer-events: none;
+}
+:where(.game--play) .map-legend__title{ margin-bottom: 4px; }
+:where(.game--play) #hover-tip{
+  position: absolute; left: 50%; top: 50%; z-index: 3; display: none; max-width: 220px; padding: 6px 8px;
+  transform: translate(-50%, -100%);
+  font-size: var(--t-xs); color: var(--fg); background: var(--surface-2);
+  border: 1px solid var(--line); border-radius: var(--radius); pointer-events: none;
+}
+
+/* past target card */
+:where(.game--play) #boot-error{ border-left: 3px solid var(--bad); }
+:where(.game--play) .past-card__row{ display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-start; gap: var(--s-3); }
+:where(.game--play) .past-card__who{ display: flex; align-items: flex-start; gap: var(--s-3); flex: 1 1 280px; min-width: 0; }
+:where(.game--play) .past-card__text{ flex: 1; min-width: 0; }
+:where(.game--play) .past-card__pills{ display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin-bottom: var(--s-2); }
+:where(.game--play) .past-card__actions{ display: flex; flex-wrap: wrap; gap: var(--s-2); flex: 0 0 auto; align-self: flex-start; }
+:where(.game--play) #past-avatar{
+  display: flex; align-items: center; justify-content: center; flex: 0 0 64px; width: 64px; height: 64px; overflow: hidden;
+  background: var(--surface-2); border: 1px solid var(--line); border-radius: var(--radius-lg); image-rendering: pixelated;
+}
+:where(.game--play) #past-name{ margin: 0 0 6px; font-size: var(--t-xl); line-height: 1; }
+:where(.game--play) #past-meta{ text-transform: none; color: var(--fg-2); line-height: 1.45; }
+:where(.game--play) .turn-indicator{ display: flex; align-items: center; gap: var(--s-2); margin-top: 10px; font-size: var(--t-sm); font-weight: 600; }
+:where(.game--play) .turn-dot{ width: 8px; height: 8px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 3px var(--accent-wash); animation: game-pulse 1.6s infinite; }
+@keyframes game-pulse{ 0%, 100%{ transform: scale(1); } 50%{ transform: scale(1.18); } }
+
+/* the guess card */
+:where(.game--play) .vh-truth{ border-inline-start: 3px solid var(--accent); }  /* embedding truth: solid marker */
+:where(.game--play) .vh-approx{ border-inline-start: 3px dashed var(--line-2); padding-inline-start: 10px; }  /* map approximation: dashed */
+:where(.game--play) .ready-banner{
+  display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: var(--s-3);
+  margin: 0 0 var(--s-3); padding: 12px 14px;
+  color: var(--fg); background: var(--accent-wash); border: 1px dashed var(--accent-line); border-radius: var(--radius-lg);
+}
+:where(.game--play) .ready-banner__body{ min-width: 0; }
+:where(.game--play) .ready-banner h3{ margin: 0 0 4px; font-size: var(--t-md); line-height: 1.2; }
+:where(.game--play) .ready-banner p{ margin: 0; font-size: var(--t-sm); line-height: 1.45; }
+:where(.game--play) .ready-banner .btn{ flex: 0 0 auto; }
+:where(.game--play) .answer__head{ display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: var(--s-2); }
+:where(.game--play) .answer__head label{ margin: 0; }
+:where(.game--play) #guess-input[disabled]{ opacity: .55; }
+:where(.game--play) .guess-actions{ display: flex; flex-wrap: wrap; gap: var(--s-2); margin-top: var(--s-3); }
+:where(.game--play) #guesses{ margin-top: var(--s-2); }
+:where(.game--play) .guess-note{ margin-top: 6px; text-transform: none; }
+:where(.game--play) #result{ margin-top: var(--s-3); }
+:where(.game--play) .guess-row{ margin-top: var(--s-2); padding: 10px 12px; background: var(--surface-2); border: 1px solid var(--line); border-radius: var(--radius-lg); }
+:where(.game--play) .twin-why{ margin-top: var(--s-3); padding-top: 14px; border-top: 1px solid var(--line); }
+:where(.game--play) .twin-why__label{ margin-bottom: var(--s-2); font-size: var(--t-xs); letter-spacing: .14em; text-transform: uppercase; color: var(--fg-2); }
+:where(.game--play) .twin-why__chips{ display: flex; flex-wrap: wrap; gap: var(--s-2); margin-bottom: 10px; }
+:where(.game--play) .twin-why__differ{ font-size: var(--t-sm); }
+:where(.game--play) .twin-why__thin{ margin-top: var(--s-2); font-size: var(--t-sm); font-style: italic; color: var(--fg-2); }
+:where(.game--play) .twin-why__band{ margin-bottom: 10px; font-size: var(--t-sm); }
+:where(.game--play) .twin-why__method{ margin-top: var(--s-2); font-size: var(--t-xs); font-style: italic; color: var(--fg-3); }
+:where(.game--play) .twin-band,
+:where(.game--play) .twin-band--inline,
+:where(.game--play) .twin-band__summary{ display: inline; }
+:where(.game--play) .twin-band__summary{ cursor: pointer; }
+:where(.game--play) .twin-band__num{ font-size: .92em; opacity: .75; font-variant-numeric: tabular-nums; }
+:where(.game--play) .twin-band__label{ opacity: .7; }
+
+/* game feel: entrances, pops, shakes (the reward overshoot is atlas.css's) */
+@keyframes game-row-in{ from{ opacity: 0; transform: translateY(10px) scale(.985); } to{ opacity: 1; transform: none; } }
+@keyframes game-pop{ 0%{ transform: scale(.8); } 55%{ transform: scale(1.1); } 100%{ transform: scale(1); } }
+@keyframes game-card-in{ from{ opacity: 0; transform: translateY(12px); } to{ opacity: 1; transform: none; } }
+@keyframes game-shake{ 0%, 100%{ transform: translateX(0); } 25%{ transform: translateX(-5px); } 75%{ transform: translateX(5px); } }
+:where(.game--play) .guess-row.is-new{ animation: game-row-in .38s var(--ease); }
+:where(.game--play) #warm-label.pop{ animation: game-pop .32s var(--ease); }
+:where(.game--play) #result .card{ animation: game-card-in .4s var(--ease); }
+:where(.game--play) #guess-input.shake{ animation: game-shake .25s var(--ease); }
+:where(.game--play) .confetti{ position: fixed; inset: 0; z-index: 98; pointer-events: none; }
+
+/* onboarding sheet (.vh-sheet stays until wave 2.2 moves it to the kit .sheet; keyboard-a11y.js closes it) */
+:where(.game--play) .vh-sheet-backdrop{ position: fixed; inset: 0; z-index: 110; display: flex; align-items: flex-end; justify-content: center; padding: 0; background: var(--scrim); }
+:where(.game--play) .vh-sheet{
+  width: 100%; max-width: 680px; max-height: min(88dvh, calc(100dvh - 16px)); overflow: auto;
+  padding: var(--s-4) var(--s-4) calc(var(--s-4) + env(safe-area-inset-bottom));
+  background: var(--surface); border: 1px solid var(--line-2); border-bottom: 0; border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+  animation: game-sheet-up .22s var(--ease);
+}
+@keyframes game-sheet-up{ from{ transform: translateY(100%); } to{ transform: translateY(0); } }
+@media (min-width: 600px){
+  :where(.game--play) .vh-sheet-backdrop{ align-items: center; padding: 20px; }
+  :where(.game--play) .vh-sheet{ border-bottom: 1px solid var(--line-2); border-radius: var(--radius-xl); }
+}
+:where(.game--play) .vh-sheet__handle{ width: 36px; height: 4px; margin: 2px auto 12px; border-radius: 2px; background: var(--line); }
+:where(.game--play) .vh-sheet__head{ display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; margin-bottom: 10px; }
+:where(.game--play) .vh-sheet__title{ margin: 0; font-family: var(--font-display); font-size: var(--t-lg); font-weight: 700; line-height: 1.05; letter-spacing: -.01em; }
+:where(.game--play) .vh-sheet__close{ flex: 0 0 auto; }
+:where(.game--play) .vh-sheet__kicker{ margin-bottom: var(--s-2); color: var(--fg-2); }
+:where(.game--play) .vh-sheet__actions{ display: flex; flex-wrap: wrap; gap: 10px; margin-top: var(--s-3); }
+:where(.game--play) .onboard-steps{ display: flex; flex-direction: column; gap: 10px; margin: var(--s-3) 0; }
+:where(.game--play) .onboard-step{ display: flex; align-items: flex-start; gap: 10px; padding: 10px 12px; background: var(--surface-2); border: 1px solid var(--line); border-radius: var(--radius-lg); }
+:where(.game--play) .onboard-step p{ margin: 4px 0 0; }
+:where(.game--play) .onboard-step__num{
+  display: inline-flex; align-items: center; justify-content: center; flex: 0 0 28px; width: 28px; height: 28px; border-radius: 50%;
+  font-family: var(--font-display); font-size: var(--t-sm); font-weight: 700; color: var(--on-accent); background: var(--accent);
+}
+
+/* the daily share sheet play-engine.js builds (#vh-share-sheet > .vh-share-card) */
+:where(.game--play) #vh-share-sheet{ position: fixed; inset: 0; z-index: 9998; display: flex; align-items: flex-end; justify-content: center; background: var(--scrim); }
+:where(.game--play) .vh-share-card{
+  width: 100%; max-width: 560px; padding: 18px 18px 24px;
+  background: var(--surface); border: 1px solid var(--line-2); border-bottom: 0; border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+  animation: game-card-in .3s var(--ease);
+}
+:where(.game--play) .vh-share-preview{
+  max-height: 230px; overflow: auto; padding: 10px 12px; white-space: pre-wrap;
+  font-family: var(--font-code); font-size: var(--t-sm); line-height: 1.65; color: var(--fg);
+  background: var(--surface-2); border: 1px solid var(--line); border-radius: var(--radius);
+}
+:where(.game--play) .vh-share-fine{ margin-top: 10px; font-size: var(--t-xs); line-height: 1.5; color: var(--fg-3); }
+
+@media (max-width: 719px){
+  /* compact hero: the guess card starts within the first screenful */
+  :where(.game--play) #map-legend{ display: none; }
+  :where(.game--play) #map-wrap{ min-height: 320px; }
+  /* three equal segments in one joined row; a long label wraps inside its own segment */
+  :where(.game--play) #mode-tabs{ display: flex; width: 100%; flex-wrap: nowrap; }
+  :where(.game--play) #mode-tabs > button{ flex: 1 1 0; min-width: 0; padding: 6px 8px; letter-spacing: .06em; white-space: normal; text-align: center; line-height: 1.2; }
+}
+@media (prefers-reduced-motion: reduce){
+  :where(.game--play) .turn-dot,
+  :where(.game--play) .guess-row.is-new,
+  :where(.game--play) #result .card,
+  :where(.game--play) #warm-label.pop,
+  :where(.game--play) #guess-input.shake,
+  :where(.game--play) .vh-sheet,
+  :where(.game--play) .vh-share-card{ animation: none; }
+}
+
+/* ==========================================================================
+   /map-guess: Map Hunt
+   ========================================================================== */
+:where(.game--map) .game-modes{ display: flex; flex-wrap: wrap; justify-content: center; gap: var(--s-2); }
+:where(.game--map) .mh-meta{
+  margin: 0 0 6px; font-family: var(--font-display); font-size: var(--t-xs); font-weight: 600; font-stretch: 112%;
+  letter-spacing: .12em; text-transform: uppercase; color: var(--fg-2);
+}
+:where(.game--map) .mh-replay{ padding: 1px 8px; border-radius: var(--radius); color: var(--fg); background: var(--accent-wash); }
+:where(.game--map) .mh-given{ margin: 4px 0 0; font-size: var(--t-sm); color: var(--fg-2); }
+:where(.game--map) .mh-season{ font-family: var(--font-code); font-size: var(--t-xs); color: var(--fg-3); }
+:where(.game--map) .mh-empty{ margin: 0; font-size: var(--t-sm); color: var(--fg-3); }
+:where(.game--map) .mh-dist{ font-size: var(--t-sm); color: var(--fg-2); }
+:where(.game--map) .mh-warmer{ color: var(--accent-2); }
+:where(.game--map) .mh-colder{ color: var(--blue); }
+:where(.game--map) .embed3d-mount{ position: relative; height: min(72vw, 460px); min-height: 380px; overflow: hidden; border: 1px solid var(--line-2); border-radius: var(--radius-lg); background: var(--surface-2); }
+:where(.game--map) .embed3d-placeholder{ position: absolute; inset: 0; border-radius: 0; }
+:where(.game--map) .mh-noscript{ margin-top: 10px; }
+:where(.game--map) .mh-fallback-row{ display: flex; gap: var(--s-2); }
+:where(.game--map) .mh-fallback-row .input{ flex: 1; }
+:where(.game--map) .mh-fallback-label{ margin: 0 0 var(--s-2); }
+:where(.game--map) #mh-status{ min-height: 1.6em; font-size: var(--t-sm); color: var(--fg-2); }
+:where(.game--map) #mh-dots{ margin-top: 10px; }
+:where(.game--map) .guess-row{ margin-top: var(--s-2); padding: 10px 12px; background: var(--surface); border: 1px solid var(--line-2); border-radius: var(--radius-lg); }
+:where(.game--map) #mh-result h3{ margin: 0 0 6px; font-size: var(--t-lg); }
+:where(.game--map) .mh-answer{ font-size: var(--t-md); }
+:where(.game--map) .mh-score{ font-family: var(--font-code); font-weight: 700; }
+:where(.game--map) .mh-twin{ font-size: var(--t-sm); color: var(--fg-2); }
+
+/* ==========================================================================
+   /twenty-questions
+   ========================================================================== */
+:where(.game--tq) .game-status .chip-link:disabled{ opacity: .45; cursor: default; }
+:where(.game--tq) #map-wrap{ position: relative; min-height: 340px; overflow: hidden; background: var(--surface-2); border: 1px solid var(--line-2); border-radius: var(--radius); }
+:where(.game--tq) #tq-canvas{ position: absolute; inset: 0; display: block; width: 100%; height: 100%; }
+:where(.game--tq) #map-overlay{
+  position: absolute; left: 10px; right: 10px; top: 10px; z-index: 2;
+  display: flex; flex-wrap: wrap; justify-content: space-between; gap: var(--s-2); pointer-events: none;
+}
+:where(.game--tq) #map-overlay .chip{ background: color-mix(in srgb, var(--surface) 92%, transparent); }
+:where(.game--tq) #map-legend{
+  position: absolute; right: 10px; bottom: 10px; z-index: 2; max-width: 230px; padding: 7px 10px;
+  font-size: var(--t-xs); line-height: 1.5; pointer-events: none;
+  background: color-mix(in srgb, var(--surface) 94%, transparent); border: 1px solid var(--line-2); border-radius: var(--radius);
+}
+@media (max-width: 719px){
+  :where(.game--tq) #map-legend{ left: 10px; right: 10px; bottom: 8px; max-width: none; padding: 4px 10px; line-height: 1.4; }
+  :where(.game--tq) #map-legend .legend-long{ display: none; }
+  :where(.game--tq) #map-wrap{ min-height: 300px; }
+}
+:where(.game--tq) #q-text{ margin: 6px 0 0; font-size: var(--t-xl); line-height: 1.25; letter-spacing: -.01em; }
+:where(.game--tq) #tie-text{ margin: 6px 0 0; font-size: var(--t-xl); }
+:where(.game--tq) #answer-log{ margin-top: 10px; }
+/* one dot per answer: yes / no / not sure (non-interactive, aria-hidden) */
+:where(.game--tq) .progress-dot.is-yes{ color: var(--fg); border-color: var(--ok); box-shadow: inset 0 -3px 0 var(--ok); }
+:where(.game--tq) .progress-dot.is-no{ color: var(--fg); border-color: var(--bad); box-shadow: inset 0 -3px 0 var(--bad); }
+:where(.game--tq) .progress-dot.is-unsure{ color: var(--fg-3); background: var(--surface-2); }
+:where(.game--tq) #reveal-name{ margin: 4px 0; font-size: var(--t-2xl); line-height: 1.05; letter-spacing: -.02em; }
+:where(.game--tq) #reveal-career{ margin: 0; font-family: var(--font-code); font-size: var(--t-sm); color: var(--fg-2); }
+:where(.game--tq) .badge-row{ display: flex; flex-wrap: wrap; gap: 6px; margin-top: var(--s-2); }
+
+/* ==========================================================================
+   /play/era-crossed
+   ========================================================================== */
+:where(.game--era) #round-dots{ justify-content: center; margin-top: var(--s-3); }
+/* a missed round: the dot keeps paper, a --bad rule underneath (red is a rule, never the text) */
+:where(.game--era) .progress-dot.is-miss{ color: var(--fg-3); border-color: var(--bad); box-shadow: inset 0 -3px 0 var(--bad); text-decoration: line-through; }
+:where(.game--era) .anchor{ padding-left: var(--s-3); border-left: 4px solid var(--accent); }
+:where(.game--era) .anchor h2{ margin: 4px 0; font-size: var(--t-2xl); line-height: 1.05; letter-spacing: -.01em; }
+:where(.game--era) .anchor p{ margin: 0; font-family: var(--font-code); font-size: var(--t-sm); color: var(--fg-2); }
+:where(.game--era) .ec-ask{ margin: 14px 0 0; }
+:where(.game--era) .ec-ask__keys{ letter-spacing: 0; text-transform: none; }
+:where(.game--era) .opts{ display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: var(--s-3); }
+@media (max-width: 560px){
+  :where(.game--era) .opts{ grid-template-columns: 1fr; }
+}
+:where(.game--era) .opt{
+  appearance: none; display: flex; flex-direction: column; gap: 4px; min-height: 76px; padding: 14px;
+  text-align: left; cursor: pointer; color: var(--fg); font: inherit;
+  background: var(--surface); border: 1px solid var(--line-2); border-radius: var(--radius);
+}
+:where(.game--era) .opt:hover:not([disabled]){ border-color: var(--accent); }
+:where(.game--era) .opt[disabled]{ cursor: default; }
+:where(.game--era) .opt .nm{ font-size: var(--t-md); font-weight: 800; line-height: 1.2; }
+:where(.game--era) .opt .ss{ font-family: var(--font-code); font-size: var(--t-xs); color: var(--fg-3); }
+:where(.game--era) .opt .sim{ margin-top: 4px; font-family: var(--font-code); font-size: var(--t-xs); font-weight: 800; }
+:where(.game--era) .opt.is-correct{ border-color: var(--ok); background: color-mix(in srgb, var(--ok) 12%, var(--surface)); }
+:where(.game--era) .opt.is-wrong{ border-color: var(--bad); background: color-mix(in srgb, var(--bad) 8%, var(--surface)); }
+:where(.game--era) .opt .bar{ height: 6px; }
+:where(.game--era) #done-title{ margin: 4px 0; font-size: var(--t-2xl); }
+:where(.game--era) #done-line{ margin-top: 0; }
+
+/* 3- and 5-solved rewards earn the gold tint over the coin look */
+:where(.game--play) .reward.is-unlocked.gold{ background: var(--accent-wash); border-color: var(--accent-line); color: var(--accent); }
