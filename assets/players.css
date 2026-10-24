@@ -1,0 +1,326 @@
+/* Players page sheet (wave 2.5; was player-profile-v28.css + the parts of
+   unified.css the page still used). Loads after shell.css, so it holds layout
+   and the profile card only: colours are atlas tokens, type is the kit's three
+   families, controls are the kit's .btn / .chip-link / .pill / .stat.
+   Anything atlas.css already styles on a shared selector is not restated here. */
+
+/* ---- page frame ---- */
+.players-main{ padding-top: 0; }
+.players-noscript{ padding: var(--s-4); text-align: center; }
+.players-tabs{ display: flex; justify-content: center; margin-bottom: var(--s-2); }
+
+/* ---- directory ---- */
+/* At <=720px atlas makes the row one 1fr track (= minmax(auto,1fr)); the two
+   selects' intrinsic width then pushed the row past the card at 390px. */
+.wiki-search-row > *{ min-width: 0; }
+.wiki-filters{ min-width: 0; }
+#wiki-list{ margin-top: var(--s-3); }
+/* The row is a <button>: reset it into a flex row (atlas re-skins it). */
+.wiki-row{
+  flex: 1 1 auto; min-width: 0;
+  display: flex; justify-content: space-between; align-items: center; gap: var(--s-3);
+  border: 0; background: transparent; text-align: left; cursor: pointer;
+}
+.wiki-row__name{ min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.wiki-row__meta{ white-space: nowrap; }
+.wiki-row__grades{ flex: 0 0 auto; display: inline-flex; align-items: center; justify-content: center; min-height: 44px; }
+@media (max-width: 479px){
+  .wiki-row{ flex-direction: column; align-items: flex-start; gap: 2px; }
+}
+.wiki-more-row{ display: flex; justify-content: center; margin-top: var(--s-4); }
+
+/* playoff swing badges (Insights #10, assets/playoff-swings.json) */
+.swing-badge{
+  display: inline-block; margin-left: 6px; padding: 1px 7px;
+  font-family: var(--font-code); font-size: var(--t-xs); font-weight: 700; font-variant-numeric: tabular-nums;
+  border: 1px solid var(--line-2); border-radius: 999px; white-space: nowrap; vertical-align: 1px;
+}
+.swing-badge.swing-up{ color: var(--pipe); border-color: var(--pipe); }
+.swing-badge.swing-down{ color: var(--accent-2); border-color: var(--accent-line); }
+.vh-dossier__swings{ margin: 4px 0 8px; }
+.vh-dossier__swings .vh-dossier__row{ display: flex; gap: var(--s-2); align-items: baseline; flex-wrap: wrap; }
+.vh-dossier__swings .swing-delta{ font-family: var(--font-code); font-weight: 700; font-size: 12px; font-variant-numeric: tabular-nums; }
+.vh-dossier__swings .swing-delta.up{ color: var(--pipe); }
+.vh-dossier__swings .swing-delta.down{ color: var(--accent-2); }
+.vh-dossier__swings .swing-note{ font-size: var(--t-xs); color: var(--fg-3); }
+.vh-dossier__swings .swing-more{ margin-top: 6px; font-size: 12px; }
+
+/* ---- dossier modal: geometry (atlas owns its colours) ---- */
+.vh-modal-backdrop{ position: fixed; inset: 0; z-index: 80; display: grid; place-items: center; padding: var(--s-4); cursor: pointer; }
+.vh-modal{ width: 100%; max-width: 560px; max-height: 80vh; overflow: auto; cursor: auto; }
+body.vh-modal-open{ overflow: hidden; overscroll-behavior: contain; }
+.dossier-head{ display: flex; justify-content: space-between; gap: 10px; align-items: center; }
+.dossier-head .hd{ margin: 0; font-size: var(--t-md); }
+.dossier-body{ margin-top: 10px; font-size: 14px; line-height: 1.6; }
+.dossier-actions{ margin-top: 10px; display: flex; gap: var(--s-2); flex-wrap: wrap; }
+
+/* ---- skill profile: search ---- */
+.skills-panel{ display: flex; flex-direction: column; gap: 0; }
+.pp-search-wrap{
+  position: relative;
+  display: flex; flex-direction: column; gap: var(--s-2);
+  margin-bottom: var(--s-3); padding: var(--s-3);
+  background: var(--surface-2);
+  border: 1px solid var(--line); border-radius: var(--radius-lg);
+}
+.pp-search-top{ display: flex; gap: var(--s-2); align-items: center; }
+.pp-search-top .input{ flex: 1 1 auto; min-width: 0; }
+.pp-search-top .btn{ flex: 0 0 auto; white-space: nowrap; }
+.pp-quick-row{ display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
+.pp-quick-row .label{ margin-right: 2px; }
+
+#players-panel-profile #skills-suggest{
+  list-style: none; margin: 0; padding: 0;
+  display: flex; flex-direction: column; gap: 6px;
+  max-height: 320px; overflow: auto;
+}
+#players-panel-profile #skills-suggest li{
+  padding: 0;
+  background: var(--surface);
+  border: 1px solid var(--line); border-radius: var(--radius);
+  box-shadow: none;
+}
+#players-panel-profile #skills-suggest li button{
+  width: 100%;
+  display: flex; justify-content: space-between; align-items: center; gap: 10px;
+  min-height: 44px; padding: 10px 12px;
+  font: inherit; color: var(--fg); text-align: left;
+  background: transparent; border: 0; cursor: pointer;
+}
+#players-panel-profile #skills-suggest li button:hover{ background: var(--surface-2); }
+.pp-suggest__name{ font-weight: 600; font-size: 14px; }
+.skills-suggest__meta{ font-size: var(--t-xs); color: var(--fg-3); font-variant-numeric: tabular-nums; }
+
+/* ---- skill profile: the card ---- */
+#skills-profile{ display: flex; flex-direction: column; gap: var(--s-3); }
+#pp-court-skill-root{ margin: 0 0 var(--s-4); }
+#pp-forecast-slot{ margin-top: var(--s-3); }
+.pp-court-note{
+  padding: var(--s-4);
+  font-size: var(--t-sm); color: var(--fg-3);
+  border: 1px dashed var(--line-2); border-radius: var(--radius-lg);
+}
+.pp-hero{
+  position: relative;
+  padding: var(--s-3) var(--s-4);
+  background: var(--surface-2);
+  border: 1px solid var(--line); border-radius: var(--radius-lg);
+}
+.pp-name-row{ display: flex; flex-wrap: wrap; align-items: center; gap: 8px var(--s-4); }
+.pp-name{
+  margin: 0;
+  font-family: var(--font-display); font-size: var(--t-2xl); font-weight: 700;
+  letter-spacing: var(--track-display); line-height: 1;
+}
+/* The headline grade is a kit .stat; this only seats it beside the name. */
+.pp-mega{ padding: 2px 0 2px var(--s-4); border-left: 1px solid var(--line-2); }
+.pp-meta-line{ margin-top: 6px; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.pp-meta-pill--arch{ background: var(--fg); color: var(--bg); border-color: var(--fg); }
+/* archetype dot hues: data colours, one per family */
+.kdot--rim{ background: var(--accent); }
+.kdot--shoot{ background: var(--blue); }
+.kdot--play{ background: var(--pipe); }
+.kdot--motor{ background: var(--data-terra); }
+.kdot--other{ background: var(--fg-3); }
+
+.pp-seasons{ display: flex; gap: 6px; flex-wrap: wrap; margin-top: 10px; }
+.pp-seasons button{ min-height: 44px; padding: 0 12px; font-size: var(--t-sm); cursor: pointer; }
+
+.pp-rarity-row{ display: flex; gap: var(--s-2); flex-wrap: wrap; margin-top: 10px; }
+.pp-rarity{
+  padding: 6px 10px;
+  font-size: var(--t-sm); line-height: 1.4; color: var(--fg-2);
+  border: 1px dashed var(--line-2); border-radius: var(--radius);
+}
+.pp-rarity b{ color: var(--fg); font-variant-numeric: tabular-nums; }
+.pp-rarity--gold{
+  background-color: var(--coin-wash-2);
+  background-image: linear-gradient(180deg, var(--coin-wash-1), var(--coin-wash-2));
+  border: 1px solid var(--coin-deep); color: var(--coin-ink);
+}
+.pp-rarity--gold b{ color: var(--coin-ink); }
+.pp-rarity--blue{ background: var(--surface); border-style: solid; }
+
+/* sections: a tracked label with a hairline to the right */
+.pp-section{ margin-top: 2px; }
+.pp-section-head{
+  display: flex; align-items: center; gap: var(--s-2);
+  margin: 14px 2px var(--s-2);
+  font-family: var(--font-display); font-size: var(--t-xs); font-weight: 600; font-stretch: 112%;
+  letter-spacing: var(--track-label); text-transform: uppercase; color: var(--fg-3);
+}
+.pp-section-head::after{ content: ''; flex: 1 1 auto; border-top: 1px solid var(--line); }
+
+/* badges grid */
+.pp-badges-grid{ display: grid; grid-template-columns: repeat(auto-fill, minmax(146px, 1fr)); gap: var(--s-2); }
+.pp-badge{
+  position: relative;
+  display: flex; flex-direction: column; gap: 4px;
+  padding: 8px 10px 7px;
+  background: var(--surface);
+  border: 1px solid var(--line); border-radius: var(--radius-lg);
+}
+.pp-badge__top{ display: flex; justify-content: space-between; align-items: center; gap: 6px; }
+.pp-badge__name{
+  font-family: var(--font-display); font-size: var(--t-xs); font-weight: 600; font-stretch: 112%;
+  letter-spacing: .08em; text-transform: uppercase; line-height: 1.2; color: var(--fg);
+}
+.pp-badge__bar{ height: 6px; background: var(--surface-2); border-radius: 999px; overflow: hidden; }
+.pp-badge__fill{ height: 100%; border-radius: 999px; }
+.pp-badge--muted{ border-style: dashed; }
+.pp-badge--muted .pp-badge__name{ color: var(--fg-3); }
+
+/* skills grid: 2 columns */
+.pp-skills-grid{ list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: var(--s-2); }
+@media (max-width: 760px){
+  .pp-skills-grid{ grid-template-columns: 1fr; }
+  .pp-badges-grid{ grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 420px){
+  .pp-badges-grid{ grid-template-columns: 1fr; }
+}
+.pp-skill{
+  display: flex; flex-direction: column; align-items: stretch; gap: 6px;
+  padding: 8px 10px;
+  background: var(--surface);
+  border: 1px solid var(--line); border-radius: var(--radius-lg);
+}
+.pp-skill__head{ display: flex; justify-content: space-between; align-items: center; gap: var(--s-2); }
+.pp-skill__label{
+  font-family: var(--font-display); font-size: var(--t-xs); font-weight: 600; font-stretch: 112%;
+  letter-spacing: .08em; text-transform: uppercase; color: var(--fg);
+}
+.pp-skill__track{ width: 100%; min-width: 0; height: 8px; background: var(--surface-2); border-radius: 999px; overflow: hidden; }
+.pp-skill__fill{ height: 100%; border-radius: 999px; transition: width var(--dur-2) var(--ease); }
+.pp-skill__foot{ display: flex; justify-content: space-between; font-size: var(--t-xs); color: var(--fg-3); }
+
+/* grade pills: the number in mono, the tier in the fill */
+.pp-skill__grade, .pp-badge__grade{
+  flex: 0 0 auto; white-space: nowrap;
+  min-width: 34px; padding: 1px 8px; text-align: center;
+  font-family: var(--font-code); font-size: 12px; font-weight: 700; font-variant-numeric: tabular-nums;
+  color: var(--fg); background: var(--surface);
+  border: 1px solid var(--line-2); border-radius: 999px;
+}
+.pp-badge__grade{ min-width: 28px; padding: 1px 7px; }
+.pp-skill__grade--gold, .pp-badge--gold .pp-badge__grade{
+  background-color: var(--coin-wash-2);
+  background-image: linear-gradient(180deg, var(--coin-wash-1), var(--coin-wash-2));
+  color: var(--coin-ink); border-color: var(--coin-deep);
+}
+.pp-skill__grade--blue{ background: var(--blue); color: var(--on-accent); border-color: var(--blue); }
+.pp-skill__grade--green{ background: var(--pipe); color: var(--on-accent); border-color: var(--pipe); }
+.pp-skill__grade--low{ background: var(--surface-2); color: var(--fg-2); }
+
+/* bar fills by tier (was an inline hex per bar) */
+.pp-fill--coin{ background: linear-gradient(90deg, var(--coin-1), var(--coin-2)); }
+.pp-fill--ink{ background: var(--fg); }
+.pp-fill--blue{ background: var(--blue); }
+.pp-fill--green{ background: var(--pipe); }
+.pp-fill--accent{ background: var(--accent); }
+.pp-fill--mid{ background: var(--fg-3); }
+.pp-fill--low{ background: var(--line-2); }
+
+/* wide tracking section */
+.pp-wide-head{ margin-top: var(--s-3); }
+
+/* discovery footer: a model window (.card--void remaps the ink) */
+.pp-discover{
+  margin-top: var(--s-3); padding: var(--s-3) var(--s-4);
+  border: 1px solid var(--line); border-radius: var(--radius-lg);
+}
+.pp-discover__title{ margin: 0 0 4px; font-size: var(--t-md); }
+.pp-discover__sub{ margin: 0 0 10px; font-size: var(--t-sm); color: var(--fg-2); }
+.pp-discover__row{ display: flex; gap: 6px; flex-wrap: wrap; }
+
+/* next-season, playoffs, MTNN neighbours */
+#skills-mtnn, #skills-next-profile, #skills-playoffs{
+  margin-top: var(--s-3); padding: var(--s-3);
+  background: var(--surface);
+  border: 1px solid var(--line); border-radius: var(--radius-lg);
+}
+.vh-section-label{
+  margin-bottom: 6px;
+  display: flex; flex-wrap: wrap; align-items: center; gap: 6px;
+  font-family: var(--font-display); font-size: var(--t-xs); font-weight: 700; font-stretch: 112%;
+  letter-spacing: .12em; text-transform: uppercase; color: var(--fg);
+}
+.skills-hint{ margin: 6px 0; font-size: var(--t-sm); color: var(--fg-3); }
+.pp-tag{
+  display: inline-block; padding: 1px 7px;
+  font-family: var(--font-display); font-size: var(--t-xs); font-weight: 600; font-stretch: 112%;
+  letter-spacing: .08em; text-transform: uppercase; color: var(--fg-2);
+  background: var(--surface); border: 1px solid var(--line-2); border-radius: 999px;
+}
+.pp-tag--accent{ color: var(--accent-2); background: var(--surface); border-color: var(--accent-line); }
+.pp-tag--ink{ color: var(--bg); background: var(--fg); border-color: var(--fg); }
+.pp-tag--soft{ background: var(--surface-2); }
+.np-splits{ list-style: none; margin: 6px 0 0; padding: 0; }
+.np-split{
+  display: grid; grid-template-columns: minmax(0, 1fr); grid-auto-flow: column; grid-auto-columns: minmax(56px, 72px); gap: var(--s-2);
+  padding: 6px 0; border-bottom: 1px solid var(--line);
+  font-size: var(--t-sm); font-variant-numeric: tabular-nums;
+}
+.np-split > span + span{ text-align: right; font-family: var(--font-code); }
+.np-split > span{ overflow-wrap: normal; } /* cells wrap between words, never mid-word */
+@media (max-width: 479px){ .np-split{ grid-auto-columns: minmax(44px, 60px); gap: 6px; } .np-split--head{ letter-spacing: .04em; } }
+.np-split--head{
+  font-family: var(--font-display); font-size: var(--t-xs); font-weight: 600; font-stretch: 112%;
+  letter-spacing: .12em; text-transform: uppercase; color: var(--fg-3);
+}
+.np-split--head > span + span{ font-family: var(--font-display); }
+.po-series{ list-style: none; padding: 0; margin: var(--s-2) 0; display: flex; flex-direction: column; gap: 4px; }
+.po-series__item{
+  display: flex; justify-content: space-between; gap: var(--s-2);
+  padding: 6px 9px;
+  font-family: var(--font-code); font-size: var(--t-xs); font-variant-numeric: tabular-nums;
+  color: var(--fg); background: var(--surface);
+  border: 1px solid var(--line-2); border-radius: var(--radius);
+}
+.po-series__item--won{ border-left: 3px solid var(--accent); }
+.po-series__item--finals{ background: var(--surface-2); }
+.po-series__item--champ{ background: var(--fg); color: var(--bg); border-color: var(--fg); }
+.po-games{ margin-top: var(--s-2); }
+.po-games summary{ min-height: 44px; display: flex; align-items: center; font-size: var(--t-sm); cursor: pointer; }
+.po-games ul{ list-style: none; padding: 0; margin: 6px 0; display: flex; flex-direction: column; gap: 2px; font-family: var(--font-code); font-size: var(--t-xs); font-variant-numeric: tabular-nums; }
+.po-games li{ display: flex; gap: var(--s-2); justify-content: space-between; padding: 2px 0; border-bottom: 1px dashed var(--line); }
+.skills-mtnn__list{ list-style: none; margin: var(--s-2) 0 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+.skills-mtnn__list li{
+  display: flex; justify-content: space-between; align-items: center; gap: var(--s-2);
+  padding: 7px 10px;
+  background: var(--surface);
+  border: 1px solid var(--line); border-radius: var(--radius);
+}
+.skills-mtnn__list a{ font-weight: 600; text-decoration: none; color: var(--fg); }
+.skills-mtnn__meta{ font-size: var(--t-xs); color: var(--fg-3); font-variant-numeric: tabular-nums; }
+
+/* empty state: featured cards */
+#pp-empty{ margin-top: var(--s-3); }
+#skills-empty{ margin: 0; }
+.pp-featured{ display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: var(--s-2); margin-top: 10px; }
+.pp-featured__card{
+  padding: 9px 10px;
+  background: var(--surface);
+  border: 1px solid var(--line); border-radius: var(--radius-lg);
+  cursor: pointer;
+  transition: border-color var(--dur-1) var(--ease);
+}
+.pp-featured__card:hover{ border-color: var(--line-2); }
+.pp-featured__name{ font-weight: 600; font-size: 13px; }
+.pp-featured__line{ margin-top: 2px; font-size: var(--t-xs); color: var(--fg-3); }
+.pp-featured__grade{
+  display: inline-block; margin-top: 6px; padding: 1px 7px;
+  font-family: var(--font-code); font-size: var(--t-xs); font-weight: 700; font-variant-numeric: tabular-nums;
+  background-color: var(--coin-wash-2);
+  background-image: linear-gradient(180deg, var(--coin-wash-1), var(--coin-wash-2));
+  color: var(--coin-ink); border: 1px solid var(--coin-deep); border-radius: 999px;
+}
+
+/* ---- leaderboard panel ---- */
+.board-controls{ display: flex; gap: var(--s-2); flex-wrap: wrap; margin-bottom: var(--s-3); }
+#board-skill{ flex: 1 1 180px; min-width: 160px; }
+#board-season{ flex: 0 0 160px; width: 160px; }
+#skills-board{ margin-top: 6px; }
+.skills-board li{ justify-content: space-between; flex-wrap: wrap; }
+.skills-board__name{ font-size: 14px; cursor: pointer; }
+.board-note{ margin-top: var(--s-3); }

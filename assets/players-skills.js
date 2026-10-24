@@ -33,14 +33,14 @@
   function mountCourtFor(name) {
     var root = document.getElementById('pp-court-skill-root');
     if (!root) return;
-    root.innerHTML = '<div style="padding:18px;border:1px dashed var(--line-2);border-radius:16px;font-family:ui-monospace,monospace;font-size:12px">Loading career floor + skills evolution for '+esc(name)+'...</div>';
+    root.innerHTML = '<div class="pp-court-note">Loading career floor + skills evolution for '+esc(name)+'...</div>';
     ensureCourtModule().then(function(mod){
       return mod.mountPlayerCourtStory(root, name, { skillDefs: SKILLS ? SKILLS.skills : null });
     }).then(function(inst){
       courtMounted = inst;
     }).catch(function(e){
       console.warn('court story mount fail', e);
-      root.innerHTML = '<div style="padding:12px;font-family:ui-monospace,monospace;font-size:12px;color:var(--fg-3)">Court story unavailable</div>';
+      root.innerHTML = '<div class="pp-court-note">Court story unavailable</div>';
     });
   }
 
@@ -154,11 +154,11 @@
 
   function archetypeDotColor(name) {
     var n = (name||'').toLowerCase();
-    if (n.indexOf('rim')>=0 || n.indexOf('glass')>=0) return '#D55E00';
-    if (n.indexOf('shoot')>=0 || n.indexOf('sniper')>=0) return '#0072B2';
-    if (n.indexOf('playmaker')>=0 || n.indexOf('general')>=0) return '#009E73';
-    if (n.indexOf('motor')>=0 || n.indexOf('pressure')>=0) return '#CC79A7';
-    return '#1A150F';
+    if (n.indexOf('rim')>=0 || n.indexOf('glass')>=0) return 'kdot--rim';
+    if (n.indexOf('shoot')>=0 || n.indexOf('sniper')>=0) return 'kdot--shoot';
+    if (n.indexOf('playmaker')>=0 || n.indexOf('general')>=0) return 'kdot--play';
+    if (n.indexOf('motor')>=0 || n.indexOf('pressure')>=0) return 'kdot--motor';
+    return 'kdot--other';
   }
 
   // ---- profile v28 ----
@@ -201,25 +201,26 @@
     }
     var total99 = count99 + wCount99;
     if (els.ppMega) {
-      if (total99>0) els.ppMega.innerHTML = '<b>'+total99+'</b> × 99';
-      else if (count97>0) els.ppMega.innerHTML = '<b>'+count97+'</b> × 97+';
-      else if (count90>0) els.ppMega.innerHTML = count90+'× 90+';
-      else els.ppMega.textContent = 'AVG '+avg;
-      els.ppMega.title = count99+' grades at 99, '+count90+' at 90+, avg '+avg;
+      /* a kit .stat: the number, then its label */
+      if (total99>0) els.ppMega.innerHTML = '<b>'+total99+'</b>' + (total99===1 ? 'grade' : 'grades') + ' at 99';
+      else if (count97>0) els.ppMega.innerHTML = '<b>'+count97+'</b>' + (count97===1 ? 'grade' : 'grades') + ' 97+';
+      else if (count90>0) els.ppMega.innerHTML = '<b>'+count90+'</b>' + (count90===1 ? 'grade' : 'grades') + ' 90+';
+      else els.ppMega.innerHTML = '<b>'+avg+'</b>avg grade';
+      els.ppMega.title = total99+' grades at 99 (incl. wide), '+count90+' at 90+, avg '+avg;
     }
 
     // meta pills
     var metaHtml = '';
-    metaHtml += '<span class="pp-meta-pill"><span class="kdot" style="background:#1A150F"></span>'+esc(current.season)+'</span>';
-    metaHtml += '<span class="pp-meta-pill">'+esc(pos)+'</span>';
+    metaHtml += '<span class="pill"><span class="kdot"></span>'+esc(current.season)+'</span>';
+    metaHtml += '<span class="pill">'+esc(pos)+'</span>';
     if (arch) {
       var dot = archetypeDotColor(arch);
-      metaHtml += '<span class="pp-meta-pill pp-meta-pill--arch"><span class="kdot" style="background:'+dot+'"></span>'+esc(arch)+'</span>';
+      metaHtml += '<span class="pill pp-meta-pill--arch"><span class="kdot '+dot+'"></span>'+esc(arch)+'</span>';
     }
-    if (eraNative) metaHtml += '<span class="pp-meta-pill" title="Era-native MTNN cluster">'+esc(eraNative)+'</span>';
+    if (eraNative) metaHtml += '<span class="pill" title="Era-native MTNN cluster">'+esc(eraNative)+'</span>';
     eraTags.forEach(function(t){
       var label = (ARCH_ASSIGN.tagLabels && ARCH_ASSIGN.tagLabels[t]) || t;
-      metaHtml += '<span class="pp-meta-pill" style="background:var(--surface)">'+esc(label)+'</span>';
+      metaHtml += '<span class="pill">'+esc(label)+'</span>';
     });
     els.meta.innerHTML = metaHtml;
 
@@ -236,9 +237,9 @@
     if (total99 >= 4) {
       rarityHtml += '<span class="pp-rarity pp-rarity--gold"><b>'+total99+'× 99</b> — rarer than 0.3% of seasons in 12,966 charted. Collector card.</span>';
     } else if (total99 >= 1) {
-      rarityHtml += '<span class="pp-rarity pp-rarity--gold"><b>'+total99+'× 99</b> — roughly the top 9% that year. Elite signature.</span>';
+      rarityHtml += '<span class="pp-rarity pp-rarity--gold"><b>'+total99+'× 99</b> — an elite signature skill.</span>';
     } else if (count90 >= 5) {
-      rarityHtml += '<span class="pp-rarity pp-rarity--blue"><b>'+count90+'× 90+</b> — two-way star, 88th+ percentile across era.</span>';
+      rarityHtml += '<span class="pp-rarity pp-rarity--blue"><b>'+count90+'× 90+</b> — strong across the board.</span>';
     } else if (count90 >= 1) {
       rarityHtml += '<span class="pp-rarity"><b>'+count90+'× 90+</b> — has an elite skill. Average '+avg+'.</span>';
     } else {
@@ -270,15 +271,15 @@
     }
     badges.sort(function(a,b){ return b.grade - a.grade; });
     if (!badges.length) {
-      els.badges.innerHTML = '<div class="pp-badge pp-badge--muted"><div class="pp-badge__top"><span class="pp-badge__name">No 90+ badges this season</span><span class="pp-badge__grade" style="background:#EEE8D9">—</span></div><div class="pp-badge__bar" style="opacity:.4"><div class="pp-badge__fill" style="width:12%;background:var(--surface-2)"></div></div></div>';
+      els.badges.innerHTML = '<div class="pp-badge pp-badge--muted"><div class="pp-badge__top"><span class="pp-badge__name">No 90+ badges this season</span><span class="pp-badge__grade pp-skill__grade--low">—</span></div><div class="pp-badge__bar"></div></div>';
     } else {
       els.badges.innerHTML = badges.map(function(b){
         var fillW = Math.max(b.grade, 8);
-        var fillColor = b.grade>=97 ? '#1A150F' : b.grade>=90 ? '#0072B2' : b.grade>=75 ? '#009E73' : '#999';
-        if (b.wide) fillColor = '#D55E00';
+        var fillCls = b.grade>=97 ? 'pp-fill--coin' : b.grade>=90 ? 'pp-fill--blue' : b.grade>=75 ? 'pp-fill--green' : 'pp-fill--low';
+        if (b.wide && b.grade < 97) fillCls = 'pp-fill--accent';
         return '<div class="pp-badge '+(b.tier.badge||'')+(b.wide?' pp-skill--wide':'')+'" title="'+esc(b.label)+' '+b.grade+'">' +
           '<div class="pp-badge__top"><span class="pp-badge__name">'+esc(b.label)+'</span><span class="pp-badge__grade '+(b.tier.pill||'')+'">'+b.grade+'</span></div>' +
-          '<div class="pp-badge__bar"><div class="pp-badge__fill" style="width:'+fillW+'%;background:'+fillColor+'"></div></div>' +
+          '<div class="pp-badge__bar"><div class="pp-badge__fill '+fillCls+'" style="width:'+fillW+'%"></div></div>' +
           '</div>';
       }).join('');
     }
@@ -287,14 +288,14 @@
     var barsHtml = SKILLS.skills.map(function (sk, j) {
       var g = grades[j];
       var tier = gradeTier(g);
-      var fillColor = g>=97 ? '#1A150F' : g>=90 ? '#0072B2' : g>=75 ? '#009E73' : g>=60 ? '#6B665E' : '#C9C2B4';
+      var fillCls = g>=97 ? 'pp-fill--coin' : g>=90 ? 'pp-fill--blue' : g>=75 ? 'pp-fill--green' : g>=60 ? 'pp-fill--mid' : 'pp-fill--low';
       var pct = Math.max(g, 4);
       var subtitle = esc(sk.badge);
       var footLeft = subtitle;
       var footRight = g>=90 ? 'ELITE' : g>=75 ? 'STRONG' : g>=60 ? 'AVG' : 'LOW';
       return '<li class="pp-skill">' +
         '<div class="pp-skill__head"><span class="pp-skill__label">'+esc(sk.label)+'</span><span class="pp-skill__grade '+tier.pill+'">'+g+'</span></div>' +
-        '<div class="pp-skill__track"><div class="pp-skill__fill '+tier.fill+'" style="width:'+pct+'%;background:'+fillColor+'"></div></div>' +
+        '<div class="pp-skill__track"><div class="pp-skill__fill '+fillCls+'" style="width:'+pct+'%"></div></div>' +
         '<div class="pp-skill__foot"><span>'+footLeft+'</span><span>'+footRight+'</span></div>' +
         '</li>';
     }).join('');
@@ -312,8 +313,8 @@
             var g = wg[sk.key];
             if (g===undefined) return '';
             var tier = gradeTier(g);
-            var fillColor = g>=97 ? '#1A150F' : g>=90 ? '#D55E00' : g>=75 ? '#0072B2' : '#6B665E';
-            return '<li class="pp-skill pp-skill--wide"><div class="pp-skill__head"><span class="pp-skill__label">'+esc(sk.label)+'</span><span class="pp-skill__grade '+tier.pill+'">'+g+'</span></div><div class="pp-skill__track"><div class="pp-skill__fill" style="width:'+Math.max(g,4)+'%;background:'+fillColor+'"></div></div><div class="pp-skill__foot"><span>'+esc(sk.badge)+'</span><span>TRACK</span></div></li>';
+            var fillCls = g>=97 ? 'pp-fill--coin' : g>=90 ? 'pp-fill--accent' : g>=75 ? 'pp-fill--blue' : 'pp-fill--mid';
+            return '<li class="pp-skill pp-skill--wide"><div class="pp-skill__head"><span class="pp-skill__label">'+esc(sk.label)+'</span><span class="pp-skill__grade '+tier.pill+'">'+g+'</span></div><div class="pp-skill__track"><div class="pp-skill__fill '+fillCls+'" style="width:'+Math.max(g,4)+'%"></div></div><div class="pp-skill__foot"><span>'+esc(sk.badge)+'</span><span>TRACK</span></div></li>';
           }).join('') + '</ul></div>';
         els.ppWideWrap.innerHTML = wideHtml;
       }
@@ -393,7 +394,7 @@
     var labels = NEXT_EVAL.featureLabels || {};
     var allKeys = NEXT_EVAL.features || [];
     var pending = row.status === 'pending';
-    var tag = pending ? '<span class="po-tag po-tag--steady" style="border:1px solid var(--line-2);border-radius:999px;padding:1px 6px;font-size:10px;background:var(--surface)">Prediction only</span>' : '<span class="po-tag po-tag--riser" style="border:1px solid var(--line-2);border-radius:999px;padding:1px 6px;background:var(--accent-wash);color:var(--accent)">Predicted vs actual</span>';
+    var tag = pending ? '<span class="po-tag po-tag--steady pp-tag">Prediction only</span>' : '<span class="po-tag po-tag--riser pp-tag pp-tag--accent">Predicted vs actual</span>';
     var hint = pending ? (esc(row.to) + ' not charted yet. Showing MTNN next-profile prediction only.') : ('From ' + esc(season) + ' → predicted ' + esc(row.to) + ' profile.');
     var head = pending ? '<li class="np-split np-split--head"><span>Stat</span><span>Pred</span></li>' : '<li class="np-split np-split--head"><span>Stat</span><span>Pred</span><span>Actual</span><span>Δ</span></li>';
     var lines = features.map(function (key) {
@@ -404,45 +405,45 @@
       return '<li class="np-split"><span>'+esc(label)+'</span><span>'+fmtStat(pred, row.to, key)+'</span><span>'+fmtStat(actual, row.to, key)+'</span><span>'+fmtStatDelta(pred, actual, row.to, key)+'</span></li>';
     }).join('');
     box.hidden = false;
-    box.innerHTML = '<div class="vh-section-label">Next-season stats '+tag+'</div><p class="skills-hint" style="font-family:ui-monospace,monospace;font-size:11px;color:var(--fg-3);margin:6px 0">'+hint+'</p><ul class="np-splits">'+head+lines+'</ul>';
+    box.innerHTML = '<div class="vh-section-label">Next-season stats '+tag+'</div><p class="skills-hint">'+hint+'</p><ul class="np-splits">'+head+lines+'</ul>';
   }
 
   function renderPlayoffSeries(series, champion) {
     if (!series || !series.length) return '';
-    return '<ol class="po-series" style="list-style:none;padding:0;display:flex;flex-direction:column;gap:4px;margin:8px 0">' + series.map(function (sr) {
+    return '<ol class="po-series">' + series.map(function (sr) {
       var won = sr.won !== false && (sr.wins == null || sr.wins > sr.losses);
-      var bg = won ? '#F0E442' : '#fff';
-      if (sr.finals || sr.label === 'NBA Finals') bg = champion ? '#1A150F' : '#D6EFFF';
+      var cls = won ? ' po-series__item--won' : '';
+      if (sr.finals || sr.label === 'NBA Finals') cls = champion ? ' po-series__item--champ' : ' po-series__item--finals';
       var mark = won ? 'W' : 'L';
-      return '<li style="border:1px solid var(--line-2);border-radius:10px;padding:6px 9px;background:'+bg+';display:flex;justify-content:space-between;gap:8px;font-family:ui-monospace,monospace;font-size:11px"><span>'+esc(sr.label)+' vs '+esc(sr.opp)+'</span><span>'+esc(sr.result)+' '+mark+'</span></li>';
+      return '<li class="po-series__item'+cls+'"><span>'+esc(sr.label)+' vs '+esc(sr.opp)+'</span><span>'+esc(sr.result)+' '+mark+'</span></li>';
     }).join('') + '</ol>';
   }
   function renderPlayoffGames(games) {
     if (!games || !games.length) return '';
-    return '<details style="margin-top:8px"><summary style="font-family:ui-monospace,monospace;font-size:11px;cursor:pointer">Game log ('+games.length+')</summary><ul style="list-style:none;padding:0;margin:6px 0;display:flex;flex-direction:column;gap:2px;font-family:ui-monospace,monospace;font-size:10px">'+games.map(function(g){return '<li style="display:flex;gap:8px;justify-content:space-between;border-bottom:1px dashed var(--line);padding:2px 0"><span>'+esc((g.d||'').slice(5))+' '+esc(g.m||'')+'</span><span>'+esc(g.wl||'')+' '+num2(g.pts)+'/'+num2(g.reb)+'/'+num2(g.ast)+'</span></li>';}).join('')+'</ul></details>';
+    return '<details class="po-games"><summary>Game log ('+games.length+')</summary><ul>'+games.map(function(g){return '<li><span>'+esc((g.d||'').slice(5))+' '+esc(g.m||'')+'</span><span>'+esc(g.wl||'')+' '+num2(g.pts)+'/'+num2(g.reb)+'/'+num2(g.ast)+'</span></li>';}).join('')+'</ul></details>';
   }
   function playoffOutcomeLabel(s) {
     var r = s.rounds; if (typeof r !== 'number') return '';
-    if (r === 4 || s.champion) return '<span style="border:1px solid var(--line-2);border-radius:999px;background:#1A150F;color:#fff;padding:1px 6px;font-size:10px">NBA Champion</span>';
+    if (r === 4 || s.champion) return '<span class="pp-tag pp-tag--ink">NBA Champion</span>';
     var labels = ['exited R1','exited R2','exited Conf. finals','NBA Finals'];
-    return '<span style="border:1px solid var(--line-2);border-radius:999px;padding:1px 6px;background:var(--surface);font-size:10px">'+(labels[r]||('round '+r))+'</span>';
+    return '<span class="pp-tag">'+(labels[r]||('round '+r))+'</span>';
   }
   function renderHonorsBadges(name, season) {
     if (!HONORS || !HONORS.bySeason) return '';
     var h = HONORS.bySeason[name + '|' + season]; if (!h) return '';
     var bits = [];
-    if (h.finalsMvp) bits.push('<span style="border:1px solid var(--line-2);border-radius:999px;background:var(--accent-wash);color:var(--accent);padding:1px 6px">Finals MVP</span>');
-    if (h.allNbaTeam === 3) bits.push('<span style="border-radius:999px;background:var(--accent-wash);color:var(--accent);padding:1px 6px">All-NBA 1st</span>');
-    else if (h.allNbaTeam === 2) bits.push('<span style="border-radius:999px;background:#D6EFFF;padding:1px 6px">All-NBA 2nd</span>');
-    else if (h.allNbaTeam === 1) bits.push('<span>All-NBA 3rd</span>');
-    if (h.asg) bits.push('<span>All-Star</span>');
+    if (h.finalsMvp) bits.push('<span class="pp-tag pp-tag--accent">Finals MVP</span>');
+    if (h.allNbaTeam === 3) bits.push('<span class="pp-tag pp-tag--accent">All-NBA 1st</span>');
+    else if (h.allNbaTeam === 2) bits.push('<span class="pp-tag pp-tag--soft">All-NBA 2nd</span>');
+    else if (h.allNbaTeam === 1) bits.push('<span class="pp-tag">All-NBA 3rd</span>');
+    if (h.asg) bits.push('<span class="pp-tag">All-Star</span>');
     return bits.length ? '<span>'+bits.join(' ')+'</span>' : '';
   }
   function renderPlayoffs(name, season) {
     var box = els.playoffs; if (!box) return;
     if (!PLAYOFFS) { box.hidden = true; return; }
     var s = PLAYOFFS.splits[name + '|' + season];
-    if (!s) { box.hidden = false; box.innerHTML = '<div class="vh-section-label">Playoffs</div><p style="font-size:11px;color:var(--fg-3)">No postseason games this season.</p>'; return; }
+    if (!s) { box.hidden = false; box.innerHTML = '<div class="vh-section-label">Playoffs</div><p class="skills-hint">No postseason games this season.</p>'; return; }
     var champion = !!(s.champion || s.rounds === 4);
     var outcome = playoffOutcomeLabel(s);
     var honors = renderHonorsBadges(name, season);
@@ -461,7 +462,7 @@
       var p = DATA.players[h.id]; var slug = window.VHDossier.playerSlug(p.name); var pct = fmtPredPct(h.sim * 100);
       return '<li><a href="/players?p='+encodeURIComponent(slug)+'&s='+encodeURIComponent(p.season)+'">'+esc(p.name)+'</a> <span class="skills-mtnn__meta">'+esc(p.season)+' · '+pct+'% craft match</span></li>';
     }).join('');
-    box.innerHTML = '<div class="vh-section-label">Similar craft profiles (MTNN) — who plays like this?</div><p class="skills-hint" style="font-family:ui-monospace,monospace;font-size:11px;color:var(--fg-3)">Click to flip their card.</p><ol class="skills-mtnn__list">'+items+'</ol>';
+    box.innerHTML = '<div class="vh-section-label">Similar craft profiles (MTNN) — who plays like this?</div><p class="skills-hint">Click to flip their card.</p><ol class="skills-mtnn__list">'+items+'</ol>';
   }
 
   function pickPlayer(slug, season) {

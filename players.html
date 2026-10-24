@@ -23,19 +23,16 @@
 <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml"/>
 <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png"/>
 <link rel="manifest" href="/manifest.json"/>
-<link rel="stylesheet" href="/assets/unified.css?v=fd25e8ca"/>
-<link rel="stylesheet" href="/assets/player-profile-v28.css?v=3e848111"/>
 <link rel="stylesheet" href="/assets/fonts.css?v=8f376b2a"/>
 <link rel="stylesheet" href="/assets/atlas.css?v=31711e9d"/>
 <link rel="stylesheet" href="/assets/shell.css?v=398d5e37"/>
-<style>.players-tabs{display:flex;justify-content:center;margin-bottom:var(--s-2)}
-.visually-hidden{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}</style>
+<link rel="stylesheet" href="/assets/players.css?v=255f83ff"/>
 </head><body>
 <a class="skip-link" href="#main">Skip to content</a>
-<noscript><div role="alert" style="padding:16px;text-align:center">Enable JS — Vector Hoops needs JavaScript for the player directory and profiles</div></noscript>
+<noscript><div role="alert" class="players-noscript">Enable JS — Vector Hoops needs JavaScript for the player directory and profiles</div></noscript>
 
 <nav class="site-nav" data-active="/players" aria-label="Vector Hoops site"><noscript class="site-nav__noscript"><a href="/">Atlas</a><a href="/play">Play</a><a href="/map-guess">Map Hunt</a><a href="/live">Live</a><a href="/players">Players</a><a href="/insights">Insights</a><a href="/taxonomy">Taxonomy</a><a href="/methods">Methods</a><a href="/models/mtnn-v5">Models</a></noscript></nav>
-<div id="main" class="main" role="main" style="padding-top:0">
+<div id="main" class="main players-main" role="main">
   <header class="title-card">
     <div class="title-card__eyebrow reveal">Players</div>
     <h1 class="title-card__title reveal reveal-1">Every charted player, graded <em>within their own season</em></h1>
@@ -63,7 +60,8 @@
       <div class="wiki-alphabet" id="wiki-alphabet" aria-label="Jump to letter"></div>
       <div class="wiki-count" id="wiki-count" role="status" aria-live="polite">Loading player index…</div>
     </div>
-    <ol class="wiki-list" id="wiki-list" style="margin-top:10px"></ol>
+    <ol class="wiki-list" id="wiki-list"></ol>
+    <div class="wiki-more-row" id="wiki-more-row" hidden><button type="button" class="btn" id="wiki-more">Show more</button></div>
   </section>
 
   <section class="card" id="players-panel-profile" role="tabpanel" aria-busy="true" hidden>
@@ -72,28 +70,28 @@
       <div class="pp-search-wrap">
         <div class="pp-search-top">
           <input class="input" id="skills-search" aria-label="Search the skills leaderboard" data-pp-alias="pp-search" type="text" placeholder="Search 12,966 seasons — try Curry, Jokic, Wemby…" autocomplete="off" disabled>
-          <button class="pp-btn pp-btn--yellow" id="pp-random" type="button" title="Surprise me">🎲 Random</button>
+          <button class="btn btn-primary" id="pp-random" type="button" title="Surprise me">🎲 Random</button>
         </div>
         <div class="pp-quick-row" id="pp-quick-row">
-          <span class="pp-quick-label">Try:</span>
-          <button class="pp-quick-chip" data-q="Victor Wembanyama">Wemby</button>
-          <button class="pp-quick-chip" data-q="Stephen Curry">Curry</button>
-          <button class="pp-quick-chip" data-q="Nikola Jokic">Jokic</button>
-          <button class="pp-quick-chip" data-q="LeBron James">LeBron</button>
-          <button class="pp-quick-chip" data-q="Giannis Antetokounmpo">Giannis</button>
-          <button class="pp-quick-chip" data-q="Luka Doncic">Luka</button>
+          <span class="label">Try:</span>
+          <button type="button" class="chip-link" data-q="Victor Wembanyama">Wemby</button>
+          <button type="button" class="chip-link" data-q="Stephen Curry">Curry</button>
+          <button type="button" class="chip-link" data-q="Nikola Jokic">Jokic</button>
+          <button type="button" class="chip-link" data-q="LeBron James">LeBron</button>
+          <button type="button" class="chip-link" data-q="Giannis Antetokounmpo">Giannis</button>
+          <button type="button" class="chip-link" data-q="Luka Doncic">Luka</button>
         </div>
         <ul class="skills-suggest" id="skills-suggest"></ul>
       </div>
 
       <div id="skills-profile" hidden>
         <div class="pp-shell" id="pp-shell">
-          <div id="pp-court-skill-root" style="margin:0 0 18px"></div>
+          <div id="pp-court-skill-root"></div>
 
           <div class="pp-hero" id="pp-hero">
             <div class="pp-name-row">
-              <h2 class="pp-name" id="pp-name">Victor Wembanyama</h2>
-              <span class="pp-grade-mega" id="pp-mega"><b>99</b> ×6</span>
+              <h2 class="pp-name" id="pp-name"></h2>
+              <span class="stat pp-mega" id="pp-mega"></span>
             </div>
             <p class="skills-player-meta pp-meta-line" id="skills-player-meta"></p>
             <div class="skills-seasons pp-seasons" id="skills-seasons" role="tablist" aria-label="Season"></div>
@@ -102,7 +100,7 @@
 
           <div class="pp-section">
             <div class="pp-section-head">Elite badges — 90+ era-normalized</div>
-            <div class="vh-skill-badges pp-badges-grid" id="skills-badges"></div>
+            <div class="pp-badges-grid" id="skills-badges"></div>
           </div>
 
           <div class="pp-section">
@@ -112,26 +110,26 @@
 
           <div id="pp-wide-wrap"></div>
           <div id="skills-next-profile" hidden></div>
-          <div id="pp-forecast-slot" style="margin-top:12px"></div>
+          <div id="pp-forecast-slot"></div>
           <div id="skills-mtnn" hidden></div>
           <div id="skills-playoffs" hidden></div>
 
-          <div class="pp-discover" id="pp-discover">
+          <div class="pp-discover card--void" id="pp-discover">
             <h3 class="pp-discover__title">Keep pulling cards</h3>
-            <p class="pp-discover__sub">Every season is era-normalized. Seen Wemby? See how Chet, Shaq, or Curry compare.</p>
+            <p class="pp-discover__sub">Every season is era-normalized. See how these compare.</p>
             <div class="pp-discover__row" id="pp-discover-row">
-              <button class="pp-discover__chip" data-q="Chet Holmgren">Chet Holmgren</button>
-              <button class="pp-discover__chip" data-q="Shaquille O'Neal">Shaq</button>
-              <button class="pp-discover__chip" data-q="Anthony Davis">AD</button>
-              <button class="pp-discover__chip" data-q="Kevin Durant">KD</button>
-              <button class="pp-discover__chip" data-q="Draymond Green">Draymond</button>
+              <button type="button" class="chip-link" data-q="Chet Holmgren">Chet Holmgren</button>
+              <button type="button" class="chip-link" data-q="Shaquille O'Neal">Shaq</button>
+              <button type="button" class="chip-link" data-q="Anthony Davis">AD</button>
+              <button type="button" class="chip-link" data-q="Kevin Durant">KD</button>
+              <button type="button" class="chip-link" data-q="Draymond Green">Draymond</button>
             </div>
           </div>
         </div>
       </div>
 
-      <div id="pp-empty" style="margin-top:10px">
-        <p style="font-size:13px;color:var(--fg-3);margin:0" id="skills-empty">Pick a player — skill profile, season by season, with next-season predicted vs actual. Try “Curry”, “Smart”, or “Jokic”.</p>
+      <div id="pp-empty">
+        <p class="caption" id="skills-empty">Pick a player — skill profile, season by season, with next-season predicted vs actual. Try “Curry”, “Smart”, or “Jokic”.</p>
         <div class="pp-featured" id="pp-featured"></div>
       </div>
     </div>
@@ -139,24 +137,24 @@
 
   <section class="card" id="players-panel-leaderboard" role="tabpanel" aria-busy="true" hidden>
     <p class="visually-hidden" role="status" id="board-status">Loading leaderboard data…</p>
-    <h2 class="hd" style="font-size:20px;margin:0 0 6px">Leaderboard</h2>
-    <p style="font-size:13px;color:var(--fg-2);margin:0 0 12px">0–99 skill grades, era-normalized. Pick a skill, see top seasons. Tracking boards cover 2015-16+ only. Draft Steals/Busts rank career mean vs draft slot.</p>
-    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px">
-      <select id="board-skill" aria-label="Leaderboard skill" class="input" style="flex:1 1 180px;min-width:160px;min-height:44px" disabled><option>Loading skills…</option></select>
-      <select id="board-season" aria-label="Leaderboard season" class="input" style="flex:0 0 160px;min-height:44px" disabled><option value="">All seasons</option></select>
+    <h2>Leaderboard</h2>
+    <p class="caption">0–99 skill grades, era-normalized. Pick a skill, see top seasons. Tracking boards cover 2015-16+ only. Draft Steals/Busts rank career mean vs draft slot.</p>
+    <div class="board-controls">
+      <select id="board-skill" aria-label="Leaderboard skill" class="input" disabled><option>Loading skills…</option></select>
+      <select id="board-season" aria-label="Leaderboard season" class="input" disabled><option value="">All seasons</option></select>
     </div>
-    <ol class="wiki-list" id="skills-board" style="margin-top:6px"></ol>
-    <p class="small-mono" style="margin-top:10px;color:var(--fg-3);text-transform:none">Grades are era-normalized percentiles. Details on <a href="/methods#skills">methods</a>.</p>
+    <ol class="wiki-list skills-board" id="skills-board"></ol>
+    <p class="caption board-note">Grades are era-normalized percentiles. Details on <a href="/methods#skills">methods</a>.</p>
   </section>
 
   <div id="dossier-backdrop" class="vh-modal-backdrop" hidden>
     <div class="vh-modal" role="dialog" aria-modal="true" id="dossier-modal">
-      <div style="display:flex;justify-content:space-between;gap:10px;align-items:center">
-        <h3 class="hd" id="dossier-title" style="margin:0;font-size:18px">Dossier</h3>
-        <button class="btn" id="dossier-close" type="button" style="min-height:36px;padding:6px 10px">Close</button>
+      <div class="dossier-head">
+        <h3 class="hd" id="dossier-title">Dossier</h3>
+        <button class="btn" id="dossier-close" type="button">Close</button>
       </div>
-      <div id="dossier-body" style="margin-top:10px;font-size:14px;line-height:1.6"></div>
-      <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap"><a class="btn btn-accent" id="dossier-source-link" href="#" target="_blank" rel="noopener" style="min-height:36px">View source →</a><button class="btn" id="vh-share-btn" type="button" style="min-height:36px">Share dossier</button></div>
+      <div id="dossier-body" class="dossier-body"></div>
+      <div class="dossier-actions"><a class="btn btn-accent" id="dossier-source-link" href="#" target="_blank" rel="noopener">View source →</a><button class="btn" id="vh-share-btn" type="button">Share dossier</button></div>
     </div>
   </div>
 </div>
@@ -201,12 +199,12 @@
 <script src="assets/dossier.js?v=7fdb3848"></script>
 <script src="assets/served-constants.js?v=8ba12340"></script>
 <script src="assets/twin-bands.js?v=0a191313"></script>
-<script src="assets/player-dossier.js?v=2a9f1a19"></script>
+<script src="assets/player-dossier.js?v=ea68eacf"></script>
 <script src="assets/player-roster.js?v=263dd347"></script>
-<script src="assets/players-directory.js?v=799c8f41"></script>
-<script src="assets/players-skills.js?v=89c7e606"></script>
+<script src="assets/players-directory.js?v=3c8be347"></script>
+<script src="assets/players-skills.js?v=1ef32c1e"></script>
 <script src="assets/players-page.js?v=ba682099"></script>
-<script src="assets/arc-projections.js?v=ea916497"></script>
+<script src="assets/arc-projections.js?v=e8a4ce8e"></script>
 <script src="/assets/inline-players.js?v=948cc3cd"></script>
 <script src="/assets/inline-sw-register.js?v=3fccd5e4"></script>
 <script src="/assets/inline-players-share.js?v=7ed94553"></script>
