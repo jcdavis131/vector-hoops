@@ -105,7 +105,8 @@
       // presence so an empty slate doesn't read as a promise.
       var k0 = document.getElementById('tonight-k');
       if (k0) k0.textContent = 'Tonight';
-      text.textContent = 'No games tonight — replays from last night are ready.';
+      // An empty board says nothing about last night either, so promise no replays.
+      text.textContent = 'No games on ESPN’s board today.';
       return;
     }
     var s = summarize(games);
