@@ -4,8 +4,7 @@
     function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
     /* Tap-to-identify caption (Panel B4): taps name the player and link the game. */
     var cap = document.createElement('p');
-    cap.className = 'hero-map__pick'; cap.hidden = true;
-    cap.style.cssText = 'margin:6px 0 0;font-size:13px;color:#5b5545';
+    cap.className = 'hero-map__pick caption'; cap.hidden = true;
     el.parentNode.insertBefore(cap, el.nextSibling);
     var handle = null;
     function onPick(id){
@@ -20,7 +19,7 @@
     function mount(proj){
       if(!(window.Embed3D && typeof window.Embed3D.mount === 'function')) return false;
       try{
-        handle = window.Embed3D.mount(el, {projection: proj, height: el.clientHeight || 440, onSelect: onPick});
+        handle = window.Embed3D.mount(el, {variant: 'home', projection: proj, height: el.clientHeight || 440, onSelect: onPick});
         var ph = el.querySelector('.embed3d-placeholder'); if(ph) ph.style.display = 'none';
         return true;
       }catch(e){ return false; }

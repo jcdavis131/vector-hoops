@@ -1049,10 +1049,9 @@ fetch('assets/live_opening.json?v=cc7d0ec4').then(r=>{if(!r.ok)throw new Error('
 function mountEmbed3D(){
   const el=document.querySelector('.embed3d-mount');
   if(!el||!window.Embed3D)return;
-  try{window.Embed3D.mount(el,{projection:'pca',highlightIds:[],onSelect:function(){}});}catch(e){}
+  try{window.Embed3D.mount(el,{variant:'live',projection:'pca',highlightIds:[],onSelect:function(){}});}catch(e){}
 }
-mountEmbed3D();
-window.addEventListener('load',mountEmbed3D);
+if(document.readyState==='complete')mountEmbed3D();else window.addEventListener('load',mountEmbed3D,{once:true});
 
 $('refreshBtn').onclick=loadGame;
 $('dayPrev').onclick=()=>gotoDay(-1);

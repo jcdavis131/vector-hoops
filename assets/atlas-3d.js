@@ -74,7 +74,11 @@
       .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
       .then(decodeIndex)
       .catch(function () {
-        mountEl.innerHTML = '<div role="alert" style="padding:24px;font:14px/1.5 system-ui,sans-serif;color:#8a2b2b">The atlas data could not be loaded. Check your connection and reload.</div>';
+        indexWaiters = [];
+        showError('The atlas data could not be loaded. Check your connection and try again.', function () {
+          booted = false; handle = null;
+          ensureIndex(); boot();
+        });
       });
   }
   function ensurePeers(cb) {
@@ -100,15 +104,25 @@
       .catch(function () { archNames = {}; if (cb) cb(); });
   }
 
+  /* Kit error state (atlas.css .state--error): role=alert, a retry button. */
+  function showError(msg, retry) {
+    if (handle && handle.destroy) { try { handle.destroy(); } catch (e) {} }
+    mountEl.innerHTML = '<div class="state state--error" role="alert"><p><b>The map could not load.</b> ' +
+      esc(msg) + '</p><button type="button" class="btn">Try again</button></div>';
+    var b = mountEl.querySelector('button');
+    if (b && retry) b.addEventListener('click', retry);
+  }
+
   /* ---------- boot ---------- */
   function boot() {
     if (booted) return;
     booted = true;
     if (!window.Embed3D || !window.Embed3D.mount) {
-      mountEl.innerHTML = '<div role="alert" style="padding:24px;font:14px/1.5 system-ui,sans-serif">The 3D atlas could not start.</div>';
+      showError('The 3D atlas could not start.', function () { location.reload(); });
       return;
     }
     handle = window.Embed3D.mount(mountEl, {
+      variant: 'home',
       greyscale: true,
       projection: 'pca',
       onSelect: function (id) { select(id); }
